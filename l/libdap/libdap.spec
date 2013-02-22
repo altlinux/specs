@@ -6,7 +6,7 @@ BuildRequires: chrpath
 Name: libdap
 Summary: The C++ DAP2 library from OPeNDAP
 Version: 3.11.3
-Release: alt2_2
+Release: alt2_3
 
 License: LGPLv2+
 Group: Development/C
@@ -44,7 +44,7 @@ library and demonstrates simple uses of it.
 %package devel
 Summary: Development and header files from libdap
 Group: Development/C
-Requires: libdap = %{version}-%{release}
+Requires: %{name} = %{version}-%{release}
 # for the /usr/share/aclocal directory ownership
 Requires: automake
 
@@ -56,7 +56,6 @@ will use libdap.
 %package doc
 Summary: Documentation of the libdap library
 Group: Documentation
-BuildArch: noarch
 
 %description doc
 Documentation of the libdap library.
@@ -79,7 +78,7 @@ make docs
 
 
 %install
-make install DESTDIR=$RPM_BUILD_ROOT INSTALL="install -p"
+make install DESTDIR=$RPM_BUILD_ROOT INSTALL="%{__install} -p"
 rm $RPM_BUILD_ROOT%{_libdir}/*.la
 mv $RPM_BUILD_ROOT%{_bindir}/dap-config-pkgconfig $RPM_BUILD_ROOT%{_bindir}/dap-config
 
@@ -91,10 +90,9 @@ rm -f __dist_docs/html/*.map __dist_docs/html/*.md5
 # for all arches
 touch -r ChangeLog __dist_docs/html/*
 # kill rpath
-for i in %buildroot{%_bindir,%_libdir,/usr/libexec,/usr/lib,/usr/sbin}/*; do
+for i in `find %buildroot{%_bindir,%_libdir,/usr/libexec,/usr/lib,/usr/sbin} -type f -perm -111`; do
 	chrpath -d $i ||:
 done
-	    
 
 
 %files
@@ -122,6 +120,9 @@ done
 
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 3.11.3-alt2_3
+- update to new release by fcimport
+
 * Sat Jan 26 2013 Igor Vlasenko <viy@altlinux.ru> 3.11.3-alt2_2
 - applied repocop patches
 
