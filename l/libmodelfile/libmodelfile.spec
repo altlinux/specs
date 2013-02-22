@@ -6,7 +6,7 @@ BuildRequires: gcc-c++
 %add_optflags %optflags_shared
 Name:           libmodelfile
 Version:        0.1.92
-Release:        alt3_10
+Release:        alt3_11
 Summary:        Library for accessing various model file formats
 
 Group:          Development/C
@@ -25,7 +25,7 @@ models of various file formats. So far the range of model formats is limited.
 %package        devel
 Summary:        Development files for libmodelfile
 Group:          Development/C
-Requires:       libmodelfile = %{version}-%{release}
+Requires:       %{name} = %{version}-%{release}
 
 %description    devel
 This package contains libraries and header files for developing applications
@@ -45,10 +45,9 @@ make %{?_smp_mflags}
 make install DESTDIR=$RPM_BUILD_ROOT
 rm -f $RPM_BUILD_ROOT%{_libdir}/*.la
 # kill rpath
-for i in %buildroot{%_bindir,%_libdir,/usr/libexec,/usr/lib,/usr/sbin}/*; do
+for i in `find %buildroot{%_bindir,%_libdir,/usr/libexec,/usr/lib,/usr/sbin} -type f -perm -111`; do
 	chrpath -d $i ||:
 done
-	    
 
 
 %check
@@ -65,6 +64,9 @@ make %{?_smp_mflags} check
 
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.1.92-alt3_11
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.1.92-alt3_10
 - update to new release by fcimport
 
