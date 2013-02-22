@@ -16,7 +16,7 @@ BuildRequires: chrpath
 
 Name:		libhocr
 Version:	0.10.17
-Release:	alt2_11.1
+Release:	alt2_12
 Summary:	A Hebrew optical character recognition library
 
 Group:		System/Libraries
@@ -44,7 +44,7 @@ text, ready for your blog, word processor or any other use.
 %package        devel
 Summary:	Development files for %{name}
 Group:		Development/C
-Requires:	libhocr = %{version}-%{release}
+Requires:	%{name} = %{version}-%{release}
 # We ship *.pc files (requires the -devel of contained libs)
 
 %description    devel
@@ -55,8 +55,7 @@ developing applications that use %{name}.
 %package        gtk
 Summary:	GTK+ application for %{name}
 Group:		Text tools
-Requires:	libhocr = %{version}-%{release}
-Requires:	python-module-sane python-module-pygtk
+Requires:	%{name} = %{version}-%{release}
 Requires:	python(hocr) = %{version}-%{release}
 # We use gtktextbuffer which uses gtkspell which have a runtime
 # check of the spellcheck backends... so here it is:
@@ -68,7 +67,7 @@ The %{name}-gtk package contains a GUI application that uses %{name}.
 %package        -n python-module-libhocr
 Summary:	Python bindings for %{name}
 Group:		System/Libraries
-Requires:	libhocr = %{version}-%{release}
+Requires:	%{name} = %{version}-%{release}
 Provides:	python(hocr) = %{version}-%{release}
 
 %description    -n python-module-libhocr
@@ -123,10 +122,9 @@ desktop-file-install --vendor="fedora"		\
 
 cat hocr-gtk.lang sane-pygtk.lang > %{name}.lang
 # kill rpath
-for i in %buildroot{%_bindir,%_libdir,/usr/libexec,/usr/lib,/usr/sbin}/*; do
+for i in `find %buildroot{%_bindir,%_libdir,/usr/libexec,/usr/lib,/usr/sbin} -type f -perm -111`; do
 	chrpath -d $i ||:
 done
-	    
 
 
 %files
@@ -166,6 +164,9 @@ done
 
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.10.17-alt2_12
+- update to new release by fcimport
+
 * Thu Oct 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.10.17-alt2_11.1
 - Rebuilt with libtiff5
 
