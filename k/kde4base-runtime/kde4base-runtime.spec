@@ -10,7 +10,7 @@
 %define bugfix 0
 Name: kde4base-runtime
 Version: %major.%minor.%bugfix
-Release: alt0.6
+Release: alt1
 %define libname lib%name
 
 Group: Graphical desktop/KDE
@@ -28,7 +28,7 @@ Source11: search-altbugzilla.desktop
 Patch1001: kdebase-runtime-4.3.2-alt-compiz.patch
 Patch1002: kdebase-runtime-4.8.0-alt-def-nepomuk.patch
 Patch1003: kdebase-runtime-4.6.0-alt-def-notify-volume.patch
-Patch1004: kdebase-runtime-4.8.0-alt-def-trash.patch
+Patch1004: kdebase-runtime-4.10.0-alt-def-trash.patch
 Patch1005: kdebase-runtime-4.8.0-alt-nepomuk-backup-on.patch
 Patch1006: kdebase-runtime-4.9.3-alt-multimedia-player-chooser.patch
 
@@ -224,6 +224,9 @@ ln -sf `relative %_kde4_bindir/kde4 %_K4bindir/kde4` %buildroot/%_K4bindir/kde4
 %_K4dbus_interfaces/*
 
 %changelog
+* Fri Feb 22 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.0-alt1
+- update from 4.10 branch
+
 * Tue Jan 29 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.0-alt0.6
 - update from 4.10 branch
 
