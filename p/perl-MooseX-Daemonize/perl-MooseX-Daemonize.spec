@@ -4,7 +4,7 @@ BuildRequires: perl(CPAN.pm) perl(Config.pm) perl(Fcntl.pm) perl(File/Spec/Funct
 # END SourceDeps(oneline)
 Name:           perl-MooseX-Daemonize
 Version:        0.15
-Release:        alt2_3
+Release:        alt2_4
 Summary:        Role for daemonizing your Moose based application
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -48,6 +48,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.15-alt2_4
+- update to new release by fcimport
+
 * Tue Dec 11 2012 Igor Vlasenko <viy@altlinux.ru> 0.15-alt2_3
 - moved to Sisyphus (Tapper dep)
 
