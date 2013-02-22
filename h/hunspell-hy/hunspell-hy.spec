@@ -1,7 +1,7 @@
 Name: hunspell-hy
 Summary: Armenian hunspell dictionaries
 Version: 0.20.0
-Release: alt2_4
+Release: alt2_5
 Source: http://downloads.sourceforge.net/armspell/myspell-hy-%{version}.tar.gz
 Group: Text tools
 URL: http://sourceforge.net/projects/armspell
@@ -28,6 +28,9 @@ cp -p hy_AM.* $RPM_BUILD_ROOT/%{_datadir}/myspell/
 %{_datadir}/myspell/*
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.20.0-alt2_5
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.20.0-alt2_4
 - update to new release by fcimport
 
