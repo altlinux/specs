@@ -1,7 +1,7 @@
 %add_optflags %optflags_shared
 Name:           libitl
 Version:        0.7.0 
-Release:        alt3_5
+Release:        alt3_6
 Summary:        Libraries for The Islamic Tools and Libraries Project
 
 Group:          System/Libraries
@@ -25,7 +25,7 @@ This package contains the libraries for applications using ITL
 %package        devel
 Summary:        Development files for %{name}
 Group:          Development/C
-Requires:       libitl = %{version}-%{release}
+Requires:       %{name} = %{version}-%{release}
 
 %description    devel
 The %{name}-devel package contains libraries and header files for
@@ -64,6 +64,9 @@ find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.7.0-alt3_6
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.7.0-alt3_5
 - update to new release by fcimport
 
