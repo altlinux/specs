@@ -1,13 +1,9 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: pkgconfig(cairo) pkgconfig(glib-2.0) pkgconfig(gmodule-2.0)
 # END SourceDeps(oneline)
-Summary(de): Logikpuzzle für GNOME
-Summary(de): Logikpuzzle für GNOME
-Summary(de): Logikpuzzle für GNOME
-Summary(de): Logikpuzzle für GNOME
 Name:		hitori
 Version:	0.4.0
-Release:	alt1_1
+Release:	alt1_2
 Summary:	Logic puzzle game for GNOME
 Summary(de):	Logikpuzzle für GNOME
 
@@ -71,6 +67,9 @@ desktop-file-validate %{buildroot}/%{_datadir}/applications/%{name}.desktop
 
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.4.0-alt1_2
+- update to new release by fcimport
+
 * Fri Nov 09 2012 Igor Vlasenko <viy@altlinux.ru> 0.4.0-alt1_1
 - update to new release by fcimport
 
