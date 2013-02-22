@@ -4,7 +4,7 @@
 
 Name:           fonts-otf-oflb-icelandic
 Version:        1.001
-Release:        alt3_13
+Release:        alt3_14
 Summary:        Icelandic Magical Staves
 
 Group:          System/Fonts/True type
@@ -87,6 +87,9 @@ fi
 %doc README.license License.txt
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 1.001-alt3_14
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.001-alt3_13
 - update to new release by fcimport
 
