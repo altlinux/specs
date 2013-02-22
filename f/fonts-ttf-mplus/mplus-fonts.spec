@@ -31,7 +31,7 @@ different weights.
 
 Name:       fonts-ttf-mplus
 Version:    028 
-Release:    alt3_4
+Release:    alt3_5
 Summary:    The Mplus fonts is a superfamily of fonts designed by Coji Morishita
 
 Group:      System/Fonts/True type
@@ -196,6 +196,9 @@ fi
 %doc LICENSE_{E,J} README_{E,J}
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 028-alt3_5
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 028-alt3_4
 - update to new release by fcimport
 
