@@ -5,7 +5,7 @@ Name: hunspell-ny
 Summary: Chichewa hunspell dictionaries
 #Epoch: 1
 Version: 0.01
-Release: alt2_4
+Release: alt2_5
 Group: Text tools
 Source: http://extensions.services.openoffice.org/e-files/4052/0/hunspell-chichewa-ny-dict-%{version}.oxt
 URL: http://extensions.services.openoffice.org/en/project/chicspell
@@ -43,6 +43,9 @@ cp -p dictionaries/ny_MW.* $RPM_BUILD_ROOT/%{_datadir}/myspell
 %{_datadir}/myspell/*
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.01-alt2_5
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.01-alt2_4
 - update to new release by fcimport
 
