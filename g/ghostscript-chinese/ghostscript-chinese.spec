@@ -1,7 +1,3 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-python rpm-macros-fedora-compat
-BuildRequires: /usr/bin/python-config /usr/bin/runtest binutils-devel cmake elfutils-devel gcc-c++ libICE-devel libSM-devel libX11-devel libelf-devel perl(IPC/Open2.pm) python-devel
-# END SourceDeps(oneline)
 %global common_desc \
 ghostscript font configuration files for Chinese fonts.
 
@@ -13,7 +9,7 @@ ghostscript font configuration files for Chinese fonts.
 
 Name:           ghostscript-chinese
 Version:        0.4.0
-Release:        alt1_1
+Release:        alt1_2
 Summary:        Ghostscript Chinese fonts configuration files
 Group:          System/Fonts/True type
 License:        GPLv2+
@@ -32,7 +28,7 @@ Source44: import.info
 %package zh_CN
 Summary:      Ghostscript Simplified Chinese fonts configuration files
 Group:        System/Fonts/True type
-Requires:     ghostscript-utils ghostscript
+Requires: ghostscript-utils ghostscript
 Requires:     fonts-ttf-wqy-zenhei >= %{zenheiver}
 Requires:     %{name} = %{version}-%{release}
 
@@ -44,7 +40,7 @@ For Simplified Chinese.
 %package zh_TW
 Summary:      Ghostscript Traditional Chinese fonts configuration files
 Group:        System/Fonts/True type
-Requires:     ghostscript-utils ghostscript
+Requires: ghostscript-utils ghostscript
 Requires:     fonts-ttf-cjkuni-uming = %{umingver}
 Requires:     fonts-ttf-cjkuni-ukai = %{ukaiver}
 Requires:     %{name} = %{version}-%{release}
@@ -87,6 +83,9 @@ done
 
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.4.0-alt1_2
+- update to new release by fcimport
+
 * Tue Nov 20 2012 Igor Vlasenko <viy@altlinux.ru> 0.4.0-alt1_1
 - update to new release by fcimport
 
