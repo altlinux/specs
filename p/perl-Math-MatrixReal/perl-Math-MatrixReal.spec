@@ -1,10 +1,10 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(File/Spec/Functions.pm) perl(Scalar/Util.pm) perl(Test/Deep.pm) perl(Test/Differences.pm) perl(Test/Exception.pm) perl(Test/Warn.pm) perl(overload.pm) perl-devel perl-podlators
+BuildRequires: perl(File/Spec/Functions.pm) perl(Scalar/Util.pm) perl(overload.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Math-MatrixReal
 Version:        2.09
-Release:        alt2_4
+Release:        alt2_5
 Summary:        Manipulate matrix of reals
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -55,6 +55,9 @@ find %{buildroot} -depth -type d -exec rmdir {} 2>/dev/null \;
 %{perl_vendor_privlib}/*
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 2.09-alt2_5
+- update to new release by fcimport
+
 * Mon Dec 10 2012 Igor Vlasenko <viy@altlinux.ru> 2.09-alt2_4
 - moved to Sisyphus
 
