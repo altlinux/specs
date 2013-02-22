@@ -1,6 +1,6 @@
 %define oname grokcore.view
 Name: python-module-%oname
-Version: 2.6.1
+Version: 2.8
 Release: alt1
 Summary: Grok-like configuration for Zope browser pages
 License: ZPL
@@ -77,6 +77,9 @@ touch %buildroot%python_sitelibdir/grokcore/__init__.py
 %python_sitelibdir/*/*/*test*
 
 %changelog
+* Fri Feb 22 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.8-alt1
+- Version 2.8
+
 * Wed Dec 28 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.6.1-alt1
 - Version 2.6.1
 
