@@ -7,7 +7,7 @@ BuildRequires: unzip
 
 Name:           fonts-otf-gdouros-alexander
 Version:        3.01
-Release:        alt3_5
+Release:        alt3_6
 Summary:        A Greek typeface inspired by Alexander Wilson
 
 Group:          System/Fonts/True type
@@ -39,7 +39,7 @@ Forms, Stylistic Alternates, Ligatures).
 
 It was created by George Douros.
 %prep
-%setup -q -c
+%setup -n %{oldname}-%{version} -q -c
 
 %build
 
@@ -106,6 +106,9 @@ fi
 
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 3.01-alt3_6
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 3.01-alt3_5
 - update to new release by fcimport
 
