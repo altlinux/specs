@@ -5,7 +5,7 @@ BuildRequires: chrpath
 %add_optflags %optflags_shared
 Name:           librfid
 Version:        0.2.0 
-Release:        alt3_6
+Release:        alt3_7
 Summary:     The librfid is a Free Software RFID library
 
 Group:          System/Libraries
@@ -13,7 +13,7 @@ License:        GPLv2
 URL:               http://www.openmrtd.org/projects/librfid/
 Source0:        http://openmrtd.org/projects/librfid/files/librfid-%{version}.tar.bz2
 
-BuildRequires:  libusb-compat-devel libusb-devel automake libtool autoconf
+BuildRequires: libusb-compat-devel libusb-devel automake libtool autoconf
 Source44: import.info
 
 
@@ -27,7 +27,7 @@ other 13.56MHz based transponders is planned.
 %package        devel
 Summary:      Development files for %{name}
 Group:           Development/C
-Requires:       librfid = %{version}-%{release}
+Requires:       %{name} = %{version}-%{release}
 
 %description    devel
 The %{name}-devel package contains libraries and header files for
@@ -47,10 +47,9 @@ make %{?_smp_mflags}
 make install DESTDIR=$RPM_BUILD_ROOT
 find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 # kill rpath
-for i in %buildroot{%_bindir,%_libdir,/usr/libexec,/usr/lib,/usr/sbin}/*; do
+for i in `find %buildroot{%_bindir,%_libdir,/usr/libexec,/usr/lib,/usr/sbin} -type f -perm -111`; do
 	chrpath -d $i ||:
 done
-	    
 
 
 %files
@@ -70,6 +69,9 @@ done
 
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.2.0-alt3_7
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.2.0-alt3_6
 - update to new release by fcimport
 
