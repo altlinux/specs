@@ -4,7 +4,7 @@ BuildRequires: perl(CPAN.pm) perl(Config.pm) perl(FindBin.pm) perl-devel perl-po
 # END SourceDeps(oneline)
 Name:		perl-Test-EOL
 Version:	1.5
-Release:	alt2_1
+Release:	alt2_2
 Summary:	Check the correct line endings in your project
 Group:		Development/Perl
 License:	GPL+ or Artistic
@@ -47,6 +47,9 @@ make test RELEASE_TESTING=1
 %{perl_vendor_privlib}/Test/
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 1.5-alt2_2
+- update to new release by fcimport
+
 * Tue Dec 11 2012 Igor Vlasenko <viy@altlinux.ru> 1.5-alt2_1
 - moved to Sisyphus (Tapper dep)
 
