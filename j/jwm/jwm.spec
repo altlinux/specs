@@ -3,7 +3,7 @@ BuildRequires: libX11-devel libXrender-devel libfribidi-devel xorg-xproto-devel
 # END SourceDeps(oneline)
 Name:           jwm
 Version:        2.1.0
-Release:        alt1_4
+Release:        alt1_5
 Summary:        Joe's Window Manager
 
 Group:          Graphical desktop/Other
@@ -94,6 +94,9 @@ install -D -m 755 %{SOURCE45} %buildroot%_sysconfdir/menu-methods/jwm
 %config %_sysconfdir/X11/wmsession.d/jwm
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 2.1.0-alt1_5
+- update to new release by fcimport
+
 * Tue Jan 29 2013 Igor Vlasenko <viy@altlinux.ru> 2.1.0-alt1_4
 - resurrected as fc import
 
