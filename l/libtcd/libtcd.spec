@@ -12,7 +12,7 @@ BuildRequires: scheme48-prescheme
 
 Name:		libtcd
 Version:	%{mainver}
-Release:	alt3_4.%(echo "-r2" | sed -e 's|-|.|g' | sed -e 's|^\.||').1
+Release:	alt3_%{rpmrel}.2
 Summary:	Tide Constituent Database Library
 
 Group:		System/Libraries
@@ -29,7 +29,7 @@ Constituent Database (TCD) files.
 %package	devel
 Summary:	Development files for %{name}
 Group:		Development/C
-Requires:	libtcd = %{version}-%{release}
+Requires:	%{name} = %{version}-%{release}
 
 %description	devel
 The %{name}-devel package contains libraries and header files for
@@ -63,6 +63,9 @@ rm -f $RPM_BUILD_ROOT%{_libdir}/lib*.{a,la}
 %{_libdir}/*.so
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 2.2.5-alt3_4.%(echo "-r2" | sed -e 's|-|.|g' | sed -e 's|^\.||').2
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 2.2.5-alt3_4.%(echo "-r2" | sed -e 's|-|.|g' | sed -e 's|^\.||').1
 - update to new release by fcimport
 
