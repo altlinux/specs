@@ -1,6 +1,6 @@
 Name:           tunneler
 Version:        1.1.1
-Release:        alt2_9
+Release:        alt2_10
 Summary:        Clone of legendary Tunneler game
 
 Group:          Games/Other
@@ -41,40 +41,6 @@ install -d $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/scalable/apps/
 install -m 644 -p %{SOURCE1} $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/scalable/apps/
 desktop-file-install  %{SOURCE2} \
         --dir=${RPM_BUILD_ROOT}%{_datadir}/applications
-# generic fedora font import transformations
-# move fonts to corresponding subdirs if any
-for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
-    case "$fontpatt" in 
-	pcf*|bdf*) type=bitmap;;
-	tt*|TT*) type=ttf;;
-	otf|OTF) type=otf;;
-	afm*|pf*) type=type1;;
-    esac
-    find $RPM_BUILD_ROOT/usr/share/fonts -type f -name '*.'$fontpatt | while read i; do
-	j=`echo "$i" | sed -e s,/usr/share/fonts/,/usr/share/fonts/$type/,`;
-	install -Dm644 "$i" "$j";
-	rm -f "$i";
-	olddir=`dirname "$i"`;
-	mv -f "$olddir"/{encodings.dir,fonts.{dir,scale,alias}} `dirname "$j"`/ 2>/dev/null ||:
-	rmdir -p "$olddir" 2>/dev/null ||:
-    done
-done
-# kill invalid catalogue links
-if [ -d $RPM_BUILD_ROOT/etc/X11/fontpath.d ]; then
-    find -L $RPM_BUILD_ROOT/etc/X11/fontpath.d -type l -print -delete ||:
-    # relink catalogue
-    find $RPM_BUILD_ROOT/usr/share/fonts -name fonts.dir | while read i; do
-	pri=10;
-	j=`echo $i | sed -e s,$RPM_BUILD_ROOT/usr/share/fonts/,,`; type=${j%%%%/*}; 
-	pre_stem=${j##$type/}; stem=`dirname $pre_stem|sed -e s,/,-,g`;
-	case "$type" in 
-	    bitmap) pri=10;;
-	    ttf|ttf) pri=50;;
-	    type1) pri=40;;
-	esac
-	ln -s /usr/share/fonts/$j $RPM_BUILD_ROOT/etc/X11/fontpath.d/"$stem:pri=$pri"
-    done ||:
-fi
 
 
 %files
@@ -85,6 +51,9 @@ fi
 
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 1.1.1-alt2_10
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.1.1-alt2_9
 - update to new release by fcimport
 
