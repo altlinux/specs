@@ -1,7 +1,7 @@
 %add_optflags %optflags_shared
 Name:           libuninameslist
 Version:        20091231
-Release:        alt3_4
+Release:        alt3_5
 
 Summary:        A library providing Unicode character names and annotations
 
@@ -18,7 +18,7 @@ annotation data from the official Unicode Character Database.
 %package        devel
 Summary:        Header files and static libraries for %{name}
 Group:          Development/C
-Requires:       libuninameslist = %{version}-%{release}
+Requires:       %{name} = %{version}-%{release}
 
 %description    devel
 This package contains header files and static libraries for %{name}.
@@ -48,6 +48,9 @@ find $RPM_BUILD_ROOT -type f -name "*.la" -exec rm -f {} ';'
 
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 20091231-alt3_5
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 20091231-alt3_4
 - update to new release by fcimport
 
