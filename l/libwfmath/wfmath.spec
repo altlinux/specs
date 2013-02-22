@@ -1,11 +1,11 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/zip gcc-c++ perl(AutoLoader.pm) perl(overload.pm) perl-devel perl-podlators pkgconfig(atlascpp-0.6) pkgconfig(glib-2.0) pkgconfig(mercator-0.3) pkgconfig(skstream-0.3)
+BuildRequires: gcc-c++ pkgconfig(atlascpp-0.6)
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
 %define oldname wfmath
 Name:           libwfmath
 Version:        1.0.1
-Release:        alt1_1
+Release:        alt1_2
 Summary:        WorldForge client math libraries
 
 Group:          Development/C++
@@ -39,7 +39,7 @@ Libraries and header files for developing applications that use wfmath.
 
 
 %prep
-%setup -q -n %{oldname}-%{version}
+%setup -n %{oldname}-%{version} -q
 
 
 %build
@@ -86,10 +86,13 @@ make %{?_smp_mflags} check
 %{_includedir}/%{oldname}-1.0
 %{_libdir}/lib%{oldname}-1.0.so
 %{_libdir}/pkgconfig/*.pc
-%{_mandir}/man3/*.*
+%{_mandir}/man3/**
 
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt1_2
+- update to new release by fcimport
+
 * Mon Dec 03 2012 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt1_1
 - update to new release by fcimport
 
