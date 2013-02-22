@@ -11,7 +11,7 @@
 %define lname mplayer
 %define Name MPlayer
 %define rel 35
-%define subrel 10
+%define subrel 11
 
 #---------------------- BEGIN OF PARAMETERS -------------------------------------
 
@@ -34,11 +34,11 @@
 %def_enable xf86keysym
 %def_enable tv
 %def_disable tv_bsdbt848
-%def_enable tv_v4l1
+%def_disable tv_v4l1
 %def_enable tv_v4l2
 %def_enable v4l2
 %def_enable radio
-%def_enable radio_v4l1
+%def_disable radio_v4l1
 %def_enable radio_v4l2
 %def_enable radio_capture
 %def_disable radio_bsdbt848
@@ -194,6 +194,7 @@
 %define language all
 
 # Advanced options:
+%ifarch %ix86 x86_64
 %def_enable mmx
 %def_enable mmxext
 %def_enable 3dnow
@@ -202,6 +203,7 @@
 %def_enable sse2
 %def_enable ssse3
 %def_disable altivec
+%endif
 %def_enable fastmemcpy
 %def_disable debug
 %def_disable profile
@@ -263,6 +265,7 @@
 %ifnarch %ix86 x86_64
 %set_disable yasm
 %set_disable vidix
+%set_disable cpu_detection
 %endif
 
 %{?_enable_tremor:%set_disable tremor_low}
@@ -727,13 +730,15 @@ subst 's|\\/\\/|//|g' help/help_mp-zh_??.h
 
 %build
 %define _optlevel 2
-%add_optflags %optflags_notraceback %optflags_fastmath -Wno-switch-enum
+%add_optflags %optflags_notraceback %optflags_fastmath -Wno-switch-enum %{?_enable_smb:-I%_includedir/samba-4.0}
 %ifarch x86_64
 %add_optflags -mtune=k8 -DARCH_X86_64
-%else
+%endif
 %ifarch %ix86
 %add_optflags -DARCH_X86_32
 %endif
+%ifarch armh
+%add_optflags -Wa,-mimplicit-it=thumb
 %endif
 export CFLAGS="%optflags"
 ./configure \
@@ -1235,6 +1240,9 @@ install -D -m 644 %{SOURCE2} %buildroot/%_desktopdir/%{name}-console.desktop
 
 
 %changelog
+* Fri Feb 22 2013 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.0-alt35.32772.11
+- tweak build parameters for arm
+
 * Sun Feb 17 2013 Igor Vlasenko <viy@altlinux.ru> 1.0-alt35.32772.10
 - NMU: dropped StartupNotify=true from mplayer-svn-r32603-desktop.patch
   as this is not implemented in current gmplayer.
