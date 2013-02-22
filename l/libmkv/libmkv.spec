@@ -1,7 +1,7 @@
 %add_optflags %optflags_shared
 Name:      libmkv
 Version:   0.6.5.1
-Release:   alt2_2
+Release:   alt2_3
 Summary:   An alternative to the official libmatroska library
 
 Group:     System/Libraries
@@ -40,7 +40,7 @@ make install DESTDIR=$RPM_BUILD_ROOT
 %package devel
 Summary:   An alternative to the official libmatroska library - devel files
 Group:     Development/C
-Requires:  libmkv = %{version}-%{release}
+Requires:  %{name} = %{version}-%{release}
 
 %description devel
 This library is meant to be an alternative to the official libmatroska library.
@@ -52,6 +52,9 @@ development files.
 %{_libdir}/libmkv.so
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.6.5.1-alt2_3
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.6.5.1-alt2_2
 - update to new release by fcimport
 
