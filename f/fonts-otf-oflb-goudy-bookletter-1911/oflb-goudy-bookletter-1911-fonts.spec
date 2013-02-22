@@ -8,7 +8,7 @@ BuildRequires: unzip
 Name:		fonts-otf-oflb-goudy-bookletter-1911
 Summary:	Clean serif font based on Kennerly Old Style
 Version:	20080206
-Release:	alt3_6
+Release:	alt3_7
 License:	Public Domain
 Group:		System/Fonts/True type
 # Source was originally downloaded from here:
@@ -88,6 +88,9 @@ fi
 %{_fontbasedir}/*/%{_fontstem}/*.otf
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 20080206-alt3_7
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 20080206-alt3_6
 - update to new release by fcimport
 
