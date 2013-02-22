@@ -3,7 +3,7 @@ BuildRequires: gcc-c++
 %add_optflags %optflags_shared
 Name:           libident
 Version:        0.32
-Release:        alt2_7
+Release:        alt2_8
 Summary:        New LibIdent C library
 Group:          System/Libraries
 License:        Public Domain
@@ -27,7 +27,7 @@ running on the system from which they are connected.
 %package        tools
 Summary:        A small daemon that can be used to test Ident servers
 Group:          System/Servers
-Requires:       libident = %{version}-%{release}
+Requires:       %{name} = %{version}-%{release}
 
 %description    tools
 in.identtestd is a small daemon (to be started from inetd) that does an 
@@ -38,7 +38,7 @@ your Ident server is working correctly.
 %package        devel
 Summary:        Development files for %{name}
 Group:          Development/C
-Requires:       libident = %{version}-%{release}
+Requires:       %{name} = %{version}-%{release}
 
 %description    devel
 LibIdent is a small C library for interfacing with RFC 1413 
@@ -73,10 +73,9 @@ make install DESTDIR=%{buildroot}
 find %{buildroot} -name '*.la' -exec rm -f {} ';'
 install -D -m 644 %{SOURCE1} %{buildroot}%{_sysconfdir}/xinetd.d/identtestd
 # kill rpath
-for i in %buildroot{%_bindir,%_libdir,/usr/libexec,/usr/lib,/usr/sbin}/*; do
+for i in `find %buildroot{%_bindir,%_libdir,/usr/libexec,/usr/lib,/usr/sbin} -type f -perm -111`; do
 	chrpath -d $i ||:
 done
-	    
 
 
 %post tools
@@ -106,6 +105,9 @@ fi
 
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.32-alt2_8
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.32-alt2_7
 - update to new release by fcimport
 
