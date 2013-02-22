@@ -1,7 +1,7 @@
 %define oname grokcore.annotation
 Name: python-module-%oname
-Version: 1.2
-Release: alt2.1
+Version: 1.3
+Release: alt1
 Summary: Grok-like configuration for Zope annotations
 License: ZPL
 Group: Development/Python
@@ -55,6 +55,9 @@ mv %buildroot%python_sitelibdir_noarch/* \
 %python_sitelibdir/*/*/test*
 
 %changelog
+* Fri Feb 22 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3-alt1
+- Version 1.3
+
 * Thu Oct 20 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 1.2-alt2.1
 - Rebuild with Python-2.7
 
