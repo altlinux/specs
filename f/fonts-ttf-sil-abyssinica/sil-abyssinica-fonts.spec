@@ -1,7 +1,7 @@
+Group: System/Fonts/True type
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
-Group: System/Fonts/True type
 %define oldname sil-abyssinica-fonts
 %global fontname     sil-abyssinica
 %global archive_name AbyssinicaSIL
@@ -10,7 +10,7 @@ Group: System/Fonts/True type
 
 Name:           fonts-ttf-sil-abyssinica
 Version:        1.200
-Release:        alt2_4
+Release:        alt2_5
 Summary:        SIL Abyssinica fonts
 
 License:        OFL
@@ -106,6 +106,9 @@ fi
 
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 1.200-alt2_5
+- update to new release by fcimport
+
 * Mon Aug 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.200-alt2_4
 - update to new release by fcimport
 
