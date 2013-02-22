@@ -4,7 +4,7 @@ BuildRequires: /usr/bin/doxygen /usr/bin/pkg-config /usr/bin/valgrind
 %add_optflags %optflags_shared
 Name:           libfishsound
 Version:        1.0.0
-Release:        alt3_5.1
+Release:        alt3_6
 Summary:        Simple programming interface for Xiph.Org codecs
 
 Group:          System/Libraries
@@ -31,7 +31,7 @@ and Ogg Vorbis files.
 %package        devel
 Summary:        Development files for %{name}
 Group:          Development/C
-Requires:       libfishsound = %{version}-%{release}
+Requires:       %{name} = %{version}-%{release}
 
 %description    devel
 The %{name}-devel package contains libraries and header files for
@@ -41,8 +41,7 @@ developing applications that use %{name}.
 Summary:        Documentation for %{name}
 Group:          Documentation
 # note: intentionally not noarch; contains a target-specific Makefile
-Requires:       libfishsound = %{version}-%{release}
-BuildArch: noarch
+Requires:       %{name} = %{version}-%{release}
 
 %description    doc
 The %{name}-doc package contains the documentation for %{name}.
@@ -50,7 +49,7 @@ The %{name}-doc package contains the documentation for %{name}.
 %package        tools
 Summary:        Sample programs bundled with %{name}
 Group:          Sound
-Requires:       libfishsound = %{version}-%{release}
+Requires:       %{name} = %{version}-%{release}
 
 %description    tools
 The %{name}-tools package contains sample programs that use %{name}.
@@ -108,6 +107,9 @@ mv src/examples .
 
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt3_6
+- update to new release by fcimport
+
 * Sat Jan 26 2013 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt3_5.1
 - applied repocop patches
 
