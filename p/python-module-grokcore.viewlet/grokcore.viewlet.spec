@@ -1,6 +1,6 @@
 %define oname grokcore.viewlet
 Name: python-module-%oname
-Version: 1.9
+Version: 1.11
 Release: alt1
 Summary: Grok-like configuration for zope viewlets
 License: ZPL
@@ -63,6 +63,9 @@ mv %buildroot%python_sitelibdir_noarch/* \
 %python_sitelibdir/*/*/*test*
 
 %changelog
+* Fri Feb 22 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.11-alt1
+- Version 1.11
+
 * Wed Dec 28 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.9-alt1
 - Version 1.9
 
