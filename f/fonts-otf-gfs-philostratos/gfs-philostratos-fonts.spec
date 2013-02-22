@@ -9,7 +9,7 @@ BuildRequires: unzip
 
 Name:    fonts-otf-gfs-philostratos
 Version: 20090902
-Release: alt3_4
+Release: alt3_5
 Summary: A revival of the a.'Griechische Antiquaa.' Greek typeface
 
 Group:     System/Fonts/True type
@@ -46,7 +46,7 @@ GFS Philostratos was digitized by George D. Matthiopoulos.
 
 
 %prep
-%setup -q -c -T
+%setup -n %{oldname}-%{version} -q -c -T
 unzip -j -L -q %{SOURCE0}
 chmod 0644 *.txt
 for txt in *.txt ; do
@@ -118,6 +118,9 @@ fi
 
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 20090902-alt3_5
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 20090902-alt3_4
 - update to new release by fcimport
 
