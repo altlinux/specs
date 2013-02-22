@@ -1,11 +1,11 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(CPAN.pm) perl(Catalyst.pm) perl(Catalyst/Helper.pm) perl(Catalyst/Model/DBIC/Schema.pm) perl(Catalyst/Runtime.pm) perl(Catalyst/Test.pm) perl(Catalyst/View/TT.pm) perl(Config.pm) perl(DBIx/Class.pm) perl(DBIx/Class/Schema.pm) perl(Data/Dumper.pm) perl(Exporter.pm) perl(ExtUtils/Manifest.pm) perl(Fcntl.pm) perl(FindBin.pm) perl(IO/Handle.pm) perl(List/Util.pm) perl(Pod/Usage.pm) perl(Regexp/Assemble.pm) perl(overload.pm) perl-devel perl-podlators
+BuildRequires: perl(CPAN.pm) perl(Catalyst.pm) perl(Catalyst/Controller/HTML/FormFu.pm) perl(Catalyst/Helper.pm) perl(Catalyst/Model/DBIC/Schema.pm) perl(Catalyst/Runtime.pm) perl(Catalyst/Test.pm) perl(Catalyst/View/TT.pm) perl(Config.pm) perl(DBIx/Class.pm) perl(DBIx/Class/Schema.pm) perl(Data/Dumper.pm) perl(Exporter.pm) perl(ExtUtils/Manifest.pm) perl(Fcntl.pm) perl(FindBin.pm) perl(IO/Handle.pm) perl(List/Util.pm) perl(Pod/Usage.pm) perl(Regexp/Assemble.pm) perl(overload.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 BuildRequires: perl(Encode/JP.pm)
 Name:           perl-HTML-FormFu
 Version:        0.09010
-Release:        alt2_1
+Release:        alt2_2
 Summary:        HTML Form Creation, Rendering and Validation Framework
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -114,7 +114,7 @@ rm -rf $RPM_BUILD_ROOT/blib
 
 
 %check
-#make test
+make test
 
 %files
 %doc Changes README examples
@@ -123,6 +123,9 @@ rm -rf $RPM_BUILD_ROOT/blib
 %{_mandir}/man1/*
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.09010-alt2_2
+- update to new release by fcimport
+
 * Tue Dec 11 2012 Igor Vlasenko <viy@altlinux.ru> 0.09010-alt2_1
 - moved to Sisyphus (Tapper dep) - bootstrap
 
