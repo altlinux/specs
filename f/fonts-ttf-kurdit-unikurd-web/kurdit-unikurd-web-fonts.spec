@@ -8,7 +8,7 @@ BuildRequires: unzip
 
 Name:    fonts-ttf-kurdit-unikurd-web
 Version: 20020502
-Release: alt3_9
+Release: alt3_10
 Summary: A widely used Kurdish font for Arabic-like scripts and Latin
 
 Group:     System/Fonts/True type
@@ -26,7 +26,7 @@ A widely used Kurdish font which supports various Arabic-like scripts
 (Arabic, Kurdish, Persian) and also Latin.
 
 %prep
-%setup -q -c %{archivename}
+%setup -n %{oldname}-%{version} -q -c %{archivename}
 
 %build
 #nothing to do
@@ -85,6 +85,9 @@ fi
 
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 20020502-alt3_10
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 20020502-alt3_9
 - update to new release by fcimport
 
