@@ -6,7 +6,7 @@ BuildRequires: gcc-c++
 %add_optflags %optflags_shared
 Name:           libifp
 Version:        1.0.0.2
-Release:        alt2_12
+Release:        alt2_13
 Summary:        A general-purpose library-driver for iRiver's iFP portable audio players
 
 Group:          System/Base
@@ -16,7 +16,7 @@ Source0:        http://dl.sourceforge.net/ifp-driver/%{name}-%{version}.tar.gz
 Source1:        libifp.hotplug
 Source2:        10-libifp.rules
 
-BuildRequires:  libusb-compat-devel libusb-devel doxygen
+BuildRequires: libusb-compat-devel libusb-devel doxygen
 Source44: import.info
 
 %description
@@ -28,7 +28,7 @@ Also included is a console app that uses the library.
 %package        devel
 Summary:        Headers and libraries for developing with libifp
 Group:          Development/C
-Requires:       libifp = %{version}-%{release}
+Requires:       %{name} = %{version}-%{release}
 
 %description    devel
 This package contains headers and libraries for developing apps that use
@@ -47,10 +47,9 @@ find $RPM_BUILD_ROOT -name \*.la -exec rm {} \;
 install -D -m 0755 %{SOURCE1} $RPM_BUILD_ROOT/sbin/libifp-hotplug
 install -D -m 0644 %{SOURCE2} $RPM_BUILD_ROOT%{_sysconfdir}/udev/rules.d/10-libifp.rules
 # kill rpath
-for i in %buildroot{%_bindir,%_libdir,/usr/libexec,/usr/lib,/usr/sbin}/*; do
+for i in `find %buildroot{%_bindir,%_libdir,/usr/libexec,/usr/lib,/usr/sbin} -type f -perm -111`; do
 	chrpath -d $i ||:
 done
-	    
 
 %files
 %doc ChangeLog COPYING README TODO
@@ -65,6 +64,9 @@ done
 %{_mandir}/man3/*
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 1.0.0.2-alt2_13
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.0.0.2-alt2_12
 - update to new release by fcimport
 
