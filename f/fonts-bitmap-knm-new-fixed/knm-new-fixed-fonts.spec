@@ -6,7 +6,7 @@
 
 Name:		fonts-bitmap-knm-new-fixed
 Version:	1.1
-Release:	alt4_17
+Release:	alt4_18
 
 Summary:	12x12 JIS X 0208 Bitmap fonts
 Group:		System/Fonts/True type
@@ -29,7 +29,7 @@ The JIS X 0208 character set contains the most often used Kanji glyphs.
 
 
 %prep
-%setup -q -T -c -a 0
+%setup -n %{oldname}-%{version} -q -T -c -a 0
 
 %build
 
@@ -100,6 +100,9 @@ fi
 
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 1.1-alt4_18
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.1-alt4_17
 - update to new release by fcimport
 
