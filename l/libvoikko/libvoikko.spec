@@ -6,7 +6,7 @@ BuildRequires: gcc-c++
 %{!?python_sitelib: %global python_sitelib %(%{__python} -c "from distutils.sysconfig import get_python_lib; print get_python_lib()")}
 Name:           libvoikko
 Version:        3.5
-Release:        alt1_2
+Release:        alt1_3
 Summary:        Voikko is a library for spellcheckers and hyphenators
 
 Group:          System/Libraries
@@ -38,7 +38,7 @@ Hunspell.
 %package        devel
 Summary:        Development files for %{name}
 Group:          Development/C
-Requires:       libvoikko = %{version}-%{release}
+Requires:       %{name} = %{version}-%{release}
 
 %description    devel
 The %{name}-devel package contains libraries and header files for
@@ -47,7 +47,7 @@ developing applications that use %{name}.
 %package -n     voikko-tools
 Summary:        Test tools for %{name}
 Group:          Text tools
-Requires:       libvoikko = %{version}-%{release}
+Requires:       %{name} = %{version}-%{release}
 
 %description -n voikko-tools
 This package contains voikkospell and voikkohyphenate, small command line
@@ -57,7 +57,7 @@ scripts.
 %package -n python-module-libvoikko
 Summary:        Python interface to %{name}
 Group:          Development/C
-Requires:       libvoikko = %{version}-%{release}
+Requires:       %{name} = %{version}-%{release}
 # Note: noarch subpackage, only works in Fedora >= 11
 BuildArch:      noarch
 
@@ -100,10 +100,10 @@ install -pm 0644 python/libvoikko.py $RPM_BUILD_ROOT%{python_sitelibdir_noarch}/
 %{_bindir}/voikkohyphenate
 %{_bindir}/voikkogc
 %{_bindir}/voikkovfstc
-%{_mandir}/man1/voikkohyphenate.1.*
-%{_mandir}/man1/voikkospell.1.*
-%{_mandir}/man1/voikkogc.1.*
-%{_mandir}/man1/voikkovfstc.1.*
+%{_mandir}/man1/voikkohyphenate.1*
+%{_mandir}/man1/voikkospell.1*
+%{_mandir}/man1/voikkogc.1*
+%{_mandir}/man1/voikkovfstc.1*
 
 %files devel
 %doc
@@ -115,6 +115,9 @@ install -pm 0644 python/libvoikko.py $RPM_BUILD_ROOT%{python_sitelibdir_noarch}/
 %{python_sitelibdir_noarch}/%{name}.py*
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 3.5-alt1_3
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 3.5-alt1_2
 - update to new release by fcimport
 
