@@ -4,7 +4,7 @@ BuildRequires: perl(CPAN.pm) perl(Config.pm) perl(Errno.pm) perl(Exporter.pm) pe
 # END SourceDeps(oneline)
 Name:           perl-Parallel-Scoreboard
 Version:        0.03
-Release:        alt3_7
+Release:        alt3_8
 Summary:        Scoreboard for monitoring status of many processes
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -58,6 +58,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.03-alt3_8
+- update to new release by fcimport
+
 * Mon Jan 21 2013 Igor Vlasenko <viy@altlinux.ru> 0.03-alt3_7
 - import for Sisyphus (required for RT)
 
