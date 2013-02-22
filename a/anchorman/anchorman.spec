@@ -4,7 +4,7 @@ BuildRequires: gcc-c++
 # END SourceDeps(oneline)
 Name:           anchorman
 Version:        0.0.1
-Release:        alt2_3
+Release:        alt2_4
 Summary:        The recording-studio-in-a-box
 
 Group:          Sound
@@ -42,6 +42,9 @@ make install DESTDIR=$RPM_BUILD_ROOT
 
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.0.1-alt2_4
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.0.1-alt2_3
 - update to new release by fcimport
 
