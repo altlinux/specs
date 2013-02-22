@@ -4,7 +4,7 @@ BuildRequires: unzip
 Name: hunspell-mr
 Summary: Marathi hunspell dictionaries
 Version: 20060920 
-Release: alt2_11
+Release: alt2_12
 Source: http://downloads.sourceforge.net/project/openofficeorg.mirror/contrib/dictionaries/mr_IN.zip
 Patch0: hunspell-mr-get-rid-of-broken-line.patch 
 Group: Text tools
@@ -34,6 +34,9 @@ cp -p mr_IN.dic mr_IN.aff $RPM_BUILD_ROOT/%{_datadir}/myspell
 %{_datadir}/myspell/*
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 20060920-alt2_12
+- update to new release by fcimport
+
 * Mon Aug 27 2012 Igor Vlasenko <viy@altlinux.ru> 20060920-alt2_11
 - update to new release by fcimport
 
