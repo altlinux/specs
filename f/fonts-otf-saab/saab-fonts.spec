@@ -1,5 +1,5 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: gcc-c++ perl(English.pm) unzip
+BuildRequires: unzip
 # END SourceDeps(oneline)
 %define oldname saab-fonts
 %global fontname saab
@@ -7,7 +7,7 @@ BuildRequires: gcc-c++ perl(English.pm) unzip
 
 Name:        fonts-otf-saab
 Version:     0.91
-Release:     alt3_8
+Release:     alt3_9
 Summary:     Free Punjabi Unicode OpenType Font
 
 Group:       System/Fonts/True type
@@ -29,7 +29,7 @@ Developed by Bhupinder Singh
 
 
 %prep
-%setup -q -c
+%setup -n %{oldname}-%{version} -q -c
 
 %build
 echo "Nothing to do in Build."
@@ -88,6 +88,9 @@ fi
 %doc License_font_exception.txt
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.91-alt3_9
+- update to new release by fcimport
+
 * Mon Dec 03 2012 Igor Vlasenko <viy@altlinux.ru> 0.91-alt3_8
 - update to new release by fcimport
 
