@@ -1,10 +1,10 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: gcc-c++ libglibmm-devel perl(FindBin.pm) perl(sigtrap.pm)
+BuildRequires: perl(FindBin.pm) perl(sigtrap.pm)
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
 Name: libhugetlbfs
 Version: 2.15
-Release: alt1_1
+Release: alt1_2
 Summary: A library which provides easy access to huge pages of memory
 
 Group: System/Libraries
@@ -67,25 +67,25 @@ rm -fr $RPM_BUILD_ROOT/%{_sbindir}/
 %files
 %{_libdir}/libhugetlbfs.so*
 %{_datadir}/%{name}/
-%{_mandir}/man7/libhugetlbfs.7.*
+%{_mandir}/man7/libhugetlbfs.7*
 %ghost %config(noreplace) %{_sysconfdir}/security/limits.d/hugepages.conf
 %exclude %{_libdir}/libhugetlbfs_privutils.so
 %doc README HOWTO LGPL-2.1 NEWS
 
 %files devel
 %{_includedir}/hugetlbfs.h
-%{_mandir}/man3/getpagesizes.3.*
-%{_mandir}/man3/free_huge_pages.3.*
-%{_mandir}/man3/get_huge_pages.3.*
-%{_mandir}/man3/gethugepagesize.3.*
-%{_mandir}/man3/gethugepagesizes.3.*
-%{_mandir}/man3/free_hugepage_region.3.*
-%{_mandir}/man3/get_hugepage_region.3.*
-%{_mandir}/man3/hugetlbfs_find_path.3.*
-%{_mandir}/man3/hugetlbfs_find_path_for_size.3.*
-%{_mandir}/man3/hugetlbfs_test_path.3.*
-%{_mandir}/man3/hugetlbfs_unlinked_fd.3.*
-%{_mandir}/man3/hugetlbfs_unlinked_fd_for_size.3.*
+%{_mandir}/man3/getpagesizes.3*
+%{_mandir}/man3/free_huge_pages.3*
+%{_mandir}/man3/get_huge_pages.3*
+%{_mandir}/man3/gethugepagesize.3*
+%{_mandir}/man3/gethugepagesizes.3*
+%{_mandir}/man3/free_hugepage_region.3*
+%{_mandir}/man3/get_hugepage_region.3*
+%{_mandir}/man3/hugetlbfs_find_path.3*
+%{_mandir}/man3/hugetlbfs_find_path_for_size.3*
+%{_mandir}/man3/hugetlbfs_test_path.3*
+%{_mandir}/man3/hugetlbfs_unlinked_fd.3*
+%{_mandir}/man3/hugetlbfs_unlinked_fd_for_size.3*
 
 %files utils
 %{_bindir}/hugeedit
@@ -96,15 +96,18 @@ rm -fr $RPM_BUILD_ROOT/%{_sbindir}/
 %exclude %{_bindir}/cpupcstat
 %exclude %{_bindir}/oprofile_map_events.pl
 %exclude %{_bindir}/oprofile_start.sh
-%{_mandir}/man8/hugeedit.8.*
-%{_mandir}/man8/hugectl.8.*
-%{_mandir}/man8/hugeadm.8.*
-%{_mandir}/man1/pagesize.1.*
-%{_mandir}/man1/ld.hugetlbfs.1.*
+%{_mandir}/man8/hugeedit.8*
+%{_mandir}/man8/hugectl.8*
+%{_mandir}/man8/hugeadm.8*
+%{_mandir}/man1/pagesize.1*
+%{_mandir}/man1/ld.hugetlbfs.1*
 %exclude %{_mandir}/man8/cpupcstat.8.gz
 %exclude /usr/lib/perl5/TLBC
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 2.15-alt1_2
+- update to new release by fcimport
+
 * Wed Dec 12 2012 Igor Vlasenko <viy@altlinux.ru> 2.15-alt1_1
 - update to new release by fcimport
 
