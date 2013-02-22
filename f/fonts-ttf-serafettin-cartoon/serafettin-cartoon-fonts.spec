@@ -8,7 +8,7 @@
 
 Name:          fonts-ttf-serafettin-cartoon
 Version:       0.6
-Release:       alt3_4
+Release:       alt3_5
 Summary:       Sans-serif Cartoon Fonts
 Group:         System/Fonts/True type
 License:       GPLv2+
@@ -93,6 +93,9 @@ fi
 
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.6-alt3_5
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.6-alt3_4
 - update to new release by fcimport
 
