@@ -1,7 +1,3 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-python rpm-macros-fedora-compat
-BuildRequires: /usr/bin/python-config /usr/bin/runtest binutils-devel cmake elfutils-devel gcc-c++ libICE-devel libSM-devel libX11-devel libelf-devel perl(IPC/Open2.pm) python-devel unzip
-# END SourceDeps(oneline)
 %define oldname wqy-zenhei-fonts
 %global fontname wqy-zenhei
 %global fontconf1 65-0-%{fontname}.conf
@@ -29,7 +25,7 @@ named "WenQuanYi Zen Hei Mono".
 
 Name:           fonts-ttf-wqy-zenhei
 Version:        0.9.46
-Release:        alt3_9
+Release:        alt3_10
 Summary:        WenQuanYi Zen Hei CJK Font
 
 Group:          System/Fonts/True type
@@ -128,6 +124,9 @@ fi
 
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.9.46-alt3_10
+- update to new release by fcimport
+
 * Tue Nov 20 2012 Igor Vlasenko <viy@altlinux.ru> 0.9.46-alt3_9
 - update to new release by fcimport
 
