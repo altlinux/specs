@@ -4,7 +4,7 @@ BuildRequires: perl(CPAN.pm) perl(Config.pm) perl(Fcntl.pm) perl(HTTP/Date.pm) p
 # END SourceDeps(oneline)
 Name:           perl-Starlet
 Version:        0.16
-Release:        alt2_1
+Release:        alt2_2
 Summary:        Simple, high-performance PSGI/Plack HTTP server
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -48,6 +48,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.16-alt2_2
+- update to new release by fcimport
+
 * Mon Jan 21 2013 Igor Vlasenko <viy@altlinux.ru> 0.16-alt2_1
 - import for Sisyphus (required for RT)
 
