@@ -3,7 +3,7 @@ BuildRequires: perl(Test.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:       perl-Time-Warp 
 Version:    0.5 
-Release:    alt4_11
+Release:    alt4_12
 # Warp.pm -> GPL+ or Artistic
 License:    GPL+ or Artistic 
 Group:      Development/Perl
@@ -52,6 +52,9 @@ make test
 %exclude %dir %{perl_vendorarch}/auto
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.5-alt4_12
+- update to new release by fcimport
+
 * Tue Dec 11 2012 Igor Vlasenko <viy@altlinux.ru> 0.5-alt4_11
 - moved to Sisyphus (Tapper dep)
 
