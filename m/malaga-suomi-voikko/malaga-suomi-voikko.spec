@@ -1,7 +1,7 @@
 BuildRequires: python-modules-encodings python-modules-xml
 Name:           malaga-suomi-voikko
 Version:        1.12
-Release:        alt1_2
+Release:        alt1_3
 Summary:        A description of Finnish morphology written in Malaga (Voikko edition)
 
 Group:          Text tools
@@ -45,6 +45,9 @@ make voikko-install DESTDIR=$RPM_BUILD_ROOT%{_libdir}/voikko
 
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 1.12-alt1_3
+- update to new release by fcimport
+
 * Mon Sep 24 2012 Igor Vlasenko <viy@altlinux.ru> 1.12-alt1_2
 - new version
 
