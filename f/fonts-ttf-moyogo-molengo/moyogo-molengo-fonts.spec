@@ -4,7 +4,7 @@
 
 Name:           fonts-ttf-moyogo-molengo
 Version:        0.10 
-Release:        alt3_6
+Release:        alt3_7
 Summary:        A Latin typeface for documents 
 
 Group:          System/Fonts/True type
@@ -15,7 +15,7 @@ Source1:        %{oldname}-fontconfig.conf
 
 BuildArch:      noarch
 BuildRequires:  fontpackages-devel
-BuildRequires:  p7zip-standalone p7zip
+BuildRequires: p7zip-standalone p7zip
 Source44: import.info
 
 
@@ -94,6 +94,9 @@ fi
 
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.10-alt3_7
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.10-alt3_6
 - update to new release by fcimport
 
