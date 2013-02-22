@@ -3,14 +3,14 @@ BuildRequires: python-devel
 # END SourceDeps(oneline)
 Name: inksmoto
 Version: 0.7.0
-Release: alt2_9
+Release: alt2_10
 Summary: The new xmoto level editor for Inkscape
 
 Group: Games/Other
 License: GPLv2
 URL: http://xmoto.sourceforge.net/
 Source0: http://download.tuxfamily.org/xmoto/svg2lvl/%{version}~rc1/inksmoto-%{version}.tar.gz
-Requires: xmoto inkscape python-module-lxml pygtk2
+Requires: xmoto inkscape pygtk2
 BuildArch: noarch
 
 Patch0: inksmoto-0.7.0-pypath.patch
@@ -44,6 +44,9 @@ cp -pr inksmoto %{buildroot}%{_datadir}/inkscape/extensions/
 %doc AUTHORS COPYING INSTALL README
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.7.0-alt2_10
+- update to new release by fcimport
+
 * Wed Jan 23 2013 Igor Vlasenko <viy@altlinux.ru> 0.7.0-alt2_9
 - update to new release by fcimport
 
