@@ -1,6 +1,6 @@
 Name:		gnujump
 Version:	1.0.8
-Release:	alt1_1
+Release:	alt1_2
 Summary:	A jumping game which is a clone of xjump
 
 Group:		Games/Other
@@ -50,6 +50,9 @@ desktop-file-install --dir=${RPM_BUILD_ROOT}%{_datadir}/applications %{SOURCE1}
 
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 1.0.8-alt1_2
+- update to new release by fcimport
+
 * Mon Aug 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.0.8-alt1_1
 - update to new release by fcimport
 
