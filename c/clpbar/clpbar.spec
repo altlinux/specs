@@ -1,6 +1,6 @@
 Name:          clpbar
 Version:       1.10.9
-Release:       alt2_6
+Release:       alt2_7
 Summary:       Show information about a data transfer
 
 Group:         File tools
@@ -45,9 +45,12 @@ make install DESTDIR=%{buildroot}
 %files
 %doc AUTHORS COPYING ChangeLog TODO TROUBLESHOOTING
 %{_bindir}/clpbar
-%{_mandir}/man1/clpbar.1.*
+%{_mandir}/man1/clpbar.1*
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 1.10.9-alt2_7
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.10.9-alt2_6
 - update to new release by fcimport
 
