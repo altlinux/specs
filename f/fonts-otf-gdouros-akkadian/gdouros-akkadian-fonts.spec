@@ -7,7 +7,7 @@ BuildRequires: unzip
 
 Name:           fonts-otf-gdouros-akkadian
 Version:        2.52
-Release:        alt3_4
+Release:        alt3_5
 Summary:        A font for Sumero-Akkadian cuneiform
 
 Group:          System/Fonts/True type
@@ -27,7 +27,7 @@ Symbols, Cuneiform, Cuneiform Numbers and Punctuation.
 
 It was created by George Douros.
 %prep
-%setup -q -c
+%setup -n %{oldname}-%{version} -q -c
 
 
 %build
@@ -91,6 +91,9 @@ fi
 
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 2.52-alt3_5
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 2.52-alt3_4
 - update to new release by fcimport
 
