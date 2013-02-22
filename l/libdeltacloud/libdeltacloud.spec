@@ -2,7 +2,7 @@
 Summary: A library for accessing deltacloud
 Name: libdeltacloud
 Version: 0.9
-Release: alt2_3
+Release: alt2_4
 License: LGPLv2+
 Group: System/Libraries
 URL: http://people.redhat.com/clalance/libdeltacloud
@@ -19,7 +19,7 @@ convenient C API.
 Summary: Header files for libdeltacloud library
 License: LGPLv2+
 Group: Development/C
-Requires: libdeltacloud = %{version}-%{release}
+Requires: %{name} = %{version}-%{release}
 
 %description devel
 The libdeltacloud-devel package contains the files needed for developing
@@ -73,6 +73,9 @@ rm -f $RPM_BUILD_ROOT/%{_lib}/libdeltacloud.a
 %{_libdir}/pkgconfig/libdeltacloud.pc
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.9-alt2_4
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.9-alt2_3
 - update to new release by fcimport
 
