@@ -1,7 +1,3 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-python rpm-macros-fedora-compat
-BuildRequires: /usr/bin/python-config /usr/bin/runtest binutils-devel cmake elfutils-devel gcc-c++ libICE-devel libSM-devel libX11-devel libelf-devel perl(IPC/Open2.pm) python-devel
-# END SourceDeps(oneline)
 %define oldname cjkuni-uming-fonts
 # %oldname or %version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name cjkuni-uming-fonts
@@ -21,7 +17,7 @@ the CJK Unifonts project.
 
 Name:           fonts-ttf-cjkuni-uming
 Version:        0.2.20080216.1
-Release:        alt4_51
+Release:        alt4_52
 Summary:        Chinese Unicode TrueType font in Ming face
 
 Group:          System/Fonts/True type
@@ -118,6 +114,9 @@ fi
 %doc ../%{umingbuilddir}/README
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.2.20080216.1-alt4_52
+- update to new release by fcimport
+
 * Tue Nov 20 2012 Igor Vlasenko <viy@altlinux.ru> 0.2.20080216.1-alt4_51
 - update to new release by fcimport
 
