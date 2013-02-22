@@ -3,7 +3,7 @@ BuildRequires: gcc-c++ unzip zlib-devel
 # END SourceDeps(oneline)
 Name:           raidem
 Version:        0.3.1
-Release:        alt2_21.2
+Release:        alt2_22
 Summary:        2d top-down shoot'em up
 Group:          Games/Other
 License:        zlib
@@ -18,11 +18,9 @@ Patch1:         raidem-0.3.1-zziplib.patch
 Patch2:         raidem-libpng15.patch
 Patch3:         raidem-gcc4.7-stdio.patch
 Patch4:         raidem-new-api.patch
-Patch5:         raidem-0.3.1-alt-objc2.patch
 BuildRequires:  gcc-objc glyph-keeper-allegro-devel libfreetype-devel libadime-devel
 BuildRequires:  zziplib-devel libpng-devel AllegroOGG-devel
 BuildRequires:  automake desktop-file-utils gnustep-base-devel
-BuildPreReq: libgnustep-objc2-devel
 Requires:       icon-theme-hicolor
 Source44: import.info
 
@@ -42,23 +40,15 @@ fun.
 %patch2 -z .libpng
 %patch3 -p0 -z .gcc47
 %patch4 -p0 -z .newapi
-%patch5 -p2
-
-for i in $(find ./ -type f); do
-	sed -i 's|objc/|objc2/|g' $i
-done
-
 # remove all included system libs, to avoid using the included system headers.
-mv lib/loadpng lib/alrand ./
+mv lib/loadpng .
 rm -fr lib/*
-mv alrand loadpng lib/
+mv loadpng lib
 aclocal
 autoconf
 
-%build
-export CC=gcc
-export CXX=g++
 
+%build
 # override _datadir otherwise it expects its datafile directly under /use/share
 %configure --datadir=%{_datadir}/%{name} --disable-id3
 make %{?_smp_mflags}
@@ -80,40 +70,6 @@ desktop-file-install             \
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/48x48/apps
 install -p -m 644 %{SOURCE1} \
   $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/48x48/apps
-# generic fedora font import transformations
-# move fonts to corresponding subdirs if any
-for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
-    case "$fontpatt" in 
-	pcf*|bdf*) type=bitmap;;
-	tt*|TT*) type=ttf;;
-	otf|OTF) type=otf;;
-	afm*|pf*) type=type1;;
-    esac
-    find $RPM_BUILD_ROOT/usr/share/fonts -type f -name '*.'$fontpatt | while read i; do
-	j=`echo "$i" | sed -e s,/usr/share/fonts/,/usr/share/fonts/$type/,`;
-	install -Dm644 "$i" "$j";
-	rm -f "$i";
-	olddir=`dirname "$i"`;
-	mv -f "$olddir"/{encodings.dir,fonts.{dir,scale,alias}} `dirname "$j"`/ 2>/dev/null ||:
-	rmdir -p "$olddir" 2>/dev/null ||:
-    done
-done
-# kill invalid catalogue links
-if [ -d $RPM_BUILD_ROOT/etc/X11/fontpath.d ]; then
-    find -L $RPM_BUILD_ROOT/etc/X11/fontpath.d -type l -print -delete ||:
-    # relink catalogue
-    find $RPM_BUILD_ROOT/usr/share/fonts -name fonts.dir | while read i; do
-	pri=10;
-	j=`echo $i | sed -e s,$RPM_BUILD_ROOT/usr/share/fonts/,,`; type=${j%%%%/*}; 
-	pre_stem=${j##$type/}; stem=`dirname $pre_stem|sed -e s,/,-,g`;
-	case "$type" in 
-	    bitmap) pri=10;;
-	    ttf|ttf) pri=50;;
-	    type1) pri=40;;
-	esac
-	ln -s /usr/share/fonts/$j $RPM_BUILD_ROOT/etc/X11/fontpath.d/"$stem:pri=$pri"
-    done ||:
-fi
 
 
 %files
@@ -125,6 +81,9 @@ fi
 
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.3.1-alt2_22
+- update to new release by fcimport
+
 * Mon Dec 31 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.1-alt2_21.2
 - Rebuilt with libobjc2 instead of libibjc
 
