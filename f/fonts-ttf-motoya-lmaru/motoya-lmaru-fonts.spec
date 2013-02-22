@@ -7,7 +7,7 @@
 
 Name:		fonts-ttf-motoya-lmaru
 Version:	1.00
-Release:	alt3_0.6.20110406git
+Release:	alt3_0.7.%{archivedate}git
 Summary:	Japanese Round Gothic-typeface TrueType fonts by MOTOYA Co,LTD
 
 License:	ASL 2.0
@@ -28,7 +28,7 @@ Motoya font was created in 1950s, it aims beauty and readability.
 MOTOYA Co,LTD. for Android platform.
 
 %prep
-%setup -q -c -T
+%setup -n %{oldname}-%{version} -q -c -T
 install -m 0644 -p %{SOURCE1} notice.txt
 install -m 0644 -p %{SOURCE2} readme.txt
 
@@ -89,6 +89,9 @@ fi
 
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 1.00-alt3_0.7.20110406git
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.00-alt3_0.6.20110406git
 - update to new release by fcimport
 
