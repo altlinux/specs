@@ -1,5 +1,5 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: gcc-c++ perl(English.pm) unzip
+BuildRequires: unzip
 # END SourceDeps(oneline)
 %define oldname paratype-pt-sans-fonts
 %global fontname paratype-pt-sans
@@ -33,7 +33,7 @@ A. A a.'titlea.' language is named after an ethnic group.
 
 Name:           fonts-ttf-paratype-pt-sans
 Version:        20101909
-Release:        alt1_1
+Release:        alt1_2
 Summary:        A pan-Cyrillic typeface
 
 Group:          System/Fonts/True type
@@ -80,7 +80,7 @@ This package includes 2 captions styles for small text sizes.
 
 
 %prep
-%setup -q -c
+%setup -n %{oldname}-%{version} -q -c
 
 for txt in *.txt ; do
    if $(echo "$txt" | grep -q "rus\.txt") ; then
@@ -152,6 +152,9 @@ fi
 
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 20101909-alt1_2
+- update to new release by fcimport
+
 * Mon Dec 03 2012 Igor Vlasenko <viy@altlinux.ru> 20101909-alt1_1
 - update to new release by fcimport
 
