@@ -7,7 +7,7 @@ BuildRequires: unzip
 
 Name:           fonts-otf-gdouros-aegyptus
 Version:        3.11
-Release:        alt3_4
+Release:        alt3_5
 Summary:        A font for Egyptian hieroglyphs
 
 Group:          System/Fonts/True type
@@ -33,7 +33,7 @@ It was created by George Douros, mainly based on the book Hieroglyphica,
 PIREI IA., 2000 and the work of Alan Gardiner.
 
 %prep
-%setup -q -c
+%setup -n %{oldname}-%{version} -q -c
 
 
 %build
@@ -97,6 +97,9 @@ fi
 
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 3.11-alt3_5
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 3.11-alt3_4
 - update to new release by fcimport
 
