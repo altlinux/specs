@@ -14,7 +14,7 @@ Special character &#x2708; ( a'. ) depicts two cats.
 
 Name:		fonts-otf-beteckna
 Version:	0.3
-Release:	alt3_9
+Release:	alt3_10
 Summary:	Beteckna sans-serif fonts
 
 Group:		System/Fonts/True type
@@ -49,12 +49,12 @@ This package consists of files used by other %{oldname} packages.
 
 
 # 1 Lower Case
-%package -n beteckna-lower-case-fonts
+%package -n	%{fontname}-lower-case-fonts
 Group: System/Fonts/True type
 Summary:	Beteckna lower case sfd fonts
 Requires:	%{name}-common = %{version}-%{release}
 
-%description -n beteckna-lower-case-fonts
+%description -n	%{fontname}-lower-case-fonts
 %common_desc
 
 These are lower case Beteckna Fonts.
@@ -66,12 +66,12 @@ These are lower case Beteckna Fonts.
 
 
 # 1 Small Caps
-%package -n beteckna-small-caps-fonts
+%package -n	%{fontname}-small-caps-fonts
 Group: System/Fonts/True type
 Summary:	Beteckna small caps sfd fonts
 Requires:	%{name}-common = %{version}-%{release}
 
-%description -n beteckna-small-caps-fonts
+%description -n	%{fontname}-small-caps-fonts
 %common_desc
 
 These are small caps Beteckna Fonts.
@@ -161,6 +161,9 @@ fi
 %doc AUTHORS LICENSE CHANGELOG readme.html
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.3-alt3_10
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.3-alt3_9
 - update to new release by fcimport
 
