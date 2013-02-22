@@ -12,7 +12,7 @@ portability across platforms.
 
 Name:           fonts-ttf-google-croscore
 Version:        1.23.0
-Release:        alt2_1
+Release:        alt2_2
 Summary:        The width-compatible fonts for improved on-screen readability
 
 Group:          Graphical desktop/Other
@@ -44,7 +44,7 @@ Group: System/Fonts/True type
 Summary:        Common files of %{oldname}
 
 %description common
-This package consists of files used by other %%{oldname} packages.
+This package consists of files used by other %{oldname} packages.
 
 # Repeat for every font family
 %package -n fonts-ttf-google-croscore-arimo
@@ -193,6 +193,9 @@ fi
 
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 1.23.0-alt2_2
+- update to new release by fcimport
+
 * Sat Jan 26 2013 Igor Vlasenko <viy@altlinux.ru> 1.23.0-alt2_1
 - applied repocop patches
 
