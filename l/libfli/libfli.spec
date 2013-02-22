@@ -5,7 +5,7 @@ BuildRequires: gcc-c++
 %add_optflags %optflags_shared
 Name: libfli
 Version: 1.7
-Release: alt2_9
+Release: alt2_10
 Summary: Library for FLI CCD Camera & Filter Wheels
 
 %define majorver 1
@@ -30,7 +30,7 @@ line of CCDs and Filter wheels
 %package devel
 Summary: Libraries, includes, etc. used to develop an application with %{name}
 Group: Development/C
-Requires: libfli = %{version}-%{release}
+Requires: %{name} = %{version}-%{release}
 %description devel
 These are the header files needed to develop a %{name} application
 
@@ -56,6 +56,9 @@ make install DESTDIR=%{buildroot}
 %{_libdir}/*.so
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 1.7-alt2_10
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.7-alt2_9
 - update to new release by fcimport
 
