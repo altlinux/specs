@@ -5,7 +5,7 @@ BuildRequires: unzip
 %define oldname AllegroOGG
 Name:           libAllegroOGG
 Version:        1.0.3
-Release:        alt2_10
+Release:        alt2_11
 Summary:        Ogg library for use with the Allegro game library
 Group:          System/Libraries
 License:        BSD
@@ -25,7 +25,7 @@ amongst a lot of other capabilites.
 %package devel
 Summary:        Developmental libraries and include files for AllegroOgg
 Group:          Development/C
-Requires:       AllegroOGG = %{version}-%{release}
+Requires:       %{name} = %{version}-%{release}
 Provides: AllegroOGG-devel = %{version}-%{release}
 
 %description devel
@@ -34,7 +34,7 @@ the %{oldname} library.
 
 
 %prep
-%setup -q -c
+%setup -n %{oldname}-%{version} -q -c
 %{__sed} -i 's/\r//' docs/A*.txt
 %{__sed} -e "s#@prefix@#%{_prefix}#g" -e "s#@libdir@#%{_libdir}#g" \
   -e "s#@includedir@#%{_includedir}#g" -e "s#@version@#%{version}#g" \
@@ -69,6 +69,9 @@ install -m 644 include/* $RPM_BUILD_ROOT%{_includedir}/%{oldname}
 
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 1.0.3-alt2_11
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.0.3-alt2_10
 - update to new release by fcimport
 
