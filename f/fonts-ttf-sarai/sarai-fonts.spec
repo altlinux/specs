@@ -4,7 +4,7 @@
 
 Name:        fonts-ttf-sarai
 Version:     1.0
-Release:     alt3_12
+Release:     alt3_13
 Summary:     Free Sarai Hindi Truetype Font
 
 Group:       System/Fonts/True type
@@ -22,7 +22,7 @@ This package provides a free Sarai Hindi TrueType font.
 It is suitable for print and publishing needs.
 
 %prep
-%setup -q -T -c 
+%setup -n %{oldname}-%{version} -q -T -c 
 cp -p %{SOURCE1} .
 
 %build
@@ -84,6 +84,9 @@ fi
 
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 1.0-alt3_13
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.0-alt3_12
 - update to new release by fcimport
 
