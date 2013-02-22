@@ -1,11 +1,8 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires: perl(English.pm) unzip
-# END SourceDeps(oneline)
 %define pkg docbook-slides
 Summary: DocBook Slides document type and stylesheets
 Name: docbook-slides
 Version: 3.4.0
-Release: alt3_12
+Release: alt3_13
 License: MIT
 Group: Text tools
 URL: http://sourceforge.net/projects/docbook
@@ -142,6 +139,9 @@ if [ "$1" = 0 ]; then
 fi
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 3.4.0-alt3_13
+- update to new release by fcimport
+
 * Mon Dec 03 2012 Igor Vlasenko <viy@altlinux.ru> 3.4.0-alt3_12
 - update to new release by fcimport
 
