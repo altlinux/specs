@@ -7,7 +7,7 @@ BuildRequires: unzip
 
 Name:           fonts-ttf-google-lato
 Version:        1.014
-Release:        alt1_2
+Release:        alt1_3
 Summary:        A sanserif typeface family
 
 Group:          System/Fonts/True type
@@ -45,7 +45,7 @@ beautiful hairline style.
 
 
 %prep
-%setup -q -c
+%setup -n %{oldname}-%{version} -q -c
 
 # Fix wrong end-of-lines encoding
 sed "s/\r//" OFL.txt > OFL.txt.new
@@ -108,6 +108,9 @@ fi
 
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 1.014-alt1_3
+- update to new release by fcimport
+
 * Mon Nov 05 2012 Igor Vlasenko <viy@altlinux.ru> 1.014-alt1_2
 - fc import
 
