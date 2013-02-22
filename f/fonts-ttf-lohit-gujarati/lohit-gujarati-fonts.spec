@@ -1,14 +1,10 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-fedora-compat
-BuildRequires: /usr/bin/runtest cmake gcc-c++ libICE-devel libSM-devel libX11-devel python-devel
-# END SourceDeps(oneline)
 %define oldname lohit-gujarati-fonts
 %global fontname lohit-gujarati
 %global fontconf 66-%{fontname}.conf
 
 Name:           fonts-ttf-lohit-gujarati
 Version:        2.5.2
-Release:        alt1_1
+Release:        alt1_2
 Summary:        Free Gujarati font
 
 Group:          System/Fonts/True type
@@ -88,6 +84,9 @@ fi
 
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 2.5.2-alt1_2
+- update to new release by fcimport
+
 * Sat Nov 24 2012 Igor Vlasenko <viy@altlinux.ru> 2.5.2-alt1_1
 - update to new release by fcimport
 
