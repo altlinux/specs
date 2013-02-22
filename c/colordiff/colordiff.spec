@@ -1,11 +1,10 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-python rpm-macros-fedora-compat
-BuildRequires: /usr/bin/python-config binutils-devel cmake elfutils-devel gcc-c++ libelf-devel perl(IPC/Open2.pm) python-devel
-# END SourceDeps(oneline)
 Group: Text tools
+# BEGIN SourceDeps(oneline):
+BuildRequires: perl(IPC/Open2.pm)
+# END SourceDeps(oneline)
 Name:           colordiff
 Version:        1.0.13
-Release:        alt1_1
+Release:        alt1_2
 Summary:        Color terminal highlighter for diff files
 
 License:        GPLv2+
@@ -57,6 +56,9 @@ make install DESTDIR=$RPM_BUILD_ROOT INSTALL_DIR=%{_bindir} \
 
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 1.0.13-alt1_2
+- update to new release by fcimport
+
 * Tue Nov 20 2012 Igor Vlasenko <viy@altlinux.ru> 1.0.13-alt1_1
 - update to new release by fcimport
 
