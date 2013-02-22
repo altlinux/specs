@@ -4,7 +4,7 @@ BuildRequires: perl(Errno.pm) perl(Fcntl.pm) perl(IO/File.pm) perl(IO/Handle.pm)
 # END SourceDeps(oneline)
 Name:           perl-Email-Sender
 Version:        0.120002
-Release:        alt2_1
+Release:        alt2_2
 Summary:        A library for sending email
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -74,6 +74,9 @@ RELEASE_TESTING=1 make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.120002-alt2_2
+- update to new release by fcimport
+
 * Mon Dec 10 2012 Igor Vlasenko <viy@altlinux.ru> 0.120002-alt2_1
 - moved to Sisyphus
 
