@@ -9,7 +9,7 @@ BuildRequires: perl(FileHandle.pm) perl(Font/TTF/Font.pm) perl(IO/File.pm) perl(
 
 Name:           fonts-ttf-sil-nuosu
 Version:        2.1.1
-Release:        alt3_5
+Release:        alt3_6
 Summary:        The Nuosu SIL Font
 
 Group:          System/Fonts/True type
@@ -28,7 +28,7 @@ used by a large ethnic group in southwestern China.
 Until this version, the font was called SIL Yi.
 
 %prep
-%setup -q -c %{oldname}
+%setup -n %{oldname}-%{version} -q -c %{oldname}
 sed -i 's/\r//' OFL.txt doc/FONTLOG.txt
 
 %build
@@ -90,6 +90,9 @@ fi
 
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 2.1.1-alt3_6
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 2.1.1-alt3_5
 - update to new release by fcimport
 
