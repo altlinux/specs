@@ -3,7 +3,7 @@ BuildRequires(pre): rpm-macros-fedora-compat
 # END SourceDeps(oneline)
 Name:      and
 Version:   1.2.2
-Release:   alt2_18
+Release:   alt2_19
 Summary:   Auto nice daemon
 
 License:   GPLv2
@@ -80,11 +80,14 @@ install -p -m 0644 %{SOURCE2} %{buildroot}%{_unitdir}
 %config(noreplace) %{_sysconfdir}/and/
 %config(noreplace) %{_sysconfdir}/sysconfig/and
 %{_sbindir}/*
-%{_mandir}/man5/*.*
-%{_mandir}/man8/*.*
+%{_mandir}/man5/**
+%{_mandir}/man8/**
 %{_unitdir}/and.service
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 1.2.2-alt2_19
+- update to new release by fcimport
+
 * Tue Oct 09 2012 Igor Vlasenko <viy@altlinux.ru> 1.2.2-alt2_18
 - update to new release by fcimport
 
