@@ -17,7 +17,7 @@ Pascal Zoghbi of 29ArabicLetters.
 Name:    fonts-ttf-google-droid
 # No sane versionning upstream, use git clone timestamp
 Version: 20120715
-Release: alt1_4
+Release: alt1_5
 Summary: General-purpose fonts released by Google as part of Android
 
 Group:     System/Fonts/True type
@@ -188,6 +188,9 @@ fi
 
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 20120715-alt1_5
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 20120715-alt1_4
 - update to new release by fcimport
 
