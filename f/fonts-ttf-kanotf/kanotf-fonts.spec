@@ -8,7 +8,7 @@ BuildRequires: unzip
 
 Name:           fonts-ttf-kanotf
 Version:        20050515
-Release:        alt3_3
+Release:        alt3_4
 Summary:        OpenType Kannada fonts
 Group:          System/Fonts/True type
 License:        GPLv2
@@ -87,6 +87,9 @@ fi
 %doc ../readme.txt ../gpl.txt
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 20050515-alt3_4
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 20050515-alt3_3
 - update to new release by fcimport
 
