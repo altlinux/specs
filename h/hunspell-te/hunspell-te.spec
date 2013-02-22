@@ -6,7 +6,7 @@ Name: hunspell-te
 Summary: Telugu hunspell dictionaries
 %define upstreamid 20050929
 Version: 0.%{upstreamid}
-Release: alt2_9
+Release: alt2_10
 Group:          Text tools
 ##Upstream is unresponsive so unable to verify license version
 License:        GPL+
@@ -14,7 +14,7 @@ URL:            http://aspell.net/
 Source0:        ftp://ftp.gnu.org/gnu/aspell/dict/%{lang}/aspell6-%{lang}-%{langversion}-%{langrelease}.tar.bz2
 BuildArch:      noarch
 BuildRequires:  aspell >= 0.60
-BuildRequires:  libhunspell-devel hunspell-utils
+BuildRequires: libhunspell-devel hunspell-utils
 Requires:       hunspell
 Source44: import.info
 
@@ -40,6 +40,9 @@ cp -p *.dic *.aff $RPM_BUILD_ROOT/%{_datadir}/myspell
 %{_datadir}/myspell/*
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.20050929-alt2_10
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.20050929-alt2_9
 - update to new release by fcimport
 
