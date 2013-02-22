@@ -7,7 +7,7 @@ BuildRequires: unzip
 
 Name:           fonts-otf-typemade-josefinsansstd-light
 Version:        1.000 
-Release:        alt3_6
+Release:        alt3_7
 Summary:        A latin font that is geometric, elegant, and kind of vintage
 
 Group:          System/Fonts/True type
@@ -31,7 +31,7 @@ Kabel (1927), Rudolf Wolf's Memphis (1930),Paul Renner's Futura (1927?).
 
 
 %prep
-%setup -q -c 
+%setup -n %{oldname}-%{version} -q -c 
 
 
 %build
@@ -95,6 +95,9 @@ fi
 
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 1.000-alt3_7
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.000-alt3_6
 - update to new release by fcimport
 
