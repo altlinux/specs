@@ -4,7 +4,7 @@ BuildRequires: perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Plack-Test-ExternalServer
 Version:        0.01
-Release:        alt3_5
+Release:        alt3_6
 Summary:        Run HTTP tests on external live servers
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -57,6 +57,9 @@ RELEASE_TESTING=1 make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.01-alt3_6
+- update to new release by fcimport
+
 * Mon Nov 26 2012 Igor Vlasenko <viy@altlinux.ru> 0.01-alt3_5
 - sisyphus release
 
