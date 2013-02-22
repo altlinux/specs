@@ -5,7 +5,7 @@ BuildRequires: perl-devel perl-podlators
 Name:           perl-DateTime-Format-SQLite 
 Summary:        Parse and format SQLite dates and times 
 Version:        0.11
-Release:        alt2_9
+Release:        alt2_10
 License:        GPL+ or Artistic 
 Group:          Development/Perl
 Source0:        http://search.cpan.org/CPAN/authors/id/C/CF/CFAERBER/DateTime-Format-SQLite-%{version}.tar.gz
@@ -59,6 +59,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.11-alt2_10
+- update to new release by fcimport
+
 * Tue Dec 11 2012 Igor Vlasenko <viy@altlinux.ru> 0.11-alt2_9
 - moved to Sisyphus (Tapper dep)
 
