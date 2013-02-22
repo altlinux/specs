@@ -10,7 +10,7 @@ from the King Abdulaziz City for Science & Technology(kacst).
 
 Name: fonts-ttf-kacst
 Version: 2.0
-Release: alt3_10
+Release: alt3_11
 License: GPLv2
 Source: http://downloads.sourceforge.net/sourceforge/arabeyes/%{fontname}_fonts_%{version}.tar.bz2
 Source1: %{fontconf}-art.conf
@@ -378,6 +378,9 @@ fi
 %doc Copyright LICENSE README
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 2.0-alt3_11
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 2.0-alt3_10
 - update to new release by fcimport
 
