@@ -1,6 +1,9 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires: /usr/bin/glib-gettextize
+# END SourceDeps(oneline)
 Name:           lucidlife
 Version:        0.9.2
-Release:        alt3_10
+Release:        alt3_11
 Summary:        A Conway's Life simulator
 
 Group:          Games/Other
@@ -44,7 +47,7 @@ make %{?_smp_mflags}
 %install
 make install DESTDIR=%{buildroot}
 %find_lang %{name}
-desktop-file-install --vendor fedora	\
+desktop-file-install 	\
 	--dir %{buildroot}%{_datadir}/applications	\
 	--delete-original	\
 	--remove-category=Application	\
@@ -58,10 +61,13 @@ desktop-file-install --vendor fedora	\
 %{_bindir}/%{name}
 %{_datadir}/%{name}
 %{_datadir}/pixmaps/%{name}.png
-%{_datadir}/applications/fedora-%{name}.desktop
+%{_datadir}/applications/%{name}.desktop
 
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.9.2-alt3_11
+- update to new release by fcimport
+
 * Tue Oct 23 2012 Igor Vlasenko <viy@altlinux.ru> 0.9.2-alt3_10
 - new fc release and picked up real@'s patch
 
