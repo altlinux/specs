@@ -4,7 +4,7 @@ BuildRequires: unzip
 %add_optflags %optflags_shared
 Name:		libaesgm
 Version:	20090429
-Release:	alt2_6
+Release:	alt2_7
 License:	BSD
 Summary:	Library implementation of AES (Rijndael) cryptographic methods
 URL:		http://gladman.plushost.co.uk/oldsite/AES/index.php
@@ -22,7 +22,7 @@ Library implementation of AES (Rijndael) cryptographic methods.
 %package devel
 Summary:	Development files for libaesgm
 Group:		Development/C
-Requires:	libaesgm = %{version}-%{release}
+Requires:	%{name} = %{version}-%{release}
 
 %description devel
 Development headers and libraries for libaesgm.
@@ -48,6 +48,9 @@ make DESTDIR="%{buildroot}" LIBDIR="%{_libdir}" install
 %{_libdir}/libaesgm.so
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 20090429-alt2_7
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 20090429-alt2_6
 - update to new release by fcimport
 
