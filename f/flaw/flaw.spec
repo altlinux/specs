@@ -1,9 +1,9 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: gcc-c++ libICE-devel libSM-devel
+BuildRequires: /usr/bin/glib-gettextize gcc-c++ libICE-devel libSM-devel
 # END SourceDeps(oneline)
 Name:		flaw
 Version:	1.3.2a
-Release:	alt1_1
+Release:	alt1_2
 Summary:	Free top-down wizard battle game
 Group:		Games/Other
 License:	GPLv3+
@@ -48,6 +48,9 @@ desktop-file-validate $RPM_BUILD_ROOT%{_datadir}/applications/%{name}.desktop
 %doc %{_docdir}/%{name}-%{version}
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 1.3.2a-alt1_2
+- update to new release by fcimport
+
 * Fri Nov 09 2012 Igor Vlasenko <viy@altlinux.ru> 1.3.2a-alt1_1
 - update to new release by fcimport
 
