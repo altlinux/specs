@@ -11,7 +11,7 @@ BuildRequires: unzip
 
 Name:		fonts-otf-drehatlas-widelands
 Version:	1.0.3.1
-Release:	alt3_8
+Release:	alt3_9
 Summary:	A Latin typeface inspired by feudal calligraphy
 Group:		System/Fonts/True type
 License:	OFL
@@ -29,7 +29,7 @@ real texts, but it looks nice for logos, banners or similar stuff.  All normal
 latin glyphs and arabic numbers are included and usable.
 
 %prep
-%setup -q -c %{oldname}-%{version}
+%setup -n %{oldname}-%{version} -q -c %{oldname}-%{version}
 cd drehatlas-fonts-%{metapkgver}/Widelands-%{version}
 # Wrap the license file at 80 chars
 fold -s LICENSE > LICENSE.new
@@ -96,6 +96,9 @@ fi
 %doc drehatlas-fonts-%{metapkgver}/Widelands-%{version}/LICENSE drehatlas-fonts-%{metapkgver}/Widelands-%{version}/FONTLOG
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 1.0.3.1-alt3_9
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.0.3.1-alt3_8
 - update to new release by fcimport
 
