@@ -6,7 +6,7 @@
 
 Name: fonts-bitmap-iso8859-2
 Version: 1.0
-Release: alt2_27
+Release: alt2_28
 License: MIT
 # Upstream url http://www.biz.net.pl/images/ISO8859-2-bdf.tar.gz is dead now.
 Source: ISO8859-2-bdf.tar.gz
@@ -70,7 +70,7 @@ resolution, for the X Window System.
 
 
 %prep
-%setup -c -q
+%setup -n %{oldname}-%{version} -c -q
 chmod 644 RELEASE_NOTES.TXT
 
 %patch0 -p1 -b .redhat
@@ -167,6 +167,9 @@ fi
 %dir %{_fontbasedir}/*/%{_fontstem}
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_28
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_27
 - update to new release by fcimport
 
