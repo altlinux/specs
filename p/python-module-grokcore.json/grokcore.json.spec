@@ -1,7 +1,7 @@
 %define oname grokcore.json
 Name: python-module-%oname
-Version: 1.1
-Release: alt1.1
+Version: 1.2
+Release: alt1
 Summary: JSON View component for Grok
 License: ZPL
 Group: Development/Python
@@ -53,6 +53,9 @@ mv %buildroot%python_sitelibdir_noarch/* \
 %python_sitelibdir/*/*/*test*
 
 %changelog
+* Fri Feb 22 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2-alt1
+- Version 1.2
+
 * Thu Oct 20 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 1.1-alt1.1
 - Rebuild with Python-2.7
 
