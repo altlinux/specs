@@ -1,10 +1,10 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(Date/Manip.pm) perl(DateTime/Duration.pm) perl(DateTime/Format/Builder.pm) perl(Module/Build.pm) perl-devel perl-podlators
+BuildRequires: perl(Module/Build.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-DateTime-Format-DBI
 Version:        0.040
-Release:        alt2_5
+Release:        alt2_6
 Summary:        Find a parser class for a database connection
 License:        GPL+ or Artistic 
 Group:          Development/Perl
@@ -60,6 +60,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.040-alt2_6
+- update to new release by fcimport
+
 * Tue Dec 11 2012 Igor Vlasenko <viy@altlinux.ru> 0.040-alt2_5
 - moved to Sisyphus (Tapper dep)
 
