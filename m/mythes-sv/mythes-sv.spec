@@ -4,7 +4,7 @@ BuildRequires: unzip
 Name: mythes-sv
 Summary: Swedish thesaurus
 Version: 1.3
-Release: alt1_4
+Release: alt1_5
 Source: http://extensions.services.openoffice.org/files/934/3/SwedishThesaurus.oxt
 Group: Text tools
 URL: http://extensions.services.openoffice.org/project/SweThes
@@ -38,6 +38,9 @@ popd
 %{_datadir}/mythes/*
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 1.3-alt1_5
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.3-alt1_4
 - update to new release by fcimport
 
