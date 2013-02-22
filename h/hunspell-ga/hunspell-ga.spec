@@ -1,7 +1,7 @@
 Name: hunspell-ga
 Summary: Irish hunspell dictionaries
 Version: 4.6
-Release: alt1_3
+Release: alt1_4
 Source0: http://gaelspell.googlecode.com/files/ispell-gaeilge-%{version}.tar.gz
 Source1: myspell-header
 Source2: hunspell-header
@@ -35,6 +35,9 @@ cp -p ga_IE.dic ga_IE.aff $RPM_BUILD_ROOT/%{_datadir}/myspell
 %{_datadir}/myspell/*
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 4.6-alt1_4
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 4.6-alt1_3
 - update to new release by fcimport
 
