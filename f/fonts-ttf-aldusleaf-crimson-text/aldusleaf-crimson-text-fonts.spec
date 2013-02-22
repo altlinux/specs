@@ -7,7 +7,7 @@ BuildRequires: unzip
 
 Name:           fonts-ttf-aldusleaf-crimson-text
 Version:        0.1
-Release:        alt3_0.5.20100628
+Release:        alt3_0.6.20100628
 Summary:        A latin font for the production of technical books and papers
 
 Group:          System/Fonts/True type
@@ -92,6 +92,9 @@ fi
 
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.1-alt3_0.6.20100628
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.1-alt3_0.5.20100628
 - update to new release by fcimport
 
