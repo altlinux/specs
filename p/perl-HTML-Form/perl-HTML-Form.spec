@@ -4,7 +4,7 @@ BuildRequires: perl(Encode.pm) perl(LWP/UserAgent.pm) perl(Test.pm) perl-devel p
 # END SourceDeps(oneline)
 Name:           perl-HTML-Form
 Version:        6.03
-Release:        alt1_3
+Release:        alt1_4
 Summary:        Class that represents an HTML form element
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -53,6 +53,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 6.03-alt1_4
+- update to new release by fcimport
+
 * Mon Nov 26 2012 Igor Vlasenko <viy@altlinux.ru> 6.03-alt1_3
 - fixed build by auto update
 
