@@ -9,7 +9,7 @@ BuildRequires: unzip
 
 Name:           fonts-ttf-nafees-web-naskh
 Version:        1.2
-Release:        alt3_9
+Release:        alt3_10
 Summary:        Nafees Web font for writing Urdu in the Naskh script 
 
 Group:          System/Fonts/True type
@@ -40,7 +40,7 @@ Nafees Web Naskh OTF contains approximately 330 glyphs, including 5 ligatures.
 
 
 %prep
-%setup -q -c
+%setup -n %{oldname}-%{version} -q -c
 
 %build
 # Fix RHBZ#490830 while not fixed upstream
@@ -104,6 +104,9 @@ fi
 
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 1.2-alt3_10
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.2-alt3_9
 - update to new release by fcimport
 
