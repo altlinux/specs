@@ -4,7 +4,7 @@ BuildRequires: /usr/bin/dot /usr/bin/doxygen gcc-c++
 %add_optflags %optflags_shared
 Name:           libpgf
 Version:        6.12.24
-Release:        alt1_3
+Release:        alt1_4
 Summary:        PGF (Progressive Graphics File) library
 
 Group:          System/Libraries
@@ -25,7 +25,7 @@ for lossless and lossy compression.
 %package        devel
 Group: System/Libraries
 Summary:        Development files for %{name}
-Requires:       libpgf = %{version}-%{release}
+Requires:       %{name}%{?_isa} = %{version}-%{release}
 
 %description    devel
 The %{name}-devel package contains libraries and header files for
@@ -63,6 +63,9 @@ find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 6.12.24-alt1_4
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 6.12.24-alt1_3
 - update to new release by fcimport
 
