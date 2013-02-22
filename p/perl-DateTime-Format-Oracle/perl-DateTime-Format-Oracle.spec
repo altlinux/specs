@@ -1,10 +1,10 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(DBI.pm) perl(Date/Manip.pm) perl(DateTime/Duration.pm) perl(DateTime/Event/ICal.pm) perl(DateTime/Infinite.pm) perl(DateTime/LeapSecond.pm) perl(DateTime/Span.pm) perl(DateTime/TimeZone.pm) perl(File/Spec/Functions.pm) perl(List/MoreUtils.pm) perl(Math/BigInt.pm) perl(Module/Build.pm) perl(Module/Pluggable.pm) perl(Params/Validate.pm) perl(Test/MockTime.pm) perl(Test/NoWarnings.pm) perl-devel perl-podlators
+BuildRequires: perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-DateTime-Format-Oracle
 Version:        0.06
-Release:        alt2_3
+Release:        alt2_4
 Summary:        Parse and format Oracle dates and timestamps
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -44,6 +44,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.06-alt2_4
+- update to new release by fcimport
+
 * Tue Dec 11 2012 Igor Vlasenko <viy@altlinux.ru> 0.06-alt2_3
 - moved to Sisyphus (Tapper dep)
 
