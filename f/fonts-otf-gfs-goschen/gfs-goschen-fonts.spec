@@ -9,7 +9,7 @@ BuildRequires: unzip
 
 Name:    fonts-otf-gfs-goschen
 Version: 20100203
-Release: alt3_4
+Release: alt3_5
 Summary: A 19th century Greek typeface
 
 Group:     System/Fonts/True type
@@ -47,7 +47,7 @@ commemoration of the great German publisher.
 
 
 %prep
-%setup -q -c -T
+%setup -n %{oldname}-%{version} -q -c -T
 unzip -j -L -q %{SOURCE0}
 chmod 0644 *.txt
 for txt in *.txt ; do
@@ -119,6 +119,9 @@ fi
 
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 20100203-alt3_5
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 20100203-alt3_4
 - update to new release by fcimport
 
