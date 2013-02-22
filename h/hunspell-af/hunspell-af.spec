@@ -5,7 +5,7 @@ Name: hunspell-af
 Summary: Afrikaans hunspell dictionary
 %define upstreamid 20080825
 Version: 0.%{upstreamid}
-Release: alt2_6
+Release: alt2_7
 Source: http://downloads.translate.org.za/spellchecker/afrikaans/myspell-af_ZA-0.%{upstreamid}.zip
 Group: Text tools
 URL: http://www.translate.org.za/
@@ -40,6 +40,9 @@ popd
 %{_datadir}/myspell/*
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.20080825-alt2_7
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.20080825-alt2_6
 - update to new release by fcimport
 
