@@ -1,7 +1,7 @@
 %add_optflags %optflags_shared
 Name:               libhbalinux
 Version:            1.0.14
-Release:            alt1_4
+Release:            alt1_5
 Summary:            FC-HBAAPI implementation using scsi_transport_fc interfaces
 Group:              System/Libraries
 License:            LGPLv2
@@ -69,6 +69,9 @@ fi
 %{_libdir}/%{name}.so
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 1.0.14-alt1_5
+- update to new release by fcimport
+
 * Tue Oct 09 2012 Igor Vlasenko <viy@altlinux.ru> 1.0.14-alt1_4
 - update to new release by fcimport
 
