@@ -1,7 +1,7 @@
 %add_optflags %optflags_shared
 Name:           libXcm
 Version:        0.5.1
-Release:        alt1_1
+Release:        alt1_2
 Summary:        X Color Management Library
 
 Group:          System/Libraries
@@ -64,6 +64,9 @@ find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.5.1-alt1_2
+- update to new release by fcimport
+
 * Thu Sep 20 2012 Igor Vlasenko <viy@altlinux.ru> 0.5.1-alt1_1
 - update to new release by fcimport
 
