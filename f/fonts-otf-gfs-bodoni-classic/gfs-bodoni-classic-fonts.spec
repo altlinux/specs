@@ -9,7 +9,7 @@ BuildRequires: unzip
 
 Name:    fonts-otf-gfs-bodoni-classic
 Version: 20070415
-Release: alt3_15
+Release: alt3_16
 Summary: GFS Bodoni Classic oblique Greek font
 
 Group:     System/Fonts/True type
@@ -43,7 +43,7 @@ greek texts.
 
 
 %prep
-%setup -q -c -T
+%setup -n %{oldname}-%{version} -q -c -T
 unzip -j -L -q %{SOURCE0}
 chmod 0644 *.txt
 for txt in *.txt ; do
@@ -115,6 +115,9 @@ fi
 
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 20070415-alt3_16
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 20070415-alt3_15
 - update to new release by fcimport
 
