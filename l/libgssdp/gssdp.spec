@@ -5,7 +5,7 @@
 %def_enable introspection
 
 Name: lib%_name
-Version: 0.14.0
+Version: 0.14.1
 Release: alt1
 
 Summary: Resource discovery and announcement over SSDP
@@ -101,6 +101,9 @@ GObject introspection devel data for the GSSDP library
 
 
 %changelog
+* Fri Feb 22 2013 Yuri N. Sedunov <aris@altlinux.org> 0.14.1-alt1
+- 0.14.1
+
 * Fri Feb 22 2013 Yuri N. Sedunov <aris@altlinux.org> 0.14.0-alt1
 - 0.14.0
 
