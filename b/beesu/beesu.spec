@@ -9,7 +9,7 @@ Name: beesu
 Version: 2.7
 # Don't ever decrease this version (unless all beesu, nbm, and gbp update) or the subpackages will go backwards.
 # It is easier to do this than to track a separate release field.
-Release: alt2_8
+Release: alt2_9
 Summary: Graphical wrapper for su
 URL: http://www.honeybeenet.altervista.org
 Group: System/Base
@@ -106,7 +106,7 @@ EOF
 %{_sysconfdir}/profile.d/%{name}-bash-completion.sh
 %{_sbindir}/%{name}
 %{_bindir}/%{name}
-%{_mandir}/man1/%{name}.1.*
+%{_mandir}/man1/%{name}.1*
 /etc/pam.d/config-util
 
 %files -n nautilus-beesu-manager
@@ -123,6 +123,9 @@ EOF
 %{_libexecdir}/gedit-beesu-plugin
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 2.7-alt2_9
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 2.7-alt2_8
 - update to new release by fcimport
 
