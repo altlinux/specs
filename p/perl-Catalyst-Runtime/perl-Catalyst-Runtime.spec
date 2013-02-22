@@ -5,7 +5,7 @@ BuildRequires: perl(Catalyst/Helper.pm) perl(Class/Accessor.pm) perl(Class/MOP/O
 Name:           perl-Catalyst-Runtime
 Summary:        Catalyst Framework Runtime
 Version:        5.90019
-Release:        alt1_1
+Release:        alt1_2
 License:        GPL+ or Artistic
 Group:          Development/Perl
 Source0:        http://search.cpan.org/CPAN/authors/id/B/BO/BOBTFISH/Catalyst-Runtime-%{version}.tar.gz
@@ -125,8 +125,8 @@ Requires:       %{name} = %{version}-%{release}
 
 %description    scripts
 
-The %%{name}-scripts package contains scripts distributed with
-%%{name} but generally used for developing Catalyst applications.
+The %{name}-scripts package contains scripts distributed with
+%{name} but generally used for developing Catalyst applications.
 
 
 %prep
@@ -178,6 +178,9 @@ make clean
 %{_mandir}/man1/*
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 5.90019-alt1_2
+- update to new release by fcimport
+
 * Wed Dec 12 2012 Igor Vlasenko <viy@altlinux.ru> 5.90019-alt1_1
 - update to new release by fcimport
 
