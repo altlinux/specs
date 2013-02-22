@@ -20,7 +20,7 @@ It can be safely uninstalled.
 
 Name:      fonts-ttf-mgopen
 Version:   0.%{upstream_date}
-Release:   alt3_19
+Release:   alt3_20
 Summary:   Truetype greek fonts
 Group:     System/Fonts/True type
 License:   MgOpen
@@ -197,6 +197,9 @@ fi
 %files compat
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.20050515-alt3_20
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.20050515-alt3_19
 - update to new release by fcimport
 
