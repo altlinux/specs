@@ -1,6 +1,6 @@
 Name: enum
 Version: 1.1
-Release: alt1_2
+Release: alt1_3
 Summary: Seq- and jot-like enumerator
 
 Group:   File tools
@@ -38,6 +38,9 @@ make check
 
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 1.1-alt1_3
+- update to new release by fcimport
+
 * Tue Sep 11 2012 Igor Vlasenko <viy@altlinux.ru> 1.1-alt1_2
 - rebuild with new radius-engine
 
