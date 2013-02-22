@@ -4,7 +4,7 @@ BuildRequires: /usr/bin/gtkdocize pkgconfig(dbus-1) pkgconfig(glib-2.0) pkgconfi
 %add_optflags %optflags_shared
 Name:		libaccounts-glib
 Version:	0.45
-Release:	alt3_4
+Release:	alt3_5
 Group:		System/Libraries
 Summary:	Nokia Maemo Accounts base library
 License:	LGPLv2
@@ -27,7 +27,7 @@ Patch33: libaccounts-glib-0.45-alt-gcc47.patch
 %package devel
 Summary:	Development files for %{name}
 Group:		Development/C
-Requires:	libaccounts-glib = %{version}-%{release}
+Requires:	%{name} = %{version}-%{release}
 
 %description devel
 The %{name}-devel package contains libraries and header files for
@@ -72,6 +72,9 @@ rm -rf %{buildroot}%{_datadir}/libaccounts-glib0-test
 %{_includedir}/%{name}
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.45-alt3_5
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.45-alt3_4
 - update to new release by fcimport
 
