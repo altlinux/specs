@@ -4,7 +4,7 @@ BuildRequires: perl(overload.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Set-Infinite
 Version:        0.65
-Release:        alt2_8
+Release:        alt2_9
 Summary:        Sets of intervals
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -45,6 +45,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.65-alt2_9
+- update to new release by fcimport
+
 * Tue Dec 11 2012 Igor Vlasenko <viy@altlinux.ru> 0.65-alt2_8
 - moved to Sisyphus (Tapper dep)
 
