@@ -4,7 +4,7 @@ BuildRequires: /usr/bin/col /usr/bin/groff /usr/bin/gzip bzlib-devel gcc-c++
 Summary: Recompression utilities for .PNG, .MNG and .ZIP files
 Name: advancecomp
 Version: 1.15
-Release: alt2_17
+Release: alt2_18
 License: GPLv2+
 Group: Emulators
 URL: http://advancemame.sourceforge.net/
@@ -39,6 +39,9 @@ make install DESTDIR=%{buildroot}
 
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 1.15-alt2_18
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.15-alt2_17
 - update to new release by fcimport
 
