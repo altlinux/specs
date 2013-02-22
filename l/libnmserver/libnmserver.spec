@@ -1,7 +1,7 @@
 %add_optflags %optflags_shared
 Name:		libnmserver
 Version:	0.0.92
-Release:	alt3_3
+Release:	alt3_4
 Summary:	This library exposes various information from NetworkManager
 
 Group:		System/Libraries
@@ -19,7 +19,7 @@ is small and has minimal set of external dependencies.
 %package devel
 Summary:	Headers for the libnmserver library
 Group:		Development/C
-Requires:	libnmserver = %{version}-%{release}
+Requires:	libnmserver%{?_isa} = %{version}-%{release}
 
 %description devel
 This package contains header files for the libnmserver library
@@ -49,6 +49,9 @@ rm -f $RPM_BUILD_ROOT/%{_bindir}/libnmserver
 %{_libdir}/libnmserver.so
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.0.92-alt3_4
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.0.92-alt3_3
 - update to new release by fcimport
 
