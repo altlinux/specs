@@ -1,6 +1,6 @@
 Name:		fbg2
 Version:	0.4
-Release:	alt3_4
+Release:	alt3_5
 Summary:	A falling block stacking game
 Group:		Games/Other
 # Code is GPLv2+, music and graphics are CC-BY-SA
@@ -37,6 +37,9 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/fbg2.desktop
 %{_datadir}/pixmaps/%{name}.png
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.4-alt3_5
+- update to new release by fcimport
+
 * Tue Sep 11 2012 Igor Vlasenko <viy@altlinux.ru> 0.4-alt3_4
 - rebuild with new radius-engine
 
