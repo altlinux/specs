@@ -10,7 +10,7 @@ BuildRequires: unzip
 
 Name:		fonts-ttf-ipa-pgothic
 Version:	003.03
-Release:	alt2_3
+Release:	alt2_4
 Summary:	Japanese Proportional Gothic-typeface OpenType font by IPA
 
 Group:		System/Fonts/True type
@@ -36,7 +36,6 @@ This package contains Proportional Gothic (sans-serif) style font.
 %build
 
 %install
-
 install -m 0755 -d $RPM_BUILD_ROOT%{_fontdir}
 install -m 0644 -p *.ttf $RPM_BUILD_ROOT%{_fontdir}
 
@@ -82,6 +81,7 @@ if [ -d $RPM_BUILD_ROOT/etc/X11/fontpath.d ]; then
     done ||:
 fi
 
+
 %files
 %{_fontconfig_templatedir}/%{fontconf}
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}
@@ -91,6 +91,9 @@ fi
 
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 003.03-alt2_4
+- update to new release by fcimport
+
 * Mon Aug 27 2012 Igor Vlasenko <viy@altlinux.ru> 003.03-alt2_3
 - update to new release by fcimport
 
