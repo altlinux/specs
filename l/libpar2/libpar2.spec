@@ -4,7 +4,7 @@ BuildRequires: gcc-c++
 %add_optflags %optflags_shared
 Name: libpar2
 Version: 0.2       
-Release: alt2_13
+Release: alt2_14
 Summary: Library for performing comman tasks related to PAR recovery sets
      
 Group: System/Libraries
@@ -26,7 +26,7 @@ sets and is the basis for GUI applications such as GPar2.
 %package devel
 Summary: Development files for %{name}
 Group: Development/C
-Requires: libpar2 = %{version}-%{release}
+Requires: %{name} = %{version}-%{release}
 
 %description devel
 The %{name}-devel package contains libraries and header files for
@@ -68,6 +68,9 @@ find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 %{_libdir}/%{name}/include/
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.2-alt2_14
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.2-alt2_13
 - update to new release by fcimport
 
