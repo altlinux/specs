@@ -7,7 +7,7 @@ BuildRequires: /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/glib-m
 
 Name:           mate-document-viewer
 Version:        1.5.0
-Release:        alt1_0
+Release:        alt2_0
 Summary:        Document viewer
 
 License:        GPLv2+ and GFDL
@@ -33,7 +33,7 @@ BuildRequires:  libtool
 BuildRequires:  gtk-doc
 BuildRequires:  intltool
 BuildRequires:  t1lib-devel
-BuildRequires:  mate-conf-devel
+#BuildRequires:  mate-conf-devel
 BuildRequires:  gobject-introspection-devel
 BuildRequires:  mate-common
 BuildRequires:  libcairo-gobject-devel
@@ -238,6 +238,9 @@ rm -f $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/icon-theme.cache
 %{_libdir}/atril/3/backends/pixbufdocument.atril-backend
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 1.5.0-alt2_0
+dropped obsolete mate-conf BR:
+
 * Sun Feb 03 2013 Igor Vlasenko <viy@altlinux.ru> 1.5.0-alt1_0
 - new version
 
