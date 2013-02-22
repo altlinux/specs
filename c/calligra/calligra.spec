@@ -9,7 +9,7 @@
 %def_disable GTL
 
 Name: calligra
-Version: 2.6.0
+Version: 2.6.1
 Release: alt1
 Epoch: 0
 %define libname lib%name
@@ -545,6 +545,7 @@ cp -ar %SOURCE1 cmake/modules/
 %_K4lib/kexidb_sqlite3_icu.so
 %_K4lib/keximigrate_*.so
 %_K4lib/kexirelationdesignshape.so
+%_K4lib/exportMobi.so
 %_K4xdg_apps/*kexi.desktop
 %_K4conf/kexirc
 %_K4srvtyp/kexi*.desktop
@@ -643,6 +644,9 @@ cp -ar %SOURCE1 cmake/modules/
 %_K4libdir/lib*.so.*
 
 %changelog
+* Fri Feb 22 2013 Sergey V Turchin <zerg@altlinux.org> 0:2.6.1-alt1
+- new version
+
 * Thu Feb 07 2013 Sergey V Turchin <zerg@altlinux.org> 0:2.6.0-alt1
 - new version
 
