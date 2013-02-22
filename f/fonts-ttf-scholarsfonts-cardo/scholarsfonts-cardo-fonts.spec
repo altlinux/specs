@@ -7,7 +7,7 @@ BuildRequires: unzip
 
 Name:           fonts-ttf-scholarsfonts-cardo
 Version:        1.045 
-Release:        alt3_3
+Release:        alt3_4
 Summary:        A font for scholarly use in classical and medieval languages
 
 Group:          System/Fonts/True type
@@ -34,7 +34,7 @@ This font has been revived in modern times under several names (Bembo, Aetna,
 Aldine 401).
 
 %prep
-%setup -q -c
+%setup -n %{oldname}-%{version} -q -c
 
 %build
 
@@ -92,6 +92,9 @@ fi
 %doc Manual104s.pdf 
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 1.045-alt3_4
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.045-alt3_3
 - update to new release by fcimport
 
