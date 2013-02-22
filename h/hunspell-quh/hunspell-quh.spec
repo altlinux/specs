@@ -5,7 +5,7 @@ Name: hunspell-quh
 Summary: Quechua, South Bolivia hunspell dictionaries
 %define upstreamid 20110816
 Version: 0.%{upstreamid}
-Release: alt1_3
+Release: alt1_4
 Source: http://www.runasimipi.org/quh_BO-pack.zip
 Group: Text tools
 URL: http://www.runasimipi.org/blanco-en.php?file=desarrollar-orto
@@ -33,6 +33,9 @@ cp -p quh_BO/quh_BO.* $RPM_BUILD_ROOT/%{_datadir}/myspell/
 %{_datadir}/myspell/*
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.20110816-alt1_4
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.20110816-alt1_3
 - update to new release by fcimport
 
