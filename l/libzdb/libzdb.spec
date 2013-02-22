@@ -2,10 +2,10 @@
 BuildRequires: /usr/bin/pg_config /usr/bin/re2c libssl-devel
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
-%define fedora 16
+%define fedora 19
 Name:           libzdb
 Version:        2.8.1
-Release:        alt3_3
+Release:        alt3_4
 Summary:        Small, fast, and easy to use database API
 
 Group:          System/Libraries
@@ -63,6 +63,9 @@ Developer header files & libraries for libzdb database API.
 
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 2.8.1-alt3_4
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 2.8.1-alt3_3
 - update to new release by fcimport
 
