@@ -4,7 +4,7 @@ BuildRequires: /usr/bin/gtkdocize /usr/bin/pkg-config /usr/bin/vala-gen-introspe
 %add_optflags %optflags_shared
 Name: libdmapsharing
 Version: 2.9.14
-Release: alt2_3
+Release: alt2_4
 License: LGPLv2+
 Source: http://www.flyn.org/projects/libdmapsharing/%{name}-%{version}.tar.gz
 URL: http://www.flyn.org/projects/libdmapsharing/
@@ -52,6 +52,9 @@ make install DESTDIR=$RPM_BUILD_ROOT INSTALL="install -p"
 rm -f ${RPM_BUILD_ROOT}%{_libdir}/libdmapsharing-3.0.la
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 2.9.14-alt2_4
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 2.9.14-alt2_3
 - update to new release by fcimport
 
