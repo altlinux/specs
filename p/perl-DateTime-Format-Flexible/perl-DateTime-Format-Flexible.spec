@@ -1,10 +1,10 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(DBI.pm) perl(Date/Manip.pm) perl(DateTime/Duration.pm) perl(DateTime/LeapSecond.pm) perl(Math/BigInt.pm) perl(Module/Build.pm) perl(Params/Validate.pm) perl(Test/NoWarnings.pm) perl-devel perl-podlators
+BuildRequires: perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:       perl-DateTime-Format-Flexible
 Version:    0.24
-Release:    alt2_1
+Release:    alt2_2
 License:    GPL+ or Artistic
 Group:      Development/Perl
 Summary:    Flexibly parse strings and turn them into DateTime objects
@@ -58,6 +58,9 @@ TEST_POD=1 make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.24-alt2_2
+- update to new release by fcimport
+
 * Tue Dec 11 2012 Igor Vlasenko <viy@altlinux.ru> 0.24-alt2_1
 - moved to Sisyphus (Tapper dep)
 
