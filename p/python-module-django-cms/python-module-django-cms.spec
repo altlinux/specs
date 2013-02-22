@@ -3,8 +3,8 @@
 %define module_name django-cms
 
 Name: python-module-%module_name
-Version: 2.1.3
-Release: alt1.git.6db7026.1
+Version: 2.1.5
+Release: alt1
 
 Summary: An Advanced Django CMS
 
@@ -17,6 +17,12 @@ Packager: Denis Klimov <zver@altlinux.org>
 Source: %module_name-%version.tar
 
 BuildArch: noarch
+
+Provides: %{name}2.1 = %EVR
+
+# see docs/getting_started/installation.rst
+Requires: python-module-django >= 1.2.3
+Requires: python-module-django-classy-tags >= 0.2.2
 
 BuildRequires: python-module-setuptools
 
@@ -45,6 +51,9 @@ An Advanced Django CMS.
 %python_sitelibdir/django_cms*egg-info/
 
 %changelog
+* Fri Feb 22 2013 Aleksey Avdeev <solo@altlinux.ru> 2.1.5-alt1
+- Version 2.1.5
+
 * Thu Oct 20 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 2.1.3-alt1.git.6db7026.1
 - Rebuild with Python-2.7
 
