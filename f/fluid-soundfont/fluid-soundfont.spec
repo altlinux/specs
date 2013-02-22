@@ -1,6 +1,6 @@
 Name:           fluid-soundfont
 Version:        3.1
-Release:        alt1_9
+Release:        alt1_10
 Summary:        Pro-quality GM/GS soundfont
 Group:          Sound
 License:        MIT
@@ -53,7 +53,7 @@ Requires:       %{name}-common = %{version}-%{release}
 Provides:       soundfont2
 Provides:       soundfont2-default
 # If timidity++ is installed it must understand the trysouce configfile keyword
-Conflicts:      timidity++ <= 2.13.2-30.cvs20111110%{?dist}
+Conflicts:      TiMidity++ <= 2.13.2-30.cvs20111110%{?dist}
 
 %description gm
 %common_description
@@ -153,6 +153,9 @@ install -p -m 644 FluidR3.cfg $RPM_BUILD_ROOT%{_sysconfdir}/timidity.cfg
 
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 3.1-alt1_10
+- update to new release by fcimport
+
 * Mon Sep 24 2012 Igor Vlasenko <viy@altlinux.ru> 3.1-alt1_9
 - new version
 
