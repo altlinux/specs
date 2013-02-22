@@ -5,7 +5,7 @@ Name: hyphen-nl
 Summary: Dutch hyphenation rules
 %define upstreamid 20050617
 Version: 0.%{upstreamid}
-Release: alt1_8
+Release: alt1_9
 Source: http://ftp.services.openoffice.org/pub/OpenOffice.org/contrib/dictionaries/hyph_nl_NL.zip
 Group: Text tools
 URL: http://wiki.services.openoffice.org/wiki/Dictionaries
@@ -42,6 +42,9 @@ done
 %{_datadir}/hyphen/*
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.20050617-alt1_9
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.20050617-alt1_8
 - update to new release by fcimport
 
