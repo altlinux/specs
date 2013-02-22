@@ -1,11 +1,11 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-fedora-compat
-BuildRequires: gcc-c++
+BuildRequires: gcc-c++ libqt4-devel
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
 Name:           libQGLViewer
 Version:        2.3.9
-Release:        alt2_5
+Release:        alt2_6
 Summary:        Qt based OpenGL generic 3D viewer library
 
 Group:          System/Libraries
@@ -42,7 +42,7 @@ complex applications, being fully customizable and easy to extend.
 %package        devel
 Summary:        Development files for %{name}
 Group:          Development/C
-Requires:       libQGLViewer = %{version}-%{release}
+Requires:       %{name} = %{version}-%{release}
 
 %description    devel
 The %{name}-devel package contains libraries and header files for
@@ -52,7 +52,7 @@ developing applications that use %{name}.
 %package doc
 Summary: API documentation, demos and example programs for %{name}
 Group: Documentation
-Requires: libQGLViewer = %{version}-%{release}
+Requires: %{name} = %{version}-%{release}
 BuildArch: noarch
 %description doc
 %{summary}.
@@ -126,6 +126,9 @@ make -e INSTALL_ROOT=$RPM_BUILD_ROOT install
 %doc examples
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 2.3.9-alt2_6
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 2.3.9-alt2_5
 - update to new release by fcimport
 
