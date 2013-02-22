@@ -9,7 +9,7 @@ BuildRequires: unzip
 
 Name:    fonts-ttf-sil-charis
 Version: 4.106
-Release: alt5_6
+Release: alt5_7
 Summary: A serif smart font similar to Bitstream Charter
 
 Group:     System/Fonts/True type
@@ -110,6 +110,9 @@ fi
 
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 4.106-alt5_7
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 4.106-alt5_6
 - update to new release by fcimport
 
