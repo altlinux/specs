@@ -1,13 +1,13 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-fedora-compat
-BuildRequires: /usr/bin/gtkdocize gcc-c++ libglibmm-devel pkgconfig(pygtk-2.0) python-module-pygobject-devel
+BuildRequires: /usr/bin/gtkdocize gcc-c++ pkgconfig(pygtk-2.0) python-module-pygobject-devel
 # END SourceDeps(oneline)
 Group: Development/C
 %add_optflags %optflags_shared
 Name:		libinstpatch
 Summary:	MIDI instrument patch library
 Version:	1.0.0
-Release:	alt3_5.20110806svn386
+Release:	alt3_6.20110806svn386
 URL:		http://www.swamiproject.org/
 License:	LGPLv2+
 # Fetch source via
@@ -18,7 +18,7 @@ Source1:	libinstpatch-snapshot.sh
 # .pc file fixes. Patch sent upstream via their mailing list
 Patch0:		libinstpatch-cmake-fixes.patch
 
-BuildRequires:	ctest cmake
+BuildRequires: ctest cmake
 BuildRequires:	glib2-devel
 BuildRequires:	libsndfile-devel
 Source44: import.info
@@ -73,6 +73,9 @@ make install DESTDIR=%{buildroot} -C %{_target_platform}
 
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt3_6.20110806svn386
+- update to new release by fcimport
+
 * Tue Nov 20 2012 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt3_5.20110806svn386
 - update to new release by fcimport
 
