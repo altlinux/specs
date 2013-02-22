@@ -1,6 +1,5 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-python rpm-macros-fedora-compat
-BuildRequires: /usr/bin/python-config /usr/bin/runtest binutils-devel cmake elfutils-devel gcc-c++ libICE-devel libSM-devel libX11-devel libelf-devel perl(IPC/Open2.pm) python-devel unzip
+BuildRequires: unzip
 # END SourceDeps(oneline)
 %define oldname ipa-ex-mincho-fonts
 %global		priority	65-2
@@ -11,7 +10,7 @@ BuildRequires: /usr/bin/python-config /usr/bin/runtest binutils-devel cmake elfu
 
 Name:		fonts-ttf-ipa-ex-mincho
 Version:	002.01
-Release:	alt1_1
+Release:	alt1_2
 Summary:	Japanese Mincho-typeface OpenType font by IPA
 
 Group:		System/Fonts/True type
@@ -36,7 +35,6 @@ This package contains Mincho style font.
 %build
 
 %install
-
 install -m 0755 -d $RPM_BUILD_ROOT%{_fontdir}
 install -m 0644 -p *.ttf $RPM_BUILD_ROOT%{_fontdir}
 
@@ -82,6 +80,7 @@ if [ -d $RPM_BUILD_ROOT/etc/X11/fontpath.d ]; then
     done ||:
 fi
 
+
 %files
 %{_fontconfig_templatedir}/%{fontconf}
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}
@@ -91,6 +90,9 @@ fi
 
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 002.01-alt1_2
+- update to new release by fcimport
+
 * Tue Nov 20 2012 Igor Vlasenko <viy@altlinux.ru> 002.01-alt1_1
 - update to new release by fcimport
 
