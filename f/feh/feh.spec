@@ -1,6 +1,6 @@
-%define rev 
+#define rev 
 Name: feh
-Version: 2.8
+Version: 2.9.1
 Release: alt1
 Summary: Image viewer using Imlib 2
 Group: Graphics
@@ -11,7 +11,7 @@ Source: http://derf.homelinux.org/projects/feh/%name-%version.tar.bz2
 
 # Automatically added by buildreq on Thu Sep 08 2011
 # optimized out: imlib2 imlib2-devel libX11-devel xorg-xproto-devel zlib-devel
-BuildRequires: libXinerama-devel libXt-devel libcurl-devel libgiblib-devel libpng-devel libexif-devel libjpeg-utils git-core
+BuildRequires: libXinerama-devel libXt-devel libcurl-devel libgiblib-devel libpng-devel libexif-devel libjpeg-utils
 
 %description
 feh is a versatile and fast image viewer using imlib2, the
@@ -46,6 +46,9 @@ cp %_builddir/%name-%version/man/*.1 %buildroot%_man1dir/
 %doc AUTHORS ChangeLog README TODO
 
 %changelog
+* Sun Feb 17 2013 Andrew Clark <andyc@altlinux.org> 2.9.1-alt1
+- version update to 2.9.1-alt1
+
 * Sun Jan 6 2013 Andrew Clark <andyc@altlinux.org> 2.8-alt1
 - version update to 2.8-alt1
 
