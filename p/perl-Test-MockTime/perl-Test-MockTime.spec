@@ -4,7 +4,7 @@ BuildRequires: perl(Exporter.pm) perl(Time/Local.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Test-MockTime
 Version:        0.12
-Release:        alt3_10
+Release:        alt3_11
 Summary:        Replaces actual time with simulated time
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -54,6 +54,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.12-alt3_11
+- update to new release by fcimport
+
 * Mon Dec 10 2012 Igor Vlasenko <viy@altlinux.ru> 0.12-alt3_10
 - moved to Sisyphus
 
