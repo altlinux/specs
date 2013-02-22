@@ -4,7 +4,7 @@
 
 Name:           fonts-ttf-tangerine
 Version:        1.000 
-Release:        alt3_4
+Release:        alt3_5
 Summary:        Tangerine is a calligraphy font inspired by many italic chancery hands 
 
 Group:          System/Fonts/True type
@@ -27,7 +27,7 @@ produced by Japanese type designer Toshi Omagari and was named after a woman
 who encouraged him to begin this work.
 
 %prep
-%setup -c -T
+%setup -n %{oldname}-%{version} -c -T
 cp -p %{SOURCE0} .
 
 
@@ -92,6 +92,9 @@ fi
 
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 1.000-alt3_5
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.000-alt3_4
 - update to new release by fcimport
 
