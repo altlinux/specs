@@ -4,7 +4,7 @@ BuildRequires: zlib-devel
 %add_optflags %optflags_shared
 Name:		libax25
 Version:	0.0.12
-Release:	alt2_0.4.rc2
+Release:	alt2_0.5.rc2
 Summary:	AX.25 library for hamradio applications
 
 Group:		System/Libraries
@@ -26,7 +26,7 @@ config file parsing, etc.
 
 Summary:	Development files for %{name}
 Group:		Development/C
-Requires:	libax25 = %{version}-%{release}
+Requires:	%{name} = %{version}-%{release}
 
 %description	devel
 The %{name}-devel package contains libraries and header files for
@@ -64,6 +64,9 @@ find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.0.12-alt2_0.5.rc2
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.0.12-alt2_0.4.rc2
 - update to new release by fcimport
 
