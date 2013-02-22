@@ -15,7 +15,7 @@ proprietary standard fonts.
 
 Name:           fonts-ttf-linuxlibertine
 Version:        5.3.0
-Release:        alt1_2.2012_07_02
+Release:        alt1_3.%{posttag}
 Summary:        Linux Libertine Open Fonts
 
 Group:          System/Fonts/True type
@@ -57,7 +57,7 @@ Group:          System/Fonts/True type
 This package consists of files used by other %{oldname} packages.
 
 %prep
-%setup -q -c
+%setup -n %{oldname}-%{version} -q -c
 sed -i -e 's/\r//' OFL-1.1.txt
 
 %build
@@ -139,6 +139,9 @@ fi
 %{_fontbasedir}/*/%{_fontstem}/LinBiolinum*.otf
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 5.3.0-alt1_3.2012_07_02
+- update to new release by fcimport
+
 * Mon Aug 27 2012 Igor Vlasenko <viy@altlinux.ru> 5.3.0-alt1_2.2012_07_02
 - update to new release by fcimport
 
