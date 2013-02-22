@@ -21,7 +21,7 @@ Accanthis is well suited to book typesetting and refined presentations.
 Name:      fonts-otf-adf-accanthis
 # Use the main PS version (as documented in NOTICE)
 Version:   1.8
-Release:   alt1_2
+Release:   alt1_3
 Summary:   A a.'modernizeda.' garaldic serif typeface, a.'Galliarda.' alternative
 
 Group:     System/Fonts/True type
@@ -171,6 +171,9 @@ fi
 
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 1.8-alt1_3
+- update to new release by fcimport
+
 * Mon Aug 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.8-alt1_2
 - update to new release by fcimport
 
