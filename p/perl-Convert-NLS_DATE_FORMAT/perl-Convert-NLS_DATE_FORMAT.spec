@@ -4,7 +4,7 @@ BuildRequires: perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Convert-NLS_DATE_FORMAT
 Version:        0.05
-Release:        alt2_3
+Release:        alt2_4
 Summary:        Convert Oracle NLS_DATE_FORMAT <-> strftime Format Strings
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -40,6 +40,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.05-alt2_4
+- update to new release by fcimport
+
 * Tue Dec 11 2012 Igor Vlasenko <viy@altlinux.ru> 0.05-alt2_3
 - moved to Sisyphus (Tapper dep)
 
