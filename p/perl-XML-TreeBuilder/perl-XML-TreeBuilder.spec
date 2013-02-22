@@ -5,7 +5,7 @@ BuildRequires: perl(Module/Build.pm) perl(Test.pm) perl-devel perl-podlators
 Summary:	Parser that builds a tree of XML::Element objects
 Name:		perl-XML-TreeBuilder
 Version:	4.0
-Release:	alt1_8
+Release:	alt1_9
 License:	GPL+ or Artistic
 Group:		Development/Perl
 URL:		http://search.cpan.org/dist/XML-TreeBuilder/
@@ -45,6 +45,9 @@ find $RPM_BUILD_ROOT -name .packlist -exec %{__rm} {} \;
 %{perl_vendor_privlib}/XML/
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 4.0-alt1_9
+- update to new release by fcimport
+
 * Thu Jan 10 2013 Igor Vlasenko <viy@altlinux.ru> 4.0-alt1_8
 - initial fc import
 
