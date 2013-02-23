@@ -1,5 +1,5 @@
 Name: python-module-docopt
-Version: 0.5.0
+Version: 0.6.1
 Release: alt1
 
 Summary: Pythonic argument parser, that will make you smile
@@ -44,6 +44,9 @@ rm -rf *.egg-info
 %python_sitelibdir/docopt-*.egg-info
 
 %changelog
+* Sat Feb 23 2013 Vitaly Lipatov <lav@altlinux.ru> 0.6.1-alt1
+- new version 0.6.1 (with rpmrb script)
+
 * Sat Feb 16 2013 Vitaly Lipatov <lav@altlinux.ru> 0.5.0-alt1
 - initial build for ALT Linux Sisyphus
 
