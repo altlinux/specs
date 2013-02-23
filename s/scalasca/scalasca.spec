@@ -7,7 +7,7 @@
 %define sover %somver.%over
 Name: scalasca
 Version: %over
-Release: alt2
+Release: alt3
 Summary: Scalable performance Analysis of Large-Scale parallel Applications
 License: MIT
 Group: Development/Tools
@@ -24,7 +24,7 @@ Conflicts: kojak < 2.2p1_%over-%release
 Obsoletes: kojak < 2.2p1_%over-%release
 
 BuildPreReq: libgomp-devel libqt4-devel libpapi-devel libotf-devel
-BuildPreReq: libpdtoolkit-devel pdtoolkit
+BuildPreReq: libopenpdt-devel openpdt tau
 BuildPreReq: %mpiimpl-devel doxygen binutils-devel
 BuildPreReq: texlive-latex-base ghostscript-utils chrpath
 
@@ -542,6 +542,9 @@ sed -i 's|\.a|.so|' %buildroot%_bindir/kinst-pomp
 #_libdir/libsz0.a
 
 %changelog
+* Sat Feb 23 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4.2-alt3
+- Rebuilt with openpdt instead of pdtoolkit
+
 * Fri Sep 21 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4.2-alt2
 - Fixed kinst-pomp for work with shared libraries
 
