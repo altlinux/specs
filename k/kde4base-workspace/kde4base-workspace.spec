@@ -27,7 +27,7 @@
 %define rname kdebase-workspace
 Name: kde4base-workspace
 Version: %major.%minor.%bugfix
-Release: alt4
+Release: alt5
 
 Group: Graphical desktop/KDE
 Summary: K Desktop Environment - Workspace
@@ -55,7 +55,6 @@ Patch23: kde-workspace-4.7.80-no_HAL.patch
 Patch24: kdebase-workspace-4.5.90-no_HAL2.patch
 Patch25: kde-workspace-4.9.1-solid_krunner_disable.patch
 Patch26: kde-workspace-4.9.3-systemd-displaymanager.patch
-Patch27: kde-workspace-4.9.98-powerdevil_systemd_login1.patch
 # SuSE
 # MDK
 # upstream
@@ -111,6 +110,8 @@ Patch1043: kdebase-workspace-4.8.5-alt-def-plasma-netbook.patch
 Patch1044: kdebase-workspace-4.8.5-alt-workspaceoptions.patch
 Patch1045: kdebase-workspace-4.10.0-alt-def-plasma-desktop-immutability.patch
 Patch1046: kdebase-workspace-4.10.0-alt-pager-refresh-layout.patch
+Patch1047: kdebase-workspace-4.10.0-alt-def-oxygen-widgets.patch
+Patch1048: kdebase-workspace-4.10.0-alt-def-oxygen-kwin.patch
 
 BuildRequires(pre): kde4libs-devel rpm-build-python
 BuildRequires(pre): NetworkManager-devel
@@ -523,7 +524,6 @@ __EOF__
 %patch25 -p1
 %if_enabled systemd
 %patch26 -p0
-%patch27 -p1
 %endif
 #
 %patch700 -p1
@@ -578,6 +578,8 @@ __EOF__
 %patch1044 -p1
 %patch1045 -p1
 %patch1046 -p1
+%patch1047 -p1
+%patch1048 -p1
 
 grep -q X-KDE-RootOnly kdm/kcm/kdm.desktop \
     || echo "X-KDE-RootOnly=true" >>kdm/kcm/kdm.desktop
@@ -953,6 +955,11 @@ chmod 0755 %buildroot/%_sysconfdir/firsttime.d/kdm4
 %_K4dbus_interfaces/*
 
 %changelog
+* Fri Feb 22 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.0-alt5
+- increase default window buttons size
+- increase default oxygen scrollbar width
+- update from 4.10 branch
+
 * Fri Feb 08 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.0-alt4
 - fix desktop pager layout
 
