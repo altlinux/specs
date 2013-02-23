@@ -9,7 +9,7 @@
 %define rname kdelibs
 Name: kde4libs
 Version: %major.%minor.%bugfix
-Release: alt4
+Release: alt5
 
 %define conflictver %major.%minor-alt0.0.1
 %define conflictver_kdevelop 3.4.1-alt0.0.1
@@ -104,6 +104,7 @@ Patch1030: kdelibs-4.9.1-alt-platform-profile.patch
 Patch1031: kdelibs-4.8.5-alt-add-desktop-translations.patch
 Patch1032: kdelibs-4.9.1-alt-policy-dir.patch
 Patch1033: kdelibs-4.9.1-alt-cmake-spaces.patch
+Patch1034: kdelibs-4.10.0-alt-find-samba.patch
 
 Patch3000: kdelibs-4.4.92-alt-alternate-kconf_update_bin-path.patch
 
@@ -194,6 +195,7 @@ applications for KDE 4.
 %patch1031 -p1
 %patch1032 -p1
 %patch1033 -p1
+%patch1034 -p1
 
 %patch3000 -p1
 
@@ -313,6 +315,9 @@ ln -sf `relative %buildroot/%_kde4_bindir/kde4-config %buildroot/%_K4bindir/kde4
 %_K4includedir/*
 
 %changelog
+* Sat Feb 23 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.0-alt5
+- fix find libsmbclient includes
+
 * Fri Feb 22 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.0-alt4
 - update from 4.10 branch
 
