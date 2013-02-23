@@ -2,7 +2,7 @@
 
 Name: wpa_supplicant
 Version: 2.0
-Release: alt1
+Release: alt2
 
 Summary: wpa_supplicant is an implementation of the WPA Supplicant component
 License: BSD
@@ -14,7 +14,7 @@ Source1: src-%version-%release.tar
 
 Requires: dbus
 
-BuildRequires: libdbus-devel libnl-devel >= 1.1
+BuildRequires: libdbus-devel libnl-devel >= 3.2.21
 BuildRequires: docbook-utils libncurses-devel libpcsclite-devel libreadline-devel libssl-devel
 BuildRequires: gcc-c++ inkscape libqt4-devel libxml2-devel
 
@@ -50,7 +50,7 @@ sed -e '' %{?_enable_privsep:-e 's,^.\+CONFIG_PRIVSEP=.\+,CONFIG_PRIVSEP=y,'} \
     < %name/defconfig > %name/.config
 
 %build
-make -C %name
+make -C %name CONFIG_LIBNL32=1
 make -C %name/doc/docbook man
 
 %install
@@ -120,6 +120,9 @@ tar c -C %name/wpa_gui-qt4/icons hicolor |tar x -C %buildroot%_iconsdir
 %_iconsdir/hicolor/*/*/*.png
 
 %changelog
+* Fri Feb 22 2013 Terechkov Evgenii <evg@altlinux.org> 2.0-alt2
+- Fix build with libnl3
+
 * Thu Jan 31 2013 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.0-alt1
 - 2.0 released
 
