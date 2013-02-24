@@ -3,7 +3,7 @@ BuildRequires: unzip
 # END SourceDeps(oneline)
 Name:           crystal-stacker
 Version:        1.5
-Release:        alt2_14
+Release:        alt2_15
 Summary:        Falling blocks, match 3 or more of the same color crystals
 Group:          Games/Other
 License:        Crystal Stacker
@@ -22,21 +22,18 @@ gonally to destroy them. For every 45 crystals you destroy, the level increases
 and the crystals fall faster. The higher the level, the more points you are   
 awarded for destroying crystals.
 
-
 %package theme-editor
-Summary:	Themes editor for Crystal Stacker
-Group:		Games/Other
-Requires:	%{name} = %{version}
+Summary:        Themes editor for Crystal Stacker
+Group:          Games/Other
+Requires:       %{name} = %{version}
 
 %description theme-editor
 Create new Themes for Crystal Stacker
-
 
 %prep
 %setup -q -c
 %patch0 -p1
 %{__sed} -i 's/\r//' ce/*.txt cs/*.txt
-
 
 %build
 export CC="gcc -Wl,--no-as-needed"
@@ -53,7 +50,6 @@ popd
 convert cs/cs.ico %{name}.png
 convert ce/ce.ico %{name}-theme-editor.png
 
-
 %install
 pushd cs/source
 make -f Makefile.unix install PREFIX=$RPM_BUILD_ROOT%{_prefix}
@@ -65,16 +61,11 @@ popd
 
 # below is the desktop file and icon stuff.
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/applications
-desktop-file-install             \
-  --dir $RPM_BUILD_ROOT%{_datadir}/applications \
-  %{SOURCE1}
-desktop-file-install             \
-  --dir $RPM_BUILD_ROOT%{_datadir}/applications \
-  %{SOURCE2}
+desktop-file-install --dir $RPM_BUILD_ROOT%{_datadir}/applications %{SOURCE1}
+desktop-file-install --dir $RPM_BUILD_ROOT%{_datadir}/applications %{SOURCE2}
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/32x32/apps
 install -p -m 644 %{name}.png %{name}-theme-editor.png \
   $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/32x32/apps
-
 
 %files
 %doc cs/*.txt
@@ -91,8 +82,10 @@ install -p -m 644 %{name}.png %{name}-theme-editor.png \
 %{_datadir}/applications/%{name}-theme-editor.desktop
 %{_datadir}/icons/hicolor/32x32/apps/%{name}-theme-editor.png
 
-
 %changelog
+* Sun Feb 24 2013 Igor Vlasenko <viy@altlinux.ru> 1.5-alt2_15
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 1.5-alt2_14
 - update to new release by fcimport
 
