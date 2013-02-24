@@ -1,12 +1,14 @@
 Name:           geekcode
 Version:        1.7.3
-Release:        alt2_10
+Release:        alt2_11
 Summary:        Geek Code generator
 Summary(pl):    Generator Geek Code
 Group:          Games/Other
 License:        GPLv2+
 URL:            http://sourceforge.net/projects/%{name}/
 Source0:        http://downloads.sourceforge.net/%{name}/%{name}-%{version}.tar.gz
+# sf#879355
+Patch0:         %{name}-1.7.3-choice.patch
 Source44: import.info
 
 %description
@@ -22,6 +24,7 @@ gdziekolwiek indziej, gdzie chcemy się pochwalić swoją geekowatością.
 %prep
 %setup -q
 sed -i 's/\r//' COPYING
+%patch0 -p1
 
 %build
 make %{?_smp_mflags} CFLAGS="%{optflags}"
@@ -35,6 +38,9 @@ install -m 755 geekcode %{buildroot}%{_bindir}
 %{_bindir}/%{name}
 
 %changelog
+* Sun Feb 24 2013 Igor Vlasenko <viy@altlinux.ru> 1.7.3-alt2_11
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 1.7.3-alt2_10
 - update to new release by fcimport
 
