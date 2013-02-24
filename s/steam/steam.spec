@@ -1,5 +1,5 @@
 Name: steam
-Version: 1.0.0.29
+Version: 1.0.0.33
 Release: alt1
 
 Summary: Installer for the Steam software distribution service
@@ -13,7 +13,7 @@ Vendor: Valve Corporation
 ExclusiveArch: %ix86
 
 Source0: http://repo.steampowered.com/%name/pool/%name/s/%name/%{name}_%version.tar.gz
-Patch0: %name-%version-alt.patch
+Patch0: %name-apt-alt.patch
 
 Requires: glibc >= 2.15
 Requires: libGL
@@ -29,7 +29,7 @@ installation, automatic updates, achievements, SteamCloud synchronized
 savegame and screenshot functionality, and many social features.
 
 %prep
-%setup -n %name-%version
+%setup -n %name
 %patch0 -p1
 
 %install
@@ -50,6 +50,9 @@ savegame and screenshot functionality, and many social features.
 %_pixmapsdir/*
 
 %changelog 
+* Sun Feb 24 2013 Nazarov Denis <nenderus@altlinux.org> 1.0.0.33-alt1
+- Version 1.0.0.33
+
 * Wed Feb 20 2013 Nazarov Denis <nenderus@altlinux.org> 1.0.0.29-alt1
 - Version 1.0.0.29
 
