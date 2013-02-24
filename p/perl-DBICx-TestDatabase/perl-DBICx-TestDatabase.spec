@@ -5,7 +5,7 @@ BuildRequires: perl(CPAN.pm) perl(Config.pm) perl(DBIx/Class/Schema.pm) perl(Fcn
 Name:           perl-DBICx-TestDatabase 
 Summary:        Create a temporary database from a DBIx::Class::Schema 
 Version:        0.04
-Release:        alt2_5
+Release:        alt2_6
 License:        GPL+ or Artistic 
 Group:          Development/Perl
 Source0:        http://search.cpan.org/CPAN/authors/id/J/JR/JROCKWAY/DBICx-TestDatabase-%{version}.tar.gz
@@ -64,6 +64,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Sun Feb 24 2013 Igor Vlasenko <viy@altlinux.ru> 0.04-alt2_6
+- update to new release by fcimport
+
 * Mon Dec 10 2012 Igor Vlasenko <viy@altlinux.ru> 0.04-alt2_5
 - moved to Sisyphus
 
