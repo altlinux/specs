@@ -1,15 +1,16 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/gconftool-2 /usr/bin/glib-gettextize ElectricFence gcc-c++ libreadline-devel perl(Text/Wrap.pm) python-devel
 # END SourceDeps(oneline)
+%define fedora 19
 Name:           teg
 Version:        0.11.2
-Release:        alt2_29
+Release:        alt2_30
 Summary:        Turn based strategy game
 Group:          Games/Other
 License:        GPLv2
 URL:            http://teg.sourceforge.net/
 Source0:        http://downloads.sourceforge.net/%{name}/%{name}-%{version}.tar.bz2
-Source1:        fedora-teg.desktop
+Source1:        teg.desktop
 Patch0:         teg_libxml.patch
 #Patch1:         teg_themes.patch
 #Patch2:         teg-disable-help.patch
@@ -50,7 +51,10 @@ make install DESTDIR=$RPM_BUILD_ROOT INSTALL="install -p"
 mkdir -p $RPM_BUILD_ROOT/%{_datadir}/pixmaps/
 mv -f $RPM_BUILD_ROOT/%{_datadir}/pixmaps/teg_icono.png $RPM_BUILD_ROOT/%{_datadir}/pixmaps/teg.png
 rm -rf $RPM_BUILD_ROOT/%{_datadir}/gnome/apps/Games/teg.desktop
-desktop-file-install --vendor="fedora"               \
+desktop-file-install \
+%if 0%{?fedora} && 0%{?fedora} < 19
+                 \
+%endif
   --dir=$RPM_BUILD_ROOT/%{_datadir}/applications %{SOURCE1}
 patch -p1 < %{SOURCE2}
 mv -f $RPM_BUILD_DIR/%{?buildsubdir}/docs/gnome-help/C/teg.sgml $RPM_BUILD_ROOT/%{_datadir}/gnome/help/teg/C/teg.xml
@@ -65,7 +69,11 @@ mv -f $RPM_BUILD_DIR/%{?buildsubdir}/docs/gnome-help/C/teg.sgml $RPM_BUILD_ROOT/
 %{_datadir}/pixmaps/teg_pix/
 %{_datadir}/pixmaps/teg.png
 %{_datadir}/gnome/help/teg/
-%{_datadir}/applications/fedora-teg.desktop
+%if 0%{?fedora} && 0%{?fedora} < 19
+%{_datadir}/applications/teg.desktop
+%else
+%{_datadir}/applications/teg.desktop
+%endif
 %{_sysconfdir}/gconf/schemas/teg.schemas
 
 %pre
@@ -87,6 +95,9 @@ export GCONF_CONFIG_SOURCE=`gconftool-2 --get-default-source`
 gconftool-2 --makefile-install-rule \
   %{_sysconfdir}/gconf/schemas/teg.schemas > /dev/null || :
 %changelog
+* Sun Feb 24 2013 Igor Vlasenko <viy@altlinux.ru> 0.11.2-alt2_30
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.11.2-alt2_29
 - update to new release by fcimport
 
