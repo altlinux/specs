@@ -1,4 +1,4 @@
-%define status beta2
+%define status beta3
 
 Name: hydrogen
 Version: 0.9.6
@@ -71,6 +71,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %doc -P AUTHORS ChangeLog README.txt
 
 %changelog
+* Mon Feb 25 2013 Alex Karpov <karpov@altlinux.ru> 0.9.6-alt0.beta3
+- new beta
+
 * Tue Jul 03 2012 Alex Karpov <karpov@altlinux.ru> 0.9.6-alt0.beta2
 - new beta
 
