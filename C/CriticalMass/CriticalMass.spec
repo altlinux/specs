@@ -3,7 +3,7 @@ BuildRequires: gcc-c++ libGL-devel libSDL-devel zlib-devel
 # END SourceDeps(oneline)
 Name:           CriticalMass
 Version:        1.5
-Release:        alt2_6
+Release:        alt2_7
 Summary:        SDL/OpenGL space shoot'em up game also known as critter
 Group:          Games/Other
 License:        GPLv2+
@@ -27,14 +27,12 @@ unprepared, your government was unable to defend its precious resources. As
 a last effort to recapture some of the "goodies", you have been placed into
 a tiny spacecraft and sent after them.
 
-
 %prep
 %setup -q
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
 sed -i 's/curl-gnutls/curl/g' configure
-
 
 %build
 %configure
@@ -44,9 +42,8 @@ sed -i 's/curl-gnutls/curl/g' configure
 CFLAGS="$RPM_OPT_FLAGS -D_GNU_SOURCE=1 -D_REENTRANT -DGAME_HAS_HERO_PARTICLE -I/usr/include/SDL"
 make CFLAGS="$CFLAGS" CXXFLAGS="$CFLAGS -std=c++0x"
 
-
 %install
-make install DESTDIR=$RPM_BUILD_ROOT
+%makeinstall_std
 ln -s opengl-game-wrapper.sh $RPM_BUILD_ROOT%{_bindir}/critter-wrapper
 
 # remove unwanted utility
@@ -54,13 +51,10 @@ rm $RPM_BUILD_ROOT%{_bindir}/Packer
 
 # below is the desktop file and icon stuff.
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/applications
-desktop-file-install             \
-  --dir $RPM_BUILD_ROOT%{_datadir}/applications \
-  %{SOURCE1}
+desktop-file-install --dir $RPM_BUILD_ROOT%{_datadir}/applications %{SOURCE1}
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/256x256/apps
 install -p -m 644 critter.png \
   $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/256x256/apps
-
 
 %files
 %doc COPYING Readme.html TODO
@@ -70,8 +64,10 @@ install -p -m 644 critter.png \
 %{_datadir}/applications/%{name}.desktop
 %{_datadir}/icons/hicolor/256x256/apps/critter.png
 
-
 %changelog
+* Sun Feb 24 2013 Igor Vlasenko <viy@altlinux.ru> 1.5-alt2_7
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 1.5-alt2_6
 - update to new release by fcimport
 
