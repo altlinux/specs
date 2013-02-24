@@ -2,18 +2,20 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/g++ /usr/bin/perl gcc-c++
 # END SourceDeps(oneline)
+%add_optflags %optflags_shared
 Name:		libint
 Version:	1.1.4
-Release:	alt1_9
+Release:	alt1_11
 Summary:	A library for computing electron repulsion integrals efficiently
 Group:		System/Libraries
 License:	GPLv2+
 URL:		http://sourceforge.net/p/libint
 Source0:	http://downloads.sourceforge.net/libint/v1-releases/libint-%{version}.tar.gz
 # Required to build documentation
-BuildRequires:	texlive-base-bin
-BuildRequires:	texlive-latex-recommended
+BuildRequires: texlive-base-bin
+BuildRequires: texlive-latex-recommended
 Source44: import.info
+
 
 %description
 LIBINT computes the Coulomb and exchange integrals, which in electronic
@@ -102,6 +104,9 @@ find %{buildroot} -name *.so.*.* -exec chmod 755 {} \;
 
 
 %changelog
+* Sun Feb 24 2013 Igor Vlasenko <viy@altlinux.ru> 1.1.4-alt1_11
+- update to new release by fcimport
+
 * Wed Jan 16 2013 Igor Vlasenko <viy@altlinux.ru> 1.1.4-alt1_9
 - initial fc import
 
