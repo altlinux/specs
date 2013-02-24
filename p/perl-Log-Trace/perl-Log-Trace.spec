@@ -4,7 +4,7 @@ BuildRequires: perl(Fcntl.pm) perl(File/Spec/Functions.pm) perl-devel perl-podla
 # END SourceDeps(oneline)
 Name:       perl-Log-Trace 
 Version:    1.070 
-Release:    alt2_11
+Release:    alt2_12
 # lib/Log/Trace.pm -> GPLv2+ 
 License:    GPLv2+
 Group:      Development/Perl
@@ -52,6 +52,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Sun Feb 24 2013 Igor Vlasenko <viy@altlinux.ru> 1.070-alt2_12
+- converted for ALT Linux by srpmconvert tools
+
 * Tue Dec 11 2012 Igor Vlasenko <viy@altlinux.ru> 1.070-alt2_11
 - moved to Sisyphus (Tapper dep)
 
