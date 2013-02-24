@@ -1,19 +1,15 @@
 Name: libdvdcss
-Version: 1.2.10
-Release: alt2
-
+Version: 1.2.12
+Release: alt1
 Summary: A portable abstraction library for DVD decryption
 License: GPL
 Group: System/Libraries
-Url: http://www.videolan.org/libdvdcss
+Url: http://www.videolan.org/developers/libdvdcss.html
 
 Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
-Source: %name-%version.tar.bz2
-
-Patch0: %name-1.2.6-alt-more_headrs_makefile.patch
-Patch1: libdvdcss-1.2.10-alt-tmpdir.patch
-Patch2: libdvdcss-1.2.10-alt-version-script.patch
+Source: %name-%version.tar
+Patch: %name-%version-%release.patch
 
 BuildRequires: doxygen
 
@@ -35,10 +31,7 @@ This package contains development files required for building
 
 %prep
 %setup -q
-
-%patch0 -p1
-%patch1 -p1
-%patch2 -p1
+%patch -p1
 
 %build
 %autoreconf
@@ -60,6 +53,9 @@ This package contains development files required for building
 %_pkgconfigdir/*.pc
 
 %changelog
+* Sun Feb 24 2013 Valery Inozemtsev <shrek@altlinux.ru> 1.2.12-alt1
+- 1.2.12
+
 * Fri Nov 05 2010 Valery Inozemtsev <shrek@altlinux.ru> 1.2.10-alt2
 - rebuild
 
