@@ -5,7 +5,7 @@
 %add_python_req_skip Base
 Name:           vegastrike-data
 Version:        0.5.1
-Release:        alt2_2.r1
+Release:        alt2_3.r1
 Summary:        Data files for Vega Strike
 Group:          Games/Other
 License:        GPLv2+
@@ -115,6 +115,9 @@ cat data.dirs >> data.files
 
 
 %changelog
+* Sun Feb 24 2013 Igor Vlasenko <viy@altlinux.ru> 0.5.1-alt2_3.r1
+- update to new release by fcimport
+
 * Wed Sep 05 2012 Igor Vlasenko <viy@altlinux.ru> 0.5.1-alt2_2.r1
 - update to new release by fcimport
 
