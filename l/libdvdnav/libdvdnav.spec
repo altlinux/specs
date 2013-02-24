@@ -1,19 +1,19 @@
 Name: libdvdnav
-Version: 4.1.3
-Release: alt4
+Version: 4.2.0
+Release: alt1
 Summary: DVD Navigation library
 License: GPLv2+
 Group: System/Libraries
-URL: http://www.mplayerhq.hu/MPlayer/releases/dvdnav/
+URL: http://dvdnav.mplayerhq.hu/releases/
 Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
 Requires: libdvdcss
 
 Source: %name-%version.tar.bz2
 Patch0: libdvdnav-4.1.3-alt-dvdnavdir.patch
-Patch1: libdvdnav-4.1.3-alt-link.patch
+Patch1: libdvdnav-4.2.0-alt-link.patch
 Patch2: libdvdnav-4.1.3-alt-version-script.patch
-Patch3: libdvdnav-4.1.3-alt-config.patch
+Patch3: libdvdnav-4.2.0-alt-config.patch
 
 BuildRequires: libdvdread-devel doxygen
 
@@ -49,7 +49,7 @@ applications.
 %make docs -C doc 
 
 %install
-%make_install DESTDIR=%buildroot install
+%make DESTDIR=%buildroot install
 
 %files
 %doc AUTHORS README TODO
@@ -64,6 +64,9 @@ applications.
 %_datadir/aclocal/*.m4
 
 %changelog
+* Sun Feb 24 2013 Valery Inozemtsev <shrek@altlinux.ru> 4.2.0-alt1
+- 4.2.0
+
 * Fri May 04 2012 Valery Inozemtsev <shrek@altlinux.ru> 4.1.3-alt4
 - fixed #27197
 
