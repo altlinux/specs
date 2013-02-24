@@ -4,7 +4,7 @@ BuildRequires: perl(CPAN.pm) perl(Config.pm) perl(Fcntl.pm) perl(FindBin.pm) per
 # END SourceDeps(oneline)
 Name:       perl-DBIx-Class-DynamicDefault 
 Version:    0.04
-Release:    alt2_3
+Release:    alt2_4
 # lib/DBIx/Class/DynamicDefault.pm -> GPL+ or Artistic
 License:    GPL+ or Artistic 
 Group:      Development/Perl
@@ -48,6 +48,9 @@ make test
 %{perl_vendor_privlib}/DBIx/Class/*
 
 %changelog
+* Sun Feb 24 2013 Igor Vlasenko <viy@altlinux.ru> 0.04-alt2_4
+- update to new release by fcimport
+
 * Tue Dec 11 2012 Igor Vlasenko <viy@altlinux.ru> 0.04-alt2_3
 - moved to Sisyphus (Tapper dep)
 
