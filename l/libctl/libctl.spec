@@ -1,12 +1,11 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-fedora-compat
-BuildRequires: /usr/bin/docbook-to-man /usr/bin/docbook2html /usr/bin/doxygen /usr/bin/gtkdocize /usr/bin/guile /usr/bin/guile-config /usr/bin/indent /usr/bin/valgrind gcc-c++ imlib2-devel libGL-devel libX11-devel libXext-devel libaccounts-glib-devel libexpat-devel libfreetype-devel libreadline-devel pkgconfig(dbus-1) pkgconfig(glib-2.0) pkgconfig(gobject-2.0) unzip zlib-devel
+BuildRequires: /usr/bin/guile /usr/bin/guile-config /usr/bin/indent guile18-devel libnlopt-devel libreadline-devel
 # END SourceDeps(oneline)
 BuildRequires: chrpath
 %add_optflags %optflags_shared
 Name:           libctl
 Version:        3.2.1
-Release:        alt1
+Release:        alt1_1
 Summary:        Guile-based support for flexible control files
 
 Group:          System/Libraries
@@ -16,8 +15,8 @@ Group:          System/Libraries
 License:        GPLv2+
 URL:            http://ab-initio.mit.edu/wiki/index.php/Libctl
 Source0:        http://ab-initio.mit.edu/libctl/libctl-%{version}.tar.gz
-BuildRequires:  gcc-fortran guile18-devel
-Requires:       guile18
+BuildRequires:  gcc-fortran guile-devel
+Requires:       guile
 Source44: import.info
 
 %description
@@ -36,7 +35,6 @@ This package contains the development files for libctl.
 %setup -q
 
 %build
-%autoreconf
 %configure F77=gfortran --enable-shared --disable-static \
   --includedir=%{_includedir}/ctl LDFLAGS='%{optflags} -lm'
 make %{?_smp_mflags}
@@ -45,10 +43,9 @@ make %{?_smp_mflags}
 make install DESTDIR=%{buildroot}
 rm -f %{buildroot}%{_libdir}/*.la
 # kill rpath
-for i in %buildroot{%_bindir,%_libdir,/usr/libexec,/usr/lib,/usr/sbin}/*; do
+for i in `find %buildroot{%_bindir,%_libdir,/usr/libexec,/usr/lib,/usr/sbin} -type f -perm -111`; do
 	chrpath -d $i ||:
 done
-	    
 
 %files
 %doc COPYING AUTHORS NEWS 
@@ -63,6 +60,9 @@ done
 %{_datadir}/libctl
 
 %changelog
+* Sun Feb 24 2013 Igor Vlasenko <viy@altlinux.ru> 3.2.1-alt1_1
+- update to new release by fcimport
+
 * Tue Oct 23 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.2.1-alt1
 - Version 3.2.1
 
