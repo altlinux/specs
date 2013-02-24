@@ -1,8 +1,8 @@
 Name: steam
 Version: 1.0.0.33
-Release: alt1
+Release: alt2
 
-Summary: Installer for the Steam software distribution service
+Summary: Launcher for the Steam software distribution service
 License: Proprietary
 Group: Games/Other
 
@@ -50,6 +50,9 @@ savegame and screenshot functionality, and many social features.
 %_pixmapsdir/*
 
 %changelog 
+* Sun Feb 24 2013 Nazarov Denis <nenderus@altlinux.org> 1.0.0.33-alt2
+- Fix summary title
+
 * Sun Feb 24 2013 Nazarov Denis <nenderus@altlinux.org> 1.0.0.33-alt1
 - Version 1.0.0.33
 
