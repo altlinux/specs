@@ -7,7 +7,7 @@
 %define builddir %_arch-alt-linux-gnu-m%bits
 
 Name: reduce
-Version: 20120302
+Version: 20121126
 Release: alt1
 Summary: REDUCE algebra system, Open Source release
 License: BSD / GPL / LGPL
@@ -88,53 +88,62 @@ Type1 fonts for REDUCE algebra system.
 %build
 export TARGET=%_arch
 export BITS=%bits
-export CXXFLAGS="-g -DHAVE_LIBXFT"
+export CXXFLAGS="-g -DHAVE_LIBXFT -I%_includedir/freetype2"
 export TOPDIR=$PWD
+export FOXDIR=$TOPDIR/cslbuild/%builddir/fox
+export FOXINC=$TOPDIR/csl/fox
 #autoreconf
 alias strip=echo
-./autogen.sh
+
+#./autogen.sh
+%add_optflags
 %configure \
 	--prefix=/ \
-	--bindir=%_libexecdir/%name \
+	--bindir=%_libdir/%name \
 	--enable-release \
 	--enable-threadsafe \
+	--with-gui \
 	--with-csl \
 	--with-opengl \
 	--with-xft \
 	--with-xshm \
 	--with-m%bits
-sed -i "s|\(%builddir\)/lib|\1/fox/src|g" \
-	cslbuild/%builddir/csl/Makefile
-sed -i "s|\(%builddir\)/src|\1/fox/src|g" \
-	cslbuild/%builddir/csl/Makefile
-%make_build all DESTDIR=%buildroot%_libexecdir/%name
+#sed -i "s|\(%builddir\)/lib|\1/fox/src|g" \
+#	cslbuild/%builddir/csl/Makefile
+#sed -i "s|\(%builddir\)/src|\1/fox/src|g" \
+#	cslbuild/%builddir/csl/Makefile
 
 %install
 export TOPDIR=$PWD
 pushd cslbuild/%builddir
-sed -i 's|#\(INSTALL_PROGRAM_ENV.*\)|\1|' csl/Makefile
-%makeinstall_std -C fox
-%makeinstall_std -C csl
+%make DESTDIR=$TOPDIR/built/%name 
 popd
 
+%make_build all DESTDIR=$TOPDIR/built/%name
+#pushd cslbuild/%builddir
+#sed -i 's|#\(INSTALL_PROGRAM_ENV.*\)|\1|' csl/Makefile
+#makeinstall_std -C fox
+#makeinstall_std -C csl
+#popd
+
 install -d %buildroot%_bindir
-install -d %buildroot%_libexecdir/%name
+install -d %buildroot%_libdir/%name
 install -d %buildroot%_docdir/%name/buglist
 install -d %buildroot%_desktopdir
 
 pushd cslbuild/%builddir/csl
 for i in bootstrapreduce fontdemo foxdemo fwindemo makeheaders \
-	objtype showmathdemo termdemo dyndemo dynmodule.so
+	objtype showmathdemo termdemo reduce reduce.img csl
 do
-	install -m755 $i %buildroot%_libexecdir/%name
+	install -m755 $i %buildroot%_libdir/%name
 done
 
 convert reduce.doc/redlogo.gif reduce.doc/redlogo.png
 #rm -f csl/reduce.doc/redlogo.gif
 sed -i -e 's/redlogo\.gif/redlogo.png/g' reduce.doc/*.html
 
-cp -fR reduce.doc %buildroot%_libexecdir/%name
-install -m644 bootstrapreduce.img %buildroot%_libexecdir/%name
+cp -fR reduce.doc %buildroot%_libdir/%name
+install -m644 bootstrapreduce.img %buildroot%_libdir/%name
 popd
 sed -e 's/VERTAG/%version/g' < %SOURCE1 > %buildroot%_desktopdir/reduce.desktop
 
@@ -143,13 +152,13 @@ cat <<EOF >%buildroot%_bindir/reduce
 
 ulimit -Ss unlimited
 
-%_libexecdir/%name/%name "\$@"
+%_libdir/%name/%name "\$@"
 EOF
 chmod +x %buildroot%_bindir/reduce
 
 # packages
 
-cp -fR packages %buildroot%_libexecdir/%name/
+cp -fR packages %buildroot%_libdir/%name/
 
 # fonts
 
@@ -180,7 +189,7 @@ popd
 
 sed -i -e 's/^Encoding.*$//' %buildroot%_desktopdir/reduce.desktop
 
-pushd %buildroot%_libexecdir/%name
+pushd %buildroot%_libdir/%name
 rm -f fox-config install reswrap
 popd
 
@@ -194,7 +203,7 @@ popd
 %files
 %doc BUGS README
 %_bindir/*
-%_libexecdir/%name
+%_libdir/%name
 %_desktopdir/%name.desktop
 
 %files doc
@@ -205,6 +214,9 @@ popd
 %files -n fonts-type1-%name -f %name.files
 
 %changelog
+* Sun Feb 24 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 20121126-alt1
+- New snapshot
+
 * Fri Mar 02 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 20120302-alt1
 - New snapshot
 
