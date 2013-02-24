@@ -1,6 +1,6 @@
 Name: qpdfview
-Version: 0.3.7
-Release: alt2
+Version: 0.4
+Release: alt1
 Summary: Tabbed PDF viewer using the poppler library
 License: GPLv2
 Group: Office
@@ -10,7 +10,8 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 
 BuildPreReq: libpoppler-devel libqt4-devel libcups-devel
-BuildPreReq: libpoppler-qt4-devel gcc-c++
+BuildPreReq: libpoppler-qt4-devel gcc-c++ libmagic-devel
+BuildPreReq: libdjvu-devel libspectre-devel
 
 Requires: libqt4-sql-sqlite
 
@@ -22,7 +23,7 @@ qpdfview is a tabbed PDF viewer using the poppler library.
 
 %build
 export PATH=%_qt4dir/bin:$PATH
-qmake
+qmake qpdfview.pro
 %make_build
 
 %install
@@ -48,8 +49,12 @@ ln -s %_datadir/%name/%name.svg \
 %_liconsdir/*
 %_miconsdir/*
 %_niconsdir/*
+%_libexecdir/%name
 
 %changelog
+* Sun Feb 24 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4-alt1
+- Version 0.4 (ALT #28589)
+
 * Thu Feb 07 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.7-alt2
 - Added requirement on libqt4-sql-sqlite (ALT #28519)
 
