@@ -1,7 +1,7 @@
 %define oname ptlib
 
 Name: libpt
-Version: 2.10.9
+Version: 2.10.10
 Release: alt1
 Summary: Portable Tools Libary
 License: MPL
@@ -98,6 +98,9 @@ cd ..
 %_libdir/%oname-%version/devices/videoinput/*_pwplugin.so
 
 %changelog
+* Mon Feb 25 2013 Alexey Shabalin <shaba@altlinux.ru> 2.10.10-alt1
+- 2.10.10
+
 * Tue Dec 18 2012 Alexey Shabalin <shaba@altlinux.ru> 2.10.9-alt1
 - 2.10.9
 

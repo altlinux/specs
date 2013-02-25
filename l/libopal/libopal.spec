@@ -1,5 +1,5 @@
 Name: libopal
-Version: 3.10.9
+Version: 3.10.10
 Release: alt1
 Epoch: 1
 Summary: Library for H323 spec
@@ -55,6 +55,9 @@ Header files for development with opal.
 %_pkgconfigdir/*.pc
 
 %changelog
+* Mon Feb 25 2013 Alexey Shabalin <shaba@altlinux.ru> 1:3.10.10-alt1
+- 3.10.10
+
 * Tue Dec 18 2012 Alexey Shabalin <shaba@altlinux.ru> 1:3.10.9-alt1
 - 3.10.9
 
