@@ -1,8 +1,8 @@
 %def_enable static
 
 Name: libgpg-error
-Version: 1.10
-Release: alt2
+Version: 1.11
+Release: alt1
 
 Group: System/Libraries
 Summary: Error library for GnuPG and related projects
@@ -83,6 +83,9 @@ install -m 0644 %SOURCE2 src/
 %endif
 
 %changelog
+* Mon Feb 25 2013 Sergey V Turchin <zerg@altlinux.org> 1.11-alt1
+- new version
+
 * Fri Feb 25 2011 Sergey V Turchin <zerg@altlinux.org> 1.10-alt2
 - add old versioned symbols to library
 
