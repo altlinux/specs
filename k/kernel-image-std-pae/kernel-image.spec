@@ -1,5 +1,5 @@
 Name: kernel-image-std-pae
-Release: alt1
+Release: alt1.1
 epoch:1 
 %define kernel_base_version	3.7
 %define kernel_sublevel	.9
@@ -594,6 +594,9 @@ find %buildroot%_docdir/kernel-doc-%base_flavour-%version/DocBook \
 %exclude %modules_dir/kernel/drivers/staging/media/lirc/
 
 %changelog
+* Mon Feb 25 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.7.9-alt1.1
+- CVE-2013-1763 fixed
+
 * Mon Feb 18 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.7.9-alt1
 - 3.7.9
 - patches for correct /proc permissions from ldv@ applied
