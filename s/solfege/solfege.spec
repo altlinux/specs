@@ -1,5 +1,5 @@
 Name: solfege
-Version: 3.20.3
+Version: 3.20.7
 Release: alt1
 
 Summary: Eartraining program for GNOME
@@ -121,6 +121,9 @@ find %buildroot%_datadir/%name/ -name '*.pyc' -delete
 %doc AUTHORS FAQ README COPYING INSTALL changelog
 
 %changelog
+* Mon Feb 25 2013 Alex Karpov <karpov@altlinux.ru> 3.20.7-alt1
+- new version
+
 * Wed Oct 12 2011 Alex Karpov <karpov@altlinux.ru> 3.20.3-alt1
 - new version
 
