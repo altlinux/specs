@@ -1,4 +1,4 @@
-%define git_date .git20130215
+%define git_date .git20130225
 #define git_date %nil
 
 %define dbus_version 1.1
@@ -6,7 +6,7 @@
 %define libgudev_version 143
 
 Name: ModemManager
-Version: 0.6.0.0
+Version: 0.7.990
 Release: alt1%git_date
 License: %gpl2plus
 Group: System/Configuration/Networking
@@ -21,16 +21,62 @@ BuildRequires(pre): rpm-build-licenses
 
 BuildRequires: libdbus-glib-devel
 BuildRequires: libgudev-devel >= %libgudev_version
+BuildRequires: libqmi-glib-devel
 BuildRequires: intltool
 BuildRequires: ppp-devel
 BuildRequires: libpolkit-devel
-BuildRequires: gtk-doc
+BuildRequires: gtk-doc dia
+
+# For tests
+BuildRequires: /dev/pts
 
 %description
 ModemManager provides a DBus interface to communicate with
 mobile broadband (GSM, CDMA, UMTS, ...) cards. Implements
 a loadable plugin interface to add work-arounds for
 non standard devices.
+
+%package devel
+License: %lgpl2plus
+Group: Development/C
+Summary: Headers for adding ModemManager support to applications
+
+%description devel
+This package contains various headers accessing some ModemManager
+functionality from applications.
+
+%package devel-doc
+Group: Development/Documentation
+Summary: Development documentation for %name
+
+%description devel-doc
+%summary
+
+%package -n libmm-glib
+License: %lgpl2plus
+Summary: Libraries for adding ModemManager support to applications that use glib
+Group: System/Libraries
+
+%description -n libmm-glib
+This package contains the libraries that make it easier to use some
+ModemManager functionality from applications that use glib.
+
+%package -n libmm-glib-devel
+License: %lgpl2plus
+Summary: Development files for libmm-glib
+Group: Development/C
+Requires: libmm-glib = %version-%release
+
+%description -n libmm-glib-devel
+This package contains libraries and header files for
+developing applications that use libmm-glib.
+
+%package -n libmm-glib-devel-doc
+Group: Development/Documentation
+Summary: Development documentation for libmm-glib
+
+%description -n libmm-glib-devel-doc
+%summary
 
 %prep
 %setup -n %name-%version
@@ -42,7 +88,9 @@ non standard devices.
 	--disable-static \
 	--with-udev-base-dir=/lib/udev \
 	--with-polkit \
-	--with-docs
+	--with-systemdsystemunitdir=%_unitdir \
+	--with-docs \
+	--with-tests
 
 %make_build
 
@@ -59,21 +107,41 @@ make check
 %dir %_libdir/ModemManager/
 %_libdir/ModemManager/*.so
 %_sbindir/*
+%_bindir/mmcli
 %_sysconfdir/dbus-1/system.d/*.conf
 %_datadir/dbus-1/interfaces/*.xml
 /lib/udev/rules.d/*
 %_iconsdir/hicolor/*/apps/*
 %_datadir/polkit-1/actions/*.policy
+%_unitdir/*.service
+%doc %_man8dir/*.*
 
 %exclude %_libdir/ModemManager/*.la
 %exclude %_libdir/pppd/*/mm-test-pppd-plugin.la
 %exclude %_libdir/pppd/*/mm-test-pppd-plugin.so
 
-# Not needed to be packaged now.
-# Maybe to package it later as the devel subpackage.
-%exclude %_includedir/mm/ModemManager.h
+%files devel
+%_includedir/%name
+%_pkgconfigdir/%name.pc
+
+%files devel-doc
+%doc %_datadir/gtk-doc/html/%name
+
+%files -n libmm-glib
+%_libdir/libmm-glib.so.*
+
+%files -n libmm-glib-devel
+%_libdir/libmm-glib.so
+%_includedir/libmm-glib
+%_pkgconfigdir/mm-glib.pc
+
+%files -n libmm-glib-devel-doc
+%doc %_datadir/gtk-doc/html/libmm-glib
 
 %changelog
+* Mon Feb 25 2013 Mikhail Efremov <sem@altlinux.org> 0.7.990-alt1.git20130225
+- upstream git snapshot (master branch).
+
 * Tue Feb 19 2013 Mikhail Efremov <sem@altlinux.org> 0.6.0.0-alt1.git20130215
 - upstream git snapshot (MM_06 branch).
 

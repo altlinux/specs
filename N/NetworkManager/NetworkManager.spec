@@ -14,7 +14,7 @@
 
 Name: NetworkManager
 Version: 0.9.8.0
-Release: alt1%git_date
+Release: alt2%git_date
 License: %gpl2plus
 Group: System/Configuration/Networking
 Summary: Network Link Manager and User Applications
@@ -43,6 +43,7 @@ BuildRequires: libpolkit1-devel libnss-devel libgio-devel libuuid-devel gtk-doc
 BuildRequires: libgudev-devel
 BuildRequires: libgnome-bluetooth-devel
 BuildRequires: iptables libsoup-devel
+BuildRequires: libmm-glib-devel
 %{?_enable_wimax:BuildRequires: libiWmxSdk-devel}
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel libgudev-gir-devel}
 %{?_enable_systemd:BuildRequires: systemd-devel libsystemd-login-devel}
@@ -56,7 +57,7 @@ Requires: ppp-pppoe
 Requires: dnsmasq
 Requires: openresolv
 Requires: libshell
-Requires: ModemManager >= 0.2
+Requires: ModemManager >= 0.7
 Requires: NetworkManager-glib = %version-%release
 Requires: nm-dhcp-client
 
@@ -178,6 +179,7 @@ sed -i 's;^SUBDIRS=\. tests;#SUBDIRS=. tests;' libnm-glib/Makefile.am
 	--disable-ifcfg-suse \
 	--disable-ifupdown \
 	--disable-ifnet \
+	--with-modem-manager-1 \
 	--enable-introspection=auto \
 	--enable-more-warnings=error
 
@@ -314,6 +316,10 @@ fi
 %exclude %_libdir/pppd/%ppp_version/*.la
 
 %changelog
+* Mon Feb 25 2013 Mikhail Efremov <sem@altlinux.org> 0.9.8.0-alt2
+- Enable build with ModemManager-0.7.x.
+- etcnet-alt: Fix connections uuid.
+
 * Thu Feb 21 2013 Mikhail Efremov <sem@altlinux.org> 0.9.8.0-alt1
 - Updated to 0.9.8.0.
 
