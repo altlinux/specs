@@ -1,8 +1,6 @@
 Name: enscript
 Version: 1.6.4
-Release: alt3.qa1
-
-Packager: Stanislav Ievlev <inger@altlinux.org>
+Release: alt4
 
 Summary: Converts plain ASCII to PostScript
 License: GPL
@@ -50,7 +48,7 @@ changing fonts.
 %patch8 -p1
 %patch9 -p1
 
-%autoreconf
+autoreconf -fiv
 
 %build
 %add_optflags -D_GNU_SOURCE
@@ -86,6 +84,9 @@ cd -
 
 
 %changelog
+* Mon Feb 25 2013 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.6.4-alt4
+- fixed build on arm
+
 * Thu Nov 12 2009 Repocop Q. A. Robot <repocop@altlinux.org> 1.6.4-alt3.qa1
 - NMU (by repocop): the following fixes applied:
   * obsolete-call-in-post-install-info for enscript
