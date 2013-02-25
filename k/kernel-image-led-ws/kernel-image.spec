@@ -21,7 +21,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.0.66
-Release: alt2
+Release: alt3
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -515,6 +515,7 @@ Patch0630: linux-%kernel_branch.43-fix-drivers-target.patch
 
 Patch0641: linux-%kernel_branch.42-fix-drivers-telephony--ixj.patch
 
+Patch0650: linux-%kernel_branch.66-fix-drivers-tty.patch
 Patch0651: linux-%kernel_branch.58-fix-drivers-tty--pty.patch
 Patch0652: linux-%kernel_branch.42-fix-drivers-tty-serial--8250.patch
 Patch0653: linux-%kernel_branch.42-fix-drivers-tty-serial--8250_pci.patch
@@ -548,7 +549,7 @@ Patch0702: linux-%kernel_branch.51-fix-drivers-watchdog--iTCO_wdt.patch
 
 Patch0711: linux-%kernel_branch.42-fix-firmware--vicam.patch
 
-Patch0720: linux-%kernel_branch.61-fix-fs.patch
+Patch0720: linux-%kernel_branch.65-fix-fs.patch
 Patch0721: linux-%kernel_branch.51-fix-fs--anon_inodes.patch
 Patch0722: linux-%kernel_branch.42-fix-fs--bio-integrity.patch
 Patch0723: linux-%kernel_branch.53-fix-fs--block.patch
@@ -566,7 +567,7 @@ Patch0734: linux-%kernel_branch.56-fix-fs-fat.patch
 Patch0735: linux-%kernel_branch.42-fix-fs-hfs.patch
 Patch0736: linux-%kernel_branch.54-fix-fs-jbd.patch
 Patch0737: linux-%kernel_branch.62-fix-fs-logfs.patch
-Patch0738: linux-%kernel_branch.62-fix-fs-nfs.patch
+Patch0738: linux-%kernel_branch.65-fix-fs-nfs.patch
 Patch0739: linux-%kernel_branch.53-fix-fs-ocfs2.patch
 Patch0740: linux-%kernel_branch.43-fix-fs-partition--ibm.patch
 Patch0741: linux-%kernel_branch.43-fix-fs-proc.patch
@@ -750,7 +751,7 @@ Patch1190: linux-%kernel_branch.42-feat-fs-fat--secrm.patch
 Patch1191: linux-%kernel_branch.42-feat-fs-jbd--secrm.patch
 Patch1192: linux-%kernel_branch.42-feat-fs-jbd2--secrm.patch
 Patch1193: linux-%kernel_branch.44-feat-fs-overlayfs.patch
-Patch1194: linux-%kernel_branch.61-feat-fs-reiser4.patch
+Patch1194: linux-%kernel_branch.65-feat-fs-reiser4.patch
 Patch1195: linux-%kernel_branch.42-feat-fs-squashfs--write.patch
 Patch1196: linux-%kernel_branch-feat-fs-subfs.patch
 Patch1197: linux-%kernel_branch.61-feat-fs-tmpfs--root.patch
@@ -1881,7 +1882,8 @@ cd linux-%version
 
 %patch0641 -p1
 
-# fix-drivers-tty-*
+# fix-drivers-tty*
+%patch0650 -p1
 %patch0651 -p1
 %patch0652 -p1
 %patch0653 -p1
@@ -3065,6 +3067,13 @@ done)
 
 
 %changelog
+* Mon Feb 25 2013 Led <led@altlinux.ru> 3.0.66-alt3
+- updated:
+  + fix-fs
+  + fix-fs-nfs
+- added:
+  + fix-drivers-tty
+
 * Mon Feb 25 2013 Led <led@altlinux.ru> 3.0.66-alt2
 - updated:
   + fix-block
