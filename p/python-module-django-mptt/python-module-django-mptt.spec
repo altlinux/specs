@@ -1,0 +1,65 @@
+# vim: set ft=spec: -*- rpm-spec -*-
+
+%define modulename mptt
+
+Name: python-module-django-%modulename
+Version: 0.5.5
+Release: alt1
+
+%setup_python_module %modulename
+
+Summary: Modified Preorder Tree Traversal Django application
+# see setup.py
+License: %bsd
+Group: Development/Python
+
+Url: http://github.com/django-mptt/django-mptt/
+Packager: Aleksey Avdeev <solo@altlinux.ru>
+BuildArch: noarch
+
+Source: %name-%version.tar
+
+# see requirements.txt
+Requires: python-module-django >= 1.2
+Conflicts: python-module-django-cms < 2.2
+
+BuildPreReq: rpm-build-licenses
+BuildPreReq: python-module-django-tests >= 1.2
+BuildPreReq: python-module-django-dbbackend-sqlite3 >= 1.2
+BuildPreReq: python-module-sphinx
+
+%description
+Django MPTT is a reusable/standalone Django application which aims to
+make it easy for you to use Modified Preorder Tree Traversal with your
+own Django models in your own applications.
+
+It takes care of the details of managing a database table as a tree
+structure and provides tools for working with trees of model instances.
+
+%prep
+%setup
+
+%build
+%python_build
+
+# doc
+pushd docs
+make text
+popd
+
+%install
+%python_install
+
+%check
+pushd tests
+./runtests.sh
+popd
+
+%files
+%doc INSTALL LICENSE NOTES README.rst build/docs
+%python_sitelibdir/%modulename/
+%python_sitelibdir/*.egg-info
+
+%changelog
+* Mon Feb 25 2013 Aleksey Avdeev <solo@altlinux.ru> 0.5.5-alt1
+- Initial build for ALT Linux Sisyphus
