@@ -1,16 +1,16 @@
 Name: libisofs
-Version: 1.2.4
-Release: alt2
+Version: 1.2.6
+Release: alt1
 
 Summary: ISO9660 filesystem creation library
+License: %gpl2plus
+Group: System/Libraries
+
 Url: http://libburnia.pykix.org/
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
-Patch1: libisofs-1.2.4-upstream-r1044.patch
-License: %gpl2plus
 
 Packager: Anton V. Boyarshinov <boyarsh@altlinux.org>
-Group: System/Libraries
 
 BuildRequires(pre): rpm-build-licenses
 
@@ -35,7 +35,6 @@ libisofs is to be the foundation of our upcoming mkisofs emulation.
 %prep
 %setup
 %patch -p1
-%patch1 -p0
 
 %build
 %autoreconf
@@ -57,6 +56,9 @@ libisofs is to be the foundation of our upcoming mkisofs emulation.
 %_pkgconfigdir/*.pc
 
 %changelog
+* Sun Feb 24 2013 Michael Shigorin <mike@altlinux.org> 1.2.6-alt1
+- 1.2.6
+
 * Wed Nov 07 2012 Michael Shigorin <mike@altlinux.org> 1.2.4-alt2
 - added temporary patch off upstream revision 1044 (MBR tweak)
 - clarified libburn-devel build dependency as versioned

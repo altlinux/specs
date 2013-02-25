@@ -1,13 +1,15 @@
 Name: libisoburn
-Version: 1.2.4
-Release: alt3
+Version: 1.2.6
+Release: alt1
 
 Summary: ISO9660 filesystem creation library
+License: GPLv2
+Group: System/Libraries
+
 Url: http://libburnia.pykix.org/
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
-License: GPL2
-Group: System/Libraries
+
 BuildRequires: zlib-devel libacl-devel libattr-devel libreadline-devel
 BuildRequires: libburn-devel >= %version, libisofs-devel >= %version
 # For tests
@@ -107,6 +109,10 @@ fi
 %_infodir/*
 
 %changelog
+* Sun Feb 24 2013 Michael Shigorin <mike@altlinux.org> 1.2.6-alt1
+- 1.2.6
+- minor spec cleanup according to policy recommendations
+
 * Wed Nov 07 2012 Michael Shigorin <mike@altlinux.org> 1.2.4-alt3
 - clarified libburn dependency as versioned for xorriso (thx amike@)
 
