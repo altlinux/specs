@@ -1,7 +1,7 @@
 
 Summary: A library for managing OS information for virtualization
 Name: libosinfo
-Version: 0.2.1
+Version: 0.2.4
 Release: alt1
 License: LGPLv2+
 Group: System/Libraries
@@ -11,6 +11,7 @@ Patch: %name-%version-%release.patch
 Patch2: %name-%version-altlinux.patch
 
 Url: https://fedorahosted.org/libosinfo/
+BuildRequires: intltool >= 0.40.0
 BuildRequires: gnome-common gtk-doc
 BuildRequires: glib2-devel libgio-devel
 BuildRequires: libsoup-devel libsoup-gnome-devel
@@ -97,10 +98,12 @@ rm -f %buildroot%_libdir/*.{a,la}
 ln -sf ../../misc/usb.ids %buildroot%_datadir/%name/db/usb.ids
 ln -sf ../../misc/pci.ids %buildroot%_datadir/%name/db/pci.ids
 
+%find_lang --with-gnome %name
+
 %check
 %make check
 
-%files
+%files -f %name.lang
 %doc AUTHORS ChangeLog COPYING.LIB NEWS README
 %_bindir/*
 %_man1dir/*
@@ -132,6 +135,9 @@ ln -sf ../../misc/pci.ids %buildroot%_datadir/%name/db/pci.ids
 %_datadir/gtk-doc/html/*
 
 %changelog
+* Mon Feb 25 2013 Alexey Shabalin <shaba@altlinux.ru> 0.2.4-alt1
+- 0.2.4
+
 * Tue Nov 13 2012 Alexey Shabalin <shaba@altlinux.ru> 0.2.1-alt1
 - 0.2.1
 
