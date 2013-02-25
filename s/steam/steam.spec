@@ -1,6 +1,6 @@
 Name: steam
-Version: 1.0.0.33
-Release: alt2
+Version: 1.0.0.34
+Release: alt1
 
 Summary: Launcher for the Steam software distribution service
 License: Proprietary
@@ -15,9 +15,11 @@ ExclusiveArch: %ix86
 Source0: http://repo.steampowered.com/%name/pool/%name/s/%name/%{name}_%version.tar.gz
 Patch0: %name-apt-alt.patch
 
+Requires: curl
 Requires: glibc >= 2.15
 Requires: libGL
 Requires: mozilla-plugin-adobe-flash
+Requires: xz
 
 BuildRequires: python-module-distribute
 BuildRequires: xterm
@@ -50,6 +52,10 @@ savegame and screenshot functionality, and many social features.
 %_pixmapsdir/*
 
 %changelog 
+* Mon Feb 25 2013 Nazarov Denis <nenderus@altlinux.org> 1.0.0.34-alt1
+- Version 1.0.0.34
+- Added requires on curl and xz
+
 * Sun Feb 24 2013 Nazarov Denis <nenderus@altlinux.org> 1.0.0.33-alt2
 - Fix summary title
 
