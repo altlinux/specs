@@ -7,7 +7,7 @@
 %define bugfix 0
 Name: kde4-pim-runtime
 Version: %major.%minor.%bugfix
-Release: alt0.3
+Release: alt1
 
 Group: Graphical desktop/KDE
 Summary: KDE Akonadi resources
@@ -222,6 +222,9 @@ based on kdepim.
 
 
 %changelog
+* Mon Feb 25 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.0-alt1
+- update from 4.10 branch
+
 * Tue Jan 29 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.0-alt0.3
 - update from 4.10 branch
 
