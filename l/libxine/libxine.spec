@@ -13,7 +13,7 @@
 
 Name: lib%bname
 Version: 1.1.21
-Release: alt3
+Release: alt4
 Summary: Free libraries for play video and audio
 Summary(ru_RU.UTF-8): Библиотеки для воспроизведения видео и аудио информации
 License: GPLv2+
@@ -160,7 +160,8 @@ sed -i 's|-O3|-O%_optlevel|g' m4/optimizations.m4
 %autoreconf
 
 %build
-%add_optflags -fno-strict-aliasing -fno-force-addr
+SAMBA_CFLAGS=`pkg-config --cflags smbclient`
+%add_optflags -fno-strict-aliasing -fno-force-addr $SAMBA_CFLAGS
 %if_enabled build_ffmpeg_ext
 %add_optflags -I%_includedir/ffmpeg
 %endif
@@ -197,6 +198,7 @@ sed -i 's|-O3|-O%_optlevel|g' m4/optimizations.m4
 	--with-libflac \
 	--with-wavpack \
 	--enable-modplug \
+	--disable-nosefart \
 	--disable-vidix \
 	--disable-vcd \
 	--disable-oss \
@@ -249,6 +251,12 @@ sed -i 's|-O3|-O%_optlevel|g' m4/optimizations.m4
 %_libdir/%bname/plugins/%plugin_version/%{bname}plug_inp_smb.so
 
 %changelog
+* Mon Feb 25 2013 Sergey V Turchin <zerg@altlinux.org> 1.1.21-alt4
+- fix to build with new libsmbclient
+
+* Thu Jun 28 2012 Sergey V Turchin <zerg@altlinux.org> 1.1.21-alt2.M60P.2
+- built for M60P
+
 * Wed Jun 27 2012 Sergey V Turchin <zerg@altlinux.org> 1.1.21-alt3
 - built without midi
 - disable xine-list and mpgaudio_priority patches
