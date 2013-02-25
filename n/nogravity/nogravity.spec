@@ -3,7 +3,7 @@ BuildRequires: gcc-c++ unzip
 # END SourceDeps(oneline)
 Name:           nogravity
 Version:        2.00
-Release:        alt2_17.1
+Release:        alt2_18
 Summary:        Space shooter in 3D
 Group:          Games/Other
 License:        GPLv2+
@@ -29,12 +29,12 @@ Patch9:         nogravity-2.00-rhbz699274.patch
 Patch10:        nogravity-2.00-libpng15.patch
 Patch11:        0001-v3xscene-Remove-some-unused-code.patch
 Patch12:        0002-rlx32-Stop-using-MaxExtentableObjet.patch
-Patch13:        nogravity-2.00-alt-libpng15.patch
-Requires:       nogravity-data = %{version}
+Requires:       %{name}-data = %{version}
 BuildRequires:  libSDL_mixer-devel libopenal-devel libpng-devel libvorbis-devel
 BuildRequires:  automake desktop-file-utils
 Requires:       icon-theme-hicolor xdriinfo glxinfo
 Source44: import.info
+Patch33: nogravity-2.00-alt-libpng15.patch
 
 %description
 No Gravity is a fantastic and futuristic universe made of five
@@ -61,11 +61,11 @@ cp %{SOURCE6} ./src/Linux/configure.in
 #patch10 -p1
 %patch11 -p1
 %patch12 -p1
-%patch13 -p2
 sed -i 's/\r//g' GNU.TXT README.TXT
 pushd src/Linux
 sh bootstrap
 popd
+%patch33 -p2
 
 
 %build
@@ -96,40 +96,6 @@ desktop-file-install             \
   %{SOURCE2}
 install -p -m 644 %{SOURCE3} \
 $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/48x48/apps/%{name}.png
-# generic fedora font import transformations
-# move fonts to corresponding subdirs if any
-for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
-    case "$fontpatt" in 
-	pcf*|bdf*) type=bitmap;;
-	tt*|TT*) type=ttf;;
-	otf|OTF) type=otf;;
-	afm*|pf*) type=type1;;
-    esac
-    find $RPM_BUILD_ROOT/usr/share/fonts -type f -name '*.'$fontpatt | while read i; do
-	j=`echo "$i" | sed -e s,/usr/share/fonts/,/usr/share/fonts/$type/,`;
-	install -Dm644 "$i" "$j";
-	rm -f "$i";
-	olddir=`dirname "$i"`;
-	mv -f "$olddir"/{encodings.dir,fonts.{dir,scale,alias}} `dirname "$j"`/ 2>/dev/null ||:
-	rmdir -p "$olddir" 2>/dev/null ||:
-    done
-done
-# kill invalid catalogue links
-if [ -d $RPM_BUILD_ROOT/etc/X11/fontpath.d ]; then
-    find -L $RPM_BUILD_ROOT/etc/X11/fontpath.d -type l -print -delete ||:
-    # relink catalogue
-    find $RPM_BUILD_ROOT/usr/share/fonts -name fonts.dir | while read i; do
-	pri=10;
-	j=`echo $i | sed -e s,$RPM_BUILD_ROOT/usr/share/fonts/,,`; type=${j%%%%/*}; 
-	pre_stem=${j##$type/}; stem=`dirname $pre_stem|sed -e s,/,-,g`;
-	case "$type" in 
-	    bitmap) pri=10;;
-	    ttf|ttf) pri=50;;
-	    type1) pri=40;;
-	esac
-	ln -s /usr/share/fonts/$j $RPM_BUILD_ROOT/etc/X11/fontpath.d/"$stem:pri=$pri"
-    done ||:
-fi
 
 
 %files
@@ -140,6 +106,9 @@ fi
 
 
 %changelog
+* Mon Feb 25 2013 Igor Vlasenko <viy@altlinux.ru> 2.00-alt2_18
+- fc update
+
 * Fri Oct 05 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.00-alt2_17.1
 - Rebuilt with libpng15
 
