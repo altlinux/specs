@@ -1,4 +1,8 @@
 Epoch: 0
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
+BuildRequires: tomcat6-jsp-2.1-api
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 %global base_name       jxpath
@@ -6,7 +10,7 @@ BuildRequires: jpackage-compat
 
 Name:             apache-%{short_name}
 Version:          1.3
-Release:          alt2_9jpp7
+Release:          alt2_11jpp7
 Summary:          Simple XPath interpreter
 
 Group:            Development/Java
@@ -19,7 +23,7 @@ Patch0:           %{short_name}-mockrunner.patch
 BuildArch:        noarch
 
 BuildRequires:    jpackage-utils
-BuildRequires:    maven2 >= 2.2.1
+BuildRequires:    maven
 BuildRequires:    maven-antrun-plugin
 BuildRequires:    maven-assembly-plugin
 BuildRequires:    maven-compiler-plugin
@@ -31,8 +35,7 @@ BuildRequires:    maven-plugin-bundle
 BuildRequires:    maven-resources-plugin
 BuildRequires:    maven-surefire-plugin
 BuildRequires:    servlet25
-#BuildRequires:    jsp
-BuildRequires:    tomcat6-jsp-2.1-api
+BuildRequires:    jsp
 BuildRequires:    el_api
 
 Requires:         jpackage-utils
@@ -97,17 +100,20 @@ rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
 
 
 %files
-%doc LICENSE.txt
+%doc LICENSE.txt NOTICE.txt
 %{_javadir}/%{name}.jar
 %{_javadir}/%{short_name}.jar
 %{_mavenpomdir}/JPP-%{short_name}.pom
 %{_mavendepmapfragdir}/%{name}
 
 %files javadoc
-%doc LICENSE.txt
+%doc LICENSE.txt NOTICE.txt
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Feb 25 2013 Igor Vlasenko <viy@altlinux.ru> 0:1.3-alt2_11jpp7
+- fc update
+
 * Mon Oct 01 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.3-alt2_9jpp7
 - fixed build
 
