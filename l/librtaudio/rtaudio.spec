@@ -1,12 +1,11 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: gcc-c++
 # END SourceDeps(oneline)
-%add_optflags %optflags_shared
 %define oldname rtaudio
 Summary:        Real-time Audio I/O Library
 Name:           librtaudio
 Version:        4.0.11
-Release:        alt1_3
+Release:        alt1_4
 License:        MIT
 Group:          System/Libraries
 URL:            http://www.music.mcgill.ca/~gary/rtaudio/
@@ -21,7 +20,6 @@ BuildRequires:  libalsa-devel
 BuildRequires:  libjack-devel
 BuildRequires:  libpulseaudio-devel
 Source44: import.info
-Provides: rtaudio = %{version}-%{release}
 
 
 %description
@@ -44,7 +42,6 @@ designed with the following objectives:
 Summary:        Real-time Audio I/O Library
 Group:          System/Libraries
 Requires:       %{name}%{?_isa} = %{version}-%{release}
-Provides: rtaudio-devel = %{version}-%{release}
 
 %description devel
 RtAudio is a set of C++ classes that provide a common API for realtime audio
@@ -78,7 +75,7 @@ rm -fr tests/Debug
 sed -i '/CFLAGS *=/d' Makefile.in
 
 # To fix the ppc64 compilation issue
-#cp -p /usr/lib/rpm/config.{sub,guess} config/
+# cp -p /usr/lib/rpm/config.{sub,guess} config/
 
 %build
 export CFLAGS="%optflags -fPIC"
@@ -91,7 +88,7 @@ mkdir -p %{buildroot}%{_includedir} %{buildroot}%{_libdir}
 cp -a RtAudio.h RtError.h %{buildroot}%{_includedir}
 cp -p lib%{oldname}.so.%{version} %{buildroot}%{_libdir}/
 ln -s %{_libdir}/lib%{oldname}.so.%{version} %{buildroot}%{_libdir}/lib%{oldname}.so
-#ldconfig -v -n  %{buildroot}%{_libdir}
+# ldconfig -v -n  %{buildroot}%{_libdir}
 
 %files
 %doc readme doc/release.txt
@@ -103,6 +100,9 @@ ln -s %{_libdir}/lib%{oldname}.so.%{version} %{buildroot}%{_libdir}/lib%{oldname
 %{_libdir}/lib%{oldname}.so
 
 %changelog
+* Mon Feb 25 2013 Igor Vlasenko <viy@altlinux.ru> 4.0.11-alt1_4
+- fc update
+
 * Mon Jan 14 2013 Igor Vlasenko <viy@altlinux.ru> 4.0.11-alt1_3
 - initial fc import
 
