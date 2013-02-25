@@ -3,7 +3,7 @@ BuildRequires: /usr/bin/pkg-config gcc-c++
 # END SourceDeps(oneline)
 Name:		libvidcap
 Version:	0.2.1
-Release:	alt1_8
+Release:	alt1_9
 Summary:	Cross-platform video capture library
 Group:		System/Libraries
 License:	LGPLv2+
@@ -18,12 +18,12 @@ capture devices.
 
 %package devel
 Summary:	Development files for %{name}
-Group:		Development/C
+Group:		Development/Perl
 Requires:	%{name} = %{version}-%{release}
 
 %description devel
-The %%{name}-devel package contains libraries and header files for
-developing applications that use %%{name}.
+The %{name}-devel package contains libraries and header files for
+developing applications that use %{name}.
 
 %prep
 %setup -q
@@ -46,6 +46,9 @@ find %{buildroot} -name '*.la' -exec rm -f {} ';'
 %{_includedir}/vidcap/
 
 %changelog
+* Mon Feb 25 2013 Igor Vlasenko <viy@altlinux.ru> 0.2.1-alt1_9
+- fc update
+
 * Tue Jan 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.2.1-alt1_8
 - initial fc import
 
