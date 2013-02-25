@@ -1,7 +1,7 @@
 %define _kde_alternate_placement 1
 
 Name: plasma-applet-networkmanager
-Version: 0.9.0.6
+Version: 0.9.0.7
 Release: alt1
 Serial: 1
 
@@ -27,6 +27,7 @@ Patch102: knetworkmanager-0.9-alt-no-autostart.patch
 Patch103: knetworkmanager-0.9.0.2-alt-fix-linking.patch
 
 BuildRequires: NetworkManager-glib-devel gcc-c++ kde4base-workspace-devel mobile-broadband-provider-info libopenconnect-devel libssl-devel
+BuildRequires: libproxy-devel
 
 %description
 This package provides the NetworkManager plasma applet which aims to provide a
@@ -103,6 +104,9 @@ fi
 
 
 %changelog
+* Mon Feb 25 2013 Sergey V Turchin <zerg@altlinux.org> 1:0.9.0.7-alt1
+- new version
+
 * Wed Dec 19 2012 Sergey V Turchin <zerg@altlinux.org> 1:0.9.0.6-alt1
 - new version
 
