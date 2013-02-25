@@ -21,7 +21,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.0.66
-Release: alt1
+Release: alt2
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -174,7 +174,7 @@ Patch0026: linux-%kernel_branch.42-fix-arch-x86-cpu--perf-event.patch
 Patch0027: linux-%kernel_branch.47-fix-arch-x86-cpu--rdrand.patch
 Patch0028: linux-%kernel_branch.42-fix-arch-x86-platform-olpc.patch
 
-Patch0030: linux-%kernel_branch.51-fix-block.patch
+Patch0030: linux-%kernel_branch.65-fix-block.patch
 Patch0031: linux-%kernel_branch.42-fix-block--blk-integrity.patch
 Patch0032: linux-%kernel_branch.42-fix-block--blk-throttle.patch
 Patch0033: linux-%kernel_branch.42-fix-block--cfq-iosched.patch
@@ -608,7 +608,7 @@ Patch0804: linux-%kernel_branch.44-fix-mm--memcontrol.patch
 Patch0805: linux-%kernel_branch.42-fix-mm--memory-failure.patch
 Patch0806: linux-%kernel_branch.51-fix-mm--memory_hotplug.patch
 Patch0807: linux-%kernel_branch.59-fix-mm--mmu.patch
-Patch0808: linux-%kernel_branch.42-fix-mm--mmu_notofier.patch
+Patch0808: linux-%kernel_branch.65-fix-mm--mmu_notifier.patch
 Patch0809: linux-%kernel_branch.46-fix-mm--numa.patch
 Patch0810: linux-%kernel_branch.42-fix-mm--slab.patch
 Patch0811: linux-%kernel_branch.42-fix-mm--slub.patch
@@ -665,7 +665,7 @@ Patch0882: linux-%kernel_branch.47-fix-sound-firewire--snd-firewire-lib.patch
 Patch0883: linux-%kernel_branch.47-fix-sound-firewire--snd-firewire-speakers.patch
 Patch0884: linux-%kernel_branch.47-fix-sound-firewire--snd-isight.patch
 Patch0885: linux-%kernel_branch.42-fix-sound-oss--pss.patch
-Patch0886: linux-%kernel_branch.62-fix-sound-pci-hda.patch
+Patch0886: linux-%kernel_branch.65-fix-sound-pci-hda.patch
 Patch0887: linux-%kernel_branch.42-fix-sound-pci-rme9652--snd-hdspm.patch
 Patch0888: linux-%kernel_branch.42-fix-sound-usb-misc--snd-ua101.patch
 
@@ -3065,6 +3065,12 @@ done)
 
 
 %changelog
+* Mon Feb 25 2013 Led <led@altlinux.ru> 3.0.66-alt2
+- updated:
+  + fix-block
+  + fix-mm--mmu_notofier
+  + fix-sound-pci-hda
+
 * Thu Feb 21 2013 Led <led@altlinux.ru> 3.0.66-alt1
 - 3.0.66
 - updated:
