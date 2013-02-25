@@ -1,6 +1,6 @@
 Name: cups
 Version: 1.6.1
-Release: alt3
+Release: alt8
 
 Summary: Common Unix Printing System - server package
 License: GPL
@@ -48,6 +48,8 @@ Patch26: cups-1.6.1-ubuntu-cupsd-no-crash-on-avahi-threaded-poll-shutdown.patch
 Patch27: cups-1.6.1-ubuntu-get-ppd-file-for-statically-configured-bonjour-shared-queues.patch
 Patch28: cups-1.6.1-ubuntu-printers-c-recognize-remote-cups-queue-via-dnssd-uri.patch
 Patch29: cups-1.4-ubuntu-default-error-policy-retry-job.patch
+Patch30: cups-1.6.1-alt-makefile.patch
+Patch31: cups-1.6.1-alt-faq-localization.patch
 Requires: printer-testpages bc cups-filters
 
 PreReq: lib%name = %version-%release, ghostscript-cups
@@ -179,6 +181,8 @@ tar xf %SOURCE114
 %patch27 -p1
 %patch28 -p1
 %patch29 -p1
+%patch30 -p1
+%patch31 -p1
 
 aclocal -I config-scripts
 autoconf -I config-scripts
@@ -388,6 +392,21 @@ rm -f /var/cache/cups/ppds.dat
 %_man1dir/ipptool.1.gz
 
 %changelog
+* Tue Feb 12 2013 Alexander Plehanov <tonik@altlinux.org> 1.6.1-alt8
+- Fix /locale/cups_ru.po localization
+
+* Tue Feb 12 2013 Alexander Plehanov <tonik@altlinux.org> 1.6.1-alt7
+- Fix russian localization
+
+* Tue Jan 22 2013 Alexander Plehanov <tonik@altlinux.org> 1.6.1-alt6
+- Edit web-interface locaization
+
+* Fri Jan 18 2013 Alexander Plehanov <tonik@altlinux.org> 1.6.1-alt5
+- /locale/cups_ru.po russian localization
+
+* Tue Dec 18 2012 Alexander Plehanov <tonik@altlinux.org> 1.6.1-alt4
+- FAQ interface localization
+
 * Tue Nov 06 2012 Alexander Plehanov <tonik@altlinux.org> 1.6.1-alt3
 - Edit russian translation
 
