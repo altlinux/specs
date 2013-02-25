@@ -1,5 +1,5 @@
 Name: make-initrd
-Version: 0.8.2
+Version: 0.8.3
 Release: alt1
 
 Summary: Creates an initramfs image
@@ -167,6 +167,11 @@ fi
 %_datadir/%name/features/mdadm
 
 %changelog
+* Mon Feb 25 2013 Alexey Gladkov <legion@altlinux.ru> 0.8.3-alt1
+- initrd: Add initrd-release/os-release support.
+- guess: Ignore errors when resolve modalias.
+- guess/keyboard: Remove obsolete code.
+
 * Thu Feb 21 2013 Alexey Gladkov <legion@altlinux.ru> 0.8.2-alt1
 - guess/net: Detect only if GUESS_NET_IFACE specified.
 
