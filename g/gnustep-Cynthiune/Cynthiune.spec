@@ -2,7 +2,7 @@
 
 Name: gnustep-Cynthiune
 Version: 0.9.5
-Release: alt1
+Release: alt2
 Summary: First free and romantic music player for GNUstep
 License: GPLv2
 Group: Graphical desktop/GNUstep
@@ -16,6 +16,7 @@ BuildPreReq: gnustep-gui-devel libid3tag-devel libmad-devel
 BuildPreReq: libvorbis-devel libogg-devel libmpcdec-devel
 BuildPreReq: libaudiofile-devel libflac-devel libtag-devel libesd-devel
 BuildPreReq: libmodplug-devel gcc-c++ libmusicbrainz-devel
+BuildPreReq: libalsa-devel
 
 Requires: lib%name = %EVR
 
@@ -126,6 +127,9 @@ popd
 %_libdir/GNUstep/Frameworks/*.framework/Versions/0/Headers
 
 %changelog
+* Mon Feb 25 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.5-alt2
+- Added support of ALSA
+
 * Mon Feb 25 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.5-alt1
 - Initial build for Sisyphus (without support of AVI files)
 
