@@ -1,0 +1,53 @@
+%set_verify_elf_method unresolved=strict
+
+Name: gnustep-SimpleAgenda
+Version: 0.43
+Release: alt1
+Summary: Simple calendar and agenda application
+License: GPLv2+
+Group: Graphical desktop/GNUstep
+Url: http://www.gnustep.org/
+Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+
+Source: %name-%version.tar
+
+BuildPreReq: gcc-objc gnustep-make-devel libgnustep-objc2-devel /proc
+BuildPreReq: gnustep-dbuskit-devel libical-devel libuuid-devel
+BuildPreReq: gnustep-AddressManager-devel
+
+%description
+SimpleAgenda is a simple calendar and agenda application.
+
+Based on libical, SimpleAgenda handles multiple local and distant
+(through webcal) calendars. You can share your calendars with Mozilla
+Calendar, Evolution and possibly others. It works for me but backup your
+data if it's really important !
+
+%prep
+%setup
+
+%build
+export GNUSTEP_MAKEFILES=%_datadir/GNUstep/Makefiles
+%autoreconf
+%configure
+
+%make_build \
+	messages=yes \
+	debug=yes \
+	strip=no \
+	shared=yes \
+	AUXILIARY_CPPFLAGS='-O2 -I%_includedir/libical'
+ 
+%install
+%makeinstall_std GNUSTEP_INSTALLATION_DOMAIN=SYSTEM \
+	GNUSTEP_MAKEFILES=%_datadir/GNUstep/Makefiles
+
+%files
+%doc NEWS README TODO
+%_bindir/*
+%_libdir/GNUstep
+
+%changelog
+* Mon Feb 25 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.43-alt1
+- Initial build for Sisyphus
+
