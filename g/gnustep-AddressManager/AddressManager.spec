@@ -1,0 +1,109 @@
+%set_verify_elf_method unresolved=strict
+
+Name: gnustep-AddressManager
+Version: 0.4.8
+Release: alt1
+Summary: Versatile address book application for managing contact information
+License: LGPL
+Group: Networking/Mail
+Url: http://www.gnustep.org/
+Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+
+Source: %name-%version.tar
+
+BuildPreReq: gcc-objc gnustep-make-devel libgnustep-objc2-devel /proc
+BuildPreReq: gnustep-base-devel gnustep-gui-devel
+
+Requires: lib%name = %EVR
+
+%description
+AddressManager is a versatile address book application for managing
+contact information.
+
+It stores addresses, phone numbers, pictures, instant messaging
+information, email, homepages and whatever.
+
+%package -n lib%name
+Summary: Shared libraries of GNUstep AddressManager
+Group: System/Libraries
+
+%description -n lib%name
+AddressManager is a versatile address book application for managing
+contact information.
+
+It stores addresses, phone numbers, pictures, instant messaging
+information, email, homepages and whatever.
+
+This package contains shared libraries of GNUstep AddressManager.
+
+%package -n lib%name-devel
+Summary: Development files of GNUstep AddressManager
+Group: Development/Objective-C
+Requires: lib%name = %EVR
+Provides: %name-devel = %EVR
+
+%description -n lib%name-devel
+AddressManager is a versatile address book application for managing
+contact information.
+
+It stores addresses, phone numbers, pictures, instant messaging
+information, email, homepages and whatever.
+
+This package contains development files of GNUstep AddressManager.
+
+%prep
+%setup
+
+%build
+. %_datadir/GNUstep/Makefiles/GNUstep.sh
+
+%make_build -C Frameworks/Addresses \
+	messages=yes \
+	debug=yes \
+	strip=no \
+	shared=yes \
+	AUXILIARY_CPPFLAGS='-O2' \
+	CONFIG_SYSTEM_LIBS='-lgnustep-gui -lgnustep-base -lobjc2'
+
+%make_build $1 $2 \
+	messages=yes \
+	debug=yes \
+	strip=no \
+	shared=yes \
+	AUXILIARY_CPPFLAGS='-O2' \
+	CONFIG_SYSTEM_LIBS="-lAddresses -lgnustep-gui -lgnustep-base -lobjc2"
+ 
+%install
+. %_datadir/GNUstep/Makefiles/GNUstep.sh
+
+%makeinstall_std GNUSTEP_INSTALLATION_DOMAIN=SYSTEM
+
+pushd %buildroot%_libdir
+for i in Addresses AddressView; do
+	lib=$(ls lib$i.so.*.*.*)
+	for j in lib$i.so*; do
+		rm -f $j
+		mv GNUstep/Frameworks/$i.framework/Versions/0/$j ./
+		ln -s %_libdir/$lib GNUstep/Frameworks/$i.framework/Versions/0/$j
+	done
+	rm -f GNUstep/Frameworks/$i.framework/Versions/0/$i
+	ln -s %_libdir/$lib GNUstep/Frameworks/$i.framework/Versions/0/$i
+done
+popd
+
+%files
+%doc AUTHORS ChangeLog NEWS README THANKS TODO
+%_bindir/*
+%_libdir/GNUstep
+
+%files -n lib%name
+%_libdir/*.so.*
+
+%files -n lib%name-devel
+%_includedir/*
+%_libdir/*.so
+
+%changelog
+* Mon Feb 25 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.8-alt1
+- Initial build for Sisyphus
+
