@@ -2,7 +2,7 @@
 
 Name: gnustep-AddressManager
 Version: 0.4.8
-Release: alt2
+Release: alt3
 Summary: Versatile address book application for managing contact information
 License: LGPL
 Group: Networking/Mail
@@ -40,6 +40,7 @@ This package contains shared libraries of GNUstep AddressManager.
 Summary: Development files of GNUstep AddressManager
 Group: Development/Objective-C
 Requires: lib%name = %EVR
+Requires: %name = %EVR
 Provides: %name-devel = %EVR
 
 %description -n lib%name-devel
@@ -108,6 +109,9 @@ popd
 %_libdir/GNUstep/Frameworks/*.framework/Versions/0/Headers
 
 %changelog
+* Mon Feb 25 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.8-alt3
+- Added requirement on %name for lib%name-devel
+
 * Mon Feb 25 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.8-alt2
 - Moved Headers into devel subpackage
 
