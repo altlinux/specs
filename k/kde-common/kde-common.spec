@@ -5,7 +5,7 @@
 
 Name: kde-common
 Version: %major.%minor.%bugfix
-Release: alt1
+Release: alt2
 
 Summary: The basic directory layout for KDE
 License: Public Domain
@@ -175,6 +175,7 @@ mkdir -p %buildroot/%_K4snd
 mkdir -p %buildroot/%_K4doc/en/common
 mkdir -p %buildroot/%_K4tmpl/.source
 mkdir -p %buildroot/%_K4wall
+mkdir -p %buildroot/%_K4datadir/env
 #
 for lng in %_kde_langlist; do
 mkdir -p %buildroot/%_K4i18n/${lng}/LC_MESSAGES
@@ -225,6 +226,9 @@ ln -s `relative %_libdir %_K4datadir/lib` %buildroot/%_K4datadir/lib
 
 
 %changelog
+* Mon Feb 25 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.0-alt2
+- add env directory for KDE4
+
 * Fri Dec 07 2012 Sergey V Turchin <zerg@altlinux.org> 4.10.0-alt1
 - bump version
 
