@@ -26,7 +26,7 @@
 
 Name: samba
 Version: 4.0.3
-Release: alt1
+Release: alt2
 Group: System/Servers
 Summary: The Samba4 CIFS and AD client and server suite
 License: GPLv3+ and LGPLv3+
@@ -1056,13 +1056,13 @@ TDB_NO_FSYNC=1 %make_build test
 %_man8dir/pam_winbind.8*
 
 %changelog
+* Mon Feb 25 2013 Alexey Shabalin <shaba@altlinux.ru> 4.0.3-alt2
+- make systemctl reference indirect in packaging/NetworkManager/30-winbind-systemd (ALT#28585)
+
 * Fri Feb 15 2013 Alexey Shabalin <shaba@altlinux.ru> 4.0.3-alt1
 - 4.0.3
 - build as default samba, replaced samba4 packages
 - rename pdb_ldap to pdb_ldapsam
-
-* Fri Feb 08 2013 Alexey Shabalin <shaba@altlinux.ru> 3.6.12-alt3
-- add conflict old samba-winbind-clients to libwbclient (ALT#28523)
 
 * Mon Feb 04 2013 Alexey Shabalin <shaba@altlinux.ru> 4.0.2-alt2
 - obsoletes libnetapi4,libwbclient4,libsmbclient4 by samba4-libs if build without them
