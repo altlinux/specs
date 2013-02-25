@@ -2,7 +2,7 @@
 
 Name: gnustep-Pantomime
 Version: 1.2.0
-Release: alt1
+Release: alt2
 Summary: GNUMail framework
 License: LGPL
 Group: Graphical desktop/GNUstep
@@ -52,6 +52,7 @@ This package contains shared libraries of GNUstep Pantomime.
 Summary: Development files of GNUstep Pantomime
 Group: Development/Objective-C
 Requires: lib%name = %EVR
+Requires: %name = %EVR
 Provides: %name-devel = %EVR
 
 %description -n lib%name-devel
@@ -109,6 +110,9 @@ popd
 %_libdir/GNUstep/Frameworks/*.framework/Versions/1.2/Headers
 
 %changelog
+* Mon Feb 25 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.0-alt2
+- Added requirement on %name for lib%name-devel
+
 * Mon Feb 25 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.0-alt1
 - Initial build for Sisyphus
 
