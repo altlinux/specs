@@ -1,5 +1,5 @@
 Name: libassuan
-Version: 2.0.3
+Version: 2.1.0
 Release: alt1
 
 Summary: IPC library used by some GnuPG related software
@@ -69,6 +69,9 @@ mv %buildroot%_libdir/libassuan{2,}.so
 %endif
 
 %changelog
+* Mon Feb 25 2013 Sergey V Turchin <zerg@altlinux.org> 2.1.0-alt1
+- new version
+
 * Wed Jul 25 2012 Sergey V Turchin <zerg@altlinux.org> 2.0.3-alt1
 - new version
 
