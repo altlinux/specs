@@ -2,7 +2,7 @@
 
 Name: lash
 Version: 0.6.0
-Release: alt0.20090725.4
+Release: alt0.20090725.5
 
 Summary: A session management system for JACK audio systems
 Summary(ru_RU.UTF-8): Менеджер сессий для сервера JACK
@@ -152,6 +152,9 @@ EOF
 #%python_sitelibdir/*lash*.pyo
 
 %changelog
+* Mon Feb 25 2013 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.6.0-alt0.20090725.5
+- fixed build on arm
+
 * Fri Jun 08 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.0-alt0.20090725.4
 - Fixed build
 
