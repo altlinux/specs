@@ -1,6 +1,6 @@
 
 Name: ekiga
-Version: 4.0.0
+Version: 4.0.1
 Release: alt1
 
 Summary: IP phone client with full SIP and H.323 support
@@ -17,8 +17,8 @@ Requires: libpt libopal libpt-plugins
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-%define ptlib_ver 2.10.9
-%define opal_ver 3.10.9
+%define ptlib_ver 2.10.10
+%define opal_ver 3.10.10
 
 %def_enable gconf
 %def_enable eds
@@ -223,6 +223,9 @@ fi
 %files plugins
 
 %changelog
+* Mon Feb 25 2013 Alexey Shabalin <shaba@altlinux.ru> 4.0.1-alt1
+- 4.0.1
+
 * Mon Dec 17 2012 Alexey Shabalin <shaba@altlinux.ru> 4.0.0-alt1
 - 4.0.0
 - move plugins to separate packages
