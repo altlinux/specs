@@ -2,7 +2,7 @@
 
 Name: gnustep-AddressManager
 Version: 0.4.8
-Release: alt1
+Release: alt2
 Summary: Versatile address book application for managing contact information
 License: LGPL
 Group: Networking/Mail
@@ -95,6 +95,8 @@ popd
 %doc AUTHORS ChangeLog NEWS README THANKS TODO
 %_bindir/*
 %_libdir/GNUstep
+%exclude %_libdir/GNUstep/Frameworks/*.framework/Headers
+%exclude %_libdir/GNUstep/Frameworks/*.framework/Versions/0/Headers
 
 %files -n lib%name
 %_libdir/*.so.*
@@ -102,8 +104,13 @@ popd
 %files -n lib%name-devel
 %_includedir/*
 %_libdir/*.so
+%_libdir/GNUstep/Frameworks/*.framework/Headers
+%_libdir/GNUstep/Frameworks/*.framework/Versions/0/Headers
 
 %changelog
+* Mon Feb 25 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.8-alt2
+- Moved Headers into devel subpackage
+
 * Mon Feb 25 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.8-alt1
 - Initial build for Sisyphus
 
