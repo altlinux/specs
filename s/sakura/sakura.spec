@@ -1,6 +1,6 @@
 Name: sakura
 Version: 2.4.2
-Release: alt2
+Release: alt3
 
 Summary: Terminal emulator application
 License: GPL
@@ -54,6 +54,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_man1dir/*
 
 %changelog
+* Tue Feb 26 2013 Mykola Grechukh <gns@altlinux.ru> 2.4.2-alt3
+- REALLY fixed (closes: #28607)
+
 * Tue Feb 19 2013 Mykola Grechukh <gns@altlinux.ru> 2.4.2-alt2
 - default font fixed
 
