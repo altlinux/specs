@@ -22,7 +22,7 @@
 %define major 3
 %define minor 5
 %define bugfix 13.1
-%define rel alt8.1
+%define rel alt9
 Name: kdelibs
 Version: %major.%minor.%bugfix
 Release: %rel
@@ -654,6 +654,9 @@ done
 #%doc %_K3doc/en/%name-*-apidocs
 
 %changelog
+* Tue Feb 26 2013 Roman Savochenko <rom_as@altlinux.ru> 3.5.13.1-alt9
+- Update to current 3.5.13-sru branch.
+
 * Wed Jan 23 2013 Roman Savochenko <rom_as@altlinux.ru> 3.5.13.1-alt8.1
 - Revert home dir ~/.trinity to ~/.kde path update.
 
