@@ -35,7 +35,7 @@
 
 Name:           rpm-build-java
 Version:        5.0.0
-Release:        alt26
+Release:        alt27
 Epoch:          0
 URL:            http://www.jpackage.org/
 License:        BSD
@@ -55,7 +55,7 @@ Patch2: jpackage-utils-1.7.4-alt-fix-typo-in-comments.patch
 Patch3: jpackage-utils-1.7.5-alt-rpmscript-safe-mode.patch
 Patch4: jpackage-utils-1.7.5-alt-hasher-support-hack.patch
 Patch5: jpackage-utils-1.7.5-alt-undefined-alternatives-during-transaction-hack.patch
-Patch6: javapackages-0.2.6-macros.fjava-alt-nopython.patch
+Patch6: javapackages-0.12.3-macros.fjava-alt-nopython.patch
 Patch7: javapackages-0.6.0-alt-macros-rpm404.patch
 
 # macros.jpacage patches
@@ -81,6 +81,8 @@ Group: Development/Java
 
 # for maven_depmap.pl
 BuildRequires:  perl-XML-Simple
+
+Provides: javapackages-tools = 0.7.5
 
 %package -n jpackage-utils
 Summary:        JPackage utilities
@@ -411,6 +413,9 @@ install -pm 644 rpm-build-java/macros.eclipse ${RPM_BUILD_ROOT}%_rpmmacrosdir/jp
 /usr/lib/rpm/osgi.*
 
 %changelog
+* Tue Feb 26 2013 Igor Vlasenko <viy@altlinux.ru> 0:5.0.0-alt27
+- sync with javapackages-tools = 0.7.5
+
 * Mon Sep 24 2012 Igor Vlasenko <viy@altlinux.ru> 0:5.0.0-alt26
 - disabled lua scripts
 
