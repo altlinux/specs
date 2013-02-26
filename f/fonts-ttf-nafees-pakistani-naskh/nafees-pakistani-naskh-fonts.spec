@@ -8,7 +8,7 @@ BuildRequires: unzip
 
 Name:           fonts-ttf-nafees-pakistani-naskh
 Version:        2.01
-Release:        alt2_4
+Release:        alt2_6
 Summary:        Nafees pakistani naskh font for writing Urdu in the Naskh script
 
 Group:          System/Fonts/True type
@@ -33,7 +33,7 @@ Sindhi and Saraiki in Naskh script.
 
 
 %prep
-%setup -q -c
+%setup -n %{oldname}-%{version} -q -c
 
 %build
 # Fix RHBZ#490830 while not fixed upstream
@@ -94,10 +94,13 @@ fi
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}
 %{_fontbasedir}/*/%{_fontstem}/*.ttf
 
-%doc  Nafees\ Pakistani\ Naskh\ v2.01.pdf
+%doc  *.pdf
 
 
 %changelog
+* Tue Feb 26 2013 Igor Vlasenko <viy@altlinux.ru> 2.01-alt2_6
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 2.01-alt2_4
 - update to new release by fcimport
 
