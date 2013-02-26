@@ -8,7 +8,7 @@
 
 Name: %hsc_namever-%f_pkg_name
 Version: 2.8.4
-Release: alt1
+Release: alt2
 License: GPL
 Packager: Denis Smirnov <mithraen@altlinux.ru>
 Group: Development/Haskell
@@ -55,7 +55,11 @@ darcs.
 %hs_gen_filelist
 
 %files -f %name-files.all
+%_man1dir/darcs.1*
 
 %changelog
+* Tue Feb 26 2013 Denis Smirnov <mithraen@altlinux.ru> 2.8.4-alt2
+- add darcs(1)
+
 * Sat Feb 16 2013 Denis Smirnov <mithraen@altlinux.ru> 2.8.4-alt1
 - Spec created by cabal2rpm 0.20_08
