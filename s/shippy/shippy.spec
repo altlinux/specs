@@ -1,9 +1,10 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
+%define fedora 19
 Name:           shippy
 Version:        1.3.3.7
-Release:        alt2_14
+Release:        alt2_15
 Summary:        Space invaders / Galaxians like game with powerups
 Group:          Games/Other
 License:        GPL+
@@ -82,7 +83,10 @@ touch $RPM_BUILD_ROOT%{_var}/lib/games/%{name}.hs
 
 # below is the desktop file and icon stuff.
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/applications
-desktop-file-install             \
+desktop-file-install \
+%if 0%{?fedora} && 0%{?fedora} < 19
+              \
+%endif
   --dir $RPM_BUILD_ROOT%{_datadir}/applications \
   %{SOURCE2}
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/16x16/apps
@@ -100,12 +104,19 @@ install -p -m 644 %{SOURCE1} \
 %doc NOTES.txt LICENSE.txt html
 %{_bindir}/%{name}
 %{_datadir}/%{name}
+%if 0%{?fedora} && 0%{?fedora} < 19
 %{_datadir}/applications/%{name}.desktop
+%else
+%{_datadir}/applications/%{name}.desktop
+%endif
 %{_datadir}/icons/hicolor/16x16/apps/%{name}.png
 %config(noreplace) %attr (0664,root,games) %{_var}/lib/games/%{name}.hs
 
 
 %changelog
+* Tue Feb 26 2013 Igor Vlasenko <viy@altlinux.ru> 1.3.3.7-alt2_15
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 1.3.3.7-alt2_14
 - update to new release by fcimport
 
