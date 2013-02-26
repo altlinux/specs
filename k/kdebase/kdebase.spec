@@ -34,7 +34,7 @@
 %define bugfix 13.1
 Name: kdebase
 Version: %major.%minor.%bugfix
-Release: alt5.1
+Release: alt6
 %define reqver %major.%minor
 
 Summary: Trinity Desktop Environment - Core files
@@ -637,7 +637,7 @@ Menu resources for the original KDE menu.
 %patch1077
 ###%patch1078 -p1
 ###%patch1079 -p1
-%patch1080
+###%patch1080
 %patch1081
 %patch1082 -p1
 
@@ -1948,6 +1948,9 @@ test ! -L %x11confdir/kdm && rm -rf %x11confdir/kdm ||:
 
 
 %changelog
+* Tue Feb 26 2013 Roman Savochenko <rom_as@altlinux.ru> 3.5.13.1-alt6
+- Update to current 3.5.13-sru branch.
+
 * Wed Jan 23 2013 Roman Savochenko <rom_as@altlinux.ru> 3.5.13.1-alt5.1
 - Revert home dir ~/.trinity to ~/.kde path added.
 
