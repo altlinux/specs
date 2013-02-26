@@ -2,7 +2,7 @@
 
 Name: gnustep-cddb.bundle
 Version: 0.2
-Release: alt1
+Release: alt2
 Summary: GNUstep bundle for cddb access
 License: GPLv2+ and LGPLv2+
 Group: Graphical desktop/GNUstep
@@ -16,6 +16,17 @@ BuildPreReq: gnustep-base-devel
 
 %description
 cddb.bundle is a GNUstep bundle for cddb access.
+
+%package devel
+Summary: Development files of cddb.bundle
+Group: Development/Objective-C
+BuildArch: noarch
+Requires: %name = %EVR
+
+%description devel
+cddb.bundle is a GNUstep bundle for cddb access.
+
+This package contains development files of cddb.bundle.
 
 %prep
 %setup
@@ -34,11 +45,23 @@ cddb.bundle is a GNUstep bundle for cddb access.
 	GNUSTEP_MAKEFILES=%_datadir/GNUstep/Makefiles \
 	GNUSTEP_INSTALLATION_DIR=%buildroot%_libdir/GNUstep
 
+install -d %buildroot%_includedir
+mv %buildroot%_libdir/GNUstep/Library/Headers/Cddb \
+	%buildroot%_includedir/
+rm -fR %buildroot%_libdir/GNUstep/Library
+
 %files
 %doc README TUTORIAL
 %_libdir/GNUstep
 
+%files devel
+%_includedir/*
+
 %changelog
+* Tue Feb 26 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2-alt2
+- Moved header into %_includedir
+- Added devel subpackage
+
 * Tue Feb 26 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2-alt1
 - Initial build for Sisyphus
 
