@@ -2,8 +2,8 @@
 %define pm_metod bbswitch
 
 Name: bumblebee
-Version: 3.0
-Release: alt2
+Version: 3.1
+Release: alt1
 
 Summary: Bumblebee - support for NVidia Optimus laptops on Linux
 Group: System/Kernel and hardware
@@ -14,7 +14,7 @@ Source: http://bumblebee-project.org/%name-%version.tar.gz
 Source1: bumblebeed.in
 
 # Configure the name of the Bumbleblee server group
-Patch: %name-3.0-alt-CONF_GID.patch
+Patch: %name-3.1-alt-CONF_GID.patch
 
 Requires: NVIDIA_GLX VirtualGL
 Requires: bbswitch
@@ -65,20 +65,25 @@ groupadd -r -f %bumblebeed_group
 %_sbindir/bumblebeed
 %_bindir/optirun
 %exclude %_bindir/%name-bugreport
+/lib/udev/rules.d/99-remove-nvidia-dev.rules
 %_sysconfdir/bash_completion.d/%name
 %dir %_sysconfdir/%name
-%config(noreplace) %_sysconfdir/%name/%name.conf
+%config %_sysconfdir/%name/%name.conf
 %config %_sysconfdir/%name/xorg.conf.nouveau
 %config %_sysconfdir/%name/xorg.conf.nvidia
 %config %systemd_unitdir/bumblebeed.service
 %config %_initdir/bumblebeed
 %_man1dir/bumblebeed.1*
 %_man1dir/optirun.1*
-%doc README.markdown doc/RELEASE_NOTES_3_0
+%doc README.markdown doc/RELEASE_NOTES_3_1
 
 %exclude %_docdir/bumblebee
 
 %changelog
+* Tue Feb 26 2013 Yuri N. Sedunov <aris@altlinux.org> 3.1-alt1
+- 3.1 (ALT #28605)
+- removed "noreplace" tag for bumblebee.conf
+
 * Tue Jan 24 2012 Yuri N. Sedunov <aris@altlinux.org> 3.0-alt2
 - enabled power management via bbswitch kernel module
 
