@@ -5,7 +5,7 @@
 
 Name: python-module-%{module_name}%module_branch
 Version: 2.3.5
-Release: alt1
+Release: alt2
 
 Summary: An Advanced Django CMS
 
@@ -19,7 +19,8 @@ Source: %module_name-%version.tar
 
 BuildArch: noarch
 
-Provides: python-module-%{module_name} = %EVR
+Provides: python-module-%module_name = %EVR
+Conflicts: python-module-%module_name < %module_branch
 
 # see docs/getting_started/installation.rst
 Requires: python-module-django >= 1.3.1
@@ -53,6 +54,9 @@ An Advanced Django CMS.
 %python_sitelibdir/django_cms*egg-info/
 
 %changelog
+* Tue Feb 26 2013 Aleksey Avdeev <solo@altlinux.ru> 2.3.5-alt2
+- Add conflicts python-module-%%module_name < %%module_branch
+
 * Tue Feb 26 2013 Aleksey Avdeev <solo@altlinux.ru> 2.3.5-alt1
 - Version 2.3.5
 - Rename package to python-module-django-cms2.3
