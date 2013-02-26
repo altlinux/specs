@@ -8,7 +8,7 @@
 
 Name: lxde-common
 Version: 0.5.5
-Release: alt17
+Release: alt18
 BuildArch: noarch
 
 Summary: Basic infrastructure for LXDE.
@@ -53,7 +53,6 @@ This package contains unmodified configuration from upstream.
 sed -i 's,lxde.conf,LXDE.conf,' Makefile.am
 sed -i 's,XDG_CONFIG_HOME/pcmanfm,XDG_CONFIG_HOME/pcmanfm/LXDE,;s,pcmanfm/LXDE.conf,pcmanfm/lxde.conf,;s,default/LXDE.conf,pcmanfm.conf,;' startlxde.in
 sed -i '/XDG_MENU/ a\\n# Since shared-mime-info-0.90-alt3 XDG_DATA_DIRS not exported. We need to define\n# the set of base directories explicitly.\nexport XDG_DATA_DIRS="/usr/share/lxde:/usr/share:/usr/local/share"' startlxde.in
-sed -i 's,pcmanfm --desktop,pcmanfm --daemon-mode --desktop,' autostart
 
 %autoreconf
 %configure --enable-man
@@ -74,7 +73,7 @@ ln -s %_datadir/%theme_virt_dir/desktop.conf %buildroot%_sysconfdir/xdg/lxsessio
 
 mkdir %theme_fullname/pcmanfm
 mkdir %theme_fullname/pcmanfm/LXDE
-mv %buildroot%_sysconfdir/xdg/pcmanfm/LXDE/pcmanfm.conf %theme_fullname/pcmanfm/LXDE/lxde.conf
+cp %buildroot%_sysconfdir/xdg/pcmanfm/LXDE/pcmanfm.conf %theme_fullname/pcmanfm/LXDE/lxde.conf
 ln -s %_datadir/%theme_virt_dir/pcmanfm/LXDE/lxde.conf %buildroot%_sysconfdir/xdg/pcmanfm/LXDE/
 
 mv lxpanel/profile/LXDE %theme_fullname/lxpanel
@@ -85,6 +84,10 @@ mkdir -p %buildroot/etc/alternatives/packages.d/
 cat > %buildroot/etc/alternatives/packages.d/%theme_fullname << __EOF__
 %_datadir/%theme_virt_dir %_datadir/%theme_fullname 1
 __EOF__
+
+# Install desktop files
+mkdir -p %buildroot%_desktopdir/
+cp -v debian/*.desktop %buildroot%_desktopdir/
 
 %find_lang %name
 
@@ -102,8 +105,10 @@ fi
 %_man1dir/*
 ### themeable
 %_sysconfdir/xdg/lxsession/LXDE/desktop.conf
-%_sysconfdir/xdg/pcmanfm/LXDE/lxde.conf
+%config %_sysconfdir/xdg/pcmanfm/LXDE/pcmanfm.conf
+%config %_sysconfdir/xdg/pcmanfm/LXDE/lxde.conf
 %_datadir/lxpanel/profile/LXDE
+%_desktopdir/*.desktop
 
 %files -n %theme_fullname
 %config /etc/alternatives/packages.d/%theme_fullname
@@ -112,6 +117,12 @@ fi
 #_iconsdir/nuoveXT2
 
 %changelog
+* Tue Feb 26 2013 Andrey Cherepanov <cas@altlinux.org> 0.5.5-alt18
+- Add desktop files for logout and screen lock
+- Fix black wallpaper by default
+- Fix first run of PCManFM fail
+- Mark configuratin files as config files
+
 * Sun Jan 20 2013 Michael Shigorin <mike@altlinux.org> 0.5.5-alt17
 - changed wmsession priority from 20 to 09 (closes: #28393)
 
