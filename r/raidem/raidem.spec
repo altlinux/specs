@@ -3,7 +3,7 @@ BuildRequires: gcc-c++ unzip zlib-devel
 # END SourceDeps(oneline)
 Name:           raidem
 Version:        0.3.1
-Release:        alt2_22
+Release:        alt2_23
 Summary:        2d top-down shoot'em up
 Group:          Games/Other
 License:        zlib
@@ -64,7 +64,7 @@ cp -a data demos maps $RPM_BUILD_ROOT%{_datadir}/%{name}
 
 # below is the desktop file and icon stuff.
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/applications
-desktop-file-install             \
+desktop-file-install                            \
   --dir $RPM_BUILD_ROOT%{_datadir}/applications \
   %{SOURCE2}
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/48x48/apps
@@ -81,6 +81,9 @@ install -p -m 644 %{SOURCE1} \
 
 
 %changelog
+* Tue Feb 26 2013 Igor Vlasenko <viy@altlinux.ru> 0.3.1-alt2_23
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.3.1-alt2_22
 - update to new release by fcimport
 
