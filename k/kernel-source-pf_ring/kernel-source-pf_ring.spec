@@ -1,5 +1,5 @@
 Name: kernel-source-pf_ring
-Version: 5.4.4
+Version: 5.5.2
 Release: alt1
 
 Summary: Packet capture acceleration by means of a ring buffer
@@ -49,6 +49,9 @@ cp -r %name-%version/kernel/linux/pf_ring.h %buildroot%_includedir/linux-default
 %_includedir/linux-default/include/linux/pf_ring.h
 
 %changelog
+* Tue Feb 26 2013 Timur Aitov <timonbl4@altlinux.org> 5.5.2-alt1
+- 5.5.2
+
 * Sun Jul 08 2012 Slava Dubrovskiy <dubrsl@altlinux.org> 5.4.4-alt1
 - 5.4.4
 
