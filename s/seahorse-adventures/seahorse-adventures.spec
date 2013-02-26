@@ -1,9 +1,10 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: python-devel
 # END SourceDeps(oneline)
+%define fedora 19
 Name:           seahorse-adventures
 Version:        1.0
-Release:        alt4_11
+Release:        alt4_12
 Summary:        Help barbie the seahorse float on bubbles to the moon
 Group:          Games/Other
 License:        GPL+
@@ -51,7 +52,10 @@ ln -s ../share/%{name}/run_game.py $RPM_BUILD_ROOT%{_bindir}/%{name}
 
 # below is the desktop file and icon stuff.
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/applications
-desktop-file-install             \
+desktop-file-install \
+%if 0%{?fedora} && 0%{?fedora} < 19
+              \
+%endif
   --dir $RPM_BUILD_ROOT%{_datadir}/applications \
   %{SOURCE1}
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/32x32/apps
@@ -63,11 +67,18 @@ install -p -m 644 data/images/player/right.png \
 %doc *.txt Seahorse-Adventures-license.eml
 %{_bindir}/%{name}
 %{_datadir}/%{name}
+%if 0%{?fedora} && 0%{?fedora} < 19
 %{_datadir}/applications/%{name}.desktop
+%else
+%{_datadir}/applications/%{name}.desktop
+%endif
 %{_datadir}/icons/hicolor/32x32/apps/%{name}.png
 
 
 %changelog
+* Tue Feb 26 2013 Igor Vlasenko <viy@altlinux.ru> 1.0-alt4_12
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 1.0-alt4_11
 - update to new release by fcimport
 
