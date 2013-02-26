@@ -3,7 +3,7 @@ BuildRequires: gcc-c++ libGL-devel libSDL-devel libX11-devel pkgconfig(avahi-cli
 # END SourceDeps(oneline)
 Name:           sear
 Version:        0.6.4
-Release:        alt4_0.14.g0b70ddb
+Release:        alt4_0.15.g0b70ddb
 Summary:        3D WorldForge client
 
 Group:          Games/Other
@@ -67,7 +67,7 @@ make %{?_smp_mflags}
 %install
 make install DESTDIR=$RPM_BUILD_ROOT
 
-desktop-file-install  \
+desktop-file-install \
     --delete-original --dir=$RPM_BUILD_ROOT%{_datadir}/applications \
     $RPM_BUILD_ROOT%{_datadir}/applications/%{name}.desktop
 
@@ -87,6 +87,9 @@ mv $RPM_BUILD_ROOT%{_datadir}/icons/worldforge/sear_icon.xpm \
 
 
 %changelog
+* Tue Feb 26 2013 Igor Vlasenko <viy@altlinux.ru> 0.6.4-alt4_0.15.g0b70ddb
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.6.4-alt4_0.14.g0b70ddb
 - update to new release by fcimport
 
