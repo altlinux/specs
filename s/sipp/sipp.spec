@@ -1,7 +1,7 @@
 Packager: Denis Smirnov <mithraen@altlinux.ru>
 
 Name: sipp
-Version: 3.2
+Version: 3.3
 Release: alt1
 
 Summary: SIPp -- test tool / traffic generator for the SIP
@@ -42,6 +42,9 @@ install -D sipp %buildroot%_bindir/sipp
 %doc pcap sipp.dtd
 
 %changelog
+* Wed Feb 27 2013 Denis Smirnov <mithraen@altlinux.ru> 3.3-alt1
+- 3.3
+
 * Tue Oct 04 2011 Denis Smirnov <mithraen@altlinux.ru> 3.2-alt1
 - 3.2
 
