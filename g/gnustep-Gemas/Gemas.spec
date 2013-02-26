@@ -2,7 +2,7 @@
 
 Name: gnustep-Gemas
 Version: 0.3
-Release: alt1
+Release: alt2
 Summary: A simple code editor for GNUstepers 
 License: GPLv3
 Group: Graphical desktop/GNUstep
@@ -13,6 +13,8 @@ Source: %name-%version.tar
 
 BuildPreReq: gcc-objc gnustep-make-devel libgnustep-objc2-devel /proc
 BuildPreReq: gnustep-HighlighterKit-devel gnustep-gui-devel
+
+Requires: gnustep-HighlighterKit
 
 %description
 Gemas is a simple code editor for GNUstepers. Features:
@@ -51,6 +53,9 @@ Gemas is a simple code editor for GNUstepers. Features:
 %_libdir/GNUstep
 
 %changelog
+* Tue Feb 26 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3-alt2
+- Added requirement on gnustep-HighlighterKit (thnx aen@)
+
 * Mon Feb 25 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3-alt1
 - Initial build for Sisyphus
 
