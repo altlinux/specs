@@ -8,7 +8,7 @@ BuildRequires: unzip
 
 Name:           fonts-ttf-nafees-riqa
 Version:        1.0
-Release:        alt2_4
+Release:        alt2_6
 Summary:        Nafees riqa font for writing Urdu in the Riqa script
 
 Group:          System/Fonts/True type
@@ -31,7 +31,7 @@ script based on Unicode standard.
 
 
 %prep
-%setup -q -c
+%setup -n %{oldname}-%{version} -q -c
 
 %build
 # Fix RHBZ#490830 while not fixed upstream
@@ -93,10 +93,13 @@ fi
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}
 %{_fontbasedir}/*/%{_fontstem}/*.ttf
 
-%doc  Nafees\ Riqa\ v1.00.pdf
+%doc  *.pdf
 
 
 %changelog
+* Tue Feb 26 2013 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_6
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_4
 - update to new release by fcimport
 
