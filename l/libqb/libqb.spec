@@ -4,7 +4,7 @@ BuildRequires: /usr/bin/doxygen /usr/bin/pkg-config /usr/bin/splint gcc-c++ pkgc
 %add_optflags %optflags_shared
 Name:           libqb
 Version:        0.14.4
-Release:        alt1_1
+Release:        alt1_2
 Summary:        An IPC library for high performance servers
 
 Group:          System/Libraries
@@ -45,8 +45,8 @@ Group:          Development/C
 Requires:       %{name} = %{version}-%{release}
 
 %description    devel
-The %%{name}-devel package contains libraries and header files for
-developing applications that use %%{name}.
+The %{name}-devel package contains libraries and header files for
+developing applications that use %{name}.
 
 %files          devel
 %doc COPYING README.markdown
@@ -57,6 +57,9 @@ developing applications that use %%{name}.
 %{_mandir}/man8/qb-blackbox.8*
 
 %changelog
+* Tue Feb 26 2013 Igor Vlasenko <viy@altlinux.ru> 0.14.4-alt1_2
+- update to new release by fcimport
+
 * Wed Jan 30 2013 Igor Vlasenko <viy@altlinux.ru> 0.14.4-alt1_1
 - update to new release by fcimport
 
