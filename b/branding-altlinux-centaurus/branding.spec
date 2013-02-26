@@ -6,7 +6,7 @@
 
 Name: branding-%brand-%theme
 Version: 6.9.0 
-Release: alt16
+Release: alt17
 
 BuildRequires: cpio fonts-ttf-dejavu fonts-ttf-droid
 BuildRequires: design-bootloader-source >= 5.0-alt2
@@ -447,6 +447,9 @@ cat '/%_datadir/themes/%XdgThemeName/panel-default-setup.entries' > \
 %_desktopdir/indexhtml.desktop
 
 %changelog
+* Tue Feb 26 2013 Andrey Cherepanov <cas@altlinux.org> 6.9.0-alt17
+- Fix Name in os-release
+
 * Fri Dec 28 2012 Andrey Cherepanov <cas@altlinux.org> 6.9.0-alt16
 - Set correct URL to indexhtml
 
