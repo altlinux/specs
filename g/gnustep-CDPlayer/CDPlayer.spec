@@ -1,0 +1,74 @@
+%set_verify_elf_method unresolved=strict
+
+Name: gnustep-CDPlayer
+Version: 0.5.1
+Release: alt1
+Summary: Small CD Audio Player for GNUstep
+License: GPL
+Group: Graphical desktop/GNUstep
+Url: http://gsburn.sourceforge.net/
+Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+
+Source: %name-%version.tar
+
+BuildPreReq: gcc-objc gnustep-make-devel libgnustep-objc2-devel /proc
+BuildPreReq: libcdaudio-devel gnustep-gui-devel
+BuildPreReq: gnustep-systempreferences-devel
+
+Requires: gnustep-cddb.bundle
+
+%description
+CDPlayer.app is a small CD Audio Player for GNUstep. This application is
+only tested on Linux/GNUstep.
+
+CDPlayer is useful only if your CD drive is directly connected with your
+sound card. It cannot cope with SATA drives where it is necessary to
+read the digital data from the disc and then convert it to audio output.
+
+%package devel
+Summary: Development files of CDPlayer
+Group: Development/Objective-C
+BuildArch: noarch
+Requires: %name = %EVR
+
+%description devel
+CDPlayer.app is a small CD Audio Player for GNUstep. This application is
+only tested on Linux/GNUstep.
+
+CDPlayer is useful only if your CD drive is directly connected with your
+sound card. It cannot cope with SATA drives where it is necessary to
+read the digital data from the disc and then convert it to audio output.
+
+This package contains development files of CDPlayer.
+
+%prep
+%setup
+
+%build
+%make_build \
+	messages=yes \
+	debug=yes \
+	strip=no \
+	shared=yes \
+	AUXILIARY_CPPFLAGS='-O2' \
+	prefs=sysprefs \
+	CONFIG_SYSTEM_LIBS='-lcdaudio' \
+	GNUSTEP_MAKEFILES=%_datadir/GNUstep/Makefiles
+ 
+%install
+%makeinstall_std GNUSTEP_INSTALLATION_DOMAIN=SYSTEM \
+	prefs=sysprefs \
+	GNUSTEP_MAKEFILES=%_datadir/GNUstep/Makefiles
+
+%files
+%doc CHANGELOG CREDITS README TODO
+%_bindir/*
+%_libdir/GNUstep
+
+%files devel
+%_includedir/*
+
+%changelog
+* Tue Feb 26 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.1-alt1
+- Initial build for Sisyphus
+
