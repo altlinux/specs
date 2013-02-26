@@ -5,7 +5,7 @@
 %define sover %somver.1.1
 Name: primme
 Version: 1.1
-Release: alt11
+Release: alt12
 Summary: PReconditioned Iterative MultiMethod Eigensolver
 License: LGPL v2.1
 Group: Sciences/Mathematics
@@ -56,6 +56,7 @@ This package contains development files of PRIMME.
 %package examples
 Summary: Examples for PRIMME
 Group: Development/Documentation
+BuildArch: noarch
 Requires: libhypre-devel
 
 %description examples
@@ -76,7 +77,7 @@ source %mpidir/bin/mpivars.sh
 export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib -L%mpidir/lib"
 
 %make lib libd libz TOP=$PWD
-%make all TOP=$PWD MPIDIR=%mpidir
+%make lib depends TOP=$PWD MPIDIR=%mpidir
 
 %install
 source %mpidir/bin/mpivars.sh
@@ -90,8 +91,8 @@ install -m644 *.a %buildroot%_libdir
 install -p -m644 PRIMMESRC/COMMONSRC/*.h \
 	PRIMMESRC/DSRC/*.h PRIMMESRC/ZSRC/*.h \
 	%buildroot%_includedir
-rm -f DTEST/*.o ZTEST/*.o
-cp -fR DTEST ZTEST %buildroot%_libdir/%name-%version/examples/
+#rm -f DTEST/*.o ZTEST/*.o
+#cp -fR DTEST ZTEST %buildroot%_libdir/%name-%version/examples/
 
 # shared libraries
 
@@ -118,10 +119,14 @@ popd
 %_includedir/*
 
 %files examples
-%dir %_libdir/%name-%version
-%_libdir/%name-%version/examples
+#dir %_libdir/%name-%version
+#_libdir/%name-%version/examples
+%doc DTEST ZTEST
 
 %changelog
+* Tue Feb 26 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1-alt12
+- Fixed build
+
 * Sun Aug 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1-alt11
 - Built with OpenBLAS instead of GotoBLAS2
 
