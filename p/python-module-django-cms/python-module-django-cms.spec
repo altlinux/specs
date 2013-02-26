@@ -1,10 +1,10 @@
-%define git_commit 1b5ea0a
+%define git_commit efd039d
 
 %define module_name django-cms
 
 Name: python-module-%module_name
 Version: 2.1.5
-Release: alt1
+Release: alt2
 
 Summary: An Advanced Django CMS
 
@@ -19,6 +19,7 @@ Source: %module_name-%version.tar
 BuildArch: noarch
 
 Provides: %{name}2.1 = %EVR
+Conflicts: python-module-django-mptt
 
 # see docs/getting_started/installation.rst
 Requires: python-module-django >= 1.2.3
@@ -51,6 +52,9 @@ An Advanced Django CMS.
 %python_sitelibdir/django_cms*egg-info/
 
 %changelog
+* Tue Feb 26 2013 Aleksey Avdeev <solo@altlinux.ru> 2.1.5-alt2
+- Fix conflicts
+
 * Fri Feb 22 2013 Aleksey Avdeev <solo@altlinux.ru> 2.1.5-alt1
 - Version 2.1.5
 
