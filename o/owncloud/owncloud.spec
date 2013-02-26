@@ -1,8 +1,8 @@
 %define installdir %webserver_webappsdir/%name
 
 Name: owncloud
-Version: 4.0.7
-Release: alt2
+Version: 4.0.12
+Release: alt1
 
 Summary: Cloud platform
 Group: Networking/WWW
@@ -82,6 +82,9 @@ rm -f %buildroot%installdir/l10n/l10n.pl
 %config(noreplace) %attr(0644,root,root) %_sysconfdir/httpd2/conf/addon.d/A.%name.conf
 
 %changelog
+* Tue Feb 26 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 4.0.12-alt1
+- 4.0.12
+
 * Fri Aug 24 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 4.0.7-alt2
 - an ability to play mp3 without tags added
 
