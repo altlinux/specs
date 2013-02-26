@@ -3,10 +3,10 @@ BuildRequires(pre): rpm-macros-fedora-compat
 BuildRequires: gcc-c++ libSDL_sound-devel libgcrypt-devel libgnutls-devel libgpg-error-devel libidn-devel libogg-devel libuuid-devel libvorbis-devel perl(FileHandle.pm) perl(Text/Wrap.pm) pkgconfig(ogg) pkgconfig(vorbis) pkgconfig(vorbisfile) zlib-devel
 # END SourceDeps(oneline)
 BuildRequires: boost-devel boost-filesystem-devel
-%define fedora 18
+%define fedora 19
 Name:			springlobby
 Version:		0.147
-Release:		alt1_3
+Release:		alt1_4
 Summary:		A lobby client for the spring RTS game engine
 
 Group:			Games/Other
@@ -15,7 +15,6 @@ License:		GPLv2
 URL:			http://springlobby.info
 Source0:		http://www.springlobby.info/tarballs/springlobby-%{version}.tar.bz2
 Patch0:			springlobby-gtkfix.patch
-
 
 BuildRequires: ctest cmake
 BuildRequires:	wxGTK-devel libtorrent-rasterbar-devel
@@ -33,15 +32,12 @@ Requires:		springrts
 ExcludeArch:	ppc ppc64
 Source44: import.info
 
-
 %description
 SpringLobby is a free cross-platform lobby client for the Spring RTS project.
-
 
 %prep
 %setup -q
 %patch0 -p0 -b .springlobby-gtkfix
-
 
 %build
 # Use boost filesystem 2 explicitly (bug 654807)
@@ -55,9 +51,8 @@ export CXXFLAGS="$CXXFLAGS -DBOOST_FILESYSTEM_VERSION=2"
 %{fedora_cmake}
 make %{?_smp_mflags}
 
-
 %install
-make install DESTDIR=$RPM_BUILD_ROOT
+%makeinstall_std
 
 # Handled in %%doc
 rm -rf $RPM_BUILD_ROOT%{_datadir}/doc/
@@ -75,15 +70,16 @@ desktop-file-install	\
 
 %find_lang %{name}
 
-
 %files -f %{name}.lang
 %doc AUTHORS NEWS README COPYING THANKS
 %{_bindir}/*
 %{_datadir}/applications/*.desktop
 %{_datadir}/icons/hicolor/scalable/apps/*.svg
 
-
 %changelog
+* Tue Feb 26 2013 Igor Vlasenko <viy@altlinux.ru> 0.147-alt1_4
+- update to new release by fcimport
+
 * Thu Feb 14 2013 Igor Vlasenko <viy@altlinux.ru> 0.147-alt1_3
 - update to new release by fcimport
 
