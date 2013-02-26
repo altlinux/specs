@@ -4,7 +4,7 @@
 
 Name: python-module-django-%modulename
 Version: 0.7
-Release: alt1
+Release: alt2
 
 %setup_python_module %modulename
 
@@ -19,13 +19,14 @@ BuildArch: noarch
 # git://github.com/ojii/django-sekizai.git
 Source: %name-%version.tar
 
-Requires: python-module-django >= 1.2.7
+Requires: Django >= 1.2.7
 # see setup.py
 Requires: python-module-django-classy-tags >= 0.3.1
 
 BuildPreReq: rpm-build-licenses
-BuildPreReq: python-module-django-tests >= 1.2.7
-BuildPreReq: python-module-django-dbbackend-sqlite3 >= 1.2.7
+BuildPreReq: Django >= 1.2.7
+BuildPreReq: python2.7(django.test)
+BuildPreReq: python2.7(django.db.backends.sqlite3)
 BuildPreReq: python-module-django-classy-tags >= 0.3.1
 BuildPreReq: python-module-setupdocs
 BuildPreReq: python-module-sphinx
@@ -63,5 +64,8 @@ python runtests.py
 %python_sitelibdir/*.egg-info
 
 %changelog
+* Tue Feb 26 2013 Aleksey Avdeev <solo@altlinux.ru> 0.7-alt2
+- Fix requires
+
 * Tue Feb 26 2013 Aleksey Avdeev <solo@altlinux.ru> 0.7-alt1
 - Initial build for ALT Linux Sisyphus
