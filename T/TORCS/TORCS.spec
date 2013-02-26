@@ -12,7 +12,7 @@ Requires: freeglut plib libalut
 
 Name: TORCS
 Version: 1.3.0
-Release: alt6.1
+Release: alt6.2
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
@@ -47,7 +47,7 @@ Requires: %name-data = %version
 #Requires: %name-data-cars = %version
 
 # Automatically added by buildreq on Sun Nov 30 2008
-BuildRequires: gcc-c++ imake libGL-devel libXext-devel libXi-devel libXmu-devel libXrandr-devel libXrender-devel libalut-devel libexpat-devel libfreeglut-devel libpng-devel plib-devel rpm-build-java rpm-build-mono rpm-build-seamonkey xorg-cf-files xorg-sdk libXxf86vm-devel
+BuildRequires: gcc-c++ imake libGL-devel libXext-devel libXi-devel libXmu-devel libXrandr-devel libXrender-devel libalut-devel libexpat-devel libfreeglut-devel libpng-devel plib-devel rpm-build-java rpm-build-mono xorg-cf-files xorg-sdk libXxf86vm-devel
 
 %description
 A 3D racing car simulator using OpenGL.
@@ -102,6 +102,9 @@ install -m 644 -D %SOURCE13 %buildroot%_liconsdir/%name.xpm
 %_liconsdir/%name.xpm
 
 %changelog
+* Tue Feb 26 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.0-alt6.2
+- Fixed build
+
 * Thu Sep 27 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.0-alt6.1
 - Rebuilt with libpng15
 
