@@ -1,7 +1,7 @@
 %define oname idioskopos
 Name: lib%oname
 Version: 0.4.1
-Release: alt2
+Release: alt2.1
 
 Summary: C++ library that simplifies (hopefully) the addition of object reflection and introspection
 
@@ -15,7 +15,7 @@ Source: http://prdownloads.sf.net/%oname/%oname-%version.tar.bz2
 
 # Warning: buildreq adds all fonts packages :)
 # Automatically added by buildreq on Sat Nov 29 2008
-BuildRequires: boost-devel gcc-c++ libxml++2-devel rpm-build-java rpm-build-mono rpm-build-seamonkey xorg-sdk
+BuildRequires: boost-devel gcc-c++ libxml++2-devel rpm-build-java rpm-build-mono xorg-sdk
 
 
 %description
@@ -55,6 +55,9 @@ Libraries/include files for development with %name.
 %_pkgconfigdir/*
 
 %changelog
+* Tue Feb 26 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.1-alt2.1
+- Fixed build
+
 * Sat Nov 29 2008 Vitaly Lipatov <lav@altlinux.ru> 0.4.1-alt2
 - update buildreq
 - cleanup spec
