@@ -2,8 +2,8 @@
 %def_enable    opengl
 
 Name:		gambas3
-Version:	3.3.4
-Release:	alt1
+Version:	3.4.0
+Release:	alt2
 
 Summary:	IDE based on a basic interpreter with object extensions
 Group:		Development/Tools
@@ -119,6 +119,7 @@ Provides:	%name = %version-%release
 Requires:	tar, gzip, rpm-build, gettext
 Requires:	%name-runtime = %version-%release
 Requires:	%name-devel = %version-%release
+Requires:	%name-gb-args = %version-%release
 Requires:	%name-gb-db = %version-%release
 Requires:	%name-gb-db-form = %version-%release
 Requires:	%name-gb-desktop = %version-%release
@@ -155,6 +156,7 @@ Requires:	%name-runtime = %version-%release
 Requires:	%name-ide = %version-%release
 # From http://gambasdoc.org/help/howto/package#t1
 # It depends on "All gambas components."
+Requires:	%name-gb-args = %version-%release
 Requires:	%name-gb-cairo = %version-%release
 Requires:	%name-gb-chart = %version-%release
 Requires:   %name-gb-complex = %version-%release
@@ -176,6 +178,7 @@ Requires:	%name-gb-form = %version-%release
 Requires:	%name-gb-form-dialog = %version-%release
 Requires:	%name-gb-form-mdi = %version-%release
 Requires:	%name-gb-form-stock = %version-%release
+Requires:   %name-gb-httpd = %version-%release
 Requires:   %name-gb-gsl = %version-%release
 Requires:   %name-gb-gtk = %version-%release
 Requires:   %name-gb-gtk-opengl = %version-%release
@@ -185,7 +188,9 @@ Requires:	%name-gb-image-effect = %version-%release
 Requires:	%name-gb-image-imlib = %version-%release
 Requires:	%name-gb-image-io = %version-%release
 Requires:   %name-gb-jit = %version-%release
+Requires:   %name-gb-map = %version-%release
 Requires:   %name-gb-media = %version-%release
+Requires:   %name-gb-memcached = %version-%release
 Requires:   %name-gb-mime = %version-%release
 Requires:   %name-gb-ncurses = %version-%release
 Requires:	%name-gb-net = %version-%release
@@ -221,13 +226,21 @@ Requires:	%name-gb-web = %version-%release
 %description examples
 This package includes all the example projects provided with Gambas3.
 
+%package gb-args
+Summary:	Gambas3 component package for args
+Group:		Development/Tools
+Requires:	%name-runtime = %version-%release
+
+%description gb-args
+This package contains the Gambas3 component package for args.
+
 %package gb-cairo
 Summary:	Gambas3 component package for cairo
 Group:		Development/Tools
 Requires:	%name-runtime = %version-%release
 
 %description gb-cairo
-This package contains the Gambas Cario components.
+This package contains the Gambas3 Cario components.
 
 %package gb-chart
 Summary:	Gambas3 component package for chart
@@ -235,7 +248,7 @@ Group:		Development/Tools
 Requires:	%name-runtime = %version-%release
 
 %description gb-chart
-This package contains the Gambas Chart components.
+This package contains the Gambas3 Chart components.
 
 %package gb-complex
 Summary:	Gambas3 component package for complex
@@ -286,7 +299,7 @@ Group:		Development/Tools
 Requires:	%name-runtime = %version-%release
 
 %description gb-db-form
-This package contains the Gambas Database form components.
+This package contains the Gambas3 Database form components.
 
 %package gb-db-mysql
 Summary:	Gambas3 component package for db.mysql
@@ -352,7 +365,7 @@ Group:		Development/Tools
 Requires:	%name-runtime = %version-%release
 
 %description gb-dbus
-This package contains the Gambas D-bus components.
+This package contains the Gambas3 D-bus components.
 
 %package gb-eval-highlight
 Summary:	Gambas3 component package for eval highlight
@@ -394,6 +407,14 @@ Requires:	%name-runtime = %version-%release
 %description gb-form-stock
 This component implements the form-stock control.
 
+%package gb-httpd
+Summary:	Gambas3 component package for httpd
+Group:		Development/Tools
+Requires:	%name-runtime = %version-%release
+
+%description gb-httpd
+Gambas3 component package for httpd.
+
 %package gb-gsl
 Summary:	Gambas3 component package for gsl
 Group:		Development/Tools
@@ -409,7 +430,7 @@ Group:		Development/Tools
 Requires:	%name-runtime = %version-%release
 
 %description gb-gtk
-This package includes the Gambas GTK2 GUI component.
+This package includes the Gambas3 GTK2 GUI component.
 
 %if_enabled opengl
 %package gb-gtk-opengl
@@ -472,6 +493,14 @@ Requires:	%name-runtime = %version-%release
 %description gb-jit
 Gambas3 Just In Time compiler.
 
+%package gb-map
+Summary:    Gambas3 component package for map
+Group:      Development/Tools
+Requires:   %name-runtime = %version-%release
+
+%description gb-map
+Gambas3 component package for map
+
 %package gb-media
 Summary:    Gambas3 component package for media
 Group:      Development/Tools
@@ -479,6 +508,14 @@ Requires:   %name-runtime = %version-%release
 
 %description gb-media
 Gambas3 component package for media
+
+%package gb-memcached
+Summary:    Gambas3 component package for memcached
+Group:      Development/Tools
+Requires:   %name-runtime = %version-%release
+
+%description gb-memcached
+Gambas3 component package for memcached
 
 %package gb-mime
 Summary:    Gambas3 component package for mime
@@ -592,7 +629,7 @@ Group:		Development/Tools
 Requires:	%name-runtime = %version-%release
 
 %description gb-qt4
-This package includes Gambas QT4 GUI component.
+This package includes Gambas3 QT4 GUI component.
 
 %package gb-qt4-ext
 Summary:	Gambas3 component package for qt4.ext
@@ -600,7 +637,7 @@ Group:		Development/Tools
 Requires:	%name-runtime = %version-%release
 
 %description gb-qt4-ext
-This package contains the Gambas qt-ext components.
+This package contains the Gambas3 qt-ext components.
 
 %package gb-qt4-opengl
 Summary:	Gambas3 component package for qt4-opengl
@@ -608,7 +645,7 @@ Group:		Development/Tools
 Requires:	%name-runtime = %version-%release
 
 %description gb-qt4-opengl
-This package contains the Gambas qt-opengl components.
+This package contains the Gambas3 qt-opengl components.
 
 %package gb-qt4-webkit
 Summary:	Gambas3 component package for qt4-webkit
@@ -616,7 +653,7 @@ Group:		Development/Tools
 Requires:	%name-runtime = %version-%release
 
 %description gb-qt4-webkit
-This package contains the Gambas qt-webkit components.
+This package contains the Gambas3 qt-webkit components.
 
 %package gb-report
 Summary:	Gambas3 component package for report
@@ -624,7 +661,7 @@ Group:		Development/Tools
 Requires:	%name-runtime = %version-%release
 
 %description gb-report
-This package contains the Gambas Report components.
+This package contains the Gambas3 Report components.
 
 %package gb-sdl
 Summary:	Gambas3 component package for sdl
@@ -663,7 +700,7 @@ Group:		Development/Tools
 Requires:	%name-runtime = %version-%release
 
 %description gb-signal
-This package contains the Gambas Signal components.
+This package contains the Gambas3 Signal components.
 
 %package gb-v4l 
 Summary:	Gambas3 component package for v4l 
@@ -699,7 +736,7 @@ Requires:	%name-runtime = %version-%release
 
 %description gb-xml
 These components brings the power of the libxml and libxslt libraries to
-Gambas for XML processing.
+Gambas3 for XML processing.
 
 %package gb-xml-html
 Summary:	Gambas3 component package for xml.html
@@ -862,6 +899,7 @@ install -m 0644 -p main/mime/application-x-gambas3.xml %buildroot%_xdgmimedir/pa
 %_libdir/%name/gb.draw.*
 %_libdir/%name/gb.eval.component
 %_libdir/%name/gb.eval.so*
+%_libdir/%name/gb.eval.la
 %_bindir/gbr3
 %_bindir/gbx3
 %_datadir/pixmaps/%name.png
@@ -911,6 +949,10 @@ install -m 0644 -p main/mime/application-x-gambas3.xml %buildroot%_xdgmimedir/pa
 %appdir/examples/Networking/
 %appdir/examples/OpenGL/
 %appdir/examples/Printing/
+
+%files gb-args
+%_libdir/%name/gb.args.*
+%appdir/info/gb.args.*
 
 %files gb-cairo
 %_libdir/%name/gb.cairo.*
@@ -1014,13 +1056,16 @@ install -m 0644 -p main/mime/application-x-gambas3.xml %buildroot%_xdgmimedir/pa
 %appdir/info/gb.form.stock.info
 %appdir/info/gb.form.stock.list
 
+%files gb-httpd
+%_libdir/%name/gb.httpd.*
+%appdir/info/gb.httpd.*
+
 %files gb-gsl
 %_libdir/%name/gb.gsl.*
 %appdir/info/gb.gsl.*
 
 %files gb-gtk
 %_libdir/%name/gb.gtk.component
-%_libdir/%name/gb.gtk.gambas
 %_libdir/%name/gb.gtk.so*
 %_libdir/%name/gb.gtk.la
 %appdir/info/gb.gtk.info
@@ -1059,9 +1104,18 @@ install -m 0644 -p main/mime/application-x-gambas3.xml %buildroot%_xdgmimedir/pa
 %_libdir/%name/gb.jit.*
 %appdir/info/gb.jit.*
 
+%files gb-map
+%_libdir/%name/gb.map.*
+%appdir/info/gb.map.*
+%appdir/control/gb.map/
+
 %files gb-media
 %_libdir/%name/gb.media.*
 %appdir/info/gb.media.*
+
+%files gb-memcached
+%_libdir/%name/gb.memcached.*
+%appdir/info/gb.memcached.*
 
 %files gb-mime
 %_libdir/%name/gb.mime.*
@@ -1124,7 +1178,6 @@ install -m 0644 -p main/mime/application-x-gambas3.xml %buildroot%_xdgmimedir/pa
 
 %files gb-qt4 
 %_libdir/%name/gb.qt4.component
-%_libdir/%name/gb.qt4.gambas 
 %_libdir/%name/gb.qt4.so* 
 %_libdir/%name/gb.qt4.la 
 %appdir/info/gb.qt4.info 
@@ -1184,6 +1237,7 @@ install -m 0644 -p main/mime/application-x-gambas3.xml %buildroot%_xdgmimedir/pa
 %_libdir/%name/gb.xml.component
 %_libdir/%name/gb.xml.gambas
 %_libdir/%name/gb.xml.so*
+%_libdir/%name/gb.xml.la
 %appdir/info/gb.xml.info
 %appdir/info/gb.xml.list
 
@@ -1204,6 +1258,13 @@ install -m 0644 -p main/mime/application-x-gambas3.xml %buildroot%_xdgmimedir/pa
 %appdir/info/gb.xml.xslt.*
 
 %changelog
+* Tue Feb 26 2013 Andrey Cherepanov <cas@altlinux.org> 3.4.0-alt2
+- Remove missed .gambas files
+- Add new components: gb.args, gb.httpd, gb.map, gb.memcached
+
+* Mon Feb 25 2013 Andrey Cherepanov <cas@altlinux.org> 3.4.0-alt1
+- New version 3.4.0
+
 * Mon Jan 21 2013 Andrey Cherepanov <cas@altlinux.org> 3.3.4-alt1
 - New version 3.3.4
 
