@@ -4,7 +4,7 @@
 
 Name: python-module-%module_name
 Version: 2.1.5
-Release: alt2
+Release: alt3
 
 Summary: An Advanced Django CMS
 
@@ -22,7 +22,7 @@ Provides: %{name}2.1 = %EVR
 Conflicts: python-module-django-mptt
 
 # see docs/getting_started/installation.rst
-Requires: python-module-django >= 1.2.3
+Requires: Django >= 1.2.3
 Requires: python-module-django-classy-tags >= 0.2.2
 
 BuildRequires: python-module-setuptools
@@ -52,6 +52,9 @@ An Advanced Django CMS.
 %python_sitelibdir/django_cms*egg-info/
 
 %changelog
+* Tue Feb 26 2013 Aleksey Avdeev <solo@altlinux.ru> 2.1.5-alt3
+- Fix requires
+
 * Tue Feb 26 2013 Aleksey Avdeev <solo@altlinux.ru> 2.1.5-alt2
 - Fix conflicts
 
