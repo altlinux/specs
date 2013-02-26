@@ -1,6 +1,6 @@
 Name: monotone
 Version: 1.0
-Release: alt1.1
+Release: alt1.2
 
 Summary: Distributed version control system
 License: GPL
@@ -10,6 +10,7 @@ Url: http://monotone.ca
 
 Source: %name-%version.tar
 Patch: monotone-1.0-alt-gcc4.7.patch
+Patch1: monotone-1.0-alt-boost-1.53.0.patch
 
 BuildRequires: pcre-devel boost-devel libbotan-devel pkg-config libidn-devel liblua5-devel libsqlite3-devel texinfo
 BuildRequires: zlib-devel gcc-c++
@@ -25,6 +26,7 @@ functions to client-side RSA certificates.
 %prep
 %setup
 %patch -p1
+%patch1 -p1
 
 %build
 %autoreconf
@@ -45,6 +47,9 @@ functions to client-side RSA certificates.
 %doc AUTHORS NEWS README UPGRADE HACKING INSTALL
 
 %changelog
+* Tue Feb 26 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0-alt1.2
+- Fixed build with Boost 1.53.0
+
 * Fri Dec 07 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0-alt1.1
 - Fixed build with gcc 4.7
 
