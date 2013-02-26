@@ -4,7 +4,7 @@ BuildRequires: gcc-c++ libexpat-devel perl(English.pm) zlib-devel
 BuildRequires: boost-python-devel
 Name:           vegastrike
 Version:        0.5.1
-Release:        alt3_6.r1
+Release:        alt3_10.r1
 Summary:        3D OpenGL spaceflight simulator
 Group:          Games/Other
 License:        GPLv2+
@@ -27,6 +27,7 @@ Patch9:         vegastrike-0.5.0-glext.patch
 Patch12:        vegastrike-0.5.1-boost146.patch
 Patch14:        vegastrike-0.5.1-gcc47.patch
 Patch15:        vegastrike-0.5.1-music.patch
+Patch16:        vegastrike-0.5.1-gcc48.patch
 BuildRequires:  libGLU-devel libfreeglut-devel libXi-devel libXmu-devel gtk2-devel
 BuildRequires:  libjpeg-devel libpng-devel boost-devel boost-filesystem-devel boost-wave-devel boost-graph-parallel-devel boost-math-devel boost-mpi-devel boost-program_options-devel boost-signals-devel boost-intrusive-devel boost-asio-devel expat-devel python-devel
 BuildRequires:  libSDL_mixer-devel libopenal-devel libalut-devel
@@ -57,6 +58,7 @@ Yet danger lurks in the space beyond.
 %patch12 -p0
 %patch14 -p1
 %patch15 -p3
+%patch16 -p0
 iconv -f ISO-8859-1 -t UTF-8 README > README.tmp
 touch -r README README.tmp
 mv README.tmp README
@@ -93,7 +95,7 @@ install -p -m 644 *.6 $RPM_BUILD_ROOT%{_mandir}/man6
 
 # below is the desktop file and icon stuff.
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/applications
-desktop-file-install             \
+desktop-file-install            \
   --dir $RPM_BUILD_ROOT%{_datadir}/applications \
   %{SOURCE3}
 
@@ -108,6 +110,9 @@ desktop-file-install             \
 
 
 %changelog
+* Tue Feb 26 2013 Igor Vlasenko <viy@altlinux.ru> 0.5.1-alt3_10.r1
+- update to new release by fcimport
+
 * Wed Feb 06 2013 Igor Vlasenko <viy@altlinux.ru> 0.5.1-alt3_6.r1
 - update to new release by fcimport
 
