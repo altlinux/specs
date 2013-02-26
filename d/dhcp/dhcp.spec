@@ -5,8 +5,8 @@
 #%%define patchlevel rc14
 
 Name: dhcp
-Version: 4.2.4.P2
-Release: alt5
+Version: 4.2.5
+Release: alt1
 Epoch: 1
 
 Summary: Dynamic Host Configuration Protocol (DHCP) distribution
@@ -76,13 +76,13 @@ Patch0031: 0031-Don-t-send-log-messages-to-the-stderr-with-f-option.patch
 Patch0032: 0032-Use-getifaddrs-to-scan-for-interfaces.patch
 Patch0033: 0033-dhclient-Don-t-use-fallback_interface-when-releasing.patch
 Patch0034: 0034-Support-DHCPv6-Options-for-Network-Boot-RFC5970.patch
-Patch0035: 0035-dhclient-Fix-parsing-zero-length-options-in-dhclient.patch
-Patch0036: 0036-Fix-infinite-leases-on-x64.patch
-Patch0037: 0037-Fix-do-forward-updates-statement.patch
-Patch0038: 0038-Document-ALT-specific-in-the-dhclient-script-manpage.patch
-Patch0039: 0039-Ignore-checksums-on-the-loopback-interface.patch
-Patch0040: 0040-dhcpd-and-dhcrelay-Override-default-user-jail-dir-an.patch
-Patch0041: 0041-examples-dhcpd-dhcpv6.conf-Drop-dhcpv6-lease-file-na.patch
+Patch0035: 0035-Fix-infinite-leases-on-x64.patch
+Patch0036: 0036-Fix-do-forward-updates-statement.patch
+Patch0037: 0037-Document-ALT-specific-in-the-dhclient-script-manpage.patch
+Patch0038: 0038-Ignore-checksums-on-the-loopback-interface.patch
+Patch0039: 0039-dhcpd-and-dhcrelay-Override-default-user-jail-dir-an.patch
+Patch0040: 0040-examples-dhcpd-dhcpv6.conf-Drop-dhcpv6-lease-file-na.patch
+Patch0041: 0041-fix-segfault-on-x86-64-on-8-network.patch
 
 # due to copy_resolv_conf/copy_resolv_lib
 BuildPreReq: chrooted >= 0.3
@@ -292,6 +292,8 @@ install -pD -m600 %_sourcedir/dhcpd.conf.sample \
 install -pD -m600 doc/examples/dhcpd-dhcpv6.conf \
 	%buildroot/etc/%name/dhcpd6.conf.sample
 
+mv %buildroot/etc/*.example %buildroot/etc/%name/
+
 for dhcpd in dhcpd dhcpd6; do
 	install -pD -m755 %_sourcedir/$dhcpd.init \
 		%buildroot%_initdir/$dhcpd
@@ -457,6 +459,7 @@ fi
 %exclude %docdir/doc/ja_JP.eucJP
 
 %files client
+%doc /etc/%name/dhclient.*.example
 %config(noreplace) /etc/%name/dhclient.conf
 %config(noreplace) %_sysconfdir/sysconfig/dhclient
 %_sysconfdir/%name/dhclient-hooks.d
@@ -468,8 +471,6 @@ fi
 %attr(700,root,dhcp) %dir %ROOT/dhclient
 %attr(700,root,dhcp) %dir %ROOT/dhclient/state
 %attr(644,root,dhcp) %config(noreplace) %verify(not md5 mtime size) %ROOT/dhclient/state/dhclient.leases
-
-%exclude %_sysconfdir/dhclient.conf
 
 %files server
 /etc/syslog.d/*
@@ -520,12 +521,11 @@ fi
 %dir %ROOT/dhcpd6/var/yp/binding
 
 %dir /etc/%name
+%doc /etc/%name/dhcpd.*.example
 %doc /etc/%name/dhcpd.conf.sample
 %doc /etc/%name/dhcpd6.conf.sample
 %dir %docdir
 %docdir/update_dhcp.pl
-
-%exclude %_sysconfdir/dhcpd.conf
 
 %files relay
 %config %_initdir/dhcrelay
@@ -557,6 +557,13 @@ fi
 # }}}
 
 %changelog
+* Mon Feb 25 2013 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:4.2.5-alt1
+- george@:
+  + Version update to 4.2.5
+  + Fix patches
+  + Add example files
+- fix segfault on x86_64 (ALT #28559)
+
 * Tue Dec 04 2012 Mikhail Efremov <sem@altlinux.org> 1:4.2.4.P2-alt5
 - Add *.service files for systemd (closes: #28041).
 - Add dhcrelay6 wrapper.
