@@ -6,7 +6,7 @@
 %define sover %somver.2.4
 Name: freepooma
 Version: 2.4.1
-Release: alt3.cvs20090410
+Release: alt4.cvs20090410
 Summary: Element-wise, data-parallel, and stencil-based physics computations
 License: MIT
 Group: Sciences/Mathematics
@@ -18,8 +18,8 @@ Source: %name-%version.tar.gz
 
 Requires: lib%name = %version-%release
 
-BuildPreReq: gcc-fortran gcc-c++ libcheetah-devel pdtoolkit libpdtoolkit-devel
-BuildPreReq: %mpiimpl-devel
+BuildPreReq: gcc-fortran gcc-c++ libcheetah-devel openpdt libopenpdt-devel
+BuildPreReq: %mpiimpl-devel tau
 BuildPreReq: libhdf5-mpi-devel libfftw3-mpi-devel makedepend libpete-devel
 BuildPreReq: doxygen graphviz chrpath
 
@@ -174,6 +174,9 @@ mv docs/reference/reference %buildroot%_docdir/%name/
 %_docdir/%name
 
 %changelog
+* Tue Feb 26 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.4.1-alt4.cvs20090410
+- Rebuilt with openpdt instead of pdtoolkit
+
 * Thu Jul 05 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.4.1-alt3.cvs20090410
 - Rebuilt with OpenMPI 1.6
 
