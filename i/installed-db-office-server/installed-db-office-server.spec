@@ -1,16 +1,45 @@
 Name: installed-db-office-server
-Version: 1.3
-Release: alt10
-Summary: Databases and config files for moodled, mediawiki and rujel
+Version: 1.4
+Release: alt1
+Summary: Databases and config files for moodle, mediawiki and rujel (common)
 License: GPL
-Group: Editors
+Group: System/Configuration/Other
 Source: %name.tar.gz
 BuildArch: noarch
-Requires: mediawiki mediawiki-apache2 mediawiki-ldap
-Requires: moodle-install-tools moodle2.2 
 
 %description
-Databases and config files for moodle, mediawiki and rujel
+Databases and config files for moodle, mediawiki and rujel (commom part)
+
+%package mediawiki
+Group: System/Configuration/Other
+Requires: mediawiki mediawiki-apache2 mediawiki-ldap
+Summary: Databases and config files for mediawiki
+
+%description mediawiki
+Databases and config files for mediawiki
+
+%package moodle
+Group: System/Configuration/Other
+Requires: moodle-install-tools moodle2.2 
+Summary: Databases and config files for moodle
+
+%description moodle
+Databases and config files for moodle
+
+%package owncloud
+Group: System/Configuration/Other
+Requires: owncloud
+Summary: Databases and config files for owncloud
+
+%description owncloud
+Databases and config files for owncloud
+
+%package rujel
+Group: System/Configuration/Other
+Summary:  Databases and config files for rujel 
+
+%description rujel
+Databases and config files for rujel
 
 %prep
 %setup -q -c
@@ -26,10 +55,9 @@ install -Dp -m755 %name/httpd2-office-server %buildroot%_sysconfdir/firsttime.d/
 install -Dp -m755 %name/moodle %buildroot/etc/hooks/hostname.d/94-moodle-ldap
 install -Dp -m755 %name/mediawiki %buildroot/etc/hooks/hostname.d/95-mediawiki-ldap
 install -Dp -m755 %name/owncloud %buildroot/etc/hooks/hostname.d/96-owncloud-ldap
-install -Dp -m755 %name/rujel %buildroot/usr/lib/alterator/hooks/firsttime.d/rujel-ldap
-install -Dp -m755 %name/gpm %buildroot/usr/lib/alterator/hooks/firsttime.d/gpm
+install -Dp -m755 %name/rujel %buildroot/etc/hooks/hostname.d/97-rujel-ldap
 
-cp -r %name %buildroot/usr/share
+cp -r %name/data %buildroot/usr/share/%name
 mkdir -p %buildroot/var/www/webapps/mediawiki
 # ln -s /usr/share/doc/alt-docs/indexhtml/img/project-logo.png %buildroot/var/www/webapps/mediawiki/project-logo.png
 
@@ -39,10 +67,24 @@ mkdir -p %buildroot/var/www/webapps/mediawiki
 /etc/firsttime.d/*-office-server
 /usr/share/install2/preinstall.d/*
 /usr/lib/alterator/hooks/root.d/*
-/usr/lib/alterator/hooks/firsttime.d/*
-/etc/hooks/hostname.d/*
+
+%files mediawiki
+/etc/hooks/hostname.d/*-mediawiki-ldap
+
+%files moodle
+/etc/hooks/hostname.d/*-moodle-ldap
+
+%files owncloud
+/etc/hooks/hostname.d/*-owncloud-ldap
+
+%files rujel
+/etc/hooks/hostname.d/*-rujel-ldap
+
 
 %changelog
+* Wed Feb 27 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1.4-alt1
+- split on mediawiki, moodle, owncloud and rujel packages
+
 * Thu Aug 30 2012 Andrey Cherepanov <cas@altlinux.org> 1.3-alt10
 - updated rujel user access privileges for MySQL (thanks Gennady Kushnir)
 
