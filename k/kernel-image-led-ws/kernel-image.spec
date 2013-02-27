@@ -21,7 +21,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.0.66
-Release: alt3
+Release: alt4
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -97,6 +97,7 @@ Release: alt3
 %def_enable guest
 %def_enable ext4_for_ext23
 %def_enable bootsplash
+%def_disable logo
 %def_enable zcache
 %def_enable security
 %def_enable audit
@@ -147,8 +148,8 @@ Group: System/Kernel and hardware
 Url: http://www.kernel.org/
 
 Source0: linux-%version.tar
-Source1: %flavour-%kernel_branch-config-x86_64
-Source2: %flavour-%kernel_branch-config-i386
+Source1: %flavour-%kernel_branch.x86_64.config
+Source2: %flavour-%kernel_branch.x86.config
 Source10: Makefile.external
 
 #Patch0000: patch-%kernel_branch.%kernel_stable_version
@@ -161,7 +162,7 @@ Patch0012: linux-%kernel_branch.51-fix-arch-powerpc.patch
 Patch0013: linux-%kernel_branch.42-fix-arch-powerpc-platforms--52xx.patch
 Patch0014: linux-%kernel_branch.42-fix-arch-powerpc-platforms--chrp.patch
 Patch0015: linux-%kernel_branch.42-fix-arch-powerpc-platforms--pseries.patch
-Patch0016: linux-%kernel_branch.43-fix-arch-s390.patch
+Patch0016: linux-%kernel_branch.66-fix-arch-s390.patch
 Patch0017: linux-%kernel_branch.43-fix-arch-s390--lib.patch
 
 Patch0020: linux-%kernel_branch.55-fix-arch-x86.patch
@@ -231,7 +232,7 @@ Patch0128: linux-%kernel_branch.43-fix-drivers-char--tape_34xx.patch
 Patch0129: linux-%kernel_branch.43-fix-drivers-char--tape_3590.patch
 Patch0130: linux-%kernel_branch.43-fix-drivers-char--virtio_console.patch
 Patch0131: linux-%kernel_branch.43-fix-drivers-char--vmur.patch
-Patch0132: linux-%kernel_branch.43-fix-drivers-char--zcore_mod.patch
+Patch0132: linux-%kernel_branch.66-fix-drivers-char--zcore_mod.patch
 Patch0133: linux-%kernel_branch.42-fix-drivers-char-agp--agpgart.patch
 Patch0134: linux-%kernel_branch.43-fix-drivers-char-agp--intel-agp.patch
 Patch0135: linux-%kernel_branch.43-fix-drivers-char-hw_random--amd-rng.patch
@@ -355,11 +356,12 @@ Patch0372: linux-%kernel_branch.42-fix-drivers-macintosh--adbhid.patch
 
 Patch0381: linux-%kernel_branch.45-fix-drivers-md--dm-mod.patch
 Patch0382: linux-%kernel_branch.57-fix-drivers-md--dm-multipath.patch
-Patch0383: linux-%kernel_branch.53-fix-drivers-md--md-mod.patch
+Patch0383: linux-%kernel_branch.66-fix-drivers-md--md-mod.patch
 Patch0384: linux-%kernel_branch.51-fix-drivers-md--multipath.patch
-Patch0385: linux-%kernel_branch.51-fix-drivers-md--raid1.patch
-Patch0386: linux-%kernel_branch.51-fix-drivers-md--raid10.patch
-Patch0387: linux-%kernel_branch.51-fix-drivers-md--raid456.patch
+Patch0385: linux-%kernel_branch.66-fix-drivers-md--raid0.patch
+Patch0386: linux-%kernel_branch.51-fix-drivers-md--raid1.patch
+Patch0387: linux-%kernel_branch.51-fix-drivers-md--raid10.patch
+Patch0388: linux-%kernel_branch.51-fix-drivers-md--raid456.patch
 
 Patch0391: linux-%kernel_branch.42-fix-drivers-media-common-tuners--max2165.patch
 Patch0392: linux-%kernel_branch.44-fix-drivers-media-dvb-firewire--firedtv.patch
@@ -479,7 +481,7 @@ Patch0594: linux-%kernel_branch.43-fix-drivers-scsi--iscsi_tcp.patch
 Patch0595: linux-%kernel_branch.42-fix-drivers-scsi--libfc.patch
 Patch0596: linux-%kernel_branch.43-fix-drivers-scsi--libiscsi.patch
 Patch0597: linux-%kernel_branch.42-fix-drivers-scsi--libsas.patch
-Patch0598: linux-%kernel_branch.58-fix-drivers-scsi--lpfc.patch
+Patch0598: linux-%kernel_branch.66-fix-drivers-scsi--lpfc.patch
 Patch0599: linux-%kernel_branch.42-fix-drivers-scsi--mpt2sas.patch
 Patch0600: linux-%kernel_branch.42-fix-drivers-scsi--mvsas.patch
 Patch0601: linux-%kernel_branch.42-fix-drivers-scsi--pm8001.patch
@@ -562,7 +564,7 @@ Patch0729: linux-%kernel_branch.62-fix-fs-cifs.patch
 Patch0730: linux-%kernel_branch.42-fix-fs-dlm.patch
 Patch0731: linux-%kernel_branch.42-fix-fs-ecryptfs.patch
 Patch0732: linux-%kernel_branch.42-fix-fs-ext3.patch
-Patch0733: linux-%kernel_branch.46-fix-fs-ext4.patch
+Patch0733: linux-%kernel_branch.66-fix-fs-ext4.patch
 Patch0734: linux-%kernel_branch.56-fix-fs-fat.patch
 Patch0735: linux-%kernel_branch.42-fix-fs-hfs.patch
 Patch0736: linux-%kernel_branch.54-fix-fs-jbd.patch
@@ -601,7 +603,7 @@ Patch0790: linux-%kernel_branch.57-fix-lib.patch
 Patch0791: linux-%kernel_branch.62-fix-lib--btree.patch
 Patch0792: linux-%kernel_branch.42-fix-lib--genalloc.patch
 
-Patch0800: linux-%kernel_branch.65-fix-mm.patch
+Patch0800: linux-%kernel_branch.66-fix-mm.patch
 Patch0801: linux-%kernel_branch.58-fix-mm--compaction.patch
 Patch0802: linux-%kernel_branch.62-fix-mm--huge_memory.patch
 Patch0803: linux-%kernel_branch.43-fix-mm--hugetlb.patch
@@ -792,7 +794,7 @@ ExclusiveArch: %x86_64 %ix86
 %define base_arch x86_64
 %endif
 %ifarch %ix86
-%define base_arch i386
+%define base_arch x86
 %endif
 
 %ifnarch x86_64 i486 i586
@@ -1714,6 +1716,7 @@ cd linux-%version
 %patch0385 -p1
 %patch0386 -p1
 %patch0387 -p1
+%patch0388 -p1
 
 # fix-drivers-media-*
 %patch0391 -p1
@@ -2233,9 +2236,9 @@ sed -i "$e" .config
 }
 
 if [ -f %flavour-%kernel_branch-config-%_target_cpu ]; then
-	cp -vf %flavour-%kernel_branch-config-%_target_cpu .config
+	cp -vf %flavour-%kernel_branch.%_target_cpu.config .config
 else
-	cp -vf %flavour-%kernel_branch-config-%base_arch .config
+	cp -vf %flavour-%kernel_branch.%base_arch.config .config
 %ifdef kernel_cpu
 %if "%base_arch" != "%_target_cpu"
 	config_disable %kernel_base_cpu
@@ -2331,6 +2334,7 @@ config_disable \
 	%{?_disable_paravirt_guest:PARAVIRT_GUEST} \
 	%{?_disable_kvm_guest:KVM_GUEST} \
 	%{?_disable_bootsplash:BOOTSPLASH} \
+	%{?_disable_logo:LOGO} \
 	%{?_disable_zcache:ZCACHE} \
 	%{?_disable_pci:PCI} \
 	%{?_disable_acpi:ACPI} \
@@ -2494,16 +2498,18 @@ for f in \
 	scripts/makelst \
 	scripts/mk{compile_h,makefile,version} \
 	scripts/module-common.lds \
-	%{?_enable_video:scripts/pnmtologo} \
+	scripts/pnmtologo \
 	scripts/recordmcount.pl \
 	scripts/basic/fixdep \
-	%{?_enable_modversions:scripts/genksyms/genksyms} \
+	scripts/genksyms/genksyms \
 	scripts/kconfig/conf \
 	scripts/mod/{modpost,mk_elfconfig} \
 	gcc_version.inc
 do
-	[ -x "$f" ] && mode=0755 || mode=0644
-	install -Dp -m $mode {,%buildroot%kbuild_dir/}$f
+	if [ -f "$f" ]; then
+		[ -x "$f" ] && mode=0755 || mode=0644
+		install -Dp -m $mode {,%buildroot%kbuild_dir/}$f
+	fi
 done
 
 # Provide kbuild directory with old name (without %%krelease)
@@ -3067,6 +3073,24 @@ done)
 
 
 %changelog
+* Wed Feb 27 2013 Led <led@altlinux.ru> 3.0.66-alt4
+- updated:
+  + fix-arch-s390
+  + fix-drivers-char--zcore_mod
+  + fix-drivers-md--md-mod
+  + fix-drivers-scsi--lpfc
+  + fix-fs-ext4
+  + fix-mm
+- added:
+  + fix-drivers-md--raid0
+- disabled:
+  + FB_ASILIANT
+  + FB_IMSTT
+  + LOGO
+- enabled:
+  + FB_S3
+  + FONT_SUN12x22
+
 * Mon Feb 25 2013 Led <led@altlinux.ru> 3.0.66-alt3
 - updated:
   + fix-fs
