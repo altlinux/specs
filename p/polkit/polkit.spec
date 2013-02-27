@@ -1,5 +1,5 @@
 Name: polkit
-Version: 0.109
+Version: 0.110
 Release: alt1
 Summary: PolicyKit Authorization Framework
 License: LGPLv2+
@@ -133,6 +133,9 @@ touch ChangeLog
 %_datadir/gir-1.0/*.gir
 
 %changelog
+* Wed Feb 27 2013 Yuri N. Sedunov <aris@altlinux.org> 0.110-alt1
+- 0.110 release
+
 * Mon Dec 24 2012 Yuri N. Sedunov <aris@altlinux.org> 0.109-alt1
 - pre 0.110 (d6acecdd)
 - removed upstreamed patches
