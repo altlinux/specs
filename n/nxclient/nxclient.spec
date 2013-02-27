@@ -4,7 +4,7 @@ BuildRequires: desktop-file-utils
 
 Name: nxclient
 Version: %ver.%subver
-Release: alt3.qa1
+Release: alt5
 
 Summary: NoMachine.com's NX client
 
@@ -23,8 +23,9 @@ Packager: Boris Savelev <boris@altlinux.org>
 BuildRequires: nx
 BuildRequires: libXft-devel fontconfig-devel libfreetype-devel libcups-devel
 BuildRequires: chrpath
+BuildRequires: libpng12
 
-Requires: nx = %ver
+Requires: nx >= %ver
 #BuildRequires: desktop-file-utils
 
 %description
@@ -51,9 +52,7 @@ mkdir -p %buildroot%_datadir/%name/
 chrpath -d bin/%name
 cp -ap bin/%name %buildroot%_libdir/%name/bin/
 cp -ap bin/nxprint %buildroot%_libdir/%name/bin/
-for f in esd ssh service ; do 
-    ln -s  ../../../bin/nx$f %buildroot%_libdir/%name/bin/nx$f
-done
+
 cat >> %buildroot%_libdir/%name/bin/%name.cfg << EOF
 <!DOCTYPE NXClientSettings>
 <NXClientSettings application="nxclient" version="1.3" >
@@ -63,15 +62,18 @@ cat >> %buildroot%_libdir/%name/bin/%name.cfg << EOF
 </NXClientSettings>
 EOF
 
-ln -s ../..%_libdir/%name/bin/%name %buildroot%_bindir/%name
+for f in nxesd nxssh nxservice ; do
+    ln -s %_bindir/$f %buildroot%_libdir/%name/bin/$f
+done
+
+ln -s %_libdir/%name/bin/%name %buildroot%_bindir/%name
 
 # lib
-# ln -s %_libdir/libXcomp.so.%ver %buildroot%_libdir/%name/lib/libXcomp.so
-ln -s ../../libXcomp.so.%ver %buildroot%_libdir/%name/lib/libXcomp.so
+ln -s %_libdir/libXcomp.so.%ver %buildroot%_libdir/%name/lib/libXcomp.so
 
 # share
 cp -ap share/* %buildroot%_datadir/%name
-ln -s ../../share/%name %buildroot%_libdir/%name/share
+ln -s %_datadir/%name %buildroot%_libdir/%name/share
 
 # desktop
 mkdir -p %buildroot%_desktopdir/
@@ -124,10 +126,17 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_desktopdir/*
 
 %changelog
+* Sun Feb 24 2013 Michael Shigorin <mike@altlinux.org> 3.5.0.7-alt5
+- added libpng12 to BR: (legacy library linked to existing binary)
+
 * Thu Aug 23 2012 Repocop Q. A. Robot <repocop@altlinux.org> 3.5.0.7-alt3.qa1
 - NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
 - applied repocop fixes:
   * freedesktop-desktop-file-proposed-patch for nxclient
+
+* Thu Aug 16 2012 Vitaly Lipatov <lav@altlinux.ru> 3.5.0.7-alt4
+- change link path (due different placement in x86_64 Ubuntu)
+- fix nx require
 
 * Wed Dec 21 2011 Michael Shigorin <mike@altlinux.org> 3.5.0.7-alt3
 - drop RPATH
