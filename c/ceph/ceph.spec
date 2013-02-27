@@ -1,6 +1,6 @@
 Name: ceph
 Version: 0.56.3
-Release: alt1
+Release: alt1.1
 Summary: User space components of the Ceph file system
 Group: System/Base
 
@@ -14,7 +14,7 @@ Patch0: %name-%version-%release.patch
 
 BuildRequires: boost-devel-headers gcc-c++ libaio-devel libcurl-devel
 BuildRequires: libedit-devel libexpat-devel libfcgi-devel libfuse-devel
-BuildRequires: libgoogle-perftools-devel libgtkmm2-devel libkeyutils-devel
+BuildRequires: libgperftools-devel libgtkmm2-devel libkeyutils-devel
 BuildRequires: libnss-devel libuuid-devel boost-program_options-devel
 
 BuildRequires(pre): rpm-build-python
@@ -252,6 +252,10 @@ mkdir -p %buildroot%_sysconfdir/ceph/
 %python_sitelibdir_noarch/*
 
 %changelog
+* Wed Feb 27 2013 Fr. Br. George <george@altlinux.ru> 0.56.3-alt1.1
+- Rebuild with renamed gperftools
+- Fix include files location
+
 * Sun Feb 17 2013 Alexei Takaseev <taf@altlinux.org> 0.56.3-alt1
 - 0.56.3
 
