@@ -1,6 +1,6 @@
 %define branch 1.5
 %define version %branch.0
-%define release alt2.rc2
+%define release alt3
 %define origname Django
 %define oname django
 
@@ -344,6 +344,9 @@ install -m 0755 extras/django_bash_completion %buildroot/%_sysconfdir/bash_compl
 %endif
 
 %changelog
+* Wed Feb 27 2013 Aleksey Avdeev <solo@altlinux.ru> 1.5.0-alt3
+- Version 1.5.0
+
 * Tue Feb 26 2013 Aleksey Avdeev <solo@altlinux.ru> 1.5.0-alt2.rc2
 - Version 1.5.0-rc2
 - Rename package to python-module-django1.5
