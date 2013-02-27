@@ -2,7 +2,7 @@
 
 Name: gnustep-PictureFrame
 Version: 1.1.3
-Release: alt1
+Release: alt2
 Summary: Software for a digital picture frame
 License: GPL
 Group: Graphical desktop/GNUstep
@@ -29,6 +29,7 @@ added.
 %package devel
 Summary: Development files of PictureFrame
 Group: Development/Objective-C
+BuildArch: noarch
 Requires: %name = %EVR
 
 %description devel
@@ -70,6 +71,9 @@ This package contains development files of PictureFrame.
 %_includedir/*
 
 %changelog
+* Wed Feb 27 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.3-alt2
+- Set devel subpackage as noarch
+
 * Wed Feb 27 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.3-alt1
 - Initial build for Sisyphus
 
