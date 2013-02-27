@@ -1,6 +1,6 @@
 Name: installed-db-office-server
 Version: 1.4
-Release: alt1
+Release: alt2
 Summary: Databases and config files for moodle, mediawiki and rujel (common)
 License: GPL
 Group: System/Configuration/Other
@@ -13,6 +13,7 @@ Databases and config files for moodle, mediawiki and rujel (commom part)
 %package mediawiki
 Group: System/Configuration/Other
 Requires: mediawiki mediawiki-apache2 mediawiki-ldap
+Requires: %name = %version-%release
 Summary: Databases and config files for mediawiki
 
 %description mediawiki
@@ -20,6 +21,7 @@ Databases and config files for mediawiki
 
 %package moodle
 Group: System/Configuration/Other
+Requires: %name = %version-%release
 Requires: moodle-install-tools moodle2.2 
 Summary: Databases and config files for moodle
 
@@ -28,6 +30,7 @@ Databases and config files for moodle
 
 %package owncloud
 Group: System/Configuration/Other
+Requires: %name = %version-%release
 Requires: owncloud
 Summary: Databases and config files for owncloud
 
@@ -36,6 +39,7 @@ Databases and config files for owncloud
 
 %package rujel
 Group: System/Configuration/Other
+Requires: %name = %version-%release
 Summary:  Databases and config files for rujel 
 
 %description rujel
@@ -82,6 +86,9 @@ mkdir -p %buildroot/var/www/webapps/mediawiki
 
 
 %changelog
+* Wed Feb 27 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1.4-alt2
+- interpackage requires added
+
 * Wed Feb 27 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1.4-alt1
 - split on mediawiki, moodle, owncloud and rujel packages
 
