@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-grub
-Version: 0.9.5
+Version: 0.9.6
 Release: alt1
 
 Summary: alterator module to setup grub bootloader
@@ -47,6 +47,9 @@ alterator module to setup grub bootloader
 %_bindir/*
 
 %changelog
+* Wed Feb 27 2013 Michael Shigorin <mike@altlinux.org> 0.9.6-alt1
+- fixed install-to-partition by working around i18n (see also #28600)
+
 * Thu Feb 07 2013 Michael Shigorin <mike@altlinux.org> 0.9.5-alt1
 - backend: use LANG variable
 
