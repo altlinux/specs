@@ -6,11 +6,11 @@
 %define koffice_ver 4:2.3.70
 %def_disable map_shape
 
-%def_disable GTL
+%def_enable GTL
 
 Name: calligra
 Version: 2.6.1
-Release: alt1
+Release: alt2
 Epoch: 0
 %define libname lib%name
 
@@ -389,9 +389,6 @@ cp -ar %SOURCE1 cmake/modules/
 %_K4lib/formulashape.*
 %_K4apps/musicshape/
 %_datadir/color/icc/pigment/
-%if_enabled GTL
-%_K4apps/pigmentcms/
-%endif
 %_K4srvtyp/pigment*.desktop
 %_K4lib/pathshapes.so
 %_K4srv/pathshapes.desktop
@@ -644,6 +641,9 @@ cp -ar %SOURCE1 cmake/modules/
 %_K4libdir/lib*.so.*
 
 %changelog
+* Thu Feb 28 2013 Sergey V Turchin <zerg@altlinux.org> 0:2.6.1-alt2
+- built with opengtl
+
 * Fri Feb 22 2013 Sergey V Turchin <zerg@altlinux.org> 0:2.6.1-alt1
 - new version
 
