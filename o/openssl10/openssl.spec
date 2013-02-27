@@ -1,5 +1,5 @@
 Name: openssl10
-Version: 1.0.0j
+Version: 1.0.0k
 Release: alt1
 
 Summary: OpenSSL - Secure Sockets Layer and cryptography shared libraries and tools
@@ -7,7 +7,8 @@ License: BSD-style
 Group: System/Base
 Url: http://www.openssl.org
 
-Source: ftp://ftp.openssl.org/source/openssl-%version.tar
+# git://git.altlinux.org/gears/o/openssl10.git
+Source: openssl-%version.tar
 Source1: openssl-config
 Source2: Makefile.certificate
 Source3: make-dummy-cert
@@ -16,7 +17,7 @@ Patch01: openssl-1.0.0b-owl-alt-issetugid.patch
 Patch02: openssl-1.0.0b-alt-krb5.patch
 Patch03: openssl-1.0.0f-alt-config.patch
 Patch04: openssl-1.0.0b-gosta-pkcs12-fix.patch
-Patch05: openssl-1.0.0j-rh-alt-soversion.patch
+Patch05: openssl-1.0.0k-rh-alt-soversion.patch
 Patch06: openssl-1.0.0b-rh-enginesdir.patch
 Patch07: openssl-1.0.0b-rh-rpath.patch
 Patch08: openssl-1.0.0b-rh-test-use-localhost.patch
@@ -26,11 +27,12 @@ Patch12: openssl-1.0.0b-rh-ia64-asm.patch
 Patch13: openssl-1.0.0b-rh-x509.patch
 Patch14: openssl-1.0.0b-rh-version-engines.patch
 Patch16: openssl-1.0.0b-rh-alt-ipv6-apps.patch
-Patch17: openssl-1.0.0b-rh-env-nozlib.patch
+Patch17: openssl-1.0.0k-rh-env-zlib.patch
 Patch18: openssl-1.0.0b-rh-aesni.patch
 Patch22: openssl-1.0.0d-rh-apps-dgst.patch
 Patch23: openssl-1.0.0d-rh-xmpp-starttls.patch
 Patch24: openssl-1.0.0d-rh-padlock64.patch
+Patch25: openssl-1.0.0k-rh-secure-getenv.patch
 
 %define shlib_soversion 10
 %define compat_shlib_versions 1.0.0 1.0.0a
@@ -234,6 +236,7 @@ on the command line.
 %patch22 -p1
 %patch23 -p1
 %patch24 -p1
+%patch25 -p1
 
 find -type f -name \*.orig -delete
 
@@ -434,6 +437,10 @@ fi
 %_man1dir/tsget.*
 
 %changelog
+* Wed Feb 27 2013 Dmitry V. Levin <ldv@altlinux.org> 1.0.0k-alt1
+- Updated to OpenSSL_1_0_0k-15-g0e05f88
+  (fixes CVE-2013-0166 and CVE-2013-0169).
+
 * Sat May 12 2012 Dmitry V. Levin <ldv@altlinux.org> 1.0.0j-alt1
 - Updated to 1.0.0j (fixes CVE-2012-2333).
 
