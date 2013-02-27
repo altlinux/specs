@@ -1,7 +1,7 @@
 # NOTE: do not use clean_spec or rpmcs for this spec
 
 Name: etersoft-build-utils
-Version: 2.0.23
+Version: 2.0.24
 Release: alt1
 
 Summary: A set of rpm build utilities from Etersoft
@@ -68,6 +68,14 @@ RECOMMENDED packages: gcc-c++ perl-libwww ccache elinks mutt hasher curl
 %config(noreplace) %_sysconfdir/eterbuild/repos/*
 
 %changelog
+* Wed Feb 27 2013 Vitaly Lipatov <lav@altlinux.ru> 2.0.24-alt1
+- fix option handling: fix install-in-hasher package after rpmbph
+- rpmbph: drop _unitdir on old ALT's distro
+- rpmbsh: drop REMOTEBUILD support
+- introduce gammit: gear-commit -a analogue: make commit with description from spec's changelog
+- estrlist: add has command (instead grep -q)
+- breaks changes in estrlist and fix rpmreqs, improve test for estrlist
+
 * Thu Feb 21 2013 Vitaly Lipatov <lav@altlinux.ru> 2.0.23-alt1
 - big pkgrepl rewrite
 - fix add ia32-libs for old deb targets
