@@ -3,7 +3,7 @@
 %def_enable wayland_egl
 
 Name: Mesa
-Version: 9.0.3
+Version: 9.1
 Release: alt1
 Epoch: 4
 License: MIT
@@ -16,9 +16,10 @@ Packager: Valery Inozemtsev <shrek@altlinux.ru>
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
+BuildRequires: llvm-devel = 3.2
 BuildRequires: gcc-c++ indent flex libXdamage-devel libXext-devel libXft-devel libXmu-devel libXi-devel libXrender-devel libXxf86vm-devel
 BuildRequires: libdrm-devel libexpat-devel xorg-glproto-devel xorg-dri2proto-devel python-modules libselinux-devel libxcb-devel libSM-devel
-BuildRequires: python-module-libxml2 libudev-devel llvm3.1-devel libXdmcp-devel libwayland-client-devel libwayland-server-devel
+BuildRequires: python-module-libxml2 libudev-devel libXdmcp-devel libwayland-client-devel libwayland-server-devel libffi-devel
 
 %description
 Mesa is an OpenGL compatible 3D graphics library
@@ -166,13 +167,7 @@ framerate information to stdout
 %prep
 %setup -q
 %patch -p1
-
-subst "s|mesa_version|%version|" configure.ac
 subst "s|^\(#define MESA_VERSION_STRING \"\).*|#define MESA_VERSION_STRING \"%version\"|" src/mesa/main/version.h
-
-ln -s %_bindir %_builddir/
-ln -s %_libdir %_builddir/
-ln -s %_includedir %_builddir/
 
 %build
 %autoreconf
@@ -211,15 +206,10 @@ ln -s %_includedir %_builddir/
 %endif
 #
 
-subst 's|^\(SRC_DIRS = \)\(.*\)mesa.*glx\(.*\)|\1\2glx mesa gtest\3|' src/Makefile
 %make_build
-%make -C progs
 
 %install
 %make DESTDIR=%buildroot install
-
-mkdir -p %buildroot%_bindir
-install -m755 progs/glx{info,gears} %buildroot%_bindir/
 
 mkdir -p %buildroot%_sysconfdir/X11/%_lib
 # moved libGL
@@ -256,7 +246,7 @@ ln -sf ../..%_sysconfdir/X11/%_lib/libEGL.so.1 %_libdir/
 ln -sf ../..%_sysconfdir/X11/%_lib/libGLESv2.so.2 %_libdir/
 
 %files -n libGL
-%doc docs/relnotes-%version.html docs/versions.html docs/news.html
+%doc docs/relnotes-%version.html
 %dir %_sysconfdir/X11/%_lib
 %ghost %_sysconfdir/X11/%_lib/libGL.so.1
 %_libdir/libGL.so.*
@@ -339,6 +329,7 @@ ln -sf ../..%_sysconfdir/X11/%_lib/libGLESv2.so.2 %_libdir/
 %endif
 
 %files -n xorg-dri-radeon
+%_libdir/libllvmradeon*.so
 %_libdir/X11/modules/dri/radeon*_dri.so
 %_libdir/X11/modules/dri/r?00_dri.so
 
@@ -349,6 +340,9 @@ ln -sf ../..%_sysconfdir/X11/%_lib/libGLESv2.so.2 %_libdir/
 %_bindir/glxgears
 
 %changelog
+* Sun Feb 24 2013 Valery Inozemtsev <shrek@altlinux.ru> 4:9.1-alt1
+- 9.1
+
 * Sat Feb 23 2013 Valery Inozemtsev <shrek@altlinux.ru> 4:9.0.3-alt1
 - 9.0.3
 

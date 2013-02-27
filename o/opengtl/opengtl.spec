@@ -1,30 +1,34 @@
-%define sover 0.7
-%define libver 0.9.15
+%define sover 0.8
+%define libver 0.9.18
 %define libname libopengtl%sover
 %define develname libopengtl-devel
-%define llvm_req_str llvm >= 2.7 llvm <= 2.9
+%define llvm_bin_req_str llvm >= 3.0 llvm <= 3.2
+%define llvm_dev_req_str llvm-devel >= 3.0 llvm-devel <= 3.3
 
 Name: opengtl
-Version: 0.9.15.2
-Release: alt3
+Version: 0.9.18
+Release: alt1
 
 Group: System/Libraries
 Summary: Open Graphics Transformation Languages
 Url: http://www.opengtl.org/
 License: LGPLv2+
 
-Requires: %llvm_req_str
+#Requires: %llvm_bin_req_str
 Provides: OpenGTL = %version-%release
 
 Source: http://www.opengtl.org/download/OpenGTL-%version.tar.bz2
-Patch1: opengtl-0.9.10-alt-find-llvm.patch
+Patch1: opengtl-0.9.18-alt-find-llvm.patch
 Patch2: opengtl-0.9.10-alt-extensions-dir.patch
 Patch3: opengtl-0.9.15-alt-fix-linking.patch
+Patch4: opengtl-0.9.18-alt-pkgconfig.patch
 
 # Automatically added by buildreq on Thu Jan 20 2011 (-bb)
 #BuildRequires: ImageMagick-tools cmake gcc-c++ ghostscript-utils latex2html libpng-devel llvm-devel rpm-build-ruby tetex-latex-listings zlib-devel-static
 BuildRequires: tetex-core tetex-latex tetex-latex-listings tetex-dvips
 BuildRequires: ImageMagick-tools cmake gcc-c++ ghostscript-utils latex2html libpng-devel llvm-devel zlib-devel
+BuildRequires: %llvm_dev_req_str
+BuildRequires: kde-common-devel
 
 %description
 Graphics Transformation Languages is a set of library for using and
@@ -51,22 +55,19 @@ based on OpenGTL.
 
 %prep
 %setup -q -n OpenGTL-%version
-#%patch1 -p1
+%patch1 -p1
 #%patch2 -p1
 %patch3 -p1
+%patch4 -p1
 
 
 %build
-%cmake
-pushd BUILD
-%make VERBOSE=1
-popd
+%Kcmake
+%Kmake
 
 
 %install
-pushd BUILD
-%make install DESTDIR=%buildroot
-popd
+%Kinstall
 
 
 %files
@@ -79,12 +80,15 @@ popd
 %_datadir/OpenGTL
 
 %files -n %develname
-%doc BUILD/OpenShiva/doc/reference/ShivaRef.pdf
+%doc BUILD-*/OpenShiva/doc/reference/ShivaRef.pdf
 %_libdir/*.so
 %_includedir/*
 %_libdir/pkgconfig/*.pc
 
 %changelog
+* Tue Feb 26 2013 Sergey V Turchin <zerg@altlinux.org> 0.9.18-alt1
+- new version
+
 * Tue Nov 06 2012 Sergey V Turchin <zerg@altlinux.org> 0.9.15.2-alt3
 - rebuild with new libpng
 
