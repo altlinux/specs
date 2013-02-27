@@ -1,6 +1,6 @@
 Name: screen
 Version: 4.0.3
-Release: alt10
+Release: alt10.1
 
 Summary: A screen manager that supports multiple sessions on one terminal
 License: GPLv2+
@@ -56,7 +56,7 @@ autoconf
 # Does it work at all?
 #__perl -pi -e 's|.*#undef HAVE_BRAILLE.*|#define HAVE_BRAILLE 1|' config.h
 
-%make_build CFLAGS="%optflags -Werror"
+%make_build CFLAGS="%optflags"
 bzip2 -9kf doc/*.ps
 
 %install
@@ -115,6 +115,9 @@ ln -f %_libexecdir/utempter/utempter %_libexecdir/screen/
 %doc NEWS README FAQ doc/README.DOTSCREEN doc/*.ps.*
 
 %changelog
+* Wed Feb 27 2013 Fr. Br. George <george@altlinux.ru> 4.0.3-alt10.1
+- Rebuild with -Werror removed
+
 * Mon Jul 16 2012 Dmitry V. Levin <ldv@altlinux.org> 4.0.3-alt10
 - Fixed build with gcc 4.6.
 
