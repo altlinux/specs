@@ -2,7 +2,7 @@
 
 Name: gnustep-NoteBook
 Version: 0.3
-Release: alt1
+Release: alt2
 Summary: Application to store and organize your notes 
 License: GPL
 Group: Graphical desktop/GNUstep
@@ -10,6 +10,7 @@ Url: http://www.gnustep.org/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
+Source1: %name.menu
 
 BuildPreReq: gcc-objc gnustep-make-devel libgnustep-objc2-devel /proc
 BuildPreReq: gnustep-gui-devel
@@ -41,11 +42,17 @@ Features:
 %makeinstall_std GNUSTEP_INSTALLATION_DOMAIN=SYSTEM \
 	GNUSTEP_MAKEFILES=%_datadir/GNUstep/Makefiles
 
+install -Dp -m644 %SOURCE1 %buildroot%_menudir/%name
+
 %files
 %_bindir/*
 %_libdir/GNUstep
+%_menudir/*
 
 %changelog
+* Wed Feb 27 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3-alt2
+- Added menu file (thnx kostyalamer@)
+
 * Tue Feb 26 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3-alt1
 - Initial build for Sisyphus
 
