@@ -2,10 +2,10 @@
 %define		privgroup schat
 %define		privpath  /var/empty
 
-%define		svn 3271
+%define		svn 3531
 
 Name:		schat
-Version:	0.8.5
+Version:	0.8.6
 Release:	alt1.svn%svn
 Summary:	IMPOMEZIA Simple Chat
 Url:		http://impomezia.com/project/schat
@@ -104,6 +104,9 @@ service %{name}d condstop
 %dir %attr(2770,root,%privgroup) %_localstatedir/%name
 
 %changelog
+* Wed Feb 27 2013 Motsyo Gennadi <drool@altlinux.ru> 0.8.6-alt1.svn3531
+- 0.8.6.3531
+
 * Wed Nov 07 2012 Motsyo Gennadi <drool@altlinux.ru> 0.8.5-alt1.svn3271
 - 0.8.5.3271
 
