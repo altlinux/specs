@@ -2,7 +2,7 @@
 
 Name: libEMF
 Version: 1.0.4
-Release: alt1.qa1
+Release: alt2
 
 Summary: A library for generating Enhanced Metafiles
 License: LGPLv2+ and GPLv2+
@@ -13,6 +13,7 @@ Source: http://downloads.sourceforge.net/pstoedit/%name-%version.tar.gz
 Patch: %name-amd64.patch
 Patch1: %name-axp.patch
 Patch3: %name-s390.patch
+Patch4: %name-arm.patch
 Packager: Michael Shigorin <mike@altlinux.org>
 
 # Automatically added by buildreq on Sun Dec 13 2009
@@ -70,6 +71,7 @@ libEMF static files.
 %patch0 -p1 -b .amd64
 %patch1 -p1 -b .axp
 %patch3 -p1 -b .s390
+%patch4 -p1 -b .arm
 
 %build
 %autoreconf
@@ -101,6 +103,9 @@ make check
 %endif
 
 %changelog
+* Wed Feb 27 2013 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.0.4-alt2
+- fixed build on arm
+
 * Sat Nov 27 2010 Igor Vlasenko <viy@altlinux.ru> 1.0.4-alt1.qa1
 - rebuild using girar-nmu to require/provide setversion 
   by request of mithraen@
