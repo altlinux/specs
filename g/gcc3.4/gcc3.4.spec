@@ -2,13 +2,12 @@
 
 Name: gcc%gcc_branch
 Version: 3.4.5
-Release: alt15
+Release: alt16
 
 Summary: GNU Compiler Collection
 License: GPL
 Group: Development/C
 Url: http://gcc.gnu.org/
-Packager: Dmitry V. Levin <ldv@altlinux.org>
 
 %define priority 340
 %define snapshot 20051201
@@ -33,11 +32,7 @@ Packager: Dmitry V. Levin <ldv@altlinux.org>
 %def_disable objc_gc
 %def_with treelang
 %def_without java
-%ifarch %ix86 x86_64
-%def_with ada
-%else
 %def_without ada
-%endif
 %def_without pdf
 %def_disable check
 
@@ -102,6 +97,7 @@ Patch702: gcc34-alt-nowrap.patch
 Patch703: gcc34-alt-as-needed.patch
 Patch704: gcc34-alt-makeinfo.patch
 Patch705: gcc34-alt-bison.patch
+Patch706: gcc34-up-siginfo.patch
 
 Provides: gcc = %version-%release, %_bindir/%_target_platform-gcc, %_bindir/gcc
 Obsoletes: egcs, gcc3.0, gcc3.1
@@ -678,24 +674,25 @@ rm -f gcc/po/*rw.po
 %patch703 -p1
 %patch704 -p1
 %patch705 -p1
+%patch706 -p0
 
 find -type f -name \*.orig -delete -print
 
 # Set proper version & contact info.
 cp -p gcc/version.c gcc/version.c.orig
-%__subst 's/3\.4\.[56]/%version/g' gcc/version.c gcc/doc/include/gcc-common.texi
-%__subst 's/\(%gcc_branch\(\.[0-9]\+\)*\)\( [0-9]\+[a-z]*\)\?.*"/\1\3 (%os_release)"/' gcc/version.c
-%__subst 's,<URL:[^>]*>,<URL:http://bugzilla.altlinux.ru/>,' gcc/version.c
+sed -i 's/3\.4\.[56]/%version/g' gcc/version.c gcc/doc/include/gcc-common.texi
+sed -i 's/\(%gcc_branch\(\.[0-9]\+\)*\)\( [0-9]\+[a-z]*\)\?.*"/\1\3 (%os_release)"/' gcc/version.c
+sed -i 's,<URL:[^>]*>,<URL:http://bugzilla.altlinux.ru/>,' gcc/version.c
 
 # Misdesign in libstdc++.
 cp -a libstdc++-v3/config/cpu/i{4,3}86/atomicity.h
 
 # Link lib-gnu-java-awt-peer-gtk with libgcj.
-%__subst -p '/^lib_gnu_java_awt_peer_gtk_la_DEPENDENCIES =/ d' libjava/Makefile.*
-%__subst -p 's|^lib_gnu_java_awt_peer_gtk_la_LIBADD = .*|& -L$(here)/.libs libgcj.la\nlib_gnu_java_awt_peer_gtk_la_DEPENDENCIES = libgcj.la libgcj.spec|' libjava/Makefile.*
+subst -p '/^lib_gnu_java_awt_peer_gtk_la_DEPENDENCIES =/ d' libjava/Makefile.*
+subst -p 's|^lib_gnu_java_awt_peer_gtk_la_LIBADD = .*|& -L$(here)/.libs libgcj.la\nlib_gnu_java_awt_peer_gtk_la_DEPENDENCIES = libgcj.la libgcj.spec|' libjava/Makefile.*
 
 sleep 1s
-%__subst s/AC_LIBLTDL_CONVENIENCE/AC_LIBLTDL_INSTALLABLE/ \
+sed -i s/AC_LIBLTDL_CONVENIENCE/AC_LIBLTDL_INSTALLABLE/ \
 	libjava/configure.in
 
 %build
@@ -731,7 +728,7 @@ mkdir %buildtarget
 pushd %buildtarget
 
 CC=%__cc
-%remove_optflags %optflags_nocpp %optflags_notraceback
+%remove_optflags %optflags_nocpp %optflags_notraceback -mtune=generic
 
 CC="$CC" \
 CFLAGS="%optflags" \
@@ -923,7 +920,7 @@ mv %buildroot%_includedir/gcj/* %buildroot%gcc_target_libdir/include/gcj/
 rmdir %buildroot%_includedir/gcj
 
 # Fix libgcj.spec and move it to compiler-specific directory.
-%__subst -p 's/-lgcjgc//g;s/-lzgcj//g;s/-lpthread//g' %buildroot%_libdir/libgcj.spec
+subst -p 's/-lgcjgc//g;s/-lzgcj//g;s/-lpthread//g' %buildroot%_libdir/libgcj.spec
 mv %buildroot%_libdir/libgcj.spec %buildroot%gcc_target_libdir/
 
 # Rename libgcj.pc to avoid conflict with libgcj4.1-devel.
@@ -952,9 +949,6 @@ rm -fv %buildroot%_man1dir/g++%psuffix.1
 ln -s gcc%psuffix.1.bz2 %buildroot%_man1dir/g++%psuffix.1.bz2
 
 %find_lang gcc%psuffix
-
-mkdir -p %buildroot%_libdir/debug
-cp -a %buildroot{/%_lib,%_libdir}/*.so.* %buildroot%_libdir/debug/
 
 %if_enabled debug
 # Don't strip in debug mode
@@ -1058,15 +1052,9 @@ EOF
 %config %_sysconfdir/buildreqs/packages/substitute.d/libgcc%gcc_branch
 /%_lib/libgcc_s.so.*
 
-%files -n libgcc%gcc_branch-debug
-%_libdir/debug/libgcc_s.so.*
-
 %files -n libstdc++%gcc_branch
 %config %_sysconfdir/buildreqs/packages/substitute.d/libstdc++%gcc_branch
 %_libdir/libstdc++.so.*
-
-%files -n libstdc++%gcc_branch-debug
-%_libdir/debug/libstdc++.so.*
 %endif # compat
 
 %files -n cpp%gcc_branch
@@ -1108,9 +1096,11 @@ EOF
 %gcc_target_libexecdir/cc1plus
 
 %if_with objc
+%if_disabled compat
 %files -n libobjc%gcc_branch
 %config %_sysconfdir/buildreqs/packages/substitute.d/libobjc%gcc_branch
 %_libdir/libobjc*.so.*
+%endif # compat
 
 %files -n libobjc%gcc_branch-devel
 %config %_sysconfdir/buildreqs/packages/substitute.d/libobjc%gcc_branch-devel
@@ -1125,9 +1115,6 @@ EOF
 %config %_sysconfdir/buildreqs/packages/substitute.d/libobjc%gcc_branch-devel-static
 %dir %gcc_target_libdir
 %gcc_target_libdir/libobjc*.a
-
-%files -n libobjc%gcc_branch-debug
-%_libdir/debug/libobjc*.so.*
 
 %files objc
 %config %_sysconfdir/buildreqs/packages/substitute.d/%name-objc
@@ -1167,9 +1154,6 @@ EOF
 %config %_sysconfdir/buildreqs/packages/substitute.d/libg2c%gcc_branch-devel-static
 %dir %gcc_target_libdir
 %gcc_target_libdir/libg2c.a
-
-%files -n libg2c%gcc_branch-debug
-%_libdir/debug/libg2c.so.*
 
 %files g77
 %config %_sysconfdir/buildreqs/packages/substitute.d/%name-g77
@@ -1220,13 +1204,6 @@ EOF
 %gcc_target_libdir/libgcj.a
 %gcc_target_libdir/lib-org-*.a
 %gcc_target_libdir/lib-gnu-java-*.a
-
-%files -n libgcj%gcc_branch-debug
-%_libdir/debug/libgcj.so.*
-%_libdir/debug/lib-org-*.so.*
-
-%files -n libgcj%gcc_branch-awt-debug
-%_libdir/debug/lib-gnu-java-*.so.*
 
 %files java
 %config %_sysconfdir/buildreqs/packages/substitute.d/%name-java
@@ -1282,9 +1259,6 @@ EOF
 %files -n libgnat%gcc_branch-devel-static
 %config %_sysconfdir/buildreqs/packages/substitute.d/libgnat%gcc_branch-devel-static
 %gcc_target_libdir/libgna*.a
-
-%files -n libgnat%gcc_branch-debug
-%_libdir/debug/libgna*
 %endif #with_ada
 
 %files doc
@@ -1304,6 +1278,12 @@ EOF
 %endif #with_pdf
 
 %changelog
+* Wed Feb 27 2013 Dmitry V. Levin <ldv@altlinux.org> 3.4.5-alt16
+- Backported upstream change to fix build with glibc-2.16.
+- Disabled build and packaging of ada subpackages.
+- Disabled packaging of libobjc3.4 subpackage obsoleted by libobjc4.1.
+- Dropped -debug subpackages.
+
 * Fri Dec 16 2011 Dmitry V. Levin <ldv@altlinux.org> 3.4.5-alt15
 - Disabled build and packaging of java subpackages.
 
