@@ -4,7 +4,7 @@
 
 Name: python-module-django-%modulename
 Version: 0.5.5
-Release: alt1
+Release: alt2
 
 %setup_python_module %modulename
 
@@ -20,7 +20,7 @@ BuildArch: noarch
 Source: %name-%version.tar
 
 # see requirements.txt
-Requires: python-module-django >= 1.2
+Requires: Django >= 1.2
 Conflicts: python-module-django-cms < 2.2
 
 BuildPreReq: rpm-build-licenses
@@ -61,5 +61,8 @@ popd
 %python_sitelibdir/*.egg-info
 
 %changelog
+* Wed Feb 27 2013 Aleksey Avdeev <solo@altlinux.ru> 0.5.5-alt2
+- Fix requires
+
 * Mon Feb 25 2013 Aleksey Avdeev <solo@altlinux.ru> 0.5.5-alt1
 - Initial build for ALT Linux Sisyphus
