@@ -8,14 +8,12 @@
 # * Update alt-bdb patch when libdb version changes. Otherwise you may
 #   have failures in tests for FS_TYPE=bdb.
 
-
 %def_without doc
 %def_disable static
 
 %def_enable sqlite_external
 %def_with server
 %def_with dav
-%def_with emacs
 %ifarch %arm
 %def_without javahl
 %else
@@ -29,8 +27,6 @@
 %def_without swig_rb
 # Note: this spec does not have support for building with swig_java
 %def_without swig_java
-
-%def_with svn_push
 
 # Global switch to enable/diable all tests
 %def_enable check
@@ -49,9 +45,9 @@
 
 # for %%libdb_soname_req macros
 %define apr_name libapr1
-%define apr_ver 1.3.3-alt1
+%define apr_ver 1.4.6-alt0.M60P.1
 %define apu_name libaprutil1
-%define apu_ver 1.3.4-alt3.2
+%define apu_ver 1.5.1-alt0.M60P.1
 
 # solo's macros for full libdb version to point it in requires
 # set %%libdb_soname_req (for Requires: <libname>-libdb = %%libdb_soname_req)
@@ -62,16 +58,12 @@
 %define svn_repo_dir %_localstatedir/subversion
 %define svn_service svnserve
 
-# Directory for subversion-tools
-%define _svn_tools_dir %_datadir/%name
-%define _svn_tools_bindir %_bindir
-
 %define module_name dav_svn
 %define modname dav_svn_module
 
 Name: subversion
-Version: 1.6.19
-Release: %svn_rel
+Version: 1.7.8
+Release: alt1
 
 Summary: A version control system
 Group: Development/Other
@@ -79,36 +71,29 @@ License: Apache
 Url: http://subversion.apache.org/
 Packager: Afanasov Dmitry <ender@altlinux.ru>
 
-Source: %name-%version%svn_ver_pre.tar
+Source: %name-%version%svn_ver_pre.tar.bz2
 Source1: %name.el
 Source2: %name-config-1.4.0.tar
 Source3: svnserve.init
 Source4: svnserve.sysconfig
 Source5: %module_name.conf
 Source6: svnwrapper
-Source8: Makefile-tools
 
 Source9: %module_name.load
 Source10: %module_name.start
 
 Source11: sqlite3-amalgamation-3.6.11.c
 
-Patch1: %name-%version-alt-autogen-fix.patch
-Patch2: %name-%version-alt-g++4.7-fix.patch
-Patch3: %name-1.5.4-alt-dockbook.patch
+Patch1: %name-1.7.8-alt-autogen-fix.patch
 Patch4: %name-1.5.4-alt-perl-DESTROY.patch
-Patch5: %name-1.6.1-alt-custom-libtool.patch
-Patch6: %name-1.6.0-alt-kwallet-build.patch
-Patch7: %name-1.5.4-alt-quote-filenames.patch
-Patch13: %name-1.3.1-alt-configure-swig-ruby.patch
+Patch5: %name-1.7.8-alt-custom-libtool.patch
+Patch6: %name-1.7.8-alt-kwallet-build.patch
 
 # http://bugs.gentoo.org/show_bug.cgi?id=219959
 Patch16: %name-1.6.0-gentoo-java-headers.patch
 
 # http://svn.haxx.se/dev/archive-2008-07/0494.shtml
 Patch17: %name-1.6.6-deb-ssh-no-controlmaster.patch
-
-Patch18: %name-1.6.17-alt-perl-ccflags.patch
 
 Requires: lib%name = %version-%release
 
@@ -131,7 +116,6 @@ BuildRequires: libneon-devel libkeyutils-devel
 
 %{?_with_gnome_keyring:BuildRequires: libdbus-devel libgnome-keyring-devel}
 %{?_with_kwallet:BuildRequires: gcc-c++ libdbus-devel kde4libs-devel}
-%{?_with_emacs:BuildPreReq: emacs-common}
 %{?_with_swig_py:BuildPreReq: swig python-devel}
 %{?_with_swig_pl:BuildPreReq: swig perl-devel perl(PerlIO.pm)}
 %{?_with_swig_rb:BuildPreReq: swig libruby-devel}
@@ -146,8 +130,8 @@ a compelling replacement for CVS in the open community.  The software is
 released under an Apache/BSD-style source license.  See the status page
 for current progress.
 This package contains command-line subversion utilities: svn and
-svnversion. For more utilities please look for packages subversion-tools
-and subversion-server-common.
+svnversion. For more utilities please look for package
+subversion-server-common.
 
 %package -n lib%name
 Summary: Shared libraries required for subversion
@@ -295,29 +279,6 @@ This package contains the files necessary to use the subversion library
 functions within java.
 %endif
 
-%package -n emacs-%name
-Summary: Subversion support for Emacs
-Group: Editors
-Requires: %name = %version-%release
-BuildArch: noarch
-
-%description -n emacs-%name
-vc-svn is a VC backend for Subversion.ataff
-psvn is an interface for subversion. psvn provides a similar interface
-for subversion as pcl-cvs for cvs.
-
-All Emacs Lisp code is byte-compiled, install emacs-%name-el for sources.
-
-%package -n emacs-%name-el
-Summary: The Emacs Lisp sources for bytecode included in emacs-%name
-Group: Editors
-Requires: %name = %version-%release
-BuildArch: noarch
-
-%description -n emacs-%name-el
-emacs-%name-el contains the Emacs Lisp sources for the bytecode
-included in emacs-%name package
-
 %package doc
 Summary: Subversion documentation
 Group: Books/Other
@@ -368,54 +329,20 @@ for current progress.
 This package contains the apache2 server shared module for running
 subversion server.
 
-%package tools
-Summary: Tools for subversion
-Group: Development/Other
-Requires: %name = %version-%release
-Requires: %name-server-common = %version-%release
-Requires: %name-python = %version-%release
-BuildPreReq: perl-URI
-
-%description tools
-Tools for Subversion.  This package includes:
-+ hook scripts
-+ bash completion,
-+ other useful scripts (hot-backup.py, server-vsn.py, showchange.pl),
-+ some scripts and code examples.
-
-%package -n bash-completion-svn
-Summary: Bash completion for subversion
-Group: Development/Other
-BuildArch: noarch
-
-%description -n bash-completion-svn
-Bash completion for subversion
-
 %prep
 %setup -q -n %name-%version%svn_ver_pre
 %if_disabled sqlite_external
 install -pD -m644 %SOURCE11 sqlite-amalgamation/sqlite3.c
 %endif
 
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
+%patch1 -p2
 %patch4 -p1
-%patch5 -p1
-%patch6 -p1
-%patch7 -p1
-
-# TODO: check this patch
-#%patch13 -p1
-
+%patch5 -p2
+%patch6 -p2
 %patch16 -p1
 %patch17 -p1
 
-%patch18 -p2
-
 rm -rf apr apr-util neon
-
-cp %SOURCE8 .
 
 %build
 %add_optflags %optflags_shared
@@ -436,10 +363,6 @@ LIBTOOL_M4=%{_datadir}/libtool/aclocal/libtool.m4 ./autogen.sh
         %{!?_with_javahl:--disable-javahl}
 
 %make_build
-
-%if_with svn_push
-%make_build contrib/client-side/svn-push/svn-push
-%endif
 
 %if_with swig_py
 %make_build libdir=%_libdir/libsvn_swig swig_pydir=%python_sitelibdir/libsvn swig_pydir_extra=%python_sitelibdir/svn swig-py
@@ -482,14 +405,6 @@ popd
 doxygen doc/doxygen.conf
 %endif
 
-%if_with emacs
-# Building emacs-subversion files
-emacs -batch --eval '(byte-compile-file "contrib/client-side/emacs/vc-svn.el")'
-emacs -batch --eval '(byte-compile-file "contrib/client-side/emacs/psvn.el")'
-%endif
-
-# Fix paths in scripts
-sed -i 's:^\(SVN=\).*:\1%_bindir/svn:' contrib/client-side/asvn
 sed -i 's:#!/usr/bin/env python2:#!/usr/bin/env python:' tools/hook-scripts/mailer/mailer.py
 sed -i 's:/usr/bin/env python2$:/usr/bin/env python:' tools/hook-scripts/*.py
 
@@ -567,10 +482,6 @@ use_svnwrapper svnserve
 #use_svnwrapper svn
 #use_svnwrapper svnadmin
 
-%if_with svn_push
-install -pm755 contrib/client-side/svn-push/.libs/svn-push %buildroot%_bindir
-%endif
-
 # Create directory for libsvn_swig libraries
 mkdir -p %buildroot%_libdir/libsvn_swig
 
@@ -602,21 +513,6 @@ rm -f %buildroot%_libdir/libsvn_swig/libsvn_swig_ruby*.la
 	javahl_javadir=%_javadir javahl_javahdir=%_includedir/svn-javahl \
 	install-javahl
 %endif
-
-%if_with emacs
-# Installing emacs-subversion files
-mkdir -p %buildroot%_emacslispdir/%name
-install -pm644 contrib/client-side/emacs/vc-svn.el* %buildroot%_emacslispdir/%name
-install -pm644 contrib/client-side/emacs/psvn.el* %buildroot%_emacslispdir/%name
-mkdir -p %buildroot%_sysconfdir/emacs/site-start.d
-install -pm644 %SOURCE1 %buildroot%_sysconfdir/emacs/site-start.d
-%endif
-
-%define docdir %_docdir/%name-%version
-rm -rf %buildroot%docdir
-mkdir -p %buildroot%docdir
-install -pm644 BUGS CHANGES COMMITTERS COPYING HACKING INSTALL README \
-	%buildroot%docdir/
 
 %if_with doc
 # Installing subversion-doc files
@@ -662,13 +558,6 @@ install -pm644 -- %SOURCE10 %buildroot%apache2_mods_start/100-%module_name.conf
 
 %endif
 %endif
-
-# Installing subversion-tools files
-%make_install -f Makefile-tools DESTDIR=%buildroot bindir=%_bindir \
-	docdir=%_defaultdocdir/%name-tools-%version \
-	toolsdir=%_svn_tools_dir
-# commit-access-control.pl has unresolved dependencies
-mv -f -- %buildroot%_svn_tools_dir/hook-scripts/commit-access-control.pl %buildroot%_defaultdocdir/%name-tools-%version/hook-scripts/
 
 # Installing bash-completion file
 mkdir -p %buildroot/etc/bash_completion.d
@@ -733,18 +622,20 @@ fi
 %endif
 
 %files -f %name.lang
+%doc BUGS CHANGES COMMITTERS INSTALL LICENSE NOTICE README
 %dir %_sysconfdir/%name
 %config(noreplace) %_sysconfdir/%name/config
 %config(noreplace) %_sysconfdir/%name/servers
 %_sysconfdir/%name/README.txt
 %_bindir/svn
 %_bindir/svnversion
+%_bindir/svnrdump
 %_bindir/svnsync
 %_mandir/man1/svn.1.*
 %_mandir/man1/svnversion.1.*
+%_mandir/man1/svnrdump.1*
 %_mandir/man1/svnsync.1.*
-%dir %docdir
-%docdir/[A-Z]*
+%_sysconfdir/bash_completion.d/svn
 
 %files -n lib%name
 %_libdir/libsvn_*-*.so.*
@@ -805,16 +696,6 @@ fi
 %_javadir/svn-javahl.jar
 %endif
 
-%if_with emacs
-%files -n emacs-%name
-%_sysconfdir/emacs/site-start.d/*.el
-%dir %_emacslispdir/%name
-%_emacslispdir/%name/*.elc
-
-%files -n emacs-%name-el
-%_emacslispdir/%name/*.el
-%endif
-
 %if_with doc
 %files doc
 %_infodir/svn-design*
@@ -854,17 +735,12 @@ fi
 %endif
 %endif
 
-%files tools -f %name-tools.list
-%_svn_tools_dir
-%_defaultdocdir/%name-tools-%version
-%if_with svn_push
-%_bindir/svn-push
-%endif
-
-%files -n bash-completion-svn
-/etc/bash_completion.d/*
-
 %changelog
+* Wed Feb 27 2013 Andrey Cherepanov <cas@altlinux.org> 1.7.8-alt1
+- New version 1.7.8
+- Disable svn-push and emacs support
+- Remove all contrib tools
+
 * Mon Dec 03 2012 Aleksey Avdeev <solo@altlinux.ru> 1.6.19-alt1
 - updated to 1.6.19
 
