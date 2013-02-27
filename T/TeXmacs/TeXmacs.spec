@@ -1,5 +1,5 @@
 Name: TeXmacs
-Version: 1.0.7.15
+Version: 1.0.7.18
 Release: alt1
 
 Summary: A WYSIWYG mathematical text editor
@@ -30,7 +30,7 @@ BuildPreReq: libX11-devel libICE-devel libfreetype-devel ghostscript
 BuildPreReq: libXext-devel zlib-devel
 # libqt4-devel kdevelop-qmake qconf
 
-%add_python_req_skip  sage
+%add_python_req_skip  sage inkex
 
 %description
 GNU TeXmacs is a free scientific text editor, which was both inspired
@@ -142,6 +142,9 @@ install -D -m644 %SOURCE4 %buildroot%_desktopdir/%name.desktop
 
 
 %changelog
+* Wed Feb 27 2013 Ilya Mashkin <oddity@altlinux.ru> 1.0.7.18-alt1
+- 1.0.7.18
+
 * Sun Apr 15 2012 Ilya Mashkin <oddity@altlinux.ru> 1.0.7.15-alt1
 - 1.0.7.15
 - build without qt
