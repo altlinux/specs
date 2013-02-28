@@ -1,8 +1,8 @@
 %def_without xtdesktop
 %def_without desklaunch
 Name: icewm-startup
-Version: 0.11
-Release: alt3
+Version: 0.12
+Release: alt1
 
 Summary: simple pluggable IceWM autostart manager
 
@@ -160,6 +160,16 @@ update-menus plug-in для менеджера автозапуска программ IceWM.
 не пользуется общесистемным меню, а предпочитает 
 локальное меню из ~/.icewm/menu.
 
+%package networkmanager
+Group: Graphical desktop/Icewm
+Summary: start gnome networkmanager applet
+Requires: %name NetworkManager-gnome polkit-gnome
+AutoReq: no
+
+%description networkmanager
+networkmanager plug-in for simple network configuration.
+Start gnome networkmanager applet into tray.
+
 %prep
 %setup -q -c -T
 
@@ -203,6 +213,8 @@ EOF
 cat <<'EOF' > %buildroot/%icewmconfdir/startup
 #!/bin/sh
 
+# delay before starting programs, to eliminate possible artifacts
+sleep 2
 # starting all system-wide icewm autostart programs
 for file in %icewmconfdir/startup.d/*; do
   userfile=~/.icewm/startup.d/`echo $file | sed -e 's,%icewmconfdir/startup.d/,,'`
@@ -282,6 +294,12 @@ if [ -e ~/.icewm/menu ]; then
 fi
 EOF
 
+cat <<EOF > %buildroot/%icewmconfdir/startup.d/networkmanager
+#!/bin/sh
+/usr/bin/nm-applet --sm-disable&
+/usr/libexec/polkit-1/polkit-gnome-authentication-agent-1&
+EOF
+
 chmod 755 %buildroot/%icewmconfdir/startup.d/*
 chmod 755 %buildroot/%icewmconfdir/startup
 
@@ -319,7 +337,14 @@ chmod 755 %buildroot/%icewmconfdir/startup
 %files xxkb
 %config %icewmconfdir/startup.d/xxkb
 
+%files networkmanager
+%config %icewmconfdir/startup.d/networkmanager
+
 %changelog
+* Thu Feb 28 2013 Dmitriy Khanzhin <jinn@altlinux.org> 0.12-alt1
+- added delay before starting programs, to eliminate possible artifacts
+- added networkmanager
+
 * Wed Mar 02 2011 Igor Vlasenko <viy@altlinux.ru> 0.11-alt3
 - removed artsd support (obsolete)
 
