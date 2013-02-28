@@ -2,7 +2,7 @@
 
 Name: gnustep-TextEdit
 Version: 4.0
-Release: alt1
+Release: alt2
 Summary: Text editor for GNUstep
 License: Free
 Group: Graphical desktop/GNUstep
@@ -10,6 +10,7 @@ Url: http://www.gnustep.org/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
+Source1: %name.menu
 
 BuildPreReq: gcc-objc gnustep-make-devel libgnustep-objc2-devel /proc
 BuildPreReq: gnustep-gui-devel
@@ -36,12 +37,18 @@ and can display any file as text.
 	GNUSTEP_MAKEFILES=%_datadir/GNUstep/Makefiles \
 	GNUSTEP_SYSTEM_ROOT=%buildroot
 
+install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
+
 %files
 %doc README.rtf
 %_bindir/*
 %_libdir/GNUstep
+%_menudir/*
 
 %changelog
+* Thu Feb 28 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0-alt2
+- Added menu file (thnx kostyalamer@)
+
 * Mon Feb 25 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0-alt1
 - Initial build for Sisyphus
 
