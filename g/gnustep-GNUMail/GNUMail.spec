@@ -2,7 +2,7 @@
 
 Name: gnustep-GNUMail
 Version: 1.2.0
-Release: alt2
+Release: alt3
 Summary: Official GNUstep mail application and a clone of NeXT's Mail.app
 License: GPLv2
 Group: Graphical desktop/GNUstep
@@ -10,6 +10,7 @@ Url: http://www.gnustep.org/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
+Source1: %name.menu
 
 BuildPreReq: gcc-objc gnustep-make-devel libgnustep-objc2-devel /proc
 BuildPreReq: gnustep-gui-devel gnustep-Pantomime-devel
@@ -84,12 +85,15 @@ for i in GNUMail; do
 done
 popd
 
+install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
+
 %files
 %doc ChangeLog* README Documentation
 %_bindir/*
 %_libdir/GNUstep
 %exclude %_libdir/GNUstep/Frameworks/*.framework/Headers
 %exclude %_libdir/GNUstep/Frameworks/*.framework/Versions/1/Headers
+%_menudir/*
 
 %files -n lib%name
 %_libdir/*.so.*
@@ -101,6 +105,9 @@ popd
 %_libdir/GNUstep/Frameworks/*.framework/Versions/1/Headers
 
 %changelog
+* Thu Feb 28 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.0-alt3
+- Added menu file (thnx kostyalamer@)
+
 * Wed Feb 27 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.0-alt2
 - Added Requires: gnustep-AddressManager gnustep-Pantomime
 
