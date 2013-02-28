@@ -3,7 +3,7 @@
 %define gnome3ver 3.90
 
 Name: altlinux-freedesktop-menu
-Version: 0.59
+Version: 0.60
 %if_without backport
 %def_with gnome3
 %def_without gnome2
@@ -45,7 +45,7 @@ Summary: altlinux freedesktop menu with shallow layout
 Group: Graphical desktop/Other
 Requires(pre): %name-common
 Requires: %name-common
-Provides: %name
+Provides: %name-provider
 
 %description nested-menu
 freedesktop.org compliant altlinux menu with nested layout
@@ -55,7 +55,7 @@ Summary: altlinux freedesktop menu with shallow layout
 Group: Graphical desktop/Other
 Requires(pre): %name-common
 Requires: %name-common
-Provides: %name
+Provides: %name-provider
 Provides: %name-gnomish-menu
 
 %description shallow-menu
@@ -67,7 +67,7 @@ Summary: altlinux freedesktop menu with shallow layout (GNOME-based)
 Group: Graphical desktop/Other
 Requires(pre): %name-common
 Requires: %name-common > 0.39
-Provides: %name
+Provides: %name-provider
 Requires: gnome2-menus-resources
 
 %description gnomish-menu
@@ -81,7 +81,7 @@ Group: Graphical desktop/XFce
 Provides: xfce-freedesktop-menu
 Conflicts: libgarcon-freedesktop-menu
 Obsoletes: libgarcon-freedesktop-menu
-Requires: %name
+Requires: %name-provider
 
 %description xfce
 ALTLinux freedesktop.org menu for XFCE
@@ -90,8 +90,8 @@ ALTLinux freedesktop.org menu for XFCE
 Summary: Enlightenment freedesktop menu
 Group: Graphical desktop/Other
 Provides: enlightenment-freedesktop-menu
-Requires(pre): %name
-Requires: %name
+Requires(pre): %name-provider
+Requires: %name-provider
 
 %description enlightenment
 ALTLinux freedesktop.org menu for Enlightenment DE
@@ -103,8 +103,8 @@ Provides: lxde-freedesktop-menu
 Conflicts: lxde-lxmenu-data
 Obsoletes: lxde-lxmenu-data < 0.2
 # specifics of lxde menu migration
-Requires(pre): %name
-Requires: %name
+Requires(pre): %name-provider
+Requires: %name-provider
 
 %description lxde
 ALTLinux freedesktop.org menu for LXDE
@@ -115,7 +115,7 @@ Group: Graphical desktop/Other
 Provides: mate-freedesktop-menu
 Conflicts: mate-menus-default
 #Requires: mate-menus-resources
-Requires: %name
+Requires: %name-provider
 
 %description mate
 ALTLinux freedesktop.org menu for MATE
@@ -128,7 +128,7 @@ Conflicts: gnome-menus-default
 Provides: gnome-menus = %gnome2ver.%version
 Obsoletes: gnome-menus-default < %gnome2ver.%version
 Requires: gnome2-menus-resources
-Requires: %name
+Requires: %name-provider
 
 %description gnome
 ALTLinux freedesktop.org menu for GNOME
@@ -140,7 +140,7 @@ Provides: gnome3-freedesktop-menu
 Conflicts: gnome-menus-default
 Provides: gnome-menus = %gnome3ver.%version
 Obsoletes: gnome-menus-default < %gnome3ver.%version
-Requires: %name
+Requires: %name-provider
 
 %description gnome3
 ALTLinux freedesktop.org menu for GNOME3
@@ -150,7 +150,7 @@ Summary: cinnamon freedesktop menu
 Group: Graphical desktop/GNOME
 Provides: cinnamon-freedesktop-menu
 Conflicts: cinnamon <= 1.6.7-alt2
-Requires: %name
+Requires: %name-provider
 
 %description cinnamon
 ALTLinux freedesktop.org menu for Cinnamon
@@ -161,8 +161,8 @@ Group: Graphical desktop/KDE
 Provides: kde3-freedesktop-menu
 Conflicts: kde3-menu-original
 Obsoletes: kde3-menu-original
-Requires(pre): %name
-Requires: %name
+Requires(pre): %name-provider
+Requires: %name-provider
 Requires: kde3-menu-common
 Conflicts: kdelibs <= 3.5.12-alt8
 
@@ -175,8 +175,8 @@ Group: Graphical desktop/KDE
 Provides: kde4-freedesktop-menu = %version
 Conflicts: kde4-menu-original
 Obsoletes: kde4-menu-original
-Requires(pre): %name
-Requires: %name
+Requires(pre): %name-provider
+Requires: %name-provider
 Requires(pre): %name-generic
 Requires: %name-generic
 #Requires: kde4-menu-common
@@ -191,8 +191,8 @@ ALTLinux freedesktop.org menu for KDE4
 Summary: generic freedesktop menu
 Group: Graphical desktop/Other
 Provides: generic-freedesktop-menu
-Requires(pre): %name
-Requires: %name
+Requires(pre): %name-provider
+Requires: %name-provider
 Conflicts: altlinux-menus
 Conflicts: kde4libs <= 4.6.2-alt6
 Conflicts: kde4base-runtime-core <= 4.6.2-alt1
@@ -252,6 +252,8 @@ rm ignore.list
 
 %install
 %makeinstall_std
+install -Dm755 altlinux-freedesktop-menu-post.sh %buildroot%_sbindir/altlinux-freedesktop-menu-post
+install -Dm755 altlinux-freedesktop-menu.filetrigger %buildroot%_rpmlibdir/altlinux-freedesktop-menu.filetrigger
 #find_lang %name
 
 %if_with backport
@@ -290,6 +292,7 @@ touch /etc/xdg/menus/lxde-applications.menu
 %_datadir/desktop-directories/altlinux-*.directory
 #config (noreplace) is too dangerous for unexpirienced user
 %config %_sysconfdir/xdg/menus/altlinux-*.menu
+%_sbindir/altlinux-freedesktop-menu-post
 
 %files nested-menu
 %_altdir/%name-nested-menu
@@ -304,19 +307,19 @@ touch /etc/xdg/menus/lxde-applications.menu
 
 %files xfce
 #config (noreplace) is too dangerous for unexpirienced user
-%config %_sysconfdir/xdg/menus/xfce-applications.menu
+%verify(not mtime) %config %_sysconfdir/xdg/menus/xfce-applications.menu
 %dir %_sysconfdir/xdg/menus/xfce-applications-merged
 
 %files lxde
 #config (noreplace) is too dangerous for unexpirienced user
-%config %_sysconfdir/xdg/menus/lxde-applications.menu
+%verify(not mtime) %config %_sysconfdir/xdg/menus/lxde-applications.menu
 %dir %_sysconfdir/xdg/menus/lxde-applications-merged
 
 %if_with gnome2
 %files gnome
-%config %_sysconfdir/xdg/menus/gnome-applications.menu
+%verify(not mtime) %config %_sysconfdir/xdg/menus/gnome-applications.menu
 %dir %_sysconfdir/xdg/menus/gnome-applications-merged
-%config %_sysconfdir/xdg/menus/settings.menu
+%verify(not mtime) %config %_sysconfdir/xdg/menus/settings.menu
 %dir %_sysconfdir/xdg/menus/settings-merged
 %endif
 
@@ -326,28 +329,28 @@ touch /etc/xdg/menus/lxde-applications.menu
 %dir %_sysconfdir/xdg/menus/gnome3-applications-merged
 
 %files cinnamon
-%config %_sysconfdir/xdg/menus/cinnamon-applications.menu
+%verify(not mtime) %config %_sysconfdir/xdg/menus/cinnamon-applications.menu
 %dir %_sysconfdir/xdg/menus/cinnamon-applications-merged
-%config %_sysconfdir/xdg/menus/cinnamon-settings.menu
+%verify(not mtime) %config %_sysconfdir/xdg/menus/cinnamon-settings.menu
 %dir %_sysconfdir/xdg/menus/cinnamon-settings-merged
 %endif
 
 %files mate
-%config %_sysconfdir/xdg/menus/mate-applications.menu
+%verify(not mtime) %config %_sysconfdir/xdg/menus/mate-applications.menu
 %dir %_sysconfdir/xdg/menus/mate-applications-merged
-%config %_sysconfdir/xdg/menus/mate-settings.menu
+%verify(not mtime) %config %_sysconfdir/xdg/menus/mate-settings.menu
 %dir %_sysconfdir/xdg/menus/mate-settings-merged
 
 
 %files kde3
-%config %_sysconfdir/xdg/menus/kde3-applications.menu
+%verify(not mtime) %config %_sysconfdir/xdg/menus/kde3-applications.menu
 %dir %_sysconfdir/xdg/menus/kde3-applications-merged
 
 %files generic
-%config %_sysconfdir/xdg/menus/applications.menu
+%verify(not mtime) %config %_sysconfdir/xdg/menus/applications.menu
 
 %files enlightenment
-%config %_sysconfdir/xdg/menus/enlightenment.menu
+%verify(not mtime) %config %_sysconfdir/xdg/menus/enlightenment.menu
 # Enlightenment is too buggy to display a proper menu :(
 #%config %_sysconfdir/xdg/menus/enlightenment-applications.menu
 %exclude %_sysconfdir/xdg/menus/enlightenment-applications.menu
@@ -359,6 +362,11 @@ touch /etc/xdg/menus/lxde-applications.menu
 %_datadir/kde4/desktop-directories/altlinux-*.directory
 
 %changelog
+* Thu Feb 21 2013 Igor Vlasenko <viy@altlinux.ru> 0.60-alt1
+- %_sbindir/altlinux-freedesktop-menu-post
+- altlinux-freedesktop-menu.filetrigger
+- closes: #28575
+
 * Tue Nov 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.59-alt1
 - explicitly excluded Settings in mate-applications.menu
 - closes: #28121
