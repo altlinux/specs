@@ -2,7 +2,7 @@
 
 Name: gnustep-AddressManager
 Version: 0.4.8
-Release: alt3
+Release: alt4
 Summary: Versatile address book application for managing contact information
 License: LGPL
 Group: Networking/Mail
@@ -10,6 +10,7 @@ Url: http://www.gnustep.org/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
+Source1: %name.menu
 
 BuildPreReq: gcc-objc gnustep-make-devel libgnustep-objc2-devel /proc
 BuildPreReq: gnustep-base-devel gnustep-gui-devel
@@ -92,12 +93,15 @@ for i in Addresses AddressView; do
 done
 popd
 
+install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
+
 %files
 %doc AUTHORS ChangeLog NEWS README THANKS TODO
 %_bindir/*
 %_libdir/GNUstep
 %exclude %_libdir/GNUstep/Frameworks/*.framework/Headers
 %exclude %_libdir/GNUstep/Frameworks/*.framework/Versions/0/Headers
+%_menudir/*
 
 %files -n lib%name
 %_libdir/*.so.*
@@ -109,6 +113,9 @@ popd
 %_libdir/GNUstep/Frameworks/*.framework/Versions/0/Headers
 
 %changelog
+* Thu Feb 28 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.8-alt4
+- Added menu file (thnx kostyalamer@)
+
 * Mon Feb 25 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.8-alt3
 - Added requirement on %name for lib%name-devel
 
