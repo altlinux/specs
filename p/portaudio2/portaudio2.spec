@@ -1,6 +1,6 @@
 Name: portaudio2
 Version: 19
-Release: alt4
+Release: alt5
 
 Summary: PortAudio is a free, cross platform, open-source, audio I/O library
 License: BSD
@@ -76,6 +76,7 @@ sed -i '/^Libs:/s/ @/\nLibs.private: @/' portaudio-2.0.pc.in
 %build
 %autoreconf
 %configure --disable-static --enable-cxx
+[ %__nprocs -le 3 ] || export NPROCS=3
 %make_build
 
 %install
@@ -91,6 +92,9 @@ sed -i '/^Libs:/s/ @/\nLibs.private: @/' portaudio-2.0.pc.in
 %_pkgconfigdir/*.pc
 
 %changelog
+* Tue Feb 26 2013 Sergey Bolshakov <sbolshakov@altlinux.ru> 19-alt5
+- limit make jobs to 3
+
 * Mon Sep 19 2011 Alexey Tourbin <at@altlinux.ru> 19-alt4
 - updated to pa_stable_v19_20110326
 
