@@ -1,6 +1,6 @@
 Name: installer-distro-simply-linux
-Version: 6.991
-Release: alt2
+Version: 7.0
+Release: alt1
 
 Summary: Installer common files
 Summary(ru_RU.UTF-8): Общие пакеты для установки дистрибутива "Simply linux"
@@ -107,11 +107,18 @@ Installer stage3
 %_datadir/install2/*.d/*
 %_datadir/install2/steps/*
 %_datadir/install2/alterator-menu
+%_datadir/install2/systemd-enabled
+%_datadir/install2/systemd-disabled
 
 %files stage3
 %_datadir/alterator/ui/simply-linux
 
 %changelog
+* Thu Feb 28 2013 Mikhail Efremov <sem@altlinux.org> 7.0-alt1
+- Enable ntpd.service.
+- Use installer hook for setup services.
+- Replace gdm-theme with lightdm-theme postinstall hook.
+
 * Thu Feb 14 2013 Mikhail Efremov <sem@altlinux.org> 6.991-alt2
 - Drop installer-feature-hdd-pm-disable-stage3.
 - remove-installer-desktop-pkgs: Remove alterator-luks.
