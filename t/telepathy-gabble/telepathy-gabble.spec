@@ -2,7 +2,7 @@
 %def_enable ft
 
 Name: telepathy-gabble
-Version: 0.17.1
+Version: 0.17.2
 Release: alt1
 
 Summary: Jabber/XMPP connection manager
@@ -11,8 +11,9 @@ Group: Networking/Instant messaging
 Url: http://telepathy.freedesktop.org/
 
 Source: http://telepathy.freedesktop.org/releases/telepathy-gabble/%name-%version.tar.gz
+Patch: telepathy-gabble-0.17.2-alt-link.patch
 
-%define telepathy_glib_ver 0.19.7
+%define telepathy_glib_ver 0.19.9
 %define glib_ver 2.24
 
 Requires: ca-certificates
@@ -33,6 +34,7 @@ with Jabber/XMPP servers, including Google Talk.
 
 %prep
 %setup -q
+%patch
 
 %build
 %autoreconf
@@ -72,6 +74,9 @@ with Jabber/XMPP servers, including Google Talk.
 %exclude %_libdir/telepathy/gabble-0/*/*.la
 
 %changelog
+* Thu Feb 28 2013 Yuri N. Sedunov <aris@altlinux.org> 0.17.2-alt1
+- 0.17.2
+
 * Thu Sep 20 2012 Yuri N. Sedunov <aris@altlinux.org> 0.17.1-alt1
 - 0.17.1
 
