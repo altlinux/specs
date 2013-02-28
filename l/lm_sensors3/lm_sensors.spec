@@ -2,7 +2,7 @@
 
 Name: lm_sensors3
 Version: 3.3.2
-Release: alt1
+Release: alt2
 
 Summary: Hardware Health Monitoring Tools
 License: GPL
@@ -94,7 +94,8 @@ user space applications for general SMBus access and hardware monitoring.
 %patch2 -p2
 
 %build
-%make_build_ext
+%add_optflags -D_FILE_OFFSET_BITS=64
+%make_build_ext PROG_EXTRA=sensord
 
 %install
 %set_verify_elf_method strict
@@ -190,6 +191,9 @@ fi
 %endif #static
 
 %changelog
+* Thu Feb 28 2013 Sergey Bolshakov <sbolshakov@altlinux.ru> 3.3.2-alt2
+- rebuilt with LFS
+
 * Fri Mar 30 2012 Sergey Y. Afonin <asy@altlinux.ru> 3.3.2-alt1
 - new version
 
