@@ -2,7 +2,7 @@
 
 Name: gnustep-GSPdf
 Version: 0.5
-Release: alt1
+Release: alt2
 Summary: Postscript and Pdf Viewer for GNUstep
 License: GPLv2
 Group: Graphical desktop/GNUstep
@@ -10,6 +10,7 @@ Url: http://www.gnustep.org/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
+Source1: %name.menu
 
 BuildPreReq: gcc-objc gnustep-make-devel libgnustep-objc2-devel /proc
 BuildPreReq: libgs-devel gnustep-base-devel gnustep-gui-devel
@@ -35,12 +36,18 @@ installed, GNUstep will recognize it and use it without further setup.
 %install
 %makeinstall_std GNUSTEP_INSTALLATION_DOMAIN=SYSTEM
 
+install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
+
 %files
 %doc ChangeLog
 %_bindir/*
 %_libdir/GNUstep
+%_menudir/*
 
 %changelog
+* Thu Feb 28 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5-alt2
+- Added menu file (thnx kostyalamer@)
+
 * Mon Feb 25 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5-alt1
 - Initial build for Sisyphus
 
