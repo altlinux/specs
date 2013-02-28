@@ -2,7 +2,7 @@
 
 Name: gnustep-SimpleAgenda
 Version: 0.43
-Release: alt1
+Release: alt2
 Summary: Simple calendar and agenda application
 License: GPLv2+
 Group: Graphical desktop/GNUstep
@@ -10,6 +10,7 @@ Url: http://www.gnustep.org/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
+Source1: %name.menu
 
 BuildPreReq: gcc-objc gnustep-make-devel libgnustep-objc2-devel /proc
 BuildPreReq: gnustep-dbuskit-devel libical-devel libuuid-devel
@@ -42,12 +43,18 @@ export GNUSTEP_MAKEFILES=%_datadir/GNUstep/Makefiles
 %makeinstall_std GNUSTEP_INSTALLATION_DOMAIN=SYSTEM \
 	GNUSTEP_MAKEFILES=%_datadir/GNUstep/Makefiles
 
+install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
+
 %files
 %doc NEWS README TODO
 %_bindir/*
 %_libdir/GNUstep
+%_menudir/*
 
 %changelog
+* Thu Feb 28 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.43-alt2
+- Added menu file (thnx kostyalamer@)
+
 * Mon Feb 25 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.43-alt1
 - Initial build for Sisyphus
 
