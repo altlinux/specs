@@ -10,7 +10,7 @@ Summary:              The Mozilla Firefox project is a redesign of Mozilla's bro
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox
-Version:        18.0.2
+Version:        19.0.1
 Release:        alt1
 License:        MPL/GPL/LGPL
 Group:          Networking/WWW
@@ -263,6 +263,18 @@ done
 %_sysconfdir/rpm/macros.d/firefox
 
 %changelog
+* Fri Mar 01 2013 Alexey Gladkov <legion@altlinux.ru> 19.0.1-alt1
+- New release (19.0.1).
+- Fixed:
+  + MFSA 2013-28 Use-after-free, out of bounds read, and buffer overflow issues found using Address Sanitizer
+  + MFSA 2013-27 Phishing on HTTPS connection through malicious proxy
+  + MFSA 2013-26 Use-after-free in nsImageLoadingContent
+  + MFSA 2013-25 Privacy leak in JavaScript Workers
+  + MFSA 2013-24 Web content bypass of COW and SOW security wrappers
+  + MFSA 2013-23 Wrapped WebIDL objects can be wrapped again
+  + MFSA 2013-22 Out-of-bounds read in image rendering
+  + MFSA 2013-21 Miscellaneous memory safety hazards (rv:19.0 / rv:17.0.3)
+
 * Sun Feb 10 2013 Alexey Gladkov <legion@altlinux.ru> 18.0.2-alt1
 - New release (18.0.2).
 

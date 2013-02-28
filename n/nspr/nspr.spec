@@ -1,6 +1,6 @@
 Summary:	Netscape Portable Runtime (NSPR)
 Name:		nspr
-Version:	4.9.4
+Version:	4.9.5
 Release:	alt1
 Epoch:		1
 License:	MPL/GPL/LGPL
@@ -107,6 +107,9 @@ sed -e "s,@libdir@,%_libdir,g" \
 %_libdir/*.a
 
 %changelog
+* Mon Feb 18 2013 Alexey Gladkov <legion@altlinux.ru> 1:4.9.5-alt1
+- New stable release 4.9.5.
+
 * Fri Jan 11 2013 Alexey Gladkov <legion@altlinux.ru> 1:4.9.4-alt1
 - New stable release 4.9.4.
 
