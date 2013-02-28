@@ -4,7 +4,7 @@ BuildRequires: jpackage-compat
 
 Name: metainf-services
 Version: 1.4
-Release: alt1_0jpp6
+Release: alt2_0jpp6
 Summary: A Java META-INF/services generator
 
 Group: Development/Java
@@ -80,7 +80,7 @@ mvn-jpp -Dmaven.compile.source=1.5 -Dmaven.compile.target=1.5 -Dmaven.javadoc.so
 %__mkdir_p %buildroot%_datadir/maven2/poms
 %__install -m 644 pom.xml \
                $RPM_BUILD_ROOT%_datadir/maven2/poms/JPP-%name.pom
-%add_to_maven_depmap %name %name %version JPP %name
+%add_to_maven_depmap org.kohsuke.metainf-services %name %version JPP %name
 
 # javadoc
 %__mkdir_p %buildroot%_javadocdir/%name-%version
@@ -98,5 +98,8 @@ mvn-jpp -Dmaven.compile.source=1.5 -Dmaven.compile.target=1.5 -Dmaven.javadoc.so
 %_javadocdir/%name
 
 %changelog
+* Thu Feb 28 2013 Paul Wolneykien <manowar@altlinux.ru> 1.4-alt2_0jpp6
+- Fix the groupId in the generated POM part.
+
 * Thu Feb 28 2013 Paul Wolneykien <manowar@altlinux.org> 1.4-alt1_0jpp6
 - Initial build for ALT Linux.
