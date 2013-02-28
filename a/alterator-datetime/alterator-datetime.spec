@@ -3,7 +3,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-datetime
-Version: 2.3
+Version: 2.4
 Release: alt1
 
 %add_findreq_skiplist %_datadir/install2/postinstall.d/*
@@ -57,6 +57,11 @@ alterator module for date/time setup
 %_datadir/install2/postinstall.d/*
 
 %changelog
+* Thu Feb 28 2013 Mikhail Efremov <sem@altlinux.org> 2.4-alt1
+- Read real timezone from config file (closes: #28610).
+- Drop unused variables.
+- Remove all dynamically added entries from ntpd configs.
+
 * Tue Dec 18 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 2.3-alt1
 - hackaround service clock sync (closes #28168)
 
