@@ -1,5 +1,5 @@
 Name: qa-robot
-Version: 0.3.3
+Version: 0.3.4
 Release: alt1
 
 Summary: Simple notification system
@@ -34,6 +34,9 @@ and (possibly) updated entries.  See qa-robot(1) for details.
 %_man1dir/*.*
 
 %changelog
+* Wed Feb 27 2013 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.3.4-alt1
+- unmets: add -a option to work with unnative arches.
+
 * Wed Aug 31 2011 Dmitry V. Levin <ldv@altlinux.org> 0.3.3-alt1
 - trap.sh: fixed signal handling.
 - rpmpeek -n: changed to ensure that unpacked tree is readable.
