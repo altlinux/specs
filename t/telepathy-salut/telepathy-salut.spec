@@ -1,7 +1,7 @@
 #%%set_verify_elf_method unresolved=relaxed
 
 Name: telepathy-salut
-Version: 0.8.0
+Version: 0.8.1
 Release: alt1
 
 Summary: A link-local XMPP connection manager
@@ -44,7 +44,6 @@ rm -rf %buildroot%_docdir/%name/
 %dir %_libdir/telepathy/salut-0
 %dir %_libdir/telepathy/salut-0/lib
 %_libdir/telepathy/salut-0/lib/*.so
-%dir %_libdir/telepathy/salut-0/plugins
 %_man8dir/*
 %_datadir/dbus-1/services/org.freedesktop.Telepathy.ConnectionManager.salut.service
 %_datadir/telepathy/managers/salut.manager
@@ -53,6 +52,9 @@ rm -rf %buildroot%_docdir/%name/
 %exclude %_libdir/telepathy/salut-0/lib/*.la
 
 %changelog
+* Thu Feb 28 2013 Yuri N. Sedunov <aris@altlinux.org> 0.8.1-alt1
+- 0.8.1
+
 * Wed Apr 04 2012 Yuri N. Sedunov <aris@altlinux.org> 0.8.0-alt1
 - 0.8.0
 
