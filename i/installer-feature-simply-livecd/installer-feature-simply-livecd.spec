@@ -1,6 +1,6 @@
 Name: installer-feature-simply-livecd
-Version: 0.7.7
-Release: alt2
+Version: 0.8.0
+Release: alt1
 
 Summary: LiveCD install hooks for Simply Linux.
 License: GPL
@@ -52,6 +52,13 @@ install -pm755 livecd-postinstall.d/* %buildroot%post_hookdir/
 %post_hookdir/*
 
 %changelog
+* Thu Feb 28 2013 Mikhail Efremov <sem@altlinux.org> 0.8.0-alt1
+- Enable ntpd.service.
+- Enable more services.
+- Enable nmb and smb services.
+- services postinstall hook: Use systemctl.
+- Replace gdm-theme with lightdm-theme preinstall hook.
+
 * Thu Feb 14 2013 Mikhail Efremov <sem@altlinux.org> 0.7.7-alt2
 - Drop installer-feature-hdd-pm-disable-stage3.
 
