@@ -2,7 +2,7 @@
 
 Name: gnustep-terminal
 Version: 0.9.8
-Release: alt2
+Release: alt3
 Summary: Terminal emulator for GNUstep
 License: GPLv2
 Group: Graphical desktop/GNUstep
@@ -44,6 +44,9 @@ install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
 %_menudir/*
 
 %changelog
+* Thu Feb 28 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.8-alt3
+- Set UTF-8 as default encoding
+
 * Sun Jan 20 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.8-alt2
 - Added menu file (thnx kostyalamer@)
 
