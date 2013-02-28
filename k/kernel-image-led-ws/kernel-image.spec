@@ -21,7 +21,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.0.66
-Release: alt6
+Release: alt7
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -657,7 +657,8 @@ Patch0854: linux-%kernel_branch.61-fix-net-rds--rds_rdma.patch
 Patch0855: linux-%kernel_branch.51-fix-net-sched.patch
 Patch0856: linux-%kernel_branch.42-fix-net-sctp.patch
 Patch0857: linux-%kernel_branch.43-fix-net-sunrpc.patch
-Patch0858: linux-%kernel_branch.58-fix-net-xfrm--xfrm_policy.patch
+Patch0858: linux-%kernel_branch.66-fix-net-sunrpc--xprtrdma.patch
+Patch0859: linux-%kernel_branch.58-fix-net-xfrm--xfrm_policy.patch
 
 Patch0860: linux-%kernel_branch.42-fix-scripts.patch
 
@@ -2035,6 +2036,7 @@ cd linux-%version
 %patch0856 -p1
 %patch0857 -p1
 %patch0858 -p1
+%patch0859 -p1
 
 %patch0860 -p1
 
@@ -3081,6 +3083,10 @@ done)
 
 
 %changelog
+* Thu Feb 28 2013 Led <led@altlinux.ru> 3.0.66-alt7
+- added:
+  + fix-net-sunrpc--xprtrdma
+
 * Wed Feb 27 2013 Led <led@altlinux.ru> 3.0.66-alt6
 - updated:
   + fix-mm (CVE-2013-1767)
