@@ -2,7 +2,7 @@
 
 Name: gnustep-Cynthiune
 Version: 0.9.5
-Release: alt2
+Release: alt3
 Summary: First free and romantic music player for GNUstep
 License: GPLv2
 Group: Graphical desktop/GNUstep
@@ -10,6 +10,7 @@ Url: http://www.gnustep.org/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
+Source1: %name.menu
 
 BuildPreReq: gcc-objc gnustep-make-devel libgnustep-objc2-devel /proc
 BuildPreReq: gnustep-gui-devel libid3tag-devel libmad-devel
@@ -110,12 +111,15 @@ for i in Cynthiune; do
 done
 popd
 
+install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
+
 %files
 %doc ChangeLog NEWS README TODO
 %_bindir/*
 %_libdir/GNUstep
 %exclude %_libdir/GNUstep/Frameworks/*.framework/Headers
 %exclude %_libdir/GNUstep/Frameworks/*.framework/Versions/0/Headers
+%_menudir/*
 
 %files -n lib%name
 %_libdir/*.so.*
@@ -127,6 +131,9 @@ popd
 %_libdir/GNUstep/Frameworks/*.framework/Versions/0/Headers
 
 %changelog
+* Thu Feb 28 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.5-alt3
+- Added menu files (thnx kostyalamer@)
+
 * Mon Feb 25 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.5-alt2
 - Added support of ALSA
 
