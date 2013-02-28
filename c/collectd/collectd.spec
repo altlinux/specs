@@ -8,7 +8,7 @@
 %def_enable libvirt
 %def_enable memcached
 %def_disable modbus
-%def_enable monitorus
+%def_disable monitorus
 %def_enable mysql
 %def_disable netlink
 %def_enable nginx
@@ -16,6 +16,7 @@
 %def_enable notify_email
 %def_enable nut
 %def_enable openvz
+%def_enable perl
 %def_enable ping
 %def_enable postgresql
 %def_enable rrdcached
@@ -28,8 +29,8 @@
 %def_disable static
 
 Name: collectd
-Version: 5.1.0
-Release: alt5
+Version: 5.2.1
+Release: alt2
 
 Summary: (Multi-)System statistics collection
 License: GPL
@@ -43,12 +44,15 @@ Packager: Michael Shigorin <mike@altlinux.org>
 ### NB: part of BRs is conditional (see subpackages below)
 # Automatically added by buildreq on Thu May 14 2009 (-bi)
 #BuildRequires: flex gcc-c++ iptables-devel libMySQL-devel libcurl-devel libdbi-devel libesmtp-devel libgcrypt-devel libnet-snmp-devel libnetlink-devel libnotify-devel liboping-devel libpcap-devel librrd-devel libsensors-devel libvirt-devel libxfs-devel libxml2-devel libxmms-devel nut-devel perl-devel perl-threads perl-Regexp-Common postgresql-devel
-BuildRequires: flex gcc-c++ iptables-devel libgcrypt-devel libpcap-devel libxfs-devel perl-devel perl-threads perl-Regexp-Common
+BuildRequires: flex gcc-c++ iptables-devel libgcrypt-devel libpcap-devel libxfs-devel
 BuildRequires: libstatgrab-devel
-BuildRequires: perl-Pod-Parser
+
+%if_enabled perl
+BuildRequires: perl-devel perl-threads perl-Regexp-Common perl-Pod-Parser
 
 # http://mailman.verplant.org/pipermail/collectd/2008-April/001766.html
 %set_perl_req_method relaxed
+%endif
 
 %set_verify_elf_method unresolved=relaxed textrel=relaxed
 %add_verify_elf_skiplist %_libdir/%name/*/*
@@ -85,6 +89,7 @@ Requires: %libname = %version-%release
 %description -n %libname-devel
 This package contains development part of %libname.
 
+%if_enabled perl
 %package -n perl-Collectd
 Summary: Perl module for %name
 Group: Development/Perl
@@ -92,6 +97,7 @@ BuildArch: noarch
 
 %description -n perl-Collectd
 This package contains Perl part of %name.
+%endif
 
 %package cluster
 Summary: Cluster metapackage for %name plugins
@@ -485,7 +491,8 @@ from collectd into nagios to avoid extra sensor-caused load
 %prep
 %setup
 %patch0 -p1
-subst 's/ -Werror//' src/Makefile.*
+sed -i 's/ -Werror//' src/Makefile.*
+sed -i -e '/^=head1/i=encoding ISO-8859-1\n' src/*.pod
 mkdir libltdl
 
 %build
@@ -499,7 +506,6 @@ mkdir libltdl
 	--disable-java \
 	--without-java \
 	--disable-debug \
-	--enable-perl \
 	%{subst_enable apache} \
 	%{subst_enable curl} \
 	%{subst_enable dbi} \
@@ -519,10 +525,11 @@ mkdir libltdl
 	%{subst_enable notify_email} \
 	%{subst_enable nut} \
 	%{subst_enable openvz} \
-	%{subst_enable rrdcached} \
-	%{subst_enable rrdtool} \
+	%{subst_enable perl} \
 	%{subst_enable ping} \
 	%{subst_enable postgresql} \
+	%{subst_enable rrdcached} \
+	%{subst_enable rrdtool} \
 	%if_enabled sensors
 	--with-libsensors=%_prefix \
 	%{subst_enable sensors} \
@@ -542,6 +549,9 @@ sed -i 's,/usr/var,%_var,g' %buildroot%_sysconfdir/%name.conf
 install -pDm755 contrib/altlinux/%name.init %buildroot%_initdir/%name
 install -d %buildroot%_libdir/%name/ %buildroot%_localstatedir/%name/
 rm %buildroot%_libdir/%name/*.la
+
+# FIXME: this is ugly
+mv %buildroot{%_libexecdir,%_datadir}/perl5
 
 # TODO: package collection3 and maybe other frontends as well
 %if_enabled cgi
@@ -638,9 +648,11 @@ service %name condrestart ||:
 %_libdir/%libname.so
 %_pkgconfigdir/*
 
+%if_enabled perl
 %files -n perl-Collectd
 %perl_vendor_privlib/*.pm
 %perl_vendor_privlib/*/*.pm
+%endif
 
 %if_enabled apache
 %files apache
@@ -802,6 +814,17 @@ service %name condrestart ||:
 # - macroize repetitive sections
 
 %changelog
+* Thu Feb 28 2013 Michael Shigorin <mike@altlinux.org> 5.2.1-alt2
+- kludged pm installation (somehow these ended up in lib/ not share/)
+- disabled monitorus plugin
+
+* Fri Feb 08 2013 Michael Shigorin <mike@altlinux.org> 5.2.1-alt1
+- 5.2.1
+- fixed pod build (thanks viy@ for the encoding tip)
+
+* Wed Nov 28 2012 Michael Shigorin <mike@altlinux.org> 5.2.0-alt1
+- 5.2.0
+
 * Tue Sep 04 2012 Vladimir Lettiev <crux@altlinux.ru> 5.1.0-alt5
 - rebuilt for perl-5.16
 
