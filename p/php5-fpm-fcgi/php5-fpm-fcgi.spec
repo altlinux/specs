@@ -2,7 +2,7 @@
 
 Name: php5-fpm-fcgi
 Version: %php5_version
-Release: %php5_release
+Release: %php5_release.1
 Summary: The PHP5 HTML-embedded scripting language as a fpm-fcgi binary.
 Group: System/Servers
 Url: http://www.php.net/
@@ -16,6 +16,7 @@ Source1: php.ini
 Source2: %name-browscap.ini
 Source3: php5-fpm.init
 Source4: php5-fpm.logrotate
+Source5: php5-fpm.service
 
 Patch0: php5-fpm-fcgi-5.3.3.20100722-config.m4.patch
 Patch2: php5-fpm-fcgi-5.3.3.20100722-build.patch
@@ -115,11 +116,18 @@ cat << EOF > %buildroot/%_altdir/php5-%php5_sapi
 %_sbindir/php-%php5_sapi	%_sbindir/php-%php5_sapi-%_php5_version	$php_weight
 EOF
 
-mkdir -p %buildroot/%_logdir/php5-fpm
-mkdir -p %buildroot/%_runtimedir/php5-fpm
+mkdir -p %buildroot%_logdir/php5-fpm
+mkdir -p %buildroot%_runtimedir/php5-fpm
 
 # config for logrotate
 install -pD -m644 %SOURCE4 %buildroot%_sysconfdir/logrotate.d/php5-fpm
+
+mkdir -p  %buildroot%_sysconfdir/tmpfiles.d
+echo 'd /var/run/php5-fpm 0775 root root' >> %buildroot%_sysconfdir/tmpfiles.d/php5-fpm.conf
+
+mkdir -p  %buildroot%_unitdir
+install -m 0644 %SOURCE5 %buildroot%_unitdir/php5-fpm.service
+
 
 %pre
 /usr/sbin/groupadd -r -f _php_fpm 2>/dev/null ||:
@@ -151,10 +159,16 @@ install -pD -m644 %SOURCE4 %buildroot%_sysconfdir/logrotate.d/php5-fpm
 %config(noreplace) %php5_sysconfdir/%php5_sapi/php.ini
 %config(noreplace) %php5_sysconfdir/%php5_sapi/browscap.ini
 %config(noreplace) %_sysconfdir/logrotate.d/php5-fpm
+%config(noreplace) %_sysconfdir/tmpfiles.d/php5-fpm.conf
 %php5_servicedir/%php5_sapi
+%config %_unitdir/php5-fpm.service
 %_man8dir/*
 
 %changelog
+* Thu Feb 28 2013 Dmitriy Kulik <lnkvisitor@altlinux.org> 5.3.18.20121017-alt1.1
+- Added systemd service (ALT #28145)
+- Logrotate use pidfile
+
 * Wed Nov 14 2012 Anton Farygin <rider@altlinux.ru> 5.3.18.20121017-alt1
 - Rebuild with php5-5.3.18.20121017-alt1
 - added logrotate support
