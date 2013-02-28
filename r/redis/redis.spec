@@ -1,6 +1,6 @@
 Name: redis
-Version: 2.4.7
-Release: alt2
+Version: 2.6.10
+Release: alt1
 
 Summary: Redis is an advanced key-value store
 
@@ -24,9 +24,6 @@ Source9: redis.service
 
 # for check section
 BuildPreReq: tcl >= 8.5
-
-# Automatically added by buildreq on Mon Oct 24 2011
-BuildRequires: git-core
 
 %description
 Redis is an advanced key-value store. It is similar to memcached but
@@ -60,7 +57,7 @@ for Windows currently.
 %__subst 's|\$(CCOPT) \$(DEBUG) \$(OBJ)|\$(OBJ) \$(CCOPT) \$(DEBUG)|g' src/Makefile
 
 %build
-%make_build
+%make_build CXXFLAGS="%{optflags}" CFLAGS="%{optflags}"
 
 %install
 %makeinstall_std PREFIX=%buildroot%prefix
@@ -92,6 +89,9 @@ install -m 0640 %SOURCE8 %buildroot%_sysconfdir/sysconfig/%name
 mkdir -p  %buildroot%_unitdir
 install -m 0755 %SOURCE9 %buildroot%_unitdir/%name.service
 
+mkdir -p  %buildroot%_sysconfdir/tmpfiles.d
+echo 'd /var/run/%name 0775 root %redis_group' >> %buildroot%_sysconfdir/tmpfiles.d/%name.conf
+
 %pre
 # Add the "_redis" user
 %_sbindir/groupadd -r -f %redis_group 2>/dev/null ||:
@@ -105,13 +105,14 @@ install -m 0755 %SOURCE9 %buildroot%_unitdir/%name.service
 %preun_service %name
 
 %files
-%doc COPYING 00-RELEASENOTES README BUGS TODO
+%doc COPYING 00-RELEASENOTES README BUGS
 
 %attr(0750,root,%redis_group) %dir %_sysconfdir/%name
 %config(noreplace) %_sysconfdir/%name/redis.conf
 
 %config %_logrotatedir/redis-server
 %config %_sysconfdir/bash_completion.d/redis-cli
+%config %_sysconfdir/tmpfiles.d/%name.conf
 %attr(0750,root,%redis_group) %config(noreplace) %_sysconfdir/sysconfig/%name
 %config %_initdir/%name
 %_unitdir/%name.service
@@ -129,6 +130,10 @@ install -m 0755 %SOURCE9 %buildroot%_unitdir/%name.service
 
 
 %changelog
+* Wed Feb 27 2013 Dmitriy Kulik <lnkvisitor@altlinux.org> 2.6.10-alt1
+- new version (2.6.10) (ALT #28374)
+- create temporary dir
+
 * Tue May 15 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 2.4.7-alt2
 - add systemd unit file (ALT #27334)
 
