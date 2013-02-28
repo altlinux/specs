@@ -1,6 +1,6 @@
 Name: libmad
 Version: 0.15.1b
-Release: alt6
+Release: alt7
 
 Summary: High quality MPEG audio decoder library
 License: GPL
@@ -36,7 +36,7 @@ MAD-based software.
 %build
 touch AUTHORS NEWS ChangeLog
 %autoreconf
-
+%remove_optflags -mthumb
 %configure \
 	--enable-accuracy \
 	--disable-static
@@ -57,6 +57,9 @@ touch AUTHORS NEWS ChangeLog
 %_includedir/mad.h
 
 %changelog
+* Thu Feb 28 2013 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.15.1b-alt7
+- fixed build on arm
+
 * Sat Mar 19 2011 Alexey Tourbin <at@altlinux.ru> 0.15.1b-alt6
 - Rebuilt for debuginfo
 
