@@ -1,8 +1,8 @@
 Name: kernel-image-std-pae
-Release: alt1.1
+Release: alt1
 epoch:1 
 %define kernel_base_version	3.7
-%define kernel_sublevel	.9
+%define kernel_sublevel	.10
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 # Numeric extra version scheme developed by Alexander Bokovoy:
@@ -594,6 +594,9 @@ find %buildroot%_docdir/kernel-doc-%base_flavour-%version/DocBook \
 %exclude %modules_dir/kernel/drivers/staging/media/lirc/
 
 %changelog
+* Thu Feb 28 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.7.10-alt1
+- 3.7.10
+
 * Mon Feb 25 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.7.9-alt1.1
 - CVE-2013-1763 fixed
 
