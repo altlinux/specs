@@ -2,7 +2,7 @@
 
 Name: gcc%gcc_branch
 Version: 3.3.4
-Release: alt7
+Release: alt8
 
 Summary: GNU Compiler Collection
 License: GPL
@@ -64,6 +64,7 @@ Patch701: gcc33-alt-libjava-makefile.patch
 Patch702: gcc32-alt-install.patch
 Patch703: gcc32-alt-nowrap.patch
 Patch704: gcc33-alt-bison.patch
+Patch705: gcc33-up-siginfo.patch
 
 Provides: gcc = %version-%release, %_bindir/%_target_platform-gcc, %_bindir/gcc
 Obsoletes: egcs, gcc3.0, gcc3.1
@@ -643,12 +644,13 @@ find -type d -name CVS -print0 |
 %patch702 -p1
 %patch703 -p1
 %patch704 -p1
+%patch705 -p0
 
 # Set proper version & contact info.
 cp -p gcc/version.c gcc/version.c.orig
-%__subst 's/3\.3\.4/%version/g' gcc/version.c gcc/doc/include/gcc-common.texi
-%__subst 's/\(%gcc_branch\(\.[0-9]\+\)*\)\( [0-9]\+[a-z]*\)\?.*"/\1\3 (%os_release)"/' gcc/version.c
-%__subst 's,<URL:[^>]*>,<URL:http://bugzilla.altlinux.ru/>,' gcc/version.c
+sed -i 's/3\.3\.4/%version/g' gcc/version.c gcc/doc/include/gcc-common.texi
+sed -i 's/\(%gcc_branch\(\.[0-9]\+\)*\)\( [0-9]\+[a-z]*\)\?.*"/\1\3 (%os_release)"/' gcc/version.c
+sed -i 's,<URL:[^>]*>,<URL:http://bugzilla.altlinux.ru/>,' gcc/version.c
 
 # Misdesign in libstdc++
 cp -a libstdc++-v3/config/cpu/i{4,3}86/atomicity.h
@@ -860,7 +862,7 @@ mv %buildroot%_includedir/gcj/* %buildroot%gcc_target_dir/include/gcj/
 rmdir %buildroot%_includedir/gcj
 
 # Fix libgcj.spec and move it to compiler-specific directory.
-%__subst -p 's/-lgcjgc//g;s/-lzgcj//g;s/-lpthread//g' %buildroot%_libdir/libgcj.spec
+subst -p 's/-lgcjgc//g;s/-lzgcj//g;s/-lpthread//g' %buildroot%_libdir/libgcj.spec
 mv %buildroot%_libdir/libgcj.spec %buildroot%gcc_target_dir/
 %endif #with_java
 
@@ -1238,6 +1240,9 @@ EOF
 %endif #compat
 
 %changelog
+* Thu Feb 28 2013 Dmitry V. Levin <ldv@altlinux.org> 3.3.4-alt8
+- Backported upstream change to fix build with glibc-2.16.
+
 * Tue Nov 16 2010 Dmitry V. Levin <ldv@altlinux.org> 3.3.4-alt7
 - Fixed build with new perl.
 
