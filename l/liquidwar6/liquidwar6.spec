@@ -3,7 +3,7 @@ Version: 0.0.13beta
 Summary: A unique multiplayer wargame
 Summary(fr): Un "wargame" multijoueur inédit.
 Summary(de): Ein einzigartiges Kriegspiel für mehrere Spieler.
-Release: alt1.1
+Release: alt2
 License: GPL
 Group: Games/Strategy
 Source: %name-%version.tar.gz
@@ -11,7 +11,7 @@ Url: http://www.gnu.org/software/liquidwar6
 
 # Automatically added by buildreq on Wed Aug 24 2011
 # optimized out: fontconfig fontconfig-devel glib2-devel guile18 libGL-devel libGLU-devel libSDL-devel libatk-devel libcairo-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgmp-devel libgoogle-perftools libltdl7-devel libpango-devel libtinfo-devel pkg-config xz zlib-devel
-BuildRequires: glibc-devel-static guile18-devel lcov libSDL_image-devel libSDL_mixer-devel libSDL_ttf-devel libcurl-devel libexpat-devel libgoogle-perftools-devel libgtk+2-devel libjpeg-devel libncurses-devel libolpcsound-devel libpng-devel libreadline-devel libsqlite3-devel
+BuildRequires: glibc-devel-static guile18-devel lcov libSDL_image-devel libSDL_mixer-devel libSDL_ttf-devel libcurl-devel libexpat-devel libgtk+2-devel libjpeg-devel libncurses-devel libolpcsound-devel libpng-devel libreadline-devel libsqlite3-devel
 
 %description
 Liquid War 6 is a unique multiplayer wargame. Your army is a blob of
@@ -75,6 +75,9 @@ rm -rf %buildroot%prefix/libexec
 %_desktopdir/%{name}*
 
 %changelog
+* Thu Feb 28 2013 Fr. Br. George <george@altlinux.ru> 0.0.13beta-alt2
+- Rebuild without perftools
+
 * Fri Oct 05 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.13beta-alt1.1
 - Rebuilt with libpng15
 
