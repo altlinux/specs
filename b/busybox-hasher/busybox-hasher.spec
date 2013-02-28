@@ -5,7 +5,7 @@
 %define bname busybox
 Name: %bname-hasher
 Version: 1.21.0
-Release: alt1
+Release: alt2
 Summary: %bname's static utils for hasher
 License: GPLv2
 Group: System/Kernel and hardware
@@ -15,6 +15,8 @@ AutoReq: no
 BuildRequires: %bname-source = %version
 # for cpio
 BuildRequires: %bname-source >= %version-alt1
+# for 'find -execdir'
+BuildRequires: %bname-source >= %version-alt6
 %if "%__cc" == "musl-gcc"
 BuildRequires: musl-devel
 %else
@@ -85,6 +87,12 @@ config_enable \
 	FEATURE_FIND_DEPTH \
 	FEATURE_FIND_DELETE \
 	FEATURE_FIND_PATH \
+	FEATURE_FIND_MAXDEPTH \
+	FEATURE_FIND_EXEC \
+	FEATURE_FIND_EXECDIR \
+	FEATURE_FIND_TYPE \
+	FEATURE_FIND_PRINT0 \
+	FEATURE_FIND_PAREN \
 	ASH \
 	ASH_BASH_COMPAT \
 	ASH_BUILTIN_ECHO \
@@ -115,6 +123,15 @@ install -pD -m 0755 %bname %buildroot%_libexecdir/hasher/%bname
 
 
 %changelog
+* Thu Feb 28 2013 Led <led@altlinux.ru> 1.21.0-alt2
+- enabled (for mkimage):
+  + FEATURE_FIND_MAXDEPTH
+  + FEATURE_FIND_EXEC
+  + FEATURE_FIND_EXECDIR
+  + FEATURE_FIND_TYPE
+  + FEATURE_FIND_PRINT0
+  + FEATURE_FIND_PAREN
+
 * Sun Jan 27 2013 Led <led@altlinux.ru> 1.21.0-alt1
 - 1.21.0
 
