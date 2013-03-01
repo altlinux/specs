@@ -21,7 +21,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.0.67
-Release: alt1
+Release: alt2
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -123,7 +123,7 @@ Release: alt1
 
 %def_disable debug_section_mismatch
 
-%define allocator SLAB
+#define allocator SLAB
 
 %Extra_modules vboxhost 4.2.6
 #Extra_modules vboxguest 4.2.6
@@ -225,7 +225,7 @@ Patch0111: linux-%kernel_branch.42-fix-drivers-bluetooth--ath3k.patch
 Patch0121: linux-%kernel_branch.43-fix-drivers-char--con3215.patch
 Patch0122: linux-%kernel_branch.42-fix-drivers-char--lp.patch
 Patch0123: linux-%kernel_branch.42-fix-drivers-char--mem.patch
-Patch0124: linux-%kernel_branch.43-fix-drivers-char--random.patch
+Patch0124: linux-%kernel_branch.67-fix-drivers-char--random.patch
 Patch0125: linux-%kernel_branch.43-fix-drivers-char--raw3270.patch
 Patch0126: linux-%kernel_branch.43-fix-drivers-char--sclp_async.patch
 Patch0127: linux-%kernel_branch.43-fix-drivers-char--tape.patch
@@ -524,7 +524,7 @@ Patch0651: linux-%kernel_branch.58-fix-drivers-tty--pty.patch
 Patch0652: linux-%kernel_branch.42-fix-drivers-tty-serial--8250.patch
 Patch0653: linux-%kernel_branch.42-fix-drivers-tty-serial--8250_pci.patch
 
-Patch0660: linux-%kernel_branch.61-fix-drivers-usb.patch
+Patch0660: linux-%kernel_branch.67-fix-drivers-usb.patch
 Patch0661: linux-%kernel_branch.42-fix-drivers-usb-atm--ueagle-atm.patch
 Patch0662: linux-%kernel_branch.66-fix-drivers-usb-class--cdc-wdm.patch
 Patch0663: linux-%kernel_branch.61-fix-drivers-usb-core.patch
@@ -839,7 +839,7 @@ ExclusiveArch: %x86_64 %ix86
 
 %{?_enable_debug:%set_enable debugfs}
 
-%{!?allocator:%define allocator SLAB}
+%{!?allocator:#define allocator SLUB}
 
 %ifarch %x86_64
 %define kernel_base_cpu	GENERIC_CPU
@@ -2366,7 +2366,7 @@ config_enable \
 	%{?_enable_nfs_swap:NFS_SWAP} \
 	%{?_enable_lnfs:NFS_V4_SECURITY_LABEL NFSD_V4_SECURITY_LABEL} \
 	%{?_enable_kallsyms:KALLSYMS} \
-	%allocator
+	%{?allocator:%allocator}
 
 # arch-specific disables
 %ifarch corei7 nehalem
@@ -3085,6 +3085,13 @@ done)
 
 
 %changelog
+* Fri Mar 01 2013 Led <led@altlinux.ru> 3.0.67-alt2
+- updated:
+  + fix-drivers-char--random
+  + fix-drivers-usb
+  + feat-mm--slqb
+- build with default (SLUB) allocator
+
 * Fri Mar 01 2013 Led <led@altlinux.ru> 3.0.67-alt1
 - 3.0.67
 - removed:
