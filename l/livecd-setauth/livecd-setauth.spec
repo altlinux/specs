@@ -1,6 +1,6 @@
 Name: livecd-setauth
 Version: 0.6
-Release: alt1
+Release: alt2
 
 Summary: Setup krb5 and cifs homes in livecd
 License: GPL
@@ -29,6 +29,9 @@ install -pD -m0755 livecd-setauth/livecd-setauth %buildroot%_initdir/livecd-seta
 
 
 %changelog
+* Fri Mar 01 2013 Mikhail Efremov <sem@altlinux.org> 0.6-alt2
+- Fix in_language for read_zone.
+
 * Fri Mar 01 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.6-alt1
 - set time zone from language
 - set multicast on et* and en*
