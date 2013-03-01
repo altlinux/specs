@@ -2,7 +2,7 @@
 
 Name: perl-Coro
 Version: 6.23
-Release: alt1
+Release: alt2
 
 Summary: cooperative multitasking Perl module
 
@@ -39,6 +39,9 @@ in Perl.
 cp -p Coro/libcoro/LICENSE LICENSE.libcoro
 
 %build
+%ifarch %arm
+export CORO_INTERFACE=u
+%endif
 %perl_vendor_build
 
 %install
@@ -50,6 +53,9 @@ cp -p Coro/libcoro/LICENSE LICENSE.libcoro
 %perl_vendor_autolib/Coro
 
 %changelog
+* Fri Mar 01 2013 Sergey Bolshakov <sbolshakov@altlinux.ru> 6.23-alt2
+- explicitly select ucontext method on arm
+
 * Mon Jan 07 2013 Nikolay A. Fetisov <naf@altlinux.ru> 6.23-alt1
 - New version
 
