@@ -4,13 +4,17 @@
 %ifarch arm
 %define platform armv5te-linux-gcc
 %else
+%ifarch armh
+%define platform armv7-linux-gcc
+%else
 %define platform %_arch-linux-gcc
+%endif
 %endif
 %endif
 
 Name: libvpx
 Version: 1.2.0
-Release: alt1
+Release: alt2
 Summary: VP8 video codec
 Group: Video
 License: BSD
@@ -43,9 +47,12 @@ develop programs which make use of %name
 %prep
 %setup -q
 %patch -p1
+%ifarch armh
+sed -i -e 's,softfp,hard,' build/make/configure.sh
+%endif
 
 %build
-%ifarch %ix86 x86_64
+%ifarch %ix86 x86_64 %arm
 export CFLAGS="$RPM_OPT_FLAGS -fPIC"
 %endif
 ./configure \
@@ -69,6 +76,9 @@ export CFLAGS="$RPM_OPT_FLAGS -fPIC"
 %_pkgconfigdir/*.pc
 
 %changelog
+* Fri Mar 01 2013 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.2.0-alt2
+- fixed build on armh
+
 * Fri Jan 11 2013 Valery Inozemtsev <shrek@altlinux.ru> 1.2.0-alt1
 - 1.2.0
 
