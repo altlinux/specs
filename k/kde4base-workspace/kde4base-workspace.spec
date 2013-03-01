@@ -27,7 +27,7 @@
 %define rname kdebase-workspace
 Name: kde4base-workspace
 Version: %major.%minor.%bugfix
-Release: alt5
+Release: alt7
 
 Group: Graphical desktop/KDE
 Summary: K Desktop Environment - Workspace
@@ -955,6 +955,12 @@ chmod 0755 %buildroot/%_sysconfdir/firsttime.d/kdm4
 %_K4dbus_interfaces/*
 
 %changelog
+* Fri Mar 01 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.0-alt7
+- update from 4.10 branch
+
+* Mon Feb 25 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.0-alt6
+- fix to process /usr/share/kde4/env path
+
 * Fri Feb 22 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.0-alt5
 - increase default window buttons size
 - increase default oxygen scrollbar width
