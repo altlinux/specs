@@ -1,4 +1,5 @@
 # BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
 BuildRequires: gcc-c++ unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
@@ -38,7 +39,7 @@ BuildRequires: jpackage-compat
 
 Name:          gradle
 Version:       1.0
-Release:       alt1_7%(echo  | tr - . )jpp7
+Release:       alt1_8%(echo  | tr - . )jpp7
 Summary:       Groovy based build system
 Group:         Development/Java
 License:       ASL 2.0
@@ -435,12 +436,12 @@ mkdir -p gradlehome
      install -pm 644 lib/%{name}-launcher-%{namedversion}.jar %{buildroot}%{_datadir}/%{name}/lib/%{name}-launcher-%{namedversion}.jar
 
      for m in base-services cli core native open-api tooling-api ui wrapper; do
-       install -pm 644 dist/lib/%{name}-${m}-%{namedversion}.jar %{buildroot}%{_javadir}/%{name}/%{name}-${m}.jar
+       install -pm 644 lib/%{name}-${m}-%{namedversion}.jar %{buildroot}%{_javadir}/%{name}/%{name}-${m}.jar
        ln -sf %{_javadir}/%{name}/%{name}-${m}.jar %{buildroot}%{_datadir}/%{name}/lib/%{name}-${m}-%{namedversion}.jar
      done
 
      for m in announce antlr code-quality core-impl cpp ear ide osgi plugins scala; do
-       install -pm 644 dist/lib/plugins/%{name}-${m}-%{namedversion}.jar %{buildroot}%{_javadir}/%{name}/%{name}-${m}.jar
+       install -pm 644 lib/plugins/%{name}-${m}-%{namedversion}.jar %{buildroot}%{_javadir}/%{name}/%{name}-${m}.jar
        ln -sf %{_javadir}/%{name}/%{name}-${m}.jar %{buildroot}%{_datadir}/%{name}/lib/plugins/%{name}-${m}-%{namedversion}.jar
      done
      cp -p LICENSE ../../
@@ -556,6 +557,9 @@ desktop-file-install --vendor="" \
 %doc LICENSE NOTICE
 
 %changelog
+* Mon Feb 25 2013 Igor Vlasenko <viy@altlinux.ru> 1.0-alt1_8%(echo  | tr - . )jpp7
+- fc update
+
 * Tue Oct 09 2012 Igor Vlasenko <viy@altlinux.ru> 1.0-alt1_7%(echo  | tr - . )jpp7
 - new version
 
