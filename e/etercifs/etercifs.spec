@@ -37,10 +37,11 @@
 %define src_3_5_version 1.78
 %define src_3_6_version 1.78
 %define src_3_7_version 2.0
+%define src_3_8_version 2.0
 
 Name: etercifs
-Version: 5.4.5
-Release: alt2
+Version: 5.4.6
+Release: alt1
 
 Summary: Advanced Common Internet File System for Linux with Etersoft extension
 
@@ -86,6 +87,7 @@ Source44: %src_package_name-3.4-%src_3_4_version.tar.bz2
 Source45: %src_package_name-3.5-%src_3_5_version.tar.bz2
 Source46: %src_package_name-3.6-%src_3_6_version.tar.bz2
 Source47: %src_package_name-3.7-%src_3_7_version.tar.bz2
+Source48: %src_package_name-3.8-%src_3_8_version.tar.bz2
 Source60: %src_package_name-centos60-%src_centos60_version.tar.bz2
 
 Conflicts: linux-cifs
@@ -114,6 +116,7 @@ Provides: %src_package_name-3.4 = %version-%release
 Provides: %src_package_name-3.5 = %version-%release
 Provides: %src_package_name-3.6 = %version-%release
 Provides: %src_package_name-3.7 = %version-%release
+Provides: %src_package_name-3.8 = %version-%release
 
 Obsoletes: %src_package_name-2.6.24
 Obsoletes: %src_package_name-2.6.25
@@ -121,6 +124,8 @@ Obsoletes: %src_package_name-2.6.26
 Obsoletes: %src_package_name-2.6.27
 Obsoletes: %src_package_name-2.6.28
 Obsoletes: %src_package_name-2.6.29
+Obsoletes: %src_package_name-2.6.30
+Obsoletes: %src_package_name-2.6.31
 
 BuildRequires: rpm-build-intro
 
@@ -243,6 +248,7 @@ cp %SOURCE44 %buildroot/%etercifs_src/
 cp %SOURCE45 %buildroot/%etercifs_src/
 cp %SOURCE46 %buildroot/%etercifs_src/
 cp %SOURCE47 %buildroot/%etercifs_src/
+cp %SOURCE48 %buildroot/%etercifs_src/
 
 # CentOS 6.x
 cp %SOURCE60 %buildroot/%etercifs_src/
@@ -305,6 +311,8 @@ ln -s ../../../../%etercifs_src/%src_package_name-3.6-%src_3_6_version.tar.bz2 \
     %buildroot%_usrsrc/kernel/sources/%src_package_name-3.6-%version.tar.bz2
 ln -s ../../../../%etercifs_src/%src_package_name-3.7-%src_3_7_version.tar.bz2 \
     %buildroot%_usrsrc/kernel/sources/%src_package_name-3.7-%version.tar.bz2
+ln -s ../../../../%etercifs_src/%src_package_name-3.8-%src_3_8_version.tar.bz2 \
+    %buildroot%_usrsrc/kernel/sources/%src_package_name-3.8-%version.tar.bz2
 
 # Special case for Fedora 15 v2.6.4x.* kernels
 ln -s ../../../../%etercifs_src/%src_package_name-3.0-%src_3_0_version.tar.bz2 \
@@ -332,6 +340,14 @@ ln -s ../../../../%etercifs_src/%src_package_name-3.3-%src_3_3_version.tar.bz2 \
 %_usrsrc/kernel/sources/%src_package_name-*-%version.tar.bz2
 
 %changelog
+* Fri Mar 01 2013 Pavel Shilovsky <piastry@altlinux.org> 5.4.6-alt1
+- Add sources for 3.8 (v3.8.1)
+- Update 3.7 sources from stable (v3.7.10)
+- Update 3.4 sources from stable (v3.4.34)
+- Update 3.2 sources from stable (v3.2.39)
+- Update 3.0 sources from stable (v3.0.67)
+- Update 2.6.34 sources from stable (v2.6.34.14)
+
 * Thu Dec 13 2012 Pavel Shilovsky <piastry@altlinux.org> 5.4.5-alt2
 - Add condstop support to etercifs init script
 
