@@ -5,16 +5,15 @@
 %define soversion %{MAJOR_VERSION}
 Name: v8
 Version: %MAJOR_VERSION.%MINOR_VERSION.%BUILD_NUMBER.%PATCH_LEVEL
-Release: alt1
+Release: alt2
 
 Summary: V8 is Google's open source JavaScript engine.
 License: BSD
 Group: System/Libraries
 Url: http://code.google.com/p/v8
 
-%set_gcc_version 4.5
 Source: %name-%version.tar
-BuildPreReq: gcc4.5-c++ gyp
+BuildPreReq: gcc-c++ gyp
 
 %description
 V8 is Google's open source JavaScript engine. V8 is written in C++ and is used
@@ -44,6 +43,10 @@ Development headers and libraries for V8.
 %setup -q
 sed -i 's|build/gyp/gyp|gyp|g' Makefile
 sed -i "s|'-Wno-unused-but-set-variable'||g" SConstruct
+%ifarch armh
+sed -i '/default.\+softfp/ s,softfp,hard,' SConstruct
+sed -i '/v8_use_arm_eabi_hardfloat%/ s,false,true,' build/common.gypi
+%endif
 #sed -i '/^#define SONAME/s,"","libv8.so.%soversion",' src/version.cc
 
 %build
@@ -67,6 +70,9 @@ install -p -m644 include/*.h %buildroot%_includedir/
 %_libdir/*.so
 
 %changelog
+* Fri Mar 01 2013 Sergey Bolshakov <sbolshakov@altlinux.ru> 3.15.11.10-alt2
+- built for arm
+
 * Sat Jan 19 2013 Dmitriy Kulik <lnkvisitor@altlinux.org> 3.15.11.10-alt1
 - 3.15.11.10 (Closes: #28346)
   + High CVE-2012-5153: Out-of-bounds stack access in v8.
