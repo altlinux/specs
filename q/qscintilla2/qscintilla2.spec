@@ -1,12 +1,12 @@
 %def_with python
 %def_without python-qt3
 %def_without qt3
-%def_with python3
+%def_without python3
 
 Summary: QScintilla is a port to Qt of Neil Hodgson's Scintilla C++ editor class
 Name: qscintilla2
 Version: 2.7
-Release: alt2
+Release: alt3
 License: GPL
 Group: Development/KDE and QT
 Source: qscintilla-gpl-%version.tar.gz
@@ -422,6 +422,9 @@ cp -a doc/html-Qt4Qt5 %buildroot%_docdir/%libname-%version
 %_docdir/%libname-%version
 
 %changelog
+* Fri Mar 01 2013 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.7-alt3
+- rebuilt without python3
+
 * Thu Dec 20 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.7-alt2
 - Rebuilt with updates python-module-sip
 
