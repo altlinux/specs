@@ -4,8 +4,8 @@
 %define develname libqtgtl-devel
 
 Name: libqtgtl
-Version: 0.9.1
-Release: alt3
+Version: 0.9.2
+Release: alt1
 
 Group: System/Libraries
 Summary: Open Graphics Transformation Languages
@@ -20,6 +20,7 @@ Patch1: libQtGTL-0.9.1-alt-fix-linking.patch
 # Automatically added by buildreq on Thu Jan 20 2011 (-bb)
 #BuildRequires: cmake gcc-c++ libopengtl-devel libqt3-devel qt4-designer
 BuildRequires: cmake gcc-c++ libopengtl-devel libqt4-devel
+BuildRequires: kde-common-devel
 
 %description
 Qt bindings for Graphics Transformation Languages (GTL)
@@ -43,19 +44,15 @@ based on libQtGTL.
 
 %prep
 %setup -q -n %rname-%version
-%patch1 -p1
+#%patch1 -p1
 
 %build
-%cmake
-pushd BUILD
-%make VERBOSE=1
-popd
+%Kcmake
+%Kmake
 
 
 %install
-pushd BUILD
-%make install DESTDIR=%buildroot
-popd
+%Kinstall
 
 
 %files -n %libname
@@ -68,6 +65,9 @@ popd
 %_libdir/pkgconfig/*.pc
 
 %changelog
+* Wed Feb 27 2013 Sergey V Turchin <zerg@altlinux.org> 0.9.2-alt1
+- new version
+
 * Thu Jun 14 2012 Sergey V Turchin <zerg@altlinux.org> 0.9.1-alt3
 - fix to build with gcc-4.6
 

@@ -1,51 +1,50 @@
 Name: pure
-Summary: PURE - The Pure programming language
-License: GPL
-Version: 0.55
+Version: 0.57
 Release: alt1
+
+Summary: A term-rewriting functional programming language
+License: GPLv3+
 Group: Development/Functional
-Url: http://pure-lang.googlecode.com/
-Source0: http://pure-lang.googlecode.com/files/%name-%version.tar.gz
-Source90: %name-rpmlintrc
+Url: http://purelang.bitbucket.org
+# https://bitbucket.org/purelang/pure-lang/downloads/%name-%version.tar.gz
+Source: %name-%version.tar
 
 #Requires: pure-doc
 #Requires:		web_browser
 #Requires: w3m
 
+Requires: libpure = %version-%release
+
 # Automatically added by buildreq on Sat Mar 28 2009
-BuildRequires: gcc-c++ libelf-devel libgmp-devel libgsl-devel libreadline-devel llvm-devel libmpfr-devel
+BuildRequires: gcc-c++ flex libelf-devel libffi-devel libgmp-devel libgsl-devel libreadline-devel libmpfr-devel llvm-devel
 
 %description
 Pure is a functional programming language based on term rewriting.
 It has a modern syntax featuring curried function applications,
 lexical closures and equational definitions with pattern matching,
 and thus is somewhat similar to languages of the Haskell and ML
-variety. But Pure is also a very dynamic and reflective language,
-and is more like Lisp in this respect. The interpreter has an LLVM
-backend to do JIT compilation, hence programs run blazingly fast
-and interfacing to C modules is easy.
-
-Author: Albert Graef <Dr.Graef@t-online.de>
+variety.  But Pure is also a very dynamic and reflective language,
+and is more like Lisp in this respect.  The interpreter has an
+LLVM backend to do JIT compilation, hence programs run blazingly
+fast and interfacing to C modules is easy.
 
 %package -n libpure
 Summary: Shared libraries for PURE
+License: LGPLv3+
 Group: System/Libraries
 
 %description -n libpure
 Shared libraries for PURE.
 
-Author: Albert Graef <Dr.Graef@t-online.de>
-
 %package -n libpure-devel
-Summary: Include Files and Libraries mandatory for Development
+Summary: Include Files and libraries mandatory for development
 Group: Development/C++
-Requires: libpure = %version
+License: LGPLv3+
+Requires: libpure = %version-%release
 
 %description -n libpure-devel
 This package contains all necessary include files and libraries
 needed to develop applications that require these.
-
-Author: Albert Graef <Dr.Graef@t-online.de>
 
 #%package complete
 #Summary: Virtual package to install pure and all its components
@@ -65,60 +64,52 @@ Author: Albert Graef <Dr.Graef@t-online.de>
 %package examples
 Summary: Some examples for pure
 Group: Development/Functional
-Requires: pure
+License: GPLv3+
+Requires: pure = %version-%release
+BuildArch: noarch
 
 %description examples
-Some examples for package pure.
+This package contains examples for programming in pure.
 
 %prep
-%setup -q -n %name-%version
+%setup -n %name-%version
 
 %build
-export LIBS=-ldl
-%configure --enable-release --disable-rpath --enable-versioned
-
-%make_build \
-	CXXFLAGS="$RPM_OPT_FLAGS -fPIC" \
-	CPPFLAGS="$RPM_OPT_FLAGS -fPIC" \
-	LDFLAGS="$RPM_OPT_FLAGS -fPIC" \
-	shared="-shared -fPIC"
+%configure
+%make_build PIC='%optflags_shared'
 
 %install
-make install DESTDIR=%buildroot
-rm -f %buildroot%_pkgconfigdir/%name.pc
-mv %buildroot%_pkgconfigdir/%name-%version.pc %buildroot%_pkgconfigdir/%name.pc
+%makeinstall_std
 
 %check
 make check
 
 %files
-%doc COPYING ChangeLog NEWS README
+%_bindir/pure
+%_libdir/pure/
+%exclude %_libdir/pure/*.?
+%_man1dir/*
+%doc NEWS README TODO
 # TODO: etc/* are separate packages for vim, emacs, gedit, kate and libhighlight
 %doc etc
-%_man1dir/*
-%_bindir/%{name}*
-%_libdir/%name
-%dir %_libdir/%name-%version
-%_libdir/%name-%version/*.????
 
 %files -n libpure
 %_libdir/*.so.*
 
 %files -n libpure-devel
-%_includedir/%name
+%_includedir/*
 %_libdir/*.so
-%_libdir/%name-%version/*.?
-%dir %_includedir/%name-%version
-%_includedir/%name-%version/runtime.h
+%dir %_libdir/pure/
+%_libdir/pure/*.?
 %_pkgconfigdir/%name.pc
-
-#%files complete
-#%doc COPYING ChangeLog NEWS README
 
 %files examples
 %doc examples
 
 %changelog
+* Thu Feb 28 2013 Dmitry V. Levin <ldv@altlinux.org> 0.57-alt1
+- Updated to 0.57.
+
 * Tue Jul 10 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 0.55-alt1
 - Version up
 
