@@ -1,7 +1,7 @@
 
 Name: libminisat
 Version: 2.2.0
-Release: alt2
+Release: alt4
 
 Packager: Michael Pozhidaev <msp@altlinux.ru>
 License: BSD style
@@ -57,6 +57,13 @@ make DESTDIR=%buildroot install
 %_libdir/%name.a
 
 %changelog
+* Fri Mar 01 2013 Michael Pozhidaev <msp@altlinux.ru> 2.2.0-alt4
+- Proper collisions support
+- Assumptions support is removed
+
+* Sat Jan 19 2013 Michael Pozhidaev <msp@altlinux.ru> 2.2.0-alt3
+- Conflicts analyzing is added
+
 * Sat Dec 22 2012 Michael Pozhidaev <msp@altlinux.ru> 2.2.0-alt2
 - Variable value assumption support added
 
