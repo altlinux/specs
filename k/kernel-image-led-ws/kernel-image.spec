@@ -20,13 +20,13 @@
 %define flavour %base_flavour-%sub_flavour
 
 Name: kernel-image-%flavour
-Version: 3.0.66
-Release: alt7
+Version: 3.0.67
+Release: alt1
 
 %define kernel_req %nil
 %define kernel_prov %nil
 %define kernel_branch 3.0
-%define kernel_stable_version 66
+%define kernel_stable_version 67
 %define kernel_extra_version .%kernel_stable_version
 #define kernel_extra_version %nil
 
@@ -180,7 +180,8 @@ Patch0031: linux-%kernel_branch.42-fix-block--blk-integrity.patch
 Patch0032: linux-%kernel_branch.42-fix-block--blk-throttle.patch
 Patch0033: linux-%kernel_branch.42-fix-block--cfq-iosched.patch
 
-Patch0050: linux-%kernel_branch.42-fix-drivers--connector.patch
+Patch0051: linux-%kernel_branch.42-fix-drivers--connector.patch
+Patch0052: linux-%kernel_branch.67-fix-drivers--dca.patch
 
 Patch0060: linux-%kernel_branch.61-fix-drivers-acpi.patch
 Patch0061: linux-%kernel_branch.42-fix-drivers-acpi--battery.patch
@@ -310,7 +311,7 @@ Patch0262: linux-%kernel_branch.56-fix-drivers-hid--hid-microsoft.patch
 Patch0263: linux-%kernel_branch.56-fix-drivers-hid--hid-uclogic.patch
 Patch0264: linux-%kernel_branch.42-fix-drivers-hid--usbhid.patch
 
-Patch0270: linux-%kernel_branch.61-fix-drivers-hv.patch
+Patch0270: linux-%kernel_branch.67-fix-drivers-hv.patch
 
 Patch0281: linux-%kernel_branch.43-fix-drivers-hwmon--abituguru.patch
 Patch0282: linux-%kernel_branch.43-fix-drivers-hwmon--applesmc.patch
@@ -369,9 +370,10 @@ Patch0393: linux-%kernel_branch.57-fix-drivers-media-video-gspca--pac7302.patch
 
 Patch0401: linux-%kernel_branch.42-fix-drivers-message-fusion.patch
 
-Patch0411: linux-%kernel_branch.63-fix-drivers-mfd--ab8500-core.patch
-Patch0412: linux-%kernel_branch.62-fix-drivers-mfd--lpc_sch.patch
-Patch0413: linux-%kernel_branch.63-fix-drivers-mfd--twl4030-core.patch
+Patch0411: linux-%kernel_branch.66-fix-drivers-mfd--ab3550-core.patch
+Patch0412: linux-%kernel_branch.63-fix-drivers-mfd--ab8500-core.patch
+Patch0413: linux-%kernel_branch.62-fix-drivers-mfd--lpc_sch.patch
+Patch0414: linux-%kernel_branch.63-fix-drivers-mfd--twl4030-core.patch
 
 Patch0421: linux-%kernel_branch.50-fix-drivers-misc--hpilo.patch
 Patch0422: linux-%kernel_branch.42-fix-drivers-misc--rts_pstor.patch
@@ -500,7 +502,7 @@ Patch0613: linux-%kernel_branch.42-fix-drivers-scsi--sr_mod.patch
 Patch0614: linux-%kernel_branch.62-fix-drivers-scsi--st.patch
 Patch0615: linux-%kernel_branch.51-fix-drivers-scsi--zfcp.patch
 Patch0616: linux-%kernel_branch.43-fix-drivers-scsi-cxgbi--cxgb3i.patch
-Patch0617: linux-%kernel_branch.43-fix-drivers-scsi-cxgbi--cxgb4i.patch
+Patch0617: linux-%kernel_branch.66-fix-drivers-scsi-cxgbi--cxgb4i.patch
 Patch0618: linux-%kernel_branch.43-fix-drivers-scsi-cxgbi--libcxgbi.patch
 Patch0619: linux-%kernel_branch.42-fix-drivers-scsi-device_handler--scsi_dh.patch
 Patch0620: linux-%kernel_branch.45-fix-drivers-scsi-device_handler--scsi_dh_alua.patch
@@ -565,7 +567,7 @@ Patch0729: linux-%kernel_branch.62-fix-fs-cifs.patch
 Patch0730: linux-%kernel_branch.42-fix-fs-dlm.patch
 Patch0731: linux-%kernel_branch.42-fix-fs-ecryptfs.patch
 Patch0732: linux-%kernel_branch.42-fix-fs-ext3.patch
-Patch0733: linux-%kernel_branch.66-fix-fs-ext4.patch
+Patch0733: linux-%kernel_branch.67-fix-fs-ext4.patch
 Patch0734: linux-%kernel_branch.56-fix-fs-fat.patch
 Patch0735: linux-%kernel_branch.42-fix-fs-hfs.patch
 Patch0736: linux-%kernel_branch.54-fix-fs-jbd.patch
@@ -589,7 +591,7 @@ Patch0761: linux-%kernel_branch.42-fix-init--calibrate.patch
 
 Patch0771: linux-%kernel_branch.42-fix-ipc--mqueue.patch
 
-Patch0780: linux-%kernel_branch.65-fix-kernel.patch
+Patch0780: linux-%kernel_branch.67-fix-kernel.patch
 Patch0781: linux-%kernel_branch.42-fix-kernel--cgroup.patch
 Patch0782: linux-%kernel_branch.42-fix-kernel--cgroup_freezer.patch
 Patch0783: linux-%kernel_branch.49-fix-kernel--events.patch
@@ -604,7 +606,7 @@ Patch0790: linux-%kernel_branch.57-fix-lib.patch
 Patch0791: linux-%kernel_branch.62-fix-lib--btree.patch
 Patch0792: linux-%kernel_branch.42-fix-lib--genalloc.patch
 
-Patch0800: linux-%kernel_branch.66-fix-mm.patch
+Patch0800: linux-%kernel_branch.67-fix-mm.patch
 Patch0801: linux-%kernel_branch.58-fix-mm--compaction.patch
 Patch0802: linux-%kernel_branch.62-fix-mm--huge_memory.patch
 Patch0803: linux-%kernel_branch.43-fix-mm--hugetlb.patch
@@ -612,12 +614,11 @@ Patch0804: linux-%kernel_branch.44-fix-mm--memcontrol.patch
 Patch0805: linux-%kernel_branch.42-fix-mm--memory-failure.patch
 Patch0806: linux-%kernel_branch.51-fix-mm--memory_hotplug.patch
 Patch0807: linux-%kernel_branch.59-fix-mm--mmu.patch
-Patch0808: linux-%kernel_branch.65-fix-mm--mmu_notifier.patch
-Patch0809: linux-%kernel_branch.46-fix-mm--numa.patch
-Patch0810: linux-%kernel_branch.42-fix-mm--slab.patch
-Patch0811: linux-%kernel_branch.42-fix-mm--slub.patch
-Patch0812: linux-%kernel_branch.58-fix-mm--swap.patch
-Patch0813: linux-%kernel_branch.42-fix-mm--zcache.patch
+Patch0808: linux-%kernel_branch.46-fix-mm--numa.patch
+Patch0809: linux-%kernel_branch.42-fix-mm--slab.patch
+Patch0810: linux-%kernel_branch.42-fix-mm--slub.patch
+Patch0811: linux-%kernel_branch.58-fix-mm--swap.patch
+Patch0812: linux-%kernel_branch.42-fix-mm--zcache.patch
 
 Patch0820: linux-%kernel_branch.51-fix-net.patch
 Patch0821: linux-%kernel_branch.42-fix-net--batman-adv.patch
@@ -677,7 +678,7 @@ Patch0888: linux-%kernel_branch.42-fix-sound-usb-misc--snd-ua101.patch
 Patch0891: linux-%kernel_branch.49-fix-tools--perf.patch
 Patch0892: linux-%kernel_branch.47-fix-tools-firewire--nosy-dump.patch
 
-Patch0901: linux-%kernel_branch.58-fix-virt-kvm.patch
+Patch0901: linux-%kernel_branch.67-fix-virt-kvm.patch
 Patch0902: linux-%kernel_branch.43-fix-virt-kvm--kvm-amd.patch
 Patch0903: linux-%kernel_branch.43-fix-virt-kvm--kvm-intel.patch
 
@@ -1513,7 +1514,8 @@ cd linux-%version
 #fix-crypto--*
 
 # fix-drivers--*
-%patch0050 -p1
+%patch0051 -p1
+%patch0052 -p1
 
 # fix-drivers-acpi*
 %patch0060 -p1
@@ -1731,6 +1733,7 @@ cd linux-%version
 %patch0411 -p1
 %patch0412 -p1
 %patch0413 -p1
+%patch0414 -p1
 
 # fix-drivers-misc-*
 %patch0421 -p1
@@ -1994,7 +1997,6 @@ cd linux-%version
 %patch0810 -p1
 %patch0811 -p1
 %patch0812 -p1
-%patch0813 -p1
 
 # fix-net*
 %patch0820 -p1
@@ -2287,7 +2289,7 @@ config_disable \
 config_disable \
 	%{?_disable_smp:SMP} \
 	%{?_disable_modversions:MODVERSIONS} \
-	%{?_disable_compat:SYSCTL_SYSCALL ACPI_PROC_EVENT COMPAT_VDSO I2C_COMPAT} \
+	%{?_disable_compat:SYSCTL_SYSCALL ACPI_PROC_EVENT COMPAT_VDSO I2C_COMPAT PROC_PID_CPUSET SYSFS_DEPRECATED} \
 	%{?_disable_numa:NUMA} \
 	%{?_disable_video:FB DISPLAY_SUPPORT VIDEO_OUTPUT_CONTROL BACKLIGHT_LCD_SUPPORT} \
 	%{?_disable_drm:DRM} \
@@ -3083,6 +3085,25 @@ done)
 
 
 %changelog
+* Fri Mar 01 2013 Led <led@altlinux.ru> 3.0.67-alt1
+- 3.0.67
+- removed:
+  + fix-mm--mmu_notifier
+- updated:
+  + fix-drivers-hv
+  + fix-drivers-scsi-cxgbi--cxgb4i
+  + fix-fs-ext4
+  + fix-kernel
+  + fix-mm
+  + fix-virt-kvm
+- added:
+  + fix-drivers--dca
+  + fix-drivers-mfd--ab3550-core
+- decreased RCU_FANOUT
+- disabled:
+  + PROC_PID_CPUSET
+  + CGROUP_PERF
+
 * Thu Feb 28 2013 Led <led@altlinux.ru> 3.0.66-alt7
 - added:
   + fix-net-sunrpc--xprtrdma
@@ -3096,7 +3117,6 @@ done)
 * Wed Feb 27 2013 Led <led@altlinux.ru> 3.0.66-alt5
 - disabled:
   + FONT_MINI_4x6
-  + FRAMEBUFFER_CONSOLE_DETECT_PRIMARY
   + PROC_PAGE_MONITOR
   + PM_DEVFREQ
   + SGI_PARTITION
