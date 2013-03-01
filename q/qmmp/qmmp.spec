@@ -1,5 +1,5 @@
 %define branch 0.7
-%define svn svn3255
+%define svn svn3290
 
 Version: %branch.0
 Epoch: 1
@@ -521,6 +521,14 @@ Requires: qmmp = %version-%release
 %description -n %name-streambrowser
 This Qmmp plugin allows to add stream from IceCast stream directory
 
+%package -n %name-copypaste
+Summary: Qmmp Copy/Paste Plugin
+Group: Sound
+Requires: qmmp = %version-%release
+
+%description -n %name-copypaste
+This plugin allows to copy selected tracks from one playlist to another
+
 %package -n %name-trackchange
 Summary: Qmmp Track Change Plugin
 Group: Sound
@@ -553,7 +561,7 @@ Requires: qmmp-eff-bs2b qmmp-vis-projectm qmmp-fileops qmmp-converter
 Requires: qmmp-out-jack qmmp-out-oss qmmp-out-null qmmp-http qmmp-mms
 Requires: qmmp-kdenotify qmmp-eff-ladspa qmmp-covermanager
 Requires: qmmp-eff-crossfade qmmp-udisks qmmp-in-gme qmmp-eff-extrastereo
-Requires: qmmp-streambrowser qmmp-trackchange
+Requires: qmmp-streambrowser qmmp-trackchange qmmp-copypaste
 
 %description -n %name-full
 Virtual package for full installation Qmmp (exclude %name-devel).
@@ -743,6 +751,9 @@ mkdir -p %buildroot/{%_miconsdir,%_niconsdir,%_liconsdir}
 %files -n %name-trackchange
 %_libdir/%name/General/libtrackchange*
 
+%files -n %name-copypaste
+%_libdir/%name/General/libcopypaste*
+
 %files -n lib%name-devel
 %dir %_includedir/%name
 %dir %_includedir/%{name}ui
@@ -757,6 +768,9 @@ mkdir -p %buildroot/{%_miconsdir,%_niconsdir,%_liconsdir}
 %files -n %name-full
 
 %changelog
+* Fri Mar 01 2013 Motsyo Gennadi <drool@altlinux.ru> 1:0.7.0-alt2.svn3290
+- 0.7.0 svn3290 version
+
 * Thu Feb 14 2013 Motsyo Gennadi <drool@altlinux.ru> 1:0.7.0-alt2.svn3255
 - 0.7.0 svn3255 version
 
