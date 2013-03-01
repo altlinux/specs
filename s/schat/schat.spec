@@ -2,7 +2,7 @@
 %define		privgroup schat
 %define		privpath  /var/empty
 
-%define		svn 3531
+%define		svn 3539
 
 Name:		schat
 Version:	0.8.6
@@ -104,6 +104,9 @@ service %{name}d condstop
 %dir %attr(2770,root,%privgroup) %_localstatedir/%name
 
 %changelog
+* Fri Mar 01 2013 Motsyo Gennadi <drool@altlinux.ru> 0.8.6-alt1.svn3539
+- 0.8.6.3539
+
 * Wed Feb 27 2013 Motsyo Gennadi <drool@altlinux.ru> 0.8.6-alt1.svn3531
 - 0.8.6.3531
 
