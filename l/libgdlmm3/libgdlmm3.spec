@@ -1,21 +1,27 @@
 %define _name gdlmm
-%define ver_major 3.3
+%define ver_major 3.7
 %define api_ver 3.0
+%def_disable snapshot
+%def_enable doc
+%if_enabled snapshot
+%def_disable doc
+%endif
 
 Name: lib%{_name}3
-Version: %ver_major.2
-Release: alt3
+Version: %ver_major.3
+Release: alt1
 
 Summary: C++ bindings for the gdl library
 Group: System/Libraries
 License: LGPLv2+
 Url: http://www.gtkmm.org/
 
-Source: %_name-%version.tar
-#Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
+#Source: %_name-%version.tar
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
 
-BuildRequires: gcc-c++ mm-common libglibmm-devel libgtkmm3-devel libgdl3-devel >= 3.6.0
-BuildRequires: perl-XML-Parser xsltproc doxygen graphviz
+BuildRequires: gcc-c++ mm-common libglibmm-devel libgtkmm3-devel libgdl3-devel >= 3.7.0
+BuildRequires: perl-XML-Parser
+%{?_enable_snapshot:BuildRequires: xsltproc doxygen graphviz}
 
 %description
 This package contains C++ bindings for the GNOME Development/Docking
@@ -43,9 +49,11 @@ This package contains the API documentation for %_name.
 %setup -n %_name-%version
 
 %build
-mm-common-prepare
+%{?_enable_snapshot:mm-common-prepare -f}
 %autoreconf
-%configure --enable-maintainer-mode
+%configure \
+%{?_enable_snapshot:--enable-maintainer-mode} \
+%{?_disable_doc:--disable-documentation}
 %make_build
 
 %install
@@ -64,11 +72,16 @@ make check
 %_libdir/%_name-%api_ver/
 %_libdir/pkgconfig/*.pc
 
+%if_enabled doc
 %files devel-doc
 %_docdir/%_name-%api_ver/
 %_datadir/devhelp/*
+%endif
 
 %changelog
+* Fri Mar 01 2013 Yuri N. Sedunov <aris@altlinux.org> 3.7.3-alt1
+- 3.7.3
+
 * Sat Dec 01 2012 Yuri N. Sedunov <aris@altlinux.org> 3.3.2-alt3
 - updated to 64fc4535
 
