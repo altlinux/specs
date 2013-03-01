@@ -13,7 +13,7 @@
 
 Name: nginx
 Version: 1.2.4
-Release: alt1
+Release: alt1.1
 
 Summary: Fast HTTP server
 License: BSD
@@ -28,6 +28,7 @@ Source5: %name.sysconfig
 Source6: default.conf
 Source7: cache_purge.tar
 Source8: ngx_ctpp2.tar
+Source9: %name.service
 Patch0: alt-mime-types.patch
 Patch1: nginx-0.8-syslog.patch
 Patch2: nginx-perl-vendor.patch
@@ -69,7 +70,7 @@ Provides: webserver
 %define nginx_spool %_spooldir/%name
 %define nginx_log %_logdir/%name
 
-%define configs %buildroot{%_sysconfdir/logrotate.d/%name,%nginx_etc/{%name.conf,sites-available.d/default.conf}}
+%define configs %buildroot{%_unitdir/%name.service,%_sysconfdir/logrotate.d/%name,%nginx_etc/{%name.conf,sites-available.d/default.conf}}
 
 %description
 Fast HTTP server, extremely useful as an Apache frontend
@@ -179,6 +180,7 @@ install -pD -m755 %SOURCE2 %buildroot%_initdir/%name
 install -pD -m644 %SOURCE3 %buildroot%_sysconfdir/logrotate.d/%name
 install -pD -m644 %SOURCE5 %buildroot%_sysconfdir/sysconfig/%name
 install -pD -m644 %SOURCE6 %buildroot%nginx_etc/sites-available.d/default.conf
+install -pD -m644 %SOURCE9 %buildroot%_unitdir/%name.service
 
 subst s!@nginx_user@!%nginx_user!g %configs
 subst s!@nginx_etc@!%nginx_etc!g %configs
@@ -223,6 +225,7 @@ rm -rf %buildroot/html/
 %config(noreplace) %nginx_etc/fastcgi_params
 %config(noreplace) %_sysconfdir/logrotate.d/%name
 %config(noreplace) %_sysconfdir/sysconfig/%name
+%config %_unitdir/%name.service
 %nginx_etc/*.default
 %nginx_etc/koi-win
 %nginx_etc/koi-utf
@@ -250,6 +253,10 @@ sed -i 's/\(types_hash_bucket_size[[:space:]]*\)[[:space:]]32[[:space:]]*;[[:spa
 %preun_service %name
 
 %changelog
+* Thu Feb 28 2013 Dmitriy Kulik <lnkvisitor@altlinux.org> 1.2.4-alt1.1
+- add systemd service (ALT #28069)
+- logrotate using 'nginx -s reopen' (systemd)
+
 * Fri Oct 26 2012 Anton Farygin <rider@altlinux.ru> 1.2.4-alt1
 - new version
 
