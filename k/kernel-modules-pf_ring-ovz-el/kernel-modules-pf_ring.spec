@@ -1,6 +1,6 @@
 %define module_name	pf_ring
-%define module_version	5.4.4
-%define module_release	alt2
+%define module_version	5.5.2
+%define module_release	alt1
 %define modules_list intel/e1000e/e1000e-2.0.0.1 intel/igb/igb-3.4.7
 
 %define flavour		ovz-el
@@ -67,7 +67,7 @@ for m in %modules_list; do
     pushd drivers/PF_RING_aware/$m
 	. %_usrsrc/linux-%kversion-%flavour/gcc_version.inc
 # SMP build does not work
-        make -C src KSRC=%_usrsrc/linux-%kversion-%flavour
+        make -C src KSRC=%_usrsrc/linux-%kversion-%flavour KVER_CODE=%kcode
     popd
 done
 
@@ -103,6 +103,9 @@ EOF
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Sat Mar 02 2013 Led <led@altlinux.ru> 5.5.2-alt1
+- 5.5.2
 
 * Wed Feb 20 2013 Led <led@altlinux.ru> 5.4.4-alt2
 - new template
