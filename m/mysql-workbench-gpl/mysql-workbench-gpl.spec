@@ -1,5 +1,5 @@
 Name: mysql-workbench-gpl
-Version: 5.2.41
+Version: 5.2.47
 Release: alt1
 Packager: Evgeny Sinelnikov <sin@altlinux.ru>
 
@@ -11,7 +11,6 @@ Url: http://wb.mysql.com
 Source0: %name-%version.tar.gz
 
 Patch1: mysql-workbench-gpl-5.2.33-alt-build.patch
-Patch4: mysql-workbench-gpl-5.2.41-alt-glib2-2.30.3.patch
 
 Provides: mysql-workbench-oss = %version-%release
 Obsoletes: mysql-workbench-oss < %version-%release
@@ -73,7 +72,6 @@ Architecture independent files for %name
 %setup -q
 
 %patch1 -p1
-%patch4 -p2
 
 %set_verify_elf_method unresolved=relaxed
 
@@ -112,8 +110,8 @@ cp images/icons/MySQLWorkbenchDocIcon32x32.png %buildroot%_iconsdir/hicolor/32x3
 %exclude %_datadir/doc/mysql-workbench/README
 
 %_bindir/mysql-workbench
-%_bindir/mysql-workbench-bin
 %_bindir/wbcopytables
+%_libexecdir/mysql-workbench-bin
 %dir %_libdir/mysql-workbench
 %_libdir/mysql-workbench/*
 
@@ -133,6 +131,9 @@ cp images/icons/MySQLWorkbenchDocIcon32x32.png %buildroot%_iconsdir/hicolor/32x3
 %_xdgdatadir/mime-info/*.mime
 
 %changelog
+* Sat Mar 02 2013 Sergey Y. Afonin <asy@altlinux.ru> 5.2.47-alt1
+- Update to last release
+
 * Sun Jul 29 2012 Evgeny Sinelnikov <sin@altlinux.ru> 5.2.41-alt1
 - Update to last release
 
