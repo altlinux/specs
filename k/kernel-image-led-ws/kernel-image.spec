@@ -21,7 +21,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.0.67
-Release: alt2
+Release: alt3
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -720,6 +720,7 @@ Patch1113: linux-%kernel_branch.42-feat-drivers-misc--rts_pstor.patch
 Patch1114: linux-%kernel_branch.42-feat-drivers-misc--xvmalloc.patch
 
 Patch1121: linux-%kernel_branch.57-feat-drivers-scsi--mvumi.patch
+Patch1122: linux-%kernel_branch.67-feat-drivers-scsi--vhba.patch
 
 Patch1131: linux-%kernel_branch.57-feat-drivers-net-wireless--vt6655.patch
 Patch1132: linux-%kernel_branch.57-feat-drivers-net-wireless--vt6656.patch
@@ -2114,6 +2115,7 @@ cd linux-%version
 
 # feat-drivers-scsi--*
 %patch1121 -p1
+%patch1122 -p1
 
 # feat-drivers-net-wireless-*
 %patch1131 -p1
@@ -2599,7 +2601,7 @@ gen_rpmmodfile scsi-base \
 %if "%sub_flavour" == "guest"
 	%buildroot%modules_dir/kernel/drivers/scsi/{{,lib}iscsi*,scsi_transport_iscsi.ko} \
 %endif
-	%buildroot%modules_dir/kernel/drivers/scsi/{{*_mod,scsi_{tgt,transport_srp}}.ko,osd,device_handler{,/scsi_dh.ko}}
+	%buildroot%modules_dir/kernel/drivers/scsi/{{*_mod,scsi_{tgt,transport_srp},vhba}.ko,osd,device_handler{,/scsi_dh.ko}}
 gen_rpmmodlist %buildroot%modules_dir/kernel/drivers/{message/fusion,scsi{,/device_handler}/*,target} | grep -Fxv -f scsi-base.rpmmodlist > scsi.rpmmodlist
 mv scsi-base.rpmmodlist scsi-base.rpmmodlist~
 gen_rpmmodfile infiniband %buildroot%modules_dir/kernel/{drivers/{infiniband,scsi/scsi_transport_srp.ko},net/{9p/9pnet_rdma.ko,rds,sunrpc/xprtrdma}}
@@ -3085,6 +3087,10 @@ done)
 
 
 %changelog
+* Sat Mar 02 2013 Led <led@altlinux.ru> 3.0.67-alt3
+- added:
+  + feat-drivers-scsi--vhba
+
 * Fri Mar 01 2013 Led <led@altlinux.ru> 3.0.67-alt2
 - updated:
   + fix-drivers-char--random
