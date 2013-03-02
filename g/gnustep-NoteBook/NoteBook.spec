@@ -2,7 +2,7 @@
 
 Name: gnustep-NoteBook
 Version: 0.3
-Release: alt2
+Release: alt3
 Summary: Application to store and organize your notes 
 License: GPL
 Group: Graphical desktop/GNUstep
@@ -50,6 +50,9 @@ install -Dp -m644 %SOURCE1 %buildroot%_menudir/%name
 %_menudir/*
 
 %changelog
+* Sat Mar 02 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3-alt3
+- Fixed menu file by kostyalamer@
+
 * Wed Feb 27 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3-alt2
 - Added menu file (thnx kostyalamer@)
 
