@@ -2,7 +2,7 @@
 
 Name: gnustep-GNUMail
 Version: 1.2.0
-Release: alt3
+Release: alt4
 Summary: Official GNUstep mail application and a clone of NeXT's Mail.app
 License: GPLv2
 Group: Graphical desktop/GNUstep
@@ -105,6 +105,9 @@ install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
 %_libdir/GNUstep/Frameworks/*.framework/Versions/1/Headers
 
 %changelog
+* Sat Mar 02 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.0-alt4
+- Fixed menu file by kostyalamer@
+
 * Thu Feb 28 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.0-alt3
 - Added menu file (thnx kostyalamer@)
 
