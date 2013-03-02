@@ -6,8 +6,8 @@
 
 Name: quagga
 
-%define baseversion 0.99.20.1
-Release: alt3
+%define baseversion 0.99.22
+Release: alt1
 
 %if %cvs
 %define cvsdate 20060505
@@ -29,7 +29,7 @@ Url: http://www.quagga.net/
 %if %cvs
 Source0:	%name-%baseversion-%cvsdate.tar.gz
 %else
-Source0:	%name-%version.tar.bz2
+Source0:	%name-%version.tar.xz
 %endif
 Source1:	%name.logrotate
 Source2:	%name.pam
@@ -42,6 +42,7 @@ Source13:	%name-ospfd.init
 Source14:	%name-ospf6d.init
 Source15:	%name-bgpd.init
 Source16:	%name-isisd.init
+Source17:	%name-babeld.init
 
 Source19:	%name-watchquagga.init
 
@@ -52,20 +53,20 @@ Source23:	%name-ospfd.conf
 Source24:	%name-ospf6d.conf
 Source25:	%name-bgpd.conf
 Source26:	%name-isisd.conf
+Source27:	%name-babeld.conf
 
 Patch1:		quagga-libzebra_to_libospf.patch
 Patch2:		quagga-libospf_to_libospfclient.patch
-Patch3:    	quagga-man.patch
+Patch3:		quagga-man.patch
 
 #Errata
-Patch1001: quagga-0.99.20-dryrun.patch
-Patch1002: quagga-CVE-2012-1820-790d1e263e8800bc49d0038d481591ecb4e37b88.patch
+#Patch1001:
 
 Conflicts:	zebra
 
 Requires:	libquagga = %{version}-%{release}
 
-BuildRequires:	/proc
+BuildRequires: /proc
 BuildRequires: rpm-build-licenses
 
 BuildRequires: gcc-c++ libcap-devel libpam-devel libpcap-devel libreadline-devel libtinfo-devel libnet-snmp-devel texi2html
@@ -76,7 +77,7 @@ It takes multi-server and multi-thread approach to resolve the current
 complexity of the Internet.
 
 Quagga supports BGP4, BGP4+, OSPFv2, OSPFv3, RIPv1, RIPv2, RIPng,
-                IS-SI and MPLS-VPN.
+                IS-SI, Babel and MPLS-VPN.
 
 Quagga is intended to be used as a Route Server and a Route Reflector. It is
 not a toolkit, it provides full routing power under a new architecture.
@@ -144,8 +145,7 @@ Quagga documentation
 %patch3 -p0
 
 #Errata
-%patch1001 -p1
-%patch1002 -p1
+#patch1001 -p1
 
 #verify-elf: WARNING: ./usr/lib/libzebra.so.0.0.0: undefined symbol: master
 #verify-elf: WARNING: ./usr/lib/libospf.so.0.0.0: undefined symbol: ospfd_privs
@@ -214,6 +214,7 @@ install %SOURCE23 $RPM_BUILD_ROOT%_sysconfdir/%name/ospfd.conf
 install %SOURCE24 $RPM_BUILD_ROOT%_sysconfdir/%name/ospf6d.conf
 install %SOURCE25 $RPM_BUILD_ROOT%_sysconfdir/%name/bgpd.conf
 install %SOURCE26 $RPM_BUILD_ROOT%_sysconfdir/%name/isisd.conf
+install %SOURCE27 $RPM_BUILD_ROOT%_sysconfdir/%name/babeld.conf
 
 install -m 755 %SOURCE10 $RPM_BUILD_ROOT%_initdir/zebra
 install -m 755 %SOURCE11 $RPM_BUILD_ROOT%_initdir/ripd
@@ -222,6 +223,7 @@ install -m 755 %SOURCE13 $RPM_BUILD_ROOT%_initdir/ospfd
 install -m 755 %SOURCE14 $RPM_BUILD_ROOT%_initdir/ospf6d
 install -m 755 %SOURCE15 $RPM_BUILD_ROOT%_initdir/bgpd
 install -m 755 %SOURCE16 $RPM_BUILD_ROOT%_initdir/isisd
+install -m 755 %SOURCE17 $RPM_BUILD_ROOT%_initdir/babeld
 
 install -m 755 %SOURCE19 $RPM_BUILD_ROOT%_initdir/watchquagga
 
@@ -243,6 +245,7 @@ cp -f tools/zc.pl $RPM_BUILD_ROOT%_bindir
 %post_service ripngd
 %post_service bgpd
 %post_service isisd
+%post_service babeld
 %post_service watchquagga
 } &>/dev/null
 
@@ -254,6 +257,7 @@ cp -f tools/zc.pl $RPM_BUILD_ROOT%_bindir
 %preun_service ripngd
 %preun_service bgpd
 %preun_service isisd
+%preun_service babeld
 %preun_service zebra
 
 %files
@@ -304,6 +308,10 @@ cp -f tools/zc.pl $RPM_BUILD_ROOT%_bindir
 %doc doc/draft-zebra-00.* doc/BGP-TypeCode
 
 %changelog
+* Sat Mar 02 2013 Sergey Y. Afonin <asy@altlinux.ru> 0.99.22-alt1
+- new version
+- added init script and configuration file for Babel (untested)
+
 * Fri Oct 26 2012 Sergey Y. Afonin <asy@altlinux.ru> 0.99.20.1-alt3
 - fixed isisd startup:
   networking check for IPv4 instead of IPv6 in init script
