@@ -1,6 +1,6 @@
 Name: bind9.8
 Version: 9.8.4
-Release: alt2
+Release: alt3
 
 %define vsuffix -P1
 #define vsuffix %nil
@@ -128,6 +128,7 @@ Requires: %name
 Summary: Utilities provided by ISC BIND
 Group: Networking/Other
 Requires: lib%name = %version-%release
+Provides: bind-utils = %version
 Conflicts: bind-utils
 
 %package -n lib%name
@@ -529,6 +530,9 @@ fi
 %exclude %docdir/README.bind-devel
 
 %changelog
+* Sun Mar 03 2013 Sergey Y. Afonin <asy@altlinux.ru> 9.8.4-alt3
+- added "Provides: bind-utils = %version" to bind-utils subpackage
+
 * Wed Feb 20 2013 Michael Shigorin <mike@altlinux.org> 9.8.4-alt2
 - new version (watch file uupdate)
   + 9.8.4-P1
