@@ -7,8 +7,8 @@
 
 Name: kernel-image-%flavour
 Version: 2.6.32
-Release: alt1
-%define erelease 279.22.1.el6
+Release: alt2
+%define erelease 358.0.1.el6
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -33,7 +33,7 @@ Release: alt1
 %def_without perf
 %def_with firmware
 
-%def_disable debug_section_mismatch
+%def_enable debug_section_mismatch
 
 %define strip_mod_opts --strip-unneeded -R .comment
 
@@ -73,7 +73,7 @@ ExclusiveArch: x86_64 i586 i686
 %define base_arch x86
 %endif
 
-%ifnarch x86_64 i586
+%ifnarch x86_64 i586 i686
 %set_disable docs
 %set_without src
 %endif
@@ -344,7 +344,7 @@ echo "Kernel built %kversion-%flavour-%krelease"
 %if_enabled builddocs
 echo "Building kernel docs %kversion-%flavour-%krelease"
 %{?_enable_htmldocs:%make_build htmldocs}
-%{?_enable_man:%make_build mandocs 2>&1 | tee mandocs.log | grep -vE --line-buffered '^(((Warn|Note): (meta [[:lower:]]+ *|AUTHOR sect\.):|Note: Writing) )| +/'}
+%{?_enable_man:%make_build mandocs 2>mandocs.err.log}
 echo "Kernel docs built %kversion-%flavour-%krelease"
 %endif
 
@@ -545,6 +545,11 @@ tar --transform='s,^,kernel-src-%flavour-%kversion-%krelease/,' \
 
 
 %changelog
+* Sun Mar 03 2013 Led <led@altlinux.ru> 2.6.32-alt2
+- 2.6.32-358.0.1.el6
+- enabled:
+  + DEBUG_SECTION_MISMATCH
+
 * Wed Feb 27 2013 Led <led@altlinux.ru> 2.6.32-alt1
 - initial build:
   + 2.6.32-279.22.1.el6
