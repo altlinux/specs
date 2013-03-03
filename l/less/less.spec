@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: less
-Version: 444
+Version: 451
 Release: alt1
 
 Summary: A text file browser similar to more, but better
@@ -105,6 +105,9 @@ ln -s lesspipe.1 %buildroot%_man1dir/lessfile.1
 %doc NEWS.bz2 *.html
 
 %changelog
+* Sun Mar 03 2013 Alexey Gladkov <legion@altlinux.ru> 451-alt1
+- New version 451.
+
 * Thu Aug 11 2011 Alexey Gladkov <legion@altlinux.ru> 444-alt1
 - New version 444.
 

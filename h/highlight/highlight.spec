@@ -1,6 +1,6 @@
 Name:    highlight
 Summary: Universal source code to formatted text converter
-Version: 2.16
+Version: 3.13
 Release: alt1
 Group:   Development/Tools
 License: GPLv3
@@ -10,8 +10,9 @@ Packager: Alexey Gladkov <legion@altlinux.ru>
 
 Source0: %name-%version.tar
 
-# Automatically added by buildreq on Thu Apr 09 2009
-BuildRequires: gcc-c++
+Patch0: highlight-lua-pkgconfig.patch
+
+BuildRequires: boost-devel-headers gcc-c++ liblua5-devel libstdc++-devel pkg-config
 
 %description
 A utility that converts sourcecode to HTML, XHTML, RTF, LaTeX, TeX, XML or
@@ -23,6 +24,7 @@ It is easily possible to create new language definitions and colour themes.
 
 %prep
 %setup -q -n highlight
+%patch0 -p2
 
 %build
 %make cli
@@ -39,6 +41,9 @@ rm -rf -- %buildroot/%_datadir/doc/%name
 %_man1dir/%name.*
 
 %changelog
+* Sun Mar 03 2013 Alexey Gladkov <legion@altlinux.ru> 3.13-alt1
+- New version (3.13).
+
 * Tue May 04 2010 Alexey Gladkov <legion@altlinux.ru> 2.16-alt1
 - New version (2.16).
 
