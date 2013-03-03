@@ -1,5 +1,5 @@
 Name: tzdata
-Version: 2012j
+Version: 2013a
 Release: alt1
 
 Summary: Timezone data
@@ -83,6 +83,9 @@ make -k check_tables
 %endif #with java
 
 %changelog
+* Mon Mar 04 2013 Dmitry V. Levin <ldv@altlinux.org> 2013a-alt1
+- Updated to 2013a.
+
 * Tue Nov 13 2012 Dmitry V. Levin <ldv@altlinux.org> 2012j-alt1
 - Updated to 2012j.
 
