@@ -5,7 +5,7 @@
 
 Name: gnustep-%oname
 Version: 1.7.0
-Release: alt1.git20130130
+Release: alt1.git20130301
 Summary: GNUstep Objective-C Runtime
 License: BSD
 Group: Development/Objective-C
@@ -18,8 +18,8 @@ Source1: Makefile
 Patch: gnustep-objc2-1.6.1-alt-i586.patch
 
 BuildRequires(pre): rpm-macros-make
-BuildPreReq: gnustep-make-devel gcc-objc gcc-c++
-BuildPreReq: cmake llvm3.1-devel clang3.1-devel
+BuildPreReq: gnustep-make-devel gcc-objc gcc-c++ libstdc++-devel
+BuildPreReq: cmake llvm-devel clang-devel
 
 %description
 The GNUstep Objective-C runtime is designed as a drop-in replacement for
@@ -91,7 +91,7 @@ cp -fR objc objc2
 %build
 #./build_opts.sh
 %add_optflags -I$PWD %optflags_shared -fpermissive
-%add_optflags -D__STDC_LIMIT_MACROS -D__STDC_CONSTANT_MACROS
+%add_optflags -D__STDC_LIMIT_MACROS -D__STDC_CONSTANT_MACROS -D__clang__
 export CPPFLAGS="%optflags"
 cmake \
 %ifarch x86_64
@@ -101,7 +101,7 @@ cmake \
 	-DCMAKE_C_FLAGS:STRING="%optflags" \
 	-DCMAKE_CXX_FLAGS:STRING="%optflags" \
 	-DCMAKE_ASM_FLAGS:STRING="%optflags" \
-	-DCMAKE_ASM_COMPILER:FILEPATH='%_bindir/gcc' \
+	-DCMAKE_ASM_COMPILER:FILEPATH='%_bindir/clang' \
 	-DCMAKE_C_COMPILER:FILEPATH='%_bindir/gcc' \
 	-DCMAKE_CXX_COMPILER:FILEPATH='%_bindir/g++' \
 	-DLLVM_DIR:PATH='%_datadir/CMake/Modules' \
@@ -163,6 +163,10 @@ install -p -m644 class.h visibility.h method_list.h \
 %_libdir/libGNUObjCRuntime.so
 
 %changelog
+* Mon Mar 04 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.7.0-alt1.git20130301
+- New snapshot
+- Rebuilt with clang 3.2
+
 * Wed Jan 30 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.7.0-alt1.git20130130
 - Version 1.7.0
 
