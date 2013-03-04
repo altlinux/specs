@@ -1,6 +1,6 @@
 Name: grub2
 Version: 2.00
-Release: alt11.2
+Release: alt12
 
 Summary: GRand Unified Bootloader
 License: GPL
@@ -177,7 +177,7 @@ Please note that this binary is *not* signed, just in case.
 %patch5 -p1
 %patch6 -p1
 %patch7 -p1
-%patch8 -p1
+#patch8 -p1
 %patch9 -p1
 %patch10 -p0
 %patch11 -p1
@@ -371,6 +371,12 @@ grub-autoupdate || {
 } >&2
 
 %post efi
+grep -q '^GRUB_DISTRIBUTOR=' %_sysconfdir/sysconfig/%name ||
+	echo 'GRUB_DISTRIBUTOR="ALT Linux"' >> %_sysconfdir/sysconfig/%name
+
+grep -q '^GRUB_BOOTLOADER_ID=' %_sysconfdir/sysconfig/%name ||
+	echo 'GRUB_BOOTLOADER_ID="altlinux"' >> %_sysconfdir/sysconfig/%name
+
 grub-efi-autoupdate || {
 	echo "** WARNING: grub-efi-autoupdate failed, NEXT BOOT WILL LIKELY FAIL NOW"
 	echo "** WARNING: please run it by hand, record the output offline,"
@@ -378,6 +384,10 @@ grub-efi-autoupdate || {
 } >&2
 
 %changelog
+* Mon Mar 04 2013 Michael Shigorin <mike@altlinux.org> 2.00-alt12
+- better UEFI boot label support (mind the sysconfig fixes)
+- dropped patch8 (irrelevant)
+
 * Mon Feb 18 2013 Michael Shigorin <mike@altlinux.org> 2.00-alt11.2
 - revert patch suggested in #28218 (results in black-on-black text menu)
 
