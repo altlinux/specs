@@ -2,7 +2,7 @@
 
 Name: gnustep-dbuskit
 Version: 0.3.2
-Release: alt3.git20121111
+Release: alt4.git20121111
 Summary: GNUstep interface to the DBUS data transport mechanism
 License: LGPLv2.1+
 Group: Development/Objective-C
@@ -14,7 +14,7 @@ Source: %name-%version.tar
 
 BuildPreReq: gcc-objc gnustep-make-devel gnustep-base-devel
 BuildPreReq: libgnustep-objc2-devel libdbus-devel /proc
-BuildPreReq: clang3.1-devel clang3.1
+BuildPreReq: clang-devel clang
 BuildPreReq: texinfo texi2html texlive-latex-base
 
 Requires: lib%name = %version-%release
@@ -70,14 +70,17 @@ for i in $(find ./ -type f); do
 	sed -i 's|objc/|objc2/|g' $i
 done
 
+sed -i 's|@LIBDIR@|%_libdir|g' configure.ac
+
 %build
 export CC=gcc
 %add_optflags -DHAVE_OBJC_RUNTIME_H
 #export OBJCPP=gcc
 %autoreconf
 for i in $(find ./ -type f); do
-	sed -i 's|[0-9a-z_]*alt-linux-cgg|gcc|g' $i
+	sed -i 's|[0-9a-z_]*alt-linux-gcc|clang|g' $i
 done
+export LD_LIBRARY_PATH=%_libdir/llvm
 %configure \
 	--libexecdir=%_libdir \
 	--enable-static=yes \
@@ -144,6 +147,9 @@ popd
 %_docdir/GNUstep
 
 %changelog
+* Mon Mar 04 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.2-alt4.git20121111
+- Rebuilt with llvm 3.2
+
 * Wed Feb 20 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.2-alt3.git20121111
 - Fixed links for libraries
 
