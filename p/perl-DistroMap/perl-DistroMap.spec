@@ -1,7 +1,7 @@
 %define module DistroMap
 
 Name: perl-%module
-Version: 0.17
+Version: 0.18
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -34,6 +34,9 @@ BuildRequires: perl-devel perl(Pod/Usage.pm)
 %_bindir/distromap*
 
 %changelog
+* Mon Mar 04 2013 Igor Vlasenko <viy@altlinux.ru> 0.18-alt1
+- disabled generic stem filter by default (thanks to aris@)
+
 * Mon Jan 14 2013 Igor Vlasenko <viy@altlinux.ru> 0.17-alt1
 - noepoch flag support
 
