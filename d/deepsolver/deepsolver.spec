@@ -1,6 +1,6 @@
 
 Name: deepsolver
-Version: 0.2.5
+Version: 0.3.0
 Release: alt1
 
 Packager: Michael Pozhidaev <msp@altlinux.ru>
@@ -11,12 +11,9 @@ Summary: The package manager
 Group: System/Configuration/Packaging
 
 Source: %name-%version.tar.gz
-Source2: ds.conf
-Source3: msp.repo
-Source4: altlinux-release.provide
 
 BuildRequires: gcc-c++ librpm-devel libcurl-devel zlib-devel
-BuildRequires: libminisat-devel >= 2.2.0-alt2
+BuildRequires: libminisat-devel >= 2.2.0-alt4
 
 %package -n lib%name
 Summary: The dynamically linked library with Deepsolver functions
@@ -78,8 +75,7 @@ repository index data what significantly reduces time.
 %prep
 %setup -q
 %build
-%__libtoolize
-%autoreconf
+./autogen.sh
 %configure
 %make_build
 
@@ -89,17 +85,13 @@ make DESTDIR=%buildroot install
 %__rm -f %buildroot%_libdir/lib%name.la
 
 %__install -d -m 755 %buildroot%_sysconfdir/%name
-%__install -d -m 755 %buildroot%_sysconfdir/%name/conf.d
-%__install -pD -m 644 %SOURCE2 %buildroot%_sysconfdir/%name/
-%__install -pD -m 644 %SOURCE3 %buildroot%_sysconfdir/%name/conf.d/
-%__install -pD -m 644 %SOURCE4 %buildroot%_sysconfdir/%name/conf.d/
+%__cp -r ./etc/. %buildroot%_sysconfdir/%name
 %__subst s/i586/%_arch/ %buildroot%_sysconfdir/%name/conf.d/msp.repo
-
 
 %__install -d -m 755 %buildroot%_localstatedir/%name
 
 %files
-%doc AUTHORS COPYING NEWS README ChangeLog doc/ru/user-manual/user-manual.pdf
+%doc AUTHORS COPYING NEWS README ChangeLog doc/user-manual/ru/user-manual.pdf
 %_bindir/ds-conf
 %_bindir/ds-install
 %_bindir/ds-remove
@@ -122,6 +114,9 @@ make DESTDIR=%buildroot install
 %_bindir/ds-provides
 
 %changelog
+* Mon Mar 04 2013 Michael Pozhidaev <msp@altlinux.ru> 0.3.0-alt1
+- New version
+
 * Wed Dec 26 2012 Michael Pozhidaev <msp@altlinux.ru> 0.2.5-alt1
 - New version
 
