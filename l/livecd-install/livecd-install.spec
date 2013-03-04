@@ -1,5 +1,5 @@
 Name: livecd-install
-Version: 0.8.2
+Version: 0.8.3
 Release: alt1
 
 Summary: Permanently install Live system
@@ -57,6 +57,10 @@ install -m 0755 zdg-user-dirs-install.sh %buildroot%_x11sysconfdir/profile.d/
 %_x11sysconfdir/profile.d/*
 
 %changelog
+* Mon Mar 04 2013 Michael Shigorin <mike@altlinux.org> 0.8.3-alt1
+- Fixed plymouth setup script to be more careful
+  ("splash" FP was ruining GRUB_WALLPAPER path).
+
 * Thu Feb 21 2013 Mikhail Efremov <sem@altlinux.org> 0.8.2-alt1
 - Turn off autologin in case of lightdm too.
 
