@@ -1,7 +1,7 @@
 # NOTE: do not use clean_spec or rpmcs for this spec
 
 Name: etersoft-build-utils
-Version: 2.0.24
+Version: 2.0.25
 Release: alt1
 
 Summary: A set of rpm build utilities from Etersoft
@@ -68,6 +68,14 @@ RECOMMENDED packages: gcc-c++ perl-libwww ccache elinks mutt hasher curl
 %config(noreplace) %_sysconfdir/eterbuild/repos/*
 
 %changelog
+* Mon Mar 04 2013 Vitaly Lipatov <lav@altlinux.ru> 2.0.25-alt1
+- rpmcs: do not use all rules for revert requires
+- rpmcs: add --skip-reqs support
+- major pkgrepls update
+- rpmbph: add support for CentOS build 32 on 64 bit
+- gpush: fix output path to the current repo
+- update sources.list, add M70P support
+
 * Wed Feb 27 2013 Vitaly Lipatov <lav@altlinux.ru> 2.0.24-alt1
 - fix option handling: fix install-in-hasher package after rpmbph
 - rpmbph: drop _unitdir on old ALT's distro
