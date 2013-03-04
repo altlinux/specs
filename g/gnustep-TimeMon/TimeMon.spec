@@ -2,7 +2,7 @@
 
 Name: gnustep-TimeMon
 Version: 4.1
-Release: alt2
+Release: alt3
 Summary: CPU time usage monitor
 License: Permission to use, copy, modify, and distribute without fee
 Group: Graphical desktop/GNUstep
@@ -45,6 +45,9 @@ install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
 %_menudir/*
 
 %changelog
+* Mon Mar 04 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.1-alt3
+- Fixed menu file by kostyalamer@
+
 * Fri Mar 01 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.1-alt2
 - Added menu file (thnx kostyalamer@)
 
