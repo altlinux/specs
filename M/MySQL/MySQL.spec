@@ -1,6 +1,6 @@
 Name: MySQL
 Version: 5.5.30
-Release: alt1
+Release: alt2
 
 %def_without debug
 %def_disable static
@@ -628,6 +628,9 @@ fi
 %_datadir/sql-bench
 
 %changelog
+* Mon Mar 04 2013 Michael Shigorin <mike@altlinux.org> 5.5.30-alt2
+- fixed chrooted configuration (closes: #28630)
+
 * Tue Feb 05 2013 Michael Shigorin <mike@altlinux.org> 5.5.30-alt1
 - 5.5.30
 
