@@ -2,7 +2,7 @@
 
 Name: libpfring
 Version: 1.0.0
-Release: alt4
+Release: alt5
 
 Summary: User space library used to manpulate PF_RING
 License: GPLv2
@@ -70,7 +70,7 @@ Static library %name
 %build
 # remove static libs
 rm -rf libs
-autoreconf -ifv
+%autoreconf
 %configure --disable-bpf
 %make_build
 
@@ -104,6 +104,9 @@ install -pm644 pfring.h %buildroot%_includedir/
 %endif #static
 
 %changelog
+* Mon Mar 04 2013 Timur Aitov <timonbl4@altlinux.org> 1.0.0-alt5
+- add SONAME
+
 * Tue Feb 26 2013 Timur Aitov <timonbl4@altlinux.org> 1.0.0-alt4
 - kernel module v5.5.2 (r5908)
 
