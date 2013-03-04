@@ -4,7 +4,7 @@
 %def_disable tcl
 %def_disable tk
 %def_enable nss
-%def_disable cyrus_sasl
+%def_enable cyrus_sasl
 %def_disable gnutls
 %def_disable gevolution
 %def_enable meanwhile
@@ -32,8 +32,8 @@
 %def_enable vv
 
 Name: pidgin
-Version: 2.10.6
-Release: alt3
+Version: 2.10.7
+Release: alt1
 
 Summary: A GTK+ based multiprotocol instant messaging client
 License: GPL
@@ -336,7 +336,7 @@ if [ $1 = 0 ]; then
 fi
 
 %files -f %name.lang
-%doc AUTHORS COPYRIGHT INSTALL NEWS README README.MTN doc/*.txt
+%doc AUTHORS COPYRIGHT INSTALL NEWS README doc/*.txt
 %config %_sysconfdir/gconf/schemas/*
 %_bindir/%name
 %_libdir/%name
@@ -446,6 +446,10 @@ fi
 %endif
 
 %changelog
+* Mon Mar 04 2013 Alexey Shabalin <shaba@altlinux.ru> 2.10.7-alt1
+- 2.10.7
+- build with sasl support
+
 * Mon Jan 28 2013 Alexey Shabalin <shaba@altlinux.ru> 2.10.6-alt3
 - port to GStreamer 1.0 and Farstream 0.2
 
