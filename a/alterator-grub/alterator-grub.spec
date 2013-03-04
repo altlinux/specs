@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-grub
-Version: 0.9.6
+Version: 0.9.7
 Release: alt1
 
 Summary: alterator module to setup grub bootloader
@@ -23,7 +23,7 @@ BuildRequires: grub2 >= 2.00-alt7
 BuildRequires: libdevmapper-devel
 
 %ifarch x86_64
-Requires: grub2-efi
+Requires: grub2-efi >= 2.00-alt12
 %endif
 
 %description
@@ -47,6 +47,11 @@ alterator module to setup grub bootloader
 %_bindir/*
 
 %changelog
+* Mon Mar 04 2013 Michael Shigorin <mike@altlinux.org> 0.9.7-alt1
+- do not force ESP subdir name onto grub-install;
+  thus it's changed from "ALT Linux" to "altlinux"
+  given the fixes in grub2-2.00-alt12
+
 * Wed Feb 27 2013 Michael Shigorin <mike@altlinux.org> 0.9.6-alt1
 - fixed install-to-partition by working around i18n (see also #28600)
 
