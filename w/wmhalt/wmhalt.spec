@@ -2,7 +2,7 @@
 
 Name: wmhalt
 Version: 1.3
-Release: alt2
+Release: alt3
 
 Summary: Window Maker and IceWM - Halt, Reboot and LockScreen 
 Summary(ru_RU.UTF-8): программа для выключения, перезагрузки и блокировки экрана в  Window Maker и IceWM
@@ -18,7 +18,8 @@ Source1: %name.menu
 
 Requires: python-devel python-module-pywm python-modules-tkinter
 Requires: python-modules-encodings xscreensaver
-Requires: /sbin/reboot /sbin/poweroff
+#Requires: /sbin/reboot /sbin/poweroff
+Requires: SysVinit-usermode
 AutoReqProv: no
 
 %description
@@ -56,6 +57,9 @@ install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
 
 
 %changelog
+* Mon Mar 04 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3-alt3
+- Restored requirement on SysVinit-usermode
+
 * Mon Feb 25 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3-alt2
 - Avoid requirement on SysVinit-usermode (thnx aen@)
 
