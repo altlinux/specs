@@ -8,7 +8,7 @@
 %define api_ver 1.0
 
 Name: gnome-online-accounts
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: Provide online accounts information
@@ -82,7 +82,7 @@ BuildArch: noarch
 This package contains development documentation for the %name libraries.
 
 %prep
-%setup -q
+%setup
 
 %build
 %autoreconf
@@ -127,6 +127,9 @@ This package contains development documentation for the %name libraries.
 %_datadir/gtk-doc/html/goa/
 
 %changelog
+* Mon Mar 04 2013 Yuri N. Sedunov <aris@altlinux.org> 3.6.3-alt1
+- 3.6.3
+
 * Wed Nov 14 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.2-alt1
 - 3.6.2
 
