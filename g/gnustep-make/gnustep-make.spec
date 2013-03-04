@@ -1,6 +1,6 @@
 Name: gnustep-make
-Version: 2.6.2
-Release: alt12.git20121102
+Version: 2.6.4
+Release: alt1.git20130301
 Source: %name-%version-%release.tar
 License: GPLv3+
 Group: Development/Other
@@ -103,6 +103,9 @@ gzip ChangeLog
 %attr(755,root,root) %_datadir/GNUstep/Makefiles/mkinstalldirs
 
 %changelog
+* Mon Mar 04 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.6.4-alt1.git20130301
+- Version 2.6.4
+
 * Sun Dec 30 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.6.2-alt12.git20121102
 - Rebuilt with linking with libobjc2 instead of libobjc
 
