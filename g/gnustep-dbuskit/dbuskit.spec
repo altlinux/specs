@@ -2,7 +2,7 @@
 
 Name: gnustep-dbuskit
 Version: 0.3.2
-Release: alt4.git20121111
+Release: alt5.git20121111
 Summary: GNUstep interface to the DBUS data transport mechanism
 License: LGPLv2.1+
 Group: Development/Objective-C
@@ -23,8 +23,6 @@ Requires: lib%name = %version-%release
 GNUstep interface to the DBUS data transport mechanism. This library
 allows applications written in GNUstep to communicate directly with apps
 which use DBUS.
-
-Requires: lib%name
 
 %package -n lib%name
 Summary: GNUstep interface to the DBUS Share data transport mechanism
@@ -133,6 +131,8 @@ popd
 %doc ChangeLog README
 %_bindir/*
 %_libdir/GNUstep
+%exclude %_libdir/GNUstep/Frameworks/*.framework/Headers
+%exclude %_libdir/GNUstep/Frameworks/*.framework/Versions/0/Headers
 %_man1dir/*
 
 %files -n lib%name
@@ -141,12 +141,17 @@ popd
 %files -n lib%name-devel
 %_includedir/*
 %_libdir/*.so
+%_libdir/GNUstep/Frameworks/*.framework/Headers
+%_libdir/GNUstep/Frameworks/*.framework/Versions/0/Headers
 
 %files doc
 %_infodir/*
 %_docdir/GNUstep
 
 %changelog
+* Mon Mar 04 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.2-alt5.git20121111
+- Moved headers into lib%name-devel
+
 * Mon Mar 04 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.2-alt4.git20121111
 - Rebuilt with llvm 3.2
 
