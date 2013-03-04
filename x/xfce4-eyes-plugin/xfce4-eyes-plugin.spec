@@ -1,6 +1,6 @@
 Name: xfce4-eyes-plugin
-Version: 4.4.1
-Release: alt3
+Version: 4.4.2
+Release: alt1
 
 Summary: Eyes plugin for XFce Desktop
 License: %gpl2plus
@@ -8,12 +8,14 @@ Group: Graphical desktop/XFce
 Url: http://goodies.xfce.org/projects/panel-plugins/%name
 Packager: XFCE Team <xfce@packages.altlinux.org>
 
+# git://git.xfce.org/panel-plugins/xfce4-eyes-plugin
 Source: %name-%version.tar
+Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-build-licenses
 
 BuildPreReq: rpm-build-xfce4 xfce4-dev-tools
-BuildPreReq: libxfce4panel-devel libxfcegui4-devel libxfce4util-devel
+BuildPreReq: libxfce4panel-devel libxfce4ui-devel libxfce4util-devel
 BuildRequires: intltool libxml2-devel
 
 Requires: xfce4-panel >= 4.8
@@ -23,13 +25,13 @@ Eyes is a xfce4 panel plugin that adds eyes which watch your every step.
 Scary!
 
 %prep
-%setup 
+%setup
+%patch -p1
+
+# Don't use git tag in version.
+%xfce4_drop_gitvtag eyes_version_tag configure.ac.in
 
 %build
-# Fix desktop file path for xfce4-panel >= 4.8
-sed -i 's|^desktopdir = \$(datadir)/xfce4/panel-plugins|desktopdir = \$(datadir)/xfce4/panel/plugins|' \
-   panel-plugin/Makefile.am
-
 %xfce4reconf
 %configure \
     --enable-debug=no
@@ -40,13 +42,20 @@ sed -i 's|^desktopdir = \$(datadir)/xfce4/panel-plugins|desktopdir = \$(datadir)
 %find_lang %name
 
 %files -f %name.lang
-%doc ChangeLog README AUTHORS
-%_libexecdir/xfce4/panel-plugins/%name
+%doc README AUTHORS
+%_libdir/xfce4/panel/plugins/*
 %_datadir/xfce4/eyes/
 %_datadir/xfce4/panel/plugins/*.desktop
 %_liconsdir/*.png
 
+%exclude %_libdir/xfce4/panel/plugins/*.la
+
 %changelog
+* Mon Mar 04 2013 Mikhail Efremov <sem@altlinux.org> 4.4.2-alt1
+- Fix build: use LT_PREREQ.
+- Updated translations from upstream git.
+- Updated to 4.4.2.
+
 * Mon Apr 16 2012 Mikhail Efremov <sem@altlinux.org> 4.4.1-alt3
 - Rebuild against libxfce4util.so.6 (libxfce4util-4.9).
 
