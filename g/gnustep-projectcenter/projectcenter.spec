@@ -2,7 +2,7 @@
 
 Name: gnustep-projectcenter
 Version: 0.6.1
-Release: alt4.git20121122
+Release: alt4.git20130225
 Summary: GNUstep IDE, a part of the GNUstep project and is copyrighted by the FSF
 License: GPLv2+ and GPLv3
 Group: Development/Tools
@@ -114,6 +114,9 @@ install -Dp -m 644 %SOURCE1 %buildroot%_menudir/%name
 %_libdir/GNUstep/Frameworks/ProjectCenter.framework//Headers
 
 %changelog
+* Tue Mar 05 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.1-alt4.git20130225
+- New snapshot
+
 * Sun Jan 27 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.1-alt4.git20121122
 - Added menu file (thnx kostyalamer@)
 
