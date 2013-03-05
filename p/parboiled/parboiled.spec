@@ -1,8 +1,11 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:          parboiled
 Version:       1.0.2
-Release:       alt1_2jpp7
+Release:       alt1_3jpp7
 Summary:       Java/Scala library providing parsing of input text based on PEGs
 Group:         Development/Java
 License:       ASL 2.0
@@ -26,6 +29,7 @@ BuildRequires: objectweb-asm
 # BuildRequires: scala-maven-plugin
 
 # test deps
+#BuildRequires: mvn(org.scalatest:scalatest_2.10.0-RC1)
 #BuildRequires: testng
 
 BuildRequires: maven
@@ -68,7 +72,7 @@ find . -name "*.jar" -delete
 
 cp -p %{SOURCE1} %{name}-core/pom.xml
 cp -p %{SOURCE2} %{name}-java/pom.xml
-#cp -p %{SOURCE?} %{name}-scala/pom.xml
+#cp -p %%{SOURCE?} %%{name}-scala/pom.xml
 cp -p %{SOURCE3} pom.xml
 
 %build
@@ -93,6 +97,7 @@ mkdir -p %{buildroot}%{_javadocdir}/%{name}
 cp -rp target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 
 %files
+%dir %{_javadir}/%{name}
 %{_javadir}/%{name}/*.jar
 %{_mavenpomdir}/JPP.%{name}-*.pom
 %{_mavendepmapfragdir}/%{name}
@@ -103,6 +108,9 @@ cp -rp target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 %doc LICENSE
 
 %changelog
+* Tue Mar 05 2013 Igor Vlasenko <viy@altlinux.ru> 1.0.2-alt1_3jpp7
+- fc update
+
 * Mon Sep 17 2012 Igor Vlasenko <viy@altlinux.ru> 1.0.2-alt1_2jpp7
 - new version
 
