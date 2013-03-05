@@ -1,26 +1,24 @@
+Group: Other
 # BEGIN SourceDeps(oneline):
 BuildRequires: gcc-c++
 # END SourceDeps(oneline)
-Group: Other
-%add_optflags %optflags_shared
-%global snapshot 1
+%global snapshot 0
 
 Name:           libpinyin
-Version:        0.8.0
-Release:        alt1_3
+Version:        0.8.91
+Release:        alt1_1
 Summary:        Library to deal with pinyin
 
 License:        GPLv2+
 URL:            https://github.com/libpinyin/libpinyin
-Source0:        https://github.com/downloads/libpinyin/libpinyin/%{name}-%{version}.tar.gz
+Source0:        http://downloads.sourceforge.net/libpinyin/libpinyin/%{name}-%{version}.tar.gz
 %if %snapshot
 Patch0:         libpinyin-0.8.x-head.patch
 %endif
 
 BuildRequires:  libdb4.8-devel glib2-devel
-Requires:       %{name}-data = %{version}-%{release}
+Requires:       %{name}-data%{?_isa} = %{version}-%{release}
 Source44: import.info
-Patch33: libpinyin-0.8.x-alt-linkage.patch
 
 %description
 The libpinyin project aims to provide the algorithms core
@@ -33,8 +31,8 @@ Summary:        Development files for %{name}
 Requires:       %{name} = %{version}-%{release}
 
 %description    devel
-The %%{name}-devel package contains libraries and header files for
-developing applications that use %%{name}.
+The %{name}-devel package contains libraries and header files for
+developing applications that use %{name}.
 
 
 %package        data
@@ -43,7 +41,7 @@ Summary:        Data files for %{name}
 Requires:       %{name} = %{version}-%{release}
 
 %description data
-The %%{name}-data package contains data files.
+The %{name}-data package contains data files.
 
 
 %package        tools
@@ -52,7 +50,7 @@ Summary:        Tools for %{name}
 Requires:       %{name} = %{version}-%{release}
 
 %description tools
-The %%{name}-tools package contains tools.
+The %{name}-tools package contains tools.
 
 
 %prep
@@ -61,7 +59,6 @@ The %%{name}-tools package contains tools.
 %if %snapshot
 %patch0 -p1 -b .head
 %endif
-%patch33 -p1
 
 %build
 %configure --disable-static
@@ -78,7 +75,7 @@ find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 %files
 %doc AUTHORS COPYING README
 %{_libdir}/*.so.*
-%dir %{_datadir}/libpinyin
+%dir %{_libdir}/libpinyin
 
 %files devel
 %doc
@@ -89,7 +86,7 @@ find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 
 %files data
 %doc
-%{_datadir}/libpinyin/data
+%{_libdir}/libpinyin/data
 
 %files tools
 %{_bindir}/gen_binary_files
@@ -98,6 +95,9 @@ find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 %{_mandir}/man1/*.1.*
 
 %changelog
+* Tue Mar 05 2013 Igor Vlasenko <viy@altlinux.ru> 0.8.91-alt1_1
+- fc update
+
 * Wed Jan 30 2013 Igor Vlasenko <viy@altlinux.ru> 0.8.0-alt1_3
 - update to new release by fcimport
 
