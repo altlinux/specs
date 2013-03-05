@@ -2,7 +2,7 @@
 
 Name: gnustep-gdl2
 Version: 0.12.0
-Release: alt1.git20120811
+Release: alt1.git20130302
 Summary: The GNUstep Database Library 2 (GDL2)
 License: LGPLv3
 Group: Graphical desktop/GNUstep
@@ -118,8 +118,10 @@ popd
 # bad info
 rm -fR %buildroot%_infodir
 
+gzip ChangeLog
+
 %files
-%doc ANNOUNCE AUTHORS ChangeLog NEWS README TODO 
+%doc ANNOUNCE AUTHORS ChangeLog* NEWS README TODO 
 %_bindir/*
 %_libdir/GNUstep
 %exclude %_libdir/GNUstep/Frameworks/*.framework/Versions/0/Headers
@@ -139,6 +141,9 @@ rm -fR %buildroot%_infodir
 %_docdir/GNUstep
 
 %changelog
+* Tue Mar 05 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.12.0-alt1.git20130302
+- New snapshot
+
 * Sat Jan 12 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.12.0-alt1.git20120811
 - Initial build for Sisyphus
 
