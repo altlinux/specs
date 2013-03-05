@@ -1,3 +1,4 @@
+BuildRequires: not-yet-commons-ssl
 BuildRequires: xmlunit
 Packager: Igor Vlasenko <viy@altlinux.ru>
 BuildRequires: /proc
@@ -35,7 +36,7 @@ BuildRequires: jpackage-compat
 
 Name:           openws
 Version:        1.2.2
-Release:        alt4_2jpp6
+Release:        alt5_2jpp6
 Epoch:          0
 Summary:        Open WS
 License:        ASL 2.0
@@ -126,6 +127,9 @@ ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Tue Mar 05 2013 Igor Vlasenko <viy@altlinux.ru> 0:1.2.2-alt5_2jpp6
+- fixed build
+
 * Wed Oct 03 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.2.2-alt4_2jpp6
 - build with spring3
 
