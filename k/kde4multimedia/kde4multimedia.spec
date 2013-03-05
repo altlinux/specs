@@ -5,9 +5,9 @@
 Name: kde4multimedia
 %define major 4
 %define minor 10
-%define bugfix 0
+%define bugfix 1
 Version: %major.%minor.%bugfix
-Release: alt0.2
+Release: alt1
 
 Group: Graphical desktop/KDE
 Summary: K Desktop Environment - Multimedia
@@ -269,6 +269,9 @@ install -m 0644 %SOURCE105 cmake/modules/
 %_K4dbus_interfaces/*.xml
 
 %changelog
+* Tue Mar 05 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.1-alt1
+- new version
+
 * Mon Jan 14 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.0-alt0.2
 - update from 4.10 branch
 
