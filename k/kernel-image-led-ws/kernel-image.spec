@@ -20,13 +20,13 @@
 %define flavour %base_flavour-%sub_flavour
 
 Name: kernel-image-%flavour
-Version: 3.0.67
-Release: alt3
+Version: 3.0.68
+Release: alt1
 
 %define kernel_req %nil
 %define kernel_prov %nil
 %define kernel_branch 3.0
-%define kernel_stable_version 67
+%define kernel_stable_version 68
 %define kernel_extra_version .%kernel_stable_version
 #define kernel_extra_version %nil
 
@@ -166,7 +166,7 @@ Patch0016: linux-%kernel_branch.66-fix-arch-s390.patch
 Patch0017: linux-%kernel_branch.43-fix-arch-s390--lib.patch
 
 Patch0020: linux-%kernel_branch.55-fix-arch-x86.patch
-Patch0021: linux-%kernel_branch.42-fix-arch-x86--apic.patch
+Patch0021: linux-%kernel_branch.68-fix-arch-x86--apic.patch
 Patch0022: linux-%kernel_branch.42-fix-arch-x86--apm.patch
 Patch0023: linux-%kernel_branch.61-fix-arch-x86--mcheck.patch
 Patch0024: linux-%kernel_branch.42-fix-arch-x86--tsc.patch
@@ -181,7 +181,6 @@ Patch0032: linux-%kernel_branch.42-fix-block--blk-throttle.patch
 Patch0033: linux-%kernel_branch.42-fix-block--cfq-iosched.patch
 
 Patch0051: linux-%kernel_branch.42-fix-drivers--connector.patch
-Patch0052: linux-%kernel_branch.67-fix-drivers--dca.patch
 
 Patch0060: linux-%kernel_branch.61-fix-drivers-acpi.patch
 Patch0061: linux-%kernel_branch.42-fix-drivers-acpi--battery.patch
@@ -350,7 +349,11 @@ Patch0351: linux-%kernel_branch.42-fix-drivers-isdn-gigaset--gigaset.patch
 Patch0352: linux-%kernel_branch.51-fix-drivers-isdn-hardware-mISDN--hfcsusb.patch
 Patch0353: linux-%kernel_branch.42-fix-drivers-isdn-mISDN--mISDN_core.patch
 
-Patch0361: linux-%kernel_branch.42-fix-drivers-leds--leds-lp5521.patch
+Patch0361: linux-%kernel_branch.67-fix-drivers-leds--led-class.patch
+Patch0362: linux-%kernel_branch.67-fix-drivers-leds--led-core.patch
+Patch0363: linux-%kernel_branch.67-fix-drivers-leds--led-triggers.patch
+Patch0364: linux-%kernel_branch.67-fix-drivers-leds--ledtrig-ide-disk.patch
+Patch0365: linux-%kernel_branch.42-fix-drivers-leds--leds-lp5521.patch
 
 Patch0371: linux-%kernel_branch.42-fix-drivers-macintosh--adb.patch
 Patch0372: linux-%kernel_branch.42-fix-drivers-macintosh--adbhid.patch
@@ -577,13 +580,12 @@ Patch0739: linux-%kernel_branch.53-fix-fs-ocfs2.patch
 Patch0740: linux-%kernel_branch.43-fix-fs-partition--ibm.patch
 Patch0741: linux-%kernel_branch.43-fix-fs-proc.patch
 Patch0742: linux-%kernel_branch.42-fix-fs-pstore.patch
-Patch0743: linux-%kernel_branch.62-fix-fs-quota.patch
-Patch0744: linux-%kernel_branch.61-fix-fs-ramfs.patch
-Patch0745: linux-%kernel_branch.51-fix-fs-reiserfs.patch
-Patch0746: linux-%kernel_branch.43-fix-fs-s390_hypfs.patch
-Patch0747: linux-%kernel_branch.56-fix-fs-squashfs.patch
-Patch0748: linux-%kernel_branch.42-fix-fs-sysfs.patch
-Patch0749: linux-%kernel_branch.63-fix-fs-xfs.patch
+Patch0743: linux-%kernel_branch.61-fix-fs-ramfs.patch
+Patch0744: linux-%kernel_branch.51-fix-fs-reiserfs.patch
+Patch0745: linux-%kernel_branch.43-fix-fs-s390_hypfs.patch
+Patch0746: linux-%kernel_branch.56-fix-fs-squashfs.patch
+Patch0747: linux-%kernel_branch.42-fix-fs-sysfs.patch
+Patch0748: linux-%kernel_branch.63-fix-fs-xfs.patch
 
 Patch0750: linux-%kernel_branch.53-fix-include.patch
 
@@ -591,7 +593,7 @@ Patch0761: linux-%kernel_branch.42-fix-init--calibrate.patch
 
 Patch0771: linux-%kernel_branch.42-fix-ipc--mqueue.patch
 
-Patch0780: linux-%kernel_branch.67-fix-kernel.patch
+Patch0780: linux-%kernel_branch.68-fix-kernel.patch
 Patch0781: linux-%kernel_branch.42-fix-kernel--cgroup.patch
 Patch0782: linux-%kernel_branch.42-fix-kernel--cgroup_freezer.patch
 Patch0783: linux-%kernel_branch.49-fix-kernel--events.patch
@@ -678,7 +680,7 @@ Patch0888: linux-%kernel_branch.42-fix-sound-usb-misc--snd-ua101.patch
 Patch0891: linux-%kernel_branch.49-fix-tools--perf.patch
 Patch0892: linux-%kernel_branch.47-fix-tools-firewire--nosy-dump.patch
 
-Patch0901: linux-%kernel_branch.67-fix-virt-kvm.patch
+Patch0901: linux-%kernel_branch.68-fix-virt-kvm.patch
 Patch0902: linux-%kernel_branch.43-fix-virt-kvm--kvm-amd.patch
 Patch0903: linux-%kernel_branch.43-fix-virt-kvm--kvm-intel.patch
 
@@ -1255,7 +1257,7 @@ These are DRM modules for your Linux system.
 %package -n kernel-modules-media-%flavour
 Summary: Linux media driver modules
 %kernel_modules_package_std_body media
-# Needed for webcams, disabled due wired sisyphus_check
+# Needed for webcams, disabled due to stupid sisyphus_check
 #Requires: kernel-modules-sound-ext-%flavour = %kversion-%release
 
 %description -n kernel-modules-media-%flavour
@@ -1358,6 +1360,8 @@ and specify %kbuild_dir as the kernel source directory.
 %package -n firmware-kernel-%flavour
 Summary: Firmware for drivers from %name
 Group: System/Kernel and hardware
+# disabled due to stupid sisyphus_check
+#Requires: %name = %kversion-%release
 AutoProv: no
 AutoReq: no
 
@@ -1516,7 +1520,6 @@ cd linux-%version
 
 # fix-drivers--*
 %patch0051 -p1
-%patch0052 -p1
 
 # fix-drivers-acpi*
 %patch0060 -p1
@@ -1708,6 +1711,10 @@ cd linux-%version
 
 # fix-drivers-leds--*
 %patch0361 -p1
+%patch0362 -p1
+%patch0363 -p1
+%patch0364 -p1
+%patch0365 -p1
 
 # fix-drivers-macintosh--*
 %patch0371 -p1
@@ -1959,7 +1966,6 @@ cd linux-%version
 %patch0746 -p1
 %patch0747 -p1
 %patch0748 -p1
-%patch0749 -p1
 
 %patch0750 -p1
 
@@ -2291,7 +2297,7 @@ config_disable \
 config_disable \
 	%{?_disable_smp:SMP} \
 	%{?_disable_modversions:MODVERSIONS} \
-	%{?_disable_compat:SYSCTL_SYSCALL ACPI_PROC_EVENT COMPAT_VDSO I2C_COMPAT PROC_PID_CPUSET SYSFS_DEPRECATED} \
+	%{?_disable_compat:SYSCTL_SYSCALL ACPI_PROC_EVENT COMPAT_VDSO I2C_COMPAT PROC_PID_CPUSET SYSFS_DEPRECATED USB_DEVICEFS} \
 	%{?_disable_numa:NUMA} \
 	%{?_disable_video:FB DISPLAY_SUPPORT VIDEO_OUTPUT_CONTROL BACKLIGHT_LCD_SUPPORT} \
 	%{?_disable_drm:DRM} \
@@ -2616,7 +2622,8 @@ gen_rpmmodfile ipmi %buildroot%modules_dir/kernel/drivers/{acpi/acpi_ipmi,char/i
 %{?_enable_usb_gadget:gen_rpmmodfile usb-gadget %buildroot%modules_dir/kernel/drivers/usb/gadget}
 %{?_enable_video:gen_rpmmodlist %buildroot%modules_dir/kernel/drivers/video/* | grep -xv '%modules_dir/kernel/drivers/video/uvesafb.ko' > video.rpmmodlist}
 %{?_enable_watchdog:gen_rpmmodlist %buildroot%modules_dir/kernel/drivers/watchdog/* | grep -xv '%modules_dir/kernel/drivers/watchdog/softdog.ko' > watchdog.rpmmodlist}
-for i in %{?_enable_edac:edac} %{?_enable_ide:ide} %{?_enable_media:media} %{?_enable_mtd:mtd} %{?_enable_w1:w1}; do
+%{?_enable_ide:gen_rpmmodfile ide %buildroot%modules_dir/kernel/drivers/{ide,leds/ledtrig-ide-disk.ko}}
+for i in %{?_enable_edac:edac} %{?_enable_media:media} %{?_enable_mtd:mtd} %{?_enable_w1:w1}; do
 	gen_rpmmodfile $i %buildroot%modules_dir/kernel/drivers/$i
 done
 for i in %{?_enable_joystick:joystick} %{?_enable_lirc:lirc} %{?_enable_tablet:tablet} %{?_enable_touchscreen:touchscreen}; do
@@ -3087,6 +3094,53 @@ done)
 
 
 %changelog
+* Tue Mar 05 2013 Led <led@altlinux.ru> 3.0.68-alt1
+- 3.0.68
+- removed:
+  + fix-drivers--dca
+  + fix-fs-quota
+- updated:
+  + fix-arch-x86--apic
+  + fix-drivers-firmware--efivars
+  + fix-kernel
+  + fix-virt-kvm
+- added:
+  + fix-drivers-leds--led-class
+  + fix-drivers-leds--led-core
+  + fix-drivers-leds--led-triggers
+  + fix-drivers-leds--ledtrig-ide-disk
+- moved ledtrig-ide-disk.ko to kernel-image-ide-* subpackage
+- disabled:
+  + KEYS_DEBUG_PROC_KEYS
+  + ASYNC_RAID6_TEST
+  + CPU_NOTIFIER_ERROR_INJECT
+  + BACKTRACE_SELF_TEST
+  + LKDTM
+  + RCU_TORTURE_TEST
+  + TIMER_STATS
+  + DEBUG_KERNEL
+  + PROC_KCORE
+  + QFMT_V1
+  + QUOTA_NETLINK_INTERFACE
+  + DMATEST
+  + RTC_DRV_TEST
+  + ACCESSIBILITY
+  + USB_G_DBGP
+  + USB_DEVICEFS
+  + FB_FOREIGN_ENDIAN
+- enabled:
+  + IO_DELAY_0XED (x86)
+  + IO_DELAY_NONE (x86_64)
+  + FRAME_WARN=2560
+  + MMC_CLKGATE
+  + USB_HWA_HCD
+  + USB_ANNOUNCE_NEW_DEVICES
+  + SND_VXPOCKET
+  + SND_PDAUDIOCF
+  + SND_HRTIMER
+  + SND_SEQ_HRTIMER_DEFAULT
+  + VIDEO_MEYE
+
 * Sat Mar 02 2013 Led <led@altlinux.ru> 3.0.67-alt3
 - added:
   + feat-drivers-scsi--vhba
