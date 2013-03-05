@@ -1,6 +1,6 @@
 Name: gnustep-renaissance
 Version: 0.9.0
-Release: alt3.git20121208
+Release: alt3.git20130131
 Summary: The GNUstep development framework
 License: LGPLv2.1+
 Group: Development/Tools
@@ -102,6 +102,9 @@ gzip ChangeLog
 %_docdir/GNUstep
 
 %changelog
+* Tue Mar 05 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.0-alt3.git20130131
+- New snapshot
+
 * Mon Dec 31 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.0-alt3.git20121208
 - Rebuilt with libobjc2 instead of libobjc
 
