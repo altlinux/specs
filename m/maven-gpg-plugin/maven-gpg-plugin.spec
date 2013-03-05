@@ -1,11 +1,12 @@
 # BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           maven-gpg-plugin
 Version:        1.4
-Release:        alt1_3jpp7
+Release:        alt1_4jpp7
 Summary:        Maven GPG Plugin
 
 Group:          Development/Java
@@ -52,7 +53,9 @@ API documentation for %{name}.
 %prep
 %setup -q
 
+# migrate to maven 3.x 
 %patch0 -p1
+sed -i 's/${mavenVersion}/3.0.4/' pom.xml
 
 %build
 mvn-rpmbuild install javadoc:javadoc
@@ -69,15 +72,17 @@ install -Dpm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
 # javadoc
 install -dm 755 %{buildroot}%{_javadocdir}/%{name}
 
-%files
-%{_javadir}/%{name}.jar
-%{_mavenpomdir}/JPP-%{name}.pom
-%{_mavendepmapfragdir}/%{name}
+%files -f .mfiles
+%doc LICENSE NOTICE
 
 %files javadoc
+%doc LICENSE NOTICE
 %{_javadocdir}/%{name}
 
 %changelog
+* Tue Mar 05 2013 Igor Vlasenko <viy@altlinux.ru> 1.4-alt1_4jpp7
+- fc update
+
 * Mon Oct 01 2012 Igor Vlasenko <viy@altlinux.ru> 1.4-alt1_3jpp7
 - new fc release
 
