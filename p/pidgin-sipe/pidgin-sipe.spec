@@ -1,10 +1,10 @@
 %def_with vv
 %def_with krb5
 %def_enable purple
-%def_disable telepathy
+%def_enable telepathy
 
 Name: pidgin-sipe
-Version: 1.13.2
+Version: 1.14.1
 Release: alt1
 Summary: Pidgin plugin for connecting to MS Communications Server
 
@@ -23,17 +23,40 @@ BuildRequires: glib2-devel >= 2.28.0
 BuildRequires: libpurple-devel >= 2.8.0
 %{?_with_vv:BuildRequires: libnice-devel >= 0.1.0 gstreamer-devel}
 %{?_with_krb5:BuildRequires: libkrb5-devel}
-%{?_enable_telepathy:BuildRequires: libtelepathy-glib-devel}
+%{?_enable_telepathy:BuildRequires: libtelepathy-glib-devel >= 0.18.0 libdbus-glib-devel libgio-devel >= 2.28.0}
 BuildRequires: libnss-devel
 BuildRequires: libgmime-devel >= 2.4.16
 
 %description
-Provides an Open Implementation of SIP/Simple protocol for connecting Pidgin to
-Live Communications Server 2003/2005 and Office Communications Server 2007.
+A third-party plugin for the Pidgin multi-protocol instant messenger.
+It implements the extended version of SIP/SIMPLE used by various products:
+
+    * Microsoft Lync Server 2010
+    * Microsoft Office Communications Server (OCS 2007/2007 R2)
+    * Microsoft Live Communications Server (LCS 2003/2005)
+    * Reuters Messaging
+
+With this plugin you should be able to replace your Microsoft Office
+Communicator client with Pidgin.
+
+%package -n telepathy-sipe
+Summary: Telepathy connection manager to connect to MS Office Communicator
+Group: Networking/Instant messaging
+
+%description -n telepathy-sipe
+A Telepathy connection manager that implements the extended version of
+SIP/SIMPLE used by various products:
+
+    * Microsoft Lync Server 2010
+    * Microsoft Office Communications Server (OCS 2007/2007 R2)
+    * Microsoft Live Communications Server (LCS 2003/2005)
+    * Reuters Messaging
+
+This package provides the protocol support for Telepathy clients.
 
 %prep
 %setup -q
-# %patch1 -p1
+%patch1 -p1
 
 %build
 export KRB5_CFLAGS=`krb5-config --cflags`
@@ -57,7 +80,17 @@ rm -f %buildroot%_libdir/purple-2/*.la
 %_libdir/purple-2/libsipe.so
 %_pixmapsdir/pidgin/protocols/*/sipe.*
 
+%files -n telepathy-sipe
+%_libexecdir/telepathy-sipe
+%_datadir/dbus-1/services/*.service
+%_datadir/empathy/icons/hicolor/*/apps/im-sipe.*
+%_datadir/telepathy/profiles/sipe.profile
+
 %changelog
+* Tue Mar 05 2013 Alexey Shabalin <shaba@altlinux.ru> 1.14.1-alt1
+- 1.14.1
+- build with telepathy support
+
 * Mon Jul 30 2012 Alexey Shabalin <shaba@altlinux.ru> 1.13.2-alt1
 - 1.13.2
 
