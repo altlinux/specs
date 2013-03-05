@@ -1,7 +1,7 @@
 %define _name p11-kit
 
 Name: lib%_name
-Version: 0.14
+Version: 0.16.0
 Release: alt1
 
 Summary: Library for loading and sharing PKCS#11 modules
@@ -10,6 +10,8 @@ License: BSD
 Url: http://p11-glue.freedesktop.org/p11-kit.html
 
 Source: http://p11-glue.freedesktop.org/releases/%_name-%version.tar.gz
+
+BuildRequires: libtasn1-devel ca-certificates
 
 %description
 %_name provides a way to load and enumerate PKCS#11 modules, as well
@@ -49,7 +51,8 @@ This package contains development documentation for %_name library.
 # https://bugs.freedesktop.org/show_bug.cgi?id=42459
 # http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=647229
 %add_optflags -D_GNU_SOURCE
-%configure --disable-static
+%configure --disable-static \
+	--with-system-anchors=%_datadir/ca-certificates
 %make_build
 
 %install
@@ -63,10 +66,17 @@ mkdir -p %buildroot%_sysconfdir/pkcs11/modules
 %_bindir/%_name
 %_libdir/lib%_name.so.*
 %_libdir/%_name-proxy.so
+%_libdir/pkcs11/p11-kit-trust.so
+%dir %_datadir/p11-kit
+%dir %_datadir/p11-kit/modules
+%_datadir/p11-kit/modules/p11-kit-trust.module
+%_datadir/p11-kit/p11-kit-extract-trust
 %dir %_sysconfdir/pkcs11
 %dir %_sysconfdir/pkcs11/modules
 %_sysconfdir/pkcs11/pkcs11.conf.example
 %doc AUTHORS COPYING NEWS README
+
+%exclude %_libdir/pkcs11/p11-kit-trust.la
 
 %files devel
 %_includedir/%_name-1
@@ -77,6 +87,12 @@ mkdir -p %buildroot%_sysconfdir/pkcs11/modules
 %_datadir/gtk-doc/html/%_name
 
 %changelog
+* Tue Mar 05 2013 Yuri N. Sedunov <aris@altlinux.org> 0.16.0-alt1
+- 0.16.0
+
+* Tue Feb 19 2013 Yuri N. Sedunov <aris@altlinux.org> 0.15.2-alt1
+- 0.15.2
+
 * Mon Sep 24 2012 Yuri N. Sedunov <aris@altlinux.org> 0.14-alt1
 - 0.14
 
