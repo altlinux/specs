@@ -12,7 +12,7 @@
 
 Name: WindowMaker
 Version: 0.95.4
-Release: alt4
+Release: alt5
 Packager: %packager
 
 Summary: A window manager for the X Window System
@@ -29,6 +29,7 @@ Patch2: WindowMaker-0.95.0-configure.ac.patch
 Patch3: WindowMaker-alt-Makefile.patch
 
 Requires: xvt, wmsetbg = %version-%release, libWINGs = %version-%release, cpp
+Requires: fonts-bitmap-cyr_rfx-iso10646-0400, xlockmore
 Requires: design-graphics
 Obsoletes: windowmaker, windowmaker-devel, windowmaker-libs
 Obsoletes: wmakerconf <= 2.5
@@ -166,6 +167,9 @@ Utility for root window image setting
 %patch2 -p1
 %patch3 -p1
 
+sed -i 's,/usr/lib/GNUstep,%gnustepdir,g' \
+	altlinux/etc/X11/WindowMaker/WMWindowAttributes
+
 %build
 
 GNUSTEP_LOCAL_ROOT=%gnustepdir
@@ -192,7 +196,7 @@ export LINGUAS GNUSTEP_LOCAL_ROOT
 	--enable-xinerama \
 	--enable-usermenu \
 
-# Меняем цвет бордюра окон на более светлый по просьбе Михаила Шигорина.
+# Set the window border color to another arbitrary value (mike@, #15667)
 subst 's,^\(#define FRAME_BORDER_COLOR \)"black",\1"%frame_border",' \
        src/wconfig.h
 
@@ -208,6 +212,9 @@ sed -e 's@#wmdatadir#@%wmdatadir@' <$RPM_BUILD_ROOT/%wmdatadir/wmmacros \
 mv $RPM_BUILD_ROOT/%wmdatadir/wmmacros.t $RPM_BUILD_ROOT/%wmdatadir/wmmacros
 
 sed -i -e 's@#wmdatadir#@%wmdatadir@' %buildroot%wmdatadir/wmmacros 
+
+ln -s `relative %gnustepdir/Applications/WPrefs.app/WPrefs %_bindir/` \
+	%buildroot%_bindir/
 
 rm -f %buildroot%wmdatadir/menu*
 rm -f %buildroot%wmdatadir/plmenu*
@@ -225,7 +232,6 @@ cat WPrefs.lang >> WindowMaker.lang
 #find_lang name WPrefs geticonset getstyle seticons setstyle wdwrite wmaker wmsetbg wxcopy wxpaste
 #find_lang --output=WINGs.lang WINGs
 
-# Подчищаем ненужные языки документации.
 rm -rf %buildroot%_mandir/cs
 
 %files -f %name.lang
@@ -251,6 +257,7 @@ rm -rf %buildroot%_mandir/cs
 %_bindir/startwindowmaker
 %_bindir/WindowMaker-Terminal
 %_bindir/WindowMaker-Lock
+%_bindir/WPrefs
 
 %_man1dir/*
 %_mandir/ru/man1/*
@@ -301,6 +308,11 @@ rm -rf %buildroot%_mandir/cs
 %_bindir/wmsetbg
 
 %changelog
+* Tue Mar 05 2013 Michael Shigorin <mike@altlinux.org> 0.95.4-alt5
+- Adjusted font specification to cope with UTF-8 (closes: #28592).
+- Updated wallpaper image path to branding.git one (closes: #28624).
+- Created %_bindir/WPrefs symlink and fixed patches (closes: #28593).
+
 * Mon Feb 18 2013 Andrey Bergman <vkni@altlinux.org> 0.95.4-alt4
 - Corrected configuration files in altlinux directory.
 
