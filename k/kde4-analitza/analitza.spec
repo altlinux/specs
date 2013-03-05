@@ -2,8 +2,8 @@
 
 %define rname analitza
 Name: kde4-analitza
-Version: 4.10.0
-Release: alt0.1
+Version: 4.10.1
+Release: alt1
 
 Group: System/Libraries
 Summary: Mathematical features
@@ -101,6 +101,9 @@ Development files for %name
 
 
 %changelog
+* Tue Mar 05 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.1-alt1
+- new version
+
 * Mon Dec 17 2012 Sergey V Turchin <zerg@altlinux.org> 4.10.0-alt0.1
 - new beta version
 
