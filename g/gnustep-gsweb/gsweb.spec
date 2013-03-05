@@ -2,7 +2,7 @@
 
 Name: gnustep-gsweb
 Version: 1.3.0
-Release: alt1.svn20110514
+Release: alt1.svn20130303
 Summary: A library which was designed to be compatible with WebObjects 4.x
 License: LGPLv2+
 Group: Graphical desktop/GNUstep
@@ -108,8 +108,12 @@ do
 done
 popd
 
+ln -s WebObjects %buildroot%_includedir/GSWeb
+
+gzip ChangeLog
+
 %files
-%doc ChangeLog README TODO
+%doc ChangeLog* README TODO
 %_libdir/GNUstep
 %exclude %_libdir/GNUstep/Frameworks/*.framework/Versions/0/Headers
 %exclude %_libdir/GNUstep/Frameworks/*.framework/Versions/1/Headers
@@ -127,6 +131,9 @@ popd
 %_libdir/GNUstep/Frameworks/*.framework/Headers
 
 %changelog
+* Tue Mar 05 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.0-alt1.svn20130303
+- New snapshot
+
 * Sun Jan 13 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.0-alt1.svn20110514
 - Initial build for Sisyphus
 
