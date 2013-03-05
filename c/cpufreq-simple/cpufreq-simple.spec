@@ -1,5 +1,5 @@
 Name: cpufreq-simple
-Version: 0.1.4.6
+Version: 0.2.0
 Release: alt1
 
 Summary: Simple scripts for managing CPUfreq settings
@@ -43,6 +43,11 @@ install -pDm755 %name.pm-utils %buildroot%_sysconfdir/pm/sleep.d/90%name
 %_sysconfdir/pm/sleep.d/*
 
 %changelog
+* Tue Mar 05 2013 Mikhail Efremov <sem@altlinux.org> 0.2.0-alt1
+- Use cpu/modalias if possible (closes: #28232).
+- Added systemd service file.
+- Load powernow-k8 for AMD Bulldozer (21) and Llano (18) CPUs.
+
 * Thu Jul 19 2012 Michael Shigorin <mike@altlinux.org> 0.1.4.6-alt1
 - Don't treat "live" mode specially.
 
