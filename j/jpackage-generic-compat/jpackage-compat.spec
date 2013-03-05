@@ -1,5 +1,5 @@
 Name: jpackage-generic-compat
-Version: 0.21
+Version: 0.22
 Release: alt1
 
 Summary: ALT to JPackage build compatibility adaptor.
@@ -82,6 +82,11 @@ Provides: jpackage-1.4-compat = %version-%release
 Provides: jpackage-1.5-compat = %version-%release
 Provides: jpackage-1.6-compat = %version-%release
 Provides: jpackage-compat = %version-%release
+# on arch
+%ifnarch %ix86 x86_64 
+Provides: jpackage-1.5.0-compat = %version-%release
+Provides: jpackage-1.6.0-compat = %version-%release
+%endif
 Obsoletes: jpackage-1.4-compat < %version
 Obsoletes: jpackage-1.5-compat < %version
 Obsoletes: jpackage-1.6-compat < %version
@@ -107,11 +112,17 @@ install -d $RPM_BUILD_ROOT%_javadir
 %files
 #/usr/share/sgml/docbook/xsl-stylesheets
 
+%ifarch %ix86 x86_64 
 %files -n jpackage-1.5.0-compat
 %files -n jpackage-1.6.0-compat
+%endif
+
 %files -n jpackage-1.7-compat
 
 %changelog
+* Tue Mar 05 2013 Igor Vlasenko <viy@altlinux.ru> 0.22-alt1
+- arm support (thanks to sbolshakov@)
+
 * Thu Jan 17 2013 Igor Vlasenko <viy@altlinux.ru> 0.21-alt1
 - moved compat symlink into docbook-style-xsl
 
