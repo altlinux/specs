@@ -16,10 +16,10 @@
 %define rname kdepim
 %define major 4
 %define minor 10
-%define bugfix 0
+%define bugfix 1
 Name: kde4pim
 Version: %major.%minor.%bugfix
-Release: alt2
+Release: alt1
 
 Group: Graphical desktop/KDE
 Summary: K Desktop Environment
@@ -1586,6 +1586,9 @@ based on kdepim.
 
 
 %changelog
+* Tue Mar 05 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.1-alt1
+- new version
+
 * Mon Feb 25 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.0-alt2
 - update from 4.10 branch
 
