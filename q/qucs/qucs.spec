@@ -1,6 +1,6 @@
 Name: qucs
 Version: 0.0.16
-Release: alt1
+Release: alt2
 Summary: Circuit simulator
 License: GPL
 Group: Education
@@ -11,11 +11,9 @@ Source1: %name.desktop
 Source2: qucs-tango-icons.tar.bz2
 Source3: qucs-icons.tar.bz2
 
-# Automatically added by buildreq on Thu May 05 2011
-# optimized out: fontconfig libICE-devel libSM-devel libX11-devel libstdc++-devel xorg-xproto-devel
-BuildRequires: flex gperf imake libqt3-devel xorg-cf-files
-
-BuildRequires: gcc3.4-c++
+# Automatically added by buildreq on Wed Mar 06 2013
+# optimized out: fontconfig gnu-config libICE-devel libSM-devel libX11-devel libstdc++-devel xorg-xproto-devel
+BuildRequires: flex gcc-c++ gperf imake libqt3-devel xorg-cf-files
 
 %description
 Qucs is a circuit simulator with graphical user interface.  The
@@ -25,10 +23,10 @@ e.g. DC, AC, S-parameter and harmonic balance analysis.
 %prep
 %setup
 tar -xjf %SOURCE2 -C qucs
+sed -i '\@<tr1/complex>@d' qucs-core/configure
 
 %build
 #autoreconf
-export CC=gcc-3.4 CXX=g++-3.4
 %configure
 %make_build
 
@@ -40,7 +38,7 @@ mkdir -p %buildroot%_iconsdir
 tar -xjf %SOURCE3 -C %buildroot%_iconsdir
 
 for l in $(find %buildroot%_datadir/%name/lang -name \*.qm); do
-    echo -n $l | sed 's,.*_\(.*\)\.qm,%lang\(\1\) ,' >> %name.lang
+    echo -n $l | sed 's,.*_\(.*\)\.qm,%%lang\(\1\) ,' >> %name.lang
     echo $l | sed "s,%buildroot,," >> %name.lang
 done
 
@@ -67,6 +65,9 @@ done
 %_man1dir/*
 
 %changelog
+* Tue Mar 05 2013 Fr. Br. George <george@altlinux.ru> 0.0.16-alt2
+- Fix build on i586
+
 * Tue May 03 2011 Fr. Br. George <george@altlinux.ru> 0.0.16-alt1
 - Autobuild version bump to 0.0.16
 - Switch to gcc3.4 to avoid C++ error messages
