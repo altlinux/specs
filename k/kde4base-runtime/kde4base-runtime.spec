@@ -7,10 +7,10 @@
 %define rname kdebase-runtime
 %define major 4
 %define minor 10
-%define bugfix 0
+%define bugfix 1
 Name: kde4base-runtime
 Version: %major.%minor.%bugfix
-Release: alt2
+Release: alt1
 %define libname lib%name
 
 Group: Graphical desktop/KDE
@@ -224,6 +224,9 @@ ln -sf `relative %_kde4_bindir/kde4 %_K4bindir/kde4` %buildroot/%_K4bindir/kde4
 %_K4dbus_interfaces/*
 
 %changelog
+* Tue Mar 05 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.1-alt1
+- new version
+
 * Fri Mar 01 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.0-alt2
 - update from 4.10 branch
 
