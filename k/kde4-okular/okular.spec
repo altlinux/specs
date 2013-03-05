@@ -6,9 +6,9 @@
 Name: kde4-okular
 %define major 4
 %define minor 10
-%define bugfix 0
+%define bugfix 1
 Version: %major.%minor.%bugfix
-Release: alt0.2
+Release: alt1
 
 Group: Office
 Summary: KDE document viewer
@@ -125,6 +125,9 @@ Development files for %name
 
 
 %changelog
+* Tue Mar 05 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.1-alt1
+- new version
+
 * Mon Jan 14 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.0-alt0.2
 - update from 4.10 branch
 
