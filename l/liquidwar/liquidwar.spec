@@ -1,14 +1,17 @@
 # Liquid War sports i386 assembler extensions, that don't work on
 # anything but i386.
-%ifarch i586
-%define configureasm --enable-asm
-%else
+#ifarch i586
+# dropped since this:
+#  Assembler messages:
+#  Fatal error: invalid -mtune= option: `generic'
+#define configureasm --enable-asm
+#else
 %define configureasm --disable-asm
-%endif
+#endif
 
 Name: liquidwar
 Version: 5.6.4
-Release: alt4
+Release: alt5
 
 Group: Games/Arcade
 Summary: Liquid War is a unique multiplayer wargame
@@ -121,6 +124,9 @@ install -m 644 %SOURCE4 %buildroot/%_liconsdir/%name.xpm
 %_liconsdir/%name.xpm
 
 %changelog
+* Tue Mar 05 2013 Fr. Br. George <george@altlinux.ru> 5.6.4-alt5
+- Drop assembles code due to invalid -mtune= option: `generic'
+
 * Tue May 29 2012 Fr. Br. George <george@altlinux.ru> 5.6.4-alt4
 - DSO list completion
 
