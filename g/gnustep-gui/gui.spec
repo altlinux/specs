@@ -3,8 +3,8 @@
 # based on Fedora's package
 
 Name: gnustep-gui
-Version: 0.23.0
-Release: alt5.git20130129
+Version: 0.23.1
+Release: alt1.git20130302
 Summary: The GNUstep GUI library
 License: GPLv2+ and GPLv3
 Group: Development/Tools
@@ -156,6 +156,9 @@ rm -fR %buildroot%_infodir
 %endif
 
 %changelog
+* Tue Mar 05 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.23.1-alt1.git20130302
+- Version 0.23.1
+
 * Wed Jan 30 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.23.0-alt5.git20130129
 - New snapshot
 
