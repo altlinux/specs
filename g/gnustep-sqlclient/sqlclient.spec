@@ -1,8 +1,8 @@
 %set_verify_elf_method unresolved=strict
 
 Name: gnustep-sqlclient
-Version: 1.6.0
-Release: alt3.git20121129
+Version: 1.6.1
+Release: alt1.git20130304
 Summary: Provide a simple interface to SQL databases for GNUstep applications
 License: LGPLv3+
 Group: Graphical desktop/GNUstep
@@ -125,6 +125,9 @@ buildIt $libSQLClient
 %_docdir/GNUstep
 
 %changelog
+* Tue Mar 05 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.6.1-alt1.git20130304
+- Version 1.6.1
+
 * Mon Dec 31 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.6.0-alt3.git20121129
 - Rebuilt with libobjc2 instead of libobjc
 
