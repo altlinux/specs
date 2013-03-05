@@ -4,7 +4,7 @@
 %define rname kdepim-runtime
 %define major 4
 %define minor 10
-%define bugfix 0
+%define bugfix 1
 Name: kde4-pim-runtime
 Version: %major.%minor.%bugfix
 Release: alt1
@@ -222,6 +222,12 @@ based on kdepim.
 
 
 %changelog
+* Tue Mar 05 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.1-alt1
+- new version
+
+* Fri Mar 01 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.0-alt2
+- update from 4.10 branch
+
 * Mon Feb 25 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.0-alt1
 - update from 4.10 branch
 
