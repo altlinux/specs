@@ -1,11 +1,11 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/docbook2man /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/pkg-config /usr/bin/xmlto pkgconfig(dbus-1) pkgconfig(gdk-2.0) pkgconfig(gdk-x11-2.0) pkgconfig(gio-2.0) pkgconfig(glib-2.0) pkgconfig(gobject-2.0) pkgconfig(gstreamer-0.10) pkgconfig(gstreamer-plugins-base-0.10) pkgconfig(gtk+-2.0) pkgconfig(libcanberra-gtk) pkgconfig(libpulse) pkgconfig(libpulse-mainloop-glib) pkgconfig(libsystemd-daemon) pkgconfig(libsystemd-login) pkgconfig(libxml-2.0) pkgconfig(mate-keyring-1) pkgconfig(unique-1.0) pkgconfig(unique-3.0) pkgconfig(x11) pkgconfig(xext) pkgconfig(xproto) pkgconfig(xrandr) pkgconfig(xrender)
-# END SourceDeps(oneline)
 Group: Graphical desktop/Other
+# BEGIN SourceDeps(oneline):
+BuildRequires: /usr/bin/glib-gettextize /usr/bin/pkg-config libgio-devel pkgconfig(glib-2.0)
+# END SourceDeps(oneline)
 %define _libexecdir %_prefix/libexec
 Name:		mate-file-manager-open-terminal
 Version:	1.5.0
-Release:	alt1_1
+Release:	alt1_2
 Summary:	Mate-file-manager extension for an open terminal shortcut
 
 License:	GPLv2+
@@ -50,6 +50,9 @@ rm -f %{buildroot}%{_libdir}/caja/extensions-2.0/*.la
 %{_libdir}/caja/extensions-2.0/libcaja-open-terminal.so
 
 %changelog
+* Tue Mar 05 2013 Igor Vlasenko <viy@altlinux.ru> 1.5.0-alt1_2
+- new fc release
+
 * Fri Dec 07 2012 Igor Vlasenko <viy@altlinux.ru> 1.5.0-alt1_1
 - new fc release
 

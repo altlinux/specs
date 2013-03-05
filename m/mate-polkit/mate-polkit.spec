@@ -1,11 +1,11 @@
+Group: File tools
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/glib-gettextize /usr/bin/gtkdocize libgtk+2-gir-devel libpolkit-gir-devel pkgconfig(gtk+-2.0)
 # END SourceDeps(oneline)
-Group: File tools
 %define _libexecdir %_prefix/libexec
 Name:		mate-polkit
 Version:	1.5.0
-Release:	alt1_1
+Release:	alt1_2
 Summary:	Integrates polkit authentication for MATE desktop
 License:	LGPLv2+
 URL:		http://mate-desktop.org
@@ -71,6 +71,9 @@ find %{buildroot} -name '*.la' -exec rm -fv {} ';'
 
 
 %changelog
+* Tue Mar 05 2013 Igor Vlasenko <viy@altlinux.ru> 1.5.0-alt1_2
+- new fc release
+
 * Fri Nov 16 2012 Igor Vlasenko <viy@altlinux.ru> 1.5.0-alt1_1
 - use F19 import base
 

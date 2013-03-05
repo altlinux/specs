@@ -1,12 +1,11 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/gtkdocize /usr/bin/mate-keyring-daemon /usr/bin/pkg-config
+BuildRequires: /usr/bin/glib-gettextize /usr/bin/gtkdocize /usr/bin/mate-keyring-daemon /usr/bin/pkg-config libgcrypt-devel
 # END SourceDeps(oneline)
-%define gcrypt_version 1.0
 %define _libexecdir %_prefix/libexec
 Summary:	Framework for managing passwords and other secrets
 Name:		libmatekeyring
 Version:	1.5.0
-Release:	alt1_1
+Release:	alt1_2
 License:	GPLv2+ and LGPLv2+
 Group:		System/Libraries
 Source:		http://pub.mate-desktop.org/releases/1.5/%{name}-%{version}.tar.xz
@@ -14,7 +13,6 @@ URL:		http://mate-desktop.org
 
 BuildRequires:	pkgconfig(glib-2.0)
 BuildRequires:	pkgconfig(dbus-1)
-BuildRequires:	libgcrypt-devel >= %{gcrypt_version}
 BuildRequires:	intltool
 BuildRequires:	mate-common
 BuildRequires:	pkgconfig(gtk-doc)
@@ -70,6 +68,9 @@ rm $RPM_BUILD_ROOT%{_libdir}/*.la
 %doc %{_datadir}/gtk-doc/html/*
 
 %changelog
+* Tue Mar 05 2013 Igor Vlasenko <viy@altlinux.ru> 1.5.0-alt1_2
+- new fc release
+
 * Sun Nov 11 2012 Igor Vlasenko <viy@altlinux.ru> 1.5.0-alt1_1
 - use F19 import base
 
