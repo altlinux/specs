@@ -1,6 +1,6 @@
 Name: gnustep-gworkspace
 Version: 0.9.2
-Release: alt2.git20130127
+Release: alt2.git20130304
 Summary: The GNUstep Workspace Manager of which the most visible part is the filebrowser
 License: GPLv2+
 Group: Graphical desktop/GNUstep
@@ -139,6 +139,9 @@ install -Dp -m644 %SOURCE1 %buildroot%_menudir/%name
 %doc Documentation/*
 
 %changelog
+* Tue Mar 05 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.2-alt2.git20130304
+- New snapshot
+
 * Wed Feb 20 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.2-alt2.git20130127
 - Added menu file (thinx kostyalamer@)
 
