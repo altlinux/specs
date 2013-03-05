@@ -1,21 +1,22 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: /usr/bin/pod2man perl(Config/General.pm) perl(Exporter.pm) perl(File/Spec/Functions.pm) perl(IO/File.pm) perl(Term/ANSIColor.pm) perl(Term/ReadLine.pm) perl(Term/Size.pm) perl-podlators
+BuildRequires: perl(Config/General.pm) perl(Exporter.pm) perl(File/Spec/Functions.pm) perl(IO/File.pm) perl(Term/ANSIColor.pm) perl(Term/ReadLine.pm) perl(Term/Size.pm) perl-podlators
 # END SourceDeps(oneline)
 Name:           acheck
 Version:        0.5.1
-Release:        alt2_7
+Release:        alt2_9
 Summary:        Check common localisation mistakes
 
 Group:          Text tools
 License:        GPLv2+
 URL:            http://packages.debian.org/etch/%{name}
 Source0:        http://ftp.de.debian.org/debian/pool/main/a/acheck/%{name}_%{version}.tar.gz
+Patch0:         acheck-0.5.1-man.patch
 BuildRequires:  gettext
+BuildRequires:  /usr/bin/pod2man
 BuildArch:      noarch
-Requires:       perl
 Requires:       perl(Text/Aspell.pm) perl(Config/General.pm) perl(Term/Size.pm) perl(Locale/gettext.pm)
-Requires:       perl(Locale/PO.pm) perl(Term/ReadLine/Gnu.pm) perl(Term/UI.pm) acheck-rules
+Requires:       perl(Locale/PO.pm) perl(Term/ReadLine/Gnu.pm) perl(Term/UI.pm) %{name}-rules
 Source44: import.info
 
 
@@ -27,7 +28,7 @@ checks.
 
 %prep
 %setup -q -n acheck-%{version}
-
+%patch0 -p1
 
 %build
 #Empty build
@@ -41,16 +42,10 @@ install -p -m 644 Common.pm FileType.pm Parser.pm \
  $RPM_BUILD_ROOT%{perl_vendor_privlib}/ACheck/
 cd po;make;cd ..
 
-echo """
-use Pod::Man;
-my \$parser = Pod::Man->new(release => \$VERSION, section => 8);
-\$parser->parse_from_file(\$ARGV[0], \$ARGV[1]);
-""" > $RPM_BUILD_ROOT/pod2man.pl
-
-perl $RPM_BUILD_ROOT/pod2man.pl man/acheck.1.pod acheck.1
-perl $RPM_BUILD_ROOT/pod2man.pl man/acheck.5.pod acheck.5
-perl $RPM_BUILD_ROOT/pod2man.pl man/acheck.fr.1.pod acheck.fr.1
-perl $RPM_BUILD_ROOT/pod2man.pl man/acheck.fr.5.pod acheck.fr.5
+/usr/bin/pod2man man/acheck.1.pod acheck.1
+/usr/bin/pod2man man/acheck.5.pod acheck.5
+/usr/bin/pod2man man/acheck.fr.1.pod acheck.fr.1
+/usr/bin/pod2man man/acheck.fr.5.pod acheck.fr.5
 
 mkdir -p $RPM_BUILD_ROOT/%{_mandir}/man1/
 mkdir -p $RPM_BUILD_ROOT/%{_mandir}/man5/
@@ -61,7 +56,6 @@ install -p -m 644 acheck.1 $RPM_BUILD_ROOT/%{_mandir}/man1/
 install -p -m 644 acheck.5 $RPM_BUILD_ROOT/%{_mandir}/man5/
 install -p -m 644 acheck.fr.1 $RPM_BUILD_ROOT/%{_mandir}/man1/fr/acheck.1
 install -p -m 644 acheck.fr.5 $RPM_BUILD_ROOT/%{_mandir}/man5/fr/acheck.5
-rm -f $RPM_BUILD_ROOT/pod2man.pl
 
 mkdir -p $RPM_BUILD_ROOT/%{_datadir}/locale/fr/LC_MESSAGES/ \
  $RPM_BUILD_ROOT/%{_datadir}/locale/pl/LC_MESSAGES/ \
@@ -85,6 +79,9 @@ install -p -m 644 po/sv.mo $RPM_BUILD_ROOT/%{_datadir}/locale/sv/LC_MESSAGES/%{n
 %{_datadir}/locale/sv/LC_MESSAGES/%{name}.mo
 
 %changelog
+* Tue Mar 05 2013 Igor Vlasenko <viy@altlinux.ru> 0.5.1-alt2_9
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.5.1-alt2_7
 - update to new release by fcimport
 
