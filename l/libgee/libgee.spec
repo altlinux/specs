@@ -1,7 +1,7 @@
 %def_disable static
 
 Name: libgee
-Version: 0.6.7
+Version: 0.6.8
 Release: alt1
 Summary: a collection library providing GObject-based interfaces
 License: LGPL
@@ -106,6 +106,9 @@ mkdir -p m4
 %endif
 
 %changelog
+* Tue Mar 05 2013 Alexey Shabalin <shaba@altlinux.ru> 0.6.8-alt1
+- 0.6.8
+
 * Tue Dec 04 2012 Alexey Shabalin <shaba@altlinux.ru> 0.6.7-alt1
 - 0.6.7
 
