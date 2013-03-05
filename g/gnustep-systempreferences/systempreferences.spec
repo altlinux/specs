@@ -1,6 +1,6 @@
 Name: gnustep-systempreferences
 Version: 1.1.0
-Release: alt5.git20120323
+Release: alt5.git20130207
 Summary: Implementation of the PreferencePanes framework (NSPreferencePane)
 License: GPLv2+
 Group: Graphical desktop/GNUstep
@@ -100,6 +100,9 @@ install -Dp -m 644 %SOURCE1 %buildroot%_menudir/%name
 %_libdir/GNUstep/Frameworks/PreferencePanes.framework/Headers
 
 %changelog
+* Tue Mar 05 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.0-alt5.git20130207
+- New snapshot
+
 * Sun Jan 27 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.0-alt5.git20120323
 - Added menu file (thnx kostyalamer@)
 
