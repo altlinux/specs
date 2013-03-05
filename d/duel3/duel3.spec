@@ -1,10 +1,10 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: gcc-c++ unzip
 # END SourceDeps(oneline)
-%define snapshot 20060225
+%global snapshot 20060225
 Name:           duel3
 Version:        0.1
-Release:        alt3_0.14.%{snapshot}
+Release:        alt3_0.15.%{snapshot}
 Summary:        One on one spaceship duel in a 2D arena
 Group:          Games/Other
 License:        BSD
@@ -74,7 +74,7 @@ ln -s opengl-game-wrapper.sh $RPM_BUILD_ROOT%{_bindir}/%{name}-wrapper
 
 # below is the desktop file and icon stuff.
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/applications
-desktop-file-install             \
+desktop-file-install \
   --dir $RPM_BUILD_ROOT%{_datadir}/applications \
   %{SOURCE2}
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/64x64/apps
@@ -91,6 +91,9 @@ install -p -m 644 %{SOURCE3} \
 
 
 %changelog
+* Tue Mar 05 2013 Igor Vlasenko <viy@altlinux.ru> 0.1-alt3_0.15.20060225
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.1-alt3_0.14.20060225
 - update to new release by fcimport
 
