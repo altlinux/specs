@@ -1,6 +1,6 @@
 Name: openbox
 Version: 3.5.0
-Release: alt1.2
+Release: alt3
 
 Summary: Openbox is a standards compliant, fast, light-weight, extensible window manager
 Summary(ru_RU.UTF-8): Openbox это следующий стандартам, быстрый, лёгкий, расширяемый оконный менеджер
@@ -32,6 +32,8 @@ Patch5: openbox-3.4.9-alt-desktop-file.patch
 Requires: lib%name = %version-%release
 # for menu "Run" item
 Requires: Xdialog
+
+Requires: %name-base = %version-%release
 
 Conflicts: openbox-extras
 
@@ -79,10 +81,17 @@ Requires: lib%name-devel = %version-%release
 This package contains static libraries for developing with
 Openbox window manager.
 
+%package base
+Summary: Openbox pure WM
+Group: Graphical desktop/Other
+
+%description base
+Openbox pure WM.
+
 %package kde
 Summary: Run KDE with Openbox as the WM
 Group: Graphical desktop/Other
-Requires: %name = %version-%release
+Requires: %name-base = %version-%release
 
 %description kde
 Run KDE with Openbox as the WM.
@@ -90,7 +99,7 @@ Run KDE with Openbox as the WM.
 %package gnome
 Summary: Run GNOME with Openbox as the WM
 Group: Graphical desktop/Other
-Requires: %name = %version-%release
+Requires: %name-base = %version-%release
 
 %description gnome
 Run GNOME with Openbox as the WM.
@@ -98,7 +107,7 @@ Run GNOME with Openbox as the WM.
 %package autostart
 Summary: XDG support for Openbox
 Group: Graphical desktop/Other
-Requires: %name = %version-%release
+Requires: %name-base = %version-%release
 Requires: python-module-pyxdg
 
 %description autostart
@@ -154,12 +163,15 @@ install -pD -m 644 %SOURCE13 %buildroot%_sysconfdir/xdg/openbox/
 
 %find_lang --output=%name.lang %name
 
-%files -f %name.lang
+%files
+%config %_sysconfdir/X11/wmsession.d/09openbox
+%_datadir/xsessions/openbox.desktop
+
+%files base -f %name.lang
 %doc AUTHORS CHANGELOG COMPLIANCE README
 %doc data/menu.xsd doc/rc-mouse-focus.xml data/rc.xsd data/xbm
 %_sysconfdir/xdg/openbox/*
 %config(noreplace) %_sysconfdir/menu-methods/*
-%config %_sysconfdir/X11/wmsession.d/09openbox
 %_bindir/*
 %exclude %_bindir/openbox-kde-session
 %exclude %_bindir/openbox-gnome-session
@@ -176,7 +188,6 @@ install -pD -m 644 %SOURCE13 %buildroot%_sysconfdir/xdg/openbox/
 %_niconsdir/%name.xpm
 %_iconsdir/hicolor/64x64/apps/OpenBox.xpm
 %_miconsdir/%name.xpm
-%_datadir/xsessions/openbox.desktop
 %_datadir/applications/openbox.desktop
 
 %files -n lib%name
@@ -212,6 +223,15 @@ install -pD -m 644 %SOURCE13 %buildroot%_sysconfdir/xdg/openbox/
 %endif
 
 %changelog
+* Tue Mar 05 2013 Mykola Grechukh <gns@altlinux.ru> 3.5.0-alt3
+- execute autostart and environment when run standalone from DM
+
+* Thu Feb 14 2013 Mykola Grechukh <gns@altlinux.ru> 3.5.0-alt2
+- revisited subpackages layout
+
+* Thu Feb 14 2013 Mykola Grechukh <gns@altlinux.ru> 3.5.0-alt1.3
+- wmsession splitted to subpackage
+
 * Thu Feb 14 2013 Mykola Grechukh <gns@altlinux.ru> 3.5.0-alt1.2
 - s/O/o/, closes #28524
 
