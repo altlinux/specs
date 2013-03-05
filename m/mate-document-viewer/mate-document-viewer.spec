@@ -1,3 +1,5 @@
+## important!!! # https://bugzilla.altlinux.org/show_bug.cgi?id=28634
+Requires: mate-desktop
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/glib-mkenums /usr/bin/gtkdocize gcc-c++ libICE-devel libgdk-pixbuf-gir-devel libgio-devel libgtk+2-gir-devel pkgconfig(cairo) pkgconfig(cairo-pdf) pkgconfig(cairo-ps) pkgconfig(gail) pkgconfig(gail-3.0) pkgconfig(gio-2.0) pkgconfig(gtk+-2.0) pkgconfig(gtk+-3.0) pkgconfig(gtk+-unix-print-2.0) pkgconfig(gtk+-unix-print-3.0) pkgconfig(gtk+-x11-2.0) pkgconfig(gtk+-x11-3.0) pkgconfig(libgxps) pkgconfig(libxml-2.0) pkgconfig(mate-keyring-1) pkgconfig(sm) pkgconfig(x11) zlib-devel
 # END SourceDeps(oneline)
@@ -7,7 +9,7 @@ BuildRequires: /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/glib-m
 
 Name:           mate-document-viewer
 Version:        1.5.0
-Release:        alt2_0
+Release:        alt3_0
 Summary:        Document viewer
 
 License:        GPLv2+ and GFDL
@@ -238,6 +240,9 @@ rm -f $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/icon-theme.cache
 %{_libdir}/atril/3/backends/pixbufdocument.atril-backend
 
 %changelog
+* Tue Mar 05 2013 Igor Vlasenko <viy@altlinux.ru> 1.5.0-alt3_0
+- added Req: mate-desktop (closes: 28634)
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 1.5.0-alt2_0
 dropped obsolete mate-conf BR:
 
