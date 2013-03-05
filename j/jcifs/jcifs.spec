@@ -6,7 +6,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:          jcifs
 Version:       1.3.17
-Release:       alt1_5jpp7
+Release:       alt1_7jpp7
 Summary:       Common Internet File System Client in 100% Java
 Group:         Development/Java
 License:       LGPLv2+ and BSD
@@ -49,7 +49,7 @@ Requires:      jpackage-utils
 BuildArch: noarch
 
 %description javadoc
-This package contains the API documentation for %%{name}.
+This package contains the API documentation for %{name}.
 
 %package demo
 Summary:       Demo for %{name}
@@ -58,7 +58,7 @@ License:       LGPLv2+ and GPLv2+ and BSD
 Requires:      %{name} = %{?epoch:%epoch:}%{version}-%{release}
 
 %description demo
-Demonstrations and samples for %%{name}.
+Demonstrations and samples for %{name}.
 
 %prep
 %setup -q -n %{name}_%{version}
@@ -104,6 +104,9 @@ cp -pr examples/*.java  %{buildroot}%{_datadir}/%{name}/examples
 %doc LICENSE.txt
 
 %changelog
+* Tue Mar 05 2013 Igor Vlasenko <viy@altlinux.ru> 0:1.3.17-alt1_7jpp7
+- fc update
+
 * Thu Feb 07 2013 Igor Vlasenko <viy@altlinux.ru> 0:1.3.17-alt1_5jpp7
 - fc update
 
