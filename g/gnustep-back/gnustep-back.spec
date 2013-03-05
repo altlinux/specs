@@ -3,8 +3,8 @@
 #based on Fedora's spec
 
 Name: gnustep-back    
-Version: 0.23.0
-Release: alt6.git20130201
+Version: 0.23.1
+Release: alt1.git20130301
 Summary: The GNUstep back-end library
 License: LGPLv3+ and GPLv3+
 Group: Graphical desktop/GNUstep
@@ -113,6 +113,9 @@ gzip ChangeLog
 %_man1dir/*
 
 %changelog
+* Tue Mar 05 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.23.1-alt1.git20130301
+- New snapshot
+
 * Mon Feb 04 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.23.0-alt6.git20130201
 - New snapshot
 
