@@ -1,4 +1,4 @@
-%define git_date .git20130225
+%define git_date .git20130304
 #define git_date %nil
 
 %define dbus_version 1.1
@@ -13,6 +13,7 @@ Group: System/Configuration/Networking
 Summary: Mobile broadband modem management service
 Url: http://gitorious.org/projects/modemmanager
 Source: %name-%version.tar
+Source1: %name-launcher
 Patch0: %name-%version-%release.patch
 
 Requires: dbus >= %dbus_version
@@ -48,6 +49,7 @@ functionality from applications.
 %package devel-doc
 Group: Development/Documentation
 Summary: Development documentation for %name
+BuildArch: noarch
 
 %description devel-doc
 %summary
@@ -74,6 +76,7 @@ developing applications that use libmm-glib.
 %package -n libmm-glib-devel-doc
 Group: Development/Documentation
 Summary: Development documentation for libmm-glib
+BuildArch: noarch
 
 %description -n libmm-glib-devel-doc
 %summary
@@ -99,6 +102,7 @@ make check
 
 %install
 %makeinstall_std
+install -Dm0755 %SOURCE1 %buildroot%_sbindir/%name-launcher
 %find_lang %name
 
 %files -f %name.lang
@@ -139,6 +143,11 @@ make check
 %doc %_datadir/gtk-doc/html/libmm-glib
 
 %changelog
+* Tue Mar 05 2013 Mikhail Efremov <sem@altlinux.org> 0.7.990-alt1.git20130304
+- Start ModemManager on non-systemd systems.
+- Package doc subpackages as noarch.
+- Upstream git snapshot (master branch).
+
 * Mon Feb 25 2013 Mikhail Efremov <sem@altlinux.org> 0.7.990-alt1.git20130225
 - upstream git snapshot (master branch).
 
