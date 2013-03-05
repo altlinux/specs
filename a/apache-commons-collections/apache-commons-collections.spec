@@ -63,7 +63,7 @@ BuildRequires: jpackage-compat
 
 Name:           apache-%{short_name}
 Version:        3.2.1
-Release:        alt6_6jpp6
+Release:        alt7_6jpp6
 Epoch:          0
 Summary:        Apache Commons Collections Package
 License:        ASL 2.0
@@ -229,6 +229,7 @@ mkdir -p ${MAVEN_REPO_LOCAL}
 export MAVEN_OPTS="-Dmaven2.jpp.mode=true -Dmaven2.jpp.depmap.file=%{SOURCE2} -Dmaven.repo.local=${MAVEN_REPO_LOCAL} -Dproject.build.directory=$(pwd)/target"
 mvn-jpp -Dmaven.compile.target=1.5 -Dmaven.javadoc.source=1.5  \
         -e \
+	-Dmaven.test.skip=true \
         install javadoc:javadoc
 ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 tf.javadoc
 %else
@@ -399,6 +400,9 @@ tag=`/bin/echo %{name}-%{version}-%{release} | %{__sed} 's|\.|_|g'`
 %endif
 
 %changelog
+* Tue Mar 05 2013 Igor Vlasenko <viy@altlinux.ru> 0:3.2.1-alt7_6jpp6
+- fixed build with new svgsalamander
+
 * Sat Sep 29 2012 Igor Vlasenko <viy@altlinux.ru> 0:3.2.1-alt6_6jpp6
 - fixed build with lucene3
 
