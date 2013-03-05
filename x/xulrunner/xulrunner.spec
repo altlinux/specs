@@ -13,7 +13,7 @@
 
 Summary:	XUL Runner
 Name:		xulrunner
-Version:	18.0.2
+Version:	19.0.1
 Release:	alt1
 
 License:	MPL/GPL/LGPL
@@ -40,8 +40,8 @@ Patch104:	mozilla-nongnome-proxies.patch
 Requires:	%name-libs = %version-%release
 
 Requires:	hunspell-en
-Requires:	libnspr       >= 4.9.4-alt1
-Requires:	libnss        >= 3.14.1-alt1
+Requires:	libnspr       >= 4.9.5-alt1
+Requires:	libnss        >= 3.14.2-alt1
 
 Obsoletes:	xulrunner-192
 Obsoletes:	xulrunner-2.0
@@ -81,9 +81,9 @@ BuildRequires: python-modules-logging
 BuildRequires: python-modules-sqlite3
 
 # Mozilla requires
-BuildRequires: libnspr-devel       >= 4.9.4-alt1
-BuildRequires: libnss-devel        >= 3.14.1-alt1
-BuildRequires: libnss-devel-static >= 3.14.1-alt1
+BuildRequires: libnspr-devel       >= 4.9.5-alt1
+BuildRequires: libnss-devel        >= 3.14.2-alt1
+BuildRequires: libnss-devel-static >= 3.14.2-alt1
 
 BuildRequires: autoconf_2.13
 %set_autoconf_version 2.13
@@ -354,6 +354,21 @@ ln -sf $(relative "%xulr_prefix/libmozalloc.so" "%xulr_develdir/sdk/lib/libmozal
 %_datadir/rpm-build-mozilla/mozilla-sh-functions
 
 %changelog
+* Thu Feb 28 2013 Alexey Gladkov <legion@altlinux.ru> 19.0.1-alt1
+- New release (19.0.1).
+
+* Thu Feb 28 2013 Alexey Gladkov <legion@altlinux.ru> 19.0-alt1
+- New release (19.0).
+- Fixed:
+  + MFSA 2013-28 Use-after-free, out of bounds read, and buffer overflow issues found using Address Sanitizer
+  + MFSA 2013-27 Phishing on HTTPS connection through malicious proxy
+  + MFSA 2013-26 Use-after-free in nsImageLoadingContent
+  + MFSA 2013-25 Privacy leak in JavaScript Workers
+  + MFSA 2013-24 Web content bypass of COW and SOW security wrappers
+  + MFSA 2013-23 Wrapped WebIDL objects can be wrapped again
+  + MFSA 2013-22 Out-of-bounds read in image rendering
+  + MFSA 2013-21 Miscellaneous memory safety hazards (rv:19.0 / rv:17.0.3)
+
 * Mon Feb 04 2013 Alexey Gladkov <legion@altlinux.ru> 18.0.2-alt1
 - New release (18.0.2).
 

@@ -3,7 +3,7 @@
 
 Summary:	Thunderbird is Mozilla's e-mail client
 Name:		thunderbird
-Version:	17.0.2
+Version:	17.0.3
 Release:	alt1
 License:	MPL/GPL
 Group:		Networking/Mail
@@ -371,7 +371,7 @@ rm -rf -- \
 	#
 
 #ver=%version
-ver=18.0
+ver=19.0
 sed -i \
 	-e "s,^\\(MaxVersion\\)=.*,\\1=${ver%%.*}.*,g" \
 	%buildroot/%tbird_prefix/application.ini
@@ -503,6 +503,16 @@ rm -f -- %buildroot/%lightning_ciddir/application.ini
 %_sysconfdir/rpm/macros.d/%name
 
 %changelog
+* Fri Mar 01 2013 Alexey Gladkov <legion@altlinux.ru> 17.0.3-alt1
+- New version (17.0.3).
+- Fixed:
+  + MFSA 2013-28 Use-after-free, out of bounds read, and buffer overflow issues found using Address Sanitizer
+  + MFSA 2013-27 Phishing on HTTPS connection through malicious proxy
+  + MFSA 2013-26 Use-after-free in nsImageLoadingContent
+  + MFSA 2013-25 Privacy leak in JavaScript Workers
+  + MFSA 2013-24 Web content bypass of COW and SOW security wrappers
+  + MFSA 2013-21 Miscellaneous memory safety hazards (rv:19.0 / rv:17.0.3)
+
 * Thu Jan 17 2013 Alexey Gladkov <legion@altlinux.ru> 17.0.2-alt1
 - New version (17.0.2).
 - Fixed:
