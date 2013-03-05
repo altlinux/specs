@@ -2,8 +2,8 @@
 
 %define rname libksane
 Name: libksane4
-Version: 4.10.0
-Release: alt0.2
+Version: 4.10.1
+Release: alt1
 
 Group: System/Libraries
 Summary: Interface for SANE library
@@ -54,6 +54,9 @@ Development files for %name
 
 
 %changelog
+* Tue Mar 05 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.1-alt1
+- new version
+
 * Mon Jan 14 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.0-alt0.2
 - update from 4.10 branch
 
