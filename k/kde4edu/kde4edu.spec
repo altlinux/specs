@@ -8,9 +8,9 @@
 Name: kde4edu
 %define major 4
 %define minor 10
-%define bugfix 0
+%define bugfix 1
 Version: %major.%minor.%bugfix
-Release: alt0.3
+Release: alt1
 Packager: Sergey V Turchin <zerg at altlinux dot org>
 
 Group: Graphical desktop/KDE
@@ -1064,6 +1064,9 @@ mkdir -p %buildroot/%_K4apps/step/objinfo/l10n
 %_K4dbus_interfaces/*
 
 %changelog
+* Tue Mar 05 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.1-alt1
+- new version
+
 * Wed Jan 30 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.0-alt0.3
 - update from 4.10 branch
 
