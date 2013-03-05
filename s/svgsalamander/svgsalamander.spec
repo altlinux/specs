@@ -1,11 +1,14 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 #
 # spec file for package svgsalamander
 
 Name:           svgsalamander
-Version:        0.1.1
-Release:        alt1_2jpp7
+Version:        0.1.10
+Release:        alt1_1jpp7
 Summary:        An SVG engine for Java
 
 Group:          Development/Java
@@ -23,7 +26,7 @@ BuildRequires:  javacc-maven-plugin
 BuildRequires:  maven-enforcer-plugin
 Requires:       jpackage-utils
 Requires(post): jpackage-utils
-Requires(postun):jpackage-utils
+Requires(postun): jpackage-utils
 Source44: import.info
 
 
@@ -42,7 +45,7 @@ Requires:       jpackage-utils
 BuildArch: noarch
 
 %description javadoc
-This package contains the API documentation for %{name}.
+This package contains the API documentation for %%{name}.
 
 %prep
 %setup -q
@@ -87,6 +90,9 @@ install -Dpm 644 www/maven/pom.xml $RPM_BUILD_ROOT/%{_mavenpomdir}/JPP-%{name}.p
 
 
 %changelog
+* Tue Mar 05 2013 Igor Vlasenko <viy@altlinux.ru> 0.1.10-alt1_1jpp7
+- fc update
+
 * Mon Sep 17 2012 Igor Vlasenko <viy@altlinux.ru> 0.1.1-alt1_2jpp7
 - new version
 
