@@ -1,3 +1,4 @@
+BuildRequires: not-yet-commons-ssl
 Packager: Igor Vlasenko <viy@altlinux.ru>
 BuildRequires: /proc
 BuildRequires: jpackage-compat
@@ -34,7 +35,7 @@ BuildRequires: jpackage-compat
 
 Name:           xmltooling
 Version:        1.2.0
-Release:	alt1_2jpp6
+Release:	alt2_2jpp6
 Epoch:          0
 Summary:        XML Tooling
 License:        Apache License 2.0
@@ -145,6 +146,9 @@ ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name} # ghost symlink
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Tue Mar 05 2013 Igor Vlasenko <viy@altlinux.ru> 0:1.2.0-alt2_2jpp6
+- fixed build
+
 * Fri Sep 03 2010 Igor Vlasenko <viy@altlinux.ru> 0:1.2.0-alt1_2jpp6
 - new version
 
