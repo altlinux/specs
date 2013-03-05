@@ -8,7 +8,7 @@ Version: 4.0
 #define sdversion 1.0.0
 %define oopfx lo4
 %define lodir %_libdir/%name
-Release: alt1
+Release: alt2
 Summary: LibreOffice Productivity Suite
 License: LGPL
 Group: Office
@@ -29,6 +29,12 @@ Source3:	libreoffice-translations-%uversion.tar.xz
 Source10:	libreoffice-ext_sources.%uversion.tar
 Source100:	forky.c
 
+Patch1:	alt-001-MOZILLA_CERTIFICATE_FOLDER.patch
+
+# FC patches
+Patch201: 0001-Work-around-problem-with-boost-shared_array-NULL-cto.patch
+Patch202: 0001-fix-compile-for-change-to-boost-1.53.0-declaring-sma.patch
+
 AutoReqProv: yes, noshell, nopython
 
 # Automatically added by buildreq on Mon Feb 11 2013
@@ -36,14 +42,16 @@ AutoReqProv: yes, noshell, nopython
 BuildRequires: ant-testutil cppunit-devel flex gcc-c++ gperf gst-plugins-devel imake junit4 libGConf-devel libGLU-devel libXinerama-devel libXrandr-devel libcups-devel libdb4-devel libdbus-glib-devel libexpat-devel libgtk+2-devel libhunspell-devel libicu-devel libldap-devel liblpsolve-devel libmpfr-devel libmythes-devel libncursesw-devel libneon-devel libnss-devel liborcus-devel libpoppler-cpp-devel libreadline-devel libssl-devel libunixODBC-devel libwpg2-devel libwps-devel libxslt-devel perl-Archive-Zip postgresql-devel unzip wget xorg-cf-files zenity zip 
 
 BuildRequires: /proc wget xdg-utils zip >= 3.0
-BuildRequires: java-devel
+BuildRequires: java-1.6.0-sun-devel
 BuildRequires: liblpsolve-devel libjpeg-devel fonts-ttf-liberation
+BuildRequires: kde4libs-devel
 
 %set_verify_elf_method unresolved=relaxed
 %add_findreq_skiplist %lodir/share/config/webcast/*
 
 %description
-LibreOffice is a productivity suite that is compatible with other major office suites
+LibreOffice is a productivity suite that is compatible with other major
+office suites
 
 %package icons
 Summary: Icon files for %name (separated for LibreOffice3 compatibility)
@@ -59,6 +67,14 @@ Requires: %name = %version-%release
 %description gnome
 GNOME extensions for %name
 
+%package kde4
+Summary: KDE4 Extensions for %name
+Group:  Office
+Requires: %name = %version-%release
+%description kde4
+KDE4 extensions for %name
+
+# define macro for quick langpack description
 %define langpack(l:n:) \
 %define lang %{-l:%{-l*}}%{!-l:%{error:Language code not defined}} \
 %define pkgname langpack-%{lang} \
@@ -80,23 +96,22 @@ echo Using forky
 %else
 echo Direct build
 %endif
-%setup -q -n libreoffice-%uversion -a10
-#-a1 -a2 -a3 -a10
-#mv libreoffice-%uversion/* .
-#rm -fr %name-translations-%version/git-hooks
-#rm -f %name-help-%version/ChangeLog
+%setup -q -n libreoffice-%uversion -a10 -b1 -b2 -b3
+%patch1 -p0
+%patch201 -p1
+%patch202 -p1
 
+rm -fr %name-tnslations/git-hooks
+
+# Hack build ditrectory a little
 ln -s %SOURCE0 ext_sources/
 ln -s %SOURCE1 ext_sources/
 ln -s %SOURCE2 ext_sources/
 ln -s %SOURCE3 ext_sources/
-rmdir translations dictionaries helpcontent2
-ln -s src/libreoffice-%uversion/translations .
-ln -s src/libreoffice-%uversion/dictionaries .
-ln -s src/libreoffice-%uversion/helpcontent2 .
 
 install -D %SOURCE100 forky.c
 
+# create shell wrappers
 for n in office writer impress calc base draw math qstart; do
 	oname=%{oopfx}$n
 	case "$n" in 
@@ -125,14 +140,13 @@ done
         --disable-systray \
         --enable-dbus \
         --enable-evolution2 \
-        --enable-ext-report-builder \
         --enable-gio \
         --with-alloc=system \
-	--with-system-openldap \
         --without-afms \
         --without-fonts \
         --without-myspell-dicts \
         --without-ppds \
+        --with-system-boost \
         --with-system-cairo \
         --with-system-cppunit \
         --with-system-curl \
@@ -145,36 +159,42 @@ done
         --with-system-libwpg \
         --with-system-libwps \
         --with-system-libxml \
+        --with-system-lpsolve \
         --with-system-mozilla \
-        --with-system-nss \
+        --with-system-mythes \
         --with-system-neon \
+        --with-system-nss \
         --with-system-odbc \
+	--with-system-openldap \
         --with-system-openssl \
+        --with-system-orcus \
         --with-system-poppler \
+        --with-system-postgresql \
         --with-system-stdlibs \
         --with-system-zlib \
-        --with-system-postgresql \
+	\
         --with-external-dict-dir=%_datadir/myspell \
         --with-external-hyph-dir=%_datadir/hyphen \
         --with-external-thes-dir=%_datadir/mythes \
         --with-lang="en-US %with_lang" \
         --with-external-tar=`pwd`/ext_sources \
         \
-        --with-system-lpsolve \
-        --with-system-mythes \
+        --enable-ext-report-builder \
 	--with-parallelism \
 	\
-	--with-system-orcus \
+	--enable-kde4 \
+	\
+	--enable-hardlink-deliver \
+	--disable-fetch-external \
 
 
-        #--with-system-boost \
-
-
-gcc -g -O2 -DHAVE_CONFIG_H -shared -O3 -fomit-frame-pointer -fPIC forky.c -oforky.so -ldl
+# Make forky
+gcc -g -DHAVE_CONFIG_H -shared -O3 -fomit-frame-pointer -fPIC forky.c -oforky.so -ldl
 
 %make bootstrap
 
 %ifdef with_forky
+# TODO calculate forky limits
 echo Using forky
 export forky_max_procs=450
 %ifarch x86_64
@@ -186,47 +206,61 @@ export forky_max_vsz=16000000
 %endif
 export forky_verbose=1
 export LD_PRELOAD=`pwd`/forky.so
+touch $HOME/forky.log
+%make_build || { wc $HOME/forky.log; false; }
+test -r $HOME/forky.log && echo "Fork() was `wc -l $HOME/forky.log` times delayed" || :
+%else
+%make_build
 %endif
-
-%make_build || cat $HOME/forky.log
 
 %install
 %makeinstall DESTDIR=%buildroot INSTALLDIR=%lodir
+
+# Pick up LOO-generated file lists
 for l in %with_lang; do
 	ll="`echo "$l" | tr '-' '_'`"
 	cat %buildroot/gid_*_$ll | sort -u > $l.lang
 done
 
+# Create gnome plugin list
 (
 cd %buildroot
 find .%lodir/program/gnome*
 find .%lodir/program/gconfbe1.uno.so
-find .%lodir/program/libvclplug_gtkl*.so
+find .%lodir/program/libvclplug_gtk*.so
 find .%lodir/share/registry/gnome.xcd
 ) | sed 's/^[.]//' > files.gnome
 
-{ cat %buildroot/gid_* | sort -u ; cat *.lang; cat files.gnome; } | sort | uniq -u > files.nolang
+# Create kde plugin list
+(
+cd %buildroot
+find .%lodir/program/kde4*
+find .%lodir/program/libvclplug_kde4*
+) | sed 's/^[.]//' > files.kde4
+
+# Generate base filelist by removing files from  separated packages
+{ cat %buildroot/gid_* | sort -u ; cat *.lang files.gnome files.kde4; } | sort | uniq -u > files.nolang
 
 unset RPM_PYTHON
 
+# Install wrappers
 for n in l*4*.sh; do install -m755 -D $n %buildroot%_bindir/${n%%.sh}; done
 
-# TODO icon-themes/
-# TODO rename icons
-mkdir -p %buildroot%_iconsdir %buildroot%_desktopdir
+# Install renamed icons
 for n in `( cd sysui/desktop/icons; find hicolor -type f )`; do
 	m=libreoffice%version-`basename "$n"`
 	d=`dirname "$n"`
 	install -D sysui/desktop/icons/$n %buildroot%_iconsdir/$d/$m
 done
+# TODO icon-themes/
 
-# TODO .desktop
+# Install desktop files
+mkdir -p %buildroot%_desktopdir
 for n in writer impress calc base draw math qstart; do
 	ln -s %lodir/share/xdg/$n.desktop %buildroot%_desktopdir/libreoffice%version-$n.desktop
 done
 
 # TODO .mime (?)
-# TODO package gnome
 
 %files -f files.nolang
 %exclude /gid_Module*
@@ -235,6 +269,8 @@ done
 %_iconsdir/*/*/apps/*.*g
 
 %files gnome -f files.gnome
+
+%files kde4 -f files.kde4
 
 %files icons
 %_iconsdir/*/*/mimetypes/*
@@ -247,6 +283,10 @@ done
 %langpack -l es -n Espanian
 
 %changelog
+* Tue Mar 05 2013 Fr. Br. George <george@altlinux.ru> 4.0-alt2
+- Separate KDE4 plugins
+- Apply Firefox certificates import patch
+
 * Tue Feb 19 2013 Fr. Br. George <george@altlinux.ru> 4.0-alt1
 Initial test build
 
