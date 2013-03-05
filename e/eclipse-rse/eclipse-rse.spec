@@ -17,7 +17,7 @@ BuildRequires: rpm-build-java-osgi
 Name: eclipse-rse
 Summary: Eclipse Remote System Explorer
 Version: 3.4
-Release: alt1_3jpp7
+Release: alt2_3jpp7
 License: EPL
 URL: http://www.eclipse.org/dsdp/tm/
 
@@ -118,8 +118,8 @@ unzip -q -o -d %{buildroot}%{install_loc}/rse \
  build/rpmBuild/org.eclipse.rse.useractions.zip
 
 pushd %{buildroot}%{install_loc}/rse/eclipse/plugins
-rm org.apache.commons.net_3.1.0*.jar
-ln -s %{_javadir}/commons-net.jar org.apache.commons.net_3.1.0.jar
+rm org.apache.commons.net_3.2.0*.jar
+ln -s %{_javadir}/commons-net.jar org.apache.commons.net_3.2.0.jar
 popd
 
 pushd %{buildroot}%{install_loc}/rse/eclipse/plugins
@@ -163,6 +163,9 @@ popd
 %doc epl-v10.html
 
 %changelog
+* Tue Mar 05 2013 Igor Vlasenko <viy@altlinux.ru> 3.4-alt2_3jpp7
+- commons-net 3.2 support
+
 * Wed Sep 12 2012 Igor Vlasenko <viy@altlinux.ru> 3.4-alt1_3jpp7
 - new version
 

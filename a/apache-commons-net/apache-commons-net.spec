@@ -1,4 +1,7 @@
 Epoch: 0
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
 Provides: osgi(org.apache.commons.net) = 2.0.0
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
@@ -9,8 +12,8 @@ BuildRequires: jpackage-compat
 %global short_name   commons-%{base_name}
 
 Name:           apache-%{short_name}
-Version:        3.1
-Release:        alt1_2jpp7
+Version:        3.2
+Release:        alt1_1jpp7
 Summary:        Internet protocol suite Java library
 License:        ASL 2.0
 Group:          Development/Java
@@ -49,7 +52,7 @@ Obsoletes:  jakarta-%{short_name}-javadoc < 0:2.0-3
 BuildArch: noarch
 
 %description javadoc
-%{summary}.
+%%{summary}.
 
 %prep
 %setup -q -n %{short_name}-%{version}-src
@@ -94,6 +97,9 @@ ln -s %{short_name}.jar %buildroot%_javadir/jakarta-%{short_name}.jar
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Wed Feb 13 2013 Igor Vlasenko <viy@altlinux.ru> 0:3.2-alt1_1jpp7
+- fc update
+
 * Fri Aug 31 2012 Igor Vlasenko <viy@altlinux.ru> 0:3.1-alt1_2jpp7
 - new version
 
