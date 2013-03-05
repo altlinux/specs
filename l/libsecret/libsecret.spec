@@ -1,4 +1,4 @@
-%define ver_major 0.13
+%define ver_major 0.14
 %define api_ver 1
 
 %def_disable static
@@ -16,7 +16,7 @@ Url: http://www.gnome.org/
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 
-%define glib_ver 2.31.0
+%define glib_ver 2.32.0
 
 BuildRequires: libgio-devel >= %glib_ver
 BuildRequires: libgcrypt-devel gtk-doc intltool xsltproc
@@ -120,6 +120,9 @@ xvfb-run %make check
 
 
 %changelog
+* Tue Mar 05 2013 Yuri N. Sedunov <aris@altlinux.org> 0.14-alt1
+- 0.14
+
 * Sun Feb 17 2013 Yuri N. Sedunov <aris@altlinux.org> 0.13-alt1
 - 0.13
 - made %%check using xvfb-run
