@@ -1,8 +1,8 @@
 %add_findpackage_path %_kde4_bindir
 
 Name: smokeqt
-Version: 4.10.0
-Release: alt0.2
+Version: 4.10.1
+Release: alt1
 
 Group: Development/KDE and QT
 Summary: Bindings for Qt libraries
@@ -355,6 +355,9 @@ Qt generic bindings library.
 
 
 %changelog
+* Tue Mar 05 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.1-alt1
+- new version
+
 * Fri Dec 21 2012 Sergey V Turchin <zerg@altlinux.org> 4.10.0-alt0.2
 - rebuilt with new qscintilla
 
