@@ -2,7 +2,7 @@
 
 Name: gnustep-steptalk
 Version: 0.10.0
-Release: alt2.git20121202
+Release: alt2.git20130302
 Summary: Scripting framework for creating scriptable servers or applications
 License: LGPLv2.1+
 Group: Development/Objective-C
@@ -112,6 +112,9 @@ popd
 %doc Documentation/*
 
 %changelog
+* Tue Mar 05 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.10.0-alt2.git20130302
+- New snapshot
+
 * Mon Dec 31 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.10.0-alt2.git20121202
 - Rebuilt with libobjc2 instead of libobjc
 - Don't require development packages for runtime packages
