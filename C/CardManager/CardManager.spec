@@ -1,17 +1,18 @@
 # BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           CardManager
-Version:        1
-Release:        alt1_2jpp7
+Version:        3
+Release:        alt1_1jpp7
 Summary:        Java application to allows you to play any, especially collectible, card game
 
 Group:          Games/Other
 License:        BSD
 URL:            http://cardmanager.wz.cz/
-Source0:        http://cardmanager.wz.cz/CardManager_sources.zip
+Source0:        http://cardmanager.wz.cz/CardManager_sources%{version}.zip
 Patch0:         removeManifestEntries.patch
 BuildArch:      noarch
 
@@ -93,6 +94,9 @@ cp -r dist/javadoc/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 
 
 %changelog
+* Tue Mar 05 2013 Igor Vlasenko <viy@altlinux.ru> 3-alt1_1jpp7
+- fc update
+
 * Mon Sep 17 2012 Igor Vlasenko <viy@altlinux.ru> 1-alt1_2jpp7
 - new version
 
