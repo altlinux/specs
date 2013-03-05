@@ -33,7 +33,7 @@ BuildRequires: jpackage-compat
 
 Name:           substance
 Version:        5.3
-Release:        alt4_1jpp6
+Release:        alt5_1jpp6
 Summary:        Substance Look and Feel
 License:        BSD
 Group:          Development/Java
@@ -53,11 +53,11 @@ BuildRequires: fest-util
 BuildRequires: jgoodies-forms
 BuildRequires: laf-plugin
 BuildRequires: laf-widget
-BuildRequires: swingx
+BuildRequires: swingx16
 Requires: jgoodies-forms
 Requires: laf-plugin
 Requires: laf-widget
-Requires: swingx
+Requires: swingx16
 BuildArch:      noarch
 
 %description
@@ -90,7 +90,7 @@ ln -sf %{_javadir}/asm2-all.jar       lib/asm-all-2.2.2.jar
 ln -sf %{_javadir}/jgoodies-forms.jar lib/forms-1.2.0.jar
 ln -sf %{_javadir}/laf-plugin.jar     lib/laf-plugin-50.jar
 ln -sf %{_javadir}/laf-widget.jar     lib
-ln -sf %{_javadir}/swingx.jar         lib
+ln -sf %{_javadir}/swingx16.jar       lib/swingx.jar
 ln -sf %{_javadir}/fest-assert.jar    lib/test/fest-assert-1.1.jar
 ln -sf %{_javadir}/fest-reflect.jar   lib/test/fest-reflect-1.1.jar
 ln -sf %{_javadir}/fest-swing.jar     lib/test/fest-swing-1.2a3.jar
@@ -147,6 +147,9 @@ ln -s %{name}-%{version} \
 %doc www/*
 
 %changelog
+* Tue Mar 05 2013 Igor Vlasenko <viy@altlinux.ru> 5.3-alt5_1jpp6
+- fixed build - now use swingx16
+
 * Sat Feb 09 2013 Igor Vlasenko <viy@altlinux.ru> 5.3-alt4_1jpp6
 - fixed build with new jgoodies - added jgoodies-common to classpath
 
