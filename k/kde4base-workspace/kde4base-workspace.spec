@@ -23,11 +23,11 @@
 
 %define major 4
 %define minor 10
-%define bugfix 0
+%define bugfix 1
 %define rname kdebase-workspace
 Name: kde4base-workspace
 Version: %major.%minor.%bugfix
-Release: alt7
+Release: alt1
 
 Group: Graphical desktop/KDE
 Summary: K Desktop Environment - Workspace
@@ -116,7 +116,10 @@ Patch1048: kdebase-workspace-4.10.0-alt-def-oxygen-kwin.patch
 BuildRequires(pre): kde4libs-devel rpm-build-python
 BuildRequires(pre): NetworkManager-devel
 BuildRequires(pre): libpolkit-devel
+%if_enabled systemd
+%else
 BuildRequires: libConsoleKit-devel
+%endif
 %if_enabled google
 BuildRequires: google-gadgets-devel
 %endif
@@ -955,6 +958,10 @@ chmod 0755 %buildroot/%_sysconfdir/firsttime.d/kdm4
 %_K4dbus_interfaces/*
 
 %changelog
+* Tue Mar 05 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.1-alt1
+- new version
+- built without consolekit support
+
 * Fri Mar 01 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.0-alt7
 - update from 4.10 branch
 
