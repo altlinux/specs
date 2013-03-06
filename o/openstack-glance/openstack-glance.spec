@@ -3,16 +3,16 @@
 #
 Name:		openstack-glance
 Version:	2012.2.0.4
-Release:	alt1
+Release:	alt2
 Summary:	OpenStack Image Service
 
 Group:		System/Servers
 License:	ASL 2.0
 URL:		http://glance.openstack.org
-Source0:	%{name}-%{version}.tar.gz
-Source1:	openstack-glance-api.service
-Source2:	openstack-glance-registry.service
-Source3:	openstack-glance.logrotate
+Source0:	%name-%version.tar.gz
+Source1:	%name-api.service
+Source2:	%name-registry.service
+Source3:	%name.logrotate
 
 #
 # patches_base=folsom-3
@@ -30,7 +30,7 @@ Requires(post):		systemd-units
 Requires(preun):	systemd-units
 Requires(postun):	systemd-units
 Requires(pre):	shadow-utils
-Requires:	python-module-glance = %{version}-%{release}
+Requires:	python-module-glance = %version-%release
 Requires:	python-module-glanceclient
 Requires:	python-module-greenlet >= 0.3.1
 
@@ -81,7 +81,7 @@ This package contains the glance Python library.
 Summary:	Documentation for OpenStack Image Service
 Group:		Documentation
 
-Requires:	%{name} = %{version}-%{release}
+Requires:	%name = %version-%release
 
 BuildRequires:	systemd-units
 BuildRequires:	python-module-sphinx
@@ -178,28 +178,12 @@ useradd -u 161 -r -g glance -d %{_sharedstatedir}/glance -s /sbin/nologin \
 exit 0
 
 %post
-if [ $1 -eq 1 ] ; then
-    # Initial installation
-    /bin/systemctl daemon-reload >/dev/null 2>&1 || :
-fi
-
+%post_service %name-api
+%post_service %name-registry
 
 %preun
-if [ $1 -eq 0 ] ; then
-    # Package removal, not upgrade
-    /bin/systemctl --no-reload disable openstack-glance-api.service > /dev/null 2>&1 || :
-    /bin/systemctl --no-reload disable openstack-glance-registry.service > /dev/null 2>&1 || :
-    /bin/systemctl stop openstack-glance-api.service > /dev/null 2>&1 || :
-    /bin/systemctl stop openstack-glance-registry.service > /dev/null 2>&1 || :
-fi
-
-%postun
-/bin/systemctl daemon-reload >/dev/null 2>&1 || :
-if [ $1 -ge 1 ] ; then
-    # Package upgrade, not uninstall
-    /bin/systemctl try-restart openstack-glance-api.service >/dev/null 2>&1 || :
-    /bin/systemctl try-restart openstack-glance-registry.service >/dev/null 2>&1 || :
-fi
+%preun_service %name-api
+%preun_service %name-registry
 
 %files
 %doc README.rst
@@ -214,8 +198,8 @@ fi
 %{_bindir}/glance-scrubber
 %{_bindir}/glance-replicator
 
-%{_unitdir}/openstack-glance-api.service
-%{_unitdir}/openstack-glance-registry.service
+%{_unitdir}/%name-api.service
+%{_unitdir}/%name-registry.service
 %{_mandir}/man1/glance*.1.gz
 %dir %{_sysconfdir}/glance
 %config(noreplace) %attr(-, root, glance) %{_sysconfdir}/glance/glance-api.conf
@@ -226,7 +210,7 @@ fi
 %config(noreplace) %attr(-, root, glance) %{_sysconfdir}/glance/glance-scrubber.conf
 %config(noreplace) %attr(-, root, glance) %{_sysconfdir}/glance/policy.json
 %config(noreplace) %attr(-, root, glance) %{_sysconfdir}/glance/schema-image.json
-%config(noreplace) %attr(-, root, glance) %{_sysconfdir}/logrotate.d/openstack-glance
+%config(noreplace) %attr(-, root, glance) %{_sysconfdir}/logrotate.d/%name
 %dir %attr(0755, glance, nobody) %{_sharedstatedir}/glance
 %dir %attr(0755, glance, nobody) %{_logdir}/glance
 %dir %attr(0755, glance, nobody) %{_runtimedir}/glance
@@ -241,5 +225,8 @@ fi
 %doc doc/build/html
 
 %changelog
+* Wed Mar 06 2013 Pavel Shilovsky <piastry@altlinux.org> 2012.2.0.4-alt2
+- Use post/preun_service scripts in spec
+
 * Thu Nov 08 2012 Pavel Shilovsky <piastry@altlinux.org> 2012.2.0.4-alt1
-- Initial relase for Sisyphus (based on Fedora)
+- Initial release for Sisyphus (based on Fedora)
