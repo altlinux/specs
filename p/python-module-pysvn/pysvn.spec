@@ -1,6 +1,6 @@
 Name: python-module-pysvn
 Version: 1.5.2
-Release: alt3.2
+Release: alt3.3
 Summary: Subversion support for python
 License: Apache License
 Group: Development/Python
@@ -9,6 +9,7 @@ Packager: Gennady Kovalev <gik@altlinux.ru>
 Source0: pysvn-%version.tar
 Patch0: pysvn-%version-alt-allinone.patch
 Patch1: pysvn-alt-no-rpath.patch
+Patch2: pysvn-1.5.2-alt-subversion-1.7.8.patch
 # Automatically added by buildreq on Tue Jan 01 2008
 BuildRequires: gcc-c++ libcom_err-devel libexpat-devel libkrb5-devel libsubversion-devel python-devel python-modules-compiler python-modules-xml subversion
 
@@ -20,6 +21,7 @@ The pysvn project's goal is to enable Tools to be written in Python that use Sub
 %setup -n pysvn-%version
 %patch0 -p1
 %patch1 -p2
+%patch2 -p2
 
 
 %build
@@ -39,6 +41,9 @@ cp -r Source/pysvn %buildroot%python_sitelibdir
 
 
 %changelog
+* Wed Mar 06 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.5.2-alt3.3
+- Fixed build with subversion 1.7.8
+
 * Tue Jan 17 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.5.2-alt3.2
 - Removed RPATH
 
