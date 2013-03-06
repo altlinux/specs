@@ -4,7 +4,7 @@
 
 Name:		scsitarget-utils
 Version:	1.0.30
-Release:	alt2
+Release:	alt3
 Summary:	The SCSI target daemon and utility programs
 
 Group:		System/Configuration/Hardware
@@ -76,20 +76,10 @@ pushd usr
 %{__make} install %{?with_rdma:ISCSI_RDMA=1} DESTDIR=%{buildroot} sbindir=%{_sbindir} libdir=%{_libdir}/tgt
 
 %post
-if [ $1 -eq 1 ]; then
-    systemctl daemon-reload >/dev/null 2>&1 || :
-fi
+%post_service tgtd
 
 %preun
-if [ $1 -eq 0 ]; then
-    systemctl --no-reload disable tgtd.service >/dev/null 2>&1 || :
-    systemctl stop tgtd.service >/dev/null 2>&1 || :
-fi
-
-%postun
-if [ $1 -ge 1 ]; then
-    systemctl try-restart %{name}.service >/dev/null 2>&1 || :
-fi
+%preun_service tgtd
 
 %files
 %defattr(-, root, root, -)
@@ -108,6 +98,9 @@ fi
 %attr(0600,root,root) %config(noreplace) %{_sysconfdir}/tgt/conf.d/sample.conf
 
 %changelog
+* Wed Mar 06 2013 Pavel Shilovsky <piastry@altlinux.org> 1.0.30-alt3
+- Use post/preun_service scripts in spec
+
 * Tue Jan 29 2013 Pavel Shilovsky <piastry@altlinux.org> 1.0.30-alt2
 - Fix build with new docbook-style-xsl
 
