@@ -14,7 +14,7 @@
 
 Name: NetworkManager
 Version: 0.9.8.0
-Release: alt2%git_date
+Release: alt3%git_date
 License: %gpl2plus
 Group: System/Configuration/Networking
 Summary: Network Link Manager and User Applications
@@ -29,6 +29,7 @@ Source5: 20-hostname
 Source6: NetworkManager.sysconfig
 Source7: 30-efw
 Source8: 80-etcnet-post
+Source9: NetworkManager-prestart
 Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-build-licenses
@@ -209,6 +210,9 @@ install -Dm0644 %SOURCE6 %buildroot%_sysconfdir/sysconfig/%name
 # Install initscript
 install -Dm0755 initscript/Alt/NetworkManager %buildroot%_initdir/NetworkManager
 
+# Install NetworkManager pre start script
+install -Dm0755 %SOURCE9 %buildroot%_sbindir/NetworkManager-prestart
+
 %check
 make check
 
@@ -316,6 +320,13 @@ fi
 %exclude %_libdir/pppd/%ppp_version/*.la
 
 %changelog
+* Wed Mar 06 2013 Mikhail Efremov <sem@altlinux.org> 0.9.8.0-alt3
+- Added NetworkManager-prestart script.
+- initscript: Fix ModemManager stopping.
+- Patches from upstream:
+  + fix a crash in 'nmcli d l'.
+  + plug some memory leaks.
+
 * Mon Feb 25 2013 Mikhail Efremov <sem@altlinux.org> 0.9.8.0-alt2
 - Enable build with ModemManager-0.7.x.
 - etcnet-alt: Fix connections uuid.
