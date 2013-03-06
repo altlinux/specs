@@ -1,6 +1,6 @@
 Name: xorg-drv-qxl
 Version: 0.1.0
-Release: alt1
+Release: alt2
 Epoch: 1
 Summary: QEMU QXL paravirt video
 License: GPL
@@ -37,6 +37,9 @@ Driver for QEMU QXL paravirt video
 %_x11modulesdir/drivers/*.so
 
 %changelog
+* Wed Mar 06 2013 Valery Inozemtsev <shrek@altlinux.ru> 1:0.1.0-alt2
+- requires XORG_ABI_VIDEODRV = 14.1
+
 * Fri Jan 18 2013 Valery Inozemtsev <shrek@altlinux.ru> 1:0.1.0-alt1
 - 0.1.0
 

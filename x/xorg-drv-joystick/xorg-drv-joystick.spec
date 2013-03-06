@@ -1,6 +1,6 @@
 Name: xorg-drv-joystick
 Version: 1.6.2
-Release: alt1
+Release: alt2
 Epoch: 1
 Summary: joystick input driver
 License: MIT/X11
@@ -41,6 +41,9 @@ joystick is an Xorg input driver
 %_man4dir/*.4*
 
 %changelog
+* Wed Mar 06 2013 Valery Inozemtsev <shrek@altlinux.ru> 1:1.6.2-alt2
+- requires XORG_ABI_XINPUT = 19.1
+
 * Fri Jan 18 2013 Valery Inozemtsev <shrek@altlinux.ru> 1:1.6.2-alt1
 - 1.6.2
 

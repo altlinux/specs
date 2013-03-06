@@ -1,6 +1,6 @@
 Name: xorg-drv-cirrus
 Version: 1.5.2
-Release: alt1
+Release: alt2
 Epoch: 1
 Summary: Cirrus Logic video driver
 License: MIT/X11
@@ -40,6 +40,9 @@ cirrus is an Xorg driver for Cirrus Logic video chips
 %_man4dir/*
 
 %changelog
+* Wed Mar 06 2013 Valery Inozemtsev <shrek@altlinux.ru> 1:1.5.2-alt2
+- requires XORG_ABI_VIDEODRV = 14.1
+
 * Fri Jan 18 2013 Valery Inozemtsev <shrek@altlinux.ru> 1:1.5.2-alt1
 - 1.5.2
 

@@ -1,6 +1,6 @@
 Name: xorg-drv-vesa
 Version: 2.3.2
-Release: alt2
+Release: alt3
 Epoch: 1
 Summary: Generic VESA video driver
 License: MIT/X11
@@ -44,6 +44,9 @@ depths 8, 15 16 and 24.
 %_man4dir/*
 
 %changelog
+* Wed Mar 06 2013 Valery Inozemtsev <shrek@altlinux.ru> 1:2.3.2-alt3
+- requires XORG_ABI_VIDEODRV = 14.1
+
 * Fri Jan 18 2013 Valery Inozemtsev <shrek@altlinux.ru> 1:2.3.2-alt2
 - requires XORG_ABI_VIDEODRV = 13.1
 

@@ -1,6 +1,6 @@
 Name: xorg-drv-fbdev
 Version: 0.4.3
-Release: alt2
+Release: alt3
 Epoch: 1
 Summary: video driver for framebuffer device
 License: MIT/X11
@@ -45,6 +45,9 @@ tions are supported.
 %_man4dir/*
 
 %changelog
+* Wed Mar 06 2013 Valery Inozemtsev <shrek@altlinux.ru> 1:0.4.3-alt3
+- requires XORG_ABI_VIDEODRV = 14.1
+
 * Fri Jan 18 2013 Valery Inozemtsev <shrek@altlinux.ru> 1:0.4.3-alt2
 - requires XORG_ABI_VIDEODRV = 13.1
 
