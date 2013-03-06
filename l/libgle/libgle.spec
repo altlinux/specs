@@ -7,19 +7,16 @@
 
 Name: lib%oname
 Version: 3.1.0
-Release: alt7.1
+Release: alt7.2
 Summary: The GLE Tubing and Extrusion Library for OpenGL
 License: GPL
 Group: System/Libraries
 Url: http://www.linas.org/gle/
-Packager: Sir Raorn <raorn@altlinux.ru>
 
 Source: %url/pub/%oname-%version.tar.gz
-
 Patch: %name-3.1.0-alt-link.patch
 
-# Automatically added by buildreq on Sat Jan 28 2006 and filtered by raorn
-BuildRequires: libGL-devel libXext-devel libXi-devel libXmu-devel libfreeglut-devel
+BuildRequires: libXi-devel libXmu-devel libfreeglut-devel
 
 %description
 The GLE Tubing and Extrusion Library consists of a number of "C"
@@ -34,7 +31,7 @@ Summary: Dedelopment headers for the GLE Tubing and Extrusion Library
 Group: Development/C
 Requires: %name = %version-%release
 # Due to %_includedir/GL directory...
-Requires: xorg-x11-proto-devel
+Requires: xorg-glproto-devel
 
 %description devel
 The GLE Tubing and Extrusion Library consists of a number of "C"
@@ -95,6 +92,9 @@ mv %buildroot%_docdir/%oname %buildroot%_docdir/%name-%version
 %doc %_docdir/%name-%version/html
 
 %changelog
+* Wed Mar 06 2013 Valery Inozemtsev <shrek@altlinux.ru> 3.1.0-alt7.2
+- fixed requires
+
 * Tue Jul 24 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.1.0-alt7.1
 - Rebuilt for set-versions
 
