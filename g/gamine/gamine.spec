@@ -1,6 +1,6 @@
 Name:		gamine
 Version:	1.1
-Release:	alt2
+Release:	alt3
 Summary:	Gamine - game for small children :)
 Source:		%name-%version.tar.gz
 Source1:	%name.desktop.in
@@ -8,7 +8,7 @@ URL:		http://gnunux.info/projets/gamine
 Group:		Games/Educational
 License:	Distributable
 
-BuildRequires:  libGConf-devel libcairo-devel gstreamer-devel gtk2-devel
+BuildRequires:  libGConf-devel libcairo-devel gstreamer-devel gtk2-devel GConf
 #Requires:  libcairo libgstreamer
 
 
@@ -45,6 +45,9 @@ make install PREFIX=%buildroot/usr/
 %_datadir/locale/*/LC_MESSAGES/%name.mo
 
 %changelog
+* Wed Mar 06 2013 Andrey Cherepanov <cas@altlinux.org> 1.1-alt3
+- Adapt BuildRequires to new version of GConf
+
 * Fri Jun 01 2012 Andrey Cherepanov <cas@altlinux.org> 1.1-alt2
 - Add required X11 library to the linker command line
 
