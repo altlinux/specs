@@ -1,6 +1,6 @@
 Name:		openstack-nova
 Version:	2012.2.0.7
-Release:	alt1
+Release:	alt2
 Summary:	OpenStack Compute (nova)
 
 Group:		System/Servers
@@ -10,17 +10,17 @@ Source0:	%{name}-%{version}.tar.gz
 Source1:	nova.conf
 Source6:	nova.logrotate
 
-Source10:	openstack-nova-api.service
-Source11:	openstack-nova-cert.service
-Source12:	openstack-nova-compute.service
-Source13:	openstack-nova-network.service
-Source14:	openstack-nova-objectstore.service
-Source15:	openstack-nova-scheduler.service
-Source16:	openstack-nova-volume.service
-Source18:	openstack-nova-xvpvncproxy.service
-Source19:	openstack-nova-console.service
-Source20:	openstack-nova-consoleauth.service
-Source25:	openstack-nova-metadata-api.service
+Source10:	%{name}-api.service
+Source11:	%{name}-cert.service
+Source12:	%{name}-compute.service
+Source13:	%{name}-network.service
+Source14:	%{name}-objectstore.service
+Source15:	%{name}-scheduler.service
+Source16:	%{name}-volume.service
+Source18:	%{name}-xvpvncproxy.service
+Source19:	%{name}-console.service
+Source20:	%{name}-consoleauth.service
+Source25:	%{name}-metadata-api.service
 
 Source21:	nova-polkit.pkla
 Source22:	nova-ifc-template
@@ -37,14 +37,14 @@ BuildRequires:	python-module-sphinx
 BuildRequires:	python-module-distribute
 BuildRequires:	python-module-netaddr
 
-Requires:	openstack-nova-compute = %{version}-%{release}
-Requires:	openstack-nova-cert = %{version}-%{release}
-Requires:	openstack-nova-scheduler = %{version}-%{release}
-Requires:	openstack-nova-volume = %{version}-%{release}
-Requires:	openstack-nova-api = %{version}-%{release}
-Requires:	openstack-nova-network = %{version}-%{release}
-Requires:	openstack-nova-objectstore = %{version}-%{release}
-Requires:	openstack-nova-console = %{version}-%{release}
+Requires:	%{name}-compute = %{version}-%{release}
+Requires:	%{name}-cert = %{version}-%{release}
+Requires:	%{name}-scheduler = %{version}-%{release}
+Requires:	%{name}-volume = %{version}-%{release}
+Requires:	%{name}-api = %{version}-%{release}
+Requires:	%{name}-network = %{version}-%{release}
+Requires:	%{name}-objectstore = %{version}-%{release}
+Requires:	%{name}-console = %{version}-%{release}
 
 %description
 OpenStack Compute (codename Nova) is open source software designed to
@@ -439,167 +439,58 @@ fi
 exit 0
 
 %post compute
-if [ $1 -eq 1 ] ; then
-    # Initial installation
-    /bin/systemctl daemon-reload >/dev/null 2>&1 || :
-fi
-%post network
-if [ $1 -eq 1 ] ; then
-    # Initial installation
-    /bin/systemctl daemon-reload >/dev/null 2>&1 || :
-fi
-%post volume
-if [ $1 -eq 1 ] ; then
-    # Initial installation
-    /bin/systemctl daemon-reload >/dev/null 2>&1 || :
-fi
-%post scheduler
-if [ $1 -eq 1 ] ; then
-    # Initial installation
-    /bin/systemctl daemon-reload >/dev/null 2>&1 || :
-fi
-%post cert
-if [ $1 -eq 1 ] ; then
-    # Initial installation
-    /bin/systemctl daemon-reload >/dev/null 2>&1 || :
-fi
-%post api
-if [ $1 -eq 1 ] ; then
-    # Initial installation
-    /bin/systemctl daemon-reload >/dev/null 2>&1 || :
-fi
-%post objectstore
-if [ $1 -eq 1 ] ; then
-    # Initial installation
-    /bin/systemctl daemon-reload >/dev/null 2>&1 || :
-fi
-%post console
-if [ $1 -eq 1 ] ; then
-    # Initial installation
-    /bin/systemctl daemon-reload >/dev/null 2>&1 || :
-fi
+%post_service %{name}-compute
 
 %preun compute
-if [ $1 -eq 0 ] ; then
-    for svc in compute; do
-        /bin/systemctl --no-reload disable openstack-nova-${svc}.service > /dev/null 2>&1 || :
-        /bin/systemctl stop openstack-nova-${svc}.service > /dev/null 2>&1 || :
-    done
-fi
-%preun network
-if [ $1 -eq 0 ] ; then
-    for svc in network; do
-        /bin/systemctl --no-reload disable openstack-nova-${svc}.service > /dev/null 2>&1 || :
-        /bin/systemctl stop openstack-nova-${svc}.service > /dev/null 2>&1 || :
-    done
-fi
-%preun volume
-if [ $1 -eq 0 ] ; then
-    for svc in volume; do
-        /bin/systemctl --no-reload disable openstack-nova-${svc}.service > /dev/null 2>&1 || :
-        /bin/systemctl stop openstack-nova-${svc}.service > /dev/null 2>&1 || :
-    done
-fi
-%preun scheduler
-if [ $1 -eq 0 ] ; then
-    for svc in scheduler; do
-        /bin/systemctl --no-reload disable openstack-nova-${svc}.service > /dev/null 2>&1 || :
-        /bin/systemctl stop openstack-nova-${svc}.service > /dev/null 2>&1 || :
-    done
-fi
-%preun cert
-if [ $1 -eq 0 ] ; then
-    for svc in cert; do
-        /bin/systemctl --no-reload disable openstack-nova-${svc}.service > /dev/null 2>&1 || :
-        /bin/systemctl stop openstack-nova-${svc}.service > /dev/null 2>&1 || :
-    done
-fi
-%preun api
-if [ $1 -eq 0 ] ; then
-    for svc in api metadata-api; do
-        /bin/systemctl --no-reload disable openstack-nova-${svc}.service > /dev/null 2>&1 || :
-        /bin/systemctl stop openstack-nova-${svc}.service > /dev/null 2>&1 || :
-    done
-fi
-%preun objectstore
-if [ $1 -eq 0 ] ; then
-    for svc in objectstore; do
-        /bin/systemctl --no-reload disable openstack-nova-${svc}.service > /dev/null 2>&1 || :
-        /bin/systemctl stop openstack-nova-${svc}.service > /dev/null 2>&1 || :
-    done
-fi
-%preun console
-if [ $1 -eq 0 ] ; then
-    for svc in console consoleauth xvpvncproxy; do
-        /bin/systemctl --no-reload disable openstack-nova-${svc}.service > /dev/null 2>&1 || :
-        /bin/systemctl stop openstack-nova-${svc}.service > /dev/null 2>&1 || :
-    done
-fi
+%preun_service %{name}-compute
 
-%postun compute
-/bin/systemctl daemon-reload >/dev/null 2>&1 || :
-if [ $1 -ge 1 ] ; then
-    # Package upgrade, not uninstall
-    for svc in compute; do
-        /bin/systemctl try-restart openstack-nova-${svc}.service >/dev/null 2>&1 || :
-    done
-fi
-%postun network
-/bin/systemctl daemon-reload >/dev/null 2>&1 || :
-if [ $1 -ge 1 ] ; then
-    # Package upgrade, not uninstall
-    for svc in network; do
-        /bin/systemctl try-restart openstack-nova-${svc}.service >/dev/null 2>&1 || :
-    done
-fi
-%postun volume
-/bin/systemctl daemon-reload >/dev/null 2>&1 || :
-if [ $1 -ge 1 ] ; then
-    # Package upgrade, not uninstall
-    for svc in volume; do
-        /bin/systemctl try-restart openstack-nova-${svc}.service >/dev/null 2>&1 || :
-    done
-fi
-%postun scheduler
-/bin/systemctl daemon-reload >/dev/null 2>&1 || :
-if [ $1 -ge 1 ] ; then
-    # Package upgrade, not uninstall
-    for svc in scheduler; do
-        /bin/systemctl try-restart openstack-nova-${svc}.service >/dev/null 2>&1 || :
-    done
-fi
-%postun cert
-/bin/systemctl daemon-reload >/dev/null 2>&1 || :
-if [ $1 -ge 1 ] ; then
-    # Package upgrade, not uninstall
-    for svc in cert; do
-        /bin/systemctl try-restart openstack-nova-${svc}.service >/dev/null 2>&1 || :
-    done
-fi
-%postun api
-/bin/systemctl daemon-reload >/dev/null 2>&1 || :
-if [ $1 -ge 1 ] ; then
-    # Package upgrade, not uninstall
-    for svc in api metadata-api; do
-        /bin/systemctl try-restart openstack-nova-${svc}.service >/dev/null 2>&1 || :
-    done
-fi
-%postun objectstore
-/bin/systemctl daemon-reload >/dev/null 2>&1 || :
-if [ $1 -ge 1 ] ; then
-    # Package upgrade, not uninstall
-    for svc in objectstore; do
-        /bin/systemctl try-restart openstack-nova-${svc}.service >/dev/null 2>&1 || :
-    done
-fi
-%postun console
-/bin/systemctl daemon-reload >/dev/null 2>&1 || :
-if [ $1 -ge 1 ] ; then
-    # Package upgrade, not uninstall
-    for svc in console consoleauth xvpvncproxy; do
-        /bin/systemctl try-restart openstack-nova-${svc}.service >/dev/null 2>&1 || :
-    done
-fi
+%post network
+%post_service %{name}-network
+
+%preun network
+%preun_service %{name}-network
+
+%post volume
+%post_service %{name}-volume
+
+%preun volume
+%preun_service %{name}-volume
+
+%post scheduler
+%post_service %{name}-scheduler
+
+%preun scheduler
+%preun_service %{name}-scheduler
+
+%post cert
+%post_service %{name}-cert
+
+%preun cert
+%preun_service %{name}-cert
+
+%post api
+%post_service %{name}-api
+%post_service %{name}-metadata-api
+
+%preun api
+%preun_service %{name}-api
+%preun_service %{name}-metadata-api
+
+%post objectstore
+%post_service %{name}-objectstore
+
+%preun objectstore
+%preun_service %{name}-objectstore
+
+%post console
+%post_service %{name}-console
+%post_service %{name}-consoleauth
+%post_service %{name}-xvpvncproxy
+
+%preun console
+%preun_service %{name}-console
+%preun_service %{name}-consoleauth
+%preun_service %{name}-xvpvncproxy
 
 %files
 %doc LICENSE
@@ -612,7 +503,7 @@ fi
 %config(noreplace) %attr(-, root, nova) %{_sysconfdir}/nova/api-paste.ini
 %config(noreplace) %attr(-, root, nova) %{_sysconfdir}/nova/rootwrap.conf
 %config(noreplace) %attr(-, root, nova) %{_sysconfdir}/nova/policy.json
-%config(noreplace) %{_sysconfdir}/logrotate.d/openstack-nova
+%config(noreplace) %{_sysconfdir}/logrotate.d/%{name}
 %config(noreplace) %{_sysconfdir}/sudoers.d/nova
 %config(noreplace) %{_sysconfdir}/polkit-1/localauthority/50-local.d/50-nova.pkla
 
@@ -643,28 +534,28 @@ fi
 
 %files compute
 %{_bindir}/nova-compute
-%{_unitdir}/openstack-nova-compute.service
+%{_unitdir}/%{name}-compute.service
 %{_datadir}/nova/rootwrap/compute.filters
 
 %files network
 %{_bindir}/nova-network
 %{_bindir}/nova-dhcpbridge
-%{_unitdir}/openstack-nova-network.service
+%{_unitdir}/%{name}-network.service
 %{_datadir}/nova/rootwrap/network.filters
 
 %files volume
 %{_bindir}/nova-volume
 %{_bindir}/nova-volume-usage-audit
-%{_unitdir}/openstack-nova-volume.service
+%{_unitdir}/%{name}-volume.service
 %{_datadir}/nova/rootwrap/volume.filters
 
 %files scheduler
 %{_bindir}/nova-scheduler
-%{_unitdir}/openstack-nova-scheduler.service
+%{_unitdir}/%{name}-scheduler.service
 
 %files cert
 %{_bindir}/nova-cert
-%{_unitdir}/openstack-nova-cert.service
+%{_unitdir}/%{name}-cert.service
 %defattr(-, nova, nova, -)
 %dir %{_sharedstatedir}/nova/CA/
 %dir %{_sharedstatedir}/nova/CA/certs
@@ -684,18 +575,18 @@ fi
 
 %files api
 %{_bindir}/nova-api*
-%{_unitdir}/openstack-nova-*api.service
+%{_unitdir}/%{name}-*api.service
 %{_datadir}/nova/rootwrap/api-metadata.filters
 
 %files objectstore
 %{_bindir}/nova-objectstore
-%{_unitdir}/openstack-nova-objectstore.service
+%{_unitdir}/%{name}-objectstore.service
 
 %files console
 %{_bindir}/nova-console*
 %{_bindir}/nova-xvpvncproxy
-%{_unitdir}/openstack-nova-console*.service
-%{_unitdir}/openstack-nova-xvpvncproxy.service
+%{_unitdir}/%{name}-console*.service
+%{_unitdir}/%{name}-xvpvncproxy.service
 
 %files -n python-module-nova
 %defattr(-,root,root,-)
@@ -707,5 +598,8 @@ fi
 %doc LICENSE doc/build/html
 
 %changelog
+* Wed Mar 06 2013 Pavel Shilovsky <piastry@altlinux.org> 2012.2.0.7-alt2
+- Use post/preun_service scripts in spec
+
 * Thu Nov 08 2012 Pavel Shilovsky <piastry@altlinux.org> 2012.2.0.7-alt1
 - Initial release for Sisyphus (based on Fedora)
