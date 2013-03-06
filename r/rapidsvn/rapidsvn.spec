@@ -3,8 +3,8 @@
 %def_with doxygen
 
 Name: rapidsvn
-Version: 0.9.8
-Release: alt3
+Version: 0.12.1
+Release: alt1
 
 Summary: wxWidgets-based Subversion client
 License: %gpl3plus
@@ -12,9 +12,11 @@ Group: Development/Other
 Url: http://rapidsvn.tigris.org
 Packager: Ilya Mashkin <oddity@altlinux.ru>
 
-Source: http://www.rapidsvn.org/download/release/%version/%name-%version.tar.gz
-Source10: %name.desktop
-Patch1: %name-0.9.4-link.patch
+Source:		http://www.rapidsvn.org/download/release/%version/%name-%version.tar.gz
+Source1:	https://raw.github.com/RapidSVN/RapidSVN/master/doc/svncpp/svncpp.dox
+Source10:	%name.desktop
+Source11:	rapidsvn_logo.png
+Patch1: %name-0.12.1-linkage_fix.patch
 
 BuildRequires: rpm-build-licenses
 
@@ -22,7 +24,7 @@ BuildRequires: rpm-build-licenses
 BuildRequires: gcc-c++
 BuildRequires: libsubversion-devel >= 1.4.2
 BuildRequires: wxGTK-devel  libwxGTK-devel
-BuildRequires: cppunit-devel
+BuildRequires: cppunit-devel ImageMagick-tools
 BuildRequires: docbook-style-xsl xsltproc
 %{?_with_doxygen:BuildRequires: doxygen graphviz}
 
@@ -51,6 +53,8 @@ Development files for libsvncpp, a C++ API for Subversion.
 %prep
 %setup -q
 %patch1 -p0
+cp -p %{SOURCE1} doc/svncpp/
+##cp -p %{SOURCE11} ..
 
 %build
 %autoreconf
@@ -68,10 +72,16 @@ Development files for libsvncpp, a C++ API for Subversion.
 %install
 %makeinstall_std
 install -pD -m644 %SOURCE10 %buildroot%_desktopdir/%name.desktop
+install -d %buildroot%_iconsdir/hicolor/{16x16,32x32,48x48}/apps
+convert %SOURCE11 -resize 16x16 %buildroot%_iconsdir/hicolor/16x16/apps/%{name}.png
+convert %SOURCE11 -resize 32x32 %buildroot%_iconsdir/hicolor/32x32/apps/%{name}.png
+convert %SOURCE11 -resize 48x48 %buildroot%_iconsdir/hicolor/48x48/apps/%{name}.png
 
 %files
 %_bindir/rapidsvn
+/usr/share/locale/*/LC_MESSAGES/rapidsvn.mo
 %_desktopdir/%name.desktop
+%_iconsdir/hicolor/*/apps/%{name}.png
 
 %files -n libsvncpp
 %_libdir/libsvncpp.so.*
@@ -82,6 +92,9 @@ install -pD -m644 %SOURCE10 %buildroot%_desktopdir/%name.desktop
 %_includedir/svncpp/*.hpp
 
 %changelog
+* Thu Mar 07 2013 Ilya Mashkin <oddity@altlinux.ru> 0.12.1-alt1
+- Build 0.12.1 (Closes: #28635) Thanks to Vadim Zelenin
+
 * Wed Mar 10 2010 Ilya Mashkin <oddity@altlinux.ru> 0.9.8-alt3
 - rebuild with current wxGTK
 
