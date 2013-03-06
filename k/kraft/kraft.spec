@@ -1,7 +1,7 @@
 
 Name:           kraft
-Version:        0.45
-Release:        alt2
+Version:        0.50
+Release:        alt1
 
 Summary:        Kraft - Software for small business
 Summary(ru_RU.UTF-8): Kraft — программное обеспечение для малого бизнеса
@@ -14,6 +14,7 @@ Source0:        kraft-%{version}.tar.bz2
 BuildRequires(pre): kde4libs-devel
 BuildRequires: 	gcc-c++
 BuildRequires:  cmake
+BuildRequires:  kde4-nepomuk-core-devel
 BuildRequires:  kde4pimlibs-devel
 BuildRequires:  libctemplate-devel
 Requires: 	libctemplate python-module-Reportlab trmltools
@@ -48,6 +49,9 @@ sed -iorig 's|LIBRARY DESTINATION lib/kraft|LIBRARY DESTINATION ${LIB_INSTALL_DI
 
 
 %changelog 
+* Wed Mar 06 2013 Andrey Cherepanov <cas@altlinux.org> 0.50-alt1
+- New version 0.50
+
 * Fri Jun 08 2012 Evgeny Sinelnikov <sin@altlinux.ru> 0.45-alt2
 - Fix build with RPATH: replace internal library to libdir
 - Update package files list
