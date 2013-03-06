@@ -1,5 +1,5 @@
 Name: iproute2
-Version: 3.6.0
+Version: 3.8.0
 Release: alt1
 
 Summary: Advanced IP routing and network devices configuration tools
@@ -100,6 +100,7 @@ done
 %_libdir/tc/
 %exclude %_sbindir/arpd
 %config(noreplace) %_sysconfdir/%name
+%_man7dir/*
 %_man8dir/*
 
 %files doc
@@ -119,6 +120,9 @@ done
 %_man3dir/*
 
 %changelog
+* Wed Mar 06 2013 Dmitry V. Levin <ldv@altlinux.org> 3.8.0-alt1
+- Updated to v3.8.0-8-gae70d96.
+
 * Wed Oct 10 2012 Dmitry V. Levin <ldv@altlinux.org> 3.6.0-alt1
 - Updated to 3.6.0.
 - Reviewed patches.

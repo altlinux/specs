@@ -1,5 +1,5 @@
 Name: iptables
-Version: 1.4.17
+Version: 1.4.18
 Release: alt1
 
 Summary: Tools for managing Linux kernel packet filtering capabilities
@@ -141,7 +141,11 @@ install -pm644 include/iptables/internal.h %buildroot%_includedir/iptables/
 # Install startup scripts and associated config files.
 install -pDm755 iptables.init %buildroot%_initdir/iptables
 cp -p %buildroot%_initdir/ip{,6}tables
-sed -i s/iptables/ip6tables/g %buildroot%_initdir/ip6tables
+sed -i 's/iptables/ip6tables/g;s/IPv4/IPv6/g' %buildroot%_initdir/ip6tables
+
+install -pDm644 iptables.service %buildroot%_unitdir/iptables.service
+cp -p %buildroot%_unitdir/ip{,6}tables.service
+sed -i 's/iptables/ip6tables/g;s/IPv4/IPv6/g' %buildroot%_unitdir/ip6tables.service
 
 install -pDm600 iptables_params %buildroot%_sysconfdir/sysconfig/iptables_params
 cp -p %buildroot%_sysconfdir/sysconfig/ip{,6}tables_params
@@ -183,6 +187,7 @@ fi
 %config(noreplace) %_sysconfdir/sysconfig/iptables*
 %doc INCOMPATIBILITIES
 %config %_initdir/iptables
+%config %_unitdir/iptables.service
 /sbin/*
 %_bindir/*
 %_man1dir/*
@@ -199,6 +204,7 @@ fi
 %files ipv6
 %config(noreplace) %_sysconfdir/sysconfig/ip6tables*
 %config %_initdir/ip6tables
+%config %_unitdir/ip6tables.service
 
 %files -n lib%name
 /%_lib/lib*.so.*
@@ -216,6 +222,10 @@ fi
 %endif
 
 %changelog
+* Wed Mar 06 2013 Dmitry V. Levin <ldv@altlinux.org> 1.4.18-alt1
+- Updated to 1.4.18 with additional fixes from Jan Engelhardt.
+- Added systemd service files (closes: #28058, #28059).
+
 * Fri Jan 11 2013 Dmitry V. Levin <ldv@altlinux.org> 1.4.17-alt1
 - Updated to stable v1.4.17-4-gff33855.
 

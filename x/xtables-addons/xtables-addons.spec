@@ -1,5 +1,5 @@
 Name: xtables-addons
-Version: 1.46
+Version: 1.47.1
 Release: alt1
 Summary: IP tables addons
 Group: System/Kernel and hardware
@@ -30,7 +30,7 @@ Requires: libipset = %version-%release
 Conflicts: ipset
 
 %description ipset
-IP sets are a framework inside the Linux 2.4.x and 2.6.x kernel,
+IP sets are a framework inside the Linux 2.6.x+ kernel,
 which can be administered by the ipset utility.
 Depending on the type, currently an IP set may store IP addresses,
 (TCP/UDP) port numbers or IP addresses with MAC addresses in a way,
@@ -112,6 +112,10 @@ tar -cjf %kernel_srcdir/kernel-source-%name-%version.tar.bz2 kernel-source-%name
 %kernel_src/*
 
 %changelog
+* Wed Mar 06 2013 Dmitry V. Levin <ldv@altlinux.org> 1.47.1-alt1
+- Updated to v1.47.1-2-gdf9d3c9.
+- Built with libxtables.so.10.
+
 * Thu Oct 11 2012 Dmitry V. Levin <ldv@altlinux.org> 1.46-alt1
 - Update to v1.46.
 - Built with libxtables.so.9.
