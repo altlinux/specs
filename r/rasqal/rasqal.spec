@@ -3,17 +3,15 @@
 %define sover 3
 Name: rasqal
 Version: 0.9.29
-Release: alt1.1
+Release: alt2
 
 Group: System/Libraries
 Summary: Rasqal RDF Query Library
 License: LGPL v2.1+ or GPL v2+ or Apache v2.0+
 Url: http://librdf.org/rasqal/
 
-# /usr/bin/roqet
-Conflicts: librasqal
-
 Source: http://download.librdf.org/source/%name-%version.tar
+Patch1: rasqal-0.9.29-alt-automake.patch
 
 # Automatically added by buildreq on Thu Sep 01 2011 (-bi)
 # optimized out: elfutils libgmp-devel libxml2-devel pkg-config
@@ -27,26 +25,29 @@ RDF Query Language.
 %package -n lib%name%sover
 Summary: %name core library
 Group: System/Libraries
+Provides: librasqal = %EVR
+Obsoletes: librasqal < %EVR
 %description -n lib%name%sover
 %name core library.
 
-%package devel
+%package -n lib%name-devel
 Summary: Header files for the Rasqal RDF query library
 Group: Development/C
-#Provides: lib%name-devel = %version-%release
-Conflicts: librasqal-devel
-%description devel
+Provides: rasqal-devel = %EVR
+Obsoletes: rasqal-devel < %EVR
+%description  -n lib%name-devel
 Header files for the Rasqal RDF query library.
 
-%package devel-static
+%package  -n lib%name-devel-static
 Summary: Static Rasqal library
 Group: Development/C
-Requires: %name-devel = %version-%release
-%description devel-static
+Requires: lib%name-devel = %version-%release
+%description  -n lib%name-devel-static
 Static Rasqal library.
 
 %prep
 %setup -q
+%patch1 -p1
 %autoreconf
 
 %build
@@ -74,7 +75,7 @@ cp -f %_datadir/automake/config.* .
 %_libdir/librasqal.so.%sover
 %_libdir/librasqal.so.%sover.*
 
-%files devel
+%files -n lib%name-devel
 %_bindir/rasqal-config
 %_libdir/librasqal.so
 #%_libdir/librasqal.la
@@ -88,8 +89,14 @@ cp -f %_datadir/automake/config.* .
 #%_libdir/librasqal.a
 
 %changelog
+* Tue Mar 05 2013 Sergey V Turchin <zerg@altlinux.org> 0.9.29-alt2
+- obsolete librasqal package
+
 * Thu Aug 30 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.29-alt1.1
 - Rebuilt with mpfr 3.1.1
+
+* Fri May 25 2012 Sergey V Turchin <zerg@altlinux.org> 0.9.29-alt0.M60P.1
+- build for M60P
 
 * Thu May 24 2012 Sergey V Turchin <zerg@altlinux.org> 0.9.29-alt1
 - new version
