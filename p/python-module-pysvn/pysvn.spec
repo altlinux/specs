@@ -1,17 +1,19 @@
 Name: python-module-pysvn
-Version: 1.5.2
-Release: alt3.3
+Version: 1.7.6
+Release: alt1
 Summary: Subversion support for python
 License: Apache License
 Group: Development/Python
 Url: http://pysvn.tigris.org/
 Packager: Gennady Kovalev <gik@altlinux.ru>
+
 Source0: pysvn-%version.tar
-Patch0: pysvn-%version-alt-allinone.patch
-Patch1: pysvn-alt-no-rpath.patch
-Patch2: pysvn-1.5.2-alt-subversion-1.7.8.patch
-# Automatically added by buildreq on Tue Jan 01 2008
+Patch0:  pysvn-1.7.6-fix-missed-apu-includes.patch
+Patch1:  02-fix-ld-shared.patch
+
 BuildRequires: gcc-c++ libcom_err-devel libexpat-devel libkrb5-devel libsubversion-devel python-devel python-modules-compiler python-modules-xml subversion
+BuildRequires: libaprutil1-devel
+BuildRequires: subversion-server-common
 
 %description
 The pysvn project's goal is to enable Tools to be written in Python that use Subversion.
@@ -19,16 +21,18 @@ The pysvn project's goal is to enable Tools to be written in Python that use Sub
 
 %prep
 %setup -n pysvn-%version
-%patch0 -p1
-%patch1 -p2
-%patch2 -p2
+%patch0 -p2
+%patch1 -p1
 
 
 %build
 cd Source
-python setup.py configure --enable-debug --verbose
-%make
+python setup.py configure \
+    --apr-inc-dir=/usr/include/apr-1 \
+    --apu-inc-dir=/usr/include/apu-1 \
+    --norpath
 
+%make_build
 
 %install
 mkdir -p %buildroot%python_sitelibdir 
@@ -41,6 +45,10 @@ cp -r Source/pysvn %buildroot%python_sitelibdir
 
 
 %changelog
+* Wed Mar 06 2013 Andrey Cherepanov <cas@altlinux.org> 1.7.6-alt1
+- New version 1.7.6
+- Remove obsoleted patches
+
 * Wed Mar 06 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.5.2-alt3.3
 - Fixed build with subversion 1.7.8
 
