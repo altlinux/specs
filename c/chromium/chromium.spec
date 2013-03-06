@@ -1,6 +1,6 @@
 %set_verify_elf_method textrel=relaxed
 %define v8_ver 3.15.11.10
-%define rev 178923
+%define rev 185281
 
 %def_disable debug
 %def_disable nacl
@@ -12,7 +12,7 @@
 %endif
 
 Name:           chromium
-Version:        24.0.1312.57
+Version:        25.0.1364.152
 Release:        alt1.r%rev
 
 Summary:        An open source web browser developed by Google
@@ -78,8 +78,6 @@ Patch90:	gcc4.7.patch
 Patch91:	arm.patch
 
 # Patches from upstream
-# Fix build with PulseAudio 2.3 (see http://code.google.com/p/chromium/issues/detail?id=157876)
-Patch95:	chromium-pulse-audio-fix.patch
 
 %add_findreq_skiplist %_libdir/%name/xdg-settings
 %add_findreq_skiplist %_libdir/%name/xdg-mime
@@ -112,8 +110,8 @@ BuildRequires:  libkrb5-devel
 BuildRequires:  libnspr-devel
 BuildRequires:  libnss-devel
 BuildRequires:  libpam-devel
-BuildRequires:  libpam-devel
-BuildRequires:  libpng-devel
+BuildRequires:  libpci-devel
+#BuildRequires:  libpng-devel
 BuildRequires:  libpulseaudio-devel
 BuildRequires:  libspeex-devel
 BuildRequires:  libsqlite3-devel
@@ -232,11 +230,9 @@ to Gnome's Keyring.
 %patch90 -p1
 %patch91 -p1
 
-%patch95 -p2
-
 # Replace anywhere v8 to system package
 subst 's,v8/tools/gyp/v8.gyp,build/linux/system.gyp,' `find . -type f -a -name *.gyp*`
-sed -i '/v8_shell#host/d' src/chrome/chrome_tests.gypi
+sed -i '/v8_shell#host/d' src/chrome/chrome_tests.gypi src/chrome/chrome_tests_unit.gypi
 grep -Rl '^#include [<"]v8/include' * 2>/dev/null | while read f;do subst 's,^\(#include [<"]\)v8/include/,\1,' "$f";done
 
 echo "svn%rev" > src/build/LASTCHANGE.in
@@ -274,7 +270,7 @@ pushd src
 	-Duse_system_libbz2=1 \
 	-Duse_system_libevent=1 \
 	-Duse_system_libjpeg=0 \
-	-Duse_system_libpng=1 \
+	-Duse_system_libpng=0 \
 	-Duse_system_libwebp=0 \
 	-Duse_system_libxml=1 \
 	-Duse_system_libxslt=1 \
@@ -439,6 +435,49 @@ printf '%_bindir/%name\t%_libdir/%name/%name-gnome\t15\n' > %buildroot%_altdir/%
 %_altdir/%name-gnome
 
 %changelog
+* Wed Mar 06 2013 Andrey Cherepanov <cas@altlinux.org> 25.0.1364.152-alt1.r185281
+- New version 25.0.1364.152
+- Security fixes:
+  - High CVE-2013-0902: Use-after-free in frame loader.
+  - High CVE-2013-0903: Use-after-free in browser navigation handling.
+  - High CVE-2013-0904: Memory corruption in Web Audio.
+  - High CVE-2013-0905: Use-after-free with SVG animations.
+  - High CVE-2013-0906: Memory corruption in Indexed DB.
+  - Medium CVE-2013-0907: Race condition in media thread handling.
+  - Medium CVE-2013-0908: Incorrect handling of bindings for extension processes.
+  - Low CVE-2013-0909: Referer leakage with XSS Auditor.
+  - Medium CVE-2013-0910: Mediate renderer -> browser plug-in loads more strictly.
+  - High CVE-2013-0911: Possible path traversal in database handling.
+- Use builtin libpng
+
+* Fri Feb 22 2013 Andrey Cherepanov <cas@altlinux.org> 25.0.1364.97-alt1.r183676
+- New version 25.0.1364.97
+- Security fixes:
+  - High CVE-2013-0879: Memory corruption with web audio node.
+  - High CVE-2013-0880: Use-after-free in database handling.
+  - Medium CVE-2013-0881: Bad read in Matroska handling.
+  - High CVE-2013-0882: Bad memory access with excessive SVG parameters.
+  - Medium CVE-2013-0883: Bad read in Skia.
+  - Low CVE-2013-0884: Inappropriate load of NaCl.
+  - Medium CVE-2013-0885: Too many API permissions granted to web store.
+  - Low CVE-2013-0887: Developer tools process has too many permissions
+    and places too much trust in the connected server.
+  - Medium CVE-2013-0888: Out-of-bounds read in Skia.
+  - Low CVE-2013-0889: Tighten user gesture check for dangerous file
+    downloads.
+  - High CVE-2013-0890: Memory safety issues across the IPC layer.
+  - High CVE-2013-0891: Integer overflow in blob handling.
+  - Medium CVE-2013-0892: Lower severity issues across the IPC layer.
+  - Medium CVE-2013-0893: Race condition in media handling.
+  - High CVE-2013-0894: Buffer overflow in vorbis decoding.
+  - High CVE-2013-0895: Incorrect path handling in file copying.
+  - High CVE-2013-0896: Memory management issues in plug-in message
+    handling.
+  - Low CVE-2013-0897: Off-by-one read in PDF.
+  - High CVE-2013-0898: Use-after-free in URL handling.
+  - Low CVE-2013-0899: Integer overflow in Opus handling.
+  - Medium CVE-2013-0900: Race condition in ICU.
+
 * Thu Jan 31 2013 Andrey Cherepanov <cas@altlinux.org> 24.0.1312.57-alt1.r178923
 - New version 24.0.1312.57
 - Remove revision number from tarball name
