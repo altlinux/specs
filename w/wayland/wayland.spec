@@ -2,7 +2,7 @@
 %def_enable scanner
 
 Name: wayland
-Version: 1.0.3
+Version: 1.0.5
 Release: alt1
 
 Summary: Wayland protocol libraries
@@ -15,7 +15,8 @@ Source: wayland-%version.tar
 Patch: %name-%version-%release.patch
 
 BuildRequires: doxygen libexpat-devel libffi-devel xsltproc docbook-style-xsl
-#BuildRequires: publican
+# for docs
+# BuildRequires: /proc publican perl-Makefile-Parser bc
 
 %description
 Wayland is a project to define a protocol for a compositor to talk to
@@ -138,6 +139,9 @@ This package provides development files for Wayland cursor helper library.
 %_pkgconfigdir/%name-cursor.pc
 
 %changelog
+* Wed Mar 06 2013 Yuri N. Sedunov <aris@altlinux.org> 1.0.5-alt1
+- 1.0.5
+
 * Thu Jan 10 2013 Yuri N. Sedunov <aris@altlinux.org> 1.0.3-alt1
 - 1.0.3
 - fixed interpackage dependencies
