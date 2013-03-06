@@ -1,5 +1,5 @@
 Name: samefile
-Version: 2.13
+Version: 2.14
 Release: alt1
 Summary: Command-line utility to find identical files on the file system
 
@@ -37,6 +37,9 @@ make install DESTDIR=$RPM_BUILD_ROOT
 %_mandir/man1/%name.1*
 
 %changelog
+* Thu Mar 07 2013 Ilya Mashkin <oddity@altlinux.ru> 2.14-alt1
+- 2.14
+
 * Tue Apr 10 2012 Ilya Mashkin <oddity@altlinux.ru> 2.13-alt1
 - 2.13
 
