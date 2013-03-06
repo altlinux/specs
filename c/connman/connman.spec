@@ -3,7 +3,7 @@
 
 Name: connman
 Version: 1.11
-Release: alt2
+Release: alt2.1
 
 Summary: ConnMan is a daemon for managing internet connections.
 License: %gpl2only
@@ -107,6 +107,9 @@ install -m0600 -D src/connmand.conf %buildroot%_sysconfdir/sysconfig/connman
 
 
 %changelog
+* Wed Mar 06 2013 Dmitry V. Levin <ldv@altlinux.org> 1.11-alt2.1
+- Rebuilt with libxtables.so.10.
+
 * Mon Feb 04 2013 Paul Wolneykien <manowar@altlinux.ru> 1.11-alt2
 - Disable DNS proxy by default.
 - Make use of /etc/sysconfig/connman.
