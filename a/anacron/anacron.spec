@@ -1,6 +1,6 @@
 Name: anacron
 Version: 2.3
-Release: alt3
+Release: alt4
 Epoch: 1
 
 Summary: A cron-like program that doesn't go by time
@@ -14,6 +14,7 @@ Source1: anacrontab
 Source2: anacron.init
 Source3: run-anacronjobs
 Source4: anacronjobs.sysconfig
+Source5: anacron.service
 
 Patch1: anacron-2.3-re.patch
 Patch2: anacron-2.3-alt-lock-file.patch
@@ -49,15 +50,20 @@ rm gregor.*
 install -pD -m755 anacron %buildroot%_sbindir/anacron
 install -pD -m644 anacron.8 %buildroot%_mandir/man8/anacron.8
 install -pD -m644 anacrontab.5 %buildroot%_mandir/man5/anacrontab.5
-install -pD -m644 %_sourcedir/anacrontab %buildroot%_sysconfdir/anacrontab
+install -pD -m644 %_sourcedir/anacrontab %buildroot/etc/anacrontab
 install -pD -m755 %SOURCE2 %buildroot%_initdir/anacron
 install -pD -m755 %SOURCE3 %buildroot%_bindir/run-anacronjobs
-install -pD -m644 %SOURCE4 %buildroot%_sysconfdir/sysconfig/anacronjobs
+install -pD -m644 %SOURCE4 %buildroot/etc/sysconfig/anacronjobs
+install -pD -m644 %_sourcedir/anacron.service %buildroot%_unitdir/anacron.service
+
+mkdir -p %buildroot/etc/sysconfig/limits.d
+ln -s crond %buildroot/etc/sysconfig/limits.d/anacron
+
 mkdir -p %buildroot/var/{run,spool}/anacron
 
 for f in cron.{dai,week,month}ly; do
-	mkdir -p "%buildroot%_sysconfdir/$f"
-cat << EOF >"%buildroot%_sysconfdir/$f/000%name"
+	mkdir -p "%buildroot/etc/$f"
+cat << EOF >"%buildroot/etc/$f/000%name"
 #!/bin/sh
 #
 # %name's cron script
@@ -70,7 +76,7 @@ cat << EOF >"%buildroot%_sysconfdir/$f/000%name"
 
 exec %_sbindir/anacron -u $f
 EOF
-chmod 750 "%buildroot%_sysconfdir/$f/000%name"
+chmod 750 "%buildroot/etc/$f/000%name"
 done
 
 sed -i s,RPM_LOCKFILE,%lockfile, %buildroot%_initdir/%name
@@ -84,15 +90,21 @@ sed -i s,RPM_LOCKFILE,%lockfile, %buildroot%_initdir/%name
 %files
 %_bindir/run-anacronjobs
 %_sbindir/anacron
+/etc/sysconfig/limits.d/anacron
+%_unitdir/anacron.service
 %config(noreplace) %_initdir/anacron
-%config(noreplace) %attr(640,root,adm) %_sysconfdir/anacrontab
-%config(noreplace) %attr(640,root,adm) %_sysconfdir/sysconfig/anacronjobs
-%config(noreplace) %_sysconfdir/cron.*/*
+%config(noreplace) %attr(640,root,adm) /etc/anacrontab
+%config(noreplace) %attr(640,root,adm) /etc/sysconfig/anacronjobs
+%config(noreplace) /etc/cron.*/*
 %_mandir/man?/*
 %attr(700,root,root) /var/*/anacron
 %doc ChangeLog README TODO
 
 %changelog
+* Wed Mar 06 2013 Dmitry V. Levin <ldv@altlinux.org> 1:2.3-alt4
+- Added limited(8) config file for anacron.
+- Added systemd.service(5) config file for anacron (closes: #28023).
+
 * Thu Jun 07 2012 Dmitry V. Levin <ldv@altlinux.org> 1:2.3-alt3
 - Create /var/run/anacron before creating tmp files there (closes: #27371).
 
