@@ -5,7 +5,7 @@
 
 Name: rabbitmq-server
 Version: 2.8.7
-Release: alt1
+Release: alt2
 License: MPLv1.1
 BuildArch: noarch
 Group: System/Servers
@@ -13,8 +13,9 @@ Source: %name-%version.tar
 Source1: rabbitmq-server.service
 Source2: rabbitmq-script-wrapper
 Source3: rabbitmq-server.logrotate
-Source4: rabbitmq.conf
+Source4: rabbitmq-env.conf
 Source5: include.mk
+Source6: rabbitmq-server.init
 URL: http://www.rabbitmq.com/
 Packager: Maxim Ivanov <redbaron@altlinux.org>
 
@@ -69,6 +70,8 @@ install -p -D -m 0644 %SOURCE3 %buildroot%_logrotatedir/%name
 install -p -D -m 0644 %SOURCE4 %buildroot%_sysconfdir/%oname/%oname.conf
 
 install -p -D -m 0644 %SOURCE5 %buildroot%_datadir/%name/include.mk
+#Sysvinit support
+install -p -D -m 0755 %SOURCE6 %buildroot%_initrddir/%oname
 
 mkdir -p %buildroot%_sysconfdir/%oname/conf.d
 rm %buildroot%_erllibdir/%name/{LICENSE,LICENSE-MPL-RabbitMQ,INSTALL}
@@ -81,25 +84,10 @@ mkdir -p %buildroot/%_erlanglibdir/%name/priv
    -c 'RabbitMQ messaging server' -M -n rabbitmq &>/dev/null ||:
 
 %post
-if [ $1 -eq 1 ] ; then
-    # Initial installation
-    /bin/systemctl daemon-reload >/dev/null 2>&1 || :
-fi
-
+%post_service %oname
 
 %preun
-if [ $1 -eq 0 ] ; then
-    # Package removal, not upgrade
-    /bin/systemctl --no-reload disable rabbitmq.service > /dev/null 2>&1 || :
-    /bin/systemctl stop rabbitmq.service > /dev/null 2>&1 || :
-fi
-
-%postun
-/bin/systemctl daemon-reload >/dev/null 2>&1 || :
-if [ $1 -ge 1 ] ; then
-    # Package upgrade, not uninstall
-    /bin/systemctl try-restart rabbitmq.service >/dev/null 2>&1 || :
-fi
+%preun_service %oname
 
 %files
 %_sbindir/*
@@ -113,6 +101,7 @@ fi
 %_man1dir/*
 %_man5dir/*
 %_unitdir/%oname.service
+%_initrddir/%oname
 %doc LICENSE LICENSE-MPL-RabbitMQ README INSTALL
 
 %files -n %name-devel
@@ -120,6 +109,10 @@ fi
 %_datadir/%name
 
 %changelog
+* Wed Mar 06 2013 Pavel Shilovsky <piastry@altlinux.org> 2.8.7-alt2
+- Change configuration file name
+- Return sysvinit support
+
 * Thu Oct 04 2012 Pavel Shilovsky <piastry@altlinux.org> 2.8.7-alt1
 - New version 2.8.7
 
