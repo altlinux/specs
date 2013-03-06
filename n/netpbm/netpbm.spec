@@ -1,7 +1,7 @@
 # NB: we track "superstable" upstream releases, see Url:
 
 Name: netpbm
-Version: 10.35.82
+Version: 10.35.88
 Release: alt1
 
 Summary: Tools for manipulating graphics files in netpbm supported formats
@@ -10,7 +10,7 @@ Group: Graphics
 
 Packager: Vladimir Lettiev <crux@altlinux.ru>
 
-URL: http://netpbm.sourceforge.net
+Url: http://netpbm.sourceforge.net
 
 # https://netpbm.svn.sourceforge.net/svnroot/netpbm/stable
 Source0: netpbm-%version.tar
@@ -69,7 +69,7 @@ Requires: lib%name = %version-%release
 BuildPreReq: %_bindir/html2pod
 
 # Automatically added by buildreq on Sat Nov 10 2007
-BuildRequires: flex libjasper-devel libjbig-devel >= 2.0 libjpeg-devel libpng-devel libtiff-devel libxml2-devel perl-podlators
+BuildRequires: flex libjasper-devel libjbig-devel >= 2.0 libjpeg-devel libpng12-devel libtiff-devel libxml2-devel perl-podlators
 
 %package doc
 Summary: Tools for manipulating graphics files in netpbm supported formats
@@ -117,7 +117,7 @@ programs which can handle the various graphics file formats supported by
 the netpbm library.
 
 %prep
-%setup -q -a1
+%setup -a1
 
 # build
 %patch0 -p1
@@ -204,7 +204,7 @@ JBIGLIB = %_libdir/libjbig.so
 JASPERHDR_DIR = %_includedir/jasper
 JASPERLIB = %_libdir/libjasper.so
 STRIPFLAG =
-pkgdir = %buildroot%_prefix
+pkgdir = %buildroot%prefix
 __EOF__
 
 # SMP incompatible
@@ -214,7 +214,7 @@ make
 %make_install install.bin install.data install.hdr
 mkdir -p %buildroot%_libdir %buildroot%_datadir
 cp -av lib/lib%name.a lib/lib%name.so* %buildroot%_libdir
-mv %buildroot%_prefix/misc %buildroot%_datadir/%name
+mv %buildroot%prefix/misc %buildroot%_datadir/%name
 rm -fv %buildroot%_bindir/manweb
 
 # install netpbm-config
@@ -307,6 +307,10 @@ cp -a userguide %buildroot%pkgdocdir/html
 %endif
 
 %changelog
+* Wed Mar 06 2013 Fr. Br. George <george@altlinux.ru> 10.35.88-alt1
+- Autobuild version bump to 10.35.88
+- Fix build by linking with ancient libpng
+
 * Sat Oct 08 2011 Michael Shigorin <mike@altlinux.org> 10.35.82-alt1
 - New version 10.35.82
 
