@@ -3,7 +3,7 @@
 
 Name:		gambas3
 Version:	3.4.0
-Release:	alt2
+Release:	alt3
 
 Summary:	IDE based on a basic interpreter with object extensions
 Group:		Development/Tools
@@ -61,7 +61,7 @@ BuildRequires:	libXft-devel
 BuildRequires:	libxml2-devel
 BuildRequires:	libxslt-devel
 BuildRequires:	libXtst-devel
-BuildRequires:	llvm3.1-devel
+BuildRequires:	llvm-devel
 BuildRequires:	pkg-config
 BuildRequires:	postgresql9.1-devel
 BuildRequires:	qt4-devel
@@ -1258,6 +1258,9 @@ install -m 0644 -p main/mime/application-x-gambas3.xml %buildroot%_xdgmimedir/pa
 %appdir/info/gb.xml.xslt.*
 
 %changelog
+* Tue Mar 05 2013 Andrey Cherepanov <cas@altlinux.org> 3.4.0-alt3
+- Remove dependence on llvm3.1
+
 * Tue Feb 26 2013 Andrey Cherepanov <cas@altlinux.org> 3.4.0-alt2
 - Remove missed .gambas files
 - Add new components: gb.args, gb.httpd, gb.map, gb.memcached
