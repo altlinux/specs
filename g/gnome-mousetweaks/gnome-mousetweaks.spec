@@ -1,8 +1,8 @@
-%define ver_major 3.5
+%define ver_major 3.6
 %define _name mousetweaks
 
 Name: gnome-%_name
-Version: %ver_major.91
+Version: %ver_major.0
 Release: alt1
 
 Summary: Mouse accessibility enhancements
@@ -73,6 +73,9 @@ gnome-panel.
 %doc AUTHORS ChangeLog NEWS README
 
 %changelog
+* Wed Mar 06 2013 Yuri N. Sedunov <aris@altlinux.org> 3.6.0-alt1
+- 3.6.0
+
 * Sun Sep 09 2012 Yuri N. Sedunov <aris@altlinux.org> 3.5.91-alt1
 - 3.5.91
 
