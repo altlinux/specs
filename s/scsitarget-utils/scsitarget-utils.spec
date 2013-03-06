@@ -4,7 +4,7 @@
 
 Name:		scsitarget-utils
 Version:	1.0.30
-Release:	alt3
+Release:	alt4
 Summary:	The SCSI target daemon and utility programs
 
 Group:		System/Configuration/Hardware
@@ -92,12 +92,17 @@ pushd usr
 %{_mandir}/man5/*
 %{_mandir}/man8/*
 %{_unitdir}/tgtd.service
+%dir %_sysconfdir/tgt
+%dir %_sysconfdir/tgt/conf.d
 %attr(0600,root,root) %config(noreplace) %{_sysconfdir}/sysconfig/tgtd
 %attr(0600,root,root) %config(noreplace) %{_sysconfdir}/tgt/targets.conf
 %attr(0600,root,root) %config(noreplace) %{_sysconfdir}/tgt/tgtd.conf
 %attr(0600,root,root) %config(noreplace) %{_sysconfdir}/tgt/conf.d/sample.conf
 
 %changelog
+* Wed Mar 06 2013 Pavel Shilovsky <piastry@altlinux.org> 1.0.30-alt4
+- Fix unowned files
+
 * Wed Mar 06 2013 Pavel Shilovsky <piastry@altlinux.org> 1.0.30-alt3
 - Use post/preun_service scripts in spec
 
