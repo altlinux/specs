@@ -1,7 +1,7 @@
 %define _sbinrootdir /sbin
 
 Name: ndiswrapper
-Version: 1.57
+Version: 1.58
 Release: alt1
 
 Group: System/Configuration/Hardware
@@ -89,6 +89,9 @@ echo -e "please download binary driver at http://ndiswrapper.sourceforge.net/wik
 %_usrsrc/kernel/sources/*ndis*
 
 %changelog
+* Wed Mar 06 2013 Ilya Mashkin <oddity@altlinux.ru> 1.58-alt1
+- 1.58
+
 * Sat Jan 14 2012 Ilya Mashkin <oddity@altlinux.ru> 1.57-alt1
 - 1.57
 
