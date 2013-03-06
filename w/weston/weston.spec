@@ -1,11 +1,13 @@
 Name:           weston
-Version:        1.0.3
+Version:        1.0.5
 Release:        alt1
 Summary:        Reference compositor for Wayland
 Group:          Graphical desktop/Other
 License:        BSD and CC-BY-SA
 URL:            http://wayland.freedesktop.org/
 Source0:        %name-%version.tar
+
+Packager: Alexey Gladkov <legion@altlinux.ru>
 
 BuildRequires:  autoconf gcc-c++ pkg-config
 BuildRequires:  libcairo-devel
@@ -72,6 +74,9 @@ find %buildroot -name \*.la | xargs rm -f
 %doc README data/COPYING
 
 %changelog
+* Wed Mar 06 2013 Alexey Gladkov <legion@altlinux.ru> 1.0.5-alt1
+- Version (1.0.5).
+
 * Sat Dec 29 2012 Alexey Gladkov <legion@altlinux.ru> 1.0.3-alt1
 - Version (1.0.3).
 
