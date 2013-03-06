@@ -6,7 +6,7 @@
 Name: squid
 Version: 3.1.23
 %define langpack_ver 20121005
-Release: alt1
+Release: alt2
 Summary: The Squid proxy caching server
 License: GPLv2
 Group: System/Servers
@@ -282,6 +282,9 @@ chown -R %name:%name %_spooldir/%name >/dev/null 2>&1 ||:
 
 
 %changelog
+* Wed Mar 06 2013 Led <led@altlinux.ru> 3.1.23-alt2
+- fixed cachemgr.cgi crash with authentication
+
 * Mon Jan 28 2013 Led <led@altlinux.ru> 3.1.23-alt1
 - 3.1.23 (CVE-2012-5643)
 
