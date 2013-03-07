@@ -1,3 +1,5 @@
+%define _unpackaged_files_terminate_build 1
+%define javapackagestoolsver 0.12.6
 # Copyright (c) 2000-2008, JPackage Project
 # All rights reserved.
 #
@@ -35,7 +37,7 @@
 
 Name:           rpm-build-java
 Version:        5.0.0
-Release:        alt27
+Release:        alt28
 Epoch:          0
 URL:            http://www.jpackage.org/
 License:        BSD
@@ -82,7 +84,7 @@ Group: Development/Java
 # for maven_depmap.pl
 BuildRequires:  perl-XML-Simple
 
-Provides: javapackages-tools = 0.7.5
+Provides: javapackages-tools = %javapackagestoolsver
 
 %package -n jpackage-utils
 Summary:        JPackage utilities
@@ -142,6 +144,40 @@ BuildArch:      noarch
 
 %description -n rpm-build-java-osgi
 RPM build helpers for Java packages with OSGi dependencies
+
+%package -n rpm-build-maven-local
+Summary:        Macros and scripts for Maven packaging support
+Group: Development/Java
+Provides: maven-local = %javapackagestoolsver
+Requires:       %{name} = %{?epoch:%{epoch}}%{version}-%{release}
+Requires:       maven
+Requires:       xmvn
+# POM files needed by maven itself
+Requires:       apache-commons-parent
+Requires:       apache-parent
+Requires:       httpcomponents-project
+Requires:       jboss-parent
+Requires:       maven-parent
+Requires:       maven-plugins-pom
+Requires:       mojo-parent
+Requires:       plexus-components-pom
+Requires:       plexus-pom
+Requires:       plexus-tools-pom
+Requires:       sonatype-oss-parent
+# added by viy@ for initial bootstrapping transaction
+Requires:       sonatype-forge-parent
+# Common Maven plugins required by almost every build. It wouldn't make
+# sense to explicitly require them in every package built with Maven.
+Requires:       maven-compiler-plugin
+Requires:       maven-jar-plugin
+Requires:       maven-javadoc-plugin
+Requires:       maven-surefire-plugin
+# Tests based on JUnit are very common and JUnit itself is small.
+# Include JUnit provider for Surefire just for convenience.
+Requires:       maven-surefire-provider-junit
+
+%description -n rpm-build-maven-local
+This package provides macros and scripts to support packaging Maven artifacts.
 
 %prep
 %setup -q -n jpackage-utils-%version -a1 -a2 -a3
@@ -360,7 +396,6 @@ popd
 
 install -D -m755 rpm-build-java/maven_depmap.pl %buildroot%{_datadir}/java-utils/maven_depmap
 echo '%%attr(755,root,root) %{_datadir}/java-utils/maven_depmap' >> jpackage-utils-%{version}.files
-install -pm 644 javapackages/macros.fjava ${RPM_BUILD_ROOT}%_rpmmacrosdir/jpackage-fjava
 install -D -m755 javapackages/scripts/pom_editor.sh %buildroot%{_datadir}/java-utils/pom_editor.sh
 echo '%%attr(755,root,root) %{_datadir}/java-utils/pom_editor.sh' >> jpackage-utils-%{version}.files
 
@@ -378,6 +413,7 @@ cat <<__TRIGGER__ >%buildroot/%_rpmlibdir/update-maven-depmap.filetrigger
 egrep -qs -e '^(%{_datadir}/maven-fragments|%{_sysconfdir}/maven/fragments)' || exit 0
 %{_sbindir}/update-maven-depmap
 __TRIGGER__
+chmod 755 %buildroot/%_rpmlibdir/update-maven-depmap.filetrigger
 echo '%%attr(755,root,root) %_rpmlibdir/update-maven-depmap.filetrigger' >> jpackage-utils-%{version}.files
 echo '%%attr(755,root,root) %_sbindir/update-maven-depmap' >> jpackage-utils-%{version}.files
 # -------- end update-maven-depmap.filetrigger ---------------
@@ -389,11 +425,36 @@ install -pm 644 rpm-build-java/macros.eclipse ${RPM_BUILD_ROOT}%_rpmmacrosdir/jp
 #echo '%%dir /usr/lib/java' >> jpackage-utils-%{version}.files
 ##endif
 
+pushd javapackages
+install -pm 644 macros.fjava ${RPM_BUILD_ROOT}%_rpmmacrosdir/javapackages-fjava
+install -pm 644 macros.xmvn ${RPM_BUILD_ROOT}%_rpmmacrosdir/javapackages-xmvn
+install -p -m 644 metadata/*.xml $RPM_BUILD_ROOT%{_sysconfdir}/maven
+install -p -m 755 scripts/mvn-* $RPM_BUILD_ROOT%{_bindir}
+popd
+
+%define fedora 18
+# On Fedora 18 we don't want to install mvn-local and mvn-rpmbuild
+# scripts as they are already provided by maven package.
+%if 0%{fedora} == 18
+rm -f $RPM_BUILD_ROOT%{_bindir}/mvn-{local,rpmbuild}
+%endif
+
 %post -n jpackage-utils
 %{_sbindir}/update-maven-depmap
 
 %files -n jpackage-utils -f jpackage-utils-%{version}.files
-%_bindir/*
+%_bindir/build-classpath
+%_bindir/build-classpath-directory
+%_bindir/build-jar-repository
+%_bindir/check-binary-files
+%_bindir/clean-binary-files
+%_bindir/create-jar-links
+%_bindir/diff-jars
+%_bindir/find-jar
+%_bindir/jvmjar
+%_bindir/rebuild-jar-repository
+%_bindir/rebuild-security-providers
+%_sbindir/update-maven-depmap
 %_mandir/man1/*
 %doc LICENSE.txt HEADER.JPP doc/* etc/httpd-javadoc.conf
 %doc jpackage-utils-safe/README.ALT
@@ -404,15 +465,28 @@ install -pm 644 rpm-build-java/macros.eclipse ${RPM_BUILD_ROOT}%_rpmmacrosdir/jp
 
 %files -n rpm-build-java
 %_rpmmacrosdir/jpackage
-%_rpmmacrosdir/jpackage-fjava
 %_rpmmacrosdir/jpackage-eclipse
 %_rpmmacrosdir/libjvm
+%_rpmmacrosdir/javapackages-fjava
+%_rpmmacrosdir/javapackages-xmvn
 /usr/lib/rpm/maven.*
 
 %files -n rpm-build-java-osgi
 /usr/lib/rpm/osgi.*
 
+%files -n rpm-build-maven-local
+%config(noreplace) %{_sysconfdir}/maven/metadata-*.xml
+#%{_bindir}/mvn-*
+%_bindir/mvn-alias
+%_bindir/mvn-build
+%_bindir/mvn-file
+%_bindir/mvn-package
+
 %changelog
+* Thu Mar 07 2013 Igor Vlasenko <viy@altlinux.ru> 0:5.0.0-alt28
+- added maven-local
+- sync with javapackages-tools = 0.12.6
+
 * Tue Feb 26 2013 Igor Vlasenko <viy@altlinux.ru> 0:5.0.0-alt27
 - sync with javapackages-tools = 0.7.5
 
