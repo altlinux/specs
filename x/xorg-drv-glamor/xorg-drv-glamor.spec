@@ -1,6 +1,6 @@
 Name: xorg-drv-glamor
 Version: 0.5
-Release: alt2.f1457c
+Release: alt2.f1457c.1
 Summary: Glamor video driver
 License: BSD
 Group: System/X11
@@ -65,6 +65,9 @@ the libglamor library
 %_pkgconfigdir/*.pc
 
 %changelog
+* Thu Mar 07 2013 Fr. Br. George <george@altlinux.ru> 0.5-alt2.f1457c.1
+- Rebuild with new Xorg
+
 * Wed Feb 13 2013 L.A. Kostis <lakostis@altlinux.ru> 0.5-alt2.f1457c
 - rebuild with new xorg.
 - update Buildreq.
