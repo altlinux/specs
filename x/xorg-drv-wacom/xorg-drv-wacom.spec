@@ -1,6 +1,6 @@
 Name: xorg-drv-wacom
 Version: 0.20.0
-Release: alt1
+Release: alt2
 Epoch: 1
 Summary: Wacom input driver
 License: GPLv2
@@ -55,6 +55,9 @@ Wacom input driver development package
 %_pkgconfigdir/*.pc
 
 %changelog
+* Wed Mar 06 2013 Valery Inozemtsev <shrek@altlinux.ru> 1:0.20.0-alt2
+- requires XORG_ABI_XINPUT = 19.1
+
 * Wed Mar 06 2013 Valery Inozemtsev <shrek@altlinux.ru> 1:0.20.0-alt1
 - 0.20.0
 

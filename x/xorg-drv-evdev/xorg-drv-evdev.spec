@@ -2,7 +2,7 @@
 
 Name: xorg-drv-evdev
 Version: 2.7.3
-Release: alt2
+Release: alt3
 Epoch: 2
 Summary: Generic Linux input driver
 License: MIT/X11
@@ -63,6 +63,9 @@ install -pD -m644 99-x11-keyboard.rules %buildroot%_sysconfdir/udev/rules.d/99-x
 %_pkgconfigdir/*.pc
 
 %changelog
+* Wed Mar 06 2013 Valery Inozemtsev <shrek@altlinux.ru> 2:2.7.3-alt3
+- requires XORG_ABI_XINPUT = 19.1
+
 * Sun Sep 16 2012 Valery Inozemtsev <shrek@altlinux.ru> 2:2.7.3-alt2
 - requires XORG_ABI_XINPUT = 18.0
 

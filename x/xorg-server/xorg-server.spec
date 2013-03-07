@@ -1,4 +1,4 @@
-%define mesaversion 9.0
+%define mesaversion 9.1
 %define xorgversion 7.7.0
 
 %define _libexecdir /usr/libexec
@@ -18,7 +18,7 @@
 %endif
 
 Name: xorg-server
-Version: 1.13.2
+Version: 1.14.0
 Release: alt1
 Epoch: 2
 License: MIT/X11
@@ -28,8 +28,8 @@ Url: http://xorg.freedesktop.org
 Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
 # grep ABI_ hw/xfree86/common/xf86Module.h
-Provides: XORG_ABI_VIDEODRV = 13.1
-Provides: XORG_ABI_XINPUT = 18.0
+Provides: XORG_ABI_VIDEODRV = 14.1
+Provides: XORG_ABI_XINPUT = 19.1
 Provides: XORG_ABI_EXTENSION = 7.0
 Provides: xorg-x11-server = %epoch:%version-%release xorg-extensions-glx = %epoch:%version-%release
 PreReq: xorg-server-control >= 1.3-alt1 %name-common = %epoch:%version-%release libGL >= %mesaversion xorg-dri-swrast >= %mesaversion
@@ -298,6 +298,15 @@ install -pD -m644 xorg-sdk.rpmmacros %buildroot%_rpmmacrosdir/xorg-sdk
 %_rpmmacrosdir/xorg-sdk
 
 %changelog
+* Wed Mar 06 2013 Valery Inozemtsev <shrek@altlinux.ru> 2:1.14.0-alt1
+- 1.14.0
+
+* Fri Mar 01 2013 Valery Inozemtsev <shrek@altlinux.ru> 2:1.13.2.902-alt1
+- 1.13.3 RC2
+
+* Sat Feb 16 2013 Valery Inozemtsev <shrek@altlinux.ru> 2:1.13.2.901-alt1
+- 1.13.3 RC1
+
 * Fri Jan 25 2013 Valery Inozemtsev <shrek@altlinux.ru> 2:1.13.2-alt1
 - 1.13.2
 
