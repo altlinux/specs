@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.0
-Release: alt2.hg20120529
+Release: alt3.git20130221
 
 Summary: Python network library that uses greenlet and libevent for easy and scalable concurrency
 
@@ -12,11 +12,9 @@ Group: Development/Python
 License: MIT
 Url: http://pypi.python.org/pypi/%oname
 
-Packager: Vitaly Lipatov <lav@altlinux.ru>
-
 %py_requires greenlet
 
-# hg clone http://bitbucket.org/denis/gevent
+# https://github.com/SiteSupport/gevent.git
 Source: %oname-%version.tar
 
 # Automatically added by buildreq on Wed Feb 03 2010
@@ -102,6 +100,7 @@ pushd ../python3
 export CYTHON=cython3
 sed -i 's|import mimetools|import email.message|' gevent/pywsgi.py
 sed -i 's|mimetools.Message|email.message.Message|' gevent/pywsgi.py
+sed -i 's|basestring|str|g' gevent/ares.pyx
 %python3_build_debug
 popd
 %endif
@@ -147,6 +146,9 @@ popd
 %endif
 
 %changelog
+* Thu Mar 07 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0-alt3.git20130221
+- New snapshot
+
 * Tue Jun 05 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0-alt2.hg20120529
 - Fixed using email.message
 
