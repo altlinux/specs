@@ -6,7 +6,7 @@
 
 
 Name: branding-%brand-%theme
-Version: 20121231
+Version: 20130307
 Release: alt1
 BuildArch: noarch
 
@@ -440,6 +440,10 @@ cat /etc/sysconfig/xinitrc.xfce >> /etc/sysconfig/xinitrc
 
 
 %changelog
+* Thu Mar 07 2013 Michael Shigorin <mike@altlinux.org> 20130307-alt1
+- fixed broken image resolution/directory name match for kde4 splash
+  (thanks zerg@)
+
 * Mon Dec 31 2012 Michael Shigorin <mike@altlinux.org> 20121231-alt1
 - fixed module link text colour in acc
 - tweaked acc background color (was too white)
