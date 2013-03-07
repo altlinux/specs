@@ -7,7 +7,7 @@ BuildRequires: /usr/bin/gconftool-2 /usr/bin/glib-gettextize pkgconfig(gtk+-2.0)
 Summary: Constructionist learning platform
 Name: sugar
 Version: 0.96.3
-Release: alt3_1
+Release: alt4_1
 URL: http://sugarlabs.org/
 License: GPLv2+
 Group: Graphical desktop/Sugar
@@ -63,7 +63,7 @@ Group: Graphical desktop/Sugar
 Requires: %{name} = %{version}-%{release}
 Requires: xorg-xephyr
 # for xdpyinfo
-Requires: xorg-x11-utils
+Requires: xdpyinfo
 
 %description emulator
 The emulator let's you test and debug sugar. For example it allows you to run 
@@ -142,6 +142,9 @@ fi
 %{_datadir}/icons/hicolor/scalable/apps/sugar-xo.svg
 
 %changelog
+* Thu Mar 07 2013 Igor Vlasenko <viy@altlinux.ru> 0.96.3-alt4_1
+- really use /usr/bin/xdpyinfo
+
 * Thu Mar 07 2013 Igor Vlasenko <viy@altlinux.ru> 0.96.3-alt3_1
 - use Req: /usr/bin/xdpyinfo
 
