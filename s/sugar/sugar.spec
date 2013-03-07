@@ -7,7 +7,7 @@ BuildRequires: /usr/bin/gconftool-2 /usr/bin/glib-gettextize pkgconfig(gtk+-2.0)
 Summary: Constructionist learning platform
 Name: sugar
 Version: 0.96.3
-Release: alt1_1
+Release: alt3_1
 URL: http://sugarlabs.org/
 License: GPLv2+
 Group: Graphical desktop/Sugar
@@ -39,7 +39,7 @@ Requires: sugar-toolkit
 Requires: sugar-toolkit-gtk3
 Requires: telepathy-mission-control
 Requires: upower
-Requires: xdg-user-dirs
+Requires: /usr/bin/xdpyinfo
 Requires: gvfs
 
 BuildArch: noarch
@@ -142,6 +142,12 @@ fi
 %{_datadir}/icons/hicolor/scalable/apps/sugar-xo.svg
 
 %changelog
+* Thu Mar 07 2013 Igor Vlasenko <viy@altlinux.ru> 0.96.3-alt3_1
+- use Req: /usr/bin/xdpyinfo
+
+* Thu Mar 07 2013 Igor Vlasenko <viy@altlinux.ru> 0.96.3-alt2_1
+- rebuild with new xorg
+
 * Mon Dec 03 2012 Igor Vlasenko <viy@altlinux.ru> 0.96.3-alt1_1
 - new version; import from fc17 updates
 
