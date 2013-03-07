@@ -3,17 +3,17 @@ BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:       perl-DateTime-Format-Flexible
-Version:    0.24
-Release:    alt2_2
+Version:    0.25
+Release:    alt1_1
 License:    GPL+ or Artistic
 Group:      Development/Perl
 Summary:    Flexibly parse strings and turn them into DateTime objects
 Source:     http://search.cpan.org/CPAN/authors/id/T/TH/THINC/DateTime-Format-Flexible-%{version}.tar.gz
-Url:        http://search.cpan.org/dist/DateTime-Format-Flexible
+Url:        http://search.cpan.org/dist/DateTime-Format-Flexible/
 BuildArch:  noarch
-
+BuildRequires:  perl
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
-# Run-time
+# Run-time:
 BuildRequires:  perl(base.pm)
 BuildRequires:  perl(Carp.pm)
 BuildRequires:  perl(DateTime.pm)
@@ -22,11 +22,13 @@ BuildRequires:  perl(DateTime/Infinite.pm)
 BuildRequires:  perl(DateTime/TimeZone.pm)
 BuildRequires:  perl(List/MoreUtils.pm)
 BuildRequires:  perl(Module/Pluggable.pm)
-# Tests only
+BuildRequires:  perl(strict.pm)
+BuildRequires:  perl(warnings.pm)
+# Tests only:
 BuildRequires:  perl(File/Spec/Functions.pm)
 BuildRequires:  perl(Test/MockTime.pm)
 BuildRequires:  perl(Test/More.pm)
-# Optional tests
+# Optional tests:
 BuildRequires:  perl(Test/Pod.pm)
 BuildRequires:  perl(Test/Pod/Coverage.pm)
 Source44: import.info
@@ -49,6 +51,7 @@ make %{?_smp_mflags}
 %install
 make pure_install DESTDIR=%{buildroot}
 find %{buildroot} -type f -name .packlist -exec rm -f {} ';'
+# %{_fixperms} %{buildroot}/*
 
 %check
 TEST_POD=1 make test
@@ -58,6 +61,9 @@ TEST_POD=1 make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Thu Mar 07 2013 Igor Vlasenko <viy@altlinux.ru> 0.25-alt1_1
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.24-alt2_2
 - update to new release by fcimport
 
