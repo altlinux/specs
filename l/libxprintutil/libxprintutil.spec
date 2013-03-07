@@ -1,14 +1,16 @@
 Name: libxprintutil
 Summary: The XprintUtil Library
 Version: 1.0.1
-Release: alt2
+Release: alt3
 Group: System/X11
 License: MIT
 Url: http://xorg.freedesktop.org
 Source: http://xorg.freedesktop.org/releases/individual/lib/libXprintUtil-%version.tar.bz2
-Packager: Fr. Br. George <george@altlinux.ru>
 
-BuildRequires: libX11-devel libXau-devel libXp-devel libXt-devel xorg-proto-devel xorg-util-macros gcc-c++
+# Automatically added by buildreq on Thu Mar 07 2013
+# optimized out: gnu-config libX11-devel libXau-devel libstdc++-devel pkg-config xorg-printproto-devel xorg-xproto-devel
+BuildRequires: gcc-c++ libXp-devel libXt-devel
+
 %description
 The XprintUtil Library allows X11 application to print
 
@@ -27,7 +29,6 @@ Development files for %name
 
 %files -n libxprintutil-devel
 %_libdir/libXprintUtil.so
-#%_libdir/libXprintUtil.la
 %_pkgconfigdir/xprintutil.pc
 %_includedir/X11/XprintUtil/xprintutil.h
 
@@ -62,6 +63,9 @@ Static development files for %name
 %_libdir/libXprintUtil.so.1.0.0
 
 %changelog
+* Thu Mar 07 2013 Fr. Br. George <george@altlinux.ru> 1.0.1-alt3
+- Rebuild win new buildreq
+
 * Mon Apr 25 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 1.0.1-alt2
 - fix build
 
@@ -93,3 +97,4 @@ Static development files for %name
 * Thu Apr 27 2006 Gustavo Pichorim Boiko <boiko@mandriva.com>
 + 2006-04-27 04:02:05 (26704)
 - Adding X.org 7.0 to the repository
+
