@@ -1,4 +1,4 @@
-%define svn svn5245
+%define svn svn5307
 
 Name: handbrake
 Version: 0.9.9
@@ -11,7 +11,7 @@ Source0: %name-%svn.tar.bz2
 Source101: http://download.handbrake.fr/handbrake/contrib/a52dec-0.7.4.tar.gz
 Source102: http://download.handbrake.fr/handbrake/contrib/faac-1.28.tar.gz
 Source103: http://download.handbrake.fr/handbrake/contrib/faad2-2.7.tar.gz
-Source104: http://download.handbrake.fr/handbrake/contrib/libav-v9.1.tar.bz2
+Source104: http://download.handbrake.fr/handbrake/contrib/libav-v9.3.tar.bz2
 Source105: http://download.handbrake.fr/handbrake/contrib/fontconfig-2.8.0.tar.gz
 Source106: http://download.handbrake.fr/handbrake/contrib/freetype-2.4.7.tar.bz2
 Source107: http://download.handbrake.fr/handbrake/contrib/lame-3.98.tar.gz
@@ -24,7 +24,7 @@ Source113: http://download.handbrake.fr/handbrake/contrib/libxml2-2.7.7.tar.gz
 Source114: http://download.handbrake.fr/handbrake/contrib/m4-1.4.16.tar.bz2
 Source115: http://download.handbrake.fr/handbrake/contrib/mp4v2-trunk-r355.tar.bz2
 Source116: http://download.handbrake.fr/handbrake/contrib/mpeg2dec-0.5.1.tar.gz
-Source117: http://download.handbrake.fr/handbrake/contrib/x264-r2245-bc13772.tar.gz
+Source117: http://download.handbrake.fr/handbrake/contrib/x264-r2273-b3065e6.tar.gz
 Source118: http://download.handbrake.fr/handbrake/contrib/yasm-1.2.0.tar.gz
 
 Source151: handbrake-ffmpeg_fix_missing_return_in_nonvoid_function.patch
@@ -110,6 +110,9 @@ popd #build
 %_datadir/icons/*/*/apps/hb-icon.png
 
 %changelog
+* Thu Mar 07 2013 Motsyo Gennadi <drool@altlinux.ru> 0.9.9-alt1.svn5307
+- build svn5307
+
 * Mon Feb 11 2013 Motsyo Gennadi <drool@altlinux.ru> 0.9.9-alt1.svn5245
 - build svn5245
 
