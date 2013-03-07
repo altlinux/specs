@@ -1,5 +1,5 @@
 Name: xorg-inputproto-devel
-Version: 2.2
+Version: 2.3
 Release: alt1
 Epoch: 1
 Summary: X.org InputProto protocol headers
@@ -38,6 +38,12 @@ X.org InputProto protocol headers
 %_datadir/pkgconfig/*.pc
 
 %changelog
+* Thu Mar 07 2013 Valery Inozemtsev <shrek@altlinux.ru> 1:2.3-alt1
+- 2.3
+
+* Wed Mar 06 2013 Valery Inozemtsev <shrek@altlinux.ru> 1:2.2.99.1-alt1
+- 2.2.99.1
+
 * Mon Mar 05 2012 Valery Inozemtsev <shrek@altlinux.ru> 1:2.2-alt1
 - 2.2
 
