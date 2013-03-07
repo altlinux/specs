@@ -37,7 +37,7 @@ BuildRequires: jpackage-compat
 
 Name:           plexus-mail-sender
 Version:        1.0
-Release:        alt5_0.a2.22jpp7
+Release:        alt6_0.a2.22jpp7
 Epoch:          0
 Summary:        Plexus Mail Sender
 License:        MIT and ASL 1.1
@@ -100,7 +100,7 @@ mv release-pom.xml pom.xml
 
 pushd plexus-mail-senders
 mv release-pom.xml pom.xml
-%pom_xpath_remove "modules/module [text()='plexus-mail-sender-test']"
+sed -i -e 's,<module>plexus-mail-sender-test</module>,<!--module>plexus-mail-sender-test</module-->,' pom.xml
 for mod in javamail simple test;do
     pushd %{name}-$mod
     mv release-pom.xml pom.xml
@@ -157,6 +157,9 @@ cp -pr target/site/apidocs/* \
 %{_javadocdir}/%{name}
 
 %changelog
+* Thu Mar 07 2013 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt6_0.a2.22jpp7
+- fixed build
+
 * Thu Feb 14 2013 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt5_0.a2.22jpp7
 - fixed maven1 dependency
 
