@@ -4,7 +4,7 @@
 %define rname kdetoys
 Name: kde4toys
 %define major 4
-%define minor 9
+%define minor 10
 %define bugfix 1
 Version: %major.%minor.%bugfix
 Release: alt1
@@ -84,6 +84,14 @@ applications for %name
 
 %prep
 %setup -q -n %rname-%version
+ls -d1 * | \
+while read d
+do
+    [ "$d" == "${d#lib}" ] || continue
+    [ -d "$d" ] || continue
+    [ -f "$d/CMakeLists.txt" ] || continue
+    echo "add_subdirectory($d)" >> CMakeLists.txt
+done
 
 
 %build
@@ -95,7 +103,6 @@ applications for %name
 
 %files
 %files common
-%doc README
 
 #%files kweather
 #%_K4bindir/kweatherreport
@@ -119,6 +126,7 @@ applications for %name
 %_K4doc/*/amor
 
 %files ktux
+%doc ktux/AUTHORS
 %_K4bindir/ktux
 %_K4apps/ktux
 %_K4srv/ScreenSavers/ktux.desktop
@@ -136,6 +144,12 @@ applications for %name
 %_K4dbus_interfaces/*
 
 %changelog
+* Thu Mar 07 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.1-alt1
+- new version
+
+* Thu Dec 20 2012 Sergey V Turchin <zerg@altlinux.org> 4.10.0-alt0.1
+- new beta version
+
 * Fri Oct 05 2012 Sergey V Turchin <zerg@altlinux.org> 4.9.1-alt1
 - new version
 
