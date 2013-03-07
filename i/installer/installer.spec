@@ -1,5 +1,5 @@
 Name: installer
-Version: 1.8.15
+Version: 1.8.16
 Release: alt1
 
 Summary: Installer common parts
@@ -22,7 +22,7 @@ Obsoletes: %name-stage2 < %version-%release
 # installer-preinstall.desktop
 Requires: alterator-preinstall >= 0.7-alt1
 # scripts/install2
-Requires: alterator-wizardface alterator-backend-x11 >= 0.21-alt2 xinit xinitrc xorg-x11-server xorg-x11-drv-video
+Requires: alterator-wizardface alterator-backend-x11 >= 0.21-alt2 xinit xinitrc xorg-server xorg-drv-video
 # scripts/postinstall
 Requires: eject
 # initinstall.d/10-vt.sh
@@ -105,6 +105,9 @@ This package contains common installer stage3 files and dependencies.
 %_datadir/install2/preinstall.d/30-setup-network.sh
 
 %changelog
+* Thu Mar 07 2013 Michael Shigorin <mike@altlinux.org> 1.8.16-alt1
+- fixed xorg dependencies (thx shrek@)
+
 * Tue Feb 12 2013 Mikhail Efremov <sem@altlinux.org> 1.8.15-alt1
 - cp-installer-logs: Don't copy wizard.log.
 - cp-installer-logs: Fix removal passwords from install logs.
