@@ -1,7 +1,5 @@
 Name: dnsmasq
-Version: 2.63
-
-%define with_resolvconf with_resolvconf
+Version: 2.65
 
 Release: alt1
 Summary: A lightweight caching nameserver
@@ -9,20 +7,18 @@ License: %gpl2plus
 Group: System/Servers
 Url: http://www.thekelleys.org.uk/dnsmasq
 Source0: %name-%version.tar
-Source1: %name.init.m4
-Source2: %name.sysconfig.m4
-Patch0: %name-%version-%release.patch
-%ifdef %with_resolvconf
-Patch1: %name.conf.resolvconf.patch
-Requires: openresolv-dnsmasq
-%endif
-BuildPreReq: m4
+Source1: %name.init
+Source2: %name.sysconfig
+Source3: %name-helper
+Source4: %name.service
+Patch: %name-%version-%release.patch
+# Patches from Fedora
+Patch2: dnsmasq-2.65-Correct-behaviour-for-TCP-queries-to-allowed-address.patch
+
 BuildPreReq: glibc-kernheaders
 BuildRequires(pre): rpm-build-licenses
 
-%define init_script rpm/%name-alt.init
 %define sysconfig_file %_sysconfdir/sysconfig/%name
-%define sysconfig_file_tmp %name-sysconfig
 
 Summary(ru_RU.KOI8-R): Компактный сервер DNS и DHCP для локальных сетей
 
@@ -49,11 +45,10 @@ Dnsmasq не поддерживает пересылку DNS-зон и поэтому не может использоваться
 в качестве авторитативного. Для этой цели вам понадобится PowerDNS или BIND.
 
 %prep
-%setup -q
-%patch0 -p1
-%ifdef %with_resolvconf
-%patch1 -p2
-%endif
+%setup
+%patch -p1
+
+%patch2 -p1
 
 # Setup version
 sed -r -i "s;-DVERSION=.+;-DVERSION='\\\\\"%version\\\\\"';" Makefile
@@ -62,19 +57,14 @@ sed -r -i "s;-DVERSION=.+;-DVERSION='\\\\\"%version\\\\\"';" Makefile
 %make_build
 
 %install
-mkdir -p rpm
-%ifdef %with_resolvconf
-m4 -D%with_resolvconf %SOURCE1 > %init_script
-m4 -D%with_resolvconf %SOURCE2 > %sysconfig_file_tmp
-%else
-m4 %SOURCE1 > %init_script
-m4 %SOURCE2 > %sysconfig_file_tmp
-%endif
-install -pD -m700 src/dnsmasq         %buildroot%_sbindir/%name
-install -pD -m744 %init_script        %buildroot%_initdir/%name
-install -pD -m600 %sysconfig_file_tmp %buildroot%sysconfig_file
+%makeinstall_std PREFIX=%prefix
+
+install -d -m770 %buildroot%_sysconfdir/dnsmasq.conf.d
+install -pD -m744 %SOURCE1            %buildroot%_initdir/%name
+install -pD -m600 %SOURCE2            %buildroot%sysconfig_file
 install -pD -m600 %name.conf.example  %buildroot%_sysconfdir/%name.conf
-install -pD -m444 man/%name.8         %buildroot%_man8dir/%name.8
+install -pD -m700 %SOURCE3            %buildroot%_sbindir/%name-helper
+install -pD -m644 %SOURCE4            %buildroot%_unitdir/%name.service
 
 %pre
 # Upgrade configuration from previous versions
@@ -92,20 +82,28 @@ fi
 
 %preun
 %preun_service %name
-%ifndef %with_resolvconf
-rm -f %_sysconfdir/*.dnsmasq 2>&1   # fixme! should be more elegant..
-%endif
 
 %files
 %doc CHANGELOG FAQ doc.html setup.html CHANGELOG.archive
 %config(noreplace) %_sysconfdir/%name.conf
 %config(noreplace) %_sysconfdir/sysconfig/%name
+%dir %_sysconfdir/dnsmasq.conf.d
+%_unitdir/%name.service
 %_initdir/%name
-%_sbindir/%name
+%attr(700,root,root) %_sbindir/%{name}*
 %_man8dir/%{name}*
 %doc contrib/dnslist contrib/dynamic-dnsmasq
 
 %changelog
+* Wed Mar 06 2013 Mikhail Efremov <sem@altlinux.org> 2.65-alt1
+- Patch from Fedora:
+  + Fix for CVE-2013-0198 (checking of TCP connection interfaces)
+- Improved resolvconf support.
+- Added dnsmasq.service.
+- Added dnsmasq-helper script.
+- Drop 'build without resolvconf' support.
+- Updated to 2.65.
+
 * Fri Aug 24 2012 Mikhail Efremov <sem@altlinux.org> 2.63-alt1
 - Updated to new version 2.63.
 

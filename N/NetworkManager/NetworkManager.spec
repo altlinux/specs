@@ -7,6 +7,7 @@
 %define ppp_version 2.4.5
 %define wpa_supplicant_version 0.7.3-alt3
 %define dhcpcd_version 4.0.0
+%define openresolv_version 3.5.4-alt3
 
 %def_enable systemd
 %def_disable wimax
@@ -14,7 +15,7 @@
 
 Name: NetworkManager
 Version: 0.9.8.0
-Release: alt3%git_date
+Release: alt4%git_date
 License: %gpl2plus
 Group: System/Configuration/Networking
 Summary: Network Link Manager and User Applications
@@ -56,7 +57,8 @@ Requires: ppp = %ppp_version
 Requires: nss >= 3.11.7
 Requires: ppp-pppoe
 Requires: dnsmasq
-Requires: openresolv
+Requires: openresolv >= %openresolv_version
+Requires: openresolv-dnsmasq >= %openresolv_version
 Requires: libshell
 Requires: ModemManager >= 0.7
 Requires: NetworkManager-glib = %version-%release
@@ -320,6 +322,10 @@ fi
 %exclude %_libdir/pppd/%ppp_version/*.la
 
 %changelog
+* Thu Mar 07 2013 Mikhail Efremov <sem@altlinux.org> 0.9.8.0-alt4
+- Require openresolv-dnsmasq.
+- dnsmasq-manager: Updated resolvconf-related code.
+
 * Wed Mar 06 2013 Mikhail Efremov <sem@altlinux.org> 0.9.8.0-alt3
 - Added NetworkManager-prestart script.
 - initscript: Fix ModemManager stopping.
