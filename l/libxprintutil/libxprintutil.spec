@@ -1,7 +1,7 @@
 Name: libxprintutil
 Summary: The XprintUtil Library
 Version: 1.0.1
-Release: alt3
+Release: alt4
 Group: System/X11
 License: MIT
 Url: http://xorg.freedesktop.org
@@ -17,12 +17,7 @@ The XprintUtil Library allows X11 application to print
 %package -n libxprintutil-devel
 Summary: Development files for %name
 Group: System/X11
-
 Requires: libxprintutil = %version-%release
-Requires: libX11-devel
-Requires: libXt-devel
-Requires: xorg-x11-proto-devel
-Provides: libxprintutil-devel = version-%release
 
 %description -n libxprintutil-devel
 Development files for %name
@@ -63,8 +58,11 @@ Static development files for %name
 %_libdir/libXprintUtil.so.1.0.0
 
 %changelog
+* Thu Mar 07 2013 Fr. Br. George <george@altlinux.ru> 1.0.1-alt4
+- Remove xorg-x11-proto-devel from requirements
+
 * Thu Mar 07 2013 Fr. Br. George <george@altlinux.ru> 1.0.1-alt3
-- Rebuild win new buildreq
+- Rebuild with new buildreq
 
 * Mon Apr 25 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 1.0.1-alt2
 - fix build
