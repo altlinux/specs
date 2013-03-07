@@ -1,5 +1,5 @@
 Name: xinitrc
-Version: 2.4.38
+Version: 2.4.39
 Release: alt1
 
 Summary: The default startup scripts for the X Window System
@@ -38,7 +38,6 @@ cp -av install/* %buildroot/
 %post
 if [ $1 -eq 1 ]; then
 	/sbin/chkconfig --add dm
-	/sbin/chkconfig --add update_wms
 fi
 if grep -qs '^x:5:' /etc/inittab; then
 	/sbin/chkconfig --add dm
@@ -48,15 +47,13 @@ fi
 %preun
 if [ $1 -eq 0 ]; then
 	/sbin/chkconfig --del dm
-	/sbin/chkconfig --del update_wms
 fi
 
 %triggerpostun -- initscripts < 1:5.49.1-alt1
 /sbin/chkconfig --add dm
-/sbin/chkconfig --add update_wms
 
-%triggerpostun -- xinitrc < 0:2.4.13-alt1
-/sbin/chkconfig --add update_wms
+%triggerun -- xinitrc < 2.4.39
+/sbin/chkconfig --del update_wms
 
 %files -f xrootwarn.lang
 %_sbindir/*
@@ -73,6 +70,10 @@ fi
 %config(noreplace) %_sysconfdir/X11/xdm/*
 
 %changelog
+* Thu Mar 07 2013 Dmitry V. Levin <ldv@altlinux.org> 2.4.39-alt1
+- xrootwarn: replaced xmessage with gxmessage (closes: #28111).
+- Dropped no longer needed update_wms startup script (closes: #28103).
+
 * Mon Jan 21 2013 Dmitry V. Levin <ldv@altlinux.org> 2.4.38-alt1
 - prefdm: added E17/entrance support (closes: #28399).
 
