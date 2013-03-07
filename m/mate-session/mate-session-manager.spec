@@ -1,34 +1,33 @@
-BuildRequires(pre): browser-plugins-npapi-devel
 Group: Graphical desktop/MATE
 # BEGIN SourceDeps(oneline):
-BuildRequires: libICE-devel libSM-devel libXau-devel libXext-devel libwrap-devel pkgconfig(gio-2.0) pkgconfig(glib-2.0) pkgconfig(gtk+-3.0) pkgconfig(ice) pkgconfig(xau) pkgconfig(xext) pkgconfig(xrender) pkgconfig(xtst) xorg-xtrans-devel
+BuildRequires: /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/xmlto /usr/bin/xsltproc libICE-devel libXau-devel libXext-devel libgio-devel libwrap-devel pkgconfig(gio-2.0) pkgconfig(glib-2.0) pkgconfig(gtk+-2.0) pkgconfig(gtk+-3.0) pkgconfig(ice) pkgconfig(xau) pkgconfig(xext) pkgconfig(xrender) pkgconfig(xtst) xorg-xtrans-devel
 # END SourceDeps(oneline)
+BuildRequires(pre): browser-plugins-npapi-devel
 %define _libexecdir %_prefix/libexec
 %define oldname mate-session-manager
 Name:           mate-session
 Version:        1.5.1
-Release:        alt1_0
+Release:        alt1_1
 Summary:        MATE Desktop session manager
 License:        GPLv2+
 URL:            http://mate-desktop.org
 Source0:        http://pub.mate-desktop.org/releases/1.5/%{oldname}-%{version}.tar.xz
-Requires:       gsettings-desktop-schemas
 
-Patch0:         mate-session-manager-cflags.patch
-
+BuildRequires:  libdbus-glib-devel
 BuildRequires:  desktop-file-utils
-BuildRequires:  pkgconfig(gtk+-2.0)
-BuildRequires:  pkgconfig(dbus-glib-1)
-BuildRequires:  mate-common
-BuildRequires:  pkgconfig(sm)
-BuildRequires:  pkgconfig(upower-glib)
-BuildRequires:  pkgconfig(polkit-gtk-mate-1)
-BuildRequires:  mate-icon-theme
+BuildRequires:  gsettings-desktop-schemas-devel
+BuildRequires:  gtk2-devel
 BuildRequires:  icon-naming-utils
-BuildRequires:  pkgconfig(polkit-agent-1)
-BuildRequires:  pkgconfig(gsettings-desktop-schemas)
-BuildRequires:  pkgconfig(pangox)
+BuildRequires:  libSM-devel
+BuildRequires:  mate-common
+BuildRequires:  mate-icon-theme
+BuildRequires:  mate-polkit-devel
+BuildRequires:  pango-devel
+BuildRequires:  libpolkit-devel
+BuildRequires:  libupower-devel
+BuildRequires:  xmlto
 Source44: import.info
+Patch33: mate-session-manager-cflags.patch
 Provides: mate-session-manager = %version-%release
 Provides: mate-session-xsession = %version-%release
 Source45: MATE64.png
@@ -40,7 +39,7 @@ full-featured user session.
 
 %prep
 %setup -n %{oldname}-%{version} -q
-%patch0 -p1
+%patch33 -p1
 
 %build
 NOCONFIGURE=1 ./autogen.sh
@@ -116,11 +115,12 @@ install -pD -m644 %SOURCE45 %buildroot%_iconsdir/hicolor/64x64/apps/mate.png
 %{_bindir}/mate-session-save
 %{_bindir}/mate-wm
 %{_datadir}/applications/mate-session-properties.desktop
-%{_datadir}/mate-session/
+%{_datadir}/mate-session
 %{_datadir}/icons/hicolor/*/apps/*.png
 %{_datadir}/icons/hicolor/scalable/apps/mate-session-properties.svg
 %{_datadir}/glib-2.0/schemas/org.mate.session.gschema.xml
 %{_datadir}/xsessions/mate.desktop
+%{_datadir}/doc/mate-session/dbus/mate-session.html
 %{_datadir}/MateConf/gsettings/mate-session.convert
 
 %_bindir/*
@@ -131,6 +131,9 @@ install -pD -m644 %SOURCE45 %buildroot%_iconsdir/hicolor/64x64/apps/mate.png
 
 
 %changelog
+* Tue Mar 05 2013 Igor Vlasenko <viy@altlinux.ru> 1.5.1-alt1_1
+- new fc release
+
 * Sun Feb 17 2013 Igor Vlasenko <viy@altlinux.ru> 1.5.1-alt1_0
 - new version
 

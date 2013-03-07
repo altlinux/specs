@@ -5,14 +5,12 @@ BuildRequires: /usr/bin/gdk-pixbuf-csource /usr/bin/glib-gettextize /usr/bin/mat
 BuildRequires: libcanberra-gtk2-devel
 %define _libexecdir %_prefix/libexec
 Name:           mate-window-manager
-Version:        1.5.3
-Release:        alt1_4
+Version:        1.5.4
+Release:        alt1_1
 Summary:        MATE Desktop window manager
 License:        LGPLv2+ and GPLv2+
 URL:            http://mate-desktop.org
 Source0:        http://pub.mate-desktop.org/releases/1.5/%{name}-%{version}.tar.xz
-
-Patch0: mwm_commits_rollup.patch
 
 BuildRequires: desktop-file-utils
 BuildRequires: gsettings-desktop-schemas-devel
@@ -64,7 +62,6 @@ Internal library for MATE Window Manager.
 
 %prep
 %setup -q
-%patch0 -p1
 %patch33 -p1
 %patch34 -p1
 %patch35 -p1
@@ -139,6 +136,9 @@ desktop-file-install                                \
 
 
 %changelog
+* Tue Mar 05 2013 Igor Vlasenko <viy@altlinux.ru> 1.5.4-alt1_1
+- new fc release
+
 * Wed Feb 20 2013 Igor Vlasenko <viy@altlinux.ru> 1.5.3-alt1_4
 - new fc release
 

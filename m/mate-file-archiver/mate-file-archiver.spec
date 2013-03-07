@@ -6,7 +6,7 @@ BuildRequires: /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/glib-m
 %define oldname mate-file-archiver
 Name:           mate-file-archiver
 Version:        1.5.1
-Release:        alt1_4
+Release:        alt1_6
 Summary:        MATE Desktop file archiver
 License:        GPLv2+ and LGPLv2+
 URL:            http://mate-desktop.org
@@ -26,6 +26,10 @@ BuildRequires:  rarian-compat
 BuildRequires:  librarian-devel
 
 Provides: engrampa
+
+# bugzilla.redhat.com/908137
+# dropped mate-file-manager-archiver subpkg sometime after 1.5.1-1 release
+Obsoletes: mate-file-manager-archiver < 1.5.1-5
 Patch33: file-roller-2.28.2-alt-7z.patch
 Source44: import.info
 
@@ -80,6 +84,9 @@ find %{buildroot} -name "*.la" -exec rm -f {} ';'
 
 
 %changelog
+* Tue Mar 05 2013 Igor Vlasenko <viy@altlinux.ru> 1.5.1-alt1_6
+- new fc release
+
 * Sat Feb 02 2013 Igor Vlasenko <viy@altlinux.ru> 1.5.1-alt1_4
 - new fc release
 

@@ -1,18 +1,18 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/glib-gettextize gcc-c++ pkgconfig(giomm-2.4) pkgconfig(glib-2.0) pkgconfig(glibmm-2.4) pkgconfig(gmodule-2.0) pkgconfig(gtk+-2.0) pkgconfig(libgtop-2.0)
-# END SourceDeps(oneline)
 Group: Graphical desktop/MATE
+# BEGIN SourceDeps(oneline):
+BuildRequires: /usr/bin/glib-gettextize gcc-c++ libgio-devel pkgconfig(giomm-2.4) pkgconfig(glib-2.0) pkgconfig(glibmm-2.4) pkgconfig(gmodule-2.0) pkgconfig(gtk+-2.0) pkgconfig(libgtop-2.0)
+# END SourceDeps(oneline)
 %define _libexecdir %_prefix/libexec
 Name:           mate-system-monitor
-Version:        1.5.0
-Release:        alt1_2
+Version:        1.5.1
+Release:        alt1_1
 Summary:        Process and resource monitor
 
 License:        GPLv2+
 URL:            http://mate-desktop.org
 Source0:        http://pub.mate-desktop.org/releases/1.5/%{name}-%{version}.tar.xz
 # upstream commit https://github.com/mate-desktop/mate-system-monitor/commit/6d06a224d764c5b58127f665b2fcfa7eeac080ee
-Patch0:         desktopfile_fix.patch
+#Patch0:         desktopfile_fix.patch
 
 BuildRequires: libgtop2-devel
 BuildRequires: desktop-file-utils
@@ -42,14 +42,13 @@ such as CPU and memory.
 
 %prep
 %setup -q
-%patch0 -p1
+#%patch0 -p1
 NOCONFIGURE=1 ./autogen.sh
 
 %build
 %configure \
         --disable-static \
-        --disable-scrollkeeper \
-        --enable-compile-warnings=minimum
+        --disable-scrollkeeper 
 
 make %{?_smp_mflags}
 
@@ -72,9 +71,13 @@ desktop-file-install --delete-original             \
 %{_datadir}/pixmaps/mate-system-monitor/
 %{_datadir}/glib-2.0/schemas/org.mate.system-monitor.*.xml
 %{_datadir}/mate/help/mate-system-monitor/
+%{_datadir}/MateConf/gsettings/mate-system-monitor.convert
 
 
 %changelog
+* Tue Mar 05 2013 Igor Vlasenko <viy@altlinux.ru> 1.5.1-alt1_1
+- new fc release
+
 * Thu Nov 29 2012 Igor Vlasenko <viy@altlinux.ru> 1.5.0-alt1_2
 - converted for ALT Linux by srpmconvert tools
 

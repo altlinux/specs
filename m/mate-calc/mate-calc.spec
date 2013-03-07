@@ -1,11 +1,11 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires: pkgconfig(gio-2.0) pkgconfig(glib-2.0) pkgconfig(gmodule-export-2.0) pkgconfig(gtk+-2.0) pkgconfig(gtk+-3.0)
-# END SourceDeps(oneline)
 Group: File tools
+# BEGIN SourceDeps(oneline):
+BuildRequires: libgio-devel pkgconfig(gio-2.0) pkgconfig(glib-2.0) pkgconfig(gmodule-export-2.0) pkgconfig(gtk+-2.0) pkgconfig(gtk+-3.0)
+# END SourceDeps(oneline)
 %define _libexecdir %_prefix/libexec
 Name:		mate-calc
 Version:	1.5.1
-Release:	alt1_2
+Release:	alt1_3
 Summary:	MATE Desktop calculator
 License:	GPLv2+
 URL:		http://mate-desktop.org
@@ -20,7 +20,6 @@ BuildRequires:	flex
 BuildRequires:	mate-desktop-devel
 BuildRequires:	desktop-file-utils
 Source44: import.info
-Patch33: mate-calc-1.5.1-alt-hack-yyscan-build.patch
 
 
 %description
@@ -29,7 +28,6 @@ It uses a multiple precision package to do its arithmetic to give a high degree 
 
 %prep
 %setup -q -n %{name}-%{version}
-#patch33 -p1
 NOCONFIGURE=1 ./autogen.sh
 
 
@@ -39,6 +37,14 @@ make %{?_smp_mflags} V=1
 
 %install
 make install DESTDIR=%{buildroot}
+
+
+desktop-file-install									\
+	--remove-category="MATE"							\
+	--add-category="X-Mate"								\
+	--delete-original								\
+	--dir=%{buildroot}%{_datadir}/applications					\
+%{buildroot}%{_datadir}/applications/*.desktop
 
 %find_lang %{name} --all-name
 
@@ -53,6 +59,9 @@ make install DESTDIR=%{buildroot}
 %{_datadir}/mate-calc/
 
 %changelog
+* Tue Mar 05 2013 Igor Vlasenko <viy@altlinux.ru> 1.5.1-alt1_3
+- new fc release
+
 * Thu Nov 29 2012 Igor Vlasenko <viy@altlinux.ru> 1.5.1-alt1_2
 - converted for ALT Linux by srpmconvert tools
 

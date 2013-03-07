@@ -5,7 +5,7 @@ BuildRequires: /usr/bin/dbus-binding-tool /usr/bin/glib-genmarshal /usr/bin/glib
 %define _libexecdir %_prefix/libexec
 Name:          mate-image-viewer
 Version:       1.5.0
-Release:       alt1_3
+Release:       alt1_4
 Summary:       Eye of MATE image viewer
 
 License:       GPLv2+ and LGPLv2+ 
@@ -115,6 +115,9 @@ done
 %{_includedir}/eom-2.20/
 
 %changelog
+* Tue Mar 05 2013 Igor Vlasenko <viy@altlinux.ru> 1.5.0-alt1_4
+- new fc release
+
 * Sat Feb 02 2013 Igor Vlasenko <viy@altlinux.ru> 1.5.0-alt1_3
 - new fc release
 

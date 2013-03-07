@@ -1,13 +1,13 @@
+Group: System/Libraries
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-python
 BuildRequires: /usr/bin/glib-gettextize pkgconfig(gio-2.0) pkgconfig(glib-2.0)
 # END SourceDeps(oneline)
-Group: System/Libraries
 Requires: altlinux-freedesktop-menu-mate
 %define _libexecdir %_prefix/libexec
 Name:	mate-menus
 Version:	1.5.0
-Release:	alt2_1
+Release:	alt2_2
 Summary:	Displays menus for MATE Desktop
 License:	GPLv2+ and LGPLv2+
 URL:		http://mate-desktop.org
@@ -17,7 +17,13 @@ BuildRequires:  gobject-introspection-devel
 BuildRequires:  mate-common
 BuildRequires:  python-devel
 
+# we don't want to provide private python extension libs
+%{echo 
+
+
+}
 Source44: import.info
+%add_findprov_skiplist %{python_sitelibdir}/.*\.so$
 Patch33: gnome-menus-2.14-alt-add-config-dir.patch
 Patch34: gnome-menus-alt-applications-menu-no-legacy-kde.patch
 
@@ -83,6 +89,9 @@ find %{buildroot} -name '*.a' -exec rm -f {} ';'
 
 
 %changelog
+* Tue Mar 05 2013 Igor Vlasenko <viy@altlinux.ru> 1.5.0-alt2_2
+- new fc release
+
 * Tue Nov 20 2012 Igor Vlasenko <viy@altlinux.ru> 1.5.0-alt2_1
 - dropped hack with 586 provides
 

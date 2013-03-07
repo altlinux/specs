@@ -2,7 +2,7 @@ Group: Graphical desktop/Other
 %define _libexecdir %_prefix/libexec
 Name:           mate-icon-theme
 Version:        1.5.0
-Release:        alt1_1
+Release:        alt1_2
 Summary:        Icon theme for MATE Desktop
 License:        GPLv2+ and LGPLv2+
 URL:            http://mate-desktop.org
@@ -40,14 +40,6 @@ make %{?_smp_mflags} V=1
 %install
 make install DESTDIR=%{buildroot}
 
-%post
-/bin/touch --no-create %{_datadir}/icons/mate &>/dev/null || :
-
-%postun
-if [ $1 -eq 0 ] ; then
-    /bin/touch --no-create %{_datadir}/icons/mate &>/dev/null
-fi
-
 %files
 %doc AUTHORS COPYING README
 %{_datadir}/icons/mate/
@@ -57,6 +49,9 @@ fi
 
 
 %changelog
+* Tue Mar 05 2013 Igor Vlasenko <viy@altlinux.ru> 1.5.0-alt1_2
+- new fc release
+
 * Fri Nov 16 2012 Igor Vlasenko <viy@altlinux.ru> 1.5.0-alt1_1
 - use F19 import base
 

@@ -1,22 +1,17 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/gtkdocize /usr/bin/perl5 /usr/bin/pkg-config /usr/bin/update-mime-database libICE-devel libX11-devel libXrender-devel libgio-devel libgtk+2-gir-devel pkgconfig(gail) pkgconfig(gio-2.0) pkgconfig(gio-unix-2.0) pkgconfig(glib-2.0) pkgconfig(gmodule-2.0) pkgconfig(gthread-2.0) pkgconfig(gtk+-2.0) pkgconfig(gtk+-3.0) pkgconfig(pango) pkgconfig(unique-3.0) xorg-xproto-devel
+BuildRequires: /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/gtkdocize /usr/bin/perl5 /usr/bin/pkg-config /usr/bin/update-mime-database gobject-introspection-devel libICE-devel libSM-devel libX11-devel libXrender-devel libgio-devel libgtk+2-gir-devel libselinux-devel pkgconfig(gail) pkgconfig(gio-2.0) pkgconfig(gio-unix-2.0) pkgconfig(glib-2.0) pkgconfig(gmodule-2.0) pkgconfig(gthread-2.0) pkgconfig(gtk+-2.0) pkgconfig(gtk+-3.0) pkgconfig(pango) pkgconfig(unique-3.0) xorg-xproto-devel
 # END SourceDeps(oneline)
 %define _libexecdir %_prefix/libexec
 Name:       mate-file-manager
 Summary:    File manager for MATE
-Version:    1.5.3
+Version:    1.5.4
 Release:    alt1_1
 License:    GPLv2+ and LGPLv2+
 Group:      Graphical desktop/Other
 URL:        http://mate-desktop.org
 Source0:    http://pub.mate-desktop.org/releases/1.5/%{name}-%{version}.tar.xz
-
-# Fix 10 caja windows on login
-# https://bugzilla.redhat.com/show_bug.cgi?id=886029
-#This patch breaks other things
-#Patch0: ten_caja_windows_on_login.patch  
-#Latest upstream commits from github with various bugfixes
-Patch0:  mfm_commits_rollup.patch
+#Fix high cpu usage by gvfs and caja segfault
+Patch0:     upstream_patch.patch
 
 Requires:   gamin
 Requires:   filesystem
@@ -25,22 +20,24 @@ Requires:   gvfs
 Requires:   mate-icon-theme
 Requires:   gsettings-desktop-schemas
 
-BuildRequires:  desktop-file-utils
-BuildRequires:  mate-common
+
 BuildRequires:  mate-desktop-devel
+BuildRequires:  libmate-desktop
+BuildRequires:  pkgconfig(sm)
+BuildRequires:  desktop-file-utils
+BuildRequires:  pkgconfig(libstartup-notification-1.0)
+BuildRequires:  pkgconfig(libexif)
+BuildRequires:  pkgconfig(exempi-2.0)
+BuildRequires:  pkgconfig(libselinux)
+BuildRequires:  pkgconfig(gobject-introspection-1.0)
+BuildRequires:  pkgconfig(unique-1.0)
+BuildRequires:  mate-common
 BuildRequires:  mate-doc-utils
-BuildRequires:  libcairo-gobject-devel
-BuildRequires:  libdbus-glib-devel
-BuildRequires:  libexempi-devel
-BuildRequires:  gobject-introspection-devel
-BuildRequires:  gsettings-desktop-schemas-devel
-BuildRequireS:  libSM-devel
-BuildRequires:  libexif-devel
-BuildRequires:  libselinux-devel
-BuildRequires:  libxml2-devel
-BuildRequires:  libpangox-compat-devel
-BuildRequires:  libstartup-notification-devel
-BuildRequires:  libunique-devel
+BuildRequires:  pkgconfig(cairo-gobject)
+BuildRequires:  pkgconfig(libxml-2.0)
+BuildRequires:  pkgconfig(dbus-glib-1)
+BuildRequires:  pkgconfig(pangox)
+BuildRequires:  pkgconfig(gsettings-desktop-schemas)
 
 
 # the main binary links against libcaja-extension.so
@@ -89,19 +86,18 @@ NOCONFIGURE=1 ./autogen.sh
 %configure \
         --disable-static \
         --enable-unique \
-        --disable-update-mimedb \
         --disable-schemas-compile \
         --with-gnu-ld \
         --with-x \
-        --with-gtk=2.0
+        --with-gtk=2.0 \
+        --disable-update-mimedb
 
 
-# drop unneeded direct library deps with --as-needed
+#drop unneeded direct library deps with --as-needed
 # libtool doesn't make this easy, so we do it the hard way
-#sed -i -e 's/ -shared / -Wl,-O1,--as-needed\0 /g' libtool
+sed -i -e 's/ -shared / -Wl,-O1,--as-needed\0 /g' libtool
 
-make %{?_smp_mflags} V=1
-
+make %{?_smp_mflags}
 
 %install
 make install DESTDIR=$RPM_BUILD_ROOT INSTALL="install -p"
@@ -125,21 +121,19 @@ $RPM_BUILD_ROOT%{_datadir}/applications/*.desktop
 
 %files  -f caja.lang
 %doc AUTHORS COPYING COPYING-DOCS COPYING.LIB NEWS README
-%{_bindir}/caja
-%{_bindir}/caja-autorun-software
-%{_bindir}/caja-connect-server
-%{_bindir}/caja-file-management-properties
-%{_datadir}/caja/
-%{_libdir}/caja/extensions-2.0/
+%{_bindir}/*
+%{_datadir}/caja
+%{_libdir}/caja/extensions-2.0
 %{_datadir}/pixmaps/caja/
 %{_datadir}/applications/*.desktop
 %{_datadir}/icons/hicolor/*/apps/caja.png
 %{_datadir}/icons/hicolor/scalable/apps/caja.svg
 %{_datadir}/glib-2.0/schemas/org.mate.*.gschema.xml
-%{_mandir}/man1/caja*.1.*
+%{_mandir}/man1/*
 %{_libexecdir}/caja-convert-metadata
 %{_datadir}/mime/packages/caja.xml
 %{_datadir}/MateConf/gsettings/caja.convert
+%{_datadir}/dbus-1/services/org.mate.freedesktop.FileManager1.service
 
 %files extensions
 %{_libdir}/libcaja-extension.so.*
@@ -154,6 +148,9 @@ $RPM_BUILD_ROOT%{_datadir}/applications/*.desktop
 
 
 %changelog
+* Tue Mar 05 2013 Igor Vlasenko <viy@altlinux.ru> 1.5.4-alt1_1
+- new fc release
+
 * Wed Feb 20 2013 Igor Vlasenko <viy@altlinux.ru> 1.5.3-alt1_1
 - new fc release
 
