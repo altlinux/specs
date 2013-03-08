@@ -4,8 +4,8 @@ BuildRequires(pre): rpm-build-java
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:		    flexdock
-Version:	    1.2.2
-Release:	    alt1_2jpp7
+Version:	    1.2.3
+Release:	    alt1_1jpp7
 Summary:	    Docking framework for Java Swing GUI apps
 
 Group:		    Development/Java
@@ -27,10 +27,10 @@ BuildRequires:	jgoodies-common
 BuildRequires:	jgoodies-looks
 BuildRequires:	skinlf
 
-Requires:	    jpackage-utils
-Requires:	    jgoodies-common
-Requires:	    jgoodies-looks
-Requires:	    skinlf
+Requires:       jpackage-utils
+Requires:       jgoodies-common
+Requires:       jgoodies-looks
+Requires:       skinlf
 
 BuildArch:      noarch
 Source44: import.info
@@ -59,7 +59,7 @@ rm src/java/demo/org/flexdock/demos/raw/jmf/JMFDemo.java
 #Endline convert Doc files
 for i in "LICENSE.txt README release-notes.txt" ;
 do
-	%{__sed} -i 's/\r//' $i
+    %{__sed} -i 's/\r//' $i
 done
 
 %build
@@ -74,6 +74,9 @@ install -pm644 build/%{name}-%{version}.jar %{buildroot}%{_javadir}/%{name}.jar
 %{_javadir}/*
 
 %changelog
+* Fri Mar 08 2013 Igor Vlasenko <viy@altlinux.ru> 1.2.3-alt1_1jpp7
+- fc update
+
 * Mon Feb 11 2013 Igor Vlasenko <viy@altlinux.ru> 1.2.2-alt1_2jpp7
 - new version
 
