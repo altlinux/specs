@@ -1,5 +1,5 @@
 Name: parole
-Version: 0.4.0
+Version: 0.5.0
 Release: alt1
 
 Summary: Media player for the Xfce desktop
@@ -16,7 +16,8 @@ BuildRequires(pre): rpm-build-licenses
 
 BuildPreReq: rpm-build-xfce4 xfce4-dev-tools
 BuildPreReq: libxfce4ui-devel libxfce4util-devel libexo-devel libxfconf-devel
-BuildRequires: libgtk+2-devel libnotify-devel gst-plugins-devel libtag-devel
+BuildRequires: libgtk+2-devel libnotify-devel libtag-devel
+BuildRequires: gstreamer1.0-devel gst-plugins1.0-devel
 BuildRequires: libdbus-glib-devel libdbus-devel
 BuildRequires: intltool gtk-doc
 
@@ -46,8 +47,8 @@ mkdir m4
 %configure \
     --disable-static \
     --enable-maintainer-mode \
-    --enable-libnotify \
     --enable-taglib \
+	--with-gstreamer=1.0 \
     --enable-gtk-doc \
     --enable-debug=no
 %make_build
@@ -70,6 +71,10 @@ mkdir m4
 %doc %_datadir/gtk-doc/html/*
 
 %changelog
+* Fri Mar 08 2013 Mikhail Efremov <sem@altlinux.org> 0.5.0-alt1
+- Build with gstreamer1.0.
+- Updated to 0.5.0.
+
 * Tue Jan 08 2013 Mikhail Efremov <sem@altlinux.org> 0.4.0-alt1
 - Updated to 0.4.0.
 
