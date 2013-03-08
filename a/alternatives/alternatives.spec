@@ -1,5 +1,5 @@
 Name: alternatives
-Version: 0.4.4
+Version: 0.4.5
 Release: alt1
 
 Summary: alternatives support
@@ -48,12 +48,12 @@ Install this package if you want to create RPM packages that use %name.
 
 %build
 %install
-mkdir -p $RPM_BUILD_ROOT%_sysconfdir/%name/{auto,packages.d,links}
-touch $RPM_BUILD_ROOT%_sysconfdir/%name/manual
+mkdir -p %buildroot%_sysconfdir/%name/{auto,packages.d,links}
+touch %buildroot%_sysconfdir/%name/manual
 %makeinstall
 
-mkdir -p $RPM_BUILD_ROOT%_sysconfdir/rpm/macros.d
-cat >$RPM_BUILD_ROOT%_sysconfdir/rpm/macros.d/%name<<EOF
+mkdir -p %buildroot%_rpmmacrosdir
+cat >%buildroot%_rpmmacrosdir/%name<<EOF
 %%_altdir %%([ ! -f %_datadir/%name/functions ])%_sysconfdir/%name/packages.d
 %%force_update_alternatives [ -x %_sbindir/%name-update ] && %_sbindir/%name-update ||:
 
@@ -99,12 +99,15 @@ install -pD -m755 alternatives.filetrigger %buildroot%_rpmlibdir/alternatives.fi
 %_rpmlibdir/alternatives.prov
 %_rpmlibdir/alternatives.prov.files
 %_rpmlibdir/alternatives.filetrigger
-%exclude %_sysconfdir/rpm/macros.d/*
+%exclude %_rpmmacrosdir/*
 
 %files -n rpm-macros-%name
-%_sysconfdir/rpm/macros.d/*
+%_rpmmacrosdir/*
 
 %changelog
+* Fri Mar 08 2013 Dmitry V. Levin <ldv@altlinux.org> 0.4.5-alt1
+- Relocated macro file to %%_rpmmacrosdir/.
+
 * Sun May 29 2011 Michael Shigorin <mike@altlinux.org> 0.4.4-alt1
 - alternatives-update: double-check link target before removing it
   (closes: #25621) (led@)

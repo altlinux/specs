@@ -1,6 +1,6 @@
 Name: rpm-build-perl
 Version: 0.82
-Release: alt1
+Release: alt2
 
 Summary: RPM helper scripts to calculate Perl dependencies
 License: GPL
@@ -18,7 +18,7 @@ and will use this information to generate automatic Requires and Provides
 tags for the package.
 
 %prep
-%setup -q
+%setup
 
 %build
 %perl_vendor_build
@@ -27,9 +27,9 @@ tags for the package.
 %perl_vendor_install INSTALLSCRIPT=%_rpmlibdir INSTALLVENDORSCRIPT=%_rpmlibdir
 mv %buildroot%perl_vendor_archlib/fake.pm %buildroot%_rpmlibdir/
 
-mkdir -p %buildroot/etc/rpm/macros.d
-cp -p perl5-alt-rpm-macros %buildroot/etc/rpm/macros.d/perl5
-cp -p macros.env %buildroot/etc/rpm/macros.d/perl5.env
+mkdir -p %buildroot%_rpmmacrosdir
+install -pm644 perl5-alt-rpm-macros %buildroot%_rpmmacrosdir/perl5
+install -pm644 macros.env %buildroot%_rpmmacrosdir/perl5.env
 
 %files
 %doc README.ALT
@@ -49,10 +49,13 @@ cp -p macros.env %buildroot/etc/rpm/macros.d/perl5.env
 %perl_vendor_autolib/B/ConstOptree/ConstOptree.so
 %dir %perl_vendor_archlib/PerlReq
 %perl_vendor_archlib/PerlReq/Utils.pm
-%config /etc/rpm/macros.d/perl5
-%config /etc/rpm/macros.d/perl5.env
+%config %_rpmmacrosdir/perl5
+%config %_rpmmacrosdir/perl5.env
 
 %changelog
+* Fri Mar 08 2013 Dmitry V. Levin <ldv@altlinux.org> 0.82-alt2
+- Relocated rpm macro files to %%_rpmmacrosdir/.
+
 * Sat Sep 29 2012 Alexey Tourbin <at@altlinux.ru> 0.82-alt1
 - B/ConstOptree.pm: new module, implements optree constant folding
   for $^O, $^V, and $] variables by installing custom PL_check hooks
