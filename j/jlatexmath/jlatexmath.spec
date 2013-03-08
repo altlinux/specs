@@ -5,16 +5,14 @@ BuildRequires: unzip
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           jlatexmath
-Version:        1.0.0
-Release:        alt1_2jpp7
+Version:        1.0.1
+Release:        alt1_1jpp7
 Summary:        Java API to display mathematical formulas written in LaTeX
 
 Group:          Development/Java
 License:        GPLv2+
 URL:            http://forge.scilab.org/index.php/p/jlatexmath/
 Source0:        http://forge.scilab.org/index.php/p/jlatexmath/downloads/get/%{name}-src-all-%{version}.zip
-# Fix incorrect-fsf-address /usr/share/doc/jlatexmath-fop-0.9.6/LICENSE
-# upstream bug : http://forge.scilab.org/index.php/p/jlatexmath/issues/458/
 
 BuildRequires:  jpackage-utils
 BuildRequires:  ant
@@ -44,7 +42,7 @@ Requires:       fop
 
 
 %description fop
-This package contains the FOP plug-in for %%{name}.
+This package contains the FOP plug-in for %{name}.
 
 %package javadoc
 Summary:        API Documentation for %{name}
@@ -54,7 +52,7 @@ Requires:       %{name} = %{version}-%{release}
 BuildArch: noarch
 
 %description javadoc
-This package contains the API documentation for %%{name}.
+This package contains the API documentation for %{name}.
 
 %prep
 %setup -q
@@ -94,6 +92,9 @@ cp -rp doc/ $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Fri Mar 08 2013 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt1_1jpp7
+- fc update
+
 * Thu Feb 07 2013 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt1_2jpp7
 - fc update
 
