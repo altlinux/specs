@@ -8,7 +8,7 @@
 %define Name ALTSP
 Name: ltsp
 Version: 5.1.21
-Release: alt0.12.4
+Release: alt0.14
 Summary: %Name is ALT Linux blend of LTSP5 and LTSP4.2
 License: %gpl2only
 Group: Networking/Remote access
@@ -328,6 +328,15 @@ install -m 0644 server/doc/ldminfod.8 %buildroot%_man8dir/
 
 
 %changelog
+* Fri Mar 08 2013 Michael Shigorin <mike@altlinux.org> 5.1.21-alt0.14
+- drop fontconfig firsttime script
+
+* Fri Mar 08 2013 Michael Shigorin <mike@altlinux.org> 5.1.21-alt0.13
+- fixed NBD swap when ramzswap is not available
+
+* Mon Dec 17 2012 Michael Shigorin <mike@altlinux.org> 5.1.21-alt0.12.5
+- switch default kernel flavour from ltsp-client to led-ws
+
 * Thu Mar 08 2012 Michael Shigorin <mike@altlinux.org> 5.1.21-alt0.12.4
 - updated links and descriptions a bit
 
