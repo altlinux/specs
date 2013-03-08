@@ -4,7 +4,7 @@
 %def_enable introspection
 
 Name: libzapojit
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: GLib/GObject wrapper for the SkyDrive and Hotmail REST APIs
@@ -103,6 +103,9 @@ rm -rf %buildroot%_datadir/doc/%name
 
 
 %changelog
+* Fri Mar 08 2013 Yuri N. Sedunov <aris@altlinux.org> 0.0.3-alt1
+- 0.0.3
+
 * Sat Sep 08 2012 Yuri N. Sedunov <aris@altlinux.org> 0.0.2-alt1
 - first build for Sisyphus
 
