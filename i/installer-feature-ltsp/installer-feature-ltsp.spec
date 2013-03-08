@@ -1,5 +1,5 @@
 Name: installer-feature-ltsp
-Version: 0.7.3
+Version: 0.7.6
 Release: alt1
 
 Summary: Linux Terminal Server Project
@@ -51,6 +51,15 @@ This package contains installer stage3 hooks for ALTSP
 %_datadir/install2/postinstall.d/*
 
 %changelog
+* Fri Mar 08 2013 Michael Shigorin <mike@altlinux.org> 0.7.6-alt1
+- add "sound" to kernel module subpackage names (led-ws)
+
+* Fri Mar 08 2013 Michael Shigorin <mike@altlinux.org> 0.7.5-alt1
+- make sure the generated net rules are carried over
+
+* Thu Mar 07 2013 Michael Shigorin <mike@altlinux.org> 0.7.4-alt1
+- drop archdep kernel selection (mind the led-ws flavour)
+
 * Sat Mar 10 2012 Michael Shigorin <mike@altlinux.org> 0.7.3-alt1
 - fixed silly option omission
 
