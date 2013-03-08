@@ -4,7 +4,7 @@ BuildRequires: perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Term-Size-Perl
 Version:        0.029
-Release:        alt3_11
+Release:        alt3_12
 Summary:        Perl extension for retrieving terminal size (Perl version)
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -16,6 +16,7 @@ BuildRequires:  perl(Test/More.pm)
 BuildRequires:  perl(Test/Pod.pm)
 BuildRequires:  perl(Test/Pod/Coverage.pm)
 BuildArch: noarch
+
 # although the resulting rpm appears to be noarch, the build is arch-dependent
 # and produces different code for ppc and x86
 %global  debug_package %nil
@@ -39,6 +40,7 @@ make pure_install PERL_INSTALL_ROOT=$RPM_BUILD_ROOT
 find $RPM_BUILD_ROOT -type f -name .packlist -exec rm -f {} \;
 find $RPM_BUILD_ROOT -depth -type d -exec rmdir {} 2>/dev/null \;
 
+# %{_fixperms} $RPM_BUILD_ROOT/*
 
 %check
 make test
@@ -48,6 +50,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon Mar 04 2013 Igor Vlasenko <viy@altlinux.ru> 0.029-alt3_12
+- update to new release by fcimport
+
 * Mon Nov 26 2012 Igor Vlasenko <viy@altlinux.ru> 0.029-alt3_11
 - sisyphus release
 
