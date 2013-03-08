@@ -1,4 +1,5 @@
 # BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
 BuildRequires: gcc-c++
 # END SourceDeps(oneline)
 BuildRequires: ruby-stdlibs zlib-devel
@@ -13,7 +14,7 @@ BuildRequires: jpackage-compat
 
 Name:           sdljava
 Version:        0.9.1
-Release:        alt1_17jpp7
+Release:        alt1_21jpp7
 Summary:        Java binding to the SDL API
 Group:          System/Libraries
 License:        LGPLv2+
@@ -22,15 +23,15 @@ Url:            http://sdljava.sourceforge.net/
 # with the included Microsoft Copyrighted Arial fonts removed
 Source0:        %{name}-%{version}.tar.gz
 Source1:        %{name}-runtest.sh
+Source2:	sdljava-0.9.1-generated.tar
 Patch0:         sdljava-0.9.1-regen.patch
 Patch1:         sdljava-0.9.1-ftgl213.patch
+Patch2:         sdljava-0.9.1-ruby19.patch
 BuildRequires:  ftgl-devel libglew-devel libSDL-devel libSDL_gfx-devel libSDL_image-devel
 BuildRequires:  libSDL_mixer-devel libSDL_ttf-devel jpackage-utils
 BuildRequires:  java-javadoc ant xml-commons-apis swig bsh jdom ruby
 Requires:       bsh jdom
 Source44: import.info
-Patch33: sdljava-0.9.1-alt-ruby19.patch
-Source45: post-process.rb
 
 %description
 sdljava is a Java binding to the SDL API being developed by Ivan Ganza.
@@ -44,7 +45,7 @@ efficient and easy to use.
 Summary:        Javadoc for %{name}
 Group:          Development/Java
 BuildArch:      noarch
-Requires:       sdljava = %{version}-%{release}
+Requires:       %{name} = %{version}-%{release}
 
 %description javadoc
 Javadoc for %{name}.
@@ -54,11 +55,11 @@ Javadoc for %{name}.
 Summary:        Some examples for %{name}
 Group:          Development/Java
 BuildArch:      noarch
-Requires:       sdljava = %{version}-%{release}
-Requires:       /usr/share/fonts/ttf/dejavu/DejaVuSans.ttf
-Requires:       /usr/share/fonts/ttf/dejavu/DejaVuSans-Bold.ttf
-Requires:       /usr/share/fonts/ttf/dejavu/DejaVuSans-Oblique.ttf
-Requires:       /usr/share/fonts/ttf/dejavu/DejaVuSans-BoldOblique.ttf
+Requires:       %{name} = %{version}-%{release}
+#Requires:       /usr/share/fonts/ttf/dejavu/DejaVuSans.ttf
+#Requires:       /usr/share/fonts/ttf/dejavu/DejaVuSans-Bold.ttf
+#Requires:       /usr/share/fonts/ttf/dejavu/DejaVuSans-Oblique.ttf
+#Requires:       /usr/share/fonts/ttf/dejavu/DejaVuSans-BoldOblique.ttf
 Requires:       jpackage-utils
 
 %description demo
@@ -69,6 +70,7 @@ Demonstrations and samples for %{name}.
 %setup -q
 %patch0 -p1 -z .regen
 %patch1 -p1
+%patch2 -p1
 # Newer ftgl no longer exports the FTFace class
 rm src/org/gljava/opengl/ftgl/FTFace.java
 iconv -f ISO_8859-2 -t UTF8 docs/CHANGES_0_9_1 > docs/CHANGES_0_9_1.tmp
@@ -101,10 +103,10 @@ cp etc/build/gljava/linux/ftgl/Makefile src/org/gljava/opengl/native/ftgl
 # and remove the swig generated code so that it gets regenerated
 rm src/sdljava/native/SDL*_wrap.c src/sdljava/native/SDL_types.h
 rm src/org/gljava/opengl/native/glew_wrap.c
-%patch33 -p1
-cp %{S:45} src/org/gljava/opengl/native/ftgl/post-process.rb
 
-
+pushd ..
+tar xf %{SOURCE2}
+popd
 %build
 # We must add -D__%{_arch}__ to swigs arguments as swig doesn't do that itself.
 # Special case ppc as the define is powerpc not ppc and both ppc and ppc64
@@ -125,7 +127,7 @@ if [ -z "$ARCH_DEFINE" ]; then
   export ARCH_DEFINE="-D__%{_arch}__"
 fi
 
-#export JAVA_HOME=/usr/lib/jvm/java
+export JAVA_HOME=/usr/lib/jvm/java
 
 pushd src/sdljava/native
 make CFLAGS="$RPM_OPT_FLAGS -fno-strict-aliasing -fPIC"
@@ -140,7 +142,7 @@ pushd src/org/gljava/opengl/native/ftgl
 make CFLAGS="$RPM_OPT_FLAGS -fno-strict-aliasing -fPIC"
 popd
 
-ant  -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 jar javadoc
+ant jar javadoc
 
 
 %install
@@ -200,6 +202,9 @@ ln -s ../../fonts/ttf/dejavu/DejaVuSans-BoldOblique.ttf \
 
 
 %changelog
+* Fri Mar 08 2013 Igor Vlasenko <viy@altlinux.ru> 0.9.1-alt1_21jpp7
+- fixed build - use pre-generated sources
+
 * Mon Jun 11 2012 Igor Vlasenko <viy@altlinux.ru> 0.9.1-alt1_17jpp7
 - update to new release by jppimport
 
