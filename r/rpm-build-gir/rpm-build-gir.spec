@@ -1,6 +1,6 @@
 Name: rpm-build-gir
-Version: 0.7.1
-Release: alt7.1
+Version: 0.7.2
+Release: alt1
 
 Summary: RPM helper macros and dependency utils to build GObject Introspection packages
 License: GPL
@@ -39,6 +39,11 @@ ln -s gir.prov.files %buildroot%_rpmlibdir/gir.req.files
 %_rpmlibdir/typelib*
 
 %changelog
+* Fri Mar 08 2013 Yuri N. Sedunov <aris@altlinux.org> 0.7.2-alt1
+- rpm-build-gir.macros: added %%set_girdir macros
+- typelib.env: exported RPM_GIRDIR variable
+- modified gir.prov.files using RPM_GIRDIR variable
+
 * Thu Jan 10 2013 Yuri N. Sedunov <aris@altlinux.org> 0.7.1-alt7.1
 - typelib.req: fix related of previous release
 
