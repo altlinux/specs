@@ -3,7 +3,7 @@ BuildRequires(pre): rpm-macros-fedora-compat
 # END SourceDeps(oneline)
 Name:           sugar-flipsticks
 Version:        13
-Release:        alt1_1
+Release:        alt1_2
 Summary:        A keyframe animation activity for Sugar
 Group:          Graphical desktop/Sugar
 License:        GPLv2+
@@ -15,6 +15,7 @@ BuildRequires:  sugar-toolkit
 BuildRequires:  gettext
 Requires:       sugar
 Source44: import.info
+BuildRequires: rpmbuild-helper-sugar-activity
 
 %description
 Flipsticks is a keyframe animation activity that lets you pose and program
@@ -39,6 +40,9 @@ python ./setup.py install --prefix=%{buildroot}/%{_prefix}
 %{sugaractivitydir}/FlipSticks.activity/
 
 %changelog
+* Fri Mar 08 2013 Igor Vlasenko <viy@altlinux.ru> 13-alt1_2
+- updated from fc18
+
 * Mon Dec 03 2012 Igor Vlasenko <viy@altlinux.ru> 13-alt1_1
 - new version; import from fc17 updates
 
