@@ -2,7 +2,7 @@
 
 Name: openresolv
 Version: 3.5.4
-Release: alt2
+Release: alt3
 
 Summary: A framework for managing DNS information 
 License: %bsdstyle
@@ -45,7 +45,7 @@ bind subscriber for openresolv
 Summary: dnsmasq subscriber for openresolv
 Group: System/Configuration/Networking
 Requires: %name = %version-%release
-Requires: dnsmasq
+Requires: dnsmasq >= 2.65-alt1
 
 %description dnsmasq
 dnsmasq subscriber for openresolv
@@ -91,6 +91,13 @@ sed -i 's;/sbin/service;/sbin/resolvconf-restartcmd;' dnsmasq.in
 
 install -Dm0755 %SOURCE2 %buildroot/sbin/resolvconf-restartcmd
 
+mkdir -p %buildroot%_sysconfdir/dnsmasq.conf.d
+touch %buildroot%_sysconfdir/dnsmasq.conf.d/60-resolvconf
+touch %buildroot%_sysconfdir/resolv.conf.dnsmasq
+mkdir -p %buildroot%_localstatedir/bind/etc
+touch %buildroot%_localstatedir/bind/etc/resolvconf-zones.conf
+touch %buildroot%_localstatedir/bind/etc/resolvconf-options.conf
+
 %files
 /sbin/*
 %_man5dir/*
@@ -101,9 +108,13 @@ install -Dm0755 %SOURCE2 %buildroot/sbin/resolvconf-restartcmd
 
 %files bind
 %subscribers_dir/named
+%ghost %_localstatedir/bind/etc/resolvconf-zones.conf
+%ghost %_localstatedir/bind/etc/resolvconf-options.conf
 
 %files dnsmasq
 %subscribers_dir/dnsmasq
+%ghost %_sysconfdir/dnsmasq.conf.d/60-resolvconf
+%ghost %_sysconfdir/resolv.conf.dnsmasq
 
 %files unbound
 %subscribers_dir/unbound
@@ -116,6 +127,12 @@ install -Dm0755 %SOURCE2 %buildroot/sbin/resolvconf-restartcmd
 %endif
 
 %changelog
+* Thu Mar 07 2013 Mikhail Efremov <sem@altlinux.org> 3.5.4-alt3
+- Updated test script.
+- Own auto generated files.
+- dnsmasq.in: Don't check files existence.
+- Use /etc/dnsmasq.conf.d for auto-generated dnsmasq config.
+
 * Tue Jan 29 2013 Mikhail Efremov <sem@altlinux.org> 3.5.4-alt2
 - Fix rundir.
 
