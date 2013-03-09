@@ -13,7 +13,7 @@
 
 Summary:	XUL Runner
 Name:		xulrunner
-Version:	19.0.1
+Version:	19.0.2
 Release:	alt1
 
 License:	MPL/GPL/LGPL
@@ -272,12 +272,12 @@ install -D -m755 \
 	rpm-build/xulrunner.req* \
 	%buildroot/%_rpmlibdir/
 
-mkdir -p -- %buildroot/%_sysconfdir/rpm/macros.d
+mkdir -p -- %buildroot/%_rpmmacrosdir
 sed \
 	-e 's,@xulr_name@,%xulr_name,g' \
 	-e 's,@xulr_version@,%version,g' \
 	-e 's,@xulr_release@,%release,g' \
-	rpm-build/rpm.macros.standalone > %buildroot/%_sysconfdir/rpm/macros.d/%xulr_name
+	rpm-build/rpm.macros.standalone > %buildroot/%_rpmmacrosdir/%xulr_name
 
 install -D -m644 \
 	%SOURCE4 \
@@ -349,11 +349,16 @@ ln -sf $(relative "%xulr_prefix/libmozalloc.so" "%xulr_develdir/sdk/lib/libmozal
 %files -n rpm-build-mozilla.org
 %_bindir/installrdf.sh
 %_bindir/applicationini.sh
-%_sysconfdir/rpm/macros.d/xulrunner
+%_rpmmacrosdir/xulrunner
 %_rpmlibdir/xulrunner.req*
 %_datadir/rpm-build-mozilla/mozilla-sh-functions
 
 %changelog
+* Sat Mar 09 2013 Alexey Gladkov <legion@altlinux.ru> 19.0.2-alt1
+- New release (19.0.2).
+- Fixed:
+  + MFSA 2013-29 Use-after-free in HTML Editor
+
 * Thu Feb 28 2013 Alexey Gladkov <legion@altlinux.ru> 19.0.1-alt1
 - New release (19.0.1).
 

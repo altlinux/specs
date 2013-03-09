@@ -10,7 +10,7 @@ Summary:              The Mozilla Firefox project is a redesign of Mozilla's bro
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox
-Version:        19.0.1
+Version:        19.0.2
 Release:        alt1
 License:        MPL/GPL/LGPL
 Group:          Networking/WWW
@@ -61,7 +61,7 @@ BuildRequires: python-modules-logging
 BuildRequires: python-modules-sqlite3
 
 # Mozilla requires
-BuildRequires: xulrunner-devel     >= 18.0.2-alt1
+BuildRequires: xulrunner-devel     >= 19.0.2-alt1
 BuildRequires: libnspr-devel       >= 4.9.2-alt1
 BuildRequires: libnss-devel        >= 3.13.6-alt1
 BuildRequires: libnss-devel-static >= 3.13.6-alt1
@@ -207,20 +207,15 @@ cp -a -- \
 
 # install rpm-build-firefox
 mkdir -p -- \
-	%buildroot/%_sysconfdir/rpm/macros.d
-
-cp -a -- \
-	rpm-build/rpm.macros.firefox.standalone \
-	%buildroot/%_sysconfdir/rpm/macros.d/firefox
+	%buildroot/%_rpmmacrosdir
+sed \
+	-e 's,@firefox_version@,%version,' \
+	-e 's,@firefox_release@,%release,' \
+	rpm-build/rpm.macros.firefox.standalone > %buildroot/%_rpmmacrosdir/firefox
 
 install -m755 firefox %buildroot/%_bindir/firefox
 
 cd %buildroot
-
-sed -i \
-	-e 's,@firefox_version@,%version,' \
-	-e 's,@firefox_release@,%release,' \
-	./%_sysconfdir/rpm/macros.d/firefox
 
 #sed -i \
 #	-e 's,\(MinVersion\)=.*,\1=5.0.1,g' \
@@ -260,9 +255,14 @@ done
 %_iconsdir/hicolor/256x256/apps/firefox.png
 
 %files -n rpm-build-firefox
-%_sysconfdir/rpm/macros.d/firefox
+%_rpmmacrosdir/firefox
 
 %changelog
+* Sat Mar 09 2013 Alexey Gladkov <legion@altlinux.ru> 19.0.2-alt1
+- New release (19.0.2).
+- Fixed:
+  + MFSA 2013-29 Use-after-free in HTML Editor
+
 * Fri Mar 01 2013 Alexey Gladkov <legion@altlinux.ru> 19.0.1-alt1
 - New release (19.0.1).
 - Fixed:
