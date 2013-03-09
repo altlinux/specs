@@ -1,6 +1,6 @@
 Name: libalsa
 Version: 1.0.26
-Release: alt2
+Release: alt3
 Epoch: 1
 
 Summary: Advanced Linux Sound Architecture (ALSA) library
@@ -90,22 +90,21 @@ cp -a doc/doxygen/html %buildroot%pkgdocdir/
 
 mkdir -p %buildroot%_sysconfdir/modprobe.d
 cat << __EOF__ >> %buildroot%modprobe_conf
-#### AC97 software sound chips
-## spare index=0 for a real soundcard (if any)
-#options snd_intel8x0 index=2
+## spare index=0 for a hotplug soundcard (if any)
+#options snd-usb-audio index=0
+
+## offset HDMI output compared to onboard audio (#28648)
 #options snd_hda_intel index=2,3
+
+#options snd_intel8x0 index=2
 #options snd_via82xx index=2
 #options snd-bt87x index=3
 #options snd_intel8x0m index=4
 #options snd-atiixp-modem index=4
 #options snd-via82xx-modem index=4
 
-## get PC speaker off the way
+## get PC speaker out of the way
 options snd_pcsp index=10
-
-## if you experience noisy sound with VIA AC97 audio,
-## try to uncomment this and play with 4/2/1:
-#options snd-via82xx dxs_support=4
 __EOF__
 
 %pre
@@ -153,6 +152,10 @@ done
 %_bindir/aserver
 
 %changelog
+* Sat Mar 09 2013 Michael Shigorin <mike@altlinux.org> 1:1.0.26-alt3
+- alsa-modindex.conf: promote USB audio, demote HDMI audio example
+  (closes: #28648)
+
 * Fri Sep 07 2012 Michael Shigorin <mike@altlinux.org> 1:1.0.26-alt2
 - retag
 
