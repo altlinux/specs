@@ -2,11 +2,9 @@
 %def_disable static
 %def_enable gtk_doc
 %def_enable introspection
-%def_without bonobo
-%def_without gnome_vfs
 
 Name: libgsf
-Version: %ver_major.25
+Version: %ver_major.26
 Release: alt1
 
 Summary: GNOME Structured file library
@@ -25,14 +23,8 @@ BuildPreReq: glib2-devel >= 2.8.0
 BuildPreReq: libgio-devel bzlib-devel zlib-devel
 BuildPreReq: libgtk+2-devel
 BuildPreReq: libxml2-devel >= 2.4.16
-BuildPreReq: GConf libGConf-devel libpopt-devel
-BuildPreReq: python-devel
-BuildPreReq: python-module-pygobject-devel >= 2.10.0
-BuildPreReq: python-module-pygtk-devel
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel}
 %{?_enable_static:BuildRequires: glibc-devel-static}
-%{?_with_bonobo:BuildPreReq: libbonobo-devel >= 2.0}
-%{?_with_gnome_vfs:BuildRequires: gnome-vfs-devel}
 
 %description
 GNOME Structured file library
@@ -74,7 +66,6 @@ Conflicts: %name-gnome < %version
 %description devel-doc
 This package contains the documentation for development programs using gsf.
 
-%if_enabled static
 %package devel-static
 Summary: Static gsf libraries
 Group: Development/C
@@ -83,39 +74,6 @@ Requires: %name-devel = %version-%release
 %description devel-static
 This package provides the necessary development libraries to allow you
 to build programs staticallly linked against libgsf.
-%endif
-
-%package gnome
-Summary: GNOME Structured file library
-Group: System/Libraries
-Requires(post,preun): GConf
-Requires: %name = %version-%release
-
-%description gnome
-GNOME Structured file library with Bonobo and Gnome-vfs support.
-
-%package gnome-devel
-Summary: Libraries and include files for gsf
-Group: Development/C
-Requires: %name-devel = %version-%release
-Requires: %name-gnome = %version-%release
-
-%description gnome-devel
-This package provides the necessary development libraries and include
-files to allow you to develop programs using gsf with Bonobo and
-Gnome-vfs support.
-
-%if_enabled static
-%package gnome-devel-static
-Summary: Static gsf libraries
-Group: Development/C
-Requires: %name-gnome-devel = %version-%release
-
-%description gnome-devel-static
-This package provides the necessary development libraries to allow you
-to build programs staticallly linked against libgsf with Bonobo and
-Gnome-vfs support.
-%endif
 
 %setup_python_module gsf
 %package -n python-module-gsf
@@ -127,17 +85,6 @@ Requires: %name = %version-%release
 
 %description -n python-module-gsf
 This package contains files that are needed to use libgsf from Python
-programs.
-
-%setup_python_module gsf-gnome
-%package -n python-module-gsf-gnome
-Summary: Python bindings for %name-gnome
-Group: Development/Python
-Autoreq: yes
-Requires: %name-gnome = %version-%release
-
-%description -n python-module-gsf-gnome
-This package contains files that are needed to use libgsf-gnome from Python
 programs.
 
 %define _gtk_docdir %_datadir/gtk-doc/html
@@ -152,30 +99,19 @@ subst 's/pythondir/pyexecdir/' python/Makefile.am
 %configure \
     --with-gdk-pixbuf \
     --with-bz2 \
-    --with-python \
-    %{?_with_bonobo:--with-bonobo} \
-    %{?_with_gnome_vfs:--with-gnome-vfs} \
     %{?_enable_gtk_doc:--enable-gtk-doc} \
     %{?_enable_introspection:--enable-introspection=yes} \
     %{subst_enable static}
 
 %make_build
 
-%check
-%make check
-
 %install
 %makeinstall_std
 
 %find_lang --with-gnome %name
 
-%post gnome
-%gconf2_install gsf-office-thumbnailer
-
-%preun gnome
-if [ $1 = 0 ]; then
-    %gconf2_uninstall gsf-office-thumbnailer
-fi
+%check
+%make check
 
 %files -f %name.lang
 %_bindir/*
@@ -204,37 +140,14 @@ fi
 %_libdir/%name-1.a
 %endif
 
-%if_with bonobo
-%files gnome
-%_libdir/%name-gnome-1.so.*
-%config %_sysconfdir/gconf/schemas/gsf-office-thumbnailer.schemas
-%doc AUTHORS README TODO NEWS
-
-%files gnome-devel
-%_includedir/%name-1/gsf-gnome
-%_libdir/%name-gnome-1.so
-%_pkgconfigdir/%name-gnome-1.pc
-
-%files -n python-module-gsf-gnome
-%python_sitelibdir/gsf/gnomemodule.so
-%endif
-
 %files devel-doc
 %_gtk_docdir/*
 
-%if_enabled static
-%files gnome-devel-static
-%_libdir/%name-gnome-1.a
-%endif
-
-%files -n python-module-gsf
-%dir %python_sitelibdir/gsf
-%python_sitelibdir/gsf/*.py*
-%python_sitelibdir/gsf/_gsfmodule.so
-
-%exclude %python_sitelibdir/gsf/*.la
 
 %changelog
+* Thu Feb 28 2013 Yuri N. Sedunov <aris@altlinux.org> 1.14.26-alt1
+- 1.14.26
+
 * Wed Nov 14 2012 Yuri N. Sedunov <aris@altlinux.org> 1.14.25-alt1
 - 1.14.25
 
