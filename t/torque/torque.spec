@@ -1,7 +1,7 @@
 Summary: Tera-scale Open-source Resource and QUEue manager
 
 Name: torque
-Version: 4.1.2
+Version: 4.2.1
 Release: alt1
 
 License: OpenPBS (Portable Batch System) v2.3 Software License (Redistribution in any form is only permitted for non-commercial, non-profit purposes)
@@ -20,11 +20,14 @@ Source201: xpbsmon.desktop
 
 Patch: %name-%version-%release.patch
 
+#set_verify_elf_method unresolved=relaxed
+
 %define torquehomedir %_spooldir/%name
 
 BuildRequires: flex gcc-c++ groff-base libncurses-devel libpam-devel 
 BuildRequires: libreadline-devel sendmail-common tk-devel openssh
 BuildRequires: openssl-devel libxml2-devel
+BuildRequires: check hwloc libhwloc-devel libblcr-devel
 
 %description
 TORQUE (Tera-scale Open-source Resource and QUEue manager) is a resource 
@@ -116,18 +119,23 @@ A simple PAM module to authorize users on PBS MOM nodes with a running job.
 %patch -p1
 
 %build
-CFLAGS="%optflags -std=gnu99"
+#CFLAGS="%optflags -std=gnu99"
 
 %configure \
 	--with-rcp=scp \
-	--enable-docs \
-	--enable-server \
-	--enable-mom \
-	--enable-client \
+	--with-gnu-ld \
 	--enable-gui \
-	--disable-gcc-warnings \
+	--enable-cpuset \
+	--enable-blcr \
+	--enable-nvidia-gpus \
+	--enable-force-nodefile \
 	--enable-maintainer-mode \
+	--disable-static \
 	--with-default-server=localhost
+
+#	--disable-gcc-warnings \
+#	--enable-drmaa \
+#	--with-pam \
 
 %make_build
 
@@ -253,6 +261,9 @@ echo "localhost" > %buildroot/%torquehomedir/server_name
 %_man3dir/*
 
 %changelog
+* Sat Mar 09 2013 Denis Pynkin <dans@altlinux.org> 4.2.1-alt1
+- New version
+
 * Thu Sep 27 2012 Denis Pynkin <dans@altlinux.org> 4.1.2-alt1
 - New version
 
