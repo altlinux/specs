@@ -4,7 +4,7 @@
 
 Name: Mesa
 Version: 9.1
-Release: alt2
+Release: alt3
 Epoch: 4
 License: MIT
 Summary: OpenGL compatible 3D graphics library
@@ -184,7 +184,11 @@ subst "s|^\(#define MESA_VERSION_STRING \"\).*|#define MESA_VERSION_STRING \"%ve
 	--enable-32-bit \
 	--with-dri-drivers=%dri_ppc \
 %else
+%ifarch %arm
+	--with-dri-drivers=swrast \
+%else
 	--with-dri-drivers=%dri_common \
+%endif
 %endif
 %endif
 %endif
@@ -326,12 +330,12 @@ ln -sf ../..%_sysconfdir/X11/%_lib/libGLESv2.so.2 %_libdir/
 
 %files -n xorg-dri-nouveau
 %_libdir/X11/modules/dri/nouveau_*dri.so
-%endif
 
 %files -n xorg-dri-radeon
 %_libdir/libllvmradeon*.so
 %_libdir/X11/modules/dri/radeon*_dri.so
 %_libdir/X11/modules/dri/r?00_dri.so
+%endif
 
 %files -n glxinfo
 %_bindir/glxinfo
@@ -340,8 +344,11 @@ ln -sf ../..%_sysconfdir/X11/%_lib/libGLESv2.so.2 %_libdir/
 %_bindir/glxgears
 
 %changelog
+* Sat Mar 09 2013 Valery Inozemtsev <shrek@altlinux.ru> 4:9.1-alt3
+- update to 9.1 git.ed29a98
+
 * Wed Mar 06 2013 Valery Inozemtsev <shrek@altlinux.ru> 4:9.1-alt2
-- updated to 9.1 git.09199c6
+- updated to 9.1 git.09199c
 
 * Sun Feb 24 2013 Valery Inozemtsev <shrek@altlinux.ru> 4:9.1-alt1
 - 9.1

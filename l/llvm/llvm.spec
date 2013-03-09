@@ -2,7 +2,7 @@
 
 Name: llvm
 Version: 3.2
-Release: alt1
+Release: alt2
 Summary: The Low Level Virtual Machine
 Group: Development/C
 License: NCSA
@@ -13,6 +13,7 @@ Source1: http://llvm.org/releases/%version/clang-%version.src.tar.gz
 # Data files should be installed with timestamps preserved
 Patch0: llvm-2.6-timestamp.patch
 Patch1: llvm-3.2-R600-tstellar-git-b53ed46.patch
+Patch2: llvm-3.2-R600-tstellar-mesa-9.1.patch
 
 BuildRequires: chrpath groff python-dev dejagnu gcc-c++ ocamldoc tcl perl-devel perl-Pod-Parser zip libffi-devel
 %if_enabled doxygen
@@ -142,6 +143,7 @@ HTML documentation for LLVM's OCaml binding.
 mv clang-%version.src tools/clang
 %patch0 -p1 -b .timestamp
 %patch1 -p1 -b .r600
+%patch2 -p1 -b .mesa-9.1
 sed -i "s|%{version}svn|%version|g" configure
 sed -i 's|/lib /usr/lib $lt_ld_extra|%_libdir $lt_ld_extra|' configure
 
@@ -298,6 +300,9 @@ ln -s LLVM-Config.cmake %buildroot%_datadir/CMake/Modules/LLVMConfig.cmake
 %endif
 
 %changelog
+* Sat Mar 09 2013 Valery Inozemtsev <shrek@altlinux.ru> 3.2-alt2
+- update R600 target to mesa-9.1
+
 * Sat Feb 23 2013 Valery Inozemtsev <shrek@altlinux.ru> 3.2-alt1
 - 3.2
 
