@@ -11,7 +11,7 @@
 
 Name: gnome-chemistry-utils
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: A set of chemical utilities
 Group: Sciences/Chemistry
@@ -21,7 +21,7 @@ Url: http://gchemutils.nongnu.org/
 Source: http://mirrors.zerg.biz/nongnu/gchemutils/%ver_major/%name-%version.tar.xz
 Patch1: %name-0.10.12-alt-mozplugindir.patch
 
-Requires: bodr chemical-mime-data
+Requires: %name-data = %version-%release bodr chemical-mime-data
 
 BuildRequires: gcc-c++ doxygen docbook-dtds
 BuildRequires: gnome-doc-utils gnome-common intltool
@@ -43,6 +43,14 @@ This package provides.
 * A periodic table of the elements application (GChemTable).
 * A crystalline structure editor (GCrystal).
 * A spectra viewer (GSpectrum).
+
+%package data
+Summary: Arch independent files for the Gnome chemistry Utils
+Group: Sciences/Chemistry
+BuildArch: noarch
+
+%description data
+This package provides noarch data needed for the Gnome chemistry Utils to work.
 
 %package -n mozilla-plugin-%name
 Summary: Gnome chemistry Utils browser plugin
@@ -84,7 +92,7 @@ spreadsheet program.
 
 %find_lang --with-gnome --output=%name.lang gchemutils-%api_ver %apps
 
-%files -f %name.lang
+%files
 %_bindir/*
 %_libexecdir/babelserver
 %_libdir/gchemutils
@@ -94,8 +102,14 @@ spreadsheet program.
 %_libdir/libgcu-%api_ver.so.*
 %_libdir/libgcrystal-%api_ver.so.*
 %_libdir/libgcugtk-%api_ver.so.*
+%doc AUTHORS NEWS README TODO
+
+%exclude %_libdir/*.so
+%exclude %_datadir/mimelnk/
+
+%files data -f %name.lang
 %_datadir/applications/*
-%_datadir/gchemutils
+%_datadir/gchemutils/
 %_datadir/icons/hicolor/*/*/*
 %_datadir/mime/packages/gchemutils.xml
 %_man1dir/*
@@ -103,11 +117,6 @@ spreadsheet program.
 %_datadir/glib-2.0/schemas/org.gnome.gchemutils.gschema.xml
 %_datadir/glib-2.0/schemas/org.gnome.gchemutils.paint.gschema.xml
 %_datadir/glib-2.0/schemas/org.gnome.gchemutils.paint.plugins.arrows.gschema.xml
-
-%doc AUTHORS NEWS README TODO
-
-%exclude %_libdir/*.so
-%exclude %_datadir/mimelnk/
 
 %if_enabled mozilla
 %files -n mozilla-plugin-%name
@@ -123,6 +132,10 @@ spreadsheet program.
 %endif
 
 %changelog
+* Sat Mar 09 2013 Yuri N. Sedunov <aris@altlinux.org> 0.14.0-alt2
+- rebuilt for new gnumeric-1.12.1
+- arch independent data moved to separate subpackage
+
 * Wed Dec 19 2012 Yuri N. Sedunov <aris@altlinux.org> 0.14.0-alt1
 - 0.14.0
 

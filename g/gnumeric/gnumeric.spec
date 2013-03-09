@@ -5,10 +5,10 @@
 %def_without gda
 %def_with python
 %def_with perl
-%def_disable introspection
+%def_enable introspection
 
 Name: gnumeric
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: A full-featured spreadsheet for GNOME
@@ -28,14 +28,15 @@ Provides: python%__python_version(Gnumeric)
 %endif
 
 %define scrollkeeper_ver 0.3.14
-%define gsf_ver 1.14.23
+%define gsf_ver 1.14.25
 %define gda_ver 4.0
 %define desktop_file_utils_ver 0.10
-%define goffice_ver 0.10.0
+%define goffice_ver 0.10.1
 
 PreReq: scrollkeeper >= %scrollkeeper_ver
 Requires(post,postun): desktop-file-utils >= %desktop_file_utils_ver
 Requires: libspreadsheet%{api_ver} = %version-%release
+Requires: %name-data = %version-%release
 
 BuildRequires: rpm-build-gnome
 BuildRequires: libgnomeoffice%goffice_api_ver-devel >= %goffice_ver
@@ -64,6 +65,14 @@ Gnumeric - это современная полнофункциональная 
 дополнить которые можно своими собственными функциями, написанными на
 языке Python и Perl.  Среди поддерживаемых форматов - Lotus 1-2-3,
 MS Excel 95/98/2000/XP, SYLK.
+
+%package data
+Summary: Arch independent files for Gnumeric
+Group: Office
+BuildArch: noarch
+
+%description data
+This package provides noarch data needed for Gnumeric to work.
 
 %package -n libspreadsheet%{api_ver}
 Summary: libspreadsheet library
@@ -111,7 +120,6 @@ gnome-doc-prepare --copy --force
 %autoreconf
 %configure \
 	--disable-schemas-compile \
-	--enable-ssindex \
 	%{subst_with gnome} \
 	%{subst_with gda} \
 	%{subst_with python} \
@@ -121,17 +129,24 @@ gnome-doc-prepare --copy --force
 %make_build
 
 %install
-%makeinstall_std
+%make DESTDIR=%buildroot DATADIRNAME=share install
 
 %find_lang --with-gnome --output=%name.lang %name %name-functions
 
-%files -f %name.lang
+%files
 %_bindir/*
 %_libdir/%name/
 %_libdir/goffice/%goffice_api_ver/plugins/gnumeric/gnumeric.so
 %_libdir/goffice/%goffice_api_ver/plugins/gnumeric/plugin.xml
+
+%exclude %_libdir/%name/%version/plugins/*/*.la
+%exclude %_libdir/goffice/%goffice_api_ver/plugins/gnumeric/gnumeric.la
+# requires no more existing python(gsf)
+%exclude %_libdir/%name/%version/plugins/gnome-glossary
+
+%files data -f %name.lang
 %dir %_datadir/%name
-%_datadir/%name/%version
+%_datadir/%name/%version/
 %_datadir/applications/*
 %_datadir/pixmaps/*
 %_iconsdir/hicolor/*/apps/gnumeric.*
@@ -140,9 +155,6 @@ gnome-doc-prepare --copy --force
 %config %_datadir/glib-2.0/schemas/org.gnome.gnumeric.dialogs.gschema.xml
 %config %_datadir/glib-2.0/schemas/org.gnome.gnumeric.gschema.xml
 %config %_datadir/glib-2.0/schemas/org.gnome.gnumeric.plugin.gschema.xml
-
-%exclude %_libdir/%name/%version/plugins/*/*.la
-%exclude %_libdir/goffice/%goffice_api_ver/plugins/gnumeric/gnumeric.la
 
 %if_enabled introspection
 %files gir
@@ -160,6 +172,9 @@ gnome-doc-prepare --copy --force
 %_pkgconfigdir/*
 
 %changelog
+* Sat Mar 09 2013 Yuri N. Sedunov <aris@altlinux.org> 1.12.1-alt1
+- 1.12.1
+
 * Wed Dec 19 2012 Yuri N. Sedunov <aris@altlinux.org> 1.12.0-alt1
 - 1.12.0
 
