@@ -23,21 +23,24 @@
 # Spec file adapted for ALT Linux.
 
 Name: lxc
-Version: 0.7.5
-Release: alt3
+Version: 0.9.0
+Release: alt1.alpha3
 Packager: Denis Pynkin <dans@altlinux.org>
 
 URL: http://lxc.sourceforge.net
 Source: http://dl.sourceforge.net/sourceforge/%name/%name-%{version}.tar
-Patch: %name-%version-%release.patch
+#Patch: %name-%version-%release.patch
 
 Summary: %name : Linux Container
 Group: System/Configuration/Other
 License: LGPL
 Requires: libcap gzip-utils
 BuildRequires: libcap-devel docbook-utils glibc-kernheaders
+BuildRequires: docbook2X xsltproc
+#TODO  python3 libpython3 
 
-%add_findreq_skiplist %_libdir/%name/templates/*
+# Needed to disable auto requirements from distro templates
+%add_findreq_skiplist %_datadir/%name/templates/*
 
 %description
 
@@ -61,12 +64,15 @@ development of the linux containers.
 
 %prep
 %setup
-%patch -p1
+#%patch -p1
 
 %build
 CFLAGS+=-I%_includedir/linux-default/include/
 %autoreconf
-%configure -disable-rpath --localstatedir=%_var --with-config-path=%_var/lib/lxc
+%configure -disable-rpath \
+    --localstatedir=%_var \
+    --with-config-path=%_var/lib/lxc
+#TODO    --enable-python
 %make_build
 
 %install
@@ -80,6 +86,8 @@ mkdir -p %buildroot%_cachedir/%name
 
 %files
 %defattr(-,root,root)
+%dir %_sysconfdir/%name
+%_sysconfdir/%name/*
 %_bindir/*
 %_libdir/*.so.*
 %dir %_libexecdir/%name
@@ -87,8 +95,8 @@ mkdir -p %buildroot%_cachedir/%name
 %dir %_libdir/%name
 %dir %_libdir/%name/rootfs
 %_libdir/%name/rootfs/*
-%dir %_libdir/%name/templates
-%_libdir/%name/templates/*
+%dir %_datadir/%name
+%_datadir/%name/*
 %_man1dir/*
 %_man5dir/*
 %_man7dir/*
@@ -100,10 +108,13 @@ mkdir -p %buildroot%_cachedir/%name
 %defattr(-,root,root)
 %dir %_includedir/%name
 %_includedir/%name/*
-%_datadir/pkgconfig/*
+%_libdir/pkgconfig/*
 %_libdir/*.so
 
 %changelog
+* Sun Mar 10 2013 Denis Pynkin <dans@altlinux.org> 0.9.0-alt1.alpha3
+- New version
+
 * Fri May 11 2012 Denis Pynkin <dans@altlinux.org> 0.7.5-alt3
 - Merged bc31b303c48c615c2cd15dd54831e55196b983f0 to fix 
   build with new autotools
