@@ -1,7 +1,7 @@
 %define _name p11-kit
 
 Name: lib%_name
-Version: 0.16.0
+Version: 0.16.3
 Release: alt1
 
 Summary: Library for loading and sharing PKCS#11 modules
@@ -10,8 +10,9 @@ License: BSD
 Url: http://p11-glue.freedesktop.org/p11-kit.html
 
 Source: http://p11-glue.freedesktop.org/releases/%_name-%version.tar.gz
+Patch: %name-0.16.3-alt-lfs.patch
 
-BuildRequires: libtasn1-devel ca-certificates
+BuildRequires: libtasn1-devel
 
 %description
 %_name provides a way to load and enumerate PKCS#11 modules, as well
@@ -46,13 +47,12 @@ This package contains development documentation for %_name library.
 
 %prep
 %setup -q -n %_name-%version
+%patch
 
 %build
-# https://bugs.freedesktop.org/show_bug.cgi?id=42459
-# http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=647229
-%add_optflags -D_GNU_SOURCE
+%autoreconf
 %configure --disable-static \
-	--with-system-anchors=%_datadir/ca-certificates
+	--with-system-anchors=%_sysconfdir/pki/
 %make_build
 
 %install
@@ -87,6 +87,9 @@ mkdir -p %buildroot%_sysconfdir/pkcs11/modules
 %_datadir/gtk-doc/html/%_name
 
 %changelog
+* Sun Mar 10 2013 Yuri N. Sedunov <aris@altlinux.org> 0.16.3-alt1
+- 0.16.3
+
 * Tue Mar 05 2013 Yuri N. Sedunov <aris@altlinux.org> 0.16.0-alt1
 - 0.16.0
 
