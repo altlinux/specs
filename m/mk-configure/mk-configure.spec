@@ -1,6 +1,6 @@
 Name: mk-configure
-Version: 0.21.2
-Release: alt5
+Version: 0.23.0
+Release: alt2
 
 Summary: Lightweight replacement for GNU autotools
 License: BSD
@@ -14,7 +14,7 @@ BuildArch: noarch
 
 # Automatically added by buildreq on Thu Jun 24 2010
 BuildRequires: bmake flex gcc-c++ glib2-devel groff-base zlib-devel
-BuildRequires: perl-podlators perl-devel
+BuildRequires: perl-podlators perl-devel liblua5-devel
 
 %description
 mk-configure is a lightweight replacement for GNU autotools, written in
@@ -26,7 +26,8 @@ bmake (portable version of NetBSD make), POSIX shell and POSIX utilities.
 %define env \
 unset MAKEFLAGS \
 export PREFIX=%prefix \
-export MANDIR=%_mandir
+export MANDIR=%_mandir \
+export CFLAGS=-O2
 
 # examples are built and tested either,
 # let's keep a pristine copy
@@ -42,10 +43,11 @@ bmake install DESTDIR=%buildroot
 rm -rf %buildroot%_docdir/%name
 
 %check
-# FIXME: https://bugzilla.altlinux.org/show_bug.cgi?id=26566
 # PREFIX=/usr/local	# this one to be fixed upstream
 unset MAKEFLAGS
-env NOSUBDIR='lua_dirs hello_lua hello_lua2 hello_reqd' bmake test
+export CFLAGS=-O3
+env NOSUBDIR='lua_dirs hello_lua hello_lua2 hello_lua3 hello_reqd' \
+	bmake test
 
 %files
 %doc ChangeLog NEWS README TODO doc/presentation.pdf
@@ -57,6 +59,12 @@ env NOSUBDIR='lua_dirs hello_lua hello_lua2 hello_reqd' bmake test
 %_man7dir/*
 
 %changelog
+* Sun Mar 10 2013 Michael Shigorin <mike@altlinux.org> 0.23.0-alt2
+- fixed build (thx upstream)
+
+* Fri Sep 07 2012 Michael Shigorin <mike@altlinux.org> 0.23.0-alt1
+- 0.23.0
+
 * Tue Dec 27 2011 Michael Shigorin <mike@altlinux.org> 0.21.2-alt5
 - tweak examples so that they're built as well but packaged pristine
 
