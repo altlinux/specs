@@ -1,5 +1,5 @@
 Name: rpm-build-pecl
-Version: 0.3
+Version: 0.4
 Release: alt1
 
 Summary: RPM helper scripts for build PECL packages
@@ -16,7 +16,7 @@ Requires: rpm-build-php5 php5-devel php5-simplexml
 %description
 RPM helper scripts for build PECL packages.
 You can build PECL rpm package with
-peclr make-rpm-spec <package> command from pear-PEAR_Command_Packaging package.
+pecl make-rpm-spec <package> command from pear-PEAR_Command_Packaging package.
 See %url for detailed PECL packaging policy.
 
 %prep
@@ -30,6 +30,9 @@ install -D -m644 macros %buildroot/%_rpmmacrosdir/pecl
 %_rpmmacrosdir/pecl
 
 %changelog
+* Mon Mar 11 2013 Vitaly Lipatov <lav@altlinux.ru> 0.4-alt1
+- small fixes
+
 * Wed Oct 27 2010 Vitaly Lipatov <lav@altlinux.ru> 0.3-alt1
 - update spec and files, fix docs
 - fix url for ALT Policy
