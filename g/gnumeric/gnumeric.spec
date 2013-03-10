@@ -9,7 +9,7 @@
 
 Name: gnumeric
 Version: %ver_major.1
-Release: alt1
+Release: alt2
 
 Summary: A full-featured spreadsheet for GNOME
 License: GPLv2+ GPLv3+
@@ -18,6 +18,7 @@ Url: http://www.gnome.org/gnumeric/
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 Patch: gnumeric-desktop-alt.patch
+Patch1: gnumeric-1.12.1-alt-locale_dir.patch
 
 Obsoletes: %name-light
 Provides: %name-light = %version-%release
@@ -114,6 +115,7 @@ GObject introspection devel data for the Gnumeric.
 %prep
 %setup
 %patch -p1
+%patch1
 
 %build
 gnome-doc-prepare --copy --force
@@ -126,7 +128,7 @@ gnome-doc-prepare --copy --force
 	%{subst_with perl} \
 	%{?_enable_introspection:--enable-introspection=yes}
 
-%make_build
+%make_build DATADIRNAME=share
 
 %install
 %make DESTDIR=%buildroot DATADIRNAME=share install
@@ -172,8 +174,12 @@ gnome-doc-prepare --copy --force
 %_pkgconfigdir/*
 
 %changelog
+* Sun Mar 10 2013 Yuri N. Sedunov <aris@altlinux.org> 1.12.1-alt2
+- set DATADIRNAME correctly (ALT #28652)
+
 * Sat Mar 09 2013 Yuri N. Sedunov <aris@altlinux.org> 1.12.1-alt1
 - 1.12.1
+- arch independent data moved to separate subpackage
 
 * Wed Dec 19 2012 Yuri N. Sedunov <aris@altlinux.org> 1.12.0-alt1
 - 1.12.0
