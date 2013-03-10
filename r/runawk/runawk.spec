@@ -1,5 +1,5 @@
 Name: runawk
-Version: 1.4.0
+Version: 1.4.4
 Release: alt1
 
 Summary: Wrapper for AWK providing modules
@@ -59,6 +59,7 @@ mkcmake install
 %doc doc/*
 %_bindir/*
 %_man1dir/*
+%_man3dir/*
 %_datadir/%name/
 
 %files examples
@@ -69,6 +70,10 @@ mkcmake install
 #   (uses runawk, isn't used by runawk)
 
 %changelog
+* Sun Mar 10 2013 Michael Shigorin <mike@altlinux.org> 1.4.4-alt1
+- 1.4.4
+- added man3
+
 * Sat Apr 21 2012 Michael Shigorin <mike@altlinux.org> 1.4.0-alt1
 - 1.4.0
 
