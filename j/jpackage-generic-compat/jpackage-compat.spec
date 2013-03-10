@@ -1,5 +1,5 @@
 Name: jpackage-generic-compat
-Version: 0.22
+Version: 0.23
 Release: alt1
 
 Summary: ALT to JPackage build compatibility adaptor.
@@ -7,7 +7,6 @@ Group: Development/Java
 License: GPL2+ or Apache
 Url: http://www.sisyphus.ru/packages/viy/srpms
 
-BuildArch: noarch
 BuildPreReq: rpm-build-java /proc
 
 Requires: docbook-style-xsl
@@ -107,6 +106,9 @@ install -d $RPM_BUILD_ROOT%_javadir
 #install -d $RPM_BUILD_ROOT/usr/share/sgml/docbook/
 #ln -s /usr/share/xml/docbook/xsl-stylesheets $RPM_BUILD_ROOT/usr/share/sgml/docbook/xsl-stylesheets
 
+mkdir -p %buildroot%_libdir
+touch %buildroot%_libdir/arch_dependent
+
 #post
 
 %files
@@ -115,11 +117,15 @@ install -d $RPM_BUILD_ROOT%_javadir
 %ifarch %ix86 x86_64 
 %files -n jpackage-1.5.0-compat
 %files -n jpackage-1.6.0-compat
+%_libdir/arch_dependent
 %endif
 
 %files -n jpackage-1.7-compat
 
 %changelog
+* Sun Mar 10 2013 Igor Vlasenko <viy@altlinux.ru> 0.23-alt1
+- package is arch specific due to arm support
+
 * Tue Mar 05 2013 Igor Vlasenko <viy@altlinux.ru> 0.22-alt1
 - arm support (thanks to sbolshakov@)
 
