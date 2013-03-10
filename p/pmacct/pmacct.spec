@@ -1,6 +1,6 @@
 Name: pmacct
 Version: 0.14.2
-Release: alt1
+Release: alt2
 License: GPLv2
 Summary: pcap-based accounting tools
 Group: System/Servers
@@ -12,8 +12,7 @@ Patch: %name-%version-%release.patch
 PreReq: %name-storage = %version-%release 
 Requires: %name-common = %version-%release
 
-BuildRequires: zlib-devel libpcap-devel libMySQL-devel postgresql-devel libsqlite3-devel libGeoIP-devel setproctitle-devel
-#libmongoc-devel 
+BuildRequires: zlib-devel libpcap-devel libMySQL-devel postgresql-devel libsqlite3-devel libGeoIP-devel setproctitle-devel libmongoc-devel 
 
 %description
 pcap-based accounting daemon; it gathers packets from an
@@ -63,7 +62,7 @@ mode); statistics may be either pushed to stdout, stored
 in a memory table or a PostgreSQL database.
 
 %package sqlite3
-Summary: pcap-based accounting daemon for store data in SQLit
+Summary: pcap-based accounting daemon for store data in SQLite
 Group: System/Servers
 Provides: %name-storage = %version-%release
 
@@ -72,6 +71,17 @@ pcap-based accounting daemon; it gathers packets from an
 interface it is bound to (enabling optionally Promiscuous
 mode); statistics may be either pushed to stdout, stored
 in a memory table or a SQLite database.
+
+%package mongodb
+Summary: pcap-based accounting daemon for store data in MongoDB
+Group: System/Servers
+Provides: %name-storage = %version-%release
+
+%description mongodb
+pcap-based accounting daemon; it gathers packets from an
+interface it is bound to (enabling optionally Promiscuous
+mode); statistics may be either pushed to stdout, stored
+in a memory table or a MongoDB database.
 
 # nfacct
 %package -n nfacct
@@ -131,6 +141,17 @@ v1/v5/v7/v8/v9 on one or more interfaces (IPv4 and IPv6);
 statistics may be either pushed to stdout, stored in a
 memory table or a SQLite database.
 
+%package -n nfacct-mongodb
+Summary: NetFlow accounting daemon for store data in MongoDB
+Group: System/Servers
+Provides: nfacct-storage = %version-%release
+
+%description -n nfacct-mongodb
+NetFlow accounting daemon; it listens for NetFlow packets
+v1/v5/v7/v8/v9 on one or more interfaces (IPv4 and IPv6);
+statistics may be either pushed to stdout, stored in a
+memory table or a MongoDB database.
+
 # sfacct
 %package -n sfacct
 Summary: sFlow accounting tools
@@ -189,6 +210,16 @@ and v5 on one or more interfaces (both IPv4 and IPv6);
 statistics may be either pushed to stdout, stored in a
 memory table or a SQLite database.
 
+%package -n sfacct-mongodb
+Summary: sFlow accounting daemon for store data in MongoDB
+Group: System/Servers
+Provides: sfacct-storage = %version-%release
+
+%description -n sfacct-mongodb
+sFlow accounting daemon; it listens for sFlow packets v2,
+and v5 on one or more interfaces (both IPv4 and IPv6);
+statistics may be either pushed to stdout, stored in a
+memory table or a MongoDB database.
 
 # uacct
 %package -n uacct
@@ -226,7 +257,6 @@ on one or more interfaces (both IPv4 and IPv6);
 statistics may be either pushed to stdout, stored in a
 memory table or a MySQL database.
 
-
 %package -n uacct-pgsql
 Summary: ULOG accounting daemon for store data in PostgreSQL
 Group: System/Servers
@@ -249,6 +279,17 @@ on one or more interfaces (both IPv4 and IPv6);
 statistics may be either pushed to stdout, stored in a
 memory table or a SQLite database.
 
+%package -n uacct-mongodb
+Summary: ULOG accounting daemon for store data in MongoDB
+Group: System/Servers
+Provides: uacct-storage = %version-%release
+
+%description -n uacct-mongodb
+ULOG accounting daemon; it listens for sFlow packets
+on one or more interfaces (both IPv4 and IPv6);
+statistics may be either pushed to stdout, stored in a
+memory table or a MongoDB database.
+
 %prep
 %setup -q -n %name-%version
 %patch -p1
@@ -263,6 +304,7 @@ memory table or a SQLite database.
 	--enable-v4-mapped \\\
 	--enable-ipv6 \\\
 	--enable-geoip
+	
 
 export LIBS="-lsetproctitle"
 
@@ -270,7 +312,8 @@ export LIBS="-lsetproctitle"
 	%common_opts \
 	--enable-mysql \
 	--disable-pgsql \
-	--disable-sqlite3
+	--disable-sqlite3 \
+	--disable-mongodb
 %make
 
 mv src/pmacct src/pmacct-mysql
@@ -285,7 +328,8 @@ mv src/uacctd src/uacctd-mysql
 	%common_opts \
 	--disable-mysql \
 	--enable-pgsql \
-	--disable-sqlite3
+	--disable-sqlite3 \
+	--disable-mongodb
 %make
 
 mv src/pmacct src/pmacct-pgsql
@@ -300,7 +344,8 @@ mv src/uacctd src/uacctd-pgsql
 	%common_opts \
 	--disable-mysql \
 	--disable-pgsql \
-	--enable-sqlite3
+	--enable-sqlite3 \
+	--disable-mongodb
 %make
 
 mv src/pmacct src/pmacct-sqlite3
@@ -313,14 +358,31 @@ mv src/uacctd src/uacctd-sqlite3
 #autoreconf
 %configure \
 	%common_opts \
+	--disable-mysql \
+	--disable-pgsql \
+	--disable-sqlite3 \
+	--enable-mongodb
+%make
+
+mv src/pmacct src/pmacct-mongodb
+mv src/pmacctd src/pmacctd-mongodb
+mv src/nfacctd src/nfacctd-mongodb
+mv src/sfacctd src/sfacctd-mongodb
+mv src/uacctd src/uacctd-mongodb
+
+%make clean
+#autoreconf
+%configure \
+	%common_opts \
 	--enable-mysql \
 	--enable-pgsql \
-	--enable-sqlite3
+	--enable-sqlite3 \
+	--enable-mongodb
 %make
 
 %install
 %makeinstall
-for suf in mysql pgsql sqlite3; do
+for suf in mysql pgsql sqlite3 mongodb; do
 %__install -p -m 755 src/pmacct-$suf  %buildroot%_bindir/pmacct-$suf
 %__install -p -m 755 src/pmacctd-$suf  %buildroot%_sbindir/pmacctd-$suf
 %__install -p -m 755 src/nfacctd-$suf  %buildroot%_sbindir/nfacctd-$suf
@@ -366,6 +428,10 @@ ln -sf %_datadir/doc/%name-common-%version/examples %buildroot%_datadir/doc/uacc
 
 #Make alternatives
 %__mkdir_p %buildroot%_altdir
+cat > %buildroot%_altdir/%name-mongodb <<__EOF__
+/usr/sbin/pmacctd /usr/sbin/pmacctd-mongodb	50
+/usr/bin/pmacct /usr/bin/pmacct-mongodb	50
+__EOF__
 cat > %buildroot%_altdir/%name-mysql <<__EOF__
 /usr/sbin/pmacctd /usr/sbin/pmacctd-mysql	40
 /usr/bin/pmacct /usr/bin/pmacct-mysql	40
@@ -383,6 +449,9 @@ cat > %buildroot%_altdir/%name-full <<__EOF__
 /usr/bin/pmacct /usr/bin/pmacct-full	10
 __EOF__
 
+cat > %buildroot%_altdir/nfacct-mongodb <<__EOF__
+/usr/sbin/nfacctd /usr/sbin/nfacctd-mongodb	50
+__EOF__
 cat > %buildroot%_altdir/nfacct-mysql <<__EOF__
 /usr/sbin/nfacctd /usr/sbin/nfacctd-mysql	40
 __EOF__
@@ -396,6 +465,9 @@ cat > %buildroot%_altdir/nfacct-full <<__EOF__
 /usr/sbin/nfacctd /usr/sbin/nfacctd-full	10
 __EOF__
 
+cat > %buildroot%_altdir/sfacct-mongodb <<__EOF__
+/usr/sbin/sfacctd /usr/sbin/sfacctd-mongodb	50
+__EOF__
 cat > %buildroot%_altdir/sfacct-mysql <<__EOF__
 /usr/sbin/sfacctd /usr/sbin/sfacctd-mysql	40
 __EOF__
@@ -409,6 +481,9 @@ cat > %buildroot%_altdir/sfacct-full <<__EOF__
 /usr/sbin/sfacctd /usr/sbin/sfacctd-full	10
 __EOF__
 
+cat > %buildroot%_altdir/uacct-mongodb <<__EOF__
+/usr/sbin/uacctd /usr/sbin/uacctd-mongodb 50
+__EOF__
 cat > %buildroot%_altdir/uacct-mysql <<__EOF__
 /usr/sbin/uacctd /usr/sbin/uacctd-mysql	40
 __EOF__
@@ -477,6 +552,11 @@ __EOF__
 %_sbindir/pmacctd-sqlite3
 %_altdir/%name-sqlite3
 
+%files mongodb
+%_bindir/pmacct-mongodb
+%_sbindir/pmacctd-mongodb
+%_altdir/%name-mongodb
+
 %files -n nfacct
 %_datadir/doc/nfacct-%version
 %config(noreplace) %attr(0640,root,root) %_sysconfdir/pmacct/nfacctd.conf
@@ -497,6 +577,10 @@ __EOF__
 %files -n nfacct-sqlite3
 %_sbindir/nfacctd-sqlite3
 %_altdir/nfacct-sqlite3
+
+%files -n nfacct-mongodb
+%_sbindir/nfacctd-mongodb
+%_altdir/nfacct-mongodb
 
 %files -n sfacct
 %_datadir/doc/sfacct-%version
@@ -519,6 +603,10 @@ __EOF__
 %_sbindir/sfacctd-sqlite3
 %_altdir/sfacct-sqlite3
 
+%files -n sfacct-mongodb
+%_sbindir/sfacctd-mongodb
+%_altdir/sfacct-mongodb
+
 %files -n uacct
 %_datadir/doc/uacct-%version
 %config(noreplace) %attr(0640,root,root) %_sysconfdir/pmacct/uacctd.conf
@@ -540,7 +628,14 @@ __EOF__
 %_sbindir/uacctd-sqlite3
 %_altdir/uacct-sqlite3
 
+%files -n uacct-mongodb
+%_sbindir/uacctd-mongodb
+%_altdir/uacct-mongodb
+
 %changelog
+* Sun Mar 10 2013 Slava Dubrovskiy <dubrsl@altlinux.org> 0.14.2-alt2
+- Add support MongoDB
+
 * Fri Mar 08 2013 Slava Dubrovskiy <dubrsl@altlinux.org> 0.14.2-alt1
 - New release
 - Add support GeoIP
