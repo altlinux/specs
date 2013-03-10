@@ -1,27 +1,29 @@
 Name: docbook2X
-Version: 0.8.7
-Release: alt0.1.qa1
+Version: 0.8.8
+Release: alt1
+
 Summary: Convert docbook into man and Texinfo
 
 Group: Text tools
 License: BSD
 Url: http://docbook2x.sourceforge.net/
+
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-Source: http://dl.sf.net/docbook2x/%name-%version.tar.bz2
+Source: http://prdownloads.sf.net/docbook2x/%name-%version.tar
 
 # Automatically added by buildreq on Mon Nov 20 2006
 BuildRequires: OpenSP perl-XML-SAX tidy xml-commons-resolver xml-utils xsltproc
 
 BuildRequires: libxslt openjade
-Requires: libxslt openjade texinfo
+Requires: libxslt openjade texinfo xsltproc
 
 %description
 docbook2X converts DocBook documents into man pages and Texinfo
 documents.
 
 %prep
-%setup -q
+%setup
 
 %build
 # to avoid clashing with docbook2* from docbook-utils
@@ -31,7 +33,7 @@ mkdir html
 cp doc/*.html html
 
 %install
-%make_install install DESTDIR=%buildroot
+%makeinstall_std
 rm -rf %buildroot%_docdir/
 rm -f %buildroot%_infodir/dir
 find %buildroot -type f -name .packlist -exec rm -f {} ';'
@@ -54,6 +56,11 @@ find %buildroot -type d -depth -exec rmdir {} 2>/dev/null ';'
 %_infodir/docbook2*
 
 %changelog
+* Mon Mar 11 2013 Vitaly Lipatov <lav@altlinux.ru> 0.8.8-alt1
+- cleanup spec
+- just import docbook2X-0.8.8.tar with rpmgs script
+- add xsltproc requires (ALT bug #28654)
+
 * Tue Nov 24 2009 Repocop Q. A. Robot <repocop@altlinux.org> 0.8.7-alt0.1.qa1
 - NMU (by repocop): the following fixes applied:
   * obsolete-call-in-post-install-info for docbook2X
