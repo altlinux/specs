@@ -1,5 +1,5 @@
 Name: paexec
-Version: 0.16.1
+Version: 0.18.0
 Release: alt1
 
 Summary: Distribute performing the given tasks across several CPUs or machines in a network
@@ -65,6 +65,9 @@ mkcmake install
 # - investigate and re-enable tests
 
 %changelog
+* Sun Mar 10 2013 Michael Shigorin <mike@altlinux.org> 0.18.0-alt1
+- 0.18.0
+
 * Mon Nov 07 2011 Michael Shigorin <mike@altlinux.org> 0.16.1-alt1
 - NMU: 0.16.1 built with:
   + mk-configure 0.21.2
