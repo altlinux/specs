@@ -21,7 +21,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.0.68
-Release: alt1
+Release: alt2
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -3094,6 +3094,10 @@ done)
 
 
 %changelog
+* Mon Mar 11 2013 Led <led@altlinux.ru> 3.0.68-alt2
+- updated:
+  + fix-virt-kvm
+
 * Tue Mar 05 2013 Led <led@altlinux.ru> 3.0.68-alt1
 - 3.0.68
 - removed:
