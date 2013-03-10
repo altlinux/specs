@@ -1,6 +1,6 @@
 Name: file
 Version: 4.26
-Release: alt9
+Release: alt10
 
 Summary: A utility for determining file types
 License: BSD-style
@@ -123,6 +123,9 @@ make -k check
 %python_sitelibdir/*
 
 %changelog
+* Sun Mar 10 2013 Dmitry V. Levin <ldv@altlinux.org> 4.26-alt10
+- Commented out weak palm magic (closes: #28261).
+
 * Sat Dec 22 2012 Dmitry V. Levin <ldv@altlinux.org> 4.26-alt9
 - Commented out weak doom packfile magic (closes: #28261).
 
