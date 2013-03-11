@@ -1,5 +1,5 @@
 Name: jpackage-generic-compat
-Version: 0.23
+Version: 0.24
 Release: alt1
 
 Summary: ALT to JPackage build compatibility adaptor.
@@ -81,7 +81,8 @@ Provides: jpackage-1.4-compat = %version-%release
 Provides: jpackage-1.5-compat = %version-%release
 Provides: jpackage-1.6-compat = %version-%release
 Provides: jpackage-compat = %version-%release
-# on arch
+# arch dependent - fake provides
+Provides: jpackage-for-%_target_cpu
 %ifnarch %ix86 x86_64 
 Provides: jpackage-1.5.0-compat = %version-%release
 Provides: jpackage-1.6.0-compat = %version-%release
@@ -106,9 +107,6 @@ install -d $RPM_BUILD_ROOT%_javadir
 #install -d $RPM_BUILD_ROOT/usr/share/sgml/docbook/
 #ln -s /usr/share/xml/docbook/xsl-stylesheets $RPM_BUILD_ROOT/usr/share/sgml/docbook/xsl-stylesheets
 
-mkdir -p %buildroot%_libdir
-touch %buildroot%_libdir/arch_dependent
-
 #post
 
 %files
@@ -117,12 +115,14 @@ touch %buildroot%_libdir/arch_dependent
 %ifarch %ix86 x86_64 
 %files -n jpackage-1.5.0-compat
 %files -n jpackage-1.6.0-compat
-%_libdir/arch_dependent
 %endif
 
 %files -n jpackage-1.7-compat
 
 %changelog
+* Mon Mar 11 2013 Igor Vlasenko <viy@altlinux.ru> 0.24-alt1
+- efficient arch hack (using arch-dependent provides)
+
 * Sun Mar 10 2013 Igor Vlasenko <viy@altlinux.ru> 0.23-alt1
 - package is arch specific due to arm support
 
