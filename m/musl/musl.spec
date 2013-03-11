@@ -8,7 +8,7 @@
 
 Name: musl
 Version: 0.9.9
-Release: alt9
+Release: alt10
 Group: System/Libraries
 Summary: musl libc - new standard library
 License: MIT
@@ -114,6 +114,9 @@ echo "%musl_dir/lib" > %buildroot%_sysconfdir/ld.so.conf.d/%name-%_lib.conf
 
 
 %changelog
+* Mon Mar 11 2013 Led <led@altlinux.ru> 0.9.9-alt10
+- updated from upstream's SCM
+
 * Wed Mar 06 2013 Led <led@altlinux.ru> 0.9.9-alt9
 - updated from upstream's SCM:
   + fix missing type error in grp.h from adding fgetgrent
