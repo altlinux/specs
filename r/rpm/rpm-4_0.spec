@@ -3,7 +3,7 @@
 
 Name: rpm
 Version: 4.0.4
-Release: alt100.69
+Release: alt100.70
 
 %define ifdef() %if %{expand:%%{?%{1}:1}%%{!?%{1}:0}}
 %define get_dep() %(rpm -q --qf '%%{NAME} >= %%|SERIAL?{%%{SERIAL}:}|%%{VERSION}-%%{RELEASE}' %1 2>/dev/null || echo '%1 >= unknown')
@@ -532,6 +532,11 @@ fi
 %_bindir/rpm2cpio.static
 
 %changelog
+* Mon Mar 11 2013 Dmitry V. Levin <ldv@altlinux.org> 4.0.4-alt100.70
+- find-lang:
+  + enhanced regexps;
+  + enabled --with-qt option support (closes: #28288).
+
 * Fri Mar 08 2013 Dmitry V. Levin <ldv@altlinux.org> 4.0.4-alt100.69
 - %%_configure_update_config: handle the case when %%_configure_script
   is a symlink.
