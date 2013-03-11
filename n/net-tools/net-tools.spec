@@ -1,6 +1,6 @@
 Name: net-tools
 Version: 1.60
-Release: alt16
+Release: alt17
 
 Summary: The basic tools for setting up networking
 License: GPLv2+
@@ -170,6 +170,9 @@ install -pm644 %_sourcedir/{ipmaddr,iptunnel}.8 man/en_US/
 # Fix slattach lock dir (ALT#10179).
 find -type f -print0 |xargs -r0 sed -i 's|/var/lock|&/serial|g' --
 
+# Drop token ring support
+sed -i '/Token ring/s/y$/n/' config.in
+
 %build
 export CFLAGS='%optflags'
 yes '' |make config version.h
@@ -194,7 +197,7 @@ find %buildroot \( -name hostname\* -or -name \*domainname\* \) -delete
 # Obsolete manpages.
 rm -r %buildroot%_mandir/*_*
 
-#%find_lang --with-man '[a-z-]\+' --output %name.lang
+#find_lang --with-man '[a-z-]\+' --output %name.lang
 %find_lang %name
 
 %files -f %name.lang
@@ -204,6 +207,9 @@ rm -r %buildroot%_mandir/*_*
 %doc README* TODO
 
 %changelog
+* Mon Mar 11 2013 Fr. Br. George <george@altlinux.ru> 1.60-alt17
+- Drop token ring suport
+
 * Wed Feb 03 2010 Dmitry V. Levin <ldv@altlinux.org> 1.60-alt16
 - Updated to FC 1.60-101.
 - Moved obsolete mii-tool back to this obsolete package.
