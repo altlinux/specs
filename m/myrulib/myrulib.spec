@@ -1,5 +1,5 @@
 Name: myrulib
-Version: 0.29.11
+Version: 0.29.12
 Release: alt1
 
 Summary: Tool for maintaining fb2 files collection
@@ -46,6 +46,16 @@ install sources/MyRuLib/desktop/home-64x64.png %buildroot%_iconsdir/hicolor/64x6
 %_iconsdir/hicolor/64x64/apps/myrulib.png
 
 %changelog
+* Mon Mar 11 2013 Vitaly Lipatov <lav@altlinux.ru> 0.29.12-alt1
+- version 0.29.12
+- fix procedure: replace author
+- trim title, authors, sequence when import files
+- fix SQL error in sequence frame
+- modify convert script: add user rate to database
+- store <annotation> in FTS table
+- read annotation when import books
+- menu item: Select All
+
 * Sat Feb 02 2013 Vitaly Lipatov <lav@altlinux.ru> 0.29.11-alt1
 - build new version
 - update buidreqs
