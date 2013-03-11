@@ -8,7 +8,7 @@
 
 Name: wxGTK
 Version: %wxbranch.11.0
-Release: alt1.svn20100628.5.qa2
+Release: alt1.svn20100628.6
 Serial:	2
 
 Summary: The GTK+ port of the wxWidgets library
@@ -170,6 +170,7 @@ subst "s,bakefile/presets,bakefile/presets-\$(WX_RELEASE),g" Makefile.in
 	 --enable-gtk2=yes \
 	 --enable-soname \
 	 --enable-mediactrl \
+	 --enable-graphics_ctx \
 	 --with-gnomeprint \
 	 --with-sdl \
 	 --with-regex=yes
@@ -316,6 +317,9 @@ cp -fR docs/* %buildroot%_docdir/%name-%version/
 %_datadir/wx/examples
 
 %changelog
+* Sun Mar 10 2013 Sergey Y. Afonin <asy@altlinux.ru> 2:2.8.11.0-alt1.svn20100628.6
+- added --enable-graphics_ctx (ALT #27460)
+
 * Thu Oct 11 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2:2.8.11.0-alt1.svn20100628.5.qa2
 - Rebuilt with libpng15
 
