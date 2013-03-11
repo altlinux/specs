@@ -1,6 +1,6 @@
 %set_verify_elf_method textrel=relaxed
 %define v8_ver 3.15.11.10
-%define rev 185281
+%define rev 186726
 
 %def_disable debug
 %def_disable nacl
@@ -12,7 +12,7 @@
 %endif
 
 Name:           chromium
-Version:        25.0.1364.152
+Version:        25.0.1364.160
 Release:        alt1.r%rev
 
 Summary:        An open source web browser developed by Google
@@ -83,7 +83,6 @@ Patch91:	arm.patch
 %add_findreq_skiplist %_libdir/%name/xdg-mime
 
 BuildRequires: /proc
-%define __nprocs %(N="$(LC_ALL=C egrep -cs '^cpu[0-9]+' /proc/stat ||:)"; [ "$N" -gt 0 ] 2>/dev/null && printf %%s "$(( 2*$N - 1))" || echo 1)
 
 BuildRequires:  bison
 BuildRequires:  bzlib-devel
@@ -111,7 +110,7 @@ BuildRequires:  libnspr-devel
 BuildRequires:  libnss-devel
 BuildRequires:  libpam-devel
 BuildRequires:  libpci-devel
-#BuildRequires:  libpng-devel
+BuildRequires:  libpng12-devel
 BuildRequires:  libpulseaudio-devel
 BuildRequires:  libspeex-devel
 BuildRequires:  libsqlite3-devel
@@ -435,6 +434,12 @@ printf '%_bindir/%name\t%_libdir/%name/%name-gnome\t15\n' > %buildroot%_altdir/%
 %_altdir/%name-gnome
 
 %changelog
+* Mon Mar 11 2013 Andrey Cherepanov <cas@altlinux.org> 25.0.1364.160-alt1.r186726
+- New version 25.0.1364.160
+- Security fixes:
+  - CVE-2013-0912: Type confusion in WebKit.
+- Build with system libpng12 (old version)
+
 * Wed Mar 06 2013 Andrey Cherepanov <cas@altlinux.org> 25.0.1364.152-alt1.r185281
 - New version 25.0.1364.152
 - Security fixes:
