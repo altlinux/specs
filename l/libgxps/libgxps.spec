@@ -6,7 +6,7 @@
 
 Name: libgxps
 Version: %ver_major.2
-Release: alt1
+Release: alt2
 
 Summary: GObject based library for handling and rendering XPS documents
 Group: System/Libraries
@@ -15,7 +15,7 @@ Url: http://live.gnome.org/libgxps
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 
-BuildRequires: gtk-doc
+BuildRequires: gtk-doc gnome-common
 BuildRequires: libgio-devel libcairo-devel libcairo-gobject-devel libfreetype-devel
 BuildRequires: libarchive-devel libjpeg-devel libtiff-devel libpng-devel liblcms2-devel
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel}
@@ -115,6 +115,9 @@ make DESTDIR=%buildroot install
 %_datadir/gtk-doc/html/%name
 
 %changelog
+* Mon Mar 11 2013 Yuri N. Sedunov <aris@altlinux.org> 0.2.2-alt2
+- rebuilt against libarchive.so.13
+
 * Mon Mar 19 2012 Yuri N. Sedunov <aris@altlinux.org> 0.2.2-alt1
 - 0.2.2
 
