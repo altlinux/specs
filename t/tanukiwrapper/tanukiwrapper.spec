@@ -1,3 +1,7 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: gcc-c++
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 # Copyright (c) 2000-2008, JPackage Project
@@ -35,7 +39,7 @@ BuildRequires: jpackage-compat
 
 Name:           tanukiwrapper
 Version:        3.2.3
-Release:        alt1_5jpp6
+Release:        alt2_5jpp6
 Summary:        Java Service Wrapper
 Epoch:          0
 License:        BSD
@@ -49,23 +53,24 @@ Patch4:         %{name}-Makefile-s390-s390x-ppc.patch
 # The following patch is only needed for GCJ.
 Patch5:         %{name}-nosun-jvm-64.patch
 Group:          Development/Java
-BuildRequires: jpackage-utils >= 0:1.7.4
-BuildRequires: glibc-devel
-BuildRequires: ant >= 0:1.6.5
-BuildRequires: ant-nodeps >= 0:1.6.5
-BuildRequires: ant-junit
-BuildRequires: %{__perl}
-BuildRequires: java-javadoc
-Requires: jpackage-utils >= 0:1.7.4
+BuildRequires:  jpackage-utils >= 0:1.7.4
+BuildRequires:  glibc-devel
+BuildRequires:  ant >= 0:1.6.5
+BuildRequires:  ant-nodeps >= 0:1.6.5
+BuildRequires:  ant-junit
+BuildRequires:  %{__perl}
+BuildRequires:  java-javadoc
+Requires:       jpackage-utils >= 0:1.7.4
 Obsoletes:      %{name}-demo < 0:3.1.2-2jpp
 
 %if %{gcj_support}
-BuildRequires: java-gcj-compat-devel
-Requires(post): java-gcj-compat
-Requires(postun): java-gcj-compat
+BuildRequires:      java-gcj-compat-devel
+Requires(post):     java-gcj-compat
+Requires(postun):   java-gcj-compat
 %endif
 Source44: import.info
 Patch33: tanukiwrapper-3.2.3-alt-Makefile.patch
+Patch34: tanukiwrapper-3.2.3-alt-add-Makefile-for-armh.patch
 
 %description
 The Java Service Wrapper is an application which has 
@@ -119,7 +124,7 @@ find . -name "*.jar" -exec %__rm -f {} \;
   's|"\./wrapper"|"%{_sbindir}/%{name}"| ;
    s|"\.\./conf/wrapper\.conf"|"/path/to/wrapper.conf"|' \
   src/bin/sh.script.in > script.sh.sample
-#%patch33 -p1
+%patch34 -p2
 
 %build
 export CLASSPATH=$(build-classpath ant junit)
@@ -129,11 +134,10 @@ bits=64
 %else
 bits=32
 %endif
-ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Dbuild.sysclasspath=first -Djdk.api=%{_javadocdir}/java -Dbits=$bits \
+%ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  -Dbuild.sysclasspath=first -Djdk.api=%{_javadocdir}/java -Dbits=$bits \
   main jdoc
 
 %install
-%__rm -rf %{buildroot}
 
 # jar
 %__mkdir_p %{buildroot}%{_javadir}
@@ -184,6 +188,9 @@ fi
 %doc doc/*
 
 %changelog
+* Mon Mar 11 2013 Igor Vlasenko <viy@altlinux.ru> 0:3.2.3-alt2_5jpp6
+- arm support thanks to Gleb Fotengauer-Malinovskiy
+
 * Wed Dec 29 2010 Igor Vlasenko <viy@altlinux.ru> 0:3.2.3-alt1_5jpp6
 - new jpp release
 
