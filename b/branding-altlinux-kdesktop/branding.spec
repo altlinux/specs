@@ -4,8 +4,8 @@
 %define Brand ALT Linux
 
 Name: branding-%brand-kdesktop
-Version: 6.0.2
-Release: alt9
+Version: 7.0.0
+Release: alt0.1
 BuildArch: noarch
 
 %define theme %name
@@ -26,11 +26,13 @@ BuildRequires: libqt4-devel
 
 BuildRequires: ImageMagick fontconfig bc libGConf-devel
 
-%define status %nil
-%define status_en %nil
+%define Theme_ru KDesktop
+%define Brand_ru Альт Линукс
+%define status alpha
+%define status_en альфа
 %define variants altlinux-desktop altlinux-office-desktop altlinux-office-server altlinux-lite altlinux-workbench school-master altlinux-gnome-desktop
 
-Source: branding.tar
+Source: %name.tar
 
 Group: Graphics
 Summary: System/Base
@@ -219,7 +221,7 @@ Requires(post): indexhtml-common
 ALT Linux index.html welcome page.
 
 %prep
-%setup -n branding
+%setup -n %name
 
 %ifnarch %arm
 %define x86 boot
@@ -229,7 +231,7 @@ ALT Linux index.html welcome page.
 
 %build
 autoconf
-THEME=%theme NAME='%Theme' BRAND_FNAME='%Brand' BRAND='%brand' STATUS_EN=%status_en STATUS=%status VERSION=%version X86='%x86' ./configure 
+THEME=%theme NAME='%Theme' NAME_RU='%Theme_ru' BRAND_FNAME='%Brand' BRAND_FNAME_RU='%Brand_ru' BRAND='%brand' STATUS_EN=%status_en STATUS=%status VERSION=%version X86='%x86' ./configure 
 make
 
 %install
@@ -418,6 +420,12 @@ cat '/%_datadir/themes/%XdgThemeName/panel-default-setup.entries' > \
 %_datadir/kde4/apps/kio_desktop/DesktopLinks/indexhtml.desktop
 
 %changelog
+* Mon Mar 11 2013 Sergey V Turchin <zerg@altlinux.org> 7.0.0-alt0.1
+- bump version
+
+* Mon Sep 03 2012 Sergey V Turchin <zerg@altlinux.org> 6.0.2-alt8.M60P.1
+- built for M60P
+
 * Mon Sep 03 2012 Sergey V Turchin <zerg@altlinux.org> 6.0.2-alt9
 - fix KDE3 splash and color defaults
 
