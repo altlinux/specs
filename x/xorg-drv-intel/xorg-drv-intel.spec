@@ -1,6 +1,6 @@
 Name: xorg-drv-intel
-Version: 2.21.3
-Release: alt2
+Version: 2.21.4
+Release: alt1
 Epoch: 7
 Summary: Intel integrated graphics chipsets
 License: MIT/X11
@@ -36,6 +36,7 @@ and 24 for the 830M and later
 %build
 %autoreconf
 %configure \
+	--with-default-accel=sna \
 	--with-xorg-module-dir=%_x11modulesdir \
 	--enable-dri \
 	--disable-static
@@ -52,6 +53,9 @@ and 24 for the 830M and later
 %_man4dir/i*.4*
 
 %changelog
+* Mon Mar 11 2013 Valery Inozemtsev <shrek@altlinux.ru> 7:2.21.4-alt1
+- 2.21.4
+
 * Wed Mar 06 2013 Valery Inozemtsev <shrek@altlinux.ru> 7:2.21.3-alt2
 - requires XORG_ABI_VIDEODRV = 14.1
 
