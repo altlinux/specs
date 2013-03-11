@@ -8,9 +8,9 @@
 Name: kde4sdk
 %define major 4
 %define minor 10
-%define bugfix 0
+%define bugfix 1
 Version: %major.%minor.%bugfix
-Release: alt0.1
+Release: alt1
 
 Group: Graphical desktop/KDE
 Summary: K Desktop Environment - Software Development Kit
@@ -282,6 +282,14 @@ Requires: %name-common = %version-%release
 %prep
 %setup -q -n %rname-%version
 #%patch1 -p1
+ls -d1 * | \
+while read d
+do
+    [ "$d" == "${d#lib}" ] || continue
+    [ -d "$d" ] || continue
+    [ -f "$d/CMakeLists.txt" ] || continue
+    echo "add_subdirectory($d)" >> CMakeLists.txt
+done
 
 %build
 %K4cmake \
@@ -599,6 +607,9 @@ mv %buildroot/%_K4bindir/svn-clean %buildroot/%_K4bindir/svnclean
 
 
 %changelog
+* Mon Mar 11 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.1-alt1
+- new version
+
 * Wed Dec 19 2012 Sergey V Turchin <zerg@altlinux.org> 4.10.0-alt0.1
 - new beta version
 
