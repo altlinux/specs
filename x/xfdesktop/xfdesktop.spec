@@ -1,6 +1,6 @@
 Name: xfdesktop
-Version: 4.10.0
-Release: alt5
+Version: 4.10.2
+Release: alt1
 
 Summary: Desktop manager for the XFce Desktop Environment
 Summary (ru_RU.UTF-8): Менеджер рабочего стола Xfce
@@ -59,6 +59,9 @@ BuildRequires: libICE-devel libnotify-devel libdbus-glib-devel
 %_datadir/backgrounds/xfce
 
 %changelog
+* Mon Mar 11 2013 Mikhail Efremov <sem@altlinux.org> 4.10.2-alt1
+- Updated to 4.10.2.
+
 * Wed Feb 06 2013 Mikhail Efremov <sem@altlinux.org> 4.10.0-alt5
 - Set default backdrop if current one is not valid.
 - Updated "Fix backgrounds search path" patch from upstream.
