@@ -1,5 +1,5 @@
 Name: installer
-Version: 1.8.16
+Version: 1.8.17
 Release: alt1
 
 Summary: Installer common parts
@@ -22,7 +22,8 @@ Obsoletes: %name-stage2 < %version-%release
 # installer-preinstall.desktop
 Requires: alterator-preinstall >= 0.7-alt1
 # scripts/install2
-Requires: alterator-wizardface alterator-backend-x11 >= 0.21-alt2 xinit xinitrc xorg-server xorg-drv-video
+Requires: alterator-wizardface alterator-backend-x11 >= 0.21-alt2 xinit xinitrc xorg-server
+Requires: xorg-drv-ati, xorg-drv-intel, xorg-drv-nv, xorg-drv-openchrome, xorg-drv-cirrus, xorg-drv-mga, xorg-drv-qxl, xorg-drv-sis, xorg-drv-nouveau xorg-drv-modesetting
 # scripts/postinstall
 Requires: eject
 # initinstall.d/10-vt.sh
@@ -105,6 +106,9 @@ This package contains common installer stage3 files and dependencies.
 %_datadir/install2/preinstall.d/30-setup-network.sh
 
 %changelog
+* Mon Mar 11 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1.8.17-alt1
+- dependences on xorg video drivers added
+
 * Thu Mar 07 2013 Michael Shigorin <mike@altlinux.org> 1.8.16-alt1
 - fixed xorg dependencies (thx shrek@)
 
