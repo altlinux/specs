@@ -13,7 +13,7 @@
 
 Name: lib%bname
 Version: 1.1.21
-Release: alt4
+Release: alt5
 Summary: Free libraries for play video and audio
 Summary(ru_RU.UTF-8): Библиотеки для воспроизведения видео и аудио информации
 License: GPLv2+
@@ -35,6 +35,7 @@ Patch11: xine-lib-1.1.20-demux_qt.patch
 Patch12: xine-lib-1.1.17-alt-tmpdir.patch
 Patch13: xine-lib-1.1.17-alt-ffmpeg-headers.patch
 Patch14: xine-lib-1.1.17-alt-ff-check-extradata.patch
+Patch15: xine-lib-1.1.21-alt-crash-workaround.patch
 # SuSE
 Patch101: xine-configure.diff
 Patch102: xine-lib-1.1.19-assert.patch
@@ -137,6 +138,7 @@ samba input plugin for %bname.
 #%patch12 -p1
 %patch13 -p1
 %patch14 -p1
+%patch15 -p1
 #
 %patch101 -p1
 %patch102 -p1
@@ -251,6 +253,9 @@ SAMBA_CFLAGS=`pkg-config --cflags smbclient`
 %_libdir/%bname/plugins/%plugin_version/%{bname}plug_inp_smb.so
 
 %changelog
+* Mon Mar 11 2013 Sergey V Turchin <zerg@altlinux.org> 1.1.21-alt5
+- add woraround against crash; thanks rom_as@alt (ALT#27505)
+
 * Mon Feb 25 2013 Sergey V Turchin <zerg@altlinux.org> 1.1.21-alt4
 - fix to build with new libsmbclient
 
