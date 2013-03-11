@@ -1,6 +1,6 @@
 Name: lndir
 Version: 1.0.3
-Release: alt1
+Release: alt2
 
 Summary: create a shadow directory of symbolic links to another directory tree
 License: MIT/X11
@@ -9,7 +9,7 @@ Group: Development/C
 Url: http://xorg.freedesktop.org
 Source: %name-%version.tar.bz2
 
-BuildRequires: pkg-config xorg-proto-devel xorg-util-macros
+BuildRequires: xorg-xproto-devel xorg-util-macros
 
 %description
 The lndir program makes  a  shadow  copy  todir  of  a  directory  tree
@@ -39,6 +39,9 @@ the shadow directory are just symlinks to the real files.
 %_man1dir/*
 
 %changelog
+* Mon Mar 11 2013 Fr. Br. George <george@altlinux.ru> 1.0.3-alt2
+- Rebuild with new buildreq
+
 * Wed Mar 21 2012 Fr. Br. George <george@altlinux.ru> 1.0.3-alt1
 - Autobuild version bump to 1.0.3
 
