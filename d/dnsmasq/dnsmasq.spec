@@ -1,7 +1,7 @@
 Name: dnsmasq
 Version: 2.65
 
-Release: alt1
+Release: alt2
 Summary: A lightweight caching nameserver
 License: %gpl2plus
 Group: System/Servers
@@ -95,6 +95,9 @@ fi
 %doc contrib/dnslist contrib/dynamic-dnsmasq
 
 %changelog
+* Mon Mar 11 2013 Mikhail Efremov <sem@altlinux.org> 2.65-alt2
+- dnsmasq-helper: Fix exit status (closes: #28658).
+
 * Wed Mar 06 2013 Mikhail Efremov <sem@altlinux.org> 2.65-alt1
 - Patch from Fedora:
   + Fix for CVE-2013-0198 (checking of TCP connection interfaces)
