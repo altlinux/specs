@@ -1,161 +1,168 @@
-Packager: Igor Vlasenko <viy@altlinux.ru>
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: unzip
+# END SourceDeps(oneline)
 BuildRequires: /proc
-BuildRequires: jpackage-1.6-compat
-%define svn_revision     5847
-
-%define eclipse_name     eclipse
-%define eclipse_base     %{_libdir}/%{eclipse_name}
-%define install_loc      %{_datadir}/eclipse/dropins
-%define local_dropins    %{install_loc}/svnkit/eclipse
-%define local_plugins    %{local_dropins}/plugins
-%define local_features   %{local_dropins}/features
-%define core_plugin_name org.tmatesoft.svnkit_%{version}
-%define core_plugin_dir  %{local_plugins}/%{core_plugin_name}
-%define jna_plugin_name  com.sun.jna_3.0.9
-%define jna_plugin_dir   %{local_plugins}/%{jna_plugin_name}
-
+BuildRequires: jpackage-compat
 Name:           svnkit
-Version:        1.3.0
-Release:        alt1_1jpp6
-Summary:        Pure Java Subversion client library
+Version:        1.7.6
+Release:        alt1_6jpp7
+Summary:        Pure java subversion client library
 
 Group:          Development/Java
 # License located at http://svnkit.com/license.html
-License:        TMate License and ASL 1.1
+License:        TMate
 URL:            http://www.svnkit.com/
-# original source located at: http://www.svnkit.com/org.tmatesoft.svn_%{version}.src.zip
-# repackaged removing binary dependencies using:
-# zip $FILE -d \*.jar
-Source0:        org.tmatesoft.svn_%{version}.src-CLEAN.zip
-Patch0:         svnkit-1.2.2-dependencies.patch
+Source0:        http://www.svnkit.com/org.tmatesoft.svn_%{version}.src.zip
+#Source1:       http://repo1.maven.org/maven2/org/tmatesoft/svnkit/svnkit/1.7.6/svnkit-1.7.6.pom
+# our pom has adjusted dependencies versions to Fedora platform:
+Source1:        %{name}-%{version}.pom
+Source2:        %{name}-build.xml
+# just in SRPM due to nailgun comes included in svnkit upstream sources:
+Source3:        https://www.apache.org/licenses/LICENSE-2.0.txt
+Source4:        https://www.apache.org/licenses/LICENSE-1.1.txt
 
+# patch reported at http://issues.tmatesoft.com/_persistent/svnkit-jna-3.5.0.patch?file=67-134&v=0&c=true
+Patch0:         svnkit-jna-3.5.0.patch
 
 BuildArch:      noarch
 
-BuildRequires: ant
-BuildRequires: jpackage-utils >= 0:1.6
-BuildRequires: eclipse-pde
-Requires: eclipse-platform
-
-BuildRequires: subversion-javahl >= 1.5
-Requires: subversion-javahl >= 1.5
-BuildRequires: jna >= 3.0
-BuildRequires: trilead-ssh2 >= 213
-Requires: jna >= 3.0
-Requires: trilead-ssh2 >= 213
-Obsoletes:              javasvn <= 1.1.0
+BuildRequires:          jpackage-utils >= 0:1.6
+BuildRequires:          ant
+BuildRequires:          sequence-library
+BuildRequires:          subversion-javahl >= 1.5
+BuildRequires:          jna >= 3.0
+BuildRequires:          trilead-ssh2 >= 213
+BuildRequires:          sqljet >= 1.1.4
+BuildRequires:          tomcat-servlet-3.0-api >= 7.0.0
+Requires:               jpackage-utils >= 0:1.6
+Requires:               subversion-javahl >= 1.5
+Requires:               jna >= 3.0
+Requires:               trilead-ssh2 >= 213
+Requires:               sqljet >= 1.1.4
+Requires:               sequence-library
+Requires:               tomcat-servlet-3.0-api >= 7.0.0
+Source44: import.info
 
 
 %description
-SVNKit is a pure Java Subversion client library. You would like to use SVNKit
+SVNKit is a pure java Subversion client library. You would like to use SVNKit
 when you need to access or modify Subversion repository from your Java
-application, be it a standalone program, plugin or web application. Being a
-pure Java program, SVNKit doesn't need any additional configuration or native
-binaries to work on any OS that runs Java.
+application, as a standalone program and plugin or web application. Being a
+pure java program, SVNKit doesn't need any additional configuration or native
+binaries to work on any OS that runs java.
+
+%package javahl
+Summary:        Replacement for the native JavaHL API 
+Group:          Development/Java
+Requires:       %{name}%{?_isa} = %{version}-%{release}
+Requires:       subversion-javahl >= 1.5
+
+%description javahl
+SVNKit provides a replacement for the native JavaHL API - the SVNClient  class 
+that does not use any native bindings. This SVNClient  also implements 
+SVNClientInterface (org.tigris.subversion.javahl) as the native one 
+but uses only the SVNKit library API (written in pure Java!).
+If you have code written with using the native SVNClient class, 
+you may simply replace that class with the new one provided by SVNKit. 
+
+%package cli
+Summary:        Jsvn is a pure java Subversion client 
+Group:          Development/Java
+Requires:       %{name}%{?_isa} = %{version}-%{release}
+
+%description cli
+Includes jsvn, a pure java Subversion command line interface based on SVNKit.
 
 %package javadoc
 Summary:        Javadoc for SVNKit
-Group:          Development/Documentation
+Group:          Development/Java
 BuildArch: noarch
 
 %description javadoc
 Javadoc for SVNKit - Java Subversion client library.
 
-%package -n eclipse-svnkit
-Summary:        Eclipse feature for SVNKit
-Group:          Development/Java
-Requires: svnkit = %{version}
-
-%description -n eclipse-svnkit
-Eclipse feature for SVNKit - Java Subversion client library.
-
-
 %prep
-%setup -q -n %{name}-src-%{version}.%{svn_revision}
+%setup -q -n %{name}-%{version}
+
 %patch0 -p1
 
-# delete the jars that are in the archive
-JAR_files=""
-for j in $(find -name \*.jar); do
-if [ ! -L $j ] ; then
-JAR_files="$JAR_files $j"
-fi
+# delete binary jars from upstream
+rm -rf gradle gradlew gradlew.bat
+rm -rf svnkit-test/nailgun/nailgun-0.7.1.jar
+
+# check for forbidden artifacts 
+WHITELIST="\(template.jar\)"
+FORBIDDEN=""
+for j in $(find . ! -regex ".*$WHITELIST.*" -and \( -name '*.jar' -or -name '*.class' \) ); do
+        if [ ! -L $j ] ; then
+        FORBIDDEN="$FORBIDDEN $j"
+        fi
 done
-if [ ! -z "$JAR_files" ] ; then
-echo "These JAR files should be deleted and symlinked to system JAR files: $JAR_files"
-exit 1
+if [ ! -z "$FORBIDDEN" ] ; then
+        echo "These files should be deleted and symlinked to system: $FORBIDDEN" 
+        exit 1
 fi
-find contrib -name \*.jar -exec rm {} \;
+  
 
-# delete src packages for dependencies
-rm contrib/trilead/trileadsrc.zip
+# this jars are not removed because are templates from upstream and have no binary contents: 
+#      - svnkit/src/main/java/org/tmatesoft/svn/core/io/repository/template.jar
+#      - svnkit/src/main/resources/org/tmatesoft/svn/core/io/repository/template.jar
 
-# relinking dependencies
-ln -s /usr/share/java/svn-javahl.jar contrib/javahl
-ln -sf %{_javadir}/jna.jar contrib/jna/jna.jar
-ln -sf %{_javadir}/trilead-ssh2.jar contrib/trilead/trilead.jar
+cp %{SOURCE2} build.xml
 
-# fixing wrong-file-end-of-line-encoding warnings
-sed -i 's/\r//' README.txt doc/javadoc/package-list
-find doc/javadoc -name \*.html -exec sed -i 's/\r//' {} \;
+cat > %{name}.build.properties <<EOF
+svnkit.version.major=1
+svnkit.version.minor=7
+svnkit.version.micro=6
+svnkit.version.build=local
+EOF
 
 
 %build
-ECLIPSE_HOME=%{eclipse_base} ant
+ant all
+
 
 %install
-
 # jar
-install -d -m 755 $RPM_BUILD_ROOT%{_javadir}
-install -m 644 build/lib/%{name}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}-%{version}.jar
-install -m 644 build/lib/%{name}-javahl.jar $RPM_BUILD_ROOT%{_javadir}/%{name}-javahl-%{version}.jar
+install -d -m 755 %{buildroot}%{_javadir}
+install -p -m 644 %{name}/dist/%{name}.jar %{buildroot}%{_javadir}/%{name}.jar
+install -p -m 644 %{name}-javahl16/dist/%{name}-javahl16.jar %{buildroot}%{_javadir}/%{name}-javahl.jar
+install -p -m 644 %{name}-cli/dist/%{name}-cli.jar %{buildroot}%{_javadir}/%{name}-cli.jar
 
-# javadoc
-mkdir -p $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
-cp -pr doc/javadoc/* \
-  $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
+install -p -Dm 644 %{SOURCE1} %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
+%add_maven_depmap
 
-# eclipse
-mkdir -p $RPM_BUILD_ROOT%{local_dropins}
-cp -R build/eclipse/features $RPM_BUILD_ROOT%{local_dropins}
+# javadocs
+mkdir -p %{buildroot}%{_javadocdir}/%{name}
+cp -rp build/javadoc %{buildroot}%{_javadocdir}/%{name}
 
-# extracting plugin jars
-mkdir $RPM_BUILD_ROOT%{local_plugins}
-unzip build/eclipse/site/plugins/%{jna_plugin_name}.jar -d $RPM_BUILD_ROOT%{jna_plugin_dir}
-unzip build/eclipse/site/plugins/%{core_plugin_name}.jar -d $RPM_BUILD_ROOT%{core_plugin_dir}
- 
-# removing plugin internal jars and sources
-rm -f $RPM_BUILD_ROOT%{jna_plugin_dir}/jna.jar
-rm -f $RPM_BUILD_ROOT%{core_plugin_dir}/{svnkitsrc.zip,trilead.jar,svnkit.jar,svnkit-javahl.jar}
-
-# main library links
-pushd $RPM_BUILD_ROOT%{_javadir}/
-ln -s %{name}-%{version}.jar %{name}.jar
-ln -s %{name}-javahl-%{version}.jar %{name}-javahl.jar
-popd
-
-# We need to setup the symlink because the ant copy task doesn't preserve symlinks
-# TODO file a bug about this
-ln -s %{_javadir}/svn-javahl.jar $RPM_BUILD_ROOT%{core_plugin_dir}
-ln -s %{_javadir}/trilead-ssh2.jar $RPM_BUILD_ROOT%{core_plugin_dir}/trilead.jar
-ln -s %{_javadir}/svnkit.jar $RPM_BUILD_ROOT%{core_plugin_dir}
-ln -s %{_javadir}/jna.jar $RPM_BUILD_ROOT%{jna_plugin_dir}
+mkdir -p $RPM_BUILD_ROOT`dirname /etc/%{name}.conf`
+touch $RPM_BUILD_ROOT/etc/%{name}.conf
 
 
 %files
-%{_javadir}/*
-%doc README.txt changelog.txt
+%{_javadir}/%{name}.jar
+%{_mavenpomdir}/*
+%{_mavendepmapfragdir}/%{name}
+%doc LICENSE.txt README.txt CHANGES.txt
+%config(noreplace,missingok) /etc/%{name}.conf
 
+%files cli
+%{_javadir}/%{name}-cli.jar
 
-%files -n eclipse-svnkit
-%{install_loc}/svnkit
-
+%files javahl
+%{_javadir}/%{name}-javahl.jar
 
 %files javadoc
-%{_javadocdir}/%{name}-%{version}
+%{_javadocdir}/%{name}
+%doc LICENSE.txt
 
 
 %changelog
+* Mon Mar 11 2013 Igor Vlasenko <viy@altlinux.ru> 1.7.6-alt1_6jpp7
+- replaced by fc package
+
 * Wed Jan 27 2010 Igor Vlasenko <viy@altlinux.ru> 1.3.0-alt1_1jpp6
 - new version
 
