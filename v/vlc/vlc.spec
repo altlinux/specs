@@ -1,6 +1,6 @@
 Name: vlc
 Version: 2.0.5
-Release: alt1
+Release: alt2
 
 Summary: VLC media player
 License: GPLv2
@@ -629,7 +629,7 @@ This package contains fortunes from VLC media player.
 echo %version-%release > src/revision.txt
 
 %build
-
+%add_optflags -I%_includedir/samba-4.0
 ./bootstrap
 
 %configure \
@@ -669,6 +669,7 @@ echo %version-%release > src/revision.txt
 	--enable-ncurses \
 	--enable-notify \
 	--enable-ogg \
+	--enable-omxil \
 	--enable-opus \
 	--enable-png \
 	--enable-postproc \
@@ -836,6 +837,7 @@ chmod 755 %buildroot%_libexecdir/rpm/vlc.filetrigger
 %vlc_plugindir/codec/libedummy_plugin.so
 %vlc_plugindir/codec/liblpcm_plugin.so
 %vlc_plugindir/codec/libmpeg_audio_plugin.so
+%vlc_plugindir/codec/libomxil_plugin.so
 %vlc_plugindir/codec/librawvideo_plugin.so
 %vlc_plugindir/codec/libspudec_plugin.so
 %vlc_plugindir/codec/libstl_plugin.so
@@ -1283,6 +1285,10 @@ chmod 755 %buildroot%_libexecdir/rpm/vlc.filetrigger
 %files maxi
 
 %changelog
+* Mon Mar 11 2013 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.0.5-alt2
+- fixed build with smbclient from samba4
+- built omxil plugin
+
 * Fri Dec 21 2012 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.0.5-alt1
 - 2.0.5 released
 
