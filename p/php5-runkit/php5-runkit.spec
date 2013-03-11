@@ -2,7 +2,7 @@
 
 Name: php5-%php5_extension
 Version: 1.0.4.git
-Release: alt1
+Release: alt2
 
 Summary: Runkit extension for PHP
 
@@ -30,19 +30,26 @@ and embeddable sub-interpreters via sandboxing.
 %setup
 
 %build
-#pecl build package.xml
 phpize
 %pecl_configure
 %make_build
 
 %install
-#pecl install package.xml
 %pecl_install
 %pecl_install_doc README LICENSE
+
+%post
+%php5_extension_postin
+
+%preun
+%php5_extension_preun
 
 %files
 %pecl_files
 
 %changelog
+* Mon Mar 11 2013 Vitaly Lipatov <lav@altlinux.ru> 1.0.4.git-alt2
+- add postin/preun scripts
+
 * Mon Mar 11 2013 Vitaly Lipatov <lav@altlinux.ru> 1.0.4.git-alt1
 - initial build for ALT Linux Sisyphus
