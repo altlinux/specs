@@ -1,6 +1,6 @@
 Name: xfindproxy
 Version: 1.0.2
-Release: alt2
+Release: alt3
 
 Summary: locate proxy services
 License: MIT/X11
@@ -10,9 +10,11 @@ Url: http://xorg.freedesktop.org
 Source: %name-%version.tar.bz2
 Patch:	xfindproxy-alt-lvalue.patch
 
+# Automatically added by buildreq on Mon Mar 11 2013
+# optimized out: libICE-devel libX11-devel pkg-config xorg-xproto-devel
+BuildRequires: libXt-devel xorg-pmproto-devel
 
-BuildRequires: libICE-devel libSM-devel libX11-devel libXau-devel libXdmcp-devel
-BuildRequires: libXt-devel pkg-config xorg-proto-devel xorg-util-macros
+BuildRequires:  xorg-util-macros
 
 %description
 xfindproxy is a program used to locate available  proxy  services.   It
@@ -39,6 +41,9 @@ shared whenever possible.
 %_man1dir/*
 
 %changelog
+* Mon Mar 11 2013 Fr. Br. George <george@altlinux.ru> 1.0.2-alt3
+- Rebuild with new buildreq
+
 * Tue Feb 14 2012 Fr. Br. George <george@altlinux.ru> 1.0.2-alt2
 - Fix new GCC lvalue always true error
 
