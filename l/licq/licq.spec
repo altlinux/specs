@@ -27,7 +27,7 @@
 # name-version-release
 %define rname licq
 %define ver 1.7.1
-%define rlz alt1
+%define rlz alt2
 
 Name: %rname
 Version: %ver
@@ -90,6 +90,8 @@ Patch22: licq-1.3.6-alt-qt4-yes-stl.patch
 
 Patch200: licq-1.2.7-remove-pidfile.patch
 
+# Errata
+Patch500: licq-1.7.1-icq-utf8.patch
 
 #package licq
 Group: Networking/Instant messaging
@@ -110,6 +112,7 @@ Requires: %name-ui
 %package maxi
 Group: Networking/Instant messaging
 Summary: ICQ clone written in C++
+BuildArch: noarch
 %if %with_msn
 Requires: %name-msn = %version-%release
 %endif
@@ -155,6 +158,7 @@ Requires: %name-ui
 %package mini
 Group: Networking/Instant messaging
 Summary: ICQ clone written in C++
+BuildArch: noarch
 %if %with_qt4
 Requires: %name-qt4 = %version-%release
 %else
@@ -435,6 +439,8 @@ install -m 644 %SOURCE9 share/utilities/tracepath.utility
 
 %patch2 -p1
 
+%patch500 -p2
+
 %if %with_osd
 pushd plugins/osd*
 %patch17 -p1
@@ -679,6 +685,10 @@ popd
 
 ########################################################
 %changelog
+* Mon Mar 11 2013 Sergey Y. Afonin <asy@altlinux.ru> 1.7.1-alt2
+- fixed conversion for non-UTF8 messages
+  http://github.com/licq-im/licq/issues/28
+
 * Mon Jan 28 2013 Sergey V Turchin <zerg@altlinux.org> 1.7.1-alt1
 - new version
 
