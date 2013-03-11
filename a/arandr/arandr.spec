@@ -1,8 +1,8 @@
 Name: arandr
-Version: 0.1.6
+Version: 0.1.7.1
 Release: alt1
 
-Summary: Screen layout editor for xrandr 1.2 (Another XRandR gui)
+Summary: Screen layout editor for xrandr 1.4 (Another XRandR gui)
 
 Url: http://christian.amsuess.com/tools/arandr/
 License: GPLv3
@@ -14,12 +14,12 @@ Source: http://christian.amsuess.com/tools/arandr/files/%name-%version.tar
 
 BuildArch: noarch
 
-# Automatically added by buildreq on Sat Jan 14 2012
-# optimized out: python-base python-devel python-module-docutils python-module-peak python-modules python-modules-compiler python-modules-encodings
+# Automatically added by buildreq on Sun Mar 10 2013
+# optimized out: python-base python-devel python-module-BeautifulSoup python-module-OpenSSL python-module-Pygments python-module-distribute python-module-docutils python-module-flup python-module-genshi python-module-gevent python-module-geventutil python-module-greenlet python-module-html5lib python-module-imaging python-module-lxml python-module-odfpy python-module-py python-module-pygobject3 python-module-pyparsing python-module-qserve python-module-serial python-module-simplejson python-module-tempita python-module-timelib python-module-twisted-core python-module-webob python-module-zope python-module-zope.interface python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-tkinter python-modules-wsgiref
 BuildRequires: python-module-mwlib python-module-paste
 
 %description
-Provide a simple visual front end for XRandR 1.2, client
+Provide a simple visual front end for XRandR 1.4, client
 side X only (no xorg.conf involved, no pre-1.2 options).
 
 Features
@@ -65,6 +65,9 @@ Features
 %_man1dir/*
 
 %changelog
+* Sun Mar 10 2013 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.1.7.1-alt1
+- New version 0.1.7.1
+
 * Mon Sep 17 2012 Vitaly Lipatov <lav@altlinux.ru> 0.1.6-alt1
 - new version 0.1.6 (with rpmrb script)
 
