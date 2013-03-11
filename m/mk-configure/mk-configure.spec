@@ -1,6 +1,6 @@
 Name: mk-configure
-Version: 0.23.0
-Release: alt2
+Version: 0.24.0
+Release: alt1
 
 Summary: Lightweight replacement for GNU autotools
 License: BSD
@@ -43,14 +43,14 @@ bmake install DESTDIR=%buildroot
 rm -rf %buildroot%_docdir/%name
 
 %check
-# PREFIX=/usr/local	# this one to be fixed upstream
 unset MAKEFLAGS
 export CFLAGS=-O3
+# lua tests expect /usr/share where we do /usr/lib
 env NOSUBDIR='lua_dirs hello_lua hello_lua2 hello_lua3 hello_reqd' \
 	bmake test
 
 %files
-%doc ChangeLog NEWS README TODO doc/presentation.pdf
+%doc NEWS README TODO doc/presentation.pdf
 %doc doc/examples/
 %_bindir/*
 %_datadir/mk-configure/
@@ -59,6 +59,9 @@ env NOSUBDIR='lua_dirs hello_lua hello_lua2 hello_lua3 hello_reqd' \
 %_man7dir/*
 
 %changelog
+* Mon Mar 11 2013 Michael Shigorin <mike@altlinux.org> 0.24.0-alt1
+- 0.24.0
+
 * Sun Mar 10 2013 Michael Shigorin <mike@altlinux.org> 0.23.0-alt2
 - fixed build (thx upstream)
 
