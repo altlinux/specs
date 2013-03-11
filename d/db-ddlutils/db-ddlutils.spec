@@ -40,7 +40,7 @@ BuildRequires: jpackage-compat
 
 Name:           db-%{base_name}
 Version:        1.0
-Release:        alt2_1jpp6
+Release:        alt3_1jpp6
 Epoch:          0
 Summary:        DDL utilities
 
@@ -82,15 +82,15 @@ BuildRequires: maven2-plugin-resources
 BuildRequires: maven-surefire-plugin
 %endif
 # runtime
-BuildRequires: jakarta-commons-beanutils
-BuildRequires: jakarta-commons-betwixt0
-BuildRequires: jakarta-commons-codec
-BuildRequires: jakarta-commons-collections
-BuildRequires: jakarta-commons-dbcp
-BuildRequires: jakarta-commons-digester
-BuildRequires: jakarta-commons-lang
-BuildRequires: jakarta-commons-logging
-BuildRequires: jakarta-commons-pool
+BuildRequires: apache-commons-beanutils
+BuildRequires: apache-commons-betwixt
+BuildRequires: apache-commons-codec
+BuildRequires: apache-commons-collections
+BuildRequires: apache-commons-dbcp
+BuildRequires: apache-commons-digester
+BuildRequires: apache-commons-lang
+BuildRequires: apache-commons-logging
+BuildRequires: apache-commons-pool
 BuildRequires: dom4j
 BuildRequires: jaxen
 BuildRequires: jakarta-oro
@@ -98,15 +98,15 @@ BuildRequires: log4j
 BuildRequires: wstx
 BuildRequires: stax_1_0_api
 
-Requires: jakarta-commons-beanutils
-Requires: jakarta-commons-betwixt0
-Requires: jakarta-commons-codec
-Requires: jakarta-commons-collections
-Requires: jakarta-commons-dbcp
-Requires: jakarta-commons-digester
-Requires: jakarta-commons-lang
-Requires: jakarta-commons-logging
-Requires: jakarta-commons-pool
+Requires: apache-commons-beanutils
+Requires: apache-commons-betwixt
+Requires: apache-commons-codec
+Requires: apache-commons-collections
+Requires: apache-commons-dbcp
+Requires: apache-commons-digester
+Requires: apache-commons-lang
+Requires: apache-commons-logging
+Requires: apache-commons-pool
 Requires: dom4j
 Requires: jaxen
 Requires: jakarta-oro
@@ -118,8 +118,6 @@ BuildRequires: java-gcj-compat-devel
 Requires(post): java-gcj-compat
 Requires(postun): java-gcj-compat
 %endif
-Requires(post): jpackage-utils >= 0:1.7.3
-Requires(postun): jpackage-utils >= 0:1.7.3
 Source44: import.info
 
 %description
@@ -160,12 +158,6 @@ done
 unzip -qq %{SOURCE1}
 rm -rf doc/api
 %if %{with_maven}
-cp %{SOURCE3} settings.xml
-sed -i -e "s|<url>__JPP_URL_PLACEHOLDER__</url>|<url>file://`pwd`/.m2/repository</url>|g" settings.xml
-sed -i -e "s|<url>__JAVADIR_PLACEHOLDER__</url>|<url>file://`pwd`/external_repo</url>|g" settings.xml
-sed -i -e "s|<url>__MAVENREPO_DIR_PLACEHOLDER__</url>|<url>file://`pwd`/.m2/repository</url>|g" settings.xml
-sed -i -e "s|<url>__MAVENDIR_PLUGIN_PLACEHOLDER__</url>|<url>file:///usr/share/maven2/plugins</url>|g" settings.xml
-sed -i -e "s|<url>__ECLIPSEDIR_PLUGIN_PLACEHOLDER__</url>|<url>file:///usr/share/eclipse/plugins</url>|g" settings.xml
 %else
 pushd lib
 pushd build-only
@@ -187,7 +179,7 @@ ln -sf $(build-classpath commons-collections)
 ln -sf $(build-classpath commons-codec)
 ln -sf $(build-classpath commons-lang)
 ln -sf $(build-classpath commons-digester)
-ln -sf $(build-classpath commons-betwixt0)
+ln -sf $(build-classpath commons-betwixt)
 ln -sf $(build-classpath stax_1_0_api)
 popd
 %endif
@@ -202,7 +194,6 @@ ln -s %{_javadir} external_repo/JPP
 
 mvn-jpp \
         -e \
-        -s $(pwd)/settings.xml \
         -Dmaven2.jpp.mode=true \
         -Dmaven2.jpp.depmap.file=%{SOURCE2} \
         -Dmaven.repo.local=$MAVEN_REPO_LOCAL \
@@ -210,7 +201,6 @@ mvn-jpp \
 
 mvn-jpp -Dmaven.compile.target=1.5 -Dmaven.javadoc.source=1.5  \
         -e \
-        -s $(pwd)/settings.xml \
         -Dmaven2.jpp.mode=true \
         -Dmaven2.jpp.depmap.file=%{SOURCE2} \
         -Dmaven.repo.local=$MAVEN_REPO_LOCAL \
@@ -276,6 +266,9 @@ cp -pr doc/* $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}
 %doc %{_docdir}/%{name}-%{version}
 
 %changelog
+* Mon Mar 11 2013 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt3_1jpp6
+- build with betwixt 0.9
+
 * Sun Sep 09 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt2_1jpp6
 - build with new fc mckoi 1.0.4
 
