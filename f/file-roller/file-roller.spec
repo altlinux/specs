@@ -1,13 +1,13 @@
 %define ver_major 3.6
 %def_disable packagekit
-%def_enable magic
-%def_disable libarchive
+%def_disable magic
+%def_enable libarchive
 
 %define nau_api_ver 3.0
 
 Name: file-roller
 Version: %ver_major.3
-Release: alt1
+Release: alt2
 
 Summary: An archive manager for GNOME
 Summary (ru_RU.UTF-8): Архиватор для GNOME 2
@@ -128,6 +128,10 @@ rm -f data/%name.desktop{,.in}
 %exclude %_libdir/nautilus/extensions-%nau_api_ver/*.la
 
 %changelog
+* Mon Mar 11 2013 Yuri N. Sedunov <aris@altlinux.org> 3.6.3-alt2
+- disabled libmagic support
+- enabled libarchive support
+
 * Wed Nov 28 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.3-alt1
 - 3.6.3
 

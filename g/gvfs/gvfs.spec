@@ -21,7 +21,7 @@
 
 Name: gvfs
 Version: %ver_major.2
-Release: alt2
+Release: alt3
 
 Summary: The GNOME virtual filesystem libraries
 License: %lgpl2plus
@@ -403,6 +403,9 @@ killall -USR1 gvfsd >&/dev/null || :
 %exclude %_libdir/gio/modules/*.la
 
 %changelog
+* Mon Mar 11 2013 Yuri N. Sedunov <aris@altlinux.org> 1.14.2-alt3
+- rebuilt against libarchive.so.13
+
 * Tue Nov 20 2012 Yuri N. Sedunov <aris@altlinux.org> 1.14.2-alt2
 - mtp devices support via libmtp (ALT #27989)
 

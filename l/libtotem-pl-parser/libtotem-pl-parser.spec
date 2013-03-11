@@ -5,7 +5,7 @@
 
 Name: lib%pkgname
 Version: %ver_major.3
-Release: alt1
+Release: alt2
 
 Summary: Shared libraries of the Totem media player play list parser
 Group: System/Libraries
@@ -100,6 +100,9 @@ GObject introspection devel data for the Totem playlist parser library
 %endif
 
 %changelog
+* Mon Mar 11 2013 Yuri N. Sedunov <aris@altlinux.org> 3.4.3-alt2
+- rebuilt against libarchive.so.13
+
 * Tue Sep 18 2012 Yuri N. Sedunov <aris@altlinux.org> 3.4.3-alt1
 - 3.4.3
 
