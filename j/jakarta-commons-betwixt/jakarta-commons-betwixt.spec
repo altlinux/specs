@@ -38,7 +38,7 @@ BuildRequires: jpackage-compat
 
 Name:           jakarta-commons-betwixt
 Version:        1.0
-Release:        alt1_0.alpha1.7jpp5
+Release:        alt2_0.alpha1.7jpp5
 Epoch:          0
 Summary:        Java bean to XML mapping library
 
@@ -59,14 +59,14 @@ BuildRequires: jpackage-utils >= 0:1.7.3
 BuildRequires: ant >= 0:1.6
 BuildRequires: ant-junit >= 0:1.6
 BuildRequires: junit >= 0:3.8.1
-BuildRequires: jakarta-commons-logging
-BuildRequires: jakarta-commons-digester >= 0:1.7
-BuildRequires: jakarta-commons-collections >= 0:2.1
-BuildRequires: jakarta-commons-beanutils >= 0:1.6.1
-Requires: jakarta-commons-logging
-Requires: jakarta-commons-digester >= 0:1.7
-Requires: jakarta-commons-beanutils >= 0:1.6.1
-Requires: jakarta-commons-collections >= 0:2.1
+BuildRequires: apache-commons-logging
+BuildRequires: apache-commons-digester >= 0:1.7
+BuildRequires: apache-commons-collections >= 0:2.1
+BuildRequires: apache-commons-beanutils >= 0:1.6.1
+Requires: apache-commons-logging
+Requires: apache-commons-digester >= 0:1.7
+Requires: apache-commons-beanutils >= 0:1.6.1
+Requires: apache-commons-collections >= 0:2.1
 %if %{gcj_support}
 BuildRequires: java-gcj-compat-devel
 Requires(post): java-gcj-compat
@@ -90,10 +90,10 @@ object.
 %package        javadoc
 Summary:        Javadoc for %{name}
 Group:          Development/Documentation
-BuildRequires: java-javadoc jakarta-commons-collections-javadoc >= 0:2.1
-BuildRequires: jakarta-commons-logging-javadoc
-BuildRequires: jakarta-commons-digester-javadoc >= 0:1.7
-BuildRequires: jakarta-commons-beanutils-javadoc >= 0:1.6.1
+BuildRequires: java-javadoc apache-commons-collections-javadoc >= 0:2.1
+BuildRequires: apache-commons-logging-javadoc
+BuildRequires: apache-commons-digester-javadoc >= 0:1.7
+BuildRequires: apache-commons-beanutils-javadoc >= 0:1.6.1
 BuildArch: noarch
 
 %description    javadoc
@@ -118,13 +118,14 @@ commons-collections \
 commons-beanutils \
 )
 ant \
+  -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 \
   -Dnoget=true \
   -Dbuild.sysclasspath=first \
   -Dj2se.javadoc=%{_javadocdir}/java \
-  -Dcollections.javadoc=%{_javadocdir}/jakarta-commons-collections \
-  -Dlogging.javadoc=%{_javadocdir}/jakarta-commons-logging \
-  -Ddigester.javadoc=%{_javadocdir}/jakarta-commons-digester \
-  -Dbeanutils.javadoc=%{_javadocdir}/jakarta-commons-beanutils \
+  -Dcollections.javadoc=%{_javadocdir}/apache-commons-collections \
+  -Dlogging.javadoc=%{_javadocdir}/apache-commons-logging \
+  -Ddigester.javadoc=%{_javadocdir}/apache-commons-digester \
+  -Dbeanutils.javadoc=%{_javadocdir}/apache-commons-beanutils \
   dist
 
 
@@ -169,6 +170,9 @@ export CLASSPATH=$(build-classpath gnu-crypto)
 
 
 %changelog
+* Mon Mar 11 2013 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt2_0.alpha1.7jpp5
+- fixed build w/new commons-digester
+
 * Sat Mar 06 2010 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt1_0.alpha1.7jpp5
 - new jpp release
 
