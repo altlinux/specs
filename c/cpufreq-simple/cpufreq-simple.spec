@@ -1,6 +1,6 @@
 Name: cpufreq-simple
 Version: 0.2.0
-Release: alt1
+Release: alt2
 
 Summary: Simple scripts for managing CPUfreq settings
 License: %gpl2plus
@@ -28,6 +28,7 @@ install -pDm755 %name.init %buildroot%_initdir/%name
 install -pDm644 %name.udev-rules %buildroot%_sysconfdir/udev/rules.d/96-%name.rules
 install -pDm644 %name.sysconfig %buildroot%_sysconfdir/sysconfig/%name
 install -pDm755 %name.pm-utils %buildroot%_sysconfdir/pm/sleep.d/90%name
+install -pDm644 %name.service %buildroot%_unitdir/%name.service
 
 %post
 %post_service %name
@@ -39,10 +40,14 @@ install -pDm755 %name.pm-utils %buildroot%_sysconfdir/pm/sleep.d/90%name
 %config(noreplace) %_sysconfdir/sysconfig/%name
 %_bindir/*
 %_initdir/%name
+%_unitdir/%name.service
 %_sysconfdir/udev/rules.d/*.rules
 %_sysconfdir/pm/sleep.d/*
 
 %changelog
+* Mon Mar 11 2013 Mikhail Efremov <sem@altlinux.org> 0.2.0-alt2
+- Install and package systemd service file.
+
 * Tue Mar 05 2013 Mikhail Efremov <sem@altlinux.org> 0.2.0-alt1
 - Use cpu/modalias if possible (closes: #28232).
 - Added systemd service file.
