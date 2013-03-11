@@ -1,7 +1,7 @@
 Name: fpc
 Epoch: 2
-Version: 2.6.0
-Release: alt2.qa2
+Version: 2.6.2
+Release: alt1
 
 Summary: Free Pascal Compiler -- Meta Package
 License: GPL
@@ -18,7 +18,9 @@ Source5: fp48x48.xpm
 Source6: ppc386_bootstrap
 Source7: ppcx64_bootstrap
 
-Patch: %name-%version-alt-changes.patch
+#Patch: %name-%version-alt-changes.patch
+Patch1: fpc-gdb.patch
+Patch2: fpc-link.patch
 
 %define makedoc 0
 %define makesrc 1
@@ -30,7 +32,7 @@ ExclusiveArch: %ix86 amd64 x86_64
 Requires: fpc-units-rtl fpc-compiler fpc-units-base fpc-ide fpc-units-fcl fpc-units-fv fpc-units-gtk fpc-units-gtk2 fpc-units-gnome1 fpc-units-db fpc-units-gfx fpc-units-net fpc-units-math fpc-units-misc fpc-units-multimedia
 
 # Automatically added by buildreq on Thu Oct 01 2009
-BuildRequires: fpc-compiler fpc-utils libexpat-devel libgdb-devel libncurses-devel libreadline-devel-static rpm-build-fpc python-devel zlib-devel
+BuildRequires: fpc-compiler fpc-utils libexpat-devel libgdb-devel libncurses-devel libreadline-devel-static rpm-build-fpc python-devel zlib-devel liblzma-devel
 %if %makedoc
 BuildRequires: tex4ht texlive-generic-recommended texlive-latex-recommended fpc-units-fcl
 %endif
@@ -61,7 +63,8 @@ and can skip installing this metapackage.
 
 %prep
 %setup -q -n fpcbuild-%version
-%patch -p1
+%patch1 -p1
+%patch2 -p1
 
 sed -i "s|/usr/local/lib|%_libdir|g" fpcsrc/packages/gdbint/src/gdbint.pp
 sed -i "/LINKLIB/s/python/python2.7/" fpcsrc/packages/gdbint/src/gdbint.pp
@@ -314,7 +317,6 @@ Compiler:
 %_bindir/fpdoc
 %_bindir/makeskel
 %_bindir/unitdiff
-#%_bindir/mkxmlrpc
 %_bindir/rmcvsdir
 %_bindir/fpclasschart
 %_bindir/chmcmd
@@ -346,7 +348,6 @@ Compiler:
 %_man1dir/fpdoc.1*
 %_man1dir/fpcres.1*
 %_man1dir/fppkg.1*
-%_man1dir/mkxmlrpc.1*
 %_man1dir/rmcvsdir.1*
 %_man1dir/chmcmd.1*
 %_man1dir/chmls.1*
@@ -562,12 +563,14 @@ This package contains Free Pascal units with bindings for:
 %fpc_dir/units/%ppctarget/sqlite
 %fpc_dir/units/%ppctarget/ldap
 %fpc_dir/units/%ppctarget/pxlib
+%fpc_dir/units/%ppctarget/dblib
 
 # packages/gfx
 %package units-gfx
 Summary: Free Pascal -- graphics libraries units
 Group: Development/Other
 #Requires: %name = %version-%release
+Requires: libX11-devel libXext-devel libXrandr-devel libXxf86dga-devel libXxf86vm-devel svgalib-devel
 
 %description units-gfx
 The Free Pascal Compiler is an object pascal compiler supporting both Delphi
@@ -717,6 +720,7 @@ This package contains Free Pascal miscellaneous units for:
 %fpc_dir/units/%ppctarget/bzip2
 %fpc_dir/units/%ppctarget/zorba
 %fpc_dir/units/%ppctarget/libsee
+%fpc_dir/units/%ppctarget/fpindexer
 
 # packages/media
 %package units-multimedia
@@ -861,6 +865,10 @@ interfacing many popular open source libraries.
 %endif
 
 %changelog
+* Sun Mar 10 2013 Slava Dubrovskiy <dubrsl@altlinux.org> 2:2.6.2-alt1
+- New version (ALT #28639)
+- Add Requires libX11-devel libXext-devel libXrandr-devel libXxf86dga-devel libXxf86vm-devel svgalib-devel in units-gfx (ALT #26812)
+
 * Tue Aug 28 2012 Repocop Q. A. Robot <repocop@altlinux.org> 2:2.6.0-alt2.qa2
 - NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
 - applied repocop fixes:
