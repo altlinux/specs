@@ -1,6 +1,6 @@
 Name: imake
 Version: 1.0.5
-Release: alt1
+Release: alt2
 
 Summary: C preprocessor interface to the make utility
 License: MIT/X11
@@ -11,7 +11,11 @@ Source: %name-%version.tar.bz2
 
 Patch: imake-1.0.5-alt-tmpdir.patch
 
-BuildRequires: pkg-config xorg-proto-devel xorg-util-macros
+# Automatically added by buildreq on Mon Mar 11 2013
+# optimized out: pkg-config
+BuildRequires: xorg-xproto-devel
+
+BuildRequires: xorg-util-macros
 
 %description
 Imake is used to generate Makefiles from a template, a set of cpp macro
@@ -40,6 +44,9 @@ descriptions of the various items to be built.
 %_man1dir/*
 
 %changelog
+* Mon Mar 11 2013 Fr. Br. George <george@altlinux.ru> 1.0.5-alt2
+- Rebuild with new buildreq
+
 * Mon Mar 26 2012 Fr. Br. George <george@altlinux.ru> 1.0.5-alt1
 - Autobuild version bump to 1.0.5
 - Fix build
