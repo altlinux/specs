@@ -1,23 +1,30 @@
-%define sover 13
-%define libarchive libarchive%sover
-
-Name: libarchive
-Version: 3.1.2
-Release: alt1
+%define rname libarchive
+%define libarchive libarchive
+Name: libarchive2
+Version: 2.8.5
+Release: alt3
 
 Group: System/Libraries
 Summary: A library for handling streaming archive formats
 License: BSD
-Url: http://www.libarchive.org/
-#Url: https://github.com/libarchive/libarchive
+Url: http://code.google.com/p/libarchive/
+#Url: http://people.freebsd.org/~kientzle/libarchive/
 
 Source0: libarchive-%version.tar.gz
+Source1: libarchive.map
+Source2: libarchive.lds
+# ALT
+Patch1: libarchive-2.8.5-alt-versioning.patch
+# MDK
+Patch101: libarchive-2.6.1-headers.patch
+# SuSE
+Patch201: libarchive-2.5.5_handle_ENOSYS_from_lutimes.patch
+Patch202: libarchive-ignore-sigpipe-in-test-suite.patch
+Patch203: libarchive-test-fuzz.patch
 
-# Automatically added by buildreq on Mon Mar 11 2013 (-bi)
-# optimized out: elfutils pkg-config python-base ruby ruby-stdlibs
-#BuildRequires: bzlib-devel glibc-devel-static libacl-devel libattr-devel libe2fs-devel liblzma-devel liblzo2-devel libssl-devel libxml2-devel rpm-build-ruby zlib-devel
-BuildRequires: bzlib-devel glibc-devel libacl-devel libattr-devel libe2fs-devel liblzma-devel liblzo2-devel libssl-devel libxml2-devel zlib-devel
-BuildRequires: libnettle-devel
+
+BuildRequires: bzlib-devel glibc-devel libacl-devel libattr-devel libe2fs-devel libssl-devel zlib-devel
+BuildRequires: liblzma-devel
 
 %description
 Libarchive is a programming library that can create and read several different
@@ -27,7 +34,7 @@ read ISO9660 CDROM images and ZIP archives.
 
 %package -n %libarchive
 Summary: Full-featured tar replacement built on libarchive
-Group: System/Libraries
+Group: Archiving/Backup
 %description -n %libarchive
 The bsdtar program is a full-featured tar replacement built on libarchive.
 
@@ -49,23 +56,30 @@ The bsdcpio program is a full-featured tar replacement built on libarchive.
 Summary: Development files for %name
 Group: Development/C
 Requires: %libarchive = %EVR
+Conflicts: libarchive-devel
 %description devel
 The %name-devel package contains libraries and header files for
 developing applications that use %name.
 
 
 %prep
-%setup -q
-%autoreconf
+%setup -qn %rname-%version
+install -m 0644 %SOURCE1 libarchive.map
+install -m 0644 %SOURCE2 libarchive.lds
+%patch1 -p1
+%patch101 -p0
+%patch201 -p0
+%patch202 -p1
+%patch203 -p1
+autoreconf -fisv
 
 
 %build
 %configure \
-    --disable-rpath \
     --disable-static \
     --enable-shared \
-    --enable-bsdtar=shared \
-    --enable-bsdcpio=shared \
+    --disable-bsdtar \
+    --disable-bsdcpio \
     --with-lzma \
     --without-lzmadec
 %make_build
@@ -77,16 +91,7 @@ developing applications that use %name.
 
 %files -n %libarchive
 %doc README NEWS
-%_libdir/*.so.%sover
-%_libdir/*.so.%sover.*
-
-%files -n bsdtar
-%_bindir/bsdtar
-%_man1dir/bsdtar*
-
-%files -n bsdcpio
-%_bindir/bsdcpio
-%_man1dir/bsdcpio*
+%_libdir/*.so.*
 
 %files devel
 %doc
@@ -97,8 +102,8 @@ developing applications that use %name.
 %_pkgconfigdir/*.pc
 
 %changelog
-* Mon Mar 11 2013 Sergey V Turchin <zerg@altlinux.org> 3.1.2-alt1
-- new version
+* Mon Mar 11 2013 Sergey V Turchin <zerg@altlinux.org> 2.8.5-alt3
+- create compatibility package
 
 * Wed Feb 29 2012 Sergey V Turchin <zerg@altlinux.org> 2.8.5-alt1.M60P.1
 - built for M60P
