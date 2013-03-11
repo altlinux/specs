@@ -4,9 +4,9 @@
 %def_enable esi
 
 Name: squid
-Version: 3.1.23
+Version: 3.2.5
+Release: alt1
 %define langpack_ver 20121005
-Release: alt2
 Summary: The Squid proxy caching server
 License: GPLv2
 Group: System/Servers
@@ -40,7 +40,7 @@ BuildRequires: doxygen  graphviz fonts-ttf-freefont
 BuildRequires: gcc-c++ libcap-devel libdb4-devel libldap-devel libltdl-devel
 BuildRequires: libpam-devel libsasl2-devel libssl-devel perl-Pod-Parser
 BuildRequires: w3c-libwww-devel cppunit-devel
-%{?_enable_ecap:BuildRequires: libecap-devel = 0.0.3}
+%{?_enable_ecap:BuildRequires: libecap-devel >= 0.2.0}
 %{?_enable_esi:BuildRequires: libxml2-devel libexpat-devel}
 # Used by smb_auth.pl,pop3.pl and squid_db_auth, required on find-requires stage:
 BuildRequires: perl-Authen-Smb perl-libnet perl-DBI
@@ -92,18 +92,21 @@ sed -i -r '1s|^(#!/usr/)local(/bin/perl)|\1\2|' {contrib,scripts}/*.pl
 
 
 %build
+%define _localstatedir %_var
 ./bootstrap.sh
 %configure \
 	CPPFLAGS="$(pkg-config --cflags-only-I libxml-2.0)" \
 	--bindir=%_sbindir \
 	--libexecdir=%_libexecdir/%name \
-	--localstatedir=%_var \
 	--sysconfdir=%_sysconfdir/%name \
 	--datadir=%_datadir/%name \
+	--with-logdir=%_logdir/%name \
+	--with-swapdir=%_localstatedir/spool/%name \
 	--enable-strict-error-checking \
 	--with-dl \
 	--with-openssl \
 	--with-libcap \
+	--enable-forw-via-db \
 %if_enabled debug
 	--with-valgrind-debug \
 	--disable-optimizations --enable-debug-cbdata --enable-stacktraces --enable-cpu-profiling \
@@ -138,13 +141,13 @@ sed -i -r '1s|^(#!/usr/)local(/bin/perl)|\1\2|' {contrib,scripts}/*.pl
 	--enable-ntlm-fail-open \
 	--enable-cache-digests \
 	--enable-x-accelerator-vary \
-	--enable-auth="basic ntlm digest negotiate" \
-	--enable-basic-auth-helpers="DB LDAP MSNT NCSA PAM POP3 SASL SMB YP getpwnam multi-domain-NTLM squid_radius_auth" \
-	--enable-ntlm-auth-helpers="smb_lm fakeauth no_check" \
-	--enable-digest-auth-helpers="ldap password eDirectory" \
-	--enable-negotiate-auth-helpers="squid_kerb_auth" \
-	--enable-external-acl-helpers="ip_user ldap_group unix_group session wbinfo_group" \
-	--enable-storeio="aufs diskd ufs" \
+	--enable-auth \
+	--enable-basic-auth-helpers="DB LDAP MSNT MSNT-multi-domain NCSA NIS PAM POP3 RADIUS SASL SMB SSPI fake getpwnam" \
+	--enable-ntlm-auth-helpers="SSPI fake smb_lm" \
+	--enable-digest-auth-helpers="LDAP eDirectory file" \
+	--enable-negotiate-auth-helpers="SSPI kerberos warpper" \
+	--enable-external-acl-helpers="AD_group LDAP_group LM_group eDirectory_userip file_userip kerberos_ldap_group session unix_group wbinfo_group" \
+	--enable-storeio="aufs diskd rock ufs" \
 	--enable-disk-io \
 	--enable-default-err-language="English" \
 	--enable-icap-client \
@@ -167,7 +170,7 @@ install -pD -m 0644 %SOURCE3 %buildroot%_sysconfdir/logrotate.d/%name
 
 install -d -m 0755 %buildroot{%_logdir,%_spooldir}/%name
 
-install -p -m 0644 {doc,helpers/{basic_auth/{LDAP,PAM},external_acl/{ldap,unix}_group}}/*.8 %buildroot%_man8dir/
+install -p -m 0644 helpers/{basic_auth/SSPI,external_acl/{AD,LM,kerberos_ldap}_group,negotiate_auth/kerberos}/*.8 %buildroot%_man8dir/
 
 install -p -m 0755 %SOURCE4 %buildroot%_libexecdir/%name/
 install -d -m 0755 %buildroot%_datadir/snmp/mibs
@@ -183,22 +186,21 @@ install -p -m 0644 doc/release-notes/*.html %buildroot%_docdir/%name-%version/ht
 install -p -m 0644 COPYRIGHT README ChangeLog QUICKSTART SPONSORS doc/debug-sections.txt %buildroot%_docdir/%name-%version/
 install -p -m 0644 scripts/*.pl %buildroot%_docdir/%name-%version/scripts/
 install -p -m 0644 helpers/basic_auth/LDAP/README %buildroot%_docdir/%name-%version/helpers/README.LDAP
-install -p -m 0644 helpers/basic_auth/SMB/README %buildroot%_docdir/%name-%version/helpers/README.SMB
-for i in SMB MSNT; do
-	install -p -m 0644 helpers/basic_auth/$i/COPYING-2.0 %buildroot%_docdir/%name-%version/helpers/$i.COPYING-2.0
-done
-for i in LDAP SASL SMB; do
+install -p -m 0644 helpers/basic_auth/SMB/COPYING-2.0 %buildroot%_docdir/%name-%version/helpers/SMB.COPYING-2.0
+for i in LDAP RADIUS; do
 	install -p -m 0644 helpers/basic_auth/$i/README %buildroot%_docdir/%name-%version/helpers/README.$i
 done
-for i in ip_user unix_group; do
+for i in LDAP_group file_userip kerberos_ldap_group; do
 	install -p -m 0644 helpers/external_acl/$i/README %buildroot%_docdir/%name-%version/helpers/README.$i
+done
+for i in kerberos; do
+	install -p -m 0644 helpers/negotiate_auth/$i/README %buildroot%_docdir/%name-%version/helpers/README.$i
 done
 install -p -m 0644 helpers/basic_auth/SMB/ChangeLog %buildroot%_docdir/%name-%version/helpers/ChangeLog.$i
 install -p -m 0644 helpers/basic_auth/MSNT/README.html %buildroot%_docdir/%name-%version/helpers/README.MSNT.html
-install -p -m 0644 helpers/basic_auth/multi-domain-NTLM/README.txt %buildroot%_docdir/%name-%version/helpers/README.NTLM
-install -p -m 0644 helpers/basic_auth/{MSNT/msntauth.conf.default,SMB/smb_auth.sh,SASL/squid_sasl_auth*} \
-	helpers/{external_acl/ip_user/*.conf,ntlm_auth/no_check/README.no_check_ntlm_auth} \
-	%buildroot%_docdir/%name-%version/helpers/
+install -p -m 0644 helpers/basic_auth/MSNT-multi-domain/README.txt %buildroot%_docdir/%name-%version/helpers/README.MSNT-multi-domain
+install -p -m 0644 helpers/ntlm_auth/SSPI/readme.txt %buildroot%_docdir/%name-%version/helpers/README.ntlm_auth_SSPI
+install -p -m 0644 helpers/basic_auth/MSNT/msntauth.conf.default %buildroot%_docdir/%name-%version/helpers/
 
 
 %check
@@ -244,6 +246,7 @@ chown -R %name:%name %_spooldir/%name >/dev/null 2>&1 ||:
 %_sbindir/*
 %_man8dir/squid.*
 %_man1dir/*
+%_libexecdir/%name/log_file_daemon
 %attr(4710,root,%name) %_libexecdir/%name/pinger
 %_libexecdir/%name/unlinkd
 %_libexecdir/%name/diskd
@@ -271,8 +274,9 @@ chown -R %name:%name %_spooldir/%name >/dev/null 2>&1 ||:
 %_libexecdir/%name/*
 %attr(640,root,auth) %config(noreplace) %_sysconfdir/pam.d/%name
 # fixing #6321, step 2/2
-%attr(2711,root,auth) %_libexecdir/%name/pam_auth
+%attr(2711,root,auth) %_libexecdir/%name/basic_pam_auth
 %_man8dir/*
+%exclude %_libexecdir/%name/log_file_daemon
 %exclude %_libexecdir/%name/pinger
 %exclude %_libexecdir/%name/unlinkd
 %exclude %_libexecdir/%name/diskd
@@ -282,6 +286,9 @@ chown -R %name:%name %_spooldir/%name >/dev/null 2>&1 ||:
 
 
 %changelog
+* Wed Mar 06 2013 Led <led@altlinux.ru> 3.2.5-alt1
+- 3.2.5
+
 * Wed Mar 06 2013 Led <led@altlinux.ru> 3.1.23-alt2
 - fixed cachemgr.cgi crash with authentication
 
