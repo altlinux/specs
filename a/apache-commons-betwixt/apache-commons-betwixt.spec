@@ -57,7 +57,7 @@ BuildRequires: jpackage-compat
 
 Name:           apache-%{short_name}
 Version:        0.9
-Release:        alt1_0.r830480.5jpp6
+Release:        alt2_0.r830480.5jpp6
 Epoch:          0
 Summary:        Java bean to XML mapping library
 Group:          Development/Java
@@ -77,10 +77,10 @@ BuildRequires: jpackage-utils >= 0:5.0.0
 BuildRequires: ant >= 0:1.7
 BuildRequires: ant-junit
 BuildRequires: junit
-BuildRequires: jakarta-commons-logging
-BuildRequires: jakarta-commons-digester
-BuildRequires: jakarta-commons-collections
-BuildRequires: jakarta-commons-beanutils
+BuildRequires: apache-commons-logging
+BuildRequires: apache-commons-digester
+BuildRequires: apache-commons-collections
+BuildRequires: apache-commons-beanutils
 %if %with maven
 BuildRequires: apache-commons-parent >= 0:12
 BuildRequires: maven2 >= 0:2.0.8
@@ -102,10 +102,10 @@ Requires(postun): java-gcj-compat
 %endif
 Requires(post): jpackage-utils >= 0:5.0.0
 Requires(postun): jpackage-utils >= 0:5.0.0
-Requires: jakarta-commons-logging
-Requires: jakarta-commons-digester
-Requires: jakarta-commons-beanutils
-Requires: jakarta-commons-collections
+Requires: apache-commons-logging
+Requires: apache-commons-digester
+Requires: apache-commons-beanutils
+Requires: apache-commons-collections
 Provides:       jakarta-%{short_name} = %{epoch}:%{version}-%{release}
 Obsoletes:      jakarta-%{short_name} < %{epoch}:1.0-1
 Provides:       jakarta-%{short_name}0 = %{epoch}:%{version}-%{release}
@@ -146,10 +146,10 @@ can be extracted through rpm2cpio.
 Summary:        Javadoc for %{name}
 Group:          Development/Documentation
 BuildRequires: java-javadoc
-BuildRequires: jakarta-commons-collections-javadoc
-BuildRequires: jakarta-commons-logging-javadoc
-BuildRequires: jakarta-commons-digester-javadoc
-BuildRequires: jakarta-commons-beanutils-javadoc
+BuildRequires: apache-commons-collections-javadoc
+BuildRequires: apache-commons-logging-javadoc
+BuildRequires: apache-commons-digester-javadoc
+BuildRequires: apache-commons-beanutils-javadoc
 Provides:       jakarta-%{short_name}-javadoc = %{epoch}:%{version}-%{release}
 Obsoletes:      jakarta-%{short_name}-javadoc < %{epoch}:%{version}-%{release}
 Provides:       jakarta-%{short_name}0-javadoc = %{epoch}:%{version}-%{release}
@@ -277,6 +277,9 @@ tag=`/bin/echo %{name}-%{version}-%{release} | %{__sed} 's|\.|_|g'`
 %endif
 
 %changelog
+* Mon Mar 11 2013 Igor Vlasenko <viy@altlinux.ru> 0:0.9-alt2_0.r830480.5jpp6
+- fixed build w/new commons-digester
+
 * Fri Dec 10 2010 Igor Vlasenko <viy@altlinux.ru> 0:0.9-alt1_0.r830480.5jpp6
 - new version
 
