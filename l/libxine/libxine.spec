@@ -13,7 +13,7 @@
 
 Name: lib%bname
 Version: 1.1.21
-Release: alt5
+Release: alt6
 Summary: Free libraries for play video and audio
 Summary(ru_RU.UTF-8): Библиотеки для воспроизведения видео и аудио информации
 License: GPLv2+
@@ -253,6 +253,9 @@ SAMBA_CFLAGS=`pkg-config --cflags smbclient`
 %_libdir/%bname/plugins/%plugin_version/%{bname}plug_inp_smb.so
 
 %changelog
+* Mon Mar 11 2013 Sergey V Turchin <zerg@altlinux.org> 1.1.21-alt6
+- update from 1.1 branch
+
 * Mon Mar 11 2013 Sergey V Turchin <zerg@altlinux.org> 1.1.21-alt5
 - add woraround against crash; thanks rom_as@alt (ALT#27505)
 
