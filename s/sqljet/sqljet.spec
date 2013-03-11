@@ -1,21 +1,24 @@
 Epoch: 0
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: unzip
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           sqljet
-Version:        1.0.4
-Release:        alt1_8jpp7
+Version:        1.1.4
+Release:        alt1_4jpp7
 Summary:        Pure Java SQLite
 
 Group:          Development/Java
 License:        GPLv2
 URL:            http://sqljet.com/
-# Obtained by sh fetch-sqljet.sh
-Source0:        %{name}-%{version}.tar.xz
-Source1:        fetch-sqljet.sh
+Source0:        http://sqljet.com/files/%{name}-%{version}-src.zip
+
 Source2:        %{name}-browser.sh
 Source3:        %{name}-browser.desktop
-Patch0:         %{name}-javadoc.patch
-Patch1:         %{name}-1.0.4-suppressdupes.patch
+Source4:        %{name}-build.xml
+Source5:        %{name}-pom.xml
 
 BuildRequires:  ant
 BuildRequires:  antlr
@@ -25,6 +28,7 @@ BuildRequires:  easymock2
 BuildRequires:  netbeans-platform
 BuildRequires:  junit4
 BuildRequires:  desktop-file-utils
+BuildRequires:  stringtemplate4
 Requires:       antlr3-java
 BuildArch: noarch
 Source44: import.info
@@ -52,26 +56,32 @@ BuildArch: noarch
 %description    javadoc
 API documentation for %{name}.
 
+
 %prep
-%setup -q
-%patch0
-%patch1 -p1
+%setup -q -n %{name}-%{version}
 
 find \( -name '*.class' -o -name '*.jar' \) -delete
 
-pushd sqljet-examples/browser/lib
-ln -s %{_javadir}/netbeans/swing-outline.jar org-netbeans-swing-outline.jar
-popd
+rm -rf gradlew.bat gradlew gradle
 
-# versions in pom xml are to be processed by ant, but we don't need that so just fix them here
-sed -i 's/%sqljet.version%/%{version}/;s/%antlr.version%/3.1.3/' pom.xml sqljet/osgi/MANIFEST.MF
+cp %{SOURCE4} build.xml
+
+cat > sqljet.build.properties <<EOF
+sqljet.version.major=1
+sqljet.version.minor=1
+sqljet.version.micro=4
+sqljet.version.build=local
+
+antlr.version=3.1.3
+sqlite.version=3.6.10
+EOF
+
 
 %build
 export CLASSPATH=$(build-classpath antlr3-runtime antlr3 antlr stringtemplate4 easymock2 junit4)
 
-ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  jars osgi javadoc
+ant jars osgi javadoc
 
-jar umf sqljet/osgi/MANIFEST.MF build/sqljet.jar
 
 %install
 # jars
@@ -80,6 +90,8 @@ install -m 755  build/sqljet.jar %{buildroot}%{_javadir}/%{name}.jar
 install -m 755  build/sqljet-browser.jar  %{buildroot}%{_javadir}/%{name}-browser.jar
 
 # maven metadata
+cp %{SOURCE5} pom.xml
+ant pom
 mkdir -p %{buildroot}%{_mavenpomdir}
 cp pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
 %add_maven_depmap JPP-%{name}.pom %{name}.jar
@@ -100,19 +112,23 @@ desktop-file-validate %{buildroot}/%{_datadir}/applications/sqljet-browser.deskt
 %files
 %{_mavendepmapfragdir}/%{name}
 %{_mavenpomdir}/JPP-%{name}.pom
-%doc COPYING README.txt
+%doc LICENSE.txt README.txt CHANGES.txt
 %{_javadir}/%{name}.jar
 
 %files browser
+%doc LICENSE.txt
 %{_javadir}/%{name}-browser.jar
 %{_bindir}/%{name}-browser
 %{_datadir}/applications/%{name}-browser.desktop
 
 %files javadoc
-%doc COPYING
+%doc LICENSE.txt
 %doc %{_javadocdir}/*
 
 %changelog
+* Mon Mar 11 2013 Igor Vlasenko <viy@altlinux.ru> 0:1.1.4-alt1_4jpp7
+- fc update
+
 * Tue Sep 11 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0.4-alt1_8jpp7
 - fixed build with antlr3
 
