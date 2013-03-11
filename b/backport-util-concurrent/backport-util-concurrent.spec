@@ -1,6 +1,10 @@
+Epoch: 0
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
-# Copyright (c) 2000-2011, JPackage Project
+# Copyright (c) 2000-2008, JPackage Project
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -30,82 +34,89 @@ BuildRequires: jpackage-compat
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
+Name:		backport-util-concurrent
+Summary:	Backport of java.util.concurrent API, introduced in Java 5.0
+Version:	3.1
+Release:	alt1_8jpp7
+URL:		http://backport-jsr166.sourceforge.net
+License:	Public Domain
+Group:		Development/Java
+Source0:        http://downloads.sourceforge.net/backport-jsr166/%{name}-%{version}-src.tar.gz
+Source1:	http://repo1.maven.org/maven2/backport-util-concurrent/backport-util-concurrent/3.1/backport-util-concurrent-3.1.pom
 
-Name:           backport-util-concurrent
-Version:        3.1
-Release:	alt1_4jpp6
-Epoch:          0
-Summary:        Backport of java.util.concurrent API, introduced in Java 5.0        
-License:        Creative Commons Public Domain
-Group:          Development/Java
-URL:            http://www.mathcs.emory.edu/dcl/util/backport-util-concurrent/
-Source0:        %{name}-%{version}-src.tar.gz
-Source1:        http://repo1.maven.org/maven2/backport-util-concurrent/backport-util-concurrent/3.1/backport-util-concurrent-3.1.pom
-Requires(post): jpackage-utils >= 0:1.7.5
-Requires(postun): jpackage-utils >= 0:1.7.5
-BuildRequires:  jpackage-utils >= 0:1.7.5
-BuildRequires:  ant >= 0:1.7.1
-BuildRequires:  junit
-BuildArch:      noarch
+BuildRequires:	jpackage-utils >= 0:1.7.2
+BuildRequires:	ant >= 0:1.6.5
+BuildRequires:	junit
+BuildArch:	noarch
+Requires:	jpackage-utils
+Requires(post):		jpackage-utils >= 0:1.7.2
+Requires(postun):	jpackage-utils >= 0:1.7.2
 Source44: import.info
+
 
 %description
 This package is the backport of java.util.concurrent API, introduced in
-Java 5.0, to Java 1.4. The backport is based on public-domain sources 
-from the JSR 166 CVS repository, and the dl.util.concurrent package. 
+Java 5.0, to Java 1.4. The backport is based on public-domain sources
+from the JSR 166 CVS repository, and the dl.util.concurrent package.
 
 %package javadoc
-Group:          Development/Documentation
-Summary:        Javadoc for %{name}
+Group:			Development/Java
+Summary:		Javadoc for %{name}
 BuildArch: noarch
 
 %description javadoc
-Javadoc for %{name}.
+API documentation for %{name}.
 
 %prep
 %setup -q -n %{name}-%{version}-src
+
 find . -name '*.?ar' | xargs rm -f
 
 build-jar-repository -s -p external \
-    junit
+		junit
 
 %build
-export CLASSPATH=
-export OPT_JAR_LIST=:
-ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 dist test
+unset CLASSPATH
+ant dist test
 
 %install
 
 # jars
 install -d -m 755 $RPM_BUILD_ROOT%{_javadir}
 install -m 644 backport-util-concurrent-dist/%{name}.jar \
-    $RPM_BUILD_ROOT%{_javadir}/%{name}-%{version}.jar
+		$RPM_BUILD_ROOT%{_javadir}/%{name}-%{version}.jar
 ln -s %{name}-%{version}.jar \
-    $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
+		$RPM_BUILD_ROOT%{_javadir}/%{name}.jar
 
-%add_to_maven_depmap %{name} %{name} %{version} JPP %{name}
 
 # pom
 install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/maven2/poms
 install -m 644 %{SOURCE1} $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-%{name}.pom
 
+%add_to_maven_depmap %{name} %{name} %{version} JPP %{name}
 
 # javadoc
 install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
 cp -pr backport-util-concurrent-dist/doc/api/* \
-    $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
+		$RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
 ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 
 %files
+%doc license.html
+%doc README.html
 %{_javadir}/*.jar
-%{_datadir}/maven2/*
-%{_mavendepmapfragdir}/*
+%{_datadir}/maven2
+%{_mavendepmapfragdir}
 
 %files javadoc
+%doc license.html
 %{_javadocdir}/%{name}-%{version}
-%{_javadocdir}/%{name}
+%doc %{_javadocdir}/%{name}
 
 %changelog
+* Mon Mar 11 2013 Igor Vlasenko <viy@altlinux.ru> 0:3.1-alt1_8jpp7
+- fc update
+
 * Mon Jan 16 2012 Igor Vlasenko <viy@altlinux.ru> 0:3.1-alt1_4jpp6
 - new jpp relase
 
