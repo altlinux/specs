@@ -21,7 +21,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.0.68
-Release: alt2
+Release: alt3
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -125,8 +125,8 @@ Release: alt2
 
 #define allocator SLAB
 
-%Extra_modules vboxhost 4.2.6
-#Extra_modules vboxguest 4.2.6
+%Extra_modules vboxhost 4.2.8
+#Extra_modules vboxguest 4.2.8
 #Extra_modules fglrx 8.97.100.7
 #Extra_modules netatop 0.1.1
 
@@ -741,7 +741,7 @@ Patch1144: linux-%kernel_branch.42-feat-drivers-platform--tp_smapi.patch
 Patch1151: linux-%kernel_branch.57-feat-drivers-usb-storage--rts5139.patch
 Patch1152: linux-%kernel_branch.42-feat-drivers-usb-usbip.patch
 
-Patch1161: linux-%kernel_branch.53-feat-drivers-video--bootsplash.patch
+Patch1161: linux-%kernel_branch.68-feat-drivers-video--bootsplash.patch
 Patch1162: linux-%kernel_branch.43-feat-drivers-video--xgifb.patch
 
 Patch1171: linux-%kernel_branch-feat-firmware-rtl_nic.patch
@@ -1208,21 +1208,11 @@ Install this package only if you really need it.
 Summary: The Advanced Linux Sound Architecture modules
 %kernel_modules_package_std_body sound
 %kernel_modules_package_add_provides alsa
+%kernel_modules_package_add_provides sound-ext
 
 %description -n kernel-modules-sound-%flavour
 The Advanced Linux Sound Architecture (ALSA) provides audio and MIDI
 functionality to the Linux operating system.
-
-
-%package -n kernel-modules-sound-ext-%flavour
-Summary: The Advanced Linux Sound Architecture modules for external adapters
-%kernel_modules_package_std_body sound-ext
-%kernel_modules_package_add_provides alsa-ext
-
-%description -n kernel-modules-sound-ext-%flavour
-The Advanced Linux Sound Architecture (ALSA) provides audio and MIDI
-functionality to the Linux operating system.
-This package contains modules for extarnal (FireWire, USB) adapters.
 %endif
 
 
@@ -2691,11 +2681,7 @@ sed 's/^/%%exclude &/' *.rpmmodlist > exclude-drivers.rpmmodlist
 
 %{?_enable_media:%kernel_modules_package_post media}
 
-%if_enabled alsa
-%kernel_modules_package_post sound
-
-%kernel_modules_package_post sound-ext
-%endif
+%{?_enable_alsa:%kernel_modules_package_post sound}
 
 %{?_enable_isdn:%kernel_modules_package_post isdn}
 
@@ -2934,16 +2920,9 @@ done)
 %if_enabled alsa
 %files -n kernel-modules-sound-%flavour
 %modules_dir/kernel/sound
+%modules_dir/kernel/drivers/usb/misc/emi*
 %{?_enable_oss:%exclude %modules_dir/kernel/sound/oss}
 %exclude %modules_dir/kernel/sound/*.ko
-%exclude %modules_dir/kernel/sound/firewire
-%exclude %modules_dir/kernel/sound/usb
-
-
-%files -n kernel-modules-sound-ext-%flavour
-%modules_dir/kernel/sound/firewire
-%modules_dir/kernel/sound/usb
-%modules_dir/kernel/drivers/usb/misc/emi*
 %endif
 
 
@@ -3094,6 +3073,15 @@ done)
 
 
 %changelog
+* Mon Mar 11 2013 Led <led@altlinux.ru> 3.0.68-alt3
+- updated:
+  + feat-drivers-video--bootsplash
+- set DEFAULT_HOSTNAME to default value
+- moved content of kernel-modules-sount-ext-* subpackage to
+  kernel-modules-sount-* subpackage
+- removed kernel-modules-sount-ext-* subpackage
+- vboxhost 4.2.8
+
 * Mon Mar 11 2013 Led <led@altlinux.ru> 3.0.68-alt2
 - updated:
   + fix-virt-kvm
