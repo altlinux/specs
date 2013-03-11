@@ -3,7 +3,7 @@ BuildRequires: desktop-file-utils
 %def_enable encryption
 
 Name: almanah
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Diary editor for GNOME
@@ -53,6 +53,12 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %doc README AUTHORS NEWS
 
 %changelog
+* Mon Mar 11 2013 Yuri N. Sedunov <aris@altlinux.org> 0.10.1-alt1
+- 0.10.1
+
+* Tue Dec 11 2012 Yuri N. Sedunov <aris@altlinux.org> 0.10.0-alt2
+- rebuilt against libgtkspell-3.0
+
 * Sat Sep 22 2012 Yuri N. Sedunov <aris@altlinux.org> 0.10.0-alt1
 - 0.10.0
 
