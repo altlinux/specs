@@ -1,3 +1,4 @@
+%def_without test
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(DBI.pm) perl(IO/String.pm) perl(List/Util.pm) perl(Pod/Usage.pm) perl(Time/localtime.pm) perl(Unicode/Collate.pm) perl-devel perl-podlators
@@ -18,7 +19,7 @@ BuildRequires: docbook-dtds docbook-style-xsl
 
 Name:           publican
 Version:        2.8
-Release:        alt3_5
+Release:        alt4_5
 Summary:        Common files and scripts for publishing with DocBook XML
 # For a breakdown of the licensing, refer to LICENSE
 License:        (GPLv2+ or Artistic) and CC0
@@ -149,16 +150,14 @@ solely on using the publican tools.
 %setup -q -n Publican-%{version}
 
 %build
-%{__perl} Build.PL --install_path bindoc=%_man1dir installdirs=vendor
-./Build
+%perl_vendor_build --install_path bindoc=%_man1dir
 dir=`pwd` && cd Users_Guide && %{__perl} -CA -I $dir/blib/lib $dir/blib/script/publican build \
     --formats=html-desktop --publish --langs=all \
     --common_config="$dir/blib/datadir" \
     --common_content="$dir/blib/datadir/Common_Content"
 
 %install
-
-./Build install destdir=$RPM_BUILD_ROOT create_packlist=0
+%perl_vendor_install
 find $RPM_BUILD_ROOT -depth -type d -exec rmdir {} 2>/dev/null \;
 
 
@@ -176,6 +175,8 @@ for file in po/*.po; do
 done
 
 %find_lang %{name}
+
+sed -i -e '1,4s,perl[0-9a-z\.]*,perl,' %buildroot%_bindir/publican
 
 %check
 %if %{TESTS}
@@ -199,6 +200,9 @@ done
 %doc fdl.txt
 
 %changelog
+* Tue Mar 12 2013 Igor Vlasenko <viy@altlinux.ru> 2.8-alt4_5
+- fixed perl specific build
+
 * Mon Feb 11 2013 Igor Vlasenko <viy@altlinux.ru> 2.8-alt3_5
 - update to new release by fcimport
 
