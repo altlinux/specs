@@ -15,9 +15,9 @@
 %define nv_version 304
 %define nv_release 64
 %define nv_minor %nil
-%define pkg_rel alt108
+%define pkg_rel alt109
 %def_disable common
-%def_enable kernelsource
+%def_disable kernelsource
 
 %define tbver %{nv_version}.%{nv_release}.%{nv_minor}
 %if "%nv_minor" == "%nil"
@@ -364,6 +364,9 @@ fi
 %endif
 
 %changelog
+* Tue Mar 12 2013 Sergey V Turchin <zerg@altlinux.org> 304.64-alt109
+- don't package kernel module sources
+
 * Wed Jan 23 2013 Sergey V Turchin <zerg@altlinux.org> 304.64-alt108
 - fix to compile kernel module with kernel-3.7
 
