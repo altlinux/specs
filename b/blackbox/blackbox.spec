@@ -1,6 +1,6 @@
 Name: blackbox
 Version: 0.70.1
-Release: alt2
+Release: alt3
 
 Summary: A Window Manager for the X Window System
 License: BSD-style
@@ -20,13 +20,12 @@ Source9: %name-gencat-wrapper
 
 Patch0: blackbox-0.70.1-gcc43.patch
 Patch1: blackbox-0.70.1-Xutil.patch
-Patch10: %name-0.70.1-alt-style.patch
-Patch11: %name-0.70.1-alt-nls.patch
+Patch10: blackbox-0.70.1-alt-style.patch
+Patch11: blackbox-0.70.1-alt-nls.patch
 
-BuildRequires: gcc-c++ libICE-devel libSM-devel libX11-devel
-BuildRequires: libXext-devel libXt-devel libXft-devel libstdc++-devel xorg-cf-files
-BuildRequires: xorg-x11-proto-devel
-# libqt4-core 
+# Automatically added by buildreq on Tue Mar 12 2013
+# optimized out: alternatives fontconfig fontconfig-devel gnu-config libX11-devel libXrender-devel libfreetype-devel libstdc++-devel pkg-config xorg-renderproto-devel xorg-xextproto-devel xorg-xproto-devel
+BuildRequires: gcc-c++ imake libXext-devel libXft-devel xorg-cf-files
 
 %description
 This is a window manager for X.  It is similar in many respects to
@@ -45,7 +44,7 @@ look like Windows 98, you probably don't want this package.
 %package devel
 Summary: Blackbox Toolbox library for writing small applications
 Group: Development/C++
-Requires: %{name} = %{version}-%{release}
+Requires: %name = %version-%release
 
 %description devel
 This package contains the Blackbox Toolbox files, headers and static library
@@ -59,19 +58,17 @@ of the utility class library for writing small applications.
 %patch0 -p1 -b .gcc43
 %patch1 -p1 -b .Xutil
 
-
 pushd nls
-for enc in KOI8-R CP1251 UTF-8; do
-	mkdir ru_RU.$enc
-	pushd ru_RU
-	for f in *; do
-		iconv -f KOI8-R -t $enc <"$f" >../ru_RU.$enc/"$f"
-	done
-	popd
-	sed -i -e "s/ru_RU/ru_RU.$enc/" ru_RU.$enc/*
-done
-sed -i -e 's/ru_RU/ru_RU.KOI8-R ru_RU.CP1251 ru_RU.UTF-8/' \
-	Makefile*
+  for enc in KOI8-R CP1251 UTF-8; do
+    mkdir ru_RU.$enc
+    pushd ru_RU
+    for f in *; do
+      iconv -f KOI8-R -t $enc <"$f" >../ru_RU.$enc/"$f"
+    done
+    popd
+    sed -i -e "s/ru_RU/ru_RU.$enc/" ru_RU.$enc/*
+  done
+  sed -i -e 's/ru_RU/ru_RU.KOI8-R ru_RU.CP1251 ru_RU.UTF-8/' Makefile*
 popd
 
 install -p %SOURCE9 ./gencat-wrapper
@@ -80,10 +77,10 @@ install -p %SOURCE9 ./gencat-wrapper
 export gencat_cmd="`pwd`/gencat-wrapper"
 autoreconf -i -f
 %configure \
-	--enable-shared \
-	--disable-static \
-	--sysconfdir=%_sysconfdir/X11/%name \
-	--enable-nls
+    --enable-shared \
+    --disable-static \
+    --sysconfdir=%_sysconfdir/X11/%name \
+    --enable-nls
 
 %make_build DEFAULT_MENU=%_sysconfdir/X11/%name/%name-menu
 
@@ -107,16 +104,15 @@ install -pD -m644 %SOURCE8 %buildroot%_altdir/%name
 install -pD -m644 /dev/null %buildroot%_sysconfdir/X11/%name/%name-menu
 
 %files
-%doc AUTHORS ChangeLog* COMPLIANCE LICENSE README* RELNOTES TODO
-%{_bindir}/blackbox*
-%{_bindir}/bsetbg*
-%{_bindir}/bsetroot*
-%{_bindir}/bstyleconvert*
-%{_man1dir}/blackbox*1*
-%{_man1dir}/bsetbg*1*
-%{_man1dir}/bsetroot*1*
-%_datadir/%name
-%{_libdir}/libbt.so.*
+%doc AUTHORS COMPLIANCE ChangeLog* LICENSE README* RELNOTES TODO
+%_bindir/blackbox
+%_bindir/bsetbg*
+%_bindir/bsetroot*
+%_bindir/bstyleconvert
+%_man1dir/*
+%dir %_datadir/%name
+%_datadir/%name/
+%_libdir/libbt.so.*
 # alt specific
 %_menudir/*
 %config(noreplace) %_sysconfdir/menu-methods/*
@@ -127,13 +123,15 @@ install -pD -m644 /dev/null %buildroot%_sysconfdir/X11/%name/%name-menu
 %_iconsdir/hicolor/??x??/apps/*.png
 
 %files devel
-%{_includedir}/bt/
-#exclude %{_libdir}/libbt.la
-%{_libdir}/libbt.so
-%{_libdir}/pkgconfig/libbt.pc
-
+%_libdir/libbt.so
+%dir %_includedir/bt
+%_includedir/bt/*.hh
+%_pkgconfigdir/libbt.pc
 
 %changelog
+* Tue Mar 12 2013 Igor Zubkov <icesik@altlinux.org> 0.70.1-alt3
+- buildreq
+
 * Thu May 24 2012 Igor Vlasenko <viy@altlinux.ru> 0.70.1-alt2
 - resurrected from orphaned
 - added devel subpackage
@@ -143,7 +141,7 @@ install -pD -m644 /dev/null %buildroot%_sysconfdir/X11/%name/%name-menu
 
 * Mon Mar 31 2008 Sergey Balbeko <balbeko@altlinux.org> 0.70.1-alt1
 - new version.
-- nls & def.theme patched   
+- nls & def.theme patched
 
 * Wed Mar 08 2006 Igor Zubkov <icesik@altlinux.ru> 0.65.0-alt6
 - fix build
