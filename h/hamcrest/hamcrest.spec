@@ -66,7 +66,7 @@ BuildRequires: jpackage-compat
 
 Name:           hamcrest
 Version:        1.1
-Release:        alt3_21jpp7
+Release:        alt4_21jpp7
 Epoch:          0
 Summary:        Library of matchers for building test expressions
 License:        BSD
@@ -175,7 +175,7 @@ perl -pi -e 's/\r$//g' LICENSE.txt
 %build
 export CLASSPATH=$(build-classpath qdox)
 export OPT_JAR_LIST="junit ant/ant-junit"
-ant -Dant.build.javac.source=1.5 -Dversion=%{version} -Dbuild.sysclasspath=first clean core generator library text bigjar javadoc
+ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Dversion=%{version} -Dbuild.sysclasspath=first clean core generator library text bigjar javadoc
 
 # inject OSGi manifests
 mkdir -p META-INF
@@ -276,6 +276,9 @@ cp -pr %{name}-examples $RPM_BUILD_ROOT%{_datadir}/%{name}/
 %{_datadir}/%{name}
 
 %changelog
+* Tue Mar 12 2013 Igor Vlasenko <viy@altlinux.ru> 0:1.1-alt4_21jpp7
+- source and target to 1.5
+
 * Mon Mar 11 2013 Igor Vlasenko <viy@altlinux.ru> 0:1.1-alt3_21jpp7
 - fix for arm
 
