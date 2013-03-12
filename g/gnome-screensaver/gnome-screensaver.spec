@@ -8,7 +8,7 @@
 
 Name: gnome-screensaver
 Version: %ver_major.1
-Release: alt2
+Release: alt3
 
 Summary: GNOME Screensaver
 License: GPLv2+
@@ -45,7 +45,7 @@ BuildPreReq: libgtk+3-devel >= %gtk_ver
 BuildPreReq: libgnome-desktop3-devel >= %desktop_ver
 BuildPreReq: libgnomekbd-devel >= %libgnomekbd_ver
 BuildRequires: libpam-devel gsettings-desktop-schemas-devel
-BuildRequires: xorg-proto-devel libXxf86vm-devel libSM-devel
+BuildRequires: libXxf86vm-devel libSM-devel
 BuildRequires:libXScrnSaver-devel libXext-devel libXtst-devel xorg-xf86vidmodeproto-devel
 %{?_enable_docbook:Requires: xmlto}
 %{?_with_systemd:BuildRequires: systemd-devel >= %systemd_ver libsystemd-login-devel libsystemd-daemon-devel}
@@ -89,6 +89,9 @@ simple, sane, secure defaults and be well integrated with the desktop.
 %doc AUTHORS NEWS README
 
 %changelog
+* Wed Mar 13 2013 Yuri N. Sedunov <aris@altlinux.org> 3.6.1-alt3
+- updated buildreqs
+
 * Mon Nov 12 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.1-alt2
 - used pam authentication scheme instead helper (ALT #27884)
 
