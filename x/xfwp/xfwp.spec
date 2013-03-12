@@ -1,6 +1,6 @@
 Name: xfwp
 Version: 1.0.2
-Release: alt3
+Release: alt4
 
 Summary: X firewall proxy
 License: MIT/X11
@@ -10,8 +10,11 @@ Url: http://xorg.freedesktop.org
 Source: %name-%version.tar.bz2
 Patch: xfwp-1.0.2-gcc4.6.patch
 
-BuildRequires: libICE-devel libX11-devel libXau-devel libXdmcp-devel pkg-config
-BuildRequires: xorg-proto-devel xorg-util-macros xorg-xtrans-devel
+# Automatically added by buildreq on Tue Mar 12 2013
+# optimized out: pkg-config xorg-xproto-devel
+BuildRequires: libICE-devel xorg-pmproto-devel
+
+BuildRequires: xorg-util-macros
 
 %description
 The  X firewall proxy (xfwp) is an application layer gateway proxy that
@@ -43,6 +46,9 @@ local X servers.
 %_man1dir/*
 
 %changelog
+* Tue Mar 12 2013 Fr. Br. George <george@altlinux.ru> 1.0.2-alt4
+- Rebuild with new buildreq
+
 * Thu Jun 07 2012 Fr. Br. George <george@altlinux.ru> 1.0.2-alt3
 - Fix gcc4.6 build
 
