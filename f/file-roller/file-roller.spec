@@ -7,7 +7,7 @@
 
 Name: file-roller
 Version: %ver_major.3
-Release: alt2
+Release: alt3
 
 Summary: An archive manager for GNOME
 Summary (ru_RU.UTF-8): Архиватор для GNOME 2
@@ -18,6 +18,7 @@ Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 Patch: %name-2.28.2-alt-7z.patch
 Patch1: %name-3.3.90-alt-zip_command.patch
+Patch2: %name-3.6.3-alt-tar.lzo_mime_type.patch
 
 # From configure.in
 %define glib_ver 2.29.14
@@ -89,6 +90,7 @@ File Roller является графической оболочкой к раз
 %setup -q
 %patch
 %patch1
+%patch2 -p1 -b .tzo
 
 rm -f data/%name.desktop{,.in}
 
@@ -128,6 +130,10 @@ rm -f data/%name.desktop{,.in}
 %exclude %_libdir/nautilus/extensions-%nau_api_ver/*.la
 
 %changelog
+* Tue Mar 12 2013 Yuri N. Sedunov <aris@altlinux.org> 3.6.3-alt3
+- subst'ituted recursively sx-lzop-compressed-tar/x-tzo
+  according to shared-mime-info database (ALT #28668)
+
 * Mon Mar 11 2013 Yuri N. Sedunov <aris@altlinux.org> 3.6.3-alt2
 - disabled libmagic support
 - enabled libarchive support
