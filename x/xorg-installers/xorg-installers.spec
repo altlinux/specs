@@ -1,0 +1,56 @@
+Name: xorg-installers
+Version: 7.8
+Release: alt1
+Summary: Set of various Xorg-related installers
+License: MIT/X11
+Group: System/X11
+
+%description
+A set of virtual packages for install various
+Xorg packages.
+
+%package -n xorg-utils
+Summary: Utilities for the X Window System
+Group: System/X11
+Requires: xinit setxkbmap sessreg xf86dga xsetroot xcmsdb xconsole xmodmap xrdb
+Requires: xdpyinfo xgamma xhost xrandr xrefresh xsetmode xstdcmap xvinfo
+Requires: xkbevd xkbprint xlsfonts xprop xset
+
+%description -n xorg-utils
+Some useful utilities for the X Window System
+
+%package -n xorg-apps
+Summary: Graphical applications for Xorg
+Group: System/X11
+Requires: xmessage glxgears xfontsel xvidtune xkill xev
+
+%description -n xorg-apps
+Graphical applications for Xorg
+
+%package -n xorg-drv-video
+Summary: video drivers for X Window System
+Group: System/X11
+Requires: xorg-drv-ati xorg-drv-intel xorg-drv-nv xorg-drv-openchrome xorg-drv-cirrus xorg-drv-mga
+Requires: xorg-drv-s3virge xorg-drv-savage xorg-drv-sis xorg-drv-nouveau xorg-drv-qxl xorg-drv-modesetting
+
+%description -n xorg-drv-video
+xorg-drv-video requires video drivers for X Window System for PCI, AGP
+and PCI-E cards
+
+%package -n xorg-drv-input
+Summary: input drivers for X Window System
+Group: System/X11
+Requires: xorg-drv-evdev xorg-drv-synaptics
+
+%description -n xorg-drv-input
+xorg-drv-input requires all input drivers for X Window System
+
+%files -n xorg-utils
+%files -n xorg-apps
+%files -n xorg-drv-video
+%files -n xorg-drv-input
+
+%changelog
+* Tue Mar 12 2013 Mikhail Efremov <sem@altlinux.org> 7.8-alt1
+- Initial build.
+
