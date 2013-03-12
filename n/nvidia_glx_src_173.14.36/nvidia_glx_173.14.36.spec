@@ -13,9 +13,9 @@
 %define nv_version 173
 %define nv_release 14
 %define nv_minor 36
-%define pkg_rel alt65
+%define pkg_rel alt66
 %define set_gl_nvidia_ver 0.6.5
-%def_enable kernelsource
+%def_disable kernelsource
 
 %define tbver %{nv_version}.%{nv_release}.%{nv_minor}
 %if "%nv_minor" == "%nil"
@@ -449,6 +449,9 @@ fi
 %endif
 
 %changelog
+* Tue Mar 12 2013 Sergey V Turchin <zerg@altlinux.org> 173.14.36-alt66
+- don't package kernel module sources
+
 * Wed Jan 23 2013 Sergey V Turchin <zerg@altlinux.org> 173.14.36-alt65
 - fix to compile kernel module with kernel-3.7
 
