@@ -1,8 +1,9 @@
-AutoReq: yes,noosgi
-BuildRequires: rpm-build-java-osgi
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
-# Copyright (c) 2000-2009, JPackage Project
+# Copyright (c) 2000-2005, JPackage Project
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -32,45 +33,26 @@ BuildRequires: jpackage-compat
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
-%define with()          %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
-%define without()       %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
-%define bcond_with()    %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
-%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
-
-#def_with gcj_support
-%bcond_with gcj_support
-
-%if %with gcj_support
-%define gcj_support 0
-%else
-%define gcj_support 0
-%endif
-
-%define base_name oro
+%global base_name oro
 
 Name:           jakarta-oro
 Version:        2.0.8
-Release:	alt2_6jpp6
+Release:        alt2_11jpp7
 Epoch:          0
 Summary:        Full regular expressions API
 License:        ASL 1.1
 Group:          Development/Java
-URL:            http://jakarta.apache.org/oro/
-Source0:        http://archive.apache.org/dist/jakarta/oro/jakarta-oro-2.0.8.tar.gz
-Source1:        http://mirrors.ibiblio.org/pub/mirrors/maven2/oro/oro/2.0.8/oro-2.0.8.pom
-Requires(post): jpackage-utils
-Requires(postun): jpackage-utils
-BuildRequires: ant
-BuildRequires: jpackage-utils
-Provides:       oro = %{epoch}:%{version}-%{release}
-Obsoletes:      oro < %{epoch}:%{version}-%{release}
-%if %{gcj_support}
-BuildRequires: java-gcj-compat-devel
-%else
+Source0:        http://archive.apache.org/dist/jakarta/oro/%{name}-%{version}.tar.gz
+Source1:        MANIFEST.MF
+Patch1:         %{name}-build-xml.patch
+URL:            http://jakarta.apache.org/oro
+BuildRequires:  jpackage-utils > 1.6
+BuildRequires:  ant
 BuildArch:      noarch
-%endif
+Requires:       jpackage-utils
 Source44: import.info
-Source45: jakarta-oro-2.0.8.jar-OSGi-MANIFEST.MF
+Provides: oro = %epoch:%version-%release
+Source45: oro-2.0.8.pom
 
 %description
 The Jakarta-ORO Java classes are a set of text-processing Java classes
@@ -78,81 +60,63 @@ that provide Perl5 compatible regular expressions, AWK-like regular
 expressions, glob expressions, and utility classes for performing
 substitutions, splits, filtering filenames, etc. This library is the
 successor to the OROMatcher, AwkTools, PerlTools, and TextTools
-libraries from ORO, Inc. (www.oroinc.com). They have been donated to the
-Jakarta Project by Daniel Savarese (www.savarese.org), the copyright
-holder of the ORO libraries. Daniel will continue to participate in
-their development under the Jakarta Project.
+libraries from ORO, Inc. (www.oroinc.com). 
 
 %package javadoc
 Group:          Development/Java
 Summary:        Javadoc for %{name}
-Provides:       oro-javadoc = %{epoch}:%{version}-%{release}
-Obsoletes:      oro-javadoc < %{epoch}:%{version}-%{release}
+Requires:       jpackage-utils
 BuildArch: noarch
 
 %description javadoc
 Javadoc for %{name}.
 
 %prep
-%setup -q
-%{_bindir}/find -type f -name "*.jar" | %{_bindir}/xargs -t %{__rm}
+%setup -q -n %{name}-%{version}
+# remove all binary libs
+find . -name "*.jar" -exec rm -f {} \;
+# remove all CVS files
+for dir in `find . -type d -name CVS`; do rm -rf $dir; done
+for file in `find . -type f -name .cvsignore`; do rm -rf $file; done
+
+%patch1
+cp %{SOURCE1} .
 
 %build
-export CLASSPATH=
-export OPT_JAR_LIST=:
-ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Dfinal.name=%{base_name} jar javadocs
+ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  -Dfinal.name=%{base_name} jar javadocs
 
 %install
-
-# jars
-%{__mkdir_p} %{buildroot}%{_javadir}
-%{__cp} -p %{base_name}.jar %{buildroot}%{_javadir}/%{name}-%{version}.jar
-(cd %{buildroot}%{_javadir} && %{__ln_s} %{name}-%{version}.jar %{base_name}-%{version}.jar)
-(cd %{buildroot}%{_javadir} && for jar in *-%{version}*; do %{__ln_s} ${jar} `/bin/echo ${jar} | %{__sed} "s|-%{version}||g"`; done)
-
-# javadoc
-%{__mkdir_p} %{buildroot}%{_javadocdir}/%{name}-%{version}
-%{__cp} -pr docs/api/* %{buildroot}%{_javadocdir}/%{name}-%{version}
-%{__ln_s} %{name}-%{version} %{buildroot}%{_javadocdir}/%{name}
-%{__ln_s} %{name}-%{version} %{buildroot}%{_javadocdir}/%{base_name}-%{version}
-%{__ln_s} %{base_name}-%{version} %{buildroot}%{_javadocdir}/%{base_name}
-
+#jars
+install -d -m 755 $RPM_BUILD_ROOT%{_javadir}
+install -m 644 %{base_name}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
+(cd $RPM_BUILD_ROOT%{_javadir} && ln -sf %{name}.jar %{base_name}.jar)
+#javadoc
+install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}
+cp -pr docs/api/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
+rm -rf docs/api
 # pom
-%{__mkdir_p} %{buildroot}%{_datadir}/maven2/poms
-%{__cp} -p %{SOURCE1} %{buildroot}%{_datadir}/maven2/poms/JPP-%{name}.pom
+mkdir -p %{buildroot}%{_mavenpomdir}
+cp -p %{SOURCE45} %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
 %add_to_maven_depmap oro oro %{version} JPP %{name}
 
-%if %{gcj_support}
-%{_bindir}/aot-compile-rpm
-%endif
-
-# inject OSGi manifest jakarta-oro-2.0.8.jar-OSGi-MANIFEST.MF
-rm -rf META-INF
-mkdir -p META-INF
-cp %{SOURCE45} META-INF/MANIFEST.MF
-zip -u %buildroot/usr/share/java/jakarta-oro.jar META-INF/MANIFEST.MF
-# end inject OSGi manifest jakarta-oro-2.0.8.jar-OSGi-MANIFEST.MF
+%pre javadoc
+[ $1 -gt 1 ] && [ -L %{_javadocdir}/%{name} ] && \
+rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
 
 %files
 %doc COMPILE ISSUES README TODO CHANGES CONTRIBUTORS LICENSE STYLE
-%{_javadir}/%{name}-%{version}.jar
-%{_javadir}/%{name}.jar
-%{_javadir}/%{base_name}-%{version}.jar
-%{_javadir}/%{base_name}.jar
-%{_datadir}/maven2/poms/JPP-%{name}.pom
-%{_mavendepmapfragdir}/%{name}
-%if %{gcj_support}
-%dir %{_libdir}/gcj/%{name}
-%{_libdir}/gcj/%{name}/jakarta-oro-2.0.8.jar.*
-%endif
+%{_javadir}/*.jar
+%_mavendepmapfragdir/*
+%_mavenpomdir/*.pom
 
 %files javadoc
-%{_javadocdir}/%{name}-%{version}
+%doc LICENSE
 %{_javadocdir}/%{name}
-%{_javadocdir}/%{base_name}-%{version}
-%{_javadocdir}/%{base_name}
 
 %changelog
+* Tue Mar 12 2013 Igor Vlasenko <viy@altlinux.ru> 0:2.0.8-alt2_11jpp7
+- fc update
+
 * Thu Dec 30 2010 Igor Vlasenko <viy@altlinux.ru> 0:2.0.8-alt2_6jpp6
 - added osgi manifest
 
