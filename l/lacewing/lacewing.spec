@@ -1,9 +1,10 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
+%define fedora 19
 Name:           lacewing
 Version:        1.10
-Release:        alt2_19
+Release:        alt2_20
 Summary:        Arcade-style shoot-em-up
 Group:          Games/Other
 License:        GPLv2+
@@ -53,7 +54,10 @@ make install PREFIX=$RPM_BUILD_ROOT%{_prefix}
 
 # below is the desktop file and icon stuff.
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/applications
-desktop-file-install             \
+desktop-file-install \
+%if 0%{?fedora} && 0%{?fedora} < 19
+              \
+%endif
   --dir $RPM_BUILD_ROOT%{_datadir}/applications \
   %{SOURCE2}
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/48x48/apps
@@ -65,11 +69,18 @@ install -p -m 644 %{SOURCE3} \
 %doc readme.txt licence.txt
 %{_bindir}/lacewing
 %{_datadir}/lacewing
+%if 0%{?fedora} && 0%{?fedora} < 19
 %{_datadir}/applications/lacewing.desktop
+%else
+%{_datadir}/applications/lacewing.desktop
+%endif
 %{_datadir}/icons/hicolor/48x48/apps/lacewing.png
 
 
 %changelog
+* Tue Mar 12 2013 Igor Vlasenko <viy@altlinux.ru> 1.10-alt2_20
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 1.10-alt2_19
 - update to new release by fcimport
 
