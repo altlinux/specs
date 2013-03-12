@@ -1,7 +1,7 @@
 %define distro centaurus
 Name: installer-distro-%distro
 Version: 6.9
-Release: alt6
+Release: alt7
 
 Summary: Installer files for Centaurus distro 
 License: GPL
@@ -67,6 +67,9 @@ cp -a * %buildroot%install2dir/
 %files stage3
 
 %changelog
+* Tue Mar 12 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 6.9-alt7
+- some sysVinit services disabled in systemd
+
 * Fri Dec 21 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 6.9-alt6
 - alterator-luks added
 
