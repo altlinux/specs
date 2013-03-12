@@ -6,7 +6,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           svnkit
 Version:        1.7.6
-Release:        alt1_6jpp7
+Release:        alt2_6jpp7
 Summary:        Pure java subversion client library
 
 Group:          Development/Java
@@ -120,7 +120,7 @@ EOF
 
 
 %build
-ant all
+ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  all
 
 
 %install
@@ -160,6 +160,9 @@ touch $RPM_BUILD_ROOT/etc/%{name}.conf
 
 
 %changelog
+* Wed Mar 13 2013 Igor Vlasenko <viy@altlinux.ru> 1.7.6-alt2_6jpp7
+- target 5 build
+
 * Mon Mar 11 2013 Igor Vlasenko <viy@altlinux.ru> 1.7.6-alt1_6jpp7
 - replaced by fc package
 
