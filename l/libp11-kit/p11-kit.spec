@@ -1,7 +1,8 @@
 %define _name p11-kit
+%define _libexecdir %_prefix/libexec
 
 Name: lib%_name
-Version: 0.16.3
+Version: 0.16.4
 Release: alt1
 
 Summary: Library for loading and sharing PKCS#11 modules
@@ -18,6 +19,16 @@ BuildRequires: libtasn1-devel
 %_name provides a way to load and enumerate PKCS#11 modules, as well
 as a standard configuration setup for installing PKCS#11 modules in
 such a way that they're discoverable.
+
+%package        trust
+Summary: System trust module from %name package
+Group: System/Libraries
+Requires: %name = %version-%release
+#Conflicts: libnss < 3.14.3
+
+%description    trust
+The %name-trust package contains a system trust PKCS#11 module which
+contains certificate anchors and black lists.
 
 %package devel
 Summary: Development files for %name
@@ -52,12 +63,18 @@ This package contains development documentation for %_name library.
 %build
 %autoreconf
 %configure --disable-static \
-	--with-system-anchors=%_sysconfdir/pki/
+	--with-system-anchors=%_datadir/pki/ca-trust-source:%_sysconfdir/pki/ca-trust/source
 %make_build
 
 %install
-%make DESTDIR=%buildroot install
+%makeinstall_std
 mkdir -p %buildroot%_sysconfdir/pkcs11/modules
+
+# alternatives
+mkdir -p %buildroot%_altdir
+cat >%buildroot%_altdir/%name <<EOF
+%_libdir/libnssckbi.so	%_libdir/pkcs11/p11-kit-trust.so 30
+EOF
 
 %check
 %make check
@@ -66,15 +83,19 @@ mkdir -p %buildroot%_sysconfdir/pkcs11/modules
 %_bindir/%_name
 %_libdir/lib%_name.so.*
 %_libdir/%_name-proxy.so
-%_libdir/pkcs11/p11-kit-trust.so
 %dir %_datadir/p11-kit
 %dir %_datadir/p11-kit/modules
-%_datadir/p11-kit/modules/p11-kit-trust.module
-%_datadir/p11-kit/p11-kit-extract-trust
 %dir %_sysconfdir/pkcs11
 %dir %_sysconfdir/pkcs11/modules
-%_sysconfdir/pkcs11/pkcs11.conf.example
 %doc AUTHORS COPYING NEWS README
+%doc p11-kit/pkcs11.conf.example
+%exclude %_sysconfdir/pkcs11/pkcs11.conf.example
+
+%files trust
+%_libdir/pkcs11/p11-kit-trust.so
+%_datadir/p11-kit/modules/p11-kit-trust.module
+%_datadir/p11-kit/p11-kit-extract-trust
+%_altdir/%name
 
 %exclude %_libdir/pkcs11/p11-kit-trust.la
 
@@ -87,6 +108,13 @@ mkdir -p %buildroot%_sysconfdir/pkcs11/modules
 %_datadir/gtk-doc/html/%_name
 
 %changelog
+* Wed Mar 13 2013 Yuri N. Sedunov <aris@altlinux.org> 0.16.4-alt1
+- 0.16.4
+- used %_datadir/pki/ca-trust-source and %_sysconfdir/pki/ca-trust/source
+  as system CA anchors paths
+- new -trust subpackage with system trust PKCS#11 module that provides
+  an alternative to libnss module
+
 * Sun Mar 10 2013 Yuri N. Sedunov <aris@altlinux.org> 0.16.3-alt1
 - 0.16.3
 
