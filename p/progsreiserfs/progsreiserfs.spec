@@ -3,35 +3,29 @@
 %def_enable nls
 
 Name: progsreiserfs
+%define lname lib%name
 Version: 0.3.0.5
-Release: alt1.2
-
+Release: alt2
 Summary: Programs needed for manipulating reiserfs partitions
+Summary(uk_UA.CP1251): Програми для маніпулювання розділами диску з reiserfs
 License: %gpl2plus
 Group: System/Configuration/Hardware
-
 # Url: ftp://ftp.namesys.com/pub/libreiserfs/
-Source: http://ftp.uni-kl.de/pub/linux/archlinux/other/progsreiserfs/%name-%version.tar.gz
-Packager: Michael Shigorin <mike@altlinux.org>
+Source: %name-%version.tar
+Patch: %name-%version-m4.patch
+%{?_enable_shared:Requires: %lname = %version-%release}
 
-Requires: lib%name = %version-%release
-
-# Automatically added by buildreq on Mon May 25 2009
-BuildRequires: gcc-c++ libuuid-devel
-
-BuildRequires: rpm-build-licenses
-
-%define lname lib%name
-
-Summary(uk_UA.CP1251): Програми для маніпулювання розділами диску з reiserfs
+BuildPreReq: rpm-build-licenses
+BuildRequires: libuuid-devel
 
 %description
-%name is a package that allows you to create, destroy, resize
-and copy reiserfs filesystem.
+%name is a package that allows you to create, destroy, resize and copy
+reiserfs filesystem.
 
 %description -l uk_UA.CP1251
-%name - пакет, який дозволє створювати, знищувати, змінювати
-розмір та копіювати файлову систему reiserfs.
+%name - пакет, який дозволє створювати, знищувати, змінювати розмір та
+копіювати файлову систему reiserfs.
+
 
 %if_enabled shared
 %package -n %lname
@@ -39,9 +33,10 @@ Summary: Shared library for reiserfs utilities
 Group: System/Libraries
 
 %description -n %lname
-This package includes the shared library needed to run
-%lname-based software.
+This package includes the shared library needed to run %lname-based
+software.
 %endif
+
 
 %package -n %lname-devel
 Summary: Files required to compile software that uses %lname
@@ -51,6 +46,7 @@ Requires: %lname%{?_disable_shared:-devel-static} = %version-%release
 %description -n %lname-devel
 This package includes the header files for %lname.
 
+
 %if_enabled static
 %package -n %lname-devel-static
 Summary: Files required to compile statically linked software that uses %lname
@@ -58,49 +54,67 @@ Group: Development/C
 Requires: %lname = %version-%release
 
 %description -n %lname-devel-static
-This package includes the libraries needed to statically link software
-with %lname.
+This package includes the libraries needed to statically link software with
+%lname.
 %endif
 
 %prep
-%setup
+%setup -q
+%patch -p1
+sed -i -r 's/(mkfs)\.(reiserfs)/\2.\1/g' doc/mkfs.reiserfs.8
+[ -e config.rpath ] || :> config.rpath
+
 
 %build
+%autoreconf -fisv
 %configure \
-    %{subst_enable shared} \
-    %{subst_enable static} \
-    %{subst_enable nls} \
-    --with-pic
+	%{subst_enable shared} \
+	%{subst_enable static} \
+	%{subst_enable nls} \
+	--enable-threads=posix \
+	--enable-largefile \
+	--disable-rpath \
+	--with-gnu-ld
 %make_build
-bzip2 --keep --best --force ChangeLog
+gzip -9c ChangeLog > ChangeLog.gz
+
 
 %install
-%make_install DESTDIR=%buildroot install
-#mv %buildroot%_sbindir/{fsck.reiserfs,reiserfs.fsck}
+%makeinstall_std
 mv %buildroot%_sbindir/{mkfs.reiserfs,reiserfs.mkfs}
 mv %buildroot%_man8dir/{mkfs.reiserfs,reiserfs.mkfs}.8
+
 
 %if_enabled shared
 %files -n %lname
 %_libdir/*.so.*
 %endif
 
+
 %files -n %lname-devel
 %{?_enable_shared:%_libdir/*.so}
 %_includedir/*
 %_datadir/aclocal/*
+
 
 %if_enabled static
 %files -n %lname-devel-static
 %_libdir/*.a
 %endif
 
+
 %files
-%doc AUTHORS ChangeLog.* NEWS README THANKS TODO
+%doc AUTHORS ChangeLog.* NEWS README THANKS
 %_sbindir/*
 %_man8dir/*
 
+
 %changelog
+* Tue Mar 12 2013 Led <led@altlinux.ru> 0.3.0.5-alt2
+- fixed %name.m4
+- cleaned up BuildRequires
+- fixed reiserfs.mkfs man page
+
 * Thu Aug 30 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.0.5-alt1.2
 - Rebuilt for debuginfo
 
