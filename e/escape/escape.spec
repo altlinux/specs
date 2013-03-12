@@ -3,7 +3,7 @@ BuildRequires: gcc-c++
 # END SourceDeps(oneline)
 Name:		escape
 Version:	200912250
-Release:	alt3_5
+Release:	alt3_6
 Summary:	Extensible block-pushing puzzle game
 
 Group:		Games/Other
@@ -71,7 +71,7 @@ install -d $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/32x32/apps
 cp -a icon.png $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/32x32/apps/%{name}.png
 
 # desktop file
-desktop-file-install  \
+desktop-file-install \
 	--dir $RPM_BUILD_ROOT%{_datadir}/applications \
 	%{SOURCE1}
 
@@ -85,6 +85,9 @@ desktop-file-install  \
 
 
 %changelog
+* Tue Mar 12 2013 Igor Vlasenko <viy@altlinux.ru> 200912250-alt3_6
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 200912250-alt3_5
 - update to new release by fcimport
 
