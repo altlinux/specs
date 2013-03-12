@@ -13,7 +13,7 @@
 %def_enable gst_1
 
 Name: empathy
-Version: %ver_major.3
+Version: %ver_major.4
 Release: alt1
 
 Summary: Instant Messaging Client for GNOME
@@ -96,6 +96,8 @@ BuildRequires: yelp-tools itstool
 BuildRequires: libpulseaudio-devel gstreamer%gst_api_ver-devel gst-plugins%gst_api_ver-devel
 BuildRequires: db2latex-xsl evolution-data-server-devel gtk-doc
 BuildRequires: xorg-cf-files libICE-devel libSM-devel
+# for check
+BuildRequires: xvfb-run
 
 %description
 Telepathy-based multi-protocol instant messaging client for GNOME
@@ -144,6 +146,10 @@ rm -f data/%name.desktop
 %make_install DESTDIR=%buildroot install
 
 %find_lang --with-gnome %name
+
+%check
+# empathy-parser-test failed
+#xvfb-run %make check
 
 %files
 %_bindir/*
@@ -195,6 +201,9 @@ rm -f data/%name.desktop
 
 
 %changelog
+* Mon Mar 11 2013 Yuri N. Sedunov <aris@altlinux.org> 3.6.4-alt1
+- 3.6.4
+
 * Wed Jan 09 2013 Yuri N. Sedunov <aris@altlinux.org> 3.6.3-alt1
 - 3.6.3
 
