@@ -5,7 +5,7 @@
 
 Name: gnustep-%oname
 Version: 1.7.0
-Release: alt2.git20130130
+Release: alt3.git20130130
 Summary: GNUstep Objective-C Runtime
 License: BSD
 Group: Development/Objective-C
@@ -19,13 +19,13 @@ Patch: gnustep-objc2-1.6.1-alt-i586.patch
 
 BuildRequires(pre): rpm-macros-make
 BuildPreReq: gnustep-make-devel gcc-objc gcc-c++ libstdc++-devel
-BuildPreReq: cmake llvm3.1-devel clang3.1-devel
+BuildPreReq: cmake llvm-devel clang-devel
 
 %description
 The GNUstep Objective-C runtime is designed as a drop-in replacement for
 the GCC runtime.  It supports both a legacy and a modern ABI, allowing
 code compiled with old versions of GCC to be supported without requiring
-recompilation.  The modern ABI adds the following features:
+recompilation.
 
 %package -n lib%name
 Summary: Shared libraries of GNUstep Objective-C Runtime
@@ -35,7 +35,7 @@ Group: System/Libraries
 The GNUstep Objective-C runtime is designed as a drop-in replacement for
 the GCC runtime.  It supports both a legacy and a modern ABI, allowing
 code compiled with old versions of GCC to be supported without requiring
-recompilation.  The modern ABI adds the following features:
+recompilation.
 
 This package contains shared libraries of GNUstep Objective-C Runtime.
 
@@ -49,7 +49,7 @@ Requires: lib%name = %version-%release
 The GNUstep Objective-C runtime is designed as a drop-in replacement for
 the GCC runtime.  It supports both a legacy and a modern ABI, allowing
 code compiled with old versions of GCC to be supported without requiring
-recompilation.  The modern ABI adds the following features:
+recompilation.
 
 This package contains development files of GNUstep Objective-C Runtime.
 
@@ -61,7 +61,7 @@ Group: System/Libraries
 The GNUstep Objective-C runtime is designed as a drop-in replacement for
 the GCC runtime.  It supports both a legacy and a modern ABI, allowing
 code compiled with old versions of GCC to be supported without requiring
-recompilation.  The modern ABI adds the following features:
+recompilation.
 
 This package contains shared libraries of GNUstep Runtime Optimisations.
 
@@ -74,7 +74,7 @@ Requires: lib%name-opts = %version-%release
 The GNUstep Objective-C runtime is designed as a drop-in replacement for
 the GCC runtime.  It supports both a legacy and a modern ABI, allowing
 code compiled with old versions of GCC to be supported without requiring
-recompilation.  The modern ABI adds the following features:
+recompilation.
 
 This package contains development files of GNUstep Runtime Optimisations.
 
@@ -163,6 +163,9 @@ install -p -m644 class.h visibility.h method_list.h \
 %_libdir/libGNUObjCRuntime.so
 
 %changelog
+* Tue Mar 12 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.7.0-alt3.git20130130
+- Rebuilt with clang 3.2
+
 * Tue Mar 05 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.7.0-alt2.git20130130
 - Back to previous snapshot
 

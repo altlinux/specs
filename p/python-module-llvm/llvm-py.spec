@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.11
-Release: alt1.git20130302
+Release: alt2.git20130302
 Summary: Python Bindings for LLVM
 License: BSD
 Group: Development/Python
@@ -49,7 +49,7 @@ cp -a . ../python3
 #sed -i 's|.*numpy\-py3.*||' llvm/_core.c
 
 %build
-%add_optflags -fno-strict-aliasing
+%add_optflags -fno-strict-aliasing -fno-rtti
 %python_build_debug
 %if_with python3
 pushd ../python3
@@ -80,6 +80,9 @@ popd
 %endif
 
 %changelog
+* Tue Mar 12 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.11-alt2.git20130302
+- Added -fno-rtti in compiler flags
+
 * Wed Mar 06 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.11-alt1.git20130302
 - Version 0.11
 
