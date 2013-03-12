@@ -6,7 +6,7 @@
 
 
 Name: branding-%brand-%theme
-Version: 20130307
+Version: 20130312
 Release: alt1
 BuildArch: noarch
 
@@ -440,6 +440,9 @@ cat /etc/sysconfig/xinitrc.xfce >> /etc/sysconfig/xinitrc
 
 
 %changelog
+* Tue Mar 12 2013 Michael Shigorin <mike@altlinux.org> 20130312-alt1
+- tweaked wallpaper to avoid kde4/gnome3/mate/wmaker collisions
+
 * Thu Mar 07 2013 Michael Shigorin <mike@altlinux.org> 20130307-alt1
 - fixed broken image resolution/directory name match for kde4 splash
   (thanks zerg@)
