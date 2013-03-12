@@ -10,13 +10,15 @@
 %def_disable coredump
 %def_disable gcrypt
 %def_disable qrencode
-%def_disable microhttpd
+%def_enable microhttpd
 %def_enable myhostname
 %def_enable bootchart
+%def_enable polkit
+%def_enable efi
 
 Name: systemd
-Version: 197
-Release: alt6
+Version: 198
+Release: alt1
 Summary: A System and Session Manager
 Url: http://www.freedesktop.org/wiki/Software/systemd
 Group: System/Configuration/Boot and Init
@@ -42,7 +44,6 @@ Source24: var-run.mount
 Source27: altlinux-first_time.service
 Source28: systemd-tmpfiles.filetrigger
 Source29: tmpfile-systemd-startup-nologin.conf
-Source30: systemd-vconsole-setup@.service
 Source31: 60-raw.rules
 # ALTLinux's default preset policy
 Source32: 99-default.preset
@@ -77,7 +78,7 @@ BuildRequires: glib2-devel >= 2.26 libgio-devel
 BuildRequires: gobject-introspection-devel
 BuildRequires: liblzma-devel
 BuildRequires: kmod-devel >= 5
-BuildRequires: python-devel
+BuildRequires: python-devel python-module-sphinx
 BuildRequires: quota
 BuildRequires: gtk-doc
 BuildRequires: libblkid-devel >= 2.20
@@ -93,6 +94,8 @@ Requires: libudev1 = %version-%release
 Requires: libnss-myhostname = %version-%release
 Requires: filesystem >= 2.3.10-alt1
 Requires: agetty
+Requires: acl
+
 # Requires: selinux-policy >= 3.8.5
 
 Requires: libsystemd-daemon = %version-%release
@@ -248,10 +251,17 @@ Drop-in replacement for the System V init tools of systemd.
 Group: System/Configuration/Boot and Init
 Summary: Analyze tool for systemd.
 Requires: %name = %version-%release
-BuildArch: noarch
 
 %description analyze
 Analyze tool for systemd.
+
+%package journal-gateway
+Group: System/Servers
+Summary: Journal Gateway Daemon
+Requires: %name = %version-%release
+
+%description journal-gateway
+This service provides access to the journal via HTTP and JSON.
 
 %package -n bash-completion-%name
 Summary: Bash completion for systemd utils
@@ -459,6 +469,8 @@ intltoolize --force --automake
 	%{subst_enable microhttpd} \
 	%{subst_enable myhostname} \
 	%{subst_enable bootchart} \
+	%{subst_enable polkit} \
+	%{subst_enable efi} \
 	--enable-introspection
 
 %make_build
@@ -470,6 +482,7 @@ ln -s rc-local.service %buildroot%_unitdir/local.service
 install -m644 %SOURCE4 %buildroot%_unitdir/prefdm.service
 ln -s prefdm.service %buildroot%_unitdir/dm.service
 ln -s prefdm.service %buildroot%_unitdir/display-manager.service
+mkdir -p %buildroot%_unitdir/graphical.target.wants
 ln -s ../display-manager.service %buildroot%_unitdir/graphical.target.wants
 install -m644 %SOURCE6 %buildroot%_unitdir/altlinux-idetune.service
 ln -s ../altlinux-idetune.service %buildroot%_unitdir/sysinit.target.wants
@@ -521,14 +534,6 @@ ln -s ../getty@.service %buildroot%_unitdir/getty.target.wants/getty@tty4.servic
 ln -s ../getty@.service %buildroot%_unitdir/getty.target.wants/getty@tty5.service
 ln -s ../getty@.service %buildroot%_unitdir/getty.target.wants/getty@tty6.service
 
-install -m644 %SOURCE30 %buildroot%_unitdir/systemd-vconsole-setup@.service
-ln -s ../systemd-vconsole-setup@.service %buildroot%_unitdir/getty.target.wants/systemd-vconsole-setup@tty1.service
-ln -s ../systemd-vconsole-setup@.service %buildroot%_unitdir/getty.target.wants/systemd-vconsole-setup@tty2.service
-ln -s ../systemd-vconsole-setup@.service %buildroot%_unitdir/getty.target.wants/systemd-vconsole-setup@tty3.service
-ln -s ../systemd-vconsole-setup@.service %buildroot%_unitdir/getty.target.wants/systemd-vconsole-setup@tty4.service
-ln -s ../systemd-vconsole-setup@.service %buildroot%_unitdir/getty.target.wants/systemd-vconsole-setup@tty5.service
-ln -s ../systemd-vconsole-setup@.service %buildroot%_unitdir/getty.target.wants/systemd-vconsole-setup@tty6.service
-
 # disable legacy services
 ln -s /dev/null %buildroot%_unitdir/fbsetfont.service
 ln -s /dev/null %buildroot%_unitdir/keytable.service
@@ -560,8 +565,17 @@ mkdir -p %buildroot/lib/modules-load.d
 mkdir -p %buildroot/lib/systemd/ntp-units.d
 mkdir -p %buildroot%_sysconfdir/systemd/ntp-units.d
 
+# Make sure directories in /var exist
+mkdir -p %buildroot%_localstatedir/lib/systemd/coredump
+mkdir -p %buildroot%_localstatedir/lib/systemd/catalog
+mkdir -p %buildroot%_localstatedir/log/journal
+touch %buildroot%_localstatedir/lib/systemd/catalog/database
+touch %buildroot%_sysconfdir/udev/hwdb.bin
+
 # Add completion for bash3
+mkdir -p %buildroot%_sysconfdir/bash_completion.d
 rm -f %buildroot%_sysconfdir/bash_completion.d/*
+rm -f %buildroot%_datadir/bash-completion/completions/*
 install -m644 %SOURCE14 %buildroot%_sysconfdir/bash_completion.d/systemd
 # Add completion for zsh
 install -D shell-completion/systemd-zsh-completion.zsh %buildroot%_datadir/zsh/Completion/Unix/_systemd
@@ -685,11 +699,15 @@ install -m644 %SOURCE29 %buildroot/lib/tmpfiles.d/systemd-startup-nologin.conf
 # rpm posttrans filetriggers
 install -pD -m755 %SOURCE28 %buildroot%_rpmlibdir/systemd-tmpfiles.filetrigger
 
+%pre
+%_sbindir/groupadd -r -f systemd-journal ||:
+
 %post
 /bin/systemd-machine-id-setup >/dev/null 2>&1 || :
 /lib/systemd/systemd-random-seed save >/dev/null 2>&1 || :
 /bin/systemctl daemon-reexec >/dev/null 2>&1 || :
 /bin/journalctl --update-catalog >/dev/null 2>&1 || :
+/usr/bin/setfacl -Rnm g:wheel:rx,d:g:wheel:rx,g:adm:rx,d:g:adm:rx /var/log/journal/ >/dev/null 2>&1 || :
 
 if [ $1 -eq 1 ] ; then
         # Try to read default runlevel from the old inittab if it exists
@@ -732,7 +750,7 @@ fi
 if [ "$1" = "1" ]; then
     grep -q '^hosts:[[:blank:]].\+myhostname' \
     /etc/nsswitch.conf || \
-    sed -i.rpmorig 's/^\(hosts:.\+\)$/\1 myhostname/' /etc/nsswitch.conf
+    sed -i.rpmorig 's/^\(hosts:.\+\)$/\1 myhostname/' /etc/nsswitch.conf >/dev/null 2>&1 || :
 fi
 update_chrooted all
 
@@ -744,10 +762,17 @@ if [ "$1" = "0" ]; then
 fi
 update_chrooted all
 
+%if_enabled microhttpd
+%pre journal-gateway
+%_sbindir/groupadd -r -f systemd-journal-gateway ||:
+%_sbindir/useradd -g systemd-journal-gateway -c 'Journal Gateway' \
+    -d %_localstatedir/log/journal -s /dev/null -r systemd-journal-gateway >/dev/null 2>&1 ||:
+%endif
+
 %pre -n udev
-%_sbindir/groupadd -r -f video 2>/dev/null
-%_sbindir/groupadd -r -f dialout 2>/dev/null
-%_sbindir/groupadd -r -f tape 2>/dev/null
+%_sbindir/groupadd -r -f video ||:
+%_sbindir/groupadd -r -f dialout ||:
+%_sbindir/groupadd -r -f tape ||:
 
 %post -n udev
 %post_service udevd
@@ -819,13 +844,26 @@ update_chrooted all
 %_datadir/dbus-1/services/*.service
 %_datadir/dbus-1/system-services/*.service
 %_datadir/dbus-1/interfaces/*.xml
+%if_enabled polkit
 %_datadir/polkit-1/actions/*.policy
+%endif
+%dir %_localstatedir/log/journal
+%dir %_localstatedir/lib/systemd
+%dir %_localstatedir/lib/systemd/catalog
+%ghost %_localstatedir/lib/systemd/catalog/database
+%dir %_localstatedir/lib/systemd/coredump
 # %%_docdir/systemd
 %doc DISTRO_PORTING LICENSE.LGPL2.1 README NEWS TODO
 %_localstatedir/log/README
 %exclude %_unitdir/*udev*
-%exclude %_unitdir/*/systemd-udev*
+%exclude %_unitdir/sockets.target.wants/systemd-udevd*.socket
+%exclude %_unitdir/sysinit.target.wants/systemd-udev*.service
 %exclude /lib/systemd/systemd-udevd
+%if_enabled microhttpd
+%exclude /lib/systemd/systemd-journal-gatewayd
+%exclude %_unitdir/systemd-journal-gatewayd.*
+%exclude %_datadir/systemd/gatewayd
+%endif
 
 %files -n libsystemd-daemon
 /%_lib/libsystemd-daemon.so.*
@@ -847,6 +885,7 @@ update_chrooted all
 
 %files devel
 %doc LICENSE.LGPL2.1 LICENSE.MIT
+%dir %_includedir/systemd
 %_includedir/systemd/sd-shutdown.h
 %_datadir/pkgconfig/systemd.pc
 %_man3dir/*
@@ -893,8 +932,22 @@ update_chrooted all
 %files analyze
 %_bindir/systemd-analyze
 
+%if_enabled microhttpd
+%files journal-gateway
+/lib/systemd/systemd-journal-gatewayd
+%_unitdir/systemd-journal-gatewayd.*
+%_datadir/systemd/gatewayd
+%endif
+
 %files -n bash-completion-%name
 %_sysconfdir/bash_completion.d/systemd
+#%_datadir/bash-completion/completions/hostnamectl
+#%_datadir/bash-completion/completions/journalctl
+#%_datadir/bash-completion/completions/localectl
+#%_datadir/bash-completion/completions/loginctl
+#%_datadir/bash-completion/completions/systemctl
+#%_datadir/bash-completion/completions/systemd-coredumpctl
+#%_datadir/bash-completion/completions/timedatectl
 
 %files -n zsh-completion-%name
 %_datadir/zsh/Completion/Unix/_systemd
@@ -904,6 +957,7 @@ update_chrooted all
 
 %files -n bash-completion-udev
 %_sysconfdir/bash_completion.d/udev
+#%_datadir/bash-completion/completions/udevadm
 
 %files -n libudev1
 /%_lib/libudev.so.*
@@ -932,11 +986,12 @@ update_chrooted all
 %doc README TODO NEWS LICENSE.GPL2
 %dir %_sysconfdir/udev
 %config(noreplace) %_sysconfdir/udev/*.conf
-%ghost %config(noreplace) %_sysconfdir/udev/hwdb.bin
+%ghost %_sysconfdir/udev/hwdb.bin
 %config %_sysconfdir/scsi_id.config
 %_initdir/udev*
 %_unitdir/*udev*
-%_unitdir/*/systemd-udev*
+%_unitdir/sockets.target.wants/systemd-udevd*.socket
+%_unitdir/sysinit.target.wants/systemd-udev*.service
 %dir %firmwaredir
 %dir %firmwaredir/updates
 %dir /lib/udev
@@ -1006,6 +1061,10 @@ update_chrooted all
 /lib/udev/write_net_rules
 
 %changelog
+* Tue Mar 12 2013 Alexey Shabalin <shaba@altlinux.ru> 198-alt1
+- 198
+- add systemd-journal-gateway package
+
 * Tue Feb 12 2013 Alexey Shabalin <shaba@altlinux.ru> 197-alt6
 - revert --action=add in systemd-udev-trigger.service
 
