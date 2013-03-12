@@ -40,7 +40,7 @@ BuildRequires: jpackage-compat
 
 Name:           jakarta-%{base_name}
 Version:        1.0
-Release:        alt2_0.d10.6jpp5
+Release:        alt3_0.d10.6jpp5
 Epoch:          1
 Summary:        Commons Messenger JMS framework 
 
@@ -59,18 +59,18 @@ BuildRequires: jpackage-utils >= 0:1.7.3
 BuildRequires: ant >= 0:1.6
 BuildRequires: ant-junit
 BuildRequires: junit >= 0:3.8.1
-BuildRequires: jakarta-commons-logging
-BuildRequires: jakarta-commons-beanutils
-BuildRequires: jakarta-commons-collections
-BuildRequires: jakarta-commons-digester
+BuildRequires: apache-commons-logging
+BuildRequires: apache-commons-beanutils
+BuildRequires: apache-commons-collections
+BuildRequires: apache-commons-digester
 BuildRequires: servlet_2_3_api
 BuildRequires: jms_1_1_api
 BuildRequires: jta_1_0_1B_api
 #BuildRequires:  xml-commons-apis >= 0:1.0
-Requires: jakarta-commons-logging
-Requires: jakarta-commons-beanutils
-Requires: jakarta-commons-collections
-Requires: jakarta-commons-digester
+Requires: apache-commons-logging
+Requires: apache-commons-beanutils
+Requires: apache-commons-collections
+Requires: apache-commons-digester
 Requires: servlet_2_3_api
 Requires: jms_1_1_api
 Requires: jta_1_0_1B_api
@@ -114,9 +114,9 @@ BuildArch: noarch
 %build
 export OPT_JAR_LIST="ant/ant-junit junit"
 export CLASSPATH=$(build-classpath \
-jakarta-commons-logging-api \
-jakarta-commons-logging jakarta-commons-beanutils jakarta-commons-collections \
-jakarta-commons-digester servlet_2_3_api jms_1_1_api jta_1_0_1B_api )
+commons-logging-api \
+commons-logging commons-beanutils commons-collections \
+commons-digester servlet_2_3_api jms_1_1_api jta_1_0_1B_api )
 CLASSPATH=target/classes:target/test-classes:$CLASSPATH
 ant -Dant.build.javac.source=1.4 -Dant.build.javac.target=1.4 -Dbuild.sysclasspath=only test dist
 
@@ -132,8 +132,8 @@ ln -s %{base_name}-%{version}.jar \
 %add_to_maven_depmap %{base_name} %{base_name} %{version} JPP %{name}
 
 # pom
-install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/maven2/poms
-install -m 644 %{SOURCE1} $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-%{name}.pom
+install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
+install -m 644 %{SOURCE1} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 
 install -dm 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
 cp -pr dist/docs/api/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
@@ -147,7 +147,7 @@ export CLASSPATH=$(build-classpath gnu-crypto)
 %files
 %doc LICENSE.txt README.txt RELEASE-NOTES.txt
 %{_javadir}/*.jar
-%{_datadir}/maven2/poms/*
+%{_mavenpomdir}/*
 %{_mavendepmapfragdir}/*
 %if %{gcj_support}
 %dir %attr(-,root,root) %{_libdir}/gcj/%{name}
@@ -159,6 +159,9 @@ export CLASSPATH=$(build-classpath gnu-crypto)
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Tue Mar 12 2013 Igor Vlasenko <viy@altlinux.ru> 1:1.0-alt3_0.d10.6jpp5
+- fixed build
+
 * Mon Feb 14 2011 Igor Vlasenko <viy@altlinux.ru> 1:1.0-alt2_0.d10.6jpp5
 - fixed build
 
