@@ -1,5 +1,5 @@
 Name: perl
-Version: 5.16.2
+Version: 5.16.3
 Release: alt1
 Epoch: 1
 
@@ -708,6 +708,10 @@ EOF
 	%autolib/Unicode/Normalize
 
 %changelog
+* Tue Mar 12 2013 Vladimir Lettiev <crux@altlinux.ru> 1:5.16.3-alt1
+- 5.16.2 -> 5.16.3
+- Fixed CVE-2013-1667: memory exhaustion with arbitrary hash keys
+
 * Tue Nov 06 2012 Vladimir Lettiev <crux@altlinux.ru> 1:5.16.2-alt1
 - 5.16.1 -> 5.16.2
 
