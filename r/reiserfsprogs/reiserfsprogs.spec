@@ -2,7 +2,7 @@
 
 Name: reiserfsprogs
 Version: 3.6.22
-Release: alt1
+Release: alt2
 Summary: The utilities to create Reiserfs volume
 License: GPLv2 with "Anti-Plagiarism" modification
 Group: System/Kernel and hardware
@@ -10,7 +10,6 @@ Url: http://git.kernel.org/?p=linux/kernel/git/jeffm/%name.git;a=summary
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 Obsoletes: reiserfs-utils
-Conflicts: progsreiserfs
 Provides: reiserfs-utils = %version-%release
 
 # Automatically added by buildreq on Tue Aug 31 2010
@@ -47,6 +46,9 @@ ln -s reiserfsck.8 %buildroot%_man8dir/fsck.reiserfs.8
 
 
 %changelog
+* Tue Mar 12 2013 Led <led@altlinux.ru> 3.6.22-alt2
+- removed conflicts of progsreiserfs
+
 * Sat Feb 09 2013 Led <led@altlinux.ru> 3.6.22-alt1
 - 3.6.22
 - fixed URL
