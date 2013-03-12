@@ -4,7 +4,7 @@
 Summary: Simple pager docklet for the WindowMaker
 Name: wmpager
 Version: 1.2
-Release: alt5.qa1
+Release: alt6
 Group: Graphical desktop/Window Maker
 License: BSD
 URL: http://wmpager.sourceforge.net/
@@ -16,8 +16,9 @@ Source: http://download.sourceforge.net/%name/%name-%version.tar.gz
 Patch: %name-1.2-alt-tooltip.patch
 Patch1: %name-1.2-alt-EWMH.patch
 
-# Automatically added by buildreq on Mon Feb 06 2006
-BuildRequires: libX11-devel libXext-devel libXpm-devel xorg-x11-proto-devel
+# Automatically added by buildreq on Tue Mar 12 2013
+# optimized out: libX11-devel xorg-xextproto-devel xorg-xproto-devel
+BuildRequires:  libXext-devel libXpm-devel libfreetype-devel
 
 %description
 %name is a simple pager docklet for the Window Maker.
@@ -67,6 +68,9 @@ __EOF
 %_menudir/%name
 
 %changelog
+* Tue Mar 12 2013 Igor Zubkov <icesik@altlinux.org> 1.2-alt6
+- buildreq
+
 * Tue May 17 2011 Repocop Q. A. Robot <repocop@altlinux.org> 1.2-alt5.qa1
 - NMU (by repocop): the following fixes applied:
   * update_menus for wmpager
