@@ -5,7 +5,7 @@
 
 Name: NetworkManager-gnome
 Version: 0.9.8.0
-Release: alt1%git_date
+Release: alt2%git_date
 License: %gpl2plus
 Group: Graphical desktop/GNOME
 Summary: GNOME applications for use with NetworkManager
@@ -145,6 +145,9 @@ fi
 %_datadir/gir-1.0/NMGtk-1.0.gir
 
 %changelog
+* Tue Mar 12 2013 Mikhail Efremov <sem@altlinux.org> 0.9.8.0-alt2
+- Autostart nm-applet in the KDE too (closes: #28666).
+
 * Thu Feb 21 2013 Mikhail Efremov <sem@altlinux.org> 0.9.8.0-alt1
 - Updated to 0.9.8.0.
 
