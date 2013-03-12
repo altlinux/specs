@@ -1,7 +1,7 @@
 
 Name: akonadi
 Version: 1.9.1
-Release: alt1
+Release: alt2
 
 Group: Databases
 Summary: An extensible cross-desktop storage service for PIM
@@ -50,50 +50,58 @@ Provides: libqt4-plugin-sql = 4.7
 %description -n libqt4-sql-sqlite3
 SQLite3 driver for Qt's SQL classes (QSQLITE3)
 
-%package database0
+%package database-1-sqlite
 Group: Databases
 Summary: %name Qt sqlite database
 BuildArch: noarch
-Requires: %name-common = %version-%release
+Requires: %name-common = %EVR
 Requires: libqt4-sql-sqlite
-Provides: %name-database = %version-%release
-%description database0
+Provides: %name-database = %EVR
+Provides: akonadi-database0 = %EVR
+Obsoletes: akonadi-database0 < %EVR
+%description database-1-sqlite
 %name Qt sqlite database
 
-%package database1
+%package database-3-sqlite3
 Group: Databases
 Summary: %name sqlite database
 BuildArch: noarch
-Requires: %name-common = %version-%release
+Requires: %name-common = %EVR
 Requires: libqt4-sql-sqlite3
-Provides: %name-database = %version-%release
-%description database1
+Provides: %name-database = %EVR
+Provides: akonadi-database1 = %EVR
+Obsoletes: akonadi-database1 < %EVR
+%description database-3-sqlite3
 %name sqlite database
 
-%package database2
+%package database-5-postgresql
 Group: Databases
 Summary: %name postgresql database
 BuildArch: noarch
-Requires: %name-common = %version-%release
+Requires: %name-common = %EVR
 Requires: libqt4-sql-postgresql postgresql /usr/bin/pg_dump /usr/bin/pg_restore
-Provides: %name-database = %version-%release
-%description database2
+Provides: %name-database = %EVR
+Provides: akonadi-database2 = %EVR
+Obsoletes: akonadi-database2 < %EVR
+%description database-5-postgresql
 %name postgresql database
 
-%package database3
+%package database-7-mysql
 Group: Databases
 Summary: %name mysql database
 BuildArch: noarch
-Requires: %name-common = %version-%release
+Requires: %name-common = %EVR
 Requires: libqt4-sql-mysql MySQL-server  MySQL-client
-Provides: %name-database = %version-%release
-%description database3
+Provides: %name-database = %EVR
+Provides: akonadi-database3 = %EVR
+Obsoletes: akonadi-database3 < %EVR
+%description database-7-mysql
 %name mysql database
 
 %package -n libakonadiprotocolinternals
 Group: System/Libraries
 Summary: %name library
-Requires: %name-common = %version-%release
+Requires: %name-common = %EVR
 Requires: %{get_dep libqt4-core}
 %description -n libakonadiprotocolinternals
 %name library
@@ -101,7 +109,7 @@ Requires: %{get_dep libqt4-core}
 %package -n libakonadiprivate
 Group: System/Libraries
 Summary: %name library
-Requires: %name-common = %version-%release
+Requires: %name-common = %EVR
 Requires: %{get_dep libqt4-core}
 %description -n libakonadiprivate
 %name library
@@ -166,10 +174,10 @@ install -m 0755 %SOURCE10 %buildroot/%_bindir/akonadi_mysql_install_db
 %files -n libqt4-sql-sqlite3
 %_qt4dir/plugins/sqldrivers/libqsqlite3.so
 
-%files database0
-%files database1
-%files database2
-%files database3
+%files database-1-sqlite
+%files database-3-sqlite3
+%files database-5-postgresql
+%files database-7-mysql
 %_bindir/akonadi_mysql_install_db
 
 %files common
@@ -191,6 +199,9 @@ install -m 0755 %SOURCE10 %buildroot/%_bindir/akonadi_mysql_install_db
 %_libdir/pkgconfig/*
 
 %changelog
+* Tue Mar 12 2013 Sergey V Turchin <zerg@altlinux.org> 1.9.1-alt2
+- rename database subpackages
+
 * Tue Mar 05 2013 Sergey V Turchin <zerg@altlinux.org> 1.9.1-alt1
 - new version
 
