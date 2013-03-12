@@ -8,7 +8,7 @@
 # file, is the same license as for the pristine package itself.
 
 Name: qupzilla
-Version: 1.3.1
+Version: 1.4.0
 Release: alt1
 
 Summary: A very fast open source browser based on WebKit core
@@ -49,7 +49,7 @@ qmake-qt4
 make INSTALL_ROOT=%buildroot install
 
 %files
-%doc AUTHORS FAQ TODO
+%doc AUTHORS FAQ
 %_bindir/%name
 %_libdir/%name
 %_libdir/*.so.*
@@ -64,6 +64,9 @@ make INSTALL_ROOT=%buildroot install
 # - move shared libraries to a subpackage?
 
 %changelog
+* Tue Mar 12 2013 Michael Shigorin <mike@altlinux.org> 1.4.0-alt1
+- 1.4.0
+
 * Mon Jul 16 2012 Michael Shigorin <mike@altlinux.org> 1.3.1-alt1
 - 1.3.1
   + dropped desktop file patch (merged upstream)
