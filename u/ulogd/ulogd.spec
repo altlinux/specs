@@ -1,6 +1,6 @@
 Name: ulogd
 Version: 1.24
-Release: alt15
+Release: alt16
 
 Summary: ulogd - The userspace logging daemon for netfilter
 Url: http://www.netfilter.org/projects/ulogd/
@@ -10,6 +10,7 @@ Group: System/Servers
 Source: http://www.netfilter.org/projects/ulogd/files/%name-%version.tar
 Source1: %name.init
 Source2: %name.logrotate
+Source3: %name.service
 Patch0: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-build-licenses
@@ -76,6 +77,8 @@ make install DESTDIR=%buildroot
 mkdir -p %buildroot/%_sysconfdir/rc.d/init.d
 install %SOURCE1 %buildroot/%_sysconfdir/rc.d/init.d/%name
 
+install -pDm644 %SOURCE3 %buildroot/%_unitdir/%name.service
+
 mkdir -p %buildroot/%_sysconfdir/logrotate.d
 install %SOURCE2 %buildroot/%_sysconfdir/logrotate.d/%name
 
@@ -102,12 +105,14 @@ rm -rf %buildroot/%_includedir/libipulog
 %attr(0755,root,root) %_sbindir/%name
 %attr(0640,root,%name) %config(noreplace) %_sysconfdir/%name.conf
 %_sysconfdir/rc.d/init.d/%name
+%_unitdir/%name.service
 %config(noreplace) %_sysconfdir/logrotate.d/%name
 %dir %_libdir/%name
 %attr(1770,root,ulogd) %_logdir/%name
-%_libdir/%name/*
+%_libdir/%name/*.so
 %exclude %_libdir/%name/ulogd_MYSQL.so
 %exclude %_libdir/%name/ulogd_PGSQL.so
+%exclude %_libdir/%name/ulogd_SQLITE3.so
 %doc COPYING AUTHORS README
 %doc doc/%name.txt doc/%name.a4.ps doc/%name.html
 %_man8dir/*
@@ -128,6 +133,10 @@ rm -rf %buildroot/%_includedir/libipulog
 %_datadir/%name/sqlite3.table
 
 %changelog
+* Tue Mar 12 2013 Mikhail Efremov <sem@altlinux.org> 1.24-alt16
+- Fix plugins packaging.
+- Added systemd service file (closes: #28096).
+
 * Tue Oct 05 2010 Mikhail Efremov <sem@altlinux.org> 1.24-alt15
 - To own /usr/share/ulogd/.
 - Slightly spec cleanup.
