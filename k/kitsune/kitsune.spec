@@ -1,9 +1,10 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: gcc-c++ libqt4-devel
 # END SourceDeps(oneline)
+%define fedora 19
 Name:           kitsune
 Version:        2.0
-Release:        alt3_11
+Release:        alt3_12
 Summary:        Program to solve mathematical problems
 
 Group:          Games/Other
@@ -49,7 +50,10 @@ for f in 16 22 32 48 64 ; do
     $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/${f}x${f}/apps/%{name}.png
 done
 
-desktop-file-install                                  \
+desktop-file-install \
+%if 0%{?fedora} && 0%{?fedora} < 19
+                                        \
+%endif
        --dir=$RPM_BUILD_ROOT%{_datadir}/applications    \
        %{SOURCE1}
 
@@ -57,11 +61,18 @@ desktop-file-install                                  \
 %files
 %doc Changelog.txt txt/*
 %{_bindir}/%{name}
+%if 0%{?fedora} && 0%{?fedora} < 19
 %{_datadir}/applications/%{name}.desktop
+%else
+%{_datadir}/applications/%{name}.desktop
+%endif
 %{_datadir}/icons/hicolor/*x*/apps/%{name}.png
 
 
 %changelog
+* Tue Mar 12 2013 Igor Vlasenko <viy@altlinux.ru> 2.0-alt3_12
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 2.0-alt3_11
 - update to new release by fcimport
 
