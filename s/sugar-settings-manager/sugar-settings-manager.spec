@@ -1,10 +1,9 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-python rpm-macros-fedora-compat
-BuildRequires: pkgconfig(gtk+-2.0) pkgconfig(x11) python-devel
+BuildRequires: pkgconfig(gtk+-2.0) pkgconfig(x11)
 # END SourceDeps(oneline)
 Name:           sugar-settings-manager
 Version:        0.87.2
-Release:        alt1_5
+Release:        alt1_6
 Summary:        Settings manager for the Sugar environment
 
 Group:          System/Servers
@@ -15,6 +14,7 @@ Source0:        http://download.sugarlabs.org/sources/external/%{name}/%{name}-%
 BuildRequires:  gtk2-devel
 BuildRequires:  libGConf-devel
 Source44: import.info
+BuildRequires: rpmbuild-helper-sugar-activity
 
 %description
 A daemon which manages and monitors various UI related settings via the
@@ -40,6 +40,9 @@ make install DESTDIR=$RPM_BUILD_ROOT
 
 
 %changelog
+* Wed Mar 13 2013 Igor Vlasenko <viy@altlinux.ru> 0.87.2-alt1_6
+- update from fc18 release
+
 * Mon Dec 03 2012 Igor Vlasenko <viy@altlinux.ru> 0.87.2-alt1_5
 - new version; import from fc17 updates
 
