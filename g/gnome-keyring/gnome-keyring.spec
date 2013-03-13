@@ -8,7 +8,7 @@
 
 Name: gnome-keyring
 Version: %ver_major.3
-Release: alt1
+Release: alt2
 
 Summary: %name is a password keeper for GNOME
 License: LGPL
@@ -17,6 +17,7 @@ Url: http://www.gnome.org
 Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+Patch: gnome-keyring-3.6.3-alt-lfs.patch
 
 %define gtk_ver 3.0.5
 %define glib_ver 2.28.5
@@ -27,7 +28,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 %define gcr_ver 3.6.0
 
 # From configure.in
-BuildPreReq: glib2-devel >= %glib_ver libgio-devel
+BuildPreReq: gnome-common glib2-devel >= %glib_ver libgio-devel
 BuildPreReq: libgtk+3-devel >= %gtk_ver
 BuildPreReq: intltool >= 0.35.0 gtk-doc
 BuildPreReq: libdbus-devel >= %dbus_ver
@@ -37,6 +38,8 @@ BuildPreReq: gcr-libs-devel >= %gcr_ver
 %{?_enable_pam:BuildPreReq: libpam-devel}
 %{?_enable_valgrind:BuildPreReq: valgrind}
 %{?_enable_selinux:BuildRequires: libselinux-devel}
+# for check
+BuildRequires: xvfb-run
 
 %description
 %name is a program that keep password and other secrets for
@@ -58,8 +61,10 @@ and start the keyring daemon.
 
 %prep
 %setup -q
+%patch -p1 -b .lfs
 
 %build
+%autoreconf
 %configure \
 	%{?_enable_gtk_doc:--enable-gtk-doc} \
 	%{subst_enable static} \
@@ -72,8 +77,8 @@ and start the keyring daemon.
 %make_build
 
 %check
-# necessary to remake for use with xvfb-run
-#%make check
+#ERROR:test-transaction.c:278:test_remove_file_abort: assertion failed (n_data == 3): (0 == 3)
+#xvfb-run %make check
 
 %install
 %make_install DESTDIR=%buildroot install
@@ -81,7 +86,7 @@ and start the keyring daemon.
 %find_lang --with-gnome %name
 
 %files -f %name.lang
-%_sysconfdir/pkcs11/modules/%name.module
+%_datadir/p11-kit/modules/%name.module
 %_bindir/*
 %_datadir/dbus-1/services/org.gnome.keyring.service
 %_datadir/dbus-1/services/org.freedesktop.secrets.service
@@ -104,6 +109,10 @@ and start the keyring daemon.
 %exclude /%_lib/security/*.la
 
 %changelog
+* Wed Mar 13 2013 Yuri N. Sedunov <aris@altlinux.org> 3.6.3-alt2
+- fix %%files section for libp11-kit >= 0.16.3
+- enabled LFS support
+
 * Fri Mar 01 2013 Yuri N. Sedunov <aris@altlinux.org> 3.6.3-alt1
 - 3.6.3
 
