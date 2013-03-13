@@ -1,10 +1,10 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-python rpm-macros-fedora-compat
-BuildRequires: /usr/bin/gconftool-2 /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/icon-slicer /usr/bin/pygtk-codegen-2.0 libICE-devel libSM-devel libalsa-devel libgtk+3-gir-devel pkgconfig(cairo) pkgconfig(gdk-pixbuf-2.0) pkgconfig(gobject-2.0) pkgconfig(gtk+-2.0) pkgconfig(ice) python-devel
+BuildRequires(pre): rpm-macros-fedora-compat
+BuildRequires: python-devel
 # END SourceDeps(oneline)
 Name: sugar-write
 Version: 79
-Release: alt1_1
+Release: alt1_2
 Summary: Word processor for Sugar
 Group: Graphical desktop/Sugar
 License: GPLv2+
@@ -15,12 +15,11 @@ BuildRequires:  sugar-toolkit
 BuildRequires:  sugar-toolkit
 BuildRequires:  gettext
 
-Requires: sugar python-module-telepathy
-Requires: python-module-abiword
+Requires: sugar
 
 BuildArch: noarch
 Source44: import.info
-Provides: sugar-write-activity = %version
+BuildRequires: rpmbuild-helper-sugar-activity
 Obsoletes: sugar-write-activity < %version
 Conflicts: sugar-write-activity < %version
 
@@ -46,6 +45,9 @@ python ./setup.py install --prefix=$RPM_BUILD_ROOT/%{_prefix}
 
 
 %changelog
+* Wed Mar 13 2013 Igor Vlasenko <viy@altlinux.ru> 79-alt1_2
+- update from fc18 release
+
 * Wed Nov 28 2012 Igor Vlasenko <viy@altlinux.ru> 79-alt1_1
 - new version; import from fc17 release
 
