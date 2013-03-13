@@ -4,19 +4,20 @@ BuildRequires(pre): rpm-macros-fedora-compat
 %global shortname implode
 
 Name:           sugar-%{shortname}
-Version:        12
+Version:        15
 Release:        alt1_1
 Summary:        Implode for Sugar
 Group:          Graphical desktop/Sugar
 License:        GPLv2+
 URL:            http://wiki.sugarlabs.org/go/Activities/Implode
-Source0:        http://download.sugarlabs.org/activities/4086/%{shortname}-%{version}.xo
+Source0:        http://download.sugarlabs.org/sources/honey/Implode/Implode-%{version}.tar.bz2
+
 BuildArch:      noarch
 BuildRequires:  gettext
-BuildRequires:  sugar-toolkit
+BuildRequires:  sugar-toolkit-gtk3
 Requires:       sugar
-Requires:       python-module-olpcgames
 Source44: import.info
+BuildRequires: rpmbuild-helper-sugar-activity
 
 %description
 Implode is a logic game based on the "falling block" model of Tetris. The game
@@ -31,7 +32,7 @@ the end of the game. The levels are generated in such a way that there is
 always a sequence of removals that clears the board. 
 
 %prep
-%setup -q -n Implode.activity
+%setup -q -n Implode-%{version}
 
 %build
 python ./setup.py build
@@ -50,6 +51,9 @@ done
 %{sugaractivitydir}/Implode.activity/
 
 %changelog
+* Wed Mar 13 2013 Igor Vlasenko <viy@altlinux.ru> 15-alt1_1
+- update from fc18 release
+
 * Mon Dec 03 2012 Igor Vlasenko <viy@altlinux.ru> 12-alt1_1
 - new version; import from fc17 updates
 

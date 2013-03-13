@@ -1,9 +1,9 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-python rpm-macros-fedora-compat
-BuildRequires: /usr/bin/gconftool-2 /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/icon-slicer /usr/bin/pygtk-codegen-2.0 libICE-devel libSM-devel libalsa-devel libgtk+3-gir-devel pkgconfig(cairo) pkgconfig(gdk-pixbuf-2.0) pkgconfig(gobject-2.0) pkgconfig(gtk+-2.0) pkgconfig(ice) python-devel
+BuildRequires(pre): rpm-macros-fedora-compat
+BuildRequires: python-devel
 # END SourceDeps(oneline)
 Name: sugar-turtleart
-Version: 156
+Version: 170
 Release: alt1_1
 Summary: Turtle Art activity for sugar
 
@@ -18,6 +18,7 @@ BuildRequires: gettext
 
 Requires: sugar
 Source44: import.info
+BuildRequires: rpmbuild-helper-sugar-activity
 Obsoletes: sugar-turtleart-activity < %version
 Conflicts: sugar-turtleart-activity < %version
 
@@ -44,6 +45,9 @@ python ./setup.py install --prefix=%{buildroot}%{_prefix}
 
 
 %changelog
+* Wed Mar 13 2013 Igor Vlasenko <viy@altlinux.ru> 170-alt1_1
+- update from fc18 release
+
 * Mon Dec 03 2012 Igor Vlasenko <viy@altlinux.ru> 156-alt1_1
 - new version; import from fc17 updates
 

@@ -1,9 +1,9 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-python rpm-macros-fedora-compat
-BuildRequires: /usr/bin/gconftool-2 /usr/bin/glib-gettextize /usr/bin/icon-slicer pkgconfig(cairo) pkgconfig(gobject-2.0) pkgconfig(gtk+-2.0) python-devel
+BuildRequires(pre): rpm-macros-fedora-compat
+BuildRequires: python-devel
 # END SourceDeps(oneline)
 Name: sugar-chat
-Version: 77
+Version: 78
 Release: alt1_1
 Summary: Chat client for Sugar
 Group: Graphical desktop/Sugar
@@ -15,11 +15,11 @@ BuildRequires: sugar-toolkit
 BuildRequires: gettext
 
 Requires: sugar
-Requires: python-module-telepathy
 Requires: telepathy-mission-control
 
 BuildArch: noarch
 Source44: import.info
+BuildRequires: rpmbuild-helper-sugar-activity
 Obsoletes: sugar-chat-activity < %version
 Conflicts: sugar-chat-activity < %version
 
@@ -45,6 +45,9 @@ python ./setup.py install --prefix=$RPM_BUILD_ROOT/%{_prefix}
 
 
 %changelog
+* Wed Mar 13 2013 Igor Vlasenko <viy@altlinux.ru> 78-alt1_1
+- update from fc18 release
+
 * Mon Dec 03 2012 Igor Vlasenko <viy@altlinux.ru> 77-alt1_1
 - new version; import from fc17 updates
 

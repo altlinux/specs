@@ -3,7 +3,7 @@ BuildRequires(pre): rpm-macros-fedora-compat
 BuildRequires: python-devel
 # END SourceDeps(oneline)
 Name:           sugar-physics
-Version:        10
+Version:        11
 Release:        alt1_1
 Summary:        A physical world simulator and playground for Sugar
 
@@ -15,11 +15,9 @@ Source0:        http://download.sugarlabs.org/sources/honey/Physics/Physics-%{ve
 BuildRequires:  sugar-toolkit
 BuildRequires:  gettext
 Requires:       sugar
-Requires:       python-module-pybox2d
-Requires:       python-module-elements
-Requires:       python-module-olpcgames
 BuildArch:      noarch
 Source44: import.info
+BuildRequires: rpmbuild-helper-sugar-activity
 
 %description
 You can add squares, circles, triangles, or draw your own shapes in
@@ -52,6 +50,9 @@ rm -f $RPM_BUILD_ROOT%{sugaractivitydir}/Physics.activity/DEVELOPING
 %{sugaractivitydir}/Physics.activity/
 
 %changelog
+* Wed Mar 13 2013 Igor Vlasenko <viy@altlinux.ru> 11-alt1_1
+- update from fc18 release
+
 * Mon Dec 03 2012 Igor Vlasenko <viy@altlinux.ru> 10-alt1_1
 - new version; import from fc17 updates
 

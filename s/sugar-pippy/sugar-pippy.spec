@@ -1,26 +1,26 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-python rpm-macros-fedora-compat
-BuildRequires: /usr/bin/gconftool-2 /usr/bin/glib-gettextize /usr/bin/icon-slicer pkgconfig(cairo) pkgconfig(gobject-2.0) pkgconfig(gtk+-2.0) python-devel
+BuildRequires(pre): rpm-macros-fedora-compat
 # END SourceDeps(oneline)
-Name:           sugar-pippy
-Version:        48
-Release:        alt1_1
-Summary:        Pippy for Sugar
+Name:          sugar-pippy
+Version:       51
+Release:       alt1_1
+Summary:       Pippy for Sugar
 
-Group:          Graphical desktop/Sugar
-License:        GPLv2+
-URL:            http://wiki.laptop.org/go/Pippy
-Source0:        http://download.sugarlabs.org/sources/sucrose/fructose/Pippy/Pippy-%{version}.tar.bz2
-BuildArch:      noarch
+Group:         Graphical desktop/Sugar
+License:       GPLv2+
+URL:           http://wiki.laptop.org/go/Pippy
+Source0:       http://download.sugarlabs.org/sources/sucrose/fructose/Pippy/Pippy-%{version}.tar.bz2
+BuildArch:     noarch
 
-BuildRequires:  sugar-toolkit
-BuildRequires:  gettext
+BuildRequires: python-devel
+BuildRequires: gobject-introspection-devel
+BuildRequires: gettext
+BuildRequires: sugar-toolkit-gtk3
 
-Requires:       sugar
-Requires:       python-module-pygame
-Requires:       python-module-pybox2d
-Requires:       python-module-elements
+Requires:      gobject-introspection
+Requires:      sugar
 Source44: import.info
+BuildRequires: rpmbuild-helper-sugar-activity
 Obsoletes: sugar-pippy-activity < %version
 Conflicts: sugar-pippy-activity < %version
 
@@ -48,20 +48,23 @@ done
 
 
 %build
-%{__python} setup.py build
+python ./setup.py build
 
 
 %install
-%{__python} setup.py install --prefix=%{buildroot}/%{_prefix}
+python ./setup.py install --prefix=%{buildroot}/%{_prefix}
 %find_lang org.laptop.Pippy
 
 
 %files -f org.laptop.Pippy.lang
-%doc NEWS
+%doc NEWS COPYING
 %{sugaractivitydir}/Pippy.activity/
 
 
 %changelog
+* Wed Mar 13 2013 Igor Vlasenko <viy@altlinux.ru> 51-alt1_1
+- update from fc18 release
+
 * Mon Dec 03 2012 Igor Vlasenko <viy@altlinux.ru> 48-alt1_1
 - new version; import from fc17 updates
 

@@ -2,7 +2,7 @@
 BuildRequires(pre): rpm-macros-fedora-compat
 # END SourceDeps(oneline)
 Name:           sugar-measure
-Version:	42
+Version:	44
 Release:        alt1_1
 Summary:        Measure for Sugar
 
@@ -18,6 +18,7 @@ BuildRequires:  sugar-toolkit
 
 Requires:       sugar
 Source44: import.info
+BuildRequires: rpmbuild-helper-sugar-activity
 
 
 %description
@@ -46,6 +47,9 @@ magnetic field etc) and view their signal.
 
 
 %changelog
+* Wed Mar 13 2013 Igor Vlasenko <viy@altlinux.ru> 44-alt1_1
+- update from fc18 release
+
 * Mon Dec 03 2012 Igor Vlasenko <viy@altlinux.ru> 42-alt1_1
 - new version; import from fc17 updates
 

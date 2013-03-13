@@ -1,17 +1,17 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-python
-BuildRequires: /usr/bin/gconftool-2 /usr/bin/glib-gettextize /usr/bin/icon-slicer /usr/bin/pygtk-codegen-2.0 pkgconfig(cairo) pkgconfig(gobject-2.0) pkgconfig(gtk+-2.0)
+BuildRequires: /usr/bin/glib-gettextize /usr/bin/pygtk-codegen-2.0
 # END SourceDeps(oneline)
 %{!?python_sitelib: %global python_sitelib %(%{__python} -c "from distutils.sysconfig import get_python_lib; print(get_python_lib())")}
 
 Summary: Base Sugar library
-Name: sugar-base
-Version: 0.96.0
+Name:    sugar-base
+Version: 0.98.0
 Release: alt1_1
-URL: http://sugarlabs.org/
+URL:     http://sugarlabs.org/
 Source0: http://download.sugarlabs.org/sources/sucrose/glucose/%{name}/%{name}-%{version}.tar.bz2
 License: LGPLv2
-Group: System/Libraries
+Group:   System/Libraries
 
 BuildRequires: python-devel
 BuildRequires: python-module-pygobject-devel
@@ -19,9 +19,9 @@ BuildRequires: python-module-pygtk-devel
 BuildRequires: gettext
 BuildRequires: perl-XML-Parser
 BuildRequires: intltool
-
-Requires: python-module-decorator
 Source44: import.info
+BuildRequires: rpmbuild-helper-sugar-activity
+
 
 %description
 
@@ -54,6 +54,9 @@ mv %{buildroot}%{python_sitelibdir_noarch}/* %{buildroot}%{python_sitelibdir}/
 %{python_sitelibdir}/sugar
 
 %changelog
+* Wed Mar 13 2013 Igor Vlasenko <viy@altlinux.ru> 0.98.0-alt1_1
+- update from fc18 release
+
 * Wed Nov 28 2012 Igor Vlasenko <viy@altlinux.ru> 0.96.0-alt1_1
 - new version; import from fc17 release
 

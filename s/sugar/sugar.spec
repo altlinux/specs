@@ -1,49 +1,47 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-python
-BuildRequires: /usr/bin/gconftool-2 /usr/bin/glib-gettextize pkgconfig(gtk+-2.0) python-devel
+BuildRequires: /usr/bin/gconftool-2 /usr/bin/glib-gettextize python-devel
 # END SourceDeps(oneline)
 %{!?python_sitelib: %global python_sitelib %(%{__python} -c "from distutils.sysconfig import get_python_lib; print(get_python_lib())")}
 
 Summary: Constructionist learning platform
-Name: sugar
-Version: 0.96.3
-Release: alt4_1
-URL: http://sugarlabs.org/
+Name:    sugar
+Version: 0.98.4
+Release: alt1_1
+URL:     http://sugarlabs.org/
 License: GPLv2+
-Group: Graphical desktop/Sugar
+Group:   Graphical desktop/Sugar
 Source0: http://download.sugarlabs.org/sources/sucrose/glucose/%{name}/%{name}-%{version}.tar.bz2
-Patch0: sugar-gnomekeyring.patch
+Patch0:  sugar-gnomekeyring.patch
 
 BuildRequires: gettext
 BuildRequires: libGConf-devel
-BuildRequires: gtk2-devel
+BuildRequires: gobject-introspection
+BuildRequires: libgtk+3-devel
+BuildRequires: libgtksourceview3-devel
 BuildRequires: intltool
 BuildRequires: perl-XML-Parser
-BuildRequires: python-module-pygtk-devel
 
 Requires: dbus-tools-gui
 Requires: ethtool
 Requires: pam_gnome-keyring
-Requires: gnome-python2-gconf
-Requires: python-module-pygnome-wnck
-Requires: gst-plugins-espeak
-Requires: python-module-gst
+Requires: gst-plugins-espeak1.0
 Requires: metacity
 Requires: NetworkManager
 Requires: openssh
-Requires: python-module-pygtksourceview
-Requires: python-module-telepathy
-Requires: python-module-xklavier
+Requires: libgtksourceview3
 Requires: sugar-artwork
 Requires: sugar-toolkit
 Requires: sugar-toolkit-gtk3
 Requires: telepathy-mission-control
 Requires: upower
-Requires: /usr/bin/xdpyinfo
+Requires: xdg-user-dirs
 Requires: gvfs
+Requires: libwnck3
 
 BuildArch: noarch
 Source44: import.info
+BuildRequires: rpmbuild-helper-sugar-activity
 Patch33: sugar-0.88.0-sugar-start-script.patch
 
 %description
@@ -63,11 +61,88 @@ Group: Graphical desktop/Sugar
 Requires: %{name} = %{version}-%{release}
 Requires: xorg-xephyr
 # for xdpyinfo
-Requires: xdpyinfo
+Requires: /usr/bin/xdpyinfo
 
 %description emulator
 The emulator let's you test and debug sugar. For example it allows you to run 
 multiple instances of sugar. 
+
+%package cp-all
+Summary: All control panel modules 
+Group: Graphical desktop/Sugar
+Requires: %{name} = %{version}-%{release}
+Requires: %{name}-cp-datetime %{name}-cp-frame %{name}-cp-language
+Requires: %{name}-cp-modemconfiguration %{name}-cp-network %{name}-cp-power %{name}-cp-updater
+# Currently broken
+# Requires: %{name}-cp-keyboard %{name}-cp-updater
+
+%description cp-all
+This is a meta package to install all Sugar Control Panel modules
+
+%package cp-datetime
+Summary: Sugar Date and Time control panel
+Group: Graphical desktop/Sugar
+Requires: %{name} = %{version}-%{release}
+
+%description cp-datetime
+This is the Sugar Date and Time settings control panel
+
+%package cp-frame
+Summary: Sugar Frame control panel
+Group: Graphical desktop/Sugar
+Requires: %{name} = %{version}-%{release}
+
+%description cp-frame
+This is the Sugar Frame settings control panel
+
+%package cp-keyboard
+Summary: Sugar Keyboard control panel
+Group: Graphical desktop/Sugar
+Requires: %{name} = %{version}-%{release}
+
+%description cp-keyboard
+This is the Sugar Keyboard settings control panel
+
+%package cp-language
+Summary: Sugar Language control panel
+Group: Graphical desktop/Sugar
+Requires: %{name} = %{version}-%{release}
+
+%description cp-language
+This is the Sugar Language settings control panel
+
+%package cp-modemconfiguration
+Summary: Sugar Modem configuration control panel
+Group: Graphical desktop/Sugar
+Requires: %{name} = %{version}-%{release}
+
+%description cp-modemconfiguration
+This is the Sugar Modem configuration control panel
+
+%package cp-network
+Summary: Sugar Network control panel
+Group: Graphical desktop/Sugar
+Requires: %{name} = %{version}-%{release}
+
+%description cp-network
+This is the Sugar Network settings control panel
+
+%package cp-power
+Summary: Sugar Power control panel
+Group: Graphical desktop/Sugar
+Requires: %{name} = %{version}-%{release}
+
+%description cp-power
+This is the Sugar Power settings control panel
+
+%package cp-updater
+Summary: Sugar Activity Update control panel
+Group: Graphical desktop/Sugar
+Requires: %{name} = %{version}-%{release}
+
+%description cp-updater
+This is the Sugar Activity Updates control panel
+
 
 %prep
 %setup -q
@@ -132,6 +207,9 @@ fi
 
 %{_bindir}/*
 %exclude %{_bindir}/sugar-emulator
+%dir %{_datadir}/sugar/extensions/cpsection/
+%exclude %{_datadir}/sugar/extensions/cpsection/[b-z]*
+%{_datadir}/sugar/extensions/cpsection/about*
 
 %{_datadir}/mime/packages/sugar.xml
 %config %{_sysconfdir}/X11/wmsession.d/*
@@ -141,7 +219,36 @@ fi
 %{_datadir}/applications/sugar-emulator.desktop
 %{_datadir}/icons/hicolor/scalable/apps/sugar-xo.svg
 
+%files cp-all
+
+%files cp-datetime
+%{_datadir}/sugar/extensions/cpsection/datetime
+
+%files cp-frame
+%{_datadir}/sugar/extensions/cpsection/frame
+
+%files cp-keyboard
+%{_datadir}/sugar/extensions/cpsection/keyboard
+
+%files cp-language
+%{_datadir}/sugar/extensions/cpsection/language
+
+%files cp-modemconfiguration
+%{_datadir}/sugar/extensions/cpsection/modemconfiguration
+
+%files cp-network
+%{_datadir}/sugar/extensions/cpsection/network
+
+%files cp-power
+%{_datadir}/sugar/extensions/cpsection/power
+
+%files cp-updater
+%{_datadir}/sugar/extensions/cpsection/updater
+
 %changelog
+* Wed Mar 13 2013 Igor Vlasenko <viy@altlinux.ru> 0.98.4-alt1_1
+- update from fc18 release
+
 * Thu Mar 07 2013 Igor Vlasenko <viy@altlinux.ru> 0.96.3-alt4_1
 - really use /usr/bin/xdpyinfo
 

@@ -1,22 +1,23 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-python rpm-macros-fedora-compat
-BuildRequires: gcc-c++ pkgconfig(gtk+-2.0) pkgconfig(x11) python-devel
+BuildRequires(pre): rpm-macros-fedora-compat
 # END SourceDeps(oneline)
 Name:           sugar-typing-turtle
-Version:        29
+Version:        30
 Release:        alt1_2
 Summary:        A multilingual animated touch typing trainer
 
 Group:          Graphical desktop/Sugar
 License:        GPLv2+
 URL:            http://wiki.sugarlabs.org/go/Activities/Typing_Turtle
-Source0:        http://activities.sugarlabs.org/sugar/downloads/file/26483/typing_turtle-%{version}.xo
+Source0:        http://download.sugarlabs.org/sources/honey/TypingTurtle/TypingTurtle-%{version}.tar.bz2
 
 BuildArch:      noarch
-BuildRequires:  sugar-toolkit
+BuildRequires:  python-devel
+BuildRequires:  sugar-toolkit-gtk3
 BuildRequires:  gettext
-Requires:       sugar
+Requires:       sugar >= 0.97.0
 Source44: import.info
+BuildRequires: rpmbuild-helper-sugar-activity
 
 %description
 This Sugar activity features a sequence of lessons designed to gradually
@@ -29,21 +30,17 @@ to press each key, encouraging good typing habits.
 
 
 %prep
-%setup -q -n TypingTurtle.activity
+%setup -q -n TypingTurtle-%{version}
 
 # remove unnecessary libs and files
 rm -rf .pydevproject .project strace.sh
-
-# resolve license file naming issues
-mv port/COPYING port/COPYING-port
 
 # calm rpmlint down and fix permissions
 sed -i -e '1d;2i#!/usr/bin/python' typingturtle.py
 sed -i -e '/^#!\//, 1d' editlessonscreen.py editlessonlistscreen.py
 
 %build
-python setup.py build
-
+python ./setup.py build
 
 %install
 python ./setup.py install --prefix=$RPM_BUILD_ROOT/%{_prefix}
@@ -52,11 +49,14 @@ python ./setup.py install --prefix=$RPM_BUILD_ROOT/%{_prefix}
 
 
 %files -f org.laptop.community.TypingTurtle.lang
-%doc port/COPYING-port COPYING NEWS
+%doc COPYING NEWS
 %{sugaractivitydir}/TypingTurtle.activity
 
 
 %changelog
+* Wed Mar 13 2013 Igor Vlasenko <viy@altlinux.ru> 30-alt1_2
+- update from fc18 release
+
 * Mon Dec 03 2012 Igor Vlasenko <viy@altlinux.ru> 29-alt1_2
 - new version; import from fc17 updates
 

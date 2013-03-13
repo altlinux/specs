@@ -1,11 +1,10 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-python rpm-macros-fedora-compat
-BuildRequires: /usr/bin/gconftool-2 /usr/bin/glib-gettextize /usr/bin/icon-slicer /usr/bin/pygtk-codegen-2.0 pkgconfig(cairo) pkgconfig(gobject-2.0) pkgconfig(gtk+-2.0)
+BuildRequires(pre): rpm-build-python
 # END SourceDeps(oneline)
 %{!?python_sitelib: %global python_sitelib %(%{__python} -c "from distutils.sysconfig import get_python_lib; print(get_python_lib())")}
 
 Name: sugar-datastore
-Version: 0.96.0
+Version: 0.98.1
 Release: alt1_1
 Summary: Sugar Datastore
 
@@ -15,10 +14,8 @@ URL: http://sugarlabs.org/
 Source0: http://download.sugarlabs.org/sources/sucrose/glucose/%{name}/%{name}-%{version}.tar.bz2
 
 BuildRequires: python-devel
-Requires: python-module-cjson
-Requires: python-module-xapian
 Source44: import.info
-Provides: sugar-datastore-service = %version
+BuildRequires: rpmbuild-helper-sugar-activity
 Obsoletes: sugar-datastore-service < %version
 Conflicts: sugar-datastore-service < %version
 
@@ -55,6 +52,9 @@ mv %{buildroot}%{python_sitelibdir_noarch}/* %{buildroot}%{python_sitelibdir}/
 %{_datadir}/dbus-1/services/*.service
 
 %changelog
+* Wed Mar 13 2013 Igor Vlasenko <viy@altlinux.ru> 0.98.1-alt1_1
+- update from fc18 release
+
 * Wed Nov 28 2012 Igor Vlasenko <viy@altlinux.ru> 0.96.0-alt1_1
 - new version; import from fc17 release
 

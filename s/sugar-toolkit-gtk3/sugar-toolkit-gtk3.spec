@@ -1,6 +1,6 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-python rpm-macros-fedora-compat
-BuildRequires: /usr/bin/gconftool-2 /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/icon-slicer /usr/bin/pygtk-codegen-2.0 libICE-devel libgtk+3-gir-devel pkgconfig(cairo) pkgconfig(gdk-pixbuf-2.0) pkgconfig(gobject-2.0) pkgconfig(gtk+-2.0) pkgconfig(ice)
+BuildRequires(pre): rpm-build-python
+BuildRequires: /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/pygtk-codegen-2.0 libICE-devel libgtk+3-gir-devel pkgconfig(gdk-pixbuf-2.0) pkgconfig(ice)
 # END SourceDeps(oneline)
 # bootstrapping around sugar...
 %set_verify_elf_method relaxed
@@ -8,14 +8,14 @@ BuildRequires: libXi-devel
 %{!?python_sitelib: %global python_sitelib %(%{__python} -c "from distutils.sysconfig import get_python_lib; print(get_python_lib())")}
 
 Summary: Sugar toolkit GTK+ 3
-Name: sugar-toolkit-gtk3
-Version: 0.96.5
+Name:    sugar-toolkit-gtk3
+Version: 0.98.5
 Release: alt1_1
-URL: http://wiki.laptop.org/go/Sugar
+URL:     http://wiki.laptop.org/go/Sugar
 Source0: http://download.sugarlabs.org/sources/sucrose/glucose/%{name}/%{name}-%{version}.tar.bz2
 Source1: macros.sugar
 License: LGPLv2+
-Group: System/Libraries
+Group:   System/Libraries
 
 BuildRequires: libalsa-devel
 BuildRequires: gettext-devel
@@ -29,14 +29,11 @@ BuildRequires: python-devel
 BuildRequires: python-module-pygtk-devel
 BuildRequires: python-module-pygobject-devel
 
-Requires: dbus-python
 Requires: gettext
-Requires: python-module-pygobject3
-Requires: python-module-simplejson
-Requires: python-module-dateutil
 Requires: sugar-datastore
 Requires: unzip
 Source44: import.info
+BuildRequires: rpmbuild-helper-sugar-activity
 
 %description
 Sugar is the core of the OLPC Human Interface. The toolkit provides
@@ -79,16 +76,18 @@ mv %{buildroot}%{python_sitelibdir_noarch}/* %{buildroot}%{python_sitelibdir}/
 %files -f %{name}.lang
 %doc COPYING README
 %{python_sitelibdir}/*
-%{_libdir}/girepository-1.0/SugarExt-1.0.typelib
-%{_libdir}/libsugarext.so.0
-%{_libdir}/libsugarext.so.0.0.0
+%{_libdir}/girepository-1.0/*.typelib
+%{_libdir}/lib*.so.*
 %{_bindir}/sugar-activity
 
 %files devel
-%{_libdir}/libsugarext.so
-%{_datadir}/gir-1.0/SugarExt-1.0.gir
+%{_libdir}/*.so
+%{_datadir}/gir-1.0/*.gir
 
 %changelog
+* Wed Mar 13 2013 Igor Vlasenko <viy@altlinux.ru> 0.98.5-alt1_1
+- update from fc18 release
+
 * Mon Dec 03 2012 Igor Vlasenko <viy@altlinux.ru> 0.96.5-alt1_1
 - new version; import from fc17 updates
 

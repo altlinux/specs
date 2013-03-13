@@ -3,7 +3,7 @@ BuildRequires(pre): rpm-macros-fedora-compat
 BuildRequires: python-devel
 # END SourceDeps(oneline)
 Name:           sugar-memorize
-Version:        41
+Version:        43
 Release:        alt1_1
 Summary:        Memorize for Sugar
 
@@ -17,9 +17,8 @@ BuildRequires:  gettext
 BuildRequires:  sugar-toolkit
 
 Requires:       sugar
-Requires:       python-module-olpcsound
-Requires:       libxml2-python
 Source44: import.info
+BuildRequires: rpmbuild-helper-sugar-activity
 
 %description
 The game memorize is about finding matching pairs. A pair can consist of any
@@ -34,11 +33,11 @@ as well.
 
 
 %build
-%{__python} setup.py build
+python ./setup.py build
 
 
 %install
-%{__python} setup.py install --prefix=%{buildroot}/%{_prefix}
+python ./setup.py install --prefix=%{buildroot}/%{_prefix}
 %find_lang org.laptop.Memorize
 
 
@@ -48,6 +47,9 @@ as well.
 
 
 %changelog
+* Wed Mar 13 2013 Igor Vlasenko <viy@altlinux.ru> 43-alt1_1
+- update from fc18 release
+
 * Mon Dec 03 2012 Igor Vlasenko <viy@altlinux.ru> 41-alt1_1
 - new version; import from fc17 updates
 
