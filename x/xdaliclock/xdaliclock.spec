@@ -1,14 +1,14 @@
 Summary: A clock for the X Window System
 Name: xdaliclock
 Version: 2.25
-Release: alt2_8
+Release: alt3_8
 Group: Graphics
 License: BSD
 URL: http://www.jwz.org/xdaliclock/
 Source0: http://www.jwz.org/xdaliclock/xdaliclock-%{version}.tar.gz
 Source1: xdaliclock.desktop
 BuildRequires: desktop-file-utils
-BuildRequires: libICE-devel libXmu-devel libSM-devel xorg-x11-proto-devel
+BuildRequires: libICE-devel libXmu-devel libSM-devel xorg-bigreqsproto-devel xorg-compositeproto-devel xorg-damageproto-devel xorg-dmxproto-devel xorg-evieproto-devel xorg-fixesproto-devel xorg-fontsproto-devel xorg-glproto-devel xorg-inputproto-devel xorg-kbproto-devel xorg-pmproto-devel xorg-randrproto-devel xorg-recordproto-devel xorg-renderproto-devel xorg-resourceproto-devel xorg-scrnsaverproto-devel xorg-videoproto-devel xorg-xcbproto-devel xorg-xcmiscproto-devel xorg-xextproto-devel xorg-xf86bigfontproto-devel xorg-xf86dgaproto-devel xorg-xf86driproto-devel xorg-xf86rushproto-devel xorg-xf86vidmodeproto-devel xorg-xineramaproto-devel xorg-xproto-devel
 BuildRequires: libXext-devel libXaw-devel libXt-devel
 Source44: import.info
 
@@ -54,6 +54,9 @@ desktop-file-install  \
 %{_datadir}/applications/*
 
 %changelog
+* Wed Mar 13 2013 Igor Vlasenko <viy@altlinux.ru> 2.25-alt3_8
+- fixed build
+
 * Mon Feb 11 2013 Igor Vlasenko <viy@altlinux.ru> 2.25-alt2_8
 - update to new release by fcimport
 
