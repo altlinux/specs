@@ -1,5 +1,5 @@
 Name: bootloader-utils
-Version: 0.4.19
+Version: 0.4.20
 Release: alt1
 
 Summary: Bootloader utilities
@@ -79,6 +79,9 @@ mv $f.install $f
 %_rpmlibdir/*.filetrigger
 
 %changelog
+* Wed Mar 13 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.4.20-alt1
+- installkernel: stop if initrd creation failed
+
 * Thu Jan 31 2013 Michael Shigorin <mike@altlinux.org> 0.4.19-alt1
 - installkernel: don't install memtest* in EFI mode (won't boot)
 
