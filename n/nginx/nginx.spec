@@ -12,8 +12,8 @@
 %def_enable ctpp2
 
 Name: nginx
-Version: 1.2.4
-Release: alt1.1
+Version: 1.2.7
+Release: alt1
 
 Summary: Fast HTTP server
 License: BSD
@@ -253,6 +253,9 @@ sed -i 's/\(types_hash_bucket_size[[:space:]]*\)[[:space:]]32[[:space:]]*;[[:spa
 %preun_service %name
 
 %changelog
+* Wed Mar 13 2013 Anton Farygin <rider@altlinux.ru> 1.2.7-alt1
+- new version
+
 * Thu Feb 28 2013 Dmitriy Kulik <lnkvisitor@altlinux.org> 1.2.4-alt1.1
 - add systemd service (ALT #28069)
 - logrotate using 'nginx -s reopen' (systemd)
