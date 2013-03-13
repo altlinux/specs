@@ -5,7 +5,7 @@
 
 Name: gnustep-%oname
 Version: 1.7.0
-Release: alt3.git20130130
+Release: alt3.git20130312
 Summary: GNUstep Objective-C Runtime
 License: BSD
 Group: Development/Objective-C
@@ -163,6 +163,9 @@ install -p -m644 class.h visibility.h method_list.h \
 %_libdir/libGNUObjCRuntime.so
 
 %changelog
+* Wed Mar 13 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.7.0-alt3.git20130312
+- New snapshot
+
 * Tue Mar 12 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.7.0-alt3.git20130130
 - Rebuilt with clang 3.2
 
