@@ -7,8 +7,8 @@
 
 Name: kernel-image-%flavour
 Version: 2.6.32
-Release: alt2
-%define erelease 358.0.1.el6
+Release: alt3
+%define erelease 358.2.1.el6
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -545,6 +545,9 @@ tar --transform='s,^,kernel-src-%flavour-%kversion-%krelease/,' \
 
 
 %changelog
+* Wed Mar 13 2013 Led <led@altlinux.ru> 2.6.32-alt3
+- 2.6.32-358.2.1.el6
+
 * Sun Mar 03 2013 Led <led@altlinux.ru> 2.6.32-alt2
 - 2.6.32-358.0.1.el6
 - enabled:
