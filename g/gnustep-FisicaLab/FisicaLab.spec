@@ -1,8 +1,8 @@
 %set_verify_elf_method unresolved=strict
 
 Name: gnustep-FisicaLab
-Version: 0.3.0
-Release: alt2
+Version: 0.3.2
+Release: alt1
 Summary: FisicaLab.app is an educational application to solve physics problems
 License: GPLv3
 Group: Graphical desktop/GNUstep
@@ -33,6 +33,9 @@ FisicaLab can solve the fallowing problems:
 %setup
 
 %build
+%autoreconf
+%configure
+
 %make_build \
 	messages=yes \
 	debug=yes \
@@ -54,6 +57,9 @@ install -Dp -m644 %SOURCE1 %buildroot%_menudir/%name
 %_menudir/*
 
 %changelog
+* Wed Mar 13 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.2-alt1
+- Version 0.3.2
+
 * Wed Feb 27 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.0-alt2
 - Added menu file (thnx kostyalamer@)
 
