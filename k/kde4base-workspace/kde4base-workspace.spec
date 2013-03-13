@@ -27,7 +27,7 @@
 %define rname kdebase-workspace
 Name: kde4base-workspace
 Version: %major.%minor.%bugfix
-Release: alt1
+Release: alt2
 
 Group: Graphical desktop/KDE
 Summary: K Desktop Environment - Workspace
@@ -195,8 +195,7 @@ Requires: qalculate-common
 %if_enabled google
 #Requires: google-gadgets-qt
 %endif
-Provides: policykit-kde = %version-%release
-Obsoletes: policykit-kde < %version-%release
+Requires: polkit-kde-agent-1
 Provides: kde4base-kinfocenter = %version-%release
 Obsoletes: kde4base-kinfocenter < %version-%release
 %description core
@@ -506,19 +505,6 @@ KDE 4 library
 %if_disabled google
 rm -rf plasma/generic/scriptengines/google_gadgets
 %endif
-# use polkit-kde-1
-mkdir -p PolicyKit-kde
-rm -rf PolicyKit-kde/*
-cp -ar altlinux/polkit-kde-1/* PolicyKit-kde/
-mv -n PolicyKit-kde/cmake/modules/*.cmake cmake/modules/
-sed -i "s|.*CMAKE_MODULE_PATH.*||" PolicyKit-kde/CMakeLists.txt
-#sed -i "s|.*set.*DESKTOP_INSTALL_DIR.*|set (DESKTOP_INSTALL_DIR %_K4start)|" PolicyKit-kde/CMakeLists.txt
-cat >>CMakeLists.txt <<__EOF__
-find_package(PolkitQt-1 REQUIRED)
-if(POLKITQT-1_FOUND)
-  add_subdirectory(PolicyKit-kde)
-endif(POLKITQT-1_FOUND)
-__EOF__
 
 %patch21 -p1
 %patch22 -p1
@@ -650,8 +636,6 @@ for d in `ls -1d %buildroot/%_kde4_iconsdir/Oxygen_*` ; do
     mv $d %buildroot/%_K4iconsdir/
 done
 
-%K4find_lang --output=%name.lang polkit-kde-authentication-agent-1
-
 
 %if_enabled desktop
 # install kdm settings
@@ -739,7 +723,7 @@ chmod 0755 %buildroot/%_sysconfdir/firsttime.d/kdm4
 %_K4doc/en/kdm
 %endif
 
-%files core -f %name.lang
+%files core
 %config(noreplace) %_sysconfdir/pam.d/kde4-kscreensaver
 %config(noreplace) %x11confdir/wmsession.d/*KDE*
 %config(noreplace) %_sysconfdir/dbus-1/system.d/org.kde.*.conf
@@ -783,7 +767,6 @@ chmod 0755 %buildroot/%_sysconfdir/firsttime.d/kdm4
 %_K4exec/ksysguardprocesslist_helper
 %_K4exec/kwin_killer_helper
 %_K4exec/kwin_opengl_test
-%_K4exec/polkit-kde-authentication-agent-1
 %if_enabled desktop
 %_K4libdir/libkickoff.so
 %_K4libdir/strigi/*
@@ -958,6 +941,9 @@ chmod 0755 %buildroot/%_sysconfdir/firsttime.d/kdm4
 %_K4dbus_interfaces/*
 
 %changelog
+* Thu Mar 14 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.1-alt2
+- build polkit-kde-agent-1 separately
+
 * Tue Mar 05 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.1-alt1
 - new version
 - built without consolekit support
