@@ -96,7 +96,7 @@
 
 Name: libvirt
 Version: 1.0.3
-Release: alt0.1.rc2
+Release: alt1
 Summary: Library providing a simple API virtualization
 License: LGPLv2+
 Group: System/Libraries
@@ -858,6 +858,9 @@ fi
 %doc examples/python
 
 %changelog
+* Wed Mar 13 2013 Alexey Shabalin <shaba@altlinux.ru> 1.0.3-alt1
+- 1.0.3 release
+
 * Fri Mar 01 2013 Alexey Shabalin <shaba@altlinux.ru> 1.0.3-alt0.1.rc2
 - upstream snapshot
 
