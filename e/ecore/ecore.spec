@@ -3,9 +3,9 @@
 Name: ecore
 Version: 1.7.5
 %ifdef beta
-Release: alt1.%beta
+Release: alt2.%beta
 %else
-Release: alt1
+Release: alt2
 %endif
 
 Serial: 1
@@ -25,9 +25,9 @@ BuildPreReq: libevas-devel >= 1.7.3 libeina-devel >= 1.7.3
 BuildRequires: fontconfig-devel libcurl-devel libdirectfb-devel libevas-devel
 BuildRequires: libfreetype-devel libICE-devel libjpeg-devel libXcursor-devel
 BuildRequires: libXdamage-devel libXinerama-devel libXp-devel libXrandr-devel
-BuildRequires: libXScrnSaver-devel xorg-x11-proto-devel libXfixes-devel
+BuildRequires: libXScrnSaver-devel libXfixes-devel
 BuildRequires: libXext-devel libXrender-devel libXcomposite-devel libXtst-devel
-BuildRequires: libssl-devel libgcrypt-devel glib2-devel doxygen
+BuildRequires: libssl-devel libgnutls-devel libgcrypt-devel glib2-devel doxygen
 
 %description
 Ecore is a nice convenience library. It handles abstracting X calls so
@@ -123,6 +123,9 @@ This package contains Ecore static libraries.
 %endif
 
 %changelog
+* Wed Mar 13 2013 Yuri N. Sedunov <aris@altlinux.org> 1:1.7.5-alt2
+- updated buildreqs
+
 * Sat Jan 05 2013 Yuri N. Sedunov <aris@altlinux.org> 1:1.7.5-alt1
 - 1.7.5
 
