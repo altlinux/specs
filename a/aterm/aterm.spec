@@ -2,7 +2,7 @@
 
 Name: aterm
 Version: 1.0.1
-Release: alt4.qa1
+Release: alt4.qa2
 
 Summary: An rxvt-based terminal emulator for X Window System
 License: GPL
@@ -23,7 +23,7 @@ Provides: xvt, %_bindir/xvt
 PreReq: libutempter, alternatives >= 0.0.6
 
 # Automatically added by buildreq on Fri Feb 10 2006
-BuildRequires: alternatives libICE-devel libSM-devel libX11-devel libXext-devel libXmu-devel libXt-devel libutempter-devel xorg-proto-devel
+BuildRequires: alternatives libICE-devel libSM-devel libX11-devel libXext-devel libXmu-devel libXt-devel libutempter-devel xorg-xproto-devel
 
 %description
 Aterm is a colour vt102 terminal emulator based on rxvt 2.4.8 with add ons
@@ -80,6 +80,9 @@ EOF
 %doc %name.lsm ChangeLog* doc/{FAQ,README.*,etc,menu}
 
 %changelog
+* Wed Mar 13 2013 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt4.qa2
+- NMU: fixed build
+
 * Mon Mar 28 2011 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt4.qa1
 - NMU: converted debian menu to freedesktop
 
