@@ -1,10 +1,9 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-fedora-compat
-BuildRequires: python-devel
 # END SourceDeps(oneline)
 Name:           sugar-connect
 Version:        22
-Release:        alt1_10
+Release:        alt1_11
 Summary:        Connect for Sugar
 Group:          Graphical desktop/Sugar
 License:        GPLv2+
@@ -16,6 +15,7 @@ BuildRequires:  gettext
 BuildRequires:  sugar-toolkit
 Requires:       sugar
 Source44: import.info
+BuildRequires: rpmbuild-helper-sugar-activity
 
 %description
 The Connect activity implements the game of Connect-4 as a two-player game.
@@ -37,6 +37,9 @@ python ./setup.py install --prefix=%{buildroot}/%{_prefix}
 %{sugaractivitydir}/Connect.activity/
 
 %changelog
+* Wed Mar 13 2013 Igor Vlasenko <viy@altlinux.ru> 22-alt1_11
+- update from fc18 release
+
 * Mon Dec 03 2012 Igor Vlasenko <viy@altlinux.ru> 22-alt1_10
 - new version; import from fc17 updates
 
