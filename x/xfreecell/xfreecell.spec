@@ -2,7 +2,7 @@
 Summary: Popular freecell card game for X
 Name: xfreecell
 Version: 1.0.5b
-Release: alt6.%bsdver
+Release: alt7.%bsdver
 License: free
 Group: Games/Cards
 Url: http://www2.giganet.net/~nakayama/
@@ -24,7 +24,7 @@ Packager: Igor Yu. Vlasenko <viy@altlinux.org>
 Prefix: /usr
 
 # Automatically added by buildreq on Fri Apr 04 2008 (-bi)
-BuildRequires: gcc-c++ libXext-devel libX11-devel libstdc++-devel xorg-proto-devel
+BuildRequires: gcc-c++ libXext-devel libX11-devel libstdc++-devel xorg-xproto-devel
 
 %description
 Popular freecell card game for X
@@ -51,9 +51,9 @@ install -m 644 %{name}.6 $RPM_BUILD_ROOT%{_man6dir}/%{name}.6
 
 zcat %SOURCE1 > $RPM_BUILD_ROOT%_datadir/%name/MSNumbers
 
-%__install -D -m644 %SOURCE2 $RPM_BUILD_ROOT%_miconsdir/%name.png
-%__install -D -m644 %SOURCE3 $RPM_BUILD_ROOT%_niconsdir/%name.png
-%__install -D -m644 %SOURCE4 $RPM_BUILD_ROOT%_liconsdir/%name.png
+install -D -m644 %SOURCE2 $RPM_BUILD_ROOT%_miconsdir/%name.png
+install -D -m644 %SOURCE3 $RPM_BUILD_ROOT%_niconsdir/%name.png
+install -D -m644 %SOURCE4 $RPM_BUILD_ROOT%_liconsdir/%name.png
 
 mkdir -p $RPM_BUILD_ROOT%_desktopdir
 cat > $RPM_BUILD_ROOT%_desktopdir/%{name}.desktop <<EOF
@@ -81,6 +81,9 @@ EOF
 %_liconsdir/%name.png
 
 %changelog
+* Wed Mar 13 2013 Igor Vlasenko <viy@altlinux.ru> 1.0.5b-alt7.nb2
+- fixed build
+
 * Sat Mar 26 2011 Igor Vlasenko <viy@altlinux.ru> 1.0.5b-alt6.nb2
 - converted debian menu to freedesktop
 
