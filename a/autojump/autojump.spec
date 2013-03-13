@@ -1,7 +1,7 @@
 Requires: bash-completion
 Name:           autojump
 Version:        21.1.2
-Release:        alt2_3
+Release:        alt3_3
 
 Summary:        A fast way to navigate your filesystem from the command line
 
@@ -53,9 +53,9 @@ install -p bin/icon.png $RPM_BUILD_ROOT%{_datadir}/%{name}/icon.png
 install -Dp bin/%{name} $RPM_BUILD_ROOT%{_bindir}/%{name}
 install -p bin/jumpapplet $RPM_BUILD_ROOT%{_bindir}/jumpapplet
 install -Dpm 644 bin/_j $RPM_BUILD_ROOT%{_datadir}/zsh/site-functions/_j
-install -Dpm 644 bin/%{name}.bash $RPM_BUILD_ROOT%{_sysconfdir}/profile.d/%{name}.bash
+install -Dpm 755 bin/%{name}.bash $RPM_BUILD_ROOT%{_sysconfdir}/profile.d/%{name}.bash
 install -Dpm 755 bin/%{name}.sh $RPM_BUILD_ROOT%{_sysconfdir}/profile.d/%{name}.sh
-install -Dpm 644 bin/%{name}.zsh $RPM_BUILD_ROOT%{_sysconfdir}/profile.d/%{name}.zsh
+install -Dpm 755 bin/%{name}.zsh $RPM_BUILD_ROOT%{_sysconfdir}/profile.d/%{name}.zsh
 
 install -Dpm 644 docs/%{name}.1 $RPM_BUILD_ROOT%{_mandir}/man1/%{name}.1
 # jumpapplet needs autojump.py
@@ -77,6 +77,9 @@ ln -s %{name} $RPM_BUILD_ROOT%{_bindir}/%{name}.py
 %{_datadir}/zsh/site-functions/_j
 
 %changelog
+* Wed Mar 13 2013 Igor Vlasenko <viy@altlinux.ru> 21.1.2-alt3_3
+- 755 for all profile files (closes: #28500)
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 21.1.2-alt2_3
 - update to new release by fcimport
 
