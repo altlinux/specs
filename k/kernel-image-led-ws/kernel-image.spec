@@ -21,7 +21,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.0.68
-Release: alt3
+Release: alt4
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -673,7 +673,7 @@ Patch0882: linux-%kernel_branch.47-fix-sound-firewire--snd-firewire-lib.patch
 Patch0883: linux-%kernel_branch.47-fix-sound-firewire--snd-firewire-speakers.patch
 Patch0884: linux-%kernel_branch.47-fix-sound-firewire--snd-isight.patch
 Patch0885: linux-%kernel_branch.42-fix-sound-oss--pss.patch
-Patch0886: linux-%kernel_branch.65-fix-sound-pci-hda.patch
+Patch0886: linux-%kernel_branch.68-fix-sound-pci-hda.patch
 Patch0887: linux-%kernel_branch.42-fix-sound-pci-rme9652--snd-hdspm.patch
 Patch0888: linux-%kernel_branch.42-fix-sound-usb-misc--snd-ua101.patch
 
@@ -3073,6 +3073,14 @@ done)
 
 
 %changelog
+* Wed Mar 13 2013 Led <led@altlinux.ru> 3.0.68-alt4
+- updated:
+  + fix-sound-pci-hda
+- enabled:
+  + BLK_DEV_INTEGRITY
+- SCSI=y
+- BLK_DEV_SD=y
+
 * Mon Mar 11 2013 Led <led@altlinux.ru> 3.0.68-alt3
 - updated:
   + feat-drivers-video--bootsplash
