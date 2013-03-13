@@ -1,10 +1,6 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-fedora-compat
-BuildRequires: python-devel
-# END SourceDeps(oneline)
 Name:           sugar-logos
 Version:        3
-Release:        alt1_5
+Release:        alt1_6
 Summary:        Boot splash imagery for Sugar on a Stick
 
 Group:          System/Base
@@ -17,6 +13,7 @@ BuildRequires:  plymouth-theme-charge
 Requires:       plymouth
 Requires:       plymouth-plugin-two-step
 Source44: import.info
+BuildRequires: rpmbuild-helper-sugar-activity
 
 %description
 A boot splash screen for Sugar using Plymouth.
@@ -64,6 +61,9 @@ fi
 
 
 %changelog
+* Wed Mar 13 2013 Igor Vlasenko <viy@altlinux.ru> 3-alt1_6
+- update from fc18 release
+
 * Mon Dec 03 2012 Igor Vlasenko <viy@altlinux.ru> 3-alt1_5
 - new version; import from fc17 updates
 
