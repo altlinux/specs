@@ -9,7 +9,7 @@ BuildRequires: /usr/bin/pkg-config /usr/bin/python
 Summary: 		Dropbox extension for caja
 Name: 			mate-file-manager-dropbox
 Version: 		0.7.1
-Release: 		alt1_5
+Release: 		alt2_5
 License: 		GNU
 Group: 			Graphical desktop/MATE
 URL: 			http://pub.mate-desktop.org
@@ -26,7 +26,6 @@ BuildRequires: 	python-module-docutils
 BuildRequires: 	ImageMagick
 BuildRequires: 	libmatenotify-devel
 BuildRequires:  mate-common
-BuildRequires:  xorg-utils
 BuildRequires:  python-module-docutils
 BuildRequires:  python-devel
 
@@ -76,6 +75,9 @@ libtool --finish %{_libdir}/caja/extensions-2.0
 %{_libdir}/caja/extensions-2.0/libcaja-dropbox.*
 
 %changelog
+* Wed Mar 13 2013 Igor Vlasenko <viy@altlinux.ru> 0.7.1-alt2_5
+- fixed build
+
 * Mon Feb 18 2013 Igor Vlasenko <viy@altlinux.ru> 0.7.1-alt1_5
 - dropped matevfs dependencies
 
