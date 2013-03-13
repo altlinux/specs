@@ -8,7 +8,7 @@
 
 Name:    fonts-ttf-apanov-edrip
 Version: 20100430
-Release: alt2_5
+Release: alt2_6
 Summary: A decorative contrast sans-serif font
 
 Group:     System/Fonts/True type
@@ -33,7 +33,7 @@ Latin alphabets.
 
 
 %prep
-%setup -q -c
+%setup -n %{oldname}-%{version} -q -c
 
 %build
 make %{?_smp_mflags}
@@ -53,9 +53,9 @@ ln -s %{_fontconfig_templatedir}/%{fontconf} \
       %{buildroot}%{_fontconfig_confdir}/%{fontconf}
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
-for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz afm pfa pfb; do
+for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
     case "$fontpatt" in 
-	pcf*) type=bitmap;;
+	pcf*|bdf*) type=bitmap;;
 	tt*|TT*) type=ttf;;
 	otf|OTF) type=otf;;
 	afm*|pf*) type=type1;;
@@ -94,6 +94,9 @@ fi
 %doc *.txt README
 
 %changelog
+* Wed Mar 13 2013 Igor Vlasenko <viy@altlinux.ru> 20100430-alt2_6
+- update to new release by fcimport
+
 * Mon Sep 24 2012 Igor Vlasenko <viy@altlinux.ru> 20100430-alt2_5
 - new fc release
 
