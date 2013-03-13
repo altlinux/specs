@@ -1,13 +1,16 @@
 %define snapshot 20121006
 %define api_ver 1.0
+%define _libexecdir %_prefix/libexec
 
 %def_enable python
 %def_enable dconf
 %def_disable gconf
 %def_enable xkb
+# may to produce problem with applet in kde if enabled
+%def_enable libgnomekbd
 
 Name: ibus
-Version: 1.4.99.%snapshot
+Version: 1.5.1
 Release: alt1
 
 Summary: Intelligent Input Bus for Linux OS
@@ -16,26 +19,23 @@ Group: System/Libraries
 Url: http://code.google.com/p/%name/
 
 Source: http://%name.googlecode.com/files/%name-%version.tar.gz
-Source1: xinput-ibus
+Source1: ibus-xinput
 # fedora's patches
 Patch1: ibus-810211-no-switch-by-no-trigger.patch
 Patch2: ibus-541492-xkb.patch
 Patch3: ibus-530711-preload-sys.patch
 Patch4: ibus-xx-setup-frequent-lang.patch
 
-# Workaround to disable preedit on gnome-shell until bug 658420 is fixed.
-# https://bugzilla.gnome.org/show_bug.cgi?id=658420
-Patch92: ibus-xx-g-s-disable-preedit.patch
-# Hide nonused properties in f17.
-Patch94: ibus-xx-no-use.diff
-# Workaround since f18 vala is old.
-Patch95: ibus-xx-f18-build.patch
+# Workaround since for vala >= 0.19
+Patch95: ibus-xx-vapi-build-failure.patch
 
 %define gtk2_binary_version %(pkg-config  --variable=gtk_binary_version gtk+-2.0)
 %define gtk3_binary_version %(pkg-config  --variable=gtk_binary_version gtk+-3.0)
 
 Requires: iso-codes
 Requires: lib%name = %version-%release
+Requires: lib%name-gir = %version-%release
+
 %{?_enable_gconf:Requires(post,preun):GConf}
 %{?_enable_dconf:Requires: dconf}
 
@@ -59,7 +59,10 @@ BuildRequires: libXi-devel
 # required if autoreconf used
 BuildRequires: libGConf-devel
 %{?_enable_dconf:BuildRequires: libdconf-devel /proc dbus-tools-gui dconf}
-%{?_enable_xkb:BuildRequires: libxkbfile-devel libgnomekbd-devel libgnomekbd-gir-devel}
+%{?_enable_xkb:BuildRequires: libxkbfile-devel}
+%{?_enable_libgnomekbd:BuildRequires: libgnomekbd-devel libgnomekbd-gir-devel}
+# gsettings-schema-convert
+BuildRequires: GConf
 
 %define _xinputconf %_sysconfdir/X11/xinit/xinput.d/ibus.conf
 
@@ -140,8 +143,6 @@ This package contains IBus im module for python.
 
 %prep
 %setup
-#%%patch92 -p1 -b .g-s-preedit
-#cp client/gtk2/ibusimcontext.c client/gtk3/ibusimcontext.c ||
 %patch1 -p1 -b .noswitch
 
 %if_enabled xkb
@@ -151,8 +152,7 @@ rm -f data/dconf/00-upstream-settings
 %endif
 %patch3 -p1
 %patch4 -p1
-%patch94 -p1 -b .no-used
-%patch95 -p1 -b .f18
+#%%patch95 -p1 -b .vala
 
 %build
 %autoreconf
@@ -162,13 +162,13 @@ rm -f data/dconf/00-upstream-settings
     --enable-gtk3 \
     --enable-xim \
     --disable-gtk-doc \
-    %{subst_enable dconf} \
     %{?_enable_python:--enable-python-library} \
+    %{subst_enable dconf} \
     %{?_enable_dconf:--disable-schemas-compile} \
     %{subst_enable gconf} \
-    %{subst_enable xkb} \
-    %{?_enable_xkb:--enable-libgnomekbd} \
     %{?_enable_gconf:--disable-schemas-install} \
+    %{subst_enable libgnomekbd} \
+    --enable-surrounding-text \
     --enable-introspection
 
 %make_build
@@ -198,18 +198,6 @@ if [ $1 = 0 ]; then
 fi
 %endif
 
-%post gtk2
-%_bindir/gtk-query-immodules-2.0 > %_sysconfdir/gtk-2.0/gtk.immodules
-
-%postun gtk2
-%_bindir/gtk-query-immodules-2.0 > %_sysconfdir/gtk-2.0/gtk.immodules
-
-%post gtk3
-%_bindir/gtk-query-immodules-3.0 --update-cache || :
-
-%postun gtk3
-%_bindir/gtk-query-immodules-3.0 --update-cache || :
-
 %files -f %{name}10.lang
 %dir %_datadir/ibus/
 %_bindir/%name
@@ -220,7 +208,7 @@ fi
 %_iconsdir/hicolor/*/apps/*
 %_libexecdir/ibus-ui-gtk3
 %_libexecdir/ibus-x11
-%{?_enable_xkb:%_libexecdir/ibus-xkb}
+#%{?_enable_xkb:%_libexecdir/ibus-xkb}
 %_libexecdir/%name-engine-simple
 %_sysconfdir/xdg/autostart/ibus.desktop
 
@@ -275,6 +263,10 @@ fi
 %_datadir/gtk-doc/html/*
 
 %changelog
+* Wed Mar 13 2013 Yuri N. Sedunov <aris@altlinux.org> 1.5.1-alt1
+- 1.5.1
+- updated fc patchset
+
 * Tue Oct 09 2012 Yuri N. Sedunov <aris@altlinux.org> 1.4.99.20121006-alt1
 - updated to 1.4.99.20121006
 
