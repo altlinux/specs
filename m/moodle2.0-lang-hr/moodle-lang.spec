@@ -6,7 +6,7 @@
 %define packagetype lang
 %define packagename hr
 %define packagversion 2.0.0
-%define packagedate 201303011657
+%define packagedate 201303071004
 %define moodlebranch 2.0
 %define moodlepackagename %moodle_name%moodlebranch
 %define langname Croatian
@@ -57,6 +57,10 @@ cp -rp * %buildroot%moodle_langdir/
 %moodle_langdir/*
 
 %changelog
+* Wed Mar 13 2013 Cronbuild Service <cronbuild@altlinux.org> 2.0.0.201303071004-alt1
+- repocop cronbuild 20130313. At your service.
+- hr.zip build 2013-03-07 10:04 UTC
+
 * Mon Mar 04 2013 Cronbuild Service <cronbuild@altlinux.org> 2.0.0.201303011657-alt1
 - repocop cronbuild 20130304. At your service.
 - hr.zip build 2013-03-01 16:57 UTC
