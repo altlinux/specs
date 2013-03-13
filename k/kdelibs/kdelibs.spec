@@ -22,7 +22,7 @@
 %define major 3
 %define minor 5
 %define bugfix 13.1
-%define rel alt9
+%define rel alt9.1
 Name: kdelibs
 Version: %major.%minor.%bugfix
 Release: %rel
@@ -394,7 +394,7 @@ then
     -DWITH_INOTIFY=OFF \
     -DWITH_GAMIN=OFF \
     -DWITH_ASPELL=ON \
-    -DASPELL_DATADIR=/usr/lib/aspell \
+    -DASPELL_DATADIR=%_libdir/aspell \
     -DWITH_HSPELL=OFF \
     -DKDE_DISTRIBUTION_TEXT="%distribution %_target_cpu"
 
@@ -654,6 +654,9 @@ done
 #%doc %_K3doc/en/%name-*-apidocs
 
 %changelog
+* Wed Mar 13 2013 Roman Savochenko <rom_as@altlinux.ru> 3.5.13.1-alt9.1
+- Path to ASpell data directory fix for X86_64 by use macro %_libdir.
+
 * Tue Feb 26 2013 Roman Savochenko <rom_as@altlinux.ru> 3.5.13.1-alt9
 - Update to current 3.5.13-sru branch.
 
