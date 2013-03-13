@@ -1,9 +1,8 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-python rpm-macros-fedora-compat
-BuildRequires: pkgconfig(gtk+-2.0) pkgconfig(x11) python-devel
+BuildRequires(pre): rpm-macros-fedora-compat
 # END SourceDeps(oneline)
 Name:           sugar-stopwatch
-Version:        15
+Version:        18
 Release:        alt1_1
 Summary:        Simple stopwatch for Sugar
 
@@ -12,11 +11,14 @@ License:        GPLv3+
 URL:            http://wiki.laptop.org/go/Stopwatch
 Source0:        http://download.sugarlabs.org/activities/4263/stopwatch-%{version}.xo
 
-BuildRequires:  sugar-toolkit
-BuildRequires:  gettext
-Requires:       sugar
+BuildRequires: python-devel
+BuildRequires: sugar-base
+BuildRequires: sugar-toolkit-gtk3
+BuildRequires: gettext
+Requires: sugar >= 0.98.0
 BuildArch:      noarch
 Source44: import.info
+BuildRequires: rpmbuild-helper-sugar-activity
 
 %description
 This activity provides multiple stopwatches to time events with. Provide a 
@@ -42,6 +44,9 @@ python ./setup.py install --prefix=%{buildroot}/%{_prefix}
 
 
 %changelog
+* Wed Mar 13 2013 Igor Vlasenko <viy@altlinux.ru> 18-alt1_1
+- update from fc18 release
+
 * Mon Dec 03 2012 Igor Vlasenko <viy@altlinux.ru> 15-alt1_1
 - new version; import from fc17 updates
 

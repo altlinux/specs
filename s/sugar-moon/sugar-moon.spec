@@ -4,7 +4,7 @@ BuildRequires(pre): rpm-macros-fedora-compat
 %{!?python_sitearch: %global python_sitearch %(%{__python} -c "from distutils.sysconfig import get_python_lib; print get_python_lib(1)")}
 
 Name: sugar-moon
-Version: 14
+Version: 16
 Release: alt1_1
 Summary: Moon phases activity for sugar
 
@@ -18,8 +18,8 @@ BuildRequires: gettext
 BuildRequires: python-devel
 BuildRequires: sugar-toolkit
 Requires: sugar
-Requires: python-module-simplejson
 Source44: import.info
+BuildRequires: rpmbuild-helper-sugar-activity
 
 %description
 Moon is a simple Lunar phase activity for Sugar.
@@ -41,6 +41,9 @@ python ./setup.py install --prefix=$RPM_BUILD_ROOT/%{_prefix}
 %{sugaractivitydir}/Moon.activity/
 
 %changelog
+* Wed Mar 13 2013 Igor Vlasenko <viy@altlinux.ru> 16-alt1_1
+- update from fc18 release
+
 * Mon Dec 03 2012 Igor Vlasenko <viy@altlinux.ru> 14-alt1_1
 - new version; import from fc17 updates
 

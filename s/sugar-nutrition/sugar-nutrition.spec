@@ -2,7 +2,7 @@
 BuildRequires(pre): rpm-macros-fedora-compat
 # END SourceDeps(oneline)
 Name:           sugar-nutrition
-Version:        7
+Version:        9
 Release:        alt1_1
 Summary:        A collection of nutrition games
 
@@ -40,6 +40,9 @@ food and nutrition.
 %{sugaractivitydir}/Nutrition.activity/
 
 %changelog
+* Wed Mar 13 2013 Igor Vlasenko <viy@altlinux.ru> 9-alt1_1
+- update from fc18 release
+
 * Wed Dec 12 2012 Igor Vlasenko <viy@altlinux.ru> 7-alt1_1
 - new version; import from fc18
 

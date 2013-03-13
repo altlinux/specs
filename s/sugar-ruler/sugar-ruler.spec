@@ -1,9 +1,8 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-python rpm-macros-fedora-compat
-BuildRequires: python-devel
+BuildRequires(pre): rpm-macros-fedora-compat
 # END SourceDeps(oneline)
 Name:           sugar-ruler
-Version:        19
+Version:        27
 Release:        alt1_1
 Summary:        Simple collection of measurement tools
 
@@ -12,10 +11,11 @@ License:        GPLv3+
 URL:            http://wiki.sugarlabs.org/go/Activities/Ruler
 Source0:        http://download.sugarlabs.org/sources/honey/Ruler/Ruler-%{version}.tar.bz2
 
-BuildRequires:  sugar-toolkit gettext
+BuildRequires:  python-devel sugar-toolkit-gtk3 gettext
 BuildArch:      noarch
-Requires:       sugar
+Requires:       sugar >= 0.97.6
 Source44: import.info
+BuildRequires: rpmbuild-helper-sugar-activity
 
 %description
 Ruler is a simple collection of measurement tools that are displayed 
@@ -44,6 +44,9 @@ subsequent uses of the Activity.
 
 
 %changelog
+* Wed Mar 13 2013 Igor Vlasenko <viy@altlinux.ru> 27-alt1_1
+- update from fc18 release
+
 * Mon Dec 03 2012 Igor Vlasenko <viy@altlinux.ru> 19-alt1_1
 - new version; import from fc17 updates
 

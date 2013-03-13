@@ -1,9 +1,8 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-fedora-compat
-BuildRequires: python-devel
 # END SourceDeps(oneline)
 Name:           sugar-finance
-Version:        8
+Version:        10
 Release:        alt1_1
 Summary:        Financial planning for Sugar
 
@@ -13,11 +12,13 @@ URL:            http://wiki.laptop.org/go/Finance
 Source0:        http://download.sugarlabs.org/sources/honey/Finance/Finance-%{version}.tar.bz2
 BuildArch:      noarch
 
-BuildRequires:  sugar-toolkit
-BuildRequires:  gettext
-
-Requires:       sugar
+BuildRequires: python-devel
+BuildRequires: sugar-base
+BuildRequires: sugar-toolkit-gtk3
+BuildRequires: gettext
+Requires: sugar >= 0.98.0
 Source44: import.info
+BuildRequires: rpmbuild-helper-sugar-activity
 
 
 %description
@@ -53,6 +54,9 @@ python ./setup.py install --prefix=%{buildroot}/%{_prefix}
 
 
 %changelog
+* Wed Mar 13 2013 Igor Vlasenko <viy@altlinux.ru> 10-alt1_1
+- update from fc18 release
+
 * Mon Dec 03 2012 Igor Vlasenko <viy@altlinux.ru> 8-alt1_1
 - new version; import from fc17 updates
 

@@ -1,9 +1,8 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-fedora-compat
-BuildRequires: python-devel
 # END SourceDeps(oneline)
 Name:           sugar-distance
-Version:        31
+Version:        34
 Release:        alt1_1
 Summary:        Distance measurement for Sugar
 
@@ -12,11 +11,13 @@ License:        GPLv2+
 URL:            http://wiki.laptop.org/go/Distance
 Source0:        http://mirrors.ibiblio.org/pub/mirrors/sugar/activities/4264/distance-%{version}.xo
 
-BuildRequires:  gettext
-BuildRequires:  sugar-toolkit
-Requires:       sugar
 BuildArch:      noarch
+BuildRequires:  gettext
+BuildRequires:  python-devel
+BuildRequires:  sugar-toolkit-gtk3
+Requires:       sugar >= 0.97.0
 Source44: import.info
+BuildRequires: rpmbuild-helper-sugar-activity
 
 %description
 Distance (aka Acoustic Tape Measure) determines the physical distance 
@@ -44,6 +45,9 @@ find %{buildroot}%{sugaractivitydir}Distance.activity/arange.py -type f -name \*
 
 
 %changelog
+* Wed Mar 13 2013 Igor Vlasenko <viy@altlinux.ru> 34-alt1_1
+- update from fc18 release
+
 * Mon Dec 03 2012 Igor Vlasenko <viy@altlinux.ru> 31-alt1_1
 - new version; import from fc17 updates
 

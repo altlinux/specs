@@ -1,16 +1,15 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-fedora-compat
-BuildRequires: python-devel
 # END SourceDeps(oneline)
 Name:           sugar-getiabooks
-Version:        11
+Version:        14
 Release:        alt1_1
 Summary:        Internet Archive Books receiver for Sugar
 
 Group:          Graphical desktop/Sugar
 License:        GPLv2+
 URL:            http://wiki.sugarlabs.org/go/Activities/Get_Internet_Archive_Books
-Source0:        http://download.sugarlabs.org/sources/honey/GetBooks/GetBooks-11.tar.bz2
+Source0:        http://download.sugarlabs.org/sources/honey/GetBooks/GetBooks-%{version}.tar.bz2
 BuildArch:      noarch
 
 BuildRequires:  sugar-toolkit
@@ -18,6 +17,7 @@ BuildRequires:  sugar-toolkit-gtk3
 BuildRequires:  gettext
 Requires:       sugar
 Source44: import.info
+BuildRequires: rpmbuild-helper-sugar-activity
 
 
 %description
@@ -52,6 +52,9 @@ rm %{buildroot}%{sugaractivitydir}GetBooks.activity/NEWS
 
 
 %changelog
+* Wed Mar 13 2013 Igor Vlasenko <viy@altlinux.ru> 14-alt1_1
+- update from fc18 release
+
 * Mon Dec 03 2012 Igor Vlasenko <viy@altlinux.ru> 11-alt1_1
 - new version; import from fc17 updates
 

@@ -5,7 +5,7 @@ BuildRequires(pre): rpm-macros-fedora-compat
 %{!?python_sitearch: %global python_sitearch %(%{__python} -c "from distutils.sysconfig import get_python_lib; print(get_python_lib(1))")}
 
 Name: sugar-abacus
-Version: 35
+Version: 43
 Release: alt1_1
 Summary: A simple abacus activity for Sugar
 
@@ -19,8 +19,9 @@ BuildRequires: python-devel
 BuildRequires: sugar-base
 BuildRequires: sugar-toolkit-gtk3
 BuildRequires: gettext
-Requires: sugar >= 0.95.0
+Requires: sugar >= 0.96.0
 Source44: import.info
+BuildRequires: rpmbuild-helper-sugar-activity
 
 %description
 Abacus lets the learner explore different representations of numbers using 
@@ -51,6 +52,9 @@ python ./setup.py install --prefix=%{buildroot}/%{_prefix}
 %{sugaractivitydir}/Abacus.activity/
 
 %changelog
+* Wed Mar 13 2013 Igor Vlasenko <viy@altlinux.ru> 43-alt1_1
+- update from fc18 release
+
 * Mon Dec 03 2012 Igor Vlasenko <viy@altlinux.ru> 35-alt1_1
 - new version; import from fc17 updates
 

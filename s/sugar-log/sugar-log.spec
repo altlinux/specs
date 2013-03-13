@@ -1,23 +1,25 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-python rpm-macros-fedora-compat
-BuildRequires: /usr/bin/gconftool-2 /usr/bin/glib-gettextize /usr/bin/icon-slicer pkgconfig(cairo) pkgconfig(gobject-2.0) pkgconfig(gtk+-2.0) python-devel
+BuildRequires(pre): rpm-macros-fedora-compat
 # END SourceDeps(oneline)
-Name:           sugar-log
-Version:        29
-Release:        alt1_1
-Summary:        Log activity for Sugar
+Name:          sugar-log
+Version:       32
+Release:       alt1_1
+Summary:       Log activity for Sugar
 
-Group:          Graphical desktop/Sugar
-License:        GPLv2+
-URL:            http://wiki.laptop.org/go/Log
-Source0:        http://download.sugarlabs.org/sources/sucrose/fructose/Log/Log-%{version}.tar.bz2
-BuildArch:      noarch
+Group:         Graphical desktop/Sugar
+License:       GPLv2+
+URL:           http://wiki.laptop.org/go/Log
+Source0:       http://download.sugarlabs.org/sources/sucrose/fructose/Log/Log-%{version}.tar.bz2
+BuildArch:     noarch
 
-BuildRequires:  sugar-toolkit
-BuildRequires:  gettext
+BuildRequires: python-devel
+BuildRequires: sugar-base
+BuildRequires: sugar-toolkit-gtk3
+BuildRequires: gettext
 
-Requires:       sugar
+Requires:      sugar
 Source44: import.info
+BuildRequires: rpmbuild-helper-sugar-activity
 Obsoletes: sugar-log-activity < %version
 Conflicts: sugar-log-activity < %version
 
@@ -45,6 +47,9 @@ python ./setup.py install --prefix=%{buildroot}/%{_prefix}
 
 
 %changelog
+* Wed Mar 13 2013 Igor Vlasenko <viy@altlinux.ru> 32-alt1_1
+- update from fc18 release
+
 * Mon Dec 03 2012 Igor Vlasenko <viy@altlinux.ru> 29-alt1_1
 - new version; import from fc17 updates
 

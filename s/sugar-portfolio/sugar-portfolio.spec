@@ -1,9 +1,8 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-python rpm-macros-fedora-compat
-BuildRequires: python-devel
+BuildRequires(pre): rpm-macros-fedora-compat
 # END SourceDeps(oneline)
 Name:           sugar-portfolio
-Version:        28
+Version:        37
 Release:        alt1_1
 Summary:        A simple tool for generating slide show from starred Journal entries
 
@@ -12,10 +11,11 @@ License:        GPLv3+
 URL:            http://wiki.sugarlabs.org/go/Activities/Portfolio
 Source0:        http://download.sugarlabs.org/sources/honey/Portfolio/Portfolio-%{version}.tar.bz2
 
-BuildRequires:  sugar-toolkit gettext
+BuildRequires:  python-devel sugar-toolkit-gtk3 gettext
 BuildArch:      noarch
-Requires:       sugar
+Requires:       sugar >= 0.97.6
 Source44: import.info
+BuildRequires: rpmbuild-helper-sugar-activity
 
 %description
 Portfolio is a simple tool for generating a slide show from Journal 
@@ -40,6 +40,9 @@ rm po/son.po
 %{sugaractivitydir}/Portfolio.activity/
 
 %changelog
+* Wed Mar 13 2013 Igor Vlasenko <viy@altlinux.ru> 37-alt1_1
+- update from fc18 release
+
 * Mon Dec 03 2012 Igor Vlasenko <viy@altlinux.ru> 28-alt1_1
 - new version; import from fc17 updates
 

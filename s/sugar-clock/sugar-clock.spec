@@ -3,7 +3,7 @@ BuildRequires(pre): rpm-macros-fedora-compat
 BuildRequires: python-devel
 # END SourceDeps(oneline)
 Name:           sugar-clock
-Version:        8
+Version:        11
 Release:        alt1_1
 Summary:        Clock activity for Sugar
 
@@ -18,6 +18,7 @@ BuildRequires:  sugar-toolkit
 
 Requires:       sugar
 Source44: import.info
+BuildRequires: rpmbuild-helper-sugar-activity
 
 
 %description
@@ -32,10 +33,6 @@ telling time.
 
 %prep
 %setup -q -n Clock-%{version}
-#sed -i 's/\r$//' {icons/*,activity/activity-clock.svg,misc/activity-clock.svg}
-#chmod -x {icons/*,activity/activity-clock.svg,misc/activity-clock.svg}
-#chmod +x {test_timewriter/*.py,speaker.py,timewriter.py,pgettext.py}
-
 
 %build
 python ./setup.py build
@@ -52,6 +49,9 @@ python ./setup.py install --prefix=%{buildroot}/%{_prefix}
 
 
 %changelog
+* Wed Mar 13 2013 Igor Vlasenko <viy@altlinux.ru> 11-alt1_1
+- update from fc18 release
+
 * Mon Dec 03 2012 Igor Vlasenko <viy@altlinux.ru> 8-alt1_1
 - new version; import from fc17 updates
 

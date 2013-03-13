@@ -1,26 +1,26 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-python rpm-macros-fedora-compat
-BuildRequires: /usr/bin/gconftool-2 /usr/bin/glib-gettextize /usr/bin/icon-slicer pkgconfig(cairo) pkgconfig(gobject-2.0) pkgconfig(gtk+-2.0) python-devel
+BuildRequires(pre): rpm-macros-fedora-compat
 # END SourceDeps(oneline)
-Name:           sugar-imageviewer
-Version:        21
-Release:        alt1_1
-Summary:        Simple Image viewer for Sugar
+Name:          sugar-imageviewer
+Version:       54
+Release:       alt1_1
+Summary:       Simple Image viewer for Sugar
 
-Group:          Graphical desktop/Sugar
-License:        GPLv2+
-URL:            http://wiki.laptop.org/go/Image_Viewer
-Source0:        http://download.sugarlabs.org/sources/sucrose/fructose/ImageViewer/ImageViewer-%{version}.tar.bz2
-BuildArch:      noarch
+Group:         Graphical desktop/Sugar
+License:       GPLv2+
+URL:           http://wiki.laptop.org/go/Image_Viewer
+Source0:       http://download.sugarlabs.org/sources/sucrose/fructose/ImageViewer/ImageViewer-%{version}.tar.bz2
+BuildArch:     noarch
 
-BuildRequires:  sugar-toolkit
-BuildRequires: 	gettext
-
-Requires:       sugar
+BuildRequires: python-devel
+BuildRequires: sugar-base
+BuildRequires: sugar-toolkit-gtk3
+BuildRequires: gettext
+Requires: sugar >= 0.96.0
 Source44: import.info
+BuildRequires: rpmbuild-helper-sugar-activity
 Obsoletes: sugar-imageviewer-activity < %version
 Conflicts: sugar-imageviewer-activity < %version
-
 
 %description
 The Image Viewer activity is a simple and fast image viewer tool for Sugar.
@@ -45,6 +45,9 @@ python ./setup.py install --prefix=%{buildroot}/%{_prefix}
 
 
 %changelog
+* Wed Mar 13 2013 Igor Vlasenko <viy@altlinux.ru> 54-alt1_1
+- update from fc18 release
+
 * Mon Dec 03 2012 Igor Vlasenko <viy@altlinux.ru> 21-alt1_1
 - new version; import from fc17 updates
 

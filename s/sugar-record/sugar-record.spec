@@ -1,12 +1,11 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-python rpm-macros-fedora-compat
-BuildRequires: python-devel
+BuildRequires(pre): rpm-macros-fedora-compat
 # END SourceDeps(oneline)
 %{!?python_sitelib: %global python_sitelib %(%{__python} -c "from distutils.sysconfig import get_python_lib; print(get_python_lib())")}
 %{!?python_sitearch: %global python_sitearch %(%{__python} -c "from distutils.sysconfig import get_python_lib; print(get_python_lib(1))")}
 
 Name:           sugar-record
-Version:        96
+Version:        97
 Release:        alt1_1
 Summary:        Recording tool for Sugar
 
@@ -22,6 +21,7 @@ BuildRequires:  sugar-toolkit
 Requires:       sugar
 Requires:       gst-plugins-good
 Source44: import.info
+BuildRequires: rpmbuild-helper-sugar-activity
 
 %description
 Record is the basic rich-media capture activity for the laptop. It 
@@ -46,6 +46,9 @@ python ./setup.py install --prefix=%{buildroot}/%{_prefix}
 %{sugaractivitydir}/Record.activity/
 
 %changelog
+* Wed Mar 13 2013 Igor Vlasenko <viy@altlinux.ru> 97-alt1_1
+- update from fc18 release
+
 * Mon Dec 03 2012 Igor Vlasenko <viy@altlinux.ru> 96-alt1_1
 - new version; import from fc17 updates
 

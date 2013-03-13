@@ -1,9 +1,8 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-python rpm-macros-fedora-compat
-BuildRequires: /usr/bin/gconftool-2 /usr/bin/glib-gettextize /usr/bin/icon-slicer pkgconfig(cairo) pkgconfig(gobject-2.0) pkgconfig(gtk+-2.0) python-devel
+BuildRequires(pre): rpm-macros-fedora-compat
 # END SourceDeps(oneline)
 Name: sugar-terminal
-Version: 39
+Version: 41
 Release: alt1_1
 Summary: Terminal for Sugar
 Group: Graphical desktop/Sugar
@@ -11,14 +10,17 @@ License: GPLv2+
 URL: http://wiki.laptop.org/go/Terminal
 Source0: http://download.sugarlabs.org/sources/sucrose/fructose/Terminal/Terminal-%{version}.tar.bz2
 
-BuildRequires: sugar-toolkit
+BuildRequires: python-devel
+BuildRequires: sugar-base
+BuildRequires: sugar-toolkit-gtk3
 BuildRequires: gettext
 
 Requires: sugar
-Requires: vte
+Requires: vte3
 
 BuildArch: noarch
 Source44: import.info
+BuildRequires: rpmbuild-helper-sugar-activity
 Obsoletes: sugar-terminal-activity < %version
 Conflicts: sugar-terminal-activity < %version
 
@@ -45,6 +47,9 @@ mkdir -p $RPM_BUILD_ROOT%{sugaractivitydir}
 %{sugaractivitydir}/Terminal.activity/
 
 %changelog
+* Wed Mar 13 2013 Igor Vlasenko <viy@altlinux.ru> 41-alt1_1
+- update from fc18 release
+
 * Mon Dec 03 2012 Igor Vlasenko <viy@altlinux.ru> 39-alt1_1
 - new version; import from fc17 updates
 

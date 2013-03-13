@@ -1,10 +1,9 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-python
-BuildRequires: /usr/bin/gconftool-2 /usr/bin/glib-gettextize /usr/bin/icon-slicer pkgconfig(cairo) pkgconfig(gobject-2.0) pkgconfig(gtk+-2.0) python-devel
+BuildRequires: /usr/bin/icon-slicer pkgconfig(cairo) pkgconfig(gobject-2.0) pkgconfig(gtk+-2.0)
 # END SourceDeps(oneline)
 Summary: Artwork for Sugar look-and-feel
 Name: sugar-artwork
-Version: 0.96.4
+Version: 0.98.4
 Release: alt1_1
 URL: http://sugarlabs.org
 Group: Graphical desktop/Sugar
@@ -21,6 +20,7 @@ BuildRequires: icon-slicer
 
 Requires: gtk2 libgtk+3
 Source44: import.info
+BuildRequires: rpmbuild-helper-sugar-activity
 Patch33: sugar-artwork-0.88.0-sugar-1899.patch
 
 %description
@@ -39,12 +39,6 @@ make %{?_smp_mflags}
 make DESTDIR=%{buildroot} install
 
 find %{buildroot} -name '*.la' -exec rm -f {} ';'
-
-%post
-touch --no-create %{_datadir}/icons/sugar || :
-
-%postun
-touch --no-create %{_datadir}/icons/sugar || :
 
 %files
 %doc README COPYING
@@ -65,6 +59,9 @@ touch --no-create %{_datadir}/icons/sugar || :
 %{_datadir}/themes/sugar-72/gtk-3.0/assets/*
 
 %changelog
+* Wed Mar 13 2013 Igor Vlasenko <viy@altlinux.ru> 0.98.4-alt1_1
+- update from fc18 release
+
 * Mon Dec 03 2012 Igor Vlasenko <viy@altlinux.ru> 0.96.4-alt1_1
 - new version; import from fc17 updates
 
