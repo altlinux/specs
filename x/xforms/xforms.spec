@@ -3,7 +3,7 @@ BuildRequires: chrpath
 %define suff sp1
 Name: xforms
 Version: 1.0.93
-Release: alt3
+Release: alt4
 
 Summary: A GUI toolkit based on Xlib for the X Window System
 
@@ -20,7 +20,7 @@ Source: http://download.savannah.nongnu.org/releases/xforms/%name-%version%suff.
 
 # manually removed: libxforms-devel 
 # Automatically added by buildreq on Sun Feb 05 2006
-BuildRequires: gccmakedep imake libX11-devel libXext-devel libXpm-devel libGL-devel libjpeg-devel xorg-cf-files xorg-x11-proto-devel libICE-devel libXpm-devel libSM-devel
+BuildRequires: gccmakedep imake libX11-devel libXext-devel libXpm-devel libGL-devel libjpeg-devel xorg-cf-files xorg-xproto-devel libICE-devel libXpm-devel libSM-devel
 BuildRequires: chrpath
 
 %description
@@ -132,6 +132,9 @@ done
 %endif
 
 %changelog
+* Wed Mar 13 2013 Igor Vlasenko <viy@altlinux.ru> 1.0.93-alt4
+- fixed build
+
 * Thu Dec 15 2011 Igor Vlasenko <viy@altlinux.ru> 1.0.93-alt3
 - chrpath -d'ed
 
