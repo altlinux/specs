@@ -1,10 +1,9 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-fedora-compat
-BuildRequires: python-devel
 # END SourceDeps(oneline)
 Name:           sugar-countries
 Version:        33
-Release:        alt1_2
+Release:        alt1_3
 Summary:        A game to play with identifying countries
 
 Group:          Graphical desktop/Sugar
@@ -16,6 +15,7 @@ BuildRequires:  sugar-toolkit gettext
 BuildArch:      noarch
 Requires:       sugar
 Source44: import.info
+BuildRequires: rpmbuild-helper-sugar-activity
 
 %description
 Countries is a game where players have to type in a country for
@@ -38,6 +38,9 @@ sed -i 's/\r//' Countries.py
 %{sugaractivitydir}/Countries.activity/
 
 %changelog
+* Wed Mar 13 2013 Igor Vlasenko <viy@altlinux.ru> 33-alt1_3
+- update from fc18 release
+
 * Mon Dec 03 2012 Igor Vlasenko <viy@altlinux.ru> 33-alt1_2
 - new version; import from fc17 updates
 
