@@ -1,7 +1,7 @@
 
 Name: akonadi
 Version: 1.9.1
-Release: alt2
+Release: alt3
 
 Group: Databases
 Summary: An extensible cross-desktop storage service for PIM
@@ -57,6 +57,7 @@ BuildArch: noarch
 Requires: %name-common = %EVR
 Requires: libqt4-sql-sqlite
 Provides: %name-database = %EVR
+Provides: %name-database-sqlite = %EVR
 Provides: akonadi-database0 = %EVR
 Obsoletes: akonadi-database0 < %EVR
 %description database-1-sqlite
@@ -69,6 +70,7 @@ BuildArch: noarch
 Requires: %name-common = %EVR
 Requires: libqt4-sql-sqlite3
 Provides: %name-database = %EVR
+Provides: %name-database-sqlite3 = %EVR
 Provides: akonadi-database1 = %EVR
 Obsoletes: akonadi-database1 < %EVR
 %description database-3-sqlite3
@@ -81,6 +83,7 @@ BuildArch: noarch
 Requires: %name-common = %EVR
 Requires: libqt4-sql-postgresql postgresql /usr/bin/pg_dump /usr/bin/pg_restore
 Provides: %name-database = %EVR
+Provides: %name-database-postgresql = %EVR
 Provides: akonadi-database2 = %EVR
 Obsoletes: akonadi-database2 < %EVR
 %description database-5-postgresql
@@ -93,6 +96,7 @@ BuildArch: noarch
 Requires: %name-common = %EVR
 Requires: libqt4-sql-mysql MySQL-server  MySQL-client
 Provides: %name-database = %EVR
+Provides: %name-database-mysql = %EVR
 Provides: akonadi-database3 = %EVR
 Obsoletes: akonadi-database3 < %EVR
 %description database-7-mysql
@@ -199,6 +203,9 @@ install -m 0755 %SOURCE10 %buildroot/%_bindir/akonadi_mysql_install_db
 %_libdir/pkgconfig/*
 
 %changelog
+* Wed Mar 13 2013 Sergey V Turchin <zerg@altlinux.org> 1.9.1-alt3
+- update provides for database subpackages
+
 * Tue Mar 12 2013 Sergey V Turchin <zerg@altlinux.org> 1.9.1-alt2
 - rename database subpackages
 
