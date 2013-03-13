@@ -1,6 +1,6 @@
 Name: steam
-Version: 1.0.0.35
-Release: alt2
+Version: 1.0.0.36
+Release: alt1
 
 Summary: Launcher for the Steam software distribution service
 License: Proprietary
@@ -19,7 +19,6 @@ Requires: curl
 Requires: glibc-pthread >= 2.15
 Requires: glibc-nss >= 2.15
 Requires: libGL
-Requires: mozilla-plugin-adobe-flash
 Requires: xz
 
 BuildRequires: python-module-distribute
@@ -53,6 +52,9 @@ savegame and screenshot functionality, and many social features.
 %_pixmapsdir/*
 
 %changelog 
+* Wed Mar 13 2013 Nazarov Denis <nenderus@altlinux.org> 1.0.0.36-alt1
+- Version 1.0.0.36
+
 * Wed Mar 06 2013 Nazarov Denis <nenderus@altlinux.org> 1.0.0.35-alt2
 - Fix resolved DNS on x86_64 (ALT #28640)
 
