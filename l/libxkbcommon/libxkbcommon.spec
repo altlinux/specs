@@ -1,9 +1,8 @@
-%add_optflags %optflags_shared
 #global gitdate  20120917
 
 Name:           libxkbcommon
 Version:        0.2.0
-Release:        alt1_2%{?gitdate:.%{gitdate}}
+Release:        alt2_2
 Summary:        X.Org X11 XKB parsing library
 License:        MIT
 Group:          System/Libraries
@@ -18,7 +17,7 @@ Source1:        make-git-snapshot.sh
 
 BuildRequires:  autoconf automake libtool
 BuildRequires:  xorg-util-macros bison flex bison
-BuildRequires:  xorg-x11-proto-devel libX11-devel
+BuildRequires: xorg-bigreqsproto-devel xorg-compositeproto-devel xorg-damageproto-devel xorg-dmxproto-devel xorg-evieproto-devel xorg-fixesproto-devel xorg-fontsproto-devel xorg-glproto-devel xorg-inputproto-devel xorg-kbproto-devel xorg-pmproto-devel xorg-randrproto-devel xorg-recordproto-devel xorg-renderproto-devel xorg-resourceproto-devel xorg-scrnsaverproto-devel xorg-videoproto-devel xorg-xcbproto-devel xorg-xcmiscproto-devel xorg-xextproto-devel xorg-xf86bigfontproto-devel xorg-xf86dgaproto-devel xorg-xf86driproto-devel xorg-xf86rushproto-devel xorg-xf86vidmodeproto-devel xorg-xineramaproto-devel xorg-xproto-devel libX11-devel
 BuildRequires:  xkeyboard-config-devel
 Source44: import.info
 
@@ -59,6 +58,9 @@ find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 %{_libdir}/pkgconfig/xkbcommon.pc
 
 %changelog
+* Wed Mar 13 2013 Igor Vlasenko <viy@altlinux.ru> 0.2.0-alt2_2
+- fixed build
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.2.0-alt1_2
 - update to new release by fcimport
 
