@@ -5,7 +5,7 @@
 
 Name: branding-%brand-kdesktop
 Version: 7.0.0
-Release: alt0.1
+Release: alt1
 BuildArch: noarch
 
 %define theme %name
@@ -420,6 +420,9 @@ cat '/%_datadir/themes/%XdgThemeName/panel-default-setup.entries' > \
 %_datadir/kde4/apps/kio_desktop/DesktopLinks/indexhtml.desktop
 
 %changelog
+* Wed Mar 13 2013 Sergey V Turchin <zerg at altlinux dot org> 7.0.0-alt1
+- update background images
+
 * Mon Mar 11 2013 Sergey V Turchin <zerg@altlinux.org> 7.0.0-alt0.1
 - bump version
 
