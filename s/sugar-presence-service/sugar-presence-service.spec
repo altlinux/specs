@@ -1,10 +1,9 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-python rpm-macros-fedora-compat
-BuildRequires: /usr/bin/gconftool-2 /usr/bin/glib-gettextize /usr/bin/icon-slicer /usr/bin/pygtk-codegen-2.0 pkgconfig(cairo) pkgconfig(gobject-2.0) pkgconfig(gtk+-2.0) python-devel
+BuildRequires: python-devel
 # END SourceDeps(oneline)
 Name: sugar-presence-service
 Version: 0.90.2
-Release: alt1_1
+Release: alt1_2
 Summary: The Sugar presence service
 
 Group: System/Libraries
@@ -14,12 +13,11 @@ Source0: http://download.sugarlabs.org/sources/sucrose/glucose/%{name}/%{name}-%
 BuildArch: noarch
 
 
-Requires: python-module-telepathy
-Requires: dbus-python
 Requires: telepathy-gabble
 Requires: telepathy-mission-control
 Requires: telepathy-salut
 Source44: import.info
+BuildRequires: rpmbuild-helper-sugar-activity
 
 %description
 The Sugar presence service.
@@ -41,6 +39,9 @@ make install DESTDIR=%{buildroot} INSTALL='install -p'
 %{_datadir}/dbus-1/services/org.laptop.Sugar.Presence.service
 
 %changelog
+* Wed Mar 13 2013 Igor Vlasenko <viy@altlinux.ru> 0.90.2-alt1_2
+- update from fc18 release
+
 * Wed Nov 28 2012 Igor Vlasenko <viy@altlinux.ru> 0.90.2-alt1_1
 - new version; import from fc17 release
 
