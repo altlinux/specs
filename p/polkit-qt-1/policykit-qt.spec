@@ -4,7 +4,7 @@ Name: polkit-qt-1
 %define minor 103
 %define bugfix 0
 Version: %major.%minor.%bugfix
-Release: alt1
+Release: alt2
 
 Group: Development/KDE and QT
 Summary: Qt support for applications using PolicyKit
@@ -17,7 +17,11 @@ Provides: policykit-qt-1 = %version-%release
 Obsoletes: policykit-qt-1 < %version-%release
 
 Source: %name-%version.tar.bz2
-#Patch1: polkit-qt-0.9.2-alt-linking.patch
+# upstream
+Patch1: 0001-Sync-FindGObject.cmake-with-the-one-in-kdelibs.patch
+Patch2: 0002-Normalize-connect-using-Qt-s-normalize.patch
+# FC
+Patch100: polkit-qt-0.95.1-install-cmake-find.patch
 
 #BuildRequires(pre): libqt4-devel
 #BuildRequires: gcc-c++ libqt4-devel xorg-devel libpolkit-devel
@@ -59,7 +63,9 @@ Development files for %name
 
 %prep
 %setup -q -n %name-%version
-#%patch1 -p1
+%patch1 -p1
+%patch2 -p1
+%patch100 -p1
 #sed -i "s|\${LIB_INSTALL_DIR}|%_K4link \${LIB_INSTALL_DIR}|" CMakeLists.txt
 
 
@@ -72,6 +78,7 @@ Development files for %name
 %Kinstall
 
 %files devel
+%_K4apps/cmake/Modules/FindPolkitQt-1.cmake
 %_libdir/lib*.so
 %_includedir/polkit-qt-1/
 %_pkgconfigdir/polkit-qt*-1.pc
@@ -88,6 +95,12 @@ Development files for %name
 
 
 %changelog
+* Wed Mar 13 2013 Sergey V Turchin <zerg@altlinux.org> 0.103.0-alt2
+- sync patches with FC
+
+* Fri Dec 16 2011 Sergey V Turchin <zerg@altlinux.org> 0.103.0-alt0.M60P.1
+- built for M60P
+
 * Thu Dec 15 2011 Sergey V Turchin <zerg@altlinux.org> 0.103.0-alt1
 - new version
 
