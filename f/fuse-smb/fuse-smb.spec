@@ -2,7 +2,7 @@
 
 Name: fuse-smb
 Version: 0.8.7
-Release: alt3
+Release: alt4
 
 Summary: SMB filesystem using FUSE - mount network neighbourhood
 Group: System/Kernel and hardware
@@ -14,6 +14,7 @@ Packager: Roman Savochenko <rom_as at altlinux.ru>
 Source: %distname-%version.tar.gz
 Patch0: %name-ResFix-RenameFix-WriteSpeedIncr.patch
 Patch1: %name-CacheThreadRemove.patch
+Patch2: %name-smbclient_library_detect.patch
 
 Requires: fuse
 
@@ -27,8 +28,10 @@ Mount network neighbourhood
 %setup -q -n %distname-%version
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 
 %build
+%autoreconf
 %configure
 %make
 
@@ -43,6 +46,9 @@ Mount network neighbourhood
 %_man5dir/*
 
 %changelog
+* Wed Mar 13 2013 Roman Savochenko <rom_as@altlinux.ru> 0.8.7-alt4
+- Smbclient library detect, from samba 4.0, is fixed.
+
 * Wed Oct 5 2011 Roman Savochenko <rom_as@altlinux.ru> 0.8.7-alt3
 - Removed not resourced threads from fusesmb.cache for correct work allow.
 
