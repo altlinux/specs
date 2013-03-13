@@ -5,7 +5,7 @@ BuildRequires: /usr/bin/glib-genmarshal /usr/bin/glib-gettextize libgio-devel pk
 %define _libexecdir %_prefix/libexec
 Name:           mate-media
 Version:        1.5.1
-Release:        alt1_3
+Release:        alt1_4
 Summary:        MATE media programs
 License:        GPLv2+ and LGPLv2+
 URL:            http://mate-desktop.org
@@ -37,9 +37,8 @@ Patch0: commits_rollup.patch
 Source44: import.info
 Patch33: gnome-media-2.26.0-alt-gst-mixer.patch
 Patch34: gnome-media-2.29.91-gst-mix_and_new_gvc_no_conflict.patch
-Patch35: gnome-media-2.32.0-alt-settings.desktop.patch
-Patch36: gnome-media-2.32.0-g_debug.patch
-Patch37: gnome-media-alt-desktop-ru.po.patch
+Patch35: gnome-media-2.32.0-g_debug.patch
+Patch36: gnome-media-alt-desktop-ru.po.patch
 
 %description
 This package contains a few media utilities for the MATE desktop,
@@ -52,9 +51,8 @@ including a volume control.
 NOCONFIGURE=1 ./autogen.sh
 %patch33 -p1
 %patch34 -p1
-%patch35 -p0
+%patch35 -p1
 %patch36 -p1
-%patch37 -p1
 
 
 %build
@@ -106,6 +104,9 @@ desktop-file-install                                                    \
 %{_datadir}/omf/mate-mixer_applet2
 
 %changelog
+* Wed Mar 13 2013 Igor Vlasenko <viy@altlinux.ru> 1.5.1-alt1_4
+- new fc release
+
 * Sat Feb 02 2013 Igor Vlasenko <viy@altlinux.ru> 1.5.1-alt1_3
 - new fc release
 
