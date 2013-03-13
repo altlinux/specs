@@ -4,7 +4,7 @@
 %define sover %somver.2.0
 Name: %oname%over
 Version: 4.3
-Release: alt2
+Release: alt3
 Summary: A set of subroutines to solve a sparse linear system A*X=B
 License: BSD-like
 Group: Sciences/Mathematics
@@ -134,7 +134,11 @@ for i in libsuperlu_%over libtmglib; do
 		ADDLIB="-L. -lsuperlu_%over"
 	fi
 	ar x $i.a
+%ifarch %arm
+	g++ -shared *.o $ADDLIB -llapack -lblas -lgfortran -lm \
+%else
 	g++ -shared *.o $ADDLIB -llapack -lopenblas -lgfortran -lm \
+%endif
 		-Wl,-soname,$i.so.%somver -o $i.so.%sover
 	ln -s $i.so.%sover $i.so.%somver
 	ln -s $i.so.%somver $i.so
@@ -158,6 +162,9 @@ popd
 %_docdir/%name
 
 %changelog
+* Tue Mar 12 2013 Gleb F-Malinovskiy <glebfm@altlinux.org> 4.3-alt3
+- on %arm liblapack is built with libblas, not libopenblas
+
 * Sun Aug 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.3-alt2
 - Built with OpenBLAS instead of GotoBLAS2
 
