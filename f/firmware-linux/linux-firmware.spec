@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20130109
+Version: 20130313
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -51,6 +51,9 @@ rm %buildroot/lib/firmware/{WHENCE,LICENCE.*}
 /lib/firmware/*
 
 %changelog
+* Wed Mar 13 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 20130313-alt1
+- updated from git
+
 * Wed Jan 09 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 20130109-alt1
 - updated from git
 
