@@ -1,7 +1,7 @@
 %define installdir %webserver_webappsdir/%name
 
 Name: owncloud
-Version: 4.0.12
+Version: 4.5.8
 Release: alt1
 
 Summary: Cloud platform
@@ -13,6 +13,7 @@ BuildRequires(pre): rpm-macros-webserver-common
 BuildArch: noarch
 
 Requires(pre): webserver-common
+Requires: owncloud-apps = %version
 
 Source0: %name-%version.tar
 
@@ -82,6 +83,12 @@ rm -f %buildroot%installdir/l10n/l10n.pl
 %config(noreplace) %attr(0644,root,root) %_sysconfdir/httpd2/conf/addon.d/A.%name.conf
 
 %changelog
+* Thu Mar 14 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 4.5.8-alt1
+- 4.5.8
+
+* Tue Feb 26 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 4.5.7-alt1
+- 4.5.7 from new upstream git
+
 * Tue Feb 26 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 4.0.12-alt1
 - 4.0.12
 
