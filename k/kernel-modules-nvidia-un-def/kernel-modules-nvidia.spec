@@ -4,7 +4,7 @@
 %define nvIF_ver_lteq() %if "%(rpmvercmp '%2' '%1')" >= "0"
 
 %define module_name	nvidia
-%define module_version	310.32
+%define module_version	310.40
 %define module_release	alt1
 %define flavour		un-def
 
@@ -26,14 +26,14 @@
 %define legacy2 %nil
 %endif
 %define legacy2_src %(echo %legacy2 | tr -d .)
-%nvIF_ver_lt %xorg_ver 1.14
-%define legacy3 173.14.36
+%nvIF_ver_lt %xorg_ver 1.15
+%define legacy3 173.14.37
 %else
 %define legacy3 %nil
 %endif
 %define legacy3_src %(echo %legacy3 | tr -d .)
-%nvIF_ver_lt %xorg_ver 1.14
-%define legacy4 304.64
+%nvIF_ver_lt %xorg_ver 1.15
+%define legacy4 304.84
 %else
 %define legacy4 %nil
 %endif
@@ -190,6 +190,12 @@ fi
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Mon Mar 11 2013 Sergey V Turchin <zerg at altlinux dot org> 310.40-alt1
+- new release (310.40 and 173.14.37 with xorg-server-1.14 support)
+
+* Thu Mar 07 2013 Sergey V Turchin <zerg at altlinux dot org> 310.32-alt2
+- new release (304.84 with xorg-server-1.14 support)
 
 * Wed Jan 23 2013 Sergey V Turchin <zerg at altlinux dot org> 310.32-alt1
 - new release (310.32)

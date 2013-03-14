@@ -1,7 +1,7 @@
 %define module_name bbswitch
-%define module_version 0.4.1
+%define module_version 0.5
 
-%define module_release alt4
+%define module_release alt1
 
 %define flavour un-def
 BuildRequires(pre): rpm-build-kernel
@@ -76,6 +76,9 @@ install -pD -m644 %module_name.ko \
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Thu Mar 14 2013 Anton V. Boyarshinov <boyarsh@altlinux.org> 0.5-alt1
+- 0.5
 
 * Mon Dec 17 2012 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.4.1-alt4
 - new template
