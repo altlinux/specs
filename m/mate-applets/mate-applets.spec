@@ -1,13 +1,13 @@
 Group: Graphical desktop/MATE
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-python
-BuildRequires: /usr/bin/gdk-pixbuf-csource /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/jw /usr/bin/xsltproc libICE-devel libSM-devel libX11-devel libapm-devel libcpufreq-devel libgio-devel pkgconfig(NetworkManager) pkgconfig(dbus-1) pkgconfig(gio-2.0) pkgconfig(gio-unix-2.0) pkgconfig(glib-2.0) pkgconfig(gobject-2.0) pkgconfig(gtk+-2.0) pkgconfig(gucharmap-2) pkgconfig(hal) pkgconfig(libgtop-2.0) pkgconfig(mate-settings-daemon) python-devel python-module-pygobject-devel xorg-kbproto-devel
+BuildRequires: /usr/bin/gdk-pixbuf-csource /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/jw /usr/bin/xsltproc libICE-devel libSM-devel libX11-devel libapm-devel libcpufreq-devel libgio-devel pkgconfig(NetworkManager) pkgconfig(dbus-1) pkgconfig(gio-2.0) pkgconfig(gio-unix-2.0) pkgconfig(glib-2.0) pkgconfig(gobject-2.0) pkgconfig(gtk+-2.0) pkgconfig(hal) pkgconfig(libgtop-2.0) pkgconfig(libnotify) pkgconfig(mate-settings-daemon) pkgconfig(mucharmap-2) python-devel python-module-pygobject-devel xorg-kbproto-devel
 # END SourceDeps(oneline)
 BuildRequires: xvfb-run
 %define _libexecdir %_prefix/libexec
 Name:           mate-applets
-Version:        1.5.1
-Release:        alt1_4
+Version:        1.5.2
+Release:        alt1_1
 Summary:        MATE Desktop panel applets
 License:        GPLv2+ and LGPLv2+
 URL:            http://mate-desktop.org
@@ -55,18 +55,19 @@ NOCONFIGURE=1 ./autogen.sh
 
 
 %build
-%configure                       \
-    --disable-schemas-compile    \
-    --disable-scrollkeeper       \
-    --with-gnu-ld                \
-    --with-x                     \
-    --enable-polkit              \
-    --enable-networkmanager      \
-    --enable-ipv6                \
-    --enable-frequency-selector  \
-    --enable-suid                \
-    --disable-cpufreq            \
-    --disable-timer-applet      
+%configure   \
+    --disable-schemas-compile                \
+    --disable-scrollkeeper                   \
+    --with-gnu-ld                            \
+    --with-x                                 \
+    --enable-polkit                          \
+    --enable-networkmanager                  \
+    --enable-ipv6                            \
+    --enable-frequency-selector              \
+    --enable-suid                            \
+    --disable-cpufreq                        \
+    --disable-timer-applet                   \
+    --libexecdir=%{_libexecdir}/mate-applets 
 
 xvfb-run -a make %{?_smp_mflags} V=1
 
@@ -84,20 +85,12 @@ install -pD -m 644 %SOURCE0 %buildroot%_sysconfdir/polkit-1/localauthority/50-lo
 %doc AUTHORS COPYING README
 %{_bindir}/mate-invest-chart
 %{python_sitelibdir_noarch}/mate_invest
-%{_libexecdir}/invest-applet
 %{_datadir}/dbus-1/services/org.mate.panel.applet.InvestAppletFactory.service
 %{_datadir}/icons/hicolor/scalable/apps/mate-invest-applet.svg
 %{_datadir}/mate/help/mate-invest-applet
 %{_datadir}/omf/mate-invest-applet
 %{_datadir}/mate-applets
 %{_sysconfdir}/sound/events/mate-battstat_applet.soundlist
-%{_libexecdir}/accessx-status-applet
-%{_libexecdir}/battstat-applet-2
-%{_libexecdir}/charpick_applet2
-%{_libexecdir}/drivemount_applet2
-%{_libexecdir}/geyes_applet2
-%{_libexecdir}/stickynotes_applet
-%{_libexecdir}/trashapplet
 %{_datadir}/dbus-1/services/org.mate.panel.applet.AccessxStatusAppletFactory.service
 %{_datadir}/dbus-1/services/org.mate.panel.applet.BattstatAppletFactory.service
 %{_datadir}/dbus-1/services/org.mate.panel.applet.CharpickerAppletFactory.service
@@ -141,8 +134,7 @@ install -pD -m 644 %SOURCE0 %buildroot%_sysconfdir/polkit-1/localauthority/50-lo
 %{_datadir}/pixmaps/mate-accessx-status-applet
 %{_datadir}/pixmaps/mate-stickynotes
 %{_datadir}/MateConf/gsettings/stickynotes-applet.convert
-%{_libexecdir}/mateweather-applet-2
-%{_libexecdir}/multiload-applet-2
+%{_libexecdir}/mate-applets
 %{_datadir}/dbus-1/services/org.mate.panel.applet.MateWeatherAppletFactory.service
 %{_datadir}/dbus-1/services/org.mate.panel.applet.MultiLoadAppletFactory.service
 %{_datadir}/glib-2.0/schemas/org.mate.panel.applet.multiload.gschema.xml
@@ -152,6 +144,9 @@ install -pD -m 644 %SOURCE0 %buildroot%_sysconfdir/polkit-1/localauthority/50-lo
 %_sysconfdir/polkit-1/localauthority/50-local.d/01-cpufreq.pkla
 
 %changelog
+* Wed Mar 13 2013 Igor Vlasenko <viy@altlinux.ru> 1.5.2-alt1_1
+- new fc release
+
 * Sun Feb 17 2013 Igor Vlasenko <viy@altlinux.ru> 1.5.1-alt1_4
 - new fc release
 

@@ -4,45 +4,43 @@ BuildRequires: /usr/bin/docbook2man /usr/bin/glib-genmarshal /usr/bin/glib-gette
 # END SourceDeps(oneline)
 %filter_from_requires /^hal$/d
 %define _libexecdir %_prefix/libexec
-Name:           mate-power-manager
-Version:        1.5.1
-Release:        alt1_4
-Summary:        MATE power management service
+Name:          mate-power-manager
+Version:       1.5.1
+Release:       alt1_6
+Summary:       MATE power management service
+License:       GPLv2+
+URL:           http://pub.mate-desktop.org
+Source0:       http://pub.mate-desktop.org/releases/1.5/%{name}-%{version}.tar.xz
 
-License:        GPLv2+
-URL:            http://pub.mate-desktop.org
-Source0:        http://pub.mate-desktop.org/releases/1.5/%{name}-%{version}.tar.xz
+# fix crasher; add inhibit for systemd >= 195, upstreamed
+# https://github.com/mate-desktop/mate-power-manager/pull/43
+Patch0: %{name}-1.5.1-add_systemd_checks.patch
 
-# PATCH-FIX-UPSTREAM - systemd inhibit requires systemd >= 195, adding checks
-# fixes crasher, https://github.com/mate-desktop/mate-power-manager/pull/43
-Patch0:         %{name}-1.5.1-add_systemd_checks.patch
-
-BuildRequires: mate-panel-devel
-BuildRequires: popt-devel
-BuildRequires: mate-doc-utils
-BuildRequires: desktop-file-utils
 BuildRequires: libcairo-devel
+BuildRequires: libdbus-glib-devel
+BuildRequires: desktop-file-utils
 BuildRequires: libcanberra-devel
 BuildRequires: libmatenotify-devel
-BuildRequires: libupower-devel
-BuildRequires: libunique-devel
 BuildRequires: glib2-devel
-BuildRequires: rarian-compat
 BuildRequires: gtk2-devel
-BuildRequires: libdbus-glib-devel
-BuildRequires: mate-control-center-devel
 BuildRequires: mate-common
+BuildRequires: mate-control-center-devel
+BuildRequires: mate-doc-utils
 BuildRequires: mate-keyring-devel
+BuildRequires: mate-panel-devel
+BuildRequires: popt-devel
+BuildRequires: rarian-compat
 BuildRequires: systemd-devel
-
-Requires: dbus-tools-gui
-Requires: mate-panel-libs
+BuildRequires: libunique-devel
+BuildRequires: libupower-devel
 Source44: import.info
 Patch33: mate-power-manager-dont-eat-the-logs.patch
+
 
 %description
 MATE Power Manager uses the information and facilities provided by UPower
 displaying icons and handling user callbacks in an interactive MATE session.
+
 
 %prep
 %setup -q
@@ -52,30 +50,30 @@ NOCONFIGURE=1 ./autogen.sh
 
 
 %build
-%configure \
-        --disable-static \
-        --disable-scrollkeeper \
-        --enable-applets
-
+%configure  --disable-static --disable-scrollkeeper --enable-applets
 make V=1 %{?_smp_mflags}
 
 
 %install
-make install DESTDIR=$RPM_BUILD_ROOT
+make DESTDIR=%{buildroot} install
+%find_lang %{name} --all-name
+desktop-file-install                               \
+     --delete-original                             \
+     --remove-category=MATE                        \
+     --add-category=X-Mate                         \
+     --dir=%{buildroot}%{_datadir}/applications    \
+%{buildroot}%{_datadir}/applications/*.desktop
 
-desktop-file-install --delete-original             \
-  --remove-category=MATE                           \
-  --add-category=X-Mate                            \
-  --dir $RPM_BUILD_ROOT%{_datadir}/applications    \
-  $RPM_BUILD_ROOT%{_datadir}/applications/mate-*.desktop
-
-%find_lang %{name} --with-gnome
 
 %files  -f %{name}.lang
 %doc AUTHORS COPYING README
-%{_bindir}/*
-%{_sbindir}/*
-%{_sysconfdir}/xdg/autostart/mate-*.desktop
+%{_mandir}/man1/**
+%{_bindir}/mate-power-bugreport.sh
+%{_bindir}/mate-power-manager
+%{_bindir}/mate-power-preferences
+%{_bindir}/mate-power-statistics
+%{_sbindir}/mate-power-backlight-helper
+%{_datadir}/omf/mate-power-manager/
 %{_datadir}/applications/mate-*.desktop
 %{_datadir}/dbus-1/services/*.service
 %{_datadir}/mate-power-manager/
@@ -87,12 +85,14 @@ desktop-file-install --delete-original             \
 %{_datadir}/mate-panel/applets/org.mate.BrightnessApplet.mate-panel-applet
 %{_datadir}/mate-panel/applets/org.mate.InhibitApplet.mate-panel-applet
 %{_datadir}/glib-2.0/schemas/org.mate.power-manager.gschema.xml
+%{_sysconfdir}/xdg/autostart/mate-power-manager.desktop
 %{_libexecdir}/mate-brightness-applet
 %{_libexecdir}/mate-inhibit-applet
-%{_mandir}/man1/*.1.*
-
 
 %changelog
+* Wed Mar 13 2013 Igor Vlasenko <viy@altlinux.ru> 1.5.1-alt1_6
+- new fc release
+
 * Sat Feb 02 2013 Igor Vlasenko <viy@altlinux.ru> 1.5.1-alt1_4
 - new fc release
 

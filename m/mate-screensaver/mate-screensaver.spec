@@ -1,13 +1,13 @@
 Group: Toys
 # BEGIN SourceDeps(oneline):
-BuildRequires: libICE-devel libSM-devel libpam0-devel pkgconfig(gio-2.0) pkgconfig(gobject-2.0) pkgconfig(gthread-2.0) pkgconfig(gtk+-2.0)
+BuildRequires: /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/xmlto libICE-devel libSM-devel libgio-devel libpam0-devel pkgconfig(gio-2.0) pkgconfig(gobject-2.0) pkgconfig(gthread-2.0) pkgconfig(gtk+-2.0)
 # END SourceDeps(oneline)
 BuildRequires: libsystemd-login-devel
 %define _libexecdir %_prefix/libexec
-%define fedora 18
+%define fedora 19
 Name:           mate-screensaver
 Version:        1.5.1
-Release:        alt3_2
+Release:        alt3_3
 Summary:        MATE Screensaver
 License:        GPLv2+ and LGPLv2+
 URL:            http://pub.mate-desktop.org
@@ -34,7 +34,7 @@ BuildRequires:  libXmu-devel
 BuildRequires:  libmatekbd-devel
 BuildRequires:  libmatenotify-devel
 BuildRequires:  libGL-devel
-BuildRequires:  xorg-x11-proto-devel
+BuildRequires: xorg-bigreqsproto-devel xorg-compositeproto-devel xorg-damageproto-devel xorg-dmxproto-devel xorg-evieproto-devel xorg-fixesproto-devel xorg-fontsproto-devel xorg-glproto-devel xorg-inputproto-devel xorg-kbproto-devel xorg-pmproto-devel xorg-randrproto-devel xorg-recordproto-devel xorg-renderproto-devel xorg-resourceproto-devel xorg-scrnsaverproto-devel xorg-videoproto-devel xorg-xcbproto-devel xorg-xcmiscproto-devel xorg-xextproto-devel xorg-xf86bigfontproto-devel xorg-xf86dgaproto-devel xorg-xf86driproto-devel xorg-xf86rushproto-devel xorg-xf86vidmodeproto-devel xorg-xineramaproto-devel xorg-xproto-devel
 BuildRequires:  gettext
 BuildRequires:  nss-devel
 BuildRequires:  mate-common
@@ -148,6 +148,9 @@ install -m 755 %name-chkpwd-helper %buildroot%_libexecdir/%name/
 
 
 %changelog
+* Wed Mar 13 2013 Igor Vlasenko <viy@altlinux.ru> 1.5.1-alt3_3
+- new fc release
+
 * Tue Feb 19 2013 Igor Vlasenko <viy@altlinux.ru> 1.5.1-alt3_2
 - dropped obsolete dependencies
 
