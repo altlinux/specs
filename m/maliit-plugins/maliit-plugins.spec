@@ -1,6 +1,6 @@
 
 Name: maliit-plugins
-Version: 0.94.0
+Version: 0.94.2
 Release: alt1
 Summary: Maliit Input Method Plugins
 
@@ -56,6 +56,9 @@ rm -rf %buildroot/%_defaultdocdir/maliit-plugins/html
 %_datadir/maliit/plugins/
 
 %changelog
+* Thu Mar 14 2013 Sergey V Turchin <zerg@altlinux.org> 0.94.2-alt1
+- new version
+
 * Thu Jan 17 2013 Sergey V Turchin <zerg@altlinux.org> 0.94.0-alt1
 - new version
 
