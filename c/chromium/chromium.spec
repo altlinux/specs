@@ -1,6 +1,6 @@
 %set_verify_elf_method textrel=relaxed
 %define v8_ver 3.15.11.10
-%define rev 186726
+%define rev 187217
 
 %def_disable debug
 %def_disable nacl
@@ -12,7 +12,7 @@
 %endif
 
 Name:           chromium
-Version:        25.0.1364.160
+Version:        25.0.1364.172
 Release:        alt1.r%rev
 
 Summary:        An open source web browser developed by Google
@@ -434,6 +434,9 @@ printf '%_bindir/%name\t%_libdir/%name/%name-gnome\t15\n' > %buildroot%_altdir/%
 %_altdir/%name-gnome
 
 %changelog
+* Wed Mar 13 2013 Andrey Cherepanov <cas@altlinux.org> 25.0.1364.172-alt1.r187217
+- New version 25.0.1364.172
+
 * Mon Mar 11 2013 Andrey Cherepanov <cas@altlinux.org> 25.0.1364.160-alt1.r186726
 - New version 25.0.1364.160
 - Security fixes:
