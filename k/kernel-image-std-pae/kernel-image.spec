@@ -1,5 +1,5 @@
 Name: kernel-image-std-pae
-Release: alt1
+Release: alt3
 epoch:1 
 %define kernel_base_version	3.8
 %define kernel_sublevel	.2
@@ -595,6 +595,14 @@ find %buildroot%_docdir/kernel-doc-%base_flavour-%version/DocBook \
 %exclude %modules_dir/kernel/drivers/staging/media/lirc/
 
 %changelog
+* Thu Mar 14 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.8.2-alt3
+- Don't allow CLONE_NEWUSER | CLONE_FS (local root fixed)
+- CVE-2013-1828 fixed
+
+* Wed Mar 13 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.8.2-alt2
+- lost rtl8192ce enabled on i586
+- default bpp on cirrus/qemu set to 16
+
 * Mon Mar 04 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.8.2-alt1
 - 3.8.2
 
