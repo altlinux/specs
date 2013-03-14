@@ -21,7 +21,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.0.68
-Release: alt5
+Release: alt6
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -604,7 +604,7 @@ Patch0787: linux-%kernel_branch.62-fix-kernel-irq.patch
 Patch0788: linux-%kernel_branch.42-fix-kernel-power--hibernate.patch
 Patch0789: linux-%kernel_branch.44-fix-kernel-time.patch
 
-Patch0790: linux-%kernel_branch.57-fix-lib.patch
+Patch0790: linux-%kernel_branch.68-fix-lib.patch
 Patch0791: linux-%kernel_branch.62-fix-lib--btree.patch
 Patch0792: linux-%kernel_branch.42-fix-lib--genalloc.patch
 
@@ -3078,6 +3078,10 @@ done)
 
 
 %changelog
+* Thu Mar 14 2013 Led <led@altlinux.ru> 3.0.68-alt6
+- updated:
+  + fix-lib
+
 * Wed Mar 13 2013 Led <led@altlinux.ru> 3.0.68-alt5
 - updated:
   + fix-drivers-gpu-drm--i915
