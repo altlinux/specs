@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.5.1
-Release: alt2.hg20110828
+Release: alt2.hg20110828.1
 Summary: A very small text templating language
 License: MIT
 Group: Development/Python
@@ -80,6 +80,9 @@ popd
 %endif
 
 %changelog
+* Fri Mar 22 2013 Aleksey Avdeev <solo@altlinux.ru> 0.5.1-alt2.hg20110828.1
+- Rebuild with Python-3.3
+
 * Sat May 05 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.1-alt2.hg20110828
 - Added module for Python 3
 

@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.1
-Release: alt1
+Release: alt1.1
 Summary: Utility library for i18n relied on by various Repoze packages
 License: BSD-like
 Group: Development/Python
@@ -177,6 +177,9 @@ cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Fri Mar 22 2013 Aleksey Avdeev <solo@altlinux.ru> 1.1-alt1.1
+- Rebuild with Python-3.3
+
 * Fri May 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1-alt1
 - Version 1.1
 - Added module for Python 3

@@ -1,14 +1,14 @@
 %define oname z3c.pt
 Name: python-module-%oname
-Version: 2.2.1
-Release: alt1.bzr20120215
+Version: 3.0.0
+Release: alt1.a1
 Summary: Python template compiler which supports ZPT
 License: ZPLv2.1
 Group: Development/Python
 Url: http://chameleon.repoze.org/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-# bzr branch lp:z3c.pt
+# git://github.com/zopefoundation/z3c.pt.git
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
@@ -145,6 +145,9 @@ cp -fR docs/.build/pickle %buildroot%python_sitelibdir/%oname/
 %doc docs/.build/html/*
 
 %changelog
+* Sat Mar 02 2013 Aleksey Avdeev <solo@altlinux.ru> 3.0.0-alt1.a1
+- Version 3.0.0a1
+
 * Wed Apr 18 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.2.1-alt1.bzr20120215
 - Version 2.2.1
 - Added python3-module-z3c

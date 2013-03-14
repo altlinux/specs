@@ -1,6 +1,14 @@
 %define oname pycountry
+
+%def_with python3
+
+%if_with python3
+%define py3name python3-module-%oname
+%define py3dir %py3name-%version
+%endif
+
 Name: python-module-%oname
-Version: 0.14.5
+Version: 0.14.8
 Release: alt1
 Summary: ISO country, subdivision, language, currency and script definitions
 License: LGPLv2.1
@@ -8,29 +16,108 @@ Group: Development/Python
 Url: http://pypi.python.org/pypi/pycountry
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-Source: %oname-%version.tar
+# hg clone https://bitbucket.org/gocept/pycountry
+Source: %name-%version.tar
+Patch10: %name-%version-alt-python3.patch
+
 BuildArch: noarch
 
 BuildPreReq: python-devel python-module-distribute
+
+%if_with python3
+BuildPreReq: rpm-build-python3
+BuildPreReq: python3-devel
+BuildPreReq: python3-module-distribute
+%endif
 
 %description
 ISO country, subdivision, language, currency and script definitions and
 their translations.
 
+%package tests
+Summary: Tests ISO country, subdivision, language, currency and script definitions
+Group: Development/Python
+BuildArch: noarch
+Requires: %name = %EVR
+
+%description tests
+Tests for ISO country, subdivision, language, currency and script
+definitions and their translations.
+
+%if_with python3
+%package -n %py3name
+Summary: Python3 ISO country, subdivision, language, currency and script definitions
+Group: Development/Python3
+BuildArch: noarch
+
+%description -n %py3name
+ISO country, subdivision, language, currency and script definitions and
+their translations for Python3.
+
+%package -n %py3name-tests
+Summary: Python3 tests ISO country, subdivision, language, currency and script definitions
+Group: Development/Python3
+BuildArch: noarch
+Requires: %py3name = %EVR
+
+%description -n %py3name-tests
+Tests for ISO country, subdivision, language, currency and script
+definitions and their translations for Python3.
+
+%endif
+
 %prep
 %setup
+%patch10 -p1
+%if_with python3
+rm -rf ../%py3dir
+cp -a . ../%py3dir
+%endif
 
 %build
 %python_build_debug
+%if_with python3
+pushd ../%py3dir
+%python3_build
+popd
+%endif
 
 %install
 %python_install
+%if_with python3
+pushd ../%py3dir
+%python3_install
+popd
+%endif
+
+%check
+%__python setup.py test
 
 %files
-%doc *.txt PKG-INFO
+%doc *.txt
 %python_sitelibdir/*
+%exclude %python_sitelibdir/%oname/tests.*
+
+%files tests
+%python_sitelibdir/%oname/tests.*
+
+%if_with python3
+%files -n %py3name
+%doc *.txt
+%python3_sitelibdir/*
+%exclude %python3_sitelibdir/%oname/tests.*
+%exclude %python3_sitelibdir/%oname/__pycache__/tests.*
+
+%files -n %py3name-tests
+%python3_sitelibdir/%oname/tests.*
+%python3_sitelibdir/%oname/__pycache__/tests.*
+%endif
 
 %changelog
+* Fri Mar 15 2013 Aleksey Avdeev <solo@altlinux.ru> 0.14.8-alt1
+- Version 0.14.8
+- Add %%name-tests subpackage
+- Added module for Python 3
+
 * Fri Sep 21 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.14.5-alt1
 - Initial build for Sisyphus
-

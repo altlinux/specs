@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 2011.5
-Release: alt2
+Release: alt2.1
 Summary: A collection of tools for Python
 License: MIT
 Group: Development/Python
@@ -109,6 +109,9 @@ popd
 %endif
 
 %changelog
+* Fri Mar 22 2013 Aleksey Avdeev <solo@altlinux.ru> 2011.5-alt2.1
+- Rebuild with Python-3.3
+
 * Sat May 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2011.5-alt2
 - Added module for Python 3
 

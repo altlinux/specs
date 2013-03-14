@@ -8,7 +8,7 @@
 
 Name: %packagename
 Version:%version
-Release: %release
+Release: alt1.hg20120916.1
 Serial: 1
 
 Summary: Load, configure, and compose WSGI applications and servers
@@ -91,6 +91,9 @@ popd
 %endif
 
 %changelog
+* Fri Mar 22 2013 Aleksey Avdeev <solo@altlinux.ru> 1:1.5.1-alt1.hg20120916.1
+- Rebuild with Python-3.3
+
 * Sat Sep 22 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:1.5.1-alt1.hg20120916
 - New snapshot
 

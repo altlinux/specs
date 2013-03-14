@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.3
-Release: alt1
+Release: alt1.1
 Summary: PKCS#5 v2.0 PBKDF2 Module
 License: MIT
 Group: Development/Python
@@ -68,6 +68,9 @@ popd
 %endif
 
 %changelog
+* Fri Mar 22 2013 Aleksey Avdeev <solo@altlinux.ru> 1.3-alt1.1
+- Rebuild with Python-3.3
+
 * Sun May 20 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3-alt1
 - Initial build for Sisyphus
 

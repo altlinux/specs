@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.0.0
-Release: alt3
+Version: 1.1.0
+Release: alt1
 Summary: Basic inter-process locks
 License: ZPLv2.1
 Group: Development/Python
@@ -132,6 +132,9 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 
 %changelog
+* Fri Mar 01 2013 Aleksey Avdeev <solo@altlinux.ru> 1.1.0-alt1
+- 1.1.0
+
 * Thu Apr 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.0-alt3
 - Added module for Python 3
 

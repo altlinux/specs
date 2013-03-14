@@ -3,14 +3,15 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.1.0
-Release: alt2
+Version: 1.2.0
+Release: alt1
 Summary: Python 2 and 3 compatibility utilities
 License: MIT
 Group: Development/Python
 Url: http://pypi.python.org/pypi/six
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
+# hg clone https://bitbucket.org/gutworth/six
 Source: %name-%version.tar
 BuildArch: noarch
 
@@ -74,6 +75,9 @@ popd
 %endif
 
 %changelog
+* Wed Mar 06 2013 Aleksey Avdeev <solo@altlinux.ru> 1.2.0-alt1
+- Version 1.2.0
+
 * Mon Apr 16 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.0-alt2
 - Added module for Python 3
 

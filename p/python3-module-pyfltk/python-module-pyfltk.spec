@@ -5,7 +5,7 @@
 
 Name: python3-module-%mname
 Version: 1.3.1rc1
-Release: alt1
+Release: alt1.1
 
 Summary: Python 3 bindings for FLTK library
 
@@ -14,6 +14,7 @@ License: LGPL
 Url: http://pyfltk.sourceforge.net
 
 Source: http://prdownloads.sf.net/pyfltk/%oname-%oversion.tar.bz2
+Patch10: pyfltk-1.3.1rc1-alt-fix-platform.patch
 
 BuildRequires(pre): rpm-build-python3
 
@@ -35,6 +36,7 @@ o To port all programs in test/ to Python using pyFLTK
 
 %prep
 %setup -q -n %oname-%oversion
+%patch10 -p2
 rm -f python/fltk_wrap.*
 
 %build
@@ -52,6 +54,9 @@ popd
 %doc CHANGES README TODO
 
 %changelog
+* Sun Mar 24 2013 Aleksey Avdeev <solo@altlinux.ru> 1.3.1rc1-alt1.1
+- Rebuild with Python-3.3
+
 * Tue May 29 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.1rc1-alt1
 - Built for Python 3
 

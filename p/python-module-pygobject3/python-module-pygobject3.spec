@@ -6,7 +6,7 @@
 
 Name: python-module-%{_name}3
 Version: %major.3
-Release: alt0.2
+Release: alt0.3
 
 Summary: Python bindings for GObject
 
@@ -168,6 +168,9 @@ xvfb-run %make check
 %endif
 
 %changelog
+* Sun Mar 17 2013 Yuri N. Sedunov <aris@altlinux.org> 3.4.3-alt0.3
+- rebuilt with python-3.3
+
 * Mon Dec 24 2012 Yuri N. Sedunov <aris@altlinux.org> 3.4.3-alt0.2
 - built python3 module too (new python3-module-, -common-devel subpackages)
 

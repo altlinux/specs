@@ -34,7 +34,7 @@
 
 Name: boost
 Version: %ver_maj.%ver_min.%ver_rel
-Release: alt2
+Release: alt3
 Epoch: 1
 
 Summary: Boost libraries
@@ -56,7 +56,8 @@ Patch29: boost-1.53.0-alt-qt4-moc-fix.patch
 BuildRequires(pre): rpm-build-python >= 0.34.4-alt4
 
 %if_with python3
-BuildRequires(pre): rpm-build-python3
+# we use %%_python3_abiflags
+BuildRequires(pre): rpm-build-python3 >= 0.1.2
 BuildRequires: python3-devel
 %endif
 
@@ -1155,7 +1156,7 @@ echo "using mpi ; " >> tools/build/v2/user-config.jam
 echo "using python : %_python_version ; " >> tools/build/v2/user-config.jam
 
 %if_with python3
-echo "using python : %_python3_version : %_prefix :  %_includedir/python%{_python3_version}mu ; " >> tools/build/v2/user-config.jam
+echo "using python : %_python3_version : %_prefix :  %_includedir/python%{_python3_version}%{_python3_abiflags} ; " >> tools/build/v2/user-config.jam
 %endif
 
 %build
@@ -1315,7 +1316,7 @@ rm -f %buildroot%_libdir/*.a || :
 # but we don't care while this works.
 export LD_PRELOAD=%_libdir/libpython%_python_version.so
 %if_with python3
-export LD_PRELOAD=${LD_PRELOAD:+$LD_PRELOAD:}%_libdir/libpython%{_python3_version}mu.so
+export LD_PRELOAD=${LD_PRELOAD:+$LD_PRELOAD:}%_libdir/libpython%{_python3_version}%{_python3_abiflags}.so
 %endif
 
 #files
@@ -1612,6 +1613,9 @@ done
 
 
 %changelog
+* Sat Feb 16 2013 Ivan A. Melnikov <iv@altlinux.org> 1:1.53.0-alt3
+- build with python3-3.3.0.
+
 * Sat Feb 09 2013 Ivan A. Melnikov <iv@altlinux.org> 1:1.53.0-alt2
 - add patch 29 to make qt4 moc work even when some boost headers
   included.

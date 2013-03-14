@@ -3,7 +3,7 @@
 Summary:       Monitor filesystem events with Python under Linux
 Name:          python-module-pyinotify
 Version:       0.9.2
-Release:       alt4
+Release:       alt4.1
 License:       MIT
 Group:         Development/Python
 URL:           https://github.com/seb-m/pyinotify
@@ -104,6 +104,9 @@ cp -a python2/examples/* %buildroot%_datadir/pyinotify
 %_datadir/pyinotify
 
 %changelog
+* Fri Mar 22 2013 Aleksey Avdeev <solo@altlinux.ru> 0.9.2-alt4.1
+- Rebuild with Python-3.3
+
 * Thu Jan 26 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 0.9.2-alt4
 - add python3 module build
 

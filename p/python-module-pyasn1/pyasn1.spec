@@ -5,7 +5,7 @@
 Summary: Abstract Syntax Notation One (ASN.1), Python implementation
 Name: python-module-%oname
 Version: 0.1.4
-Release: alt1.rc4
+Release: alt1.rc4.1
 %setup_python_module %oname
 Url: http://pyasn1.sourceforge.net/
 Source0: %modulename-%version.tar.gz
@@ -122,6 +122,9 @@ popd
 %endif
 
 %changelog
+* Fri Mar 22 2013 Aleksey Avdeev <solo@altlinux.ru> 0.1.4-alt1.rc4.1
+- Rebuild with Python-3.3
+
 * Tue Jun 05 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.4-alt1.rc4
 - Version 0.1.4rc4
 

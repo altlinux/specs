@@ -2,17 +2,23 @@
 # Conditionals and other variables controlling the build
 # ======================================================
 
-%global pybasever 3.2
+%global pybasever 3.3
+%global __python3_version %pybasever
 
 # pybasever without the dot:
-%global pyshortver 32
+%global pyshortver 33
 
-%global pyabi mu
+%global pyabi m
 
 %global pynameabi python%pybasever%pyabi
 
 %global pylibdir %_libdir/python%pybasever
 %global dynload_dir %pylibdir/lib-dynload
+%global pylibdir_noarch %_libexecdir/python%pybasever
+
+# Fix find-requires
+%define __python3 %buildroot%_bindir/python3
+%add_python3_path %pylibdir
 
 # All bytecode files are now in a __pycache__ subdirectory, with a name
 # reflecting the version of the bytecode (to permit sharing of python libraries
@@ -21,9 +27,9 @@
 # For example,
 #   foo/bar.py
 # now has bytecode at:
-#   foo/__pycache__/bar.cpython-32.pyc
-#   foo/__pycache__/bar.cpython-32.pyo
-%global bytecode_suffixes .cpython-32.py?
+#   foo/__pycache__/bar.cpython-33.pyc
+#   foo/__pycache__/bar.cpython-33.pyo
+%global bytecode_suffixes .cpython-33.py?
 
 # Python's configure script defines SOVERSION, and this is used in the Makefile
 # to determine INSTSONAME, the name of the libpython DSO:
@@ -48,14 +54,20 @@
 
 %global _optlevel 3
 
+%def_disable test_posix_fadvise
+
 Summary: Version 3 of the Python programming language aka Python 3000
 Name: python3
-Version: %pybasever.3
-Release: alt3
+Version: %pybasever.0
+Release: alt1
 License: Python
 Group: Development/Python3
 
-BuildRequires(pre): rpm-build-python3
+BuildRequires(pre): rpm-build-python3 >= 0.1.4
+BuildPreReq: liblzma-devel
+# For Bluetooth support
+# see https://bugzilla.redhat.com/show_bug.cgi?id=879720
+BuildPreReq: libbluez-devel
 BuildRequires: bzip2-devel db4-devel libexpat-devel gcc-c++ libgmp-devel libffi-devel libGL-devel libX11-devel libncurses-devel libssl-devel libreadline-devel libsqlite3-devel tcl-devel tk-devel zlib-devel
 
 %if %with_gdbm
@@ -76,9 +88,9 @@ Patch1: Python-3.1.1-rpath.patch
 
 # The four TestMIMEAudio tests fail due to "audiotest.au" not being packaged.
 # It's simplest to remove them:
-Patch3: python-3.2b2-remove-mimeaudio-tests.patch
+Patch3: 00003-remove-mimeaudio-tests.patch
 
-Patch102: python-3.2.3-lib64.patch
+Patch102: python-3.3.0b1-lib64.patch
 
 # Only used when "%_lib" == "lib64"
 # Another lib64 fix, for distutils/tests/test_install.py; not upstream:
@@ -208,9 +220,9 @@ Patch143: 00143-tsc-on-ppc.patch
 Patch146: 00146-hashlib-fips.patch
 
 # Add a sys._debugmallocstats() function
-# Based on patch 202 from RHEL 5's python.spec, with updates from rhbz#737198
-#  Not yet sent upstream
-Patch147: 00147-add-debug-malloc-stats.patch
+# Sent upstream as http://bugs.python.org/issue14785
+# Upstream as of Python 3.3.0
+#  Patch147: 00147-add-debug-malloc-stats.patch
 
 # Cherrypick fix for dbm version detection to cope with gdbm-1.9's magic values
 # Taken from upstream http://bugs.python.org/issue13007 (rhbz#742242)
@@ -222,9 +234,47 @@ Patch147: 00147-add-debug-malloc-stats.patch
 # Patch149: 00149-backport-issue11254-pycache-bytecompilation-fix.patch
 # Fix a regex in test_gdb so that it doesn't choke when gdb provides a full
 # path to Python/bltinmodule.c:
-Patch152: 00152-fix-test-gdb-regex.patch
+# Committed upstream as 77824:abcd29c9a791 as part of fix for
+# http://bugs.python.org/issue12605
+#  Patch152: 00152-fix-test-gdb-regex.patch
 
-Patch201: python-3.2.3-autoconf-sem_open_check-alt.patch
+# 00158 #
+#  Patch158: 00158-fix-hashlib-leak.patch
+# in python.spec
+# TODO: python3 status?
+
+# 00159 #
+#  Patch159: 00159-correct-libdb-include-path.patch
+# in python.spec
+# TODO: python3 status?
+
+# 00160 #
+# Python 3.3 added os.SEEK_DATA and os.SEEK_HOLE, which may be present in the
+# header files in the build chroot, but may not be supported in the running
+# kernel, hence we disable this test in an rpm build.
+# Adding these was upstream issue http://bugs.python.org/issue10142
+# Not yet sent upstream
+Patch160: 00160-disable-test_fs_holes-in-rpm-build.patch
+
+# 00161 #
+# (Was only needed for Python 3.3.0b1)
+
+# 00162 #
+# (Was only needed for Python 3.3.0b1)
+
+# 00163 #
+# Some tests within test_socket fail intermittently when run inside Koji;
+# disable them using unittest._skipInRpmBuild
+# Not yet sent upstream
+Patch163: 00163-disable-parts-of-test_socket-in-rpm-build.patch
+
+Patch201: python-3.3.0-autoconf-sem_open_check-alt.patch
+
+# Under some kernels not working on tmpfs,
+# see http://comments.gmane.org/gmane.linux.suse.kernel/3182
+%if_enabled test_posix_fadvise
+Patch202: python-3.3.0-skip-test_posix_fadvise-alt.patch
+%endif
 
 # ======================================================
 # Additional metadata, and subpackages
@@ -400,12 +450,22 @@ done
 # 00144: not for python3
 # 00145: not for python3
 %patch146 -p1
-%patch147 -p1
-# %patch148 -p1
-# %patch149 -p1
-%patch152 -p0
+# 00147: upstream as of Python 3.3.0
+# 00148: upstream as of Python 3.2.3
+# 00149: upstream as of Python 3.2.3
+# 00151: not for python3
+# 00152: upstream as of Python 3.3.0b2
+#00158: FIXME
+#00159: FIXME
+%patch160 -p1
+# 00161: was only needed for Python 3.3.0b1
+# 00162: was only needed for Python 3.3.0b1
+%patch163 -p1
 
 %patch201 -p2
+%if_enabled test_posix_fadvise
+%patch202 -p2
+%endif
 
 # Currently (2010-01-15), http://docs.python.org/library is for 2.6, and there
 # are many differences between 2.6 and the Python 3 library.
@@ -427,7 +487,6 @@ topdir=$(pwd)
 build() {
 %configure \
   --enable-ipv6 \
-  --with-wide-unicode \
   --with-system-ffi \
 %if 0%{?with_valgrind}
   --with-valgrind \
@@ -437,7 +496,7 @@ build() {
   --with-computed-gotos=%with_computed_gotos \
   $*
 
-%make
+%make CFLAGS=
 }
 
 pushd ../build-shared
@@ -610,6 +669,21 @@ find %buildroot -type f -a -name "*.py" -a -not -wholename "*/test/*" -a -not -w
 
 sed -i 's,/usr/local/bin/python,/usr/bin/python3,' %buildroot%_libdir/python%pybasever/cgi.py
 
+mkdir -p %buildroot%_rpmlibdir
+cat <<\EOF >%buildroot%_rpmlibdir/%name-base-files.req.list
+# %name dirlist for %_rpmlibdir/files.req
+%pylibdir/	%name-base
+%dynload_dir/	%name-base
+%pylibdir/__pycache__/	%name-base
+%pylibdir/site-packages/	%name-base
+%pylibdir/site-packages/__pycache__/	%name-base
+%pylibdir/Tools/	%name-tools
+%pylibdir/Tools/__pycache__/	%name-tools
+%pylibdir_noarch/	%name-base
+%pylibdir_noarch/site-packages/	%name-base
+%pylibdir_noarch/site-packages/__pycache__/	%name-base
+EOF
+
 #Do not recompile .py files with old python3
 %add_python3_compile_exclude %_libdir/python%pybasever
 
@@ -621,24 +695,29 @@ WITHIN_PYTHON_RPM_BUILD= LD_LIBRARY_PATH=`pwd` ./python -m test.regrtest --verbo
 %_bindir/pydoc*
 %_bindir/python3
 %_bindir/python%pybasever
-%_bindir/python%{pybasever}mu
+%_bindir/%pynameabi
+%_bindir/pyvenv
+%_bindir/pyvenv-%pybasever
 %_mandir/*/*
 
 %files base
 %doc LICENSE README
+%_rpmlibdir/%name-base-files.req.list
 %dir %pylibdir
 %dir %dynload_dir
-%dynload_dir/Python-%version-py%pybasever.egg-info
 %dynload_dir/_bisect.cpython-%pyshortver%pyabi.so
+%dynload_dir/_bz2.cpython-%pyshortver%pyabi.so
 %dynload_dir/_codecs_cn.cpython-%pyshortver%pyabi.so
 %dynload_dir/_codecs_hk.cpython-%pyshortver%pyabi.so
 %dynload_dir/_codecs_iso2022.cpython-%pyshortver%pyabi.so
 %dynload_dir/_codecs_jp.cpython-%pyshortver%pyabi.so
 %dynload_dir/_codecs_kr.cpython-%pyshortver%pyabi.so
 %dynload_dir/_codecs_tw.cpython-%pyshortver%pyabi.so
+%dynload_dir/_crypt.cpython-%pyshortver%pyabi.so
 %dynload_dir/_csv.cpython-%pyshortver%pyabi.so
 %dynload_dir/_ctypes.cpython-%pyshortver%pyabi.so
 %dynload_dir/_dbm.cpython-%pyshortver%pyabi.so
+%dynload_dir/_decimal.cpython-%pyshortver%pyabi.so
 %dynload_dir/_elementtree.cpython-%pyshortver%pyabi.so
 %if %with_gdbm
 %dynload_dir/_gdbm.cpython-%pyshortver%pyabi.so
@@ -647,6 +726,7 @@ WITHIN_PYTHON_RPM_BUILD= LD_LIBRARY_PATH=`pwd` ./python -m test.regrtest --verbo
 %dynload_dir/_heapq.cpython-%pyshortver%pyabi.so
 %dynload_dir/_json.cpython-%pyshortver%pyabi.so
 %dynload_dir/_lsprof.cpython-%pyshortver%pyabi.so
+%dynload_dir/_lzma.cpython-%pyshortver%pyabi.so
 %dynload_dir/_multibytecodec.cpython-%pyshortver%pyabi.so
 %dynload_dir/_multiprocessing.cpython-%pyshortver%pyabi.so
 %dynload_dir/_pickle.cpython-%pyshortver%pyabi.so
@@ -659,9 +739,7 @@ WITHIN_PYTHON_RPM_BUILD= LD_LIBRARY_PATH=`pwd` ./python -m test.regrtest --verbo
 %dynload_dir/atexit.cpython-%pyshortver%pyabi.so
 %dynload_dir/audioop.cpython-%pyshortver%pyabi.so
 %dynload_dir/binascii.cpython-%pyshortver%pyabi.so
-%dynload_dir/bz2.cpython-%pyshortver%pyabi.so
 %dynload_dir/cmath.cpython-%pyshortver%pyabi.so
-%dynload_dir/crypt.cpython-%pyshortver%pyabi.so
 %dynload_dir/_datetime.cpython-%pyshortver%pyabi.so
 %dynload_dir/fcntl.cpython-%pyshortver%pyabi.so
 %dynload_dir/grp.cpython-%pyshortver%pyabi.so
@@ -688,7 +766,11 @@ WITHIN_PYTHON_RPM_BUILD= LD_LIBRARY_PATH=`pwd` ./python -m test.regrtest --verbo
 %pylibdir/*.py
 %dir %pylibdir/__pycache__/
 %pylibdir/__pycache__/*%bytecode_suffixes
-%pylibdir/wsgiref.egg-info
+
+%dir %pylibdir/collections/
+%dir %pylibdir/collections/__pycache__/
+%pylibdir/collections/*.py
+%pylibdir/collections/__pycache__/*%bytecode_suffixes
 
 %dir %pylibdir/concurrent/
 %dir %pylibdir/concurrent/__pycache__/
@@ -723,6 +805,7 @@ WITHIN_PYTHON_RPM_BUILD= LD_LIBRARY_PATH=`pwd` ./python -m test.regrtest --verbo
 %pylibdir/email/*.py
 %pylibdir/email/__pycache__/*%bytecode_suffixes
 %pylibdir/email/mime
+%doc %pylibdir/email/architecture.rst
 
 %pylibdir/encodings
 %pylibdir/html
@@ -742,7 +825,7 @@ WITHIN_PYTHON_RPM_BUILD= LD_LIBRARY_PATH=`pwd` ./python -m test.regrtest --verbo
 %pylibdir/lib2to3
 %pylibdir/logging
 %pylibdir/multiprocessing
-%pylibdir/plat-linux2
+%pylibdir/plat-linux
 %pylibdir/pydoc_data
 
 %exclude %pylibdir/turtle.py
@@ -754,6 +837,13 @@ WITHIN_PYTHON_RPM_BUILD= LD_LIBRARY_PATH=`pwd` ./python -m test.regrtest --verbo
 %pylibdir/unittest/__pycache__/*%bytecode_suffixes
 
 %pylibdir/urllib
+
+%dir %pylibdir/venv/
+%dir %pylibdir/venv/__pycache__/
+%pylibdir/venv/*.py
+%pylibdir/venv/__pycache__/*%bytecode_suffixes
+%pylibdir/venv/scripts
+
 %pylibdir/wsgiref
 %pylibdir/xml
 %pylibdir/xmlrpc
@@ -825,16 +915,19 @@ WITHIN_PYTHON_RPM_BUILD= LD_LIBRARY_PATH=`pwd` ./python -m test.regrtest --verbo
 %files test
 %pylibdir/ctypes/test
 %pylibdir/distutils/tests
-%pylibdir/email/test
-%pylibdir/importlib/test
 %pylibdir/sqlite3/test
 %pylibdir/test
 %dynload_dir/_ctypes_test.cpython-%pyshortver%pyabi.so
+%dynload_dir/_testbuffer.cpython-%pyshortver%pyabi.so
 %dynload_dir/_testcapi.cpython-%pyshortver%pyabi.so
 %pylibdir/tkinter/test
 %pylibdir/unittest/test
 
 %changelog
+* Fri Mar 29 2013 Aleksey Avdeev <solo@altlinux.ru> 3.3.0-alt1
+- version up to 3.3.0
+- add support for Bluetooth
+
 * Wed May 09 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 3.2.3-alt3
 - base: add python3.x(builtins) to Provides
 

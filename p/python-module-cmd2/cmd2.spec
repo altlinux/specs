@@ -3,7 +3,7 @@
 %def_with python3
 
 Version: 0.6.4
-Release: alt5
+Release: alt5.1
 %setup_python_module %oname
 
 Name: python-module-%oname
@@ -121,6 +121,9 @@ done
 %endif
 
 %changelog
+* Fri Mar 22 2013 Aleksey Avdeev <solo@altlinux.ru> 0.6.4-alt5.1
+- Rebuild with Python-3.3
+
 * Fri May 11 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.4-alt5
 - Added module for Python 3
 

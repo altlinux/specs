@@ -3,7 +3,7 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 3.5.1
+Version: 4.2.2
 Release: alt1
 Summary: Zope 3 Deprecation Infrastructure
 License: ZPLv2.1
@@ -11,6 +11,7 @@ Group: Development/Python
 Url: http://pypi.python.org/pypi/zope.deprecation/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
+# git://github.com/zopefoundation/zope.deprecation.git
 Source: %name-%version.tar
 
 BuildPreReq: python-devel python-module-distribute
@@ -126,15 +127,18 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %doc *.txt
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*.pth
-%exclude %python3_sitelibdir/*/*/tests*
-%exclude %python3_sitelibdir/*/*/__pycache__/tests*
+%exclude %python3_sitelibdir/*/*/tests.*
+%exclude %python3_sitelibdir/*/*/__pycache__/tests.*
 
 %files -n python3-module-%oname-tests
-%python3_sitelibdir/*/*/tests*
-%python3_sitelibdir/*/*/__pycache__/tests*
+%python3_sitelibdir/*/*/tests.*
+%python3_sitelibdir/*/*/__pycache__/tests.*
 %endif
 
 %changelog
+* Wed Mar 13 2013 Aleksey Avdeev <solo@altlinux.ru> 4.2.2-alt1
+- Version 4.0.2
+
 * Sat May 05 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.5.1-alt1
 - Version 3.5.1
 - Added module for Python 3
@@ -154,4 +158,3 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 
 * Sat May 21 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.4.0-alt1
 - Initial build for Sisyphus
-

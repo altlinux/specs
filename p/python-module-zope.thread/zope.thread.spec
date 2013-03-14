@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 3.4
-Release: alt3
+Release: alt3.1
 Summary: Zope3 Thread-Local Storage
 License: ZPLv2.1
 Group: Development/Python
@@ -111,6 +111,9 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 
 %changelog
+* Sat Mar 23 2013 Aleksey Avdeev <solo@altlinux.ru> 3.4-alt3.1
+- Rebuild with Python-3.3
+
 * Mon Apr 16 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.4-alt3
 - Added module for Python 3
 

@@ -1,8 +1,15 @@
 %define modulename FormEncode
 
+%def_with python3
+
+%if_with python3
+%define py3name python3-module-%modulename
+%define py3dir %py3name-%version
+%endif
+
 Name: python-module-%modulename
 Version: 1.3.0
-Release: alt1.git20130201
+Release: alt1.git20130312
 Epoch: 1
 
 %setup_python_module %modulename
@@ -20,13 +27,38 @@ Source0: %name-%version.tar
 
 BuildPreReq: %py_dependencies setuptools
 BuildPreReq: python-module-docutils python-module-sphinx-devel
-BuildPreReq: python-module-pydns python-module-pycountry
+BuildPreReq: python-module-pycountry
 BuildPreReq: python-module-nose
+BuildPreReq: python-module-dns
+
+%if_with python3
+BuildPreReq: rpm-build-python3
+BuildPreReq: python-tools-2to3
+BuildPreReq: python3-devel
+BuildPreReq: python3-module-distribute
+BuildPreReq: python3-module-docutils
+BuildPreReq: python3-module-nose
+BuildPreReq: python3-module-pycountry
+BuildPreReq: python3-module-dns
+%endif
 
 %description
 FormEncode validates and converts nested structures. It allows for
 a declarative form of defining the validation, and decoupled processes
 for filling and generating forms.
+
+%if_with python3
+%package -n %py3name
+Summary: HTML form validation, generation, and convertion package for Python 3
+Group: Development/Python3
+BuildArch: noarch
+
+%description -n %py3name
+FormEncode validates and converts nested structures. It allows for
+a declarative form of defining the validation, and decoupled processes
+for filling and generating forms.
+
+%endif
 
 %package doc
 Summary: This package contains documentation and examples for FormEncode
@@ -48,14 +80,34 @@ for filling and generating forms.
 
 %prep
 %setup
+%if_with python3
+rm -rf ../%py3dir
+cp -a . ../%py3dir
+pushd ../%py3dir
+2to3 -w formencode/i18n/msgfmt.py
+sed -ri '1s@^(#![[:space:]]*(.*/)?)python([[:space:]]*.*)?$@\1python3\3@' formencode/i18n/msgfmt.py
+popd
+%endif
 
 %prepare_sphinx .
 
 %build
 %python_build
+%if_with python3
+pushd ../%py3dir
+%python3_build
+popd
+%endif
 
 %install
 %python_install
+rm -rf %buildroot%python_sitelibdir/docs
+%if_with python3
+pushd ../%py3dir
+%python3_install
+rm -rf %buildroot%python3_sitelibdir/docs
+popd
+%endif
 
 pushd docs
 export PYTHONPATH=%buildroot%python_sitelibdir
@@ -65,8 +117,15 @@ cp -fR _build/pickle %buildroot%python_sitelibdir/formencode/
 popd
 
 %files
+%doc docs/*.txt
 %python_sitelibdir/*
 %exclude %python_sitelibdir/*/pickle
+
+%if_with python3
+%files -n %py3name
+%doc ../%py3dir/docs/*.txt
+%python3_sitelibdir/*
+%endif
 
 %files doc
 %doc docs/_build/html examples
@@ -75,6 +134,10 @@ popd
 %python_sitelibdir/*/pickle
 
 %changelog
+* Thu Mar 21 2013 Aleksey Avdeev <solo@altlinux.ru> 1:1.3.0-alt1.git20130312
+- New snapshot
+- Added module for Python 3
+
 * Tue Feb 12 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:1.3.0-alt1.git20130201
 - Version 1.3.0
 

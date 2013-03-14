@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.6.2
-Release: alt1.git20120215
+Version: 0.7.1
+Release: alt1
 Summary: Auto-generate Sphinx API docs from Zope interfaces
 License: BSD
 Group: Development/Python
@@ -122,6 +122,9 @@ touch %buildroot%python3_sitelibdir/repoze/sphinx/__init__.py
 %endif
 
 %changelog
+* Sun Mar 03 2013 Aleksey Avdeev <solo@altlinux.ru> 0.7.1-alt1
+- Version 0.7.1
+
 * Tue May 08 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.2-alt1.git20120215
 - New snapshot
 - Added module for Python 3
@@ -135,4 +138,3 @@ touch %buildroot%python3_sitelibdir/repoze/sphinx/__init__.py
 
 * Fri Jun 10 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.2-alt1.git20110322
 - Initial build for Sisyphus
-

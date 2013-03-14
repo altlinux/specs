@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.16
-Release: alt1
+Release: alt1.1
 Summary: Flexible static resources for web applications
 License: BSD
 Group: Development/Python
@@ -149,6 +149,9 @@ cp -fR doc/_build/pickle %buildroot%python_sitelibdir/fanstatic/
 %endif
 
 %changelog
+* Fri Mar 22 2013 Aleksey Avdeev <solo@altlinux.ru> 0.16-alt1.1
+- Rebuild with Python-3.3
+
 * Wed Feb 13 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.16-alt1
 - Version 0.16
 - Added docs and pickles

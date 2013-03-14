@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.2.0
-Release: alt2
+Release: alt2.1
 Summary: Text templating module
 License: LGPL
 Group: Development/Python
@@ -74,6 +74,9 @@ popd
 %endif
 
 %changelog
+* Fri Mar 22 2013 Aleksey Avdeev <solo@altlinux.ru> 0.2.0-alt2.1
+- Rebuild with Python-3.3
+
 * Tue Apr 17 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.0-alt2
 - Added module for Python 3
 

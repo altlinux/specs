@@ -14,7 +14,7 @@
 
 Name: python-module-%oname
 Version: %majver.0.0
-Release: alt7.git20121009
+Release: alt7.git20121009.1
 
 Summary: NumPy: array processing for numbers, strings, records, and objects
 License: BSD
@@ -1060,6 +1060,9 @@ rm -fR %python_sitelibdir/numpydoc*.egg-info
 # TODO: restore requirement on scipy for tests
 
 %changelog
+* Fri Mar 22 2013 Aleksey Avdeev <solo@altlinux.ru> 2.0.0-alt7.git20121009.1
+- Rebuild with Python-3.3
+
 * Sun Oct 14 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.0-alt7.git20121009
 - Fixed upgrading of numpydoc
 - Extracted tests for numpydoc into separate package

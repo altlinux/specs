@@ -1,5 +1,5 @@
 Version: 4.2.3
-Release: alt3.svn20120223
+Release: alt3.svn20120223.1
 %setup_python_module cx_Freeze
 %define origname cx-freeze
 
@@ -108,7 +108,7 @@ cp -a . ../python3
 %python_build_debug
 %if_with python3
 pushd ../python3
-sed -i 's|\(libname =.*\)|\1 + "mu"|' setup.py
+sed -i 's|\(libname =.*\)|\1 + "%_python3_abiflags"|' setup.py
 for i in $(find ./ -name '*.py'); do
 	2to3 -w -n $i
 done
@@ -163,6 +163,9 @@ rm -f $(find %buildroot -name 'windist*')
 %endif
 
 %changelog
+* Sat Mar 23 2013 Aleksey Avdeev <solo@altlinux.ru> 4.2.3-alt3.svn20120223.1
+- Rebuild with Python-3.3
+
 * Sat May 26 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.2.3-alt3.svn20120223
 - New snapshot
 - Added module for Python 3

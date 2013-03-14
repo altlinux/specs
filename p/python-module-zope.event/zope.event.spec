@@ -3,7 +3,7 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 3.5.2
+Version: 4.0.2
 Release: alt1
 Summary: Very basic event publishing system
 License: ZPL
@@ -11,6 +11,7 @@ Group: Development/Python
 Url: http://pypi.python.org/pypi/zope.event/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
+# git://github.com/zopefoundation/zope.event.git
 Source: %name-%version.tar
 
 BuildPreReq: python-devel python-module-distribute
@@ -133,6 +134,9 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 
 %changelog
+* Sun Mar 03 2013 Aleksey Avdeev <solo@altlinux.ru> 4.0.2-alt1
+- Version 4.0.2
+
 * Thu Apr 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.5.2-alt1
 - Version 3.5.2
 - Added module for Python 3

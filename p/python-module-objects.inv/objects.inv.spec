@@ -3,7 +3,7 @@
 %define oname objects.inv
 Name: python-module-%oname
 Version: %ver.%reldate
-Release: alt2
+Release: alt2.1
 Summary: Resource for build documentarion by Sphinx
 License: BSD
 Group: Development/Python
@@ -51,6 +51,9 @@ install -m644 objects.inv \
 %python3_sitelibdir/sphinx/*
 
 %changelog
+* Wed Mar 20 2013 Aleksey Avdeev <solo@altlinux.ru> 2.3.3.20130320-alt2.1
+- Rebuild with Python-3.3
+
 * Wed Mar 20 2013 Cronbuild Service <cronbuild@altlinux.org> 2.3.3.20130320-alt2
 - repocop cronbuild 20130320. At your service.
 

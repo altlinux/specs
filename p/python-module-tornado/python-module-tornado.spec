@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%module_name
-Version: 2.1.1
-Release: alt1.1
+Version: 2.4.1
+Release: alt1
 Summary: Scalable, non-blocking web server and tools
 
 License: Apache
@@ -92,6 +92,9 @@ popd
 %endif
 
 %changelog
+* Sat Mar 02 2013 Aleksey Avdeev <solo@altlinux.ru> 2.4.1-alt1
+- 2.4.1
+
 * Fri Jun 01 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.1.1-alt1.1
 - Added module for Python 3
 

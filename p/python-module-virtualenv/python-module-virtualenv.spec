@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%modulename
-Version: 1.7
-Release: alt1.1
+Version: 1.8.4
+Release: alt1
 
 Summary: Virtual Python Environment builder
 License: MIT
@@ -18,6 +18,8 @@ BuildRequires: python-module-setuptools
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-distribute
 %endif
+
+# git://github.com/pypa/virtualenv.git
 Source: %name-%version.tar
 
 %setup_python_module %modulename
@@ -90,16 +92,21 @@ mv %buildroot%_bindir/virtualenv %buildroot%_bindir/virtualenv3
 %files
 %_bindir/*
 %exclude %_bindir/virtualenv3
+%exclude %_bindir/virtualenv-3.*
 %python_sitelibdir/*
 %doc docs/*
 
 %if_with python3
 %files -n python3-module-%modulename
 %_bindir/virtualenv3
+%_bindir/virtualenv-3.*
 %python3_sitelibdir/*
 %endif
 
 %changelog
+* Sun Mar 03 2013 Aleksey Avdeev <solo@altlinux.ru> 1.8.4-alt1
+- 1.8.4
+
 * Mon May 07 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.7-alt1.1
 - Added module for Python 3
 

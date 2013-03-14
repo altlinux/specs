@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 3.7.0
-Release: alt4
+Release: alt4.1
 Summary: Object life-cycle events
 License: ZPL
 Group: Development/Python
@@ -127,6 +127,9 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 
 %changelog
+* Sun Mar 24 2013 Aleksey Avdeev <solo@altlinux.ru> 3.7.0-alt4.1
+- Rebuild with Python-3.3
+
 * Mon Apr 16 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.7.0-alt4
 - Added module for Python 3
 

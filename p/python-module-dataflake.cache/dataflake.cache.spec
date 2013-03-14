@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.4
-Release: alt1
+Release: alt1.1
 Summary: Simple caching library
 License: ZPLv2.1
 Group: Development/Python
@@ -133,6 +133,9 @@ popd
 %endif
 
 %changelog
+* Sun Mar 24 2013 Aleksey Avdeev <solo@altlinux.ru> 1.4-alt1.1
+- Rebuild with Python-3.3
+
 * Sat May 26 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4-alt1
 - Version 1.4
 - Added module for Python 3

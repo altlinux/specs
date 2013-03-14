@@ -2,7 +2,7 @@
 
 Name: python3-module-mock
 Version: 0.8.0
-Release: alt1
+Release: alt1.1
 Summary: A Python mock object library
 
 Group: Development/Python
@@ -38,5 +38,8 @@ return values and set needed attributes in the normal way.
 %{python3_sitelibdir_noarch}/__pycache__/%{modulename}*
 
 %changelog
+* Mon Mar 25 2013 Aleksey Avdeev <solo@altlinux.ru> 0.8.0-alt1.1
+- Rebuild with Python-3.3
+
 * Wed Jan 02 2013 Igor Vlasenko <viy@altlinux.ru> 0.8.0-alt1
 - 0.8.0

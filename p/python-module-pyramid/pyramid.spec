@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.4
-Release: alt2.git20130105
+Release: alt2.git20130105.1
 Summary: Small, fast, down-to-earth Python web application development framework
 License: Repoze Public License
 Group: Development/Python
@@ -187,6 +187,9 @@ popd
 %endif
 
 %changelog
+* Fri Mar 22 2013 Aleksey Avdeev <solo@altlinux.ru> 1.4-alt2.git20130105.1
+- Rebuild with Python-3.3
+
 * Mon Jan 07 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4-alt2.git20130105
 - New snapshot
 

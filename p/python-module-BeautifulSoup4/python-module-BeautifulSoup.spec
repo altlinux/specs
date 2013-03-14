@@ -2,12 +2,12 @@
 %define python_build CFLAGS="%optflags" python setup.py build
 %define python_install python setup.py install --root %buildroot --optimize=2
 
-%def_without python3
+%def_with python3
 
 %define oname BeautifulSoup4
 Name: python-module-%oname
 Version: 4.1.3
-Release: alt1
+Release: alt1.1
 
 Summary: HTML/XML parser for quick-turnaround applications like screen-scraping
 
@@ -116,6 +116,9 @@ python -m unittest discover -s bs4
 %endif
 
 %changelog
+* Wed Mar 06 2013 Aleksey Avdeev <solo@altlinux.ru> 4.1.3-alt1.1
+- Added module for Python 3
+
 * Fri Sep 21 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.1.3-alt1
 - Version 4.1.3
 

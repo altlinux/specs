@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.4.1
-Release: alt1
+Release: alt1.1
 Summary: A password hashing framework with bcrypt and pbkdf2
 License: MIT
 Group: Development/Python
@@ -150,6 +150,9 @@ touch %buildroot%python3_sitelibdir/%oname/__init__.py
 %endif
 
 %changelog
+* Fri Mar 22 2013 Aleksey Avdeev <solo@altlinux.ru> 1.4.1-alt1.1
+- Rebuild with Python-3.3
+
 * Sun May 20 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4.1-alt1
 - Version 1.4.1
 - Added module for Python 3

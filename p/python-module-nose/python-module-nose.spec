@@ -4,21 +4,22 @@
 
 Name: python-module-%oname
 Epoch: 1
-Version: 1.1.2
-Release: alt1
+Version: 1.2.1
+Release: alt1.git20130317
 
 Summary: A unittest-based testing framework for python that makes writing and running tests easier
 
 Group: Development/Python
 License: LGPL
 #Url: http://code.google.com/p/python-nose/
+#Url: https://github.com/nose-devs/nose
 Url: http://www.somethingaboutorange.com/mrl/projects/nose/
 
 BuildArch: noarch
 
 %setup_python_module %oname
 
-Source: %oname-%version.tar
+Source: %name-%version.tar
 Patch1: nose-1.1.2-alt-syntax-error-patch_py.patch
 
 BuildRequires: python-module-setuptools python-module-coverage
@@ -42,7 +43,7 @@ as is reasonably possible without resorting to too much magic.
 %endif
 
 %prep
-%setup -n %oname-%version
+%setup
 %patch1 -p2
 
 sed -i "s|man/man1|share/man/man1|g" setup.py
@@ -99,6 +100,9 @@ popd
 %endif
 
 %changelog
+* Sun Mar 17 2013 Aleksey Avdeev <solo@altlinux.ru> 1:1.2.1-alt1.git20130317
+- new version 1.2.1 (git describe: release_1.2.1-112-g846382d)
+
 * Wed Feb 08 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 1:1.1.2-alt1
 - fix version typo
 - build with Python3

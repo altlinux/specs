@@ -4,14 +4,16 @@
 
 Name: python-module-%oname
 Version: 1.0
-Release: alt1.a6
+Release: alt1.a7
 Summary: A library for deferring decorator actions
 License: BSD-derived
 Group: Development/Python
 Url: http://pypi.python.org/pypi/venusian
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
+# git://github.com/Pylons/venusian.git
 Source: %name-%version.tar
+Patch1: %name-%version-alt-docs-tune.patch
 BuildArch: noarch
 
 BuildPreReq: python-devel python-module-setuptools
@@ -93,6 +95,7 @@ This package contains documentation for Venusian.
 
 %prep
 %setup
+%patch1 -p1
 %if_with python3
 rm -rf ../python3
 cp -a . ../python3
@@ -150,6 +153,9 @@ cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Sat Mar 02 2013 Aleksey Avdeev <solo@altlinux.ru> 1.0-alt1.a7
+- Version 1.0a7
+
 * Sat May 05 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0-alt1.a6
 - Version 1.0a6
 - Added module for Python 3

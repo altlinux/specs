@@ -2,7 +2,7 @@
 %def_with python3
 
 Version: 2.4.5
-Release: alt1.git20120328
+Release: alt1.git20120328.1
 %setup_python_module %oname
 
 Summary: psycopg2 is a PostgreSQL database adapter for Python
@@ -147,6 +147,9 @@ install -m644 psycopg2da/*.zcml %buildroot/%python_sitelibdir/psycopg2da/
 %endif
 
 %changelog
+* Fri Mar 22 2013 Aleksey Avdeev <solo@altlinux.ru> 2.4.5-alt1.git20120328.1
+- Rebuild with Python-3.3
+
 * Thu Apr 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.4.5-alt1.git20120328
 - Version 2.4.5
 - Added module for Python 3

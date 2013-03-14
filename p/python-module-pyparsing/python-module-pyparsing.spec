@@ -1,10 +1,8 @@
 %define oname pyparsing
 
-%def_with python3
-
 Name: python-module-%oname
-Version: 1.5.6
-Release: alt2
+Version: 1.5.7
+Release: alt1
 
 Summary: Python parsing module
 
@@ -16,10 +14,6 @@ Packager: Python Development Team <python at packages.altlinux.org>
 BuildArch: noarch
 
 %setup_python_module %oname
-%if_with python3
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel
-%endif
 
 Source: http://prdownloads.sourceforge.net/%oname/%modulename-%version.tar.gz
 
@@ -29,54 +23,25 @@ simple grammars, vs. the traditional lex/yacc approach, or the use of
 regular expressions.  The parsing module provides a library of classes
 that client code uses to construct the grammar directly in Python code.
 
-%if_with python3
-%package -n python3-module-%oname
-Summary: Python 3 parsing module
-Group: Development/Python
-
-%description -n python3-module-%oname
-The parsing module is an alternative approach to creating and executing
-simple grammars, vs. the traditional lex/yacc approach, or the use of
-regular expressions.  The parsing module provides a library of classes
-that client code uses to construct the grammar directly in Python code.
-%endif
-
 %prep
 %setup -n %modulename-%version
-%if_with python3
-rm -rf ../python3
-cp -a . ../python3
-%endif
 
 %build
 %python_build
-%if_with python3
-pushd ../python3
-%python3_build
-popd
-%endif
 
 %install
 %python_install
-%if_with python3
-pushd ../python3
-%python3_install
-popd
-%endif
 
 %files
-%doc CHANGES examples HowToUsePyparsing.html htmldoc/*
+%doc CHANGES examples HowToUsePyparsing.html docs/*.pdf
 %doc pyparsingClassDiagram.JPG pyparsingClassDiagram.PNG README
 %python_sitelibdir/*
 
-%if_with python3
-%files -n python3-module-%oname
-%doc CHANGES examples HowToUsePyparsing.html htmldoc/*
-%doc pyparsingClassDiagram.JPG pyparsingClassDiagram.PNG README
-%python3_sitelibdir/*
-%endif
-
 %changelog
+* Tue Feb 19 2013 Aleksey Avdeev <solo@altlinux.ru> 1.5.7-alt1
+- Version 1.5.7
+- Removed module for Python 3
+
 * Thu May 10 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.5.6-alt2
 - Added module for Python 3
 

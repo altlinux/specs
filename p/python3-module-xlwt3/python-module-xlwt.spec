@@ -1,6 +1,6 @@
 nAME: python3-module-xlwt3
 Version: 0.1.2
-Release: alt1
+Release: alt1.1
 
 Summary: Library to generate spreadsheet files compatible with Microsoft Excel versions 95 to 2003
 
@@ -36,6 +36,9 @@ packages outside the standard Python distribution.
 %python3_sitelibdir/*
 
 %changelog
+* Fri Mar 22 2013 Aleksey Avdeev <solo@altlinux.ru> 0.1.2-alt1.1
+- Rebuild with Python-3.3
+
 * Fri Jun 01 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.2-alt1
 - Built for Python 3
 

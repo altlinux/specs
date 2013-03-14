@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.1.5
-Release: alt3
+Release: alt4.1
 Summary: Python Software for Convex Optimization
 License: GPL v3 or higher/GPL v2 of higher
 Group: Development/Python
@@ -14,6 +14,8 @@ Source: %oname-%version.tar.gz
 %setup_python_module %oname
 # disable requirements on commertial software
 %add_python_req_skip mosekarr pymosek mosek
+
+Patch100: python-module-cvxopt-1.1.5-alt3-armh.patch
 
 BuildRequires(pre): rpm-build-python
 BuildPreReq: python-devel liblapack-devel libgsl-devel
@@ -105,6 +107,10 @@ This package contains pickles for CVXOPT.
 
 %prep
 %setup
+%ifarch %arm
+%patch100 -p2
+%endif
+
 %if_with python3
 rm -rf ../python3
 cp -a . ../python3
@@ -178,6 +184,12 @@ cp -fR doc/build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Fri Mar 22 2013 Aleksey Avdeev <solo@altlinux.ru> 1.1.5-alt4.1
+- Rebuild with Python-3.3
+
+* Thu Mar 14 2013 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.1.5-alt4
+- on %%arm liblapack is built with libblas, not libopenblas
+
 * Mon Feb 04 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.5-alt3
 - Rebuilt with glpk 4.48
 

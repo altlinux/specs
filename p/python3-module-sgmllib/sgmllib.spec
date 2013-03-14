@@ -1,7 +1,7 @@
 %define oname sgmllib
 Name: python3-module-%oname
 Version: 1.0.0
-Release: alt1.hg20100824
+Release: alt1.hg20100824.1
 Summary: Py3k port of the old stdlib module
 License: BSD
 Group: Development/Python3
@@ -36,6 +36,9 @@ module to use.
 %python3_sitelibdir/*
 
 %changelog
+* Fri Mar 22 2013 Aleksey Avdeev <solo@altlinux.ru> 1.0.0-alt1.hg20100824.1
+- Rebuild with Python-3.3
+
 * Mon Apr 09 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.0-alt1.hg20100824
 - Initial build for Sisyphus
 

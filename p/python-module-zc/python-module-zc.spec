@@ -1,6 +1,6 @@
 %define oname zc
 %define version 1.0.0
-%define release alt6
+%define release alt6.1
 
 %def_with python3
 
@@ -66,6 +66,9 @@ install -m644 %buildroot/%python_sitelibdir/%modulename/__init__.py \
 %endif
 
 %changelog
+* Fri Mar 22 2013 Aleksey Avdeev <solo@altlinux.ru> 1.0.0-alt6.1
+- Rebuild with Python-3.3
+
 * Wed Apr 18 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.0-alt6
 - Added requirement on python3-module-z3c
 

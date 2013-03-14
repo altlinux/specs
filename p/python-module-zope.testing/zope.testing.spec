@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 4.1.1
-Release: alt1
+Release: alt1.1
 Summary: Zope testing helpers
 License: ZPL
 Group: Development/Python
@@ -83,6 +83,9 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 
 %changelog
+* Fri Mar 22 2013 Aleksey Avdeev <solo@altlinux.ru> 4.1.1-alt1.1
+- Rebuild with Python-3.3
+
 * Thu Apr 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.1.1-alt1
 - Version 4.1.1
 - Added module for Python 3

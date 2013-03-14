@@ -1,8 +1,15 @@
 %define oname SQLObject
 
+%def_with python3
+
+%if_with python3
+%define py3name python3-module-%oname
+%define py3dir %py3name-%version
+%endif
+
 Name: python-module-SQLObject
-Version: 0.13.0
-Release: alt1.1.1
+Version: 1.3.2
+Release: alt1
 
 Summary: Object-Relational Manager, aka database wrapper for Python
 
@@ -17,9 +24,20 @@ BuildArch: noarch
 BuildRequires: python-devel python-modules-compiler python-modules-encodings
 BuildPreReq: python-module-distribute
 
+%if_with python3
+BuildRequires(pre): rpm-build-python3
+BuildPreReq: python-tools-2to3
+BuildPreReq: python3-devel
+BuildPreReq: python3-module-distribute
+%endif
+
 %setup_python_module sqlobject
 
 %add_python_req_skip py
+
+%if_with python3
+%add_python3_req_skip new
+%endif
 
 %description
 SQLObject is a popular *Object Relational Manager* for providing an
@@ -32,6 +50,24 @@ applications.
 
 Supports MySQL, PostgreSQL, SQLite, Firebird, Sybase, and MaxDB (SAPDB).
 
+
+%if_with python3
+%package -n %py3name
+Summary: Object-Relational Manager, aka database wrapper for Python3
+Group: Development/Python
+
+%description -n %py3name
+SQLObject is a popular *Object Relational Manager* for providing an
+object interface to your database, with tables as classes, rows as
+instances, and columns as attributes.
+
+SQLObject includes a Python-object-based query language that makes SQL
+more abstract, and provides substantial database independence for
+applications.
+
+Supports MySQL, PostgreSQL, SQLite, Firebird, Sybase, and MaxDB (SAPDB).
+
+%endif
 
 %package doc
 Summary: This package contains documentation for SQLObject.
@@ -51,11 +87,35 @@ Supports MySQL, PostgreSQL, SQLite, Firebird, Sybase, and MaxDB (SAPDB).
 
 %prep
 %setup -n %oname-%version
+%if_with python3
+rm -rf ../%py3dir
+cp -a . ../%py3dir
+pushd ../%py3dir
+find ./ -name '*.py' -print0 | xargs -0i 2to3 -w {}
+popd
+%endif
 
 %build
 %python_build
+%if_with python3
+pushd ../%py3dir
+%python3_build
+popd
+%endif
 
 %install
+%if_with python3
+pushd ../%py3dir
+%python3_install
+pushd %buildroot%_bindir
+for f in `ls`
+do
+	mv $f $f-%__python3_version
+	ln -s $f-%__python3_version ${f}3
+done
+popd
+popd
+%endif
 %python_install
 
 # omit paste for a while
@@ -64,13 +124,29 @@ Supports MySQL, PostgreSQL, SQLite, Firebird, Sybase, and MaxDB (SAPDB).
 %files
 %doc README.txt
 %_bindir/sqlobject-admin
+%_bindir/sqlobject-convertOldURI
 %python_sitelibdir/%modulename/
 %python_sitelibdir/%oname-*.egg-info
+
+%if_with python3
+%files -n %py3name
+%doc README.txt
+%_bindir/sqlobject-admin-%__python3_version
+%_bindir/sqlobject-admin3
+%_bindir/sqlobject-convertOldURI-%__python3_version
+%_bindir/sqlobject-convertOldURI3
+%python3_sitelibdir/%modulename/
+%python3_sitelibdir/%oname-*.egg-info
+%endif
 
 %files doc
 %doc docs/*
 
 %changelog
+* Wed Mar 20 2013 Aleksey Avdeev <solo@altlinux.ru> 1.3.2-alt1
+- Version 1.3.2
+- Added module for Python 3
+
 * Thu Oct 20 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 0.13.0-alt1.1.1
 - Rebuild with Python-2.7
 

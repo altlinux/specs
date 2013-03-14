@@ -7,7 +7,7 @@
 %define oname BeautifulSoup
 Name: python-module-%oname
 Version: 3.2.1
-Release: alt2
+Release: alt2.1
 
 Summary: HTML/XML parser for quick-turnaround applications like screen-scraping
 
@@ -81,6 +81,9 @@ popd
 %endif
 
 %changelog
+* Fri Mar 22 2013 Aleksey Avdeev <solo@altlinux.ru> 3.2.1-alt2.1
+- Rebuild with Python-3.3
+
 * Tue Apr 10 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.2.1-alt2
 - Added module for Python 3
 

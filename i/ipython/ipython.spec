@@ -1,8 +1,8 @@
 %def_with python3
 
 Name: ipython
-Version: 0.13
-Release: alt2
+Version: 0.13.1
+Release: alt1
 
 %setup_python_module IPython
 
@@ -10,7 +10,7 @@ Summary: An enhanced interactive Python shell
 License: BSD
 Group: Development/Python
 
-Url: http://ipython.scipy.org
+Url: http://ipython.org
 BuildArch: noarch
 
 # https://github.com/ipython/ipython.git
@@ -24,6 +24,7 @@ BuildRequires: python3-devel python3-module-distribute
 %endif
 
 %add_python_req_skip Gnuplot Numeric bzrlib foolscap nose setuptools twisted msvcrt oct2py rpy2
+%add_python3_req_skip __main__
 
 
 %description
@@ -161,6 +162,9 @@ popd
 
 
 %changelog
+* Sun Mar 24 2013 Aleksey Avdeev <solo@altlinux.ru> 0.13.1-alt1
+- Version 0.13.1 (rel)
+
 * Tue Jul 03 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 0.13-alt2
 - Version 0.13 (rel)
 

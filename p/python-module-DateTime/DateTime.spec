@@ -5,7 +5,7 @@
 Name: python-module-%oname
 Epoch: 1
 Version: 3.0.3
-Release: alt1
+Release: alt1.1
 Summary: Encapsulation of date/time values
 License: ZPLv2.1
 Group: Development/Python
@@ -107,6 +107,9 @@ popd
 %endif
 
 %changelog
+* Fri Mar 22 2013 Aleksey Avdeev <solo@altlinux.ru> 1:3.0.3-alt1.1
+- Rebuild with Python-3.3
+
 * Tue Feb 12 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:3.0.3-alt1
 - Version 3.0.3
 

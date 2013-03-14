@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.17
-Release: alt2
+Release: alt2.1
 Summary: Python library for arbitrary-precision floating-point arithmetic
 License: New BSD License
 Group: Development/Python
@@ -161,6 +161,9 @@ popd
 %endif
 
 %changelog
+* Fri Mar 22 2013 Aleksey Avdeev <solo@altlinux.ru> 0.17-alt2.1
+- Rebuild with Python-3.3
+
 * Sat May 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.17-alt2
 - Added module for Python 3
 

@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.5
-Release: alt1.git20120324
+Version: 0.6
+Release: alt1
 Summary: Tiny LRU cache
 License: BSD
 Group: Development/Python
@@ -120,6 +120,9 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 
 %changelog
+* Sat Mar 02 2013 Aleksey Avdeev <solo@altlinux.ru> 0.6-alt1
+- Version 0.6
+
 * Sat May 05 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5-alt1.git20120324
 - Version 0.5
 - Added module for Python 3

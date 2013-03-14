@@ -4,7 +4,7 @@
 
 Name: structuresynth
 Version: 1.0.0
-Release: %branch_release %our_release.%svn_release.%minor_release.3
+Release: %branch_release %our_release.%svn_release.%minor_release.4
 
 Summary: Application for generating 3D structures by specifying a design grammar
 License: %gpl3only / %lgpl21only
@@ -69,6 +69,9 @@ install -pDm0644 images/fileicons/StructureSynth-256.png %buildroot%_iconsdir/hi
 %_iconsdir/hicolor/128x128/*
 
 %changelog
+* Sun Mar 24 2013 Aleksey Avdeev <solo@altlinux.ru> 1.0.0-alt1.svn255.3.4
+- Rebuild with Python-3
+
 * Mon Apr 02 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.0-alt1.svn255.3.3
 - Rebuilt with Python 3
 

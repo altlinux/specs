@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 3.5.1
-Release: alt4
+Release: alt4.1
 Summary: Zope Template Application Language Expression Syntax (TALES)
 License: ZPL
 Group: Development/Python
@@ -115,6 +115,9 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 
 %changelog
+* Fri Mar 22 2013 Aleksey Avdeev <solo@altlinux.ru> 3.5.1-alt4.1
+- Rebuild with Python-3.3
+
 * Tue Apr 17 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.5.1-alt4
 - Added module for Python 3
 

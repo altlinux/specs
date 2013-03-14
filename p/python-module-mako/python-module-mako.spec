@@ -3,7 +3,7 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.7.0
+Version: 0.7.3
 Release: alt1
 Summary: template library written in Python
 
@@ -93,6 +93,9 @@ mv %buildroot%_bindir/mako-render %buildroot%_bindir/mako-render3
 %endif
 
 %changelog
+* Wed Feb 20 2013 Aleksey Avdeev <solo@altlinux.ru> 0.7.3-alt1
+- Version 0.7.3
+
 * Thu May 10 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7.0-alt1
 - Version 0.7.0
 - Added module for Python 3

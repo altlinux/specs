@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.5.14
-Release: alt1.git20130210
+Release: alt1.git20130210.1
 Summary: WebSocket & WAMP for Python/Twisted
 License: Apache License 2.0
 Group: Development/Python
@@ -122,6 +122,9 @@ popd
 %endif
 
 %changelog
+* Fri Mar 22 2013 Aleksey Avdeev <solo@altlinux.ru> 0.5.14-alt1.git20130210.1
+- Rebuild with Python-3.3
+
 * Wed Feb 13 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.14-alt1.git20130210
 - Version 0.5.14
 

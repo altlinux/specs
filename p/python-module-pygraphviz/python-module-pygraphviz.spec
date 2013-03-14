@@ -4,7 +4,7 @@
 
 Name: python-module-%module_name
 Version: 1.2
-Release: alt1.svn20120328
+Release: alt1.svn20120328.1
 
 Summary: Python wrapper for the Graphviz Agraph data structure
 
@@ -119,6 +119,9 @@ popd
 %endif
 
 %changelog
+* Fri Mar 22 2013 Aleksey Avdeev <solo@altlinux.ru> 1.2-alt1.svn20120328.1
+- Rebuild with Python-3.3
+
 * Wed Jul 18 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2-alt1.svn20120328
 - Version 1.2
 - Extracted tests into separate package

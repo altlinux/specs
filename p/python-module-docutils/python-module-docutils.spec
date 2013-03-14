@@ -3,7 +3,7 @@
 
 Summary: Docutils -- Python Documentation Utilities
 Version: 0.11
-Release: alt1.svn20130117
+Release: alt1.svn20130117.1
 %setup_python_module %oname
 Name: %packagename
 Source0: %modulename-%version.tar.gz
@@ -123,6 +123,9 @@ popd
 %endif
 
 %changelog
+* Wed Mar 20 2013 Aleksey Avdeev <solo@altlinux.ru> 0.11-alt1.svn20130117.1
+- Rebuild with Python-3.3
+
 * Fri Jan 18 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.11-alt1.svn20130117
 - Version 0.11
 

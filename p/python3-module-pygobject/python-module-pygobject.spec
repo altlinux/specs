@@ -5,7 +5,7 @@
 
 Name: python3-module-pygobject
 Version: %major.6
-Release: alt4
+Release: alt4.1
 
 Summary: Python 3 bindings for GObject
 
@@ -99,7 +99,7 @@ sed -i 's|%_bindir/env python|%_bindir/env python3|' \
 #	%buildroot%_bindir/py3_pygobject-codegen-2.0
 
 # hack to avoid verify-elf errors
-export LD_PRELOAD=%_libdir/libpython%{_python3_version}mu.so
+export LD_PRELOAD=%_libdir/libpython%{_python3_version}%_python3_abiflags.so
 
 %files
 %_libdir/libpyglib-2.0-python3*.so.*
@@ -133,6 +133,9 @@ export LD_PRELOAD=%_libdir/libpython%{_python3_version}mu.so
 %endif
 
 %changelog
+* Sun Mar 24 2013 Aleksey Avdeev <solo@altlinux.ru> 2.28.6-alt4.1
+- Rebuild with Python-3.3
+
 * Sat May 19 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.28.6-alt4
 - Built for Python 3
 

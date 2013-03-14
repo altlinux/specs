@@ -1,5 +1,5 @@
 %define version 1.7.5
-%define release alt1.hg20120208
+%define release alt1.hg20120208.1
 %define oname PasteScript
 
 %def_with python3
@@ -97,6 +97,9 @@ popd
 %endif
 
 %changelog
+* Fri Mar 22 2013 Aleksey Avdeev <solo@altlinux.ru> 1:1.7.5-alt1.hg20120208.1
+- Rebuild with Python-3.3
+
 * Fri May 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:1.7.5-alt1.hg20120208
 - New snapshot
 - Added module for Python 3

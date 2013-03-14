@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.4.0
-Release: alt1.git20121205
+Release: alt1.git20121205.1
 Summary: Lightweight in-process concurrent programming
 License: MIT
 Group: Development/Python
@@ -116,10 +116,13 @@ popd
 %files -n python3-module-%oname
 %doc AUTHORS LICENSE NEWS README* doc/greenlet.txt
 %python3_sitelibdir/*
-%_includedir/python%{_python3_version}mu/greenlet
+%_includedir/python%_python3_version%_python3_abiflags/greenlet
 %endif
 
 %changelog
+* Sun Mar 24 2013 Aleksey Avdeev <solo@altlinux.ru> 0.4.0-alt1.git20121205.1
+- Rebuild with Python-3.3
+
 * Thu Feb 14 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.0-alt1.git20121205
 - Version 0.4.0
 

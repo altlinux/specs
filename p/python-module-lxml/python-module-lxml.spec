@@ -3,12 +3,18 @@
 %def_with python3
 
 Name: python-module-lxml
-Version: 2.3.4
-Release: alt2
+Version: 3.1.0
+Release: alt1
 
 Summary: Powerful and Pythonic XML processing library combining libxml2/libxslt with the ElementTree API.
 
-Source: http://codespeak.net/lxml/%modulename-%version.tar
+# http://codespeak.net/lxml/%modulename-%version.tar
+# git://github.com/lxml/lxml.git
+Source: %name-%version.tar
+# see https://github.com/lxml/lxml/issues/102
+Patch10: %name-%version-alt-egg_info.patch
+# see https://github.com/lxml/lxml/issues/105
+Patch20: %name-%version-alt-fix_use_API_libxml2.patch
 
 License: BSD/GPLv2/ZPL/PSF
 Group: Development/Python
@@ -17,12 +23,18 @@ URL: http://codespeak.net/lxml
 Packager: Python Development Team <python@packages.altlinux.org>
 
 BuildPreReq: libxslt-devel python-module-distribute zlib-devel
+# see doc/build.txt
+BuildPreReq: python-module-Cython >= 0.18
 
 %setup_python_module lxml
 
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-distribute
+# see doc/build.txt
+BuildPreReq: python3-module-Cython >= 0.18
+BuildPreReq: python3-devel python3-module-distribute
+
+%add_python3_req_skip etree
 %endif
 
 %description
@@ -65,21 +77,24 @@ RelaxNG, XML Schema, XSLT, C14N and much more.
 This package contains documentation for lxml.
 
 %prep
-%setup -n %modulename-%version
+%setup
+%patch10 -p1
+%patch20 -p1
 %if_with python3
 rm -rf ../python3
 cp -a . ../python3
 %endif
 
 %build
-%python_build_debug
+# see Makefile
+%python_build_debug --with-cython
 %if_with python3
 pushd ../python3
 sed -i 's|/usr/bin/env python.*|/usr/bin/env python3|' \
 	update-error-constants.py test.py
 sed -i 's|/usr/bin/python|/usr/bin/python3|' \
 	doc/rest2latex.py doc/rest2html.py
-%python3_build
+%python3_build --with-cython
 popd
 %endif
 
@@ -88,6 +103,24 @@ popd
 %if_with python3
 pushd ../python3
 %python3_install
+popd
+%endif
+
+%check
+# see Makefile
+CFLAGS="${CFLAGS:-%optflags}" ; export CFLAGS ;
+CXXFLAGS="${CXXFLAGS:-%optflags}" ; export CXXFLAGS ;
+FFLAGS="${FFLAGS:-%optflags}" ; export FFLAGS ;
+cp -l build/lib.linux-*/lxml/*.so src/lxml/
+%__python test.py -p -v
+PYTHONPATH=src:$PYTHONPATH %__python selftest.py
+PYTHONPATH=src:$PYTHONPATH %__python selftest2.py
+%if_with python3
+pushd ../python3
+cp -l build/lib.linux-*/lxml/*.so src/lxml/
+%__python3 test.py -p -v
+PYTHONPATH=src:$PYTHONPATH %__python3 selftest.py
+PYTHONPATH=src:$PYTHONPATH %__python3 selftest2.py
 popd
 %endif
 
@@ -103,6 +136,12 @@ popd
 %doc doc samples
 
 %changelog
+* Thu Mar 28 2013 Aleksey Avdeev <solo@altlinux.ru> 3.1.0-alt1
+- Version 3.1.0
+
+* Sun Mar 17 2013 Aleksey Avdeev <solo@altlinux.ru> 2.3.6-alt1
+- Version 2.3.6
+
 * Tue Apr 10 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.3.4-alt2
 - Added module for Python 3
 

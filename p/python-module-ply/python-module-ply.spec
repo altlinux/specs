@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 3.4
-Release: alt1
+Release: alt1.1
 
 Summary: lex and yacc python implementation
 
@@ -79,6 +79,9 @@ popd
 %endif
 
 %changelog
+* Fri Mar 22 2013 Aleksey Avdeev <solo@altlinux.ru> 3.4-alt1.1
+- Rebuild with Python-3.3
+
 * Sat May 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.4-alt1
 - Version 3.4
 - Added module for Python 3
