@@ -21,7 +21,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.0.68
-Release: alt6
+Release: alt7
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -569,7 +569,7 @@ Patch0728: linux-%kernel_branch.42-fix-fs-ceph.patch
 Patch0729: linux-%kernel_branch.62-fix-fs-cifs.patch
 Patch0730: linux-%kernel_branch.42-fix-fs-dlm.patch
 Patch0731: linux-%kernel_branch.42-fix-fs-ecryptfs.patch
-Patch0732: linux-%kernel_branch.42-fix-fs-ext3.patch
+Patch0732: linux-%kernel_branch.68-fix-fs-ext3.patch
 Patch0733: linux-%kernel_branch.67-fix-fs-ext4.patch
 Patch0734: linux-%kernel_branch.56-fix-fs-fat.patch
 Patch0735: linux-%kernel_branch.42-fix-fs-hfs.patch
@@ -3078,6 +3078,12 @@ done)
 
 
 %changelog
+* Thu Mar 14 2013 Led <led@altlinux.ru> 3.0.68-alt7
+- updated:
+  + fix-drivers-gpu-drm--i915
+  + fix-fs-ext3
+  + feat-fs-aufs
+
 * Thu Mar 14 2013 Led <led@altlinux.ru> 3.0.68-alt6
 - updated:
   + fix-lib
