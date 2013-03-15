@@ -1,8 +1,9 @@
 %define major 2.22
 %define oname gnome-python-desktop
+
 Name: python-module-pygnome-gtksourceview
 Version: %major.0
-Release: alt2.1
+Release: alt2.2
 
 Summary: python bindings for the version 1 of the GtkSourceView library
 
@@ -13,13 +14,10 @@ Url: http://www.pygtk.org/
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 Source: http://ftp.gnome.org/pub/gnome/sources/%oname/%major/%oname-%version.tar.bz2
+# remove gtk_source_print_job_* functions
+Patch: %name-2.22.0-alt-no_gnomeprint.patch
 
-%define python_gnome_dir %python_sitelibdir/gtk-1.0/gnome
-
-# manually removed: bug-buddy 
-# Automatically added by buildreq on Sun Jan 06 2008
-BuildRequires: gcc-c++ libgtksourceview1-devel python-module-pygtk-devel
-
+BuildRequires: libgtksourceview1-devel
 BuildRequires: python-module-pygtk-devel >= 2.10.0
 
 %description
@@ -28,6 +26,7 @@ GtkSourceView library.
 
 %prep
 %setup -q -n %oname-%version
+%patch -b .gnomeprint
 
 %build
 %configure
@@ -45,6 +44,9 @@ rm -f %buildroot%_datadir/pygtk/2.0/defs/gtksourceview.defs
 %python_sitelibdir/gtk-2.0/gtksourceview.so
 
 %changelog
+* Fri Mar 15 2013 Yuri N. Sedunov <aris@altlinux.org> 2.22.0-alt2.2
+- built against libgtksourceview1 without gnomeprint support
+
 * Thu Oct 27 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 2.22.0-alt2.1
 - Rebuild with Python-2.7
 
