@@ -1,7 +1,7 @@
 %define installdir %webserver_webappsdir/%name
 
 Name: owncloud
-Version: 4.5.8
+Version: 5.0.0
 Release: alt1
 
 Summary: Cloud platform
@@ -13,7 +13,9 @@ BuildRequires(pre): rpm-macros-webserver-common
 BuildArch: noarch
 
 Requires(pre): webserver-common
+Requires: php5-dom
 Requires: owncloud-apps = %version
+Requires: owncloud-3rdparty = %version
 
 Source0: %name-%version.tar
 
@@ -60,7 +62,7 @@ rm -f %buildroot%installdir/l10n/l10n.pl
 %doc COPYING-AGPL
 %doc COPYING-README
 %doc README
-%installdir/3rdparty
+#%installdir/3rdparty
 %dir %attr(0775,root,_webserver) %installdir/apps
 %installdir/apps/*
 %dir %attr(0770,root,_webserver) %_sysconfdir/owncloud
@@ -83,6 +85,9 @@ rm -f %buildroot%installdir/l10n/l10n.pl
 %config(noreplace) %attr(0644,root,root) %_sysconfdir/httpd2/conf/addon.d/A.%name.conf
 
 %changelog
+* Fri Mar 15 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 5.0.0-alt1
+- 5.0.0
+
 * Thu Mar 14 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 4.5.8-alt1
 - 4.5.8
 
