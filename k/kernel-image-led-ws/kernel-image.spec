@@ -20,13 +20,13 @@
 %define flavour %base_flavour-%sub_flavour
 
 Name: kernel-image-%flavour
-Version: 3.0.68
-Release: alt7
+Version: 3.0.69
+Release: alt1
 
 %define kernel_req %nil
 %define kernel_prov %nil
 %define kernel_branch 3.0
-%define kernel_stable_version 68
+%define kernel_stable_version 69
 %define kernel_extra_version .%kernel_stable_version
 #define kernel_extra_version %nil
 
@@ -362,7 +362,7 @@ Patch0381: linux-%kernel_branch.45-fix-drivers-md--dm-mod.patch
 Patch0382: linux-%kernel_branch.57-fix-drivers-md--dm-multipath.patch
 Patch0383: linux-%kernel_branch.66-fix-drivers-md--md-mod.patch
 Patch0384: linux-%kernel_branch.51-fix-drivers-md--multipath.patch
-Patch0385: linux-%kernel_branch.66-fix-drivers-md--raid0.patch
+Patch0385: linux-%kernel_branch.69-fix-drivers-md--raid0.patch
 Patch0386: linux-%kernel_branch.51-fix-drivers-md--raid1.patch
 Patch0387: linux-%kernel_branch.51-fix-drivers-md--raid10.patch
 Patch0388: linux-%kernel_branch.51-fix-drivers-md--raid456.patch
@@ -616,7 +616,7 @@ Patch0804: linux-%kernel_branch.44-fix-mm--memcontrol.patch
 Patch0805: linux-%kernel_branch.42-fix-mm--memory-failure.patch
 Patch0806: linux-%kernel_branch.51-fix-mm--memory_hotplug.patch
 Patch0807: linux-%kernel_branch.59-fix-mm--mmu.patch
-Patch0808: linux-%kernel_branch.46-fix-mm--numa.patch
+Patch0808: linux-%kernel_branch.68-fix-mm--numa.patch
 Patch0809: linux-%kernel_branch.42-fix-mm--slab.patch
 Patch0810: linux-%kernel_branch.42-fix-mm--slub.patch
 Patch0811: linux-%kernel_branch.58-fix-mm--swap.patch
@@ -3078,6 +3078,12 @@ done)
 
 
 %changelog
+* Fri Mar 15 2013 Led <led@altlinux.ru> 3.0.69-alt1
+- 3.0.69
+- updated:
+  + fix-drivers-md--raid0
+  + fix-mm--numa
+
 * Thu Mar 14 2013 Led <led@altlinux.ru> 3.0.68-alt7
 - updated:
   + fix-drivers-gpu-drm--i915
