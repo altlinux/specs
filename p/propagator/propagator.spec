@@ -2,7 +2,7 @@
 %def_with splash
 
 Name: propagator
-Version: 20130315
+Version: 20130316
 Release: alt1
 
 Summary: 'Early userspace' set of binaries
@@ -37,6 +37,9 @@ make \
 %_sbindir/propagator
 
 %changelog
+* Sat Mar 16 2013 Michael Shigorin <mike@altlinux.org> 20130316-alt1
+- cdrom: probe sda1 before sda (see also #28289)
+
 * Thu Feb 21 2013 Michael Shigorin <mike@altlinux.org> 20130315-alt1
 - complete the /bin/plymouth existence check started in 20101130-alt6
 
