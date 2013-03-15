@@ -4,8 +4,8 @@
 %define	docdir %_docdir/%name-%version
 
 Name: awstats
-Version: 7.1
-Release: alt3.cvs20120604
+Version: 7.1.1
+Release: alt0.1
 
 Summary: Real-time logfile analyzer to get advanced web statistics
 Summary(ru_RU.KOI8-R):	Анализатор логов Web-сервера в режиме реального времени
@@ -173,6 +173,10 @@ install -p -m644 %SOURCE6 %buildroot%apache2_ports_start/%name.conf
 %config(noreplace) %apache2_ports_start/%name.conf
 
 %changelog
+* Fri Mar 15 2013 L.A. Kostis <lakostis@altlinux.ru> 7.1.1-alt0.1
+- 7.1.1.
+- possibly fixes perl 5.16 compatibility issues (ALT #28686).
+
 * Fri Oct 05 2012 L.A. Kostis <lakostis@altlinux.ru> 7.1-alt3.cvs20120604
 - more fixes for yandex search.
 
@@ -184,7 +188,7 @@ install -p -m644 %SOURCE6 %buildroot%apache2_ports_start/%name.conf
 - Bug fixes:
   + fix permissions for .pl files.
   + awstats.pl: fix opera version detection (upstream #3564921)
-  + browsers_phone.pm: add missing %BrowsersFamily (upstream #3430233)
+  + browsers_phone.pm: add missing %%BrowsersFamily (upstream #3430233)
 
 * Tue Oct 02 2012 L.A. Kostis <lakostis@altlinux.ru> 7.1-alt0.1.cvs20120604
 - Updated to CVS 2012/06/04 shapshot.
