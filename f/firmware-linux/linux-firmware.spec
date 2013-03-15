@@ -1,6 +1,6 @@
 Name: firmware-linux
 Version: 20130313
-Release: alt1
+Release: alt2
 
 Summary: Firmware files used by the Linux kernel
 License: GPL+ and GPLv2+ and MIT and Redistributable, no modification permitted
@@ -49,8 +49,12 @@ rm %buildroot/lib/firmware/{WHENCE,LICENCE.*}
 %files
 %doc WHENCE LICEN?E.*
 /lib/firmware/*
+%exclude /lib/firmware/carl9170fw
 
 %changelog
+* Fri Mar 15 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 20130313-alt2
+- sources exluded (closes: #28682)
+
 * Wed Mar 13 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 20130313-alt1
 - updated from git
 
