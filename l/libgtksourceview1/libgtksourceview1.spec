@@ -1,10 +1,11 @@
 %define _name gtksourceview
 %define ver_major 1.8
 %def_disable static
+%def_disable gnomeprint
 
 Name: lib%{_name}1
 Version: %ver_major.5
-Release: alt8
+Release: alt9
 
 Summary: GtkSourceView text widget library
 License: %lgpl2plus
@@ -34,7 +35,7 @@ BuildPreReq: gnome-common
 BuildPreReq: libgtk+2-devel >= %gtk_ver
 BuildPreReq: gnome-vfs-devel >= %gnome_vfs_ver
 BuildPreReq: libxml2-devel >= %libxml2_ver
-BuildPreReq: libgnomeprint2-devel >= %gnome_print_ver
+%{?_enable_gnomeprint:BuildPreReq: libgnomeprint2-devel >= %gnome_print_ver}
 BuildPreReq: gtk-doc >= 1.0
 
 
@@ -75,13 +76,15 @@ This package provides development documentation for %_name.
 %setup -n %_name-%version
 %patch
 %patch1 -p1
+%{?_disable_gnomeprint:subst 's/ libgnomeprint-2.2//' gtksourceview-1.0.pc.in}
 
 %build
 %autoreconf
 %configure \
 	%{subst_enable static} \
-	--enable-build-tests
-	
+	--enable-build-tests \
+	%{?_disable_gnomeprint:--disable-gnomeprint}
+
 %make_build
 
 %install
@@ -104,6 +107,9 @@ This package provides development documentation for %_name.
 %_gtk_docdir/*
 
 %changelog
+* Fri Mar 15 2013 Yuri N. Sedunov <aris@altlinux.org> 1.8.5-alt9
+- libgnomeprint support disabled
+
 * Sat May 12 2012 Yuri N. Sedunov <aris@altlinux.org> 1.8.5-alt8
 - fixed includes for newest glib
 

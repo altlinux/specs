@@ -1,15 +1,17 @@
 %def_disable gtk_doc
-%def_enable evince
+%def_disable evince
 %def_disable nautilusburn
 %def_disable panel
 %def_disable media
 %def_disable brasero
-%def_disable desktop
+%def_disable gnomedesktop
 %def_enable wnck
-%def_enable totem
+%def_disable totem_plparser
 %def_disable bugbuddy
 %def_disable metacity
 %def_disable evolution
+%def_disable gnomeprint
+%def_disable gnomeprintui
 
 %define major 2.32
 %define oname gnome-python-desktop
@@ -17,7 +19,7 @@
 
 Name: python-module-pygnome-desktop
 Version: %major.0
-Release: alt7
+Release: alt8
 
 Summary: Python modules for some GNOME libraries part of the GNOME Desktop
 
@@ -32,20 +34,21 @@ Source: http://ftp.gnome.org/pub/GNOME/sources/%oname/%major/%oname-%version.tar
 %define bname python-module-pygnome
 %define python_gnome_dir %python_sitelibdir/gtk-2.0/gnome
 
-#Requires: %bname-extras >= %extras_version
-
 %{?_enable_evince:BuildRequires: libevince-gtk-devel >= 2.32.0 }
 %{?_enable_nautilusburn:BuildRequires: libnautilus-cd-burner-devel}
 %{?_enable_panel:BuildRequires: libgnome-panel-devel}
 %{?_enable_media:BuildRequires: gnome-media-devel}
 %{?_enable_brasero:BuildRequires: libbrasero-devel >= 2.32.0}
-%{?_enable_totem:BuildRequires: libtotem-pl-parser-devel}
-%{?_enable_desktop:BuildRequires: libgnome-desktop-devel}
+%{?_enable_totem_plparser:BuildRequires: libtotem-pl-parser-devel}
+%{?_enable_gnomedesktop:BuildRequires: libgnome-desktop-devel}
 %{?_enable_wnck:BuildRequires: libwnck-devel}
 %{?_enable_metacity:BuildRequires: libmetacity-devel}
 %{?_enable_bugbuddy:BuildRequires: bug-buddy}
 %{?_enable_evolution:BuildRequires: evolution-data-server-devel}
-BuildRequires: libgnome-keyring-devel libgnomeprintui-devel libgtop-devel
+%{?_enable_gnomeprint:BuildRequires: libgnomeprint-devel}
+%{?_enable_gnomeprintui:BuildRequires: libgnomeprintui-devel}
+%{?_enable_gtop:BuildRequires: libgtop-devel}
+BuildRequires: libgnome-keyring-devel
 BuildRequires: librsvg-devel python-module-pycairo-devel libgtksourceview-devel
 BuildRequires: libgnomeui-devel
 
@@ -188,11 +191,16 @@ viewer via Python
 %build
 export CFLAGS="$CFLAGS `pkg-config --cflags gtk+-2.0`"
 %configure --disable-dependency-tracking \
-	%{?_enable_evolution:--enable-evolution} \
-	%{?_enable_evolution:--enable-evolution-ecal} \
+	%{subst_enable gnomedesktop} \
+	%{?_disable_evolution:--disable-evolution} \
+	%{?_disable_evolution:--disable-evolution_ecal} \
 	%{subst_enable bugbuddy} \
 	%{subst_enable metacity} \
 	%{subst_enable nautilusburn} \
+	%{subst_enable gnomeprint} \
+	%{subst_enable gnomeprintui} \
+	%{subst_enable totem_plparser} \
+	%{subst_enable gtop} \
 	%{?_enable_gtk_doc:--enable-gtk-doc}
 
 %make_build
@@ -204,11 +212,11 @@ mkdir -p %buildroot%_docdir/%name
 cp -R examples %buildroot%_docdir/%name/
 
 %files
-%python_sitelibdir/gtk-2.0/gtop.so
+%{?_enable_gtop:%python_sitelibdir/gtk-2.0/gtop.so}
 %python_sitelibdir/gtk-2.0/rsvg.so
 %{?_enable_media:%python_sitelibdir/gtk-2.0/mediaprofiles.so}
 %{?_enable_bugbuddy:%python_sitelibdir/gtk-2.0/bugbuddy.*}
-%{?_enable_desktop:%python_sitelibdir/gtk-2.0/gnomedesktop/}
+%{?_enable_gnomedesktop:%python_sitelibdir/gtk-2.0/gnomedesktop/}
 %dir %_docdir/%name
 %doc AUTHORS ChangeLog README NEWS
 
@@ -219,8 +227,10 @@ cp -R examples %buildroot%_docdir/%name/
 %files examples
 %_docdir/%name/examples
 
+%if_enabled gtk_doc
 %files devel-doc
 %_datadir/gtk-doc/html/*
+%endif
 
 %if_enabled wnck
 %files -n %bname-wnck
@@ -236,8 +246,10 @@ cp -R examples %buildroot%_docdir/%name/
 %python_sitelibdir/gtk-2.0/gnomeapplet.so
 %endif
 
+%if_enabled gnomeprint
 %files -n %bname-gnomeprint
 %python_sitelibdir/gtk-2.0/gnomeprint/
+%endif
 
 %if_enabled totem
 %files -n %bname-totem
@@ -273,6 +285,9 @@ cp -R examples %buildroot%_docdir/%name/
 %exclude %python_sitelibdir/gtk-2.0/*.la
 
 %changelog
+* Fri Mar 15 2013 Yuri N. Sedunov <aris@altlinux.org> 2.32.0-alt8
+- disabled evince, totem, gnomeprint{,ui} modules
+
 * Tue Oct 02 2012 Yuri N. Sedunov <aris@altlinux.org> 2.32.0-alt7
 - disabled evolution module
 
