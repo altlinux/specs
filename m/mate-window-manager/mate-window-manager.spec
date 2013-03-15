@@ -6,7 +6,7 @@ BuildRequires: libcanberra-gtk2-devel
 %define _libexecdir %_prefix/libexec
 Name:           mate-window-manager
 Version:        1.5.4
-Release:        alt1_1
+Release:        alt2_1
 Summary:        MATE Desktop window manager
 License:        LGPLv2+ and GPLv2+
 URL:            http://mate-desktop.org
@@ -29,16 +29,17 @@ BuildRequires: libstartup-notification-devel
 # http://bugzilla.redhat.com/873342
 Provides: firstboot(windowmanager) = mate-window-manager
 Source44: import.info
+Patch33: mate-window-manager-keybindings.patch
 # http://bugzilla.gnome.org/show_bug.cgi?id=558723
-Patch33: stop-spamming-xsession-errors.patch
+Patch34: stop-spamming-xsession-errors.patch
 # from fedora. do we need it?
-Patch34: mate-window-manager-fresh-tooltips.patch
+Patch35: mate-window-manager-fresh-tooltips.patch
 # https://bugzilla.gnome.org/show_bug.cgi?id=598995
-Patch35: Dont-focus-ancestor-window-on-a-different-workspac.patch
+Patch36: Dont-focus-ancestor-window-on-a-different-workspac.patch
 # https://bugzilla.gnome.org/show_bug.cgi?id=559816
-Patch36: metacity-2.28-empty-keybindings.patch
+Patch37: metacity-2.28-empty-keybindings.patch
 # https://bugzilla.gnome.org/show_bug.cgi?id=604319
-Patch37: metacity-2.28-xioerror-unknown-display.patch
+Patch38: metacity-2.28-xioerror-unknown-display.patch
 Requires: libmarco-private = %{version}-%{release}
 
 %description
@@ -67,6 +68,7 @@ Internal library for MATE Window Manager.
 %patch35 -p1
 %patch36 -p1
 %patch37 -p1
+%patch38 -p1
 NOCONFIGURE=1 ./autogen.sh
 
 %build
@@ -136,6 +138,9 @@ desktop-file-install                                \
 
 
 %changelog
+* Fri Mar 15 2013 Igor Vlasenko <viy@altlinux.ru> 1.5.4-alt2_1
+- bugfix (closes: 28487)
+
 * Tue Mar 05 2013 Igor Vlasenko <viy@altlinux.ru> 1.5.4-alt1_1
 - new fc release
 
