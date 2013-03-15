@@ -1,85 +1,132 @@
-Packager: Igor Vlasenko <viy@altlinux.ru>
+Epoch: 0
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
-# Copyright (c) 2000-2005, JPackage Project
-# All rights reserved.
-#
-# Redistribution and use in source and binary forms, with or without
-# modification, are permitted provided that the following conditions
-# are met:
-#
-# 1. Redistributions of source code must retain the above copyright
-#    notice, this list of conditions and the following disclaimer.
-# 2. Redistributions in binary form must reproduce the above copyright
-#    notice, this list of conditions and the following disclaimer in the
-#    documentation and/or other materials provided with the
-#    distribution.
-# 3. Neither the name of the JPackage Project nor the names of its
-#    contributors may be used to endorse or promote products derived
-#    from this software without specific prior written permission.
-#
-# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-# "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-# LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-# A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-# OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-# SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-# LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-# DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-# THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-# (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-# OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-#
+Name:          xml-stylebook
+Version:       1.0
+Release:       alt2_0.10.b3_xalan2.svn313293jpp7
+Summary:       Apache XML Stylebook
+Group:         Development/Java
+License:       ASL 1.1
+URL:           http://xml.apache.org/
 
-%define section devel
+# How to generate this tarball:
+#  $ svn export http://svn.apache.org/repos/asf/xml/stylebook/trunk/@313293 xml-stylebook-1.0
+#  $ tar zcf xml-stylebook-1.0.tar.gz xml-stylebook-1.0
+Source0:       %{name}-%{version}.tar.gz
 
-Name:           xml-stylebook
-Version:        1.0
-Release:        alt1_0.b3_xalan2.5jpp5
-Epoch:          0
-Summary:        Apache XML Stylebook
-License:        ASL 2.0
-URL:            http://xml.apache.org/
-Group:          Development/Java
-# cvs -d :pserver:anoncvs@cvs.apache.org:/home/cvspublic login
-# cvs -d :pserver:anoncvs@cvs.apache.org:/home/cvspublic export -r HEAD xml-stylebook
-Source0:        xml-stylebook-1.0-b2-src.tar.gz
-Patch0:         xml-stylebook-image-printer.patch
-BuildRequires: ant >= 0:1.6
-BuildRequires: jpackage-utils >= 0:1.5
-BuildArch:      noarch
+# Patch to fix an NPE in Xalan-J2's docs generation (from JPackage)
+Patch0:        %{name}-image-printer.patch
+
+# Patch the build script to build javadocs
+Patch1:        %{name}-build-javadoc.patch
+
+BuildArch:     noarch
+
+BuildRequires: java-javadoc
+BuildRequires: jpackage-utils
+BuildRequires: ant
+BuildRequires: xml-commons-apis
+BuildRequires: jaxp_parser_impl
+BuildRequires: fonts-ttf-dejavu
+Requires:      jpackage-utils
+Requires:      xml-commons-apis
+Requires:      jaxp_parser_impl
+Source44: import.info
 Provides: stylebook = %{version}
 Obsoletes: stylebook < 1.0-alt1
 
 %description
-XML Apache Stylebook.
+Apache XML Stylebook is a HTML documentation generator.
+
+%package       javadoc
+Summary:       API documentation for %{name}
+Group:         Development/Java
+Requires:      java-javadoc
+BuildArch: noarch
+
+%description   javadoc
+%{summary}.
+
+%package       demo
+Summary:       Examples for %{name}
+Group:         Development/Java
+Requires:      %{name} = %{?epoch:%epoch:}%{version}-%{release}
+
+%description   demo
+Examples demonstrating the use of %{name}.
 
 %prep
-%setup -q -n %{name}
-%patch0 -p1 -b .image-printer
+%setup -q
+%patch0 -p0
+%patch1 -p0
+
+# Remove bundled binaries
+rm -r bin/*.jar
+
+# Don't include this sample theme because it contains an errant font
+rm -r styles/christmas/
+
+# Make sure upstream hasn't sneaked in any jars we don't know about
+JARS=""
+for j in `find -name "*.jar"`; do
+  if [ ! -L $j ]; then
+    JARS="$JARS $j"
+  fi
+done
+if [ ! -z "$JARS" ]; then
+   echo "These jars should be deleted and symlinked to system jars: $JARS"
+   exit 1
+fi
 
 %build
-export OPT_JAR_LIST=:
-export CLASSPATH=
-ant -Ddebug=on
+ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 
+
+# Build the examples (this serves as a good test suite)
+pushd docs
+rm run.bat
+java -classpath "$(build-classpath xml-commons-apis):$(build-classpath jaxp_parser_impl):../bin/stylebook-%{version}-b3_xalan-2.jar" \
+  org.apache.stylebook.StyleBook "targetDirectory=../results" book.xml ../styles/apachexml
+popd
 
 %install
 
 # jars
-mkdir -p $RPM_BUILD_ROOT%{_javadir}
+install -pD -T bin/stylebook-%{version}-b3_xalan-2.jar \
+  %{buildroot}%{_javadir}/%{name}-%{version}.jar
+(cd %{buildroot}%{_javadir} && for jar in *-%{version}.jar; do \
+  ln -sf ${jar} `echo $jar| sed "s|-%{version}||g"`; done)
 
-cp -p bin/stylebook-1.0-b3_xalan-2.jar \
-  $RPM_BUILD_ROOT%{_javadir}/%{name}-%{version}.jar
-(cd $RPM_BUILD_ROOT%{_javadir} && for jar in *-%{version}.jar; do ln -sf ${jar} `echo $jar| sed "s|-%{version}||g"`; done)
+# javadoc
+install -d %{buildroot}%{_javadocdir}/%{name}-%{version}
+cp -pr build/javadoc/* %{buildroot}%{_javadocdir}/%{name}-%{version}
+(cd %{buildroot}%{_javadocdir} && ln -sf %{name}-%{version} %{name}) 
+
+# examples
+install -d %{buildroot}%{_datadir}/%{name}
+cp -pr docs %{buildroot}%{_datadir}/%{name}
+cp -pr styles %{buildroot}%{_datadir}/%{name}
+cp -pr results %{buildroot}%{_datadir}/%{name}
 ln -s xml-stylebook.jar $RPM_BUILD_ROOT/%{_javadir}/stylebook.jar
 
 %files
 %{_javadir}/stylebook.jar
 %doc LICENSE.txt
-%{_javadir}/%{name}-%{version}.jar
-%{_javadir}/%{name}.jar
+%{_javadir}/*
+
+%files javadoc
+%{_javadocdir}/%{name}-%{version}
+%{_javadocdir}/%{name}
+
+%files demo
+%{_datadir}/%{name} 
 
 %changelog
+* Fri Mar 15 2013 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt2_0.10.b3_xalan2.svn313293jpp7
+- fc update
+
 * Mon Feb 22 2010 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt1_0.b3_xalan2.5jpp5
 - use default jpp profile
 
