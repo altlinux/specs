@@ -1,5 +1,5 @@
 Name:         rekonq
-Version:      2.2
+Version:      2.2.1
 Release:      alt1
 
 Group:        Networking/WWW
@@ -61,6 +61,9 @@ desktop-file-install --dir %buildroot/%_K4xdg_apps --add-mime-type=x-scheme-hand
 %_K4cfg/%name.kcfg
 
 %changelog
+* Fri Mar 15 2013 Sergey V Turchin <zerg@altlinux.org> 2.2.1-alt1
+- new version
+
 * Thu Mar 07 2013 Sergey V Turchin <zerg@altlinux.org> 2.2-alt1
 - new version
 
