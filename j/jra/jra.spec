@@ -1,144 +1,98 @@
-Packager: Igor Vlasenko <viy@altlinux.ru>
+Epoch: 0
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
-# Copyright (c) 2000-2009, JPackage Project
-# All rights reserved.
-#
-# Redistribution and use in source and binary forms, with or without
-# modification, are permitted provided that the following conditions
-# are met:
-#
-# 1. Redistributions of source code must retain the above copyright
-#    notice, this list of conditions and the following disclaimer.
-# 2. Redistributions in binary form must reproduce the above copyright
-#    notice, this list of conditions and the following disclaimer in the
-#    documentation and/or other materials provided with the
-#    distribution.
-# 3. Neither the name of the JPackage Project nor the names of its
-#    contributors may be used to endorse or promote products derived
-#    from this software without specific prior written permission.
-#
-# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-# "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-# LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-# A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-# OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-# SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-# LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-# DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-# THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-# (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-# OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-#
+# %name or %version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+%define name jra
+%define version 1.0
+%global namedreltag -alpha-4
+%global namedversion %{version}%{?namedreltag}
 
-%define named_version 1.0-alpha-4
+Name:          jra
+Version:       1.0
+Release:       alt2_0.2.alpha4jpp7
+Summary:       Java REST Annotations
+License:       ASL 2.0
+Group:         Development/Java
+URL:           http://jra.codehaus.org/
 
-Name:           jra
-Version:        1.0
-Release:        alt1_0.a4.1jpp5
-Epoch:          0
-Summary:        Java REST Annotations
+# svn export https://svn.codehaus.org/jra/branches/jra-1.0-alpha-4/ jra-1.0-alpha-4
+# tar cafJ jra-1.0-alpha-4.tar.xz jra-1.0-alpha-4
 
-Group:          Development/Java
-License:        ASL 2.0
-URL:            http://jra.codehaus.org/
-Source0:        jra-1.0-alpha-4.tar.gz
-# svn export http://svn.codehaus.org/jra/branches/jra-1.0-alpha-4/
+Source0:       %{name}-%{namedversion}.tar.xz
 
-Source2:        %{name}-jpp-depmap.xml
-Source3:        %{name}-settings.xml
+BuildArch:     noarch
 
-
-BuildArch:      noarch
-BuildRequires: jpackage-utils >= 0:1.7.5
-BuildRequires: maven2 >= 0:2.0.7
-BuildRequires: maven2-plugin-compiler
-BuildRequires: maven2-plugin-install
-BuildRequires: maven2-plugin-jar
-BuildRequires: maven2-plugin-javadoc
-BuildRequires: maven2-plugin-resources
+BuildRequires: jpackage-utils
+BuildRequires: maven
+BuildRequires: maven-compiler-plugin
+BuildRequires: maven-install-plugin
+BuildRequires: maven-jar-plugin
+BuildRequires: maven-javadoc-plugin
+BuildRequires: maven-release-plugin
+BuildRequires: maven-resources-plugin
 BuildRequires: maven-surefire-plugin
-BuildRequires: maven-release
-BuildRequires: maven-surefire-plugin
-BuildRequires: jakarta-slide-webdavclient
 
-Requires: jakarta-slide-webdavclient
-
-Requires(post): jpackage-utils >= 0:1.7.5
-Requires(postun): jpackage-utils >= 0:1.7.5
+Requires:      jpackage-utils
+Source44: import.info
 
 %description
-The Java REST annotations are annotations to help service 
-creators build REST style services. Frameworks which wish 
-to support REST can reuse these annotations just like the 
-JSR181 & JAX-WS annotations are used across implementations. 
-However, the idea with JRA is that many different frameworks 
+The Java REST annotations are annotations to help service creators build REST
+style services. Frameworks which wish to support REST can reuse these
+annotations just like the JSR181 & JAX-WS annotations are used across
+implementations. However, the idea with JRA is that many different frameworks
 (web, XML/SOAP, etc) may want to expose REST style services.
 
-It is recognized that REST is an architecture not an 
-implementation, and these annotations are geared around 
-HTTP. So technically they should be called the 
-Java HTTP Annotations, but then no one would no what we're 
-talking about, leading us to chose the less correct name 
-instead.
+%package javadoc
+Summary:       Javadocs for %{name}
+Group:         Development/Java
+Requires:      jpackage-utils
+BuildArch: noarch
 
-%package        javadoc
-Summary:        Javadoc for %{name}
-Group:          Development/Documentation
-
-%description    javadoc
-%{summary}.
+%description javadoc
+This package contains the API documentation for %{name}.
 
 %prep
-%setup -q -n %{name}-%{named_version}
+%setup -q -n %{name}-%{namedversion}
 
 %build
-cp %{SOURCE3} maven2-settings.xml
-
-sed -i -e "s|<url>__JPP_URL_PLACEHOLDER__</url>|<url>file://`pwd`/m2_repo/repository</url>|g" maven2-settings.xml
-sed -i -e "s|<url>__JAVADIR_PLACEHOLDER__</url>|<url>file://`pwd`/external_repo</url>|g" maven2-settings.xml
-sed -i -e "s|<url>__MAVENREPO_DIR_PLACEHOLDER__</url>|<url>file://`pwd`/m2_repo/repository</url>|g" maven2-settings.xml
-sed -i -e "s|<url>__MAVENDIR_PLUGIN_PLACEHOLDER__</url>|<url>file:///usr/share/maven2/plugins</url>|g" maven2-settings.xml
-sed -i -e "s|<url>__ECLIPSEDIR_PLUGIN_PLACEHOLDER__</url>|<url>file:///usr/share/eclipse/plugins</url>|g" maven2-settings.xml
-
-mkdir external_repo
-ln -s %{_javadir} external_repo/JPP
-
-export M2SETTINGS=$(pwd)/maven2-settings.xml
-export MAVEN_REPO_LOCAL=`pwd`/m2_repo/repository
-mvn-jpp -e \
-        -s ${M2SETTINGS} \
-        -Dmaven.repo.local=$MAVEN_REPO_LOCAL \
-        -Dmaven2.jpp.depmap.file=%{SOURCE2} \
-        install javadoc:javadoc
-
+mvn-rpmbuild -Dmaven.compile.source=1.5 -Dmaven.compile.target=1.5 -Dmaven.javadoc.source=1.5  \
+  -Dproject.build.sourceEncoding=UTF-8 \
+  package javadoc:aggregate
 
 %install
-install -dm 755 $RPM_BUILD_ROOT%{_javadir}
-install -dm 755 $RPM_BUILD_ROOT%{_datadir}/maven2/poms
+install -d -m 755 %{buildroot}%{_javadir}
+install -d -m 755 %{buildroot}%{_mavenpomdir}
+install -d -m 755 %{buildroot}%{_javadocdir}/%{name}
 
-install -m 644 target/%{name}-%{named_version}.jar \
-  $RPM_BUILD_ROOT%{_javadir}/%{name}-%{version}.jar
-ln -s %{name}-%{version}.jar \
-  $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
-install -m 644 pom.xml $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-%{name}.pom
-%add_to_maven_depmap org.codehaus.jra %{name} %{named_version} JPP %{name}
+# jar
+install -pm 644 target/%{name}-%{namedversion}.jar %{buildroot}%{_javadir}/%{name}.jar
+
+# pom
+install -pm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
+
+# depmap
+%add_maven_depmap JPP-%{name}.pom %{name}.jar
 
 # javadoc
-install -dm 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
-cp -pr target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
-ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name} # ghost symlink
+cp -rp target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 
 %files
-%{_javadir}/*.jar
-%{_datadir}/maven2/poms/*
+%{_mavenpomdir}/*
 %{_mavendepmapfragdir}/*
+%{_javadir}/*
+%doc src/main/resources/META-INF/LICENSE
 
 %files javadoc
-%doc %{_javadocdir}/%{name}-%{version}
-%doc %{_javadocdir}/%{name}
+%{_javadocdir}/%{name}
+%doc src/main/resources/META-INF/LICENSE
 
 %changelog
+* Fri Mar 15 2013 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt2_0.2.alpha4jpp7
+- fc update
+
 * Tue Mar 03 2009 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt1_0.a4.1jpp5
 - new version
 
