@@ -1,4 +1,4 @@
-%define ver_major 0.96
+%define ver_major 0.98
 
 Name: sugar-desktop-environment
 Version: %ver_major.0
@@ -18,6 +18,7 @@ A set of virtual packages for Sugar Desktop installation.
 Summary: Sugar Desktop minimal installer
 Group: Graphical desktop/Sugar
 Provides: %name-core = %version-%release
+Provides: %name-mini = %version-%release
 
 Requires: sugar-glucose
 
@@ -105,5 +106,8 @@ This virtual package installs full Sugar Desktop except .
 #%files -n sugar-full
 
 %changelog
+* Fri Mar 15 2013 Igor Vlasenko <viy@altlinux.ru> 0.98.0-alt1
+- updated
+
 * Wed Dec 12 2012 Igor Vlasenko <viy@altlinux.ru> 0.96.0-alt1
 - initial build
