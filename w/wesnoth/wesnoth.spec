@@ -1,3 +1,5 @@
+%define _unpackaged_files_terminate_build 1
+%def_without scons
 %def_enable nls
 %def_enable rpath
 %def_disable debug
@@ -28,8 +30,8 @@
 %define subst_enable_to() %{expand:%%{?_enable_%{1}:--enable-%{2}}} %{expand:%%{?_disable_%{1}:--disable-%{2}}}
 
 Name: wesnoth
-Version: 1.10.2
-Release: alt1.1
+Version: 1.10.5
+Release: alt1
 Group: Games/Strategy
 Summary: 2D fantasy turn-based strategy
 Summary(ru_RU.UTF-8): двухмерная пошаговая стратегия в стиле фэнтези
@@ -37,16 +39,18 @@ License: %gpl2plus
 Url: http://www.%name.org
 Source0: %name-%version.tar
 Source1: %name.init
-Patch: wesnoth-1.10.2-alt-boost-1.52.0.patch
 
 Requires: %name-data = %version-%release
 Packager: Vitaly Kuznetsov <vitty@altlinux.ru>
 
 BuildRequires(pre): rpm-build-licenses
 
-BuildRequires: ImageMagick-tools asciidoc boost-devel fribidi gcc-c++ hd2u imake libICE-devel libSDL-devel libSDL_image-devel libSDL_mixer-devel libSDL_net-devel libSDL_ttf-devel libfribidi-devel libpango-devel po4a subversion xorg-cf-files xsltproc liblua5-devel libpng-devel cmake boost-program_options-devel libdbus-devel boost-asio-devel
+BuildRequires: ImageMagick-tools asciidoc boost-devel fribidi gcc-c++ hd2u imake libICE-devel libSDL-devel libSDL_image-devel libSDL_mixer-devel libSDL_net-devel libSDL_ttf-devel libfribidi-devel libpango-devel po4a subversion xorg-cf-files xsltproc liblua5-devel libpng-devel cmake boost-program_options-devel libdbus-devel boost-asio-devel libpixman-devel libXdmcp-devel
+%if_with scons
+BuildRequires: scons desktop-file-utils
+%endif
 
-BuildRequires: fonts-ttf-dejavu
+BuildRequires: fonts-ttf-dejavu fonts-ttf-sazanami-gothic fonts-ttf-wqy-zenhei
 %{?_enable_tools:BuildRequires: perl(Tie/File.pm)}
 %{?_enable_optipng:BuildRequires: optipng}
 %{?_enable_python:BuildRequires: python-devel}
@@ -79,6 +83,7 @@ Group: Games/Strategy
 Summary: Data files to Battle for Wesnoth
 BuildArch: noarch
 Conflicts: %name < 1.6.5-alt1
+Conflicts: %name-editor < 1.10.3
 
 %description data
 Battle for Wesnoth is a fantasy turn-based strategy game.
@@ -176,11 +181,15 @@ This package contains python interface to Battle for Wesnoth.
 
 %prep
 %setup
-%patch -p2
 
 %build
 %define _optlevel 3
-
+# evil, evil... configure does not work, cmake does not build translations,
+# scons does not build schema_validator
+%if_with scons
+scons all prefix=/usr
+scons schema_generator
+%else
 export PYTHON_PREFIX=/usr
 export PYTHON_VERSION=%__python_version
 #%%configure \
@@ -220,10 +229,14 @@ cmake . \
 	-DDATAROOTDIR=%_datadir \
 	-DBINDIR=%_bindir \
 	-DENABLE_TOOLS=ON \
-	-DENABLE_STRICT_COMPILATION=OFF \
+	-DENABLE_NLS=ON \
+ 	-DGETTEXT_FOUND=ON \
+ 	-DENABLE_STRICT_COMPILATION=OFF \
 	-DCMAKE_INSTALL_PREFIX=%buildroot
 
 %make_build VERBOSE=1
+%endif # scons
+
 for s in 96 72 48 36 32 24 22 16; do
     convert -depth 8 -resize ${s}x$s icons/%name-{icon-Mac,$s}.png
     convert -depth 8 -resize ${s}x$s icons/{map-editor-icon-Mac,%{name}_editor-$s}.png
@@ -231,15 +244,40 @@ done
 bzip2 --keep --best --force changelog
 
 %install
+%if_with scons
+mkdir -p %buildroot%{_bindir}
+mkdir -p %buildroot%{_sbindir}
+for i in cutter exploder wesnoth; do
+        cp -p $i %buildroot%{_bindir}/
+done
+cp wesnothd %buildroot%{_sbindir}/
+mkdir -p %buildroot%{_datadir}/wesnoth
+for i in data fonts icons images sounds translations l10n-track; do
+        cp -pr $i %buildroot%{_datadir}/wesnoth/
+done
+desktop-file-install --dir %buildroot%_desktopdir \
+                     --mode="0644" \
+                     --remove-key="Version" \
+                     icons/%{name}.desktop icons/%{name}_editor.desktop
+mkdir -p %buildroot%{_datadir}/pixmaps
+cp icons/%{name}-icon.png %buildroot%{_datadir}/pixmaps
+cp icons/%{name}_editor-icon.png %buildroot%{_datadir}/pixmaps
+mkdir -p %buildroot%_docdir/
+cp -a doc/manual %buildroot%_docdir/%name
+
+%else
+
 %make_install \
     DESTDIR=%buildroot \
     docdir=%_docdir/%name-%version \
     appentrydir=%_desktopdir \
     install
+
 install -d -m 0755 %buildroot%_sbindir
 mv %buildroot{%_bindir,%_sbindir}/%{name}d
 %if_enabled tests
 mv %buildroot%_bindir/{,%name-}test
+%endif
 %endif
 
 mkdir -p %buildroot/%python_sitelibdir_noarch
@@ -256,8 +294,8 @@ popd
 popd
 
 mkdir -p %buildroot%_docdir/%name-%version/manual
-install -m 0644 README copyright changelog.* %buildroot%_docdir/%name-%version/
 mv %buildroot%_docdir/%name/* %buildroot%_docdir/%name-%version/manual/
+install -m 0644 README copyright changelog.* %buildroot%_docdir/%name-%version/
 install -d -m 0755 %buildroot%_iconsdir/hicolor/64x64/apps
 mv %buildroot{%_pixmapsdir/%name-icon,%_iconsdir/hicolor/64x64/apps/%name}.png
 mv %buildroot{%_pixmapsdir/%{name}_editor-icon,%_iconsdir/hicolor/64x64/apps/%{name}_editor}.png
@@ -270,7 +308,6 @@ done
 install -D -m 0755 %SOURCE1 %buildroot%_initdir/%{name}d
 
 %find_lang --with-man %name
-%find_lang --with-man %{name}_editor
 %find_lang --with-man %{name}d
 
 for d in %buildroot%_datadir/%name/translations/*; do
@@ -279,24 +316,27 @@ for d in %buildroot%_datadir/%name/translations/*; do
     echo "%%lang($c) %%dir %_datadir/%name/translations/$l" >> %name.lang
     echo "%%lang($c) %%dir %_datadir/%name/translations/$l/LC_MESSAGES" >> %name.lang
     [ -f $d/LC_MESSAGES/%name.mo ] && echo "%%lang($c) %_datadir/%name/translations/$l/LC_MESSAGES/%name.mo" >> %name.lang
-    for i in anl aoi did dm ei httt l lib low multiplayer nr sof sotbe tb test thot trow tsg tutorial units utbs dw help manpages manual; do
+    for i in anl aoi did dm editor ei httt l lib low multiplayer nr sof sotbe tb test thot trow tsg tutorial units utbs dw help manpages manual; do
 	[ -f $d/LC_MESSAGES/%name-$i.mo ] && echo "%%lang($c) %_datadir/%name/translations/$l/LC_MESSAGES/%name-$i.mo" >> %name.lang
     done
-    if [ -f $d/LC_MESSAGES/%name-editor.mo ]; then
-	echo "%%lang($c) %%dir %_datadir/%name/translations/$l" >> %{name}_editor.lang
-	echo "%%lang($c) %%dir %_datadir/%name/translations/$l/LC_MESSAGES" >> %{name}_editor.lang
-	echo "%%lang($c) %_datadir/%name/translations/$l/LC_MESSAGES/%name-editor.mo" >> %{name}_editor.lang
-    fi
 done
 for f in %buildroot%_datadir/%name/data/languages/*_*.cfg; do
     l=$(basename "$f")
     echo "%%lang(${l:0:2}) %_datadir/%name/data/languages/$l" >> %name.lang
 done
-sed -i 's|.*translations.*||' %name.lang
+#    /usr/share/wesnoth/data/languages/racv.cfg
+echo "%%lang(racv) %_datadir/%name/data/languages/racv.cfg" >> %name.lang
+#    /usr/share/wesnoth/data/languages/en@shaw.cfg
+echo "%%lang(en) %_datadir/%name/data/languages/en@shaw.cfg" >> %name.lang
 
 rm -rf %buildroot%_datadir/%name/icons
 rm -f %buildroot%_datadir/%name/fonts/DejaVuSans.ttf
 ln -s %_datadir/fonts/ttf/dejavu/DejaVuSans.ttf %buildroot%_datadir/%name/fonts/
+# sazanami-fonts-gothic
+ln -s %_datadir/fonts/ttf/sazanami/gothic/sazanami-gothic.ttf %buildroot%_datadir/%name/fonts/sazanami-gothic.ttf
+# wqy-zenhei-fonts
+ln -s %_datadir/fonts/ttf/wqy-zenhei/wqy-zenhei.ttc %buildroot%_datadir/%name/fonts/wqy-zenhei.ttc
+
 
 sed -i 's/wesnoth-icon/wesnoth/' %buildroot%_desktopdir/%name.desktop
 %if_enabled editor
@@ -326,7 +366,7 @@ sed -i 's/wesnoth_editor-icon/wesnoth_editor/' %buildroot%_desktopdir/%{name}_ed
 %_datadir/%name/fonts
 %_datadir/%name/images
 %_datadir/%name/sounds
-#dir %_datadir/%name/translations
+%dir %_datadir/%name/translations
 %dir %_datadir/%name/data
 %_datadir/%name/data/COPYING.txt
 %_datadir/%name/data/ai/
@@ -340,13 +380,15 @@ sed -i 's/wesnoth_editor-icon/wesnoth_editor/' %buildroot%_desktopdir/%{name}_ed
 %_datadir/%name/data/test
 %_datadir/%name/data/*.cfg
 %dir %_datadir/%name/data/languages
+%_datadir/%name/l10n-track
+%_man6dir/%name.6*
 
 %files doc
 %dir %_docdir/%name-%version
 %_docdir/%name-%version/manual
 
 %if_enabled editor
-%files editor -f %{name}_editor.lang
+%files editor
 %_desktopdir/%{name}_editor.desktop
 %_iconsdir/hicolor/*/apps/%{name}_editor.png
 %endif
@@ -356,7 +398,10 @@ sed -i 's/wesnoth_editor-icon/wesnoth_editor/' %buildroot%_desktopdir/%{name}_ed
 %_bindir/cutter
 %_bindir/exploder
 %_bindir/schema_generator
+%if_with scons
+%else
 %_bindir/schema_validator
+%endif
 %dir %_datadir/%name
 %dir %_datadir/%name/data
 %_datadir/%name/data/tools
@@ -368,6 +413,7 @@ sed -i 's/wesnoth_editor-icon/wesnoth_editor/' %buildroot%_desktopdir/%{name}_ed
 %files server -f %{name}d.lang
 %_sbindir/*
 %_initdir/*
+%_man6dir/%{name}d.6*
 %endif
 
 %if_enabled python
@@ -378,6 +424,15 @@ sed -i 's/wesnoth_editor-icon/wesnoth_editor/' %buildroot%_desktopdir/%{name}_ed
 %endif
 
 %changelog
+* Fri Mar 15 2013 Igor Vlasenko <viy@altlinux.ru> 1.10.5-alt1
+- update to 1.10.5
+- linked sazanami fonts
+- added missing optional BR: libpixman-devel libXdmcp-devel
+- fixed localization packaging (closes: 28689)
+- note: #28689 was introduced in 1.10.2-alt1.1 by using cmake.
+  tried to fix it using scons, but due to lack of schema_validator,
+  used -DGETTEXT_FOUND=ON cmake hack
+
 * Sat Dec 01 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.10.2-alt1.1
 - Rebuilt with Boost 1.52.0
 
