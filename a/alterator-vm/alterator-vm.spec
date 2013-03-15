@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-vm
-Version: 0.4.2
+Version: 0.4.3
 Release: alt1
 
 Summary: Alterator module for volume management
@@ -42,6 +42,9 @@ install -pD -m0644 profile.scm %buildroot%_cachedir/alterator/vm-profile.scm
 %_cachedir/alterator/vm-profile.scm
 
 %changelog
+* Fri Mar 15 2013 Timur Aitov <timonbl4@altlinux.org> 0.4.3-alt1
+- disable edit mount point for swap
+
 * Mon Dec 24 2012 Timur Aitov <timonbl4@altlinux.org> 0.4.2-alt1
 - use GPT when '/sys/firmware/efi/' exists (closes: 28161)
 - create efi GPT partition in automatic mode (closes: 28162)
