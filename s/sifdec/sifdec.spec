@@ -1,6 +1,6 @@
 Name: sifdec
 Version: 2.0.0
-Release: alt1.svn20120420
+Release: alt2.svn20120420
 Summary: Decoder for translating SIF into Fortran 77 and data files
 License: LGPL v2.1 or later
 Group: File tools
@@ -12,6 +12,8 @@ Source: %name-%version.tar.gz
 
 Requires: %name-data = %version
 BuildPreReq: gcc-fortran
+
+Conflicts: libxforms-demos
 
 %description
 SifDec is a decoder. It tranlates test problems, written in so-called
@@ -93,6 +95,9 @@ install -p -m644 common/doc/*.pdf %buildroot%_docdir/%name
 %_docdir/%name
 
 %changelog
+* Fri Mar 15 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.0-alt2.svn20120420
+- Added conflict with libxforms-demos
+
 * Tue Sep 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.0-alt1.svn20120420
 - New snapshot
 
