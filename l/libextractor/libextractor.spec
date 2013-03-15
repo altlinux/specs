@@ -1,14 +1,14 @@
 Name: libextractor
 Version: 1.0.1
-Release: alt1
+Release: alt2
 
 Summary: libextractor is a simple library for keyword extraction
 
 Group: System/Libraries
 License: GPLv2+
-Url: http://gnunet.org/%name/
+Url: http://www.gnu.org/software/%name/
 
-Source: %url/download/%name-%version.tar.gz
+Source: ftp://ftp.gnu.org/gnu/%name/%name-%version.tar.gz
 Patch: %name-0.4.0-alt-ole2_makefile.patch
 Patch1: %name-0.5.15.patch
 
@@ -88,6 +88,9 @@ export LIBEXTRACTOR_PREFIX=%buildroot%_libdir/%name
 %_man3dir/*
 
 %changelog
+* Fri Mar 15 2013 Yuri N. Sedunov <aris@altlinux.org> 1.0.1-alt2
+- rebuilt against libarchive.so.13
+
 * Mon Jan 28 2013 Yuri N. Sedunov <aris@altlinux.org> 1.0.1-alt1
 - 1.0.1
 - removed old hack&tricks, packager tag
