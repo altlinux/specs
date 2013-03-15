@@ -1,5 +1,5 @@
 Name: installer-feature-kdesktop-services
-Version: 0.5.0
+Version: 0.5.1
 Release: alt1
 
 Summary: Setup services for start/not start on boot
@@ -26,6 +26,9 @@ install -pm755 *.sh %buildroot%hookdir/
 %hookdir/*
 
 %changelog
+* Fri Mar 15 2013 Sergey V Turchin <zerg@altlinux.org> 0.5.1-alt1
+- force enable postfix
+
 * Mon Feb 04 2013 Sergey V Turchin <zerg@altlinux.org> 0.5.0-alt1
 - remove sysvinit support
 
