@@ -1,5 +1,5 @@
 Name: sugar-glucose
-Version: 0.96.0
+Version: 0.98.0
 Release: alt1
 Summary: Core Sugar components
 License: GPL/LGPL
@@ -8,12 +8,13 @@ Url: http://sugarlabs.org/
 Packager: Sugar Development Team <sugar@packages.altlinux.org>
 BuildArch: noarch
 
-Requires: sugar-artwork >= 0.96.0
-Requires: sugar-datastore >= 0.96.0
-Requires: sugar-presence-service >= 0.90.0
-Requires: sugar >= 0.96.0
-Requires: sugar-base >= 0.96.0
-Requires: sugar-toolkit >= 0.96.0
+Requires: sugar-artwork >= 0.98.0
+Requires: sugar-datastore >= 0.98.0
+Requires: sugar-presence-service >= 0.90.2
+Requires: sugar >= 0.98.0
+Requires: sugar-base >= 0.98.0
+Requires: sugar-toolkit >= 0.98.0
+Requires: sugar-toolkit-gtk3 >= 0.98.0
 
 %description
 Virtual package of core Sugar components that follow the Sugarlabs
@@ -25,6 +26,9 @@ and collaborative learning. It was introduced on the One Laptop Per Child
 %files
 
 %changelog
+* Fri Mar 15 2013 Igor Vlasenko <viy@altlinux.ru> 0.98.0-alt1
+- updated to 0.98
+
 * Wed Nov 28 2012 Igor Vlasenko <viy@altlinux.ru> 0.96.0-alt1
 - updated to 0.96.0
 
