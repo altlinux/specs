@@ -1,9 +1,8 @@
-# TODO https://bugzilla.altlinux.org/show_bug.cgi?id=20664
 %define cfg %_builddir/%name-%version/
 
 Name:       lazarus
-Version:    1.0.4
-Release:    alt2
+Version:    1.0.6
+Release:    alt1
 Epoch:      1
 
 Summary:    Lazarus Component Library and IDE
@@ -178,6 +177,9 @@ mv docs/index.html docs/index.en.html
 %_libdir/%name/examples
 
 %changelog
+* Fri Mar 15 2013 Andrey Cherepanov <cas@altlinux.org> 1:1.0.6-alt1
+- New version 1.0.6
+
 * Wed Dec 26 2012 Andrey Cherepanov <cas@altlinux.org> 1:1.0.4-alt2
 - Build LRS_Explorer
 
