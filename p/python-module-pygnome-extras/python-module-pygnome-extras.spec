@@ -1,9 +1,12 @@
 %define major 2.25
 %def_enable docs
+%def_disable gdl
+%def_disable gda
+%def_disable gksu2
 
 Name: python-module-pygnome-extras
 Version: %major.3
-Release: alt3.2.1
+Release: alt4
 
 Summary: Set of extra bindings for the GNOME2 platform library
 
@@ -25,13 +28,15 @@ Patch2: gnome-python-extras-2.25.3-update-for-gdl-2.27.2.part2.patch
 %define python_gnome_dir %python_sitelibdir/gtk-2.0/gnome
 
 %{?_enable_docs:BuildRequires: gtk-doc}
-BuildPreReq: libgda4-devel >= 3.99.9
-BuildRequires: gcc-c++ glibc-devel libgdl-devel libgksu-devel libgtkhtml2-devel
+BuildRequires: gcc-c++ glibc-devel libgtkhtml2-devel
 BuildRequires: libgtk+2-devel libbonoboui-devel libgnomeui-devel gnome-vfs-devel libgtkspell-devel
 BuildRequires: python-module-pygnome-devel xulrunner-devel
 # style.css from this package required to build documentation
 BuildRequires: python-module-pygobject-devel-doc
 BuildPreReq: python-module-pygtk-devel
+%{?_enable_gda:BuildPreReq: libgda4-devel >= 3.99.9}
+%{?_enable_gdl:BuildRequires: libgdl-devel}
+%{?_enable_gksu2:BuildRequires: libgksu-devel}
 
 %description
 This package is a set of extra bindings for the Gnome platform
@@ -86,7 +91,11 @@ This module contains a wrapper that allows the use of libgda-4 via Python.
 %patch2 -p1 -b .update-for-gdl-2.27.2.part2
 
 %build
-%configure --enable-gtkmozembed=off %{subst_enable docs}
+%configure --enable-gtkmozembed=off \
+	%{subst_enable docs} \
+	%{subst_enable gda} \
+	%{subst_enable gdl} \
+	%{subst_enable gksu2}
 %make_build
 
 %install
@@ -96,12 +105,12 @@ rm -f %buildroot%python_sitelibdir/gtk-2.0/*.la
 %files
 %doc AUTHORS ChangeLog README NEWS
 %python_sitelibdir/gtk-2.0/egg
-%python_sitelibdir/gtk-2.0/gdl.so
+%{?_enable_gdl:%python_sitelibdir/gtk-2.0/gdl.so}
 %python_sitelibdir/gtk-2.0/gtkspell.so
-%python_sitelibdir/gtk-2.0/gksu2/
+%{?_enable_gksu2:%python_sitelibdir/gtk-2.0/gksu2/}
 
 %files devel
-%_includedir/pygda-4.0/pygdavalue_conversions.h
+%{?_enable_gdl:%_includedir/pygda-4.0/pygdavalue_conversions.h}
 %_pkgconfigdir/*
 %_datadir/pygtk/2.0/defs/*.defs
 %doc examples/*
@@ -112,11 +121,16 @@ rm -f %buildroot%python_sitelibdir/gtk-2.0/*.la
 %files -n %bname-gtkhtml2
 %python_sitelibdir/gtk-2.0/gtkhtml*
 
+%if_enabled gda
 %files -n %bname-gda
 %python_sitelibdir/gtk-2.0/gda*
 %_datadir/pygtk/2.0/argtypes/gda*
+%endif
 
 %changelog
+* Fri Mar 15 2013 Yuri N. Sedunov <aris@altlinux.org> 2.25.3-alt4
+- gda, gdl, gksu2 modules disabled
+
 * Thu Apr 12 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 2.25.3-alt3.2.1
 - Rebuild to remove redundant libpython2.7 dependency
 
