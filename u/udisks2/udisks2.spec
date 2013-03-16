@@ -7,7 +7,7 @@
 
 Name: %{_name}2
 Version: 2.0.92
-Release: alt1
+Release: alt2
 
 Summary: Disk Management Service (Second Edition)
 License: GPLv2+
@@ -20,14 +20,18 @@ Patch1: %_name-1.92.0-alt-udiskd_dir.patch
 
 Obsoletes: %_name
 
-Requires: lib%name = %version-%release
-
 %define glib_ver 2.31.13
 %define gi_ver 1.30.0
 %define polkit_ver 0.101
 %define udev_ver 165
 %define libatasmart_ver 0.17
 %define dbus_ver 1.4.0
+
+Requires: lib%name = %version-%release
+Requires: /lib/udev/rules.d
+Requires: /usr/sbin/cryptsetup
+Requires: dbus >= %dbus_ver dbus-tools-gui
+Requires: mdadm ntfsprogs parted gdisk acl
 
 BuildRequires: intltool gtk-doc gnome-common
 BuildRequires: libgio-devel >= %glib_ver
@@ -36,9 +40,6 @@ BuildRequires: libatasmart-devel >= %libatasmart_ver
 BuildRequires: libudev-devel libgudev-devel >= %udev_ver
 BuildRequires: libacl-devel systemd-devel libsystemd-login-devel libsystemd-daemon-devel
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel >= %gi_ver}
-
-Requires: /lib/udev/rules.d /usr/sbin/cryptsetup mdadm
-Requires: dbus >= %dbus_ver ntfsprogs parted gdisk parted acl
 
 %description
 The udisks project provides a daemon, tools and libraries to access
@@ -153,6 +154,9 @@ touch %buildroot%_localstatedir/lib/%name/mtab
 %endif
 
 %changelog
+* Sat Mar 16 2013 Yuri N. Sedunov <aris@altlinux.org> 2.0.92-alt2
+- Added dependency on dbus-tools-gui (ALT #28692)
+
 * Tue Feb 19 2013 Yuri N. Sedunov <aris@altlinux.org> 2.0.92-alt1
 - 2.0.92
 
