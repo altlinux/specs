@@ -1,5 +1,5 @@
 Name: make-initrd-propagator
-Version: 0.15
+Version: 0.17
 Release: alt1
 
 Summary: Put propagator into make-initrd generated image
@@ -37,6 +37,13 @@ mkdir -p %buildroot%_datadir/make-initrd/features/propagator/data/image
 %_datadir/make-initrd/features/propagator
 
 %changelog
+* Sat Mar 16 2013 Michael Shigorin <mike@altlinux.org> 0.17-alt1
+- accept cdrom for rw disk_slice on isohybrid media (closes: #28289)
+
+* Thu Feb 21 2013 Michael Shigorin <mike@altlinux.org> 0.16-alt1
+- reenable rw slice if it's not GPT (thus MBR)
+- fixed annoying /etc/mtab related message
+
 * Sun Feb 10 2013 Michael Shigorin <mike@altlinux.org> 0.15-alt1
 - add name-slot-rules conditionally (see also #28484)
 - fix a typo
