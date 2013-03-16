@@ -1,4 +1,6 @@
-Packager: Igor Vlasenko <viy@altlinux.ru>
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 # Copyright (c) 2000-2007, JPackage Project
@@ -31,63 +33,41 @@ BuildRequires: jpackage-compat
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
-%define gcj_support 0
-
-# If you don't want to build with maven, and use straight ant instead,
-# give rpmbuild option '--without maven'
-
-%define with_maven %{!?_without_maven:1}%{?_without_maven:0}
-%define without_maven %{?_without_maven:1}%{!?_without_maven:0}
-
-
 Name:           bcel
 Version:        5.2
-Release:        alt4_3jpp5
+Release:        alt4_13jpp7
 Epoch:          1
 Summary:        Byte Code Engineering Library
-License:        Apache Software License
-Source0:        http://www.apache.org/dist/jakarta/%{name}/source/%{name}-%{version}-src.tar.gz
+License:        ASL 2.0
+Source0:        %{name}-%{version}-src.tar.gz
+#svn export https://svn.apache.org/repos/asf/jakarta/bcel/tags/BCEL_5_2
+#tar czvf bcel-5.2-src.tar.gz BCEL_5_2
 Source1:        pom-maven2jpp-depcat.xsl
 Source2:        pom-maven2jpp-newdepmap.xsl
 Source3:        pom-maven2jpp-mapdeps.xsl
 Source4:        %{name}-%{version}-jpp-depmap.xml
-Source5:        commons-build.tar.gz
+#Source5:        commons-build.tar.gz
+Source5:        bcel-jakarta-site2.tar.gz
 Source6:        %{name}-%{version}-build.xml
 Source7:        %{name}-%{version}.pom
+Source8:        %{name}-MANIFEST.MF
 
 Patch0:         %{name}-%{version}-project_properties.patch
 URL:            http://jakarta.apache.org/%{name}/
 Group:          Development/Java
-Requires: regexp
-BuildRequires: ant
-%if %{with_maven}
-BuildRequires: maven1 >= 0:1.1
-#BuildRequires: saxon
-BuildRequires: saxon6-scripts
-BuildRequires: maven1-plugins-base
-BuildRequires: maven1-plugin-changelog
-BuildRequires: maven1-plugin-changes
-BuildRequires: maven1-plugin-developer-activity
-BuildRequires: maven1-plugin-jxr
-BuildRequires: maven1-plugin-license
-BuildRequires: maven1-plugin-pmd
-BuildRequires: maven1-plugin-test
-BuildRequires: maven1-plugin-xdoc
-Requires(post): jpackage-utils >= 0:1.7.2
-Requires(postun): jpackage-utils >= 0:1.7.2
-%endif
-BuildRequires: regexp
-BuildRequires: jpackage-utils >= 0:1.7.2
-%if ! %{gcj_support}
+Requires:       regexp
+BuildRequires:  zip
+BuildRequires:  ant
+BuildRequires:  jdom
+BuildRequires:  velocity
+BuildRequires:  jakarta-commons-collections
+BuildRequires:  apache-commons-lang
+BuildRequires:  avalon-logkit
+BuildRequires:  werken-xpath
+BuildRequires:  regexp
+BuildRequires:  jpackage-utils >= 0:1.7.2
 BuildArch:      noarch
-%endif
-
-%if %{gcj_support}
-BuildRequires: gnu-crypto
-BuildRequires: java-gcj-compat-devel
-Requires(post): java-gcj-compat
-Requires(postun): java-gcj-compat
-%endif
+Source44: import.info
 
 %description
 The Byte Code Engineering Library (formerly known as JavaClass) is
@@ -107,7 +87,9 @@ being the Xalan XSLT processor at Apache.
 
 %package javadoc
 Summary:        Javadoc for %{name}
-Group:          Development/Documentation
+Group:          Development/Java
+Requires:       jpackage-utils
+BuildArch: noarch
 
 %description javadoc
 %{summary}.
@@ -115,146 +97,84 @@ Group:          Development/Documentation
 %package manual
 Summary:        Manual for %{name}
 Group:          Development/Java
+BuildArch: noarch
 
 %description manual
 %{summary}.
 
 %prep
-
-%setup -q
+%setup -q -n BCEL_5_2
 gzip -dc %{SOURCE5} | tar xf -
 # remove all binary libs
-#find . -name "*.jar" -exec rm -f {} \;
-for j in $(find . -name "*.jar"); do
-    %{__mv} $j ${j}.no
-done
+find . -name "*.jar" -exec rm -f {} \;
+mkdir jakarta-site2/lib
+pushd jakarta-site2/lib/
+  build-jar-repository -s -p . jdom
+  build-jar-repository -s -p . velocity
+  build-jar-repository -s -p . commons-collections
+  build-jar-repository -s -p . commons-lang
+  build-jar-repository -s -p . avalon-logkit
+  build-jar-repository -s -p . werken-xpath
+popd
 cp %{SOURCE6} build.xml
 %patch0 -b .sav
 
+# fix wrong-file-end-of-line-encoding
+sed -i 's/\r//' docs/verifier/V_API_SD.eps docs/eps/classloader.fig
+
 %build
-%if %{with_maven}
-export DEPCAT="$(pwd)/%{name}-%{version}-depcat.new.xml"
-echo '<?xml version="1.0" standalone="yes"?>' > $DEPCAT
-echo '<depset>' >> $DEPCAT
-for p in $(find . -name project.xml); do
-    pushd $(dirname $p)
-        /usr/bin/saxon6 project.xml %{SOURCE1} >> $DEPCAT
-    popd
-done
-echo >> $DEPCAT
-echo '</depset>' >> $DEPCAT
-/usr/bin/saxon6 $DEPCAT %{SOURCE2} > %{name}-%{version}-depmap.new.xml
-
-for p in $(find . -name project.xml); do
-    pushd $(dirname $p)
-        %{__cp} project.xml project.xml.orig
-        /usr/bin/saxon6 -o project.xml project.xml.orig %{SOURCE3} \
-            map="%{SOURCE4}"
-    popd
-done
-
-export MAVEN_HOME_LOCAL="$(pwd)/.maven"
-
-maven -Dmaven.compile.target=1.5 -Dmaven.javadoc.source=1.5  -e \
-        -Dmaven.repo.remote=file:/usr/share/maven1/repository \
-        -Dmaven.home.local=${MAVEN_HOME_LOCAL} \
-        jar:jar javadoc:generate xdoc:transform
-%else
-ant -Dregexp.jar="file://$(build-classpath regexp)" jar javadoc
-%endif
+#ant -Dregexp.jar="file://$(build-classpath regexp)" jar javadoc
+ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5      -Dbuild.dest=build/classes -Dbuild.dir=build -Ddocs.dest=docs \
+        -Ddocs.src=xdocs -Djakarta.site2=jakarta-site2 -Djdom.jar=jdom.jar \
+        -Dregexp.jar="file://$(build-classpath regexp)" \
+        jar javadoc xdocs
 
 %install
+# inject OSGi manifests
+mkdir -p META-INF
+cp -p %{SOURCE8} META-INF/MANIFEST.MF
+touch META-INF/MANIFEST.MF
+zip -u target/%{name}-%{version}.jar META-INF/MANIFEST.MF
+
 # jars
 %{__mkdir_p} %{buildroot}%{_javadir}
 %{__install} -m 0644 target/%{name}-%{version}.jar \
-    %{buildroot}%{_javadir}/%{name}-%{version}.jar
-(
-    cd %{buildroot}%{_javadir}
-    for jar in *-%{version}*; do 
-        %{__ln_s} ${jar} `echo $jar | %{__sed}  "s|-%{version}||g"`
-    done
-)
-# depmap frags
-%add_to_maven_depmap %{name} %{name} %{version} JPP %{name}
-%add_to_maven_depmap org.apache.bcel %{name} %{version} JPP %{name}
+    %{buildroot}%{_javadir}/%{name}.jar
+
 # pom
-%{__mkdir_p} %{buildroot}%{_datadir}/maven2/poms
+%{__mkdir_p} %{buildroot}%{_mavenpomdir}
 %{__install} -m 0644 %{SOURCE7} \
-    %{buildroot}%{_datadir}/maven2/poms/JPP-%{name}.pom
-%{__mkdir_p} %{buildroot}%{_datadir}/maven2/default_poms
-%{__install} -m 0644 %{SOURCE7} \
-    %{buildroot}%{_datadir}/maven2/default_poms/JPP-%{name}.pom
+    %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
+
+# depmap frags
+%add_maven_depmap JPP-%{name}.pom %{name}.jar -a org.apache.bcel:%{name}
 
 # javadoc
-%{__mkdir_p} %{buildroot}%{_javadocdir}/%{name}-%{version}
-%if %{with_maven}
-%{__cp} -pr target/docs/apidocs/* %{buildroot}%{_javadocdir}/%{name}-%{version}
-%{__rm} -rf target/docs/apidocs
-%else
-%{__cp} -pr dist/docs/api/* %{buildroot}%{_javadocdir}/%{name}-%{version}
-%{__rm} -rf docs/api
-%endif
-%{__ln_s} %{name}-%{version} %{buildroot}%{_javadocdir}/%{name} # ghost symlink
+%{__mkdir_p} %{buildroot}%{_javadocdir}/%{name}
+%{__cp} -pr dist/docs/api/* %{buildroot}%{_javadocdir}/%{name}
+%{__rm} -rf dist/docs/api
 
 # manual
 %{__mkdir_p} %{buildroot}%{_docdir}/%{name}-%{version}
-%if %{with_maven}
-%{__cp} -pr target/docs/* %{buildroot}%{_docdir}/%{name}-%{version}
-%else
 %{__cp} -pr docs/* %{buildroot}%{_docdir}/%{name}-%{version}
-%endif
 %{__cp} LICENSE.txt %{buildroot}%{_docdir}/%{name}-%{version}
 
-%if %{gcj_support}
-export CLASSPATH="$(build-classpath gnu-crypto)"
-%{_bindir}/aot-compile-rpm
-%endif
-
-%post javadoc
-%{__rm} -f %{_javadocdir}/%{name}
-%{__ln_s} %{name}-%{version} %{_javadocdir}/%{name}
-
-%postun javadoc
-if [ "$1" = "0" ]; then
-    %{__rm} -f %{_javadocdir}/%{name}
-fi
-
-%post
-%if %{gcj_support}
-if [ -x %{_bindir}/rebuild-gcj-db ]; then
-    %{_bindir}/rebuild-gcj-db
-fi
-%endif
-
-%postun
-%if %{gcj_support}
-if [ -x %{_bindir}/rebuild-gcj-db ]; then
-    %{_bindir}/rebuild-gcj-db
-fi
-%endif
-
 %files
-%doc %{_docdir}/%{name}-%{version}/LICENSE.txt 
-%{_javadir}/*
-%if %{with_maven}
-%{_datadir}/maven2/poms/*
-%{_datadir}/maven2/default_poms/*
-%endif
-%{_mavendepmapfragdir}
-%if %{gcj_support}
-%{_libdir}/gcj/%{name}/%{name}-*.jar.*
-%endif
-# hack; explicitly added docdir if not owned
-%doc %dir %{_docdir}/%{name}-%{version}
+%doc %{_docdir}/%{name}-%{version}
+%{_javadir}/%{name}.jar
+%{_mavenpomdir}/*
+%{_mavendepmapfragdir}/*
 
 %files javadoc
-%{_javadocdir}/%{name}-%{version}
-%ghost %doc %{_javadocdir}/%{name}
+%doc %{_javadocdir}/%{name}
 
 %files manual
 %doc %{_docdir}/%{name}-%{version}
 
 %changelog
+* Fri Mar 15 2013 Igor Vlasenko <viy@altlinux.ru> 1:5.2-alt4_13jpp7
+- fc update
+
 * Wed Sep 12 2012 Igor Vlasenko <viy@altlinux.ru> 1:5.2-alt4_3jpp5
 - build with saxon6-scripts
 
