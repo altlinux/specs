@@ -21,7 +21,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.0.69
-Release: alt1
+Release: alt2
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -407,26 +407,27 @@ Patch0458: linux-%kernel_branch.42-fix-drivers-net--ibmveth.patch
 Patch0459: linux-%kernel_branch.50-fix-drivers-net--igb.patch
 Patch0460: linux-%kernel_branch.49-fix-drivers-net--ixgbe.patch
 Patch0461: linux-%kernel_branch.43-fix-drivers-net--lcs.patch
-Patch0462: linux-%kernel_branch.42-fix-drivers-net--macvtap.patch
-Patch0463: linux-%kernel_branch.42-fix-drivers-net--natsemi.patch
-Patch0464: linux-%kernel_branch.42-fix-drivers-net--ne3210.patch
-Patch0465: linux-%kernel_branch.53-fix-drivers-net--netiucv.patch
-Patch0466: linux-%kernel_branch.42-fix-drivers-net--qlcnic.patch
-Patch0467: linux-%kernel_branch.46-fix-drivers-net--qlge.patch
-Patch0468: linux-%kernel_branch.44-fix-drivers-net--sfc.patch
-Patch0469: linux-%kernel_branch.56-fix-drivers-net--skge.patch
-Patch0470: linux-%kernel_branch.50-fix-drivers-net--smsguicv.patch
-Patch0471: linux-%kernel_branch.64-fix-drivers-net--tg3.patch
-Patch0472: linux-%kernel_branch.42-fix-drivers-net--tlan.patch
-Patch0473: linux-%kernel_branch.42-fix-drivers-net--vmxnet3.patch
-Patch0474: linux-%kernel_branch.42-fix-drivers-net-benet--be2net.patch
-Patch0475: linux-%kernel_branch.42-fix-drivers-net-mlx4--mlx4_core.patch
-Patch0476: linux-%kernel_branch.46-fix-drivers-net-mlx4--mlx4_en.patch
-Patch0477: linux-%kernel_branch.42-fix-drivers-net-netxen.patch
-Patch0478: linux-%kernel_branch.42-fix-drivers-net-pcmcia--nmclan_cs.patch
-Patch0479: linux-%kernel_branch.53-fix-drivers-net-qeth.patch
-Patch0480: linux-%kernel_branch.42-fix-drivers-net-tulip.patch
-Patch0481: linux-%kernel_branch.42-fix-drivers-net-tulip--de4x5.patch
+Patch0462: linux-%kernel_branch.68-fix-drivers-net--macvlan.patch
+Patch0463: linux-%kernel_branch.42-fix-drivers-net--macvtap.patch
+Patch0464: linux-%kernel_branch.42-fix-drivers-net--natsemi.patch
+Patch0465: linux-%kernel_branch.42-fix-drivers-net--ne3210.patch
+Patch0466: linux-%kernel_branch.53-fix-drivers-net--netiucv.patch
+Patch0467: linux-%kernel_branch.42-fix-drivers-net--qlcnic.patch
+Patch0468: linux-%kernel_branch.46-fix-drivers-net--qlge.patch
+Patch0469: linux-%kernel_branch.44-fix-drivers-net--sfc.patch
+Patch0470: linux-%kernel_branch.56-fix-drivers-net--skge.patch
+Patch0471: linux-%kernel_branch.50-fix-drivers-net--smsguicv.patch
+Patch0472: linux-%kernel_branch.64-fix-drivers-net--tg3.patch
+Patch0473: linux-%kernel_branch.42-fix-drivers-net--tlan.patch
+Patch0474: linux-%kernel_branch.42-fix-drivers-net--vmxnet3.patch
+Patch0475: linux-%kernel_branch.42-fix-drivers-net-benet--be2net.patch
+Patch0476: linux-%kernel_branch.42-fix-drivers-net-mlx4--mlx4_core.patch
+Patch0477: linux-%kernel_branch.46-fix-drivers-net-mlx4--mlx4_en.patch
+Patch0478: linux-%kernel_branch.42-fix-drivers-net-netxen.patch
+Patch0479: linux-%kernel_branch.42-fix-drivers-net-pcmcia--nmclan_cs.patch
+Patch0480: linux-%kernel_branch.53-fix-drivers-net-qeth.patch
+Patch0481: linux-%kernel_branch.42-fix-drivers-net-tulip.patch
+Patch0482: linux-%kernel_branch.42-fix-drivers-net-tulip--de4x5.patch
 
 Patch0491: linux-%kernel_branch.46-fix-drivers-net-usb--asix.patch
 Patch0492: linux-%kernel_branch.42-fix-drivers-net-usb--cdc_ether.patch
@@ -1786,6 +1787,7 @@ cd linux-%version
 %patch0479 -p1
 %patch0480 -p1
 %patch0481 -p1
+%patch0482 -p1
 
 # fix-net-usb--*
 %patch0491 -p1
@@ -3078,6 +3080,12 @@ done)
 
 
 %changelog
+* Sat Mar 16 2013 Led <led@altlinux.ru> 3.0.69-alt2
+- updated:
+  + fix-sound-pci-hda
+- added:
+  + fix-drivers-net--macvlan
+
 * Fri Mar 15 2013 Led <led@altlinux.ru> 3.0.69-alt1
 - 3.0.69
 - updated:
