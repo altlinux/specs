@@ -7,7 +7,7 @@
 
 Name: kernel-image-%flavour
 Version: 2.6.32
-Release: alt3
+Release: alt4
 %define erelease 358.2.1.el6
 
 %define kernel_req %nil
@@ -545,6 +545,9 @@ tar --transform='s,^,kernel-src-%flavour-%kversion-%krelease/,' \
 
 
 %changelog
+* Sun Mar 17 2013 Led <led@altlinux.ru> 2.6.32-alt4
+- macvlan: receive multicast with local address
+
 * Wed Mar 13 2013 Led <led@altlinux.ru> 2.6.32-alt3
 - 2.6.32-358.2.1.el6
 
