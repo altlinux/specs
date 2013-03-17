@@ -1,7 +1,9 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: unzip
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
-%define version 1.2
-%define name easymock
 # Copyright (c) 2000-2009, JPackage Project
 # All rights reserved.
 #
@@ -32,41 +34,31 @@ BuildRequires: jpackage-compat
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
-%define with()          %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
-%define without()       %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
-%define bcond_with()    %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
-%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
-
-%bcond_without repolib
-
-%define repodir %{_javadir}/repository.jboss.com/%{name}/%{version}-brew
-%define repodirlib %{repodir}/lib
-%define repodirsrc %{repodir}/src
-
-
 Name:           easymock
 Version:        1.2
-Release:        alt1_8jpp6
+Release:        alt1_18jpp7
 Epoch:          0
 Summary:        Easy mock objects
 Group:          Development/Java
 License:        MIT
 URL:            http://www.easymock.org/
-# cvs -d:pserver:anonymous@cvs.sourceforge.net:/cvsroot/easymock login
-# cvs -z3 -d:pserver:anonymous@cvs.sourceforge.net:/cvsroot/easymock export -r EasyMock1_2_Java1_3 easymock
+# cvs -d:pserver:anonymous@easymock.cvs.sourceforge.net:/cvsroot/easymock login
+# cvs -z3 -d:pserver:anonymous@easymock.cvs.sourceforge.net:/cvsroot/easymock export -r EasyMock1_2_Java1_3 easymock
+# tar czf easymock-1.2-src.tar.gz easymock
 Source0:        easymock-1.2-src.tar.gz
 Source1:        http://repo1.maven.org/maven2/easymock/easymock/1.2_Java1.5/easymock-1.2_Java1.5.pom
 Source2:        easymock-component-info.xml
-Patch0:		easymock-1.2-build_xml.patch
-Requires(post): jpackage-utils >= 1.7.2
-Requires(postun): jpackage-utils >= 1.7.2
-BuildRequires: jpackage-utils >= 0:1.6
-BuildRequires: ant >= 0:1.6
-BuildRequires: ant-junit >= 0:1.6
-%if %with repolib
-BuildRequires: easymock-classextension
-%endif
-BuildRequires: junit >= 0:3.8.1
+# Starting with version 2.5.1, EasyMock changed its license to Apache 2.
+# Older versions are still available under MIT License
+# See http://www.easymock.org/License.html
+Source3:        LICENSE
+Patch0:         easymock-1.2-build_xml.patch
+Patch1:         %{name}-removed-test.patch
+Patch2:         %{name}-removed-alltests.patch
+BuildRequires:  jpackage-utils >= 0:1.6
+BuildRequires:  ant >= 0:1.6
+BuildRequires:  ant-junit >= 0:1.6
+BuildRequires:  junit >= 0:3.8.1
 BuildArch:      noarch
 Source44: import.info
 
@@ -78,26 +70,18 @@ So EasyMock is a perfect fit for Test-Driven Development.
 
 %package        javadoc
 Summary:        Javadoc for %{name}
-Group:          Development/Documentation
+Group:          Development/Java
 BuildArch: noarch
 
 %description    javadoc
 Javadoc for %{name}.
 
-%if %with repolib
-%package repolib
-Summary:        Artifacts to be uploaded to a repository library
-Group:          Development/Java
-
-%description repolib
-Artifacts to be uploaded to a repository library.
-This package is not meant to be installed but so its contents
-can be extracted through rpm2cpio.
-%endif
-
 %prep
 %setup -q -n %{name}
 %patch0 -p0
+%patch1 -p1
+%patch2 -p1
+cp %{SOURCE3} .
 mkdir lib
 pushd lib
 ln -sf $(build-classpath junit) .
@@ -113,60 +97,40 @@ echo "java\ compiler=%{javac}" >> easymockbuild.properties
 %build
 export OPT_JAR_LIST="ant/ant-junit junit"
 export CLASSPATH=
-ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Dbuild.sysclasspath=first
+%{ant} -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  -Dbuild.sysclasspath=first
 
 %install
-
 unzip -qq %{name}%{version}_Java1.3.zip
 install -dm 755 $RPM_BUILD_ROOT%{_javadir}
 
 install -pm 644 %{name}%{version}_Java1.3/%{name}.jar \
-  $RPM_BUILD_ROOT%{_javadir}/%{name}-%{version}.jar
-ln -s %{name}-%{version}.jar \
   $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
 
 # javadoc
-install -dm 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
-cp -pr %{name}%{version}_Java1.3/javadoc/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
-ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name}
+install -dm 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}
+cp -pr %{name}%{version}_Java1.3/javadoc/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 
 # pom
-install -dm 755 $RPM_BUILD_ROOT%{_datadir}/maven2/poms
-cp -p %{SOURCE1} $RPM_BUILD_ROOT%{_datadir}/maven2/poms/
-%add_to_maven_depmap easymock easymock %{version}_Java1.5 JPP easymock
+install -dm 755 $RPM_BUILD_ROOT%{_mavenpomdir}
+cp -p %{SOURCE1} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
+%add_maven_depmap
 
-%if %with repolib
-%{__install} -d -m 0755 %{buildroot}%{repodir}
-%{__install} -d -m 0755 %{buildroot}%{repodirlib}
-%{__install} -p -m 0644 %{SOURCE2} %{buildroot}%{repodir}/component-info.xml
-tag=`/bin/echo %{name}-%{version}-%{release} | %{__sed} 's|\.|_|g'`
-%{__sed} -i "s/@TAG@/$tag/g" %{buildroot}%{repodir}/component-info.xml
-%{__sed} -i "s/@VERSION@/%{version}-brew/g" %{buildroot}%{repodir}/component-info.xml
-%{__install} -d -m 0755 %{buildroot}%{repodirsrc}
-%{__install} -p -m 0644 %{SOURCE0} %{buildroot}%{repodirsrc}
-%{__install} -p -m 0644 %{SOURCE1} %{buildroot}%{repodirsrc}
-%{__install} -p -m 0644 %{PATCH0} %{buildroot}%{repodirsrc}
-%{__cp} -p %{buildroot}%{_javadir}/%{name}-%{version}.jar %{buildroot}%{repodirlib}/%{name}.jar
-%{__cp} -p %{_javadir}/easymock-classextension.jar %{buildroot}%{repodirlib}/easymockclassextension.jar
-%endif
 
 %files
+%doc LICENSE
 %doc %{name}%{version}_Java1.3/{Documentation,License}.html
-%{_datadir}/maven2/*
+%{_mavenpomdir}/*
 %{_mavendepmapfragdir}/*
-%{_javadir}/%{name}-%{version}.jar
 %{_javadir}/%{name}.jar
 
 %files javadoc
-%{_javadocdir}/%{name}-%{version}
+%doc LICENSE
 %{_javadocdir}/%{name}
 
-%if %with repolib
-%files repolib
-%{_javadir}/repository.jboss.com
-%endif
-
 %changelog
+* Sun Mar 17 2013 Igor Vlasenko <viy@altlinux.ru> 0:1.2-alt1_18jpp7
+- fc update
+
 * Sat Jan 08 2011 Igor Vlasenko <viy@altlinux.ru> 0:1.2-alt1_8jpp6
 - jpp 6 release
 
