@@ -1,8 +1,8 @@
-%define subver 25
+%define subver 105
 
 Name: psi-plus
 Version: 0.16.%subver
-Release: alt2
+Release: alt1
 Group: Networking/Instant messaging
 
 Summary: Psi+ Jabber client
@@ -755,6 +755,9 @@ popd
 %_libdir/%name/plugins/libwatcherplugin.so
 
 %changelog
+* Sun Mar 17 2013 Nazarov Denis <nenderus@altlinux.org> 0.16.105-alt1
+- Version 0.16.105
+
 * Wed Nov 14 2012 Nazarov Denis <nenderus@altlinux.org> 0.16.25-alt2
 - Fix version
 
