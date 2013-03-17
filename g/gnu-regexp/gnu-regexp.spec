@@ -1,6 +1,10 @@
+Epoch: 0
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
-# Copyright (c) 2000-2010, JPackage Project
+# Copyright (c) 2000-2005, JPackage Project
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -30,27 +34,21 @@ BuildRequires: jpackage-compat
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
-
 Name:           gnu-regexp
 Version:        1.1.4
-Release:        alt1_14jpp6
-Epoch:          0
+Release:        alt1_16jpp7
 Summary:        Java NFA regular expression engine implementation
-License:        LGPLv2+
-Group:          Development/Java
-URL:            http://www.cacas.org/java/gnu/regexp/
+License:        LGPLv2+ and GPLv2+
 Source0:        ftp://ftp.tralfamadore.com/pub/java/gnu.regexp-1.1.4.tar.gz
 Source1:        %{name}.build.xml
-Source2:        http://repo2.maven.org/maven2/gnu-regexp/gnu-regexp/1.1.4/gnu-regexp-1.1.4.pom
-BuildRequires: ant >= 0:1.7.1
-BuildRequires: gnu-getopt
-BuildRequires: jpackage-utils >= 0:1.7.5
+BuildRequires:  ant
+BuildRequires:  gnu-getopt
+BuildRequires:  jpackage-utils >= 0:1.6
+URL:            http://nlp.stanford.edu/nlp/javadoc/gnu-regexp-docs/
+Group:          Development/Java
 BuildArch:      noarch
-Provides:       gnu.regexp = %{epoch}:%{version}-%{release}
-Obsoletes:      gnu.regexp < %{epoch}:%{version}-%{release}
-Requires: jpackage-utils >= 0:1.7.5
-Requires(post): jpackage-utils >= 0:1.7.5
-Requires(postun): jpackage-utils >= 0:1.7.5
+Provides:       gnu.regexp = %{version}-%{release}
+Obsoletes:      gnu.regexp < %{version}-%{release}
 Source44: import.info
 
 %description
@@ -62,20 +60,20 @@ to the syntax and usage notes.
 
 %package demo
 Summary:        Demo for %{name}
+Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
+Requires:       gnu.getopt
 Group:          Development/Java
-Requires: %{name} = %{epoch}:%{version}-%{release}
-Requires: gnu-getopt
-Provides:       gnu.regexp-demo = %{epoch}:%{version}-%{release}
-Obsoletes:      gnu.regexp-demo < %{epoch}:%{version}-%{release}
+Provides:       gnu.regexp-demo = %{version}-%{release}
+Obsoletes:      gnu.regexp-demo < %{version}-%{release}
 
 %description demo
 Demonstrations and samples for %{name}.
 
 %package javadoc
 Summary:        Javadoc for %{name}
-Group:          Development/Documentation
-Provides:       gnu.regexp-javadoc = %{epoch}:%{version}-%{release}
-Obsoletes:      gnu.regexp-javadoc < %{epoch}:%{version}-%{release}
+Group:          Development/Java
+Provides:       gnu.regexp-javadoc = %{version}-%{release}
+Obsoletes:      gnu.regexp-javadoc < %{version}-%{release}
 BuildArch: noarch
 
 %description javadoc
@@ -85,60 +83,45 @@ Javadoc for %{name}.
 %setup -q -n gnu.regexp-%{version}
 %__cp -a %{SOURCE1} build.xml
 # remove all binary libs
-find . -name "*.jar" | xargs %{__rm}
+find . -name "*.jar" -exec %__rm -f {} \;
 
 %build
-export OPT_JAR_LIST=:
 export CLASSPATH=$(build-classpath gnu.getopt)
-ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  jar javadoc
+%ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  jar javadoc
 
 %install
-%__rm -rf %{buildroot}
 
 # jars
 %__mkdir_p %{buildroot}%{_javadir}
 %__cp -a build/lib/gnu.regexp.jar %{buildroot}%{_javadir}/%{name}-%{version}.jar
-%__ln_s %{name}-%{version}.jar %{buildroot}%{_javadir}/gnu.regexp-%{version}.jar
-(cd %{buildroot}%{_javadir} && for jar in *-%{version}*; do %__ln_s ${jar} `echo $jar| sed "s|-%{version}||g"`; done)
-
-# pom
-%__mkdir_p %{buildroot}%{_datadir}/maven2/poms
-%__cp -a %{SOURCE2} %{buildroot}%{_datadir}/maven2/poms/JPP-%{name}.pom
-%add_to_maven_depmap %{name} %{name} %{version} JPP %{name}
+(cd %{buildroot}%{_javadir} && for jar in *-%{version}*; do %__ln_s ${jar} `echo $jar| sed "s|-%{version}||g"`; done
+%__ln_s %{name}.jar gnu.regexp.jar)
 
 # demo
 %__mkdir_p %{buildroot}%{_datadir}/%{name}/gnu/regexp/util
 %__cp -a build/classes/gnu/regexp/util/*.class \
   %{buildroot}%{_datadir}/%{name}/gnu/regexp/util
-%__ln_s %{name} %{buildroot}%{_datadir}/gnu.regexp
 
 # javadoc
 %__mkdir_p %{buildroot}%{_javadocdir}/%{name}-%{version}
 %__cp -a build/api/* %{buildroot}%{_javadocdir}/%{name}-%{version}
-%__ln_s %{name}-%{version} %{buildroot}%{_javadocdir}/%{name}
-%__ln_s %{name}-%{version} %{buildroot}%{_javadocdir}/gnu.regexp-%{version}
-%__ln_s gnu.regexp-%{version} %{buildroot}%{_javadocdir}/gnu.regexp
+(cd %{buildroot}%{_javadocdir} && %__ln_s %{name}-%{version} %{name})
 
 %files
 %doc COPYING COPYING.LIB README TODO docs/*.html
-%{_javadir}/%{name}-%{version}.jar
-%{_javadir}/%{name}.jar
-%{_javadir}/gnu.regexp-%{version}.jar
-%{_javadir}/gnu.regexp.jar
-%{_datadir}/maven2/poms/*
-%{_mavendepmapfragdir}/*
+%{_javadir}/*
 
 %files demo
 %{_datadir}/%{name}
-%{_datadir}/gnu.regexp
 
 %files javadoc
-%{_javadocdir}/%{name}-%{version}
-%{_javadocdir}/%{name}
-%{_javadocdir}/gnu.regexp-%{version}
-%{_javadocdir}/gnu.regexp
+%doc %{_javadocdir}/%{name}-%{version}
+%doc %{_javadocdir}/%{name}
 
 %changelog
+* Sun Mar 17 2013 Igor Vlasenko <viy@altlinux.ru> 0:1.1.4-alt1_16jpp7
+- fc update
+
 * Sat Mar 12 2011 Igor Vlasenko <viy@altlinux.ru> 0:1.1.4-alt1_14jpp6
 - new jpp release
 
