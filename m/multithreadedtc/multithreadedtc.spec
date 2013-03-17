@@ -1,120 +1,104 @@
+Epoch: 0
 # BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
-# Copyright (c) 2000-2011, JPackage Project
-# All rights reserved.
-#
-# Redistribution and use in source and binary forms, with or without
-# modification, are permitted provided that the following conditions
-# are met:
-#
-# 1. Redistributions of source code must retain the above copyright
-#    notice, this list of conditions and the following disclaimer.
-# 2. Redistributions in binary form must reproduce the above copyright
-#    notice, this list of conditions and the following disclaimer in the
-#    documentation and/or other materials provided with the
-#    distribution.
-# 3. Neither the name of the JPackage Project nor the names of its
-#    contributors may be used to endorse or promote products derived
-#    from this software without specific prior written permission.
-#
-# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-# "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-# LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-# A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-# OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-# SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-# LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-# DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-# THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-# (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-# OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-#
-
-
+%global project_name MultithreadedTC
 Name:           multithreadedtc
 Version:        1.01
-Release:        alt3_2jpp6
-Epoch:          0
-Summary:        Multithreaded TC
+Release:        alt3_12jpp7
+Summary:        A framework for testing concurrent Java application
 
 Group:          Development/Java
-License:        BSD
-URL:            http://code.google.com/p/multithreadedtc/
-Source0:        http://multithreadedtc.googlecode.com/files/MultithreadedTC-1.01-source.zip
-Source1:        http://repo1.maven.org/maven2/com/googlecode/multithreadedtc/multithreadedtc/1.01/multithreadedtc-1.01.pom
+License:        BSD 
+URL:            http://www.cs.umd.edu/projects/PL/multithreadedtc
+#http://multithreadedtc.googlecode.com/files/MultithreadedTC-1.01-source.zip
+Source0:        %{project_name}-%{version}-source.zip
+Source1:        %{name}.pom
+Patch0:        %{name}-build.patch
 
+BuildArch: noarch
 
-BuildArch:      noarch
-BuildRequires:  jpackage-utils >= 0:1.7.5
-BuildRequires:  ant >= 0:1.7.1
-BuildRequires:  junit
+BuildRequires: jpackage-utils
+BuildRequires: ant >= 0:1.6
+BuildRequires: ant-junit
+BuildRequires: junit
 
-Requires:  junit
+Requires:       jpackage-utils
+Requires:      junit
 
-Requires(post):   jpackage-utils >= 0:1.7.5
-Requires(postun): jpackage-utils >= 0:1.7.5
+Requires(post):       jpackage-utils
+Requires(postun):     jpackage-utils
 Source44: import.info
 
 %description
-The MultithreadedTC framework was created to make it easier
-to test small concurrent abstractions. It enables test 
-designers to guarantee a specific interleaving of two or 
-more threads, even in the presence of blocking and timing 
-issues.
+MultithreadedTC is a framework for testing concurrent applications. 
+It features a metronome that is used to provide fine control over
+the sequence of activities in multiple threads.
 
-%package        javadoc
+%package javadoc
+Group:          Development/Java
 Summary:        Javadoc for %{name}
-Group:          Development/Documentation
+Requires:       jpackage-utils
 BuildArch: noarch
 
-%description    javadoc
-Javadoc for %{name}
+%description javadoc
+API documentation for %{name}.
 
 
 %prep
-%setup -q  -n MultithreadedTC-%{version}-source
-for j in $(find . -name "*.jar"); do
-    mv $j $j.no
-done
+%setup -q -n %{project_name}-%{version}-source
+%patch0 -p0 -b .sav
+
+rm -f *.jar
+
+sed -i 's/\r//' web/docs/package-list
+sed -i 's/\r//' web/docs/stylesheet.css
+sed -i 's/\r//' LICENSE.txt
+sed -i 's/\r//' README.txt
 
 %build
-mkdir bin
-export CLASSPATH=$(build-classpath junit)
-%{_jvmdir}/java/bin/javac  -target 1.5 -source 1.5 -d bin $(find src -name "*.java")
-%{_jvmdir}/java/bin/javadoc -d apidocs -sourcepath src edu.umd.cs.mtc
-
-ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 distjar
+ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 
 
 %install
-install -dm 755 $RPM_BUILD_ROOT%{_javadir}
 
-install -m 644 MultithreadedTC-%{version}.jar \
-  $RPM_BUILD_ROOT%{_javadir}/%{name}-%{version}.jar
-ln -s %{name}-%{version}.jar \
-  $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
+# jars
+install -d -m 0755 %{buildroot}%{_javadir}
+install -m 644 %{project_name}-%{version}.jar   %{buildroot}%{_javadir}/%{project_name}-%{version}.jar
 
-install -dm 755 $RPM_BUILD_ROOT%{_datadir}/maven2/poms
-install -m 644 %{SOURCE1} $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-%{name}.pom
-%add_to_maven_depmap com.googlecode.multithreadedtc %{name} %{version} JPP %{name}
+(cd %{buildroot}%{_javadir} && for jar in *-%{version}*; \
+    do ln -sf ${jar} `echo $jar| sed "s|-%{version}||g"`; done)
+
+%add_to_maven_depmap edu.umd.cs.mtc multithreadedtc %{version} JPP %{project_name}
+%add_to_maven_depmap edu.umd.cs.mtc multithreadedtc-jdk14 %{version} JPP %{project_name}
+
+# poms
+install -d -m 755 %{buildroot}%{_mavenpomdir}
+install -pm 644 %{SOURCE1} \
+    %{buildroot}%{_mavenpomdir}/JPP-%{project_name}.pom
 
 # javadoc
-install -dm 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
-cp -pr apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
-ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name} # ghost symlink
+install -d -m 0755 %{buildroot}%{_javadocdir}/%{name}-%{version}
+cp -pr web/docs/* %{buildroot}%{_javadocdir}/%{name}-%{version}/
+ln -s %{name}-%{version} %{buildroot}%{_javadocdir}/%{name}
+rm -rf web/docs
 
 %files
-%{_javadir}/*.jar
-%{_datadir}/maven2/poms/*
+%doc LICENSE.txt README.txt
+%{_javadir}/*
+%{_mavenpomdir}/*
 %{_mavendepmapfragdir}/*
 
 %files javadoc
-%doc %{_javadocdir}/%{name}-%{version}
-%doc %{_javadocdir}/%{name}
+%{_javadocdir}/%{name}-%{version}
+%{_javadocdir}/%{name}
 
 %changelog
+* Sun Mar 17 2013 Igor Vlasenko <viy@altlinux.ru> 0:1.01-alt3_12jpp7
+- fc update
+
 * Mon Jan 16 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.01-alt3_2jpp6
 - new jpp relase
 
