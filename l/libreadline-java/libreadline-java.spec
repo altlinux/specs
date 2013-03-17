@@ -1,109 +1,91 @@
+Epoch: 0
 # BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
+BuildRequires(pre): rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
-# Copyright (c) 2000-2009, JPackage Project
-# All rights reserved.
-#
-# Redistribution and use in source and binary forms, with or without
-# modification, are permitted provided that the following conditions
-# are met:
-#
-# 1. Redistributions of source code must retain the above copyright
-#    notice, this list of conditions and the following disclaimer.
-# 2. Redistributions in binary form must reproduce the above copyright
-#    notice, this list of conditions and the following disclaimer in the
-#    documentation and/or other materials provided with the
-#    distribution.
-# 3. Neither the name of the JPackage Project nor the names of its
-#    contributors may be used to endorse or promote products derived
-#    from this software without specific prior written permission.
-#
-# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-# "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-# LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-# A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-# OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-# SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-# LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-# DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-# THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-# (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-# OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-#
+%global editline_ver    2.9
+%global src_dirs        org test
 
-%define readln_min_ver  5.0
-%define debug_package %{nil}
+Name:    libreadline-java
+Version: 0.8.0
+Release: alt2_30jpp7
+Summary: Java wrapper for the EditLine library
+Group:   Development/Java
 
-Name:           libreadline-java
-Version:        0.8.0
-Release:        alt2_12jpp6
-Epoch:          0
-Summary:        Java wrapper for the GNU-readline library
-License:        LGPL
-Source0:        http://download.sourceforge.net/java-readline/libreadline-java-0.8.0-src.tar.gz
-Url:            http://java-readline.sf.net/
-Requires:       readline >= 0:%{readln_min_ver}
-BuildRequires:  jpackage-utils >= 0:1.7.5
-BuildRequires:  libreadline-devel
-BuildRequires:  libtinfo-devel
-Provides:       java_readline
-Provides:       gnu.readline
-Group:          Development/Java
-##AutoReqProv:    no
+License: LGPLv2+
+URL:     http://java-readline.sf.net/
+Source0: http://download.sf.net/java-readline/%{name}-%{version}-src.tar.gz
+Patch0:  %{name}-ncurses.patch
+Patch1:  %{name}-libdir.patch
+
+BuildRequires: jpackage-utils >= 1.5
+BuildRequires: libedit-devel >= %{editline_ver}
+BuildRequires: ncurses-devel
+
+Requires:         libedit >= %{editline_ver}
 Source44: import.info
 
 %description
-Java-Readline is a port of GNU Readline for Java.  Or, to be more 
-precise, it is a JNI-wrapper to Readline. It is distributed under 
-the LGPL.
+libreadline-java provides Java bindings for libedit though a JNI
+wrapper.
 
 %package javadoc
-Summary:        Javadoc for %{name}
-Group:          Development/Java
+Summary: Javadoc for %{name}
+Group:   Development/Java
+Requires: jpackage-utils
 BuildArch: noarch
 
 %description javadoc
-%{summary}.
+API documentation for %{name}.
 
 %prep
 %setup -q
-find . -name "*.jar" -exec rm -f {} \;
+%patch0
+%patch1
+sed -i 's|@LIBDIR@|%{_libdir}|' src/org/gnu/readline/Readline.java
 %__subst s,termcap,tinfo, src/native/Makefile
 
 %build
 #export JAVA_HOME=%{java_home}
 export PATH=$JAVA_HOME/bin:$JAVA_HOME/jre/bin:$PATH
-%__make T_LIBS=JavaReadline
-%__make apidoc
+make CFLAGS="$RPM_OPT_FLAGS -fPIC -DPOSIX" T_LIBS=JavaEditline
+make apidoc
+
+# fix debuginfo package
+rm -f %{src_dirs}
+for dir in %{src_dirs}
+do
+  ln -s src/$dir
+done
 
 %install
-# jar
-%__mkdir_p %{buildroot}%{_jnidir}
-%__install -m 644 %{name}.jar %{buildroot}%{_jnidir}/%{name}-%{version}.jar
-(cd %{buildroot}%{_jnidir} && for jar in *-%{version}*; do \
-ln -sf ${jar} ${jar/-%{version}/}; done)
-# lib
-%__mkdir_p %{buildroot}%{_libdir}
-%__install -m 755 libJavaReadline.so %{buildroot}%{_libdir}/libJavaReadline.so.%{version}
-(cd %{buildroot}%{_libdir} && ln -sf libJavaReadline.so.%{version} libJavaReadline.so)
+
+# install jar file and JNI library under %{_libdir}/%{name}
+# FIXME: fix jpackage-utils to handle multilib correctly
+mkdir -p $RPM_BUILD_ROOT%{_libdir}/%{name}
+install -m 644 %{name}.jar \
+  $RPM_BUILD_ROOT%{_libdir}/%{name}/%{name}.jar
+install -m 755 libJavaEditline.so $RPM_BUILD_ROOT%{_libdir}/%{name}
 
 # javadoc
-%__mkdir_p %{buildroot}%{_javadocdir}/%{name}-%{version}
-%__cp -a api/* %{buildroot}%{_javadocdir}/%{name}-%{version}
-%__ln_s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name}
+mkdir -p $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
+cp -a api/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
+ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 
 %files
-%doc ChangeLog NEWS README README.1st VERSION
-%{_libdir}/*.so*
-%{_jnidir}/*.jar
+%doc ChangeLog NEWS README README.1st VERSION COPYING.LIB
+%dir %{_libdir}/%{name}
+%{_libdir}/%{name}/*
 
 %files javadoc
-%doc %{_javadocdir}/%{name}-%{version}
-%doc %{_javadocdir}/%{name}
+%{_javadocdir}/%{name}-%{version}
+%{_javadocdir}/%{name}
 
 %changelog
+* Sun Mar 17 2013 Igor Vlasenko <viy@altlinux.ru> 0:0.8.0-alt2_30jpp7
+- fc update
+
 * Sun Feb 26 2012 Igor Vlasenko <viy@altlinux.ru> 0:0.8.0-alt2_12jpp6
 - build with new jnidir
 
