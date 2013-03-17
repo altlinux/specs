@@ -36,7 +36,7 @@ BuildRequires: jpackage-1.6.0-compat
 
 Name:           sun-jaxb-2.1-impl
 Version:        2.1.13
-Release:        alt3_1jpp6
+Release:        alt4_1jpp6
 Epoch:          0
 Summary:        JAXB Reference Implementation
 License:        CDDL
@@ -64,7 +64,7 @@ BuildRequires:  jakarta-commons-jelly
 BuildRequires:  jakarta-commons-jelly-tags-util
 BuildRequires:  javamail_1_4_api
 BuildRequires:  javatools-package-rename-task
-BuildRequires:  jing >= 0:0.1-0.20030619.9jpp
+BuildRequires:  jing0
 BuildRequires:  jsp_2_1_api
 BuildRequires:  msv-msv
 BuildRequires:  msv-xsdlib
@@ -156,7 +156,7 @@ ln -sf $(build-classpath sjsxp) tools/lib/util/sjsxp.jar
 ln -sf $(build-classpath aqute-bndlib) tools/lib/util/bnd-0.0.249.jar
 
 #mv tools/lib/util/jing.jar.no tools/lib/util/jing.jar
-ln -sf $(build-classpath jing) tools/lib/util/jing.jar
+ln -sf $(build-classpath jing0) tools/lib/util/jing.jar
 
 #mv tools/lib/rebundle/runtime2/txw2.jar.no tools/lib/rebundle/runtime2/txw2.jar
 ln -sf $(build-classpath txw2) tools/lib/rebundle/runtime2/txw2.jar
@@ -320,11 +320,11 @@ install -m 755 dist/bin/schemagen.sh $RPM_BUILD_ROOT%{_bindir}/sun-jaxb-schemage
 install -m 755 dist/bin/xjc.sh $RPM_BUILD_ROOT%{_bindir}/sun-jaxb-xjc
 
 # poms
-install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/maven2/poms
+install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
 install -pm 644 %{SOURCE1} \
-    $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-%{name}.pom
+    $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 install -pm 644 %{SOURCE2} \
-    $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-%{name}-xjc.pom
+    $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}-xjc.pom
 
 # javadoc
 install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
@@ -359,7 +359,7 @@ EOF
 %{_javadir}/sun-jaxb-2.1-tools
 %attr(755,root,root) %{_bindir}/*
 %{_datadir}/%{name}
-%{_datadir}/maven2/poms/*
+%_mavenpomdir/*
 %{_mavendepmapfragdir}/*
 %if %{gcj_support}
 %dir %attr(-,root,root) %{_libdir}/gcj/%{name}
@@ -375,6 +375,10 @@ EOF
 %ghost %{_javadocdir}/%{name}
 
 %changelog
+* Mon Mar 18 2013 Igor Vlasenko <viy@altlinux.ru> 0:2.1.13-alt4_1jpp6
+- NMU for unknown reason:
+  the person above was too neglectant to add --changelog "- NMU: <reason>" option.
+
 * Mon Sep 17 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.1.13-alt3_1jpp6
 - build with txw2
 
