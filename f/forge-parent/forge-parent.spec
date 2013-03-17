@@ -1,8 +1,11 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           forge-parent
 Version:        5
-Release:        alt1_7jpp6
+Release:        alt1_8jpp7
 Summary:        Sonatype Forge Parent Pom
 
 Group:          Development/Java
@@ -35,18 +38,22 @@ next-generation of development tools and technologies.
 %install
 rm -rf %{buildroot}/
 
-%add_to_maven_depmap org.sonatype.forge %{name} %{version} JPP/plexus %{name}
+%add_to_maven_depmap org.sonatype.forge forge-parent %{version} JPP forge-parent
 
 # poms
-install -d -m 755 %{buildroot}%{_datadir}/maven2/poms
+install -d -m 755 %{buildroot}%{_mavenpomdir}
 install -pm 644 pom.xml \
-    %{buildroot}%{_datadir}/maven2/poms/JPP.plexus-%{name}.pom
+    %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
 
 %files
-%{_datadir}/maven2/poms/*
+
+%{_mavenpomdir}/*
 %{_mavendepmapfragdir}/*
 
 %changelog
+* Sun Mar 17 2013 Igor Vlasenko <viy@altlinux.ru> 5-alt1_8jpp7
+- fc update
+
 * Fri Dec 31 2010 Igor Vlasenko <viy@altlinux.ru> 5-alt1_7jpp6
 - fixed repolib
 
