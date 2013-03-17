@@ -1,162 +1,136 @@
+Epoch: 0
 # BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
-# Copyright (c) 2000-2010, JPackage Project
-# All rights reserved.
-#
-# Redistribution and use in source and binary forms, with or without
-# modification, are permitted provided that the following conditions
-# are met:
-#
-# 1. Redistributions of source code must retain the above copyright
-#    notice, this list of conditions and the following disclaimer.
-# 2. Redistributions in binary form must reproduce the above copyright
-#    notice, this list of conditions and the following disclaimer in the
-#    documentation and/or other materials provided with the
-#    distribution.
-# 3. Neither the name of the JPackage Project nor the names of its
-#    contributors may be used to endorse or promote products derived
-#    from this software without specific prior written permission.
-#
-# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-# "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-# LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-# A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-# OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-# SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-# LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-# DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-# THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-# (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-# OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-#
+Name: relaxngcc
+Version: 1.12
+Release: alt2_4jpp7
+Summary: RELAX NG Compiler Compiler
+Group: Development/Java
 
-%define gcj_support 0
+License: ASL 1.1
 
-%define cvsdate 20031218
+Url: http://relaxngcc.sourceforge.net/en/index.htm
 
-Summary:        RELAX NG Compiler Compiler
-Name:           relaxngcc
-Version:        1.12
-Release:        alt2_2jpp6
-Epoch:          0
-License:        Apache Software License-like
-URL:            http://relaxngcc.sourceforge.net/
-Group:          Development/Java
-Source0:	http://prdownloads.sourceforge.net/relaxngcc/relaxngcc-20031218.zip
-Source1:	relaxngcc-build.xml
-BuildRequires:  jpackage-utils >= 0:1.7.5
-BuildRequires:  ant >= 0:1.7
-BuildRequires:  ant-nodeps
-BuildRequires:  jakarta-commons-jelly
-BuildRequires:  msv-msv
-BuildRequires:  msv-xsdlib
-BuildRequires:  relaxngDatatype
-#BuildRequires:  xerces-j2
-#BuildRequires:  xml-commons-apis
-Requires:  ant >= 0:1.7
-Requires:  jakarta-commons-jelly
-Requires:  msv-msv
-Requires:  msv-xsdlib
-Requires:  relaxngDatatype
-#Requires:  xerces-j2
-#Requires:  xml-commons-apis
-%if %{gcj_support}
-BuildRequires:          java-gcj-compat-devel
-Requires(post):         java-gcj-compat
-Requires(postun):       java-gcj-compat
-%endif
-%if ! %{gcj_support}
-BuildArch:      noarch
-%endif
+Source0: http://prdownloads.sourceforge.net/relaxngcc/relaxngcc-20031218.zip
+Source1: %{name}-build.xml
+
+BuildRequires: ant
+BuildRequires: javacc
+BuildRequires: jpackage-utils
+BuildRequires: msv-msv
+BuildRequires: msv-xsdlib
+BuildRequires: relaxngDatatype
+BuildRequires: xerces-j2
+BuildRequires: xml-commons-apis
+BuildRequires: dos2unix
+
+Requires: msv-msv
+Requires: msv-xsdlib
+Requires: relaxngDatatype
+Requires: xerces-j2
+Requires: xml-commons-apis
+
+BuildArch: noarch
 Source44: import.info
 
+
 %description
-RelaxNGCC is a tool for generating Java source code from a 
-given RELAX NG grammar. By embedding code fragments in the 
-grammar like yacc or JavaCC, you can take appropriate 
-actions while parsing valid XML documents against the 
-grammar.
+RelaxNGCC is a tool for generating Java source code from a given RELAX NG
+grammar. By embedding code fragments in the grammar like yacc or JavaCC, you can
+take appropriate actions while parsing valid XML documents against the grammar.
+
 
 %package javadoc
-Summary:        Javadoc for %{name}
-Group:          Development/Documentation
+Group: Development/Java
+Summary: Javadoc for %{name}
+Requires: jpackage-utils
 BuildArch: noarch
+
 
 %description javadoc
-%{summary}.
+This package contains javadoc for %{name}.
 
-%package manual
-Summary:        Documents for %{name}
-Group:          Development/Documentation
-BuildArch: noarch
-
-%description manual
-%{summary}.
 
 %prep
-%setup -q -n %{name}-%{cvsdate}
-cp %{SOURCE1} build.xml
-mkdir lib
-for j in $(find . -name "*.jar"); do
-	mv $j $j.no
+
+# Prepare the original sources:
+%setup -q -n relaxngcc-20031218
+
+# Remove all the binary files:
+find . -name '*.class' -delete
+find . -name '*.jar' -delete
+
+# Remove the sources that will be generated with JavaCC:
+rm src/relaxngcc/javabody/*.java
+
+# Remove to avoid dependency on commons-jelly:
+rm src/relaxngcc/maven/ChildAntProjectTag.java
+
+# Some of the sources don't use the correct end of line encoding, so to be
+# conservative fix all of them:
+find . -type f -exec dos2unix {} \;
+
+# Some of the source files contain characters outside of the ASCII set that
+# cause problems when compiling, so make sure that they are translated to
+# ASCCI:
+sources='
+src/relaxngcc/builder/SwitchBlockInfo.java
+'
+for source in ${sources}
+do
+  native2ascii -encoding UTF8 ${source} ${source}
 done
-cp relaxngcc.jar.no lib/bootstrap-relaxngcc.jar
+
 
 %build
+
+# Populate the lib directory with references to the jar files required for the
+# build:
+mkdir lib
 pushd lib
-#BUILD/relaxngcc-20031218/msv.jar.no
-ln -sf $(build-classpath msv-msv) .
-#BUILD/relaxngcc-20031218/relaxngDatatype.jar.no
-ln -sf $(build-classpath relaxngDatatype) .
-#BUILD/relaxngcc-20031218/xerces.jar.no
-#ln -sf $(build-classpath xerces-j2) .
-#BUILD/relaxngcc-20031218/xsdlib.jar.no
-ln -sf $(build-classpath msv-xsdlib) .
-#
-ln -sf $(build-classpath commons-jelly) .
+  ln -sf $(build-classpath msv-msv) .
+  ln -sf $(build-classpath relaxngDatatype) .
+  ln -sf $(build-classpath xerces-j2) .
+  ln -sf $(build-classpath msv-xsdlib) .
+  ln -sf $(build-classpath javacc) .
 popd
 
-ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 jar javadoc
+# Put the ant build files in place:
+cp %{SOURCE1} build.xml
+
+# Run the ant build:
+ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  jar javadoc
+
 
 %install
 
-# jars
-mkdir -p $RPM_BUILD_ROOT%{_javadir}
-cp -p %{name}.jar \
-  $RPM_BUILD_ROOT%{_javadir}/%{name}-%{version}.jar
-(cd $RPM_BUILD_ROOT%{_javadir} && for jar in *-%{version}.jar; do ln -sf ${jar} `echo $jar| sed "s|-%{version}||g"`; done)
+# Jar files:
+mkdir -p %{buildroot}%{_javadir}
+install -pm 644 relaxngcc.jar %{buildroot}%{_javadir}/%{name}.jar
 
-# javadoc
-mkdir -p $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
-cp -pr javadoc/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
-ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name} # ghost symlink
+# Javadoc files:
+mkdir -p %{buildroot}%{_javadocdir}/%{name}
+cp -pr javadoc/* %{buildroot}%{_javadocdir}/%{name}/.
 
-# manual
-mkdir -p $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}
-cp -pr doc/en/* $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}
-
-%if %{gcj_support}
-%{_bindir}/aot-compile-rpm
-%endif
 
 %files
-%{_javadir}/*.jar
-%if %{gcj_support}
-%dir %{_libdir}/gcj/%{name}
-%{_libdir}/gcj/%{name}/%{name}-%{version}.jar.*
-%endif
+%{_javadir}/*
+%doc src/HOWTO-readAutomata.txt LICENSE.txt readme.txt
+%doc doc/*
+
 
 %files javadoc
-%doc %{_javadocdir}/%{name}-%{version}
-%ghost %{_javadocdir}/%{name}
-
-%files manual
-%doc %{_docdir}/%{name}-%{version}
+%{_javadocdir}/*
+%doc LICENSE.txt
 
 %changelog
+* Sun Mar 17 2013 Igor Vlasenko <viy@altlinux.ru> 0:1.12-alt2_4jpp7
+- fc update
+
 * Mon Jan 16 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.12-alt2_2jpp6
 - new jpp relase
 
