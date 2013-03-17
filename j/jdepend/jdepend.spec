@@ -1,7 +1,9 @@
-Packager: Igor Vlasenko <viy@altlinux.ru>
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
-# Copyright (c) 2000-2009, JPackage Project
+# Copyright (c) 2000-2005, JPackage Project
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -31,30 +33,23 @@ BuildRequires: jpackage-compat
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
-%define gcj_support 0
-
-
 Name:           jdepend
 Version:        2.9.1
-Release:	alt3_3jpp6
+Release:        alt3_7jpp7
 Epoch:          0
 Summary:        Java Design Quality Metrics
 License:        BSD
+URL:            http://www.clarkware.com/
 Group:          Development/Java
-URL:            http://www.clarkware.com/software/JDepend.html
-Source0:        http://www.clarkware.com/software/jdepend-2.9.1.zip
-Source1:        http://mirrors.ibiblio.org/pub/mirrors/maven2/jdepend/jdepend/2.9.1/jdepend-2.9.1.pom
-Patch0:         jdepend-2.9.1-test.patch
-Requires(post): jpackage-utils
-Requires(postun): jpackage-utils
-BuildRequires: ant
-BuildRequires: ant-junit
-BuildRequires: jpackage-utils
-%if %{gcj_support}
-BuildRequires: java-gcj-compat-devel
-%else
+#Downloaded from http://github.com/clarkware/jdepend/tarball/2.9.1
+Source0:        clarkware-jdepend-5798059.tar.gz
+Source1:        %{name}-%{version}.pom
 BuildArch:      noarch
-%endif
+
+Requires:      jpackage-utils
+
+BuildRequires: ant
+BuildRequires: jpackage-utils
 Source44: import.info
 
 %description
@@ -65,69 +60,55 @@ extensibility, reusability, and maintainability to effectively manage
 and control package dependencies.
 
 %package javadoc
-Summary:        Javadoc for %{name}
-Group:          Development/Documentation
+Summary:    Javadoc for %{name}
+Group:      Development/Java
+Requires:   %{name} = %{version}-%{release}
 BuildArch: noarch
 
 %description javadoc
 Javadoc for %{name}.
 
 %package demo
-Summary:        Demos for %{name}
-Group:          Development/Java
-Requires: %{name} = %{epoch}:%{version}-%{release}
+Summary:    Demos for %{name}
+Group:      Development/Java
+Requires:   %{name} = %{version}-%{release}
 
 %description demo
 Demonstrations and samples for %{name}.
 
 %prep
-%setup -q
-%patch0 -b .sav0
-%{_bindir}/find -type f -name "*.jar" |  %{_bindir}/xargs -t %{__rm}
-%{_bindir}/find -type f -name "*.zip" |  %{_bindir}/xargs -t %{__rm}
-%{_bindir}/find -type d |  %{_bindir}/xargs -t %{__chmod} 0755
+%setup -q -n clarkware-jdepend-5798059
+# remove all binary libs
+find . -name "*.jar" -exec rm -f {} \;
+# fix strange permissions
+find . -type d -exec chmod 755 {} \;
 
 %build
-export CLASSPATH=
-export OPT_JAR_LIST=`%{__cat} %{_sysconfdir}/ant.d/junit`
-ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 package compile-sample
+ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  jar javadoc
 
 %install
-
 # jars
-%{__mkdir_p} %{buildroot}%{_javadir}
-%{__cp} -p dist/%{name}-%{version}.jar %{buildroot}%{_javadir}/%{name}-%{version}.jar
-(cd %{buildroot}%{_javadir} && for jar in *-%{version}*; do %{__ln_s} ${jar} ${jar/-%{version}/}; done)
-
-# pom
-%{__mkdir_p} %{buildroot}%{_datadir}/maven2/poms
-%{__cp} -p %{SOURCE1} %{buildroot}%{_datadir}/maven2/poms/JPP-%{name}.pom
-%add_to_maven_depmap jdepend jdepend %{version} JPP %{name}
-
+install -d -m 755 $RPM_BUILD_ROOT%{_javadir}
+install -m 644 dist/%{name}-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
 # javadoc
-%{__mkdir_p} %{buildroot}%{_javadocdir}/%{name}-%{version}
-%{__cp} -pr build/docs/api/* %{buildroot}%{_javadocdir}/%{name}-%{version}
-%{__ln_s} %{name}-%{version} %{buildroot}%{_javadocdir}/%{name}
-
+install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
+cp -pr build/docs/api/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
+ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name} 
+rm -rf build/docs/api
 # demo
-%{__mkdir_p} %{buildroot}%{_datadir}/%{name}
-%{__cp} -pr sample %{buildroot}%{_datadir}/%{name}
-%{__cp} -pr build/epayment %{buildroot}%{_datadir}/%{name}/sample
-
-%if %{gcj_support}
-%{_bindir}/aot-compile-rpm
-%endif
+install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/%{name}
+cp -pr sample $RPM_BUILD_ROOT%{_datadir}/%{name}
+# pom
+install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
+install -pm 644 %{SOURCE1} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
+# depmap
+%add_maven_depmap JPP-%{name}.pom %{name}.jar
 
 %files
-%doc CHANGES LICENSE README contrib/jdepend2dot*
-%{_javadir}/%{name}-%{version}.jar
-%{_javadir}/%{name}.jar
-%{_datadir}/maven2/poms/JPP-%{name}.pom
-%{_mavendepmapfragdir}/%{name}
-%if %{gcj_support}
-%dir %{_libdir}/gcj/%{name}
-%{_libdir}/gcj/%{name}/%{name}-%{version}.jar.*
-%endif
+%doc README LICENSE docs
+%{_javadir}/*
+%{_mavenpomdir}/*
+%{_mavendepmapfragdir}/*
 
 %files javadoc
 %{_javadocdir}/%{name}-%{version}
@@ -137,6 +118,9 @@ ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 package compile-sa
 %{_datadir}/%{name}
 
 %changelog
+* Sun Mar 17 2013 Igor Vlasenko <viy@altlinux.ru> 0:2.9.1-alt3_7jpp7
+- fc update
+
 * Sat Oct 23 2010 Igor Vlasenko <viy@altlinux.ru> 0:2.9.1-alt3_3jpp6
 - added pom
 
