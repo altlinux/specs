@@ -1,8 +1,8 @@
 %def_disable static
 
 Name: libexif-gtk
-Version: 0.3.6
-Release: alt4.cvs2
+Version: 0.4.0
+Release: alt1
 
 Summary: libexif-gtk provides GTK+ widgets to display/edit EXIF tags
 Summary (ru_RU.UTF-8): libexif-gtk содержит элементы интерфейса GTK+ для показа и редактирования EXIF данных
@@ -10,8 +10,8 @@ License: LGPLv2+
 Group: System/Libraries
 Url: http://www.sourceforge.net/projects/libexif
 Source0: %name.tar
-# Automatically added by buildreq on Sun May 18 2008
-BuildRequires: cvs gcc-c++ libexif-devel libgtk+2-devel
+# Automatically added by buildreq on Wed Mar 13 2013
+BuildRequires: libexif-devel libgtk+2-devel
 
 %description
 This library provides GTK+ widgets to display/edit EXIF tags.
@@ -52,7 +52,6 @@ This library provides GTK+ widgets to display/edit EXIF tags.
 %setup -n %name
 
 %build
-%autoreconf
 %configure %{subst_enable static}
 %make_build
 
@@ -74,6 +73,10 @@ This library provides GTK+ widgets to display/edit EXIF tags.
 %endif
 
 %changelog
+* Wed Mar 13 2013 Dmitriy Khanzhin <jinn@altlinux.org> 0.4.0-alt1
+- 0.4.0
+- buildreq
+
 * Sun May 27 2012 Dmitriy Khanzhin <jinn@altlinux.ru> 0.3.6-alt4.cvs2
 - rebuilt for debuginfo
 
