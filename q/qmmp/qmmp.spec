@@ -1,5 +1,5 @@
 %define branch 0.7
-%define svn svn3290
+%define svn svn3333
 
 Version: %branch.0
 Epoch: 1
@@ -25,7 +25,7 @@ BuildRequires: libsamplerate-devel libtag-devel >= 1.6 libvorbis-devel
 BuildRequires: libwavpack-devel libalsa-devel libflac-devel libbs2b-devel >= 3.0
 BuildRequires: libprojectM-devel >= 2.0.1 jackit-devel xorg-xf86miscproto-devel
 BuildRequires: libenca-devel libcddb-devel libmms-devel >= 0.4 libwildmidi-devel >= 0.2.3.4
-BuildRequires: libgme-devel libGLU-devel
+BuildRequires: libgme-devel libGLU-devel libopusfile-devel
 
 %description
 QMMP is an audio-player, written with help of Qt library.
@@ -338,6 +338,14 @@ Requires: qmmp = %version-%release
 %description -n %name-in-gme
 Qmmp GME Audio Plugin
 
+%package -n %name-in-opus
+Summary: Qmmp Opus Audio Plugin
+Group: Sound
+Requires: qmmp = %version-%release
+
+%description -n %name-in-opus
+Qmmp Opus Audio Plugin
+
 # Visualization plugins
 %package -n %name-vis-analyzer
 Summary: Qmmp Analyzer Visual Plugin
@@ -560,8 +568,8 @@ Requires: qmmp-vis-analyzer qmmp-scrobbler qmmp-hal qmmp-hotkey
 Requires: qmmp-eff-bs2b qmmp-vis-projectm qmmp-fileops qmmp-converter
 Requires: qmmp-out-jack qmmp-out-oss qmmp-out-null qmmp-http qmmp-mms
 Requires: qmmp-kdenotify qmmp-eff-ladspa qmmp-covermanager
-Requires: qmmp-eff-crossfade qmmp-udisks qmmp-in-gme qmmp-eff-extrastereo
-Requires: qmmp-streambrowser qmmp-trackchange qmmp-copypaste
+Requires: qmmp-eff-crossfade qmmp-udisks qmmp-in-gme qmmp-in-opus
+Requires: qmmp-streambrowser qmmp-trackchange qmmp-copypaste qmmp-eff-extrastereo
 
 %description -n %name-full
 Virtual package for full installation Qmmp (exclude %name-devel).
@@ -678,6 +686,9 @@ mkdir -p %buildroot/{%_miconsdir,%_niconsdir,%_liconsdir}
 %files -n %name-in-gme
 %_libdir/%name/Input/libgme*
 
+%files -n %name-in-opus
+%_libdir/%name/Input/libopus*
+
 # Visualization plugins
 %files -n %name-vis-analyzer
 %_libdir/%name/Visual/libanalyzer*
@@ -768,6 +779,12 @@ mkdir -p %buildroot/{%_miconsdir,%_niconsdir,%_liconsdir}
 %files -n %name-full
 
 %changelog
+* Mon Mar 18 2013 Motsyo Gennadi <drool@altlinux.ru> 1:0.7.0-alt2.svn3333
+- 0.7.0 svn3333 version
+
+* Sat Mar 16 2013 Motsyo Gennadi <drool@altlinux.ru> 1:0.7.0-alt2.svn3318
+- 0.7.0 svn3318 version
+
 * Fri Mar 01 2013 Motsyo Gennadi <drool@altlinux.ru> 1:0.7.0-alt2.svn3290
 - 0.7.0 svn3290 version
 
