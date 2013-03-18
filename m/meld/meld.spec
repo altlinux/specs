@@ -1,4 +1,4 @@
-%define ver_major 1.6
+%define ver_major 1.7
 
 Name: meld
 Version: %ver_major.1
@@ -13,11 +13,13 @@ Url: http://meld.sourceforge.net/
 Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+# don't run update-{desktop,mime}-database
+Patch: %name-1.7.1-alt-makefile.patch
 
 BuildArch: noarch
 
 %py_package_requires pygtk >= 2.8
-%py_requires gtksourceview libglade
+%py_requires gtksourceview2 libglade
 %add_python_req_skip misc
 
 BuildPreReq: rpm-build-licenses
@@ -34,12 +36,18 @@ also features a tabbed interface that allows you to open many diffs at
 once.
 
 %prep
-%setup -q
+%setup
+%patch
+# fix prefix
+subst s'|/usr/local|/usr|' INSTALL
 
 # Misuse of localstatedir and the whole Scrollkeeper problem is a matter of
 # http://bugzilla.gnome.org/show_bug.cgi?id=446157
 %__subst "s:-scrollkeeper:#-scrollkeeper:" help/*/Makefile
 %__subst "s:\$(localstatedir)/lib/:\$(localstatedir)/:" help/*/Makefile
+
+%build
+%make
 
 %install
 %make_install DESTDIR=%buildroot prefix=%_prefix install
@@ -53,10 +61,16 @@ once.
 %dir %_libexecdir/%name
 %_libexecdir/%name/*
 %_desktopdir/%name.desktop
+%_datadir/mime/packages/%name.xml
 %_iconsdir/hicolor/*/*/*
+%_iconsdir/HighContrast/*/*/*
 %doc NEWS
 
 %changelog
+* Thu Feb 28 2013 Yuri N. Sedunov <aris@altlinux.org> 1.7.1-alt1
+- 1.7.1
+- required python(gtksourceview2)
+
 * Sat Oct 20 2012 Yuri N. Sedunov <aris@altlinux.org> 1.6.1-alt1
 - 1.6.1
 
