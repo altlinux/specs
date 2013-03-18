@@ -6,8 +6,8 @@
 %def_enable introspection
 
 Name: %{_name}2
-Version: 2.0.92
-Release: alt2
+Version: 2.1.0
+Release: alt1
 
 Summary: Disk Management Service (Second Edition)
 License: GPLv2+
@@ -154,6 +154,9 @@ touch %buildroot%_localstatedir/lib/%name/mtab
 %endif
 
 %changelog
+* Mon Mar 18 2013 Yuri N. Sedunov <aris@altlinux.org> 2.1.0-alt1
+- 2.1.0
+
 * Sat Mar 16 2013 Yuri N. Sedunov <aris@altlinux.org> 2.0.92-alt2
 - Added dependency on dbus-tools-gui (ALT #28692)
 
