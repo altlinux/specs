@@ -14,7 +14,7 @@ The font is a smart font using a Graphite description.
 
 Name:    fonts-ttf-sil-padauk
 Version: 2.8
-Release: alt1_3
+Release: alt1_4
 Summary: A font for Burmese and the Myanmar script
 
 Group:   System/Fonts/True type
@@ -27,6 +27,7 @@ Source2: %{oldname}-book-fontconfig.conf
 
 BuildArch: noarch
 BuildRequires: fontpackages-devel
+BuildRequires: python-module-fonttools
 Source44: import.info
 
 %description
@@ -59,7 +60,17 @@ Padauk Book family font.
 sed -i 's/\r//' OFL.txt
 
 %build
-# Nothing there
+# Following is needed to fix the postscript font name
+ttx *.ttf
+sed -i 's|&#225;&#128;&#149;&#225;&#128;&#173;&#225;&#128;&#144;&#225;&#128;&#177;&#225;&#128;&#172;&#225;&#128;&#128;&#225;&#128;&#186;|Padauk|g' Padauk*.ttx
+
+sed -i 's|&#225;&#128;&#133;&#225;&#128;&#172;&#225;&#128;&#156;&#225;&#128;&#175;&#225;&#128;&#182;&#225;&#128;&#184;&#225;&#128;&#153;&#225;&#128;&#178;|Bold|g' Padauk*.ttx
+
+sed -i 's|&#225;&#128;&#133;&#225;&#128;&#172;&#225;&#128;&#161;&#225;&#128;&#175;&#225;&#128;&#149;&#225;&#128;&#186;|Book|g' Padauk-book*.ttx
+rm *.ttf
+ttx Padauk*.ttx
+
+rm *.ttx
 
 
 %install
@@ -116,6 +127,9 @@ fi
 
 
 %changelog
+* Mon Mar 18 2013 Igor Vlasenko <viy@altlinux.ru> 2.8-alt1_4
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 2.8-alt1_3
 - update to new release by fcimport
 
