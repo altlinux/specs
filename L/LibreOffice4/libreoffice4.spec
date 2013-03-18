@@ -1,18 +1,22 @@
-# 4.0.0.3
+# 4.0.2.1
 %define with_forky yes
 
 Name: LibreOffice4
 Version: 4.0
-%define urelease 0.3
+%define urelease 2.1
 %define uversion %version.%urelease
-#define sdversion 1.0.0
 %define oopfx lo4
 %define lodir %_libdir/%name
-Release: alt2
+%define conffile %_sysconfdir/sysconfig/libreoffice
+Release: alt3
 Summary: LibreOffice Productivity Suite
 License: LGPL
 Group: Office
 URL: http://www.libreoffice.org
+
+# Change this to -integrated to make LO4 default
+Requires: %name-standalone = %version-%release
+Requires: %name-common
 
 %define with_lang ru de fr uk pt-BR es
 #Requires: java xdg-utils hunspell-en hyphen-en mythes-en
@@ -35,16 +39,11 @@ Patch1:	alt-001-MOZILLA_CERTIFICATE_FOLDER.patch
 Patch201: 0001-Work-around-problem-with-boost-shared_array-NULL-cto.patch
 Patch202: 0001-fix-compile-for-change-to-boost-1.53.0-declaring-sma.patch
 
-AutoReqProv: yes, noshell, nopython
+# Automatically added by buildreq on Wed Mar 06 2013
+# optimized out: ant boost-devel boost-devel-headers boost-interprocess-devel boost-intrusive-devel bzlib-devel cppunit fontconfig fontconfig-devel fonts-ttf-java-1.6.0-sun glib2-devel gstreamer-devel icu-utils java java-devel jpackage-utils junit kde4libs libGL-devel libGLU-devel libICE-devel libSM-devel libX11-devel libXext-devel libXinerama-devel libXrandr-devel libXrender-devel libXt-devel libatk-devel libcairo-devel libcom_err-devel libcurl-devel libdbus-devel libdbus-glib libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgdk-pixbuf-xlib libgio-devel libgmp-devel libgpg-error libgst-plugins libkrb5-devel libncurses-devel libnspr-devel libpango-devel libpcre-devel libpng-devel libpoppler-devel libpq-devel libqt4-core libqt4-devel libqt4-gui libssl-devel libstdc++-devel libsystemd-daemon libtinfo-devel libunixODBC-devel libwayland-client libwayland-server libwpd9-devel libxml2-devel perl-Compress-Raw-Zlib pkg-config poppler-data python-base tzdata tzdata-java xerces-j2 xml-common xml-commons-jaxp-1.3-apis xml-utils xorg-kbproto-devel xorg-randrproto-devel xorg-renderproto-devel xorg-xextproto-devel xorg-xproto-devel xsltproc xz zlib-devel
+BuildRequires: ant-testutil cppunit-devel flex fonts-ttf-liberation gcc-c++ gperf gst-plugins-devel imake junit4 kde4libs-devel libGConf-devel libcups-devel libdb4-devel libdbus-glib-devel libexpat-devel libgtk+2-devel libhunspell-devel libicu-devel libjpeg-devel libldap-devel liblpsolve-devel libmpfr-devel libmysqlclient-devel libmythes-devel libncursesw-devel libneon-devel libnss-devel liborcus-devel libpoppler-cpp-devel libreadline-devel libvigra-devel libwpg2-devel libwps-devel libxslt-devel perl-Archive-Zip postgresql-devel unzip xorg-cf-files zenity zip
 
-# Automatically added by buildreq on Mon Feb 11 2013
-# optimized out: ant cppunit fontconfig fontconfig-devel fonts-ttf-java-1.6.0-sun glib2-devel gstreamer-devel icu-utils java java-devel jpackage-utils junit libGL-devel libICE-devel libSM-devel libX11-devel libXext-devel libXrender-devel libXt-devel libatk-devel libcairo-devel libcom_err-devel libcurl-devel libdbus-devel libdbus-glib libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgdk-pixbuf-xlib libgio-devel libgmp-devel libgpg-error libgst-plugins libjpeg-devel libkrb5-devel libncurses-devel libnspr-devel libpango-devel libpng-devel libpoppler-devel libpq-devel libstdc++-devel libsystemd-daemon libtinfo-devel libwayland-client libwayland-server libwpd9-devel libxml2-devel perl-Compress-Raw-Zlib pkg-config poppler-data python-base tzdata xerces-j2 xml-common xml-commons-jaxp-1.3-apis xml-utils xorg-kbproto-devel xorg-randrproto-devel xorg-renderproto-devel xorg-xextproto-devel xorg-xproto-devel xsltproc xz zlib-devel
-BuildRequires: ant-testutil cppunit-devel flex gcc-c++ gperf gst-plugins-devel imake junit4 libGConf-devel libGLU-devel libXinerama-devel libXrandr-devel libcups-devel libdb4-devel libdbus-glib-devel libexpat-devel libgtk+2-devel libhunspell-devel libicu-devel libldap-devel liblpsolve-devel libmpfr-devel libmythes-devel libncursesw-devel libneon-devel libnss-devel liborcus-devel libpoppler-cpp-devel libreadline-devel libssl-devel libunixODBC-devel libwpg2-devel libwps-devel libxslt-devel perl-Archive-Zip postgresql-devel unzip wget xorg-cf-files zenity zip 
-
-BuildRequires: /proc wget xdg-utils zip >= 3.0
-BuildRequires: java-1.6.0-sun-devel
-BuildRequires: liblpsolve-devel libjpeg-devel fonts-ttf-liberation
-BuildRequires: kde4libs-devel
+BuildRequires: libbluez-devel libhyphen-devel libclucene-core-devel
 
 %set_verify_elf_method unresolved=relaxed
 %add_findreq_skiplist %lodir/share/config/webcast/*
@@ -53,12 +52,28 @@ BuildRequires: kde4libs-devel
 LibreOffice is a productivity suite that is compatible with other major
 office suites
 
-%package icons
-Summary: Icon files for %name (separated for LibreOffice3 compatibility)
+%package common
+Summary: Basic installation of %name
 Group: Office
-BuildArch: noarch
-%description icons
-Icon files for %name (separated for LibreOffice3 compatibility)
+AutoReqProv: yes, noshell, nopython
+%description common
+Common part of %name that does not interfere with other packages
+
+# TODO %name-full
+
+%package standalone
+Summary: Renamed binaries, icons and desktop files for %name
+Group: Office
+Conflicts: %name-integrated
+%description standalone
+Wrapper scripts, icons and desktop files for running %name as lo4*
+
+%package integrated
+Summary: Binaries, icons and desktop files for %name
+Group: Office
+Conflicts: %name-standalone
+%description integrated
+Wrapper scripts, icons and desktop files for running %name
 
 %package gnome
 Summary: GNOME Extensions for %name
@@ -73,6 +88,24 @@ Group:  Office
 Requires: %name = %version-%release
 %description kde4
 KDE4 extensions for %name
+
+%package extensions
+Summary: Additional extensions for %name
+Group:  Office
+Requires: %name = %version-%release
+AutoReqProv: yes, noshell, nopython
+%description extensions
+Additional extensions for %name.
+One can choose either to install this package at once,
+or to download and install (possibly newer) extensions manually.
+
+%package mimetypes
+Summary: Mimetype keys support for %name
+Group: Office
+BuildArch: noarch
+%description mimetypes
+%name is distributed along with some mimetype settings and files.
+This package installs them.
 
 # define macro for quick langpack description
 %define langpack(l:n:) \
@@ -104,10 +137,10 @@ echo Direct build
 rm -fr %name-tnslations/git-hooks
 
 # Hack build ditrectory a little
-ln -s %SOURCE0 ext_sources/
-ln -s %SOURCE1 ext_sources/
-ln -s %SOURCE2 ext_sources/
-ln -s %SOURCE3 ext_sources/
+##ln -s %SOURCE0 ext_sources/
+##ln -s %SOURCE1 ext_sources/
+##ln -s %SOURCE2 ext_sources/
+##ln -s %SOURCE3 ext_sources/
 
 install -D %SOURCE100 forky.c
 
@@ -124,6 +157,15 @@ for n in office writer impress calc base draw math qstart; do
 exec %lodir/program/soffice $opt "\$@"
 @@@
 done
+
+# Now create a config file
+grep -r getenv * | sed -n 's/.*getenv *( *"\([^"]*\).*/\1/p' | sort -u | egrep 'STAR_|SAL_|OOO_' > %name.config.ENV
+
+sed -n '/# STAR_PROFILE_LOCKING_DISABLED/,/#.*JITC_PROCESSOR_TYPE_EXPORT/p' < desktop/scripts/soffice.sh > libreoffice.config
+test -n "libreoffice.config"
+sed -i '/# STAR_PROFILE_LOCKING_DISABLED/i\
+test -r %conffile && . %conffile ||:
+/# STAR_PROFILE_LOCKING_DISABLED/,/#.*JITC_PROCESSOR_TYPE_EXPORT/d' desktop/scripts/soffice.sh
 
 %build
 # XXX
@@ -146,8 +188,10 @@ done
         --without-fonts \
         --without-myspell-dicts \
         --without-ppds \
+	--with-system-altlinuxhyph \
         --with-system-boost \
         --with-system-cairo \
+	--with-system-clucene \
         --with-system-cppunit \
         --with-system-curl \
         --with-system-dicts \
@@ -171,6 +215,7 @@ done
         --with-system-poppler \
         --with-system-postgresql \
         --with-system-stdlibs \
+	--with-system-vigra \
         --with-system-zlib \
 	\
         --with-external-dict-dir=%_datadir/myspell \
@@ -185,7 +230,23 @@ done
 	--enable-kde4 \
 	\
 	--enable-hardlink-deliver \
-	--disable-fetch-external \
+  	\
+  --enable-ext-diagram \
+  --enable-ext-google-docs \
+  --enable-ext-nlpsolver \
+  --enable-ext-numbertext \
+  --enable-ext-typo \
+  --enable-ext-validator \
+  --enable-ext-watch-window \
+  --enable-ext-wiki-publisher \
+  --enable-ext-ct2n \
+  --enable-ext-barcode \
+  --with-system-bluez \
+  \
+  --with-system-mysql \
+  --enable-ext-mysql-connector \
+  \
+  --disable-fetch-external \
 
 
 # Make forky
@@ -239,12 +300,14 @@ find .%lodir/program/libvclplug_kde4*
 ) | sed 's/^[.]//' > files.kde4
 
 # Generate base filelist by removing files from  separated packages
-{ cat %buildroot/gid_* | sort -u ; cat *.lang files.gnome files.kde4; } | sort | uniq -u > files.nolang
+{ cat %buildroot/gid_* | sort -u ; cat *.lang files.gnome files.kde4; } | sort | uniq -u | grep -v '~$' | grep -v '/share/extensions/.' > files.nolang
 
 unset RPM_PYTHON
 
-# Install wrappers
+# Install renamed wrappers
 for n in l*4*.sh; do install -m755 -D $n %buildroot%_bindir/${n%%.sh}; done
+# Install wrappers
+for n in lo4*.sh; do m="lo${n##lo4}"; install -m755 -D $n %buildroot%_bindir/${m%%.sh}; done
 
 # Install renamed icons
 for n in `( cd sysui/desktop/icons; find hicolor -type f )`; do
@@ -252,28 +315,67 @@ for n in `( cd sysui/desktop/icons; find hicolor -type f )`; do
 	d=`dirname "$n"`
 	install -D sysui/desktop/icons/$n %buildroot%_iconsdir/$d/$m
 done
+# install unrenamed icons
+for n in `( cd sysui/desktop/icons; find hicolor -type f )`; do
+	d=`dirname "$n"`
+	install -D sysui/desktop/icons/$n %buildroot%_iconsdir/$d/$n
+done
+
 # TODO icon-themes/
 
-# Install desktop files
 mkdir -p %buildroot%_desktopdir
 for n in writer impress calc base draw math qstart; do
 	ln -s %lodir/share/xdg/$n.desktop %buildroot%_desktopdir/libreoffice%version-$n.desktop
+	ln -s %lodir/share/xdg/$n.desktop %buildroot%_desktopdir/$n.desktop
 done
 
-# TODO .mime (?)
+# TODO some other hack with .mime (?)
+mkdir -p %buildroot%_datadir/mime-info %buildroot%_datadir/mimelnk/application %buildroot%_datadir/application-registry
+install sysui/desktop/mimetypes/*.keys %buildroot%_datadir/mime-info/
+install sysui/desktop/mimetypes/*.mime %buildroot%_datadir/mime-info/
+install sysui/desktop/mimetypes/*.desktop %buildroot%_datadir/mimelnk/application/
+install sysui/desktop/mimetypes/*.applications %buildroot%_datadir/application-registry/
 
-%files -f files.nolang
+# Config file
+install -D libreoffice.config %buildroot%conffile
+
+%files
+
+%files common -f files.nolang
 %exclude /gid_Module*
+%config %conffile
+%lodir/share/extensions/package.txt
+%lodir/share/extensions/presentation-minimizer
+%lodir/share/extensions/report-builder
+
+%files standalone
+%_bindir/lo4*
+%_desktopdir/libreoffice%{version}-*
+%_iconsdir/*/*/apps/libreoffice%{version}-*.*g
+
+%files integrated
 %_bindir/*
+%exclude %_bindir/lo4*
 %_desktopdir/*
-%_iconsdir/*/*/apps/*.*g
+%exclude %_desktopdir/libreoffice%{version}-*
+%_iconsdir/*/*/mimetypes/*
+%_iconsdir/*/*/apps/*
+%exclude %_iconsdir/*/*/apps/libreoffice%{version}-*.*g
 
 %files gnome -f files.gnome
 
 %files kde4 -f files.kde4
 
-%files icons
-%_iconsdir/*/*/mimetypes/*
+%files extensions
+%lodir/share/extensions/*
+%exclude %lodir/share/extensions/package.txt
+%exclude %lodir/share/extensions/presentation-minimizer
+%exclude %lodir/share/extensions/report-builder
+
+%files mimetypes
+%_datadir/mime-info/*
+%_datadir/mimelnk/application/*
+%_datadir/application-registry/*
 
 %langpack -l ru -n Russian
 %langpack -l de -n German
@@ -283,6 +385,12 @@ done
 %langpack -l es -n Espanian
 
 %changelog
+* Wed Mar 06 2013 Fr. Br. George <george@altlinux.ru> 4.0-alt3
+- Update to 4.0.2.1
+- Introduce extra extensions
+- Separate %name-standalone and %name-integrated packages
+- Introduce %name-mimetype
+
 * Tue Mar 05 2013 Fr. Br. George <george@altlinux.ru> 4.0-alt2
 - Separate KDE4 plugins
 - Apply Firefox certificates import patch
