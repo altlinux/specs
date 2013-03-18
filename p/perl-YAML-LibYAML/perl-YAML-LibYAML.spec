@@ -1,9 +1,9 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: perl(B/Deparse.pm) perl(CPAN.pm) perl(Config.pm) perl(Devel/Peek.pm) perl(Exporter.pm) perl(ExtUtils/MakeMaker.pm) perl(Fcntl.pm) perl(Scalar/Util.pm) perl(XSLoader.pm) perl(blib.pm) perl(overload.pm) perl-devel perl-podlators
+BuildRequires: perl(CPAN.pm) perl(Config.pm) perl(Fcntl.pm) perl(blib.pm) perl(overload.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 BuildRequires: perl-Filter
 Name:           perl-YAML-LibYAML
-Version:        0.39
+Version:        0.41
 Release:        alt1_1
 Summary:        Perl YAML Serialization using XS and libyaml
 License:        GPL+ or Artistic
@@ -13,11 +13,29 @@ Source0:        http://search.cpan.org/CPAN/authors/id/I/IN/INGY/YAML-LibYAML-%{
 Patch0:         YAML-LibYAML-0.35-format-error.patch
 
 # Install
+BuildRequires:  perl(Cwd.pm)
+BuildRequires:  perl(ExtUtils/MakeMaker.pm)
+BuildRequires:  perl(File/Find.pm)
+BuildRequires:  perl(File/Path.pm)
+BuildRequires:  perl(File/Spec.pm)
 
 # Module
 BuildRequires:  perl
+BuildRequires:  perl(B/Deparse.pm)
+BuildRequires:  perl(base.pm)
+BuildRequires:  perl(constant.pm)
+BuildRequires:  perl(Exporter.pm)
+BuildRequires:  perl(XSLoader.pm)
 
 # Tests
+BuildRequires:  perl(Data/Dumper.pm)
+BuildRequires:  perl(Devel/Peek.pm)
+BuildRequires:  perl(Scalar/Util.pm)
+BuildRequires:  perl(Test/Builder.pm)
+BuildRequires:  perl(Test/Builder/Module.pm)
+BuildRequires:  perl(Test/More.pm)
+BuildRequires:  perl(Tie/Array.pm)
+BuildRequires:  perl(Tie/Hash.pm)
 
 # Runtime
 
@@ -44,6 +62,7 @@ make %{?_smp_mflags}
 make pure_install DESTDIR=%{buildroot}
 find %{buildroot} -type f -name .packlist -exec rm -f {} \;
 find %{buildroot} -type f -name '*.bs' -size 0 -exec rm -f {} \;
+# %{_fixperms} %{buildroot}
 
 %check
 make test
@@ -54,6 +73,9 @@ make test
 %{perl_vendorarch}/YAML/
 
 %changelog
+* Mon Mar 18 2013 Igor Vlasenko <viy@altlinux.ru> 0.41-alt1_1
+- update to new release by fcimport
+
 * Wed Feb 13 2013 Igor Vlasenko <viy@altlinux.ru> 0.39-alt1_1
 - update to new release by fcimport
 
