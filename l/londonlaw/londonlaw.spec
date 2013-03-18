@@ -1,11 +1,12 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-python
 # END SourceDeps(oneline)
+%define fedora 19
 %{!?python_sitelib: %global python_sitelib %(%{__python} -c "from distutils.sysconfig import get_python_lib; print get_python_lib()")}
 
 Name:           londonlaw
 Version:        0.2.1
-Release:        alt2_12
+Release:        alt2_15
 Summary:        Online multiplayer version of a well known detective boardgame
 License:        GPLv2
 Group:          Games/Other
@@ -14,10 +15,10 @@ Source0:        http://pessimization.com/software/%{name}/%{name}-%{version}.tar
 Source1:        %{name}.desktop
 Source2:        %{name}-server.desktop
 Patch0:         londonlaw-0.2.1-new-twisted.patch
-BuildRequires:  python-devel wxPython /usr/bin/latex texlive-latex-recommended ghostscript-utils ghostscript ImageMagick
-BuildRequires:  desktop-file-utils
+BuildRequires:  python-devel python-module-wx ghostscript-utils ghostscript ImageMagick
+BuildRequires: /usr/bin/latex texlive-latex-recommended texlive-latex-recommended desktop-file-utils
 BuildArch:      noarch
-Requires:       wxPython python-module-twisted-core
+Requires:       icon-theme-hicolor
 Source44: import.info
 
 %description
@@ -51,46 +52,18 @@ convert londonlaw/guiclient/images/playericon1.jpg -resize 48x48 \
    $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/48x48/apps/%{name}.png
 
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/applications
-desktop-file-install                \
+desktop-file-install \
+%if 0%{?fedora} && 0%{?fedora} < 19
+      \
+%endif
   --dir=${RPM_BUILD_ROOT}%{_datadir}/applications  \
   %{SOURCE1}
-desktop-file-install                \
+desktop-file-install \
+%if 0%{?fedora} && 0%{?fedora} < 19
+      \
+%endif
   --dir=${RPM_BUILD_ROOT}%{_datadir}/applications  \
   %{SOURCE2}
-# generic fedora font import transformations
-# move fonts to corresponding subdirs if any
-for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
-    case "$fontpatt" in 
-	pcf*|bdf*) type=bitmap;;
-	tt*|TT*) type=ttf;;
-	otf|OTF) type=otf;;
-	afm*|pf*) type=type1;;
-    esac
-    find $RPM_BUILD_ROOT/usr/share/fonts -type f -name '*.'$fontpatt | while read i; do
-	j=`echo "$i" | sed -e s,/usr/share/fonts/,/usr/share/fonts/$type/,`;
-	install -Dm644 "$i" "$j";
-	rm -f "$i";
-	olddir=`dirname "$i"`;
-	mv -f "$olddir"/{encodings.dir,fonts.{dir,scale,alias}} `dirname "$j"`/ 2>/dev/null ||:
-	rmdir -p "$olddir" 2>/dev/null ||:
-    done
-done
-# kill invalid catalogue links
-if [ -d $RPM_BUILD_ROOT/etc/X11/fontpath.d ]; then
-    find -L $RPM_BUILD_ROOT/etc/X11/fontpath.d -type l -print -delete ||:
-    # relink catalogue
-    find $RPM_BUILD_ROOT/usr/share/fonts -name fonts.dir | while read i; do
-	pri=10;
-	j=`echo $i | sed -e s,$RPM_BUILD_ROOT/usr/share/fonts/,,`; type=${j%%%%/*}; 
-	pre_stem=${j##$type/}; stem=`dirname $pre_stem|sed -e s,/,-,g`;
-	case "$type" in 
-	    bitmap) pri=10;;
-	    ttf|ttf) pri=50;;
-	    type1) pri=40;;
-	esac
-	ln -s /usr/share/fonts/$j $RPM_BUILD_ROOT/etc/X11/fontpath.d/"$stem:pri=$pri"
-    done ||:
-fi
 
 
 %files
@@ -99,11 +72,14 @@ fi
 %{_datadir}/%{name}
 %{python_sitelibdir_noarch}/%{name}
 %{python_sitelibdir_noarch}/%{name}-%{version}-py?.?.egg-info
-%{_datadir}/applications/%{name}*.desktop
+%{_datadir}/applications/*%{name}*.desktop
 %{_datadir}/icons/hicolor/48x48/apps/%{name}.png
 
 
 %changelog
+* Mon Mar 18 2013 Igor Vlasenko <viy@altlinux.ru> 0.2.1-alt2_15
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.2.1-alt2_12
 - update to new release by fcimport
 
