@@ -21,7 +21,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.0.69
-Release: alt2
+Release: alt3
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -125,7 +125,7 @@ Release: alt2
 
 #define allocator SLAB
 
-%Extra_modules vboxhost 4.2.8
+%Extra_modules vboxhost 4.2.10
 #Extra_modules vboxguest 4.2.8
 #Extra_modules fglrx 8.97.100.7
 #Extra_modules netatop 0.1.1
@@ -215,9 +215,10 @@ Patch0095: linux-%kernel_branch.43-fix-drivers-block--dasd_fba_mod.patch
 Patch0096: linux-%kernel_branch.51-fix-drivers-block--dasd_mod.patch
 Patch0097: linux-%kernel_branch.42-fix-drivers-block--drbd.patch
 Patch0098: linux-%kernel_branch.51-fix-drivers-block--floppy.patch
-Patch0099: linux-%kernel_branch.43-fix-drivers-block--nbd.patch
-Patch0100: linux-%kernel_branch.42-fix-drivers-block--rbd.patch
-Patch0101: linux-%kernel_branch.42-fix-drivers-block--virtio_blk.patch
+Patch0099: linux-%kernel_branch.68-fix-drivers-block--loop.patch
+Patch0100: linux-%kernel_branch.43-fix-drivers-block--nbd.patch
+Patch0101: linux-%kernel_branch.42-fix-drivers-block--rbd.patch
+Patch0102: linux-%kernel_branch.42-fix-drivers-block--virtio_blk.patch
 
 Patch0111: linux-%kernel_branch.42-fix-drivers-bluetooth--ath3k.patch
 
@@ -561,7 +562,7 @@ Patch0711: linux-%kernel_branch.42-fix-firmware--vicam.patch
 Patch0720: linux-%kernel_branch.65-fix-fs.patch
 Patch0721: linux-%kernel_branch.51-fix-fs--anon_inodes.patch
 Patch0722: linux-%kernel_branch.42-fix-fs--bio-integrity.patch
-Patch0723: linux-%kernel_branch.53-fix-fs--block.patch
+Patch0723: linux-%kernel_branch.68-fix-fs--block.patch
 Patch0724: linux-%kernel_branch.42-fix-fs--eventpoll.patch
 Patch0725: linux-%kernel_branch.53-fix-fs-autofs4.patch
 Patch0726: linux-%kernel_branch.58-fix-fs-btrfs.patch
@@ -1554,6 +1555,7 @@ cd linux-%version
 %patch0099 -p1
 %patch0100 -p1
 %patch0101 -p1
+%patch0102 -p1
 
 # fix-drivers-bluetooth--*
 %patch0111 -p1
@@ -3080,6 +3082,13 @@ done)
 
 
 %changelog
+* Mon Mar 18 2013 Led <led@altlinux.ru> 3.0.69-alt3
+- updated:
+  + fix-fs--block
+- added:
+  + fix-drivers-block--loop
+- vboxhost 4.2.8
+
 * Sat Mar 16 2013 Led <led@altlinux.ru> 3.0.69-alt2
 - updated:
   + fix-sound-pci-hda
