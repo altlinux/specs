@@ -1,7 +1,7 @@
 %add_optflags %optflags_shared
 Name:           libXcm
 Version:        0.5.1
-Release:        alt1_2
+Release:        alt1_3
 Summary:        X Color Management Library
 
 Group:          System/Libraries
@@ -9,11 +9,13 @@ License:        MIT
 URL:            http://www.oyranos.org
 Source0:        http://downloads.sourceforge.net/oyranos/libXcm-%{version}.tar.bz2
 
+BuildRequires: xorg-util-macros
+BuildRequires: autoconf automake libtool
 BuildRequires:  doxygen
 BuildRequires:  graphviz
 BuildRequires:  libXfixes-devel
 BuildRequires:  libXmu-devel
-BuildRequires:  xorg-x11-proto-devel
+BuildRequires: xorg-bigreqsproto-devel xorg-compositeproto-devel xorg-damageproto-devel xorg-dmxproto-devel xorg-evieproto-devel xorg-fixesproto-devel xorg-fontsproto-devel xorg-glproto-devel xorg-inputproto-devel xorg-kbproto-devel xorg-pmproto-devel xorg-randrproto-devel xorg-recordproto-devel xorg-renderproto-devel xorg-resourceproto-devel xorg-scrnsaverproto-devel xorg-videoproto-devel xorg-xcbproto-devel xorg-xcmiscproto-devel xorg-xextproto-devel xorg-xf86bigfontproto-devel xorg-xf86dgaproto-devel xorg-xf86driproto-devel xorg-xf86rushproto-devel xorg-xf86vidmodeproto-devel xorg-xineramaproto-devel xorg-xproto-devel
 BuildRequires:  xorg-xtrans-devel
 Source44: import.info
 
@@ -39,6 +41,7 @@ developing applications that use %{name}.
 
 
 %build
+autoreconf -v --install --force
 CFLAGS="$RPM_OPT_FLAGS -fPIC"
 
 %configure --disable-static --enable-shared
@@ -64,6 +67,9 @@ find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 
 
 %changelog
+* Mon Mar 18 2013 Igor Vlasenko <viy@altlinux.ru> 0.5.1-alt1_3
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.5.1-alt1_2
 - update to new release by fcimport
 
