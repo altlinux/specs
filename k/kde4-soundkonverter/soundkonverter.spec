@@ -5,7 +5,7 @@
 %define rname soundKonverter
 %define tname soundkonverter
 Name: kde4-soundkonverter
-Version: 1.6.4
+Version: 2.0.0
 Release: alt1
 
 Summary: A frontend to various audio converters
@@ -18,9 +18,8 @@ Source: %tname-%version.tar
 Source1: ru.po
 Patch1: alt-fix-linking.patch
 
-Requires: /usr/bin/ffmpeg vorbis-tools vorbisgain flac lame mp3gain cdparanoia speex wavpack faad mppenc
+Requires: /usr/bin/avconv vorbis-tools vorbisgain flac lame mp3gain cdparanoia speex wavpack faad mppenc sox
 #Requires: faac
-Requires: kde4libs >= %{get_version kde4libs}
 
 # Automatically added by buildreq on Mon Mar 15 2010 (-bi)
 #BuildRequires: gcc-c++ glib2-devel glibc-devel-static kde4libs-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXdamage-devel libXdmcp-devel libXpm-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libcdparanoia-devel libqt3-devel libtag-devel libxkbfile-devel qt4-assistant qt4-designer rpm-build-ruby xorg-xf86vidmodeproto-devel
@@ -75,6 +74,9 @@ done
 %_K4srvtyp/%{tname}_*.desktop
 
 %changelog
+* Mon Mar 18 2013 Sergey V Turchin <zerg@altlinux.org> 2.0.0-alt1
+- new version
+
 * Tue Jan 29 2013 Sergey V Turchin <zerg@altlinux.org> 1.6.4-alt1
 - new version
 
