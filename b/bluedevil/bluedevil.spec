@@ -1,7 +1,7 @@
 %define _kde_alternate_placement 1
 
 Name: bluedevil
-Version: 1.2.4
+Version: 1.3
 Release: alt1
 
 Group: Graphical desktop/KDE
@@ -53,6 +53,16 @@ __EOF__
 %install
 %K4install
 
+# rename service desktopfiles
+find %buildroot/%_K4srv -type f -name \*.desktop | \
+while read f
+do
+    fdir=`dirname "$f"`
+    fname=`basename "$f"`
+    newfname=`echo "$fname" | sed 's|-|_|g'`
+    [ "$fname" == "$newfname" ] || mv "$fdir/$fname" "$fdir/$newfname"
+done
+
 %K4find_lang --with-kde %name
 mkdir -p %buildroot/%_K4includedir
 mv %buildroot/%_K4datadir/include/* %buildroot/%_K4includedir
@@ -86,6 +96,12 @@ mv %buildroot/%_K4datadir/include/* %buildroot/%_K4includedir
 %_K4includedir/actionplugin.h
 
 %changelog
+* Mon Mar 18 2013 Sergey V Turchin <zerg@altlinux.org> 1.3-alt1
+- new version
+
+* Fri Nov 23 2012 Sergey V Turchin <zerg@altlinux.org> 1.2.4-alt0.M60P.1
+- built for M60P
+
 * Fri Nov 23 2012 Sergey V Turchin <zerg@altlinux.org> 1.2.4-alt1
 - new version
 
