@@ -21,7 +21,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.0.69
-Release: alt3
+Release: alt4
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -532,7 +532,7 @@ Patch0653: linux-%kernel_branch.42-fix-drivers-tty-serial--8250_pci.patch
 Patch0660: linux-%kernel_branch.67-fix-drivers-usb.patch
 Patch0661: linux-%kernel_branch.42-fix-drivers-usb-atm--ueagle-atm.patch
 Patch0662: linux-%kernel_branch.66-fix-drivers-usb-class--cdc-wdm.patch
-Patch0663: linux-%kernel_branch.61-fix-drivers-usb-core.patch
+Patch0663: linux-%kernel_branch.68-fix-drivers-usb-core.patch
 Patch0664: linux-%kernel_branch.58-fix-drivers-usb-host--ehci-hcd.patch
 Patch0665: linux-%kernel_branch.42-fix-drivers-usb-host--uhci-hcd.patch
 Patch0666: linux-%kernel_branch.61-fix-drivers-usb-host--xhci-hcd.patch
@@ -583,7 +583,7 @@ Patch0740: linux-%kernel_branch.43-fix-fs-partition--ibm.patch
 Patch0741: linux-%kernel_branch.43-fix-fs-proc.patch
 Patch0742: linux-%kernel_branch.42-fix-fs-pstore.patch
 Patch0743: linux-%kernel_branch.61-fix-fs-ramfs.patch
-Patch0744: linux-%kernel_branch.51-fix-fs-reiserfs.patch
+Patch0744: linux-%kernel_branch.68-fix-fs-reiserfs.patch
 Patch0745: linux-%kernel_branch.43-fix-fs-s390_hypfs.patch
 Patch0746: linux-%kernel_branch.56-fix-fs-squashfs.patch
 Patch0747: linux-%kernel_branch.42-fix-fs-sysfs.patch
@@ -3082,6 +3082,12 @@ done)
 
 
 %changelog
+* Mon Mar 18 2013 Led <led@altlinux.ru> 3.0.69-alt4
+- updated:
+  + fix-drivers-usb-core
+  + fix-fs-reiserfs
+  + feat-fs-aufs
+
 * Mon Mar 18 2013 Led <led@altlinux.ru> 3.0.69-alt3
 - updated:
   + fix-fs--block
