@@ -3,7 +3,7 @@ BuildRequires: gcc-c++
 # END SourceDeps(oneline)
 Name:           fbg
 Version:        0.9.1
-Release:        alt3_11
+Release:        alt3_12
 Summary:        Falling Block Game
 Group:          Games/Other
 License:        GPLv2+
@@ -50,7 +50,7 @@ rm $RPM_BUILD_ROOT/usr/doc/fbg/COPYING $RPM_BUILD_ROOT/usr/doc/fbg/README
 
 # below is the desktop file and icon stuff.
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/applications
-desktop-file-install             \
+desktop-file-install \
   --dir $RPM_BUILD_ROOT%{_datadir}/applications \
   %{SOURCE1}
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/32x32/apps
@@ -68,6 +68,9 @@ install -p -m 644 %{name}.png \
 
 
 %changelog
+* Mon Mar 18 2013 Igor Vlasenko <viy@altlinux.ru> 0.9.1-alt3_12
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.9.1-alt3_11
 - update to new release by fcimport
 
