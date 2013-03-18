@@ -1,4 +1,4 @@
-%define ver_major 0.14
+%define ver_major 0.15
 %define api_ver 1
 
 %def_disable static
@@ -120,6 +120,9 @@ xvfb-run %make check
 
 
 %changelog
+* Mon Mar 18 2013 Yuri N. Sedunov <aris@altlinux.org> 0.15-alt1
+- 0.15
+
 * Tue Mar 05 2013 Yuri N. Sedunov <aris@altlinux.org> 0.14-alt1
 - 0.14
 
