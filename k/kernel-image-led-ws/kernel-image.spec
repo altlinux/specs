@@ -21,7 +21,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.0.69
-Release: alt4
+Release: alt5
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -587,7 +587,7 @@ Patch0744: linux-%kernel_branch.68-fix-fs-reiserfs.patch
 Patch0745: linux-%kernel_branch.43-fix-fs-s390_hypfs.patch
 Patch0746: linux-%kernel_branch.56-fix-fs-squashfs.patch
 Patch0747: linux-%kernel_branch.42-fix-fs-sysfs.patch
-Patch0748: linux-%kernel_branch.63-fix-fs-xfs.patch
+Patch0748: linux-%kernel_branch.68-fix-fs-xfs.patch
 
 Patch0750: linux-%kernel_branch.53-fix-include.patch
 
@@ -3082,6 +3082,11 @@ done)
 
 
 %changelog
+* Mon Mar 18 2013 Led <led@altlinux.ru> 3.0.69-alt5
+- updated:
+  + fix-fs-xfs
+  + fix-virt-kvm
+
 * Mon Mar 18 2013 Led <led@altlinux.ru> 3.0.69-alt4
 - updated:
   + fix-drivers-usb-core
