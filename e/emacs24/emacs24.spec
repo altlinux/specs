@@ -1,19 +1,19 @@
 # -*- coding: utf-8; mode: rpm-spec -*-
 # $Id: emacs22.spec,v 1.60 2006/09/12 18:38:21 eugene Exp $
 
-%define emacs_version 24.2
+%define emacs_version 24.3
 %define gnus_version 5.13
 %define shortname emacs
-%define tramp_version 2.2.3
+%define tramp_version 2.2.6
 %define speedbar_version 1.0
 %define erc_version 5.3
 %define nxml_version 0.2.20041004
 %define cedet_version 1.0
 
-%define cedet_release alt6
+%define cedet_release alt7
 
 %define cvsdate 20090110
-%define rel_base alt5
+%define rel_base alt6
 
 # subpackages to build;
 %def_enable nox
@@ -858,29 +858,29 @@ export EMACSLOADPATH="$(pwd)"/lisp
 %define _configure_script ../configure
 %if_enabled nox
 pushd build-nox
-%configure --sharedstatedir=/var --with-pop --with-x=no --without-sound --with-gpm --without-dbus --without-rsvg --without-compress-info --with-wide-int
+%configure --sharedstatedir=/var --with-pop --with-x=no --without-sound --with-gpm --without-dbus --without-rsvg --without-compress-info --with-wide-int --enable-link-time-optimization
 popd
 %endif
 %if_enabled athena
 pushd build-athena
-%configure --sharedstatedir=/var --with-pop --with-x-toolkit=athena --with-png --with-jpeg --with-xpm --with-gif --with-tiff --enable-font-backend --with-freetype --with-xft --with-dbus --without-rsvg --without-compress-info --with-wide-int
+%configure --sharedstatedir=/var --with-pop --with-x-toolkit=athena --with-png --with-jpeg --with-xpm --with-gif --with-tiff --enable-font-backend --with-freetype --with-xft --with-dbus --without-rsvg --without-compress-info --with-wide-int --enable-link-time-optimization
 popd
 %endif
 %if_enabled gtk
 pushd build-gtk
-%configure --sharedstatedir=/var --with-pop --with-x-toolkit=gtk --with-png --with-jpeg --with-xpm --with-gif --with-tiff --with-gpm --enable-font-backend --with-freetype --with-xft --with-dbus --with-rsvg --without-compress-info --with-wide-int
+%configure --sharedstatedir=/var --with-pop --with-x-toolkit=gtk --with-png --with-jpeg --with-xpm --with-gif --with-tiff --with-gpm --enable-font-backend --with-freetype --with-xft --with-dbus --with-rsvg --without-compress-info --with-wide-int --enable-link-time-optimization
 popd
 %endif
 %if_enabled motif
 # export CFLAGS="%optflags -I%_prefix/X11R6/include"
 # export LDFLAGS="-Wl,-L%_prefix/X11R6/%_lib"
 pushd build-motif
-%configure --sharedstatedir=/var --with-pop --with-x-toolkit=motif --with-png --with-jpeg --with-xpm --with-gif --with-tiff --enable-font-backend --with-freetype --with-xft --with-dbus --without-rsvg --without-compress-info --with-wide-int
+%configure --sharedstatedir=/var --with-pop --with-x-toolkit=motif --with-png --with-jpeg --with-xpm --with-gif --with-tiff --enable-font-backend --with-freetype --with-xft --with-dbus --without-rsvg --without-compress-info --with-wide-int --enable-link-time-optimization
 popd
 %endif
 %if_enabled gtk3
 pushd build-gtk3
-%configure --sharedstatedir=/var --with-pop --with-x-toolkit=gtk3 --with-png --with-jpeg --with-xpm --with-gif --with-tiff --with-gpm --enable-font-backend --with-freetype --with-xft --with-dbus --with-rsvg --without-compress-info --with-wide-int
+%configure --sharedstatedir=/var --with-pop --with-x-toolkit=gtk3 --with-png --with-jpeg --with-xpm --with-gif --with-tiff --with-gpm --enable-font-backend --with-freetype --with-xft --with-dbus --with-rsvg --without-compress-info --with-wide-int --enable-link-time-optimization
 popd
 %endif
 
@@ -1135,7 +1135,7 @@ popd # "$RPM_BUILD_ROOT"
 # Create file lists #
 #####################
 # INFO
-%define common_infos ada-mode,auth,autotype,calc,ccmode,cl,dbus,dired-x,ebrowse,ediff,edt,efaq,emacs,emacs-gnutls,epa,ert,eshell,eudc,flymake,forms,idlwave,mairix-el,mh-e,newsticker,org,pcl-cvs,pgg,rcirc,reftex,remember,sasl,sc,ses,smtpmail,url,vip,viper,widget,woman
+%define common_infos ada-mode,auth,autotype,bovine,calc,ccmode,cl,dbus,dired-x,ebrowse,ediff,edt,efaq,emacs,emacs-gnutls,epa,ert,eshell,eudc,flymake,forms,htmlfontify,idlwave,mairix-el,mh-e,newsticker,org,pcl-cvs,pgg,rcirc,reftex,remember,sasl,sc,ses,smtpmail,srecode,url,vip,viper,widget,wisent,woman
 %define gnus_infos emacs-mime,gnus,message,sieve
 %define gnus_infos_pattern gnus\\|emacs-mime\\|message\\|sieve
 %define speedbar_infos_pattern speedbar
@@ -1408,10 +1408,6 @@ install -p -m755 %SOURCE51 %buildroot%_bindir/check-shadows
 %_iconsdir/hicolor/128x128/apps/%name.png
 %_iconsdir/hicolor/scalable/apps/%name.svg
 %_iconsdir/hicolor/scalable/mimetypes/emacs-document.svg
-%exclude %_niconsdir/emacs22.png
-%exclude %_miconsdir/emacs22.png
-%exclude %_liconsdir/emacs22.png
-%exclude %_iconsdir/hicolor/24x24/apps/emacs22.png
 %exclude %_desktopdir/emacs.desktop
 # Substitute for buidreq
 %_sysconfdir/buildreqs/packages/substitute.d/%name-X11
@@ -1548,6 +1544,9 @@ install -p -m755 %SOURCE51 %buildroot%_bindir/check-shadows
 
 
 %changelog
+* Fri Mar 15 2013 Terechkov Evgenii <evg@altlinux.org> 24.3-alt6
+- 24.3
+
 * Thu Sep 27 2012 Terechkov Evgenii <evg@altlinux.org> 24.2-alt5
 - Rebuild with new libpng15.so.15/libtiff.so.5
 
