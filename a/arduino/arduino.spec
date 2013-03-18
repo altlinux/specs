@@ -6,7 +6,7 @@ BuildRequires: jpackage-compat
 Name:		arduino
 Epoch:		1
 Version:	1.0.1
-Release:	alt2_3jpp7
+Release:	alt2_4jpp7
 Summary:	An IDE for Arduino-compatible electronics prototyping platforms
 Group:		Development/Java
 License:	GPLv2+ and LGPLv2+ and CC-BY-SA
@@ -109,9 +109,9 @@ build-jar-repository -p -s app/lib/ ecj jna RXTXcomm
 
 %build
 cd core/methods
-ant
+ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 
 cd ..
-ant
+ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 
 cd ../build
 echo %{version} | ant dist
 tar -xf linux/%{name}-%{version}-linux.tgz
@@ -190,9 +190,11 @@ fi
 
 %files -n %{name}-core
 %doc license.txt readme.txt todo.txt
+%dir %{_sysconfdir}/%{name}
 %config(noreplace) %{_sysconfdir}/%{name}/boards.txt
 %config(noreplace) %{_sysconfdir}/%{name}/programmers.txt
 %config(noreplace) %{_sysconfdir}/%{name}/preferences.txt
+%dir %{_datadir}/%{name}
 %{_datadir}/%{name}/examples/
 %{_datadir}/%{name}/hardware/
 %{_datadir}/%{name}/libraries/
@@ -205,6 +207,9 @@ fi
 
 
 %changelog
+* Tue Mar 19 2013 Igor Vlasenko <viy@altlinux.ru> 1:1.0.1-alt2_4jpp7
+- fc update
+
 * Thu Feb 14 2013 Igor Vlasenko <viy@altlinux.ru> 1:1.0.1-alt2_3jpp7
 - update to new release by jppimport
 
