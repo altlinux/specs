@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-services
-Version: 1.9.1
+Version: 2.0.0
 Release: alt1
 
 Summary: Simple SysV services configurator
@@ -15,6 +15,7 @@ Packager: Vladislav Zavjalov <slazav@altlinux.org>
 # we use alterator-read-desktop from alterator >= 3.6-alt7
 Requires: alterator >= 3.6-alt7
 Requires: alterator-sh-functions >= 0.6-alt3
+Requires: alterator-service-functions >= 2.0.0-alt1
 Conflicts: alterator-fbi < 5.23-alt1
 Conflicts: alterator-lookout < 1.2-alt1
 
@@ -40,12 +41,16 @@ Alterator module for SysV services administration
 %makeinstall
 
 %files
-%_altdata_dir/ui/*/*
+%_altdata_dir/ui/*
 %_altdata_dir/applications/*
-%_sysconfdir/alterator/services/*
+%_sysconfdir/alterator/services
 %_alterator_backend3dir/*
 
 %changelog
+* Mon Mar 18 2013 Mikhail Efremov <sem@altlinux.org> 2.0.0-alt1
+- Use alterator-service-functions (closes: #28701).
+- Own forgotten dirs.
+
 * Thu Oct 04 2012 Mikhail Efremov <sem@altlinux.org> 1.9.1-alt1
 - Don't use deprecated 'find -perm' syntax.
 
