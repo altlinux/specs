@@ -3,7 +3,7 @@ BuildRequires: unzip
 # END SourceDeps(oneline)
 Name:           flight-of-the-amazon-queen
 Version:        1.0
-Release:        alt4_8
+Release:        alt4_9
 Summary:        Flight of the Amazon Queen - Adventure Game
 Group:          Games/Other
 # For further discussion on distribution rights see:
@@ -49,7 +49,7 @@ mkdir -p $RPM_BUILD_ROOT%{_datadir}/%{name}
 install -p -m 644 queen.1 $RPM_BUILD_ROOT%{_datadir}/%{name}
 
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/applications
-desktop-file-install             \
+desktop-file-install \
   --dir $RPM_BUILD_ROOT%{_datadir}/applications \
   %{SOURCE1}
 
@@ -61,6 +61,9 @@ desktop-file-install             \
 
 
 %changelog
+* Mon Mar 18 2013 Igor Vlasenko <viy@altlinux.ru> 1.0-alt4_9
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 1.0-alt4_8
 - update to new release by fcimport
 
