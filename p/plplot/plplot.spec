@@ -4,7 +4,7 @@
 Name: plplot
 %define fmoddir %_libdir/fortran/modules/%name
 Version: 5.9.9
-Release: alt4.svn20121223
+Release: alt5.svn20121223
 Summary: Scientific graphics plotting library, supporting multiple languages
 License: LGPL v2 or later
 Group: Graphics
@@ -19,7 +19,7 @@ BuildPreReq: graphviz cmake swig gcc-fortran python-devel
 BuildPreReq: gcc-c++ libltdl7-devel libfreetype-devel libqhull-devel
 BuildPreReq: libncurses-devel libgd2-devel tcl-devel tk-devel
 BuildPreReq: python-module-pygtk-devel libnumpy-devel libgnomeui-devel
-BuildPreReq: libgnomeprintui-devel python-module-pygnome-devel
+BuildPreReq: python-module-pygnome-devel
 BuildPreReq: python-module-pygnome-canvas perl-XML-DOM liblasi-devel
 BuildPreReq: libwxGTK2.9-devel liblapack-devel dri2proto
 %if_enabled docs
@@ -572,6 +572,9 @@ rm -fR %buildroot%_docdir/%name \
 %_pkgconfigdir/plplotd-wxwidgets.pc
 
 %changelog
+* Tue Mar 19 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.9.9-alt5.svn20121223
+- Built without libgnomeprintui
+
 * Tue Jan 01 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.9.9-alt4.svn20121223
 - New snapshot
 
