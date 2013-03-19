@@ -25,8 +25,8 @@
 %endif
 
 Name: samba
-Version: 4.0.3
-Release: alt2
+Version: 4.0.4
+Release: alt1
 Group: System/Servers
 Summary: The Samba4 CIFS and AD client and server suite
 License: GPLv3+ and LGPLv3+
@@ -421,7 +421,8 @@ Samba suite.
 	--with-sockets-dir=/var/run/samba \
 	--with-modulesdir=%_libdir/samba \
 	--with-pammodulesdir=%_lib/security \
-	--with-lockdir=/var/lib/samba \
+	--with-lockdir=%_localstatedir/lib/samba \
+	--with-cachedir=%_localstatedir/cache/samba \
 	--with-privatedir=/var/lib/samba/private \
 	--disable-gnutls \
 	--disable-rpath-install \
@@ -470,6 +471,7 @@ mkdir -p %buildroot/sbin
 mkdir -p %buildroot/usr/{sbin,bin}
 mkdir -p %buildroot/%_lib/security
 mkdir -p %buildroot/var/lib/samba
+mkdir -p %buildroot%_localstatedir/cache/samba
 mkdir -p %buildroot/var/lib/samba/{private,winbindd_privileged,scripts,sysvol}
 mkdir -p %buildroot/var/log/samba/old
 mkdir -p %buildroot/var/spool/samba
@@ -686,6 +688,7 @@ TDB_NO_FSYNC=1 %make_build test
 %attr(0700,root,root) %dir /var/log/samba/old
 %dir /var/run/samba
 %dir /var/run/winbindd
+%attr(755,root,root) %dir %_localstatedir/cache/samba
 %attr(700,root,root) %dir /var/lib/samba/private
 %attr(755,root,root) %dir %_sysconfdir/samba
 %config(noreplace) %_sysconfdir/samba/smb.conf
@@ -1056,6 +1059,10 @@ TDB_NO_FSYNC=1 %make_build test
 %_man8dir/pam_winbind.8*
 
 %changelog
+* Tue Mar 19 2013 Alexey Shabalin <shaba@altlinux.ru> 4.0.4-alt1
+- 4.0.4 (fixed CVE-2013-186)
+- add /var/cache/samba to samba-common package (ALT#28601)
+
 * Mon Feb 25 2013 Alexey Shabalin <shaba@altlinux.ru> 4.0.3-alt2
 - make systemctl reference indirect in packaging/NetworkManager/30-winbind-systemd (ALT#28585)
 
