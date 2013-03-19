@@ -1,13 +1,9 @@
-Patch33: qdox-disable-xsite.patch
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
-# fedora bcond_with macro
-%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
-%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
-# redefine altlinux specific with and without
-%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
-%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
-# Copyright (c) 2000-2011, JPackage Project
+# Copyright (c) 2000-2009, JPackage Project
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -37,228 +33,140 @@ BuildRequires: jpackage-compat
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
-%define with()          %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
-%define without()       %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
-%define bcond_with()    %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
-%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
-
-#def_with gcj_support
-%bcond_with gcj_support
-%bcond_without maven
-
-%if %with gcj_support
-%define gcj_support 0
-%else
-%define gcj_support 0
-%endif
-
-
-Name:           qdox
-Version:        1.12
-Release:        alt3_2jpp6
 Summary:        Extract class/interface/method definitions from sources
+Name:           qdox
+Version:        1.12.1
+Release:        alt1_2jpp7
 Epoch:          1
-License:        Apache-style Software License
+License:        ASL 2.0
 URL:            http://qdox.codehaus.org/
 Group:          Development/Java
-# svn export http://svn.codehaus.org/qdox/tags/qdox-1.12/ && tar cjf qdox-1.12.tar.bz2 qdox-1.12
-# Exported revision 1031.
-Source0:        qdox-1.12.tar.bz2
-Source1:        qdox-build.xml
-Source2:        qdox-settings.xml
-Source3:        qdox-jpp-depmap.xml
-Patch0:         qdox-pom.patch
-Requires:       annotation_1_0_api
-Requires:       jpackage-utils
-Requires(post): jpackage-utils >= 0:1.7.3
-Requires(postun): jpackage-utils >= 0:1.7.3
-BuildRequires:  jpackage-utils >= 0:1.7.5
-BuildRequires:  ant >= 0:1.7.1
-BuildRequires:  ant-junit
-BuildRequires:  junit >= 0:3.8.2
-BuildRequires:  byaccj
-BuildRequires:  java-cup
-BuildRequires:  jflex
-%if %with maven
-BuildRequires:  maven2 >= 2.0.8
-BuildRequires:  maven2-plugin-ant
-BuildRequires:  maven2-plugin-antrun
-BuildRequires:  maven2-plugin-changes
-BuildRequires:  maven2-plugin-compiler
-BuildRequires:  maven2-plugin-dependency
-BuildRequires:  maven2-plugin-deploy
-BuildRequires:  maven2-plugin-install
-BuildRequires:  maven2-plugin-jar
-BuildRequires:  maven2-plugin-javadoc
-BuildRequires:  maven2-plugin-release
-BuildRequires:  maven2-plugin-resources
-BuildRequires:  maven-surefire-maven-plugin
-BuildRequires:  maven2-common-poms >= 1.0
-BuildRequires:  maven2-default-skin
-BuildRequires:  maven-plugin-cobertura
-BuildRequires:  maven-jflex-plugin
-BuildRequires:  jmock >= 0:1.0
-%endif
-BuildRequires:  annotation_1_0_api
-BuildRequires:  excalibur-avalon-framework
-BuildRequires:  excalibur-avalon-logkit
-BuildRequires:  jakarta-slide-webdavclient
-BuildRequires:  xmlrpc
-#BuildRequires:  xsite
-%if ! %{gcj_support}
-BuildArch:      noarch
-%endif
+Source0:        http://repo2.maven.org/maven2/com/thoughtworks/qdox/qdox/%{version}/%{name}-%{version}-project.tar.bz2
+Source1:        qdox-MANIFEST.MF
 
-%if %{gcj_support}
-BuildRequires:    java-gcj-compat-devel
-%endif
+BuildRequires:  jpackage-utils >= 0:1.7.4
+BuildRequires:  ant >= 0:1.6
+BuildRequires:  ant-junit >= 0:1.6
+BuildRequires:  junit >= 0:3.8.1
+BuildRequires:  byaccj
+BuildRequires:  jflex
+BuildRequires:  maven
+BuildRequires:  maven-assembly-plugin
+BuildRequires:  maven-compiler-plugin
+BuildRequires:  maven-changes-plugin
+BuildRequires:  maven-clean-plugin
+BuildRequires:  maven-plugin-cobertura
+BuildRequires:  maven-dependency-plugin
+BuildRequires:  maven-deploy-plugin
+BuildRequires:  maven-install-plugin
+BuildRequires:  maven-jar-plugin
+BuildRequires:  maven-javadoc-plugin
+BuildRequires:  maven-site-plugin
+BuildRequires:  maven-surefire-plugin
+BuildRequires:  maven-surefire-provider-junit
+BuildRequires:  maven-release-plugin
+BuildRequires:  zip
+
+
+BuildArch:      noarch
+Obsoletes:      qdox-manual <= 0:1.9.2
 Source44: import.info
+Obsoletes: qdox16-poms < 1.1
+
 
 %description
-QDox is a high speed, small footprint parser 
-for extracting class/interface/method definitions 
-from source files complete with JavaDoc @tags. 
-It is designed to be used by active code 
-generators or documentation tools. 
+QDox is a high speed, small footprint parser
+for extracting class/interface/method definitions
+from source files complete with JavaDoc @tags.
+It is designed to be used by active code
+generators or documentation tools.
 
 %package javadoc
 Summary:        Javadoc for %{name}
-Group:          Development/Documentation
+Group:          Development/Java
 Requires:       jpackage-utils
 BuildArch: noarch
 
 %description javadoc
-%{summary}.
+API docs for %{name}.
 
-%if %with maven
-%package manual
-Summary:        Documents for %{name}
-Group:          Development/Documentation
-BuildArch: noarch
-
-%description manual
-%{summary}.
-%endif
 
 %prep
 %setup -q 
-%patch0 -p0 -b .sav0
-%patch33
+find -name *.jar -delete
+rm -rf bootstrap
 
-rm bootstrap/yacc.linux
-ln -s /usr/bin/byaccj bootstrap/yacc.linux
-ln -s $(build-classpath jflex) bootstrap
-ln -s $(build-classpath java_cup) bootstrap
-cp -p %{SOURCE1} build.xml
-cp -p %{SOURCE2} settings.xml
-sed -i -e "s|<url>__JPP_URL_PLACEHOLDER__</url>|<url>file://`pwd`/.m2/repository</url>|g" settings.xml
-sed -i -e "s|<url>__JAVADIR_PLACEHOLDER__</url>|<url>file://`pwd`/external_repo</url>|g" settings.xml
-sed -i -e "s|<url>__MAVENREPO_DIR_PLACEHOLDER__</url>|<url>file://`pwd`/.m2/repository</url>|g" settings.xml
+# Ant changed groupId
+%pom_remove_dep ant:ant
+%pom_add_dep org.apache.ant:ant
 
-%if %without maven
-perl -pi -e 's/\@VERSION\@/%{version}/g;' build.xml
-%endif
+# We don't need these plugins
+%pom_remove_plugin :maven-antrun-plugin
+%pom_remove_plugin :maven-jflex-plugin
+%pom_remove_plugin :maven-resources-plugin
+%pom_remove_plugin :xsite-maven-plugin
 
 %build
-%if %with maven
-mkdir external_repo
-ln -s %{_javadir} external_repo/JPP
+# Generate scanner (upstream does this with maven-jflex-plugin)
+jflex \
+      -d src/java \
+      --skel src/grammar/skeleton.inner \
+      src/grammar/lexer.flex
 
-export MAVEN_REPO_LOCAL=$(pwd)/.m2/repository
-mkdir -p $MAVEN_REPO_LOCAL
-
-# XXX: huh?
-mkdir -p target/generated-site
-cp -pr src/site/* target/generated-site
-
-mvn-jpp -Dmaven.compile.target=1.5 -Dmaven.javadoc.source=1.5  \
-        -e \
-        -s settings.xml \
-        -Dproject.build.directory=$(pwd)/target \
-        -Dmaven2.jpp.depmap.file=%{SOURCE3} \
-        -Dmaven.repo.local=${MAVEN_REPO_LOCAL} \
-        -Dmaven.test.failure.ignore=true \
-        -Dmaven.build.timestamp=$(date "+%Y-%m-%d") \
-        ant:ant install javadoc:javadoc 
-%else
-mkdir -p src/java/com/thoughtworks/qdox/parser/impl
-export CLASSPATH=$(build-classpath jmock jflex java_cup):target/classes:target/test-classes
-%{java} JFlex.Main \
-    -d src/java/com/thoughtworks/qdox/parser/impl \
-    src/grammar/lexer.flex
-pushd src
+# Generate parser (upstream does this with maven-antrun-plugin)
+dir=src/java/com/thoughtworks/qdox/parser/impl
+mkdir -p $dir
+(cd ./$dir
 byaccj \
-    -Jnorun \
-    -Jnoconstruct \
-    -Jclass=Parser \
-    -Jsemantic=Value \
-    -Jpackage=com.thoughtworks.qdox.parser.impl \
-    grammar/parser.y
-popd
-mv src/Parser.java src/java/com/thoughtworks/qdox/parser/impl
-%{ant}  -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Dbuild.sysclasspath=only jar test javadoc
-%endif
+       -v \
+       -Jnorun \
+       -Jnoconstruct \
+       -Jclass=Parser \
+       -Jsemantic=Value \
+       -Jpackage=com.thoughtworks.qdox.parser.impl \
+       ../../../../../../grammar/parser.y)
+
+# Build artifact
+mvn-rpmbuild -Dmaven.compile.source=1.5 -Dmaven.compile.target=1.5 -Dmaven.javadoc.source=1.5  \
+        -Dmaven.test.skip=true \
+        install \
+        javadoc:aggregate
+
+# Inject OSGi manifests
+mkdir -p META-INF
+cp -p %{SOURCE1} META-INF/MANIFEST.MF
+touch META-INF/MANIFEST.MF
+zip -u target/%{name}-%{version}.jar META-INF/MANIFEST.MF
 
 %install
-
 # jars
-mkdir -p %{buildroot}%{_javadir}
-cp -p target/%{name}-%{version}.jar \
-      %{buildroot}%{_javadir}/%{name}-%{version}.jar
-(cd %{buildroot}%{_javadir} && for jar in *-%{version}.jar; do ln -sf ${jar} `echo $jar| sed "s|-%{version}||g"`; done)
-
-%add_to_maven_depmap qdox qdox %{version} JPP %{name}
-%add_to_maven_depmap com.thoughtworks.qdox qdox %{version} JPP %{name}
+mkdir -p $RPM_BUILD_ROOT%{_javadir}
+cp -p target/%{name}-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
 
 # poms
-install -d -m 755 %{buildroot}%{_datadir}/maven2/poms
-install -p -m 644 pom.xml \
-    %{buildroot}%{_datadir}/maven2/poms/JPP-%{name}.pom
+install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
+install -m 644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
+
+%add_maven_depmap -a qdox:qdox
 
 # javadoc
-mkdir -p %{buildroot}%{_javadocdir}/%{name}-%{version}
-cp -pr target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}-%{version}
-ln -s %{name}-%{version} %{buildroot}%{_javadocdir}/%{name}
-
-# manual
-mkdir -p %{buildroot}%{_docdir}/%{name}-%{version}
-cp -p LICENSE.txt %{buildroot}%{_docdir}/%{name}-%{version}
-cp -p README.txt %{buildroot}%{_docdir}/%{name}-%{version}
-%if %with maven
-#cp -pr target/site/* %{buildroot}%{_docdir}/%{name}-%{version}
-#rm -r %{buildroot}%{_docdir}/%{name}-%{version}/apidocs
-#ln -s %{_javadocdir}/%{name} %{buildroot}%{_docdir}/%{name}-%{version}/apidocs
-%endif
-
-%if %{gcj_support}
-%{_bindir}/aot-compile-rpm
-%endif
+mkdir -p $RPM_BUILD_ROOT%{_javadocdir}/%{name}
+cp -pr target/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 
 %files
-%dir %doc %{_docdir}/%{name}-%{version}
-%doc %{_docdir}/%{name}-%{version}/LICENSE.txt
-%doc %{_docdir}/%{name}-%{version}/README.txt
-%{_javadir}/%{name}-%{version}.jar
+%doc LICENSE.txt README.txt
 %{_javadir}/%{name}.jar
-%{_datadir}/maven2/poms/JPP-%{name}.pom
-%{_mavendepmapfragdir}/%{name}
-%if %{gcj_support}
-%dir %{_libdir}/gcj/%{name}
-%{_libdir}/gcj/%{name}/%{name}-%{version}.jar.*
-%endif
-# hack; explicitly added docdir if not owned
-%doc %dir %{_docdir}/%{name}-%{version}
+%{_mavenpomdir}/*
+%{_mavendepmapfragdir}/*
 
 %files javadoc
-%{_javadocdir}/%{name}-%{version}
-%{_javadocdir}/%{name}
-
-%if %with maven
-#files manual
-#%doc %{_docdir}/%{name}-%{version}
-%endif
+%doc LICENSE.txt
+%doc %{_javadocdir}/%{name}
 
 %changelog
+* Tue Mar 19 2013 Igor Vlasenko <viy@altlinux.ru> 1:1.12.1-alt1_2jpp7
+- fc update
+
 * Tue Sep 25 2012 Igor Vlasenko <viy@altlinux.ru> 1:1.12-alt3_2jpp6
 - fixed build
 
