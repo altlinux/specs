@@ -2,8 +2,8 @@
 
 Summary: Play your Windows games on Linux
 Name: playonlinux
-Version: 4.1.8
-Release: alt1.1
+Version: 4.1.9
+Release: alt1
 License: GPLv3
 Group: Games/Other
 Url: http://www.playonlinux.com
@@ -64,6 +64,9 @@ rm -f %buildroot%_datadir/%name/bin/smile
 %_datadir/desktop-directories/%oname.directory
 
 %changelog
+* Tue Jan 22 2013 Gleb F-Malinovskiy <glebfm@altlinux.org> 4.1.9-alt1
+- 4.1.9
+
 * Mon Dec 10 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.1.8-alt1.1
 - Rebuilt with gnustep-base 1.24.2
 
