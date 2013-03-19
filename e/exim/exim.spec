@@ -9,7 +9,7 @@
 
 Name: exim
 Version: 4.76
-Release: alt2
+Release: alt3
 
 Summary: Exim Mail Transport Agent
 License: GPLv2+
@@ -48,6 +48,7 @@ Source43: smtpauthpwd
 Patch1: exim-4.72-buildoptions.patch
 Patch3: exim-4.34-texinfo.patch
 Patch4: exim-4.76-pcre.patch
+Patch5: CVE-2012-5671.patch
 
 # Automatically added by buildreq on Tue Apr 26 2011
 # ...and edited:
@@ -211,6 +212,7 @@ install -d Local
 #patch3 -p1
 
 %patch4 -p1
+%patch5 -p1
 
 install %SOURCE21 Local/eximon.conf
 
@@ -268,7 +270,7 @@ install -pD -m644 doc/exim.8 %buildroot%_man8dir/exim.8
 #ln -sf %{_bindir}/exim %buildroot%{_sbindir}/exim
 ln -sf %_sbindir/exim %buildroot%_sbindir/sendmail
 #ln -sf %{_sbindir}/exim %buildroot%{_libdir}/sendmail
-ln -sf %_sbindir/exim %buildroot%_sbindir/mailq
+#ln -sf %_sbindir/exim %buildroot%_sbindir/mailq
 ln -sf %_sbindir/exim %buildroot%_sbindir/rsmtp
 ln -sf %_sbindir/exim %buildroot%_sbindir/rmail
 ln -sf %_sbindir/exim %buildroot%_sbindir/runq
@@ -393,7 +395,7 @@ ln -sf /usr/sbin/exim-ldap /usr/sbin/exim
 %_bindir/exiqsumm
 %_bindir/exiqgrep
 #%attr( 755,root,root) %{_sbindir}/exim
-%_sbindir/mailq
+#_sbindir/mailq
 %_sbindir/rmail
 %_sbindir/rsmtp
 %_sbindir/runq
@@ -449,6 +451,11 @@ ln -sf /usr/sbin/exim-ldap /usr/sbin/exim
 %_bindir/exipick
 
 %changelog
+* Tue Mar 19 2013 Michael Shigorin <mike@altlinux.org> 4.76-alt3
+- NMU:
+  + applied CVE-2012-5671.patch
+  + dropped mailq symlink duplicating sendmail-common's one (ALT#28006)
+
 * Tue Sep 04 2012 Vladimir Lettiev <crux@altlinux.ru> 4.76-alt2
 - rebuilt for perl-5.16
 
