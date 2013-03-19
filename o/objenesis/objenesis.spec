@@ -1,9 +1,11 @@
-# dropped
-#BuildRequires:  xsite
+Epoch: 0
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
 BuildRequires: sun-annotation-1.0-api
 BuildRequires: /proc
 BuildRequires: jpackage-compat
-# Copyright (c) 2000-2011, JPackage Project
+# Copyright (c) 2000-2009, JPackage Project
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -33,191 +35,150 @@ BuildRequires: jpackage-compat
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
-%define gcj_support 0
-
-
-Summary:        Instantiate New Object
+Summary:        A library for instantiating Java objects
 Name:           objenesis
-Version:        1.1
-Release:        alt3_1jpp6
-Epoch:          0
+Version:        1.2
+Release:        alt1_11jpp7
 Group:          Development/Java
-License:        MIT
+License:        ASL 2.0
 URL:            http://objenesis.googlecode.com/svn/docs/index.html
-Source0:        %{name}-%{version}.tar.gz
-# svn export http://objenesis.googlecode.com/svn/tags/1_1/ objenesis-1.1
+# svn export http://objenesis.googlecode.com/svn/tags/1_2/ objenesis-1.2
+# tar cfJ objenesis-1.2.tar.xz objenesis-1.2
+Source0:        %{name}-%{version}.tar.xz
 
-Source1:        %{name}-jpp-depmap.xml
-Source2:        %{name}-settings.xml
+# Skipping website (requires xsite), this patch is unused atm
+#Patch0:         objenesis-website-pom.patch
 
-Patch0:         objenesis-website-pom.patch
+# Remove deps for test scope (unavailable); fix
+# maven-license-plugin groupID to latest version available.
+Patch1:         001-objenesis-fix-build.patch
+Patch2:         JRockitInstantntiatorCharacters.patch
 
-BuildRequires:  jpackage-utils >= 0:1.7.5
+BuildRequires:  jpackage-utils
 BuildRequires:  junit
-BuildRequires:  maven2 >= 0:2.0.8
-BuildRequires:  maven2-plugin-antrun
-BuildRequires:  maven2-plugin-assembly
-BuildRequires:  maven2-plugin-compiler
-BuildRequires:  maven2-plugin-eclipse
-BuildRequires:  maven2-plugin-install
-BuildRequires:  maven2-plugin-jar
-BuildRequires:  maven2-plugin-javadoc
-BuildRequires:  maven2-plugin-resources
-BuildRequires:  maven2-plugin-site
-BuildRequires:  maven2-plugin-source
-BuildRequires:  maven-surefire-maven-plugin
-BuildRequires:  maven-surefire-provider-junit
+BuildRequires:  maven
+BuildRequires:  maven-antrun-plugin
+BuildRequires:  maven-assembly-plugin
+BuildRequires:  maven-compiler-plugin
+BuildRequires:  maven-install-plugin
+BuildRequires:  maven-jar-plugin
+BuildRequires:  maven-javadoc-plugin
+BuildRequires:  maven-resources-plugin
+BuildRequires:  maven-remote-resources-plugin
+BuildRequires:  maven-site-plugin
+BuildRequires:  maven-shade-plugin
+BuildRequires:  maven-source-plugin
+BuildRequires:  maven-surefire-plugin
+BuildRequires:  maven-license-plugin
+BuildRequires:  maven-timestamp-plugin
 BuildRequires:  xpp3-minimal
+BuildRequires:  asm2
+BuildRequires: apache-resource-bundles apache-jar-resource-bundle
 
+Requires:       jpackage-utils
 
-
-Requires(post):   jpackage-utils >= 0:1.7.5
-Requires(postun): jpackage-utils >= 0:1.7.5
-
-%if %{gcj_support}
-BuildRequires:          java-gcj-compat-devel
-Requires(post):         java-gcj-compat
-Requires(postun):       java-gcj-compat
-%endif
-%if ! %{gcj_support}
 BuildArch:      noarch
-%endif
 Source44: import.info
 
 %description
-Java already supports this dynamic instantiation of classes
-using Class.newInstance(). However, this only works if the 
-class has an appropriate constructor. There are many times 
-when a class cannot be instantiated this way, such as when 
-the class contains:
-* Constructors that require arguments.
-* Constructors that have side effects.
-* Constructors that throw exceptions.
-As a result, it is common to see restrictions in libraries 
-stating that classes must require a default constructor. 
-Objenesis aims to overcomes these restrictions by bypassing 
-the constructor on object instantiation.
-Needing to instantiate an object without calling the 
-constructor is a fairly specialized task, however there 
-are certain cases when this is useful:
-* Serialization, Remoting and Persistence - 
-  Objects need to be instantiated and restored to a 
-  specific state, without invoking code.
-* Proxies, AOP Libraries and Mock Objects - Classes can be 
-  subclassed without needing to worry about the super() 
-  constructor.
-* Container Frameworks - Objects can be dynamically 
-  instantatiated in non-standard ways.
+Objenesis is a small Java library that serves one purpose: to instantiate 
+a new object of a particular class.
+Java supports dynamic instantiation of classes using Class.newInstance(); 
+however, this only works if the class has an appropriate constructor. There 
+are many times when a class cannot be instantiated this way, such as when 
+the class contains constructors that require arguments, that have side effects,
+and/or that throw exceptions. As a result, it is common to see restrictions 
+in libraries stating that classes must require a default constructor. 
+Objenesis aims to overcome these restrictions by bypassing the constructor 
+on object instantiation. Needing to instantiate an object without calling 
+the constructor is a fairly specialized task, however there are certain cases 
+when this is useful:
+* Serialization, Remoting and Persistence - Objects need to be instantiated 
+  and restored to a specific state, without invoking code.
+* Proxies, AOP Libraries and Mock Objects - Classes can be subclassed without 
+  needing to worry about the super() constructor.
+* Container Frameworks - Objects can be dynamically instantiated in 
+  non-standard ways.
 
 
 %package javadoc
-Group:          Development/Documentation
+Group:          Development/Java
 Summary:        Javadoc for %{name}
-BuildArch: noarch
+Requires:       jpackage-utils
+BuildArch:      noarch
 
 %description javadoc
-%{summary}.
+This package contains the API documentation for %{name}.
 
-%package manual
-Group:          Development/Documentation
-Summary:        Documents for %{name}
-BuildArch: noarch
 
-%description manual
-%{summary}.
+# Skipped till xsite avilable in fedora
+#%%%package manual
+#Group:          Documentation
+#Summary:        Documents for %%{name}
+#
+#%%%description manual
+#This package contains the %%{name} manual.
+
 
 %prep
 %setup -q 
+#%%patch0 -b .sav0
+%patch1 -p1
+%patch2 -p2
 
-%patch0 -b .sav0
 
 %build
-export LANG=en_US.ISO8859-1
-cp %{SOURCE2} maven2-settings.xml
+# tests are skipped because of missing dependency spring-osgi-test
+mvn-rpmbuild -Dmaven.compile.source=1.5 -Dmaven.compile.target=1.5 -Dmaven.javadoc.source=1.5  -e \
+          -Dyear=2009 \
+          -Dmaven.test.skip=true \
+          install javadoc:javadoc
 
-sed -i -e "s|<url>__JPP_URL_PLACEHOLDER__</url>|<url>file://`pwd`/m2_repo/repository</url>|g" maven2-settings.xml
-sed -i -e "s|<url>__JAVADIR_PLACEHOLDER__</url>|<url>file://`pwd`/external_repo</url>|g" maven2-settings.xml
-sed -i -e "s|<url>__MAVENREPO_DIR_PLACEHOLDER__</url>|<url>file://`pwd`/m2_repo/repository</url>|g" maven2-settings.xml
-sed -i -e "s|<url>__MAVENDIR_PLUGIN_PLACEHOLDER__</url>|<url>file:///usr/share/maven2/plugins</url>|g" maven2-settings.xml
-sed -i -e "s|<url>__ECLIPSEDIR_PLUGIN_PLACEHOLDER__</url>|<url>file:///usr/share/eclipse/plugins</url>|g" maven2-settings.xml
+# Below is for manual (requires xsite), skipped
+#pushd website
+#mvn-jpp -e \
+#        -s ${M2SETTINGS} \
+#        -Dmaven.repo.local=$MAVEN_REPO_LOCAL \
+#        -Dmaven2.jpp.depmap.file=%%{SOURCE1} \
+#        antrun:run 
+#popd
 
-mkdir external_repo
-ln -s %{_javadir} external_repo/JPP
-
-export M2SETTINGS=$(pwd)/maven2-settings.xml
-export MAVEN_REPO_LOCAL=`pwd`/m2_repo/repository
-
-mvn-jpp -Dmaven.compile.target=1.5 -Dmaven.javadoc.source=1.5  -e \
-        -s ${M2SETTINGS} \
-        -Dmaven.repo.local=$MAVEN_REPO_LOCAL \
-        -Dmaven2.jpp.depmap.file=%{SOURCE1} \
-        install javadoc:javadoc
-
-pushd website
-mvn-jpp -Dmaven.compile.target=1.5 -Dmaven.javadoc.source=1.5  -e \
-        -s ${M2SETTINGS} \
-        -Dmaven.repo.local=$MAVEN_REPO_LOCAL \
-        -Dmaven2.jpp.depmap.file=%{SOURCE1} \
-        antrun:run 
-#	xsite:run
-popd
 
 %install
-
 # jars
-install -d -m 0755 $RPM_BUILD_ROOT%{_javadir}/%{name}
-install -d -m 0755 $RPM_BUILD_ROOT%{_datadir}/maven2/poms
+install -Dp -m 644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}-parent.pom
+%add_maven_depmap JPP-%{name}-parent.pom
 
-install -m 644 pom.xml $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-%{name}-parent.pom
-%add_to_maven_depmap org.objenesis objenesis-parent %{version} JPP %{name}-parent
+install -Dp -m 644 main/target/%{name}-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
+install -Dp -m 644 main/pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
+%add_maven_depmap JPP-%{name}.pom %{name}.jar
 
-install -m 644 main/target/%{name}-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}-%{version}.jar
-install -m 644 main/pom.xml $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-%{name}.pom
-%add_to_maven_depmap org.objenesis objenesis %{version} JPP %{name}
-
-install -m 644 tck/target/%{name}-tck-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}-tck-%{version}.jar
-install -m 644 tck/pom.xml $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-%{name}-tck.pom
-%add_to_maven_depmap org.objenesis objenesis-tck %{version} JPP %{name}-tck
-
-(cd $RPM_BUILD_ROOT%{_javadir} && for jar in *-%{version}*; do ln -sf ${jar} `echo $jar| sed  "s|-%{version}||g"`; done)
+install -Dp -m 644 tck/target/%{name}-tck-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}-tck.jar
+install -Dp -m 644 tck/pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}-tck.pom
+%add_maven_depmap JPP-%{name}-tck.pom %{name}-tck.jar
 
 # javadoc
-install -d -m 0755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}/main
-cp -pr main/target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}/main
-install -d -m 0755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}/tck
-cp -pr tck/target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}/tck
-ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name} # ghost symlink
+install -d -m 0755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}/main
+cp -pr main/target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}/main
+install -d -m 0755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}/tck
+cp -pr tck/target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}/tck
 
-# manual
-install -d -m 0755 $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}
-#cp -pr website/target/xsite/* $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}/
-cp -p LICENSE.txt $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}/
-
-%if %{gcj_support}
-%{_bindir}/aot-compile-rpm
-%endif
 
 %files
-%doc %{_docdir}/%{name}-%{version}/LICENSE.txt
-%dir %{_javadir}/%{name}
+%doc LICENSE.txt
 %{_javadir}/*.jar
-%{_datadir}/maven2/poms/*
+%{_mavenpomdir}/*
 %{_mavendepmapfragdir}/*
-%if %{gcj_support}
-%dir %{_libdir}/gcj/%{name}
-%{_libdir}/gcj/%{name}-%{version}.jar.*
-%endif
-# hack; explicitly added docdir if not owned
-%doc %dir %{_docdir}/%{name}-%{version}
 
 %files javadoc
-%doc %{_javadocdir}/%{name}-%{version}
-%doc %{_javadocdir}/%{name}
+%doc LICENSE.txt
+%{_javadocdir}/%{name}
 
-#files manual
-#%{_docdir}/%{name}-%{version}
 
 %changelog
+* Tue Mar 19 2013 Igor Vlasenko <viy@altlinux.ru> 0:1.2-alt1_11jpp7
+- fc update
+
 * Mon Mar 19 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.1-alt3_1jpp6
 - dropped xsite dependency
 
