@@ -9,7 +9,7 @@
 
 Name: wxGTK2.9
 Version: %wxbranch.5
-Release: alt2.svn20120816
+Release: alt3.svn20120816
 Epoch: 2
 
 Summary: The GTK+ port of the wxWidgets library
@@ -25,7 +25,7 @@ Source2: ld_shared_wrapper.pl
 # Automatically added by buildreq on Wed Dec 10 2008
 BuildRequires: gcc-c++ libGL-devel libSDL-devel libSM-devel
 BuildRequires: libXinerama-devel libesd-devel libexpat-devel
-BuildRequires: libgnomeprintui-devel libjpeg-devel libtiff-devel
+BuildRequires: libjpeg-devel libtiff-devel libgtk+2-devel
 
 BuildPreReq: xorg-xextproto-devel xorg-inputproto-devel libXtst-devel
 BuildPreReq: rpm-build-java libXxf86vm-devel libbfd-devel
@@ -320,6 +320,9 @@ ln -sf ../..%_libdir/wx/config/$wx_config_filename %buildroot%_bindir/wx-config
 %_datadir/wx/examples
 
 %changelog
+* Tue Mar 19 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2:2.9.5-alt3.svn20120816
+- Built without libgnomeprintui and with libgtk+2
+
 * Wed Sep 26 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2:2.9.5-alt2.svn20120816
 - Rebuilt with libpng15
 
