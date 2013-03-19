@@ -1,6 +1,6 @@
 Name: libfreetype
 Version: 2.4.11
-Release: alt1
+Release: alt1.1
 
 Summary: A free and portable font rendering engine
 License: FTL or GPLv2+
@@ -97,7 +97,7 @@ ln -s ft2demos-%version ft2demos
 %patch21 -p0
 
 %build
-%add_optflags -fno-strict-aliasing
+%add_optflags -fno-strict-aliasing %(getconf LFS_CFLAGS)
 %configure %{subst_enable static}
 
 # get rid of RPATH
@@ -167,6 +167,9 @@ mv %buildroot%develdocdir/{FTL.TXT,LICENSE.TXT,CHANGES.bz2} %buildroot%docdir/
 %_bindir/ft*
 
 %changelog
+* Tue Mar 19 2013 Fr. Br. George <george@altlinux.ru> 2.4.11-alt1.1
+- Fix i586 FILE64 build
+
 * Fri Dec 21 2012 Valery Inozemtsev <shrek@altlinux.ru> 2.4.11-alt1
 - 2.4.11
 
