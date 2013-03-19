@@ -1,6 +1,6 @@
 Name: fontconfig
 Version: 2.10.91
-Release: alt3
+Release: alt4
 
 Summary: Font configuration and customization library and utilities
 Group: System/Configuration/Other
@@ -33,6 +33,9 @@ documentation required for development of fontconfig-based software.
 %prep
 %setup -q
 %patch -p1
+for f in conf.d/??-sub-pixel-*.conf ; do
+    sed -i 's|mode="append"|mode="assign"|' $f
+done
 
 %build
 %autoreconf
@@ -108,6 +111,10 @@ find -L %_sysconfdir/fonts/conf.d -type l -delete
 %docdir/%name-devel*
 
 %changelog
+* Tue Mar 19 2013 Sergey V Turchin <zerg@altlinux.org> 2.10.91-alt4
+- use assign instead of append for sub-pixel rendering default config
+  to return fine fonts look
+
 * Wed Feb 20 2013 Sergey V Turchin <zerg@altlinux.org> 2.10.91-alt3
 - add compatibility config symlinks (ALT #28555)
 
