@@ -1,5 +1,5 @@
 Name: livecd-install-wmaker
-Version: 0.3
+Version: 0.4
 Release: alt1
 
 Summary: WindowMaker configuration for livecd-install
@@ -29,6 +29,9 @@ install -pDm644 %name.service %buildroot%_unitdir/%name.service
 %_unitdir/%name.service
 
 %changelog
+* Tue Mar 19 2013 Michael Shigorin <mike@altlinux.org> 0.4-alt1
+- drop the workaround introduced in previous version, hooray!
+
 * Tue Mar 12 2013 Michael Shigorin <mike@altlinux.org> 0.3-alt1
 - drop fbdev_drv (see also #28669)
 
