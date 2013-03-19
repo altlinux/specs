@@ -1,5 +1,5 @@
 Name: make-initrd-propagator
-Version: 0.17
+Version: 0.18
 Release: alt1
 
 Summary: Put propagator into make-initrd generated image
@@ -37,6 +37,12 @@ mkdir -p %buildroot%_datadir/make-initrd/features/propagator/data/image
 %_datadir/make-initrd/features/propagator
 
 %changelog
+* Tue Mar 19 2013 Michael Shigorin <mike@altlinux.org> 0.18-alt1
+- init-bottom (see also the subsequent discussion in #28289):
+  + require "live_rw" keyword for "cdrom" method to create rw slice
+  + create ext4 w/o journal instead of ext3
+  + tweaked rw slice mount options
+
 * Sat Mar 16 2013 Michael Shigorin <mike@altlinux.org> 0.17-alt1
 - accept cdrom for rw disk_slice on isohybrid media (closes: #28289)
 
