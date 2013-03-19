@@ -2,7 +2,7 @@
 
 Name: libtag
 Version: 1.8
-Release: alt1
+Release: alt2
 
 Summary: TagLib, is well, a library for reading and editing audio meta data
 License: LGPL / MPL
@@ -12,15 +12,14 @@ Packager: Sergey V Turchin <zerg@altlinux.org>
 
 Provides: %rname = %version-%release
 
-Source0: %rname-%version.tar.bz2
-Source1: taglib-csa6.tar.bz2
+Source0: %rname-%version.tar
 Source2: version-script.libtag
 
-Patch1: taglib-1.6-alt-rcc-fix.patch
-#
-Patch3: taglib-1.8-alt-versioning.patch
-#(tpg) http://foetida.jaist.ac.jp:37565/~yaz/diary/2006/07/taglib-1.4_wchar.diff
-Patch10:         taglib-1.4_wchar.diff
+# SuSE
+Patch2: taglib-1.8-ds-rusxmms-r2.patch
+Patch3: taglib-1.8-version_fix.patch
+# ALT
+Patch10: taglib-1.8-alt-versioning.patch
 
 BuildRequires: gcc-c++ librcc-devel zlib-devel
 BuildRequires: doxygen graphviz cmake kde-common-devel
@@ -54,13 +53,10 @@ library.
 
 
 %prep
-%setup -q -n %rname-%version -a1
+%setup -q -n %rname-%version
 install -m0644 %SOURCE2 ./
-#patch -p1 <taglib-csa/taglib-1.5-ds-rusxmms.patch
-#%patch1 -p1
-#
+%patch2 -p1
 %patch3 -p1
-#
 %patch10 -p1
 
 
@@ -91,6 +87,12 @@ install -m0644 %SOURCE2 ./
 %_includedir/taglib/*.tcc
 
 %changelog
+* Tue Mar 19 2013 Sergey V Turchin <zerg@altlinux.org> 1.8-alt2
+- sync patches with SuSE (return rusxmms patch)
+
+* Mon Jan 14 2013 Sergey V Turchin <zerg@altlinux.org> 1.8-alt0.M60P.1
+- build for M60P
+
 * Tue Oct 16 2012 Sergey V Turchin <zerg@altlinux.org> 1.8-alt1
 - new version
 - built without tag encoding detection patch
