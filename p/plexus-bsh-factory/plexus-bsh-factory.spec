@@ -1,9 +1,9 @@
-Source33: plexus-container-default-1.0-alt-depmap.xml
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
-%define version 1.0
-%define name plexus-bsh-factory
-# Copyright (c) 2000-2010, JPackage Project
+# Copyright (c) 2000-2005, JPackage Project
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -33,77 +33,54 @@ BuildRequires: jpackage-compat
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
-%define with()          %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
-%define without()       %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
-%define bcond_with()    %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
-%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
-
-%bcond_without          maven
-
-%define gcj_support 0
-
-
 %define parent plexus
 %define subname bsh-factory
 
-%define maven_settings_file %{_builddir}/%{name}/settings.xml
-
 Name:           %{parent}-%{subname}
 Version:        1.0
-Release:        alt3_0.a7s.5jpp6
+Release:        alt4_0.8.a7jpp7
 Epoch:          0
-Summary:        Plexus Bsh Factory
-License:        ASL 2.0
+Summary:        Plexus Bsh component factory
+License:        MIT
 Group:          Development/Java
 URL:            http://plexus.codehaus.org/
-# svn export svn://svn.plexus.codehaus.org/plexus/tags/plexus-bsh-factory-1.0-alpha-7-SNAPSHOT plexus-bsh-factory
+# svn export svn://svn.plexus.codehaus.org/plexus/tags/plexus-bsh-factory-1.0-alpha-7-SNAPSHOT plexus-bsh-factory/
+# tar czf plexus-bsh-factory-src.tar.gz plexus-bsh-factory/
 Source0:        %{name}-src.tar.gz
 Source1:        %{name}-jpp-depmap.xml
-Source2:        %{name}-build.xml
-Patch0:         %{name}-encodingfix.patch
-Requires: bsh
-Requires: classworlds
-Requires: plexus-container-default
-Requires: plexus-utils
-Requires(post): jpackage-utils >= 0:1.7.5
-Requires(postun): jpackage-utils >= 0:1.7.5
-BuildRequires: jpackage-utils >= 0:1.7.5
-%if %{with_maven}
-BuildRequires: maven2 >= 2.0.8
-BuildRequires: maven2-plugin-compiler
-BuildRequires: maven2-plugin-install
-BuildRequires: maven2-plugin-jar
-BuildRequires: maven2-plugin-javadoc
-BuildRequires: maven2-plugin-resources
-BuildRequires: maven2-common-poms >= 1.0-2
-BuildRequires: maven-release
-BuildRequires: maven-surefire-maven-plugin
-BuildRequires: apache-commons-parent
-%else
-BuildRequires: ant
-%endif
-BuildRequires: bsh
-BuildRequires: classworlds
-BuildRequires: plexus-container-default
-BuildRequires: plexus-utils
-%if %{gcj_support}
-BuildRequires: java-gcj-compat-devel
-%else
+Source3:	plexus-bsh-factory-license.txt
+
+Patch1:         %{name}-encodingfix.patch
+
 BuildArch:      noarch
-%endif
+
+BuildRequires:     jpackage-utils
+BuildRequires:     maven
+BuildRequires:     maven-compiler-plugin
+BuildRequires:     maven-install-plugin
+BuildRequires:     maven-jar-plugin
+BuildRequires:     maven-javadoc-plugin
+BuildRequires:     maven-resources-plugin
+BuildRequires:     maven-surefire-plugin
+BuildRequires:     bsh
+BuildRequires:     classworlds
+BuildRequires:     plexus-container-default
+BuildRequires:     plexus-utils
+
+Requires:          bsh
+Requires:          classworlds
+Requires:          plexus-utils
+# the only user of this code doesn't use problematic parts of API
+Requires:          plexus-containers-container-default
 Source44: import.info
 
 %description
-The Plexus project seeks to create end-to-end developer tools for
-writing applications. At the core is the container, which can be
-embedded or for a full scale application server. There are many
-reusable components for hibernate, form processing, jndi, i18n,
-velocity, etc. Plexus also includes an application server which
-is like a J2EE application server, without all the baggage.
+Bsh component class creator for Plexus.
 
 %package javadoc
 Summary:        Javadoc for %{name}
-Group:          Development/Documentation
+Group:          Development/Java
+Requires:       jpackage-utils
 BuildArch: noarch
 
 %description javadoc
@@ -111,66 +88,52 @@ Javadoc for %{name}.
 
 %prep
 %setup -q -n %{name}
-%patch0 -p0
 
-%if %without maven
-cp -p %{SOURCE2} build.xml
-%endif
+%patch1 -b .sav
+cp release-pom.xml pom.xml
+
+cp -p %{SOURCE3} .
+
 
 %build
-%if %with maven
-export MAVEN_REPO_LOCAL=$(pwd)/.m2/repository
-mkdir -p $MAVEN_REPO_LOCAL
-mvn-jpp -Dmaven.compile.target=1.5 -Dmaven.javadoc.source=1.5  -e \
-	-Dmaven.local.depmap.file=%{S:33} \
-	-Dmaven.repo.local=$MAVEN_REPO_LOCAL install javadoc:javadoc
-%else
-export CLASSPATH=
-export OPT_JAR_LIST=:
-mkdir -p lib
-build-jar-repository -s -p lib bsh classworlds  plexus/container-default plexus/utils
-ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Dmaven.mode.offline=true package javadoc
-%endif
+# depmap used to compile so we resolve old plexus-container-default
+# At runtime we use new plexus-containers-container-default because our only
+# runtime user is maven-plugin-tools/maven-script-beanshell which doesn't cause
+# problems with old/new API
+mvn-rpmbuild -Dmaven.compile.source=1.5 -Dmaven.compile.target=1.5 -Dmaven.javadoc.source=1.5  -Dmaven.local.depmap.file=%{SOURCE1} \
+             -Dmaven.test.skip=true \
+             package javadoc:aggregate
 
 %install
-
 # jars
 install -d -m 755 $RPM_BUILD_ROOT%{_javadir}/plexus
-install -m 644 target/*.jar $RPM_BUILD_ROOT%{_javadir}/%{parent}/%{subname}-%{version}.jar
-(cd $RPM_BUILD_ROOT%{_javadir}/%{parent} && for jar in *-%{version}*; do ln -sf ${jar} `echo $jar| sed  "s|-%{version}||g"`; done)
+install -pm 644 target/*.jar \
+      $RPM_BUILD_ROOT%{_javadir}/%{parent}/%{subname}.jar
 
 # pom
-%add_to_maven_depmap org.codehaus.plexus %{name} 1.0-alpha-7 JPP/%{parent} %{subname}
+install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
+install -pm 644 \
+  pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{parent}-%{subname}.pom
 
-install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/maven2/poms
-install -pm 644 pom.xml $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP.%{parent}-%{subname}.pom
+%add_maven_depmap JPP.%{parent}-%{subname}.pom %{parent}/%{subname}.jar
 
 # javadoc
-install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
-cp -pr target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}/
-ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name}
+install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}
+cp -pr target/site/apidocs/* \
+       $RPM_BUILD_ROOT%{_javadocdir}/%{name}/
 
-%if %{gcj_support}
-%{_bindir}/aot-compile-rpm
-%endif
 
-%files
-%dir %{_javadir}/plexus
-%{_javadir}/plexus/*.jar
-%{_datadir}/maven2/poms/*
-%{_mavendepmapfragdir}/*
-%if %{with_maven}
-%if %{gcj_support}
-%dir %{_libdir}/gcj/%{name}
-%{_libdir}/gcj/%{name}/bsh-factory-1.0.jar.*
-%endif
+%files -f .mfiles
+%doc plexus-bsh-factory-license.txt
 
 %files javadoc
-%{_javadocdir}/%{name}-%{version}
-%{_javadocdir}/%{name}
-%endif
+%doc plexus-bsh-factory-license.txt
+%doc %{_javadocdir}/*
 
 %changelog
+* Tue Mar 19 2013 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt4_0.8.a7jpp7
+- fc update
+
 * Fri Apr 13 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt3_0.a7s.5jpp6
 - fixed build with new plexus-containers
 
