@@ -15,24 +15,22 @@ BuildArch: noarch
 Name: eclipse-nls 
 Summary: Babel language packs for the Eclipse platform and various plug-ins
 # note: try to keep this group the same as eclipse's rpm:
-Group: Editors
+Group: Development/Java
 License: EPL
 URL: http://www.eclipse.org/babel/
 
-Version: 3.7.0.v20111128043401
-Release: alt1_2jpp7
-## The source for this package is taken from
-# http://download.eclipse.org/technology/babel/babel_language_packs/R0.9.1/indigo/indigo.php
-# usage: FROM=http://download.eclipse.org/technology/babel/babel_language_packs/R0.9.1/indigo/indigo.php ./fetch-babel.sh
-Source0: BabelLanguagePack-%{version}.tar.bz2
-
-%if %{defined fedora}
-BuildArch:  noarch
-%endif
-Requires:   eclipse-platform >= 1:3.6
+Version: 4.2.0.v20121120043402
+Release: alt1_1jpp7
+# Babel language pack (zipped p2 update site) via: http://www.eclipse.org/babel/downloads.php
+Source0: http://download.eclipse.org/technology/babel/update-site/R0.10.1/babel-R0.10.1-juno.zip
+Requires:   eclipse-platform >= 1:4.2
 
 %if 0%{?rhel} >= 6
 ExclusiveArch: %{ix86} x86_64
+%else
+%if %{defined fedora}
+BuildArch:  noarch
+%endif
 %endif
 Source44: import.info
 
@@ -129,31 +127,36 @@ have a translation for a given string. \
 
 %prep
 # extract langpack zips from tarball
-%setup -q -n %{name}
-#mkdir -p eclipse/features
-mkdir -p eclipse/plugins
+%setup -q -n juno
+# remove unused p2 metadata
+rm -rf mirrors/ artifacts.jar content.jar
+# rearrange directories to be like the old extracted zips
+mkdir eclipse
+mv features/ plugins/ eclipse/
 # remove unsupported langpacks (currently Klingon)
 unsupported="tl"
 for locale in $unsupported; do
-   rm -f Babel*-${locale}_%{version}.zip
+  rm -f eclipse/features/*_${locale}_%{version}.jar
+  rm -f eclipse/plugins/*.nl_${locale}_%{version}.jar
 done
-# extract remaining zips - to eclipse/{features,plugins}
-for f in Babel*.zip; do
-   unzip -qq $f
-   rm $f
+# extract feature jars to feature dirs (like the old extracted zips)
+for feature in eclipse/features/*.jar; do
+  feature_dir=${feature%.jar}
+  unzip -qq $feature -d $feature_dir
+  rm -f $feature
 done
-#mv artifacts.jar content.jar eclipse
-# also ignore site.xml for now
 
 %build
 # nothing to build
 
 %install
 mkdir -p $RPM_BUILD_ROOT%{eclipse_data}/dropins/babel/eclipse/
-mv eclipse/plugins $RPM_BUILD_ROOT%{eclipse_data}/dropins/babel/eclipse
-find eclipse/features -type f -exec chmod 644 {} \;
+mv eclipse/plugins/ $RPM_BUILD_ROOT%{eclipse_data}/dropins/babel/eclipse
 
 %changelog
+* Tue Mar 19 2013 Igor Vlasenko <viy@altlinux.ru> 4.2.0.v20121120043402-alt1_1jpp7
+- fc update
+
 * Wed Sep 05 2012 Igor Vlasenko <viy@altlinux.ru> 3.7.0.v20111128043401-alt1_2jpp7
 - new version
 
