@@ -1,4 +1,5 @@
 # BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
@@ -9,9 +10,11 @@ BuildRequires: rpm-build-java-osgi
 %endif
 %global eclipse_dropin   %{_datadir}/eclipse/dropins
 
+%define __requires_exclude osgi*
+
 Name:      eclipse-emf
-Version:   2.8.0
-Release:   alt2_16jpp7
+Version:   2.8.1
+Release:   alt1_7jpp7
 Summary:   Eclipse Modeling Framework (EMF) Eclipse plugin
 Group:     System/Libraries
 License:   EPL
@@ -48,7 +51,7 @@ BuildRequires:    eclipse-pde >= 1:4.2.0
 BuildRequires:    dos2unix
 Requires:         jpackage-utils
 Requires:         eclipse-platform >= 1:4.2.0
-Requires:         %{name}-core = %{?serial:%serial:}%{version}-%{release}
+Requires:         %{name}-core
 
 # the standalone package was deprecated and removed in EMF 2.3 (see eclipse.org bug #191837)
 Obsoletes:        %{name}-standalone < 2.4
@@ -84,7 +87,7 @@ Summary:   Eclipse EMF SDK
 Group:     System/Libraries
 Requires:  java-javadoc
 Requires:  eclipse-pde >= 1:4.2.0
-Requires:  eclipse-emf = %{version}-%{release}
+Requires:  %{name} = %{version}-%{release}
 
 %description sdk
 Documentation and source for the Eclipse Modeling Framework (EMF).
@@ -92,7 +95,7 @@ Documentation and source for the Eclipse Modeling Framework (EMF).
 %package   xsd
 Summary:   XML Schema Definition (XSD) Eclipse plugin
 Group:     System/Libraries
-Requires:  eclipse-emf = %{version}-%{release}
+Requires:  %{name} = %{version}-%{release}
 
 %description xsd
 The XML Schema Definition (XSD) plugin is a library that provides an API for
@@ -105,8 +108,8 @@ Summary:   Eclipse XSD SDK
 Group:     System/Libraries
 Requires:  java-javadoc
 Requires:  eclipse-pde >= 1:4.2.0
-Requires:  eclipse-emf-xsd = %{version}-%{release}
-Requires:  eclipse-emf-sdk = %{version}-%{release}
+Requires:  %{name}-xsd = %{version}-%{release}
+Requires:  %{name}-sdk = %{version}-%{release}
 
 %description xsd-sdk
 Documentation and source for the Eclipse XML Schema Definition (XSD) plugin.
@@ -114,8 +117,8 @@ Documentation and source for the Eclipse XML Schema Definition (XSD) plugin.
 %package   examples
 Summary:   Eclipse EMF/XSD examples
 Group:     System/Libraries
-Requires:  eclipse-emf = %{version}-%{release}
-Requires:  eclipse-emf-xsd = %{version}-%{release}
+Requires:  %{name} = %{version}-%{release}
+Requires:  %{name}-xsd = %{version}-%{release}
 
 %description examples
 Installable versions of the example projects from the SDKs that demonstrate how
@@ -153,7 +156,7 @@ fi
 %build
 # Note: We use forceContextQualifier because the docs plugins use custom build
 #       scripts and don't work otherwise.
-OPTIONS="-DjavacTarget=1.5 -DjavacSource=1.5 -DforceContextQualifier=v20110913-1526"
+OPTIONS="-DjavacTarget=1.5 -DjavacSource=1.5 -DforceContextQualifier=v20120911-0500"
 
 # Work around pdebuild entering/leaving symlink it is unaware of.
 ln -s %{_builddir}/emf-%{version}/org.eclipse.emf.license-feature %{_builddir}/emf-%{version}/org.eclipse.emf.license
@@ -200,11 +203,11 @@ eclipse-pdebuild -f org.eclipse.emf.examples -a "$OPTIONS" -d "eclipse-emf-core"
 
 %install
 install -d -m 755 %{buildroot}%{eclipse_dropin}
-install -d -m 755 %{buildroot}/usr/share/java/emf
+install -d -m 755 %{buildroot}%{_javadir}/emf
 
-unzip -q -n -d %{buildroot}/usr/share/java/emf          build/rpmBuild/org.eclipse.emf.common.zip
-unzip -q -n -d %{buildroot}/usr/share/java/emf          build/rpmBuild/org.eclipse.emf.ecore.zip
-unzip -q -n -d %{buildroot}/usr/share/java/emf          build/rpmBuild/org.eclipse.emf.edit.zip
+unzip -q -n -d %{buildroot}%{_javadir}/emf          build/rpmBuild/org.eclipse.emf.common.zip
+unzip -q -n -d %{buildroot}%{_javadir}/emf          build/rpmBuild/org.eclipse.emf.ecore.zip
+unzip -q -n -d %{buildroot}%{_javadir}/emf          build/rpmBuild/org.eclipse.emf.edit.zip
 
 
 unzip -q -n -d %{buildroot}%{eclipse_dropin}/emf          build/rpmBuild/org.eclipse.emf.common.ui.zip
@@ -248,12 +251,18 @@ rm -rf %{buildroot}%{eclipse_dropin}/emf-sdk/eclipse/plugins/org.eclipse.emf.eco
 rm -rf %{buildroot}%{eclipse_dropin}/emf-sdk/eclipse/plugins/org.eclipse.emf.ecore.change_*
 rm -rf %{buildroot}%{eclipse_dropin}/emf-sdk/eclipse/plugins/org.eclipse.emf.ecore.xmi_*
 
+pushd %{buildroot}%{_javadir}/emf/eclipse/plugins/
+	EMF_EDIT=`ls | grep emf.edit`
+popd
+pushd %{buildroot}%{eclipse_dropin}/emf/eclipse/plugins
+	ln -s %{_javadir}/emf/eclipse/plugins/${EMF_EDIT}
+popd
 %files
 %{eclipse_dropin}/emf
 %doc org.eclipse.emf.license-feature/rootfiles/*
 
 %files core
-/usr/share/java/emf
+%{_javadir}/emf
 %doc org.eclipse.emf.license-feature/rootfiles/*
 
 %files sdk
@@ -270,6 +279,9 @@ rm -rf %{buildroot}%{eclipse_dropin}/emf-sdk/eclipse/plugins/org.eclipse.emf.eco
 %{eclipse_dropin}/emf-examples
 
 %changelog
+* Tue Mar 19 2013 Igor Vlasenko <viy@altlinux.ru> 2.8.1-alt1_7jpp7
+- fc update
+
 * Sat Jan 26 2013 Igor Vlasenko <viy@altlinux.ru> 2.8.0-alt2_16jpp7
 - applied repocop patches
 
