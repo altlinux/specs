@@ -1,6 +1,6 @@
 Name: xbmc
-Version: 11.0
-Release: alt2
+Version: 12.1
+Release: alt1
 
 Summary: XBMC Media Center
 License: GPL
@@ -9,24 +9,33 @@ Url: http://xbmc.org
 
 Requires: xbmc-data = %version-%release
 
-Source: %name-%version-%release.tar
+Source0: %name-%version-%release.tar
+Source1: pvr-addons.tar
+Source2: xvdr.tar
 
-BuildRequires: cmake gcc-c++ gperf nasm
+BuildRequires: cmake gcc-c++ doxygen swig gperf nasm unzip zip
 BuildRequires: boost-devel bzlib-devel libmysqlclient-devel libSDL_image-devel libSDL_mixer-devel
 BuildRequires: libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel
 BuildRequires: libXdmcp-devel libXext-devel libXft-devel libXinerama-devel libXmu-devel
 BuildRequires: libXpm-devel libXrandr-devel libXt-devel libXtst-devel libSM-devel libxkbfile-devel
 BuildRequires: libX11-devel libXfixes-devel libXrender-devel xorg-xproto-devel
-BuildRequires: libalsa-devel libass-devel libavahi-devel libcdio-devel libcurl-devel
-BuildRequires: libenca-devel libexpat-devel libfaad-devel libflac-devel libfribidi-devel
-BuildRequires: libglew-devel libjasper-devel libjpeg-devel liblzo2-devel libyajl-devel
-BuildRequires: libmad-devel libmicrohttpd-devel libmms-devel libmodplug-devel libmpeg2-devel
+BuildRequires: libalsa-devel libass-devel libavahi-devel libbluray-devel libcap-devel
+BuildRequires: libcec-devel libcdio-devel libcurl-devel libdbus-devel libenca-devel
+BuildRequires: libexpat-devel libfaad-devel libflac-devel libfreetype-devel libfribidi-devel
+BuildRequires: libjasper-devel libjpeg-devel liblzo2-devel libyajl-devel libmad-devel
+BuildRequires: libmicrohttpd-devel libmms-devel libmodplug-devel libmpeg2-devel
 BuildRequires: libpcrecpp-devel libpng-devel libsamplerate-devel libsmbclient-devel
 BuildRequires: libsqlite3-devel libtiff-devel libvorbis-devel libwavpack-devel
-BuildRequires: libavfilter-devel libavformat-devel libpostproc-devel libswscale-devel libva-devel libvdpau-devel
-BuildRequires: libdbus-devel libplist-devel libssh-devel librtmp-devel python-devel unzip zip
-BuildRequires: libbluray-devel libpulseaudio-devel fontconfig-devel libfreetype-devel
-BuildRequires: libbluez-devel libudev-devel
+BuildRequires: libplist-devel libpulseaudio-devel libssh-devel librtmp-devel python-devel
+BuildRequires: libbluez-devel libtag-devel tinyxml-devel libudev-devel
+BuildRequires: fontconfig-devel java-1.6.0-openjdk-devel /proc
+
+%ifarch %ix86 x86_64
+BuildRequires: libva-devel libvdpau-devel libGL-devel libGLU-devel libglew-devel
+%endif
+%ifarch %arm
+BuildRequires: libEGL-devel libGLES-devel
+%endif
 
 %package data
 Summary: XBMC architecture-independent data
@@ -43,12 +52,22 @@ This package contains all architecture-independent data requried for XBMC.
 %define docdir %_defaultdocdir/%name-%version
 
 %prep
-%setup
+%setup -a1 -a2
+touch xvdr/{NEWS,AUTHORS,ChangeLog}
 
 %build
 [ ! -x bootstrap ] || sh bootstrap
-GIT_REV='20120322-14feb09' \
-%configure --disable-non-free
+%configure --disable-non-free \
+	--enable-external-libraries \
+	--disable-external-ffmpeg \
+	--enable-pulse \
+%ifarch %arm
+	--enable-gles \
+	--disable-projectm \
+	--with-platform=marvell-dove \
+%endif
+	#
+
 %make_build
 
 %install
@@ -57,6 +76,10 @@ make \
     bindir=%_bindir \
     libdir=%_libdir \
     datadir=%_datadir install
+
+cd %buildroot%_datadir/xbmc/addons && find pvr.vdr.xvdr -type f -name \*.pvr |\
+	cpio -pmd %buildroot%_libdir/xbmc/addons/
+rm -f %buildroot%_datadir/xbmc/addons/pvr.vdr.xvdr/*.pvr
 
 rm -rf \
     %buildroot%_datadir/xbmc/addons/library.xbmc.* \
@@ -104,6 +127,9 @@ E_O_F
 %add_python_req_skip xbmc
 %add_python_req_skip xbmcgui
 %add_python_req_skip xbmcaddon
+%add_python_req_skip xbmcvfs
+
+%set_verify_elf_method textrel=relaxed
 
 %files
 %docdir
@@ -136,6 +162,12 @@ E_O_F
 %_datadir/xbmc/userdata
 
 %changelog
+* Tue Mar 19 2013 Sergey Bolshakov <sbolshakov@altlinux.ru> 12.1-alt1
+- 12.1 Frodo released
+
+* Sat Feb 02 2013 Sergey Bolshakov <sbolshakov@altlinux.ru> 12.0-alt1
+- 12.0 Frodo released
+
 * Tue May 08 2012 Sergey Bolshakov <sbolshakov@altlinux.ru> 11.0-alt2
 - 11.0 Eden-r2 released
 
