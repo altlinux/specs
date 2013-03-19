@@ -2,7 +2,7 @@
 %define systemdsystemunitdir /lib/systemd/system
 
 Name: upower
-Version: 0.9.19
+Version: 0.9.20
 Release: alt1
 Summary: Power Management Service
 License: GPLv2+
@@ -79,6 +79,7 @@ rm -f acinclude.m4
 	--libexecdir=%_libexecdir \
 	--localstatedir=%_var \
 	--disable-static
+#	--enable-deprecated
 %make_build
 
 %install
@@ -118,6 +119,9 @@ rm -f acinclude.m4
 %_datadir/gir-1.0/*.gir
 
 %changelog
+* Tue Mar 19 2013 Valery Inozemtsev <shrek@altlinux.ru> 0.9.20-alt1
+- 0.9.20
+
 * Mon Jan 14 2013 Valery Inozemtsev <shrek@altlinux.ru> 0.9.19-alt1
 - 0.9.19
 
