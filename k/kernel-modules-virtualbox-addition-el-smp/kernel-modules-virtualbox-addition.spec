@@ -1,12 +1,12 @@
 %define module_name	virtualbox-addition
-%define module_version	4.2.4
+%define module_version	4.2.10
 %define module_release	alt1
 
-%define kversion	2.6.32
-%define krelease	alt39
 %define flavour		el-smp
+BuildRequires(pre): rpm-build-kernel >= 0.100-alt1
+BuildRequires(pre): kernel-headers-modules-el-smp
 
-%define base_arch %(echo %_target_cpu | sed 's/i.86/i386/;s/athlon/i386/')
+%setup_kernel_module %flavour
 
 %define module_dir /lib/modules/%kversion-%flavour-%krelease/misc
 
@@ -17,7 +17,7 @@
 Summary: VirtualBox modules
 Name: kernel-modules-%module_name-%flavour
 Version: %module_version
-Release: %module_release.132640.39
+Release: %module_release.%kcode.%kbuildrelease
 License: GPL
 Group: System/Kernel and hardware
 
@@ -25,11 +25,11 @@ Packager: Kernel Maintainer Team <kernel@packages.altlinux.org>
 
 ExclusiveOS: Linux
 Url: http://www.virtualbox.org/
-BuildRequires(pre): rpm-build-kernel
+
 BuildPreReq: gcc-c++
 BuildRequires: perl
 BuildRequires: rpm >= 4.0.2-75
-BuildRequires: kernel-headers-modules-%flavour = %kversion-%krelease
+BuildRequires: kernel-headers-modules-%flavour = %kepoch%kversion-%krelease
 BuildRequires: kernel-source-%guest_module_name = %module_version
 BuildRequires: kernel-source-%vfs_module_name = %module_version
 BuildRequires: kernel-source-%video_module_name = %module_version
@@ -48,10 +48,8 @@ Provides: kernel-modules-%vfs_module_name-%kversion-%flavour-%krelease = %versio
 Provides: kernel-modules-%vfs_module_name-%flavour = %version-%release
 Obsoletes: kernel-modules-%vfs_module_name-%flavour
 
-PreReq: coreutils
-PreReq: kernel-image-%flavour = %kversion-%krelease
-Requires(postun): kernel-image-%flavour = %kversion-%krelease
-ExclusiveArch: %ix86 x86_64
+PreReq: kernel-image-%flavour = %kepoch%kversion-%krelease
+ExclusiveArch: %karch
 
 # %%if "%flavour" == "ovz-el"
 # #Patch1: ovz-el-fix-build.patch
@@ -63,9 +61,9 @@ that are needed for additonal guests support for VirtualBox.
 
 %prep
 %setup -T -c -n kernel-source-%module_name-%module_version
-%__tar jxvf %kernel_src/kernel-source-%guest_module_name-%module_version.tar.bz2
-%__tar jxvf %kernel_src/kernel-source-%vfs_module_name-%module_version.tar.bz2
-%__tar jxvf %kernel_src/kernel-source-%video_module_name-%module_version.tar.bz2
+tar jxvf %kernel_src/kernel-source-%guest_module_name-%module_version.tar.bz2
+tar jxvf %kernel_src/kernel-source-%vfs_module_name-%module_version.tar.bz2
+tar jxvf %kernel_src/kernel-source-%video_module_name-%module_version.tar.bz2
 
 # %%if "%flavour" == "ovz-el"
 # %%patch1 -p1
@@ -83,30 +81,31 @@ cp kernel-source-%guest_module_name-%module_version/Module.symvers \
     KERN_DIR=%_usrsrc/linux-%kversion-%flavour/
 
 %install
-%__mkdir_p %buildroot/%module_dir
-%__install -pD -m644 kernel-source-%guest_module_name-%module_version/vboxguest.ko \
+mkdir -p %buildroot/%module_dir
+install -pD -m644 kernel-source-%guest_module_name-%module_version/vboxguest.ko \
     %buildroot%module_dir/
-%__install -pD -m644 kernel-source-%vfs_module_name-%module_version/vboxsf.ko \
+install -pD -m644 kernel-source-%vfs_module_name-%module_version/vboxsf.ko \
     %buildroot%module_dir/
-%__install -pD -m644 kernel-source-%video_module_name-%module_version/vboxvideo.ko \
+install -pD -m644 kernel-source-%video_module_name-%module_version/vboxvideo.ko \
     %buildroot%module_dir/
-
-%post
-%post_kernel_modules %kversion-%flavour-%krelease
-
-%postun
-%postun_kernel_modules %kversion-%flavour-%krelease
 
 %files
 %defattr(644,root,root,755)
 %module_dir
 
 %changelog
-* Fri Nov 23 2012 Evgeny Sinelnikov <sin@altlinux.ru> 4.2.4-alt1.132640.39
-- Build for kernel-image-el-smp-2.6.32-alt39.
+* %(LC_TIME=C date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
+- Build for kernel-image-%flavour-%kversion-%krelease.
 
-* Thu Nov 22 2012 Evgeny Sinelnikov <sin@altlinux.ru> 4.2.4-alt1
-- Update to new release
+* Tue Mar 19 2013 Evgeny Sinelnikov <sin@altlinux.ru> 4.2.10-alt1
+- Update to last stable version
+- Support specsubst for kflavour
+
+* Mon Dec 17 2012 Gleb F-Malinovskiy <glebfm@altlinux.org> 4.2.4-alt2
+- new template
+
+* Tue Nov 27 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 4.2.4-alt1
+- 4.2.4
 
 * Wed Aug 29 2012 Anton Protopopov <aspsk@altlinux.org> 4.1.20-alt2
 - technical
@@ -114,23 +113,14 @@ cp kernel-source-%guest_module_name-%module_version/Module.symvers \
 * Wed Aug 22 2012 Evgeny Sinelnikov <sin@altlinux.ru> 4.1.20-alt1
 - Update to new release
 
-* Sun Jul 29 2012 Evgeny Sinelnikov <sin@altlinux.ru> 4.1.18-alt2
-- Remove old patch for el-smp
+* Sun Jul 29 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 4.1.18-alt1
+- 4.1.18
 
-* Sat Jul 28 2012 Evgeny Sinelnikov <sin@altlinux.ru> 4.1.18-alt1
-- Update to new release
+* Sun Apr 15 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 4.1.12-alt4
+- 4.1.12
 
-* Sun Jun 24 2012 Anton Protopopov <aspsk@altlinux.org> 4.1.12-alt3
-- Fix build on el-smp
-
-* Fri Apr 06 2012 Anton Protopopov <aspsk@altlinux.org> 4.1.12-alt2
-- Technical
-
-* Wed Apr 04 2012 Evgeny Sinelnikov <sin@altlinux.ru> 4.1.12-alt1
-- Update to new release
-
-* Sun Apr 01 2012 Evgeny Sinelnikov <sin@altlinux.ru> 4.1.10-alt1
-- Update to new release with 3.2 kernel support
+* Mon Mar 26 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 4.1.6-alt4
+- fix to build with 3.3 kernel
 
 * Sat Jan 14 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 4.1.6-alt3
 - fix to build with 3.2 kernel

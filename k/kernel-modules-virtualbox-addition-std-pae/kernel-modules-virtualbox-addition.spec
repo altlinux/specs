@@ -1,9 +1,9 @@
 %define module_name	virtualbox-addition
-%define module_version	4.2.4
-%define module_release alt3
+%define module_version	4.2.10
+%define module_release	alt1
 
 %define flavour		std-pae
-BuildRequires(pre): rpm-build-kernel
+BuildRequires(pre): rpm-build-kernel >= 0.100-alt1
 BuildRequires(pre): kernel-headers-modules-std-pae
 
 %setup_kernel_module %flavour
@@ -25,7 +25,7 @@ Packager: Kernel Maintainer Team <kernel@packages.altlinux.org>
 
 ExclusiveOS: Linux
 Url: http://www.virtualbox.org/
-BuildRequires(pre): rpm-build-kernel
+
 BuildPreReq: gcc-c++
 BuildRequires: perl
 BuildRequires: rpm >= 4.0.2-75
@@ -51,7 +51,9 @@ Obsoletes: kernel-modules-%vfs_module_name-%flavour
 PreReq: kernel-image-%flavour = %kepoch%kversion-%krelease
 ExclusiveArch: %karch
 
-Patch0: virtualbox-addition-build3.8.patch
+# %%if "%flavour" == "ovz-el"
+# #Patch1: ovz-el-fix-build.patch
+# %%endif
 
 %description
 This package contains VirtualBox addition modules (vboxguest, vboxsf, vboxvideo)
@@ -63,9 +65,9 @@ tar jxvf %kernel_src/kernel-source-%guest_module_name-%module_version.tar.bz2
 tar jxvf %kernel_src/kernel-source-%vfs_module_name-%module_version.tar.bz2
 tar jxvf %kernel_src/kernel-source-%video_module_name-%module_version.tar.bz2
 
-pushd kernel-source-%guest_module_name-%module_version
-%patch0 -p1
-popd
+# %%if "%flavour" == "ovz-el"
+# %%patch1 -p1
+# %%endif
 
 %build
 . %_usrsrc/linux-%kversion-%flavour/gcc_version.inc
@@ -92,11 +94,12 @@ install -pD -m644 kernel-source-%video_module_name-%module_version/vboxvideo.ko 
 %module_dir
 
 %changelog
-* %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
+* %(LC_TIME=C date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
 
-* Tue Feb 19 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 4.2.4-alt3
-- build with kernel 3.8 fixed
+* Tue Mar 19 2013 Evgeny Sinelnikov <sin@altlinux.ru> 4.2.10-alt1
+- Update to last stable version
+- Support specsubst for kflavour
 
 * Mon Dec 17 2012 Gleb F-Malinovskiy <glebfm@altlinux.org> 4.2.4-alt2
 - new template
