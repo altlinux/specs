@@ -1,3 +1,6 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           colossus
@@ -5,7 +8,7 @@ Name:           colossus
 %global         revdate    20120314
 Version:        0.13.2
 %global         branch     0.13.x
-Release:        alt1_2jpp7
+Release:        alt1_4jpp7
 Summary:        Allows people to play Titan against each other or AIs
 
 Group:          Games/Other
@@ -23,6 +26,8 @@ URL:            http://colossus.sourceforge.net/
 Source0:        colossus-%{branch}-%{revdate}-%{rev}.tar.gz
 Source1:        colossus-gen-tarball.sh
 Source2:        colossus-rev.xsl
+# Backport carryover hang patch from upstream trunk
+Patch0:         hang.patch
 
 BuildArch:      noarch
 
@@ -49,7 +54,7 @@ of humans.
 %package javadoc
 Summary:        Javadocs for %{name}
 Group:          Development/Java
-Requires:       colossus = %{version}-%{release}
+Requires:       %{name} = %{version}-%{release}
 Requires:       jpackage-utils
 BuildArch: noarch
 
@@ -60,6 +65,7 @@ This package contains the API documentation for %{name}.
 %setup -q -n %{name}-%{branch}-%{revdate}-%{rev}
 # With 0.13.x there is an extra direcory level
 mv Colossus/* Colossus/.??* .
+%patch0 -p2
 
 %build
 
@@ -75,7 +81,7 @@ build.timestamp=%{revdate}
 username=rpmbuild
 EOF
 
-ant jar
+ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  jar
 
 # The supplied build.xml adds a classpath to the manifest that needs to
 # be removed.
@@ -100,9 +106,9 @@ cat <<EOF > fixup.xml
 </project>
 EOF
 
-ant -f fixup.xml
+ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  -f fixup.xml
 
-ant -lib %{_javadir}/jdom.jar javadoc
+ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  -lib %{_javadir}/jdom.jar javadoc
 
 # Allow for simple command to run colossus
 echo -e "#!/bin/sh\njava -cp %{_javadir}/jdom.jar:%{_javadir}/colossus.jar net.sf.colossus.appmain.Start" > %{name}
@@ -147,6 +153,9 @@ touch --no-create %{_datadir}/pixmaps || :
 %{_javadocdir}/%{name}
 
 %changelog
+* Tue Mar 19 2013 Igor Vlasenko <viy@altlinux.ru> 0.13.2-alt1_4jpp7
+- fc update
+
 * Mon Aug 20 2012 Igor Vlasenko <viy@altlinux.ru> 0.13.2-alt1_2jpp7
 - update to new release by jppimport
 
