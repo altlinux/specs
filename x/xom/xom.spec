@@ -1,10 +1,10 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
 BuildRequires: dom4j
 BuildRequires: /proc
 BuildRequires: jpackage-compat
-# fedora bcond_with macro
-%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
-%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
-# Copyright (c) 2000-2010, JPackage Project
+# Copyright (c) 2000-2005, JPackage Project
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -34,201 +34,162 @@ BuildRequires: jpackage-compat
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
-%define with()          %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
-%define without()       %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
-%define bcond_with()    %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
-%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
+# To build with dom4j issue rpmbuild --with dom4j xom.spec
 
-#def_with bootstrap
-%bcond_with bootstrap
-#def_with gcj_support
-%bcond_with gcj_support
-#def_with test
-%bcond_with test
+%define with_dom4j %{?_with_dom4j:1}%{!?_with_dom4j:0}
+%define without_dom4j %{!?_with_dom4j:1}%{?_with_dom4j:0}
 
-%if %with gcj_support
-%define gcj_support 0
-%else
-%define gcj_support 0
-%endif
-
-
-Name:           xom
-Version:        1.2.6
-Release:        alt1_2jpp6
-Epoch:          0
 Summary:        XML Pull Parser
-License:        LGPLv2+
+Name:           xom
+Version:        1.0
+Release:        alt1_9jpp7
+Epoch:          1
+License:        LGPLv2
+URL:            http://www.xom.nu
 Group:          Development/Java
-URL:            http://www.xom.nu/
-Source0:        http://www.cafeconleche.org/XOM/xom-1.2.6-src.tar.gz
-Source1:        http://repo1.maven.org/maven2/xom/xom/1.2.6/xom-1.2.6.pom
-Patch0:         xom-1.2.6-remove-jaxen.patch
-Patch1:         xom-1.1-clean-dist.patch
-Patch3:         xom-1.1-remove_sun_import.patch
-Patch4:         xom-1.2.6-crosslink.patch
-Patch5:         xom-1.1-sinjdoc.patch
-Patch6:         xom-1.2b2-javadoc-stack-size.patch
-Requires(post): jpackage-utils
-Requires(postun): jpackage-utils
-Requires:       jpackage-utils
-Requires:       xalan-j2
-Requires:       xerces-j2
-Requires:       xml-commons-jaxp-1.3-apis
-BuildRequires:  ant >= 0:1.6
-BuildRequires:  ant-junit
-BuildRequires:  jarjar
-BuildRequires:  java-javadoc
-BuildRequires:  jaxen
-BuildRequires:  jpackage-utils
+Source0:        http://www.cafeconleche.org/XOM/xom-1.0.tar.gz
+Source1:        http://central.maven.org/maven2/xom/xom/1.0/xom-1.0.pom
+
+# Evidently gjdoc doesn't know about the noqualifier option; also, it
+# must do linkoffline and not link
+Patch0:         %{name}-gjdocissues.patch
+# FIXME:  file this
+# I don't know if this is a libgcj bug or if this is a legitimate typo
+# in build.xml
+Patch1:         %{name}-betterdocclasspath.patch
+
+BuildRequires:  ant >= 0:1.6 jpackage-utils >= 0:1.6
 BuildRequires:  junit
-BuildRequires:  junit-javadoc
 BuildRequires:  xalan-j2
 BuildRequires:  xerces-j2
-BuildRequires:  xml-commons-jaxp-1.3-apis
-%if %without bootstrap
+BuildRequires:  icu4j
+%if %{with_dom4j}
+BuildRequires:  dom4j
+%endif
+BuildRequires:  xml-commons-apis
+
 BuildRequires:  tagsoup
-BuildRequires:  saxon
-BuildRequires:  jaxp_parser_impl
-BuildRequires:  xml-commons-resolver12
+# Use JAXP implementation in libgcj
+BuildRequires:  libgcj
+BuildRequires:  xml-commons-resolver
 BuildRequires:  servlet
-%endif
-%if !%{gcj_support}
-BuildArch:      noarch
-%else
-BuildRequires:  java-gcj-compat-devel
-%endif
+
+Requires:  xalan-j2
+Requires:  xerces-j2
+Requires:  icu4j
+Requires:  xml-commons-apis
+Requires:  jpackage-utils
+BuildArch: noarch
 Source44: import.info
 
 %description
-XOM is a new XML object model. It is an open source (LGPL), 
-tree-based API for processing XML with Java that strives 
-for correctness, simplicity, and performance, in that order. 
-XOM is designed to be easy to learn and easy to use. It 
-works very straight-forwardly, and has a very shallow 
-learning curve. Assuming you're already familiar with XML, 
+XOM is a new XML object model. It is an open source (LGPL),
+tree-based API for processing XML with Java that strives
+for correctness, simplicity, and performance, in that order.
+XOM is designed to be easy to learn and easy to use. It
+works very straight-forwardly, and has a very shallow
+learning curve. Assuming you're already familiar with XML,
 you should be able to get up and running with XOM very quickly.
 
 %package javadoc
 Summary:        Javadoc for %{name}
-Group:          Development/Documentation
+Group:          Development/Java
+Requires:       jpackage-utils
 BuildArch: noarch
 
 %description javadoc
 %{summary}.
 
-%if %without bootstrap
 %package demo
 Summary:        Samples for %{name}
-Group:          Development/Documentation
-Requires:       %{name} = %{epoch}:%{version}-%{release}
+Group:          Development/Java
+Requires:       %{name} = 0:%{version}
 
 %description demo
 %{summary}.
-%endif
 
 %prep
 %setup -q -n XOM
+%patch0
+%patch1
 # remove all binary libs
-%{_bindir}/find -type f -name "*.jar" -o -type f -name "*.class" | %{_bindir}/xargs -t %{__rm}
-%patch0 -p0 -b .sav0
-%patch1 -p0 -b .sav1
-%patch3 -p0 -b .sav3
-%patch4 -p0 -b .sav4
-# XXX: (dwalluck): Required only for sinjdoc
-%if 0
-%patch5 -p0 -b .sav5
-%endif
-%patch6 -p0 -b .sav6
-%{__perl} -pi -e 's/\r$//g' *.html *.txt
-%{__perl} -pi -e 's/compress="no"/compress="yes"/g' build.xml
-
-pushd lib
-ln -s $(build-classpath junit) junit.jar
-ln -s $(build-classpath xerces-j2) xercesImpl.jar
-ln -s $(build-classpath xalan-j2) xalan.jar
-ln -s $(build-classpath xml-commons-jaxp-1.3-apis) xmlParserAPIs.jar
-popd
-mkdir lib2
-%if %without bootstrap
-pushd lib2
-ln -s $(build-classpath tagsoup) tagsoup-1.0rc1.jar
-ln -s $(build-classpath saxon) saxon.jar
-ln -s $(build-classpath jaxp_parser_impl) gnujaxp.jar
-ln -s $(build-classpath xml-commons-resolver12) resolver.jar
-DOM4J_PRESENT=$(build-classpath dom4j 2>/dev/null || :)
-if [ -n "$DOM4J_PRESENT" ]; then
-ln -s $(build-classpath dom4j) dom4j-1.5.1.jar
-fi
-ln -s $(build-classpath servlet) servlet.jar
-popd
-%endif
+find . -name "*.jar" -exec rm -f {} \;
 
 %build
-export CLASSPATH=$(build-classpath jarjar jaxen)
-export OPT_JAR_LIST=`%{__cat} %{_sysconfdir}/ant.d/junit`
-export ANT_OPTS="-Xss1m"
-ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Dbuild.sysclasspath=first -Dj2se.api=%{_javadocdir}/java -Djunit.api=%{_javadocdir}/junit compile15 jar javadoc
-%if %without bootstrap
-ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Dbuild.sysclasspath=first samples
-%if %with test
-ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Dbuild.sysclasspath=first test
+pushd lib
+ln -sf $(build-classpath junit) junit.jar
+ln -sf $(build-classpath xerces-j2) xercesImpl.jar
+ln -sf $(build-classpath xalan-j2) xalan.jar
+ln -sf $(build-classpath icu4j) normalizer.jar
+ln -sf $(build-classpath xml-commons-apis) xmlParserAPIs.jar
+popd
+mkdir lib2
+pushd lib2
+ln -sf $(build-classpath tagsoup) tagsoup-1.0rc1.jar
+ln -sf $(build-classpath xml-commons-resolver) resolver.jar
+
+%if %{with_dom4j}
+ln -sf $(build-classpath dom4j) dom4j.jar
 %endif
-%endif
+
+ln -sf $(build-classpath servlet) servlet.jar
+popd
+
+ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  jar samples betterdoc
+
+# Fix encoding
+sed -i 's/\r//g' LICENSE.txt
+pushd apidocs
+for f in `find -name \*.css -o -name \*.html`; do
+  sed -i 's/\r//g' $f
+done
+popd
 
 %install
-
 # jars
-install -d -m 755 %{buildroot}%{_javadir}
-install -p -m 644 build/xom-%{version}.jar %{buildroot}%{_javadir}/%{name}-%{version}.jar
-(cd %{buildroot}%{_javadir} && for jar in *-%{version}.jar; do ln -s ${jar} `echo $jar| sed "s|-%{version}||g"`; done)
+install -d -m 755 $RPM_BUILD_ROOT%{_javadir}
 
-# poms
-%add_to_maven_depmap %{name} %{name} %{version} JPP %{name}
-install -d -m 755 %{buildroot}%{_datadir}/maven2/poms
-install -pm 644 %{SOURCE1} %{buildroot}%{_datadir}/maven2/poms/JPP-%{name}.pom
+install -m 644 build/%{name}-%{version}.jar \
+  $RPM_BUILD_ROOT%{_javadir}/%{name}-%{version}.jar
+(cd $RPM_BUILD_ROOT%{_javadir} && for jar in *-%{version}.jar; do ln -sf ${jar} `echo $jar| sed "s|-%{version}||g"`; done)
 
 # javadoc
-install -d -m 755 %{buildroot}%{_javadocdir}/%{name}-%{version}
-cp -a build/apidocs/* %{buildroot}%{_javadocdir}/%{name}-%{version}
-ln -s %{name}-%{version} %{buildroot}%{_javadocdir}/%{name}
+install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
+cp -pr apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
+ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 
-%if %without bootstrap
 # demo
-install -d -m 755 %{buildroot}%{_datadir}/%{name}
-install -p -m 644 build/xom-samples.jar %{buildroot}%{_datadir}/%{name}
-install -p -m 644 xom.graffle %{buildroot}%{_datadir}/%{name}
-%endif
+install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/%{name}-%{version}
+install -m 644 build/xom-samples.jar $RPM_BUILD_ROOT%{_datadir}/%{name}-%{version}
 
-%if %{gcj_support}
-%{_bindir}/aot-compile-rpm
-%endif
+# POM
+install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
+install -m 644 %{SOURCE1} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
+%add_maven_depmap JPP-%{name}.pom %{name}.jar
 
 %files
-%doc overview.html README.txt LICENSE.txt Todo.txt lgpl.txt
-%if %without bootstrap
-%dir %{_datadir}/%{name}
-%{_datadir}/%{name}/xom.graffle
-%endif
+%doc overview.html
+%doc README.txt
+%doc LICENSE.txt
+%doc Todo.txt
+%doc lgpl.txt
+%doc %{name}.graffle
 %{_javadir}/%{name}.jar
 %{_javadir}/%{name}-%{version}.jar
-%{_datadir}/maven2/poms/JPP-%{name}.pom
-%{_mavendepmapfragdir}/%{name}
-%if %{gcj_support}
-%dir %{_libdir}/gcj/%{name}
-%{_libdir}/gcj/%{name}/*
-%endif
+%{_mavenpomdir}/JPP-%{name}.pom
+%{_mavendepmapfragdir}/*
 
 %files javadoc
-%{_javadocdir}/%{name}-%{version}
-%{_javadocdir}/%{name}
+%{_javadocdir}/*
 
-%if %without bootstrap
 %files demo
-%{_datadir}/%{name}/xom-samples.jar
-%endif
+%dir %{_datadir}/%{name}-%{version}
+%{_datadir}/%{name}-%{version}/xom-samples.jar
 
 %changelog
+* Tue Mar 19 2013 Igor Vlasenko <viy@altlinux.ru> 1:1.0-alt1_9jpp7
+- fc update
+
 * Mon Jan 16 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.2.6-alt1_2jpp6
 - new jpp relase
 
