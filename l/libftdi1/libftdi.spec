@@ -1,50 +1,57 @@
 Summary:   Library to program and control the FTDI USB serial controllers
-Name:      libftdi
-Version:   0.20
-Release:   alt2
+Name:      libftdi1
+Version:   1.0
+Release:   alt1
 License:   LGPL for libftdi and GPLv2+linking exception for the C++ wrapper
 Group:     System/Libraries
 URL:       http://www.intra2net.com/en/developer/libftdi
 Packager:  Evgeny Sinelnikov <sin@altlinux.ru>
 
 Source:    %name-%version.tar
-BuildRequires: libusb-compat-devel, pkg-config, doxygen
+BuildRequires: libusb-devel, pkg-config, doxygen
 BuildRequires: gcc-c++ boost-devel
 BuildRequires: rpm-macros-cmake
 BuildRequires: cmake swig
 BuildRequires: python-devel rpm-build-python
 
+%define    namepp libftdipp1
+%define    pyname python-module-ftdi1
+
+%define    soname libftdi1
+%define    sonamepp libftdipp1
+
 Patch:     %name-%version-%release.patch
 
-%package   -n libftdipp
+%package   -n %namepp
 Summary:   C++ interface for libftdi library
 Group:     System/Libraries
 
 %package   devel
 Summary:   Header files and libraries for libftdi
 Group:     Development/C
-Requires:  libftdi = %version, libusb-devel
+Requires:  %name = %version, libusb-devel
 
-%package   -n libftdipp-devel
+%package   -n %namepp-devel
 Summary:   Header files and libraries for libftdipp
 Group:     Development/C
-Requires:  libftdi-devel = %version
+Requires:  %name-devel = %version
 Requires:  boost-devel
 
 %package   devel-static
 Summary:   Static libraries for libftdi
 Group:     Development/C
-Requires:  libftdi-devel = %version
+Requires:  %name-devel = %version
+Conflicts: libftdi-devel
 
-%package   -n libftdipp-devel-static
+%package   -n %namepp-devel-static
 Summary:   Static libraries for libftdipp
 Group:     Development/C
-Requires:  libftdipp-devel = %version
+Requires:  %namepp-devel = %version
 
-%package   -n python-module-ftdi
+%package   -n %pyname
 Summary:   Python bindings for libftdi
 Group:     Development/Python
-Requires:  libftdi = %version
+Requires:  %name = %version
 
 %package   docs
 Summary:   Documentation files for libftdi
@@ -57,22 +64,22 @@ USB controllers, using libusb, including the popular
 bitbang mode. This library talks to next FTDI chips:
 FT232BM/245BM, FT2232C/D and FT232/245R.
 
-%description -n libftdipp
+%description -n %namepp
 Full C++ wrapper for libftdi library
 
 %description devel
 Header files for userspace libftdi library
 
-%description -n libftdipp-devel
+%description -n %namepp-devel
 Header files for full libftdi library C++ wrapper
 
 %description devel-static
 Static libraries for userspace libftdi library
 
-%description -n libftdipp-devel-static
+%description -n %namepp-devel-static
 Static libraries for full libftdi library C++ wrapper
 
-%description -n python-module-ftdi
+%description -n %pyname
 Python bindings for libftdi library
 
 %description docs
@@ -91,40 +98,37 @@ Documentation files for userspace libftdi library
 
 # Install python bindings
 mkdir -p %buildroot%python_sitelibdir
-mv %buildroot%_prefix/site-packages/* %buildroot%python_sitelibdir/
 
 # Install man pages
 mkdir -p %buildroot%_mandir
 cp -a doc/man/* %buildroot%_mandir/
-
-# Fix confict between libqwt-devel-5.2.0-alt7 and libftdi-docs-0.18-alt2
-# for /usr/share/man/man3/deprecated.3.gz
-mv %buildroot%_man3dir/deprecated.3 %buildroot%_man3dir/ftdi_deprecated.3
+mv %buildroot%_man3dir/size_and_time.3 %buildroot%_man3dir/ftdi_size_and_time.3
 
 %files
-%_libdir/libftdi.so.*
+%_libdir/%soname.so.*
 
-%files -n libftdipp
-%_libdir/libftdipp.so.*
+%files -n %namepp
+%_libdir/%sonamepp.so.*
 
 %files devel
-%_bindir/libftdi-config
-%_libdir/libftdi.so
-%_libdir/pkgconfig/libftdi.pc
-%_includedir/*.h
+%_bindir/%soname-config
+%_libdir/%soname.so
+%_libdir/pkgconfig/%soname.pc
+%_includedir/%name/*.h
+%_libdir/cmake/%name/*.cmake
 
-%files -n libftdipp-devel
-%_libdir/libftdipp.so
-%_libdir/pkgconfig/libftdipp.pc
-%_includedir/*.hpp
+%files -n %namepp-devel
+%_libdir/%sonamepp.so
+%_libdir/pkgconfig/%sonamepp.pc
+%_includedir/%name/*.hpp
 
 %files devel-static
-%_libdir/libftdi.a
+%_libdir/%soname.a
 
-%files -n libftdipp-devel-static
-%_libdir/libftdipp.a
+%files -n %namepp-devel-static
+%_libdir/%sonamepp.a
 
-%files -n python-module-ftdi
+%files -n %pyname
 %python_sitelibdir/*.py*
 %python_sitelibdir/*.so
 
@@ -133,8 +137,8 @@ mv %buildroot%_man3dir/deprecated.3 %buildroot%_man3dir/ftdi_deprecated.3
 %_man3dir/*
 
 %changelog
-* Tue Mar 19 2013 Evgeny Sinelnikov <sin@altlinux.ru> 0.20-alt2
-- Build for Sisyphus last release 0.20
+* Tue Mar 19 2013 Evgeny Sinelnikov <sin@altlinux.ru> 1.0-alt1
+- Build new package libftdi1 with soname 2.0.0 using libusb1
 
 * Thu Aug 30 2012 Evgeny Sinelnikov <sin@altlinux.ru> 0.20-alt1
 - Update to last release 0.20
