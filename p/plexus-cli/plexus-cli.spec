@@ -1,3 +1,6 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 # Copyright (c) 2000-2007, JPackage Project
@@ -30,71 +33,52 @@ BuildRequires: jpackage-compat
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
-%define gcj_support 0
-
-# If you don't want to build with maven, and use straight ant instead,
-# give rpmbuild option '--without maven'
-
-%define with_maven %{!?_without_maven:1}%{?_without_maven:0}
-%define without_maven %{?_without_maven:1}%{!?_without_maven:0}
-
-
-%define parent plexus
-%define subname cli
-%define namedversion 1.2
+%global parent plexus
+%global subname cli
 
 Name:           %{parent}-%{subname}
 Version:        1.2
-Release:        alt3_5jpp6
+Release:        alt3_12jpp7
 Epoch:          0
 Summary:        Command Line Interface facilitator for Plexus
-License:        Apache Software License 2.0
+License:        ASL 2.0 and Plexus
 Group:          Development/Java
 URL:            http://plexus.codehaus.org/
-# svn export http://svn.codehaus.org/plexus/plexus-tools/tags/plexus-cli-1.2 plexus-cli
-# tar czf plexus-cli-src.tar.gz plexus-cli/
-Source0:        %{name}-%{namedversion}-src.tar.gz
+# svn export http://svn.codehaus.org/plexus/archive/plexus-tools/tags/plexus-cli-1.2
+# tar czf plexus-cli-%{version}-src.tar.gz plexus-cli-%{version}
+# Note: Exported revision 8188.
+Source0:        %{name}-%{version}-src.tar.gz
 
-Source1:        plexus-cli-1.2-build.xml
-Source2:        plexus-cli-settings.xml
-Source3:        plexus-cli-1.2-jpp-depmap.xml
+# License headers missing from some files
+# http://jira.codehaus.org/browse/PLX-418
+Patch0:         plexus-cli-licenseheaders.patch
 
-
-%if ! %{gcj_support}
 BuildArch:      noarch
-%endif
 
-BuildRequires: jpackage-utils >= 0:1.7.3
-BuildRequires: ant >= 0:1.6.5
-BuildRequires: junit
-%if %{with_maven}
-BuildRequires: maven2 >= 2.0.4-10jpp
-BuildRequires: maven2-plugin-compiler
-BuildRequires: maven2-plugin-install
-BuildRequires: maven2-plugin-jar
-BuildRequires: maven2-plugin-javadoc
-BuildRequires: maven2-plugin-resources
-BuildRequires: maven-surefire-plugin
-BuildRequires: maven-surefire-provider-junit
-BuildRequires: maven-doxia
-BuildRequires: maven-doxia-sitetools
-BuildRequires: maven-release
-%endif
-BuildRequires: plexus-classworlds
-BuildRequires: plexus-containers-container-default
-BuildRequires: plexus-utils
+BuildRequires:  jpackage-utils >= 0:1.7.3
+BuildRequires:  ant >= 0:1.6.5
+BuildRequires:  junit
+BuildRequires:  maven
+BuildRequires:  maven-compiler-plugin
+BuildRequires:  maven-install-plugin
+BuildRequires:  maven-jar-plugin
+BuildRequires:  maven-javadoc-plugin
+BuildRequires:  maven-resources-plugin
+BuildRequires:  maven-surefire-plugin
+BuildRequires:  maven-surefire-provider-junit
+BuildRequires:  maven-doxia
+BuildRequires:  maven-doxia-sitetools
+BuildRequires:  maven-release
+BuildRequires:  plexus-classworlds
+BuildRequires:  plexus-containers-container-default
+BuildRequires:  plexus-utils
+BuildRequires:  apache-commons-cli
 
-%if %{gcj_support}
-BuildRequires: java-gcj-compat-devel
-Requires(post): java-gcj-compat
-Requires(postun): java-gcj-compat
-%endif
-
-Requires: plexus-classworlds
-Requires: plexus-containers-container-default
-Requires: plexus-utils
-Requires(post): jpackage-utils >= 0:1.7.3
-Requires(postun): jpackage-utils >= 0:1.7.3
+Requires:  plexus-classworlds
+Requires:  plexus-containers-container-default
+Requires:  plexus-utils
+Requires(post):    jpackage-utils >= 0:1.7.3
+Requires(postun):  jpackage-utils >= 0:1.7.3
 Source44: import.info
 
 %description
@@ -107,83 +91,51 @@ is like a J2EE application server, without all the baggage.
 
 %package javadoc
 Summary:        Javadoc for %{name}
-Group:          Development/Documentation
+Group:          Development/Java
+Requires:       jpackage-utils
 BuildArch: noarch
 
 %description javadoc
 Javadoc for %{name}.
 
 %prep
-%setup -q -n %{name}-%{namedversion}
+%setup -q
 find . -name "*.jar" -exec rm -f {} \;
-#for j in $(find . -name "*.jar" ); do
-#        mv $j $j.no
-#done
 
-cp %{SOURCE1} build.xml
-cp %{SOURCE2} settings.xml
+%patch0 -p3
 
 %build
-export MAVEN_REPO_LOCAL=$(pwd)/.m2/repository
-mkdir -p $MAVEN_REPO_LOCAL
-
-%if %{with_maven}
-mvn-jpp -Dmaven.compile.target=1.5 -Dmaven.javadoc.source=1.5  \
-        -e \
-		-Dmaven.repo.local=$MAVEN_REPO_LOCAL \
-        -Dmaven2.jpp.depmap.file=%{SOURCE3} \
+mvn-rpmbuild -Dmaven.compile.source=1.5 -Dmaven.compile.target=1.5 -Dmaven.javadoc.source=1.5  \
         install javadoc:javadoc
-
-%else
-export CLASSPATH=$(build-classpath \
-plexus/classworlds \
-plexus/containers-component-api \
-plexus/containers-container-default \
-plexus/utils  \
-)
-CLASSPATH=$CLASSPATH:target/classes:target/test-classes
-
-ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  -Dbuild.sysclasspath=only jar javadoc
-%endif
-
 
 %install
 # jars
 install -d -m 755 $RPM_BUILD_ROOT%{_javadir}/plexus
-install -pm 644 target/%{name}-%{namedversion}.jar \
-  $RPM_BUILD_ROOT%{_javadir}/plexus/%{subname}-%{version}.jar
+install -pm 644 target/%{name}-%{version}.jar \
+  $RPM_BUILD_ROOT%{_javadir}/plexus/%{subname}.jar
 %add_to_maven_depmap org.codehaus.plexus %{name} %{namedversion} JPP/%{parent} %{subname}
 
-(cd $RPM_BUILD_ROOT%{_javadir}/%{parent} && for jar in *-%{version}*; do ln -sf ${jar} `echo $jar| sed  "s|-%{version}||g"`; done)
-
 # pom
-install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/maven2/poms
-install -pm 644 pom.xml $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP.%{parent}-%{subname}.pom
+install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
+install -pm 644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{parent}-%{subname}.pom
 
 # javadoc
-install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
-cp -pr target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
-ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name} # ghost symlink
-
-%if %{gcj_support}
-%{_bindir}/aot-compile-rpm
-%endif
+install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}
+cp -pr target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 
 %files
 %{_javadir}/%{parent}/*
-%{_datadir}/maven2
-%{_mavendepmapfragdir}
-
-%if %{gcj_support}
-%dir %attr(-,root,root) %{_libdir}/gcj/%{name}
-%{_libdir}/gcj/%{name}/%{subname}*-%{version}.jar.*
-%endif
+%{_mavenpomdir}/*
+%{_mavendepmapfragdir}/*
 
 %files javadoc
 %doc %{_javadocdir}/*
 
 
 %changelog
+* Tue Mar 19 2013 Igor Vlasenko <viy@altlinux.ru> 0:1.2-alt3_12jpp7
+- fc update
+
 * Sun Feb 20 2011 Igor Vlasenko <viy@altlinux.ru> 0:1.2-alt3_5jpp6
 - new version
 
