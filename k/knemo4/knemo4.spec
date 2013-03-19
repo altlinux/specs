@@ -1,5 +1,5 @@
 Name: knemo4
-Version: 0.7.2
+Version: 0.7.6
 Release: alt1
 
 Summary: KNemo - the KDE Network Monitor
@@ -13,7 +13,7 @@ BuildRequires(pre): kde-common-devel
 BuildRequires: gcc-c++ kde4libs-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXdamage-devel
 BuildRequires: libXdmcp-devel libXft-devel libXpm-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel
 BuildRequires: libwireless-devel libxkbfile-devel net-tools wireless-tools xorg-xf86vidmodeproto-devel
-BuildRequires: libnl-devel
+BuildRequires: libnl-devel kde4base-workspace-devel
 
 %description
 KNemo offers a network monitor similar to the one found in Windows.
@@ -39,10 +39,14 @@ For every network interface it displays an icon in the systray.
 %_K4srv/*
 %_K4iconsdir/hicolor/*/apps/*.png
 %_K4iconsdir/hicolor/*/status/*.png
-%_K4iconsdir/hicolor/scalable/apps/knemo.svgz
+%_K4iconsdir/hicolor/scalable/*
 %_K4conf_update/*
 
 %changelog
+* Tue Mar 19 2013 Aeliya Grevnyov <gray_graff@altlinux.org> 0.7.6-alt1
+- 0.7.6
+- fix build
+
 * Tue Oct 18 2011 Aeliya Grevnyov <gray_graff@altlinux.org> 0.7.2-alt1
 - 0.7.2
 
