@@ -50,8 +50,8 @@
 
 
 Name: virtualbox
-Version: 4.2.4
-Release: alt1.1
+Version: 4.2.10
+Release: alt1
 
 Summary: VM VirtualBox OSE - Virtual Machine for x86 hardware
 License: GPL
@@ -91,6 +91,7 @@ BuildPreReq: libXcursor-devel libXext-devel
 BuildPreReq: xsltproc
 BuildPreReq: kernel-build-tools python-dev
 BuildPreReq: libpulseaudio-devel
+BuildRequires: libdevmapper-devel
 BuildRequires: libxml2-devel libxslt-devel
 BuildRequires: libqt4-devel libalsa-devel
 BuildRequires: libcap-devel libcurl-devel
@@ -98,7 +99,7 @@ BuildRequires: libXmu-devel libGLU-devel
 BuildRequires: libXdamage-devel libXcomposite-devel
 BuildRequires: xorg-xf86driproto-devel xorg-glproto-devel
 BuildRequires: xorg-resourceproto-devel xorg-scrnsaverproto-devel
-BuildRequires: xorg-sdk
+BuildRequires(pre): xorg-sdk
 BuildPreReq: yasm kBuild >= 0.1.999
 %if_with webservice
 BuildRequires: libgsoap-devel-static
@@ -212,6 +213,7 @@ Summary: The X.org driver for video in VirtualBox guests
 Group: System/X11
 Provides: xorg-x11-drv-vboxvideo = %version-%release
 Obsoletes: xorg-x11-drv-vboxvideo < %version
+Requires: XORG_ABI_VIDEODRV = %get_xorg_abi_videodrv
 
 %description -n xorg-drv-vboxvideo
 The X.org driver for video in VirtualBox guests
@@ -594,6 +596,12 @@ mountpoint -q /dev || {
 %vboxdir/sdk
 
 %changelog
+* Sun Mar 17 2013 Evgeny Sinelnikov <sin@altlinux.ru> 4.2.10-alt1
+- Update to last stable release with multiple fixes for Sisyphus
+
+* Wed Jan 30 2013 Evgeny Sinelnikov <sin@altlinux.ru> 4.2.6-alt1
+- Update to last release of stable branch 4.2
+
 * Sun Jan 20 2013 Michael Shigorin <mike@altlinux.org> 4.2.4-alt1.1
 - NMU: rebuilt against xorg-1.13
 

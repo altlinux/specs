@@ -1,7 +1,7 @@
 %define module_name	virtualbox
-%define module_version	4.2.4
+%define module_version	4.2.10
 
-%define module_release alt2
+%define module_release	alt1
 
 %define drv_module_name	vboxdrv
 %define pci_module_name	vboxpci
@@ -9,7 +9,7 @@
 %define net_module_adaptor_name	vboxnetadp
 
 %define flavour		std-pae
-BuildRequires(pre): rpm-build-kernel
+BuildRequires(pre): rpm-build-kernel >= 0.100-alt1
 BuildRequires(pre): kernel-headers-modules-std-pae
 
 %setup_kernel_module %flavour
@@ -27,7 +27,7 @@ Packager: Kernel Maintainer Team <kernel@packages.altlinux.org>
 
 ExclusiveOS: Linux
 Url: http://www.virtualbox.org/
-BuildRequires(pre): rpm-build-kernel
+
 BuildPreReq: gcc-c++
 BuildRequires: perl
 BuildRequires: rpm >= 4.0.2-75
@@ -93,17 +93,18 @@ install -pD -m644 kernel-source-%net_module_adaptor_name-%module_version/vboxnet
 %module_dir
 
 %changelog
-* %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
+* %(LC_TIME=C date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Mon Mar 18 2013 Evgeny Sinelnikov <sin@altlinux.ru> 4.2.10-alt1
+- Update to new release
+- Support specsubst for kflavour
 
 * Mon Dec 17 2012 Gleb F-Malinovskiy <glebfm@altlinux.org> 4.2.4-alt2
 - new template
 
 * Tue Nov 27 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 4.2.4-alt1
 - 4.2.4
-
-* Thu Nov 22 2012 Evgeny Sinelnikov <sin@altlinux.ru> 4.2.4-alt1
-- Update to new release
 
 * Wed Aug 29 2012 Anton Protopopov <aspsk@altlinux.org> 4.1.20-alt2
 - technical
