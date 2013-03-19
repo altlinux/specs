@@ -5,23 +5,22 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 BuildRequires: rpm-build-java-osgi
 %global install_loc      %{_datadir}/eclipse/dropins/egit
+%global version_suffix 201212191850-r
 
 Summary:          Eclipse Git Integration
 Name:             eclipse-egit
-Version:          2.0.0
-Release:          alt1_2jpp7
+Version:          2.2.0
+Release:          alt1_1jpp7
 License:          EPL
 URL:              http://www.eclipse.org/egit
 Group:            Development/Java
-# retrieved from http://git.eclipse.org/c/egit/egit.git/snapshot/egit-2.0.0.201206130900-r.tar.bz2
-Source0:          egit-2.0.0.201206130900-r.tar.bz2
-Patch0:           encoding-fix.patch
+Source0:          http://git.eclipse.org/c/egit/egit.git/snapshot/egit-%{version}.%{version_suffix}.tar.bz2
 
 BuildRequires:    eclipse-pde
-BuildRequires:    eclipse-jgit >= 1.3.0
+BuildRequires:    eclipse-jgit >= 2.2.0
 BuildRequires:    jpackage-utils >= 0:1.5
 Requires:         eclipse-platform >= 1:3.5.0
-Requires:         eclipse-jgit >= 1.3.0
+Requires:         eclipse-jgit >= 2.2.0
 
 BuildArch:        noarch
 Source44: import.info
@@ -31,8 +30,7 @@ The eclipse-egit package contains Eclipse plugins for
 interacting with Git repositories.
 
 %prep
-%setup -n egit-2.0.0.201206130900-r -q
-#%patch0 -p1
+%setup -n egit-%{version}.%{version_suffix} -q
 
 %build
 %{_bindir}/eclipse-pdebuild -f org.eclipse.egit -d "jgit"
@@ -45,9 +43,12 @@ unzip -q -d $RPM_BUILD_ROOT%{install_loc}/ build/rpmBuild/org.eclipse.egit.zip
 
 %files
 %{install_loc}
-%doc LICENSE README
+%doc LICENSE README.md
 
 %changelog
+* Tue Mar 19 2013 Igor Vlasenko <viy@altlinux.ru> 2.2.0-alt1_1jpp7
+- fc update
+
 * Fri Sep 21 2012 Igor Vlasenko <viy@altlinux.ru> 2.0.0-alt1_2jpp7
 - new version
 

@@ -1,20 +1,22 @@
-BuildRequires: maven-antrun-plugin
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 BuildRequires: rpm-build-java-osgi
 %global install_loc    %{_datadir}/eclipse/dropins/jgit
-%global version_suffix 201206130900-r
+%global version_suffix 201212191850-r
 
 Name:           eclipse-jgit
-Version:        2.0.0
-Release:        alt2_2jpp7
+Version:        2.2.0
+Release:        alt1_1jpp7
 Summary:        Eclipse JGit
 
 Group:          Development/Java
 License:        BSD
 URL:            http://www.eclipse.org/egit/
-# Fetched from http://git.eclipse.org/c/jgit/jgit.git/snapshot/jgit-2.0.0.201206130900-r.tar.bz2
-Source0:        jgit-%{version}.%{version_suffix}.tar.bz2
+Source0:        http://git.eclipse.org/c/jgit/jgit.git/snapshot/jgit-%{version}.%{version_suffix}.tar.bz2
 Patch0:         fix_jgit_sh.patch
 
 BuildArch: noarch
@@ -31,6 +33,8 @@ BuildRequires:  maven-surefire-plugin
 BuildRequires:  maven-surefire-provider-junit
 BuildRequires:  maven-shade-plugin
 BuildRequires:  args4j >= 2.0.12
+BuildRequires:	apache-commons-compress
+BuildRequires:       xz-java >= 1.1-2
 Requires: eclipse-platform >= 3.5.0
 Source44: import.info
 
@@ -49,6 +53,8 @@ Requires:       jpackage-utils
 Summary:        Java-based command line Git interface
 Group:          Development/Java
 Requires:       args4j >= 2.0.12
+Requires:       apache-commons-compress
+Requires:       xz-java >= 1.1-2
 Requires:       jpackage-utils
 
 %description -n jgit
@@ -62,18 +68,36 @@ sed -i -e "s|\${bundle-manifest}|\${source-bundle-manifest}|g" \
 
 %patch0
 
+find . -name MANIFEST.MF -exec sed -i -e 's|7.6.0,8.0.0|7.6.0,8.6.0|g' {} \;
+sed -i -e 's|org.kohsuke.args4j|args4j|g' org.eclipse.jgit.packaging/org.eclipse.jgit.orbit.feature/feature.xml
 %build
+mkdir -p deps/plugins
+pushd deps/
+	ln -s %{_javadir}/commons-compress.jar
+	ln -s %{_javadir}/xz-java.jar
+	ln -s %{_javadir}/args4j.jar
+popd
+
 # build plugin
-%{_bindir}/eclipse-pdebuild -f org.eclipse.jgit
+%{_bindir}/eclipse-pdebuild -f org.eclipse.jgit -o `pwd`/deps
 # build JARs
-mvn-rpmbuild -Dtranslate-qualifier=true install \
+mvn-rpmbuild -Dmaven.compile.source=1.5 -Dmaven.compile.target=1.5 -Dmaven.javadoc.source=1.5  -Dtranslate-qualifier=true install \
  -pl "org.eclipse.jgit,org.eclipse.jgit.ui,org.eclipse.jgit.console,org.eclipse.jgit.iplog,org.eclipse.jgit.pgm"
 
 %install
 install -d -m 755 %{buildroot}%{install_loc}
 # Eclipse Plugin
 %{__unzip} -q -d %{buildroot}%{install_loc} \
-     build/rpmBuild/org.eclipse.jgit.zip 
+     build/rpmBuild/org.eclipse.jgit.zip
+pushd %{buildroot}%{install_loc}/eclipse/plugins
+	rm args4j_*.jar
+	rm com.jcraft.jsch_*.jar
+	rm org.apache.commons.compress_*.jar
+	ln -s %{_javadir}/args4j.jar
+	ln -s %{_javadir}/commons-compress.jar
+	ln -s %{_javadir}/xz-java.jar
+popd
+
 # JARs
 install -d -m 0755 %{buildroot}%{_javadir}/jgit
 install -m 644 org.eclipse.jgit/target/org.eclipse.jgit-%{version}.%{version_suffix}.jar   %{buildroot}%{_javadir}/jgit/jgit.jar
@@ -108,7 +132,7 @@ install -m 755 org.eclipse.jgit.pgm/jgit.sh %{buildroot}%{_bindir}/jgit
 
 %files
 %doc LICENSE 
-%doc README
+%doc README.md
 %{install_loc}
 
 %files -n jgit
@@ -118,14 +142,17 @@ install -m 755 org.eclipse.jgit.pgm/jgit.sh %{buildroot}%{_bindir}/jgit
 %{_mavenpomdir}/JPP-jgit-parent.pom
 %{_mavenpomdir}/JPP.jgit*.pom
 %doc LICENSE 
-%doc README
+%doc README.md
 
 %files -n jgit-javadoc
 %{_javadocdir}/jgit
 %doc LICENSE 
-%doc README
+%doc README.md
 
 %changelog
+* Tue Mar 19 2013 Igor Vlasenko <viy@altlinux.ru> 2.2.0-alt1_1jpp7
+- fc update
+
 * Mon Sep 17 2012 Igor Vlasenko <viy@altlinux.ru> 2.0.0-alt2_2jpp7
 - fixed build
 
