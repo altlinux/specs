@@ -5,7 +5,7 @@
 %define info_nogen 1
 
 Name: libgcrypt
-Version: 1.5.0
+Version: 1.5.1
 Release: alt1
 
 Group: System/Libraries
@@ -163,6 +163,9 @@ install -m 0644 doc/*.info %buildroot/%_infodir/
 
 
 %changelog
+* Tue Mar 19 2013 Sergey V Turchin <zerg@altlinux.org> 1.5.1-alt1
+- new version
+
 * Wed Jun 29 2011 Sergey V Turchin <zerg@altlinux.org> 1.5.0-alt1
 - new version
 
