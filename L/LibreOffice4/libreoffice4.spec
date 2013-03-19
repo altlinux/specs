@@ -7,8 +7,9 @@ Version: 4.0
 %define uversion %version.%urelease
 %define oopfx lo4
 %define lodir %_libdir/%name
-%define conffile %_sysconfdir/sysconfig/libreoffice
-Release: alt3
+%define uname libreoffice4
+%define conffile %_sysconfdir/sysconfig/%uname
+Release: alt4
 Summary: LibreOffice Productivity Suite
 License: LGPL
 Group: Office
@@ -16,7 +17,7 @@ URL: http://www.libreoffice.org
 
 # Change this to -integrated to make LO4 default
 Requires: %name-standalone = %version-%release
-Requires: %name-common
+Requires: %name-common = %version-%release
 
 %define with_lang ru de fr uk pt-BR es
 #Requires: java xdg-utils hunspell-en hyphen-en mythes-en
@@ -59,11 +60,20 @@ AutoReqProv: yes, noshell, nopython
 %description common
 Common part of %name that does not interfere with other packages
 
-# TODO %name-full
+%package full
+Summary: LibreOffice Productivity Suite
+Group: Office
+Requires: %name-integrated = %version-%release
+Requires: %name-common = %version-%release
+Requires: %name-mimetypes = %version-%release
+%description full
+Full installation of %name, except of language packs
+and GNOME/KDE bindings.
 
 %package standalone
 Summary: Renamed binaries, icons and desktop files for %name
 Group: Office
+Provides: %uname = %version-%release
 Conflicts: %name-integrated
 %description standalone
 Wrapper scripts, icons and desktop files for running %name as lo4*
@@ -71,6 +81,7 @@ Wrapper scripts, icons and desktop files for running %name as lo4*
 %package integrated
 Summary: Binaries, icons and desktop files for %name
 Group: Office
+Provides: %uname = %version-%release
 Conflicts: %name-standalone
 %description integrated
 Wrapper scripts, icons and desktop files for running %name
@@ -78,21 +89,21 @@ Wrapper scripts, icons and desktop files for running %name
 %package gnome
 Summary: GNOME Extensions for %name
 Group:  Office
-Requires: %name = %version-%release
+Requires: %uname = %version-%release
 %description gnome
 GNOME extensions for %name
 
 %package kde4
 Summary: KDE4 Extensions for %name
 Group:  Office
-Requires: %name = %version-%release
+Requires: %uname = %version-%release
 %description kde4
 KDE4 extensions for %name
 
 %package extensions
 Summary: Additional extensions for %name
 Group:  Office
-Requires: %name = %version-%release
+Requires: %uname = %version-%release
 AutoReqProv: yes, noshell, nopython
 %description extensions
 Additional extensions for %name.
@@ -116,7 +127,7 @@ This package installs them.
 %package %{pkgname} \
 Summary: %{langname} language pack for %name \
 Group:  Office \
-Requires: %name = %version-%release \
+Requires: %uname = %version-%release \
 %description %{pkgname} \
 Provides additional %{langname} translations and resources for %name. \
 \
@@ -341,6 +352,8 @@ install -D libreoffice.config %buildroot%conffile
 
 %files
 
+%files full
+
 %files common -f files.nolang
 %exclude /gid_Module*
 %config %conffile
@@ -385,6 +398,10 @@ install -D libreoffice.config %buildroot%conffile
 %langpack -l es -n Espanian
 
 %changelog
+* Tue Mar 19 2013 Fr. Br. George <george@altlinux.ru> 4.0-alt4
+- Fix conflicts with LO3
+- Introduce "full" package (without langpacks and GNOMe/KDE stuff)
+
 * Wed Mar 06 2013 Fr. Br. George <george@altlinux.ru> 4.0-alt3
 - Update to 4.0.2.1
 - Introduce extra extensions
