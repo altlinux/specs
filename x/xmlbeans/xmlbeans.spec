@@ -1,11 +1,18 @@
-Packager: Igor Vlasenko <viy@altlinux.ru>
+Epoch: 0
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
 BuildRequires: subversion
 %define _without_maven 1
 BuildRequires: /proc
 BuildRequires: jpackage-compat
-%define version 2.4.0
-%define name xmlbeans
-# Copyright (c) 2000-2009, JPackage Project
+# fedora bcond_with macro
+%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
+%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
+# redefine altlinux specific with and without
+%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
+%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
+# Copyright (c) 2000-2005, JPackage Project
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -35,164 +42,139 @@ BuildRequires: jpackage-compat
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
-%define with()          %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
-%define without()       %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
-%define bcond_with()    %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
-%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
-
-%define gcj_support 0
-
-%define source_top %{name}-%{cvs_version}
+#def_with bootstrap
+%bcond_with bootstrap
 
 Name:           xmlbeans
-Version:        2.4.0
-Release:        alt1_3jpp6
-Epoch:          0
+Version:        2.6.0
+Release:        alt1_2jpp7
 Summary:        XML-Java binding tool
-License:        ASL 2.0
 Group:          Development/Java
-URL:            http://xmlbeans.apache.org
-# svn export http://svn.apache.org/repos/asf/xmlbeans/tags/2.4.0 xmlbeans-2.4.0
-# tar czf xmlbeans-2.4.0-src.tgz xmlbeans-2.4.0
-Source0:        xmlbeans-2.4.0-src.tgz
-Source1:        http://repo1.maven.org/maven2/org/apache/xmlbeans/xmlbeans/2.4.0/xmlbeans-2.4.0.pom
-Source2:        http://repo1.maven.org/maven2/org/apache/xmlbeans/xmlbeans-xpath/2.4.0/xmlbeans-xpath-2.4.0.pom
-Source3:        http://repo1.maven.org/maven2/org/apache/xmlbeans/xmlbeans-xmlpublic/2.4.0/xmlbeans-xmlpublic-2.4.0.pom
-Source4:        http://repo1.maven.org/maven2/org/apache/xmlbeans/xmlbeans-qname/2.4.0/xmlbeans-qname-2.4.0.pom
-#FIXME, pre-built saxon9 jars, replace it with saxon9 package if saxon9 was built
-#Source5:        saxon9-jars.tgz
+URL:            http://xmlbeans.apache.org/
+Source0:        http://www.apache.org/dist/xmlbeans/source/%{name}-%{version}-src.tgz
+# Pom file is not available from maven repository for the
+# currently released version
+Source1:        %{version}/%{name}-%{version}.pom
+Source2:        http://repo1.maven.org/maven2/org/apache/%{name}/%{name}-xpath/%{version}/%{name}-xpath-%{version}.pom
+Source3:        http://repo1.maven.org/maven2/org/apache/%{name}/%{name}-xmlpublic/%{version}/%{name}-xmlpublic-%{version}.pom
+Patch0:         xmlbeans-2.6.0-nodownload.patch
+Patch1:         0001-Update-to-newer-saxon-API.patch
+Patch2:         xmlbeans-2.6.0-iso-8859-1-encoding.patch
+Patch3:         xmlbeans-2.6.0-jsr-bundle.patch
+Patch4:         xmlbeans-scripts-classpath.patch
+License:        ASL 2.0
 
-BuildRequires: jpackage-utils >= 0:1.7.3
-BuildRequires: ant >= 0:1.6.5
-BuildRequires: ant-junit
-BuildRequires: ant-nodeps
-#BuildRequires:  ant-contrib
-BuildRequires: junit
-BuildRequires: xml-commons-resolver11
-BuildRequires: stax_1_0_api
-BuildRequires: saxon9
-BuildRequires: saxon9-dom
-BuildRequires: saxon9-xpath
-%if %{gcj_support}
-BuildRequires: java-gcj-compat-devel
-%else
-BuildArch:      noarch
+%if %without bootstrap
+BuildRequires:  xmlbeans
 %endif
+BuildRequires:  jpackage-utils >= 0:1.5
+BuildRequires:  ant >= 0:1.6 ant-junit ant-contrib junit
+BuildRequires:  ant >= 0:1.6 ant-junit junit
+BuildRequires:  xml-commons-resolver >= 0:1.1
+BuildRequires:  bea-stax-api
+BuildRequires:  saxon >= 8
+Requires:       jpackage-utils >= 0:1.6
 
-Requires(post): jpackage-utils >= 0:1.7.3
-Requires(postun): jpackage-utils >= 0:1.7.3
-Requires: jpackage-utils >= 0:1.7.3
-Requires: stax_1_0_api
-Requires: saxon9
-Requires: saxon9-dom
-Requires: saxon9-xpath
-Requires: xml-commons-resolver11
+BuildArch:      noarch
 Source44: import.info
 
 %description
-XMLBeans is a tool that allows you to access the full power
-of XML in a Java friendly way. It is an XML-Java binding tool.
-The idea is that you can take advantage the richness and
+XMLBeans is a tool that allows you to access the full power 
+of XML in a Java friendly way. It is an XML-Java binding tool. 
+The idea is that you can take advantage the richness and 
 features of XML and XML Schema and have these features mapped 
-as naturally as possible to the equivalent Java language and
-typing constructs. XMLBeans uses XML Schema to compile Java
-interfaces and classes that you can then use to access and
-modify XML instance data. Using XMLBeans is similar to using
-any other Java interface/class, you will see things like
-getFoo or setFoo just as you would expect when working with
-Java. While a major use of XMLBeans is to access your XML
-instance data with strongly typed Java classes there are also
-API's that allow you access to the full XML infoset (XMLBeans
-keeps full XML Infoset fidelity) as well as to allow you to
-reflect into the XML schema itself through an XML Schema
+as naturally as possible to the equivalent Java language and 
+typing constructs. XMLBeans uses XML Schema to compile Java 
+interfaces and classes that you can then use to access and 
+modify XML instance data. Using XMLBeans is similar to using 
+any other Java interface/class, you will see things like 
+getFoo or setFoo just as you would expect when working with 
+Java. While a major use of XMLBeans is to access your XML 
+instance data with strongly typed Java classes there are also 
+API's that allow you access to the full XML infoset (XMLBeans 
+keeps full XML Infoset fidelity) as well as to allow you to 
+reflect into the XML schema itself through an XML Schema 
 Object model.
+
 
 %package javadoc
 Summary:        Javadoc for %{name}
-Group:          Development/Documentation
+Group:          Development/Java
+Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
+Requires:       jpackage-utils
 BuildArch: noarch
 
 %description javadoc
 %{summary}.
 
+
 %package manual
 Summary:        Documents for %{name}
-Group:          Development/Documentation
+Group:          Development/Java
 BuildArch: noarch
 
 %description manual
 %{summary}.
 
+
 %package scripts
 Summary:        Scripts for %{name}
 Group:          Development/Java
-Requires: %{name} = %{epoch}:%{version}-%{release}
+Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
 
 %description scripts
 %{summary}.
 
+
 %prep
 %setup -q -n %{name}-%{version}
-chmod -R go=u-w *
-for j in $(find . -name "*.jar"); do
-    jj=$(basename $j)
-    m=$(expr $jj : '\(piccolo_apache_dist\).*') || :
-    n=$(expr $jj : '\(jam-\).*') || :
-    if [ "$m" != "piccolo_apache_dist" -a "$n" != "jam-" ]; then
-       mv $j $j.no
-    fi
-done
-mkdir -p build/lib
+%patch0 -p1 -b .nodownload
+%patch1 -p1
+%patch2 -p1
+%patch3 -p1
+%patch4 -p1
 
-#tar zxf %{SOURCE5}
-
-pushd build/lib
-ln -sf $(build-classpath xml-commons-resolver) resolver.jar
-ln -sf $(build-classpath stax_1_0_api) jsr173_1.0_api.jar
-ln -sf $(build-classpath saxon9) saxon9.jar
-ln -sf $(build-classpath saxon9/saxon9-dom) saxon9-dom.jar
-ln -sf $(build-classpath saxon9/saxon9-xpath) saxon9-xpath.jar
-popd
-
-pushd external/lib
-mv oldxbean.jar.no oldxbean.jar
-ln -sf $(build-classpath stax_1_0_api) jsr173_1.0_api_bundle.jar
-touch xcresolver.zip
-popd
 
 %build
-export CLASSPATH="$(build-classpath-directory build/lib)"
-export OPT_JAR_LIST="`%{__cat} %{_sysconfdir}/ant.d/{nodeps}`"
-export XMLBEANS_EXTERNALS=/usr/share/java
-export XMLBEANS_HOME=`pwd`
-ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 default docs
+# Piccolo and jam are rebuilt from source and bundled with xbean
+# ant clean.jars leaves some dangling jars around, do not use it
+find . \( -name '*.jar' -o -name '*.zip' \) \
+        -not -name 'piccolo*.jar' -not -name 'jam*.jar' \
+        %{?with_bootstrap:-not -name 'oldxbean.jar' } \
+        -print -delete
+
+# Replace bundled libraries
+mkdir -p build/lib
+ln -sf $(build-classpath xml-commons-resolver) build/lib/resolver.jar
+ln -sf $(build-classpath xmlbeans/xbean) external/lib/oldxbean.jar
+ln -sf $(build-classpath bea-stax-api) external/lib/jsr173_1.0_api.jar
+ln -sf $(build-classpath saxon) external/lib/saxon9.jar
+ln -sf $(build-classpath saxon) external/lib/saxon9-dom.jar
+
+# Fix CRLF
+sed 's/\r//' -i LICENSE.txt NOTICE.txt README.txt docs/stylesheet.css docs/xmlbeans.css
+
+# Build
+ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  -Djavac.source=1.5 -Djavac.target=1.5 default docs
 
 %install
 
 # jar
 install -d -m 0755 $RPM_BUILD_ROOT%{_javadir}/%{name}
-install -d -m 0755 $RPM_BUILD_ROOT%{_datadir}/maven2/poms
-
-install -m 0644 build/lib/xmlbeans-qname.jar $RPM_BUILD_ROOT%{_javadir}/%{name}/xmlbeans-qname-%{version}.jar
-install -m 0644 %{SOURCE4} $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP.%{name}-xmlbeans-qname.pom
-%add_to_maven_depmap org.apache.xmlbeans xmlbeans-qname %{version} JPP/%{name} xmlbeans-qname
-
-install -m 0644 build/lib/xmlpublic.jar $RPM_BUILD_ROOT%{_javadir}/%{name}/xmlpublic-%{version}.jar
-install -m 0644 %{SOURCE3} $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP.%{name}-xmlpublic.pom
-%add_to_maven_depmap org.apache.xmlbeans xmlbeans-xmlpublic %{version} JPP/%{name} xmlpublic
-
-install -m 0644 build/lib/xbean_xpath.jar $RPM_BUILD_ROOT%{_javadir}/%{name}/xbean_xpath-%{version}.jar
-install -m 0644 %{SOURCE2} $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP.%{name}-xbean_xpath.pom
-%add_to_maven_depmap org.apache.xmlbeans xmlbeans-xpath %{version} JPP/%{name} xbean_xpath
-
-install -m 0644 build/lib/xbean.jar $RPM_BUILD_ROOT%{_javadir}/%{name}/xbean-%{version}.jar
-install -m 0644 %{SOURCE1} $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP.%{name}-xbean.pom
-%add_to_maven_depmap org.apache.xmlbeans xmlbeans %{version} JPP/%{name} xbean
-
-ln -s xmlbeans-qname-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}/xmlbeans-qname.jar
+install -p -m 0644 build/lib/xmlpublic.jar $RPM_BUILD_ROOT%{_javadir}/%{name}/xmlpublic-%{version}.jar
+install -p -m 0644 build/lib/xbean_xpath.jar $RPM_BUILD_ROOT%{_javadir}/%{name}/xbean_xpath-%{version}.jar
+install -p -m 0644 build/lib/xbean.jar $RPM_BUILD_ROOT%{_javadir}/%{name}/xbean-%{version}.jar
 ln -s xmlpublic-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}/xmlpublic.jar
 ln -s xbean_xpath-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}/xbean_xpath.jar
 ln -s xbean-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}/xbean.jar
+
+mkdir -p $RPM_BUILD_ROOT%{_mavenpomdir}
+install -pm 644 %{SOURCE1} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{name}-xbean.pom
+%add_maven_depmap JPP.%{name}-xbean.pom %{name}/xbean.jar
+install -pm 644 %{SOURCE2} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{name}-xbean_xpath.pom
+%add_maven_depmap JPP.%{name}-xbean_xpath.pom %{name}/xbean_xpath.jar
+install -pm 644 %{SOURCE3} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{name}-xmlpublic.pom
+%add_maven_depmap JPP.%{name}-xmlpublic.pom %{name}/xmlpublic.jar
 
 # bin
 install -d -m 0755 $RPM_BUILD_ROOT%{_bindir}
@@ -208,42 +190,43 @@ install -p -m 0755 bin/xsd2inst  $RPM_BUILD_ROOT%{_bindir}
 install -p -m 0755 bin/xsdtree   $RPM_BUILD_ROOT%{_bindir}
 install -p -m 0755 bin/xstc      $RPM_BUILD_ROOT%{_bindir}
 
+
 # javadoc
-install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
-cp -pr build/docs/reference/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
-ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name} # ghost symlink
+install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}
+cp -pr build/docs/reference/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 rm -rf build/docs/reference
 
 # manual
 install -d -m 755 $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}
 cp -pr build/docs/* $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}
+# fix line endings
+cat $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}/guide/tools.html | tr -d \\r > tmp
+mv tmp $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}/guide/tools.html
 
-%if %{gcj_support}
-%{_bindir}/aot-compile-rpm
-%endif
 
 %files
-%doc LICENSE.txt
-%dir %{_javadir}/%{name}
-%{_javadir}/%{name}/*.jar
-%{_datadir}/maven2/poms/*
-%{_mavendepmapfragdir}/*
-%if %{gcj_support}
-%dir %{_libdir}/gcj/%{name}
-%{_libdir}/gcj/%{name}/x*-%{version}.jar.*
-%endif
+%{_javadir}/*
+%{_mavenpomdir}/JPP.%{name}-*.pom
+%{_mavendepmapfragdir}/%{name}
+%doc LICENSE.txt NOTICE.txt  README.txt
+
 
 %files javadoc
-%{_javadocdir}/%{name}-%{version}
-%{_javadocdir}/%{name}
+%doc %{_javadocdir}/%{name}
+
 
 %files manual
-%doc %{_docdir}/%{name}-%{version}
+%{_docdir}/%{name}-%{version}
+
 
 %files scripts
 %attr(0755,root,root) %{_bindir}/*
 
+
 %changelog
+* Tue Mar 19 2013 Igor Vlasenko <viy@altlinux.ru> 0:2.6.0-alt1_2jpp7
+- fc update
+
 * Sat Oct 23 2010 Igor Vlasenko <viy@altlinux.ru> 0:2.4.0-alt1_3jpp6
 - new version
 
