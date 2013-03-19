@@ -21,7 +21,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.0.69
-Release: alt5
+Release: alt6
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -3082,6 +3082,10 @@ done)
 
 
 %changelog
+* Tue Mar 19 2013 Led <led@altlinux.ru> 3.0.69-alt6
+- enabled:
+  + VM_EVENT_COUNTERS
+
 * Mon Mar 18 2013 Led <led@altlinux.ru> 3.0.69-alt5
 - updated:
   + fix-fs-xfs
@@ -3098,7 +3102,7 @@ done)
   + fix-fs--block
 - added:
   + fix-drivers-block--loop
-- vboxhost 4.2.8
+- vboxhost 4.2.10
 
 * Sat Mar 16 2013 Led <led@altlinux.ru> 3.0.69-alt2
 - updated:
