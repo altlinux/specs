@@ -1,9 +1,9 @@
 %define _kde_alternate_placement 1
 
 Name: kde4-webkitpart
-Version: 1.3.1
+Version: 1.3.2
 Release: alt1
-Serial: 1
+Epoch: 1
 
 Group: Networking/WWW
 Summary: WebKit render engine for Konqueror
@@ -11,7 +11,7 @@ License: LGPLv2+
 Url: http://websvn.kde.org/trunk/playground/libs/webkitkde/
 
 #Requires: libkwebkit4 = %version-%release
-Provides: kde4-kwebkitpart = %serial:%version-%release
+Provides: kde4-kwebkitpart = %EVR
 
 Source0: kwebkitpart-%version.tar
 Source1: lang.tar
@@ -30,7 +30,7 @@ A HTML kparts component based on WebKit
 %package -n libkwebkit4
 Summary: KDE 4 library
 Group: System/Libraries
-Serial: 0
+Epoch: 0
 %description -n libkwebkit4
 KDE 4 library
 
@@ -68,6 +68,9 @@ sed -i "s|^Icon=.*|Icon=kwebkit|" src/kwebkitpart.desktop
 #%_K4apps/cmake/modules/*.cmake
 
 %changelog
+* Tue Mar 19 2013 Sergey V Turchin <zerg@altlinux.org> 1:1.3.2-alt1
+- new version
+
 * Thu Nov 29 2012 Sergey V Turchin <zerg@altlinux.org> 1:1.3.1-alt1
 - new version
 
