@@ -6,8 +6,8 @@
 %define rpm_ver %{get_SVR rpm}
 
 Name: kde-common-devel
-Version: 4.10.0
-Release: alt3
+Version: 4.10.1
+Release: alt1
 
 Group: Development/KDE and QT
 Summary: Development utils for KDE
@@ -19,8 +19,6 @@ BuildArch: noarch
 Requires: rpm-utils
 
 Source11: macrosd
-Patch1: find-lang.patch
-Patch2: find-lang-rpm-4.0.4-alt100.51.patch
 Requires: rpm-macros-%name = %version-%release
 
 %description
@@ -40,24 +38,19 @@ Install this package if you want to create RPM packages that use %name.
 
 %prep
 %setup -cT
-install -m 0644 %_libexecdir/rpm/find-lang .
-%K_if_ver_lteq "%rpm_ver" "4.0.4-alt100.50"
-%patch1 -p0
-%else
-%patch2 -p0
-%endif
 
 %install
 install -D -m 0644 %SOURCE11 %buildroot/%_rpmmacrosdir/%name
-install -D -m 0755 find-lang %buildroot/%_bindir/kde-devel-find-lang
 
 %files
-%_bindir/kde-devel-find-lang
 
 %files -n rpm-macros-%name
 %_rpmmacrosdir/%name
 
 %changelog
+* Tue Mar 19 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.1-alt1
+- don't use own find_lang because rpm find_lang was fixed
+
 * Fri Feb 01 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.0-alt3
 - fix to install python files in python prefix
 
