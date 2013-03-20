@@ -1,5 +1,5 @@
 Name: gutenprint
-Version: 5.2.8
+Version: 5.2.9
 Release: alt1
 Epoch: 1
 Summary: Gutenprint Printer Drivers
@@ -11,7 +11,8 @@ Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
 Source: http://download.sourceforge.net/gimp-print/%name-%version.tar.bz2
 Patch0: gutenprint-5.2.8-alt-fixes.patch
-Patch1: gutenprint-5.2.8-alt-makefile.patch
+Patch1: gutenprint-5.2.9-alt-makefile.patch
+Patch2: gutenprint-5.2.9-alt-LFS.patch
 
 # Automatically added by buildreq on Sat Jun 16 2012
 # optimized out: fontconfig fontconfig-devel glib2-devel libatk-devel libcairo-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgtk+2-devel libncurses-devel libpango-devel libtinfo-devel libwayland-client libwayland-server pkg-config xz zlib-devel
@@ -85,6 +86,8 @@ Epson, HP and compatible printers.
 %setup
 %patch0 -p1
 %patch1 -p1
+%patch2 -p2
+touch src/testpattern/testpatternl.l
 
 %build
 # remove old versions of standard macros
@@ -171,6 +174,10 @@ fi
 %_man8dir/*.8*
 
 %changelog
+* Wed Mar 20 2013 Fr. Br. George <george@altlinux.ru> 1:5.2.9-alt1
+- Version up
+- Fix i586 FILE64 build
+
 * Sat Jun 16 2012 Michael Shigorin <mike@altlinux.org> 1:5.2.8-alt1
 - 5.2.8
   + updated patch
