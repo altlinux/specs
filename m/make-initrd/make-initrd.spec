@@ -1,5 +1,5 @@
 Name: make-initrd
-Version: 0.8.3
+Version: 0.8.4
 Release: alt1
 
 Summary: Creates an initramfs image
@@ -167,6 +167,13 @@ fi
 %_datadir/%name/features/mdadm
 
 %changelog
+* Wed Mar 20 2013 Alexey Gladkov <legion@altlinux.ru> 0.8.4-alt1
+- Add simple syntax check for /etc/os-release.
+- Add /dev/{stdin,stdout,stderr,core,fd} to initrd.
+- Add crc32c module for libcrc32c.
+- depinfo: -D option.
+- Fix race condition in plymouthd and plymouth show-splash (thx Anton V. Boyarshinov).
+
 * Mon Feb 25 2013 Alexey Gladkov <legion@altlinux.ru> 0.8.3-alt1
 - initrd: Add initrd-release/os-release support.
 - guess: Ignore errors when resolve modalias.
