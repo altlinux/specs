@@ -1,13 +1,13 @@
 Name: warsow-data
-Version: 0.61
+Version: 1.02
 Release: alt1
-Summary: Data files for Warsow
 
+Summary: Data files for Warsow
 Group: Games/Arcade
 License: Warsow Data License
 
 Url: http://warsow.net
-Source0: %name-%version.tar
+Source0: warsow_%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -15,18 +15,21 @@ BuildArch: noarch
 Data files for Warsow.
 
 %prep
-%setup -q -n %name-%version
+%setup -q -n warsow_%{version}
 
 %install
-
-mkdir -p %buildroot%_datadir/games/warsow
-cp -a basewsw %buildroot%_datadir/games/warsow
+mkdir -p %buildroot%_datadir/warsow
+cp -a basewsw %buildroot%_datadir/warsow
 
 %files
 %doc docs/license.txt
-%_datadir/games/warsow/basewsw
+%dir %_datadir/warsow
+%_datadir/warsow/
 
 %changelog
+* Sun Mar 17 2013 Igor Zubkov <icesik@altlinux.org> 1.02-alt1
+- 0.61 -> 1.02
+
 * Fri Apr 22 2011 Igor Vlasenko <viy@altlinux.ru> 0.61-alt1
 - new version
 
