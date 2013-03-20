@@ -2,13 +2,17 @@
 BuildRequires: /usr/bin/java /usr/bin/xprop
 # END SourceDeps(oneline)
 BuildRequires: ca-certificates-java
+# ALT arm fix by Gleb Fotengauer-Malinovskiy <glebfm@altlinux.org>
+%ifarch %{arm}
+%set_verify_elf_method textrel=relaxed
+%endif
 %def_enable accessibility
 %def_disable javaws
 %def_disable moz_plugin
 %def_disable systemtap
 %def_disable desktop
-BuildRequires: gcc-c++ libstdc++-devel-static 
-BuildRequires: libXext-devel libXrender-devel
+BuildRequires: unzip gcc-c++ libstdc++-devel-static 
+BuildRequires: libXext-devel libXrender-devel libfreetype-devel
 BuildRequires(pre): browser-plugins-npapi-devel
 BuildRequires(pre): rpm-build-java
 %set_compress_method none
@@ -26,10 +30,7 @@ BuildRequires: jpackage-compat
 # If debug is 1, OpenJDK is built with all debug info present.
 %global debug 0
 
-# If runtests is 0 test suites will not be run.
-%global runtests 0
-
-%global icedtea_version 2.3.3
+%global icedtea_version 2.3.8
 %global hg_tag icedtea-{icedtea_version}
 
 %global accessmajorver 1.23
@@ -37,7 +38,6 @@ BuildRequires: jpackage-compat
 %global accessver %{accessmajorver}.%{accessminorver}
 %global accessurl http://ftp.gnome.org/pub/GNOME/sources/java-access-bridge/
 
-%global mauvedate 2008-10-22
 
 %global multilib_arches ppc64 sparc64 x86_64
 
@@ -130,8 +130,8 @@ BuildRequires: jpackage-compat
 # Standard JPackage naming and versioning defines.
 %global origin          openjdk
 %global buildver        9
-# Keep priority on 5digits in case buildver>9
-%global priority        1700%{buildver}
+# Keep priority on 6digits in case buildver>9
+%global priority        17000%{buildver}
 %global javaver         1.7.0
 
 # Standard JPackage directories and symbolic links.
@@ -172,7 +172,7 @@ BuildRequires: jpackage-compat
 
 Name:    java-%{javaver}-%{origin}
 Version: %{javaver}.%{buildver}
-Release: alt1_2.3.3jpp7
+Release: alt1_2.3.8.0jpp7
 # java-1.5.0-ibm from jpackage.org set Epoch to 1 for unknown reasons,
 # and this change was brought into RHEL-4.  java-1.5.0-ibm packages
 # also included the epoch in their virtual provides.  This created a
@@ -192,7 +192,6 @@ URL:      http://openjdk.java.net/
 #head
 #REPO=http://icedtea.classpath.org/hg/icedtea7-forest
 #current release
-#REPO=http://icedtea.classpath.org/hg/release/icedtea7-forest-2.2
 #REPO=http://icedtea.classpath.org/hg/release/icedtea7-forest-2.3
 # hg clone $REPO/ openjdk -r %{hg_tag}
 # hg clone $REPO/corba/ openjdk/corba -r %{hg_tag}
@@ -202,56 +201,57 @@ URL:      http://openjdk.java.net/
 # hg clone $REPO/jdk/ openjdk/jdk -r %{hg_tag}
 # hg clone $REPO/langtools/ openjdk/langtools -r %{hg_tag}
 # find openjdk -name ".hg" -exec rm -rf '{}' \;
-# find openjdk -name ".hgtags" -exec rm -rf '{}' \;
 # tar czf openjdk-icedtea-%{icedtea_version}.tar.gz openjdk
 Source0:  openjdk-icedtea-%{icedtea_version}.tar.gz
 
 # Gnome access bridge
+# Download-able from accessurl, md5 hash supported
 Source1:  %{accessurl}%{accessmajorver}/java-access-bridge-%{accessver}.tar.bz2
 
 # README file
+# This source is under maintainer's/java-team's control
 Source2:  README.src
 
-# Mauve test suite
-# FIXME: Is this applicable for 7?
-Source3:  mauve-%{mauvedate}.tar.gz
-Source4:  mauve_tests
-
 # javac wrapper (used during bootstrap to strip what ecj doesn't support)
-Source5: javac-wrapper
+# This source is under manual control of maintainer/java-team
+Source3: javac-wrapper
+
+
+# Sources 6-12 are taken from hg clone http://icedtea.classpath.org/hg/icedtea7
+# Unless said differently, there is directory with required sources which should be enough to pack/rename
 
 # Auto-generated files (used only in bootstrap)
 # To reproduce: 
 # build OpenJDK7 tarball above with any JDK
 # mv generated.build generated
 # tar czf generated-files.tar.gz generated
-Source6: generated-files.tar.gz
+Source4: generated-files.tar.gz
 
 # Class rewrite to rewrite rhino hierarchy
-Source7: class-rewriter.tar.gz
+Source5: class-rewriter.tar.gz
 
 # Systemtap tapsets. Zipped up to keep it small.
-Source8: systemtap-tapset.tar.gz
+Source6: systemtap-tapset.tar.gz
 
 # .desktop files. Zipped up to keep it small.
-Source9: desktop-files.tar.gz
+Source7: desktop-files.tar.gz
 
 # nss configuration file
-Source10: nss.cfg
+Source8: nss.cfg
 
 # FIXME: Taken from IcedTea snapshot 877ad5f00f69, but needs to be moved out
 # hg clone -r 877ad5f00f69 http://icedtea.classpath.org/hg/icedtea7
-Source11: pulseaudio.tar.gz
+Source9: pulseaudio.tar.gz
 
 # Removed libraries that we link instead
-Source12: remove-intree-libraries.sh
+Source10: remove-intree-libraries.sh
 
 # For primary arches, build latest and for secondary, use hs22
 # base (icedtea-2.2.1 tag)
 
 # http://icedtea.classpath.org/hg/release/icedtea7-forest-2.1
-# hg tag: icedtea-2.1.3
-Source100:  openjdk-icedtea-2.1.3.tar.gz
+# hg tag: icedtea-2.1.5
+Source100:  openjdk-icedtea-2.1.6.tar.gz
 
 # RPM/distribution specific patches
 
@@ -427,8 +427,6 @@ Patch302: systemtap.patch
 # Rhino support
 Patch400: rhino-icedtea-2.1.1.patch
 
-#Patch500: java-1.7.0-openjdk-removing_jvisualvm_man.patch
-
 BuildRequires: autoconf
 BuildRequires: automake
 BuildRequires: libalsa-devel
@@ -445,7 +443,7 @@ BuildRequires: libjpeg-devel
 BuildRequires: libpng-devel
 BuildRequires: wget
 BuildRequires: xsltproc libxslt
-BuildRequires: xorg-x11-proto-devel
+BuildRequires: xorg-bigreqsproto-devel xorg-compositeproto-devel xorg-damageproto-devel xorg-dmxproto-devel xorg-evieproto-devel xorg-fixesproto-devel xorg-fontsproto-devel xorg-glproto-devel xorg-inputproto-devel xorg-kbproto-devel xorg-pmproto-devel xorg-randrproto-devel xorg-recordproto-devel xorg-renderproto-devel xorg-resourceproto-devel xorg-scrnsaverproto-devel xorg-videoproto-devel xorg-xcbproto-devel xorg-xcmiscproto-devel xorg-xextproto-devel xorg-xf86bigfontproto-devel xorg-xf86dgaproto-devel xorg-xf86driproto-devel xorg-xf86rushproto-devel xorg-xf86vidmodeproto-devel xorg-xineramaproto-devel xorg-xproto-devel
 BuildRequires: mercurial
 BuildRequires: ant
 BuildRequires: ant-nodeps
@@ -457,18 +455,12 @@ BuildRequires: java-1.6.0-sun-devel
 %else
 BuildRequires: java-1.7.0-openjdk-devel
 %endif
-# Mauve build requirements.
-BuildRequires: xorg-x11-xvfb
-BuildRequires: fonts-type1-xorg
-BuildRequires: fonts-bitmap-misc
-BuildRequires: libfreetype-devel >= 2.3.0
 BuildRequires: fontconfig
-BuildRequires: ecj
 # Java Access Bridge for GNOME build requirements.
 #BuildRequires: libat-spi-devel
 BuildRequires: gawk
 BuildRequires: libbonobo-devel
-BuildRequires: xorg-x11-utils
+BuildRequires: xset xhost
 # PulseAudio build requirements.
 %if %{with_pulseaudio}
 BuildRequires: libpulseaudio-devel >= 0.9.11
@@ -528,7 +520,6 @@ Provides: java-fonts = %{epoch}:%{version}
 
 # Obsolete older 1.6 packages as it cannot use the new bytecode
 Source44: import.info
-Patch33: java-1.7.0-openjdk-alt-no-Werror.patch
 
 %define altname %name
 %define label -%{name}
@@ -550,6 +541,7 @@ Provides: /usr/lib/jvm/java/jre/lib/%archinstall/server/libjvm.so(SUNWprivate_1.
 Provides: /usr/lib/jvm/java/jre/lib/%archinstall/client/libjvm.so()
 Provides: /usr/lib/jvm/java/jre/lib/%archinstall/client/libjvm.so(SUNWprivate_1.1)
 %endif
+Patch33: java-1.7.0-openjdk-alt-no-Werror.patch
 Requires: java-common
 Requires: /proc
 
@@ -627,10 +619,8 @@ The OpenJDK API documentation.
 %endif
 
 %setup -q -c -n %{name} -T -a %{source_num}
-%setup -q -n %{name} -T -D -a 3
 %setup -q -n %{name} -T -D -a 1
 cp %{SOURCE2} .
-cp %{SOURCE4} .
 
 # OpenJDK patches
 
@@ -652,21 +642,21 @@ cp %{SOURCE4} .
 %endif
 
 # Remove libraries that are linked
-sh %{SOURCE12}
+sh %{SOURCE10}
 
 # Copy jaxp, jaf and jaxws drops
 mkdir drops/
 
 # Extract the generated files
-tar xzf %{SOURCE6}
+tar xzf %{SOURCE4}
 
 # Extract the rewriter (to rewrite rhino classes)
-tar xzf %{SOURCE7}
+tar xzf %{SOURCE5}
 
 # Extract systemtap tapsets
 %if_enabled systemtap
 
-tar xzf %{SOURCE8}
+tar xzf %{SOURCE6}
 
 for file in tapset/*.in; do
 
@@ -682,11 +672,11 @@ done
 
 # Pulseaudio
 %if %{with_pulseaudio}
-tar xzf %{SOURCE11}
+tar xzf %{SOURCE9}
 %endif
 
 # Extract desktop files
-tar xzf %{SOURCE9}
+tar xzf %{SOURCE7}
 
 # If bootstrapping, apply additional patches
 %if %{gcjbootstrap}
@@ -734,9 +724,6 @@ cp -a openjdk openjdk-boot
 
 %endif
 sed -i -e 's,DEF_OBJCOPY=/usr/bin/objcopy,DEF_OBJCOPY=/usr/bin/NO-objcopy,' openjdk/hotspot/make/linux/makefiles/defs.make
-
-#%patch500
-
 %patch33 -p1
 
 %build
@@ -822,8 +809,8 @@ mkdir -p bootstrap/boot
 cp -aL %{_jvmdir}/java-gcj/* bootstrap/boot/ || : # broken symlinks can be non-fatal but may cause this to fail
 
 # Replace javac with a wrapper that does some magic
-cp -af %{SOURCE5} bootstrap/boot/bin/javac
-chmod u+x bootstrap/boot/bin/javac # SOURCE5 may not be +x
+cp -af %{SOURCE3} bootstrap/boot/bin/javac
+chmod u+x bootstrap/boot/bin/javac # SOURCE3 may not be +x
 sed -i -e s:@RT_JAR@:$PWD/bootstrap/boot/jre/lib/rt.jar:g bootstrap/boot/bin/javac
 
 # Link the native2ascii binary
@@ -876,7 +863,6 @@ export ALT_JDK_IMPORT_PATH="$PWD/../bootstrap/jdk1.6.0"
 source jdk/make/jdk_generic_profile.sh
 
 make MEMORY_LIMIT=-J-Xmx512m \
-  WARNINGS_ARE_ERRORS= \
   ANT="/usr/bin/ant" \
   ALT_BOOTDIR="$PWD/../bootstrap/jdk1.6.0" \
   ICEDTEA_RT="$PWD/../bootstrap/jdk1.6.0/jre/lib/rt.jar" \
@@ -939,7 +925,6 @@ make MEMORY_LIMIT=-J-Xmx512m \
   HOTSPOT_BUILD_JOBS="$NUM_PROC" \
   STATIC_CXX="false" \
   RHINO_JAR="$PWD/../rhino/rhino.jar" \
-  GENSRCDIR="$PWD/generated.build" \
   FT2_CFLAGS="-I/usr/include/freetype2 " \
   FT2_LIBS="-lfreetype " \
   DEBUG_CLASSFILES="true" \
@@ -961,7 +946,9 @@ make MEMORY_LIMIT=-J-Xmx512m \
 
 popd >& /dev/null
 
+%ifarch %{jit_arches}
 chmod 644 $(pwd)/%{buildoutputdir}/j2sdk-image/lib/sa-jdi.jar
+%endif
 
 export JAVA_HOME=$(pwd)/%{buildoutputdir}/j2sdk-image
 
@@ -992,39 +979,6 @@ popd
 
 # Copy tz.properties
 echo "sun.zoneinfo.dir=/usr/share/javazi" >> $JAVA_HOME/jre/lib/tz.properties
-
-%if %{runtests}
-# Run jtreg test suite.
-{
-  echo ====================JTREG TESTING========================
-  export DISPLAY=:20
-  Xvfb :20 -screen 0 1x1x24 -ac&
-  echo $! > Xvfb.pid
-make MEMORY_LIMIT=-J-Xmx512m jtregcheck -k
-  kill -9 `cat Xvfb.pid` || :
-  unset DISPLAY
-  rm -f Xvfb.pid
-  echo ====================JTREG TESTING END====================
-} || :
-
-# Run Mauve test suite.
-{
-  pushd mauve-%{mauvedate}
-    ./configure
-make MEMORY_LIMIT=-J-Xmx512m
-    echo ====================MAUVE TESTING========================
-    export DISPLAY=:20
-    Xvfb :20 -screen 0 1x1x24 -ac&
-    echo $! > Xvfb.pid
-    $JAVA_HOME/bin/java Harness -vm $JAVA_HOME/bin/java \
-      -file %{SOURCE4} -timeout 30000 2>&1 | tee mauve_output
-    kill -9 `cat Xvfb.pid` || :
-    unset DISPLAY
-    rm -f Xvfb.pid
-    echo ====================MAUVE TESTING END====================
-  popd
-} || :
-%endif
 
 %install
 unset JAVA_HOME
@@ -1125,7 +1079,7 @@ popd
 
 
 # Install nss.cfg
-install -m 644 %{SOURCE10} $RPM_BUILD_ROOT%{_jvmdir}/%{jredir}/lib/security/
+install -m 644 %{SOURCE8} $RPM_BUILD_ROOT%{_jvmdir}/%{jredir}/lib/security/
 
 
 # Install Javadoc documentation.
@@ -1388,12 +1342,6 @@ done
 %files src
 %doc README.src
 %{_jvmdir}/%{sdkdir}/src.zip
-%if %{runtests}
-# FIXME: put these in a separate testresults subpackage.
-%doc mauve_tests
-%doc mauve-%{mauvedate}/mauve_output
-%doc test/jtreg-summary.log
-%endif
 
 %files javadoc
 %_altdir/javadocdir_java-1.7.0-openjdk-javadoc
@@ -1401,6 +1349,9 @@ done
 %doc %{buildoutputdir}/j2sdk-image/jre/LICENSE
 
 %changelog
+* Wed Mar 20 2013 Igor Vlasenko <viy@altlinux.ru> 0:1.7.0.9-alt1_2.3.8.0jpp7
+- fc update
+
 * Thu Oct 18 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.7.0.9-alt1_2.3.3jpp7
 - new release
 
