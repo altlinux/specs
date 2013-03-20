@@ -1,6 +1,6 @@
 Name: ant
 Version: 1.8.4
-Release: alt2
+Release: alt3
 # optional py and pl scripts in /usr/share/ant/bin
 %filter_from_requires /perl/d
 %filter_from_requires /python/d
@@ -23,7 +23,7 @@ Release: alt2
 
 Summary: Platform-independent build tool for Java
 Group: Development/Java
-License: Apache Software License 2.0
+License: Apache Software License 2.0 and W3C
 URL: http://ant.apache.org/
 Packager: Java Maintainers Team <java at packages.altlinux.org>
 
@@ -1079,6 +1079,9 @@ tag=`/bin/echo %{name}-%{version}-%{release} | %{__sed} 's|\.|_|g'`
 # --------------------------------
 
 %changelog
+* Wed Mar 20 2013 Igor Vlasenko <viy@altlinux.ru> 1.8.4-alt3
+- updated license tag
+
 * Wed Oct 03 2012 Igor Vlasenko <viy@altlinux.ru> 1.8.4-alt2
 - added ant-junit3 subpackage
 
