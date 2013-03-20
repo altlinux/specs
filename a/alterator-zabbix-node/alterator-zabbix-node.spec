@@ -1,6 +1,6 @@
 Name: alterator-zabbix-node
-Version: 1.0
-Release: alt7
+Version: 1.2
+Release: alt4
 
 Summary: Deployment tool for a Zabbix node
 License: GPL
@@ -12,9 +12,12 @@ Source: %name-%version.tar.gz
 
 BuildPreReq: help2man alterator-service-functions alterator-php-functions
 
+BuildRequires: alterator
+
 Requires: zabbix-phpfrontend-apache2 zabbix-phpfrontend-php5 zabbix-phpfrontend-engine apache2-mod_php5 zabbix-agent
 Requires: alterator-service-functions >= 1.0-alt5
 Requires: alterator-DBTYPE-functions
+Requires: alterator >= 4.20-alt1.1
 
 %description
 This package contains utilities for configuration of Zabbix nodes based
@@ -105,6 +108,15 @@ An XML bundle of Chainmail templates for a Zabbix node. The templates in
 this package can be imported to a working Zabbix configuration using the
 "Templates/Import template" operation.
 
+%package -n alterator-zabbix-agent
+Summary: Alterator module for the Zabbix agent configuration
+Group: System/Configuration/Other
+Requires: zabbix-agent
+Requires: alterator-l10n >= 2.9-alt21
+
+%description -n alterator-zabbix-agent
+Alterator module for the Zabbix agent configuration
+
 %prep
 %setup
 
@@ -136,7 +148,6 @@ this package can be imported to a working Zabbix configuration using the
 %_datadir/grow-zabbix-node/refconf/zabbix.conf.php
 %_datadir/grow-zabbix-node/refconf/zabbix_agentd.conf
 %_datadir/grow-zabbix-node/refconf/zabbix_server.conf
-%dir %_datadir/grow-zabbix-node
 %dir %_datadir/grow-zabbix-node/dumps
 %dir %_datadir/grow-zabbix-node/templates
 %_datadir/grow-zabbix-node/template.xml
@@ -166,7 +177,39 @@ this package can be imported to a working Zabbix configuration using the
 %files -n grow-zabbix-node-chainmail-templates
 %_datadir/grow-zabbix-node/templates/chainmail-templates.xml
 
+%files -n alterator-zabbix-agent
+%_alterator_datadir/applications/zabbix-agent.desktop
+%_alterator_datadir/ui/zabbix-agent
+%_alterator_backend3dir/zabbix-agent
+
 %changelog
+* Thu Sep 06 2012 Paul Wolneykien <manowar@altlinux.ru> 1.2-alt4
+- Restart zabbix-agentd while applying the configuration.
+
+* Wed Sep 05 2012 Paul Wolneykien <manowar@altlinux.ru> 1.2-alt3
+- Update the 'ids' table after new data insert.
+
+* Fri Aug 31 2012 Paul Wolneykien <manowar@altlinux.ru> 1.2-alt2
+- Use X-Alterator-Monitoring-Control category.
+
+* Wed Aug 29 2012 Paul Wolneykien <manowar@altlinux.ru> 1.2-alt1
+- Alterator module:
+ + Manual control of the "Listen IP" option.
+ + Control the "EnableRemoteCommands" parameter.
+ + Fix/improve the UI layout.
+
+* Thu Dec 16 2010 Paul Wolneykien <manowar@altlinux.ru> 1.1-alt4
+- Fix system hostname mode in agent module.
+
+* Wed Dec 15 2010 Paul Wolneykien <manowar@altlinux.ru> 1.1-alt3
+- Fix/update of the Jupiter templates.
+
+* Wed Dec 15 2010 Aleksey Avdeev <solo@altlinux.ru> 1.1-alt2
+- Update the agent configuration module.
+
+* Thu Dec 09 2010 Paul Wolneykien <manowar@altlinux.ru> 1.1-alt1
+- Add the agent configuration module.
+
 * Fri Nov 19 2010 Paul Wolneykien <manowar@altlinux.ru> 1.0-alt7
 - Fix the path of the traceroute command in the base configurations.
 
