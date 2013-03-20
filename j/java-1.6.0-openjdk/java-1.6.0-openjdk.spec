@@ -156,7 +156,7 @@ BuildRequires: jpackage-1.6.0-compat
 
 Name:    java-%{javaver}-%{origin}
 Version: %{javaver}.%{buildver}
-Release: alt20_65.1.11jpp6
+Release: alt21_65.1.11jpp6
 # java-1.5.0-ibm from jpackage.org set Epoch to 1 for unknown reasons,
 # and this change was brought into RHEL-4.  java-1.5.0-ibm packages
 # also included the epoch in their virtual provides.  This created a
@@ -207,7 +207,7 @@ BuildRequires: wget
 #BuildRequires: xalan-j2
 #BuildRequires: xerces-j2
 BuildRequires: xsltproc libxslt
-BuildRequires: xorg-x11-proto-devel
+BuildRequires: xorg-bigreqsproto-devel xorg-compositeproto-devel xorg-damageproto-devel xorg-dmxproto-devel xorg-evieproto-devel xorg-fixesproto-devel xorg-fontsproto-devel xorg-glproto-devel xorg-inputproto-devel xorg-kbproto-devel xorg-pmproto-devel xorg-randrproto-devel xorg-recordproto-devel xorg-renderproto-devel xorg-resourceproto-devel xorg-scrnsaverproto-devel xorg-videoproto-devel xorg-xcbproto-devel xorg-xcmiscproto-devel xorg-xextproto-devel xorg-xf86bigfontproto-devel xorg-xf86dgaproto-devel xorg-xf86driproto-devel xorg-xf86rushproto-devel xorg-xf86vidmodeproto-devel xorg-xineramaproto-devel xorg-xproto-devel
 BuildRequires: mercurial
 BuildRequires: ant
 BuildRequires: ant-nodeps
@@ -229,7 +229,7 @@ BuildRequires: eclipse-ecj
 #BuildRequires: libat-spi-devel
 BuildRequires: gawk
 BuildRequires: libbonobo-devel
-BuildRequires: xorg-x11-utils
+BuildRequires: xset xhost
 # PulseAudio build requirements.
 BuildRequires: libpulseaudio-devel >= 0.9.11
 BuildRequires: pulseaudio >= 0.9.11
@@ -931,6 +931,9 @@ done
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Wed Mar 20 2013 Igor Vlasenko <viy@altlinux.ru> 0:1.6.0.0-alt21_65.1.11jpp6
+- fixed build
+
 * Wed Aug 22 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.6.0.0-alt20_65.1.11jpp6
 - applied repocop patches
 
