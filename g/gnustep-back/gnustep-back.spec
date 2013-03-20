@@ -4,7 +4,7 @@
 
 Name: gnustep-back    
 Version: 0.23.1
-Release: alt3.git20130301
+Release: alt4.git20130301
 Summary: The GNUstep back-end library
 License: LGPLv3+ and GPLv3+
 Group: Graphical desktop/GNUstep
@@ -34,6 +34,7 @@ windowing environments). This package includes development headers too.
 %setup
 
 %build
+%remove_optflags -O2
 %autoreconf
 %configure \
 	--libexecdir=%_libdir \
@@ -51,8 +52,7 @@ sed -i 's|i586|x86_64|g' $(find ./ -type f)
 	messages=yes \
 	debug=yes \
 	strip=no \
-	shared=yes \
-	AUXILIARY_CPPFLAGS='-O2'
+	shared=yes
 
 %make_build -C Documentation \
 	messages=yes \
@@ -113,6 +113,9 @@ gzip ChangeLog
 %_man1dir/*
 
 %changelog
+* Wed Mar 20 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.23.1-alt4.git20130301
+- Disabled optimization
+
 * Wed Mar 13 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.23.1-alt3.git20130301
 - Rebuilt
 

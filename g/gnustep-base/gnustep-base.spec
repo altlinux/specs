@@ -2,7 +2,7 @@
 
 Name: gnustep-base
 Version: 1.24.4
-Release: alt2.git20130303
+Release: alt2.git20130317
 Epoch: 1
 
 Summary: GNUstep Base library package
@@ -65,6 +65,7 @@ done
 %build
 %undefine __libtoolize
 
+%remove_optflags -O2
 %{expand:%%add_optflags %(pkg-config --cflags libffi) -D__GNUSTEP_RUNTIME__}
 export CPPFLAGS="%optflags"
 export CC=gcc
@@ -147,6 +148,9 @@ rm -f /etc/services.orig
 %_includedir/gnustep
  
 %changelog
+* Wed Mar 20 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:1.24.4-alt2.git20130317
+- New snapshot
+
 * Wed Mar 13 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:1.24.4-alt2.git20130303
 - Rebuilt
 
