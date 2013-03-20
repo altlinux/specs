@@ -1,11 +1,12 @@
 %define Theme KDesktop
-%define codename Centaurea Sadleriana
+%define smalltheme kdesktop
+%define codename Centaurea Montana
 %define brand altlinux
 %define Brand ALT Linux
 
-Name: branding-%brand-kdesktop
+Name: branding-%brand-%smalltheme
 Version: 7.0.0
-Release: alt1
+Release: alt2
 BuildArch: noarch
 
 %define theme %name
@@ -28,8 +29,8 @@ BuildRequires: ImageMagick fontconfig bc libGConf-devel
 
 %define Theme_ru KDesktop
 %define Brand_ru Альт Линукс
-%define status alpha
-%define status_en альфа
+%define status альфа
+%define status_en alpha
 %define variants altlinux-desktop altlinux-office-desktop altlinux-office-server altlinux-lite altlinux-workbench school-master altlinux-gnome-desktop
 
 Source: %name.tar
@@ -37,6 +38,7 @@ Source: %name.tar
 Group: Graphics
 Summary: System/Base
 License: GPL
+Url: http://altlinux.ru
 
 %description
 Distro-specific packages with design and texts
@@ -262,6 +264,19 @@ echo "%distribution %version %Theme %status_en (%codename)" >%buildroot%_sysconf
 for n in fedora redhat system; do
 	ln -s altlinux-release %buildroot%_sysconfdir/$n-release
 done
+# os-release
+mkdir -p %buildroot/%_datadir/%name
+cat >>%buildroot/%_datadir/%name/os-release <<__EOF__
+NAME="%distribution"
+VERSION="%version %Theme %status_en (%codename)"
+ID=altlinux
+VERSION_ID=%version
+PRETTY_NAME="%distribution %version %Theme %status_en (%codename)"
+ANSI_COLOR="1;33"
+CPE_NAME="cpe:/o:alt_linux:%smalltheme:%version"
+HOME_URL="%url"
+BUG_REPORT_URL="https://bugs.altlinux.org/"
+__EOF__
 
 #notes
 pushd notes
@@ -385,6 +400,14 @@ cat '/%_datadir/themes/%XdgThemeName/panel-default-setup.entries' > \
 %files release
 %_sysconfdir/*-*
 %_sysconfdir/buildreqs/packages/ignore.d/*
+%dir %_datadir/%name/
+%_datadir/%name/os-release
+
+%post release
+if ! [ -e %_sysconfdir/os-release ] ; then
+    cat %buildroot/%_datadir/%name/os-release > %_sysconfdir/os-release
+    chmod 0644 %_sysconfdir/os-release
+fi
 
 %files notes
 %_datadir/alt-notes/*
@@ -420,6 +443,10 @@ cat '/%_datadir/themes/%XdgThemeName/panel-default-setup.entries' > \
 %_datadir/kde4/apps/kio_desktop/DesktopLinks/indexhtml.desktop
 
 %changelog
+* Wed Mar 20 2013 Sergey V Turchin <zerg at altlinux dot org> 7.0.0-alt2
+- update graphics
+- add /etc/os-release
+
 * Wed Mar 13 2013 Sergey V Turchin <zerg at altlinux dot org> 7.0.0-alt1
 - update background images
 
