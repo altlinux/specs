@@ -1,6 +1,6 @@
 Name: jed
 Version: 0.99.19
-Release: alt2.qa1
+Release: alt2.qa2
 Serial: 2
 
 %define srcname %name-0.99-19
@@ -33,8 +33,10 @@ Patch6: jed-0.99-18-slutf8.patch
 
 Requires: %name-common = %{?serial:%serial:}%version-%release
 
-# Automatically added by buildreq on Tue Nov 26 2002
-BuildRequires: libXt-devel xorg-compat-devel libX11-devel xorg-libs fontconfig-devel freetype2-devel libXft-devel libexpat libgpm-devel libslang2-devel autoconf libXft-devel libXft
+# Automatically added by buildreq on Wed Mar 20 2013
+# optimized out: fontconfig fontconfig-devel gnu-config libICE-devel libX11-devel libXrender-devel libfreetype-devel pkg-config xorg-renderproto-devel xorg-xproto-devel
+BuildRequires: libXft-devel libXt-devel libgpm-devel libncurses-devel libslang2-devel
+
 BuildRequires: /proc
 
 %package common
@@ -216,6 +218,9 @@ while ps -C jed > /dev/null; do sleep 1; done
 %_man1dir/rgrep.1*
 
 %changelog
+* Wed Mar 20 2013 Fr. Br. George <george@altlinux.ru> 2:0.99.19-alt2.qa2
+- Renew buildreq
+
 * Thu Aug 30 2012 Repocop Q. A. Robot <repocop@altlinux.org> 2:0.99.19-alt2.qa1
 - NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
 - applied repocop fixes:
