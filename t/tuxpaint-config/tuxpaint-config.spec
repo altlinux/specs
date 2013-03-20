@@ -12,16 +12,17 @@ Summary: Configuration tool for Tux Paint
 Url: http://www.tuxpaint.org/
 License: GPL v2 or later
 Group: Graphics
-Version: 0.0.10
-Release: alt1.2.qa1
-BuildRequires: libfltk-devel gcc-c++ libpaper-devel xorg-x11-proto-devel libXft-devel libXext-devel
-BuildPreReq: libpixman-devel libcairo-devel libXinerama-devel
+Version: 0.0.12
+Release: alt1
 Requires: tuxpaint
-Packager: Alexandra Panyukova <mex3@altlinux.ru>
 
-Source: %name-%version.tar.bz2
+Source: %name-%version.tar.gz
 Patch1: tuxpaint-config-docpath.patch
 Patch2: tuxpaint-config-desktop.patch
+# Automatically added by buildreq on Wed Mar 20 2013
+# optimized out: fontconfig libX11-devel libXext-devel libstdc++-devel xorg-xproto-devel
+BuildRequires: gcc-c++ libXft-devel libXinerama-devel libcairo-devel libfltk-devel libpaper-devel libpixman-devel
+
 BuildRequires: desktop-file-utils
 
 %description
@@ -30,17 +31,11 @@ command-line options or configuration files. This configuration tool
 provides a point-and-click interface for administrators to tailor
 Tux Paint to suit the needs of their users.
 
-%if "%(xft-config --prefix)" == "/usr"
-%define _xorg_fontdir %_datadir/fonts
-%else
-%define _xorg_fontdir /usr/X11R6/lib/X11/fonts
-%endif
-
 %prep
 %setup -q
 find . -name CVS | xargs rm -rf
 %patch1
-%patch2 -p1
+%patch2
 
 %build
 make  PREFIX=%prefix X11_ICON_PREFIX=/usr/include/X11/pixmaps/
@@ -54,9 +49,6 @@ install -D -m644 src/%name.desktop %buildroot%_desktopdir/%name.desktop
 find %buildroot%_defaultdocdir/%name -type f -exec chmod 644 {} \;
 find %buildroot%_mandir -type f -exec chmod 644 {} \;
 
-%if 0%{?suse_version} > 1020
-%fdupes -s %buildroot
-%endif
 desktop-file-install --dir %buildroot%_desktopdir \
 	--remove-category=System \
 	--remove-category=SystemSetup \
@@ -64,6 +56,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 	--add-category=KidsGame \
 	%buildroot%_desktopdir/tuxpaint-config.desktop
 
+#find_lang %name
+# XXX this turns all the text to ???s
+#files -f %name.lang
 %files
 %_bindir/tuxpaint-config
 %doc %_defaultdocdir/%name
@@ -75,6 +70,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_desktopdir/*.desktop
 
 %changelog
+* Wed Mar 20 2013 Fr. Br. George <george@altlinux.ru> 0.0.12-alt1
+- Version up
+
 * Mon May 23 2011 Repocop Q. A. Robot <repocop@altlinux.org> 0.0.10-alt1.2.qa1
 - NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
 - applied repocop fixes:
