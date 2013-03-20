@@ -66,7 +66,7 @@ BuildRequires: jpackage-compat
 
 Name:           jbossweb
 Version:        2.1.3
-Release:        alt1_2jpp6
+Release:        alt2_2jpp6
 Epoch:          0
 Summary:        JBoss Web Server based on Apache Tomcat
 Group:          Development/Java
@@ -80,9 +80,9 @@ BuildRequires:  ant
 BuildRequires:  ant-nodeps
 BuildRequires:  ant-trax
 BuildRequires:  axis
-BuildRequires:  jakarta-commons-daemon
+BuildRequires:  apache-commons-daemon
 %if %with jci
-BuildRequires:  jakarta-commons-jci
+BuildRequires:  apache-commons-jci
 %endif
 BuildRequires:  javamail_1_3_1_api
 BuildRequires:  ecj3 >= 0:3.1.2
@@ -142,7 +142,7 @@ export OPT_JAR_LIST=`cat %{_sysconfdir}/ant.d/{nodeps,trax}`
 
 pushd %{packdname}
     # we don't care about the tarballs and we're going to replace
-    # tomcat-dbcp.jar with jakarta-commons-{collections,dbcp,pool}-tomcat5.jar
+    # tomcat-dbcp.jar with apache-commons-{collections,dbcp,pool}-tomcat5.jar
     # so just create a dummy file for later removal
     touch HACK
     # who needs a build.properties file anyway
@@ -216,6 +216,9 @@ cp -p %{buildroot}%{_javadir}/%{name}/servlet-api-%{version}.jar %{buildroot}%{r
 %endif
 
 %changelog
+* Wed Mar 20 2013 Igor Vlasenko <viy@altlinux.ru> 0:2.1.3-alt2_2jpp6
+- use apache-commons-daemon
+
 * Wed Feb 01 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.1.3-alt1_2jpp6
 - new jpp release
 
