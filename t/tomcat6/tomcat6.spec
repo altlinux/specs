@@ -57,7 +57,7 @@ BuildRequires: jpackage-compat
 Name:          tomcat6
 Epoch:         0
 Version:       %{major_version}.%{minor_version}.%{micro_version}
-Release:       alt1_15jpp6
+Release:       alt2_15jpp6
 Summary:       Apache Servlet/JSP Engine, RI for Servlet %{servletspec}/JSP %{jspspec} API
 
 Group:         Development/Java
@@ -88,19 +88,19 @@ BuildRequires: ant
 BuildRequires: ant-nodeps
 BuildRequires: ecj
 BuildRequires: findutils
-BuildRequires: jakarta-commons-collections
-BuildRequires: jakarta-commons-daemon
-BuildRequires: jakarta-commons-dbcp
-BuildRequires: jakarta-commons-pool
+BuildRequires: apache-commons-collections
+BuildRequires: apache-commons-daemon
+BuildRequires: apache-commons-dbcp
+BuildRequires: apache-commons-pool
 BuildRequires: jakarta-taglibs-standard
 BuildRequires: jpackage-utils >= 0:1.7.0
 BuildRequires: junit
 BuildRequires: log4j
-Requires:      jakarta-commons-daemon
-Requires:      jakarta-commons-logging
-Requires:      jakarta-commons-collections
-Requires:      jakarta-commons-dbcp
-Requires:      jakarta-commons-pool
+Requires:      apache-commons-daemon
+Requires:      apache-commons-logging
+Requires:      apache-commons-collections
+Requires:      apache-commons-dbcp
+Requires:      apache-commons-pool
 Requires:      procps
 Requires:      %{name}-lib = %{epoch}:%{version}-%{release}
 Requires(pre):    shadow-utils
@@ -167,9 +167,9 @@ Requires: %{name}-jsp-%{jspspec}-api = %{epoch}:%{version}-%{release}
 Requires: %{name}-servlet-%{servletspec}-api = %{epoch}:%{version}-%{release}
 Requires: %{name}-el-%{elspec}-api = %{epoch}:%{version}-%{release}
 Requires: ecj
-Requires: jakarta-commons-collections
-Requires: jakarta-commons-dbcp
-Requires: jakarta-commons-pool
+Requires: apache-commons-collections
+Requires: apache-commons-dbcp
+Requires: apache-commons-pool
 Requires(preun): coreutils
 
 %description lib
@@ -570,6 +570,9 @@ fi
 %{appdir}/sample
 
 %changelog
+* Wed Mar 20 2013 Igor Vlasenko <viy@altlinux.ru> 0:6.0.32-alt2_15jpp6
+- use apache-commons-daemon
+
 * Thu Sep 08 2011 Igor Vlasenko <viy@altlinux.ru> 0:6.0.32-alt1_15jpp6
 - update to new release by jppimport
 

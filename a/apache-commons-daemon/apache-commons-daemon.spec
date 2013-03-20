@@ -1,4 +1,7 @@
 Epoch: 1
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 
@@ -6,8 +9,8 @@ BuildRequires: jpackage-compat
 %global short_name  commons-%{base_name}
 
 Name:           apache-%{short_name}
-Version:        1.0.10
-Release:        alt1_4jpp7
+Version:        1.0.11
+Release:        alt1_1jpp7
 Summary:        Defines API to support an alternative invocation mechanism
 License:        ASL 2.0
 Group:          Development/Java
@@ -16,6 +19,7 @@ Source0:        http://archive.apache.org/dist/commons/%{base_name}/source/%{sho
 Patch0:         0001-execve-path-warning.patch
 Patch1:         apache-commons-daemon-JAVA_OS.patch
 Patch2:         apache-commons-daemon-s390x.patch
+Patch3:         apache-commons-daemon-ppc64.patch
 BuildRequires:  jpackage-utils
 BuildRequires:  maven
 BuildRequires:  apache-commons-parent
@@ -67,6 +71,7 @@ Obsoletes:      jakarta-%{short_name}-javadoc <= 1:1.0.1
 %patch0 -p1 -b .execve
 %patch1 -p1 -b .java_os
 %patch2 -p1 -b .s390x
+%patch3 -p1 -b .ppc64
 
 # remove java binaries from sources
 rm -rf src/samples/build/
@@ -87,7 +92,7 @@ make %{?_smp_mflags}
 popd
 
 # build jars
-mvn-rpmbuild install javadoc:javadoc
+mvn-rpmbuild -Dmaven.compile.source=1.5 -Dmaven.compile.target=1.5 -Dmaven.javadoc.source=1.5  install javadoc:javadoc
 
 
 
@@ -137,6 +142,9 @@ rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
 
 
 %changelog
+* Tue Mar 19 2013 Igor Vlasenko <viy@altlinux.ru> 1:1.0.11-alt1_1jpp7
+- fc update
+
 * Mon Oct 08 2012 Igor Vlasenko <viy@altlinux.ru> 1:1.0.10-alt1_4jpp7
 - new version
 
