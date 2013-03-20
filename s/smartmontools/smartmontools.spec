@@ -1,6 +1,6 @@
 Name: smartmontools
-Version: 6.0
-Release: alt1
+Version: 6.1
+Release: alt2
 
 Summary: Control and monitor storage systems using S.M.A.R.T.
 License: GPLv2+
@@ -56,7 +56,7 @@ install -pD -m755 %_sourcedir/smartd.init \
 install -pD -m644 %_sourcedir/smartd.sysconfig \
 	%buildroot%_sysconfdir/sysconfig/smartd
 
-rm %buildroot%docdir/{CHANGELOG,COPYING,INSTALL}
+rm %buildroot%docdir/{ChangeLog,COPYING,INSTALL}
 
 %post
 %post_service smartd
@@ -74,11 +74,18 @@ rm %buildroot%docdir/{CHANGELOG,COPYING,INSTALL}
 %_man5dir/smartd.conf.*
 %config(noreplace) %_sysconfdir/smartd.conf
 %config(noreplace) %_sysconfdir/sysconfig/smartd
+%config(noreplace) %_sysconfdir/smartd_warning.sh
 %exclude %_sbindir/update-smart-drivedb
 %exclude %_datadir/%name
 %docdir
 
 %changelog
+* Wed Mar 20 2013 Michael Shigorin <mike@altlinux.org> 6.1-alt2
+- Packaged %_sysconfdir/smartd_warning.sh.
+
+* Tue Mar 19 2013 Michael Shigorin <mike@altlinux.org> 6.1-alt1
+- Updated to 6.1.
+
 * Mon Oct 15 2012 Dmitry V. Levin <ldv@altlinux.org> 6.0-alt1
 - Updated to 6.0.
 
