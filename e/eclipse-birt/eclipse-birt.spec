@@ -1,5 +1,5 @@
-BuildRequires: eclipse-emf-sdk
 # BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %define rlsdate %(date '+%%Y%%m%%d0000')
@@ -9,7 +9,7 @@ BuildRequires: jpackage-compat
 BuildRequires: rpm-build-java-osgi
 # %name or %version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name eclipse-birt
-%define version 4.2.0
+%define version 4.2.1
 %global eclipse_dropin   %{_datadir}/eclipse/dropins
 
 # Match the context qualifier with the upstream p2 repo
@@ -20,12 +20,12 @@ BuildRequires: rpm-build-java-osgi
 #  sed "s/org.eclipse.birt.feature.group=//" | \
 #  sed "s/%%{version}.//" | \
 #  sed "s/-.*//"
-%global qualifier v20110905
-%global tag BIRT_4_2_0_Release_201206131143
+%global qualifier v201209121721
+%global tag BIRT_4_2_1_Release_201209121721
 
 Name:      eclipse-birt
-Version:   4.2.0
-Release:   alt1_2jpp7
+Version:   4.2.1
+Release:   alt1_1jpp7
 Summary:   Eclipse-based reporting system
 Group:     System/Libraries
 License:   EPL
@@ -129,6 +129,7 @@ ln -s %{_javadir}/batik/batik-xml.jar
 ln -s %{_javadir}/xml-commons-jaxp-1.3-apis-ext.jar
 ln -s %{_javadir}/fop.jar
 ln -s %{_javadir}/js.jar
+ln -s %{_javadir}/xerces-j2.jar
 popd
 
 %build
@@ -184,6 +185,9 @@ popd
 %doc org.eclipse.birt.data.fedora.feature/epl-v10.html
 
 %changelog
+* Tue Mar 19 2013 Igor Vlasenko <viy@altlinux.ru> 4.2.1-alt1_1jpp7
+- fc update
+
 * Fri Sep 28 2012 Igor Vlasenko <viy@altlinux.ru> 4.2.0-alt1_2jpp7
 - new fc release
 
