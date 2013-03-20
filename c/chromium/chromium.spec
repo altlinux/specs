@@ -13,7 +13,7 @@
 
 Name:           chromium
 Version:        25.0.1364.172
-Release:        alt1.r%rev
+Release:        alt2.r%rev
 
 Summary:        An open source web browser developed by Google
 License:        BSD-3-Clause and LGPL-2.1+
@@ -317,7 +317,10 @@ pushd src
 	-Denable_plugin_installation=0 \
 	-Dlinux_use_tcmalloc=0 \
 	-Duse_pulseaudio=1 \
-	-Djavascript_engine=v8
+	-Djavascript_engine=v8 \
+	-Dgoogle_api_key='AIzaSyAIIWz7zaCwYcUSe3ZaRPviXjMjkBP4-xY' \
+	-Dgoogle_default_client_id='1018394967181.apps.googleusercontent.com' \
+	-Dgoogle_default_client_secret='h_PrTP1ymJu83YTLyz-E25nP'
 
 # Buld main program
 %make_build -r %{?_smp_mflags} chrome V=1 BUILDTYPE=%buildtype
@@ -434,6 +437,9 @@ printf '%_bindir/%name\t%_libdir/%name/%name-gnome\t15\n' > %buildroot%_altdir/%
 %_altdir/%name-gnome
 
 %changelog
+* Wed Mar 20 2013 Andrey Cherepanov <cas@altlinux.org> 25.0.1364.172-alt2.r187217
+- Build with access to Google API
+
 * Wed Mar 13 2013 Andrey Cherepanov <cas@altlinux.org> 25.0.1364.172-alt1.r187217
 - New version 25.0.1364.172
 
