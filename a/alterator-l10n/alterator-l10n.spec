@@ -1,6 +1,6 @@
 Name: alterator-l10n
 Version: 2.9
-Release: alt53
+Release: alt54
 
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
@@ -83,6 +83,7 @@ make check
 %lang(uk) %config(noreplace) %_sysconfdir/alterator/l10n/*-uk_*
 %lang(pt_BR) %config(noreplace) %_sysconfdir/alterator/l10n/*-pt_BR
 %lang(es) %config(noreplace) %_sysconfdir/alterator/l10n/*-es_*
+%lang(kk) %config(noreplace) %_sysconfdir/alterator/l10n/*-kk_*
 
 %dir %_datadir/alterator/help/
 %lang(en) %dir %_datadir/alterator/help/en_US/
@@ -106,7 +107,12 @@ make check
 
 %lang(es) %_datadir/locale/es/LC_MESSAGES/*.mo
 
+%lang(kk) %_datadir/locale/kk/LC_MESSAGES/*.mo
+
 %changelog
+* Wed Mar 20 2013 Andrey Cherepanov <cas@altlinux.org> 2.9-alt54
+- Add Kazakh translations (thanks Baurzhan Muftakhidinov)
+
 * Thu Feb 28 2013 Andrey Cherepanov <cas@altlinux.org> 2.9-alt53
 - Update Russian localization for modules net-iptables and vm
 
