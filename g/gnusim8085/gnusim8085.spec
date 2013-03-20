@@ -1,56 +1,55 @@
-#TODO: http://live.gnome.org/GtkSourceView/PortingGuide
-
 Name: gnusim8085
-Version: 1.3.2
-Release: alt1.qa3
+Version: 1.3.7
+Release: alt1
 
 Summary: Simulator and assembler for the Intel 8085 Microprocessor
 
 License: GPL
 Group: Emulators
-Url: http://gnusim8085.sourceforge.net/
+Url: http://gnusim8085.org/
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-Source: http://dl.sf.net/%name/%name-%version.tar.bz2
+Source:  http://launchpad.net/%name/trunk/%version/+download/%name-%version.tar.gz
+Patch: gnusim8085-1.3.7-desktop.patch
 
-# Automatically added by buildreq on Sun Sep 23 2007
-BuildRequires: gcc-c++ libSM-devel libgnomeui-devel libgtksourceview1-devel
+BuildRequires: libSM-devel libgtk+2-devel libgio-devel libgtksourceview-devel
 
 Obsoletes: GNUSim8085
 Provides: GNUSim8085
 
 %description
-GNUSim8085 is a graphical simulator plus assembler with debugger for
-the Intel 8085 microprocessor.  It is written using GNOME libs.  It
-can also run on several window managers.
+GNUSim8085 is a graphical simulator plus assembler with debugger for the
+Intel 8085 microprocessor. It is written using GNOME libs. It can also
+run on several window managers.
 
 %prep
 %setup -q
+%patch
 
 %build
 %configure
 %make_build
 
 %install
-%makeinstall
-#mv %buildroot/%_prefix/doc %buildroot/%_docdir
-rm -rf %buildroot/%_datadir/gnome/
-
-sed -i -e 's,Encoding=UTF-8,Version=1.0,' GNUSim8085.desktop
-echo 'Categories=System;Emulator;' >> GNUSim8085.desktop
-install -D -m0644 GNUSim8085.desktop %buildroot%_desktopdir/%name.desktop
+%makeinstall_std
 
 %find_lang %name
 
 %files -f %name.lang
-%_docdir/%name/
 %_bindir/*
 %_desktopdir/*
-%_pixmapsdir/*
-%_datadir/gtksourceview-1.0/language-specs/8085asm.lang
+%_datadir/%name/
+%_datadir/doc/%name
+%_iconsdir/hicolor/scalable/apps/%name.svg
+%_man1dir/%name.1.*
 
 %changelog
+* Wed Mar 20 2013 Yuri N. Sedunov <aris@altlinux.org> 1.3.7-alt1
+- 1.3.7
+- updated buildreqs
+- spec cleanup
+
 * Sun Apr 10 2011 Igor Vlasenko <viy@altlinux.ru> 1.3.2-alt1.qa3
 - NMU: second cleanup of .desktop files
 
