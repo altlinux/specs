@@ -1,13 +1,13 @@
 Name: sifdec
 Version: 2.0.0
-Release: alt2.svn20120420
+Release: alt2.svn20130216
 Summary: Decoder for translating SIF into Fortran 77 and data files
 License: LGPL v2.1 or later
 Group: File tools
 Url: http://cuter.rl.ac.uk/cuter-www/sifdec/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-# https://magi-trac-svn.mathappl.polymtl.ca/SVN/cuter/sifdec/branches/SifDec2
+# http://tracsvn.mathappl.polymtl.ca/SVN/cuter/sifdec/branches/SifDec2
 Source: %name-%version.tar.gz
 
 Requires: %name-data = %version
@@ -95,6 +95,9 @@ install -p -m644 common/doc/*.pdf %buildroot%_docdir/%name
 %_docdir/%name
 
 %changelog
+* Wed Mar 20 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.0-alt2.svn20130216
+- New snapshot
+
 * Fri Mar 15 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.0-alt2.svn20120420
 - Added conflict with libxforms-demos
 
