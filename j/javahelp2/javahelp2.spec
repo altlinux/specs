@@ -1,9 +1,12 @@
+Epoch: 0
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: unzip
+# END SourceDeps(oneline)
 %def_without demo
 BuildRequires: /proc
 BuildRequires: jpackage-compat
-%define version 2.0.05
-%define name javahelp2
-# Copyright (c) 2000-2011, JPackage Project
+# Copyright (c) 2000-2005, JPackage Project
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -33,44 +36,24 @@ BuildRequires: jpackage-compat
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
-
-%global oname javahelp
-%global namedversion %{version}
-
-Name:           javahelp2
-Version:        2.0.05
-Release:        alt3_8jpp6
-Epoch:          0
-Summary:        JavaHelp
-License:        LGPLv2 with the classpath exception
-URL:            https://javahelp.dev.java.net/
-Group:          Development/Java
+Name:		javahelp2
+Version:	2.0.05
+Release:	alt3_12jpp7
+Summary:	JavaHelp is a full-featured, platform-independent, extensible help system 
+License:	GPLv2 with exceptions
+Url:		https://javahelp.dev.java.net/
+Group:		Development/Java
+# 
 #
-# To get the source, build it from svn repository of 
-# https://javahelp.dev.java.net/ 
-# using following steps:
-# svn checkout https://javahelp.dev.java.net/svn/javahelp/trunk javahelp --username guest -r 46
-# cd javahelp
-# ant -f javahelp_nbproject/build.xml release-source -Dversion=2.0.02_svn46
-# the source file will be generated into 
-# javahelp_nbproject/dist/javahelp2-src-2.0.02_svn46.zip
-#
-Source0:        %{name}-%{version}.tar.gz
-# svn export -r 59 https://javahelp.dev.java.net/svn/javahelp/trunk javahelp2-2.0.05 --username guest
-Source1:        %{name}-jhindexer.sh
-Source2:        %{name}-jhsearch.sh
-Source3:        %{oname}-%{version}.pom
-Requires(post): jpackage-utils >= 0:1.7.4
-Requires(postun): jpackage-utils >= 0:1.7.4
-Requires:       jpackage-utils >= 0:1.7.4
-Requires:       jsp_api >= 0:2.0
-Requires:       servlet_api >= 0:2.4
-BuildRequires:  jpackage-utils >= 0:1.7.4
-BuildRequires:  ant >= 0:1.6.5
-BuildRequires:  ant-nodeps
-BuildRequires:  jsp_2_1_api
-BuildRequires:  servlet_2_5_api
-BuildArch:      noarch
+Source0:	https://javahelp.dev.java.net/files/documents/5985/59373/%{name}-src-%{version}.zip
+Source1:	%{name}-jhindexer.sh
+Source2:	%{name}-jhsearch.sh
+BuildArch:	noarch
+Requires:	jpackage-utils >= 0:1.5.32
+BuildRequires:	jpackage-utils >= 0:1.5.32
+BuildRequires:  jsp >= 0:2.0
+BuildRequires:	ant ant-nodeps
+BuildRequires:	servlet6
 Source44: import.info
 
 %description
@@ -80,42 +63,20 @@ help in applets, components, applications, operating systems, and
 devices. Authors can also use the JavaHelp software to deliver online
 documentation for the Web and corporate Intranet.
 
-%package manual
-Summary:        Manual for %{name}
-Group:          Development/Java
-BuildArch: noarch
-
-%description manual
-Documentation for %{name}.
-
 %package javadoc
-Summary:        Javadoc for %{name}
-Group:          Development/Documentation
-Requires:       jpackage-utils
+Summary:	Javadoc for %{name}
+Group:		Development/Java
 BuildArch: noarch
 
 %description javadoc
 Javadoc for %{name}.
 
-%if_with demo
-%package demo
-Summary:        Demo for %{name}
-Group:          Development/Java
-Requires:       %{name} = %{epoch}:%{version}-%{release}
-%endif #demo
-
-%if_with demo
-%description demo
-Demonstrations and samples for %{name}.
-%endif #demo
-
 %prep
-%setup -q 
+%setup -q -n %{name}-%{version}
 # fix files perms
 chmod -R go=u-w *
-
-%{_bindir}/find -type f -name "*.bat" | %{_bindir}/xargs -t rm
-%{_bindir}/find -type f -name "*.jar" | %{_bindir}/xargs -t rm
+# remove windows files
+for file in `find . -type f -name .bat`; do rm -f $file; done
 
 #
 # This class provides native browser integration and would require
@@ -126,55 +87,27 @@ chmod -R go=u-w *
 rm jhMaster/JavaHelp/src/new/javax/help/plaf/basic/BasicNativeContentViewerUI.java
 
 mkdir javahelp_nbproject/lib
-ln -s %{_javadir}/jsp_2_1_api.jar javahelp_nbproject/lib/jsp-api.jar
-ln -s %{_javadir}/servlet_2_5_api.jar javahelp_nbproject/lib/servlet-api.jar
+ln -s %{_javadir}/jsp.jar javahelp_nbproject/lib/jsp-api.jar
+ln -s %{_javadir}/servlet.jar javahelp_nbproject/lib/servlet-api.jar
 
 %build
-export CLASSPATH=
-export OPT_JAR_LIST=:
-ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 \
-    -f javahelp_nbproject/build.xml \
-    -Djdic-jar-present=true \
-    -Djdic-zip-present=true \
-    -Dservlet-jar-present=true \
-    -Dtomcat-zip-present=true \
-    release javadoc
+export CLASSPATH=$(build-classpath ant/ant-nodeps)
+ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  -f javahelp_nbproject/build.xml -Djdic-jar-present=true -Djdic-zip-present=true -Dservlet-jar-present=true -Dtomcat-zip-present=true release javadoc
 
 %install
+install -d -m 755 $RPM_BUILD_ROOT%{_javadir}
+install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
+install -d -m 755 $RPM_BUILD_ROOT%{_bindir}
+install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/%{name}
+install -m 755 %{SOURCE1} $RPM_BUILD_ROOT%{_bindir}/jh2indexer
+install -m 755 %{SOURCE2} $RPM_BUILD_ROOT%{_bindir}/jh2search
 
-# jars
-mkdir -p %{buildroot}%{_javadir}/%{name}
-cp -p javahelp_nbproject/dist/lib/jh-client.jar %{buildroot}%{_javadir}/%{name}/jh-client-%{namedversion}.jar
-cp -p javahelp_nbproject/dist/lib/jh.jar %{buildroot}%{_javadir}/%{name}/jh-%{namedversion}.jar
-cp -p javahelp_nbproject/dist/lib/jhall.jar %{buildroot}%{_javadir}/%{name}/jhall-%{namedversion}.jar
-cp -p javahelp_nbproject/dist/lib/jhbasic.jar %{buildroot}%{_javadir}/%{name}/jhbasic-%{namedversion}.jar
-cp -p javahelp_nbproject/dist/lib/jsearch-client.jar %{buildroot}%{_javadir}/%{name}/jsearch-client-%{namedversion}.jar
-cp -p javahelp_nbproject/dist/lib/jsearch-indexer.jar %{buildroot}%{_javadir}/%{name}/jsearch-indexer-%{namedversion}.jar
-cp -p javahelp_nbproject/dist/lib/jsearch-misc.jar %{buildroot}%{_javadir}/%{name}/jsearch-misc-%{namedversion}.jar
-cp -p javahelp_nbproject/dist/lib/jsearch.jar %{buildroot}%{_javadir}/%{name}/jsearch-%{namedversion}.jar
-ln -s %{name}/jhall-%{namedversion}.jar %{buildroot}%{_javadir}/%{name}-%{namedversion}.jar
-(cd %{buildroot}%{_javadir} && for jar in *-%{namedversion}*; do ln -sf ${jar} ${jar/-%{namedversion}/}; done)
-(cd %{buildroot}%{_javadir}/%{name} && for jar in *-%{namedversion}*; do ln -sf ${jar} ${jar/-%{namedversion}/}; done)
-
-# pom
-mkdir -p %{buildroot}%{_datadir}/maven2/poms
-cp -p %{SOURCE3} %{buildroot}%{_datadir}/maven2/poms/JPP-%{name}.pom
-%add_to_maven_depmap javax.help %{oname} %{namedversion} JPP/%{name} jhall
-
-# javadoc
-mkdir -p %{buildroot}%{_javadocdir}/%{name}-%{namedversion}
-cp -pr javahelp_nbproject/dist/lib/javadoc/* %{buildroot}%{_javadocdir}/%{name}-%{namedversion}
-ln -s %{_javadocdir}/%{name}-%{namedversion} %{buildroot}%{_javadocdir}/%{name}
-
-# bin
-mkdir -p %{buildroot}%{_bindir}
-install -p -m 755 %{SOURCE1} %{buildroot}%{_bindir}/jh2indexer
-install -p -m 755 %{SOURCE2} %{buildroot}%{_bindir}/jh2search
-
-# data
-mkdir -p %{buildroot}%{_datadir}/%{name}
-cp -pr jhMaster/JavaHelp/doc/public-spec/dtd %{buildroot}%{_datadir}/%{name}
-cp -pr jhMaster/JavaHelp/demos %{buildroot}%{_datadir}/%{name}
+install -m 644 javahelp_nbproject/dist/lib/jhall.jar $RPM_BUILD_ROOT%{_javadir}/%{name}-%{version}.jar
+#cp -pr jhMaster/JavaHelp/doc/public-spec/dtd $RPM_BUILD_ROOT%{_datadir}/%{name}
+#cp -pr jhMaster/JavaHelp/demos $RPM_BUILD_ROOT%{_datadir}/%{name}
+cp -pr javahelp_nbproject/dist/lib/javadoc/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
+# create unversioned symlinks
+(cd $RPM_BUILD_ROOT%{_javadir} && for jar in *-%{version}*; do ln -sf ${jar} ${jar/-%{version}/}; done)
 
 mkdir -p $RPM_BUILD_ROOT`dirname /etc/jhindexer.conf`
 touch $RPM_BUILD_ROOT/etc/jhindexer.conf
@@ -183,55 +116,20 @@ mkdir -p $RPM_BUILD_ROOT`dirname /etc/jhsearch.conf`
 touch $RPM_BUILD_ROOT/etc/jhsearch.conf
 
 %files
-%doc jhMaster/JavaHelp/README jhMaster/JavaHelp/README.html jhMaster/JavaHelp/LICENSE.html
 %attr(0755,root,root) %{_bindir}/*
-%{_javadir}/%{name}-%{namedversion}.jar
+%{_javadir}/%{name}-%{version}.jar
 %{_javadir}/%{name}.jar
-%{_javadir}/%{name}/jh-%{version}.jar
-%{_javadir}/%{name}/jh-client-%{version}.jar
-%{_javadir}/%{name}/jh-client.jar
-%{_javadir}/%{name}/jh.jar
-%{_javadir}/%{name}/jhall-%{namedversion}.jar
-%{_javadir}/%{name}/jhall.jar
-%{_javadir}/%{name}/jhbasic-%{version}.jar
-%{_javadir}/%{name}/jhbasic.jar
-%{_javadir}/%{name}/jsearch-%{version}.jar
-%{_javadir}/%{name}/jsearch-client-%{version}.jar
-%{_javadir}/%{name}/jsearch-client.jar
-%{_javadir}/%{name}/jsearch-indexer-%{version}.jar
-%{_javadir}/%{name}/jsearch-indexer.jar
-%{_javadir}/%{name}/jsearch-misc-%{version}.jar
-%{_javadir}/%{name}/jsearch-misc.jar
-%{_javadir}/%{name}/jsearch.jar
 %dir %{_datadir}/%{name}
-%dir %{_datadir}/%{name}/dtd
-%{_datadir}/%{name}/dtd/favorites_2_0.dtd
-%{_datadir}/%{name}/dtd/helpset_1_0.dtd
-%{_datadir}/%{name}/dtd/helpset_2_0.dtd
-%{_datadir}/%{name}/dtd/index_1_0.dtd
-%{_datadir}/%{name}/dtd/index_2_0.dtd
-%{_datadir}/%{name}/dtd/map_1_0.dtd
-%{_datadir}/%{name}/dtd/map_2_0.dtd
-%{_datadir}/%{name}/dtd/toc_1_0.dtd
-%{_datadir}/%{name}/dtd/toc_2_0.dtd
-%{_datadir}/maven2/poms/JPP-%{name}.pom
-%{_mavendepmapfragdir}/%{name}
 %config(noreplace,missingok) /etc/jhindexer.conf
 %config(noreplace,missingok) /etc/jhsearch.conf
 
-%files manual
-%doc jhMaster/JavaHelp/doc/public-spec/*
-
 %files javadoc
-%{_javadocdir}/%{name}-%{namedversion}
-%{_javadocdir}/%{name}
-
-%if_with demo
-%files demo
-%{_datadir}/%{name}/demos
-%endif #demo
+%{_javadocdir}/%{name}-%{version}
 
 %changelog
+* Sun Mar 17 2013 Igor Vlasenko <viy@altlinux.ru> 0:2.0.05-alt3_12jpp7
+- fc update
+
 * Mon Jan 16 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.0.05-alt3_8jpp6
 - new jpp relase
 
