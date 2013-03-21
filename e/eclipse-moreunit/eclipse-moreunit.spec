@@ -1,19 +1,18 @@
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 BuildRequires: rpm-build-java-osgi
-%global src_repo_tag   V_2_4_1
-%global eclipse_base   %{_libdir}/eclipse
+%global src_repo_tag   V_2_4_6
 %global install_loc    %{_datadir}/eclipse/dropins/moreunit
 
 Name:           eclipse-moreunit
-Version:        2.4.1
-Release:        alt2_1jpp6
+Version:        2.4.6
+Release:        alt1_2jpp7
 Summary:        An Eclipse plugin that assists with writing more unit tests
 
 Group:          Development/Java
 License:        EPL
 URL:            http://moreunit.sourceforge.net
-## sh %{name}-fetch-src.sh V_2_4_1 2.4.1
+## sh %{name}-fetch-src.sh V_2_4_6 2.4.6
 Source0:        %{name}-%{version}.tar.xz
 Source1:        %{name}-fetch-src.sh
 
@@ -50,6 +49,9 @@ install -d -m 755 %{buildroot}%{install_loc}
 %doc org.moreunit.plugin/help/documentation.html
 
 %changelog
+* Sun Mar 17 2013 Igor Vlasenko <viy@altlinux.ru> 2.4.6-alt1_2jpp7
+- fc update
+
 * Mon Sep 17 2012 Igor Vlasenko <viy@altlinux.ru> 2.4.1-alt2_1jpp6
 - fixed build
 
