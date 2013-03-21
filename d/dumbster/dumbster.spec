@@ -1,4 +1,6 @@
-Packager: Igor Vlasenko <viy@altlinux.ru>
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 # Copyright (c) 2000-2007, JPackage Project
@@ -30,40 +32,29 @@ BuildRequires: jpackage-compat
 # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
-%define gcj_support 0
-
 
 Summary:        Fake SMTP Server
 Name:           dumbster
 Version:        1.6
-Release:        alt1_6jpp6
+Release:        alt1_12jpp7
 Epoch:          0
-License:        Apache Software License 2.0
+License:        ASL 2.0
 URL:            http://quintanasoft.com/dumbster/
 Group:          Development/Java
-#cvs -z3 -d:pserver:anonymous@dumbster.cvs.sourceforge.net:/cvsroot/dumbster co -P dumbster
-#tar czf dumbster-1.6.tar.gz dumbster
-Source0:        %{name}-%{version}.tar.gz
+# cvs -z3 -d:pserver:anonymous@dumbster.cvs.sourceforge.net:/cvsroot/dumbster export -r RELEASE_1_6 dumbster
+# tar czf dumbster-1.6-src.tgz dumbster
+Source0:        %{name}-%{version}-src.tgz
 Source1:        %{name}-1.6.pom
 Patch0:         %{name}-SimpleSmtpServer.patch
-BuildRequires: ant >= 0:1.6
-BuildRequires: jpackage-utils >= 0:1.6
-BuildRequires: jaf
-BuildRequires: javamail
-BuildRequires: junit
-Requires: jaf
-Requires: java-sasl
-Requires: javamail
+BuildRequires:  ant >= 0:1.6
+BuildRequires:  jpackage-utils >= 0:1.6
+BuildRequires:  javamail
+BuildRequires:  junit
+Requires:       java-sasl
+Requires:       javamail
 
-%if %{gcj_support}
-BuildRequires: java-gcj-compat-devel
-Requires(post): java-gcj-compat
-Requires(postun): java-gcj-compat
-%else
 BuildArch:      noarch
-%endif
 Source44: import.info
-
 
 %description
 The Dumbster is a very simple fake SMTP server designed for
@@ -74,7 +65,7 @@ Dumbster for later extraction and verification.
 
 %package javadoc
 Summary:        Javadoc for %{name}
-Group:          Development/Documentation
+Group:          Development/Java
 BuildArch: noarch
 
 %description javadoc
@@ -86,19 +77,16 @@ BuildArch: noarch
 find . -name "*.jar" -exec rm -f {} \;
 
 %patch0
+rm -f src/com/dumbster/smtp/SimpleSmtpServer.java.orig
 
 %build
 pushd lib
 ln -sf $(build-classpath javamail)
-ln -sf $(build-classpath jaf)
 ln -sf $(build-classpath junit)
 ln -sf $(build-classpath sasl)
 popd
 
-export OPT_JAT_LIST=:
-export CLASSPATH=
-
-ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 jar javadoc
+ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  jar javadoc
 
 %install
 
@@ -106,13 +94,11 @@ ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 jar javadoc
 mkdir -p $RPM_BUILD_ROOT%{_javadir}
 
 install -m 0644 build/%{name}.jar \
-  $RPM_BUILD_ROOT%{_javadir}/%{name}-%{version}.jar
-(cd $RPM_BUILD_ROOT%{_javadir} && for jar in *-%{version}.jar; do ln -sf ${jar} `echo $jar| sed "s|-%{version}||g"`; done)
+  $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
 
 # javadoc
-mkdir -p $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
-cp -pr doc/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
-ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name}
+mkdir -p $RPM_BUILD_ROOT%{_javadocdir}/%{name}
+cp -pr doc/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 
 # pom
 install -dm 755 $RPM_BUILD_ROOT%{_datadir}/maven2/poms
@@ -122,19 +108,6 @@ cp -pr %{SOURCE1} $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-%{name}.pom
 install -dm 755 $RPM_BUILD_ROOT%{_javadir}/maven2
 ln -s %{_datadir}/maven2/poms $RPM_BUILD_ROOT%{_javadir}/maven2/poms
 
-%if %{gcj_support}
-%{_bindir}/aot-compile-rpm
-%endif
-
-%post javadoc
-rm -f %{_javadocdir}/%{name}
-ln -s %{name}-%{version} %{_javadocdir}/%{name}
-
-%postun javadoc
-if [ "$1" = "0" ]; then
-  rm -f %{_javadocdir}/%{name}
-fi
-
 %files
 %doc license.txt
 %{_javadir}/*.jar
@@ -142,17 +115,13 @@ fi
 %{_javadir}/maven2
 %{_mavendepmapfragdir}
 
-%if %{gcj_support}
-%dir %{_libdir}/gcj/%{name}
-%{_libdir}/gcj/%{name}/%{name}-%{version}.jar.*
-%endif
-
-
 %files javadoc
-%doc %{_javadocdir}/%{name}-%{version}
-%ghost %{_javadocdir}/%{name}
+%{_javadocdir}/%{name}
 
 %changelog
+* Sun Mar 17 2013 Igor Vlasenko <viy@altlinux.ru> 0:1.6-alt1_12jpp7
+- fc update
+
 * Sat Oct 23 2010 Igor Vlasenko <viy@altlinux.ru> 0:1.6-alt1_6jpp6
 - added pom
 
