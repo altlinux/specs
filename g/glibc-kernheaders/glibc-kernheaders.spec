@@ -1,4 +1,4 @@
-%define kernel_base_version 3.5
+%define kernel_base_version 3.8
 %define kernel_source kernel-source-%kernel_base_version
 
 Name: glibc-kernheaders
@@ -18,7 +18,7 @@ BuildRequires: %kernel_source = 1.0.0
 
 Provides: kernel-headers = %version-%release
 Provides: linux-libc-headers = %version-%release
-Obsoletes: linux-libc-headers
+Obsoletes: linux-libc-headers < %version
 
 %define base_arch %_target_cpu
 %ifarch %ix86 x86_32 x86_64
@@ -74,6 +74,9 @@ done
 %hdr_dir
 
 %changelog
+* Thu Mar 21 2013 Dmitry V. Levin <ldv@altlinux.org> 3.8.4-alt1
+- Updated to v3.8.4.
+
 * Sun Sep 30 2012 Dmitry V. Levin <ldv@altlinux.org> 3.5.4-alt1
 - Updated to v3.5.4.
 
