@@ -8,8 +8,8 @@ Hebrew from the Culmus project.
 
 
 Name:           fonts-ttf-culmus
-Version:        0.121
-Release:        alt2_5
+Version:        0.130
+Release:        alt1_1
 Summary:        Fonts for Hebrew from Culmus project
 
 Group:          System/Fonts/True type
@@ -30,7 +30,8 @@ Source11:        %{fontconf}-keteryg.conf
 Source12:        %{fontconf}-simple-clm.conf
 Source13:        %{fontconf}-stamashkenaz-clm.conf
 Source14:        %{fontconf}-stamsefarad-clm.conf
-Source15:        http://downloads.sourceforge.net/culmus/culmus-type1-0.121.tar.gz
+Source15:        %{fontconf}-shofar.conf
+Source16:        http://downloads.sourceforge.net/culmus/culmus-type1-0.121.tar.gz
 Obsoletes:      culmus-fonts < 0.102-1
 
 BuildArch:      noarch
@@ -54,6 +55,8 @@ This package consists of files used by other %{oldname} packages.
 Summary:        Fonts for Hebrew from Culmus project
 Group:          System/Fonts/True type
 Requires:       fonts-ttf-culmus-common = %{version}-%{release}
+Provides:       culmus-fonts-compat = %{version}-%{release}
+Obsoletes:      culmus-fonts-compat < %{version}-%{release}
 
 %description -n fonts-type1-culmus-aharoni-clm
 %common_desc
@@ -68,6 +71,8 @@ Requires:       fonts-ttf-culmus-common = %{version}-%{release}
 Summary:        Fonts for Hebrew from Culmus project
 Group:          System/Fonts/True type
 Requires:       fonts-ttf-culmus-common = %{version}-%{release}
+Provides:       culmus-fonts-compat = %{version}-%{release}
+Obsoletes:      culmus-fonts-compat < %{version}-%{release}
 
 %description -n fonts-type1-culmus-caladings-clm
 %common_desc
@@ -82,6 +87,8 @@ Requires:       fonts-ttf-culmus-common = %{version}-%{release}
 Summary:        Fonts for Hebrew from Culmus project
 Group:          System/Fonts/True type
 Requires:       fonts-ttf-culmus-common = %{version}-%{release}
+Provides:       culmus-fonts-compat = %{version}-%{release}
+Obsoletes:      culmus-fonts-compat < %{version}-%{release}
 
 %description -n fonts-type1-culmus-david-clm
 %common_desc
@@ -97,6 +104,8 @@ Requires:       fonts-ttf-culmus-common = %{version}-%{release}
 Summary:        Fonts for Hebrew from Culmus project
 Group:          System/Fonts/True type
 Requires:       fonts-ttf-culmus-common = %{version}-%{release}
+Provides:       culmus-fonts-compat = %{version}-%{release}
+Obsoletes:      culmus-fonts-compat < %{version}-%{release}
 
 %description -n fonts-type1-culmus-drugulin-clm
 %common_desc
@@ -111,6 +120,8 @@ Requires:       fonts-ttf-culmus-common = %{version}-%{release}
 Summary:        Fonts for Hebrew from Culmus project
 Group:          System/Fonts/True type
 Requires:       fonts-ttf-culmus-common = %{version}-%{release}
+Provides:       culmus-fonts-compat = %{version}-%{release}
+Obsoletes:      culmus-fonts-compat < %{version}-%{release}
 
 %description -n fonts-type1-culmus-ellinia-clm
 %common_desc
@@ -125,6 +136,8 @@ Requires:       fonts-ttf-culmus-common = %{version}-%{release}
 Summary:        Fonts for Hebrew from Culmus project
 Group:          System/Fonts/True type
 Requires:       fonts-ttf-culmus-common = %{version}-%{release}
+Provides:       culmus-fonts-compat = %{version}-%{release}
+Obsoletes:      culmus-fonts-compat < %{version}-%{release}
 
 %description -n fonts-type1-frank-ruehl-clm
 %common_desc
@@ -141,6 +154,8 @@ Requires:       fonts-ttf-culmus-common = %{version}-%{release}
 Summary:        Fonts for Hebrew from Culmus project
 Group:          System/Fonts/True type
 Requires:       fonts-ttf-culmus-common = %{version}-%{release}
+Provides:       culmus-fonts-compat = %{version}-%{release}
+Obsoletes:      culmus-fonts-compat < %{version}-%{release}
 
 %description -n fonts-ttf-culmus-hadasim-clm
 %common_desc
@@ -154,6 +169,8 @@ Requires:       fonts-ttf-culmus-common = %{version}-%{release}
 Summary:        Fonts for Hebrew from Culmus project
 Group:          System/Fonts/True type
 Requires:       fonts-ttf-culmus-common = %{version}-%{release}
+Provides:       culmus-fonts-compat = %{version}-%{release}
+Obsoletes:      culmus-fonts-compat < %{version}-%{release}
 
 %description -n fonts-ttf-culmus-keteryg
 %common_desc
@@ -168,6 +185,8 @@ Requires:       fonts-ttf-culmus-common = %{version}-%{release}
 Summary:        Fonts for Hebrew from Culmus project
 Group:          System/Fonts/True type
 Requires:       fonts-ttf-culmus-common = %{version}-%{release}
+Provides:       culmus-fonts-compat = %{version}-%{release}
+Obsoletes:      culmus-fonts-compat < %{version}-%{release}
 
 %description -n fonts-ttf-culmus-miriam-clm
 %common_desc
@@ -183,6 +202,8 @@ Requires:       fonts-ttf-culmus-common = %{version}-%{release}
 Summary:        Fonts for Hebrew from Culmus project
 Group:          System/Fonts/True type
 Requires:       fonts-ttf-culmus-common = %{version}-%{release}
+Provides:       culmus-fonts-compat = %{version}-%{release}
+Obsoletes:      culmus-fonts-compat < %{version}-%{release}
 
 %description -n fonts-ttf-culmus-miriam-mono-clm
 %common_desc
@@ -198,6 +219,8 @@ Requires:       fonts-ttf-culmus-common = %{version}-%{release}
 Summary:        Fonts for Hebrew from Culmus project
 Group:          System/Fonts/True type
 Requires:       fonts-ttf-culmus-common = %{version}-%{release}
+Provides:       culmus-fonts-compat = %{version}-%{release}
+Obsoletes:      culmus-fonts-compat < %{version}-%{release}
 
 %description -n fonts-type1-culmus-nachlieli-clm
 %common_desc
@@ -213,6 +236,8 @@ Requires:       fonts-ttf-culmus-common = %{version}-%{release}
 Summary:        Fonts for Hebrew from Culmus project
 Group:          System/Fonts/True type
 Requires:       fonts-ttf-culmus-common = %{version}-%{release}
+Provides:       culmus-fonts-compat = %{version}-%{release}
+Obsoletes:      culmus-fonts-compat < %{version}-%{release}
 
 %description -n fonts-ttf-culmus-simple-clm
 %common_desc
@@ -226,6 +251,8 @@ Requires:       fonts-ttf-culmus-common = %{version}-%{release}
 Summary:        Fonts for Hebrew from Culmus project
 Group:          System/Fonts/True type
 Requires:       fonts-ttf-culmus-common = %{version}-%{release}
+Provides:       culmus-fonts-compat = %{version}-%{release}
+Obsoletes:      culmus-fonts-compat < %{version}-%{release}
 
 %description -n fonts-ttf-culmus-stamashkenaz-clm
 %common_desc
@@ -239,6 +266,8 @@ Requires:       fonts-ttf-culmus-common = %{version}-%{release}
 Summary:        Fonts for Hebrew from Culmus project
 Group:          System/Fonts/True type
 Requires:       fonts-ttf-culmus-common = %{version}-%{release}
+Provides:       culmus-fonts-compat = %{version}-%{release}
+Obsoletes:      culmus-fonts-compat < %{version}-%{release}
 
 %description -n fonts-ttf-culmus-stamsefarad-clm
 %common_desc
@@ -253,6 +282,8 @@ Requires:       fonts-ttf-culmus-common = %{version}-%{release}
 Summary:        Fonts for Hebrew from Culmus project
 Group:          System/Fonts/True type
 Requires:       fonts-ttf-culmus-common = %{version}-%{release}
+Provides:       culmus-fonts-compat = %{version}-%{release}
+Obsoletes:      culmus-fonts-compat < %{version}-%{release}
 
 %description -n fonts-type1-culmus-yehuda-clm
 %common_desc
@@ -261,9 +292,24 @@ Requires:       fonts-ttf-culmus-common = %{version}-%{release}
 %{_fontbasedir}/*/%{_fontstem}/YehudaCLM-*.afm
 %{_fontbasedir}/*/%{_fontstem}/YehudaCLM-*.pfa
 
+%package -n %{fontname}-shofar-fonts
+Summary:        Fonts for Hebrew from Culmus project
+Group:          Graphical desktop/Other
+Requires:       fonts-ttf-culmus-common = %{version}-%{release}
+Provides:       culmus-fonts-compat = %{version}-%{release}
+Obsoletes:      culmus-fonts-compat < %{version}-%{release}
+
+%description -n %{fontname}-shofar-fonts
+%common_desc
+
+%files -n %{?fontname:%fontname}%{!?fontname:%oldname}-shofar-fonts
+%{_fontconfig_templatedir}/%{fontconf}-shofar.conf
+%config(noreplace) %{_fontconfig_confdir}/%{fontconf}-shofar.conf
+%{_fontbasedir}/*/%{_fontstem}/Shofar*.ttf
+
 %prep
 %setup -q -n %{fontname}-%{version}
-%setup -n %{oldname}-%{version} -c -q -a 15
+%setup -n %{oldname}-%{version} -c -q -a 16
 mv %{fontname}-%{version}/* .
 mv %{fontname}-type1-0.121/* .
 
@@ -307,6 +353,8 @@ install -m 0644 -p %{SOURCE13} \
         %{buildroot}%{_fontconfig_templatedir}/%{fontconf}-stamashkenaz-clm.conf
 install -m 0644 -p %{SOURCE14} \
         %{buildroot}%{_fontconfig_templatedir}/%{fontconf}-stamsefarad-clm.conf
+install -m 0644 -p %{SOURCE15} \
+        %{buildroot}%{_fontconfig_templatedir}/%{fontconf}-shofar.conf
 
 for fconf in %{fontconf}-aharoni-clm.conf \
              %{fontconf}-caladings-clm.conf \
@@ -321,7 +369,8 @@ for fconf in %{fontconf}-aharoni-clm.conf \
              %{fontconf}-keteryg.conf \
              %{fontconf}-simple-clm.conf \
              %{fontconf}-stamashkenaz-clm.conf \
-             %{fontconf}-stamsefarad-clm.conf ; do
+             %{fontconf}-stamsefarad-clm.conf \
+             %{fontconf}-shofar.conf ; do
   ln -s %{_fontconfig_templatedir}/$fconf \
         %{buildroot}%{_fontconfig_confdir}/$fconf
 done
@@ -368,6 +417,9 @@ fi
 
 
 %changelog
+* Thu Mar 21 2013 Igor Vlasenko <viy@altlinux.ru> 0.130-alt1_1
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.121-alt2_5
 - update to new release by fcimport
 
