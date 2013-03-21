@@ -1,5 +1,5 @@
 Name: tray_mixer_plus
-Version: 0.0.3
+Version: 0.0.4
 Release: alt1
 
 Summary: Small tray sound volume
@@ -48,6 +48,10 @@ install -pDm644 %SOURCE1 %buildroot%_datadir/applications/
 %_datadir/applications/*
 
 %changelog
+* Thu Mar 21 2013 Michael Shigorin <mike@altlinux.org> 0.0.4-alt1
+- new version with docking bugfixes and a new -s option:
+  http://forum.altlinux.org/index.php/topic,28619.msg201123.html#msg201123
+
 * Wed Mar 20 2013 Michael Shigorin <mike@altlinux.org> 0.0.3-alt1
 - built for Sisyphus (thx YYY at the forum)
 
