@@ -9,8 +9,8 @@ ghostscript font configuration files for Chinese fonts.
 
 Name:           ghostscript-chinese
 Version:        0.4.0
-Release:        alt1_2
-Summary:        Ghostscript Chinese fonts configuration files
+Release:        alt1_3
+Summary:        Common files for ghostscript-chinese
 Group:          System/Fonts/True type
 License:        GPLv2+
 URL:            http://www.freedesktop.org/wiki/Software/CJKUnifonts
@@ -24,6 +24,7 @@ Source44: import.info
 %description
 %common_desc
 
+This package consists of files used by other %{name} packages.
 
 %package zh_CN
 Summary:      Ghostscript Simplified Chinese fonts configuration files
@@ -83,6 +84,9 @@ done
 
 
 %changelog
+* Thu Mar 21 2013 Igor Vlasenko <viy@altlinux.ru> 0.4.0-alt1_3
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.4.0-alt1_2
 - update to new release by fcimport
 
