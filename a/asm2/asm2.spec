@@ -1,7 +1,10 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
 Obsoletes: asm = 2.0-alt0.RC1
 BuildRequires: /proc
 BuildRequires: jpackage-compat
-# Copyright (c) 2000-2011, JPackage Project
+# Copyright (c) 2000-2007, JPackage Project
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -32,16 +35,14 @@ BuildRequires: jpackage-compat
 #
 
 %define gcj_support 0
-
 # tests need lots of: cpu, mem, time
-%define tests %{?_with_tests:1}%{!?_with_tests:%{?_without_tests:0}%{!?_without_tests:%{?_tests:%{_tests}}%{!?_tests:0}}}
-
+%define tests 0
 
 Name:           asm2
 Version:        2.2.3
-Release:        alt4_8jpp6
+Release:        alt4_10jpp7
 Epoch:          0
-Summary:        Code manipulation tool to implement adaptable systems
+Summary:        A code manipulation tool to implement adaptable systems
 License:        BSD
 URL:            http://asm.objectweb.org/
 Group:          Development/Java
@@ -59,14 +60,16 @@ Source10:       asm-parent-%{version}.pom
 Source11:       asm-tree-%{version}.pom
 Source12:       asm-util-%{version}.pom
 Source13:       asm-xml-%{version}.pom
+
 Patch0:         asm2-build_xml.patch
 Patch1:         asm2-SerialVersionUIDAdder.patch
 Patch2:         asm2-test-build_xml.patch
 Patch3:         asm2-ALLPerfTest.patch
 Patch4:         asm2-test-heap.patch
-Patch5:         asm2-xml-no-classpath-in-manifest.patch
-BuildRequires:  jpackage-utils >= 0:1.7.5
-BuildRequires:  ant >= 0:1.7.1
+# Patch out the Class-path in MANIFEST.MF
+Patch5:         %{name}-noclasspathinmanifest.patch
+
+BuildRequires:  ant
 %if %{tests}
 BuildRequires:  ant-junit
 BuildRequires:  asm2
@@ -79,15 +82,16 @@ BuildRequires:  javancss
 BuildRequires:  javassist
 BuildRequires:  log4j
 %endif
+BuildRequires:  jpackage-utils >= 0:1.7.2
 BuildRequires:  objectweb-anttask
 %if ! %{gcj_support}
 BuildArch:      noarch
 %endif
-
-Requires(post):    jpackage-utils >= 0:1.7.5
-Requires(postun):  jpackage-utils >= 0:1.7.5
+Requires:       jpackage-utils >= 0:1.7.2
 %if %{gcj_support}
 BuildRequires:    java-gcj-compat-devel
+Requires(post):   java-gcj-compat
+Requires(postun): java-gcj-compat
 %endif
 Source44: import.info
 
@@ -100,8 +104,8 @@ the Java Virtual Machine.
 ASM offers similar functionalities as BCEL or SERP, but is 
 much smaller (33KB instead of 350KB for BCEL and 150KB for 
 SERP) and faster than these tools (the overhead of a load 
-time class transformation is of the order of 60%% with ASM, 
-700%% or more with BCEL, and 1100%% or more with SERP). Indeed 
+time class transformation is of the order of 60% with ASM, 
+700% or more with BCEL, and 1100% or more with SERP). Indeed 
 ASM was designed to be used in a dynamic way* and was 
 therefore designed and implemented to be as small and 
 as fast as possible.
@@ -110,11 +114,11 @@ as fast as possible.
 
 %package        javadoc
 Summary:        Javadoc for %{name}
-Group:          Development/Documentation
+Group:          Development/Java
 BuildArch: noarch
 
 %description    javadoc
-%{summary}.
+Javadoc for %{name}.
 
 %package        manual
 Summary:        Documents for %{name}
@@ -134,7 +138,8 @@ Requires:       %{name} = %{version}
 
 %prep
 %setup -q -n asm-%{version}
-cp -p %{SOURCE1} %{SOURCE2} %{SOURCE3} %{SOURCE4} .
+%patch5
+find . -name "*.jar" -exec rm -f {} \;
 mkdir test/lib
 %if %{tests}
 pushd test/lib
@@ -147,30 +152,26 @@ ln -sf $(build-classpath javancss)
 popd
 %endif
 
-%patch0 -p0
-%patch1 -p0
-%patch2 -p0
-%patch3 -p0
-%patch4 -p0
-%patch5 -p1
+%patch0 -b .sav
+%patch1 -b .sav
+%patch2 -b .sav
+%patch3 -b .sav
+%patch4 -b .sav
 
 rm test/perf/org/objectweb/asm/SERPPerfTest.java
 rm test/conform/adviceadapter2.xml
+# Update source/target to 1.5 to handle java generics (bug 842578)
+find -name build.xml | xargs sed -i -e 's/="1.[0-4]"/="1.5"/g'
 
-perl -pi -e 's/\r$//g' README.txt
 
 %build
-export CLASSPATH=
-export OPT_JAR_LIST=:
 %if %{tests}
 export CLASSPATH=$(build-classpath asm2/asm2 asm2/asm2-tree)
 %endif
-ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 \
-%if %{tests}
+ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  \
   -Dbcel.path=$(build-classpath bcel) \
   -Djanino.path=$(build-classpath janino) \
   -Djavassist.path=$(build-classpath javassist) \
-%endif
   -Dobjectweb.ant.tasks.path=$(build-classpath objectweb-anttask) \
   jar \
   jdoc \
@@ -181,6 +182,26 @@ ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 \
   coverage.report \
   test.report \
 %endif
+
+# compile
+# compile-debug
+# coverage
+# coverage.report
+# dist
+# dist.init
+# dist.version
+# example
+# examples
+# jar
+# jdoc
+# noshrink
+# properties
+# shrink
+# test
+# test.report
+
+# fix encoding
+sed -i 's/\r//g' README.txt LICENSE.txt
 
 %install
 
@@ -232,9 +253,17 @@ install -m 644 %{SOURCE12} $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP.%{name}-%{
 install -m 644 %{SOURCE13} $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP.%{name}-%{name}-xml.pom
 
 # javadoc
-install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
+install -p -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
 cp -pr output/dist/doc/javadoc/user/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
 (cd $RPM_BUILD_ROOT%{_javadocdir} && ln -sf %{name}-%{version} %{name})
+# manual
+install -d -m 755 $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}
+install -m 644 README.txt $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}
+install -m 644 LICENSE.txt $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}
+install -m 644 %{SOURCE1} $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}
+install -m 644 %{SOURCE2} $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}
+install -m 644 %{SOURCE3} $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}
+install -m 644 %{SOURCE4} $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}
 
 # demo
 install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/%{name}-%{version}
@@ -245,30 +274,40 @@ cp -pr output/dist/examples $RPM_BUILD_ROOT%{_datadir}/%{name}-%{version}
 %endif
 
 %files
-%doc README.txt 
+%dir %{_docdir}/%{name}-%{version}
+%doc %{_docdir}/%{name}-%{version}/README.txt
+%doc %{_docdir}/%{name}-%{version}/LICENSE.txt
+%doc %{_docdir}/%{name}-%{version}/asm-eng.pdf
 %dir %{_datadir}/%{name}-%{version}
 %dir %{_javadir}/%{name}
 %{_javadir}/%{name}/*.jar
 %{_javadir}/*.jar
 %{_datadir}/maven2/poms/*
-%{_mavendepmapfragdir}/*
+%{_mavendepmapfragdir}/%{name}
 %if %{gcj_support}
-%dir %{_libdir}/gcj/%{name}
-%{_libdir}/gcj/%{name}/*
+%{_libdir}/gcj/%{name}
 %endif
+# hack; explicitly added docdir if not owned
+%doc %dir %{_docdir}/%{name}-%{version}
+
 
 %files javadoc
-%{_javadocdir}/%{name}-%{version}
-%{_javadocdir}/%{name}
+%doc %{_javadocdir}/*
 
 %files manual
-%doc faq.html
-%doc *.pdf
+%dir %{_docdir}/%{name}-%{version}
+%doc %{_docdir}/%{name}-%{version}/faq.html
+%doc %{_docdir}/%{name}-%{version}/*.pdf
+# hack; explicitly added docdir if not owned
+%doc %dir %{_docdir}/%{name}-%{version}
 
 %files demo
 %{_datadir}/%{name}-%{version}/examples
 
 %changelog
+* Sun Mar 17 2013 Igor Vlasenko <viy@altlinux.ru> 0:2.2.3-alt4_10jpp7
+- fc update
+
 * Fri Mar 30 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.2.3-alt4_8jpp6
 - added versioned pom groupid asm2
 
