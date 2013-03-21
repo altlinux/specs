@@ -1,0 +1,75 @@
+Name: zpaq
+Version: 622
+Release: alt1
+Summary: A journaling archiver optimized for backup
+Group: Archiving/Compression
+License: GPLv3
+Source: %name%version.zip
+Url: http://mattmahoney.net/dc/zpaq.html
+
+# Automatically added by buildreq on Thu Mar 21 2013
+# optimized out: libstdc++-devel
+BuildRequires: gcc-c++ libgomp-devel unzip
+
+%description
+zpaq is a journaling archiver optimized for user-level incremental
+backup of directory trees. It supports 10 multi-threaded compression
+levels and file fragment level deduplication. It adds only files whose
+date has changed, and keeps both old and new versions. You can roll
+back the archive date to restore from old versions of the archive.
+The default compression level is faster than zip usually with better
+compression.
+
+zpaq is (C) 2012, Dell Inc., written by Matt Mahoney.
+
+%package -n lib%name
+Group: System/Libraries
+Summary: A journaling archiver optimized for backup library
+%description -n lib%name
+A journaling archiver optimized for backup library
+
+%package -n lib%name-devel
+Group: Development/C++
+Summary: Development environment for lib%name
+%description -n lib%name-devel
+A journaling archiver optimized for backup library,
+development environment.
+
+%prep
+%setup -c
+
+%build
+# XXX this is for funny libzpaq::error() callback
+%set_verify_elf_method unresolved=relaxed
+
+%add_optflags -Wall
+g++ %optflags -Dunix -shared -fPIC libzpaq.cpp -Wl,-soname,%name.so.0 -o lib%name.so.0 -lm
+ln -s lib%name.so.0 lib%name.so
+g++ %optflags -Dunix -DNDEBUG -fopenmp zpaq.cpp divsufsort.c -L.  -o zpaq -l%name -lm
+g++ %optflags -Dunix zpaqd.cpp -L. -l%name -o zpaqd -L. -lzpaq -lm
+
+%install
+install -D zpaq %buildroot%_bindir/zpaq
+install -D zpaq zpaqd %buildroot%_bindir/
+install -D lib%name.so.0 %buildroot%_libdir/lib%name.so.0
+install -D libzpaq.h %buildroot%_includedir/libzpaq.h
+ln -s lib%name.so.0 %buildroot%_libdir/lib%name.so
+
+%files
+%doc readme.txt
+%_bindir/*
+
+%files -n lib%name
+%_libdir/*.so.*
+
+%files -n lib%name-devel
+%_libdir/*.so
+%_includedir/*.h
+
+%changelog
+* Thu Mar 21 2013 Fr. Br. George <george@altlinux.ru> 622-alt1
+- Autobuild version bump to 622
+
+* Thu Mar 21 2013 Fr. Br. George <george@altlinux.ru> 0-alt1
+- Initial zero version build
+
