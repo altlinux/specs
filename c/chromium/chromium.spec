@@ -13,7 +13,7 @@
 
 Name:           chromium
 Version:        25.0.1364.172
-Release:        alt2.r%rev
+Release:        alt3.r%rev
 
 Summary:        An open source web browser developed by Google
 License:        BSD-3-Clause and LGPL-2.1+
@@ -321,6 +321,9 @@ pushd src
 	-Dgoogle_api_key='AIzaSyAIIWz7zaCwYcUSe3ZaRPviXjMjkBP4-xY' \
 	-Dgoogle_default_client_id='1018394967181.apps.googleusercontent.com' \
 	-Dgoogle_default_client_secret='h_PrTP1ymJu83YTLyz-E25nP'
+# Set up Google API keys, see http://www.chromium.org/developers/how-tos/api-keys .
+# Note: these are for ALT Linux use ONLY. For your own distribution,
+# please get your own set of keys.
 
 # Buld main program
 %make_build -r %{?_smp_mflags} chrome V=1 BUILDTYPE=%buildtype
@@ -437,6 +440,10 @@ printf '%_bindir/%name\t%_libdir/%name/%name-gnome\t15\n' > %buildroot%_altdir/%
 %_altdir/%name-gnome
 
 %changelog
+* Thu Mar 21 2013 Andrey Cherepanov <cas@altlinux.org> 25.0.1364.172-alt3.r187217
+- Add note that the keys for Google API are only to be used for ALT Linux
+- Fix run script if CHROMIUM_ULIMIT is not set in /etc/chromium/default
+
 * Wed Mar 20 2013 Andrey Cherepanov <cas@altlinux.org> 25.0.1364.172-alt2.r187217
 - Build with access to Google API
 
