@@ -1,0 +1,77 @@
+%define Name BTIER
+Name: btier
+%define module_name %name
+Version: 0.9.9.9
+Release: alt1
+Summary: %Name - a blockdevice that provides automated tiered storage
+License: GPLv2
+Group: System/Base
+URL: http://sourceforge.net/projects/tier/
+Source: %name-%version.tar
+Patch: %name-%version-%release.patch
+ExclusiveOS: Linux
+
+BuildRequires: rpm-build-kernel
+
+%description
+%name is a kernel block device that creates a tiered device out of multiple
+smaller devices with automatic migration and smart placement of data chunks based
+up-on access patterns.
+
+
+%package utils
+Summary: %name utilities
+Group: System/Base
+Provides: %{name}_setup = %version-%release
+
+%description utils
+%name is a kernel block device that creates a tiered device out of multiple
+smaller devices with automatic migration and smart placement of data chunks based
+up-on access patterns.
+This package contains btier_setup - The setup utility for %name.
+
+
+%package -n kernel-source-%name
+Summary: sources for %name kernel module
+Group: Development/Kernel
+BuildArch: noarch
+
+%description -n kernel-source-%name
+%name is a kernel block device that creates a tiered device out of multiple
+smaller devices with automatic migration and smart placement of data chunks based
+up-on access patterns.
+This package contains sources for %name kernel module.
+
+
+%prep
+%setup -q
+%patch -p1
+
+
+%build
+%make_build CC="%__cc %optflags" clionly
+
+gzip -9c Changelog > Changelog.gz
+
+
+%install
+install -d -m 0755 %buildroot{%_sbindir,%_man1dir,%_usrsrc/kernel/sources}
+install -m 0755 cli/%{name}_setup %buildroot%_sbindir/
+install -m 0644 man/*.1 %buildroot%_man1dir/
+
+tar --transform='s,^.*/,/%module_name-%version/,' -cJf %kernel_srcdir/%module_name-%version.tar.xz kernel/%name/*
+
+
+%files utils
+%doc Changelog.* TODO Documentation/*
+%_sbindir/*
+%_man1dir/*
+
+
+%files -n kernel-source-%name
+%_usrsrc/kernel
+
+
+%changelog
+* Thu Mar 21 2013 Led <led@altlinux.ru> 0.9.9.9-alt1
+- initial build
