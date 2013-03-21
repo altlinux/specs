@@ -1,5 +1,5 @@
 Name: make-initrd-propagator
-Version: 0.18
+Version: 0.19
 Release: alt1
 
 Summary: Put propagator into make-initrd generated image
@@ -37,6 +37,9 @@ mkdir -p %buildroot%_datadir/make-initrd/features/propagator/data/image
 %_datadir/make-initrd/features/propagator
 
 %changelog
+* Thu Mar 21 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.19-alt1
+- use disk and nfs slices only if stagenage=live
+
 * Tue Mar 19 2013 Michael Shigorin <mike@altlinux.org> 0.18-alt1
 - init-bottom (see also the subsequent discussion in #28289):
   + require "live_rw" keyword for "cdrom" method to create rw slice
