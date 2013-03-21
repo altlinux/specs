@@ -13,7 +13,7 @@
 Summary: Graphical Boot Animation and Logger
 Name: plymouth
 Version: 0.8.8
-Release: alt2.git.b1140c
+Release: alt3.git.b1140c
 License: GPLv2+
 Group: System/Base
 
@@ -484,6 +484,9 @@ fi \
 %files system-theme
 
 %changelog
+* Thu Mar 21 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.8.8-alt3.git.b1140c
+- fixed progress calculation while run in vesa framebuffer
+
 * Fri Jan 25 2013 Alexey Shabalin <shaba@altlinux.ru> 0.8.8-alt2.git.b1140c
 - build themes as noarch
 
