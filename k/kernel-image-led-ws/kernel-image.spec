@@ -21,7 +21,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.0.70
-Release: alt1
+Release: alt2
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -702,9 +702,10 @@ Patch1013: linux-%kernel_branch.42-feat-block--sio-iosched.patch
 Patch1021: linux-%kernel_branch.57-feat-crypto--blowfish-x86_64.patch
 Patch1022: linux-%kernel_branch.57-feat-crypto--sha1-ssse3.patch
 
-Patch1031: linux-%kernel_branch-feat-drivers-block--cloop.patch
-Patch1032: linux-%kernel_branch.63-feat-drivers-block--rxdsk.patch
-Patch1033: linux-%kernel_branch.42-feat-drivers-block--zram.patch
+Patch1031: linux-%kernel_branch.68-feat-drivers-block--btier.patch
+Patch1032: linux-%kernel_branch-feat-drivers-block--cloop.patch
+Patch1033: linux-%kernel_branch.63-feat-drivers-block--rxdsk.patch
+Patch1034: linux-%kernel_branch.42-feat-drivers-block--zram.patch
 
 Patch1040: linux-%kernel_branch.57-feat-drivers-devfreq.patch
 
@@ -2098,6 +2099,7 @@ cd linux-%version
 %patch1031 -p1
 %patch1032 -p1
 %patch1033 -p1
+%patch1034 -p1
 
 # feat-drivers-devfreq
 %patch1040 -p1
@@ -3098,6 +3100,13 @@ done)
 
 
 %changelog
+* Thu Mar 21 2013 Led <led@altlinux.ru> 3.0.70-alt2
+- updated:
+  + fix-mm
+  + fix-net-ipv6--xfrm
+- added:
+  + feat-drivers-block--btier
+
 * Thu Mar 21 2013 Led <led@altlinux.ru> 3.0.70-alt1
 - 3.0.70
 - removed:
