@@ -1,109 +1,103 @@
+Epoch: 0
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
-# Copyright (c) 2000-2010, JPackage Project
-# All rights reserved.
-#
-# Redistribution and use in source and binary forms, with or without
-# modification, are permitted provided that the following conditions
-# are met:
-#
-# 1. Redistributions of source code must retain the above copyright
-#    notice, this list of conditions and the following disclaimer.
-# 2. Redistributions in binary form must reproduce the above copyright
-#    notice, this list of conditions and the following disclaimer in the
-#    documentation and/or other materials provided with the
-#    distribution.
-# 3. Neither the name of the JPackage Project nor the names of its
-#    contributors may be used to endorse or promote products derived
-#    from this software without specific prior written permission.
-#
-# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-# "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-# LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-# A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-# OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-# SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-# LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-# DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-# THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-# (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-# OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-#
+Name:          xapool
+Version:       1.5.0
+Release:       alt4_2jpp7
+Summary:       Open source XA JDBC Pool
+Group:         Development/Java
+License:       LGPLv2+
+URL:           http://xapool.ow2.org/
+# wget http://download.forge.objectweb.org/xapool/xapool-1.5.0-src.tgz
+# tar -xf xapool-1.5.0-src.tgz
+# find xapool-1.5.0-src -name "*.jar" -delete
+# find xapool-1.5.0-src -name "*.class" -delete
+# find xapool-1.5.0-src -name "*.java~" -delete
+# rm -rf $(find xapool-1.5.0-src -name "CVS")
+# tar czf xapool-1.5.0-src-clean.tar.gz xapool-1.5.0-src
+Source0:       %{name}-%{version}-src-clean.tar.gz
+Source1:       http://repo1.maven.org/maven2/com/experlog/%{name}/%{version}/%{name}-%{version}.pom
+# disable p6spy howl-logger oracle classes12 support
+Patch0:        %{name}-%{version}-build.patch
+Patch1:        %{name}-%{version}-jdk7.patch
 
+BuildRequires: jpackage-utils
 
-Name:		xapool
-Summary:	XAPOOL: open source XA Pool
-Url:		http://xapool.experlog.com/
-Version:	1.5.0
-Release:	alt3_3jpp6
-Epoch:		0
-License:	LGPL
-Group:		Development/Java
-BuildArch:	noarch
-Source0:	xapool-%{version}-src.tgz
-Source1:        http://repo1.maven.org/maven2/com/experlog/xapool/1.5.0/xapool-1.5.0.pom
-Patch0:         xapool-build.patch
-BuildRequires: jpackage-utils >= 0:1.7.5
-BuildRequires: ant >= 0:1.7.1
-BuildRequires: jta_1_0_1B_api
-Requires(post): jpackage-utils >= 0:1.7.5
-Requires(postun): jpackage-utils >= 0:1.7.5
+BuildRequires: ant
+BuildRequires: apache-commons-logging
+BuildRequires: geronimo-jta
+
+Requires:      jpackage-utils
+BuildArch:     noarch
 Source44: import.info
 
-
 %description
-XAPool is an open source XA Pool !
-It allows to pool objects, JDBC connections 
-and XA connections 
+XAPool is a software component which allows to:
+
+ - Store objects with a Generic Pool
+ - Export a DataSource (javax.sql.DataSource)
+ - Export a XADataSource (javax.sql.XADataSource)
 
 %package javadoc
-Summary:	Javadoc for %{name}
-Group:		Development/Documentation
+Group:         Development/Java
+Summary:       Javadoc for %{name}
+Requires:      jpackage-utils
 BuildArch: noarch
 
 %description javadoc
-Javadoc for %{name}.
+This package contains javadoc for %{name}.
 
 %prep
 %setup -q -n %{name}-%{version}-src
-chmod -R go=u-w *
-find . -name "*.jar" -exec rm -f {} \;
-%patch0 -b .sav0
+find . -name "*.jar" -delete
+find . -name "*.class" -delete
+find . -name "*.java~" -delete
+
+rm -rf $(find . -name "CVS")
+
+%patch0 -p0
+%patch1 -p1
+sed -i "s|Class-Path: idb.jar classes12.jar jta-spec1_0_1.jar log4j.jar commons-logging.jar p6psy.jar||" archive/xapool.mf
+
+ln -sf $(build-classpath commons-logging) externals/
+ln -sf $(build-classpath geronimo-jta) externals/
+
+rm -r src/org/enhydra/jdbc/instantdb \
+  src/org/enhydra/jdbc/oracle
 
 %build
-pushd externals
-ln -sf $(build-classpath jta_1_0_1B_api) jta-spec1_0_1.jar
-popd
 
-ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 
+ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  dist
 
 %install
-# jars
-install -d -m 755 $RPM_BUILD_ROOT%{_javadir}
 
+mkdir -p %{buildroot}%{_javadir}
 install -m 644 output/dist/lib/%{name}.jar \
-        $RPM_BUILD_ROOT%{_javadir}/%{name}-%{version}.jar
-(cd $RPM_BUILD_ROOT%{_javadir} && for jar in *-%{version}*; do ln -sf ${jar} `echo $jar| sed  "s|-%{version}||g"`; done)
-%add_to_maven_depmap com.experlog %{name} %{version} JPP %{name}
-# pom
-install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/maven2/poms
-install -m 644 %{SOURCE1} $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-%{name}.pom
+  %{buildroot}%{_javadir}/%{name}.jar
 
-# javadoc
-install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
-cp -pr output/dist/jdoc/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
-ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name} 
+mkdir -p %{buildroot}%{_mavenpomdir}
+install -pm 644 %{SOURCE1} %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
+%add_maven_depmap JPP-%{name}.pom %{name}.jar
+
+mkdir -p %{buildroot}%{_javadocdir}/%{name}
+cp -pr output/dist/jdoc/* %{buildroot}%{_javadocdir}/%{name}
 
 %files
-%{_javadir}/*.jar
-%{_datadir}/maven2/poms/*
-%{_mavendepmapfragdir}/*
+%{_javadir}/%{name}.jar
+%{_mavenpomdir}/JPP-%{name}.pom
+%{_mavendepmapfragdir}/%{name}
+%doc README.txt
 
 %files javadoc
-%doc %{_javadocdir}/%{name}-%{version}
-%doc %{_javadocdir}/%{name}
+%{_javadocdir}/%{name}
 
 %changelog
+* Sun Mar 17 2013 Igor Vlasenko <viy@altlinux.ru> 0:1.5.0-alt4_2jpp7
+- fc update
+
 * Sat Mar 12 2011 Igor Vlasenko <viy@altlinux.ru> 0:1.5.0-alt3_3jpp6
 - jpp 6 release
 
