@@ -40,7 +40,7 @@
 %define minor	8
 %define bugfix	4
 %define beta	%nil
-%define rlz alt2
+%define rlz alt3
 %define phonon_ver 4.4.0
 
 Name: %rname%major
@@ -65,6 +65,7 @@ Requires: %name-dbus = %version-%release
 Source0: qt-everywhere-opensource-src-%version%beta.tar
 Source1: qt4-compat-map
 Source2: qt4-compat-lds
+Source3: rpmmacros
 #
 Source8: qtX-README.ALT
 #
@@ -695,6 +696,7 @@ GStreamer backend for Phonon
 Version: %major.%minor.%bugfix
 Summary: Set of RPM macros for packaging %name-based applications
 Group: Development/KDE and QT
+BuildArch: noarch
 Requires: %name-common = %version-%release
 %description -n rpm-macros-%{name}
 Set of RPM macros for packaging %name-based applications for %distribution
@@ -943,9 +945,7 @@ ln -s ../../..%_docdir/%rname-%version %buildroot/%_datadir/%name/doc
 
 # install rpm macros
 install -d -m 0755 %buildroot/%_rpmmacrosdir/
-cat >%buildroot/%_rpmmacrosdir/%name <<__EOF__
-%%_%{name}dir %qtdir
-__EOF__
+install -m 0644 %SOURCE3 %buildroot/%_rpmmacrosdir/%name
 
 # install settings directory
 install -d -m 0755 %buildroot/%_sysconfdir/xdg/
@@ -1529,6 +1529,9 @@ install -m 644 %SOURCE104 %buildroot/%_iconsdir/hicolor/64x64/apps/%name.png
 %endif
 
 %changelog
+* Thu Mar 21 2013 Sergey V Turchin <zerg@altlinux.org> 4.8.4-alt3
+- add qmake_qt4 macro (ALT#28724)
+
 * Fri Feb 15 2013 Sergey V Turchin <zerg@altlinux.org> 4.8.4-alt2
 - add fix against QTBUG-29082 (ALT #28557)
 
