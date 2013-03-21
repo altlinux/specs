@@ -1,6 +1,6 @@
 Name: alterator-zabbix-node
-Version: 1.2
-Release: alt4
+Version: 1.3
+Release: alt1
 
 Summary: Deployment tool for a Zabbix node
 License: GPL
@@ -15,7 +15,7 @@ BuildPreReq: help2man alterator-service-functions alterator-php-functions
 BuildRequires: alterator
 
 Requires: zabbix-phpfrontend-apache2 zabbix-phpfrontend-php5 zabbix-phpfrontend-engine apache2-mod_php5 zabbix-agent
-Requires: alterator-service-functions >= 1.0-alt5
+Requires: alterator-service-functions >= 2.0.0-alt1
 Requires: alterator-DBTYPE-functions
 Requires: alterator >= 4.20-alt1.1
 
@@ -183,6 +183,10 @@ Alterator module for the Zabbix agent configuration
 %_alterator_backend3dir/zabbix-agent
 
 %changelog
+* Thu Mar 21 2013 Paul Wolneykien <manowar@altlinux.org> 1.3-alt1
+- Modify the package for the new version of
+  alterator-service-functions.
+
 * Thu Sep 06 2012 Paul Wolneykien <manowar@altlinux.ru> 1.2-alt4
 - Restart zabbix-agentd while applying the configuration.
 

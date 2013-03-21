@@ -1,6 +1,6 @@
 Name: alterator-service-functions
-Version: 1.0
-Release: alt5
+Version: 2.0.0
+Release: alt1
 
 Packager: Paul Wolneykien <manowar@altlinux.ru>
 
@@ -25,6 +25,14 @@ Helpers for common service management
 %_bindir/*
 
 %changelog
+* Thu Mar 21 2013 Paul Wolneykien <manowar@altlinux.org> 2.0.0-alt1
+- Make service_control() support some combined status options
+  (on/start, stop/off).
+- sd_service_control: Handle condstop. (thx Mikhail Efremov).
+- Implement systemd-related functions. (thx Mikhail Efremov).
+- Rewrite service_control() and update related functions.
+  (thx Mikhail Efremov).
+
 * Sun Oct 31 2010 Paul Wolneykien <manowar@altlinux.ru> 1.0-alt5
 - Add and use functions for service existance testing.
 
