@@ -1,36 +1,38 @@
+Epoch: 0
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           cal10n
 Version:        0.7.4
-Release:        alt3_5jpp6
-Epoch:          0
+Release:        alt3_9jpp7
 Summary:        Compiler assisted localization library (CAL10N)
+
 Group:          Development/Java
 License:        MIT
-URL:            http://cal10n.qos.ch/
+URL:            http://cal10n.qos.ch
 Source0:        http://cal10n.qos.ch/dist/cal10n-%{version}.tar.gz
-Source1:        %{name}-jpp-depmap.xml
 Patch0:         %{name}-fix-maven.patch
-Requires(post): jpackage-utils >= 1.7.3
-Requires(postun): jpackage-utils >= 1.7.3
-Requires: jpackage-utils
-BuildRequires: apache-commons-parent >= 0:9
+
+BuildArch: noarch
+
 BuildRequires: junit4
-BuildRequires: maven2
-BuildRequires: maven2-plugin-assembly
-BuildRequires: maven2-plugin-compiler
-BuildRequires: maven2-plugin-install
-BuildRequires: maven2-plugin-jar
-BuildRequires: maven2-plugin-javadoc
-BuildRequires: maven2-plugin-plugin
-BuildRequires: maven2-plugin-resources
-BuildRequires: maven2-plugin-source
+BuildRequires: maven
+BuildRequires: maven-assembly-plugin
+BuildRequires: maven-compiler-plugin
+BuildRequires: maven-install-plugin
+BuildRequires: maven-jar-plugin
+BuildRequires: maven-javadoc-plugin
+BuildRequires: maven-plugin-plugin
+BuildRequires: maven-resources-plugin
+BuildRequires: maven-source-plugin
 BuildRequires: maven-doxia-sitetools
-BuildRequires: maven2-plugin-site
-BuildRequires: maven-surefire-maven-plugin
+BuildRequires: maven-site-plugin
+BuildRequires: maven-surefire-plugin
 BuildRequires: maven-surefire-provider-junit4
-BuildArch:      noarch
 Source44: import.info
+
 
 %description
 Compiler Assisted Localization, abbreviated as CAL10N (pronounced as "calion") 
@@ -47,7 +49,7 @@ Features:
 %package javadoc
 Group:          Development/Java
 Summary:        Javadoc for %{name}
-Requires: jpackage-utils
+Requires:       jpackage-utils
 BuildArch: noarch
 
 %description javadoc
@@ -56,72 +58,70 @@ API documentation for %{name}.
 %package -n maven-cal10n-plugin
 Summary:    CAL10N maven plugin
 Group:      Development/Java
-Requires: maven2
-Requires: %{name} = %{?epoch:%epoch:}%{version}-%{release}
+Requires:   maven
+Requires:   %{name} = %{?epoch:%epoch:}%{version}-%{release}
 
 %description -n maven-cal10n-plugin
 Maven plugin verifying that the codes defined in
 an enum type match those in the corresponding resource bundles. 
 
 %prep
-%setup -q
-find -type f -name "*.jar" | xargs -t rm
-%patch0 -b .sav0
+%setup -q 
+find . -name "*.jar" | xargs rm
+%patch0
 
 %build
-export LANG=en_US.ISO8859-1
-mvn-jpp -Dmaven.compile.target=1.5 -Dmaven.javadoc.source=1.5  \
-        -e \
-        -Dmaven2.jpp.depmap.file=%{SOURCE1} \
-        -Dmaven.test.failure.ignore=true \
-        install javadoc:javadoc
+mvn-rpmbuild -Dmaven.compile.source=1.5 -Dmaven.compile.target=1.5 -Dmaven.javadoc.source=1.5  -Dproject.build.sourceEncoding=ISO-8859-1 install javadoc:aggregate
 
 %install
 
 # jars
 install -d -m 0755 %{buildroot}%{_javadir}/%{name}
-install -p -m 644 cal10n-api/target/cal10n-api-%{version}.jar \
-        %{buildroot}%{_javadir}/%{name}/cal10n-api-%{version}.jar
-install -p -m 644 maven-cal10n-plugin/target/maven-cal10n-plugin-%{version}.jar \
-        %{buildroot}%{_javadir}/%{name}/maven-cal10n-plugin-%{version}.jar
-(cd %{buildroot}%{_javadir}/%{name} && for jar in *-%{version}*; do ln -s ${jar} ${jar/-%{version}/}; done)
-
-%add_to_maven_depmap ch.qos.cal10n cal10n-parent %{version} JPP/%{name} cal10n-parent
-%add_to_maven_depmap ch.qos.cal10n cal10n-api %{version} JPP/%{name} cal10n-api
-%add_to_maven_depmap ch.qos.cal10n maven-cal10n-plugin %{version} JPP/%{name} maven-cal10n-plugin
+install -m 644 cal10n-api/target/cal10n-api-%{version}.jar \
+        %{buildroot}%{_javadir}/%{name}/cal10n-api.jar
+install -m 644 maven-cal10n-plugin/target/maven-cal10n-plugin-%{version}.jar \
+        %{buildroot}%{_javadir}/%{name}/maven-cal10n-plugin.jar
 
 # poms
-install -d -m 755 %{buildroot}%{_datadir}/maven2/poms
+install -d -m 755 %{buildroot}%{_mavenpomdir}
 install -pm 644 pom.xml \
-    %{buildroot}%{_datadir}/maven2/poms/JPP.%{name}-%{name}-parent.pom
+    %{buildroot}%{_mavenpomdir}/JPP.%{name}-%{name}-parent.pom
 install -pm 644 cal10n-api/pom.xml \
-    %{buildroot}%{_datadir}/maven2/poms/JPP.%{name}-%{name}-api.pom
+    %{buildroot}%{_mavenpomdir}/JPP.%{name}-%{name}-api.pom
 install -pm 644 maven-cal10n-plugin/pom.xml \
-    %{buildroot}%{_datadir}/maven2/poms/JPP.%{name}-maven-cal10n-plugin.pom
+    %{buildroot}%{_mavenpomdir}/JPP.%{name}-maven-cal10n-plugin.pom
+
+%add_maven_depmap JPP.%{name}-%{name}-parent.pom
+%add_maven_depmap JPP.%{name}-%{name}-api.pom %{name}/cal10n-api.jar
+%add_maven_depmap JPP.%{name}-maven-cal10n-plugin.pom %{name}/maven-cal10n-plugin.jar
 
 # javadoc
-install -d -m 0755 %{buildroot}%{_javadocdir}/%{name}-%{version}
-cp -pr docs/api*/* %{buildroot}%{_javadocdir}/%{name}-%{version}
-ln -s %{name}-%{version} %{buildroot}%{_javadocdir}/%{name}
+install -d -m 0755 %{buildroot}%{_javadocdir}/%{name}
+cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}
+
+%pre javadoc
+[ $1 -gt 1 ] && [ -L %{_javadocdir}/%{name} ] && \
+rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
+
 
 %files
-%dir %{_javadir}*/%{name}
-%{_javadir}*/%{name}/cal10n-api.jar
-%{_javadir}*/%{name}/cal10n-api-%{version}.jar
-%{_datadir}/maven2/poms/JPP.%{name}-%{name}-parent.pom
-%{_datadir}/maven2/poms/JPP.%{name}-%{name}-api.pom
+%dir %{_javadir}/%{name}
+%{_javadir}/%{name}/%{name}*.jar
+%{_mavenpomdir}/JPP.%{name}-%{name}-parent*
+%{_mavenpomdir}/JPP.%{name}-%{name}-api*
 %{_mavendepmapfragdir}/%{name}
 
 %files -n maven-cal10n-plugin
-%{_javadir}/%{name}/maven-cal10n-plugin-%{version}.jar
-%{_javadir}/%{name}/maven-cal10n-plugin.jar
-%{_datadir}/maven2/poms/JPP.%{name}-maven-cal10n-plugin.pom
+%{_javadir}/%{name}/maven*.jar
+%{_mavenpomdir}/JPP.%{name}-maven*
 
 %files javadoc
-%{_javadocdir}/%{name}-%{version}
 %{_javadocdir}/%{name}
 
 %changelog
+* Sun Mar 17 2013 Igor Vlasenko <viy@altlinux.ru> 0:0.7.4-alt3_9jpp7
+- fc update
+
 * Wed Aug 22 2012 Igor Vlasenko <viy@altlinux.ru> 0:0.7.4-alt3_5jpp6
 - applied repocop patches
 
