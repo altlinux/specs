@@ -3,7 +3,7 @@
 
 %define rname ktp-contact-list
 Name: kde4-ktp-contact-list
-Version: 0.5.1
+Version: 0.5.3
 Release: alt1
 
 Group: Graphical desktop/KDE
@@ -64,6 +64,9 @@ Requires: libtelepathy-qt4-devel
 #%_K4includedir/KTp/
 
 %changelog
+* Thu Mar 21 2013 Sergey V Turchin <zerg@altlinux.org> 0.5.3-alt1
+- new version
+
 * Wed Oct 31 2012 Sergey V Turchin <zerg@altlinux.org> 0.5.1-alt1
 - new version
 
