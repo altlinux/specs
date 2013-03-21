@@ -1,5 +1,5 @@
 %define branch 0.7
-%define svn svn3333
+%define svn svn3337
 
 Version: %branch.0
 Epoch: 1
@@ -25,7 +25,10 @@ BuildRequires: libsamplerate-devel libtag-devel >= 1.6 libvorbis-devel
 BuildRequires: libwavpack-devel libalsa-devel libflac-devel libbs2b-devel >= 3.0
 BuildRequires: libprojectM-devel >= 2.0.1 jackit-devel xorg-xf86miscproto-devel
 BuildRequires: libenca-devel libcddb-devel libmms-devel >= 0.4 libwildmidi-devel >= 0.2.3.4
-BuildRequires: libgme-devel libGLU-devel libopusfile-devel
+BuildRequires: libgme-devel libGLU-devel
+
+# disable for 5.1
+BuildRequires: libopusfile-devel
 
 %description
 QMMP is an audio-player, written with help of Qt library.
@@ -568,8 +571,11 @@ Requires: qmmp-vis-analyzer qmmp-scrobbler qmmp-hal qmmp-hotkey
 Requires: qmmp-eff-bs2b qmmp-vis-projectm qmmp-fileops qmmp-converter
 Requires: qmmp-out-jack qmmp-out-oss qmmp-out-null qmmp-http qmmp-mms
 Requires: qmmp-kdenotify qmmp-eff-ladspa qmmp-covermanager
-Requires: qmmp-eff-crossfade qmmp-udisks qmmp-in-gme qmmp-in-opus
+Requires: qmmp-eff-crossfade qmmp-udisks qmmp-in-gme
 Requires: qmmp-streambrowser qmmp-trackchange qmmp-copypaste qmmp-eff-extrastereo
+
+# disable for 5.1
+Requires: qmmp-in-opus
 
 %description -n %name-full
 Virtual package for full installation Qmmp (exclude %name-devel).
@@ -686,6 +692,7 @@ mkdir -p %buildroot/{%_miconsdir,%_niconsdir,%_liconsdir}
 %files -n %name-in-gme
 %_libdir/%name/Input/libgme*
 
+# disable for 5.1
 %files -n %name-in-opus
 %_libdir/%name/Input/libopus*
 
@@ -779,6 +786,9 @@ mkdir -p %buildroot/{%_miconsdir,%_niconsdir,%_liconsdir}
 %files -n %name-full
 
 %changelog
+* Thu Mar 21 2013 Motsyo Gennadi <drool@altlinux.ru> 1:0.7.0-alt2.svn3337
+- 0.7.0 svn3337 version (fixed opus codec sample rate)
+
 * Mon Mar 18 2013 Motsyo Gennadi <drool@altlinux.ru> 1:0.7.0-alt2.svn3333
 - 0.7.0 svn3333 version
 
