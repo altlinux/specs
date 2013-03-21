@@ -20,13 +20,13 @@
 %define flavour %base_flavour-%sub_flavour
 
 Name: kernel-image-%flavour
-Version: 3.0.69
-Release: alt8
+Version: 3.0.70
+Release: alt1
 
 %define kernel_req %nil
 %define kernel_prov %nil
 %define kernel_branch 3.0
-%define kernel_stable_version 69
+%define kernel_stable_version 70
 %define kernel_extra_version .%kernel_stable_version
 #define kernel_extra_version %nil
 
@@ -215,10 +215,9 @@ Patch0095: linux-%kernel_branch.43-fix-drivers-block--dasd_fba_mod.patch
 Patch0096: linux-%kernel_branch.51-fix-drivers-block--dasd_mod.patch
 Patch0097: linux-%kernel_branch.42-fix-drivers-block--drbd.patch
 Patch0098: linux-%kernel_branch.51-fix-drivers-block--floppy.patch
-Patch0099: linux-%kernel_branch.68-fix-drivers-block--loop.patch
-Patch0100: linux-%kernel_branch.43-fix-drivers-block--nbd.patch
-Patch0101: linux-%kernel_branch.42-fix-drivers-block--rbd.patch
-Patch0102: linux-%kernel_branch.42-fix-drivers-block--virtio_blk.patch
+Patch0099: linux-%kernel_branch.43-fix-drivers-block--nbd.patch
+Patch0100: linux-%kernel_branch.42-fix-drivers-block--rbd.patch
+Patch0101: linux-%kernel_branch.42-fix-drivers-block--virtio_blk.patch
 
 Patch0111: linux-%kernel_branch.42-fix-drivers-bluetooth--ath3k.patch
 
@@ -297,7 +296,7 @@ Patch0231: linux-%kernel_branch.62-fix-drivers-gpio--sch_gpio.patch
 Patch0241: linux-%kernel_branch.44-fix-drivers-gpu-drm.patch
 Patch0242: linux-%kernel_branch.44-fix-drivers-gpu-drm--drm.patch
 Patch0243: linux-%kernel_branch.42-fix-drivers-gpu-drm--drm_kms_helper.patch
-Patch0244: linux-%kernel_branch.68-fix-drivers-gpu-drm--i915.patch
+Patch0244: linux-%kernel_branch.70-fix-drivers-gpu-drm--i915.patch
 Patch0245: linux-%kernel_branch.42-fix-drivers-gpu-drm--mga.patch
 Patch0246: linux-%kernel_branch.43-fix-drivers-gpu-drm--nouveau.patch
 Patch0247: linux-%kernel_branch.43-fix-drivers-gpu-drm--psb_gfx.patch
@@ -504,7 +503,7 @@ Patch0610: linux-%kernel_branch.42-fix-drivers-scsi--ses.patch
 Patch0611: linux-%kernel_branch.49-fix-drivers-scsi--sg.patch
 Patch0612: linux-%kernel_branch.42-fix-drivers-scsi--sim710.patch
 Patch0613: linux-%kernel_branch.42-fix-drivers-scsi--sr_mod.patch
-Patch0614: linux-%kernel_branch.62-fix-drivers-scsi--st.patch
+Patch0614: linux-%kernel_branch.68-fix-drivers-scsi--st.patch
 Patch0615: linux-%kernel_branch.51-fix-drivers-scsi--zfcp.patch
 Patch0616: linux-%kernel_branch.43-fix-drivers-scsi-cxgbi--cxgb3i.patch
 Patch0617: linux-%kernel_branch.66-fix-drivers-scsi-cxgbi--cxgb4i.patch
@@ -525,13 +524,12 @@ Patch0630: linux-%kernel_branch.43-fix-drivers-target.patch
 Patch0641: linux-%kernel_branch.42-fix-drivers-telephony--ixj.patch
 
 Patch0650: linux-%kernel_branch.66-fix-drivers-tty.patch
-Patch0651: linux-%kernel_branch.58-fix-drivers-tty--pty.patch
-Patch0652: linux-%kernel_branch.42-fix-drivers-tty-serial--8250.patch
-Patch0653: linux-%kernel_branch.42-fix-drivers-tty-serial--8250_pci.patch
+Patch0651: linux-%kernel_branch.42-fix-drivers-tty-serial--8250.patch
+Patch0652: linux-%kernel_branch.42-fix-drivers-tty-serial--8250_pci.patch
 
 Patch0660: linux-%kernel_branch.67-fix-drivers-usb.patch
 Patch0661: linux-%kernel_branch.42-fix-drivers-usb-atm--ueagle-atm.patch
-Patch0662: linux-%kernel_branch.66-fix-drivers-usb-class--cdc-wdm.patch
+Patch0662: linux-%kernel_branch.70-fix-drivers-usb-class--cdc-wdm.patch
 Patch0663: linux-%kernel_branch.68-fix-drivers-usb-core.patch
 Patch0664: linux-%kernel_branch.58-fix-drivers-usb-host--ehci-hcd.patch
 Patch0665: linux-%kernel_branch.42-fix-drivers-usb-host--uhci-hcd.patch
@@ -562,7 +560,7 @@ Patch0711: linux-%kernel_branch.42-fix-firmware--vicam.patch
 Patch0720: linux-%kernel_branch.68-fix-fs.patch
 Patch0721: linux-%kernel_branch.51-fix-fs--anon_inodes.patch
 Patch0722: linux-%kernel_branch.42-fix-fs--bio-integrity.patch
-Patch0723: linux-%kernel_branch.68-fix-fs--block.patch
+Patch0723: linux-%kernel_branch.70-fix-fs--block.patch
 Patch0724: linux-%kernel_branch.42-fix-fs--eventpoll.patch
 Patch0725: linux-%kernel_branch.68-fix-fs-9p.patch
 Patch0726: linux-%kernel_branch.53-fix-fs-autofs4.patch
@@ -572,7 +570,7 @@ Patch0729: linux-%kernel_branch.42-fix-fs-ceph.patch
 Patch0730: linux-%kernel_branch.62-fix-fs-cifs.patch
 Patch0731: linux-%kernel_branch.42-fix-fs-dlm.patch
 Patch0732: linux-%kernel_branch.42-fix-fs-ecryptfs.patch
-Patch0733: linux-%kernel_branch.68-fix-fs-ext3.patch
+Patch0733: linux-%kernel_branch.70-fix-fs-ext3.patch
 Patch0734: linux-%kernel_branch.68-fix-fs-ext4.patch
 Patch0735: linux-%kernel_branch.56-fix-fs-fat.patch
 Patch0736: linux-%kernel_branch.68-fix-fs-gfs2.patch
@@ -632,7 +630,7 @@ Patch0823: linux-%kernel_branch.42-fix-mm--zcache.patch
 
 Patch0830: linux-%kernel_branch.51-fix-net.patch
 Patch0831: linux-%kernel_branch.42-fix-net--batman-adv.patch
-Patch0832: linux-%kernel_branch.42-fix-net--dcb.patch
+Patch0832: linux-%kernel_branch.70-fix-net--dcb.patch
 Patch0833: linux-%kernel_branch.62-fix-net--dns_resolver.patch
 Patch0834: linux-%kernel_branch.42-fix-net--wimax.patch
 Patch0835: linux-%kernel_branch.42-fix-net--x25.patch
@@ -640,7 +638,7 @@ Patch0836: linux-%kernel_branch.42-fix-net-8021q--vlan-core.patch
 Patch0837: linux-%kernel_branch.64-fix-net-bridge--bridge.patch
 Patch0838: linux-%kernel_branch.63-fix-net-caif--caif_socket.patch
 Patch0839: linux-%kernel_branch.42-fix-net-ceph.patch
-Patch0840: linux-%kernel_branch.62-fix-net-core.patch
+Patch0840: linux-%kernel_branch.70-fix-net-core.patch
 Patch0841: linux-%kernel_branch.46-fix-net-ipv4.patch
 Patch0842: linux-%kernel_branch.68-fix-net-ipv4--xfrm.patch
 Patch0843: linux-%kernel_branch.51-fix-net-ipv4-netfilter--iptable_nat.patch
@@ -1563,7 +1561,6 @@ cd linux-%version
 %patch0099 -p1
 %patch0100 -p1
 %patch0101 -p1
-%patch0102 -p1
 
 # fix-drivers-bluetooth--*
 %patch0111 -p1
@@ -1906,7 +1903,6 @@ cd linux-%version
 %patch0650 -p1
 %patch0651 -p1
 %patch0652 -p1
-%patch0653 -p1
 
 # fix-drivers-usb*
 %patch0660 -p1
@@ -2561,7 +2557,9 @@ rm -f %buildroot%modules_dir/{build,source}
 ln -s %kbuild_dir %buildroot%modules_dir/build
 
 %if_with perf
-%makeinstall_std -C tools/perf prefix=%_prefix perfexecdir=%_libexecdir/perf install install-man
+%makeinstall_std -C tools/perf %{?_enable_verbose:V=1} \
+	prefix=%_prefix perfexecdir=%_libexecdir/perf \
+	EXTRA_CFLAGS="%optflags %{?_disable_debug:-g0}" install-man
 install -d -m 0755 %buildroot%_docdir/perf-%version
 install -m 0644 tools/perf/{CREDITS,design.txt,Documentation/examples.txt} %buildroot%_docdir/perf-%version/
 %endif
@@ -3100,6 +3098,21 @@ done)
 
 
 %changelog
+* Thu Mar 21 2013 Led <led@altlinux.ru> 3.0.70-alt1
+- 3.0.70
+- removed:
+  + fix-drivers-block--loop
+  + fix-drivers-tty--pty
+- updated:
+  + fix-drivers-gpu-drm--i915
+  + fix-drivers-scsi--st
+  + fix-drivers-usb-class--cdc-wdm
+  + fix-fs--block
+  + fix-fs-ext3
+  + fix-net--dcb
+  + fix-net-core
+  + fix-virt-kvm
+
 * Wed Mar 20 2013 Led <led@altlinux.ru> 3.0.69-alt8
 - updated:
   + fix-block
