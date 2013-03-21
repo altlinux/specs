@@ -1,27 +1,22 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires: perl(B.pm) perl(Exporter.pm) perl(IO/File.pm) perl(Pod/Checker.pm) perl(Scalar/Util.pm) perl(XML/Parser.pm) perl(overload.pm) unzip
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 BuildRequires: rpm-build-java-osgi
-# required for install
-BuildRequires: unzip
-%define eclipse_base     %{_libdir}/eclipse
-
 Name:      eclipse-epic
-Version:   0.6.39
-Release:   alt2_1jpp6
+Version:   0.6.44
+Release:   alt1_2jpp7
 Summary:   Perl Eclipse plug-in
 Group:     Development/Java
 License:   CPL
 URL:       http://www.epic-ide.org/
 
-# source tarball and the script used to generate it from upstream's source control
-# script usage:
-# $ sh get-epic.sh
-Source0:   epic-%{version}.tar.gz
-Source1:   get-epic.sh
+# Fetched from https://github.com/jploski/epic-ide/tarball/testing
+Source0:   jploski-epic-ide-273ac0e.tar.gz
 
 # enable module starter and taint checking by default
 Patch0:    %{name}-enable-module-starter.patch
-
 
 BuildArch:        noarch
 
@@ -51,12 +46,10 @@ perldoc support, source formatter, templating support, a regular expression
 view and a Perl debugger.
 
 %prep
-%setup -q -n epic-%{version}
+%setup -q -n jploski-epic-ide-273ac0e
 
 # apply patches
-pushd org.epic.perleditor
-%patch0 -p0
-popd
+%patch0 
 
 # remove all bundled libs
 find -name '*.class' -exec rm -f '{}' \;
@@ -119,6 +112,9 @@ popd
 %{_datadir}/eclipse/dropins/epic
 
 %changelog
+* Sun Mar 17 2013 Igor Vlasenko <viy@altlinux.ru> 0.6.44-alt1_2jpp7
+- fc update
+
 * Mon Sep 17 2012 Igor Vlasenko <viy@altlinux.ru> 0.6.39-alt2_1jpp6
 - fixed build
 
