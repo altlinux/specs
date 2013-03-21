@@ -1,4 +1,6 @@
-Packager: Igor Vlasenko <viy@altlinux.ru>
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 # Copyright (c) 2000-2005, JPackage Project
@@ -31,113 +33,124 @@ BuildRequires: jpackage-compat
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
+%define oversion 1.1.3_8
 
-%define cvs_oversion 1_1_4c
-%define oversion 1.1.4c
-
-Name:           xpp3
-Version:        1.1.4
-Release:	alt2_2jpp6
-Epoch:          0
 Summary:        XML Pull Parser
+Name:           xpp3
+Version:        1.1.3.8
+Release:        alt1_7jpp7
+Epoch:          1
 License:        ASL 1.1
-Group:          Development/Java
 URL:            http://www.extreme.indiana.edu/xgws/xsoap/xpp/mxp1/index.html
-Source0:        http://www.extreme.indiana.edu/dist/java-repository/xpp3/distributions/xpp3-1.1.4c_all.tgz
-Source1:        http://mirrors.ibiblio.org/pub/mirrors/maven2/xpp3/xpp3/1.1.4c/xpp3-1.1.4c.pom
-Source2:        http://mirrors.ibiblio.org/pub/mirrors/maven2/xpp3/xpp3_min/1.1.4c/xpp3_min-1.1.4c.pom
-Source3:        http://mirrors.ibiblio.org/pub/mirrors/maven2/xpp3/xpp3_xpath/1.1.4c/xpp3_xpath-1.1.4c.pom
-Requires(post): jpackage-utils
+Group:          Development/Java
+Source0:        http://www.extreme.indiana.edu/dist/java-repository/xpp3/distributions/xpp3-%{oversion}_src.tgz
+Source1:        http://mirrors.ibiblio.org/pub/mirrors/maven2/xpp3/xpp3/1.1.3.4.O/xpp3-1.1.3.4.O.pom
+Source2:        http://mirrors.ibiblio.org/pub/mirrors/maven2/xpp3/xpp3_xpath/1.1.3.4.O/xpp3_xpath-1.1.3.4.O.pom
+Source3:        http://mirrors.ibiblio.org/pub/mirrors/maven2/xpp3/xpp3_min/1.1.3.4.O/xpp3_min-1.1.3.4.O.pom
+Patch0:         %{name}-link-docs-locally.patch
+Requires:       jpackage-utils >= 0:1.6
+BuildRequires:  jpackage-utils >= 0:1.6
+BuildRequires:  ant >= 0:1.6
+BuildRequires:  junit
+BuildRequires:  xml-commons-apis
+BuildRequires:  /usr/bin/perl
+Requires:       jpackage-utils
+Requires:       junit
+Requires:       xml-commons-apis
+Requires(post):   jpackage-utils
 Requires(postun): jpackage-utils
-Requires: jpackage-utils
-BuildRequires: ant
-BuildRequires: jpackage-utils
-BuildRequires: junit
-BuildRequires: xml-commons-jaxp-1.3-apis
+
 BuildArch:      noarch
 Source44: import.info
 
 %description
-Xml Pull Parser 3rd Edition (XPP3) MXP1 is a new XmlPull 
-parsing engine that is based on ideas from XPP and in 
-particular XPP2 but completely revised and rewritten to 
+Xml Pull Parser 3rd Edition (XPP3) MXP1 is a new XmlPull
+parsing engine that is based on ideas from XPP and in
+particular XPP2 but completely revised and rewritten to
 take best advantage of latest JIT JVMs such as Hotspot in JDK 1.4.
 
 %package minimal
 Summary:        Minimal XML Pull Parser
 Group:          Development/Java
+Requires:       jpackage-utils
+Requires:       junit
+Requires:       xml-commons-apis
+Requires(post):   jpackage-utils
+Requires(postun): jpackage-utils
 
 %description minimal
 Minimal XML pull parser implementation.
 
 %package javadoc
 Summary:        Javadoc for %{name}
-Group:          Development/Documentation
+Group:          Development/Java
+Requires:       jpackage-utils
 BuildArch: noarch
 
 %description javadoc
 Javadoc for %{name}.
 
 %prep
-%setup -q -n xpp3-%{oversion}
-%{_bindir}/find . -name "*.jar" | %{_bindir}/xargs -t rm
-mkdir -p src/java/addons_tests
+%setup -q -n %{name}-%{oversion}
+# remove all binary libs
+find . -name "*.jar" -exec rm -f {} \;
+
+%patch0
 
 %build
-export OPT_JAR_LIST=:
-export CLASSPATH=$(build-classpath xml-commons-jaxp-1.3-apis junit)
-ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 all apidoc junit
+export CLASSPATH=$(build-classpath xml-commons-apis junit)
+ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  xpp3 junit apidoc
 
 %install
 
 # jars
-mkdir -p %{buildroot}%{_javadir}
-cp -p build/%{name}-%{oversion}.jar %{buildroot}%{_javadir}/%{name}-%{version}.jar
-cp -p build/%{name}_min-%{oversion}.jar %{buildroot}%{_javadir}/%{name}-minimal-%{version}.jar
-ln -s %{name}-minimal-%{version}.jar %{buildroot}%{_javadir}/%{name}_min-%{version}.jar
-cp -p build/%{name}_xpath-%{oversion}.jar %{buildroot}%{_javadir}/%{name}-xpath-%{version}.jar
-ln -s %{name}-xpath-%{version}.jar %{buildroot}%{_javadir}/%{name}_xpath-%{version}.jar
-(cd %{buildroot}%{_javadir} && for jar in *-%{version}.jar; do ln -sf ${jar} `echo $jar| sed "s|-%{version}||g"`; done)
+mkdir -p $RPM_BUILD_ROOT%{_javadir}
+cp -p build/%{name}-%{oversion}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
+cp -p build/%{name}_min-%{oversion}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}-minimal.jar
+cp -p build/%{name}_xpath-%{oversion}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}-xpath.jar
 
 # javadoc
-mkdir -p %{buildroot}%{_javadocdir}/%{name}-%{version}
-cp -pr doc/api/* %{buildroot}%{_javadocdir}/%{name}-%{version}
-ln -s %{name}-%{version} %{buildroot}%{_javadocdir}/%{name}
+mkdir -p $RPM_BUILD_ROOT%{_javadocdir}/%{name}
+cp -pr doc/api/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 
-mkdir -p %{buildroot}%{_datadir}/maven2/poms
-cp -p %{SOURCE1} $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-%{name}.pom
-cp -p %{SOURCE2} $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-%{name}-minimal.pom
-cp -p %{SOURCE3} $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-%{name}-xpath.pom
-%add_to_maven_depmap xmlpull xmlpull %{version} JPP %{name}
-%add_to_maven_depmap xpp3 xpp3 %{version} JPP %{name}
-%add_to_maven_depmap_at xpp3-minimal xpp3 xpp3_min %{version} JPP %{name}-minimal
-%add_to_maven_depmap xpp3 xpp3_xpath %{version} JPP %{name}-xpath
+rm -rf doc/{build.txt,api}
+
+install -d -m 755 %{buildroot}%{_mavenpomdir}
+install -pm 644 %{SOURCE3} \
+    %{buildroot}%{_mavenpomdir}/JPP-%{name}-minimal.pom
+%add_to_maven_depmap %{name} %{name}_min %{version} JPP %{name}-minimal
+
+mv %{buildroot}%{_mavendepmapfragdir}/%{name} %{buildroot}%{_mavendepmapfragdir}/%{name}-minimal
+install -pm 644 %{SOURCE1} \
+    %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
+%add_to_maven_depmap %{name} %{name} %{version} JPP %{name}
+
+install -pm 644 %{SOURCE2} \
+    %{buildroot}%{_mavenpomdir}/JPP-%{name}-xpath.pom
+%add_to_maven_depmap %{name} %{name}_xpath %{version} JPP %{name}-xpath
+
 
 %files
 %doc README.html LICENSE.txt doc/*
-%{_datadir}/maven2/poms/JPP-%{name}.pom
-%{_datadir}/maven2/poms/JPP-%{name}-xpath.pom
 %{_javadir}/%{name}.jar
-%{_javadir}/%{name}-%{version}.jar
-%{_javadir}/%{name}_xpath.jar
-%{_javadir}/%{name}_xpath-%{version}.jar
 %{_javadir}/%{name}-xpath.jar
-%{_javadir}/%{name}-xpath-%{version}.jar
+%{_mavenpomdir}/JPP-%{name}-xpath.pom
+%{_mavenpomdir}/JPP-%{name}.pom
 %{_mavendepmapfragdir}/%{name}
 
 %files minimal
+%doc LICENSE.txt
 %{_mavendepmapfragdir}/%{name}-minimal
-%{_datadir}/maven2/poms/JPP-%{name}-minimal.pom
+%{_mavenpomdir}/JPP-%{name}-minimal.pom
 %{_javadir}/%{name}-minimal.jar
-%{_javadir}/%{name}-minimal-%{version}.jar
-%{_javadir}/%{name}_min.jar
-%{_javadir}/%{name}_min-%{version}.jar
 
 %files javadoc
-%{_javadocdir}/%{name}-%{version}
-%{_javadocdir}/%{name}
+%doc %{_javadocdir}/*
 
 %changelog
+* Sun Mar 17 2013 Igor Vlasenko <viy@altlinux.ru> 1:1.1.3.8-alt1_7jpp7
+- fc update
+
 * Sat May 05 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.1.4-alt2_2jpp6
 - split maven-fragments for minimal subpackage
 
