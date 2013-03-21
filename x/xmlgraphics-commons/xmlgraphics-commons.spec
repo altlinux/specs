@@ -1,118 +1,94 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
 BuildRequires: /proc
-BuildRequires: jpackage-1.6.0-compat
-# Copyright (c) 2000-2011, JPackage Project
-# All rights reserved.
-#
-# Redistribution and use in source and binary forms, with or without
-# modification, are permitted provided that the following conditions
-# are met:
-#
-# 1. Redistributions of source code must retain the above copyright
-#    notice, this list of conditions and the following disclaimer.
-# 2. Redistributions in binary form must reproduce the above copyright
-#    notice, this list of conditions and the following disclaimer in the
-#    documentation and/or other materials provided with the
-#    distribution.
-# 3. Neither the name of the JPackage Project nor the names of its
-#    contributors may be used to endorse or promote products derived
-#    from this software without specific prior written permission.
-#
-# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-# "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-# LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-# A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-# OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-# SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-# LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-# DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-# THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-# (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-# OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
-
+BuildRequires: jpackage-compat
 Name:           xmlgraphics-commons
 Version:        1.4
-Release:        alt2_4jpp6
+Release:        alt2_6jpp7
 Epoch:          0
 Summary:        XML Graphics Commons
+
 Group:          Development/Java
 License:        ASL 2.0
 URL:            http://xmlgraphics.apache.org/
-Source0:        http://www.apache.org/dist//xmlgraphics/commons/source/xmlgraphics-commons-1.4-src.tar.gz
-Patch0:         xmlgraphics-commons-build_xml.patch
-Requires(post): jpackage-utils
-Requires(postun): jpackage-utils
-Requires:       jakarta-commons-io >= 0:1.1
-Requires:       jakarta-commons-logging
-Requires:       jpackage-utils
-BuildRequires:  ant >= 0:1.7.1
-BuildRequires:  ant-junit
-BuildRequires:  jakarta-commons-io >= 0:1.1
-BuildRequires:  jakarta-commons-logging
-BuildRequires:  jpackage-utils >= 0:1.7.5
+Source0:        http://apache.skknet.net/xmlgraphics/commons/source/%{name}-%{version}-src.tar.gz
+Patch0:         %{name}-java-7-fix.patch
+
 BuildArch:      noarch
+BuildRequires:  jpackage-utils >= 0:1.6
+BuildRequires:  ant >= 0:1.6
+BuildRequires:  ant-junit >= 0:1.6
+BuildRequires:  junit
+BuildRequires:  apache-commons-io >= 0:1.1
+BuildRequires:  apache-commons-logging >= 0:1.0.4
+Requires:       apache-commons-logging >= 0:1.0.4
+Requires:       apache-commons-io >= 0:1.1
+Requires(post):   jpackage-utils
+Requires(postun): jpackage-utils
 Source44: import.info
 
 %description
-Apache XML Graphics Commons is a library that consists of 
-several reusable components used by Apache Batik and 
-Apache FOP. Many of these components can easily be used 
-separately outside the domains of SVG and XSL-FO. You will 
-find components such as a PDF library, an RTF library, 
-Graphics2D implementations that let you generate PDF & 
+Apache XML Graphics Commons is a library that consists of
+several reusable components used by Apache Batik and
+Apache FOP. Many of these components can easily be used
+separately outside the domains of SVG and XSL-FO. You will
+find components such as a PDF library, an RTF library,
+Graphics2D implementations that let you generate PDF &
 PostScript files, and much more.
 
-%package javadoc
+%package        javadoc
 Summary:        Javadoc for %{name}
-Group:          Development/Documentation
+Group:          Development/Java
 Requires:       jpackage-utils
 BuildArch: noarch
 
-%description javadoc
+%description    javadoc
 %{summary}.
 
-%prep
-%setup -q
-%patch0 -p0 -b .sav0
-%{_bindir}/find -type f -name "*.jar" | %{_bindir}/xargs -t %{__rm}
 
-pushd lib
-ln -s $(build-classpath commons-io) .
-ln -s $(build-classpath commons-logging) .
-popd
+%prep
+%setup -q %{name}-%{version}
+rm -f `find . -name "*.jar"`
+%patch0
+
+# create pom from template
+sed "s:@version@:%{version}:g" %{name}-pom-template.pom \
+    > %{name}.pom
+
 
 %build
-export LANG=en_US.ISO8859-1
-export CLASSPATH=
-export OPT_JAR_LIST=`%{__cat} %{_sysconfdir}/ant.d/junit`
-ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 package javadocs maven-artifacts
+export CLASSPATH=$(build-classpath commons-logging)
+export OPT_JAR_LIST="ant/ant-junit junit"
+pushd lib
+ln -sf $(build-classpath commons-io) .
+popd
+ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  package javadocs
 
 %install
+install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
+install -Dpm 0644 build/%{name}-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
+install -pm 644 %{name}.pom $RPM_BUILD_ROOT/%{_mavenpomdir}/JPP-%{name}.pom
+%add_to_maven_depmap org.apache.xmlgraphics %{name} %{version} JPP %{name}
 
-install -Dpm 644 build/%{name}-%{version}.jar %{buildroot}%{_javadir}/%{name}-%{version}.jar
-ln -s %{name}-%{version}.jar %{buildroot}%{_javadir}/%{name}.jar
-
-# pom
-install -d -m 755 %{buildroot}%{_datadir}/maven2/poms
-install -pm 644 build/maven/pom.xml %{buildroot}%{_datadir}/maven2/poms/JPP-%{name}.pom
-%add_to_maven_depmap org.apache.xmlgraphics xmlgraphics-commons %{version} JPP %{name}
-
-install -dm 755 %{buildroot}%{_javadocdir}/%{name}-%{version}
-cp -pr build/javadocs/* %{buildroot}%{_javadocdir}/%{name}-%{version}
-ln -s %{name}-%{version} %{buildroot}%{_javadocdir}/%{name}
+install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}
+cp -pr build/javadocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 
 %files
-%doc examples/ KEYS LICENSE NOTICE README status.xml
-%{_javadir}*/%{name}-%{version}.jar
-%{_javadir}*/%{name}.jar
-%{_datadir}/maven2/poms/JPP-%{name}.pom
+%doc LICENSE NOTICE README
 %{_mavendepmapfragdir}/%{name}
+%{_mavenpomdir}/JPP-%{name}.pom
+%{_javadir}/*.jar
 
 %files javadoc
-%{_javadocdir}/%{name}-%{version}
-%{_javadocdir}/%{name}
+%doc LICENSE NOTICE
+%doc %{_javadocdir}/%{name}
+
 
 %changelog
+* Sun Mar 17 2013 Igor Vlasenko <viy@altlinux.ru> 0:1.4-alt2_6jpp7
+- fc update
+
 * Fri Mar 16 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.4-alt2_4jpp6
 - fixed build with java 7
 
