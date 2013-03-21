@@ -1,6 +1,9 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
-# Copyright (c) 2000-2010, JPackage Project
+# Copyright (c) 2000-2007, JPackage Project
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -35,51 +38,48 @@ BuildRequires: jpackage-compat
 Summary:        XML Pull Parser
 Name:           xpp2
 Version:        2.1.10
-Release:        alt4_7jpp6
+Release:        alt4_11.3jpp7
 Epoch:          0
-License:        ASL-style
+License:        ASL 1.1
 URL:            http://www.extreme.indiana.edu/xgws/xsoap/xpp/
 Group:          Development/Java
 Source0:        http://www.extreme.indiana.edu/xgws/xsoap/xpp/download/PullParser2/PullParser2.1.10.tgz
-Source1:        http://mirrors.ibiblio.org/pub/mirrors/maven2/pull-parser/pull-parser/2.1.10/pull-parser-2.1.10.pom
 Patch0:         xpp2-build_xml.patch
-Requires(post): jpackage-utils
-Requires(postun): jpackage-utils
-Requires:       jpackage-utils
-Requires:       xml-commons-jaxp-1.3-apis
-BuildRequires:  ant
-BuildRequires:  ant-junit
-BuildRequires:  jpackage-utils
+BuildRequires:  ant >= 0:1.6
+BuildRequires:  ant-junit >= 0:1.6
+BuildRequires:  jpackage-utils >= 0:1.6
 BuildRequires:  junit
-BuildRequires:  xml-commons-jaxp-1.3-apis
+BuildRequires:  xml-commons-apis
+Requires:       xml-commons-apis
+Requires:       jpackage-utils
 BuildArch:      noarch
 Source44: import.info
 
 %description
 XML Pull Parser 2 (XPP2) is a simple and fast incremental XML parser.
-NOTE: XPP2 is no longer developed and is on maintenance mode. 
-All active developement concentrates on its successor XPP3/MXP1
+NOTE: XPP2 is no longer developed and is on maintenance mode.
+All active development concentrates on its successor XPP3/MXP1.
 
 %package javadoc
 Summary:        Javadoc for %{name}
 Group:          Development/Documentation
+Requires:       jpackage-utils
 BuildArch: noarch
 
 %description javadoc
 %{summary}.
 
-%package manual
+%package doc
 Summary:        Manual for %{name}
 Group:          Development/Documentation
-BuildArch: noarch
 
-%description manual
+%description doc
 %{summary}.
 
 %package demo
 Summary:        Samples for %{name}
 Group:          Development/Documentation
-Requires:       %{name} = %{epoch}:%{version}-%{release}
+Requires:       %{name} = %{epoch}:%{version}
 
 %description demo
 %{summary}.
@@ -87,17 +87,16 @@ Requires:       %{name} = %{epoch}:%{version}-%{release}
 %prep
 %setup -q -n %{originalname}%{version}
 # remove all binary libs
-%{_bindir}/find -type f -name "*.jar" | %{_bindir}/xargs -t %{__rm}
-%{__mv} LICENSE.txt LICENSE.txt.orig
-%{_bindir}/iconv -f iso8859-1 -t utf8 -o LICENSE.txt LICENSE.txt.orig
-%patch0 -p0 -b .sav0
+find . -name "*.jar" -exec rm -f {} \;
+
+%patch0 -b .sav
 
 %build
-export OPT_JAR_LIST=`%{__cat} %{_sysconfdir}/ant.d/junit`
-export CLASSPATH=$(build-classpath xml-commons-jaxp-1.3-apis)
-ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 all api api.impl
-export CLASSPATH=$CLASSPATH:$(build-classpath junit):`pwd`/build/tests:build/lib/PullParser-%{version}.jar
-%{java} AllTests
+export OPT_JAR_LIST="ant/ant-junit junit"
+export CLASSPATH=$(build-classpath xml-commons-apis)
+ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  all api api.impl
+CLASSPATH=$CLASSPATH:$(build-classpath junit):build/tests:build/lib/PullParser-2.1.10.jar
+java AllTests
 
 %install
 
@@ -114,11 +113,6 @@ cp -p build/lib/%{originalname}-x2-%{version}.jar \
   $RPM_BUILD_ROOT%{_javadir}/%{name}-x2-%{version}.jar
 (cd $RPM_BUILD_ROOT%{_javadir} && for jar in *-%{version}.jar; do ln -sf ${jar} `echo $jar| sed "s|-%{version}||g"`; done)
 
-# poms
-%{__mkdir_p} %{buildroot}%{_datadir}/maven2/poms
-%{__cp} -p %{SOURCE1} %{buildroot}%{_datadir}/maven2/poms/JPP-%{name}.pom
-%add_to_maven_depmap pull-parser pull-parser %{version} JPP %{name}
-
 # javadoc
 mkdir -p $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}/api
 mkdir -p $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}/api_impl
@@ -126,13 +120,12 @@ cp -pr doc/api/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}/api
 cp -pr doc/api_impl/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}/api_impl
 ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 
+
 rm -rf doc/{build.txt,api,api_impl}
 
-# manual
+# doc
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/doc/%{name}-%{version}
 cp -pr doc/* $RPM_BUILD_ROOT%{_datadir}/doc/%{name}-%{version}
-cp -p README.html $RPM_BUILD_ROOT%{_datadir}/doc/%{name}-%{version}
-cp -p LICENSE.txt $RPM_BUILD_ROOT%{_datadir}/doc/%{name}-%{version}
 ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_datadir}/doc/%{name}
 
 # demo
@@ -141,8 +134,8 @@ cp -pr src/java/samples/* $RPM_BUILD_ROOT%{_datadir}/%{name}-%{version}
 ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_datadir}/%{name}
 
 %files
-%{_datadir}/doc/%{name}-%{version}/README.html
-%{_datadir}/doc/%{name}-%{version}/LICENSE.txt
+%doc README.html
+%doc LICENSE.txt
 %{_javadir}/%{name}.jar
 %{_javadir}/%{name}-%{version}.jar
 %{_javadir}/%{name}-intf.jar
@@ -151,24 +144,23 @@ ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_datadir}/%{name}
 %{_javadir}/%{name}-standard-%{version}.jar
 %{_javadir}/%{name}-x2.jar
 %{_javadir}/%{name}-x2-%{version}.jar
-%{_datadir}/maven2/poms/JPP-%{name}.pom
-%{_mavendepmapfragdir}/%{name}
-# hack; explicitly added docdir if not owned
-%doc %dir %{_docdir}/%{name}-%{version}
 
 %files javadoc
-%{_javadocdir}/%{name}-%{version}
-%{_javadocdir}/%{name}
+%doc %{_javadocdir}/%{name}-%{version}
+%doc %{_javadocdir}/%{name}
 
-%files manual
-%{_datadir}/doc/%{name}-%{version}
-%{_datadir}/doc/%{name}
+%files doc
+%doc %{_datadir}/doc/%{name}-%{version}
+%doc %{_datadir}/doc/%{name}
 
 %files demo
 %{_datadir}/%{name}-%{version}
 %{_datadir}/%{name}
 
 %changelog
+* Sun Mar 17 2013 Igor Vlasenko <viy@altlinux.ru> 0:2.1.10-alt4_11.3jpp7
+- fc update
+
 * Mon Jan 16 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.1.10-alt4_7jpp6
 - new jpp relase
 
