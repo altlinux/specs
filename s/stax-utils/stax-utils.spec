@@ -1,148 +1,89 @@
+Epoch: 1
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
-# Copyright (c) 2000-2011, JPackage Project
-# All rights reserved.
-#
-# Redistribution and use in source and binary forms, with or without
-# modification, are permitted provided that the following conditions
-# are met:
-#
-# 1. Redistributions of source code must retain the above copyright
-#    notice, this list of conditions and the following disclaimer.
-# 2. Redistributions in binary form must reproduce the above copyright
-#    notice, this list of conditions and the following disclaimer in the
-#    documentation and/or other materials provided with the
-#    distribution.
-# 3. Neither the name of the JPackage Project nor the names of its
-#    contributors may be used to endorse or promote products derived
-#    from this software without specific prior written permission.
-#
-# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-# "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-# LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-# A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-# OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-# SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-# LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-# DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-# THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-# (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-# OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-#
-
-%define gcj_support 0
-
-%define tstamp  20070216
+%global svnrev 238
 
 Name:           stax-utils
-Version:        0.0
-Release:        alt1_0.20070216.3jpp6
-Epoch:          0
-Summary:        STAX Utilities
+Version:        0
+Release:        alt1_0.2.20110309svn238jpp7
+Summary:        StAX utility classes
 Group:          Development/Java
 License:        BSD
-URL:            https://stax-utils.dev.java.net/
-# cvs -d :pserver:guest@cvs.dev.java.net:/cvs login
-# cvs -d :pserver:guest@cvs.dev.java.net:/cvs export -D 20070216 stax-utils && tar cjf stax-utils-0.0-cvs20070216.tar.bz2 stax-utils/
-Source0:        %{name}-%{version}-cvs%{tstamp}.tar.bz2
-Patch0:         stax-utils-build_xml.patch
-Patch1:         stax-utils-XMLEventConsumerDelegate.patch
-Requires:  bea-stax-api
-Requires:  bea-stax
-BuildRequires:  ant >= 0:1.7
-BuildRequires:  ant-junit
-BuildRequires:  ant-trax
-BuildRequires:  bea-stax-api
-BuildRequires:  bea-stax
-BuildRequires:  jpackage-utils >= 0:1.7.5
-BuildRequires:  junit
-%if %{gcj_support}
-BuildRequires:  java-gcj-compat-devel
-%else
+URL:            http://java.net/projects/stax-utils/
+# svn export -r 238 https://svn.java.net/svn/stax-utils~svn/trunk/ stax-utils-svn238
+# rm -rf stax-utils-svn238/lib
+# tar caf stax-utils-svn238.tar.xz stax-utils-svn238
+Source0:        %{name}-svn%{svnrev}.tar.xz
+# This is the only pom I could find.  I'm updating the version after download.
+Source1:        http://repo1.maven.org/maven2/net/java/dev/stax-utils/stax-utils/20060502/stax-utils-20060502.pom
+
+# This patch fixes several things:
+# 1. Use Java 1.7 as the build source and target
+# 2. Remove dependency on jsr 173 code
+# 3. Do not attempt to pull docs from the web
+Patch0:         %{name}-build-fixes.patch
 BuildArch:      noarch
-%endif
+
+BuildRequires: ant ant-junit
+BuildRequires: jpackage-utils
+Requires:      jpackage-utils
 Source44: import.info
-Patch33: stax-utils-0.0-javadoc-exclude.patch
 
 %description
-The purpose of this project is to help facilitate the adoption 
-of JSR-173: Streaming API for XML (StAX) by providing a set of 
-utility classes that make it easy for developers to integrate 
-StAX into their existing XML processing applications.
+This is a set of utility classes that make it easy for developers to
+integrate StAX into their existing XML processing applications.
 
 %package javadoc
-Summary:        Javadoc for %{name}
-Group:          Development/Documentation
+Summary:      API documentation for %{name}
+Group:        Development/Java
+Requires:     jpackage-utils
 BuildArch: noarch
 
 %description javadoc
-%{summary}.
-
-%package manual
-Summary:        Documents for %{name}
-Group:          Development/Documentation
-BuildArch: noarch
-
-%description manual
-%{summary}.
+API documentation for %{name}.
 
 %prep
-%setup -q -n %{name}
-find . -type f -name "*.jar" | xargs -t rm
-%patch0 -p0
-%patch1 -p0
-
-pushd lib
-#jsr173_1.0_api.jar.no
-ln -s $(build-classpath bea-stax-api)
-#jsr173_1.0_ri.jar.no
-ln -s $(build-classpath bea-stax-ri)
-#junit.jar.no
-ln -s $(build-classpath junit)
-popd
-%patch33 -p1
+%setup -q -n stax-utils-svn%{svnrev}
+%patch0 -p1
 
 %build
-export CLASSPATH=
-export OPT_JAR_LIST="`cat %{_sysconfdir}/ant.d/{junit,trax}`"
-ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 all test
+ant jar
+ant javadoc
+
+%check
+ant test
 
 %install
+install -d -m 755 %{buildroot}%{_javadir}
+cp -p build/%{name}.jar %{buildroot}%{_javadir}/%{name}.jar
 
-install -d -m 755 $RPM_BUILD_ROOT%{_javadir}
-install -p -m 644 build/stax-utils.jar $RPM_BUILD_ROOT%{_javadir}/%{name}-%{version}.jar
-(cd $RPM_BUILD_ROOT%{_javadir} && for jar in *-%{version}.jar; do ln -sf ${jar} `echo $jar| sed "s|-%{version}||g"`; done)
+install -d -m 755 %{buildroot}%{_mavenpomdir}
+cp -p %{SOURCE1} %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
+# Reflect latest commit date in version
+sed -i -e 's/20060502/20110309/' %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
+%add_maven_depmap JPP-%{name}.pom %{name}.jar
 
-# javadocs
-install -dm 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
-cp -pr build/javadoc/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
-ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-
-# manual
-install -dm 755 $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}
-cp -pr docs/sax/ $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}
-
-%if %{gcj_support}
-%{_bindir}/aot-compile-rpm
-%endif
+install -d -m 755 %{buildroot}%{_javadocdir}
+cp -rp build/javadoc %{buildroot}%{_javadocdir}/%{name}
 
 %files
-%doc docs/COPYRIGHT.TXT
-%{_javadir}/%{name}-%{version}.jar
+%doc docs/COPYRIGHT.TXT LICENSE
 %{_javadir}/%{name}.jar
-%if %{gcj_support}
-%dir %{_libdir}/gcj/%{name}
-%{_libdir}/gcj/%{name}/%{name}-%{version}.jar.*
-%endif
+%{_mavenpomdir}/JPP-%{name}.pom
+%{_mavendepmapfragdir}/%{name}
 
 %files javadoc
-%{_javadocdir}/%{name}-%{version}
+%doc docs/COPYRIGHT.TXT LICENSE
 %{_javadocdir}/%{name}
 
-%files manual
-%doc %{_docdir}/%{name}-%{version}
 
 %changelog
+* Mon Mar 18 2013 Igor Vlasenko <viy@altlinux.ru> 1:0-alt1_0.2.20110309svn238jpp7
+- fc update
+
 * Mon Jan 16 2012 Igor Vlasenko <viy@altlinux.ru> 0:0.0-alt1_0.20070216.3jpp6
 - new jpp relase
 
