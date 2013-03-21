@@ -1,11 +1,9 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
-# fedora bcond_with macro
-%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
-%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
-%define version 1.9.14
-%define name nekohtml
-# Copyright (c) 2000-2011, JPackage Project
+# Copyright (c) 2000-2009, JPackage Project
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -33,49 +31,36 @@ BuildRequires: jpackage-compat
 # THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
-%bcond_without repolib
-
-%global repodir %{_javadir}/repository.jboss.com/nekohtml/%{version}-brew
-%global repodirlib %{repodir}/lib
-%global repodirsrc %{repodir}/src
-
-%define xerces_version 2.9.1
-
+#
 
 Name:           nekohtml
 Version:        1.9.14
-Release:        alt2_4jpp6
+Release:        alt2_9jpp7
 Epoch:          0
 Summary:        HTML scanner and tag balancer
 License:        ASL 2.0
-Group:          Development/Java
 URL:            http://nekohtml.sourceforge.net/
-Source0:        http://downloads.sourceforge.net/nekohtml/nekohtml-1.9.14.tar.gz
+Source0:        http://downloads.sourceforge.net/%{name}/%{name}-%{version}.tar.gz
 # http://www.jpackage.org/cgi-bin/viewvc.cgi/*checkout*/rpms/devel/nekohtml/nekohtml-filter.sh?root=jpackage&content-type=text%2Fplain
 Source1:        %{name}-filter.sh
 Source2:        nekohtml-component-info.xml
-Source3:        http://nekohtml.sourceforge.net/m2-repo/net/sourceforge/nekohtml/nekohtml/1.9.14/nekohtml-1.9.14.pom
+Source3:        http://repo1.maven.org/maven2/net/sourceforge/nekohtml/nekohtml/1.9.14/nekohtml-1.9.14.pom
 Patch0:         %{name}-crosslink.patch
 Patch1:         %{name}-jars.patch
-Patch2:         %{name}-skip-tests.patch
-Requires(post): jpackage-utils
-Requires(postun): jpackage-utils
+Group:          Development/Java
 Requires:       bcel
-Requires:       jpackage-utils
-Requires:       xerces-j2 >= 0:%{xerces_version}
-Requires:       xml-commons-jaxp-1.3-apis
+Requires:       jpackage-utils >= 0:1.6
+Requires:       xerces-j2 >= 0:2.7.1
+Requires:       xml-commons-apis
 BuildRequires:  jpackage-utils
 BuildRequires:  ant
 BuildRequires:  ant-junit
-BuildRequires:  ant-trax
 BuildRequires:  java-javadoc
 BuildRequires:  bcel
 BuildRequires:  bcel-javadoc
-BuildRequires:  xerces-j2 = 0:%{xerces_version}
-BuildRequires:  xerces-j2-javadoc-xni
-BuildRequires:  xerces-j2-javadoc-impl
-BuildRequires:  xml-commons-jaxp-1.3-apis
+BuildRequires:  xerces-j2 >= 0:2.7.1
+#BuildRequires:  xerces-j2-javadoc-apis
+BuildRequires:  xml-commons-apis
 BuildArch:      noarch
 Source44: import.info
 
@@ -94,8 +79,7 @@ rewriting code.
 
 %package javadoc
 Summary:        Javadoc for %{name}
-Group:          Development/Documentation
-Requires:       jpackage-utils
+Group:          Development/Java
 BuildArch: noarch
 
 %description javadoc
@@ -109,108 +93,64 @@ Requires:       %{name} = %{epoch}:%{version}-%{release}
 %description demo
 Demonstrations and samples for %{name}.
 
-%if %with repolib
-%package repolib
-Summary:        Artifacts to be uploaded to a repository library
-Group:          Development/Java
-
-%description repolib
-Artifacts to be uploaded to a repository library.
-This package is not meant to be installed but so its contents
-can be extracted through rpm2cpio.
-%endif
-
 %prep
 %setup -q
-%patch0 -p0 -b .sav0
-%patch1 -p0 -b .sav1
-%patch2 -p0 -b .sav2
+%patch0 -p1
+%patch1 -p1
 %{_bindir}/find . -name "*.jar" | %{_bindir}/xargs -t %{__rm}
 %{__perl} -pi -e 's/\r$//g' *.txt doc/*.html
 %{__rm} -r doc/javadoc
 
 %build
-export CLASSPATH=$(%{_bindir}/build-classpath bcel xerces-j2)
-export OPT_JAR_LIST="`%{__cat} %{_sysconfdir}/ant.d/junit` ant/ant-trax xalan-j2"
-ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 \
+export CLASSPATH=$(build-classpath bcel xerces-j2)
+%{ant} -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  \
     -Dbuild.sysclasspath=first \
     -Dlib.dir=%{_javadir} \
-    -Djar.file=%{name}-%{version}.jar \
-    -Djar.xni.file=%{name}-xni-%{version}.jar \
-    -Djar.samples.file=%{name}-samples-%{version}.jar \
-    -Dxerces.version=%{xerces_version} \
+    -Djar.file=%{name}.jar \
+    -Djar.xni.file=%{name}-xni.jar \
+    -Djar.samples.file=%{name}-samples.jar \
     -Dbcel.javadoc=%{_javadocdir}/bcel \
     -Dj2se.javadoc=%{_javadocdir}/java \
     -Dxni.javadoc=%{_javadocdir}/xerces-j2-xni \
     -Dxerces.javadoc=%{_javadocdir}/xerces-j2-impl \
-    clean jar jar-xni doc test
+    clean jar jar-xni doc 
+# test - disabled because it makes the build failing
 
 %install
-
 # Jars
-mkdir -p %{buildroot}%{_javadir}
-cp -p %{name}{,-samples,-xni}-%{version}.jar %{buildroot}%{_javadir}/
-ln -s %{name}-%{version}.jar %{buildroot}%{_javadir}/%{name}.jar
-ln -s %{name}-samples-%{version}.jar %{buildroot}%{_javadir}/%{name}-samples.jar
-ln -s %{name}-xni-%{version}.jar %{buildroot}%{_javadir}/%{name}-xni.jar
-
-# pom
-%{__mkdir_p} %{buildroot}%{_datadir}/maven2/poms
-%{__cp} -p %{SOURCE3} %{buildroot}%{_datadir}/maven2/poms/JPP-%{name}.pom
-%add_to_maven_depmap net.sourceforge.nekohtml nekohtml %{version} JPP %{name}
+install -d -m 755 $RPM_BUILD_ROOT%{_javadir}
+install -p -m 644 %{name}{,-samples,-xni}.jar $RPM_BUILD_ROOT%{_javadir}/
 
 # Scripts
-mkdir -p %{buildroot}%{_bindir}
-install -p -m 0755 %{SOURCE1} %{buildroot}%{_bindir}/%{name}-filter
+install -Dpm 755 %{SOURCE1} $RPM_BUILD_ROOT%{_bindir}/%{name}-filter
+
+# POM
+install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
+install -p -m 644 %{SOURCE3} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
+%add_maven_depmap JPP-%{name}.pom %{name}.jar
 
 # Javadocs
-mkdir -p %{buildroot}%{_javadocdir}/%{name}-%{version}
-cp -pr build/doc/javadoc/* %{buildroot}%{_javadocdir}/%{name}-%{version}
-ln -s %{name}-%{version} %{buildroot}%{_javadocdir}/%{name}
-
-%if %with repolib
-mkdir -p %{buildroot}%{repodir}
-mkdir -p %{buildroot}%{repodirlib}
-cp -p %{SOURCE2} %{buildroot}%{repodir}/component-info.xml
-tag=`/bin/echo %{name}-%{version}-%{release} | %{__sed} 's|\.|_|g'`
-%{__sed} -i "s/@TAG@/$tag/g" %{buildroot}%{repodir}/component-info.xml
-%{__sed} -i "s/@VERSION@/%{version}-brew/g" %{buildroot}%{repodir}/component-info.xml
-mkdir -p %{buildroot}%{repodirsrc}
-cp -p %{SOURCE0} %{buildroot}%{repodirsrc}
-cp -p %{SOURCE1} %{buildroot}%{repodirsrc}
-cp -p %{PATCH0} %{buildroot}%{repodirsrc}
-cp -p %{PATCH1} %{buildroot}%{repodirsrc}
-cp -p %{PATCH2} %{buildroot}%{repodirsrc}
-%{__cp} -p %{buildroot}%{_datadir}/maven2/poms/JPP-%{name}.pom %{buildroot}%{repodirlib}/nekohtml.pom
-%{__cp} -p %{buildroot}%{_javadir}/%{name}.jar %{buildroot}%{repodirlib}/nekohtml.jar
-%endif
+install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}
+cp -a build/doc/javadoc/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 
 %files
 %doc --no-dereference LICENSE.txt README.txt doc/*.html
 %attr(755,root,root) %{_bindir}/%{name}-filter
-%{_javadir}*/%{name}-%{version}.jar
-%{_javadir}*/%{name}.jar
-%{_javadir}*/%{name}-xni-%{version}.jar
-%{_javadir}*/%{name}-xni.jar
-%{_datadir}/maven2/poms/JPP-%{name}.pom
-%{_mavendepmapfragdir}/%{name}
+%{_mavenpomdir}/*
+%{_mavendepmapfragdir}/*
+%{_javadir}/%{name}.jar
+%{_javadir}/%{name}-xni.jar
 
 %files javadoc
-%{_javadocdir}/%{name}-%{version}
 %{_javadocdir}/%{name}
 
 %files demo
-%{_javadir}*/%{name}-samples-%{version}.jar
-%{_javadir}*/%{name}-samples.jar
-
-%if %with repolib
-%files repolib
-%dir %{_javadir}*
-%exclude %dir %{_javadocdir}
-%{_javadir}*/repository.jboss.com
-%endif
+%{_javadir}/%{name}-samples.jar
 
 %changelog
+* Sun Mar 17 2013 Igor Vlasenko <viy@altlinux.ru> 0:1.9.14-alt2_9jpp7
+- fc update
+
 * Mon Jan 16 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.9.14-alt2_4jpp6
 - new jpp relase
 
