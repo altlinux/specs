@@ -7,7 +7,7 @@
 
 Name: python-module-wx
 Version: %major.11.0
-Release: alt2.svn20100628.1
+Release: alt2.svn20100628.2
 
 # Enable/disable GLcanvas
 %def_enable glcanvas
@@ -222,14 +222,17 @@ rm -rf %python_sitelibdir/{wx,wxPython} || :
 %endif
 
 %changelog
+* Thu Mar 21 2013 Sergey Y. Afonin <asy@altlinux.ru> 2.8.11.0-alt2.svn20100628.2
+- Rebuilt with wxGTK 2.8.11.0-alt1.svn20100628.7 (ALT #28702)
+
 * Thu Apr 12 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 2.8.11.0-alt2.svn20100628.1
-- Rebuild to remove redundant libpython2.7 dependency
+- Rebuilt to remove redundant libpython2.7 dependency
 
 * Thu Dec 01 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.8.11.0-alt2.svn20100628
 - Enabled docs
 
 * Mon Oct 24 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 2.8.11.0-alt1.svn20100628.4.1
-- Rebuild with Python-2.7
+- Rebuilt with Python-2.7
 
 * Tue Apr 05 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.8.11.0-alt1.svn20100628.4
 - Rebuilt with python-module-sphinx-devel
