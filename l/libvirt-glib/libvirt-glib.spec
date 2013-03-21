@@ -1,7 +1,7 @@
 %def_without python
 
 Name: libvirt-glib
-Version: 0.1.5
+Version: 0.1.6
 Release: alt1
 Summary: libvirt glib integration for events
 Group: System/Libraries
@@ -216,6 +216,9 @@ libvirt and the glib event loop
 %endif
 
 %changelog
+* Thu Mar 21 2013 Alexey Shabalin <shaba@altlinux.ru> 0.1.6-alt1
+- 0.1.6
+
 * Mon Feb 25 2013 Alexey Shabalin <shaba@altlinux.ru> 0.1.5-alt1
 - 0.1.5
 
