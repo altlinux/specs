@@ -1,12 +1,9 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: unzip
+BuildRequires(pre): rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
-# fedora bcond_with macro
-%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
-%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
-# Copyright (c) 2000-2010, JPackage Project
+# Copyright (c) 2000-2005, JPackage Project
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -36,117 +33,83 @@ BuildRequires: jpackage-compat
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
-%define with()          %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
-%define without()       %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
-%define bcond_with()    %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
-%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
-
-#def_with tests
-%bcond_with tests
-
-%define cvsversion 20041111
+%global cvstag  release-20050331
 
 Name:           isorelax
-Version:        0.1
-Release:        alt4_0.20041111.7jpp6
-Epoch:          1
-Summary:        Public interfaces useful for applications to support RELAX Core
-License:        MIT-style
-Group:          Development/Java
+Summary:        Public interfaces for RELAX Core
 URL:            http://iso-relax.sourceforge.net/
-Source0:        %{name}.%{cvsversion}.zip
-Source1:        %{name}-build.xml
-Source2:        isorelax-maven-project.xml
-Source3:        isorelax-maven-project.xsd
-Source4:        isorelax.pom
-Patch0:         isorelax-jdk15.patch
-Obsoletes:      isorelax-bootstrap < %{epoch}:%{version}-%{release}
-Provides:       isorelax-bootstrap = %{epoch}:%{version}-%{release}
-Requires(post): jpackage-utils
-Requires(postun): jpackage-utils
-Requires:       jpackage-utils
-Requires:       xerces-j2
-Requires:       xml-commons-jaxp-1.3-apis
-BuildRequires:  ant
-BuildRequires:  jpackage-utils >= 0:1.6
-%if %with tests
-BuildRequires:  xercesjarv
-%endif
-BuildRequires:  xerces-j2
-BuildRequires:  xml-commons-jaxp-1.3-apis
+Epoch:          2
+Version:        0
+# I can't use %%{cvstag} as dashes aren't allowed in Release tags
+Release:        alt1_0.10.release20050331jpp7
+License:        MIT and ASL 1.1
+Group:          Development/Java
 BuildArch:      noarch
+
+# mkdir isorelax-release-20050331-src
+# cd isorelax-release-20050331-src
+# cvs -d:pserver:anonymous@iso-relax.cvs.sourceforge.net:/cvsroot/iso-relax \
+#   export -r release-20050331 src lib
+# cvs -d:pserver:anonymous@iso-relax.cvs.sourceforge.net:/cvsroot/iso-relax \
+#   co -r release-20050331 build.xml
+# rm -rf CVS
+# cd ..
+# tar cjf isorelax-release-20050331-src.tar.bz2 isorelax-release-20050331-src
+Source0:        %{name}-%{cvstag}-src.tar.bz2
+# There's no license in the upstream tarball so include it here
+Source1:        license.txt
+Patch0:         %{name}-apidocsandcompressedjar.patch
+
+BuildRequires:  jpackage-utils >= 0:1.6
+BuildRequires:  ant
+Requires:       jpackage-utils
 Source44: import.info
 
 %description
-The ISO RELAX project is started to host the public interfaces 
-useful for applications to support RELAX Core. But nowadays 
-some of the stuff we have is schema language neutral.
+The ISO RELAX project was started to host public interfaces 
+useful for applications to support RELAX Core. Now, however,
+some of the hosted material is schema language-neutral.
 
 %package javadoc
 Summary:        Javadoc for %{name}
-Group:          Development/Documentation
+Group:          Development/Java
+Requires:       jpackage-utils
 BuildArch: noarch
 
 %description javadoc
 Javadoc for %{name}.
 
 %prep
-%setup -q -c -n %{name}-%{version}
-mkdir src
-(cd src; unzip -q ../src.zip)
-%{__rm} src.zip
-cp -p %{SOURCE1} build.xml
-mkdir test
-cp -p %{SOURCE2} test
-cp -p %{SOURCE3} test
-chmod -R go=u-w *
-%{_bindir}/find -type f -name "*.jar" | xargs -t %{__rm}
-%{__rm} -r src/jp/gr/xml/relax/swift
-%patch0 -p0 -b .sav0
-%{__perl} -pi -e 's/\r$//g;' COPYING.txt
+%setup -q -n %{name}-%{cvstag}-src
+find . -name "*.jar" -exec rm -f {} \;
+ln -s %{_javadir}/ant.jar lib/
+%patch0 -p0
+cp %{SOURCE1} .
 
 %build
-export OPT_JAR_LIST=:
-export CLASSPATH=$(%{_bindir}/build-classpath xerces-j2 xml-commons-jaxp-1.3-apis)
-%if %with tests
-CLASSPATH=$CLASSPATH:$(build-classpath xercesjarv)
-ln -sf $(find-jar xercesjarv) xercesjarv.jar
-%endif
-ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Dbuild.sysclasspath=only release
-%if %with tests
-CLASSPATH=`pwd`/isorelax.jar:$CLASSPATH
-ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Dbuild.sysclasspath=first ant-task-test
-%endif
+ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  release
 
 %install
-
 # jars
-install -d -m 755 %{buildroot}%{_javadir}
-install -p -m 644 isorelax.jar %{buildroot}%{_javadir}/%{name}-%{version}.jar
-(cd %{buildroot}%{_javadir} && for jar in *-%{version}*; do ln -s ${jar} `echo $jar | sed "s|-%{version}||g"`; done)
-
-# poms
-install -d -m 755 %{buildroot}%{_datadir}/maven2/poms
-install -p -m 644 %{SOURCE4} %{buildroot}%{_datadir}/maven2/poms/JPP-%{name}.pom
-%add_to_maven_depmap isorelax isorelax %{cvsversion} JPP %{name}
+install -d -m 755 $RPM_BUILD_ROOT%{_javadir}
+install -m 644 %{name}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
 
 # javadoc
-install -d -m 755 %{buildroot}%{_javadocdir}/%{name}-%{version}
-cp -pr apidocs/* %{buildroot}%{_javadocdir}/%{name}-%{version}
-ln -s %{name}-%{version} %{buildroot}%{_javadocdir}/%{name}
+install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}
+cp -pr apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 
 %files
-%doc COPYING.txt
-%{_javadir}/%{name}-%{version}.jar
-%{_javadir}/%{name}.jar
-%{_datadir}/maven2/poms/JPP-%{name}.pom
-%{_mavendepmapfragdir}/%{name}
+%doc license.txt
+%{_javadir}/*
 
 %files javadoc
-%{_javadocdir}/%{name}-%{version}
-%{_javadocdir}/%{name}
+%doc license.txt
+%{_javadocdir}/*
 
 %changelog
+* Sun Mar 17 2013 Igor Vlasenko <viy@altlinux.ru> 2:0-alt1_0.10.release20050331jpp7
+- fc update
+
 * Mon Jan 16 2012 Igor Vlasenko <viy@altlinux.ru> 1:0.1-alt4_0.20041111.7jpp6
 - new jpp relase
 
