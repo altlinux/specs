@@ -1,20 +1,27 @@
-Packager: Igor Vlasenko <viy@altlinux.ru>
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: unzip
+# END SourceDeps(oneline)
 BuildRequires: /proc
-BuildRequires: jpackage-1.6-compat
+BuildRequires: jpackage-compat
 Name:		htmlparser
 Version:	1.6
-Release:	alt1_5.1jpp6
+Release:	alt1_10jpp7
 Summary:	HTML Parser, a Java library used to parse HTML
 Group:		Development/Java
 License:	LGPLv2+
 URL:		http://htmlparser.sourceforge.net/
 Source0:	http://downloads.sourceforge.net/htmlparser/htmlparser1_6_20060610.zip
+Patch1:         htmlparser-build.patch
 BuildArch:	noarch
 
-BuildRequires: jpackage-utils ant
+BuildRequires:	jpackage-utils ant
 
-Requires: jpackage-utils
+Requires:	jpackage-utils
 
+# will not build on ppc64: #664440
+ExcludeArch:	ppc64
+Source44: import.info
 
 %description
 HTML Parser is a Java library used to parse HTML in either a linear or
@@ -25,17 +32,19 @@ robust and well tested package.
 %package	javadoc
 Summary:	Javadocs for %{name}
 Group:		Development/Java
-Requires: %{name} = %{version}-%{release}
-Requires: jpackage-utils
+Requires:	%{name} = %{version}-%{release}
+Requires:	jpackage-utils
 BuildArch: noarch
 %description 	javadoc
 This package contains the API documentation for %{name}.
+
 
 %prep
 %setup -q -n htmlparser1_6
 
 find -name '*.jar' -o -name '*.class' -exec rm -f '{}' \;
 %{__unzip} -qq src.zip
+%patch1 -p1
 
 
 %build
@@ -69,6 +78,9 @@ cp -rp docs/javadoc/ $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/*
 
 %changelog
+* Sun Mar 17 2013 Igor Vlasenko <viy@altlinux.ru> 1.6-alt1_10jpp7
+- fc update
+
 * Wed Jan 27 2010 Igor Vlasenko <viy@altlinux.ru> 1.6-alt1_5.1jpp6
 - new version
 
