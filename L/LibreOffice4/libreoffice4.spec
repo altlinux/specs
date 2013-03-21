@@ -9,7 +9,7 @@ Version: 4.0
 %define lodir %_libdir/%name
 %define uname libreoffice4
 %define conffile %_sysconfdir/sysconfig/%uname
-Release: alt4
+Release: alt5
 Summary: LibreOffice Productivity Suite
 License: LGPL
 Group: Office
@@ -19,7 +19,7 @@ URL: http://www.libreoffice.org
 Requires: %name-standalone = %version-%release
 Requires: %name-common = %version-%release
 
-%define with_lang ru de fr uk pt-BR es
+%define with_lang ru de fr uk pt-BR es kk
 #Requires: java xdg-utils hunspell-en hyphen-en mythes-en
 #Requires: gst-plugins-base gst-plugins-good gst-plugins-ugly gst-plugins-bad gst-ffmpeg
 
@@ -44,14 +44,17 @@ Patch202: 0001-fix-compile-for-change-to-boost-1.53.0-declaring-sma.patch
 # optimized out: ant boost-devel boost-devel-headers boost-interprocess-devel boost-intrusive-devel bzlib-devel cppunit fontconfig fontconfig-devel fonts-ttf-java-1.6.0-sun glib2-devel gstreamer-devel icu-utils java java-devel jpackage-utils junit kde4libs libGL-devel libGLU-devel libICE-devel libSM-devel libX11-devel libXext-devel libXinerama-devel libXrandr-devel libXrender-devel libXt-devel libatk-devel libcairo-devel libcom_err-devel libcurl-devel libdbus-devel libdbus-glib libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgdk-pixbuf-xlib libgio-devel libgmp-devel libgpg-error libgst-plugins libkrb5-devel libncurses-devel libnspr-devel libpango-devel libpcre-devel libpng-devel libpoppler-devel libpq-devel libqt4-core libqt4-devel libqt4-gui libssl-devel libstdc++-devel libsystemd-daemon libtinfo-devel libunixODBC-devel libwayland-client libwayland-server libwpd9-devel libxml2-devel perl-Compress-Raw-Zlib pkg-config poppler-data python-base tzdata tzdata-java xerces-j2 xml-common xml-commons-jaxp-1.3-apis xml-utils xorg-kbproto-devel xorg-randrproto-devel xorg-renderproto-devel xorg-xextproto-devel xorg-xproto-devel xsltproc xz zlib-devel
 BuildRequires: ant-testutil cppunit-devel flex fonts-ttf-liberation gcc-c++ gperf gst-plugins-devel imake junit4 kde4libs-devel libGConf-devel libcups-devel libdb4-devel libdbus-glib-devel libexpat-devel libgtk+2-devel libhunspell-devel libicu-devel libjpeg-devel libldap-devel liblpsolve-devel libmpfr-devel libmysqlclient-devel libmythes-devel libncursesw-devel libneon-devel libnss-devel liborcus-devel libpoppler-cpp-devel libreadline-devel libvigra-devel libwpg2-devel libwps-devel libxslt-devel perl-Archive-Zip postgresql-devel unzip xorg-cf-files zenity zip
 
-BuildRequires: libbluez-devel libhyphen-devel libclucene-core-devel
+BuildRequires: libbluez-devel libhyphen-devel libclucene-core-devel libgtk+3-devel
 
 %set_verify_elf_method unresolved=relaxed
 %add_findreq_skiplist %lodir/share/config/webcast/*
 
 %description
 LibreOffice is a productivity suite that is compatible with other major
-office suites
+office suites.
+
+This package provides maximum possible installation of %name along winth
+other office packages.
 
 %package common
 Summary: Basic installation of %name
@@ -76,7 +79,8 @@ Group: Office
 Provides: %uname = %version-%release
 Conflicts: %name-integrated
 %description standalone
-Wrapper scripts, icons and desktop files for running %name as lo4*
+Wrapper scripts, icons and desktop files for running renamed version if %name
+as lo4write, lo4draw etc.
 
 %package integrated
 Summary: Binaries, icons and desktop files for %name
@@ -225,7 +229,6 @@ test -r %conffile && . %conffile ||:
         --with-system-orcus \
         --with-system-poppler \
         --with-system-postgresql \
-        --with-system-stdlibs \
 	--with-system-vigra \
         --with-system-zlib \
 	\
@@ -257,6 +260,7 @@ test -r %conffile && . %conffile ||:
   --with-system-mysql \
   --enable-ext-mysql-connector \
   \
+  --enable-gtk3 \
   --disable-fetch-external \
 
 
@@ -356,6 +360,7 @@ install -D libreoffice.config %buildroot%conffile
 
 %files common -f files.nolang
 %exclude /gid_Module*
+%_bindir/libreoffice%version
 %config %conffile
 %lodir/share/extensions/package.txt
 %lodir/share/extensions/presentation-minimizer
@@ -363,12 +368,14 @@ install -D libreoffice.config %buildroot%conffile
 
 %files standalone
 %_bindir/lo4*
+%exclude %_bindir/libreoffice%version
 %_desktopdir/libreoffice%{version}-*
 %_iconsdir/*/*/apps/libreoffice%{version}-*.*g
 
 %files integrated
 %_bindir/*
 %exclude %_bindir/lo4*
+%exclude %_bindir/libreoffice%version
 %_desktopdir/*
 %exclude %_desktopdir/libreoffice%{version}-*
 %_iconsdir/*/*/mimetypes/*
@@ -396,11 +403,16 @@ install -D libreoffice.config %buildroot%conffile
 %langpack -l uk -n Ukrainian
 %langpack -l pt-BR -n Brazilian Portuguese
 %langpack -l es -n Espanian
+%langpack -l kk -n Kazakh
 
 %changelog
+* Thu Mar 21 2013 Fr. Br. George <george@altlinux.ru> 4.0-alt5
+- Introduce Kazakh locale
+- Fix common binary displacement
+
 * Tue Mar 19 2013 Fr. Br. George <george@altlinux.ru> 4.0-alt4
 - Fix conflicts with LO3
-- Introduce "full" package (without langpacks and GNOMe/KDE stuff)
+- Introduce "full" package (without langpacks and GNOME/KDE stuff)
 
 * Wed Mar 06 2013 Fr. Br. George <george@altlinux.ru> 4.0-alt3
 - Update to 4.0.2.1
