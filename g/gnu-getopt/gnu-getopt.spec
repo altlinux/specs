@@ -1,3 +1,6 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 # Copyright (c) 2000-2009, JPackage Project
@@ -30,56 +33,33 @@ BuildRequires: jpackage-compat
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
-%define with()          %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
-%define without()       %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
-%define bcond_with()    %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
-%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
-
-%bcond_without repolib
-
-%define repodir %{_javadir}/repository.jboss.com/gnu-getopt/%{version}-brew
-%define repodirlib %{repodir}/lib
-%define repodirsrc %{repodir}/src
-
 
 Name:           gnu-getopt
 Version:        1.0.13
-Release:        alt1_4jpp6
+Release:        alt1_6.1jpp7
 Epoch:          0
 Summary:        Java getopt implementation
 License:        LGPLv2+
 URL:            http://www.urbanophile.com/arenn/hacking/download.html
 Source0:        http://www.urbanophile.com/arenn/hacking/getopt/java-getopt-%{version}.tar.gz
-Source1:        gnu-getopt-component-info.xml
 Source2:        gnu-getopt-%{version}.pom
 Group:          Development/Java
 Provides:       gnu.getopt = %{epoch}:%{version}-%{release}
 Obsoletes:      gnu.getopt < %{epoch}:%{version}-%{release}
 Requires(post): jpackage-utils
 Requires(postun): jpackage-utils
-BuildRequires: ant
-BuildRequires: jpackage-utils
+BuildRequires:  ant
+BuildRequires:  jpackage-utils
 BuildArch:      noarch
 Source44: import.info
 
 %description
 The GNU Java getopt classes support short and long argument parsing in
-a manner 100%% compatible with the version of GNU getopt in glibc 2.0.6
+a manner 100% compatible with the version of GNU getopt in glibc 2.0.6
 with a mostly compatible programmer's interface as well. Note that this
 is a port, not a new implementation. I am currently unaware of any bugs
 in this software, but there certainly could be some lying about. I would
 appreciate bug reports as well as hearing about positive experiences.
-
-%if %with repolib
-%package repolib
-Summary:         Artifacts to be uploaded to a repository library
-Group:           Development/Java
-
-%description repolib
-Artifacts to be uploaded to a repository library.
-This package is not meant to be installed but so its contents
-can be extracted through rpm2cpio.
-%endif
 
 %package javadoc
 Summary:        Javadoc for %{name}
@@ -98,7 +78,7 @@ BuildArch: noarch
 %build
 export CLASSPATH=
 export OPT_JAR_LIST=:
-ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  jar javadoc
+%{ant} -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  jar javadoc
 
 %install
 
@@ -120,18 +100,6 @@ ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  jar javadoc
 %add_to_maven_depmap urbanophile java-getopt %{version} JPP %{name}
 %{__install} -D -p -m 0644 %{SOURCE2} %{buildroot}%{_datadir}/maven2/poms/JPP-%{name}.pom
 
-%if %with repolib
-install -d -m 755 $RPM_BUILD_ROOT%{repodir}
-install -d -m 755 $RPM_BUILD_ROOT%{repodirlib}
-install -p -m 644 %{SOURCE1} $RPM_BUILD_ROOT%{repodir}/component-info.xml
-sed -i 's/@VERSION@/%{version}-brew/g' $RPM_BUILD_ROOT%{repodir}/component-info.xml
-tag=`echo %{name}-%{version}-%{release} | sed 's|\.|_|g'`
-sed -i "s/@TAG@/$tag/g" $RPM_BUILD_ROOT%{repodir}/component-info.xml
-install -d -m 755 $RPM_BUILD_ROOT%{repodirsrc}
-install -p -m 644 %{SOURCE0} $RPM_BUILD_ROOT%{repodirsrc}
-cp -p $RPM_BUILD_ROOT%{_javadir}/gnu-getopt.jar $RPM_BUILD_ROOT%{repodirlib}/getopt.jar
-%endif
-
 %files
 %doc gnu/getopt/COPYING.LIB gnu/getopt/README
 %{_javadir}/%{name}-%{version}.jar
@@ -147,12 +115,10 @@ cp -p $RPM_BUILD_ROOT%{_javadir}/gnu-getopt.jar $RPM_BUILD_ROOT%{repodirlib}/get
 %{_javadocdir}/gnu.getopt-%{version}
 %{_javadocdir}/gnu.getopt
 
-%if %with repolib
-%files repolib
-%{_javadir}/repository.jboss.com
-%endif
-
 %changelog
+* Sun Mar 17 2013 Igor Vlasenko <viy@altlinux.ru> 0:1.0.13-alt1_6.1jpp7
+- fc update
+
 * Sat Mar 12 2011 Igor Vlasenko <viy@altlinux.ru> 0:1.0.13-alt1_4jpp6
 - new jpp release
 
