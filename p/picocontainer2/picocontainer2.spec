@@ -51,7 +51,7 @@ BuildRequires: jpackage-compat
 
 Name:           picocontainer2
 Version:        2.4
-Release:        alt4_2jpp6
+Release:        alt5_2jpp6
 Epoch:          0
 Summary:        Dependency-injection container
 Group:          Development/Java
@@ -104,7 +104,7 @@ BuildRequires: apache-commons-parent
 BuildRequires: jakarta-commons-logging
 BuildRequires: jakarta-slide-webdavclient
 BuildRequires: jetty5
-BuildRequires: jmock2
+BuildRequires: jmock
 BuildRequires: jpackage-utils >= 0:1.7.5
 BuildRequires: junit >= 0:3.8.1
 BuildRequires: log4j
@@ -212,17 +212,17 @@ install -m 644 container/target/%{oname}-%{version}.jar \
 %add_to_maven_depmap org.picocontainer picocontainer-gems %{version} JPP %{name}-gems
 
 # poms
-install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/maven2/poms
+install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
 install -m 644 pom.xml \
-    $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-%{name}-parent.pom
+    $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}-parent.pom
 install -m 644 distribution/pom.xml \
-    $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-%{name}-distribution.pom
+    $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}-distribution.pom
 install -m 644 container/pom.xml \
-    $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-%{name}.pom
+    $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 install -m 644 tck/pom.xml \
-    $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-%{name}-tck.pom
+    $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}-tck.pom
 install -m 644 gems/pom.xml \
-    $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-%{name}-gems.pom
+    $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}-gems.pom
 
 #javadocs
 install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}/
@@ -247,7 +247,7 @@ ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadir}/%{name}-gems.jar
 %{_javadir}/%{name}-tck-%{version}.jar
 %{_javadir}/%{name}-tck.jar
-%{_datadir}/maven2/poms/*
+%{_mavenpomdir}/*
 %{_mavendepmapfragdir}/*
 %if %{gcj_support}
 %dir %{_libdir}/gcj/%{name}
@@ -259,6 +259,9 @@ ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/*
 
 %changelog
+* Fri Mar 22 2013 Igor Vlasenko <viy@altlinux.ru> 0:2.4-alt5_2jpp6
+- use jmock
+
 * Sun Jun 10 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.4-alt4_2jpp6
 - build with maven-plugin-cobertura
 
