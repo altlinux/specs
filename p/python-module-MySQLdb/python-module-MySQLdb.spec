@@ -1,16 +1,18 @@
 # -*- coding: utf-8 -*-
 
 Version: 1.2.3
-Release: alt3.2
+Release: alt4
 Epoch: 1
 %setup_python_module MySQLdb
 Name: %packagename
 
 Summary: Python interface to MySQL-3.23+
 Summary(ru_RU.UTF-8): Интерфейс к MySQL-3.23+ для Python
+
 License: GPLv2
 Group: Development/Python
 Url: http://sourceforge.net/projects/mysql-python
+
 Packager: Python Development Team <python@packages.altlinux.org>
 
 Source: MySQL-python.tar
@@ -23,32 +25,20 @@ Obsoletes: %name <= %epoch:%version-%release
 
 %description
 MySQLdb is an interface to the popular MySQL database server for
-Python.  The design goals are:
+Python. The design goals are:
 
 - Compliance with Python database API version 2.0
-
 - Thread-safety
-
 - Thread-friendliness (threads will not block each other)
 
-MySQL-3.23 through 5.0 and Python-2.3 through 2.5 are currently
-supported.
-
-MySQLdb is Free Software.
 
 %description -l ru_RU.UTF-8
 MySQLdb - это интерфейс к популярной СУБД MySQL для Python.
 При его создании преследовались следующие цели:
 
--    Соответствие API баз данных для Python версии 2.0
-
--    Совместимость с многопоточными средами
-
--    "Дружелюбие к потокам" (потоки не блокируют друг друга)
-
--    Совместимость с MySQL-3.23 и более поздними (вплоть до ветки 5.0)
-
-MySQLdb - это свободное ПО.
+- Соответствие API баз данных для Python версии 2.0
+- Совместимость с многопоточными средами
+- "Дружелюбие к потокам" (потоки не блокируют друг друга)
 
 %prep
 %setup -n MySQL-python
@@ -58,13 +48,19 @@ MySQLdb - это свободное ПО.
 %python_build_debug
 
 %install
-%python_install --optimize=2 --record=INSTALLED_FILES
+%python_install
 
-%files -f INSTALLED_FILES
+%files
 %doc README HISTORY doc/*
 %python_sitelibdir/%modulename
+%python_sitelibdir/*egg-info*
+%python_sitelibdir/_mysql*
 
 %changelog
+* Fri Mar 22 2013 Vitaly Lipatov <lav@altlinux.ru> 1:1.2.3-alt4
+- cleanup spec
+- rebuild with libmysqlclient18
+
 * Thu May 03 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:1.2.3-alt3.2
 - Restored old package
 
