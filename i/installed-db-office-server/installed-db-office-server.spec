@@ -1,6 +1,6 @@
 Name: installed-db-office-server
 Version: 1.4
-Release: alt3
+Release: alt4
 Summary: Databases and config files for moodle, mediawiki and rujel (common)
 License: GPL
 Group: System/Configuration/Other
@@ -61,7 +61,7 @@ install -Dp -m755 %name/mediawiki %buildroot/etc/hooks/hostname.d/95-mediawiki-l
 install -Dp -m755 %name/owncloud %buildroot/etc/hooks/hostname.d/96-owncloud-ldap
 install -Dp -m755 %name/rujel %buildroot/etc/hooks/hostname.d/97-rujel-ldap
 
-cp -r %name/data %buildroot/usr/share/%name
+cp -r %name/data/* %buildroot/usr/share/%name/
 install -Dp -m755 %name/mysql-office-server %buildroot/usr/share/%name/
 mkdir -p %buildroot/var/www/webapps/mediawiki
 # ln -s /usr/share/doc/alt-docs/indexhtml/img/project-logo.png %buildroot/var/www/webapps/mediawiki/project-logo.png
@@ -87,6 +87,10 @@ mkdir -p %buildroot/var/www/webapps/mediawiki
 
 
 %changelog
+* Fri Mar 22 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1.4-alt4
+- premature exit fixed
+- data files placement fixed
+
 * Fri Mar 01 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1.4-alt3
 - lost script re-added into package
 
