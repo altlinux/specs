@@ -52,7 +52,7 @@ BuildRequires: jpackage-compat
 
 Name:           velocity-jboss
 Version:        1.4
-Release:        alt2_5jpp6
+Release:        alt3_5jpp6
 Epoch:          0
 Summary:        JBoss-patched version of velocity
 License:        ASL 2.0
@@ -69,7 +69,7 @@ Patch3:         velocity-1.4-java5-enumeration.patch
 Patch4:         velocity-1.4-shebang.patch
 Requires(post): jpackage-utils
 Requires(postun): jpackage-utils
-Requires: jakarta-commons-collections
+Requires: apache-commons-collections
 # Use servletapi5 instead of servletapi3
 Requires: bcel
 Requires: excalibur-avalon-logkit
@@ -82,7 +82,7 @@ BuildRequires: ant
 BuildRequires: antlr
 BuildRequires: bcel
 BuildRequires: excalibur-avalon-logkit
-BuildRequires: jakarta-commons-collections
+BuildRequires: apache-commons-collections
 BuildRequires: jdom >= 0:1.0-1
 BuildRequires: jpackage-utils >= 0:1.6
 BuildRequires: junit
@@ -184,7 +184,7 @@ Demonstrations and samples for %{name}.
 
 %build
 # Use servletapi5 instead of servletapi3 in CLASSPATH
-export CLASSPATH=$(%{_bindir}/build-classpath antlr jakarta-commons-collections servlet_2_4_api excalibur/avalon-logkit junit oro log4j jdom bcel werken-xpath)
+export CLASSPATH=$(%{_bindir}/build-classpath antlr commons-collections servlet_2_4_api excalibur/avalon-logkit junit oro log4j jdom bcel werken-xpath)
 export OPT_JAR_LIST=:
 ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -buildfile build/build.xml -Djunit.jar=$(%{_bindir}/build-classpath junit) -Dbuild.sysclasspath=first jar javadocs
 # Note: test are not run due to the JBoss changes causing the tests to fail 
@@ -199,8 +199,8 @@ ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -buildfile build/b
 (cd %{buildroot}%{_javadir} && for jar in *-%{version}*; do %{__ln_s} ${jar} `/bin/echo ${jar} | %{__sed} "s|-%{version}||g"`; done)
 
 # poms
-%{__mkdir_p} %{buildroot}%{_datadir}/maven2/poms
-%{__cp} -p %{SOURCE3} %{buildroot}%{_datadir}/maven2/poms/JPP-%{name}.pom
+%{__mkdir_p} %{buildroot}%{_mavenpomdir}
+%{__cp} -p %{SOURCE3} %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
 %add_to_maven_depmap apache-velocity velocity 1.4jboss JPP %{name}
 
 # javadoc
@@ -237,14 +237,14 @@ tag=`/bin/echo %{name}-%{version}-%{release} | %{__sed} 's|\.|_|g'`
 %{__cp} -p %{SOURCE1} %{buildroot}%{repodirsrc}
 %{__cp} -p %{SOURCE2} %{buildroot}%{repodirsrc}/README.txt
 %{__cp} -p %{buildroot}%{_javadir}/%{name}.jar %{buildroot}%{repodirlib}/velocity.jar
-%{__cp} -p %{buildroot}%{_datadir}/maven2/poms/JPP-%{name}.pom %{buildroot}%{repodirlib}/velocity.pom
+%{__cp} -p %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom %{buildroot}%{repodirlib}/velocity.pom
 %endif
 
 %files
 %doc LICENSE NOTICE README.txt
 %{_javadir}/%{name}-%{version}.jar
 %{_javadir}/%{name}.jar
-%{_datadir}/maven2/poms/JPP-%{name}.pom
+%{_mavenpomdir}/JPP-%{name}.pom
 %{_mavendepmapfragdir}/%{name}
 %if %{gcj_support}
 %dir %{_libdir}/gcj/%{name}
@@ -279,6 +279,9 @@ tag=`/bin/echo %{name}-%{version}-%{release} | %{__sed} 's|\.|_|g'`
 %endif
 
 %changelog
+* Fri Mar 22 2013 Igor Vlasenko <viy@altlinux.ru> 0:1.4-alt3_5jpp6
+- fixed build w/new commons
+
 * Sat Oct 23 2010 Igor Vlasenko <viy@altlinux.ru> 0:1.4-alt2_5jpp6
 - added pom
 
