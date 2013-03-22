@@ -34,7 +34,7 @@ BuildRequires: jpackage-compat
 
 Name:           proxytoys
 Version:        0.2.1
-Release:        alt1_2jpp5
+Release:        alt2_2jpp5
 Epoch:          0
 Summary:        ProxyToys
 Group:          Development/Java
@@ -48,7 +48,7 @@ BuildRequires: jpackage-utils >= 0:1.6
 BuildRequires: ant >= 0:1.6
 BuildRequires: ant-junit >= 0:1.6
 BuildRequires: junit
-BuildRequires: jmock
+BuildRequires: jmock1
 BuildRequires: cglib >= 0:2.1.3
 BuildRequires: xstream >= 0:1.1.2
 BuildRequires: xpp3
@@ -72,7 +72,7 @@ Group:          Development/Documentation
 pushd lib
 ln -s $(build-classpath cglib-nodep) .
 #BUILD/xstream-1.1.3/lib/jmock-2004-03-19.jar.no
-ln -s $(build-classpath jmock) .
+ln -s $(build-classpath jmock1) .
 #BUILD/xstream-1.1.3/lib/junit-3.8.1.jar.no
 ln -s $(build-classpath junit) .
 #BUILD/xstream-1.1.3/lib/xpp3-1.1.3.4d_b4_min.jar.no
@@ -106,6 +106,9 @@ ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Fri Mar 22 2013 Igor Vlasenko <viy@altlinux.ru> 0:0.2.1-alt2_2jpp5
+- use jmock1
+
 * Mon Mar 30 2009 Igor Vlasenko <viy@altlinux.ru> 0:0.2.1-alt1_2jpp5
 - new jpp release
 
