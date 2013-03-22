@@ -38,7 +38,7 @@ BuildRequires: jpackage-compat
 
 Name:           velocity14
 Version:        1.4
-Release:	alt3_8jpp5
+Release:	alt4_8jpp5
 Epoch:          0
 Summary:        Java-based template engine
 License:        Apache Software License
@@ -56,7 +56,7 @@ BuildRequires: antlr
 BuildRequires: junit
 BuildRequires: bcel
 BuildRequires: excalibur-avalon-logkit
-BuildRequires: jakarta-commons-collections
+BuildRequires: apache-commons-collections
 BuildRequires: jakarta-oro
 BuildRequires: jdom >= 0:1.0-1
 BuildRequires: log4j >= 0:1.1
@@ -66,7 +66,7 @@ BuildRequires: werken-xpath
 
 Requires: bcel
 Requires: excalibur-avalon-logkit
-Requires: jakarta-commons-collections
+Requires: apache-commons-collections
 Requires: jakarta-oro
 Requires: jdom >= 0:1.0-1
 Requires: log4j >= 0:1.1
@@ -162,7 +162,7 @@ done
 # Use servletapi5 instead of servletapi3 in CLASSPATH
 export CLASSPATH=$(build-classpath \
 antlr \
-jakarta-commons-collections \
+commons-collections \
 servletapi5 \
 excalibur/avalon-logkit \
 junit \
@@ -187,9 +187,9 @@ install -p -m 644 bin/%{oname}-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}
 %add_to_maven_depmap velocity velocity %{version} JPP %{name}
 
 # pom
-install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/maven2/poms
+install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
 install -pm 644 %{SOURCE1} \
-    $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-%{name}.pom
+    $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 
 # javadoc
 install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
@@ -217,8 +217,8 @@ fi
 %files
 %doc LICENSE NOTICE README.txt
 %{_javadir}/*.jar
-%{_datadir}/maven2/poms/*
-%{_mavendepmapfragdir}
+%{_mavenpomdir}/*
+%{_mavendepmapfragdir}/*
 %if %{gcj_support}
 %{_libdir}/gcj/%{name}/velocity-1.4.jar.*
 %{_libdir}/gcj/%{name}/classloader.*
@@ -246,6 +246,9 @@ fi
 #%endif
 
 %changelog
+* Fri Mar 22 2013 Igor Vlasenko <viy@altlinux.ru> 0:1.4-alt4_8jpp5
+- fixed build w/new commons
+
 * Sat Feb 26 2011 Igor Vlasenko <viy@altlinux.ru> 0:1.4-alt3_8jpp5
 - added velocity:velocity depmap
 
