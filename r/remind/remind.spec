@@ -2,8 +2,8 @@
 # see patch for a list
 
 Name: remind
-Version: 03.01.12
-Release: alt2
+Version: 03.01.13
+Release: alt1
 
 Summary: Remind is a full-featured calendar/alarm program
 License: GPL
@@ -98,6 +98,9 @@ install -pDm644 %SOURCE1 %buildroot%_desktopdir/%name.desktop
 # - cronjob subpackage?
 
 %changelog
+* Fri Mar 22 2013 Michael Shigorin <mike@altlinux.org> 03.01.13-alt1
+- new version (watch file uupdate)
+
 * Wed May 09 2012 Michael Shigorin <mike@altlinux.org> 03.01.12-alt2
 - added watch file
 
