@@ -6,7 +6,7 @@
 
 
 Name: branding-%brand-%theme
-Version: 20130312
+Version: 20130322
 Release: alt1
 BuildArch: noarch
 
@@ -440,6 +440,9 @@ cat /etc/sysconfig/xinitrc.xfce >> /etc/sysconfig/xinitrc
 
 
 %changelog
+* Fri Mar 22 2013 Michael Shigorin <mike@altlinux.org> 20130322-alt1
+- rebuilt upon d-b-s with Kazakh translation
+
 * Tue Mar 12 2013 Michael Shigorin <mike@altlinux.org> 20130312-alt1
 - tweaked wallpaper to avoid kde4/gnome3/mate/wmaker collisions
 
