@@ -38,7 +38,7 @@ Name:           groovy11
 Summary:        Groovy scripting language
 Url:            http://groovy.codehaus.org/
 Version:        1.1
-Release:        alt5_0.rc3.1jpp5
+Release:        alt6_0.rc3.1jpp5
 Epoch:          0
 License:        Apache Software License 2.0
 Group:          Development/Java
@@ -78,7 +78,7 @@ BuildRequires: jakarta-commons-logging
 BuildRequires: jakarta-oro
 BuildRequires: jarjar
 BuildRequires: jline
-BuildRequires: jmock
+BuildRequires: jmock1
 BuildRequires: jsp_2_0_api
 BuildRequires: lucene
 BuildRequires: mockobjects
@@ -157,7 +157,7 @@ ln -sf $(build-classpath xmlunit)
 ln -sf $(build-classpath xpp3)
 ln -sf $(build-classpath ant/ant-junit)
 ln -sf $(build-classpath bsf)
-ln -sf $(build-classpath jmock)
+ln -sf $(build-classpath jmock1)
 ln -sf $(build-classpath jsp_2_0_api)
 ln -sf $(build-classpath cglib-nodep)
 ln -sf $(build-classpath asm2/asm2-tree)
@@ -166,7 +166,7 @@ ln -sf $(build-classpath asm2/asm2)
 ln -sf $(build-classpath hsqldb)
 ln -sf $(build-classpath mockobjects-core)
 ln -sf $(build-classpath servlet_2_4_api)
-ln -sf $(build-classpath jmock-cglib)
+ln -sf $(build-classpath jmock1-cglib)
 ln -sf $(build-classpath antlr)
 ln -sf $(build-classpath junit)
 ln -sf $(build-classpath asm2/asm2-util)
@@ -262,12 +262,12 @@ install -m 644 target/dist/%{bname}-all-minimal-%{namedversion}.jar \
 (cd $RPM_BUILD_ROOT%{_javadir} && for jar in *-%{version}*; do ln -sf ${jar} `echo $jar| sed  "s|-%{version}||g"`; done)
 
 # poms and depmap frags
-install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/maven2/poms
-install -m 644 pom.xml $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-%{name}.pom
+install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
+install -m 644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 %add_to_maven_depmap org.codehaus.groovy groovy %{namedversion} JPP %{name}
-install -m 644 %{SOURCE1} $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-%{name}-all.pom
+install -m 644 %{SOURCE1} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}-all.pom
 %add_to_maven_depmap org.codehaus.groovy groovy-all %{namedversion} JPP %{name}-all
-install -m 644 %{SOURCE2} $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-%{name}-all-minimal.pom
+install -m 644 %{SOURCE2} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}-all-minimal.pom
 %add_to_maven_depmap org.codehaus.groovy groovy-all-minimal %{namedversion} JPP %{name}-all-minimal
 
 # javadoc
@@ -350,7 +350,7 @@ fi
 %{_javadir}/*
 %attr(755, root, root) %{_bindir}/*
 %{_datadir}/%{name}-%{version}
-%{_datadir}/maven2
+%{_mavenpomdir}/*
 %{_mavendepmapfragdir}
 
 %files javadoc
@@ -358,6 +358,9 @@ fi
 %ghost %doc %{_javadocdir}/%{name}
 
 %changelog
+* Fri Mar 22 2013 Igor Vlasenko <viy@altlinux.ru> 0:1.1-alt6_0.rc3.1jpp5
+- use jmock1
+
 * Fri Mar 23 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.1-alt5_0.rc3.1jpp5
 - fixed broken dep on /usr/bin/startGroovy
 
