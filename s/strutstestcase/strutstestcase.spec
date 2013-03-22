@@ -36,7 +36,7 @@ BuildRequires: jpackage-compat
 
 Name:           strutstestcase
 Version:        2.1.4
-Release:        alt2_1jpp5
+Release:        alt3_1jpp5
 Epoch:          0
 Summary:        StrutsTestCase for JUnit
 
@@ -62,11 +62,11 @@ BuildRequires: ant-junit
 BuildRequires: ant-trax
 BuildRequires: junit
 BuildRequires: jakarta-cactus
-BuildRequires: jakarta-commons-beanutils
-BuildRequires: jakarta-commons-chain
-BuildRequires: jakarta-commons-collections
-BuildRequires: jakarta-commons-digester
-BuildRequires: jakarta-commons-logging
+BuildRequires: apache-commons-beanutils
+BuildRequires: apache-commons-chain
+BuildRequires: apache-commons-collections
+BuildRequires: apache-commons-digester
+BuildRequires: apache-commons-logging
 BuildRequires: jsp_2_0_api
 BuildRequires: servlet_2_4_api
 BuildRequires: struts
@@ -74,9 +74,9 @@ BuildRequires: struts-taglib
 BuildRequires: struts-tiles
 BuildRequires: struts-extras
 Requires: jakarta-cactus
-Requires: jakarta-commons-collections
-Requires: jakarta-commons-digester
-Requires: jakarta-commons-logging
+Requires: apache-commons-collections
+Requires: apache-commons-digester
+Requires: apache-commons-logging
 Requires: junit
 Requires: jsp_2_0_api
 Requires: servlet_2_4_api
@@ -135,9 +135,9 @@ install -pm 644 dist/strutstest/strutstest-%{version}.jar \
 %add_to_maven_depmap %{name} %{name} %{version}-1.2-2.4 JPP %{name}
 
 # poms
-install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/maven2/poms
+install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
 install -m 644 %{SOURCE1} \
-    $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-%{name}.pom
+    $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 
 # javadoc
 install -dm 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
@@ -151,7 +151,7 @@ ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name} # ghost symlink
 %files
 %{_javadir}/*.jar
 %{_mavendepmapfragdir}/*
-%{_datadir}/maven2/poms/*
+%{_mavenpomdir}/*
 %if %{gcj_support}
 %dir %attr(-,root,root) %{_libdir}/gcj/%{name}
 %{_libdir}/gcj/%{name}/%{name}-*-%{version}.jar.*
@@ -162,6 +162,9 @@ ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name} # ghost symlink
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Fri Mar 22 2013 Igor Vlasenko <viy@altlinux.ru> 0:2.1.4-alt3_1jpp5
+- fixed build with apache-commons-*
+
 * Sun Sep 16 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.1.4-alt2_1jpp5
 - build with new struts
 
