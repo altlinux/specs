@@ -1,8 +1,11 @@
 %define modulename dns
 
+# Testing requires network access
+%def_without check
+
 Name: python-module-%modulename
-Version: 1.9.2
-Release: alt1.1
+Version: 1.10.0
+Release: alt2
 
 Summary: DNS toolkit
 License: BSD-like
@@ -12,9 +15,16 @@ Packager: Python Development Team <python at packages.altlinux.org>
 
 BuildArch: noarch
 
-Source: http://www.dnspython.org/kits/%version/dnspython-%version.tar
+# http://www.dnspython.org/kits/%version/dnspython-%version.tar
+# git://github.com/rthalley/dnspython.git
+Source: %name-%version.tar
+
+Provides: python-module-dnspython = %EVR
+Obsoletes: python-module-dnspython <= 1.10.0-alt1
 
 %setup_python_module %modulename
+
+BuildPreReq: python-module-epydoc
 
 %description
 dnspython is a DNS toolkit for Python. It supports almost all
@@ -27,20 +37,32 @@ class, and return an answer set.  The low level classes allow
 direct manipulation of DNS zones, messages, names, and records.
 
 %prep
-%setup -n dnspython-%version
+%setup
 rm -f examples/._*
 
 %build
 %python_build
+%make_build doc
 
 %install
 %python_install
 
+%if_with check
+%check
+pushd tests
+%make PYTHONPATH="../:$PYTHONPATH" check
+popd
+%endif
+
 %files
-%doc examples ChangeLog LICENSE README TODO
+%doc examples/ html/ ChangeLog LICENSE
 %python_sitelibdir/*
 
 %changelog
+* Fri Mar 22 2013 Aleksey Avdeev <solo@altlinux.ru> 1.10.0-alt2
+- Version 1.10.0
+- Obsoletes python-module-dnspython (ALT #28727)
+
 * Sun Oct 23 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 1.9.2-alt1.1
 - Rebuild with Python-2.7
 
