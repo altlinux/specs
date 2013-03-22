@@ -1,6 +1,6 @@
 Name: libnss-mysql
 Version: 1.6
-Release: alt4
+Release: alt5
 
 Summary: NSS API library
 Summary(ru_RU.UTF-8): Библиотека NSS API
@@ -47,6 +47,9 @@ touch %buildroot/etc/buildreqs/packages/ignore.d/%name
 %doc sample/README sample/linux/
 
 %changelog
+* Fri Mar 22 2013 Vitaly Lipatov <lav@altlinux.ru> 1.6-alt5
+- rebuild with libmysqlclient18
+
 * Mon Mar 28 2011 Vitaly Lipatov <lav@altlinux.ru> 1.6-alt4
 - add buildreqs ignore files (ALT bug #21886)
 
