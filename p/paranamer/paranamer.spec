@@ -46,7 +46,7 @@ BuildRequires: jpackage-compat
 Summary:        Method parameter name access
 Name:           paranamer
 Version:        1.5
-Release:        alt3_1jpp6
+Release:        alt4_1jpp6
 Epoch:          0
 License:        Apache-style Software License
 URL:            http://paranamer.codehaus.org/
@@ -85,7 +85,7 @@ BuildRequires: maven-surefire-report-maven-plugin
 BuildRequires: maven-release
 BuildRequires: mojo-maven2-plugin-cobertura
 BuildRequires: apache-commons-parent
-BuildRequires: jmock >= 0:1.0
+BuildRequires: jmock1 >= 0:1.0
 #BuildRequires: xsite
 %endif
 
@@ -189,24 +189,24 @@ install -m 644 %{name}/target/%{name}-%{version}.jar \
 
 
 # poms
-install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/maven2/poms
+install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
 install -m 644 pom.xml \
-    $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP.%{name}-parent.pom
+    $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{name}-parent.pom
 %add_to_maven_depmap  com.thoughtworks.paranamer paranamer-parent %{version} JPP/%{name} parent
 install -m 644 %{name}-ant/pom.xml \
-    $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP.%{name}-ant.pom
+    $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{name}-ant.pom
 %add_to_maven_depmap  com.thoughtworks.paranamer paranamer-ant %{version} JPP/%{name} ant
 install -m 644 %{name}-generator/pom.xml \
-    $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP.%{name}-generator.pom
+    $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{name}-generator.pom
 %add_to_maven_depmap  com.thoughtworks.paranamer paranamer-generator %{version} JPP/%{name} generator
 install -m 644 %{name}-maven-plugin/pom.xml \
-    $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP.%{name}-maven-plugin.pom
+    $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{name}-maven-plugin.pom
 %add_to_maven_depmap  com.thoughtworks.paranamer paranamer-maven-plugin %{version} JPP/%{name} maven-plugin
 install -m 644 %{name}-more-integration-tests/pom.xml \
-    $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP.%{name}-more-integration-tests.pom
+    $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{name}-more-integration-tests.pom
 %add_to_maven_depmap  com.thoughtworks.paranamer paranamer-more-integration-tests %{version} JPP/%{name} more-integration-tests
 install -m 644 %{name}/pom.xml \
-    $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP.%{name}-core.pom
+    $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{name}-core.pom
 %add_to_maven_depmap  com.thoughtworks.paranamer paranamer %{version} JPP/%{name} core
 
 
@@ -232,7 +232,7 @@ export CLASSPATH=$(build-classpath gnu-crypto)
 %doc %{_docdir}/%{name}-%{version}/LICENSE.txt
 %dir %{_javadir}/%{name}
 %{_javadir}/%{name}/*.jar
-%{_datadir}/maven2/poms/*
+%{_mavenpomdir}/*
 %{_mavendepmapfragdir}/*
 %if %{gcj_support}
 %dir %attr(-,root,root) %{_libdir}/gcj/%{name}
@@ -250,6 +250,9 @@ export CLASSPATH=$(build-classpath gnu-crypto)
 %endif
 
 %changelog
+* Fri Mar 22 2013 Igor Vlasenko <viy@altlinux.ru> 0:1.5-alt4_1jpp6
+- use jmock1 (TODO: try jmock2)
+
 * Mon Mar 19 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.5-alt3_1jpp6
 - fixed build
 
