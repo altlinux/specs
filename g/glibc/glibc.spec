@@ -1,6 +1,6 @@
 Name: glibc
 Version: 2.16
-Release: alt5
+Release: alt6
 Epoch: 6
 
 Summary: The GNU libc libraries
@@ -645,6 +645,11 @@ fi
 %_datadir/i18n
 
 %changelog
+* Fri Mar 22 2013 Dmitry V. Levin <ldv@altlinux.org> 6:2.16-alt6
+- ls.so:
+  + enhanced locale-related environment sanitation;
+  + fixed locale-related environment sanitation on x86-64.
+
 * Wed Jan 30 2013 Dmitry V. Levin <ldv@altlinux.org> 6:2.16-alt5
 - Updated to 2.16 branch with backports from master.
 
