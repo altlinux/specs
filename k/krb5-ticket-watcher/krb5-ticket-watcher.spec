@@ -1,7 +1,7 @@
 BuildRequires: desktop-file-utils
 Name: krb5-ticket-watcher
 Version: 1.0.3
-Release: alt2
+Release: alt3
 Summary: A Tray Applet for Watching, Renewing, and Reinitializing Kerberos Tickets
 Url: http://sourceforge.net/projects/krb5ticketwatch
 License: %gpl2plus
@@ -46,6 +46,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %doc COPYING Changes News TODO
 
 %changelog
+* Fri Mar 22 2013 Andrey Cherepanov <cas@altlinux.org> 1.0.3-alt3
+- Traslate desktop file into Russian
+
 * Thu Mar 21 2013 Andrey Cherepanov <cas@altlinux.org> 1.0.3-alt2
 - Fix desktop file categories (ALT #28731)
 
