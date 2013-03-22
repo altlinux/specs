@@ -1,7 +1,7 @@
 %define binname zyGrib
 
 Name: zygrib
-Version: 6.1.0
+Version: 6.1.2
 Release: alt1
 
 Summary: Visualisation of meteo data from files in GRIB Format 1
@@ -100,6 +100,9 @@ fi
 %_datadir/%binname
 
 %changelog
+* Fri Mar 22 2013 Sergey Y. Afonin <asy@altlinux.ru> 6.1.2-alt1
+- New version
+
 * Sun Dec 30 2012 Sergey Y. Afonin <asy@altlinux.ru> 6.1.0-alt1
 - New version
 
