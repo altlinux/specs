@@ -45,7 +45,7 @@ BuildRequires: jpackage-compat
 Summary:        Extract class/interface/method definitions from sources
 Name:           qdox18
 Version:        1.8
-Release:        alt3_1jpp5
+Release:        alt4_1jpp5
 Epoch:          0
 License:        Apache-style Software License
 URL:            http://qdox.codehaus.org/
@@ -77,7 +77,7 @@ BuildRequires: maven2-plugin-javadoc
 BuildRequires: maven2-plugin-release
 BuildRequires: maven2-plugin-resources
 BuildRequires: maven-surefire-plugin
-BuildRequires: jmock >= 0:1.0
+BuildRequires: jmock1 >= 0:1.0
 %endif
 BuildRequires: excalibur-avalon-framework
 BuildRequires: excalibur-avalon-logkit
@@ -160,7 +160,7 @@ mvn-jpp \
 
 %else
 mkdir -p src/java/com/thoughtworks/qdox/parser/impl
-export CLASSPATH=$(build-classpath jmock jflex):target/classes:target/test-classes
+export CLASSPATH=$(build-classpath jmock1 jflex):target/classes:target/test-classes
 java JFlex.Main \
     -d src/java/com/thoughtworks/qdox/parser/impl \
     src/grammar/lexer.flex
@@ -190,9 +190,9 @@ cp -p target/%{oname}-%{version}.jar \
 
 
 # poms
-install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/maven2/poms
+install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
 install -m 644 pom.xml \
-    $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-%{name}.pom
+    $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 
 # javadoc
 mkdir -p $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
@@ -215,7 +215,7 @@ rm -rf target/site/apidocs
 %doc %{_docdir}/%{name}-%{version}/LICENSE.txt
 %{_javadir}/%{name}.jar
 %{_javadir}/%{name}-%{version}.jar
-%{_datadir}/maven2/poms/*
+%{_mavenpomdir}/*
 %{_mavendepmapfragdir}/*
 %if %{gcj_support}
 %dir %attr(-,root,root) %{_libdir}/gcj/%{name}
@@ -236,6 +236,9 @@ rm -rf target/site/apidocs
 %doc %dir %{_docdir}/%{name}-%{version}
 
 %changelog
+* Fri Mar 22 2013 Igor Vlasenko <viy@altlinux.ru> 0:1.8-alt4_1jpp5
+- use jmock1
+
 * Tue Mar 20 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.8-alt3_1jpp5
 - fixed build with java 7
 
