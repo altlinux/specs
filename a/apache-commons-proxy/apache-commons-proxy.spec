@@ -1,4 +1,4 @@
-BuildRequires: jmock caucho-services
+BuildRequires: jmock1 caucho-services
 BuildRequires: /proc 
 BuildRequires: jpackage-compat
 # Copyright (c) 2000-2010, JPackage Project
@@ -57,7 +57,7 @@ BuildRequires: jpackage-compat
 
 Name:           apache-commons-proxy
 Version:        1.0
-Release:        alt5_4jpp6
+Release:        alt6_4jpp6
 Epoch:          0
 Summary:        Apache Commons Proxy Component
 License:        Apache Software License 2.0
@@ -221,7 +221,7 @@ ln -sf $(build-classpath commons-logging) .m2/repository/
 ln -sf $(build-classpath concurrent) .m2/repository/
 ln -sf $(build-classpath hessian) .m2/repository/
 ln -sf $(build-classpath javassist) .m2/repository/
-ln -sf $(build-classpath jmock) .m2/repository/
+ln -sf $(build-classpath jmock1) .m2/repository/
 ln -sf $(build-classpath junit44) .m2/repository/junit4.jar
 ln -sf $(build-classpath xmlrpc2) .m2/repository/
 
@@ -243,9 +243,9 @@ ln -s %{name}-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/jakarta-%{short_name}.ja
 %add_to_maven_depmap %{short_name} %{short_name} %{version} JPP %{short_name}
 
 # pom
-install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/maven2/poms
+install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
 install -m 644 pom.xml \
-    $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-%{name}.pom
+    $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 
 # javadoc
 install -dm 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
@@ -284,7 +284,7 @@ tag=`/bin/echo %{name}-%{version}-%{release} | %{__sed} 's|\.|_|g'`
 %files
 %doc %{_docdir}/%{name}-%{version}/LICENSE.txt
 %{_javadir}/*.jar
-%{_datadir}/maven2/poms/*
+%{_mavenpomdir}/*
 %{_mavendepmapfragdir}/*
 %if %{gcj_support}
 %{_libdir}/gcj/%{name}/%{name}-%{version}.jar.*
@@ -308,6 +308,9 @@ tag=`/bin/echo %{name}-%{version}-%{release} | %{__sed} 's|\.|_|g'`
 %endif
 
 %changelog
+* Fri Mar 22 2013 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt6_4jpp6
+- use jmock1 (TODO: try jmock2)
+
 * Thu Oct 11 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt5_4jpp6
 - build without burlap
 
