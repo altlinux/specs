@@ -1,5 +1,5 @@
 %define oldname swingx
-BuildRequires: maven2-plugin-compiler maven-surefire-maven-plugin maven2-plugin-jar maven2-plugin-install maven2-plugin-javadoc jmock maven-doxia-sitetools
+BuildRequires: maven2-plugin-compiler maven-surefire-maven-plugin maven2-plugin-jar maven2-plugin-install maven2-plugin-javadoc jmock1 maven-doxia-sitetools
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 # Copyright (c) 2000-2010, JPackage Project
@@ -34,7 +34,7 @@ BuildRequires: jpackage-compat
 
 Name:           swingx16
 Version:        1.6
-Release:        alt5_1jpp6
+Release:        alt6_1jpp6
 Summary:        Extensions to the Swing GUI toolkit
 
 Group:          Development/Java
@@ -141,6 +141,9 @@ mvn-jpp -Dmaven.compile.source=1.5 -Dmaven.compile.target=1.5 -Dmaven.javadoc.so
 %{_javadocdir}/%{name}
 
 %changelog
+* Fri Mar 22 2013 Igor Vlasenko <viy@altlinux.ru> 1.6-alt6_1jpp6
+- use jmock1 (TODO: try jmock2)
+
 * Tue Mar 05 2013 Igor Vlasenko <viy@altlinux.ru> 1.6-alt5_1jpp6
 - compat package
 
