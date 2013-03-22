@@ -1,6 +1,6 @@
 Name:    kde4-regular
 Version: 4.10
-Release: alt7
+Release: alt8
 
 Group: Graphical desktop/KDE
 Summary: KDE4 common collection
@@ -40,6 +40,8 @@ Requires: kde4-i18n-kk
 Requires: kde4-i18n-ru
 Requires: kde4-i18n-uk
 
+Requires: kde4-kio-mtp
+Requires: kde4-kio-upnp-ms
 Requires: kde4-k3b
 Requires: kde4-amarok
 Requires: kde4-kaffeine
@@ -81,6 +83,9 @@ K Desktop Environment 4 сборный пакет,
 %files
 
 %changelog
+* Fri Mar 22 2013 Sergey V Turchin <zerg@altlinux.org> 4.10-alt8
+- add kio-mtp and kio-upnp-ms
+
 * Wed Feb 20 2013 Sergey V Turchin <zerg@altlinux.org> 4.10-alt7
 - add sflphone-client-kde4
 
