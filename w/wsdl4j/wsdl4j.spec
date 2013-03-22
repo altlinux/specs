@@ -1,8 +1,12 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: unzip
+# END SourceDeps(oneline)
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
 BuildRequires: /proc
 BuildRequires: jpackage-compat
-# Copyright (c) 2000-2010, JPackage Project
+# Copyright (c) 2000-2005, JPackage Project
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -32,168 +36,86 @@ BuildRequires: jpackage-compat
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
-# If you want repolib package to be built,
-# issue the following: 'rpmbuild --with repolib'
-
-%define _with_repolib 1
-
-%define with_repolib %{?_with_repolib:1}%{!?_with_repolib:0}
-%define without_repolib %{!?_with_repolib:1}%{?_with_repolib:0}
-
-%define repodir %{_javadir}/repository.jboss.com/ibm-wsdl4j/1.6.2-brew
-%define repodirlib %{repodir}/lib
-%define repodirsrc %{repodir}/src
-
-%define gcj_support 0
-
-%define cvs_version     1_6_2
-
+Summary:        Web Services Description Language Toolkit for Java
 Name:           wsdl4j
 Version:        1.6.2
-Release:        alt4_7jpp6
+Release:        alt4_7jpp7
 Epoch:          0
-Summary:        Web Services Description Language Toolkit for Java
 Group:          Development/Java
 License:        CPL
-URL:            http://sourceforge.net/projects/wsdl4j/
-%if ! %{gcj_support}
+URL:            http://sourceforge.net/projects/wsdl4j
 BuildArch:      noarch
-%endif
-# cvs -d:pserver:anonymous@wsdl4j.cvs.sourceforge.net:/cvsroot/wsdl4j login 
-# cvs -z3 -d:pserver:anonymous@wsdl4j.cvs.sourceforge.net:/cvsroot/wsdl4j export -r wsdl4j-1_6_2 wsdl4j 
-Source0:        wsdl4j-%{version}-src.tar.gz
-Source1:        wsdl4j-%{version}.pom
-Source2:        wsdl4j-component-info.xml
-BuildRequires: ant >= 0:1.7.1
-BuildRequires: ant-junit
-BuildRequires: jpackage-utils >= 0:1.7.5
-BuildRequires: junit
-%if %{gcj_support}
-BuildRequires: java-gcj-compat-devel
-%else
-BuildArch:      noarch
-%endif
+Source0:        http://downloads.sourceforge.net/project/wsdl4j/WSDL4J/%{version}/wsdl4j-src-%{version}.zip
+Source1:        %{name}-MANIFEST.MF
+Source2:        http://repo1.maven.org/maven2/wsdl4j/wsdl4j/%{version}/wsdl4j-%{version}.pom
+Requires:       jpackage-utils
+BuildRequires:  ant ant-junit
+BuildRequires:  jpackage-utils >= 0:1.5
+BuildRequires:  zip
 Source44: import.info
-Source45: wsdl4j-1.5.2.jar-OSGi-MANIFEST.MF
 
 %description
 The Web Services Description Language for Java Toolkit (WSDL4J) allows the
 creation, representation, and manipulation of WSDL documents describing
-services.  This codebase will eventually serve as a reference implementation
+services.  This code base will eventually serve as a reference implementation
 of the standard created by JSR110.
 
 %package javadoc
-Group:          Development/Documentation
+Group:          Development/Java
 Summary:        Javadoc for %{name}
+Requires:       jpackage-utils
 BuildArch: noarch
 
 %description javadoc
 Javadoc for %{name}.
 
-%if %{with_repolib}
-%package repolib
-Summary:         Artifacts to be uploaded to a repository library
-Group:           Development/Java
-
-%description repolib
-Artifacts to be uploaded to a repository library.
-This package is not meant to be installed but so its contents
-can be extracted through rpm2cpio.
-%endif
-
 %prep
-%setup -q -n %{name}
-find . -name '*.jar' | xargs -t %{__rm}
-
-mkdir tmpsrc
-%{jar} -cf tmpsrc/%{name}-src.jar src
+%setup -q -n %{name}-1_6_2
 
 %build
-export CLASSPATH=
-export OPT_JAR_LIST="ant/ant-junit junit"
-ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  -Ddebug=true -Dbuild.compiler=modern compile test javadocs
+ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  compile javadocs
 
 %install
+# inject OSGi manifests
+mkdir -p META-INF
+cp -p %{SOURCE1} META-INF/MANIFEST.MF
+touch META-INF/MANIFEST.MF
+zip -u build/lib/%{name}.jar META-INF/MANIFEST.MF
 
 # jars
 install -d -m 0755 $RPM_BUILD_ROOT%{_javadir}
 
-install -m 644 build/lib/%{name}.jar \
-      $RPM_BUILD_ROOT%{_javadir}/%{name}-%{version}.jar
-install -m 644 build/lib/qname.jar \
-      $RPM_BUILD_ROOT%{_javadir}/wsdl-qname-%{version}.jar
-touch $RPM_BUILD_ROOT%{_javadir}/qname.jar # for %ghost
+install -m 644 build/lib/%{name}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
+install -m 644 build/lib/qname.jar $RPM_BUILD_ROOT%{_javadir}/qname.jar
 
-(cd $RPM_BUILD_ROOT%{_javadir} && for jar in *-%{version}.jar; do ln -sf ${jar} `echo $jar| sed  "s|-%{version}||g"`; done)
-
-%add_to_maven_depmap wsdl4j wsdl4j %{version} JPP wsdl4j
-
-# poms
-install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/maven2/poms
-install -pm 644 %{SOURCE1} \
-    $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP.wsdl4j.pom
+# POMs
+install -d -m 0755 $RPM_BUILD_ROOT%{_mavenpomdir}
+install -p -m 0644 %{SOURCE2} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
+%add_maven_depmap JPP-%{name}.pom %{name}.jar
 
 # javadoc
-install -d -m 0755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
-cp -pr build/javadocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}/
-ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name}
+install -d -m 0755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}
+cp -pr build/javadocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}/
 
-%if %{with_repolib}
-        install -d -m 755 $RPM_BUILD_ROOT%{repodir}
-        install -d -m 755 $RPM_BUILD_ROOT%{repodirlib}
-        install -p -m 644 %{SOURCE2} $RPM_BUILD_ROOT%{repodir}/component-info.xml
-        sed -i "s/@VERSION@/%{version}-brew/g" $RPM_BUILD_ROOT%{repodir}/component-info.xml
-        tag=`echo %{name}-%{version}-%{release} | sed 's|\.|_|g'`
-        sed -i "s/@TAG@/$tag/g" $RPM_BUILD_ROOT%{repodir}/component-info.xml
-        install -d -m 755 $RPM_BUILD_ROOT%{repodirsrc}
-        install -p -m 644 %{SOURCE0} $RPM_BUILD_ROOT%{repodirsrc}
-        cp -p $RPM_BUILD_ROOT%{_javadir}/wsdl4j.jar $RPM_BUILD_ROOT%{repodirlib}
-        cp -p tmpsrc/%{name}-src.jar $RPM_BUILD_ROOT%{repodirlib}
-%endif
+%pre javadoc
+[ $1 -gt 1 ] && [ -L %{_javadocdir}/%{name} ] && \
+rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
 
-%if %{gcj_support}
-%{_bindir}/aot-compile-rpm
-%endif
-install -d $RPM_BUILD_ROOT/%_altdir; cat >$RPM_BUILD_ROOT/%_altdir/qname_wsdl4j<<EOF
-%{_javadir}/qname.jar	%{_javadir}/wsdl-qname.jar	00100
-EOF
-
-# inject OSGi manifest wsdl4j-1.5.2.jar-OSGi-MANIFEST.MF
-rm -rf META-INF
-mkdir -p META-INF
-cp %{SOURCE45} META-INF/MANIFEST.MF
-# update even MANIFEST.MF already exists
-# touch META-INF/MANIFEST.MF
-zip -v %buildroot/usr/share/java/wsdl4j.jar META-INF/MANIFEST.MF
-# end inject OSGi manifest wsdl4j-1.5.2.jar-OSGi-MANIFEST.MF
 
 %files
-%_altdir/qname_wsdl4j
 %doc license.html
-%exclude %{_javadir}/qname.jar
-%{_javadir}/wsdl-qname-%{version}.jar
-%{_javadir}/wsdl-qname.jar
-%{_javadir}/wsdl-qname.jar
-%{_javadir}/wsdl4j-%{version}.jar
-%{_javadir}/wsdl4j.jar
-%{_datadir}/maven2/poms/*
-%config(noreplace) %{_mavendepmapfragdir}/*
-%if %{gcj_support}
-%dir %{_libdir}/gcj/%{name}
-%{_libdir}/gcj/%{name}/%{name}-%{version}.jar.*
-%{_libdir}/gcj/%{name}/qname-%{version}.jar.*
-%endif
+%{_javadir}/*
+%{_mavenpomdir}/*
+%{_mavendepmapfragdir}/*
 
 %files javadoc
-%{_javadocdir}/%{name}-%{version}
+%doc license.html
 %{_javadocdir}/%{name}
 
-%if %{with_repolib}
-%files repolib
-%{_javadir}/repository.jboss.com
-%endif
-
 %changelog
+* Fri Mar 22 2013 Igor Vlasenko <viy@altlinux.ru> 0:1.6.2-alt4_7jpp7
+- fc update
+
 * Sat Mar 12 2011 Igor Vlasenko <viy@altlinux.ru> 0:1.6.2-alt4_7jpp6
 - jpp 6 release
 
