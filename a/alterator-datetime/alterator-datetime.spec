@@ -3,7 +3,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-datetime
-Version: 2.4
+Version: 2.5
 Release: alt1
 
 %add_findreq_skiplist %_datadir/install2/postinstall.d/*
@@ -18,6 +18,7 @@ Summary: alterator module for date/time setup
 License: GPL
 Group: System/Configuration/Other
 Requires: alterator >= 4.7-alt1 alterator-sh-functions >= 0.6-alt5
+Requires: alterator-service-functions >= 2.0.0-alt1
 Requires: alterator-l10n >= 1.5-alt5
 Requires: ntp-server glibc-timezones
 Conflicts: alterator-browser-qt < 2.9.93
@@ -57,6 +58,9 @@ alterator module for date/time setup
 %_datadir/install2/postinstall.d/*
 
 %changelog
+* Fri Mar 22 2013 Mikhail Efremov <sem@altlinux.org> 2.5-alt1
+- Use alterator-service-functions (closes: #28688).
+
 * Thu Feb 28 2013 Mikhail Efremov <sem@altlinux.org> 2.4-alt1
 - Read real timezone from config file (closes: #28610).
 - Drop unused variables.
