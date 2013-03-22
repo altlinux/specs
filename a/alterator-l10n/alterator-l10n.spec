@@ -1,6 +1,6 @@
 Name: alterator-l10n
 Version: 2.9
-Release: alt54
+Release: alt55
 
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
@@ -110,6 +110,11 @@ make check
 %lang(kk) %_datadir/locale/kk/LC_MESSAGES/*.mo
 
 %changelog
+* Fri Mar 22 2013 Andrey Cherepanov <cas@altlinux.org> 2.9-alt55
+- Add Kazakh translation for alterator
+- Fix message for apt-get problems on group selection in alterator-pkg
+- Simplify checkbox Russian translation in alterator-auth
+
 * Wed Mar 20 2013 Andrey Cherepanov <cas@altlinux.org> 2.9-alt54
 - Add Kazakh translations (thanks Baurzhan Muftakhidinov)
 
