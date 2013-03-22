@@ -8,7 +8,7 @@
 
 Name: wxGTK
 Version: %wxbranch.11.0
-Release: alt1.svn20100628.6
+Release: alt1.svn20100628.7
 Serial:	2
 
 Summary: The GTK+ port of the wxWidgets library
@@ -22,7 +22,7 @@ Source2: ld_shared_wrapper.pl
 
 BuildPreReq: gcc-c++ libGL-devel libSDL-devel libSM-devel
 BuildPreReq: libXinerama-devel libesd-devel libexpat-devel
-BuildPreReq: libgnomeprintui-devel libjpeg-devel libtiff-devel
+BuildPreReq: libgtk+2-devel libjpeg-devel libtiff-devel
 BuildPreReq: rpm-build-java libXt-devel gstreamer-devel
 BuildPreReq: libGConf-devel gst-plugins-devel
 
@@ -317,6 +317,9 @@ cp -fR docs/* %buildroot%_docdir/%name-%version/
 %_datadir/wx/examples
 
 %changelog
+* Thu Mar 21 2013 Sergey Y. Afonin <asy@altlinux.ru> 2:2.8.11.0-alt1.svn20100628.7
+- Built without libgnomeprintui and with libgtk+2
+
 * Sun Mar 10 2013 Sergey Y. Afonin <asy@altlinux.ru> 2:2.8.11.0-alt1.svn20100628.6
 - added --enable-graphics_ctx (ALT #27460)
 
