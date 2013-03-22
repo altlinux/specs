@@ -34,7 +34,7 @@ BuildRequires: jpackage-compat
 
 Name:           qdox161
 Version:        1.6.1
-Release:        alt2_7jpp6
+Release:        alt3_7jpp6
 Epoch:          0
 Summary:        Extract class/interface/method definitions from sources
 License:        ASL 2.0
@@ -57,7 +57,7 @@ BuildRequires: junit
 BuildRequires: byaccj
 BuildRequires: java-cup
 BuildRequires: jflex
-BuildRequires: jmock
+BuildRequires: jmock1
 Provides:  qdox = 0:%{version}-%{release}
 Source44: import.info
 
@@ -89,7 +89,7 @@ sed -e "s/@VERSION@/%{version}/g" %{SOURCE3} > build.xml
 %build
 export OPT_JAR_LIST="junit ant/ant-junit"
 mkdir -p target/src/java/com/thoughtworks/qdox/parser/impl
-export CLASSPATH=`pwd`/target/classes:`pwd`/target/test-classes:$(build-classpath java-cup jflex jmock junit)
+export CLASSPATH=`pwd`/target/classes:`pwd`/target/test-classes:$(build-classpath java-cup jflex jmock1 junit)
 %{java} JFlex.Main \
     -d src/java/com/thoughtworks/qdox/parser/impl \
     src/grammar/lexer.flex
@@ -119,14 +119,14 @@ cp -pr target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
 ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 
 # pom
-install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/maven2/poms
-install -m 644 %{SOURCE1} $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-qdox161.pom
+install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
+install -m 644 %{SOURCE1} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-qdox161.pom
 %add_to_maven_depmap %{oname} %{oname} %{version} JPP %{name}
 
 %files
 %doc LICENSE.txt
 %{_javadir}/*.jar
-%{_datadir}/maven2/poms/*
+%{_mavenpomdir}/*
 %{_mavendepmapfragdir}/*
 
 %files javadoc
@@ -134,6 +134,9 @@ install -m 644 %{SOURCE1} $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-qdox161.pom
 %{_javadocdir}/%{name}
 
 %changelog
+* Fri Mar 22 2013 Igor Vlasenko <viy@altlinux.ru> 0:1.6.1-alt3_7jpp6
+- use jmock1
+
 * Mon Jan 31 2011 Igor Vlasenko <viy@altlinux.ru> 0:1.6.1-alt2_7jpp6
 - set target 5
 
