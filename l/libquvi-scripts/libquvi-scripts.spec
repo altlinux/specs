@@ -2,7 +2,7 @@
 %define ver_major 0.4
 
 Name: lib%_name-scripts
-Version: %ver_major.13
+Version: %ver_major.14
 Release: alt1
 
 Summary: Lua scripts for parsing the media details
@@ -54,6 +54,9 @@ This package provides files needed for building applications against
 %_datadir/pkgconfig/*.pc
 
 %changelog
+* Fri Mar 22 2013 Yuri N. Sedunov <aris@altlinux.org> 0.4.14-alt1
+- 0.4.14
+
 * Sat Mar 09 2013 Yuri N. Sedunov <aris@altlinux.org> 0.4.13-alt1
 - 0.4.13
 
