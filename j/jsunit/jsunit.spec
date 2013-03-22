@@ -48,7 +48,7 @@ BuildRequires: jpackage-compat
 
 Name:           jsunit    
 Version:        1.3
-Release:        alt4_4jpp6
+Release:        alt5_4jpp6
 Epoch:          0
 Summary:        Simple framework to write repeatable tests in JavaScript
 License:        ASL 2.0
@@ -61,7 +61,7 @@ BuildRequires: ant >= 0:1.6.5
 BuildRequires: ant-junit >= 0:1.6.5
 BuildRequires: ant-trax >= 0:1.6.5
 # Scope test
-BuildRequires: jmock >= 0:1.1.0
+BuildRequires: jmock1 >= 0:1.1.0
 BuildRequires: jpackage-utils
 BuildRequires: maven2
 BuildRequires: maven2-plugin-install
@@ -135,19 +135,19 @@ popd
 %{__cp} -pr jsunit/samples/* %{buildroot}%{_datadir}/%{name}/samples/
 
 # poms
-%{__mkdir_p} %{buildroot}%{_datadir}/maven2/poms
+%{__mkdir_p} %{buildroot}%{_mavenpomdir}
 # jsunit-parent
 %add_to_maven_depmap de.berlios.jsunit jsunit-parent %{version} JPP %{name}-parent
-%{__cp} -p pom.xml %{buildroot}%{_datadir}/maven2/poms/JPP-%{name}-parent.pom
+%{__cp} -p pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}-parent.pom
 # jsunit
 %add_to_maven_depmap de.berlios.jsunit jsunit %{version} JPP %{name}
-%{__cp} -p jsunit/pom.xml %{buildroot}%{_datadir}/maven2/poms/JPP-%{name}.pom
+%{__cp} -p jsunit/pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
 # jsunit-ant
 %add_to_maven_depmap de.berlios.jsunit jsunit-ant %{version} JPP %{name}-ant
-%{__cp} -p ant/pom.xml %{buildroot}%{_datadir}/maven2/poms/JPP-%{name}-ant.pom
+%{__cp} -p ant/pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}-ant.pom
 # jsunit-maven2-plugin
 %add_to_maven_depmap de.berlios.jsunit jsunit-maven2-plugin %{version} JPP %{name}-maven2-plugin
-%{__cp} -p maven2/pom.xml %{buildroot}%{_datadir}/maven2/poms/JPP-%{name}-maven2-plugin.pom
+%{__cp} -p maven2/pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}-maven2-plugin.pom
 
 %if %{gcj_support}
 %{_bindir}/aot-compile-rpm
@@ -162,10 +162,10 @@ popd
 %{_javadir}/jsunit-maven2-plugin-%{version}.jar
 %{_javadir}/jsunit-maven2-plugin.jar
 %{_javadir}/jsunit.jar
-%{_datadir}/maven2/poms/JPP-jsunit-ant.pom
-%{_datadir}/maven2/poms/JPP-jsunit-maven2-plugin.pom
-%{_datadir}/maven2/poms/JPP-jsunit-parent.pom
-%{_datadir}/maven2/poms/JPP-jsunit.pom
+%{_mavenpomdir}/JPP-jsunit-ant.pom
+%{_mavenpomdir}/JPP-jsunit-maven2-plugin.pom
+%{_mavenpomdir}/JPP-jsunit-parent.pom
+%{_mavenpomdir}/JPP-jsunit.pom
 %{_mavendepmapfragdir}/%{name}
 %if %{gcj_support}
 %dir %{_libdir}/gcj/%{name}
@@ -198,6 +198,9 @@ popd
 %{_javadocdir}/%{name}
 
 %changelog
+* Fri Mar 22 2013 Igor Vlasenko <viy@altlinux.ru> 0:1.3-alt5_4jpp6
+- use jmock1 (TODO: try jmock2)
+
 * Mon Apr 16 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.3-alt4_4jpp6
 - fixed build
 
