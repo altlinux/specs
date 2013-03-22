@@ -1,8 +1,8 @@
 %define base_name design-bootloader
 
 Name: %base_name-source
-Version: 6.0
-Release: alt6
+Version: 6.9
+Release: alt1
 
 Group: Graphics
 Summary: Graphical boot logo sources
@@ -32,6 +32,9 @@ cp -a * %buildroot/usr/src/%base_name-source
 /usr/src/%base_name-source
 
 %changelog
+* Fri Mar 22 2013 Michael Shigorin <mike@altlinux.org> 6.9-alt1
+- added Kazakh translation by Baurzhan Muftakhidinov (closes: #28715)
+
 * Mon Nov 19 2012 Sergey V Turchin <zerg@altlinux.org> 6.0-alt6
 - fix detect isohybrid image booted as disk
 
