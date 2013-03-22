@@ -39,7 +39,7 @@ BuildRequires: jpackage-compat
 
 Name:           groovy%{majmin}
 Version:        1.7.10
-Release:        alt3_3jpp6
+Release:        alt4_3jpp6
 Epoch:          0
 Summary:        Groovy scripting language
 License:        ASL 2.0
@@ -106,7 +106,7 @@ BuildRequires:  jakarta-oro
 BuildRequires:  jansi
 BuildRequires:  jarjar
 BuildRequires:  jline
-BuildRequires:  jmock
+BuildRequires:  jmock1
 BuildRequires:  jsp_2_0_api
 BuildRequires:  lucene
 BuildRequires:  livetribe-jsr223
@@ -234,8 +234,8 @@ ln -s $(build-classpath commons-primitives)
 ln -s $(build-classpath hsqldb)
 ln -s $(build-classpath apache-ivy)
 ln -s $(build-classpath jline)
-ln -s $(build-classpath jmock)
-ln -s $(build-classpath jmock-cglib)
+ln -s $(build-classpath jmock1)
+ln -s $(build-classpath jmock1-cglib)
 ln -s $(build-classpath jsp_2_0_api)
 ln -s $(build-classpath junit4)
 ln -s $(build-classpath livetribe-jsr223)
@@ -282,11 +282,11 @@ install -p -m 644 target/install/embeddable/%{bname}-all-%{namedversion}.jar %{b
 (cd %{buildroot}%{_javadir} && for jar in *-%{namedversion}*; do ln -s ${jar} `echo $jar| sed  "s|-%{namedversion}||g"`; done)
 
 # poms and depmap frags
-install -d -m 755 %{buildroot}%{_datadir}/maven2/poms
-install -p -m 644 pom.xml %{buildroot}%{_datadir}/maven2/poms/JPP-%{name}.pom
+install -d -m 755 %{buildroot}%{_mavenpomdir}
+install -p -m 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
 %add_to_maven_depmap org.codehaus.groovy groovy %{namedversion} JPP %{name}
 %add_to_maven_depmap org.codehaus.groovy %{name} %{namedversion} JPP %{name}
-install -p -m 644 %{SOURCE1} %{buildroot}%{_datadir}/maven2/poms/JPP-%{name}-all.pom
+install -p -m 644 %{SOURCE1} %{buildroot}%{_mavenpomdir}/JPP-%{name}-all.pom
 %add_to_maven_depmap org.codehaus.groovy groovy-all %{namedversion} JPP %{name}-all
 %add_to_maven_depmap org.codehaus.groovy %{name}-all %{namedversion} JPP %{name}-all
 
@@ -397,8 +397,8 @@ sed -i -e 's,startGroovy,startGroovy17,g' %buildroot%_datadir/%{name}-%{version}
 %{_datadir}/%{name}-%{namedversion}/lib/servlet_2_4_api.jar
 %{_datadir}/%{name}-%{namedversion}/lib/xpp3.jar
 %{_datadir}/%{name}-%{namedversion}/lib/xstream.jar
-%{_datadir}/maven2/poms/JPP-%{name}-all.pom
-%{_datadir}/maven2/poms/JPP-%{name}.pom
+%{_mavenpomdir}/JPP-%{name}-all.pom
+%{_mavenpomdir}/JPP-%{name}.pom
 %{_mavendepmapfragdir}/%{name}
 
 %files javadoc
@@ -406,6 +406,9 @@ sed -i -e 's,startGroovy,startGroovy17,g' %buildroot%_datadir/%{name}-%{version}
 %{_javadocdir}/%{name}
 
 %changelog
+* Fri Mar 22 2013 Igor Vlasenko <viy@altlinux.ru> 0:1.7.10-alt4_3jpp6
+- use jmock1
+
 * Mon Aug 27 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.7.10-alt3_3jpp6
 - fixed build - use aqute-bnd from fedora instead of aqute-bndlib
 
