@@ -1,7 +1,7 @@
 BuildRequires: desktop-file-utils
 Name: hugin
 Version: 2012.0.0
-Release: alt2.3
+Release: alt2.4
 
 Group: Graphics
 Summary: hugin - Goal: an easy to use cross-platform GUI for Panorama Tools.
@@ -16,7 +16,7 @@ BuildRequires: boost-devel boost-thread-devel boost-datetime-devel boost-regex-d
 BuildRequires: boost-filesystem-devel boost-iostreams-devel boost-system-devel
 BuildRequires: boost-signals-devel libglew-devel libGLUT-devel libXi-devel libXmu-devel
 BuildRequires: glib-devel libgtk+2-devel libjpeg-devel libpano13-devel perl-podlators
-BuildRequires: libpng-devel libstdc++-devel libtiff-devel wxGTK-devel xorg-locales
+BuildRequires: libpng-devel libstdc++-devel libtiff-devel wxGTK-devel
 BuildRequires: zlib-devel libpango-devel zip cmake openexr-devel libexiv2-devel libtclap-devel
 BuildRequires: liblensfun-devel swig
 Requires: enblend >= 3.2 libpano13 wxGTK >= 2.6.0  autopano-sift-C perl-Image-ExifTool make
@@ -74,6 +74,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 /usr/share/icons/hicolor/32x32/apps/hugin.png
 
 %changelog
+* Fri Mar 22 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 2012.0.0-alt2.4
+- build fixed
+
 * Mon Feb 11 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2012.0.0-alt2.3
 - Rebuilt with Boost 1.53.0
 
