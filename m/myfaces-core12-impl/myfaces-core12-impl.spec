@@ -39,7 +39,7 @@ BuildRequires: jpackage-compat testng maven-surefire-provider-testng
 Summary:        JSF 1.2 implementation
 Name:           myfaces-core12-impl
 Version:        1.2.3
-Release:        alt9_1jpp5
+Release:        alt10_1jpp5
 Epoch:          0
 License:        Apache Software License 2.0
 URL:            http://myfaces.apache.org/
@@ -178,8 +178,8 @@ install -m 644 impl/target/myfaces-impl-%{version}.jar $RPM_BUILD_ROOT%{_javadir
 (cd $RPM_BUILD_ROOT%{_javadir}/%{parent} && for jar in *-%{version}.jar; do ln -sf ${jar} `echo $jar| sed "s|-%{version}||g"`; done)
 
 # poms
-install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/maven2/poms
-install -m 644 impl/pom.xml $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP.%{parent}-core12-impl.pom
+install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
+install -m 644 impl/pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{parent}-core12-impl.pom
 %add_to_maven_depmap org.apache.myfaces.core myfaces-impl %{version} JPP/%{parent} core12-impl
 
 # javadoc
@@ -190,7 +190,7 @@ ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %files
 %doc assembly/src/main/resources/LICENSE.txt
 %{_javadir}/%{parent}/*.jar
-%{_datadir}/maven2/poms/*
+%{_mavenpomdir}/*
 %{_mavendepmapfragdir}/*
 
 %files javadoc
@@ -198,6 +198,9 @@ ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Fri Mar 22 2013 Igor Vlasenko <viy@altlinux.ru> 0:1.2.3-alt10_1jpp5
+- use jmock1
+
 * Fri Sep 21 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.2.3-alt9_1jpp5
 - build with aspectj 1.6.0
 
