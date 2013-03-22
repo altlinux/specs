@@ -11,7 +11,7 @@
 %define rctag %nil
 
 Name: clamav
-Version: 0.97.6
+Version: 0.97.7
 Release: alt1
 
 Packager: Victor Forsiuk <force@altlinux.org>
@@ -302,6 +302,9 @@ subst s/^[0-9]*/$RNDM/ %_sysconfdir/cron.d/freshclam
 %endif
 
 %changelog
+* Fri Mar 22 2013 Sergey Y. Afonin <asy@altlinux.ru> 0.97.7-alt1
+- 0.97.7
+
 * Thu Oct 04 2012 Sergey Y. Afonin <asy@altlinux.ru> 0.97.6-alt1
 - 0.97.6
 
