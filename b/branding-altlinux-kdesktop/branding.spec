@@ -6,7 +6,7 @@
 
 Name: branding-%brand-%smalltheme
 Version: 7.0.0
-Release: alt2
+Release: alt3
 BuildArch: noarch
 
 %define theme %name
@@ -170,6 +170,17 @@ Conflicts: %(for n in %variants ; do [ "$n" = %brand-%theme ] || echo -n "brandi
 %description fvwm-settings
 FVWM2 settings for %Brand %version %Theme
 
+%package mate-settings
+
+BuildArch: noarch
+Summary: MATE settings for %Brand %version %Theme
+License: Distributable
+Group:   Graphical desktop/GNOME
+Requires: gksu
+Requires: dconf
+%description mate-settings
+MATE settings for %Brand %version %Theme
+
 %package gnome-settings
 
 BuildArch: noarch
@@ -314,6 +325,11 @@ popd
 mkdir -p %buildroot/etc/skel
 install -m 644 fvwm-settings/.fvwm2rc %buildroot/etc/skel/
 
+#mate-settings
+pushd mate-settings
+install -m 644 -D mate-background.gschema.override %buildroot/%_datadir/glib-2.0/schemas/50_mate-%name-background.gschema.override
+popd
+
 #gnome-settings
 %define XdgThemeName %Brand %Theme
 pushd gnome-settings
@@ -425,6 +441,9 @@ fi
 %files fvwm-settings
 %_sysconfdir/skel/.fvwm2rc
 
+%files mate-settings
+%_datadir/glib-2.0/schemas/*mate*
+
 %files gnome-settings
 %_datadir/themes/*
 /etc/gnome/xdg/menus/*
@@ -443,6 +462,9 @@ fi
 %_datadir/kde4/apps/kio_desktop/DesktopLinks/indexhtml.desktop
 
 %changelog
+* Fri Mar 22 2013 Sergey V Turchin <zerg at altlinux dot org> 7.0.0-alt3
+- add mate-settings package
+
 * Wed Mar 20 2013 Sergey V Turchin <zerg at altlinux dot org> 7.0.0-alt2
 - update graphics
 - add /etc/os-release
