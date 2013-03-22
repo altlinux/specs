@@ -2,7 +2,7 @@
 
 Name: mate
 Version: %ver_major.0
-Release: alt4
+Release: alt5
 
 Summary: MATE Desktop installers
 License: %gpl2plus
@@ -117,6 +117,7 @@ Requires: seahorse
 #Requires: seahorse-agent
 ## All gvfs-backends
 Requires: gvfs-backends
+Requires: gvfs-utils
 Requires: fuse-gvfs
 #Requires: mate-disk-utility
 ## Display manager
@@ -376,6 +377,9 @@ itself).
 #%files a11y
 
 %changelog
+* Fri Mar 22 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1.5.0-alt5
+- added Requires: gvfs-utils into mate-default (closes #28677)
+
 * Thu Feb 21 2013 Igor Vlasenko <viy@altlinux.ru> 1.5.0-alt4
 - added Requires: mate-mplayer
   Requires: mate-file-manager-actions
