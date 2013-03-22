@@ -47,7 +47,7 @@ BuildRequires: jpackage-compat
 
 Name:           shale
 Version:        1.0.4
-Release:        alt10_1jpp5
+Release:        alt11_1jpp5
 Epoch:          0
 Summary:        Shale Framework
 License:        Apache Software License 2.0
@@ -98,7 +98,7 @@ BuildRequires: apache-commons-digester
 BuildRequires: apache-commons-logging
 BuildRequires: apache-commons-scxml
 BuildRequires: apache-commons-validator
-BuildRequires: jmock
+BuildRequires: jmock1
 BuildRequires: jsf_1_2_api
 BuildRequires: jsp_2_1_api
 BuildRequires: myfaces
@@ -203,7 +203,7 @@ Requires: spring-web >= 0:1.2.9
 Summary:        Shale Test Framework
 Group:          Development/Java
 Requires: htmlunit1
-Requires: jmock
+Requires: jmock1
 Requires: junit
 Requires: cargo
 Requires: %{name} = %{epoch}:%{version}-%{release}
@@ -490,7 +490,7 @@ popd
 %install
 # jars/poms
 install -d -m 755 $RPM_BUILD_ROOT%{_javadir}/%{name}
-install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/maven2/poms
+install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
 
 for module in \
            application \
@@ -511,7 +511,7 @@ for module in \
 install -m 644 shale-$module/target/shale-$module-%{version}.jar \
                $RPM_BUILD_ROOT%{_javadir}/%{name}/$module-%{version}.jar
 %add_to_maven_depmap org.apache.shale shale-$module %{version} JPP/shale $module
-install -m 644 shale-$module/pom.xml $RPM_BUILD_ROOT/%{_datadir}/maven2/poms/JPP.shale-$module.pom
+install -m 644 shale-$module/pom.xml $RPM_BUILD_ROOT/%{_mavenpomdir}/JPP.shale-$module.pom
 
 install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}/$module
 cp -pr shale-$module/target/site/apidocs/* \
@@ -519,10 +519,10 @@ cp -pr shale-$module/target/site/apidocs/* \
 done
 
 %add_to_maven_depmap org.apache.shale shale-master 2 JPP/shale master
-install -m 644 %{SOURCE1} $RPM_BUILD_ROOT/%{_datadir}/maven2/poms/JPP.shale-master.pom
+install -m 644 %{SOURCE1} $RPM_BUILD_ROOT/%{_mavenpomdir}/JPP.shale-master.pom
 
 %add_to_maven_depmap org.apache.shale shale-parent %{version} JPP/shale parent
-install -m 644 pom.xml $RPM_BUILD_ROOT/%{_datadir}/maven2/poms/JPP.shale-parent.pom
+install -m 644 pom.xml $RPM_BUILD_ROOT/%{_mavenpomdir}/JPP.shale-parent.pom
 
 (cd $RPM_BUILD_ROOT%{_javadir}/%{name} && for jar in *-%{version}*; do ln -sf ${jar} `echo $jar| sed  "s|-%{version}||g"`; done)
 
@@ -544,8 +544,8 @@ fi
 %files
 %dir %{_javadir}/%{name}
 %{_javadir}/%{name}/core*.jar
-%{_datadir}/maven2
-%{_mavendepmapfragdir}
+%{_mavenpomdir}/*
+%{_mavendepmapfragdir}/*
 %doc %{_docdir}/%{name}-%{version}/LICENSE.txt
 # hack; explicitly added docdir if not owned
 %doc %dir %{_docdir}/%{name}-%{version}
@@ -599,6 +599,9 @@ fi
 %doc %dir %{_docdir}/%{name}-%{version}
 
 %changelog
+* Fri Mar 22 2013 Igor Vlasenko <viy@altlinux.ru> 0:1.0.4-alt11_1jpp5
+- use jmock1
+
 * Fri Oct 12 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0.4-alt10_1jpp5
 - fixed build
 
