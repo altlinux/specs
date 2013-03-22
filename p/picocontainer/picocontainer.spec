@@ -52,7 +52,7 @@ BuildRequires: jpackage-compat
 
 Name:           picocontainer
 Version:        1.3
-Release:        alt5_5jpp6
+Release:        alt6_5jpp6
 Epoch:          0
 Summary:        Dependency-injection container
 Group:          Development/Java
@@ -107,7 +107,7 @@ BuildRequires:  apache-commons-parent
 BuildRequires:  apache-commons-logging
 BuildRequires:  jakarta-slide-webdavclient
 BuildRequires:  jetty5
-BuildRequires:  jmock
+BuildRequires:  jmock1
 BuildRequires:  jpackage-utils >= 0:5.0.0
 BuildRequires:  junit >= 0:3.8.1
 BuildRequires:  log4j
@@ -182,18 +182,18 @@ mvn-jpp -Dmaven.compile.target=1.5 -Dmaven.javadoc.source=1.5  \
 %else
 export OPT_JAR_LIST=`%{__cat} %{_sysconfdir}/ant.d/junit`
 pushd container
-  export CLASSPATH=$(build-classpath jmock xstream)
+  export CLASSPATH=$(build-classpath jmock1 xstream)
   CLASSPATH=$CLASSPATH:target/classes:target/test-classes
 ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Dbuild.sysclasspath=only jar javadoc
 popd
 pushd tck
-  export CLASSPATH=$(build-classpath jmock junit xstream)
+  export CLASSPATH=$(build-classpath jmock1 junit xstream)
   CLASSPATH=$CLASSPATH:../container/target/%{name}-%{version}.jar
   CLASSPATH=$CLASSPATH:target/classes:target/test-classes
 ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Dbuild.sysclasspath=only jar javadoc
 popd
 pushd gems
-  export CLASSPATH=$(build-classpath commons-logging proxytoys prefuse jmock log4j xstream cglib-nodep xpp3-minimal)
+  export CLASSPATH=$(build-classpath commons-logging proxytoys prefuse jmock1 log4j xstream cglib-nodep xpp3-minimal)
   CLASSPATH=$CLASSPATH:../container/target/%{name}-%{version}.jar
   CLASSPATH=$CLASSPATH:../tck/target/%{name}-tck-%{version}.jar
   CLASSPATH=$CLASSPATH:target/classes:target/test-classes
@@ -222,17 +222,17 @@ install -m 644 container/target/%{name}-%{version}.jar \
 %add_to_maven_depmap org.picocontainer picocontainer-gems %{version} JPP %{name}-gems
 
 # poms
-install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/maven2/poms
+install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
 install -m 644 pom.xml \
-    $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-%{name}-parent.pom
+    $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}-parent.pom
 install -m 644 distribution/pom.xml \
-    $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-%{name}-distribution.pom
+    $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}-distribution.pom
 install -m 644 container/pom.xml \
-    $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-%{name}.pom
+    $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 install -m 644 tck/pom.xml \
-    $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-%{name}-tck.pom
+    $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}-tck.pom
 install -m 644 gems/pom.xml \
-    $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-%{name}-gems.pom
+    $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}-gems.pom
 
 #javadocs
 install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
@@ -262,11 +262,11 @@ cp -pr distribution/target/site/* $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}
 %{_javadir}/picocontainer-gems.jar
 %{_javadir}/picocontainer-tck-%{version}.jar
 %{_javadir}/picocontainer-tck.jar
-%{_datadir}/maven2/poms/JPP-picocontainer-distribution.pom
-%{_datadir}/maven2/poms/JPP-picocontainer-gems.pom
-%{_datadir}/maven2/poms/JPP-picocontainer-parent.pom
-%{_datadir}/maven2/poms/JPP-picocontainer-tck.pom
-%{_datadir}/maven2/poms/JPP-picocontainer.pom
+%{_mavenpomdir}/JPP-picocontainer-distribution.pom
+%{_mavenpomdir}/JPP-picocontainer-gems.pom
+%{_mavenpomdir}/JPP-picocontainer-parent.pom
+%{_mavenpomdir}/JPP-picocontainer-tck.pom
+%{_mavenpomdir}/JPP-picocontainer.pom
 %{_mavendepmapfragdir}/%{name}
 %if %{gcj_support}
 %dir %{_libdir}/gcj/%{name}
@@ -279,6 +279,9 @@ cp -pr distribution/target/site/* $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}
 %{_javadocdir}/%{name}
 
 %changelog
+* Fri Mar 22 2013 Igor Vlasenko <viy@altlinux.ru> 0:1.3-alt6_5jpp6
+- use jmock1
+
 * Wed May 09 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.3-alt5_5jpp6
 - dropped extra build dependencies
 
