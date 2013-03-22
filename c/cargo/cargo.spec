@@ -49,7 +49,7 @@ BuildRequires: jpackage-compat
 
 Name:           cargo
 Version:        1.0
-Release:        alt10_3jpp6
+Release:        alt11_3jpp6
 Epoch:          0
 Summary:        Cargo container wrapper
 License:        ASL 2.0
@@ -109,7 +109,7 @@ BuildRequires: geronimo-servlet-2.4-api
 BuildRequires: gnu-trove
 BuildRequires: jpackage-utils >= 0:1.7.5
 BuildRequires: jetty
-BuildRequires: jmock
+BuildRequires: jmock1
 BuildRequires: junit
 BuildRequires: apache-commons-parent
 BuildRequires: apache-commons-codec
@@ -276,7 +276,7 @@ mvn-jpp -Dmaven.compile.target=1.5 -Dmaven.javadoc.source=1.5  \
         -Dmaven.test.failure.ignore=true \
         install javadoc:javadoc
 %else
-export CLASSPATH=$(build-classpath geronimo-ejb-2.1-api geronimo-servlet-2.4-api junit commons-vfs commons-logging xalan-j2 jmock commons-codec plexus/container-default plexus/utils)
+export CLASSPATH=$(build-classpath geronimo-ejb-2.1-api geronimo-servlet-2.4-api junit commons-vfs commons-logging xalan-j2 jmock1 commons-codec plexus/container-default plexus/utils)
 export CLASSPATH=${CLASSPATH}:`pwd`/core/api/util/target/classes:`pwd`/core/api/util/target/test-classes
 export CLASSPATH=${CLASSPATH}:`pwd`/core/api/module/target/classes:`pwd`/core/api/module/target/test-classes
 export CLASSPATH=${CLASSPATH}:`pwd`/core/api/container/target/classes:`pwd`/core/api/container/target/test-classes
@@ -390,65 +390,65 @@ popd
 %endif
 
 # poms
-mkdir -p %{buildroot}%{_datadir}/maven2/poms
+mkdir -p %{buildroot}%{_mavenpomdir}
 cp -p core/api/container/pom.xml \
-   %{buildroot}%{_datadir}/maven2/poms/JPP.cargo-cargo-core-api-container.pom
+   %{buildroot}%{_mavenpomdir}/JPP.cargo-cargo-core-api-container.pom
 cp -p core/api/generic/pom.xml \
-   %{buildroot}%{_datadir}/maven2/poms/JPP.cargo-cargo-core-api-generic.pom
+   %{buildroot}%{_mavenpomdir}/JPP.cargo-cargo-core-api-generic.pom
 cp -p core/api/module/pom.xml \
-   %{buildroot}%{_datadir}/maven2/poms/JPP.cargo-cargo-core-api-module.pom
+   %{buildroot}%{_mavenpomdir}/JPP.cargo-cargo-core-api-module.pom
 cp -p core/api/pom.xml \
-   %{buildroot}%{_datadir}/maven2/poms/JPP.cargo-cargo-core-api.pom
+   %{buildroot}%{_mavenpomdir}/JPP.cargo-cargo-core-api.pom
 cp -p core/api/util/pom.xml \
-   %{buildroot}%{_datadir}/maven2/poms/JPP.cargo-cargo-core-api-util.pom
+   %{buildroot}%{_mavenpomdir}/JPP.cargo-cargo-core-api-util.pom
 cp -p core/containers/geronimo/pom.xml \
-   %{buildroot}%{_datadir}/maven2/poms/JPP.cargo-cargo-core-container-geronimo.pom
+   %{buildroot}%{_mavenpomdir}/JPP.cargo-cargo-core-container-geronimo.pom
 cp -p core/containers/jboss/pom.xml \
-   %{buildroot}%{_datadir}/maven2/poms/JPP.cargo-cargo-core-container-jboss.pom
+   %{buildroot}%{_mavenpomdir}/JPP.cargo-cargo-core-container-jboss.pom
 %if_with jetty
 cp -p core/containers/jetty/pom.xml \
-   %{buildroot}%{_datadir}/maven2/poms/JPP.cargo-cargo-core-container-jetty.pom
+   %{buildroot}%{_mavenpomdir}/JPP.cargo-cargo-core-container-jetty.pom
 %endif
 cp -p core/containers/jo/pom.xml \
-   %{buildroot}%{_datadir}/maven2/poms/JPP.cargo-cargo-core-container-jo.pom
+   %{buildroot}%{_mavenpomdir}/JPP.cargo-cargo-core-container-jo.pom
 cp -p core/containers/jrun/pom.xml \
-   %{buildroot}%{_datadir}/maven2/poms/JPP.cargo-cargo-core-container-jrun.pom
+   %{buildroot}%{_mavenpomdir}/JPP.cargo-cargo-core-container-jrun.pom
 cp -p core/containers/orion/pom.xml \
-   %{buildroot}%{_datadir}/maven2/poms/JPP.cargo-cargo-core-container-orion.pom
+   %{buildroot}%{_mavenpomdir}/JPP.cargo-cargo-core-container-orion.pom
 cp -p core/containers/pom.xml \
-   %{buildroot}%{_datadir}/maven2/poms/JPP.cargo-cargo-core-containers.pom
+   %{buildroot}%{_mavenpomdir}/JPP.cargo-cargo-core-containers.pom
 cp -p core/containers/resin/pom.xml \
-   %{buildroot}%{_datadir}/maven2/poms/JPP.cargo-cargo-core-container-resin.pom
+   %{buildroot}%{_mavenpomdir}/JPP.cargo-cargo-core-container-resin.pom
 cp -p core/containers/tomcat/pom.xml \
-   %{buildroot}%{_datadir}/maven2/poms/JPP.cargo-cargo-core-container-tomcat.pom
+   %{buildroot}%{_mavenpomdir}/JPP.cargo-cargo-core-container-tomcat.pom
 cp -p core/containers/weblogic/pom.xml \
-   %{buildroot}%{_datadir}/maven2/poms/JPP.cargo-cargo-core-container-weblogic.pom
+   %{buildroot}%{_mavenpomdir}/JPP.cargo-cargo-core-container-weblogic.pom
 cp -p core/documentation/pom.xml \
-   %{buildroot}%{_datadir}/maven2/poms/JPP.cargo-cargo-core-documentation.pom
+   %{buildroot}%{_mavenpomdir}/JPP.cargo-cargo-core-documentation.pom
 cp -p core/pom.xml \
-   %{buildroot}%{_datadir}/maven2/poms/JPP.cargo-cargo-core.pom
+   %{buildroot}%{_mavenpomdir}/JPP.cargo-cargo-core.pom
 cp -p core/samples/java/pom.xml \
-   %{buildroot}%{_datadir}/maven2/poms/JPP.cargo-cargo-core-samples-java.pom
+   %{buildroot}%{_mavenpomdir}/JPP.cargo-cargo-core-samples-java.pom
 cp -p core/samples/pom.xml \
-   %{buildroot}%{_datadir}/maven2/poms/JPP.cargo-cargo-core-samples.pom
+   %{buildroot}%{_mavenpomdir}/JPP.cargo-cargo-core-samples.pom
 cp -p core/uberjar/pom.xml \
-   %{buildroot}%{_datadir}/maven2/poms/JPP.cargo-cargo-core-uberjar.pom
+   %{buildroot}%{_mavenpomdir}/JPP.cargo-cargo-core-uberjar.pom
 cp -p extensions/ant/pom.xml \
-   %{buildroot}%{_datadir}/maven2/poms/JPP.cargo-cargo-ant.pom
+   %{buildroot}%{_mavenpomdir}/JPP.cargo-cargo-ant.pom
 cp -p extensions/maven2/pom.xml \
-   %{buildroot}%{_datadir}/maven2/poms/JPP.cargo-cargo-maven2-plugin.pom
+   %{buildroot}%{_mavenpomdir}/JPP.cargo-cargo-maven2-plugin.pom
 cp -p extensions/maven/pom.xml \
-   %{buildroot}%{_datadir}/maven2/poms/JPP.cargo-cargo-maven-plugin.pom
+   %{buildroot}%{_mavenpomdir}/JPP.cargo-cargo-maven-plugin.pom
 cp -p extensions/pom.xml \
-   %{buildroot}%{_datadir}/maven2/poms/JPP.cargo-cargo-extensions.pom
+   %{buildroot}%{_mavenpomdir}/JPP.cargo-cargo-extensions.pom
 cp -p pom/pom.xml \
-   %{buildroot}%{_datadir}/maven2/poms/JPP.cargo-cargo-parent.pom
+   %{buildroot}%{_mavenpomdir}/JPP.cargo-cargo-parent.pom
 cp -p pom.xml \
-   %{buildroot}%{_datadir}/maven2/poms/JPP.cargo-cargo-trunks.pom
+   %{buildroot}%{_mavenpomdir}/JPP.cargo-cargo-trunks.pom
 cp -p resources/build-tools/pom.xml \
-   %{buildroot}%{_datadir}/maven2/poms/JPP.cargo-cargo-build-tools.pom
+   %{buildroot}%{_mavenpomdir}/JPP.cargo-cargo-build-tools.pom
 cp -p resources/pom.xml \
-   %{buildroot}%{_datadir}/maven2/poms/JPP.cargo-cargo-resources.pom
+   %{buildroot}%{_mavenpomdir}/JPP.cargo-cargo-resources.pom
 
 # depmap frags
 %add_to_maven_depmap org.codehaus.cargo cargo-core-api-container %{version} JPP/cargo cargo-core-api-container
@@ -556,7 +556,7 @@ ln -s %{name}-%{version} %{buildroot}%{_javadocdir}/%{name}
 %{_javadir}/%{name}/%{name}-sample-java*.jar
 %{_javadir}/%{name}/%{name}-ant*.jar
 %{_javadir}/%{name}/%{name}-build-tools*.jar
-%{_datadir}/maven2/poms/*
+%{_mavenpomdir}/*
 %{_mavendepmapfragdir}/*
 %if %{gcj_support}
 %dir %{_libdir}/gcj/%{name}
@@ -579,6 +579,9 @@ ln -s %{name}-%{version} %{buildroot}%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Fri Mar 22 2013 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt11_3jpp6
+- use jmock1
+
 * Thu Oct 11 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt10_3jpp6
 - build with spring3
 
