@@ -50,7 +50,7 @@ BuildRequires: jpackage-compat
 
 Name:           picocontainer-script
 Version:        2.0
-Release:        alt4_1jpp6
+Release:        alt5_1jpp6
 Epoch:          0
 Summary:        Scripting-layer for picocontainer
 Group:          Development/Java
@@ -93,7 +93,7 @@ BuildRequires: ant-junit
 BuildRequires: jpackage-utils >= 0:1.7.5
 BuildRequires: annotation_1_0_api
 BuildRequires: groovy15
-BuildRequires: jmock2
+BuildRequires: jmock
 BuildRequires: jruby
 BuildRequires: jython
 BuildRequires: paranamer
@@ -208,25 +208,25 @@ install -m 644 script-testmodel/target/%{name}-testmodel-%{version}.jar \
 %add_to_maven_depmap org.picocontainer.script picocontainer-script-testmodel %{version} JPP %{name}-testmodel
 
 # poms
-install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/maven2/poms
+install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
 install -m 644 pom.xml \
-    $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-%{name}.pom
+    $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 install -m 644 script-core/pom.xml \
-    $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-%{name}-core.pom
+    $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}-core.pom
 install -m 644 script-bsh/pom.xml \
-    $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-%{name}-bsh.pom
+    $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}-bsh.pom
 install -m 644 script-groovy/pom.xml \
-    $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-%{name}-groovy.pom
+    $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}-groovy.pom
 install -m 644 script-jruby/pom.xml \
-    $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-%{name}-jruby.pom
+    $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}-jruby.pom
 install -m 644 script-jython/pom.xml \
-    $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-%{name}-jython.pom
+    $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}-jython.pom
 install -m 644 script-rhino/pom.xml \
-    $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-%{name}-rhino.pom
+    $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}-rhino.pom
 install -m 644 script-tck/pom.xml \
-    $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-%{name}-tck.pom
+    $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}-tck.pom
 install -m 644 script-testmodel/pom.xml \
-    $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-%{name}-testmodel.pom
+    $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}-testmodel.pom
 
 #javadocs
 install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}/
@@ -246,7 +246,7 @@ ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %files
 #%doc %{_docdir}/%{name}-%{version}
 %{_javadir}/*.jar
-%{_datadir}/maven2/poms/*
+%{_mavenpomdir}/*
 %{_mavendepmapfragdir}/*
 %if %{gcj_support}
 %dir %{_libdir}/gcj/%{name}
@@ -258,6 +258,9 @@ ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/*
 
 %changelog
+* Fri Mar 22 2013 Igor Vlasenko <viy@altlinux.ru> 0:2.0-alt5_1jpp6
+- use jmock
+
 * Sun Jun 10 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.0-alt4_1jpp6
 - build with maven-plugin-cobertura
 
