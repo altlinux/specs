@@ -1,4 +1,4 @@
-BuildRequires: buildnumber-maven-plugin eclipse-jdt maven-antrun-plugin
+BuildRequires: buildnumber-maven-plugin eclipse-jdt maven-antrun-plugin xom
 # BEGIN SourceDeps(oneline):
 BuildRequires: python-devel
 # END SourceDeps(oneline)
@@ -28,7 +28,7 @@ BuildRequires: jpackage-compat
 
 Name:             jboss-as
 Version:          7.1.1
-Release:          alt1_6jpp7
+Release:          alt2_6jpp7
 Summary:          JBoss Application Server
 Group:            System/Servers
 License:          LGPLv2 and ASL 2.0
@@ -857,6 +857,9 @@ rm -rf %{homedir}/modules/org/hornetq/main/lib/linux-${arch}/*
 %doc %{homedir}/LICENSE.txt
 
 %changelog
+* Fri Mar 22 2013 Igor Vlasenko <viy@altlinux.ru> 7.1.1-alt2_6jpp7
+- fixed build
+
 * Mon Sep 17 2012 Igor Vlasenko <viy@altlinux.ru> 7.1.1-alt1_6jpp7
 - new version
 
