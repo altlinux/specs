@@ -1,7 +1,9 @@
 
+%def_disable wbxml
+
 Name: virtuoso-opensource
 Version: 6.1.6
-Release: alt1
+Release: alt2
 Serial: 2
 
 Group: Databases
@@ -15,12 +17,14 @@ Requires: %name-applications = %version-%release
 
 Source0: %name-%version.tar
 # FC
-Patch1: virtuoso-opensource-6.1.0-extern-iodbc.patch
+Patch1: virtuoso-opensource-6.1.6-extern-iodbc.patch
 Patch2: virtuoso-opensource-6.1.0-nodemos_buildfix.patch
 Patch3: virtuoso-opensource-6.1.4-no_strip.patch
-Patch4: virtuoso-opensource-6.1.2-no_strip.patch
 
-BuildRequires: glibc-devel libssl-devel bison flex gperf libxml2-devel libiodbc-devel libldap-devel /usr/bin/openssl libwbxml2-devel libexpat-devel
+BuildRequires: glibc-devel libssl-devel bison flex gperf libxml2-devel libiodbc-devel libldap-devel /usr/bin/openssl libexpat-devel zlib-devel
+%if_enabled wbxml
+BuildRequires: libwbxml2-devel
+%endif
 
 
 %description
@@ -72,8 +76,8 @@ functionality.
 %patch1 -p0 -b .iodbc
 %patch2 -p0
 %patch3 -p1
-#%patch4 -p1
-#./autogen.sh
+rm -rf libsrc/odbcsdk/*
+>libsrc/odbcsdk/Makefile.am
 %autoreconf
 
 
@@ -87,6 +91,9 @@ functionality.
     --without-internal-zlib \
     --enable-openssl \
     --disable-imagemagick \
+%if_disabled wbxml
+    --disable-wbxml2 \
+%endif
     --disable-all-vads
 %make
 
@@ -139,6 +146,9 @@ mv %buildroot%_var/lib/virtuoso/db/virtuoso.ini %buildroot%_sysconfdir/virtuoso/
 %_libdir/hibernate/virt_dialect.jar
 
 %changelog
+* Fri Mar 22 2013 Sergey V Turchin <zerg@altlinux.org> 2:6.1.6-alt2
+- built without wbxml support
+
 * Fri Oct 12 2012 Sergey V Turchin <zerg@altlinux.org> 2:6.1.6-alt1
 - new version
 
