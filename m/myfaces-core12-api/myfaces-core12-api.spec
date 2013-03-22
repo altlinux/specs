@@ -35,7 +35,7 @@ BuildRequires: jpackage-compat
 Summary:        JSF 1.2 API 
 Name:           myfaces-core12-api
 Version:        1.2.3
-Release:        alt6_2jpp6
+Release:        alt7_2jpp6
 Epoch:          0
 License:        Apache Software License 2.0
 URL:            http://myfaces.apache.org/
@@ -73,7 +73,7 @@ BuildRequires: jakarta-taglibs-standard
 BuildRequires: shale-test
 BuildRequires: servlet_2_5_api
 BuildRequires: jsp_2_1_api
-BuildRequires: jmock
+BuildRequires: jmock1
 BuildRequires: el_1_0_api
 BuildRequires: jakarta-commons-logging
 BuildRequires: apache-commons-beanutils
@@ -159,12 +159,12 @@ install -m 644 api/target/myfaces-api-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/
 touch $RPM_BUILD_ROOT%{_javadir}/jsf_1_2_api.jar
 
 # poms
-install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/maven2/poms
-install -m 644 pom.xml $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP.%{parent}-core12.pom
+install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
+install -m 644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{parent}-core12.pom
 %add_to_maven_depmap org.apache.myfaces.core myfaces-core-project %{version} JPP/%{parent} core12
-install -m 644 api/pom.xml $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP.%{parent}-core12-api.pom
+install -m 644 api/pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{parent}-core12-api.pom
 %add_to_maven_depmap org.apache.myfaces.core myfaces-api %{version} JPP/%{parent} core12-api
-install -m 644 %{SOURCE3} $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP.%{parent}-master.pom
+install -m 644 %{SOURCE3} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{parent}-master.pom
 %add_to_maven_depmap org.apache.myfaces myfaces 5 JPP/%{parent} master
 
 # javadoc
@@ -180,19 +180,22 @@ EOF
 %doc assembly/src/main/resources/LICENSE.txt
 %exclude %{_javadir}/*.jar
 %{_javadir}/%{parent}/*.jar
-%{_datadir}/maven2/poms/*
+%{_mavenpomdir}/*
 %{_mavendepmapfragdir}/*
-%exclude %{_datadir}/maven2/poms/JPP.myfaces-master.pom
+%exclude %{_mavenpomdir}/JPP.myfaces-master.pom
 
 %files javadoc
 %{_javadocdir}/%{name}-%{version}
 %{_javadocdir}/%{name}
 
 %files parent
-%{_datadir}/maven2/poms/JPP.myfaces-master.pom
+%{_mavenpomdir}/JPP.myfaces-master.pom
 
 
 %changelog
+* Fri Mar 22 2013 Igor Vlasenko <viy@altlinux.ru> 0:1.2.3-alt7_2jpp6
+- use jmock1
+
 * Sat May 05 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.2.3-alt6_2jpp6
 - fixed build with new testng and xbean
 
