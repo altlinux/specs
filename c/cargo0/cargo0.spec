@@ -52,7 +52,7 @@ BuildRequires: jpackage-compat
 
 Name:           cargo0
 Version:        0.9
-Release:        alt11_5jpp5
+Release:        alt12_5jpp5
 Epoch:          0
 Summary:        Cargo container wrapper
 License:        ASL 2.0
@@ -101,7 +101,7 @@ BuildRequires: plexus-container-default
 BuildRequires: plexus-utils
 BuildRequires: jetty5
 BuildRequires: junit
-BuildRequires: jmock
+BuildRequires: jmock1
 BuildRequires: xmlunit
 BuildRequires: jpackage-utils >= 0:1.7.4
 BuildRequires: ant >= 0:1.6.5
@@ -270,7 +270,7 @@ mvn-jpp -Dmaven.compile.target=1.5 -Dmaven.javadoc.source=1.5  \
         -Dmaven.repo.local=$MAVEN_REPO_LOCAL \
         install javadoc:javadoc
 %else
-export CLASSPATH=$(build-classpath geronimo-ejb-2.1-api geronimo-servlet-2.4-api junit commons-vfs commons-logging xalan-j2 jmock commons-codec plexus/container-default plexus/utils)
+export CLASSPATH=$(build-classpath geronimo-ejb-2.1-api geronimo-servlet-2.4-api junit commons-vfs commons-logging xalan-j2 jmock1 commons-codec plexus/container-default plexus/utils)
 export CLASSPATH=${CLASSPATH}:`pwd`/core/api/util/target/classes:`pwd`/core/api/util/target/test-classes
 export CLASSPATH=${CLASSPATH}:`pwd`/core/api/module/target/classes:`pwd`/core/api/module/target/test-classes
 export CLASSPATH=${CLASSPATH}:`pwd`/core/api/container/target/classes:`pwd`/core/api/container/target/test-classes
@@ -390,61 +390,61 @@ install -m 644 extensions/maven2/target/%{oldname}-maven2-plugin-%{m2plversion}.
 
 # poms 
 
-install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/maven2/poms
+install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
 install -m 644 core/api/container/pom.xml \
-   $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP.cargo0-cargo0-core-api-container.pom
+   $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.cargo0-cargo0-core-api-container.pom
 install -m 644 core/api/generic/pom.xml \
-   $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP.cargo0-cargo0-core-api-generic.pom
+   $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.cargo0-cargo0-core-api-generic.pom
 install -m 644 core/api/module/pom.xml \
-   $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP.cargo0-cargo0-core-api-module.pom
+   $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.cargo0-cargo0-core-api-module.pom
 install -m 644 core/api/pom.xml \
-   $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP.cargo0-cargo0-core-api.pom
+   $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.cargo0-cargo0-core-api.pom
 install -m 644 core/api/util/pom.xml \
-   $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP.cargo0-cargo0-core-api-util.pom
+   $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.cargo0-cargo0-core-api-util.pom
 install -m 644 core/containers/geronimo/pom.xml \
-   $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP.cargo0-cargo0-core-container-geronimo.pom
+   $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.cargo0-cargo0-core-container-geronimo.pom
 install -m 644 core/containers/jboss/pom.xml \
-   $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP.cargo0-cargo0-core-container-jboss.pom
+   $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.cargo0-cargo0-core-container-jboss.pom
 install -m 644 core/containers/jetty/pom.xml \
-   $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP.cargo0-cargo0-core-container-jetty.pom
+   $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.cargo0-cargo0-core-container-jetty.pom
 install -m 644 core/containers/jo/pom.xml \
-   $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP.cargo0-cargo0-core-container-jo.pom
+   $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.cargo0-cargo0-core-container-jo.pom
 install -m 644 core/containers/orion/pom.xml \
-   $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP.cargo0-cargo0-core-container-orion.pom
+   $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.cargo0-cargo0-core-container-orion.pom
 install -m 644 core/containers/pom.xml \
-   $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP.cargo0-cargo0-core-containers.pom
+   $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.cargo0-cargo0-core-containers.pom
 install -m 644 core/containers/resin/pom.xml \
-   $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP.cargo0-cargo0-core-container-resin.pom
+   $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.cargo0-cargo0-core-container-resin.pom
 install -m 644 core/containers/tomcat/pom.xml \
-   $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP.cargo0-cargo0-core-container-tomcat.pom
+   $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.cargo0-cargo0-core-container-tomcat.pom
 install -m 644 core/containers/weblogic/pom.xml \
-   $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP.cargo0-cargo0-core-container-weblogic.pom
+   $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.cargo0-cargo0-core-container-weblogic.pom
 install -m 644 core/documentation/pom.xml \
-   $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP.cargo0-cargo0-core-documentation.pom
+   $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.cargo0-cargo0-core-documentation.pom
 install -m 644 core/pom.xml \
-   $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP.cargo0-cargo0-core.pom
+   $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.cargo0-cargo0-core.pom
 install -m 644 core/samples/java/pom.xml \
-   $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP.cargo0-cargo0-core-samples-java.pom
+   $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.cargo0-cargo0-core-samples-java.pom
 install -m 644 core/samples/pom.xml \
-   $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP.cargo0-cargo0-core-samples.pom
+   $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.cargo0-cargo0-core-samples.pom
 install -m 644 core/uberjar/pom.xml \
-   $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP.cargo0-cargo0-core-uberjar.pom
+   $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.cargo0-cargo0-core-uberjar.pom
 install -m 644 extensions/ant/pom.xml \
-   $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP.cargo0-cargo0-ant.pom
+   $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.cargo0-cargo0-ant.pom
 install -m 644 extensions/maven2/pom.xml \
-   $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP.cargo0-cargo0-maven2-plugin.pom
+   $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.cargo0-cargo0-maven2-plugin.pom
 install -m 644 extensions/maven/pom.xml \
-   $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP.cargo0-cargo0-maven-plugin.pom
+   $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.cargo0-cargo0-maven-plugin.pom
 install -m 644 extensions/pom.xml \
-   $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP.cargo0-cargo0-extensions.pom
+   $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.cargo0-cargo0-extensions.pom
 install -m 644 pom/pom.xml \
-   $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP.cargo0-cargo0-parent.pom
+   $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.cargo0-cargo0-parent.pom
 install -m 644 pom.xml \
-   $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP.cargo0-cargo0-trunks.pom
+   $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.cargo0-cargo0-trunks.pom
 install -m 644 resources/build-tools/pom.xml \
-   $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP.cargo0-cargo0-build-tools.pom
+   $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.cargo0-cargo0-build-tools.pom
 install -m 644 resources/pom.xml \
-   $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP.cargo0-cargo0-resources.pom
+   $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.cargo0-cargo0-resources.pom
 
 # depmap frags
 %add_to_maven_depmap org.codehaus.cargo cargo-core-api-container %{version} JPP/cargo0 cargo0-core-api-container
@@ -545,7 +545,7 @@ ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadir}/%{name}/%{name}-sample-java*.jar
 %{_javadir}/%{name}/%{name}-ant*.jar
 %{_javadir}/%{name}/%{name}-build-tools*.jar
-%{_datadir}/maven2/poms/*
+%{_mavenpomdir}/*
 %{_mavendepmapfragdir}/*
 %if %{gcj_support}
 %dir %{_libdir}/gcj/%{name}
@@ -568,6 +568,9 @@ ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Fri Mar 22 2013 Igor Vlasenko <viy@altlinux.ru> 0:0.9-alt12_5jpp5
+- use jmock1
+
 * Wed Sep 19 2012 Igor Vlasenko <viy@altlinux.ru> 0:0.9-alt11_5jpp5
 - fixed build with assembly plugin
 
