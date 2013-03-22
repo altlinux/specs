@@ -1,6 +1,6 @@
 Name: lzip
-Version: 1.13
-Release: alt2
+Version: 1.14
+Release: alt1
 
 Summary: LZMA file compressor
 License: GPL v3+
@@ -55,6 +55,9 @@ make all info
 %_infodir/lzip.info*
 
 %changelog
+* Fri Mar 22 2013 Michael Shigorin <mike@altlinux.org> 1.14-alt1
+- new version (watch file uupdate)
+
 * Wed May 09 2012 Michael Shigorin <mike@altlinux.org> 1.13-alt2
 - added watch file
 
