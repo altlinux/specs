@@ -1,6 +1,6 @@
 Name: net-tools
 Version: 1.60
-Release: alt17
+Release: alt18
 
 Summary: The basic tools for setting up networking
 License: GPLv2+
@@ -172,6 +172,8 @@ find -type f -print0 |xargs -r0 sed -i 's|/var/lock|&/serial|g' --
 
 # Drop token ring support
 sed -i '/Token ring/s/y$/n/' config.in
+# Drop Metricom radio support
+sed -i '/STRIP (Metricom radio) support/s/y$/n/' config.in
 
 %build
 export CFLAGS='%optflags'
@@ -207,6 +209,9 @@ rm -r %buildroot%_mandir/*_*
 %doc README* TODO
 
 %changelog
+* Sat Mar 23 2013 Terechkov Evgenii <evg@altlinux.org> 1.60-alt18
+- Drop Metricom radio support
+
 * Mon Mar 11 2013 Fr. Br. George <george@altlinux.ru> 1.60-alt17
 - Drop token ring suport
 
