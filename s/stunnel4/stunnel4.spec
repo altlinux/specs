@@ -3,7 +3,7 @@
 
 Summary: Universal SSL tunnel
 Name: stunnel4
-Version: 4.52
+Version: 4.56
 Release: alt1
 License: GPLv2+
 Group: Networking/Other
@@ -74,13 +74,18 @@ stunnel acts as inetd service.
 
 %install
 install -d \
-	%buildroot{/etc/{rc.d/init.d,xinetd.d,sysconfig},%_var/{lib,run}/stunnel}
+	%buildroot{/etc/{rc.d/init.d,xinetd.d,sysconfig},%_var/{lib,run}/stunnel} \
+	%buildroot/%systemd_unitdir
 
 %make install DESTDIR=%buildroot
 
 mv -f \
 	%buildroot%_sysconfdir/stunnel/stunnel.conf-sample \
 	%buildroot%_sysconfdir/stunnel/stunnel.conf
+
+mv -f \
+	tools/stunnel.service \
+	%buildroot/%systemd_unitdir/stunnel.service
 
 install -m755 %SOURCE1 %buildroot/etc/rc.d/init.d/stunnel
 install -m644 %SOURCE3 %buildroot/etc/xinetd.d/stunnel
@@ -118,6 +123,7 @@ rm -f  -- %buildroot%_sysconfdir/stunnel/stunnel.pem
 %_mandir/man8/*
 
 %files standalone
+%systemd_unitdir/stunnel.service
 %attr(754,root,root) /etc/rc.d/init.d/stunnel
 %attr(0600,root,root) %ghost %config(missingok,noreplace) %verify(not md5 size mtime) %_ssldir/certs/stunnel.pem
 %attr(0600,root,root) %ghost %config(missingok,noreplace) %verify(not md5 size mtime) %_ssldir/private/stunnel.pem
@@ -126,6 +132,9 @@ rm -f  -- %buildroot%_sysconfdir/stunnel/stunnel.pem
 %config(noreplace) %verify(not md5 mtime size) /etc/xinetd.d/stunnel
 
 %changelog
+* Sat Mar 23 2013 Alexey Gladkov <legion@altlinux.ru> 4.56-alt1
+- New version (4.56).
+
 * Fri Jan 13 2012 Alexey Gladkov <legion@altlinux.ru> 4.52-alt1
 - New version (4.52).
 
