@@ -1,7 +1,7 @@
 %define oname xapian-bindings
 
 Name: python-module-xapian
-Version: 1.2.13
+Version: 1.2.14
 Release: alt1
 
 Summary: Xapian search engine interface for Python
@@ -49,6 +49,9 @@ rm -rf %buildroot%_docdir/%oname/
 %python_sitelibdir/*
 
 %changelog
+* Sat Mar 23 2013 Michael Shigorin <mike@altlinux.org> 1.2.14-alt1
+- 1.2.14
+
 * Thu Feb 21 2013 Michael Shigorin <mike@altlinux.org> 1.2.13-alt1
 - 1.2.13
 
