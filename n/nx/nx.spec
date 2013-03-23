@@ -1,28 +1,34 @@
+%define tjpg_ver 1.0.1
+%def_without tjpg
+
 Name: nx
-Version: 3.5.0
-Release: alt1.1
+Version: 3.5.1
+Release: alt11
 
 Summary: Next Generation Remote Display
 
-Packager: Boris Savelev <boris@altlinux.org>
+Packager: Denis Baranov <baraka@altlinux.ru>
 
 Group: Networking/Remote access
 License: GPL, MIT/X11 for X11 bits
 Url: http://www.nomachine.com
 
-Source: nxagent-%version-2.tar
-Source1: nxauth-%version-1.tar
-Source3: nxcomp-%version-1.tar
+Source: ftp://updates.etersoft.ru/pub/Etersoft/RX@Etersoft/last/source/tarball/nxagent-%version-11.tar
+Source1: nxauth-%version-3.tar
+Source3: nxcomp-%version-7.tar
 Source4: nxcompext-%version-1.tar
-Source5: nxcompsh-%version-1.tar
-Source6: nxcompshad-%version-2.tar
+Source5: nxcompsh-%version-2.tar
+Source6: nxcompshad-%version-3.tar
 Source7: nxesd-%version-2.tar
-Source9: nxproxy-%version-1.tar
+Source9: nxproxy-%version-2.tar
 Source10: nxscripts-%version-1.tar
-Source12: nxservice-%version-1.tar
-Source13: nxssh-%version-1.tar
-Source15: nxwin-%version-1.tar
-Source16: nx-X11-%version-1.tar
+Source12: nxservice-%version-2.tar
+Source13: nxssh-%version-2.tar
+Source16: nx-X11-%version-4.tar
+%if_with tjpg
+#http://sourceforge.net/projects/libjpeg-turbo/files/%tjpg_ver/libjpeg-turbo-%tjpg_ver.tar.gz
+Source17: libjpeg-turbo-%tjpg_ver.tar
+%endif
 Source18: docs.tar
 Source19: nxfind-provides.sh
 Source50: nxagent.1
@@ -45,6 +51,7 @@ Patch40: nx-X11-dimbor.patch
 Patch41: nxagent.MotifWMHints_Utf8Names.dimbor.patch
 Patch42: nxa_wine_close_delay.patch
 Patch43: nx-X11-dimbor_x64.patch
+Patch44: nxcomp-1.5.0-pic.patch
 
 # gentoo
 Patch50: nx-3.3.0-cflags.patch
@@ -52,6 +59,7 @@ Patch50: nx-3.3.0-cflags.patch
 # list
 Patch60: createpixmap_bounds_check.patch
 Patch61: nx-X11-fix_format.patch
+Patch62: 204_nxagent_repaint-solidpict.full.patch
 
 # debian
 Patch85: 85_nx-X11_debian-ld.patch
@@ -63,7 +71,9 @@ Patch93: 93_export_remote_keyboard_config.patch
 Patch100: wmclass.patch
 Patch101: byerace.patch
 Patch102: sa_restorer.patch
-Patch103: nx-3.5.0-alt-libpng15.patch
+
+#libpng
+Patch110: nx-3.5.0-libpng15.patch
 
 
 Obsoletes: NX
@@ -78,17 +88,26 @@ Provides: libXcompext = %version
 Obsoletes: libXcompshad
 Provides: libXcompshad = %version
 
-%define _use_internal_dependency_generator 0
-%define __find_provides %SOURCE19
+#define _use_internal_dependency_generator 0
+#define __find_provides %SOURCE19
 
-BuildRequires: docbook-utils gcc-c++ groff-base
+BuildRequires: docbook-utils gcc-c++ groff-base makedepend
 BuildRequires: libXdamage-devel libXrandr-devel libXt-devel libXtst-devel
+BuildRequires: libpam-devel libesd-devel libpng-devel
+BuildRequires: libssl-devel libstdc++-devel zlib-devel
+BuildRequires: libfreetype-devel libXmu-devel libXcomposite-devel libXpm-devel libXext-devel
 BuildRequires: libalsa-devel libpng-devel zlib-devel libpam-devel
-BuildRequires: libssl-devel libstdc++-devel makedepend
-BuildRequires: libfreetype libXmu-devel libXcomposite libXpm
+
+%if_with tjpg
+BuildRequires: nasm
+%else
 BuildRequires: libjpeg-devel
+%endif
 BuildRequires: libaudiofile-devel
 
+# due "can't find 'fixed' font"
+Requires: fonts-bitmap-misc
+Requires: xkeyboard-config
 
 %description
 NX is an exciting new technology for remote display. It provides near local
@@ -96,7 +115,10 @@ speed application responsiveness over high latency, low bandwidth links. The
 core libraries for NX are provided by NoMachine under the GPL.
 
 %prep
-%setup -c -a1 -a3 -a4 -a5 -a6 -a7 -a9 -a10 -a12 -a13 -a15 -a16
+%setup -c -a1 -a3 -a4 -a5 -a6 -a7 -a9 -a10 -a12 -a13 -a16
+%if_with tjpg
+%setup -c -a17
+%endif
 
 %patch0 -p0
 %patch2 -p0
@@ -112,6 +134,7 @@ core libraries for NX are provided by NoMachine under the GPL.
 %patch41 -p0
 %patch42 -p0
 %patch43 -p0
+%patch44 -p0
 
 %patch50 -p0
 
@@ -119,6 +142,7 @@ core libraries for NX are provided by NoMachine under the GPL.
 
 cd nx-X11
 %patch61 -p2
+%patch62 -p2
 %patch85 -p1
 %patch90 -p1
 # disable debug?
@@ -133,9 +157,8 @@ cd ..
 cd nxcomp
 %patch101 -p1
 %patch102 -p1
+%patch110 -p1
 cd ..
-
-%patch103 -p1
 
 cat >> nx-X11/config/cf/host.def << EOF
 #ifdef  i386Architecture
@@ -174,6 +197,17 @@ pushd nx-X11
 %make_build -f Makefile.alt Includes
 popd
 
+%if_with tjpg
+%__subst "s|-ljpeg|-ljpeg-turbo|" nx*/configure.in nx*/configure
+# turbo-jpeg
+cd libjpeg-turbo-%tjpg_ver
+sed -i -e 's|libjpeg|libjpeg-turbo|g' -e 's|-ljpeg|-ljpeg-turbo|g' Makefile.* configure
+%configure
+%make_build
+export LDFLAGS="-L`pwd`/.libs -Wl,-rpath-link,`pwd`/.libs"
+cd -
+%endif
+
 # build Compression Library and Proxy and Extended Compression Library
 for i in nxcomp nxproxy nxcompshad nxcompext nxcompsh; do
 pushd $i
@@ -208,7 +242,11 @@ popd
 
 # build X11 Support Libraries and Agents
 pushd nx-X11
+%if_with tjpg
+%make_build TURBOJPG="$LDFLAGS" World
+%else
 %make_build World
+%endif
 popd
 
 %install
@@ -231,6 +269,10 @@ cp -a nx-X11/lib/X11/libX11-nx.so.* \
 
 install -m 755 nx-X11/programs/Xserver/nxagent \
 %buildroot%_bindir/
+
+%if_with tjpg
+cp -a libjpeg-turbo-%tjpg_ver/.libs/libjpeg-turbo.so.* %buildroot%_libdir/
+%endif
 
 # install Compression Libraries and Proxy
 cp -a nxcomp/libXcomp.so.* %buildroot%_libdir/
@@ -272,10 +314,10 @@ ln -s ../bin/nxagent %buildroot%_libdir
 mkdir -p %buildroot%_libdir/nxserver/xserver
 mv %buildroot%_sysconfdir/X11/xserver/SecurityPolicy %buildroot%_libdir/nxserver/xserver/SecurityPolicy
 
-# fix keyboard layout switch (need fix)
-mkdir -p %buildroot%_sysconfdir/nxagent/xkb
-ln -fs ../../../var/lib/xkb %buildroot%_sysconfdir/nxagent/xkb/compiled
-ln -fs ../../../../../etc/nxagent/xkb %buildroot%_libdir/nxserver/lib/X11/
+# fix keyboard layout switch
+mkdir -p %buildroot%_sysconfdir/nxagent/xkb/compiled/
+#ln -fs ../../../var/lib/xkb %buildroot%_sysconfdir/nxagent/xkb/compiled
+ln -fs ../../../../../%_sysconfdir/nxagent/xkb %buildroot%_libdir/nxserver/lib/X11/
 
 rm -rf %buildroot%_sysconfdir/X11
 rm -rf %buildroot%_sysconfdir/fonts
@@ -320,24 +362,74 @@ ln -fs ../libXrender-nx.so.1 %buildroot%_libdir/nxserver/libXrender.so.1
 %_man1dir/*
 
 %changelog
-* Fri Oct 05 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.5.0-alt1.1
-- Rebuilt with libpng15
+* Sat Mar 23 2013 Vitaly Lipatov <lav@altlinux.ru> 3.5.1-alt11
+- build in Sisyphus (ALT bug # 27515)
 
-* Thu Jun 16 2011 Boris Savelev <boris@altlinux.org> 3.5.0-alt1
-- remove turbo-jpeg completly
-- remove vendor check
-- up to 3.5.0
+* Tue Dec 18 2012 Vitaly Lipatov <lav@altlinux.ru> 3.5.1-alt10
+- fix clipboard problem in nxagent (eterbug #4332)
+
+* Thu Dec 13 2012 Denis Baranov <baraka@altlinux.ru> 3.5.1-alt9
+- add spec, add new patch to stop corrupting with text rendering (eterbug #6284)
+- discard revert "Add patch "Revert update for nxagent-to-3.4.0-5 for file" (eterbug#6284)"
+
+* Fri Dec 07 2012 Vitaly Lipatov <lav@altlinux.ru> 3.5.1-alt8
+- nxagent: add /usr/share/fonts/bitmap/misc path to font search path (eterbug #7265)
+
+* Fri Dec 07 2012 Vitaly Lipatov <lav@altlinux.ru> 3.5.1-alt7
+- spec: add fonts-bitmap-misc requires (eterbug #7265)
+- hosts.def: add /usr/share/fonts/bitmap/misc path to font search path (eterbug #7265)
+- remove nxwin (needed only for build nxclient for Windows)
+
+* Tue Aug 07 2012 Denis Baranov <baraka@altlinux.ru> 3.5.1-alt6
+- add patch "Revert update for nxagent-to-3.4.0-5 for file" (eterbug#6284)
+- add patch from linuxforum (Dimbor)  - nxcomp-1.5.0-pic.patch
+
+* Mon Aug 06 2012 Denis Baranov <baraka@altlinux.ru> 3.5.1-alt5
+- update from Nomacjine sorce  - nx-X11-3.5.0-2
+
+* Mon Aug 06 2012 Denis Baranov <baraka@altlinux.ru> 3.5.1-alt4
+- update source from NoMachine  - nxagent-3.5.0-9  - nxwin-3.5.0-4
+
+* Mon Aug 06 2012 Denis Baranov <baraka@altlinux.ru> 3.5.1-alt3
+- add patch for libpng nx-3.5.0-libpng15.patch
+- wmclass.patch: Add -lX11 link
+- remove extra buildreq
+
+* Sat Sep 24 2011 Denis Baranov <baraka@altlinux.ru> 3.5.1-alt2
+- nxssh: add lose files, fix build
+
+* Sat Sep 24 2011 Denis Baranov <baraka@altlinux.ru> 3.5.1-alt1
+- nxssh: add path for use High Performance SSH (HPN-SSH)
+
+* Mon Aug 29 2011 Denis Baranov <baraka@altlinux.ru> 3.5.0-eter2
+- enable nxservice with patch
+- fix nxservice build
 - add symlinks for X11 libs to %%_libdir/nxserver
+- remove nxservice
 - build nxesd staticly with libesd
 - build nxcomp* with rpath
 
-* Fri Apr 08 2011 Lenar Shakirov <snejok@altlinux.ru> 3.4.0-alt15
-- fixed build:
-  + libarts-devel removed from Sisyphus
-  + libalsa-devel libpng-devel zlib-devel was added to spec
+* Wed Jul 20 2011 Denis Baranov <baraka@altlinux.ru> 3.5.0-eter1
+- libjpeg-turbo-1.1.1.tar.gz
+- nxwin-3.5.0-2.tar.gz
+- nxssh-3.5.0-2.tar.gz
+- nxservice-3.5.0-1.tar.gz
+- nxscripts-3.5.0-1.tar.gz
+- nxproxy-3.5.0-1.tar.gz
+- nxesd-3.5.0-2.tar.gz
+- nxcompshad-3.5.0-2.tar.gz
+- nxcompsh-3.5.0-1.tar.gz
+- nxcompext-3.5.0-1.tar.gz
+- nxcomp-3.5.0-2.tar.gz
+- nxauth-3.5.0-1.tar.gz
+- nxagent-3.5.0-2.tar.gz
+- nx-X11-3.5.0-1.tar.gz
 
-* Mon Feb 07 2011 Boris Savelev <boris@altlinux.org> 3.4.0-alt14
-- build for Sisyphus
+* Fri Jul 01 2011 Vitaly Lipatov <lav@altlinux.ru> 3.4.0-alt15
+- do not pack link to /var/lib/xkb
+
+* Wed Mar 02 2011 Denis Baranov <baraka@altlinux.ru> 3.4.0-alt14
+- update nxagent to 3.4.0-16
 
 * Tue Jan 11 2011 Denis Baranov <baraka@etersoft.ru> 3.4.0-alt13.2
 - Fix eterbug #6284
