@@ -1,15 +1,16 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
 Obsoletes: jakarta-regexp = 1.4-alt1
 Obsoletes: jakarta-regexp = 1.4-alt2
 Obsoletes: jakarta-regexp = 1.4-alt3
 Obsoletes: jakarta-regexp = 1.4-alt4
 BuildRequires: /proc
 BuildRequires: jpackage-compat
-# fedora bcond_with macro
-%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
-%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
-%define version 1.5
+# %name or %version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name regexp
-# Copyright (c) 2000-2010, JPackage Project
+%define version 1.5
+# Copyright (c) 2000-2005, JPackage Project
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -39,48 +40,27 @@ BuildRequires: jpackage-compat
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
-%define with()          %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
-%define without()       %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
-%define bcond_with()    %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
-%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
-
-#def_with gcj_support
-%bcond_with gcj_support
-
-%if %with gcj_support
-%define gcj_support 0
-%else
-%define gcj_support 0
-%endif
-
-%define full_name       jakarta-%{name}
+%global full_name       jakarta-%{name}
 
 Name:           regexp
 Version:        1.5
-Release:        alt1_2jpp6
+Release:        alt1_9jpp7
 Epoch:          0
 Summary:        Simple regular expressions API
 License:        ASL 2.0
 Group:          Development/Java
-URL:            http://jakarta.apache.org/regexp/
+Url:            http://jakarta.apache.org/%{name}/
 Source0:        http://www.apache.org/dist/jakarta/regexp/jakarta-regexp-%{version}.tar.gz
-Source1:        regexp-%{version}.pom
-Requires(pre):  jpackage-utils
-Requires(postun):  jpackage-utils
-Requires:       jpackage-utils
-BuildRequires:  ant
+Source1:        http://repo.maven.apache.org/maven2/%{full_name}/%{full_name}/1.4/%{full_name}-1.4.pom
 BuildRequires:  jpackage-utils >= 0:1.6
-%if %{gcj_support}
-BuildRequires:  java-gcj-compat-devel
-%else
+
+BuildRequires:  ant >= 1.6
 BuildArch:      noarch
-%endif
 Source44: import.info
 Provides: jakarta-regexp = %{version}-%{release}
 
-
 %description
-Regexp is a 100%% Pure Java Regular Expression package that was
+Regexp is a 100% Pure Java Regular Expression package that was
 graciously donated to the Apache Software Foundation by Jonathan Locke.
 He originally wrote this software back in 1996 and it has stood up quite
 well to the test of time.
@@ -98,52 +78,42 @@ Javadoc for %{name}.
 %prep
 %setup -q -n %{full_name}-%{version}
 # remove all binary libs
-%{_bindir}/find -type f -name "*.jar" | %{_bindir}/xargs -t %{__rm}
-
-%{__mkdir} lib
+find . -name "*.jar" -exec rm -f {} \;
 
 %build
-export OPT_JAR_LIST=:
-export CLASSPATH=
-ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Djakarta-site2.dir=. jar javadocs
+mkdir lib
+ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  -Djakarta-site2.dir=. jar javadocs
+
 
 %install
-
 # jars
-%{__mkdir_p} %{buildroot}%{_javadir}
-%{__cp} -p build/jakarta-regexp-%{version}.jar %{buildroot}%{_javadir}/%{name}-%{version}.jar
-(cd %{buildroot}%{_javadir} && for jar in *-%{version}*; do %{__ln_s} ${jar} `/bin/echo ${jar} | %{__sed} "s|-%{version}||g"`; done)
-
-# pom
-%{__mkdir_p} %{buildroot}%{_datadir}/maven2/poms
-%{__cp} -p %{SOURCE1} %{buildroot}%{_datadir}/maven2/poms/JPP-%{name}.pom
-%add_to_maven_depmap regexp regexp %{version} JPP %{name}
+install -d -m 755 %{buildroot}%{_javadir}
+install -m 644 build/*.jar %{buildroot}%{_javadir}/%{name}.jar
 
 # javadoc
-%{__mkdir_p} %{buildroot}%{_javadocdir}/%{name}-%{version}
-%{__cp} -r docs/api/* %{buildroot}%{_javadocdir}/%{name}-%{version}
-%{__ln_s} %{name}-%{version} %{buildroot}%{_javadocdir}/%{name}
+install -d -m 755 %{buildroot}%{_javadocdir}/%{name}-%{version}
+ln -s %{name}-%{version} %{buildroot}%{_javadocdir}/%{name}
+cp -r docs/api/* %{buildroot}%{_javadocdir}/%{name}-%{version}
 
-%if %{gcj_support}
-%{_bindir}/aot-compile-rpm
-%endif
+install -d -m 755 %{buildroot}%{_mavenpomdir}
+install -p -m 644 %{SOURCE1} %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
+%add_maven_depmap -a regexp:regexp
 
 %files
 %doc LICENSE
-%{_javadir}/%{name}-%{version}.jar
 %{_javadir}/%{name}.jar
-%{_datadir}/maven2/poms/JPP-%{name}.pom
+%{_mavenpomdir}/JPP-%{name}.pom
 %{_mavendepmapfragdir}/%{name}
-%if %{gcj_support}
-%dir %{_libdir}/gcj/%{name}
-%{_libdir}/gcj/%{name}/*
-%endif
 
 %files javadoc
+%doc LICENSE
 %{_javadocdir}/%{name}-%{version}
-%{_javadocdir}/%{name}
+%doc %{_javadocdir}/%{name}
 
 %changelog
+* Sun Mar 17 2013 Igor Vlasenko <viy@altlinux.ru> 0:1.5-alt1_9jpp7
+- fc update
+
 * Mon Jan 16 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.5-alt1_2jpp6
 - new jpp relase
 
