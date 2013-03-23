@@ -1,9 +1,10 @@
 # BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
-# Copyright (c) 2000-2011, JPackage Project
+# Copyright (c) 2000-2005, JPackage Project
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -33,39 +34,30 @@ BuildRequires: jpackage-compat
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
-%define gcj_support 0
-%define bootstrap %{?_with_bootstrap:1}%{!?_with_bootstrap:%{?_without_bootstrap:0}%{!?_without_bootstrap:%{?_bootstrap:%{_bootstrap}}%{!?_bootstrap:0}}}
+%global _with_bootstrap 0
+
+%global with_bootstrap %{!?_with_bootstrap:0}%{?_with_bootstrap:1}
+%global without_bootstrap %{?_with_bootstrap:0}%{!?_with_bootstrap:1}
 
 
 Summary:        ObjectWeb Ant task
 Name:           objectweb-anttask
 Version:        1.3.2
-Release:        alt4_5jpp6
+Release:        alt4_7jpp7
 Epoch:          0
 Group:          Development/Java
-License:        LGPL
-URL:            http://asm.objectweb.org/
-%if ! %{gcj_support}
+License:        LGPLv2+
+URL:            http://forge.objectweb.org/projects/monolog/
 BuildArch:      noarch
-%endif
-Source0:        ow_util_ant_tasks_1.3.2.zip
-Source1:        asm-2.1.tar.gz
-Patch0:         ow_util_ant_tasks_build_xml.patch
-Patch1:         ow_util_ant_tasks_DependencyAnalyzer.patch
-Patch2:         ow_util_ant_tasks_MultipleCopy.patch
-BuildRequires:  jpackage-utils >= 0:1.7.6
-BuildRequires:  xalan-j2
-BuildRequires:  ant >= 0:1.7.1
-%if ! %{bootstrap}
+Source0:        http://download.forge.objectweb.org/monolog/ow_util_ant_tasks_1.3.2.zip
+BuildRequires:  ant >= 0:1.6
+BuildRequires:  jpackage-utils >= 0:1.6
+
+%if %{without_bootstrap}
 BuildRequires:  asm2
 Requires:       asm2
 %endif
-Provides:       owanttask
-%if %{gcj_support}
-BuildRequires:    java-gcj-compat-devel
-Requires(post):   java-gcj-compat
-Requires(postun): java-gcj-compat
-%endif
+Requires:       ant
 Source44: import.info
 
 %description
@@ -73,7 +65,7 @@ ObjectWeb Ant task
 
 %package        javadoc
 Summary:        Javadoc for %{name}
-Group:          Development/Documentation
+Group:          Development/Java
 BuildArch: noarch
 
 %description    javadoc
@@ -81,53 +73,45 @@ Javadoc for %{name}.
 
 %prep
 %setup -c -q -n %{name}
-%if %{bootstrap}
-tar xzf %{SOURCE1} asm-2.1/src
-cp -R asm-2.1/src/* src
-%endif
+
+# extract jars iff in bootstrap mode
+%if %{without_bootstrap}
 find . -name "*.class" -exec rm {} \;
 find . -name "*.jar" -exec rm {} \;
-%patch0 -b .sav0
-%patch1 -b .sav1
-%patch2 -b .sav2
-ln -sf $(build-classpath asm2/asm2) externals
-ln -sf $(build-classpath xalan-j2) externals
+%endif
 
 %build
-ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 jar jdoc
+[ -z "$JAVA_HOME" ] && export JAVA_HOME=%{_jvmdir}/java
+export CLASSPATH=$(build-classpath asm2/asm2)
+ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  -Dbuild.compiler=modern -Dbuild.sysclasspath=first jar jdoc
 
 %install
-
 # jars
 install -d -m 0755 $RPM_BUILD_ROOT%{_javadir}
 
-install -m 644 output/lib/ow_util_ant_tasks.jar $RPM_BUILD_ROOT%{_javadir}/%{name}-%{version}.jar
-pushd $RPM_BUILD_ROOT%{_javadir}
-  ln -sf %{name}-%{version}.jar %{name}.jar
-popd
+install -m 644 output/lib/ow_util_ant_tasks.jar\
+ $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
 
 # javadoc
-install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
-cp -pr output/jdoc/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
-(cd $RPM_BUILD_ROOT%{_javadocdir} && ln -sf %{name}-%{version} %{name})
+install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}
+cp -pr output/jdoc/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 
-%if %{gcj_support}
-export CLASSPATH=$(build-classpath gnu-crypto)
-%{_bindir}/aot-compile-rpm
-%endif
+mkdir -p $RPM_BUILD_ROOT%{_sysconfdir}/ant.d
+echo "%{name}" > $RPM_BUILD_ROOT%{_sysconfdir}/ant.d/%{name}
 
 %files
+%doc doc/* 
+%doc output/jdoc/*
 %{_javadir}/*
-%if %{gcj_support}
-%dir %attr(-,root,root) %{_libdir}/gcj/%{name}
-%{_libdir}/gcj/%{name}/%{name}-%{version}.jar.*
-%endif
+%{_sysconfdir}/ant.d/*
 
 %files javadoc
-%doc %{_javadocdir}/%{name}-%{version}
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Sun Mar 17 2013 Igor Vlasenko <viy@altlinux.ru> 0:1.3.2-alt4_7jpp7
+- fc update
+
 * Mon Jan 16 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.3.2-alt4_5jpp6
 - new jpp relase
 
