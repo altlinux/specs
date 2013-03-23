@@ -1,32 +1,26 @@
-%define version 0.8.7
-%define add_rel %nil
-%def_disable static
-
 Name: lirc
 Version: 0.9.0
-Release: alt1.2
+Release: alt2
 
 Summary: The Linux Infrared Remote Control package
 License: GPL
 Group: System/Base
 URL: http://www.lirc.org
-Packager: Anton Farygin <rider@altlinux.ru>
 
-Source: %name-%version%add_rel.tar.bz2
+Source: %name-%version.tar
 Source1: lircd
-Source2: pathdown.sh
-Source4: lircd.sysconfig
-Source5: liblircclient0.pc
+Source2: lircd.sysconfig
+Source3: liblircclient0.pc
+
 Patch1: %name-0.8.1-alt-configure.patch
 Patch2: %name-0.8.0pre4-hiddev_fix.patch
 Patch3: %name-alt-font-fix.patch
-Patch6: %name-0.8.6-devpath.patch
-Patch7: %name-0.8.6-fdiformat.patch
+Patch4: %name-0.8.6-devpath.patch
+Patch5: %name-0.8.6-fdiformat.patch
 
-# Automatically added by buildreq on Fri Nov 27 2009
-BuildRequires: imake libSM-devel libX11-devel libalsa-devel libftdi-devel
+BuildRequires: libX11-devel libalsa-devel libftdi-devel
 
-BuildPreReq: svgalib-devel
+Requires: liblirc = %version-%release
 
 %description
 LIRC is a package that allows you to decode and send infra-red signals
@@ -47,19 +41,12 @@ Requires: lib%name = %version-%release
 %description -n liblirc-devel
 Development library for LIRC
 
-%package -n liblirc-devel-static
-Summary: Development for LIRC
-Group: Development/C
-Requires: lib%name-devel = %version-%release
+%package remotes
+Summary: LIRC remote definitions
+Group: System/Base
+BuildArch: noarch
 
-%description -n liblirc-devel-static
-Static library for LIRC
-
-%package        remotes
-Summary:        LIRC remote definitions
-Group:          System/Base
-
-%description    remotes
+%description remotes
 LIRC is a package that allows you to decode and send infra-red and
 other signals of many (but not all) commonly used remote controls.
 Included applications include daemons which decode the received
@@ -68,12 +55,12 @@ computer with a remote control.  This package contains a collection
 of remote control configuration files.
 
 %prep
-%setup -q -n %name-%version%add_rel
+%setup
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
-%patch6 -p2
-%patch7 -p2
+%patch4 -p2
+%patch5 -p2
 
 for f in remotes/chronos/lircd.conf.chronos \
     remotes/creative/lircd.conf.livedrive remotes/atiusb/lircd.conf.atiusb \
@@ -84,44 +71,24 @@ done
 %build
 %add_optflags -I%_includedir/libftdi
 %autoreconf
-%configure  %{subst_enable static} --localstatedir=%_var --with-x --with-major=61 \
-	    --with-syslog --with-driver=userspace --with-port=0x3f8 --with-irq=4
-NPROCS=1
-%make_build
-pushd contrib/hal
-./gen-hal-fdi.pl
-popd
+%configure  --disable-static --localstatedir=%_var \
+	    --with-x --with-syslog --with-driver=userspace \
+	    --with-port=0x3f8 --with-irq=4
+make
 
 %install
-%makeinstall devdir=%buildroot/dev varrundir=%buildroot/%_runtimedir
-mkdir -p %buildroot/%_runtimedir/%name
-mkdir -p %buildroot%_initdir
-mkdir -p %buildroot/dev
-mkdir -p %buildroot%_datadir/hal/fdi/policy/10osvendor
-install -p -m600 contrib/lircd.conf contrib/lircmd.conf %buildroot%_sysconfdir
-pushd contrib/hal/
-./gen-hal-fdi.pl
-popd
-install -p -m644 contrib/hal/20-ircontrol-lirc.fdi %buildroot%_datadir/hal/fdi/policy/10osvendor/
-install -pD -m644 %SOURCE4 %buildroot%_sysconfdir/sysconfig/lircd
-install -m755 %SOURCE1 %buildroot%_initdir
-chmod +x %buildroot%_initdir/lircd
-touch %buildroot/dev/lirc
-%makeinstall -C $RPM_BUILD_DIR/%name-%version%add_rel/doc/man
-
-mkdir -p %buildroot%_datadir/pkgconfig/
-install -m644 %SOURCE5 %buildroot%_datadir/pkgconfig/
-
-t=$(pwd)/kernel-source-%name-%version
-rm -rf $t
-mkdir -p $t/drivers/scripts
-mkdir -p %buildroot%_usrsrc/kernel/sources
-cp config.h $t/
-cp -a drivers/{*.h,Makefile.kernel} $t/drivers/
-cp %SOURCE2 $t/drivers/scripts/
-
+%makeinstall varrundir=%buildroot/%_runtimedir
+%makeinstall -C doc/man
+install -pm755 -D %SOURCE1 %buildroot%_initdir/lircd
+install -pm644 -D %SOURCE2 %buildroot%_sysconfdir/sysconfig/lircd
+install -pm644 -D %SOURCE3 %buildroot%_datadir/pkgconfig/liblircclient0.pc
+install -pm600 contrib/lircd.conf contrib/lircmd.conf %buildroot%_sysconfdir
+mkdir -p %buildroot/%_runtimedir/lirc %buildroot%_tmpfilesdir
+echo 'd /var/run/lirc 0755 root root' > %buildroot%_tmpfilesdir/lirc.conf
+# relocate to docdir to avoid python deps
+rm -f %buildroot%_bindir/pronto2lirc
 # Put remote definitions in place
-cp -ar remotes $RPM_BUILD_ROOT%{_datadir}/lirc-remotes
+cp -ar remotes %buildroot%_datadir/lirc-remotes
 
 %pre
 /usr/sbin/groupadd -r -f %name &> /dev/null ||:
@@ -133,17 +100,19 @@ cp -ar remotes $RPM_BUILD_ROOT%{_datadir}/lirc-remotes
 %preun_service lircd
 
 %files
-%config(noreplace) %_sysconfdir/sysconfig/*
-%config(noreplace) %_sysconfdir/*.conf
+%doc NEWS TODO doc/lirc.css doc/irxevent.keys doc/html doc/images
+%doc tools/pronto2lirc.py
+%config(noreplace) %_sysconfdir/sysconfig/lircd
+%config(noreplace) %_sysconfdir/lircd.conf
+%config(noreplace) %_sysconfdir/lircmd.conf
 %_initdir/*
 %_bindir/*
-%attr(2711,root,%name) %_sbindir/lircd
+%_sbindir/lircd
 %_sbindir/lircmd
-%_datadir/hal/fdi/policy/10osvendor/*.fdi
-%doc NEWS TODO remotes doc/lirc.css doc/irxevent.keys doc/html doc/images
 %_man1dir/*.1*
 %_man8dir/*.8*
-%dir %_runtimedir/%name
+%_tmpfilesdir/lirc.conf
+%_runtimedir/lirc
 
 %files -n liblirc
 %_libdir/liblirc_client.so.*
@@ -153,16 +122,15 @@ cp -ar remotes $RPM_BUILD_ROOT%{_datadir}/lirc-remotes
 %_includedir/*
 %_datadir/pkgconfig/*
 
-%if_enabled static
-%files -n liblirc-devel-static
-%_libdir/liblirc_client.a
-%endif #static
-
 %files remotes
 %dir %_datadir/lirc-remotes
 %_datadir/lirc-remotes/*
 
 %changelog
+* Sat Mar 23 2013 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.9.0-alt2
+- tmpfiles.d entry added (closes: #28208)
+- do not package ancient utilities, reducing dependencies
+
 * Wed Jan 16 2013 Igor Vlasenko <viy@altlinux.ru> 0.9.0-alt1.2
 - NMU: lirc database of remotes packaged as lirc-remotes subpackage
 
