@@ -1,7 +1,7 @@
 %def_disable static
 
 Name: xapian-core
-Version: 1.2.13
+Version: 1.2.14
 Release: alt1
 
 Summary: The Xapian Probabilistic Information Retrieval Library
@@ -133,6 +133,9 @@ rm -f %buildroot%_libdir/libxapian.a
 %doc HACKING
 
 %changelog
+* Fri Mar 22 2013 Michael Shigorin <mike@altlinux.org> 1.2.14-alt1
+- new version (watch file uupdate)
+
 * Wed Feb 20 2013 Michael Shigorin <mike@altlinux.org> 1.2.13-alt1
 - new version (watch file uupdate)
 
