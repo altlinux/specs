@@ -2,8 +2,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: man
-Version: 1.6f
-Release: alt14
+Version: 1.6g
+Release: alt1
 
 Summary: Programs for formating and displaying the manual pages
 License: GPL
@@ -17,7 +17,7 @@ Source4: whatis.filetrigger
 
 Patch0: man-1.5m2-cvs-fixes.patch
 Patch1: man-1.6f-alt-add-less-R.patch
-Patch2: man-1.5m2-alt-makefile.patch
+Patch2: man-1.6g-alt-makefile.patch
 Patch3: man-alt-bzip2.patch
 Patch4: man-alt-usage_fix.patch
 Patch5: man-1.5k-alt-conf.patch
@@ -33,8 +33,8 @@ Patch15: man-1.5m2-alt-utf8whatis.patch
 Patch16: man-1.5m2-alt-my_xsprintf.patch
 Patch17: man-1.6f-alt-call-pic-tbl-inside-groff.patch
 Patch18: man-1.6f-alt-add-tty-tmac.patch
-Patch19: man-1.6f-alt-man-unpack.patch
-Patch20: man-1.6f-alt-add-man-show-source.patch
+Patch19: man-1.6g-alt-man-unpack.patch
+Patch20: man-1.6g-alt-add-man-show-source.patch
 Patch21: man-1.6f-alt-safer-mode.patch
 Patch22: man-1.6f-remove-unsafe.patch
 
@@ -94,7 +94,7 @@ apropos and whatis.
 %patch17 -p1
 %patch18 -p1
 %patch19 -p1
-%patch20 -p1
+%patch20 -p1 -b .fix20
 %patch21 -p1
 %patch22 -p1
 
@@ -126,8 +126,8 @@ find %buildroot%_mandir -type f -print0 |
 	xargs -r0 chmod 644 --
 
 # See bug ALT#27372 for details
-mkdir -p %buildroot%_sysconfdir/tmpfiles.d
-cat > %buildroot%_sysconfdir/tmpfiles.d/man.conf <<EOF
+mkdir -p %buildroot%_tmpfilesdir
+cat > %buildroot%_tmpfilesdir/man.conf <<EOF
 D %_lockdir/makewhatis 0700 root root -
 EOF
 
@@ -142,7 +142,7 @@ install -pD -m754 %SOURCE3 %buildroot%_sbindir/makewhatis
 
 %find_lang %name --with-man
 
-for man in man.conf apropos whatis; do
+for man in man man.conf apropos whatis makewhatis; do
 	%find_lang "$man" \
 		--output="%name.lang" \
 		--append \
@@ -162,10 +162,12 @@ echo done.
 %_mandir/ru/.charset
 %_mandir/uk/.charset
 %config(noreplace) %_sysconfdir/%name.conf
-%config %_sysconfdir/tmpfiles.d/man.conf
+%_tmpfilesdir/man.conf
 %_bindir/*
 %_man1dir/manpath.1.*
 %_man1dir/man2html.1.*
+%_man1dir/man.1.*
+%_man5dir/man.conf.5.*
 
 %exclude %_bindir/whatis
 %exclude %_bindir/apropos
@@ -201,6 +203,13 @@ echo done.
 %attr(644,cacheman,man) %ghost %_cachedir/man/X11R6/whatis
 
 %changelog
+* Sat Mar 23 2013 Alexey Gladkov <legion@altlinux.ru> 1.6g-alt1
+- New version (1.6g).
+
+* Sat Mar 23 2013 Alexey Gladkov <legion@altlinux.ru> 1.6f-alt15
+- Pack missing man-pages.
+- Move /etc/tmpfiles.d/man.conf -> /lib/tmpfiles.d/man.conf
+
 * Tue Jun 26 2012 Dmitry V. Levin <ldv@altlinux.org> 1.6f-alt14
 - Merged man-base subpackage back to man subpackage; man-whatis
   subpackage is no longer required by man subpackage
