@@ -21,7 +21,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.4.37
-Release: alt2
+Release: alt3
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -1144,6 +1144,7 @@ in the kernel and update the documentation to reflect these changes.
 %package -n kernel-man-%flavour-%kernel_branch
 Summary: Linux kernel %kversion-%flavour man pages
 %kernel_doc_package_std_body man
+Provides: kernel-man = %version-%release
 Conflicts: kernel-man > %version-%release
 Conflicts: kernel-man < %version-%release
 
@@ -2501,6 +2502,11 @@ done)
 
 
 %changelog
+* Sat Mar 23 2013 Led <led@altlinux.ru> 3.4.37-alt3
+- updated:
+  + fix-mm
+  + feat-drivers-block--btier
+
 * Thu Mar 21 2013 Led <led@altlinux.ru> 3.4.37-alt2
 - added:
   + feat-drivers-block--btier
