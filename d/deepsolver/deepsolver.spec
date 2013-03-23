@@ -1,6 +1,6 @@
 
 Name: deepsolver
-Version: 0.3.0
+Version: 0.3.1
 Release: alt1
 
 Packager: Michael Pozhidaev <msp@altlinux.ru>
@@ -86,7 +86,7 @@ make DESTDIR=%buildroot install
 
 %__install -d -m 755 %buildroot%_sysconfdir/%name
 %__cp -r ./etc/. %buildroot%_sysconfdir/%name
-%__subst s/i586/%_arch/ %buildroot%_sysconfdir/%name/conf.d/msp.repo
+%__subst s/i586/%_arch/ %buildroot%_sysconfdir/%name/conf.d/sisyphus.repo
 
 %__install -d -m 755 %buildroot%_localstatedir/%name
 
@@ -114,6 +114,11 @@ make DESTDIR=%buildroot install
 %_bindir/ds-provides
 
 %changelog
+* Sat Mar 23 2013 Michael Pozhidaev <msp@altlinux.ru> 0.3.1-alt1
+- Sisyphus is chosen as main repository
+- --nothing command line key is changed to --dry-run
+- base.* index metadata directory is changed to base/ds.*
+
 * Mon Mar 04 2013 Michael Pozhidaev <msp@altlinux.ru> 0.3.0-alt1
 - New version
 
