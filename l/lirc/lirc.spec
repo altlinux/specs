@@ -1,6 +1,6 @@
 Name: lirc
 Version: 0.9.0
-Release: alt2
+Release: alt3
 
 Summary: The Linux Infrared Remote Control package
 License: GPL
@@ -10,7 +10,8 @@ URL: http://www.lirc.org
 Source: %name-%version.tar
 Source1: lircd
 Source2: lircd.sysconfig
-Source3: liblircclient0.pc
+Source3: lircd.service
+Source4: liblircclient0.pc
 
 Patch1: %name-0.8.1-alt-configure.patch
 Patch2: %name-0.8.0pre4-hiddev_fix.patch
@@ -81,7 +82,8 @@ make
 %makeinstall -C doc/man
 install -pm755 -D %SOURCE1 %buildroot%_initdir/lircd
 install -pm644 -D %SOURCE2 %buildroot%_sysconfdir/sysconfig/lircd
-install -pm644 -D %SOURCE3 %buildroot%_datadir/pkgconfig/liblircclient0.pc
+install -pm644 -D %SOURCE3 %buildroot%systemd_unitdir/lircd.service
+install -pm644 -D %SOURCE4 %buildroot%_datadir/pkgconfig/liblircclient0.pc
 install -pm600 contrib/lircd.conf contrib/lircmd.conf %buildroot%_sysconfdir
 mkdir -p %buildroot/%_runtimedir/lirc %buildroot%_tmpfilesdir
 echo 'd /var/run/lirc 0755 root root' > %buildroot%_tmpfilesdir/lirc.conf
@@ -105,9 +107,10 @@ cp -ar remotes %buildroot%_datadir/lirc-remotes
 %config(noreplace) %_sysconfdir/sysconfig/lircd
 %config(noreplace) %_sysconfdir/lircd.conf
 %config(noreplace) %_sysconfdir/lircmd.conf
+%systemd_unitdir/lircd.service
 %_initdir/*
 %_bindir/*
-%_sbindir/lircd
+%attr(2711,root,%name) %_sbindir/lircd
 %_sbindir/lircmd
 %_man1dir/*.1*
 %_man8dir/*.8*
@@ -127,6 +130,9 @@ cp -ar remotes %buildroot%_datadir/lirc-remotes
 %_datadir/lirc-remotes/*
 
 %changelog
+* Sun Mar 24 2013 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.9.0-alt3
+- systemd service file added for lircd
+
 * Sat Mar 23 2013 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.9.0-alt2
 - tmpfiles.d entry added (closes: #28208)
 - do not package ancient utilities, reducing dependencies
