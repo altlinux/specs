@@ -1,8 +1,11 @@
-BuildRequires: plexus-resources
-BuildRequires: oro
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: unzip
+# END SourceDeps(oneline)
+BuildRequires: oro plexus-resources
 BuildRequires: /proc
 BuildRequires: jpackage-compat
-# Copyright (c) 2000-2010, JPackage Project
+# Copyright (c) 2000-2005, JPackage Project
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -31,222 +34,123 @@ BuildRequires: jpackage-compat
 # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
-
-%define gcj_support 0
-
-%define with()          %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
-%define without()       %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
-%define bcond_with()    %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
-%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
-
-%bcond_without          maven
-
-
 Name:           pmd
 Version:        4.2.5
-Release:        alt3_2jpp6
+Release:        alt3_14jpp7
 Epoch:          0
 Summary:        Scans Java source code and looks for potential problems
-License:        BSD Style
-Url:            http://pmd.sourceforge.net/
-Group:          Development/Java
-# svn export https://pmd.svn.sourceforge.net/svnroot/pmd/tags/pmd/pmd_release_4_2_5 pmd-4.2.5 && tar cjf pmd-4.2.5.tar.bz2 pmd-4.2.5
-Source0:        pmd-4.2.5.tar.bz2
-Source1:        pmd-4.2.5.pom
-Source2:        %{name}-%{version}-jpp-depmap.xml
-Source3:        %{name}-%{version}-settings.xml
+License:        BSD
 
-Patch0:         pmd-4.2.5-pom.patch
-Patch1:         pmd-ruby.patch
-Patch2:         pmd-4.2.4-no-retroweaver.patch
-Patch3:         pmd-4.2.4-no-classpath-in-manifest.patch
-Requires(post): jpackage-utils >= 0:1.7.5
-Requires(postun): jpackage-utils >= 0:1.7.5
-Requires: ant >= 0:1.7.1
-# FIXME: (dwalluck): Should be 1.1.1
-Requires: jaxen >= 0:1.1
-Requires: objectweb-asm >= 0:3.1
-Requires: junit4 >= 0:4.4
-BuildRequires: ant >= 0:1.7.1
-BuildRequires: ant-junit
-BuildRequires: jaxen >= 0:1.1
-BuildRequires: jpackage-utils >= 0:1.7.5
-BuildRequires: junit4 >= 0:4.4
-BuildRequires: objectweb-asm >= 0:3.1
-%if %with maven
-BuildRequires: maven2 >= 0:2.0.8
-BuildRequires: maven2-plugin-checkstyle
-BuildRequires: maven2-plugin-compiler
-BuildRequires: maven2-plugin-install
-BuildRequires: maven2-plugin-jar
-BuildRequires: maven2-plugin-javadoc
-BuildRequires: maven2-plugin-pmd
-BuildRequires: maven2-plugin-project-info-reports
-BuildRequires: maven2-plugin-resources
-BuildRequires: maven2-plugin-site
-BuildRequires: maven2-default-skin
-BuildRequires: maven-doxia
-BuildRequires: maven-doxia-sitetools
-BuildRequires: maven-jxr
-BuildRequires: maven-surefire-maven-plugin
-BuildRequires: apache-commons-parent
-BuildRequires: fonts-ttf-liberation
-%endif
-%if %{gcj_support}
-BuildRequires: java-gcj-compat-devel
-%else
+Source0:        http://downloads.sourceforge.net/pmd/pmd-src-%{version}.zip
+# This patch has not been sent upstream.  It causes the build to use installed
+# jars for dependencies rather than use those distributed with the source.  It
+# also kills retroweaver dead, dead, dead so it won't interfere with the build.
+Patch0:         pmd-4.2.5-build.patch
+# This patch was sent upstream on 11 Feb 2009.  It fixes a null pointer
+# exception when using the nicerhtml output format.
+Patch1:         pmd-4.2.4-nicerhtml.patch
+# This patch has not been sent upstream.  It updates an ant dep in a pom file
+# to use the latest groupId for ant.
+Patch2:         pmd-4.2.5-antdep.patch
+URL:            http://pmd.sourceforge.net/
+
+BuildRequires:  jpackage-utils >= 0:1.6
+BuildRequires:  ant >= 0:1.6
+BuildRequires:  ant-junit
+BuildRequires:  junit
+BuildRequires:  jaxen >= 0:1.1.1
+BuildRequires:  objectweb-asm >= 0:3.1
+BuildRequires:  objectweb-asm-javadoc >= 0:3.1
+BuildRequires:  xml-commons-apis >= 1.3.02
+Requires:       jpackage-utils >= 0:1.6
+Requires:       jaxen >= 0:1.1.1
+Requires:       objectweb-asm >= 0:3.1
+Requires:       xerces-j2
+Requires:       xml-commons-apis >= 1.3.02
+Group:          Development/Java
 BuildArch:      noarch
-%endif
+
+Provides:       %{name}-manual = %{epoch}:%{version}-%{release}
+Obsoletes:      %{name}-manual < 0:4.0.0-1
 Source44: import.info
 
 %description
-PMD scans Java source code and looks for potential 
-problems like:
-+ Unused local variables 
-+ Empty catch blocks 
-+ Unused parameters 
-+ Empty 'if' statements 
-+ Duplicate import statements 
-+ Unused private methods 
-+ Classes which could be Singletons 
-+ Short/long variable and method names 
-PMD has plugins for JDeveloper, JEdit, JBuilder, 
-NetBeans/Sun ONE Studio, IntelliJ IDEA, TextPad, 
-Maven, Ant, Eclipse, Gel, and Emacs. 
+PMD scans Java source code and looks for potential problems like:
+* Possible bugs: empty try/catch/finally/switch statements
++ Dead code: unused local variables, parameters and private methods
++ Suboptimal code: wasteful String/StringBuffer usage
++ Overcomplicated expressions: unnecessary if statements, for loops
+  that could be while loops
++ Duplicate code: copied/pasted code means copied/pasted bugs
 
-%if %with maven
-%package manual
-Summary:        Manual for %{name}
-Group:          Development/Documentation
-BuildArch: noarch
-
-%description manual
-Documentation for %{name}.
-%endif
+PMD has plugins for JDeveloper, Eclipse, JEdit, JBuilder, BlueJ,
+CodeGuide, NetBeans/Sun Java Studio Enterprise/Creator, IntelliJ IDEA,
+TextPad, Maven, Ant, Gel, JCreator, and Emacs.
 
 %package javadoc
 Summary:        Javadoc for %{name}
-Group:          Development/Documentation
+Group:          Development/Java
+Requires:       objectweb-asm-javadoc
 BuildArch: noarch
 
 %description javadoc
-%{summary}.
+Javadoc for %{name}.
 
 %prep
 %setup -q
-%patch0 -p0
-%patch1 -p0
-%patch2 -p1
-%patch3 -p1
-%{_bindir}/find . -name "*.sh" | %{_bindir}/xargs -t %{__chmod} 0755
-%{_bindir}/find . -name "*.jar" | xargs -t %{__rm}
+%patch0 -p1
+%patch1
+%patch2
 
-%{__ln_s} $(build-classpath objectweb-asm/asm) lib/asm-3.0.jar
-%if %with maven
-cp %{SOURCE3} settings.xml
-sed -i -e "s|<url>__JPP_URL_PLACEHOLDER__</url>|<url>file://`pwd`/.m2/repository</url>|g" settings.xml
-sed -i -e "s|<url>__JAVADIR_PLACEHOLDER__</url>|<url>file://`pwd`/external_repo</url>|g" settings.xml
-sed -i -e "s|<url>__MAVENREPO_DIR_PLACEHOLDER__</url>|<url>file://`pwd`/.m2/repository</url>|g" settings.xml
-%endif
+# remove all binary libs
+find . -name "*.jar" -exec rm -f {} \;
+
+# remove an unneeded script in an otherwise documentation directory
+rm -f etc/fr_docs/copy_up.sh
 
 %build
-export LANG=en_US.ISO8859-1
-%if %with maven
-export MAVEN_REPO_LOCAL=$(pwd)/.m2/repository
-mkdir -p $MAVEN_REPO_LOCAL
-
-mkdir external_repo
-ln -s %{_javadir} external_repo/JPP
-
-export M2_SETTINGS=$(pwd)/settings.xml
-mvn-jpp -Dmaven.compile.target=1.5 -Dmaven.javadoc.source=1.5  \
-        -e \
-        -s $M2_SETTINGS \
-        -Dmaven.test.failure.ignore=true \
-        -Dmaven2.jpp.depmap.file=%{SOURCE2} \
-        -Dmaven.repo.local=$MAVEN_REPO_LOCAL \
-        install javadoc:javadoc 
-#	site
-
-%else
-export OPT_JAR_LIST=`%{__cat} %{_sysconfdir}/ant.d/junit`
-export CLASSPATH=$(build-classpath \
-backport-util-concurrent \
-jaxen \
-junit4 \
-objectweb-asm \
-)
-CLASSPATH=$CLASSPATH:target/classes:target/test-classes
-cd bin
-ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Dbuild.sysclasspath=only dist javadoc
-%endif
+ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 
+ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  -f bin/build.xml -Ddir.lib=%{_javadir} javadoc
 
 %install
-
 # jar
-install -d -m 755 %{buildroot}%{_javadir}
-%if %with maven
-install -p -m 644 target/%{name}-%{version}.jar %{buildroot}%{_javadir}/%{name}-%{version}.jar
-%else
-install -p -m 644 lib/%{name}-%{version}.jar %{buildroot}%{_javadir}/%{name}-%{version}.jar
-%endif
-
-(cd %{buildroot}%{_javadir} && for jar in *-%{version}.jar; do %{__ln_s} ${jar} ${jar/-%{version}/}; done)
-
-install -d -m 755 %{buildroot}%{_datadir}/%{name}-%{version}/etc
-%{__cp} -pr etc/* %{buildroot}%{_datadir}/%{name}-%{version}/etc
-
-install -d -m 755 %{buildroot}%{_datadir}/%{name}-%{version}/rulesets
-%{__cp} -pr rulesets/* %{buildroot}%{_datadir}/%{name}-%{version}/rulesets
-%{__ln_s} %{name}-%{version} %{buildroot}%{_datadir}/%{name}
+install -d -m 755 $RPM_BUILD_ROOT%{_javadir}
+install -m 644 lib/%{name}-%{version}.jar \
+  $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
+install -d -m 755 $RPM_BUILD_ROOT%{_sysconfdir}
+cp -p etc/pmd-nicerhtml.xsl $RPM_BUILD_ROOT%{_sysconfdir}
+install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/%{name}-%{version}
+cp -pr etc/xslt $RPM_BUILD_ROOT%{_datadir}/%{name}-%{version}
+install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/%{name}-%{version}/rulesets
+cp -pr rulesets/* $RPM_BUILD_ROOT%{_datadir}/%{name}-%{version}/rulesets
 
 # pom
-install -d -m 755 %{buildroot}%{_datadir}/maven2/poms
-install -pm 644 %{SOURCE1} %{buildroot}%{_datadir}/maven2/poms/JPP-%{name}.pom
-%add_to_maven_depmap %{name} %{name} %{version} JPP %{name}
+install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
+install -pm 644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
+
+%add_maven_depmap
 
 # javadoc
-install -d -m 755 %{buildroot}%{_javadocdir}/%{name}-%{version}
-%if %with maven
-%{__cp} -pr target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}-%{version}
-# FIXME: (dwalluck): breaks -bi --short-circuit
-rm -rf target/site/apidocs
-%else
-%{__cp} -pr docs/api/* %{buildroot}%{_javadocdir}/%{name}-%{version}
-%endif
-%{__ln_s} %{name}-%{version} %{buildroot}%{_javadocdir}/%{name}
-
-# manual
-%if %with maven
-install -d -m 755 %{buildroot}%{_docdir}/%{name}-%{version}
-#%{__cp} -pr target/site/* %{buildroot}%{_docdir}/%{name}-%{version}/
-%endif
-
-%if %{gcj_support}
-%{_bindir}/aot-compile-rpm
-%endif
+install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}
+cp -pr docs/api/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 
 %files
-%doc LICENSE.txt
+%doc LICENSE.txt etc/changelog.txt etc/fr_docs etc/readme.txt
+%doc etc/pmdProperties.rtf
 %{_javadir}/*.jar
-%{_datadir}/maven2/poms/*
-%{_mavendepmapfragdir}/*
-%{_datadir}/%{name}
 %{_datadir}/%{name}-%{version}
-%if %{gcj_support}
-%dir %{_libdir}/gcj/%{name}
-%{_libdir}/gcj/%{name}/%{name}-%{version}.jar.*
-%endif
-
-%if %with maven
-%files manual
-%doc %{_docdir}/%{name}-%{version}
-%endif
+%config(noreplace) %{_sysconfdir}/pmd-nicerhtml.xsl
+%{_mavenpomdir}/*
+%{_mavendepmapfragdir}/*
 
 %files javadoc
-%doc %{_javadocdir}/*
+%doc LICENSE.txt
+%{_javadocdir}/*
 
 %changelog
+* Sun Mar 17 2013 Igor Vlasenko <viy@altlinux.ru> 0:4.2.5-alt3_14jpp7
+- fc update
+
 * Tue Mar 20 2012 Igor Vlasenko <viy@altlinux.ru> 0:4.2.5-alt3_2jpp6
 - dropped velocity14
 
