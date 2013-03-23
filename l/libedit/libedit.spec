@@ -1,10 +1,10 @@
 %define vrs	3.0
-%define tstamp 	20100424
+%define tstamp 	20121213
 #def_enable Werror
 
 Name: libedit
 Version: %vrs.%tstamp
-Release: alt2
+Release: alt1
 
 Summary: libedit is a replacement or alternative to the GNU readline commandline editing functionality.
 License: BSD
@@ -39,8 +39,8 @@ command line interface for users.
 %prep
 %setup -q -n %name-%tstamp-%vrs
 %patch0 -p1 -b .fix0
-%patch1 -p1 -b .fix1
-%patch2 -p1 -b .fix2
+#patch1 -p1 -b .fix1
+#patch2 -p1 -b .fix2
 
 %build
 %add_optflags %optflags_warnings -Wunused-function -Wunused-label -Wunused-variable -Wunused-value
@@ -63,6 +63,10 @@ command line interface for users.
 %_man5dir/*
 
 %changelog
+* Sat Mar 23 2013 Alexey Gladkov <legion@altlinux.ru> 3.0.20121213-alt1
+- New version.
+- SONAME change: libedit.so.0.0.35 -> libedit.so.0.0.42
+
 * Tue Feb 15 2011 Alexey Tourbin <at@altlinux.ru> 3.0.20100424-alt2
 - rebuilt for debuginfo
 
