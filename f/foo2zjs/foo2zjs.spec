@@ -1,6 +1,6 @@
 Name: foo2zjs
 Version: 20120601
-Release: alt1
+Release: alt2
 
 Summary: ZJS (some HP/Minolta) printer driver
 Summary(ru_RU.UTF8): ZJS драйвер для некоторых принтеров HP/Minolta
@@ -207,6 +207,10 @@ install -m700 %SOURCE2 %buildroot%_sbindir/
 
 rm -rf %buildroot%_docdir/%name/
 
+# temporary till the foo2zjs base sync with foomatic-db
+# drop this line when the file will be removed upstream
+rm %buildroot/usr/share/foomatic/db/source/printer/Samsung-CLP-620.xml
+
 %files -n %name-apps
 %_miconsdir/hplj1020.png
 %_niconsdir/hplj1020.png
@@ -248,6 +252,9 @@ rm -rf %buildroot%_docdir/%name/
 %exclude %_localstatedir/foo2zjs/hplj10xx_gui.tcl
 
 %changelog
+* Sat Mar 23 2013 Igor Vlasenko <viy@altlinux.ru> 20120601-alt2
+- NMU: removed conflict with foomatic-db (closes: 28741)
+
 * Mon Jul 16 2012 Evgeny V Shishkov <shev@altlinux.org> 20120601-alt1
 - 2012-06-01 tarball
 - fix #25798 again
