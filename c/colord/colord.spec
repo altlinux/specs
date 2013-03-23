@@ -8,7 +8,7 @@
 %define _localstatedir %_var
 
 Name: colord
-Version: 0.1.30
+Version: 0.1.31
 Release: alt1
 
 Summary: Color daemon
@@ -32,6 +32,8 @@ BuildRequires: libsqlite3-devel libusb-devel libgusb-devel systemd-devel libsyst
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel libgusb-gir-devel}
 %{?_enable_vala:BuildRequires: vala-tools}
 %{?_enable_print_profiles:BuildRequires: argyllcms}
+# for check
+BuildRequires: /proc dbus-tools-gui valgrind
 
 %description
 colord is a low level system activated daemon that maps color devices to color
@@ -118,6 +120,9 @@ touch %buildroot%_localstatedir/lib/%name/storage.db
 
 %find_lang %name
 
+%check
+#%%make check
+
 %pre
 %_sbindir/groupadd -r -f %colord_group 2>/dev/null ||:
 %_sbindir/useradd -r -n -g %colord_group -d %_localstatedir/%name \
@@ -143,6 +148,10 @@ touch %buildroot%_localstatedir/lib/%name/storage.db
 %_libdir/colord-sensors/libcolord_sensor_colorhug.so
 %_libdir/colord-sensors/libcolord_sensor_argyll.so
 %_libdir/colord-sensors/libcolord_sensor_dtp94.so
+%_libdir/colord-sensors/libdtp94-private.so
+%_libdir/colord-sensors/libhuey-private.so
+%_libdir/colord-sensors/libmunki-private.so
+
 
 %dir %_libdir/colord-plugins
 %_libdir/colord-plugins/libcd_plugin_camera.so
@@ -216,9 +225,6 @@ touch %buildroot%_localstatedir/lib/%name/storage.db
 %_libdir/libcolord.so.*
 %_libdir/libcolordprivate.so.*
 %_libdir/libcolorhug.so.*
-%_libdir/libdtp94-private.so.*
-%_libdir/libhuey-private.so.*
-%_libdir/libmunki-private.so.*
 
 %files -n lib%name-devel
 %_includedir/colord-1/
@@ -226,9 +232,6 @@ touch %buildroot%_localstatedir/lib/%name/storage.db
 %_libdir/pkgconfig/%name.pc
 %_libdir/libcolordprivate.so
 %_libdir/libcolorhug.so
-%_libdir/libdtp94-private.so
-%_libdir/libhuey-private.so
-%_libdir/libmunki-private.so
 %_pkgconfigdir/colorhug.pc
 
 %if_enabled introspection
@@ -248,6 +251,9 @@ touch %buildroot%_localstatedir/lib/%name/storage.db
 
 
 %changelog
+* Sat Mar 23 2013 Yuri N. Sedunov <aris@altlinux.org> 0.1.31-alt1
+- 0.1.31
+
 * Mon Feb 18 2013 Yuri N. Sedunov <aris@altlinux.org> 0.1.30-alt1
 - 0.1.30
 
