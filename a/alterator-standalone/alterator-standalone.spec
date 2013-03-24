@@ -2,7 +2,7 @@
 
 Name: alterator-standalone
 Version: 7.1.1
-Release: alt1
+Release: alt2
 
 Packager: Stanislav Ievlev <inger@altlinux.org>
 
@@ -75,6 +75,9 @@ install -Dpm644 acc.desktop %buildroot/%_desktopdir/acc.desktop
 %_bindir/*
 
 %changelog
+* Sun Mar 24 2013 Andrey Cherepanov <cas@altlinux.org> 7.1.1-alt2
+- Add Kazakh translation for System management center (ALT #28744)
+
 * Fri Aug 19 2011 Andrey Cherepanov <cas@altlinux.org> 7.1.1-alt1
 - Put acc in system configuration menu (closes: #26127)
 - Show all available modules in alterator-standalone
