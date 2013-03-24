@@ -2,7 +2,7 @@
 
 Name: libnl1
 Version: 1.1
-Release: alt3
+Release: alt4
 
 Summary: library for applications dealing with netlink sockets
 License: LGPL
@@ -23,6 +23,17 @@ libnl is a library for applications dealing with netlink sockets. The library
 provides an interface for raw netlink messaging and various netlink family
 specific interfaces.
 
+%package devel
+Summary: header files for libnl1, a netlink sockets library
+Group: System/Legacy libraries
+Requires: %name = %version
+Conflicts: libnl-devel
+
+%description devel
+libnl is a library for applications dealing with netlink sockets.
+
+This package contains header files for libnl.
+
 %prep
 %setup -n %_name-%version
 %patch1 -p2
@@ -37,11 +48,16 @@ cp %SOURCE1 lib/%_name.ver
 
 %files
 %_libdir/libnl.so.*
-%exclude %_libdir/libnl.so
-%exclude %_includedir/netlink
-%exclude %_pkgconfigdir/%_name-1.pc
+
+%files devel
+%_libdir/libnl.so
+%_includedir/netlink
+%_pkgconfigdir/%_name-1.pc
 
 %changelog
+* Sun Mar 24 2013 Igor Vlasenko <viy@altlinux.ru> 1.1-alt4
+- restored libnl1-devel (required for lldpad)
+
 * Wed Feb 13 2013 Mikhail Efremov <sem@altlinux.org> 1.1-alt3
 - Renamed libnl -> libnl1 and drop libnl-devel subpackage.
 - Package as legacy library.
