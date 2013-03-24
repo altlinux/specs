@@ -1,5 +1,5 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java rpm-macros-fedora-compat
+BuildRequires(pre): rpm-build-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
@@ -38,7 +38,7 @@ BuildRequires: jpackage-compat
 
 Name:           hsqldb
 Version:        1.8.1.3
-Release:        alt1_9jpp7
+Release:        alt2_9jpp7
 Epoch:          1
 Summary:        HyperSQL Database Engine
 License:        BSD
@@ -205,7 +205,6 @@ install -d -m 755 $RPM_BUILD_ROOT%{_initrddir}
 install -m 755 bin/%{name} $RPM_BUILD_ROOT%{_initrddir}/%{name}
 
 %preun
-%systemd_preun hsqldb.service
 %preun_service hsqldb
 
 %pre
@@ -215,8 +214,6 @@ install -m 755 bin/%{name} $RPM_BUILD_ROOT%{_initrddir}/%{name}
 
 %post
 %post_service hsqldb
-
-%postun
 
 %files
 %doc doc/hsqldb_lic.txt
@@ -249,6 +246,9 @@ install -m 755 bin/%{name} $RPM_BUILD_ROOT%{_initrddir}/%{name}
 %{_datadir}/%{name}
 
 %changelog
+* Sun Mar 24 2013 Igor Vlasenko <viy@altlinux.ru> 1:1.8.1.3-alt2_9jpp7
+- fixed scripts (closes: 28719)
+
 * Tue Oct 09 2012 Igor Vlasenko <viy@altlinux.ru> 1:1.8.1.3-alt1_9jpp7
 - new version
 
