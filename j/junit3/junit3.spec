@@ -1,3 +1,4 @@
+%define oldname junit
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
@@ -9,9 +10,6 @@ BuildRequires: jpackage-compat
 # redefine altlinux specific with and without
 %define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
 %define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
-# %name or %version is ahead of its definition. Predefining for rpm 4.0 compatibility.
-%define name junit
-%define version 3.8.2
 # Copyright (c) 2000-2012, JPackage Project
 # All rights reserved.
 #
@@ -49,11 +47,7 @@ BuildRequires: jpackage-compat
 
 #def_with gcj_support
 %bcond_with gcj_support
-%bcond_without repolib
-
-%define repodir %{_javadir}/repository.jboss.com/junit/%{version}-brew
-%define repodirlib %{repodir}/lib
-%define repodirsrc %{repodir}/src
+%bcond_with repolib
 
 %if %with gcj_support
 %define gcj_support 0
@@ -61,9 +55,9 @@ BuildRequires: jpackage-compat
 %define gcj_support 0
 %endif
 
-Name:           junit
+Name:           junit3
 Version:        3.8.2
-Release:	alt7_10jpp6
+Release:	alt8_10jpp6
 Epoch:          1
 Summary:        Java regression test package
 License:        CPL
@@ -84,8 +78,12 @@ BuildRequires:  java-gcj-compat-devel
 Buildarch:      noarch
 %endif
 Source44: import.info
-Provides: junit = 0:%{version}
-Provides: junit3 = %{epoch}:%{version}-%{release}
+Conflicts: junit < 1:3.8.2-alt8
+Obsoletes: junit < 1:3.8.2-alt8
+
+%define repodir %{_javadir}/repository.jboss.com/junit/%{version}-brew
+%define repodirlib %{repodir}/lib
+%define repodirsrc %{repodir}/src
 
 %description
 JUnit is a regression testing framework written by Erich Gamma and Kent
@@ -103,6 +101,18 @@ Artifacts to be uploaded to a repository library.
 This package is not meant to be installed but so its contents
 can be extracted through rpm2cpio.
 %endif
+
+%package -n junit-junit3
+Group:          Development/Java
+Summary:        %{oldname} provider
+BuildArch: noarch
+Requires: %name = %epoch:%{version}-%{release}
+Provides: junit = 0:%{version}
+Provides: junit = %{epoch}:%{version}-%{release}
+Provides: %_javadir/junit.jar
+
+%description -n junit-junit3
+Virtual junit package based on %{name}.
 
 %package manual
 Group:          Development/Java
@@ -129,7 +139,7 @@ Requires:       %{name} = %{epoch}:%{version}-%{release}
 Demonstrations and samples for %{name}.
 
 %prep
-%setup -q -n %{name}%{version}
+%setup -q -n %{oldname}%{version}
 %{jar} xf src.jar
 %{__rm} src.jar
 %{__cp} -p %{SOURCE1} build.xml
@@ -144,23 +154,21 @@ export OPT_JAR_LIST=:
 
 # jars
 %{__mkdir_p} %{buildroot}%{_javadir}
-%{__cp} -p %{name}%{version}/%{name}.jar %{buildroot}%{_javadir}/%{name}-%{version}.jar
-(cd %{buildroot}%{_javadir} && for jar in *-%{version}*; do %{__ln_s} ${jar} ${jar/-%{version}/}; done)
+%{__cp} -p %{oldname}%{version}/%{oldname}.jar %{buildroot}%{_javadir}/%{name}.jar
 
 # javadoc
-%{__mkdir_p} %{buildroot}%{_javadocdir}/%{name}-%{version}
-%{__cp} -pr %{name}%{version}/javadoc/* %{buildroot}%{_javadocdir}/%{name}-%{version}
-%{__ln_s} %{name}-%{version} %{buildroot}%{_javadocdir}/%{name}
+%{__mkdir_p} %{buildroot}%{_javadocdir}/%{name}
+%{__cp} -pr %{oldname}%{version}/javadoc/* %{buildroot}%{_javadocdir}/%{name}
 
 # pom
-%{__mkdir_p} %{buildroot}%{_datadir}/maven2/poms
-%{__cp} -p %{SOURCE3} %{buildroot}%{_datadir}/maven2/poms/JPP-%{name}.pom
+%{__mkdir_p} %{buildroot}%{_mavenpomdir}
+%{__cp} -p %{SOURCE3} %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
 %add_to_maven_depmap junit junit %{version} JPP %{name}
 
 # demo
 # Not using %%name for last part because it is part of package name
 %{__mkdir_p} %{buildroot}%{_datadir}/%{name}/demo/junit
-%{__cp} -pr %{name}%{version}/%{name}/* %{buildroot}%{_datadir}/%{name}/demo/junit
+%{__cp} -pr %{oldname}%{version}/%{oldname}/* %{buildroot}%{_datadir}/%{name}/demo/junit
 
 %if %{gcj_support}
 %{_bindir}/aot-compile-rpm
@@ -170,38 +178,38 @@ export OPT_JAR_LIST=:
 %{__mkdir_p} %{buildroot}%{repodir}
 %{__mkdir_p} %{buildroot}%{repodirlib}
 %{__cp} -p %{SOURCE2} %{buildroot}%{repodir}/component-info.xml
-tag=`/bin/echo %{name}-%{version}-%{release} | %{__sed} 's|\.|_|g'`
+tag=`/bin/echo %{oldname}-%{version}-%{release} | %{__sed} 's|\.|_|g'`
 %{__sed} -i "s/@TAG@/$tag/g" %{buildroot}%{repodir}/component-info.xml
 
-%{__sed} -i 's/project name=""/project name="%{name}"/g' %{buildroot}%{repodir}/component-info.xml
+%{__sed} -i 's/project name=""/project name="%{oldname}"/g' %{buildroot}%{repodir}/component-info.xml
 %{__sed} -i "s/@VERSION@/%{version}-brew/g" %{buildroot}%{repodir}/component-info.xml
 %{__mkdir_p} %{buildroot}%{repodirsrc}
 %{__cp} -p %{SOURCE0} %{buildroot}%{repodirsrc}
 %{__cp} -p %{SOURCE1} %{buildroot}%{repodirsrc}
-%{__cp} -p %{buildroot}%{_javadir}/%{name}-%{version}.jar %{buildroot}%{repodirlib}/junit.jar
-%{__cp} -p %{buildroot}%{_datadir}/maven2/poms/JPP-%{name}.pom %{buildroot}%{repodirlib}/junit.pom
+%{__cp} -p %{buildroot}%{_javadir}/%{name}.jar %{buildroot}%{repodirlib}/junit.jar
+%{__cp} -p %{buildroot}%{_mavenpomdir}/JPP-%{oldname}.pom %{buildroot}%{repodirlib}/junit.pom
 %endif
-# symlink
-ln -s %{name}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}3.jar
+
+mkdir -p %buildroot%_altdir
+cat >>%buildroot%_altdir/%{name}<<EOF
+%{_javadir}/junit.jar	%{_javadir}/%{name}.jar	3820
+EOF
 
 %files
 %doc cpl-v10.html README.html
-%{_javadir}/%{name}-%{version}.jar
 %{_javadir}/%{name}.jar
-%{_datadir}/maven2/poms/JPP-%{name}.pom
+%{_mavenpomdir}/JPP-%{name}.pom
 %{_mavendepmapfragdir}/%{name}
 %if %{gcj_support}
 %dir %{_libdir}/gcj/%{name}
-%{_libdir}/gcj/%{name}/junit-3.8.2.jar.*
+%{_libdir}/gcj/%{name}/junit3.jar.*
 %endif
-%{_javadir}/%{name}3.jar
 
 %files manual
 # FIXME: (dwalluck) Manuals are usually stored in an absolute location inside %%{_docdir}
-%doc %{name}%{version}/doc/*
+%doc %{oldname}%{version}/doc/*
 
 %files javadoc
-%{_javadocdir}/%{name}-%{version}
 %{_javadocdir}/%{name}
 
 %files demo
@@ -215,7 +223,13 @@ ln -s %{name}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}3.jar
 %{_javadir}/repository.jboss.com
 %endif
 
+%files -n junit-junit3
+%_altdir/%{name}
+
 %changelog
+* Mon Mar 25 2013 Igor Vlasenko <viy@altlinux.ru> 1:3.8.2-alt8_10jpp6
+- renamed to junit3; added junit-junit3 virtual provider
+
 * Tue Oct 02 2012 Igor Vlasenko <viy@altlinux.ru> 1:3.8.2-alt7_10jpp6
 - target 5 build
 
