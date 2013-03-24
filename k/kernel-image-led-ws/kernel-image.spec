@@ -21,7 +21,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.4.37
-Release: alt3
+Release: alt4
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -97,6 +97,7 @@ Release: alt3
 %def_enable guest
 %def_enable ext4_for_ext23
 %def_enable bootsplash
+%def_disable crasher
 %def_disable logo
 %def_enable zcache
 %def_enable security
@@ -315,11 +316,10 @@ Patch0359: linux-%kernel_branch.25-fix-drivers-net-ethernet-via--via-rhine.patch
 
 Patch0361: linux-%kernel_branch.20-fix-drivers-net-hyperv.patch
 
-Patch0371: linux-%kernel_branch.20-fix-drivers-net-wireless--b43.patch
-Patch0372: linux-%kernel_branch.25-fix-drivers-net-wireless--iwlwifi.patch
-Patch0373: linux-%kernel_branch.20-fix-drivers-net-wireless-brcm80211--brcmsmac.patch
-Patch0374: linux-%kernel_branch.25-fix-drivers-net-wireless-ipw2x00--libipw.patch
-Patch0375: linux-%kernel_branch.20-fix-drivers-net-wireless-rt2x00--rt2800lib.patch
+Patch0371: linux-%kernel_branch.25-fix-drivers-net-wireless--iwlwifi.patch
+Patch0372: linux-%kernel_branch.20-fix-drivers-net-wireless-brcm80211--brcmsmac.patch
+Patch0373: linux-%kernel_branch.25-fix-drivers-net-wireless-ipw2x00--libipw.patch
+Patch0374: linux-%kernel_branch.20-fix-drivers-net-wireless-rt2x00--rt2800lib.patch
 
 Patch0381: linux-%kernel_branch.27-fix-drivers-platform--asus_oled.patch
 Patch0382: linux-%kernel_branch.20-fix-drivers-platform--hdaps.patch
@@ -1394,7 +1394,6 @@ cd linux-%version
 %patch0372 -p1
 %patch0373 -p1
 %patch0374 -p1
-%patch0375 -p1
 
 # fix-drivers-platform--*
 %patch0381 -p1
@@ -1776,6 +1775,7 @@ config_disable \
 	%{?_disable_paravirt_guest:PARAVIRT_GUEST} \
 	%{?_disable_kvm_guest:KVM_GUEST} \
 	%{?_disable_bootsplash:BOOTSPLASH} \
+	%{?_disable_crasher:CRASHER} \
 	%{?_disable_logo:LOGO} \
 	%{?_disable_zcache:ZCACHE} \
 	%{?_disable_pci:PCI} \
@@ -2502,6 +2502,11 @@ done)
 
 
 %changelog
+* Sun Mar 24 2013 Led <led@altlinux.ru> 3.4.37-alt4
+- removed:
+  + fix-drivers-net-wireless--b43
+- disabled crasher
+
 * Sat Mar 23 2013 Led <led@altlinux.ru> 3.4.37-alt3
 - updated:
   + fix-mm
