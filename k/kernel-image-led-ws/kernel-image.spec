@@ -21,7 +21,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.4.37
-Release: alt4
+Release: alt5
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -472,7 +472,8 @@ Patch1114: linux-%kernel_branch.20-feat-drivers-platform--tp_smapi.patch
 
 Patch1121: linux-%kernel_branch.34-feat-drivers-scsi--vhba.patch
 
-Patch1131: linux-%kernel_branch.20-feat-drivers-usb-usbip.patch
+Patch1131: linux-%kernel_branch.35-feat-drivers-usb-storage--rts5139.patch
+Patch1132: linux-%kernel_branch.20-feat-drivers-usb-usbip.patch
 
 Patch1141: linux-%kernel_branch.35-feat-drivers-video--bootsplash.patch
 Patch1142: linux-%kernel_branch.25-feat-drivers-video--xgifb.patch
@@ -1573,6 +1574,7 @@ cd linux-%version
 
 # feat-drivers-usb-*
 %patch1131 -p1
+%patch1132 -p1
 
 # feat-drivers-video--*
 %patch1141 -p1
@@ -2502,6 +2504,10 @@ done)
 
 
 %changelog
+* Sun Mar 24 2013 Led <led@altlinux.ru> 3.4.37-alt5
+- added:
+  + feat-drivers-usb-storage--rts5139
+
 * Sun Mar 24 2013 Led <led@altlinux.ru> 3.4.37-alt4
 - removed:
   + fix-drivers-net-wireless--b43
