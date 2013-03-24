@@ -1,19 +1,20 @@
 Summary: A GTK front-end for gPhoto2
 Name: gtkam
-Version: 0.1.18
-Release: alt3
+Version: 0.2.0
+Release: alt1
 License: GPLv2
 Group: File tools
 Packager: Dmitriy Khanzhin <jinn@altlinux.ru>
 
 Source0: %name-%version.tar
-Source1: %name.desktop
+Patch1: %name-0.2.0-alt-conf.patch
 Patch2: %name-0.1.14-alt-fhs.patch
 Patch3: %name-0.1.18-alt-fix-DSO-link.patch
 
 Url: http://www.gphoto.org
 
-BuildRequires: cvs gcc-c++ intltool libexif-gtk-devel libgphoto2-devel libgtk+2-devel
+# Automatically added by buildreq on Wed Mar 20 2013
+BuildRequires: intltool libexif-gtk-devel libgphoto2-devel libgtk+2-devel
 
 %description
 The gtKam package provides a GTK-based front-end to gPhoto2.  Install
@@ -22,32 +23,42 @@ this package if you want to use a digital camera with Linux.
 %prep
 %setup
 rm -f po/*.gmo
+%patch1 -p1
 %patch2 -p1
 %patch3 -p1
 
 %build
 %autoreconf
-%configure --without-bonobo --without-gnome --without-gimp --disable-scrollkeeper
+%configure --without-bonobo --without-gimp --without-gnome --disable-scrollkeeper
 make
 make -C po update-po
 
 %install
 %makeinstall
-%find_lang %name
 
-install -pD -m 644 %SOURCE1 %buildroot%_desktopdir/%name.desktop
+mkdir -p %buildroot%_liconsdir
+mv %buildroot%_pixmapsdir/gtkam-camera.png %buildroot%_liconsdir/
+
+%find_lang %name
 
 %files -f %name.lang
 %_bindir/*
-%_desktopdir/%name.desktop
+%_desktopdir/*
 %_datadir/%name
-%_man1dir/%name.*
-%_datadir/omf/%name
-%_pixmapsdir/%name.png
-
+%_datadir/gnome/*
+%_datadir/omf/*
+%_man1dir/*
+%_liconsdir/*
+%_pixmapsdir/*
 %doc AUTHORS README CHANGES NEWS TODO
 
 %changelog
+* Sun Mar 24 2013 Dmitriy Khanzhin <jinn@altlinux.org> 0.2.0-alt1
+- 0.2.0
+- Updated .desktop
+- Fixed repocop warnings
+- Buildreq
+
 * Sun May 27 2012 Dmitriy Khanzhin <jinn@altlinux.ru> 0.1.18-alt3
 - Fixed DSO link error
 - Changed packager
