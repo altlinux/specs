@@ -80,11 +80,9 @@
 # }}}
 
 Name: libav
-Version: 0.8.4
+Version: 0.8.6
 Release: alt1
 Epoch: 1
-
-%define gitrev 2c8ce462
 
 Summary: Hyper fast MPEG1/MPEG4/H263/RV and AC3/MPEG audio encoder
 License: %{!?_enable_gpl:L}GPL%{?_enable_version3:3}
@@ -453,7 +451,7 @@ sed -i 's/UNKNOWN/%version/' version.sh
 %endif
     --enable-pic \
     --extra-cflags="%optflags" \
-    --extra-version='%release\ \(git.%gitrev\)'
+    --extra-version='%release'
 
 %make
 
@@ -600,6 +598,9 @@ bzip2 --best --force --keep -- Changelog
 
 # {{{ Changelog
 %changelog
+* Sun Mar 24 2013 Sergey Bolshakov <sbolshakov@altlinux.ru> 1:0.8.6-alt1
+- 0.8.6 released
+
 * Thu Nov 01 2012 Sergey Bolshakov <sbolshakov@altlinux.ru> 1:0.8.4-alt1
 - 0.8.4 released
 
