@@ -1,6 +1,6 @@
 Name: glibc
-Version: 2.16
-Release: alt6
+Version: 2.17
+Release: alt1
 Epoch: 6
 
 Summary: The GNU libc libraries
@@ -36,7 +36,7 @@ Source: glibc-%version-%release.tar
 Obsoletes: libc-static, libc-devel, libc-profile, libc-headers,
 Obsoletes: linuxthreads, gencat, ldconfig
 
-%define libc_locales_list aa af am an ar as ast az be bem ber bg bho bn bo br brx bs byn ca crh cs csb cv cy da de dv dz el en es et eu fa ff fi fil fo fr fur fy ga gd gez gl gu gv ha he hi hne hr hsb ht hu hy id ig ik is it iu iw ja ka kk kl km kn ko kok ks ku kw ky lb lg li lij lo lt lv mag mai mg mhr mi mk ml mn mr ms mt my nan nb nds ne nl nn nr nso oc om or os pa pap pl ps pt ro ru rw sa sc sd se shs si sid sk sl so sq sr ss st sv sw ta te tg th ti tig tk tl tn tr ts tt ug uk unm ur uz ve vi wa wae wal wo xh yi yo yue zh zu
+%define libc_locales_list aa af am an ar as ast ayc az be bem ber bg bho bn bo br brx bs byn ca crh cs csb cv cy da de doi dv dz el en es et eu fa ff fi fil fo fr fur fy ga gd gez gl gu gv ha he hi hne hr hsb ht hu hy ia id ig ik is it iu iw ja ka kk kl km kn ko kok ks ku kw ky lb lg li lij lo lt lv mag mai mg mhr mi mk ml mn mni mr ms mt my nan nb nds ne nhn niu nl nn nr nso oc om or os pa pap pl ps pt ro ru rw sa sat sc sd se shs si sid sk sl so sq sr ss st sv sw szl ta te tg th ti tig tk tl tn tr ts tt ug uk unm ur uz ve vi wa wae wal wo xh yi yo yue zh zu
 %define libc_locales %(for i in %libc_locales_list;do echo -n "locale-$i locales-$i ";done)
 %define renamed_locales ru_RU.iso88595 ru_UA.koi8u uk_UA.koi8u
 
@@ -64,7 +64,7 @@ BuildPreReq: rpm-build >= 4.0.4-alt61
 BuildPreReq: libgd2-devel
 
 # g++ and /proc are required for test suite.
-%{?!_without_check:%{?!_disable_check:BuildPreReq: gcc-c++ /proc}}
+%{?!_without_check:%{?!_disable_check:BuildPreReq: gcc-c++ libstdc++-devel-static /proc}}
 
 %define _localstatedir /var
 %define _gconvdir %_libdir/gconv
@@ -92,6 +92,8 @@ Provides: glibc-crypt_blowfish = 1.2
 Provides: rtld(GNU_HASH)
 # The dynamic linker supports STB_GNU_UNIQUE
 Provides: rtld(GNU_UNIQUE)
+# The dynamic linker supports STT_GNU_IFUNC
+Provides: rtld(GNU_IFUNC)
 
 %package pthread
 Summary: The GNU libc pthread libraries
@@ -645,6 +647,14 @@ fi
 %_datadir/i18n
 
 %changelog
+* Sun Mar 24 2013 Dmitry V. Levin <ldv@altlinux.org> 6:2.17-alt1
+- Updated to 2.17 branch with backports from master, fedora and
+  libc-alpha@.
+- glob: changed to use getuid+getpwuid_r instead of
+  getlogin_r+getpwnam_r.
+- Reexported __secure_getenv while apps are being ported
+  to secure_getenv.
+
 * Fri Mar 22 2013 Dmitry V. Levin <ldv@altlinux.org> 6:2.16-alt6
 - ls.so:
   + enhanced locale-related environment sanitation;
