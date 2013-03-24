@@ -1,5 +1,5 @@
 Name: gtkwave
-Version: 3.3.44
+Version: 3.3.45
 Release: alt1
 Summary: %name
 License: GPL
@@ -43,6 +43,9 @@ BuildRequires: bzlib-devel desktop-file-utils flex gperf libgtk+2-devel liblzma-
 %_datadir/mime/packages/*.xml
 
 %changelog
+* Sun Mar 24 2013 Cronbuild Service <cronbuild@altlinux.org> 3.3.45-alt1
+- new version 3.3.45
+
 * Sat Mar 02 2013 Cronbuild Service <cronbuild@altlinux.org> 3.3.44-alt1
 - new version 3.3.44
 
