@@ -1,9 +1,6 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-fedora-compat
-# END SourceDeps(oneline)
 Name:      and
 Version:   1.2.2
-Release:   alt2_19
+Release:   alt3_19
 Summary:   Auto nice daemon
 
 License:   GPLv2
@@ -67,13 +64,10 @@ mkdir -p %{buildroot}%{_unitdir}
 install -p -m 0644 %{SOURCE2} %{buildroot}%{_unitdir}
 
 %post
-%systemd_post and.service
+%post_service and
 
 %preun
-%systemd_preun and.service
-
-%postun
-%systemd_postun_with_restart and.service
+%preun_service and
 
 %files
 %doc README LICENSE CHANGELOG
@@ -85,6 +79,9 @@ install -p -m 0644 %{SOURCE2} %{buildroot}%{_unitdir}
 %{_unitdir}/and.service
 
 %changelog
+* Sun Mar 24 2013 Igor Vlasenko <viy@altlinux.ru> 1.2.2-alt3_19
+- use post/un_service for service-only packages
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 1.2.2-alt2_19
 - update to new release by fcimport
 
