@@ -1,6 +1,6 @@
 Name: xournal
 Version: 0.4.5
-Release: alt4
+Release: alt5
 
 Summary: Xournal - application for notetaking, sketching, keeping a journal using a stylus
 License: GPL
@@ -14,7 +14,7 @@ Patch2: xournal-poppler-0.18.patch
 Packager: Michael Shigorin <mike@altlinux.org>
 
 # Automatically added by buildreq on Sun Mar 08 2009
-BuildRequires: libgnomeprintui-devel libpoppler-glib-devel
+BuildRequires: libpoppler-glib-devel libgnomecanvas-devel libgtk+2-devel
 
 Summary(pl.UTF-8): Xournal - aplikacja do tworzenia notatek, szkicowania i prowadzenia dziennika pisakiem
 
@@ -52,6 +52,9 @@ install -pDm644 %name.glade %buildroot%_datadir/%name/%name.glade
 %_desktopdir/%name.desktop
 
 %changelog
+* Mon Mar 25 2013 Michael Shigorin <mike@altlinux.org> 0.4.5-alt5
+- rebuilt without libgnomeprintui-devel
+
 * Sat Nov 12 2011 Michael Shigorin <mike@altlinux.org> 0.4.5-alt4
 - applied opensuse patches, thanks zerg@ for a pointer
   (the one regarding poppler)
