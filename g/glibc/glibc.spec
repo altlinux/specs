@@ -1,6 +1,6 @@
 Name: glibc
 Version: 2.17
-Release: alt2
+Release: alt3
 Epoch: 6
 
 Summary: The GNU libc libraries
@@ -647,6 +647,10 @@ fi
 %_datadir/i18n
 
 %changelog
+* Mon Mar 25 2013 Dmitry V. Levin <ldv@altlinux.org> 6:2.17-alt3
+- getaddrinfo: reverted the change that made ECONNREFUSED
+  return EAI_SYSTEM instead of EAI_AGAIN.
+
 * Mon Mar 25 2013 Dmitry V. Levin <ldv@altlinux.org> 6:2.17-alt2
 - stdlib.h: Made __secure_getenv prototype available without
   -D_GNU_SOURCE as in older glibc releases.
