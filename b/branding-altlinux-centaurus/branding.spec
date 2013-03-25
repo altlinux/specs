@@ -6,7 +6,7 @@
 
 Name: branding-%brand-%theme
 Version: 6.9.0 
-Release: alt17
+Release: alt18
 
 BuildRequires: cpio fonts-ttf-dejavu fonts-ttf-droid
 BuildRequires: design-bootloader-source >= 5.0-alt2
@@ -178,8 +178,7 @@ License: Distributable
 Group:   Graphical desktop/GNOME
 Requires: gksu
 Requires: dconf
-Provides: metacity-theme-%brand-%theme = %version-%release
-Provides: metacity-theme
+Requires: gtk3-theme-clearlooks-phenix
 Conflicts: %(for n in %variants ; do [ "$n" = %brand-%theme ] || echo -n "branding-$n-gnome-settings ";done )
 
 %description mate-settings
@@ -319,6 +318,7 @@ install -m 644 fvwm-settings/.fvwm2rc %buildroot/etc/skel/
 #mate-settings
 pushd mate-settings
 install -m 644 -D 50_mate-background.gschema.override '%buildroot%_datadir/glib-2.0/schemas/50_mate-background.gschema.override'
+install -m 644 -D 60_mate-theme.gschema.override '%buildroot%_datadir/glib-2.0/schemas/60_mate-theme.gschema.override'
 popd
 
 #gnome-settings
@@ -424,9 +424,7 @@ cat '/%_datadir/themes/%XdgThemeName/panel-default-setup.entries' > \
 %_sysconfdir/skel/.fvwm2rc
 
 %files mate-settings
-%_datadir/themes/*
-/etc/xdg/menus/*
-%_datadir/glib-2.0/schemas/50_mate-background.gschema.override
+%_datadir/glib-2.0/schemas/*.gschema.override
 
 %files gnome-settings
 %_datadir/themes/*
@@ -447,6 +445,11 @@ cat '/%_datadir/themes/%XdgThemeName/panel-default-setup.entries' > \
 %_desktopdir/indexhtml.desktop
 
 %changelog
+* Fri Mar 22 2013 Andrey Cherepanov <cas@altlinux.org> 6.9.0-alt18
+- Cleanup MATE settings
+- Expand GRUB menu
+- Set gtk3-theme-clearlooks-phenix as default GTK+2/3 theme
+
 * Tue Feb 26 2013 Andrey Cherepanov <cas@altlinux.org> 6.9.0-alt17
 - Fix Name in os-release
 
