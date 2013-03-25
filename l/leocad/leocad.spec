@@ -1,64 +1,77 @@
 Summary: Visual brick construction tool for kids
-Summary (ru_RU.KOI8-R): Детский конструктор, использующий блоки с шипами
-Name:    leocad
-Version: 0.75
-Release: alt5.2
+Summary (ru_RU.UTF-8): п■п╣я┌я│п╨п╦п╧ п╨п╬п╫я│я┌я─я┐п╨я┌п╬я─, п╦я│п©п╬п╩я▄п╥я┐я▌я┴п╦п╧ п╠п╩п╬п╨п╦ я│ я┬п╦п©п╟п╪п╦
+Name: leocad
+Version: 0.79.3
+Release: alt1
 
 License: GPL
-Url:     http://www.leocad.org
-Source:  %name-%version.tar.bz2
-# svn co http://svn.gerf.org/leocad/tags/leocad-0.75 leocad
-Group:   Games/Puzzles
+Url: http://www.leocad.org
+Source: %name-%version-src.tgz
+Group: Games/Puzzles
 Packager: Fr. Br. George <george@altlinux.ru>
 
 Source1: %name.desktop
 
 Patch1: %name-longint.patch
 Patch2: %name-gcc44.patch
-Patch3: %name-0.75-alt-DSO.patch
-Patch4: %name-0.75-alt-libpng15.patch
+Patch3: %name-0.79.3-alt-DSO.patch
 
 BuildRequires: gcc-c++ libgtk+2-devel libjpeg-devel unzip libpng-devel libGL-devel
 BuildRequires: desktop-file-utils, ImageMagick
 
-Requires: %name-data
+Requires: %name-data > 3000
 
 %description
-LeoCAD is a CAD program that uses bricks similar to those found in many toys (but they don't represent any particular brand). Currently it has a library of more than 1000 different pieces. LEGO is a trademark of the LEGO Group of companies which does not sponsor, authorize or endorse this software.
+LeoCAD is a CAD program that uses bricks similar to those found in many
+toys (but they don't represent any particular brand). Currently it has
+a library of more than 1000 different pieces. LEGO is a trademark of the
+LEGO Group of companies which does not sponsor, authorize or endorse
+this software.
 
-
-%description -l ru_RU.KOI8-R
-LeoCAD -- программа для конструирования чего угодно из блоков с шипами. В прилагаемой библиотеке таких блоков содержится более 1000 различных видов. Блоки похожи на те, что используются некоторыми фирмами, производящими разборные игрушки. LEGO -- торговая марка группы компаний LEGO, которые не спонсируют и не курируют LeoCAD, а также не имеют авторских прав на эту программу.
+%description -l ru_RU.UTF-8
+LeoCAD -- п©я─п╬пЁя─п╟п╪п╪п╟ п╢п╩я▐ п╨п╬п╫я│я┌я─я┐п╦я─п╬п╡п╟п╫п╦я▐ я┤п╣пЁп╬ я┐пЁп╬п╢п╫п╬ п╦п╥ п╠п╩п╬п╨п╬п╡ я│ я┬п╦п©п╟п╪п╦.
+п▓ п©я─п╦п╩п╟пЁп╟п╣п╪п╬п╧ п╠п╦п╠п╩п╦п╬я┌п╣п╨п╣ я┌п╟п╨п╦я┘ п╠п╩п╬п╨п╬п╡ я│п╬п╢п╣я─п╤п╦я┌я│я▐ п╠п╬п╩п╣п╣ 1000 я─п╟п╥п╩п╦я┤п╫я▀я┘
+п╡п╦п╢п╬п╡. п▒п╩п╬п╨п╦ п©п╬я┘п╬п╤п╦ п╫п╟ я┌п╣, я┤я┌п╬ п╦я│п©п╬п╩я▄п╥я┐я▌я┌я│я▐ п╫п╣п╨п╬я┌п╬я─я▀п╪п╦ я└п╦я─п╪п╟п╪п╦,
+п©я─п╬п╦п╥п╡п╬п╢я▐я┴п╦п╪п╦ я─п╟п╥п╠п╬я─п╫я▀п╣ п╦пЁя─я┐я┬п╨п╦. LEGO -- я┌п╬я─пЁп╬п╡п╟я▐ п╪п╟я─п╨п╟ пЁя─я┐п©п©я▀ п╨п╬п╪п©п╟п╫п╦п╧
+LEGO, п╨п╬я┌п╬я─я▀п╣ п╫п╣ я│п©п╬п╫я│п╦я─я┐я▌я┌ п╦ п╫п╣ п╨я┐я─п╦я─я┐я▌я┌ LeoCAD, п╟ я┌п╟п╨п╤п╣ п╫п╣ п╦п╪п╣я▌я┌
+п╟п╡я┌п╬я─я│п╨п╦я┘ п©я─п╟п╡ п╫п╟ я█я┌я┐ п©я─п╬пЁя─п╟п╪п╪я┐.
 
 %prep
-%setup -q -n %name
-%patch2 -p1 
+%setup -n %name
+%patch2 -p1
 %patch3 -p2
-%patch4 -p2
 
 %build
 %make PREFIX=/usr
 
-
 %install
 %makeinstall DESTDIR=%buildroot
 
-mkdir -p %buildroot%_niconsdir
-convert linux/pixmaps/icon32.xpm %buildroot%_niconsdir/%name.png
+for f in tools/icon/icon*.png; do
+  size=${f##icon}; size=${size##.png}
+  install -D $f %buildroot%_iconsdir/hicolor/${size}x$size/apps/%name.png
+done
+install -D tools/icon/icon.svg %buildroot%_iconsdir/hicolor/scalable/apps/%name.svg
 
 desktop-file-install \
    --dir %buildroot%_desktopdir \
    --vendor="" \
    %SOURCE1
 
-
 %files
 %_bindir/*
-%_niconsdir/%name.png
+%_iconsdir/*/*/*/*
 %_man1dir/%name.*
 %_desktopdir/%name.desktop
+%_xdgmimedir/packages/*
+%_datadir/%name
+%_pixmapsdir/*
 
 %changelog
+* Mon Mar 25 2013 Fr. Br. George <george@altlinux.ru> 0.79.3-alt1
+- Autobuild version bump to 0.79.3
+- Fix build
+
 * Fri Sep 28 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.75-alt5.2
 - Rebuilt with libpng15
 
