@@ -7,10 +7,10 @@ Summary(uk_UA.UTF8): Потужний інтерфейс для MPlayer (QT4)
 License:	GPLv2
 Group:		Video
 Url:		http://smplayer.sourceforge.net
-Version:	0.8.3
+Version:	0.8.4
 Release:	alt1
 Packager:	Alexey Morsov <swi@altlinux.ru>
-Source0:	%name-%version.tar.bz2
+Source0:	http://downloads.sourceforge.net/smplayer/%name-%version.tar.bz2
 Patch0:		smplayer-paths-fix-alt.patch
 
 Requires:	mplayer
@@ -73,6 +73,9 @@ export OPTFLAGS="%optflags"
 %_man1dir/*
 
 %changelog
+* Mon Mar 25 2013 Motsyo Gennadi <drool@altlinux.ru> 0.8.4-alt1
+- 0.8.4
+
 * Mon Jan 21 2013 Motsyo Gennadi <drool@altlinux.ru> 0.8.3-alt1
 - 0.8.3
 
