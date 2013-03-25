@@ -1,6 +1,6 @@
 Name: xearth
 Version: 1.1
-Release: alt1.qa2
+Release: alt2
 Epoch: 1
 
 Summary: An X display of the Earth from space
@@ -16,7 +16,7 @@ Source5: xearth48.xpm
 Packager: Michael Shigorin <mike@altlinux.org>
 
 # Automatically added by buildreq on Sat Mar 04 2006
-BuildRequires: imake libICE-devel libSM-devel libX11-devel libXext-devel libXt-devel xorg-cf-files xorg-x11-proto-devel
+BuildRequires: imake libICE-devel libSM-devel libX11-devel libXext-devel libXt-devel xorg-cf-files xorg-proto-devel
 
 Summary(fr): affiche en 3D la terre vue du soleil en fonds d'écran
 
@@ -77,6 +77,9 @@ EOF
 %_liconsdir/*.xpm
 
 %changelog
+* Mon Mar 25 2013 Michael Shigorin <mike@altlinux.org> 1:1.1-alt2
+- update BR:
+
 * Mon Apr 18 2011 Igor Vlasenko <viy@altlinux.ru> 1:1.1-alt1.qa2
 - NMU: converted menu to desktop file
 
