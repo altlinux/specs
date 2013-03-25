@@ -3,7 +3,7 @@
 
 Name: wmclock
 Version: 1.0.12.2
-Release: alt3
+Release: alt4
 
 Summary: Dockable clock applet for Window Maker
 License: GPL
@@ -15,7 +15,7 @@ Patch: wmclock-1.0.12.2-debian-nopolling.patch
 Packager: Sir Raorn <raorn@altlinux.ru>
 
 # Automatically added by buildreq on Mon Feb 06 2006
-BuildRequires: gccmakedep imake libX11-devel libXext-devel libXpm-devel xorg-cf-files xorg-x11-proto-devel
+BuildRequires: gccmakedep imake libX11-devel libXext-devel libXpm-devel xorg-cf-files xorg-proto-devel
 
 %description
 %name is an applet which displays the date and time in a dockable
@@ -56,6 +56,9 @@ __EOF
 #   (should WindowMaker cope with that)
 
 %changelog
+* Mon Mar 25 2013 Michael Shigorin <mike@altlinux.org> 1.0.12.2-alt4
+- updated BR:
+
 * Mon Sep 14 2009 Michael Shigorin <mike@altlinux.org> 1.0.12.2-alt3
 - built for Sisyphus (closes: #16028)
 
