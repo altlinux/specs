@@ -1,6 +1,6 @@
 Name: libpopt
 Version: 1.14
-Release: alt6
+Release: alt7
 Epoch: 1
 
 %def_with apidocs
@@ -19,6 +19,7 @@ Patch4: popt-1.14-alt-man.patch
 Patch5: popt-1.14-alt-poptBadOption.patch
 Patch6: popt-1.14-alt-doxygen.patch
 Patch7: popt-1.14-alt-vers.patch
+Patch8: popt-1.14-alt-secure_getenv.patch
 
 Provides: popt = %version-%release
 Obsoletes: popt
@@ -79,6 +80,7 @@ This package contains developement documentation for libpopt.
 %patch5 -p2
 %patch6 -p2
 %patch7 -p2
+%patch8 -p1
 
 %build
 %add_optflags -DHAVE_MCHECK_H
@@ -134,6 +136,9 @@ bzip2 -9 %buildroot%docdir/*.ps
 %docdir/*.ps.bz2
 
 %changelog
+* Mon Mar 25 2013 Dmitry V. Levin <ldv@altlinux.org> 1:1.14-alt7
+- Added secure_getenv support.
+
 * Fri Feb 25 2011 Dmitry V. Levin <ldv@altlinux.org> 1:1.14-alt6
 - Rebuilt for debuginfo.
 
