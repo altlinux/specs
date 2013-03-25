@@ -1,6 +1,6 @@
 Name: wmCalClock
 Version: 1.25
-Release: alt8.qa1
+Release: alt9
 
 Packager: Alexey Voinov <voins@altlinux.ru>
 
@@ -17,7 +17,7 @@ Source0: http://nis-www.lanl.gov/~mgh/WindowMaker/%name-%version.tar.bz2
 Source1: %name.menu
 
 # Automatically added by buildreq on Sun Mar 05 2006
-BuildRequires: libX11-devel libXext-devel libXpm-devel xorg-x11-proto-devel
+BuildRequires: libX11-devel libXext-devel libXpm-devel xorg-proto-devel
 
 %description
 wmCalClock is a simple Calendar Clock that uses anti-aliased characters and
@@ -48,6 +48,9 @@ install -D -pm644 %SOURCE1 $RPM_BUILD_ROOT%_menudir/%name
 %_menudir/*
 
 %changelog
+* Mon Mar 25 2013 Michael Shigorin <mike@altlinux.org> 1.25-alt9
+- updated BR:
+
 * Thu Feb 04 2010 Repocop Q. A. Robot <repocop@altlinux.org> 1.25-alt8.qa1
 - NMU (by repocop): the following fixes applied:
   * update_menus for wmCalClock
