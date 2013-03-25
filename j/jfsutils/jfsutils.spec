@@ -1,67 +1,73 @@
 %def_enable largefile
+%define _sbindir /sbin
 
 Name: jfsutils
 Version: 1.1.15
-Release: alt1
-
+Release: alt2
 Summary: IBM JFS utility programs
-License: GPL
+License: GPLv2+
 Group: System/Kernel and hardware
-
 Url: http://jfs.sourceforge.net
-Source: %url/project/pub/%name-%version.tar.gz
-Packager: Michael Shigorin <mike@altlinux.org>
-
+Source: %name-%version.tar
+Patch: %name-%version-%release.patch
 Provides: jfsprogs = %version-%release
 Obsoletes: jfsprogs
 
-BuildRequires: libuuid-devel linux-libc-headers
+BuildRequires: libuuid-devel
 
 %description
-IBM's journaled file system technology, currently used in IBM
-enterprise servers, is designed for high-throughput server
-environments, key to running intranet and other high-performance
-e-business file servers.
+IBM's journaled file system technology, currently used in IBM enterprise servers,
+is designed for high-throughput server environments, key to running intranet and
+other high-performance e-business file servers.
 
 %description -l ru_RU.UTF-8
-Технология журналируемой файловой системы IBM, в настоящее время
-используется на enterprise-серверах IBM, разработана для
-высокопроизводительных серверных окружений, ключ к работающим
-intranet- и другим высокопроизводительным файловым серверам
-электронной коммерции.
+Технология журналируемой файловой системы IBM, в настоящее время используется на
+enterprise-серверах IBM, разработана для высокопроизводительных серверных
+окружений, ключ к работающим intranet- и другим высокопроизводительным файловым
+серверам электронной коммерции.
 
 %description -l uk_UA.UTF-8
-Технологія журнальованої файлової системи IBM, яка нині
-використовується на enterprise-серверах IBM, розроблена для
-високопродуктивних серверних оточень, є ключом до працюючих
-intranet- та інших високопродуктивних файлових серверів
+Технологія журнальованої файлової системи IBM, яка нині використовується на
+enterprise-серверах IBM, розроблена для високопродуктивних серверних оточень,
+є ключом до працюючих intranet- та інших високопродуктивних файлових серверів
 електронної комерції.
 
+
 %prep
-%setup
+%setup -q
+%patch -p1
+
 
 %build
-%configure \
-	--sbindir=/sbin \
-	%{subst_enable largefile}
+%autoreconf
+%configure --enable-largefile
 %make_build
+for n in NEWS ChangeLog; do
+	gzip -9c $n > $n.gz
+done
+
 
 %install
-%make_install DESTDIR=%buildroot install
+%makeinstall_std
 for n in fsck mkfs; do
-    ln -sf jfs_$n %buildroot/sbin/$n.jfs
-    ln -sf jfs_$n.8 %buildroot/%_man8dir/$n.jfs.8
+	ln -sf jfs_$n %buildroot/sbin/$n.jfs
+	ln -sf jfs_$n.8 %buildroot/%_man8dir/$n.jfs.8
 done
-# why so much hassle?
-bzip2 --best --keep --force ChangeLog
-gzip --best --stdout NEWS > NEWS.gz
+
 
 %files
 %doc AUTHORS ChangeLog.* NEWS.* README
-/sbin/*
+%_sbindir/*
 %_man8dir/*
 
+
 %changelog
+* Mon Mar 25 2013 Led <led@altlinux.ru> 1.1.15-alt2
+- fixes from upstream's CVS
+- fixed License
+- cleaned up spec
+- fixed build
+
 * Sun Sep 25 2011 Michael Shigorin <mike@altlinux.org> 1.1.15-alt1
 - 1.1.15
   + mostly 64-bit value related fixups
