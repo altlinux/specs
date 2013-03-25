@@ -3,8 +3,8 @@ BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(CPAN.pm) perl(Config.pm) perl(Fcntl.pm) perl(HTTP/Date.pm) perl(HTTP/Request/Common.pm) perl(HTTP/Status.pm) perl(IO/Socket/INET.pm) perl(LWP/UserAgent.pm) perl(List/Util.pm) perl(Plack/HTTPParser.pm) perl(Plack/Loader.pm) perl(Plack/Runner.pm) perl(Plack/TempBuffer.pm) perl(Plack/Test.pm) perl(Plack/Test/Suite.pm) perl(Plack/Util.pm) perl(Socket.pm) perl(Time/HiRes.pm) perl(Try/Tiny.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Starlet
-Version:        0.16
-Release:        alt2_2
+Version:        0.18
+Release:        alt1_1
 Summary:        Simple, high-performance PSGI/Plack HTTP server
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -39,6 +39,7 @@ make pure_install PERL_INSTALL_ROOT=$RPM_BUILD_ROOT
 find $RPM_BUILD_ROOT -type f -name .packlist -exec rm -f {} \;
 find $RPM_BUILD_ROOT -depth -type d -exec rmdir {} 2>/dev/null \;
 
+# %{_fixperms} $RPM_BUILD_ROOT/*
 
 %check
 make test
@@ -48,6 +49,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon Mar 25 2013 Igor Vlasenko <viy@altlinux.ru> 0.18-alt1_1
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.16-alt2_2
 - update to new release by fcimport
 
