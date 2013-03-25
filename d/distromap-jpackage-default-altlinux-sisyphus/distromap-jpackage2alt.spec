@@ -2,7 +2,7 @@
 
 Name: distromap-%module
 Version: 0.05
-Release: alt1
+Release: alt2
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
 
@@ -36,6 +36,9 @@ ln -s 6.0 %buildroot/usr/share/distromap/jpackage/default
 /usr/share/distromap/*
 
 %changelog
+* Mon Mar 25 2013 Igor Vlasenko <viy@altlinux.ru> 0.05-alt2
+- db updates
+
 * Wed Sep 26 2012 Igor Vlasenko <viy@altlinux.ru> 0.05-alt1
 - db updates
 
