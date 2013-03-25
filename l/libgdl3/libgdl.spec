@@ -1,8 +1,8 @@
-%define major 3.6
+%define major 3.8
 %define _unpackaged_files_terminate_build 1
 
 Name: libgdl3
-Version: %major.2
+Version: %major.0
 Release: alt1
 
 Summary: Gnome docking library (GDL)
@@ -122,6 +122,9 @@ NOCONFIGURE=1 ./autogen.sh
 %_gtk_docdir/*
 
 %changelog
+* Mon Mar 25 2013 Alexey Shabalin <shaba@altlinux.ru> 3.8.0-alt1
+- 3.8.0
+
 * Tue Nov 13 2012 Alexey Shabalin <shaba@altlinux.ru> 3.6.2-alt1
 - 3.6.2
 
