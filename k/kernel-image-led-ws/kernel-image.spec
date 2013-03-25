@@ -21,7 +21,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.4.37
-Release: alt5
+Release: alt6
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -351,6 +351,7 @@ Patch0432: linux-%kernel_branch.32-fix-drivers-tty-serial--pch_uart.patch
 
 Patch0440: linux-%kernel_branch.34-fix-drivers-usb.patch
 Patch0441: linux-%kernel_branch.25-fix-drivers-usb-gadget--g_audio.patch
+Patch0442: linux-%kernel_branch.37-fix-drivers-usb-serial--io_ti.patch
 
 Patch0451: linux-%kernel_branch.20-fix-drivers-video-aty--radeonfb.patch
 Patch0452: linux-%kernel_branch.20-fix-drivers-video-console--vgacon.patch
@@ -1432,6 +1433,7 @@ cd linux-%version
 # fix-drivers-usb*
 %patch0440 -p1
 %patch0441 -p1
+%patch0442 -p1
 
 # fix-drivers-video-*
 %patch0451 -p1
@@ -2504,6 +2506,10 @@ done)
 
 
 %changelog
+* Mon Mar 25 2013 Led <led@altlinux.ru> 3.4.37-alt6
+- added:
+  + fix-drivers-usb-serial--io_ti
+
 * Sun Mar 24 2013 Led <led@altlinux.ru> 3.4.37-alt5
 - added:
   + feat-drivers-usb-storage--rts5139
