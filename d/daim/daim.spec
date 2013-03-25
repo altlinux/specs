@@ -44,7 +44,7 @@ BuildRequires: jpackage-compat
 
 Name:           daim
 Version:        0.9.2
-Release:        alt1_15jpp6
+Release:        alt2_15jpp6
 Epoch:          0
 Summary:        Instant Messaging Client and Library supporting AIM and ICQ
 License:        LGPLv2+
@@ -62,7 +62,7 @@ Requires: log4j
 Requires: jpackage-utils >= 0:1.5
 Requires: xerces-j2
 BuildRequires: ant >= 0:1.6
-BuildRequires: ant-junit >= 0:1.6
+BuildRequires: ant-junit3 >= 0:1.6
 BuildRequires: antlr
 BuildRequires: bouncycastle-javadoc >= 0:1.42
 BuildRequires: bouncycastle >= 0:1.42
@@ -73,8 +73,8 @@ BuildRequires: jakarta-commons-collections
 BuildRequires: jakarta-commons-logging
 BuildRequires: java-javadoc >= 0:1.5
 BuildRequires: jpackage-utils >= 0:1.5
-BuildRequires: junit
-BuildRequires: junit-javadoc
+BuildRequires: junit3
+BuildRequires: junit3-javadoc
 BuildRequires: log4j
 BuildRequires: regexp
 BuildRequires: xerces-j2
@@ -118,7 +118,7 @@ Javadoc for %{name}.
 %setup -q -n %{name}
 
 %build
-export OPT_JAR_LIST=`%{__cat} %{_sysconfdir}/ant.d/junit`
+export OPT_JAR_LIST=`%{__cat} %{_sysconfdir}/ant.d/junit3`
 export CLASSPATH=$(build-classpath antlr bcmail bcprov bsf checkstyle jakarta-commons-beanutils jakarta-commons-collections jakarta-commons-logging log4j regexp xerces-j2)
 %{ant} jar test javadocs
 
@@ -177,6 +177,9 @@ touch $RPM_BUILD_ROOT/etc/%{name}.conf
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Mar 25 2013 Igor Vlasenko <viy@altlinux.ru> 0:0.9.2-alt2_15jpp6
+- fixed build w/new junit
+
 * Sat Sep 04 2010 Igor Vlasenko <viy@altlinux.ru> 0:0.9.2-alt1_15jpp6
 - new version
 
