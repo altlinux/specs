@@ -1,7 +1,7 @@
 %add_optflags %optflags_shared
 Name:           libuninameslist
 Version:        20091231
-Release:        alt3_5
+Release:        alt3_6
 
 Summary:        A library providing Unicode character names and annotations
 
@@ -9,6 +9,7 @@ Group:          System/Libraries
 License:        BSD
 URL:            http://libuninameslist.sourceforge.net
 Source0:        http://downloads.sourceforge.net/libuninameslist/libuninameslist-%{version}.tar.bz2
+Patch1:         http://ausil.fedorapeople.org/aarch64/libuninameslist/libuninameslist-aarch64.patch
 Source44: import.info
 
 %description
@@ -26,7 +27,7 @@ This package contains header files and static libraries for %{name}.
 
 %prep
 %setup -q -n libuninameslist
-
+%patch1 -p1
 
 %build
 %configure --disable-static
@@ -48,6 +49,9 @@ find $RPM_BUILD_ROOT -type f -name "*.la" -exec rm -f {} ';'
 
 
 %changelog
+* Mon Mar 25 2013 Igor Vlasenko <viy@altlinux.ru> 20091231-alt3_6
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 20091231-alt3_5
 - update to new release by fcimport
 
