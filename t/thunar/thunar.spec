@@ -1,6 +1,6 @@
 Name: thunar
 Version: 1.6.2
-Release: alt1
+Release: alt2
 
 Summary: Thunar File Manager for the XFce Desktop Environment
 Summary (ru_RU.UTF-8): Файловый менеджер Thunar
@@ -57,6 +57,9 @@ This package contains libraries for Thunar.
 %prep
 %setup
 %patch -p1
+
+# Don't use git tag in version.
+%xfce4_drop_gitvtag thunar_version_tag configure.ac.in
 
 %build
 %xfce4reconf
@@ -115,6 +118,16 @@ make check
 %exclude %_libdir/thunarx-*/*.la
 
 %changelog
+* Mon Mar 25 2013 Mikhail Efremov <sem@altlinux.org> 1.6.2-alt2
+- Updated translations from upstream git.
+- Fixes and improvements from upstream git:
+  + Prepend and later reverse for collecting selection.
+  + Allow keyboard shortcuts for user customizable actions
+    (Xfce bug #1941).
+  + Autotools updates.
+  + Use utilities-terminal for default uca action
+    (Xfce bug #9716).
+
 * Thu Dec 27 2012 Mikhail Efremov <sem@altlinux.org> 1.6.2-alt1
 - Updated to 1.6.2.
 
