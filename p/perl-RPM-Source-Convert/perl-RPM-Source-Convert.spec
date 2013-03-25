@@ -5,7 +5,7 @@ BuildRequires: perl(Carp.pm) perl(File/Basename.pm) perl(File/Path.pm) perl(File
 
 Name: perl-%module
 Version: 0.51
-Release: alt2
+Release: alt3
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
 
@@ -43,6 +43,9 @@ Conflicts: perl-RPM-Source-Editor < 0.73
 %perl_vendor_privlib/RPM*
 
 %changelog
+* Mon Mar 25 2013 Igor Vlasenko <viy@altlinux.ru> 0.51-alt3
+- bugfix release
+
 * Wed Feb 20 2013 Igor Vlasenko <viy@altlinux.ru> 0.51-alt2
 - bugfix release
 
