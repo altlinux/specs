@@ -3,7 +3,7 @@ BuildRequires: gcc-c++
 # END SourceDeps(oneline)
 Name:           slashem
 Version:        0.0.8
-Release:        alt2_0.10.E0F1
+Release:        alt2_0.11.E0F1
 Summary:        Super Lotsa Added Stuff Hack - Extended Magic
 
 Group:          Games/Other
@@ -14,6 +14,8 @@ Source1:        %{name}.desktop
 Patch0:         slashem-config.patch
 # fix building with libpng 1.5
 Patch1:         slashem-libpng-1.5.patch
+# update config.guess and config.sub to recognize aarch64
+Patch2:         slashem-aarch64.patch
 
 BuildRequires:  ncurses-devel
 BuildRequires:  bison flex desktop-file-utils
@@ -55,6 +57,7 @@ SLASH'EM is the (continuing) saga of one such variant...
 %setup -q -n %{name}-%{version}E0F1
 %patch0 -p 1 -b .config
 %patch1 -p 1 -b .libpng
+%patch2 -p 1 -b .aarch64
 
 sed -i \
     -e 's:^\(#define FILE_AREA_VAR\).*:\1 "%{fa_var}/":' \
@@ -148,6 +151,9 @@ desktop-file-install \
 
 
 %changelog
+* Mon Mar 25 2013 Igor Vlasenko <viy@altlinux.ru> 0.0.8-alt2_0.11.E0F1
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.0.8-alt2_0.10.E0F1
 - update to new release by fcimport
 
