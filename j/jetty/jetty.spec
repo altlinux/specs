@@ -58,7 +58,7 @@ BuildRequires: jpackage-compat
 
 Name:           jetty
 Version:        8.1.5
-Release:        alt3_6jpp7
+Release:        alt4_6jpp7
 Summary:        Java Webserver and Servlet Container
 
 Group:          Networking/WWW
@@ -1036,6 +1036,9 @@ getent passwd %username &>/dev/null || useradd  -r  -g %username \
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Mon Mar 25 2013 Igor Vlasenko <viy@altlinux.ru> 8.1.5-alt4_6jpp7
+- fixed init script
+
 * Sun Mar 24 2013 Igor Vlasenko <viy@altlinux.ru> 8.1.5-alt3_6jpp7
 - fixed scripts and provides
 
