@@ -1,6 +1,6 @@
 Name: glibc
 Version: 2.17
-Release: alt1
+Release: alt2
 Epoch: 6
 
 Summary: The GNU libc libraries
@@ -647,6 +647,10 @@ fi
 %_datadir/i18n
 
 %changelog
+* Mon Mar 25 2013 Dmitry V. Levin <ldv@altlinux.org> 6:2.17-alt2
+- stdlib.h: Made __secure_getenv prototype available without
+  -D_GNU_SOURCE as in older glibc releases.
+
 * Sun Mar 24 2013 Dmitry V. Levin <ldv@altlinux.org> 6:2.17-alt1
 - Updated to 2.17 branch with backports from master, fedora and
   libc-alpha@.
