@@ -1,6 +1,6 @@
 Name: valgrind
 Version: 3.8.1
-Release: alt1
+Release: alt2
 
 Summary: Valgrind, an open-source memory debugger for GNU/Linux
 License: GPLv2+
@@ -34,6 +34,7 @@ Patch21: valgrind-3.8.1-rh-avx2-bmi-fma.patch
 Patch22: valgrind-3.8.1-rh-bmi-conf-check.patch
 Patch23: valgrind-3.8.1-rh-memcheck-mc_translate-Iop_8HLto16.patch
 Patch24: valgrind-3.8.1-rh-avx2-prereq.patch
+Patch25: valgrind-3.8.1-rh-glibc-2.17.patch
 
 # valgrind needs /proc to work
 Requires: /proc
@@ -112,6 +113,7 @@ needed to compile Valgrind tools separately from the Valgrind core.
 %patch22 -p1
 %patch23 -p1
 %patch24 -p1
+%patch25 -p1
 
 chmod a+x memcheck/tests/filter_memcpy
 touch none/tests/amd64/{avx2-1,fma,bmi}.stderr.exp
@@ -201,6 +203,9 @@ echo "===============END TESTING==============="
 
 
 %changelog
+* Mon Mar 25 2013 Dmitry V. Levin <ldv@altlinux.org> 3.8.1-alt2
+- Fixed build with glibc 2.17.
+
 * Wed Oct 03 2012 Dmitry V. Levin <ldv@altlinux.org> 3.8.1-alt1
 - Updated to 3.8.1.
 - Merged with valgrind-3.8.1-2 from Fedora.
