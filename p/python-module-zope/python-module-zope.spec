@@ -1,6 +1,6 @@
 %define oname zope
 %define version 3.3.0
-%define release alt8.1
+%define release alt8.2
 
 %def_with python3
 
@@ -27,7 +27,7 @@ BuildRequires: python3-devel
 %package -n python3-module-%oname
 Summary: The ``zope`` package is a pure namespace package (Python 3)
 Group: Development/Python3
-#Requires: python3-module-zope.interface
+Requires: python3-module-zope.interface
 Requires: python3-module-zc
 
 %description -n python3-module-%oname
@@ -80,6 +80,9 @@ install -m644 %buildroot/%python_sitelibdir/%modulename/__init__.py \
 %endif
 
 %changelog
+* Tue Mar 26 2013 Aleksey Avdeev <solo@altlinux.ru> 3.3.0-alt8.2
+- Added requirement on python3-module-zope.interface
+
 * Sat Mar 02 2013 Aleksey Avdeev <solo@altlinux.ru> 3.3.0-alt8.1
 - Removed requirement on python3-module-zope.interface
   (bootstrap for Python 3.3)
