@@ -1,4 +1,4 @@
-%define ver_major 1.34
+%define ver_major 1.36
 %define _name gjs
 %define api_ver 1.0
 
@@ -13,14 +13,14 @@ Group: System/Libraries
 # The console module (modules/console.c)
 # Stack printer (gjs/stack.c)
 License: MIT and (MPLv1.1 or GPLv2+ or LGPLv2+)
-Url: http://live.gnome.org/Gjs/
+Url: https://live.gnome.org/Gjs/
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
 
-%define glib_ver 2.33.14
-%define gi_ver 1.33.14
+%define glib_ver 2.36.0
+%define gi_ver 1.36.0
 
-BuildRequires: gcc-c++ libmozjs-devel >= 1.8.5 libcairo-devel
+BuildRequires: gnome-common gcc-c++ libmozjs-devel >= 1.8.5 libcairo-devel
 BuildRequires: glib2-devel >= %glib_ver gobject-introspection-devel >= %gi_ver
 BuildRequires: libdbus-glib-devel libreadline-devel libcairo-gobject-devel
 
@@ -42,7 +42,6 @@ Files for development with %name.
 
 %set_typelibdir %_libdir/%_name/girepository-1.0
 
-
 %prep
 %setup -q -n %_name-%version
 
@@ -62,27 +61,25 @@ Files for development with %name.
 %files
 %_bindir/%_name
 %_bindir/%_name-console
-%_libdir/*.so.*
-%dir %_libdir/%_name-%api_ver
-%_libdir/%_name-%api_ver/*.so
+%_libdir/%name.so.*
 %dir %_libdir/%_name/
-%dir %_libdir/%_name/girepository-1.0
-%_libdir/%_name/girepository-1.0/GjsPrivate-%api_ver.typelib
+%dir %_typelibdir
+%_typelibdir/GjsPrivate-1.0.typelib
 %_datadir/%_name-%api_ver
 %doc COPYING NEWS README
 
-%exclude %_libdir/gjs-1.0/*.la
-
 %files devel
 %_includedir/%_name-%api_ver/
-%_libdir/*.so
+%_libdir/%name.so
 %_libdir/pkgconfig/%_name-%api_ver.pc
-%_libdir/pkgconfig/%_name-dbus-%api_ver.pc
 %_libdir/pkgconfig/%_name-internals-%api_ver.pc
 
 %doc examples/*
 
 %changelog
+* Tue Mar 26 2013 Yuri N. Sedunov <aris@altlinux.org> 1.36.0-alt1
+- 1.36.0
+
 * Mon Sep 24 2012 Yuri N. Sedunov <aris@altlinux.org> 1.34.0-alt1
 - 1.34.0
 

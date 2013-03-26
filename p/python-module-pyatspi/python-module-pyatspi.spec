@@ -1,5 +1,5 @@
 %define _name pyatspi
-%define ver_major 2.6
+%define ver_major 2.8
 
 Name: python-module-%_name
 Version: %ver_major.0
@@ -14,7 +14,8 @@ Source: ftp://ftp.gnome.org/pub/sources/%name/%ver_major/%_name-%version.tar.xz
 
 BuildArch: noarch
 
-BuildRequires: python-devel python-module-pygobject3-devel >= 3.1.0
+BuildRequires: python-devel python-module-pygobject3-devel >= 3.8.0
+BuildRequires: rpm-build-python3 python3-devel python3-module-pygobject3-devel >= 3.8.0
 BuildRequires: libX11-devel libICE-devel libSM-devel
 
 %description
@@ -29,22 +30,63 @@ ORBIT / CORBA for its transport protocol.
 
 This package includes a python client library for at-spi.
 
+%package -n python3-module-%_name
+Summary: Python3 bindings for at-spi
+Group: Development/Python3
+
+%description -n python3-module-%_name
+at-spi allows assistive technologies to access GTK-based
+applications. Essentially it exposes the internals of applications for
+automation, so tools such as screen readers, magnifiers, or even
+scripting interfaces can query and interact with GUI controls.
+
+This version of at-spi is a major break from previous versions.
+It has been completely rewritten to use D-Bus rather than
+ORBIT / CORBA for its transport protocol.
+
+This package provides Python3 bindings for at-spi library.
+
 %prep
 %setup -n %_name-%version
+%setup -D -c -n %_name-%version
+mv %_name-%version py3build
 
 %build
-%configure
+export PYTHON=%__python
+%configure --with-python=python2
 %make_build
+
+pushd py3build
+export PYTHON=python3
+%autoreconf
+%configure --with-python=python3
+%make_build
+popd
 
 %install
 %make DESTDIR=%buildroot install
+# hack to avoid verify-elf errors
+export LD_PRELOAD=%_libdir/libpython%__python_version.so
+
+pushd py3build
+%makeinstall_std
+# hack to avoid verify-elf errors
+export LD_PRELOAD="${LD_PRELOAD:+"$LD_PRELOAD:"}%_libdir/libpython3.so"
+popd
 
 %files
-%_bindir/magFocusTracker.py
+#%_bindir/magFocusTracker.py
 %python_sitelibdir/%_name/
 %doc AUTHORS README NEWS
 
+%files -n python3-module-%_name
+%python3_sitelibdir/%_name/
+%doc AUTHORS README NEWS
+
 %changelog
+* Tue Mar 26 2013 Yuri N. Sedunov <aris@altlinux.org> 2.8.0-alt1
+- 2.8.0
+
 * Tue Sep 25 2012 Yuri N. Sedunov <aris@altlinux.org> 2.6.0-alt1
 - 2.6.0
 

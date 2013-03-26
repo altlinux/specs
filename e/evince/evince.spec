@@ -1,5 +1,5 @@
 %define _libexecdir %_prefix/libexec
-%define ver_major 3.6
+%define ver_major 3.8
 %define api_ver 3
 %define so_ver 4
 
@@ -7,7 +7,7 @@
 %def_enable introspection
 
 Name: evince
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 Summary: A document viewer
 License: GPL
@@ -21,9 +21,9 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 BuildRequires: gcc-c++ gnome-common gtk-doc gnome-icon-theme intltool libdbus-glib-devel
 BuildRequires: yelp-tools itstool
 BuildRequires: libdjvu-devel libgnome-keyring-devel libnautilus-devel libpoppler-glib-devel libspectre-devel libtiff-devel
-BuildRequires: libxml2-devel libkpathsea-devel libgail3-devel gsettings-desktop-schemas-devel zlib-devel
+BuildRequires: libxml2-devel libkpathsea-devel libgail3-devel gsettings-desktop-schemas-devel zlib-devel libsecret-devel
 %{?_enable_xps:BuildRequires: libgxps-devel}
-BuildRequires: libSM-devel libICE-devel
+BuildRequires: libSM-devel libICE-devel libXi-devel
 
 %if_enabled introspection
 BuildRequires: gobject-introspection-devel libgtk+3-gir-devel
@@ -120,6 +120,8 @@ subst '/NoDisplay/d' %buildroot%_desktopdir/%name.desktop
 %exclude %_libdir/evince/%so_ver/backends/dvidocument.evince-backend
 %_libexecdir/evince*
 %_desktopdir/%name.desktop
+%_desktopdir/%name-previewer.desktop
+
 %_datadir/dbus-1/services/org.gnome.evince.Daemon.service
 %_datadir/%name
 %_datadir/GConf/gsettings/evince.convert
@@ -158,6 +160,9 @@ subst '/NoDisplay/d' %buildroot%_desktopdir/%name.desktop
 %exclude %_libdir/nautilus/extensions-3.0/libevince-properties-page.la
 
 %changelog
+* Tue Mar 26 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.0-alt1
+- 3.8.0
+
 * Mon Oct 15 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.1-alt1
 - 3.6.1
 

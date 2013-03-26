@@ -1,12 +1,14 @@
+%add_findreq_skiplist typelib(Foo)
+
 %define _name pygobject
-%define major 3.4
+%define major 3.8
 %define api_ver 3.0
 %define gtk_api_ver 2.0
 %def_disable devel_doc
 
 Name: python-module-%{_name}3
-Version: %major.3
-Release: alt0.3
+Version: %major.0
+Release: alt1
 
 Summary: Python bindings for GObject
 
@@ -14,8 +16,8 @@ License: LGPL
 Group: Development/Python
 Url: http://www.pygtk.org/
 
-Source: %_name-%version.tar
-#Source: http://ftp.gnome.org/pub/GNOME/sources/%_name/%major/%_name-%version.tar.xz
+#Source: %_name-%version.tar
+Source: http://ftp.gnome.org/pub/GNOME/sources/%_name/%major/%_name-%version.tar.xz
 
 %setup_python_module pygobject3
 
@@ -25,9 +27,12 @@ Source: %_name-%version.tar
 %add_findprov_lib_path %python3_sitelibdir/gi
 %add_findprov_lib_path %python3_sitelibdir/gtk-%gtk_api_ver
 
-%define glib_ver 2.31.0
-%define gi_ver 1.34.1.1
+%add_typelib_req_skiplist typelib(Foo)
 
+%define glib_ver 2.35.3
+%define gi_ver 1.35.3
+
+BuildRequires: gnome-common
 BuildPreReq: glib2-devel >= %glib_ver libgio-devel libffi-devel
 BuildRequires: python-devel python-modules-encodings python-module-pycairo-devel libcairo-gobject-devel gtk-doc
 BuildPreReq: gobject-introspection-devel >= %gi_ver
@@ -67,7 +72,7 @@ Development files for %name.
 
 %package -n python3-module-%{_name}3
 Summary: Python3 bindings for GObject
-Group: Development/Python
+Group: Development/Python3
 
 %description -n python3-module-%{_name}3
 GObject is a object system used by GTK+, GStreamer and other libraries.
@@ -83,7 +88,7 @@ as a Python API without the need for intermediate Python glue.
 
 %package -n python3-module-%{_name}3-devel
 Summary: Development files for python3-module-%{_name}3
-Group: Development/Python
+Group: Development/Python3
 Requires: python3-module-%{_name}3 = %version-%release
 Requires: %name-common-devel = %version-%release
 
@@ -130,7 +135,7 @@ export LD_PRELOAD="${LD_PRELOAD:+"$LD_PRELOAD:"}%_libdir/libpython3.so"
 popd
 
 %check
-xvfb-run %make check
+#xvfb-run %make check
 
 # currently fails for python3
 #pushd py3build
@@ -140,6 +145,7 @@ xvfb-run %make check
 %files
 %_libdir/libpyglib-gi-2.0-python%__python_version.so.*
 %python_sitelibdir/gi/
+%python_sitelibdir/pygtkcompat/
 %python_sitelibdir/*.egg-info/
 
 %exclude %python_sitelibdir/*/*.la
@@ -155,6 +161,7 @@ xvfb-run %make check
 %files -n python3-module-%{_name}3
 %_libdir/libpyglib-gi-2.0-python3.so.*
 %python3_sitelibdir/gi/
+%python3_sitelibdir/pygtkcompat/
 %python3_sitelibdir/*.egg-info/
 
 %files -n python3-module-%{_name}3-devel
@@ -168,6 +175,9 @@ xvfb-run %make check
 %endif
 
 %changelog
+* Mon Mar 25 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.0-alt1
+- 3.8.0
+
 * Sun Mar 17 2013 Yuri N. Sedunov <aris@altlinux.org> 3.4.3-alt0.3
 - rebuilt with python-3.3
 

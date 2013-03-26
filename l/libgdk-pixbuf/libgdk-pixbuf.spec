@@ -1,13 +1,13 @@
 %define _name gdk-pixbuf
 %define api_ver 2.0
 %define binary_ver 2.10.0
-%define ver_major 2.26
+%define ver_major 2.28
 %def_disable gtk_doc
 %def_enable introspection
 %def_with x11
 
 Name: lib%_name
-Version: %ver_major.5
+Version: %ver_major.0
 Release: alt1
 
 Summary: An image loading and rendering library for Gdk
@@ -21,7 +21,7 @@ Source1: %_name.map
 Source2: %_name.lds
 Source3: gdk-pixbuf-loaders.filetrigger
 
-%define glib_ver 2.31.0
+%define glib_ver 2.34.0
 %define gi_ver 0.9.5
 
 Requires: %name-locales = %version
@@ -190,6 +190,9 @@ touch %buildroot%_libdir/%_name-%api_ver/%binary_ver/loaders.cache
 %endif
 
 %changelog
+* Tue Mar 26 2013 Yuri N. Sedunov <aris@altlinux.org> 2.28.0-alt1
+- 2.28.0
+
 * Sat Nov 10 2012 Yuri N. Sedunov <aris@altlinux.org> 2.26.5-alt1
 - 2.26.5
 

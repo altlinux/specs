@@ -1,8 +1,8 @@
-%define ver_major 3.14
+%define ver_major 3.15
 %define api_ver 2.0
 
 Name: glade
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: A user interface designer for Gtk+ and GNOME
@@ -126,6 +126,9 @@ GObject introspection devel data for the GladeUI library.
 %_girdir/Gladeui-2.0.gir
 
 %changelog
+* Thu Mar 07 2013 Yuri N. Sedunov <aris@altlinux.org> 3.15.0-alt1
+- 3.15.0
+
 * Tue Dec 04 2012 Yuri N. Sedunov <aris@altlinux.org> 3.14.2-alt1
 - first build for Sisyphus
 

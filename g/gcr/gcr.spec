@@ -1,27 +1,28 @@
 %define _libexecdir %_prefix/libexec
-%define ver_major 3.6
+%define ver_major 3.8
 %def_enable introspection
 
 Name: gcr
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: A GNOME crypto viewer and prompter
 Group: Graphical desktop/GNOME
 License: LGPLv2+
-Url: http://live.gnome.org/CryptoGlue/
+Url: https://live.gnome.org/CryptoGlue/
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 
 Requires: %name-libs = %version-%release
+Requires: libtasn1-utils
 Conflicts: gnome-keyring < 3.3.0
 
 %define glib_ver 2.32.0
 
-BuildRequires: intltool glib2-devel >= %glib_ver libgtk+3-devel libp11-kit-devel
-BuildRequires: libgcrypt-devel libtasn1-devel libtasn1-utils gnupg2-gpg
+BuildRequires: gnome-common gtk-doc intltool glib2-devel >= %glib_ver libgtk+3-devel libp11-kit-devel
+BuildRequires: libgcrypt-devel libtasn1-devel libtasn1-utils libtasn1-utils gnupg2-gpg
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel libgtk+3-gir-devel}
-BuildRequires: chrpath
+#BuildRequires: chrpath
 
 %description
 GCR is a library for displaying certificates, and crypto UI, accessing
@@ -87,17 +88,23 @@ This package contains development documentation for GCR libraries.
 %setup
 
 %build
+%autoreconf
 %configure
 %make_build
 
 %install
-%make DESTDIR=%buildroot install
-
-chrpath --delete %buildroot%_libdir/*.so.*
-chrpath --delete %buildroot%_bindir/gcr-viewer
-chrpath --delete %buildroot%_libexecdir/gcr-prompter
+%makeinstall_std
 
 %find_lang %name
+
+%check
+#  /gcr/subject-public-key/dsa/private-key-attributes:                  secure memory pool is not locked while in FIPS mode
+#  fatal error in libgcrypt, file misc.c, line 84, function _gcry_fatal_error: out of core in secure memory
+#  
+#  Fatal error: <12>Feb 19 08:48:33 lt-test-subject-public-key: Libgcrypt notice: state transition Power-On => Fatal-Error
+#  out of core in secure memory
+#  
+#%%make check
 
 %files -f %name.lang
 %_bindir/gcr-viewer
@@ -119,8 +126,9 @@ chrpath --delete %buildroot%_libexecdir/gcr-prompter
 %_libdir/libgck-1.so.*
 %_libdir/libgcr-3.so.*
 %_libdir/libgcr-base-3.so.*
+%_libdir/libgcr-ui-3.so.*
 
-%exclude %_libdir/libmock-test-module.so
+#%exclude %_libdir/libmock-test-module.so
 
 %files libs-devel
 %_includedir/gck-1
@@ -128,9 +136,11 @@ chrpath --delete %buildroot%_libexecdir/gcr-prompter
 %_libdir/libgck-1.so
 %_libdir/libgcr-3.so
 %_libdir/libgcr-base-3.so
+%_libdir/libgcr-ui-3.so
 %_libdir/pkgconfig/gck-1.pc
 %_libdir/pkgconfig/gcr-3.pc
 %_libdir/pkgconfig/gcr-base-3.pc
+%_libdir/pkgconfig/gcr-ui-3.pc
 
 %files libs-devel-doc
 %_datadir/gtk-doc/html/gck
@@ -140,13 +150,18 @@ chrpath --delete %buildroot%_libexecdir/gcr-prompter
 %files libs-gir
 %_typelibdir/Gck-1.typelib
 %_typelibdir/Gcr-3.typelib
+%_typelibdir/GcrUi-3.typelib
 
 %files libs-gir-devel
 %_girdir/Gck-1.gir
 %_girdir/Gcr-3.gir
+%_girdir/GcrUi-3.gir
 %endif
 
 %changelog
+* Mon Mar 25 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.0-alt1
+- 3.8.0
+
 * Mon Nov 12 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.2-alt1
 - 3.6.2
 

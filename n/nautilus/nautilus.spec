@@ -1,5 +1,5 @@
 %define _name nautilus2
-%define ver_major 3.6
+%define ver_major 3.8
 %define api_ver 3.0
 
 %def_enable exempi
@@ -9,7 +9,7 @@
 %def_enable selinux
 
 Name: nautilus
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 
 Summary: Nautilus is a network user environment
@@ -36,7 +36,7 @@ Provides: gnome-volume-manager
 %define desktop_file_utils_ver 0.8
 
 # From configure.in
-%define glib_ver 2.31.9
+%define glib_ver 2.35.3
 %define desktop_ver 3.3.3
 %define pango_ver 1.28.3
 %define gtk_ver 3.5.5
@@ -147,6 +147,7 @@ subst 's@\.\/@xvfb-run -a ./@' eel/check-eel src/check-nautilus
 %configure \
     --disable-update-mimedb \
     --disable-schemas-compile \
+    %{subst_enable tracker} \
     %{subst_enable packagekit}
 
 %make_build
@@ -173,7 +174,7 @@ ln -sf %_licensedir/LGPL-2 COPYING
 %files -f %name.lang
 %_bindir/*
 %_libexecdir/nautilus-convert-metadata
-%_libexecdir/nautilus-shell-search-provider
+#%_libexecdir/nautilus-shell-search-provider
 %dir %_libdir/%name-%api_ver
 %dir %_libdir/%name-%api_ver/components
 %_datadir/mime/packages/nautilus.xml
@@ -217,6 +218,9 @@ ln -sf %_licensedir/LGPL-2 COPYING
 
 
 %changelog
+* Mon Mar 25 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.0-alt1
+- 3.8.0
+
 * Tue Nov 13 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.3-alt1
 - 3.6.3
 

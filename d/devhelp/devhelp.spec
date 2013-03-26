@@ -1,7 +1,7 @@
-%define ver_major 3.6
+%define ver_major 3.8
 
 Name: devhelp
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: Developer's help program
@@ -13,10 +13,10 @@ Group: Development/Other
 Url: http://www.gnome.org
 #VCS: git:git://git.gnome.org/devhelp
 Source: %name-%version.tar
+Source2: libgd.tar
 
 # From configure.in
-%define gtk_ver 3.4
-%define GConf_ver 2.6.0
+%define gtk_ver 3.5.6
 
 Requires: lib%name = %version-%release
 
@@ -28,8 +28,7 @@ BuildPreReq: gtk-doc
 BuildPreReq: intltool >= 0.40.0
 BuildPreReq: libgio-devel >= 2.32
 BuildPreReq: libgtk+3-devel >= %gtk_ver
-BuildPreReq: GConf libGConf-devel >= %GConf_ver
-BuildPreReq: libwebkitgtk3-devel
+BuildPreReq: libwebkitgtk3-devel libwebkit2gtk-devel >= 1.10.0
 BuildPreReq: zlib-devel
 BuildPreReq: gettext-tools
 
@@ -86,6 +85,7 @@ This plugin for GEdit enables using DevHelp from inside the editor.
 
 %prep
 %setup -q
+tar -xf %SOURCE2 -C libgd
 
 %build
 NOCONFIGURE=1 ./autogen.sh
@@ -103,21 +103,14 @@ mkdir -p %buildroot%_devhelpdir/{specs,books}
 
 %find_lang %name
 
-%post
-%gconf2_install %name
-
-%preun
-if [ $1 = 0 ]; then
-%gconf2_uninstall %name
-fi
-
 %files -f %name.lang
 %_bindir/*
 %dir %_devhelpdir
 %_devhelpdir/*
 %_desktopdir/%name.desktop
 %_iconsdir/hicolor/*/apps/devhelp.*
-%config %gconf_schemasdir/*
+%_datadir/GConf/gsettings/*.convert
+%_datadir/glib-2.0/schemas/*.gschema.xml
 %doc AUTHORS COPYING NEWS README
 
 %files -n lib%name
@@ -132,6 +125,15 @@ fi
 %gedit_pluginsdir/*
 
 %changelog
+* Tue Mar 26 2013 Alexey Shabalin <shaba@altlinux.ru> 3.8.0-alt1
+- 3.8.0
+
+* Thu Mar 07 2013 Alexey Shabalin <shaba@altlinux.ru> 3.7.91-alt1
+- 3.7.91
+
+* Mon Feb 25 2013 Alexey Shabalin <shaba@altlinux.ru> 3.7.5-alt1
+- 3.7.5
+
 * Wed Nov 14 2012 Alexey Shabalin <shaba@altlinux.ru> 3.6.1-alt1
 - 3.6.1
 

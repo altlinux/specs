@@ -1,4 +1,4 @@
-%define ver_major 0.17
+%define ver_major 0.18
 %def_enable external_plugin
 %def_enable mpris_plugin
 %def_enable mediathek_plugin
@@ -17,7 +17,7 @@
 %endif
 
 Name: rygel
-Version: %ver_major.5.1
+Version: %ver_major.0
 Release: alt1
 Summary: A UPnP v2 Media Server
 
@@ -33,7 +33,7 @@ Source: ftp://ftp.gnome.org/pub/GNOME/sources/%name/%ver_major/%name-%version.ta
 %define gssdp_ver 0.13.0
 %define gupnp_ver 0.19.0
 %define gupnp_av_ver 0.11.4
-%define gupnp_dlna_ver 0.7.0
+%define gupnp_dlna_ver 0.9.4
 %define gstreamer_ver 1.0
 %define gst_pbu_ver 1.0
 %define gst_tag_ver 1.0
@@ -50,20 +50,23 @@ BuildRequires: pkgconfig(gssdp-1.0) >= %gssdp_ver
 BuildRequires: pkgconfig(gupnp-1.0) >= %gupnp_ver
 BuildRequires: pkgconfig(gupnp-av-1.0) >= %gupnp_av_ver
 BuildRequires: pkgconfig(gio-2.0) >= %gio_ver
+BuildRequires: pkgconfig(gmodule-2.0)
 BuildRequires: pkgconfig(gee-0.8) >= %gee_ver
 BuildRequires: pkgconfig(uuid) >= %uuid_ver
 BuildRequires: pkgconfig(libsoup-2.4) >= %libsoup_ver
 BuildRequires: pkgconfig(libxml-2.0) >= %libxml_ver
-%if %media_engine == gstreamer
-BuildRequires: pkgconfig(gupnp-dlna-1.1) >= %gupnp_dlna_ver
 BuildRequires: pkgconfig(gstreamer-1.0) >= %gstreamer_ver
 BuildRequires: pkgconfig(gstreamer-base-1.0) >= %gstreamer_ver
+%if %media_engine == gstreamer
 BuildRequires: pkgconfig(gstreamer-pbutils-1.0) >= %gst_pbu_ver
+BuildRequires: pkgconfig(gstreamer-app-1.0) >= %gst_app_ver
+BuildRequires: pkgconfig(gupnp-dlna-2.0) >= %gupnp_dlna_ver
+BuildRequires: pkgconfig(gio-2.0) >= %gio_ver
 %endif
 BuildRequires: tracker-devel
-%{?_enable_media_export_plugin:BuildRequires: pkgconfig(sqlite3) >= %libsqlite3_ver pkgconfig(gstreamer-tag-1.0) >= %gst_tag_ver pkgconfig(gstreamer-app-1.0) >= %gst_app_ver}
+%{?_enable_media_export_plugin:BuildRequires: pkgconfig(sqlite3) >= %libsqlite3_ver pkgconfig(gstreamer-tag-1.0) >= %gst_tag_ver pkgconfig(gstreamer-app-1.0) >= %gst_app_ver pkgconfig(gupnp-dlna-2.0) >= %gupnp_dlna_ver pkgconfig(gupnp-dlna-gst-2.0) >= %gupnp_dlna_ver }
 BuildRequires: libvala-devel >= %vala_ver vala >= %vala_ver
-BuildRequires: vapi(gupnp-1.0) vapi(gupnp-av-1.0) vapi(gio-2.0) vapi(gee-0.8) vapi(posix)
+BuildRequires: vapi(gupnp-1.0) vapi(gupnp-av-1.0) vapi(gio-2.0) vapi(gee-0.8) vapi(posix) 
 %{?_with_ui:BuildRequires: pkgconfig(gtk+-3.0) >= %gtk_ver}
 BuildRequires: xsltproc docbook-style-xsl docbook-dtds
 
@@ -142,6 +145,15 @@ echo %version > .tarball-version
 %_datadir/vala/vapi/*
 
 %changelog
+* Wed Mar 27 2013 Alexey Shabalin <shaba@altlinux.ru> 0.18.0-alt1
+- 0.18.0
+
+* Thu Mar 07 2013 Alexey Shabalin <shaba@altlinux.ru> 0.17.9-alt1
+- 0.17.9
+
+* Mon Feb 25 2013 Alexey Shabalin <shaba@altlinux.ru> 0.17.8-alt1
+- 0.17.8
+
 * Mon Dec 17 2012 Alexey Shabalin <shaba@altlinux.ru> 0.17.5.1-alt1
 - 0.17.5.1
 

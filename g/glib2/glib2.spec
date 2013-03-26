@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 2.34
+%define ver_major 2.36
 %define pcre_ver 8.11
 %def_without sys_pcre
 %def_enable selinux
@@ -12,9 +12,10 @@
 %def_disable gtk_doc
 %endif
 
+
 Name: glib2
-Version: %ver_major.3
-Release: alt2
+Version: %ver_major.0
+Release: alt1
 
 Summary: A library of handy utility functions
 License: %lgpl2plus
@@ -37,7 +38,7 @@ Source6: gio-compat.lds
 Source10: glib2.sh
 Source11: glib2.csh
 
-Patch: glib-2.34.3-alt-gtester.patch
+Patch: glib-2.35.9-alt-compat-version-script.patch
 
 %def_with locales
 %if_with locales
@@ -50,6 +51,12 @@ Obsoletes: lib%name < %version
 Provides: %name-core = %version
 Obsoletes: %name-core < %version
 
+# use python3
+#AutoReqProv: nopython
+#%define __python %nil
+#%add_python3_lib_path %_datadir/glib-2.0/codegen
+%add_python_lib_path %_datadir/glib-2.0/codegen
+
 %if_with sys_pcre
 BuildPreReq: libpcre-devel >= %pcre_ver
 Requires: pcre-config(utf8) pcre-config(unicode-properties)
@@ -60,7 +67,9 @@ BuildRequires(pre): rpm-build-licenses
 BuildPreReq: gtk-doc >= 1.8
 
 BuildRequires: gtk-doc indent libdbus-devel libpcre-devel
-BuildRequires: libffi-devel python-devel zlib-devel libelf-devel
+BuildRequires: libffi-devel  zlib-devel libelf-devel
+BuildRequires: rpm-build-python python-devel
+#BuildRequires: rpm-build-python3 python3-devel
 %{?_enable_selinux:BuildRequires: libselinux-devel}
 %{?_enable_fam:BuildRequires: libgamin-devel}
 
@@ -182,7 +191,7 @@ This package contains documentation for GIO.
 %endif
 
 %prep
-%setup -q -n glib-%version
+%setup -n glib-%version
 %patch
 
 %if_with sys_pcre
@@ -218,7 +227,7 @@ NOCONFIGURE=1 ./autogen.sh
     %{?_with_sys_pcre:--with-pcre=system} \
     %{subst_enable fam}
 
-%make_build LIBTOOL_EXPORT_OPTIONS='-Wl,--version-script=compat.map -Wl,compat.lds'
+%make_build
 
 %install
 %make_install install DESTDIR=%buildroot
@@ -300,6 +309,7 @@ install -pD -m 755 filetrigger %buildroot%_rpmlibdir/gsettings.filetrigger
 %_datadir/aclocal/gsettings.m4
 %dir %_datadir/glib-2.0
 %_datadir/glib-2.0/gettext/
+%_datadir/glib-2.0/codegen/
 %_man1dir/glib-genmarshal.*
 %_man1dir/glib-gettextize.*
 %_man1dir/glib-mkenums.*
@@ -347,7 +357,6 @@ install -pD -m 755 filetrigger %buildroot%_rpmlibdir/gsettings.filetrigger
 
 %files -n libgio-devel
 %_bindir/gdbus-codegen
-%_libdir/gdbus-2.0/codegen/
 %dir %_includedir/glib-2.0
 %dir %_includedir/glib-2.0/gio
 %_includedir/glib-2.0/gio/*.h
@@ -370,6 +379,12 @@ install -pD -m 755 filetrigger %buildroot%_rpmlibdir/gsettings.filetrigger
 
 
 %changelog
+* Tue Mar 26 2013 Yuri N. Sedunov <aris@altlinux.org> 2.36.0-alt1
+- 2.36.0
+
+* Tue Mar 19 2013 Yuri N. Sedunov <aris@altlinux.org> 2.35.9-alt1
+- 2.35.9
+
 * Sat Jan 12 2013 Yuri N. Sedunov <aris@altlinux.org> 2.34.3-alt2
 - fixed gtester (ldv@)
 

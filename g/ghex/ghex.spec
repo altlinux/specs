@@ -1,22 +1,23 @@
-%define ver_major 3.6
+%define ver_major 3.8
 %define api_ver 3.0
 
 Name: ghex
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: Binary editor for GNOME
 Group: Development/Tools
 License: GPLv2+
-Url: http://live.gnome.org/Ghex
+Url: https://live.gnome.org/Ghex
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+Patch: ghex-3.7.90-alt-lfs.patch
 
 %define glib_ver 2.31.10
 %define gtk_ver 3.3.8
 
-BuildRequires: glib2-devel >= %glib_ver libgtk+3-devel >= %gtk_ver
-BuildRequires: libgail3-devel gnome-doc-utils intltool librarian
+BuildRequires: gnome-common glib2-devel >= %glib_ver libgtk+3-devel >= %gtk_ver
+BuildRequires: libgail3-devel intltool yelp-tools
 
 %description
 GHex is a hex editor for the GNOME desktop.
@@ -37,15 +38,17 @@ developing applications that use GtkGHex library.
 
 %prep
 %setup
+%patch -p1 -b .lfs
 
 %build
-%configure --disable-scrollkeeper \
+%autoreconf
+%configure \
 	--disable-schemas-compile
 
 %make_build
 
 %install
-make DESTDIR=%buildroot install
+%make DESTDIR=%buildroot install
 
 %find_lang --with-gnome --output=%name.lang %name %name-%api_ver
 
@@ -55,6 +58,7 @@ make DESTDIR=%buildroot install
 %_datadir/GConf/gsettings/%name.convert
 %_datadir/glib-2.0/schemas/org.gnome.GHex.gschema.xml
 %_iconsdir/hicolor/*/apps/*
+%_iconsdir/HighContrast/*x*/apps/%name.png
 %_libdir/*.so.*
 %doc AUTHORS NEWS README
 
@@ -64,6 +68,9 @@ make DESTDIR=%buildroot install
 %_libdir/pkgconfig/*.pc
 
 %changelog
+* Mon Mar 25 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.0-alt1
+- 3.8.0
+
 * Tue Oct 16 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.1-alt1
 - 3.6.1
 

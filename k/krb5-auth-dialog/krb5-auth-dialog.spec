@@ -1,9 +1,9 @@
-%define ver_major 3.2
+%define ver_major 3.8
 %define gtk_api_ver 3.0
 %def_with pkcs11
 
 Name: krb5-auth-dialog
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: Kerberos 5 authentication dialog
@@ -20,14 +20,13 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 %define notify_ver 0.7
 %define control_center_ver 3.0.0
 
-Requires(post,preun): GConf
 %{?_with_pkcs11:Requires: libopensc}
 
 BuildPreReq: libgtk+3-devel >= %gtk_ver
 BuildPreReq: libnotify-devel >= %notify_ver
 BuildPreReq: NetworkManager-glib-devel >= %nm_ver
-BuildRequires: flex libgio-devel libGConf-devel libkrb5-devel libcap-devel libpam-devel
-BuildRequires: intltool perl-XML-Parser librarian gnome-doc-utils
+BuildRequires: flex libgio-devel libkrb5-devel libcap-devel libpam-devel
+BuildRequires: intltool perl-XML-Parser gnome-doc-utils
 BuildRequires: gnome-control-center-devel >= %control_center_ver
 %{?_with_pkcs11:BuildRequires: libopensc}
 
@@ -40,24 +39,16 @@ pops up a dialog when they are about to expire.
 
 %build
 %configure \
-	--disable-schemas-install \
-	--enable-network-manager \
+	--disable-schemas-compile \
 	--disable-static \
+	--enable-network-manager \
 	%{?_with_pkcs11:--with-pkcs11=%_libdir/pkcs11/opensc-pkcs11.so}
 
 %make_build
 
 %install
-%make DESTDIR=%buildroot install
+%makeinstall_std
 %find_lang --with-gnome %name
-
-%post
-%gconf2_install %name
-
-%preun
-if [ $1 = 0 ]; then
-%gconf2_uninstall %name
-fi
 
 %files -f %name.lang
 %_bindir/*
@@ -69,14 +60,18 @@ fi
 %_datadir/applications/%name.desktop
 %_datadir/dbus-1/services/org.gnome.KrbAuthDialog.service
 %_iconsdir/hicolor/*/*/*.*
-%_sysconfdir/gconf/schemas/*.schemas
+%_datadir/glib-2.0/schemas/org.gnome.KrbAuthDialog.gschema.xml
+%_datadir/GConf/gsettings/org.gnome.KrbAuthDialog.convert
 %_sysconfdir/xdg/autostart/*.desktop
 %_man1dir/*
-%doc AUTHORS ChangeLog NEWS README 
+%doc AUTHORS ChangeLog NEWS README
 
 %exclude %_libdir/%name/plugins/*.la
 
 %changelog
+* Thu Mar 28 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.0-alt1
+- 3.8.0
+
 * Mon Oct 17 2011 Yuri N. Sedunov <aris@altlinux.org> 3.2.1-alt1
 - 3.2.1
 

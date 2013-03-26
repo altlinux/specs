@@ -1,11 +1,12 @@
-%define ver_major 3.6
+%define ver_major 3.8
+%define api_ver 3.0
 %define gst_api_ver 1.0
 %def_disable static
 %def_disable gtk_doc
 %def_enable introspection
 
 Name: cheese
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: Cheese is a Photobooth-inspired application for taking pictures and videos
@@ -15,8 +16,9 @@ Url: http://www.gnome.org/projects/cheese
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/cheese/%ver_major/%name-%version.tar.xz
 
+# from configure.ac
 %define glib_ver 2.28.0
-%define gtk_ver 3.2.0
+%define gtk_ver 3.4.4
 %define desktop_ver 3.0.0
 %define gst_ver 0.11
 %define vala_ver 0.14.0
@@ -26,27 +28,29 @@ Requires: lib%name = %version-%release
 Requires: gnome-video-effects
 # camerabin used for taking photos and videos
 Requires: gst-plugins-bad%gst_api_ver
-# matroska (webmmux)
+# matroska (webmmux), vp8enc
 Requires: gst-plugins-good%gst_api_ver
 Requires: gst-plugins-ugly%gst_api_ver
 
-BuildPreReq: gnome-doc-utils gnome-common intltool yelp-tools itstool
 BuildPreReq: libgio-devel >= %glib_ver
 BuildPreReq: libgtk+3-devel >= %gtk_ver
 BuildPreReq: libgnome-desktop3-devel >= %desktop_ver
 BuildPreReq: gst-plugins%gst_api_ver-devel >= %gst_ver
 BuildPreReq: gst-plugins-bad%gst_api_ver-devel >= %gst_ver
 BuildPreReq: gstreamer%gst_api_ver-utils >= %gst_ver
-BuildRequires: libgnome-menus-devel libgnomekbd-devel
-BuildRequires: librsvg-devel libgee-devel libcanberra-gtk3-devel
-BuildRequires: libdbus-devel libdbus-glib-devel libgudev-devel
+BuildPreReq: gst-plugins-good%gst_api_ver >= %gst_ver
+BuildPreReq: libclutter-devel >= %clutter_ver
+BuildPreReq: vala-tools >= %vala_ver
+BuildRequires: gnome-common intltool yelp-tools gtk-doc desktop-file-utils
+BuildRequires: librsvg-devel libcanberra-gtk3-devel
+BuildRequires: libgudev-devel
 BuildRequires: libX11-devel libXtst-devel libXext-devel
-BuildRequires: libclutter-devel >= %clutter_ver libclutter-gst2.0-devel libclutter-gtk3-devel
-BuildRequires: docbook-dtds xsltproc gtk-doc
+BuildRequires: libclutter-gst2.0-devel libclutter-gtk3-devel
 BuildRequires: gnome-video-effects-devel gsettings-desktop-schemas-devel
-BuildRequires: vala-tools >= %vala_ver
 BuildRequires: nautilus-sendto-devel
 %{?_enable_introspection:BuildRequires: libgdk-pixbuf-gir-devel libclutter-gir-devel libgstreamer%gst_api_ver-gir-devel}
+# for check
+BuildRequires: /proc dbus-tools-gui xvfb-run
 
 %description
 Cheese is a Photobooth-inspired GNOME application for taking pictures
@@ -113,13 +117,16 @@ GObject introspection devel data for the Cheese library.
 %make_build
 
 %install
-%make_install DESTDIR=%buildroot install
+%makeinstall_std
 
 %find_lang --with-gnome %name
 
+%check
+#xvfb-run %make check
+
 %files -f %name.lang
-%_bindir/cheese
-%_datadir/applications/cheese.desktop
+%_bindir/%name
+%_desktopdir/%name.desktop
 %_datadir/cheese/
 %_datadir/icons/hicolor/*/*/*.*
 %config %_datadir/glib-2.0/schemas/*
@@ -139,13 +146,16 @@ GObject introspection devel data for the Cheese library.
 
 %if_enabled introspection
 %files -n lib%name-gir
-%_typelibdir/Cheese-3.0.typelib
+%_typelibdir/Cheese-%api_ver.typelib
 
 %files -n lib%name-gir-devel
-%_girdir/Cheese-3.0.gir
+%_girdir/Cheese-%api_ver.gir
 %endif
 
 %changelog
+* Tue Mar 26 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.0-alt1
+- 3.8.0
+
 * Tue Nov 13 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.2-alt1
 - 3.6.2
 

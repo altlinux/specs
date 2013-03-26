@@ -1,8 +1,9 @@
-%define ver_major 3.6
+%define ver_major 3.8
 %def_disable static
 %def_disable gtk_doc
 %def_disable debug
 %def_enable introspection
+%def_enable vala
 
 Name: libgnome-keyring
 Version: %ver_major.0
@@ -31,7 +32,7 @@ BuildRequires: libvala-devel vala-tools rpm-build-vala
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel}
 
 # for check
-#BuildRequires: gnome-keyring dbus-tools-gui /proc
+BuildRequires: /proc xvfb-run
 
 %description
 The %name library is used by applications to integrate with the
@@ -93,13 +94,14 @@ install -p -m644 %SOURCE1 library/%name-altlinux.ver
 %configure \
 	%{?_enable_gtk_doc:--enable-gtk-doc} \
 	%{subst_enable static} \
-	%{subst_enable debug}
+	%{subst_enable debug} \
+	%{subst_enable vala}
 
 %make_build
 
 # X11 required for tests
-#%check
-#%make check
+%check
+xvfb-run %make check
 
 %install
 %make_install DESTDIR=%buildroot install
@@ -133,6 +135,9 @@ install -p -m644 %SOURCE1 library/%name-altlinux.ver
 %endif
 
 %changelog
+* Mon Mar 25 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.0-alt1
+- 3.8.0
+
 * Tue Sep 25 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.0-alt1
 - 3.6.0
 

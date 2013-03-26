@@ -1,7 +1,10 @@
-%define ver_major 3.6
+%define ver_major 3.8
+%define _libexecdir %_prefix/libexec
+
+%def_with nautilus
 
 Name: gnome-terminal
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: GNOME Terminal
@@ -11,9 +14,6 @@ Url: http://www.gnome.org
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 
-%define intltool_ver 0.40.0
-%define GConf_ver 2.32.02
-%define scrollkeeper_ver 0.3.14
 %define glib_ver 2.28.0
 %define gtk_ver 3.0.1
 %define vte_ver 0.32.1
@@ -21,22 +21,30 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 Provides: xvt
 
 PreReq: libvte3 >= %vte_ver
-Requires(post,preun): GConf >= %GConf_ver
-Requires: scrollkeeper >= %scrollkeeper_ver
 Requires: common-licenses
 
-BuildPreReq: gnome-common
-BuildPreReq: intltool >= %intltool_ver
-BuildPreReq: yelp-tools itstool
-BuildPreReq: GConf >= %GConf_ver libGConf-devel >= %GConf_ver
+BuildRequires: gnome-common intltool yelp-tools desktop-file-utils
 BuildPreReq: libgio-devel >= %glib_ver
 BuildPreReq: libgtk+3-devel >= %gtk_ver
 BuildPreReq: libvte3-devel >= %vte_ver
 
 BuildRequires: gsettings-desktop-schemas-devel gnome-doc-utils-xslt libgio-devel libSM-devel
+BuildRequires: libdconf-devel libuuid-devel
+%{?_with_nautilus:BuildRequires: libnautilus-devel}
+# for migration
+BuildRequires: libGConf-devel
 
 %description
 GNOME terminal emulator application.
+
+%package nautilus
+Summary: Nautilus extension for the GNOME Terminal
+Group: Graphical desktop/GNOME
+Requires: %name = %version-%release
+
+%description nautilus
+This package provides integration with the GNOME Terminal for the
+Nautilus file manager.
 
 %prep
 %setup -q
@@ -48,15 +56,15 @@ GNOME terminal emulator application.
 %build
 %autoreconf
 %configure \
-	--disable-schemas-install \
-	--disable-dependency-tracking
-
-#	--disable-schemas-compile \
+	--disable-static \
+	--disable-schemas-compile \
+	--disable-dependency-tracking \
+	%{?_with_nautilus:--with-nautilus-extension}
 
 %make_build
 
 %install
-%make_install install DESTDIR=%buildroot
+%makeinstall_std
 
 # alternatives
 mkdir -p %buildroot%_altdir
@@ -66,25 +74,28 @@ EOF
 
 %find_lang --with-gnome %name
 
-%post
-%gconf2_install %name
-
-%preun
-if [ $1 = 0 ]; then
-%gconf2_uninstall %name
-fi
-
 %files -f %name.lang
-%_bindir/*
-%_datadir/applications/*
-%_datadir/%name
-#%config %_datadir/glib-2.0/schemas/*
-%config %_sysconfdir/gconf/*/*
+%_bindir/%name
+%_libexecdir/%name-migration
+%_libexecdir/%name-server
+%_datadir/applications/%name.desktop
+%_datadir/dbus-1/services/org.gnome.Terminal.service
+%config %_datadir/glib-2.0/schemas/org.gnome.Terminal.gschema.xml
 %_altdir/%name
 %doc --no-dereference COPYING
-%doc AUTHORS ChangeLog NEWS README
+%doc AUTHORS ChangeLog NEWS
+
+%if_with nautilus
+%files nautilus
+%_libdir/nautilus/extensions-3.0/libterminal-nautilus.so
+%exclude %_libdir/nautilus/extensions-3.0/libterminal-nautilus.la
+%endif
 
 %changelog
+* Tue Mar 26 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.0-alt1
+- 3.8.0
+- new -nautilus subpackage
+
 * Tue Oct 16 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.1-alt1
 - 3.6.1
 

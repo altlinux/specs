@@ -1,48 +1,48 @@
 %define api_ver 2.4
-%define ver_major 2.40
+%define ver_major 2.42
 %def_disable static
-%def_disable gtk_doc
+%def_enable gtk_doc
 %def_with gnome
 %def_enable introspection
 
 Name: libsoup
-Version: %ver_major.3
-Release: alt1
+Version: %ver_major.0
+Release: alt1.1
 
 Summary: HTTP client/server library for GNOME
 Group: System/Libraries
 License: LGPLv2+
-Url: http://live.gnome.org/LibSoup
+Url: https://live.gnome.org/LibSoup
 Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 
-Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+Source: %name-%version.tar
+#Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+
 Source1: %name-compat.map
 Source2: %name-compat.lds
 Source3: %name-gnome-compat.map
 Source4: %name-gnome-compat.lds
-Patch1: %name-2.25.4-alt-compat-map.patch
+Patch1: %name-2.41.3-alt-compat-map.patch
 # time out test fails in build system not in local hasher
 Patch100: %name-2.32.2-no-timeout_test.patch
 
-Requires: glib-networking >= 2.31.16
+Requires: glib-networking >= 2.35.3
 
 Provides: soup = %version libsoup%api_ver = %version
 Obsoletes: soup < %version libsoup%api_ver < %version
 
-%define glib_ver 2.33.3
+%define glib_ver 2.35.0
 %define gi_ver 1.33.3
 
 # from configure.in
 BuildPreReq: glib2-devel >= %glib_ver
 BuildPreReq: libgio-devel >= %glib_ver
-BuildPreReq: libxml2-devel libsqlite3-devel libgnome-keyring-devel zlib-devel
+BuildPreReq: libxml2-devel libsqlite3-devel zlib-devel
 
 BuildRequires: docbook-dtds docbook-style-xsl common-licenses
 BuildRequires: gtk-doc xml-common xsltproc intltool
 BuildRequires: glib-networking
 %{?_enable_introspection:BuildPreReq: gobject-introspection-devel >= %gi_ver}
-# for check
-BuildRequires: curl
 
 %description
 libsoup is an HTTP client/server library for GNOME. It uses GObjects
@@ -146,7 +146,8 @@ Requires: %name-gir-devel = %version-%release
 Requires: %name-gnome-gir = %version-%release
 
 %description gnome-gir-devel
-This package provides GObject introspection devel data for the GNOME part of Soup library
+This package provides GObject introspection devel data for the GNOME
+part of Soup library.
 
 %prep
 %setup -q
@@ -213,6 +214,20 @@ install -p -m644 %_sourcedir/%name-{,gnome-}compat.{map,lds} %name/
 %endif
 
 %changelog
+* Tue Apr 02 2013 Yuri N. Sedunov <aris@altlinux.org> 2.42.0-alt1.1
+- after 2.42.0 snapshot (6666b3cd)
+
+* Mon Mar 25 2013 Yuri N. Sedunov <aris@altlinux.org> 2.42.0-alt1
+- 2.42.0
+- libsoup-compat.lds: removed symbols:
+  soup_auth_manager_emit_authenticate
+  soup_auth_manager_ntlm_get_type
+  soup_session_cleanup_connections
+  soup_session_make_connect_message
+  soup_session_send_queue_item
+  soup_session_set_item_status
+  soup_session_unqueue_item
+
 * Tue Jan 15 2013 Yuri N. Sedunov <aris@altlinux.org> 2.40.3-alt1
 - 2.40.3
 

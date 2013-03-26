@@ -1,5 +1,5 @@
 %define _name atk
-%define ver_major 2.6
+%define ver_major 2.8
 %def_disable static
 %def_disable gtk_doc
 %def_enable introspection
@@ -28,7 +28,7 @@ Obsoletes: atk < %version
 %define glib_ver 2.31.2
 %define gtk_doc_ver 1.0
 
-BuildPreReq: rpm-build-gnome rpm-build-licenses
+BuildPreReq: rpm-build-gnome rpm-build-licenses gnome-common
 BuildPreReq: glib2-devel >= %glib_ver
 BuildPreReq: gtk-doc >= %gtk_doc_ver
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel >= 0.6.7}
@@ -152,6 +152,9 @@ install -p -m644 %_sourcedir/atk-compat.lds atk/compat.lds
 %endif
 
 %changelog
+* Tue Mar 26 2013 Yuri N. Sedunov <aris@altlinux.org> 2.8.0-alt1
+- 2.8.0
+
 * Mon Sep 24 2012 Yuri N. Sedunov <aris@altlinux.org> 2.6.0-alt1
 - 2.6.0
 

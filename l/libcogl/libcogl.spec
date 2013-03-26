@@ -12,7 +12,7 @@
 
 
 Name: libcogl
-Version: 1.12.2
+Version: 1.14.0
 Release: alt1
 Summary: A library for using 3D graphics hardware to draw pretty pictures
 
@@ -26,16 +26,16 @@ Patch: %name-%version-%release.patch
 Conflicts: libclutter < 1.8.0
 
 BuildRequires: libcairo-devel libcairo-gobject-devel
-BuildRequires: glib2-devel
+BuildRequires: glib2-devel >= 2.32.0
 BuildRequires: gobject-introspection-devel
 BuildRequires: libgdk-pixbuf-devel
 BuildRequires: gtk-doc
-BuildRequires: libXcomposite-devel libXext-devel libXdamage-devel libX11-devel libXfixes-devel
-BuildRequires: libGL-devel 
+BuildRequires: libXcomposite-devel >= 0.4 libXext-devel libXdamage-devel libX11-devel libXfixes-devel >= 3 libXrandr-devel >= 1.2
+BuildRequires: libGL-devel
 BuildRequires: libpango-devel libpango-gir-devel
 %{?_enable_gles2:BuildRequires: libGLES-devel >= 8.0}
 %{?_enable_wayland_egl:BuildRequires: libwayland-client-devel libwayland-egl-devel}
-%{?_enable_wayland_server:BuildRequires: libwayland-server-devel}
+%{?_enable_wayland_server:BuildRequires: libwayland-server-devel >= 1.0.0}
 %{?_kms_egl_platform:BuildRequires: libdrm-devel libgbm-devel}
 
 %description
@@ -134,6 +134,9 @@ NOCONFIGURE=1 ./autogen.sh
 %_datadir/gtk-doc/html/*
 
 %changelog
+* Tue Mar 26 2013 Alexey Shabalin <shaba@altlinux.ru> 1.14.0-alt1
+- 1.14.0
+
 * Wed Jan 09 2013 Alexey Shabalin <shaba@altlinux.ru> 1.12.2-alt1
 - 1.12.2
 

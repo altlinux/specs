@@ -1,11 +1,11 @@
 %define oldname eog2
-%define ver_major 3.6
+%define ver_major 3.8
 %define api_ver 3.0
 %def_enable color_management
 %def_enable introspection
 
 Name: eog
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: Eye Of Gnome
@@ -15,25 +15,17 @@ Url: http://www.gnome.org
 Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 
 Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
-Patch: %name-3.0.0-alt-gir.patch
+Patch: %name-3.7.91-alt-gir.patch
 
 Provides: %oldname = %version-%release
 Obsoletes: %oldname < 2.14.2-alt1
 
-%define rpm_ver 4.0.4-alt14
-%define scrollkeeper_ver 0.3.14
-
-PreReq: scrollkeeper >= %scrollkeeper_ver
-
 BuildPreReq: rpm-build-gnome rpm-build-licenses
-BuildPreReq: rpm >= %rpm_ver
 
 # From configure.in
-BuildPreReq: gnome-common
-BuildPreReq: intltool >= 0.40.0
-BuildPreReq: yelp-tools itstool
-BuildPreReq: libgtk+3-devel >= 3.3.6
-BuildPreReq: gtk-doc
+BuildRequires: gnome-common intltool yelp-tools
+BuildRequires: gtk-doc
+BuildPreReq: libgtk+3-devel >= 3.5.4
 BuildPreReq: libgio-devel >= 2.31.0
 BuildPreReq: libgnome-desktop3-devel >= 2.91.91
 BuildPreReq: gnome-icon-theme >= 2.19.1
@@ -89,7 +81,7 @@ GObject introspection devel data for the Eye of GNOME
 
 %prep
 %setup -q
-%patch -b .gir
+%patch -p1 -b .gir
 
 %build
 %autoreconf
@@ -142,6 +134,9 @@ GObject introspection devel data for the Eye of GNOME
 %exclude %_libdir/%name/plugins/*.la
 
 %changelog
+* Tue Mar 26 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.0-alt1
+- 3.8.0
+
 * Mon Nov 12 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.2-alt1
 - 3.6.2
 

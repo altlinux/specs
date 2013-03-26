@@ -1,5 +1,6 @@
-%define ver_base 3.0
-%define ver_major 3.0
+%define ver_base 3.2
+%define ver_major 3.2
+%define gst_api_ver 1.0
 %def_enable debug
 %def_enable exiv2
 # brasero-3 not supported
@@ -7,8 +8,8 @@
 %def_enable web_albums
 
 Name: gthumb
-Version: %ver_major.2
-Release: alt3
+Version: %ver_major.0
+Release: alt1
 
 Summary: An image file viewer and browser for GNOME
 Summary(ru_RU.UTF-8): Просмотрщик изображений и фотоальбом для GNOME
@@ -24,16 +25,18 @@ Source1: %name.ru.po
 Patch: %name-2.13.91-remove_dump_exif_data.patch
 
 # From configure.in
-%define glib_ver 2.28.0
+%define glib_ver 2.32.0
 %define gtk_ver 3.2.0
 %define clutter_gtk_ver 1.0.0
-%define gst_ver 0.10
+%define gst_ver 1.0
 %define exiv2_ver 0.20
 %define openraw_ver 0.0.8
 %define brasero_ver 3.2.0
 %define soup_ver 2.36
-%define keyring_ver 3.2
 %define gnome_common_ver 2.8.0
+%define webp_ver 0.2.0
+%define webkit_ver 1.10.0
+%define champlain_ver 0.12.0
 %define desktop_file_utils_ver 0.8
 
 Requires: %name-data = %version-%release
@@ -42,12 +45,13 @@ Requires: %name-data = %version-%release
 BuildPreReq: glib2-devel >= %glib_ver
 BuildPreReq: libgtk+3-devel >= %gtk_ver
 BuildPreReq: libclutter-devel libclutter-gtk3-devel >= %clutter_gtk_ver
-BuildPreReq: gstreamer-devel >= %gst_ver gst-plugins-devel >= %gst_ver
+BuildPreReq: gstreamer%gst_api_ver-devel >= %gst_ver gst-plugins%gst_api_ver-devel >= %gst_ver
 BuildPreReq: libopenraw-gnome-devel >= %openraw_ver
 BuildRequires: libjpeg-devel libpng-devel libtiff-devel zlib-devel
-BuildRequires: libsoup-gnome-devel >= %soup_ver libgnome-keyring-devel >= %keyring_ver
-BuildRequires: librsvg-devel intltool perl-XML-Parser gnome-common gnome-doc-utils
-BuildRequires: gsettings-desktop-schemas-devel
+BuildRequires: libsoup-gnome-devel >= %soup_ver libsecret-devel
+BuildRequires: librsvg-devel intltool perl-XML-Parser gnome-common yelp-tools
+BuildRequires: gsettings-desktop-schemas-devel libwebp-devel >= %webp_ver libjson-glib-devel
+BuildRequires: libwebkit2gtk-devel >= %webkit_ver libchamplain-devel >= %champlain_ver
 %{?_enable_libbrasero:BuildRequires: libbrasero-devel >= %brasero_ver}
 %{?_enable_web_albums:BuildRequires: bison flex}
 
@@ -98,7 +102,6 @@ This package contains headers needed to build extensions for gThumb.
 #%%patch
 
 %build
-gnome-doc-prepare -f
 %autoreconf
 %configure \
     --enable-jpeg \
@@ -107,7 +110,6 @@ gnome-doc-prepare -f
     %{subst_enable debug} \
     %{subst_enable libbrasero} \
     --disable-static \
-    --disable-scrollkeeper \
     --disable-schemas-compile \
     --enable-libopenraw \
     --with-smclient=xsmp
@@ -118,8 +120,6 @@ gnome-doc-prepare -f
 %make_install DESTDIR=%buildroot install
 
 %find_lang --with-gnome %name
-
-%define schemas gthumb-comments gthumb_convert_format gthumb-gstreamer gthumb_image_print gthumb-image-viewer gthumb-importer gthumb_photo_importer gthumb-picasaweb gthumb-pixbuf-savers gthumb_resize_images gthumb gthumb-slideshow gthumb_crop_options gthumb_rename_series gthumb_resize_options gthumb_webalbums
 
 %files
 %_bindir/*
@@ -139,6 +139,7 @@ gnome-doc-prepare -f
 %config %_datadir/glib-2.0/schemas/org.gnome.gthumb.enums.xml
 %config %_datadir/glib-2.0/schemas/org.gnome.gthumb.facebook.gschema.xml
 %config %_datadir/glib-2.0/schemas/org.gnome.gthumb.file-manager.gschema.xml
+%config %_datadir/glib-2.0/schemas/org.gnome.gthumb.flickr.gschema.xml
 %config %_datadir/glib-2.0/schemas/org.gnome.gthumb.gschema.xml
 %config %_datadir/glib-2.0/schemas/org.gnome.gthumb.gstreamer-tools.gschema.xml
 %config %_datadir/glib-2.0/schemas/org.gnome.gthumb.image-print.gschema.xml
@@ -163,6 +164,12 @@ gnome-doc-prepare -f
 %_libdir/pkgconfig/*
 
 %changelog
+* Wed Mar 27 2013 Yuri N. Sedunov <aris@altlinux.org> 3.2.0-alt1
+- 3.2.0
+
+* Tue Mar 05 2013 Yuri N. Sedunov <aris@altlinux.org> 3.1.4-alt1
+- 3.1.4
+
 * Thu Jan 24 2013 Yuri N. Sedunov <aris@altlinux.org> 3.0.2-alt3
 - rebuilt against libexiv2.so.12
 

@@ -1,17 +1,18 @@
 %define pkgname totem-pl-parser
 %define ver_major 3.4
-%def_disable gtk_doc
+%def_enable gtk_doc
 %def_enable introspection
 
 Name: lib%pkgname
-Version: %ver_major.3
-Release: alt2
+Version: %ver_major.4
+Release: alt1
 
 Summary: Shared libraries of the Totem media player play list parser
 Group: System/Libraries
 License: GPL
 URL: http://www.hadess.net/%pkgname.php3
 
+#Source: %pkgname-%version.tar
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%pkgname/%ver_major/%pkgname-%version.tar.xz
 
 BuildPreReq: glib2-devel >= 2.33.10 libgio-devel >= 2.24.0
@@ -64,9 +65,11 @@ GObject introspection devel data for the Totem playlist parser library
 %define _libexecdir %_libdir/%name
 
 %prep
-%setup -q -n %pkgname-%version
+%setup -n %pkgname-%version
+[ ! -d m4 ] && mkdir m4
 
 %build
+%autoreconf
 %configure \
 	--disable-static \
 	%{?_enable_gtk_doc:--enable-gtk-doc} \
@@ -80,7 +83,7 @@ GObject introspection devel data for the Totem playlist parser library
 %find_lang --with-gnome --output=%name.lang %pkgname %pkgname-2.0
 
 %files -f %name.lang
-%doc AUTHORS ChangeLog NEWS README
+%doc AUTHORS NEWS README
 %_libdir/*.so.*
 
 %files -n %name-devel
@@ -100,6 +103,9 @@ GObject introspection devel data for the Totem playlist parser library
 %endif
 
 %changelog
+* Tue Mar 26 2013 Yuri N. Sedunov <aris@altlinux.org> 3.4.4-alt1
+- 3.4.4
+
 * Mon Mar 11 2013 Yuri N. Sedunov <aris@altlinux.org> 3.4.3-alt2
 - rebuilt against libarchive.so.13
 

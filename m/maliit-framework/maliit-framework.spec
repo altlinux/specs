@@ -4,7 +4,7 @@
 %define libsover 0
 Name: maliit-framework
 Version: 0.94.2
-Release: alt1
+Release: alt2
 %define libmaliit libmaliit%libver-%libsover
 %define libmaliit_glib libmaliit-glib%libver-%libsover
 %define xinputconfdir %_sysconfdir/X11/xinit/xinput.d
@@ -152,10 +152,10 @@ Requires: %name = %version-%release
     BINDIR=%_bindir \
     LIBDIR=%_libdir \
     INCLUDEDIR=%_includedir \
-    MALIIT_ENABLE_MULTITOUCH=false \
     CONFIG+=notests \
     CONFIG+=enable-dbus-activation \
     CONFIG+=disable-gtk-cache-update
+#    MALIIT_ENABLE_MULTITOUCH=false \
 #    CONFIG+=enable-qdbus \
 #    CONFIG+=disable-background-translucency \
 
@@ -275,6 +275,9 @@ install -m 0644 README LICENSE.LGPL NEWS %buildroot/%_defaultdocdir/maliit-frame
 %_libdir/gtk-3.0/3.0.0/immodules/libim-maliit.so*
 
 %changelog
+* Mon Apr 01 2013 Sergey V Turchin <zerg@altlinux.org> 0.94.2-alt2
+- rebuilt with new glib
+
 * Fri Mar 29 2013 Sergey V Turchin <zerg@altlinux.org> 0.94.2-alt1
 - new version
 

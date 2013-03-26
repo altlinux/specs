@@ -1,7 +1,7 @@
 %define _name gupnp-dlna
 
 Name: libgupnp-dlna
-Version: 0.7.0
+Version: 0.10.0
 Release: alt1
 Summary: A collection of helpers for building UPnP AV applications
 
@@ -11,13 +11,13 @@ Url: http://www.gupnp.org/
 Source: http://ftp.gnome.org/pub/GNOME/sources/gupnp-dlna/0.6/%name-%version.tar
 Patch: %name-%version-%release.patch
 
-BuildRequires: glib2-devel >= 2.32 libgio-devel
-BuildRequires: pkgconfig(gstreamer-1.0) >= 1.0
-BuildRequires: pkgconfig(gstreamer-pbutils-1.0) >= 1.0
-BuildRequires: gobject-introspection-devel libgstreamer1.0-gir-devel gst-plugins1.0-gir-devel
-BuildRequires: vala-tools rpm-build-vala libvala-devel
+BuildRequires: libgio-devel
+BuildRequires: pkgconfig(glib-2.0) >= 2.32 pkgconfig(gobject-2.0) pkgconfig(gmodule-2.0)
+BuildRequires: pkgconfig(gstreamer-1.0) >= 1.0 pkgconfig(gstreamer-pbutils-1.0) >= 1.0
+BuildRequires: gir(GObject) = 2.0 gir(Gst) = 1.0 gir(GstPbutils) = 1.0
+BuildRequires: vala-tools >= 0.18 rpm-build-vala libvala-devel
 BuildRequires: vapi(gupnp-1.0) vapi(libxml-2.0) vapi(gstreamer-pbutils-1.0) vapi(gstreamer-1.0) vapi(gstreamer-base-1.0) vapi(gstreamer-video-1.0)
-BuildRequires: libxml2-devel >= 2.5.0
+BuildRequires: pkgconfig(libxml-2.0) >= 2.5.0
 BuildRequires: gtk-doc
 
 %description
@@ -81,6 +81,7 @@ NOCONFIGURE=1 ./autogen.sh
 %_bindir/*
 %_libdir/lib*.so.*
 %_datadir/%{_name}*
+%_libdir/%{_name}/*.so
 
 %files devel
 %_libdir/lib*.so
@@ -99,6 +100,12 @@ NOCONFIGURE=1 ./autogen.sh
 %_datadir/gtk-doc/html/*
 
 %changelog
+* Fri Mar 29 2013 Alexey Shabalin <shaba@altlinux.ru> 0.10.0-alt1
+- 0.10.0
+
+* Mon Feb 25 2013 Alexey Shabalin <shaba@altlinux.ru> 0.9.5-alt1
+- 0.9.5
+
 * Wed Dec 12 2012 Alexey Shabalin <shaba@altlinux.ru> 0.7.0-alt1
 - 0.7.0
 

@@ -1,5 +1,5 @@
-%define ver_major 3.6
-%define ver_base 3.6
+%define ver_major 3.8
+%define ver_base 3.8
 %define ver_lib 1.2
 
 %def_disable debug
@@ -10,12 +10,14 @@
 %def_with krb5
 %def_enable nntp
 %def_enable goa
-%def_disable gtk_doc
+# Ubuntu online accounts support
+%def_disable uoa
+%def_enable gtk_doc
 %def_enable introspection
 %def_enable vala
 
 Name: evolution-data-server
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1
 
 Summary: Evolution Data Server
@@ -25,22 +27,23 @@ URL: http://www.gnome.org/projects/evolution/
 Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 
 Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
+#Source: %name-%version.tar
 Patch1: %name-1.4.2.1-debug-lock.patch
 
 # from configure.in
-%define glib_ver 2.30.0
+%define glib_ver 2.34.0
 %define gtk3_ver 3.2.0
 %define libsoup_ver 2.33.90
-%define gnomekeyring_ver 2.32.0
 %define gcr_ver 3.4
+%define secret_ver 0.5
 %define sqlite_ver 3.5
 %define gweather_ver 2.91.6
 %define ical_ver 0.43
-%define gdata_ver 0.9.1
-%define goa_ver 3.1.1
+%define gdata_ver 0.10
+%define goa_ver 3.7.90
 %define vala_ver 0.13.1
 
-BuildPreReq: rpm-build-gnome rpm-build-licenses intltool
+BuildPreReq: gcc-c++ rpm-build-gnome rpm-build-licenses intltool
 BuildPreReq: gtk-doc >= 1.0
 BuildPreReq: gnome-common
 BuildPreReq: glib2-devel >= %glib_ver
@@ -51,10 +54,11 @@ BuildPreReq: libsqlite3-devel >= %sqlite_ver
 BuildPreReq: libgweather-devel >= %gweather_ver
 BuildPreReq: libical-devel >= %ical_ver
 BuildPreReq: libgdata-devel >= %gdata_ver
-BuildPreReq: libgnome-keyring-devel >= %gnomekeyring_ver
+BuildPreReq: libsecret-devel >= %secret_ver
 BuildPreReq: gcr-libs-devel >= %gcr_ver
 BuildRequires: gperf docbook-utils flex bison libcom_err-devel libnss-devel libnspr-devel zlib-devel
 %{?_enable_goa:BuildRequires: libgnome-online-accounts-devel >= %goa_ver liboauth-devel libgdata-devel >= %gdata_ver}
+%{?_enable_uoa:BuildRequires: libaccounts-glib-devel}
 %{?_enable_introspection:BuildPreReq: gobject-introspection-devel}
 %{?_with_sys_db4:BuildRequires: libdb4-devel}
 %{?_with_krb5:BuildRequires: libkrb5-devel}
@@ -172,6 +176,7 @@ export CAMEL_LOCK_HELPER_GROUP=mail
     %ldap_flags \
     %{subst_enable nntp} \
     %{subst_enable goa} \
+    %{subst_enable uoa} \
     --enable-smime \
 %if_with krb5
     --with-krb5=%_prefix \
@@ -205,7 +210,7 @@ rm -f %buildroot%_libdir/%name-%ver_lib/*/*.la
 %_libdir/%name/*/*.so
 %_libdir/%name/*/*.urls
 %_libdir/*.so.*
-%_datadir/%name-*/
+%_datadir/%name/
 %_datadir/dbus-1/services/*
 %_datadir/pixmaps/*
 %_datadir/GConf/gsettings/libedataserver.convert
@@ -229,12 +234,14 @@ rm -f %buildroot%_libdir/%name-%ver_lib/*/*.la
 
 %if_enabled introspection
 %files gir
-%_typelibdir/ECalendar-1.2.typelib
+#%_typelibdir/ECalendar-1.2.typelib
+%_typelibdir/EBookContacts-1.2.typelib
 %_typelibdir/EDataServer-1.2.typelib
 %_typelibdir/EBook-1.2.typelib
 
 %files gir-devel
-%_girdir/ECalendar-1.2.gir
+#%_girdir/ECalendar-1.2.gir
+%_girdir/EBookContacts-1.2.gir
 %_girdir/EDataServer-1.2.gir
 %_girdir/EBook-1.2.gir
 %endif
@@ -247,6 +254,9 @@ rm -f %buildroot%_libdir/%name-%ver_lib/*/*.la
 
 
 %changelog
+* Sun Mar 24 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.0-alt1
+- 3.8.0
+
 * Thu Mar 07 2013 Yuri N. Sedunov <aris@altlinux.org> 3.6.4-alt1
 - 3.6.4
 

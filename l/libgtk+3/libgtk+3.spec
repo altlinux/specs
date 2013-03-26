@@ -1,5 +1,5 @@
 %define _name gtk+
-%define ver_major 3.6
+%define ver_major 3.8
 %define api_ver 3.0
 %define binary_ver 3.0.0
 
@@ -9,10 +9,14 @@
 %def_enable man
 %def_enable introspection
 %def_enable colord
-%def_disable wayland
+# wayland gdk backend
+%def_enable wayland
+# broadway (HTML5) gdk backend
+%def_enable broadway
+
 
 Name: libgtk+3
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1
 
 Summary: The GIMP ToolKit (GTK+)
@@ -25,20 +29,16 @@ Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 Source: %gnome_ftp/%_name/%ver_major/%_name-%version.tar.xz
 Patch: gtk+-2.16.5-alt-stop-spam.patch
 
-%define glib_ver 2.33.1
+%define glib_ver 2.35.3
 %define cairo_ver 1.10
-%define pango_ver 1.30.0
+%define pango_ver 1.32.4
 %define atk_ver 2.5.91
 %define atspi_atk_ver 2.5.91
-%define pixbuf_ver 2.26.0
+%define pixbuf_ver 2.27.1
 %define fontconfig_ver 2.2.1-alt2
 %define gtk_doc_ver 1.6
 %define colord_ver 0.1.9
-
-# We need to prereq these so we can run gtk-query-immodules-%api_ver in post
-PreReq: glib2 >= %glib_ver
-PreReq: libpango >= %pango_ver
-PreReq: libatk >= %atk_ver
+%define cups_ver 1.6
 
 Requires: gtk-update-icon-cache
 Requires: icon-theme-hicolor
@@ -54,17 +54,18 @@ BuildPreReq: at-spi2-atk-devel >= %atk_ver
 BuildPreReq: libgdk-pixbuf-devel >= %pixbuf_ver
 BuildPreReq: fontconfig-devel >= %fontconfig_ver
 BuildPreReq: gtk-doc >= %gtk_doc_ver
-BuildRequires: gtk-update-icon-cache docbook-utils libcups-devel zlib-devel
+BuildPreReq: libcups-devel >= %cups_ver
+BuildRequires: gtk-update-icon-cache docbook-utils zlib-devel
 
 BuildRequires: libXdamage-devel libXcomposite-devel libX11-devel libXcursor-devel
 BuildRequires: libXext-devel libXfixes-devel libXi-devel libXinerama-devel libXrandr-devel
 BuildRequires: libXrender-devel libXt-devel
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel libpango-gir-devel libatk-gir-devel >= %atk_ver libgdk-pixbuf-gir-devel}
 %{?_enable_colord:BuildRequires: libcolord-devel >= %colord_ver}
-%{?_enable_wayland:BuildRequires: libwayland-client-devel libEGL-devel libwayland-egl-devel libxkbcommon-devel}
+%{?_enable_wayland:BuildRequires: libwayland-client-devel libwayland-cursor-devel libEGL-devel libwayland-egl-devel libxkbcommon-devel}
 
 # for check
-BuildRequires: /proc dbus-tools-gui xvfb-run icon-theme-hicolor
+BuildRequires: /proc dbus-tools-gui xvfb-run
 
 %description
 GTK+ is a multi-platform toolkit for creating graphical user interfaces.
@@ -206,7 +207,8 @@ export LDLIBS="$LDLIBS $(freetype-config --libs)"
     %{?_enable_gtk_doc:--enable-gtk-doc} \
     --enable-gtk2-dependency \
     %{subst_enable colord} \
-    %{?_enable_wayland:--enable-wayland-backend}
+    %{?_enable_wayland:--enable-wayland-backend} \
+    %{?_enable_broadway:--enable-broadway-backend}
 
 %make_build
 
@@ -252,7 +254,7 @@ ln -sf %_licensedir/LGPL-2 COPYING
 %find_lang --output=gtk30.lang gtk30 gtk30-properties
 %find_lang --output=gail.lang gail
 
-bzip2 -9f NEWS
+bzip2 -9kf NEWS
 
 mkdir %buildroot%_libdir/gtk-%api_ver/modules
 
@@ -261,10 +263,10 @@ mkdir -p %buildroot/%_docdir/%name-devel-%version/examples
 cp examples/*.c examples/Makefile* %buildroot/%_docdir/%name-devel-%version/examples/
 
 %check
-# org.gtk.Settings.FileChooser schemas must be installed
 #xvfb-run %make check
 
 %files -f gtk30.lang
+%{?_enable_broadway:%_bindir/broadwayd}
 %_bindir/gtk-query-immodules-%api_ver
 %_bindir/gtk-launch
 %_libdir/libgdk-3.so.*
@@ -293,6 +295,7 @@ cp examples/*.c examples/Makefile* %buildroot/%_docdir/%name-devel-%version/exam
 %config(noreplace) %_sysconfdir/gtk-%api_ver/im-multipress.conf
 #%config(noreplace) %_sysconfdir/profile.d/*
 %ghost %_libdir/gtk-%api_ver/%binary_ver/immodules.cache
+%{?_enable_broadway:%_man1dir/broadwayd.1.*}
 %_man1dir/gtk-query-immodules*
 %_man1dir/gtk-launch.*
 %config %_datadir/glib-2.0/schemas/org.gtk.Settings.FileChooser.gschema.xml
@@ -314,20 +317,24 @@ cp examples/*.c examples/Makefile* %buildroot/%_docdir/%name-devel-%version/exam
 %dir %_datadir/gtk-%api_ver
 %_datadir/gtk-%api_ver/gtkbuilder.rng
 %_datadir/aclocal/gtk-%api_ver.m4
-%exclude %_datadir/gtk-%api_ver/demo
+#%exclude %_datadir/gtk-%api_ver/demo
 
 %if_enabled wayland
-#%_includedir/gtk-%api_ver/gdk/gdkwayland.h
 %_pkgconfigdir/gtk+-wayland-%api_ver.pc
 %_pkgconfigdir/gdk-wayland-%api_ver.pc
+%endif
+
+%if_enabled broadway
+%_pkgconfigdir/gdk-broadway-3.0.pc
+%_pkgconfigdir/gtk+-broadway-3.0.pc
 %endif
 
 %files -n gtk3-demo
 %_bindir/gtk3-demo
 %_bindir/gtk3-demo-application
 %_bindir/gtk3-widget-factory
-%dir %_datadir/gtk-%api_ver/demo
-%_datadir/gtk-%api_ver/demo/*
+#%dir %_datadir/gtk-%api_ver/demo
+#%_datadir/gtk-%api_ver/demo/*
 %_datadir/glib-2.0/schemas/org.gtk.Demo.gschema.xml
 
 %files devel-doc
@@ -368,6 +375,10 @@ cp examples/*.c examples/Makefile* %buildroot/%_docdir/%name-devel-%version/exam
 %exclude %fulllibpath/*/*.la
 
 %changelog
+* Tue Mar 26 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.0-alt1
+- 3.8.0
+- enabled wayland and broadway backends
+
 * Tue Jan 08 2013 Yuri N. Sedunov <aris@altlinux.org> 3.6.4-alt1
 - 3.6.4
 

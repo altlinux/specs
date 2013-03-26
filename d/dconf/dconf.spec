@@ -1,15 +1,15 @@
-%define ver_major 0.14
+%define ver_major 0.16
 %def_disable introspection
 
 Name: dconf
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: A simple configuration system
 Group: System/Servers
 License: LGPLv2+
 
-Url: http://live.gnome.org/dconf
+Url: https://live.gnome.org/dconf
 
 Source: http://download.gnome.org/sources/dconf/%ver_major/%name-%version.tar.xz
 Source1: update-dconf-database.filetrigger
@@ -18,7 +18,7 @@ Provides: %_rpmlibdir/update-dconf-database.filetrigger
 
 Requires: lib%name = %version-%release dbus
 
-BuildRequires: libgio-devel >= 2.33.3 libgtk+3-devel libxml2-devel vala-tools >= 0.17.0
+BuildRequires: libgio-devel >= 2.35.2 libgtk+3-devel libxml2-devel vala-tools >= 0.17.0
 BuildRequires: libdbus-devel gtk-doc intltool xsltproc
 %{?_enable_introspection:BuildPreReq: gobject-introspection-devel >= 1.33.3}
 
@@ -153,6 +153,7 @@ install -pD -m755 {%_sourcedir,%buildroot%_rpmlibdir}/update-dconf-database.file
 %_datadir/dconf-editor/dconf-editor-menu.ui
 %_datadir/applications/dconf-editor.desktop
 %_iconsdir/hicolor/*/apps/*.*
+%_iconsdir/HighContrast/*/apps/dconf-editor.png
 %_man1dir/dconf-editor.1.*
 %config %_datadir/glib-2.0/schemas/ca.desrt.dconf-editor.gschema.xml
 
@@ -171,6 +172,9 @@ install -pD -m755 {%_sourcedir,%buildroot%_rpmlibdir}/update-dconf-database.file
 %exclude %_datadir/bash-completion/completions/dconf
 
 %changelog
+* Tue Mar 26 2013 Yuri N. Sedunov <aris@altlinux.org> 0.16.0-alt1
+- 0.16.0
+
 * Thu Nov 01 2012 Yuri N. Sedunov <aris@altlinux.org> 0.14.1-alt1
 - 0.14.1
 

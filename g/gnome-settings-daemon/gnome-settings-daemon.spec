@@ -1,4 +1,4 @@
-%define ver_major 3.6
+%define ver_major 3.8
 %define api_ver 3.0
 %def_disable static
 %def_enable smartcard
@@ -10,8 +10,8 @@
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-settings-daemon
-Version: %ver_major.4
-Release: alt2
+Version: %ver_major.0
+Release: alt1
 
 Summary: A program that manages general GNOME settings
 License: GPLv2+
@@ -22,14 +22,9 @@ Url: http://gnome.org
 Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 #Source: %name-%version.tar
 
-Patch: %name-3.5.5-alt-link.patch
-Patch1: %name-3.3.90.1-alt-link.patch
-# https://bugzilla.gnome.org/show_bug.cgi?id=685676
-Patch2: gnome-settings-daemon-3.6.3-xi-raw-events.patch
-
 # From configure.ac
-%define glib2_ver 2.29.14
-%define gtk_ver 3.3.18
+%define glib2_ver 2.35.3
+%define gtk_ver 3.7.8
 %define gio_ver 2.29.14
 %define gnome_desktop_ver 3.5.3
 %define notify_ver 0.7.3
@@ -39,7 +34,7 @@ Patch2: gnome-settings-daemon-3.6.3-xi-raw-events.patch
 %define dconf_ver 0.8
 %define upower_ver 0.9.1
 %define systemd_ver 40
-%define wacom_ver 0.6
+%define wacom_ver 0.7
 %define ibus_ver 1.4.99
 
 Requires: dconf >= %dconf_ver
@@ -63,7 +58,7 @@ BuildRequires: rpm-build-gnome intltool docbook-style-xsl xsltproc
 BuildRequires: gcc-c++ libcups-devel libgudev-devel libXi-devel libXext-devel libXfixes-devel
 BuildRequires: libXrandr-devel xorg-inputproto-devel libICE-devel libSM-devel
 BuildRequires: libupower-devel >= %upower_ver
-BuildRequires: libcolord-devel >= %colord_ver liblcms2-devel
+BuildRequires: libcolord-devel >= %colord_ver liblcms2-devel librsvg-devel
 BuildRequires: libwacom-devel >= %wacom_ver xorg-drv-wacom-devel libXtst-devel
 # for check
 %{?_enable_check:BuildRequires: /proc xvfb-run gnome-color-manager}
@@ -93,16 +88,12 @@ The %name-tests package provides programms for testing GSD plugins.
 
 %prep
 %setup -q
-%patch -p1 -b .link
-%patch1
-%patch2 -p1
 
 %build
 %autoreconf
 %configure \
 	%{subst_enable static} \
 	%{?_disable_smartcard:--disable-smartcard-support} \
-	%{subst_enable systemd} \
 	%{subst_enable ibus} \
 	--disable-schemas-compile
 
@@ -119,7 +110,7 @@ The %name-tests package provides programms for testing GSD plugins.
 %dir %_libdir/%name-%api_ver
 %_libdir/%name-%api_ver/a11y-keyboard.gnome-settings-plugin
 %_libdir/%name-%api_ver/a11y-settings.gnome-settings-plugin
-%_libdir/%name-%api_ver/background.gnome-settings-plugin
+#%_libdir/%name-%api_ver/background.gnome-settings-plugin
 %_libdir/%name-%api_ver/clipboard.gnome-settings-plugin
 %_libdir/%name-%api_ver/color.gnome-settings-plugin
 %_libdir/%name-%api_ver/cursor.gnome-settings-plugin
@@ -128,7 +119,7 @@ The %name-tests package provides programms for testing GSD plugins.
 %_libdir/%name-%api_ver/liba11y-keyboard.so
 %_libdir/%name-%api_ver/liba11y-settings.so
 %_libdir/%name-%api_ver/libgsd.so
-%_libdir/%name-%api_ver/libbackground.so
+#%_libdir/%name-%api_ver/libbackground.so
 %_libdir/%name-%api_ver/libclipboard.so
 %_libdir/%name-%api_ver/libcolor.so
 %_libdir/%name-%api_ver/libcursor.so
@@ -140,27 +131,29 @@ The %name-tests package provides programms for testing GSD plugins.
 %_libdir/%name-%api_ver/libpower.so
 %_libdir/%name-%api_ver/libprint-notifications.so
 %_libdir/%name-%api_ver/libscreensaver-proxy.so
-%_libdir/%name-%api_ver/libsmartcard.so
+#%_libdir/%name-%api_ver/libsmartcard.so
 %_libdir/%name-%api_ver/libsound.so
 %_libdir/%name-%api_ver/libgsdwacom.so
 %_libdir/%name-%api_ver/libxrandr.so
 %_libdir/%name-%api_ver/libxsettings.so
+%_libdir/%name-%api_ver/libremote-display.so
 %_libdir/%name-%api_ver/media-keys.gnome-settings-plugin
 %_libdir/%name-%api_ver/mouse.gnome-settings-plugin
 %_libdir/%name-%api_ver/orientation.gnome-settings-plugin
 %_libdir/%name-%api_ver/power.gnome-settings-plugin
 %_libdir/%name-%api_ver/print-notifications.gnome-settings-plugin
 %_libdir/%name-%api_ver/screensaver-proxy.gnome-settings-plugin
-%_libdir/%name-%api_ver/smartcard.gnome-settings-plugin
+#%_libdir/%name-%api_ver/smartcard.gnome-settings-plugin
 %_libdir/%name-%api_ver/sound.gnome-settings-plugin
 %_libdir/%name-%api_ver/wacom.gnome-settings-plugin
 %_libdir/%name-%api_ver/xrandr.gnome-settings-plugin
 %_libdir/%name-%api_ver/xsettings.gnome-settings-plugin
+%_libdir/%name-%api_ver/remote-display.gnome-settings-plugin
 %_libexecdir/%name
 %_libexecdir/gsd-list-wacom
 %_libexecdir/gsd-locate-pointer
 %_libexecdir/gsd-printer
-%_libexecdir/gnome-fallback-mount-helper
+#%_libexecdir/gnome-fallback-mount-helper
 %_libexecdir/gsd-backlight-helper
 %_libexecdir/gsd-wacom-led-helper
 %_libexecdir/gsd-input-sources-switcher
@@ -168,7 +161,7 @@ The %name-tests package provides programms for testing GSD plugins.
 %_iconsdir/hicolor/*/*/*.png
 %_iconsdir/hicolor/*/*/*.svg
 %_sysconfdir/xdg/autostart/%name.desktop
-%_sysconfdir/xdg/autostart/gnome-fallback-mount-helper.desktop
+#%_sysconfdir/xdg/autostart/gnome-fallback-mount-helper.desktop
 %config %_datadir/glib-2.0/schemas/*
 %_datadir/GConf/gsettings/%name.convert
 %_man1dir/%{name}*
@@ -180,6 +173,7 @@ The %name-tests package provides programms for testing GSD plugins.
 %exclude %_libdir/%name-%api_ver/*.la
 %exclude %_datadir/%name-%api_ver/input-device-example.sh
 
+
 %files devel
 %_includedir/*
 %_pkgconfigdir/*
@@ -187,21 +181,27 @@ The %name-tests package provides programms for testing GSD plugins.
 %files tests
 %_libexecdir/gsd-test-a11y-keyboard
 %_libexecdir/gsd-test-a11y-settings
-%_libexecdir/gsd-test-background
+%_libexecdir/gsd-test-cursor
+%_libexecdir/gsd-test-housekeeping
 %_libexecdir/gsd-test-input-helper
 %_libexecdir/gsd-test-keyboard
 %_libexecdir/gsd-test-media-keys
 %_libexecdir/gsd-test-mouse
 %_libexecdir/gsd-test-orientation
-%_libexecdir/gsd-test-power
 %_libexecdir/gsd-test-print-notifications
+%_libexecdir/gsd-test-remote-display
 %_libexecdir/gsd-test-screensaver-proxy
-%_libexecdir/gsd-test-smartcard
 %_libexecdir/gsd-test-sound
 %_libexecdir/gsd-test-wacom
+%_libexecdir/gsd-test-wacom-osd
+%_libexecdir/gsd-test-xrandr
 %_libexecdir/gsd-test-xsettings
 
+
 %changelog
+* Tue Mar 26 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.0-alt1
+- 3.8.0
+
 * Sat Feb 16 2013 Yuri N. Sedunov <aris@altlinux.org> 3.6.4-alt2
 - rebuilt against libcolord.so.2
 

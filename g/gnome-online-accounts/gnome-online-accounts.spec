@@ -1,14 +1,12 @@
-# Ahtung!
-#%%set_verify_elf_method unresolved=relaxed
-
-%define ver_major 3.6
+%define ver_major 3.8
 %define _libexecdir %_prefix/libexec
 %def_enable kerberos
+%def_enable owncloud
 %def_enable gtk_doc
 %define api_ver 1.0
 
 Name: gnome-online-accounts
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 
 Summary: Provide online accounts information
@@ -20,17 +18,19 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 
 Requires: lib%name = %version-%release
 
-%define glib_ver 2.29.5
+%define glib_ver 2.35
 %define gtk_ver 3.5.1
 %define oauth_ver 0.9.5
 %define rest_ver 0.7.12
+%define soup_ver 2.41
 
 BuildPreReq: glib2-devel >= %glib_ver
 BuildPreReq: liboauth-devel >= %oauth_ver
 BuildPreReq: librest-devel >= %rest_ver
+BuildPreReq: libsoup-devel >= %soup_ver
 BuildRequires: gnome-common intltool gtk-doc
 BuildRequires: libgtk+3-devel >= %gtk_ver libwebkitgtk3-devel libjson-glib-devel
-BuildRequires: libgnome-keyring-devel libnotify-devel libsoup-gnome-devel libsecret-devel
+BuildRequires: libgnome-keyring-devel libnotify-devel libsecret-devel
 BuildRequires: libkrb5-devel gcr-libs-devel
 BuildRequires: gobject-introspection-devel
 
@@ -82,13 +82,15 @@ BuildArch: noarch
 This package contains development documentation for the %name libraries.
 
 %prep
-%setup
+%setup -q
 
 %build
 %autoreconf
 %configure --disable-static \
 	--enable-facebook \
 	%{subst_enable kerberos} \
+	%{subst_enable owncloud} \
+	--enable-imap-smtp \
 	%{?_enable_gtk_doc:--enable-gtk-doc}
 
 %make_build
@@ -112,6 +114,9 @@ This package contains development documentation for the %name libraries.
 
 %files -n lib%name-devel
 %_includedir/goa-%api_ver/
+%dir %_libdir/goa-%api_ver
+%dir %_libdir/goa-%api_ver/include
+%_libdir/goa-%api_ver/include/goaconfig.h
 %_libdir/libgoa-%api_ver.so
 %_libdir/libgoa-backend-%api_ver.so
 %_libdir/pkgconfig/goa-%api_ver.pc
@@ -127,6 +132,9 @@ This package contains development documentation for the %name libraries.
 %_datadir/gtk-doc/html/goa/
 
 %changelog
+* Tue Mar 26 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.0-alt1
+- 3.8.0
+
 * Mon Mar 04 2013 Yuri N. Sedunov <aris@altlinux.org> 3.6.3-alt1
 - 3.6.3
 

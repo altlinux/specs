@@ -1,10 +1,10 @@
-%define ver_major 3.6
+%define ver_major 3.8
 %define _libexecdir %_prefix/libexec
 %def_enable systemd
 
 Name: gnome-session
-Version: %ver_major.2
-Release: alt2.1
+Version: %ver_major.0
+Release: alt1
 
 Summary: The gnome session programs for the GNOME GUI desktop environment
 License: GPLv2+
@@ -12,20 +12,18 @@ Group: Graphical desktop/GNOME
 URL: ftp://ftp.gnome.org
 Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 
-#Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
-Source: %name-%version.tar
+Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
+#Source: %name-%version.tar
 Source1: gnome.svg
-Source2: polkit-gnome-authentication-agent.desktop
 
 Patch: %name-2.91.6-alt-autosave_session.patch
 
 # fedora patches:
-Patch10: gnome-session-3.3.1-llvmpipe.patch
 # Blacklist NV30: https://bugzilla.redhat.com/show_bug.cgi?id=745202
 Patch11: gnome-session-3.3.92-nv30.patch
 
 # From configure.in
-%define glib_ver 2.33.4
+%define glib_ver 2.35.0
 %define gtk_ver 3.0.0
 %define dbus_glib_ver 0.76
 %define polkit_ver 0.91
@@ -54,7 +52,7 @@ BuildRequires: libpangox-compat-devel libgnome-desktop3-devel librsvg-devel libj
 BuildRequires: libX11-devel libXau-devel libXrandr-devel libXrender-devel libXt-devel
 BuildRequires: libSM-devel libXext-devel libXtst-devel libXi-devel libXcomposite-devel libGL-devel
 BuildRequires: GConf browser-plugins-npapi-devel perl-XML-Parser xorg-xtrans-devel
-%{?_enable_systemd:BuildRequires: systemd-devel >= %systemd_ver libsystemd-login-devel libsystemd-daemon-devel libpolkit-devel}
+%{?_enable_systemd:BuildRequires: systemd-devel >= %systemd_ver libsystemd-login-devel libsystemd-daemon-devel libsystemd-journal-devel libpolkit-devel}
 
 %description
 GNOME (GNU Network Object Model Environment) is a user-friendly
@@ -66,7 +64,6 @@ This package provides tools for the the gnome desktop.
 %prep
 %setup -q
 %patch
-%patch10 -p1 -b .llvmpipe
 %patch11 -p1 -b .nv30
 
 [ ! -d m4 ] && mkdir m4
@@ -81,9 +78,9 @@ This package provides tools for the the gnome desktop.
 %make_build
 
 %install
-%make_install install DESTDIR=%buildroot
+%makeinstall_std
 
-cat <<__START_GNOME__ >startgnome
+cat <<__START_GNOME_COMMON__ >startgnome-common
 #!/bin/sh
 
 # turn on fonts antialiasing
@@ -109,12 +106,19 @@ export XDG_MENU_PREFIX="gnome3-"
 export XDG_DATA_DIRS="%_datadir/gnome:%_datadir:/usr/local/share"
 
 # to avoid gnome-shell crash
-/bin/rm -f "\$HOME"/.config/gnome-session/saved-session/gnome-shell.desktop >/dev/null 2>&1
+#/bin/rm -f "\$HOME"/.config/gnome-session/saved-session/gnome-shell.desktop >/dev/null 2>&1
+__START_GNOME_COMMON__
+
+cat <<__START_GNOME__ >startgnome
+#!/bin/sh
+
+. %_datadir/%name/startgnome-common
 
 exec %_bindir/gnome-session "\$@"
 __START_GNOME__
 
 install -pD -m755 startgnome %buildroot%_bindir/startgnome
+install -pD -m755 startgnome-common %buildroot%_datadir/%name/startgnome-common
 
 mkdir -p %buildroot%_sysconfdir/X11/wmsession.d/
 cat << __EOF__ > %buildroot%_sysconfdir/X11/wmsession.d/02Gnome
@@ -126,19 +130,7 @@ SCRIPT:
 exec %_bindir/startgnome
 __EOF__
 
-%if 0
-cat << __EOF__ > %buildroot%_sysconfdir/X11/wmsession.d/02Gnome-fallback
-NAME=Gnome fallback
-ICON=%_iconsdir/gnome.svg
-DESC=Gnome Environment (fallback mode)
-EXEC=%_bindir/startgnome
-SCRIPT:
-exec %_bindir/startgnome --session gnome-fallback
-__EOF__
-%endif
-
 install -pD -m644 %SOURCE1 %buildroot%_iconsdir/gnome.svg
-install -pD -m644 %SOURCE2 %buildroot%_datadir/gnome/autostart/gnome-authentication-agent.desktop
 
 %find_lang --with-gnome --output=%name.lang %name-3.0
 
@@ -149,14 +141,15 @@ install -pD -m644 %SOURCE2 %buildroot%_datadir/gnome/autostart/gnome-authenticat
 %_bindir/*
 %_libexecdir/gnome-session-check-accelerated
 %_libexecdir/gnome-session-check-accelerated-helper
+%_libexecdir/gnome-session-failed
 %_desktopdir/*.desktop
 %dir %_datadir/%name
 %_datadir/%name/*.ui
 %_datadir/%name/hardware-compatibility
+%_datadir/%name/startgnome-common
 %dir %_datadir/%name/sessions
 %_datadir/%name/sessions/gnome.session
-%_datadir/%name/sessions/gnome-fallback.session
-%_datadir/gnome/autostart/gnome-authentication-agent.desktop
+%_datadir/%name/sessions/gnome-dummy.session
 %_iconsdir/gnome.svg
 %_iconsdir/hicolor/*/apps/session-properties.*
 %config %_sysconfdir/X11/wmsession.d/*Gnome*
@@ -168,6 +161,13 @@ install -pD -m644 %SOURCE2 %buildroot%_datadir/gnome/autostart/gnome-authenticat
 %exclude %_datadir/xsessions/gnome.desktop
 
 %changelog
+* Tue Mar 26 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.0-alt1
+- 3.8.0
+
+* Tue Mar 19 2013 Yuri N. Sedunov <aris@altlinux.org> 3.7.92-alt1
+- 3.7.92
+- by gnome-fallback session
+
 * Fri Dec 21 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.2-alt2.1
 - fixed install for gnome-authentication-agent.desktop
 

@@ -1,5 +1,5 @@
-%define ver_major 3.6
-%define ver_base 3.6
+%define ver_major 3.8
+%define ver_base 3.8
 %define gst_api_ver 1.0
 
 %def_disable static
@@ -17,7 +17,7 @@
 %define strict_build_settings 1
 
 Name: evolution
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1
 
 Summary: Integrated GNOME mail client, calendar and address book
@@ -43,11 +43,11 @@ Provides: camel
 %define glib_ver 2.30.0
 %define gtk_ver 3.2
 %define clutter_gtk_ver 0.91.8
-%define eds_ver 3.6.4
+%define eds_ver 3.8.0
 %define gnome_icon_ver 3.0.0
 %define gnome_desktop_ver 2.91.6
 %define gtkhtml_ver 4.5.2
-%define libsoup_ver 2.38.1
+%define libsoup_ver 2.40.3
 %define libnotify_ver 0.7.0
 %define gweather_ver 3.5.0
 %define ical_ver 0.43
@@ -55,11 +55,13 @@ Provides: camel
 %define champlain_ver 0.12
 %define goa_ver 3.1.1
 %define pst_ver 0.6.54
-%define webkit_ver 1.8.0
+%define webkit_ver 1.10.0
+%define geocode_ver 0.99.0
 
 Requires: %name-data = %version-%release
 Requires: evolution-data-server >= %eds_ver
 Requires: gnome-settings-daemon
+Requires: highlight
 
 BuildPreReq: gnome-common
 BuildPreReq: glib2-devel >= %glib_ver
@@ -79,7 +81,7 @@ BuildPreReq: libpst-devel >= %pst_ver
 BuildPreReq: libwebkitgtk3-devel >= %webkit_ver
 BuildPreReq: libclutter-gtk3-devel >= %clutter_gtk_ver
 %{?_enable_goa:BuildPreReq: libgnome-online-accounts-devel >= %goa_ver}
-%{?_enable_map:BuildPreReq: libchamplain-gtk3-devel >= %champlain_ver libgeoclue-devel}
+%{?_enable_map:BuildPreReq: libchamplain-gtk3-devel >= %champlain_ver libgeoclue-devel libgeocode-glib-devel >= %geocode_ver}
 %{?_enable_image_inline:BuildRequires: libgtkimageview-devel}
 
 BuildRequires: docbook-utils intltool gnome-doc-utils yelp-tools itstool gtk-doc
@@ -221,14 +223,17 @@ CFLAGS="$CFLAGS \
 
 #NOCONFIGURE=1 ./autogen.sh
 gnome-doc-prepare -f
+export ac_cv_path_BOGOFILTER=%_bindir/bogofilter
 %autoreconf
 export ac_cv_path_SENDMAIL=%_sbindir/sendmail
+export ac_cv_path_SPAMASSASSIN=%_bindir/spamassassin
+export ac_cv_path_SA_LEARN=%_bindir/sa-learn
+export ac_cv_path_HIGHLIGHT=%_bindir/highlight
 export KILL_PROCESS_CMD=%_bindir/killall
 %configure \
     %{subst_enable static} \
     %ldap_flags \
     --with-sub-version=" (%version-%release)" \
-    --with-kde-applnk-path=no \
     --enable-plugins=%plugins \
     --enable-nss \
     --enable-smime \
@@ -320,6 +325,9 @@ rm -rf %buildroot%_localstatedir/scrollkeeper
 %_datadir/glib-2.0/schemas/org.gnome.evolution.spamassassin.gschema.xml
 
 %changelog
+* Sun Mar 24 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.0-alt1
+- 3.8.0
+
 * Thu Mar 07 2013 Yuri N. Sedunov <aris@altlinux.org> 3.6.4-alt1
 - 3.6.4
 

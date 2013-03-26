@@ -1,4 +1,4 @@
-%define ver_major 3.6
+%define ver_major 3.8
 %define api_ver 3.0
 %define panel_api_ver 4.0
 
@@ -8,7 +8,7 @@
 %def_enable ssh
 
 Name: vinagre
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: VNC client for the GNOME Desktop
@@ -21,7 +21,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 
 %{?_enable_rdp:Requires: rdesktop}
 
-BuildPreReq: rpm-build-gnome gnome-common gnome-icon-theme
+BuildPreReq: rpm-build-gnome gnome-common gnome-icon-theme desktop-file-utils
 BuildPreReq: intltool >= 0.35 glib2-devel >= 2.28.0
 BuildPreReq: libgtk3vnc-devel >= 0.4.3-alt2
 BuildRequires: libavahi-gobject-devel libavahi-ui-gtk3-devel libsecret-devel
@@ -84,6 +84,9 @@ rm -rf %buildroot%_datadir/doc
 %doc AUTHORS NEWS README
 
 %changelog
+* Tue Mar 26 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.0-alt1
+- 3.8.0
+
 * Tue Nov 13 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.2-alt1
 - 3.6.2
 

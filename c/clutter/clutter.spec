@@ -1,10 +1,18 @@
+%def_enable x11_backend
+%def_enable gdk_backend
+%def_disable egl_backend
+%def_disable tslib_input
+%def_enable evdev_input
+%def_enable xinput
+%def_enable gdk_pixbuf
+
 # libcogl compiled with --enable-wayland-egl-platform required
-%def_disable wayland
+%def_disable wayland_backend
 # libcogl compiled with --enable-wayland-egl-server required
 %def_disable wayland_compositor
 
 Name: clutter
-Version: 1.12.2
+Version: 1.14.0
 Release: alt1
 Summary: Clutter Core Library
 License: LGPLv2+
@@ -16,16 +24,31 @@ Source: %name-%version.tar
 # Patch: %name-%version-%release.patch
 
 %define glib_ver 2.31.19
-%define cogl_ver 1.11
+%define cogl_ver 1.14.0
+%define json_glib_ver 0.12.0
+%define atk_ver 2.5.3
+%define cairo_ver 1.10
+%define pango_ver 1.30
+%define gi_version 0.9.5
+%define uprof_ver 0.3
+%define gtk_doc_ver 1.15
+%define xfixes_ver 3
+%define xcomposite_ver 0.4
+%define gdk_ver 3.3.18
 
-BuildRequires: gtk-doc
-BuildRequires: libGL-devel libXcomposite-devel libXext-devel libXdamage-devel libXi-devel libX11-devel libXfixes-devel
-BuildRequires: libcairo-devel libcairo-gobject-devel
-BuildRequires: libgio-devel >= %glib_ver libgudev-devel libpango-devel libpango-gir-devel
-BuildRequires: gobject-introspection-devel libatk-devel libatk-gir-devel libjson-glib-devel libjson-glib-gir-devel
-BuildRequires: libcogl-devel >= %cogl_ver libcogl-gir-devel
-%{?_enable_wayland:BuildRequires: libwayland-client-devel libwayland-cursor-devel libxkbcommon-devel libgdk-pixbuf-devel}
-%{?_enable_wayland_compositor:BuildRequires: libwayland-server-devel}
+BuildRequires: libGL-devel
+BuildRequires: pkgconfig(cogl-1.0) >= %cogl_ver pkgconfig(cairo-gobject) >= %cairo_ver pkgconfig(atk) >= %atk_ver pkgconfig(pangocairo) >= %pango_ver pkgconfig(cogl-pango-1.0) pkgconfig(json-glib-1.0) >= %json_glib_ver
+BuildRequires: gtk-doc >= %gtk_doc_ver
+BuildRequires: gobject-introspection-devel  gir(GL) = 1.0 gir(GObject) = 2.0 gir(cairo) = 1.0 gir(Cogl) = 1.0 gir(CoglPango) = 1.0 gir(Atk) = 1.0 gir(Json) = 1.0
+%{?_enable_x11_backend:BuildRequires: pkgconfig(pangoft2) pkgconfig(x11) pkgconfig(xext) pkgconfig(xfixes) >= %xfixes_ver pkgconfig(xdamage) pkgconfig(xcomposite) >= %xcomposite_ver }
+%{?_enable_wayland_backend:BuildRequires: pkgconfig(wayland-client) pkgconfig(wayland-cursor) pkgconfig(xkbcommon) pkgconfig(gdk-pixbuf-2.0)}
+%{?_enable_wayland_compositor:BuildRequires: pkgconfig(wayland-server)}
+%{?_enable_gdk_backend:BuildRequires: pkgconfig(gdk-3.0) >= %gdk_ver gir(Gdk) = 3.0}
+
+%{?_enable_tslib_input:BuildRequires: pkgconfig(tslib-1.0)}
+%{?_enable_evdev_input:BuildRequires: pkgconfig(gudev-1.0) pkgconfig(xkbcommon)}
+%{?_enable_xinput:BuildRequires: pkgconfig(xi)}
+%{?_enable_gdk_pixbuf:BuildRequires: pkgconfig(gdk-pixbuf-2.0)}
 
 %description
 Clutter is an open source software library for creating fast, visually
@@ -93,14 +116,21 @@ Contains developer documentation for %name.
 # %%patch -p1
 
 %build
+gtkdocize
 %autoreconf
 %configure \
-	--enable-xinput \
-	--enable-gtk-doc \
-	--enable-introspection \
 	--disable-static \
-	%{?_enable_wayland:--enable-wayland-backend=yes} \
-	%{?_enable_wayland_compositor:--enable-wayland-compositor=yes}
+	%{?_enable_x11_backend:--enable-x11-backend} \
+	%{?_enable_gdk_backend:--enable-gdk-backend} \
+	%{?_enable_wayland_backend:--enable-wayland_backend} \
+	%{?_enable_wayland_compositor:--enable-wayland-compositor} \
+	%{?_enable_egl_backend:--enable-egl-backend} \
+	%{?_enable_tslib_input:--enable-tslib-input} \
+	%{?_enable_evdev_input:--enable-evdev-input} \
+	%{?_enable_xinput:--enable-xinput} \
+	%{?_enable_gdk_pixbuf:--enable-gdk-pixbuf} \
+	--enable-gtk-doc \
+	--enable-introspection
 
 %make_build
 
@@ -131,6 +161,9 @@ Contains developer documentation for %name.
 
 
 %changelog
+* Tue Mar 26 2013 Alexey Shabalin <shaba@altlinux.ru> 1.14.0-alt1
+- 1.14.0
+
 * Wed Oct 17 2012 Alexey Shabalin <shaba@altlinux.ru> 1.12.2-alt1
 - 1.12.2
 

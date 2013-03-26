@@ -1,7 +1,7 @@
 %define _libexecdir /usr/libexec
 
 Name: gnote
-Version: 3.6.2
+Version: 3.8.0
 Release: alt1
 Summary: Note-taking application
 Group: Graphical desktop/GNOME
@@ -11,10 +11,10 @@ Packager: GNOME Maintainers Team <gnome at packages.altlinux.org>
 
 Source0: http://ftp.gnome.org/pub/GNOME/sources/gnote/%version/%name-%version.tar
 
-%define gtk_ver 3.0
-%define gtkmm_ver 3.4
+%define gtk_ver 3.6
+%define gtkmm_ver 3.6
 %define glibmm_ver 2.28
-%define gtkspell_ver 2.0.9
+%define gtkspell_ver 3.0.0
 %define libsecret_ver 0.8
 
 BuildRequires: gcc-c++ boost-devel
@@ -25,7 +25,7 @@ BuildRequires: pkgconfig(x11)
 BuildRequires: pkgconfig(gtkmm-3.0) >= %gtkmm_ver
 BuildRequires: pkgconfig(glib-2.0) >= 2.32
 BuildRequires: pkgconfig(libxml-2.0) pkgconfig(libxslt)
-# BuildRequires: libgtkspell-devel >= %gtkspell_ver
+BuildRequires: pkgconfig(gtkspell3-3.0) >= %gtkspell_ver
 BuildRequires: pkgconfig(libsecret-1) >= %libsecret_ver
 BuildRequires: pkgconfig(uuid)
 BuildRequires: desktop-file-utils
@@ -68,6 +68,9 @@ desktop-file-install \
 %_datadir/glib-2.0/schemas/*.xml
 
 %changelog
+* Wed Mar 27 2013 Alexey Shabalin <shaba@altlinux.ru> 3.8.0-alt1
+- 3.8.0
+
 * Tue Jan 22 2013 Alexey Shabalin <shaba@altlinux.ru> 3.6.2-alt1
 - 3.6.2
 

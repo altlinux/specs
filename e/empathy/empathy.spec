@@ -1,4 +1,4 @@
-%define ver_major 3.6
+%define ver_major 3.8
 %def_disable static
 %def_enable sendto
 %def_enable map
@@ -6,20 +6,20 @@
 %if_enabled goa
 %define mcp_dir %(pkg-config --variable=plugindir mission-control-plugins)
 %endif
-%def_enable geocode
+%def_disable geocode
 %def_enable gudev
 %def_with cheese
 %define gst_api_ver 1.0
 %def_enable gst_1
 
 Name: empathy
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1
 
 Summary: Instant Messaging Client for GNOME
 License: GPL/LGPL
 Group: Networking/Instant messaging
-Url: http://live.gnome.org/Empathy
+Url: https://live.gnome.org/Empathy
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 #Source: %name-%version.tar
@@ -35,7 +35,7 @@ Requires: %name-data = %version-%release
 %define clutter_ver 1.1.2
 %define clutter_gst_ver 1.9.92
 %define tp_glib_ver 0.19.9
-%define tp_logger_ver 0.2.13
+%define tp_logger_ver 0.8.0
 %define tp_gabble_ver 0.16.0
 %define tp_haze_ver 0.6.0
 %define tp_salut_ver 0.8.0
@@ -50,12 +50,13 @@ Requires: %name-data = %version-%release
 %define gcr_ver 3.3.90
 %define champlain_ver 0.12.0
 %define gnutls_ver 2.8.5
-%define folks_ver 0.7.1
+%define folks_ver 0.9.1
 %define nst_ver 2.91.6
 %define nm_ver 0.8.995
 %define goa_ver 3.6.2
 %define secret_ver 0.5
 %define farstream_ver 0.2
+%define geocode_ver 0.99.1
 
 Requires: telepathy-gabble >= %tp_gabble_ver
 Requires: telepathy-salut >= %tp_salut_ver
@@ -82,13 +83,14 @@ BuildPreReq: libsecret-devel >= %secret_ver
 BuildPreReq: gcr-libs-devel >= %gcr_ver
 BuildPreReq: libtelepathy-logger-devel >= %tp_logger_ver
 BuildPreReq: libgnutls-devel >= %gnutls_ver
+BuildRequires: libgee0.8-devel
 # for gnome-control-center-3.0.x
 # BuildPreReq: gnome-control-center-devel
 BuildPreReq: NetworkManager-glib-devel >= %nm_ver libtelepathy-farstream-devel >= %farstream_ver
 %{?_enable_sendto:BuildRequires: nautilus-sendto-devel >= %nst_ver}
 %{?_enable_map:BuildPreReq: libchamplain-devel >= %champlain_ver  libchamplain-gtk3-devel >= %champlain_ver}
 %{?_enable_goa:BuildRequires: libgnome-online-accounts-devel >= %goa_ver libtelepathy-mission-control-devel}
-%{?_enable_geocode:BuildRequires: libgeocode-glib-devel}
+%{?_enable_geocode:BuildRequires: libgeocode-glib-devel >= %geocode_ver}
 %{?_enable_gudev:BuildRequires: libgudev-devel}
 %{?_with_cheese:BuildRequires: libcheese-devel}
 BuildRequires: libcheck-devel gsettings-desktop-schemas-devel xsltproc
@@ -151,6 +153,7 @@ rm -f data/%name.desktop
 # empathy-parser-test failed
 #xvfb-run %make check
 
+
 %files
 %_bindir/*
 %_libexecdir/empathy-auth-client
@@ -201,6 +204,10 @@ rm -f data/%name.desktop
 
 
 %changelog
+* Mon Mar 25 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.0-alt1
+- 3.8.0
+- geocode support temporarily disabled
+
 * Mon Mar 11 2013 Yuri N. Sedunov <aris@altlinux.org> 3.6.4-alt1
 - 3.6.4
 

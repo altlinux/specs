@@ -1,4 +1,4 @@
-%define ver_major 0.6
+%define ver_major 0.7
 %def_disable static
 
 Name: libwacom
@@ -8,7 +8,7 @@ Release: alt1
 Summary: A Wacom tablets library
 Group: System/Libraries
 License: BSD-like
-Url: http://www.gnome.org
+Url: http://linuxwacom.sf.net
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.bz2
 
 Requires: %name-data = %version-%release
@@ -81,11 +81,15 @@ developing applications that use %name.
 %dir %_datadir/%name
 %_datadir/%name/*.tablet
 %_datadir/%name/*.stylus
+%_datadir/%name/layouts/
 
 #%files devel-doc
 #%_datadir/gtk-doc/html/*
 
 %changelog
+* Wed Feb 20 2013 Yuri N. Sedunov <aris@altlinux.org> 0.7-alt1
+- 0.7
+
 * Mon Sep 17 2012 Yuri N. Sedunov <aris@altlinux.org> 0.6-alt1
 - 0.6
 

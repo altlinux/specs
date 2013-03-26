@@ -1,4 +1,4 @@
-%define ver_major 3.6
+%define ver_major 3.8
 %def_disable packagekit
 %def_disable magic
 %def_enable libarchive
@@ -6,8 +6,8 @@
 %define nau_api_ver 3.0
 
 Name: file-roller
-Version: %ver_major.3
-Release: alt3
+Version: %ver_major.0
+Release: alt1
 
 Summary: An archive manager for GNOME
 Summary (ru_RU.UTF-8): Архиватор для GNOME 2
@@ -18,11 +18,11 @@ Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 Patch: %name-2.28.2-alt-7z.patch
 Patch1: %name-3.3.90-alt-zip_command.patch
-Patch2: %name-3.6.3-alt-tar.lzo_mime_type.patch
+Patch2: %name-3.7.91-alt-tar.lzo_mime_type.patch
 
 # From configure.in
 %define glib_ver 2.29.14
-%define gtk_ver 3.0.2
+%define gtk_ver 3.6.0
 %define nautilus_ver 2.91.91
 %define libarchive_ver 3.0.0
 %define desktop_file_utils_ver 0.8
@@ -42,7 +42,6 @@ BuildPreReq: desktop-file-utils >= %desktop_file_utils_ver
 BuildRequires: libSM-devel libjson-glib-devel libnotify-devel
 %{?_enable_libarchive:BuildRequires: libarchive-devel >= %libarchive_ver}
 %{?_enable_magic:BuildRequires: libmagic-devel}
-
 
 %description
 File Roller is an archive manager for the GNOME environment.  This means that
@@ -130,6 +129,9 @@ rm -f data/%name.desktop{,.in}
 %exclude %_libdir/nautilus/extensions-%nau_api_ver/*.la
 
 %changelog
+* Tue Mar 26 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.0-alt1
+- 3.8.0
+
 * Tue Mar 12 2013 Yuri N. Sedunov <aris@altlinux.org> 3.6.3-alt3
 - subst'ituted recursively sx-lzop-compressed-tar/x-tzo
   according to shared-mime-info database (ALT #28668)

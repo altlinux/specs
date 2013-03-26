@@ -1,7 +1,8 @@
 %def_enable privatelib
+%def_disable gtk_doc
 
 Name: mutter
-Version: 3.6.3
+Version: 3.8.0
 Release: alt1
 Epoch: 1
 Summary: Clutter based compositing GTK3 Window Manager
@@ -16,7 +17,6 @@ Requires: zenity
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-BuildRequires(Pre): libGConf-devel GConf
 BuildPreReq: rpm-build-gnome gnome-common
 BuildPreReq: intltool >= 0.34.90
 BuildPreReq: gobject-introspection-devel >= 0.9.5
@@ -24,14 +24,17 @@ BuildRequires: libgtk+3-devel >= 3.3.7
 BuildRequires: glib2-devel  libgio-devel >= 2.25.10
 BuildRequires: libpango-devel >= 1.2.0
 BuildRequires: libcairo-devel >= 1.10.0
-BuildRequires: gsettings-desktop-schemas-devel >= 3.3.0
-BuildRequires: libXcomposite-devel libXfixes-devel libXrender-devel libXdamage-devel
+BuildRequires: gsettings-desktop-schemas-devel >= 3.7.3
+BuildRequires: libXcomposite-devel libXfixes-devel libXrender-devel libXdamage-devel libXi-devel >= 1.6.0
 BuildRequires: libXcursor-devel libX11-devel libXinerama-devel libXext-devel libXrandr-devel libSM-devel libICE-devel
-BuildRequires: libclutter-devel >= 1.9.10 libcogl-devel >= 1.9.6
+BuildRequires: libclutter-devel >= 1.13.5 libcogl-devel >= 1.13.3
 BuildRequires: libgdk-pixbuf-devel
 BuildRequires: gtk-doc
 BuildRequires: libstartup-notification-devel zenity libcanberra-gtk3-devel
 BuildRequires: libclutter-gir-devel libpango-gir-devel libgtk+3-gir-devel gsettings-desktop-schemas-gir-devel
+
+%set_typelibdir %_libdir/%name
+%set_girdir %_libdir/%name
 
 %description
 mutter is a minimal X window manager aimed at nontechnical users and is
@@ -66,7 +69,6 @@ GObject introspection data for the Mutter library
 %package -n lib%name-gir-devel
 Summary: GObject introspection devel data for the Mutter library
 Group: System/Libraries
-BuildArch: noarch
 Requires: lib%name-devel = %epoch:%version-%release lib%name-gir = %epoch:%version-%release
 
 %description -n lib%name-gir-devel
@@ -83,14 +85,24 @@ Requires: %name = %epoch:%version-%release
 This package contains everything necessary to use Mutter in GNOME desktop
 environment.
 
+%package devel-doc
+Summary: Development docs package for mutter
+Group: Development/Documentation
+BuildArch: noarch
+Conflicts: %name < %version
+
+%description devel-doc
+Development docs package for mutter
+
 %prep
 %setup -q
-%patch -p1
+# %%patch -p1
 
 %build
 %autoreconf
 DATADIRNAME=share %configure \
 	--enable-introspection \
+	%{?_enable_gtk_doc:--enable-gtk-doc} \
 	--disable-static \
 	--disable-schemas-compile
 
@@ -123,18 +135,36 @@ DATADIRNAME=share %configure \
 %endif
 
 %files -n lib%name-gir
-%_typelibdir/*.typelib
+%_libdir/%name/*.typelib
 
 %files -n lib%name-gir-devel
-%_girdir/*.gir
+%_libdir/%name/*.gir
 
 %files gnome
 %_datadir/glib-2.0/schemas/org.gnome.mutter.gschema.xml
 %_datadir/GConf/gsettings/mutter-schemas.convert
-%_datadir/gnome-control-center/keybindings/50-mutter-windows.xml
+%_datadir/gnome-control-center/keybindings/*.xml
 %_datadir/gnome/wm-properties/%name-wm.desktop
 
+%if_enabled gtk_doc
+%files devel-doc
+%_datadir/gtk-doc/html/*
+%endif
+
+
 %changelog
+* Wed Mar 27 2013 Alexey Shabalin <shaba@altlinux.ru> 1:3.8.0-alt1
+- 3.8.0
+
+* Tue Mar 19 2013 Alexey Shabalin <shaba@altlinux.ru> 1:3.7.92-alt1
+- 3.7.92
+
+* Thu Mar 07 2013 Alexey Shabalin <shaba@altlinux.ru> 1:3.7.91-alt1
+- 3.7.91
+
+* Fri Feb 22 2013 Alexey Shabalin <shaba@altlinux.ru> 1:3.7.90-alt1
+- 3.7.90
+
 * Mon Feb 18 2013 Alexey Shabalin <shaba@altlinux.ru> 1:3.6.3-alt1
 - 3.6.3
 

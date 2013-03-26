@@ -1,11 +1,11 @@
-%define ver_major 3.6
-%define parser_ver 3.4.1
+%define ver_major 3.8
+%define parser_ver 3.4.4
 %define gst_api_ver 1.0
 %define gst_ver 0.11.99
 %define gst_plugins_ver 0.11.93
 %define gtk_ver 3.5.2
 %define grilo_ver 0.2.0
-%define glib_ver 2.33.0
+%define glib_ver 2.35.0
 
 %define _libexecdir %_prefix/libexec
 %define nautilus_extdir %_libdir/nautilus/extensions-3.0
@@ -34,7 +34,7 @@
 %endif
 
 Name: totem
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 
 Summary: Movie player for GNOME 3
@@ -55,8 +55,10 @@ Requires: gst-plugins-base%gst_api_ver
 Requires: gst-plugins-good%gst_api_ver
 Requires: gst-plugins-bad%gst_api_ver
 Requires: gst-plugins-ugly%gst_api_ver
+Requires: gst-libav
 Requires: iso-codes
 
+#Source: %name-%version.tar
 Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 Source1: totem-bin-backend-ondemand.sh
 
@@ -88,7 +90,7 @@ BuildRequires: libdbus-devel libdbus-glib-devel libgdata-devel gsettings-desktop
 %{?_enable_introspection:BuildRequires: libtotem-pl-parser-gir-devel libgtk+3-gir-devel}
 
 BuildRequires: desktop-file-utils libSM-devel
-BuildRequires: db2latex-xsl yelp-tools itstool gcc-c++
+BuildRequires: db2latex-xsl yelp-tools gcc-c++
 BuildRequires: libX11-devel libXext-devel libXi-devel
 BuildRequires: libclutter-gst2.0-devel >= 1.3.9 libclutter-gtk3-devel
 
@@ -412,6 +414,9 @@ find %buildroot%_libdir -name \*.la -delete
 %_datadir/gtk-doc/html/*
 
 %changelog
+* Tue Mar 26 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.0-alt1
+- 3.8.0
+
 * Thu Nov 08 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.3-alt1
 - 3.6.3
 

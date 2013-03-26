@@ -1,4 +1,4 @@
-%define ver_major 3.6
+%define ver_major 3.8
 
 Name: gnome-power-manager
 Version: %ver_major.0
@@ -38,9 +38,6 @@ GNOME Power Manager comes in three parts:
 %prep
 %setup
 
-# Fix icons location
-%__subst 's/pkgdatadir/datadir/' data/icons/*/{apps,status}/Makefile.am
-
 %build
 %autoreconf
 %configure \
@@ -50,7 +47,7 @@ GNOME Power Manager comes in three parts:
 %make_build
 
 %check
-#%make check
+%make check
 
 %install
 %make_install DESTDIR=%buildroot install
@@ -65,6 +62,7 @@ ln -sf %_licensedir/GPL-2 COPYING
 %_desktopdir/gnome-power-statistics.desktop
 %_iconsdir/hicolor/*/*/*.png
 %_iconsdir/hicolor/*/*/*.svg
+%_iconsdir/HighContrast/*/*/*.png
 %config %_datadir/glib-2.0/schemas/org.gnome.power-manager.gschema.xml
 %_man1dir/*.1.gz
 %doc --no-dereference COPYING
@@ -72,6 +70,9 @@ ln -sf %_licensedir/GPL-2 COPYING
 
 
 %changelog
+* Tue Mar 26 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.0-alt1
+- 3.8.0
+
 * Wed Sep 26 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.0-alt1
 - 3.6.0
 

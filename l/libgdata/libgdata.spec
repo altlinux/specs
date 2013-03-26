@@ -1,7 +1,8 @@
 %def_enable gnome
+%def_enable goa
 
 Name: libgdata
-Version: 0.13.1
+Version: 0.13.3
 Release: alt1
 
 Summary: Library for the GData protocol
@@ -13,13 +14,12 @@ Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 Source: %name-%version.tar.xz
 
 %define soup_ver 2.37.91
-%define goa_ver 3.2
+%define goa_ver 3.7.90
 
-BuildRequires: gnome-common gtk-doc intltool libsoup-gnome-devel >= %soup_ver
-BuildRequires: libxml2-devel libgdk-pixbuf-devel libgtk+3-devel liboauth-devel
-BuildRequires: gcr-libs-devel libgnome-online-accounts-devel >= %goa_ver
-BuildRequires: gobject-introspection-devel libgnome-online-accounts-gir-devel
-BuildRequires: libsoup-gnome-gir-devel
+BuildRequires: gnome-common gtk-doc intltool
+BuildRequires: libgdk-pixbuf-devel libgtk+3-devel liboauth-devel gobject-introspection-devel
+%{?_enable_gnome:BuildRequires: gcr-libs-devel libxml2-devel libsoup-gnome-devel >= %soup_ver libsoup-gnome-gir-devel}
+%{?_enable_goa:BuildRequires: libgnome-online-accounts-devel >= %goa_ver libgnome-online-accounts-gir-devel}
 
 %description
 libgdata is a GLib-based library for accessing online service APIs using the
@@ -53,13 +53,15 @@ Requires: %name-gir = %version-%release %name-devel = %version-%release
 GObject introspection devel data for the GData library.
 
 %prep
-%setup -q
+%setup
+[ ! -d m4 ] && mkdir m4
 
 %build
 %autoreconf
 %configure \
 	--enable-gtk-doc \
 	%{subst_enable gnome} \
+	%{subst_enable goa} \
 	--enable-introspection \
 	--disable-static
 %make_build
@@ -68,6 +70,10 @@ GObject introspection devel data for the GData library.
 %make DESTDIR=%buildroot install
 
 %find_lang gdata
+
+%check
+# network connection required for tests
+#%%make check
 
 %files -f gdata.lang
 %doc NEWS README AUTHORS
@@ -86,6 +92,12 @@ GObject introspection devel data for the GData library.
 %_girdir/*.gir
 
 %changelog
+* Tue Feb 26 2013 Yuri N. Sedunov <aris@altlinux.org> 0.13.3-alt1
+- 0.13.3
+
+* Sun Sep 30 2012 Yuri N. Sedunov <aris@altlinux.org> 0.13.2-alt1
+- 0.13.2
+
 * Mon Jul 30 2012 Yuri N. Sedunov <aris@altlinux.org> 0.13.1-alt1
 - 0.13.1
 

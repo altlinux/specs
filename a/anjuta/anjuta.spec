@@ -1,10 +1,11 @@
-%define ver_major 3.6
-# need glade3 > 3.11.0 (for gtk+3)
-%def_disable glade
+%define ver_major 3.8
+%def_enable glade
+%def_disable vala
+%def_disable gtk_doc
 
 Name: anjuta
-Version: %ver_major.2
-Release: alt1
+Version: %ver_major.0
+Release: alt1.1
 Summary: GNOME IDE for C and C++
 Group: Development/GNOME and GTK+
 License: GPLv2+
@@ -17,7 +18,7 @@ Provides: %{name}2 = %version-%release lib%name
 Provides: %{name}2-docs = %version-%release %{name}2-core = %version-%release %{name}2-project-templates = %version-%release
 
 Source: %name-%version.tar
-Patch: %name-%version-%release.patch
+# Patch: %name-%version-%release.patch
 
 BuildRequires: dconf flex gcc-c++ autogen gnome-common gtk-doc intltool yelp-tools itstool
 BuildRequires: gobject-introspection-devel >= 0.6.7
@@ -26,12 +27,13 @@ BuildRequires: glib2-devel >= 2.32.0 libgio-devel
 BuildRequires: libgtk+3-devel >= 3.4.0 libgtk+3-gir-devel
 BuildRequires: libgdk-pixbuf-devel >= 2.0.0 libgdk-pixbuf-gir-devel
 BuildRequires: libxml2-devel >= 2.4.23
+BuildRequires: libwebkit2gtk-devel
 BuildRequires: libgdl3-devel >= 3.5.5
 BuildRequires: libvte3-devel >= 0.27.6
-BuildRequires: libdevhelp-devel >= 3.4.2
-%{?_enable_glade:BuildRequires: libgladeui-devel >= 3.12.0}
+BuildRequires: libdevhelp-devel >= 3.7.4
+%{?_enable_glade:BuildRequires: libgladeui2.0-devel >= 3.12.0}
 BuildRequires: libgtksourceview3-devel >= 3.0.0
-BuildRequires: libvala-devel vala
+%{?_enable_vala:BuildRequires: libvala-devel vala}
 BuildRequires: python-devel python-modules-compiler
 BuildRequires: libgda4-devel >= 4.2.0 libsqlite3-devel
 BuildRequires: libXrender-devel libXext-devel
@@ -101,7 +103,7 @@ This plugin lets you run DevHelp from inside Anjuta.
 
 %prep
 %setup -q
-%patch -p1
+# %patch -p1
 
 %build
 NOCONFIGURE=1 ./autogen.sh
@@ -110,16 +112,18 @@ NOCONFIGURE=1 ./autogen.sh
     --disable-rpath \
     --disable-silent-rules \
     --disable-schemas-compile \
+    %{subst_enable vala} \
     --disable-packagekit \
     --enable-plugin-devhelp \
 %if_enabled glade
     --enable-plugin-glade \
+    --enable-glade-catalog \
 %else
     --disable-plugin-glade \
 %endif
     --disable-plugin-subversion \
-    --enable-gtk-doc
-
+    %{?_enable_gtk_doc:--enable-gtk-doc}
+    
 %make_build
 
 %install
@@ -190,7 +194,7 @@ NOCONFIGURE=1 ./autogen.sh
 %_libdir/*.so
 %_girdir/*.gir
 %_pkgconfigdir/*.pc
-%_datadir/gtk-doc/html/lib%name
+%{?_enable_gtk_doc:%_datadir/gtk-doc/html/lib%name}
 
 %files cvs
 %anjuta_libdir/*cvs*
@@ -204,9 +208,9 @@ NOCONFIGURE=1 ./autogen.sh
 %files glade
 %anjuta_libdir/*glade*
 %exclude %anjuta_libdir/lib*.la
-%_libdir/glade3/modules/libgladeanjuta.so
-%_datadir/glade3/catalogs/anjuta-glade.xml
-%exclude %_libdir/glade3/modules/*.la
+%_libdir/glade/modules/libgladeanjuta.so
+%_datadir/glade/catalogs/anjuta-glade.xml
+%exclude %_libdir/glade/modules/*.la
 %anjuta_pixmapsdir/*glade*
 %endif
 
@@ -217,6 +221,20 @@ NOCONFIGURE=1 ./autogen.sh
 %exclude %anjuta_pixmapsdir/*devhelp*
 
 %changelog
+* Sat Mar 30 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.0-alt1.1
+- disabled building gtk-doc files (broken after libxml2 update)
+
+* Tue Mar 26 2013 Alexey Shabalin <shaba@altlinux.ru> 3.8.0-alt1
+- 3.8.0
+- disable vala plugin
+
+* Wed Mar 20 2013 Alexey Shabalin <shaba@altlinux.ru> 3.7.92-alt1
+- 3.7.92
+- build with glade plugin
+
+* Mon Feb 25 2013 Alexey Shabalin <shaba@altlinux.ru> 3.7.90-alt1
+- 3.7.90
+
 * Tue Nov 13 2012 Alexey Shabalin <shaba@altlinux.ru> 3.6.2-alt1
 - 3.6.2
 

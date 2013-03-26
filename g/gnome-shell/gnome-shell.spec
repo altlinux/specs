@@ -1,22 +1,21 @@
 %define _libexecdir %_prefix/libexec
-%define ver_major 3.6
+%define ver_major 3.8
 %define gst_api_ver 1.0
 %def_enable gnome_bluetooth
-%def_with systemd
 
 Name: gnome-shell
-Version: %ver_major.3.1
+Version: %ver_major.0.1
 Release: alt1
 
 Summary: Window management and application launching for GNOME
 Group: Graphical desktop/GNOME
 License: GPLv2+
-Url: http://live.gnome.org/GnomeShell
+Url: https://live.gnome.org/GnomeShell
 Packager: GNOME Maintainers Team <gnome at packages.altlinux.org>
 
 #Source: %name-%version.tar
 Source: http://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
-Patch1: %name-3.5.92-alt-gir.patch
+Patch1: %name-3.7.92-alt-gir.patch
 # use gnome3-applications.menu
 Patch2: %name-3.5.91-avoid-alt-menus.patch
 Patch3: %name-3.6.2-alt-invalid_user_shell.patch
@@ -26,12 +25,13 @@ Patch20: 0001-org-gnome-shell-use-litebox-setting-introduced.patch
 # manowar@
 Patch21: gnome-shell-show-hide-timer.patch
 
-Requires: %name-data = %version-%release
-Requires: polkit-gnome >= 0.105
+Obsoletes: gnome-shell-extension-per-window-input-source
 
-%define clutter_ver 1.11.11
+Requires: %name-data = %version-%release
+
+%define clutter_ver 1.13.6
 %define gjs_ver 1.33.2
-%define mutter_ver 3.6.3
+%define mutter_ver 3.8.0
 %define gtk_ver 3.5.9
 %define gio_ver 2.31.6
 %define gstreamer_ver 0.11.92
@@ -48,6 +48,8 @@ Requires: polkit-gnome >= 0.105
 %define menus_ver 3.5.3
 %define desktop_ver 3.5.1
 %define json_glib_ver 0.13.2
+%define nm_ver 0.9.6
+%define caribou_ver 0.4.8
 
 Requires: mutter-gnome >= %mutter_ver
 Requires: ca-certificates
@@ -87,6 +89,9 @@ BuildRequires: libpolkit-devel >= %polkit_ver
 BuildRequires: libtelepathy-glib-devel >= %telepathy_ver libtelepathy-glib-gir-devel libtelepathy-logger-gir-devel
 BuildRequires: libtelepathy-logger-devel >= %telepathy_logger_ver
 BuildRequires: libfolks-devel >= %folks_ver libfolks-gir-devel
+BuildRequires: libnm-gtk-devel >= %nm_ver
+BuildRequires: libcaribou-devel >= %caribou_ver
+BuildRequires: libcanberra-gtk3-devel
 BuildRequires: libgudev-devel libgudev-gir-devel
 BuildRequires: gsettings-desktop-schemas-devel >= 0.1.7
 BuildRequires: NetworkManager-glib-devel >= 0.8.995 NetworkManager-glib-gir-devel
@@ -94,7 +99,6 @@ BuildRequires: libsoup-gir-devel ca-certificates
 BuildRequires: gnome-control-center-devel
 # for browser plugin
 BuildRequires: browser-plugins-npapi-devel
-%{?_with_systemd:BuildRequires: systemd-devel libsystemd-login-devel libsystemd-daemon-devel}
 
 %description
 GNOME Shell provides core user interface functions for the GNOME 3 desktop,
@@ -136,8 +140,8 @@ GNOME Shell.
 NOCONFIGURE=1 ./autogen.sh
 %configure \
 	--enable-gtk-doc \
-    --disable-schemas-compile \
-    %{subst_with systemd} \
+    --disable-schemas-compile
+
 #    --with-ca-certificates=%_datadir/ca-certificates/ca-bundle.crt
 %make
 
@@ -174,6 +178,8 @@ rm -f %buildroot%_libdir/%name/*.la
 %_datadir/dbus-1/services/org.gnome.Shell.CalendarServer.service
 %_datadir/dbus-1/services/org.gnome.Shell.HotplugSniffer.service
 %_datadir/dbus-1/interfaces/org.gnome.ShellSearchProvider.xml
+%_datadir/dbus-1/interfaces/org.gnome.Shell.Screenshot.xml
+%_datadir/dbus-1/interfaces/org.gnome.ShellSearchProvider2.xml
 %_datadir/GConf/gsettings/gnome-shell-overrides.convert
 %_datadir/gnome-control-center/keybindings/50-gnome-shell-screenshot.xml
 %_datadir/gnome-control-center/keybindings/50-gnome-shell-system.xml
@@ -186,6 +192,9 @@ rm -f %buildroot%_libdir/%name/*.la
 %_datadir/gtk-doc/html/st/
 
 %changelog
+* Tue Mar 26 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.0.1-alt1
+- 3.8.0.1
+
 * Thu Feb 21 2013 Yuri N. Sedunov <aris@altlinux.org> 3.6.3.1-alt1
 - 3.6.3.1
 

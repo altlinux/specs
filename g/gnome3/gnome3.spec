@@ -1,8 +1,8 @@
-%define ver_major 3.6
+%define ver_major 3.7
 
 Name: gnome3
-Version: %ver_major.2
-Release: alt1
+Version: %ver_major.1
+Release: alt2
 
 Summary: GNOME 3 Desktop installers
 License: %gpl3plus
@@ -16,7 +16,6 @@ BuildPreReq: rpm-build-licenses
 # do not follow GNOME version numbers.
 ## Core components
 %define session_ver %ver_major.0
-%define librarian_ver 0.8.0
 ## Applications
 %define network_manager_ver 0.8.995
 %define terminal_ver %ver_major
@@ -61,24 +60,29 @@ Provides: %name-sisyphus-minimal = %version-%release
 
 # GNOME Desktop Core
 Requires: gnome-session >= %session_ver
-Requires: gnome-panel >= %ver_major
+#Requires: gnome-panel >= %ver_major
+Requires: pulseaudio-daemon
 Requires: gnome-control-center >= %ver_major
 Requires: gnome-shell >= %ver_major
+Requires: gnome-shell-extensions >= %ver_major
+# user settings utility
+Requires: gnome-tweak-tool >= %ver_major
+#Requires: gnome-initial-setup
 # default font
 Requires: fonts-otf-abattis-cantarell
 # Window manager
 # Requires: gnome-wm (see altbug #15947)
-Requires: metacity-gnome >= %metacity_ver
+#Requires: metacity-gnome >= %metacity_ver
 
 # Help browser
 Requires: yelp >= %ver_major
 #Requires: gnome-menus >= %ver_major
 
 # GNOME Utilities
-Requires: gnome-search-tool >= %ver_major
+Requires: gnome-search-tool >= 3.6.0
 Requires: gnome-system-monitor >= %ver_major
 Requires: gucharmap >= 3.5.99
-Requires: gcalctool >= %ver_major
+Requires: gnome-calculator >= %ver_major
 
 # Applications
 ## Default file manager
@@ -86,7 +90,7 @@ Requires: nautilus >= %ver_major
 ## Default terminal emulator
 Requires: gnome-terminal >= %terminal_ver
 ## Default archiving tool
-Requires: file-roller >= 3.5.92
+Requires: file-roller >= %ver_major
 ## Default text editor
 Requires: gedit >= %ver_major
 
@@ -102,7 +106,8 @@ Requires: libgtk2-engine-adwaita
 Requires: gnome-screensaver
 
 # And, of course, the documentation
-Requires: gnome-user-docs >= %gud_ver
+Requires: gnome-user-docs >= %ver_major
+Requires: gnome-getting-started-docs
 
 %description minimal
 This virtual package installs GNOME Desktop with minimum components. It
@@ -131,8 +136,7 @@ Requires: gnome-disk-utility >= %gdu_ver
 Requires: gdm-gnome >= %ver_major
 ## Default web-browser (firefox or galeon?)
 Requires: epiphany >=  %epiphany_ver
-## Epiphany extensions
-Requires: epiphany-extensions
+Requires: mozilla-plugin-adobe-flash
 ## Default mailer
 Requires: evolution >= %ver_major
 ## Default messenger
@@ -144,12 +148,14 @@ Requires: gnome-contacts >= %ver_major
 Requires: evince >= %evince_ver
 ## and E-Book Reader
 #Requires: fbreader
+## and videos from a webcam
+Requires: cheese
 
 ## Applets
-Requires: gnome-applets >= %applets_ver
+#Requires: gnome-applets >= %applets_ver
 
 # Utilities
-Requires: gnome-utils >= %ver_major
+Requires: gnome-utils >= 3.6
 Requires: gconf-editor >= 3.0
 Requires: dconf-editor >= 0.10
 
@@ -162,7 +168,7 @@ Requires: gedit-plugins >= %gedit_plugins_ver
 ## Stock multimedia applications
 Requires: gnome-media >= %media_ver
 ## Default music player
-#Requires: rhythmbox
+Requires: rhythmbox
 ## Default media player
 Requires: totem
 ## Stock GNOME games
@@ -175,14 +181,18 @@ Requires: eog-plugins >= %ver_major
 Requires: brasero >= %ver_major
 ## Clipboard manager
 Requires: parcellite
+# Documents manager
+Requires: gnome-documents
 # A quick previewer for Nautilus
 Requires: sushi
 # Menu editor
-#Requires: alacarte
+Requires: alacarte
+# Weather application
+Requires: gnome-weather >= %ver_major
 
 # Look & Feel
 ## All default themes
-Requires: metacity-themes-default >= %metacity_ver
+#Requires: metacity-themes-default >= %metacity_ver
 #Requires: gnome-themes-default >= %ver_major
 
 Requires: gnome-power-manager >= %ver_major
@@ -191,8 +201,6 @@ Requires: NetworkManager-gnome >= %network_manager_ver
 Requires: gnome-bluetooth
 ## frontend for various networking tools
 Requires: gnome-nettool >= %gnome_nettool_ver
-# user settings utility
-Requires: gnome-tweak-tool >= %ver_major
 
 %description default
 This virtual package installs GNOME Desktop for an average user's
@@ -223,8 +231,6 @@ Requires: %name-default = %version-%release
 ## module player
 #Requires: modplugplay
 ## Applications for taking pictures
-## and videos from a webcam
-#Requires: cheese
 # GTK UVC video viewer
 #Requires: guvcview
 ## FM-tuner
@@ -359,6 +365,18 @@ itself).
 #%files a11y
 
 %changelog
+* Thu Mar 21 2013 Yuri N. Sedunov <aris@altlinux.org> 3.7.1-alt2
+- added pulseaudio-daemon to -minimal, gnome-shell-extensions,
+  gnome-weather to -default
+
+* Wed Mar 06 2013 Yuri N. Sedunov <aris@altlinux.org> 3.7.1-alt1
+- removed obsolete epiphany-extensions
+- removed gnome-panel, gnome-applets, metacity-gnome - no more gnome-fallback session
+- gcalctool replaced by gnome-calculator
+- cheese moved from -full to -default
+- rhythmbox, gnome-documents, alacarte added to -default
+- added gnome-initial-setup, gnome-getting-started-docs to -minimal
+
 * Sun Jan 20 2013 Yuri N. Sedunov <aris@altlinux.org> 3.6.2-alt1
 - a time to add fonts-otf-abattis-cantarell
 

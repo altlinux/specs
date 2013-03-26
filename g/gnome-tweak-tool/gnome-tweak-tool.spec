@@ -1,8 +1,8 @@
-%define ver_major 3.6
+%define ver_major 3.7
 
 Name: gnome-tweak-tool
-Version: %ver_major.1
-Release: alt2
+Version: %ver_major.4
+Release: alt1
 
 Summary: A tool to customize advanced GNOME 3 options
 Group: Graphical desktop/GNOME
@@ -10,7 +10,7 @@ License: GPLv3
 Url: http://live.gnome.org/GnomeTweakTool
 Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 
-Source: %name-%version.tar
+Source: %name-%version.tar.xz
 Patch: gnome-tweak-tool-3.6.1-desktop.patch
 
 BuildArch: noarch
@@ -44,7 +44,7 @@ Features:
 %patch -b .desktop
 
 %build
-NOCONFIGURE=1 ./autogen.sh
+#NOCONFIGURE=1 ./autogen.sh
 %configure --disable-schemas-compile
 %make_build
 
@@ -62,6 +62,9 @@ NOCONFIGURE=1 ./autogen.sh
 %doc AUTHORS NEWS README
 
 %changelog
+* Thu Feb 28 2013 Yuri N. Sedunov <aris@altlinux.org> 3.7.4-alt1
+- 3.7.4
+
 * Mon Dec 17 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.1-alt2
 - updated to 600e101a
 - moved to System menu (ALT #27896)

@@ -1,8 +1,10 @@
-%define ver_major 3.6
+%define ver_major 3.8
 %def_enable systemd
 
+%define _libexecdir %_prefix/libexec
+
 Name: gnome-system-monitor
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: Simple process monitor
@@ -15,7 +17,7 @@ Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 
 # From configure.in
 %define glib_ver 2.28.0
-%define gtk_ver 3.0.5
+%define gtk_ver 3.5.12
 %define glibmm_ver 2.28.0
 %define libgtkmm3_ver 3.0.0
 %define libwnck_ver 3.0.0
@@ -25,11 +27,10 @@ Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 %define gnome_icon_theme_ver 3.0.0
 %define systemd_ver 38
 
-PreReq: librarian
-
 BuildPreReq: rpm-build-gnome
 
 # From configure.in
+BuildPreReq: gnome-common
 BuildPreReq: intltool >= 0.35.0
 BuildPreReq: libgio-devel >= %glib_ver
 BuildPreReq: libglibmm-devel >= %glibmm_ver
@@ -41,7 +42,7 @@ BuildPreReq: gnome-icon-theme >= %gnome_icon_theme_ver
 BuildPreReq: libxml2-devel >= %libxml_ver
 BuildPreReq: librsvg-devel >= %rsvg_ver
 BuildPreReq: gnome-doc-utils gnome-common
-BuildRequires: yelp-tools itstool
+BuildRequires: yelp-tools
 BuildRequires: gcc-c++
 %{?_enable_systemd:BuildRequires: systemd-devel libsystemd-login-devel libsystemd-daemon-devel}
 
@@ -52,6 +53,7 @@ Gnome-system-monitor is a simple process and system monitor.
 %setup -q
 
 %build
+%autoreconf
 %configure \
     --disable-schemas-compile \
     %{subst_enable systemd}
@@ -65,13 +67,21 @@ Gnome-system-monitor is a simple process and system monitor.
 
 %files -f %name.lang
 %_bindir/*
+%dir %_libexecdir/%name
+%_libexecdir/%name/gsm-kill
+%_libexecdir/%name/gsm-renice
 %_pixmapsdir/%name/
 %_desktopdir/*
 %_datadir/%name/
+%_datadir/polkit-1/actions/org.gnome.%name.policy
 %config %_datadir/glib-2.0/schemas/org.gnome.%name.gschema.xml
 %config %_datadir/glib-2.0/schemas/org.gnome.gnome-system-monitor.enums.xml
 
+
 %changelog
+* Tue Mar 26 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.0-alt1
+- 3.8.0
+
 * Tue Oct 16 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.1-alt1
 - 3.6.1
 

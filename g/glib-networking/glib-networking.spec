@@ -1,7 +1,7 @@
-%define ver_major 2.34
+%define ver_major 2.36
 
 Name: glib-networking
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: Networking support for GIO
@@ -14,7 +14,7 @@ Source: ftp://ftp.gnome.org/pub/sources/gnome/%name/%ver_major/%name-%version.ta
 
 Requires: ca-certificates gsettings-desktop-schemas >= 3.2.0
 
-%define glib_ver 2.34.0
+%define glib_ver 2.35.3
 %define gnutls_ver 2.12.8
 
 BuildRequires: intltool libgio-devel >= %glib_ver libproxy-devel
@@ -44,6 +44,9 @@ and a gnutls-based GTlsConnection implementation.
 
 %find_lang %name
 
+%check
+#%%make check
+
 %files -f %name.lang
 %_libexecdir/glib-pacrunner
 %_libdir/gio/modules/libgiolibproxy.so
@@ -55,6 +58,9 @@ and a gnutls-based GTlsConnection implementation.
 %exclude %_libdir/gio/modules/*.la
 
 %changelog
+* Mon Mar 25 2013 Yuri N. Sedunov <aris@altlinux.org> 2.36.0-alt1
+- 2.36.0
+
 * Tue Nov 13 2012 Yuri N. Sedunov <aris@altlinux.org> 2.34.2-alt1
 - 2.34.2
 

@@ -1,4 +1,4 @@
-%define ver_major 3.6
+%define ver_major 3.8
 %def_enable libnotify
 %def_enable webkitgtk
 
@@ -13,13 +13,11 @@ Group: Graphical desktop/GNOME
 URL: http://ftp.gnome.org/pub/gnome/sources/%name/
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 
-Requires: scrollkeeper
-
 # from configure.in
 %define intltool_ver 0.40.0
 %define gtk_ver 3.0.0
 
-BuildPreReq: gnome-common docbook-dtds yelp-tools itstool
+BuildPreReq: gnome-common docbook-dtds yelp-tools
 BuildPreReq: intltool >= %intltool_ver
 BuildPreReq: glib2-devel
 BuildPreReq: libgtk+3-devel >= %gtk_ver
@@ -57,6 +55,9 @@ a cooler name.
 %doc AUTHORS NEWS README THANKS TODO
 
 %changelog
+* Tue Mar 26 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.0-alt1
+- 3.8.0
+
 * Wed Sep 26 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.0-alt1
 - 3.6.0
 
