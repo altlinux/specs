@@ -1,8 +1,8 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-squidmill
-Version: 2.0
-Release: alt5
+Version: 2.1
+Release: alt1
 
 Packager: Paul Wolneykien <manowar@altlinux.ru>
 
@@ -16,11 +16,7 @@ Group: System/Configuration/Other
 Requires: alterator >= 4.8-alt1
 Requires: alterator-fbi >= 5.11-alt2
 Requires: squidmill >= 2.0-alt3
-Requires: alterator-service-functions >= 1.0
-Conflicts: alterator >= 5.0
-Conflicts: alterator-fbi >= 6.0
-Conflicts: squidmill >= 3.0
-Conflicts: alterator-service-functions >= 2.0
+Requires: alterator-service-functions >= 2.0.0
 
 # Automatically added by buildreq on Wed Apr 08 2009
 BuildRequires: alterator rpm-macros-fillup
@@ -43,6 +39,11 @@ Alterator module for browsing the Squid proxy server statistics
 %_alterator_backend3dir/squidmill
 
 %changelog
+* Mon Mar 25 2013 Paul Wolneykien <manowar@altlinux.org> 2.1-alt1
+- Require alterator-service-functions >= 2.0.0-alt1.
+- Cleanup the spec.
+- Update for the new version of alterator-service-functions.
+
 * Thu Mar 22 2012 Paul Wolneykien <manowar@altlinux.ru> 2.0-alt5
 - Fix error reporting.
 

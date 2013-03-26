@@ -1,8 +1,6 @@
 Name: alterator-squid
-Version: 1.3
+Version: 1.4
 Release: alt1
-
-Packager: Stanislav Ievlev <inger@altlinux.org>
 
 BuildArch: noarch
 
@@ -20,16 +18,7 @@ Requires: alterator-ldap-groups >= 0.1-alt2
 Requires: alterator-fbi >= 5.11-alt2
 Requires: squid >= 3.0.STABLE15-alt2
 Requires: alterator-openldap-functions >= 0.1-alt1
-Requires: alterator-service-functions >= 1.0-alt4
-Conflicts: alterator >= 5.0
-Conflicts: metalterator >= 2.0
-Conflicts: verborum-caterva >= 3.0
-Conflicts: caterva-alterator-kit-sh >= 3.0
-Conflicts: alterator-net-iptables >= 5.0
-Conflicts: alterator-ldap-groups >= 1.0
-Conflicts: alterator-fbi >= 6.0
-Conflicts: alterator-openldap-functions >= 2.0
-Conflicts: alterator-service-functions >= 2.0
+Requires: alterator-service-functions >= 2.0.0-alt1
 
 BuildRequires(Pre): rpm-macros-alterator
 
@@ -63,6 +52,11 @@ cp -rp caterva/* %buildroot%_sysconfdir/caterva/squid/
 %_bindir/*
 
 %changelog
+* Mon Mar 25 2013 Paul Wolneykien <manowar@altlinux.org> 1.4-alt1
+- Require alterator-service-functions >= 2.0.0-alt1.
+- Cleanup the spec.
+- Update for the new version of alterator-service-functions.
+
 * Tue Nov 06 2012 Paul Wolneykien <manowar@altlinux.ru> 1.3-alt1
 - Backup the squid.conf before making any changes.
 - Remove the configuration migration script.
