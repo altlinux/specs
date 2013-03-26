@@ -3,7 +3,7 @@
 %define gnome3ver 3.90
 
 Name: altlinux-freedesktop-menu
-Version: 0.60
+Version: 0.61
 %if_without backport
 %def_with gnome3
 %def_without gnome2
@@ -362,6 +362,9 @@ touch /etc/xdg/menus/lxde-applications.menu
 %_datadir/kde4/desktop-directories/altlinux-*.directory
 
 %changelog
+* Tue Mar 26 2013 Igor Vlasenko <viy@altlinux.ru> 0.61-alt1
+- added Kazakhstan translation by Baurzhan Muftakhidinov (baurthefirst@)
+
 * Thu Feb 21 2013 Igor Vlasenko <viy@altlinux.ru> 0.60-alt1
 - %_sbindir/altlinux-freedesktop-menu-post
 - altlinux-freedesktop-menu.filetrigger
