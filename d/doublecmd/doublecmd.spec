@@ -1,12 +1,13 @@
 Name:		doublecmd
 Summary:	Twin-panel (commander-style) file manager (GTK2)
 Version:	0.5.4
-Release:	alt1
+Release:	alt2
 Url:		http://doublecmd.sourceforge.net
 
 Packager:	Motsyo Gennadi <drool@altlinux.ru>
 
 Source0:	%name-%version.tar
+Patch1:     %name-0.5.4-fix-build.patch
 License:	GPLv2
 Group:		File tools
 
@@ -27,6 +28,7 @@ It is inspired by Total Commander and features some new ideas.
 
 %prep
 %setup
+%patch1 -p2
 
 %build
 ./build.sh beta gtk2
@@ -46,6 +48,9 @@ install/linux/install.sh --install-prefix=%buildroot
 %_desktopdir/%name.desktop
 
 %changelog
+* Tue Mar 26 2013 Andrey Cherepanov <cas@altlinux.org> 0.5.4-alt2
+- Fix build by commented out unused assignment
+
 * Wed Feb 06 2013 Motsyo Gennadi <drool@altlinux.ru> 0.5.4-alt1
 - build for Sisyphus
 
