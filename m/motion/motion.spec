@@ -1,5 +1,4 @@
 # -*- rpm-spec -*-
-# $Id: motion,v 1.18 2005/04/25 05:07:36 grigory Exp $
 
 #define svnversion svn20090216
 
@@ -7,22 +6,21 @@
 %define branch_point alt2
 #define revision 1
 
-
 Name: motion
 Version: 3.2.12
-
-Release: %branch_point.4
-
+Release: %branch_point.5
 
 Summary: %name - Detect motion using a video4linux device
+
 License: GPL
 Group: Video
 Url: http://www.lavrsen.dk/twiki/bin/view/Motion/WebHome
 
 #Source0: %%name-%%version-%%svnversion.tar.bz2
-Source0: %name-%%version.tar.gz
+Source0: %name-%version.tar.gz
 Patch: %name-ffmpeg-0.7.1.patch
 Patch1: %name-3.2.12-alt-v4l.patch
+
 Packager: Hihin Ruslan <ruslandh@altlinux.ru>
 
 BuildPreReq: libavformat-devel libjpeg-devel postgresql-devel zlib-devel
@@ -38,7 +36,7 @@ With motion you can use a video4linux device as a motion detector.
 It will make snapshots if motion is detected.
 
 %prep
-%setup -q -n %name-%version
+%setup -n %name-%version
 %patch0 -p2
 %patch1 -p2
 %__subst 's|<postgresql[/]libpq-fe.h>|<pgsql/libpq-fe.h>|' %name.h
@@ -58,10 +56,10 @@ rm -f version.sh
 	--without-optimizecpu
 
 %make
-%make_build 
+%make_build
 
 %install
-%makeinstall 
+%makeinstall
 
 install -d -m 755 %buildroot%_sysconfdir/%name
 install -m 644 %buildroot%_sysconfdir/%name-dist.conf %buildroot%_sysconfdir/%name/%name.conf
@@ -77,6 +75,10 @@ mv %buildroot%_datadir/%name-%version/examples/  %buildroot%_defaultdocdir/%name
 %_man1dir/*
 
 %changelog
+* Tue Mar 26 2013 Vitaly Lipatov <lav@altlinux.ru> 3.2.12-alt2.5
+- cleanup spec
+- rebuild with libmysqlclient18
+
 * Wed Jun 13 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.2.12-alt2.4
 - Fixed build
 
