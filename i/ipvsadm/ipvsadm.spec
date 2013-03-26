@@ -1,7 +1,7 @@
 Summary: Utility to administer the Linux Virtual Server
 Name: ipvsadm
 Version: 1.26
-Release: alt1
+Release: alt2
 License: GPL
 Url: http://www.LinuxVirtualServer.org/
 Group: System/Kernel and hardware
@@ -14,7 +14,7 @@ Source1: %name.init.alt
 #Patch0: ipvsadm-1.25-kernhdr-1.2.0.patch
 
 # Automatically added by buildreq on Sat May 16 2009
-BuildRequires: libnl-devel libpopt-devel
+BuildRequires: libnl1-devel libpopt-devel
 
 %description
 ipvsadm is a utility to administer the IP Virtual Server services
@@ -26,7 +26,7 @@ offered by the Linux kernel.
 
 %build
 #make INCLUDE="-Ikernheaders -I.. -I." CFLAGS="%optflags" POPT_LIB="-lpopt"
-%make_build POPT_LIB="-lpopt"
+%make POPT_LIB="-lpopt"
 
 %install
 %__mkdir_p $RPM_BUILD_ROOT/{sbin,%_man8dir,%_initrddir,%_sysconfdir/sysconfig}
@@ -48,6 +48,9 @@ offered by the Linux kernel.
 %preun_service ipvsadm
 
 %changelog
+* Tue Mar 26 2013 Slava Dubrovskiy <dubrsl@altlinux.org> 1.26-alt2
+- Fix build
+
 * Wed Apr 27 2011 Slava Dubrovskiy <dubrsl@altlinux.org> 1.26-alt1
 - New version
 - Add LSB Init header
