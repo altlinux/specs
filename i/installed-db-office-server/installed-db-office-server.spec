@@ -1,6 +1,6 @@
 Name: installed-db-office-server
 Version: 1.4
-Release: alt4
+Release: alt5
 Summary: Databases and config files for moodle, mediawiki and rujel (common)
 License: GPL
 Group: System/Configuration/Other
@@ -87,6 +87,9 @@ mkdir -p %buildroot/var/www/webapps/mediawiki
 
 
 %changelog
+* Tue Mar 26 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1.4-alt5
+- owncloud installation without wiki fixed
+
 * Fri Mar 22 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1.4-alt4
 - premature exit fixed
 - data files placement fixed
