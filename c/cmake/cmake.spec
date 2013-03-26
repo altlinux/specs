@@ -1,5 +1,5 @@
 Name: cmake
-Version: 2.8.10.1
+Version: 2.8.10.2
 Release: alt1
 
 Summary: Cross-platform, open-source make system
@@ -238,6 +238,9 @@ popd
 
 
 %changelog
+* Tue Mar 26 2013 Slava Dubrovskiy <dubrsl@altlinux.org> 2.8.10.2-alt1
+- 2.8.10.2
+
 * Tue Nov 20 2012 Slava Dubrovskiy <dubrsl@altlinux.org> 2.8.10.1-alt1
 - 2.8.10.1
 
