@@ -1,9 +1,8 @@
 Name: libslv2
 Version: 0.6.6
-Release: alt3
+Release: alt3.1
 License: GPLv2+
 Url: http://drobilla.net/software/slv2/
-Packager: Egor Glukhov <kaman@altlinux.org>
 Source0: %name-%version.tar
 BuildRequires: gcc-c++ rasqal-devel libredland-devel lv2core rasqal-devel
 BuildRequires: python-modules-compiler python-modules-logging
@@ -60,6 +59,9 @@ DESTDIR=%buildroot ./waf install
 %_pkgconfigdir/slv2.pc
 
 %changelog
+* Tue Mar 26 2013 Igor Vlasenko <viy@altlinux.ru> 0.6.6-alt3.1
+- NMU: rebuild with new lv2
+
 * Thu Sep 08 2011 Egor Glukhov <kaman@altlinux.org> 0.6.6-alt3
 - Fixed build
 
