@@ -1,6 +1,6 @@
 Name: baresip
 Version: 0.4.2
-Release: alt2
+Release: alt3
 
 Summary: Baresip is a portable and modular SIP User-Agent with audio and video support
 
@@ -45,6 +45,9 @@ and srtp media encoding.
 %_datadir/%name
 
 %changelog
+* Tue Mar 26 2013 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.4.2-alt3
+- fixed build with recent glibc
+
 * Mon Oct 01 2012 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.4.2-alt2
 - revisit buildreqs and modules
 - fixed module path
