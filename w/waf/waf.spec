@@ -1,8 +1,8 @@
-%def_without python3
+%def_with python3
 
 Name: waf
 Version: 1.7.10
-Release: alt1
+Release: alt2
 
 Summary: A Python-based build system
 License: BSD
@@ -26,9 +26,6 @@ BuildArch: noarch
 %if_with python3
 BuildRequires: python3-devel rpm-build-python3
 %endif
-
-# skip file that bombs req finder
-#add_findreq_skiplist /usr/bin/*
 
 %description
 Waf is a Python-based framework for configuring, compiling and installing
@@ -80,7 +77,7 @@ pushd .waf-%{version}-*
 find . -name '*.py' -printf '%%P\0' |
   xargs -0 -I{} install -m 0644 -p -D {} %{buildroot}%{_datadir}/waf/{}
 popd
-%if 0%{?with_python3}
+%if_with python3
 %{__python3} ./waf >/dev/null 2>&1
 pushd .waf3-%{version}-*
 find . -name '*.py' -printf '%%P\0' |
@@ -124,6 +121,9 @@ rm -f docs/sphinx/build/html/.buildinfo
 
 
 %changelog
+* Tue Mar 26 2013 Igor Vlasenko <viy@altlinux.ru> 1.7.10-alt2
+- python3 support
+
 * Tue Mar 26 2013 Igor Vlasenko <viy@altlinux.ru> 1.7.10-alt1
 - 1.7.10 (closes: 28285)
 - TODO: python3
