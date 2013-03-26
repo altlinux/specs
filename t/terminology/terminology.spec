@@ -1,8 +1,8 @@
-%define ver_major 0.2
+%define ver_major 0.3
 
 Name: terminology
 Version: %ver_major.0
-Release: alt0.2
+Release: alt1
 
 Summary: EFL terminal emulator
 License: BSD
@@ -10,16 +10,15 @@ Group: Terminals
 Url: http://www.enlightenment.org/p.php?p=about/terminology
 
 #Source: %name-%version.tar
-Source: http://download.enlightenment.org/releases/%name-%version.tar.xz
-Patch: %name-0.2-sl-theme.patch
-Patch1: %name-0.2-up.patch
-Patch2: %name-0.2-alt-default_font.patch
+Source: http://download.enlightenment.org/releases/%name-%version.tar.bz2
+Patch: %name-0.2-alt-default_font.patch
 
 Requires: fonts-bitmap-terminus
 Provides: xvt
 
 BuildRequires: intltool
-BuildRequires: libevas-devel edje embryo_cc libedje-devel libemotion-devel libelementary-devel >= 1.7.3
+BuildRequires: libevas-devel edje embryo_cc libedje-devel libemotion-devel
+BuildRequires: libethumb-devel libelementary-devel >= 1.7.3
 
 %description
 An EFL terminal emulator with some extra bells and whistles. It's brand
@@ -29,9 +28,7 @@ considering it's young age, it does a lot.
 
 %prep
 %setup -q
-%patch -p1
-%patch1 -p1
-%patch2 -b .def_font
+%patch -b .def_font
 
 %build
 %autoreconf
@@ -60,6 +57,9 @@ EOF
 %doc AUTHORS ChangeLog COPYING README
 
 %changelog
+* Tue Mar 26 2013 Yuri N. Sedunov <aris@altlinux.org> 0.3.0-alt1
+- 0.3.0
+
 * Wed Jan 23 2013 Yuri N. Sedunov <aris@altlinux.org> 0.2.0-alt0.2
 - used Terminus 18 as default font
 
