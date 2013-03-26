@@ -1,6 +1,6 @@
 %define lo_name libreoffice
 %define ver_major 3.6
-%define lo_ver %ver_major.5.2
+%define lo_ver %ver_major.6.1
 %define src_url http://download.documentfoundation.org/libreoffice/src/%ver_major.5/
 %define with_lang ru de fr uk pt-BR es
 
@@ -18,9 +18,11 @@ Requires: java xdg-utils hunspell-en hyphen-en mythes-en
 Requires: gst-plugins-base gst-plugins-good gst-plugins-ugly gst-plugins-bad gst-ffmpeg
 Conflicts: openoffice.org < 3.3.0
 
-Source10: libreoffice-src-3.6.3.1.tar
+Source10: libreoffice-src-3.6.6.1.tar
 Source11: biblio.tar.bz2
 Source12: extras-3.1.tar.bz2
+
+Source100:      forky.c
 
 Source0: %src_url/libreoffice-core-%version.tar.xz
 Source1000: %src_url/libreoffice-binfilter-%version.tar.xz
@@ -48,17 +50,19 @@ Patch20: libreoffice-3.6.1.2-alt-xdg-config-home.patch
 Patch21: libreoffice-3.5.0.3-alt-spelldict_select.patch
 Patch25: libreoffice-3.5.3.1-alt-download.patch
 
+#Patch100: 0001-fix-compile-for-change-to-boost-1.53.0-declaring-sma.patch
+
 AutoReqProv: yes, noshell, nopython
 
 BuildRequires: /proc wget xdg-utils zip >= 3.0 gcc-c++ >= 4.6
 BuildRequires: java-devel = 1.6.0 libdbus-glib-devel gst-plugins-devel postgresql-devel libncursesw-devel GConf
-BuildRequires: ant ant-jakarta-regexp boost-devel flex gperf fontconfig-devel libfreetype-devel libcups-devel
+BuildRequires: ant ant-jakarta-regexp flex gperf fontconfig-devel libfreetype-devel libcups-devel
 BuildRequires: libGConf-devel libicu-devel libcurl-devel libexpat-devel libgtk+2-devel libjpeg-devel libneon-devel
 BuildRequires: libpam0-devel libpng-devel libsane-devel libreadline-devel libwpd9-devel libxslt-devel libxml2-devel
 BuildRequires: perl-Archive-Zip perl-libnet python-dev tcsh unzip libbonobo-devel zlib-devel xsltproc xulrunner-devel
 BuildRequires: libldap-devel libdb4-devel libdb4_cxx-devel libssl-devel libnss-devel libnspr-devel libminizip-devel
 BuildRequires: libhunspell-devel libhyphen-devel libwpg2-devel libgio-devel libunixODBC-devel gvfs-devel libGLU-devel
-BuildRequires: perl-Switch junit4 boost-program_options-devel cppunit-devel libwps-devel libXaw-devel libXau-devel
+BuildRequires: perl-Switch junit4 cppunit-devel libwps-devel libXaw-devel libXau-devel
 BuildRequires: libXrandr-devel libXext-devel zenity libmpc-devel librsvg-devel libpq-devel libclucene-core-devel
 # libpoppler-devel libpoppler-cpp-devel
 
@@ -149,13 +153,24 @@ ln -s %_builddir/../SOURCES/%name-*-%version.tar.xz ext_sources/
 %patch21 -p1
 %patch25 -p1
 
+#patch100 -p1
+
 tar -xjf %SOURCE5 -C sysui/desktop/icons/
 tar -xf %SOURCE7 -C icon-themes/tango/
 
 tar -xjf %SOURCE500
 tar -xjf %SOURCE501
 
+install -D %SOURCE100 forky.c
+
 %build
+# XXX
+sed -i 's/MDDS_CPPFLAGS="-std=gnu++0x"/MDDS_CPPFLAGS=""/
+s/CXXFLAGS -std=gnu++0x/CXXFLAGS/
+' configure.in
+# XXX
+sed -i 's/test \([$]enable_mergelibs\)/test "\1"/' configure.in
+
 aclocal -I m4
 autoconf
 %configure \
@@ -177,7 +192,6 @@ autoconf
 	--without-fonts \
 	--without-myspell-dicts \
 	--without-ppds \
-	--with-system-boost \
 	--with-system-cairo \
 	--with-system-cppunit \
 	--with-system-curl \
@@ -206,10 +220,14 @@ autoconf
 	--with-external-thes-dir=%_datadir/mythes \
 	--with-lang="en-US %with_lang" \
 	--with-external-tar=%_builddir/%name-%version/ext_sources \
-	--with-num-cpus=1
+	--without-system-boost \
+	--with-num-cpus=1 \
+
 #	--with-system-poppler
 
 ln -sf /bin/true autogen.sh
+
+#gcc -g -DHAVE_CONFIG_H -shared -O3 -fomit-frame-pointer -fPIC forky.c -oforky.so -ldl
 %make
 
 subst 's|^rm|rm -f|' config_host.mk.source
@@ -318,6 +336,10 @@ unset RPM_PYTHON
 %files langpack-es -f %name.es.files
 
 %changelog
+* Tue Mar 26 2013 Fr. Br. George <george@altlinux.ru> 3.6.6.1-alt1
+- Version up to 3.6.6.1
+- Fix build by using internal boost library
+
 * Thu Jan 17 2013 Valery Inozemtsev <shrek@altlinux.ru> 3.6.5.2-alt1
 - 3.6.5 release 2
 
