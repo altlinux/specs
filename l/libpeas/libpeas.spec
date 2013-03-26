@@ -1,4 +1,4 @@
-%define ver_major 1.7
+%define ver_major 1.8
 %define api_ver 1.0
 %define gtk_api_ver 3.0
 
@@ -18,13 +18,15 @@ Url: ftp://ftp.gnome.org/pub/gnome/sources/%name/
 Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+# our python3 --ldflags break build
+Patch: libpeas-1.8.0-alt-python3_build.patch
 
 BuildRequires: gnome-common intltool gtk-doc
 BuildRequires: libgio-devel >= 2.32.0 libgtk+3-devel >= 3.0.0
 BuildRequires: gobject-introspection-devel >= 1.31.10 libgtk+3-gir-devel
 # for python support
 BuildRequires: python-module-pygobject3-devel >= 3.1.1
-# for python support
+# for python3 support
 BuildRequires: python3-devel python3-module-pygobject3-devel >= 3.1.1
 
 # for Javascript support
@@ -120,11 +122,11 @@ This package contains %name demonstration programs
 
 %prep
 %setup
+%patch
 
 %build
 %autoreconf
 %configure \
-	%{subst_enable vala} \
 	%{?_enable_gtk_doc:--enable-gtk-doc}
 
 %make_build
@@ -179,6 +181,9 @@ This package contains %name demonstration programs
 
 
 %changelog
+* Tue Mar 26 2013 Yuri N. Sedunov <aris@altlinux.org> 1.8.0-alt1
+- 1.8.0
+
 * Tue Feb 26 2013 Yuri N. Sedunov <aris@altlinux.org> 1.7.0-alt1
 - 1.7.0
 - new python3-loader subpackage
