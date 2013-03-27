@@ -1,7 +1,7 @@
 %define _name libqmi
 
 Name: %_name-glib
-Version: 1.0.0
+Version: 1.2.0
 Release: alt1
 
 Summary: QMI modem protocol helper library
@@ -43,7 +43,8 @@ developing applications that use %name.
 
 %package devel-doc
 Summary: This package contains development documentation for %name
-Group: Development/C
+Group: Development/Documentation
+BuildArch: noarch
 Requires: %name-devel = %version-%release
 
 %description devel-doc
@@ -84,6 +85,11 @@ make check
 
 
 %changelog
+* Wed Mar 27 2013 Mikhail Efremov <sem@altlinux.org> 1.2.0-alt1
+- devel-doc subpackage: Fix group.
+- Package doc subpackage as noarch.
+- Updated to 1.2.0.
+
 * Mon Feb 25 2013 Mikhail Efremov <sem@altlinux.org> 1.0.0-alt1
 - Initial build.
 
