@@ -1,6 +1,6 @@
 Name: btpd
 Version: 0.13
-Release: alt2.qa1.1
+Release: alt2.qa2
 Packager: Paul Wolneykien <manowar@altlinux.ru>
 
 Summary: Bittorrent download daemon.
@@ -8,6 +8,7 @@ License: Non-ad BSD license
 Group: Networking/File transfer
 
 Source: %name-%version.tar.gz
+Patch: btpd-0.13-glibc-2.17.patch
 
 Requires: libssl
 
@@ -19,6 +20,7 @@ Btpd is a bittorrent client consisting of a daemon and client commands.
 
 %prep
 %setup -q
+%patch -p2
 
 %build
 %configure
@@ -37,6 +39,9 @@ Btpd is a bittorrent client consisting of a daemon and client commands.
 %dir %_docdir/btpd-%version 
 
 %changelog
+* Wed Mar 27 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.13-alt2.qa2
+- Fixed build with glibc 2.17
+
 * Tue Dec 07 2010 Igor Vlasenko <viy@altlinux.ru> 0.13-alt2.qa1.1
 - rebuild with new openssl and/or boost by request of git.alt administrator
 
