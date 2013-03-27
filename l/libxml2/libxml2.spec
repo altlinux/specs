@@ -1,5 +1,5 @@
 Name: libxml2
-Version: 2.8.0
+Version: 2.9.0
 Release: alt1
 Epoch: 1
 
@@ -9,7 +9,7 @@ Group: System/Libraries
 Url: http://xmlsoft.org/
 
 %def_disable static
-%define srcname libxml2-v2.8.0-3-g549f06a
+%define srcname libxml2-v2.9.0-42-gf7aeda2
 
 Source: %srcname.tar
 # http://www.w3.org/XML/Test/xmlts20080827.tar.gz
@@ -196,6 +196,9 @@ install -p -m644 doc/*.html %buildroot%pkgdocdir/
 %doc %_datadir/gtk-doc/html/libxml2/
 
 %changelog
+* Wed Mar 27 2013 Dmitry V. Levin <ldv@altlinux.org> 1:2.9.0-alt1
+- Updated to v2.9.0-42-gf7aeda2.
+
 * Tue Jul 17 2012 Dmitry V. Levin <ldv@altlinux.org> 1:2.8.0-alt1
 - Updated to v2.8.0-3-g549f06a.
 - Unexported 13 internal functions which are not supposed to be exported.
@@ -680,7 +683,7 @@ install -p -m644 doc/*.html %buildroot%pkgdocdir/
 * Wed Jun 30 1999 Chmouel Boudjnah <chmouel@mandrakesoft.com>
 - 1.2.0.
 
-* Tue May 11 1999 Bernhard Rosenkr‰nzer <bero@mandrakesoft.com>
+* Tue May 11 1999 Bernhard Rosenkr√§nzer <bero@mandrakesoft.com>
 - Mandrake adaptions
 
 * Thu Mar 04 1999 Michael Fulbright <drmike@redhat.com>
