@@ -1,5 +1,5 @@
 Name: installer-feature-simply-livecd
-Version: 0.8.0
+Version: 0.8.1
 Release: alt1
 
 Summary: LiveCD install hooks for Simply Linux.
@@ -52,6 +52,12 @@ install -pm755 livecd-postinstall.d/* %buildroot%post_hookdir/
 %post_hookdir/*
 
 %changelog
+* Wed Mar 27 2013 Mikhail Efremov <sem@altlinux.org> 0.8.1-alt1
+- Explicitly enable prefdm.service.
+- Disable krb5kdc service.
+- Change lightdm theme to Clearlooks-Phenix.
+- Added setup-journald postinstall hook.
+
 * Thu Feb 28 2013 Mikhail Efremov <sem@altlinux.org> 0.8.0-alt1
 - Enable ntpd.service.
 - Enable more services.
