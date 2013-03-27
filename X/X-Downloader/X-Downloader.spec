@@ -1,6 +1,6 @@
 Name: X-Downloader
 Version: 2.5.7.1
-Release: alt4.5
+Release: alt4.6
 Serial: 1
 
 License: Artistic
@@ -25,7 +25,7 @@ Obsoletes: nt
 
 # Automatically added by buildreq on Mon Nov 19 2007 (-bi)
 BuildRequires: boost-devel cppunit-devel doxygen esound-devel gcc4.3-c++ graphviz 
-BuildRequires: imake libgtk+2-devel libssl-devel xorg-cf-files xorg-x11-proto-devel
+BuildRequires: imake libgtk+2-devel libssl-devel xorg-cf-files xorg-proto-devel
 
 %description
 This program lets you download files from internet/intranet using
@@ -113,6 +113,9 @@ export CC=gcc-4.3 CXX=g++-4.3
 %doc AUTHORS README NEWS DOC/{FAQ*,LICENSE,README.*,THANKS,TROUBLES}
 
 %changelog
+* Wed Mar 27 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:2.5.7.1-alt4.6
+- Fixed build
+
 * Thu Jun 07 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:2.5.7.1-alt4.5
 - Fixed build
 
