@@ -1,4 +1,4 @@
-%define git_date .git20130304
+%define git_date .git20130326
 #define git_date %nil
 
 %define dbus_version 1.1
@@ -105,6 +105,24 @@ make check
 install -Dm0755 %SOURCE1 %buildroot%_sbindir/%name-launcher
 %find_lang %name
 
+%post
+SYSTEMCTL=systemctl
+if sd_booted && "$SYSTEMCTL" --version >/dev/null 2>&1; then
+	"$SYSTEMCTL" daemon-reload ||:
+	if [ "$1" -eq 1 ]; then
+		"$SYSTEMCTL" -q preset "%name.service" ||:
+	else
+		"$SYSTEMCTL" try-restart "%name.service" ||:
+	fi
+fi
+
+%preun
+SYSTEMCTL=systemctl
+if [ "$1" -eq 0 ] && sd_booted && "$SYSTEMCTL" --version >/dev/null 2>&1; then
+		"$SYSTEMCTL" --no-reload -q disable "%name.service"
+		"$SYSTEMCTL" stop "%name.service"
+fi
+
 %files -f %name.lang
 %doc ChangeLog NEWS AUTHORS README
 %_datadir/dbus-1/system-services/*.service
@@ -143,6 +161,10 @@ install -Dm0755 %SOURCE1 %buildroot%_sbindir/%name-launcher
 %doc %_datadir/gtk-doc/html/libmm-glib
 
 %changelog
+* Wed Mar 27 2013 Mikhail Efremov <sem@altlinux.org> 0.7.990-alt1.git20130326
+- Preset/disable MM service in case of systemd.
+- Upstream git snapshot (master branch).
+
 * Tue Mar 05 2013 Mikhail Efremov <sem@altlinux.org> 0.7.990-alt1.git20130304
 - Start ModemManager on non-systemd systems.
 - Package doc subpackages as noarch.
