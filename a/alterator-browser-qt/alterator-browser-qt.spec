@@ -7,7 +7,7 @@
 %define alterator_cfg %_sysconfdir/alterator
 
 Name: alterator-browser-qt
-Version: 2.18.5
+Version: 2.18.6
 Release: alt1
 
 Source:%name-%version.tar
@@ -82,6 +82,9 @@ ln -s %alterator_cfg/design-browser-qt %buildroot/%_datadir/%name/design/current
 
 
 %changelog
+* Wed Mar 27 2013 Sergey V Turchin <zerg at altlinux dot org> 2.18.6-alt1
+- return current item if no selected items in checktree
+
 * Mon Mar 25 2013 Sergey V Turchin <zerg at altlinux dot org> 2.18.5-alt1
 - update Kazakh translation (ALT#28747)
 
