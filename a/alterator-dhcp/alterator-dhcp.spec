@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-dhcp
-Version: 0.9.2
+Version: 0.9.3
 Release: alt1
 
 Summary: alterator module for dhcp conf file editing
@@ -17,6 +17,7 @@ Requires: alterator >= 4.10-alt1 alterator-sh-functions alterator-net-functions 
 Requires: alterator-l10n >= 2.1-alt11
 Requires: dhcp-server
 Requires: alterator-services
+Requires: alterator-service-functions >= 2.0.0
 Conflicts: alterator-fbi < 5.17-alt2
 
 BuildPreReq: alterator >= 4.10-alt1
@@ -48,6 +49,9 @@ DHCP configuration alterator module
 %_libexecdir/alterator/hooks/dhcp.d
 
 %changelog
+* Wed Mar 27 2013 Mikhail Efremov <sem@altlinux.org> 0.9.3-alt1
+- Use alterator-service-functions.
+
 * Thu Dec 20 2012 Mikhail Efremov <sem@altlinux.org> 0.9.2-alt1
 - ipv6: Don't enable dhcpd6 is radvd is not installed.
 - ipv6: Show error if radvd is not installed.
