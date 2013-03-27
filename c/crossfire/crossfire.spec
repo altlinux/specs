@@ -3,7 +3,7 @@
 
 Name: crossfire
 Version: 1.11.0
-Release: alt1.qa4
+Release: alt1.qa5
 Summary: Multiplayer graphical role-playing game
 Summary(ru_RU.UTF-8): Многопользовательская графическая ролевая игра
 License: GPL
@@ -28,7 +28,7 @@ Requires: crossfire-maps
 BuildPreReq: perl-CGI
 
 # Automatically added by buildreq on Fri Mar 10 2006
-BuildRequires: alternatives flex gcc-c++ imake libICE-devel libSM-devel libX11-devel libXaw-devel libXext-devel libXmu-devel libXpm-devel libXt-devel libpng-devel libstdc++-devel ncompress python-base python-dev python-modules-encodings tetex-latex xorg-cf-files xorg-x11-proto-devel zlib-devel
+BuildRequires: alternatives flex gcc-c++ imake libICE-devel libSM-devel libX11-devel libXaw-devel libXext-devel libXmu-devel libXpm-devel libXt-devel libpng-devel libstdc++-devel ncompress python-base python-dev python-modules-encodings tetex-latex xorg-cf-files xorg-proto-devel zlib-devel
 
 
 %description
@@ -177,6 +177,9 @@ install -d %buildroot%_localstatedir/games/%name/datafiles
 
 
 %changelog
+* Wed Mar 27 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.11.0-alt1.qa5
+- Fixed build
+
 * Fri Sep 28 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.11.0-alt1.qa4
 - Rebuilt with libpng15
 
