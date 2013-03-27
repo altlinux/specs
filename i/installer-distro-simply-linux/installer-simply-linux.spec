@@ -1,6 +1,6 @@
 Name: installer-distro-simply-linux
 Version: 7.0
-Release: alt1
+Release: alt2
 
 Summary: Installer common files
 Summary(ru_RU.UTF-8): Общие пакеты для установки дистрибутива "Simply linux"
@@ -114,6 +114,14 @@ Installer stage3
 %_datadir/alterator/ui/simply-linux
 
 %changelog
+* Wed Mar 27 2013 Mikhail Efremov <sem@altlinux.org> 7.0-alt2
+- Explicitly enable prefdm.service.
+- Disable krb5kdc service.
+- Change lightdm theme to Clearlooks-Phenix.
+- Added setup-journald postinstall hook.
+- Disable syslogd.service.
+- Disable consolesaver.service.
+
 * Thu Feb 28 2013 Mikhail Efremov <sem@altlinux.org> 7.0-alt1
 - Enable ntpd.service.
 - Use installer hook for setup services.
