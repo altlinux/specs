@@ -1,12 +1,12 @@
 %define theme slinux
 %define Name Simply Linux
 %define codename Dory
-%define status alpha
+%define status beta
 %define variants altlinux-backup-server altlinux-desktop altlinux-gnome-desktop altlinux-kdesktop altlinux-lite altlinux-lxdesktop altlinux-office-desktop altlinux-office-server altlinux-school-server altlinux-sisyphus altlinux-spt altlinux-tablet altlinux-workbench informika-schoolmaster ivk-chainmail lxde-desktop lxde-school-lite Platform6-server-light school-junior school-lite school-master school-server school-teacher school-terminal altlinux-centaurus sisyphus-server-light
 %define brand simply
 
 Name: branding-simply-linux
-Version: 6.992.0
+Version: 6.993.0
 Release: alt1
 BuildArch: noarch
 
@@ -43,7 +43,7 @@ Provides: design-bootloader-system-%theme design-bootloader-livecd-%theme design
 Obsoletes: design-bootloader-system-%theme design-bootloader-livecd-%theme design-bootloader-livecd-%theme design-bootloader-%theme branding-alt-%theme-bootloader
 Conflicts: %(for n in %variants ; do [ "$n" = %theme ] || echo -n "branding-$n-bootloader ";done )
 
-%define grub_normal dark-gray/white
+%define grub_normal white/dark-gray
 %define grub_high black/white
 
 %description bootloader
@@ -161,7 +161,7 @@ Summary: default settings for Xfce 4.6 for Simply linux distribution
 License: Distributable
 Group: Graphical desktop/XFce
 Requires: PolicyKit-gnome
-Requires: etcskel gtk2-theme-simplicity
+Requires: etcskel gtk3-theme-clearlooks-phenix
 Requires: gnome-icon-theme icon-theme-simple
 Requires: branding-simply-linux-graphics
 Obsoletes: xfce-settings-lite xfce-settings-school-lite
@@ -290,7 +290,7 @@ cp -P xfce-settings/backgrounds/*.jpg %buildroot/usr/share/backgrounds/xfce
 install -m 644 xfce-settings/backgrounds/vladstudio.com/LICENSE.txt %buildroot/usr/share/backgrounds/xfce/vladstudio.com/
 install -m 644 xfce-settings/backgrounds/vladstudio.com/1600x1200/* %buildroot/usr/share/backgrounds/xfce/vladstudio.com/1600x1200/
 install -m 644 xfce-settings/backgrounds/vladstudio.com/1680x1050/* %buildroot/usr/share/backgrounds/xfce/vladstudio.com/1680x1050/
-install -m 644 xfce-settings/backgrounds/slinux*.jpg %buildroot/usr/share/backgrounds/xfce/
+install -m 644 xfce-settings/backgrounds/slinux*.{jpg,png} %buildroot/usr/share/backgrounds/xfce/
 
 install -pDm0755 xfce-settings/scripts/zdg-move-templates.sh %buildroot%_sysconfdir/X11/profile.d/zdg-move-templates.sh
 
@@ -369,6 +369,7 @@ subst "s/Theme=.*/Theme=%theme/" /etc/plymouth/plymouthd.conf
 
 %files bootsplash
 %_datadir/plymouth/themes/%theme/*
+%exclude %_datadir/plymouth/themes/%theme/*.in
 
 %files release
 %_sysconfdir/*-release
@@ -411,6 +412,29 @@ subst "s/Theme=.*/Theme=%theme/" /etc/plymouth/plymouthd.conf
 /usr/share/desktop-directories/altlinux-wine.directory
 
 %changelog
+* Wed Mar 27 2013 Mikhail Efremov <sem@altlinux.org> 6.993.0-alt1
+- Set status 'beta'.
+- Fix perms for acc group icons.
+- Add groups/firewall.png from Centaurus.
+- Update backgrounds.
+- Don't package theme.plymouth.in file.
+- plymouth: Replace progress bar with appearing logo.
+- Fix grub text colour.
+- Install *.png backgrounds too.
+- gfxboot: Fix font color.
+- Update wallpaper.png.
+- Set new default background.
+- Add new wallpapers.
+- New slideshow.
+- Replace gtk2-theme-simplicity with gtk3-theme-clearlooks-phenix.
+- Update boot images.
+- Drop parts of old Centaurus branding.
+- Change theme to Clearlooks-Phenix.
+- xfce settings: Suspend on lid close in case of AC too.
+- Fix grub fonts and colours.
+- Fix sysconfig-base installer step icon.
+- xfce settings: Lock screen when going for sleep.
+
 * Thu Feb 28 2013 Mikhail Efremov <sem@altlinux.org> 6.992.0-alt1
 - Added os-release file.
 - Fix design.qss.
