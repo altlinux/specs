@@ -1,5 +1,5 @@
-#define git_date .git20120315
-%define git_date %nil
+%define git_date .git20130327
+#define git_date %nil
 
 %define dbus_version 1.2.12-alt2
 %define libdbus_glib_version 0.76
@@ -15,7 +15,7 @@
 
 Name: NetworkManager
 Version: 0.9.8.0
-Release: alt4%git_date
+Release: alt5%git_date
 License: %gpl2plus
 Group: System/Configuration/Networking
 Summary: Network Link Manager and User Applications
@@ -225,15 +225,23 @@ rm -rf %_var/lib/NetworkManager/timestamps/ ||:
 
 %post
 if /sbin/service messagebus status &>/dev/null; then
-dbus-send --system --type=method_call --dest=org.freedesktop.DBus / org.freedesktop.DBus.ReloadConfig &>/dev/null ||:
-#post_service %name
-	if [ $1 -eq 1 ]; then
-		/sbin/chkconfig --add NetworkManager
+	dbus-send --system --type=method_call --dest=org.freedesktop.DBus / org.freedesktop.DBus.ReloadConfig &>/dev/null ||:
+	#post_service %name
+	SYSTEMCTL=systemctl
+	if sd_booted && "$SYSTEMCTL" --version >/dev/null 2>&1; then
+		"$SYSTEMCTL" daemon-reload ||:
+		if [ "$1" -eq 1 ]; then
+			"$SYSTEMCTL" -q preset NetworkManager.service ||:
+		fi
 	else
-		/sbin/chkconfig NetworkManager resetpriorities ||:
+		if [ "$1" -eq 1 ]; then
+			/sbin/chkconfig --add NetworkManager ||:
+		else
+			/sbin/chkconfig NetworkManager resetpriorities ||:
+		fi
 	fi
 else
-echo "WARNING: NetworkManager requires running messagebus service." >&2
+	echo "WARNING: NetworkManager requires running messagebus service." >&2
 fi
 
 %preun
@@ -322,6 +330,11 @@ fi
 %exclude %_libdir/pppd/%ppp_version/*.la
 
 %changelog
+* Wed Mar 27 2013 Mikhail Efremov <sem@altlinux.org> 0.9.8.0-alt5.git20130327
+- Allow talking to the NetworkManager-l2tp VPN plugin.
+- Use systemctl preset.
+- Upstream git snapshot (nm-0-9-8 branch).
+
 * Thu Mar 07 2013 Mikhail Efremov <sem@altlinux.org> 0.9.8.0-alt4
 - Require openresolv-dnsmasq.
 - dnsmasq-manager: Updated resolvconf-related code.
