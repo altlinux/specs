@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-bind
-Version: 0.9.2
+Version: 0.9.3
 Release: alt1
 
 Source:%name-%version.tar
@@ -17,6 +17,7 @@ Requires: alterator-net-common >= 0.6-alt1
 Requires: alterator-dhcp >= 0.9-alt1 alterator >= 4.24-alt1
 Requires: alterator-l10n >= 2.8-alt2
 Requires: alterator-net-functions >= 1.3.0
+Requires: alterator-service-functions >= 2.0.0
 
 Conflicts: alterator-fbi < 5.25-alt2
 
@@ -48,6 +49,9 @@ alterator module to create and manage dynamic dns
 %_libexecdir/alterator/hooks/dhcp.d/*
 
 %changelog
+* Wed Mar 27 2013 Mikhail Efremov <sem@altlinux.org> 0.9.3-alt1
+- Use alterator-service-functions.
+
 * Wed Jan 30 2013 Mikhail Efremov <sem@altlinux.org> 0.9.2-alt1
 - dhcp-hook-net-domain: Always use DHCPv4.
 - Fix forward zones.
