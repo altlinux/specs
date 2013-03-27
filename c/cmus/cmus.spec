@@ -3,7 +3,7 @@
 
 %define name cmus
 %define version 2.5.0
-%define release alt3
+%define release alt4
 %define debug 0
 
 Name: %name
@@ -48,7 +48,11 @@ BuildRequires(build): libavcodec-devel
 BuildRequires(build): libavformat-devel
 BuildRequires(build): libavutil-devel
 BuildRequires(build): libwavpack-devel
+BuildRequires(build): libcue-devel
 BuildRequires(build): libcdio-devel
+BuildRequires(build): libcddb-devel
+BuildRequires(build): libdiscid-devel
+BuildRequires(build): libopusfile-devel
 
 # Automatically added by buildreq on Sat Jul 28 2007
 BuildRequires: libstdc++-devel
@@ -309,6 +313,23 @@ CMus - маленький и быстрый музыкальный проигр�
 Этот пакет содержит расширение для поддержки FFMPEG (дает возможность
 воспроизведения .wma и других форматов).
 
+%package in-cue
+Summary: CUE plugin for CMus
+Group: Sound
+
+Requires: %name = %version-%release
+
+%description in-cue
+CMus is a small and fast music player using the ncurses library.
+
+This package contains plugin for CUE sheet support.
+
+%description -l ru_RU.UTF-8 in-cue
+CMus - маленький и быстрый музыкальный проигрыватель, использующий
+библиотеку ncurses.
+
+Этот пакет содержит расширение для поддержки CUE-файлов.
+
 
 %package out-alsa
 Summary: ALSA output plugin for CMus
@@ -386,10 +407,15 @@ CXXFLAGS="${CXXFLAGS:--pipe -Wall -O2 -g}" ; export CXXFLAGS
         CONFIG_MP4=y \
         CONFIG_WAVPACK=y \
         CONFIG_FFMPEG=y \
+        CONFIG_CUE=y \
         CONFIG_ALSA=y \
+        CONFIG_PULSE=y \
         CONFIG_ARTS=n \
         CONFIG_AO=y \
         CONFIG_OSS=y \
+        CONFIG_OPUS=y \
+        CONFIG_CDDB=y \
+        CONFIG_DISCID=y \
         CONFIG_CDIO=y
 %make_build
 # make man
@@ -431,6 +457,7 @@ mv cmus-status-display examples
 %_man1dir/cmus-remote.1.*
 %_man7dir/cmus-tutorial.7.*
 
+
 %files in-flac
 %_libexecdir/%name/ip/flac.so
 
@@ -466,8 +493,13 @@ mv cmus-status-display examples
 %files in-ffmpeg
 %_libexecdir/%name/ip/ffmpeg.so
 
+
 %files in-cdio
 %_libexecdir/%name/ip/cdio.so
+
+
+%files in-cue
+%_libexecdir/%name/ip/cue.so
 
 
 %files out-alsa
@@ -483,6 +515,13 @@ mv cmus-status-display examples
 
 
 %changelog
+* Wed Mar 27 2013 Eugene Vlasov <eugvv@altlinux.ru> 2.5.0-alt4
+- Merged my git works for 2.4.2:
+  * Initial CUE support
+  * Added subpackage for CUE plugin
+  * Added cmus-tutorial man page
+- libcddb and libdiscid identification for CDDA
+
 * Sat Jan  5 2013 Terechkov Evgenii <evg@altlinux.org> 2.5.0-alt3
 - Make DEBUG conditional
 
