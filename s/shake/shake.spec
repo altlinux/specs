@@ -1,6 +1,6 @@
 Name: shake
 Version: 0.99
-Release: alt2
+Release: alt2.1
 
 Summary: Userspace filesystem defragmenter
 
@@ -11,6 +11,7 @@ Url: http://vleu.net/shake/
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 Source: http://ftp.twaren.net/Unix/NonGNU/shake/%name-%version.tar.bz2
+Patch: shake-0.99-glibc-2.17.patch
 
 # Automatically added by buildreq on Fri Jan 02 2009
 BuildRequires: ccmake gcc-c++ help2man libattr-devel
@@ -26,6 +27,7 @@ http://mydebianblog.blogspot.com/2008/05/linux_19.html
 
 %prep
 %setup
+%patch -p2
 
 %build
 %cmake
@@ -40,6 +42,9 @@ http://mydebianblog.blogspot.com/2008/05/linux_19.html
 %_man8dir/*
 
 %changelog
+* Wed Mar 27 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.99-alt2.1
+- Fixed build with glibc 2.17
+
 * Wed Nov 25 2009 Vitaly Lipatov <lav@altlinux.ru> 0.99-alt2
 - build with new cmake macro
 
