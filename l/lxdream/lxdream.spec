@@ -1,6 +1,6 @@
 Name: lxdream
 Version: 0.9.1
-Release: alt2.qa4
+Release: alt2.qa5
 
 Summary: Lxdream is an emulator for the Sega Dreamcast system
 License: GPL
@@ -19,7 +19,7 @@ Patch1: %name-0.9.1-alt-DSO.patch
 # Automatically added by buildreq on Tue Oct 28 2008 (-bi)
 BuildRequires: esound-devel libalsa-devel libgtk+2-devel libGL-devel subversion fontconfig-devel glib2-devel
 BuildRequires: libatk-devel libaudiofile-devel libcairo-devel libfreetype-devel libgtk+2-common libgtk+2-common-devel
-BuildRequires: libpango-devel libpng-devel pkg-config xorg-x11-proto-devel zlib-devel libX11-devel perl-podlators
+BuildRequires: libpango-devel libpng-devel pkg-config xorg-proto-devel zlib-devel libX11-devel perl-podlators
 BuildRequires: liblirc-devel
 BuildRequires: libSDL-devel
 
@@ -57,6 +57,9 @@ echo "Comment=Lxdream is an emulator for the Sega Dreamcast" >> %buildroot%_desk
 #_iconsdir/*
 
 %changelog
+* Wed Mar 27 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.1-alt2.qa5
+- Fixed build
+
 * Fri Sep 28 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.1-alt2.qa4
 - Rebuilt with libpng15
 
