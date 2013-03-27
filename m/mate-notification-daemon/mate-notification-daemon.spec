@@ -4,8 +4,8 @@ BuildRequires: /usr/bin/glib-gettextize libgio-devel pkgconfig(dbus-1) pkgconfig
 # END SourceDeps(oneline)
 %define _libexecdir %_prefix/libexec
 Name:           mate-notification-daemon
-Version:        1.5.1
-Release:        alt1_2
+Version:        1.5.2
+Release:        alt1_1
 Summary:        Notification daemon for MATE Desktop
 License:        GPLv2+
 URL:            http://mate-desktop.org
@@ -16,11 +16,12 @@ BuildRequires:  desktop-file-utils
 BuildRequires:  gsettings-desktop-schemas-devel
 BuildRequires:  icon-naming-utils
 BuildRequires:  libcanberra-devel
-BuildRequires:  libmatenotify-devel
+BuildRequires:  libnotify-devel
 BuildRequires:  libmatewnck-devel
 BuildRequires:  mate-common
 BuildRequires:  mate-desktop-devel
 BuildRequires:  mate-doc-utils
+Requires:       libnotify
 Source44: import.info
 
 %description
@@ -65,6 +66,9 @@ desktop-file-install                               \
 
 
 %changelog
+* Wed Mar 27 2013 Igor Vlasenko <viy@altlinux.ru> 1.5.2-alt1_1
+- new fc release
+
 * Tue Mar 05 2013 Igor Vlasenko <viy@altlinux.ru> 1.5.1-alt1_2
 - new fc release
 

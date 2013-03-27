@@ -1,8 +1,8 @@
 Group: Graphical desktop/Other
 %define _libexecdir %_prefix/libexec
 Name:           mate-icon-theme
-Version:        1.5.0
-Release:        alt1_2
+Version:        1.5.1
+Release:        alt1_1
 Summary:        Icon theme for MATE Desktop
 License:        GPLv2+ and LGPLv2+
 URL:            http://mate-desktop.org
@@ -14,7 +14,6 @@ BuildRequires:  mate-common
 BuildRequires:  icon-naming-utils
 
 Provides: mate-icon-theme = %{version}-%{release}
-Obsoletes: mate-icon-theme-legacy < %{version}-%{release}
 Source44: import.info
 
 %description
@@ -32,23 +31,27 @@ Development files for mate-icon-theme
 NOCONFIGURE=1 ./autogen.sh
 
 %build
-%configure  --enable-icon-mapping \
-            --disable-static
+%configure  --enable-icon-mapping
+
 make %{?_smp_mflags} V=1
 
 
 %install
-make install DESTDIR=%{buildroot}
+make DESTDIR=%{buildroot} install
 
 %files
 %doc AUTHORS COPYING README
-%{_datadir}/icons/mate/
+%{_datadir}/icons/mate
+%{_datadir}/icons/menta
 
 %files devel
 %{_datadir}/pkgconfig/mate-icon-theme.pc
 
 
 %changelog
+* Wed Mar 27 2013 Igor Vlasenko <viy@altlinux.ru> 1.5.1-alt1_1
+- new fc release
+
 * Tue Mar 05 2013 Igor Vlasenko <viy@altlinux.ru> 1.5.0-alt1_2
 - new fc release
 

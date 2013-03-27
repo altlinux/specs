@@ -6,8 +6,8 @@ BuildRequires: /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/update
 %define _libexecdir %_prefix/libexec
 %define fedora 19
 Name:           mate-control-center
-Version:        1.5.4
-Release:        alt1_1
+Version:        1.5.5
+Release:        alt1_3
 Summary:        MATE Desktop control-center
 License:        LGPLv2+ and GPLv2+
 URL:            http://mate-desktop.org
@@ -37,6 +37,7 @@ BuildRequires: mate-window-manager-devel
 BuildRequires: nss-devel
 BuildRequires: libpolkit-devel
 BuildRequires: libunique-devel
+
 
 
 # sample code block for handling distributions which cant provide
@@ -91,8 +92,7 @@ MATE Control Center configures system settings such as themes, keyboards shortcu
 
 %build
 NOCONFIGURE=1 ./autogen.sh
-%configure \
-           --disable-static          \
+%configure --disable-static          \
            --disable-schemas-compile \
            --disable-update-mimedb   \
            --disable-scrollkeeper
@@ -106,11 +106,9 @@ make DESTDIR=%{buildroot} install
 find %{buildroot} -name '*.la' -exec rm -rf {} ';'
 find %{buildroot} -name '*.a' -exec rm -rf {} ';'
 
-desktop-file-install                                                       \
-        --remove-category="MATE"                                           \
-        --add-category="X-Mate"                                            \
-        --delete-original                                                  \
-        --dir=%{buildroot}%{_datadir}/applications                         \
+desktop-file-install									\
+	--delete-original								\
+	--dir=%{buildroot}%{_datadir}/applications					\
 %{buildroot}%{_datadir}/applications/*.desktop
 
 # delete mime cache
@@ -122,22 +120,9 @@ rm %{buildroot}%{_datadir}/applications/mimeinfo.cache
 %files -f %{name}.lang
 %doc AUTHORS COPYING README
 %config %{_sysconfdir}/xdg/menus/matecc.menu
-%{_bindir}/mate-about-me
-%{_bindir}/mate-appearance-properties
-%{_bindir}/mate-at-properties
-%{_bindir}/mate-control-center
-%{_bindir}/mate-default-applications-properties
-%{_bindir}/mate-display-properties
-%{_bindir}/mate-font-viewer
-%{_bindir}/mate-keybinding-properties
-%{_bindir}/mate-keyboard-properties
-%{_bindir}/mate-mouse-properties
-%{_bindir}/mate-network-properties
-%{_bindir}/mate-thumbnail-font
-%{_bindir}/mate-typing-monitor
-%{_bindir}/mate-window-properties
+%{_bindir}/mate-*
 %{_libdir}/libmate-window-settings.so.*
-%{_libdir}/window-manager-settings/
+%{_libdir}/window-manager-settings
 %{_sbindir}/mate-display-properties-install-systemwide
 %{_datadir}/applications/*.desktop
 %{_datadir}/desktop-directories/matecc.directory
@@ -157,18 +142,21 @@ rm %{buildroot}%{_datadir}/applications/mimeinfo.cache
 %{_libdir}/libslab.so.*
 
 %files devel
-%{_includedir}/mate-window-settings-2.0
+%{_includedir}/mate-window-settings-2.0/
 %{_libdir}/pkgconfig/mate-window-settings-2.0.pc
 %{_libdir}/libmate-window-settings.so
 %{_datadir}/pkgconfig/mate-default-applications.pc
 %{_datadir}/pkgconfig/mate-keybindings.pc
 
 %files -n libslab-devel
-%{_includedir}/libslab/
+%{_includedir}/libslab
 %{_libdir}/libslab.so
 %{_libdir}/pkgconfig/libslab.pc
 
 %changelog
+* Wed Mar 27 2013 Igor Vlasenko <viy@altlinux.ru> 1:1.5.5-alt1_3
+- new fc release
+
 * Wed Feb 20 2013 Igor Vlasenko <viy@altlinux.ru> 1:1.5.4-alt1_1
 - new fc release
 

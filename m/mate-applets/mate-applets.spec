@@ -1,13 +1,14 @@
 Group: Graphical desktop/MATE
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-python
-BuildRequires: /usr/bin/gdk-pixbuf-csource /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/jw /usr/bin/xsltproc libICE-devel libSM-devel libX11-devel libapm-devel libcpufreq-devel libgio-devel pkgconfig(NetworkManager) pkgconfig(dbus-1) pkgconfig(gio-2.0) pkgconfig(gio-unix-2.0) pkgconfig(glib-2.0) pkgconfig(gobject-2.0) pkgconfig(gtk+-2.0) pkgconfig(hal) pkgconfig(libgtop-2.0) pkgconfig(libnotify) pkgconfig(mate-settings-daemon) pkgconfig(mucharmap-2) python-devel python-module-pygobject-devel xorg-kbproto-devel
+BuildRequires: /usr/bin/gdk-pixbuf-csource /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/jw /usr/bin/xsltproc libICE-devel libSM-devel libX11-devel libapm-devel libcpufreq-devel libgio-devel pkgconfig(NetworkManager) pkgconfig(dbus-1) pkgconfig(gio-2.0) pkgconfig(gio-unix-2.0) pkgconfig(glib-2.0) pkgconfig(gobject-2.0) pkgconfig(gtk+-2.0) pkgconfig(hal) pkgconfig(libgtop-2.0) pkgconfig(mate-settings-daemon) pkgconfig(mucharmap-2) python-devel python-module-pygobject-devel xorg-kbproto-devel
 # END SourceDeps(oneline)
 BuildRequires: xvfb-run
 %define _libexecdir %_prefix/libexec
+%define fedora 19
 Name:           mate-applets
 Version:        1.5.2
-Release:        alt1_1
+Release:        alt1_2
 Summary:        MATE Desktop panel applets
 License:        GPLv2+ and LGPLv2+
 URL:            http://mate-desktop.org
@@ -20,7 +21,13 @@ BuildRequires: libmatekeyring-devel
 BuildRequires: libmatenotify-devel
 BuildRequires: libmateweather-devel
 BuildRequires: libmatewnck-devel
+BuildRequires: libnotify-devel
+#NetworkManager-gtk-devel is renamed libnm-gtk-devel on F18
+%if 0%{?fedora} < 18
+BuildRequires: NetworkManager-gtk-devel
+%else
 BuildRequires: libnm-gtk-devel
+%endif
 BuildRequires: libxml2-devel
 BuildRequires: mate-common
 BuildRequires: mate-control-center-devel
@@ -38,11 +45,11 @@ BuildRequires: rarian-compat
 BuildRequires: librarian-devel
 BuildRequires: libstartup-notification-devel
 Buildrequires: libupower-devel
+Requires:      libnotify
 Source44: import.info
 Patch33: mate-applets-1.5.1-alt-geyes_schema.patch
 Patch34: gnome-applets-2.6.0-alt-install_makefile.patch
 Patch35: gnome-applets-2.9.90-alt-modemlights.patch
-
 %description
 MATE Desktop panel applets
 
@@ -144,6 +151,9 @@ install -pD -m 644 %SOURCE0 %buildroot%_sysconfdir/polkit-1/localauthority/50-lo
 %_sysconfdir/polkit-1/localauthority/50-local.d/01-cpufreq.pkla
 
 %changelog
+* Wed Mar 27 2013 Igor Vlasenko <viy@altlinux.ru> 1.5.2-alt1_2
+- new fc release
+
 * Wed Mar 13 2013 Igor Vlasenko <viy@altlinux.ru> 1.5.2-alt1_1
 - new fc release
 

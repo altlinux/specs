@@ -1,18 +1,15 @@
+Group: System/Libraries
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/asn1Parser /usr/bin/gcov /usr/bin/genhtml /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/gtkdocize /usr/bin/lcov /usr/bin/pkg-config /usr/bin/valgrind libgio-devel libpam0-devel pkgconfig(gio-2.0) pkgconfig(glib-2.0) pkgconfig(gmodule-no-export-2.0) pkgconfig(gobject-2.0) pkgconfig(gthread-2.0) pkgconfig(gtk+-2.0) pkgconfig(gtk+-3.0)
+BuildRequires: /usr/bin/asn1Parser /usr/bin/gcov /usr/bin/genhtml /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/gtkdocize /usr/bin/lcov /usr/bin/pkg-config /usr/bin/valgrind libgio-devel libpam0-devel pkgconfig(gio-2.0) pkgconfig(glib-2.0) pkgconfig(gmodule-no-export-2.0) pkgconfig(gobject-2.0) pkgconfig(gthread-2.0) pkgconfig(gtk+-2.0) pkgconfig(gtk+-3.0) valgrind-devel
 # END SourceDeps(oneline)
 %define _libexecdir %_prefix/libexec
 Summary:        Framework for managing passwords and other secrets
 Name:           mate-keyring
-Version:        1.5.0
-Release:        alt1_4
+Version:        1.5.1
+Release:        alt1_1
 License:        GPLv2+ and LGPLv2+
-Group:          System/Libraries
 URL:            http://mate-desktop.org
 Source0:        http://pub.mate-desktop.org/releases/1.5/%{name}-%{version}.tar.xz
-
-#Latest fixes from upstream
-Patch0: mk_commits_rollup.patch
 
 BuildRequires: libdbus-devel
 BuildRequires: gtk2-devel
@@ -23,7 +20,6 @@ BuildRequires: libtasn1-devel
 BuildRequires: libtasn1-utils
 BuildRequires: mate-common
 BuildRequires: pam-devel
-BuildRequires: valgrind-devel
 Source44: import.info
 Patch33: mate-keyring-1.3.0-alt-fix-pc.patch
 Patch34: mate-keyring-1.5.0-alt-linkage.patch
@@ -64,7 +60,6 @@ Shared library for MATE Desktop pam auth
 %prep
 #%setup -q -n mate-keyring-%{version}
 %setup -q
-%patch0 -p1
 %patch33 -p1
 %patch34 -p1
 %patch35 -p1
@@ -75,10 +70,8 @@ NOCONFIGURE=1 ./autogen.sh
 %configure \
    --disable-static                    \
    --with-gtk=2.0                      \
-   --with-gnu-ld                       \
    --disable-schemas-compile           \
    --enable-gcov                       \
-   --enable-valgrind                   \
    --libexecdir=/usr/libexec           \
    --with-pam-dir=%_pam_modules_dir \
    --with-root-certs=/usr/share/ca-certificates
@@ -141,6 +134,9 @@ chmod 0755 %{buildroot}%{_bindir}/mate-keyring-daemon
 %{_libdir}/pkgconfig/*
 
 %changelog
+* Wed Mar 27 2013 Igor Vlasenko <viy@altlinux.ru> 1.5.1-alt1_1
+- new fc release
+
 * Wed Feb 20 2013 Igor Vlasenko <viy@altlinux.ru> 1.5.0-alt1_4
 - new fc release
 

@@ -5,8 +5,8 @@ BuildRequires: /usr/bin/gdk-pixbuf-csource /usr/bin/glib-gettextize /usr/bin/mat
 BuildRequires: libcanberra-gtk2-devel
 %define _libexecdir %_prefix/libexec
 Name:           mate-window-manager
-Version:        1.5.4
-Release:        alt2_1
+Version:        1.5.5
+Release:        alt1_1
 Summary:        MATE Desktop window manager
 License:        LGPLv2+ and GPLv2+
 URL:            http://mate-desktop.org
@@ -29,17 +29,16 @@ BuildRequires: libstartup-notification-devel
 # http://bugzilla.redhat.com/873342
 Provides: firstboot(windowmanager) = mate-window-manager
 Source44: import.info
-Patch33: mate-window-manager-keybindings.patch
 # http://bugzilla.gnome.org/show_bug.cgi?id=558723
-Patch34: stop-spamming-xsession-errors.patch
+Patch33: stop-spamming-xsession-errors.patch
 # from fedora. do we need it?
-Patch35: mate-window-manager-fresh-tooltips.patch
+Patch34: mate-window-manager-fresh-tooltips.patch
 # https://bugzilla.gnome.org/show_bug.cgi?id=598995
-Patch36: Dont-focus-ancestor-window-on-a-different-workspac.patch
+Patch35: Dont-focus-ancestor-window-on-a-different-workspac.patch
 # https://bugzilla.gnome.org/show_bug.cgi?id=559816
-Patch37: metacity-2.28-empty-keybindings.patch
+Patch36: metacity-2.28-empty-keybindings.patch
 # https://bugzilla.gnome.org/show_bug.cgi?id=604319
-Patch38: metacity-2.28-xioerror-unknown-display.patch
+Patch37: metacity-2.28-xioerror-unknown-display.patch
 Requires: libmarco-private = %{version}-%{release}
 
 %description
@@ -68,14 +67,12 @@ Internal library for MATE Window Manager.
 %patch35 -p1
 %patch36 -p1
 %patch37 -p1
-%patch38 -p1
 NOCONFIGURE=1 ./autogen.sh
 
 %build
 %configure --disable-static           \
            --disable-scrollkeeper     \
            --disable-schemas-compile  \
-           --with-gnu-ld              \
            --with-gtk=2.0             \
            --with-x
 
@@ -88,8 +85,6 @@ make install DESTDIR=%{buildroot}
 find %{buildroot} -name '*.la' -exec rm -vf {} ';'
 
 desktop-file-install                                \
-        --remove-category="MATE"                    \
-        --add-category="X-Mate"                     \
         --delete-original                           \
         --dir=%{buildroot}%{_datadir}/applications  \
 %{buildroot}%{_datadir}/applications/marco.desktop
@@ -102,17 +97,17 @@ desktop-file-install                                \
 %{_bindir}/marco
 %{_bindir}/marco-message
 %{_datadir}/applications/marco.desktop
-%{_datadir}/themes/ClearlooksRe/
-%{_datadir}/themes/Dopple-Left/
-%{_datadir}/themes/Dopple/
-%{_datadir}/themes/DustBlue/
-%{_datadir}/themes/Spidey-Left/
-%{_datadir}/themes/Spidey/
-%{_datadir}/themes/Splint-Left/
-%{_datadir}/themes/Splint/
-%{_datadir}/themes/WinMe/
-%{_datadir}/themes/eOS/
-%{_datadir}/marco/
+%{_datadir}/themes/ClearlooksRe
+%{_datadir}/themes/Dopple-Left
+%{_datadir}/themes/Dopple
+%{_datadir}/themes/DustBlue
+%{_datadir}/themes/Spidey-Left
+%{_datadir}/themes/Spidey
+%{_datadir}/themes/Splint-Left
+%{_datadir}/themes/Splint
+%{_datadir}/themes/WinMe
+%{_datadir}/themes/eOS
+%{_datadir}/marco
 %{_datadir}/mate-control-center/keybindings/50-marco*.xml
 %{_datadir}/mate/help/creating-marco-themes/C/creating-marco-themes.xml
 %{_datadir}/mate/wm-properties
@@ -138,6 +133,9 @@ desktop-file-install                                \
 
 
 %changelog
+* Wed Mar 27 2013 Igor Vlasenko <viy@altlinux.ru> 1.5.5-alt1_1
+- new fc release
+
 * Fri Mar 15 2013 Igor Vlasenko <viy@altlinux.ru> 1.5.4-alt2_1
 - bugfix (closes: 28487)
 

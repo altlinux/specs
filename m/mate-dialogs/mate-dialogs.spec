@@ -1,22 +1,22 @@
 Group: File tools
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/glib-gettextize /usr/bin/perl pkgconfig(glib-2.0) pkgconfig(gtk+-3.0) pkgconfig(x11)
+BuildRequires: /usr/bin/glib-gettextize /usr/bin/perl pkgconfig(glib-2.0) pkgconfig(gtk+-2.0) pkgconfig(gtk+-3.0) pkgconfig(x11)
 # END SourceDeps(oneline)
 %define _libexecdir %_prefix/libexec
 Name:           mate-dialogs
-Version:        1.5.0
-Release:        alt2_3
+Version:        1.5.1
+Release:        alt1_1
 Summary:        Displays dialog boxes from shell scripts
 License:        LGPLv2+ and GPLv2+
 URL:            http://mate-desktop.org
 Source0:        http://pub.mate-desktop.org/releases/1.5/%{name}-%{version}.tar.xz
 
-BuildRequires:  pkgconfig(gtk+)
-BuildRequires:  pkgconfig(gtk+-2.0)
+BuildRequires:  gtk2-devel
 BuildRequires:  mate-common
 BuildRequires:  mate-doc-utils
 BuildRequires:  rarian-compat
 BuildRequires:	libmatenotify-devel
+BuildRequires:  libnotify-devel
 Source44: import.info
 
 %description
@@ -29,7 +29,7 @@ Displays dialog boxes from shell scripts.
 %build
 NOCONFIGURE=1 ./autogen.sh
 %configure --disable-static \
-           --enable-libmatenotify
+           --disable-scrollkeeper \
 
 make %{?_smp_mflags} V=1
 
@@ -51,6 +51,9 @@ make install DESTDIR=%{buildroot}
 %exclude %_bindir/gdialog
 
 %changelog
+* Wed Mar 27 2013 Igor Vlasenko <viy@altlinux.ru> 1.5.1-alt1_1
+- new fc release
+
 * Tue Mar 05 2013 Igor Vlasenko <viy@altlinux.ru> 1.5.0-alt2_3
 - new fc release
 

@@ -5,7 +5,7 @@ BuildRequires: /usr/bin/glib-genmarshal /usr/bin/glib-gettextize gcc-c++ libICE-
 BuildRequires: libXext-devel
 %define _libexecdir %_prefix/libexec
 Name:           mate-settings-daemon
-Version:        1.5.5
+Version:        1.5.6
 Release:        alt1_1
 Summary:        MATE Desktop settings daemon
 License:        GPLv2+
@@ -14,6 +14,7 @@ Source0:        http://pub.mate-desktop.org/releases/1.5/%{name}-%{version}.tar.
 Requires:       mate-icon-theme
 
 BuildRequires:  libclutter-gst-devel
+BuildRequires:  libdconf-devel
 BuildRequires:  libdbus-glib-devel
 BuildRequires:  gtk2-devel
 BuildRequires:  gsettings-desktop-schemas-devel
@@ -23,6 +24,7 @@ BuildRequires:  icon-naming-utils
 BuildRequires:  libSM-devel
 BuildRequires:  libmatekbd-devel
 BuildRequires:  libmatenotify-devel
+BuildRequires:  libnotify-devel
 BuildRequires:  libxklavier-devel
 BuildRequires:  mate-common
 BuildRequires:  mate-doc-utils
@@ -92,6 +94,9 @@ find ${RPM_BUILD_ROOT} -type f -name "*.la" -exec rm -f {} ';'
 %{_libdir}/pkgconfig/mate-settings-daemon.pc
 
 %changelog
+* Wed Mar 27 2013 Igor Vlasenko <viy@altlinux.ru> 1.5.6-alt1_1
+- new fc release
+
 * Sun Feb 17 2013 Igor Vlasenko <viy@altlinux.ru> 1.5.5-alt1_1
 - new fc release
 

@@ -1,58 +1,55 @@
+Group: Graphical desktop/Other
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/glib-gettextize /usr/bin/pkg-config pkgconfig(gio-2.0) pkgconfig(gtk+-2.0)
+BuildRequires: /usr/bin/glib-gettextize /usr/bin/pkg-config pkgconfig(gio-2.0) pkgconfig(glib-2.0) pkgconfig(gtk+-2.0)
 # END SourceDeps(oneline)
 %define _libexecdir %_prefix/libexec
-%define oldname caja-image-converter
 Name:           mate-file-manager-image-converter
 Version:        1.5.0
-Release:        alt1_0
-Summary:        Caja extension to mass resize images
-
-Group:          Graphical desktop/Other
+Release:        alt1_3
+Summary:        MATE file manager image converter
 License:        GPLv2+
-URL:		http://pub.mate-desktop.org
+URL:            http://www.mate-desktop.org
 Source0:        http://pub.mate-desktop.org/releases/1.5/%{name}-%{version}.tar.xz
 
-BuildRequires:  libglade2-devel >= 2.4.0
-BuildRequires:	glib2-devel >= 2.15.0
-BuildRequires:	mate-file-manager-devel >= 1.1.0
-BuildRequires:	gettext
-BuildRequires:	perl(XML/Parser.pm)
 BuildRequires:  mate-common
-BuildRequires:  intltool
-Requires:	/usr/bin/convert
- 
+BuildRequires:  mate-file-manager-devel
+BuildRequires:  mate-doc-utils
+
+Requires:       mate-file-manager-extensions
+Requires:		ImageMagick
+Source44: import.info
 
 %description
-Adds a "Resize Images..." menu item to the context menu of all images. This
-opens a dialog where you set the desired image size and file name. A click
-on "Resize" finally resizes the image(s) using ImageMagick's convert tool.
-
+Caja-Image-Converter extension allows you to resize/rotate images from Caja.
 
 %prep
-%setup -q -n %{name}-%{version}
-
+%setup -q
 %build
-NOCONFIGURE=1 ./autogen.sh
-%configure \
-	--disable-static
 
-make %{?_smp_mflags}
+NOCONFIGURE=1 ./autogen.sh
+%configure                  \
+           --disable-static \
+           --with-gnu-ld
+
+make %{?_smp_mflags} V=1
 
 
 %install
-make install DESTDIR=$RPM_BUILD_ROOT
-%find_lang %{oldname}
-find $RPM_BUILD_ROOT -name \*.la -exec rm {} \;
+make DESTDIR=%{buildroot} install
+%find_lang %{name} --all-name
+find %{buildroot} -name '*.la' -exec rm -rf {} ';'
+find %{buildroot} -name '*.a' -exec rm -rf {} ';'
 
 
-%files -f %{oldname}.lang
-%doc AUTHORS COPYING
-%{_datadir}/%{oldname}/
-%{_libdir}/caja/extensions-2.0/*.so
-
+%files -f %{name}.lang
+%doc AUTHORS COPYING README
+%{_libdir}/caja/extensions-2.0/libcaja-image-converter.so
+%{_datadir}/caja-image-converter
 
 %changelog
+* Wed Mar 27 2013 Igor Vlasenko <viy@altlinux.ru> 1.5.0-alt1_3
+- new fc release
+
 * Sun Feb 03 2013 Igor Vlasenko <viy@altlinux.ru> 1.5.0-alt1_0
 - new version
 

@@ -1,70 +1,66 @@
+Group: File tools
 # BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-python
 BuildRequires: /usr/bin/glib-gettextize
 # END SourceDeps(oneline)
 %define _libexecdir %_prefix/libexec
-%define oldname mozo
-%{!?python_sitelib: %define python_sitelib %(%{__python} -c "from distutils.sysconfig import get_python_lib; print get_python_lib()")}
-
 Name:           mate-menu-editor
 Version:        1.5.0
-Release:        alt2_0
-Summary:        Menu editor for the MATE desktop
-
-Group:          File tools
+Release:        alt2_2
+Summary:        MATE Desktop menu editor
 License:        LGPLv2+
-URL:            http://pub.mate-desktop.org
+URL:            http://mate-desktop.org
 Source0:        http://pub.mate-desktop.org/releases/1.5/%{name}-%{version}.tar.xz
 
-Patch1:         mate-menu-editor-move-and_rename_directorys.patch
-
-BuildArch:      noarch
-
-BuildRequires:  python-devel
-BuildRequires:  python-module-pygtk-devel
-BuildRequires:  mate-menus-devel
-BuildRequires:  intltool
+BuildRequires:  desktop-file-utils
 BuildRequires:  mate-common
-Requires:       pygtk2
-Requires:       mate-menus
+BuildRequires:  mate-menus-devel
+BuildRequires: python-module-pygobject python-module-pygobject-devel
+BuildRequires:  python-devel
 
-Provides:		mozo
-Patch33: alacarte-0.13.2-alt-xfce.patch
+Requires:  mate-desktop
+
+BuildArch:  noarch
+Source44: import.info
 
 %description
-mozo is a graphical menu editor that lets you edit, add, and delete
-menu entries. It follows the freedesktop.org menu specification and
-should work with any desktop environment that uses this specification.
+MATE Desktop menu editor
 
 %prep
 %setup -q
-%patch33 -p1
-
-%build
 NOCONFIGURE=1 ./autogen.sh
 
-%configure
 
-make %{?_smp_mflags}
+%build
+%configure
+make %{?_smp_mflags} V=1
 
 %install
-make install DESTDIR=$RPM_BUILD_ROOT
+make install DESTDIR=%{buildroot}
+find %{buildroot} -name '*.la' -exec rm -rf {} ';'
+find %{buildroot} -name '*.a' -exec rm -rf {} ';'
+%find_lang %{name} --all-name
 
 
-%find_lang mozo
+desktop-file-install                                  \
+        --dir=%{buildroot}%{_datadir}/applications    \
+%{buildroot}%{_datadir}/applications/mozo.desktop
 
-%files -f mozo.lang
-%{python_sitelibdir_noarch}/Mozo
+%check
+desktop-file-validate %{buildroot}%{_datadir}/applications/mozo.desktop
+
+%files -f %{name}.lang
+%doc AUTHORS COPYING README
 %{_bindir}/mozo
+%{_datadir}/icons/hicolor/*x*/apps/mozo.png
+%{_datadir}/mozo
 %{_datadir}/applications/mozo.desktop
-%{_datadir}/mozo/mozo.ui
-%{_datadir}/icons/hicolor/16x16/apps/mozo.png
-%{_datadir}/icons/hicolor/22x22/apps/mozo.png
-%{_datadir}/icons/hicolor/24x24/apps/mozo.png
-%{_datadir}/icons/hicolor/32x32/apps/mozo.png
-%{_datadir}/icons/hicolor/48x48/apps/mozo.png
-%{_datadir}/icons/hicolor/256x256/apps/mozo.png
+%{python_sitelibdir_noarch}/Mozo
 
 %changelog
+* Wed Mar 27 2013 Igor Vlasenko <viy@altlinux.ru> 1.5.0-alt2_2
+- new fc release
+
 * Sun Feb 17 2013 Igor Vlasenko <viy@altlinux.ru> 1.5.0-alt2_0
 - dropped obsolete dependencies on mate 1.4.x stuff
 
