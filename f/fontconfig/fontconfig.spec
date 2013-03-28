@@ -1,6 +1,6 @@
 Name: fontconfig
 Version: 2.10.91
-Release: alt5
+Release: alt6
 
 Summary: Font configuration and customization library and utilities
 Group: System/Configuration/Other
@@ -111,6 +111,9 @@ find -L %_sysconfdir/fonts/conf.d -type l -delete
 %docdir/%name-devel*
 
 %changelog
+* Thu Mar 28 2013 Sergey V Turchin <zerg@altlinux.org> 2.10.91-alt6
+- add upstream fix against broken sort order with FcFontSort()
+
 * Wed Mar 27 2013 Sergey V Turchin <zerg@altlinux.org> 2.10.91-alt5
 - add upstream fix against broken 10-autohint.conf and 10-unhinted.conf (ALT#28620)
 
