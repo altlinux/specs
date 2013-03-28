@@ -28,7 +28,7 @@ License:        GPLv2+
 Group:          Development/Tools
 #AutoReqProv:    on
 Summary:        A Script to Build SUSE Linux RPMs
-Version:        2012.03.06
+Version:        2013.03.28
 Release:        alt1
 
 Packager: Denis Pynkin <dans@altlinux.org>
@@ -125,11 +125,6 @@ for generating delta rpm packages.
 
 %install
 make DESTDIR=$RPM_BUILD_ROOT install
-%if 0%{?sles_version} < 12
- # use sle variation with IA64 compat package generation
- install -m 0644 baselibs_global-sle.conf \
-                $RPM_BUILD_ROOT/usr/lib/build/baselibs_global.conf
-%endif
 cd $RPM_BUILD_ROOT/usr/lib/build/configs/
 %if 0%{?suse_version}
 %if 0%{?sles_version}
@@ -172,6 +167,9 @@ test -e default.conf
 %endif
 
 %changelog
+* Thu Mar 28 2013 Denis Pynkin <dans@altlinux.org> 2013.03.28-alt1
+- New version
+
 * Mon Apr 02 2012 Denis Pynkin <dans@altlinux.org> 2012.03.06-alt1
 - New version
 
