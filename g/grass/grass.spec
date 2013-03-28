@@ -1,6 +1,6 @@
 Name: grass
 Version: 6.4.2
-Release: alt1
+Release: alt1.1
 
 %def_with mysql
 %def_with postgres
@@ -34,7 +34,8 @@ BuildRequires: libpq-devel postgresql-devel libMySQL-devel libsqlite3-devel
 BuildRequires: libqt4-core libXmu-devel swig libfreetype-devel readline-devel libGLU-devel
 BuildRequires: proj-devel libgdal-devel libproj-nad proj
 BuildRequires: tcl-devel tk-devel
-BuildRequires: libICE-devel, libSM-devel, libX11-devel, libXau-devel, libXaw-devel, libXrandr-devel, libXdmcp-devel, libXext-devel, libXfixes-devel, libXfont-devel, libXft-devel, libXi-devel, libXmu-devel, libXpm-devel, libXrender-devel, libXres-devel, libXScrnSaver-devel, libXinerama-devel, libXt-devel, libXtst-devel, libXxf86dga-devel, libXcomposite-devel, libXxf86vm-devel, libdmx-devel, libfontenc-devel, libGLU-devel, libXdamage-devel, libxkbfile-devel, xcursorgen, xorg-font-utils, libXvMC-devel, libXcursor-devel, libXevie-devel, libXv-devel, xorg-xtrans-devel, xorg-util-macros, xorg-sgml-doctools, xorg-compat-devel
+BuildRequires: libICE-devel, libSM-devel, libX11-devel, libXau-devel, libXaw-devel, libXrandr-devel, libXdmcp-devel, libXext-devel, libXfixes-devel, libXfont-devel, libXft-devel, libXi-devel, libXmu-devel, libXpm-devel, libXrender-devel, libXres-devel, libXScrnSaver-devel, libXinerama-devel, libXt-devel, libXtst-devel, libXxf86dga-devel, libXcomposite-devel, libXxf86vm-devel, libdmx-devel, libfontenc-devel, libGLU-devel, libXdamage-devel, libxkbfile-devel, xcursorgen, xorg-font-utils, libXvMC-devel, libXcursor-devel, libXevie-devel, libXv-devel, xorg-xtrans-devel, xorg-util-macros, xorg-sgml-doctools
+BuildRequires: gccmakedep, imake, lndir, makedepend, rman, xorg-cf-files
 
 %description
 GRASS (Geographic Resources Analysis Support System) is an
@@ -163,6 +164,9 @@ rm -f  %_libdir/%grassdir/locks
 /usr/share/doc/%grassdir
 
 %changelog
+* Thu Mar 28 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 6.4.2-alt1.1
+- build fixed
+
 * Fri Feb 15 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 6.4.2-alt1
 - 6.4.2
 - build fixed
