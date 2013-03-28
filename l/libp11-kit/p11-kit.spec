@@ -1,8 +1,12 @@
 %define _name p11-kit
 %define _libexecdir %_prefix/libexec
 
+%def_enable trust_module
+%define trust_paths %_datadir/ca-certificates/ca-bundle.crt
+#%%define trust_paths %_sysconfdir/pki/ca-trust/source:%_datadir/pki/ca-trust-source
+
 Name: lib%_name
-Version: 0.16.4
+Version: 0.17.4
 Release: alt1
 
 Summary: Library for loading and sharing PKCS#11 modules
@@ -12,6 +16,8 @@ Url: http://p11-glue.freedesktop.org/p11-kit.html
 
 Source: http://p11-glue.freedesktop.org/releases/%_name-%version.tar.gz
 Patch: %name-0.16.3-alt-lfs.patch
+
+Requires: ca-certificates
 
 BuildRequires: libtasn1-devel
 
@@ -63,7 +69,13 @@ This package contains development documentation for %_name library.
 %build
 %autoreconf
 %configure --disable-static \
-	--with-system-anchors=%_datadir/pki/ca-trust-source:%_sysconfdir/pki/ca-trust/source
+	%{subst_enable trust_module} \
+%if_enabled trust_module
+	--with-libtasn1 \
+	--with-trust-paths=%trust_paths
+%endif
+
+
 %make_build
 
 %install
@@ -91,6 +103,7 @@ EOF
 %doc p11-kit/pkcs11.conf.example
 %exclude %_sysconfdir/pkcs11/pkcs11.conf.example
 
+%if_enabled trust_module
 %files trust
 %_libdir/pkcs11/p11-kit-trust.so
 %_datadir/p11-kit/modules/p11-kit-trust.module
@@ -98,6 +111,7 @@ EOF
 %_altdir/%name
 
 %exclude %_libdir/pkcs11/p11-kit-trust.la
+%endif
 
 %files devel
 %_includedir/%_name-1
@@ -108,6 +122,9 @@ EOF
 %_datadir/gtk-doc/html/%_name
 
 %changelog
+* Sat Mar 23 2013 Yuri N. Sedunov <aris@altlinux.org> 0.17.4-alt1
+- 0.17.4 (unstable)
+
 * Wed Mar 13 2013 Yuri N. Sedunov <aris@altlinux.org> 0.16.4-alt1
 - 0.16.4
 - used %_datadir/pki/ca-trust-source and %_sysconfdir/pki/ca-trust/source
