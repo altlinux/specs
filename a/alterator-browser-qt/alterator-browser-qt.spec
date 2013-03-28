@@ -7,7 +7,7 @@
 %define alterator_cfg %_sysconfdir/alterator
 
 Name: alterator-browser-qt
-Version: 2.18.6
+Version: 2.18.7
 Release: alt1
 
 Source:%name-%version.tar
@@ -82,6 +82,9 @@ ln -s %alterator_cfg/design-browser-qt %buildroot/%_datadir/%name/design/current
 
 
 %changelog
+* Thu Mar 28 2013 Sergey V Turchin <zerg at altlinux dot org> 2.18.7-alt1
+- fix reading desktop-files
+
 * Wed Mar 27 2013 Sergey V Turchin <zerg at altlinux dot org> 2.18.6-alt1
 - return current item if no selected items in checktree
 
