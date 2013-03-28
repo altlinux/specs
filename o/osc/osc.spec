@@ -18,7 +18,7 @@
 %define altlinux 1
 
 Name:           osc
-Version:        0.134.1
+Version:        0.139.1
 Release:        alt1
 License:        GPLv2+
 Summary:        openSUSE Build Service Commander
@@ -150,6 +150,9 @@ rm -rf %{buildroot}
 %endif
 
 %changelog
+* Thu Mar 28 2013 Denis Pynkin <dans@altlinux.org> 0.139.1-alt1
+- New version
+
 * Mon Apr 02 2012 Denis Pynkin <dans@altlinux.org> 0.134.1-alt1
 - New version
 
