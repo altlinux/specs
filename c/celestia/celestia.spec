@@ -1,6 +1,6 @@
 Name: celestia
 Version: 1.6.1
-Release: alt2.3
+Release: alt2.4
 License: GPL
 Group: Education
 Summary: A real-time visual space simulation
@@ -15,7 +15,7 @@ Patch5: celestia-1.6.1-alt-glibc-2.16.patch
 BuildRequires: fontconfig freetype2 gcc-c++ kdelibs-devel libtqt-devel
 BuildRequires: libjpeg-devel libpng-devel libqt3-devel
 BuildRequires: libqt3-settings libstdc++-devel xml-utils 
-BuildRequires: libICE-devel, libSM-devel, libX11-devel, libXau-devel, libXaw-devel, libXrandr-devel, libXdmcp-devel, libXext-devel, libXfixes-devel, libXfont-devel, libXft-devel, libXi-devel, libXmu-devel, libXpm-devel, libXrender-devel, libXres-devel, libXScrnSaver-devel, libXinerama-devel, libXt-devel, libXtst-devel, libXxf86dga-devel, libXcomposite-devel, libXxf86vm-devel, libdmx-devel, libfontenc-devel, libGLU-devel, libXdamage-devel, libxkbfile-devel, xcursorgen, xorg-font-utils, libXvMC-devel, libXcursor-devel, libXevie-devel, libXv-devel, xorg-xtrans-devel, xorg-util-macros, xorg-sgml-doctools, xorg-compat-devel
+BuildRequires: libICE-devel, libSM-devel, libX11-devel, libXau-devel, libXaw-devel, libXrandr-devel, libXdmcp-devel, libXext-devel, libXfixes-devel, libXfont-devel, libXft-devel, libXi-devel, libXmu-devel, libXpm-devel, libXrender-devel, libXres-devel, libXScrnSaver-devel, libXinerama-devel, libXt-devel, libXtst-devel, libXxf86dga-devel, libXcomposite-devel, libXxf86vm-devel, libdmx-devel, libfontenc-devel, libGLU-devel, libXdamage-devel, libxkbfile-devel, xcursorgen, xorg-font-utils, libXvMC-devel, libXcursor-devel, libXevie-devel, libXv-devel, xorg-xtrans-devel, xorg-util-macros, xorg-sgml-doctools
 BuildRequires: zlib-devel liblua5-devel libtheora-devel
 
 BuildRequires: libGConf2-devel GConf libgtk+2-devel glib-devel libgnomeui-devel libgtkglext-devel
@@ -170,6 +170,9 @@ gconftool-2 --makefile-uninstall-rule %{_sysconfdir}/gconf/schemas/celestia.sche
 /etc/alternatives/packages.d/%name-kde
 
 %changelog
+* Thu Mar 28 2013 Andrey Cherepanov <cas@altlinux.org> 1.6.1-alt2.4
+- Fix build with new xorg version
+
 * Tue Nov 13 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.6.1-alt2.3
 - Fixed build with glibc 2.16
 
