@@ -1,23 +1,23 @@
+Group: System/Libraries
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/glib-gettextize /usr/bin/gtkdocize /usr/bin/mate-keyring-daemon /usr/bin/pkg-config libgcrypt-devel
+BuildRequires: /usr/bin/glib-gettextize /usr/bin/gtkdocize /usr/bin/mate-keyring-daemon /usr/bin/pkg-config
 # END SourceDeps(oneline)
 %define _libexecdir %_prefix/libexec
 Summary:	Framework for managing passwords and other secrets
 Name:		libmatekeyring
-Version:	1.5.0
-Release:	alt1_2
+Version:	1.5.1
+Release:	alt1_1
 License:	GPLv2+ and LGPLv2+
-Group:		System/Libraries
 Source:		http://pub.mate-desktop.org/releases/1.5/%{name}-%{version}.tar.xz
 URL:		http://mate-desktop.org
 
-BuildRequires:	pkgconfig(glib-2.0)
-BuildRequires:	pkgconfig(dbus-1)
-BuildRequires:	intltool
-BuildRequires:	mate-common
-BuildRequires:	pkgconfig(gtk-doc)
+BuildRequires:	libdbus-devel
+BuildRequires:	glib2-devel
+BuildRequires:  gtk-doc
+BuildRequires:	libgcrypt-devel
+BuildRequires:  mate-common
+BuildRequires:  mate-doc-utils
 Source44: import.info
-
 
 %description
 libmatekeyring is a program that keep password and other secrets for
@@ -40,19 +40,13 @@ header files needed to develop applications that use libmate-keyring.
 NOCONFIGURE=1 ./autogen.sh
 
 %build
-%configure --disable-gtk-doc
-	
-sed -i 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' libtool
-sed -i 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' libtool
-
-# avoid unneeded direct dependencies
-sed -i -e 's/ -shared / -Wl,-O1,--as-needed\0 /g' libtool
-
-make %{?_smp_mflags}
+%configure --enable-gtk-doc-html  
+ 
+make %{?_smp_mflags} V=1
 
 %install
-make install DESTDIR=$RPM_BUILD_ROOT
-rm $RPM_BUILD_ROOT%{_libdir}/*.la
+make DESTDIR=%{buildroot} install 
+rm %{buildroot}%{_libdir}/*.la
 
 %find_lang %{name}
 
@@ -65,9 +59,12 @@ rm $RPM_BUILD_ROOT%{_libdir}/*.la
 %{_libdir}/lib*.so
 %{_libdir}/pkgconfig/*
 %{_includedir}/*
-%doc %{_datadir}/gtk-doc/html/*
+%{_datadir}/gtk-doc/html/*
 
 %changelog
+* Wed Mar 27 2013 Igor Vlasenko <viy@altlinux.ru> 1.5.1-alt1_1
+- new fc release
+
 * Tue Mar 05 2013 Igor Vlasenko <viy@altlinux.ru> 1.5.0-alt1_2
 - new fc release
 

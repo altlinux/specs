@@ -4,8 +4,8 @@ BuildRequires: libgio-devel pkgconfig(gio-2.0) pkgconfig(glib-2.0) pkgconfig(gmo
 # END SourceDeps(oneline)
 %define _libexecdir %_prefix/libexec
 Name:		mate-calc
-Version:	1.5.1
-Release:	alt1_3
+Version:	1.5.2
+Release:	alt1_1
 Summary:	MATE Desktop calculator
 License:	GPLv2+
 URL:		http://mate-desktop.org
@@ -40,8 +40,6 @@ make install DESTDIR=%{buildroot}
 
 
 desktop-file-install									\
-	--remove-category="MATE"							\
-	--add-category="X-Mate"								\
 	--delete-original								\
 	--dir=%{buildroot}%{_datadir}/applications					\
 %{buildroot}%{_datadir}/applications/*.desktop
@@ -56,9 +54,12 @@ desktop-file-install									\
 %{_bindir}/mate-calculator
 %{_datadir}/applications/mate-calc.desktop
 %{_datadir}/glib-2.0/schemas/org.mate.calc.gschema.xml
-%{_datadir}/mate-calc/
+%{_datadir}/mate-calc
 
 %changelog
+* Wed Mar 27 2013 Igor Vlasenko <viy@altlinux.ru> 1.5.2-alt1_1
+- new fc release
+
 * Tue Mar 05 2013 Igor Vlasenko <viy@altlinux.ru> 1.5.1-alt1_3
 - new fc release
 

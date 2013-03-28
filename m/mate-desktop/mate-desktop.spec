@@ -5,7 +5,7 @@ BuildRequires: /usr/bin/glib-gettextize /usr/bin/gtkdocize libgio-devel pkgconfi
 %define _libexecdir %_prefix/libexec
 Summary:	Shared code for mate-panel, mate-session, mate-file-manager, etc
 Name:		mate-desktop
-Version:	1.5.7
+Version:	1.5.8
 Release:	alt1_1
 URL:		http://mate-desktop.org
 Source0:	http://pub.mate-desktop.org/releases/1.5/%{name}-%{version}.tar.xz
@@ -80,8 +80,6 @@ find %{buildroot} -name '*.a' -exec rm -f {} ';'
 
 
 desktop-file-install \
-	--remove-category="MATE"					\
-	--add-category="X-Mate"						\
 	--delete-original						\
 	--dir=%{buildroot}%{_datadir}/applications			\
 %{buildroot}%{_datadir}/applications/mate-about.desktop
@@ -117,6 +115,9 @@ mkdir -p %buildroot%{_datadir}/mate-about
 
 
 %changelog
+* Wed Mar 27 2013 Igor Vlasenko <viy@altlinux.ru> 1.5.8-alt1_1
+- new fc release
+
 * Tue Mar 05 2013 Igor Vlasenko <viy@altlinux.ru> 1.5.7-alt1_1
 - new fc release
 

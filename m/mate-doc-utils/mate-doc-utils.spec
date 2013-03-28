@@ -7,8 +7,7 @@ BuildRequires: python-devel
 Name:           mate-doc-utils
 Summary:        MATE Desktop doc utils
 Version:        1.5.0
-Release:        alt1_3
-
+Release:        alt1_4
 License:        GPLv2+ and LGPLv2+
 URL:            http://mate-desktop.org
 Source0:        http://pub.mate-desktop.org/releases/1.5/%{name}-%{version}.tar.xz
@@ -60,7 +59,6 @@ NOCONFIGURE=1 ./autogen.sh
 %configure --disable-scrollkeeper
 make %{?_smp_mflags}
 
-
 %install
 make install DESTDIR=%{buildroot}
 %find_lang %{name}
@@ -88,6 +86,9 @@ rm -rf $RPM_BUILD_ROOT/%{_datadir}/mate-doc-utils/mate-debian.sh
 %{_datadir}/pkgconfig/mate-doc-utils.pc
 
 %changelog
+* Wed Mar 27 2013 Igor Vlasenko <viy@altlinux.ru> 1.5.0-alt1_4
+- new fc release
+
 * Tue Mar 05 2013 Igor Vlasenko <viy@altlinux.ru> 1.5.0-alt1_3
 - new fc release
 
