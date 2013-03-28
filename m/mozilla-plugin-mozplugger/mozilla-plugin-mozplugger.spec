@@ -1,14 +1,14 @@
 %define rname mozplugger
 %define name mozilla-plugin-%rname
-%define version 1.13.0
+%define version 2.1.3
 %define release alt1
 
 Summary: A generic mozilla plug-in
 Summary(ru_RU.KOI8-R): Универсальный плагин к mozilla
 Name: %name
 Version: %version
-Release: %release.1
-Source0: %rname-%version.tar.gz
+Release: %release
+Source0: %rname-%version.tar
 Url: http://mozplugger.mozdev.org
 License: GPL
 Group: Networking/WWW
@@ -16,6 +16,8 @@ Requires: browser-plugins-npapi, m4
 Obsoletes: %rname
 
 BuildRequires: libX11-devel libXt-devel 
+
+Patch: %rname-alt-install.patch
 
 # Added by hand
 BuildRequires(pre): browser-plugins-npapi-devel
@@ -33,17 +35,14 @@ MozPlugger - это универсальный плагин для браузеров семейства mozilla,
 
 %prep
 %setup -q -n %rname-%version
-#%patch0 -p0
-#%patch1 -p1
-#ugly hack for proper installation
-%__subst 's,\/etc,\$\(sysconfdir\),g' Makefile
+%patch -p2
 
 %build
-%make_build linux
+%configure
+%make_build
 
 %install
-%makeinstall
-%__install -pD -m755 %rname.so %buildroot%browser_plugins_path/%rname.so
+%makeinstall_std PLUGINDIRS=%browser_plugins_path
 
 %files
 %_sysconfdir/mozpluggerrc
@@ -53,6 +52,9 @@ MozPlugger - это универсальный плагин для браузеров семейства mozilla,
 %doc README ChangeLog COPYING
 
 %changelog
+* Thu Mar 28 2013 L.A. Kostis <lakostis@altlinux.ru> 2.1.3-alt1
+- 2.1.3.
+
 * Tue Sep 29 2009 Alexey Gladkov <legion@altlinux.ru> 1.13.0-alt1.1
 - NMU: Rebuilt with browser-plugins-npapi.
 
