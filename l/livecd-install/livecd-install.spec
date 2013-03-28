@@ -1,5 +1,5 @@
 Name: livecd-install
-Version: 0.8.3
+Version: 0.8.4
 Release: alt1
 
 Summary: Permanently install Live system
@@ -57,6 +57,9 @@ install -m 0755 zdg-user-dirs-install.sh %buildroot%_x11sysconfdir/profile.d/
 %_x11sysconfdir/profile.d/*
 
 %changelog
+* Thu Mar 28 2013 Mikhail Efremov <sem@altlinux.org> 0.8.4-alt1
+- Fix firsttime flag-file path.
+
 * Mon Mar 04 2013 Michael Shigorin <mike@altlinux.org> 0.8.3-alt1
 - Fixed plymouth setup script to be more careful
   ("splash" FP was ruining GRUB_WALLPAPER path).
