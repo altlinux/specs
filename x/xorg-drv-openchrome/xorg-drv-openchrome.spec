@@ -1,6 +1,6 @@
 Name: xorg-drv-openchrome
-Version: 0.3.1
-Release: alt3
+Version: 0.3.2
+Release: alt1
 Epoch: 1
 Summary: VIA openchrome graphics driver
 License: MIT/X11
@@ -58,6 +58,9 @@ is available at dri.sourceforge.net.
 %_man4dir/*
 
 %changelog
+* Thu Mar 28 2013 Valery Inozemtsev <shrek@altlinux.ru> 1:0.3.2-alt1
+- 0.3.2
+
 * Mon Mar 18 2013 Valery Inozemtsev <shrek@altlinux.ru> 1:0.3.1-alt3
 - removed miInitializeBackingStore (closes: #28685)
 
