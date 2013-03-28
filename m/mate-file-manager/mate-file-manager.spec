@@ -4,14 +4,12 @@ BuildRequires: /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/gtkdoc
 %define _libexecdir %_prefix/libexec
 Name:       mate-file-manager
 Summary:    File manager for MATE
-Version:    1.5.4
+Version:    1.5.5
 Release:    alt1_1
 License:    GPLv2+ and LGPLv2+
 Group:      Graphical desktop/Other
 URL:        http://mate-desktop.org
 Source0:    http://pub.mate-desktop.org/releases/1.5/%{name}-%{version}.tar.xz
-#Fix high cpu usage by gvfs and caja segfault
-Patch0:     upstream_patch.patch
 
 Requires:   gamin
 Requires:   filesystem
@@ -46,7 +44,7 @@ Requires:       %{name}-extensions%{?_isa} = %{version}-%{release}
 Source44: import.info
 Patch33: mate-file-manager-1.2.2-alt-fix-linkage.patch
 Patch34: nautilus-2.22.1-umountfstab.patch
-Patch35: mate-file-manager-1.5.3-alt-desktop-labels-po-ru.patch
+Patch35: mate-file-manager-1.5.5-alt-desktop-labels-po-ru.patch
 
 %description
 Caja (mate-file-manager) is the file manager and graphical shell
@@ -77,7 +75,6 @@ for developing caja extensions.
 
 %prep
 %setup -q
-%patch0 -p1
 %patch33 -p1
 %patch35 -p1
 NOCONFIGURE=1 ./autogen.sh
@@ -148,6 +145,9 @@ $RPM_BUILD_ROOT%{_datadir}/applications/*.desktop
 
 
 %changelog
+* Thu Mar 28 2013 Igor Vlasenko <viy@altlinux.ru> 1.5.5-alt1_1
+- new fc release
+
 * Tue Mar 05 2013 Igor Vlasenko <viy@altlinux.ru> 1.5.4-alt1_1
 - new fc release
 

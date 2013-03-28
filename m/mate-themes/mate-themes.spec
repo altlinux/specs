@@ -1,11 +1,11 @@
+Group: Graphical desktop/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/glib-gettextize pkgconfig(gdk-pixbuf-2.0) pkgconfig(gtk+-2.0)
 # END SourceDeps(oneline)
-Group: Graphical desktop/Other
 %define _libexecdir %_prefix/libexec
 Name:           mate-themes
 Version:        1.5.0
-Release:        alt1_1
+Release:        alt1_2
 Summary:        MATE Desktop themes
 License:        GPLv2+
 URL:            http://mate-desktop.org
@@ -98,6 +98,9 @@ fi
 %{_datadir}/themes/TraditionalOkTest
 
 %changelog
+* Thu Mar 28 2013 Igor Vlasenko <viy@altlinux.ru> 1.5.0-alt1_2
+- converted for ALT Linux by srpmconvert tools
+
 * Fri Nov 16 2012 Igor Vlasenko <viy@altlinux.ru> 1.5.0-alt1_1
 - use F19 import base
 
