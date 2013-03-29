@@ -59,7 +59,7 @@ BuildRequires: jpackage-compat
 
 Name:           jetty5
 Version:        5.1.14
-Release:        alt2_6jpp5
+Release:        alt3_6jpp5
 Epoch:          0
 Summary:        Webserver and Servlet Container
 Group:          Development/Java
@@ -79,9 +79,9 @@ Patch4:         jetty-CERT438616-CERT237888-CERT21284.patch
 
 BuildRequires: jpackage-utils >= 0:1.6
 # build only
-BuildRequires: ant-junit
+BuildRequires: ant-junit3
 BuildRequires: jakarta-commons-collections
-BuildRequires: junit
+BuildRequires: junit3
 BuildRequires: xdoclet
 BuildRequires: xjavadoc
 # main
@@ -337,7 +337,7 @@ jgroups \
 log4j \
 )
 %endif
-export OPT_JAR_LIST="junit ant/ant-junit"
+export OPT_JAR_LIST="junit3 ant/ant-junit3"
 ant -Dant.build.javac.source=1.4 -Dant.build.javac.target=1.4 \
 -Dxdoclet.home=%{_javadir}/xdoclet -Dbuild.sysclasspath=first prepare jars webapps javadoc \
 %if %with extra
@@ -497,8 +497,8 @@ popd
 
 # poms
 %add_to_maven_depmap jetty5 org.mortbay.jetty %{version} JPP/jetty5 jetty5
-mkdir -p $RPM_BUILD_ROOT%{_datadir}/maven2/poms
-cp -p %{SOURCE5} $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP.jetty5.jetty5.pom
+mkdir -p $RPM_BUILD_ROOT%{_mavenpomdir}
+cp -p %{SOURCE5} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.jetty5.jetty5.pom
 
 %if %{gcj_support}
 %{_bindir}/aot-compile-rpm \
@@ -582,7 +582,7 @@ fi
 %doc %{_docdir}/%{name}-%{version}/LICENSE.TXT
 %doc %{_docdir}/%{name}-%{version}/VERSION.TXT
 %attr(0755,root,root) %{_initrddir}/%{name}
-%{_datadir}/maven2/poms/*
+%{_mavenpomdir}/*
 %{_mavendepmapfragdir}/*
 %if %{gcj_support}
 %dir %{_libdir}/gcj/%{name}
@@ -644,6 +644,9 @@ fi
 %endif
 
 %changelog
+* Fri Mar 29 2013 Igor Vlasenko <viy@altlinux.ru> 0:5.1.14-alt3_6jpp5
+- explicitly use junit3
+
 * Mon Dec 22 2008 Igor Vlasenko <viy@altlinux.ru> 0:5.1.14-alt2_6jpp5
 - removed xml-commons-apis (java5 included)
 
