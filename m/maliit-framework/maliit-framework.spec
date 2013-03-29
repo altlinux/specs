@@ -1,16 +1,13 @@
 
-%define xinputconfdir %_sysconfdir/X11/xinit/xinput.d
+
 %define libver 1.0
-%define pluginver 0.94
 %define libsover 0
-
-#add_findprov_lib_path %_qt4dir/plugins/inputmethods
-#add_findprov_lib_path %_libdir/maliit-framework-tests/plugins
-#add_findprov_lib_path %_libdir/maliit/plugins-%libver/factories
-
 Name: maliit-framework
-Version: 0.94.0
+Version: 0.94.2
 Release: alt1
+%define libmaliit libmaliit%libver-%libsover
+%define libmaliit_glib libmaliit-glib%libver-%libsover
+%define xinputconfdir %_sysconfdir/X11/xinit/xinput.d
 
 Group: System/Libraries
 Summary: Maliit Input Method Framework
@@ -31,6 +28,8 @@ BuildRequires: pkgconfig(QtCore)
 BuildRequires: pkgconfig(QtDeclarative)
 BuildRequires: pkgconfig(gtk+-2.0)
 BuildRequires: pkgconfig(gtk+-3.0)
+BuildRequires: rpm-build-python python-devel
+BuildRequires: rpm-build-python3 python3-devel
 
 %description
 Core server and libraries for the Maliit Input Methods Framework
@@ -39,15 +38,16 @@ Core server and libraries for the Maliit Input Methods Framework
 Summary: Maliit Input Method Framework Development Package
 Group: System/Libraries
 #Requires: %name = %version-%release
+Requires: libmaliit-glib-gir
 %description devel
 This package contains the files necessary to develop
 input method plugins for Maliit, and applications using the libmaliit
 extension library.
 
-%package -n libmaliit%libver-%libsover
+%package -n %libmaliit
 Summary: Maliit Framework Input Method library
 Group: System/Libraries
-%description -n libmaliit%libver-%libsover
+%description -n %libmaliit
 Maliit toolkit support extension library for Qt applications
 
 %package -n libmaliit-devel
@@ -57,10 +57,10 @@ Group: System/Libraries
 Development files for the Maliit toolkit support extension library
 for Qt applications
 
-%package -n libmaliit-glib%libver-%libsover
+%package -n %libmaliit_glib
 Summary: Maliit Framework Input Method library
 Group: System/Libraries
-%description -n libmaliit-glib%libver-%libsover
+%description -n %libmaliit_glib
 Maliit toolkit support extension library for Gtk+ applications
 
 %package -n libmaliit-glib-devel
@@ -69,6 +69,14 @@ Group: System/Libraries
 %description -n libmaliit-glib-devel
 Development files for the Maliit toolkit support extension library
 for Gtk+ applications
+
+%package -n libmaliit-glib-gir
+Summary: GObject introspection data for the Maliit Framework
+Group: System/Libraries
+Requires: %libmaliit_glib = %EVR
+Conflicts: libmaliit-glib-devel <= 0.94.0-alt1
+%description -n libmaliit-glib-gir
+GObject introspection data for the Maliit Framework Input Method library
 
 %package doc
 Summary: Maliit Framework Documentation
@@ -101,6 +109,17 @@ Requires: %name = %version-%release
 This package contains examples applications for
 the Maliit input method framework
 
+%package settings
+Summary: Maliit Framework settings utitlity
+Group: System/Configuration/Other
+Requires: libmaliit-glib-gir
+# broken rpm-build-python3, bug #28762
+Requires: python3-module-pygobject3
+Conflicts: maliit-framework-examples <= 0.94.0-alt1
+%description settings
+This package contains settings utitlity for
+the Maliit input method framework
+
 %package -n maliit-inputcontext-qt4
 Summary: Maliit Input Context Plugin for Qt 4
 Group: Accessibility
@@ -124,16 +143,11 @@ Requires: %name = %version-%release
 
 %prep
 %setup -n %name-%version
-find -type f -name \*.pro | \
-while read f
-do
-    echo "QMAKE_CFLAGS+=%optflags" >>$f
-    echo "QMAKE_CXXFLAGS+=%optflags" >>$f
-done
 
 %build
-qmake-qt4 -r \
+%qmake_qt4 -r \
     MALIIT_VERSION=%version \
+    MALIIT_SERVER_ARGUMENTS="-software -bypass-wm-hint" \
     PREFIX=%prefix \
     BINDIR=%_bindir \
     LIBDIR=%_libdir \
@@ -149,9 +163,6 @@ qmake-qt4 -r \
 
 %install
 %make install INSTALL="install -p" INSTALL_ROOT=%buildroot
-
-# Make dir for plugins
-mkdir -p %buildroot/%_libdir/maliit/plugins-%pluginver/
 
 # install xinput config file
 mkdir -p %buildroot/%xinputconfdir
@@ -191,6 +202,13 @@ install -m 0644 README LICENSE.LGPL NEWS %buildroot/%_defaultdocdir/maliit-frame
 %config %xinputconfdir/*
 %_datadir/dbus-1/services/org.maliit.server.service
 
+%files settings
+%_bindir/maliit-exampleapp-settings-python3.py
+
+%files examples
+%_bindir/maliit-example*
+%exclude %_bindir/maliit-exampleapp-settings-python3.py
+
 %files devel
 %dir %_includedir/maliit/
 %dir %_includedir/maliit/framework/
@@ -211,7 +229,7 @@ install -m 0644 README LICENSE.LGPL NEWS %buildroot/%_defaultdocdir/maliit-frame
 %_libdir/pkgconfig/maliit-server.pc
 %_datadir/qt4/mkspecs/features/maliit-*.prf
 
-%files -n libmaliit%libver-%libsover
+%files -n %libmaliit
 %_libdir/libmaliit.so.*
 %_libdir/libmaliit-connection.so.*
 %_libdir/libmaliit-plugins.so.*
@@ -225,11 +243,13 @@ install -m 0644 README LICENSE.LGPL NEWS %buildroot/%_defaultdocdir/maliit-frame
 %_libdir/pkgconfig/maliit.pc
 %_libdir/pkgconfig/maliit-settings.pc
 
-%files -n libmaliit-glib%libver-%libsover
+%files -n %libmaliit_glib
 %_libdir/libmaliit-glib.so.*
 
-%files -n libmaliit-glib-devel
+%files -n libmaliit-glib-gir
 %_typelibdir/Maliit-*.typelib
+
+%files -n libmaliit-glib-devel
 %_girdir/Maliit-*.gir
 %_libdir/libmaliit-glib.so
 %_includedir/maliit/maliit-glib/
@@ -245,9 +265,6 @@ install -m 0644 README LICENSE.LGPL NEWS %buildroot/%_defaultdocdir/maliit-frame
 #%files tests
 #%_libdir/maliit-framework-tests/
 
-%files examples
-%_bindir/maliit-example*
-
 %files -n maliit-inputcontext-qt4
 %_qt4dir/plugins/inputmethods/*.so
 
@@ -258,6 +275,9 @@ install -m 0644 README LICENSE.LGPL NEWS %buildroot/%_defaultdocdir/maliit-frame
 %_libdir/gtk-3.0/3.0.0/immodules/libim-maliit.so*
 
 %changelog
+* Fri Mar 29 2013 Sergey V Turchin <zerg@altlinux.org> 0.94.2-alt1
+- new version
+
 * Thu Jan 17 2013 Sergey V Turchin <zerg@altlinux.org> 0.94.0-alt1
 - new version
 
