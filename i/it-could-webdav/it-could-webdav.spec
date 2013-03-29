@@ -36,7 +36,7 @@ BuildRequires: jpackage-compat
 
 Name:           it-could-webdav
 Version:        0.4
-Release:        alt1_3jpp5
+Release:        alt2_3jpp5
 Epoch:          0
 Summary:        WebDAV Servlet
 License:        ASL 2.0
@@ -46,9 +46,9 @@ Source0:        http://could.it/main/a-simple-approach-to-webdav.data/webdav-0.4
 Source1:        it-could-webdav-LICENSE.TXT
 Requires: servlet_2_4_api
 BuildRequires: ant >= 0:1.6
-BuildRequires: ant-junit >= 0:1.6
+BuildRequires: ant-junit3 >= 0:1.6
 BuildRequires: jpackage-utils >= 0:1.6
-BuildRequires: junit
+BuildRequires: junit3
 BuildRequires: servlet_2_4_api
 %if %{gcj_support}
 BuildRequires: java-gcj-compat-devel
@@ -75,7 +75,7 @@ cp -p %{SOURCE1} LICENSE.TXT
 %build
 export CLASSPATH=$(build-classpath servlet_2_4_api)
 export OPT_JAR_LIST=:
-%{ant}
+%{ant} -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 
 
 %install
 
@@ -109,6 +109,9 @@ ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Fri Mar 29 2013 Igor Vlasenko <viy@altlinux.ru> 0:0.4-alt2_3jpp5
+- explicitly use junit3
+
 * Fri Mar 27 2009 Igor Vlasenko <viy@altlinux.ru> 0:0.4-alt1_3jpp5
 - fixed repocop warnings
 
