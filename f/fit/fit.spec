@@ -37,7 +37,7 @@ BuildRequires: jpackage-compat
 Summary:        Framework for Integrated Test
 Name:           fit
 Version:        1.1
-Release:        alt2_2jpp5
+Release:        alt3_2jpp5
 Epoch:          0
 License:        GPL
 URL:            http://fit.c2.com/
@@ -47,8 +47,8 @@ Source1:        http://mirrors.ibiblio.org/pub/mirrors/maven2/com/c2/fit/fit/1.1
 Patch0:         fit-1.1-build_xml.patch
 BuildRequires: jpackage-utils >= 0:1.7.3
 BuildRequires: ant >= 0:1.6.5
-BuildRequires: ant-junit
-BuildRequires: junit
+BuildRequires: ant-junit3
+BuildRequires: junit3
 %if %{gcj_support}
 BuildRequires: java-gcj-compat-devel
 Requires(post): java-gcj-compat
@@ -97,7 +97,7 @@ done
 
 %build
 export LANG=en_US.ISO8859-1
-export CLASSPATH=$(build-classpath junit)
+export CLASSPATH=$(build-classpath junit3)
 pushd source/imp/java
 ant  -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Dbuild.sysclasspath=first release
 popd
@@ -113,9 +113,9 @@ install -m 0644 source/imp/java/output/jars/%{name}.jar \
 %add_to_maven_depmap com.c2.fit %{name} %{version} JPP %{name}
 
 # poms
-install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/maven2/poms
+install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
 install -m 644 %{SOURCE1} \
-    $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-%{name}.pom
+    $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 
 # javadoc
 mkdir -p $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
@@ -135,7 +135,7 @@ cp -pr source/imp/java/doc/* $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}
 %doc license.txt
 %{_javadir}/*.jar
 %{_mavendepmapfragdir}/*
-%{_datadir}/maven2/poms/*
+%{_mavenpomdir}/*
 %if %{gcj_support}
 %dir %{_libdir}/gcj/%{name}
 %{_libdir}/gcj/%{name}/%{name}-%{version}.jar.*
@@ -149,6 +149,9 @@ cp -pr source/imp/java/doc/* $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}
 %doc %{_docdir}/%{name}-%{version}
 
 %changelog
+* Fri Mar 29 2013 Igor Vlasenko <viy@altlinux.ru> 0:1.1-alt3_2jpp5
+- explicitly use junit3
+
 * Fri Mar 16 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.1-alt2_2jpp5
 - fixed build with java 7
 
