@@ -35,7 +35,7 @@ BuildRequires: jpackage-compat
 
 Name:		ws-scout
 Version:	1.0
-Release:	alt7_5jpp5
+Release:	alt8_5jpp5
 Epoch:		0
 Summary:	Apache Scout Implementation of JSR 93 (JAXR)
 License:	Apache Software License 2.0
@@ -50,7 +50,7 @@ Source3:        pom-maven2jpp-mapdeps.xsl
 Source4:        %{name}-%{version}-jpp-depmap.xml
 Patch0:         ws-scout-1.0-jaxr-api-project_xml.patch
 BuildRequires: jpackage-utils >= 0:1.6
-BuildRequires: junit
+BuildRequires: junit3
 BuildRequires: maven1 >= 1.0.2
 BuildRequires: maven1-plugins-base >= 1.0.2
 BuildRequires: maven1-plugin-multiproject >= 1.0.2
@@ -180,6 +180,9 @@ fi
 %ghost %doc %{_javadocdir}/%{name}
 
 %changelog
+* Fri Mar 29 2013 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt8_5jpp5
+- explicitly use junit3
+
 * Wed Sep 12 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt7_5jpp5
 - build with saxon6-scripts
 
