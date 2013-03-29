@@ -40,7 +40,7 @@ BuildRequires: jpackage-compat
 
 Name:           args4j10
 Version:        1.0
-Release:        alt9_1jpp5
+Release:        alt10_1jpp5
 Epoch:          0
 Summary:        Commandline parser
 
@@ -54,8 +54,8 @@ Patch0:         args4j10-project.patch
 BuildArch:      noarch
 BuildRequires: jpackage-utils >= 0:1.7.4
 BuildRequires: ant >= 0:1.6.5
-BuildRequires: ant-junit
-BuildRequires: junit
+BuildRequires: ant-junit3
+BuildRequires: junit3
 %if %{with_maven}
 BuildRequires: maven1 >= 0:1.1
 BuildRequires: maven1-plugins-base
@@ -121,9 +121,9 @@ maven -Dmaven.compile.target=1.5 -Dmaven.compile.source=1.5 -Dmaven.javadoc.sour
 %else
 mkdir lib
 pushd lib
-ln -sf $(build-classpath junit) junit-3.8.1.jar
+ln -sf $(build-classpath junit3) junit3-3.8.1.jar
 popd
-export OPT_JAR_LIST="ant/ant-junit junit"
+export OPT_JAR_LIST="ant/ant-junit3 junit"
 export CLASSPATH=
 ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Dbuild.sysclasspath=only jar javadoc test
 %endif
@@ -133,8 +133,8 @@ install -dm 755 $RPM_BUILD_ROOT%{_javadir}
 install -m 644 target/args4j-1.0-RC.jar \
   $RPM_BUILD_ROOT%{_javadir}/%{name}-%{version}.jar
 ln -s %{name}-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
-install -dm 755 $RPM_BUILD_ROOT%{_datadir}/maven2/poms
-install -m 644 %{SOURCE1} $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-%{name}.pom
+install -dm 755 $RPM_BUILD_ROOT%{_mavenpomdir}
+install -m 644 %{SOURCE1} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 %add_to_maven_depmap org.kohsuke.args4j %{name} %{version} JPP %{name}
 #
 install -dm 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
@@ -160,7 +160,7 @@ fi
 %files
 %{_docdir}/%{name}-%{version}/LICENSE.txt
 %{_javadir}/*.jar
-%{_datadir}/maven2
+%{_mavenpomdir}/*
 %{_mavendepmapfragdir}
 # hack; explicitly added docdir if not owned
 %doc %dir %{_docdir}/%{name}-%{version}
@@ -170,6 +170,9 @@ fi
 %ghost %doc %{_javadocdir}/%{name}
 
 %changelog
+* Fri Mar 29 2013 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt10_1jpp5
+- explicitly use junit3
+
 * Fri Mar 16 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt9_1jpp5
 - fixed build with java 7
 
