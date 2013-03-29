@@ -41,7 +41,7 @@ BuildRequires: jpackage-compat
 Summary:        Java Source Code Formatter Beautifier Pretty Printer
 Name:           jalopy
 Version:        1.0
-Release:        alt4_0.b11.1jpp5
+Release:        alt5_0.b11.1jpp5
 Epoch:          0
 Group:          Development/Java
 License:        BSD
@@ -64,7 +64,7 @@ BuildRequires: ant-trax
 BuildRequires: jakarta-oro
 BuildRequires: log4j
 BuildRequires: jdom
-BuildRequires: junit
+BuildRequires: junit3
 BuildRequires: gnu-getopt
 BuildRequires: saxon6
 #BuildRequires:  jedit >= 0:4.1, jedit-messageview >= 0:0.1.0
@@ -168,7 +168,7 @@ perl -pi -e \
 %build
 
 # core jars
-export CLASSPATH=$(build-classpath ant oro log4j jdom junit gnu.getopt saxon6 \
+export CLASSPATH=$(build-classpath ant oro log4j jdom junit3 gnu.getopt saxon6 \
 docbook-xsl-saxon)
 
 # jedit plugin jars
@@ -330,6 +330,9 @@ ln -s %{name}-%{version} %{_javadocdir}/%{name}
 
 
 %changelog
+* Fri Mar 29 2013 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt5_0.b11.1jpp5
+- explicitly use junit3
+
 * Sat Sep 15 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt4_0.b11.1jpp5
 - fixed build with new saxon
 
