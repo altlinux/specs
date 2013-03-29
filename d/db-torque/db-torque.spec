@@ -44,7 +44,7 @@ BuildRequires: jpackage-compat
 
 Name:           db-torque
 Version:        3.3
-Release:        alt5_3jpp5
+Release:        alt6_3jpp5
 Epoch:          0
 Summary:        Torque persistence layer
 
@@ -80,7 +80,7 @@ Patch2:         db-torque-3.3-generator-project_xml.patch
 BuildArch:      noarch
 %endif
 BuildRequires: jpackage-utils >= 0:1.7.5
-BuildRequires: junit
+BuildRequires: junit3
 %if %{with_maven}
 BuildRequires: maven1 >= 0:1.1
 BuildRequires: maven1-plugins-base
@@ -430,18 +430,18 @@ ln -s %{name}-templates.jar $RPM_BUILD_ROOT%{_javadir}/%{name}-gen-templates.jar
 ln -s %{name}-village-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}-village.jar
 ln -s %{name}-village.jar $RPM_BUILD_ROOT%{_javadir}/village.jar
 
-install -dm 755 $RPM_BUILD_ROOT%{_datadir}/maven2/poms
-install -m 644 torque-common-3.3/pom.xml $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-%{name}-common.pom
+install -dm 755 $RPM_BUILD_ROOT%{_mavenpomdir}
+install -m 644 torque-common-3.3/pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}-common.pom
 %add_to_maven_depmap org.apache.torque torque %{version} JPP %{name}-common
-install -m 644 torque-generator-3.3/pom.xml $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-%{name}-generator.pom
+install -m 644 torque-generator-3.3/pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}-generator.pom
 %add_to_maven_depmap org.apache.torque torque-generator %{version} JPP %{name}-generator
-install -m 644 torque-maven2-plugin-3.3/pom.xml $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-%{name}-maven2-plugin.pom
+install -m 644 torque-maven2-plugin-3.3/pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}-maven2-plugin.pom
 %add_to_maven_depmap org.apache.torque torque-maven-plugin %{version} JPP %{name}-maven2-plugin
-install -m 644 torque-runtime-3.3/pom.xml $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-%{name}-runtime.pom
+install -m 644 torque-runtime-3.3/pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}-runtime.pom
 %add_to_maven_depmap org.apache.torque torque-runtime %{version} JPP %{name}-runtime
-install -m 644 torque-templates-3.3/pom.xml $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-%{name}-templates.pom
+install -m 644 torque-templates-3.3/pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}-templates.pom
 %add_to_maven_depmap org.apache.torque torque-templates %{version} JPP %{name}-templates
-install -m 644 torque-village-3.3/pom.xml $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-village.pom
+install -m 644 torque-village-3.3/pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-village.pom
 %add_to_maven_depmap org.apache.torque village %{version} JPP village
 
 install -d -m 755 ${RPM_BUILD_ROOT}%{_datadir}/maven2/plugins
@@ -511,7 +511,7 @@ export CLASSPATH=$(build-classpath gnu-crypto)
 %{_javadir}/%{name}-runtime.jar
 %{_javadir}/%{name}.jar
 %{_datadir}/%{name}-%{version}
-%{_datadir}/maven2/poms/*
+%{_mavenpomdir}/*
 %{_mavendepmapfragdir}/*
 %if %{gcj_support}
 %dir %attr(-,root,root) %{_libdir}/gcj/%{name}
@@ -604,6 +604,9 @@ export CLASSPATH=$(build-classpath gnu-crypto)
 %doc %{_docdir}/%{name}-maven2-plugin-%{version}
 
 %changelog
+* Fri Mar 29 2013 Igor Vlasenko <viy@altlinux.ru> 0:3.3-alt6_3jpp5
+- explicitly use junit3
+
 * Wed Sep 12 2012 Igor Vlasenko <viy@altlinux.ru> 0:3.3-alt5_3jpp5
 - build with saxon6-scripts
 
