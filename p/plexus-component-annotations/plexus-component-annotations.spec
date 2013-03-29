@@ -45,7 +45,7 @@ BuildRequires: jpackage-compat
 
 Name:           plexus-component-annotations
 Version:        1.0
-Release:        alt1_0.a16.1jpp5
+Release:        alt2_0.a16.1jpp5
 Epoch:          0
 Summary:        Plexus Component Annotations
 License:        Apache Software License 2.0
@@ -65,8 +65,8 @@ BuildArch:      noarch
 
 BuildRequires: jpackage-utils >= 0:1.7.5
 BuildRequires: ant >= 0:1.6.5
-BuildRequires: ant-junit
-BuildRequires: junit
+BuildRequires: ant-junit3
+BuildRequires: junit3
 %if %{with_maven}
 BuildRequires: maven2 >= 0:2.0.7
 BuildRequires: maven2-plugin-ant
@@ -129,7 +129,7 @@ mkdir -p $MAVEN_REPO_LOCAL
 mkdir external_repo
 ln -s %{_javadir} external_repo/JPP
 
-    mvn-jpp \
+mvn-jpp -Dmaven.compile.source=1.5 -Dmaven.compile.target=1.5 -Dmaven.javadoc.source=1.5  \
         -e \
         -s $(pwd)/settings.xml \
         -Dmaven2.jpp.depmap.file=%{SOURCE2} \
@@ -138,12 +138,12 @@ ln -s %{_javadir} external_repo/JPP
 
 #        -Dmaven.test.failure.ignore=true \
 %else
-export OPT_JAR_LIST="ant/ant-junit junit"
+export OPT_JAR_LIST="ant/ant-junit3 junit"
 export CLASSPATH=
 #export CLASSPATH=$(build-classpath \
 #plexus/classworlds \
 #)
-ant -Dmaven.mode.offline=true -Dbuild.sysclasspath=only package javadoc
+ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  -Dmaven.mode.offline=true -Dbuild.sysclasspath=only package javadoc
 %endif
 
 %install
@@ -157,9 +157,9 @@ install -pm 644 target/%{parent}-component-annotations-%{namedversion}.jar \
 (cd $RPM_BUILD_ROOT%{_javadir}/plexus && for jar in *-%{version}*; do ln -sf ${jar} `echo $jar| sed  "s|-%{version}||g"`; done)
 
 # poms
-install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/maven2/poms
+install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
 install -pm 644 pom.xml \
-    $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP.%{parent}-component-annotations.pom
+    $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{parent}-component-annotations.pom
 
 # javadoc
 install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
@@ -173,7 +173,7 @@ export CLASSPATH=$(build-classpath gnu-crypto)
 
 %files
 %{_javadir}/%{parent}/*.jar
-%{_datadir}/maven2/poms/*
+%{_mavenpomdir}/*
 %{_mavendepmapfragdir}/*
 %if %{gcj_support}
 %dir %attr(-,root,root) %{_libdir}/gcj/%{name}
@@ -185,6 +185,9 @@ export CLASSPATH=$(build-classpath gnu-crypto)
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Fri Mar 29 2013 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt2_0.a16.1jpp5
+- explicitly use junit3
+
 * Thu Jun 04 2009 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt1_0.a16.1jpp5
 - new jpp release
 
