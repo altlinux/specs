@@ -36,7 +36,7 @@ BuildRequires: jpackage-compat
 
 Name:           junitejb
 Version:        1.0
-Release:        alt1_0.b2.2jpp5
+Release:        alt2_0.b2.2jpp5
 Epoch:          0
 Summary:        JUnitEJB extension to JUnit
 
@@ -49,10 +49,10 @@ Patch0:         junitejb-build_xml.patch
 BuildArch:      noarch
 BuildRequires: jpackage-utils >= 0:1.6
 BuildRequires: ant
-BuildRequires: junit >= 0:3.8.1
+BuildRequires: junit3 >= 0:3.8.1
 BuildRequires: ejb
 BuildRequires: jta
-Requires: junit >= 0:3.8.1
+Requires: junit3 >= 0:3.8.1
 Requires: ejb
 Requires: jta
 
@@ -122,6 +122,9 @@ ln -s %{name}-%{version} %{_javadocdir}/%{name}
 %ghost %doc %{_javadocdir}/%{name}
 
 %changelog
+* Fri Mar 29 2013 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt2_0.b2.2jpp5
+- explicitly use junit3
+
 * Wed Nov 26 2008 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt1_0.b2.2jpp5
 - fixed build w/java5 
 
