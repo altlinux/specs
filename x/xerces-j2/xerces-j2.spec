@@ -58,7 +58,7 @@ BuildRequires: jpackage-1.6.0-compat
 
 Name:           xerces-j2
 Version:        2.9.1
-Release:        alt2_2jpp6
+Release:        alt3_2jpp6
 Epoch:          0
 Summary:        Java XML parser
 License:        ASL 2.0
@@ -95,6 +95,7 @@ BuildArch:      noarch
 %endif
 Source44: import.info
 Source45: xerces-j2-2.9.0.jar-OSGi-MANIFEST.MF
+Source9: JPP-xerces-j2.pom
 Provides: xerces-j = %version-%release
 Obsoletes: xerces-j <= 2.9.0-alt4
 
@@ -309,6 +310,11 @@ cp %{SOURCE45} META-INF/MANIFEST.MF
 zip -u %buildroot/usr/share/java/xerces-j2.jar META-INF/MANIFEST.MF
 ln -s xerces-j2.jar $RPM_BUILD_ROOT%_javadir/xerces-j.jar
 
+mkdir -p %buildroot/%mavenpomdir
+install -m644 %{SOURCE9} %buildroot/%mavenpomdir/JPP-%{name}.pom
+%add_to_maven_depmap xerces xmlParserAPIs %{version} JPP %{name}
+%add_to_maven_depmap xerces xercesImpl %{version} JPP %{name}
+
 %files
 %_altdir/jaxp_parser_impl_%{name}
 %doc LICENSE LICENSE-SAX.html LICENSE.DOM-documentation.html
@@ -367,6 +373,9 @@ ln -s xerces-j2.jar $RPM_BUILD_ROOT%_javadir/xerces-j.jar
 %endif
 
 %changelog
+* Fri Mar 29 2013 Igor Vlasenko <viy@altlinux.ru> 0:2.9.1-alt3_2jpp6
+- added pom
+
 * Sat Mar 24 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.9.1-alt2_2jpp6
 - build w/java6
 
