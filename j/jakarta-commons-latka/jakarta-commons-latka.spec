@@ -40,7 +40,7 @@ BuildRequires: jpackage-compat
 
 Name:           jakarta-commons-latka
 Version:        1.0
-Release:        alt7_0.r560660.1jpp5
+Release:        alt8_0.r560660.1jpp5
 Epoch:          0
 Summary:        Functional (end-to-end) testing tool
 
@@ -65,7 +65,7 @@ BuildArch:      noarch
 %endif
 
 BuildRequires: jpackage-utils >= 0:1.7.3
-BuildRequires: junit
+BuildRequires: junit3
 BuildRequires: ant >= 0:1.6
 %if %{with_maven}
 BuildRequires: maven1 >= 0:1.1
@@ -181,7 +181,7 @@ pushd target/lib
     ln -sf $(build-classpath commons-collections)
     ln -sf $(build-classpath commons-httpclient)
     ln -sf $(build-classpath commons-jelly)
-    ln -sf $(build-classpath commons-jelly-tags-junit)
+    ln -sf $(build-classpath commons-jelly-tags-junit3)
     ln -sf $(build-classpath commons-jexl11)
     ln -sf $(build-classpath commons-logging)
     ln -sf $(build-classpath jaxen)
@@ -205,9 +205,9 @@ ln -s %{base_name}-%{version}.jar \
 %add_to_maven_depmap commons-latka commons-latka %{version} JPP commons-latka
 
 # poms
-install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/maven2/poms
+install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
 install -m 644 %{SOURCE4} \
-    $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-%{name}.pom
+    $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 
 install -dm 755 $RPM_BUILD_ROOT%{_datadir}/%{name}-%{version}/bin
 cp -p src/distribution/bin/*.sh $RPM_BUILD_ROOT%{_datadir}/%{name}-%{version}/bin
@@ -240,7 +240,7 @@ find $RPM_BUILD_ROOT -name *.sh -print0 | xargs -0 dos2unix
 %{_javadir}/*.jar
 %doc %{_datadir}/%{name}-%{version}
 %{_mavendepmapfragdir}/*
-%{_datadir}/maven2/poms/*
+%{_mavenpomdir}/*
 %if %{gcj_support}
 %dir %attr(-,root,root) %{_libdir}/gcj/%{name}
 %{_libdir}/gcj/%{name}/%{name}-%{version}.jar.*
@@ -256,6 +256,9 @@ find $RPM_BUILD_ROOT -name *.sh -print0 | xargs -0 dos2unix
 %endif
 
 %changelog
+* Fri Mar 29 2013 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt8_0.r560660.1jpp5
+- explicitly use junit3
+
 * Wed Sep 12 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt7_0.r560660.1jpp5
 - build with saxon6-scripts
 
