@@ -37,7 +37,7 @@ BuildRequires: jpackage-compat
 Summary:        Dependency Management Utility
 Name:           jaranalyzer
 Version:        1.1
-Release:	alt2_2jpp5
+Release:	alt3_2jpp5
 Epoch:          0
 License:        BSD-style
 URL:            http://www.kirkk.com/main/Main/JarAnalyzer
@@ -48,7 +48,7 @@ Source2:        jaranalyzer-1.1.pom
 Patch0:         jaranalyzer-1.1-build_xml.patch
 BuildRequires: jpackage-utils >= 0:1.7.4
 BuildRequires: ant >= 0:1.6.5
-BuildRequires: ant-junit
+BuildRequires: ant-junit3
 BuildRequires: bcel
 BuildRequires: regexp
 
@@ -96,7 +96,7 @@ ln -sf $(build-classpath regexp) jakarta-regexp-1.3.jar
 ln -sf $(build-classpath bcel) bcel-5.1.jar
 popd
 
-ant
+ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 
 
 %install
 
@@ -111,9 +111,9 @@ install -m 0644 bin/%{name}-%{version}.jar \
 (cd $RPM_BUILD_ROOT%{_javadir} && for jar in *-%{version}.jar; do ln -sf ${jar} `echo $jar| sed "s|-%{version}||g"`; done)
 
 # pom and depmap frags
-install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/maven2/poms
+install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
 %add_to_maven_depmap com.kirkk %{name} %{version} JPP %{name}
-install -m 644 %{SOURCE2} $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-%{name}.pom
+install -m 644 %{SOURCE2} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 
 install -d -m 0755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
 cp -pr docs/api/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
@@ -141,7 +141,7 @@ fi
 %attr(755,root,root) %{_bindir}/runxmlsummary
 %{_javadir}/*.jar
 %doc %{_docdir}/%{name}-%{version}
-%{_datadir}/maven2
+%{_mavenpomdir}/*
 %{_mavendepmapfragdir}
 %if %{gcj_support}
 %dir %attr(-,root,root) %{_libdir}/gcj/%{name}
@@ -153,6 +153,9 @@ fi
 %doc %{_javadocdir}/%{name}-%{version}
 
 %changelog
+* Fri Mar 29 2013 Igor Vlasenko <viy@altlinux.ru> 0:1.1-alt3_2jpp5
+- explicitly use junit3
+
 * Sun Feb 21 2010 Igor Vlasenko <viy@altlinux.ru> 0:1.1-alt2_2jpp5
 - use default jpp profile
 
