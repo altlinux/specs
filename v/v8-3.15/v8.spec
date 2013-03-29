@@ -1,11 +1,11 @@
 %define MAJOR_VERSION     3
-%define MINOR_VERSION     16
-%define BUILD_NUMBER      14
+%define MINOR_VERSION     15
+%define BUILD_NUMBER      11
 %define PATCH_LEVEL       10
-%define soversion %MAJOR_VERSION.%MINOR_VERSION
-Name: v8
+%define soversion %{MAJOR_VERSION}
+Name: v8-%MAJOR_VERSION.%MINOR_VERSION
 Version: %MAJOR_VERSION.%MINOR_VERSION.%BUILD_NUMBER.%PATCH_LEVEL
-Release: alt1
+Release: alt3
 
 Summary: V8 is Google's open source JavaScript engine.
 License: BSD
@@ -24,6 +24,7 @@ as specified in ECMA-262, 5rd edition.
 Summary: Google's JavaScript Engine
 License: BSD
 Group: System/Libraries
+Provides: libv8 = %version-%release
 
 %description -n lib%name
 V8 is Google's open source JavaScript engine. V8 is written in C++ and is used
@@ -34,11 +35,11 @@ as specified in ECMA-262, 5rd edition.
 Group: Development/C++
 Summary: Development headers and libraries for V8
 Requires: lib%name = %version-%release
-Conflicts: lib%name-devel < 3.15
+Provides: libv8-devel = %version-%release
+Conflicts: libv8-devel
 
 %description -n lib%name-devel
 Development headers and libraries for V8.
-
 
 %prep
 %setup -q
@@ -71,9 +72,8 @@ install -p -m644 include/*.h %buildroot%_includedir/
 %_libdir/*.so
 
 %changelog
-* Fri Mar 29 2013 Dmitriy Kulik <lnkvisitor@altlinux.org> 3.16.14.10-alt1
-- new version (Closes: #28759)
-- change soname
+* Fri Mar 29 2013 Dmitriy Kulik <lnkvisitor@altlinux.org> 3.15.11.10-alt3
+- rename to libv8-3.15
 
 * Fri Mar 01 2013 Sergey Bolshakov <sbolshakov@altlinux.ru> 3.15.11.10-alt2
 - built for arm
