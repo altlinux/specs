@@ -40,7 +40,7 @@ BuildRequires: jpackage-compat
 
 Name:           jakarta-%{base_name}
 Version:        1.0
-Release:        alt3_0.d10.6jpp5
+Release:        alt4_0.d10.6jpp5
 Epoch:          1
 Summary:        Commons Messenger JMS framework 
 
@@ -57,8 +57,8 @@ BuildArch:      noarch
 
 BuildRequires: jpackage-utils >= 0:1.7.3
 BuildRequires: ant >= 0:1.6
-BuildRequires: ant-junit
-BuildRequires: junit >= 0:3.8.1
+BuildRequires: ant-junit3
+BuildRequires: junit3 >= 0:3.8.1
 BuildRequires: apache-commons-logging
 BuildRequires: apache-commons-beanutils
 BuildRequires: apache-commons-collections
@@ -112,7 +112,7 @@ BuildArch: noarch
 %patch0 -b .sav0
 
 %build
-export OPT_JAR_LIST="ant/ant-junit junit"
+export OPT_JAR_LIST="ant/ant-junit3 junit"
 export CLASSPATH=$(build-classpath \
 commons-logging-api \
 commons-logging commons-beanutils commons-collections \
@@ -159,6 +159,9 @@ export CLASSPATH=$(build-classpath gnu-crypto)
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Fri Mar 29 2013 Igor Vlasenko <viy@altlinux.ru> 1:1.0-alt4_0.d10.6jpp5
+- explicitly use junit3
+
 * Tue Mar 12 2013 Igor Vlasenko <viy@altlinux.ru> 1:1.0-alt3_0.d10.6jpp5
 - fixed build
 
