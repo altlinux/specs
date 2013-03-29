@@ -1,4 +1,4 @@
-BuildRequires: ant-junit
+BuildRequires: ant-junit3
 Packager: Igor Vlasenko <viy@altlinux.ru>
 BuildRequires: /proc
 BuildRequires: jpackage-compat
@@ -35,7 +35,7 @@ BuildRequires: jpackage-compat
 
 Name:           juel
 Version:        2.1.0
-Release:        alt2_1jpp5
+Release:        alt3_1jpp5
 Epoch:          0
 Summary:        Java Unified Expression Language
 
@@ -94,8 +94,8 @@ ln -sf %{name}-impl-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}-impl.jar
 
 
 # pom
-install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/maven2/poms
-install -m 644 %{SOURCE1} $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-%{name}.pom
+install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
+install -m 644 %{SOURCE1} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 
 # javadoc
 install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
@@ -105,7 +105,7 @@ ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name} # ghost symlink
 %files
 %{_javadir}/*.jar
 %doc LICENSE.txt
-%{_datadir}/maven2/poms/*
+%{_mavenpomdir}/*
 %{_mavendepmapfragdir}/*
 
 %files javadoc
@@ -114,6 +114,9 @@ ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name} # ghost symlink
 
 
 %changelog
+* Fri Mar 29 2013 Igor Vlasenko <viy@altlinux.ru> 0:2.1.0-alt3_1jpp5
+- explicitly use junit3
+
 * Wed Oct 03 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.1.0-alt2_1jpp5
 - added ant-junit BR:
 
