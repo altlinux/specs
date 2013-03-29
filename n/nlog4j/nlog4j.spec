@@ -36,7 +36,7 @@ BuildRequires: jpackage-compat
 Summary:        Log4j-replacement with native SLF4J API support
 Name:           nlog4j
 Version:        1.2.25
-Release:        alt1_1jpp5
+Release:        alt2_1jpp5
 Epoch:		0
 Group:          Development/Java
 License:        X11 License
@@ -48,7 +48,7 @@ Patch0:         nlog4j-1.2.21-jmx-Agent.patch
 
 BuildRequires: ant >= 0:1.6.5
 BuildRequires: jpackage-utils >= 0:1.7.3
-BuildRequires: junit
+BuildRequires: junit3
 BuildRequires: geronimo-javamail-1.3.1-api
 BuildRequires: geronimo-jaf-1.0.2-api
 BuildRequires: geronimo-jms-1.1-api
@@ -75,9 +75,9 @@ Javadoc for %{name}.
 %patch0 -b .orig
 
 %build
-export OPT_JAR_LIST="ant/ant-junit junit"
+export OPT_JAR_LIST="ant/ant-junit3 junit"
 [ -z "$JAVA_HOME" ] && export JAVA_HOME=%{_jvmdir}/java
-ant -Dversion=%{version} -Dbuild.compiler=modern \
+ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  -Dversion=%{version} -Dbuild.compiler=modern \
     -Djavamail.jar=$(build-classpath geronimo-javamail-1.3.1-api) \
     -Dactivation.jar=$(build-classpath geronimo-jaf-1.0.2-api) \
     -Djms.jar=$(build-classpath geronimo-jms-1.1-api) \
@@ -98,9 +98,9 @@ popd
 %add_to_maven_depmap org.slf4j %{name} %{version} JPP %{name}
 
 # poms
-install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/maven2/poms
+install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
 install -m 644 %{SOURCE1} \
-    $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-%{name}.pom
+    $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 
 # javadoc
 install -d -m 0755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
@@ -110,12 +110,15 @@ cp -pr docs/api/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}/
 %doc LICENSE.txt
 %{_javadir}/*
 %{_mavendepmapfragdir}/*
-%{_datadir}/maven2/poms/*
+%{_mavenpomdir}/*
 
 %files javadoc
 %{_javadocdir}/%{name}-%{version}
 
 %changelog
+* Fri Mar 29 2013 Igor Vlasenko <viy@altlinux.ru> 0:1.2.25-alt2_1jpp5
+- explicitly use junit3
+
 * Mon Mar 30 2009 Igor Vlasenko <viy@altlinux.ru> 0:1.2.25-alt1_1jpp5
 - new jpp release
 
