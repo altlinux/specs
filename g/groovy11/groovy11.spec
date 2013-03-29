@@ -38,7 +38,7 @@ Name:           groovy11
 Summary:        Groovy scripting language
 Url:            http://groovy.codehaus.org/
 Version:        1.1
-Release:        alt6_0.rc3.1jpp5
+Release:        alt7_0.rc3.1jpp5
 Epoch:          0
 License:        Apache Software License 2.0
 Group:          Development/Java
@@ -57,11 +57,11 @@ BuildRequires: jpackage-utils >= 0:1.7.4
 
 BuildRequires: ant >= 0:1.6.5
 BuildRequires: ant-antlr
-BuildRequires: ant-junit
+BuildRequires: ant-junit3
 BuildRequires: antlr
 BuildRequires: checkstyle
 BuildRequires: cobertura
-BuildRequires: junit
+BuildRequires: junit3
 BuildRequires: xmlunit
 
 BuildRequires: asm2 >= 0:2.2
@@ -91,7 +91,7 @@ BuildRequires: xstream
 
 #
 Requires: ant
-Requires: ant-junit
+Requires: ant-junit3
 Requires: antlr
 Requires: asm2
 Requires: bsf
@@ -100,7 +100,7 @@ Requires: jakarta-commons-logging
 Requires: jarjar
 Requires: jline
 Requires: jsp_2_0_api
-Requires: junit
+Requires: junit3
 Requires: mockobjects
 Requires: mx4j
 Requires: servlet_2_4_api
@@ -155,7 +155,7 @@ mkdir -p target/lib/test
 pushd target/lib/test
 ln -sf $(build-classpath xmlunit)
 ln -sf $(build-classpath xpp3)
-ln -sf $(build-classpath ant/ant-junit)
+ln -sf $(build-classpath ant/ant-junit3)
 ln -sf $(build-classpath bsf)
 ln -sf $(build-classpath jmock1)
 ln -sf $(build-classpath jsp_2_0_api)
@@ -168,7 +168,7 @@ ln -sf $(build-classpath mockobjects-core)
 ln -sf $(build-classpath servlet_2_4_api)
 ln -sf $(build-classpath jmock1-cglib)
 ln -sf $(build-classpath antlr)
-ln -sf $(build-classpath junit)
+ln -sf $(build-classpath junit3)
 ln -sf $(build-classpath asm2/asm2-util)
 ln -sf $(build-classpath ant-launcher)
 ln -sf $(build-classpath ant)
@@ -190,7 +190,7 @@ ln -sf $(build-classpath asm2/asm2)
 ln -sf $(build-classpath mockobjects-core)
 ln -sf $(build-classpath servlet_2_4_api)
 ln -sf $(build-classpath antlr)
-ln -sf $(build-classpath junit)
+ln -sf $(build-classpath junit3)
 ln -sf $(build-classpath asm2/asm2-util)
 ln -sf $(build-classpath ant)
 ln -sf $(build-classpath asm2/asm2-analysis)
@@ -201,7 +201,7 @@ popd
 mkdir -p target/lib/runtime
 pushd target/lib/runtime
 ln -sf $(build-classpath xpp3)
-ln -sf $(build-classpath ant/ant-junit)
+ln -sf $(build-classpath ant/ant-junit3)
 ln -sf $(build-classpath bsf)
 ln -sf $(build-classpath jsp_2_0_api)
 ln -sf $(build-classpath asm2/asm2-tree)
@@ -210,7 +210,7 @@ ln -sf $(build-classpath asm2/asm2)
 ln -sf $(build-classpath mockobjects-core)
 ln -sf $(build-classpath servlet_2_4_api)
 ln -sf $(build-classpath antlr)
-ln -sf $(build-classpath junit)
+ln -sf $(build-classpath junit3)
 ln -sf $(build-classpath asm2/asm2-util)
 ln -sf $(build-classpath ant-launcher)
 ln -sf $(build-classpath ant)
@@ -299,7 +299,7 @@ install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/%{name}-%{version}/lib
 pushd $RPM_BUILD_ROOT%{_datadir}/%{name}-%{version}/lib
 build-jar-repository . \
 ant \
-ant/ant-junit \
+ant/ant-junit3 \
 ant-launcher \
 antlr \
 asm2/asm2-analysis \
@@ -311,7 +311,7 @@ commons-cli \
 commons-logging \
 jline \
 jsp_2_0_api \
-junit \
+junit3 \
 mockobjects-core \
 mx4j/mx4j \
 servlet_2_4_api \
@@ -358,6 +358,9 @@ fi
 %ghost %doc %{_javadocdir}/%{name}
 
 %changelog
+* Fri Mar 29 2013 Igor Vlasenko <viy@altlinux.ru> 0:1.1-alt7_0.rc3.1jpp5
+- explicitly use junit3
+
 * Fri Mar 22 2013 Igor Vlasenko <viy@altlinux.ru> 0:1.1-alt6_0.rc3.1jpp5
 - use jmock1
 
