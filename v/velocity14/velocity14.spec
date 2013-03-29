@@ -38,7 +38,7 @@ BuildRequires: jpackage-compat
 
 Name:           velocity14
 Version:        1.4
-Release:	alt4_8jpp5
+Release:	alt5_8jpp5
 Epoch:          0
 Summary:        Java-based template engine
 License:        Apache Software License
@@ -53,7 +53,7 @@ Group:          Development/Java
 BuildRequires: jpackage-utils >= 0:1.7.4
 BuildRequires: ant >= 0:1.6.5
 BuildRequires: antlr
-BuildRequires: junit
+BuildRequires: junit3
 BuildRequires: bcel
 BuildRequires: excalibur-avalon-logkit
 BuildRequires: apache-commons-collections
@@ -165,7 +165,7 @@ antlr \
 commons-collections \
 servletapi5 \
 excalibur/avalon-logkit \
-junit \
+junit3 \
 oro \
 log4j \
 jdom \
@@ -246,6 +246,9 @@ fi
 #%endif
 
 %changelog
+* Fri Mar 29 2013 Igor Vlasenko <viy@altlinux.ru> 0:1.4-alt5_8jpp5
+- explicitly use junit3
+
 * Fri Mar 22 2013 Igor Vlasenko <viy@altlinux.ru> 0:1.4-alt4_8jpp5
 - fixed build w/new commons
 
