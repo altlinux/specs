@@ -36,7 +36,7 @@ BuildRequires: jpackage-compat
 
 Name:		ws-fx-addressing
 Version:	1.0
-Release:	alt5_3jpp5
+Release:	alt6_3jpp5
 Epoch:		0
 Summary:	WS-Addressing on top of Axis
 License:	Apache Software License 2.0
@@ -52,7 +52,7 @@ Source3:        pom-maven2jpp-mapdeps.xsl
 Source4:        ws-fx-addressing-1.0-jpp-depmap.xml
 Source5:        addressing-1.0.pom
 BuildRequires: jpackage-utils >= 0:1.7.3
-BuildRequires: junit
+BuildRequires: junit3
 BuildRequires: maven1 >= 0:1.1
 BuildRequires: maven1-plugins-base
 BuildRequires: maven1-plugin-license
@@ -125,7 +125,7 @@ axis/axis-ant \
 axis/jaxrpc \
 axis/saaj \
 wsdl4j \
-junit \
+junit3 \
 commons-discovery \
 commons-logging \
 
@@ -147,9 +147,9 @@ for jar in *-%{version}*; do ln -sf ${jar} ${jar/-%{version}/}; done
 %add_to_maven_depmap org.apache.ws addressing %{version} JPP %{name}
 
 # poms
-install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/maven2/poms
+install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
 install -m 644 %{SOURCE5} \
-    $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-%{name}.pom
+    $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 
 install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
 cp -pr target/docs/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
@@ -162,7 +162,7 @@ cp LICENSE.txt $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}
 %doc %{_docdir}/%{name}-%{version}/LICENSE.txt
 %{_javadir}/*.jar
 %{_mavendepmapfragdir}/*
-%{_datadir}/maven2/poms/*
+%{_mavenpomdir}/*
 # hack; explicitly added docdir if not owned
 %doc %dir %{_docdir}/%{name}-%{version}
 
@@ -171,6 +171,9 @@ cp LICENSE.txt $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Fri Mar 29 2013 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt6_3jpp5
+- explicitly use junit3
+
 * Wed Sep 12 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt5_3jpp5
 - build with saxon6-scripts
 
