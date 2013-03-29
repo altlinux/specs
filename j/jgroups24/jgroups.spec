@@ -55,7 +55,7 @@ BuildRequires: jpackage-compat
 
 Name:           jgroups24
 Version:        2.4.1
-Release:        alt3_1.SP4.1jpp5
+Release:        alt4_1.SP4.1jpp5
 Epoch:          1
 Summary:        Toolkit for reliable multicast communication
 License:        LGPLv2+
@@ -92,14 +92,14 @@ Requires: bsh
 
 BuildRequires: jpackage-utils >= 0:1.6
 BuildRequires: ant >= 0:1.6
-BuildRequires: ant-junit
+BuildRequires: ant-junit3
 BuildRequires: ant-trax
 BuildRequires: bsh
 BuildRequires: concurrent
 BuildRequires: jakarta-commons-logging
 BuildRequires: jaxp_parser_impl
 BuildRequires: jms
-BuildRequires: junit
+BuildRequires: junit3
 BuildRequires: log4j
 BuildRequires: mx4j
 BuildRequires: xalan-j2
@@ -182,17 +182,17 @@ sed -i "s/@TAG@/$tag/g" %{SOURCE1}
 
 %build
 export CLASSPATH=
-export OPT_JAR_LIST="ant-launcher ant/ant-junit ant/ant-trax junit xalan-j2 xalan-j2-serializer"
+export OPT_JAR_LIST="ant-launcher ant/ant-junit3 ant/ant-trax junit xalan-j2 xalan-j2-serializer"
 pushd lib
 ln -sf $(build-classpath ant) .
 ln -sf $(build-classpath ant-launcher) .
-ln -sf $(build-classpath ant/ant-junit) .
+ln -sf $(build-classpath ant/ant-junit3) .
 #BUILD/JGroups-2.4.1.src/lib/bcprov-jdk14-117.jar.no
 ln -sf $(build-classpath bsh) .
 ln -sf $(build-classpath commons-logging) .
 ln -sf $(build-classpath concurrent) .
 ln -sf $(build-classpath jms) .
-ln -sf $(build-classpath junit) .
+ln -sf $(build-classpath junit3) .
 ln -sf $(build-classpath log4j) .
 ln -sf $(build-classpath mx4j/mx4j-jmx) .
 ln -sf $(build-classpath xalan-j2) .
@@ -257,6 +257,9 @@ cp -pr doc/* $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}
 %endif
 
 %changelog
+* Fri Mar 29 2013 Igor Vlasenko <viy@altlinux.ru> 1:2.4.1-alt4_1.SP4.1jpp5
+- explicitly use junit3
+
 * Thu Feb 03 2011 Igor Vlasenko <viy@altlinux.ru> 1:2.4.1-alt3_1.SP4.1jpp5
 - compat build
 
