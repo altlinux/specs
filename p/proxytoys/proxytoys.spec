@@ -34,7 +34,7 @@ BuildRequires: jpackage-compat
 
 Name:           proxytoys
 Version:        0.2.1
-Release:        alt2_2jpp5
+Release:        alt3_2jpp5
 Epoch:          0
 Summary:        ProxyToys
 Group:          Development/Java
@@ -46,8 +46,8 @@ Requires: cglib >= 0:2.1.3
 Requires: xstream >= 0:1.1.2
 BuildRequires: jpackage-utils >= 0:1.6
 BuildRequires: ant >= 0:1.6
-BuildRequires: ant-junit >= 0:1.6
-BuildRequires: junit
+BuildRequires: ant-junit3 >= 0:1.6
+BuildRequires: junit3
 BuildRequires: jmock1
 BuildRequires: cglib >= 0:2.1.3
 BuildRequires: xstream >= 0:1.1.2
@@ -74,7 +74,7 @@ ln -s $(build-classpath cglib-nodep) .
 #BUILD/xstream-1.1.3/lib/jmock-2004-03-19.jar.no
 ln -s $(build-classpath jmock1) .
 #BUILD/xstream-1.1.3/lib/junit-3.8.1.jar.no
-ln -s $(build-classpath junit) .
+ln -s $(build-classpath junit3) .
 #BUILD/xstream-1.1.3/lib/xpp3-1.1.3.4d_b4_min.jar.no
 ln -s $(build-classpath xpp3) .
 #BUILD/proxytoys-0.2.1/lib/xstream-1.1.2.jar.no
@@ -82,9 +82,9 @@ ln -s $(build-classpath xstream) .
 popd
 
 %build
-export OPT_JAR_LIST=`%{__cat} %{_sysconfdir}/ant.d/junit`
+export OPT_JAR_LIST=`%{__cat} %{_sysconfdir}/ant.d/junit3`
 export CLASSPATH=
-%{ant} test javadoc
+%{ant} -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  test javadoc
 
 %install
 
@@ -106,6 +106,9 @@ ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Fri Mar 29 2013 Igor Vlasenko <viy@altlinux.ru> 0:0.2.1-alt3_2jpp5
+- explicitly use junit3
+
 * Fri Mar 22 2013 Igor Vlasenko <viy@altlinux.ru> 0:0.2.1-alt2_2jpp5
 - use jmock1
 
