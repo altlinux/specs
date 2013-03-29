@@ -36,7 +36,7 @@ BuildRequires: jpackage-compat
 
 Name:           jung
 Version:        1.7.6
-Release:        alt2_1jpp5
+Release:        alt3_1jpp5
 Epoch:          0
 Summary:        Java Universal Network/Graph Framework
 License:        BSD
@@ -52,7 +52,7 @@ BuildRequires: jpackage-utils >= 0:1.7.4
 BuildRequires: ant >= 0:1.6.5
 BuildRequires: colt
 BuildRequires: jakarta-commons-collections >= 0:3.1
-BuildRequires: junit
+BuildRequires: junit3
 %if ! %{gcj_support}
 BuildArch:      noarch
 %endif
@@ -116,7 +116,7 @@ cp %{SOURCE1} build.xml
 
 %build
 export CLASSPATH=$(build-classpath colt commons-collections)
-ant \
+ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  \
    -Dbuild.sysclasspath=only \
    build javadoc
 
@@ -131,9 +131,9 @@ install -m 644 lib/%{name}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}-%{version}.jar
 for jar in *-%{version}*.jar; do ln -sf ${jar} `echo $jar| sed  "s|-%{version}||g"`; done)
 
 # poms
-install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/maven2/poms
+install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
 install -m 644 %{SOURCE2} \
-    $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-%{name}.pom
+    $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 
 install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
 cp -pr api/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}/
@@ -155,7 +155,7 @@ fi
 
 %files
 %{_javadir}/%{name}*.jar
-%{_datadir}/maven2/poms/*
+%{_mavenpomdir}/*
 %{_mavendepmapfragdir}
 %if %{gcj_support}
 %dir %attr(-,root,root) %{_libdir}/gcj/%{name}
@@ -167,6 +167,9 @@ fi
 %ghost %doc %{_javadocdir}/%{name}
 
 %changelog
+* Fri Mar 29 2013 Igor Vlasenko <viy@altlinux.ru> 0:1.7.6-alt3_1jpp5
+- explicitly use junit3
+
 * Wed May 12 2010 Igor Vlasenko <viy@altlinux.ru> 0:1.7.6-alt2_1jpp5
 - fixes for java6 support
 
