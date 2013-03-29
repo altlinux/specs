@@ -39,7 +39,7 @@ BuildRequires: jpackage-compat maven2-plugin-checkstyle
 Summary:        Myfaces JSF 1.1 implementation
 Name:           myfaces-core11-impl
 Version:        1.1.5
-Release:        alt8_2jpp5
+Release:        alt9_2jpp5
 Epoch:          0
 License:        Apache Software License 2.0
 URL:            http://myfaces.apache.org/
@@ -74,7 +74,7 @@ BuildRequires: mojo-maven2-plugin-xslt
 
 BuildRequires: cargo
 BuildRequires: jakarta-cactus
-BuildRequires: junit
+BuildRequires: junit3
 BuildRequires: shale-test
 
 BuildRequires: apache-commons-beanutils
@@ -179,8 +179,8 @@ ln -sf core11-impl.jar $RPM_BUILD_ROOT%{_javadir}/%{parent}/myfaces-impl.jar
 ln -sf core11-api.jar $RPM_BUILD_ROOT%{_javadir}/%{parent}/myfaces-jsf-api.jar
 
 # poms
-install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/maven2/poms
-install -m 644 impl/pom.xml $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP.%{parent}-core11-impl.pom
+install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
+install -m 644 impl/pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{parent}-core11-impl.pom
 %add_to_maven_depmap org.apache.myfaces.core myfaces-impl %{version} JPP/%{parent} core11-impl
 
 # javadoc
@@ -191,7 +191,7 @@ ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %files
 %doc assembly/src/main/resources/LICENSE.txt
 %{_javadir}/%{parent}/*.jar
-%{_datadir}/maven2/poms/*
+%{_mavenpomdir}/*
 %{_mavendepmapfragdir}/*
 
 %files javadoc
@@ -199,6 +199,9 @@ ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Fri Mar 29 2013 Igor Vlasenko <viy@altlinux.ru> 0:1.1.5-alt9_2jpp5
+- explicitly use junit3
+
 * Mon Oct 22 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.1.5-alt8_2jpp5
 - fixed build
 
