@@ -35,7 +35,7 @@ BuildRequires: jpackage-compat
 
 Name:           jruby-bytelist
 Version:        0.1
-Release:	alt2_3jpp5
+Release:	alt3_3jpp5
 Epoch:          0
 Summary:        ByteList
 License:        GPL/LGPL
@@ -46,8 +46,8 @@ Source0:        bytelist-1.0.tar.gz
 Source1:        bytelist-0.1.pom
 BuildRequires: jpackage-utils >= 0:1.7.5
 BuildRequires: ant >= 0:1.6.5
-BuildRequires: ant-junit
-BuildRequires: junit
+BuildRequires: ant-junit3
+BuildRequires: junit3
 Requires: jpackage-utils >= 0:1.7.5
 Requires(post): jpackage-utils >= 0:1.7.5
 Requires(postun): jpackage-utils >= 0:1.7.5
@@ -60,8 +60,8 @@ ByteList.
 %setup -q -n bytelist-1.0
 
 %build
-export OPT_JAR_LIST="ant-launcher ant/ant-junit junit"
-ant test jar
+export OPT_JAR_LIST="ant-launcher ant/ant-junit3 junit"
+ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  test jar
 
 %install
 
@@ -74,16 +74,19 @@ ln -sf ${jar} ${jar/-%{version}/}; done)
 %add_to_maven_depmap org.jruby.extras bytelist %{version} JPP %{name}
 
 # pom
-install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/maven2/poms
+install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
 install -pm 644 %{SOURCE1} \
-    $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-%{name}.pom
+    $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 
 %files
 %{_javadir}/*.jar
-%{_datadir}/maven2/poms/*
+%{_mavenpomdir}/*
 %{_mavendepmapfragdir}
 
 %changelog
+* Fri Mar 29 2013 Igor Vlasenko <viy@altlinux.ru> 0:0.1-alt3_3jpp5
+- explicitly use junit3
+
 * Wed May 12 2010 Igor Vlasenko <viy@altlinux.ru> 0:0.1-alt2_3jpp5
 - fixes for java6 support
 
