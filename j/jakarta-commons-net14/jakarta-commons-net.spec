@@ -50,7 +50,7 @@ BuildRequires: jpackage-compat
 
 Name:           jakarta-commons-net14
 Version:        1.4.1
-Release:        alt6_4jpp5
+Release:        alt7_4jpp5
 Epoch:          0
 Summary:        Jakarta Commons Net Package
 License:        Apache Software License
@@ -70,9 +70,9 @@ Patch2:         %{short_name}-%{version}-project_properties.patch
 BuildRequires: jpackage-utils >= 0:1.7.2
 BuildRequires: ant >= 0:1.6
 %if ! %{without_tests}
-BuildRequires: ant-junit >= 0:1.6
+BuildRequires: ant-junit3 >= 0:1.6
 %endif
-BuildRequires: junit >= 3.8.1
+BuildRequires: junit3 >= 3.8.1
 BuildRequires: java-javadoc
 BuildRequires: oro >= 2.0.8
 %if %{with_maven}
@@ -175,7 +175,7 @@ ln -s %{_javadir}/junit.jar target/lib
 %if %{without_tests}
 ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Dnoget=true -Dfinal.name=commons-net-%{version} -Dj2se.api=%{_javadocdir}/java jar javadoc
 %else
-export OPT_JAR_LIST="ant/ant-junit junit"
+export OPT_JAR_LIST="ant/ant-junit3 junit"
 ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Dnoget=true -Dfinal.name=commons-net-%{version} -Dj2se.api=%{_javadocdir}/java jar test javadoc
 %endif
 %endif
@@ -190,9 +190,9 @@ install -m 644 target/%{short_name}-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{
 (cd $RPM_BUILD_ROOT%{_javadir} && for jar in *-%{version}*; do ln -sf ${jar} `echo $jar| sed  "s|-%{version}||g"`; done)
 
 # pom
-install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/maven2/poms
+install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
 install -pm 644 %{SOURCE6} \
-    $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-%{name}.pom
+    $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 
 # javadoc
 install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
@@ -228,7 +228,7 @@ fi
 %files
 %doc %{_docdir}/%{name}-%{version}/LICENSE.txt
 %{_javadir}/*
-%{_datadir}/maven2/poms/*
+%{_mavenpomdir}/*
 %{_mavendepmapfragdir}
 %if %{gcj_support}
 %{_libdir}/gcj/%{name}
@@ -248,6 +248,9 @@ fi
 %doc %dir %{_docdir}/%{name}-%{version}
 
 %changelog
+* Fri Mar 29 2013 Igor Vlasenko <viy@altlinux.ru> 0:1.4.1-alt7_4jpp5
+- explicitly use junit3
+
 * Wed Mar 14 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.4.1-alt6_4jpp5
 - fixed build with moved maven1
 
