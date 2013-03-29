@@ -36,7 +36,7 @@ BuildRequires: servletapi4
 Summary:        High performance J2EE caching solution
 Name:           oscache
 Version:        2.4.1
-Release:        alt3_1jpp5
+Release:        alt4_1jpp5
 Epoch:          0
 License:        ASL 2.0
 Group:          Development/Java
@@ -52,8 +52,8 @@ Patch1:		oscache-2.4.1-no-groboutils.patch
 Requires: jakarta-commons-logging
 BuildRequires: jpackage-utils >= 0:1.6
 BuildRequires: ant >= 0:1.6
-BuildRequires: ant-junit
-BuildRequires: junit >= 0:3.8.2
+BuildRequires: ant-junit3
+BuildRequires: junit3 >= 0:3.8.2
 BuildRequires: apache-ivy
 BuildRequires: ant-trax
 BuildRequires: junitperf >= 0:1.9.1
@@ -124,9 +124,9 @@ sed -i -e 's,dependency org="java" name="jgroups",dependency org="java" name="jg
 
 %build
 
-export CLASSPATH=$(build-classpath apache-ivy ant/ant-junit junit ant/ant-trax)
+export CLASSPATH=$(build-classpath apache-ivy ant/ant-junit3 junit3 ant/ant-trax)
 export CLASSPATH=
-export OPT_JAR_LIST="apache-ivy ant/ant-junit junit ant/ant-trax"
+export OPT_JAR_LIST="apache-ivy ant/ant-junit3 junit ant/ant-trax"
 ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Dskip.tests=true -Dcommon.build=osbuild.xml jar
 # docs example-war 
 
@@ -164,6 +164,9 @@ mkdir -p $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}
 # -----------------------------------------------------------------------------
 
 %changelog
+* Fri Mar 29 2013 Igor Vlasenko <viy@altlinux.ru> 0:2.4.1-alt4_1jpp5
+- explicitly use junit3
+
 * Sat Sep 15 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.4.1-alt3_1jpp5
 - fixed build with new jgroup
 
