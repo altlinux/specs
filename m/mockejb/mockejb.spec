@@ -42,7 +42,7 @@ BuildRequires: jpackage-compat
 Summary:        Framework for running EJBs
 Name:           mockejb
 Version:        0.6
-Release:        alt3_0.b2.3jpp5
+Release:        alt4_0.b2.3jpp5
 Epoch:          0
 License:        Apache Software License
 URL:            http://mockejb.sourceforge.net/
@@ -56,8 +56,8 @@ Patch3:         mockejb-build_mockejb.patch
 
 BuildRequires: jpackage-utils >= 0:1.7.4
 BuildRequires: ant >= 0:1.6.5
-BuildRequires: ant-junit
-BuildRequires: junit
+BuildRequires: ant-junit3
+BuildRequires: junit3
 BuildRequires: asm
 BuildRequires: aspectj
 BuildRequires: cglib
@@ -145,12 +145,12 @@ ln -sf $(build-classpath mockrunner/mockrunner) .
 ln -sf $(build-classpath mockrunner/mockrunner-ejb) .
 %endif
 popd
-export OPT_JAR_LIST="ant/ant-junit junit"
+export OPT_JAR_LIST="ant/ant-junit3 junit"
 %if %{with_tests}
 export CLASSPATH=$(build-classpath mockrunner)
-ant build test
+ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  build test
 %else
-ant -f build_mockejb.xml build
+ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  -f build_mockejb.xml build
 %endif
 
 %install
@@ -163,9 +163,9 @@ cp -p build/%{name}/%{name}-%{version}-beta2/lib/%{name}.jar \
 (cd $RPM_BUILD_ROOT%{_javadir} && for jar in *-%{version}.jar; do ln -sf ${jar} `echo $jar| sed "s|-%{version}||g"`; done)
 
 # pom and depmap frags
-install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/maven2/poms
+install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
 %add_to_maven_depmap org.mockejb %{name} %{version} JPP %{name}
-install -m 644 %{SOURCE1} $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-%{name}.pom
+install -m 644 %{SOURCE1} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 
 # javadoc
 mkdir -p $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
@@ -196,7 +196,7 @@ fi
 %files
 %{_javadir}/*.jar
 %doc %{_docdir}/%{name}-%{version}/ReleaseNotes.html
-%{_datadir}/maven2
+%{_mavenpomdir}/*
 %{_mavendepmapfragdir}
 %if %{gcj_support}
 %dir %attr(-,root,root) %{_libdir}/gcj/%{name}
@@ -213,6 +213,9 @@ fi
 %doc %{_docdir}/%{name}-%{version}
 
 %changelog
+* Fri Mar 29 2013 Igor Vlasenko <viy@altlinux.ru> 0:0.6-alt4_0.b2.3jpp5
+- explicitly use junit3
+
 * Mon Jan 05 2009 Igor Vlasenko <viy@altlinux.ru> 0:0.6-alt3_0.b2.3jpp5
 - fixed repocop warnings
 
