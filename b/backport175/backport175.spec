@@ -37,7 +37,7 @@ BuildRequires: jpackage-compat
 Summary:        JSR-175 Backport
 Name:           backport175
 Version:        1.0
-Release:        alt2_1jpp5
+Release:        alt3_1jpp5
 Epoch:          0
 License:        Apache Software License 2.0
 URL:            http://backport175.codehaus.org/
@@ -47,7 +47,7 @@ Source1:        http://repo1.maven.org/maven2/backport175/backport175/1.0/backpo
 
 BuildRequires: jpackage-utils >= 0:1.7.5
 BuildRequires: ant >= 0:1.6.5
-BuildRequires: junit
+BuildRequires: junit3
 BuildRequires: asm2
 BuildRequires: jarjar
 BuildRequires: qdox
@@ -93,7 +93,7 @@ done
 ln -sf $(build-classpath asm2/asm2) lib/asm-2.0.jar
 ln -sf $(build-classpath qdox) lib/qdox-1.6-SNAPSHOT.jar
 ln -sf $(build-classpath jarjar) lib/jarjar-0.3.jar
-ln -sf $(build-classpath junit) lib/junit-3.8.1.jar
+ln -sf $(build-classpath junit3) lib/junit3-3.8.1.jar
 
 %build
 export LANG=en_US.ISO8859-1
@@ -103,14 +103,14 @@ ant  -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 dist test doc
 
 %install
 install -dm 755 $RPM_BUILD_ROOT%{_javadir}
-install -dm 755 $RPM_BUILD_ROOT%{_datadir}/maven2/poms
+install -dm 755 $RPM_BUILD_ROOT%{_mavenpomdir}
 
 # jars
 install -m 644 target/%{name}-%{version}.jar \
       $RPM_BUILD_ROOT%{_javadir}/%{name}-%{version}.jar
 ln -s %{name}-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
 
-install -m 644 %{SOURCE1} $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-backport175.pom
+install -m 644 %{SOURCE1} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-backport175.pom
 %add_to_maven_depmap %{name} %{name} %{version} JPP %{name}
 
 # javadoc
@@ -125,7 +125,7 @@ export CLASSPATH=$(build-classpath gnu-crypto)
 
 %files
 %{_javadir}/*.jar
-%{_datadir}/maven2/poms/*
+%{_mavenpomdir}/*
 %{_mavendepmapfragdir}/*
 %doc LICENSE.txt
 %if %{gcj_support}
@@ -138,6 +138,9 @@ export CLASSPATH=$(build-classpath gnu-crypto)
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Fri Mar 29 2013 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt3_1jpp5
+- explicitly use junit3
+
 * Fri Mar 16 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt2_1jpp5
 - fixed build with java 7
 
