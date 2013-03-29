@@ -36,7 +36,7 @@ BuildRequires: jpackage-compat
 
 Name:           strutstestcase
 Version:        2.1.4
-Release:        alt3_1jpp5
+Release:        alt4_1jpp5
 Epoch:          0
 Summary:        StrutsTestCase for JUnit
 
@@ -58,9 +58,9 @@ Requires(postun): java-gcj-compat
 
 BuildRequires: jpackage-utils >= 0:1.7.3
 BuildRequires: ant >= 0:1.6.5
-BuildRequires: ant-junit
+BuildRequires: ant-junit3
 BuildRequires: ant-trax
-BuildRequires: junit
+BuildRequires: junit3
 BuildRequires: jakarta-cactus
 BuildRequires: apache-commons-beanutils
 BuildRequires: apache-commons-chain
@@ -77,7 +77,7 @@ Requires: jakarta-cactus
 Requires: apache-commons-collections
 Requires: apache-commons-digester
 Requires: apache-commons-logging
-Requires: junit
+Requires: junit3
 Requires: jsp_2_0_api
 Requires: servlet_2_4_api
 Requires: struts
@@ -115,7 +115,7 @@ ln -sf $(build-classpath commons-chain)
 ln -sf $(build-classpath commons-collections)
 ln -sf $(build-classpath commons-digester)
 ln -sf $(build-classpath commons-logging)
-ln -sf $(build-classpath junit)
+ln -sf $(build-classpath junit3)
 ln -sf $(build-classpath struts)
 ln -sf $(build-classpath struts-extras)
 ln -sf $(build-classpath struts-taglib)
@@ -162,6 +162,9 @@ ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name} # ghost symlink
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Fri Mar 29 2013 Igor Vlasenko <viy@altlinux.ru> 0:2.1.4-alt4_1jpp5
+- explicitly use junit3
+
 * Fri Mar 22 2013 Igor Vlasenko <viy@altlinux.ru> 0:2.1.4-alt3_1jpp5
 - fixed build with apache-commons-*
 
