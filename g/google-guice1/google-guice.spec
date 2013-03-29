@@ -38,7 +38,7 @@ BuildRequires: jpackage-compat cglib
 Summary:        Dependency Injection Framework
 Name:           google-guice1
 Version:        1.0
-Release:        alt4_0.RC2.1jpp5
+Release:        alt5_0.RC2.1jpp5
 Epoch:          0
 Group:          Development/Java
 License:        Apache Software License 2.0
@@ -53,7 +53,7 @@ Patch0:         google-guice-pom.patch
 #Vendor: %{?_vendorinfo:%{_vendorinfo}}%{!?_vendorinfo:%{_vendor}}
 #Distribution: %{?_distribution:%{_distribution}}%{!?_distribution:%{_vendor}}
 BuildRequires: jpackage-utils >= 0:1.7.5
-BuildRequires: junit
+BuildRequires: junit3
 BuildRequires: maven2 >= 0:2.0.7
 BuildRequires: maven2-plugin-antrun
 BuildRequires: maven2-plugin-assembly
@@ -142,9 +142,9 @@ mvn-jpp -Dmaven.compile.target=1.5 -Dmaven.javadoc.source=1.5  -e \
 
 # jars
 install -d -m 0755 $RPM_BUILD_ROOT%{_javadir}
-install -d -m 0755 $RPM_BUILD_ROOT%{_datadir}/maven2/poms
+install -d -m 0755 $RPM_BUILD_ROOT%{_mavenpomdir}
 
-install -m 644 pom.xml $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-%{name}.pom
+install -m 644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 %add_to_maven_depmap com.google.inject guice %{version} JPP %{name}
 
 install -m 644 target/guice-1.0-RC2.jar $RPM_BUILD_ROOT%{_javadir}/%{name}-%{version}.jar
@@ -163,7 +163,7 @@ ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name} # ghost symlink
 
 %files
 %{_javadir}/*.jar
-%{_datadir}/maven2/poms/*
+%{_mavenpomdir}/*
 %{_mavendepmapfragdir}/*
 %if %{gcj_support}
 %dir %{_libdir}/gcj/%{name}
@@ -175,6 +175,9 @@ ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name} # ghost symlink
 %{_javadocdir}/%{name}
 
 %changelog
+* Fri Mar 29 2013 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt5_0.RC2.1jpp5
+- explicitly use junit3
+
 * Sun Mar 20 2011 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt4_0.RC2.1jpp5
 - compat build
 
