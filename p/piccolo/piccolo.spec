@@ -35,7 +35,7 @@ BuildRequires: jpackage-compat
 Summary:        Small fast XML parser
 Name:           piccolo
 Version:        1.0.4
-Release:        alt1_3jpp5
+Release:        alt2_3jpp5
 Epoch:          1
 License:        LGPL
 URL:            http://piccolo.sourceforge.net/
@@ -44,8 +44,8 @@ Source0:        piccolo-1.04-src.zip
 Source1:        piccolo-1.0.4.pom
 BuildRequires: jpackage-utils >= 0:1.7.3
 BuildRequires: ant >= 0:1.6.5
-BuildRequires: ant-junit
-BuildRequires: junit
+BuildRequires: ant-junit3
+BuildRequires: junit3
 BuildArch:      noarch
 Requires(post): jpackage-utils >= 0:1.7.3
 Requires(postun): jpackage-utils >= 0:1.7.3
@@ -69,7 +69,7 @@ BuildArch: noarch
 %setup -q -n %{name}-1.04
 
 %build
-export OPT_JAR_LIST="ant/ant-junit junit"
+export OPT_JAR_LIST="ant/ant-junit3 junit3"
 export CLASSPATH=
 ant -Dbuild.sysclasspath=first build javadoc
 
@@ -84,9 +84,9 @@ cp -p lib/Piccolo.jar \
 %add_to_maven_depmap %{name} %{name} %{version} JPP %{name}
 
 # poms
-install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/maven2/poms
+install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
 install -m 644 %{SOURCE1} \
-    $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-%{name}.pom
+    $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 
 # javadoc
 mkdir -p $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
@@ -99,13 +99,16 @@ ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name} # ghost symlink
 %{_javadir}/%{name}.jar
 %{_javadir}/%{name}-%{version}.jar
 %{_mavendepmapfragdir}/*
-%{_datadir}/maven2/poms/*
+%{_mavenpomdir}/*
 
 %files javadoc
 %doc %{_javadocdir}/%{name}-%{version}
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Fri Mar 29 2013 Igor Vlasenko <viy@altlinux.ru> 1:1.0.4-alt2_3jpp5
+- explicitly use junit3
+
 * Sun Feb 21 2010 Igor Vlasenko <viy@altlinux.ru> 1:1.0.4-alt1_3jpp5
 - new jpackage release
 
