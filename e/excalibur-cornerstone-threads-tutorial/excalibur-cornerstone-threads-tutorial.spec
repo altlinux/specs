@@ -36,7 +36,7 @@ BuildRequires: jpackage-compat
 
 Name:		excalibur-cornerstone-threads-tutorial
 Version:	2.1
-Release:	alt6_2jpp5
+Release:	alt7_2jpp5
 Epoch:		0
 Summary:	Cornerstone Threads Tutorial
 License:	Apache Software License 2.0
@@ -57,7 +57,7 @@ BuildRequires: maven1-plugin-test
 BuildRequires: maven1-plugin-xdoc
 BuildRequires: maven1-plugin-license
 #BuildRequires: maven1-plugin-
-BuildRequires: junit
+BuildRequires: junit3
 BuildRequires: jpackage-utils >= 0:1.6
 BuildRequires: saxon
 BuildRequires: saxon6-scripts
@@ -168,6 +168,9 @@ cp LICENSE.txt $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}
 %{_javadocdir}/%{name}
 
 %changelog
+* Fri Mar 29 2013 Igor Vlasenko <viy@altlinux.ru> 0:2.1-alt7_2jpp5
+- explicitly use junit3
+
 * Sun Sep 30 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.1-alt6_2jpp5
 - explicit maven1 plugin deps
 
