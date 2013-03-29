@@ -40,7 +40,7 @@ BuildRequires: jpackage-compat
 
 Name:           portals-%{bname}10
 Version:        1.0.1
-Release:        alt8_2jpp5
+Release:        alt9_2jpp5
 Epoch:          0
 Summary:        Portlet 1.0 Reference Implementation
 License:        Apache Software License 2.0
@@ -72,7 +72,7 @@ Patch8:         pluto-1.0.1-portal-build.patch
 
 BuildRequires: jpackage-utils >= 0:1.7.4
 BuildRequires: ant >= 0:1.6.5
-BuildRequires: junit
+BuildRequires: junit3
 %if %{with_maven}
 BuildRequires: maven1 >= 0:1.1
 BuildRequires: maven1-plugin-changelog
@@ -283,33 +283,33 @@ popd
 %install
 # jars/poms
 install -d -m 755 $RPM_BUILD_ROOT%{_javadir}/%{name}
-install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/maven2/poms
+install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
 
 install -m 644 api/target/portlet-api-1.0.jar \
     $RPM_BUILD_ROOT%{_javadir}/%{name}-portlet-1.0-api-%{version}.jar
 %add_to_maven_depmap javax.portlet portlet-api 1.0 JPP portlet_1_0_api
 %add_to_maven_depmap portlet-api portlet-api 1.0 JPP %{name}-portlet-1.0-api
-install -m 644 %{SOURCE5} $RPM_BUILD_ROOT/%{_datadir}/maven2/poms/JPP-%{name}-portlet-1.0-api.pom
+install -m 644 %{SOURCE5} $RPM_BUILD_ROOT/%{_mavenpomdir}/JPP-%{name}-portlet-1.0-api.pom
 
 install -m 644 container/target/%{bname}-%{version}.jar \
     $RPM_BUILD_ROOT%{_javadir}/%{name}/%{bname}-%{version}.jar
 %add_to_maven_depmap org.apache.pluto %{bname} %{version} JPP/%{name} %{bname}
-install -m 644 %{SOURCE6} $RPM_BUILD_ROOT/%{_datadir}/maven2/poms/JPP.%{name}-%{bname}.pom
+install -m 644 %{SOURCE6} $RPM_BUILD_ROOT/%{_mavenpomdir}/JPP.%{name}-%{bname}.pom
 
 install -m 644 deploy/target/%{bname}-deploy-%{version}.jar \
     $RPM_BUILD_ROOT%{_javadir}/%{name}/%{bname}-deploy-%{version}.jar
 %add_to_maven_depmap org.apache.pluto %{bname}-deploy %{version} JPP/%{name} %{bname}-deploy
-install -m 644 %{SOURCE7} $RPM_BUILD_ROOT/%{_datadir}/maven2/poms/JPP.%{name}-%{bname}-deploy.pom
+install -m 644 %{SOURCE7} $RPM_BUILD_ROOT/%{_mavenpomdir}/JPP.%{name}-%{bname}-deploy.pom
 
 install -m 644 portal/target/%{bname}-portal-%{version}.jar \
     $RPM_BUILD_ROOT%{_javadir}/%{name}/%{bname}-portal-%{version}.jar
 %add_to_maven_depmap org.apache.pluto %{bname}-portal %{version} JPP/%{name} %{bname}-portal
-install -m 644 %{SOURCE8} $RPM_BUILD_ROOT/%{_datadir}/maven2/poms/JPP.%{name}-%{bname}-portal.pom
+install -m 644 %{SOURCE8} $RPM_BUILD_ROOT/%{_mavenpomdir}/JPP.%{name}-%{bname}-portal.pom
 
 install -m 644 descriptors/target/%{bname}-descriptors-%{version}.jar \
     $RPM_BUILD_ROOT%{_javadir}/%{name}/%{bname}-descriptors-%{version}.jar
 %add_to_maven_depmap org.apache.pluto %{bname}-descriptors %{version} JPP/%{name} %{bname}-descriptors
-install -m 644 %{SOURCE9} $RPM_BUILD_ROOT/%{_datadir}/maven2/poms/JPP.%{name}-%{bname}-descriptors.pom
+install -m 644 %{SOURCE9} $RPM_BUILD_ROOT/%{_mavenpomdir}/JPP.%{name}-%{bname}-descriptors.pom
 
 install -m 644 testsuite/target/testsuite-%{version}.jar \
     $RPM_BUILD_ROOT%{_javadir}/%{name}/testsuite-%{version}.jar
@@ -380,7 +380,7 @@ fi
 %files 
 %doc %{_docdir}/%{name}-%{version}/LICENSE.TXT
 %{_javadir}/%{name}/*.jar
-%{_datadir}/maven2
+%{_mavenpomdir}/*
 %{_mavendepmapfragdir}
 %if %{gcj_support}
 %dir %{_libdir}/gcj/%{name}
@@ -397,7 +397,7 @@ fi
 %_altdir/portlet_1_0_api_%{name}-portlet-1.0-api
 %doc %{_docdir}/%{name}-%{version}/LICENSE.portlet-api
 %{_javadir}/*.jar
-%{_datadir}/maven2
+%{_mavenpomdir}/*
 %{_mavendepmapfragdir}
 %if %{gcj_support}
 %dir %{_libdir}/gcj/%{name}
@@ -416,6 +416,9 @@ fi
 %ghost %{_javadocdir}/%{name}
 
 %changelog
+* Fri Mar 29 2013 Igor Vlasenko <viy@altlinux.ru> 0:1.0.1-alt9_2jpp5
+- explicitly use junit3
+
 * Mon Oct 08 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0.1-alt8_2jpp5
 - rebuild with apache-commons-*
 
