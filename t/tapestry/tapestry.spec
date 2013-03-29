@@ -37,7 +37,7 @@ BuildRequires: jpackage-compat
 
 Name:           tapestry
 Version:        4.0.2
-Release:        alt7_3jpp5
+Release:        alt8_3jpp5
 Epoch:          0
 Summary:        Tapestry Framework
 License:        ASL 2.0
@@ -85,7 +85,7 @@ Requires: ognl
 Requires: portlet-1.0-api
 Requires: servletapi4
 BuildRequires: ant
-BuildRequires: ant-junit
+BuildRequires: ant-junit3
 BuildRequires: ant-nodeps
 BuildRequires: jpackage-utils >= 0:1.7
 BuildRequires: cglib
@@ -102,7 +102,7 @@ BuildRequires: jakarta-oro
 BuildRequires: javassist
 BuildRequires: jcharts
 BuildRequires: jdom
-BuildRequires: junit
+BuildRequires: junit3
 BuildRequires: log4j
 BuildRequires: ognl
 BuildRequires: portlet-1.0-api
@@ -215,7 +215,7 @@ ln -sf $(build-classpath log4j) log4j-.jar
 ln -sf $(build-classpath easymock) easymock-.jar
 ln -sf $(build-classpath easymock-classextension) easymockclassextension-.jar
 ln -sf $(build-classpath cglib-nodep) cglib-full-.jar
-ln -sf $(build-classpath junit) junit-.jar
+ln -sf $(build-classpath junit3) junit-.jar
 ln -sf $(build-classpath jdom) jdom-.jar
 #ln -sf $(build-classpath spring) spring-.jar
 ln -sf $(build-classpath springframework/spring-core.jar) spring-.jar
@@ -231,14 +231,10 @@ sed -i -e s,JPEGEncoder13,JPEGEncoder,g `grep -rl org.jCharts.encoders.JPEGEncod
 
 %build
 export CLASSPATH=
-export OPT_JAR_LIST="`%{__cat} %{_sysconfdir}/ant.d/{junit,nodeps}`"
+export OPT_JAR_LIST="`%{__cat} %{_sysconfdir}/ant.d/{junit3,nodeps}`"
 mkdir tmp
 mkdir -p ext-package/lib
 touch ext-package/download-warning-marker
-%if ! %{java2}
-%else
-export JAVA_HOME=%{_jvmdir}/java-1.4.2
-%endif
 export RD=$(pwd)
 ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Dhivebuild.dir=${RD}/hivemind-1.1.1/hivebuild -Dscratch.dir=${RD}/tmp -Droot.dir=${RD} -Dhivebuild.skip-tests=true install run-reports
 for d in framework contrib portlet; do
@@ -345,6 +341,9 @@ cp -pr config/* $RPM_BUILD_ROOT%{_datadir}/%{name}-%{version}/config
 %endif
 
 %changelog
+* Fri Mar 29 2013 Igor Vlasenko <viy@altlinux.ru> 0:4.0.2-alt8_3jpp5
+- explicitly use junit3
+
 * Mon Oct 08 2012 Igor Vlasenko <viy@altlinux.ru> 0:4.0.2-alt7_3jpp5
 - rebuild with apache-commons-*
 
