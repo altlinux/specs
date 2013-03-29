@@ -1,7 +1,7 @@
 %define node_name      node
-%define node_version  0.8.18
-%define node_release   alt1.1
-%define npmver 1.2.2
+%define node_version  0.10.2
+%define node_release   alt1
+%define npmver 1.2.15
 
 Name: %node_name
 Version: %node_version
@@ -11,9 +11,8 @@ Group: Development/Tools
 License: MIT License
 Url: http://nodejs.org/
 Source: %name-%version.tar
-Source1: node.macros
 
-BuildRequires: python-devel gcc-c++ openssl-devel zlib-devel libv8-devel gyp
+BuildRequires: python-devel gcc-c++ openssl-devel zlib-devel libv8-3.15-devel libuv-devel libcares-devel gyp
 Provides: nodejs = %version-%release
 Provides: node.js = %version-%release
 Obsoletes: nodejs < %version-%release
@@ -26,26 +25,26 @@ Node.js is a server-side JavaScript environment that uses an asynchronous
 event-driven model.  Node's goal is to provide an easy way to build scalable
 network programs.
 
-%package -n rpm-build-%node_name
-Summary:        RPM helper macros to rebuild Node.js packages
-Group:          Development/Other
-License:        GPL
-BuildArch:      noarch
-Requires: %node_name-devel = %node_version
+#%package -n rpm-build-%node_name
+#Summary:        RPM helper macros to rebuild Node.js packages
+#Group:          Development/Other
+#License:        GPL
+#BuildArch:      noarch
+#Requires: %node_name-devel = %node_version
 
-%description -n rpm-build-%node_name
-These helper macros provide possibility to rebuild
-Node.js packages by some Alt Linux Team Policy compatible way.
+#%description -n rpm-build-%node_name
+#These helper macros provide possibility to rebuild
+#Node.js packages by some Alt Linux Team Policy compatible way.
 
-%package devel
-Summary:        Devel package for Node.js
-Group:          Development/Other
-License:        GPL
-BuildArch:      noarch
-Requires:	%node_name = %node_version gcc-c++ gyp
+#%package devel
+#Summary:        Devel package for Node.js
+#Group:          Development/Other
+#License:        GPL
+#BuildArch:      noarch
+#Requires:	%node_name = %node_version gcc-c++ gyp
 
-%description devel
-Node.js header and build tools
+#%description devel
+#Node.js header and build tools
 
 %package -n npm
 Version: 	%npmver
@@ -54,7 +53,7 @@ Summary:	A package manager for node
 License:	MIT License
 Requires:	node
 BuildArch:	noarch
-Requires:	%node_name-devel = %node_version-%node_release
+#Requires:	%node_name-devel = %node_version-%node_release
 Requires:	%node_name = %node_version-%node_release
 
 %description -n npm
@@ -68,10 +67,10 @@ node programs. It manages dependencies and does other cool stuff.
 ./configure --no-ssl2 \
     --prefix=%_prefix \
     --shared-zlib \
-    --shared-v8 \
-    --shared-v8-includes=%_includedir \
     --openssl-includes=%_includedir \
-    --openssl-use-sys
+    --openssl-use-sys \
+    --shared-v8 \
+    --shared-v8-includes=%_includedir
 
 %make_build CXXFLAGS="%{optflags}" CFLAGS="%{optflags}"
 %make doc
@@ -84,15 +83,6 @@ echo 'export NODE_PATH="%{_libexecdir}/node_modules"' >%buildroot%_sysconfdir/pr
 echo 'setenv NODE_PATH %{_libexecdir}/node_modules' >%buildroot%_sysconfdir/profile.d/node.csh
 chmod 0755 %buildroot%_sysconfdir/profile.d/*
 
-mkdir -p %buildroot/%_rpmmacrosdir
-cp %SOURCE1 %buildroot%_rpmmacrosdir/%node_name
-
-subst 's,@node_name@,%node_name,'           %buildroot%_rpmmacrosdir/%node_name
-subst 's,@node_version@,%node_version,'     %buildroot%_rpmmacrosdir/%node_name
-subst 's,@node_release@,%node_release,'     %buildroot%_rpmmacrosdir/%node_name
-
-
-
 %files
 %doc AUTHORS ChangeLog LICENSE README.md out/doc
 %_bindir/node
@@ -100,20 +90,25 @@ subst 's,@node_release@,%node_release,'     %buildroot%_rpmmacrosdir/%node_name
 %_man1dir/*
 %_sysconfdir/profile.d/*
 
-%files devel
-%_bindir/node-waf
-%_includedir/node/
-%_libexecdir/node/
+#%files devel
+#%_bindir/node-waf
+#%_includedir/node/
+#%_libexecdir/node/
 
 
 %files -n npm
 %_bindir/npm
 %_libexecdir/node_modules/npm
 
-%files -n rpm-build-%node_name
-%_rpmmacrosdir/%node_name
-
 %changelog
+* Fri Mar 29 2013 Dmitriy Kulik <lnkvisitor@altlinux.org> 0.10.2-alt1
+- 0.10.2
+- npm 1.2.15
+
+* Sun Feb 10 2013 Dmitriy Kulik <lnkvisitor@altlinux.org> 0.8.19-alt1
+- 0.8.19
+- nmp 1.2.10
+
 * Fri Jan 25 2013 Dmitriy Kulik <lnkvisitor@altlinux.org> 0.8.18-alt1.1
 - Fix spec
   + non-strict dependency on node
