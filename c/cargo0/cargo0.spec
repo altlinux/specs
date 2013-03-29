@@ -52,7 +52,7 @@ BuildRequires: jpackage-compat
 
 Name:           cargo0
 Version:        0.9
-Release:        alt12_5jpp5
+Release:        alt13_5jpp5
 Epoch:          0
 Summary:        Cargo container wrapper
 License:        ASL 2.0
@@ -100,7 +100,7 @@ BuildRequires: modello-maven-plugin >= 0:1.0-0.a17
 BuildRequires: plexus-container-default
 BuildRequires: plexus-utils
 BuildRequires: jetty5
-BuildRequires: junit
+BuildRequires: junit3
 BuildRequires: jmock1
 BuildRequires: xmlunit
 BuildRequires: jpackage-utils >= 0:1.7.4
@@ -270,7 +270,7 @@ mvn-jpp -Dmaven.compile.target=1.5 -Dmaven.javadoc.source=1.5  \
         -Dmaven.repo.local=$MAVEN_REPO_LOCAL \
         install javadoc:javadoc
 %else
-export CLASSPATH=$(build-classpath geronimo-ejb-2.1-api geronimo-servlet-2.4-api junit commons-vfs commons-logging xalan-j2 jmock1 commons-codec plexus/container-default plexus/utils)
+export CLASSPATH=$(build-classpath geronimo-ejb-2.1-api geronimo-servlet-2.4-api junit3 commons-vfs commons-logging xalan-j2 jmock1 commons-codec plexus/container-default plexus/utils)
 export CLASSPATH=${CLASSPATH}:`pwd`/core/api/util/target/classes:`pwd`/core/api/util/target/test-classes
 export CLASSPATH=${CLASSPATH}:`pwd`/core/api/module/target/classes:`pwd`/core/api/module/target/test-classes
 export CLASSPATH=${CLASSPATH}:`pwd`/core/api/container/target/classes:`pwd`/core/api/container/target/test-classes
@@ -281,7 +281,7 @@ export CLASSPATH=${CLASSPATH}:`pwd`/core/containers/${container}/target/classes:
 done
 export CLASSPATH=${CLASSPATH}:$(echo %{_datadir}/maven2/lib/maven-plugin-api-[0-9]*.jar)::$(echo %{_datadir}/maven2/lib/maven-artifact-[0-9]*.jar):$(echo %{_datadir}/maven2/lib/maven-project-[0-9]*.jar):$(echo %{_datadir}/maven2/lib/maven-model-[0-9]*.jar)
 export CLASSPATH=${CLASSPATH}:`pwd`/classes/org/codehaus/cargo/module/webapp
-export OPT_JAR_LIST="junit ant/ant-junit"
+export OPT_JAR_LIST="junit3 ant/ant-junit3"
 ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Dcargo.containers= -Dcargo.core.version=0.9 -Dmaven.junit.fork=true -Dmaven.test.skip=true -Dbuild.sysclasspath=first -Dmaven.mode.offline=true -Dmaven.repo.local=$MAVEN_REPO_LOCAL package javadoc
 %if %with bootstrap
 pushd core/uberjar
@@ -568,6 +568,9 @@ ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Fri Mar 29 2013 Igor Vlasenko <viy@altlinux.ru> 0:0.9-alt13_5jpp5
+- explicitly use junit3
+
 * Fri Mar 22 2013 Igor Vlasenko <viy@altlinux.ru> 0:0.9-alt12_5jpp5
 - use jmock1
 
