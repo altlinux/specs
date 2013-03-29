@@ -37,7 +37,7 @@ BuildRequires: jpackage-compat
 Summary:        OpenSymphony Utilities
 Name:           oscore
 Version:        2.2.5
-Release:        alt1_2jpp5
+Release:        alt2_2jpp5
 Epoch:          0
 License:        Apache Software License modified
 URL:            http://www.opensymphony.com/oscore/
@@ -50,7 +50,7 @@ Patch2:         oscore-osbuild.patch
 
 BuildRequires: jpackage-utils >= 0:1.7.3
 BuildRequires: ant >= 0:1.6.5
-BuildRequires: ant-junit
+BuildRequires: ant-junit3
 BuildRequires: ant-nodeps
 BuildRequires: ant-trax
 BuildRequires: javacc3
@@ -62,7 +62,7 @@ BuildRequires: log4j
 BuildRequires: jakarta-oro
 BuildRequires: xerces-j2
 BuildRequires: xml-commons-jaxp-1.3-apis
-BuildRequires: junit >= 0:3.8.1
+BuildRequires: junit3 >= 0:3.8.1
 BuildRequires: mockobjects-jdk1.4-j2ee1.4
 BuildRequires: mockobjects-alt-jdk1.4
 BuildRequires: mockobjects
@@ -136,7 +136,7 @@ ln -sf $(build-classpath oro)
 ln -sf $(build-classpath xerces-j2)
 ln -sf $(build-classpath xml-commons-apis)
 popd
-ln -sf $(build-classpath junit)
+ln -sf $(build-classpath junit3)
 ln -sf $(build-classpath mockobjects-jdk1.4-j2ee1.4)
 ln -sf $(build-classpath mockobjects-alt-jdk1.4)
 ln -sf $(build-classpath mockobjects-jdk1.4)
@@ -171,8 +171,8 @@ popd
 
 echo package = com.opensymphony >> build.properties
 
-export OPT_JAR_LIST="ant/ant-junit junit ant/ant-trax"
-ant jar javadocs junit.report
+export OPT_JAR_LIST="ant/ant-junit3 junit ant/ant-trax"
+ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  jar javadocs junit.report
 
 %install
 
@@ -211,6 +211,9 @@ cp -pr dist/docs/* $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}
 %doc %{_docdir}/%{name}-%{version}
 
 %changelog
+* Fri Mar 29 2013 Igor Vlasenko <viy@altlinux.ru> 0:2.2.5-alt2_2jpp5
+- explicitly use junit3
+
 * Thu Jun 11 2009 Igor Vlasenko <viy@altlinux.ru> 0:2.2.5-alt1_2jpp5
 - new version
 
