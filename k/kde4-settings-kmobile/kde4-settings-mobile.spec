@@ -11,7 +11,7 @@
 %define bugfix 0
 Name: kde4-settings-%theme
 Version: %major.%minor.%bugfix
-Release: alt7
+Release: alt8
 
 Group: Graphical desktop/KDE
 Summary: %Theme - specific KDE settings
@@ -88,6 +88,9 @@ install -m 0755 profile.d/startkde %buildroot/%thisconfdir/
 %config %thisconfdir
 
 %changelog
+* Fri Mar 29 2013 Sergey V Turchin <zerg@altlinux.org> 0.3.0-alt8
+- setup maliit keyboard layout
+
 * Wed Feb 20 2013 Sergey V Turchin <zerg@altlinux.org> 0.3.0-alt7
 - fix qml import paths order
 
