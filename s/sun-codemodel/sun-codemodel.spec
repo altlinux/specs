@@ -45,7 +45,7 @@ BuildRequires: jpackage-compat
 Summary:        Java source code generation library
 Name:           sun-codemodel
 Version:        2.0
-Release:	alt3_2jpp5
+Release:	alt4_2jpp5
 Epoch:          0
 License:        CDDL
 URL:            https://codemodel.dev.java.net/
@@ -58,7 +58,7 @@ Source2:        sun-codemodel-2.0-jpp-depmap.xml
 
 BuildRequires: jpackage-utils >= 0:1.7.4
 BuildRequires: ant >= 0:1.6.5
-BuildRequires: junit >= 0:3.8.1
+BuildRequires: junit3 >= 0:3.8.1
 %if %{with_maven}
 BuildRequires: maven2 >= 2.0.4-11
 BuildRequires: maven2-plugin-ant
@@ -156,13 +156,13 @@ install -m 644 %{bname}/%{bname}-annotation-compiler/target/%{bname}-annotation-
 %add_to_maven_depmap com.sun.codemodel %{bname}-annotation-compiler %{version} JPP %{name}-annotation-compiler
 
 # poms
-install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/maven2/poms
+install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
 install -m 644 %{bname}/pom.xml \
-    $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-%{name}-parent.pom
+    $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}-parent.pom
 install -m 644 %{bname}/%{bname}/pom.xml \
-    $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-%{name}.pom
+    $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 install -m 644 %{bname}/%{bname}-annotation-compiler/pom.xml \
-    $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-%{name}-annotation-compiler.pom
+    $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}-annotation-compiler.pom
 
 # javadoc
 install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}/core
@@ -194,7 +194,7 @@ fi
 %files
 %doc %{_docdir}/%{name}-%{version}/LICENSE.txt
 %{_javadir}/*.jar
-%{_datadir}/maven2/poms/*
+%{_mavenpomdir}/*
 %{_mavendepmapfragdir}
 %if %{gcj_support}
 %dir %attr(-,root,root) %{_libdir}/gcj/%{name}
@@ -208,6 +208,9 @@ fi
 %ghost %{_javadocdir}/%{name}
 
 %changelog
+* Fri Mar 29 2013 Igor Vlasenko <viy@altlinux.ru> 0:2.0-alt4_2jpp5
+- explicitly use junit3
+
 * Tue Feb 22 2011 Igor Vlasenko <viy@altlinux.ru> 0:2.0-alt3_2jpp5
 - fixed build
 
