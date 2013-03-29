@@ -34,7 +34,7 @@ BuildRequires: jpackage-compat
 
 Name:           jaskell
 Version:        1.0
-Release:        alt1_1jpp5
+Release:        alt2_1jpp5
 Epoch:          0
 Summary:        Java Haskell pure functional programming language.
 
@@ -49,8 +49,8 @@ Patch0:         jaskell-build.patch
 BuildArch:      noarch
 BuildRequires: jpackage-utils >= 0:1.7.5
 BuildRequires: ant >= 0:1.6.5
-BuildRequires: ant-junit
-BuildRequires: junit
+BuildRequires: ant-junit3
+BuildRequires: junit3
 
 BuildRequires: bsf
 BuildRequires: jakarta-commons-lang
@@ -113,7 +113,7 @@ ln -sf $(build-classpath commons-lang) lib/commons-lang-2.1.jar
 ln -sf $(build-classpath bsf) lib/bsf.jar
 ln -sf $(build-classpath jfunutil) lib/jfunutil.jar
 ln -sf $(build-classpath jparsec) lib/jparsec.jar
-ln -sf $(build-classpath jparsec) lib/junit.jar
+ln -sf $(build-classpath jparsec) lib/junit3.jar
 
 #mv lib/jparsec_old2.jar.no lib/jparsec_old2.jar
 #mv lib/jparsec_old.jar.no lib/jparsec_old.jar
@@ -128,7 +128,7 @@ popd
 
 %build
 pushd src
-ant buildlib test doc
+ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  buildlib test doc
 popd
 
 %install
@@ -140,8 +140,8 @@ install -m 644 src/bin/jaskell.jar \
 ln -sf %{name}-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
 
 # pom
-install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/maven2/poms
-install -m 644 %{SOURCE1} $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-%{name}.pom
+install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
+install -m 644 %{SOURCE1} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 
 # javadoc
 install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
@@ -156,7 +156,7 @@ cp -pr doc/docs/jaskell/* $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}
 %files
 %{_javadir}/*.jar
 %doc src/LICENSE.txt
-%{_datadir}/maven2/poms/*
+%{_mavenpomdir}/*
 %{_mavendepmapfragdir}/*
 
 %files javadoc
@@ -167,6 +167,9 @@ cp -pr doc/docs/jaskell/* $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}
 %doc %{_docdir}/%{name}-%{version}
 
 %changelog
+* Fri Mar 29 2013 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt2_1jpp5
+- explicitly use junit3
+
 * Tue Mar 17 2009 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt1_1jpp5
 - first build
 
