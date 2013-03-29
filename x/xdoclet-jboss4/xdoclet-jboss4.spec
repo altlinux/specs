@@ -38,7 +38,7 @@ BuildRequires: jpackage-compat
 
 Name:           xdoclet-jboss4
 Version:        1.2.2
-Release:        alt2_3jpp5
+Release:        alt3_3jpp5
 Epoch:          0
 Summary:        XDoclet Attribute Orientated Programming Framework
 License:        XDoclet Open Source Licence
@@ -54,7 +54,7 @@ BuildArch:      noarch
 %endif
 BuildRequires: jpackage-utils >= 0:1.6
 BuildRequires: ant >= 0:1.6
-BuildRequires: junit
+BuildRequires: junit3
 BuildRequires: javacc
 BuildRequires: jrefactory
 BuildRequires: bsf
@@ -184,6 +184,9 @@ fi
 %doc %{_docdir}/%{name}-%{version}
 
 %changelog
+* Fri Mar 29 2013 Igor Vlasenko <viy@altlinux.ru> 0:1.2.2-alt3_3jpp5
+- explicitly use junit3
+
 * Wed Aug 03 2011 Igor Vlasenko <viy@altlinux.ru> 0:1.2.2-alt2_3jpp5
 - fixed build
 
