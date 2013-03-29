@@ -38,7 +38,7 @@ BuildRequires: jpackage-compat
 
 Name:           jing0
 Version:        0.1
-Release:        alt5_0.20030619.9jpp5
+Release:        alt6_0.20030619.9jpp5
 Epoch:          0
 Summary:        Jing, a validator for RELAX NG implemented in Java
 
@@ -58,8 +58,8 @@ BuildArch:      noarch
 
 BuildRequires: jpackage-utils >= 0:1.7.4
 BuildRequires: ant >= 0:1.6.5
-BuildRequires: ant-junit
-BuildRequires: junit >= 0:3.8.1
+BuildRequires: ant-junit3
+BuildRequires: junit3 >= 0:3.8.1
 BuildRequires: xalan-j2 >= 0:2.7.0
 BuildRequires: xerces-j2 >= 0:2.9.0
 BuildRequires: isorelax
@@ -110,14 +110,14 @@ find . -name "*.jar" -exec rm {} \;
 %patch2 -b .sav2
 
 %build
-export OPT_JAR_LIST="ant/ant-junit junit"
+export OPT_JAR_LIST="ant/ant-junit3 junit"
 export CLASSPATH=$(build-classpath \
 xalan-j2 \
 xerces-j2 \
 saxon6 \
 isorelax)
 CLASSPATH=$CLASSPATH:src/test-input:target/classes:target/test-classes
-ant dist javadoc 
+ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  dist javadoc 
 
 %install
 install -Dpm 644 dist/lib/%{oldname}-%{cvsversion}.jar \
@@ -148,6 +148,9 @@ export CLASSPATH=$(build-classpath gnu-crypto)
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Fri Mar 29 2013 Igor Vlasenko <viy@altlinux.ru> 0:0.1-alt6_0.20030619.9jpp5
+- explicitly use junit3
+
 * Mon Mar 18 2013 Igor Vlasenko <viy@altlinux.ru> 0:0.1-alt5_0.20030619.9jpp5
 - compat package for sun-jaxb-2.1-impl
 
