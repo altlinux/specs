@@ -41,7 +41,7 @@ Name:           rmock
 Summary:        RMOCK - A Java Test-Double Framework
 Url:            http://rmock.sourceforge.net/
 Version:        2.0.0
-Release:        alt7_2jpp5
+Release:        alt8_2jpp5
 Epoch:          0
 License:        Apache Software License 2.0
 Group:          Development/Java
@@ -88,14 +88,14 @@ BuildRequires: fop
 BuildRequires: cglib
 BuildRequires: excalibur-avalon-logkit
 BuildRequires: jakarta-commons-collections
-BuildRequires: junit
+BuildRequires: junit3
 BuildRequires: velocity
 
 Requires: maven2
 Requires: cglib
 Requires: excalibur-avalon-logkit
 Requires: jakarta-commons-collections
-Requires: junit
+Requires: junit3
 Requires: velocity
 
 
@@ -185,43 +185,43 @@ mvn-jpp -Dmaven.compile.target=1.5 -Dmaven.javadoc.source=1.5  \
 
 # jars
 install -d -m 755 $RPM_BUILD_ROOT%{_javadir}/%{name}
-install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/maven2/poms
+install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
 install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/maven2/plugins
 
 %add_to_maven_depmap com.agical.rmock parent %{version} JPP/%{name} parent
 install -m 644 rmock-framework/parent_pom.xml \
-   $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP.%{name}-parent.pom
+   $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{name}-parent.pom
 
 install -m 644 com.agical.rdoc/target/tddoc-%{version}.jar \
    $RPM_BUILD_ROOT%{_javadir}/%{name}/tddoc-%{version}.jar
 %add_to_maven_depmap com.agical.rmock tddoc %{version} JPP/%{name} tddoc
 install -m 644 com.agical.rdoc/pom.xml \
-   $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP.%{name}-tddoc.pom
+   $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{name}-tddoc.pom
 
 install -m 644 com.agical.rmock/target/%{name}-%{version}.jar \
    $RPM_BUILD_ROOT%{_javadir}/%{name}/%{name}-%{version}.jar
 %add_to_maven_depmap com.agical.rmock %{name} %{version} JPP/%{name} %{name}
 install -m 644 com.agical.rmock/pom.xml \
-   $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP.%{name}-%{name}.pom
+   $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{name}-%{name}.pom
 
 install -m 644 documentation/target/documentation-%{version}.jar \
    $RPM_BUILD_ROOT%{_javadir}/%{name}/documentation-%{version}.jar
 %add_to_maven_depmap com.agical.rmock documentation %{version} JPP/%{name} documentation
 install -m 644 documentation/pom.xml \
-   $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP.%{name}-documentation.pom
+   $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{name}-documentation.pom
 
 install -m 644 rmock-maven-plugin/target/%{name}-maven-plugin-%{plugin_version}.jar \
    $RPM_BUILD_ROOT%{_javadir}/%{name}/%{name}-maven-plugin-%{plugin_version}.jar
 %add_to_maven_depmap com.agical.rmock %{name}-maven-plugin %{plugin_version} JPP/%{name} %{name}-maven-plugin
 install -m 644 rmock-maven-plugin/pom.xml \
-   $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP.%{name}-%{name}-maven-plugin.pom
+   $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{name}-%{name}-maven-plugin.pom
 
 
 install -m 644 rmock-skin/target/%{name}-skin-%{skin_version}.jar \
    $RPM_BUILD_ROOT%{_javadir}/%{name}/%{name}-skin-%{skin_version}.jar
 %add_to_maven_depmap com.agical.rmock %{name}-skin %{skin_version} JPP/%{name} %{name}-maven-plugin
 install -m 644 rmock-skin/pom.xml \
-   $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP.%{name}-%{name}-skin.pom
+   $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{name}-%{name}-skin.pom
 
 
 (cd $RPM_BUILD_ROOT%{_javadir}/%{name} && for jar in *-%{version}.jar; do ln -sf ${jar} `echo $jar| sed  "s|-%{version}||g"`; done)
@@ -256,7 +256,7 @@ fi
 %files
 %dir %{_javadir}/%{name}
 %{_javadir}/%{name}/*.jar
-%{_datadir}/maven2/poms
+%{_mavenpomdir}
 %{_mavendepmapfragdir}
 %{_datadir}/maven2/plugins/*maven-plugin.jar
 %if %{gcj_support}
@@ -269,6 +269,9 @@ fi
 %ghost %doc %{_javadocdir}/%{name}
 
 %changelog
+* Fri Mar 29 2013 Igor Vlasenko <viy@altlinux.ru> 0:2.0.0-alt8_2jpp5
+- explicitly use junit3
+
 * Fri Aug 31 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.0.0-alt7_2jpp5
 - fixed build
 
