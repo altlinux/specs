@@ -37,7 +37,7 @@ BuildRequires: jpackage-compat
 Summary:        Livetribe JSR223 API
 Name:           livetribe-jsr223
 Version:        2.0.3
-Release:        alt3_1jpp5
+Release:        alt4_1jpp5
 Epoch:          0
 Group:          Development/Java
 License:        ASL 2.0
@@ -53,7 +53,7 @@ Source3:        livetribe-1.0.pom
 Patch0:         http://jira.codehaus.org/secure/attachment/34178/patch-lt-jsr223-exception-message.txt
 
 BuildRequires: jpackage-utils >= 0:1.7.5
-BuildRequires: junit
+BuildRequires: junit3
 BuildRequires: maven2 >= 0:2.0.7
 BuildRequires: maven2-plugin-antrun
 BuildRequires: maven2-plugin-assembly
@@ -121,7 +121,7 @@ mkdir -p $MAVEN_REPO_LOCAL/JPP/maven2/default_poms
 cp %{SOURCE3} $MAVEN_REPO_LOCAL/JPP/maven2/default_poms/org.livetribe-livetribe.pom
 install -Dm644 %{SOURCE3} $MAVEN_REPO_LOCAL/org/livetribe/livetribe/1.0/livetribe-1.0.pom
 
-mvn-jpp -e \
+mvn-jpp -Dmaven.compile.source=1.5 -Dmaven.compile.target=1.5 -Dmaven.javadoc.source=1.5  -e \
         -s ${M2SETTINGS} \
         -Dmaven.repo.local=$MAVEN_REPO_LOCAL \
         -Dmaven2.jpp.depmap.file=%{SOURCE1} \
@@ -131,12 +131,12 @@ mvn-jpp -e \
 
 # jars
 install -d -m 0755 $RPM_BUILD_ROOT%{_javadir}
-install -d -m 0755 $RPM_BUILD_ROOT%{_datadir}/maven2/poms
+install -d -m 0755 $RPM_BUILD_ROOT%{_mavenpomdir}
 
-install -m 644 %{SOURCE3} $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-livetribe.pom
+install -m 644 %{SOURCE3} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-livetribe.pom
 %add_to_maven_depmap org.livetribe livetribe 1.0 JPP livetribe
 
-install -m 644 pom.xml $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-%{name}.pom
+install -m 644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 %add_to_maven_depmap org.livetribe %{name} %{version} JPP %{name}
 install -m 644 target/livetribe-jsr223-2.0.2.jar \
                $RPM_BUILD_ROOT%{_javadir}/%{name}-%{version}.jar
@@ -162,7 +162,7 @@ EOF
 %_altdir/script_api_%{name}
 %_altdir/script_1_0_api_%{name}
 %{_javadir}/*.jar
-%{_datadir}/maven2/poms/*
+%{_mavenpomdir}/*
 %{_mavendepmapfragdir}/*
 %if %{gcj_support}
 %dir %{_libdir}/gcj/%{name}
@@ -174,6 +174,9 @@ EOF
 %{_javadocdir}/%{name}
 
 %changelog
+* Fri Mar 29 2013 Igor Vlasenko <viy@altlinux.ru> 0:2.0.3-alt4_1jpp5
+- explicitly use junit3
+
 * Fri Mar 23 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.0.3-alt3_1jpp5
 - manually dropped maven-one-plugin from pom to fix build
 
