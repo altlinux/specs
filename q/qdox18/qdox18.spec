@@ -45,7 +45,7 @@ BuildRequires: jpackage-compat
 Summary:        Extract class/interface/method definitions from sources
 Name:           qdox18
 Version:        1.8
-Release:        alt4_1jpp5
+Release:        alt5_1jpp5
 Epoch:          0
 License:        Apache-style Software License
 URL:            http://qdox.codehaus.org/
@@ -61,8 +61,8 @@ Patch1:         qdox-1.8-lexer_flex.patch
 
 BuildRequires: jpackage-utils >= 0:1.7.4
 BuildRequires: ant >= 0:1.6
-BuildRequires: ant-junit >= 0:1.6
-BuildRequires: junit >= 0:3.8.1
+BuildRequires: ant-junit3 >= 0:1.6
+BuildRequires: junit3 >= 0:3.8.1
 BuildRequires: byaccj
 BuildRequires: jflex
 %if %{with_maven}
@@ -236,6 +236,9 @@ rm -rf target/site/apidocs
 %doc %dir %{_docdir}/%{name}-%{version}
 
 %changelog
+* Fri Mar 29 2013 Igor Vlasenko <viy@altlinux.ru> 0:1.8-alt5_1jpp5
+- explicitly use junit3
+
 * Fri Mar 22 2013 Igor Vlasenko <viy@altlinux.ru> 0:1.8-alt4_1jpp5
 - use jmock1
 
