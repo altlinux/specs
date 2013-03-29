@@ -1,4 +1,4 @@
-BuildRequires: ant ant-junit
+BuildRequires: ant ant-junit3
 BuildRequires: crimson
 %define _without_maven 1
 Packager: Igor Vlasenko <viy@altlinux.ru>
@@ -47,7 +47,7 @@ BuildRequires: jpackage-1.6.0-compat
 
 Name:           cewolf
 Version:        1.0
-Release:        alt3_5jpp5
+Release:        alt4_5jpp5
 Epoch:          0
 Summary:        Chart Taglib Library
 License:        LGPLv2+
@@ -186,8 +186,8 @@ done
 (cd $RPM_BUILD_ROOT%{_javadir} && for jar in *-%{version}*; do \
 ln -sf ${jar} ${jar/-%{version}/}; done)
 
-install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/maven2/poms
-install -m 644 pom.xml $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-%{name}.pom
+install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
+install -m 644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 %add_to_maven_depmap %{name} %{name} %{version} JPP %{name}
 
 # javadoc
@@ -206,7 +206,7 @@ export CLASSPATH=$(build-classpath gnu-crypto)
 %files
 %{_javadir}/%{name}.jar
 %{_javadir}/%{name}-%{version}.jar
-%{_datadir}/maven2/poms/*
+%{_mavenpomdir}/*
 %{_mavendepmapfragdir}/*
 %if %{gcj_support}
 %dir %{_libdir}/gcj/%{name}
@@ -218,6 +218,9 @@ export CLASSPATH=$(build-classpath gnu-crypto)
 %{_javadocdir}/%{name}
 
 %changelog
+* Fri Mar 29 2013 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt4_5jpp5
+- explicitly use junit3
+
 * Wed Oct 03 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt3_5jpp5
 - added ant-junit BR:
 
