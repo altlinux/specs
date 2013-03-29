@@ -38,7 +38,7 @@ Name:           rife-continuations
 Summary:        RIFE continuations
 Url:            http://rifers.org/wiki/display/RIFECNT/Home
 Version:        0.1
-Release:        alt1_2jpp5
+Release:        alt2_2jpp5
 Epoch:          0
 License:        LGPL
 Group:          Development/Java
@@ -48,7 +48,7 @@ Source1:        http://mirrors.ibiblio.org/pub/mirrors/maven2/org/rifers/rife-co
 Patch0:         rife-continuations-0.1-build_xml.patch
 BuildRequires: jpackage-utils >= 0:1.7.3
 BuildRequires: ant >= 0:1.6.5
-BuildRequires: junit >= 0:3.8.1
+BuildRequires: junit3 >= 0:3.8.1
 %if %{gcj_support}
 BuildRequires: java-gcj-compat-devel
 Requires(post): java-gcj-compat
@@ -87,9 +87,9 @@ done
 
 %build
 pushd lib
-ln -sf $(build-classpath junit) .
+ln -sf $(build-classpath junit3) .
 popd
-ant jar test javadocs
+ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  jar test javadocs
 
 %install
 # jars
@@ -100,9 +100,9 @@ install -m 644 build/dist/%{name}-%{version}-snapshot.jar \
 %add_to_maven_depmap org.rifers %{name} 0.0.1 JPP %{name}
 
 # poms
-install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/maven2/poms
+install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
 install -m 644 %{SOURCE1} \
-    $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-%{name}.pom
+    $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 
 # javadoc
 install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
@@ -118,7 +118,7 @@ ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name} # ghost symlink
 %doc LICENSE_CDDL.txt
 %{_javadir}/*
 %{_mavendepmapfragdir}/*
-%{_datadir}/maven2/poms/*
+%{_mavenpomdir}/*
 %if %{gcj_support}
 %dir %{_libdir}/gcj/%{name}
 %{_libdir}/gcj/%{name}/%{name}*%{version}.jar.*
@@ -129,6 +129,9 @@ ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name} # ghost symlink
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Fri Mar 29 2013 Igor Vlasenko <viy@altlinux.ru> 0:0.1-alt2_2jpp5
+- explicitly use junit3
+
 * Sun Feb 21 2010 Igor Vlasenko <viy@altlinux.ru> 0:0.1-alt1_2jpp5
 - new jpackage release
 
