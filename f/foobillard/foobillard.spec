@@ -3,7 +3,7 @@
 
 Name: foobillard
 Version: 3.0a
-Release: alt1.1
+Release: alt1.2
 
 Summary: A game of playing billard
 License: GPL
@@ -27,7 +27,7 @@ Requires: sound_handler
 # Automatically added by buildreq on Thu May 15 2008 (-bi)
 BuildRequires: gcc-c++ imake libSDL-devel libXaw-devel libfreetype-devel libpng-devel xorg-cf-files
 
-BuildRequires: xorg-x11-libs freetype2-devel gcc-c++ libGLU-devel libXi-devel
+BuildRequires: freetype2-devel gcc-c++ libGLU-devel libXi-devel
 BuildRequires: libSDL-devel libpng-devel xpm zlib-devel
 
 %description
@@ -84,6 +84,9 @@ install -pm0644 %SOURCE5 %buildroot/%_iconsdir/hicolor/48x48/apps/%name.xpm
 %_desktopdir/%{name}.desktop
 
 %changelog
+* Fri Mar 29 2013 Andrey Cherepanov <cas@altlinux.org> 3.0a-alt1.2
+- Fix build with new version of xorg
+
 * Fri Sep 28 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0a-alt1.1
 - Rebuilt with libpng15
 
