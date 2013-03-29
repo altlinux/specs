@@ -36,7 +36,7 @@ BuildRequires: jpackage-compat
 Summary:        AOP for Java
 Name:           aspectwerkz
 Version:        2.0
-Release:        alt2_2jpp5
+Release:        alt3_2jpp5
 Epoch:          0
 License:        BSD-style License
 URL:            http://aspectwerkz.codehaus.org/
@@ -45,7 +45,7 @@ Source0:        http://dist.codehaus.org/aspectwerkz/distributions/aspectwerkz-2
 Patch0:         aspectwerkz2-build_xml.patch
 Patch1:         aspectwerkz2-script.patch
 BuildRequires: jpackage-utils >= 0:1.6
-BuildRequires: junit
+BuildRequires: junit3
 BuildRequires: ant >= 0:1.6
 BuildRequires: asm
 BuildRequires: concurrent
@@ -131,7 +131,7 @@ dom4j \
 gnu.trove \
 concurrent \
 j2ee-management \
-junit \
+junit3 \
 jrexx \
 javassist \
 qdox \
@@ -211,6 +211,9 @@ fi
 # -----------------------------------------------------------------------------
 
 %changelog
+* Fri Mar 29 2013 Igor Vlasenko <viy@altlinux.ru> 0:2.0-alt3_2jpp5
+- explicitly use junit3
+
 * Fri Mar 16 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.0-alt2_2jpp5
 - fixed build with java 7
 
