@@ -4,7 +4,7 @@
 %define naplet plasma_applet_yawp
 
 Name: kde4plasma-addon-yawp
-Version: 0.4.3
+Version: 0.4.5
 Release: alt1
 
 Group: Graphical desktop/KDE
@@ -24,11 +24,11 @@ Patch2: yawp-0.3.4-alt-fix-compile.patch
 BuildRequires: gcc-c++ glib2-devel glibc-devel-static kde4base-workspace-devel
 BuildRequires: libXScrnSaver-devel libXau-devel libXcomposite-devel
 BuildRequires: libXdamage-devel libXdmcp-devel libXpm-devel libXt-devel
-BuildRequires: libXtst-devel libXv-devel libXxf86misc-devel
+BuildRequires: libXtst-devel libXv-devel
 BuildRequires: libxkbfile-devel qt4-assistant xorg-xf86vidmodeproto-devel
 
 BuildRequires: libXcomposite-devel libXdamage-devel libXdmcp-devel libXpm-devel
-BuildRequires: libXt-devel libXtst-devel libXv-devel libXxf86misc-devel
+BuildRequires: libXt-devel libXtst-devel libXv-devel
 BuildRequires: libqt4-devel libxkbfile-devel xorg-xf86vidmodeproto-devel
  
 %description
@@ -62,6 +62,12 @@ There is nothing wrong with the ones that exist, I just wanted something more
 #%_K4apps/ion_accuweather/
 
 %changelog
+* Fri Mar 29 2013 Sergey V Turchin <zerg@altlinux.org> 0.4.5-alt1
+- new version
+
+* Thu Aug 23 2012 Sergey V Turchin <zerg@altlinux.org> 0.4.3-alt0.M60P.1
+- built for M60P
+
 * Thu Aug 23 2012 Sergey V Turchin <zerg@altlinux.org> 0.4.3-alt1
 - new version
 
