@@ -37,7 +37,7 @@ BuildRequires: jpackage-compat
 Summary:        IZPack installer generator
 Name:           izpack
 Version:        3.8.1
-Release:        alt1_4jpp5
+Release:        alt2_4jpp5
 Epoch:          0
 License:        Apache Software License 2.0
 URL:            http://www.izforge.com/izpack/
@@ -54,8 +54,8 @@ Source6:        izpack-uninstaller-ext-3.8.1.pom
 
 BuildRequires: jpackage-utils >= 0:1.7.3
 BuildRequires: ant >= 0:1.6.5
-BuildRequires: ant-junit
-BuildRequires: junit
+BuildRequires: ant-junit3
+BuildRequires: junit3
 BuildRequires: regexp
 Requires: regexp
 %if %{gcj_support}
@@ -131,7 +131,7 @@ ln -sf $(build-classpath regexp) jakarta-regexp-1.3.jar
 ln -sf $(build-classpath ant) .
 popd
 cd src
-ant all build.javadoc
+ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  all build.javadoc
 
 %install
 
@@ -165,13 +165,13 @@ cp -p lib/izevent.jar \
 (cd $RPM_BUILD_ROOT%{_javadir}/%{name} && for jar in *-%{version}.jar; do ln -sf ${jar} `echo $jar| sed "s|-%{version}||g"`; done)
 
 # poms
-install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/maven2/poms
-install -m 644 %{SOURCE1} $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP.%{name}-compiler.pom
-install -m 644 %{SOURCE2} $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP.%{name}-installer.pom
-install -m 644 %{SOURCE3} $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP.%{name}-izevent.pom
-install -m 644 %{SOURCE4} $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP.%{name}-standalone-compiler.pom
-install -m 644 %{SOURCE5} $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP.%{name}-uninstaller.pom
-install -m 644 %{SOURCE6} $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP.%{name}-uninstaller-ext.pom
+install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
+install -m 644 %{SOURCE1} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{name}-compiler.pom
+install -m 644 %{SOURCE2} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{name}-installer.pom
+install -m 644 %{SOURCE3} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{name}-izevent.pom
+install -m 644 %{SOURCE4} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{name}-standalone-compiler.pom
+install -m 644 %{SOURCE5} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{name}-uninstaller.pom
+install -m 644 %{SOURCE6} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{name}-uninstaller-ext.pom
 
 # javadoc
 mkdir -p $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
@@ -200,7 +200,7 @@ cp -pr sample/* $RPM_BUILD_ROOT%{_datadir}/%{name}-%{version}/sample
 %{_docdir}/%{name}-%{version}/*.txt
 %{_javadir}/%{name}/*.jar
 %{_mavendepmapfragdir}/*
-%{_datadir}/maven2/poms/*
+%{_mavenpomdir}/*
 %if %{gcj_support}
 %dir %{_libdir}/gcj/%{name}
 %{_libdir}/gcj/%{name}/*.jar.*
@@ -219,6 +219,9 @@ cp -pr sample/* $RPM_BUILD_ROOT%{_datadir}/%{name}-%{version}/sample
 %{_datadir}/%{name}-%{version}
 
 %changelog
+* Fri Mar 29 2013 Igor Vlasenko <viy@altlinux.ru> 0:3.8.1-alt2_4jpp5
+- explicitly use junit3
+
 * Tue Mar 31 2009 Igor Vlasenko <viy@altlinux.ru> 0:3.8.1-alt1_4jpp5
 - new jpp release
 
