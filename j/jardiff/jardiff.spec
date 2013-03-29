@@ -36,7 +36,7 @@ BuildRequires: jpackage-compat
 
 Name:           jardiff
 Version:        0.2
-Release:	alt3_3jpp5
+Release:	alt4_3jpp5
 Epoch:          0
 Summary:        Jar Diff Util
 License:        BSD
@@ -59,8 +59,8 @@ BuildArch:      noarch
 
 BuildRequires: jpackage-utils >= 0:1.7.4
 BuildRequires: ant >= 0:1.6.5
-BuildRequires: ant-junit
-BuildRequires: junit
+BuildRequires: ant-junit3
+BuildRequires: junit3
 BuildRequires: asm2
 BuildRequires: jakarta-commons-cli
 
@@ -95,7 +95,7 @@ asm2/asm2 \
 asm2/asm2-commons \
 commons-cli \
 )
-ant -Dbuild.sysclasspath=only jar test javadoc
+ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  -Dbuild.sysclasspath=only jar test javadoc
 
 
 %install
@@ -107,8 +107,8 @@ install -m 644 target/%{name}-%{version}.jar \
 (cd $RPM_BUILD_ROOT%{_javadir} && for jar in *-%{version}*; do ln -sf ${jar} `echo $jar| sed  "s|-%{version}||g"`; done)
 
 # pom
-install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/maven2/poms
-install -m 644 %{SOURCE1} $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-%{name}.pom
+install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
+install -m 644 %{SOURCE1} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 
 # javadoc
 install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
@@ -131,7 +131,7 @@ fi
 
 %files
 %{_javadir}/*
-%{_datadir}/maven2
+%{_mavenpomdir}/*
 %{_mavendepmapfragdir}
 %if %{gcj_support}
 %dir %attr(-,root,root) %{_libdir}/gcj/%{name}
@@ -143,6 +143,9 @@ fi
 %ghost %doc %{_javadocdir}/%{name}
 
 %changelog
+* Fri Mar 29 2013 Igor Vlasenko <viy@altlinux.ru> 0:0.2-alt4_3jpp5
+- explicitly use junit3
+
 * Wed May 12 2010 Igor Vlasenko <viy@altlinux.ru> 0:0.2-alt3_3jpp5
 - fixes for java6 support
 
