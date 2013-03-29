@@ -37,7 +37,7 @@ BuildRequires: jpackage-compat
 
 Name:           smack1
 Version:        1.5.0
-Release:        alt3_3jpp5
+Release:        alt4_3jpp5
 Epoch:          0
 Summary:        Open Source XMPP (Jabber) client library
 
@@ -59,7 +59,7 @@ BuildArch:      noarch
 BuildRequires: jpackage-utils >= 0:1.6
 BuildRequires: ant >= 0:1.6
 BuildRequires: ant-contrib >= 0:1.0
-BuildRequires: junit >= 0:3.8.1
+BuildRequires: junit3 >= 0:3.8.1
 BuildRequires: xpp3
 Requires: xpp3
 
@@ -93,12 +93,12 @@ done
 %build
 pushd build
 ln -sf $(build-classpath ant-contrib)
-ln -sf $(build-classpath junit)
+ln -sf $(build-classpath junit3) junit.jar
 pushd merge
 ln -sf $(build-classpath xpp3) xpp.jar
 popd
 popd
-ant -f build/build.xml jar javadoc jar-test
+ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  -f build/build.xml jar javadoc jar-test
 
 %install
 install -d -m 755 $RPM_BUILD_ROOT%{_javadir}/%{name}
@@ -153,6 +153,9 @@ fi
 %doc %{_docdir}/%{name}-%{version}
 
 %changelog
+* Fri Mar 29 2013 Igor Vlasenko <viy@altlinux.ru> 0:1.5.0-alt4_3jpp5
+- explicitly use junit3
+
 * Mon Mar 22 2010 Igor Vlasenko <viy@altlinux.ru> 0:1.5.0-alt3_3jpp5
 - renamed smack1x1.jar to smackx1.jar
 
