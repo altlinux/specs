@@ -38,7 +38,7 @@ BuildRequires: jpackage-compat
 
 Name:           junit4
 Version:        4.10
-Release:        alt2_6jpp7
+Release:        alt3_6jpp7
 Epoch:          0
 Summary:        Java regression test package
 License:        CPL
@@ -70,6 +70,18 @@ It is used by the developer who implements unit tests in Java. JUnit is Open
 Source Software, released under the Common Public License Version 1.0 and 
 JUnit is Open Source Software, released under the IBM Public License and
 hosted on SourceForge.
+
+%package -n junit-junit4
+Group:          Development/Java
+Summary:        %{oldname} provider
+BuildArch: noarch
+Requires: %name = %epoch:%{version}-%{release}
+#Provides: junit = 0:%{version}
+#Provides: junit = %{epoch}:%{version}-%{release}
+#Provides: %_javadir/junit.jar
+
+%description -n junit-junit4
+Virtual junit package based on %{name}.
 
 %package manual
 Group:          Development/Java
@@ -134,6 +146,11 @@ install -d -m 755 %{buildroot}%{_datadir}/%{name}/demo/%{name}
 cp -pr %{oldname}%{version}/%{oldname}/* %{buildroot}%{_datadir}/%{name}/demo/%{name}
 
 
+mkdir -p %buildroot%_altdir
+cat >>%buildroot%_altdir/%{name}<<EOF
+%{_javadir}/junit.jar	%{_javadir}/%{name}.jar	4100
+EOF
+
 %files
 %doc cpl-v10.html README.html
 #%{_javadir}/%{oldname}.jar
@@ -153,7 +170,13 @@ cp -pr %{oldname}%{version}/%{oldname}/* %{buildroot}%{_datadir}/%{name}/demo/%{
 %doc cpl-v10.html
 %doc junit%{version}/doc/*
 
+%files -n junit-junit4
+%_altdir/%{name}
+
 %changelog
+* Fri Mar 29 2013 Igor Vlasenko <viy@altlinux.ru> 0:4.10-alt3_6jpp7
+- added junit-junit4 provider
+
 * Tue Sep 04 2012 Igor Vlasenko <viy@altlinux.ru> 0:4.10-alt2_6jpp7
 - added OSGi manifest
 
