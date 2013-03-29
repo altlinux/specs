@@ -45,7 +45,7 @@ BuildRequires: jpackage-compat
 Summary:        Java Caching System
 Name:           jakarta-jcs
 Version:        1.3.2.8
-Release:        alt5_1jpp5
+Release:        alt6_1jpp5
 Epoch:          0
 License:        Apache Software License
 URL:            http://jakarta.apache.org/jcs/
@@ -79,7 +79,7 @@ BuildRequires: saxon
 BuildRequires: saxon6-scripts
 BuildRequires: sf-cobertura-maven-plugin
 %endif
-BuildRequires: junit
+BuildRequires: junit3
 BuildRequires: jpackage-utils >= 0:1.7.3
 BuildRequires: ant >= 0:1.6.5
 
@@ -286,6 +286,9 @@ EOF
 %endif
 
 %changelog
+* Fri Mar 29 2013 Igor Vlasenko <viy@altlinux.ru> 0:1.3.2.8-alt6_1jpp5
+- explicitly use junit3
+
 * Wed Sep 12 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.3.2.8-alt5_1jpp5
 - build with saxon6-scripts
 
