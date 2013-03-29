@@ -66,7 +66,7 @@ BuildRequires: ant-bsf
 
 Name:           sf-maven-plugins
 Version:        1.0
-Release:        alt11_0.20050908.9jpp5
+Release:        alt12_0.20050908.9jpp5
 Epoch:          0
 Summary:        Maven Plugins hosted at sf.net
 
@@ -140,10 +140,10 @@ BuildRequires: java-gcj-compat-devel
 
 
 BuildRequires: jpackage-utils >= 0:1.6.5
-BuildRequires: junit
+BuildRequires: junit3
 BuildRequires: ant >= 0:1.6
 BuildRequires: ant-apache-bsf
-BuildRequires: ant-junit
+BuildRequires: ant-junit3
 BuildRequires: ant-trax
 BuildRequires: maven1 >= 0:1.1
 BuildRequires: saxon
@@ -429,7 +429,7 @@ Requires(postun): java-gcj-compat
 Summary:        JUnitpp Maven Plugin hosted at sf.net
 Group:          Development/Java
 Requires: maven1 >= 0:1.1
-Requires: junit
+Requires: junit3
 %if %{gcj_support}
 Requires: %{name} = %{epoch}:%{version}-%{release}
 Requires(post): java-gcj-compat
@@ -542,7 +542,7 @@ Group:          Development/Java
 Requires: maven1 >= 0:1.1
 Requires: ant
 Requires: ant-apache-bsf
-Requires: ant-junit
+Requires: ant-junit3
 Requires: ant-trax
 Requires: asm
 Requires: jakarta-commons-beanutils
@@ -556,7 +556,7 @@ Requires: jakarta-commons-lang
 Requires: jakarta-commons-logging
 #Requires: groovy11
 Requires: jaxen
-Requires: junit
+Requires: junit3
 Requires: log4j
 Requires: nekohtml
 Requires: oro
@@ -1076,6 +1076,9 @@ export CLASSPATH=$(build-classpath gnu-crypto)
 
 
 %changelog
+* Fri Mar 29 2013 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt12_0.20050908.9jpp5
+- explicitly use junit3
+
 * Mon Sep 17 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt11_0.20050908.9jpp5
 - build without groovy11
 
