@@ -34,7 +34,7 @@ BuildRequires: jpackage-compat
 
 Name:           jparsec
 Version:        1.2
-Release:        alt1_1jpp5
+Release:        alt2_1jpp5
 Epoch:          0
 Summary:        Java Haskell Parsec parser combinator.
 
@@ -48,8 +48,8 @@ Source1:        jparsec-1.2.pom
 BuildArch:      noarch
 BuildRequires: jpackage-utils >= 0:1.7.5
 BuildRequires: ant >= 0:1.6.5
-BuildRequires: ant-junit
-BuildRequires: junit
+BuildRequires: ant-junit3
+BuildRequires: junit3
 
 
 Requires(post): jpackage-utils >= 0:1.7.5
@@ -95,7 +95,7 @@ for j in $(find . -name "*.jar"); do
     mv $j $j.no
 done
 ln -sf $(build-classpath jfunutil) lib/jfunutil.jar
-ln -sf $(build-classpath junit) lib/junit.jar
+ln -sf $(build-classpath junit3) lib/junit3.jar
 popd
 mkdir doc
 pushd doc
@@ -105,7 +105,7 @@ popd
 %build
 pushd src
 mkdir bin
-ant buildlib test doc
+ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  buildlib test doc
 popd
 
 %install
@@ -117,8 +117,8 @@ install -pm 644 src/bin/jparsec.jar \
 ln -sf %{name}-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
 
 # pom
-install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/maven2/poms
-install -m 644 %{SOURCE1} $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-%{name}.pom
+install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
+install -m 644 %{SOURCE1} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 
 # javadoc
 install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
@@ -132,7 +132,7 @@ cp -pr doc/* $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}
 %files
 %{_javadir}/*.jar
 %doc src/LICENSE.txt
-%{_datadir}/maven2/poms/*
+%{_mavenpomdir}/*
 %{_mavendepmapfragdir}/*
 
 %files javadoc
@@ -143,6 +143,9 @@ cp -pr doc/* $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}
 %doc %{_docdir}/%{name}-%{version}
 
 %changelog
+* Fri Mar 29 2013 Igor Vlasenko <viy@altlinux.ru> 0:1.2-alt2_1jpp5
+- explicitly use junit3
+
 * Tue Mar 03 2009 Igor Vlasenko <viy@altlinux.ru> 0:1.2-alt1_1jpp5
 - new version
 
