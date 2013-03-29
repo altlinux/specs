@@ -39,7 +39,7 @@ BuildRequires: jpackage-compat
 
 Name:           jakarta-commons-el10
 Version:        1.0
-Release:        alt5_12jpp5
+Release:        alt6_12jpp5
 Epoch:          0
 Summary:        Commons Expression Language
 License:        ASL 2.0
@@ -54,7 +54,7 @@ BuildRequires: jpackage-utils >= 0:1.7.3
 BuildRequires: ant
 BuildRequires: jsp_2_0_api
 BuildRequires: servlet_2_4_api
-BuildRequires: junit
+BuildRequires: junit3
 Requires: jsp_2_0_api
 Requires: servlet_2_4_api
 %if %{gcj_support}
@@ -91,7 +91,7 @@ popd
 
 cat > build.properties <<EOBP
 build.compiler=modern
-junit.jar=$(build-classpath junit)
+junit3.jar=$(build-classpath junit3)
 servlet-api.jar=$(build-classpath servlet_2_4_api)
 jsp-api.jar=$(build-classpath jsp_2_0_api)
 servletapi.build.notrequired=true
@@ -101,7 +101,7 @@ EOBP
 %build
 export CLASSPATH=
 export OPT_JAR_LIST=:
-ant \
+ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  \
   -Dfinal.name=%{short_name} \
   -Dj2se.javadoc=%{_javadocdir}/java \
   jar javadoc
@@ -115,8 +115,8 @@ install -m 644 dist/%{short_name}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}-%{versi
 (cd $RPM_BUILD_ROOT%{_javadir} && for jar in *-%{version}*; do ln -sf ${jar} `echo $jar| sed "s|-%{version}||g"`; done)
 
 # pom
-install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/maven2/poms
-install -m 644 %{SOURCE1} $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-%{name}.pom
+install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
+install -m 644 %{SOURCE1} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 %add_to_maven_depmap commons-el commons-el %{version} JPP %{name}
 
 # javadoc
@@ -131,7 +131,7 @@ ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %files
 %doc LICENSE.txt STATUS.html
 %{_javadir}/*
-%{_datadir}/maven2/poms/*
+%{_mavenpomdir}/*
 %{_mavendepmapfragdir}/*
 %if %{gcj_support}
 %dir %{_libdir}/gcj/%{name}
@@ -143,6 +143,9 @@ ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Fri Mar 29 2013 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt6_12jpp5
+- explicitly use junit3
+
 * Tue Dec 14 2010 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt5_12jpp5
 - compat build
 
