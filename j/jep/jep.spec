@@ -35,7 +35,7 @@ BuildRequires: jpackage-compat
 
 Name:           jep
 Version:        2.4.1
-Release:        alt1_1jpp5
+Release:        alt2_1jpp5
 Epoch:          0
 Summary:        Java Math Expression Parser
 
@@ -54,7 +54,7 @@ BuildRequires: ant-nodeps
 
 BuildRequires: javacc3
 BuildRequires: jama
-BuildRequires: junit
+BuildRequires: junit3
 
 Requires: jama
 
@@ -84,13 +84,13 @@ for j in $(find . -name "*.jar"); do
 done
 ln -sf $(build-classpath jama) lib/Jama-1.0.2.jar
 ln -sf $(build-classpath javacc3) lib/javacc.jar
-ln -sf $(build-classpath junit) lib/junit.jar
+ln -sf $(build-classpath junit3) lib/junit3.jar
 
 
 %build
 export JRE1_2HOME=%{_jvmdir}/java/jre
 export JAVACCHOME=$(pwd)/lib
-ant jar javadoc
+ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  jar javadoc
 
 %install
 # jars
@@ -106,9 +106,9 @@ ln -sf %{name}-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
 ln -sf %{name}-ext-%{ext_version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}-ext.jar
 
 # pom
-install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/maven2/poms
-install -m 644 %{SOURCE1} $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-%{name}.pom
-install -m 644 %{SOURCE2} $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-%{name}-ext.pom
+install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
+install -m 644 %{SOURCE1} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
+install -m 644 %{SOURCE2} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}-ext.pom
 
 # javadoc
 install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
@@ -118,7 +118,7 @@ ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name} # ghost symlink
 %files
 %{_javadir}/*.jar
 %doc LICENSE-gpl.txt
-%{_datadir}/maven2/poms/*
+%{_mavenpomdir}/*
 %{_mavendepmapfragdir}/*
 
 %files javadoc
@@ -126,6 +126,9 @@ ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name} # ghost symlink
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Fri Mar 29 2013 Igor Vlasenko <viy@altlinux.ru> 0:2.4.1-alt2_1jpp5
+- explicitly use junit3
+
 * Tue Mar 03 2009 Igor Vlasenko <viy@altlinux.ru> 0:2.4.1-alt1_1jpp5
 - new version
 
