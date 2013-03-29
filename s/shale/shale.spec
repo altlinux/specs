@@ -47,7 +47,7 @@ BuildRequires: jpackage-compat
 
 Name:           shale
 Version:        1.0.4
-Release:        alt11_1jpp5
+Release:        alt12_1jpp5
 Epoch:          0
 Summary:        Shale Framework
 License:        Apache Software License 2.0
@@ -71,8 +71,8 @@ Patch33: shale-alt-no-site-pom.patch
 BuildArch:      noarch
 BuildRequires: jpackage-utils >= 0:1.7.4
 BuildRequires: ant >= 0:1.6.5
-BuildRequires: ant-junit
-BuildRequires: junit
+BuildRequires: ant-junit3
+BuildRequires: junit3
 %if %{with_maven}
 BuildRequires: maven2-common-poms
 BuildRequires: maven2 >= 0:2.0.7
@@ -204,7 +204,7 @@ Summary:        Shale Test Framework
 Group:          Development/Java
 Requires: htmlunit1
 Requires: jmock1
-Requires: junit
+Requires: junit3
 Requires: cargo
 Requires: %{name} = %{epoch}:%{version}-%{release}
 
@@ -326,7 +326,7 @@ mvn-jpp -Dmaven.compile.target=1.5 -Dmaven.javadoc.source=1.5  -Dmaven.compile.t
 #[INFO]   Shale Validator Integration
 #[INFO]   Shale View Controller
 #[INFO]   Shale Tiger Extensions
-export OPT_JAR_LIST="ant/ant-junit junit"
+export OPT_JAR_LIST="ant/ant-junit3 junit"
 export CLASSPATH=$(build-classpath \
 cargo/cargo-ant \
 cargo/cargo-core-api-container \
@@ -599,6 +599,9 @@ fi
 %doc %dir %{_docdir}/%{name}-%{version}
 
 %changelog
+* Fri Mar 29 2013 Igor Vlasenko <viy@altlinux.ru> 0:1.0.4-alt12_1jpp5
+- explicitly use junit3
+
 * Fri Mar 22 2013 Igor Vlasenko <viy@altlinux.ru> 0:1.0.4-alt11_1jpp5
 - use jmock1
 
