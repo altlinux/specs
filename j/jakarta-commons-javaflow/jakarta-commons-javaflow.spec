@@ -46,7 +46,7 @@ BuildRequires: jpackage-compat
 
 Name:           jakarta-commons-javaflow
 Version:        1.0
-Release:        alt6_0.r618928.1jpp5
+Release:        alt7_0.r618928.1jpp5
 Epoch:          0
 Summary:        Commons JavaFlow
 License:        Apache License 2.0
@@ -66,7 +66,7 @@ Patch2:         %{base_name}-%{version}-pom.patch
 
 BuildRequires: jpackage-utils >= 0:1.7.4
 BuildRequires: ant >= 0:1.6.5
-BuildRequires: junit
+BuildRequires: junit3
 BuildRequires: junit-addons
 %if %{with_maven}
 BuildRequires: maven2-common-poms
@@ -218,8 +218,8 @@ ln -sf ${jar} ${jar/jakarta-/}; done)
 ln -sf ${jar} ${jar/-%{version}/}; done)
 
 # pom
-install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/maven2/poms
-install -m 644 pom.xml $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-%{base_name}.pom
+install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
+install -m 644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{base_name}.pom
 
 # javadoc
 install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
@@ -245,7 +245,7 @@ fi
 %files
 %doc %{_docdir}/%{name}-%{version}/LICENSE.txt
 %{_javadir}/*
-%{_datadir}/maven2
+%{_mavenpomdir}/*
 %{_mavendepmapfragdir}
 # hack; explicitly added docdir if not owned
 %doc %dir %{_docdir}/%{name}-%{version}
@@ -262,6 +262,9 @@ fi
 %doc %dir %{_docdir}/%{name}-%{version}
 
 %changelog
+* Fri Mar 29 2013 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt7_0.r618928.1jpp5
+- explicitly use junit3
+
 * Fri Aug 24 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt6_0.r618928.1jpp5
 - build w/new jci
 
