@@ -39,7 +39,7 @@ BuildRequires: jpackage-compat
 Summary:        Cactus unit test framework for server-side java code 
 Name:           jakarta-%{base_name}
 Version:        1.7.2
-Release:        alt7_4jpp5
+Release:        alt8_4jpp5
 Epoch:          0
 License:        Apache Software License
 URL:            http://jakarta.apache.org/cactus/
@@ -77,10 +77,10 @@ BuildRequires: maven1-plugin-license
 BuildRequires: maven1-plugin-test
 BuildRequires: saxon6-scripts
 BuildRequires: ant >= 0:1.6
-BuildRequires: ant-junit >= 0:1.6
+BuildRequires: ant-junit3 >= 0:1.6
 BuildRequires: ant-nodeps >= 0:1.6
 BuildRequires: ant-trax >= 0:1.6
-BuildRequires: junit
+BuildRequires: junit3
 BuildRequires: antlr
 BuildRequires: aspectj15
 BuildRequires: cargo0 >= 0:0.9
@@ -237,7 +237,7 @@ echo jasper-runtime.jar=$(build-classpath jasper5-runtime) >> build.properties
 echo jetty.jar=$(build-classpath jetty5/jetty5) >> build.properties
 echo js.jar=$(build-classpath js) >> build.properties
 echo jstl.jar=$(build-classpath taglibs-core) >> build.properties
-echo junit.jar=$(build-classpath junit) >> build.properties
+echo junit.jar=$(build-classpath junit3) >> build.properties
 echo log4j.jar=$(build-classpath log4j) >> build.properties
 echo mockobjects.jar=$(build-classpath mockobjects-core) >> build.properties
 echo nekohtml.jar=$(build-classpath nekohtml) >> build.properties
@@ -252,7 +252,7 @@ echo xmlapis.jar=$(build-classpath xml-commons-jaxp-1.3-apis) >> build.propertie
 echo cactus.port=9992 >> build.properties
 
 
-export OPT_JAR_LIST="ant/ant-nodeps ant/ant-junit junit ant/ant-trax xalan-j2 xalan-j2-serializer aspectjtools15"
+export OPT_JAR_LIST="ant/ant-nodeps ant/ant-junit3 junit3 ant/ant-trax xalan-j2 xalan-j2-serializer aspectjtools15"
 export CLASSPATH=$(build-classpath commons-codec)
 ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 \
         -Drepo.url=file://usr/share/java/ \
@@ -283,10 +283,10 @@ cp -p integration/ant/dist-14/lib/cactus-ant-%{version}.jar \
 %add_to_maven_depmap cactus cactus-maven %{version} JPP/maven/plugins maven-cactus-plugin
 
 # pom
-install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/maven2/poms
-install -m 644 %{SOURCE6} $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP.cactus-14-cactus.pom
-install -m 644 %{SOURCE7} $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP.cactus-14-cactus-ant.pom
-install -m 644 %{SOURCE8} $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP.maven.plugins-maven-cactus-plugin.pom
+install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
+install -m 644 %{SOURCE6} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.cactus-14-cactus.pom
+install -m 644 %{SOURCE7} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.cactus-14-cactus-ant.pom
+install -m 644 %{SOURCE8} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.maven.plugins-maven-cactus-plugin.pom
 
 # plugin
 install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/maven/plugins
@@ -317,7 +317,7 @@ cp -pr documentation/dist/doc/* $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}
 %doc %{_docdir}/%{name}-%{version}/apache-2.0.txt
 %{_datadir}/%{name}-%{version}
 %{_javadir}/cactus-14
-%{_datadir}/maven2/poms/*
+%{_mavenpomdir}/*
 %{_mavendepmapfragdir}/*
 # hack; explicitly added docdir if not owned
 %doc %dir %{_docdir}/%{name}-%{version}
@@ -337,6 +337,9 @@ cp -pr documentation/dist/doc/* $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}
 %{_docdir}/%{name}-%{version}
 
 %changelog
+* Fri Mar 29 2013 Igor Vlasenko <viy@altlinux.ru> 0:1.7.2-alt8_4jpp5
+- explicitly use junit3
+
 * Thu Sep 20 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.7.2-alt7_4jpp5
 - build with aspectj15
 
