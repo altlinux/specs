@@ -37,7 +37,7 @@ BuildRequires: jpackage-1.6.0-compat
 
 Name:           sun-jaxws-2.1-impl
 Version:        2.1.3
-Release:        alt6_1jpp5
+Release:        alt7_1jpp5
 Epoch:          0
 Summary:        Java API for XML Web Services API
 License:        CDDL
@@ -58,7 +58,7 @@ BuildRequires: annotation_1_0_api
 BuildRequires: jaf_1_1_api
 BuildRequires: jaxb_2_1_api
 BuildRequires: jaxws_2_1_api
-BuildRequires: junit
+BuildRequires: junit3
 BuildRequires: saaj_1_3_api
 BuildRequires: servlet_2_5_api
 BuildRequires: stax_1_0_api
@@ -77,7 +77,7 @@ Requires: ant >= 0:1.6.5
 Requires: jaf_1_1_api
 Requires: jaxb_2_1_api
 Requires: jaxws_2_1_api
-Requires: junit
+Requires: junit3
 Requires: saaj_1_3_api
 Requires: stax_1_0_api
 Requires: stax-ex >= 0:1.2
@@ -168,11 +168,11 @@ install -m 644 build/lib/jaxws-tools.jar $RPM_BUILD_ROOT%{_javadir}/%{name}-tool
 (cd $RPM_BUILD_ROOT%{_javadir} && for jar in *-%{version}.jar; do ln -sf ${jar} `echo $jar| sed  "s|-%{version}||g"`; done)
 
 # poms
-install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/maven2/poms
+install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
 install -pm 644 etc/poms/jaxws-rt.pom \
-    $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-%{name}-rt.pom
+    $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}-rt.pom
 install -pm 644 etc/poms/jaxws-tools.pom \
-    $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-%{name}-tools.pom
+    $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}-tools.pom
 
 # javadoc
 install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
@@ -206,7 +206,7 @@ fi
 %files
 %{_docdir}/%{name}-%{version}/CDDL*
 %{_javadir}/%{name}*.jar
-%{_datadir}/maven2/poms/*
+%{_mavenpomdir}/*
 %{_mavendepmapfragdir}
 %if %{gcj_support}
 %dir %attr(-,root,root) %{_libdir}/gcj/%{name}
@@ -221,6 +221,9 @@ fi
 %ghost %{_javadocdir}/%{name}
 
 %changelog
+* Fri Mar 29 2013 Igor Vlasenko <viy@altlinux.ru> 0:2.1.3-alt7_1jpp5
+- explicitly use junit3
+
 * Mon Sep 17 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.1.3-alt6_1jpp5
 - build with txw2
 
