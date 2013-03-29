@@ -38,7 +38,7 @@ BuildRequires: jpackage-compat
 
 Name:           jakarta-commons-betwixt
 Version:        1.0
-Release:        alt2_0.alpha1.7jpp5
+Release:        alt3_0.alpha1.7jpp5
 Epoch:          0
 Summary:        Java bean to XML mapping library
 
@@ -57,8 +57,8 @@ BuildArch:      noarch
 %endif
 BuildRequires: jpackage-utils >= 0:1.7.3
 BuildRequires: ant >= 0:1.6
-BuildRequires: ant-junit >= 0:1.6
-BuildRequires: junit >= 0:3.8.1
+BuildRequires: ant-junit3 >= 0:1.6
+BuildRequires: junit3 >= 0:3.8.1
 BuildRequires: apache-commons-logging
 BuildRequires: apache-commons-digester >= 0:1.7
 BuildRequires: apache-commons-collections >= 0:2.1
@@ -109,7 +109,7 @@ cp %{SOURCE1} .
 cp %{SOURCE1} src/test/org/apache/commons/betwixt/xmlunit/
 
 %build
-export OPT_JAR_LIST="ant/ant-junit junit"
+export OPT_JAR_LIST="ant/ant-junit3 junit"
 export CLASSPATH=$(build-classpath commons-logging-api \
 commons-logging \
 commons-digester \
@@ -141,9 +141,9 @@ ln -s %{base_name}-%{version}.jar \
 %add_to_maven_depmap %{base_name} %{base_name} 1.0-alpha-1 JPP %{name}
 
 # poms
-install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/maven2/poms
+install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
 install -m 644 %{SOURCE2} \
-    $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-%{name}.pom
+    $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 
 install -dm 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
 cp -pr target/docs/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
@@ -158,7 +158,7 @@ export CLASSPATH=$(build-classpath gnu-crypto)
 %doc LICENSE.txt RELEASE-NOTES.txt
 %{_javadir}/*.jar
 %{_mavendepmapfragdir}/*
-%{_datadir}/maven2/poms/*
+%{_mavenpomdir}/*
 %if %{gcj_support}
 %dir %attr(-,root,root) %{_libdir}/gcj/%{name}
 %{_libdir}/gcj/%{name}/%{name}-%{version}.jar.*
@@ -170,6 +170,9 @@ export CLASSPATH=$(build-classpath gnu-crypto)
 
 
 %changelog
+* Fri Mar 29 2013 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt3_0.alpha1.7jpp5
+- explicitly use junit3
+
 * Mon Mar 11 2013 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt2_0.alpha1.7jpp5
 - fixed build w/new commons-digester
 
