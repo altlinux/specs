@@ -55,13 +55,13 @@ Patch1:         ws-commons-tcpmon-script.patch
 
 Name:           ws-commons-tcpmon
 Version:        1.0
-Release:        alt7_1jpp5
+Release:        alt8_1jpp5
 Epoch:          0
 License:        Apache Software License 2
 Group:          Development/Java
 BuildRequires: jpackage-utils >= 0:1.7.2
 BuildRequires: ant >= 0:1.6
-BuildRequires: junit
+BuildRequires: junit3
 %if %{with_maven}
 BuildRequires: maven1 >= 0:1.1
 BuildRequires: maven1-plugins-base
@@ -221,6 +221,9 @@ fi
 #endif
 
 %changelog
+* Fri Mar 29 2013 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt8_1jpp5
+- explicitly use junit3
+
 * Wed Sep 12 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt7_1jpp5
 - build with saxon6-scripts
 
