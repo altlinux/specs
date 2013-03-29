@@ -34,7 +34,7 @@ BuildRequires: jpackage-compat
 
 Name:		monolog
 Version:	2.0
-Release:	alt2_3jpp5
+Release:	alt3_3jpp5
 Epoch:		0
 Summary:	API for monitoring and logging
 License:	LGPL
@@ -48,7 +48,7 @@ Patch0:         monolog_2.0_build.patch
 
 BuildRequires: jpackage-utils >= 0:1.7.3
 BuildRequires: ant >= 0:1.6.5
-BuildRequires: junit
+BuildRequires: junit3
 BuildRequires: log4j
 BuildRequires: mx4j
 BuildRequires: objectweb-anttask
@@ -82,13 +82,13 @@ mv shared.old/archive/ow_util_io.xml archive
 %patch33 -p0
 
 %build
-export CLASSPATH=$(build-classpath junit log4j mx4j/mx4j objectweb-anttask p6spy velocity)
+export CLASSPATH=$(build-classpath junit3 log4j mx4j/mx4j objectweb-anttask p6spy velocity)
 pushd externals
 for jar in $(echo $CLASSPATH | sed 's/:/ /g'); do
 ln -sf ${jar} .
 done
 popd
-ant jar jdoc
+ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  jar jdoc
 
 %install
 
@@ -106,9 +106,9 @@ done
 ln -sf ${jar} ${jar/-%{version}/}; done)
 
 # poms
-install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/maven2/poms
+install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
 install -m 644 %{SOURCE1} \
-    $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP.%{name}-ow_%{name}.pom
+    $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{name}-ow_%{name}.pom
 %add_to_maven_depmap org.objectweb.monolog %{name} %{version} JPP/%{name} ow_%{name}
 
 # javadoc
@@ -120,13 +120,16 @@ cp -pr output/dist/jdoc/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
 %dir %{_javadir}/%{name}
 %{_javadir}/%{name}/*.jar
 %{_mavendepmapfragdir}/*
-%{_datadir}/maven2/poms/*
+%{_mavenpomdir}/*
 
 %files javadoc
 %doc %{_javadocdir}/%{name}-%{version}
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Fri Mar 29 2013 Igor Vlasenko <viy@altlinux.ru> 0:2.0-alt3_3jpp5
+- explicitly use junit3
+
 * Wed May 12 2010 Igor Vlasenko <viy@altlinux.ru> 0:2.0-alt2_3jpp5
 - fixes for java6 support
 
