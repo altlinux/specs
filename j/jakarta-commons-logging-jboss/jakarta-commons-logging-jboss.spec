@@ -59,7 +59,7 @@ BuildRequires: jpackage-compat
 
 Name:           jakarta-%{short_name}-jboss
 Version:        1.1
-Release:        alt2_4jpp5
+Release:        alt3_4jpp5
 Epoch:          0
 Summary:        Jakarta Commons Logging Package
 License:        ASL 2.0
@@ -91,8 +91,8 @@ BuildRequires: saxon
 BuildRequires: saxon-scripts
 %endif
 %if %without bootstrap
-BuildRequires: ant-junit
-BuildRequires: junit
+BuildRequires: ant-junit3
+BuildRequires: junit3
 %if 0
 BuildRequires: excalibur-avalon-logkit
 BuildRequires: excalibur-avalon-framework
@@ -161,7 +161,7 @@ cp -p LICENSE.txt NOTICE.txt META-INF
 
 %build
 cat > build.properties <<EOBM
-junit.jar=$(build-classpath junit)
+junit3.jar=$(build-classpath junit3)
 log4j.jar=$(build-classpath log4j)
 log4j12.jar=$(build-classpath log4j)
 %if %without bootstrap
@@ -214,7 +214,7 @@ maven -Dmaven.compile.target=1.5 -Dmaven.javadoc.source=1.5  \
 
 %else
 ant  -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 \
-        -Djunit.jar=$(build-classpath junit) \
+        -Djunit3.jar=$(build-classpath junit3) \
 %if 0
         -Dlogkit.jar=$(build-classpath excalibur/avalon-logkit) \
         -Davalon-framework.jar=$(build-classpath excalibur/avalon-framework) \
@@ -225,7 +225,7 @@ ant  -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 \
 ## FIXME: There are failures with gcj. Ignore them for now.
 %if %{gcj_support}
   ant  -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Dtest.failonerror=false \
-        -Djunit.jar=$(build-classpath junit) \
+        -Djunit3.jar=$(build-classpath junit3) \
 %if 0
         -Dlogkit.jar=$(build-classpath excalibur/avalon-logkit) \
         -Davalon-framework.jar=$(build-classpath excalibur/avalon-framework) \
@@ -234,7 +234,7 @@ ant  -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 \
     test
 %else
   ant  -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  \
-        -Djunit.jar=$(build-classpath junit) \
+        -Djunit3.jar=$(build-classpath junit3) \
 %if 0
         -Dlogkit.jar=$(build-classpath excalibur/avalon-logkit) \
         -Davalon-framework.jar=$(build-classpath excalibur/avalon-framework) \
@@ -264,11 +264,11 @@ install -p -m 644 target/%{short_name}-adapters-%{version}.jar \
 (cd $RPM_BUILD_ROOT%{_javadir} && for jar in *-%{version}*; do ln -sf ${jar} `echo $jar| sed "s|-%{version}||g"`; done)
 
 # poms
-install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/maven2/poms
+install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
 install -pm 644 %{SOURCE5} \
-    $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-%{short_name}-jboss.pom
+    $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{short_name}-jboss.pom
 install -pm 644 %{SOURCE6} \
-    $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-%{short_name}-jboss-api.pom
+    $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{short_name}-jboss-api.pom
 
 # javadoc
 install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
@@ -345,7 +345,7 @@ fi
 %{_javadir}/%{short_name}-jboss-adapters.jar
 %{_javadir}/%{short_name}-jboss-api-%{version}.jar
 %{_javadir}/%{short_name}-jboss-api.jar
-%{_datadir}/maven2/poms/*
+%{_mavenpomdir}/*
 %{_mavendepmapfragdir}/*
 %if %{gcj_support}
 %dir %{_libdir}/gcj/%{name}
@@ -369,6 +369,9 @@ fi
 %endif
 
 %changelog
+* Fri Mar 29 2013 Igor Vlasenko <viy@altlinux.ru> 0:1.1-alt3_4jpp5
+- explicitly use junit3
+
 * Wed Mar 14 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.1-alt2_4jpp5
 - fixed build with moved maven1
 
