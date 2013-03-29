@@ -20,13 +20,13 @@
 %define flavour %base_flavour-%sub_flavour
 
 Name: kernel-image-%flavour
-Version: 3.4.37
-Release: alt6
+Version: 3.4.38
+Release: alt1
 
 %define kernel_req %nil
 %define kernel_prov %nil
 %define kernel_branch 3.4
-%define kernel_stable_version 37
+%define kernel_stable_version 38
 %define kernel_extra_version .%kernel_stable_version
 #define kernel_extra_version %nil
 
@@ -233,7 +233,7 @@ Patch0163: linux-%kernel_branch.25-fix-drivers-edac--x38_edac.patch
 
 Patch0171: linux-%kernel_branch.25-fix-drivers-gpu-drm--exynosdrm.patch
 Patch0172: linux-%kernel_branch.25-fix-drivers-gpu-drm--gma500_gfx.patch
-Patch0173: linux-%kernel_branch.35-fix-drivers-gpu-drm--i915.patch
+Patch0173: linux-%kernel_branch.38-fix-drivers-gpu-drm--i915.patch
 Patch0174: linux-%kernel_branch.20-fix-drivers-gpu-drm--nouveau.patch
 
 Patch0181: linux-%kernel_branch.20-fix-drivers-hid--hid-apple.patch
@@ -2506,6 +2506,11 @@ done)
 
 
 %changelog
+* Fri Mar 29 2013 Led <led@altlinux.ru> 3.4.38-alt1
+- 3.4.38
+- updated:
+  + fix-drivers-gpu-drm--i915
+
 * Mon Mar 25 2013 Led <led@altlinux.ru> 3.4.37-alt6
 - added:
   + fix-drivers-usb-serial--io_ti
