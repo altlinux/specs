@@ -40,7 +40,7 @@ BuildRequires: jpackage-compat testng maven-surefire-provider-testng
 Summary:        MyFaces shared 12
 Name:           myfaces-shared12
 Version:        3.0.4
-Release:        alt6_1jpp5
+Release:        alt7_1jpp5
 Epoch:          0
 License:        Apache Software License 2.0
 URL:            http://myfaces.apache.org/
@@ -73,7 +73,7 @@ BuildRequires: cargo
 BuildRequires: easymock-classextension2
 BuildRequires: httpunit
 BuildRequires: jakarta-cactus
-BuildRequires: junit
+BuildRequires: junit3
 BuildRequires: shale-test
 
 BuildRequires: apache-commons-codec
@@ -170,14 +170,14 @@ install -m 644 shared-tomahawk/target/myfaces-shared-tomahawk-%{version}.jar $RP
 (cd $RPM_BUILD_ROOT%{_javadir}/%{parent} && for jar in *-%{version}.jar; do ln -sf ${jar} `echo $jar| sed "s|-%{version}||g"`; done)
 
 # poms
-install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/maven2/poms
-install -m 644 pom.xml $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP.%{parent}-shared12-project.pom
+install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
+install -m 644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{parent}-shared12-project.pom
 %add_to_maven_depmap org.apache.myfaces.shared myfaces-shared-project %{version} JPP/%{parent} shared12-project
-install -m 644 core/pom.xml $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP.%{parent}-shared12-core.pom
+install -m 644 core/pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{parent}-shared12-core.pom
 %add_to_maven_depmap org.apache.myfaces.shared myfaces-shared-core %{version} JPP/%{parent} shared12-core
-install -m 644 shared-impl/pom.xml $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP.%{parent}-shared12-impl.pom
+install -m 644 shared-impl/pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{parent}-shared12-impl.pom
 %add_to_maven_depmap org.apache.myfaces.shared myfaces-shared-impl %{version} JPP/%{parent} shared12-impl
-install -m 644 shared-tomahawk/pom.xml $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP.%{parent}-shared12-tomahawk.pom
+install -m 644 shared-tomahawk/pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{parent}-shared12-tomahawk.pom
 %add_to_maven_depmap org.apache.myfaces.shared myfaces-shared-tomahawk %{version} JPP/%{parent} shared12-tomahawk
 
 # javadoc
@@ -193,7 +193,7 @@ ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %doc core/src/main/resources/META-INF/LICENSE.txt
 %dir %{_javadir}/%{parent}
 %{_javadir}/%{parent}/*.jar
-%{_datadir}/maven2/poms/*
+%{_mavenpomdir}/*
 %{_mavendepmapfragdir}/*
 
 %files javadoc
@@ -201,6 +201,9 @@ ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Fri Mar 29 2013 Igor Vlasenko <viy@altlinux.ru> 0:3.0.4-alt7_1jpp5
+- explicitly use junit3
+
 * Mon Oct 22 2012 Igor Vlasenko <viy@altlinux.ru> 0:3.0.4-alt6_1jpp5
 - fixed build
 
