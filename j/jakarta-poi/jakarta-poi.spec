@@ -36,7 +36,7 @@ BuildRequires: jpackage-compat
 
 Name:           jakarta-%{base_name}
 Version:        3.2
-Release:        alt2_1jpp5
+Release:        alt3_1jpp5
 Epoch:          0
 Summary:        Java API To Access Microsoft Format Files
 
@@ -51,8 +51,8 @@ BuildArch:      noarch
 
 BuildRequires: jpackage-utils >= 0:1.7.3
 BuildRequires: ant >= 0:1.6.5
-BuildRequires: ant-junit
-BuildRequires: junit >= 0:3.8.1
+BuildRequires: ant-junit3
+BuildRequires: junit3 >= 0:3.8.1
 BuildRequires: ant-trax
 #BuildRequires:  jaxp_transform_impl
 #BuildRequires:  ant-jdepend
@@ -108,7 +108,7 @@ find . -name "*.jar" -exec mv {} {}.no \;
 
 %build
 export LANG=en_US.UTF-8
-#export OPT_JAR_LIST="ant/ant-junit junit ant/ant-jdepend jdepend jaxp_transform_impl ant/ant-trax"
+#export OPT_JAR_LIST="ant/ant-junit3 junit ant/ant-jdepend jdepend jaxp_transform_impl ant/ant-trax"
 #export CLASSPATH=$(build-classpath \
 #commons-beanutils \
 #commons-collections \
@@ -138,12 +138,12 @@ cp -p build/dist/%{base_name}-scratchpad-%{version}-FINAL-*.jar \
 (cd $RPM_BUILD_ROOT%{_javadir} && for jar in *-%{version}.jar; do ln -sf ${jar} `echo $jar| sed "s|-%{version}||g"`; done)
 
 # poms
-install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/maven2/poms
-install -m 644 %{SOURCE1} $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-%{name}.pom
+install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
+install -m 644 %{SOURCE1} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 %add_to_maven_depmap org.apache.poi %{base_name} %{namedversion} JPP %{base_name}
-install -m 644 %{SOURCE2} $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-%{name}-contrib.pom
+install -m 644 %{SOURCE2} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}-contrib.pom
 %add_to_maven_depmap org.apache.poi %{base_name}-contrib %{namedversion} JPP %{base_name}-contrib
-install -m 644 %{SOURCE3} $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-%{name}-scratchpad.pom
+install -m 644 %{SOURCE3} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}-scratchpad.pom
 %add_to_maven_depmap org.apache.poi %{base_name}-scratchpad %{namedversion} JPP %{base_name}-scratchpad
 
 #javadoc
@@ -162,7 +162,7 @@ ln -s %{_javadocdir}/%{name}-%{version} $RPM_BUILD_ROOT%{_docdir}/%{name}-%{vers
 %doc %{_docdir}/%{name}-%{version}/LICENSE
 %{_javadir}/*.jar
 %{_mavendepmapfragdir}/*
-%{_datadir}/maven2/poms/*
+%{_mavenpomdir}/*
 # hack; explicitly added docdir if not owned
 %doc %dir %{_docdir}/%{name}-%{version}
 
@@ -174,6 +174,9 @@ ln -s %{_javadocdir}/%{name}-%{version} $RPM_BUILD_ROOT%{_docdir}/%{name}-%{vers
 %doc %{_docdir}/%{name}-%{version}
 
 %changelog
+* Fri Mar 29 2013 Igor Vlasenko <viy@altlinux.ru> 0:3.2-alt3_1jpp5
+- explicitly use junit3
+
 * Fri Sep 23 2011 Igor Vlasenko <viy@altlinux.ru> 0:3.2-alt2_1jpp5
 - fixed build
 
