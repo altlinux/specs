@@ -42,7 +42,7 @@ Patch0:		jcoverage-build.patch
 
 Name:		jcoverage
 Version:	1.0.5
-Release:	alt1_4jpp5
+Release:	alt2_4jpp5
 Epoch:		0
 License:	GPL
 Group:		Development/Java
@@ -51,7 +51,7 @@ BuildRequires: jpackage-utils >= 0:1.7.3
 BuildRequires: ant >= 0:1.6.5
 BuildRequires: bcel5.3
 BuildRequires: gnu-getopt
-BuildRequires: junit
+BuildRequires: junit3
 BuildRequires: log4j
 BuildRequires: oro
 Requires: jpackage-utils >= 0:1.7.3
@@ -106,11 +106,11 @@ cp build.properties build.properties.sav
 export CLASSPATH=$(build-classpath \
 bcel5.3 \
 gnu-getopt \
-junit \
+junit3 \
 log4j \
 oro
 )
-ant -Dbuild.sysclasspath=only
+ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  -Dbuild.sysclasspath=only
 
 %install
 
@@ -123,9 +123,9 @@ install -p -m 0644 build/eclipse/%{name}-main.jar $RPM_BUILD_ROOT%{_javadir}/ecl
 %add_to_maven_depmap %{name} %{name} %{version} JPP %{name}
 
 # poms
-install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/maven2/poms
+install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
 install -m 644 %{SOURCE2} \
-    $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-%{name}.pom
+    $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 
 # javadoc
 install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
@@ -149,7 +149,7 @@ cp README   $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}
 %{_docdir}/%{name}-%{version}/COPYRIGHT
 %{_docdir}/%{name}-%{version}/README
 %{_mavendepmapfragdir}/*
-%{_datadir}/maven2/poms/*
+%{_mavenpomdir}/*
 # hack; explicitly added docdir if not owned
 %doc %dir %{_docdir}/%{name}-%{version}
 
@@ -163,6 +163,9 @@ cp README   $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}
 %doc %dir %{_docdir}/%{name}-%{version}
 
 %changelog
+* Fri Mar 29 2013 Igor Vlasenko <viy@altlinux.ru> 0:1.0.5-alt2_4jpp5
+- explicitly use junit3
+
 * Mon Mar 30 2009 Igor Vlasenko <viy@altlinux.ru> 0:1.0.5-alt1_4jpp5
 - new jpp release
 
