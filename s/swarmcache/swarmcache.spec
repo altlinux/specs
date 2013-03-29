@@ -35,7 +35,7 @@ BuildRequires: jpackage-compat
 Summary:        Cluster-aware Caching for Java
 Name:           swarmcache
 Version:        1.0
-Release:        alt4_0.cvs040225.8jpp5
+Release:        alt5_0.cvs040225.8jpp5
 Epoch:          0
 License:        LGPL
 URL:            http://swarmcache.sourceforge.net/
@@ -48,7 +48,7 @@ BuildRequires: ant >= 0:1.6.1
 BuildRequires: jakarta-commons-collections
 BuildRequires: jakarta-commons-logging
 BuildRequires: jgroups212
-BuildRequires: junit
+BuildRequires: junit3
 Requires: alternatives >= 0:0.4
 Requires: jakarta-commons-collections
 Requires: jakarta-commons-logging
@@ -93,7 +93,7 @@ commons-logging \
 jgroups212 \
 junit)
 export OPT_JAR_LIST=:
-ant -Dbuild.sysclasspath=only test jar javadoc
+ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  -Dbuild.sysclasspath=only test jar javadoc
 
 %install
 
@@ -142,6 +142,9 @@ EOF
 %doc %{_docdir}/%{name}-%{version}
 
 %changelog
+* Fri Mar 29 2013 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt5_0.cvs040225.8jpp5
+- explicitly use junit3
+
 * Sat Sep 15 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt4_0.cvs040225.8jpp5
 - fixed build with jgroups
 
