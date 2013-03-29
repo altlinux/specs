@@ -35,7 +35,7 @@ BuildRequires: jpackage-compat
 
 Name:           lucene1
 Version:        1.9.1
-Release:        alt2_3jpp5
+Release:        alt3_3jpp5
 Epoch:          0
 Summary:        High-performance, full-featured text search engine
 License:        ASL 2.0
@@ -47,11 +47,11 @@ Patch1:		lucene-1.9-contrib-db-bdb-build_xml.patch
 Patch2:		lucene-1.9-contrib-db-bdb-je-build_xml.patch
 BuildRequires: jpackage-utils >= 0:1.6
 BuildRequires: ant
-BuildRequires: ant-junit
+BuildRequires: ant-junit3
 BuildRequires: ant-trax
 BuildRequires: berkeleydb
 BuildRequires: berkeleydb-native >= 0:4.3.29
-BuildRequires: junit
+BuildRequires: junit3
 BuildRequires: javacc
 BuildRequires: java-javadoc
 BuildRequires: jline
@@ -111,7 +111,7 @@ find . -name "*.jar" -exec rm -f {} \;
 %build
 mkdir -p docs
 mkdir -p lib
-export OPT_JAR_LIST="ant/ant-junit junit jaxp_transform_impl ant/ant-trax xalan-j2-serializer"
+export OPT_JAR_LIST="ant/ant-junit3 junit jaxp_transform_impl ant/ant-trax xalan-j2-serializer"
 export CLASSPATH=$(build-classpath jline jtidy regexp)
 pushd contrib/db/bdb/lib
 ln -sf $(build-classpath berkeleydb-native) .
@@ -119,7 +119,7 @@ popd
 pushd contrib/db/bdb-je/lib
 ln -sf $(build-classpath berkeleydb) .
 popd
-ant -Dbuild.sysclasspath=first \
+ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  -Dbuild.sysclasspath=first \
   -Djavacc.home=%{_bindir}/javacc \
   -Djavacc.jar=%{_javadir}/javacc.jar \
   -Djavacc.jar.dir=%{_javadir} \
@@ -183,6 +183,9 @@ install -m 0644 build/%{oname}web.war \
 %{_javadir}/%{name}-demos.jar
 
 %changelog
+* Fri Mar 29 2013 Igor Vlasenko <viy@altlinux.ru> 0:1.9.1-alt3_3jpp5
+- explicitly use junit3
+
 * Thu Apr 15 2010 Igor Vlasenko <viy@altlinux.ru> 0:1.9.1-alt2_3jpp5
 - fixed dep on lucene2
 
