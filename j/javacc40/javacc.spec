@@ -36,7 +36,7 @@ BuildRequires: jpackage-compat
 
 Name:           javacc40
 Version:        4.0
-Release:        alt1_3jpp5
+Release:        alt2_3jpp5
 Epoch:          0
 Summary:        A parser/scanner generator for java
 License:        BSD
@@ -50,7 +50,7 @@ Group:          Development/Java
 BuildArch:      noarch
 %endif
 Requires: jpackage-utils >= 0:1.5
-BuildRequires: ant /bin/bash ant-junit junit >= 0:3.8.1
+BuildRequires: ant /bin/bash ant-junit3 junit3 >= 0:3.8.1
 Conflicts: javacc
 
 %if %{gcj_support}
@@ -89,7 +89,7 @@ cp %{SOURCE3} jjtree
 mv www/doc .
 
 %build
-ant \
+ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  \
   -Dversion=%{version} \
   jar
 
@@ -116,6 +116,9 @@ cp -pr examples $RPM_BUILD_ROOT/%{_datadir}/%{name}
 %{_datadir}/%{name}/*
 
 %changelog
+* Fri Mar 29 2013 Igor Vlasenko <viy@altlinux.ru> 0:4.0-alt2_3jpp5
+- explicitly use junit3
+
 * Sat Feb 27 2010 Igor Vlasenko <viy@altlinux.ru> 0:4.0-alt1_3jpp5
 - compat version
 
