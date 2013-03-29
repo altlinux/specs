@@ -1,6 +1,6 @@
 Name: gtypist
 Version: 2.8.3
-Release: alt2.qa1
+Release: alt2.qa2
 
 Summary: GNU Typist is a universal typing tutor
 Summary(ru_RU.KOI8-R): Клавиатурный тренажер для консоли
@@ -16,7 +16,7 @@ Source4: %name-64.png
 Source5: ru.po
 
 # Automatically added by buildreq on Tue Sep 30 2003
-BuildRequires: xorg-x11-libs libX11-locales emacs-common emacs-leim libXaw3d libjpeg libncurses-devel libtiff libtinfo-devel libungif xpm
+BuildRequires: emacs-common emacs-leim libXaw3d libjpeg libncurses-devel libtiff libtinfo-devel libungif xpm
 
 %description
 GNU Typist (or gtypist) is free software that assist you in learning
@@ -130,6 +130,9 @@ __INIT__
 %_emacslispdir/%name-mode.el
 
 %changelog
+* Fri Mar 29 2013 Andrey Cherepanov <cas@altlinux.org> 2.8.3-alt2.qa2
+- Fix build with new version of xorg
+
 * Sat Apr 23 2011 Igor Vlasenko <viy@altlinux.ru> 2.8.3-alt2.qa1
 - NMU: converted menu to desktop file
 
