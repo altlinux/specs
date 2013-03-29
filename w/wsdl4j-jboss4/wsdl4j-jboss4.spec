@@ -38,7 +38,7 @@ BuildRequires: jpackage-compat
 Summary:        WSDL4J patched
 Name:           wsdl4j-jboss4
 Version:        1.5.2
-Release:	alt1_3jpp5
+Release:	alt2_3jpp5
 Epoch:		0
 Group:          Development/Java
 License:        IBM Common Public License
@@ -50,9 +50,9 @@ Source0:        wsdl4j-%{version}-src.tar.gz
 Patch0:		%{name}-%{version}-jboss4-WSDLReaderImpl.patch
 Requires: jaxp_parser_impl
 BuildRequires: ant
-BuildRequires: ant-junit
+BuildRequires: ant-junit3
 BuildRequires: jpackage-utils >= 0:1.6
-BuildRequires: junit
+BuildRequires: junit3
 
 %description
 The Web Services Description Language for Java Toolkit (WSDL4J) allows the
@@ -75,9 +75,9 @@ Javadoc for %{name}.
 %patch0 -b .sav
 
 %build
-export OPT_JAR_LIST="ant/ant-junit junit"
+export OPT_JAR_LIST="ant/ant-junit3 junit"
 [ -z "$JAVA_HOME" ] && export JAVA_HOME=%{_jvmdir}/java
-ant -Dbuild.compiler=modern compile test javadocs
+ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  -Dbuild.compiler=modern compile test javadocs
 
 %install
 
@@ -120,6 +120,9 @@ fi
 %ghost %{_javadocdir}/%{name}
 
 %changelog
+* Fri Mar 29 2013 Igor Vlasenko <viy@altlinux.ru> 0:1.5.2-alt2_3jpp5
+- explicitly use junit3
+
 * Sat Mar 06 2010 Igor Vlasenko <viy@altlinux.ru> 0:1.5.2-alt1_3jpp5
 - new jpp release
 
