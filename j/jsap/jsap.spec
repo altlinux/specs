@@ -33,7 +33,7 @@ BuildRequires: jpackage-compat
 
 Name:           jsap
 Version:        2.1
-Release:        alt1_3jpp5
+Release:        alt2_3jpp5
 Epoch:          0
 Summary:        A Java-based Simple Argument Parser
 License:        LGPL
@@ -41,7 +41,7 @@ Group:          Development/Java
 Source0:        http://prdownloads.sourceforge.net/jsap/JSAP-2.1-src.tar.gz
 URL:            http://www.martiansoftware.com/jsap/
 Requires: xstream
-BuildRequires: xstream-javadoc jpackage-utils >= 0:5.0.0 ant ant-junit /bin/bash
+BuildRequires: xstream-javadoc jpackage-utils >= 0:5.0.0 ant ant-junit3 /bin/bash
 BuildArch:      noarch
 
 %description 
@@ -79,7 +79,7 @@ Manual for %{name}.
 %build
 mv JSAP-%{version}/* .
 export CLASSPATH=%(build-classpath xstream)
-ant \
+ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  \
   -Dversion=%{version} \
   -Dj2se.apiurl=%{_javadocdir}/java \
   -Dxstream.apiurl=%{_javadocdir}/xstream/core \
@@ -112,6 +112,9 @@ ln -s %{name}-%{version} %{_javadocdir}/%{name}
 
 
 %changelog
+* Fri Mar 29 2013 Igor Vlasenko <viy@altlinux.ru> 0:2.1-alt2_3jpp5
+- explicitly use junit3
+
 * Sun Feb 21 2010 Igor Vlasenko <viy@altlinux.ru> 0:2.1-alt1_3jpp5
 - new jpackage release
 
