@@ -36,7 +36,7 @@ BuildRequires: struts-taglib struts-tiles
 Summary:        JSF Implementation
 Name:           myfaces
 Version:        1.1.0
-Release:        alt5_3jpp5
+Release:        alt6_3jpp5
 Epoch:          0
 License:        Apache Software License 2.0
 URL:            http://myfaces.apache.org/
@@ -45,8 +45,8 @@ Source0:        myfaces-1.1.0-src.tar.gz
 # svn export https://svn.apache.org/repos/asf/myfaces/release/tags/1_1_0
 
 Patch0:         myfaces-1.1.0-build_xml.patch
-BuildRequires: ant >= 0:1.6 ant-junit >= 0:1.6 jpackage-utils >= 0:1.5
-BuildRequires: junit
+BuildRequires: ant >= 0:1.6 ant-junit3 >= 0:1.6 jpackage-utils >= 0:1.5
+BuildRequires: junit3
 BuildRequires: asm
 BuildRequires: cglib
 BuildRequires: apache-commons-beanutils
@@ -134,7 +134,7 @@ ln -sf $(build-classpath easymock) .
 ln -sf $(build-classpath oro) jakarta-oro.jar
 ln -sf $(build-classpath jsp) jsp.jar
 ln -sf $(build-classpath taglibs-core) jstl.jar
-ln -sf $(build-classpath junit) .
+ln -sf $(build-classpath junit3) .
 ln -sf $(build-classpath portlet-1.0-api) portlet-api.jar
 ln -sf $(build-classpath servletapi5) servlet-api.jar
 ln -sf $(build-classpath struts) .
@@ -204,6 +204,9 @@ fi
 %{_datadir}/%{name}-%{version}
 
 %changelog
+* Fri Mar 29 2013 Igor Vlasenko <viy@altlinux.ru> 0:1.1.0-alt6_3jpp5
+- explicitly use junit3
+
 * Mon Oct 08 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.1.0-alt5_3jpp5
 - rebuild with apache-commons-*
 
