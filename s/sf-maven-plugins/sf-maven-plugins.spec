@@ -66,7 +66,7 @@ BuildRequires: ant-bsf
 
 Name:           sf-maven-plugins
 Version:        1.0
-Release:        alt12_0.20050908.9jpp5
+Release:        alt13_0.20050908.9jpp5
 Epoch:          0
 Summary:        Maven Plugins hosted at sf.net
 
@@ -699,6 +699,7 @@ pushd $p
 maven \
 	-Dmaven.compile.target=1.5 -Dmaven.compile.source=1.5 -Dmaven.javadoc.source=1.5 \
         -Dmaven.mode.offline=true \
+	-Dmaven.test.skip=true	\
         -Dmaven.repo.remote=file:/usr/share/maven1/repository \
         -Dmaven.home.local=$MAVEN_HOME_LOCAL \
         plugin:install-now plugin:repository-install \
@@ -1076,6 +1077,9 @@ export CLASSPATH=$(build-classpath gnu-crypto)
 
 
 %changelog
+* Sat Mar 30 2013 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt13_0.20050908.9jpp5
+-fixed build with new xerces-j2
+
 * Fri Mar 29 2013 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt12_0.20050908.9jpp5
 - explicitly use junit3
 
