@@ -40,7 +40,7 @@ BuildRequires: jpackage-compat
 
 Name:           portals-%{bname}10
 Version:        1.0.1
-Release:        alt9_2jpp5
+Release:        alt10_2jpp5
 Epoch:          0
 Summary:        Portlet 1.0 Reference Implementation
 License:        Apache Software License 2.0
@@ -221,6 +221,7 @@ export MAVEN_HOME_LOCAL=$(pwd)/.maven
 maven -Dmaven.compile.target=1.5 -Dmaven.javadoc.source=1.5  \
     -Dmaven.repo.remote=file:///usr/share/maven1/repository \
     -Dmaven.home.local=$MAVEN_HOME_LOCAL \
+	-Dmaven.test.skip=true	\
     -Dgoal=jar:install,javadoc,test:test \
     multiproject:goal xdoc:transform
 %else
@@ -416,6 +417,9 @@ fi
 %ghost %{_javadocdir}/%{name}
 
 %changelog
+* Sat Mar 30 2013 Igor Vlasenko <viy@altlinux.ru> 0:1.0.1-alt10_2jpp5
+-fixed build with new xerces-j2
+
 * Fri Mar 29 2013 Igor Vlasenko <viy@altlinux.ru> 0:1.0.1-alt9_2jpp5
 - explicitly use junit3
 
