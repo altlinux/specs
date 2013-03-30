@@ -5,7 +5,7 @@ BuildRequires: /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/pkg-co
 Summary: Mate user file sharing
 Name: mate-user-share
 Version: 1.5.0
-Release: alt3_0
+Release: alt4_0
 License: GPLv2+
 Group: System/Libraries
 URL: http://pub.mate-desktop.org
@@ -14,7 +14,7 @@ Source0: http://pub.mate-desktop.org/releases/1.5/%{name}-%{version}.tar.xz
 #BuildRequires: mate-conf-devel
 BuildRequires: gtk2-devel
 BuildRequires: httpd apache2-mod_dnssd
-BuildRequires: mate-bluetooth-libs-devel
+BuildRequires: mate-bluetooth-devel
 BuildRequires: libcanberra-devel
 BuildRequires: desktop-file-utils
 BuildRequires: mate-doc-utils
@@ -74,6 +74,9 @@ rm -f %buildroot%_libdir/caja/extensions-2.0/libcaja-share-extension.la
 %{_libdir}/caja/extensions-2.0/*.so
 
 %changelog
+* Sat Mar 30 2013 Igor Vlasenko <viy@altlinux.ru> 1.5.0-alt4_0
+- fixed build
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 1.5.0-alt3_0
 - cleaned up obsolete mate-conf BR:
 
