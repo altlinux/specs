@@ -21,7 +21,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.4.38
-Release: alt2
+Release: alt3
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -2506,6 +2506,10 @@ done)
 
 
 %changelog
+* Sat Mar 30 2013 Led <led@altlinux.ru> 3.4.38-alt3
+- enabled:
+  + TIMER_STATS
+
 * Fri Mar 29 2013 Led <led@altlinux.ru> 3.4.38-alt2
 - updated:
   + fix-mm
