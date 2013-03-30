@@ -36,7 +36,7 @@ BuildRequires: jpackage-compat
 
 Name:           fulcrum-testcontainer
 Version:        1.0.5
-Release:        alt4_1jpp5
+Release:        alt5_1jpp5
 Epoch:          0
 Summary:        Fulcrum Test Container
 License:        Apache Software License 2.0
@@ -135,6 +135,7 @@ export MAVEN_HOME_LOCAL=$(pwd)/.maven
 maven -Dmaven.compile.target=1.5 -Dmaven.javadoc.source=1.5  \
         -Dmaven.repo.remote=file:/usr/share/maven1/repository \
         -Dmaven.home.local=$MAVEN_HOME_LOCAL \
+	-Dmaven.test.skip=true \
         jar:install javadoc:generate
 
 %install
@@ -145,8 +146,8 @@ install -m 0644 target/%{name}-%{version}.jar \
     $RPM_BUILD_ROOT%{_javadir}/%{name}-%{version}.jar
 (cd $RPM_BUILD_ROOT%{_javadir} && for jar in *-%{version}*; do ln -sf ${jar} `echo $jar| sed "s|-%{version}||g"`; done)
 
-install -dm 0755 $RPM_BUILD_ROOT%{_datadir}/maven2/poms
-install -m 0644 %{SOURCE5} $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-%{name}.pom
+install -dm 0755 $RPM_BUILD_ROOT%{_mavenpomdir}
+install -m 0644 %{SOURCE5} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 %add_to_maven_depmap fulcrum %{name} %{version} JPP %{name}
 
 # javadoc
@@ -179,7 +180,7 @@ fi
 %files
 %doc LICENSE.txt
 %{_javadir}/*.jar
-%{_datadir}/maven2/poms/*
+%{_mavenpomdir}/*
 %{_mavendepmapfragdir}/*
 %if %{gcj_support}
 %dir %{_libdir}/gcj/%{name}
@@ -192,6 +193,9 @@ fi
 
 
 %changelog
+* Sat Mar 30 2013 Igor Vlasenko <viy@altlinux.ru> 0:1.0.5-alt5_1jpp5
+-fixed build with new xerces-j2
+
 * Wed Sep 12 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0.5-alt4_1jpp5
 - build with saxon6-scripts
 
