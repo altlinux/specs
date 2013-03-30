@@ -1,5 +1,6 @@
 BuildRequires: /proc
 BuildRequires: jpackage-1.6.0-compat
+%define _without_maven 1
 # Copyright (c) 2000-2012, JPackage Project
 # All rights reserved.
 #
@@ -39,7 +40,7 @@ BuildRequires: jpackage-1.6.0-compat
 
 Name:           gsbase
 Version:        2.0.1
-Release:        alt7_2jpp6
+Release:        alt8_2jpp6
 Epoch:          0
 Summary:        GSBase
 License:        Apache-style Software License
@@ -64,7 +65,7 @@ BuildArch:      noarch
 
 BuildRequires:  jpackage-utils >= 0:1.7.5
 BuildRequires:  ant >= 0:1.7.1
-BuildRequires:  junit
+BuildRequires:  junit3 ant-junit3
 BuildRequires:  junitperf
 %if %{with_maven}
 BuildRequires:  maven1 >= 0:1.1
@@ -82,10 +83,9 @@ BuildRequires:  maven1-plugin-pmd
 BuildRequires:  maven1-plugin-tasklist
 BuildRequires:  maven1-plugin-test
 BuildRequires:  maven1-plugin-xdoc
-BuildRequires:  saxon
+BuildRequires:  saxon6
 BuildRequires:  saxon6-scripts
 %endif
-Requires:  junit
 Requires:  junitperf
 Requires(post):    jpackage-utils >= 0:1.7.5
 Requires(postun):  jpackage-utils >= 0:1.7.5
@@ -156,8 +156,9 @@ maven -Dmaven.compile.source=1.5 -Dmaven.compile.target=1.5 -Dmaven.javadoc.sour
         -Dmaven.xdoc.jsl=file://$(pwd)/xdocs/site.jsl \
         jar:jar javadoc:generate xdoc:transform
 %else
+export OPT_JAR_LIST="ant/ant-junit3 junit3"
 export CLASSPATH=$(build-classpath \
-junit \
+junit3 \
 junitperf \
 )
 CLASSPATH=$CLASSPATH:target/classes:target/test-classes
@@ -174,9 +175,9 @@ install -pm 644 target/%{name}-%{version}.jar \
 (cd $RPM_BUILD_ROOT%{_javadir} && for jar in *-%{version}*; do ln -sf ${jar} `echo $jar| sed  "s|-%{version}||g"`; done)
 
 # poms
-install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/maven2/poms
+install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
 install -pm 644 %{SOURCE5} \
-    $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-%{name}.pom
+    $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 
 # javadoc
 install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
@@ -195,7 +196,7 @@ cp -pr target/docs/* $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}
 %{_javadir}/*
 %dir %{_docdir}/%{name}-%{version}
 %doc %{_docdir}/%{name}-%{version}/LICENSE.txt
-%{_datadir}/maven2/poms/*
+%{_mavenpomdir}/*
 %{_mavendepmapfragdir}/*
 # hack; explicitly added docdir if not owned
 %doc %dir %{_docdir}/%{name}-%{version}
@@ -212,6 +213,9 @@ cp -pr target/docs/* $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}
 %doc %dir %{_docdir}/%{name}-%{version}
 
 %changelog
+* Sat Mar 30 2013 Igor Vlasenko <viy@altlinux.ru> 0:2.0.1-alt8_2jpp6
+-fixed build with new xerces-j2
+
 * Tue Sep 18 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.0.1-alt7_2jpp6
 - jpp6 release
 
