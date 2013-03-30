@@ -1,7 +1,7 @@
 
 Name: krb5
-Version: 1.11
-Release: alt2
+Version: 1.11.1
+Release: alt1
 
 %define _docdir %_defaultdocdir/%name-%version
 
@@ -23,7 +23,7 @@ Patch8: krb5-1.10-fedora-kpasswd_tcp.patch
 Patch9: krb5-1.10-fedora-kprop-mktemp.patch
 Patch11: krb5-1.11-fedora-selinux-label.patch
 Patch12: krb5-fedora-kvno-230379.patch
-Patch21: krb5-1.10.3-fedora-timeout_over.patch
+Patch22: krb5-1.11.1-upsream-fix-memory-leak-gitd2a66c.patch
 
 
 BuildRequires: /dev/pts /proc
@@ -142,20 +142,16 @@ MIT Kerberos.
 %patch9 -p1
 %patch11 -p1
 %patch12 -p1
-%patch21 -p1
-
-pushd src
-util/reconf --verbose --force
-popd
+%patch22 -p1
 
 %build
-
 
 DEFINES="-D_FILE_OFFSET_BITS=64" ; export DEFINES
 %add_optflags -I/usr/include/et
 %add_optflags -DKRB5_DNS_LOOKUP
 
 pushd src
+util/reconf --verbose --force
 %configure \
 	--enable-shared --disable-static \
 	--localstatedir=%_localstatedir/kerberos \
@@ -328,7 +324,7 @@ touch %buildroot%_sysconfdir/krb5.keytab
 %_bindir/kswitch
 
 %_man1dir/kdestroy.1*
-# %_man1dir/kerberos.1*
+# %%_man1dir/kerberos.1*
 %_man1dir/kinit.1*
 %_man1dir/klist.1*
 %_man1dir/kpasswd.1*
@@ -346,6 +342,14 @@ touch %buildroot%_sysconfdir/krb5.keytab
 # {{{ changelog
 
 %changelog
+* Sat Mar 30 2013 Ivan A. Melnikov <iv@altlinux.org> 1.11.1-alt1
+- 1.11.1
+  + fix a null pointer dereference in the KDC PKINIT code
+    (CVE-2013-1415);
+- drop obsolete patch 21;
+- add patch 22 from upstream git to fix a memory leak in
+  krb5_get_init_creds_keytab (upstream ticket 7586).
+
 * Fri Jan 04 2013 Ivan A. Melnikov <iv@altlinux.org> 1.11-alt2
 - added %%check section.
 
