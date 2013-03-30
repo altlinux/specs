@@ -5,7 +5,7 @@
 %define soversion %{MAJOR_VERSION}
 Name: v8-%MAJOR_VERSION.%MINOR_VERSION
 Version: %MAJOR_VERSION.%MINOR_VERSION.%BUILD_NUMBER.%PATCH_LEVEL
-Release: alt3
+Release: alt4
 
 Summary: V8 is Google's open source JavaScript engine.
 License: BSD
@@ -65,13 +65,16 @@ install -p -m644 include/*.h %buildroot%_includedir/
 %files -n lib%name
 %doc AUTHORS ChangeLog LICENSE LICENSE.*
 %_libdir/*.so.*
-%_bindir/*
+#%_bindir/*
 
 %files -n lib%name-devel
 %_includedir/*.h
 %_libdir/*.so
 
 %changelog
+* Sat Mar 30 2013 Dmitriy Kulik <lnkvisitor@altlinux.org> 3.15.11.10-alt4
+- remove conflicts files (Closes : #28766)
+
 * Fri Mar 29 2013 Dmitriy Kulik <lnkvisitor@altlinux.org> 3.15.11.10-alt3
 - rename to libv8-3.15
 
