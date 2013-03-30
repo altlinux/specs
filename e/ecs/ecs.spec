@@ -7,7 +7,7 @@ BuildRequires: jpackage-compat
 
 Name:           ecs
 Version:        1.4.2
-Release:        alt1_3jpp6
+Release:        alt2_3jpp6
 Epoch:          0
 Summary:        Tools for generating HTML/XML/... elements
 License:        Apache Software License
@@ -20,7 +20,6 @@ BuildRequires: jpackage-utils >= 0:1.7.6
 BuildRequires: ant >= 0:1.7
 BuildRequires: regexp
 BuildRequires: xerces-j2
-BuildRequires: xerces-j2-javadoc-impl
 BuildRequires: xml-commons-apis-javadoc
 Requires: regexp
 #Requires:       xerces-j2
@@ -49,12 +48,12 @@ rm -rf docs/apidocs
 
 %build
 export CLASSPATH=%(build-classpath regexp xerces-j2)
-ant \
+ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  \
   -Dbuild.compiler=modern \
   -Dxerces.javadoc=%{_javadocdir}/xerces-j2-impl \
   -Djaxp.javadoc=%{_javadocdir}/xml-commons-apis \
   -buildfile build/build-ecs.xml \
-  jar javadocs
+  jar 
 
 %install
 
@@ -65,8 +64,8 @@ install -m 0644 bin/%{name}-%{version}.jar $RPM_BUILD_ROOT%{_javadir}
 
 # javadoc
 install -d -m 0755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
-cp -pr docs/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
-rm -rf docs/apidocs
+#cp -pr docs/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
+#rm -rf docs/apidocs
 
 %files
 %doc AUTHORS ChangeLog LICENSE.txt README RELEASE_NOTES.txt docs/*
@@ -76,6 +75,9 @@ rm -rf docs/apidocs
 %{_javadocdir}/%{name}-%{version}
 
 %changelog
+* Sat Mar 30 2013 Igor Vlasenko <viy@altlinux.ru> 0:1.4.2-alt2_3jpp6
+-fixed build with new xerces-j2
+
 * Tue Oct 19 2010 Igor Vlasenko <viy@altlinux.ru> 0:1.4.2-alt1_3jpp6
 - new version
 
