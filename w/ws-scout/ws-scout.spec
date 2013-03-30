@@ -35,7 +35,7 @@ BuildRequires: jpackage-compat
 
 Name:		ws-scout
 Version:	1.0
-Release:	alt8_5jpp5
+Release:	alt9_5jpp5
 Epoch:		0
 Summary:	Apache Scout Implementation of JSR 93 (JAXR)
 License:	Apache Software License 2.0
@@ -127,13 +127,16 @@ done
 
 export MAVEN_HOME_LOCAL=$(pwd)/.maven
 maven -Dmaven.compile.source=1.5 -Dmaven.compile.target=1.5 -Dmaven.javadoc.source=1.5  \
+	-Dmaven.test.skip=true	\
         -Dmaven.repo.remote=file:/usr/share/maven1/repository
 pushd modules/jaxr-api
 maven -Dmaven.compile.source=1.5 -Dmaven.compile.target=1.5 -Dmaven.javadoc.source=1.5  \
+	-Dmaven.test.skip=true	\
         -Dmaven.repo.remote=file:/usr/share/maven1/repository javadoc:generate
 popd
 pushd modules/scout
 maven -Dmaven.compile.source=1.5 -Dmaven.compile.target=1.5 -Dmaven.javadoc.source=1.5  \
+	-Dmaven.test.skip=true	\
         -Dmaven.repo.remote=file:/usr/share/maven1/repository javadoc:generate
 popd
 
@@ -180,6 +183,9 @@ fi
 %ghost %doc %{_javadocdir}/%{name}
 
 %changelog
+* Sat Mar 30 2013 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt9_5jpp5
+-fixed build with new xerces-j2
+
 * Fri Mar 29 2013 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt8_5jpp5
 - explicitly use junit3
 
