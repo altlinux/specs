@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 2.3.2
-Release: alt1.hg20120406
+Version: 2.4.1
+Release: alt1
 Summary: Fast pure-Python indexing and search library
 
 Group: Development/Python
@@ -155,6 +155,9 @@ cp -fR pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Mon Feb 18 2013 Aleksey Avdeev <solo@altlinux.ru> 2.4.1-alt1
+- Version 2.4.1
+
 * Mon Apr 16 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.3.2-alt1.hg20120406
 - Version 2.3.2
 - Added module for Python 3

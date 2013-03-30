@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 3.8.0
-Release: alt2
+Release: alt2.1
 Summary: Zope Configuration Markup Language (ZCML)
 License: ZPL
 Group: Development/Python
@@ -145,6 +145,9 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 
 %changelog
+* Fri Mar 22 2013 Aleksey Avdeev <solo@altlinux.ru> 3.8.0-alt2.1
+- Rebuild with Python-3.3
+
 * Mon Apr 16 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.8.0-alt2
 - Added module for Python 3
 

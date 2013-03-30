@@ -4,7 +4,7 @@
 
 Name: python-module-%oname.core
 Version: 2.11
-Release: alt1.git20130114
+Release: alt1.git20130114.1
 Summary: Chameleon Template Compiler
 License: BSD
 Group: Development/Python
@@ -133,6 +133,9 @@ cp -fR _build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Fri Mar 22 2013 Aleksey Avdeev <solo@altlinux.ru> 2.11-alt1.git20130114.1
+- Rebuild with Python-3.3
+
 * Wed Feb 13 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.11-alt1.git20130114
 - Version 2.11
 

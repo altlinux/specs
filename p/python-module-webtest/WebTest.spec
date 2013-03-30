@@ -3,21 +3,22 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.3.4
-Release: alt1.hg20120506
+Version: 2.0
+Release: alt1
 Summary: Helper to test WSGI applications
 License: MIT
 Group: Development/Python
-Url: http://pythonpaste.org/webtest/
+Url: http://webtest.pythonpaste.org/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-# hg clone http://bitbucket.org/ianb/webtest
+# git://github.com/Pylons/webtest.git
 Source: WebTest-%version.tar.gz
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python
 BuildPreReq: python-devel python-module-setuptools
 BuildPreReq: python-module-sphinx python-module-Pygments
+BuildPreReq: python-module-objects.inv
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-distribute
@@ -63,7 +64,8 @@ pushd ../python3
 popd
 %endif
 
-./regen-docs
+# for docs
+make -C docs html SPHINXBUILD=sphinx-build PYTHONPATH=`pwd`
 
 %install
 %python_install
@@ -83,6 +85,9 @@ popd
 %endif
 
 %changelog
+* Sun Mar 03 2013 Aleksey Avdeev <solo@altlinux.ru> 2.0-alt1
+- Version 2.0
+
 * Tue May 08 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.4-alt1.hg20120506
 - Version 1.3.4
 - Added module for Python 3
@@ -107,4 +112,3 @@ popd
 
 * Tue Sep 29 2009 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.1-alt1.svn20090922
 - Initial build for Sisyphus
-

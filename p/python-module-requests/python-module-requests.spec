@@ -4,7 +4,7 @@
 Summary: HTTP library, written in Python, for human beings
 Name: python-module-requests
 Version: 0.12.1
-Release: alt1
+Release: alt1.1
 License: ISC and MIT
 Group: Development/Python
 Url: https://github.com/kennethreitz/requests
@@ -66,5 +66,8 @@ popd
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Fri Mar 22 2013 Aleksey Avdeev <solo@altlinux.ru> 0.12.1-alt1.1
+- Rebuild with Python-3.3
+
 * Fri May 18 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 0.12.1-alt1
 - initial

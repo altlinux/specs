@@ -1,7 +1,7 @@
 %define oname dateutil
 Name: python3-module-%oname
 Version: 2.0
-Release: alt1
+Release: alt1.1
 
 Summary: Extensions to the standard datetime module (Python 3)
 
@@ -54,6 +54,9 @@ rm -rf %buildroot%python_sitelibdir/%oname/zoneinfo
 
 
 %changelog
+* Thu Mar 21 2013 Aleksey Avdeev <solo@altlinux.ru> 2.0-alt1.1
+- Rebuild with Python-3.3
+
 * Mon May 28 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0-alt1
 - Built for Python 3
 

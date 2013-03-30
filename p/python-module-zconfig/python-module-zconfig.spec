@@ -4,7 +4,7 @@
 
 Name: python-module-%modulename
 Version: 2.9.2
-Release: alt1
+Release: alt1.1
 
 Summary: Python configuration module from Zope
 License: ZPL
@@ -156,6 +156,9 @@ popd
 %endif
 
 %changelog
+* Fri Mar 22 2013 Aleksey Avdeev <solo@altlinux.ru> 2.9.2-alt1.1
+- Rebuild with Python-3.3
+
 * Thu Apr 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.9.2-alt1
 - Version 2.9.2
 - Added module for Python 3

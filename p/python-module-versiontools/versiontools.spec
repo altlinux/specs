@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.9.1
-Release: alt1
+Release: alt1.1
 Summary: Smart replacement for plain tuple used in __version__
 License: LGPL
 Group: Development/Python
@@ -123,6 +123,9 @@ cp -fR pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Fri Mar 22 2013 Aleksey Avdeev <solo@altlinux.ru> 1.9.1-alt1.1
+- Rebuild with Python-3.3
+
 * Tue Jun 05 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.9.1-alt1
 - Initial build for Sisyphus
 

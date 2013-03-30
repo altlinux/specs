@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.6.34
-Release: alt2
+Version: 0.6.35
+Release: alt1
 Summary: Easily download, build, install, upgrade, and uninstall Python packages
 License: ZPL
 Group: Development/Python
@@ -168,6 +168,9 @@ ln -s easy_install-%__python3_version %buildroot%_bindir/easy_install3
 %endif
 
 %changelog
+* Sun Feb 17 2013 Aleksey Avdeev <solo@altlinux.ru> 0.6.35-alt1
+- Version 0.6.35
+
 * Thu Feb 14 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.34-alt2
 - Renamed "script template*.py" -> script_template*.py (thnx ldv@)
 

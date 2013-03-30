@@ -3,7 +3,7 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 3.12.1
+Version: 4.1.0
 Release: alt1
 Summary: Zope Component Architecture
 License: ZPLv2.1
@@ -11,6 +11,7 @@ Group: Development/Python
 Url: http://pypi.python.org/pypi/zope.component/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
+# git://github.com/zopefoundation/zope.component.git
 Source: %name-%version.tar
 
 BuildPreReq: python-devel python-module-distribute
@@ -137,6 +138,9 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 
 %changelog
+* Sun Mar 03 2013 Aleksey Avdeev <solo@altlinux.ru> 4.1.0-alt1
+- Version 4.1.0-alt1
+
 * Mon Apr 16 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.12.1-alt1
 - Version 3.12.1
 - Added module for Python 3
@@ -159,4 +163,3 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 
 * Mon May 16 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.10.0-alt1
 - Initial build for Sisyphus
-

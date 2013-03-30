@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 2.7
-Release: alt1.git20120313
+Release: alt1.git20120916
 
 Summary: The new and improved version of a small but fast template engine
 License: BSD
@@ -115,54 +115,57 @@ popd
 %install
 %python_install
 # IronPython support
-rm -f %buildroot%python_sitelibdir/jinja2/_ipysupport.py
+rm -f %buildroot%python_sitelibdir_noarch/jinja2/_ipysupport.py
 
 %if_with python3
 pushd ../python3
 %python3_install
 popd
-rm -f %buildroot%python3_sitelibdir/jinja2/_ipysupport.py
+rm -f %buildroot%python3_sitelibdir_noarch/jinja2/_ipysupport.py
 %endif
 
-cp -fR docs/_build/pickle %buildroot%python_sitelibdir/jinja2/
+cp -fR docs/_build/pickle %buildroot%python_sitelibdir_noarch/jinja2/
 
 %check
 make test
 
 %files
-%python_sitelibdir/jinja2/
-%python_sitelibdir/*.egg-info
-%exclude %python_sitelibdir/jinja2/tests.py*
-%exclude %python_sitelibdir/jinja2/testsuite
-%exclude %python_sitelibdir/jinja2/pickle
+%python_sitelibdir_noarch/jinja2/
+%python_sitelibdir_noarch/*.egg-info
+%exclude %python_sitelibdir_noarch/jinja2/tests.py*
+%exclude %python_sitelibdir_noarch/jinja2/testsuite
+%exclude %python_sitelibdir_noarch/jinja2/pickle
 %doc AUTHORS CHANGES
 %doc ext/
 
 %files tests
-%python_sitelibdir/jinja2/tests.py*
-%python_sitelibdir/jinja2/testsuite
+%python_sitelibdir_noarch/jinja2/tests.py*
+%python_sitelibdir_noarch/jinja2/testsuite
 
 %files doc
 %doc docs/_build/html/*
 
 %files pickles
-%dir %python_sitelibdir/jinja2
-%python_sitelibdir/jinja2/pickle
+%dir %python_sitelibdir_noarch/jinja2
+%python_sitelibdir_noarch/jinja2/pickle
 
 %if_with python3
 %files -n python3-module-%oname
 %doc AUTHORS CHANGES
-%python3_sitelibdir/jinja2/
-%python3_sitelibdir/*.egg-info
-%exclude %python3_sitelibdir/jinja2/tests.py*
-%exclude %python3_sitelibdir/jinja2/testsuite
+%python3_sitelibdir_noarch/jinja2/
+%python3_sitelibdir_noarch/*.egg-info
+%exclude %python3_sitelibdir_noarch/jinja2/tests.py*
+%exclude %python3_sitelibdir_noarch/jinja2/testsuite
 
 %files -n python3-module-%oname-tests
-%python3_sitelibdir/jinja2/tests.py*
-%python3_sitelibdir/jinja2/testsuite
+%python3_sitelibdir_noarch/jinja2/tests.py*
+%python3_sitelibdir_noarch/jinja2/testsuite
 %endif
 
 %changelog
+* Wed Mar 27 2013 Aleksey Avdeev <solo@altlinux.ru> 2.7-alt1.git20120916
+- New snapshot
+
 * Fri Apr 13 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.7-alt1.git20120313
 - New snapshot
 - Added module for Python 3

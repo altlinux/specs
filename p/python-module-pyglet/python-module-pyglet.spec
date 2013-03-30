@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 1.2
-Release: alt2.dev.hg20120428
+Release: alt3.alpha1
 Summary: Cross-platform windowing and multimedia library
 
 Group: Development/Python
@@ -109,13 +109,11 @@ rm -fR */win32* libs/darwin input/*win* */*carbon.* \
 popd
 %endif
 
-export PYTHONPATH=$PYTHONPATH:$PWD:$PWD/tools
-pushd tools
-./gendoc.sh html-api html-tutorial html-guide
-popd
+./make.py clean
+./make.py docs
 
 %if_enabled docs
-%generate_pickles $PWD $PWD/doc/html %oname
+%generate_pickles $PWD $PWD/doc/_build/html %oname
 install -d %buildroot%python_sitelibdir/%oname
 cp -fR pickle %buildroot%python_sitelibdir/%oname/
 %endif
@@ -133,7 +131,7 @@ cp -fR pickle %buildroot%python_sitelibdir/%oname/
 %python_sitelibdir/%oname/pickle
 
 %files docs
-%doc doc/programming_guide doc/html examples
+%doc doc/programming_guide doc/_build/html examples
 %endif
 
 %if_with python3
@@ -143,6 +141,9 @@ cp -fR pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Thu Feb 21 2013 Aleksey Avdeev <solo@altlinux.ru> 1.2-alt3.alpha1
+- New version 1.2alpha1
+
 * Sat May 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2-alt2.dev.hg20120428
 - New snapshot
 - Added module for Python 3

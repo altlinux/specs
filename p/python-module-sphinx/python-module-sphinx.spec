@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.1.3
-Release: alt4
+Release: alt4.1
 Epoch: 1
 
 Summary: Tool for producing documentation for Python projects
@@ -360,6 +360,9 @@ popd
 %endif
 
 %changelog
+* Thu Mar 21 2013 Aleksey Avdeev <solo@altlinux.ru> 1:1.1.3-alt4.1
+- Rebuild with Python-3.3
+
 * Sun Jan 27 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:1.1.3-alt4
 - Disabled generating of man pages (broken)
 

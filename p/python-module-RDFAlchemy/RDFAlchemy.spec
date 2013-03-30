@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.2.9
-Release: alt1
+Release: alt1.1
 Epoch: 1
 Summary: rdflib wrapper for Python
 License: BSD
@@ -95,6 +95,9 @@ mv %buildroot%_bindir/sparql %buildroot%_bindir/sparql3
 %endif
 
 %changelog
+* Fri Mar 22 2013 Aleksey Avdeev <solo@altlinux.ru> 1:0.2.9-alt1.1
+- Rebuild with Python-3.3
+
 * Tue May 08 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:0.2.9-alt1
 - Version 0.2.9
 - Added module for Python 3

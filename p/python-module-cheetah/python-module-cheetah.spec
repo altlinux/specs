@@ -6,7 +6,7 @@
 Summary: Template engine and code-generator
 Name: %packagename
 Version: 2.4.4
-Release: alt1
+Release: alt1.1
 Source0: %origname-%version.tar.gz
 License: MIT
 Group: Development/Python
@@ -125,6 +125,9 @@ popd
 %endif
 
 %changelog
+* Fri Mar 22 2013 Aleksey Avdeev <solo@altlinux.ru> 2.4.4-alt1.1
+- Rebuild with Python-3.3
+
 * Fri Apr 13 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.4.4-alt1
 - Version 2.4.4
 - Added module for Python 3

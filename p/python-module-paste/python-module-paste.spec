@@ -4,7 +4,7 @@
 
 Name: python-module-%modulename
 Version: 1.7.5.1
-Release: alt1.hg20120305
+Release: alt1.hg20120305.1
 
 Summary: Tools for using a Web Server Gateway Interface stack
 License: MIT
@@ -96,6 +96,9 @@ popd
 %endif
 
 %changelog
+* Fri Mar 22 2013 Aleksey Avdeev <solo@altlinux.ru> 1.7.5.1-alt1.hg20120305.1
+- Rebuild with Python-3.3
+
 * Fri Apr 13 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.7.5.1-alt1.hg20120305
 - New snapshot
 - Added module for Python 3

@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 3.7.1
-Release: alt1
+Release: alt1.1
 Summary: Zope Exceptions
 License: ZPL
 Group: Development/Python
@@ -118,6 +118,9 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 
 %changelog
+* Fri Mar 22 2013 Aleksey Avdeev <solo@altlinux.ru> 3.7.1-alt1.1
+- Rebuild with Python-3.3
+
 * Thu Apr 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.7.1-alt1
 - Version 3.7.1
 - Added module for Python 3

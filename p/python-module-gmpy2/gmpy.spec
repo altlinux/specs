@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 2.0.0
-Release: alt1.b1
+Release: alt2.b1.1
 Summary: GMP/MPIR, MPFR, and MPC interface
 License: LGPL
 Group: Development/Python
@@ -98,6 +98,12 @@ popd
 %endif
 
 %changelog
+* Tue Mar 26 2013 Aleksey Avdeev <solo@altlinux.ru> 2.0.0-alt2.b1.1
+- Rebuild with Python-3.3
+
+* Wed Aug 29 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.0-alt2.b1
+- Rebuilt with gmp 5.0.5
+
 * Sat Jun 09 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.0-alt1.b1
 - Version 2.0.0b1
 

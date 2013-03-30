@@ -15,7 +15,7 @@ Summary: Cryptography Toolkit for python
 Summary(ru_RU.UTF-8): Криптографический инструментарий для python
 Name: %packagename
 Version: %version
-Release: %release
+Release: alt2.1
 # git://git.pycrypto.org:9419/crypto/pycrypto-2.x.git
 Source: %sourcename-%modulever.tar.bz2
 License: LGPL
@@ -190,6 +190,9 @@ python setup.py test
 %endif
 
 %changelog
+* Fri Mar 22 2013 Aleksey Avdeev <solo@altlinux.ru> 2.5-alt2.1
+- Rebuild with Python-3.3
+
 * Thu Jul 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.5-alt2
 - Rebuilt with gmp 5.0.5 (ALT #27535)
 

@@ -3,19 +3,23 @@
 %def_with python3
 
 Name:           python-module-%oname
-Version:        2.0
-Release:        alt3
+Version:        2.1
+Release:        alt1.b1
 Summary:        Identification and authentication framework for WSGI
 Group:          Development/Python
 License:        BSD-derived
 URL:            http://pypi.python.org/pypi/repoze.who/
-Source:         %oname-%version.tar.gz
+# git://github.com/repoze/repoze.who.git
+Source:         %name-%version.tar
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 BuildRequires: python-devel python-module-sphinx-devel
 BuildPreReq: texlive-latex-recommended gif2png
 BuildPreReq: python-module-zope.interface
 BuildPreReq: python-module-paste python-module-distribute
+# for docs
+BuildPreReq: %py_dependencies webob
+BuildPreReq: %py_dependencies repoze.sphinx.autointerface
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-zope.interface
@@ -161,11 +165,11 @@ done
 popd
 %endif
 
-export PYTHONPATH=$PWD
+#export PYTHONPATH=$PWD
 pushd docs/.static
 gif2png logo_hi.gif
 popd
-%make -C docs latex
+%make -C docs latex pickle html
 
 %install
 %python_install
@@ -205,7 +209,7 @@ popd
 %endif
 
 %files
-%doc *.txt PKG-INFO
+%doc *.txt
 %python_sitelibdir/%oname-*
 %exclude %python_sitelibdir/*.pth
 %python_sitelibdir/repoze/*
@@ -222,7 +226,7 @@ popd
 %python_sitelibdir/repoze/who/plugins/tests
 
 %files docs
-%doc docs/.build/latex/*.pdf
+%doc docs/.build/latex
 %doc docs/.build/html
 
 %files pickles
@@ -230,7 +234,7 @@ popd
 
 %if_with python3
 %files -n python3-module-%oname
-%doc *.txt PKG-INFO
+%doc *.txt
 %python3_sitelibdir/%oname-*
 %exclude %python3_sitelibdir/*.pth
 %python3_sitelibdir/repoze/*
@@ -248,6 +252,9 @@ popd
 %endif
 
 %changelog
+* Sun Mar 03 2013 Aleksey Avdeev <solo@altlinux.ru> 2.1-alt1.b1
+- Version 2.1b1
+
 * Sat May 05 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0-alt3
 - Added module for Python 3
 

@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.15
-Release: alt1
+Release: alt1.1
 Summary: implements a XML/HTML/XHTML Markup safe string for Python
 
 Group: Development/Python
@@ -97,6 +97,9 @@ popd
 %endif
 
 %changelog
+* Fri Mar 22 2013 Aleksey Avdeev <solo@altlinux.ru> 0.15-alt1.1
+- Rebuild with Python-3.3
+
 * Mon May 07 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.15-alt1
 - Version 0.15
 - Added module for Python 3

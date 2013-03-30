@@ -4,7 +4,7 @@
 
 Name: python-module-yaml
 Version: 3.10
-Release: alt2
+Release: alt2.1
 
 Summary: PyYAML, a YAML parser and emitter for Python
 License: MIT/X Consortium
@@ -78,6 +78,9 @@ popd
 %endif
 
 %changelog
+* Fri Mar 22 2013 Aleksey Avdeev <solo@altlinux.ru> 3.10-alt2.1
+- Rebuild with Python-3.3
+
 * Sat Apr 07 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.10-alt2
 - Dont' rename _yaml.*.so -> _yaml.so
 

@@ -1,7 +1,7 @@
 # Note: mkl is a Intel Compiler thing
 
 BuildRequires(pre): rpm-build-python
-%define python_noarch %_libexecdir/python%_python_version/site-packages
+%define python_noarch %python_sitelibdir_noarch
 
 %define oname scipy
 %define svnver 8cec719
@@ -11,7 +11,7 @@ BuildRequires(pre): rpm-build-python
 
 Name: python-module-%oname
 Version: 0.12.0
-Release: alt2.git20121009
+Release: alt2.git20121009.1
 
 Summary: SciPy is the library of scientific codes
 
@@ -22,6 +22,7 @@ Url: http://www.scipy.org/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 %setup_python_module %oname
+Requires: %python_noarch
 
 #add_python_req_skip swig2_ext symeig vtk
 
@@ -59,6 +60,7 @@ SciPy is the library of scientific codes built on top of NumPy.
 %package -n python3-module-%oname
 Summary: SciPy is the library of scientific codes (Python 3)
 Group: Development/Python3
+Requires: %python3_sitelibdir_noarch
 %add_python3_req_skip _min_spanning_tree _shortest_path _tools
 %add_python3_req_skip _traversal
 
@@ -371,9 +373,7 @@ done
 %endif
 %exclude %python_sitelibdir/%oname/weave/blitz
 %exclude %python_noarch/weave
-%ifnarch x86_64
 %exclude %python_noarch/weave-*.egg-info
-%endif
 
 %files tests
 %python_sitelibdir/%oname/*/examples
@@ -400,9 +400,7 @@ done
 %exclude %python3_sitelibdir/%oname/*/*/*/*/tests
 %exclude %python3_sitelibdir/%oname/weave/blitz
 %exclude %python3_sitelibdir_noarch/weave
-%ifnarch x86_64
 %exclude %python3_sitelibdir_noarch/weave-*.egg-info
-%endif
 
 %files -n python3-module-%oname-tests
 %python3_sitelibdir/%oname/*/examples
@@ -433,13 +431,13 @@ done
 %_python_set_noarch
 %files -n python-module-weave
 %doc scipy/weave/LICENSE.txt scipy/weave/README.txt
-%python_sitelibdir/weave*
-%exclude %python_sitelibdir/weave/examples
-%exclude %python_sitelibdir/weave/tests
+%python_noarch/weave*
+%exclude %python_noarch/weave/examples
+%exclude %python_noarch/weave/tests
 
 %files -n python-module-weave-tests
-%python_sitelibdir/weave/examples
-%python_sitelibdir/weave/tests
+%python_noarch/weave/examples
+%python_noarch/weave/tests
 
 %if_with python3
 %files -n python3-module-weave
@@ -454,6 +452,10 @@ done
 %endif
 
 %changelog
+* Sat Mar 30 2013 Aleksey Avdeev <solo@altlinux.ru> 0.12.0-alt2.git20121009.1
+- Rebuild with Python-3.3
+- Fix non-identical noarch packages (python{,3}-module-weave)
+
 * Wed Dec 19 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.12.0-alt2.git20121009
 - Set doc-html as noarch
 
@@ -579,4 +581,3 @@ done
 
 * Sun Jul 06 2008 Vitaly Lipatov <lav@altlinux.ru> 0.6.0-alt1
 - initial build for ALT Linux Sisyphus
-

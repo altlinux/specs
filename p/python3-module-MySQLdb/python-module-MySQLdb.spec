@@ -3,7 +3,7 @@
 %define oname MySQLdb
 
 Version: 1.2.3
-Release: alt1.git20111005
+Release: alt1.git20111005.1
 Name: python3-module-%oname
 
 Summary: Python 3 interface to MySQL-3.23+
@@ -50,6 +50,9 @@ MySQLdb is Free Software.
 %python3_sitelibdir/*
 
 %changelog
+* Fri Mar 22 2013 Aleksey Avdeev <solo@altlinux.ru> 1.2.3-alt1.git20111005.1
+- Rebuild with Python-3.3
+
 * Tue Apr 10 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.3-alt1.git20111005
 - Build for Python 3
 

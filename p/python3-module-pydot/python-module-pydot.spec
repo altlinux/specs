@@ -1,7 +1,7 @@
 %define oname pydot
 Name: python3-module-%oname
 Version: 1.0.15
-Release: alt1.hg20110706
+Release: alt1.hg20110706.1
 
 Summary: Python 3 interface to Graphiz's Dot
 
@@ -40,6 +40,9 @@ by the Graphviz tools dot, neato, twopi.
 %python3_sitelibdir/*
 
 %changelog
+* Fri Mar 22 2013 Aleksey Avdeev <solo@altlinux.ru> 1.0.15-alt1.hg20110706.1
+- Rebuild with Python-3.3
+
 * Thu May 10 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.15-alt1.hg20110706
 - Initial build for Sisyphus
 

@@ -1,4 +1,4 @@
-%define version 2.1.1
+%define version 2.2.1
 %define release alt1
 %define modulename markdown
 
@@ -6,7 +6,7 @@
 
 %setup_python_module %modulename
 
-Name: %packagename
+Name: python-module-%modulename
 Version: %version
 Release: %release
 
@@ -16,7 +16,8 @@ License: %gpl2plus | %bsd
 Url: http://pypi.python.org/pypi/Markdown/2.1.1
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-Source: %modulename-%version.tar.bz2
+# git://github.com/waylan/Python-Markdown.git
+Source: %name-%version.tar
 
 BuildArch: noarch
 BuildPreReq: rpm-build-licenses
@@ -58,7 +59,7 @@ possible while being structured enough to allow conversion to other formats.
 This package contains documentation for Markdown.
 
 %prep
-%setup -n %modulename-%version
+%setup
 %if_with python3
 rm -rf ../python3
 cp -a . ../python3
@@ -102,6 +103,9 @@ ln -s %{modulename}_py %buildroot%_bindir/%modulename
 %endif
 
 %changelog
+* Sat Mar 02 2013 Aleksey Avdeev <solo@altlinux.ru> 2.2.1-alt1
+- Version 2.2.1
+
 * Tue Apr 10 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.1.1-alt1
 - Version 2.1.1
 - Added module for Python 3

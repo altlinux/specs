@@ -4,7 +4,7 @@
 
 Name: python-module-%modulename
 Version: 3.2.2
-Release: alt1.hg20120408
+Release: alt1.hg20120408.1
 
 %setup_python_module %modulename
 
@@ -119,6 +119,9 @@ mv %buildroot%_bindir/cherryd %buildroot%_bindir/cherryd3
 %endif
 
 %changelog
+* Fri Mar 22 2013 Aleksey Avdeev <solo@altlinux.ru> 3.2.2-alt1.hg20120408.1
+- Rebuild with Python-3.3
+
 * Mon Apr 16 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.2.2-alt1.hg20120408
 - Version 3.2.2
 - Added module for Python 3

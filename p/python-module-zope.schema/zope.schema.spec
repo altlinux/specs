@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 4.1.1
-Release: alt1
+Release: alt1.1
 Summary: zope.interface extension for defining data schemas
 License: ZPLv2.1
 Group: Development/Python
@@ -149,6 +149,9 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 
 %changelog
+* Fri Mar 22 2013 Aleksey Avdeev <solo@altlinux.ru> 4.1.1-alt1.1
+- Rebuild with Python-3.3
+
 * Mon Apr 16 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.1.1-alt1
 - Version 4.1.1
 - Added module for Python 3

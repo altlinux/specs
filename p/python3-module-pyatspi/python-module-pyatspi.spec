@@ -3,7 +3,7 @@
 
 Name: python3-module-%_name
 Version: %ver_major.2
-Release: alt1
+Release: alt1.1
 Summary: Python bindings for at-spi library
 
 Group: Development/Python
@@ -65,6 +65,9 @@ This package includes the sample programs.
 %_bindir/magFocusTracker.py
 
 %changelog
+* Fri Mar 22 2013 Aleksey Avdeev <solo@altlinux.ru> 2.7.2-alt1.1
+- Rebuild with Python-3.3
+
 * Tue Dec 18 2012 Paul Wolneykien <manowar@altlinux.ru> 2.7.2-alt1
 - Switch to Python 3.
 - Upstream version 2.7.2.

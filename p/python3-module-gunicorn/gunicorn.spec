@@ -1,7 +1,7 @@
 %define oname gunicorn
 Name: python3-module-%oname
 Version: 0.14.4
-Release: alt2.git20120604
+Release: alt2.git20120604.1
 Summary: WSGI HTTP Server for UNIX (Python 3)
 License: Mit
 Group: Development/Python3
@@ -65,6 +65,9 @@ popd
 %doc doc/htdocs examples
 
 %changelog
+* Fri Mar 22 2013 Aleksey Avdeev <solo@altlinux.ru> 0.14.4-alt2.git20120604.1
+- Rebuild with Python-3.3
+
 * Wed Jun 06 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.14.4-alt2.git20120604
 - Avoid conflict with python-module-%oname
 

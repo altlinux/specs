@@ -4,7 +4,7 @@
 
 Name:           python-module-%oname
 Version:        1.2
-Release:        alt2.hg20110331
+Release:        alt2.hg20110331.1
 Summary:        Python command line parser
 
 Group:          Development/Python
@@ -105,6 +105,9 @@ cp -fR pickle %buildroot%python_sitelibdir/%oname
 %endif
 
 %changelog
+* Fri Mar 22 2013 Aleksey Avdeev <solo@altlinux.ru> 1.2-alt2.hg20110331.1
+- Rebuild with Python-3.3
+
 * Thu May 10 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2-alt2.hg20110331
 - Added module for Python 3
 

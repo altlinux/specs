@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.2.2
-Release: alt1
+Release: alt1.1
 
 Summary: A Python MessagePack (de)serializer
 
@@ -76,6 +76,9 @@ popd
 %endif
 
 %changelog
+* Tue Mar 26 2013 Aleksey Avdeev <solo@altlinux.ru> 0.2.2-alt1.1
+- Rebuild with Python-3.3
+
 * Thu Dec 06 2012 Slava Dubrovskiy <dubrsl@altlinux.org> 0.2.2-alt1
 - New version
 

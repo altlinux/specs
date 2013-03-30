@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.6.4
-Release: alt1
+Release: alt1.1
 Summary: Lightweight pipelining: using Python functions as pipeline jobs
 License: BSD
 Group: Development/Python
@@ -130,6 +130,9 @@ popd
 %endif
 
 %changelog
+* Fri Mar 22 2013 Aleksey Avdeev <solo@altlinux.ru> 0.6.4-alt1.1
+- Rebuild with Python-3.3
+
 * Mon Jun 11 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.4-alt1
 - Version 0.6.4
 - Added module for Python 3

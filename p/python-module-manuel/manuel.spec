@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.5.0
-Release: alt2
+Release: alt2.1
 Summary: Manuel lets you build tested documentation
 License: ZPL
 Group: Development/Python
@@ -100,6 +100,9 @@ popd
 %endif
 
 %changelog
+* Fri Mar 22 2013 Aleksey Avdeev <solo@altlinux.ru> 1.5.0-alt2.1
+- Rebuild with Python-3.3
+
 * Thu Apr 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.5.0-alt2
 - Added module for Python 3
 

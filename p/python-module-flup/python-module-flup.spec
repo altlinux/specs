@@ -9,7 +9,7 @@
 Summary: Random assortment of WSGI servers, middleware
 Name: python-module-%oname
 Version: %version
-Release: %release.%subrel
+Release: %release.%subrel.1
 # http://hg.saddi.com/flup-server
 Source0: %modulename.tar.bz2
 License: BSD
@@ -92,23 +92,27 @@ popd
 
 #docs
 
-cp -fR docs/build/pickle %buildroot%python_sitelibdir/%oname/
+cp -fR docs/build/pickle %buildroot%python_sitelibdir_noarch/%oname/
 
 %files -f INSTALLED_FILES
-%exclude %python_sitelibdir/%oname/pickle
+%exclude %python_sitelibdir_noarch/%oname/pickle
 
 %files docs
 %doc docs/build/html
 
 %files pickles
-%python_sitelibdir/%oname/pickle
+%python_sitelibdir_noarch/%oname/pickle
 
 %if_with python3
 %files -n python3-module-%oname
-%python3_sitelibdir/*
+%python3_sitelibdir_noarch/*
 %endif
 
 %changelog
+* Sun Mar 17 2013 Aleksey Avdeev <solo@altlinux.ru> 1.0.3-alt1.hg20120223.1
+- Rebuild with Python-3.3
+- Fix non-identical noarch packages (python{,3}-module-flup)
+
 * Fri Apr 13 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.3-alt1.hg20120223
 - New snapshot
 - Added module for Python 3

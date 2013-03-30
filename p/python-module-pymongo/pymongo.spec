@@ -2,7 +2,7 @@
 
 Name: python-module-pymongo
 Version: 2.3
-Release: alt2
+Release: alt2.1
 
 %setup_python_module pymongo
 %setup_python_module gridfs
@@ -122,6 +122,9 @@ popd
 %endif
 
 %changelog
+* Sat Mar 23 2013 Aleksey Avdeev <solo@altlinux.ru> 2.3-alt2.1
+- Rebuild with Python-3.3
+
 * Wed Jan 09 2013 Igor Vlasenko <viy@altlinux.ru> 2.3-alt2
 - 2.3
 

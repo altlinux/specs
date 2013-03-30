@@ -1,7 +1,7 @@
 %def_with python3
 
 Version: 0.6
-Release: alt2
+Release: alt2.1
 %setup_python_module genshi
 
 Name: python-module-genshi
@@ -110,6 +110,9 @@ popd
 %endif
 
 %changelog
+* Fri Mar 22 2013 Aleksey Avdeev <solo@altlinux.ru> 0.6-alt2.1
+- Rebuild with Python-3.3
+
 * Tue Apr 10 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6-alt2
 - Added module for Python 3
 

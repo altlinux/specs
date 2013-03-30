@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.9.2
-Release: alt1
+Release: alt1.1
 Summary: VCS fastimport/fastexport parser
 License: GPLv2+
 Group: Development/Python
@@ -117,6 +117,9 @@ popd
 %endif
 
 %changelog
+* Fri Mar 22 2013 Aleksey Avdeev <solo@altlinux.ru> 0.9.2-alt1.1
+- Rebuild with Python-3.3
+
 * Mon Jun 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.2-alt1
 - Version 0.9.2
 - Add module for Python 3

@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 3.2.0
-Release: alt1
+Release: alt1.1
 
 Summary: RDFLib is a Python library for working with RDF
 
@@ -83,6 +83,9 @@ popd
 %endif
 
 %changelog
+* Fri Mar 22 2013 Aleksey Avdeev <solo@altlinux.ru> 3.2.0-alt1.1
+- Rebuild with Python-3.3
+
 * Tue May 08 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.2.0-alt1
 - Version 3.2.0
 - Added module for Python 3

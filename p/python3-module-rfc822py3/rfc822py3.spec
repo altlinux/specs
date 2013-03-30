@@ -1,7 +1,7 @@
 %define oname rfc822py3
 Name: python3-module-%oname
 Version: 20110416
-Release: alt1
+Release: alt1.1
 Summary: A port of the Python 2.x rfc822 library to Python3
 License: Python
 Group: Development/Python3
@@ -29,6 +29,9 @@ install -p -m644 *.py %buildroot%python3_sitelibdir
 %python3_sitelibdir/*
 
 %changelog
+* Fri Mar 22 2013 Aleksey Avdeev <solo@altlinux.ru> 20110416-alt1.1
+- Rebuild with Python-3.3
+
 * Tue Jun 05 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 20110416-alt1
 - Initial build for Sisyphus
 

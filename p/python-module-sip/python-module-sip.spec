@@ -3,15 +3,16 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 4.14.2
-Release: alt2
+Version: 4.14.3
+Release: alt1
 Summary: Python bindings generator for C++ class libraries
 License: PSF
 Group: Development/Python
 
 %setup_python_module sip
 
-Source0: %modulename.tar
+# hg clone http://www.riverbankcomputing.com/hg/sip
+Source0: %name-%version.tar
 
 URL: http://www.riverbankcomputing.com/software/sip/
 Packager: Python Development Team <python@packages.altlinux.org>
@@ -20,6 +21,9 @@ Provides: %modulename = %version-%release
 Obsoletes: %modulename <= 4.1-alt2.1
 
 BuildPreReq: gcc-c++
+BuildPreReq: flex
+# for docs build
+BuildPreReq: python-module-sphinx-devel
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
@@ -66,7 +70,8 @@ Requires: python-devel
 Header files for sip
 
 %prep
-%setup -n %modulename
+%setup
+python build.py prepare
 %if_with python3
 rm -rf ../python3
 cp -a . ../python3
@@ -77,14 +82,17 @@ python configure.py --debug -d %python_sitelibdir
 sed -i 's|^\(CPPFLAGS.*\)|\1 -g -I%python_includedir|' */Makefile
 %make
 
+# docs build
+python build.py doc
+
 %if_with python3
 pushd ../python3
 python3 configure.py --debug -d %python3_sitelibdir
 sed -i \
-	's|^\(CPPFLAGS.*\)|\1 -g -I%{python3_includedir}mu|' \
+	's|^\(CPPFLAGS.*\)|\1 -g -I%python3_includedir%_python3_abiflags|' \
 	*/Makefile
 sed -i \
-	's|lpython%_python3_version|lpython%{_python3_version}mu|' \
+	's|lpython%_python3_version|lpython%_python3_version%_python3_abiflags|' \
 	siplib/Makefile
 %make
 popd
@@ -120,11 +128,14 @@ sed -i 's|%_bindir/sip|%_bindir/sip3|' \
 %python3_sitelibdir/*
 
 %files -n python3-module-%oname-devel
-%{python3_includedir}mu/*
+%python3_includedir%_python3_abiflags/*
 %doc doc/*
 %endif
 
 %changelog
+* Fri Mar 01 2013 Aleksey Avdeev <solo@altlinux.ru> 4.14.3-alt1
+- Version 4.14.3
+
 * Thu Dec 20 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.14.2-alt2
 - Release up
 

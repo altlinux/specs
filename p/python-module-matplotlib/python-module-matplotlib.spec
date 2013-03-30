@@ -9,7 +9,7 @@
 
 Name: python-module-%oname
 Version: %major.0
-Release: alt3.git20121010
+Release: alt3.git20121010.1
 
 Summary: Matlab(TM) style python plotting package
 
@@ -596,6 +596,9 @@ rm -fR %_docdir/%name/pdf
 %endif
 
 %changelog
+* Wed Mar 27 2013 Aleksey Avdeev <solo@altlinux.ru> 1.3.0-alt3.git20121010.1
+- Rebuild with Python-3.3
+
 * Tue Jan 29 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.0-alt3.git20121010
 - Fixed build
 

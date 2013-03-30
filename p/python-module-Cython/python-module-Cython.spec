@@ -4,7 +4,7 @@
 
 Name: python-module-%_name
 Version: 0.16
-Release: alt1
+Release: alt1.1
 
 Summary: C-extensions for Python
 Group: Development/Python
@@ -111,6 +111,9 @@ mv %buildroot/%_bindir/cygdb %buildroot/%_bindir/cygdb3
 %endif
 
 %changelog
+* Sun Mar 17 2013 Aleksey Avdeev <solo@altlinux.ru> 0.16-alt1.1
+- Rebuild with Python-3.3
+
 * Thu May 10 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 0.16-alt1
 - 0.16 (ALT #27317)
 

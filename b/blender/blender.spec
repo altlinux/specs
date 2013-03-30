@@ -1,6 +1,6 @@
 Name: blender
 Version: 2.63
-Release: alt0.1
+Release: alt0.2
 
 Summary: 3D modeling, animation, rendering and post-production
 License: GPL
@@ -105,6 +105,7 @@ cmake .. -DCMAKE_INSTALL_PREFIX=%{_prefix} \
  -DWITH_PYTHON_SAFETY=ON \
  -DWITH_PLAYER=ON \
  -DWITH_OPENMP=OFF \
+ -DPYTHON_VERSION="3.3" \
 #
 
 %make
@@ -159,6 +160,9 @@ cp -a release/datafiles/locale %buildroot%_datadir
 
 
 %changelog
+* Thu Mar 14 2013 Aleksey Avdeev <solo@altlinux.ru> 2.63-alt0.2
+- Rebuilt with python3-3.3
+
 * Tue Aug 21 2012 Yuriy Kashirin <uka@altlinux.ru> 2.63-alt0.1
 - 2.63 test build
 

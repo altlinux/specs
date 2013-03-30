@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.9.8
-Release: alt1.2
+Release: alt1.2.1
 Summary: extensions to the Python standard library's unit testing framework
 
 Group: Development/Python
@@ -74,6 +74,9 @@ popd
 %endif
 
 %changelog
+* Fri Mar 22 2013 Aleksey Avdeev <solo@altlinux.ru> 0.9.8-alt1.2.1
+- Rebuild with Python-3.3
+
 * Thu Apr 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.8-alt1.2
 - Added module for Python 3 (bootstrap)
 

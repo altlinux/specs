@@ -3,12 +3,12 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.2
-Release: alt1.b3.git20120504
+Version: 1.2.3
+Release: alt1
 Summary: WSGI request and response object
 License: MIT
 Group: Development/Python
-Url: http://pythonpaste.org/webob/
+Url: http://webob.org/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 BuildArch: noarch
 
@@ -81,6 +81,9 @@ popd
 %endif
 
 %changelog
+* Sun Mar 03 2013 Aleksey Avdeev <solo@altlinux.ru> 1.2.3-alt1
+- Version 1.2.3
+
 * Sat May 05 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2-alt1.b3.git20120504
 - Version 1.2b3
 - Added module for Python 3

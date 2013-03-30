@@ -4,7 +4,7 @@
 
 Name: python-module-%module_name
 Version: 0.95
-Release: alt3
+Release: alt3.1
 
 Summary: Library for working with HTML5 documents
 
@@ -108,6 +108,9 @@ popd
 %endif
 
 %changelog
+* Fri Mar 22 2013 Aleksey Avdeev <solo@altlinux.ru> 0.95-alt3.1
+- Rebuild with Python-3.3
+
 * Tue Apr 10 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.95-alt3
 - Added modules for Python 3
 

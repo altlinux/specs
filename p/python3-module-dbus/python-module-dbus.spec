@@ -1,6 +1,6 @@
 Name: python3-module-dbus
 Version: 1.1.1
-Release: alt3
+Release: alt3.1
 
 Summary: Python 3 bindings for D-BUS library
 License: AFL/GPL
@@ -34,7 +34,7 @@ Development package.
 
 %prep
 %setup -q -n dbus-python-%version
-%patch -p1
+%patch -p2
 %patch2 -p1
 
 %build
@@ -73,6 +73,9 @@ export PYTHON_LIBS="$(python3-config --libs)"
 %exclude %_docdir/dbus-python
 
 %changelog
+* Tue Feb 19 2013 Aleksey Avdeev <solo@altlinux.ru> 1.1.1-alt3.1
+- Fix build with Python 3.3
+
 * Wed Dec 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.1-alt3
 - Built for Python 3
 

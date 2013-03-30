@@ -3,7 +3,7 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 2012c
+Version: 2012j
 Release: alt1
 
 %setup_python_module %oname
@@ -121,6 +121,9 @@ popd
 %endif
 
 %changelog
+* Thu Feb 21 2013 Aleksey Avdeev <solo@altlinux.ru> 2012j-alt1
+- Version 2012j
+
 * Mon Apr 16 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2012c-alt1
 - Version 2012c
 - Added module for Python 3

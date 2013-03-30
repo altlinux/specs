@@ -34,7 +34,7 @@
 
 Name: boost%ver_maj.%ver_min.%ver_rel
 Version: %ver_maj.%ver_min.%ver_rel
-Release: alt3
+Release: alt3.1
 Epoch: 1
 
 Summary: Boost libraries
@@ -56,7 +56,8 @@ Patch30: boost-1.52.0-boost_locale_utf.patch
 BuildRequires(pre): rpm-build-python >= 0.34.4-alt4
 
 %if_with python3
-BuildRequires(pre): rpm-build-python3
+# we use %%_python3_abiflags
+BuildRequires(pre): rpm-build-python3 >= 0.1.2
 BuildRequires: python3-devel
 %endif
 
@@ -1078,7 +1079,7 @@ echo "using mpi ; " >> tools/build/v2/user-config.jam
 echo "using python : %_python_version ; " >> tools/build/v2/user-config.jam
 
 %if_with python3
-echo "using python : %_python3_version : %_prefix :  %_includedir/python%{_python3_version}mu ; " >> tools/build/v2/user-config.jam
+echo "using python : %_python3_version : %_prefix :  %_includedir/python%{_python3_version}%{_python3_abiflags} ; " >> tools/build/v2/user-config.jam
 %endif
 
 %build
@@ -1238,7 +1239,7 @@ rm -f %buildroot%_libdir/*.a || :
 # but we don't care while this works.
 export LD_PRELOAD=%_libdir/libpython%_python_version.so
 %if_with python3
-export LD_PRELOAD=${LD_PRELOAD:+$LD_PRELOAD:}%_libdir/libpython%{_python3_version}mu.so
+export LD_PRELOAD=${LD_PRELOAD:+$LD_PRELOAD:}%_libdir/libpython%{_python3_version}%{_python3_abiflags}.so
 %endif
 
 #files
@@ -1520,6 +1521,9 @@ done
 
 
 %changelog
+* Tue Mar 26 2013 Aleksey Avdeev <solo@altlinux.ru> 1:1.52.0-alt3.1
+- Rebuild with Python-3.3
+
 * Sat Feb 09 2013 Ivan A. Melnikov <iv@altlinux.org> 1:1.52.0-alt3
 - compatibility build without development headers.
 

@@ -4,7 +4,7 @@
 
 Name:           python-module-%oname
 Version:        4.17
-Release:        alt1
+Release:        alt1.1
 Summary:        Python Remote Objects
 Group:          Development/Python
 License:        LGPLv2+
@@ -190,6 +190,9 @@ cp -fR build/sphinx/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Fri Mar 22 2013 Aleksey Avdeev <solo@altlinux.ru> 4.17-alt1.1
+- Rebuild with Python-3.3
+
 * Wed Feb 13 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.17-alt1
 - Version 4.17
 

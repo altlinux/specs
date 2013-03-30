@@ -1,4 +1,4 @@
-%define version 4.0.3
+%define version 4.0.5
 #define subver c1
 %define release alt1
 %define oname zope.interface
@@ -7,16 +7,16 @@
 %def_with python3
 
 Summary: Zope interfaces package
-Name: %packagename
+Name: python-module-%oname
 Version: %version
 Url: http://www.python.org/pypi/zope.interface
 %ifdef subver
 Release: %release.%subver
-Source0: zope.interface-%version%subver.tar.gz
 %else
 Release: %release
-Source0: zope.interface-%version.tar.gz
 %endif
+# git://github.com/zopefoundation/zope.interface.git
+Source0: %name-%version.tar
 License: ZPL
 Group: Development/Python
 Packager: Python Development Team <python@packages.altlinux.org>
@@ -65,11 +65,7 @@ Zope 3, along with the packages it depends on.
 This package contains tests for zope.interface.
 
 %prep
-%ifdef subver
-%setup -n zope.interface-%version%subver
-%else
-%setup -n zope.interface-%version
-%endif
+%setup
 %if_with python3
 rm -rf ../python3
 cp -a . ../python3
@@ -86,41 +82,35 @@ popd
 
 %install
 %python_module_declare %python_sitelibdir/zope
-%python_install --optimize=2 --record=INSTALLED_FILES
-rm -fR %buildroot%python_sitelibdir/zope/__init__.py*
+%python_install
 
 %if_with python3
 pushd ../python3
 %python3_install
 popd
-rm -fR %buildroot%python3_sitelibdir/zope/__init__.py*
 %endif
  
 %files
 %python_sitelibdir/*
 %exclude %python_sitelibdir/zope/interface/tests
-%exclude %python_sitelibdir/zope/interface/common/tests
-%ifnarch x86_64
-%exclude %python_sitelibdir/zope*egg-info
-%endif
 %doc *.txt
 
 %files tests
 %python_sitelibdir/zope/interface/tests
-%python_sitelibdir/zope/interface/common/tests
 
 %if_with python3
 %files -n python3-module-%oname
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/zope/interface/tests
-%exclude %python3_sitelibdir/zope/interface/common/tests
 
 %files -n python3-module-%oname-tests
 %python3_sitelibdir/zope/interface/tests
-%python3_sitelibdir/zope/interface/common/tests
 %endif
 
 %changelog
+* Sat Mar 16 2013 Aleksey Avdeev <solo@altlinux.ru> 4.0.5-alt1
+- Version 4.0.5
+
 * Thu Jan 03 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.3-alt1
 - Version 4.0.3
 

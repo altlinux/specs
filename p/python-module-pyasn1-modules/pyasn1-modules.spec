@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.0.4
-Release: alt1.rc0
+Release: alt1.rc0.1
 Summary: ASN.1 modules for Python
 License: BSD
 Group: Development/Python
@@ -76,6 +76,9 @@ popd
 %endif
 
 %changelog
+* Fri Mar 22 2013 Aleksey Avdeev <solo@altlinux.ru> 0.0.4-alt1.rc0.1
+- Rebuild with Python-3.3
+
 * Tue Jun 05 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.4-alt1.rc0
 - Initial build for Sisyphus
 

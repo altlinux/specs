@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.1
-Release: alt1.svn20130211
+Release: alt1.svn20130211.1
 Summary: Python package for modeling optimization problems
 License: GPLv3
 Group: Development/Python
@@ -74,6 +74,9 @@ popd
 %endif
 
 %changelog
+* Fri Mar 22 2013 Aleksey Avdeev <solo@altlinux.ru> 0.1-alt1.svn20130211.1
+- Rebuild with Python-3.3
+
 * Wed Feb 13 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1-alt1.svn20130211
 - Version 0.1
 

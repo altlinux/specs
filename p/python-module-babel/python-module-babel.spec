@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.9.5
-Release: alt1.2
+Version: 0.9.6
+Release: alt1
 
 Summary: a collection of tools for internationalizing Python applications
 License: BSD
@@ -112,6 +112,9 @@ python setup.py test
 %endif
 
 %changelog
+* Thu Feb 21 2013 Aleksey Avdeev <solo@altlinux.ru> 0.9.6-alt1
+- 0.9.6
+
 * Thu May 10 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.5-alt1.2
 - Added module for Python 3
 

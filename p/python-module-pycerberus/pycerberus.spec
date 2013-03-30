@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.4.2
-Release: alt2
+Release: alt2.1
 Summary: Highly flexible, no magic input validation library
 License: MIT
 Group: Development/Python
@@ -105,6 +105,9 @@ popd
 %endif
 
 %changelog
+* Fri Mar 22 2013 Aleksey Avdeev <solo@altlinux.ru> 0.4.2-alt2.1
+- Rebuild with Python-3.3
+
 * Tue May 08 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.2-alt2
 - Added module for Python 3
 

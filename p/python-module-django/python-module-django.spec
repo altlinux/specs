@@ -1,6 +1,6 @@
 %define branch 1.5
 %define version %branch.0
-%define release alt4
+%define release alt4.1
 %define origname Django
 %define oname django
 %define py3_name python3-module-%oname
@@ -366,6 +366,9 @@ install -m 0755 extras/django_bash_completion %buildroot/%_sysconfdir/bash_compl
 %endif
 
 %changelog
+* Fri Mar 22 2013 Aleksey Avdeev <solo@altlinux.ru> 1.5.0-alt4.1
+- Rebuild with Python-3.3
+
 * Wed Feb 27 2013 Aleksey Avdeev <solo@altlinux.ru> 1.5.0-alt4
 - Rename package to python-module-django
 

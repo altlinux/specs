@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%modulename
-Version: 1.4.3
-Release: alt1.git20120427
+Version: 2.1.0
+Release: alt1
 
 Summary: Another implementation of Markdown in Python
 Group: Development/Python
@@ -102,6 +102,9 @@ rm -f %buildroot%python_sitelibdir/*.pyo
 %endif
 
 %changelog
+* Sat Mar 02 2013 Aleksey Avdeev <solo@altlinux.ru> 2.1.0-alt1
+- Version 2.1.0
+
 * Thu May 10 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4.3-alt1.git20120427
 - Version 1.4.3
 - Added module for Python 3

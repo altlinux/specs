@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 2012.1
-Release: alt1
+Release: alt1.1
 Summary: C/C++ source generation from an AST
 License: MIT
 Group: Development/Python
@@ -104,6 +104,9 @@ cp -fR doc/build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Sun Mar 24 2013 Aleksey Avdeev <solo@altlinux.ru> 2012.1-alt1.1
+- Rebuild with Python-3.3
+
 * Sat May 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2012.1-alt1
 - Initial build for Sisyphus
 

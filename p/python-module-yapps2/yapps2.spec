@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 2.1.1
-Release: alt3
+Release: alt3.1
 Summary: Yet Another Python Parser System
 
 Group: Development/Python
@@ -121,6 +121,9 @@ find . -name '._*' -size 1 -print0 | xargs -0 grep -lZ 'Mac OS X' -- | xargs -0 
 %endif
 
 %changelog
+* Fri Mar 22 2013 Aleksey Avdeev <solo@altlinux.ru> 2.1.1-alt3.1
+- Rebuild with Python-3.3
+
 * Sat Jun 23 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.1.1-alt3
 - Applied repocop patch
 

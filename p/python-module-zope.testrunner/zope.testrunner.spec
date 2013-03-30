@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 4.0.4
-Release: alt2
+Release: alt2.1
 Summary: Zope testrunner script
 License: ZPL
 Group: Development/Python
@@ -86,6 +86,9 @@ mv %buildroot%python_sitelibdir_noarch/* \
 %endif
 
 %changelog
+* Fri Mar 22 2013 Aleksey Avdeev <solo@altlinux.ru> 4.0.4-alt2.1
+- Rebuild with Python-3.3
+
 * Thu Apr 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.4-alt2
 - Added module for Python 3
 

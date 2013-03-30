@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.3
-Release: alt3
+Release: alt3.1
 Summary: Shared Zope Toolkit browser components
 License: ZPLv2.1
 Group: Development/Python
@@ -109,6 +109,9 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 
 %changelog
+* Fri Mar 22 2013 Aleksey Avdeev <solo@altlinux.ru> 1.3-alt3.1
+- Rebuild with Python-3.3
+
 * Tue Apr 17 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3-alt3
 - Added module for Python 3
 

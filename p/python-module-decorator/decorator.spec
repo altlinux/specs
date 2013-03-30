@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 3.4.0
-Release: alt1
+Release: alt1.1
 Summary: Better living through Python with decorators
 License: BSD
 Group: Development/Python
@@ -99,6 +99,9 @@ popd
 %endif
 
 %changelog
+* Fri Mar 22 2013 Aleksey Avdeev <solo@altlinux.ru> 3.4.0-alt1.1
+- Rebuild with Python-3.3
+
 * Wed Feb 13 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.4.0-alt1
 - Version 3.4.0
 

@@ -4,7 +4,7 @@
 
 Name:           python-module-%oname
 Version:        1.0.6
-Release:        alt2.svn20101016
+Release:        alt2.svn20101016.1
 Summary:        Setuptools plugin
 
 Group:          Development/Python
@@ -76,6 +76,9 @@ popd
 %endif
 
 %changelog
+* Fri Mar 22 2013 Aleksey Avdeev <solo@altlinux.ru> 1.0.6-alt2.svn20101016.1
+- Rebuild with Python-3.3
+
 * Sat May 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.6-alt2.svn20101016
 - Added module for Python 3
 
