@@ -1,5 +1,5 @@
 Name: tea
-Version: 33.1.0
+Version: 35.0.0
 Release: alt1
 
 Summary: Powerful text editor with many HTML editing and text processing functions
@@ -8,9 +8,9 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 License: GPL
 Group: Text tools
-Url: http://tea-editor.sourceforge.net/
+Url: http://semiletov.org/tea/
 
-Source: http://prdownloads.sf.net/tea-editor/%name-%version.tar
+Source: http://semiletov.org/tea/dloads/tea-%version.tar
 
 # Automatically added by buildreq on Sun Apr 26 2009
 BuildRequires: gcc-c++ libaspell-devel libqt4-devel
@@ -22,10 +22,10 @@ higher), GnomeVFS, LibGconf and modern version of GCC (you have it with
 your Linux-distro).
 
 %prep
-%setup -q
+%setup
 
 %build
-qmake-qt4
+%qmake_qt4
 %make_build
 
 %install
@@ -53,12 +53,15 @@ EOF
 
 %files -f %name.lang
 %_bindir/*
-%doc AUTHORS ChangeLog INSTALL NEWS README TODO
+%doc AUTHORS ChangeLog NEWS README TODO
 #%_datadir/%name
 %_pixmapsdir/*
 %_desktopdir/%name.desktop
 
 %changelog
+* Sat Mar 30 2013 Vitaly Lipatov <lav@altlinux.ru> 35.0.0-alt1
+- new version 35.0.0 (with rpmrb script)
+
 * Mon Jun 11 2012 Vitaly Lipatov <lav@altlinux.ru> 33.1.0-alt1
 - new version 33.1.0 (with rpmrb script)
 
