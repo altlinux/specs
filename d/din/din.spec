@@ -1,5 +1,5 @@
 Name: din
-Version: 4.2.1
+Version: 5.2.1
 Release: alt1
 License: GPLv2
 Summary: Edit waveforms in a GUI, and watch the sound change before your ears
@@ -33,6 +33,7 @@ Collaboration? MIDI. OSC. IRC.
 %prep
 %setup
 sed -i 's@\[tcl8\.5/tcl\.h\]@@' configure.ac
+sed -i 's@/usr/local@/usr@g' data/checkdotdin
 
 %build
 %autoreconf
@@ -56,6 +57,10 @@ done
 %_pixmapsdir/*
 
 %changelog
+* Sun Mar 31 2013 Fr. Br. George <george@altlinux.ru> 5.2.1-alt1
+- Autobuild version bump to 5.2.1
+- Fix paths
+
 * Mon Oct 22 2012 Fr. Br. George <george@altlinux.ru> 4.2.1-alt1
 - Autobuild version bump to 4.2.1
 
