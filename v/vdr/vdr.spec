@@ -1,5 +1,5 @@
 Name: vdr
-Version: 1.7.31
+Version: 2.0.0
 Release: alt1
 
 Summary: Digital satellite receiver box with advanced features
@@ -16,7 +16,8 @@ BuildRequires: libavcodec-devel libavformat-devel libavutil-devel libswscale-dev
 BuildRequires: libGraphicsMagick-c++-devel libvdpau-devel libxine-devel libzvbi-devel
 BuildRequires: libGL-devel libGLU-devel libglut-devel libX11-devel libXext-devel
 BuildRequires: libXinerama-devel libXrandr-devel libXrender-devel libXv-devel
-BuildRequires: boost-devel libsqlite3-devel libupnp-devel libdbus-glib-devel perl-Date-Manip
+BuildRequires: boost-devel libupnp-devel libtntnet-devel libtntdb-devel libdbus-glib-devel perl-Date-Manip
+BuildRequires: libcurl-devel
 
 %description
 VDR, Video Disc Recorder, enables you to build a powerful set-top box on your own
@@ -24,6 +25,10 @@ using Linux and a DVB card. It incorporates basic features, such as watching TV,
 recording and time-shifting, plus advanced features, including MP3/Ogg playback,
 playback of all video formats supported by MPlayer and backup of the recorded
 material to MPEG-4, video CD or DVD.
+
+%package devel
+Summary: Development part of VDR
+Group: Development/C
 
 %package plugin-sc
 Summary: VDR softcam plugin
@@ -113,6 +118,9 @@ Summary: VDR X11 frontend
 Group: Video
 Requires: vdr-plugin-xine = %version-%release
 
+%description devel
+Header and pkgconfig files of VDR
+
 %description plugin-sc
 Softcam plugin  for the Video Disk Recorder (VDR).
 
@@ -183,15 +191,19 @@ Additional Xine plugins for use with VDR frontends.
 
 %prep
 %setup
-sed -e 's,^MANDIR.\+$,MANDIR = %_mandir,' \
-    -e 's,^BINDIR.\+$,BINDIR = %_bindir,' \
-    -e 's,^LOCDIR.\+$,LOCDIR = %_datadir/locale,g' \
-    -e 's,^PLUGINLIBDIR.\+$,PLUGINLIBDIR = %plugindir,g' \
-    -e 's,^VIDEODIR.\+$,VIDEODIR = %videodir,g' \
-    -e 's,^CONFDIR.\+$,CONFDIR = %confdir,g' \
-    -e 's,^RESDIR.\+$,RESDIR = %_datadir/vdr,g' \
-    -e 's,^.\+USEFHS.\+$,USEFHS=1,' \
-    -e 's,^.\+VDR_USER.\+$,VDR_USER = vdr,' \
+sed -e 's,^#PREFIX.\+$,PREFIX = %prefix,' \
+    -e 's,^#BINDIR.\+$,BINDIR = %_bindir,' \
+    -e 's,^#INCDIR.\+$,INCDIR = %_includedir,' \
+    -e 's,^#LIBDIR.\+$,LIBDIR = %plugindir,' \
+    -e 's,^#LOCDIR.\+$,LOCDIR = %_datadir/locale,g' \
+    -e 's,^#MANDIR.\+$,MANDIR = %_mandir,' \
+    -e 's,^#PCDIR.\+$,PCDIR = %_pkgconfigdir,' \
+    -e 's,^#RESDIR.\+$,RESDIR = %_datadir/vdr,g' \
+    -e 's,^#VIDEODIR.\+$,VIDEODIR = %videodir,g' \
+    -e 's,^#CONFDIR.\+$,CONFDIR = %confdir,g' \
+    -e 's,^#CACHEDIR.\+$,CACHEDIR = %_cachedir/vdr,g' \
+    -e 's,^\(CFLAGS[[:blank:]]\+[^[:blank:]]\+[[:blank:]]\+\)\(.\+$\),\1%optflags \2,' \
+    -e 's,^\(CXXFLAGS[[:blank:]]\+[^[:blank:]]\+[[:blank:]]\+\)\(.\+$\),\1%optflags \2,' \
     < Make.config.template > Make.config
 
 sed -i 's,^IMAGELIB.\+$,IMAGELIB = graphicsmagick,' PLUGINS/src/text2skin/Makefile
@@ -199,7 +211,7 @@ sed -i 's,^IMAGELIB.\+$,IMAGELIB = graphicsmagick,' PLUGINS/src/text2skin/Makefi
 %build
 (cd PLUGINS/src/softdevice && sh configure)
 (cd PLUGINS/src/xineliboutput && sh configure)
-make all plugins
+make
 
 %install
 make install DESTDIR=%buildroot
@@ -252,7 +264,7 @@ cp -p PLUGINS/src/ttxtsubs/{README,TROUBLESHOOTING} %buildroot%docdir/ttxtsubs
 
 mkdir -p %buildroot%docdir/upnp %buildroot%confdir/plugins/upnp
 cp -p PLUGINS/src/upnp/README %buildroot%docdir/upnp/
-cp -a PLUGINS/src/upnp/http %buildroot%confdir/plugins/upnp
+cp -a PLUGINS/src/upnp/httpdocs %buildroot%confdir/plugins/upnp
 touch %buildroot%confdir/plugins/upnp/metadata.db
 
 mkdir -p %buildroot%docdir/vnsiserver
@@ -356,6 +368,11 @@ mkdir -p %buildroot%_runtimedir/vdr %buildroot%_cachedir/vdr
 %dir %attr(0770,root,_vdr) %_runtimedir/vdr
 %dir %attr(0770,root,_vdr) %_cachedir/vdr
 
+%files devel
+%_includedir/libsi
+%_includedir/vdr
+%_pkgconfigdir/vdr.pc
+
 %files plugin-sc -f sc.lang
 %docdir/sc
 %dir %attr(0770,root,_vdr) %confdir/plugins/sc
@@ -420,7 +437,7 @@ mkdir -p %buildroot%_runtimedir/vdr %buildroot%_cachedir/vdr
 %docdir/streamdev
 %dir %attr(0770,root,_vdr) %confdir/plugins/streamdev-server
 %config(noreplace) %attr(0600,_vdr,_vdr) %confdir/plugins/streamdev-server/streamdevhosts.conf
-%config(noreplace) %attr(0600,_vdr,_vdr) %confdir/plugins/streamdev-server/externremux.sh
+%config(noreplace) %attr(0700,_vdr,_vdr) %confdir/plugins/streamdev-server/externremux.sh
 %plugindir/libvdr-streamdev-server.so.%version
 %plugindir/libvdr-streamdev-client.so.%version
 
@@ -438,8 +455,12 @@ mkdir -p %buildroot%_runtimedir/vdr %buildroot%_cachedir/vdr
 %docdir/upnp
 %dir %attr(0770,root,_vdr) %confdir/plugins/upnp
 %config(noreplace) %attr(0600,_vdr,_vdr) %confdir/plugins/upnp/metadata.db
-%confdir/plugins/upnp/http
+%confdir/plugins/upnp/httpdocs
 %plugindir/libvdr-upnp.so.%version
+%plugindir/libupnp-dvb-profiler.so.%version
+%plugindir/libupnp-file-provider.so.%version
+%plugindir/libupnp-rec-provider.so.%version
+%plugindir/libupnp-vdr-provider.so.%version
 
 %files plugin-vnsiserver -f vnsiserver.lang
 %docdir/vnsiserver
@@ -462,6 +483,7 @@ mkdir -p %buildroot%_runtimedir/vdr %buildroot%_cachedir/vdr
 %docdir/xvdr
 %dir %attr(0770,root,_vdr) %confdir/plugins/xvdr
 %config(noreplace) %attr(0600,_vdr,_vdr) %confdir/plugins/xvdr/allowed_hosts.conf
+%config(noreplace) %attr(0600,_vdr,_vdr) %confdir/plugins/xvdr/xvdr.conf
 %plugindir/libvdr-xvdr.so.%version
 
 %files fbfe
@@ -483,6 +505,24 @@ mkdir -p %buildroot%_runtimedir/vdr %buildroot%_cachedir/vdr
 %_libdir/xine/plugins/*/xineplug_inp_xvdr.so
 
 %changelog
+* Sun Mar 31 2013 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.0.0-alt1
+- 2.0.0 released
+
+* Sun Mar 24 2013 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.7.42-alt1
+- 1.7.42 released
+
+* Wed Mar 13 2013 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.7.39-alt1
+- 1.7.39 released
+
+* Sat Feb 23 2013 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.7.38-alt1
+- 1.7.38 released
+
+* Tue Feb 12 2013 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.7.37-alt1
+- 1.7.37 released
+
+* Mon Nov 19 2012 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.7.32-alt1
+- 1.7.32 released
+
 * Sun Sep 30 2012 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.7.31-alt1
 - 1.7.31 released
 
