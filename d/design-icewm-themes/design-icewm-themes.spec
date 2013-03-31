@@ -1,6 +1,6 @@
 Name: design-icewm-themes
 Version: 1.0
-Release: alt4
+Release: alt5
 
 Summary: Themes collection for IceWM
 License: GPL
@@ -47,6 +47,10 @@ find . \( -name '.*.swp' -o -name '#*#' -o -name '*~' \) -print -delete
 %themedir/*
 
 %changelog
+* Sun Mar 31 2013 Dmitriy Khanzhin <jinn@altlinux.org> 1.0-alt5
+- fixed and restored dropped themes
+- added several new themes from http://box-look.org
+
 * Fri Mar 22 2013 Michael Shigorin <mike@altlinux.org> 1.0-alt4
 - dropped a bunch of themes exposing bugs with icewm-1.3 (closes: #28733)
 - fixed permissions in the archive
