@@ -13,7 +13,7 @@
 
 Name:           chromium
 Version:        25.0.1364.172
-Release:        alt3.r%rev
+Release:        alt4.r%rev
 
 Summary:        An open source web browser developed by Google
 License:        BSD-3-Clause and LGPL-2.1+
@@ -116,7 +116,7 @@ BuildRequires:  libspeex-devel
 BuildRequires:  libsqlite3-devel
 BuildRequires:  libssl-devel
 BuildRequires:  libudev-devel
-BuildRequires:  libv8-devel >= %v8_ver
+BuildRequires:  libv8-3.15-devel >= %v8_ver
 BuildRequires:  libvpx-devel
 BuildRequires:  libx264-devel
 BuildRequires:  libXrandr-devel
@@ -151,7 +151,7 @@ BuildRequires:  wdiff
 BuildRequires:  yasm
 #BuildRequires:  zlib-devel
 
-Requires:       libv8 >= %v8_ver
+Requires:       libv8-3.15 >= %v8_ver
 
 Provides: 		webclient, /usr/bin/xbrowser
 BuildPreReq: 	alternatives >= 0.2.0
@@ -440,6 +440,9 @@ printf '%_bindir/%name\t%_libdir/%name/%name-gnome\t15\n' > %buildroot%_altdir/%
 %_altdir/%name-gnome
 
 %changelog
+* Sun Mar 31 2013 Andrey Cherepanov <cas@altlinux.org> 25.0.1364.172-alt4.r187217
+- Rebuild with libv8-3.15
+
 * Thu Mar 21 2013 Andrey Cherepanov <cas@altlinux.org> 25.0.1364.172-alt3.r187217
 - Add note that the keys for Google API are only to be used for ALT Linux
 - Fix run script if CHROMIUM_ULIMIT is not set in /etc/chromium/default
