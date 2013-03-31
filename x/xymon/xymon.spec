@@ -61,7 +61,7 @@ URL:		http://xymon.sourceforge.net/
 
 %if_disabled trunk
 Version:	4.3.10
-Release:	alt1
+Release:	alt2
 Source0:	http://prdownloads.sourceforge.net/xymon/Xymon/%{version}/%{name}-4.3.10.tar.gz
 %else
 %define		trunkVersion	%(svn info ~/svn/xymon/trunk/ | grep ^Revision | awk '{print $2}')
@@ -278,6 +278,9 @@ Patch500: xymonclient-linux.sh-altlinux.patch
 # removed xymongen task from tasks.cfg
 Patch501: xymongen.tasks.cfg.DIST.patch
 
+# added control for using "ifconfig" and "netstat -rn" in xymonclient-linux.sh
+Patch502: xymonclient-linux.sh-ifconfig-route.altlinux.patch
+
 ##########################################################################
 ##########################################################################
 
@@ -361,7 +364,7 @@ built-in monitor.
 %if_enabled extraclients
 %package client-passive
 Summary:	Run-time utilities and a client for the Xymon monitoring system
-Group:		File tools
+Group:		Monitoring
 Conflicts:	xymon xymon-client
 Provides:	xymon-client = %{version}-%{release} xymon-client-core = %{version}-%{release}
 %if_enabled selinux
@@ -405,7 +408,7 @@ one.
 
 %package client-orca
 Summary:	Orca collector client for the Xymon monitoring system
-Group:		File tools
+Group:		Monitoring
 
 %description client-orca
 orcaxymon is an add-on tool for the Xymon client. It is used to grab data 
@@ -478,6 +481,7 @@ the Xymon server in NCV format.
 
 %patch500 -p2
 %patch501 -p0
+%patch502 -p0
 
 %if_disabled trunk
   PROTOFILE="xymond/etcfiles/protocols.cfg.DIST"
@@ -1033,11 +1037,9 @@ done
 /bin/true
 %endif
 
-
 #######################################################################
 %endif # extraclients
 #######################################################################
-
 
 %files
 %doc README README.CLIENT README.redhat Changes* COPYING CREDITS RELEASENOTES
@@ -1079,6 +1081,9 @@ done
 %attr(755,xymon,xymon) %dir	%{libDirectory}/rrd
 %attr(755,xymon,xymon) %dir	%{libDirectory}/tmp
 
+%exclude %{xymonServerRoot}/server/static
+%exclude %{xymonServerRoot}/server/web
+%exclude %{xymonServerRoot}/server/www
 %dir	%{xymonServerRoot}
 %dir	%{xymonServerRoot}/server
 %{xymonServerRoot}/server/*
@@ -1115,6 +1120,9 @@ done
 
 %{xymonServerRoot}/cgi-bin
 %{xymonServerRoot}/cgi-secure
+%{xymonServerRoot}/server/static
+%{xymonServerRoot}/server/web
+%{xymonServerRoot}/server/www
 
 %files apache2
 %config(noreplace) %attr(0644,root,root) %{_sysconfdir}/httpd2/conf/addon.d/A.%{serverName}.conf
@@ -1156,7 +1164,6 @@ done
 %attr(755,xymon,xymon)	%{logDirectory}
 %attr(755,xymon,xymon)	%{runDirectory}
 
-
 %files man
 %_man1dir/*
 %_man5dir/*
@@ -1191,7 +1198,6 @@ done
 %{_mandir}/man1/xymondigest.1.*
 %{_mandir}/man1/logfetch.1.*
 %{_mandir}/man5/xymonclient.cfg.5.*
-
 
 %{_bindir}/bb*
 %{_bindir}/xymon*
@@ -1244,7 +1250,6 @@ done
      %{xymonClientRoot}/bin
      %{xymonClientRoot}/etc
 
-
 %files client-orca
 %doc README Changes* COPYING CREDITS RELEASENOTES
 %{_libexecdir}/%{clientName}/orcaxymon
@@ -1253,8 +1258,11 @@ done
 
 ################ end extra clients ################
 
-
 %changelog
+* Sun Mar 31 2013 Sergey Y. Afonin <asy@altlinux.ru> 4.3.10-alt2
+- added control for using "ifconfig" and "netstat -rn" in
+  xymonclient-linux.sh
+
 * Thu Mar 28 2013 Sergey Y. Afonin <asy@altlinux.ru> 4.3.10-alt1
 - initial build for ALT Linux
 
