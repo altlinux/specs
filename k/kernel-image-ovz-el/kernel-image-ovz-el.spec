@@ -1,6 +1,6 @@
 Name: kernel-image-ovz-el
 Version: 2.6.32
-Release: alt84
+Release: alt85
 
 %define kernel_base_version	%version
 %define kernel_extra_version	%nil
@@ -616,6 +616,9 @@ find %buildroot%_docdir/kernel-doc-%base_flavour-%version/DocBook \
 %endif # staging
 
 %changelog
+* Sun Mar 31 2013 Led <led@altlinux.ru> 2.6.32-alt85
+- fuse: fix stat call on 32 bit platforms (ALT#28767)
+
 * Wed Mar 13 2013 Led <led@altlinux.ru> 2.6.32-alt84
 - Update to 042stab075.2
 
