@@ -1,5 +1,5 @@
 Name: tatham-puzzles
-Version: 9751
+Version: 9794
 Release: alt1
 License: MIT
 Group: Games/Puzzles
@@ -103,6 +103,9 @@ install *.info* %buildroot%_infodir/
 %_infodir/*%{name}*
 
 %changelog
+* Sun Mar 31 2013 Fr. Br. George <george@altlinux.ru> 9794-alt1
+- Autobuild version bump to 9794
+
 * Thu Feb 14 2013 Fr. Br. George <george@altlinux.ru> 9751-alt1
 - Autobuild version bump to 9751
 - Convert russian descriptions to UTF
