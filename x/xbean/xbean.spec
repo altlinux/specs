@@ -6,7 +6,7 @@ Name:           xbean
 Version:        3.11.1
 BuildArch:      noarch
 
-Release:        alt1_3jpp7
+Release:        alt2_3jpp7
 Summary:        Java plugin based web server
 
 Group:          Development/Java
@@ -57,7 +57,7 @@ Requires:       jpackage-utils
 Requires:       apache-commons-logging
 Requires:       objectweb-asm
 Requires:       slf4j
-Requires:       eclipse-rcp
+#Requires:       eclipse-rcp
 Source44: import.info
 
 %description
@@ -237,6 +237,9 @@ cp -pr target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Sun Mar 31 2013 Igor Vlasenko <viy@altlinux.ru> 0:3.11.1-alt2_3jpp7
+- bootstrapping eclipse - dropped eclipse-rcp dep
+
 * Fri Sep 21 2012 Igor Vlasenko <viy@altlinux.ru> 0:3.11.1-alt1_3jpp7
 - new version
 
