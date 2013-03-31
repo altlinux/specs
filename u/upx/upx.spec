@@ -1,5 +1,5 @@
 Name: upx
-Version: 3.08
+Version: 3.09
 Release: alt1
 
 Summary: The Ultimate Packer for eXecutables
@@ -40,6 +40,9 @@ install -pD -m644 doc/upx.1 %buildroot%_man1dir/upx.1
 %_man1dir/upx*
 
 %changelog
+* Sun Mar 31 2013 Fr. Br. George <george@altlinux.ru> 3.09-alt1
+- Autobuild version bump to 3.09
+
 * Wed Jan 11 2012 Fr. Br. George <george@altlinux.ru> 3.08-alt1
 - Autobuild version bump to 3.08
 
