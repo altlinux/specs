@@ -8,7 +8,7 @@
 
 Name: motion
 Version: 3.2.12
-Release: %branch_point.5
+Release: %branch_point.6
 
 Summary: %name - Detect motion using a video4linux device
 
@@ -54,8 +54,6 @@ rm -f version.sh
 %configure --sysconfdir=%_sysconfdir/%name \
 	--docdir=%_defaultdocdir \
 	--without-optimizecpu
-
-%make
 %make_build
 
 %install
@@ -63,18 +61,22 @@ rm -f version.sh
 
 install -d -m 755 %buildroot%_sysconfdir/%name
 install -m 644 %buildroot%_sysconfdir/%name-dist.conf %buildroot%_sysconfdir/%name/%name.conf
+rm -f %buildroot%_sysconfdir/%name-dist.conf
 mv %buildroot%_datadir/%name-%version/examples/  %buildroot%_defaultdocdir/%name-%version/examples
 
 
 %files
+%_defaultdocdir/%name-%version/
 %docdir %_defaultdocdir/%name-%version/
-#%%doc %_defaultdocdir/%name-%version/*
-%config %attr(0644,root,root) %_sysconfdir/%name/%name.conf
-%exclude %_sysconfdir/%name-dist.conf
+%dir %_sysconfdir/%name/
+%config %_sysconfdir/%name/%name.conf
 %_bindir/%name
 %_man1dir/*
 
 %changelog
+* Sun Mar 31 2013 Vitaly Lipatov <lav@altlinux.ru> 3.2.12-alt2.6
+- fix files packing (ALT bug #23880)
+
 * Tue Mar 26 2013 Vitaly Lipatov <lav@altlinux.ru> 3.2.12-alt2.5
 - cleanup spec
 - rebuild with libmysqlclient18
