@@ -1,3 +1,4 @@
+BuildRequires: junit-junit4 ant-junit
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
 # END SourceDeps(oneline)
@@ -23,7 +24,7 @@ BuildRequires: jpackage-compat
 
 Name:           gluegen2
 Version:        %{pkg_version}
-Release:        alt1_7jpp7
+Release:        alt2_7jpp7
 Summary:        Java/JNI glue code generator to call out to ANSI C
 
 Group:          Development/Java
@@ -40,7 +41,7 @@ BuildRequires:  jpackage-utils
 BuildRequires: p7zip-standalone p7zip
 BuildRequires:  ant-antlr
 BuildRequires:  ant-contrib
-BuildRequires:  ant-junit4
+BuildRequires:  ant-junit4 junit4
 BuildRequires:  cpptasks
 BuildRequires:  maven
 
@@ -64,7 +65,7 @@ BuildArch:      noarch
 Requires:       %{name} = %{version}-%{release}
 Requires:       ant-antlr
 Requires:       ant-contrib
-Requires:       ant-junit
+Requires:       ant-junit4
 Requires:       cpptasks
 
 %description devel
@@ -228,6 +229,9 @@ _JAVA_OPTIONS="-Djogamp.debug=true -Djava.library.path=../build/test/build/nativ
 %{_docdir}/%{name}
 
 %changelog
+* Mon Apr 01 2013 Igor Vlasenko <viy@altlinux.ru> 2.0-alt2_7jpp7
+- fixed build with new junit
+
 * Thu Feb 14 2013 Igor Vlasenko <viy@altlinux.ru> 2.0-alt1_7jpp7
 - new release
 
