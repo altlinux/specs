@@ -5,12 +5,12 @@
 
 Name:           python-module-%oname
 Version:        1.8
-Release:        alt1.hg20120708.1
+Release:        alt2.git20130303
 Summary:        Creates and Manipulates Graphs and Networks
 Group:          Development/Python
 License:        LGPLv2+
 URL:            https://networkx.lanl.gov/trac
-# hg clone http://networkx.lanl.gov/hg/networkx
+# https://github.com/networkx/networkx.git
 Source:         %oname-%version.tar.gz
 BuildArch:      noarch
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
@@ -159,12 +159,14 @@ cp -fR doc/build/pickle %buildroot%python_sitelibdir/%oname/
 %exclude %python_sitelibdir/%oname/pickle
 %endif
 %exclude %python_sitelibdir/*/tests
+%exclude %python_sitelibdir/*/testing
 %exclude %python_sitelibdir/*/*/tests
 %exclude %python_sitelibdir/*/*/*/tests
 
 %files tests
 #python_sitelibdir/networkxdoctest.py*
 %python_sitelibdir/*/tests
+%python_sitelibdir/*/testing
 %python_sitelibdir/*/*/tests
 %python_sitelibdir/*/*/*/tests
 
@@ -184,16 +186,21 @@ cp -fR doc/build/pickle %buildroot%python_sitelibdir/%oname/
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*.egg-info
 %exclude %python3_sitelibdir/*/tests
+%exclude %python3_sitelibdir/*/testing
 %exclude %python3_sitelibdir/*/*/tests
 %exclude %python3_sitelibdir/*/*/*/tests
 
 %files -n python3-module-%oname-tests
 %python3_sitelibdir/*/tests
+%python3_sitelibdir/*/testing
 %python3_sitelibdir/*/*/tests
 %python3_sitelibdir/*/*/*/tests
 %endif
 
 %changelog
+* Mon Apr 01 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.8-alt2.git20130303
+- New snapshot
+
 * Fri Mar 22 2013 Aleksey Avdeev <solo@altlinux.ru> 1.8-alt1.hg20120708.1
 - Rebuild with Python-3.3
 
