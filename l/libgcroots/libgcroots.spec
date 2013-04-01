@@ -1,11 +1,12 @@
 %add_optflags %optflags_shared
 Name:		libgcroots
 Version:	0.2.3
-Release:	alt2_4
+Release:	alt2_5
 License:	MIT
 URL:		http://code.google.com/p/sigscheme/wiki/libgcroots
 
 Source0:	http://sigscheme.googlecode.com/files/%{name}-%{version}.tar.bz2
+Patch0:		%{name}-aarch64.patch
 
 
 Summary:	Roots acquisition library for Garbage Collector
@@ -23,7 +24,7 @@ experimental ideas.
 %package devel
 Summary:	Development files for libgcroots
 Group:		Development/C
-Requires:	%{name} = %{version}-%{release}
+Requires:	%{name}%{?_isa} = %{version}-%{release}
 
 %description devel
 libgcroots abstracts architecture-dependent part of garbage collector
@@ -35,14 +36,14 @@ to develop any own GC.
 
 %prep
 %setup -q
+%patch0 -p1 -b .0-aarch64
 
 %build
 %configure --disable-static
 make %{?_smp_mflags}
 
 %install
-
-make install DESTDIR=$RPM_BUILD_ROOT
+make install DESTDIR=$RPM_BUILD_ROOT INSTALL="install -p"
 
 # Remove unnecessary files
 rmdir $RPM_BUILD_ROOT%{_includedir}/libgcroots
@@ -59,6 +60,9 @@ rm $RPM_BUILD_ROOT%{_libdir}/*.la
 %{_libdir}/pkgconfig/gcroots.pc
 
 %changelog
+* Tue Apr 02 2013 Igor Vlasenko <viy@altlinux.ru> 0.2.3-alt2_5
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.2.3-alt2_4
 - update to new release by fcimport
 
