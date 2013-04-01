@@ -3,8 +3,8 @@
 %def_without python3
 
 Name: python-module-%oname
-Version: 0.8.2
-Release: alt1.hg20120315
+Version: 0.8.4
+Release: alt1.hg20130321
 Summary: A library to convert from a MIME type to another
 
 Group: Development/Python
@@ -139,6 +139,9 @@ rm -f %buildroot%python3_sitelibdir/logilab/__init__.py*
 %endif
 
 %changelog
+* Mon Apr 01 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.4-alt1.hg20130321
+- Version 0.8.4
+
 * Fri Jun 22 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.2-alt1.hg20120315
 - Initial build for Sisyphus
 
