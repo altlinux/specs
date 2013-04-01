@@ -6,7 +6,7 @@
 
 Name: python-module-%oname
 Version: 1.3
-Release: alt2.hg20120510.1
+Release: alt2.hg20130325
 Summary: MPI bindings for Python
 License: Public
 Group: Development/Python
@@ -158,6 +158,9 @@ cp -fR docs/source %buildroot%_docdir/%name/
 %endif
 
 %changelog
+* Mon Apr 01 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3-alt2.hg20130325
+- New snapshot
+
 * Fri Mar 22 2013 Aleksey Avdeev <solo@altlinux.ru> 1.3-alt2.hg20120510.1
 - Rebuild with Python-3.3
 
