@@ -6,7 +6,7 @@ Name: python-module-%oname
 URL:http://niftilib.sf.net/pynifti/
 Summary: Easy access to NIfTI images from within Python
 Version: 1.3.0
-Release: alt3.git20120609
+Release: alt3.git20120903
 License: MIT
 Group: Development/Python
 
@@ -129,6 +129,9 @@ rm -f %buildroot%python_sitelibdir/conf.py
 %python_sitelibdir/%oname/*/test*
 
 %changelog
+* Mon Apr 01 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.0-alt3.git20120903
+- New snapshot
+
 * Sun Aug 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.0-alt3.git20120609
 - Built with OpenBLAS instead of GotoBLAS2
 
