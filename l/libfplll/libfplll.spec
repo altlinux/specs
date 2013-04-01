@@ -4,7 +4,7 @@ BuildRequires: gcc-c++ libgmp-devel
 %add_optflags %optflags_shared
 Name:           libfplll
 Version:        4.0.2
-Release:        alt1_1
+Release:        alt1_2
 Summary:        LLL-reduces euclidean lattices
 Group:          System/Libraries
 License:        LGPLv2+
@@ -13,7 +13,10 @@ Source0:        http://perso.ens-lyon.fr/damien.stehle/fplll/%{name}-%{version}.
 
 BuildRequires:  libmpfr-devel
 
+# Improve compatibility with version 3.x
 Patch0:         %{name}-fplllv31.patch
+# Add support for building on aarch64
+Patch1:         %{name}-aarch64.patch
 Source44: import.info
 
 %description
@@ -35,8 +38,8 @@ Group:          Development/C
 Requires:       %{name}%{?_isa} = %{version}-%{release}
 
 %description    devel
-The %%{name}-devel package contains libraries and header files for
-developing applications that use %%{name}.
+The %{name}-devel package contains libraries and header files for
+developing applications that use %{name}.
 
 
 %package        tools
@@ -45,13 +48,14 @@ Group:          Engineering
 Requires:       %{name}%{?_isa} = %{version}-%{release}
 
 %description    tools
-The %%{name}-tools package contains command-line tools that expose
-the functionality of %%{name}.
+The %{name}-tools package contains command-line tools that expose
+the functionality of %{name}.
 
 
 %prep
 %setup -q
 %patch0 -p1
+%patch1 -p1
 
 %build
 %configure --disable-static LDFLAGS="-Wl,--as-needed $RPM_LD_FLAGS"
@@ -90,6 +94,9 @@ make check
 
 
 %changelog
+* Tue Apr 02 2013 Igor Vlasenko <viy@altlinux.ru> 4.0.2-alt1_2
+- update to new release by fcimport
+
 * Tue Feb 05 2013 Igor Vlasenko <viy@altlinux.ru> 4.0.2-alt1_1
 - update to new release by fcimport
 
