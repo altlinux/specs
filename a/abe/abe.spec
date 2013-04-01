@@ -3,17 +3,26 @@ BuildRequires: gcc-c++ libICE-devel libSM-devel
 # END SourceDeps(oneline)
 Name:           abe
 Version:        1.1
-Release:        alt5_17
+Release:        alt5_18
 
 Summary:        Scrolling, platform-jumping, ancient pyramid exploring game
 Group:          Games/Other
 License:        GPL+
 URL:            http://abe.sourceforge.net/
-Source0:        http://downloads.sourceforge.net/abe/abe-%{version}.tar.gz
+Source0:        http://downloads.sourceforge.net/abe/%{name}-%{version}.tar.gz
 Source1:        %{name}.png
-Patch0:         abe-1.1-settings.patch
-Patch1:         abe-1.1-doublefree.patch
-Patch2:         abe-1.1-format.patch
+# Enable changing the video settings.  Sent upstream 2 Apr 2006:
+# https://sourceforge.net/tracker/?func=detail&aid=1463202&group_id=70141&atid=526743
+Patch0:         %{name}-1.1-settings.patch
+# Fix a double free() bug.  Sent upstream 15 Mar 2011:
+# https://sourceforge.net/tracker/?func=detail&aid=3214269&group_id=70141&atid=526745
+Patch1:         %{name}-1.1-doublefree.patch
+# Fix an incorrect printf format specifier.  Sent upstram 15 Mar 2011:
+# https://sourceforge.net/tracker/?func=detail&aid=3214270&group_id=70141&atid=526745
+Patch2:         %{name}-1.1-format.patch
+# Add support for aarch64.  Sent upstream 25 Mar 2013:
+# https://sourceforge.net/tracker/?func=detail&aid=3609029&group_id=70141&atid=526743
+Patch3:         %{name}-1.1-aarch64.patch
 
 BuildRequires:  libSDL-devel >= 1.2.3 libSDL_mixer-devel >= 1.2.3
 BuildRequires:  libXmu-devel libXi-devel
@@ -26,9 +35,14 @@ vaguely in the style of similar games for the Commodore+4.
 
 %prep
 %setup -q
-%patch0 -p1
+%patch0
 %patch1
 %patch2
+
+# Fix the FSF's address
+sed 's/59 Temple Place, Suite 330, Boston, MA  02111-1307/51 Franklin Street, Suite 500, Boston, MA  02110-1335/' COPYING > COPYING.new
+touch -r COPYING COPYING.new
+mv -f COPYING.new COPYING
 
 %build
 %configure --with-data-dir=%{_datadir}/%{name}
@@ -53,7 +67,6 @@ Exec=abe
 Icon=abe
 Terminal=false
 Type=Application
-Encoding=UTF-8
 Categories=Game;ArcadeGame;
 EOF
 
@@ -67,6 +80,9 @@ desktop-file-install --dir $RPM_BUILD_ROOT/%{_datadir}/applications/ %{name}.des
 %{_datadir}/pixmaps/%{name}.png
 
 %changelog
+* Tue Apr 02 2013 Igor Vlasenko <viy@altlinux.ru> 1.1-alt5_18
+- update to new release by fcimport
+
 * Mon Feb 11 2013 Igor Vlasenko <viy@altlinux.ru> 1.1-alt5_17
 - update to new release by fcimport
 
