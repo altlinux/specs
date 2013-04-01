@@ -1,13 +1,13 @@
 Name: netwalk
 Version: 0.4.10
-Release: alt4
+Release: alt5
 
 Summary: NetWalk is a puzzle game where the object is to connect every terminal to the main server
-URL: http://code.google.com/p/netwalk/
-License: GPLv2+
+URL: https://github.com/blynn/netwalk
+License: GPLv3+
 Group: Games/Puzzles
 
-Source0: %name-%version.tgz
+Source0: %name.tar.bz2
 Source1: %name-16.png
 Source2: %name-32.png
 Source3: %name-48.png
@@ -18,8 +18,9 @@ Packager: Igor Zubkov <icesik@altlinux.org>
 
 Requires: fonts-ttf-vera
 
-# Automatically added by buildreq on Fri Oct 05 2012
-BuildRequires: libSDL_ttf-devel
+# Automatically added by buildreq on Mon Apr 01 2013
+# optimized out: libSDL-devel
+BuildRequires:  libSDL_ttf-devel libfreetype-devel
 
 %description
 NetWalk is a puzzle game where the object is to connect every terminal to the main server
@@ -32,7 +33,7 @@ You can select presets, or make a custom game in the options window.
 There is one shortcut key: F2 starts a new game.
 
 %prep
-%setup -q
+%setup -q -n %name
 %patch0 -p1
 
 %build
@@ -59,7 +60,7 @@ Categories=Game;LogicGame;
 EOF
 
 %files
-%doc NEWS README copyright
+%doc README
 %_bindir/*
 %_desktopdir/%name.desktop
 %_miconsdir/*.png
@@ -67,6 +68,12 @@ EOF
 %_liconsdir/*.png
 
 %changelog
+* Mon Apr 01 2013 Igor Zubkov <icesik@altlinux.org> 0.4.10-alt5
+- Don't pack copyright file
+- Update Url
+- Update from author git
+- Update License to GPLv3+
+
 * Fri Oct 05 2012 Igor Zubkov <icesik@altlinux.org> 0.4.10-alt4
 - Use system fonts-ttf-vera (closes #25319)
 
