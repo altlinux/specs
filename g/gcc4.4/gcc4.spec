@@ -1,8 +1,8 @@
 %define gcc_branch 4.4
 
 Name: gcc%gcc_branch
-Version: 4.4.6
-Release: alt3
+Version: 4.4.7
+Release: alt2
 
 Summary: GNU Compiler Collection
 # libgcc, libgfortran, libmudflap, libgomp, libstdc++ and crtstuff have
@@ -16,9 +16,9 @@ Url: http://gcc.gnu.org/
 %define _target_platform ppc64-alt-linux
 %endif
 
-%define priority 446
-%define snapshot 20120305
-%define svnrev 184929
+%define priority 447
+%define snapshot 20120601
+%define svnrev 188105
 %define srcver %version-%snapshot
 %define srcfilename gcc-%srcver
 %define srcdirname gcc-%srcver
@@ -108,6 +108,15 @@ Patch15: gcc44-rh-libstdc++-docs.patch
 Patch16: gcc44-rh-ppc64-aixdesc.patch
 Patch17: gcc44-rh-rh533181.patch
 Patch18: gcc44-rh-rh610785.patch
+Patch21: gcc44-rh-pr43680.patch
+Patch22: gcc44-rh-rh750545.patch
+Patch23: gcc44-rh-pr53199.patch
+Patch24: gcc44-rh-rh801144.patch
+Patch25: gcc44-rh-rh808590.patch
+Patch26: gcc44-rh-rh820281.patch
+Patch27: gcc44-rh-pr54858.patch
+Patch28: gcc44-rh-pr54487.patch
+Patch29: gcc44-rh-rh867878.patch
 
 # Debian patches.
 Patch301: gcc44-deb-gcc-textdomain.patch
@@ -742,6 +751,15 @@ echo '%distribution %version-%release' >gcc/DEV-PHASE
 %patch16 -p0
 %patch17 -p0
 %patch18 -p0
+%patch21 -p0
+%patch22 -p0
+%patch23 -p0
+%patch24 -p0
+%patch25 -p0
+%patch26 -p0
+%patch27 -p0
+%patch28 -p0
+%patch29 -p0
 
 # Debian patches.
 %patch301 -p2
@@ -1610,6 +1628,12 @@ EOF
 %endif #with_pdf
 
 %changelog
+* Tue Apr 02 2013 Dmitry V. Levin <ldv@altlinux.org> 4.4.7-alt2
+- Synced with RH 4.4.7-3 (closes: #28765).
+
+* Fri Feb 08 2013 Dmitry V. Levin <ldv@altlinux.org> 4.4.7-alt1
+- Synced with RH 4.4.7-1.
+
 * Thu Feb 07 2013 Dmitry V. Levin <ldv@altlinux.org> 4.4.6-alt3
 - Synced with RH 4.4.6-4.
 
