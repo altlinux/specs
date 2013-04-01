@@ -1,379 +1,216 @@
-Packager: Igor Vlasenko <viy@altlinux.ru>
-BuildRequires: xml-commons-resolver
+Epoch: 0
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
 BuildRequires: /proc
-BuildRequires: jpackage-1.6.0-compat
-# Copyright (c) 2000-2009, JPackage Project
-# All rights reserved.
-#
-# Redistribution and use in source and binary forms, with or without
-# modification, are permitted provided that the following conditions
-# are met:
-#
-# 1. Redistributions of source code must retain the above copyright
-#    notice, this list of conditions and the following disclaimer.
-# 2. Redistributions in binary form must reproduce the above copyright
-#    notice, this list of conditions and the following disclaimer in the
-#    documentation and/or other materials provided with the
-#    distribution.
-# 3. Neither the name of the JPackage Project nor the names of its
-#    contributors may be used to endorse or promote products derived
-#    from this software without specific prior written permission.
-#
-# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-# "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-# LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-# A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-# OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-# SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-# LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-# DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-# THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-# (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-# OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-#
+BuildRequires: jpackage-compat
+%global cvs_version 2_11_0
 
-%define with()          %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
-%define without()       %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
-%define bcond_with()    %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
-%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
+%define __requires_exclude system.bundle
 
-#def_with manual
-%bcond_with             manual
+Name:          xerces-j2
+Version:       2.11.0
+Release:       alt1_11jpp7
+Summary:       Java XML parser
+Group:         Development/Java
+License:       ASL 2.0
+URL:           http://xerces.apache.org/xerces2-j/
 
-%define _with_repolib 1
+Source0:       http://mirror.ox.ac.uk/sites/rsync.apache.org/xerces/j/source/Xerces-J-src.%{version}.tar.gz
+Source1:       %{name}-version.sh
+Source2:       %{name}-constants.sh
 
-# If you want repolib package to be built,
-# issue the following: 'rpmbuild --with repolib'
-%define with_repolib %{?_with_repolib:1}%{!?_with_repolib:0}
-%define without_repolib %{!?_with_repolib:1}%{?_with_repolib:0}
+# Custom javac ant task used by the build
+Source3:       https://svn.apache.org/repos/asf/xerces/java/tags/Xerces-J_%{cvs_version}/tools/src/XJavac.java
 
-%define repodir %{_javadir}/repository.jboss.com/apache-xerces/%{version}-brew
-%define repodirlib %{repodir}/lib
-%define repodirsrc %{repodir}/src
+# Custom doclet tags used in javadocs
+Source5:       https://svn.apache.org/repos/asf/xerces/java/tags/Xerces-J_%{cvs_version}/tools/src/ExperimentalTaglet.java
+Source6:       https://svn.apache.org/repos/asf/xerces/java/tags/Xerces-J_%{cvs_version}/tools/src/InternalTaglet.java
 
-%define cvs_version        2_9_1
-%define gcj_support        %{?_with_gcj_support:1}%{!?_with_gcj_support:%{?_without_gcj_support:0}%{!?_without_gcj_support:%{?_gcj_support:%{_gcj_support}}%{!?_gcj_support:0}}}
+Source7:       %{name}-pom.xml
 
-Name:           xerces-j2
-Version:        2.9.1
-Release:        alt4_2jpp6
-Epoch:          0
-Summary:        Java XML parser
-License:        ASL 2.0
-URL:            http://xerces.apache.org/xerces2-j/
-Group:          Development/Java
-# svn export https://svn.apache.org/repos/asf/xerces/java/tags/Xerces-J_2_9_1/
-Source0:        http://www.apache.org/dist/xml/xerces-j/Xerces-J-src.%{version}.tar.bz2
-Source3:        %{name}-version.sh
-Source4:        %{name}-constants.sh
-Source5:        %{name}-component-info.xml
-Patch0:         %{name}-build.patch
-Patch1:         %{name}-libgcj.patch
-Provides:       jaxp_parser_impl
-Obsoletes:      xerces-j2-dom3 < %{epoch}:%{version}-%{release}
-Provides:       xerces-j2-dom3 = %{epoch}:%{version}-%{release}
-Requires: xalan-j2
-Requires: xml-commons-jaxp-1.3-apis
-Requires: xml-commons-resolver12 >= 0:1.1
-Requires(post): alternatives >= 0:0.4
-Requires(preun): alternatives >= 0:0.4
-BuildRequires: ant >= 0:1.5
+# Patch the build so that it doesn't try to use bundled xml-commons source
+Patch0:        %{name}-build.patch
+
+# Patch the manifest so that it includes OSGi stuff
+Patch1:        %{name}-manifest.patch
+
+BuildArch:     noarch
+
+BuildRequires: jpackage-utils
+BuildRequires: xalan-j2 >= 2.7.1
+BuildRequires: xml-commons-apis >= 1.4.01
+BuildRequires: xml-commons-resolver >= 1.2
+BuildRequires: ant
 BuildRequires: jaxp_parser_impl
-BuildRequires: xalan-j2
-BuildRequires: xml-commons-jaxp-1.3-apis
-BuildRequires: xml-commons-resolver12 >= 0:1.3
-BuildRequires: xml-stylebook
-%if %{with_repolib}
-BuildRequires: xml-commons-repolib = 0:1.3.04
-%endif
-%if %{gcj_support}
-BuildRequires: java-gcj-compat-devel
-%else
-BuildArch:      noarch
-%endif
+BuildRequires: fonts-ttf-dejavu
+Requires:      jpackage-utils
+Requires:      xalan-j2 >= 2.7.1
+Requires:      xml-commons-apis >= 1.4.01
+Requires:      xml-commons-resolver >= 1.2
+
+Provides:      jaxp_parser_impl = 1.4
+Provides:      %{name}-scripts = %{version}-%{release}
+Obsoletes:     %{name}-scripts < 2.11.0-6
+
+Requires(post):  chkconfig jaxp_parser_impl
+Requires(preun): chkconfig jaxp_parser_impl
+
+# This documentation is provided by xml-commons-apis
+Obsoletes:     %{name}-javadoc-apis < %{version}-%{release}
+
+# http://mail-archives.apache.org/mod_mbox/xerces-j-dev/201008.mbox/%3COF8D7E2F83.0271A181-ON8525777F.00528302-8525777F.0054BBE0@ca.ibm.com%3E
+Obsoletes:     %{name}-manual < %{version}-%{release}
 Source44: import.info
-Source45: xerces-j2-2.9.0.jar-OSGi-MANIFEST.MF
-Source9: JPP-xerces-j2.pom
-Provides: xerces-j = %version-%release
-Obsoletes: xerces-j <= 2.9.0-alt4
 
 %description
-Welcome to the future! Xerces2 is the next generation of high
-performance, fully compliant XML parsers in the Apache Xerces family.
-This new version of Xerces introduces the Xerces Native Interface (XNI),
-a complete framework for building parser components and configurations
-that is extremely modular and easy to program.
+Welcome to the future! Xerces2 is the next generation of high performance,
+fully compliant XML parsers in the Apache Xerces family. This new version of
+Xerces introduces the Xerces Native Interface (XNI), a complete framework for
+building parser components and configurations that is extremely modular and
+easy to program.
 
-The Apache Xerces2 parser is the reference implementation of XNI but
-other parser components, configurations, and parsers can be written
-using the Xerces Native Interface. For complete design and
-implementation documents, refer to the XNI Manual.
+The Apache Xerces2 parser is the reference implementation of XNI but other
+parser components, configurations, and parsers can be written using the Xerces
+Native Interface. For complete design and implementation documents, refer to
+the XNI Manual.
 
-Xerces 2 is a fully conforming XML Schema processor. For more
-information, refer to the XML Schema page.
+Xerces2 is a fully conforming XML Schema processor. For more information,
+refer to the XML Schema page.
 
-Xerces 2 also provides a partial implementation of Document Object Model
-Level 3 Core, Load and Save and Abstract Schemas [deprecated] Working
-Drafts. For more information, refer to the DOM Level 3 Implementation
-page.
+Xerces2 also provides a complete implementation of the Document Object Model
+Level 3 Core and Load/Save W3C Recommendations and provides a complete
+implementation of the XML Inclusions (XInclude) W3C Recommendation. It also
+provides support for OASIS XML Catalogs v1.1.
 
-%if %{with_repolib}
-%package repolib
-Summary:        Artifacts to be uploaded to a repository library
+Xerces2 is able to parse documents written according to the XML 1.1
+Recommendation, except that it does not yet provide an option to enable
+normalization checking as described in section 2.13 of this specification. It
+also handles name spaces according to the XML Namespaces 1.1 Recommendation,
+and will correctly serialize XML 1.1 documents if the DOM level 3 load/save
+APIs are in use.
+
+%package        javadoc
+Summary:        Javadocs for %{name}
 Group:          Development/Java
+Requires:       jpackage-utils
 
-%description repolib
-Artifacts to be uploaded to a repository library.
-This package is not meant to be installed but so its contents
-can be extracted through rpm2cpio.
-%endif
-
-%package javadoc-impl
-Summary:        Javadoc for %{name} implementation
-Group:          Development/Documentation
-
-%description javadoc-impl
-Javadoc for %{name} implementation.
-
-%package javadoc-apis
-Summary:        Javadoc for %{name} apis
-Group:          Development/Documentation
-Obsoletes:      xerces-j2-dom3-javadoc < %{epoch}:%{version}-%{release}
-Provides:       xerces-j2-dom3-javadoc = %{epoch}:%{version}-%{release}
-
-%description javadoc-apis
-Javadoc for %{name} apis.
-
-%package javadoc-xni
-Summary:        Javadoc for %{name} xni
-Group:          Development/Documentation
-
-%description javadoc-xni
-Javadoc for %{name} xni.
-
-%package javadoc-other
-Summary:        Javadoc for other %{name} components
-Group:          Development/Documentation
-
-%description javadoc-other
-Javadoc for other %{name} components.
-
-%if %with manual
-%package manual
-Summary:        Documents for %{name}
-Group:          Development/Documentation
+# Consolidating all javadocs into one package
+Obsoletes:      %{name}-javadoc-impl < %{version}-%{release}
+Obsoletes:      %{name}-javadoc-xs < %{version}-%{release}
+Obsoletes:      %{name}-javadoc-xni < %{version}-%{release}
+Obsoletes:      %{name}-javadoc-other < %{version}-%{release}
 BuildArch: noarch
 
-%description manual
+%description    javadoc
+This package contains the API documentation for %{name}.
+
+%package        demo
+Summary:        Demonstrations and samples for %{name}
+Group:          Development/Java
+Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
+
+%description    demo
 %{summary}.
-%endif
-
-%package demo
-Summary:        Demo for %{name}
-Group:          Development/Java
-Requires: %{name} = %{epoch}:%{version}-%{release}
-
-%description demo
-Demonstrations and samples for %{name}.
-
-%package scripts
-Summary:        Additional utility scripts for %{name}
-Group:          Development/Java
-Requires: %{name} = %{epoch}:%{version}-%{release}
-Requires: jpackage-utils >= 0:1.6
-
-%description scripts
-Additional utility scripts for %{name}.
 
 %prep
-%setup -q -n Xerces-J_%{cvs_version}
+%setup -q -n xerces-%{cvs_version}
+%patch0 -p0 -b .orig
+%patch1 -p0 -b .orig
 
-%{_bindir}/find -name '*.jar' -o -name '*.class' | %{_bindir}/xargs -t rm
-
+# Copy the custom ant tasks into place
 mkdir -p tools/org/apache/xerces/util
-cp -p tools/src/XJavac.java tools/org/apache/xerces/util/XJavac.java
-cp -p tools/src/ExperimentalTaglet.java tools/org/apache/xerces/util/ExperimentalTaglet.java
-cp -p tools/src/InternalTaglet.java tools/org/apache/xerces/util/InternalTaglet.java
-
 mkdir -p tools/bin
+cp -a %{SOURCE3} %{SOURCE5} %{SOURCE6} tools/org/apache/xerces/util
 
-%patch0 -p1 -b .build
-%patch1 -p0 -b .libgcj
+# Make sure upstream hasn't sneaked in any jars we don't know about
+find -name '*.class' -exec rm -f '{}' \;
+find -name '*.jar' -exec rm -f '{}' \;
+
+sed -i 's/\r//' LICENSE README NOTICE
 
 %build
 pushd tools
-%{javac} -classpath $(build-classpath ant) org/apache/xerces/util/XJavac.java
-%{jar} cf bin/xjavac.jar org/apache/xerces/util/XJavac.class
-%{javac} -classpath %{java_home}/lib/tools.jar org/apache/xerces/util/ExperimentalTaglet.java org/apache/xerces/util/InternalTaglet.java
-%{jar} cf bin/xerces2taglets.jar org/apache/xerces/util/ExperimentalTaglet.class org/apache/xerces/util/InternalTaglet.class
+
+# Build custom ant tasks
+javac -classpath $(build-classpath ant) org/apache/xerces/util/XJavac.java
+jar cf bin/xjavac.jar org/apache/xerces/util/XJavac.class
+
+# Build custom doc taglets
+javac -classpath /usr/lib/jvm/java/lib/tools.jar org/apache/xerces/util/*Taglet.java
+jar cf bin/xerces2taglets.jar org/apache/xerces/util/*Taglet.class
+
+ln -sf $(build-classpath xalan-j2) serializer.jar
+ln -sf $(build-classpath xml-commons-apis) xml-apis.jar
+ln -sf $(build-classpath xml-commons-resolver) resolver.jar
 popd
 
-export ANT_OPTS="-Djava.awt.headless=true"
-export CLASSPATH=$(build-classpath xalan-j2-serializer):%{java_home}/jre/lib/rt.jar
-export OPT_JAR_LIST=:
-ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 \
-        -Dbuild.compiler=modern \
-        -Dtools.dir=%{_javadir} \
-        -Djar.apis=xml-commons-jaxp-1.3-apis.jar \
-        -Djar.resolver=xml-commons-resolver12.jar \
-        -Djar.serializer=xalan-j2-serializer.jar \
-        clean jars javadocs \
-%if %with manual
-docs
-%else
-
-%endif
+# Build everything
+export ANT_OPTS="-Xmx256m -Djava.endorsed.dirs=$(pwd)/tools -Djava.awt.headless=true -Dbuild.sysclasspath=first -Ddisconnected=true"
+ant -Djavac.source=1.5 -Djavac.target=1.5 \
+    -Dbuild.compiler=modern \
+    clean jars javadocs
 
 %install
-
 # jars
-mkdir -p $RPM_BUILD_ROOT%{_javadir}
-cp -p build/xercesImpl.jar $RPM_BUILD_ROOT%{_javadir}/%{name}-%{version}.jar
-(cd $RPM_BUILD_ROOT%{_javadir} && for jar in *.jar; do ln -sf ${jar} dom3-${jar}; done)
-ln -s %{name}-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/xercesImpl-%{version}.jar
-(cd $RPM_BUILD_ROOT%{_javadir} && for jar in *-%{version}.jar; do ln -sf ${jar} `echo $jar| sed "s|-%{version}||g"`; done)
+install -pD -T build/xercesImpl.jar %{buildroot}%{_javadir}/%{name}.jar
 
 # javadoc
-mkdir -p $RPM_BUILD_ROOT%{_javadocdir}/%{name}-impl-%{version}
-cp -pr build/docs/javadocs/xerces2/* \
-  $RPM_BUILD_ROOT%{_javadocdir}/%{name}-impl-%{version}
-ln -s %{name}-impl-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name}-impl
+mkdir -p %{buildroot}%{_javadocdir}/%{name}
+mkdir -p %{buildroot}%{_javadocdir}/%{name}/impl
+mkdir -p %{buildroot}%{_javadocdir}/%{name}/xs
+mkdir -p %{buildroot}%{_javadocdir}/%{name}/xni
+mkdir -p %{buildroot}%{_javadocdir}/%{name}/other
 
-mkdir -p $RPM_BUILD_ROOT%{_javadocdir}/%{name}-apis-%{version}
-cp -pr build/docs/javadocs/api/* \
-  $RPM_BUILD_ROOT%{_javadocdir}/%{name}-apis-%{version}
-ln -s %{name}-apis-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name}-apis
-
-mkdir -p $RPM_BUILD_ROOT%{_javadocdir}/%{name}-xni-%{version}
-cp -pr build/docs/javadocs/xni/* \
-  $RPM_BUILD_ROOT%{_javadocdir}/%{name}-xni-%{version}
-ln -s %{name}-xni-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name}-xni
-
-mkdir -p $RPM_BUILD_ROOT%{_javadocdir}/%{name}-other-%{version}
-cp -pr build/docs/javadocs/other/* \
-  $RPM_BUILD_ROOT%{_javadocdir}/%{name}-other-%{version}
-ln -s %{name}-other-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name}-other
-
-# FIXME: (dwalluck): breaks -bi --short-circuit
-rm -rf build/docs/javadocs
-
-%if %with manual
-# manual
-mkdir -p $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}
-%if !%{gcj_support}
-cp -pr build/docs/* $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}
-%endif
-%endif
+cp -pr build/docs/javadocs/xerces2/* %{buildroot}%{_javadocdir}/%{name}/impl
+cp -pr build/docs/javadocs/api/* %{buildroot}%{_javadocdir}/%{name}/xs
+cp -pr build/docs/javadocs/xni/* %{buildroot}%{_javadocdir}/%{name}/xni
+cp -pr build/docs/javadocs/other/* %{buildroot}%{_javadocdir}/%{name}/other
 
 # scripts
-mkdir -p $RPM_BUILD_ROOT%{_bindir}
-cp -p %{SOURCE3} $RPM_BUILD_ROOT%{_bindir}/%{name}-version
-cp -p %{SOURCE4} $RPM_BUILD_ROOT%{_bindir}/%{name}-constants
+install -pD -m755 -T %{SOURCE1} %{buildroot}%{_bindir}/%{name}-version
+install -pD -m755 -T %{SOURCE2} %{buildroot}%{_bindir}/%{name}-constants
 
 # demo
-mkdir -p $RPM_BUILD_ROOT%{_datadir}/%{name}
-cp -p build/xercesSamples.jar \
-  $RPM_BUILD_ROOT%{_datadir}/%{name}/%{name}-samples.jar
-cp -pr data $RPM_BUILD_ROOT%{_datadir}/%{name}
+install -pD -T build/xercesSamples.jar %{buildroot}%{_datadir}/%{name}/%{name}-samples.jar
+cp -pr data %{buildroot}%{_datadir}/%{name}
 
-%if %{with_repolib}
-install -d -m 755 $RPM_BUILD_ROOT%{repodir}
-install -d -m 755 $RPM_BUILD_ROOT%{repodirlib}
-install -p -m 644 %{SOURCE5} $RPM_BUILD_ROOT%{repodir}/component-info.xml
-tag=`echo %{name}-%{version}-%{release} | sed 's|\.|_|g'`
-sed -i "s/@TAG@/$tag/g" $RPM_BUILD_ROOT%{repodir}/component-info.xml
-sed -i "s/@VERSION@/%{version}-brew/g" $RPM_BUILD_ROOT%{repodir}/component-info.xml
-install -d -m 755 $RPM_BUILD_ROOT%{repodirsrc}
-install -p -m 644 %{PATCH0} $RPM_BUILD_ROOT%{repodirsrc}
-install -p -m 644 %{SOURCE3} $RPM_BUILD_ROOT%{repodirsrc}
-install -p -m 644 %{SOURCE0} $RPM_BUILD_ROOT%{repodirsrc}
-install -p -m 644 %{PATCH1} $RPM_BUILD_ROOT%{repodirsrc}
-cp -p $RPM_BUILD_ROOT%{_javadir}/%{name}-%{version}.jar $RPM_BUILD_ROOT%{repodirlib}/xercesImpl.jar
-cp -p %{_javadir}/repository.jboss.com/apache-xml-commons/1.3.04-brew/lib/resolver.jar $RPM_BUILD_ROOT%{repodirlib}/resolver.jar
-cp -p %{_javadir}/repository.jboss.com/apache-xml-commons/1.3.04-brew/lib/xml-apis.jar $RPM_BUILD_ROOT%{repodirlib}/xml-apis.jar
-%endif
+# Pom
+install -pD -T -m 644 %{SOURCE7} %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
 
-%if %{gcj_support}
-%{_bindir}/aot-compile-rpm
-%endif
-install -d $RPM_BUILD_ROOT/%_altdir; cat >$RPM_BUILD_ROOT/%_altdir/jaxp_parser_impl_%{name}<<EOF
+# Depmap with legacy depmaps for compatability
+%add_maven_depmap JPP-%{name}.pom %{name}.jar -a "xerces:xerces" -a "xerces:xmlParserAPIs"
+
+# jaxp_parser_impl ghost symlink
+ln -s %{_sysconfdir}/alternatives \
+  %{buildroot}%{_javadir}/jaxp_parser_impl.jar
+install -d $RPM_BUILD_ROOT/%_altdir; cat >$RPM_BUILD_ROOT/%_altdir/jaxp_parser_impl_xerces-j2<<EOF
 %{_javadir}/jaxp_parser_impl.jar	%{_javadir}/%{name}.jar	40
 EOF
-chmod 755 $RPM_BUILD_ROOT%{_bindir}/*
-
-# inject OSGi manifest xerces-j2-2.9.0.jar-OSGi-MANIFEST.MF
-rm -rf META-INF
-mkdir -p META-INF
-cp %{SOURCE45} META-INF/MANIFEST.MF
-zip -u %buildroot/usr/share/java/xerces-j2.jar META-INF/MANIFEST.MF
-ln -s xerces-j2.jar $RPM_BUILD_ROOT%_javadir/xerces-j.jar
-
-mkdir -p %buildroot/%_mavenpomdir
-install -m644 %{SOURCE9} %buildroot/%_mavenpomdir/JPP-%{name}.pom
-%add_to_maven_depmap xerces xmlParserAPIs %{version} JPP %{name}
-%add_to_maven_depmap xerces xercesImpl %{version} JPP %{name}
 
 %files
-%_altdir/jaxp_parser_impl_%{name}
-%doc LICENSE LICENSE-SAX.html LICENSE.DOM-documentation.html
-%doc LICENSE.DOM-software.html LICENSE.resolver.txt
-%doc LICENSE.serializer.txt NOTICE NOTICE.resolver.txt
-%doc NOTICE.serializer.txt README Readme.html
-%{_javadir}/%{name}-%{version}.jar
-%{_javadir}/%{name}.jar
-%{_javadir}/dom3-%{name}-%{version}.jar
-%{_javadir}/dom3-%{name}.jar
-%{_javadir}/xercesImpl-%{version}.jar
-%{_javadir}/xercesImpl.jar
-%if %{gcj_support}
-%dir %{_libdir}/gcj/%{name}
-%{_libdir}/gcj/%{name}/xercesImpl.jar.db
-%{_libdir}/gcj/%{name}/xercesImpl.jar.so
-%endif
-%_mavenpomdir/JPP-%{name}.pom
-%_javadir/xerces-j.jar
+%_altdir/jaxp_parser_impl_xerces-j2
+%doc LICENSE NOTICE README
+%{_mavendepmapfragdir}/*
+%{_mavenpomdir}/*
+%{_javadir}/%{name}*
+%{_bindir}/*
 
-%files javadoc-impl
-%{_javadocdir}/%{name}-impl-%{version}
-%{_javadocdir}/%{name}-impl
-
-%files javadoc-apis
-%{_javadocdir}/%{name}-apis-%{version}
-%{_javadocdir}/%{name}-apis
-
-%files javadoc-other
-%{_javadocdir}/%{name}-other-%{version}
-%{_javadocdir}/%{name}-other
-
-%files javadoc-xni
-%{_javadocdir}/%{name}-xni-%{version}
-%{_javadocdir}/%{name}-xni
-
-%if %with manual
-%files manual
-%doc %{_docdir}/%{name}-%{version}/
-%endif
+%files javadoc
+%{_javadocdir}/%{name}/impl
+%{_javadocdir}/%{name}/xs
+%{_javadocdir}/%{name}/xni
+%{_javadocdir}/%{name}/other
 
 %files demo
 %{_datadir}/%{name}
-%if %{gcj_support}
-%{_libdir}/gcj/%{name}/%{name}-samples.jar.db
-%{_libdir}/gcj/%{name}/%{name}-samples.jar.so
-%endif
-
-%files scripts
-#%defattr(0755,root,root,0755)
-%{_bindir}/xerces-j2-constants
-%{_bindir}//xerces-j2-version
-
-%if %{with_repolib}
-%files repolib
-%{_javadir}/repository.jboss.com
-%endif
 
 %changelog
+* Mon Apr 01 2013 Igor Vlasenko <viy@altlinux.ru> 0:2.11.0-alt1_11jpp7
+- fc update
+
 * Sat Mar 30 2013 Igor Vlasenko <viy@altlinux.ru> 0:2.9.1-alt4_2jpp6
 - bugfixes
 
