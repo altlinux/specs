@@ -3,8 +3,8 @@
 
 %define oname logilab-astng
 Name: python-module-%oname
-Version: 0.23.1
-Release: alt1.hg20120119.1
+Version: 0.24.2
+Release: alt1.hg20130227
 
 Summary: Python Abstract Syntax Tree New Generation
 License: LGPLv2.1+
@@ -23,6 +23,7 @@ Source: %name-%version.tar
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-distribute /usr/bin/pytest3
+BuildPreReq: python-tools-2to3
 %endif
 
 %description
@@ -111,6 +112,9 @@ popd
 %endif
 
 %changelog
+* Mon Apr 01 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.24.2-alt1.hg20130227
+- Version 0.24.2
+
 * Fri Mar 22 2013 Aleksey Avdeev <solo@altlinux.ru> 0.23.1-alt1.hg20120119.1
 - Rebuild with Python-3.3
 
