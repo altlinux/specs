@@ -1,9 +1,9 @@
-%define ver 2.3.3
-%define reldate 20130320
+%define ver 2.3.4
+%define reldate 20130331
 %define oname objects.inv
 Name: python-module-%oname
 Version: %ver.%reldate
-Release: alt2.1
+Release: alt1
 Summary: Resource for build documentarion by Sphinx
 License: BSD
 Group: Development/Python
@@ -51,6 +51,9 @@ install -m644 objects.inv \
 %python3_sitelibdir/sphinx/*
 
 %changelog
+* Mon Apr 01 2013 Aleksey Avdeev <solo@altlinux.ru> 2.3.4.20130331-alt1
+- Version 2.3.4.20130331
+
 * Wed Mar 20 2013 Aleksey Avdeev <solo@altlinux.ru> 2.3.3.20130320-alt2.1
 - Rebuild with Python-3.3
 
