@@ -1,5 +1,5 @@
 Name: pentobi
-Version: 5.0
+Version: 6.0
 Release: alt1
 License: GPLv3
 Summary: A computer program that plays the board game Blokus
@@ -26,30 +26,27 @@ Pentobi is a computer program that plays the board game Blokus.
 
 %build
 %cmake
-(
-cd BUILD
-%make_build VERBOSE=1
-)
+%make_build -C BUILD VERBOSE=1
 
 %install
-(
-cd BUILD
-%makeinstall DESTDIR=%buildroot
-)
+%makeinstall -C BUILD DESTDIR=%buildroot
 mkdir -p %buildroot%_sysconfdir
-mv %buildroot/usr/etc/gconf %buildroot%_sysconfdir/
 
 %files
-%_gamesbindir/*
-%_sysconfdir/gconf/schemas/%name.schemas
+%doc %_defaultdocdir/%name
+%_bindir/*
 %_desktopdir/%name.desktop
 %_iconsdir/hicolor/*/*/*
 %_datadir/mime/packages/*.xml
 %_datadir/thumbnailers/*
-%_gamesdatadir/%name
+%_datadir/%name
 %_man6dir/*
 
 %changelog
+* Mon Apr 01 2013 Fr. Br. George <george@altlinux.ru> 6.0-alt1
+- Autobuild version bump to 6.0
+- Remove gconf bindings
+
 * Thu Dec 13 2012 Fr. Br. George <george@altlinux.ru> 5.0-alt1
 - Autobuild version bump to 5.0
 
