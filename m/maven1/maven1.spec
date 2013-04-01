@@ -1,3 +1,4 @@
+BuildRequires: xerces-j29
 %define oldname maven
 %define movname maven1
 %add_findreq_skiplist %_datadir/maven1/repository/javadoc/jars/*
@@ -49,7 +50,7 @@ BuildRequires: jpackage-core
 
 Name:           maven1
 Version:        1.1
-Release:        alt25_9jpp6
+Release:        alt26_9jpp6
 Epoch:          0
 Summary:        Java project management and project comprehension tool
 
@@ -139,7 +140,7 @@ BuildRequires: plexus-utils >= 0:1.0.3
 BuildRequires: qname_1_1_api
 BuildRequires: stax-utils
 BuildRequires: werkz >= 1.0-0.b10.5jpp
-BuildRequires: xerces-j2 >= 0:2.7.1
+BuildRequires: xerces-j29 >= 0:2.7.1
 BuildRequires: xml-commons-jaxp-1.3-apis >= 0:1.3.03
 BuildRequires: xml-commons-resolver11
 Requires: ant17
@@ -173,7 +174,7 @@ Requires: maven-wagon >= 0:1.0-0.b2
 Requires: plexus-utils >= 1.0.3
 Requires: stax-utils
 Requires: werkz >= 1.0-0.b10.5jpp
-Requires: xerces-j2 >= 0:2.7.1
+Requires: xerces-j29
 Requires: xml-commons-jaxp-1.3-apis >= 0:1.3.03
 Requires: xml-commons-resolver11
 
@@ -205,7 +206,7 @@ Requires(post): maven-model302
 Requires(post): maven-wagon >= 0:1.0-0.b2
 Requires(post): plexus-utils >= 1.0.3
 Requires(post): werkz >= 1.0-0.b10.5jpp
-Requires(post): xerces-j2 >= 0:2.7.1
+Requires(post): xerces-j29 >= 0:2.7.1
 Requires(post): xml-commons-jaxp-1.3-apis >= 0:1.3.03
 Requires(post): xml-commons-resolver11
 
@@ -215,7 +216,6 @@ Patch33: maven-1.1-plugin-checkstyle-alt-add-collections-dep.patch
 Patch35: maven-1.1-alt-commons-io-24.patch
 Provides: %movname = %version-%release
 Provides: %movname = 0:%version-%release
-Obsoletes: maven1 < 1.1-alt14
 
 # Begin sub package listings...
 
@@ -254,7 +254,7 @@ BuildRequires: msv-xsdlib
 BuildRequires: plexus-utils >= 0:1.0.3
 BuildRequires: relaxngDatatype
 BuildRequires: velocity >= 0:1.5
-BuildRequires: xerces-j2 >= 0:2.7.1
+BuildRequires: xerces-j29 >= 0:2.7.1
 BuildRequires: xml-commons-jaxp-1.3-apis >= 0:1.3.03
 BuildRequires: xml-commons-resolver11
 Requires: dom4j >= 0:1.6.1
@@ -288,7 +288,7 @@ Requires: msv-xsdlib
 Requires: plexus-utils >= 0:1.0.3
 Requires: relaxngDatatype
 Requires: velocity >= 0:1.5
-Requires: xerces-j2 >= 0:2.7.1
+Requires: xerces-j29 >= 0:2.7.1
 Requires: xml-commons-jaxp-1.3-apis >= 0:1.3.03
 Requires: xml-commons-resolver11
 Provides: %movname-plugins-base = %{epoch}:%{version}-%{release}
@@ -321,7 +321,7 @@ BuildRequires: gnu-regexp
 BuildRequires: jakarta-commons-jelly-tags-xml
 BuildRequires: jdom
 BuildRequires: junit
-BuildRequires: xerces-j2
+BuildRequires: xerces-j29
 BuildRequires: xml-commons-jaxp-1.3-apis
 Requires: abbot
 Requires: ant17
@@ -329,7 +329,7 @@ Requires: gnu-regexp
 Requires: jakarta-commons-jelly-tags-xml
 Requires: jdom
 Requires: junit
-Requires: xerces-j2
+Requires: xerces-j29
 Requires: xml-commons-jaxp-1.3-apis
 Provides: %movname-plugin-abbot = %{epoch}:%{version}-%{release}
 Obsoletes: maven-plugin-abbot < 1.1-alt14
@@ -423,7 +423,7 @@ BuildRequires: gnu-trove >= 0:1.0.2
 BuildRequires: apache-commons-jexl11 >= 0:1.0
 BuildRequires: jrexx >= 0:1.1.1
 BuildRequires: qdox161
-BuildRequires: xerces-j2 >= 0:2.7.1
+BuildRequires: xerces-j29 >= 0:2.7.1
 BuildRequires: xml-commons-jaxp-1.3-apis >= 0:1.3.03
 BuildRequires: xml-commons-resolver11
 Requires: ant17
@@ -434,7 +434,7 @@ Requires: gnu-trove >= 0:1.0.2
 Requires: apache-commons-jexl11 >= 0:1.0
 Requires: jrexx >= 0:1.1.1
 Requires: qdox161
-Requires: xerces-j2 >= 0:2.7.1
+Requires: xerces-j29 >= 0:2.7.1
 Requires: xml-commons-jaxp-1.3-apis
 Provides: %movname-plugin-aspectwerkz = %{epoch}:%{version}-%{release}
 Obsoletes: maven-plugin-aspectwerkz < 1.1-alt14
@@ -492,7 +492,7 @@ BuildRequires: junit >= 0:3.8.2
 BuildRequires: javacvs-lib >= 0:3.6
 BuildRequires: maven-model302
 BuildRequires: regexp >= 0:1.3
-BuildRequires: xerces-j2 >= 0:2.7.1
+BuildRequires: xerces-j29 >= 0:2.7.1
 BuildRequires: xml-commons-jaxp-1.3-apis >= 0:1.3.03
 BuildRequires: xml-commons-resolver11
 Requires: ant17
@@ -503,7 +503,7 @@ Requires: junit >= 0:3.8.2
 Requires: javacvs-lib >= 3.6
 Requires: maven-model302
 Requires: regexp >= 0:1.3
-Requires: xerces-j2 >= 0:2.7.1
+Requires: xerces-j29 >= 0:2.7.1
 Requires: xml-commons-jaxp-1.3-apis >= 0:1.3.03
 Requires: xml-commons-resolver11
 Provides: %movname-plugin-changelog = %{epoch}:%{version}-%{release}
@@ -786,7 +786,7 @@ BuildRequires: jakarta-commons-logging >= 0:1.0.4
 BuildRequires: jaxen >= 0:1.1
 BuildRequires: junit >= 0:3.8.2
 BuildRequires: nekohtml >= 0:0.9.5
-BuildRequires: xerces-j2 >= 0:2.7.1
+BuildRequires: xerces-j29 >= 0:2.7.1
 BuildRequires: xml-commons-jaxp-1.3-apis >= 0:1.3.03
 BuildRequires: xml-commons-resolver11
 Requires: dom4j >= 0:1.6.1
@@ -795,7 +795,7 @@ Requires: jakarta-commons-jelly-tags-xml >= 0:1.0-5jpp
 Requires: jakarta-commons-logging >= 0:1.0.4
 Requires: jaxen >= 0:1.1
 Requires: nekohtml >= 0:0.9.5
-Requires: xerces-j2 >= 0:2.7.1
+Requires: xerces-j29 >= 0:2.7.1
 Requires: xml-commons-jaxp-1.3-apis >= 0:1.3.03
 Requires: xml-commons-resolver11
 Provides: %movname-plugin-html2xdoc = %{epoch}:%{version}-%{release}
@@ -921,7 +921,7 @@ BuildRequires: junit >= 0:3.8.2
 BuildRequires: log4j >= 0:1.2.13
 BuildRequires: jakarta-oro >= 0:2.0.8
 BuildRequires: velocity >= 0:1.5
-BuildRequires: xerces-j2 >= 0:2.7.1
+BuildRequires: xerces-j29 >= 0:2.7.1
 BuildRequires: xml-commons-jaxp-1.3-apis >= 0:1.3.03
 BuildRequires: xml-commons-resolver11
 BuildRequires: xpp3 >= 0:1.1.3
@@ -933,7 +933,7 @@ Requires: junit >= 0:3.8.2
 Requires: log4j >= 0:1.2.13
 Requires: jakarta-oro >= 0:2.0.8
 Requires: velocity >= 0:1.5
-Requires: xerces-j2 >= 0:2.7.1
+Requires: xerces-j29 >= 0:2.7.1
 Requires: xml-commons-jaxp-1.3-apis >= 0:1.3.03
 Requires: xml-commons-resolver11
 Requires: xpp3 >= 0:1.1.3
@@ -963,13 +963,13 @@ BuildRequires: jakarta-commons-jelly-tags-jsl >= 0:1.0-5jpp
 BuildRequires: jakarta-commons-jelly-tags-xml >= 0:1.0-5jpp
 BuildRequires: jdepend >= 0:2.9.1
 BuildRequires: junit >= 0:3.8.2
-BuildRequires: xerces-j2 >= 0:2.7.1
+BuildRequires: xerces-j29 >= 0:2.7.1
 BuildRequires: xml-commons-jaxp-1.3-apis >= 0:1.3.03
 BuildRequires: xml-commons-resolver11
 Requires: jakarta-commons-jelly-tags-jsl >= 0:1.0-5jpp
 Requires: jakarta-commons-jelly-tags-xml >= 0:1.0-5jpp
 Requires: jdepend >= 0:2.9.1
-Requires: xerces-j2 >= 0:2.7.1
+Requires: xerces-j29 >= 0:2.7.1
 Requires: xml-commons-jaxp-1.3-apis >= 0:1.3.03
 Requires: xml-commons-resolver11
 Provides: %movname-plugin-jdepend = %{epoch}:%{version}-%{release}
@@ -1001,9 +1001,9 @@ Group:          Development/Java
 Requires: %{name} = %{epoch}:%{version}-%{release}
 BuildRequires: jdiff >= 0:1.0.10
 BuildRequires: junit >= 0:3.8.2
-BuildRequires: xerces-j2 >= 0:2.7.1
+BuildRequires: xerces-j29 >= 0:2.7.1
 Requires: jdiff >= 0:1.0.10
-Requires: xerces-j2 >= 0:2.7.1
+Requires: xerces-j29 >= 0:2.7.1
 Provides: %movname-plugin-jdiff = %{epoch}:%{version}-%{release}
 Obsoletes: maven-plugin-jdiff < 1.1-alt14
 BuildArch: noarch
@@ -1020,14 +1020,14 @@ BuildRequires: dom4j >= 0:1.6.1
 BuildRequires: jakarta-commons-jelly-tags-jsl >= 0:1.0-5jpp
 BuildRequires: jakarta-commons-jelly-tags-xml >= 0:1.0-5jpp
 BuildRequires: nekohtml >= 0:0.9.5
-BuildRequires: xerces-j2 >= 0:2.7.1
+BuildRequires: xerces-j29 >= 0:2.7.1
 BuildRequires: xml-commons-jaxp-1.3-apis >= 0:1.3.03
 BuildRequires: xml-commons-resolver11
 Requires: dom4j >= 0:1.6.1
 Requires: jakarta-commons-jelly-tags-jsl >= 0:1.0-5jpp
 Requires: jakarta-commons-jelly-tags-xml >= 0:1.0-5jpp
 Requires: nekohtml >= 0:0.9.5
-Requires: xerces-j2 >= 0:2.7.1
+Requires: xerces-j29 >= 0:2.7.1
 Requires: xml-commons-jaxp-1.3-apis >= 0:1.3.03
 Requires: xml-commons-resolver11
 Provides: %movname-plugin-jellydoc = %{epoch}:%{version}-%{release}
@@ -1330,7 +1330,7 @@ BuildRequires: xmlgraphics-batik >= 0:1.6
 BuildRequires: xmlgraphics-batik-rasterizer >= 0:1.6
 BuildRequires: xmlgraphics-fop
 BuildRequires: xalan-j2 >= 0:2.7.0
-BuildRequires: xerces-j2 >= 0:2.7.1
+BuildRequires: xerces-j29 >= 0:2.7.1
 BuildRequires: xml-commons-jaxp-1.3-apis >= 0:1.3.03
 BuildRequires: xml-commons-resolver11
 Requires: excalibur-avalon-framework-api >= 0:4.3.1
@@ -1340,7 +1340,7 @@ Requires: xmlgraphics-batik >= 0:1.6
 Requires: xmlgraphics-batik-rasterizer >= 0:1.6
 Requires: xmlgraphics-fop
 Requires: xalan-j2 >= 0:2.7.0
-Requires: xerces-j2 >= 0:2.7.1
+Requires: xerces-j29 >= 0:2.7.1
 Requires: xml-commons-jaxp-1.3-apis >= 0:1.3.03
 Requires: xml-commons-resolver11
 Provides: %movname-plugin-pdf = %{epoch}:%{version}-%{release}
@@ -1523,7 +1523,7 @@ BuildRequires: jakarta-commons-logging >= 0:1.0.4
 BuildRequires: jaxen >= 0:1.1
 BuildRequires: junit >= 0:3.8.2
 BuildRequires: regexp >= 0:1.3
-BuildRequires: xerces-j2 >= 0:2.7.1
+BuildRequires: xerces-j29 >= 0:2.7.1
 BuildRequires: xml-commons-jaxp-1.3-apis >= 0:1.3.03
 BuildRequires: xml-commons-resolver11
 Requires: dom4j >= 0:1.6.1
@@ -1534,7 +1534,7 @@ Requires: jakarta-commons-logging >= 0:1.0.4
 Requires: jaxen >= 0:1.1
 Requires: junit >= 0:3.8.2
 Requires: regexp >= 0:1.3
-Requires: xerces-j2 >= 0:2.7.1
+Requires: xerces-j29 >= 0:2.7.1
 Requires: xml-commons-jaxp-1.3-apis >= 0:1.3.03
 Requires: xml-commons-resolver11
 Provides: %movname-plugin-struts = %{epoch}:%{version}-%{release}
@@ -1570,11 +1570,11 @@ Summary:        Optional test plugin for %{name}
 Group:          Development/Java
 Requires: %{name} = %{epoch}:%{version}-%{release}
 BuildRequires: junit >= 0:3.8.2
-BuildRequires: xerces-j2 >= 0:2.7.1
+BuildRequires: xerces-j29 >= 0:2.7.1
 BuildRequires: xml-commons-jaxp-1.3-apis >= 0:1.3.03
 BuildRequires: xml-commons-resolver11
 Requires: junit >= 0:3.8.2
-Requires: xerces-j2 >= 0:2.7.1
+Requires: xerces-j29 >= 0:2.7.1
 Requires: xml-commons-jaxp-1.3-apis >= 0:1.3.03
 Requires: xml-commons-resolver11
 Provides: %movname-plugin-test = %{epoch}:%{version}-%{release}
@@ -1904,7 +1904,7 @@ BuildArch: noarch
 ##BuildRequires:  xalan-j2 >= 0:2.7.0
 ##BuildRequires:  xdoclet
 ##BuildRequires:  xdoclet-maven-plugin
-##BuildRequires:  xerces-j2 >= 0:2.7.1
+##BuildRequires:  xerces-j29 >= 0:2.7.1
 ##BuildRequires:  xjavadoc
 ##BuildRequires:  xml-commons-jaxp-1.3-apis >= 0:1.3.03
 ##BuildRequires:  xml-commons-resolver11
@@ -2119,7 +2119,7 @@ rm -f maven-j2ee-plugin.jar
 install -dm 755 $RPM_BUILD_ROOT%{_bindir}
 install -pm 755 %{SOURCE4} $RPM_BUILD_ROOT%{_bindir}/maven
 
-install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/maven2/poms
+install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
 
 # maven.jar to _javadir
 install -dm 755 $RPM_BUILD_ROOT%{_javadir}
@@ -2128,14 +2128,14 @@ install -pm 644 home/lib/maven.jar \
 ln -s %{name}-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
 %add_to_maven_depmap %{oldname} %{oldname} %{version} JPP %{name}
 install -pm 644 maven-poms/%{oldname}-%{version}.pom \
-    $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-%{name}.pom
+    $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 
 install -pm 644 repository/maven/jars/maven-jelly-tags-1.0.1.jar \
         $RPM_BUILD_ROOT%{_javadir}/maven1-jelly-tags-1.0.1.jar
 ln -s maven1-jelly-tags-1.0.1.jar $RPM_BUILD_ROOT%{_javadir}/maven1-jelly-tags.jar
 %add_to_maven_depmap %{oldname} %{oldname}-jelly-tags %{version} JPP %{name}-jelly-tags
 install -pm 644 maven-poms/%{oldname}-jelly-tags-%{ver_jelly_tags}.pom \
-    $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-%{name}-jelly-tags.pom
+    $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}-jelly-tags.pom
 
 # maven.home
 install -dm 755 $RPM_BUILD_ROOT%{_datadir}/%{name}
@@ -2153,10 +2153,10 @@ for p in maven-poms/maven-*-plugin*.pom; do
   v=$(expr $b : 'maven-.*-plugin-\(.*\)\.pom');
 %add_to_maven_depmap %{oldname} $n $v JPP/maven1-plugins $n
   install -pm 644 $p \
-    $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP.maven1-plugins-$n.pom
+    $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.maven1-plugins-$n.pom
 done
-mv $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP.maven1-plugins-maven-junit-doclet-plugin.pom \
-   $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP.maven1-plugins-maven-junitdoclet-plugin.pom \
+mv $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.maven1-plugins-maven-junit-doclet-plugin.pom \
+   $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.maven1-plugins-maven-junitdoclet-plugin.pom \
 
 install -dm 755 $RPM_BUILD_ROOT%{_javadir}/%{name}-plugins
 pushd $RPM_BUILD_ROOT%{_javadir}/%{name}-plugins
@@ -2246,8 +2246,8 @@ if [ -d %{_datadir}/%{name} ] ; then rmdir --ignore-fail-on-non-empty %{_datadir
 %{_datadir}/%{name}/lib
 %{_datadir}/%{name}/repository
 %{_datadir}/%{name}-1.0
-%{_datadir}/maven2/poms/JPP-%{name}.pom
-%{_datadir}/maven2/poms/JPP-%{name}-jelly-tags.pom
+%{_mavenpomdir}/JPP-%{name}.pom
+%{_mavenpomdir}/JPP-%{name}-jelly-tags.pom
 %{_mavendepmapfragdir}
 # hack; explicitly added docdir if not owned
 %doc %dir %{_docdir}/%{name}-%{version}
@@ -2259,37 +2259,37 @@ if [ -d %{_datadir}/%{name} ] ; then rmdir --ignore-fail-on-non-empty %{_datadir
 %dir %{_datadir}/%{name}/plugins
 %{_datadir}/%{name}/plugins/maven-ant-plugin*.jar
 %{_javadir}/%{name}-plugins/maven-ant-plugin.jar
-%{_datadir}/maven2/poms/JPP.maven1-plugins-maven-ant-plugin.pom
+%{_mavenpomdir}/JPP.maven1-plugins-maven-ant-plugin.pom
 %{_datadir}/%{name}/plugins/maven-artifact-plugin*.jar
 %{_javadir}/%{name}-plugins/maven-artifact-plugin.jar
-%{_datadir}/maven2/poms/JPP.maven1-plugins-maven-artifact-plugin.pom
+%{_mavenpomdir}/JPP.maven1-plugins-maven-artifact-plugin.pom
 %{_datadir}/%{name}/plugins/maven-clean-plugin*.jar
 %{_javadir}/%{name}-plugins/maven-clean-plugin.jar
-%{_datadir}/maven2/poms/JPP.maven1-plugins-maven-clean-plugin.pom
+%{_mavenpomdir}/JPP.maven1-plugins-maven-clean-plugin.pom
 %{_datadir}/%{name}/plugins/maven-console-plugin*.jar
 %{_javadir}/%{name}-plugins/maven-console-plugin.jar
-%{_datadir}/maven2/poms/JPP.maven1-plugins-maven-console-plugin.pom
+%{_mavenpomdir}/JPP.maven1-plugins-maven-console-plugin.pom
 %{_datadir}/%{name}/plugins/maven-jar-plugin*.jar
 %{_javadir}/%{name}-plugins/maven-jar-plugin.jar
-%{_datadir}/maven2/poms/JPP.maven1-plugins-maven-jar-plugin.pom
+%{_mavenpomdir}/JPP.maven1-plugins-maven-jar-plugin.pom
 %{_datadir}/%{name}/plugins/maven-java-plugin*.jar
 %{_javadir}/%{name}-plugins/maven-java-plugin.jar
-%{_datadir}/maven2/poms/JPP.maven1-plugins-maven-java-plugin.pom
+%{_mavenpomdir}/JPP.maven1-plugins-maven-java-plugin.pom
 %{_datadir}/%{name}/plugins/maven-javacc-plugin*.jar
 %{_javadir}/%{name}-plugins/maven-javacc-plugin.jar
-%{_datadir}/maven2/poms/JPP.maven1-plugins-maven-javacc-plugin.pom
+%{_mavenpomdir}/JPP.maven1-plugins-maven-javacc-plugin.pom
 %{_datadir}/%{name}/plugins/maven-javadoc-plugin*.jar
 %{_javadir}/%{name}-plugins/maven-javadoc-plugin.jar
-%{_datadir}/maven2/poms/JPP.maven1-plugins-maven-javadoc-plugin.pom
+%{_mavenpomdir}/JPP.maven1-plugins-maven-javadoc-plugin.pom
 %{_datadir}/%{name}/plugins/maven-junit-report-plugin*.jar
 %{_javadir}/%{name}-plugins/maven-junit-report-plugin.jar
-%{_datadir}/maven2/poms/JPP.maven1-plugins-maven-junit-report-plugin.pom
+%{_mavenpomdir}/JPP.maven1-plugins-maven-junit-report-plugin.pom
 %{_datadir}/%{name}/plugins/maven-plugin-plugin*.jar
 %{_javadir}/%{name}-plugins/maven-plugin-plugin.jar
-%{_datadir}/maven2/poms/JPP.maven1-plugins-maven-plugin-plugin.pom
+%{_mavenpomdir}/JPP.maven1-plugins-maven-plugin-plugin.pom
 %{_datadir}/%{name}/plugins/maven-pom-plugin*.jar
 %{_javadir}/%{name}-plugins/maven-pom-plugin.jar
-%{_datadir}/maven2/poms/JPP.maven1-plugins-maven-pom-plugin.pom
+%{_mavenpomdir}/JPP.maven1-plugins-maven-pom-plugin.pom
 
 %if 0
 %files plugin-abbot
@@ -2297,7 +2297,7 @@ if [ -d %{_datadir}/%{name} ] ; then rmdir --ignore-fail-on-non-empty %{_datadir
 %dir %{_datadir}/%{name}/plugins
 %{_datadir}/%{name}/plugins/maven-abbot-plugin*.jar
 %{_javadir}/%{name}-plugins/maven-abbot-plugin.jar
-%{_datadir}/maven2/poms/JPP.maven1-plugins-maven-abbot-plugin.pom
+%{_mavenpomdir}/JPP.maven1-plugins-maven-abbot-plugin.pom
 %endif
 
 %files plugin-announcement
@@ -2305,21 +2305,21 @@ if [ -d %{_datadir}/%{name} ] ; then rmdir --ignore-fail-on-non-empty %{_datadir
 %dir %{_datadir}/%{name}/plugins
 %{_datadir}/%{name}/plugins/maven-announcement-plugin*.jar
 %{_javadir}/%{name}-plugins/maven-announcement-plugin.jar
-%{_datadir}/maven2/poms/JPP.maven1-plugins-maven-announcement-plugin.pom
+%{_mavenpomdir}/JPP.maven1-plugins-maven-announcement-plugin.pom
 
 %files plugin-antlr
 %dir %{_datadir}/%{name}
 %dir %{_datadir}/%{name}/plugins
 %{_datadir}/%{name}/plugins/maven-antlr-plugin*.jar
 %{_javadir}/%{name}-plugins/maven-antlr-plugin.jar
-%{_datadir}/maven2/poms/JPP.maven1-plugins-maven-antlr-plugin.pom
+%{_mavenpomdir}/JPP.maven1-plugins-maven-antlr-plugin.pom
 
 %files plugin-appserver
 %dir %{_datadir}/%{name}
 %dir %{_datadir}/%{name}/plugins
 %{_datadir}/%{name}/plugins/maven-appserver-plugin*.jar
 %{_javadir}/%{name}-plugins/maven-appserver-plugin.jar
-%{_datadir}/maven2/poms/JPP.maven1-plugins-maven-appserver-plugin.pom
+%{_mavenpomdir}/JPP.maven1-plugins-maven-appserver-plugin.pom
 
 %if %{RHEL4}==0
 %files plugin-aspectj
@@ -2327,7 +2327,7 @@ if [ -d %{_datadir}/%{name} ] ; then rmdir --ignore-fail-on-non-empty %{_datadir
 %dir %{_datadir}/%{name}/plugins
 %{_datadir}/%{name}/plugins/maven-aspectj-plugin*.jar
 %{_javadir}/%{name}-plugins/maven-aspectj-plugin.jar
-%{_datadir}/maven2/poms/JPP.maven1-plugins-maven-aspectj-plugin.pom
+%{_mavenpomdir}/JPP.maven1-plugins-maven-aspectj-plugin.pom
 %endif
 
 %if %{RHEL4}==0
@@ -2336,7 +2336,7 @@ if [ -d %{_datadir}/%{name} ] ; then rmdir --ignore-fail-on-non-empty %{_datadir
 %dir %{_datadir}/%{name}/plugins
 %{_datadir}/%{name}/plugins/maven-aspectwerkz-plugin*.jar
 %{_javadir}/%{name}-plugins/maven-aspectwerkz-plugin.jar
-%{_datadir}/maven2/poms/JPP.maven1-plugins-maven-aspectwerkz-plugin.pom
+%{_mavenpomdir}/JPP.maven1-plugins-maven-aspectwerkz-plugin.pom
 %endif
 
 %files plugin-cactus-jcoverage-integration
@@ -2344,21 +2344,21 @@ if [ -d %{_datadir}/%{name} ] ; then rmdir --ignore-fail-on-non-empty %{_datadir
 %dir %{_datadir}/%{name}/plugins
 %{_datadir}/%{name}/plugins/maven-cactus-jcoverage-integration-plugin*.jar
 %{_javadir}/%{name}-plugins/maven-cactus-jcoverage-integration-plugin.jar
-%{_datadir}/maven2/poms/JPP.maven1-plugins-maven-cactus-jcoverage-integration-plugin.pom
+%{_mavenpomdir}/JPP.maven1-plugins-maven-cactus-jcoverage-integration-plugin.pom
 
 %files plugin-caller
 %dir %{_datadir}/%{name}
 %dir %{_datadir}/%{name}/plugins
 %{_datadir}/%{name}/plugins/maven-caller-plugin*.jar
 %{_javadir}/%{name}-plugins/maven-caller-plugin.jar
-%{_datadir}/maven2/poms/JPP.maven1-plugins-maven-caller-plugin.pom
+%{_mavenpomdir}/JPP.maven1-plugins-maven-caller-plugin.pom
 
 %files plugin-castor
 %dir %{_datadir}/%{name}
 %dir %{_datadir}/%{name}/plugins
 %{_datadir}/%{name}/plugins/maven-castor-plugin*.jar
 %{_javadir}/%{name}-plugins/maven-castor-plugin.jar
-%{_datadir}/maven2/poms/JPP.maven1-plugins-maven-castor-plugin.pom
+%{_mavenpomdir}/JPP.maven1-plugins-maven-castor-plugin.pom
 
 %if %{RHEL4}==0
 %files plugin-changelog
@@ -2366,7 +2366,7 @@ if [ -d %{_datadir}/%{name} ] ; then rmdir --ignore-fail-on-non-empty %{_datadir
 %dir %{_datadir}/%{name}/plugins
 %{_datadir}/%{name}/plugins/maven-changelog-plugin*.jar
 %{_javadir}/%{name}-plugins/maven-changelog-plugin.jar
-%{_datadir}/maven2/poms/JPP.maven1-plugins-maven-changelog-plugin.pom
+%{_mavenpomdir}/JPP.maven1-plugins-maven-changelog-plugin.pom
 %endif
 
 %files plugin-changes
@@ -2374,28 +2374,28 @@ if [ -d %{_datadir}/%{name} ] ; then rmdir --ignore-fail-on-non-empty %{_datadir
 %dir %{_datadir}/%{name}/plugins
 %{_datadir}/%{name}/plugins/maven-changes-plugin*.jar
 %{_javadir}/%{name}-plugins/maven-changes-plugin.jar
-%{_datadir}/maven2/poms/JPP.maven1-plugins-maven-changes-plugin.pom
+%{_mavenpomdir}/JPP.maven1-plugins-maven-changes-plugin.pom
 
 %files plugin-checkstyle
 %dir %{_datadir}/%{name}
 %dir %{_datadir}/%{name}/plugins
 %{_datadir}/%{name}/plugins/maven-checkstyle-plugin*.jar
 %{_javadir}/%{name}-plugins/maven-checkstyle-plugin.jar
-%{_datadir}/maven2/poms/JPP.maven1-plugins-maven-checkstyle-plugin.pom
+%{_mavenpomdir}/JPP.maven1-plugins-maven-checkstyle-plugin.pom
 
 %files plugin-cruisecontrol
 %dir %{_datadir}/%{name}
 %dir %{_datadir}/%{name}/plugins
 %{_datadir}/%{name}/plugins/maven-cruisecontrol-plugin*.jar
 %{_javadir}/%{name}-plugins/maven-cruisecontrol-plugin.jar
-%{_datadir}/maven2/poms/JPP.maven1-plugins-maven-cruisecontrol-plugin.pom
+%{_mavenpomdir}/JPP.maven1-plugins-maven-cruisecontrol-plugin.pom
 
 %files plugin-developer-activity
 %dir %{_datadir}/%{name}
 %dir %{_datadir}/%{name}/plugins
 %{_datadir}/%{name}/plugins/maven-developer-activity-plugin*.jar
 %{_javadir}/%{name}-plugins/maven-developer-activity-plugin.jar
-%{_datadir}/maven2/poms/JPP.maven1-plugins-maven-developer-activity-plugin.pom
+%{_mavenpomdir}/JPP.maven1-plugins-maven-developer-activity-plugin.pom
 
 %if !%{bootstrap}
 %files plugin-dashboard
@@ -2403,7 +2403,7 @@ if [ -d %{_datadir}/%{name} ] ; then rmdir --ignore-fail-on-non-empty %{_datadir
 %dir %{_datadir}/%{name}/plugins
 %{_datadir}/%{name}/plugins/maven-dashboard-plugin*.jar
 %{_javadir}/%{name}-plugins/maven-dashboard-plugin.jar
-%{_datadir}/maven2/poms/JPP.maven1-plugins-maven-dashboard-plugin.pom
+%{_mavenpomdir}/JPP.maven1-plugins-maven-dashboard-plugin.pom
 %endif
 
 %files plugin-dist
@@ -2411,49 +2411,49 @@ if [ -d %{_datadir}/%{name} ] ; then rmdir --ignore-fail-on-non-empty %{_datadir
 %dir %{_datadir}/%{name}/plugins
 %{_datadir}/%{name}/plugins/maven-dist-plugin*.jar
 %{_javadir}/%{name}-plugins/maven-dist-plugin.jar
-%{_datadir}/maven2/poms/JPP.maven1-plugins-maven-dist-plugin.pom
+%{_mavenpomdir}/JPP.maven1-plugins-maven-dist-plugin.pom
 
 %files plugin-docbook
 %dir %{_datadir}/%{name}
 %dir %{_datadir}/%{name}/plugins
 %{_datadir}/%{name}/plugins/maven-docbook-plugin*.jar
 %{_javadir}/%{name}-plugins/maven-docbook-plugin.jar
-%{_datadir}/maven2/poms/JPP.maven1-plugins-maven-docbook-plugin.pom
+%{_mavenpomdir}/JPP.maven1-plugins-maven-docbook-plugin.pom
 
 %files plugin-ear
 %dir %{_datadir}/%{name}
 %dir %{_datadir}/%{name}/plugins
 %{_datadir}/%{name}/plugins/maven-ear-plugin*.jar
 %{_javadir}/%{name}-plugins/maven-ear-plugin.jar
-%{_datadir}/maven2/poms/JPP.maven1-plugins-maven-ear-plugin.pom
+%{_mavenpomdir}/JPP.maven1-plugins-maven-ear-plugin.pom
 
 %files plugin-eclipse
 %dir %{_datadir}/%{name}
 %dir %{_datadir}/%{name}/plugins
 %{_datadir}/%{name}/plugins/maven-eclipse-plugin*.jar
 %{_javadir}/%{name}-plugins/maven-eclipse-plugin.jar
-%{_datadir}/maven2/poms/JPP.maven1-plugins-maven-eclipse-plugin.pom
+%{_mavenpomdir}/JPP.maven1-plugins-maven-eclipse-plugin.pom
 
 %files plugin-ejb
 %dir %{_datadir}/%{name}
 %dir %{_datadir}/%{name}/plugins
 %{_datadir}/%{name}/plugins/maven-ejb-plugin*.jar
 %{_javadir}/%{name}-plugins/maven-ejb-plugin.jar
-%{_datadir}/maven2/poms/JPP.maven1-plugins-maven-ejb-plugin.pom
+%{_mavenpomdir}/JPP.maven1-plugins-maven-ejb-plugin.pom
 
 %files plugin-faq
 %dir %{_datadir}/%{name}
 %dir %{_datadir}/%{name}/plugins
 %{_datadir}/%{name}/plugins/maven-faq-plugin*.jar
 %{_javadir}/%{name}-plugins/maven-faq-plugin.jar
-%{_datadir}/maven2/poms/JPP.maven1-plugins-maven-faq-plugin.pom
+%{_mavenpomdir}/JPP.maven1-plugins-maven-faq-plugin.pom
 
 %files plugin-file-activity
 %dir %{_datadir}/%{name}
 %dir %{_datadir}/%{name}/plugins
 %{_datadir}/%{name}/plugins/maven-file-activity-plugin*.jar
 %{_javadir}/%{name}-plugins/maven-file-activity-plugin.jar
-%{_datadir}/maven2/poms/JPP.maven1-plugins-maven-file-activity-plugin.pom
+%{_mavenpomdir}/JPP.maven1-plugins-maven-file-activity-plugin.pom
 
 %if ! %{bootstrap}
 %files plugin-genapp
@@ -2461,7 +2461,7 @@ if [ -d %{_datadir}/%{name} ] ; then rmdir --ignore-fail-on-non-empty %{_datadir
 %dir %{_datadir}/%{name}/plugins
 %{_datadir}/%{name}/plugins/maven-genapp-plugin*.jar
 %{_javadir}/%{name}-plugins/maven-genapp-plugin.jar
-%{_datadir}/maven2/poms/JPP.maven1-plugins-maven-genapp-plugin.pom
+%{_mavenpomdir}/JPP.maven1-plugins-maven-genapp-plugin.pom
 %endif
 
 %files plugin-gump
@@ -2469,35 +2469,35 @@ if [ -d %{_datadir}/%{name} ] ; then rmdir --ignore-fail-on-non-empty %{_datadir
 %dir %{_datadir}/%{name}/plugins
 %{_datadir}/%{name}/plugins/maven-gump-plugin*.jar
 %{_javadir}/%{name}-plugins/maven-gump-plugin.jar
-%{_datadir}/maven2/poms/JPP.maven1-plugins-maven-gump-plugin.pom
+%{_mavenpomdir}/JPP.maven1-plugins-maven-gump-plugin.pom
 
 %files plugin-html2xdoc
 %dir %{_datadir}/%{name}
 %dir %{_datadir}/%{name}/plugins
 %{_datadir}/%{name}/plugins/maven-html2xdoc-plugin*.jar
 %{_javadir}/%{name}-plugins/maven-html2xdoc-plugin.jar
-%{_datadir}/maven2/poms/JPP.maven1-plugins-maven-html2xdoc-plugin.pom
+%{_mavenpomdir}/JPP.maven1-plugins-maven-html2xdoc-plugin.pom
 
 %files plugin-idea
 %dir %{_datadir}/%{name}
 %dir %{_datadir}/%{name}/plugins
 %{_datadir}/%{name}/plugins/maven-idea-plugin*.jar
 %{_javadir}/%{name}-plugins/maven-idea-plugin.jar
-%{_datadir}/maven2/poms/JPP.maven1-plugins-maven-idea-plugin.pom
+%{_mavenpomdir}/JPP.maven1-plugins-maven-idea-plugin.pom
 
 %files plugin-itest
 %dir %{_datadir}/%{name}
 %dir %{_datadir}/%{name}/plugins
 %{_datadir}/%{name}/plugins/maven-itest-plugin*.jar
 %{_javadir}/%{name}-plugins/maven-itest-plugin.jar
-%{_datadir}/maven2/poms/JPP.maven1-plugins-maven-itest-plugin.pom
+%{_mavenpomdir}/JPP.maven1-plugins-maven-itest-plugin.pom
 
 %files plugin-j2ee
 %dir %{_datadir}/%{name}
 %dir %{_datadir}/%{name}/plugins
 %{_datadir}/%{name}/plugins/maven-j2ee-plugin*.jar
 %{_javadir}/%{name}-plugins/maven-j2ee-plugin.jar
-%{_datadir}/maven2/poms/JPP.maven1-plugins-maven-j2ee-plugin.pom
+%{_mavenpomdir}/JPP.maven1-plugins-maven-j2ee-plugin.pom
 
 %if %{RHEL4}==0
 %files plugin-jalopy
@@ -2505,7 +2505,7 @@ if [ -d %{_datadir}/%{name} ] ; then rmdir --ignore-fail-on-non-empty %{_datadir
 %dir %{_datadir}/%{name}/plugins
 %{_datadir}/%{name}/plugins/maven-jalopy-plugin*.jar
 %{_javadir}/%{name}-plugins/maven-jalopy-plugin.jar
-%{_datadir}/maven2/poms/JPP.maven1-plugins-maven-jalopy-plugin.pom
+%{_mavenpomdir}/JPP.maven1-plugins-maven-jalopy-plugin.pom
 %endif
 
 %files plugin-jboss
@@ -2513,35 +2513,35 @@ if [ -d %{_datadir}/%{name} ] ; then rmdir --ignore-fail-on-non-empty %{_datadir
 %dir %{_datadir}/%{name}/plugins
 %{_datadir}/%{name}/plugins/maven-jboss-plugin*.jar
 %{_javadir}/%{name}-plugins/maven-jboss-plugin.jar
-%{_datadir}/maven2/poms/JPP.maven1-plugins-maven-jboss-plugin.pom
+%{_mavenpomdir}/JPP.maven1-plugins-maven-jboss-plugin.pom
 
 %files plugin-jbuilder
 %dir %{_datadir}/%{name}
 %dir %{_datadir}/%{name}/plugins
 %{_datadir}/%{name}/plugins/maven-jbuilder-plugin*.jar
 %{_javadir}/%{name}-plugins/maven-jbuilder-plugin.jar
-%{_datadir}/maven2/poms/JPP.maven1-plugins-maven-jbuilder-plugin.pom
+%{_mavenpomdir}/JPP.maven1-plugins-maven-jbuilder-plugin.pom
 
 %files plugin-jcoverage
 %dir %{_datadir}/%{name}
 %dir %{_datadir}/%{name}/plugins
 %{_datadir}/%{name}/plugins/maven-jcoverage-plugin*.jar
 %{_javadir}/%{name}-plugins/maven-jcoverage-plugin.jar
-%{_datadir}/maven2/poms/JPP.maven1-plugins-maven-jcoverage-plugin.pom
+%{_mavenpomdir}/JPP.maven1-plugins-maven-jcoverage-plugin.pom
 
 %files plugin-jdee
 %dir %{_datadir}/%{name}
 %dir %{_datadir}/%{name}/plugins
 %{_datadir}/%{name}/plugins/maven-jdee-plugin*.jar
 %{_javadir}/%{name}-plugins/maven-jdee-plugin.jar
-%{_datadir}/maven2/poms/JPP.maven1-plugins-maven-jdee-plugin.pom
+%{_mavenpomdir}/JPP.maven1-plugins-maven-jdee-plugin.pom
 
 %files plugin-jdepend
 %dir %{_datadir}/%{name}
 %dir %{_datadir}/%{name}/plugins
 %{_datadir}/%{name}/plugins/maven-jdepend-plugin*.jar
 %{_javadir}/%{name}-plugins/maven-jdepend-plugin.jar
-%{_datadir}/maven2/poms/JPP.maven1-plugins-maven-jdepend-plugin.pom
+%{_mavenpomdir}/JPP.maven1-plugins-maven-jdepend-plugin.pom
 
 %if %{RHEL4}==0
 %files plugin-jdeveloper
@@ -2549,7 +2549,7 @@ if [ -d %{_datadir}/%{name} ] ; then rmdir --ignore-fail-on-non-empty %{_datadir
 %dir %{_datadir}/%{name}/plugins
 %{_datadir}/%{name}/plugins/maven-jdeveloper-plugin*.jar
 %{_javadir}/%{name}-plugins/maven-jdeveloper-plugin.jar
-%{_datadir}/maven2/poms/JPP.maven1-plugins-maven-jdeveloper-plugin.pom
+%{_mavenpomdir}/JPP.maven1-plugins-maven-jdeveloper-plugin.pom
 %endif
 
 %if %{RHEL4}==0
@@ -2558,7 +2558,7 @@ if [ -d %{_datadir}/%{name} ] ; then rmdir --ignore-fail-on-non-empty %{_datadir
 %dir %{_datadir}/%{name}/plugins
 %{_datadir}/%{name}/plugins/maven-jdiff-plugin*.jar
 %{_javadir}/%{name}-plugins/maven-jdiff-plugin.jar
-%{_datadir}/maven2/poms/JPP.maven1-plugins-maven-jdiff-plugin.pom
+%{_mavenpomdir}/JPP.maven1-plugins-maven-jdiff-plugin.pom
 %endif
 
 %files plugin-jellydoc
@@ -2566,7 +2566,7 @@ if [ -d %{_datadir}/%{name} ] ; then rmdir --ignore-fail-on-non-empty %{_datadir
 %dir %{_datadir}/%{name}/plugins
 %{_datadir}/%{name}/plugins/maven-jellydoc-plugin*.jar
 %{_javadir}/%{name}-plugins/maven-jellydoc-plugin.jar
-%{_datadir}/maven2/poms/JPP.maven1-plugins-maven-jellydoc-plugin.pom
+%{_mavenpomdir}/JPP.maven1-plugins-maven-jellydoc-plugin.pom
 
 %if %{RHEL4}==0
 %files plugin-jetty
@@ -2574,7 +2574,7 @@ if [ -d %{_datadir}/%{name} ] ; then rmdir --ignore-fail-on-non-empty %{_datadir
 %dir %{_datadir}/%{name}/plugins
 %{_datadir}/%{name}/plugins/maven-jetty-plugin*.jar
 %{_javadir}/%{name}-plugins/maven-jetty-plugin.jar
-%{_datadir}/maven2/poms/JPP.maven1-plugins-maven-jetty-plugin.pom
+%{_mavenpomdir}/JPP.maven1-plugins-maven-jetty-plugin.pom
 %endif
 
 %files plugin-jira
@@ -2582,28 +2582,28 @@ if [ -d %{_datadir}/%{name} ] ; then rmdir --ignore-fail-on-non-empty %{_datadir
 %dir %{_datadir}/%{name}/plugins
 %{_datadir}/%{name}/plugins/maven-jira-plugin*.jar
 %{_javadir}/%{name}-plugins/maven-jira-plugin.jar
-%{_datadir}/maven2/poms/JPP.maven1-plugins-maven-jira-plugin.pom
+%{_mavenpomdir}/JPP.maven1-plugins-maven-jira-plugin.pom
 
 %files plugin-jnlp
 %dir %{_datadir}/%{name}
 %dir %{_datadir}/%{name}/plugins
 %{_datadir}/%{name}/plugins/maven-jnlp-plugin*.jar
 %{_javadir}/%{name}-plugins/maven-jnlp-plugin.jar
-%{_datadir}/maven2/poms/JPP.maven1-plugins-maven-jnlp-plugin.pom
+%{_mavenpomdir}/JPP.maven1-plugins-maven-jnlp-plugin.pom
 
 %files plugin-junitdoclet
 %dir %{_datadir}/%{name}
 %dir %{_datadir}/%{name}/plugins
 %{_datadir}/%{name}/plugins/maven-junitdoclet-plugin*.jar
 %{_javadir}/%{name}-plugins/maven-junitdoclet-plugin.jar
-%{_datadir}/maven2/poms/JPP.maven1-plugins-maven-junitdoclet-plugin.pom
+%{_mavenpomdir}/JPP.maven1-plugins-maven-junitdoclet-plugin.pom
 
 %files plugin-jxr
 %dir %{_datadir}/%{name}
 %dir %{_datadir}/%{name}/plugins
 %{_datadir}/%{name}/plugins/maven-jxr-plugin*.jar
 %{_javadir}/%{name}-plugins/maven-jxr-plugin.jar
-%{_datadir}/maven2/poms/JPP.maven1-plugins-maven-jxr-plugin.pom
+%{_mavenpomdir}/JPP.maven1-plugins-maven-jxr-plugin.pom
 
 %if %{RHEL4}==0
 %files plugin-latex
@@ -2611,7 +2611,7 @@ if [ -d %{_datadir}/%{name} ] ; then rmdir --ignore-fail-on-non-empty %{_datadir
 %dir %{_datadir}/%{name}/plugins
 %{_datadir}/%{name}/plugins/maven-latex-plugin*.jar
 %{_javadir}/%{name}-plugins/maven-latex-plugin.jar
-%{_datadir}/maven2/poms/JPP.maven1-plugins-maven-latex-plugin.pom
+%{_mavenpomdir}/JPP.maven1-plugins-maven-latex-plugin.pom
 %endif
 
 %files plugin-latka
@@ -2619,42 +2619,42 @@ if [ -d %{_datadir}/%{name} ] ; then rmdir --ignore-fail-on-non-empty %{_datadir
 %dir %{_datadir}/%{name}/plugins
 %{_datadir}/%{name}/plugins/maven-latka-plugin*.jar
 %{_javadir}/%{name}-plugins/maven-latka-plugin.jar
-%{_datadir}/maven2/poms/JPP.maven1-plugins-maven-latka-plugin.pom
+%{_mavenpomdir}/JPP.maven1-plugins-maven-latka-plugin.pom
 
 %files plugin-license
 %dir %{_datadir}/%{name}
 %dir %{_datadir}/%{name}/plugins
 %{_datadir}/%{name}/plugins/maven-license-plugin*.jar
 %{_javadir}/%{name}-plugins/maven-license-plugin.jar
-%{_datadir}/maven2/poms/JPP.maven1-plugins-maven-license-plugin.pom
+%{_mavenpomdir}/JPP.maven1-plugins-maven-license-plugin.pom
 
 %files plugin-linkcheck
 %dir %{_datadir}/%{name}
 %dir %{_datadir}/%{name}/plugins
 %{_datadir}/%{name}/plugins/maven-linkcheck-plugin*.jar
 %{_javadir}/%{name}-plugins/maven-linkcheck-plugin.jar
-%{_datadir}/maven2/poms/JPP.maven1-plugins-maven-linkcheck-plugin.pom
+%{_mavenpomdir}/JPP.maven1-plugins-maven-linkcheck-plugin.pom
 
 %files plugin-modello
 %dir %{_datadir}/%{name}
 %dir %{_datadir}/%{name}/plugins
 %{_datadir}/%{name}/plugins/maven-modello-plugin*.jar
 %{_javadir}/%{name}-plugins/maven-modello-plugin.jar
-%{_datadir}/maven2/poms/JPP.maven1-plugins-maven-modello-plugin.pom
+%{_mavenpomdir}/JPP.maven1-plugins-maven-modello-plugin.pom
 
 %files plugin-multichanges
 %dir %{_datadir}/%{name}
 %dir %{_datadir}/%{name}/plugins
 %{_datadir}/%{name}/plugins/maven-multichanges-plugin*.jar
 %{_javadir}/%{name}-plugins/maven-multichanges-plugin.jar
-%{_datadir}/maven2/poms/JPP.maven1-plugins-maven-multichanges-plugin.pom
+%{_mavenpomdir}/JPP.maven1-plugins-maven-multichanges-plugin.pom
 
 %files plugin-multiproject
 %dir %{_datadir}/%{name}
 %dir %{_datadir}/%{name}/plugins
 %{_datadir}/%{name}/plugins/maven-multiproject-plugin*.jar
 %{_javadir}/%{name}-plugins/maven-multiproject-plugin.jar
-%{_datadir}/maven2/poms/JPP.maven1-plugins-maven-multiproject-plugin.pom
+%{_mavenpomdir}/JPP.maven1-plugins-maven-multiproject-plugin.pom
 
 %if %{RHEL4}==0
 %files plugin-native
@@ -2662,7 +2662,7 @@ if [ -d %{_datadir}/%{name} ] ; then rmdir --ignore-fail-on-non-empty %{_datadir
 %dir %{_datadir}/%{name}/plugins
 %{_datadir}/%{name}/plugins/maven-native-plugin*.jar
 %{_javadir}/%{name}-plugins/maven-native-plugin.jar
-%{_datadir}/maven2/poms/JPP.maven1-plugins-maven-native-plugin.pom
+%{_mavenpomdir}/JPP.maven1-plugins-maven-native-plugin.pom
 %endif
 
 %files plugin-nsis
@@ -2670,7 +2670,7 @@ if [ -d %{_datadir}/%{name} ] ; then rmdir --ignore-fail-on-non-empty %{_datadir
 %dir %{_datadir}/%{name}/plugins
 %{_datadir}/%{name}/plugins/maven-nsis-plugin*.jar
 %{_javadir}/%{name}-plugins/maven-nsis-plugin.jar
-%{_datadir}/maven2/poms/JPP.maven1-plugins-maven-nsis-plugin.pom
+%{_mavenpomdir}/JPP.maven1-plugins-maven-nsis-plugin.pom
 
 %if %{RHEL4}==0
 %files plugin-pdf
@@ -2678,7 +2678,7 @@ if [ -d %{_datadir}/%{name} ] ; then rmdir --ignore-fail-on-non-empty %{_datadir
 %dir %{_datadir}/%{name}/plugins
 %{_datadir}/%{name}/plugins/maven-pdf-plugin*.jar
 %{_javadir}/%{name}-plugins/maven-pdf-plugin.jar
-%{_datadir}/maven2/poms/JPP.maven1-plugins-maven-pdf-plugin.pom
+%{_mavenpomdir}/JPP.maven1-plugins-maven-pdf-plugin.pom
 %endif
 
 %files plugin-pmd
@@ -2686,77 +2686,77 @@ if [ -d %{_datadir}/%{name} ] ; then rmdir --ignore-fail-on-non-empty %{_datadir
 %dir %{_datadir}/%{name}/plugins
 %{_datadir}/%{name}/plugins/maven-pmd-plugin*.jar
 %{_javadir}/%{name}-plugins/maven-pmd-plugin.jar
-%{_datadir}/maven2/poms/JPP.maven1-plugins-maven-pmd-plugin.pom
+%{_mavenpomdir}/JPP.maven1-plugins-maven-pmd-plugin.pom
 
 %files plugin-rar
 %dir %{_datadir}/%{name}
 %dir %{_datadir}/%{name}/plugins
 %{_datadir}/%{name}/plugins/maven-rar-plugin*.jar
 %{_javadir}/%{name}-plugins/maven-rar-plugin.jar
-%{_datadir}/maven2/poms/JPP.maven1-plugins-maven-rar-plugin.pom
+%{_mavenpomdir}/JPP.maven1-plugins-maven-rar-plugin.pom
 
 %files plugin-release
 %dir %{_datadir}/%{name}
 %dir %{_datadir}/%{name}/plugins
 %{_datadir}/%{name}/plugins/maven-release-plugin*.jar
 %{_javadir}/%{name}-plugins/maven-release-plugin.jar
-%{_datadir}/maven2/poms/JPP.maven1-plugins-maven-release-plugin.pom
+%{_mavenpomdir}/JPP.maven1-plugins-maven-release-plugin.pom
 
 %files plugin-repository
 %dir %{_datadir}/%{name}
 %dir %{_datadir}/%{name}/plugins
 %{_datadir}/%{name}/plugins/maven-repository-plugin*.jar
 %{_javadir}/%{name}-plugins/maven-repository-plugin.jar
-%{_datadir}/maven2/poms/JPP.maven1-plugins-maven-repository-plugin.pom
+%{_mavenpomdir}/JPP.maven1-plugins-maven-repository-plugin.pom
 
 %files plugin-scm
 %dir %{_datadir}/%{name}
 %dir %{_datadir}/%{name}/plugins
 %{_datadir}/%{name}/plugins/maven-scm-plugin*.jar
 %{_javadir}/%{name}-plugins/maven-scm-plugin.jar
-%{_datadir}/maven2/poms/JPP.maven1-plugins-maven-scm-plugin.pom
+%{_mavenpomdir}/JPP.maven1-plugins-maven-scm-plugin.pom
 
 %files plugin-shell
 %dir %{_datadir}/%{name}
 %dir %{_datadir}/%{name}/plugins
 %{_datadir}/%{name}/plugins/maven-shell-plugin*.jar
 %{_javadir}/%{name}-plugins/maven-shell-plugin.jar
-%{_datadir}/maven2/poms/JPP.maven1-plugins-maven-shell-plugin.pom
+%{_mavenpomdir}/JPP.maven1-plugins-maven-shell-plugin.pom
 
 %files plugin-site
 %dir %{_datadir}/%{name}
 %dir %{_datadir}/%{name}/plugins
 %{_datadir}/%{name}/plugins/maven-site-plugin*.jar
 %{_javadir}/%{name}-plugins/maven-site-plugin.jar
-%{_datadir}/maven2/poms/JPP.maven1-plugins-maven-site-plugin.pom
+%{_mavenpomdir}/JPP.maven1-plugins-maven-site-plugin.pom
 
 %files plugin-source
 %dir %{_datadir}/%{name}
 %dir %{_datadir}/%{name}/plugins
 %{_datadir}/%{name}/plugins/maven-source-plugin*.jar
 %{_javadir}/%{name}-plugins/maven-source-plugin.jar
-%{_datadir}/maven2/poms/JPP.maven1-plugins-maven-source-plugin.pom
+%{_mavenpomdir}/JPP.maven1-plugins-maven-source-plugin.pom
 
 %files plugin-struts
 %dir %{_datadir}/%{name}
 %dir %{_datadir}/%{name}/plugins
 %{_datadir}/%{name}/plugins/maven-struts-plugin*.jar
 %{_javadir}/%{name}-plugins/maven-struts-plugin.jar
-%{_datadir}/maven2/poms/JPP.maven1-plugins-maven-struts-plugin.pom
+%{_mavenpomdir}/JPP.maven1-plugins-maven-struts-plugin.pom
 
 %files plugin-tasklist
 %dir %{_datadir}/%{name}
 %dir %{_datadir}/%{name}/plugins
 %{_datadir}/%{name}/plugins/maven-tasklist-plugin*.jar
 %{_javadir}/%{name}-plugins/maven-tasklist-plugin.jar
-%{_datadir}/maven2/poms/JPP.maven1-plugins-maven-tasklist-plugin.pom
+%{_mavenpomdir}/JPP.maven1-plugins-maven-tasklist-plugin.pom
 
 %files plugin-test
 %dir %{_datadir}/%{name}
 %dir %{_datadir}/%{name}/plugins
 %{_datadir}/%{name}/plugins/maven-test-plugin*.jar
 %{_javadir}/%{name}-plugins/maven-test-plugin.jar
-%{_datadir}/maven2/poms/JPP.maven1-plugins-maven-test-plugin.pom
+%{_mavenpomdir}/JPP.maven1-plugins-maven-test-plugin.pom
 
 %if_with tjdo
 %files plugin-tjdo
@@ -2764,7 +2764,7 @@ if [ -d %{_datadir}/%{name} ] ; then rmdir --ignore-fail-on-non-empty %{_datadir
 %dir %{_datadir}/%{name}/plugins
 %{_datadir}/%{name}/plugins/maven-tjdo-plugin*.jar
 %{_javadir}/%{name}-plugins/maven-tjdo-plugin.jar
-%{_datadir}/maven2/poms/JPP.maven1-plugins-maven-tjdo-plugin.pom
+%{_mavenpomdir}/JPP.maven1-plugins-maven-tjdo-plugin.pom
 %endif
 
 %files plugin-touchstone-partner
@@ -2772,14 +2772,14 @@ if [ -d %{_datadir}/%{name} ] ; then rmdir --ignore-fail-on-non-empty %{_datadir
 %dir %{_datadir}/%{name}/plugins
 %{_datadir}/%{name}/plugins/maven-touchstone-partner-plugin*.jar
 %{_javadir}/%{name}-plugins/maven-touchstone-partner-plugin.jar
-%{_datadir}/maven2/poms/JPP.maven1-plugins-maven-touchstone-partner-plugin.pom
+%{_mavenpomdir}/JPP.maven1-plugins-maven-touchstone-partner-plugin.pom
 
 %files plugin-touchstone
 %dir %{_datadir}/%{name}
 %dir %{_datadir}/%{name}/plugins
 %{_datadir}/%{name}/plugins/maven-touchstone-plugin*.jar
 %{_javadir}/%{name}-plugins/maven-touchstone-plugin.jar
-%{_datadir}/maven2/poms/JPP.maven1-plugins-maven-touchstone-plugin.pom
+%{_mavenpomdir}/JPP.maven1-plugins-maven-touchstone-plugin.pom
 
 %if %{RHEL4}==0
 %files plugin-uberjar
@@ -2787,7 +2787,7 @@ if [ -d %{_datadir}/%{name} ] ; then rmdir --ignore-fail-on-non-empty %{_datadir
 %dir %{_datadir}/%{name}/plugins
 %{_datadir}/%{name}/plugins/maven-uberjar-plugin*.jar
 %{_javadir}/%{name}-plugins/maven-uberjar-plugin.jar
-%{_datadir}/maven2/poms/JPP.maven1-plugins-maven-uberjar-plugin.pom
+%{_mavenpomdir}/JPP.maven1-plugins-maven-uberjar-plugin.pom
 %endif
 
 %if %{RHEL4}==0
@@ -2796,7 +2796,7 @@ if [ -d %{_datadir}/%{name} ] ; then rmdir --ignore-fail-on-non-empty %{_datadir
 %dir %{_datadir}/%{name}/plugins
 %{_datadir}/%{name}/plugins/maven-vdoclet-plugin*.jar
 %{_javadir}/%{name}-plugins/maven-vdoclet-plugin.jar
-%{_datadir}/maven2/poms/JPP.maven1-plugins-maven-vdoclet-plugin.pom
+%{_mavenpomdir}/JPP.maven1-plugins-maven-vdoclet-plugin.pom
 %endif
 
 %files plugin-war
@@ -2804,35 +2804,35 @@ if [ -d %{_datadir}/%{name} ] ; then rmdir --ignore-fail-on-non-empty %{_datadir
 %dir %{_datadir}/%{name}/plugins
 %{_datadir}/%{name}/plugins/maven-war-plugin*.jar
 %{_javadir}/%{name}-plugins/maven-war-plugin.jar
-%{_datadir}/maven2/poms/JPP.maven1-plugins-maven-war-plugin.pom
+%{_mavenpomdir}/JPP.maven1-plugins-maven-war-plugin.pom
 
 %files plugin-webserver
 %dir %{_datadir}/%{name}
 %dir %{_datadir}/%{name}/plugins
 %{_datadir}/%{name}/plugins/maven-webserver-plugin*.jar
 %{_javadir}/%{name}-plugins/maven-webserver-plugin.jar
-%{_datadir}/maven2/poms/JPP.maven1-plugins-maven-webserver-plugin.pom
+%{_mavenpomdir}/JPP.maven1-plugins-maven-webserver-plugin.pom
 
 %files plugin-webstart
 %dir %{_datadir}/%{name}
 %dir %{_datadir}/%{name}/plugins
 %{_datadir}/%{name}/plugins/maven-webstart-plugin*.jar
 %{_javadir}/%{name}-plugins/maven-webstart-plugin.jar
-%{_datadir}/maven2/poms/JPP.maven1-plugins-maven-webstart-plugin.pom
+%{_mavenpomdir}/JPP.maven1-plugins-maven-webstart-plugin.pom
 
 %files plugin-wizard
 %dir %{_datadir}/%{name}
 %dir %{_datadir}/%{name}/plugins
 %{_datadir}/%{name}/plugins/maven-wizard-plugin*.jar
 %{_javadir}/%{name}-plugins/maven-wizard-plugin.jar
-%{_datadir}/maven2/poms/JPP.maven1-plugins-maven-wizard-plugin.pom
+%{_mavenpomdir}/JPP.maven1-plugins-maven-wizard-plugin.pom
 
 %files plugin-xdoc
 %dir %{_datadir}/%{name}
 %dir %{_datadir}/%{name}/plugins
 %{_datadir}/%{name}/plugins/maven-xdoc-plugin*.jar
 %{_javadir}/%{name}-plugins/maven-xdoc-plugin.jar
-%{_datadir}/maven2/poms/JPP.maven1-plugins-maven-xdoc-plugin.pom
+%{_mavenpomdir}/JPP.maven1-plugins-maven-xdoc-plugin.pom
 
 %files javadoc
 %doc %{_javadocdir}/%{name}-%{version}
@@ -2842,6 +2842,9 @@ if [ -d %{_datadir}/%{name} ] ; then rmdir --ignore-fail-on-non-empty %{_datadir
 %doc %{_docdir}/%{name}-%{version}
 
 %changelog
+* Mon Apr 01 2013 Igor Vlasenko <viy@altlinux.ru> 0:1.1-alt26_9jpp6
+-fixed build with new xerces
+
 * Sun Oct 07 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.1-alt25_9jpp6
 - rebuild with apache-commons-fileupload
 
