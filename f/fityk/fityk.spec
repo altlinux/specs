@@ -5,8 +5,8 @@
 
 Summary: Tool for fitting and analyzing data
 Name: fityk
-Version: 1.2.0
-Release: alt1.git20120714.1
+Version: 1.2.1
+Release: alt1.git20130117
 License: GPL
 Group: Sciences/Other
 Url: https://github.com/wojdyr/fityk
@@ -26,6 +26,7 @@ BuildPreReq: texlive-latex-recommended texmf-latex-preview gnuplot
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
+BuildPreReq: python-tools-2to3
 %endif
 
 %description
@@ -153,6 +154,22 @@ mv $PWD%python3_sitelibdir_noarch/* %buildroot%python3_sitelibdir/
 popd
 %endif
 
+%check
+# no check for: java, lua, perl and ruby
+%make samples/hello samples/helloc
+samples/hello
+samples/helloc
+LD_LIBRARY_PATH=%buildroot%_libdir PYTHONPATH=%buildroot%python_sitelibdir samples/hello.py
+%if_with python3
+pushd ../python3
+%make samples/hello samples/helloc
+samples/hello
+samples/helloc
+2to3 -w samples/hello.py
+LD_LIBRARY_PATH=%buildroot%_libdir PYTHONPATH=%buildroot%python3_sitelibdir %__python3 samples/hello.py
+popd
+%endif
+
 %files
 %doc COPYING NEWS TODO
 %if_with docs
@@ -183,6 +200,9 @@ popd
 %endif
 
 %changelog
+* Mon Apr 01 2013 Aleksey Avdeev <solo@altlinux.ru> 1.2.1-alt1.git20130117
+- Version 1.2.1 (12a914462f8f621ca4b21101abecd424593d96aa)
+
 * Tue Mar 26 2013 Aleksey Avdeev <solo@altlinux.ru> 1.2.0-alt1.git20120714.1
 - Rebuild with Python-3.3
 
