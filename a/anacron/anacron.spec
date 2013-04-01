@@ -1,6 +1,6 @@
 Name: anacron
 Version: 2.3
-Release: alt5
+Release: alt6
 Epoch: 1
 
 Summary: A cron-like program that doesn't go by time
@@ -101,6 +101,9 @@ sed -i s,RPM_LOCKFILE,%lockfile, %buildroot%_initdir/%name
 %doc ChangeLog README TODO
 
 %changelog
+* Mon Apr 01 2013 Dmitry V. Levin <ldv@altlinux.org> 1:2.3-alt6
+- anacron.service: redirect standard descriptors (closes: #28775).
+
 * Mon Apr 01 2013 Dmitry V. Levin <ldv@altlinux.org> 1:2.3-alt5
 - anacron.service: changed service type to simple (closes: #28775).
 
