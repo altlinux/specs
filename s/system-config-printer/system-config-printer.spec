@@ -1,7 +1,7 @@
 Summary: A printer administration tool
 Name: system-config-printer
 Version: 1.3.11
-Release: alt1
+Release: alt2
 License: GPLv2+
 Url: http://cyberelk.net/tim/software/system-config-printer/
 Group: System/Configuration/Printing
@@ -86,6 +86,9 @@ exit 0
 %python_sitelibdir_noarch/cupshelpers-*
 
 %changelog
+* Mon Apr 01 2013 Andrey Cherepanov <cas@altlinux.org> 1.3.11-alt2
+- Complete Russian translation (ALT #28773)
+
 * Mon Sep 10 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1.3.11-alt1
 - 1.3.11
 
