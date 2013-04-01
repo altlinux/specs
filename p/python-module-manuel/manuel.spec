@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.5.0
-Release: alt2.1
+Version: 1.7.2
+Release: alt1
 Summary: Manuel lets you build tested documentation
 License: ZPL
 Group: Development/Python
@@ -55,6 +55,15 @@ Manuel lets you build tested documentation.
 
 This package contains tests for Manuel.
 
+%package docs
+Summary: Documentation for Manuel
+Group: Development/Documentation
+
+%description docs
+Manuel lets you build tested documentation.
+
+This package contains documentation for Manuel.
+
 %prep
 %setup
 %if_with python3
@@ -89,6 +98,9 @@ popd
 %files tests
 %python_sitelibdir/%oname/test*
 
+%files docs
+%doc docs/*
+
 %if_with python3
 %files -n python3-module-%oname
 %doc *.txt
@@ -100,6 +112,9 @@ popd
 %endif
 
 %changelog
+* Mon Apr 01 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.7.2-alt1
+- Version 1.7.2
+
 * Fri Mar 22 2013 Aleksey Avdeev <solo@altlinux.ru> 1.5.0-alt2.1
 - Rebuild with Python-3.3
 
