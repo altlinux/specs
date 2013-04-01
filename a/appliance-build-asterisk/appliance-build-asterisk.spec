@@ -2,7 +2,7 @@ Name: appliance-build-asterisk
 Summary: Packages required for build Asterisk
 BuildArch: noarch
 Version: 4.0.1
-Release: alt1
+Release: alt1.1
 License: GPL
 Group: System/Base
 
@@ -34,7 +34,7 @@ Requires: libldap-devel
 Requires: libltdl-devel
 Requires: liblua5-devel
 Requires: libmISDN-devel
-Requires: libMySQL-devel
+Requires: libmysqlclient-devel
 Requires: libtinfo-devel
 Requires: libnet-snmp-devel
 Requires: libnewt-devel
@@ -87,6 +87,9 @@ Requires: zlib-devel
 %files
 
 %changelog
+* Mon Apr 01 2013 Michael Shigorin <mike@altlinux.org> 4.0.1-alt1.1
+- NMU: fixed MySQL client library dependency
+
 * Sun May 06 2012 Denis Smirnov <mithraen@altlinux.ru> 4.0.1-alt1
 - initial build for ALT Linux Sisyphus
 

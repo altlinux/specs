@@ -1,8 +1,10 @@
 Name: MySQL
 Version: 5.5.30
-Release: alt2
+Release: alt3
 
 %def_without debug
+%def_without libs
+%def_without devel
 %def_disable static
 %define mysql_version %version
 %define mysqld_user mysql
@@ -53,8 +55,10 @@ Patch106: mysql-dh1024.patch
 BuildRequires: chrooted gcc-c++ libncursesw-devel libreadline-devel libssl-devel perl-DBI zlib-devel
 BuildRequires: cmake control
 
-%define soversion 18
-%package -n libmysqlclient%soversion
+%define soname 18
+
+%if_with libs
+%package -n libmysqlclient%soname
 Summary: Shared libraries for MySQL
 Summary(ru_RU.UTF-8): Динамические библиотеки для MySQL
 License: LGPL
@@ -63,18 +67,20 @@ Provides: libMySQL = %version
 Obsoletes: libMySQL < %version
 Conflicts: libmariadb < 5.6
 
+%if_with devel
 %package -n libmysqlclient-devel
 Summary: Development header files and libraries for MySQL
 Summary(ru_RU.UTF-8): Интерфейс прикладного уровня для разработки программ с MySQL
 License: LGPL
 Group: Development/C
-Requires: libmysqlclient%soversion = %version-%release
+Requires: libmysqlclient%soname = %version-%release
 Provides: MySQL-devel = %version mysql-devel = %version
 Obsoletes: MySQL-devel < %version mysql-devel < %version
 Provides: libMySQL-devel = %version
 Obsoletes: libMySQL-devel < %version
 Conflicts: libmariadb-devel
 
+%if_enabled static
 %package -n libmysqlclient-devel-static
 Summary: Development static libraries for MySQL
 Summary(ru_RU.UTF-8): Интерфейс прикладного уровня для разработки программ с MySQL
@@ -84,13 +90,15 @@ Requires: libmysqlclient-devel = %version-%release
 Provides: libMySQL-devel-static = %version
 Obsoletes: libMySQL-devel-static < %version
 Conflicts: libmariadb-devel-static
+%endif
+%endif
+%endif
 
 %package client
 Summary: MySQL Client
 Summary(ru_RU.UTF-8): Клиент MySQL
 License: GPL
 Group: Databases
-Requires: libmysqlclient%soversion = %version-%release
 Provides: mysql-client = %version
 Obsoletes: mysql-client < %version
 
@@ -99,7 +107,7 @@ Summary: A very fast and reliable SQL database engine
 Summary(ru_RU.UTF-8): Очень быстрый и надежный SQL-сервер
 License: GPL
 Group: Databases
-PreReq: libmysqlclient%soversion = %version-%release, MySQL-client = %version-%release
+PreReq: MySQL-client = %version-%release
 PreReq: shadow-utils, coreutils, glibc-locales
 Requires(post,preun): chkconfig, chrooted, coreutils, findutils, grep, sed
 Provides: mysql-server = %version MySQL = %version mysql = %version
@@ -211,15 +219,17 @@ MySQL ведется на основе программного кода, кот
 Данная версия MySQL собрана с поддержкой транзакций и расширенной поддержкой
 различных текстовых кодировок. См. документацию для более подробной информации.
 
-%description -n libmysqlclient%soversion
+%if_with libs
+%description -n libmysqlclient%soname
 This package contains the shared libraries (*.so*) which certain
 languages and applications need to dynamically load and use MySQL.
 
-%description -n libmysqlclient%soversion -l ru_RU.UTF-8
+%description -n libmysqlclient%soname -l ru_RU.UTF-8
 Этот пакет содержит динамически загружаемые библиотеки (файлы *.so*),
 требуемые для работы большинства клиентских приложений, взаимодействующих
 с СУБД MySQL.
 
+%if_with devel
 %description -n libmysqlclient-devel
 This package contains the development header files and libraries
 necessary to develop MySQL client applications.
@@ -233,6 +243,7 @@ necessary to develop MySQL client applications.
 
 %see_base_ru
 
+%if_enabled static
 %description -n libmysqlclient-devel-static
 This package contains the development libraries for static linking
 necessary to develop MySQL client applications.
@@ -245,6 +256,9 @@ necessary to develop MySQL client applications.
 взаимодействующих с SQL-сервером MySQL.
 
 %see_base_ru
+%endif
+%endif
+%endif
 
 %description client
 This package contains the standard MySQL clients.
@@ -526,20 +540,25 @@ if [ $1 = 0 ]; then
 	rm -f %ROOT/lib/* %ROOT/var/yp/binding/*
 fi
 
-%files -n libmysqlclient%soversion
+%if_with libs
+%files -n libmysqlclient%soname
 %_libdir/*.so.*
 
+%if_with devel
 %files -n libmysqlclient-devel
 %_bindir/mysql_config
 %_libdir/*.so
 %_includedir/*
 %_aclocaldir/mysql.m4
+%_man1dir/mysql_config.1*
 
 %if_enabled static
 %files -n libmysqlclient-devel-static
 %_libdir/*.a
 %_libdir/mysql
-%endif #static 
+%endif
+%endif
+%endif
 
 %files client
 %_bindir/innochecksum
@@ -561,6 +580,7 @@ fi
 %_bindir/replace
 %_bindir/resolve*
 %_mandir/man?/*
+%exclude %_man1dir/mysql_config.1*
 %_infodir/*.info*
 
 %files server-perl
@@ -628,6 +648,12 @@ fi
 %_datadir/sql-bench
 
 %changelog
+* Mon Apr 01 2013 Michael Shigorin <mike@altlinux.org> 5.5.30-alt3
+- made subpackages with client libraries and devel headers optional,
+  turned these off by default since mariadb provides them and looks
+  more maintainable based on current consensus (closes: #28676)
+- dropped explicit library requirements (set-versions should suffice)
+
 * Mon Mar 04 2013 Michael Shigorin <mike@altlinux.org> 5.5.30-alt2
 - fixed chrooted configuration (closes: #28630)
 

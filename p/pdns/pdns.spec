@@ -1,6 +1,6 @@
 Name:		pdns
 Version:	2.9.22
-Release:	alt1.1
+Release:	alt1.2
 
 %def_with	ssl
 %def_with	mysql
@@ -47,7 +47,7 @@ BuildPreReq:	openssl-devel
 %endif
 
 %if_with mysql
-BuildPreReq:	MySQL-devel
+BuildPreReq:	libmysqlclient-devel
 %{expand:%%global dynmodules %dynmodules gmysql}
 %endif
 
@@ -117,7 +117,6 @@ that accepts questions on stdin and returns answers on stdout.
 Summary:	MySQL backend for %name
 Group:		System/Servers
 Requires:	%name = %version
-Requires:	libMySQL
 
 %description	backend-mysql
 This package contains a MySQL backend for the PowerDNS nameserver.
@@ -395,6 +394,9 @@ fi
 %mylibdir/*.a
 
 %changelog
+* Mon Apr 01 2013 Michael Shigorin <mike@altlinux.org> 2.9.22-alt1.2
+- NMU: fixed MySQL client library dependencies
+
 * Tue Dec 07 2010 Igor Vlasenko <viy@altlinux.ru> 2.9.22-alt1.1
 - rebuild with new libmysqlclient by request of libmysqlclient maintainer
 

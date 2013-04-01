@@ -30,7 +30,7 @@
 
 Name: collectd
 Version: 5.2.1
-Release: alt2
+Release: alt3
 
 Summary: (Multi-)System statistics collection
 License: GPL
@@ -312,8 +312,7 @@ This plugin provides Monitorus support for collectd
 Summary: MySQL support module for collectd
 Group: Monitoring
 Requires: collectd = %version-%release
-Requires: libMySQL
-BuildRequires: libMySQL-devel
+BuildRequires: libmysqlclient-devel
 
 %description mysql
 This plugin provides MySQL server support for collectd
@@ -814,6 +813,9 @@ service %name condrestart ||:
 # - macroize repetitive sections
 
 %changelog
+* Wed Mar 13 2013 Michael Shigorin <mike@altlinux.org> 5.2.1-alt3
+- fixed mysql deps
+
 * Thu Feb 28 2013 Michael Shigorin <mike@altlinux.org> 5.2.1-alt2
 - kludged pm installation (somehow these ended up in lib/ not share/)
 - disabled monitorus plugin
