@@ -1,6 +1,6 @@
 Name: mcelog
 Version: 1.0
-Release: alt0.1
+Release: alt0.2
 
 Summary: Tool to translate x86_64 CPU Machine Check Exception data
 License: GPLv2
@@ -21,6 +21,7 @@ ExclusiveArch: x86_64 %ix86
 %package cron
 Summary: Optional cronjob for mcelog
 Group: System/Kernel and hardware
+BuildArch: noarch
 
 %description
 mcelog is a utility that collects and decodes Machine Check Exception
@@ -66,6 +67,9 @@ install -pDm644 mcelog.8 %buildroot%_man8dir/mcelog.8
 %_sysconfdir/logrotate.d/mcelog
 
 %changelog
+* Mon Apr 01 2013 Michael Shigorin <mike@altlinux.org> 1.0-alt0.2
+- cron subpackage made noarch
+
 * Tue Mar 26 2013 Michael Shigorin <mike@altlinux.org> 1.0-alt0.1
 - rebuilt for Sisyphus from ground up
   + upstream version is roughly 1.0 (gc824617)
