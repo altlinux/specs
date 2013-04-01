@@ -6,7 +6,7 @@
 
 Name: katrin
 Version: 1.5.0
-Release: alt4.2
+Release: alt4.3
 
 Summary: Modular billing system
 
@@ -19,7 +19,7 @@ Packager: Denis Klimov <zver@altlinux.org>
 
 BuildRequires: libconfuse-devel libmysqlclient-devel ppp-devel postgresql-devel
 BuildPreReq: chrpath
-Requires: libMySQL net-tools sudo
+Requires: net-tools sudo
 
 %description
 Modular billing system Katrin.
@@ -157,6 +157,9 @@ useradd -g %katrin_group -c 'Katrin billing system' -d /var/empty -s '/dev/null'
 %config(noreplace) %attr(640,root,root) %_sysconfdir/%name/kcdr-sender.conf
 
 %changelog
+* Mon Apr 01 2013 Michael Shigorin <mike@altlinux.org> 1.5.0-alt4.3
+- fixed MySQL client library dependencies
+
 * Thu Jul 12 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 1.5.0-alt4.2
 - move sudo config to /etc/sudoers.d
 

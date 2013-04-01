@@ -2,13 +2,14 @@
 %define build_test 0
 %define build_bench 1
 
+Name: mariadb
+Version: 5.5.30
+Release: alt10
 
 Summary: A very fast and reliable SQL database engine
-Name: mariadb
-Version: 5.5.28a
-Release: alt1
-Group: Databases
 License: GPLv2 with exceptions
+Group: Databases
+
 Url: http://mariadb.org/
 Source0: %name-%version.tar
 Source2: mysqld.sysconfig
@@ -36,19 +37,21 @@ Patch103: mariadb-5.5-mysql_upgrade-exit-status.patch
 Patch106: mariadb-5.5-hotcopy.patch
 Patch107: mariadb-5.5-mysql_install_db-quiet.alt.patch
 
-
 Requires: %name-server = %version-%release %name-client = %version-%release
 
-BuildRequires: gcc-c++ libncursesw-devel libreadline-devel libssl-devel perl-DBI zlib-devel libpam0-devel libevent-devel cmake bison doxygen groff-base
+BuildRequires: gcc-c++ libncursesw-devel libreadline-devel libssl-devel perl-DBI zlib-devel libpam0-devel libevent-devel cmake bison doxygen groff-base groff-ps
 BuildRequires: libaio-devel  libwrap-devel boost-devel libedit-devel perl-GD perl-threads perl-Memoize
+
+%define soname 18
 
 %add_findreq_skiplist %_datadir/mysql/mysql-test/mysql-test-run.pl
 
 %description
-The MariaDB software delivers a very fast, multi-threaded, multi-user, and
-robust SQL (Structured Query Language) database server. MariaDB Server is
-intended for mission-critical, heavy-load production systems as well as for
-embedding into mass-deployed software.
+The MariaDB software delivers a very fast, multi-threaded, multi-user,
+and robust SQL (Structured Query Language) database server.
+
+MariaDB Server is intended for mission-critical, heavy-load production
+systems as well as for embedding into mass-deployed software.
 
 The mariadb server is compiled with the following storage engines:
 
@@ -64,31 +67,16 @@ The mariadb server is compiled with the following storage engines:
  - Perfschema Storage Engine
  - XtraDB Storage Engine (InnoDB replacement)
 
-The following extra storage engines are provided by the mariadb-extra package
+The following extra storage engines are provided by the
+mariadb-extra package:
 
  - OQGraph Storage Engine
  - Sphinx Storage Engine
 
-The feedback storage engine is provided by the mariadb-feedback package
+The following storage engines are provided in the
+mariadb-obsolete package:
 
- - Feedback Storage Engine
-
-The following storage engines are provided in the mariadb-obsolete package
-
- - Federated Storage Engine
  - InnoDB Storage Engine
-
-%package -n MySQL-MariaDB
-Summary: A MySQL drop-in replacement
-Group: System/Servers
-Requires: %name
-
-%description -n	MySQL-MariaDB
-MariaDB is a complete MySQL drop-in replacement with additional fixes and
-storage engines.
-
-This package is used as a transitional virtual package, which requires
-MariaDB so that people who used to use mysql can find it nicely.
 
 %package server
 Summary: A very fast and reliable MariaDB database server
@@ -100,15 +88,6 @@ Conflicts: MySQL-server
 %description server
 Core mysqld server. For a full MariaDB database server, install
 package 'mariadb'.
-
-%package engine-feedback
-Summary: MariaDB feedback storage engine
-Group: System/Servers
-Requires: %name-server = %version-%release
-
-%description engine-feedback
-MariaDB feedback storage engine submits feedback about your mariadb server.
-Results can be seen on http://mariadb.org/feedback_plugin/ .
 
 %package engine-extra
 Summary: MariaDB extra storage engines
@@ -124,9 +103,9 @@ Group: System/Servers
 Requires: %name-server = %version-%release
 
 %description engine-obsolete
-MariaDB obsolete storage engines. InnoDB and Federated are being replaced by
-XtraDB and FederatedX storage engines. These obsolete storage engines are
-provided in case you need the vanilla mysql storage engines.
+MariaDB obsolete storage engines. InnoDB and Federated are being replaced
+by XtraDB and FederatedX storage engines. These obsolete storage engines
+are provided in case you need the vanilla mysql storage engines.
 
 %package client
 Summary: Client
@@ -150,25 +129,28 @@ Conflicts: MySQL-bench
 This package contains MariaDB benchmark scripts and data.
 %endif
 
-%package -n	lib%name
+%package -n libmysqlclient%soname
 Summary: Shared libraries
 Group: System/Libraries
+Provides: lib%name = %version-%release
+Obsoletes: lib%name < 5.5.30
 
-%description -n	lib%name
-This package contains the shared libraries (*.so*) which certain languages and
-applications need to dynamically load and use MariaDB.
+%description -n	libmysqlclient%soname
+This package contains the shared libraries (*.so*) which certain languages
+and applications need to dynamically load and use MariaDB/MySQL.
 
-%package -n	lib%name-devel
+%package -n libmysqlclient-devel
 Summary: Development header files and libraries
 Group: Development/Other
 Requires: lib%name = %version-%release
-Conflicts: libmysqlclient-devel
+Provides: lib%name-devel = %version-%release
+Obsoletes: lib%name-devel < 5.5.30
 
-%description -n	lib%name-devel
-This package contains the development header files and libraries necessary to
-develop MariaDB client applications.
+%description -n	libmysqlclient-devel
+This package contains the development header files and libraries necessary
+to develop MariaDB/MySQL client applications.
 
-%package -n 	libmariadbembedded
+%package -n libmariadbembedded
 Summary: MariaDB as an embeddable library
 Group: System/Libraries
 
@@ -177,10 +159,10 @@ MariaDB is a multi-user, multi-threaded SQL database server. This
 package contains a version of the MariaDB server that can be embedded
 into a client application instead of running as a separate process.
 
-The API is identical for the embedded MariaDB version and the client/server
-version.
+The API is identical for the embedded MariaDB version
+and the client/server version.
 
-%package -n 	libmariadbembedded-devel
+%package -n libmariadbembedded-devel
 Summary: Development files for MySQL as an embeddable library
 Group: Development/Other
 Requires: libmariadbembedded = %version-%release lib%name-devel = %version-%release
@@ -208,7 +190,6 @@ version.
 %patch106 -p1
 %patch107 -p0
 
-
 mkdir -p ALT
 cp %SOURCE2 ALT/mysqld.sysconfig
 cp %SOURCE3 ALT/my.cnf
@@ -231,45 +212,56 @@ perl -pi -e "s|basedir/lib/|basedir/%_lib/|g" mysql-test/mysql-test-run.pl
 # workaround for upstream bug #56342
 rm -f mysql-test/t/ssl_8k_key-master.opt
 
-install -pD %SOURCE4 build/libmysql/libmysql.version
-
 %build
+mkdir build
 pushd build
     cmake .. \
+	-DBUILD_CONFIG=mysql_release \
+	-DFEATURE_SET="community" \
+	-DINSTALL_LAYOUT=RPM \
 	-DCMAKE_VERBOSE_MAKEFILE=ON \
 	-DCMAKE_SKIP_RPATH:BOOL=ON \
 	-DCMAKE_C_FLAGS:STRING='%optflags' \
-        -DCMAKE_CXX_FLAGS:STRING='%optflags' \
-        -DCMAKE_INSTALL_PREFIX=%prefix \
+	-DCMAKE_CXX_FLAGS:STRING='%optflags' \
+	-DCMAKE_INSTALL_PREFIX=%prefix \
 	-DCMAKE_BUILD_TYPE=RelWithDebInfo \
 	-DMYSQL_DATADIR=/var/lib/mysql \
 	-DINSTALL_SBINDIR=sbin \
 	-DSYSCONFDIR=%_sysconfdir \
-        -DINSTALL_PLUGINDIR=%_lib/mysql/plugin \
-        -DINSTALL_MANDIR=share/man \
-        -DINSTALL_SHAREDIR=share/mysql \
-        -DINSTALL_LIBDIR=%_lib \
-        -DINSTALL_INCLUDEDIR=include/mysql \
-        -DINSTALL_INFODIR=share/info \
-        -DINSTALL_MYSQLDATADIR=/var/lib/mysql \
-        -DINSTALL_MYSQLTESTDIR=share/mysql/mysql-test \
-        -DINSTALL_SQLBENCHDIR=share/mysql \
-        -DINSTALL_SUPPORTFILESDIR=share/mysql \
-        -DINSTALL_MYSQLSHAREDIR=share/mysql \
-        -DMYSQL_UNIX_ADDR=/var/lib/mysql/mysql.sock \
-        -DWITH_READLINE=OFF \
-        -DWITH_LIBWRAP=ON \
-        -DWITH_SSL=system \
-        -DWITH_ZLIB=system \
-        -DWITH_PIC=ON \
-        -DEXTRA_CHARSETS=all \
-        -DENABLED_LOCAL_INFILE=ON \
-        -DWITH_EMBEDDED_SERVER=ON \
-        -DWITHOUT_EXAMPLE_STORAGE_ENGINE=ON \
-        -DWITH_FAST_MUTEXES=ON \
-        -DWITHOUT_DAEMON_EXAMPLE=ON \
-        -DWITH_PLUGIN_PBXT=ON \
-        -DCOMPILATION_COMMENT="%distribution - MariaDB Community Edition (GPL)"
+	-DINSTALL_PLUGINDIR=%_lib/mysql/plugin \
+	-DINSTALL_MANDIR=share/man \
+	-DINSTALL_SHAREDIR=share/mysql \
+	-DINSTALL_LIBDIR=%_lib \
+	-DINSTALL_INCLUDEDIR=include/mysql \
+	-DINSTALL_INFODIR=share/info \
+	-DINSTALL_MYSQLDATADIR=/var/lib/mysql \
+	-DINSTALL_MYSQLTESTDIR=share/mysql/mysql-test \
+	-DINSTALL_SQLBENCHDIR=share/mysql \
+	-DINSTALL_SUPPORTFILESDIR=share/mysql \
+	-DINSTALL_MYSQLSHAREDIR=share/mysql \
+	-DMYSQL_UNIX_ADDR=/var/lib/mysql/mysql.sock \
+	-DWITH_READLINE=ON \
+	-DWITH_LIBWRAP=ON \
+	-DWITH_SSL=system \
+	-DWITH_ZLIB=system \
+	-DWITH_PIC=ON \
+	-DEXTRA_CHARSETS=all \
+	-DENABLED_LOCAL_INFILE=ON \
+	-DWITH_EMBEDDED_SERVER=ON \
+	-DWITHOUT_EXAMPLE_STORAGE_ENGINE=ON \
+	-DWITH_FAST_MUTEXES=ON \
+	-DWITHOUT_DAEMON_EXAMPLE=ON \
+	-DCOMPILATION_COMMENT="(%distribution)" \
+	-DMYSQL_SERVER_SUFFIX="-%release"
+
+#	-DWITH_PLUGIN_FEEDBACK=ON \
+
+# override upstream version script by now (adds 747 symbols as of 5.5.30)
+# NB: might be dropped some day in favour of upstream one
+# (which is also based on fedora's and mageia's in its turn);
+# so far there's a problem with version script not being used
+# thus had to kludge it in indefinitely again :-/
+install -pD %SOURCE4 libmysql/libmysql.version
 
 popd
 
@@ -280,6 +272,10 @@ popd
 export DONT_GPRINTIFY=1
 
 %makeinstall_std -C build
+
+# RPM install style leftovers
+rm -rf %buildroot%_sysconfdir/{init.d/mysql,my.cnf.d/}
+rm -rf %buildroot{%_libdir/libmysqld.a,%_defaultdocdir/*}
 
 mkdir -p %buildroot%_var/run/mysqld
 mkdir -p %buildroot%_var/log/mysqld
@@ -302,7 +298,6 @@ install -Dm 644 support-files/mysql-log-rotate.sh %buildroot%_sysconfdir/logrota
 # bork
 #mv %buildroot%_bindir/mysqlaccess.conf %buildroot%_sysconfdir/
 #chmod 644 %buildroot%_sysconfdir/mysqlaccess.conf
-mv %buildroot%prefix/scripts/mysql_install_db %buildroot%_sbindir/
 mv %buildroot%_datadir/mysql/aclocal %buildroot%_datadir/aclocal
 
 pushd %buildroot%_bindir
@@ -310,6 +305,10 @@ pushd %buildroot%_bindir
     ln -sf mysqlcheck mysqlanalyze
     ln -sf mysqlcheck mysqloptimize
 popd
+
+# most current distro packages have it in %_bindir (hello kde4?)
+# but the server subpackage obtains /usr/sbin/mysql_install_db autoreq
+ln -sf {../bin,%buildroot%_sbindir}/mysql_install_db
 
 # nuke -Wl,--as-needed from the mysql_config file
 #perl -pi -e "s|^ldflags=.*|ldflags=\'-rdynamic\'|g" %buildroot%_bindir/mysql_config
@@ -319,15 +318,15 @@ popd
 # so resort to this blunt instrument.  While at it, let's not reference
 # libmysqlclient_r anymore either.
 #sed -e 's/-lprobes_mysql//' -e 's/-lmysqlclient_r/-lmysqlclient/' \
-#	%buildroot%_bindir/mysql_config >mysql_config.tmp
-#cp -f mysql_config.tmp %buildroot%_bindir/mysql_config
-#chmod 755 %buildroot%_bindir/mysql_config
-#install -m 0755 -d %buildroot/var/lib/mysql
+#	%%buildroot%%_bindir/mysql_config >mysql_config.tmp
+#cp -f mysql_config.tmp %%buildroot%%_bindir/mysql_config
+#chmod 755 %%buildroot%%_bindir/mysql_config
+#install -m 0755 -d %%buildroot/var/lib/mysql
 
-# Remove libmysqld.a, + hardlink libmysqld.so.%libmysqlembedded_major so that it's provided
-#rm -f %buildroot%_libdir/libmysqld.a
-#ln %buildroot%_libdir/libmysqld.so.%major %buildroot%_libdir/libmysqld.so.%libmysqlembedded_major.%libmysqlembedded_minor
-#ln -s libmysqld.so.%libmysqlembedded_major.%libmysqlembedded_minor %buildroot%_libdir/libmysqld.so.%libmysqlembedded_major
+# Remove libmysqld.a, + hardlink libmysqld.so.%%libmysqlembedded_major so that it's provided
+#rm -f %%buildroot%%_libdir/libmysqld.a
+#ln %%buildroot%%_libdir/libmysqld.so.%%major %%buildroot%%_libdir/libmysqld.so.%%libmysqlembedded_major.%%libmysqlembedded_minor
+#ln -s libmysqld.so.%%libmysqlembedded_major.%%libmysqlembedded_minor %%buildroot%%_libdir/libmysqld.so.%%libmysqlembedded_major
 
 # libmysqlclient_r is no more.  Upstream tries to replace it with symlinks
 # but that really doesn't work (wrong soname in particular).  We'll keep
@@ -392,7 +391,6 @@ rm -f %buildroot%prefix/COPYING.LESSER
 rm -f %buildroot%prefix/INSTALL-BINARY
 rm -f %buildroot%prefix/README
 
-
 ################################################################################
 # run the tests
 %if %build_test
@@ -446,13 +444,7 @@ if [ "$1" = "0" ]; then
     fi
 fi
 
-%post -n MySQL-MariaDB
-rm -rf /var/lib/mysql/{dev,var,etc}
-
-
 %files
-
-%files -n MySQL-MariaDB
 
 %files server
 %doc README COPYING
@@ -482,7 +474,8 @@ rm -rf /var/lib/mysql/{dev,var,etc}
 %_bindir/mysqlbug
 %_bindir/mysql_convert_table_format
 %_bindir/mysqld_multi
-#%_bindir/mysqld_safe
+%_bindir/mysqld_safe
+%_bindir/mysql_install_db
 %_bindir/mysql_fix_extensions
 %_bindir/mysqlhotcopy
 %_bindir/mysql_secure_installation
@@ -530,17 +523,11 @@ rm -rf /var/lib/mysql/{dev,var,etc}
 %exclude %_datadir/mysql/sql-bench
 %exclude %_datadir/mysql/mysql-test
 %exclude %_libdir/mysql/plugin/ha_innodb.so
-%exclude %_libdir/mysql/plugin/ha_federated.so
-%exclude %_libdir/mysql/plugin/feedback.so
 %exclude %_libdir/mysql/plugin/ha_oqgraph.so
 %exclude %_libdir/mysql/plugin/ha_sphinx.so
 
 %files engine-obsolete
 %_libdir/mysql/plugin/ha_innodb.so
-%_libdir/mysql/plugin/ha_federated.so
-
-%files engine-feedback
-%_libdir/mysql/plugin/feedback.so
 
 %files engine-extra
 %_libdir/mysql/plugin/ha_oqgraph.so
@@ -600,10 +587,10 @@ rm -rf /var/lib/mysql/{dev,var,etc}
 %_mandir/man1/mysqltest_embedded.1*
 %endif
 
-%files -n lib%name
+%files -n libmysqlclient%soname
 %_libdir/libmysqlclient.so.*
 
-%files -n lib%name-devel
+%files -n libmysqlclient-devel
 %doc INSTALL-SOURCE
 %_bindir/mysql_config
 %_libdir/libmysqlclient_r.so
@@ -619,12 +606,35 @@ rm -rf /var/lib/mysql/{dev,var,etc}
 %files -n libmariadbembedded
 %doc README COPYING
 %_libdir/libmysqld.so.*
-#%_libdir/libmysqld.so.%{libmysqlembedded_major}*
+#%_libdir/libmysqld.so.%%libmysqlembedded_major*
 
 %files -n libmariadbembedded-devel
 %_libdir/libmysqld.so
 
 %changelog
+* Mon Apr 01 2013 Michael Shigorin <mike@altlinux.org> 5.5.30-alt10
+- New version
+- NB: 5.5.29 had important security fixes, including:
+  + A buffer overflow that can cause a server crash or
+    arbitrary code execution (a variant of CVE-2012-5611)
+  + CVE-2012-5627 fast password brute-forcing using the "change user"
+  + CVE-2012-5615 information leakage about existing user accounts
+    via the protocol handshake
+  + fixes for DoS attacks - crashes and server lockups
+  + all security fixes from MySQL 5.5.29, such as fix for CVE-2012-5612
+- please note that client libraries are now built from MariaDB code;
+  these should be backwards compatible (but still add 84 symbols),
+  see also #28289
+  + merged fedora's version script changes (but left ours in too)
+- selectively synced build options with fedora
+  + enabled readline support
+  + do not force PBXT storage plugin build (deprecated in 5.5)
+    - see also https://kb.askmonty.org/en/about-pbxt/
+    - causes ICE
+- removed MySQL-MariaDB subpackage being rather superfluous
+- updated BR: (see #16878)
+- bumped Release: to be higher than MySQL's, just in case
+
 * Sun Dec 02 2012 Slava Dubrovskiy <dubrsl@altlinux.org> 5.5.28a-alt1
 - New version (fix CVE-2012-5579)
 
