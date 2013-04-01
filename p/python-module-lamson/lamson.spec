@@ -1,7 +1,7 @@
 %define oname lamson
 Name: python-module-%oname
-Version: 1.1
-Release: alt2.1
+Version: 1.3.4
+Release: alt1
 Summary: Lamson is a modern Pythonic mail server built like a web application server
 License: BSD or GPLv3
 Group: Development/Python
@@ -65,7 +65,7 @@ This package contains documentation and examples for lamson mail server.
 %python_install
 
 %files
-%doc LICENSE README
+%doc LICENSE
 %_bindir/*
 %python_sitelibdir/*
 %exclude %python_sitelibdir/*/testing.*
@@ -79,6 +79,9 @@ This package contains documentation and examples for lamson mail server.
 %doc examples
 
 %changelog
+* Mon Apr 01 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.4-alt1
+- Version 1.3.4
+
 * Thu Oct 20 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 1.1-alt2.1
 - Rebuild with Python-2.7
 
