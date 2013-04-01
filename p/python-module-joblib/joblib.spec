@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.6.4
-Release: alt1.1
+Version: 0.7.0d
+Release: alt1
 Summary: Lightweight pipelining: using Python functions as pipeline jobs
 License: BSD
 Group: Development/Python
@@ -14,7 +14,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools
+BuildPreReq: python-devel python-module-setuptools python-modules-json
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-distribute
@@ -124,12 +124,17 @@ popd
 %doc PKG-INFO
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/%oname/test*
+%exclude %python3_sitelibdir/%oname/__pycache__/test*
 
 %files -n python3-module-%oname-tests
 %python3_sitelibdir/%oname/test*
+%python3_sitelibdir/%oname/__pycache__/test*
 %endif
 
 %changelog
+* Mon Apr 01 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7.0d-alt1
+- Version 0.7.0d
+
 * Fri Mar 22 2013 Aleksey Avdeev <solo@altlinux.ru> 0.6.4-alt1.1
 - Rebuild with Python-3.3
 
