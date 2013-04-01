@@ -9,7 +9,7 @@
 
 Name: python-module-%oname
 Version: %major.0
-Release: alt3.git20121010.1
+Release: alt4.git20121010
 
 Summary: Matlab(TM) style python plotting package
 
@@ -512,7 +512,9 @@ rm -fR %_docdir/%name/pdf
 %files -n python3-module-%oname
 %doc LICENSE README.txt CHANGELOG INSTALL TODO
 %python3_sitelibdir/*.py*
+%exclude %python3_sitelibdir/six.py*
 %python3_sitelibdir/__pycache__/*
+%exclude %python3_sitelibdir/__pycache__/six.*
 %python3_sitelibdir/*.egg-info
 %dir %python3_sitelibdir/matplotlib/
 %python3_sitelibdir/matplotlib/*.py*
@@ -596,6 +598,9 @@ rm -fR %_docdir/%name/pdf
 %endif
 
 %changelog
+* Mon Apr 01 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.0-alt4.git20121010
+- Excluded six.py
+
 * Wed Mar 27 2013 Aleksey Avdeev <solo@altlinux.ru> 1.3.0-alt3.git20121010.1
 - Rebuild with Python-3.3
 
