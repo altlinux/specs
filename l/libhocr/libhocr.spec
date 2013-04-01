@@ -16,7 +16,7 @@ BuildRequires: chrpath
 
 Name:		libhocr
 Version:	0.10.17
-Release:	alt2_12
+Release:	alt2_13
 Summary:	A Hebrew optical character recognition library
 
 Group:		System/Libraries
@@ -32,6 +32,10 @@ Patch1:		libhocr-no-scanner.patch
 BuildRequires:	libfftw3-devel libhspell-devel libtiffxx-devel libtiff-devel
 BuildRequires:	desktop-file-utils
 BuildRequires:	swig python-devel gtk2-devel gettext
+# Fix #925761
+# Upstream use very old autoconf, breaks aarm64 builds
+# So we use autoreconf
+BuildRequires:	autoconf automake libtool
 Source44: import.info
 
 %description
@@ -79,6 +83,8 @@ The %{name}-python package contains python binding for %{name}.
 %patch0
 %patch1
 
+# Fix #925761 -- update configure for aarm64
+autoreconf --install --force
 
 %build
 export CFLAGS="%optflags -Werror-implicit-function-declaration"
@@ -164,6 +170,9 @@ done
 
 
 %changelog
+* Tue Apr 02 2013 Igor Vlasenko <viy@altlinux.ru> 0.10.17-alt2_13
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.10.17-alt2_12
 - update to new release by fcimport
 
