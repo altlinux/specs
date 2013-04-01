@@ -1,13 +1,13 @@
 Name: libchipmunk
-Version: 6.1.3
-Release: alt2
+Version: 6.1.4
+Release: alt1
 Summary: Physics engine for 2D games
 
 Group: System/Libraries
 License: MIT
 Url: http://chipmunk-physics.net
 Source0: http://files.slembcke.net/chipmunk/release/Chipmunk-%version.tgz
-Patch: Chipmunk-6.1.2-alt-build-shared-demos.patch
+Patch: Chipmunk-6.1.4-alt-build-shared-demos.patch
 
 # Automatically added by buildreq on Sun Mar 03 2013
 # optimized out: cmake-modules libGL-devel libGLU-devel libICE-devel libSM-devel libX11-devel libXau-devel libXext-devel libXfixes-devel libXi-devel libXrender-devel libXt-devel libstdc++-devel xorg-kbproto-devel xorg-xproto-devel
@@ -71,6 +71,10 @@ target_link_libraries(chipmunk -lm)
 %_bindir/*
 
 %changelog
+* Mon Apr 01 2013 Fr. Br. George <george@altlinux.ru> 6.1.4-alt1
+- Autobuild version bump to 6.1.4
+- Fix cmake
+
 * Sun Mar 03 2013 Fr. Br. George <george@altlinux.ru> 6.1.3-alt2
 - Export some interlnal functions
 
