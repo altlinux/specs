@@ -1,10 +1,11 @@
 Name: rpmrebuild
 Version: 2.9
-Release: alt1
+Release: alt2
 License: GPLv2+
 Group: Development/Other
 Summary: A tool to build rpm file from rpm database
 Source: %name-%version.tar.gz
+Patch: rpmrebuild-2.9-alt-tmpdir.patch
 Url: http://rpmrebuild.sourceforge.net/
 BuildArch: noarch
 
@@ -28,6 +29,7 @@ Rpmrebuild plugin for automatically un-prelinking package content.
 
 %prep
 %setup -c %name-%version
+%patch -p2
 
 %build
 %make
@@ -46,11 +48,18 @@ Rpmrebuild plugin for automatically un-prelinking package content.
 %_bindir/*
 %dir %prefix/lib/%name
 %prefix/lib/%name/*
+%_man1dir/*
+
 %files un_prelink
 %_man1dir/un_prelink.plug*
 %_mandir/*/*/un_prelink.plug*
 %prefix/lib/%name/plugins/un_prelink*
+
 %changelog
+* Mon Apr 01 2013 Fr. Br. George <george@altlinux.ru> 2.9-alt2
+- Fix ~/.tmp usage
+- Add plugin manpages
+
 * Thu Feb 14 2013 Fr. Br. George <george@altlinux.ru> 2.9-alt1
 - Autobuild version bump to 2.9
 
