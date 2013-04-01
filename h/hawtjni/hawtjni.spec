@@ -1,3 +1,4 @@
+BuildRequires: eclipse-rse
 Epoch: 0
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
@@ -6,7 +7,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:             hawtjni
 Version:          1.5
-Release:          alt2_5jpp7
+Release:          alt3_5jpp7
 Summary:          Code generator that produces the JNI code
 Group:            Development/Java
 License:          ASL 2.0 and EPL and BSD
@@ -126,6 +127,9 @@ install -pm 644 maven-%{name}-plugin/pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-
 %{_javadir}/maven-%{name}-plugin.jar
 
 %changelog
+* Mon Apr 01 2013 Igor Vlasenko <viy@altlinux.ru> 0:1.5-alt3_5jpp7
+- fixed build with new junit
+
 * Thu Feb 14 2013 Igor Vlasenko <viy@altlinux.ru> 0:1.5-alt2_5jpp7
 - fixed maven1 dependency
 
