@@ -1,3 +1,4 @@
+BuildRequires: junit-junit4
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 # %name or %version is ahead of its definition. Predefining for rpm 4.0 compatibility.
@@ -8,7 +9,7 @@ BuildRequires: jpackage-compat
 %global nameddottag  %(echo %{?namedreltag} | tr - . )
 Name:          spock
 Version:       0.6
-Release:       alt1_0.3%(echo -groovy-1.8 | tr - . )jpp7
+Release:       alt2_0.3%(echo -groovy-1.8 | tr - . )jpp7
 Summary:       A testing and specification framework
 Group:         Development/Java
 License:       ASL 2.0
@@ -124,6 +125,9 @@ cp -pr dist/api/* %{buildroot}%{_javadocdir}/%{name}
 %doc LICENSE NOTICE
 
 %changelog
+* Mon Apr 01 2013 Igor Vlasenko <viy@altlinux.ru> 0.6-alt2_0.3%(echo -groovy-1.8 | tr - . )jpp7
+- fixed build with new junit
+
 * Mon Oct 01 2012 Igor Vlasenko <viy@altlinux.ru> 0.6-alt1_0.3%(echo -groovy-1.8 | tr - . )jpp7
 - new version
 
