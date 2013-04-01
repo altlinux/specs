@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-services
-Version: 2.0.0
+Version: 2.0.1
 Release: alt1
 
 Summary: Simple SysV services configurator
@@ -10,7 +10,6 @@ Group: System/Configuration/Other
 
 Url: http://wiki.sisyphus.ru/Alterator
 Source: %name-%version.tar
-Packager: Vladislav Zavjalov <slazav@altlinux.org>
 
 # we use alterator-read-desktop from alterator >= 3.6-alt7
 Requires: alterator >= 3.6-alt7
@@ -32,7 +31,7 @@ Alterator module for SysV services administration
 Модуль для управления сервисами на платформе Альтератор
 
 %prep
-%setup -q
+%setup
 
 %build
 %make_build
@@ -47,6 +46,9 @@ Alterator module for SysV services administration
 %_alterator_backend3dir/*
 
 %changelog
+* Mon Apr 01 2013 Mikhail Efremov <sem@altlinux.org> 2.0.1-alt1
+- Fix possible unbound variable.
+
 * Mon Mar 18 2013 Mikhail Efremov <sem@altlinux.org> 2.0.0-alt1
 - Use alterator-service-functions (closes: #28701).
 - Own forgotten dirs.
