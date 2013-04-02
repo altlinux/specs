@@ -1,6 +1,6 @@
 %define oname pyramid_beaker
 Name: python-module-%oname
-Version: 0.6.1
+Version: 0.7
 Release: alt1
 Summary: Beaker session factory backend for Pyramid
 License: BSD
@@ -48,6 +48,9 @@ This package contains tests for pyramid_beaker.
 %python_sitelibdir/*/tests.*
 
 %changelog
+* Tue Apr 02 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7-alt1
+- Version 0.7
+
 * Mon Dec 12 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.1-alt1
 - Version 0.6.1
 
