@@ -5,11 +5,12 @@ BuildRequires: gcc-c++
 Name:           liboglappth
 Summary:        An OpenGL wrapper library
 Version:        0.98
-Release:        alt2_11
+Release:        alt2_12
 License:        GPLv2+
 Group:          Engineering
 URL:            http://www.uku.fi/~thassine/ghemical
 Source0:        http://www.uku.fi/~thassine/projects/download/current/%{name}-%{version}.tar.gz
+BuildRequires:  libtool
 BuildRequires:  libGL-devel
 BuildRequires:  libGLU-devel
 Source44: import.info
@@ -33,6 +34,7 @@ based on %{name}.
 [ -s README ] && exit 1
 
 %build
+autoreconf -v -f -i
 %configure --disable-static
 make %{?_smp_mflags} CCOPTIONS="%{optflags}" LIBS="-lGL -lGLU"
 
@@ -51,6 +53,9 @@ find %{buildroot}%{_libdir} -name *.la -exec rm -rf {} \;
 
 
 %changelog
+* Tue Apr 02 2013 Igor Vlasenko <viy@altlinux.ru> 0.98-alt2_12
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.98-alt2_11
 - update to new release by fcimport
 
