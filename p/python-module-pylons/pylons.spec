@@ -1,7 +1,8 @@
 %define oname pylons
 Name: python-module-%oname
-Version: 1.2
-Release: alt1.git20110115.1
+Version: 1.0.1
+Release: alt1.git20120813
+Epoch: 1
 Summary: Lightweight web framework emphasizing flexibility and rapid development
 License: BSD
 Group: Development/Python
@@ -40,7 +41,7 @@ This package contains pickles for Pylons.
 %package tests
 Summary: Tests for Pylons
 Group: Development/Python
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description tests
 The Pylons web framework is aimed at making webapps and large
@@ -91,6 +92,7 @@ install -p -m644 %SOURCE1 .
 %exclude %python_sitelibdir/*/*/*/test*
 %exclude %python_sitelibdir/*/*/test*
 %exclude %python_sitelibdir/*/test*
+%exclude %python_sitelibdir/test_files
 
 #files pickles
 #dir %python_sitelibdir/%oname
@@ -101,11 +103,15 @@ install -p -m644 %SOURCE1 .
 %python_sitelibdir/*/*/*/test*
 %python_sitelibdir/*/*/test*
 %python_sitelibdir/*/test*
+%python_sitelibdir/test_files
 
 %files doc
 %doc *.pdf
 
 %changelog
+* Tue Apr 02 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:1.0.1-alt1.git20120813
+- Version 1.0.1
+
 * Mon Oct 24 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 1.2-alt1.git20110115.1
 - Rebuild with Python-2.7
 
