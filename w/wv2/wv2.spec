@@ -2,7 +2,7 @@
 
 Name: wv2
 Version: 0.4.2
-Release: alt2
+Release: alt3
 
 
 Summary: MSWord 6/7/8/9 binary file format -> HTML converter
@@ -74,6 +74,8 @@ This is the development package with static library.
 
 
 %build
+%add_optflags -I%_includedir/libxml2
+export CFLAGS="%optflags"
 %Kbuild
 
 %install
@@ -101,6 +103,9 @@ This is the development package with static library.
 
 
 %changelog
+* Tue Apr 02 2013 Andrey Cherepanov <cas@altlinux.org> 0.4.2-alt3
+- Fix build with libxml2
+
 * Wed Apr 04 2012 Sergey V Turchin <zerg@altlinux.org> 0.4.2-alt2
 - fix to build with new glib2
 
