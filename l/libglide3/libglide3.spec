@@ -2,7 +2,7 @@
 
 Name: libglide3
 Version: 20050815
-Release: alt2.1.1
+Release: alt2.2
 Summary: Glide3 runtime for the 3Dfx Voodoo family of cards
 Group: System/Libraries
 License: GPL
@@ -20,7 +20,7 @@ Source1: glidelink.c
 
 Packager: Repocop Q. A. Robot <repocop@altlinux.org>
 
-BuildRequires: libX11-devel libXext-devel xorg-x11-proto-devel
+BuildRequires: libX11-devel libXext-devel xorg-proto-devel
 BuildRequires: libXxf86dga-devel libXxf86vm-devel
 BuildRequires: nasm
 
@@ -111,6 +111,9 @@ install -p -m 644 swlibs/texus2/lib/texus.h %buildroot/%_includedir/glide3
 %_libdir/libglide3.so
 
 %changelog
+* Tue Apr 02 2013 Andrey Cherepanov <cas@altlinux.org> 20050815-alt2.2
+- Fix build with new xorg
+
 * Wed Nov 04 2009 Igor Vlasenko <viy@altlinux.ru> 20050815-alt2.1.1
 - NMU (by repocop): the following fixes applied:
   * post_ldconfig for libglide3
