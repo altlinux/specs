@@ -1,9 +1,10 @@
 %define modulename virtualenv
 
 %def_with python3
+%def_with check
 
 Name: python-module-%modulename
-Version: 1.8.4
+Version: 1.9.1
 Release: alt1
 
 Summary: Virtual Python Environment builder
@@ -17,6 +18,14 @@ BuildRequires: python-module-setuptools
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-distribute
+%endif
+%if_with check
+BuildPreReq: python-module-mock
+BuildPreReq: python-module-nose
+%if_with python3
+BuildPreReq: python3-module-mock
+BuildPreReq: python3-module-nose
+%endif
 %endif
 
 # git://github.com/pypa/virtualenv.git
@@ -89,6 +98,16 @@ mv %buildroot%_bindir/virtualenv %buildroot%_bindir/virtualenv3
 %endif
 %python_install
 
+%if_with check
+%check
+%__python setup.py test
+%if_with python3
+pushd ../python3
+%__python3 setup.py test
+popd
+%endif
+%endif
+
 %files
 %_bindir/*
 %exclude %_bindir/virtualenv3
@@ -104,6 +123,9 @@ mv %buildroot%_bindir/virtualenv %buildroot%_bindir/virtualenv3
 %endif
 
 %changelog
+* Tue Apr 02 2013 Aleksey Avdeev <solo@altlinux.ru> 1.9.1-alt1
+- 1.9.1 (Closes: #28670)
+
 * Sun Mar 03 2013 Aleksey Avdeev <solo@altlinux.ru> 1.8.4-alt1
 - 1.8.4
 
