@@ -1,5 +1,5 @@
 Name:           weston
-Version:        1.0.5
+Version:        1.0.6
 Release:        alt1
 Summary:        Reference compositor for Wayland
 Group:          Graphical desktop/Other
@@ -41,6 +41,14 @@ BuildRequires:  systemd-devel libwebp-devel
 Weston is the reference wayland compositor that can run on KMS, under X11
 or under another compositor.
 
+%package devel
+Summary:          Development libraries for weston
+Group:            Development/C
+Requires:         %name = %version-%release
+
+%description devel
+Header and Library files for doing development with the weston.
+
 %prep
 %setup -q
 
@@ -71,9 +79,19 @@ find %buildroot -name \*.la | xargs rm -f
 %_libdir/weston
 %_libexecdir/weston
 %_datadir/weston
+%_man1dir/weston*
+%_man5dir/weston*
+%_man7dir/weston*
 %doc README data/COPYING
 
+%files devel
+%_includedir/weston
+%_pkgconfigdir/weston.pc
+
 %changelog
+* Tue Apr 02 2013 Alexey Gladkov <legion@altlinux.ru> 1.0.6-alt1
+- Version (1.0.6).
+
 * Wed Mar 06 2013 Alexey Gladkov <legion@altlinux.ru> 1.0.5-alt1
 - Version (1.0.5).
 
