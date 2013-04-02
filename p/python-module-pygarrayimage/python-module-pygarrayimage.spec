@@ -1,7 +1,7 @@
 %define oname pygarrayimage
 Name: python-module-%oname
-Version: 0.0.7
-Release: alt2.1
+Version: 1.0
+Release: alt1
 Summary: Allow numpy arrays as source of texture data for pyglet
 
 Group: Development/Python
@@ -35,6 +35,9 @@ any other data source supporting the array interface) to the video card.
 %python_sitelibdir/*
 
 %changelog
+* Tue Apr 02 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0-alt1
+- Version 1.0
+
 * Thu Oct 20 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 0.0.7-alt2.1
 - Rebuild with Python-2.7
 
