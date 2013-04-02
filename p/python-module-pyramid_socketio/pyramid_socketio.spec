@@ -1,7 +1,7 @@
 %define oname pyramid_socketio
 Name: python-module-%oname
-Version: 0.8
-Release: alt1.1
+Version: 0.9
+Release: alt1
 Summary: Gevent-based Socket.IO pyramid integration and helpers
 License: BSD
 Group: Development/Python
@@ -33,6 +33,9 @@ Gevent-based Socket.IO integration for Pyramid (and WSGI frameworks).
 %python_sitelibdir/*
 
 %changelog
+* Tue Apr 02 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9-alt1
+- Version 0.9
+
 * Thu Oct 20 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 0.8-alt1.1
 - Rebuild with Python-2.7
 
