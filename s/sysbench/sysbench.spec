@@ -1,14 +1,14 @@
 Summary: A system performance benchmark
 Name: sysbench
 Version: 0.4.12
-Release: alt1
+Release: alt2
 Url: http://sysbench.sourceforge.net/
 Source: %name-%version.tar
 Packager: Valentin Rosavitskiy <valintinr@altlinux.org>
 License: GPLv2
 Group: Other
 
-BuildRequires: gcc-c++ libmysqlclient-devel
+BuildRequires: gcc-c++ libmysqlclient-devel zlib-devel libssl-devel
 
 
 %description
@@ -46,6 +46,9 @@ benchmarks and third-party plug-in modules.
 %doc doc/manual.xml COPYING ChangeLog
 
 %changelog
+* Tue Apr 02 2013 Valentin Rosavitskiy <valintinr@altlinux.org> 0.4.12-alt2
+- Dependiens zlib-devel fixed
+
 * Tue Feb 12 2013 Valentin Rosavitskiy <valintinr@altlinux.org> 0.4.12-alt1
 - Initial build
 
