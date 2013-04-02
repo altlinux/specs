@@ -5,8 +5,8 @@
 %define oname redland
 
 Name: libredland
-Version: 1.0.15
-Release: alt3
+Version: 1.0.16
+Release: alt1
 
 Summary: Redland - a library that provides a high-level interface for RDF
 
@@ -26,7 +26,8 @@ BuildPreReq: rpm-build-intro
 # optimized out: elfutils libpq-devel pkg-config raptor2-devel
 #BuildRequires: glibc-devel-static gtk-doc libdb4-devel libiodbc-devel libltdl7-devel libmysqlclient-devel libredland-devel libsqlite-devel libsqlite3-devel postgresql-devel rasqal-devel
 BuildRequires: glibc-devel gtk-doc libdb4-devel libiodbc-devel libltdl-devel glib2-devel
-BuildRequires: libmysqlclient-devel libredland-devel libsqlite3-devel postgresql-devel rasqal-devel
+BuildRequires: libmysqlclient-devel libsqlite3-devel postgresql-devel rasqal-devel
+BuildRequires: libssl-devel zlib-devel
 
 %if_with threestore
 BuildRequires: 3store-devel >= 2.0
@@ -67,7 +68,7 @@ Python bindings for Redland RDF library
 #patch1 -p2
 
 #autoreconf
-./autogen.sh
+NOCONFIGURE=1 ./autogen.sh
 
 %build
 %configure \
@@ -113,6 +114,9 @@ Python bindings for Redland RDF library
 %_gtkdocdir/redland/
 
 %changelog
+* Tue Apr 02 2013 Sergey V Turchin <zerg@altlinux.org> 1.0.16-alt1
+- new version
+
 * Wed Mar 06 2013 Sergey V Turchin <zerg@altlinux.org> 1.0.15-alt3
 - rebuilt for new automatic requires
 

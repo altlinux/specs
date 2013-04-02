@@ -2,8 +2,8 @@
 
 %define sover 3
 Name: rasqal
-Version: 0.9.29
-Release: alt2
+Version: 0.9.30
+Release: alt1
 
 Group: System/Libraries
 Summary: Rasqal RDF Query Library
@@ -89,6 +89,9 @@ cp -f %_datadir/automake/config.* .
 #%_libdir/librasqal.a
 
 %changelog
+* Tue Apr 02 2013 Sergey V Turchin <zerg@altlinux.org> 0.9.30-alt1
+- new version
+
 * Tue Mar 05 2013 Sergey V Turchin <zerg@altlinux.org> 0.9.29-alt2
 - obsolete librasqal package
 
