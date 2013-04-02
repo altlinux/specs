@@ -6,7 +6,7 @@
 
 Name: branding-%brand-%smalltheme
 Version: 7.0.0
-Release: alt4
+Release: alt5
 BuildArch: noarch
 
 %define theme %name
@@ -152,7 +152,6 @@ BuildArch: noarch
 Summary: KDE3 settings for %Brand %version %Theme
 License: Distributable
 Group: Graphical desktop/KDE
-Requires: ksplash-engine-moodin
 PreReq: %name-graphics
 Conflicts: %(for n in %variants ; do [ "$n" = %brand-%theme ] || echo -n "branding-$n-kde3-settings ";done )
 
@@ -313,14 +312,6 @@ cp -a config/* %buildroot%_sysconfdir/skel/.kde/share/config/
 cp -a apps/* %buildroot%_sysconfdir/skel/.kde/share/apps/
 popd
 
-#kde3-splash
-pushd kde3-styles-splash
-mkdir -p "%buildroot/%_datadir/apps/ksplash/Themes/ALTLinux%Theme"
-install -m 644 *.jpg "%buildroot/%_datadir/apps/ksplash/Themes/ALTLinux%Theme/"
-install -m 644 *.png "%buildroot/%_datadir/apps/ksplash/Themes/ALTLinux%Theme/"
-install -m 644 *.rc "%buildroot/%_datadir/apps/ksplash/Themes/ALTLinux%Theme/"
-popd
-
 #fwvm-settings
 mkdir -p %buildroot/etc/skel
 install -m 644 fvwm-settings/.fvwm2rc %buildroot/etc/skel/
@@ -435,7 +426,6 @@ fi
 %ifnarch %arm
 %files kde3-settings
 %_sysconfdir/skel/.kde
-%_datadir/apps/ksplash/Themes/*
 %endif
 
 %files fvwm-settings
@@ -462,6 +452,9 @@ fi
 %_datadir/kde4/apps/kio_desktop/DesktopLinks/indexhtml.desktop
 
 %changelog
+* Tue Apr 02 2013 Sergey V Turchin <zerg at altlinux dot org> 7.0.0-alt5
+- remove KDE3 splash doublet
+
 * Tue Mar 26 2013 Sergey V Turchin <zerg at altlinux dot org> 7.0.0-alt4
 - add missing grub font
 
