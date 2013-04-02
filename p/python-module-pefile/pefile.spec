@@ -1,9 +1,9 @@
-%define svnrev 117
+%define svnrev 125
 
 %define oname pefile
 Name: python-module-%oname
 Version: 1.2.10
-Release: alt1.svn20120122
+Release: alt1.svn20121216
 Summary: Portable Executable reader module
 License: MIT
 Group: Development/Python
@@ -36,6 +36,9 @@ sed -i 's|\$LastChangedRevision\$|%svnrev|' %oname.py
 %python_sitelibdir/*
 
 %changelog
+* Tue Apr 02 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.10-alt1.svn20121216
+- New snapshot
+
 * Fri Jan 27 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.10-alt1.svn20120122
 - New snapshot
 
