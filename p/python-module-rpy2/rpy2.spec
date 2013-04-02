@@ -1,7 +1,7 @@
 %define oname rpy2
 Name: python-module-%oname
-Version: 2.2.5
-Release: alt1.1
+Version: 2.3.4
+Release: alt1
 Summary: A simple and efficient access to R from Python, version 2
 License: MPL/GPL/LGPL
 Group: Development/Python
@@ -17,6 +17,8 @@ BuildPreReq: python-devel R-devel liblapack-devel libreadline-devel
 #BuildPreReq: python-module-sphinx-devel python-module-Pygments
 #BuildPreReq: graphviz texlive-latex-recommended
 %setup_python_module %oname
+
+%add_python_req_skip pandas
 
 %description
 RPy is a very simple, yet robust, Python interface to the R Programming
@@ -120,12 +122,14 @@ EOF
 %python_sitelibdir/*
 %exclude %python_sitelibdir/*/tests*
 %exclude %python_sitelibdir/*/*/tests
+%exclude %python_sitelibdir/*/*/*/tests
 #exclude %python_sitelibdir/%oname/pickle
 %_sysconfdir/profile.d/*
 
 %files tests
 %python_sitelibdir/*/tests*
 %python_sitelibdir/*/*/tests
+%python_sitelibdir/*/*/*/tests
 
 #files pickles
 #dir %python_sitelibdir/%oname
@@ -135,6 +139,9 @@ EOF
 #_docdir/%oname
 
 %changelog
+* Tue Apr 02 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.3.4-alt1
+- Version 2.3.4
+
 * Thu Apr 12 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 2.2.5-alt1.1
 - Rebuild to remove redundant libpython2.7 dependency
 
