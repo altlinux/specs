@@ -1,7 +1,7 @@
 %define oname pyramid_mongodb
 Name: python-module-%oname
-Version: 1.0
-Release: alt1.1
+Version: 1.3
+Release: alt1
 Summary: Pyramid application template for a traversal-based URL mapping and MongoDB project
 License: MIT
 Group: Development/Python
@@ -35,6 +35,9 @@ and Mike Orr's "Akhet" template.
 %python_sitelibdir/*
 
 %changelog
+* Tue Apr 02 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3-alt1
+- Version 1.3
+
 * Thu Oct 20 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 1.0-alt1.1
 - Rebuild with Python-2.7
 
