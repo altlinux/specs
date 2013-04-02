@@ -1,13 +1,13 @@
 %define origname pmw
 
 Name:           python-module-%origname
-Version:        1.3.2
-Release:        alt3.1
+Version:        1.3.3
+Release:        alt1
 Summary:        Toolkit for building high-level compound widgets
 Group:          Development/Python
 License:        BSD
 URL:            http://pmw.sourceforge.net
-Source:         http://downloads.sourceforge.net/pmw/Pmw.1.3.2.tar.gz
+Source:         http://downloads.sourceforge.net/pmw/Pmw.1.3.3.tar.gz
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 BuildArch: noarch
@@ -32,7 +32,7 @@ sed -i \
 	-e "s/regsub\.gsub('\\\<Pmw/re.sub(r'\\\bPmw/" \
 	-e "s/regsub\.gsub('import\ PmwLogicalFont/re.sub(r'import PmwLogicalFont/" \
 	-e "s/regsub\.gsub('PmwLogicalFont/re.sub(r'PmwLogicalFont\\\/" \
-	Pmw/Pmw_1_3/bin/bundlepmw.py
+	Pmw/Pmw_1_3_3/bin/bundlepmw.py
 %python_build
 popd
 
@@ -45,6 +45,9 @@ popd
 %python_sitelibdir/*
 
 %changelog
+* Tue Apr 02 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.3-alt1
+- Version 1.3.3
+
 * Thu Oct 20 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 1.3.2-alt3.1
 - Rebuild with Python-2.7
 
