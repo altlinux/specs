@@ -1,6 +1,6 @@
 Name: wvstreams
 Version: 4.5.1
-Release: alt4.git20090319.1
+Release: alt4.git20090319.2
 
 %define soffix .so.4.5
 %def_disable kdoc
@@ -16,6 +16,7 @@ URL: http://alumnit.ca/wiki/index.php?page=WvStreams
 Source: %name-%version.tar.gz
 Source1: ChangeLog
 Patch: %name-%version-alt-paths_links_USBmodem.patch
+Patch1: %name-4.5.1-fix-build.patch
 
 BuildPreReq: gcc-c++
 BuildPreReq: OpenSP /proc
@@ -161,6 +162,7 @@ configuration back end for Qt and KDE.
 install -m644 %SOURCE1 .
 %__bzip2 -9fk ChangeLog
 %patch -p0
+%patch1 -p1
 
 %build
 %autoreconf
@@ -254,6 +256,9 @@ mv %buildroot%_localstatedir/lib/uniconf/uniconfd.ini \
 %_libdir/pkgconfig/libwvqt.pc
 
 %changelog
+* Tue Apr 02 2013 Andrey Cherepanov <cas@altlinux.org> 4.5.1-alt4.git20090319.2
+- Fix build
+
 * Mon Oct 04 2010 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.5.1-alt4.git20090319.1
 - Rebuilt with openssl10
 
