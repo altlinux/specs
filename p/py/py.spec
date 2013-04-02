@@ -2,7 +2,7 @@
 
 Name: py
 Version: 1.4.13
-Release: alt1.dev3.hg20130127.1
+Release: alt1.hg20130301
 Summary: Testing and distributed programming library
 License: MIT
 Group: Development/Tools
@@ -150,6 +150,9 @@ done
 %endif
 
 %changelog
+* Tue Apr 02 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4.13-alt1.hg20130301
+- Version 1.4.13
+
 * Thu Mar 21 2013 Aleksey Avdeev <solo@altlinux.ru> 1.4.13-alt1.dev3.hg20130127.1
 - Rebuild with Python-3.3
 
