@@ -2,7 +2,7 @@
 
 Name: chkpwd-pam
 Version: 0.1.0
-Release: alt1
+Release: alt2
 Summary: PAM user password checker
 License: GPLv3
 Group: System/Base
@@ -23,16 +23,20 @@ Tool for check user password through PAM.
 
 
 %install
-install -d -m 0755 %buildroot{%_libexecdir,%_sysconfdir/pam.d}
-install -m 0755 %name %buildroot%_libexecdir/
+install -d -m 0755 %buildroot{%_libexecdir/%name,%_sysconfdir/pam.d}
+install -m 0755 %name %buildroot%_libexecdir/%name/
 install -m 0644 userpass.pamd %buildroot%_sysconfdir/pam.d/userpass
 
 
 %files
-%attr(2711,root,chkpwd) %_libexecdir/*
+%dir %_libexecdir/%name
+%attr(2711,root,chkpwd) %_libexecdir/%name/*
 %_sysconfdir/pam.d/*
 
 
 %changelog
+* Wed Apr 03 2013 Led <led@altlinux.ru> 0.1.0-alt2
+- moved chkpwd-pam to separate directory
+
 * Tue Apr 02 2013 Led <led@altlinux.ru> 0.1.0-alt1
 - initial build
