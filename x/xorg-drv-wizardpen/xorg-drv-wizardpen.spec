@@ -1,6 +1,6 @@
 Name: xorg-drv-wizardpen
 Version: 0.8.1
-Release: alt1
+Release: alt2
 
 Summary: Genius WizardPen tablet driver for X.Org and XFree86
 License: GPLv2
@@ -13,7 +13,7 @@ Source0: %name-%version.tar.gz
 #Patch0: altlinux.patch
 
 # Automatically added by buildreq on Tue Feb 10 2009
-BuildRequires: gcc-c++ gcc-fortran rpm-macros-fillup xorg-inputproto-devel xorg-randrproto-devel xorg-sdk xorg-xproto-devel
+BuildRequires: gcc-c++ gcc-fortran rpm-macros-fillup xorg-inputproto-devel xorg-randrproto-devel xorg-sdk xorg-xproto-devel xorg-proto-devel
 
 %description
 This is a X.Org and XFree86 4.x driver for the Genius WizardPen
@@ -50,6 +50,9 @@ please report any experience with it, if you have one.
 %_sysconfdir/X11/xorg.conf.d/*.conf
 
 %changelog
+* Tue Apr 02 2013 Andrey Cherepanov <cas@altlinux.org> 0.8.1-alt2
+- Fix build (add xorg-resourceproto-devel to build requires)
+
 * Fri Nov 11 2011 Paul Wolneykien <manowar@altlinux.ru> 0.8.1-alt1
 - Upgrade to the rev. 51 (v0.8.1) of lp:wizardpen.
 - Do not use HAL (FDIs).
