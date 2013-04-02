@@ -4,7 +4,7 @@
 
 Name: python-module-django-%modulename
 Version: 0.5.5
-Release: alt2
+Release: alt3.git20130402
 
 %setup_python_module %modulename
 
@@ -18,6 +18,7 @@ Packager: Aleksey Avdeev <solo@altlinux.ru>
 BuildArch: noarch
 
 Source: %name-%version.tar
+Patch10: %name-%version-alt-fix-test_run_doctest.patch
 
 # see requirements.txt
 Requires: Django >= 1.2
@@ -38,6 +39,7 @@ structure and provides tools for working with trees of model instances.
 
 %prep
 %setup
+%patch10 -p1
 
 %build
 %python_build
@@ -61,6 +63,9 @@ popd
 %python_sitelibdir/*.egg-info
 
 %changelog
+* Wed Apr 03 2013 Aleksey Avdeev <solo@altlinux.ru> 0.5.5-alt3.git20130402
+- Version 0.5.5 (9068e148af4fb091275ea945542fc1fed896231a)
+
 * Wed Feb 27 2013 Aleksey Avdeev <solo@altlinux.ru> 0.5.5-alt2
 - Fix requires
 
