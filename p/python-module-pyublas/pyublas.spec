@@ -1,7 +1,7 @@
 %define oname pyublas
 Name: python-module-%oname
-Version: 2011.1
-Release: alt6.git20120417
+Version: 2013.1
+Release: alt1.git20130314
 Summary: Seamless Numpy-UBlas interoperability
 License: BSD
 Group: Development/Python
@@ -21,7 +21,6 @@ use with Boost.Python.
 %package devel
 Summary: Development files of PyUblas
 Group: Development/Python
-BuildArch: noarch
 Requires: %name = %version-%release
 
 %description devel
@@ -65,15 +64,24 @@ ln -s ../objects.inv doc/
 %install
 %python_install
 
+install -d %buildroot%_includedir
+ln -s %python_sitelibdir/pyublas/include/pyublas %buildroot%_includedir/
+
 cp -fR doc/build/pickle %buildroot%python_sitelibdir/%oname/
+
+%pre devel
+rm -fR %_includedir/pyublas
 
 %files
 %python_sitelibdir/*
 %exclude %python_sitelibdir/%oname/pickle
+%exclude %python_sitelibdir/pyublas/include
+%exclude %python_sitelibdir/pyublas/testhelp_ext.so
 
 %files devel
-%doc test/*
+#doc test/*
 %_includedir/*
+%python_sitelibdir/pyublas/include
 
 %files docs
 %doc doc/.build/html
@@ -82,6 +90,9 @@ cp -fR doc/build/pickle %buildroot%python_sitelibdir/%oname/
 %python_sitelibdir/%oname/pickle
 
 %changelog
+* Tue Apr 02 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2013.1-alt1.git20130314
+- Version 2013.1
+
 * Sun Feb 10 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2011.1-alt6.git20120417
 - Rebuilt with Boost 1.53.0
 
