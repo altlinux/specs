@@ -1,6 +1,6 @@
 %define oname pyramid_jinja2
 Name: python-module-%oname
-Version: 1.2
+Version: 1.6
 Release: alt1
 Summary: Jinja2 template bindings for the Pyramid web framework
 License: BSD
@@ -44,13 +44,18 @@ This package contains tests for pyramid_jinja2.
 %doc *.txt docs/*.rst
 %python_sitelibdir/*
 %exclude %python_sitelibdir/*/tests
+%exclude %python_sitelibdir/*/*/*/*/tests*
 %exclude %python_sitelibdir/*/demo
 
 %files tests
 %python_sitelibdir/*/tests
+%python_sitelibdir/*/*/*/*/tests*
 %python_sitelibdir/*/demo
 
 %changelog
+* Tue Apr 02 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.6-alt1
+- Version 1.6
+
 * Mon Dec 12 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2-alt1
 - Version 1.2
 
