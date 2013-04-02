@@ -1,6 +1,6 @@
 %define oname pyramid_viewgroup
 Name: python-module-%oname
-Version: 0.4
+Version: 0.5
 Release: alt1
 Summary: An anlologue of Zope 3 "content providers" for Pyramid
 License: BSD
@@ -62,6 +62,9 @@ This package contains tests for pyramid_viewgroup.
 %python_sitelibdir/*/tests
 
 %changelog
+* Tue Apr 02 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5-alt1
+- Version 0.5
+
 * Mon Dec 12 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4-alt1
 - Version 0.4
 
