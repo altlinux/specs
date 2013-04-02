@@ -4,7 +4,7 @@
 
 Name: mariadb
 Version: 5.5.30
-Release: alt10
+Release: alt11
 
 Summary: A very fast and reliable SQL database engine
 License: GPLv2 with exceptions
@@ -142,7 +142,12 @@ and applications need to dynamically load and use MariaDB/MySQL.
 %package -n libmysqlclient-devel
 Summary: Development header files and libraries
 Group: Development/Other
+# see also #28676
+Requires: libssl-devel zlib-devel
 Requires: lib%name = %version-%release
+Provides: mysql-devel = %version
+Provides: MySQL-devel = %version
+Provides: libMySQL-devel = %version
 Provides: lib%name-devel = %version-%release
 Obsoletes: lib%name-devel < 5.5.30
 
@@ -612,6 +617,11 @@ fi
 %_libdir/libmysqld.so
 
 %changelog
+* Tue Apr 02 2013 Michael Shigorin <mike@altlinux.org> 5.5.30-alt11
+- devel subpackage:
+  + added extra Provides: which have been missed out optimistically
+  + added extra Requires: to avoid unneccessary build breakage
+
 * Mon Apr 01 2013 Michael Shigorin <mike@altlinux.org> 5.5.30-alt10
 - New version
 - NB: 5.5.29 had important security fixes, including:
