@@ -1,7 +1,7 @@
 BuildRequires: desktop-file-utils
 Name: gnome-alsamixer
 Version: 0.9.7
-Release: alt4.qa1
+Release: alt5
 
 Summary: %name is an ALSA mixer for GNOME
 Summary(ru_RU.UTF-8): ALSA-микшер для GNOME
@@ -30,7 +30,7 @@ ALSA.
 
 %build
 %autoreconf
-%configure
+%configure --disable-schemas-install
 %make update-po -C po
 %make_build
 
@@ -60,6 +60,9 @@ fi
 %doc AUTHORS ChangeLog
 
 %changelog
+* Mon Apr 01 2013 Yuri N. Sedunov <aris@altlinux.org> 0.9.7-alt5
+- fixed build
+
 * Mon Aug 27 2012 Repocop Q. A. Robot <repocop@altlinux.org> 0.9.7-alt4.qa1
 - NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
 - applied repocop fixes:
