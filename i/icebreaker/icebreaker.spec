@@ -1,6 +1,6 @@
 Name: icebreaker
 Version: 1.9.7
-Release: alt2.2
+Release: alt2.3
 Epoch: 1
 
 Summary: An addictive action-puzzle game involving bouncing penguins
@@ -18,8 +18,8 @@ Patch1: icebreaker-1.9.7-alt-buffer.patch
 Packager: Michael Shigorin <mike@altlinux.org>
 
 BuildRequires: libSDL-devel libSDL_mixer-devel
-BuildRequires: xorg-libs aalib esound libSDL-devel libSDL_mixer-devel
-BuildRequires: libalsa2 libaudiofile libogg libslang2 libsmpeg libvorbis
+BuildRequires: aalib esound libSDL-devel libSDL_mixer-devel
+BuildRequires: libalsa libaudiofile libogg libslang2 libsmpeg libvorbis
 
 %description
 So, uh, there's a bunch of penguins on an iceberg in Antarctica.
@@ -58,6 +58,9 @@ install -pDm644 %SOURCE4 %buildroot/%_liconsdir/%name.xpm
 %_liconsdir/icebreaker.xpm
 
 %changelog
+* Tue Apr 02 2013 Andrey Cherepanov <cas@altlinux.org> 1:1.9.7-alt2.3
+- Fix build with new xorg version
+
 * Tue Nov 13 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:1.9.7-alt2.2
 - Fixed build
 
