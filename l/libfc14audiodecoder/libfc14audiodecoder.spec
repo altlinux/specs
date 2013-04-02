@@ -3,8 +3,8 @@ BuildRequires: gcc-c++
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
 Name: libfc14audiodecoder
-Version: 1.0.2
-Release: alt2_6
+Version: 1.0.3
+Release: alt1_1
 
 Summary: C wrapper library for Future Composer audio decoding
 Group: System/Libraries
@@ -52,6 +52,9 @@ make install DESTDIR=$RPM_BUILD_ROOT INSTALL="install -p"
 
 
 %changelog
+* Tue Apr 02 2013 Igor Vlasenko <viy@altlinux.ru> 1.0.3-alt1_1
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 1.0.2-alt2_6
 - update to new release by fcimport
 
