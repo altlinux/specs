@@ -1,6 +1,6 @@
 Name: smbnetfs
 Version: 0.5.3a
-Release: alt1
+Release: alt2
 
 Summary: SMB filesystem using FUSE - mount network neighbourhood
 Group: System/Kernel and hardware
@@ -22,8 +22,9 @@ neighborhood in Microsoft Windows.
 touch NEWS
 
 %build
-%autoreconf
-%configure --with-gnome-keyring=no
+%add_optflags -I%_includedir/samba-4.0
+autoreconf
+CFLAGS="$RPM_OPT_FLAGS" %configure --with-gnome-keyring=no
 %make
 
 %install
@@ -34,6 +35,9 @@ touch NEWS
 %_bindir/*
 
 %changelog
+* Tue Apr 02 2013 Andrey Cherepanov <cas@altlinux.org> 0.5.3a-alt2
+- Fix build with new Samba
+
 * Sat Mar 12 2011 Ivan A. Melnikov <iv@altlinux.org> 0.5.3a-alt1
 - New version.
 
