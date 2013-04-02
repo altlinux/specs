@@ -6,7 +6,7 @@
 #%%define trust_paths %_sysconfdir/pki/ca-trust/source:%_datadir/pki/ca-trust-source
 
 Name: lib%_name
-Version: 0.17.4
+Version: 0.17.5
 Release: alt1
 
 Summary: Library for loading and sharing PKCS#11 modules
@@ -15,9 +15,11 @@ License: BSD
 Url: http://p11-glue.freedesktop.org/p11-kit.html
 
 Source: http://p11-glue.freedesktop.org/releases/%_name-%version.tar.gz
+Source1: p11-kit-extract-trust
 Patch: %name-0.16.3-alt-lfs.patch
 
 Requires: ca-certificates
+Requires: pkcs11-trust-module = %version-%release
 
 BuildRequires: libtasn1-devel
 
@@ -30,6 +32,7 @@ such a way that they're discoverable.
 Summary: System trust module from %name package
 Group: System/Libraries
 Requires: %name = %version-%release
+Provides: pkcs11-trust-module = %version-%release
 #Conflicts: libnss < 3.14.3
 
 %description    trust
@@ -81,6 +84,7 @@ This package contains development documentation for %_name library.
 %install
 %makeinstall_std
 mkdir -p %buildroot%_sysconfdir/pkcs11/modules
+install -p -m755 %SOURCE1 %buildroot/%_datadir/%_name/
 
 # alternatives
 mkdir -p %buildroot%_altdir
@@ -95,8 +99,8 @@ EOF
 %_bindir/%_name
 %_libdir/lib%_name.so.*
 %_libdir/%_name-proxy.so
-%dir %_datadir/p11-kit
-%dir %_datadir/p11-kit/modules
+%dir %_datadir/%_name
+%dir %_datadir/%_name/modules
 %dir %_sysconfdir/pkcs11
 %dir %_sysconfdir/pkcs11/modules
 %doc AUTHORS COPYING NEWS README
@@ -105,11 +109,10 @@ EOF
 
 %if_enabled trust_module
 %files trust
-%_libdir/pkcs11/p11-kit-trust.so
-%_datadir/p11-kit/modules/p11-kit-trust.module
-%_datadir/p11-kit/p11-kit-extract-trust
+%_libdir/pkcs11/%_name-trust.so
+%_datadir/%_name/modules/%_name-trust.module
+%_datadir/%_name/p11-kit-extract-trust
 %_altdir/%name
-
 %exclude %_libdir/pkcs11/p11-kit-trust.la
 %endif
 
@@ -122,6 +125,9 @@ EOF
 %_datadir/gtk-doc/html/%_name
 
 %changelog
+* Sat Mar 30 2013 Yuri N. Sedunov <aris@altlinux.org> 0.17.5-alt1
+- 0.17.5
+
 * Sat Mar 23 2013 Yuri N. Sedunov <aris@altlinux.org> 0.17.4-alt1
 - 0.17.4 (unstable)
 

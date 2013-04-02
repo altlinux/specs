@@ -8,7 +8,7 @@
 
 Name: python-module-%{_name}3
 Version: %major.0
-Release: alt1
+Release: alt2
 
 Summary: Python bindings for GObject
 
@@ -54,6 +54,18 @@ PyGTK, GIO and python-gnome to build a full GNOME 3.0 application. Once
 new functionality is added to gobject library it is instantly available
 as a Python API without the need for intermediate Python glue.
 
+%package pygtkcompat
+Summary: PyGTK compatibility layer for PyGObject
+Group: Development/Python
+Requires: %name = %version-%release
+
+%description pygtkcompat
+PyGTK compatibility layer.
+It is recommended to not depend on this layer, but only use it as an
+intermediate step when porting your application to PyGI. Compatibility
+might never be 100%%, but the aim is to make it possible to run a well
+behaved PyGTK application mostly unmodified on top of PyGI.
+
 %package common-devel
 Summary: Common development files for %_name
 Group: Development/Python
@@ -86,6 +98,18 @@ PyGTK, GIO and python-gnome to build a full GNOME 3.0 application. Once
 new functionality is added to gobject library it is instantly available
 as a Python API without the need for intermediate Python glue.
 
+%package -n python3-module-%{_name}3-pygtkcompat
+Summary: PyGTK compatibility layer for PyGObject
+Group: Development/Python3
+Requires: python3-module-%{_name}3 = %version-%release
+
+%description -n python3-module-%{_name}3-pygtkcompat
+PyGTK compatibility layer.
+It is recommended to not depend on this layer, but only use it as an
+intermediate step when porting your application to PyGI. Compatibility
+might never be 100%%, but the aim is to make it possible to run a well
+behaved PyGTK application mostly unmodified on top of PyGI.
+
 %package -n python3-module-%{_name}3-devel
 Summary: Development files for python3-module-%{_name}3
 Group: Development/Python3
@@ -97,7 +121,7 @@ Development files for python3-module-%{_name}3.
 
 %package devel-doc
 Summary: Development documentation for %_name
-Group: Development/Python
+Group: Development/Documentation
 BuildArch: noarch
 Conflicts: %name-common-devel < %version-%release
 
@@ -145,10 +169,14 @@ popd
 %files
 %_libdir/libpyglib-gi-2.0-python%__python_version.so.*
 %python_sitelibdir/gi/
-%python_sitelibdir/pygtkcompat/
+%exclude %python_sitelibdir/gi/pygtkcompat.py*
 %python_sitelibdir/*.egg-info/
 
 %exclude %python_sitelibdir/*/*.la
+
+%files pygtkcompat
+%python_sitelibdir/pygtkcompat/
+%python_sitelibdir/gi/pygtkcompat.py*
 
 %files common-devel
 %_includedir/%_name-%api_ver/
@@ -161,8 +189,12 @@ popd
 %files -n python3-module-%{_name}3
 %_libdir/libpyglib-gi-2.0-python3.so.*
 %python3_sitelibdir/gi/
-%python3_sitelibdir/pygtkcompat/
+%exclude %python3_sitelibdir/gi/pygtkcompat.py*
 %python3_sitelibdir/*.egg-info/
+
+%files -n python3-module-%{_name}3-pygtkcompat
+%python3_sitelibdir/pygtkcompat/
+%python3_sitelibdir/gi/pygtkcompat.py*
 
 %files -n python3-module-%{_name}3-devel
 %_libdir/libpyglib-gi-2.0-python3.so
@@ -175,6 +207,9 @@ popd
 %endif
 
 %changelog
+* Thu Apr 04 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.0-alt2
+- moved pygtkcompat to separate subpackages (ALT #28787)
+
 * Mon Mar 25 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.0-alt1
 - 3.8.0
 

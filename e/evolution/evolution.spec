@@ -3,6 +3,7 @@
 %define gst_api_ver 1.0
 
 %def_disable static
+%def_enable gtk_doc
 %def_with openldap
 %def_disable static_ldap
 %def_with krb5
@@ -17,8 +18,8 @@
 %define strict_build_settings 1
 
 Name: evolution
-Version: %ver_major.0
-Release: alt1
+Version: %ver_major.1
+Release: alt0.1
 
 Summary: Integrated GNOME mail client, calendar and address book
 License: GPLv2+
@@ -26,7 +27,8 @@ Group: Office
 Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 Url: http://www.gnome.org/projects/%name/
 
-Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+Source: %name-%version.tar
+#Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 
 ### Patches ###
 # hack to properly link against ldap libs
@@ -232,6 +234,7 @@ export ac_cv_path_HIGHLIGHT=%_bindir/highlight
 export KILL_PROCESS_CMD=%_bindir/killall
 %configure \
     %{subst_enable static} \
+    %{?_enable_gtk_doc:--enable-gtk-doc} \
     %ldap_flags \
     --with-sub-version=" (%version-%release)" \
     --enable-plugins=%plugins \
@@ -325,6 +328,9 @@ rm -rf %buildroot%_localstatedir/scrollkeeper
 %_datadir/glib-2.0/schemas/org.gnome.evolution.spamassassin.gschema.xml
 
 %changelog
+* Tue Apr 02 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.1-alt0.1
+- 3.8.1 snapshot (b00e0e1)
+
 * Sun Mar 24 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.0-alt1
 - 3.8.0
 
