@@ -3,8 +3,8 @@
 ### Header
 Summary: A collection of basic system utilities
 Name: util-linux
-Version: 2.22
-Release: alt4
+Version: 2.22.1
+Release: alt1
 License: GPLv2 and GPLv2+ and BSD with advertising and Public Domain
 Group: System/Base
 URL: ftp://ftp.kernel.org/pub/linux/utils/util-linux
@@ -90,7 +90,7 @@ Patch40: util-linux-2.22-owl-alt-mtab-umask-for-mount-deprecated.patch
 Patch41: util-linux-2.22-owl-write.patch
 
 Patch50: util-linux-2.20-alt-pg.patch
-Patch51: util-linux-ng-2.22-mount-pamconsole.patch
+Patch51: util-linux-ng-2.22.1-mount-pamconsole.patch
 Patch52: util-linux-2.11a-gecossize.patch
 Patch54: util-linux-2.11f-rh-rawman.patch
 Patch56: util-linux-2.12r-cal-trim_trailing_spaces.patch
@@ -98,6 +98,7 @@ Patch58: util-linux-2.12r-alt-mount-MS_SILENT.patch
 Patch59: util-linux-tests.patch
 Patch60: util-linux-2.20-alt-agetty-release.patch
 Patch61: util-linux-2.19.1-alt-selinux-libs.patch
+Patch62: util-linux-secure_getenv.patch
 
 %description
 The util-linux package contains a large variety of low-level system
@@ -381,6 +382,7 @@ cp -r -- %SOURCE8 %SOURCE9 %SOURCE10 %SOURCE11 %SOURCE12 .
 #%patch59 -p1
 %patch60 -p1
 %patch61 -p1
+%patch62 -p1
 
 echo %version > .tarball-version
 
@@ -810,6 +812,9 @@ fi
 %doc Documentation/*.txt NEWS AUTHORS README* Documentation/licenses/* Documentation/TODO
 
 %changelog
+* Tue Apr 02 2013 Alexey Gladkov <legion@altlinux.ru> 2.22.1-alt1
+- New version (2.22.1).
+
 * Thu Nov 15 2012 Alexey Gladkov <legion@altlinux.ru> 2.22-alt4
 - libmount: fix support of comma-separated fs types lists (thx: glebfm@) (ALT#27942).
 

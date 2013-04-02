@@ -3,7 +3,7 @@
 
 Name: rpm
 Version: 4.0.4
-Release: alt100.70
+Release: alt100.71
 
 %define ifdef() %if %{expand:%%{?%{1}:1}%%{!?%{1}:0}}
 %define get_dep() %(rpm -q --qf '%%{NAME} >= %%|SERIAL?{%%{SERIAL}:}|%%{VERSION}-%%{RELEASE}' %1 2>/dev/null || echo '%1 >= unknown')
@@ -532,6 +532,10 @@ fi
 %_bindir/rpm2cpio.static
 
 %changelog
+* Wed Apr 03 2013 Dmitry V. Levin <ldv@altlinux.org> 4.0.4-alt100.71
+- rpmbuild: enhanced interdep to ignore packages that are not going
+  to be written.
+
 * Mon Mar 11 2013 Dmitry V. Levin <ldv@altlinux.org> 4.0.4-alt100.70
 - find-lang:
   + enhanced regexps;
