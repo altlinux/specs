@@ -1,6 +1,6 @@
 Name: xorg-drv-synaptics
-Version: 1.6.3
-Release: alt2
+Version: 1.7.0
+Release: alt1
 Epoch: 1
 Summary: Synaptics touchpad input driver
 License: MIT/X11
@@ -59,6 +59,9 @@ Synaptics touchpad input driver development package
 %_pkgconfigdir/*.pc
 
 %changelog
+* Tue Apr 02 2013 Valery Inozemtsev <shrek@altlinux.ru> 1:1.7.0-alt1
+- 1.7.0
+
 * Wed Mar 06 2013 Valery Inozemtsev <shrek@altlinux.ru> 1:1.6.3-alt2
 - requires XORG_ABI_XINPUT = 19.1
 
