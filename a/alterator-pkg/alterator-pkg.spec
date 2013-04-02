@@ -3,7 +3,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-pkg
-Version: 2.6.8
+Version: 2.6.9
 Release: alt1
 
 %add_findreq_skiplist %_libexecdir/alterator/backend3/pkg-init
@@ -60,6 +60,9 @@ additional package installation
 %_alterator_backend3dir/*
 
 %changelog
+* Tue Apr 02 2013 Andrey Cherepanov <cas@altlinux.org> 2.6.9-alt1
+- Correct conflicts processes
+
 * Tue Dec 13 2011 Andrey Cherepanov <cas@altlinux.org> 2.6.8-alt1
 - Ignore missed trailing new line in package lists (closes: #26696)
 
