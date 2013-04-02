@@ -7,7 +7,7 @@
 
 Name: nautilus-actions
 Version: %ver_major.2
-Release: alt1
+Release: alt2
 
 Summary: Nautilus extension for customizing the context menu
 Group: Graphical desktop/GNOME
@@ -21,6 +21,7 @@ Requires: %name-data = %version-%release
 BuildPreReq: gnome-common intltool
 BuildRequires: libnautilus-devel libuuid-devel gettext libxml2-devel libdbus-glib-devel
 BuildRequires: libunique3-devel libGConf-devel libgtop-devel libSM-devel libICE-devel
+BuildRequires: GConf
 %{?_enable_gtk_doc:BuildRequires: gtk-doc}
 %{?_enable_html_manuals:BuildRequires: gtk-doc gnome-doc-utils}
 
@@ -105,6 +106,9 @@ make DESTDIR=%buildroot install
 %_datadir/gtk-doc/html/*
 
 %changelog
+* Tue Apr 02 2013 Andrey Cherepanov <cas@altlinux.org> 3.2.2-alt2
+- Fix build with new GConf
+
 * Thu Mar 08 2012 Yuri N. Sedunov <aris@altlinux.org> 3.2.2-alt1
 - 3.2.2
 
