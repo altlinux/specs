@@ -5,7 +5,7 @@
 
 Name: ksplash-engine-%ename
 Version: 0.4.2
-Release: alt4
+Release: alt5
 
 Group: Graphical desktop/KDE
 Summary: Splash Screen Engine for KDE
@@ -22,7 +22,7 @@ Patch0: ksplash-engine-moodin-0.4.2-alt-DSO.patch
 
 BuildRequires: automake autoconf
 BuildRequires: gcc-c++
-BuildRequires: libpng3-devel libjpeg-devel
+BuildRequires: libpng-devel libjpeg-devel
 
 %description
 Heavily customizable engine for various types of themes
@@ -63,6 +63,9 @@ cp -f %SOURCE1 %buildroot%_K3srv/
 %_K3srv/*.desktop
 
 %changelog
+* Tue Apr 02 2013 Andrey Cherepanov <cas@altlinux.org> 0.4.2-alt5
+- Link with libpng instead libpng3
+
 * Mon Jul 23 2012 Roman Savochenko <rom_as@altlinux.org> 0.4.2-alt4
 - Rebuild for TDE 3.5.13 environment.
 
