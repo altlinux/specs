@@ -1,7 +1,7 @@
 %define oname peak-o-mat
 Name: python-module-%oname
 Version: 1.2
-Release: alt1.svn20110810
+Release: alt1.svn20121202
 Summary: A curve fitting program aimed at the fast and easy fitting of spectroscopic data
 License: GPL v2
 Group: Development/Python
@@ -56,6 +56,9 @@ install -p -m644 data/* %buildroot%_datadir/%oname
 %_datadir/%oname
 
 %changelog
+* Tue Apr 02 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2-alt1.svn20121202
+- New snapshot
+
 * Fri Dec 23 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2-alt1.svn20110810
 - Version 1.2
 
