@@ -1,18 +1,22 @@
 Name: aardtools
 Version: 0.8.3
-Release: alt1.git.72.ga609acb
+Release: alt2.git.72.ga609acb
 Summary: Tools to create dictionaries in aarddict format
 
 Packager: Ildar Mulyukov <ildar@altlinux.ru>
 
 BuildArch: noarch
-Source: %name.tar
 Group: Development/Other
 Url: http://aarddict.org
 License: GPL3
 
+Source: %name.tar
+Patch1: %name-alt-disable-mw.patch
+
 # Automatically added by buildreq on Mon Apr 01 2013
 BuildRequires: python-module-distribute python-module-icu python-module-mwlib
+
+#Requires: python-module-mwlib >= 0.14.1
 
 %description
 `Aard Tools` "out of the box" comes with support for the following input types:
@@ -34,19 +38,23 @@ wordnet
 
 %prep
 %setup -n %name
+%patch1 -p1
 
 %build
 %python_build
 
 %install
 %python_install --install-lib %python_sitelibdir --record=INSTALLED_FILES
+subst '/^mwlib/d' %buildroot%python_sitelibdir/%{name}*egg-info/requires.txt
 
 %files
 %_bindir/aard*
-%python_sitelibdir/%name
-%python_sitelibdir/%{name}*egg-info
+%python_sitelibdir/%{name}*
 %doc doc/*
 
 %changelog
+* Tue Apr 02 2013 Ildar Mulyukov <ildar@altlinux.ru> 0.8.3-alt2.git.72.ga609acb
+- add %name-alt-disable-mw.patch to disable mwlib part due to bug #28776
+
 * Mon Apr 01 2013 Ildar Mulyukov <ildar@altlinux.ru> 0.8.3-alt1.git.72.ga609acb
 - initial build for ALT Linux Sisyphus
