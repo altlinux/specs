@@ -3,7 +3,7 @@
 %define _pseudouser_home     %_localstatedir/radvd
 
 Name: radvd
-Version: 1.9.2
+Version: 1.9.3
 Release: alt1
 
 Summary: A Router Advertisement daemon
@@ -16,6 +16,8 @@ Url: http://www.litech.org/radvd/
 Source0: %name-%version.tar
 Source1: %name.init
 Source2: %name.sysconfig
+Source3: %name-tmpfs.conf
+Source4: %name.service
 
 BuildRequires: libdaemon-devel
 BuildRequires: flex, byacc
@@ -49,6 +51,8 @@ mkdir -p %buildroot/var/run/radvd
 install -m 644 redhat/radvd.conf.empty %buildroot%_sysconfdir/radvd.conf
 install -m 755 %SOURCE1 %buildroot%_initdir/radvd
 install -m 644 %SOURCE2 %buildroot%_sysconfdir/sysconfig/radvd
+install -Dm0644 %SOURCE3 %buildroot%_sysconfdir/tmpfiles.d/%name.conf
+install -Dm0644 %SOURCE4 %buildroot%systemd_unitdir/%name.service
 
 %post
 %post_service %name
@@ -65,6 +69,8 @@ install -m 644 %SOURCE2 %buildroot%_sysconfdir/sysconfig/radvd
 %doc COPYRIGHT README CHANGES INTRO.html TODO
 %config(noreplace) %_sysconfdir/%name.conf
 %config(noreplace) %_sysconfdir/sysconfig/%name
+%config %_sysconfdir/tmpfiles.d/%name.conf
+%config %systemd_unitdir/%name.service
 %_initdir/%name
 %dir %attr(0771,root,%_pseudouser_group) /var/run/radvd/
 %doc radvd.conf.example
@@ -73,6 +79,10 @@ install -m 644 %SOURCE2 %buildroot%_sysconfdir/sysconfig/radvd
 %_sbindir/radvdump
 
 %changelog
+* Tue Apr 02 2013 Mikhail Efremov <sem@altlinux.org> 1.9.3-alt1
+- Add systemd support.
+- Updated to 1.9.3.
+
 * Thu Dec 20 2012 Mikhail Efremov <sem@altlinux.org> 1.9.2-alt1
 - Updated to 1.9.2.
 
