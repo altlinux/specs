@@ -7,7 +7,7 @@
 %define alterator_cfg %_sysconfdir/alterator
 
 Name: alterator-browser-qt
-Version: 2.18.8
+Version: 2.18.9
 Release: alt1
 
 Source:%name-%version.tar
@@ -82,6 +82,9 @@ ln -s %alterator_cfg/design-browser-qt %buildroot/%_datadir/%name/design/current
 
 
 %changelog
+* Wed Apr 03 2013 Sergey V Turchin <zerg at altlinux dot org> 2.18.9-alt1
+- fix event loop in checktree
+
 * Tue Apr 02 2013 Sergey V Turchin <zerg at altlinux dot org> 2.18.8-alt1
 - fix checktree event selected
 
