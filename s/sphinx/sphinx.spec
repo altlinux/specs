@@ -1,17 +1,19 @@
 Name: sphinx
-Version: 2.0.6
-Release: alt2
+Version: 2.0.7
+Release: alt1
 Summary: Free open-source SQL full-text search engine
 
 Group: Text tools
 License: GPLv2+
 Url: http://sphinxsearch.com
+
 Source0: http://sphinxsearch.com/downloads/%name-%version.tar.gz
 Source1: %name.init
 Source2: %name.unit
+
 Packager: Dmitriy Kulik <lnkvisitor@altlinux.org>
 
-BuildRequires: libMySQL-devel postgresql-devel libexpat-devel gcc-c++
+BuildRequires: gcc-c++ libexpat-devel libmysqlclient-devel libssl-devel libunixODBC-devel postgresql-devel zlib-devel
 
 %description
 Sphinx is a full-text search engine, distributed under GPL version 2.
@@ -168,6 +170,10 @@ make install DESTDIR=%buildroot INSTALL="%__install -p -c"
 %_libdir/libsphinxclient.a
 
 %changelog
+* Tue Apr 02 2013 Igor Zubkov <icesik@altlinux.org> 2.0.7-alt1
+- 2.0.6 -> 2.0.7
+- buildreq
+
 * Fri Feb 15 2013 Dmitriy Kulik <lnkvisitor@altlinux.org> 2.0.6-alt2
 - Added systemd service
 - Fix init
