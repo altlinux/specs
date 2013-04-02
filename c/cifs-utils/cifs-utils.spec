@@ -1,6 +1,6 @@
 Name: cifs-utils
 Version: 5.7
-Release: alt1
+Release: alt2
 
 Summary: Utilities for doing and managing mounts of the Linux CIFS filesystem
 Group: System/Kernel and hardware
@@ -9,7 +9,7 @@ Url: https://wiki.samba.org/index.php/LinuxCIFS_utils
 
 Source: %name-%version.tar
 
-BuildRequires: libcap-ng-devel libkeyutils-devel libkrb5-devel libtalloc-devel samba-winbind-devel
+BuildRequires: libcap-ng-devel libkeyutils-devel libkrb5-devel libtalloc-devel libwbclient-devel
 
 Conflicts: samba-client < 3.6.0-alt1
 
@@ -50,6 +50,9 @@ mv %buildroot/%_sbindir/cifs.upcall %buildroot/sbin/
 %doc AUTHORS ChangeLog README
 
 %changelog
+* Tue Apr 02 2013 Andrey Cherepanov <cas@altlinux.org> 5.7-alt2
+- Build with renamed libwbclient-devel
+
 * Wed Oct 31 2012 Michael Shigorin <mike@altlinux.org> 5.7-alt1
 - 5.7 (closes: #27909)
 
