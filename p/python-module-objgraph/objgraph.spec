@@ -1,6 +1,6 @@
 %define oname objgraph
 Name: python-module-%oname
-Version: 1.7.1
+Version: 1.7.2
 Release: alt1
 Summary: Draws Python object reference graphs with graphviz
 License: MIT
@@ -36,6 +36,9 @@ objgraph will automatically look for it in your PATH.
 %python_sitelibdir/*
 
 %changelog
+* Tue Apr 02 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.7.2-alt1
+- Version 1.7.2
+
 * Mon Dec 12 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.7.1-alt1
 - Version 1.7.1
 
