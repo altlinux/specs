@@ -1,7 +1,7 @@
 %define oname regex
 Name: python-module-%oname
-Version: 0.1.20111223
-Release: alt1.1
+Version: 2013.03.11
+Release: alt1
 Summary: Alternate regular expression module, to replace re
 License: PSFL
 Group: Development/Python
@@ -29,8 +29,12 @@ current re module implementation.
 %files
 %doc README
 %python_sitelibdir/*
+%exclude %python_sitelibdir/test*
 
 %changelog
+* Tue Apr 02 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2013.03.11-alt1
+- Version 2013-03-11
+
 * Thu Apr 12 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 0.1.20111223-alt1.1
 - Rebuild to remove redundant libpython2.7 dependency
 
