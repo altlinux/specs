@@ -7,7 +7,7 @@
 %def_disable jack_version
 
 Name: qjackctl
-Version: 0.3.9
+Version: 0.3.10
 %ifdef cvsbuild
 Release: alt0.cvs%cvsdate
 %else
@@ -65,15 +65,21 @@ export PATH=%_qt4dir/bin:$PATH
 %install
 %make DESTDIR=%buildroot install
 
-%files
+%find_lang --with-qt %name
+
+%files -f %name.lang
 %_bindir/%name
 %_datadir/applications/*
-%_datadir/%name/
+%dir %_datadir/%name
+%dir %_datadir/%name/locale
 %_iconsdir/hicolor/*/*/*.*
 %_man1dir/*
 %doc AUTHORS ChangeLog README TODO
 
 %changelog
+* Mon Apr 01 2013 Yuri N. Sedunov <aris@altlinux.org> 0.3.10-alt1
+- 0.3.10
+
 * Mon May 28 2012 Yuri N. Sedunov <aris@altlinux.org> 0.3.9-alt1
 - 0.3.9
 
