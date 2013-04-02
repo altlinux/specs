@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 2011.5
-Release: alt2.1
+Version: 2012.1
+Release: alt1
 Summary: A collection of tools for Python
 License: MIT
 Group: Development/Python
@@ -109,6 +109,9 @@ popd
 %endif
 
 %changelog
+* Tue Apr 02 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2012.1-alt1
+- Version 2012.1
+
 * Fri Mar 22 2013 Aleksey Avdeev <solo@altlinux.ru> 2011.5-alt2.1
 - Rebuild with Python-3.3
 
