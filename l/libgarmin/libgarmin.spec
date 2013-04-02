@@ -2,7 +2,7 @@
 
 Name: libgarmin
 Version: 0.1.0
-Release: alt1
+Release: alt2
 Summary: Libgarmin is an open source (GPLv2) for Garmin image format maps.
 License: GPL2
 Group: Sciences/Geosciences
@@ -29,6 +29,7 @@ and creation/design of a new map format for OSM data.
 
 %prep
 %setup -q -n %name
+svn upgrade
 
 %build
 ./autosh.sh
@@ -63,5 +64,8 @@ and creation/design of a new map format for OSM data.
 #%_man7dir/*
 
 %changelog
+* Tue Apr 02 2013 Andrey Cherepanov <cas@altlinux.org> 0.1.0-alt2
+- Fix build with new Subversion
+
 * Mon Dec 15 2008 Grigory Milev <week@altlinux.ru> 0.1.0-alt1
 - Initital build for ALT Linux
