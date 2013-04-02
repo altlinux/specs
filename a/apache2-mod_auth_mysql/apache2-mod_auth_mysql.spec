@@ -1,6 +1,6 @@
 Name: %apache2_name-mod_auth_mysql
 Version: 3.0.0
-Release: alt7.1
+Release: alt7.2
 
 Summary: mod_auth_mysql module for Apache 2 HTTP Server
 License: Apache (BSD-like)
@@ -18,7 +18,8 @@ Requires: %apache2_name-base > 2.2.22-alt15
 Requires: %apache2_name-mmn = %apache2_mmn
 
 BuildRequires(pre): apache2-devel > 2.2.22-alt15
-BuildRequires: libMySQL-devel zlib-devel
+BuildPreReq: libmysqlclient-devel
+BuildRequires: zlib-devel
 
 %description
 mod_auth_mysql is an Apache module to authenticate users and authorize access
@@ -49,6 +50,10 @@ touch %buildroot%apache2_mods_enabled/auth_mysql.load
 %doc CHANGES CONFIGURE README
 
 %changelog
+* Tue Apr 02 2013 Aleksey Avdeev <solo@altlinux.ru> 3.0.0-alt7.2
+- mod_auth_mysql.so: fix undefined symbol: remove
+  make_scrambled_password_323 (Closes: #28737)
+
 * Fri Feb 08 2013 Aleksey Avdeev <solo@altlinux.ru> 3.0.0-alt7.1
 - Rebuild with apache2-2.2.22-alt16 (fix unmets)
 - Add %%apache2_mods_start/100-auth_mysql.conf file for auto loading
