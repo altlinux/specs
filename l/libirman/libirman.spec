@@ -4,7 +4,7 @@ BuildRequires: gcc-c++
 %add_optflags %optflags_shared
 Name:           libirman
 Version:        0.4.5
-Release:        alt3_8
+Release:        alt3_9
 Summary:        Library for IRMAN hardware
 
 Group:          System/Libraries
@@ -13,7 +13,7 @@ Group:          System/Libraries
 #The files which make up the test programs and the documentation are covered
 #under the GNU General Public License, which is in the file COPYING.
 License:        GPLv2+ and LGPLv2+
-URL:            http://lirc.sourceforge.net/software/snapshots/
+URL:            http://sourceforge.net/projects/lirc/files/libirman/
 Source0:        http://downloads.sourceforge.net/lirc/%{name}-%{version}.tar.bz2
 
 BuildRequires:  autoconf automake libtool
@@ -34,6 +34,7 @@ developing applications that use %{name}.
 
 %prep
 %setup -q
+autoreconf
 
 
 %build
@@ -64,6 +65,9 @@ find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 
 
 %changelog
+* Tue Apr 02 2013 Igor Vlasenko <viy@altlinux.ru> 0.4.5-alt3_9
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.4.5-alt3_8
 - update to new release by fcimport
 
