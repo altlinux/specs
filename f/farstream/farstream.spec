@@ -3,11 +3,11 @@
 
 %def_disable static
 %def_disable gtk_doc
-%def_enable introspection
+%def_disable introspection
 
 Name: farstream
 Version: 0.1.2
-Release: alt1
+Release: alt2
 
 Summary: A audio/video conferencing framework
 Group: System/Libraries
@@ -82,11 +82,16 @@ GObject introspection devel data for the Farstream library.
 %prep
 %setup -q
 %patch
+%autoreconf
 
 %build
-%autoreconf
 %configure \
 	--disable-static \
+%if_enabled introspection
+	--enable-introspection=yes \
+%else
+	--enable-introspection=no \
+%endif
 	%{?_enable_gtk_doc:--enable-gtk-doc}
 
 %make_build
@@ -123,13 +128,17 @@ GObject introspection devel data for the Farstream library.
 %files devel-doc
 %_datadir/gtk-doc/html/*
 
+%if_enabled introspection
 %files -n lib%name-gir
 %_typelibdir/Farstream-0.1.typelib
-
 %files -n lib%name-gir-devel
 %_girdir/Farstream-0.1.gir
+%endif
 
 %changelog
+* Tue Apr 02 2013 Sergey V Turchin <zerg@altlinux.org> 0.1.2-alt2
+- built without gobject introspection
+
 * Sat Mar 24 2012 Yuri N. Sedunov <aris@altlinux.org> 0.1.2-alt1
 - 0.1.2
 
