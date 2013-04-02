@@ -3,8 +3,8 @@
 %def_enable docs
 
 Name: python-module-%oname
-Version: 0.2.0
-Release: alt2.git20120705
+Version: 0.4.0
+Release: alt1.git20130205
 Summary: The neuroimaging in python (NIPY) project
 License: MIT
 Group: Development/Python
@@ -126,7 +126,7 @@ cp -fR doc/build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %files
-%doc LICENSE README THANKS
+%doc AUTHOR Changelog LICENSE README* THANKS
 %_bindir/*
 %python_sitelibdir/*
 %if_enabled docs
@@ -164,6 +164,9 @@ cp -fR doc/build/pickle %buildroot%python_sitelibdir/%oname/
 #python_sitelibdir/*/*/*/*/*/tests
 
 %changelog
+* Tue Apr 02 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.0-alt1.git20130205
+- Version 0.4.0
+
 * Sun Aug 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.0-alt2.git20120705
 - Built with OpenBLAS instead of GotoBLAS2
 
