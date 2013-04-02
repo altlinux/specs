@@ -1,6 +1,6 @@
 %define oname pyramid_zcml
 Name: python-module-%oname
-Version: 0.8
+Version: 1.0.0
 Release: alt1
 Summary: Zope Config Markup Language support for Pyramid
 License: BSD
@@ -74,34 +74,45 @@ This package contains documentation for pyramid_zcml.
 %build
 %python_build
 
+%if 0
 export PYTHONPATH=$PWD
 pushd docs
 %make html
 %make pickle
 popd
+%endif
 
 %install
 %python_install
 
+%if 0
 install -d %buildroot%python_sitelibdir/%oname
 cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
+%endif
 
 %files
 %doc *.txt
 %python_sitelibdir/*
 %exclude %python_sitelibdir/*/tests
+%if 0
 %exclude %python_sitelibdir/%oname/pickle
+%endif
 
 %files tests
 %python_sitelibdir/*/tests
 
+%if 0
 %files pickles
 %python_sitelibdir/%oname/pickle
 
 %files docs
 %doc docs/_build/html/*
+%endif
 
 %changelog
+* Tue Apr 02 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.0-alt1
+- Version 1.0.0
+
 * Mon Dec 12 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8-alt1
 - Version 0.8
 
