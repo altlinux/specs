@@ -11,7 +11,7 @@
 
 Name: zabbix
 Version: 2.0.5
-Release: alt1
+Release: alt2
 
 Packager: Alexei Takaseev <taf@altlinux.ru>
 
@@ -32,7 +32,7 @@ BuildPreReq: libelf-devel
 BuildRequires(pre): rpm-build-webserver-common
 
 # Automatically added by buildreq on Fri Feb 27 2009 (-bi)
-BuildRequires: libMySQL-devel libcurl-devel libiksemel-devel libldap-devel
+BuildRequires: libmysqlclient-devel libcurl-devel libiksemel-devel libldap-devel
 BuildRequires: libnet-snmp-devel libsqlite3-devel perl-Switch libopenipmi-devel gettext-tools
 
 %if_with pgsql
@@ -455,6 +455,9 @@ fi
 %doc misc/snmptrap/* migrate.sh
 
 %changelog
+* Wed Apr 03 2013 Alexei Takaseev <taf@altlinux.org> 1:2.0.5-alt2
+- change buildreq 'libMySQL-devel' to 'libmysqlclient-devel'
+
 * Wed Feb 13 2013 Alexei Takaseev <taf@altlinux.org> 1:2.0.5-alt1
 - 2.0.5 release
 
