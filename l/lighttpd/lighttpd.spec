@@ -14,8 +14,7 @@
 
 Name: lighttpd
 Version: 1.4.32
-#Release: alt1.svn.%svnrev
-Release: alt3
+Release: alt4
 
 Packager: Alexei Takaseev <taf@altlinux.ru>
 
@@ -36,7 +35,7 @@ BuildRequires(pre): rpm-macros-webserver-common
 # Automatically added by buildreq on Wed Sep 02 2009
 BuildRequires: bzlib-devel libfcgi-devel libpcre-devel zlib-devel
 
-%{?_with_mysql:BuildPreReq: libMySQL-devel}
+%{?_with_mysql:BuildPreReq: libmysqlclient-devel}
 %{?_with_ssl:BuildPreReq: libssl-devel}
 %{?_with_ldap:BuildPreReq: libldap-devel}
 %{?_with_memcache:BuildPreReq: libmemcache-devel}
@@ -201,6 +200,9 @@ gpasswd -a %lighttpd_user %webserver_group
 %_libdir/%name/*rrdtool.so
 
 %changelog
+* Wed Apr 03 2013 Alexei Takaseev <taf@altlinux.org> 1.4.32-alt4
+- change buildreq 'libMySQL-devel' to 'libmysqlclient-devel'
+
 * Mon Nov 26 2012 Alexei Takaseev <taf@altlinux.org> 1.4.32-alt3
 - Add systemd unit
 
