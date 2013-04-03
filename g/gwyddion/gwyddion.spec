@@ -1,7 +1,7 @@
 %define _gtkdocdir %_datadir/gtk-doc/html
 Name: gwyddion
-Version: 2.25
-Release: alt1.3
+Version: 2.31
+Release: alt1
 Summary: An SPM data visualization and analysis tool
 Group: Sciences/Other
 License: GNU GPL
@@ -13,7 +13,7 @@ Patch1: gwyddion-2.25-alt-glib2.patch
 Patch2: gwyddion-2.25-alt-libpng15.patch
 BuildRequires(pre): rpm-build-compat libGConf-devel
 BuildRequires: libgtk+2-devel pkg-config libgtkglext-devel libfftw3-devel python-module-pygtk-devel gcc-c++
-BuildRequires: libgtksourceview-devel libxml2-devel libruby-devel python libGConf-devel chrpath kde4libs-devel
+BuildRequires: libgtksourceview-devel libxml2-devel libruby-devel libGConf-devel chrpath kde4libs-devel GConf
 BuildPreReq: perl-podlators libpng-devel
 
 %define pkglibdir %_libdir/%name
@@ -93,9 +93,9 @@ Python tools for Gwyddion module development
 
 %prep
 %setup
-%patch0 -p1
-%patch1 -p2
-%patch2 -p2
+#patch0 -p1
+#patch1 -p2
+#patch2 -p2
 
 # Don't install .la files.
 %__subst '/# Install the pseudo-library/,/^$/d' ltmain.sh
@@ -103,6 +103,7 @@ Python tools for Gwyddion module development
 %__subst '1s/env *//' plugins/process/*.{py,rb,pl}
 
 %__subst 's|#include <pygtk-2.0/pygobject.h>|#include <pygtk/pygobject.h>|' modules/pygwy/pygwy.c
+%__subst 's|#include <pygtk-2.0/pygobject.h>|#include <pygtk/pygobject.h>|' modules/pygwy/gwy.c
 
 %build
 %configure \
@@ -183,6 +184,8 @@ mv %buildroot%pkglibdir/modules/pygwy.so %buildroot%python_sitelibdir/gwy.so
 %dir %pkglibdir
 %_desktopdir/%name.desktop
 %_datadir/mime/packages/%name.xml
+%dir %_datadir/thumbnailers
+%_datadir/thumbnailers/%name.thumbnailer
 
 %files -n %libname
 %_libdir/*.so.*
@@ -252,6 +255,9 @@ mv %buildroot%pkglibdir/modules/pygwy.so %buildroot%python_sitelibdir/gwy.so
 %python_sitelibdir/*
 
 %changelog
+* Wed Apr 03 2013 Boris Savelev <boris@altlinux.org> 2.31-alt1
+- new version. closes: #28780
+
 * Thu Oct 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.25-alt1.3
 - Rebuilt with libpng15
 
