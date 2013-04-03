@@ -3,7 +3,7 @@
 
 Name: pecl-%php5_extension
 Version: 1.0.3
-Release: alt3
+Release: alt%php5_version.%php5_release
 
 Summary: PAM integration
 License: PHP
@@ -58,6 +58,9 @@ cd %php5_extension-%version
 %pecl_files
 
 %changelog
+* %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
+- Rebuild with php5-%php5_version-%php5_release
+
 * Wed Nov 14 2012 Anton Farygin <rider@altlinux.ru> 1.0.3-alt3
 - Rebuild with php5-5.3.18.20121017-alt1
 

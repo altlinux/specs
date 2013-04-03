@@ -255,6 +255,9 @@ done
 %endif
 
 %changelog
+* %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
+- Rebuild with php5-%php5_version-%php5_release
+
 * Fri Jan 04 2013 Nikolay A. Fetisov <naf@altlinux.ru> 5.3.18.20121017-alt1.1
 - Rebuild with php5-5.3.18.20121017-alt1.1
 

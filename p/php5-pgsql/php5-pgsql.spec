@@ -57,6 +57,9 @@ chrpath -d %buildroot%php5_extdir/%php5_extension.so
 %php5_extension_preun
 
 %changelog
+* %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
+- Rebuild with php5-%php5_version-%php5_release
+
 * Wed Nov 14 2012 Anton Farygin <rider@altlinux.ru> 5.3.18.20121017-alt1.2
 - Rebuild with php5-5.3.18.20121017-alt1
 

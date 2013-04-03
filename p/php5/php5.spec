@@ -4,7 +4,7 @@
 Summary: The PHP5 scripting language
 Name:	 %php5_name
 Version: %php5_version
-Release: %php5_release.1
+Release: %php5_release
 License: PHP
 Group:	 Development/Other
 
@@ -137,7 +137,6 @@ in use by other PHP5-related packages.
 %patch14 -p1
 %patch15 -p1 -b .suhosin
 %patch17 -p1
-
 %patch30 -p0
 %patch32 -p1
 %patch33 -p2
@@ -326,6 +325,9 @@ chrpath -d %buildroot%_bindir/phpinfo-%_php5_version
 %doc tests run-tests.php 
 
 %changelog
+* Tue Apr  2 2013 Anton V. Boyarshinov <boyarsh@altlinux.org> 5.3.23.20130314-alt1
+- new version
+
 * Tue Dec 11 2012 Anton Farygin <rider@altlinux.ru> 5.3.18.20121017-alt1.1
 - fixed sendmail path (closes: #28169)
 
