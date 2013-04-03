@@ -1,7 +1,6 @@
 Name: povray
 Version: 3.6
-Release: alt3
-Packager: Grigory Batalov <bga@altlinux.ru>
+Release: alt4
 
 Summary: Persistence of Vision Ray Tracer (POV-Ray)
 Summary(ru_RU.UTF-8): Трассировщик лучей POV-Ray
@@ -11,14 +10,15 @@ Group: Graphics
 Url: http://www.povray.org
 
 Source: ftp://ftp.povray.org/pub/povray/Official/Unux/%name-%version.tar.bz2
+Patch1: povray-debian-15_PNG.patch
+Patch2: povray-debian-20_glass.patch
 
 Requires: %name-common
 #Obsoletes: megapovplus
 
-# Automatically added by buildreq on Mon Nov 10 2008
-BuildRequires: gcc-c++ imake libXpm-devel libXt-devel libjpeg-devel libpng-devel libtiff-devel
-
-#BuildRequires: XFree86-devel xpm-devel
+# Automatically added by buildreq on Wed Apr 03 2013
+# optimized out: gnu-config libICE-devel libSM-devel libstdc++-devel libX11-devel xorg-xproto-devel zlib-devel
+BuildRequires: gcc-c++ imake libjpeg-devel libpng12-devel libtiff-devel libXpm-devel libXt-devel
 
 %description
 POV-Ray is a free, full-featured ray tracer, written and
@@ -69,6 +69,8 @@ scenes, scripts etc.
 #---------------------------------------------------------
 %prep
 %setup -q -n %name-3.6.1
+%patch1 -p1
+%patch2 -p1
 
 %build
 %configure COMPILED_BY='ALT Linux Team (http://www.altlinux.ru, mailto:community@lists.altlinux.org)' --with-x --without-svga
@@ -110,6 +112,9 @@ find %buildroot%_datadir/povray-3.6/scripts/ -type f -print0 |\
 %doc %_man1dir/*
 
 %changelog
+* Wed Apr 03 2013 Fr. Br. George <george@altlinux.ru> 3.6-alt4
+- Build with legacy libpng12
+
 * Mon Nov 10 2008 Grigory Batalov <bga@altlinux.ru> 3.6-alt3
 - Carriage return symbols were removed from scripts.
 - Russian package description converted to UTF-8.
