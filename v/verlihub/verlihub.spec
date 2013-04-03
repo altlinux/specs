@@ -5,7 +5,7 @@
 
 Name: verlihub
 Version: 0.9.8e
-Release: alt1.1
+Release: alt1.2
 
 Summary: Direct Connect (p2p) Server
 
@@ -16,6 +16,7 @@ Url: http://www.verlihub-project.org
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 Source: verlihub-%version%rel.tar
+Patch:  verlihub-fix-build.patch
 
 # Automatically added by buildreq on Fri Mar 21 2008
 BuildRequires: gcc-c++ glibc-devel libGeoIP-devel libMySQL-devel libpcre-devel zlib-devel
@@ -44,6 +45,7 @@ The lib%name package contains the necessary library for %name
 
 %prep
 %setup -n %name
+%patch -p2
 
 %build
 export PTHREAD_LIBS=-lpthread
@@ -87,6 +89,9 @@ ln -s ../../..%_libdir/libplug_pi.so.0.0.0 %buildroot%_sysconfdir/%name/plugins
 %_includedir/%name/
 
 %changelog
+* Wed Apr 03 2013 Andrey Cherepanov <cas@altlinux.org> 0.9.8e-alt1.2
+- Fix build with new glibc
+
 * Wed Nov 10 2010 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.8e-alt1.1
 - Rebuilt for soname set-versions
 
