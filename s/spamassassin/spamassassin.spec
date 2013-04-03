@@ -5,7 +5,7 @@
 
 Name: spamassassin
 Version: 3.3.2
-Release: alt1
+Release: alt2
 
 Summary: Spam filter for email written in perl
 License: Apache License v2.0
@@ -140,7 +140,8 @@ subpackages versions with.
 %patch10 -p1
 
 %build
-%perl_vendor_build LOCALRULESDIR=%_sysconfdir/spamassassin INSTALLMAN1DIR=%_man1dir
+cp -f spamc/spamc.pod spamc/spamc
+%perl_vendor_build LOCALRULESDIR=%_sysconfdir/spamassassin INSTALLMAN1DIR=%_man1dir BUILD_SPAMC=no
 
 # Rebuild spamc wirh SSL
 pushd spamc
@@ -235,6 +236,9 @@ pod2man spamc/spamc.pod %buildroot%_man1dir/spamc.1
 #%_man3dir/*
 
 %changelog
+* Wed Apr 03 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 3.3.2-alt2
+- hackaround build
+
 * Thu Jul 21 2011 Victor Forsiuk <force@altlinux.org> 3.3.2-alt1
 - 3.3.2
 
