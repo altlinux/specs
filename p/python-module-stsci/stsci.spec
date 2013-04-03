@@ -3,8 +3,8 @@
 %def_enable docs
 
 Name: python-module-%oname
-Version: 2.12
-Release: alt3.1
+Version: 2.13
+Release: alt1
 Summary: Python packages for a general astronomical data analysis infrastructure
 License: BSD
 Group: Sciences/Mathematics
@@ -21,6 +21,8 @@ BuildPreReq: python-module-sphinx-devel
 BuildPreReq: Mayavi
 %add_python_req_skip AppKit numarray objc scipy_distutils
 
+Requires: python-module-zest.releaser
+
 %description
 STSCI_PYTHON is a collection of Python packages (with C extensions)
 that has been developed to provide a general astronomical data analysis
@@ -36,6 +38,7 @@ Summary: Tests for STSCI_PYTHON
 Group: Development/Python
 Requires: %name = %version-%release
 %py_requires nose
+%add_python_req_skip wtraxyutils
 
 %description tests
 STSCI_PYTHON is a collection of Python packages (with C extensions)
@@ -140,6 +143,9 @@ rm -f %buildroot%python_sitelibdir/conf.py
 %endif
 
 %changelog
+* Wed Apr 03 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.13-alt1
+- Version 2.13
+
 * Thu Apr 12 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 2.12-alt3.1
 - Rebuild to remove redundant libpython2.7 dependency
 
