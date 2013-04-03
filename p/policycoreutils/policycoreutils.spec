@@ -3,7 +3,7 @@
 Summary: SELinux policy core utilities
 Name: policycoreutils
 Version: 2.1.13
-Release: alt3
+Release: alt4
 License: GPLv2
 Group: System/Base
 Url: http://userspace.selinuxproject.org
@@ -272,6 +272,9 @@ cp -r mcstrans/share/* %buildroot%_datadir/mcstrans/
 
 
 %changelog
+* Wed Apr 03 2013 Led <led@altlinux.ru> 2.1.13-alt4
+- newrole: add CAP_SETGID to list fo drop_capabilities() (ALT#28784)
+
 * Fri Nov 30 2012 Led <led@altlinux.ru> 2.1.13-alt3
 - fix restorecond.service (by amike@) (ALT#28073)
 - some fixes for mcstrans.service (thanx amike@)
