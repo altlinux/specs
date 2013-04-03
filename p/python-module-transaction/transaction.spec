@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.2.0
-Release: alt2.1
+Version: 1.4.1
+Release: alt1
 Summary: Transaction management for Python
 License: ZPLv2.1
 Group: Development/Python
@@ -106,7 +106,7 @@ popd
 %endif
 
 %files
-%doc *.txt
+%doc *.txt *.rst
 %python_sitelibdir/*
 %exclude %python_sitelibdir/%oname/tests
 
@@ -115,7 +115,7 @@ popd
 
 %if_with python3
 %files -n python3-module-%oname
-%doc *.txt
+%doc *.txt *.rst
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/%oname/tests
 
@@ -124,6 +124,9 @@ popd
 %endif
 
 %changelog
+* Wed Apr 03 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4.1-alt1
+- Version 1.4.1
+
 * Sat Mar 23 2013 Aleksey Avdeev <solo@altlinux.ru> 1.2.0-alt2.1
 - Rebuild with Python-3.3
 
