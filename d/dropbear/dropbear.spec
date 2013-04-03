@@ -1,6 +1,6 @@
 Name: dropbear
 Summary: Relatively small SSH 2 server
-Version: 2012.55
+Version: 2013.56
 Release: alt1
 License: MIT-style
 Group: System/Servers
@@ -8,7 +8,7 @@ Url: http://matt.ucc.asn.au/dropbear/dropbear.html
 
 Patch: dropbear-0.53.1-authkey_fp.patch
 
-Source: %name-%version.tar.gz
+Source: %name-%version.tar.bz2
 
 # Automatically added by buildreq on Wed Sep 14 2011
 BuildRequires: libtomcrypt-devel libtommath-devel zlib-devel
@@ -75,6 +75,9 @@ install -D dropbearkey.8 %buildroot%_man8dir/dropbearkey.8
 %_bindir/scp
 
 %changelog
+* Mon Apr 01 2013 Fr. Br. George <george@altlinux.ru> 2013.56-alt1
+- Autobuild version bump to 2013.56
+
 * Wed Mar 21 2012 Fr. Br. George <george@altlinux.ru> 2012.55-alt1
 - Autobuild version bump to 2012.55
 
