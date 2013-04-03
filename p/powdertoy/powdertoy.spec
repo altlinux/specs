@@ -1,22 +1,19 @@
 Name: powdertoy
-Version: 81.3
-Release: alt2
+Version: 263
+Release: alt1
 Summary: Classic 'falling sand' physics sandbox game
 Group: Games/Educational
 License: GPL
 Url: http://powdertoy.co.uk/
 #Patch: %name-%version-%release.patch
-# GitHub https://github.com/FacialTurd/The-Powder-Toy/downloads
-# Source: %name-%version.tar
-# find this at homepage, XXX may disappear
-Source: powder-%version-src.zip
+# GitHub https://github.com/FacialTurd/The-Powder-Toy/tags
+Source: build%version.tar.gz
+Patch: powdertoy-263-alt-xinit.patch
 Obsoletes: powder
 
-BuildRequires: unzip
-
-# Automatically added by buildreq on Tue Aug 16 2011
-# optimized out: libX11-devel xorg-xproto-devel
-BuildRequires: bzlib-devel libSDL-devel libfftw3-devel liblua5-devel
+# Automatically added by buildreq on Wed Apr 03 2013
+# optimized out: fontconfig libX11-devel libstdc++-devel pkg-config python-base python-modules python-modules-compiler xorg-xproto-devel
+BuildRequires: ImageMagick-tools bzlib-devel flex gcc-c++ ghostscript-classic libSDL-devel libfftw3-devel liblua5-devel python-modules-email scons zlib-devel
 
 %description
 The Powder Toy is a desktop version of the classic 'falling sand'
@@ -24,30 +21,16 @@ physics sandbox game, it simulates air pressure and velocity as well as
 heat!
 
 %prep
-%setup -c
-#patch -p1
-# lua5.1 -> lua
-ln -s /usr/include includes/lua5.1
-# Remove old version message
-sed -i 's/old_version = 1/old_version = 0/g' src/main.c
-
-mv Makefile Makefile.upstream
-
-sed -i 's/lua5.1/lua/g' Makefile.upstream
-sed -i 's/-march=native//g' Makefile.upstream
-
-cat > Makefile <<@@@
-include Makefile.upstream
-SRCS := \$(wildcard \$(SOURCES))
-OBJS := \$(SRCS:.c=.o)
-BUS=32
-OPT64=\$(MFLAGS_SSE3)
-OPT32=-m32
-CFLAGS+= %optflags \$(OFLAGS) -DINTERNAL -DLIN\$(BUS) \$(OPT\$(BUS))
-
-%name:	\$(OBJS)
-	\$(CC) \$(OBJS) \$(LFLAGS) -o\$@
+%setup -n The-Powder-Toy-build%version
+%patch -p0
+cat > %name.sh <<@@@
+#!/bin/sh
+test -d "\$HOME/.powdertoy" || 
+{ rm -f "\$HOME/.powdertoy"; mkdir -p "\$HOME/.powdertoy/Brushes"; }
+cd "\$HOME/.powdertoy" && \$0.bin
 @@@
+
+sed -i.lua51 's/lua5.1/lua/g' SConscript
 
 cat > %name.desktop <<@@@
 [Desktop Entry]
@@ -62,26 +45,45 @@ Comment=%summary
 @@@
 
 %build
+#make_build BUS=64 %name
+#else
+#make_build %name
+#endif
+convert -set filename:area '%%wx%%h' resources/powder.ico 'powder-%%[filename:area].png'
 %ifarch x86_64
-%make_build BUS=64 %name
+scons -j %__nprocs --lin --64bit
 %else
-%make_build %name
+scons -j %__nprocs --lin
 %endif
 
+# TODO this doesn't compile for build263
+# --opengl 
+
 %install
-# TODO MIME
-install -D %name %buildroot%_gamesbindir/%name
+# TODO MIME (it can install mime locally!)
+install -D build/powder*-legacy %buildroot%_gamesbindir/%name.bin
+install -m755 %name.sh %buildroot%_gamesbindir/%name
 install -D %name.desktop %buildroot%_desktopdir/%name.desktop
-install -D src/Resources/Icon-16.png %buildroot%_miconsdir/%name.png
-install -D src/Resources/Icon-32.png %buildroot%_niconsdir/%name.png
+for N in powder-*.png; do 
+	install -D $N %buildroot%_iconsdir/hicolor/$(basename ${$##*-} .png)/apps/%nameodone.png
+done
 
 %files
-%doc README*
+%doc README* TODO
 %_gamesbindir/*
 %_desktopdir/%name.desktop
 %_iconsdir/hicolor/*/apps/*
 
 %changelog
+* Wed Apr 03 2013 Fr. Br. George <george@altlinux.ru> 263-alt1
+- Switch versioning from version to build number
+- Autobuild version bump to 263
+- Patch C++ flaws
+- Provide a wrapper for ~/.powdertoy cwd
+
+* Wed Feb 06 2013 Fr. Br. George <george@altlinux.ru> 82.0-alt1
+- Newer version build
+
 * Tue Feb 05 2013 Gleb F-Malinovskiy <glebfm@altlinux.org> 81.3-alt2
 - drop native optimization
 - do not strip main binary before debuginfo
