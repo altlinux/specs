@@ -1,7 +1,7 @@
 %define oname tempstorage
 Name: python-module-%oname
-Version: 2.12.1
-Release: alt2.1
+Version: 2.12.2
+Release: alt1
 Summary: A RAM-based storage for ZODB
 License: ZPLv2.1
 Group: Development/Python
@@ -52,6 +52,9 @@ This package contains tests for tempstorage.
 %python_sitelibdir/*/tests
 
 %changelog
+* Wed Apr 03 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.12.2-alt1
+- Version 2.12.2
+
 * Thu Oct 20 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 2.12.1-alt2.1
 - Rebuild with Python-2.7
 
