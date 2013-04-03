@@ -1,6 +1,6 @@
 Name: 0ad-data
 Epoch: 1
-Version: 0.0.12.alpha
+Version: 0.0.13.alpha
 Release: alt1
 BuildArch: noarch
 
@@ -39,6 +39,9 @@ mv binaries/data/* %buildroot/%_datadir/0ad
 %_datadir/0ad
 
 %changelog
+* Wed Apr 03 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:0.0.13.alpha-alt1
+- 0.0.13
+
 * Tue Dec 18 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:0.0.12.alpha-alt1
 - 0.0.12
 - don't relay on bin package release

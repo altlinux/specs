@@ -1,7 +1,7 @@
 Name: 0ad
 Epoch: 1
-Version: 0.0.12.alpha
-Release: alt1.1
+Version: 0.0.13.alpha
+Release: alt1
 
 Group: Games/Strategy
 Summary: Free, open-source realtime strategy game of ancient warfare
@@ -34,6 +34,7 @@ educational celebration of game development and ancient history.
 %setup
 
 %build
+mkdir -p libraries/source/fcollada/src/output/debug/FCollada
 export CFLAGS="%optflags"
 export CPPFLAGS="%optflags"
 build/workspaces/update-workspaces.sh --bindir=%_bindir --datadir=%_datadir/%name --libdir=%_libdir/%name
@@ -73,6 +74,9 @@ install -Dm 0755 build/resources/0ad.sh %buildroot%_bindir/0ad
 %dir %_libdir/%name
 
 %changelog
+* Wed Apr 03 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:0.0.13.alpha-alt1
+- 0.0.13
+
 * Thu Mar 28 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:0.0.12.alpha-alt1.1
 - rebuild with boost 1.53
 
