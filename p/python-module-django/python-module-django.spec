@@ -1,11 +1,12 @@
 %define branch 1.5
-%define version %branch.0
-%define release alt4.1
+%define version %branch.1
+%define release alt1
 %define origname Django
 %define oname django
 %define py3_name python3-module-%oname
 
 %def_with python3
+%def_with check
 
 %setup_python_module django
 %add_python_req_skip cx_Oracle
@@ -43,7 +44,15 @@ BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-distribute
 BuildPreReq: python-tools-2to3
 
-%add_python3_req_skip hotshot
+%add_python3_req_skip hotshot StringIO
+%endif
+
+%if_with check
+BuildPreReq: python-modules-json
+BuildPreReq: python-modules-wsgiref
+%if_with python3
+BuildPreReq: python3-modules-sqlite3
+%endif
 %endif
 
 %description
@@ -241,7 +250,6 @@ pushd ../python3
 for i in $(find ./ -name '*.py'); do
 	sed -i 's|%_bindir/env python|%_bindir/env python3|' $i
 	sed -i 's|.*from future_builtins import zip.*||' $i
-	2to3 -w -n $i
 done
 popd
 %endif
@@ -271,16 +279,20 @@ mkdir -p %buildroot/%_sysconfdir/bash_completion.d
 
 install -m 0755 extras/django_bash_completion %buildroot/%_sysconfdir/bash_completion.d/django.sh
 
+%if_with check
 %check
 # Run tests
-#export PYTHONPATH="$PYTHONPATH:%buildroot/%python_sitelibdir/"
-#cat >tests/settings.py << EOF
-#DATABASE_ENGINE = 'sqlite3'
-#DATABASE_NAME = 'demodb'
-#ROOT_URLCONF=None 
-#EOF
-#tests/runtests.py --settings=settings --noinput -v 1
+pushd tests
+LANG="en_US.UTF-8" PYTHONPATH=%buildroot/%python_sitelibdir ./runtests.py --settings=test_sqlite
+popd
+%if_with python3
+pushd ../python3/tests
+LANG="en_US.UTF-8" PYTHONPATH=%buildroot/%python_sitelibdir ./runtests.py --settings=test_sqlite
+popd
+%endif
 # End tests
+%endif
+
 
 %files -f INSTALLED_FILES
 #%%exclude %python_sitelibdir/%modulename/core/handlers/modpython.py*
@@ -366,6 +378,10 @@ install -m 0755 extras/django_bash_completion %buildroot/%_sysconfdir/bash_compl
 %endif
 
 %changelog
+* Wed Apr 03 2013 Aleksey Avdeev <solo@altlinux.ru> 1.5.1-alt1
+- Version 1.5.1
+- Fix python3-module-django
+
 * Fri Mar 22 2013 Aleksey Avdeev <solo@altlinux.ru> 1.5.0-alt4.1
 - Rebuild with Python-3.3
 
