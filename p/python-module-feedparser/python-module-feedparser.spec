@@ -1,5 +1,5 @@
 Name: python-module-feedparser
-Version: 5.1.2
+Version: 5.1.3
 Release: alt1
 Epoch: 1
 
@@ -69,6 +69,9 @@ PYTHONPATH=%buildroot%python_sitelibdir %__python feedparsertest.py
 %endif
 
 %changelog
+* Wed Apr 03 2013 Dmitry V. Levin <ldv@altlinux.org> 1:5.1.3-alt1
+- Updated to 5.1.3.
+
 * Thu Sep 06 2012 Dmitry V. Levin <ldv@altlinux.org> 1:5.1.2-alt1
 - Updated to 5.1.2.
 
