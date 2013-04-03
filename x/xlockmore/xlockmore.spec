@@ -1,5 +1,5 @@
 Name: xlockmore
-Version: 5.41
+Version: 5.42
 Release: alt1
 
 Summary: An X terminal locking program
@@ -16,7 +16,7 @@ Source3: po.tar.gz
 Patch: %name-v5.27-imode.patch
 Patch1: %name-v5.27-pam.patch
 Patch2: %name-v5.27-l10n.patch
-Patch3: %name-v5.27-kbdmon.patch
+Patch3: %name-v5.42-kbdmon.patch
 
 PreReq: /etc/tcb
 Requires: fortune-mod
@@ -94,6 +94,10 @@ chmod 755 %buildroot%_bindir/*
 %exclude %_mandir/xlock.1*
 
 %changelog
+* Mon Apr 01 2013 Fr. Br. George <george@altlinux.ru> 5.42-alt1
+- Autobuild version bump to 5.42
+- Fix patch
+
 * Tue Feb 12 2013 Fr. Br. George <george@altlinux.ru> 5.41-alt1
 - Autobuild version bump to 5.41
 
