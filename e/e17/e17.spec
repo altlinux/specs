@@ -2,9 +2,10 @@
 %define cvs_date zero
 %undefine cvs_date
 %define snapshot 2012-10-12
-%define rel alt1
+%define rel alt2
 
 %def_disable static
+%def_with pam_helper
 
 # TODO: pam CoreFoundation
 
@@ -46,6 +47,7 @@ Patch4: e17-0.17.0-alt-g-s-d_path.patch
 # from Suse
 Patch5: e17-0.17.0-alt-e_sys_nosuid.patch
 Patch6: auto-ptrace-disable.patch
+Patch11: enlightenment-0.17.1-pam-helper.patch
 
 Provides: e17-default
 # default terminal
@@ -55,6 +57,7 @@ Requires: dbus-tools-gui edbus eeze pm-utils evas_generic_loaders
 Requires: gnome-icon-theme
 Requires: wm-common-freedesktop
 Requires: altlinux-freedesktop-menu-%_name >= 0.55
+%{?_with_pam_helper:Requires: chkpwd-pam}
 
 BuildPreReq: libeet-devel >= 1.7.4
 BuildPreReq: libecore-devel >= 1.7.4
@@ -65,6 +68,7 @@ BuildRequires: libXext-devel embryo_cc libdbus-devel libedbus-devel
 BuildRequires: libalsa-devel libeina-devel eeze libeeze-devel libemotion-devel libelementary-devel
 BuildRequires: libudev-devel libxcbutil-keysyms-devel pm-utils
 BuildRequires: doxygen
+BuildRequires: libp11-kit-devel
 
 %description
 Enlightenment is a window manager.
@@ -104,6 +108,7 @@ to use Enlightenment as windowmanager in GNOME 2 session
 %patch4 -p1 -b .gsd
 #%%patch5 -p1 -b .nosuid
 %patch6 -p2
+%patch11 -p1
 
 %build
 %autoreconf
@@ -114,6 +119,10 @@ export CFLAGS="$CFLAGS `pkg-config --cflags dbus-1` -g -ggdb3"
 	%{subst_enable static} \
 	--enable-shared \
 	--enable-mount-eeze \
+	--enable-pam \
+%if_with pam_helper
+	--with-pam-helper=%prefix/libexec/chkpwd-pam/chkpwd-pam \
+%endif
 	--disable-mount-hal
 
 %make_build
@@ -141,7 +150,7 @@ install -pD -m 644 %SOURCE9 %buildroot%_datadir/gnome/wm-properties/enlightenmen
 # PAM-config
 mkdir -p %buildroot%_sysconfdir/pam.d
 cat > %buildroot%_sysconfdir/pam.d/enlightenment << _PAM_
-#%PAM-1.0
+#%%PAM-1.0
 
 auth		include		system-auth
 account		required	pam_deny.so
@@ -178,6 +187,9 @@ _PAM_
 %_datadir/gnome/wm-properties/*.desktop
 
 %changelog
+* Wed Apr 03 2013 Led <led@altlinux.ru> 1:0.17.1-alt2
+- with pam helper (ALT#28277)
+
 * Mon Feb 04 2013 Paul Wolneykien <manowar@altlinux.ru> 1:0.17.1-alt1
 - Fresh up to v0.17.1.
 
