@@ -1,6 +1,6 @@
 %define oname tgming
 Name: python-module-%oname
-Version: 0.0.7
+Version: 0.0.8
 Release: alt1
 Summary: TurboGears2 Support for Ming MongoDB ORM
 License: MIT
@@ -28,10 +28,13 @@ automatically setup tgming and all the required dependencies.
 %python_install
 
 %files
-%doc PKG-INFO
+%doc PKG-INFO *.rst
 %python_sitelibdir/*
 
 %changelog
+* Wed Apr 03 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.8-alt1
+- Version 0.0.8
+
 * Wed Sep 26 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.7-alt1
 - Initial build for Sisyphus
 
