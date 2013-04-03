@@ -1,6 +1,6 @@
 %define oname sphinxcontrib-epydoc
 Name: python-module-%oname
-Version: 0.4.1
+Version: 0.6
 Release: alt1
 Summary: Sphinx extension epydoc
 License: BSD
@@ -26,10 +26,13 @@ A Sphinx extension to cross-reference epydoc-generated documentation.
 %python_install
 
 %files
-%doc *.rst README
+%doc *.rst
 %python_sitelibdir/*
 
 %changelog
+* Wed Apr 03 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6-alt1
+- Version 0.6
+
 * Mon Dec 12 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.1-alt1
 - Version 0.4.1
 
