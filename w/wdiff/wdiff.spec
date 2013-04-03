@@ -1,5 +1,5 @@
 Name: wdiff
-Version: 1.1.2
+Version: 1.2.1
 Release: alt1
 Summary: Comparing files on a word per word basis
 License: GPL
@@ -41,6 +41,9 @@ differences between the original files.
 %_infodir/*
 
 %changelog
+* Sun Mar 31 2013 Fr. Br. George <george@altlinux.ru> 1.2.1-alt1
+- Autobuild version bump to 1.2.1
+
 * Fri Jun 08 2012 Fr. Br. George <george@altlinux.ru> 1.1.2-alt1
 - Autobuild version bump to 1.1.2
 
