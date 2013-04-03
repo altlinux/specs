@@ -6,7 +6,7 @@
 
 Name: branding-%brand-%smalltheme
 Version: 7.0.0
-Release: alt5
+Release: alt6
 BuildArch: noarch
 
 %define theme %name
@@ -29,8 +29,8 @@ BuildRequires: ImageMagick fontconfig bc libGConf-devel
 
 %define Theme_ru KDesktop
 %define Brand_ru Альт Линукс
-%define status_en alpha
-%define status альфа
+%define status_en beta
+%define status бета
 %define variants altlinux-desktop altlinux-office-desktop altlinux-office-server altlinux-lite altlinux-workbench school-master altlinux-gnome-desktop
 
 Source: %name.tar
@@ -452,6 +452,9 @@ fi
 %_datadir/kde4/apps/kio_desktop/DesktopLinks/indexhtml.desktop
 
 %changelog
+* Wed Apr 03 2013 Sergey V Turchin <zerg at altlinux dot org> 7.0.0-alt6
+- change status to beta
+
 * Tue Apr 02 2013 Sergey V Turchin <zerg at altlinux dot org> 7.0.0-alt5
 - remove KDE3 splash doublet
 
