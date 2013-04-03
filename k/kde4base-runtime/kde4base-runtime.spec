@@ -7,7 +7,7 @@
 %define rname kdebase-runtime
 %define major 4
 %define minor 10
-%define bugfix 1
+%define bugfix 2
 Name: kde4base-runtime
 Version: %major.%minor.%bugfix
 Release: alt1
@@ -224,6 +224,9 @@ ln -sf `relative %_kde4_bindir/kde4 %_K4bindir/kde4` %buildroot/%_K4bindir/kde4
 %_K4dbus_interfaces/*
 
 %changelog
+* Wed Apr 03 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.2-alt1
+- new version
+
 * Tue Mar 05 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.1-alt1
 - new version
 

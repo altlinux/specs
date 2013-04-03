@@ -23,11 +23,11 @@
 
 %define major 4
 %define minor 10
-%define bugfix 1
+%define bugfix 2
 %define rname kdebase-workspace
 Name: kde4base-workspace
 Version: %major.%minor.%bugfix
-Release: alt2
+Release: alt1
 
 Group: Graphical desktop/KDE
 Summary: K Desktop Environment - Workspace
@@ -61,7 +61,7 @@ Patch26: kde-workspace-4.9.3-systemd-displaymanager.patch
 Patch700: kde-workspace-kwin-reenable-xrender-effects.diff
 # Ubuntu
 Patch850: kubuntu_11_fix_root_only_kcms.diff
-Patch851: kubuntu_19_always_show_kickoff_subtext.diff
+Patch851: kubuntu_always_show_kickoff_subtext.diff
 # ALT
 Patch1000: kdebase-workspace-4.10.0-alt-startkde.patch
 Patch1001: kdebase-workspace-4.6.0-alt-kdm-confdir.patch
@@ -941,6 +941,9 @@ chmod 0755 %buildroot/%_sysconfdir/firsttime.d/kdm4
 %_K4dbus_interfaces/*
 
 %changelog
+* Wed Apr 03 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.2-alt1
+- new version
+
 * Thu Mar 14 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.1-alt2
 - build polkit-kde-agent-1 separately
 
