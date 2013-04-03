@@ -1,6 +1,6 @@
 Name: emelfm2
-Version: 0.8.0
-Release: alt1.1
+Version: 0.8.2
+Release: alt1
 Summary: file manager for UNIX-like operating systems
 
 Group: File tools
@@ -8,10 +8,10 @@ License: GPLv3+
 Url: http://emelfm2.net
 
 Source: %name-%version.tar
-Patch: emelfm2-0.8.0-alt-DSO.patch
+Patch:  emelfm2-0.8.0-alt-DSO.patch
 Packager: Vladimir Lettiev <crux@altlinux.ru>
 
-BuildRequires: libgimp-devel libacl-devel libgtk+2-devel libgtkspell-devel udisks-devel libdbus-glib-devel libmagic-devel
+BuildRequires: libgimp-devel libacl-devel libgtk+2-devel libgtkspell-devel libudisks2-devel libdbus-glib-devel libmagic-devel
 
 %description
 emelFM2 is a file manager for UNIX-like operating systems. It uses a
@@ -27,7 +27,6 @@ buttons or assigned keys can be used to initiate commands.
 %prep
 %setup -q
 %patch -p2
-mkdir src/build
 
 %build
 make PREFIX=%_prefix LIB_DIR=%_libdir    CFLAGS="--pipe -Wall -g -O2" STRIP=0 \
@@ -61,6 +60,10 @@ done
 %_datadir/doc/%name-%version
 
 %changelog
+* Wed Apr 03 2013 Andrey Cherepanov <cas@altlinux.org> 0.8.2-alt1
+- New version 0.8.2
+- Fix requires to libudisks2-devel
+
 * Wed Jul 18 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.0-alt1.1
 - Fixed build
 
