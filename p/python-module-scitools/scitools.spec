@@ -1,6 +1,6 @@
 %define oname scitools
 Name: python-module-%oname
-Version: 0.8
+Version: 0.9.0
 Release: alt1
 Summary: Python library for scientific computing
 License: BSD
@@ -42,7 +42,7 @@ This package contains documentation for SciTools.
 %install
 %python_install
 
-cp -fR doc/api/sphinx-html api
+cp -fR doc/api/html api
 
 %files
 %doc ChangeLog LICENSE README
@@ -54,6 +54,9 @@ cp -fR doc/api/sphinx-html api
 %doc api doc/easyviz
 
 %changelog
+* Wed Apr 03 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.0-alt1
+- Version 0.9.0
+
 * Fri Dec 09 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8-alt1
 - Initial build for Sisyphus
 
