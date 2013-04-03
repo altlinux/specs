@@ -2,7 +2,7 @@
 
 Name: aeskulap
 Version: 0.2.2
-Release: alt2.1.qa2
+Release: alt2.1.qa3
 
 Summary: Medial image viewer for DICOM images
 License: GPL/LGPL
@@ -23,7 +23,7 @@ BuildPreReq: libxml2-devel, libwrap-devel, libssl-devel
 BuildPreReq: libgtkmm2-devel, libglademm-devel, libgconfmm2-devel
 BuildPreReq: perl-XML-Parser, gettext, intltool
 BuildPreReq: libdcmtk-devel
-BuildRequires: desktop-file-utils
+BuildRequires: desktop-file-utils GConf
 
 %description
 Aeskulap is a medical image viewer. It is able to load a series of special
@@ -67,6 +67,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %doc ABOUT-NLS AUTHORS ChangeLog COPYING COPYING.LIB NEWS README
 
 %changelog
+* Wed Apr 03 2013 Andrey Cherepanov <cas@altlinux.org> 0.2.2-alt2.1.qa3
+- Fix build with new GConf
+
 * Tue Jul 17 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.2-alt2.1.qa2
 - Fixed build
 
