@@ -5,9 +5,9 @@
 Name: kde4-nepomuk-widgets
 %define major 4
 %define minor 10
-%define bugfix 0
+%define bugfix 2
 Version: %major.%minor.%bugfix
-Release: alt0.3
+Release: alt1
 
 Group: System/Libraries
 Summary: Nepomuk widgets library
@@ -62,6 +62,9 @@ Development files for %name
 
 
 %changelog
+* Wed Apr 03 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.2-alt1
+- new version
+
 * Mon Jan 28 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.0-alt0.3
 - update from 4.10 branch
 
