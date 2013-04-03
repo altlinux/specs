@@ -1,5 +1,5 @@
 Name: qpdfview
-Version: 0.4
+Version: 0.4.1
 Release: alt1
 Summary: Tabbed PDF viewer using the poppler library
 License: GPLv2
@@ -52,6 +52,9 @@ ln -s %_datadir/%name/%name.svg \
 %_libexecdir/%name
 
 %changelog
+* Wed Apr 03 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.1-alt1
+- Version 0.4.1 (ALT #28781)
+
 * Sun Feb 24 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4-alt1
 - Version 0.4 (ALT #28589)
 
