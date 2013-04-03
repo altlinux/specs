@@ -1,6 +1,6 @@
 Name: python-module-kivy
-Version: 1.5.1
-Release: alt2
+Version: 1.6.0
+Release: alt1
 Summary: Open source library for rapid development of applications
 License: LGPLv3
 Url: http://kivy.org
@@ -54,6 +54,9 @@ make html &&
 %_datadir/kivy-examples
 
 %changelog
+* Sun Mar 31 2013 Fr. Br. George <george@altlinux.ru> 1.6.0-alt1
+- Autobuild version bump to 1.6.0
+
 * Tue Dec 18 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.5.1-alt2
 - Set examples as noarch package
 
