@@ -7,7 +7,7 @@
 
 Name: branding-%brand-%theme
 Version: 5.9.9
-Release: alt2
+Release: alt3
 BuildArch: noarch
 
 BuildRequires: cpio gfxboot >= 4 fonts-ttf-dejavu
@@ -128,18 +128,6 @@ PreReq: %name-graphics
 %description kde4-settings
 KDE4 settings for %Brand %version %Theme
 
-%package kde3-settings
-
-Summary: KDE3 settings for %Brand %version %Theme
-License: Distributable
-Group: Graphical desktop/KDE
-Requires: ksplash-engine-moodin
-PreReq: %name-graphics
-Conflicts: %(for n in %variants ; do [ "$n" = %brand-%theme ] || echo -n "branding-$n-kde3-settings ";done )
-
-%description kde3-settings
-KDE3 settings for %Brand %version %Theme
-
 %package gnome-settings
 
 Summary: GNOME settings for %Brand %version %Theme
@@ -250,25 +238,6 @@ mkdir -p %buildroot%_sysconfdir/kde4/xdg/menus/applications-merged/
 install -m 644 menu/*menu %buildroot%_sysconfdir/kde4/xdg/menus/applications-merged/
 mkdir -p %buildroot/usr/share/desktop-directories/
 install -m 644 menu/*directory %buildroot/usr/share/desktop-directories/
-popd
-
-#kde3-settings
-pushd kde3-settings
-mkdir -p %buildroot%_sysconfdir/skel/.kde
-cp -a kde/* %buildroot%_sysconfdir/skel/.kde/
-mkdir -p %buildroot%_sysconfdir/skel/.kde/share
-mkdir -p %buildroot%_sysconfdir/skel/.kde/share/config
-mkdir -p %buildroot%_sysconfdir/skel/.kde/share/apps
-cp -a config/* %buildroot%_sysconfdir/skel/.kde/share/config/
-cp -a apps/* %buildroot%_sysconfdir/skel/.kde/share/apps/
-popd
-
-#kde3-splash
-pushd kde3-styles-splash
-mkdir -p "%buildroot/%_datadir/apps/ksplash/Themes/ALTLinux%Theme"
-install -m 644 *.jpg "%buildroot/%_datadir/apps/ksplash/Themes/ALTLinux%Theme/"
-install -m 644 *.png "%buildroot/%_datadir/apps/ksplash/Themes/ALTLinux%Theme/"
-install -m 644 *.rc "%buildroot/%_datadir/apps/ksplash/Themes/ALTLinux%Theme/"
 popd
 
 #gnome-settings
@@ -386,10 +355,6 @@ cat /etc/sysconfig/xinitrc.xfce >> /etc/sysconfig/xinitrc
 %_sysconfdir/kde4/xdg/menus/applications-merged/*
 /usr/share/desktop-directories/*
 
-%files kde3-settings
-%_sysconfdir/skel/.kde
-%_datadir/apps/ksplash/Themes/*
-
 %files gnome-settings
 %_datadir/themes/*
 #/etc/gnome/xdg/menus/applications-merged/
@@ -423,6 +388,9 @@ cat /etc/sysconfig/xinitrc.xfce >> /etc/sysconfig/xinitrc
 
 
 %changelog
+* Thu Apr 04 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 5.9.9-alt3
+- kde3 settings removed
+
 * Mon May 23 2011 Anton V. Boyarshinov <boyarsh@altlinux.ru> 5.9.9-alt2
 - dependence on altlinux-menus dropped
 
