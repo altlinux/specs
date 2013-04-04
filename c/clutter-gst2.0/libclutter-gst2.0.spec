@@ -8,7 +8,7 @@
 %def_disable hw
 
 Name: %_name%api_ver
-Version: 2.0.0
+Version: 2.0.2
 Release: alt1
 
 Summary: Library integrating clutter with GStreamer
@@ -19,7 +19,7 @@ Url: http://www.clutter-project.org/
 Source: %_name-%version.tar.xz
 Patch: clutter-gst-1.9.90-alt-gtk-doc.patch
 
-BuildRequires: gst-plugins%gst_api_ver-devel gtk-doc glib2-devel >= 2.18 libclutter-devel >= 1.6.0
+BuildRequires: gst-plugins%gst_api_ver-devel gtk-doc glib2-devel >= 2.18 libcogl-devel >= 1.10 libclutter-devel >= 1.6.0
 %{?_enable_introspection:BuildRequires: libclutter-gir-devel gst-plugins%gst_api_ver-gir-devel}
 # for gstreamer-basevideo
 %{?_enable_hw:BuildRequires: gst-plugins%gst_api_ver-bad-devel}
@@ -109,6 +109,12 @@ that use Clutter-Gst libraries.
 %endif
 
 %changelog
+* Wed Feb 27 2013 Yuri N. Sedunov <aris@altlinux.org> 2.0.2-alt1
+- 2.0.2
+
+* Fri Feb 22 2013 Yuri N. Sedunov <aris@altlinux.org> 2.0.0-alt2
+- rebuilt against libcogl.so.12
+
 * Wed Jan 23 2013 Yuri N. Sedunov <aris@altlinux.org> 2.0.0-alt1
 - 2.0.0
 

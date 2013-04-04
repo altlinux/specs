@@ -1,7 +1,7 @@
-%define ver_major 3.6
+%define ver_major 3.8
 
 Name: vino
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: A remote desktop system for GNOME
@@ -12,11 +12,11 @@ Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 
 Source: ftp://ftp.gnome.org/pub/sources/gnome/%name/%ver_major/%name-%version.tar.xz
 
-BuildRequires: intltool gnome-common NetworkManager-devel
+BuildRequires: intltool gnome-common desktop-file-utils NetworkManager-devel
 BuildRequires: libgio-devel libgtk+3-devel libsoup-devel libdbus-devel
 BuildRequires: libXdamage-devel libXtst-devel libSM-devel xorg-cf-files xorg-inputproto-devel
-BuildRequires: libavahi-glib-devel libgcrypt-devel libgnutls-devel
-BuildRequires: libgnome-keyring-devel libjpeg-devel libnotify-devel >= 0.7 zlib-devel
+BuildRequires: libavahi-glib-devel libgcrypt-devel libgnutls-devel libsecret-devel
+BuildRequires: libjpeg-devel libnotify-devel >= 0.7 zlib-devel
 BuildRequires: libtelepathy-glib-devel >= 0.11.6
 
 %description
@@ -53,6 +53,9 @@ export LDFLAGS="$LDFLAGS -lgcrypt"
 %doc AUTHORS NEWS README docs/TODO docs/remote-desktop.txt docs/debugging.txt
 
 %changelog
+* Tue Mar 26 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.0-alt1
+- 3.8.0
+
 * Tue Nov 13 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.2-alt1
 - 3.6.2
 

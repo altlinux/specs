@@ -1,6 +1,6 @@
 Name: gtkaml
-Version: 0.5.92
-Release: alt2.svn869
+Version: 0.5.94
+Release: alt1
 
 Summary: An Application Markup Language for GTK+Vala
 License: GPL
@@ -8,7 +8,8 @@ Group: Development/Other
 
 URL: http://code.google.com/p/%name
 Source: %name-%version.tar
-Patch: gtkaml-0.5.92-vala_0.18.patch
+Patch: gtkaml-0.5.94-vala_0.20.patch
+Patch1: gtkaml-0.5.94-link.patch
 
 Requires: lib%name = %version-%release
 BuildRequires: glib2-devel libgtk+2-devel libxml2-devel libvala-devel
@@ -46,7 +47,8 @@ This package contains gtkaml development files (headers and libraries links)
 
 %prep
 %setup
-%patch -p2
+%patch -p1
+%patch1 -p1
 
 %build
 %autoreconf
@@ -73,6 +75,10 @@ This package contains gtkaml development files (headers and libraries links)
 %_vapidir/*
 
 %changelog
+* Fri Mar 29 2013 Yuri N. Sedunov <aris@altlinux.org> 0.5.94-alt1
+- 0.5.94
+- built against libvala-0.20.so.0
+
 * Tue Oct 02 2012 Vladimir Lettiev <crux@altlinux.ru> 0.5.92-alt2.svn869
 - fixed build with vala-0.18
 

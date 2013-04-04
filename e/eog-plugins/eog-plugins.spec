@@ -1,11 +1,11 @@
 %define _name eog
-%define ver_major 3.6
+%define ver_major 3.8
 %define api_ver 3.0
 %def_enable map
 %def_enable postasa
 
 Name: %_name-plugins
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: EOG plugins
@@ -92,6 +92,9 @@ export ac_cv_path_POSTR=%_bindir/postr
 %exclude %_libdir/%_name/plugins/*.la
 
 %changelog
+* Tue Mar 26 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.0-alt1
+- 3.8.0
+
 * Tue Oct 16 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.1-alt1
 - 3.6.1
 

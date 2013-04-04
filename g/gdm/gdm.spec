@@ -1,4 +1,4 @@
-%define ver_major 3.6
+%define ver_major 3.8
 %define api_ver 1.0
 
 %define _libexecdir %_prefix/libexec
@@ -17,16 +17,18 @@
 %def_with xdmcp
 %def_with tcp_wrappers
 %def_with selinux
-%def_with consolekit
+%def_without consolekit
 %def_with systemd
 %def_with libaudit
 %def_with plymouth
 %def_without xevie
 %def_disable split_authentication
+# https://git.gnome.org/browse/gdm/commit/?id=acc931c762b5510103a7f49cf3074c1228700cb8
+%def_disable fallback_greeter
 
 Name: gdm
-Version: %ver_major.2
-Release: alt5
+Version: %ver_major.0
+Release: alt1
 
 Summary: The GNOME Display Manager
 License: GPLv2+
@@ -34,7 +36,7 @@ URL: ftp://ftp.gnome.org/
 Group: Graphical desktop/GNOME
 Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 
-Source: %name-%version.tar
+Source: %name-%version.tar.xz
 Source1: gdm_xdmcp.control
 Source2: gdm.wms-method
 
@@ -47,17 +49,16 @@ Source13: gdm-launch-environment.pam
 #Source12: gdm-fingerprint.pam
 
 # revert this http://git.gnome.org/browse/gdm/commit/?h=gnome-3-6&id=affb42aff901f407502e4d2c0eb65b4f30a1275d
-Patch: gdm-3.6.2-up-affb42af.patch
+#Patch: gdm-3.6.2-up-affb42af.patch
 Patch2: gdm-3.2.1.1-alt-Xsession.patch
 Patch7: gdm-3.1.92-alt-Init.patch
 Patch9: gdm-3.2.2-alt-link.patch
 Patch10: gdm-3.2.1.1-alt-invalid_user_shell.patch
-Patch11: gdm-3.6.2-alt-runtimedir-perms.patch
-Patch12: gdm-autologin-session-logout.patch
+Patch11: gdm-3.7.92-alt-lfs.patch
 
 # from configure.ac
 %define dbus_glib_ver 0.74
-%define glib_ver 2.33.2
+%define glib_ver 2.35
 %define gtk_ver 2.91.1
 %define pango_ver 1.3.0
 %define scrollkeeper_ver 0.1.4
@@ -65,6 +66,8 @@ Patch12: gdm-autologin-session-logout.patch
 %define fontconfig_ver 2.5.0
 %define upower_ver 0.9.0
 %define accountsservice_ver 0.6.12
+%define nss_ver 3.11.1
+%define check_ver 0.9.4
 
 Provides: %name-user-switch-applet = %version-%release
 Obsoletes: %name-user-switch-applet
@@ -84,7 +87,7 @@ BuildPreReq: libpango-devel >= %pango_ver
 BuildPreReq: libupower-devel >= %upower_ver
 BuildPreReq: libaccountsservice-devel >= %accountsservice_ver
 %{?_with_consolekit:BuildPreReq: libConsoleKit-devel}
-%{?_with_systemd:BuildRequires: systemd-devel libsystemd-login-devel libsystemd-daemon-devel}
+%{?_with_systemd:BuildRequires: systemd-devel libsystemd-login-devel libsystemd-daemon-devel libsystemd-journal-devel}
 %{?_with_selinux:BuildPreReq: libselinux-devel libattr-devel}
 %{?_with_libaudit:BuildPreReq: libaudit-devel}
 %{?_with_plymouth:BuildPreReq: plymouth-devel}
@@ -96,8 +99,8 @@ BuildPreReq: fontconfig-devel >= %fontconfig_ver
 BuildPreReq: libX11-devel libXau-devel libXrandr-devel libXext-devel libXdmcp-devel libXft-devel libSM-devel
 BuildPreReq: libXi-devel xorg-inputproto-devel libXinerama-devel xorg-xineramaproto-devel libXevie-devel
 BuildPreReq: xorg-xephyr xorg-server
-BuildPreReq: libcheck-devel >= 0.9.4
-BuildPreReq: libnss-devel >= 3.11.1
+BuildPreReq: libcheck-devel >= %check_ver
+BuildPreReq: libnss-devel >= %nss_ver
 
 BuildRequires:  gcc-c++ libdmx-devel
 BuildRequires: librsvg-devel perl-XML-Parser docbook-dtds xsltproc zenity
@@ -195,8 +198,8 @@ BuildArch: noarch
 Requires: %name = %version-%release
 Provides: gnome-dm
 Conflicts: %name < 2.28.0-alt1
-Requires: gnome-session >= 3.5.1
-Requires: polkit-gnome >= 0.105 gnome-settings-daemon >= 3.5.1
+Requires: gnome-session >= 3.7.1
+Requires: polkit-gnome >= 0.105 gnome-settings-daemon >= 3.7.1
 
 %description gnome
 Gdm (the GNOME Display Manager) is a highly configurable
@@ -208,13 +211,12 @@ Install this package for use with GNOME desktop.
 
 %prep
 %setup -q
-%patch -p1 -R
+#%%patch -p1 -R
 %patch2 -p1
 %patch7 -p1
 %patch9 -p1 -b .link
-%patch10 -p1 -b .shells
-%patch11 -p1 -b .runtimedir
-%patch12 -p1
+#%%patch10 -p1 -b .shells
+%patch11 -p1 -b .lfs
 
 # just copy our PAM config files to %default_pam_config directory
 cp %SOURCE10 %SOURCE11 %SOURCE12 %SOURCE13 data/pam-%default_pam_config/
@@ -244,7 +246,9 @@ cp %SOURCE10 %SOURCE11 %SOURCE12 %SOURCE13 data/pam-%default_pam_config/
 	%{?_disable_split_authentication:--disable-split-authentication} \
 	--with-initial-vt=%vt_nr \
 	--with-authentication-agent-directory=%_libexecdir/polkit-1 \
-	--disable-dependency-tracking
+	--with-dmconfdir=%_sysconfdir/X11/sessions \
+	--disable-dependency-tracking \
+	%{?_enable_fallback_greeter:--enable-fallback-greeter}
 
 %make_build
 
@@ -334,14 +338,11 @@ xvfb-run %make check
 %_datadir/gdm/simple-greeter/extensions/password/page.ui
 %endif
 
-
 %files help -f %name-help.lang
 
 %files gnome
 %_datadir/gdm/greeter/applications/gdm-simple-greeter.desktop
-%_datadir/gdm/greeter/applications/gnome-mag.desktop
 %_datadir/gdm/greeter/applications/gnome-shell.desktop
-%_datadir/gdm/greeter/applications/gok.desktop
 %_datadir/gdm/greeter/applications/mime-dummy-handler.desktop
 %_datadir/gdm/greeter/applications/mimeapps.list
 %_datadir/gdm/greeter/autostart/orca-autostart.desktop
@@ -365,6 +366,8 @@ xvfb-run %make check
 %files libs-gir-devel
 %_girdir/Gdm-%api_ver.gir
 
+%exclude %_sysconfdir/pam.d/gdm-pin
+
 # TODO
 %if_enabled split_authentication
 %files extension-fingerprint
@@ -381,6 +384,13 @@ xvfb-run %make check
 %endif
 
 %changelog
+* Tue Mar 26 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.0-alt1
+- 3.8.0
+
+* Tue Mar 19 2013 Yuri N. Sedunov <aris@altlinux.org> 3.7.92-alt1
+- 3.7.92
+- disabled console-kit support
+
 * Sun Feb 17 2013 Yuri N. Sedunov <aris@altlinux.org> 3.6.2-alt5
 - fixed relogin if autologin enabled (ALT #28475)(BGO 682467)
   patch: http://git.gnome.org/browse/gdm/commit/?h=gnome-3-6&id=12ba97b9741a9f1691f2ef7417871c148dd9fa09

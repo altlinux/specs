@@ -4,7 +4,7 @@
 
 Name: gedit-plugins-collaboration
 Version: %ver_major.1
-Release: alt1
+Release: alt2
 
 Summary: Collaboration plugin for GEdit
 License: GPL
@@ -13,6 +13,10 @@ Url: http://gnome.org
 Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 
 Source: %gnome_ftp/%_name/%ver_major/%_name-%version.tar.xz
+
+# use python3
+AutoReqProv: nopython
+%define __python %nil
 
 # From configure.in
 %define glib_ver 2.28.0
@@ -66,6 +70,9 @@ servers with shared documents.
 %exclude %gedit_pluginsdir/*.la
 
 %changelog
+* Wed Mar 27 2013 Yuri N. Sedunov <aris@altlinux.org> 3.6.1-alt2
+- rebuilt against libgtksourceview-3.0.so.1
+
 * Mon Feb 25 2013 Yuri N. Sedunov <aris@altlinux.org> 3.6.1-alt1
 - 3.6.1
 

@@ -1,13 +1,13 @@
 %set_verify_elf_method unresolved=relaxed
 
-%define ver_major 3.6
+%define ver_major 3.8
 %define api_ver 3.0
 %def_enable introspection
 %def_enable python
 %def_enable zeitgeist
 
 Name: gedit
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: gEdit is a small but powerful text editor for GNOME
@@ -16,21 +16,30 @@ Group: Editors
 Url: ftp://ftp.gnome.org/
 Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 
-%{?_enable_python:%py_provides gedit}
+# use python3
+AutoReqProv: nopython
+%define __python %nil
+%{?_enable_python:%py3_provides gedit}
+
+%define pkglibdir %_libdir/%name
+%define pkgdatadir %_datadir/%name
+%set_typelibdir %pkglibdir
+%set_girdir %pkgdatadir
 
 Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 Patch: %name-3.6.0-alt-settings.patch
 Patch1: %name-2.91.6-alt-link.patch
-Patch2: %name-2.91.8-alt-gir.patch
 
 # From configure.ac
 %define glib_ver 2.28.0
 %define gtk_ver 3.3.15
-%define gtksourceview_ver 3.4.1
-%define peas_ver 1.1.3
+%define gtksourceview_ver 3.8.0
+%define peas_ver 1.7.0
 %define enchant_ver 1.2.0
 
 Requires: %name-data = %version-%release
+Requires: %name-gir = %version-%release
+Requires: libpeas-python3-loader
 
 BuildPreReq: rpm-build-gnome >= 0.6
 
@@ -48,7 +57,7 @@ BuildPreReq: libgtksourceview3-devel >= %gtksourceview_ver
 BuildRequires: desktop-file-utils
 BuildRequires: gnome-common libxml2-devel libsoup-devel libSM-devel libICE-devel gsettings-desktop-schemas-devel
 %{?_enable_zeitgeist:BuildRequires: libzeitgeist-devel}
-%{?_enable_python:BuildRequires: python-module-pygobject3-devel}
+%{?_enable_python:BuildRequires: rpm-build-python3 python3-devel python3-module-pygobject3-devel}
 %{?_enable_introspection:BuildPreReq: gobject-introspection-devel >= 0.10.2 libgtk+3-gir-devel libgtksourceview3-gir-devel}
 
 %description
@@ -109,7 +118,6 @@ This package contains documentation needed to develop plugins for gedit.
 %setup -q
 %patch -p1 -b .settings
 %patch1 -b .link
-%patch2 -b .gir
 
 rm -f data/gedit.desktop.in
 
@@ -164,24 +172,28 @@ desktop-file-install --dir %buildroot%_desktopdir \
 
 %files
 %_bindir/*
-%_libdir/%name/lib%name-private.so
-%dir %_libdir/%name
-%exclude %_libexecdir/%name/gedit-bugreport.sh
+%dir %pkglibdir
+%pkglibdir/lib%name-private.so
 %dir %gedit_pluginsdir
 %gedit_pluginsdir/*
-%{?_enable_python:%python_sitelibdir/gi/overrides/Gedit.py*}
+%{?_enable_python:%python3_sitelibdir/gi/overrides/Gedit.py*}
+%{?_enable_python:%python3_sitelibdir/gi/overrides/__pycache__/Gedit.cpython-*.pyc}
 
+%exclude %_libexecdir/%name/gedit-bugreport.sh
 %exclude %gedit_pluginsdir/*.la
-%exclude %_libdir/%name/lib%name-private.la
+%exclude %pkglibdir/lib%name-private.la
+
 
 %files data -f %name.lang
-%_datadir/%name/
+%pkgdatadir/
 %_desktopdir/*
 %_datadir/dbus-1/services/org.gnome.gedit.service
 %_mandir/man?/*
 %config %_datadir/glib-2.0/schemas/*
 %_datadir/GConf/gsettings/gedit.convert
 %doc BUGS README AUTHORS NEWS
+
+%exclude %pkgdatadir/gir-1.0/
 
 %files devel
 %_includedir/*
@@ -192,12 +204,15 @@ desktop-file-install --dir %buildroot%_desktopdir \
 
 %if_enabled introspection
 %files gir
-%_libdir/girepository-1.0/Gedit-%api_ver.typelib
+%pkglibdir/girepository-1.0/Gedit-%api_ver.typelib
 %files gir-devel
-%_datadir/gir-1.0/Gedit-%api_ver.gir
+%pkgdatadir/gir-1.0/Gedit-%api_ver.gir
 %endif
 
 %changelog
+* Mon Mar 25 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.0-alt1
+- 3.8.0
+
 * Tue Nov 13 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.2-alt1
 - 3.6.2
 

@@ -1,7 +1,7 @@
 %define ver_major 3.6
 %define api_ver 3.0
 %def_disable static
-%def_disable gtk_doc
+%def_enable gtk_doc
 %def_enable introspection
 
 # Whether to build clock applet with evolution-data-server.
@@ -13,7 +13,7 @@
 %def_without in_process_applets
 
 Name: gnome-panel
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: The core programs for the GNOME GUI desktop environment
@@ -22,14 +22,7 @@ Group: Graphical desktop/GNOME
 Url: ftp://ftp.gnome.org
 Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 
-Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
-
-# https://bugzilla.gnome.org/show_bug.cgi?id=507873
-# need  to rework after testing
-Patch3: %name-2.9.92-alt-default_setup.patch
-
-# http://bugzilla.gnome.org/show_bug.cgi?id=520111
-Patch24: %name-2.21.92-allow-spurious-view-done-signals.patch
+Source: %gnome_ftp/%name/%ver_major/%name-%version.tar
 
 # From configure.in
 %define gtk_ver 3.3.12
@@ -75,7 +68,7 @@ BuildPreReq: libgweather-devel >= %gweather_ver
 %{?_enable_eds:BuildPreReq: evolution-data-server-devel >= %eds_ver}
 BuildPreReq: librsvg-devel >= %rsvg_ver
 BuildPreReq: libX11-devel libXt-devel libXau-devel libXrandr-devel
-BuildPreReq: gtk-doc >= 1.0 yelp-tools itstool
+BuildPreReq: gtk-doc >= 1.0 yelp-tools
 BuildPreReq: libxml2-devel
 BuildPreReq: NetworkManager-devel >= %nm_ver
 BuildRequires: libGConf-devel libdconf-devel >= %dconf_ver libdbus-glib-devel libpolkit-devel libSM-devel perl-XML-Parser
@@ -148,8 +141,7 @@ GObject introspection devel data for the GNOME Panel shared library.
 %define _libexecdir %gnome_appletsdir
 
 %prep
-%setup -q
-%patch24 -p1 -b .allow-spurious-view-done-signals
+%setup
 
 %build
 gnome-doc-common --copy
@@ -211,6 +203,10 @@ gnome-doc-common --copy
 %endif
 
 %changelog
+* Wed Mar 13 2013 Yuri N. Sedunov <aris@altlinux.org> 3.6.3-alt1
+- 3.6.3 snapshot (ab3a7495)
+- built for GNOME-3.7.x
+
 * Mon Nov 12 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.2-alt1
 - 3.6.2
 

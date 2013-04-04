@@ -1,7 +1,7 @@
-%define ver_major 3.6
+%define ver_major 3.8
 
 Name: gnome-screenshot
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: The GNOME Screenshot Tool
@@ -41,6 +41,9 @@ GNOME Screenshot Tool makes screenshots from desktop.
 %doc NEWS
 
 %changelog
+* Mon Mar 25 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.0-alt1
+- 3.8.0
+
 * Tue Nov 13 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.1-alt1
 - 3.6.1
 

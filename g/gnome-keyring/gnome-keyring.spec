@@ -1,4 +1,4 @@
-%define ver_major 3.6
+%define ver_major 3.8
 %def_disable static
 %def_disable gtk_doc
 %def_disable debug
@@ -7,8 +7,8 @@
 %def_enable selinux
 
 Name: gnome-keyring
-Version: %ver_major.3
-Release: alt2
+Version: %ver_major.0
+Release: alt1
 
 Summary: %name is a password keeper for GNOME
 License: LGPL
@@ -19,17 +19,17 @@ Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 Patch: gnome-keyring-3.6.3-alt-lfs.patch
 
-%define gtk_ver 3.0.5
-%define glib_ver 2.28.5
+%define glib_ver 2.32.0
 %define dbus_ver 1.0
 %define gcrypt_ver 1.2.2
 %define tasn1_ver 0.3.4
-%define p11kit_ver 0.6
-%define gcr_ver 3.6.0
+%define p11kit_ver 0.16
+%define gcr_ver 3.7.91
+
+Requires: libp11-kit >= %p11kit_ver
 
 # From configure.in
 BuildPreReq: gnome-common glib2-devel >= %glib_ver libgio-devel
-BuildPreReq: libgtk+3-devel >= %gtk_ver
 BuildPreReq: intltool >= 0.35.0 gtk-doc
 BuildPreReq: libdbus-devel >= %dbus_ver
 BuildPreReq: libgcrypt-devel >= %gcrypt_ver
@@ -60,7 +60,7 @@ and start the keyring daemon.
 %define _libexecdir %_prefix/libexec/%name
 
 %prep
-%setup -q
+%setup
 %patch -p1 -b .lfs
 
 %build
@@ -71,13 +71,14 @@ and start the keyring daemon.
 	%{subst_enable debug} \
 	%{subst_enable valgrind} \
 	%{subst_enable selinux} \
-	--with-pam-dir=/%_lib/security \
-	--with-root-certs=/usr/share/ca-certificates
+	--with-pam-dir=/%_lib/security
+
 
 %make_build
 
 %check
-#ERROR:test-transaction.c:278:test_remove_file_abort: assertion failed (n_data == 3): (0 == 3)
+#** (test-data-der:3746): CRITICAL **: egg_symkey_generate_pkcs12: assertion `iterations > 0' failed
+#FAIL
 #xvfb-run %make check
 
 %install
@@ -86,13 +87,13 @@ and start the keyring daemon.
 %find_lang --with-gnome %name
 
 %files -f %name.lang
-%_datadir/p11-kit/modules/%name.module
 %_bindir/*
 %_datadir/dbus-1/services/org.gnome.keyring.service
 %_datadir/dbus-1/services/org.freedesktop.secrets.service
 %_sysconfdir/xdg/autostart/*.desktop
 %config %_datadir/glib-2.0/schemas/org.gnome.crypto.cache.gschema.xml
 %_datadir/GConf/gsettings/org.gnome.crypto.cache.convert
+%_datadir/p11-kit/modules/gnome-keyring.module
 %_libdir/gnome-keyring
 %_libdir/pkcs11
 
@@ -109,6 +110,9 @@ and start the keyring daemon.
 %exclude /%_lib/security/*.la
 
 %changelog
+* Mon Mar 25 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.0-alt1
+- 3.8.0
+
 * Wed Mar 13 2013 Yuri N. Sedunov <aris@altlinux.org> 3.6.3-alt2
 - fix %%files section for libp11-kit >= 0.16.3
 - enabled LFS support

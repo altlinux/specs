@@ -1,9 +1,9 @@
-%define ver_major 3.6
+%define ver_major 3.8
 %define api_ver 3.0
 %def_enable introspection
 
 Name: gnome-menus
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: GNOME desktop menu
@@ -14,7 +14,7 @@ Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 
 Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 Patch1: %name-2.14-alt-add-config-dir.patch
-Patch2: %name-alt-applications-menu-no-legacy-kde.patch
+Patch2: %name-3.8.0-alt-applications-menu-no-legacy-kde.patch
 
 BuildPreReq: rpm-build-gnome rpm-build-xdg
 
@@ -32,7 +32,6 @@ Summary: GNOME Menus common data
 License: GPLv2+
 Group: Graphical desktop/GNOME
 BuildArch: noarch
-Requires: %name-common = %version-%release
 Provides: gnome-menus = %version-%release
 Obsoletes: gnome-menus < 2.26.2-alt2
 
@@ -40,21 +39,13 @@ Obsoletes: gnome-menus < 2.26.2-alt2
 The package contains an implementation of the draft "Desktop Menu
 Specification" from http://www.freedesktop.org/Standards/menu-spec/
 
-%package common
-Summary: GNOME Menus common data
-License: GPLv2+
-Group: Graphical desktop/GNOME
-BuildArch: noarch
-
-%description common
-The package contains data common to GNOME menus of any ALT Linux
-distribution. Normally you should not install this package manually, it
-will be installed as a dependency.
-
 %package -n lib%name
 Summary: Desktop Menu Library for GNOME
 License: LGPLv2+
 Group: System/Libraries
+Obsoletes: gnome-menu-editor
+Obsoletes: gnome-menus-common
+Provides: gnome-menus-common = %version-%release
 
 %description -n lib%name
 This package provides Desktop Menu Library for GNOME.
@@ -96,12 +87,8 @@ Requires: lib%name-gir = %version-%release
 %description -n lib%name-gir-devel
 GObject introspection devel data for the GNOME Desktop Menu Library
 
-%package -n gnome-menu-editor
-Summary: A simple GNOME menu editor
-Group: Graphical desktop/GNOME
+%add_findreq_skiplist %_xdgmenusdir/*
 
-%description -n gnome-menu-editor
-This package contains a simple GNOME menu editor.
 
 %prep
 %setup -q
@@ -119,19 +106,19 @@ This package contains a simple GNOME menu editor.
 %install
 %make_install DESTDIR=%buildroot install
 
-mv %buildroot%_xdgmenusdir/{,gnome3-}applications.menu
+#mv %buildroot%_xdgmenusdir/{gnome-,gnome3-}applications.menu
+# just rewrite gnome-applications.menu by symlink to our gnome3-applications.menu
+ln -sf gnome3-applications.menu  %buildroot%_xdgmenusdir/gnome-applications.menu
+
 
 %find_lang %name-%api_ver
 
 %files default
 %_datadir/desktop-directories/*
-#%config %_xdgmenusdir/gnome3-applications.menu
 
-%files common -f %name-%api_ver.lang
-%dir %_datadir/gnome-menus
-
-%files -n lib%name
+%files -n lib%name -f %name-%api_ver.lang
 %_libdir/*.so.*
+%_xdgmenusdir/gnome-applications.menu
 %doc AUTHORS NEWS README
 
 %files -n lib%name-devel
@@ -147,24 +134,12 @@ mv %buildroot%_xdgmenusdir/{,gnome3-}applications.menu
 %_girdir/*
 %endif
 
-%if 0
-%files -n lib%name-devel-examples
-# like the gnome-menu-spec-test
-%dir %_datadir/%name/examples
-%_datadir/%name/examples/gnome-menus-ls.py
-%endif
-
-%define editor_name gmenu-simple-editor
-
-%files -n gnome-menu-editor
-%_bindir/%editor_name
-%_desktopdir/%editor_name.desktop
-%dir %_datadir/gnome-menus/ui
-%_datadir/gnome-menus/ui/%editor_name.ui
-%dir %python_sitelibdir/GMenuSimpleEditor
-%python_sitelibdir/GMenuSimpleEditor/*
 
 %changelog
+* Tue Mar 26 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.0-alt1
+- 3.8.0
+- no more gnome-menu-editor and common subpackage
+
 * Wed Nov 14 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.1-alt1
 - 3.6.1
 

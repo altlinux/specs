@@ -1,7 +1,7 @@
 
 Name: ekiga
 Version: 4.0.1
-Release: alt1
+Release: alt2
 
 Summary: IP phone client with full SIP and H.323 support
 
@@ -223,6 +223,9 @@ fi
 %files plugins
 
 %changelog
+* Sun Mar 31 2013 Yuri N. Sedunov <aris@altlinux.org> 4.0.1-alt2
+- rebuild against new e-d-s-3.8
+
 * Mon Feb 25 2013 Alexey Shabalin <shaba@altlinux.ru> 4.0.1-alt1
 - 4.0.1
 

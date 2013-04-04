@@ -1,7 +1,7 @@
-%define ver_major 3.6
+%define ver_major 3.8
 
 Name: gnome-themes-standard
-Version: %ver_major.5
+Version: %ver_major.0
 Release: alt1
 
 Summary: A set of standard themes for GNOME desktop
@@ -23,7 +23,7 @@ Requires: %name-data = %version-%release
 
 %define theme_prefix gnome-theme
 BuildPreReq: intltool >= 0.35.0
-BuildRequires: libgtk+3-devel >= 3.5.17 libgtk+2-devel librsvg-devel
+BuildRequires: libgtk+3-devel >= 3.7.12 libgtk+2-devel librsvg-devel
 
 %description
 This package provides a set of standard GTK+-(2/3) themes, engines,
@@ -121,6 +121,9 @@ This package provides a GTK+2 theme engine Adwaita.
 %exclude %_libdir/gtk-2.0/2.10.0/engines/libadwaita.la
 
 %changelog
+* Mon Mar 25 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.0-alt1
+- 3.8.0
+
 * Wed Feb 20 2013 Yuri N. Sedunov <aris@altlinux.org> 3.6.5-alt1
 - 3.6.5
 

@@ -2,7 +2,7 @@
 #%%add_findreq_skiplist %_typelibdir/*
 
 %define _name folks
-%define ver_major 0.8
+%define ver_major 0.9
 %define api_ver 0.6
 %def_disable static
 %def_enable introspection
@@ -11,7 +11,7 @@
 %def_enable tracker
 
 Name: lib%_name
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: GObject contact aggregation library
@@ -26,21 +26,19 @@ Source: http://download.gnome.org/sources/%_name/%ver_major/%_name-%version.tar.
 %define glib_ver 2.26.0
 %define tp_glib_ver 0.19.0
 %define vala_ver 0.15.1
-%define eds_ver 3.5.3
-%define gconf_ver 2.31
-%define tracker_ver 0.14
-%define gee_ver 0.6
+%define eds_ver 3.7.90
+%define tracker_ver 0.15.2
+%define gee_ver 0.8.4
 %define zeitgeist_ver 0.3.14
 
-BuildRequires: intltool libgio-devel >= %glib_ver libdbus-glib-devel
-BuildRequires: libtelepathy-glib-devel >= %tp_glib_ver libgee-devel >= %gee_ver
-BuildRequires: evolution-data-server-devel >= %eds_ver libGConf-devel >= %gconf_ver
-BuildRequires: libzeitgeist-devel >= %zeitgeist_ver
+BuildRequires: gnome-common intltool libgio-devel >= %glib_ver libdbus-glib-devel
+BuildRequires: libtelepathy-glib-devel >= %tp_glib_ver libgee0.8-devel >= %gee_ver
+BuildRequires: evolution-data-server-devel >= %eds_ver
+BuildRequires: libzeitgeist-devel >= %zeitgeist_ver vala-tools
 %{?_enable_tracker:BuildRequires: tracker-devel >= %tracker_ver}
-%{?_enable_introspection:BuildRequires: gobject-introspection-devel libgee-gir-devel libtelepathy-glib-gir-devel evolution-data-server-gir-devel}
+%{?_enable_introspection:BuildRequires: gobject-introspection-devel libgee-gir-devel libtelepathy-glib-gir-devel evolution-data-server-gir-devel libgee0.8-gir-devel}
 %{?_enable_vala:BuildRequires: vala >= %vala_ver vala-tools >= %vala_ver libtelepathy-glib-vala evolution-data-server-vala}
 %{?_enable_libsocialweb:BuildRequires: libsocialweb-devel libsocialweb-gir-devel %{?_enable_vala:libsocialweb-vala}}
-BuildRequires: chrpath
 
 # for tools
 BuildRequires: libreadline-devel libncurses-devel libxml2-devel
@@ -106,11 +104,7 @@ This package provides vala language bindings for %_name library
 #%make check
 
 %install
-%make DESTDIR=%buildroot install
-
-chrpath --delete %buildroot/%_bindir/%_name-{inspect,import}
-chrpath --delete %buildroot/%_libdir/%name-*.so.*
-chrpath --delete %buildroot/%_libdir/%_name/*/backends/*/*.so
+%makeinstall_std
 
 %find_lang %_name
 
@@ -138,11 +132,22 @@ chrpath --delete %buildroot/%_libdir/%_name/*/backends/*/*.so
 
 %if_enabled vala
 %files vala
-%_datadir/vala/vapi/*.deps
-%_datadir/vala/vapi/*.vapi
+%_vapidir/folks.deps
+%_vapidir/folks-eds.deps
+%_vapidir/folks-eds.vapi
+%_vapidir/folks-libsocialweb.deps
+%_vapidir/folks-libsocialweb.vapi
+%_vapidir/folks-telepathy.deps
+%_vapidir/folks-telepathy.vapi
+%_vapidir/folks-tracker.deps
+%_vapidir/folks-tracker.vapi
+%_vapidir/folks.vapi
 %endif
 
 %changelog
+* Sat Feb 23 2013 Yuri N. Sedunov <aris@altlinux.org> 0.9.1-alt1
+- 0.9.1
+
 * Fri Oct 05 2012 Yuri N. Sedunov <aris@altlinux.org> 0.8.0-alt1
 - 0.8.0
 

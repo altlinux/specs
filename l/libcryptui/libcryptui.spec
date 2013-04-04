@@ -1,4 +1,4 @@
-%define ver_major 3.6
+%define ver_major 3.8
 %define api_ver 0.0
 %def_disable static
 %def_enable introspection
@@ -30,6 +30,8 @@ BuildRequires: libgio-devel >= %glib_ver libgtk+3-devel >= %gtk_ver libdbus-glib
 BuildRequires: gnupg2-gpg libgpgme-devel >= 1.0.0 libgnome-keyring-devel libSM-devel
 BuildRequires: libnotify-devel >= 0.7.3 intltool >= %intltool_ver xsltproc
 %{?_enable_introspection:BuildPreReq: gobject-introspection-devel >= %gir_ver libgtk+3-gir-devel}
+# for check
+BuildRequires: /proc dbus-tools-gui xvfb-run
 
 %description
 %name is a library used for prompting for PGP keys.
@@ -92,6 +94,9 @@ GObject introspection devel data for the %name library
 
 %find_lang --output=%name.lang cryptui
 
+%check
+xvfb-run %make check
+
 %files -f %name.lang
 %_bindir/seahorse-daemon
 %_libdir/*.so.*
@@ -120,6 +125,9 @@ GObject introspection devel data for the %name library
 %endif
 
 %changelog
+* Mon Mar 25 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.0-alt1
+- 3.8.0
+
 * Tue Sep 25 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.0-alt1
 - 3.6.0
 

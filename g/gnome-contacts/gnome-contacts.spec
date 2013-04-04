@@ -1,10 +1,10 @@
-%define ver_major 3.6
+%define ver_major 3.8
 %define _libexecdir %_prefix/libexec
 %define gst_api_ver 1.0
 %def_with cheese
 
 Name: gnome-contacts
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: Contacts manager for GNOME
@@ -26,7 +26,7 @@ BuildRequires: libgio-devel >= %glib_ver libgtk+3-devel >= %gtk_ver libtelepathy
 BuildRequires: libfolks-devel >= %folks_ver libvala-devel >= %vala_ver libnotify-devel libgnome-desktop3-devel
 BuildRequires: libgnome-online-accounts-devel libgee-devel evolution-data-server-devel >= %eds_ver
 %{?_with_cheese:BuildRequires: gstreamer%gst_api_ver-devel libcheese-devel >= %cheese_ver}
-BuildRequires: intltool
+BuildRequires: gobject-introspection-devel vala-tools libgtk+3-gir-devel intltool
 
 %description
 %name is a standalone contacts manager for GNOME desktop.
@@ -48,11 +48,15 @@ BuildRequires: intltool
 %_libexecdir/gnome-contacts-search-provider
 %_datadir/applications/%name.desktop
 %_datadir/glib-2.0/schemas/org.gnome.Contacts.gschema.xml
+%_datadir/glib-2.0/schemas/org.gnome.Contacts.enums.xml
 %_datadir/dbus-1/services/org.gnome.Contacts.SearchProvider.service
 %_datadir/gnome-shell/search-providers/gnome-contacts-search-provider.ini
 %doc AUTHORS README NEWS
 
 %changelog
+* Mon Mar 25 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.0-alt1
+- 3.8.0
+
 * Mon Nov 12 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.2-alt1
 - 3.6.2
 

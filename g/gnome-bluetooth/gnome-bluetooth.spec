@@ -1,19 +1,18 @@
-%define ver_major 3.6
+%define ver_major 3.8
 %define _libexecdir %_prefix/libexec
 
 %def_enable introspection
-%def_enable sendto
 %def_enable geoclue
 %def_enable gtk_doc
 
 Name: gnome-bluetooth
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: The GNOME Bluetooth Subsystem
 License: GPLv2/LGPLv2
 Group: System/Libraries
-Url: http://live.gnome.org/GnomeBluetooth
+Url: https://live.gnome.org/GnomeBluetooth
 
 Provides: bluez-gnome = %version
 Obsoletes: bluez-gnome < %version
@@ -23,12 +22,10 @@ Requires: lib%name = %version-%release bluez obex-data-server obexd rfkill
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 # https://bugzilla.redhat.com/show_bug.cgi?id=514798
 Source1: 61-gnome-bluetooth-rfkill.rules
-
-Patch: %name-3.3.92-alt-gir.patch
+Patch: %name-3.7.4-alt-gir.patch
 
 BuildRequires: gnome-common gtk-doc intltool yelp-tools itstool
 BuildRequires: libgio-devel libgtk+3-devel libnotify-devel libXi-devel libdbus-glib-devel
-%{?_enable_sendto:BuildRequires: nautilus-sendto-devel}
 %{?_enable_geoclue:BuildRequires: libgeoclue-devel}
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel libgtk+3-gir-devel}
 
@@ -77,19 +74,6 @@ Requires: lib%name-gir = %version-%release
 %description -n lib%name-gir-devel
 GObject introspection devel data for the GNOME Bluetooth library
 
-%package -n nautilus-sendto-bluetooth
-Summary: Send files from nautilus to bluetooth
-Group: Graphical desktop/GNOME
-Requires: %name = %version-%release
-Requires: lib%name = %version-%release
-Provides: nautilus-sendto-plugin = %version-%release
-
-%description -n nautilus-sendto-bluetooth
-This application provides integration between nautilus and bluetooth.
-It adds a Nautilus context menu component ("Send To...") and features
-a dialog for insert the bluetooth device which you want to send the
-file/files
-
 %prep
 %setup -q
 %patch -p1
@@ -123,10 +107,10 @@ find %buildroot -name "*.la" -delete
 
 %find_lang --with-gnome --output=global.lang %name gnome-bluetooth2
 
+
 %files -f global.lang
 %doc AUTHORS README NEWS
 %_altdir/%name
-%_sysconfdir/xdg/autostart/bluetooth-applet.desktop
 %_bindir/*
 %dir %_libdir/%name
 %dir %_libdir/%name/plugins
@@ -134,15 +118,8 @@ find %buildroot -name "*.la" -delete
 /lib/udev/rules.d/61-gnome-bluetooth-rfkill.rules
 %_desktopdir/*.desktop
 %_datadir/%name
-%_datadir/GConf/gsettings/*
-%_datadir/glib-2.0/schemas/*.xml
 %_iconsdir/hicolor/*/*/*
 %_man1dir/*.1*
-
-%if_enabled sendto
-%files -n nautilus-sendto-bluetooth
-%_libdir/nautilus-sendto/plugins/*.so
-%endif
 
 %files -n lib%name
 %_libdir/*.so.*
@@ -159,15 +136,17 @@ find %buildroot -name "*.la" -delete
 
 %if_enabled introspection
 %files -n lib%name-gir
-%_typelibdir/GnomeBluetooth-1.0.typelib
 %_typelibdir/GnomeBluetoothApplet-1.0.typelib
+%_typelibdir/GnomeBluetooth-1.0.typelib
 
 %files -n lib%name-gir-devel
 %_girdir/GnomeBluetooth-1.0.gir
-%_girdir/GnomeBluetoothApplet-1.0.gir
 %endif
 
 %changelog
+* Tue Mar 26 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.0-alt1
+- 3.8.0
+
 * Thu Nov 15 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.1-alt1
 - 3.6.1
 

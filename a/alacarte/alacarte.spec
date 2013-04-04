@@ -1,7 +1,7 @@
-%define ver_major 3.6
+%define ver_major 3.7
 
 Name: alacarte
-Version: %ver_major.1
+Version: %ver_major.90
 Release: alt1
 
 Summary: Menu editor for GNOME
@@ -47,6 +47,9 @@ Just click and type to edit, add, and delete any menu entry.
 %doc README AUTHORS NEWS
 
 %changelog
+* Thu Feb 28 2013 Yuri N. Sedunov <aris@altlinux.org> 3.7.90-alt1
+- 3.7.90
+
 * Wed Oct 17 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.1-alt1
 - 3.6.1
 

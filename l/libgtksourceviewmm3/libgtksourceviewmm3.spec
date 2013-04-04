@@ -4,7 +4,7 @@
 
 Name: lib%{_name}3
 Version: %ver_major.0
-Release: alt2
+Release: alt3
 
 Summary: gtksourceviewmm is a C++ wrapper for the gtksourceview widget library
 License: LGPL
@@ -80,6 +80,9 @@ mm-common-prepare --copy --force
 %pkgdocdir
 
 %changelog
+* Mon Mar 25 2013 Yuri N. Sedunov <aris@altlinux.org> 3.2.0-alt3
+- rebuilt against libgtksourceview-3.0.so.1
+
 * Thu Apr 19 2012 Yuri N. Sedunov <aris@altlinux.org> 3.2.0-alt2
 - updated from upstream git (aa0dcab289)
 

@@ -1,4 +1,4 @@
-%define ver_major 3.6
+%define ver_major 3.8
 %define _name mousetweaks
 
 Name: gnome-%_name
@@ -8,12 +8,10 @@ Release: alt1
 Summary: Mouse accessibility enhancements
 License: %gpl3plus
 Group: Graphical desktop/GNOME
-Url: http://live.gnome.org/Mousetweaks/Home
+Url: https://live.gnome.org/Mousetweaks/Home
 Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 
 Source: %gnome_ftp/%name/%ver_major/%_name-%version.tar.xz
-
-PreReq: librarian
 
 BuildPreReq: rpm-build-gnome rpm-build-licenses
 
@@ -73,6 +71,9 @@ gnome-panel.
 %doc AUTHORS ChangeLog NEWS README
 
 %changelog
+* Tue Mar 26 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.0-alt1
+- 3.8.0
+
 * Wed Mar 06 2013 Yuri N. Sedunov <aris@altlinux.org> 3.6.0-alt1
 - 3.6.0
 

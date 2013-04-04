@@ -7,7 +7,7 @@
 
 Name: %_name
 Version: %ver_major.3
-Release: alt2
+Release: alt3
 
 Summary: Map view library for Clutter
 License: LGPLv2+
@@ -198,6 +198,9 @@ gtkdocize --copy
 %endif
 
 %changelog
+* Tue Feb 26 2013 Yuri N. Sedunov <aris@altlinux.org> 0.12.3-alt3
+- rebuilt against libcogl.so.12
+
 * Wed Sep 12 2012 Yuri N. Sedunov <aris@altlinux.org> 0.12.3-alt2
 - after 0.12.3 snapshot for people/gnome
 

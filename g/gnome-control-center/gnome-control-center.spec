@@ -1,17 +1,16 @@
+%define _libexecdir %_prefix/libexec
 %define _name control-center
-%define ver_major 3.6
+%define ver_major 3.8
 %define api_ver 2.0
 
 %def_disable debug
 %def_disable static
-%def_with libsocialweb
+%def_without libsocialweb
 %def_with cheese
-%def_enable systemd
-%def_enable ibus
 
 Name: gnome-control-center
-Version: %ver_major.3
-Release: alt3
+Version: %ver_major.0
+Release: alt1
 
 Summary: GNOME Control Center
 License: GPLv2+
@@ -20,28 +19,31 @@ Url: http://www.gnome.org
 Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 
 # git archive --format=tar --prefix=gnome-control-center-3.2.2/ --output=gnome-control-center-3.2.2.tar HEAD
-Source: %name-%version.tar
-#Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
+#Source: %name-%version.tar
+Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
+Patch: %name-3.7.92-alt-lfs.patch
+Patch1: %name-3.8.0-alt-ru.po.patch
 
 # From configure.ac
 %define gtk_ver 3.5.13
-%define glib_ver 2.31.0
+%define glib_ver 2.35.1
 %define desktop_ver 3.5.91
-#%define clutter_ver 1.11.3
 %define fontconfig_ver 1.0.0
 %define xft_ver 2.1.2
 %define libmetacity_ver 2.30.0
-%define gsds_ver 3.6.0
+%define gsds_ver 3.7.91
 %define notify_ver 0.7.3
 %define nm_ver 0.9.1.90
-%define gnome_menus_ver 3.5.5
-%define goa_ver 3.5.90
-%define sett_daemon_ver 3.6.3
+%define gnome_menus_ver 3.7.90
+%define goa_ver 3.7.91
+%define acc_ver 0.6.30
+%define sett_daemon_ver 3.7.91
 %define cheese_ver 3.5.92
 %define bt_ver 3.5.92
 %define systemd_ver 40
-%define wacom_ver 0.6
+%define wacom_ver 0.7
 %define ibus_ver 1.4.99
+%define colord_ver 0.1.29
 
 Requires: %name-data = %version-%release
 
@@ -65,25 +67,29 @@ BuildPreReq: libgnome-desktop3-devel >= %desktop_ver
 BuildPreReq: gsettings-desktop-schemas-devel >= %gsds_ver
 BuildPreReq: libnotify-devel >= %notify_ver
 BuildPreReq: gnome-settings-daemon-devel >= %sett_daemon_ver
+BuildPreReq: libcolord-devel >= %colord_ver
+BuildPreReq: libcolord-gtk-devel
 BuildPreReq: libgnome-menus-devel >= %gnome_menus_ver
-%{?_with_cheese:BuildPreReq: libcheese-devel >= %cheese_ver}
-BuildRequires: libxkbfile-devel
-%{?_enable_ibus:BuildPreReq: libibus-devel >= %ibus_ver}
-BuildRequires: libGConf-devel libdbus-glib-devel libupower-devel libpolkit1-devel
+BuildPreReq: libibus-devel >= %ibus_ver libxkbfile-devel
+BuildRequires: libupower-devel libpolkit1-devel
 BuildRequires: libgio-devel librsvg-devel libxml2-devel libcanberra-gtk3-devel
 BuildRequires: libX11-devel libXext-devel libSM-devel libXScrnSaver-devel libXt-devel
 BuildRequires: libXft-devel libXi-devel libXrandr-devel libXrender-devel libXcursor-devel libXcomposite-devel
 BuildRequires: libgtop-devel libcups-devel libpulseaudio-devel iso-codes-devel
-BuildRequires: libpwquality-devel libkrb5-devel
+BuildRequires: libpwquality-devel libkrb5-devel libsmbclient-devel
+BuildRequires: gobject-introspection-devel libgtk+3-gir-devel
 # for test-endianess
 BuildRequires: glibc-i18ndata
 BuildRequires: libnm-gtk-devel >= %nm_ver
-BuildRequires: libgnome-online-accounts-devel >= %goa_ver colord-devel
+BuildRequires: libmm-glib-devel
+BuildRequires: libgnome-online-accounts-devel >= %goa_ver
+BuildRequires: libaccountsservice-devel >= %acc_ver
 BuildRequires: libgnome-bluetooth-devel >= %bt_ver
 BuildRequires: libwacom-devel >= %wacom_ver
 BuildRequires: libclutter-gtk3-devel
+BuildRequires: systemd-devel >= %systemd_ver libsystemd-login-devel
+%{?_with_cheese:BuildPreReq: libcheese-devel >= %cheese_ver}
 %{?_with_libsocialweb:BuildRequires: libsocialweb-devel}
-%{?_enable_systemd:BuildRequires: systemd-devel >= %systemd_ver libsystemd-login-devel}
 
 %description
 GNOME (the GNU Network Object Model Environment) is an attractive and
@@ -117,56 +123,29 @@ you'll want to install this package.
 
 %prep
 %setup
+%patch -p1 -b .lfs
+%patch1
 
 %build
-#NOCONFIGURE=1 ./autogen.sh
 %autoreconf
 %configure \
-	%{subst_enable debug} \
-	%{subst_enable static} \
-	--disable-update-mimedb \
-	%{subst_with libsocialweb} \
-	%{subst_with cheese} \
-	%{subst_enable systemd} \
-	%{subst_enable ibus}
+    %{subst_enable static} \
+    %{subst_with libsocialweb} \
+    %{subst_with cheese}
 
 %make_build
 
 %install
 %make_install DESTDIR=%buildroot install
-
 %find_lang --with-gnome --output=%name.lang %name-%api_ver %name-%api_ver-timezones %_name
 
-
 %files
-%_bindir/*
-%dir %_libdir/control-center-1/panels
-%_libdir/control-center-1/panels/libbackground.so
-%_libdir/control-center-1/panels/libbluetooth.so
-%_libdir/control-center-1/panels/libcolor.so
-%_libdir/control-center-1/panels/libdate_time.so
-%_libdir/control-center-1/panels/libdisplay.so
-%_libdir/control-center-1/panels/libinfo.so
-%_libdir/control-center-1/panels/libkeyboard.so
-%_libdir/control-center-1/panels/libmouse-properties.so
-%_libdir/control-center-1/panels/libnetwork.so
-%_libdir/control-center-1/panels/libonline-accounts.so
-%_libdir/control-center-1/panels/libpower.so
-%_libdir/control-center-1/panels/libprinters.so
-%_libdir/control-center-1/panels/libregion.so
-%_libdir/control-center-1/panels/libscreen.so
-%_libdir/control-center-1/panels/libsound.so
-%_libdir/control-center-1/panels/libuniversal-access.so
-%_libdir/control-center-1/panels/libuser-accounts.so
-%_libdir/control-center-1/panels/libwacom-properties.so
-
-%exclude %_libdir/control-center-1/panels/*.la
+%_bindir/%name
+%_libexecdir/cc-remote-login-helper
+%_libexecdir/gnome-control-center-search-provider
 
 %files data -f %name.lang
 %dir %_datadir/%name
-%_datadir/%name/ui
-# need to move to ui subdir
-%_datadir/%name/bluetooth.ui
 %_datadir/%name/keybindings
 %_datadir/%name/pixmaps
 %dir %_datadir/%name/sounds
@@ -175,22 +154,26 @@ you'll want to install this package.
 %_datadir/%name/datetime/backward
 %_datadir/%name/icons/
 %_desktopdir/*.desktop
-%_sysconfdir/xdg/menus/gnomecc.menu
-%_datadir/desktop-directories/*
-%_sysconfdir/xdg/autostart/gnome-sound-applet.desktop
 %_datadir/pixmaps/faces/
 %_iconsdir/hicolor/*/*/*
 %_datadir/sounds/gnome/default/alerts/*.ogg
 %_datadir/polkit-1/actions/org.gnome.controlcenter.datetime.policy
 %_datadir/polkit-1/actions/org.gnome.controlcenter.user-accounts.policy
 %_datadir/polkit-1/rules.d/gnome-control-center.rules
+%_datadir/polkit-1/actions/org.gnome.controlcenter.remote-login-helper.policy
+%_datadir/dbus-1/services/org.gnome.ControlCenter.SearchProvider.service
+%_datadir/gnome-shell/search-providers/gnome-control-center-search-provider.ini
 %_man1dir/%name.1.*
+%_datadir/bash-completion/completions/gnome-control-center
 %doc AUTHORS NEWS README
 
 %files devel
 %_datadir/pkgconfig/gnome-keybindings.pc
 
 %changelog
+* Tue Mar 26 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.0-alt1
+- 3.8.0
+
 * Sat Feb 16 2013 Yuri N. Sedunov <aris@altlinux.org> 3.6.3-alt3
 - rebuilt against libcolord.so.2
 

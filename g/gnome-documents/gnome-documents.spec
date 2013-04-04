@@ -1,9 +1,9 @@
-%define ver_major 3.6
+%define ver_major 3.8
 %define api_ver 1.0
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-documents
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: A document manager application for GNOME
@@ -13,30 +13,49 @@ Url: https://live.gnome.org/Design/Apps/Documents
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 
+Requires: %name-data = %version-%release
+
 %define pkglibdir %_libdir/%name
 %define pkgdatadir %_datadir/%name
 %set_typelibdir %pkglibdir
+%set_girdir %pkgdatadir
 
 %define glib_ver 2.31.6
 %define gtk_ver 3.5.5
-%define evince_ver 3.3.0
-%define tracker_ver 0.13.1
+%define evince_ver 3.7.4
+%define tracker_ver 0.15.2
 %define goa_ver 3.2.0
-%define gdata_ver 0.13.1
-%define clutter_gtk_ver 1.3.2
+%define gdata_ver 0.13.3
+%define soup_ver 2.41.3
+%define gi_ver 1.31.6
 
-BuildRequires: intltool
+
+BuildRequires: intltool yelp-tools desktop-file-utils
 BuildRequires: libgio-devel >= %glib_ver libgtk+3-devel >= %gtk_ver
-BuildRequires: libclutter-gtk3-devel >= %clutter_gtk_ver libgnome-desktop3-devel libgdata-devel >= %gdata_ver
+BuildRequires: libgnome-desktop3-devel libgdata-devel >= %gdata_ver
 BuildRequires: liboauth-devel libgnome-online-accounts-devel >= %goa_ver
-BuildRequires: tracker-devel >= %tracker_ver libevince-devel >= %evince_ver libzapojit-devel
-BuildRequires: libgtk+3-gir-devel libgjs-devel libevince-gir-devel libgdata-gir-devel libgnome-online-accounts-gir-devel
+BuildRequires: tracker-devel >= %tracker_ver libevince-devel >= %evince_ver
+BuildRequires: libsoup-devel >= %soup_ver
+BuildRequires: libwebkitgtk3-devel
+BuildRequires: libzapojit-devel
+BuildRequires: gobject-introspection-devel >= %gi_ver
+BuildRequires: libgtk+3-gir-devel libgjs-devel libevince-gir-devel
+BuildRequires: libgdata-gir-devel libgnome-online-accounts-gir-devel libtracker-gir-devel
 BuildRequires: libzapojit-gir-devel
 
 %description
 gnome-documents is a document manager application for GNOME,
 aiming to be a simple and elegant replacement for using Files to show
 the Documents directory.
+
+%package data
+Summary: Arch independent files for %name
+Group: Office
+BuildArch: noarch
+Requires: %name-gir = %version-%release
+
+%description data
+This package provides noarch data needed for %name to work.
 
 %package devel
 Summary: Development files for %name
@@ -75,39 +94,48 @@ GObject introspection devel data for the %name library.
 %make_build
 
 %install
-make DESTDIR=%buildroot install
-%find_lang %name
+%makeinstall_std
+%find_lang --with-gnome %name
 
-%files -f %name.lang
+%files
 %_bindir/%name
 %dir %pkglibdir
 %pkglibdir/*.so
 %exclude %pkglibdir/*.la
 %_libexecdir/gd-tracker-gdata-miner
-%_libexecdir/gnome-documents-search-provider
 %_libexecdir/gd-tracker-zpj-miner
+%doc README AUTHORS NEWS TODO
+
+%files gir
+%dir %pkglibdir/girepository-1.0
+%pkglibdir/girepository-1.0/Gd-%api_ver.typelib
+%pkglibdir/girepository-1.0/GdPrivate-1.0.typelib
+%pkglibdir/girepository-1.0/Egg-1.0.typelib
+
+%if 0
+%files gir-devel
+%dir %pkgdatadir/gir-1.0
+%pkgdatadir/gir-1.0/Gd-%api_ver.gir
+%endif
+
+%files data -f %name.lang
 %pkgdatadir/
 %exclude %pkgdatadir/gir-1.0
+%_datadir/applications/%name.desktop
 %_datadir/dbus-1/services/org.gnome.Documents.GDataMiner.service
 %_datadir/dbus-1/services/org.gnome.Documents.SearchProvider.service
 %_datadir/dbus-1/services/org.gnome.Documents.ZpjMiner.service
 %_datadir/glib-2.0/schemas/org.gnome.Documents.enums.xml
 %_datadir/glib-2.0/schemas/org.gnome.documents.gschema.xml
 %_datadir/gnome-shell/search-providers/gnome-documents-search-provider.ini
-%_datadir/applications/%name.desktop
 %_iconsdir/hicolor/*/apps/%name.png
-%doc README AUTHORS NEWS TODO
 
-#%files gir
-%dir %pkglibdir/girepository-1.0
-%pkglibdir/girepository-1.0/Gd-%api_ver.typelib
-%pkglibdir/girepository-1.0/GdPrivate-1.0.typelib
-
-#%files gir-devel
-%exclude %dir %pkgdatadir/gir-1.0
-%exclude %pkgdatadir/gir-1.0/Gd-%api_ver.gir
 
 %changelog
+* Mon Mar 25 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.0-alt1
+- 3.8.0
+- arch independent data moved to separate subpackage
+
 * Tue Nov 13 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.2-alt1
 - 3.6.2
 

@@ -4,7 +4,7 @@
 %define api_ver 0.2
 
 Name: telepathy-logger
-Version: 0.6.0
+Version: 0.8.0
 Release: alt1
 
 Summary: Telepathy client that logs information received by the Telepathy framework
@@ -126,6 +126,9 @@ GObject introspection devel data for %name library.
 
 
 %changelog
+* Tue Feb 26 2013 Yuri N. Sedunov <aris@altlinux.org> 0.8.0-alt1
+- 0.8.0
+
 * Wed Nov 07 2012 Yuri N. Sedunov <aris@altlinux.org> 0.6.0-alt1
 - 0.6.0
 

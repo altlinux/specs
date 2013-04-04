@@ -1,7 +1,10 @@
 %define _libexecdir %_prefix/libexec
+%def_disable ovirt
+%def_enable usbredir
+%def_enable smartcard
 
 Name: gnome-boxes
-Version: 3.6.3
+Version: 3.8.0
 Release: alt1
 Summary: A simple GNOME 3 application to access remote or virtual systems
 Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
@@ -15,21 +18,23 @@ Source2: libgd.tar
 # From configure.ac
 %define clutter_gtk_ver 1.3.2
 %define clutter_ver 1.11.14
-%define glib_ver 2.29.90
+%define govirt_ver 0.0.3
+%define glib_ver 2.32.0
 %define gtk_ver 3.5.5
 %define gtk_vnc_ver 0.4.4
-%define libvirt_glib_ver 0.1.2
+%define libvirt_glib_ver 0.1.6
 %define libxml2_ver 2.7.8
-%define spice_gtk_ver 0.12.101
+%define spice_gtk_ver 0.15
 %define gudev_ver 165
-%define osinfo_ver 0.2.1
+%define osinfo_ver 0.2.6
 %define tracker_ver 0.13.1
 %define uuid_ver 1.41.3
 %define libsoup_ver 2.38
 
 BuildRequires: intltool >= 0.40.0
+BuildRequires: yelp-tools
 BuildRequires: gobject-introspection-devel >= 0.9.6
-BuildRequires: libvala-devel >= 0.17.2
+BuildRequires: libvala-devel >= 0.17.3
 BuildRequires: vala-tools
 BuildRequires: libclutter-gtk3-devel >= %clutter_gtk_ver
 BuildRequires: libclutter-devel >= %clutter_ver
@@ -45,6 +50,8 @@ BuildRequires: libosinfo-devel >= %osinfo_ver
 BuildRequires: tracker-devel >= %tracker_ver
 BuildRequires: libuuid-devel >= %uuid_ver
 BuildRequires: libsoup-devel >= %libsoup_ver
+%{?_enable_ovirt:BuildRequires: pkgconfig(govirt-1.0) >= %govirt_ver}
+
 
 # Need libvirtd and an hypervisor to do anything useful
 Requires: libvirt-daemon
@@ -68,10 +75,16 @@ gnome-boxes lets you easily create, setup, access, and use:
 %prep
 %setup
 tar -xf %SOURCE2 -C libgd
+echo %version > .tarball-version
 
 %build
 %autoreconf
-%configure --enable-vala
+intltoolize -f
+%configure \
+	%{subst_enable usbredir} \
+	%{subst_enable smartcard} \
+	--enable-vala
+
 %make_build
 
 %install
@@ -90,6 +103,15 @@ tar -xf %SOURCE2 -C libgd
 %_datadir/gnome-shell/search-providers/gnome-boxes-search-provider.ini
 
 %changelog
+* Wed Mar 27 2013 Alexey Shabalin <shaba@altlinux.ru> 3.8.0-alt1
+- 3.8.0
+
+* Fri Mar 22 2013 Alexey Shabalin <shaba@altlinux.ru> 3.7.92-alt1
+- 3.7.92
+
+* Mon Feb 25 2013 Alexey Shabalin <shaba@altlinux.ru> 3.7.90-alt1
+- 3.7.90
+
 * Mon Feb 25 2013 Alexey Shabalin <shaba@altlinux.ru> 3.6.3-alt1
 - 3.6.3
 

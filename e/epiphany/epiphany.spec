@@ -1,23 +1,17 @@
-%define ver_major 3.6
+%define ver_major 3.8
 %define api_ver %ver_major
 %define ua_ver %ver_major
 
-%def_enable gtk_doc
-%def_without webkit2
+%def_with webkit2
 %if_with webkit2
 %def_disable introspection
 %else
 %def_enable introspection
 %endif
 
-# seed support removed
-#%if_enabled introspection
-#%def_enable seed
-#%endif
-
 Name: epiphany
-Version: %ver_major.1
-Release: alt1
+Version: %ver_major.0
+Release: alt2
 
 Summary: Epiphany is a GNOME web browser.
 Summary(ru_RU.UTF-8): Epiphany - интернет-браузер для графической оболочки GNOME.
@@ -25,18 +19,20 @@ Group: Networking/WWW
 License: GPL
 URL: http://www.gnome.org/projects/%name
 
-Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
-#Source: %name-%version.tar
+#Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+Source: %name-%version.tar
 
 Provides: webclient
+Obsoletes: %name-extensions
 
-%define webkit_ver 1.9.6
+%define webkit_ver 1.11.92
 
-Requires: %name-data = %version-%release indexhtml iso-codes libwebkitgtk3-webinspector
+Requires: %name-data = %version-%release indexhtml iso-codes
+Requires: libwebkitgtk3-webinspector
 
 BuildRequires: gnome-common
 BuildPreReq: intltool >= 0.50.0
-BuildPreReq: libgio-devel >= 2.31.2
+BuildPreReq: libgio-devel >= 2.35.6
 BuildPreReq: libgtk+3-devel >= 3.5.2
 BuildPreReq: libSM-devel
 BuildPreReq: libxml2-devel >= 2.6.12
@@ -44,18 +40,15 @@ BuildPreReq: libxslt-devel >= 1.1.7
 # Epiphany partially ported to WebKit2
 BuildPreReq: libwebkitgtk3-devel >= %webkit_ver
 %{?_with_webkit2:BuildPreReq: libwebkit2gtk-devel >= %webkit_ver}
-BuildPreReq: libsoup-gnome-devel >= 2.39.6
-BuildPreReq: libgnome-keyring-devel >= 2.32.0
+BuildPreReq: libsoup-gnome-devel >= 2.41.3
+BuildPreReq: libsecret-devel
 BuildPreReq: gcr-libs-devel >= 3.5.5
-BuildRequires: libgnome-desktop3-devel libnotify-devel libnss-devel libsqlite3-devel
+BuildRequires: libwnck3-devel libgnome-desktop3-devel libnotify-devel libnss-devel libsqlite3-devel
 # Zeroconf support
 BuildPreReq: libavahi-devel libavahi-gobject-devel
 # GObject introspection support
 %{?_enable_introspection:BuildPreReq: gobject-introspection-devel >= 0.9.5 libgtk+3-gir-devel libwebkitgtk3-gir-devel}
-# Seed support
-%{?_enable_seed:BuildPreReq: libseed-gtk3-devel >= 3.1.1}
 BuildPreReq: iso-codes-devel >= 0.35
-BuildRequires: lsb-core ca-certificates gnome-doc-utils gtk-doc db2latex-xsl
 BuildRequires: gcc-c++ gsettings-desktop-schemas-devel
 
 %description
@@ -73,24 +66,6 @@ BuildArch: noarch
 %description data
 Epiphany is a GNOME web browser based on the Webkit rendering engine.
 This package contains common noarch files needed for Epiphany.
-
-%package devel
-Summary: Epiphany header files
-Group: Development/C
-Requires: %name = %version-%release
-
-%description devel
-This package provides header files needed for build Epiphany extensions.
-
-%package devel-doc
-Summary: Epiphany development documentation
-Group: Development/C
-BuildArch: noarch
-Conflicts: %name < %version
-
-%description devel-doc
-This package contains documentation needed to develop Epipnahy
-extensions.
 
 %package gir
 Summary: GObject introspection data for the Epiphany
@@ -110,18 +85,20 @@ Requires: %name-gir = %version-%release
 GObject introspection devel data for the Epiphany
 
 %prep
-%setup -q
+%setup
+
+[ ! -d m4 ] && mkdir m4
+
+# sinc 3.7.92 --with-webkit2 flag removed
+%{?_without_webkit2:subst 's/with_webkit2=yes/with_webkit2=no/' configure.ac}
 
 %build
 %autoreconf
 %configure \
 	--disable-schemas-compile \
 	--disable-dependency-tracking \
-	%{?_enable_gtk_doc:--enable-gtk-doc} \
 	%{?_enable introspection:--enable-introspection=yes} \
-	%{subst_with webkit2} \
 	--with-distributor-name="ALTLinux"
-#	%{subst_enable seed} \
 
 %make_build
 
@@ -135,6 +112,9 @@ GObject introspection devel data for the Epiphany
 %files
 %_bindir/*
 %dir %_libdir/%name/%ua_ver/extensions
+%dir %_libdir/%name/%ua_ver/web-extensions
+%_libdir/%name/%ua_ver/web-extensions/libephywebextension.so
+%exclude %_libdir/%name/%ua_ver/web-extensions/libephywebextension.la
 %doc AUTHORS NEWS README TODO
 
 %files data -f %name.lang
@@ -146,14 +126,6 @@ GObject introspection devel data for the Epiphany
 %_datadir/GConf/gsettings/epiphany.convert
 %_man1dir/*
 
-%files devel
-%_includedir/*
-%_libdir/pkgconfig/*
-%_datadir/aclocal/*
-
-%files devel-doc
-%doc %_datadir/gtk-doc/html/*
-
 %if_enabled introspection
 %files gir
 %_typelibdir/Epiphany-%ver_major.typelib
@@ -163,6 +135,12 @@ GObject introspection devel data for the Epiphany
 %endif
 
 %changelog
+* Thu Mar 28 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.0-alt2
+- after 3.8.0 snapshot (5ba907e)
+
+* Tue Mar 26 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.0-alt1
+- 3.8.0
+
 * Tue Oct 16 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.1-alt1
 - 3.6.1
 

@@ -1,6 +1,6 @@
 Name: giggle
 Version: 0.7
-Release: alt1
+Release: alt2
 
 Summary: Giggle is a Gtk frontend to git.
 License: GPL
@@ -8,6 +8,8 @@ Group: Development/Other
 
 URL: http://live.gnome.org/giggle
 Source: %name-%version.tar
+# from fedora
+Patch: %name-0.7-fc-gtksourceview.patch
 
 Requires: git-core
 
@@ -32,6 +34,7 @@ Requires: %name = %version-%release
 
 %prep
 %setup
+%patch
 
 %build
 %autoreconf
@@ -58,6 +61,9 @@ Requires: %name = %version-%release
 %_includedir/%name
 
 %changelog
+* Fri Mar 29 2013 Yuri N. Sedunov <aris@altlinux.org> 0.7-alt2
+- rebuilt against libgtksourceview-3.0-so.1
+
 * Sat Nov 10 2012 Vladimir Lettiev <crux@altlinux.ru> 0.7-alt1
 - 0.7
 - dropped patches

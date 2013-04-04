@@ -1,7 +1,7 @@
 
 Summary: A library for managing OS information for virtualization
 Name: libosinfo
-Version: 0.2.4
+Version: 0.2.6
 Release: alt1
 License: LGPLv2+
 Group: System/Libraries
@@ -82,6 +82,8 @@ NOCONFIGURE=1 ./autogen.sh
 %configure \
 	--disable-static \
 	--enable-introspection \
+	--with-usb-ids-path=%_datadir/misc/usb.ids \
+	--with-pci-ids-path=%_datadir/misc/pci.ids \
 	--enable-vala \
 	--enable-udev \
 	--enable-gtk-doc
@@ -93,10 +95,6 @@ chmod a-x examples/*.js examples/*.py
 %install
 %makeinstall_std
 rm -f %buildroot%_libdir/*.{a,la}
-
-# symlinks to *.ids
-ln -sf ../../misc/usb.ids %buildroot%_datadir/%name/db/usb.ids
-ln -sf ../../misc/pci.ids %buildroot%_datadir/%name/db/pci.ids
 
 %find_lang --with-gnome %name
 
@@ -135,6 +133,9 @@ ln -sf ../../misc/pci.ids %buildroot%_datadir/%name/db/pci.ids
 %_datadir/gtk-doc/html/*
 
 %changelog
+* Thu Mar 21 2013 Alexey Shabalin <shaba@altlinux.ru> 0.2.6-alt1
+- 0.2.6
+
 * Mon Feb 25 2013 Alexey Shabalin <shaba@altlinux.ru> 0.2.4-alt1
 - 0.2.4
 

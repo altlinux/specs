@@ -1,9 +1,9 @@
-%define ver_major 3.6
+%define ver_major 3.8
 %def_enable python
 %define gedit_pluginsdir %_libdir/gedit/plugins
 
 Name: gedit-plugins
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: Plugins for GEdit
@@ -14,12 +14,18 @@ Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 
 Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 
+Requires: gedit >= %ver_major
+Requires: libpeas-python3-loader
+
+AutoReqProv: nopython
+%define __python %nil
+
 # From configure.in
 %define glib_ver 2.31.0
 %define gtk_ver 3.3.7
 %define gtksourceview_ver 3.3.0
-%define gedit_ver 3.6.0
-%define peas_ver 1.2.0
+%define gedit_ver 3.8.0
+%define peas_ver 1.7.0
 
 BuildPreReq: rpm-build-gnome >= 0.6
 
@@ -33,8 +39,8 @@ BuildPreReq: gedit-devel >= %gedit_ver
 BuildPreReq: libpeas-devel >= %peas_ver
 # For Charmap plugin
 BuildPreReq: libgucharmap-devel >= 3.0.0
-%{?_enable_python:BuildRequires: python-module-pygobject3-devel}
-BuildRequires: libSM-devel libxml2-devel python-module-dbus-devel libvte3-devel
+%{?_enable_python:BuildRequires: rpm-build-python3 python3-devel python3-module-pygobject3-devel}
+BuildRequires: libSM-devel libxml2-devel python3-module-dbus-devel libvte3-devel
 
 %description
 gEdit is a small but powerful text editor designed expressly for GNOME.
@@ -94,6 +100,9 @@ done
 %exclude %gedit_pluginsdir/*.la
 
 %changelog
+* Mon Mar 25 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.0-alt1
+- 3.8.0
+
 * Tue Oct 16 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.1-alt1
 - 3.6.1
 

@@ -1,19 +1,20 @@
-%define ver_major 3.6
+%define ver_major 3.8
 %define domain gcampax.github.com
+%define _libexecdir %_prefix/libexec
 
 Name: gnome-shell-extensions
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: GNOME Shell Extensions
 Group: Graphical desktop/GNOME
 License: GPLv2+
-Url: http://live.gnome.org/GnomeShell
+Url: https://live.gnome.org/GnomeShell
 Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 
 BuildArch: noarch
 
-Source: http://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar
+Source: http://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 
 Requires: gnome-shell >= %version
 
@@ -25,10 +26,10 @@ and optional functionality to GNOME Shell.
 See %_docdir/%name-%version/README for more information.
 
 %prep
-%setup -q -n %name-%version
+%setup -n %name-%version
 
 %build
-NOCONFIGURE=1 ./autogen.sh
+#NOCONFIGURE=1 ./autogen.sh
 %configure \
     --disable-schemas-compile \
     --enable-extensions=all
@@ -40,9 +41,45 @@ NOCONFIGURE=1 ./autogen.sh
 %install
 %make DESTDIR=%buildroot install
 
+cat <<__START_GNOME__ >startgnome
+#!/bin/sh
+
+. %_datadir/gnome-session/startgnome-common
+
+exec %_bindir/gnome-session --session gnome-classic "\$@"
+__START_GNOME__
+
+install -pD -m755 startgnome %buildroot%_bindir/startgnome-classic
+
+mkdir -p %buildroot%_sysconfdir/X11/wmsession.d/
+cat << __EOF__ > %buildroot%_sysconfdir/X11/wmsession.d/03Gnome-classic
+NAME=Gnome-classic
+ICON=%_iconsdir/gnome.svg
+DESC=Gnome Classic Mode
+EXEC=%_bindir/startgnome-classic
+SCRIPT:
+exec %_bindir/startgnome-classic
+__EOF__
+
+
 %find_lang %name
 
 %files -f %name.lang
+## Classic mode
+%_bindir/startgnome-classic
+%_sysconfdir/X11/wmsession.d/03Gnome-classic
+%_datadir/applications/gnome-shell-classic.desktop
+%_datadir/gnome-session/sessions/gnome-classic.session
+%_datadir/gnome-shell/modes/classic.json
+%_datadir/gnome-shell/theme/classic-toggle-off-intl.svg
+%_datadir/gnome-shell/theme/classic-toggle-off-us.svg
+%_datadir/gnome-shell/theme/classic-toggle-on-intl.svg
+%_datadir/gnome-shell/theme/classic-toggle-on-us.svg
+%_datadir/gnome-shell/theme/gnome-classic.css
+
+%exclude %_datadir/xsessions/gnome-classic.desktop
+
+## Extensions
 %dir %_datadir/gnome-shell/extensions
 # alternate-tab
 %dir %_datadir/gnome-shell/extensions/alternate-tab@gnome-shell-extensions.%domain
@@ -51,7 +88,6 @@ NOCONFIGURE=1 ./autogen.sh
 %_datadir/gnome-shell/extensions/alternate-tab@gnome-shell-extensions.%domain/stylesheet.css
 %_datadir/gnome-shell/extensions/alternate-tab@gnome-shell-extensions.%domain/convenience.js
 %_datadir/gnome-shell/extensions/alternate-tab@gnome-shell-extensions.%domain/prefs.js
-%_datadir/glib-2.0/schemas/org.gnome.shell.extensions.alternate-tab.gschema.xml
 
 # alternative status menu
 %dir %_datadir/gnome-shell/extensions/alternative-status-menu@gnome-shell-extensions.%domain
@@ -60,14 +96,6 @@ NOCONFIGURE=1 ./autogen.sh
 %_datadir/gnome-shell/extensions/alternative-status-menu@gnome-shell-extensions.%domain/stylesheet.css
 %_datadir/gnome-shell/extensions/alternative-status-menu@gnome-shell-extensions.%domain/convenience.js
 %_datadir/glib-2.0/schemas/org.gnome.shell.extensions.alternative-status-menu.gschema.xml
-
-# dock
-%dir %_datadir/gnome-shell/extensions/dock@gnome-shell-extensions.%domain
-%_datadir/gnome-shell/extensions/dock@gnome-shell-extensions.%domain/extension.js
-%_datadir/gnome-shell/extensions/dock@gnome-shell-extensions.%domain/metadata.json
-%_datadir/gnome-shell/extensions/dock@gnome-shell-extensions.%domain/stylesheet.css
-%_datadir/gnome-shell/extensions/dock@gnome-shell-extensions.%domain/convenience.js
-%_datadir/glib-2.0/schemas/org.gnome.shell.extensions.dock.gschema.xml
 
 # windowsNavigator
 %dir %_datadir/gnome-shell/extensions/windowsNavigator@gnome-shell-extensions.%domain
@@ -107,7 +135,6 @@ NOCONFIGURE=1 ./autogen.sh
 %_datadir/gnome-shell/extensions/xrandr-indicator@gnome-shell-extensions.%domain/stylesheet.css
 %_datadir/gnome-shell/extensions/xrandr-indicator@gnome-shell-extensions.%domain/convenience.js
 
-
 # apps-menu
 %dir %_datadir/gnome-shell/extensions/apps-menu@gnome-shell-extensions.%domain
 %_datadir/gnome-shell/extensions/apps-menu@gnome-shell-extensions.%domain/extension.js
@@ -146,27 +173,49 @@ NOCONFIGURE=1 ./autogen.sh
 %_datadir/gnome-shell/extensions/workspace-indicator@gnome-shell-extensions.%domain/convenience.js
 %_datadir/gnome-shell/extensions/workspace-indicator@gnome-shell-extensions.%domain/prefs.js
 
-%if 0
-# gajim integration
-%dir %_datadir/gnome-shell/extensions/gajim@gnome-shell-extensions.%domain
-%_datadir/gnome-shell/extensions/gajim@gnome-shell-extensions.%domain/extension.js
-%_datadir/gnome-shell/extensions/gajim@gnome-shell-extensions.%domain/metadata.json
-%_datadir/gnome-shell/extensions/gajim@gnome-shell-extensions.%domain/stylesheet.css
-%_datadir/gnome-shell/extensions/gajim@gnome-shell-extensions.%domain/convenience.js
+# default-min-max
+%dir %_datadir/gnome-shell/extensions/default-min-max@gnome-shell-extensions.gcampax.github.com
+%_datadir/gnome-shell/extensions/default-min-max@gnome-shell-extensions.gcampax.github.com/convenience.js
+%_datadir/gnome-shell/extensions/default-min-max@gnome-shell-extensions.gcampax.github.com/extension.js
+%_datadir/gnome-shell/extensions/default-min-max@gnome-shell-extensions.gcampax.github.com/metadata.json
+%_datadir/gnome-shell/extensions/default-min-max@gnome-shell-extensions.gcampax.github.com/stylesheet.css
 
-# example
-%dir %_datadir/gnome-shell/extensions/example@gnome-shell-extensions.%domain
-%_datadir/gnome-shell/extensions/example@gnome-shell-extensions.%domain/extension.js
-%_datadir/gnome-shell/extensions/example@gnome-shell-extensions.%domain/metadata.json
-%_datadir/gnome-shell/extensions/example@gnome-shell-extensions.%domain/stylesheet.css
-%_datadir/gnome-shell/extensions/example@gnome-shell-extensions.%domain/convenience.js
-%_datadir/gnome-shell/extensions/example@gnome-shell-extensions.%domain/prefs.js
-%_datadir/glib-2.0/schemas/org.gnome.shell.extensions.example.gschema.xml
-%endif
+# launch-new-instance
+%dir %_datadir/gnome-shell/extensions/launch-new-instance@gnome-shell-extensions.gcampax.github.com
+%_datadir/gnome-shell/extensions/launch-new-instance@gnome-shell-extensions.gcampax.github.com/convenience.js
+%_datadir/gnome-shell/extensions/launch-new-instance@gnome-shell-extensions.gcampax.github.com/extension.js
+%_datadir/gnome-shell/extensions/launch-new-instance@gnome-shell-extensions.gcampax.github.com/metadata.json
+%_datadir/gnome-shell/extensions/launch-new-instance@gnome-shell-extensions.gcampax.github.com/stylesheet.css
+
+# static-workspaces
+%dir %_datadir/gnome-shell/extensions/static-workspaces@gnome-shell-extensions.gcampax.github.com
+%_datadir/gnome-shell/extensions/static-workspaces@gnome-shell-extensions.gcampax.github.com/convenience.js
+%_datadir/gnome-shell/extensions/static-workspaces@gnome-shell-extensions.gcampax.github.com/extension.js
+%_datadir/gnome-shell/extensions/static-workspaces@gnome-shell-extensions.gcampax.github.com/metadata.json
+%_datadir/gnome-shell/extensions/static-workspaces@gnome-shell-extensions.gcampax.github.com/stylesheet.css
+
+# window-list
+%dir %_datadir/gnome-shell/extensions/window-list@gnome-shell-extensions.gcampax.github.com
+%_datadir/gnome-shell/extensions/window-list@gnome-shell-extensions.gcampax.github.com/classic.css
+%_datadir/gnome-shell/extensions/window-list@gnome-shell-extensions.gcampax.github.com/convenience.js
+%_datadir/gnome-shell/extensions/window-list@gnome-shell-extensions.gcampax.github.com/extension.js
+%_datadir/gnome-shell/extensions/window-list@gnome-shell-extensions.gcampax.github.com/metadata.json
+%_datadir/gnome-shell/extensions/window-list@gnome-shell-extensions.gcampax.github.com/prefs.js
+%_datadir/gnome-shell/extensions/window-list@gnome-shell-extensions.gcampax.github.com/stylesheet.css
+%_datadir/glib-2.0/schemas/org.gnome.shell.extensions.window-list.gschema.xml
+
 
 %doc README
 
+# example
+%exclude %_datadir/gnome-shell/extensions/example@gnome-shell-extensions.%domain/
+%exclude %_datadir/glib-2.0/schemas/org.gnome.shell.extensions.example.gschema.xml
+
+
 %changelog
+* Tue Mar 26 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.0-alt1
+- 3.8.0
+
 * Sat Nov 24 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.2-alt1
 - 3.6.2
 
@@ -194,3 +243,4 @@ NOCONFIGURE=1 ./autogen.sh
 * Thu Apr 07 2011 Yuri N. Sedunov <aris@altlinux.org> 3.0.0-alt1
 - first build for people/gnome
 - don't package gajim integration and example plugins
+

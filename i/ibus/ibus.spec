@@ -11,7 +11,7 @@
 
 Name: ibus
 Version: 1.5.1
-Release: alt1
+Release: alt2
 
 Summary: Intelligent Input Bus for Linux OS
 License: LGPLv2+
@@ -152,7 +152,7 @@ rm -f data/dconf/00-upstream-settings
 %endif
 %patch3 -p1
 %patch4 -p1
-#%%patch95 -p1 -b .vala
+%patch95 -p1 -b .vala
 
 %build
 %autoreconf
@@ -263,6 +263,9 @@ fi
 %_datadir/gtk-doc/html/*
 
 %changelog
+* Wed Mar 13 2013 Yuri N. Sedunov <aris@altlinux.org> 1.5.1-alt2
+- rebuilt for people/gnome
+
 * Wed Mar 13 2013 Yuri N. Sedunov <aris@altlinux.org> 1.5.1-alt1
 - 1.5.1
 - updated fc patchset

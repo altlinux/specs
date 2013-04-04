@@ -1,4 +1,4 @@
-%define ver_major 1.6
+%define ver_major 1.7
 %define api_ver 1.0
 %define gtk_api_ver 3.0
 
@@ -8,7 +8,7 @@
 %def_enable gtk_doc
 
 Name: libpeas
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: A gobject-based plugins engine
@@ -24,6 +24,9 @@ BuildRequires: libgio-devel >= 2.32.0 libgtk+3-devel >= 3.0.0
 BuildRequires: gobject-introspection-devel >= 1.31.10 libgtk+3-gir-devel
 # for python support
 BuildRequires: python-module-pygobject3-devel >= 3.1.1
+# for python support
+BuildRequires: python3-devel python3-module-pygobject3-devel >= 3.1.1
+
 # for Javascript support
 %{?_enable_js:BuildRequires: libseed-devel >= 3.2.0}
 %{?_enable_gjs:BuildRequires: libgjs-devel >= 1.31.11}
@@ -40,6 +43,14 @@ Requires: %name = %version-%release
 
 %description python-loader
 This package provides Python loader for %name
+
+%package python3-loader
+Summary: Python3 loader for %name
+Group: System/Libraries
+Requires: %name = %version-%release
+
+%description python3-loader
+This package provides Python3 loader for %name
 
 %package js-loader
 Summary: Javascript loader for %name
@@ -99,6 +110,7 @@ GObject introspection devel data for the %name
 Summary: %name demonstration program
 Group: Development/C
 Requires: %name = %version-%release
+Requires: %name-gir = %version-%release
 
 %description demo
 %name is a convenience library making adding plug-ins support
@@ -132,6 +144,9 @@ This package contains %name demonstration programs
 %files python-loader
 %_libdir/%name-%api_ver/loaders/libpythonloader.so
 
+%files python3-loader
+%_libdir/%name-%api_ver/loaders/libpython3loader.so
+
 %if_enabled js
 %files js-loader
 %_libdir/%name-%api_ver/loaders/libseedloader.so
@@ -164,6 +179,10 @@ This package contains %name demonstration programs
 
 
 %changelog
+* Tue Feb 26 2013 Yuri N. Sedunov <aris@altlinux.org> 1.7.0-alt1
+- 1.7.0
+- new python3-loader subpackage
+
 * Tue Oct 16 2012 Yuri N. Sedunov <aris@altlinux.org> 1.6.1-alt1
 - 1.6.1
 

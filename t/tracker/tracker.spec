@@ -1,4 +1,5 @@
-%define ver_major 0.14
+%define ver_major 0.16
+%define ver_api 0.16
 
 %add_verify_elf_skiplist %_bindir/tracker-needle
 
@@ -7,16 +8,13 @@
 %def_enable upower
 %def_enable libxml2
 %def_enable gdkpixbuf
-%def_enable gnome_keyring
+%def_enable libsecret
 %def_enable network_manager
 %def_disable evolution
 %def_disable rss
-%def_enable flickr
-%def_enable explorer
-%def_enable search_bar
 %def_enable preferences
-%def_enable tracker_search_tool
 %def_enable poppler
+%def_enable libgxps
 %def_enable libexif
 %def_enable libiptcdata
 %def_enable libgsf
@@ -25,7 +23,6 @@
 %def_enable libvorbis
 %def_enable libflac
 %def_enable exempi
-%def_enable playlist
 %def_enable nautilus_extension
 %def_disable gtk_doc
 %def_enable taglib
@@ -41,8 +38,8 @@
 %define _libexecdir %_prefix/libexec
 
 Name: tracker
-Version: %ver_major.4
-Release: alt1.1
+Version: %ver_major.0
+Release: alt1
 
 Summary: Tracker is a powerfull desktop-oriented search tool and indexer
 License: GPLv2+
@@ -56,7 +53,7 @@ Patch: %name-%version-%release.patch
 Obsoletes: lib%name-client
 
 %define dbus_ver 1.3.1
-%define glib_ver 2.28.0
+%define glib_ver 2.35.1
 %define pango_ver 1.0.0
 %define gtk_ver 3.0.0
 %define libxml2_ver 2.6
@@ -76,13 +73,13 @@ Obsoletes: lib%name-client
 %define eds_ver 2.32.0
 %define gee_ver 0.3
 %define taglib_ver 1.6
-%define gnome_keyring_ver 2.26
-%define libgrss_ver 0.3
+%define libsecret_ver 0.5
+%define libgrss_ver 0.5
 %define rest_ver 0.7
 %define nm_ver 0.8
 %define gst_ver 0.10.31
-%define gupnp_ver 0.5
-%define sqlite3_ver 3.7.0
+%define gupnp_dlna_ver 0.9.4
+%define sqlite3_ver 3.7.9
 %define libosinfo_ver 0.0.2
 
 BuildPreReq: gcc-c++ gnome-common rpm-build-gnome gtk-doc docbook-utils
@@ -104,15 +101,13 @@ BuildPreReq: libenca-devel >= 1.9
 BuildPreReq: vala >= 0.12.0
 BuildPreReq: intltool >= 0.35.0
 BuildPreReq: sqlite3 libsqlite3-devel >= %sqlite3_ver
-BuildRequires: gstreamer-devel >= %gst_ver gst-plugins-devel >= %gst_ver
-BuildRequires: libgupnp-dlna-devel >= %gupnp_ver
-%{?_enable_gnome_keyring:BuildPreReq: libgnome-keyring-devel >= %gnome_keyring_ver}
+BuildRequires: gstreamer1.0-devel >= %gst_ver gst-plugins1.0-devel >= %gst_ver
+BuildRequires: libgupnp-dlna-devel >= %gupnp_dlna_ver
+%{?_enable_libsecret:BuildPreReq: libsecret-devel >= %libsecret_ver}
 %{?_enable_rss:BuildPreReq: libgrss-devel >= %libgrss_ver}
-%{?_enable_tracker_search_tool:BuildPreReq: libgee-devel >= %gee_ver}
-%{?_enable_flickr:BuildPreReq: librest-devel >= %rest_ver}
-%{?_enable_explorer:BuildPreReq: libgee-devel >= %gee_ver}
-%{?_enable_search_bar:BuildPreReq: libgnome-panel-devel}
+BuildPreReq: libgee0.8-devel >= %gee_ver
 %{?_enable_poppler:BuildPreReq: libpoppler-glib-devel >= %poppler_ver}
+%{?_enable_libgxps:BuildPreReq: libgxps-devel}
 %{?_enable_libexif:BuildPreReq: libexif-devel >= %libexif_ver}
 %{?_enable_libiptcdata:BuildPreReq: libiptcdata-devel}
 %{?_enable_libgsf:BuildPreReq: libgsf-devel >= %libgfs_ver}
@@ -121,11 +116,10 @@ BuildRequires: libgupnp-dlna-devel >= %gupnp_ver
 %{?_enable_libvorbis:BuildPreReq: libvorbis-devel >= %vorbis_ver}
 %{?_enable_libvorbis:BuildPreReq: libflac-devel >= %flac_ver}
 %{?_enable_exempi:BuildPreReq: libexempi-devel >= %exempi_ver}
-%{?_enable_playlist:BuildPreReq: libtotem-pl-parser-devel}
 %{?_enable_evolution:BuildPreReq: evolution-devel >= %evo_ver evolution-data-server-devel >= %eds_ver}
 %{?_enable_nautilus_extension:BuildPreReq: libnautilus-devel}
 %{?_enable_taglib:BuildPreReq: libtag-devel >= %taglib_ver}
-%{?_enable_gtk_doc:BuildPreReq: gtk-doc docbook-utils graphviz dia}
+%{?_enable_gtk_doc:BuildPreReq: gtk-doc docbook-utils graphviz}
 %{?_enable_qt:BuildPreReq: libqt4-devel}
 %{?_enable_libgif:BuildPreReq: libgif-devel}
 %{?_enable_libcue:BuildPreReq: libcue-devel}
@@ -173,16 +167,6 @@ Requires: lib%name-gir = %version-%release
 %description -n lib%name-gir-devel
 GObject introspection devel data for the Tracker library
 
-%package -n gnome-applets-extra-%name
-Summary: Tracker GNOME search applet
-Group: Graphical desktop/GNOME
-Requires: %name = %version-%release
-Provides: %name-search-bar
-
-%description -n gnome-applets-extra-%name
-Tracker is a powerfull desktop-oriented search tool and indexer.
-This package contains tracker GNOME search applet.
-
 %package search-tool
 Summary: Tracker search tool(s)
 Group: Graphical desktop/GNOME
@@ -190,14 +174,6 @@ Requires: %name = %version-%release
 
 %description search-tool
 Graphical frontend to tracker search facilities.
-
-%package explorer
-Summary: Tracker explorer
-Group: Graphical desktop/GNOME
-Requires: %name = %version-%release
-
-%description explorer
-Graphical frontend for explorer to tracker search facilities.
 
 %package utils
 Summary: Commandline tools for Tracker
@@ -254,18 +230,15 @@ NOCONFIGURE=1 ./autogen.sh
 	%{subst_enable gdkpixbuf} \
 	%{subst_enable qt} \
 	%{subst_enable unac} \
-	%{?_enable_gnome_keyring:--enable-gnome-keyring} \
-	%{?_enable_flickr:--enable-miner-flickr} \
+	%{subst_enable libsecret} \
 	%{?_enable_rss:--enable-miner-rss} \
 	%{?_enable_evolition:--enable-miner-evolution} \
 	%{?_enable_nautilus_extension:--enable-nautilus-extension} \
 	%{subst_enable taglib} \
-	%{?_enable_search_bar:--enable-tracker-search-bar} \
 	%{?_enable_needle:--enable-tracker-needle} \
-	%{?_enable_explorer:--enable-tracker-explorer} \
-	%{?_enable_tracker_search_tool:--enable-tracker-search-tool} \
 	%{?_enable_preferences:--enable-tracker-preferences} \
 	%{subst_enable poppler} \
+	%{subst_enable libgxps} \
 	%{subst_enable libexif} \
 	%{subst_enable libiptcdata} \
 	%{subst_enable libgsf} \
@@ -275,7 +248,6 @@ NOCONFIGURE=1 ./autogen.sh
 	%{subst_enable libvorbis} \
 	%{subst_enable libflac} \
 	%{subst_enable exempi} \
-	%{subst_enable playlist} \
 	%{subst_enable libcue} \
 	%{subst_enable libosinfo} \
 	%{?_enable_gtk_doc:--enable-gtk-doc}
@@ -296,10 +268,10 @@ find %{buildroot} -type f -name "*.la" -exec rm -f {} ';'
 %doc src/libtracker-common/COPYING.LIB
 %config(noreplace) %_sysconfdir/xdg/autostart/*
 %_datadir/glib-2.0/schemas/*
-%dir %_libdir/%name-%ver_major
-%_libdir/%name-%ver_major/*.so.*
-%_libdir/%name-%ver_major/extract-modules
-%_libdir/%name-%ver_major/writeback-modules
+%dir %_libdir/%name-%ver_api
+%_libdir/%name-%ver_api/*.so.*
+%_libdir/%name-%ver_api/extract-modules
+%_libdir/%name-%ver_api/writeback-modules
 
 %_libexecdir/*
 
@@ -313,11 +285,6 @@ find %{buildroot} -type f -name "*.la" -exec rm -f {} ';'
 %_datadir/%name/ontologies
 %_datadir/%name/extract-rules
 
-%if_enabled flickr
-%dir %_datadir/%name/icons
-%_datadir/%name/icons/tracker-miner-flickr.svg
-%endif
-
 %_libdir/libtracker-extract*.so.*
 %_libdir/libtracker-miner*.so.*
 %_libdir/libtracker-sparql*.so.*
@@ -325,11 +292,6 @@ find %{buildroot} -type f -name "*.la" -exec rm -f {} ';'
 %_man1dir/tracker-extract.1.gz
 %_man1dir/tracker-writeback.1.gz
 %_man1dir/tracker-store.1.gz
-
-%if_enabled search_bar
-%exclude %_libexecdir/tracker-search-bar
-%exclude %_datadir/%name/tracker-search-bar-menu.xml
-%endif
 
 %files utils
 %_bindir/tracker-import
@@ -357,13 +319,9 @@ find %{buildroot} -type f -name "*.la" -exec rm -f {} ';'
 %_man1dir/tracker-preferences.1.gz
 %_man1dir/tracker-needle.1.gz
 
-%files explorer
-%_bindir/tracker-explorer
-%_datadir/%name/tracker-explorer.ui
-
 %files devel
-%_libdir/%name-%ver_major/*.so
-%_includedir/%name-%ver_major
+%_libdir/%name-%ver_api/*.so
+%_includedir/%name-%ver_api
 %_pkgconfigdir/*.pc
 %_libdir/*.so
 %_datadir/vala/vapi/*
@@ -380,15 +338,6 @@ find %{buildroot} -type f -name "*.la" -exec rm -f {} ';'
 %_libdir/evolution/*/plugins/*
 %endif
 
-%if_enabled search_bar
-%files -n gnome-applets-extra-%name
-%_libexecdir/tracker-search-bar
-%_datadir/%name/tracker-search-bar-menu.xml
-%_datadir/%name/tracker-search-bar.ui
-%_datadir/gnome-panel/4.0/applets/org.gnome.panel.SearchBar.panel-applet
-%_man1dir/tracker-search-bar.1.gz
-%endif
-
 %if_enabled nautilus_extension
 %files -n nautilus-%name
 %nautilus_extdir/libnautilus-tracker-tags.so
@@ -403,6 +352,19 @@ find %{buildroot} -type f -name "*.la" -exec rm -f {} ';'
 %endif
 
 %changelog
+* Tue Mar 19 2013 Alexey Shabalin <shaba@altlinux.ru> 0.16.0-alt1
+- 0.16.0
+- upstream deleted search_bar, flickr, playlist support
+
+* Wed Mar 13 2013 Alexey Shabalin <shaba@altlinux.ru> 0.15.4-alt1
+- 0.15.4
+
+* Mon Feb 25 2013 Alexey Shabalin <shaba@altlinux.ru> 0.15.2-alt1
+- 0.15.2
+
+* Mon Jan 28 2013 Alexey Shabalin <shaba@altlinux.ru> 0.15.1-alt1
+- 0.15.1
+
 * Thu Nov 15 2012 Alexey Shabalin <shaba@altlinux.ru> 0.14.4-alt1.1
 - rebuild with libicu-5.1
 

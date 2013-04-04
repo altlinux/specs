@@ -1,16 +1,18 @@
 %define ver_major 2.98
 %define rev %nil
+%define gst_api_ver 1.0
 
 %def_without hal
 %def_with gudev
 %def_without webkit
-%def_enable daap
-%def_enable grilo
+%def_disable daap
 %def_disable visualizer
+%def_enable grilo
+%def_disable gtk_doc
 
 Name: rhythmbox
 Version: %ver_major
-Release: alt2%rev
+Release: alt3%rev
 
 Summary: Music Management Application
 License: GPL
@@ -21,30 +23,24 @@ Url: http://www.gnome.org/projects/rhythmbox/
 
 #Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 Source: %name-%version.tar
-# https://bugzilla.gnome.org/show_bug.cgi?id=686320
-Patch: rhythmbox-2.98-xinitthreads.patch
 
 %define dbus_ver 0.35
 %define glib_ver 2.32.0
-%define gstreamer_ver 0.10.32
-%define gtk_ver 3.4.0
+%define gst_ver 1.0
+%define gtk_ver 3.6.0
 %define mtp_ver 0.3
 %define brasero_ver 0.9.1
-%define scrollkeeper_ver 0.3.14
 %define soup_ver 2.26.0
-%define totem_ver 2.26.0
+%define totem_ver 2.32.0
 %define udev_ver 143
 %define gpod_ver 0.8
 
 Requires: lib%name = %version-%release
-PreReq: scrollkeeper >= %scrollkeeper_ver
 
-Requires: gstreamer >= %gstreamer_ver
-Requires: libgst-plugins >= %gstreamer_ver
-Requires: gstreamer(audio-hardware-sink)
-Requires: gst-plugins-base
-Requires: gst-plugins-good
-Requires: gst-plugins-gconf
+Requires: gstreamer%gst_api_ver >= %gst_ver
+Requires: libgst-plugins%gst_api_ver >= %gst_ver
+Requires: gst-plugins-base%gst_api_ver
+Requires: gst-plugins-good%gst_api_ver
 
 %define _libexecdir %_libdir/%name
 
@@ -52,7 +48,7 @@ BuildRequires(Pre): browser-plugins-npapi-devel
 
 BuildRequires: glib2-devel >= %glib_ver
 BuildRequires: intltool >= 0.40
-BuildRequires: gtk-doc gnome-doc-utils gnome-common desktop-file-utils
+BuildRequires: gtk-doc yelp-tools gnome-common desktop-file-utils
 
 BuildRequires: libgtk+3-devel >= %gtk_ver
 BuildRequires: libdbus-glib-devel >= %dbus_ver
@@ -60,9 +56,9 @@ BuildRequires: libsoup-devel >= %soup_ver
 BuildRequires: libsoup-gnome-devel >= %soup_ver
 BuildRequires: libbrasero-devel >= %brasero_ver
 BuildRequires: libtotem-pl-parser-devel >= %totem_ver
-BuildRequires: gstreamer-devel >= %gstreamer_ver
-BuildRequires: gstreamer-utils >= %gstreamer_ver
-BuildRequires: gst-plugins-devel >= %gstreamer_ver
+BuildRequires: gstreamer%gst_api_ver-devel >= %gst_ver
+BuildRequires: gstreamer%gst_api_ver-utils >= %gst_ver
+BuildRequires: gst-plugins%gst_api_ver-devel >= %gst_ver
 BuildRequires: libgpod-devel >= %gpod_ver
 BuildRequires: libmtp-devel >= %mtp_ver
 BuildRequires: libICE-devel libSM-devel libgnome-keyring-devel
@@ -75,11 +71,11 @@ BuildRequires: libpeas-devel libtdb-devel zlib-devel
 BuildRequires: libavahi-glib-devel
 BuildRequires: libdmapsharing-devel
 # for visualizer plugin
-%{?_enable_visualizer:BuildRequires: libclutter-gtk3-devel libclutter-gst-devel libmx-devel}
+%{?_enable_visualizer:BuildRequires: libclutter-gtk3-devel libclutter-gst2.0-devel libmx-devel}
 %{?_with_hal:BuildRequires: libhal-devel}
 %{?_with_gudev:BuildRequires: libgudev-devel}
 BuildRequires: python-module-pygobject3-devel
-BuildRequires: libgtk+3-gir-devel gstreamer-gir-devel gst-plugins-gir-devel
+BuildRequires: libgtk+3-gir-devel libgstreamer%gst_api_ver-gir-devel gst-plugins%gst_api_ver-gir-devel
 
 Provides: %name-plugins-audiocd
 Provides: %name-plugins-generic-player
@@ -272,7 +268,7 @@ Grilo.
 Summary: Python plugins for Rhythmbox
 Group: Sound
 Requires: %name = %version-%release
-Requires: python-module-gst
+Requires: lib%name-gir = %version-%release
 
 %package -n lib%name-gir
 Summary: GObject introspection data for the Gedit
@@ -324,18 +320,15 @@ This virtual package installs all Rhythmbox plugins
 
 %prep
 %setup -n %name-%version
-%patch -p1
 
 %build
 # Temporary hack
 #%%set_verify_elf_method unresolved=relaxed
-gnome-doc-prepare -f
 %autoreconf
 export MOZILLA_PLUGINDIR=%browser_plugins_path
 %configure \
-	--enable-gtk-doc \
+	%{?_enable_gtk_doc:--enable-gtk-doc} \
 	--disable-static \
-	--disable-scrollkeeper \
 	--disable-schemas-compile \
 	--disable-dependency-tracking \
 	--enable-lirc \
@@ -347,8 +340,7 @@ export MOZILLA_PLUGINDIR=%browser_plugins_path
 	%{subst_with hal} \
 	%{subst_with gudev} \
 	%{subst_with webkit} \
-	%{subst_enable grilo} \
-	%{subst_enable visualizer}
+	%{subst_enable grilo}
 
 %make_build
 
@@ -475,13 +467,20 @@ ln -s %_licensedir/GPL-2 %buildroot%pkgdocdir/COPYING
 
 %files plugins
 
+%if_enabled gtk_doc
 %files devel-doc
 %_datadir/gtk-doc/html/rhythmbox/
+%endif
 
 %exclude %_libdir/%name/sample-plugins/
 
-
 %changelog
+* Wed Mar 06 2013 Yuri N. Sedunov <aris@altlinux.org> 2.98-alt3
+- updated to 6ffa66a
+- removed upstreamed patch
+- updated buildrqs
+- daap plugin temporarily disabled
+
 * Sat Oct 20 2012 Yuri N. Sedunov <aris@altlinux.org> 2.98-alt2
 - updated to 2a405e3
 - webkit support disbaled to avoid mixed gstreamer-0.10/1.0 linkage

@@ -1,4 +1,4 @@
-%define ver_major 1.14
+%define ver_major 1.16
 %def_enable http
 %def_enable avahi
 %def_enable cdda
@@ -14,14 +14,15 @@
 %def_enable afp
 %def_enable udisks2
 %def_enable libmtp
+%def_enable goa
 %def_enable bluray
 %def_enable gtk
 %def_enable systemd_login
 %def_disable gtk_doc
 
 Name: gvfs
-Version: %ver_major.2
-Release: alt3
+Version: %ver_major.0
+Release: alt1
 
 Summary: The GNOME virtual filesystem libraries
 License: %lgpl2plus
@@ -32,25 +33,27 @@ Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 #Source: %name-%version.tar
 Patch: gvfs-1.11.3-alt-gettext.patch
-Patch1: gvfs-1.0.1-archive-integration.patch
+Patch1: gvfs-1.16.0-archive-integration.patch
 Patch3: gvfs-1.14.1-libgvfsdaemon+headers_install.patch
-# ALT #27989
-Patch4: gvfs-1.14.2-add-mtp.patch
+Patch4: gvfs-1.15.3-alt-lfs.patch
+Patch5: gvfs-1.15.4-alt-tmpfiles_dir.patch
 
 %{?_enable_gdu:Obsoletes: gnome-mount <= 0.8}
 %{?_enable_gdu:Obsoletes: gnome-mount-nautilus-properties <= 0.8}
 
 # From configure.in
 %define intltool_ver 0.35.0
-%define glib_ver 2.33.4
-%define libsoup_ver 2.26.0
+%define glib_ver 2.35.3
+%define libsoup_ver 2.41.3
 %define avahi_ver 0.6
 %define libcdio_paranoia_ver 0.82
 %define hal_ver 0.5.10
 %define bluez_ver 4.0
 %define gdu_ver 3.3.91
 %define udisks_ver 1.99
-%define mtp_ver 1.1.0
+%define mtp_ver 1.1.5
+%define goa_ver 3.7.90
+%define libarchive_ver 3.0.22
 
 %{?_enable_hal:Requires: gnome-mount}
 %{?_enable_gdu:Requires: gnome-disk-utility >= %gdu_ver}
@@ -78,17 +81,23 @@ BuildRequires: libgcrypt-devel
 %{?_enable_gphoto2:BuildPreReq: libgphoto2-devel}
 %{?_enable_keyring:BuildPreReq: libsecret-devel}
 %{?_enable_samba:BuildPreReq: libsmbclient-devel}
-%{?_enable_archive:BuildPreReq: libarchive-devel}
+%{?_enable_archive:BuildPreReq: libarchive-devel >= %libarchive_ver}
 %{?_enable_gdu:BuildPreReq: libgdu-devel >= %gdu_ver libgudev-devel}
 %{?_enable_afc:BuildPreReq: libimobiledevice-devel >= 1.1.3}
 %{?_enable_afp:BuildPreReq: libgcrypt-devel}
 %{?_enable_udisks2:BuildPreReq: libudisks2-devel >= %udisks_ver}
 %{?_enable_libmtp:BuildPreReq: libmtp-devel >= %mtp_ver}
+%{?_enable_goa:BuildPreReq: libgnome-online-accounts-devel >= %goa_ver}
 %{?_enable_bluray:BuildPreReq: libbluray-devel}
 %{?_enable_systemd_login:BuildPreReq: libsystemd-login-devel}
 
 BuildPreReq: desktop-file-utils
 BuildRequires: gcc-c++ perl-XML-Parser
+
+# for check
+#BuildRequires: /proc dbus-tools-gui python3 python3-module-pygobject3 python-module-twisted-core
+#BuildRequires:  openssh-server apache2 samba genisoimage
+# and more
 
 %package devel
 Summary: Libraries and include files for developing gvfs applications
@@ -136,6 +145,11 @@ Summary: Recent files backend for gvfs
 Group: System/Libraries
 Requires: %name = %version-%release
 
+%package backend-goa
+Summary: gnome-online-accounts backend for gvfs
+Group: System/Libraries
+Requires: %name = %version-%release
+
 %package backends
 Summary: All backends for gvfs
 Group: System/Libraries
@@ -146,6 +160,7 @@ Requires: gvfs gvfs-backend-smb gvfs-backend-dnssd
 %{?_enable_afc:Requires: gvfs-backend-afc}
 %{?_enable_afp:Requires: gvfs-backend-afp}
 %{?_enable_gtk:Requires: gvfs-backend-recent-files}
+%{?_enable_goa:Requires: gvfs-backend-goa}
 
 %package utils
 Summary: Command line applications for gvfs.
@@ -204,6 +219,9 @@ Mac OS X filesystem by AFP (Apple Filing Protocol) network protocol.
 %description backend-recent-files
 This package contains recent files backend for gvfs.
 
+%description backend-goa
+This package contains gnome-online-accounts backend for gvfs.
+
 %description backends
 This virtual package contains the all backends for gvfs.
 
@@ -221,7 +239,10 @@ Bash completion for gvfs.
 %patch -p1
 %patch1 -p1 -b .archive-integration
 %patch3 -p1 -b .headers-install
-%{?_enable_libmtp:%patch4 -p1 -b .mtp}
+%patch4 -p1 -b .lfs
+%patch5 -b .tmpfiles
+
+[ ! -d m4 ] && mkdir m4
 
 %build
 %autoreconf
@@ -254,21 +275,15 @@ Bash completion for gvfs.
 %find_lang %name
 
 %check
-%make check
+#export PATH=/usr/sbin:$PATH
+#%%make check
 
 %post
 killall -USR1 gvfsd >&/dev/null || :
 
 %files -f %name.lang
 %doc AUTHORS NEWS README monitor/udisks2/what-is-shown.txt
-# lib
 %_libdir/libgvfs*.so.*
-%if_enabled libmtp
-%dir %_libdir/gvfs
-%_libdir/gvfs/libgvfscommon.so
-%exclude %_libdir/gvfs/libgvfscommon.la
-%endif
-
 %dir %_libexecdir
 # daemon
 %_libexecdir/gvfsd
@@ -341,6 +356,7 @@ killall -USR1 gvfsd >&/dev/null || :
 
 %files -n fuse-gvfs
 %_libexecdir/gvfsd-fuse
+/lib/tmpfiles.d/gvfsd-fuse-tmpfiles.conf
 
 %files backend-smb
 %_libexecdir/gvfsd-smb
@@ -390,6 +406,12 @@ killall -USR1 gvfsd >&/dev/null || :
 %_datadir/%name/mounts/recent.mount
 %endif
 
+%if_enabled goa
+%files backend-goa
+%_libexecdir/%name-goa-volume-monitor
+%_datadir/%name/remote-volume-monitors/goa.monitor
+%endif
+
 %files backends
 
 %files utils
@@ -403,6 +425,10 @@ killall -USR1 gvfsd >&/dev/null || :
 %exclude %_libdir/gio/modules/*.la
 
 %changelog
+* Mon Mar 25 2013 Yuri N. Sedunov <aris@altlinux.org> 1.16.0-alt1
+- 1.16.0
+- new gnome-online-accounts backend
+
 * Mon Mar 11 2013 Yuri N. Sedunov <aris@altlinux.org> 1.14.2-alt3
 - rebuilt against libarchive.so.13
 

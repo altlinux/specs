@@ -5,31 +5,29 @@
 %def_enable gtk3_module
 
 Name: caribou
-Version: %ver_major.6
+Version: %ver_major.10
 Release: alt1
 
 Summary: A simplified in-place on-screen keyboard
 Group: Graphical desktop/GNOME
 License: LGPLv2+
-Url: http://live.gnome.org/Caribou
+Url: https://live.gnome.org/Caribou
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
-Patch: %name-0.3.92-alt-python_build.patch
-Patch1: %name-0.4.1-alt-pythonpath.patch
-Patch2: %name-0.4.1-alt-russian_layouts.patch
-Patch3: %name-0.4.2-singleton-daemon.patch
+Patch2: %name-0.4.7-alt-russian_layouts.patch
 Patch4: %name-0.4.2-use-reserved-bar-keycode.patch
 Patch5: %name-0.4.2-fix-keys.patch
 
 Provides: on-screen-keyboard
 Requires: lib%name = %version-%release
+Requires: lib%name-gir = %version-%release
 
 %define gee_ver 0.8
 
 %{?_enable_gtk2_module:BuildRequires: libgtk+2-devel}
 %{?_enable_gtk3_module:BuildRequires: libgtk+3-devel}
 BuildPreReq: libgee-devel >= %gee_ver
-BuildRequires: libclutter-devel libxklavier-devel libXtst-devel
+BuildRequires: libat-spi2-core-devel libclutter-devel libxklavier-devel libXtst-devel
 BuildRequires: gobject-introspection-devel python-module-pygobject3-devel libxml2-devel
 BuildRequires: intltool xsltproc gnome-doc-utils vala-tools >= 0.13
 
@@ -76,12 +74,9 @@ GObject introspection devel data for the Caribou library.
 
 %prep
 %setup
-%patch -p1 -b .pkgpythondir
-%patch1 -b .pythonpath
 %patch2 -p1
-%patch3 -p2
 %patch4 -p2
-%patch5 -p2
+#%%patch5 -p2
 
 %build
 %autoreconf
@@ -106,14 +101,14 @@ make clean
 %_datadir/antler/
 %_datadir/dbus-1/services/org.gnome.Caribou.Antler.service
 %_libexecdir/antler-keyboard
-%_datadir/applications/%name.desktop
+#%_datadir/applications/%name.desktop
 %_sysconfdir/xdg/autostart/%name-autostart.desktop
 %_datadir/glib-2.0/schemas/org.gnome.antler.gschema.xml
 %_datadir/glib-2.0/schemas/org.gnome.caribou.gschema.xml
 %_libdir/gnome-settings-daemon-3.0/gtk-modules/%name-gtk-module.desktop
 %{?_enable_gtk2_module:%_libdir/gtk-2.0/modules/lib%name-gtk-module.so}
 %{?_enable_gtk3_module:%_libdir/gtk-3.0/modules/lib%name-gtk-module.so}
-%python_sitelibdir/%name/
+%python_sitelibdir_noarch/%name/
 %doc NEWS README
 
 %exclude %_libdir/gtk-*/modules/lib%name-gtk-module.la
@@ -124,6 +119,10 @@ make clean
 %files -n lib%name-devel
 %_includedir/lib%name/
 %_libdir/lib%name.so
+%_pkgconfigdir/%name-%api_ver.pc
+# libxklavier bindings required
+%exclude %_vapidir/%name-%api_ver.deps
+%exclude %_vapidir/%name-%api_ver.vapi
 
 %files -n lib%name-gir
 %_typelibdir/Caribou-1.0.typelib
@@ -132,6 +131,12 @@ make clean
 %_girdir/Caribou-1.0.gir
 
 %changelog
+* Tue Mar 19 2013 Yuri N. Sedunov <aris@altlinux.org> 0.4.10-alt1
+- 0.4.10
+
+* Tue Feb 19 2013 Yuri N. Sedunov <aris@altlinux.org> 0.4.8-alt1
+- 0.4.8
+
 * Tue Dec 18 2012 Yuri N. Sedunov <aris@altlinux.org> 0.4.6-alt1
 - 0.4.6
 

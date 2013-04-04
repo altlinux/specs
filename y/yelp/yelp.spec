@@ -1,15 +1,15 @@
-%define ver_major 3.6
+%define ver_major 3.8
 %def_disable debug
 %def_disable lzma
 
 Name: yelp
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: Lightweight help browser for GNOME
 License: %gpl2plus
 Group: Graphical desktop/GNOME
-URL: http://live.gnome.org/yelp
+URL: https://live.gnome.org/yelp
 Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 
 Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
@@ -116,6 +116,9 @@ Yelp.
 %_datadir/gtk-doc/html/*
 
 %changelog
+* Tue Mar 26 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.0-alt1
+- 3.8.0
+
 * Mon Nov 12 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.2-alt1
 - 3.6.2
 

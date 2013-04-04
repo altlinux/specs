@@ -1,9 +1,9 @@
 %define _name aisleriot
-%define ver_major 3.6
+%define ver_major 3.7
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-games-%_name
-Version: %ver_major.2
+Version: %ver_major.91
 Release: alt1
 
 Summary: A collection of card games
@@ -19,12 +19,13 @@ Provides:  %_name = %version-%release
 
 Requires(post,preun): GConf
 
-%define glib_ver 2.31.13
+%define glib_ver 2.32.0
 %define gtk_ver 3.0.0
 
-BuildRequires: intltool gnome-doc-utils itstool yelp-tools libgio-devel >= %glib_ver
+BuildRequires: intltool yelp-tools libgio-devel >= %glib_ver
 BuildRequires: libgtk+3-devel >= %gtk_ver libGConf-devel librsvg-devel libcanberra-gtk3-devel
 BuildRequires: libICE-devel libSM-devel gstreamer-devel guile20 libguile20-devel
+BuildRequires: /proc
 
 %description
 AisleRiot also known as Solitaire or sol is a collection of over 80 card games
@@ -63,6 +64,9 @@ fi
 %_man6dir/sol.*
 
 %changelog
+* Wed Mar 06 2013 Yuri N. Sedunov <aris@altlinux.org> 3.7.91-alt1
+- 3.7.91
+
 * Tue Nov 13 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.2-alt1
 - 3.6.2
 

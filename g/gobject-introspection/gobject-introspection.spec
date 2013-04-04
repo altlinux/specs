@@ -1,20 +1,20 @@
-%define ver_major 1.34
+%define ver_major 1.36
 
 Name: gobject-introspection
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: Introspection system for GObject-based libraries
 Group: Development/C
 License: GPLv2+, LGPLv2+, MIT
-URL: http://live.gnome.org/GObjectIntrospection
+URL: https://live.gnome.org/GObjectIntrospection
 
 Provides: gir-repository = %version-%release
 Obsoletes: gir-repository
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 
-BuildPreReq: libgio-devel >= 2.33.3
+BuildPreReq: libgio-devel >= 2.36.0
 BuildRequires: flex gtk-doc libcairo-devel libcairo-gobject-devel libffi-devel libgio-devel
 BuildRequires: python-devel python-modules-ctypes python-modules-compiler rpm-build-gir
 
@@ -81,6 +81,9 @@ find %buildroot%_libdir -name \*.la -delete
 %_datadir/gtk-doc/html/*
 
 %changelog
+* Tue Mar 26 2013 Yuri N. Sedunov <aris@altlinux.org> 1.36.0-alt1
+- 1.36.0
+
 * Tue Nov 13 2012 Yuri N. Sedunov <aris@altlinux.org> 1.34.2-alt1
 - 1.34.2
 

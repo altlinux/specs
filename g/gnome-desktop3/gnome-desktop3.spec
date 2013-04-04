@@ -1,6 +1,6 @@
 %define _libexecdir %_prefix/libexec
 %define _name gnome-desktop
-%define ver_major 3.6
+%define ver_major 3.8
 %define api_ver 3.0
 %define gnome_distributor "%vendor"
 %define gnome_date "%(date "+%%B %%e %%Y"), Moscow"
@@ -9,7 +9,7 @@
 %def_enable introspection
 
 Name: %{_name}3
-Version: %ver_major.2
+Version: %ver_major.0.1
 Release: alt1
 
 Summary: Library with common API for various GNOME 3 modules
@@ -33,16 +33,17 @@ BuildPreReq: rpm-build-licenses rpm-build-gnome
 
 # From configure.in
 BuildPreReq: intltool >= 0.35
-BuildPreReq: libgtk+3-devel >= 3.0.1
-BuildPreReq: glib2-devel >= 2.28.0
+BuildPreReq: libgtk+3-devel >= 3.3.6
+BuildPreReq: glib2-devel >= 2.35.0
 BuildPreReq: libgio-devel >= 2.28.0
 BuildPreReq: yelp-tools itstool
 BuildPreReq: gtk-doc >= 1.4
 BuildPreReq: gnome-common >= 2.8.0
 BuildPreReq: gsettings-desktop-schemas-devel >= 3.5.91
+BuildRequires: iso-codes-devel
 BuildRequires: libSM-devel libXrandr-devel libXext-devel xkeyboard-config-devel libxkbfile-devel
 BuildRequires: hwdatabase >= 0.3.31-alt1
-%{?_enable_introspection:BuildRequires: gobject-introspection-devel libgtk+3-gir-devel}
+%{?_enable_introspection:BuildRequires: gobject-introspection-devel libgtk+3-gir-devel gsettings-desktop-schemas-gir-devel}
 
 %description
 GNOME (GNU Network Object Model Environment) is a user-friendly set of
@@ -158,6 +159,9 @@ GObject introspection devel data for the %_name library
 
 
 %changelog
+* Wed Mar 27 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.0.1-alt1
+- 3.8.0.1
+
 * Tue Nov 13 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.2-alt1
 - 3.6.2
 

@@ -1,11 +1,11 @@
-%define ver_major 3.6
+%define ver_major 3.8
 %define brasero_api_ver 3
 %define nau_api_ver 3.0
 %define gst_api_ver 1.0
 
 %def_enable gtk_doc
 # Make use of Tracker
-%def_enable search
+%def_disable search
 # Embed a playlist functionality based on libtotem
 %def_enable playlist
 %def_enable cdrkit
@@ -15,7 +15,7 @@
 %def_disable introspection
 
 Name: brasero
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: CD/DVD burning tool for GNOME.
@@ -83,7 +83,7 @@ This package provides shared library required for Brasero to work.
 %package -n lib%name-devel
 Summary: Development files and libraries for Brasero CD/DVD burning application
 Group: Development/C
-Requires: %name = %version-%release
+Requires: lib%name = %version-%release
 
 %description -n lib%name-devel
 Brasero is an application to burn CD/DVD for the Gnome Desktop. It is designed
@@ -230,6 +230,10 @@ GObject introspection devel data for the Brasero
 %exclude %_libdir/nautilus/extensions-%nau_api_ver/libnautilus-%name-extension.la
 
 %changelog
+* Tue Mar 26 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.0-alt1
+- 3.8.0
+- no support for tracker-0.16
+
 * Mon Nov 12 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.1-alt1
 - 3.6.1
 

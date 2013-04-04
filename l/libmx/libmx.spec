@@ -11,9 +11,9 @@
 
 Name: lib%_name
 Version: %ver_major.7
-Release: alt1
-Summary: A clutter widget toolkit
+Release: alt2
 
+Summary: A clutter widget toolkit
 Group: System/Libraries
 License: LGPLv2
 Url: https://github.com/clutter-project/mx 
@@ -112,6 +112,9 @@ autoreconf -fisv
 %endif
 
 %changelog
+* Fri Mar 29 2013 Yuri N. Sedunov <aris@altlinux.org> 1.4.7-alt2
+- rebuilt against libcogl.so.12
+
 * Fri Oct 26 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1.4.7-alt1
 - 1.4.7
 - moved to upstream git

@@ -7,7 +7,7 @@
 
 Name: cairo-compmgr
 Version: 0.3.4
-Release: alt4.gitc609e
+Release: alt5.gitc609e
 Summary: Cairo Composite Manager
 License: GPL
 Group: System/X11
@@ -24,7 +24,7 @@ BuildRequires: intltool gtk-doc
 BuildRequires: libXcomposite-devel libXdamage-devel libXext-devel libXi-devel libSM-devel libGL-devel libXrandr-devel
 BuildRequires: libcairo-devel libpixman-devel
 BuildRequires: libgtk+2-devel
-BuildRequires: libvala-devel >= 0.18.0
+BuildRequires: libvala-devel >= 0.20.0
 %{?_enable_gconf:BuildRequires: libGConf-devel GConf}
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel}
 %{?_enable_perf_plugin:BuildRequires: libgtop-devel libwnck-devel}
@@ -141,6 +141,9 @@ fi
 %_datadir/gtk-doc/html/*
 
 %changelog
+* Fri Mar 29 2013 Alexey Shabalin <shaba@altlinux.ru> 0.3.4-alt5.gitc609e
+- rebuild with vala-0.20
+
 * Thu Dec 27 2012 Andrey Cherepanov <cas@altlinux.org> 0.3.4-alt4.gitc609e
 - Add Russian localization (ALT #28205)
 

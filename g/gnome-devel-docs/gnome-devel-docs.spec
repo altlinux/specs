@@ -1,7 +1,7 @@
-%define ver_major 3.6
+%define ver_major 3.8
 
 Name: gnome-devel-docs
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: General GNOME Developper Documentation
@@ -21,11 +21,8 @@ Provides: gnome2-user-docs
 
 PreReq: librarian
 
-BuildPreReq: rpm-build >= 4.0.4-alt100.39
 BuildPreReq: rpm-build-gnome rpm-build-licenses rpm-build-gir
-BuildPreReq: rpm >= 4.0.4-alt14
-BuildPreReq: gnome-doc-utils >= 0.5.6
-
+BuildPreReq: yelp-tools
 BuildRequires: intltool xml-utils xsltproc
 
 %description
@@ -46,9 +43,9 @@ This package is a part of %name and provides demos for GNOME developpers
 %setup
 
 %build
-gnome-doc-prepare -f
+
 %autoreconf
-%configure --disable-scrollkeeper
+%configure
 %make_build
 
 %install
@@ -61,9 +58,12 @@ gnome-doc-prepare -f
 %doc AUTHORS README NEWS
 
 %files -n gnome-devel-demos
-%_datadir/gnome/help/gnome-devel-demos/
+%_datadir/help/*/gnome-devel-demos/
 
 %changelog
+* Tue Mar 26 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.0-alt1
+- 3.8.0
+
 * Tue Nov 13 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.2-alt1
 - 3.6.2
 

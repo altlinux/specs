@@ -1,5 +1,5 @@
 %define _unpackaged_files_terminate_build 1
-%define ver_major 3.6
+%define ver_major 3.8
 
 %def_disable debug
 %def_enable ldap
@@ -14,18 +14,18 @@
 %endif
 
 Name: seahorse
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 
 Summary: A password and encryption key manager
 License: %gpllgpl2plus
 Group: Graphical desktop/GNOME
-Url: http://live.gnome.org/Seahorse
+Url: https://live.gnome.org/Seahorse
 Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 
 Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 
-Requires: gnupg2-gpg
+Requires: gnupg2-gpg gcr
 %{?_enable_ssh:Requires: openssh-clients}
 %{?_enable_sharing:Requires: avahi-daemon}
 
@@ -97,6 +97,9 @@ export GNUPG=/usr/bin/gpg2
 %doc AUTHORS NEWS README THANKS TODO HACKING
 
 %changelog
+* Mon Mar 25 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.0-alt1
+- 3.8.0
+
 * Mon Nov 12 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.3-alt1
 - 3.6.3
 
