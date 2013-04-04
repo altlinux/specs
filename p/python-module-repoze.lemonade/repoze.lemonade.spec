@@ -1,7 +1,7 @@
 %define oname repoze.lemonade
 Name: python-module-%oname
-Version: 0.7.5
-Release: alt1.git20110225.1.1
+Version: 0.8
+Release: alt1.git20120330
 Summary: Library for content-management applications
 License: BSD
 Group: Development/Python
@@ -58,6 +58,9 @@ mv %buildroot%python_sitelibdir_noarch/* \
 %python_sitelibdir/*/*/test*
 
 %changelog
+* Thu Apr 04 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8-alt1.git20120330
+- Version 0.8
+
 * Thu Oct 20 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 0.7.5-alt1.git20110225.1.1
 - Rebuild with Python-2.7
 
