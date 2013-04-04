@@ -1,7 +1,7 @@
 %define oname repoze.accelerator
 Name: python-module-%oname
 Version: 0.1
-Release: alt1.git20110302.1.1
+Release: alt1.git20120330
 Summary: WSGI middleware that acts as a caching accelerator
 License: BSD
 Group: Development/Python
@@ -61,6 +61,9 @@ mv %buildroot%python_sitelibdir_noarch/* \
 %python_sitelibdir/*/*/tests
 
 %changelog
+* Thu Apr 04 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1-alt1.git20120330
+- New snapshot
+
 * Thu Oct 20 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 0.1-alt1.git20110302.1.1
 - Rebuild with Python-2.7
 
