@@ -1,5 +1,5 @@
 Name:		rosa-media-player
-Version:	1.5.1.4
+Version:	1.6
 Release:	alt1
 Summary:	Multimedia player based on mplayer technology
 
@@ -13,11 +13,14 @@ BuildRequires(pre):	qt4-devel >= 4.2.0
 BuildRequires:  libwildmidi-devel
 BuildRequires:	libalsa-devel
 BuildRequires:  gcc-c++ kdelibs zlib-devel
+BuildRequires:  qjson-devel
 
 Requires:	mplayer >= 1.0
 Requires:	mencoder
 Requires:	ffmpeg
 Requires:	xdg-utils
+Requires:   timidity-instruments
+Requires:   wget
 
 %description
 Rosa Media Player (ROMP) - multimedia player that supports most of audio
@@ -55,8 +58,12 @@ strip %buildroot%_bindir/%name
 %_datadir/%name
 %_iconsdir/hicolor/*/apps/rosamp.png
 %_desktopdir/*.desktop
+%_datadir/apps/solid/actions/Open-with-ROMP.desktop
 
 %changelog
+* Thu Apr 04 2013 Andrey Cherepanov <cas@altlinux.org> 1.6-alt1
+- New version 1.6
+
 * Wed Jan 23 2013 Andrey Cherepanov <cas@altlinux.org> 1.5.1.4-alt1
 - New version 1.5.1-4
 
