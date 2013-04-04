@@ -10,7 +10,7 @@
 %define utilsshell changeDBAPassword.sh createAliasDB.sh
 Name: firebird
 Version: %major.%minor
-Release: alt1
+Release: alt2
 Summary: Firebird SQL Database, fork of InterBase
 Group: Databases
 License: IPL
@@ -266,7 +266,7 @@ mv %pkgname-%pkgversion work
 cd %workdir
 %patch0 -p1
 %patch2 -p0
-%patch4 -p2
+%patch4 -p1
 
 # compile time relative path hacks, ew :(
 for d in ../etc usr var/log/firebird var/run/firebird ; do
@@ -339,7 +339,6 @@ find . -name \*.sh -print0 | xargs -0 chmod +x
 rm -rf extern/{editline,icu}
 
 %build
-%define _optlevel 1
 %add_optflags "-fpermissive"
 # server-superserver
 cd %workdir
@@ -351,7 +350,7 @@ mkdir -p m4
 --with-system-icu \
 --enable-superserver
 # Can't use %%make as itsparallel build is broken
-%make
+make
 mv gen/%name gen/superserver
 
 # server-classic
@@ -361,7 +360,7 @@ cd %workdir
 --with-system-editline \
 --with-system-icu
 # Can't use %%make as itsparallel build is broken
-%make
+make
 ln -sf %name gen/classic
 
 %install
@@ -526,6 +525,9 @@ if [ -z "$oldLine" ]; then
 fi
 
 %changelog
+* Thu Apr 04 2013 Dmitry V. Levin <ldv@altlinux.org> 2.1.5.18497.0-alt2
+- Fixed build.
+
 * Wed Apr 03 2013 Boris Savelev <boris@altlinux.org> 2.1.5.18497.0-alt1
 - new version
 
