@@ -8,7 +8,7 @@ BuildRequires: xvfb-run
 %define fedora 19
 Name:           mate-applets
 Version:        1.5.2
-Release:        alt1_2.1
+Release:        alt2_2
 Summary:        MATE Desktop panel applets
 License:        GPLv2+ and LGPLv2+
 URL:            http://mate-desktop.org
@@ -47,9 +47,11 @@ BuildRequires: libstartup-notification-devel
 Buildrequires: libupower-devel
 Requires:      libnotify
 Source44: import.info
+Source45: 01-cpufreq.pkla
 Patch33: mate-applets-1.5.1-alt-geyes_schema.patch
 Patch34: gnome-applets-2.6.0-alt-install_makefile.patch
 Patch35: gnome-applets-2.9.90-alt-modemlights.patch
+
 %description
 MATE Desktop panel applets
 
@@ -86,7 +88,7 @@ make DESTDIR=%{buildroot} install
 #http://forums.fedoraforum.org/showthread.php?t=284962
 chmod a+x %{buildroot}%{python_sitelibdir_noarch}/mate_invest/chart.py
 # alt 01-cpufreq.pkla
-install -pD -m 644 %SOURCE0 %buildroot%_sysconfdir/polkit-1/localauthority/50-local.d/01-cpufreq.pkla
+install -pD -m 644 %SOURCE45 %buildroot%_sysconfdir/polkit-1/localauthority/50-local.d/01-cpufreq.pkla
 
 %files -f %{name}.lang
 %doc AUTHORS COPYING README
@@ -151,6 +153,9 @@ install -pD -m 644 %SOURCE0 %buildroot%_sysconfdir/polkit-1/localauthority/50-lo
 %_sysconfdir/polkit-1/localauthority/50-local.d/01-cpufreq.pkla
 
 %changelog
+* Thu Apr 04 2013 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.5.2-alt2_2
+- package plain 01-cpufreq.pkla instead of tar.xz file (closes: 28794)
+
 * Thu Apr 04 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1.5.2-alt1_2.1
 - hal dependence removed
 
