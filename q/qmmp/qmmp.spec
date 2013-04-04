@@ -1,5 +1,5 @@
 %define branch 0.7
-%define svn svn3337
+%define svn svn3379
 
 Version: %branch.0
 Epoch: 1
@@ -786,6 +786,9 @@ mkdir -p %buildroot/{%_miconsdir,%_niconsdir,%_liconsdir}
 %files -n %name-full
 
 %changelog
+* Thu Apr 04 2013 Motsyo Gennadi <drool@altlinux.ru> 1:0.7.0-alt2.svn3379
+- 0.7.0 svn3379 version
+
 * Thu Mar 21 2013 Motsyo Gennadi <drool@altlinux.ru> 1:0.7.0-alt2.svn3337
 - 0.7.0 svn3337 version (fixed opus codec sample rate)
 
