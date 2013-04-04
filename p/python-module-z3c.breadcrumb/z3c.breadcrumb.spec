@@ -1,7 +1,7 @@
 %define oname z3c.breadcrumb
 Name: python-module-%oname
-Version: 1.1.1
-Release: alt2.1
+Version: 2.0.0
+Release: alt1.a1
 Summary: A pluggable breadcrumbs implementation based on adapters
 License: ZPLv2.1
 Group: Development/Python
@@ -60,6 +60,9 @@ mv %buildroot%python_sitelibdir_noarch/* \
 %python_sitelibdir/*/*/tests.*
 
 %changelog
+* Thu Apr 04 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.0-alt1.a1
+- Version 2.0.0a1
+
 * Thu Oct 20 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 1.1.1-alt2.1
 - Rebuild with Python-2.7
 
