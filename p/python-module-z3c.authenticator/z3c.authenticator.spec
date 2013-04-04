@@ -1,7 +1,7 @@
 %define oname z3c.authenticator
 Name: python-module-%oname
-Version: 0.8.1
-Release: alt3.1
+Version: 1.0.0
+Release: alt1.a5
 Summary: IAuthentication implementation for for Zope3
 License: ZPLv2.1
 Group: Development/Python
@@ -68,6 +68,9 @@ mv %buildroot%python_sitelibdir_noarch/* \
 %python_sitelibdir/*/*/test*
 
 %changelog
+* Thu Apr 04 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.0-alt1.a5
+- Version 1.0.0a5
+
 * Thu Oct 20 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 0.8.1-alt3.1
 - Rebuild with Python-2.7
 
