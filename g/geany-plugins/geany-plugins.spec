@@ -1,6 +1,6 @@
-%define geany_ver 1.22
+%define geany_ver 1.23
 Name: geany-plugins
-Version: 1.22
+Version: 1.23
 Release: alt1
 
 Summary: Plugins for Geany
@@ -10,7 +10,6 @@ Group: Development/Tools
 Url: http://plugins.geany.org/
 
 Source: %name-%version.tar.bz2
-Obsoletes: geanygdb
 
 BuildRequires(pre): geany geany-devel intltool
 
@@ -43,7 +42,7 @@ Various VCS integration (Git, SVN, ...) for Geany
 %setup
 
 %build
-%configure --enable-geanygdb
+%configure
 %make_build
 
 %install
@@ -55,8 +54,8 @@ Various VCS integration (Git, SVN, ...) for Geany
 %_libdir/geany/*
 %_libdir/geany-plugins/*
 %_datadir/geany-plugins/*
-%dir %_libexecdir/geany-plugins
-%_libexecdir/geany-plugins/*
+#dir #_libexecdir/geany-plugins
+#_libexecdir/geany-plugins/*
 %_iconsdir/hicolor/*/apps/gproject*
 %exclude %_libdir/geany/geanyvc*
 %exclude %_libdir/geany/*.la
@@ -68,6 +67,10 @@ Various VCS integration (Git, SVN, ...) for Geany
 %exclude %_libdir/geany/*.la
 
 %changelog
+* Mon Apr 01 2013 Fr. Br. George <george@altlinux.ru> 1.23-alt1
+- Autobuild version bump to 1.23
+- GDB and noarch plugins vanished
+
 * Thu Jul 26 2012 Fr. Br. George <george@altlinux.ru> 1.22-alt1
 - Autobuild version bump to 1.22
 - Update BuildRequires for more plugins to build

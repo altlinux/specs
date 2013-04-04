@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: geany
-Version: 1.22
+Version: 1.23
 Release: alt1
 
 Summary: A fast and lightweight IDE using GTK2
@@ -69,7 +69,7 @@ bzip2 %buildroot%_defaultdocdir/%name-%version/ChangeLog
 %_miconsdir/classviewer-*.png
 %_miconsdir/%name.png
 %_liconsdir/%name.png
-%_iconsdir/hicolor/scalable/apps/%name.svg
+%_iconsdir/*/*/*/*
 %_defaultdocdir/%name-%version/
 
 %files devel
@@ -77,6 +77,10 @@ bzip2 %buildroot%_defaultdocdir/%name-%version/ChangeLog
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Mon Apr 01 2013 Fr. Br. George <george@altlinux.ru> 1.23-alt1
+- Autobuild version bump to 1.23
+- Package additional icons
+
 * Sun Jul 22 2012 Fr. Br. George <george@altlinux.ru> 1.22-alt1
 - Autobuild version bump to 1.22
 
