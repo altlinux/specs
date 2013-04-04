@@ -5,16 +5,12 @@ BuildRequires: /usr/bin/docbook2man /usr/bin/glib-genmarshal /usr/bin/glib-gette
 %filter_from_requires /^hal$/d
 %define _libexecdir %_prefix/libexec
 Name:          mate-power-manager
-Version:       1.5.1
-Release:       alt1_6
+Version:       1.6.0
+Release:       alt1
 Summary:       MATE power management service
 License:       GPLv2+
 URL:           http://pub.mate-desktop.org
-Source0:       http://pub.mate-desktop.org/releases/1.5/%{name}-%{version}.tar.xz
-
-# fix crasher; add inhibit for systemd >= 195, upstreamed
-# https://github.com/mate-desktop/mate-power-manager/pull/43
-Patch0: %{name}-1.5.1-add_systemd_checks.patch
+Source0:       http://pub.mate-desktop.org/releases/1.6/%{name}-%{version}.tar.xz
 
 BuildRequires: libcairo-devel
 BuildRequires: libdbus-glib-devel
@@ -33,8 +29,8 @@ BuildRequires: rarian-compat
 BuildRequires: systemd-devel
 BuildRequires: libunique-devel
 BuildRequires: libupower-devel
+BuildRequires: libnotify-devel
 Source44: import.info
-Patch33: mate-power-manager-dont-eat-the-logs.patch
 
 
 %description
@@ -44,13 +40,11 @@ displaying icons and handling user callbacks in an interactive MATE session.
 
 %prep
 %setup -q
-%patch0 -p1
 NOCONFIGURE=1 ./autogen.sh
-%patch33 -p1
 
 
 %build
-%configure  --disable-static --disable-scrollkeeper --enable-applets
+%configure  --disable-static --disable-scrollkeeper --enable-applets --without-systemdinhibit
 make V=1 %{?_smp_mflags}
 
 
@@ -90,6 +84,11 @@ desktop-file-install                               \
 %{_libexecdir}/mate-inhibit-applet
 
 %changelog
+* Thu Apr 04 2013 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.6.0-alt1
+- new version
+- drop upstreamed patches
+- disable systemdinhibit
+
 * Wed Mar 13 2013 Igor Vlasenko <viy@altlinux.ru> 1.5.1-alt1_6
 - new fc release
 
