@@ -1,14 +1,14 @@
 Group: Graphical desktop/MATE
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-python
-BuildRequires: /usr/bin/gdk-pixbuf-csource /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/jw /usr/bin/xsltproc libICE-devel libSM-devel libX11-devel libapm-devel libcpufreq-devel libgio-devel pkgconfig(NetworkManager) pkgconfig(dbus-1) pkgconfig(gio-2.0) pkgconfig(gio-unix-2.0) pkgconfig(glib-2.0) pkgconfig(gobject-2.0) pkgconfig(gtk+-2.0) pkgconfig(hal) pkgconfig(libgtop-2.0) pkgconfig(mate-settings-daemon) pkgconfig(mucharmap-2) python-devel python-module-pygobject-devel xorg-kbproto-devel
+BuildRequires: /usr/bin/gdk-pixbuf-csource /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/jw /usr/bin/xsltproc libICE-devel libSM-devel libX11-devel libapm-devel libcpufreq-devel libgio-devel pkgconfig(NetworkManager) pkgconfig(dbus-1) pkgconfig(gio-2.0) pkgconfig(gio-unix-2.0) pkgconfig(glib-2.0) pkgconfig(gobject-2.0) pkgconfig(gtk+-2.0) pkgconfig(libgtop-2.0) pkgconfig(mate-settings-daemon) pkgconfig(mucharmap-2) python-devel python-module-pygobject-devel xorg-kbproto-devel
 # END SourceDeps(oneline)
 BuildRequires: xvfb-run
 %define _libexecdir %_prefix/libexec
 %define fedora 19
 Name:           mate-applets
 Version:        1.5.2
-Release:        alt1_2
+Release:        alt1_2.1
 Summary:        MATE Desktop panel applets
 License:        GPLv2+ and LGPLv2+
 URL:            http://mate-desktop.org
@@ -151,6 +151,9 @@ install -pD -m 644 %SOURCE0 %buildroot%_sysconfdir/polkit-1/localauthority/50-lo
 %_sysconfdir/polkit-1/localauthority/50-local.d/01-cpufreq.pkla
 
 %changelog
+* Thu Apr 04 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1.5.2-alt1_2.1
+- hal dependence removed
+
 * Wed Mar 27 2013 Igor Vlasenko <viy@altlinux.ru> 1.5.2-alt1_2
 - new fc release
 
