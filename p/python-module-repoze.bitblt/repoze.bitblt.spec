@@ -1,7 +1,7 @@
 %define oname repoze.bitblt
 Name: python-module-%oname
-Version: 0.8
-Release: alt1.git20110324.1.1
+Version: 0.9
+Release: alt1.git20121130
 Summary: Image transforming WSGI middleware
 License: BSD
 Group: Development/Python
@@ -57,6 +57,9 @@ mv %buildroot%python_sitelibdir_noarch/* \
 %python_sitelibdir/*/*/tests.*
 
 %changelog
+* Thu Apr 04 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9-alt1.git20121130
+- Version 0.9
+
 * Thu Oct 20 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 0.8-alt1.git20110324.1.1
 - Rebuild with Python-2.7
 
