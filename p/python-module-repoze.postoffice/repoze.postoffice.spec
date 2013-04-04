@@ -1,6 +1,6 @@
 %define oname repoze.postoffice
 Name: python-module-%oname
-Version: 0.17
+Version: 0.21
 Release: alt1
 Summary: Provides central depot for incoming mail for use by applications
 License: BSD
@@ -73,6 +73,9 @@ mv %buildroot%python_sitelibdir_noarch/* \
 %python_sitelibdir/*/*/tests
 
 %changelog
+* Thu Apr 04 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.21-alt1
+- Version 0.21
+
 * Tue Dec 27 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.17-alt1
 - Version 0.17
 
