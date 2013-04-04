@@ -1,7 +1,7 @@
 %define oname repoze.debug
 Name: python-module-%oname
-Version: 0.7.2
-Release: alt1.git20110418.1.1
+Version: 0.8
+Release: alt1.git20130130
 Summary: WSGI middleware: debugging utilities
 License: BSD
 Group: Development/Python
@@ -93,6 +93,9 @@ cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
 %doc docs/_build/html/*
 
 %changelog
+* Thu Apr 04 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8-alt1.git20130130
+- Version 0.8
+
 * Mon Oct 24 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 0.7.2-alt1.git20110418.1.1
 - Rebuild with Python-2.7
 
