@@ -1,6 +1,6 @@
 Name: pam_mount 
 Version: 2.11
-Release: alt4
+Release: alt5
 
 Summary: Pluggable Authentication Module that can mount volumes for a user session 
 License: GPLv2+ and LGPLv2+
@@ -38,6 +38,9 @@ all possible volumes in /etc/fstab is not feasible.
 %{_mandir}/man?/*
 
 %changelog
+* Thu Apr 04 2013 Andrey Cherepanov <cas@altlinux.org> 2.11-alt5
+- Use full path to /usr/sbin/pmvarrun to prevent warning in su/sudo
+
 * Mon Nov 07 2011 Alexey Shabalin <shaba@altlinux.ru> 2.11-alt4
 - rebuild with cryptsetup-1.4.0
 
