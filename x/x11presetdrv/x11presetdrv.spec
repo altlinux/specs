@@ -2,7 +2,7 @@
 %define drvpre_dir /usr/libexec/X11/drvpre.d
 
 Name: x11presetdrv
-Version: 1.0.0
+Version: 2.0.0
 Release: alt1
 
 Group: System/Configuration/Hardware
@@ -13,8 +13,6 @@ URL: http://www.altlinux.ru
 BuildArch: noarch
 
 Source: %name-%version.tar.bz2
-
-BuildRequires: gcc
 
 %description
 Utility for initial X Window System drivers preparing
@@ -36,6 +34,10 @@ sed -i "s|@PRESET_DIR@|%drvpre_dir|g" %buildroot/%_sbindir/%name
 mkdir -p -m 0755 %buildroot/%_sysconfdir/rc.d/init.d
 install -m 0755 %name.init %buildroot/%_sysconfdir/rc.d/init.d/%name
 
+mkdir -p -m 0755 %buildroot/%_sysconfdir/rc.d/init.d
+
+mkdir -p -m 0755 %buildroot/%_unitdir
+install -m 0644 %name.service %buildroot/%_unitdir/
 
 %post
 %post_service %name
@@ -48,8 +50,12 @@ install -m 0755 %name.init %buildroot/%_sysconfdir/rc.d/init.d/%name
 %dir %drvpre_dir
 %_sbindir/%name
 %_sysconfdir/rc.d/init.d/%name
+%_unitdir/%name.service
 
 %changelog
+* Thu Apr 04 2013 Sergey V Turchin <zerg@altlinux.org> 2.0.0-alt1
+- add systemd service file (ALT#28660)
+
 * Fri Apr 04 2008 Sergey V Turchin <zerg at altlinux dot org> 1.0.0-alt1
 - don't check for drvpre.d catalog twice
 
