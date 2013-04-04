@@ -1,17 +1,22 @@
 Name: zbar
 Version: 0.10
-Release: alt4.2.1
+Release: alt5
 %define libname libzbar
 
-Summary:Zbar is a library for scanning and decoding bar codes from various sources such as video streams, image files or raw intensity sensors. It supports EAN, UPC, Code 128, Code 39 and Interleaved 2 of 5
+Summary: A library for scanning and decoding bar codes
 
 Group: Graphics
 License: GPLv2
 Url: http://zbar.sourceforge.net/
-Packager: Sergey Alembekov <rt@altlinux.ru>
 Source: %name-%version.tar
-BuildRequires: libImageMagick-devel libgtk+2-devel python-module-pygtk-devel autoconf gcc-c++ libqt4-devel libv4l-devel
-Requires: %libname = %version
+Patch1: 0001-Description-Linux-2.6.38-and-later-do-not-support-th.patch
+Patch2: python-zbar-import-fix-am.patch
+
+# Automatically added by buildreq on Thu Apr 04 2013
+# optimized out: fontconfig fontconfig-devel glib2-devel libICE-devel libSM-devel libX11-devel libXext-devel libXv-devel libatk-devel libcairo-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgtk+2-devel libpango-devel libqt4-core libqt4-devel libqt4-gui libstdc++-devel pkg-config python-base python-devel python-module-distribute python-module-pygobject-devel python-modules python-modules-compiler xorg-videoproto-devel xorg-xextproto-devel xorg-xproto-devel
+BuildRequires: gcc-c++ libImageMagick-devel libv4l-devel python-module-pygtk-devel
+
+BuildRequires: libqt4-devel
 
 %description
 Zbar is the utils and library for scanning and decoding bar codes from
@@ -67,7 +72,7 @@ developing applications that read bar codes with this library.
 %package -n %libname-gtk
 Group: Development/GNOME and GTK+
 Summary: Bar code reader GTK widget
-Requires: %libname = %version, gtk2
+Requires: %libname = %version
 
 %description -n %libname-gtk
 Zbar is a library for scanning and decoding bar codes from various
@@ -82,7 +87,7 @@ applications based on GTK+-2.0.
 %package -n %libname-gtk-devel
 Group: Development/GNOME and GTK+
 Summary: Bar code reader GTK widget extra development files
-Requires: %libname-gtk = %version, %libname-devel = %version, gtk2-devel
+Requires: %libname-gtk = %version, %libname-devel = %version
 
 %description -n %libname-gtk-devel
 Zbar is a library for scanning and decoding bar codes from various
@@ -98,7 +103,7 @@ scanning widget.
 %package -n %libname-gtk-devel-static
 Group: Development/GNOME and GTK+
 Summary: Bar code reader GTK widget extra development files and static libraries
-Requires: %libname-gtk = %version, %libname-devel = %version, gtk2-devel
+Requires: %libname-gtk = %version, %libname-devel = %version
 
 %description -n %libname-gtk-devel-static
 Zbar is a library for scanning and decoding bar codes from various
@@ -114,7 +119,6 @@ scanning widget.
 %package -n python-module-%name
 Group: Development/Python
 Summary: Bar code reader PyGTK widget
-Requires: %libname = %version, pygtk2
 
 %description -n python-module-zbar
 Zbar is a library for scanning and decoding bar codes from various
@@ -129,7 +133,6 @@ applications based on PyGTK.
 %package -n %libname-qt
 Group: Development/KDE and QT
 Summary: Bar code reader Qt widget
-Requires: %libname = %version, libqt4 >= 4
 
 %description -n %libname-qt
 Zbar is a library for scanning and decoding bar codes from various
@@ -144,7 +147,7 @@ applications based on Qt4.
 %package -n %libname-qt-devel
 Group: Development/KDE and QT
 Summary: Bar code reader Qt widget extra development files
-Requires: %libname-qt = %version, %libname-devel = %version, libqt4-devel >= 4
+Requires: %libname-qt = %version, %libname-devel = %version
 
 %description -n %libname-qt-devel
 Zbar is a library for scanning and decoding bar codes from various
@@ -160,7 +163,7 @@ scanning widget.
 %package -n %libname-qt-devel-static
 Group: Development/KDE and QT
 Summary: Bar code reader Qt widget extra development files and static libraries
-Requires: %libname-qt = %version, %libname-devel = %version, libqt4-devel >= 4
+Requires: %libname-qt = %version, %libname-devel = %version
 
 %description -n %libname-qt-devel-static
 Zbar is a library for scanning and decoding bar codes from various
@@ -175,22 +178,16 @@ scanning widget.
 
 %prep
 %setup
-%autoreconf -i
-%configure \
-	--prefix=%prefix \
-	--exec-prefix=%_exec_prefix \
-        --bindir=%_bindir \
-        --sbindir=%_sbindir \
-        --sysconfdir=%_sysconfdir \
-        --datadir=%_datadir \
-        --includedir=%_includedir \
-        --libdir=%_libdir \
-        --libexecdir=%_libexecdir \
-        --localstatedir=%_localstatedir \
-        --sharedstatedir=%_sharedstatedir \
-        --mandir=%_mandir \
-        --infodir=%_infodir \
-        --disable-dependency-tracking
+%patch1 -p1
+%patch2 -p1
+for F in `grep -rl dprintf *`; do
+sed -i.dprintf 's/dprintf/debprintf/g' $F
+done
+
+%build
+%autoreconf
+%configure 
+
 #	--without-qt
 #	--without-xshm \
 #	--without-xv \
@@ -203,7 +200,6 @@ scanning widget.
 #	--disable-video \
 #	--disable-assert
 
-%build
 %make_build
 
 %install
@@ -270,6 +266,11 @@ scanning widget.
 %_libdir/libzbarqt.a
 
 %changelog
+* Thu Apr 04 2013 Fr. Br. George <george@altlinux.ru> 0.10-alt5
+- Switch back to precious upstream sources
+- Add Debian patches
+- Fix dprintf redefinition
+
 * Fri Jun 08 2012 Anton Farygin <rider@altlinux.ru> 0.10-alt4.2.1
 - Rebuild with new libImageMagick
 
