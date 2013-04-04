@@ -6,7 +6,7 @@
 
 Name: branding-%brand-%smalltheme
 Version: 7.0.0
-Release: alt6
+Release: alt7
 BuildArch: noarch
 
 %define theme %name
@@ -334,6 +334,8 @@ install -m 644 index.theme '%buildroot/%_datadir/themes/%XdgThemeName/'
 mkdir -p '%buildroot/etc/gnome/xdg/menus/'
 install -m 644 gnome-applications.menu '%buildroot/etc/gnome/xdg/menus/'
 install -m 644 settings.menu '%buildroot/etc/gnome/xdg/menus/'
+mkdir -p %buildroot/etc/skel/.config/gtk-3.0/
+install -m 644 gtk3-settings.ini %buildroot/etc/skel/.config/gtk-3.0/settings.ini
 popd
 
 #slideshow
@@ -400,6 +402,7 @@ cat '/%_datadir/themes/%XdgThemeName/panel-default-setup.entries' > \
 %files graphics
 %config /etc/alternatives/packages.d/%name-graphics
 %_datadir/design
+%_sysconfdir/skel/.config/gtk-3.0
 
 %files bootsplash
 %_datadir/plymouth/themes/%theme/*
@@ -452,6 +455,9 @@ fi
 %_datadir/kde4/apps/kio_desktop/DesktopLinks/indexhtml.desktop
 
 %changelog
+* Thu Apr 04 2013 Sergey V Turchin <zerg at altlinux dot org> 7.0.0-alt7
+- set GTK3 defaults
+
 * Wed Apr 03 2013 Sergey V Turchin <zerg at altlinux dot org> 7.0.0-alt6
 - change status to beta
 
