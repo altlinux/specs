@@ -1,7 +1,7 @@
 %define oname repoze.tm2
 Name: python-module-%oname
-Version: 1.0b2
-Release: alt1.git20110718
+Version: 1.1
+Release: alt1.git20120324
 Summary: WSGI middleware: commit / abort transactions
 License: BSD
 Group: Development/Python
@@ -62,6 +62,9 @@ mv %buildroot%python_sitelibdir_noarch/* \
 %python_sitelibdir/*/*/tests.*
 
 %changelog
+* Thu Apr 04 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1-alt1.git20120324
+- Version 1.1
+
 * Tue Dec 27 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0b2-alt1.git20110718
 - Version 1.0b2
 
