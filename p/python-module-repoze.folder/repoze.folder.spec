@@ -1,7 +1,7 @@
 %define oname repoze.folder
 Name: python-module-%oname
-Version: 0.6.2
-Release: alt1.git20110225.1.1
+Version: 0.7
+Release: alt1.git20120330
 Summary: Stripped-down ZODBcontainer implementation with object event support
 License: BSD
 Group: Development/Python
@@ -60,6 +60,9 @@ mv %buildroot%python_sitelibdir_noarch/* \
 %python_sitelibdir/*/*/tests.*
 
 %changelog
+* Thu Apr 04 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7-alt1.git20120330
+- Version 0.7
+
 * Thu Oct 20 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 0.6.2-alt1.git20110225.1.1
 - Rebuild with Python-2.7
 
