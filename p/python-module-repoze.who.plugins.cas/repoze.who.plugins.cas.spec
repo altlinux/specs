@@ -1,7 +1,7 @@
 %define oname repoze.who.plugins.cas
 Name: python-module-%oname
-Version: 0.1.1
-Release: alt1.1
+Version: 0.1.2
+Release: alt1
 Summary: CAS plugin for repoze.who by Makina Corpus
 License: BSD
 Group: Development/Python
@@ -67,6 +67,9 @@ mv %buildroot%python_sitelibdir_noarch/* \
 %python_sitelibdir/*/*/*/*/tests
 
 %changelog
+* Thu Apr 04 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.2-alt1
+- Version 0.1.2
+
 * Thu Oct 20 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 0.1.1-alt1.1
 - Rebuild with Python-2.7
 
