@@ -1,5 +1,5 @@
 Name: yakuake
-Version: 2.9.7
+Version: 2.9.9
 Release: alt1
 
 Summary: Very powerful Quake style Konsole
@@ -45,9 +45,14 @@ This version is built with KDE4.
 %_kde4_xdg_apps/*.desktop
 %_kde4_iconsdir/*/*/apps/*
 %_K4apps/%name
+%_K4conf_update/%{name}*
+%_K4conf/%name.knsrc
 
 
 %changelog
+* Thu Apr 04 2013 Andrey Cherepanov <cas@altlinux.org> 2.9.9-alt1
+- New version 2.9.9
+
 * Sat Jul 17 2010 Andrey Rahmatullin <wrar@altlinux.org> 2.9.7-alt1
 - 2.9.7
 
