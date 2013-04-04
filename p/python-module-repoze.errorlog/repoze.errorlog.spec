@@ -1,7 +1,7 @@
 %define oname repoze.errorlog
 Name: python-module-%oname
-Version: 0.9.1
-Release: alt1.git20110322.1.1
+Version: 0.9.2
+Release: alt1.git20120329
 Summary: WSGI middleware: intercept / log / browse exceptions
 License: BSD
 Group: Development/Python
@@ -59,6 +59,9 @@ mv %buildroot%python_sitelibdir_noarch/* \
 %python_sitelibdir/*/*/tests.*
 
 %changelog
+* Thu Apr 04 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.2-alt1.git20120329
+- Version 0.9.2
+
 * Thu Oct 20 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 0.9.1-alt1.git20110322.1.1
 - Rebuild with Python-2.7
 
