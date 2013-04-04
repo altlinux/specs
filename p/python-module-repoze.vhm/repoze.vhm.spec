@@ -1,7 +1,7 @@
 %define oname repoze.vhm
 Name: python-module-%oname
 Version: 0.13
-Release: alt1.git20110322.1.1
+Release: alt1.git20120324
 Summary: Commit / abort transactions via WSGI middleware
 License: BSD
 Group: Development/Python
@@ -61,6 +61,9 @@ mv %buildroot%python_sitelibdir_noarch/* \
 %python_sitelibdir/*/*/tests
 
 %changelog
+* Thu Apr 04 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.13-alt1.git20120324
+- New snapshot
+
 * Thu Oct 20 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 0.13-alt1.git20110322.1.1
 - Rebuild with Python-2.7
 
