@@ -2,7 +2,7 @@
 
 Name: kipi-plugins
 Version: 0.1.6
-Release: alt6.3
+Release: alt6.4
 Serial: 3
 
 Group: Graphics
@@ -18,6 +18,9 @@ Patch2: kipi-plugins-0.1.3-alt-gpod-link.patch
 Patch3: kipi-plugins-0.1.6-alt-automake.patch
 Patch4: kipi-plugins-0.1.5-rc1-alt-shared-icc.patch
 Patch5: kipi-plugins-0.1.6-alt-fix-compile.patch
+Patch6: kipi-plugins-0.1.6-alt-fix-redeclaration.patch
+Patch7: kipi-plugins-0.1.6-alt-use-new-gphoto2.patch
+
 
 Requires: icc-profiles
 
@@ -39,6 +42,8 @@ The library of the KDE Image Plugin Interface used by digiKam and Gwenview
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
+%patch6 -p2
+%patch7 -p2
 
 %make -f admin/Makefile.common cvs ||:
 
@@ -75,6 +80,10 @@ done
 %lang(pt_BR) %_K3doc/pt_BR/%name
 
 %changelog
+* Thu Apr 04 2013 Andrey Cherepanov <cas@altlinux.org> 3:0.1.6-alt6.4
+- Fix redeclaration in flickrexport plugin
+- Adapt kameraklient plugin to new gphoto2 API
+
 * Fri Sep 28 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3:0.1.6-alt6.3
 - Rebuilt with libtiff5 and libpng15
 
