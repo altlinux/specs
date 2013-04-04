@@ -1,12 +1,14 @@
 Name:		rosa-media-player
 Version:	1.6
-Release:	alt1
+Release:	alt2
 Summary:	Multimedia player based on mplayer technology
 
 License:	GPLv2+
 Group:		Video
 Url:		https://abf.rosalinux.ru/uxteam/ROSA_Media_Player/tree/develop
+
 Source:		%name-%version.tar.gz
+
 Packager:   Andrey Cherepanov <cas@altlinux.org>
 
 BuildRequires(pre):	qt4-devel >= 4.2.0
@@ -40,20 +42,16 @@ record screen presentations and many other things.
 %setup -q -n %name
 
 %build
-./get_romp_version.sh %version 1
-make QMAKE=%_qt4dir/bin/qmake LRELEASE=%_qt4dir/bin/lrelease
+%make_build QMAKE=%_qt4dir/bin/qmake LRELEASE=%_qt4dir/bin/lrelease PREFIX=%_prefix
 
 %install
 %makeinstall_std PREFIX=%_prefix
-
-# remove wrongly put docs
-rm -rf %buildroot%_datadir/doc
 
 # strip binary
 strip %buildroot%_bindir/%name
 
 %files
-%doc Copying.txt
+%doc %_docdir/%name
 %attr(755,root,root) %_bindir/%name
 %_datadir/%name
 %_iconsdir/hicolor/*/apps/rosamp.png
@@ -61,6 +59,10 @@ strip %buildroot%_bindir/%name
 %_datadir/apps/solid/actions/Open-with-ROMP.desktop
 
 %changelog
+* Thu Apr 04 2013 Andrey Cherepanov <cas@altlinux.org> 1.6-alt2
+- Pack user manual
+- Fix path to localization files
+
 * Thu Apr 04 2013 Andrey Cherepanov <cas@altlinux.org> 1.6-alt1
 - New version 1.6
 
