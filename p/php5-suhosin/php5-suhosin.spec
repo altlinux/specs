@@ -2,7 +2,7 @@
 
 Name:	 	php5-%php5_extension
 Version:	0.9.33
-Release:	alt3
+Release:	alt%php5_version.%php5_release
 
 Summary:	Advanced PHP5 protection system
 Group:		System/Servers
@@ -49,6 +49,9 @@ install -D -m 644 %SOURCE2 %buildroot/%php5_extconf/%php5_extension/params
 %php5_extension_preun
 
 %changelog
+* %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
+- Rebuild with php5-%php5_version-%php5_release
+
 * Wed Nov 14 2012 Anton Farygin <rider@altlinux.ru> 0.9.33-alt3
 - Rebuild with php5-5.3.18.20121017-alt1
 

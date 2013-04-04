@@ -2,7 +2,7 @@
 
 Name: php5-%php5_extension
 Version: 1.0.4.git
-Release: alt2
+Release: alt%php5_version.%php5_release
 
 Summary: Runkit extension for PHP
 
@@ -48,6 +48,9 @@ phpize
 %pecl_files
 
 %changelog
+* %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
+- Rebuild with php5-%php5_version-%php5_release
+
 * Mon Mar 11 2013 Vitaly Lipatov <lav@altlinux.ru> 1.0.4.git-alt2
 - add postin/preun scripts
 

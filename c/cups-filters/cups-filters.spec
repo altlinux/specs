@@ -2,8 +2,8 @@
 %define _cups_serverbin %_libexecdir/cups
 Summary: OpenPrinting CUPS filters and backends
 Name: cups-filters
-Version: 1.0.24
-Release: alt3
+Version: 1.0.31
+Release: alt1
 
 # For a breakdown of the licensing, see COPYING file
 # GPLv2:   filters: commandto*, imagetoraster, pdftops, rasterto*,
@@ -17,7 +17,7 @@ License: GPLv2 and GPLv2+ and GPLv3 and MIT
 Group: System/Servers
 
 Source: http://www.openprinting.org/download/cups-filters/cups-filters-%version.tar
-Patch0: %name-%version-%release.patch
+Patch0: %name-alt.patch
 Url: http://www.linuxfoundation.org/collaborate/workgroups/openprinting/pdf_as_standard_print_job_format
 Conflicts: cups < 1.6.1-alt1
 
@@ -34,6 +34,7 @@ BuildRequires: libtiff-devel
 BuildRequires: gcc-c++
 BuildRequires: zlib-devel
 BuildRequires: libijs-devel
+BuildRequires: glib2-devel
 # libijs
 BuildRequires: libgs-devel
 BuildRequires: libfreetype-devel
@@ -94,7 +95,7 @@ serial backend for cups
 
 %prep
 %setup
-%patch0 -p1
+%patch0 -p2
 
 %build
 # work-around Rpath
@@ -167,6 +168,10 @@ install -D -m 644 scripting/php/php-cups-params.sh %buildroot/%php5_extconf/%php
 %_libdir/libfontembed.so
 
 %changelog
+* Wed Apr 03 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1.0.31-alt1
+- updated from upstream (closes: #28783)
+- rebuild with php5-5.3.23.20130314-alt1
+
 * Wed Nov 14 2012 Anton Farygin <rider@altlinux.ru> 1.0.24-alt3
 - rebuild with php5-5.3.18.20121017-alt1
 

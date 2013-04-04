@@ -4,7 +4,7 @@
 
 Name:	 	php5-%php5_extension
 Version:	%real_version
-Release:	alt1
+Release:	alt%php5_version.%php5_release
 
 Summary:	Client extension for Redis key-value store.
 
@@ -55,6 +55,9 @@ install -D -m 644 -- %SOURCE2 %buildroot/%php5_extconf/%php5_extension/params
 %php5_extension_preun
 
 %changelog
+* %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
+- Rebuild with php5-%php5_version-%php5_release
+
 * Sun Dec 02 2012 Dmitriy Kulik <lnkvisitor@altlinux.org> 2.2.2-alt1
 - Initial build
 

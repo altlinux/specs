@@ -2,7 +2,7 @@
 
 Name: php5-eaccelerator
 Version: 0.9.6.1
-Release: alt10
+Release: alt10.%php5_version.%php5_release
 
 Summary: PHP accelerator, optimizer, encoder and dynamic content cache
 License: GPL
@@ -78,6 +78,9 @@ popd
 # - add/separate admin stuff (see also spec attached to #19996)
 
 %changelog
+* %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
+- Rebuild with php5-%php5_version-%php5_release
+
 * Wed Nov 14 2012 Anton Farygin <rider@altlinux.ru> 0.9.6.1-alt10
 - Rebuild with php5-5.3.18.20121017-alt1
 

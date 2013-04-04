@@ -5,7 +5,7 @@
 
 Name:	 	php5-%php5_extension
 Version:	%vmajor.%vminor
-Release:	alt5
+Release:	alt%php5_version.%php5_release
 
 Summary:	php5 module to produce HTML from HTML Template files.
 Group:		System/Servers
@@ -65,6 +65,9 @@ install -D -m 644 %SOURCE2 %buildroot/%php5_extconf/%php5_extension/params
 %php5_extension_preun
 
 %changelog
+* %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
+- Rebuild with php5-%php5_version-%php5_release
+
 * Sat Dec 22 2012 Igor Vlasenko <viy@altlinux.ru> 0.95.1-alt5
 - rebuild for php5-5.3.18.20121017-alt1.1
 
