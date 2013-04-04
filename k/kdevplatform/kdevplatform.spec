@@ -2,7 +2,7 @@
 %def_disable apidox
 %define unstable 0
 %define post_version 1
-%define _unpackaged_files_terminate_build 1
+#define _unpackaged_files_terminate_build 1
 
 %if %unstable
 %define pkg_sfx -pre4.4
@@ -23,7 +23,7 @@
 
 Name: %kdevplatform
 Version: 1.4.1
-Release: alt1.git
+Release: alt2
 Serial: 1
 
 Group: Development/Tools
@@ -325,6 +325,9 @@ done
 %_K4link/lib*.so
 
 %changelog
+* Thu Apr 04 2013 Sergey V Turchin <zerg@altlinux.org> 1:1.4.1-alt2
+- fix to build
+
 * Fri Nov 30 2012 Alexey Morozov <morozov@altlinux.org> 1:1.4.1-alt1.git
 - a post-1.4.1 git snapshot (1d425f15575279df6b00cf72a068acea5c1fb7fc)
 - translations updated/fixed and synchronized with trunk
