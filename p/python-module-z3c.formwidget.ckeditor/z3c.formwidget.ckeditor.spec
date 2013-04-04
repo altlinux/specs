@@ -1,7 +1,7 @@
 %define oname z3c.formwidget.ckeditor
 Name: python-module-%oname
-Version: 1.1.0
-Release: alt3.1
+Version: 2.0.0
+Release: alt1.a1
 Summary: A CKEditor widget for text fields using z3c.form
 License: ZPLv2.1
 Group: Development/Python
@@ -12,7 +12,9 @@ Source: %name-%version.tar
 
 BuildPreReq: python-devel python-module-distribute
 
-%py_requires z3c.formwidget simplejson z3c.form zope.viewlet
+%py_requires simplejson z3c.form zope.viewlet
+
+Requires: python-module-z3c.formwidget = %EVR
 
 %description
 This package provides a CKEditor widget for the z3c.form library. It
@@ -70,6 +72,9 @@ touch %buildroot%python_sitelibdir/z3c/formwidget/__init__.py
 %python_sitelibdir/z3c/formwidget/__init__.py*
 
 %changelog
+* Thu Apr 04 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.0-alt1.a1
+- Version 2.0.0a1
+
 * Thu Oct 20 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 1.1.0-alt3.1
 - Rebuild with Python-2.7
 
