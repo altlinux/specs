@@ -1,7 +1,7 @@
 %define oname z3c.indexer
 Name: python-module-%oname
-Version: 0.6.0
-Release: alt2.1
+Version: 0.6.1
+Release: alt1
 Summary: A new way to index objects for Zope3
 License: ZPLv2.1
 Group: Development/Python
@@ -61,6 +61,9 @@ mv %buildroot%python_sitelibdir_noarch/* \
 %python_sitelibdir/*/*/test*
 
 %changelog
+* Thu Apr 04 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.1-alt1
+- Version 0.6.1
+
 * Thu Oct 20 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 0.6.0-alt2.1
 - Rebuild with Python-2.7
 
