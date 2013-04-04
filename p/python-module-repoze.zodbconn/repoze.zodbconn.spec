@@ -1,7 +1,7 @@
 %define oname repoze.zodbconn
 Name: python-module-%oname
-Version: 0.13
-Release: alt1.git20110722
+Version: 0.14
+Release: alt1.git20121206
 Summary: Open databases from URI specifications
 License: BSD
 Group: Development/Python
@@ -55,6 +55,9 @@ mv %buildroot%python_sitelibdir_noarch/* \
 %python_sitelibdir/*/*/tests
 
 %changelog
+* Thu Apr 04 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.14-alt1.git20121206
+- Version 0.14
+
 * Tue Dec 27 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.13-alt1.git20110722
 - New snapshot
 
