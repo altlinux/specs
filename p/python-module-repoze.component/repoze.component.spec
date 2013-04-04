@@ -1,7 +1,7 @@
 %define oname repoze.component
 Name: python-module-%oname
 Version: 0.4
-Release: alt1.git20110222.1.1
+Release: alt1.git20121206
 Summary: A Python component system
 License: BSD
 Group: Development/Python
@@ -63,6 +63,9 @@ mv %buildroot%python_sitelibdir_noarch/* \
 %python_sitelibdir/*/*/tests
 
 %changelog
+* Thu Apr 04 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4-alt1.git20121206
+- New snapshot
+
 * Thu Oct 20 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 0.4-alt1.git20110222.1.1
 - Rebuild with Python-2.7
 
