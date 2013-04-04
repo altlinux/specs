@@ -1,7 +1,7 @@
 %define oname repoze.mailin
 Name: python-module-%oname
 Version: 0.4
-Release: alt1.git20110225.1.1
+Release: alt1.git20120326
 Summary: Map inbound e-mail onto application-defined handlers
 License: BSD
 Group: Development/Python
@@ -57,6 +57,9 @@ mv %buildroot%python_sitelibdir_noarch/* \
 %python_sitelibdir/*/*/tests
 
 %changelog
+* Thu Apr 04 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4-alt1.git20120326
+- New snapshot
+
 * Thu Oct 20 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 0.4-alt1.git20110225.1.1
 - Rebuild with Python-2.7
 
