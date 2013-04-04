@@ -1,4 +1,4 @@
-%define major 2.1.4.18393
+%define major 2.1.5.18497
 %define minor 0
 %define pkgname Firebird
 %define pkgversion %major-%minor
@@ -21,9 +21,7 @@ Source1: %name.init
 Source2: %name.xinetd
 
 Patch: firebird-2.1.2.18118.0-deps-flags-libs.patch
-Patch1: firebird-gcc44-build.patch
 Patch2: firebird-update-valgrind.patch
-Patch3: firebird-scl.epp.patch
 Patch4: firebird-alt-buffer.patch
 
 Requires: libfbclient = %version-%release
@@ -267,9 +265,7 @@ tar -xf %SOURCE0
 mv %pkgname-%pkgversion work
 cd %workdir
 %patch0 -p1
-%patch1 -p2
 %patch2 -p0
-%patch3 -p3
 %patch4 -p2
 
 # compile time relative path hacks, ew :(
@@ -343,6 +339,8 @@ find . -name \*.sh -print0 | xargs -0 chmod +x
 rm -rf extern/{editline,icu}
 
 %build
+%define _optlevel 1
+%add_optflags "-fpermissive"
 # server-superserver
 cd %workdir
 mkdir -p m4
@@ -353,7 +351,7 @@ mkdir -p m4
 --with-system-icu \
 --enable-superserver
 # Can't use %%make as itsparallel build is broken
-make
+%make
 mv gen/%name gen/superserver
 
 # server-classic
@@ -363,7 +361,7 @@ cd %workdir
 --with-system-editline \
 --with-system-icu
 # Can't use %%make as itsparallel build is broken
-make
+%make
 ln -sf %name gen/classic
 
 %install
@@ -528,6 +526,9 @@ if [ -z "$oldLine" ]; then
 fi
 
 %changelog
+* Wed Apr 03 2013 Boris Savelev <boris@altlinux.org> 2.1.5.18497.0-alt1
+- new version
+
 * Fri Mar 16 2012 Boris Savelev <boris@altlinux.org> 2.1.4.18393.0-alt1
 - new version
 
