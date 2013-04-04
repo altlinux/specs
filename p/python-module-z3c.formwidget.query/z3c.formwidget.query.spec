@@ -1,6 +1,6 @@
 %define oname z3c.formwidget.query
 Name: python-module-%oname
-Version: 0.7
+Version: 0.9
 Release: alt1
 Summary: A source query widget for z3c.form
 License: ZPLv2.1
@@ -64,6 +64,9 @@ mv %buildroot%python_sitelibdir_noarch/* \
 %python_sitelibdir/*/*/*/tests.*
 
 %changelog
+* Thu Apr 04 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9-alt1
+- Version 0.9
+
 * Wed Dec 28 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7-alt1
 - Version 0.7
 
