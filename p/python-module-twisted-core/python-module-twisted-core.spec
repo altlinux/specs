@@ -2,7 +2,7 @@
 
 %define prefx python-module-twisted
 Name: %prefx-core
-Version: 12.2.0
+Version: 13.0.0
 Release: alt1
 %setup_python_module twisted-core
 Summary: An asynchronous networking framework written in Python
@@ -14,6 +14,7 @@ Source: http://tmrc.mit.edu/mirror/twisted/Core/10.1/%origname-%version.tar.bz2
 Source1: README.ALT-ru_RU.UTF-8
 
 BuildRequires: python-devel python-modules-compiler
+BuildPreReq: python-module-zope.interface
 Requires: python-module-OpenSSL
 
 Conflicts: %name-core < %version-%release
@@ -242,7 +243,7 @@ Low-level networking transports and utilities.
 %setup -n %origname-%version
 
 # Generate a brief README.zsh
-awk '/^Zsh Notes:/,/^Have fun!/' twisted/python/zshcomp.py > README.zsh
+#awk '/^Zsh Notes:/,/^Have fun!/' twisted/python/zshcomp.py > README.zsh
 
 %build
 %python_build
@@ -400,7 +401,7 @@ touch %buildroot%python_sitelibdir/twisted/trial/__init__.py
 
 %files zsh
 %defattr(-,root,root,-)
-%doc README.zsh
+#doc README.zsh
 #_datadir/zsh/Completion/Python/_twisted_zsh_stub
 #python_sitelibdir/twisted/python/_twisted_zsh_stub
 %python_sitelibdir/twisted/python/twisted-completion.zsh
@@ -501,6 +502,9 @@ touch %buildroot%python_sitelibdir/twisted/trial/__init__.py
 %exclude %python_sitelibdir/twisted/pair/test
 
 %changelog
+* Thu Apr 04 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 13.0.0-alt1
+- Version 13.0.0
+
 * Mon Sep 10 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 12.2.0-alt1
 - Version 12.2.0
 
