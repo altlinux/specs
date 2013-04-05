@@ -2,12 +2,13 @@
 Name: btier
 %define module_name %name
 Version: 0.9.9.9
-Release: alt1
+%define rel 6
+Release: alt2
 Summary: %Name - a blockdevice that provides automated tiered storage
 License: GPLv2
 Group: System/Base
 URL: http://sourceforge.net/projects/tier/
-Source: %name-%version.tar
+Source: %name-%version-%rel.tar
 Patch: %name-%version-%release.patch
 ExclusiveOS: Linux
 
@@ -31,6 +32,18 @@ up-on access patterns.
 This package contains btier_setup - The setup utility for %name.
 
 
+%package doc
+Summary: %name documentation
+Group: Documentation
+BuildArch: noarch
+
+%description doc
+%name is a kernel block device that creates a tiered device out of multiple
+smaller devices with automatic migration and smart placement of data chunks based
+up-on access patterns.
+This package contains %name documentation.
+
+
 %package -n kernel-source-%name
 Summary: sources for %name kernel module
 Group: Development/Kernel
@@ -44,7 +57,7 @@ This package contains sources for %name kernel module.
 
 
 %prep
-%setup -q
+%setup -q -n %name-%version-%rel
 %patch -p1
 
 
@@ -55,17 +68,23 @@ gzip -9c Changelog > Changelog.gz
 
 
 %install
-install -d -m 0755 %buildroot{%_sbindir,%_man1dir,%_usrsrc/kernel/sources}
+install -d -m 0755 %buildroot{%_sbindir,%_man1dir,%_usrsrc/kernel/sources,%_docdir/%name-%version/examples/fio}
 install -m 0755 cli/%{name}_setup %buildroot%_sbindir/
 install -m 0644 man/*.1 %buildroot%_man1dir/
+install -m 0644 tools/{show_*,writetest.c} %buildroot%_docdir/%name-%version/examples/
+install -m 0644 tools/fio/* %buildroot%_docdir/%name-%version/examples/fio/
+install -m 0644 Changelog.* TODO Documentation/* %buildroot%_docdir/%name-%version/
 
 tar --transform='s,^.*/,/%module_name-%version/,' -cJf %kernel_srcdir/%module_name-%version.tar.xz kernel/%name/*
 
 
 %files utils
-%doc Changelog.* TODO Documentation/*
 %_sbindir/*
 %_man1dir/*
+
+
+%files doc
+%_docdir/%name-%version
 
 
 %files -n kernel-source-%name
@@ -73,5 +92,9 @@ tar --transform='s,^.*/,/%module_name-%version/,' -cJf %kernel_srcdir/%module_na
 
 
 %changelog
+* Fri Apr 05 2013 Led <led@altlinux.ru> 0.9.9.9-alt2
+- 0.9.9.9-6
+- added doc subpackage
+
 * Thu Mar 21 2013 Led <led@altlinux.ru> 0.9.9.9-alt1
 - initial build
