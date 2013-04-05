@@ -1,7 +1,7 @@
 %define oname z3c.recipe.i18n
 Name: python-module-%oname
-Version: 0.8.0
-Release: alt2.1
+Version: 0.8.1
+Release: alt1
 Summary: Zope3 egg based i18n locales extration recipes
 License: ZPLv2.1
 Group: Development/Python
@@ -13,7 +13,7 @@ Source: %name-%version.tar
 BuildPreReq: python-devel python-module-distribute
 
 %py_requires zc.buildout z3c.recipe.scripts zope.app.appsetup
-%py_requires zope.app.locales zope.configuration
+%py_requires zope.app.locales zope.configuration z3c.recipe
 
 %description
 This Zope 3 recipes offers different tools which allows to extract i18n
@@ -60,6 +60,9 @@ mv %buildroot%python_sitelibdir_noarch/* \
 %python_sitelibdir/*/*/*/test*
 
 %changelog
+* Fri Apr 05 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.1-alt1
+- Version 0.8.1
+
 * Thu Oct 20 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 0.8.0-alt2.1
 - Rebuild with Python-2.7
 
