@@ -4,7 +4,7 @@
 %def_enable telepathy
 
 Name: pidgin-sipe
-Version: 1.14.1
+Version: 1.15.0
 Release: alt1
 Summary: Pidgin plugin for connecting to MS Communications Server
 
@@ -87,6 +87,9 @@ rm -f %buildroot%_libdir/purple-2/*.la
 %_datadir/telepathy/profiles/sipe.profile
 
 %changelog
+* Fri Apr 05 2013 Alexey Shabalin <shaba@altlinux.ru> 1.15.0-alt1
+- 1.15.0
+
 * Tue Mar 05 2013 Alexey Shabalin <shaba@altlinux.ru> 1.14.1-alt1
 - 1.14.1
 - build with telepathy support
