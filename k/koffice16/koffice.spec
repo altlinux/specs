@@ -25,7 +25,7 @@
 %define rname koffice
 Name: %{rname}16
 Version: 1.6.3
-%define rlz alt26
+%define rlz alt27
 %define beta %nil
 Serial: 4
 
@@ -81,7 +81,8 @@ BuildRequires: libGraphicsMagick-c++-devel
 %endif
 BuildRequires: kdelibs-devel libart_lgpl-devel
 BuildRequires: libaspell-devel libexif-devel libgsf-devel libjpeg-devel liblcms-devel
-BuildRequires: libpng-devel libqt3-devel libstdc++-devel libtiff-devel libwv2-devel
+BuildRequires: libpng-devel libqt3-devel libstdc++-devel libtiff-devel
+#libwv2-devel	# For disable MS Office import
 BuildRequires: libxml2-devel libxslt-devel pkg-config python-devel ruby libruby-devel
 BuildRequires: libMySQL-devel libwpd-devel
 BuildRequires: qt3-designer qt3-doc xml-utils zlib-devel libreadline-devel
@@ -849,7 +850,7 @@ mv %buildroot/%_iconsdir/crystalsvg %buildroot/%_kde3_iconsdir
 %_Klibdir/libhtmlimport.so*
 %_Klibdir/libkwordkword1dot3import.so*
 %_Klibdir/libkwordlatexexport.so*
-%_Klibdir/libmswordimport.so*
+#_Klibdir/libmswordimport.so*
 %_Klibdir/libmswriteexport.so*
 %_Klibdir/libmswriteimport.so*
 %_Klibdir/liboowriterexport.so*
@@ -905,6 +906,9 @@ mv %buildroot/%_iconsdir/crystalsvg %buildroot/%_kde3_iconsdir
 ###%endif
 
 %changelog
+* Fri Apr 05 2013 Roman Savochenko <rom_as@altlinux.ru> 4:1.6.3-alt27
+- MS Office import by library libwv2 disable by some headers broken.
+
 * Tue Oct 30 2012 Roman Savochenko <rom_as@altlinux.ru> 4:1.6.3-alt26
 - Move conflicted with KOffice 2 files to /usr/lib/kde3.
 
