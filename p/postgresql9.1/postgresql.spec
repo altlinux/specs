@@ -4,8 +4,8 @@
 %define prog_name            postgresql
 %define postgresql_major     9
 %define postgresql_minor     1
-%define postgresql_subminor  8
-%define postgresql_altrel    2
+%define postgresql_subminor  9
+%define postgresql_altrel    1
 %define libpq_major          5
 %define libpq_minor          4
 %define libecpg_major        6
@@ -696,6 +696,9 @@ fi
 %_libdir/%PGSQL/plpython2.so
 
 %changelog
+* Fri Apr 05 2013 Alexei Takaseev <taf@altlinux.org> 9.1.9-alt1
+- 9.1.9
+
 * Mon Feb 18 2013 Alexei Takaseev <taf@altlinux.org> 9.1.8-alt2
 - Remove /tmp/.s.PGSQL.* after shutdown server
 - Small fix spec (locate localedir into chroot)
