@@ -3,8 +3,8 @@
 %define major 2.24
 
 Name: libgtkmm2
-Version: %major.0
-Release: alt2
+Version: %major.3
+Release: alt1
 
 Summary: A C++ interface for GTK2 (a GUI library for X)
 License: LGPL
@@ -12,11 +12,12 @@ Group: System/Libraries
 Url: http://gtkmm.sourceforge.net/
 Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 
-Source: ftp://ftp.gnome.org/pub/gnome/sources/%rname/%major/%rname-%version.tar.bz2
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%rname/%major/%rname-%version.tar.xz
 
 Provides: %rname = %version
 
-BuildRequires: mm-common gcc-c++ libgtk+2-devel >= 2.24.0 libpangomm-devel libatkmm-devel
+BuildRequires: mm-common >= 0.9.6
+BuildRequires: gcc-c++ libgtk+2-devel >= 2.24.0 libpangomm-devel libatkmm-devel
 
 %description
 Gtkmm provides a C++ interface to the GTK+ GUI library. gtkmm2 wraps GTK+ 2.
@@ -85,6 +86,9 @@ mm-common-prepare
 #%_datadir/%rname-%api_version
 
 %changelog
+* Fri Apr 05 2013 Yuri N. Sedunov <aris@altlinux.org> 2.24.3-alt1
+- 2.24.3
+
 * Thu Apr 21 2011 Yuri N. Sedunov <aris@altlinux.org> 2.24.0-alt2
 - rebuild using new mm-common
 
