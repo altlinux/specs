@@ -1,7 +1,7 @@
 %define oname z3c.layer.pagelet
 Name: python-module-%oname
-Version: 1.9.0
-Release: alt2.1
+Version: 2.0.0
+Release: alt1.a1
 Summary: Pagelet layer setup for Zope 3
 License: ZPLv2.1
 Group: Development/Python
@@ -15,6 +15,8 @@ BuildPreReq: python-devel python-module-distribute
 %py_requires z3c.pagelet z3c.template zope.authentication zope.browser
 %py_requires zope.browserresource zope.component zope.interface
 %py_requires zope.login zope.publisher
+
+Requires: python-module-z3c.layer
 
 %description
 This package provides a pagelet based layer setup for Zope3.
@@ -32,6 +34,13 @@ This package provides a pagelet based layer setup for Zope3.
 
 This package contains tests for Pagelet layer setup for Zope 3.
 
+%package -n python-module-z3c.layer
+Summary: Core package of z3c.layer
+Group: Development/Python
+
+%description -n python-module-z3c.layer
+This package contains core package of z3c.layer.
+
 %prep
 %setup
 
@@ -47,16 +56,26 @@ mv %buildroot%python_sitelibdir_noarch/* \
 	%buildroot%python_sitelibdir/
 %endif
 
+touch %buildroot%python_sitelibdir/z3c/layer/__init__.py
+
 %files
 %doc *.txt
 %python_sitelibdir/*
 %exclude %python_sitelibdir/*.pth
-%exclude %python_sitelibdir/*/*/*/tests
+%exclude %python_sitelibdir/*/*/*/test*
+%exclude %python_sitelibdir/z3c/layer/__init__.py*
 
 %files tests
-%python_sitelibdir/*/*/*/tests
+%python_sitelibdir/*/*/*/test*
+
+%files -n python-module-z3c.layer
+%dir %python_sitelibdir/z3c/layer
+%python_sitelibdir/z3c/layer/__init__.py*
 
 %changelog
+* Fri Apr 05 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.0-alt1.a1
+- Version 2.0.0a1
+
 * Thu Oct 20 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 1.9.0-alt2.1
 - Rebuild with Python-2.7
 
