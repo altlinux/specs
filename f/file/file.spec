@@ -1,6 +1,6 @@
 Name: file
 Version: 4.26
-Release: alt10
+Release: alt11
 
 Summary: A utility for determining file types
 License: BSD-style
@@ -123,6 +123,12 @@ make -k check
 %python_sitelibdir/*
 
 %changelog
+* Fri Apr 05 2013 Dmitry V. Levin <ldv@altlinux.org> 4.26-alt11
+- libmagic: fixed &-prefixed offsets support in magic that uses string flags.
+- Enhanced #!/usr/bin/env magic, removed "a " prefix from its output.
+- Enhanced python magic and its output.
+- Commented out weak sendmail magic (closes: #28310).
+
 * Sun Mar 10 2013 Dmitry V. Levin <ldv@altlinux.org> 4.26-alt10
 - Commented out weak palm magic (closes: #28261).
 
