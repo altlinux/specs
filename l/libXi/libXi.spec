@@ -1,5 +1,5 @@
 Name: libXi
-Version: 1.7
+Version: 1.7.1
 Release: alt1
 Summary: X Input Extension Library
 License: MIT/X11
@@ -10,7 +10,8 @@ Packager: Valery Inozemtsev <shrek@altlinux.ru>
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-BuildRequires: asciidoc libX11-devel libXext-devel xmlto xorg-inputproto-devel xorg-sgml-doctools xorg-util-macros
+BuildRequires: asciidoc libX11-devel libXext-devel libXfixes-devel xmlto xorg-inputproto-devel
+BuildRequires: xorg-sgml-doctools xorg-util-macros
 
 %description
 X Input Extension Library
@@ -49,6 +50,9 @@ develop programs which make use of %name
 %_man3dir/*
 
 %changelog
+* Fri Apr 05 2013 Valery Inozemtsev <shrek@altlinux.ru> 1.7.1-alt1
+- 1.7.1
+
 * Thu Mar 07 2013 Valery Inozemtsev <shrek@altlinux.ru> 1.7-alt1
 - 1.7
 
