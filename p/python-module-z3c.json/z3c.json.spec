@@ -1,7 +1,7 @@
 %define oname z3c.json
 Name: python-module-%oname
-Version: 0.5.4
-Release: alt2.1
+Version: 0.5.5
+Release: alt1
 Summary: Zope3 JSON base libraries
 License: ZPLv2.1
 Group: Development/Python
@@ -57,6 +57,9 @@ mv %buildroot%python_sitelibdir_noarch/* \
 %python_sitelibdir/*/*/test*
 
 %changelog
+* Fri Apr 05 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.5-alt1
+- Version 0.5.5
+
 * Thu Oct 20 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 0.5.4-alt2.1
 - Rebuild with Python-2.7
 
