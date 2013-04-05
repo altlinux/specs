@@ -40,7 +40,7 @@
 %define minor	8
 %define bugfix	4
 %define beta	%nil
-%define rlz alt3
+%define rlz alt4
 %define phonon_ver 4.4.0
 
 Name: %rname%major
@@ -91,7 +91,7 @@ Patch103: 0191-listview-alternate-row-colors.diff
 Patch104: 0195-compositing-properties.diff
 Patch105: 0225-invalidate-tabbar-geometry-on-refresh.patch
 # FC
-Patch201: qt-everywhere-opensource-src-4.8.0-rc1-moc-boost148.patch
+Patch201: qt-everywhere-opensource-src-4.8.4-QTBUG-22829.patch
 Patch202: qt-4.0.1-sans-mono.patch
 Patch203: qt-everywhere-opensource-src-4.6.2-cups.patch
 Patch204: qt-everywhere-opensource-src-4.6.3-glib_eventloop_nullcheck.patch
@@ -151,7 +151,7 @@ BuildRequires: libcups-devel libalsa-devel
 BuildRequires: gcc-c++ libstdc++-devel libcom_err-devel libicu-devel libffi-devel
 BuildRequires: libjpeg-devel libmng-devel libpng-devel zlib-devel libtiff-devel
 BuildRequires: libxml2-devel libxslt-devel libreadline-devel libpam0-devel
-BuildRequires: libMySQL-devel libsqlite3-devel
+BuildRequires: libmysqlclient-devel libsqlite3-devel
 BuildRequires: bison pkg-config
 BuildRequires: fontconfig-devel libssl-devel libkrb5-devel libdbus-devel
 BuildRequires: libatk-devel libcairo-devel libgdk-pixbuf-devel libgio-devel libpango-devel
@@ -1529,6 +1529,12 @@ install -m 644 %SOURCE104 %buildroot/%_iconsdir/hicolor/64x64/apps/%name.png
 %endif
 
 %changelog
+* Fri Apr 05 2013 Sergey V Turchin <zerg@altlinux.org> 4.8.4-alt4
+- update patch against QTBUG-22829
+
+* Fri Mar 22 2013 Sergey V Turchin <zerg@altlinux.org> 4.8.4-alt2.M60P.1
+- built for M60P
+
 * Thu Mar 21 2013 Sergey V Turchin <zerg@altlinux.org> 4.8.4-alt3
 - add qmake_qt4 macro (ALT#28724)
 
