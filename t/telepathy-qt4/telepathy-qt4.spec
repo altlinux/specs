@@ -1,8 +1,10 @@
 %define qt4_ver %{get_version libqt4-devel}
+%define farstream farstream
+%define farstream_dev farstream-devel libtelepathy-farstream0.4-devel
 
 Name: telepathy-qt4
 Version: 0.9.3
-Release: alt1
+Release: alt2
 
 Summary: Telepathy framework - Qt4 connection manager library 
 License: GPLv2
@@ -20,7 +22,7 @@ Patch2: alt-pkgconfig.patch
 #BuildRequires: cmake doxygen gcc-c++ git-core graphviz gst-plugins-devel libicu libqt4-sql-interbase libqt4-sql-mysql libqt4-sql-odbc libqt4-sql-postgresql libqt4-sql-sqlite2 libtelepathy-farstream-devel phonon-devel python-module-dbus python-module-distribute qt4-doc-html
 BuildRequires(pre): libqt4-devel
 BuildRequires: cmake doxygen gcc-c++ git-core graphviz gst-plugins-devel qt4-doc-html phonon-devel
-BuildRequires: farstream-devel libtelepathy-farstream-devel
+BuildRequires: %farstream_dev
 BuildRequires: python-module-dbus python-module-distribute
 BuildRequires: kde-common-devel
 
@@ -30,7 +32,7 @@ Telepathy-Qt4 is a high-level binding for Telepathy, similar to telepathy-glib b
 %package -n lib%name
 Summary: Telepathy framework - Qt4 connection manager library 
 Group: System/Libraries
-Requires: farstream
+Requires: %farstream
 %description -n lib%name
 Telepathy-Qt4 is a high-level binding for Telepathy, similar to telepathy-glib but for Qt 4.
 
@@ -50,7 +52,10 @@ Development libraries and header files for %name.
 %build
 export PATH=%_qt4dir/bin:$PATH
 export QT_DOC_DIR=%_docdir/qt-%qt4_ver
-%Kbuild -DENABLE_TESTS=OFF
+%Kbuild \
+    -DENABLE_FARSTREAM:BOOL=ON \
+    -DENABLE_FARSIGHT:BOOL=OFF \
+    -DENABLE_TESTS=OFF
 pushd BUILD*/
 make doxygen-doc
 popd
@@ -70,6 +75,9 @@ popd
 %_includedir/telepathy-qt4
 
 %changelog
+* Fri Apr 05 2013 Sergey V Turchin <zerg@altlinux.org> 0.9.3-alt2
+- fix build requires
+
 * Wed Aug 29 2012 Sergey V Turchin <zerg@altlinux.org> 0.9.3-alt1
 - new version
 
