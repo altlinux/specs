@@ -1,7 +1,7 @@
 %define oname z3c.menu.ready2go
 Name: python-module-%oname
-Version: 0.8.0
-Release: alt2.1
+Version: 1.0.0
+Release: alt1.a1
 Summary: A ready to go menu for Zope3
 License: ZPLv2.1
 Group: Development/Python
@@ -16,6 +16,8 @@ BuildPreReq: python-devel python-module-distribute
 %py_requires zope.configuration zope.interface zope.proxy zope.publisher
 %py_requires zope.schema zope.security zope.site zope.traversing
 %py_requires zope.viewlet
+
+Requires: python-module-z3c.menu = %EVR
 
 %description
 This package provides a ready 2 go menu implementation based on viewlets
@@ -35,6 +37,13 @@ for Zope3.
 
 This package contains tests for z3c.menu.ready2go.
 
+%package -n python-module-z3c.menu
+Summary: Core package of z3c.menu
+Group: Development/Python
+
+%description -n python-module-z3c.menu
+This package contains core package of z3c.menu.
+
 %prep
 %setup
 
@@ -50,16 +59,25 @@ mv %buildroot%python_sitelibdir_noarch/* \
 	%buildroot%python_sitelibdir/
 %endif
 
+touch %buildroot%python_sitelibdir/z3c/menu/__init__.py
+
 %files
 %doc *.txt
 %python_sitelibdir/*
 %exclude %python_sitelibdir/*.pth
 %exclude %python_sitelibdir/*/*/*/test*
+%exclude %python_sitelibdir/z3c/menu/__init__.py*
 
 %files tests
 %python_sitelibdir/*/*/*/test*
 
+%files -n python-module-z3c.menu
+%python_sitelibdir/z3c/menu/__init__.py*
+
 %changelog
+* Fri Apr 05 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.0-alt1.a1
+- Version 1.0.0a1
+
 * Thu Oct 20 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 0.8.0-alt2.1
 - Rebuild with Python-2.7
 
