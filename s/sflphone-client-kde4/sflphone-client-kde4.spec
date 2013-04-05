@@ -3,7 +3,7 @@
 %define rname sflphone-client-kde
 Name: sflphone-client-kde4
 Version: 1.2.2
-Release: alt3
+Release: alt4
 
 Group: Communications
 Summary: KDE client for SFLphone
@@ -12,6 +12,9 @@ Url: http://www.sflphone.org/
 
 Requires: sflphone-common = %version
 Requires: %name-common = %EVR
+
+Provides: sflphone-client-kde = %EVR
+Obsoletes: sflphone-client-kde < %EVR
 
 Source: %rname-%version.tar
 Patch1: alt-enable-video.patch
@@ -95,6 +98,9 @@ Requires: %name-common = %EVR
 %_K4libdir/libqtsflphone.so.*
 
 %changelog
+* Fri Apr 05 2013 Sergey V Turchin <zerg@altlinux.org> 1.2.2-alt4
+- obsolete sflphone-client-kde
+
 * Thu Feb 21 2013 Sergey V Turchin <zerg@altlinux.org> 1.2.2-alt3
 - enable video
 
