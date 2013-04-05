@@ -1,15 +1,17 @@
 %define _kde_alternate_placement 1
 
+%def_enable hupnp
+
 %add_findpackage_path %_kde4_bindir
 %add_findreq_skiplist %_K4apps/cmake/modules*.py
 
 %define major 4
 %define minor 10
-%define bugfix 1
+%define bugfix 2
 %define rname kdelibs
 Name: kde4libs
 Version: %major.%minor.%bugfix
-Release: alt1
+Release: alt2
 
 %define conflictver %major.%minor-alt0.0.1
 %define conflictver_kdevelop 3.4.1-alt0.0.1
@@ -113,7 +115,9 @@ Patch3000: kdelibs-4.4.92-alt-alternate-kconf_update_bin-path.patch
 BuildRequires(pre): kde-common-devel libqt4-devel libsoprano-devel libstrigi-devel attica-devel
 BuildRequires: soprano-backend-redland soprano-backend-virtuoso soprano
 BuildRequires: bzlib-devel cmake libalsa-devel
+%if_enabled hupnp
 BuildRequires: herqq-devel
+%endif
 BuildRequires: libXScrnSaver-devel grantlee-devel
 #BuildRequires: libaspell-devel aspell
 BuildRequires: libenchant-devel
@@ -153,7 +157,9 @@ applications for KDE 4.
 %patch102 -p1
 %patch103 -p1
 %patch104 -p1
+%if_enabled hupnp
 %patch105 -p1
+%endif
 #
 %patch201 -p1
 %patch202 -p1
@@ -219,10 +225,13 @@ export XDG_DATA_DIRS=%_K4datadir:%_datadir
     -DKDE_PLATFORM_PROFILE="Desktop" \
 %endif
     -DPCRE_INCLUDE_DIR=%_includedir/pcre \
+%if_enabled hupnp
+    -DHUPNP_ENABLED:BOOL=ON \
+%endif
     -DWITH_FAM:BOOL=OFF \
     -DWITH_SOLID_UDISKS2=ON \
     -DKDE_DISTRIBUTION_TEXT="%distribution %_target_cpu" \
-    -DKDE4_AUTH_BACKEND_NAME=PolkitQt-1 \
+    -DKDE4_AUTH_BACKEND_NAME="POLKITQT-1" \
     -DKDE_DEFAULT_HOME:STRING=".kde4"
 
 %K4make
@@ -315,6 +324,12 @@ ln -sf `relative %buildroot/%_kde4_bindir/kde4-config %buildroot/%_K4bindir/kde4
 %_K4includedir/*
 
 %changelog
+* Fri Apr 05 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.2-alt2
+- fix to build with libhupnp
+
+* Wed Apr 03 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.2-alt1
+- new version
+
 * Mon Mar 04 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.1-alt1
 - new version
 
