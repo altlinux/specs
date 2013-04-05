@@ -1,7 +1,7 @@
 %define oname zope.app.appsetup
 Name: python-module-%oname
 Version: 3.16.0
-Release: alt3.1
+Release: alt4
 Summary: Zope app setup helper
 License: ZPLv2.1
 Group: Development/Python
@@ -47,6 +47,7 @@ mv %buildroot%python_sitelibdir_noarch/* \
 	%buildroot%python_sitelibdir/
 %endif
 
+mv %buildroot%_bindir/debug %buildroot%_bindir/debug.app
 
 %files
 %doc *.txt
@@ -59,6 +60,9 @@ mv %buildroot%python_sitelibdir_noarch/* \
 %python_sitelibdir/*/*/*/test*
 
 %changelog
+* Fri Apr 05 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.16.0-alt4
+- Renamed %_bindir/debug -> %_bindir/debug.app (ALT #28797)
+
 * Mon Oct 24 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 3.16.0-alt3.1
 - Rebuild with Python-2.7
 
