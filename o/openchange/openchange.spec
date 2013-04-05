@@ -4,8 +4,8 @@
 # Licensing Note: The code is GPLv3+ and the IDL files are public domain.
 
 Name: openchange
-Version: 1.0
-Release: alt2.1
+Version: 2.0
+Release: alt1
 Group: Networking/Mail
 Summary: Provides access to Microsoft Exchange servers using native protocols
 License: GPLv3+ and Public Domain
@@ -144,8 +144,8 @@ This package provides the server elements for OpenChange.
 %patch -p1
 
 %build
-mkdir bin
-mkdir setup/mapistore
+mkdir -p bin
+mkdir -p setup/mapistore
 
 ./autogen.sh
 %configure \
@@ -238,6 +238,9 @@ rm -f %buildroot%_bindir/check_fasttransfer
 %endif
 
 %changelog
+* Fri Apr 05 2013 Alexey Shabalin <shaba@altlinux.ru> 2.0-alt1
+- 2.0
+
 * Mon Feb 18 2013 Alexey Shabalin <shaba@altlinux.ru> 1.0-alt2.1
 - rebuild
 
