@@ -11,9 +11,9 @@ Name: ruby
 %define lname lib%name
 %define branch 1.9
 %define ver_teeny 3
-%define _pl p408
+%define _pl p411
 Version: %branch.%ver_teeny
-Release: alt19
+Release: alt20
 Summary: An Interpreted Object-Oriented Scripting Language
 License: BSD (revised) or Ruby
 Group: Development/Ruby
@@ -350,6 +350,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 
 
 %changelog
+* Fri Apr 05 2013 Led <led@altlinux.ru> 1.9.3-alt20
+- p411 upstream patchlevel
+
 * Wed Apr 03 2013 Led <led@altlinux.ru> 1.9.3-alt19
 - p408 upstream patchlevel
 
