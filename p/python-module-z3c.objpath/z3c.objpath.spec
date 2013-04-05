@@ -1,7 +1,7 @@
 %define oname z3c.objpath
 Name: python-module-%oname
-Version: 1.0
-Release: alt2.1
+Version: 1.1
+Release: alt1
 Summary: Generate and resolve paths to to objects
 License: ZPL
 Group: Development/Python
@@ -65,13 +65,15 @@ mv %buildroot%python_sitelibdir_noarch/* \
 %files
 %doc *.txt
 %python_sitelibdir/*
-%exclude %python_sitelibdir/*/__init__.*
 %exclude %python_sitelibdir/*/*/tests.*
 
 %files tests
 %python_sitelibdir/*/*/tests.*
 
 %changelog
+* Fri Apr 05 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1-alt1
+- Version 1.1
+
 * Thu Oct 20 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 1.0-alt2.1
 - Rebuild with Python-2.7
 
