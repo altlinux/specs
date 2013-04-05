@@ -1,5 +1,5 @@
 Name: freeciv
-Version: 2.3.2
+Version: 2.3.4
 Release: alt1
 
 Summary: Turn-based strategy game inspired by the history of human civilization
@@ -223,6 +223,12 @@ hardlink -cv %buildroot
 %_datadir/%name/wonders*
 
 %changelog
+* Sat Feb 16 2013 Dmitry V. Levin <ldv@altlinux.org> 2.3.4-alt1
+- Updated to 2.3.4 release.
+
+* Sat Dec 08 2012 Dmitry V. Levin <ldv@altlinux.org> 2.3.3-alt1
+- Updated to 2.3.3 release.
+
 * Tue Sep 18 2012 Dmitry V. Levin <ldv@altlinux.org> 2.3.2-alt1
 - Updated to 2.3.2 release.
 
