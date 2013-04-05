@@ -1,10 +1,11 @@
 %define oname sip
+%define version_hex %(printf '0x%%02x%%02x%%02x' %(echo %version | sed 's/\\./ /g'))
 
 %def_with python3
 
 Name: python-module-%oname
 Version: 4.14.3
-Release: alt1
+Release: alt2
 Summary: Python bindings generator for C++ class libraries
 License: PSF
 Group: Development/Python
@@ -72,6 +73,13 @@ Header files for sip
 %prep
 %setup
 python build.py prepare
+
+# fix versions sets
+sed -ri '
+s@^(sip_version[[:space:]]+=)[[:space:]]+.*$@\1 %version_hex@
+s@^(sip_version_str[[:space:]]+=)[[:space:]]+.*$@\1 "%version"@
+' configure.py
+
 %if_with python3
 rm -rf ../python3
 cp -a . ../python3
@@ -133,6 +141,9 @@ sed -i 's|%_bindir/sip|%_bindir/sip3|' \
 %endif
 
 %changelog
+* Fri Apr 05 2013 Aleksey Avdeev <solo@altlinux.ru> 4.14.3-alt2
+- Fix versions sets in sipconfig.py
+
 * Fri Mar 01 2013 Aleksey Avdeev <solo@altlinux.ru> 4.14.3-alt1
 - Version 4.14.3
 
