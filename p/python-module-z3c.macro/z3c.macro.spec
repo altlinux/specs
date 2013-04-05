@@ -1,7 +1,7 @@
 %define oname z3c.macro
 Name: python-module-%oname
-Version: 1.4.1
-Release: alt1
+Version: 2.0.0
+Release: alt1.a1
 Summary: Simpler definition of ZPT macros
 License: ZPLv2.1
 Group: Development/Python
@@ -60,6 +60,9 @@ mv %buildroot%python_sitelibdir_noarch/* \
 %python_sitelibdir/*/*/tests.*
 
 %changelog
+* Fri Apr 05 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.0-alt1.a1
+- Version 2.0.0a1
+
 * Wed Dec 28 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4.1-alt1
 - Version 1.4.1
 
