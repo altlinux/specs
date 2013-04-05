@@ -6,7 +6,7 @@
 
 Name: gnome-games-%_name
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: A GNOME version of the color lines program
 Group: Games/Boards
@@ -14,6 +14,7 @@ License: GPLv3+
 Url: http://live.gnome.org/GnomeGames/
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
+Patch: gnome-games-glines-3.8.0-segfault.patch
 
 Provides:  %_name = %version-%release
 Obsoletes: gnome-games-glines
@@ -34,6 +35,7 @@ possible, and be #1 in the High Scores.
 
 %prep
 %setup -n %_name-%version
+%patch -p1
 
 %build
 %autoreconf
@@ -56,6 +58,9 @@ possible, and be #1 in the High Scores.
 %config(noreplace) %attr(0664,games,games) %_localstatedir/games/glines*
 
 %changelog
+* Wed Apr 03 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.0-alt2
+- fixed crash on startup
+
 * Wed Mar 27 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.0-alt1
 - 3.8.0
 

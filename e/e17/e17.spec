@@ -2,7 +2,7 @@
 %define cvs_date zero
 %undefine cvs_date
 %define snapshot 2012-10-12
-%define rel alt2
+%define rel alt3
 
 %def_disable static
 %def_with pam_helper
@@ -36,7 +36,6 @@ Source9: %_name-wm.desktop
 
 # Some missing source files from the SVN tree
 Source10: %_name.missing-%version.tar
-# from Suse
 Source11: e17-alt-sysactions.conf
 
 Patch0: fix-systray-height.patch
@@ -44,15 +43,16 @@ Patch1: add-systray-mobile.patch
 Patch2: add-systray-standard.patch
 Patch3: illume-keyboard-bigfont.patch
 Patch4: e17-0.17.0-alt-g-s-d_path.patch
-# from Suse
-Patch5: e17-0.17.0-alt-e_sys_nosuid.patch
+Patch5: e17-0.17.1-alt-e_sys_nosuid.patch
 Patch6: auto-ptrace-disable.patch
 Patch11: enlightenment-0.17.1-pam-helper.patch
 
 Provides: e17-default
 # default terminal
 Requires: terminology
-Requires: dbus-tools-gui edbus eeze pm-utils evas_generic_loaders
+Requires: evas_generic_loaders dbus-tools-gui edbus eeze
+Requires: empower
+Requires: pm-utils
 # for menu
 Requires: gnome-icon-theme
 Requires: wm-common-freedesktop
@@ -106,7 +106,7 @@ to use Enlightenment as windowmanager in GNOME 2 session
 %patch2 -p2
 %patch3 -p2
 %patch4 -p1 -b .gsd
-#%%patch5 -p1 -b .nosuid
+%patch5 -p1 -b .nosuid
 %patch6 -p2
 %patch11 -p1
 
@@ -159,7 +159,7 @@ session		required	pam_deny.so
 _PAM_
 
 # replace original sysaction.conf
-#cp %SOURCE11 %buildroot%_sysconfdir/enlightenment/sysactions.conf
+cp %SOURCE11 %buildroot%_sysconfdir/enlightenment/sysactions.conf
 
 %find_lang enlightenment
 
@@ -187,6 +187,10 @@ _PAM_
 %_datadir/gnome/wm-properties/*.desktop
 
 %changelog
+* Thu Apr 04 2013 Yuri N. Sedunov <aris@altlinux.org> 1:0.17.1-alt3
+- applied e17-0.17.1-alt-e_sys_nosuid.patch,
+  applied custom sysactions.conf, added empower to rqs (ALT #28291)
+
 * Wed Apr 03 2013 Led <led@altlinux.ru> 1:0.17.1-alt2
 - with pam helper (ALT#28277)
 

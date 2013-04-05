@@ -5,7 +5,7 @@
 
 Name: gnome-shell
 Version: %ver_major.0.1
-Release: alt1
+Release: alt2
 
 Summary: Window management and application launching for GNOME
 Group: Graphical desktop/GNOME
@@ -13,8 +13,8 @@ License: GPLv2+
 Url: https://live.gnome.org/GnomeShell
 Packager: GNOME Maintainers Team <gnome at packages.altlinux.org>
 
-#Source: %name-%version.tar
-Source: http://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+Source: %name-%version.tar
+#Source: http://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 Patch1: %name-3.7.92-alt-gir.patch
 # use gnome3-applications.menu
 Patch2: %name-3.5.91-avoid-alt-menus.patch
@@ -156,7 +156,6 @@ rm -f %buildroot%_libdir/%name/*.la
 %check
 %make check
 
-
 %files
 %_bindir/*
 %_libexecdir/gnome-shell-calendar-server
@@ -192,6 +191,9 @@ rm -f %buildroot%_libdir/%name/*.la
 %_datadir/gtk-doc/html/st/
 
 %changelog
+* Thu Apr 04 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.0.1-alt2
+- after 3.8.0.1 snapshot (ae5cdea5)
+
 * Tue Mar 26 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.0.1-alt1
 - 3.8.0.1
 
