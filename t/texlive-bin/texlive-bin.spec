@@ -1,6 +1,6 @@
 Name: texlive-bin
 Version: 2008.0
-Release: alt0.15.3
+Release: alt0.15.4
 Packager: Grigory Batalov <bga@altlinux.ru>
 
 Summary: Essential binaries
@@ -18,7 +18,7 @@ Source6: tlmgr
 Patch1: texlive-source-%version-%release.patch
 
 # Automatically added by buildreq on Mon Sep 22 2008
-BuildRequires: flex fontconfig-devel libfreetype-devel gcc-c++ libXaw-devel libfreetype-devel libgd2-devel libpng-devel libtinfo-devel libXpm-devel t1lib-devel
+BuildRequires: flex fontconfig-devel libfreetype-devel gcc-c++ libXaw-devel libfreetype-devel libgd2-devel libpng12-devel libtinfo-devel libXpm-devel t1lib-devel
 
 BuildRequires: tex-common texlive-common
 BuildRequires(pre): rpm-build-texmf
@@ -657,6 +657,9 @@ ln -s %_sysconfdir/texmf/web2c/texmf.cnf %buildroot%_datadir/texmf/web2c/texmf.c
 %files -n texlive-xetex -f alt-linux/texlive-xetex.files
 
 %changelog
+* Tue Apr 02 2013 Fr. Br. George <george@altlinux.ru> 2008.0-alt0.15.4
+- Rebuild with libpng12
+
 * Fri Oct 21 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 2008.0-alt0.15.3
 - Rebuild with Python-2.7
 
