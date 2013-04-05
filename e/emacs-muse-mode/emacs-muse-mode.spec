@@ -4,11 +4,11 @@
 %define modename muse
 %define base_rel alt1
 
-Version: 3.02.93
+Version: 3.20
 %ifdef beta_ver
-Release: %base_rel.%beta_ver.qa1
+Release: %base_rel.%beta_ver
 %else
-Release: %base_rel.qa1
+Release: %base_rel
 %endif
 Name: emacs-%modename-mode
 License: GPL
@@ -32,7 +32,7 @@ BuildPreReq: emacs-misc-modes >= 0.2-alt3
 BuildPreReq: emacs-devel
 
 # Automatically added by buildreq on Sat May 27 2006
-BuildRequires: emacs-w3 fontconfig
+BuildRequires: fontconfig
 
 %description
 Emacs Muse is an authoring and publishing environment for Emacs. It
@@ -66,14 +66,14 @@ You need to install %name-el only if you intend to modify any of the
 %__make PREFIX=%prefix
 
 %install
-%__mkdir_p %buildroot%_emacslispdir/%modename
-%__install -m 644 lisp/*.el* %buildroot%_emacslispdir/%modename
+mkdir -p %buildroot%_emacslispdir/%modename
+install -m 644 lisp/*.el* %buildroot%_emacslispdir/%modename
 
-%__mkdir_p %buildroot%_infodir
-%__install -m 644 *.info* %buildroot%_infodir/
+mkdir -p %buildroot%_infodir
+install -m 644 texi/*.info* %buildroot%_infodir/
 
-%__mkdir_p %buildroot%_emacs_sitestart_dir
-%__install -m 644 %SOURCE1 %buildroot%_emacs_sitestart_dir/%modename.el
+mkdir -p %buildroot%_emacs_sitestart_dir
+install -m 644 %SOURCE1 %buildroot%_emacs_sitestart_dir/%modename.el
 
 # gzip ChangeLog*
 
@@ -91,7 +91,12 @@ You need to install %name-el only if you intend to modify any of the
 
 
 %changelog
-* Tue Nov 10 2009 Repocop Q. A. Robot <repocop@altlinux.org> 3.02.93-alt1.qa1
+* Fri Apr 05 2013 Eugene Vlasov <eugvv@altlinux.ru> 3.20-alt1
+- New version
+- Removed build requires on emacs-w3
+- Removed obsoletes macros
+
+* Tue Nov 10 2009 Repocop Q. A. Robot <repocop at altlinux.org> 3.02.93-alt1.qa1
 - NMU (by repocop): the following fixes applied:
   * obsolete-call-in-post-install-info for emacs-muse-mode
   * postclean-05-filetriggers for spec file
