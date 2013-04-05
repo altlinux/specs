@@ -1,7 +1,7 @@
 %define oname z3c.menu.simple
 Name: python-module-%oname
 Version: 0.6.0
-Release: alt2.1
+Release: alt3
 Summary: A simple menu system for Zope3
 License: ZPLv2.1
 Group: Development/Python
@@ -13,7 +13,7 @@ Source: %name-%version.tar
 BuildPreReq: python-devel python-module-distribute
 
 %py_requires z3c.i18n zope.app.component zope.browserpage zope.schema
-%py_requires zope.traversing zope.viewlet
+%py_requires zope.traversing zope.viewlet z3c.menu
 
 %description
 This package provides a simple menu implementation based on viewlets.
@@ -54,6 +54,9 @@ mv %buildroot%python_sitelibdir_noarch/* \
 %python_sitelibdir/*/*/*/tests.*
 
 %changelog
+* Fri Apr 05 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.0-alt3
+- Added requirement on python-module-z3c.menu
+
 * Thu Oct 20 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 0.6.0-alt2.1
 - Rebuild with Python-2.7
 
