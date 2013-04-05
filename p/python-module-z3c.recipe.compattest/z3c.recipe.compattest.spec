@@ -1,7 +1,7 @@
 %define oname z3c.recipe.compattest
 Name: python-module-%oname
-Version: 0.13.1
-Release: alt2.1
+Version: 1.0
+Release: alt1
 Summary: Buildout recipe to create testrunners for testing compatibility with other packages
 License: ZPLv2.1
 Group: Development/Python
@@ -34,11 +34,14 @@ mv %buildroot%python_sitelibdir_noarch/* \
 %endif
 
 %files
-%doc *.txt
+%doc *.rst
 %python_sitelibdir/*
 %exclude %python_sitelibdir/*.pth
 
 %changelog
+* Fri Apr 05 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0-alt1
+- Version 1.0
+
 * Thu Oct 20 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 0.13.1-alt2.1
 - Rebuild with Python-2.7
 
