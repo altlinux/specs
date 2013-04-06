@@ -2,7 +2,7 @@ Group: Development/Tools
 %define _libexecdir %_prefix/libexec
 Name:           mate-common
 Summary:        mate common build files
-Version:        1.5.2
+Version:        1.6.0
 Release:        alt1_1
 License:	GPLv3+
 URL:		http://mate-desktop.org
@@ -37,6 +37,9 @@ make install DESTDIR=%{buildroot}
 %{_mandir}/man1/*
 
 %changelog
+* Sat Apr 06 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.0-alt1_1
+- new fc release
+
 * Wed Mar 27 2013 Igor Vlasenko <viy@altlinux.ru> 1.5.2-alt1_1
 - new fc release
 

@@ -4,7 +4,7 @@ BuildRequires: /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/gtkdoc
 # END SourceDeps(oneline)
 %define _libexecdir %_prefix/libexec
 Name:           mate-panel
-Version:        1.5.5
+Version:        1.6.0
 Release:        alt1_1
 Summary:        MATE Desktop panel applets
 #libs are LGPLv2+ applications GPLv2+
@@ -12,7 +12,6 @@ License:        GPLv2+
 URL:            http://mate-desktop.org
 Source0:        http://pub.mate-desktop.org/releases/1.5/%{name}-%{version}.tar.xz
 Requires:       %{name}-libs%{?_isa} = %{version}-%{release}
-Requires:       gsettings-desktop-schemas
 # needed as nothing else requires it
 Requires:       mate-session-manager
 #for fish
@@ -40,6 +39,8 @@ BuildRequires:  pango-devel
 BuildRequires:  popt-devel
 Source44: import.info
 Requires: tzdata
+# let us keep it just in case
+Requires:       gsettings-desktop-schemas
 
 %description
 MATE Desktop panel applets
@@ -82,11 +83,10 @@ make  %{?_smp_mflags} V=1
 %install
 make DESTDIR=%{buildroot} install
 
-rm -fv %{buildroot}%{_libdir}/lib*.la
+find %{buildroot} -name '*.la' -exec rm -rf {} ';'
+find %{buildroot} -name '*.a' -exec rm -rf {} ';'
 
 desktop-file-install \
-        --remove-category="MATE" \
-        --add-category="X-Mate" \
         --dir=%{buildroot}%{_datadir}/applications \
 %{buildroot}%{_datadir}/applications/mate-panel.desktop
 
@@ -104,7 +104,6 @@ rm %{buildroot}%{_libexecdir}/mate-panel/mate-panel-add
 %{_libexecdir}/mate-panel/
 %{_datadir}/glib-2.0/schemas/org.mate.panel.*.xml
 %{_datadir}/applications/mate-panel.desktop
-%{_datadir}/dbus-1/services/org.mate.panel.*.service
 %{_datadir}/omf/mate-applet-fish/
 %{_datadir}/omf/mate-applet-clock/
 %{_datadir}/icons/hicolor/*/*/*
@@ -113,6 +112,10 @@ rm %{buildroot}%{_libexecdir}/mate-panel/mate-panel-add
 %{_datadir}/mate-panel
 %{_datadir}/mate-panelrc
 %{_datadir}/MateConf/gsettings/mate-panel.convert
+%{_datadir}/dbus-1/services/org.mate.panel.applet.ClockAppletFactory.service
+%{_datadir}/dbus-1/services/org.mate.panel.applet.FishAppletFactory.service
+%{_datadir}/dbus-1/services/org.mate.panel.applet.NotificationAreaAppletFactory.service
+%{_datadir}/dbus-1/services/org.mate.panel.applet.WnckletFactory.service
 
 %files libs
 %doc COPYING.LIB
@@ -127,6 +130,12 @@ rm %{buildroot}%{_libexecdir}/mate-panel/mate-panel-add
 
 
 %changelog
+* Sat Apr 06 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.0-alt1_1
+- new fc release
+
+* Wed Mar 27 2013 Igor Vlasenko <viy@altlinux.ru> 1.5.6-alt1_1
+- fc update
+
 * Wed Feb 20 2013 Igor Vlasenko <viy@altlinux.ru> 1.5.5-alt1_1
 - new fc release
 

@@ -5,7 +5,7 @@ BuildRequires: /usr/bin/glib-gettextize /usr/bin/gtkdocize /usr/bin/mate-keyring
 %define _libexecdir %_prefix/libexec
 Summary:	Framework for managing passwords and other secrets
 Name:		libmatekeyring
-Version:	1.5.1
+Version:	1.6.0
 Release:	alt1_1
 License:	GPLv2+ and LGPLv2+
 Source:		http://pub.mate-desktop.org/releases/1.5/%{name}-%{version}.tar.xz
@@ -62,6 +62,9 @@ rm %{buildroot}%{_libdir}/*.la
 %{_datadir}/gtk-doc/html/*
 
 %changelog
+* Sat Apr 06 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.0-alt1_1
+- new fc release
+
 * Wed Mar 27 2013 Igor Vlasenko <viy@altlinux.ru> 1.5.1-alt1_1
 - new fc release
 

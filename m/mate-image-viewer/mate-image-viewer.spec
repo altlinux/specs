@@ -4,14 +4,14 @@ BuildRequires: /usr/bin/dbus-binding-tool /usr/bin/glib-genmarshal /usr/bin/glib
 # END SourceDeps(oneline)
 %define _libexecdir %_prefix/libexec
 Name:          mate-image-viewer
-Version:       1.5.0
-Release:       alt1_4
+Version:       1.6.0
+Release:       alt1_1
 Summary:       Eye of MATE image viewer
 
 License:       GPLv2+ and LGPLv2+ 
 URL:           http://mate-desktop.org
-Source0:       http://pub.mate-desktop.org/releases/1.5/%{name}-%{version}.tar.xz
-Patch0:        schema.patch
+Source0:       http://pub.mate-desktop.org/releases/1.6/%{name}-%{version}.tar.xz
+#Patch0:        schema.patch
 
 BuildRequires: pkgconfig(glib-2.0)
 BuildRequires: pkgconfig(gtk+-2.0)
@@ -57,7 +57,7 @@ functionality to eog.
 
 %prep
 %setup -q
-%patch0 -p1
+#%patch0 -p1
 NOCONFIGURE=1 ./autogen.sh
 
 
@@ -72,11 +72,10 @@ make V=1 %{?_smp_mflags}
 %install
 make install DESTDIR=$RPM_BUILD_ROOT
 
-desktop-file-install --vendor "" --delete-original \
-  --remove-category=MATE                           \
-  --add-category=X-Mate                            \
+desktop-file-install                               \
+  --delete-original                                \
   --dir $RPM_BUILD_ROOT%{_datadir}/applications    \
-  $RPM_BUILD_ROOT%{_datadir}/applications/eom.desktop
+$RPM_BUILD_ROOT%{_datadir}/applications/eom.desktop
 
 find ${RPM_BUILD_ROOT} -type f -name "*.la" -exec rm -f {} ';'
 find ${RPM_BUILD_ROOT} -type f -name "*.a" -exec rm -f {} ';'
@@ -103,18 +102,22 @@ done
 %files -f eom.lang
 %doc AUTHORS COPYING NEWS README
 %{_bindir}/eom
-%{_libdir}/eom/plugins/
+%{_libdir}/eom/plugins
 %{_datadir}/applications/eom.desktop
-%{_datadir}/eom/
-%{_datadir}/mate/help/eom/
+%{_datadir}/eom
+%{_datadir}/mate/help/eom
 %{_datadir}/icons/hicolor/*/apps/eom.*
 %{_datadir}/glib-2.0/schemas/org.mate.eom.gschema.xml
+%{_datadir}/MateConf/gsettings/eom.convert
 
 %files devel
 %{_libdir}/pkgconfig/eom.pc
-%{_includedir}/eom-2.20/
+%{_includedir}/eom-2.20
 
 %changelog
+* Sat Apr 06 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.0-alt1_1
+- new fc release
+
 * Tue Mar 05 2013 Igor Vlasenko <viy@altlinux.ru> 1.5.0-alt1_4
 - new fc release
 

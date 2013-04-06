@@ -5,13 +5,13 @@ BuildRequires: /usr/bin/glib-gettextize pkgconfig(gio-2.0) pkgconfig(glib-2.0)
 # END SourceDeps(oneline)
 Requires: altlinux-freedesktop-menu-mate
 %define _libexecdir %_prefix/libexec
-Name:	mate-menus
-Version:	1.5.0
-Release:	alt2_2
-Summary:	Displays menus for MATE Desktop
-License:	GPLv2+ and LGPLv2+
-URL:		http://mate-desktop.org
-Source0:	http://pub.mate-desktop.org/releases/1.5/%{name}-%{version}.tar.xz
+Name:           mate-menus
+Version:        1.6.0
+Release:        alt1_1
+Summary:        Displays menus for MATE Desktop
+License:        GPLv2+ and LGPLv2+
+URL:            http://mate-desktop.org
+Source0:        http://pub.mate-desktop.org/releases/1.6/%{name}-%{version}.tar.xz
 
 BuildRequires:  gobject-introspection-devel
 BuildRequires:  mate-common
@@ -72,8 +72,8 @@ find %{buildroot} -name '*.a' -exec rm -f {} ';'
 %doc AUTHORS COPYING README
 #%{_sysconfdir}/xdg/menus/mate-applications.menu
 #%{_sysconfdir}/xdg/menus/mate-settings.menu
-%{_datadir}/mate-menus/
-%{_datadir}/mate/desktop-directories/
+%{_datadir}/mate-menus
+%{_datadir}/mate/desktop-directories
 
 %files -n libmate-menus
 %{_libdir}/girepository-1.0/MateMenu-2.0.typelib
@@ -84,11 +84,14 @@ find %{buildroot} -name '*.a' -exec rm -f {} ';'
 %files devel
 %{_datadir}/gir-1.0/MateMenu-2.0.gir
 %{_libdir}/libmate-menu.so
-%{_includedir}/mate-menus/
+%{_includedir}/mate-menus
 %{_libdir}/pkgconfig/libmate-menu.pc
 
 
 %changelog
+* Sat Apr 06 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.0-alt1_1
+- new fc release
+
 * Tue Mar 05 2013 Igor Vlasenko <viy@altlinux.ru> 1.5.0-alt2_2
 - new fc release
 

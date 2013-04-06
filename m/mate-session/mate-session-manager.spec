@@ -1,17 +1,17 @@
 Group: Graphical desktop/MATE
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/xmlto /usr/bin/xsltproc libICE-devel libXau-devel libXext-devel libgio-devel libwrap-devel pkgconfig(gio-2.0) pkgconfig(glib-2.0) pkgconfig(gtk+-2.0) pkgconfig(gtk+-3.0) pkgconfig(ice) pkgconfig(xau) pkgconfig(xext) pkgconfig(xrender) pkgconfig(xtst) xorg-xtrans-devel
+BuildRequires: /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/xmlto /usr/bin/xsltproc libICE-devel libXau-devel libXext-devel libgio-devel libwrap-devel pkgconfig(gio-2.0) pkgconfig(glib-2.0) pkgconfig(gtk+-2.0) pkgconfig(gtk+-3.0) pkgconfig(ice) pkgconfig(libsystemd-daemon) pkgconfig(libsystemd-login) pkgconfig(xau) pkgconfig(xext) pkgconfig(xrender) pkgconfig(xtst) xorg-xtrans-devel
 # END SourceDeps(oneline)
 BuildRequires(pre): browser-plugins-npapi-devel
 %define _libexecdir %_prefix/libexec
 %define oldname mate-session-manager
 Name:           mate-session
-Version:        1.5.1
+Version:        1.6.0
 Release:        alt1_1
 Summary:        MATE Desktop session manager
 License:        GPLv2+
 URL:            http://mate-desktop.org
-Source0:        http://pub.mate-desktop.org/releases/1.5/%{oldname}-%{version}.tar.xz
+Source0:        http://pub.mate-desktop.org/releases/1.6/%{oldname}-%{version}.tar.xz
 
 BuildRequires:  libdbus-glib-devel
 BuildRequires:  desktop-file-utils
@@ -46,7 +46,6 @@ NOCONFIGURE=1 ./autogen.sh
 %configure --disable-static \
            --enable-ipv6 \
            --with-gtk=2.0 \
-           --with-gnu-ld \
            --with-default-wm=marco \
            --with-x
 make %{?_smp_mflags} V=1
@@ -56,8 +55,6 @@ make %{?_smp_mflags} V=1
 make install DESTDIR=%{buildroot}
 
 desktop-file-install                               \
-        --remove-category="MATE"                   \
-        --add-category="X-Mate"                    \
         --delete-original                          \
         --dir=%{buildroot}%{_datadir}/applications \
 %{buildroot}%{_datadir}/applications/mate-session-properties.desktop
@@ -131,6 +128,9 @@ install -pD -m644 %SOURCE45 %buildroot%_iconsdir/hicolor/64x64/apps/mate.png
 
 
 %changelog
+* Sat Apr 06 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.0-alt1_1
+- new fc release
+
 * Tue Mar 05 2013 Igor Vlasenko <viy@altlinux.ru> 1.5.1-alt1_1
 - new fc release
 
