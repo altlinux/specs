@@ -1,9 +1,9 @@
-%define		softver 12.14
-%define		buildver 1738
+%define		softver 12.15
+%define		buildver 1748
 
 Name:		opera
 Version:	%softver.%buildver
-Release:	alt2
+Release:	alt1
 Packager:	Motsyo Gennadi <drool@altlinux.ru>
 Summary:	A fast and secure web browser and Internet suite
 Group:		Networking/WWW
@@ -31,7 +31,7 @@ BuildArch:	x86_64
 # rem for M51
 BuildRequires: libgtk+3
 
-BuildRequires: kde4libs libXt libgst-plugins libgtk+2 libcurl
+BuildRequires: kde4libs libXt libgst-plugins libgtk+2
 
 %description
 Opera is a small, fast, customizable, powerful and user-friendly web
@@ -92,14 +92,14 @@ cp -a -f %opera64/share/man %buildroot%_datadir
 cp -a -f %opera64/share/mime %buildroot%_datadir
 cp -a -f %opera64/share/opera %buildroot%_datadir
 subst 's|/usr/lib/|/usr/%_lib/|g' %buildroot%_bindir/%name
-rm -rf %buildroot%_libdir/%name/pluginwrapper/operapluginwrapper-ia32-linux 
+rm -rf %buildroot%_libdir/%name/pluginwrapper/operapluginwrapper-ia32-linux
 %endif
+rm -rf %buildroot%_libdir/opera/opera_autoupdatechecker
 
 %files
 %_docdir/opera
 %_bindir/*
 %_libdir/%name
-%exclude %_libdir/opera/opera_autoupdatechecker
 %exclude %_libdir/opera/lib%{name}*.so
 %_desktopdir/*.desktop
 %_iconsdir/*/*/*/*
@@ -119,6 +119,9 @@ rm -rf %buildroot%_libdir/%name/pluginwrapper/operapluginwrapper-ia32-linux
 %_libdir/opera/lib%{name}kde4.so
 
 %changelog
+* Sat Apr 06 2013 Motsyo Gennadi <drool@altlinux.ru> 12.15.1748-alt1
+- 12.15 released
+
 * Tue Feb 12 2013 Motsyo Gennadi <drool@altlinux.ru> 12.14.1738-alt2
 - exclude opera_autoupdatechecker (ugly requires)
 
