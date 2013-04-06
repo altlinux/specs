@@ -50,7 +50,7 @@
 
 Name:           %jppname
 Version:        %{javaver}.%{buildver}
-Release:        alt6
+Release:        alt7
 Epoch:          0
 Summary:        Java 2 Runtime Environment, Standard Edition
 License:        Operating System Distributor License for Java version 1.1
@@ -603,7 +603,7 @@ cat >> $RPM_BUILD_ROOT%{_datadir}/applications/%{name}-control-panel.desktop << 
 [Desktop Entry]
 Name=Java Plugin Control Panel (%{name})
 Comment=Java Control Panel
-Exec=%{_jvmdir}/%{sdkdir}/bin/jcontrol
+Exec=%{_jvmdir}/%{jredir}/bin/jcontrol
 Icon=%{name}
 Terminal=false
 Type=Application
@@ -977,6 +977,9 @@ done
 
 
 %changelog
+* Sat Apr 06 2013 Igor Vlasenko <viy@altlinux.ru> 0:1.6.0.26-alt7
+- use jcontrol from jre (closes: 28795)
+
 * Thu Sep 20 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.6.0.26-alt6
 - disabled accessibility subpackage (java access bridge is depecated)
 
