@@ -1,5 +1,5 @@
 Name: rpm-build-python
-Version: 0.36.1
+Version: 0.36.2
 Release: alt1
 
 # redefine python_libdir for 0.29.alt2 is buggy 
@@ -15,7 +15,7 @@ Packager: Python Development Team <python@packages.altlinux.org>
 
 Requires: rpm >= 4.0.4-alt96.15
 Requires: python-base >= 2.7.2-alt3
-Requires: file >= 4.26-alt8
+Requires: file >= 4.26-alt11
 
 AutoReqProv: yes, nopython
 
@@ -85,6 +85,18 @@ unset RPM_PYTHON
 %python_tooldir/rpm-build
 
 %changelog
+* Sat Apr 06 2013 Dmitry V. Levin <ldv@altlinux.org> 0.36.2-alt1
+- python.compileall.py:
+  + removed python version <= 2.2 py_compile workaround;
+  + fixed file executability check (by iv@).
+- python.{prov,req}.files:
+  + enhanced "python script text executable" type check;
+  + added is_python3_path check from python.{prov,req}.py,
+    which is now applied only to files of uncertain type.
+- python.{prov,req}.py: removed is_python3 check.
+- brp-bytecompile_python:
+  added $RPM_PYTHON3_COMPILE_INCLUDE to the exclude list (closes: #28606).
+
 * Fri Feb 15 2013 Dmitry V. Levin <ldv@altlinux.org> 0.36.1-alt1
 - python.{prov,req}.files: reintroduced optimization from 0.36.0-alt3.
 - python.prov.files: skip all files that cannot be provided due to

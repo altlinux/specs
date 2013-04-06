@@ -1,5 +1,5 @@
 Name: rpm-build-python3
-Version: 0.1.5
+Version: 0.1.6
 Release: alt1
 
 %define python3_version %(LC_ALL=C python3 -c 'python3 -c 'import sys; print("{0}.{1}".format(sys.version_info[0],sys.version_info[1]))' 2>/dev/null || echo 2.7)
@@ -13,7 +13,7 @@ Source: %name-%version.tar
 BuildArch: noarch
 
 Requires: python3
-Requires: file >= 4.26-alt8
+Requires: file >= 4.26-alt11
 Requires: rpm >= 4.0.4-alt100.45
 
 AutoReqProv: yes, nopython
@@ -25,10 +25,6 @@ These helper macros provide possibility to build python3 modules.
 
 %prep
 %setup
-
-%build
-sed -i 's/@PYTHON_VERSION@/%__python_version/g' python3
-./test.sh
 
 %install
 install -pD -m644 python3 %buildroot%_rpmmacrosdir/python3
@@ -55,6 +51,9 @@ install -pD -m755 brp-bytecompile_python3 %buildroot%_rpmlibdir/brp.d/096-byteco
 
 #unset RPM_PYTHON
 
+%check
+./test.sh
+
 %files
 %_rpmmacrosdir/python3
 %_rpmmacrosdir/python3.env
@@ -69,6 +68,14 @@ install -pD -m755 brp-bytecompile_python3 %buildroot%_rpmlibdir/brp.d/096-byteco
 %_rpmlibdir/python3.prov.files
 
 %changelog
+* Sat Apr 06 2013 Dmitry V. Levin <ldv@altlinux.org> 0.1.6-alt1
+- python3.{prov,req}.files:
+  + skip files of type "python script text executable";
+  + enhanced "python3 script text executable" type check;
+  + added is_python3_path check from python3.{prov,req}.py,
+    which is now applied only to files of uncertain type.
+- python3.{prov,req}.py: removed is_python3 check (closes: #28762).
+
 * Fri Feb 22 2013 Dmitry V. Levin <ldv@altlinux.org> 0.1.5-alt1
 - macros.d/python3: use %%__python3 for python3-config location.
 - python3.compileall.py: fixed file executability check (by iv@).
