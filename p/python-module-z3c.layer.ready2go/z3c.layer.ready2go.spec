@@ -1,7 +1,7 @@
 %define oname z3c.layer.ready2go
 Name: python-module-%oname
-Version: 0.6.0
-Release: alt2.1
+Version: 1.0.0
+Release: alt1.a1
 Summary: A ready to go layer for Zope3
 License: ZPLv2.1
 Group: Development/Python
@@ -11,6 +11,8 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 
 BuildPreReq: python-devel python-module-distribute
+BuildPreReq: python-module-zope.interface python-module-zope.testrunner
+BuildPreReq: python-module-eggtestinfo
 
 %py_requires z3c.form z3c.formui z3c.layer.pagelet zope.viewlet
 
@@ -52,11 +54,15 @@ mv %buildroot%python_sitelibdir_noarch/* \
 %python_sitelibdir/*
 %exclude %python_sitelibdir/*.pth
 %exclude %python_sitelibdir/*/*/*/tests.*
+%exclude %python_sitelibdir/*/*/__init__.py*
 
 %files tests
 %python_sitelibdir/*/*/*/tests.*
 
 %changelog
+* Sat Apr 06 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.0-alt1.a1
+- Version 1.0.0a1
+
 * Thu Oct 20 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 0.6.0-alt2.1
 - Rebuild with Python-2.7
 
