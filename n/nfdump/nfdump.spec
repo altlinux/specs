@@ -1,16 +1,18 @@
 Name: nfdump
-Version: 1.6.6
-Release: alt2
+Version: 1.6.9
+Release: alt1
 Summary: collect and process netflow data
 
 Group: Monitoring
-License: BSD
+License: %bsd
 Url: http://sourceforge.net/projects/nfdump/
 
 Source: %name-%version.tar
 Source2: nfcapd.init
 Source3: nfcapd.sysconfig
 Packager: Vladimir Lettiev <crux@altlinux.ru>
+
+BuildRequires: rpm-build-licenses
 
 BuildRequires: librrd-devel libpcap-devel flex bison
 
@@ -69,6 +71,9 @@ cp %SOURCE3 %buildroot%_sysconfdir/sysconfig/nfcapd
 %_man1dir/nfprofile.1.gz
 
 %changelog
+* Sat Apr 06 2013 Sergey Y. Afonin <asy@altlinux.ru> 1.6.9-alt1
+- New version 1.6.9
+
 * Wed Apr 11 2012 Sergey Y. Afonin <asy@altlinux.ru> 1.6.6-alt2
 - added %%post_service/%%preun_service
 - fixed line for chkconfig in init script
