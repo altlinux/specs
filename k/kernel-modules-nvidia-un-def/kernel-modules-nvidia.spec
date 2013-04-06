@@ -4,7 +4,7 @@
 %define nvIF_ver_lteq() %if "%(rpmvercmp '%2' '%1')" >= "0"
 
 %define module_name	nvidia
-%define module_version	310.40
+%define module_version	310.44
 %define module_release	alt1
 %define flavour		un-def
 
@@ -33,7 +33,7 @@
 %endif
 %define legacy3_src %(echo %legacy3 | tr -d .)
 %nvIF_ver_lt %xorg_ver 1.15
-%define legacy4 304.84
+%define legacy4 304.88
 %else
 %define legacy4 %nil
 %endif
@@ -190,6 +190,11 @@ fi
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Wed Apr 03 2013 Sergey V Turchin <zerg at altlinux dot org> 310.44-alt1..
+- new releases (310.44 and 304.88)
+- security fixes:
+  CVE-2013-0131
 
 * Mon Mar 11 2013 Sergey V Turchin <zerg at altlinux dot org> 310.40-alt1
 - new release (310.40 and 173.14.37 with xorg-server-1.14 support)
