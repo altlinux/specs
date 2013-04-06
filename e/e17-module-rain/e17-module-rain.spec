@@ -2,7 +2,7 @@
 
 Name: e17-module-%_name
 Version: 0.0.3
-Release: alt1
+Release: alt2
 
 Summary: %_name module for the Enlightenment desktop
 License: BSD
@@ -37,6 +37,9 @@ A module for the Enlightenment desktop to display rain.
 %doc AUTHORS ChangeLog COPYING* NEWS README
 
 %changelog
+* Sat Apr 06 2013 Yuri N. Sedunov <aris@altlinux.org> 0.0.3-alt2
+- updated from upstream git, built for e17-0.17.1
+
 * Tue Jan 22 2013 Yuri N. Sedunov <aris@altlinux.org> 0.0.3-alt1
 - first build for Sisyphus
 
