@@ -1,6 +1,6 @@
 Name: archway
 Version: 0.2.1
-Release: alt2
+Release: alt2.1
 
 Summary: ArchWay is a GNU Arch GUI
 License: GPL
@@ -16,7 +16,7 @@ Patch0: %name-0.2.0-alt-gtkinit.patch
 Patch1: %name-0.2.1-alt-gtk2table.patch
 
 # Automatically added by buildreq on Mon Jan 31 2005 (-bi)
-BuildRequires: fontconfig freetype2 glib2 perl-Arch perl-Glib perl-Gtk2 xorg-x11-libs
+BuildRequires: fontconfig freetype2 glib2 perl-Arch perl-Glib perl-Gtk2
 
 %description 
 ArchWay is a GNU Arch GUI.  It follows the unix tradition of small tools
@@ -49,6 +49,9 @@ rm -rf $RPM_BUILD_ROOT%perl_vendor_privlib/Arch
 
 
 %changelog
+* Wed Apr 03 2013 Andrey Cherepanov <cas@altlinux.org> 0.2.1-alt2.1
+- Fix build with new xorg
+
 * Fri Aug 08 2008 Alexey Voinov <voins@altlinux.ru> 0.2.1-alt2
 - url updated
 - packager tag added
