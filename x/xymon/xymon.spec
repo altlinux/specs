@@ -61,7 +61,7 @@ URL:		http://xymon.sourceforge.net/
 
 %if_disabled trunk
 Version:	4.3.10
-Release:	alt2
+Release:	alt3
 Source0:	http://prdownloads.sourceforge.net/xymon/Xymon/%{version}/%{name}-4.3.10.tar.gz
 %else
 %define		trunkVersion	%(svn info ~/svn/xymon/trunk/ | grep ^Revision | awk '{print $2}')
@@ -882,6 +882,9 @@ done
 
 ln -s %_libexecdir/xymon/xymond_client %buildroot%_libexecdir/xymon-client/xymond_client
 
+# add content-type to all html headers
+%{__perl} -p -e 's#<HEAD>|<head>#<HEAD>\n<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">#;' -i %{buildroot}%{_sysconfdir}/%{serverName}/web/*_header
+
 ##########################################################################
 ##########################################################################
 
@@ -1259,6 +1262,9 @@ done
 ################ end extra clients ################
 
 %changelog
+* Sat Apr 06 2013 Sergey Y. Afonin <asy@altlinux.ru> 4.3.10-alt3
+- added charset=utf-8 to web/*_header
+
 * Sun Mar 31 2013 Sergey Y. Afonin <asy@altlinux.ru> 4.3.10-alt2
 - added control for using "ifconfig" and "netstat -rn" in
   xymonclient-linux.sh
