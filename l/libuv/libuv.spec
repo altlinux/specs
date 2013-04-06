@@ -1,5 +1,6 @@
+%define soversion 1
 Name: libuv
-Version: 0.9
+Version: 0.10.3
 Release: alt1
 Summary: Evented I/O for NodeJS
 Group: Development/Tools
@@ -28,24 +29,27 @@ libuv header and build tools
 %setup -q
 
 %build
-./gyp_uv -f make
-%make libuv.so libuv.a
+./gyp_uv
+%make_build CXXFLAGS="%{optflags}" CFLAGS="%{optflags}" libuv.so
 
 %install
 mkdir -p %buildroot{%_libdir,%_includedir}
-install libuv.so %buildroot%_libdir/
-install libuv.a %buildroot%_libdir/
+install libuv.so %buildroot%_libdir/libuv.so.%soversion
+ln -s libuv.so.%soversion %buildroot%_libdir/libuv.so
 cp -R include/* %buildroot%_includedir
 
 %files
-%_libdir/*.so
+%_libdir/*.so.*
 
 %files devel
-%_libdir/*.a
+%_libdir/*.so
 %_includedir/*
 
 
 %changelog
+* Sat Apr 06 2013 Dmitriy Kulik <lnkvisitor@altlinux.org> 0.10.3-alt1
+- 0.10.3
+
 * Thu Nov 15 2012 Dmitriy Kulik <lnkvisitor@altlinux.org> 0.9-alt1
 - Initial build
 
