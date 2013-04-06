@@ -3,7 +3,7 @@
 
 Name: tcl-img
 Version: 1.3.2
-Release: alt1
+Release: alt2
 
 Summary: Tcl Image Formats (Img)
 License: BSD
@@ -16,7 +16,7 @@ Obsoletes: %teaname
 Source0: %name-%version-%release.tar
 
 BuildRequires: rpm-build-tcl >= 0.4-alt1
-BuildRequires: libjpeg-devel libpng-devel tk-devel zlib-devel
+BuildRequires: libjpeg-devel libpng12-devel tk-devel zlib-devel
 
 %description
 %name is a Tk enhancement, adding support for many other Image formats:
@@ -52,6 +52,9 @@ find %buildroot '(' -path \*%_includedir/\* -o -path \*%_libdir/\*.sh \
 %_tcldatadir/*
 
 %changelog
+* Sun Apr 07 2013 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.3.2-alt2
+- use png12 from now
+
 * Tue Jun 23 2009 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.3.2-alt1
 - 1.3.2 release
 
