@@ -2,7 +2,7 @@
 
 Name: e17-module-%_name
 Version: 0.1.0
-Release: alt1
+Release: alt2
 
 Summary: %_name module for the Enlightenment desktop
 License: BSD
@@ -38,6 +38,9 @@ feeds like Rss (and soon Atom).
 %doc AUTHORS ChangeLog COPYING* NEWS README
 
 %changelog
+* Sat Apr 06 2013 Yuri N. Sedunov <aris@altlinux.org> 0.1.0-alt2
+- updated from upstream git, built for e17-0.17.1
+
 * Tue Jan 22 2013 Yuri N. Sedunov <aris@altlinux.org> 0.1.0-alt1
 - first build for Sisyphus
 
