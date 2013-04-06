@@ -1,44 +1,36 @@
 Group: Graphical desktop/Other
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/glib-genmarshal /usr/bin/glib-gettextize libgio-devel pkgconfig(gio-2.0) pkgconfig(gobject-2.0) pkgconfig(gstreamer-audio-0.10) pkgconfig(gstreamer-interfaces-0.10) pkgconfig(libcanberra-gtk) pkgconfig(libxml-2.0) pkgconfig(mate-desktop-2.0)
+BuildRequires: /usr/bin/glib-genmarshal /usr/bin/glib-gettextize libgio-devel pkgconfig(gio-2.0) pkgconfig(gobject-2.0) pkgconfig(gtk+-2.0) pkgconfig(libcanberra-gtk) pkgconfig(libxml-2.0) pkgconfig(mate-desktop-2.0)
 # END SourceDeps(oneline)
 %define _libexecdir %_prefix/libexec
 Name:           mate-media
-Version:        1.5.1
-Release:        alt1_4
+Version:        1.5.2
+Release:        alt1_1
 Summary:        MATE media programs
 License:        GPLv2+ and LGPLv2+
 URL:            http://mate-desktop.org
 Source0:        http://pub.mate-desktop.org/releases/1.5/%{name}-%{version}.tar.xz
 
+BuildRequires:  libclutter-gst2.0-devel
+BuildRequires:  libdbus-glib-devel
 BuildRequires:  desktop-file-utils
-BuildRequires:  pkgconfig(gtk+-2.0)
-BuildRequires:  pkgconfig(gstreamer-0.10)
-BuildRequires:  pkgconfig(gstreamer-plugins-base-0.10)
-BuildRequires:  pkgconfig(mate-default-applications)
-BuildRequires:  pkgconfig(unique-1.0)
-BuildRequires:  pkgconfig(dbus-glib-1)
-BuildRequires:  pkgconfig(libcanberra)
+BuildRequires:  gtk2-devel
+BuildRequires:  gstreamer-devel
+BuildRequires:  gst-plugins-devel
+BuildRequires:  libcanberra-devel
+BuildRequires:  mate-control-center-devel
 BuildRequires:  mate-doc-utils
 BuildRequires:  rarian-compat
 BuildRequires:  mate-common
 BuildRequires:  libpulseaudio-devel
-BuildRequires:  libclutter-gst-devel
 BuildRequires:  mate-panel-devel
-
-Requires(post):    desktop-file-utils
-Requires(postun):  desktop-file-utils
-
-Obsoletes:      %{name}-devel < 1.4.0-4
-
-#fix gstreamer applet
-#https://github.com/mate-desktop/mate-media/pull/15
-Patch0: commits_rollup.patch
+BuildRequires:  libunique-devel
 Source44: import.info
-Patch33: gnome-media-2.26.0-alt-gst-mixer.patch
+Patch33: mate-media-1.5.2-alt-gst-mixer.patch
 Patch34: gnome-media-2.29.91-gst-mix_and_new_gvc_no_conflict.patch
 Patch35: gnome-media-2.32.0-g_debug.patch
 Patch36: gnome-media-alt-desktop-ru.po.patch
+
 
 %description
 This package contains a few media utilities for the MATE desktop,
@@ -47,7 +39,6 @@ including a volume control.
 
 %prep
 %setup -q
-%patch0 -p1 -b .commit_rollup.patch
 NOCONFIGURE=1 ./autogen.sh
 %patch33 -p1
 %patch34 -p1
@@ -63,19 +54,15 @@ NOCONFIGURE=1 ./autogen.sh
         --disable-scrollkeeper \
         --enable-gst-mixer-applet \
         --enable-pulseaudio \
-        --enable-gstreamer \
-        --with-gnu-ld
+        --enable-gstreamer 
 
-make V=1 %{?_smp_mflags}
-
+make %{?_smp_mflags} V=1
 
 %install
 make DESTDIR=%{buildroot} install
 find %{buildroot} -name '*.la' -exec rm -rf {} ';'
 
 desktop-file-install                                                    \
-        --remove-category="MATE"                                        \
-        --add-category="X-Mate"                                         \
         --delete-original                                               \
         --dir=%{buildroot}%{_datadir}/applications                      \
 %{buildroot}%{_datadir}/applications/mate-volume-control.desktop
@@ -102,8 +89,12 @@ desktop-file-install                                                    \
 %{_datadir}/mate-panel/applets/org.mate.applets.MixerApplet.mate-panel-applet
 %{_datadir}/mate/help/mate-mixer_applet2
 %{_datadir}/omf/mate-mixer_applet2
+%{_datadir}/MateConf/gsettings/mate-volume-control.convert
 
 %changelog
+* Sun Apr 07 2013 Igor Vlasenko <viy@altlinux.ru> 1.5.2-alt1_1
+- new fc release
+
 * Wed Mar 13 2013 Igor Vlasenko <viy@altlinux.ru> 1.5.1-alt1_4
 - new fc release
 

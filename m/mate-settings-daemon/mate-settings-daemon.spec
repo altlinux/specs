@@ -5,15 +5,15 @@ BuildRequires: /usr/bin/glib-genmarshal /usr/bin/glib-gettextize gcc-c++ libICE-
 BuildRequires: libXext-devel
 %define _libexecdir %_prefix/libexec
 Name:           mate-settings-daemon
-Version:        1.5.6
+Version:        1.6.0
 Release:        alt1_1
 Summary:        MATE Desktop settings daemon
 License:        GPLv2+
 URL:            http://mate-desktop.org
-Source0:        http://pub.mate-desktop.org/releases/1.5/%{name}-%{version}.tar.xz
+Source0:        http://pub.mate-desktop.org/releases/1.6/%{name}-%{version}.tar.xz
 Requires:       mate-icon-theme
 
-BuildRequires:  libclutter-gst-devel
+BuildRequires:  libclutter-gst2.0-devel
 BuildRequires:  libdconf-devel
 BuildRequires:  libdbus-glib-devel
 BuildRequires:  gtk2-devel
@@ -23,7 +23,6 @@ BuildRequires:  gst-plugins-devel
 BuildRequires:  icon-naming-utils
 BuildRequires:  libSM-devel
 BuildRequires:  libmatekbd-devel
-BuildRequires:  libmatenotify-devel
 BuildRequires:  libnotify-devel
 BuildRequires:  libxklavier-devel
 BuildRequires:  mate-common
@@ -62,14 +61,16 @@ NOCONFIGURE=1 ./autogen.sh
    --enable-polkit                     \
    --enable-gstreamer                  \
    --with-x                            \
-   --with-gnu-ld                       \
    --with-nssdb
+
 make %{?_smp_mflags} V=1
 
-
 %install
-make install DESTDIR=%{buildroot}
-find ${RPM_BUILD_ROOT} -type f -name "*.la" -exec rm -f {} ';'
+make DESTDIR=%{buildroot} install
+
+find %{buildroot} -name '*.la' -exec rm -rf {} ';'
+find %{buildroot} -name '*.a' -exec rm -rf {} ';'
+
 %find_lang %{name}
 
 
@@ -90,10 +91,13 @@ find ${RPM_BUILD_ROOT} -type f -name "*.la" -exec rm -f {} ';'
 %{_datadir}/MateConf/gsettings/mate-settings-daemon.convert
 
 %files devel
-%{_includedir}/mate-settings-daemon/
+%{_includedir}/mate-settings-daemon
 %{_libdir}/pkgconfig/mate-settings-daemon.pc
 
 %changelog
+* Sat Apr 06 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.0-alt1_1
+- new fc release
+
 * Wed Mar 27 2013 Igor Vlasenko <viy@altlinux.ru> 1.5.6-alt1_1
 - new fc release
 
