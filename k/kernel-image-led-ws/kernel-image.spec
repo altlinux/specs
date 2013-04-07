@@ -21,7 +21,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.4.39
-Release: alt2
+Release: alt3
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -181,7 +181,7 @@ Patch0032: linux-%kernel_branch.20-fix-block-partitions--efi.patch
 
 Patch0041: linux-%kernel_branch.35-fix-crypto--cryptomgr.patch
 
-Patch0050: linux-%kernel_branch.28-fix-drivers-acpi.patch
+Patch0050: linux-%kernel_branch.39-fix-drivers-acpi.patch
 Patch0051: linux-%kernel_branch.20-fix-drivers-acpi--ec_sys.patch
 Patch0052: linux-%kernel_branch.20-fix-drivers-acpi--thermal.patch
 Patch0053: linux-%kernel_branch.20-fix-drivers-acpi-acpica.patch
@@ -429,6 +429,7 @@ Patch0541: linux-%kernel_branch.34-fix-include-linux.patch
 Patch0550: linux-%kernel_branch.20-fix-init.patch
 
 Patch0560: linux-%kernel_branch.34-fix-kernel.patch
+Patch0561: linux-%kernel_branch.39-fix-kernel-power.patch
 
 Patch0570: linux-%kernel_branch.25-fix-lib.patch
 Patch0571: linux-%kernel_branch.29-fix-lib--btree.patch
@@ -437,16 +438,18 @@ Patch0573: linux-%kernel_branch.35-fix-lib-lzo.patch
 
 Patch0580: linux-%kernel_branch.35-fix-mm.patch
 Patch0581: linux-%kernel_branch.35-fix-mm--bounce.patch
-Patch0582: linux-%kernel_branch.20-fix-mm--compaction.patch
-Patch0583: linux-%kernel_branch.20-fix-mm--memcontrol.patch
-Patch0584: linux-%kernel_branch.20-fix-mm--memory-failure.patch
-Patch0585: linux-%kernel_branch.20-fix-mm--memory_hotplug.patch
-Patch0586: linux-%kernel_branch.35-fix-mm--mmu.patch
-Patch0587: linux-%kernel_branch.35-fix-mm--slab.patch
-Patch0588: linux-%kernel_branch.35-fix-mm--slub.patch
-Patch0589: linux-%kernel_branch.35-fix-mm--swap.patch
-Patch0590: linux-%kernel_branch.20-fix-mm--zcache.patch
-Patch0591: linux-%kernel_branch.20-fix-mm--zsmalloc.patch
+Patch0582: linux-%kernel_branch.39-fix-mm--cleancache.patch
+Patch0583: linux-%kernel_branch.20-fix-mm--compaction.patch
+Patch0584: linux-%kernel_branch.39-fix-mm--memblock.patch
+Patch0585: linux-%kernel_branch.20-fix-mm--memcontrol.patch
+Patch0586: linux-%kernel_branch.20-fix-mm--memory-failure.patch
+Patch0587: linux-%kernel_branch.20-fix-mm--memory_hotplug.patch
+Patch0588: linux-%kernel_branch.35-fix-mm--mmu.patch
+Patch0589: linux-%kernel_branch.35-fix-mm--slab.patch
+Patch0590: linux-%kernel_branch.35-fix-mm--slub.patch
+Patch0591: linux-%kernel_branch.35-fix-mm--swap.patch
+Patch0592: linux-%kernel_branch.20-fix-mm--zcache.patch
+Patch0593: linux-%kernel_branch.20-fix-mm--zsmalloc.patch
 
 Patch0601: linux-%kernel_branch.30-fix-net--dns_resolver.patch
 Patch0602: linux-%kernel_branch.31-fix-net-bridge--bridge.patch
@@ -1567,6 +1570,7 @@ cd linux-%version
 
 # fix-kernel*
 %patch0560 -p1
+%patch0561 -p1
 
 # fix-lib*
 %patch0570 -p1
@@ -1587,6 +1591,8 @@ cd linux-%version
 %patch0589 -p1
 %patch0590 -p1
 %patch0591 -p1
+%patch0592 -p1
+%patch0593 -p1
 
 # fix-net-*
 %patch0601 -p1
@@ -2611,6 +2617,18 @@ done)
 
 
 %changelog
+* Sun Apr 07 2013 Led <led@altlinux.ru> 3.4.39-alt3
+- updated:
+  + fix-arch-x86--mcheck
+  + fix-drivers-acpi
+  + fix-mm
+  + feat-mm--frontswap
+- added:
+  + fix-kernel-power
+  + fix-mm--cleancache
+  + fix-mm--memblock
+- disabled ACPI_EC_DEBUGFS
+
 * Sun Apr 07 2013 Led <led@altlinux.ru> 3.4.39-alt2
 - updated:
   + fix-drivers-hid--hid
