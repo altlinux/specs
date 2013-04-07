@@ -7,7 +7,7 @@
 %def_disable debug
 
 Name: bacula
-Version: 5.2.10
+Version: 5.2.13
 Release: alt1
 
 License: AGPLv3
@@ -553,7 +553,7 @@ use appropriate %_datadir/bacula/scripts/update_*_tables script"
 %_man8dir/btraceback.8.gz
 
 %files director-common
-%doc COPYING ChangeLog ReleaseNotes VERIFYING kernstodo updatedb
+%doc COPYING ChangeLog ReleaseNotes VERIFYING updatedb
 %dir %attr (0750,root,bacula) %_sysconfdir/bacula/client
 %dir %attr (0750,root,bacula) %_sysconfdir/bacula/fileset
 %dir %attr (0750,root,bacula) %_sysconfdir/bacula/job
@@ -628,7 +628,16 @@ use appropriate %_datadir/bacula/scripts/update_*_tables script"
 %_libdir/nagios/plugins/check_bacula
 
 %files
+
 %changelog
+* Sun Apr 07 2013 Michael Shigorin <mike@altlinux.org> 5.2.13-alt1
+- 5.2.13
+
+* Thu Oct 11 2012 Michael Shigorin <mike@altlinux.org> 5.2.12-alt1
+- 5.2.12
+- NB: 5.2.11 has fixed CVE-2012-4430 in bacula-dir
+  (improper ACL rules enforcement by dumping resources)
+
 * Wed Jul 04 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 5.2.10-alt1
 - 5.2.10
 
