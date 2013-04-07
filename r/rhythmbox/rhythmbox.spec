@@ -1,4 +1,4 @@
-%define ver_major 2.98
+%define ver_major 2.99
 %define rev %nil
 %define gst_api_ver 1.0
 
@@ -6,13 +6,13 @@
 %def_with gudev
 %def_without webkit
 %def_disable daap
-%def_disable visualizer
+%def_enable visualizer
 %def_enable grilo
 %def_disable gtk_doc
 
 Name: rhythmbox
 Version: %ver_major
-Release: alt3%rev
+Release: alt1%rev
 
 Summary: Music Management Application
 License: GPL
@@ -21,8 +21,8 @@ Url: http://www.gnome.org/projects/rhythmbox/
 
 %define pkgdocdir %_docdir/%name-%version
 
-#Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
-Source: %name-%version.tar
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+#ource: %name-%version.tar
 
 %define dbus_ver 0.35
 %define glib_ver 2.32.0
@@ -34,6 +34,7 @@ Source: %name-%version.tar
 %define totem_ver 2.32.0
 %define udev_ver 143
 %define gpod_ver 0.8
+%define mx_ver 1.0.1
 
 Requires: lib%name = %version-%release
 
@@ -61,7 +62,7 @@ BuildRequires: gstreamer%gst_api_ver-utils >= %gst_ver
 BuildRequires: gst-plugins%gst_api_ver-devel >= %gst_ver
 BuildRequires: libgpod-devel >= %gpod_ver
 BuildRequires: libmtp-devel >= %mtp_ver
-BuildRequires: libICE-devel libSM-devel libgnome-keyring-devel
+BuildRequires: libICE-devel libSM-devel libsecret-devel
 BuildRequires: iso-codes-devel libcheck-devel
 BuildRequires: liblirc-devel libnotify-devel >= 0.7.3
 BuildRequires: libjson-glib-devel libpng-devel
@@ -70,8 +71,7 @@ BuildRequires: libpeas-devel libtdb-devel zlib-devel
 %{?_enable_grilo:BuildRequires: libgrilo-devel}
 BuildRequires: libavahi-glib-devel
 BuildRequires: libdmapsharing-devel
-# for visualizer plugin
-%{?_enable_visualizer:BuildRequires: libclutter-gtk3-devel libclutter-gst2.0-devel libmx-devel}
+%{?_enable_visualizer:BuildRequires: libclutter-gtk3-devel libclutter-gst2.0-devel libmx-devel >= %mx_ver}
 %{?_with_hal:BuildRequires: libhal-devel}
 %{?_with_gudev:BuildRequires: libgudev-devel}
 BuildRequires: python-module-pygobject3-devel
@@ -322,8 +322,6 @@ This virtual package installs all Rhythmbox plugins
 %setup -n %name-%version
 
 %build
-# Temporary hack
-#%%set_verify_elf_method unresolved=relaxed
 %autoreconf
 export MOZILLA_PLUGINDIR=%browser_plugins_path
 %configure \
@@ -334,8 +332,6 @@ export MOZILLA_PLUGINDIR=%browser_plugins_path
 	--enable-lirc \
 	--with-brasero \
 	--with-mtp \
-	--with-mdns=avahi \
-	--with-gnome-keyring \
 	--with-ipod \
 	%{subst_with hal} \
 	%{subst_with gudev} \
@@ -467,14 +463,18 @@ ln -s %_licensedir/GPL-2 %buildroot%pkgdocdir/COPYING
 
 %files plugins
 
-%if_enabled gtk_doc
+#%%if_enabled gtk_doc
 %files devel-doc
 %_datadir/gtk-doc/html/rhythmbox/
-%endif
+#%%endif
 
 %exclude %_libdir/%name/sample-plugins/
 
 %changelog
+* Sun Apr 07 2013 Yuri N. Sedunov <aris@altlinux.org> 2.99-alt1
+- 2.99
+- enabled visualizer plugin
+
 * Wed Mar 06 2013 Yuri N. Sedunov <aris@altlinux.org> 2.98-alt3
 - updated to 6ffa66a
 - removed upstreamed patch
