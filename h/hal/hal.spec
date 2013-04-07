@@ -2,8 +2,8 @@
 %define _haldocdir  %_docdir/lib%name-devel-%version
 
 Name: hal
-Version: 0.5.14
-Release: alt8.2
+Version: 0.5.15
+Release: alt1
 Summary: Hardware Abstraction Layer
 Group: System/Servers
 License: AFL/GPL
@@ -18,15 +18,16 @@ Patch: %name-%version-%release.patch
 Patch1: hal-0.5.14-alt-ntfs-options.patch
 Patch2: hal-0.5.14-alt-v4l.patch
 Patch3: hal-0.5.14-alt-glib2.patch
+Patch4: hal-0.5.15-udev-direct.patch
+
 
 AutoReq: yes, noshell
 BuildPreReq: libblkid-devel >= 1.43
-BuildRequires: docbook-utils gcc-c++ gtk-doc intltool libdbus-glib-devel libexpat-devel libusb-compat-devel perl-XML-Parser
-BuildRequires: python-devel gperf python-modules-compiler python-modules-encodings xmlto libConsoleKit-devel
+BuildRequires: docbook-utils gcc-c++ gtk-doc intltool libdbus-glib-devel libudev-devel libexpat-devel libusb-compat-devel perl-XML-Parser
+BuildRequires: python-devel gperf python-modules-compiler python-modules-encodings xmlto libConsoleKit-devel libv4l-devel
 %ifarch %ix86 x86_64
 BuildRequires: libpci-devel zlib-devel
 %endif
-BuildPreReq: libv4l-devel
 
 %description
 HAL is daemon for collection and maintaining information from several
@@ -57,6 +58,7 @@ Headers for HAL
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
 
 rm -f gtk-doc.make acinclude.m4
 
@@ -87,12 +89,11 @@ mkdir -p %buildroot%_var/{run,cache}/hald
 mkdir -p %buildroot%_sysconfdir/hal/fdi/{information,policy,preprobe}
 
 %pre
-#_sbindir/groupadd -r -f haldaemon >/dev/null 2>&1 || :
-#_sbindir/useradd -r -g haldaemon -d '/' -s /sbin/nologin -c "HAL daemon" haldaemon >/dev/null 2>&1 ||:
-service haldaemon stop ||:
+%_sbindir/groupadd -r -f haldaemon >/dev/null 2>&1 || :
+%_sbindir/useradd -r -g haldaemon -d '/' -s /sbin/nologin -c "HAL daemon" haldaemon >/dev/null 2>&1 ||:
 
-#post
-#post_service haldaemon
+%post
+%post_service haldaemon
 
 %preun
 %preun_service haldaemon
@@ -100,8 +101,8 @@ service haldaemon stop ||:
 %files
 %doc AUTHORS NEWS README doc/TODO
 %_sysconfdir/dbus*/system.d/hal.conf
-/lib/udev/rules.d/90-hal.rules
-#_initdir/haldaemon
+# /lib/udev/rules.d/90-hal.rules
+%_initdir/haldaemon
 %dir %_sysconfdir/hal
 %dir %_sysconfdir/hal/fdi
 %dir %_sysconfdir/hal/fdi/information
@@ -126,6 +127,13 @@ service haldaemon stop ||:
 %_pkgconfigdir/*
 
 %changelog
+* Sun Apr 07 2013 Roman Savochenko <rom_as@altlinux.org> 0.5.15-alt1
+- Working without UDEV events socket by direct libudev is implemented.
+- Enabled haldaemon service.
+
+* Wed Apr 03 2013 Andrey Cherepanov <cas@altlinux.org> 0.5.14-alt8.3
+- Change order of unistd.h include to fix build
+
 * Fri Jul 27 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.14-alt8.2
 - Disabled haldaemon service
 
