@@ -1,6 +1,6 @@
 Name: glibc
 Version: 2.17
-Release: alt3
+Release: alt4
 Epoch: 6
 
 Summary: The GNU libc libraries
@@ -647,6 +647,9 @@ fi
 %_datadir/i18n
 
 %changelog
+* Sun Apr 07 2013 Dmitry V. Levin <ldv@altlinux.org> 6:2.17-alt4
+- getaddrinfo: backported fixes for sw#15330 and sw#15339.
+
 * Mon Mar 25 2013 Dmitry V. Levin <ldv@altlinux.org> 6:2.17-alt3
 - getaddrinfo: reverted the change that made ECONNREFUSED
   return EAI_SYSTEM instead of EAI_AGAIN.
