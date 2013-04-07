@@ -4,7 +4,7 @@
 
 Name:    iceb
 Version: 12.0
-Release: alt2
+Release: alt3
 
 Summary: Free financial accounting system (console)
 
@@ -71,6 +71,9 @@ rm -rf %buildroot%_libdir/%name/*.{a,la}
 %_datadir/%name
 
 %changelog
+* Sun Apr 07 2013 Andrey Cherepanov <cas@altlinux.org> 12.0-alt3
+- Rebuild with new libmysqlclient
+
 * Wed Sep 19 2012 Andrey Cherepanov <cas@altlinux.org> 12.0-alt2
 - Fix build
 
