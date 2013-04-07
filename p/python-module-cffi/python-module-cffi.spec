@@ -2,7 +2,7 @@
 
 Name: python-module-cffi
 Version: 0.6
-Release: alt1
+Release: alt2
 
 Summary: Foreign Function Interface for Python calling C code
 
@@ -31,10 +31,13 @@ Foreign Function Interface for Python calling C code.
 %python_install
 
 %files
+%python_sitelibdir/_cffi_backend.so
 %python_sitelibdir/%modulename/
-%python_sitelibdir//_cffi_backend.so
 %python_sitelibdir/%modulename-%version-*.egg-info
 
 %changelog
+* Mon Apr 08 2013 Vitaly Lipatov <lav@altlinux.ru> 0.6-alt2
+- fix packing
+
 * Mon Apr 08 2013 Vitaly Lipatov <lav@altlinux.ru> 0.6-alt1
 - initial build for ALT Linux Sisyphus
