@@ -1,5 +1,5 @@
 Name: mc
-Version: 4.8.7
+Version: 4.8.8
 Release: alt1
 
 License: %gpl3plus
@@ -30,16 +30,13 @@ Patch3: mc-4.7.0.2-alt-menu.patch
 Patch101: mc-4.7.0.2-savannah-edit-homekey.patch
 
 # http://www.midnight-commander.org/ticket/2496
-Patch102: mc-4.8.6-alt-forceexec.patch
-
-# http://www.midnight-commander.org/ticket/2896
-Patch103: mc-4.8.6-alt-syntax-mak.patch
+Patch102: mc-4.8.8-alt-forceexec.patch
 
 # http://www.midnight-commander.org/ticket/34
-Patch104: mc-4.8.6-alt-extfs-udar.patch
+Patch103: mc-4.8.6-alt-extfs-udar.patch
 
 # http://www.midnight-commander.org/ticket/2812
-Patch105: mc-4.8.6-alt-extfs-rpm.patch
+Patch104: mc-4.8.6-alt-extfs-rpm.patch
 
 BuildRequires(pre): rpm-build-licenses
 
@@ -95,7 +92,6 @@ needed for working all components (some vfs for example)
 %patch102 -p1
 %patch103 -p1
 %patch104 -p1
-%patch105 -p1
 
 cat <<EOF > version.h
 #ifndef MC_CURRENT_VERSION
@@ -162,8 +158,8 @@ install -pD -m644 %SOURCE5 %buildroot%_niconsdir/%name.png
 %config(noreplace) %_sysconfdir/mc/filehighlight.ini
 %config(noreplace) %_sysconfdir/mc/mc.ext
 %config(noreplace) %_sysconfdir/mc/mc.keymap
-%config(noreplace) %_sysconfdir/mc/mc.keymap.default
-%config(noreplace) %_sysconfdir/mc/mc.keymap.emacs
+%config(noreplace) %_sysconfdir/mc/mc.default.keymap
+%config(noreplace) %_sysconfdir/mc/mc.emacs.keymap
 %config(noreplace) %_sysconfdir/mc/mc.menu
 %config(noreplace) %_sysconfdir/mc/mc.menu.sr
 %config(noreplace) %_sysconfdir/mc/sfs.ini
@@ -182,6 +178,9 @@ install -pD -m644 %SOURCE5 %buildroot%_niconsdir/%name.png
 %files full
 
 %changelog
+* Sun Apr 07 2013 Sergey Y. Afonin <asy@altlinux.ru> 4.8.8-alt1
+- 4.8.8
+
 * Tue Jan 08 2013 Sergey Y. Afonin <asy@altlinux.ru> 4.8.7-alt1
 - 4.8.7
 - removed xdg-open-quickdisable.patch (moved to upstream)
