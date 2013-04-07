@@ -1,6 +1,6 @@
 Name: texworks
 Version: 0.4.4
-Release: alt1
+Release: alt2
 
 Summary: A simple IDE for authoring TeX documents
 Summary(ru_RU.UTF-8): Простой редактор для документов TeX
@@ -14,23 +14,25 @@ BuildPreReq: gcc-c++ libqt4-devel libhunspell-devel libdbus-devel libpoppler-qt4
 Requires: libqt4-core
 
 Source0: texworks-0.4.4-r1004.tar.gz
-Source2: TeXworks-manual-r959.pdf
+Source2: TeXworks-manual-r1029.pdf
 Source4: %{name}-alt-icons.tar.bz2
 
 Patch1: %{name}-0.4.3-desktop.patch
 Patch2: %{name}-0.4.3-TeXworks.pro.patch
 
 %description
-TeXworks is an environment for authoring TeX (LaTeX, ConTeXt, etc) documents,
-with a Unicode-based, TeX-aware editor, integrated PDF viewer, and a clean,
-simple interface accessible to casual and non-technical users.
+TeXworks is an environment for authoring TeX (LaTeX, ConTeXt, etc)
+documents, with a Unicode-based, TeX-aware editor, integrated PDF
+viewer, and a clean, simple interface accessible to casual
+and non-technical users.
 
 You may install the texlive-* packages to make this program useful.
 
 %description -l ru_RU.UTF-8
-TeXworks - это простой редактор для работы с TeX документами (LaTeX, ConTeXt
-и другие) с возможностью просмотра скомпилированных PDF-документов и простым
-интерфейсом, понятным даже для начинающих осваивать TeX.
+TeXworks - это простой редактор для работы с TeX документами (LaTeX,
+ConTeXt и другие) с возможностью просмотра скомпилированных
+PDF-документов и простым интерфейсом, понятным даже для
+начинающих осваивать TeX.
 
 Для того, чтобы использовать TeXworks вам также понадобится установить
 пакеты texlive-*.
@@ -88,6 +90,9 @@ install -m 644 -D TeXworks-48x48.png %buildroot%_liconsdir/TeXworks.png
 %{_docdir}/%{name}-%{version}/TeXworks-manual-*.pdf
 
 %changelog
+* Sun Apr 07 2013 Denis Kirienko <dk@altlinux.org> 0.4.4-alt2
+- Rebuild with new libpoppler
+
 * Sat Jun 02 2012 Denis Kirienko <dk@altlinux.org> 0.4.4-alt1
 - Version 0.4.4 (SVN 1004)
 
