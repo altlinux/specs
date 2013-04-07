@@ -1,5 +1,5 @@
 Name: help2man
-Version: 1.40.12
+Version: 1.41.1
 Release: alt1
 
 Summary: help2man creates simple man pages from the output of programs
@@ -57,10 +57,14 @@ sed -i '1i .\\" -*- mode: troff; coding: utf8 -*-' help2man.*.1
 %_libdir/%name
 %endif
 %_bindir/*
+%_man1dir/*
 %_infodir/*.info*
 %doc ChangeLog NEWS README* THANKS help2man.h2m
 
 %changelog
+* Sun Apr 07 2013 Dmitry V. Levin <ldv@altlinux.org> 1.41.1-alt1
+- Updated to 1.41.1.
+
 * Wed Sep 12 2012 Dmitry V. Levin <ldv@altlinux.org> 1.40.12-alt1
 - Updated to 1.40.12.
 
