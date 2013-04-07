@@ -61,7 +61,7 @@ URL:		http://xymon.sourceforge.net/
 
 %if_disabled trunk
 Version:	4.3.10
-Release:	alt3
+Release:	alt4
 Source0:	http://prdownloads.sourceforge.net/xymon/Xymon/%{version}/%{name}-4.3.10.tar.gz
 %else
 %define		trunkVersion	%(svn info ~/svn/xymon/trunk/ | grep ^Revision | awk '{print $2}')
@@ -359,6 +359,19 @@ already running as a Xymon server (indeed, it conflicts with it).
 The Xymon server already contains the files necessary to run its
 built-in monitor.
 
+%package bb-compatibility
+Summary:	Some Big Brother compatibility symlinks for Xymon
+Group:		Monitoring
+Requires:	xymon-common
+BuildArch:	noarch
+Conflicts:	bb
+
+%description bb-compatibility
+Some Big Brother compatibility symlinks for Xymon. The package contains
+/usr/bin/bb and /usr/bin/bbcmd. All other symlinks placed to /usr/lib/xymon
+or /usr/lib/xymon-client and it is not interfere with other packages.
+
+/usr/bin/bb has conflict with BB - the portable AAlib demo
 
 ###########################################################################
 %if_enabled extraclients
@@ -1099,12 +1112,6 @@ done
 %attr(644,root,root) %config(noreplace) %{_sysconfdir}/sysconfig/%{serverName}
 %attr(644,root,root) %config(noreplace) %{_sysconfdir}/logrotate.d/%{serverName}
 
-%exclude %{_bindir}/bb*
-%exclude %{_bindir}/xymon*
-%exclude %{_bindir}/logfetch
-%exclude %{_bindir}/msgcache
-%{_bindir}/*
-
 %files web
 %attr(755,xymon,xymon)	%{wwwDirectory}
 %attr(755,xymon,_webserver) %dir %{wwwCacheDirectory}
@@ -1139,7 +1146,6 @@ done
 %attr(644,root,root) %config(noreplace)	%{_sysconfdir}/%{clientName}/xymonclient.cfg
 %attr(644,root,root) %config(noreplace)	%{_sysconfdir}/%{clientName}/clientlaunch.cfg
 
-%{_bindir}/bb*
 %{_bindir}/xymon*
 %{_bindir}/logfetch
 %{_bindir}/msgcache
@@ -1183,6 +1189,9 @@ done
 
 %attr(755,root,root) %{_initrddir}/%{clientName}
 %attr(644,root,root) %config(noreplace) %{_sysconfdir}/logrotate.d/%{clientName}
+
+%files bb-compatibility
+%{_bindir}/bb*
 
 ################ start extra clients ################
 %if_enabled extraclients
@@ -1262,6 +1271,10 @@ done
 ################ end extra clients ################
 
 %changelog
+* Sun Apr 07 2013 Sergey Y. Afonin <asy@altlinux.ru> 4.3.10-alt4
+- moved /usr/bin/bb* to bb-compatibility package
+  (resolved conflict with BB - the portable AAlib demo)
+
 * Sat Apr 06 2013 Sergey Y. Afonin <asy@altlinux.ru> 4.3.10-alt3
 - added charset=utf-8 to web/*_header
 
