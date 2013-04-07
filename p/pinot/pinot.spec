@@ -1,7 +1,7 @@
 %def_disable deskbar
 
 Name: pinot
-Version: 1.03
+Version: 1.05
 Release: alt1
 
 Summary: Personal search and metasearch tool
@@ -11,6 +11,7 @@ Group: File tools
 Url: http://pinot.berlios.de/
 Source: http://pinot-search.googlecode.com/files/pinot-%version.tar.gz
 Patch: pinot-0.98-alt-link.patch
+Patch1: pinot-1.05-alt-g_type_init.patch
 
 # Automatically added by buildreq on Sat Nov 26 2011
 BuildRequires: boost-devel-headers desktop-file-utils gcc-c++ libarchive-devel libattr-devel libchm-devel libcurl-devel libdbus-glib-devel libexiv2-devel libgmime-devel libgtkmm2-devel libsqlite3-devel libssl-devel libtag-devel libtextcat-devel libxapian-devel libxml++2-devel
@@ -34,6 +35,7 @@ The included plugin enables Deskbar to search documents indexed by Pinot.
 %package devel
 Summary: Pinot development package
 Group: Development/C++
+BuildArch: noarch
 Requires: %name = %version-%release
 
 %description devel
@@ -43,6 +45,7 @@ This package provides headers needed to develop Pinot plugins.
 %prep
 %setup
 %patch -p2
+%patch1 -p1
 
 subst 's~glib/gunicode.h~glib.h~' IndexSearch/cjkv/CJKVTokenizer.h
 
@@ -88,6 +91,10 @@ subst 's/Settings;X/Settings;DesktopSettings;X/' pinot-prefs.desktop
 %_includedir/%name/
 
 %changelog
+* Sun Apr 07 2013 Yuri N. Sedunov <aris@altlinux.org> 1.05-alt1
+- 1.0.5
+- fixed build with glib-2.36
+
 * Thu Jan 24 2013 Yuri N. Sedunov <aris@altlinux.org> 1.03-alt1
 - 1.03
 - new -devel subpackage
