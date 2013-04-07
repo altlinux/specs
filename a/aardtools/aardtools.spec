@@ -1,6 +1,6 @@
 Name: aardtools
 Version: 0.8.3
-Release: alt2.git.72.ga609acb
+Release: alt3.git.73.g5d4b4c4
 Summary: Tools to create dictionaries in aarddict format
 
 Packager: Ildar Mulyukov <ildar@altlinux.ru>
@@ -53,6 +53,9 @@ subst '/^mwlib/d' %buildroot%python_sitelibdir/%{name}*egg-info/requires.txt
 %doc doc/*
 
 %changelog
+* Sun Apr 07 2013 Ildar Mulyukov <ildar@altlinux.ru> 0.8.3-alt3.git.73.g5d4b4c4
+- new snapshot
+
 * Tue Apr 02 2013 Ildar Mulyukov <ildar@altlinux.ru> 0.8.3-alt2.git.72.ga609acb
 - add %name-alt-disable-mw.patch to disable mwlib part due to bug #28776
 
