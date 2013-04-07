@@ -1,5 +1,5 @@
 Name: gnu-config
-Version: 1.0.603.062587e
+Version: 1.0.619.fd4dee4
 Release: alt1
 
 Summary: GNU config.guess and config.sub files
@@ -30,6 +30,9 @@ install -pm755 config.guess config.sub %buildroot%_datadir/%name/
 %_datadir/%name/
 
 %changelog
+* Sun Apr 07 2013 Dmitry V. Levin <ldv@altlinux.org> 1.0.619.fd4dee4-alt1
+- Updated to release-1-0-619-gfd4dee4.
+
 * Mon Aug 20 2012 Dmitry V. Levin <ldv@altlinux.org> 1.0.603.062587e-alt1
 - Updated to release-1-0-603-g062587e.
 
