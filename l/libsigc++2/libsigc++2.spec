@@ -1,5 +1,5 @@
 Name: libsigc++2
-Version: 2.2.11
+Version: 2.3.1
 Release: alt1
 
 Summary: The Typesafe Callback Framework for C++
@@ -74,6 +74,9 @@ install -pm644 AUTHORS NEWS README %buildroot%docdir/
 %doc %_datadir/devhelp/books/*
 
 %changelog
+* Sun Apr 07 2013 Dmitry V. Levin <ldv@altlinux.org> 2.3.1-alt1
+- Updated to 2.3.1-2-g7c6ff31.
+
 * Wed Oct 03 2012 Dmitry V. Levin <ldv@altlinux.org> 2.2.11-alt1
 - Updated to 2.2.11.
 
