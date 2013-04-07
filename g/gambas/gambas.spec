@@ -6,7 +6,7 @@
 
 Name:    gambas
 Version: 2.24.0
-Release: alt1
+Release: alt2
 
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
@@ -17,7 +17,7 @@ Url: http://gambas.sourceforge.net
 
 BuildRequires: bzlib-devel gcc-c++ imake kdelibs-devel libGL-devel
 BuildRequires: libXtst-devel libcurl-devel libffi-devel libjpeg-devel 
-BuildRequires: libomniORB-devel libpoppler13-devel libqt3-devel librsvg-devel 
+BuildRequires: libomniORB-devel libpoppler-devel libqt3-devel librsvg-devel 
 BuildRequires: libsqlite3-devel libxslt-devel xorg-cf-files xorg-inputproto-devel
 BuildRequires: libgtk+2-devel libpng-devel
 
@@ -42,6 +42,7 @@ Source0: %name-%version-%release.tar
 Source1: %name.desktop
 
 Patch1: gambas-2.14-alt-unresolved.patch
+Patch2: gambas2-2.24.0-poppler20.patch
 
 %description
 Gambas is a free development environment based on a Basic interpreter
@@ -443,6 +444,7 @@ Gambas.
 %setup
 sed -i 's,lib/gambas,%_lib/gambas,' main/gbc/gbi.c main/gbx/gbx_project.c
 %patch1 -p1
+%patch2 -p1
 cp %SOURCE1 gambas.desktop
 
 ./reconf-all
@@ -805,6 +807,9 @@ install -pD -m644 gambas.desktop %buildroot%_desktopdir/gambas2.desktop
 %_datadir/gambas2/info/gb.xml.xslt.list
 
 %changelog
+* Sun Apr 07 2013 Andrey Cherepanov <cas@altlinux.org> 2.24.0-alt2
+- Rebuild with new version of poppler
+
 * Mon Jan 21 2013 Andrey Cherepanov <cas@altlinux.org> 2.24.0-alt1
 - New version 2.24.0
 - Drop patch that is applied
