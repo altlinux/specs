@@ -3,7 +3,7 @@
 
 Name: ethumb
 Version: 1.7.5
-Release: alt2
+Release: alt3
 
 Summary: Ethumb - Thumbnail generation library
 Group: Graphical desktop/Enlightenment
@@ -78,6 +78,9 @@ developing applications that use %name.
 %_pkgconfigdir/%{name}*.pc
 
 %changelog
+* Sun Apr 07 2013 Yuri N. Sedunov <aris@altlinux.org> 1.7.5-alt3
+rebuilt against libpoppler.so.35
+
 * Sun Jan 20 2013 Yuri N. Sedunov <aris@altlinux.org> 1.7.5-alt2
 - epdf support
 
