@@ -6,7 +6,7 @@
 
 Name: libgnome
 Version: %ver_major.1
-Release: alt1.1
+Release: alt2
 
 Summary: GNOME base library
 License: LGPLv2
@@ -34,6 +34,8 @@ Patch9: libgnome-im-setting.patch
 Patch10: libgnome-2.22.0-alt-default_gtk_theme.patch
 
 Patch11: libgnome-2.22.0-alt-default_browser.patch 
+# https://git.gnome.org/browse/libgnome/commit/?id=ea5e602fb0b316b8e4f76a803404885c7200142c
+Patch12: libgnome-2.32.1-up-warning.patch
 
 Obsoletes: %name-utils
 Provides: %name-utils = %version-%release
@@ -126,6 +128,9 @@ Static libraries and objects for gnome library infrastructure
 %patch9 -p1 -b .im-setting
 %patch10 -p1
 %patch11 -p1
+%patch12 -p1
+
+subst '/DG_DISABLE_DEPRECATED/d' libgnome/Makefile.am
 
 %build
 %autoreconf
@@ -193,6 +198,9 @@ fi
 %exclude %_libdir/bonobo/monikers/*.la
 
 %changelog
+* Sun Apr 07 2013 Yuri N. Sedunov <aris@altlinux.org> 2.32.1-alt2
+- fixed build with glib-2.36
+
 * Wed Oct 10 2012 Igor Vlasenko <viy@altlinux.ru> 2.32.1-alt1.1
 - use /usr/share/design/current (closes: #27828)
 
