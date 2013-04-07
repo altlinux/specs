@@ -1,6 +1,6 @@
 Name: libnss-mysql
 Version: 1.6
-Release: alt5
+Release: alt6
 
 Summary: NSS API library
 Summary(ru_RU.UTF-8): Библиотека NSS API
@@ -12,8 +12,9 @@ Group: System/Libraries
 #Source: http://dl.sf.net/%name/%name-%version.tar.bz2
 Source: http://libnss-mysql.sourceforge.net/snapshot/libnss-mysql-20060915.tar
 
-# Automatically added by buildreq on Tue Apr 18 2006
-BuildRequires: gcc-c++ libMySQL-devel zlib-devel
+# Automatically added by buildreq on Sun Apr 07 2013
+# optimized out: gnu-config libstdc++-devel
+BuildRequires: gcc-c++ libmysqlclient-devel zlib-devel
 
 BuildPreReq: rpm-build-intro
 
@@ -47,6 +48,9 @@ touch %buildroot/etc/buildreqs/packages/ignore.d/%name
 %doc sample/README sample/linux/
 
 %changelog
+* Sun Apr 07 2013 Vitaly Lipatov <lav@altlinux.ru> 1.6-alt6
+- update buildereqs
+
 * Fri Mar 22 2013 Vitaly Lipatov <lav@altlinux.ru> 1.6-alt5
 - rebuild with libmysqlclient18
 
