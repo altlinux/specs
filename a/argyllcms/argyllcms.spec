@@ -2,7 +2,7 @@
 
 Name: argyllcms
 Version: 1.4.0
-Release: alt1
+Release: alt2
 
 Summary: ICC compatible color management system
 Group: Graphics
@@ -76,6 +76,9 @@ This package contains the Argyll color management system documentation.
 %exclude %_datadir/doc
 
 %changelog
+* Sun Apr 07 2013 Yuri N. Sedunov <aris@altlinux.org> 1.4.0-alt2
+- rebuild against libtiff.so.5
+
 * Sun May 13 2012 Yuri N. Sedunov <aris@altlinux.org> 1.4.0-alt1
 - 1.4.0
 
