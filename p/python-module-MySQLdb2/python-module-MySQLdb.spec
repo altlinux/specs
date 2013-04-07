@@ -4,7 +4,7 @@
 %def_without python3
 
 Version: 1.3.0
-Release: alt2.hg20110907
+Release: alt3.hg20110907
 %setup_python_module %oname
 Name: %packagename
 
@@ -109,6 +109,9 @@ popd
 %endif
 
 %changelog
+* Sun Apr 07 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.0-alt3.hg20110907
+- Rebuilt with libmysqlclient.so.18
+
 * Thu May 03 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.0-alt2.hg20110907
 - Renamed MySQLdb -> MySQLdb2 (ALT #27288)
 
