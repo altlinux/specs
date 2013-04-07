@@ -4,7 +4,7 @@
 Epoch: 1
 
 Version: 0.8.91
-Release: alt3
+Release: alt4
 Name: emacs-jabber
 License: %gpl2plus
 Group: Networking/Instant messaging
@@ -24,6 +24,8 @@ BuildPreReq: emacs-common
 BuildPreReq: rpm-build-licenses
 BuildPreReq: emacs-gnus >= 5.10
 BuildPreReq: automake >= 1.9
+# Waiting for autocrap update...
+# BuildPreReq: automake >= 1.12
 
 %description
 jabber.el is a minimal Jabber client running under Emacs.
@@ -33,7 +35,7 @@ Recommends: xprintidle
 %package el
 Summary: The Emacs Lisp sources for bytecode included in %name
 Group: Development/Other
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description el
 %name-el contains the Emacs Lisp sources for the bytecode
@@ -50,9 +52,10 @@ You need to install %name-el only if you intend to modify any of the
 %autoreconf
 %configure --with-lispdir=%_emacslispdir/%pkg_name
 make install DESTDIR=%buildroot abs_builddir="%_builddir/%name-%version"
-pushd tests
-make check
-popd
+# We need automake >= 1.12 to support LOG_COMPILER:
+# pushd tests
+# make check
+# popd
 
 mkdir -p %buildroot%_bindir
 mv -v %buildroot%_libexecdir/%name-uri-handler %buildroot%_bindir
@@ -61,9 +64,9 @@ mkdir -p %buildroot%_emacs_sitestart_dir
 install -m 644 jabber-emacs.el %buildroot%_emacs_sitestart_dir/%pkg_name.el
 
 # Hexrgb
-%byte_compile_file compat/hexrgb.el
-install -m 644 compat/hexrgb.el %buildroot%_emacslispdir/%pkg_name/hexrgb.el
-install -m 644 compat/hexrgb.elc %buildroot%_emacslispdir/%pkg_name/hexrgb.elc
+%byte_compile_file jabber-fallback-lib/hexrgb.el
+install -m 644 jabber-fallback-lib/hexrgb.el %buildroot%_emacslispdir/%pkg_name/hexrgb.el
+install -m 644 jabber-fallback-lib/hexrgb.elc %buildroot%_emacslispdir/%pkg_name/hexrgb.elc
 
 %files
 %_bindir/*
@@ -80,6 +83,9 @@ install -m 644 compat/hexrgb.elc %buildroot%_emacslispdir/%pkg_name/hexrgb.elc
 %doc %pkg_name.texi
 
 %changelog
+* Sun Apr  7 2013 Terechkov Evgenii <evg@altlinux.org> 1:0.8.91-alt4
+- git-20130407
+
 * Sat Jun 16 2012 Terechkov Evgenii <evg@altlinux.org> 1:0.8.91-alt3
 - git-20120616
 
