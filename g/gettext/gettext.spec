@@ -1,6 +1,6 @@
 Name: gettext
-Version: 0.18.1.1
-Release: alt3
+Version: 0.18.2.1
+Release: alt1
 
 %define libintl libintl3
 
@@ -14,19 +14,16 @@ Source: gettext-%version.tar
 Source1: msghack.py
 Source2: gettext-po-mode-start.el
 
-Patch1: gnulib-up-tests-readlink.patch
-Patch2: gettext-0.18.1.1-up-fix-xgettext-crash.patch
-Patch3: gettext-0.18.1.1-up-new-scheme-syntax.patch
 Patch4: gettext-0.18.1.1-deb-project-id.patch
 Patch5: gettext-0.18.1.1-deb-msgfmt-default-little-endian.patch
-Patch6: gettext-0.18.1.1-rh-stdio-gets.patch
 
 Patch11: gettext-0.18-alt-gettextize-quiet.patch
 Patch12: gettext-0.18-alt-cvs-git.patch
 Patch13: gettext-0.18-alt-tmp-autopoint.patch
 Patch14: gettext-0.18-alt-gcc.patch
 Patch15: gettext-0.18-alt-doc.patch
-Patch16: gettext-0.18-alt-urlview.patch
+Patch16: gettext-0.18.2.1-alt-urlview.patch
+Patch17: gettext-0.18.2.1-alt-libxml.patch
 
 Provides: %name-base = %version-%release
 Obsoletes: %name-base
@@ -170,12 +167,8 @@ a formatted output library for C++.
 
 %prep
 %setup
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
 %patch4 -p1
 %patch5 -p1
-%patch6 -p1
 
 %patch11 -p1
 %patch12 -p1
@@ -183,29 +176,22 @@ a formatted output library for C++.
 %patch14 -p1
 %patch15 -p1
 %patch16 -p1
-
-# autopoint: replace gzip with xz.
-sed -i -e 's/\.tar\.gz/.tar.xz/g' -e 's/gzip/xz/g' \
-	gettext-tools/misc/{*.in,Makefile.*}
+%patch17 -p1
 
 # Comment out sys_lib_search_path_spec and sys_lib_dlsearch_path_spec.
 mkdir archive
 cd archive
-archive=../gettext-tools/misc/archive.dir.tar.gz
+archive=../gettext-tools/misc/archive.dir.tar
 tar -xf $archive
 find -type f -print0 |
 	xargs -r0 grep -lZ '\<sys_lib_\(dl\)\?search_path_spec=' -- |
 	xargs -r0 sed -i 's/\<sys_lib_\(dl\)\?search_path_spec=/#&/' --
-tar --owner=root --group=root --xz -cf ${archive%%.gz}.xz *
-rm $archive
+tar --owner=root --group=root -cf $archive *
 cd -
 rm -rf archive
 
 # Regenerate texinfo documentation.
 find -type f -name '*.info*' -delete
-
-# Update outdated build files.
-cp -a build-aux/config.[gs]* gettext-tools/examples/hello-c++-kde/admin/
 
 %build
 %if_with java
@@ -223,7 +209,7 @@ export ac_cv_prog_STRIP=:
 	--without-cvs --without-git \
 	%{subst_enable static} \
 	%{?_with_included_gettext:--with-included-gettext} \
-	CPPFLAGS=-I/usr/include/libxml2
+	#
 # We have to edit libtool files by hand until autoreconf can be used here.
 find -type f -name libtool -print0 |
 	xargs -r0 grep -lZ '^sys_lib_dlsearch_path_spec="' -- |
@@ -231,17 +217,10 @@ find -type f -name libtool -print0 |
 %make_build
 
 %install
-%makeinstall \
-	lispdir=%buildroot%_datadir/emacs/site-lisp \
-	aclocaldir=%buildroot%_datadir/aclocal \
-	gettextsrcdir=%buildroot%_datadir/gettext/intl \
+%makeinstall_std \
+	lispdir=%_datadir/emacs/site-lisp \
+	aclocaldir=%_datadir/aclocal \
 	#
-
-mv %buildroot%_datadir/gettext/intl/{ABOUT-NLS,archive.*.tar.?z} \
-	%buildroot%_datadir/gettext/
-
-mkdir -p %buildroot%_datadir/gettext/po
-install -pm644 gettext-runtime/po/Makefile.in.in %buildroot%_datadir/gettext/po/
 
 install -pD -m755 %_sourcedir/msghack.py \
 	%buildroot%_bindir/msghack
@@ -343,6 +322,9 @@ mkdir -p %buildroot%_docdir
 %_defaultdocdir/libasprintf
 
 %changelog
+* Sun Apr 07 2013 Dmitry V. Levin <ldv@altlinux.org> 0.18.2.1-alt1
+- Updated to 0.18.2.1.
+
 * Tue Aug 28 2012 Dmitry V. Levin <ldv@altlinux.org> 0.18.1.1-alt3
 - Synced with Debian gettext-0.18.1.1-9:
   + modified msgfmt to always create little endian .mo files;
