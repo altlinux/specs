@@ -1,12 +1,11 @@
 Name: libdb1
 Version: 1.85
-Release: alt7
+Release: alt8
 
 Summary: Berkeley database library version %version
 License: BSD
 Group: System/Libraries
 Url: http://www.sleepycat.com/
-Packager: Dmitry V. Levin <ldv@altlinux.org>
 
 Provides: libdb1.so.2, db1 = %version
 Obsoletes: db1
@@ -83,7 +82,7 @@ embedded database support for both traditional and client/server applications.
 This package contains documentation for Berkeley DB version %version.
 
 %prep
-%setup -q -n db.%version
+%setup -n db.%version
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
@@ -137,6 +136,9 @@ install -pm644 README LICENSE docs/*usenix*.ps.* %buildroot%docdir/
 %docdir/*.ps.*
 
 %changelog
+* Sun Apr 07 2013 Dmitry V. Levin <ldv@altlinux.org> 1.85-alt8
+- Rebuilt for debuginfo.
+
 * Fri Nov 05 2010 Dmitry V. Levin <ldv@altlinux.org> 1.85-alt7
 - Rebuilt for soname set-versions.
 
