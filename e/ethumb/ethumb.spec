@@ -3,7 +3,7 @@
 
 Name: ethumb
 Version: 1.7.5
-Release: alt3
+Release: alt4
 
 Summary: Ethumb - Thumbnail generation library
 Group: Graphical desktop/Enlightenment
@@ -14,7 +14,9 @@ Source: http://download.enlightenment.org/releases/%name-%version.tar.bz2
 
 Requires: lib%name = %version-%release
 
-BuildRequires: doxygen edje libedbus-devel libedje-devel libeet-devel libemotion-devel libexif-devel
+BuildRequires: doxygen edje libedbus-devel libedje-devel
+BuildRequires: libeet-devel libemotion-devel libexif-devel
+BuildRequires: libpoppler-devel
 %{?_enable_epdf:BuildRequires: libepdf-devel}
 BuildRequires: doxygen
 
@@ -78,6 +80,9 @@ developing applications that use %name.
 %_pkgconfigdir/%{name}*.pc
 
 %changelog
+* Sun Apr 07 2013 Yuri N. Sedunov <aris@altlinux.org> 1.7.5-alt4
+- another attempt to avoid linking against libpoppler13
+
 * Sun Apr 07 2013 Yuri N. Sedunov <aris@altlinux.org> 1.7.5-alt3
 rebuilt against libpoppler.so.35
 
