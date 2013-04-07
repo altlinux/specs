@@ -1,8 +1,6 @@
-# vim: set ft=spec: -*- rpm-spec -*-
-
 Name: mediatomb
 Version: 0.12.1
-Release: alt8
+Release: alt9
 
 Summary: UPnP AV Mediaserver for Linux
 Group: System/Servers
@@ -17,7 +15,7 @@ Source2: mediatomb.sysconfig
 Source3: mediatomb.service
 
 BuildRequires: gcc-c++ id3lib-devel libavformat-devel libcurl-devel libexif-devel libexpat-devel libffmpegthumbnailer-devel
-BuildRequires: libjs-devel libmagic-devel libmpeg4ip-devel libMySQL-devel libsqlite3-devel libtag-devel
+BuildRequires: libjs-devel libmagic-devel libmpeg4ip-devel libmysqlclient-devel libsqlite3-devel libtag-devel
 
 %description
 MediaTomb is an open source (GPL) UPnP MediaServer with a nice web user
@@ -72,6 +70,9 @@ install -pD -m0644 %SOURCE3 %buildroot%systemd_unitdir/mediatomb.service
 %attr(3770,root,_mediatomb) %dir %_localstatedir/%name
 
 %changelog
+* Sun Apr 07 2013 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.12.1-alt9
+- use libmysqlclient-devel
+
 * Thu Oct 11 2012 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.12.1-alt8
 - systemd service fixed (closes: 27832)
 
