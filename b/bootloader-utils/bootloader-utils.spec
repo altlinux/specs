@@ -1,5 +1,5 @@
 Name: bootloader-utils
-Version: 0.4.20
+Version: 0.4.21
 Release: alt1
 
 Summary: Bootloader utilities
@@ -79,6 +79,10 @@ mv $f.install $f
 %_rpmlibdir/*.filetrigger
 
 %changelog
+* Sun Apr 07 2013 Dmitry V. Levin <ldv@altlinux.org> 0.4.21-alt1
+- kernel.filetrigger: fixed handling of uninstalled kernels
+  (by Roman Savochenko; closes: #28647).
+
 * Wed Mar 13 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.4.20-alt1
 - installkernel: stop if initrd creation failed
 
