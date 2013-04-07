@@ -7,7 +7,7 @@
 
 Name: branding-%brand-%theme
 Version: 6.0.0 
-Release: alt4
+Release: alt5
 
 BuildRequires: cpio fonts-ttf-dejavu fonts-ttf-droid
 BuildRequires: design-bootloader-source >= 5.0-alt2
@@ -163,7 +163,6 @@ Group: Graphical desktop/GNOME
 Requires: gtk2-theme-mist
 Requires: gksu
 Requires: altlinux-freedesktop-menu-gnomish-menu
-PreReq: gnome-panel
 Provides: gnome-theme-%brand-%theme = %version-%release
 Provides: metacity-theme-%brand-%theme = %version-%release
 Provides: metacity-theme
@@ -374,6 +373,9 @@ cat '/%_datadir/themes/%XdgThemeName/panel-default-setup.entries' > \
 %_desktopdir/indexhtml.desktop
 
 %changelog
+* Sun Apr 07 2013 Andrey Cherepanov <cas@altlinux.org> 6.0.0-alt5
+- Remove obsoleted gnome-panel from requires
+
 * Thu Apr 04 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 6.0.0-alt4
 - kde3 settings removed
 
