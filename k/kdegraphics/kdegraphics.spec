@@ -12,7 +12,7 @@
 
 Name: kdegraphics
 Version: 3.5.13.1
-Release: alt2
+Release: alt3
 
 Group: Graphical desktop/KDE
 Summary: K Desktop Environment - Graphics
@@ -63,7 +63,6 @@ Patch303: security_02_CVE-2009-1709.diff
 Patch304: xpdf-3.02-CVE-2010-3702.patch
 Patch305: xpdf-3.02-CVE-2010-3704.patch
 Patch306: tde-3.5.13-build-defdir.patch
-Patch307: tde-3.5.13-build-poppler.patch
 
 # Automatically added by buildreq on Tue Apr 13 2004 (-bi)
 BuildRequires(pre): cmake glibc-core kdelibs-devel
@@ -73,12 +72,12 @@ BuildRequires: libieee1284-devel libjpeg-devel openexr-devel
 BuildRequires: liblcms-devel libpng-devel libqt3-devel libsane-devel libstdc++-devel
 BuildRequires: libtiff-devel libungif-devel libusb-devel pkg-config
 BuildRequires: qt3-designer xml-utils zlib-devel
-BuildRequires: libfribidi-devel fribidi t1lib-devel libpoppler13-devel
+BuildRequires: libfribidi-devel fribidi t1lib-devel libpoppler-devel
 BuildRequires: libacl-devel libattr-devel
 BuildRequires: libXxf86vm-devel
 BuildRequires: kdelibs >= %version kdelibs-devel >= %version
 %if %gphoto
-BuildRequires: libgphoto2_2.4-devel liblockdev-devel
+BuildRequires: libgphoto2-devel liblockdev-devel
 %endif
 
 %description
@@ -360,7 +359,6 @@ pushd kpdf/xpdf
 %patch305 -p0
 popd
 %patch306
-%patch307
 
 %if %cmake
 %else
@@ -680,7 +678,6 @@ install -m 0644 %SOURCE1 %buildroot/%_K3conf/kghostviewrc
 %_K3lib/*.la
 %endif
 %_K3includedir/*.h
-%_K3includedir/kde/*.h
 %_K3includedir/dom/*.h
 %_K3includedir/libtext2path*/
 %_K3includedir/ksvg/
@@ -689,6 +686,10 @@ install -m 0644 %SOURCE1 %buildroot/%_K3conf/kghostviewrc
 
 
 %changelog
+* Sun Apr 07 2013 Roman Savochenko <rom_as@altlinux.ru> 3.5.13.1-alt3
+- Build with current poppler fix.
+- Update from origin/v3.5.13-sru.
+
 * Mon Oct 29 2012 Roman Savochenko <rom_as@altlinux.ru> 3.5.13.1-alt2
 - Build with -O2 and -g.
 
