@@ -3,7 +3,7 @@ Version: 1.7.5
 %ifdef beta
 Release: alt1.%beta
 %else
-Release: alt1
+Release: alt2
 %endif
 
 Summary: A set of loaders for Evas
@@ -51,6 +51,9 @@ loader.
 %doc AUTHORS COPYING README
 
 %changelog
+* Sun Apr 07 2013 Yuri N. Sedunov <aris@altlinux.org> 1.7.5-alt2
+rebuilt against libpoppler.so.35
+
 * Sat Jan 05 2013 Yuri N. Sedunov <aris@altlinux.org> 1.7.5-alt1
 - 1.7.5
 

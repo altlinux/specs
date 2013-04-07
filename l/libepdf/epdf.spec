@@ -8,7 +8,7 @@
 
 Name: lib%_name
 Version: 0.0.1
-Release: alt1
+Release: alt2
 
 Summary: EFL PDF Reader
 License: GPLv2/LGPLv3
@@ -61,6 +61,9 @@ Enlightenment PDF library development package.
 %_includedir/%_name/
 
 %changelog
+* Sun Apr 07 2013 Yuri N. Sedunov <aris@altlinux.org> 0.0.1-alt2
+rebuilt against libpoppler.so.35
+
 * Sun Jan 20 2013 Yuri N. Sedunov <aris@altlinux.org> 0.0.1-alt1
 - first build for Sisyphus (4f02c256) using poppler
 
