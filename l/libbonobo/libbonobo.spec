@@ -4,7 +4,7 @@
 
 Name: libbonobo
 Version: %ver_major.1
-Release: alt2
+Release: alt3
 
 Summary: Bonobo component system
 License: LGPL
@@ -18,6 +18,7 @@ Patch: %name-2.3.2-alt-tests_makefile.patch
 Patch1: %name-2.13-fix-link-as-needed.patch
 Patch2: %name-2.20.0-alt-linking.patch
 Patch3: %name-2.32.1-alt-link.patch
+Patch4: %name-2.32.1-alt-allow-deprecated.patch
 
 Obsoletes: bonobo-activation
 Obsoletes: libbonobo-activation
@@ -88,6 +89,7 @@ This package contains development documentation for Bonobo.
 %patch1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
 
 %__subst 's,\${prefix}/lib,%_libdir,;s,\${prefix}/etc,%_sysconfdir,' \
     activation-server/bonobo-activation-server.1
@@ -148,6 +150,9 @@ rm -f samples/echo/Bonobo_Sample_Echo{-{common,skels,stubs}.c,.h}
 %_gtk_docdir/*
 
 %changelog
+* Sun Apr 07 2013 Yuri N. Sedunov <aris@altlinux.org> 2.32.1-alt3
+- fixed build with glib-2.36
+
 * Mon May 21 2012 Yuri N. Sedunov <aris@altlinux.org> 2.32.1-alt2
 - fixed build
 
