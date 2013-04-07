@@ -21,7 +21,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.4.39
-Release: alt1
+Release: alt2
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -48,7 +48,7 @@ Release: alt1
 %def_enable man
 %def_disable compat
 %def_enable x32
-%def_disable debugfs
+%def_enable debugfs
 %def_disable numa
 %def_enable acpi
 %def_enable pci
@@ -455,11 +455,13 @@ Patch0604: linux-%kernel_branch.37-fix-net-core.patch
 Patch0605: linux-%kernel_branch.35-fix-net-ipv4--xfrm.patch
 Patch0606: linux-%kernel_branch.31-fix-net-ipv6.patch
 Patch0607: linux-%kernel_branch.35-fix-net-ipv6--xfrm.patch
-Patch0608: linux-%kernel_branch.25-fix-net-mac80211.patch
-Patch0609: linux-%kernel_branch.20-fix-net-netfilter--nf_conntrack_ftp.patch
-Patch0610: linux-%kernel_branch.28-fix-net-rds--rds_rdma.patch
-Patch0611: linux-%kernel_branch.35-fix-net-sunrpc.patch
-Patch0612: linux-%kernel_branch.35-fix-net-wireless--cfg80211.patch
+Patch0608: linux-%kernel_branch.39-fix-net-l2tp--l2tp_core.patch
+Patch0609: linux-%kernel_branch.25-fix-net-mac80211.patch
+Patch0610: linux-%kernel_branch.20-fix-net-netfilter--nf_conntrack_ftp.patch
+Patch0611: linux-%kernel_branch.28-fix-net-rds--rds_rdma.patch
+Patch0612: linux-%kernel_branch.35-fix-net-sunrpc.patch
+Patch0613: linux-%kernel_branch.39-fix-net-wimax.patch
+Patch0614: linux-%kernel_branch.35-fix-net-wireless--cfg80211.patch
 
 Patch0621: linux-%kernel_branch.20-fix-scripts--kconfig.patch
 
@@ -2609,6 +2611,19 @@ done)
 
 
 %changelog
+* Sun Apr 07 2013 Led <led@altlinux.ru> 3.4.39-alt2
+- updated:
+  + fix-drivers-hid--hid
+  + fix-drivers-net-caif--cfspi_slave
+  + fix-drivers-spi--spi-dw
+- added:
+  + fix-net-l2tp--l2tp_core
+  + fix-net-wimax
+- disabled:
+  + MMC_TEST
+  + L2TP_DEBUGFS
+- enabled debugfs
+
 * Sat Apr 06 2013 Led <led@altlinux.ru> 3.4.39-alt1
 - 3.4.39
 - updated:
