@@ -2,7 +2,7 @@
 
 Name: lib%_name
 Version: 0.9
-Release: alt1
+Release: alt2
 
 Summary: A library for Gypsy
 Group: System/Libraries
@@ -11,6 +11,7 @@ License: LGPLv2 and GPLv2
 Url: http://gypsy.freedesktop.org/
 Source: http://gypsy.freedesktop.org/gypsy-releases/%_name-%version.tar.gz
 Patch: gypsy-0.8-unusedvar.patch
+Patch1: gypsy-0.9-alt-g_type_init.patch
 
 BuildRequires: libbluez-devel
 BuildRequires: libdbus-devel
@@ -57,13 +58,14 @@ access GPS data from multiple GPS sources concurrently.
 %prep
 %setup -q -n %_name-%version
 %patch -p1
+%patch1 -p1
 
 %build
 %configure --disable-static
 %make_build
 
 %install
-make install DESTDIR=%buildroot
+%makeinstall_std
 
 %files
 %_libdir/libgypsy.so.0
@@ -85,6 +87,9 @@ make install DESTDIR=%buildroot
 %_datadir/gtk-doc/html/gypsy
 
 %changelog
+* Sun Apr 07 2013 Yuri N. Sedunov <aris@altlinux.org> 0.9-alt2
+- fixed build with glib-2.36
+
 * Tue Oct 09 2012 Yuri N. Sedunov <aris@altlinux.org> 0.9-alt1
 - 0.9
 
