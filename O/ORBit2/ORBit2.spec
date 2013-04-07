@@ -4,7 +4,7 @@
 
 Name: ORBit2
 Version: %ver_major.19
-Release: alt3
+Release: alt4
 
 Summary: A high-performance CORBA Object Request Broker
 Group: System/Libraries
@@ -17,6 +17,7 @@ Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.bz2
 Patch: %name-2.7.3-alt-test_makefile.patch
 Patch1: %name-2.14.0-alt-shared_name-server.patch
 Patch2: %name-2.13.3-fix-link-as-needed.patch
+Patch3: ORBit2-fc-allow-deprecated.patch
 
 %define libIDL_ver 0.8.2
 %define glib_ver 2.8.0
@@ -111,6 +112,7 @@ This package contains static versions of libraries from ORBit2 package.
 %patch -p1
 %patch1 -p0
 %patch2 -p0
+%patch3 -p1
 
 %build
 %autoreconf
@@ -177,6 +179,9 @@ EOF
 %exclude %_libdir/*/*.la
 
 %changelog
+* Sun Apr 07 2013 Yuri N. Sedunov <aris@altlinux.org> 2.14.19-alt4
+- fixed build with glib-2.36
+
 * Sat Feb 19 2011 Alexey Tourbin <at@altlinux.ru> 2.14.19-alt3
 - rebuilt for debuginfo
 
