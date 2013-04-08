@@ -1,7 +1,7 @@
 %define oname zc.z3monitor
 Name: python-module-%oname
-Version: 0.7.0
-Release: alt2.1
+Version: 0.8.0
+Release: alt1
 Summary: A network-accessible command-line interface to monitor a Zope 3 process
 License: ZPLv2.1
 Group: Development/Python
@@ -73,6 +73,9 @@ mv %buildroot%python_sitelibdir_noarch/* \
 %python_sitelibdir/*/*/tests.*
 
 %changelog
+* Mon Apr 08 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.0-alt1
+- Version 0.8.0
+
 * Thu Oct 20 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 0.7.0-alt2.1
 - Rebuild with Python-2.7
 
