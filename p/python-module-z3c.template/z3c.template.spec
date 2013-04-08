@@ -1,7 +1,7 @@
 %define oname z3c.template
 Name: python-module-%oname
-Version: 1.4.0
-Release: alt1
+Version: 2.0.0
+Release: alt1.a2
 Summary: A package implementing advanced Page Template patterns
 License: ZPLv2.1
 Group: Development/Python
@@ -87,6 +87,9 @@ mv %buildroot%python_sitelibdir_noarch/* \
 %python_sitelibdir/*/*/tests.*
 
 %changelog
+* Mon Apr 08 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.0-alt1.a2
+- Version 2.0.0a2
+
 * Wed Dec 28 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4.0-alt1
 - Version 1.4.0
 
