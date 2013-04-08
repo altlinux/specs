@@ -1,5 +1,5 @@
 Name: diffstat
-Version: 1.55
+Version: 1.56
 Release: alt1
 
 Summary: An utility which provides statistics based on the output of diff
@@ -36,6 +36,9 @@ to provide a summary of the changes in large, complex patch files.
 %doc CHANGES README
 
 %changelog
+* Mon Apr 08 2013 Dmitry V. Levin <ldv@altlinux.org> 1.56-alt1
+- Updated to 1.56.
+
 * Tue Jan 17 2012 Dmitry V. Levin <ldv@altlinux.org> 1.55-alt1
 - Updated to 1.55.
 
