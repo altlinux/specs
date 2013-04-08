@@ -1,6 +1,6 @@
 Name: create-resources
 Version: 0.1.3
-Release: alt3
+Release: alt4
 
 Summary: shared resources for use by creative applications
 License: GPLv2
@@ -12,6 +12,8 @@ Conflicts: gimp < 2.6.11-alt4
 
 Source: create-%version.tar.bz2
 Patch1: sconstruct.patch
+# Debian
+Patch10: 0001-add_name_header_to_GIMP_palettes.patch
 
 # Automatically added by buildreq on Thu Apr 21 2011 (-bi)
 # optimized out: ghostscript-classic python-base python-modules python-modules-compiler python-modules-email tetex-core tetex-dvips
@@ -28,6 +30,7 @@ The package includes color swatches files
 %prep
 %setup -qn create-%version
 %patch1 -p0
+%patch10 -p1
 
 %build
 
@@ -43,6 +46,9 @@ scons install PREFIX=%buildroot/%_prefix
 %_datadir/create/*
 
 %changelog
+* Mon Apr 08 2013 Sergey V Turchin <zerg@altlinux.org> 0.1.3-alt4
+- add patch from Debian to add name header to GIMP palettes
+
 * Thu Apr 21 2011 Sergey V Turchin <zerg@altlinux.org> 0.1.3-alt3
 - fix build requires
 
