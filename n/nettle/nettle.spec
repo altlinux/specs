@@ -1,6 +1,6 @@
 Name: nettle
 Version: 2.6
-Release: alt1
+Release: alt2
 Summary: A low-level cryptographic library
 
 License: LGPLv2.1+
@@ -75,5 +75,8 @@ sed -i -e 's/libnettle\.a/\$(LIBNETTLE_FORLINK)/' \
 %_infodir/*.*
 
 %changelog
+* Tue Apr 09 2013 Dmitry V. Levin <ldv@altlinux.org> 2.6-alt2
+- Updated to nettle_2.6_release_20130116.
+
 * Sat Sep 01 2012 Dmitry V. Levin <ldv@altlinux.org> 2.6-alt1
 - Initial build for Sisyphus.

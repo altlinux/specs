@@ -1,6 +1,6 @@
 Name: gsasl
 %define libname lib%name
-Version: 1.6.1
+Version: 1.8.0
 Release: alt1
 
 Summary: GNU SASL implementation
@@ -41,7 +41,7 @@ which will use lib%name.
 
 %prep
 %setup
-sed -i 's/^AM_CPPFLAGS =/& \$(GSS_CFLAGS)/' lib/gl/Makefile.*
+sed -i 's/^AM_CPPFLAGS +=/& \$(GSS_CFLAGS)/' lib/gl/Makefile.*
 
 %build
 %autoreconf
@@ -70,11 +70,11 @@ sed -i '/libgsasl\.mo/d' %name.lang
 %files -f %name.lang
 %_bindir/*
 %_man1dir/*
-%doc lib/AUTHORS lib/NEWS lib/README lib/THANKS
+%doc AUTHORS NEWS README THANKS
 
 %files -n lib%name -f lib%name.lang
-%doc AUTHORS NEWS README THANKS
 %_libdir/*.so.*
+%doc lib/AUTHORS lib/NEWS lib/README lib/THANKS
 
 %files -n lib%name-devel
 %_libdir/*.so
@@ -84,6 +84,9 @@ sed -i '/libgsasl\.mo/d' %name.lang
 %_man3dir/*
 
 %changelog
+* Tue Apr 09 2013 Dmitry V. Levin <ldv@altlinux.org> 1.8.0-alt1
+- Updated to 1.8.0.
+
 * Fri Dec 09 2011 Dmitry V. Levin <ldv@altlinux.org> 1.6.1-alt1
 - Updated to 1.6.1.
 
