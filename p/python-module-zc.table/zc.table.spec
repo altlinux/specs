@@ -1,7 +1,7 @@
 %define oname zc.table
 Name: python-module-%oname
-Version: 0.8.1
-Release: alt2.1
+Version: 0.9.0
+Release: alt1
 Summary: Zope 3 extension that helps with the construction of (HTML) tables
 License: ZPL
 Group: Development/Python
@@ -58,6 +58,9 @@ mv %buildroot%python_sitelibdir_noarch/* \
 %python_sitelibdir/*/*/test*
 
 %changelog
+* Mon Apr 08 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.0-alt1
+- Version 0.9.0
+
 * Thu Oct 20 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 0.8.1-alt2.1
 - Rebuild with Python-2.7
 
