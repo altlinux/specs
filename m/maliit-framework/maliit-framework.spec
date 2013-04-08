@@ -4,7 +4,7 @@
 %define libsover 0
 Name: maliit-framework
 Version: 0.94.2
-Release: alt2
+Release: alt3
 %define libmaliit libmaliit%libver-%libsover
 %define libmaliit_glib libmaliit-glib%libver-%libsover
 %define xinputconfdir %_sysconfdir/X11/xinit/xinput.d
@@ -113,8 +113,6 @@ the Maliit input method framework
 Summary: Maliit Framework settings utitlity
 Group: System/Configuration/Other
 Requires: libmaliit-glib-gir
-# broken rpm-build-python3, bug #28762
-Requires: python3-module-pygobject3
 Conflicts: maliit-framework-examples <= 0.94.0-alt1
 %description settings
 This package contains settings utitlity for
@@ -275,6 +273,9 @@ install -m 0644 README LICENSE.LGPL NEWS %buildroot/%_defaultdocdir/maliit-frame
 %_libdir/gtk-3.0/3.0.0/immodules/libim-maliit.so*
 
 %changelog
+* Mon Apr 08 2013 Sergey V Turchin <zerg@altlinux.org> 0.94.2-alt3
+- rebuilt with new rpm-build-python3
+
 * Mon Apr 01 2013 Sergey V Turchin <zerg@altlinux.org> 0.94.2-alt2
 - rebuilt with new glib
 
