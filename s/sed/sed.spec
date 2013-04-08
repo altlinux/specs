@@ -1,6 +1,6 @@
 Name: sed
 Version: 4.2.2
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: A GNU stream text editor
@@ -19,7 +19,7 @@ Patch: %srcname.patch
 
 %def_enable selinux
 
-BuildRequires: gnulib >= 0.0.7696.fd9f1ac
+BuildRequires: gnulib >= 0.0.7901.076ac82
 
 # for acl copying support.
 BuildRequires: libacl-devel
@@ -60,7 +60,7 @@ bzip2 -9k NEWS
 	doc/sed-in.texi doc/sed.x
 
 ./bootstrap --force --skip-po --gnulib-srcdir=%_datadir/gnulib
-%configure --bindir=/bin --without-included-regex
+%configure --bindir=/bin
 %make_build -C po update-po
 %make_build
 
@@ -82,6 +82,12 @@ bzip2 -9k NEWS
 %doc BUGS NEWS.bz2 README THANKS doc/*.txt.bz2
 
 %changelog
+* Mon Apr 08 2013 Dmitry V. Levin <ldv@altlinux.org> 1:4.2.2-alt2
+- Updated to 4.2.2-5-g22fec09.
+- Updated translations from translationproject.org.
+- Enabled relevant gnulib tests.
+- Built with gnulib v0.0-7901-g076ac82.
+
 * Tue Jan 22 2013 Dmitry V. Levin <ldv@altlinux.org> 1:4.2.2-alt1
 - Updated sed to 4.2.2-4-g2c99bda.
 - Updated translations from translationproject.org.
