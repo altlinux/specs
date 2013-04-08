@@ -4,7 +4,7 @@
 
 Name: dict-wn
 Version: 2.0
-Release: alt2
+Release: alt3
 
 Summary: %dictdesc
 
@@ -20,7 +20,7 @@ Source: ftp://ftp.dict.org/pub/dict/pre/%name-%version.tar.bz2
 BuildArchitectures: noarch
 
 # Automatically added by buildreq on Thu Sep 15 2005
-BuildRequires: dict-tools flex fontconfig libfreetype stardict-tools xorg-x11-locales
+BuildRequires: dict-tools flex fontconfig libfreetype stardict-tools
 
 %description
 The files contained herein are designed to convert the WordNet (r) 1.6 data
@@ -124,6 +124,9 @@ install -m 644 %dictname.ifo %buildroot%_datadir/stardict/dic/%dictname.ifo
 %_datadir/stardict/dic/*
 
 %changelog
+* Mon Apr 08 2013 Andrey Cherepanov <cas@altlinux.org> 2.0-alt3
+- Fix build with new xorg
+
 * Sun Jan 18 2009 Vitaly Lipatov <lav@altlinux.ru> 2.0-alt2
 - cleanup spec, fix Url, fix Summary (bug #14980)
 
