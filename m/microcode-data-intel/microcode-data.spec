@@ -1,6 +1,6 @@
 Name: microcode-data-intel
-Version: 20120606
-Release: alt2.v2
+Version: 20130222
+Release: alt1
 
 Packager: Vicror Forsiuk <force@altlinux.org>
 
@@ -30,7 +30,7 @@ all Intel processors.
 %setup -c
 
 %build
-mv microcode*.dat microcode.dat
+#mv microcode*.dat microcode.dat
 
 %install
 install -pDm644 microcode.dat %buildroot/lib/microcode/microcode.dat
@@ -40,6 +40,10 @@ install -pDm644 microcode.dat %buildroot/lib/microcode/microcode.dat
 /lib/microcode/microcode.dat
 
 %changelog
+* Mon Apr 08 2013 L.A. Kostis <lakostis@altlinux.ru> 20130222-alt1
+- NMU:
+  + updated to 20130222.
+
 * Sat Oct 20 2012 L.A. Kostis <lakostis@altlinux.ru> 20120606-alt2.v2
 - NMU:
   + updated to 20120606-v2.
