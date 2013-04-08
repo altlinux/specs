@@ -5,7 +5,7 @@
 
 Name: branding-%brand-schoolmaster
 Version: 6.0.0
-Release: alt45
+Release: alt46
 BuildArch: noarch
 
 %define theme %name
@@ -175,7 +175,7 @@ Summary: GNOME settings for %Brand %version %Theme
 License: Distributable
 Group: Graphical desktop/GNOME
 Requires: gtk2-theme-mist
-PreReq: gnome-panel
+#PreReq: gnome-panel
 Provides: gnome-theme-%brand-%theme = %version-%release
 Provides: metacity-theme-%brand-%theme = %version-%release
 Provides: metacity-theme
@@ -420,6 +420,12 @@ cat '/%_datadir/themes/%XdgThemeName/panel-default-setup.entries' > \
 %_datadir/kde4/apps/kio_desktop/DesktopLinks/indexhtml.desktop
 
 %changelog
+* Mon Apr 08 2013 Sergey V Turchin <zerg at altlinux dot org> 6.0.0-alt46
+- fix requires
+
+* Thu Aug 30 2012 Sergey V Turchin <zerg@altlinux.org> 6.0.0-alt44.M60P.1
+- built for M60P
+
 * Thu Aug 30 2012 Sergey V Turchin <zerg@altlinux.org> 6.0.0-alt45
 - translate installer notes and license titles into russian
 
