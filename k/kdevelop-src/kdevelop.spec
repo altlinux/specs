@@ -1,5 +1,5 @@
 Version: 4.4.1
-Release: alt1.git
+Release: alt2.git
 Serial: 3
 
 %define _unpackaged_files_terminate_build 1
@@ -342,6 +342,9 @@ find po -name 'kdevokteta.po' -exec rm {} \;
 # Fix permissions of desktop files
 chmod -x %buildroot%_K4xdg_apps/*
 
+# remove all desktop_extragear-* translations, zerg@ told they aren't needed at all
+find %buildroot -name 'desktop_extragear*.mo' -exec rm {} \;
+
 %K4find_lang --output=%name.lang --with-kde          kdevelop
 for m in \
 kdevcmakebuilder kdevcmake kdevcpp kdevcustommake kdevformatters \
@@ -432,6 +435,11 @@ done
 #%doc %_K4doc/en/kdevelop-apidocs/
 
 %changelog
+* Mon Apr  8 2013 Alexey Morozov <morozov@altlinux.org> 3:4.4.1-alt2.git
+- a post-4.4.1 snapshot (0f2c97bf42c60484ba1ad73021f904c4dc34d3eb)
+- explicitly remove desktop_extragear*.mo files from the build
+- translations are synchronized with upstream
+
 * Fri Nov 30 2012 Alexey Morozov <morozov@altlinux.org> 3:4.4.1-alt1.git
 - a post-4.4.1 snapshot (88f0a7496a5989a2d071b0ec5671697aa365723b)
 - updated translations
