@@ -1,17 +1,17 @@
-%define ver_major 3.7
+%define ver_major 3.8
 
 Name: gnome-tweak-tool
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1
 
 Summary: A tool to customize advanced GNOME 3 options
 Group: Graphical desktop/GNOME
 License: GPLv3
-Url: http://live.gnome.org/GnomeTweakTool
+Url: https://live.gnome.org/GnomeTweakTool
 Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 
 Source: %name-%version.tar.xz
-Patch: gnome-tweak-tool-3.6.1-desktop.patch
+Patch: gnome-tweak-tool-3.8.0-alt-desktop.patch
 
 BuildArch: noarch
 Requires: gnome-shell >= %ver_major
@@ -62,6 +62,9 @@ Features:
 %doc AUTHORS NEWS README
 
 %changelog
+* Mon Apr 08 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.0-alt1
+- 3.8.0
+
 * Thu Feb 28 2013 Yuri N. Sedunov <aris@altlinux.org> 3.7.4-alt1
 - 3.7.4
 
