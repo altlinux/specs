@@ -10,7 +10,7 @@
 
 Name: calligra
 Version: 2.6.1
-Release: alt2
+Release: alt3
 Epoch: 0
 %define libname lib%name
 
@@ -191,7 +191,7 @@ Provides: koffice-krita = %koffice_ver
 Obsoletes: koffice-krita < %koffice_ver
 Requires: %name-core = %EVR
 Requires: %libname = %EVR
-Requires: kde4-kross-python
+Requires: kde4-kross-python create-resources
 %description krita
 Krita is a creative sketching and painting application based on KOffice
 technology. Whether you want to create art paintings, cartoons, concept
@@ -641,6 +641,10 @@ cp -ar %SOURCE1 cmake/modules/
 %_K4libdir/lib*.so.*
 
 %changelog
+* Mon Apr 08 2013 Sergey V Turchin <zerg@altlinux.org> 0:2.6.1-alt3
+- rebuild with new poppler
+- fix requires
+
 * Thu Feb 28 2013 Sergey V Turchin <zerg@altlinux.org> 0:2.6.1-alt2
 - built with opengtl
 
