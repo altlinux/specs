@@ -6,7 +6,7 @@
 
 Name: branding-%brand-%smalltheme
 Version: 7.0.0
-Release: alt7
+Release: alt8
 BuildArch: noarch
 
 %define theme %name
@@ -187,7 +187,7 @@ Summary: GNOME settings for %Brand %version %Theme
 License: Distributable
 Group: Graphical desktop/GNOME
 Requires: gtk2-theme-mist
-PreReq: gnome-panel
+#PreReq: gnome-panel
 Provides: gnome-theme-%brand-%theme = %version-%release
 Provides: metacity-theme-%brand-%theme = %version-%release
 Provides: metacity-theme
@@ -455,6 +455,9 @@ fi
 %_datadir/kde4/apps/kio_desktop/DesktopLinks/indexhtml.desktop
 
 %changelog
+* Mon Apr 08 2013 Sergey V Turchin <zerg at altlinux dot org> 7.0.0-alt8
+- fix requires
+
 * Thu Apr 04 2013 Sergey V Turchin <zerg at altlinux dot org> 7.0.0-alt7
 - set GTK3 defaults
 
