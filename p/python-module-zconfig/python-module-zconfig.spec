@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%modulename
-Version: 2.9.2
-Release: alt1.1
+Version: 3.0.4
+Release: alt1.git20130313
 
 Summary: Python configuration module from Zope
 License: ZPL
@@ -156,6 +156,9 @@ popd
 %endif
 
 %changelog
+* Mon Apr 08 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0.4-alt1.git20130313
+- Version 3.0.4
+
 * Fri Mar 22 2013 Aleksey Avdeev <solo@altlinux.ru> 2.9.2-alt1.1
 - Rebuild with Python-3.3
 
