@@ -1,6 +1,6 @@
 Name: vlc
-Version: 2.0.5
-Release: alt2
+Version: 2.0.6
+Release: alt1
 
 Summary: VLC media player
 License: GPLv2
@@ -1285,6 +1285,9 @@ chmod 755 %buildroot%_libexecdir/rpm/vlc.filetrigger
 %files maxi
 
 %changelog
+* Mon Apr 08 2013 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.0.6-alt1
+- 2.0.6 released
+
 * Mon Mar 11 2013 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.0.5-alt2
 - fixed build with smbclient from samba4
 - built omxil plugin
