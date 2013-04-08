@@ -1,13 +1,14 @@
 Name: powertop
-Version: 2.0
-Release: alt2
+Version: 2.3
+Release: alt1
 
 Summary: Tool that helps you find what software is using the most power
 License: GPLv2 only
 Group: System/Kernel and hardware
 
 Url: https://01.org/powertop/
-Source: https://01.org/powertop/sites/default/files/downloads/%name-%version.tar.bz2
+Source0: https://01.org/powertop/sites/default/files/downloads/%name-%version.tar.gz
+Source100: %name.watch
 
 # Automatically added by buildreq on Tue May 15 2012
 # optimized out: libncurses-devel libstdc++-devel libtinfo-devel pkg-config xz
@@ -39,10 +40,20 @@ install -d %buildroot%_cachedir/%name
 
 %files -f %name.lang
 %_sbindir/*
+%_man8dir/*
 %doc README
 %dir %_cachedir/%name
 
 %changelog
+* Mon Apr 08 2013 Michael Shigorin <mike@altlinux.org> 2.3-alt1
+- new version (watch file uupdate)
+
+* Mon Apr 08 2013 Michael Shigorin <mike@altlinux.org> 2.1-alt2
+- added watch file (thanks debian with its #695891)
+
+* Mon Sep 03 2012 Michael Shigorin <mike@altlinux.org> 2.1-alt1
+- 2.1
+
 * Wed May 16 2012 Michael Shigorin <mike@altlinux.org> 2.0-alt2
 - re-added %_cachedir/%name created by hand
 - NB: Url: has changed
