@@ -1,6 +1,6 @@
 Name: findutils
 Version: 4.5.11
-Release: alt1
+Release: alt2
 
 Summary: The GNU versions of find utilities (find and xargs)
 License: GPLv3+
@@ -12,7 +12,7 @@ Source: %name-%version-%release.tar
 
 %def_enable selinux
 
-BuildRequires: gnulib >= 0.0.7696.fd9f1ac-alt1
+BuildRequires: gnulib >= 0.0.7901.076ac82
 BuildRequires: glibc-devel-static
 %{?_enable_selinux:BuildRequires: libselinux-devel}
 %{?!_without_check:%{?!_disable_check:BuildRequires: dejagnu}}
@@ -51,16 +51,13 @@ bzip2 -9k NEWS
 %build
 ./import-gnulib.sh -d %_datadir/gnulib
 
-# The regex.h must be kept in sync with --without-included-regex.
-install -pm644 %_includedir/regex.h gl/lib/
-
 %define _configure_script ../configure
 mkdir dynamic static
 
 pushd dynamic
 mkdir locate
 echo '@set LOCATE_DB /var/lib/locate/locatedb' >locate/dblocation.texi
-%configure --bindir=/bin --without-included-regex %{subst_enable selinux}
+%configure --bindir=/bin %{subst_enable selinux}
 make -C po update-po
 %make_build MAKEINFOFLAGS=--no-split
 popd
@@ -70,7 +67,7 @@ export	ac_cv_search_setfilecon=no \
 	ac_cv_header_selinux_context_h=no \
 	ac_cv_header_selinux_flask_h=no \
 	ac_cv_header_selinux_selinux_h=no
-%configure --disable-nls --without-included-regex --disable-selinux
+%configure --disable-nls --disable-selinux
 # Do not build xargs and doc.
 sed -i -e 's/ xargs / /' -e 's/ doc / /' Makefile*
 %make_build
@@ -109,6 +106,10 @@ install -pm755 static/find/find %buildroot%_bindir/find.static
 %_bindir/find.static
 
 %changelog
+* Mon Apr 08 2013 Dmitry V. Levin <ldv@altlinux.org> 4.5.11-alt2
+- Updated to v4.5.11-19-g16e147b.
+- Built with gnulib v0.0-7901-g076ac82.
+
 * Sat Feb 02 2013 Dmitry V. Levin <ldv@altlinux.org> 4.5.11-alt1
 - Updated to v4.5.11.
 
