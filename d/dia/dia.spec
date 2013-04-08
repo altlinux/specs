@@ -1,6 +1,6 @@
 Name: dia
 Version: 0.97.2
-Release: alt1.1
+Release: alt2
 
 Summary: A gtk+ based diagram creation program
 Summary(ru_RU.UTF-8): Программа для создания диаграмм, основанная на GTK+
@@ -66,6 +66,7 @@ intltoolize --force
 
 %install
 %makeinstall_std
+rm -rf %buildroot%_libdir/dia/*.la
 
 %find_lang %name
 desktop-file-install --dir %buildroot%_desktopdir \
@@ -76,16 +77,22 @@ desktop-file-install --dir %buildroot%_desktopdir \
 
 %files -f %name.lang
 %doc README TODO NEWS AUTHORS
+%_docdir/dia/
+%docdir %_docdir/dia/
 %_bindir/%name
 %dir %_libdir/%name
 %_libdir/%name/*.so
-%_datadir/%name
+%_datadir/%name/
 %_datadir/mime-info/*
 %_desktopdir/*.desktop
 %_iconsdir/hicolor/*/apps/%name.*
 %_man1dir/*
 
 %changelog
+* Mon Apr 08 2013 Vitaly Lipatov <lav@altlinux.ru> 0.97.2-alt2
+- fix Bug 694025 - GLib drop support for adding interfaces after class_init (ALT bug #28807)
+- cleanup build
+
 * Fri Sep 28 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.97.2-alt1.1
 - Rebuilt with libpng15
 
