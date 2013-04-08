@@ -6,11 +6,12 @@ BuildRequires: /usr/bin/docbook2man /usr/bin/glib-genmarshal /usr/bin/glib-gette
 %define _libexecdir %_prefix/libexec
 Name:          mate-power-manager
 Version:       1.6.0
-Release:       alt1
+Release:       alt2
 Summary:       MATE power management service
 License:       GPLv2+
 URL:           http://pub.mate-desktop.org
 Source0:       http://pub.mate-desktop.org/releases/1.6/%{name}-%{version}.tar.xz
+Patch0:	mpm-alt-logind-support.patch
 
 BuildRequires: libcairo-devel
 BuildRequires: libdbus-glib-devel
@@ -40,6 +41,7 @@ displaying icons and handling user callbacks in an interactive MATE session.
 
 %prep
 %setup -q
+%patch -p2
 NOCONFIGURE=1 ./autogen.sh
 
 
@@ -84,6 +86,10 @@ desktop-file-install                               \
 %{_libexecdir}/mate-inhibit-applet
 
 %changelog
+* Mon Apr 08 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1.6.0-alt2
+- added suspend/hybernate via logind
+- enabled systemdinhibit
+
 * Thu Apr 04 2013 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.6.0-alt1
 - new version
 - drop upstreamed patches
