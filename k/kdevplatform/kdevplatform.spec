@@ -2,7 +2,7 @@
 %def_disable apidox
 %define unstable 0
 %define post_version 1
-#define _unpackaged_files_terminate_build 1
+%define _unpackaged_files_terminate_build 1
 
 %if %unstable
 %define pkg_sfx -pre4.4
@@ -23,7 +23,7 @@
 
 Name: %kdevplatform
 Version: 1.4.1
-Release: alt2
+Release: alt3.git
 Serial: 1
 
 Group: Development/Tools
@@ -208,6 +208,8 @@ make apidox
 
 %install
 %K4install
+# remove all desktop_extragear-* translations, zerg@ told they aren't needed at all
+find %buildroot -name 'desktop_extragear*.mo' -exec rm {} \; 
 %K4find_lang --output=%name.lang --with-kde          kdevappwizard
 
 for m in \
@@ -325,6 +327,10 @@ done
 %_K4link/lib*.so
 
 %changelog
+* Mon Apr 08 2013 Alexey Morozov <morozov@altlinux.org> 1:1.4.1-alt3.git
+- new git post-1.4.1 snapshot (09b05ae3b18c33dcee09a4b5a21f76f1a365a4a1)
+- Russian translations are synchronized with upstream and slightly updated
+
 * Thu Apr 04 2013 Sergey V Turchin <zerg@altlinux.org> 1:1.4.1-alt2
 - fix to build
 
