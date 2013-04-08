@@ -1,7 +1,7 @@
 %define oname z3c.xmlhttp
 Name: python-module-%oname
-Version: 0.5.0
-Release: alt2.1
+Version: 0.5.1
+Release: alt1
 Summary: XMLHttpRequest (XHR) javascript
 License: ZPLv2.1
 Group: Development/Python
@@ -40,6 +40,9 @@ mv %buildroot%python_sitelibdir_noarch/* \
 %exclude %python_sitelibdir/*.pth
 
 %changelog
+* Mon Apr 08 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.1-alt1
+- Version 0.5.1
+
 * Thu Oct 20 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 0.5.0-alt2.1
 - Rebuild with Python-2.7
 
