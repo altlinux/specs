@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 4.0.4
-Release: alt2.1
+Version: 4.3.3
+Release: alt1
 Summary: Zope testrunner script
 License: ZPL
 Group: Development/Python
@@ -72,7 +72,7 @@ mv %buildroot%python_sitelibdir_noarch/* \
 %endif
 
 %files
-%doc *.txt
+%doc *.rst
 %_bindir/*
 %exclude %_bindir/zope-testrunner3
 %python_sitelibdir/*
@@ -80,12 +80,15 @@ mv %buildroot%python_sitelibdir_noarch/* \
 
 %if_with python3
 %files -n python3-module-%oname
-%doc *.txt
+%doc *.rst
 %_bindir/zope-testrunner3
 %python3_sitelibdir/*
 %endif
 
 %changelog
+* Mon Apr 08 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.3.3-alt1
+- Version 4.3.3
+
 * Fri Mar 22 2013 Aleksey Avdeev <solo@altlinux.ru> 4.0.4-alt2.1
 - Rebuild with Python-3.3
 
