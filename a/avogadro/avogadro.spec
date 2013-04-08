@@ -1,10 +1,12 @@
 
 %define sover 1
+%define sover_oq 0
 %define libname libavogadro%sover
+%define libname_openqube libavogadro-openqube%sover_oq
 
 Name: avogadro
-Version: 1.0.3
-Release: alt5
+Version: 1.1.0
+Release: alt1
 
 Group: Sciences/Chemistry
 Summary: An advanced molecular editor for chemical purposes
@@ -19,14 +21,14 @@ Source: %name-%version.tar
 Patch1: avogadro-1.0.3-mkspecs-dir.patch
 Patch2: avogadro-1.0.3-no-strip.patch
 # ALT
-Patch100: avogadro-1.0.3-alt-config.patch
+Patch100: avogadro-1.1.0-alt-config.patch
 Patch101: avogadro-1.0.3-alt-desktopfile.patch
 
 %setup_python_module Avogadro
 
 # Automatically added by buildreq on Tue Feb 08 2011 (-bi)
 #BuildRequires: boost-devel-headers boost-python-devel cmake docbook-utils eigen2 gcc-c++ libXScrnSaver-devel libXau-devel libXcomposite-devel libXdmcp-devel libXpm-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libglew-devel libnumpy-devel libopenbabel-devel libqt3-devel libxkbfile-devel openbabel python-module-numpy-testing python-module-sip-devel python-modules-ctypes qt4-designer rpm-build-ruby zlib-devel-static
-BuildRequires: boost-devel-headers boost-python-devel cmake docbook-utils eigen2 gcc-c++
+BuildRequires: boost-devel-headers boost-python-devel cmake docbook-utils docbook-utils-print eigen2 gcc-c++
 BuildRequires: libglew-devel libnumpy-devel libopenbabel-devel libqt4-devel
 BuildRequires: openbabel libopenbabel-devel python-module-numpy-testing python-module-sip-devel python-modules-ctypes zlib-devel
 BuildRequires: kde-common-devel
@@ -39,10 +41,16 @@ rendering and a powerful plugin architecture.
 
 
 %package -n %libname
-Summary: Shared libraries for Avogadro
+Summary: Shared library for Avogadro
 Group: System/Libraries
 %description -n %libname
-Libraries for Avogadro molecular editor.
+Library for Avogadro molecular editor.
+
+%package -n %libname_openqube
+Summary: Shared library for Avogadro
+Group: System/Libraries
+%description -n %libname_openqube
+Library for Avogadro molecular editor.
 
 %package devel
 Summary: Development files for Avogadro
@@ -61,13 +69,14 @@ Development Avogadro files.
 
 rm -f cmake/modules/FindPythonLibs.cmake
 sed -i 's|\${PYTHON_LIB_PATH}|%python_sitelibdir|g' libavogadro/src/python/CMakeLists.txt
-find -type f -name \*.h | \
-while read header_file
-do
-    sed -i 's|^\(#include <boost/python\.hpp>\)|#ifndef Q_MOC_RUN\n\1\n#endif|g' $header_file
-done
+#find -type f -name \*.h | \
+#while read header_file
+#do
+#    sed -i 's|^\(#include <boost/python\.hpp>\)|#ifndef Q_MOC_RUN\n\1\n#endif|g' $header_file
+#done
 
 %build
+%add_optflags -DPIC -fPIC
 %Kcmake \
     -DENABLE_RPATH:BOOL=OFF \
     -DENABLE_GLSL:BOOL=ON \
@@ -82,7 +91,7 @@ done
 %_bindir/%name
 %_bindir/avopkg
 %dir %_libdir/%name
-%dir %_libdir/%name/1_0
+%dir %_libdir/%name/1_1
 %_libdir/%name/*/colors
 %_libdir/%name/*/extensions
 %_libdir/%name/*/engines
@@ -96,10 +105,15 @@ done
 %python_sitelibdir/Avogadro.so
 
 %files -n %libname
-%_libdir/libavogadro.so.%{sover}*
+%_libdir/libavogadro.so.%{sover}
+%_libdir/libavogadro.so.%{sover}.*
+%files -n %libname_openqube
+%_libdir/libavogadro_OpenQube.so.%{sover_oq}
+%_libdir/libavogadro_OpenQube.so.%{sover_oq}.*
 
 %files devel
 %_includedir/%name
+%_pkgconfigdir/avogadro.pc
 %_libdir/lib*.so
 %_libdir/%name/*.cmake
 %_libdir/%name/*/*.cmake
@@ -107,6 +121,9 @@ done
 %_datadir/qt4/mkspecs/features/%name.prf
 
 %changelog
+* Mon Apr 08 2013 Sergey V Turchin <zerg@altlinux.org> 1.1.0-alt1
+- new version
+
 * Wed Nov 28 2012 Sergey V Turchin <zerg@altlinux.org> 1.0.3-alt5
 - rebuilt with new boost
 
