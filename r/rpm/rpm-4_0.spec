@@ -3,7 +3,7 @@
 
 Name: rpm
 Version: 4.0.4
-Release: alt100.71
+Release: alt100.72
 
 %define ifdef() %if %{expand:%%{?%{1}:1}%%{!?%{1}:0}}
 %define get_dep() %(rpm -q --qf '%%{NAME} >= %%|SERIAL?{%%{SERIAL}:}|%%{VERSION}-%%{RELEASE}' %1 2>/dev/null || echo '%1 >= unknown')
@@ -204,13 +204,11 @@ the Python programming language to use the interface supplied by RPM
 %endif #with python
 
 %prep
-%setup -q -n rpm-%rpm_version-%release
+%setup -n rpm-%rpm_version-%release
 
 %build
-touch config.rpath
 gettextize --force --quiet --no-changelog --symlink
 install -pv -m644 /usr/share/automake/mkinstalldirs .
-install -pv -m644 /usr/share/gettext/intl/Makevars* po/Makevars
 autoreconf -fisv -I m4
 # avoid extra build dependencies
 export ac_cv_path___CPIO=/bin/cpio
@@ -532,6 +530,9 @@ fi
 %_bindir/rpm2cpio.static
 
 %changelog
+* Mon Apr 08 2013 Dmitry V. Levin <ldv@altlinux.org> 4.0.4-alt100.72
+- Fixed build with new gettext.
+
 * Wed Apr 03 2013 Dmitry V. Levin <ldv@altlinux.org> 4.0.4-alt100.71
 - rpmbuild: enhanced interdep to ignore packages that are not going
   to be written.
