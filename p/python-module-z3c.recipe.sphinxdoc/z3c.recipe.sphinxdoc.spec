@@ -1,7 +1,7 @@
 %define oname z3c.recipe.sphinxdoc
 Name: python-module-%oname
-Version: 0.0.8
-Release: alt4.1
+Version: 1.0.0
+Release: alt1
 Summary: Use Sphinx to build documentation for zope.org
 License: ZPL
 Group: Development/Python
@@ -13,8 +13,10 @@ Source: %name-%version.tar
 BuildPreReq: python-devel python-module-distribute
 BuildPreReq: python-module-zc.buildout
 
-%py_requires z3c z3c.recipe zc.buildout zc.recipe.egg docutils
+%py_requires z3c zc.buildout zc.recipe.egg docutils
 %py_requires sphinx
+
+Requires: python-module-z3c.recipe = %EVR
 
 %description
 This buildout recipe aids in the generation of documentation for the
@@ -60,6 +62,9 @@ touch %buildroot%python_sitelibdir/z3c/recipe/__init__.py
 %python_sitelibdir/z3c/recipe/__init__.py*
 
 %changelog
+* Mon Apr 08 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.0-alt1
+- Version 1.0.0
+
 * Mon Oct 24 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 0.0.8-alt4.1
 - Rebuild with Python-2.7
 
