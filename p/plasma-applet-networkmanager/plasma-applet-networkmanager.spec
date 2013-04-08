@@ -1,7 +1,7 @@
 %define _kde_alternate_placement 1
 
 Name: plasma-applet-networkmanager
-Version: 0.9.0.7
+Version: 0.9.0.8
 Release: alt1
 Serial: 1
 
@@ -104,6 +104,9 @@ fi
 
 
 %changelog
+* Mon Apr 08 2013 Sergey V Turchin <zerg@altlinux.org> 1:0.9.0.8-alt1
+- new version
+
 * Mon Feb 25 2013 Sergey V Turchin <zerg@altlinux.org> 1:0.9.0.7-alt1
 - new version
 
