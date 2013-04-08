@@ -21,7 +21,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.4.39
-Release: alt3
+Release: alt4
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -389,12 +389,13 @@ Patch0484: linux-%kernel_branch.32-fix-drivers-tty-serial--pch_uart.patch
 Patch0485: linux-%kernel_branch.20-fix-drivers-tty-serial-8250--8250.patch
 
 Patch0490: linux-%kernel_branch.34-fix-drivers-usb.patch
-Patch0491: linux-%kernel_branch.39-fix-drivers-usb-dwc3--dwc3.patch
-Patch0492: linux-%kernel_branch.25-fix-drivers-usb-gadget--g_audio.patch
-Patch0493: linux-%kernel_branch.39-fix-drivers-usb-host--isp116x-hcd.patch
-Patch0494: linux-%kernel_branch.39-fix-drivers-usb-host--uhci-hcd.patch
-Patch0495: linux-%kernel_branch.39-fix-drivers-usb-musb--musb_hdrc.patch
-Patch0496: linux-%kernel_branch.37-fix-drivers-usb-serial--io_ti.patch
+Patch0491: linux-%kernel_branch.39-fix-drivers-usb-core.patch
+Patch0492: linux-%kernel_branch.39-fix-drivers-usb-dwc3--dwc3.patch
+Patch0493: linux-%kernel_branch.25-fix-drivers-usb-gadget--g_audio.patch
+Patch0494: linux-%kernel_branch.39-fix-drivers-usb-host--isp116x-hcd.patch
+Patch0495: linux-%kernel_branch.39-fix-drivers-usb-host--uhci-hcd.patch
+Patch0496: linux-%kernel_branch.39-fix-drivers-usb-musb--musb_hdrc.patch
+Patch0497: linux-%kernel_branch.37-fix-drivers-usb-serial--io_ti.patch
 
 Patch0501: linux-%kernel_branch.20-fix-drivers-video-aty--radeonfb.patch
 Patch0502: linux-%kernel_branch.20-fix-drivers-video-console--vgacon.patch
@@ -1530,6 +1531,7 @@ cd linux-%version
 %patch0494 -p1
 %patch0495 -p1
 %patch0496 -p1
+%patch0497 -p1
 
 # fix-drivers-video-*
 %patch0501 -p1
@@ -2617,6 +2619,13 @@ done)
 
 
 %changelog
+* Sun Apr 07 2013 Led <led@altlinux.ru> 3.4.39-alt4
+- updated:
+  + fix-drivers-regulator
+  + fix-mm
+- added:
+  + fix-drivers-usb-core
+
 * Sun Apr 07 2013 Led <led@altlinux.ru> 3.4.39-alt3
 - updated:
   + fix-arch-x86--mcheck
