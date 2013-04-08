@@ -2,8 +2,8 @@
 %define _localstatedir %_var
 
 Name: connman
-Version: 1.11
-Release: alt2.1
+Version: 1.12
+Release: alt1
 
 Summary: ConnMan is a daemon for managing internet connections.
 License: %gpl2only
@@ -13,6 +13,7 @@ Url: http://connman.net/
 Source: %name.tar
 Source1: connmand.init
 Patch0: add-options-file.patch
+Patch10: connman-1.12-fix-in6_addr.patch
 
 BuildRequires: rpm-build-licenses gcc-c++ glib2-devel iptables-devel libdbus-devel wpa_supplicant
 BuildRequires: gtk-doc libgnutls-devel libreadline-devel
@@ -53,6 +54,7 @@ This package contains include files required for development %name-based softwar
 %prep
 %setup -n %name
 %patch0 -p2
+%patch10 -p2
 
 %build
 %autoreconf
@@ -107,6 +109,9 @@ install -m0600 -D src/connmand.conf %buildroot%_sysconfdir/sysconfig/connman
 
 
 %changelog
+* Mon Apr 08 2013 Aleksey Avdeev <solo@altlinux.ru> 1.12-alt1
+- New version 1.1
+
 * Wed Mar 06 2013 Dmitry V. Levin <ldv@altlinux.org> 1.11-alt2.1
 - Rebuilt with libxtables.so.10.
 
