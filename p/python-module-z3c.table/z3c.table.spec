@@ -1,7 +1,7 @@
 %define oname z3c.table
 Name: python-module-%oname
-Version: 0.9.1
-Release: alt1
+Version: 2.0.0
+Release: alt1.a1
 Summary: Modular table rendering implementation for Zope3
 License: ZPLv2.1
 Group: Development/Python
@@ -58,6 +58,9 @@ mv %buildroot%python_sitelibdir_noarch/* \
 %python_sitelibdir/*/*/test*
 
 %changelog
+* Mon Apr 08 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.0-alt1.a1
+- Version 2.0.0a1
+
 * Wed Dec 28 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.1-alt1
 - Version 0.9.1
 
