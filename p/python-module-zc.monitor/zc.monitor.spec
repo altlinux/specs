@@ -1,6 +1,6 @@
 %define oname zc.monitor
 Name: python-module-%oname
-Version: 0.3.0
+Version: 0.3.1
 Release: alt1
 Summary: A network-accessible command-line monitoring interface
 License: ZPLv2.1
@@ -62,6 +62,9 @@ mv %buildroot%python_sitelibdir_noarch/* \
 %python_sitelibdir/*/*/tests.*
 
 %changelog
+* Mon Apr 08 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.1-alt1
+- Version 0.3.1
+
 * Wed Dec 28 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.0-alt1
 - Version 0.3.0
 
