@@ -1,5 +1,5 @@
 Name: coreutils
-Version: 8.20
+Version: 8.21
 Release: alt1
 %define srcname %name-%version-%release
 
@@ -31,7 +31,7 @@ Source28: true.1
 Source29: false.1
 
 # git://git.altlinux.org/people/ldv/packages/coreutils coreutils-current..coreutils-alt
-Patch: %name-%version-%release.patch
+Patch: %srcname.patch
 
 %def_enable selinux
 
@@ -50,7 +50,7 @@ Conflicts: rpm-utils < 0:0.7.6-alt1
 # due to hostname
 Conflicts: net-tools < 0:1.60-alt9
 
-BuildRequires: gnulib >= 0.0.7677.4027785
+BuildRequires: gnulib >= 0.0.7901.076ac82
 
 # for ACL support in ls/dir/vdir, cp, mv and install utilities
 BuildRequires: libacl-devel
@@ -116,7 +116,6 @@ sed -i 's/gl_printf_safe=yes/gl_printf_safe=/' m4/gnulib-comp.m4 configure
 
 %configure \
 	--exec-prefix=/ \
-	--without-included-regex \
 	%{subst_enable selinux} \
 	--enable-install-program=arch,hostname \
 	--enable-no-install-program=su,uptime \
@@ -206,6 +205,11 @@ install -pm644 %_sourcedir/{runas,usleep}.1 %buildroot%_man1dir/
 %doc AUTHORS NEWS.bz2 README THANKS.bz2 TODO
 
 %changelog
+* Mon Apr 08 2013 Dmitry V. Levin <ldv@altlinux.org> 8.21-alt1
+- Updated to v8.21-32-gec02161.
+- Updated translations from translationproject.org.
+- Built with gnulib v0.0-7901-g076ac82.
+
 * Mon Oct 29 2012 Dmitry V. Levin <ldv@altlinux.org> 8.20-alt1
 - Updated coreutils to v8.20-9-g1cace4a.
 - Updated translations from translationproject.org.
