@@ -1,6 +1,6 @@
 Name: mc
 Version: 4.8.8
-Release: alt1
+Release: alt2
 
 License: %gpl3plus
 Summary: An user-friendly file manager and visual shell
@@ -178,6 +178,10 @@ install -pD -m644 %SOURCE5 %buildroot%_niconsdir/%name.png
 %files full
 
 %changelog
+* Mon Apr 08 2013 Sergey Y. Afonin <asy@altlinux.ru> 4.8.8-alt2
+- merged with git://github.com/MidnightCommander/mc.git
+  (ticket #2991 closed)
+
 * Sun Apr 07 2013 Sergey Y. Afonin <asy@altlinux.ru> 4.8.8-alt1
 - 4.8.8
 
