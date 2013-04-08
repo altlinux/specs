@@ -1,13 +1,13 @@
 Name: youtube-dl
-Version: 2011.08.04
-Release: alt1.1
+Version: 2013.04.03
+Release: alt2
 
 Summary: Download videos from YouTube
 License: Public domain
 Group: Networking/File transfer
 Url: http://bitbucket.org/rg3/youtube-dl/wiki/Home
 
-Source0: youtube-dl
+Source0: youtube_dl-%version.tar
 
 Packager: Igor Zubkov <icesik@altlinux.org>
 
@@ -17,16 +17,25 @@ BuildArch: noarch
 Youtube-dl is a small command-line program to download videos
 from YouTube.com.
 
+%prep
+%setup -n youtube_dl-%version
+
 %install
 mkdir -p %buildroot%_bindir/
-install -pm 755 %SOURCE0 %buildroot%_bindir/youtube-dl
+install -pm 755 __main__.py %buildroot%_bindir/youtube-dl
+mkdir -p %buildroot%python_sitelibdir
+cp -r youtube_dl %buildroot%python_sitelibdir/
 
 %files
 %_bindir/youtube-dl
+%python_sitelibdir/youtube_dl
 
 %changelog
-* Sat Oct 22 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 2011.08.04-alt1.1
-- Rebuild with Python-2.7
+* Mon Apr 08 2013 Mykola Grechukh <gns@altlinux.ru> 2013.04.03-alt2
+- build from source tree
+
+* Mon Apr 08 2013 Mykola Grechukh <gns@altlinux.ru> 2013.04.03-alt1
+- 2011.08.04 -> 2013.04.03
 
 * Fri Aug 05 2011 Mykola Grechukh <gns@altlinux.ru> 2011.08.04-alt1
 - 2010.12.09 -> 2011.08.04
