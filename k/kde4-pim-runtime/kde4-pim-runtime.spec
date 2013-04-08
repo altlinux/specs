@@ -4,10 +4,10 @@
 %define rname kdepim-runtime
 %define major 4
 %define minor 10
-%define bugfix 1
+%define bugfix 2
 Name: kde4-pim-runtime
 Version: %major.%minor.%bugfix
-Release: alt2
+Release: alt1
 
 Group: Graphical desktop/KDE
 Summary: KDE Akonadi resources
@@ -32,7 +32,7 @@ Patch102: kdepim-4.9.1-alt-akonadi-sqlite3.patch
 Patch104: kdepim-4.8.0-alt-def-mixedmaildir-path.patch
 Patch105: kdepim-4.7.3-alt-migrate-pop3-passwords.patch
 Patch106: kdepim-4.7.3-alt-ignore-empty-accounts.patch
-Patch107: kdepim-4.9.1-alt-maildir-checks.patch
+Patch107: kdepim-4.10.2-alt-maildir-checks.patch
 Patch108: kdepim-4.7.4-alt-mixedmaildir-show-error.patch
 Patch109: kdepim-4.10.0-alt-def-nepomuk.patch
 
@@ -133,7 +133,7 @@ based on kdepim.
 %patch104 -p2
 %patch105 -p2
 %patch106 -p2
-%patch107 -p2
+%patch107 -p1
 %patch108 -p2
 %patch109 -p1
 
@@ -222,6 +222,9 @@ based on kdepim.
 
 
 %changelog
+* Mon Apr 08 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.2-alt1
+- new version
+
 * Thu Mar 21 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.1-alt2
 - update from 4.10 branch
 
