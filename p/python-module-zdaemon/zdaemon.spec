@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 2.0.4
-Release: alt2.1
+Version: 4.0.0
+Release: alt1.a1
 Summary: Daemon process control library and tools for Unix-based systems
 License: ZPL
 Group: Development/Python
@@ -121,6 +121,9 @@ mv %buildroot%_bindir/zdaemon %buildroot%_bindir/zdaemon3
 %endif
 
 %changelog
+* Mon Apr 08 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.0-alt1.a1
+- Version 4.0.0a1
+
 * Fri Mar 22 2013 Aleksey Avdeev <solo@altlinux.ru> 2.0.4-alt2.1
 - Rebuild with Python-3.3
 
