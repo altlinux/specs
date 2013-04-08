@@ -1,7 +1,7 @@
 %define oname zc.recipe.egg
 Name: python-module-%oname
-Version: 1.3.2
-Release: alt2.1
+Version: 2.0.0
+Release: alt1
 Summary: Recipe for installing Python package distributions as eggs
 License: ZPLv2.1
 Group: Development/Python
@@ -57,6 +57,9 @@ mv %buildroot%python_sitelibdir_noarch/* \
 %python_sitelibdir/*/*/*/tests.*
 
 %changelog
+* Mon Apr 08 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.0-alt1
+- Version 2.0.0
+
 * Thu Oct 20 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 1.3.2-alt2.1
 - Rebuild with Python-2.7
 
