@@ -1,6 +1,6 @@
 Name: libpopt
 Version: 1.14
-Release: alt7
+Release: alt8
 Epoch: 1
 
 %def_with apidocs
@@ -84,9 +84,7 @@ This package contains developement documentation for libpopt.
 
 %build
 %add_optflags -DHAVE_MCHECK_H
-touch config.rpath
 gettextize --force --quiet
-install -pv -m644 /usr/share/gettext/intl/Makevars* po/Makevars
 autoreconf -fisv -I m4
 %configure --disable-rpath %{subst_with apidocs}
 
@@ -97,7 +95,7 @@ autoreconf -fisv -I m4
 
 %install
 mkdir -p %buildroot/%_lib
-%make_install install DESTDIR="%buildroot" usrlibdir=%_libdir
+%makeinstall_std usrlibdir=%_libdir
 
 # Relocate shared libraries from %_libdir/ to /%_lib/.
 for f in %buildroot%_libdir/*.so; do
@@ -136,6 +134,9 @@ bzip2 -9 %buildroot%docdir/*.ps
 %docdir/*.ps.bz2
 
 %changelog
+* Mon Apr 08 2013 Dmitry V. Levin <ldv@altlinux.org> 1:1.14-alt8
+- Fixed build with new gettext.
+
 * Mon Mar 25 2013 Dmitry V. Levin <ldv@altlinux.org> 1:1.14-alt7
 - Added secure_getenv support.
 
