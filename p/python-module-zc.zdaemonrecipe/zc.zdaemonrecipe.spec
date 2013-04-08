@@ -1,7 +1,7 @@
 %define oname zc.zdaemonrecipe
 Name: python-module-%oname
-Version: 0.2
-Release: alt2.1
+Version: 0.3.1
+Release: alt1
 Summary: ZC Buildout recipe for zdaemon scripts
 License: ZPLv2.1
 Group: Development/Python
@@ -46,7 +46,7 @@ mv %buildroot%python_sitelibdir_noarch/* \
 %endif
 
 %files
-%doc *.txt
+%doc *.txt *.rst
 %python_sitelibdir/*
 %exclude %python_sitelibdir/*.pth
 %exclude %python_sitelibdir/*/*/tests.*
@@ -55,6 +55,9 @@ mv %buildroot%python_sitelibdir_noarch/* \
 %python_sitelibdir/*/*/tests.*
 
 %changelog
+* Mon Apr 08 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.1-alt1
+- Version 0.3.1
+
 * Thu Oct 20 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 0.2-alt2.1
 - Rebuild with Python-2.7
 
