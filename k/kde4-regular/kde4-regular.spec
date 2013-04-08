@@ -1,6 +1,6 @@
 Name:    kde4-regular
 Version: 4.10
-Release: alt8
+Release: alt9
 
 Group: Graphical desktop/KDE
 Summary: KDE4 common collection
@@ -14,7 +14,9 @@ Requires: gtk2-theme-oxygen-gtk
 Requires: gtk3-theme-oxygen-gtk
 
 Requires: fonts-ttf-dejavu
-Requires: fonts-ttf-droid
+Requires: fonts-ttf-google-droid-sans
+Requires: fonts-ttf-google-droid-sans-mono
+Requires: fonts-ttf-google-droid-serif
 
 Requires: soprano-backend-redland
 Requires: soprano-backend-virtuoso
@@ -64,6 +66,7 @@ Requires: kde4-digikam kde4-digikam-image-plugins kde4-digikam-utils kde4-digika
 Requires: kde4-kipi-plugins
 Requires: kdenlive
 Requires: skanlite
+Requires: kde4plasma-addon-yawp
 
 
 Requires: calligra
@@ -83,6 +86,10 @@ K Desktop Environment 4 сборный пакет,
 %files
 
 %changelog
+* Mon Apr 08 2013 Sergey V Turchin <zerg@altlinux.org> 4.10-alt9
+- add kde4plasma-addon-yawp
+- use fonts-ttf-google-droid instead of fonts-ttf-droid
+
 * Fri Mar 22 2013 Sergey V Turchin <zerg@altlinux.org> 4.10-alt8
 - add kio-mtp and kio-upnp-ms
 
