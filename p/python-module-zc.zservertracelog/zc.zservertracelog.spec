@@ -1,7 +1,7 @@
 %define oname zc.zservertracelog
 Name: python-module-%oname
-Version: 1.3.0
-Release: alt2.1
+Version: 1.3.2
+Release: alt1
 Summary: Zope 3 tracelog implementation for zserver
 License: ZPLv2.1
 Group: Development/Python
@@ -13,6 +13,7 @@ Source: %name-%version.tar
 BuildPreReq: python-devel python-module-distribute
 
 %py_requires zope.app.appsetup zope.app.server zope.app.wsgi zope.server
+%py_requires zc
 
 %description
 This package implements a Zope2-style (extended) tracelog. A tracelog is
@@ -61,6 +62,9 @@ mv %buildroot%python_sitelibdir_noarch/* \
 %python_sitelibdir/*/*/tests.*
 
 %changelog
+* Mon Apr 08 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.2-alt1
+- Version 1.3.2
+
 * Thu Oct 20 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 1.3.0-alt2.1
 - Rebuild with Python-2.7
 
