@@ -1,7 +1,7 @@
 %define ver_major 0.2
 
 Name: grilo
-Version: %ver_major.4
+Version: %ver_major.5
 Release: alt1
 Summary: Content discovery framework
 Group: Sound
@@ -9,7 +9,7 @@ License: LGPLv2+
 Url: http://live.gnome.org/Grilo
 
 Source: %name-%version.tar
-# Patch1: %name-%version-%release.patch
+Patch1: %name-%version-%release.patch
 
 BuildRequires: gnome-common
 BuildRequires: glib2-devel >= 2.29.10 libgio-devel
@@ -83,7 +83,7 @@ Tools for the %name library
 
 %prep
 %setup
-# %patch1 -p1
+%patch1 -p1
 
 # Fix vala detection for version 0.16
 # sed -i.vala 's/libvala-0.14/libvala-0.16/g' configure*
@@ -134,6 +134,9 @@ rm -f %buildroot%_bindir/grilo-simple-playlist
 %_gtk_docdir/*
 
 %changelog
+* Mon Apr 08 2013 Alexey Shabalin <shaba@altlinux.ru> 0.2.5-alt1
+- 0.2.5
+
 * Tue Dec 04 2012 Alexey Shabalin <shaba@altlinux.ru> 0.2.4-alt1
 - 0.2.4
 
