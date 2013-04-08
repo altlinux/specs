@@ -1,6 +1,6 @@
 Name: gambit-signal
 Version: 1.0
-Release: alt7
+Release: alt8
 Summary: UNIX signal handling library for Gambit-C Scheme programming system
 License: GPL
 Group: Development/Scheme
@@ -44,6 +44,9 @@ install -Dp -m0644 libgambc-signal.c %buildroot%{_includedir}/gambit/libgambc-si
 %{_includedir}/gambit/libgambc-signal.c
 
 %changelog
+* Mon Apr 08 2013 Paul Wolneykien <manowar@altlinux.ru> 1.0-alt8
+- Rebuild with a new version of Gambit.
+
 * Fri Jan 04 2013 Paul Wolneykien <manowar@altlinux.ru> 1.0-alt7
 - Rebuild with Gambit v4.6.6.
 
