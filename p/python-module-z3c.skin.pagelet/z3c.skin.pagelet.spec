@@ -1,7 +1,7 @@
 %define oname z3c.skin.pagelet
 Name: python-module-%oname
 Version: 1.0.2
-Release: alt2.1
+Release: alt3
 Summary: A base skin for pagelet-based UIs
 License: ZPLv2.1
 Group: Development/Python
@@ -21,6 +21,8 @@ BuildPreReq: python-devel python-module-distribute
 %py_requires z3c.pagelet z3c.template z3c.viewlet z3c.zrtresource
 %py_requires z3c.menu.simple
 
+Requires: python-module-z3c.skin = %EVR
+
 %description
 This package provides a base skin for people wanting to develop
 pagelet-based applications.
@@ -36,6 +38,13 @@ This package provides a base skin for people wanting to develop
 pagelet-based applications.
 
 This package contains tests for a base skin for pagelet-based UIs.
+
+%package -n python-module-z3c.skin
+Summary: Core package of z3c.skin
+Group: Development/Python
+
+%description -n python-module-z3c.skin
+This package contains core package of z3c.skin.
 
 %prep
 %setup
@@ -59,11 +68,18 @@ touch %buildroot%python_sitelibdir/z3c/skin/__init__.py
 %python_sitelibdir/*
 %exclude %python_sitelibdir/*.pth
 %exclude %python_sitelibdir/*/*/*/test*
+%exclude %python_sitelibdir/z3c/skin/__init__.py*
 
 %files tests
 %python_sitelibdir/*/*/*/test*
 
+%files -n python-module-z3c.skin
+%python_sitelibdir/z3c/skin/__init__.py*
+
 %changelog
+* Mon Apr 08 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.2-alt3
+- Added python-module-z3c.skin
+
 * Thu Oct 20 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 1.0.2-alt2.1
 - Rebuild with Python-2.7
 
