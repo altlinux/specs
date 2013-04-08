@@ -13,7 +13,7 @@
 Summary: Graphical Boot Animation and Logger
 Name: plymouth
 Version: 0.8.8
-Release: alt3.git.b1140c
+Release: alt4.git.054d29
 License: GPLv2+
 Group: System/Base
 
@@ -484,6 +484,11 @@ fi \
 %files system-theme
 
 %changelog
+* Mon Apr 08 2013 Alexey Shabalin <shaba@altlinux.ru> 0.8.8-alt4.git.054d29
+- upstream snapshot 054d29019d03fe787eeb26267774743d2a849777
+- revert buggy commit "move to daemon in real system"
+- remove systemd-vconsole-setup.service from plymouth-start.service
+
 * Thu Mar 21 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.8.8-alt3.git.b1140c
 - fixed progress calculation while run in vesa framebuffer
 

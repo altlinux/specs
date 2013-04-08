@@ -17,8 +17,8 @@
 %def_enable efi
 
 Name: systemd
-Version: 198
-Release: alt1
+Version: 200
+Release: alt3
 Summary: A System and Session Manager
 Url: http://www.freedesktop.org/wiki/Software/systemd
 Group: System/Configuration/Boot and Init
@@ -302,7 +302,7 @@ Provides: hotplug = 2004_09_23-alt18
 Obsoletes: hotplug
 Conflicts: systemd < %version-%release
 Conflicts: util-linux <= 2.22-alt2
-Conflicts: hal DeviceKit
+Conflicts: DeviceKit
 
 %description -n udev
 Starting with the 2.5 kernel, all physical and virtual devices in a
@@ -471,12 +471,20 @@ intltoolize --force --automake
 	%{subst_enable bootchart} \
 	%{subst_enable polkit} \
 	%{subst_enable efi} \
+	--with-firmware-path="/lib/firmware/updates:/lib/firmware" \
 	--enable-introspection
 
 %make_build
 
 %install
 %make DESTDIR=%buildroot install
+
+# Make sure these directories are properly owned
+mkdir -p %buildroot%_unitdir/basic.target.wants
+mkdir -p %buildroot%_unitdir/default.target.wants
+mkdir -p %buildroot%_unitdir/dbus.target.wants
+mkdir -p %buildroot%_unitdir/syslog.target.wants
+
 install -m644 %SOURCE2 %buildroot%_unitdir/rc-local.service
 ln -s rc-local.service %buildroot%_unitdir/local.service
 install -m644 %SOURCE4 %buildroot%_unitdir/prefdm.service
@@ -534,6 +542,10 @@ ln -s ../getty@.service %buildroot%_unitdir/getty.target.wants/getty@tty4.servic
 ln -s ../getty@.service %buildroot%_unitdir/getty.target.wants/getty@tty5.service
 ln -s ../getty@.service %buildroot%_unitdir/getty.target.wants/getty@tty6.service
 
+# move systemd-vconsole-setup.service from sysinit.target.wants to getty.target.wants
+rm -f %buildroot%_unitdir/sysinit.target.wants/systemd-vconsole-setup.service
+ln -s ../systemd-vconsole-setup.service %buildroot%_unitdir/getty.target.wants/systemd-vconsole-setup.service
+
 # disable legacy services
 ln -s /dev/null %buildroot%_unitdir/fbsetfont.service
 ln -s /dev/null %buildroot%_unitdir/keytable.service
@@ -586,11 +598,6 @@ touch %buildroot%_sysconfdir/systemd/system/runlevel3.target
 touch %buildroot%_sysconfdir/systemd/system/runlevel4.target
 touch %buildroot%_sysconfdir/systemd/system/runlevel5.target
 
-# Make sure these directories are properly owned
-mkdir -p %buildroot%_unitdir/basic.target.wants
-mkdir -p %buildroot%_unitdir/default.target.wants
-mkdir -p %buildroot%_unitdir/dbus.target.wants
-mkdir -p %buildroot%_unitdir/syslog.target.wants
 
 # Create new-style configuration files so that we can ghost-own them
 touch %buildroot%_sysconfdir/hostname
@@ -607,7 +614,6 @@ mkdir -p %buildroot/lib/systemd/user-preset
 mkdir -p %buildroot%_sysconfdir/systemd/user-preset
 mkdir -p %buildroot/usr/lib/systemd/user-preset
 install -m 0644 %SOURCE32 %buildroot/lib/systemd/system-preset/
-
 
 # The following services are currently installed by initscripts
 #pushd %buildroot%_unitdir/graphical.target.wants && {
@@ -641,11 +647,13 @@ ln -s ../systemd/systemd-udevd %buildroot/lib/udev/udevd
 ln -s ../lib/systemd/systemd-udevd %buildroot/sbin/udevd
 
 # move udevadm to /sbin
-mv %buildroot%_bindir/udevadm %buildroot/sbin/udevadm
-sed -i -e 's|/usr/bin/udevadm|/sbin/udevadm|g' \
+mv %buildroot/bin/udevadm %buildroot/sbin/udevadm
+sed -i -e 's|/bin/udevadm|/sbin/udevadm|g' \
 	%buildroot/lib/udev/rules.d/71-seat.rules \
 	%buildroot%_unitdir/systemd-udev-settle.service \
-	%buildroot%_unitdir/systemd-udev-trigger.service
+	%buildroot%_unitdir/systemd-udev-trigger.service \
+	%buildroot%_unitdir/initrd-udevadm-cleanup-db.service \
+	%buildroot%_unitdir/initrd-switch-root.target
 
 install -p -m644 %SOURCE21 %buildroot/lib/udev/rules.d/40-ignore-remove.rules
 install -p -m644 %SOURCE22 %buildroot%_sysconfdir/scsi_id.config
@@ -792,6 +800,7 @@ update_chrooted all
 /lib/tmpfiles.d/*.conf
 %_sysconfdir/modules-load.d/modules.conf
 %_sysconfdir/xdg/systemd
+/lib/sysctl.d/*.conf
 
 %config(noreplace) %_sysconfdir/dbus-1/system.d/*.conf
 %config(noreplace) %_sysconfdir/systemd/*.conf
@@ -1061,6 +1070,16 @@ update_chrooted all
 /lib/udev/write_net_rules
 
 %changelog
+* Mon Apr 08 2013 Alexey Shabalin <shaba@altlinux.ru> 200-alt3
+- run systemd-vconsole-setup before getty.target
+
+* Mon Apr 08 2013 Alexey Shabalin <shaba@altlinux.ru> 200-alt2
+- fixed custom font in console
+- remove conflict with hal for udev
+
+* Fri Apr 05 2013 Alexey Shabalin <shaba@altlinux.ru> 200-alt1
+- 200
+
 * Tue Mar 12 2013 Alexey Shabalin <shaba@altlinux.ru> 198-alt1
 - 198
 - add systemd-journal-gateway package
