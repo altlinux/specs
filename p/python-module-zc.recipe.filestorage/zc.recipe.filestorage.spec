@@ -1,7 +1,7 @@
 %define oname zc.recipe.filestorage
 Name: python-module-%oname
 Version: 1.0.1
-Release: alt1.1
+Release: alt2
 Summary: ZC Buildout recipe for defining a file-storage
 License: ZPLv2.1
 Group: Development/Python
@@ -13,6 +13,8 @@ Source: %name-%version.tar
 BuildPreReq: python-devel python-module-distribute
 
 %py_requires z3c.recipe zc.buildout zope.testing
+
+Requires: python-module-zc.recipe
 
 %description
 This recipe can be used to define a file-storage. It creates a ZConfig
@@ -68,6 +70,9 @@ mv %buildroot%python_sitelibdir_noarch/* \
 %python_sitelibdir/*/*/*/tests.*
 
 %changelog
+* Mon Apr 08 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.1-alt2
+- Added requirement on python-module-zc.recipe
+
 * Thu Oct 20 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 1.0.1-alt1.1
 - Rebuild with Python-2.7
 
