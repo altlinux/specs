@@ -5,7 +5,7 @@
 
 Name: squid
 Version: 3.2.9
-Release: alt1
+Release: alt2
 %define langpack_ver 20121005
 Summary: The Squid proxy caching server
 License: GPLv2
@@ -286,6 +286,9 @@ chown -R %name:%name %_spooldir/%name >/dev/null 2>&1 ||:
 
 
 %changelog
+* Mon Apr 08 2013 Led <led@altlinux.ru> 3.2.9-alt2
+- added upstream fixes
+
 * Tue Mar 12 2013 Led <led@altlinux.ru> 3.2.9-alt1
 - 3.2.9
 
