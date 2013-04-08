@@ -1,6 +1,6 @@
 %define oname zc.zope3recipes
 Name: python-module-%oname
-Version: 0.15.0
+Version: 0.18.0
 Release: alt1
 Summary: ZC Buildout recipe for defining Zope 3 applications
 License: ZPLv2.1
@@ -67,6 +67,9 @@ mv %buildroot%python_sitelibdir_noarch/* \
 %python_sitelibdir/*/*/tests.*
 
 %changelog
+* Mon Apr 08 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.18.0-alt1
+- Version 0.18.0
+
 * Wed Dec 28 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.15.0-alt1
 - Version 0.15.0
 
