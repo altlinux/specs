@@ -1,6 +1,6 @@
 Name: gzip
 Version: 1.5
-Release: alt1
+Release: alt2
 
 Summary: The GNU data compression program
 License: GPLv3+
@@ -10,7 +10,7 @@ Url: http://www.gnu.org/software/gzip/
 %define srcname %name-%version-%release
 Source0: %srcname.tar
 
-BuildRequires: gnulib >= 0.0.7557.ee60576
+BuildRequires: gnulib >= 0.0.7901.076ac82
 
 # for test suite
 %{?!_without_check:%{?!_disable_check:BuildRequires: less}}
@@ -128,6 +128,10 @@ rm %buildroot{/bin/z{less,more},%_man1dir/z{less,more}.1}
 %exclude %_man1dir/zcat.*
 
 %changelog
+* Mon Apr 08 2013 Dmitry V. Levin <ldv@altlinux.org> 1.5-alt2
+- Updated to v1.5-24-g6ea2e1b.
+- Built with gnulib v0.0-7901-g076ac82.
+
 * Fri Aug 03 2012 Dmitry V. Levin <ldv@altlinux.org> 1.5-alt1
 - Updated gzip to v1.5-3-gc8ae982.
 - Built with gnulib v0.0-7557-gee60576.
