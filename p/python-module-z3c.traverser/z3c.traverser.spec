@@ -1,7 +1,7 @@
 %define oname z3c.traverser
 Name: python-module-%oname
-Version: 0.3.0
-Release: alt2.1
+Version: 1.0.0
+Release: alt1.a2
 Summary: Pluggable Traversers And URL handling utilities
 License: ZPLv2.1
 Group: Development/Python
@@ -11,6 +11,9 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 
 BuildPreReq: python-devel python-module-distribute
+BuildPreReq: python-module-eggtestinfo python-module-zope.testrunner
+BuildPreReq: python-module-zope.interface python-module-zope.exceptions
+BuildPreReq: python-module-six
 
 %py_requires zope.component zope.contentprovider zope.interface
 %py_requires zope.publisher zope.traversing zope.viewlet
@@ -70,6 +73,9 @@ mv %buildroot%python_sitelibdir_noarch/* \
 %python_sitelibdir/*/*/*/test*
 
 %changelog
+* Mon Apr 08 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.0-alt1.a2
+- Version 1.0.0a2
+
 * Thu Oct 20 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 0.3.0-alt2.1
 - Rebuild with Python-2.7
 
