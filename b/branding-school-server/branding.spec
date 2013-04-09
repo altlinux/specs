@@ -7,7 +7,7 @@
 
 Name: branding-%brand-%theme
 Version: 6.0.0 
-Release: alt9
+Release: alt10
 
 BuildRequires: cpio fonts-ttf-dejavu fonts-ttf-droid
 BuildRequires: design-bootloader-source >= 5.0-alt2
@@ -155,26 +155,6 @@ Conflicts: %(for n in %variants ; do [ "$n" = %brand-%theme ] || echo -n "brandi
 %description fvwm-settings
 FVWM2 settings for %Brand %version %Theme
 
-%package gnome-settings
-
-BuildArch: noarch
-Summary: GNOME settings for %Brand %version %Theme
-License: Distributable
-Group: Graphical desktop/GNOME
-Requires: gtk2-theme-mist
-Requires: gksu
-Requires: altlinux-freedesktop-menu-gnomish-menu
-PreReq: gnome-panel
-Provides: gnome-theme-%brand-%theme = %version-%release
-Provides: metacity-theme-%brand-%theme = %version-%release
-Provides: metacity-theme
-Provides: gnome-menus = 2.30.4
-Conflicts: %(for n in %variants ; do [ "$n" = %brand-%theme ] || echo -n "branding-$n-gnome-settings ";done )
-
-%description gnome-settings
-GNOME settings for %Brand %version %Theme
-
-
 %package slideshow
 
 BuildArch: noarch
@@ -268,21 +248,6 @@ popd
 mkdir -p %buildroot/etc/skel
 install -m 644 fvwm-settings/.fvwm2rc %buildroot/etc/skel/
 
-#gnome-settings
-%define XdgThemeName %Brand %Theme
-pushd gnome-settings
-mkdir -p '%buildroot/%_datadir/themes/%XdgThemeName'
-install -m 644  panel-default-setup.entries '%buildroot/%_datadir/themes/%XdgThemeName/'
-mkdir -p '%buildroot/%_datadir/themes/%XdgThemeName/gtk-2.0'
-install -m 644 gtkrc '%buildroot/%_datadir/themes/%XdgThemeName/gtk-2.0'
-mkdir -p '%buildroot/%_datadir/themes/%XdgThemeName/metacity-1'
-install -m 644 metacity-theme-1.xml '%buildroot/%_datadir/themes/%XdgThemeName/metacity-1/'
-install -m 644 index.theme '%buildroot/%_datadir/themes/%XdgThemeName/'
-mkdir -p '%buildroot/etc/xdg/menus/'
-install -m 644 gnome-applications.menu '%buildroot/etc/xdg/menus/'
-install -m 644 settings.menu '%buildroot/etc/xdg/menus/'
-popd
-
 #slideshow
 mkdir -p %buildroot/usr/share/install2/slideshow
 install slideshow/*  %buildroot/usr/share/install2/slideshow/
@@ -327,16 +292,6 @@ subst "s/Theme=.*/Theme=%theme/" /etc/plymouth/plymouthd.conf
       subst "s|GRUB_WALLPAPER=.*|GRUB_WALLPAPER=/usr/share/plymouth/themes/%theme/grub.jpg|" \
              /etc/sysconfig/grub2 ||:
 
-%post gnome-settings
-%gconf2_set string /desktop/gnome/interface/font_name Sans 11
-%gconf2_set string /desktop/gnome/interface/monospace_font_name Monospace 10
-cat '/%_datadir/themes/%XdgThemeName/panel-default-setup.entries' > \
-/etc/gconf/schemas/panel-default-setup.entries
-/usr/bin/gconftool-2 --direct --config-source=$(/usr/bin/gconftool-2 --get-default-source) \
---load='/%_datadir/themes/%XdgThemeName/panel-default-setup.entries'
-/usr/bin/gconftool-2 --direct --config-source=$(/usr/bin/gconftool-2 --get-default-source) \
---load='/%_datadir/themes/%XdgThemeName/panel-default-setup.entries' /apps/panel
-
 
 %files alterator
 %config %_altdir/*.rcc
@@ -363,10 +318,6 @@ cat '/%_datadir/themes/%XdgThemeName/panel-default-setup.entries' > \
 %files fvwm-settings
 %_sysconfdir/skel/.fvwm2rc
 
-%files gnome-settings
-%_datadir/themes/*
-/etc/xdg/menus/*
-
 %files slideshow
 /usr/share/install2/slideshow
 
@@ -382,6 +333,9 @@ cat '/%_datadir/themes/%XdgThemeName/panel-default-setup.entries' > \
 %_desktopdir/indexhtml.desktop
 
 %changelog
+* Tue Apr 09 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 6.0.0-alt10
+- gnome2 settings removed
+
 * Thu Apr 04 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 6.0.0-alt9
 - kde3 settings removed
 
