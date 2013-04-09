@@ -4,8 +4,8 @@
 %define rname kdegraphics
 Name: kde4graphics
 %define major 4
-%define minor 9
-%define bugfix 1
+%define minor 10
+%define bugfix 2
 Version: %major.%minor.%bugfix
 Release: alt1
 
@@ -56,6 +56,9 @@ based on %name.
 %files devel
 
 %changelog
+* Tue Apr 09 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.2-alt1
+- bump version
+
 * Wed Oct 03 2012 Sergey V Turchin <zerg@altlinux.org> 4.9.1-alt1
 - new version
 
