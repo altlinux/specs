@@ -1,7 +1,7 @@
 %define oname zope.error
 Name: python-module-%oname
-Version: 3.7.2
-Release: alt3.1
+Version: 4.1.0
+Release: alt1
 Summary: An error reporting utility for Zope3
 License: ZPLv2.1
 Group: Development/Python
@@ -55,6 +55,9 @@ mv %buildroot%python_sitelibdir_noarch/* \
 %python_sitelibdir/*/*/tests.*
 
 %changelog
+* Tue Apr 09 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.1.0-alt1
+- Version 4.1.0
+
 * Thu Oct 20 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 3.7.2-alt3.1
 - Rebuild with Python-2.7
 
