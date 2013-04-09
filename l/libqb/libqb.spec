@@ -1,59 +1,65 @@
-Name: libqb
-Version: 0.14.4
-Release: alt2
-Summary: An IPC library for high performance servers
+# BEGIN SourceDeps(oneline):
+BuildRequires: /usr/bin/doxygen /usr/bin/pkg-config /usr/bin/splint gcc-c++ pkgconfig(glib-2.0)
+# END SourceDeps(oneline)
+%add_optflags %optflags_shared
+Name:           libqb
+Version:        0.14.4
+Release:        alt2_2
+Summary:        An IPC library for high performance servers
 
-Group: System/Libraries
-License: LGPLv2+
-Url: http://www.libqb.org
-Source0: https://fedorahosted.org/releases/q/u/quarterback/%name-%version.tar.xz
+Group:          System/Libraries
+License:        LGPLv2+
+URL:            http://www.libqb.org
+Source0:        https://fedorahosted.org/releases/q/u/quarterback/%{name}-%{version}.tar.xz
+
+BuildRequires:  libtool doxygen procps libcheck-devel automake
 Source44: import.info
 
-BuildRequires: /proc doxygen procps libcheck-devel gcc-c++
-
-%define _localstatedir %_var
+#Requires: <nothing>
 
 %description
 libqb provides high performance client server reusable features.
 Initially these are IPC and poll.
 
 %prep
-%setup
+%setup -q
 
+# work-around for broken epoll in rawhide/f17
 %build
-%autoreconf
-%configure --disable-static --with-socket-dir=%_runtimedir
-%make_build
+%configure --disable-static ac_cv_func_epoll_create1=no ac_cv_func_epoll_create=no
+make %{?_smp_mflags}
 
 %install
-%makeinstall_std
-
-%check
-%make check
+make install DESTDIR=$RPM_BUILD_ROOT
+find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
+rm -rf $RPM_BUILD_ROOT/%{_docdir}/*
 
 %files
 %doc COPYING
-%_sbindir/qb-blackbox
-%_libdir/libqb.so.*
+%{_sbindir}/qb-blackbox
+%{_libdir}/libqb.so.*
 
-%package devel
-Summary: Development files for %name
-Group: Development/C
-Requires: %name = %version-%release
+%package        devel
+Summary:        Development files for %{name}
+Group:          Development/C
+Requires:       %{name} = %{version}-%{release}
 
-%description devel
-The %name-devel package contains libraries and header files for
-developing applications that use %name.
+%description    devel
+The %{name}-devel package contains libraries and header files for
+developing applications that use %{name}.
 
-%files devel
+%files          devel
 %doc COPYING README.markdown
-%_includedir/qb/
-%_libdir/libqb.so
-%_libdir/pkgconfig/libqb.pc
-%_mandir/man3/qb*3*
-%_mandir/man8/qb-blackbox.8*
+%{_includedir}/qb/
+%{_libdir}/libqb.so
+%{_libdir}/pkgconfig/libqb.pc
+%{_mandir}/man3/qb*3*
+%{_mandir}/man8/qb-blackbox.8*
 
 %changelog
+* Tue Apr 09 2013 Igor Vlasenko <viy@altlinux.ru> 0.14.4-alt2_2
+- update to new release by fcimport
+
 * Thu Apr 04 2013 Slava Dubrovskiy <dubrsl@altlinux.org> 0.14.4-alt2
 - spec cleanup
 - define _localstatedir and add --with-socket-dir=%_runtimedir
