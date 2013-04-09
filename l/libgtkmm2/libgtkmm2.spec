@@ -4,7 +4,7 @@
 
 Name: libgtkmm2
 Version: %major.3
-Release: alt1
+Release: alt2
 
 Summary: A C++ interface for GTK2 (a GUI library for X)
 License: LGPL
@@ -12,7 +12,8 @@ Group: System/Libraries
 Url: http://gtkmm.sourceforge.net/
 Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 
-Source: ftp://ftp.gnome.org/pub/gnome/sources/%rname/%major/%rname-%version.tar.xz
+#Source: ftp://ftp.gnome.org/pub/gnome/sources/%rname/%major/%rname-%version.tar.xz
+Source: %rname-2.24.2.tar.xz
 
 Provides: %rname = %version
 
@@ -54,7 +55,8 @@ Requires: %name-devel = %version-%release
 The %name-demos package contains source code of demo programs for %name.
 
 %prep
-%setup -q -n %rname-%version
+#%%setup -q -n %rname-%version
+%setup -q -n %rname-2.24.2
 
 %build
 mm-common-prepare
@@ -86,6 +88,9 @@ mm-common-prepare
 #%_datadir/%rname-%api_version
 
 %changelog
+* Tue Apr 09 2013 Yuri N. Sedunov <aris@altlinux.org> 2.24.3-alt2
+- roll back to 2.24.2
+
 * Fri Apr 05 2013 Yuri N. Sedunov <aris@altlinux.org> 2.24.3-alt1
 - 2.24.3
 
