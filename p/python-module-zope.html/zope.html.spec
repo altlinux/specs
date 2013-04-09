@@ -1,7 +1,7 @@
 %define oname zope.html
 Name: python-module-%oname
-Version: 2.3.0
-Release: alt2.1
+Version: 2.4.1
+Release: alt1
 Summary: HTML and XHTML Editing Support
 License: ZPLv2.1
 Group: Development/Python
@@ -67,6 +67,9 @@ mv %buildroot%python_sitelibdir_noarch/* \
 %python_sitelibdir/*/*/tests.*
 
 %changelog
+* Tue Apr 09 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.4.1-alt1
+- Version 2.4.1
+
 * Thu Oct 20 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 2.3.0-alt2.1
 - Rebuild with Python-2.7
 
