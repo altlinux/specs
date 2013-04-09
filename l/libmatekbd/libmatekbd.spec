@@ -4,7 +4,7 @@ BuildRequires: /usr/bin/glib-gettextize libICE-devel libSM-devel libgio-devel pk
 # END SourceDeps(oneline)
 %define _libexecdir %_prefix/libexec
 Name:           libmatekbd
-Version:        1.5.1
+Version:        1.6.0
 Release:        alt1_1
 Summary:        Libraries for mate kbd
 License:        LGPLv2+
@@ -41,8 +41,7 @@ NOCONFIGURE=1 ./autogen.sh
    --disable-static          \
    --with-gtk=2.0            \
    --disable-schemas-compile \
-   --with-x                  \
-   --with-gnu-ld             
+   --with-x
    
   
 make %{?_smp_mflags} V=1
@@ -52,14 +51,6 @@ make %{?_smp_mflags} V=1
 make install DESTDIR=%{buildroot}
 
 find %{buildroot} -name '*.la' -exec rm -fv {} ';'
-
-
-#desktop-file-install									\
-#        --remove-category="MATE"							\
-#        --add-category="X-Mate"								\
-#        --delete-original								\
-#        --dir=%{buildroot}%{_datadir}/applications					\
-#%{buildroot}%{_datadir}/applications/matekbd-indicator-plugins-capplet.desktop
 
 
 %find_lang %{name} --all-name
@@ -81,6 +72,9 @@ find %{buildroot} -name '*.la' -exec rm -fv {} ';'
 %{_libdir}/libmatekbd.so
 
 %changelog
+* Sat Apr 06 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.0-alt1_1
+- new fc release
+
 * Sun Feb 17 2013 Igor Vlasenko <viy@altlinux.ru> 1.5.1-alt1_1
 - new fc release
 

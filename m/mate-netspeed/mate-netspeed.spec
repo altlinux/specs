@@ -4,14 +4,12 @@ BuildRequires: /usr/bin/glib-gettextize libgio-devel pkgconfig(gio-2.0) pkgconfi
 # END SourceDeps(oneline)
 %define _libexecdir %_prefix/libexec
 Name:           mate-netspeed
-Version:        1.5.1
-Release:        alt1_2
+Version:        1.6.0
+Release:        alt1_1
 Summary:        MATE netspeed
 License:        GPLv2+
 URL:            http://www.mate-desktop.org
-Source0:        http://pub.mate-desktop.org/releases/1.5/%{name}-%{version}.tar.xz
-#Fix RHBZ #918641
-Patch0: netspeed_commits.patch
+Source0:        http://pub.mate-desktop.org/releases/1.6/%{name}-%{version}.tar.xz
 
 BuildRequires:  mate-common
 BuildRequires:  mate-doc-utils
@@ -27,15 +25,13 @@ traffic occurs on a specified network device.
 
 %prep
 %setup -q
-%patch0 -p1
 %build
 NOCONFIGURE=1 ./autogen.sh
 export LDFLAGS="$LDFLAGS -lm"
 %configure                                 \
                 --disable-static           \
                 --disable-scrollkeeper     \
-                --disable-schemas-compile  \
-                --with-gnu-ld
+                --disable-schemas-compile  
 
 make %{?_smp_mflags} V=1
 
@@ -60,6 +56,9 @@ find %{buildroot} -name '*.a' -exec rm -rf {} ';'
 %{_datadir}/mate-panel/ui/netspeed-menu.xml
 
 %changelog
+* Sat Apr 06 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.0-alt1_1
+- new fc release
+
 * Wed Mar 13 2013 Igor Vlasenko <viy@altlinux.ru> 1.5.1-alt1_2
 - new fc release
 

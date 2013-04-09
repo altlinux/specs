@@ -6,12 +6,12 @@ BuildRequires: /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/update
 %define _libexecdir %_prefix/libexec
 %define fedora 19
 Name:           mate-control-center
-Version:        1.5.5
-Release:        alt1_3
+Version:        1.6.0
+Release:        alt1_1
 Summary:        MATE Desktop control-center
 License:        LGPLv2+ and GPLv2+
 URL:            http://mate-desktop.org
-Source0:        http://pub.mate-desktop.org/releases/1.5/%{name}-%{version}.tar.xz
+Source0:        http://pub.mate-desktop.org/releases/1.6/%{name}-%{version}.tar.xz
 
 BuildRequires: libdbus-glib-devel
 BuildRequires: libdconf-devel
@@ -21,7 +21,7 @@ BuildRequires: gtk2-devel
 BuildRequires: icon-naming-utils
 BuildRequires: libcanberra-devel
 BuildRequires: libmatekbd-devel
-BuildRequires: libmatenotify-devel
+BuildRequires: libnotify-devel
 BuildRequires: librsvg-devel
 BuildRequires: libSM-devel
 BuildRequires: libxkbfile-devel
@@ -142,7 +142,7 @@ rm %{buildroot}%{_datadir}/applications/mimeinfo.cache
 %{_libdir}/libslab.so.*
 
 %files devel
-%{_includedir}/mate-window-settings-2.0/
+%{_includedir}/mate-window-settings-2.0
 %{_libdir}/pkgconfig/mate-window-settings-2.0.pc
 %{_libdir}/libmate-window-settings.so
 %{_datadir}/pkgconfig/mate-default-applications.pc
@@ -154,6 +154,9 @@ rm %{buildroot}%{_datadir}/applications/mimeinfo.cache
 %{_libdir}/pkgconfig/libslab.pc
 
 %changelog
+* Sat Apr 06 2013 Igor Vlasenko <viy@altlinux.ru> 1:1.6.0-alt1_1
+- new fc release
+
 * Wed Mar 27 2013 Igor Vlasenko <viy@altlinux.ru> 1:1.5.5-alt1_3
 - new fc release
 

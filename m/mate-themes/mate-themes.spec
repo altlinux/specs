@@ -4,12 +4,12 @@ BuildRequires: /usr/bin/glib-gettextize pkgconfig(gdk-pixbuf-2.0) pkgconfig(gtk+
 # END SourceDeps(oneline)
 %define _libexecdir %_prefix/libexec
 Name:           mate-themes
-Version:        1.5.0
-Release:        alt1_2
+Version:        1.6.0
+Release:        alt1_1
 Summary:        MATE Desktop themes
 License:        GPLv2+
 URL:            http://mate-desktop.org
-Source0:        http://pub.mate-desktop.org/releases/1.5/%{name}-%{version}.tar.xz
+Source0:        http://pub.mate-desktop.org/releases/1.6/%{name}-%{version}.tar.xz
 
 BuildRequires:  icon-naming-utils
 BuildRequires:  mate-common
@@ -21,7 +21,7 @@ Requires:       mate-icon-theme
 Requires:       libgtk-engines-default
 Requires:       libgtk-engine-murrine
 
-BuildARch:      noarch
+BuildArch:      noarch
 Source44: import.info
 
 %description
@@ -70,7 +70,6 @@ fi
 %files -f %{name}.lang
 %doc AUTHORS COPYING README
 %{_datadir}/icons/ContrastHigh-SVG
-%{_datadir}/themes/TraditionalOkClassic
 %{_datadir}/themes/ContrastLowLargePrint
 %{_datadir}/themes/Fog
 %{_datadir}/themes/PrintLarge
@@ -96,8 +95,16 @@ fi
 %{_datadir}/icons/mate/cursors
 %{_datadir}/icons/ContrastHighLargePrintInverse
 %{_datadir}/themes/TraditionalOkTest
+%{_datadir}/themes/BlackMATE
+%{_datadir}/themes/GreenLaguna
+%{_datadir}/themes/Menta-Black
+%{_datadir}/themes/Menta
+%{_datadir}/themes/TraditionalGreen
 
 %changelog
+* Sat Apr 06 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.0-alt1_1
+- new fc release
+
 * Thu Mar 28 2013 Igor Vlasenko <viy@altlinux.ru> 1.5.0-alt1_2
 - converted for ALT Linux by srpmconvert tools
 

@@ -7,18 +7,18 @@ BuildRequires: xvfb-run
 %define _libexecdir %_prefix/libexec
 %define fedora 19
 Name:           mate-applets
-Version:        1.5.2
-Release:        alt2_2
+Version:        1.6.0
+Release:        alt1_1
 Summary:        MATE Desktop panel applets
 License:        GPLv2+ and LGPLv2+
 URL:            http://mate-desktop.org
-Source0:        http://pub.mate-desktop.org/releases/1.5/%{name}-%{version}.tar.xz
+Source0:        http://pub.mate-desktop.org/releases/1.6/%{name}-%{version}.tar.xz
 
 BuildRequires: libdbus-glib-devel
 BuildRequires: libgucharmap-devel
 BuildRequires: libgtop2-devel
 BuildRequires: libmatekeyring-devel
-BuildRequires: libmatenotify-devel
+BuildRequires: libnotify-devel
 BuildRequires: libmateweather-devel
 BuildRequires: libmatewnck-devel
 BuildRequires: libnotify-devel
@@ -47,11 +47,10 @@ BuildRequires: libstartup-notification-devel
 Buildrequires: libupower-devel
 Requires:      libnotify
 Source44: import.info
-Source45: 01-cpufreq.pkla
 Patch33: mate-applets-1.5.1-alt-geyes_schema.patch
 Patch34: gnome-applets-2.6.0-alt-install_makefile.patch
 Patch35: gnome-applets-2.9.90-alt-modemlights.patch
-
+Source45: 01-cpufreq.pkla
 %description
 MATE Desktop panel applets
 
@@ -67,7 +66,6 @@ NOCONFIGURE=1 ./autogen.sh
 %configure   \
     --disable-schemas-compile                \
     --disable-scrollkeeper                   \
-    --with-gnu-ld                            \
     --with-x                                 \
     --enable-polkit                          \
     --enable-networkmanager                  \
@@ -88,7 +86,7 @@ make DESTDIR=%{buildroot} install
 #http://forums.fedoraforum.org/showthread.php?t=284962
 chmod a+x %{buildroot}%{python_sitelibdir_noarch}/mate_invest/chart.py
 # alt 01-cpufreq.pkla
-install -pD -m 644 %SOURCE45 %buildroot%_sysconfdir/polkit-1/localauthority/50-local.d/01-cpufreq.pkla
+install -pD -m 644 %{SOURCE45} %buildroot%_sysconfdir/polkit-1/localauthority/50-local.d/01-cpufreq.pkla
 
 %files -f %{name}.lang
 %doc AUTHORS COPYING README
@@ -153,6 +151,9 @@ install -pD -m 644 %SOURCE45 %buildroot%_sysconfdir/polkit-1/localauthority/50-l
 %_sysconfdir/polkit-1/localauthority/50-local.d/01-cpufreq.pkla
 
 %changelog
+* Sat Apr 06 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.0-alt1_1
+- new fc release
+
 * Thu Apr 04 2013 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.5.2-alt2_2
 - package plain 01-cpufreq.pkla instead of tar.xz file (closes: 28794)
 

@@ -4,12 +4,12 @@ BuildRequires: /usr/bin/glib-gettextize
 # END SourceDeps(oneline)
 %define _libexecdir %_prefix/libexec
 Name:		mate-backgrounds
-Version:	1.5.0
-Release:	alt1_3
+Version:	1.6.0
+Release:	alt1_1
 Summary:	MATE Desktop backgrounds
 License:	GPLv2+
 URL:		http://mate-desktop.org
-Source0:	http://pub.mate-desktop.org/releases/1.5/%{name}-%{version}.tar.xz
+Source0:	http://pub.mate-desktop.org/releases/1.6/%{name}-%{version}.tar.xz
 
 BuildArch:	noarch
 BuildRequires:	mate-common
@@ -20,9 +20,6 @@ Backgrounds for MATE Desktop
 
 %prep
 %setup -q
-# move to @datadir@/backgrounds as our gnome did.
-# just in case, ask aris@ why.
-sed -i -e s,/pixmaps/backgrounds/,/backgrounds/,g `grep -rl /pixmaps/backgrounds/ .`
 NOCONFIGURE=1 ./autogen.sh
 
 
@@ -38,9 +35,12 @@ make install DESTDIR=%{buildroot}
 %files -f %{name}.lang
 %doc AUTHORS COPYING README
 %{_datadir}/mate-background-properties/
-%{_datadir}/backgrounds/mate/
+%{_datadir}/backgrounds/mate
 
 %changelog
+* Sat Apr 06 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.0-alt1_1
+- new fc release
+
 * Tue Mar 05 2013 Igor Vlasenko <viy@altlinux.ru> 1.5.0-alt1_3
 - new fc release
 

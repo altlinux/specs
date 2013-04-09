@@ -6,8 +6,8 @@ BuildRequires: python-devel
 %define _libexecdir %_prefix/libexec
 Name:           mate-doc-utils
 Summary:        MATE Desktop doc utils
-Version:        1.5.0
-Release:        alt1_4
+Version:        1.6.0
+Release:        alt1_1
 License:        GPLv2+ and LGPLv2+
 URL:            http://mate-desktop.org
 Source0:        http://pub.mate-desktop.org/releases/1.5/%{name}-%{version}.tar.xz
@@ -29,7 +29,6 @@ Requires: gnome-doc-utils-xslt
 BuildArch:      noarch
 
 BuildRequires:  mate-common
-BuildRequires:  intltool
 BuildRequires:  pkgconfig(libxslt)
 BuildRequires:  pkgconfig(rarian)
 BuildRequires:  pkgconfig(libxml-2.0)
@@ -37,11 +36,11 @@ BuildRequires:  pkgconfig(gnome-doc-utils)
 
 Requires:       mate-common
 Requires:       gnome-doc-utils
-
-#Fix https://bugzilla.redhat.com/show_bug.cgi?id=888807
-Patch0: fix_mock_build_errors.patch
 Source44: import.info
 Patch33: mate-doc-utils-0.14.0-package.patch
+
+#Fix https://bugzilla.redhat.com/show_bug.cgi?id=888807
+#Patch0: fix_mock_build_errors.patch
 
 %description
 mate-doc-utils is a collection of documentation utilities for the Mate
@@ -51,16 +50,16 @@ XSLT style sheets that were once distributed with Yelp.
 
 %prep
 %setup -q
-%patch0 -p1
+#%patch0 -p1
 NOCONFIGURE=1 ./autogen.sh
 %patch33 -p1
 
 %build
 %configure --disable-scrollkeeper
-make %{?_smp_mflags}
+make %{?_smp_mflags} V=1
 
 %install
-make install DESTDIR=%{buildroot}
+make DESTDIR=%{buildroot} install
 %find_lang %{name}
 #Remove unnecessary python sitepackages provided by gnome-doc-utils
 rm -rf $RPM_BUILD_ROOT/%{python_sitelibdir_noarch}/*
@@ -86,6 +85,9 @@ rm -rf $RPM_BUILD_ROOT/%{_datadir}/mate-doc-utils/mate-debian.sh
 %{_datadir}/pkgconfig/mate-doc-utils.pc
 
 %changelog
+* Sat Apr 06 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.0-alt1_1
+- new fc release
+
 * Wed Mar 27 2013 Igor Vlasenko <viy@altlinux.ru> 1.5.0-alt1_4
 - new fc release
 

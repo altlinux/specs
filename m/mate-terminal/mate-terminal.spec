@@ -5,8 +5,8 @@ BuildRequires: /usr/bin/glib-gettextize /usr/bin/gtk-builder-convert libICE-deve
 %define _libexecdir %_prefix/libexec
 Summary:        Terminal emulator for MATE
 Name:           mate-terminal
-Version:        1.5.0
-Release:        alt1_3
+Version:        1.6.0
+Release:        alt1_1
 License:        GPLv3+
 URL:            http://mate-desktop.org
 Source0:        http://pub.mate-desktop.org/releases/1.5/%{name}-%{version}.tar.xz
@@ -39,8 +39,7 @@ NOCONFIGURE=1 ./autogen.sh
 %configure --disable-static                \
            --with-gtk=2.0                  \
            --disable-scrollkeeper          \
-           --disable-schemas-compile       \
-           --with-gnu-ld                   
+           --disable-schemas-compile       
 
 make %{?_smp_mflags} V=1
 
@@ -50,8 +49,6 @@ make DESTDIR=%{buildroot} install
 %find_lang %{name}
 
 desktop-file-install							\
-	--remove-category="MATE"					\
-	--add-category="X-Mate"						\
 	--delete-original						\
 	--dir=%{buildroot}%{_datadir}/applications			\
 %{buildroot}%{_datadir}/applications/mate-terminal.desktop
@@ -63,6 +60,7 @@ EOF
 
 %files -f %{name}.lang
 %doc AUTHORS COPYING NEWS README
+%{_mandir}/man1/*
 %{_bindir}/mate-terminal
 %{_datadir}/mate-terminal
 %{_datadir}/mate/help/mate-terminal
@@ -72,6 +70,9 @@ EOF
 %_altdir/%name
 
 %changelog
+* Sat Apr 06 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.0-alt1_1
+- new fc release
+
 * Wed Feb 20 2013 Igor Vlasenko <viy@altlinux.ru> 1.5.0-alt1_3
 - new fc release
 

@@ -5,7 +5,7 @@ BuildRequires: /usr/bin/asn1Parser /usr/bin/gcov /usr/bin/genhtml /usr/bin/glib-
 %define _libexecdir %_prefix/libexec
 Summary:        Framework for managing passwords and other secrets
 Name:           mate-keyring
-Version:        1.5.1
+Version:        1.6.0
 Release:        alt1_1
 License:        GPLv2+ and LGPLv2+
 URL:            http://mate-desktop.org
@@ -134,6 +134,9 @@ chmod 0755 %{buildroot}%{_bindir}/mate-keyring-daemon
 %{_libdir}/pkgconfig/*
 
 %changelog
+* Sat Apr 06 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.0-alt1_1
+- new fc release
+
 * Wed Mar 27 2013 Igor Vlasenko <viy@altlinux.ru> 1.5.1-alt1_1
 - new fc release
 
