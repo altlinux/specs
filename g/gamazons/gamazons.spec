@@ -3,7 +3,7 @@ BuildRequires: /usr/bin/glib-gettextize
 # END SourceDeps(oneline)
 Name:           gamazons
 Version:        0.83
-Release:        alt4_10
+Release:        alt4_11
 Summary:        GNOME Amazons
 
 Group:          Games/Other
@@ -41,7 +41,7 @@ make %{?_smp_mflags}
 
 %install
 make install DESTDIR=$RPM_BUILD_ROOT
-desktop-file-install  \
+desktop-file-install \
                      --delete-original \
                      --dir=$RPM_BUILD_ROOT%{_datadir}/applications/ \
                      --remove-key=OnlyShowIn \
@@ -60,6 +60,9 @@ desktop-file-install  \
 
 
 %changelog
+* Tue Apr 09 2013 Igor Vlasenko <viy@altlinux.ru> 0.83-alt4_11
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.83-alt4_10
 - update to new release by fcimport
 
