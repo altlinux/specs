@@ -1,13 +1,13 @@
 Name: comparepdf
 Version: 1.0.1
-Release: alt1
+Release: alt2
 License: GPLv2
 Summary: Compare two PDF files
 Group: Publishing
 Url: http://www.qtrac.eu/comparepdf.html
 Source: %name-%version.tar.gz
 
-# /*G*/ Can't be fount by findreq :(
+# /*G*/ Can't be found by findreq :(
 BuildRequires:	libpoppler-cpp-devel
 
 # Automatically added by buildreq on Tue Oct 11 2011
@@ -37,6 +37,9 @@ install -D %name.1 %buildroot%_man1dir/%name.1
 %_man1dir/*
 
 %changelog
+* Tue Apr 09 2013 Fr. Br. George <george@altlinux.ru> 1.0.1-alt2
+- Rebuild with new libpoppler
+
 * Thu Jan 12 2012 Fr. Br. George <george@altlinux.ru> 1.0.1-alt1
 - Autobuild version bump to 1.0.1
 - BuildRequires fix
