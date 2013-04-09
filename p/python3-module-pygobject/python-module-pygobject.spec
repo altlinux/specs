@@ -5,7 +5,7 @@
 
 Name: python3-module-pygobject
 Version: %major.6
-Release: alt5
+Release: alt6
 
 Summary: Python 3 bindings for GObject
 
@@ -71,9 +71,7 @@ facilitate the creation of Python bindings.
 %prep
 %setup -q -n %oname-%version
 
-for i in $(find ./ -name '*.py'); do
-	sed -i 's|%_bindir/env python|%_bindir/env python3|' $i ||:
-done
+find -type f -name '*.py' -exec sed -i 's|%_bindir/env python|%_bindir/python3|' -- '{}' +
 
 %build
 export PYTHON=python3
@@ -101,9 +99,10 @@ sed -i 's|%_bindir/env python|%_bindir/env python3|' \
 # hack to avoid verify-elf errors
 export LD_PRELOAD=%_libdir/libpython%{_python3_version}%_python3_abiflags.so
 
-for i in $(find %buildroot -name '*.py'); do
-	2to3 -w $i ||:
-done
+#for i in $(find %buildroot -name '*.py'); do
+#	2to3 -w $i
+#done
+find %buildroot -type f -name '*.py' -exec 2to3 -w '{}' +
 
 %files
 %_libdir/libpyglib-2.0-python3*.so.*
@@ -137,6 +136,9 @@ done
 %endif
 
 %changelog
+* Tue Apr 09 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.28.6-alt6
+- Don't ignore errors when 2to3 & sed run
+
 * Tue Apr 09 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.28.6-alt5
 - Fixed build
 
