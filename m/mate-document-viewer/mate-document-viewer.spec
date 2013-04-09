@@ -6,10 +6,11 @@ BuildRequires: /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/glib-m
 %define glib2_version 1.0
 %define _libexecdir %_prefix/libexec
 %define oldname atril
+%define apiversion 1.5.0
 
 Name:           mate-document-viewer
-Version:        1.5.0
-Release:        alt3_0
+Version:        1.6.0
+Release:        alt1_0
 Summary:        Document viewer
 
 License:        GPLv2+ and GFDL
@@ -208,7 +209,7 @@ rm -f $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/icon-theme.cache
 
 %files devel
 %dir %{_includedir}/atril
-%{_includedir}/atril/%version
+%{_includedir}/atril/%apiversion
 %{_libdir}/libatrilview.so
 %{_libdir}/libatrildocument.so
 %{_libdir}/pkgconfig/atril-view-*.pc
@@ -240,6 +241,9 @@ rm -f $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/icon-theme.cache
 %{_libdir}/atril/3/backends/pixbufdocument.atril-backend
 
 %changelog
+* Tue Apr 09 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.0-alt1_0
+- new version
+
 * Tue Mar 05 2013 Igor Vlasenko <viy@altlinux.ru> 1.5.0-alt3_0
 - added Req: mate-desktop (closes: 28634)
 
