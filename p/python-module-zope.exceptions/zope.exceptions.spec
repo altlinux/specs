@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 3.7.1
-Release: alt1.1
+Version: 4.0.6
+Release: alt1
 Summary: Zope Exceptions
 License: ZPL
 Group: Development/Python
@@ -118,6 +118,9 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 
 %changelog
+* Tue Apr 09 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.6-alt1
+- Version 4.0.6
+
 * Fri Mar 22 2013 Aleksey Avdeev <solo@altlinux.ru> 3.7.1-alt1.1
 - Rebuild with Python-3.3
 
