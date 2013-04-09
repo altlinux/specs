@@ -1,11 +1,10 @@
 Name: libatasmart
-Version: 0.18
+Version: 0.19
 Release: alt1
 Summary: ATA S.M.A.R.T. Disk Health Monitoring Library
 Group: System/Libraries
 License: LGPLv2+
 Url: http://git.0pointer.de/?p=libatasmart.git;a=summary
-Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
@@ -22,34 +21,43 @@ Group: Development/C
 Requires: %name = %version-%release
 
 %description devel
-Development Files for libatasmart Client Development
+Development Files for libatasmart Client Development.
 
 %prep
-%setup -q
+%setup
 %patch -p1
 
 mkdir -p m4
 
 %build
 %autoreconf
-%configure \
-	--disable-static
+%define docdir %_docdir/%name-%version
+%configure --disable-static --docdir=%docdir
 %make_build
 
 %install
-%make DESTDIR=%buildroot install
+%makeinstall_std
+cp -a blob-examples %buildroot%docdir/
 
 %files
 %_libdir/%name.so.*
 %_sbindir/sk*
+%dir %docdir
+%docdir/README
 
 %files devel
-%doc blob-examples/*
 %_includedir/atasmart.h
 %_libdir/%name.so
 %_pkgconfigdir/%name.pc
+%_datadir/vala/vapi/atasmart.vapi
+%dir %docdir
+%docdir/blob-examples
 
 %changelog
+* Tue Apr 09 2013 Dmitry V. Levin <ldv@altlinux.org> 0.19-alt1
+- Updated to 0.19.
+- Built with libudev1.
+
 * Wed Oct 26 2011 Valery Inozemtsev <shrek@altlinux.ru> 0.18-alt1
 - 0.18
 
