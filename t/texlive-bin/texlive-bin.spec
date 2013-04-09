@@ -1,7 +1,6 @@
 Name: texlive-bin
 Version: 2008.0
-Release: alt0.15.4
-Packager: Grigory Batalov <bga@altlinux.ru>
+Release: alt0.15.5
 
 Summary: Essential binaries
 License: Distributable
@@ -16,6 +15,7 @@ Source5: config.trigger
 Source6: tlmgr
 #Patch0: %name-%version-%release.patch
 Patch1: texlive-source-%version-%release.patch
+Patch2: texlive-source-2008.0-alt-mubyte_cswrite.patch
 
 # Automatically added by buildreq on Mon Sep 22 2008
 BuildRequires: flex fontconfig-devel libfreetype-devel gcc-c++ libXaw-devel libfreetype-devel libgd2-devel libpng12-devel libtinfo-devel libXpm-devel t1lib-devel
@@ -158,6 +158,8 @@ sed -e 's,@TEXMFSYSVAR@,%_cachedir/texmf,g' %SOURCE6 > alt-linux/tlmgr
 
 cd source
 %patch1 -p1
+%patch2 -p2
+
 sed -i  -e 's,^TEXMFSYSCONFIG =.*,TEXMFSYSCONFIG = %_sysconfdir/texmf,g' \
 	-e 's,^TEXMFSYSVAR =.*,TEXMFSYSVAR = %_cachedir/texmf,g' \
 	-e 's,^VARTEXFONTS =.*,VARTEXFONTS = $TEXMFVAR/fonts,g' \
@@ -657,6 +659,9 @@ ln -s %_sysconfdir/texmf/web2c/texmf.cnf %buildroot%_datadir/texmf/web2c/texmf.c
 %files -n texlive-xetex -f alt-linux/texlive-xetex.files
 
 %changelog
+* Tue Apr 09 2013 Fr. Br. George <george@altlinux.ru> 2008.0-alt0.15.5
+- Fix off-by-one bug in tex
+
 * Tue Apr 02 2013 Fr. Br. George <george@altlinux.ru> 2008.0-alt0.15.4
 - Rebuild with libpng12
 
