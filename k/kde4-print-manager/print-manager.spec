@@ -2,7 +2,7 @@
 
 %define rname print-manager
 Name: kde4-print-manager
-Version: 4.10.0
+Version: 4.10.2
 Release: alt1
 
 Group: System/Configuration/Printing
@@ -97,6 +97,9 @@ sed -i 's|^X-KDE-Library=.*||' %buildroot/%_K4xdg_apps/kcm_printer_manager.deskt
 %_K4dbus_services/org.kde.*Print*.service
 
 %changelog
+* Tue Apr 09 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.2-alt1
+- new version
+
 * Thu Feb 07 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.0-alt1
 - create menu entry
 - update from 4.10 branch
