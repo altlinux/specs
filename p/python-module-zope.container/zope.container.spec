@@ -1,7 +1,7 @@
 %define oname zope.container
 Name: python-module-%oname
-Version: 3.12.0
-Release: alt3.1.1
+Version: 4.0.0
+Release: alt1.a3
 Summary: Zope Container
 License: ZPL
 Group: Development/Python
@@ -57,6 +57,9 @@ This package contains tests for Zope Container.
 %python_sitelibdir/*/*/tests
 
 %changelog
+* Tue Apr 09 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.0-alt1.a3
+- Version 4.0.0a3
+
 * Thu Apr 12 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 3.12.0-alt3.1.1
 - Rebuild to remove redundant libpython2.7 dependency
 
