@@ -1,6 +1,6 @@
 Name: xfce4-power-manager
 Version: 1.2.0
-Release: alt3
+Release: alt4
 Summary: Power management for the Xfce desktop environment
 Summary (ru_RU.UTF8): Утилита расширенного управления питанием для Xfce
 
@@ -46,6 +46,7 @@ scaling.
 	--enable-polkit \
 	--enable-dpms \
 	--enable-network-manager \
+	--with-sleep-manager=systemd \
 	--enable-debug=no
 %make_build
 
@@ -66,6 +67,9 @@ scaling.
 %_mandir/man?/*
 
 %changelog
+* Tue Apr 09 2013 Mikhail Efremov <sem@altlinux.org> 1.2.0-alt4
+- Add systemd support for suspend/hibernate (closes: #28763).
+
 * Thu Feb 21 2013 Mikhail Efremov <sem@altlinux.org> 1.2.0-alt3
 - Don't allow systemd to handle suspend/hibernate events.
 
