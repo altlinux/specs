@@ -1,7 +1,7 @@
 %define pre %nil
 Name: inkscape
 Version: 0.48.4
-Release: alt1
+Release: alt2
 
 Summary: A Vector Drawing Application
 
@@ -25,9 +25,10 @@ BuildPreReq: desktop-file-utils
 
 %add_findreq_skiplist %_datadir/%name/extensions/*
 
+# manually removed: bzr
 # Automatically added by buildreq on Sat Aug 04 2012
 # optimized out: fontconfig fontconfig-devel glib2-devel gnome-vfs libGConf-devel libX11-devel libatk-devel libatkmm-devel libavahi-glib libcairo-devel libcairomm-devel libdbus-glib libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libglibmm-devel libgpg-error libgtk+2-devel libp11-kit libpango-devel libpangomm-devel libpng-devel libpoppler-devel libpoppler8-glib libsigc++2-devel libstdc++-devel libwpd9-devel libxml2-devel perl-Encode perl-XML-Parser pkg-config python-base python-devel python-module-distribute python-module-peak python-module-zope python-modules xorg-xproto-devel zlib-devel
-BuildRequires: boost-devel-headers bzr gcc-c++ gnome-vfs-devel intltool libImageMagick-devel libaspell-devel libgc-devel libgsl-devel libgtkmm2-devel libgtkspell-devel liblcms-devel libpoppler-glib-devel libpopt-devel libwpg2-devel libxslt-devel perl-devel python-module-mwlib python-module-paste
+BuildRequires: boost-devel-headers gcc-c++ gnome-vfs-devel intltool libImageMagick-devel libaspell-devel libgc-devel libgsl-devel libgtkmm2-devel libgtkspell-devel liblcms-devel libpoppler-glib-devel libpopt-devel libwpg2-devel libxslt-devel perl-devel python-module-mwlib python-module-paste
 
 BuildRequires: libpng-devel
 BuildRequires: libpoppler-devel
@@ -114,6 +115,9 @@ rm -rf %buildroot%_mandir/zh_TW/
 %_man1dir/inkview*
 
 %changelog
+* Mon Apr 08 2013 Vitaly Lipatov <lav@altlinux.ru> 0.48.4-alt2
+- rebuild with libpoppler35
+
 * Mon Feb 11 2013 Vitaly Lipatov <lav@altlinux.ru> 0.48.4-alt1
 - new version 0.48.4 (with rpmrb script) (ALT bug #28530)
 - drop all patches
