@@ -1,6 +1,6 @@
 Name: shotwell
-Version: 0.13.1
-Release: alt2
+Version: 0.14.1
+Release: alt1
 Summary: digital photo organizer designed for the GNOME desktop environment
 
 Group: Graphics
@@ -11,7 +11,7 @@ Url: http://www.yorba.org/shotwell/
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-BuildRequires: gstreamer-devel gst-plugins-devel libGConf-devel libdconf-devel libdbus-glib-devel libgee-devel libgexiv2-devel libgphoto2-devel libgudev-devel libjson-glib-devel libraw-devel libsqlite3-devel libstdc++-devel libunique3-devel libwebkitgtk3-devel vala librest-devel
+BuildRequires: gstreamer1.0-devel gst-plugins1.0-devel libGConf-devel libdconf-devel libdbus-glib-devel libgee-devel libgexiv2-devel libgphoto2-devel libgudev-devel libjson-glib-devel libraw-devel libsqlite3-devel libstdc++-devel libunique3-devel libwebkitgtk3-devel vala librest-devel
 
 Requires: dconf
 
@@ -47,6 +47,9 @@ mode, and export them to share with others.
 %doc AUTHORS COPYING NEWS README THANKS
 
 %changelog
+* Tue Apr 09 2013 Vladimir Lettiev <crux@altlinux.ru> 0.14.1-alt1
+- 0.14.1
+
 * Fri Jan 25 2013 Vladimir Lettiev <crux@altlinux.ru> 0.13.1-alt2
 - rebuilt with libgexiv2 0.5.0
 
