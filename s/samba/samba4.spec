@@ -25,7 +25,7 @@
 %endif
 
 Name: samba
-Version: 4.0.4
+Version: 4.0.5
 Release: alt1
 Group: System/Servers
 Summary: The Samba4 CIFS and AD client and server suite
@@ -78,7 +78,7 @@ BuildRequires: libkrb5-devel libssl-devel libcups-devel
 BuildRequires: gawk libgtk+2-devel libcap-devel libuuid-devel
 BuildRequires: inkscape libxslt xsltproc netpbm dblatex html2text docbook-style-xsl
 %{?_without_talloc:BuildRequires: libtalloc-devel >= 2.0.8 libpytalloc-devel}
-%{?_without_tevent:BuildRequires: libtevent-devel >= 0.9.17 python-module-tevent}
+%{?_without_tevent:BuildRequires: libtevent-devel >= 0.9.18 python-module-tevent}
 %{?_without_tdb:BuildRequires: libtdb-devel >= 1.2.11  python-module-tdb}
 %{?_without_tdb:BuildRequires: libldb-devel >= 1.1.14 python-module-pyldb-devel}
 %{?_with_clustering_support:BuildRequires: ctdb-devel}
@@ -1059,6 +1059,9 @@ TDB_NO_FSYNC=1 %make_build test
 %_man8dir/pam_winbind.8*
 
 %changelog
+* Tue Apr 09 2013 Alexey Shabalin <shaba@altlinux.ru> 4.0.5-alt1
+- 4.0.5
+
 * Tue Mar 19 2013 Alexey Shabalin <shaba@altlinux.ru> 4.0.4-alt1
 - 4.0.4 (fixed CVE-2013-186)
 - add /var/cache/samba to samba-common package (ALT#28601)
