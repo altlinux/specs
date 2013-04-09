@@ -1,7 +1,7 @@
 %define oname zope.app.fssync
 Name: python-module-%oname
-Version: 3.5
-Release: alt2.1
+Version: 3.6.0
+Release: alt1
 Summary: Filesystem synchronization utility for Zope 3
 License: ZPLv2.1
 Group: Development/Python
@@ -17,7 +17,7 @@ BuildPreReq: python-devel python-module-distribute
 %py_requires zope.xmlpickle zope.app.catalog zope.app.component
 %py_requires zope.app.dtmlpage zope.app.file zope.app.folder
 %py_requires zope.app.module zope.app.securitypolicy zope.app.zcmlfiles
-%py_requires zope.app.zptpage
+%py_requires zope.app.zptpage zope.app
 
 %description
 The FSSync project (zope.app.fssync) provides support for filesystem
@@ -76,6 +76,9 @@ mv %buildroot%python_sitelibdir_noarch/* \
 %python_sitelibdir/*/*/*/*/*test*
 
 %changelog
+* Tue Apr 09 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.6.0-alt1
+- Version 3.6.0
+
 * Thu Oct 20 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 3.5-alt2.1
 - Rebuild with Python-2.7
 
