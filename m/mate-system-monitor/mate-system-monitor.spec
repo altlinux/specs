@@ -4,15 +4,13 @@ BuildRequires: /usr/bin/glib-gettextize gcc-c++ libgio-devel pkgconfig(giomm-2.4
 # END SourceDeps(oneline)
 %define _libexecdir %_prefix/libexec
 Name:           mate-system-monitor
-Version:        1.5.1
+Version:        1.6.0
 Release:        alt1_1
 Summary:        Process and resource monitor
 
 License:        GPLv2+
 URL:            http://mate-desktop.org
-Source0:        http://pub.mate-desktop.org/releases/1.5/%{name}-%{version}.tar.xz
-# upstream commit https://github.com/mate-desktop/mate-system-monitor/commit/6d06a224d764c5b58127f665b2fcfa7eeac080ee
-#Patch0:         desktopfile_fix.patch
+Source0:        http://pub.mate-desktop.org/releases/1.6/%{name}-%{version}.tar.xz
 
 BuildRequires: libgtop2-devel
 BuildRequires: desktop-file-utils
@@ -42,7 +40,6 @@ such as CPU and memory.
 
 %prep
 %setup -q
-#%patch0 -p1
 NOCONFIGURE=1 ./autogen.sh
 
 %build
@@ -50,15 +47,13 @@ NOCONFIGURE=1 ./autogen.sh
         --disable-static \
         --disable-scrollkeeper 
 
-make %{?_smp_mflags}
+make %{?_smp_mflags} V=1
 
 
 %install
 make install DESTDIR=$RPM_BUILD_ROOT
 
 desktop-file-install --delete-original             \
-  --remove-category=MATE                           \
-  --add-category=X-Mate                            \
   --dir $RPM_BUILD_ROOT%{_datadir}/applications    \
   $RPM_BUILD_ROOT%{_datadir}/applications/mate-system-monitor.desktop
 
@@ -68,13 +63,16 @@ desktop-file-install --delete-original             \
 %doc AUTHORS NEWS COPYING README
 %{_bindir}/mate-system-monitor
 %{_datadir}/applications/mate-system-monitor.desktop
-%{_datadir}/pixmaps/mate-system-monitor/
+%{_datadir}/pixmaps/mate-system-monitor
 %{_datadir}/glib-2.0/schemas/org.mate.system-monitor.*.xml
 %{_datadir}/mate/help/mate-system-monitor/
 %{_datadir}/MateConf/gsettings/mate-system-monitor.convert
 
 
 %changelog
+* Tue Apr 09 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.0-alt1_1
+- new fc release
+
 * Tue Mar 05 2013 Igor Vlasenko <viy@altlinux.ru> 1.5.1-alt1_1
 - new fc release
 
