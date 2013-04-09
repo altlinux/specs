@@ -23,7 +23,7 @@
 %define rname kdenetwork
 %define major 4
 %define minor 10
-%define bugfix 1
+%define bugfix 2
 Name: kde4network
 Version: %major.%minor.%bugfix
 Release: alt1
@@ -62,7 +62,7 @@ Patch19: kdenetwork-4.3.0-alt-kppp-resolv-mods.patch
 Patch20: kdenetwork-4.5.0-alt-kget-disable-bt.patch
 Patch21: kdenetwork-4.7.1-alt-fix-compile.patch
 Patch22: kdenetwork-4.5.1-alt-kppp-fix-statglg-close.patch
-Patch23: kdenetwork-4.6.3-alt-samba-sharing.patch
+Patch23: kdenetwork-4.10.2-alt-samba-sharing.patch
 Patch24: kdenetwork-4.8.3-alt-mobile.patch
 
 BuildRequires(pre): kde4libs-devel
@@ -86,6 +86,8 @@ BuildRequires: rpm-macros-browser-plugins shared-desktop-ontologies
 BuildRequires: libktorrent-devel libtelepathy-qt4-devel
 BuildRequires: kde4libs-devel >= %version kde4pimlibs-devel >= %version
 BuildRequires: kde4base-workspace-devel >= %version kde4base-devel >= %version
+BuildRequires: soprano-backend-redland soprano-backend-virtuoso soprano
+BuildRequires: kde4-nepomuk-core-devel
 
 %description
 Networking applications for the K Desktop Environment.
@@ -340,6 +342,7 @@ chmod 0755 %buildroot/etc/control.d/facilities/kppp-kde4
 %_K4srv/kget_*
 %_K4srv/plasma-runner-kget.desktop
 %_K4srvtyp/kget_*
+%_datadir/ontology/kde/kget_*.*
 %_K4doc/*/kget
 
 %files kopete
@@ -471,6 +474,9 @@ chmod 0755 %buildroot/etc/control.d/facilities/kppp-kde4
 %_K4dbus_interfaces/*
 
 %changelog
+* Tue Apr 09 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.2-alt1
+- new version
+
 * Wed Mar 13 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.1-alt1
 - new version
 - update from 4.10 branch
