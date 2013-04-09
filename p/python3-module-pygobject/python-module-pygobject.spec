@@ -5,7 +5,7 @@
 
 Name: python3-module-pygobject
 Version: %major.6
-Release: alt4.1
+Release: alt5
 
 Summary: Python 3 bindings for GObject
 
@@ -24,7 +24,7 @@ Source: http://ftp.gnome.org/pub/GNOME/sources/%oname/%major/%oname-%version.tar
 
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: glib2-devel >= %glib_ver libgio-devel libffi-devel
-BuildRequires: python3-devel python3-module-pycairo-devel
+BuildRequires: python3-devel python3-module-pycairo-devel python-tools-2to3
 %{?_enable_introspection:BuildPreReq: gobject-introspection-devel >= 0.10.2}
 
 %py3_provides scmexpr
@@ -101,6 +101,10 @@ sed -i 's|%_bindir/env python|%_bindir/env python3|' \
 # hack to avoid verify-elf errors
 export LD_PRELOAD=%_libdir/libpython%{_python3_version}%_python3_abiflags.so
 
+for i in $(find %buildroot -name '*.py'); do
+	2to3 -w $i ||:
+done
+
 %files
 %_libdir/libpyglib-2.0-python3*.so.*
 %python3_sitelibdir/pygtk.*
@@ -133,6 +137,9 @@ export LD_PRELOAD=%_libdir/libpython%{_python3_version}%_python3_abiflags.so
 %endif
 
 %changelog
+* Tue Apr 09 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.28.6-alt5
+- Fixed build
+
 * Sun Mar 24 2013 Aleksey Avdeev <solo@altlinux.ru> 2.28.6-alt4.1
 - Rebuild with Python-3.3
 
