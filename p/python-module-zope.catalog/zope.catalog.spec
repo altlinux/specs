@@ -1,7 +1,7 @@
 %define oname zope.catalog
 Name: python-module-%oname
-Version: 3.8.2
-Release: alt1
+Version: 4.0.0
+Release: alt1.a1
 Summary: Cataloging and Indexing Framework for the Zope Toolkit
 License: ZPLv2.1
 Group: Development/Python
@@ -57,6 +57,9 @@ mv %buildroot%python_sitelibdir_noarch/* \
 %python_sitelibdir/*/*/tests.*
 
 %changelog
+* Tue Apr 09 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.0-alt1.a1
+- Version 4.0.0a1
+
 * Wed Dec 28 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.8.2-alt1
 - Version 3.8.2
 
