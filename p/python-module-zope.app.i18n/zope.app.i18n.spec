@@ -1,7 +1,7 @@
 %define oname zope.app.i18n
 Name: python-module-%oname
-Version: 3.6.3
-Release: alt2.1
+Version: 3.6.4
+Release: alt1
 Summary: Persistent translation domains and message catalogs
 License: ZPLv2.1
 Group: Development/Python
@@ -59,6 +59,9 @@ mv %buildroot%python_sitelibdir_noarch/* \
 %python_sitelibdir/*/*/*/*/tests
 
 %changelog
+* Tue Apr 09 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.6.4-alt1
+- Version 3.6.4
+
 * Thu Oct 20 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 3.6.3-alt2.1
 - Rebuild with Python-2.7
 
