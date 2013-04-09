@@ -7,13 +7,15 @@
 
 Name: lib%{_name}2
 Version: %ver_major.1
-Release: alt1
+Release: alt1.1
 Summary: A canvas widget for GTK+3 that uses cairo for drawing
 
 Group: System/Libraries
 License: LGPLv2+
 Url: http://live.gnome.org/GooCanvas
-Source: %_name-%version.tar.xz
+
+Source: %_name-%version.tar
+#Source: ftp://ftp.gnome.org/pub/sources/%_name/%ver_major/%_name-%version.tar.xz
 
 BuildPreReq: rpm-build-gnome
 # From configure.in
@@ -21,7 +23,7 @@ BuildPreReq: libgtk+3-devel >= 3.2.0
 BuildPreReq: glib2-devel >= 2.28.0
 BuildPreReq: libcairo-devel >= 1.10.0
 BuildRequires: gtk-doc
-%{?_enable_python:BuildRequires: python-module-pygobject-devel}
+%{?_enable_python:BuildRequires: python-module-pygobject3-devel}
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel libgtk+3-gir-devel}
 
 %description
@@ -85,6 +87,7 @@ This package provides Python language bindings for for the GooCanvas library.
 %setup -n %_name-%version
 
 %build
+NOCONFIGURE=1 ./autogen.sh
 %autoreconf
 %configure %{subst_enable static} \
 	--enable-gtk-doc
@@ -123,6 +126,9 @@ This package provides Python language bindings for for the GooCanvas library.
 
 
 %changelog
+* Tue Apr 09 2013 Yuri N. Sedunov <aris@altlinux.org> 2.0.1-alt1.1
+- updated from upstream git
+
 * Tue Mar 20 2012 Yuri N. Sedunov <aris@altlinux.org> 2.0.1-alt1
 - first build for Sisyphus
 
