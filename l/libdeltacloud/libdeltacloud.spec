@@ -2,13 +2,15 @@
 Summary: A library for accessing deltacloud
 Name: libdeltacloud
 Version: 0.9
-Release: alt2_4
+Release: alt2_5
 License: LGPLv2+
 Group: System/Libraries
 URL: http://people.redhat.com/clalance/libdeltacloud
 Source0: http://people.redhat.com/clalance/libdeltacloud/%{version}/%{name}-%{version}.tar.gz
+Patch0: libdeltacloud-configure-ac-update.patch
 BuildRequires: libcurl-devel
 BuildRequires: libxml2-devel
+BuildRequires: libtool
 Source44: import.info
 
 %description
@@ -27,8 +29,15 @@ applications that need to use the libdeltacloud library.
 
 %prep
 %setup -q
+%patch0 -p1
 
 %build
+# to support aarch64
+libtoolize --force
+aclocal
+autoheader
+autoconf
+automake --add-missing
 %configure --libdir=/%{_lib}
 make %{?_smp_mflags}
 
@@ -73,6 +82,9 @@ rm -f $RPM_BUILD_ROOT/%{_lib}/libdeltacloud.a
 %{_libdir}/pkgconfig/libdeltacloud.pc
 
 %changelog
+* Tue Apr 09 2013 Igor Vlasenko <viy@altlinux.ru> 0.9-alt2_5
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.9-alt2_4
 - update to new release by fcimport
 
