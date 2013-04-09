@@ -1,14 +1,14 @@
 Name: ode
 Version: 0.12
-Release: alt2.svn20130203
+Release: alt3.svn20130203
 Summary: The Open Dynamics Engine (ODE)
-License: LGPL v2.1
+License: LGPLv2.1+
 Group: Graphics
 Url: http://www.ode.org/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://opende.svn.sourceforge.net/svnroot/opende/trunk
-Source: %name-%version.tar.gz
+Source: %name-%version.tar
 Source1: http://www.ode.org/ode-latest-userguide.pdf
 Source2: http://www.ode.org/joints.pdf
 
@@ -152,6 +152,9 @@ install -p -m644 %SOURCE1 %SOURCE2 \
 %_libdir/%name/
 
 %changelog
+* Tue Apr 09 2013 Dmitry V. Levin <ldv@altlinux.org> 0.12-alt3.svn20130203
+- Fixed build (removed useless attempts to link with -lmp).
+
 * Wed Feb 06 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.12-alt2.svn20130203
 - New snapshot
 
