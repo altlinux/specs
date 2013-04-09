@@ -2,7 +2,7 @@
 Summary: XScript is xml-based application server written in C++.
 Name: xscript
 Version: 5.63
-Release: alt24.7
+Release: alt24.8
 License: GPL
 Group: System/Servers
 Packager: Boris Savelev <boris@altlinux.org>
@@ -128,7 +128,7 @@ XScript offline processor.
 # touch config.rpath
 subst 's|-lboost_thread|-lboost_thread-mt|g' configure.in
 find . -name "Makefile.am" -exec subst 's|-lboost_thread|-lboost_thread-mt|g' {} \;
-cp %_datadir/gettext/intl/config.rpath config.rpath
+cp %_datadir/gettext/config.rpath config.rpath
 
 ACLOCAL_OPTIONS="-I config" ./autogen.sh
 %add_optflags -fpermissive
@@ -213,6 +213,9 @@ install -m755 extra/xscriptcacheclean.sh %buildroot/%_bindir
 %_datadir/%name-proc/*.xsl
 
 %changelog
+* Tue Apr 09 2013 Fr. Br. George <george@altlinux.ru> 5.63-alt24.8
+- Fix build
+
 * Sun Feb 10 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.63-alt24.7
 - Rebuilt with Boost 1.53.0
 
