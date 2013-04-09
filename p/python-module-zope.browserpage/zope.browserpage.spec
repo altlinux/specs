@@ -1,7 +1,7 @@
 %define oname zope.browserpage
 Name: python-module-%oname
-Version: 3.12.2
-Release: alt4.1
+Version: 4.1.0
+Release: alt1.a1
 Summary: ZCML directives for configuring browser views for Zope
 License: ZPL
 Group: Development/Python
@@ -57,6 +57,9 @@ mv %buildroot%python_sitelibdir_noarch/* \
 %python_sitelibdir/*/*/tests
 
 %changelog
+* Tue Apr 09 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.1.0-alt1.a1
+- Version 4.1.0a1
+
 * Mon Oct 24 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 3.12.2-alt4.1
 - Rebuild with Python-2.7
 
