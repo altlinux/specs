@@ -1,7 +1,7 @@
 # -*- coding: utf-8; mode: rpm-spec -*-
 # $Id: emacs-wiki.spec,v 1.4 2006/05/27 13:10:23 eugene Exp $
 
-%define base_rel alt2
+%define base_rel alt3
 
 Version: 2.72
 %ifdef cvsdate
@@ -31,7 +31,7 @@ BuildPreReq: emacs-misc-modes >= 0.2-alt3
 BuildPreReq: emacs-devel
 
 # Automatically added by buildreq on Wed Nov 16 2005
-BuildRequires: emacs-common fontconfig freetype2 xorg-x11-locales
+BuildRequires: emacs-common fontconfig freetype2 libX11-locales
 
 %description
 Emacs-wiki allows you to create a wiki on your local system and export
@@ -89,6 +89,9 @@ gzip ChangeLog*
 
 
 %changelog
+* Tue Apr 09 2013 Andrey Cherepanov <cas@altlinux.org> 2.72-alt3
+- Fix build with new xorg
+
 * Sat Oct 24 2009 Igor Vlasenko <viy@altlinux.ru> 2.72-alt2
 - applied repocop patch: removed obsolete (un)install_info macros
 
