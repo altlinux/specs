@@ -1,6 +1,6 @@
 Name: deluge
-Version: 1.3.5
-Release: alt2
+Version: 1.3.6
+Release: alt1
 
 Summary: full-featured BitTorrent client
 License: GPL
@@ -154,6 +154,9 @@ cp altlinux/deluged.sys %buildroot%_sysconfdir/sysconfig/deluged
 %python_sitelibdir/%name/ui/web
 
 %changelog
+* Tue Apr 09 2013 Vladimir Lettiev <crux@altlinux.ru> 1.3.6-alt1
+- New version 1.3.6 (Closes: #28750)
+
 * Thu May 31 2012 Vladimir Lettiev <crux@altlinux.ru> 1.3.5-alt2
 - Fixed subpackages dependencies (Closed: #27388)
 
