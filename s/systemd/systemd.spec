@@ -17,8 +17,8 @@
 %def_enable efi
 
 Name: systemd
-Version: 200
-Release: alt3
+Version: 201
+Release: alt1
 Summary: A System and Session Manager
 Url: http://www.freedesktop.org/wiki/Software/systemd
 Group: System/Configuration/Boot and Init
@@ -1070,6 +1070,9 @@ update_chrooted all
 /lib/udev/write_net_rules
 
 %changelog
+* Tue Apr 09 2013 Alexey Shabalin <shaba@altlinux.ru> 201-alt1
+- 201
+
 * Mon Apr 08 2013 Alexey Shabalin <shaba@altlinux.ru> 200-alt3
 - run systemd-vconsole-setup before getty.target
 
