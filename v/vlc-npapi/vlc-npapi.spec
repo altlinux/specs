@@ -1,6 +1,6 @@
 Name: vlc-npapi
-Version: 2.0.0
-Release: alt2
+Version: 2.0.6
+Release: alt1
 Summary: VLC Web Plugin
 License: LGPLv2.1
 Group: Video
@@ -39,6 +39,16 @@ install -pD -m644 npapi/.libs/libvlcplugin.so %buildroot%browser_plugins_path/li
 %browser_plugins_path/libvlcplugin.so
 
 %changelog
+* Tue Apr 09 2013 Dmitry Derjavin <dd@altlinux.org> 2.0.6-alt1
+- 2.0.6.
+
+* Wed Dec 12 2012 Dmitry Derjavin <dd@altlinux.org> 2.0.2-alt1.git20121119
+- git snapshot;
+- GTK scrollbar in Firefox fixed.
+
+* Wed Dec 12 2012 Dmitry Derjavin <dd@altlinux.org> 2.0.2-alt1
+- 2.0.2.
+
 * Thu Apr 19 2012 Dmitry Derjavin <dd@altlinux.org> 2.0.0-alt2
 - 2.0.0 release.
 
