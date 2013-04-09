@@ -1,7 +1,7 @@
 %define oname zope.app.testing
 Name: python-module-%oname
-Version: 3.9.0
-Release: alt2.1
+Version: 3.10.0
+Release: alt1
 Summary: Zope Application Testing Support
 License: ZPL
 Group: Development/Python
@@ -12,7 +12,7 @@ Source: %name-%version.tar
 
 BuildPreReq: python-devel python-module-distribute
 
-%py_requires zope.app zope.annotation zope.app.appsetup
+%py_requires zope.annotation zope.app.appsetup
 %py_requires zope.processlifetime zope.app.debug zope.app.dependable
 %py_requires zope.app.publication zope.component zope.container
 %py_requires zope.i18n zope.interface zope.password zope.publisher
@@ -21,6 +21,8 @@ BuildPreReq: python-devel python-module-distribute
 
 %py_requires ZODB3 zope.app.authentication zope.app.zcmlfiles zope.login
 %py_requires zope.publisher zope.securitypolicy
+
+Requires: python-module-zope.app = %EVR
 
 %description
 This package provides testing support for Zope 3 applications. Besides
@@ -69,6 +71,9 @@ touch %buildroot%python_sitelibdir/zope/app/__init__.py
 %python_sitelibdir/zope/app/__init__.py*
 
 %changelog
+* Tue Apr 09 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.10.0-alt1
+- Version 3.10.0
+
 * Thu Oct 20 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 3.9.0-alt2.1
 - Rebuild with Python-2.7
 
