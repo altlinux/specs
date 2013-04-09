@@ -6,7 +6,7 @@ BuildRequires: /usr/bin/docbook2man /usr/bin/glib-genmarshal /usr/bin/glib-gette
 %define _libexecdir %_prefix/libexec
 Name:          mate-power-manager
 Version:       1.6.0
-Release:       alt2
+Release:       alt3
 Summary:       MATE power management service
 License:       GPLv2+
 URL:           http://pub.mate-desktop.org
@@ -86,6 +86,9 @@ desktop-file-install                               \
 %{_libexecdir}/mate-inhibit-applet
 
 %changelog
+* Tue Apr 09 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1.6.0-alt3
+- crash fixed
+
 * Mon Apr 08 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1.6.0-alt2
 - added suspend/hybernate via logind
 - enabled systemdinhibit
