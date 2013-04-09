@@ -1,7 +1,7 @@
 %define oname zope.app.rotterdam
 Name: python-module-%oname
-Version: 3.5.2
-Release: alt2.1
+Version: 3.5.3
+Release: alt1
 Summary: Rotterdam -- A Zope 3 ZMI Skin
 License: ZPLv2.1
 Group: Development/Python
@@ -57,6 +57,9 @@ mv %buildroot%python_sitelibdir_noarch/* \
 %python_sitelibdir/*/*/*/test*
 
 %changelog
+* Tue Apr 09 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.5.3-alt1
+- Version 3.5.3
+
 * Thu Oct 20 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 3.5.2-alt2.1
 - Rebuild with Python-2.7
 
