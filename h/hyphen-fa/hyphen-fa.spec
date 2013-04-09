@@ -3,12 +3,12 @@ BuildRequires: unzip
 # END SourceDeps(oneline)
 Name: hyphen-fa
 Summary: Farsi hyphenation rules
-%define upstreamid 20081119
+%define upstreamid 20130404
 Version: 0.%{upstreamid}
-Release: alt1_6
-Source: http://www.ctan.org/get/language/hyphenation/fahyph.zip
+Release: alt1_1
+Source: http://mirrors.ctan.org/language/hyphenation/fahyph.zip
 Group: Text tools
-URL: http://www.ctan.org/tex-archive/help/Catalogue/entries/fahyph.html
+URL: http://www.ctan.org/tex-archive/language/hyphenation/fahyph
 License: LPPL
 BuildArch: noarch
 BuildRequires: libhyphen-devel
@@ -36,6 +36,9 @@ cp -p hyph_fa_IR.dic $RPM_BUILD_ROOT/%{_datadir}/hyphen
 %{_datadir}/hyphen/*
 
 %changelog
+* Tue Apr 09 2013 Igor Vlasenko <viy@altlinux.ru> 0.20130404-alt1_1
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.20081119-alt1_6
 - update to new release by fcimport
 
