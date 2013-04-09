@@ -1,7 +1,7 @@
 %define oname zope.copy
 Name: python-module-%oname
-Version: 3.5.0
-Release: alt2.1
+Version: 4.0.2
+Release: alt1
 Summary: Pluggable object copying mechanism
 License: ZPLv2.1
 Group: Development/Python
@@ -53,12 +53,17 @@ mv %buildroot%python_sitelibdir_noarch/* \
 %doc *.txt
 %python_sitelibdir/*
 %exclude %python_sitelibdir/*.pth
-%exclude %python_sitelibdir/*/*/tests.*
+%exclude %python_sitelibdir/*/*/tests
+%exclude %python_sitelibdir/*/*/examples.*
 
 %files tests
-%python_sitelibdir/*/*/tests.*
+%python_sitelibdir/*/*/tests
+%python_sitelibdir/*/*/examples.*
 
 %changelog
+* Tue Apr 09 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.2-alt1
+- Version 4.0.2
+
 * Thu Oct 20 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 3.5.0-alt2.1
 - Rebuild with Python-2.7
 
