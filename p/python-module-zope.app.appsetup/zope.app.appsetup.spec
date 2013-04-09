@@ -1,7 +1,7 @@
 %define oname zope.app.appsetup
 Name: python-module-%oname
-Version: 3.16.0
-Release: alt4
+Version: 4.0.0
+Release: alt1.a1
 Summary: Zope app setup helper
 License: ZPLv2.1
 Group: Development/Python
@@ -11,6 +11,9 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 
 BuildPreReq: python-devel python-module-distribute
+BuildPreReq: python-module-zope.testrunner python-module-eggtestinfo
+BuildPreReq: python-module-zope.interface python-module-zope.exceptions
+BuildPreReq: python-module-six
 
 %py_requires zope.app.publication zope.component zope.configuration
 %py_requires zope.container zope.error zope.event zope.interface
@@ -60,6 +63,9 @@ mv %buildroot%_bindir/debug %buildroot%_bindir/debug.app
 %python_sitelibdir/*/*/*/test*
 
 %changelog
+* Tue Apr 09 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.0-alt1.a1
+- Version 4.0.0a1
+
 * Fri Apr 05 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.16.0-alt4
 - Renamed %_bindir/debug -> %_bindir/debug.app (ALT #28797)
 
