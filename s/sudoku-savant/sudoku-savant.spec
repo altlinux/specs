@@ -3,7 +3,7 @@ BuildRequires: gcc-c++ pkgconfig(gtk+-2.0)
 # END SourceDeps(oneline)
 Name:           sudoku-savant
 Version:        1.3
-Release:        alt2_8
+Release:        alt2_9
 Summary:        Solve and generate sudoku puzzles through logical means
 Summary(de):    Lösen und Erstellen von Sudoku-Puzzles mit logischen Mitteln
 
@@ -12,12 +12,15 @@ Group:          Games/Other
 # Upstream bug: https://sourceforge.net/tracker/?func=detail&aid=3272054&group_id=172187&atid=860784
 License:        GPL+
 URL:            http://sourceforge.net/projects/%{name}/
+
 Source0:        http://downloads.sourceforge.net/%{name}/%{name}-%{version}.tar.bz2
 # Patch is taken from the Opensuse package.
 # Without it, "make" cannot install the icons and the *.desktop file
 # into buildroot and tries to use the real system folders instead.
 # Upstream bug: https://sourceforge.net/tracker/?func=detail&aid=3294399&group_id=172187&atid=860784
 Patch0:         %{name}-Makefile.patch
+Patch1:         %{name}-aarch64.patch
+
 BuildRequires:  desktop-file-utils
 BuildRequires:  gtk2-devel
 Source44: import.info
@@ -37,6 +40,7 @@ Standard-Sudoku aus Zeitungen oder Zeitschriften zu lösen.
 %prep
 %setup -q
 %patch0 -p0
+%patch1 -p1
 
 
 %build
@@ -61,6 +65,9 @@ desktop-file-validate %{buildroot}/%{_datadir}/applications/%{name}.desktop
 
 
 %changelog
+* Tue Apr 09 2013 Igor Vlasenko <viy@altlinux.ru> 1.3-alt2_9
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 1.3-alt2_8
 - update to new release by fcimport
 
