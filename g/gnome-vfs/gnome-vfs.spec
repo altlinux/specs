@@ -30,7 +30,7 @@
 
 Name: gnome-vfs
 Version: %ver_major.4
-Release: alt5
+Release: alt6
 Serial: 1
 
 Summary: The GNOME virtual file-system libraries
@@ -41,6 +41,7 @@ Url: ftp://ftp.gnome.org
 Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 
 Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.bz2
+Patch: gnome-vfs-2.24.4-enable-deprecated.patch
 
 Patch2: gnome-vfs-2.24.1-gnutls.patch
 
@@ -232,7 +233,7 @@ This package contains command line tools for GNOME VFS.
 
 %prep
 %setup -q
-
+%patch -p1
 %patch2 -p1
 
 %patch3 -p1 -b .modules-conf
@@ -367,6 +368,9 @@ fi
 %exclude %vfsmodulesdir/*.la
 
 %changelog
+* Tue Apr 09 2013 Yuri N. Sedunov <aris@altlinux.org> 1:2.24.4-alt6
+- fixed build with glib-2.36
+
 * Fri Feb 15 2013 Alexey Shabalin <shaba@altlinux.ru> 1:2.24.4-alt5
 - rebuild with new libsmbclient
 - don't use the anymore the smbc_remove_unused_server (patch17)
