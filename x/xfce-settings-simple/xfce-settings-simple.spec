@@ -1,6 +1,6 @@
 Name: xfce-settings-simple
 Version: 1.0
-Release: alt4
+Release: alt5
 BuildArch: noarch
 
 Source:%name-%version.tar
@@ -30,6 +30,9 @@ cp -a etcskel %buildroot/etc/skel
 /etc/skel
 
 %changelog
+* Tue Apr 09 2013 Eugene Prokopiev <enp@altlinux.ru> 1.0-alt5
+- ported to XFCE 4.10
+
 * Wed May 18 2011 Eugene Prokopiev <enp@altlinux.ru> 1.0-alt4
 - ported to XFCE 4.8
 
