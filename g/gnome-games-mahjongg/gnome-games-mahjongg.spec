@@ -7,7 +7,7 @@
 
 Name: gnome-games-%_name
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: Classic Chinese Tile Game
 Group: Games/Boards
@@ -42,7 +42,7 @@ version of the classic Eastern tile game, Mahjongg.
 %find_lang --with-gnome %__name
 
 %files -f gnome-%_name.lang
-%attr(2711,root,games) %_bindir/%__name
+%_bindir/%__name
 %_desktopdir/%_name.desktop
 %_datadir/%__name
 %_iconsdir/hicolor/*x*/apps/%__name.png
@@ -54,6 +54,9 @@ version of the classic Eastern tile game, Mahjongg.
 
 
 %changelog
+* Tue Apr 09 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.0-alt2
+- no more sgid bit for /usr/bin/gnome-mahjongg
+
 * Wed Mar 27 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.0-alt1
 - 3.8.0
 
