@@ -1,6 +1,6 @@
 %define oname zope.filerepresentation
 Name: python-module-%oname
-Version: 3.6.1
+Version: 4.0.2
 Release: alt1
 Summary: File-system Representation Interfaces
 License: ZPLv2.1
@@ -37,11 +37,14 @@ mv %buildroot%python_sitelibdir_noarch/* \
 %endif
 
 %files
-%doc *.txt
+%doc *.txt *.rst
 %python_sitelibdir/*
 %exclude %python_sitelibdir/*.pth
 
 %changelog
+* Tue Apr 09 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.2-alt1
+- Version 4.0.2
+
 * Wed Dec 28 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.6.1-alt1
 - Version 3.6.1
 
