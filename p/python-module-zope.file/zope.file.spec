@@ -1,7 +1,7 @@
 %define oname zope.file
 Name: python-module-%oname
-Version: 0.6.0
-Release: alt2.1
+Version: 0.6.2
+Release: alt1
 Summary: Efficient File Implementation for Zope Applications
 License: ZPLv2.1
 Group: Development/Python
@@ -59,6 +59,9 @@ mv %buildroot%python_sitelibdir_noarch/* \
 %python_sitelibdir/*/*/test*
 
 %changelog
+* Tue Apr 09 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.2-alt1
+- Version 0.6.2
+
 * Thu Oct 20 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 0.6.0-alt2.1
 - Rebuild with Python-2.7
 
