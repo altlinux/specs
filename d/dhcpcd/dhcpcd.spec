@@ -1,6 +1,6 @@
 Name: dhcpcd
 Epoch: 1
-Version: 5.6.7
+Version: 5.6.8
 Release: alt1
 
 Summary: DHCP Client
@@ -65,6 +65,10 @@ fi
 /lib/%name/%name-run-hooks
 
 %changelog
+* Tue Apr 09 2013 Mikhail Efremov <sem@altlinux.org> 1:5.6.8-alt1
+- Fix a memory leak (from upstream git).
+- Updated to 5.6.8.
+
 * Thu Feb 21 2013 Mikhail Efremov <sem@altlinux.org> 1:5.6.7-alt1
 - Updated to 5.6.7.
 
