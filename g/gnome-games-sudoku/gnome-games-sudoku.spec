@@ -7,7 +7,7 @@
 
 Name: gnome-games-%_name
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: GNOME Sudoku game
 Group: Games/Boards
@@ -41,7 +41,7 @@ in popularity.
 %find_lang --with-gnome %__name
 
 %files -f %__name.lang
-%attr(-,root,games) %_bindir/%__name
+%_bindir/%__name
 %_desktopdir/%__name.desktop
 %_datadir/%__name/
 %python_sitelibdir_noarch/gnome_sudoku/
@@ -53,6 +53,9 @@ in popularity.
 %config %_datadir/glib-2.0/schemas/org.gnome.%__name.gschema.xml
 
 %changelog
+* Tue Apr 09 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.0-alt2
+- no more sgid on /usr/bin/gnome-sudoku (ALT# 28820)
+
 * Wed Mar 27 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.0-alt1
 - 3.8.0
 

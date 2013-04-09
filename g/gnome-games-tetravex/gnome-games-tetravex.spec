@@ -7,7 +7,7 @@
 
 Name: gnome-games-%_name
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: A game based on Tetravex
 Group: Games/Boards
@@ -45,7 +45,7 @@ times are stored in a system-wide scoreboard.
 %find_lang --with-gnome %__name
 
 %files -f %__name.lang
-%attr(2711,root,games) %_bindir/%__name
+%_bindir/%__name
 %_desktopdir/%__name.desktop
 %_datadir/%__name/
 %_iconsdir/hicolor/*x*/apps/*.png
@@ -57,6 +57,9 @@ times are stored in a system-wide scoreboard.
 
 
 %changelog
+* Tue Apr 09 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.0-alt2
+- no more sgid on /usr/bin/gnome-tetrevex (ALT #28820)
+
 * Wed Mar 27 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.0-alt1
 - 3.8.0
 
