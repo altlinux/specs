@@ -3,8 +3,8 @@
 %define real_name               python
 Name: %real_name
 
-Version: 2.7.3
-Release: alt4
+Version: 2.7.4
+Release: alt1
 
 %define package_name		%real_name
 %define weight			1001
@@ -48,7 +48,7 @@ Patch2: python-2.5.1-deb-distutils-link.patch
 Patch3: python-2.5.1-alt-TextTools.patch
 Patch4: python-2.6.5-alt-distutils-get_python_lib.patch
 # use system libexpat library
-Patch5: python-2.5.1-alt-expat.patch
+Patch5: python-2.7.4-alt-expat.patch
 # raise fatal error when extension fails to load
 Patch6: python-2.5.1-alt-setup-PyBuildExt-raise.patch
 # x64 build patches
@@ -62,9 +62,8 @@ Patch17: python-2.7rc1-socketmodule-constants2.patch
 Patch20: python-2.5.4-alt-python-config.patch
 Patch21: python-2.6-ctypes-noexecmem.patch
 Patch22: python-2.6.6-alt-bdist_altrpm.patch
-Patch23: python-2.6.7-alt-linux2-platform.patch
-Patch24: python-2.7.3-python-config-ldflags-alt.patch
-Patch25: python-2.7.3-autoconf-sem_open_check-alt.patch
+Patch23: python-2.7.4-alt-linux2-platform.patch
+Patch24: python-2.7.4-python-config-ldflags-alt.patch
 
 # XXX ignore pydoc dependencies for now
 %add_findreq_skiplist %_bindir/pydoc*
@@ -644,8 +643,7 @@ rm -r Modules/expat
 #patch21 -p1
 %patch22 -p2
 %patch23 -p1
-%patch24 -p2
-%patch25 -p2
+%patch24 -p1
 
 find -type f \( -name \*~ -o -name \*.orig \) -print0 |
 	xargs -r0 rm -f --
@@ -654,16 +652,16 @@ find -type f -print0 |
     xargs -r0 grep -FZl -- /usr/local/bin/python |
     xargs -r0 sed -i 's@/usr/local/bin/python@/usr/bin/python@' --
 
-mkdir ../build-shared
+%build
+rm -rf ../build-shared
+mkdir -p ../build-shared
 export OPT="$RPM_OPT_FLAGS"
 libtoolize --copy --force
 autoconf
 cp -rl * ../build-shared/
 
-%build
 build () {
 %configure --with-threads \
-           --with-libdb \
 %if 0%{?with_valgrind}
   --with-valgrind \
 %endif
@@ -865,6 +863,7 @@ ln -sf idle%suffix_ver %buildroot%_bindir/idle
 ln -s pynche%suffix_ver %buildroot%_bindir/pynche
 
 rm -rf %buildroot%_libdir/%python_name/lib2to3/tests/
+rm -f %buildroot%_man1dir/python2.1 %buildroot%_man1dir/python.1
 
 %files
 
@@ -1045,6 +1044,11 @@ rm -rf %buildroot%_libdir/%python_name/lib2to3/tests/
 %python_libdir/lib-dynload/_tkinter.so
 
 %changelog
+* Tue Apr 09 2013 Fr. Br. George <george@altlinux.ru> 2.7.4-alt1
+- Version up
+- Fix patches
+- Move autoconf from prep to build section
+
 * Thu Apr 19 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 2.7.3-alt4
 - python-2.7.3-autoconf-sem_open_check-alt.patch
 
