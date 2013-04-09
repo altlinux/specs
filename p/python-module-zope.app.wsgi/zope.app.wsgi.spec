@@ -1,7 +1,7 @@
 %define oname zope.app.wsgi
 Name: python-module-%oname
-Version: 3.13.0
-Release: alt4.1
+Version: 4.0.0
+Release: alt1.a4
 Summary: WSGI application for the zope.publisher
 License: ZPLv2.1
 Group: Development/Python
@@ -11,6 +11,9 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 
 BuildPreReq: python-devel python-module-distribute
+BuildPreReq: python-module-zope.testrunner python-module-eggtestinfo
+BuildPreReq: python-module-zope.interface python-module-zope.exceptions
+BuildPreReq: python-module-six
 
 Requires: python-module-ZODB3
 %py_requires webtest ZConfig zope.app.appsetup zope.event
@@ -63,6 +66,9 @@ mv %buildroot%python_sitelibdir_noarch/* \
 %python_sitelibdir/*/*/*/test*
 
 %changelog
+* Tue Apr 09 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.0-alt1.a4
+- Version 4.0.0a4
+
 * Mon Oct 24 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 3.13.0-alt4.1
 - Rebuild with Python-2.7
 
