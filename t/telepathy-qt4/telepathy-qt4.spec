@@ -4,7 +4,7 @@
 
 Name: telepathy-qt4
 Version: 0.9.3
-Release: alt2
+Release: alt3
 
 Summary: Telepathy framework - Qt4 connection manager library 
 License: GPLv2
@@ -21,7 +21,7 @@ Patch2: alt-pkgconfig.patch
 # optimized out: cmake-modules elfutils farstream farstream-devel fontconfig glib2-devel gstreamer-devel libdbus-devel libdbus-glib libdbus-glib-devel libgio-devel libqt4-clucene libqt4-core libqt4-dbus libqt4-devel libqt4-gui libqt4-help libqt4-network libqt4-opengl libqt4-qt3support libqt4-script libqt4-sql libqt4-sql-sqlite libqt4-svg libqt4-test libqt4-xml libstdc++-devel libtelepathy-farstream libtelepathy-glib libtelepathy-glib-devel libxml2-devel pkg-config python-base python-devel python-modules python-modules-compiler python-modules-email python-modules-encodings python-modules-logging python-modules-xml xml-utils
 #BuildRequires: cmake doxygen gcc-c++ git-core graphviz gst-plugins-devel libicu libqt4-sql-interbase libqt4-sql-mysql libqt4-sql-odbc libqt4-sql-postgresql libqt4-sql-sqlite2 libtelepathy-farstream-devel phonon-devel python-module-dbus python-module-distribute qt4-doc-html
 BuildRequires(pre): libqt4-devel
-BuildRequires: cmake doxygen gcc-c++ git-core graphviz gst-plugins-devel qt4-doc-html phonon-devel
+BuildRequires: cmake doxygen gcc-c++ git-core graphviz gst-plugins-devel phonon-devel
 BuildRequires: %farstream_dev
 BuildRequires: python-module-dbus python-module-distribute
 BuildRequires: kde-common-devel
@@ -55,6 +55,7 @@ export QT_DOC_DIR=%_docdir/qt-%qt4_ver
 %Kbuild \
     -DENABLE_FARSTREAM:BOOL=ON \
     -DENABLE_FARSIGHT:BOOL=OFF \
+    -DQT_DOC_DIR=%_docdir/qt-%qt4_ver \
     -DENABLE_TESTS=OFF
 pushd BUILD*/
 make doxygen-doc
@@ -75,6 +76,9 @@ popd
 %_includedir/telepathy-qt4
 
 %changelog
+* Tue Apr 09 2013 Sergey V Turchin <zerg@altlinux.org> 0.9.3-alt3
+- clean build requires
+
 * Fri Apr 05 2013 Sergey V Turchin <zerg@altlinux.org> 0.9.3-alt2
 - fix build requires
 
