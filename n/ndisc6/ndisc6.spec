@@ -1,6 +1,6 @@
 Name: ndisc6
 Version: 1.0.2
-Release: alt2.git20121003
+Release: alt3.git20121003
 
 Summary: IPv6 diagnostic tools
 License: %gpl2plus
@@ -38,7 +38,8 @@ autoconfiguration (RFC5006).
 %patch -p1
 
 %build
-ln -s %_datadir/gettext/intl/gettext.h include/gettext.h
+#Hack for gettext_noop mainly
+find /usr/share/gettext -name gettext.h -exec ln -s '{}' include/gettext.h ';' -quit
 %autoreconf
 CFLAGS="%optflags -fno-strict-aliasing" \
 %configure \
@@ -85,6 +86,9 @@ useradd -r -g rdnssd -d %_runtimedir/rdnssd -s /dev/null -N rdnssd >/dev/null 2>
 %ghost %_runtimedir/rdnssd/resolv.conf
 
 %changelog
+* Tue Apr 09 2013 Mikhail Efremov <sem@altlinux.org> 1.0.2-alt3.git20121003
+- Fix build with new gettext.
+
 * Thu Jan 24 2013 Mikhail Efremov <sem@altlinux.org> 1.0.2-alt2.git20121003
 - Added rdnssd.service for systemd.
 - Fix owner of /var/run/rdnssd directory (closes: #28430).
