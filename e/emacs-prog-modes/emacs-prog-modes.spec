@@ -4,7 +4,7 @@
 %define pkg_name prog-modes
 
 Version: 0.2
-Release: alt4
+Release: alt5
 Name: emacs-%pkg_name
 License: GPL
 Group: Editors
@@ -28,7 +28,7 @@ BuildArch: noarch
 BuildPreReq: emacs-devel >= 0.0.1-alt2
 
 # Automatically added by buildreq on Thu Oct 13 2005
-BuildRequires: emacs-cedet emacs-common emacs-elib emacs-leim fontconfig freetype2 xorg-x11-locales
+BuildRequires: emacs-cedet emacs-common emacs-elib emacs-leim fontconfig freetype2 libX11-locales
 
 %description
 Various programming packages for Emacs, including packages for editing
@@ -66,6 +66,9 @@ install -pD -m0644 %SOURCE9 %buildroot%_emacs_sitestart_dir/xbase.el
 
 
 %changelog
+* Tue Apr 09 2013 Andrey Cherepanov <cas@altlinux.org> 0.2-alt5
+- Fix build with new xorg
+
 * Thu May 01 2008 Eugene Vlasov <eugvv@altlinux.ru> 0.2-alt4
 - Removed c-mode-addons.el, c_synopsis_list and support scripts (#15474)
 
