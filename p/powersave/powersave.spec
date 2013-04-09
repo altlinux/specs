@@ -1,7 +1,7 @@
 Name: powersave
 Summary: General Powermanagement daemon supporting APM and ACPI and CPU frequency scaling
 Version: 0.15.20
-Release: alt3
+Release: alt4
 License: GPL
 Group: System/Kernel and hardware
 Url: http://sourceforge.net/projects/powersave
@@ -17,6 +17,7 @@ Patch0: powersave-0.10.22-disable-videobios.patch
 Patch1: powersave-0.10.15-disable-suspend.patch
 Patch2: powersave-0.15.11-alt-fix-linkage.patch
 Patch3: powersave-0.15.20-alt-fix-script-message.patch
+Patch4: powersave-0.15.20-alt-fix-build.patch
 
 # Automatically added by buildreq on Mon Apr 24 2006
 BuildRequires: doxygen gcc-c++ libcpufreq-devel libdbus-glib-devel libhal-devel libsysfs-devel glibc-kernheaders pkg-config lynx
@@ -65,6 +66,7 @@ applications which will use lib%name.
 #patch1 -p1
 %patch2 -p1
 %patch3 -p2
+%patch4 -p1
 
 %__subst "s/\/var\/run\/hal\/haldaemon.pid/\/var\/run\/hal\.pid/" daemon/*.cpp
 
@@ -152,6 +154,9 @@ touch $RPM_BUILD_ROOT%_sysconfdir/powersave/{battery,common,cpufreq,events,schem
 %preun_service powersaved
 
 %changelog
+* Sun Apr 07 2013 Roman Savochenko <rom_as@altlinux.org> 0.15.20-alt4
+- Build fix.
+
 * Sat Nov 15 2008 Damir Shayhutdinov <damir@altlinux.ru> 0.15.20-alt3
 - added some fixes by raorn@:
   + drop obsolete ldconfig calls
