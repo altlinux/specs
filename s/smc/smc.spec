@@ -1,6 +1,6 @@
 Name: smc
 Version: 2.0.0
-Release: alt2.git20110510.5
+Release: alt2.git20110510.6
 Summary: 2D platform game that uses OpenGL in a style similar to Super Mario
 Group: Games/Arcade
 License: GPLv3
@@ -36,9 +36,6 @@ Data files for Secret Maryo Chronicles game
 
 #Fix EOL chars
 sed -i 's/\r//' docs/style.css docs/*.html docs/*.txt
-
-sed -i 's,/usr/share/gettext/config.rpath,/usr/share/gettext/intl/config.rpath,g' ./autogen.sh
-
 ./autogen.sh
 
 %build
@@ -91,6 +88,9 @@ desktop-file-install --vendor dribble \
 %doc credits.txt docs/*.html docs/license.txt docs/style.css
 
 %changelog
+* Tue Apr 09 2013 Andrey Cherepanov <cas@altlinux.org> 2.0.0-alt2.git20110510.6
+- Fix build with new gettext-tools
+
 * Tue Dec 04 2012 Dmitriy Kulik <lnkvisitor@altlinux.org> 2.0.0-alt2.git20110510.5
 - Rebuild with libxerces-c 3.1.1
 
