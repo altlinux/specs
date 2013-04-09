@@ -1,20 +1,19 @@
 Name: gmp
-Version: 5.0.5
-Release: alt2
+Version: 5.1.1
+Release: alt1
 
 Summary: GNU MP arbitrary precision arithmetic library
 License: LGPLv3+
 Group: System/Libraries
 Url: http://gmplib.org/
 
-# ftp://ftp.gnu.org/gnu/gmp/gmp-%version.tar.bz2
+# ftp://ftp.gmplib.org/pub/gmp-%version/gmp-%version.tar.xz
 Source: gmp-%version.tar
 Patch: gmp-%version-%release.patch
 
 # Automatically added by buildreq on Mon Jun 16 2003
 BuildRequires: flex gcc-c++ libreadline-devel
 
-%def_enable mpbsd
 %def_enable cxx
 %ifarch %ix86
 %def_enable fat
@@ -34,19 +33,12 @@ a rich set of functions, and the functions have a regular interface.
 Summary: GNU MP arbitrary precision arithmetic library
 Group: System/Libraries
 Provides: gmp = %version, libgmp = %version
-Obsoletes: gmp, libgmp
-
-%package -n libmp
-Summary: Berkeley MP compatibility library
-Group: System/Libraries
-Requires: %libgmp = %version-%release
-Conflicts: libgmp < 4.3.2-alt4
+Obsoletes: gmp < %version, libgmp < %version
 
 %package -n libgmp-devel
 Summary: Development GNU MP arbitrary precision arithmetic library
 Group: Development/C
 Requires: %libgmp = %version-%release
-Requires: libmp = %version-%release
 Provides: gmp-devel = %version
 Obsoletes: gmp-devel
 
@@ -103,10 +95,6 @@ This package contains static libraries required for development of
 statically linked applications with the GNU MP arbitrary precision
 arithmetic library.
 
-%description -n libmp
-This package contains GNU MP implementation of
-Berkeley MP compatibility library.
-
 %description -n %libgmpxx
 This package contains C++ bindings for the GNU MP arbitrary precision
 arithmetic library.
@@ -127,10 +115,10 @@ arithmetic library.
 
 %build
 %autoreconf
-%configure %{subst_enable mpbsd} %{subst_enable cxx} %{subst_enable fat}
+%configure %{subst_enable cxx} %{subst_enable fat}
 LANG=C awk 'NR>=3&&$1=="#define"&&$2~/^[a-z_0-9]+$/&&$3~/^__/{print gensub("^__MPN\\(([^)]+)\\)","__gmpn_\\1",1,$3)}' \
-	gmp.h >libgmp.sym
-sed -n 's/^[^ ]\+ \([^ ]\+\) __GMP_PROTO .*/\1/p' randmt.h >>libgmp.sym
+	gmp.h > libgmp.sym
+sed -n 's/^[^ ]\+ \(__gmp_[^ ]\+\) .*/\1/p' rand/randmt.h >> libgmp.sym
 # extra symbols required by libgmpxx and test suite
 cat >>libgmp.sym <<'EOF'
 __gmp_allocate_func
@@ -153,11 +141,16 @@ __gmp_reallocate_func
 __gmp_tmp_reentrant_alloc
 __gmp_tmp_reentrant_free
 __gmpn_bases
+__gmpn_bdiv_qr
+__gmpn_bdiv_qr_itch
+__gmpn_broot
+__gmpn_brootinv
 __gmpn_clz_tab
 __gmpn_copyd
 __gmpn_copyi
 __gmpn_cpuvec
 __gmpn_cpuvec_init
+__gmpn_cpuvec_initialized
 __gmpn_dcpi1_bdiv_q
 __gmpn_dcpi1_bdiv_qr
 __gmpn_dcpi1_div_q
@@ -169,6 +162,8 @@ __gmpn_divexact_1
 __gmpn_dump
 __gmpn_get_d
 __gmpn_hgcd
+__gmpn_hgcd_appr
+__gmpn_hgcd_appr_itch
 __gmpn_hgcd_itch
 __gmpn_hgcd_matrix_init
 __gmpn_invert
@@ -181,6 +176,8 @@ __gmpn_mod_1_1p
 __gmpn_mod_1_1p_cps
 __gmpn_mod_1s_2p
 __gmpn_mod_1s_2p_cps
+__gmpn_mod_1s_3p
+__gmpn_mod_1s_3p_cps
 __gmpn_mod_1s_4p
 __gmpn_mod_1s_4p_cps
 __gmpn_mod_34lsub1
@@ -195,10 +192,15 @@ __gmpn_mu_div_qr_itch
 __gmpn_mu_divappr_q
 __gmpn_mu_divappr_q_itch
 __gmpn_mul_basecase
+__gmpn_mullo_basecase
 __gmpn_mullo_n
+__gmpn_mulmid
 __gmpn_mulmod_bnm1
 __gmpn_mulmod_bnm1_next_size
+__gmpn_powlo
 __gmpn_preinv_divrem_1
+__gmpn_sb_div_qr_sec
+__gmpn_sb_div_r_sec
 __gmpn_sbpi1_bdiv_q
 __gmpn_sbpi1_bdiv_qr
 __gmpn_sbpi1_div_q
@@ -208,17 +210,23 @@ __gmpn_sqr_basecase
 __gmpn_sqrmod_bnm1
 __gmpn_sqrmod_bnm1_next_size
 __gmpn_toom22_mul
+__gmpn_toom2_sqr
 __gmpn_toom32_mul
 __gmpn_toom33_mul
 __gmpn_toom3_mul_n
+__gmpn_toom3_sqr
 __gmpn_toom42_mul
 __gmpn_toom43_mul
 __gmpn_toom44_mul
+__gmpn_toom4_sqr
 __gmpn_toom52_mul
 __gmpn_toom53_mul
+__gmpn_toom54_mul
 __gmpn_toom62_mul
 __gmpn_toom63_mul
+__gmpn_toom6_sqr
 __gmpn_toom6h_mul
+__gmpn_toom8_sqr
 __gmpn_toom8h_mul
 __gmpz_divexact_gcd
 EOF
@@ -227,7 +235,7 @@ sort -u -o libgmp.sym libgmp.sym
 
 %install
 %makeinstall_std
-install -pm644 gmp-mparam.h randmt.h %buildroot%_includedir/
+install -pm644 gmp-mparam.h rand/randmt.h %buildroot%_includedir/
 
 %check
 %make_build -k check
@@ -236,19 +244,14 @@ install -pm644 gmp-mparam.h randmt.h %buildroot%_includedir/
 %doc AUTHORS README NEWS
 %_libdir/libgmp.so.*
 
-%files -n libmp
-%_libdir/libmp.so.*
-
 %files -n libgmp-devel
 %_libdir/libgmp.so
-%_libdir/libmp.so
 %_includedir/*
 %{?_enable_cxx:%exclude %_includedir/*xx*}
 %_infodir/*.info*
 
 %files -n libgmp-devel-static
 %_libdir/libgmp.a
-%_libdir/libmp.a
 
 %if_enabled cxx
 %files -n %libgmpxx
@@ -263,6 +266,10 @@ install -pm644 gmp-mparam.h randmt.h %buildroot%_includedir/
 %endif #cxx
 
 %changelog
+* Tue Apr 09 2013 Dmitry V. Levin <ldv@altlinux.org> 5.1.1-alt1
+- Updated to 5.1.1.
+- Dropped libmp (it has been removed in 5.1.0).
+
 * Wed Jun 06 2012 Dmitry V. Levin <ldv@altlinux.org> 5.0.5-alt2
 - Renamed libgmp_cxx-devel to libgmpxx-devel.
 
