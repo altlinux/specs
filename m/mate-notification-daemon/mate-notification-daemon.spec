@@ -4,7 +4,7 @@ BuildRequires: /usr/bin/glib-gettextize libgio-devel pkgconfig(dbus-1) pkgconfig
 # END SourceDeps(oneline)
 %define _libexecdir %_prefix/libexec
 Name:           mate-notification-daemon
-Version:        1.5.2
+Version:        1.6.0
 Release:        alt1_1
 Summary:        Notification daemon for MATE Desktop
 License:        GPLv2+
@@ -33,8 +33,7 @@ Notification daemon for MATE Desktop
 %build
 NOCONFIGURE=1 ./autogen.sh
 %configure --disable-schemas-compile   \
-           --with-gtk=2.0              \
-           --with-gnu-ld               
+           --with-gtk=2.0
 
 make %{?_smp_mflags} V=1
 
@@ -44,8 +43,6 @@ make %{?_smp_mflags} V=1
 make install DESTDIR=%{buildroot}
 
 desktop-file-install                               \
-        --remove-category="MATE"                   \
-        --add-category="X-Mate"                    \
         --delete-original                          \
         --dir=%{buildroot}%{_datadir}/applications \
 %{buildroot}/%{_datadir}/applications/mate-notification-properties.desktop
@@ -66,6 +63,9 @@ desktop-file-install                               \
 
 
 %changelog
+* Tue Apr 09 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.0-alt1_1
+- new fc release
+
 * Wed Mar 27 2013 Igor Vlasenko <viy@altlinux.ru> 1.5.2-alt1_1
 - new fc release
 
