@@ -1,7 +1,7 @@
 Name: gri
 Summary: A language for scientific illustration
 Version: 2.12.23
-Release: alt1
+Release: alt2
 Group: Development/Tools
 License: GPL v2
 URL: http://gri.sourceforge.net
@@ -81,6 +81,9 @@ install -p -m644 %SOURCE1 %SOURCE2 %SOURCE3 %buildroot%_docdir/%name
 %_docdir/%name
 
 %changelog
+* Tue Apr 09 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.12.23-alt2
+- Fixed build
+
 * Mon Sep 05 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.12.23-alt1
 - Version 2.12.23
 
