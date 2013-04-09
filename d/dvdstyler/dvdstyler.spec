@@ -1,5 +1,5 @@
 Name: dvdstyler
-Version: 2.2
+Version: 2.4.3
 Release: alt1
 Summary: %name is a crossplatform DVD Authoring System
 Summary(ru_RU.UTF-8): %name - это программа для создания DVD дисков
@@ -12,11 +12,9 @@ Source: http://prdownloads.sourceforge.net/dvdstyler/DVDStyler-%version.tar
 Source2: %name.desktop
 Source4: %name-16x16.png
 Source5: %name-32x32.png
-Patch0: genisoimage.patch
-Patch2: drop-mplex.patch
 
-BuildRequires: gcc-c++ libwxGTK-devel libmjpegtools-devel netpbm libnetpbm-devel libwxsvg-devel libexif-devel libjpeg-devel libudev-devel libgnomeui-devel
-BuildRequires: libavcodec-devel libavformat-devel libavutil-devel libavfilter-devel libswscale-devel
+BuildRequires: gcc-c++ libwxGTK2.9-devel libmjpegtools-devel netpbm libnetpbm-devel libwxsvg-devel libexif-devel libjpeg-devel libudev-devel libgnomeui-devel
+BuildRequires: libavcodec-devel libavformat-devel libavutil-devel libavfilter-devel libswscale-devel avconv
 BuildRequires: dvdauthor mjpegtools genisoimage dvd+rw-tools cdrecord-classic dvdrecord xmlto zip bison flex mpgtx
 
 Requires: mjpegtools dvdauthor dvd+rw-tools genisoimage dvdisaster
@@ -50,38 +48,29 @@ The main %name features are:
 
 %prep
 %setup -q -n DVDStyler-%version
-%patch0 -p1
-%patch2 -p1
+
+rm -f ./configure
 
 touch NEWS
-%__subst "s|ja ||g" locale/Makefile.in
-%__subst "s|docs|docs templates|g" Makefile.am
-
-
-#__subst "s|PKT_FLAG_KEY|AV_PKT_FLAG_KEY|g" src/mediaenc_ffmpeg.cpp
-#__subst "s| PKT_FLAG_KEY| AV_PKT_FLAG_KEY|g" src/mediatrc_ffmpeg.cpp
-#__subst "s|AVPictureType|AV_PICTURE_TYPE_NONE|g" src/mediatrc_ffmpeg.cpp
 
 %build
 %autoreconf
-%__subst "s|core,base,html|core,base,html,adv|g" configure
-export FFMPEG_CFLAGS=-I%_includedir/ffmpeg
-export LIBS=-ljpeg
-CXXFLAGS=-D__STDC_CONSTANT_MACROS %configure
-%make
+%configure
+%make_build
 
 %install
-%make install DESTDIR=%buildroot
+%makeinstall_std
 
 #meny
-%__install -p -m 644 %SOURCE2 %buildroot%_datadir/applications
+install -p -m 644 %SOURCE2 %buildroot%_datadir/applications
+
 #icons
-%__mkdir_p %buildroot%_miconsdir
-%__mkdir_p %buildroot%_liconsdir
-%__mkdir_p %buildroot%_niconsdir
-%__install -p -m 644 %SOURCE4 %buildroot%_miconsdir/%name.png
-%__install -p -m 644 %SOURCE5 %buildroot%_niconsdir/%name.png
-%__install -p -m 644 data/%name.png %buildroot%_liconsdir/%name.png
+mkdir -p %buildroot%_miconsdir
+mkdir -p %buildroot%_liconsdir
+mkdir -p %buildroot%_niconsdir
+install -p -m 644 %SOURCE4 %buildroot%_miconsdir/%name.png
+install -p -m 644 %SOURCE5 %buildroot%_niconsdir/%name.png
+install -p -m 644 data/%name.png %buildroot%_liconsdir/%name.png
 
 %find_lang --with-gnome %name
 
@@ -90,6 +79,7 @@ CXXFLAGS=-D__STDC_CONSTANT_MACROS %configure
 %_bindir/*
 %_datadir/%name
 %_man1dir/*
+
 #icons
 %_datadir/pixmaps/*
 %_miconsdir/*
@@ -99,6 +89,13 @@ CXXFLAGS=-D__STDC_CONSTANT_MACROS %configure
 
 
 %changelog
+* Tue Apr 09 2013 Slava Dubrovskiy <dubrsl@altlinux.org> 2.4.3-alt1
+- New release version
+- Cleanup spec
+
+* Sat Sep 01 2012 Slava Dubrovskiy <dubrsl@altlinux.org> 2.3-alt1
+- New release version
+
 * Thu May 24 2012 Slava Dubrovskiy <dubrsl@altlinux.org> 2.2-alt1
 - New release version (ALT #26810)
 

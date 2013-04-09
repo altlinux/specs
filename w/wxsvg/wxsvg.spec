@@ -1,5 +1,5 @@
 Name: wxsvg
-Version: 1.1.8
+Version: 1.1.14
 Release: alt1
 Epoch: 1
 
@@ -10,7 +10,7 @@ Url: http://wxsvg.sourceforge.net
 Packager: Slava Dubrovskiy <dubrsl@altlinux.ru>
 Source: %name-%version.tar.bz2
 
-BuildRequires: gcc-c++ libart_lgpl-devel libpango-devel libwxGTK-devel libavformat-devel libswscale-devel libexpat-devel libagg-devel
+BuildRequires: gcc-c++ libart_lgpl-devel libpango-devel libwxGTK2.9-devel libavformat-devel libswscale-devel libexpat-devel libagg-devel
 
 %description
 wxSVG is viewer SVG files
@@ -43,22 +43,15 @@ Development shared library for wxSVG
 
 %prep
 %setup -q
-
-touch INSTALL
-touch NEWS
-touch README
-
-sed -i '/AC_CONFIG_MACRO_DIR/d' configure.in
+rm -f ./configure
 
 %build
-%add_optflags -D__STDC_CONSTANT_MACROS
 %autoreconf
 %configure
-sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' libtool
 %make_build
 
 %install
-make install DESTDIR=%buildroot
+%makeinstall_std
 
 %files
 %doc ChangeLog AUTHORS TODO COPYING
@@ -77,6 +70,12 @@ make install DESTDIR=%buildroot
 %_libdir/pkgconfig/*
 
 %changelog
+* Tue Apr 09 2013 Slava Dubrovskiy <dubrsl@altlinux.org> 1:1.1.14-alt1
+- New version
+
+* Sat Sep 01 2012 Slava Dubrovskiy <dubrsl@altlinux.org> 1:1.1.9-alt1
+- New version
+
 * Wed May 23 2012 Slava Dubrovskiy <dubrsl@altlinux.org> 1:1.1.8-alt1
 - New version
 - Drop patches
