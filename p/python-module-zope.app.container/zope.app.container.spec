@@ -1,7 +1,7 @@
 %define oname zope.app.container
 Name: python-module-%oname
-Version: 3.9.1
-Release: alt2.1
+Version: 3.9.2
+Release: alt1
 Summary: Zope Container
 License: ZPLv2.1
 Group: Development/Python
@@ -17,7 +17,7 @@ BuildPreReq: python-devel python-module-distribute
 %py_requires zope.exceptions zope.i18n zope.i18nmessageid zope.interface
 %py_requires zope.lifecycleevent zope.location zope.publisher
 %py_requires zope.schema zope.security zope.size zope.traversing
-%py_requires zope.app.publisher
+%py_requires zope.app.publisher zope.app
 
 %description
 This package define interfaces of container components, and provides
@@ -65,6 +65,9 @@ mv %buildroot%python_sitelibdir_noarch/* \
 %python_sitelibdir/*/*/*/*/tests
 
 %changelog
+* Tue Apr 09 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.9.2-alt1
+- Version 3.9.2
+
 * Thu Oct 20 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 3.9.1-alt2.1
 - Rebuild with Python-2.7
 
