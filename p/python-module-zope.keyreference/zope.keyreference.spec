@@ -1,7 +1,7 @@
 %define oname zope.keyreference
 Name: python-module-%oname
-Version: 3.6.4
-Release: alt1
+Version: 4.0.0
+Release: alt1.a2
 Summary: Zope Key References
 License: ZPLv2.1
 Group: Development/Python
@@ -54,6 +54,9 @@ mv %buildroot%python_sitelibdir_noarch/* \
 %python_sitelibdir/*/*/test*
 
 %changelog
+* Tue Apr 09 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.0-alt1.a2
+- Version 4.0.0a2
+
 * Wed Dec 28 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.6.4-alt1
 - Version 3.6.4
 
