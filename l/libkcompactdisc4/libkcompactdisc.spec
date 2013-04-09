@@ -2,7 +2,7 @@
 
 %define rname libkcompactdisc
 Name: libkcompactdisc4
-Version: 4.9.1
+Version: 4.10.2
 Release: alt1
 
 Group: System/Libraries
@@ -49,6 +49,9 @@ Development files for %name
 %_K4includedir/libkcompactdisc/
 
 %changelog
+* Tue Apr 09 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.2-alt1
+- new version
+
 * Wed Oct 03 2012 Sergey V Turchin <zerg@altlinux.org> 4.9.1-alt1
 - new version
 
