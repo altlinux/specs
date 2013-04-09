@@ -1,7 +1,7 @@
 %define oname zope.app.publication
 Name: python-module-%oname
-Version: 3.13.2
-Release: alt1
+Version: 4.0.0
+Release: alt1.a1.dev
 Summary: Zope publication
 License: ZPLv2.1
 Group: Development/Python
@@ -59,6 +59,9 @@ mv %buildroot%python_sitelibdir_noarch/* \
 %python_sitelibdir/*/*/*/test*
 
 %changelog
+* Tue Apr 09 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.0-alt1.a1.dev
+- Version 4.0.0a1.dev
+
 * Wed Dec 28 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.13.2-alt1
 - Version 3.13.2
 
