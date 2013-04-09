@@ -7,7 +7,7 @@ BuildRequires(pre): browser-plugins-npapi-devel
 %define oldname mate-session-manager
 Name:           mate-session
 Version:        1.6.0
-Release:        alt1_1
+Release:        alt2_1
 Summary:        MATE Desktop session manager
 License:        GPLv2+
 URL:            http://mate-desktop.org
@@ -30,6 +30,7 @@ Source44: import.info
 Patch33: mate-session-manager-cflags.patch
 Provides: mate-session-manager = %version-%release
 Provides: mate-session-xsession = %version-%release
+Requires: mate-desktop
 Source45: MATE64.png
 
 %description
@@ -128,6 +129,9 @@ install -pD -m644 %SOURCE45 %buildroot%_iconsdir/hicolor/64x64/apps/mate.png
 
 
 %changelog
+* Tue Apr 09 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.0-alt2_1
+- added Requires: mate-desktop (closes: 28825)
+
 * Sat Apr 06 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.0-alt1_1
 - new fc release
 
