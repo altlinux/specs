@@ -1,11 +1,18 @@
 Name:      arc
-Version:   5.21o
-Release:   alt2_12
+Version:   5.21p
+Release:   alt1_1
 Summary:   Arc archiver
 Group:     Archiving/Other
 License:   GPL+
 URL:       http://arc.sourceforge.net/
-Source:    http://heanet.dl.sourceforge.net/sourceforge/%{name}/%{name}-%{version}.tgz
+Source0:   http://downloads.sourceforge.net/%{name}/%{name}-%{version}.tar.gz
+# 2 small polish patches courtesy of Debian
+Patch0:    arc-5.21p-spelling.patch
+Patch1:    arc-5.21p-manpage-section-fix.patch
+# Arc was once shareware, but has been relicensed to the GPL with permission
+# of its original author. But there still is some confusing license text in the
+# docs this clarifies those parts of the text (rhbz#947786)
+Patch2:    arc-5.21p-clarify-license.patch
 Source44: import.info
 
 %description
@@ -15,6 +22,9 @@ but useful if you have old .arc files you need to unpack.
 
 %prep
 %setup -q
+%patch0 -p1
+%patch1 -p1
+%patch2 -p1
 sed -i -e 's,^OPT =.*$,OPT = ${RPM_OPT_FLAGS},' Makefile
 
 
@@ -23,19 +33,21 @@ make %{?_smp_mflags}
 
 
 %install
-rm -fr %{buildroot}
 install -m 0755 -d %{buildroot}{%{_bindir},%{_mandir}/man1}
 install -m 0755 arc marc %{buildroot}%{_bindir}
-install -m 0644 arc.1 %{buildroot}%{_mandir}/man1/
+install -m 0644 arc.1 marc.1 %{buildroot}%{_mandir}/man1/
 
 
 %files
 %doc LICENSE COPYING PATCHLEVEL Readme Arc521.doc
-%doc %{_mandir}/man1/*
-%attr (0755,root,root) %{_bindir}/*
+%{_bindir}/*
+%{_mandir}/man1/*
 
 
 %changelog
+* Tue Apr 09 2013 Igor Vlasenko <viy@altlinux.ru> 5.21p-alt1_1
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 5.21o-alt2_12
 - update to new release by fcimport
 
