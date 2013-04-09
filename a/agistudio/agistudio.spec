@@ -1,9 +1,9 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: gcc-c++
+BuildRequires: gcc-c++ libqt4-devel
 # END SourceDeps(oneline)
 Name: agistudio
-Version: 1.2.4
-Release: alt2_8
+Version: 1.3.0
+Release: alt1_1
 Summary: AGI integrated development environment
 License: GPLv2+
 Group: Games/Other
@@ -11,7 +11,7 @@ Source0: http://downloads.sourceforge.net/%{name}/%{name}-%{version}.tar.gz
 Source1: %{name}.desktop
 URL: http://agistudio.sourceforge.net/
 
-BuildRequires: qt3-devel desktop-file-utils
+BuildRequires: qt4-devel desktop-file-utils
 #Requiring nagi, needed at runtime, not picked up by rpm.
 Requires: icon-theme-hicolor nagi gtk2
 Source44: import.info
@@ -27,7 +27,7 @@ is a program which allows you to view, create and edit AGI games.
 
 %build
 cd src
-qmake-qt3
+qmake-qt4
 make RPM_OPT_FLAGS="$RPM_OPT_FLAGS"
 
 %install
@@ -56,6 +56,9 @@ desktop-file-install  \
 %{_datadir}/icons/hicolor/32x32/apps/agistudio.xpm
 
 %changelog
+* Tue Apr 09 2013 Igor Vlasenko <viy@altlinux.ru> 1.3.0-alt1_1
+- update to new release by fcimport
+
 * Mon Feb 11 2013 Igor Vlasenko <viy@altlinux.ru> 1.2.4-alt2_8
 - update to new release by fcimport
 
