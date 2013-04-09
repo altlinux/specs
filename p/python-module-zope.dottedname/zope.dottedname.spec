@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 3.4.6
-Release: alt3
+Version: 4.0.1
+Release: alt1
 Summary: Resolver for Python dotted names
 License: ZPLv2.1
 Group: Development/Python
@@ -130,6 +130,9 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 
 %changelog
+* Tue Apr 09 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.1-alt1
+- Version 4.0.1
+
 * Mon Apr 16 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.4.6-alt3
 - Added module for Python 3
 
