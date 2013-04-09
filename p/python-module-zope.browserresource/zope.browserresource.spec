@@ -1,7 +1,7 @@
 %define oname zope.browserresource
 Name: python-module-%oname
-Version: 3.12.0
-Release: alt3.1
+Version: 4.0.1
+Release: alt1
 Summary: Browser resources implementation for Zope
 License: ZPL
 Group: Development/Python
@@ -59,6 +59,9 @@ mv %buildroot%python_sitelibdir_noarch/* \
 %python_sitelibdir/*/*/tests
 
 %changelog
+* Tue Apr 09 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.1-alt1
+- Version 4.0.1
+
 * Thu Oct 20 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 3.12.0-alt3.1
 - Rebuild with Python-2.7
 
