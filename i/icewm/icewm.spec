@@ -3,7 +3,7 @@
 
 Name: icewm
 Version: 1.3.7
-Release: alt10
+Release: alt11
 Epoch: 2
 
 Summary: X11 Window Manager
@@ -212,6 +212,12 @@ rm -rf %buildroot/%_x11x11dir/%name/themes/*
 %_pixmapsdir/*
 
 %changelog
+* Wed Apr 10 2013 Dmitriy Khanzhin <jinn@altlinux.org> 2:1.3.7-alt11
+- updated altconf.patch:
+  + added wlan0 to NetworkStatusDevice for show status
+  + updated ClockCommand, CPUStatusCommand (recommends htop)
+    and added support key "PrtSc" by scrot (thx YYY at the forum)
+
 * Sun Jan 06 2013 Dmitriy Khanzhin <jinn@altlinux.org> 2:1.3.7-alt10
 - applied patches from sf.net icewm tracker:
   + #3393827 "fix reading window icon property"
