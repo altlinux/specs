@@ -2,7 +2,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: chkpwd-pam
-Version: 0.1.1
+Version: 0.1.1.1
 Release: alt1
 Summary: PAM user password checker
 License: GPLv3
@@ -42,6 +42,9 @@ echo 'd %lockfilesdir 1770 root %_group' > %buildroot%_tmpfilesdir/%name.conf
 
 
 %changelog
+* Tue Apr 09 2013 Led <led@altlinux.ru> 0.1.1.1-alt1
+- chkpwd-pam.c: fixed lockdir path
+
 * Thu Apr 04 2013 Led <led@altlinux.ru> 0.1.1-alt1
 - 0.1.1:
   + add throttle chkpwd-pam invocations to avoid abusing it for bruteforcing
