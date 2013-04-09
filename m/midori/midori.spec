@@ -1,7 +1,7 @@
 %def_without devel
 
 Name: midori
-Version: 0.4.8
+Version: 0.5.0
 Release: alt1
 
 Summary: is a lightweight web browser
@@ -75,6 +75,9 @@ Requires: %name = %version-%release
 %endif
 
 %changelog
+* Tue Apr 09 2013 Vladimir Lettiev <crux@altlinux.ru> 0.5.0-alt1
+- 0.5.0
+
 * Thu Feb 07 2013 Vladimir Lettiev <crux@altlinux.ru> 0.4.8-alt1
 - 0.4.8
 
