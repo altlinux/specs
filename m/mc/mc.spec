@@ -1,6 +1,6 @@
 Name: mc
 Version: 4.8.8
-Release: alt2
+Release: alt3
 
 License: %gpl3plus
 Summary: An user-friendly file manager and visual shell
@@ -37,6 +37,9 @@ Patch103: mc-4.8.6-alt-extfs-udar.patch
 
 # http://www.midnight-commander.org/ticket/2812
 Patch104: mc-4.8.6-alt-extfs-rpm.patch
+
+# http://www.midnight-commander.org/ticket/3003
+Patch105: mc-5c22dc152480607eaca220284330f10a0864a492-man.patch
 
 BuildRequires(pre): rpm-build-licenses
 
@@ -92,6 +95,7 @@ needed for working all components (some vfs for example)
 %patch102 -p1
 %patch103 -p1
 %patch104 -p1
+%patch105 -p1
 
 cat <<EOF > version.h
 #ifndef MC_CURRENT_VERSION
@@ -178,6 +182,9 @@ install -pD -m644 %SOURCE5 %buildroot%_niconsdir/%name.png
 %files full
 
 %changelog
+* Tue Apr 09 2013 Sergey Y. Afonin <asy@altlinux.ru> 4.8.8-alt3
+- applied patch for mc ticket #3003 (ALT #28817)
+
 * Mon Apr 08 2013 Sergey Y. Afonin <asy@altlinux.ru> 4.8.8-alt2
 - merged with git://github.com/MidnightCommander/mc.git
   (ticket #2991 closed)
