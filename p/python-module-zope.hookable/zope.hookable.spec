@@ -1,7 +1,7 @@
 %define oname zope.hookable
 Name: python-module-%oname
-Version: 3.4.1
-Release: alt2.1.1
+Version: 4.0.1
+Release: alt1
 Summary: Hookable object support
 License: ZPLv2.1
 Group: Development/Python
@@ -61,6 +61,9 @@ This package contains tests for zope.hookable.
 %python_sitelibdir/*/*/tests
 
 %changelog
+* Tue Apr 09 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.1-alt1
+- Version 4.0.1
+
 * Thu Apr 12 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 3.4.1-alt2.1.1
 - Rebuild to remove redundant libpython2.7 dependency
 
