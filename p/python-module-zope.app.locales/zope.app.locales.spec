@@ -1,6 +1,6 @@
 %define oname zope.app.locales
 Name: python-module-%oname
-Version: 3.7.2
+Version: 3.7.4
 Release: alt1
 Summary: Zope locale extraction and management utilities
 License: ZPLv2.1
@@ -62,6 +62,9 @@ mv %buildroot%python_sitelibdir_noarch/* \
 %python_sitelibdir/*/*/*/tests.*
 
 %changelog
+* Tue Apr 09 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.7.4-alt1
+- Version 3.7.4
+
 * Wed Dec 28 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.7.2-alt1
 - Version 3.7.2
 
