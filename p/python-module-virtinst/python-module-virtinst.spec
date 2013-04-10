@@ -1,8 +1,7 @@
-Version: 0.600.3
-Release: alt1.git592be03
+Version: 0.600.4
+Release: alt1
 %setup_python_module virtinst
 Name: python-module-virtinst
-Packager: Anton Protopopov <aspsk@altlinux.ru>
 
 Summary: Python modules and utilities for installing virtual machines
 License: GPLv2+
@@ -44,6 +43,9 @@ and install new VMs) and virt-clone (clone an existing virtual machine).
 %_man5dir/*
 
 %changelog
+* Wed Apr 10 2013 Alexey Shabalin <shaba@altlinux.ru> 0.600.4-alt1
+- 0.600.4
+
 * Wed Jan 23 2013 Alexey Shabalin <shaba@altlinux.ru> 0.600.3-alt1.git592be03
 - upstream git snapshot 592be03453042bc9fefdce38a526e32b1441c92e
 
