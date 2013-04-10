@@ -4,8 +4,8 @@ BuildRequires: /usr/bin/glib-gettextize /usr/bin/pkg-config libgio-devel pkgconf
 # END SourceDeps(oneline)
 %define _libexecdir %_prefix/libexec
 Name:		mate-file-manager-open-terminal
-Version:	1.5.0
-Release:	alt1_2
+Version:	1.6.0
+Release:	alt1_1
 Summary:	Mate-file-manager extension for an open terminal shortcut
 
 License:	GPLv2+
@@ -29,10 +29,9 @@ Terminal" option for mate-file-manager users who prefer that option.
 NOCONFIGURE=1 ./autogen.sh
 
 %build
-%configure				\
-	--disable-static		\
-	--disable-schemas-compile	\
-	--with-gnu-ld			
+%configure \
+    --disable-static  \
+    --disable-schemas-compile
 
 make %{?_smp_mflags} V=1
 
@@ -46,10 +45,14 @@ rm -f %{buildroot}%{_libdir}/caja/extensions-2.0/*.la
 
 %files -f caja-open-terminal.lang
 %doc AUTHORS ChangeLog README COPYING
-%{_datadir}/glib-2.0/schemas/org.mate.apps.caja-open-terminal.gschema.xml
 %{_libdir}/caja/extensions-2.0/libcaja-open-terminal.so
+%{_datadir}/MateConf/gsettings/caja-open-terminal.convert
+%{_datadir}/glib-2.0/schemas/org.mate.caja-open-terminal.gschema.xml
 
 %changelog
+* Tue Apr 09 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.0-alt1_1
+- new fc release
+
 * Tue Mar 05 2013 Igor Vlasenko <viy@altlinux.ru> 1.5.0-alt1_2
 - new fc release
 
