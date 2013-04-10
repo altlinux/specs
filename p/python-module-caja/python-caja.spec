@@ -4,8 +4,8 @@ BuildRequires: /usr/bin/gtkdocize /usr/bin/pkg-config /usr/bin/xsltproc
 %define _libexecdir %_prefix/libexec
 %define oldname python-caja
 Name:           python-module-caja
-Version:        1.5.0
-Release:        alt3_0
+Version:        1.6.0
+Release:        alt1_0
 Summary:        Python bindings for Caja
 
 Group:          Development/C
@@ -71,6 +71,9 @@ find $RPM_BUILD_ROOT -name '*.la' -delete
 %{_datadir}/doc/*
 
 %changelog
+* Tue Apr 09 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.0-alt1_0
+- new version
+
 * Wed Feb 20 2013 Igor Vlasenko <viy@altlinux.ru> 1.5.0-alt3_0
 - added py_provides caja
 
