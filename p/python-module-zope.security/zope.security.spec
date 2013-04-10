@@ -1,14 +1,14 @@
 %define oname zope.security
 Name: python-module-%oname
 Version: 4.0.0
-Release: alt2.bzr20120517
+Release: alt3.b2.dev0.git20130327
 Summary: Zope Security Framework
 License: ZPLv2.1
 Group: Development/Python
 Url: http://pypi.python.org/pypi/zope.security/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-# bzr branch lp:zope.security
+# https://github.com/zopefoundation/zope.security.git
 Source: %name-%version.tar
 
 BuildPreReq: python-devel python-module-distribute
@@ -75,6 +75,9 @@ install -p -m644 src/zope/security/*.zcml \
 %python_sitelibdir/*/*/examples
 
 %changelog
+* Wed Apr 10 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.0-alt3.b2.dev0.git20130327
+- Version 4.0.0b2.dev0
+
 * Thu Jan 03 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.0-alt2.bzr20120517
 - Added necessary .zcml files (ALT #28301)
 
