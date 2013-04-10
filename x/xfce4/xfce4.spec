@@ -1,6 +1,6 @@
 Name: xfce4
 Version: 4.10
-Release: alt3
+Release: alt4
 Summary: Set of XFce4 Desktop installers.
 License: %gpl2plus
 Group: Graphical desktop/XFce
@@ -26,7 +26,6 @@ Summary: Minimal installation of XFce4 Desktop
 Summary(ru_RU.UTF8): Минимальная установка XFce4
 Group: Graphical desktop/XFce
 BuildArch: noarch
-Requires: ConsoleKit
 Requires: xfce4-panel
 Requires: xfce4-session
 Requires: xfce4-settings
@@ -83,6 +82,7 @@ Requires: orage
 Requires: xfce4-screenshooter
 Requires: xarchiver
 Requires: ristretto
+Requires: mousepad
 # Panel plugins
 Requires: xfce4-clipman-plugin
 Requires: xfce4-cpufreq-plugin
@@ -153,6 +153,10 @@ mkdir -p %buildroot/%_sysconfdir/xdg/xfce4
 %files regular
 
 %changelog
+* Wed Apr 10 2013 Mikhail Efremov <sem@altlinux.org> 4.10-alt4
+- minimal: Drop ConsoleKit.
+- full: Added mousepad.
+
 * Thu Jan 31 2013 Mikhail Efremov <sem@altlinux.org> 4.10-alt3
 - Added 'regular' subpackage.
 - default: Terminal -> xfce4-terminal.
