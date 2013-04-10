@@ -6,7 +6,7 @@ BuildRequires: chrpath
 Summary:	Shared functions for Ayatana indicators
 Name:		libindicator
 Version:	0.4.94
-Release:	alt1_4
+Release:	alt1_4.1
 License:	GPLv3
 Group:		System/Libraries
 URL:		https://launchpad.net/libindicator
@@ -17,6 +17,7 @@ BuildRequires:	libdbus-glib-devel
 BuildRequires:	gtk2-devel
 BuildRequires:	libgtk+3-devel
 Source44: import.info
+Patch: libindicator-fix-deprecated.patch
 
 %description
 A set of symbols and convenience functions that all Ayatana indicators
@@ -68,6 +69,7 @@ developing applications that use %{name}-gtk3.
 
 %prep
 %setup -q
+%patch -p2
 
 %build
 # we build it twice, once against GTK+ 3 and once against GTK+ 2, so
@@ -135,6 +137,9 @@ done
 %{_libdir}/pkgconfig/indicator3-0.4.pc
 
 %changelog
+* Wed Apr 10 2013 Andrey Cherepanov <cas@altlinux.org> 0.4.94-alt1_4.1
+- don't use deprecated gtk_icon_info_free
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.4.94-alt1_4
 - update to new release by fcimport
 
