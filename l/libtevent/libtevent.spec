@@ -1,5 +1,5 @@
 Name: libtevent
-Version: 0.9.17
+Version: 0.9.18
 Release: alt1
 Summary: The tevent library
 License: LGPLv3+
@@ -71,6 +71,9 @@ rm -f %buildroot%_libdir/*.a
 %python_sitelibdir/tevent.py*
 
 %changelog
+* Tue Apr 09 2013 Alexey Shabalin <shaba@altlinux.ru> 0.9.18-alt1
+- 0.9.18
+
 * Mon Sep 17 2012 Alexey Shabalin <shaba@altlinux.ru> 0.9.17-alt1
 - 0.9.17
 
