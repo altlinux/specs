@@ -1,6 +1,6 @@
 Name: awesome
-Version: 3.5
-Release: alt4
+Version: 3.5.1
+Release: alt1
 Group: Graphical desktop/Other
 License: GPL2+
 
@@ -90,6 +90,9 @@ install -D -m 755 %SOURCE2 %buildroot%_sysconfdir/menu-methods/%name
 %doc AUTHORS LICENSE README BUGS PATCHES STYLE
 
 %changelog
+* Wed Apr 10 2013 Terechkov Evgenii <evg@altlinux.org> 3.5.1-alt1
+- 3.5.1 (Ruby Tuesday)
+
 * Mon Jan 21 2013 Terechkov Evgenii <evg@altlinux.org> 3.5-alt4
 - We need libcairo-gobject
 
