@@ -1,8 +1,8 @@
 Name: gawk
 Version: 4.0.2
-Release: alt2
+Release: alt3
 
-%def_without doc
+%def_with doc
 %def_with profile
 %define _libexecdir %prefix/libexec
 
@@ -122,9 +122,12 @@ install -pm644 AUTHORS ChangeLog FUTURES LIMITATIONS NEWS POSIX.STD README \
 %endif
 
 %changelog
+* Wed Apr 10 2013 Dmitry V. Levin <ldv@altlinux.org> 4.0.2-alt3
+- Reenabled doc subpackage.
+
 * Mon Apr 08 2013 Dmitry V. Levin <ldv@altlinux.org> 4.0.2-alt2
 - Updated to gawk-4.0.1-88-ge321abf.
-- Disabled -doc subpackage for a while (texlive is broken).
+- Disabled doc subpackage for a while (texlive is broken).
 
 * Mon Jan 21 2013 Dmitry V. Levin <ldv@altlinux.org> 4.0.2-alt1
 - Updated to gawk-4.0.1-80-gcb565f1.
