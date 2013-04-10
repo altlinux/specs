@@ -2,8 +2,8 @@
 Name: btier
 %define module_name %name
 Version: 0.9.9.9
-%define rel 6
-Release: alt2
+%define rel 7
+Release: alt3
 Summary: %Name - a blockdevice that provides automated tiered storage
 License: GPLv2
 Group: System/Base
@@ -92,6 +92,9 @@ tar --transform='s,^.*/,/%module_name-%version/,' -cJf %kernel_srcdir/%module_na
 
 
 %changelog
+* Wed Apr 10 2013 Led <led@altlinux.ru> 0.9.9.9-alt3
+- 0.9.9.9-7
+
 * Fri Apr 05 2013 Led <led@altlinux.ru> 0.9.9.9-alt2
 - 0.9.9.9-6
 - added doc subpackage
