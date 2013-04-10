@@ -2,7 +2,7 @@
 
 Name: python-module-pygnome
 Version: %major.1
-Release: alt2
+Release: alt3
 
 Summary: Set of bindings for the GNOME2 platform library
 License: LGPL
@@ -101,6 +101,8 @@ find %buildroot -name '*.la' -exec rm {} \;
 %python_gnome_dir/__init__.*
 %python_gnome_dir/_gnome.so
 %python_gnome_dir/ui.so
+%python_gnome_dir/vfs.*
+%python_gnome_dir/canvas.*
 %doc AUTHORS ChangeLog README NEWS
 
 %files devel
@@ -111,7 +113,6 @@ find %buildroot -name '*.la' -exec rm {} \;
 %_datadir/pygtk/2.0/defs/*
 
 %files canvas
-%python_gnome_dir/canvas.*
 %python_sitelibdir/gtk-2.0/gnomecanvas.so
 
 %files bonobo
@@ -123,9 +124,12 @@ find %buildroot -name '*.la' -exec rm {} \;
 %files gnome-vfs
 %_libdir/gnome-vfs-2.0/modules/libpythonmethod.so
 %python_sitelibdir/gtk-2.0/gnomevfs/
-%python_gnome_dir/vfs.*
 
 %changelog
+* Wed Apr 10 2013 Yuri N. Sedunov <aris@altlinux.org> 2.28.1-alt3
+- move %%python_sitelibdir/gtk-2.0/gnome/{canvas,vfs}.py*
+  to main package (ALT #28831)
+
 * Sat Apr 07 2012 Yuri N. Sedunov <aris@altlinux.org> 2.28.1-alt2
 - removed manual dependencies
 - separate gnomevfs from main package
