@@ -4,7 +4,7 @@ BuildRequires(pre): rpm-macros-fedora-compat
 %define oldname fedora-gnat-project-common
 Name:           rpm-build-gnat
 Version:        3.5
-Release:        alt1_4
+Release:        alt1_7
 Summary:        Files shared by Ada libraries
 Summary(sv):    Gemensamma filer för adabibliotek
 
@@ -18,6 +18,7 @@ Requires:       setup
 # workaround for https://bugzilla.redhat.com/show_bug.cgi?id=613407:
 Requires:       libgnat-devel-static
 # macros.gnat requires __global_ldflags:
+# An RPM that knows about /usr/lib/rpm/macros.d is required:
 # Distribute this package only for architectures where libgnat-static is
 # available:
 ExclusiveArch:  noarch %{GNAT_arches}
@@ -38,6 +39,7 @@ GNAT-projektfilerna för flera adabibliotek, samt GNAT-specifika RPM-makron.
 %global _GNAT_project_dir /usr/share/gpr
 # _GNAT_project_dir is defined here and copied from here to macros.gnat so that
 # this package won't build-require itself.
+
 
 
 
@@ -63,6 +65,10 @@ exec_prefix=%{_exec_prefix} bindir=%{_bindir} libexecdir=%{_libexecdir} included
 mkdir --parents %{buildroot}%{_GNAT_project_dir} %{buildroot}%{_sysconfdir}/profile.d %{buildroot}%_rpmmacrosdir/
 cp -p directories.gpr %{buildroot}%{_GNAT_project_dir}/
 cp -p gnat-project.sh gnat-project.csh %{buildroot}%{_sysconfdir}/profile.d/
+# Write an explanation where macros.gnat used to be. Remove it in 2015.
+mkdir %{buildroot}%{_sysconfdir}/rpm
+# Overwrite the explanation with the macros rather than the opposite if the
+# directories are the same (which they are not supposed to be).
 cp -p macros.gnat %{buildroot}%_rpmmacrosdir/gnat
 
 
@@ -77,6 +83,9 @@ cp -p macros.gnat %{buildroot}%_rpmmacrosdir/gnat
 
 
 %changelog
+* Wed Apr 10 2013 Igor Vlasenko <viy@altlinux.ru> 3.5-alt1_7
+- update from fc import
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 3.5-alt1_4
 - update to new release by fcimport
 
