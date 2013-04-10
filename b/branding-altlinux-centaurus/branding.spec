@@ -6,7 +6,7 @@
 
 Name: branding-%brand-%theme
 Version: 6.9.0 
-Release: alt20
+Release: alt21
 
 BuildRequires: cpio fonts-ttf-dejavu fonts-ttf-droid
 BuildRequires: design-bootloader-source >= 5.0-alt2
@@ -167,6 +167,7 @@ Requires: gksu
 Requires: dconf
 Requires: gtk3-theme-clearlooks-phenix
 Conflicts: %(for n in %variants ; do [ "$n" = %brand-%theme ] || echo -n "branding-$n-gnome-settings ";done )
+PreReq(post): lightdm-gtk-greeter
 
 %description mate-settings
 MATE settings for %Brand %version %Theme
@@ -267,6 +268,7 @@ install -m 644 fvwm-settings/.fvwm2rc %buildroot/etc/skel/
 pushd mate-settings
 install -m 644 -D 50_mate-background.gschema.override '%buildroot%_datadir/glib-2.0/schemas/50_mate-background.gschema.override'
 install -m 644 -D 60_mate-theme.gschema.override '%buildroot%_datadir/glib-2.0/schemas/60_mate-theme.gschema.override'
+install -m 644 -D Trolltech.conf '%buildroot%_sysconfdir/skel/.config/Trolltech.conf'
 popd
 
 #slideshow
@@ -313,6 +315,9 @@ subst "s/Theme=.*/Theme=%theme/" /etc/plymouth/plymouthd.conf
       subst "s|GRUB_WALLPAPER=.*|GRUB_WALLPAPER=/usr/share/plymouth/themes/%theme/grub.jpg|" \
              /etc/sysconfig/grub2 ||:
 
+%post mate-settings
+subst 's/#theme-name=/theme-name=Clearlooks-Phenix/' /etc/lightdm/lightdm-gtk-greeter.conf ||:
+
 %files alterator
 %config %_altdir/*.rcc
 /usr/share/alterator-browser-qt/design/*.rcc
@@ -340,6 +345,7 @@ subst "s/Theme=.*/Theme=%theme/" /etc/plymouth/plymouthd.conf
 
 %files mate-settings
 %_datadir/glib-2.0/schemas/*.gschema.override
+%_sysconfdir/skel/.config/Trolltech.conf
 
 %files slideshow
 /usr/share/install2/slideshow
@@ -356,6 +362,10 @@ subst "s/Theme=.*/Theme=%theme/" /etc/plymouth/plymouthd.conf
 %_desktopdir/indexhtml.desktop
 
 %changelog
+* Wed Apr 10 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 6.9.0-alt21
+- lightdm theme setup added to mate-settings
+- setting GTK+ QT style added to mate-settings
+
 * Tue Apr 09 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 6.9.0-alt20
 - gnome2 settings removed
 
