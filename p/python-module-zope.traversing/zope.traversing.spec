@@ -1,7 +1,7 @@
 %define oname zope.traversing
 Name: python-module-%oname
-Version: 3.14.0
-Release: alt1
+Version: 4.0.0
+Release: alt1.a3
 Summary: Resolving paths in the object hierarchy
 License: ZPLv2.1
 Group: Development/Python
@@ -63,6 +63,9 @@ mv %buildroot%python_sitelibdir_noarch/* \
 %python_sitelibdir/*/*/test*
 
 %changelog
+* Wed Apr 10 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.0-alt1.a3
+- Version 4.0.0a3
+
 * Thu Dec 29 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.14.0-alt1
 - Version 3.14.0
 
