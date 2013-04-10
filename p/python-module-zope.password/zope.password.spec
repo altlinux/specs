@@ -1,7 +1,7 @@
 %define oname zope.password
 Name: python-module-%oname
-Version: 3.6.1
-Release: alt2.1
+Version: 4.0.2
+Release: alt1
 Summary: Password encoding and checking utilities
 License: ZPL
 Group: Development/Python
@@ -47,6 +47,7 @@ mv %buildroot%python_sitelibdir_noarch/* \
 
 %files
 %doc *.txt
+%_bindir/*
 %python_sitelibdir/*
 %exclude %python_sitelibdir/*.pth
 %exclude %python_sitelibdir/*/*/test*
@@ -55,6 +56,9 @@ mv %buildroot%python_sitelibdir_noarch/* \
 %python_sitelibdir/*/*/test*
 
 %changelog
+* Wed Apr 10 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.2-alt1
+- Version 4.0.2
+
 * Thu Oct 20 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 3.6.1-alt2.1
 - Rebuild with Python-2.7
 
