@@ -1,14 +1,14 @@
 Name: phpMyAdmin
-Version: 3.5.4
-Release: alt2
+Version: 3.5.8
+Release: alt1
+
 Summary: phpMyAdmin - web-based MySQL administration
+
 License: GPL
 Group: System/Servers
-
 Url: http://www.phpmyadmin.net
 
-#http://prdownloads.sourceforge.net/phpmyadmin/%name-%version-all-languages.tar.bz2
-Source0: %name-%version.tar
+Source: http://prdownloads.sourceforge.net/phpmyadmin/%name-%version-all-languages.tar
 Source1: config.inc.php
 Source2: %name-README.ALT
 Source3: %name.htaccess
@@ -107,7 +107,7 @@ manual. Currently phpMyAdmin can:
 Install this package if you need phpMyAdmin for apache 2.0 and php5.
 
 %prep
-%setup -q
+%setup
 
 %install
 mkdir -p %buildroot%webserver_webappsdir
@@ -174,21 +174,26 @@ replace *SECRET* `pwgen -0s1` -- %webserver_webappsdir/%name/config.inc.php
 %doc phpMyAdmin-README.ALT Documentation.* docs.css README* ChangeLog
 %dir %webserver_webappsdir/%name/
 %webserver_webappsdir/%name/*
-%webserver_webappsdir/%name/.htaccess
+%config(noreplace) %webserver_webappsdir/%name/.htaccess
 %attr(640,root,%webserver_group) %config(noreplace) %webserver_webappsdir/%name/config.inc.php
 %exclude %webserver_webappsdir/%name/setup
 
 %files apache
-%apache_addonconfdir/%name.conf
+%config(noreplace) %apache_addonconfdir/%name.conf
 %apache_modconfdir/%name.conf
 %attr(755,root,root) %_controldir/%name-apache
 
 %files apache2
-%apache2_extra_available/%name.conf
+%config(noreplace) %apache2_extra_available/%name.conf
 %apache2_extra_enabled/%name.conf
 %attr(755,root,root) %_controldir/%name-apache2
 
 %changelog
+* Wed Apr 10 2013 Vitaly Lipatov <lav@altlinux.ru> 3.5.8-alt1
+- new version 3.5.8 (with rpmrb script)
+- cleanup spec, mark conf files as config
+- fix default configs
+
 * Wed Dec 19 2012 Dmitriy Kulik <lnkvisitor@altlinux.org> 3.5.4-alt2
 - Require apache2-base, apache-base package (ALT #28238)
 
