@@ -5,7 +5,7 @@
 
 Name: pacoxx
 Version: 0.2.beta
-Release: alt3
+Release: alt4
 Summary: PaCO++: Portable Parallel CORBA Object
 License: GPLv2+ / LGPLv2+
 Group: Networking/Remote access
@@ -106,7 +106,7 @@ This package contains examples for PaCO++.
 source %mpidir/bin/mpivars.sh                                                                     
 export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib -L%mpidir/lib"
 export PACOORB=%prefix
-export CLASSPATH=%_javadir/xerces-j.jar
+export CLASSPATH=%_javadir/xerces-j2.jar
 
 %add_optflags %optflags_shared $(pkg-config omniORB4 --cflags)
 omniORB_4_0=$(rpm -q --queryformat '%{VERSION}' libomniORB)
@@ -149,9 +149,9 @@ cat <<EOF >%buildroot%_bindir/pacoenv.sh
 export PACOORB=%prefix
 export PACOPATH=%ldir
 if [ "$CLASSPATH" = "" ]; then
-	export CLASSPATH=%_javadir/xerces-j.jar
+	export CLASSPATH=%_javadir/xerces-j2.jar
 else
-	export CLASSPATH=$CLASSPATH:%_javadir/xerces-j.jar
+	export CLASSPATH=$CLASSPATH:%_javadir/xerces-j2.jar
 fi
 
 EOF
@@ -181,6 +181,9 @@ chmod +x %buildroot%_bindir/pacoenv.sh
 %ldir/Examples
 
 %changelog
+* Wed Apr 10 2013 Igor Vlasenko <viy@altlinux.ru> 0.2.beta-alt4
+- fixed build
+
 * Fri Sep 14 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.beta-alt3
 - Rebuilt with updated libomniORB
 
