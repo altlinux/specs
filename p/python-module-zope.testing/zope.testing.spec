@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 4.1.1
-Release: alt1.1
+Version: 4.1.2
+Release: alt1
 Summary: Zope testing helpers
 License: ZPL
 Group: Development/Python
@@ -72,17 +72,21 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 
 %files
-%doc *.txt
+%doc *.txt *.rst
 %python_sitelibdir/*
 %exclude %python_sitelibdir/*.pth
 
 %if_with python3
 %files -n python3-module-%oname
+%doc *.txt *.rst
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*.pth
 %endif
 
 %changelog
+* Wed Apr 10 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.1.2-alt1
+- Version 4.1.2
+
 * Fri Mar 22 2013 Aleksey Avdeev <solo@altlinux.ru> 4.1.1-alt1.1
 - Rebuild with Python-3.3
 
