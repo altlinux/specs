@@ -1,7 +1,7 @@
 %define oname zope.z2release
 Name: python-module-%oname
-Version: 0.8
-Release: alt2.1
+Version: 0.9
+Release: alt1
 Summary: Zope release helper
 License: ZPL
 Group: Development/Python
@@ -36,12 +36,15 @@ mv %buildroot%python_sitelibdir_noarch/* \
 %endif
 
 %files
-%doc *.txt
+%doc *.rst
 %_bindir/*
 %python_sitelibdir/*
 %exclude %python_sitelibdir/*.pth
 
 %changelog
+* Wed Apr 10 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9-alt1
+- Version 0.9
+
 * Thu Oct 20 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 0.8-alt2.1
 - Rebuild with Python-2.7
 
