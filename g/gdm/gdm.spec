@@ -28,7 +28,7 @@
 
 Name: gdm
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: The GNOME Display Manager
 License: GPLv2+
@@ -36,7 +36,7 @@ URL: ftp://ftp.gnome.org/
 Group: Graphical desktop/GNOME
 Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 
-Source: %name-%version.tar.xz
+Source: %name-%version.tar
 Source1: gdm_xdmcp.control
 Source2: gdm.wms-method
 
@@ -54,7 +54,7 @@ Patch2: gdm-3.2.1.1-alt-Xsession.patch
 Patch7: gdm-3.1.92-alt-Init.patch
 Patch9: gdm-3.2.2-alt-link.patch
 Patch10: gdm-3.2.1.1-alt-invalid_user_shell.patch
-Patch11: gdm-3.7.92-alt-lfs.patch
+Patch11: gdm-3.8.0-alt-lfs.patch
 
 # from configure.ac
 %define dbus_glib_ver 0.74
@@ -75,6 +75,7 @@ Obsoletes: %name-user-switch-applet
 PreReq: %_rpmlibdir/update-dconf-database.filetrigger
 Requires: %name-libs = %version-%release
 %{?_with_consolekit:Requires: ConsoleKit-x11}
+%{?_disable_fallback_greeter:Requires: gnome-shell}
 Requires: coreutils consolehelper zenity xinitrc iso-codes lsb-release shadow-utils
 
 BuildPreReq: desktop-file-utils gnome-common rpm-build-gnome
@@ -93,7 +94,6 @@ BuildPreReq: libaccountsservice-devel >= %accountsservice_ver
 %{?_with_plymouth:BuildPreReq: plymouth-devel}
 BuildPreReq: libpam-devel
 %{?_with_tcp_wrappers:BuildPreReq: libwrap-devel}
-BuildPreReq: libgnome-panel-devel >= 2.0.0
 BuildPreReq: libcanberra-devel >= %libcanberra_ver libcanberra-gtk3-devel
 BuildPreReq: fontconfig-devel >= %fontconfig_ver
 BuildPreReq: libX11-devel libXau-devel libXrandr-devel libXext-devel libXdmcp-devel libXft-devel libSM-devel
@@ -384,6 +384,11 @@ xvfb-run %make check
 %endif
 
 %changelog
+* Fri Apr 05 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.0-alt2
+- after 3.8.0 snapshot (7a040a9)
+- updated buildreqs
+- disabled fallback greeter (gnome-shell required)
+
 * Tue Mar 26 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.0-alt1
 - 3.8.0
 
