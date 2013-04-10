@@ -1,5 +1,5 @@
 Name: maintenance-utils
-Version: 1.5
+Version: 1.6
 Release: alt1
 
 Summary: Utilities for package maintenance
@@ -31,6 +31,11 @@ and git.alt build server.
 %_mandir/ru/man?/*
 
 %changelog
+* Wed Apr 10 2013 Paul Wolneykien <manowar@altlinux.org> 1.6-alt1
+- Add support for task subnums.
+- Add the script to update a local RPM repo from hasher builds.
+- Checkout the specified master branch in the dry run mode.
+
 * Thu Jul 12 2012 Paul Wolneykien <manowar@altlinux.ru> 1.5-alt1
 - Take the committer name from the git config by default.
 - Implement the --closes option for autoclose of bugs.
