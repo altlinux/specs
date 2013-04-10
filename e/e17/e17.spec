@@ -2,7 +2,7 @@
 %define cvs_date zero
 %undefine cvs_date
 %define snapshot 2012-10-12
-%define rel alt3
+%define rel alt4
 
 %def_disable static
 %def_with pam_helper
@@ -59,9 +59,9 @@ Requires: wm-common-freedesktop
 Requires: altlinux-freedesktop-menu-%_name >= 0.55
 %{?_with_pam_helper:Requires: chkpwd-pam}
 
-BuildPreReq: libeet-devel >= 1.7.4
-BuildPreReq: libecore-devel >= 1.7.4
-BuildPreReq: libeio-devel >= 1.7.4
+BuildPreReq: libeet-devel >= 1.7.5
+BuildPreReq: libecore-devel >= 1.7.5
+BuildPreReq: libeio-devel >= 1.7.5
 BuildRequires: libpam-devel libX11-devel libevas-devel libecore-devel
 BuildRequires: edje libedje-devel libeet-devel libeet-utils libembryo-devel libefreet-devel
 BuildRequires: libXext-devel embryo_cc libdbus-devel libedbus-devel
@@ -130,6 +130,11 @@ export CFLAGS="$CFLAGS `pkg-config --cflags dbus-1` -g -ggdb3"
 %install
 %make_install DESTDIR=%buildroot install
 
+mkdir -p %buildroot%_rpmmacrosdir
+cat > %buildroot%_rpmmacrosdir/e17 <<_EOF_
+%%e17_version		%version
+_EOF_
+
 %find_lang enlightenment
 
 mkdir -p %buildroot%_sysconfdir/X11/wmsession.d
@@ -182,11 +187,16 @@ cp %SOURCE11 %buildroot%_sysconfdir/enlightenment/sysactions.conf
 %_includedir/enlightenment/*.h
 %_libdir/pkgconfig/enlightenment.pc
 %_libdir/pkgconfig/everything.pc
+%_rpmmacrosdir/%name
 
 %files gnome
 %_datadir/gnome/wm-properties/*.desktop
 
 %changelog
+* Tue Apr 09 2013 Yuri N. Sedunov <aris@altlinux.org> 1:0.17.1-alt4
+- starte17: run empower if logind is running
+- added %%e17_version rpm macros for modules
+
 * Thu Apr 04 2013 Yuri N. Sedunov <aris@altlinux.org> 1:0.17.1-alt3
 - applied e17-0.17.1-alt-e_sys_nosuid.patch,
   applied custom sysactions.conf, added empower to rqs (ALT #28291)
