@@ -1,5 +1,5 @@
 Name: kde4-telepathy
-Version: 4.8.4
+Version: 4.10.2
 Release: alt1
 
 Group: Graphical desktop/KDE
@@ -13,9 +13,10 @@ Requires: telepathy-mission-control
 Requires: kde4-ktp-accounts-kcm kde4-ktp-approver
 Requires: kde4-ktp-auth-handler
 Requires: kde4-ktp-call-ui
-Requires: kde4-ktp-contact-applet kde4-ktp-contact-list kde4-ktp-contact-runner
+Requires: kde4-ktp-desktop-applets
+Requires: kde4-ktp-contact-list kde4-ktp-contact-runner
 Requires: kde4-ktp-filetransfer-handler kde4-ktp-kded-integration-module
-Requires: kde4-ktp-presence-applet kde4-ktp-send-file
+Requires: kde4-ktp-send-file
 Requires: kde4-ktp-text-ui
 
 %description
@@ -24,6 +25,9 @@ Requires: kde4-ktp-text-ui
 %files
 
 %changelog
+* Thu Apr 11 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.2-alt1
+- fix requires
+
 * Mon Jun 18 2012 Sergey V Turchin <zerg@altlinux.org> 4.8.4-alt1
 - fix requires
 

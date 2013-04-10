@@ -3,7 +3,7 @@
 
 %define rname ktp-contact-runner
 Name: kde4-ktp-contact-runner
-Version: 0.5.3
+Version: 0.6.0
 Release: alt1
 
 Group: Graphical desktop/KDE
@@ -63,6 +63,9 @@ Requires: libtelepathy-qt4-devel
 #%_K4includedir/KTp/
 
 %changelog
+* Wed Apr 10 2013 Sergey V Turchin <zerg@altlinux.org> 0.6.0-alt1
+- new version
+
 * Thu Mar 21 2013 Sergey V Turchin <zerg@altlinux.org> 0.5.3-alt1
 - new version
 

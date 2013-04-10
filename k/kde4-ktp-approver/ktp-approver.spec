@@ -3,7 +3,7 @@
 
 %define rname ktp-approver
 Name: kde4-ktp-approver
-Version: 0.5.3
+Version: 0.6.0
 Release: alt1
 
 Group: Graphical desktop/KDE
@@ -59,6 +59,7 @@ Requires: libtelepathy-qt4-devel
 %files -f %rname.lang
 %_K4lib/kded_ktp_approver.so
 %_K4srv/kded/ktp_approver.desktop
+%_K4srvtyp/ktp-approver.service
 %_K4conf/ktp_approverrc
 %_K4dbus_services/org.freedesktop.Telepathy.Client.KTp.Approver.service
 
@@ -67,6 +68,9 @@ Requires: libtelepathy-qt4-devel
 #%_K4includedir/KTp/
 
 %changelog
+* Wed Apr 10 2013 Sergey V Turchin <zerg@altlinux.org> 0.6.0-alt1
+- new version
+
 * Thu Mar 21 2013 Sergey V Turchin <zerg@altlinux.org> 0.5.3-alt1
 - new version
 
