@@ -1,7 +1,7 @@
 %define oname zope.login
 Name: python-module-%oname
-Version: 1.0.0
-Release: alt2.1
+Version: 2.0.0
+Release: alt1.a1
 Summary: Login helpers for zope.publisher / authentication
 License: ZPL
 Group: Development/Python
@@ -55,6 +55,9 @@ mv %buildroot%python_sitelibdir_noarch/* \
 %python_sitelibdir/*/*/tests
 
 %changelog
+* Wed Apr 10 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.0-alt1.a1
+- Version 2.0.0a1
+
 * Thu Oct 20 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 1.0.0-alt2.1
 - Rebuild with Python-2.7
 
