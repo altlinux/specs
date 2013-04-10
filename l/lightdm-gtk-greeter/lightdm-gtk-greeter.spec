@@ -2,7 +2,7 @@
 %define _localstatedir %_var
 
 Name: lightdm-gtk-greeter
-Version: 1.5.0
+Version: 1.5.1
 Release: alt1
 Summary: LightDM GTK+ Greeter
 Group: Graphical desktop/Other
@@ -23,6 +23,7 @@ BuildRequires: glib2-devel
 BuildRequires: libgtk+3-devel
 BuildRequires: libX11-devel
 BuildRequires: lightdm-devel lightdm-gir-devel
+BuildRequires: /usr/bin/exo-csource
 
 %description
 This package provides a GTK+-based LightDM greeter engine.
@@ -36,6 +37,8 @@ This package provides a GTK+-based LightDM greeter engine.
 %configure \
 	%{subst_enable introspection} \
 	--disable-static \
+	--disable-libindicator \
+	--enable-maintainer-mode \
 	--libexecdir=%_libexecdir
 
 %make_build
@@ -53,11 +56,13 @@ printf '%_datadir/xgreeters/lightdm-default-greeter.desktop\t%_datadir/xgreeters
 %files -f %name.lang
 %_altdir/lightdm-gtk-greeter
 %_sbindir/lightdm-gtk-greeter
-%_datadir/lightdm-gtk-greeter
 %_datadir/xgreeters/lightdm-gtk-greeter.desktop
 %config(noreplace) %_sysconfdir/lightdm/lightdm-gtk-greeter.conf
 
 %changelog
+* Wed Apr 10 2013 Alexey Shabalin <shaba@altlinux.ru> 1.5.1-alt1
+- 1.5.1
+
 * Wed Jan 30 2013 Alexey Shabalin <shaba@altlinux.ru> 1.5.0-alt1
 - 1.5.0
 - enable show-language-selector
