@@ -1,6 +1,6 @@
 %define oname zope.location
 Name: python-module-%oname
-Version: 3.9.1
+Version: 4.0.2
 Release: alt1
 Summary: Zope Location
 License: ZPL
@@ -46,12 +46,15 @@ mv %buildroot%python_sitelibdir_noarch/* \
 %doc *.txt
 %python_sitelibdir/*
 %exclude %python_sitelibdir/*.pth
-%exclude %python_sitelibdir/*/*/tests.*
+%exclude %python_sitelibdir/*/*/tests
 
 %files tests
-%python_sitelibdir/*/*/tests.*
+%python_sitelibdir/*/*/tests
 
 %changelog
+* Wed Apr 10 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.2-alt1
+- Version 4.0.2
+
 * Wed Dec 28 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.9.1-alt1
 - Version 3.9.1
 
