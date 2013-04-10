@@ -1,6 +1,6 @@
 Name: glibc
 Version: 2.17
-Release: alt4
+Release: alt5
 Epoch: 6
 
 Summary: The GNU libc libraries
@@ -647,6 +647,9 @@ fi
 %_datadir/i18n
 
 %changelog
+* Tue Apr 09 2013 Dmitry V. Levin <ldv@altlinux.org> 6:2.17-alt5
+- getaddrinfo: updated fix for sw#15339.
+
 * Sun Apr 07 2013 Dmitry V. Levin <ldv@altlinux.org> 6:2.17-alt4
 - getaddrinfo: backported fixes for sw#15330 and sw#15339.
 
