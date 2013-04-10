@@ -1,6 +1,6 @@
 Name: python-module-smbc
-Version: 1.0.6
-Release: alt1.1.1
+Version: 1.0.8
+Release: alt1
 
 Summary: Python interface for smbclient
 Group: Development/Python
@@ -22,7 +22,7 @@ The smbc module provides an interface to the Samba client API.
 %setup -n py%mname-%version
 
 %build
-%python_build
+CFLAGS=-I/usr/include/samba-4.0/ %python_build
 
 %install
 %python_install
@@ -32,6 +32,10 @@ The smbc module provides an interface to the Samba client API.
 %doc README
 
 %changelog
+* Wed Apr 10 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1.0.8-alt1
+- updated to 1.0.8
+- build fixed
+
 * Thu Apr 12 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 1.0.6-alt1.1.1
 - Rebuild to remove redundant libpython2.7 dependency
 
