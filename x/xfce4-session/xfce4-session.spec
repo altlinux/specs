@@ -1,6 +1,6 @@
 Name: xfce4-session
 Version: 4.10.0
-Release: alt1
+Release: alt2.git20130327
 
 Summary: Session manager for XFce desktop environment
 Summary (ru): Менеджер сессий для окружения рабочего стола Xfce
@@ -15,7 +15,7 @@ Source1: xfce.wmsession
 
 Patch: %name-%version-%release.patch
 
-%def_enable gnome
+%def_enable systemd
 
 BuildRequires(pre): rpm-build-licenses
 
@@ -23,12 +23,11 @@ BuildPreReq: rpm-build-xfce4 xfce4-dev-tools
 BuildRequires: libxfconf-devel libxfce4ui-devel
 # For gdk-pixbuf-csource and exo-csource (needed in maintainer mode)
 BuildRequires: libgdk-pixbuf-devel libexo-devel
-# GNOME compatibility
-%{?_enable_gnome:BuildRequires: libgnome-keyring-devel}
+%{?_enable_systemd:BuildRequires: libpolkit-devel}
 BuildRequires: iceauth intltool libSM-devel libglade-devel libwnck-devel xorg-cf-files
 
 Requires: wm-common-freedesktop
-Requires: upower
+%{?_disable_systemd: Requires: upower}
 
 Obsoletes: xfce-utils < %version
 
@@ -70,11 +69,13 @@ Additional splash screen engines for XFce session manager.
 %patch -p1
 
 %build
+# Don't use git tag in version.
+%xfce4_drop_gitvtag xfsm_version_tag configure.ac.in
 %xfce4reconf
 %configure \
 	--disable-static \
 	--enable-maintainer-mode \
-	%{?_enable_gnome:--enable-libgnome-keyring} \
+	%{subst_enable systemd} \
 	--enable-debug=no
 %make_build
 
@@ -116,6 +117,12 @@ install -Dm0644 %SOURCE1 %buildroot%_x11sysconfdir/wmsession.d/10Xfce4
 %_libdir/xfce4/session/balou*
 
 %changelog
+* Wed Apr 10 2013 Mikhail Efremov <sem@altlinux.org> 4.10.0-alt2.git20130327
+- Use sudo for suspend/hibernate as fallback.
+- Add systemd-logind support for suspend/hibernate.
+- Enable systemd-logind support (drop ConsoleKit).
+- Upstream git snapshot.
+
 * Sun Apr 29 2012 Mikhail Efremov <sem@altlinux.org> 4.10.0-alt1
 - Updated to 4.10.0.
 
