@@ -1,7 +1,7 @@
 Name: asterisk1.8
 Summary: Open source PBX
-Version: 1.8.20.1
-Release: alt2
+Version: 1.8.21.0
+Release: alt1
 License: GPL
 Group: System/Servers
 BuildRequires: dahdi-linux-headers flex gcc-c++ graphviz libSDL_image-devel libalsa-devel libavcodec-devel libbluez-devel libcap-devel libcurl-devel libfreetds-devel libgsm-devel libgtk+2-devel libical-devel libiksemel-devel libilbc-devel libjack-devel libkeyutils-devel libltdl7-devel liblua5-devel libmISDN-devel libmysqlclient-devel libncurses-devel libneon-devel libnet-snmp-devel libnewt-devel libopenr2-devel libpopt-devel libportaudio2-devel libpri-devel libpw1.11-devel libradiusclient-ng-devel libresample-devel libsasl2-devel libspandsp6-devel libspeex-devel libsqlite-devel libsqlite3-devel libsrtp libss7-devel libtonezone-dahdi-devel libunixODBC-devel libusb-compat-devel libvorbis-devel libvpb-devel libxml2-devel ncompress openssl postgresql-devel rpm-build-gir texlive-base-bin wget zlib-devel
@@ -1211,6 +1211,9 @@ mv %buildroot/var/lib/asterisk/documentation/*.dtd %buildroot/usr/share/asterisk
 %_altdir/conf2ael-%version
 
 %changelog
+* Wed Apr 10 2013 Denis Smirnov <mithraen@altlinux.ru> 1.8.21.0-alt1
+- new version 1.8.21.0
+
 * Wed Feb 06 2013 Denis Smirnov <mithraen@altlinux.ru> 1.8.20.1-alt2
 - exclude from package some unneeded files
 

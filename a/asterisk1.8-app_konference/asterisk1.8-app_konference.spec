@@ -1,9 +1,9 @@
-%define ast_version 1.8.20.1
+%define ast_version 1.8.21.0
 
 Name: asterisk1.8-app_konference
 Summary: Conference module for Asterisk
 Version: 1.5
-Release: alt27
+Release: alt28
 License: GPL
 Group: System/Servers
 Url: http://sourceforge.net/projects/appkonference
@@ -48,6 +48,9 @@ mkdir -p %buildroot%modules_dir
 %attr(0440,root,_asterisk) %modules_dir/app_konference.so
 
 %changelog
+* Wed Apr 10 2013 Denis Smirnov <mithraen@altlinux.ru> 1.5-alt28
+- Asterisk update
+
 * Sat Jan 26 2013 Denis Smirnov <mithraen@altlinux.ru> 1.5-alt27
 - Asterisk update
 
