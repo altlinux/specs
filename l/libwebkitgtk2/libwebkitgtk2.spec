@@ -4,8 +4,6 @@
 %define gtk_ver 2.0
 
 %define oname webkit
-# freetype/pango
-%define font_backend freetype
 # none/opengl/cairo/clutter
 %define acceleration_backend opengl
 %def_enable introspection
@@ -14,11 +12,10 @@
 %def_disable web_audio
 %def_disable media_stream
 %def_enable spellcheck
-%def_disable unstable_features
 
 Summary: Web browser engine
 Name: libwebkitgtk2
-Version: 1.10.2
+Version: 2.0.0
 Release: alt1
 License: %bsd %lgpl2plus
 Group: System/Libraries
@@ -40,7 +37,7 @@ BuildPreReq: rpm-build-licenses
 BuildRequires: gcc-c++ libicu-devel bison perl-Switch zlib-devel
 
 BuildRequires: flex >= 2.5.33
-BuildRequires: gperf libjpeg-devel libpng-devel
+BuildRequires: gperf libjpeg-devel libpng-devel libwebp-devel
 BuildRequires: libxml2-devel >= 2.6
 BuildRequires: libXt-devel
 BuildRequires: libgtk+2-devel >= 2.10
@@ -48,22 +45,17 @@ BuildRequires: libgail-devel >= 1.8
 BuildRequires: libenchant-devel >= 0.22
 BuildRequires: libsqlite3-devel >= 3.0
 BuildRequires: libxslt-devel >= 1.1.7
-BuildRequires: gstreamer1.0-devel >= 0.11.90 gst-plugins1.0-devel >= 0.11.90
+BuildRequires: gstreamer1.0-devel >= 1.0.3 gst-plugins1.0-devel >= 1.0.3
 BuildRequires: librsvg-devel >= 2.2.0
 BuildRequires: gtk-doc >= 1.10
-BuildRequires: libsoup-devel >= 2.39.2
+BuildRequires: libsoup-devel >= 2.40.0
+BuildRequires: libsecret-devel
 BuildRequires: libpango-devel >= 1.21.0 libcairo-devel >= 1.10 libcairo-gobject-devel
+BuildRequires: fontconfig-devel >= 2.4 libfreetype-devel libharfbuzz-devel
 BuildRequires: libgio-devel >= 2.25.0
 BuildRequires: python-modules-json
 BuildRequires: ruby ruby-stdlibs
 
-%if %font_backend == freetype
-BuildRequires: fontconfig-devel >= 2.4 libfreetype-devel
-%endif
-%if %acceleration_backend == clutter
-BuildRequires: libclutter-devel >= 1.8.2
-BuildRequires: libclutter-gtk-devel >= 1.0.2
-%endif
 %if %acceleration_backend == opengl
 BuildRequires: libGL-devel libXcomposite-devel libXdamage-devel
 %endif
@@ -72,6 +64,9 @@ BuildRequires: libGL-devel libXcomposite-devel libXdamage-devel
 %{?_enable_geolocation:BuildPreReq: libgeoclue-devel}
 %{?_enable_spellcheck:BuildPreReq: libenchant-devel}
 %{?_enable_media_stream:BuildPreReq: farstream0.2-devel}
+
+# for check
+BuildRequires: xvfb-run python-module-pygobject3
 
 %description
 WebKit is an open source web browser engine.
@@ -163,7 +158,7 @@ GObject introspection data for the WebkitGTK library
 
 %package gir-devel
 Summary: GObject introspection devel data for the WebkitGTK library
-Group: System/Libraries
+Group: Development/GNOME and GTK+
 BuildArch: noarch
 Requires: %name-gir = %version-%release
 Requires: libjavascriptcoregtk2-gir = %version-%release
@@ -185,7 +180,7 @@ GObject introspection data for the JavaScriptCore library
 
 %package -n libjavascriptcoregtk2-gir-devel
 Summary: GObject introspection devel data for the JavaScriptCore library
-Group: System/Libraries
+Group: Development/GNOME and GTK+
 BuildArch: noarch
 Requires: libjavascriptcoregtk2-gir = %version-%release
 Requires: libjavascriptcoregtk2-devel = %version-%release
@@ -209,35 +204,38 @@ rm -f Source/autotools/{compile,config.guess,config.sub,depcomp,install-sh,ltmai
 # https://bugs.webkit.org/show_bug.cgi?id=91154
 %define optflags_debug -g1
 
+echo "GTK_DOC_CHECK([1.10])" >> configure.ac
 gtkdocize --copy
 %autoreconf -I Source/autotools
 %configure \
 	--enable-video \
-	--with-font-backend=%font_backend \
 	--with-acceleration-backend=%acceleration_backend \
 	--enable-webgl \
-	--with-gstreamer=1.0 \
 	%{subst_enable introspection} \
 	%{subst_enable geolocation} \
 	%{?_enable_web_audio:--enable-web-audio} \
 	%{?_enable_media_stream:--enable-media-stream} \
 	--with-gtk=%gtk_ver \
-	--disable-webkit2 \
-	%{?_enable_unstable_features:--enable-unstable-features}
+	--disable-webkit2
 
 mkdir -p DerivedSources/webkit
 mkdir -p DerivedSources/ANGLE
 mkdir -p DerivedSources/WebKit2/webkit2gtk/webkit2
 mkdir -p DerivedSources/InjectedBundle
+mkdir -p DerivedSources/webkitdom
+mkdir -p Programs/resources
 
 %make_build
 
 %install
 %make_install DESTDIR=%buildroot install
 
-%find_lang --output=webkitgtk.lang webkitgtk-%gtk_ver
+%find_lang WebKitGTK-2.0
 
-%files -f webkitgtk.lang
+%check
+xvfb-run make check
+
+%files -f WebKitGTK-2.0.lang
 %_libdir/libwebkitgtk-1.0.so.*
 %dir %_datadir/webkitgtk-1.0
 %_datadir/webkitgtk-1.0/images
@@ -247,6 +245,7 @@ mkdir -p DerivedSources/InjectedBundle
 %_libdir/libwebkitgtk-1.0.so
 %dir %_includedir/webkitgtk-1.0
 %_includedir/webkitgtk-1.0/webkit
+%_includedir/webkitgtk-1.0/webkitdom
 %_pkgconfigdir/webkit-1.0.pc
 
 %files devel-doc
@@ -281,6 +280,9 @@ mkdir -p DerivedSources/InjectedBundle
 %endif
 
 %changelog
+* Wed Apr 10 2013 Alexey Shabalin <shaba@altlinux.ru> 2.0.0-alt1
+- 2.0.0
+
 * Tue Dec 18 2012 Alexey Shabalin <shaba@altlinux.ru> 1.10.2-alt1
 - 1.10.2
 - fixed CVE-2012-5112, CVE-2012-5133
