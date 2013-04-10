@@ -1,17 +1,16 @@
 Name: gnutls26
-Version: 2.12.21
+Version: 2.12.23
 Release: alt1
 
 Summary: A TLS protocol implementation
-# The libgnutls library is LGPLv2+, utilities and remaining libraries are GPLv3+
-License: LGPLv2+ and GPLv3+
+# The libgnutls library is LGPLv2.1+, utilities and remaining libraries are GPLv3+
+License: LGPLv2.1+ and GPLv3+
 Group: System/Libraries
-Url: http://www.gnu.org/software/gnutls/
+Url: http://gnutls.org/
 # ftp://ftp.gnutls.org/pub/gnutls/gnutls-%version.tar.bz2
 Source: gnutls-%version.tar
 Patch1: gnutls-2.12.14-rh-tests.patch
-Patch2: gnutls-2.12.20-rh-stdio-gets.patch
-Patch3: gnutls-2.12.21-alt-linkage.patch
+Patch2: gnutls-2.12.21-alt-linkage.patch
 
 %define libcxx libgnutlsxx27
 %define libssl libgnutls27-openssl
@@ -20,7 +19,7 @@ Patch3: gnutls-2.12.21-alt-linkage.patch
 
 # Automatically added by buildreq on Thu Dec 08 2011
 BuildRequires: gcc-c++ gtk-doc libgcrypt-devel libp11-kit-devel libreadline-devel libtasn1-devel zlib-devel
-%if_with guile
+%if_enabled guile
 BuildRequires: guile-devel
 %endif
 %if_with lzo
@@ -35,7 +34,7 @@ group.
 
 %package -n lib%name
 Summary: Transport Layer Security library
-License: LGPLv2+
+License: LGPLv2.1+
 Group: System/Libraries
 Provides: libgnutls = %version
 Obsoletes: libgnutls < %version
@@ -213,7 +212,6 @@ This package contains the GnuTLS API Reference Manual.
 %setup -n gnutls-%version
 %patch1 -p1
 %patch2 -p1
-%patch3 -p1
 rm doc/*.info*
 rm aclocal.m4 m4/{libtool,lt*}.m4
 
@@ -302,7 +300,7 @@ ln -s %_licensedir/LGPL-2.1 %buildroot%docdir/COPYING.LIB
 %dir %docdir
 %docdir/*.cfg
 
-%if_with guile
+%if_enabled guile
 # %%_datadir/guile belongs to guile package
 # %%_datadir/guile/site may contain not only gnutls guile files.
 # therefore %%_datadir/guile and %%_datadir/guile/site are not packaged. 
@@ -314,6 +312,9 @@ ln -s %_licensedir/LGPL-2.1 %buildroot%docdir/COPYING.LIB
 %endif
 
 %changelog
+* Wed Apr 10 2013 Dmitry V. Levin <ldv@altlinux.org> 2.12.23-alt1
+- Updated to 2.12.23.
+
 * Sun Dec 16 2012 Dmitry V. Levin <ldv@altlinux.org> 2.12.21-alt1
 - Updated to 2.12.21.
 

@@ -1,62 +1,66 @@
 Name: libtasn1
-Version: 2.14
+Version: 3.3
 Release: alt1
 
 Summary: The ASN.1 library used in GNUTLS
 Group: System/Libraries
-License: LGPLv2+
-URL: http://www.gnu.org/software/gnutls/
-# ftp://ftp.gnu.org/gnu/%name/%name-%version.tar.gz
+License: LGPLv2.1+
+URL: http://www.gnu.org/software/libtasn1/
+# git://git.altlinux.org/gears/l/libtasn1.git
 Source: %name-%version.tar
 
 # due to gtkdocize
 BuildRequires: gtk-doc
 
 %description
-Libtasn1 is the ASN.1 library used in GNUTLS for ASN.1
-(Abstract Syntax Notation One) structures management and DER
-(Distinguished Encoding Rules) encoding functions.
+This is GNU Libtasn1, a library that provides Abstract Syntax Notation
+One (ASN.1, as specified by the X.680 ITU-T recommendation) parsing and
+structures management, and Distinguished Encoding Rules (DER, as per
+X.690) encoding and decoding functions.
 
 This package contains libtasn1 runtime library.
 
 %package devel
-Summary: Files for development of libtasn1-based applications
+Summary: Files for development of applications which will use libtasn1
 Group: Development/C
-License: LGPLv2+
+License: LGPLv2.1+
 Requires: %name = %version-%release
 
 %description devel
-Libtasn1 is the ASN.1 library used in GNUTLS for ASN.1
-(Abstract Syntax Notation One) structures management and DER
-(Distinguished Encoding Rules) encoding functions.
+This is GNU Libtasn1, a library that provides Abstract Syntax Notation
+One (ASN.1, as specified by the X.680 ITU-T recommendation) parsing and
+structures management, and Distinguished Encoding Rules (DER, as per
+X.690) encoding and decoding functions.
 
 This package contains files for development of applications
 which will use libtasn1.
 
 %package utils
-Summary: ASN.1 development utilities
-Group: Development/Other
+Summary: Some ASN.1 tools
+Group: Text tools
 License: GPLv3+
 Requires: %name = %version-%release
 
 %description utils
-Libtasn1 is the ASN.1 library used in GNUTLS for ASN.1
-(Abstract Syntax Notation One) structures management and DER
-(Distinguished Encoding Rules) encoding functions.
+This is GNU Libtasn1, a library that provides Abstract Syntax Notation
+One (ASN.1, as specified by the X.680 ITU-T recommendation) parsing and
+structures management, and Distinguished Encoding Rules (DER, as per
+X.690) encoding and decoding functions.
 
-This package contains libtasn1 development utilities.
+This package contains simple tools that can decode and encode ASN.1 data.
 
 %package devel-doc
-Summary: Development documentation for %name
-Group: Development/C
+Summary: libtasn1 development documentation
+Group: Development/Documentation
 License: LGPLv2+
 Conflicts: %name-devel < %version
 BuildArch: noarch
 
 %description devel-doc
-Libtasn1 is the ASN.1 library used in GNUTLS for ASN.1
-(Abstract Syntax Notation One) structures management and DER
-(Distinguished Encoding Rules) encoding functions.
+This is GNU Libtasn1, a library that provides Abstract Syntax Notation
+One (ASN.1, as specified by the X.680 ITU-T recommendation) parsing and
+structures management, and Distinguished Encoding Rules (DER, as per
+X.690) encoding and decoding functions.
 
 This package contains libtasn1 development documentation.
 
@@ -65,7 +69,6 @@ This package contains libtasn1 development documentation.
 
 %build
 %autoreconf
-%def_disable static
 %configure --disable-static --disable-silent-rules
 %make_build
 
@@ -109,6 +112,9 @@ install -pm644 doc/reference/html/* %buildroot%docdir/reference/html/
 %docdir/reference/
 
 %changelog
+* Wed Apr 10 2013 Dmitry V. Levin <ldv@altlinux.org> 3.3-alt1
+- Updated to 3.3.
+
 * Sun Dec 16 2012 Dmitry V. Levin <ldv@altlinux.org> 2.14-alt1
 - Updated to 2.14.
 
