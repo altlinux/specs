@@ -1,5 +1,5 @@
 Name: update-source-functions
-Version: 0.1.1
+Version: 0.1.2
 Release: alt1
 
 Summary: A set of functions intended to help with updating a git repository from an upstream source
@@ -36,6 +36,9 @@ mkdir -p m4
 %_bindir/*.sh
 
 %changelog
+* Wed Apr 10 2013 Paul Wolneykien <manowar@altlinux.org> 0.1.2-alt1
+- Fix version comparison: compare with 0 instead of -1.
+
 * Wed Apr 10 2013 Paul Wolneykien <manowar@altlinux.org> 0.1.1-alt1
 - Fix package requisites: update-source-functions alone should be
   sufficient as the value of "cronbuild_requires" option.
