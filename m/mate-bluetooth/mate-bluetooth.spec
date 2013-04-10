@@ -4,25 +4,25 @@ BuildRequires: /usr/bin/glib-gettextize /usr/bin/gtk-update-icon-cache /usr/bin/
 # END SourceDeps(oneline)
 %define _libexecdir %_prefix/libexec
 Name:           mate-bluetooth
-Version:        1.5.0
-Release:        alt1_2
+Version:        1.6.0
+Release:        alt1_1
 Summary:        MATE Desktop bluetooth applet
 License:        GPLv2+
 URL:            http://www.mate-desktop.org
-Source0:        http://pub.mate-desktop.org/releases/1.5/%{name}-%{version}.tar.xz
+Source0:        http://pub.mate-desktop.org/releases/1.6/%{name}-%{version}.tar.xz
 
+BuildRequires:  libdbus-glib-devel
+BuildRequires:  desktop-file-utils
+BuildRequires:  gobject-introspection-devel
+BuildRequires:  gsettings-desktop-schemas-devel
+BuildRequires:  gtk2-devel
+BuildRequires:  libnotify-devel
 BuildRequires:  mate-common
 BuildRequires:  mate-doc-utils
-BuildRequires:  mate-panel-devel
 BuildRequires:  mate-file-manager-sendto-devel
+BuildRequires:  mate-panel-devel
 BuildRequires:  rarian-compat
-BuildRequires:  gtk2-devel
-BuildRequires:  gobject-introspection-devel
 BuildRequires:  libunique-devel
-BuildRequires:  libdbus-glib-devel
-BuildRequires:  libmatenotify-devel
-BuildRequires:  desktop-file-utils
-BuildRequires:  gsettings-desktop-schemas-devel
 
 Requires:  %{name}-libs%{?_isa} = %{version}-%{release}
 Requires:  mate-panel
@@ -32,7 +32,6 @@ Source44: import.info
 %description
 MATE Desktop bluetooth applet
 
-
 %package libs
 Group: System/Libraries
 Summary:        Shared libraries for mate-bluetooth
@@ -41,7 +40,6 @@ Requires:       %{name} = %{version}-%{release}
 
 %description libs
 development files for mate-bluetooth
-
 
 %package devel
 Group: Communications
@@ -73,8 +71,6 @@ find %{buildroot} -name '*.a' -exec rm -rf {} ';'
 %find_lang %{name} --all-name
 
 desktop-file-install                               \
-     --remove-category="MATE"                      \
-     --add-category="X-Mate"                       \
      --delete-original                             \
      --dir=%{buildroot}%{_datadir}/applications    \
 %{buildroot}%{_datadir}/applications/mate-bluetooth-properties.desktop
@@ -114,6 +110,9 @@ desktop-file-install                               \
 %{_datadir}/gir-1.0/MateBluetooth-1.0.gir
 
 %changelog
+* Wed Apr 10 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.0-alt1_1
+- added Requires: mate-desktop (closes: 28825)
+
 * Wed Mar 27 2013 Igor Vlasenko <viy@altlinux.ru> 1.5.0-alt1_2
 - new fc release
 
