@@ -19,7 +19,7 @@
 
 Name: xorg-server
 Version: 1.14.0
-Release: alt1
+Release: alt2
 Epoch: 2
 License: MIT/X11
 Summary: Xserver - X Window System display server
@@ -298,6 +298,9 @@ install -pD -m644 xorg-sdk.rpmmacros %buildroot%_rpmmacrosdir/xorg-sdk
 %_rpmmacrosdir/xorg-sdk
 
 %changelog
+* Wed Apr 10 2013 Valery Inozemtsev <shrek@altlinux.ru> 2:1.14.0-alt2
+- rebuild with enabled abstract socket
+
 * Wed Mar 06 2013 Valery Inozemtsev <shrek@altlinux.ru> 2:1.14.0-alt1
 - 1.14.0
 
