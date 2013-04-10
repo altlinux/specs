@@ -1,7 +1,7 @@
 
 Name:    kmymoney
 Version: 4.6.3
-Release: alt2
+Release: alt3
 
 Summary: A Personal Finance Manager for KDE4
 Summary(ru_RU.UTF-8): Учёт финансов под KDE4
@@ -14,6 +14,7 @@ Packager: Andrey Cherepanov <cas@altlinux.org>
 Source0: %name-%version.tar.bz2
 Source2: %name.watch
 Patch0:  %name-fix-undeclared-geteuid.patch
+Patch1:  %name-4.6.3-gmp-5.1.0.patch
 
 AutoReq: yes, noperl
 
@@ -24,6 +25,7 @@ BuildRequires: doxygen
 BuildRequires: gcc-c++ 
 BuildRequires: glib2-devel
 BuildRequires: kde4pimlibs-devel
+BuildRequires: kde4-nepomuk-core-devel
 BuildRequires: ktoblzcheck-devel
 BuildRequires: libOpenSP-devel
 BuildRequires: libalkimia-devel >= 4.3.1
@@ -150,9 +152,10 @@ Internationalization and documentation for KMyMoney
 %prep
 %setup -q -n %name-%version
 %patch0 -p2
+%patch1 -p1
 
 %build
-%K4build -DCMAKE_SKIP_RPATH=1
+%K4build -DCMAKE_SKIP_RPATH=1 -DUSE_HTML_HANDBOOK=1
 
 %install
 %K4install
@@ -219,6 +222,7 @@ Internationalization and documentation for KMyMoney
 %_K4lib/kmm_csvimport.so
 %_K4srv/kmm_csvimport.desktop
 %_K4apps/kmm_csvimport/kmm_csvimport.rc
+%_K4conf/csvimporterrc
 
 %files plugins
 
@@ -229,6 +233,11 @@ Internationalization and documentation for KMyMoney
 
 
 %changelog
+* Wed Apr 10 2013 Andrey Cherepanov <cas@altlinux.org> 4.6.3-alt3
+- Fix build with GMP 5.1.0
+- Support Nepomuk
+- Generate HTML documentation
+
 * Wed Mar 06 2013 Andrey Cherepanov <cas@altlinux.org> 4.6.3-alt2
 - Fix build in Sisyphus
 
