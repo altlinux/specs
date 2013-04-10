@@ -1,6 +1,6 @@
 %define oname grok
 Name: python-module-%oname
-Version: 1.10.3
+Version: 1.11.3
 Release: alt1
 Summary: A Smashing Web Framework
 License: ZPL
@@ -124,6 +124,9 @@ cp -fR doc/_build/pickle %buildroot%python_sitelibdir/%oname/
 %doc doc/_build/html/*
 
 %changelog
+* Wed Apr 10 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.11.3-alt1
+- Version 1.11.3
+
 * Tue Jun 05 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.10.3-alt1
 - Version 1.10.3
 
