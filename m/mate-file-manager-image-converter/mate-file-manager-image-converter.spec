@@ -4,19 +4,18 @@ BuildRequires: /usr/bin/glib-gettextize /usr/bin/pkg-config pkgconfig(gio-2.0) p
 # END SourceDeps(oneline)
 %define _libexecdir %_prefix/libexec
 Name:           mate-file-manager-image-converter
-Version:        1.5.0
-Release:        alt1_3
+Version:        1.6.0
+Release:        alt1_1
 Summary:        MATE file manager image converter
 License:        GPLv2+
 URL:            http://www.mate-desktop.org
-Source0:        http://pub.mate-desktop.org/releases/1.5/%{name}-%{version}.tar.xz
+Source0:        http://pub.mate-desktop.org/releases/1.6/%{name}-%{version}.tar.xz
 
 BuildRequires:  mate-common
 BuildRequires:  mate-file-manager-devel
 BuildRequires:  mate-doc-utils
-
-Requires:       mate-file-manager-extensions
-Requires:		ImageMagick
+Requires:  mate-file-manager-extensions
+Requires:  ImageMagick
 Source44: import.info
 
 %description
@@ -27,9 +26,8 @@ Caja-Image-Converter extension allows you to resize/rotate images from Caja.
 %build
 
 NOCONFIGURE=1 ./autogen.sh
-%configure                  \
-           --disable-static \
-           --with-gnu-ld
+%configure \
+  --disable-static
 
 make %{?_smp_mflags} V=1
 
@@ -47,6 +45,9 @@ find %{buildroot} -name '*.a' -exec rm -rf {} ';'
 %{_datadir}/caja-image-converter
 
 %changelog
+* Tue Apr 09 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.0-alt1_1
+- new fc release
+
 * Wed Mar 27 2013 Igor Vlasenko <viy@altlinux.ru> 1.5.0-alt1_3
 - new fc release
 
