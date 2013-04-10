@@ -1,7 +1,7 @@
 %def_without xtdesktop
 %def_without desklaunch
 Name: icewm-startup
-Version: 0.13
+Version: 0.14
 Release: alt1
 
 Summary: simple pluggable IceWM autostart manager
@@ -201,6 +201,15 @@ AutoReq: no
 %description tray_mixer_plus
 tray_mixer_plus plug-in for simple sound volume control.
 
+%package grun
+Group: Graphical desktop/Icewm
+Summary: setup Run dialog
+Requires: %name grun
+AutoReq: no
+
+%description grun
+grun plug-in for setup dialog of launching applications in console mode.
+
 %prep
 %setup -q -c -T
 
@@ -351,12 +360,25 @@ cp -fp %icewmconfdir/XXkb.conf /etc/X11/app-defaults/XXkb
 fi
 fi
 
+%post grun
+if [ $1 -eq 1 ]; then
+echo "RunCommand=\"grun\"" >> %icewmconfdir/prefoverride
+fi
+
 %preun xxkb-tray
 if [ $1 -eq 0 ]; then
 if [ -e %icewmconfdir/XXkb~ ]; then
 mv -f %icewmconfdir/XXkb~ /etc/X11/app-defaults/XXkb
 else
 rm -f /etc/X11/app-defaults/XXkb
+fi
+fi
+
+%preun grun
+if [ $1 -eq 0 ]; then
+sed -i '/RunCommand=\"grun\"/d' %icewmconfdir/prefoverride
+if [ "`wc -w %icewmconfdir/prefoverride | cut -d" " -f1`" == "0" ]; then
+rm -f %icewmconfdir/prefoverride
 fi
 fi
 
@@ -404,7 +426,12 @@ fi
 %files tray_mixer_plus
 %config %icewmconfdir/startup.d/tray_mixer_plus
 
+%files grun
+
 %changelog
+* Wed Apr 10 2013 Dmitriy Khanzhin <jinn@altlinux.org> 0.14-alt1
+- added grun subpackage
+
 * Sat Mar 30 2013 Dmitriy Khanzhin <jinn@altlinux.org> 0.13-alt1
 - added xxkb-tray subpackage
 - added tray_mixer_plus subpackage
