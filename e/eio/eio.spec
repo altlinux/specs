@@ -1,7 +1,7 @@
 %def_disable static
 
 Name: eio
-Version: 1.7.5
+Version: 1.7.6.1
 %ifdef beta
 Release: alt1.%beta
 %else
@@ -80,6 +80,12 @@ documentation for Eio.
 %_libdir/pkgconfig/*
 
 %changelog
+* Wed Apr 10 2013 Yuri N. Sedunov <aris@altlinux.org> 1.7.6.1-alt1
+- 1.7.6.1
+
+* Tue Apr 09 2013 Yuri N. Sedunov <aris@altlinux.org> 1.7.6-alt1
+- 1.7.6
+
 * Sat Jan 05 2013 Yuri N. Sedunov <aris@altlinux.org> 1.7.5-alt1
 - 1.7.5
 

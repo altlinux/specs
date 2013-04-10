@@ -2,7 +2,7 @@
 %define cvs_date zero
 %undefine cvs_date
 %define snapshot 2012-10-12
-%define rel alt4
+%define rel alt1
 
 %def_disable static
 %def_with pam_helper
@@ -10,7 +10,7 @@
 # TODO: pam CoreFoundation
 
 Name: e17
-Version: 0.17.1
+Version: 0.17.2.1
 
 %ifdef cvs_date
 Release: %rel.%cvs_date
@@ -59,9 +59,9 @@ Requires: wm-common-freedesktop
 Requires: altlinux-freedesktop-menu-%_name >= 0.55
 %{?_with_pam_helper:Requires: chkpwd-pam}
 
-BuildPreReq: libeet-devel >= 1.7.5
-BuildPreReq: libecore-devel >= 1.7.5
-BuildPreReq: libeio-devel >= 1.7.5
+BuildPreReq: libeet-devel >= 1.7.6
+BuildPreReq: libecore-devel >= 1.7.6
+BuildPreReq: libeio-devel >= 1.7.6
 BuildRequires: libpam-devel libX11-devel libevas-devel libecore-devel
 BuildRequires: edje libedje-devel libeet-devel libeet-utils libembryo-devel libefreet-devel
 BuildRequires: libXext-devel embryo_cc libdbus-devel libedbus-devel
@@ -193,6 +193,10 @@ cp %SOURCE11 %buildroot%_sysconfdir/enlightenment/sysactions.conf
 %_datadir/gnome/wm-properties/*.desktop
 
 %changelog
+* Wed Apr 10 2013 Yuri N. Sedunov <aris@altlinux.org> 1:0.17.2.1-alt1
+- 0.17.2.1
+- starte17: run empower in background (ALT #28823)
+
 * Tue Apr 09 2013 Yuri N. Sedunov <aris@altlinux.org> 1:0.17.1-alt4
 - starte17: run empower if logind is running
 - added %%e17_version rpm macros for modules

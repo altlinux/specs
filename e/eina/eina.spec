@@ -1,8 +1,8 @@
-%def_enable tests
+%def_disable tests
 %def_disable static
 
 Name: eina
-Version: 1.7.5
+Version: 1.7.6
 %ifdef beta
 Release: alt1.%beta
 %else
@@ -18,7 +18,7 @@ Url: http://www.enlightenment.org/
 Source: http://download.enlightenment.org/releases/%name-%version.tar.bz2
 
 %{?_enable_static:BuildPreReq: glibc-devel-static}
-BuildRequires: doxygen
+BuildRequires: gcc-c++ libcheck-devel lcov doxygen
 
 %description
  Eina is a multi-platform library that provides optimized data types and a few
@@ -85,13 +85,13 @@ documentation for Eina
 	%{subst_enable tests}
 
 %make_build
-%make doc
-
-%check
-%{?_enable_tests:%make check}
+#%make doc
 
 %install
 %make DESTDIR=%buildroot install
+
+%check
+%{?_enable_tests:%make check}
 
 %files -n lib%name
 %_libdir/*.so.*
@@ -103,6 +103,9 @@ documentation for Eina
 %_libdir/pkgconfig/*
 
 %changelog
+* Tue Apr 09 2013 Yuri N. Sedunov <aris@altlinux.org> 1.7.6-alt1
+- 1.7.6
+
 * Sat Jan 05 2013 Yuri N. Sedunov <aris@altlinux.org> 1.7.5-alt1
 - 1.7.5
 

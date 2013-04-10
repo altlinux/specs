@@ -1,7 +1,7 @@
 %def_disable xine
 
 Name: emotion
-Version: 1.7.5
+Version: 1.7.6
 Release: alt1
 
 Summary: Widget set based on the Enlightenment Foundation Libraries
@@ -78,6 +78,9 @@ developing applications that use Emotion library.
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Tue Apr 09 2013 Yuri N. Sedunov <aris@altlinux.org> 1.7.6-alt1
+- 1.7.6
+
 * Sat Jan 05 2013 Yuri N. Sedunov <aris@altlinux.org> 1.7.5-alt1
 - 1.7.5
 
