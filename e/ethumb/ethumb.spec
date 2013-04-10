@@ -2,8 +2,8 @@
 %def_enable epdf
 
 Name: ethumb
-Version: 1.7.5
-Release: alt4
+Version: 1.7.6
+Release: alt1
 
 Summary: Ethumb - Thumbnail generation library
 Group: Graphical desktop/Enlightenment
@@ -80,6 +80,9 @@ developing applications that use %name.
 %_pkgconfigdir/%{name}*.pc
 
 %changelog
+* Tue Apr 09 2013 Yuri N. Sedunov <aris@altlinux.org> 1.7.6-alt1
+- 1.7.6
+
 * Sun Apr 07 2013 Yuri N. Sedunov <aris@altlinux.org> 1.7.5-alt4
 - another attempt to avoid linking against libpoppler13
 

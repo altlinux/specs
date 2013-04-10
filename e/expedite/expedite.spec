@@ -1,5 +1,5 @@
 Name: expedite
-Version: 1.7.5
+Version: 1.7.6
 %ifdef beta
 Release: alt1.%beta
 %else
@@ -47,6 +47,9 @@ usage cases.
 %doc AUTHORS COPYING* README
 
 %changelog
+* Tue Apr 09 2013 Yuri N. Sedunov <aris@altlinux.org> 1.7.6-alt1
+- 1.7.6
+
 * Sat Jan 05 2013 Yuri N. Sedunov <aris@altlinux.org> 1.7.5-alt1
 - 1.7.5
 

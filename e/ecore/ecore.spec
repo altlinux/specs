@@ -1,11 +1,11 @@
 %def_disable static
 
 Name: ecore
-Version: 1.7.5
+Version: 1.7.6
 %ifdef beta
-Release: alt2.%beta
+Release: alt1.%beta
 %else
-Release: alt2
+Release: alt1
 %endif
 
 Serial: 1
@@ -123,6 +123,9 @@ This package contains Ecore static libraries.
 %endif
 
 %changelog
+* Tue Apr 09 2013 Yuri N. Sedunov <aris@altlinux.org> 1:1.7.6-alt1
+- 1.7.6
+
 * Wed Mar 13 2013 Yuri N. Sedunov <aris@altlinux.org> 1:1.7.5-alt2
 - updated buildreqs
 
