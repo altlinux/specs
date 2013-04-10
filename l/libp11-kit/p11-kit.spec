@@ -6,7 +6,7 @@
 #%%define trust_paths %_sysconfdir/pki/ca-trust/source:%_datadir/pki/ca-trust-source
 
 Name: lib%_name
-Version: 0.17.5
+Version: 0.18.0
 Release: alt1
 
 Summary: Library for loading and sharing PKCS#11 modules
@@ -66,7 +66,7 @@ such a way that they're discoverable.
 This package contains development documentation for %_name library.
 
 %prep
-%setup -q -n %_name-%version
+%setup -n %_name-%version
 %patch
 
 %build
@@ -77,7 +77,6 @@ This package contains development documentation for %_name library.
 	--with-libtasn1 \
 	--with-trust-paths=%trust_paths
 %endif
-
 
 %make_build
 
@@ -125,6 +124,9 @@ EOF
 %_datadir/gtk-doc/html/%_name
 
 %changelog
+* Wed Apr 10 2013 Dmitry V. Levin <ldv@altlinux.org> 0.18.0-alt1
+- Updated to 0.18.0 (stable).
+
 * Sat Mar 30 2013 Yuri N. Sedunov <aris@altlinux.org> 0.17.5-alt1
 - 0.17.5
 
