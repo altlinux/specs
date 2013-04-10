@@ -2,7 +2,7 @@
 %def_enable scanner
 
 Name: wayland
-Version: 1.0.5
+Version: 1.0.6
 Release: alt1
 
 Summary: Wayland protocol libraries
@@ -139,6 +139,9 @@ This package provides development files for Wayland cursor helper library.
 %_pkgconfigdir/%name-cursor.pc
 
 %changelog
+* Wed Apr 10 2013 Yuri N. Sedunov <aris@altlinux.org> 1.0.6-alt1
+- 1.0.6
+
 * Wed Mar 06 2013 Yuri N. Sedunov <aris@altlinux.org> 1.0.5-alt1
 - 1.0.5
 
