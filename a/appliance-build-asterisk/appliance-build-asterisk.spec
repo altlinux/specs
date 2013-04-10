@@ -2,11 +2,11 @@ Name: appliance-build-asterisk
 Summary: Packages required for build Asterisk
 BuildArch: noarch
 Version: 4.0.1
-Release: alt1.1
+Release: alt2
 License: GPL
 Group: System/Base
 
-Requires: asterisk1.6.2-devel
+Requires: asterisk1.8-devel
 Requires: asterisk-build-hacks
 Requires: autoconf_2.60
 Requires: automake_1.9
@@ -87,6 +87,9 @@ Requires: zlib-devel
 %files
 
 %changelog
+* Thu Apr 11 2013 Denis Smirnov <mithraen@altlinux.ru> 4.0.1-alt2
+- use Asterisk 1.8
+
 * Mon Apr 01 2013 Michael Shigorin <mike@altlinux.org> 4.0.1-alt1.1
 - NMU: fixed MySQL client library dependency
 
