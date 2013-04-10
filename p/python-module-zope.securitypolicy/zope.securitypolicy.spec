@@ -1,7 +1,7 @@
 %define oname zope.securitypolicy
 Name: python-module-%oname
-Version: 3.7.0
-Release: alt2.1
+Version: 4.0.0
+Release: alt1.a1
 Summary: Default security policy for Zope3
 License: ZPL
 Group: Development/Python
@@ -59,6 +59,9 @@ mv %buildroot%python_sitelibdir_noarch/* \
 %python_sitelibdir/*/*/tests
 
 %changelog
+* Wed Apr 10 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.0-alt1.a1
+- Version 4.0.0a1
+
 * Mon Oct 24 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 3.7.0-alt2.1
 - Rebuild with Python-2.7
 
