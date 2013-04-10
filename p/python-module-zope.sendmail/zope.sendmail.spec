@@ -1,7 +1,7 @@
 %define oname zope.sendmail
 Name: python-module-%oname
-Version: 3.7.4
-Release: alt2.1
+Version: 4.0.0
+Release: alt1.a2
 Summary: Zope sendmail
 License: ZPLv2.1
 Group: Development/Python
@@ -55,6 +55,9 @@ mv %buildroot%python_sitelibdir_noarch/* \
 %python_sitelibdir/*/*/tests
 
 %changelog
+* Wed Apr 10 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.0-alt1.a2
+- Version 4.0.0a2
+
 * Thu Oct 20 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 3.7.4-alt2.1
 - Rebuild with Python-2.7
 
