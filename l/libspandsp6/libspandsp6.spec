@@ -12,7 +12,7 @@ Conflicts: libspandsp5-%1 \
 Name: libspandsp6
 Summary: DSP library for VoIP, FAX and T.38 support
 Version: 0.0.6
-Release: alt0.19.1
+Release: alt0.19.2
 License: LGPL
 Group: System/Libraries
 
@@ -87,6 +87,9 @@ cp -a doc/t38_manual %buildroot%_docdir/%name/t38_manual
 %_pkgconfigdir/spandsp.pc
 
 %changelog
+* Thu Apr 11 2013 Denis Smirnov <mithraen@altlinux.ru> 0.0.6-alt0.19.2
+- rebuild
+
 * Fri Feb 03 2012 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.0.6-alt0.19.1
 - 0.0.6-pre19
 
