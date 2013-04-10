@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 3.6.1
-Release: alt1.1
+Version: 4.0.0
+Release: alt1.a1
 Summary: Zope 3 Template Application Languate (TAL)
 License: ZPL
 Group: Development/Python
@@ -92,9 +92,7 @@ cp -a . ../python3
 %python_build
 %if_with python3
 pushd ../python3
-for i in $(find ./ -name '*.py'); do
-	2to3 -w $i
-done
+find -type f -name '*.py' -exec 2to3 -w '{}' +
 sed -i 's|.*def setSourceFile\(.*\)|    def setSourceFile\1|' \
 	src/zope/tal/interfaces.py
 sed -i 's|.*def setGlobal\(.*\)|    def setGlobal\1|' \
@@ -124,7 +122,7 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 
 %files
-%doc *.txt
+%doc *.rst
 %python_sitelibdir/*
 %exclude %python_sitelibdir/*.pth
 %exclude %python_sitelibdir/*/*/tests
@@ -136,7 +134,7 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 
 %if_with python3
 %files -n python3-module-%oname
-%doc *.txt
+%doc *.rst
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*.pth
 %exclude %python3_sitelibdir/*/*/tests
@@ -148,6 +146,9 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 
 %changelog
+* Wed Apr 10 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.0-alt1.a1
+- Version 4.0.0a1
+
 * Fri Mar 22 2013 Aleksey Avdeev <solo@altlinux.ru> 3.6.1-alt1.1
 - Rebuild with Python-3.3
 
