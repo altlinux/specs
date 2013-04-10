@@ -1,6 +1,6 @@
 %define oname zope.pagetemplate
 Name: python-module-%oname
-Version: 3.6.3
+Version: 4.0.4
 Release: alt1
 Summary: Zope Page Templates
 License: ZPL
@@ -60,6 +60,9 @@ mv %buildroot%python_sitelibdir_noarch/* \
 %python_sitelibdir/*/*/tests
 
 %changelog
+* Wed Apr 10 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.4-alt1
+- Version 4.0.4
+
 * Wed Dec 28 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.6.3-alt1
 - Version 3.6.3
 
