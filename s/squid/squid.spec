@@ -5,7 +5,7 @@
 
 Name: squid
 Version: 3.2.9
-Release: alt2
+Release: alt3
 %define langpack_ver 20121005
 Summary: The Squid proxy caching server
 License: GPLv2
@@ -28,7 +28,7 @@ Provides: %name-server = %version-%release
 Obsoletes: %name-server
 Provides: %name-cachemgr = %version-%release
 Obsoletes: %name-cachemgr
-Conflicts: %name-conf-host2cat
+Conflicts: %name-conf-host2cat < 1.01-alt5
 
 # epoll is enabled by default, so disable it if plain poll is enabled
 %{?_enable_poll:%force_disable epoll}
@@ -286,6 +286,9 @@ chown -R %name:%name %_spooldir/%name >/dev/null 2>&1 ||:
 
 
 %changelog
+* Thu Apr 11 2013 Led <led@altlinux.ru> 3.2.9-alt3
+- updated Conflicts
+
 * Mon Apr 08 2013 Led <led@altlinux.ru> 3.2.9-alt2
 - added upstream fixes
 
@@ -324,7 +327,7 @@ chown -R %name:%name %_spooldir/%name >/dev/null 2>&1 ||:
   + esi
 
 * Thu Dec 20 2012 Led <led@altlinux.ru> 3.1.22-alt5
-- Conflicts %%name-conf-host2cat (ALT#28242)
+- Conflicts %%name-conf-host2cat (ALT#28241)
 
 * Wed Dec 19 2012 Led <led@altlinux.ru> 3.1.22-alt4
 - fixed init script for use parameters from %%_sysconfdie/sysconfig/squid

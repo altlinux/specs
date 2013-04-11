@@ -9,7 +9,7 @@
 Name: %{bname}_%ver
 Version: %ver.23
 %define langpack_ver 20121005
-Release: alt3
+Release: alt4
 Summary: The Squid proxy caching server
 License: GPLv2
 Group: System/Servers
@@ -31,7 +31,7 @@ Provides: %bname-server = %version-%release
 Obsoletes: %bname-server < %version-%release
 Provides: %bname-cachemgr = %version-%release
 Obsoletes: %name-cachemgr < %version-%release
-Conflicts: %bname-conf-host2cat
+Conflicts: %bname-conf-host2cat < 1.01-alt5
 Provides: %bname = %version-%release
 Conflicts: %bname > %version-%release
 Provides: %bname-helpers = %version-%release
@@ -270,6 +270,9 @@ chown -R %bname:%bname %_spooldir/%bname >/dev/null 2>&1 ||:
 
 
 %changelog
+* Thu Apr 11 2013 Led <led@altlinux.ru> 3.1.23-alt4
+- updated Conflicts
+
 * Wed Mar 06 2013 Led <led@altlinux.ru> 3.1.23-alt3
 - built as squid_3.1
 - moved content of helpers subpackage to main subpackage
