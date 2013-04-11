@@ -1,7 +1,7 @@
 BuildRequires: desktop-file-utils
 Name: lightlang
 Version: 0.8.6.s
-Release: alt1.qa1
+Release: alt1.qa2
 
 Summary: Dictionary Shell on Qt4
 Summary(ru_RU.UTF-8): Словарь на основе Qt4
@@ -17,6 +17,7 @@ Source: http://lightlang.googlecode.com/files/lightlang-%version.tar
 # Automatically added by buildreq on Sun Jun 03 2012
 # optimized out: fontconfig libgst-plugins libqt4-clucene libqt4-core libqt4-dbus libqt4-declarative libqt4-designer libqt4-gui libqt4-help libqt4-multimedia libqt4-network libqt4-opengl libqt4-script libqt4-scripttools libqt4-sql libqt4-svg libqt4-test libqt4-webkit libqt4-xml libqt4-xmlpatterns pkg-config python-base python-module-distribute python-module-peak python-module-sip python-module-zope python-modules python-modules-compiler python-modules-email python-modules-encodings python-modules-json
 BuildRequires: python-module-PyQt4 python-module-mwlib python-module-paste python-module-xlib sox-base
+BuildRequires: python-modules-json
 
 %description
 LightLang is a small and powerfull dictionary shell, writed on qt4 and has a many dictionary (ru-en and en-ru).
@@ -66,6 +67,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 #%_pkgconfigdir/*.pc
 
 %changelog
+* Thu Apr 11 2013 Andrey Cherepanov <cas@altlinux.org> 0.8.6.s-alt1.qa2
+- Use python-modules-json as json module
+
 * Tue Aug 28 2012 Repocop Q. A. Robot <repocop@altlinux.org> 0.8.6.s-alt1.qa1
 - NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
 - applied repocop fixes:
