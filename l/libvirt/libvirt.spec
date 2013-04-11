@@ -95,7 +95,7 @@
 %def_with sasl
 
 Name: libvirt
-Version: 1.0.3
+Version: 1.0.4
 Release: alt1
 Summary: Library providing a simple API virtualization
 License: LGPLv2+
@@ -858,6 +858,10 @@ fi
 %doc examples/python
 
 %changelog
+* Thu Apr 11 2013 Alexey Shabalin <shaba@altlinux.ru> 1.0.4-alt1
+- 1.0.4
+- add patches from v1.0.4-maint
+
 * Wed Mar 13 2013 Alexey Shabalin <shaba@altlinux.ru> 1.0.3-alt1
 - 1.0.3 release
 
