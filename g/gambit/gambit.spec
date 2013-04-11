@@ -1,5 +1,5 @@
 Name: gambit
-Version: 4.6.6
+Version: 4.6.7
 Release: alt1
 
 Summary: Gambit-C Scheme programming system
@@ -10,12 +10,12 @@ Conflicts: ghostscript-minimal < 8.64-alt5
 
 Packager: Paul Wolneykien <manowar@altlinux.ru>
 
-%def_with bootstrap
+%def_without bootstrap
 
 Source: %name-%version.tar
 %if_with bootstrap
 Patch0: %name-%version-bootstrap.patch
-%define bootstrap_version 4.6.5
+%define bootstrap_version 4.6.6
 BuildRequires: gambit >= %bootstrap_version
 %endif
 
@@ -67,7 +67,7 @@ Gambit-C manual in info format
 %prep
 %setup -q -c %name
 # Redirect REPL to stdout to avoid hangs in Hasher
-find %name-%version -name 'makefile.in' -exec sed -i -e 's/gs[ci]\(-comp\)\? -:/&d-,/g' '{}' \;
+find %name-%version -name 'makefile.in' -exec sed -i -e 's/gs[ci]\(-boot\)\? -:/&d-,/g' '{}' \;
 %if_with bootstrap
 # Prepare the bootstrap tree
 cp -Rp %name-%version %name-%version-bootstrap-2
@@ -81,32 +81,39 @@ cd %name-%version
 %build
 %if_with bootstrap
 pushd %name-%version-bootstrap-1
-cp /usr/bin/gsc gsc-comp
-if [ "%bootstrap_version" = "$(./gsc-comp -v | sed -n 's/^v\([0-9]\+\.[0-9]\+\.[0-9]\+\).*$/\1/p')" ]; then \
+cp /usr/bin/gsc gsc-boot
+if [ "%bootstrap_version" = "$(./gsc-boot -v | sed -n 's/^v\([0-9]\+\.[0-9]\+\.[0-9]\+\).*$/\1/p')" ]; then \
 	autoconf configure.ac > configure && chmod 755 configure; \
 	%configure --enable-single-host; \
+	%make bootclean; \
 	%make_build bootstrap; \
 fi
-cp gsc-comp ../%name-%version-bootstrap-2/
+cp gsc-boot ../%name-%version-bootstrap-2/
 popd
 %endif
 
 %if_with bootstrap
 pushd %name-%version-bootstrap-2
-if [ "%version" != "$(./gsc-comp -v | sed -n 's/^v\([0-9]\+\.[0-9]\+\.[0-9]\+\).*$/\1/p')" ]; then \
+if [ "%version" != "$(./gsc-boot -v | sed -n 's/^v\([0-9]\+\.[0-9]\+\.[0-9]\+\).*$/\1/p')" ]; then \
 	autoconf configure.ac > configure && chmod 755 configure; \
 	%configure --enable-single-host; \
+	%make bootclean; \
 	%make_build bootstrap; \
 fi
-cp gsc-comp ../%name-%version/
+cp gsc-boot ../%name-%version/
 popd
 %endif
 
 cd %name-%version
 autoconf configure.ac > configure && chmod 755 configure
+# TODO: try --enable-poll
 %configure --enable-single-host \
            --enable-shared \
            --disable-absolute-shared-libs
+%if_without bootstrap
+%make bootstrap
+%endif
+%make bootclean
 %make_build
 emacs -q -no-site-file -batch -eval "(byte-compile-file \"misc/gambit.el\")"
 
@@ -133,8 +140,8 @@ mkdir -p %buildroot%pkgdocdir
 cp -R doc/gambit-c.pdf doc/gambit-c.txt doc/gambit-c.html examples/* %buildroot%pkgdocdir/
 
 %check
-cd %name-%version/tests
-%make check
+cd %name-%version
+%make -C tests check
 
 %files
 %_altdir/*
@@ -159,6 +166,16 @@ cd %name-%version/tests
 %_infodir/*.info*
 
 %changelog
+* Mon Apr 08 2013 Paul Wolneykien <manowar@altlinux.ru> 4.6.7-alt1
+- Build without bootstrap.
+- Add TODO for --enable-poll option (to be tested with the latest
+  Gambit).
+- Update the building scheme following README inctructions.
+- Make bootclean prior to make.
+- Rename: gsc-comp -> gsc-boot.
+- Update the sources up to v4.6.7 with the help of repocop cronbuild
+  scripts.
+
 * Thu Dec 06 2012 Paul Wolneykien <manowar@altlinux.ru> 4.6.6-alt1
 - repocop cronbuild 20121206. At your service.
 

@@ -1,6 +1,6 @@
 Name: squidmill
 Version: 2.2
-Release: alt3
+Release: alt4
 
 Source: %name-%version.tar
 
@@ -41,6 +41,9 @@ data are included.
 %_sysconfdir/sysconfig/squidmill
 
 %changelog
+* Mon Apr 08 2013 Paul Wolneykien <manowar@altlinux.ru> 2.2-alt4
+- Rebuild with a new version of Gambit.
+
 * Fri Jan 04 2013 Paul Wolneykien <manowar@altlinux.ru> 2.2-alt3
 - Rebuild with Gambit v4.6.6.
 
