@@ -27,7 +27,7 @@
 %define rname kdebase-workspace
 Name: kde4base-workspace
 Version: %major.%minor.%bugfix
-Release: alt1
+Release: alt2
 
 Group: Graphical desktop/KDE
 Summary: K Desktop Environment - Workspace
@@ -804,7 +804,9 @@ chmod 0755 %buildroot/%_sysconfdir/firsttime.d/kdm4
 %endif
 %_K4srvtyp/*
 %_K4snd/*
+%if_enabled desktop
 %_K4start/*
+%endif
 %if_enabled desktop
 %_kde4_xdg_apps/*
 %_K4xdg_apps/*
@@ -941,6 +943,9 @@ chmod 0755 %buildroot/%_sysconfdir/firsttime.d/kdm4
 %_K4dbus_interfaces/*
 
 %changelog
+* Thu Apr 11 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.2-alt2
+- fix add new ktp-presence applet to systray by default
+
 * Wed Apr 03 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.2-alt1
 - new version
 
