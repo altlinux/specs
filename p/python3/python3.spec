@@ -58,12 +58,12 @@
 
 Summary: Version 3 of the Python programming language aka Python 3000
 Name: python3
-Version: %pybasever.0
+Version: %pybasever.1
 Release: alt1
 License: Python
 Group: Development/Python3
 
-BuildRequires(pre): rpm-build-python3 >= 0.1.4
+BuildRequires(pre): rpm-build-python3 >= 0.1.7
 BuildPreReq: liblzma-devel
 # For Bluetooth support
 # see https://bugzilla.redhat.com/show_bug.cgi?id=879720
@@ -217,7 +217,7 @@ Patch143: 00143-tsc-on-ppc.patch
 # - don't build the _md5 and _sha* modules; rely on the _hashlib implementation
 #   of hashlib
 # (rhbz#563986)
-Patch146: 00146-hashlib-fips.patch
+Patch146: 00146-python3-3.3.1-alt-hashlib-fips.patch
 
 # Add a sys._debugmallocstats() function
 # Sent upstream as http://bugs.python.org/issue14785
@@ -275,6 +275,9 @@ Patch201: python-3.3.0-autoconf-sem_open_check-alt.patch
 %if_enabled test_posix_fadvise
 Patch202: python-3.3.0-skip-test_posix_fadvise-alt.patch
 %endif
+
+# RLIMIT 1000000 unavailable in hasher
+Patch203: python-3.3.1-skip-test_setrusage_refcount-alt.patch
 
 # ======================================================
 # Additional metadata, and subpackages
@@ -449,7 +452,7 @@ done
 %patch143 -p1 -b .tsc-on-ppc
 # 00144: not for python3
 # 00145: not for python3
-%patch146 -p1
+%patch146 -p2
 # 00147: upstream as of Python 3.3.0
 # 00148: upstream as of Python 3.2.3
 # 00149: upstream as of Python 3.2.3
@@ -466,6 +469,7 @@ done
 %if_enabled test_posix_fadvise
 %patch202 -p2
 %endif
+%patch203 -p2
 
 # Currently (2010-01-15), http://docs.python.org/library is for 2.6, and there
 # are many differences between 2.6 and the Python 3 library.
@@ -924,6 +928,10 @@ WITHIN_PYTHON_RPM_BUILD= LD_LIBRARY_PATH=`pwd` ./python -m test.regrtest --verbo
 %pylibdir/unittest/test
 
 %changelog
+* Fri Apr 12 2013 Aleksey Avdeev <solo@altlinux.ru> 3.3.1-alt1
+- version up to 3.3.1
+- skip test_posix_fadvise: RLIMIT_CPU 1000000 unavailable in hasher
+
 * Fri Mar 29 2013 Aleksey Avdeev <solo@altlinux.ru> 3.3.0-alt1
 - version up to 3.3.0
 - add support for Bluetooth
