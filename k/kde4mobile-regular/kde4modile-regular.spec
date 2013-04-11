@@ -1,6 +1,6 @@
 Name:    kde4mobile-regular
 Version: 4.10
-Release: alt2
+Release: alt3
 
 Group: Graphical desktop/KDE
 Summary: KDE4 mobile common collection
@@ -35,7 +35,7 @@ Requires: kde4-share-like-connect
 Requires: kde4-startactive
 %endif
 
-Requires: kde4base-workspace
+Requires: kde4base-workspace-core
 Requires: kde4base-plasma-applets
 Requires: kde4base-dolphin
 Requires: kde4base-kwrite
@@ -73,6 +73,9 @@ KDE Active package to easy select packages during install
 %files
 
 %changelog
+* Thu Apr 11 2013 Sergey V Turchin <zerg@altlinux.org> 4.10-alt3
+- fix requires
+
 * Tue Apr 09 2013 Sergey V Turchin <zerg@altlinux.org> 4.10-alt2
 - update requires
 
