@@ -4,7 +4,7 @@
 
 Name: telepathy-qt4
 Version: 0.9.3
-Release: alt3
+Release: alt4
 
 Summary: Telepathy framework - Qt4 connection manager library 
 License: GPLv2
@@ -40,7 +40,7 @@ Telepathy-Qt4 is a high-level binding for Telepathy, similar to telepathy-glib b
 Summary: Development libraries and header files for %name
 Group: Development/KDE and QT
 Requires: lib%name = %version-%release
-
+Requires: libtelepathy-glib-devel
 %description -n lib%name-devel
 Development libraries and header files for %name.
 
@@ -76,6 +76,9 @@ popd
 %_includedir/telepathy-qt4
 
 %changelog
+* Thu Apr 11 2013 Sergey V Turchin <zerg@altlinux.org> 0.9.3-alt4
+- fix requires
+
 * Tue Apr 09 2013 Sergey V Turchin <zerg@altlinux.org> 0.9.3-alt3
 - clean build requires
 

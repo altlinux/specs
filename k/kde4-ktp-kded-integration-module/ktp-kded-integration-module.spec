@@ -3,7 +3,7 @@
 
 %define rname ktp-kded-integration-module
 Name: kde4-ktp-kded-integration-module
-Version: 0.5.3
+Version: 0.6.0
 Release: alt1
 
 Group: Graphical desktop/KDE
@@ -12,6 +12,7 @@ Url: https://projects.kde.org/projects/extragear/network/telepathy/%rname
 License: LGPLv2+
 
 Source0: %rname-%version.tar
+Patch1: 0.6.0-alt-autoconnect.patch
 
 BuildRequires: gcc-c++
 BuildRequires: kde4-ktp-common-internals-devel kde4libs-devel
@@ -45,6 +46,7 @@ Requires: libtelepathy-qt4-devel
 
 %prep
 %setup -qn %rname-%version
+%patch1 -p1
 
 %build
 %K4build
@@ -66,6 +68,9 @@ Requires: libtelepathy-qt4-devel
 #%_K4includedir/KTp/
 
 %changelog
+* Wed Apr 10 2013 Sergey V Turchin <zerg@altlinux.org> 0.6.0-alt1
+- new version
+
 * Thu Mar 21 2013 Sergey V Turchin <zerg@altlinux.org> 0.5.3-alt1
 - new version
 

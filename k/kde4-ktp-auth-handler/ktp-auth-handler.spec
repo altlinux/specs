@@ -3,7 +3,7 @@
 
 %define rname ktp-auth-handler
 Name: kde4-ktp-auth-handler
-Version: 0.5.3
+Version: 0.6.0
 Release: alt1
 
 Group: Graphical desktop/KDE
@@ -17,7 +17,7 @@ Source0: %rname-%version.tar
 # optimized out: automoc cmake cmake-modules elfutils fontconfig fontconfig-devel glibc-devel-static kde-common-devel kde4libs libICE-devel libSM-devel libX11-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXext-devel libXfixes-devel libXft-devel libXi-devel libXinerama-devel libXpm-devel libXrandr-devel libXrender-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel libdbus-devel libdbusmenu-qt2 libfreetype-devel libgst-plugins libpng-devel libqt4-core libqt4-dbus libqt4-devel libqt4-gui libqt4-network libqt4-svg libqt4-webkit libqt4-xml libsoprano-devel libssl-devel libstdc++-devel libtelepathy-qt4 libtelepathy-qt4-devel libxkbfile-devel phonon-devel pkg-config python-base xorg-kbproto-devel xorg-xf86miscproto-devel xorg-xproto-devel zlib-devel
 #BuildRequires: gcc-c++ glib2-devel kde4-ktp-common-internals-devel kde4libs-devel libicu libqt3-devel zlib-devel-static
 BuildRequires: gcc-c++
-BuildRequires: kde4-ktp-common-internals-devel kde4libs-devel qjson-devel
+BuildRequires: kde4-ktp-common-internals-devel kde4libs-devel qjson-devel libqca2-devel
 BuildRequires: kde-common-devel
 
 %description
@@ -57,14 +57,17 @@ Requires: libtelepathy-qt4-devel
 
 %files -f %rname.lang
 %_K4exec/ktp-auth-handler
-%_K4dbus_services/org.freedesktop.Telepathy.Client.KTp.SASLHandler.service
-%_datadir/telepathy/clients/KTp.SASLHandler.client
+%_K4dbus_services/org.freedesktop.Telepathy.Client.KTp.*.service
+%_datadir/telepathy/clients/KTp.*.client
 
 #%files devel
 #%_K4link/lib*.so
 #%_K4includedir/KTp/
 
 %changelog
+* Wed Apr 10 2013 Sergey V Turchin <zerg@altlinux.org> 0.6.0-alt1
+- new version
+
 * Thu Mar 21 2013 Sergey V Turchin <zerg@altlinux.org> 0.5.3-alt1
 - new version
 

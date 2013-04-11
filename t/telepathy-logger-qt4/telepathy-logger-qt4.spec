@@ -1,7 +1,7 @@
 
 Name: telepathy-logger-qt4
 Version: 0.6.0
-Release: alt1
+Release: alt2
 %define sover 1
 %define libname lib%name%sover
 
@@ -28,7 +28,7 @@ It is needed by KDE Telepathy in order to log the chat activity.
 Group: Development/KDE and QT
 Summary: Qt Wrapper around TpLogger client library
 Requires: %libname
-Requires: qt-gstreamer-devel
+Requires: qt-gstreamer-devel libtelepathy-qt4-devel
 %description devel
 Telepathy-logger-qt4 is a Qt Wrapper around the TpLogger client library.
 It is needed by KDE Telepathy in order to log the chat activity.
@@ -66,6 +66,9 @@ export QTDIR=%_qt4dir
 %_libdir/pkgconfig/TelepathyLoggerQt4.pc
 
 %changelog
+* Thu Apr 11 2013 Sergey V Turchin <zerg@altlinux.org> 0.6.0-alt2
+- fix requires
+
 * Fri Apr 05 2013 Sergey V Turchin <zerg@altlinux.org> 0.6.0-alt1
 - new version
 
