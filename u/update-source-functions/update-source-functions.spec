@@ -1,5 +1,5 @@
 Name: update-source-functions
-Version: 0.1.2
+Version: 0.1.3
 Release: alt1
 
 Summary: A set of functions intended to help with updating a git repository from an upstream source
@@ -16,7 +16,7 @@ This package contains the set of Shell functions intended to help with
 updating a git repository from an upstream source released in a public
 directory. Several popular software project hostings are supported
 including SourceForge and GitHub. The plain network public directory
-(i.e. HTTP, FTP) search is also supported.
+(i.e. HTTP, FTP) search is also supported with a shortcut for PyPI.
 
 %prep
 %setup
@@ -36,6 +36,11 @@ mkdir -p m4
 %_bindir/*.sh
 
 %changelog
+* Thu Apr 11 2013 Paul Wolneykien <manowar@altlinux.org> 0.1.3-alt1
+- Define the basic filename pattern as BASIC_VERPAT.
+- Add basic support of the PyPI.
+- Add support for HTTP public directories.
+
 * Wed Apr 10 2013 Paul Wolneykien <manowar@altlinux.org> 0.1.2-alt1
 - Fix version comparison: compare with 0 instead of -1.
 
