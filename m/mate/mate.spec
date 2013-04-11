@@ -1,8 +1,8 @@
-%define ver_major 1.5
+%define ver_major 1.6
 
 Name: mate
 Version: %ver_major.0
-Release: alt5
+Release: alt1
 
 Summary: MATE Desktop installers
 License: %gpl2plus
@@ -274,7 +274,7 @@ Requires: consolehelper
 ## 3D screensavers
 #Requires: mate-screensaver-modules-xscreensaver-gl
 
-Requires: mate-file-manager-dropbox
+#Requires: mate-file-manager-dropbox
 Requires: mate-file-manager-share
 #Requires: mate-keyring-pam
 Requires: mate-system-log
@@ -377,6 +377,9 @@ itself).
 #%files a11y
 
 %changelog
+* Thu Apr 11 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1.6.0-alt1
+- mate-file-manager-dropbox removed from mate-maxi
+
 * Fri Mar 22 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1.5.0-alt5
 - added Requires: gvfs-utils into mate-default (closes #28677)
 

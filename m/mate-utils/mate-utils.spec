@@ -4,8 +4,8 @@ BuildRequires: /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/glib-m
 # END SourceDeps(oneline)
 %define _libexecdir %_prefix/libexec
 Name:           mate-utils
-Version:        1.5.0
-Release:        alt2_1
+Version:        1.6.0
+Release:        alt1
 Summary:        MATE utility programs
 
 License:        GPLv2+ and LGPLv2+
@@ -191,6 +191,9 @@ cat mate-search-tool.lang >> %{name}.lang
 
 
 %changelog
+* Thu Apr 11 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1.6.0-alt1
+- 1.6.0
+
 * Wed Feb 20 2013 Igor Vlasenko <viy@altlinux.ru> 1.5.0-alt2_1
 - new fc release
 
