@@ -4,7 +4,7 @@
 
 Name: gnome-menus
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: GNOME desktop menu
 License: GPLv2+
@@ -106,19 +106,14 @@ GObject introspection devel data for the GNOME Desktop Menu Library
 %install
 %make_install DESTDIR=%buildroot install
 
-#mv %buildroot%_xdgmenusdir/{gnome-,gnome3-}applications.menu
-# just rewrite gnome-applications.menu by symlink to our gnome3-applications.menu
-ln -sf gnome3-applications.menu  %buildroot%_xdgmenusdir/gnome-applications.menu
-
-
 %find_lang %name-%api_ver
 
 %files default
 %_datadir/desktop-directories/*
+%exclude %_xdgmenusdir/gnome-applications.menu
 
 %files -n lib%name -f %name-%api_ver.lang
 %_libdir/*.so.*
-%_xdgmenusdir/gnome-applications.menu
 %doc AUTHORS NEWS README
 
 %files -n lib%name-devel
@@ -136,6 +131,10 @@ ln -sf gnome3-applications.menu  %buildroot%_xdgmenusdir/gnome-applications.menu
 
 
 %changelog
+* Thu Apr 11 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.0-alt2
+- removed symlink gnome-applications.menu->gnome3-applications.menu
+  provided by new altlinux-freedesktop-menu-gnome
+
 * Tue Mar 26 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.0-alt1
 - 3.8.0
 - no more gnome-menu-editor and common subpackage
