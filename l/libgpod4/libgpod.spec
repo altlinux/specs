@@ -2,7 +2,7 @@
 
 Name: libgpod4
 Version: 0.8.2
-Release: alt2
+Release: alt3
 
 Summary: iPod access library
 Group: Sound
@@ -137,6 +137,9 @@ rm -f %buildroot%python_sitelibdir/gpod/*.la
 %_pkgconfigdir/libgpod-sharp.pc
 
 %changelog
+* Thu Apr 11 2013 Yuri N. Sedunov <aris@altlinux.org> 0.8.2-alt3
+- rebuilt against libimobiledevice.so.4
+
 * Tue Oct 02 2012 Alexey Shabalin <shaba@altlinux.ru> 0.8.2-alt2
 - upstream snapshot
 - add patches for fix deprecated functions
