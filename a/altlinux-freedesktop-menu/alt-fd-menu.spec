@@ -1,17 +1,13 @@
 %def_without backport
-%define gnome2ver 2.90
+%def_without gnome2
 %define gnome3ver 3.90
 
 Name: altlinux-freedesktop-menu
-Version: 0.61
+Version: 0.62
 %if_without backport
-%def_with gnome3
-%def_without gnome2
 Release: alt1
 %else
-%def_without gnome3
-%def_with gnome2
-Release: alt0.M60P.1
+Release: alt0.M70P.1
 %endif
 
 Summary: Implementation of the freedesktop.org menu specification
@@ -120,19 +116,6 @@ Requires: %name-provider
 %description mate
 ALTLinux freedesktop.org menu for MATE
 
-%package gnome
-Summary: gnome freedesktop menu
-Group: Graphical desktop/GNOME
-Provides: gnome2-freedesktop-menu
-Conflicts: gnome-menus-default
-Provides: gnome-menus = %gnome2ver.%version
-Obsoletes: gnome-menus-default < %gnome2ver.%version
-Requires: gnome2-menus-resources
-Requires: %name-provider
-
-%description gnome
-ALTLinux freedesktop.org menu for GNOME
-
 %package gnome3
 Summary: gnome3 freedesktop menu
 Group: Graphical desktop/GNOME
@@ -141,6 +124,10 @@ Conflicts: gnome-menus-default
 Provides: gnome-menus = %gnome3ver.%version
 Obsoletes: gnome-menus-default < %gnome3ver.%version
 Requires: %name-provider
+#Provides: %name-gnome = %version
+Conflicts: %name-gnome < %version
+Obsoletes: %name-gnome < %version
+Conflicts: libgnome-menus <= 3.8.0-alt1
 
 %description gnome3
 ALTLinux freedesktop.org menu for GNOME3
@@ -256,16 +243,14 @@ install -Dm755 altlinux-freedesktop-menu-post.sh %buildroot%_sbindir/altlinux-fr
 install -Dm755 altlinux-freedesktop-menu.filetrigger %buildroot%_rpmlibdir/altlinux-freedesktop-menu.filetrigger
 #find_lang %name
 
-%if_with backport
-sed -i s/xfce4-run.desktop/xfrun4.desktop/ %buildroot%_sysconfdir/xdg/menus/xfce-applications.menu
-%endif
-
 mkdir -p %buildroot%_sysconfdir/xdg/menus/{,enlightenment-,gnome-,gnome3-,cinnamon-,kde3-,lxde-,mate-,xfce-}applications-merged
 mkdir -p %buildroot%_sysconfdir/xdg/menus/{,mate-,cinnamon-}settings-merged
 
 install -D -m644 layout/kde4-merged.menu %buildroot%_sysconfdir/kde4/xdg/menus/applications-merged/50-kde4-merged.menu
 
 install -m0644 altlinux-directories/*.directory %buildroot/%_datadir/desktop-directories/
+
+ln -s gnome3-applications.menu %buildroot%_sysconfdir/xdg/menus/gnome-applications.menu
 
 # alternatives
 mkdir -p %buildroot%_altdir
@@ -315,17 +300,10 @@ touch /etc/xdg/menus/lxde-applications.menu
 %verify(not mtime) %config %_sysconfdir/xdg/menus/lxde-applications.menu
 %dir %_sysconfdir/xdg/menus/lxde-applications-merged
 
-%if_with gnome2
-%files gnome
+%files gnome3
 %verify(not mtime) %config %_sysconfdir/xdg/menus/gnome-applications.menu
 %dir %_sysconfdir/xdg/menus/gnome-applications-merged
-%verify(not mtime) %config %_sysconfdir/xdg/menus/settings.menu
-%dir %_sysconfdir/xdg/menus/settings-merged
-%endif
-
-%if_with gnome3
-%files gnome3
-%config %_sysconfdir/xdg/menus/gnome3-applications.menu
+%verify(not mtime) %config %_sysconfdir/xdg/menus/gnome3-applications.menu
 %dir %_sysconfdir/xdg/menus/gnome3-applications-merged
 
 %files cinnamon
@@ -333,7 +311,6 @@ touch /etc/xdg/menus/lxde-applications.menu
 %dir %_sysconfdir/xdg/menus/cinnamon-applications-merged
 %verify(not mtime) %config %_sysconfdir/xdg/menus/cinnamon-settings.menu
 %dir %_sysconfdir/xdg/menus/cinnamon-settings-merged
-%endif
 
 %files mate
 %verify(not mtime) %config %_sysconfdir/xdg/menus/mate-applications.menu
@@ -362,6 +339,10 @@ touch /etc/xdg/menus/lxde-applications.menu
 %_datadir/kde4/desktop-directories/altlinux-*.directory
 
 %changelog
+* Thu Apr 11 2013 Igor Vlasenko <viy@altlinux.ru> 0.62-alt1
+- added Conflicts/Obsoletes on gnome2 menu in gnome3 menu
+- removed gnome2 menu
+
 * Tue Mar 26 2013 Igor Vlasenko <viy@altlinux.ru> 0.61-alt1
 - added Kazakhstan translation by Baurzhan Muftakhidinov (baurthefirst@)
 
