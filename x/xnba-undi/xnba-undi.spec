@@ -1,7 +1,7 @@
 Name: xnba-undi
 Summary: xCAT Network Boot Agent for x86 PXE hosts
 Version: 1.0.2
-Release: alt0.1
+Release: alt0.2
 License: GPL
 Group: System/Servers
 Packager: Andriy Stepanov <stanv@altlinux.ru>
@@ -22,6 +22,7 @@ Patch5: ipxe-undinetchange.patch
 Patch6: ipxe-expandfilename.patch
 Patch7: ipxe-cmdlinesize.patch
 Patch8: ipxe-machyp.patch
+Patch9: ipxe-fix-undefined-NULL.patch
 
 %description
 The xCAT Network Boot Agent is a slightly modified version of ipxe.
@@ -40,6 +41,7 @@ This includes iSCSI, http/ftp downloads, and gPXE script based booting.
 %patch6 -p1
 %patch7 -p1
 %patch8 -p1
+%patch9 -p3
 
 %build
 
@@ -56,6 +58,9 @@ cp src/bin/undionly.kkpxe %{buildroot}/%{xcatdir}/xnba.kpxe
 %{xcatdir}/xnba.kpxe
 
 %changelog
+* Wed Apr 10 2013 Andrey Cherepanov <cas@altlinux.org> 1.0.2-alt0.2
+- Fix undefined NULL
+
 * Mon Nov 22 2010 Andriy Stepanov <stanv@altlinux.ru> 1.0.2-alt0.1
 - Update from upstream SVN: trunk@8157
 
