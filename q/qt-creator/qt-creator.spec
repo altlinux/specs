@@ -1,8 +1,8 @@
 %add_findreq_skiplist *gdbmacros*
 
 Name: qt-creator
-Version: 2.6.0
-Release: alt2
+Version: 2.7.0
+Release: alt1
 Summary: Lightweight and cross-platform IDE for Qt
 
 Group: Development/Tools
@@ -19,8 +19,8 @@ Patch: fix_linking_libhelp.patch
 Requires: %name-data = %version-%release
 
 BuildRequires: gcc-c++ 
-BuildRequires: libqt4-devel >= 4.7.4
-BuildRequires: libqt4-webkit >= 4.7.4
+BuildRequires: libqt4-devel >= 4.8.0
+BuildRequires: libqt4-webkit >= 4.8.0
 
 %description
 Qt Creator (previously known as Project Greenhouse) is a new,
@@ -93,6 +93,9 @@ done
 %exclude %_datadir/qtcreator/doc
 
 %changelog
+* Thu Apr 11 2013 Anatoly Lyutin <vostok@altlinux.org> 2.7.0-alt1
+- new version (closes #28740)
+
 * Tue Dec 18 2012 Anatoly Lyutin <vostok@altlinux.org> 2.6.0-alt2
 - true 2.6.0 (closes #28152)
 
