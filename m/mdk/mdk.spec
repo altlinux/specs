@@ -1,5 +1,5 @@
 Name: mdk
-Version: 1.2.5
+Version: 1.2.7
 Release: alt1
 
 Summary: GNU MIX Development Kit
@@ -13,6 +13,7 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 Source: http://prdownloads.sf.net/%name/%name-%version.tar
 Patch: %name-1.2.3.patch
+Patch1: %name-1.2.7-enable-deprecated.patch
 
 # Automatically added by buildreq on Mon Oct 29 2007
 BuildRequires: cvs flex guile18-devel libglade-devel libncurses-devel libreadline-devel
@@ -50,6 +51,7 @@ MDK включает в себя ассемблер MIXAL (mixasm) и вирту
 %prep
 %setup -q
 #%patch
+%patch1 -p2
 
 %build
 #%autoreconf
@@ -70,13 +72,17 @@ rm -f %buildroot%_infodir/dir
 %find_lang %name
 
 %files -f %name.lang
-%doc doc/mdk.html doc/img THANKS NEWS README TODO AUTHORS ChangeLog
+%doc doc/mdk.html doc/img THANKS NEWS README AUTHORS ChangeLog
 %_bindir/*
 %_infodir/*
 %_datadir/%name/
 %_emacslispdir/*
 
 %changelog
+* Thu Apr 11 2013 Andrey Cherepanov <cas@altlinux.org> 1.2.7-alt1
+- New version 1.2.7
+- Enable deprecated functions because g_completion* have no replacement
+
 * Sat May 15 2010 Vitaly Lipatov <lav@altlinux.ru> 1.2.5-alt1
 - new version (1.2.5) import in git
 - change license to GPLv3
