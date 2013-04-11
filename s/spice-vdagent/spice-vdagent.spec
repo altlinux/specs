@@ -1,7 +1,7 @@
 %define _localstatedir /var
 
 Name: spice-vdagent
-Version: 0.12.0
+Version: 0.12.1
 Release: alt1
 Summary: Agent for Spice guests
 Group: Networking/Remote access
@@ -12,7 +12,7 @@ Source: http://spice-space.org/download/releases/%name-%version.tar
 Source2: spice-vdagentd.init-alt
 Patch: %name-%version-%release.patch
 
-BuildRequires: spice-protocol libXrandr-devel libXfixes-devel libXinerama-devel libX11-devel
+BuildRequires: spice-protocol libXrandr-devel >= 1.3 libXfixes-devel libXinerama-devel libX11-devel
 BuildRequires: libpciaccess-devel >= 0.10
 BuildRequires: desktop-file-utils
 BuildRequires: libsystemd-login-devel >= 42 systemd-devel
@@ -66,6 +66,9 @@ install -m 0755 %SOURCE2 %buildroot%_initdir/spice-vdagentd
 %_datadir/gdm/autostart/LoginWindow/spice-vdagent.desktop
 
 %changelog
+* Thu Apr 11 2013 Alexey Shabalin <shaba@altlinux.ru> 0.12.1-alt1
+- 0.12.1
+
 * Tue Sep 04 2012 Alexey Shabalin <shaba@altlinux.ru> 0.12.0-alt1
 - 0.12.0
 
