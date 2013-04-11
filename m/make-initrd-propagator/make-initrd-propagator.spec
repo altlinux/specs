@@ -1,5 +1,5 @@
 Name: make-initrd-propagator
-Version: 0.19
+Version: 0.20
 Release: alt1
 
 Summary: Put propagator into make-initrd generated image
@@ -37,6 +37,9 @@ mkdir -p %buildroot%_datadir/make-initrd/features/propagator/data/image
 %_datadir/make-initrd/features/propagator
 
 %changelog
+* Thu Apr 11 2013 Michael Shigorin <mike@altlinux.org> 0.20-alt1
+- fixed a typo, thanks Andrey Liakhovets
+
 * Thu Mar 21 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.19-alt1
 - use disk and nfs slices only if stagenage=live
 
