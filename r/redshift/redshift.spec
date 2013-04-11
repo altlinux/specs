@@ -1,6 +1,6 @@
 Name: redshift
 Version: 1.6
-Release: alt3.1
+Release: alt3.2
 
 Summary: Redshift adjusts the color temperature of your screen
 Summary(ru_RU.UTF-8): Redshift изменяет температуру цвета Вашего экрана для снижения утомляемости глаз
@@ -21,7 +21,6 @@ Patch0: %name-%version-alt-remove_la_files.patch
 BuildPreReq: libGConf-devel
 BuildPreReq: libXxf86vm-devel
 BuildPreReq: libXext-devel
-BuildPreReq: libgnome-panel-devel
 BuildPreReq: libX11-devel
 BuildPreReq: libXxf86vm-devel 
 BuildPreReq: libX11-devel
@@ -86,6 +85,9 @@ fi
 rm -f %_sysconfdir/xdg/autostart/gtk-redshift.desktop
 
 %changelog
+* Thu Apr 11 2013 Andrey Cherepanov <cas@altlinux.org> 1.6-alt3.2
+- Remove requires of deprecated gnome-panel
+
 * Sat Oct 22 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 1.6-alt3.1
 - Rebuild with Python-2.7
 
