@@ -6,7 +6,7 @@
 
 Name: branding-%brand-%theme
 Version: 6.9.0 
-Release: alt21
+Release: alt22
 
 BuildRequires: cpio fonts-ttf-dejavu fonts-ttf-droid
 BuildRequires: design-bootloader-source >= 5.0-alt2
@@ -168,6 +168,7 @@ Requires: dconf
 Requires: gtk3-theme-clearlooks-phenix
 Conflicts: %(for n in %variants ; do [ "$n" = %brand-%theme ] || echo -n "branding-$n-gnome-settings ";done )
 PreReq(post): lightdm-gtk-greeter
+PreReq(post): libgio
 
 %description mate-settings
 MATE settings for %Brand %version %Theme
@@ -317,6 +318,7 @@ subst "s/Theme=.*/Theme=%theme/" /etc/plymouth/plymouthd.conf
 
 %post mate-settings
 subst 's/#theme-name=/theme-name=Clearlooks-Phenix/' /etc/lightdm/lightdm-gtk-greeter.conf ||:
+/usr/bin/glib-compile-schemas /usr/share/glib-2.0/schemas
 
 %files alterator
 %config %_altdir/*.rcc
@@ -362,6 +364,13 @@ subst 's/#theme-name=/theme-name=Clearlooks-Phenix/' /etc/lightdm/lightdm-gtk-gr
 %_desktopdir/indexhtml.desktop
 
 %changelog
+* Thu Apr 11 2013 Andrey Cherepanov <cas@altlinux.org> 6.9.0-alt22
+- Set different qss style file for LiveCD
+- Colorize bootloader bottom bar
+- Really use overrided settings in Mate
+- Set 'mate' icon theme in Mate
+- Set 'Clearlooks-Phenix' window manager theme in Mate
+
 * Wed Apr 10 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 6.9.0-alt21
 - lightdm theme setup added to mate-settings
 - setting GTK+ QT style added to mate-settings
