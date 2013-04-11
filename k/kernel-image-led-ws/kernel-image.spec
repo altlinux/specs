@@ -21,7 +21,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.4.39
-Release: alt7
+Release: alt8
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -737,6 +737,7 @@ Requires: startup >= 0.9.8.24.1
 
 Provides: kernel = %kversion
 Provides: kernel-modules-md-%flavour = %version-%release
+%{?_enable_w1:Provides: kernel-modules-w1-%flavour = %version-%release}
 
 PreReq: coreutils
 PreReq: module-init-tools >= 3.1
@@ -923,19 +924,6 @@ Summary: Linux Amateur Radio driver modules
 %description -n kernel-modules-hamradio-%flavour
 This package contains Amateur Radio driver modules for the Linux kernel
 package %name-%version-%release.
-%endif
-
-
-%if_enabled w1
-%package -n kernel-modules-w1-%flavour
-Summary: Linux Dallas' 1-wire bus driver modules
-%kernel_modules_package_std_body w1
-
-%description -n kernel-modules-w1-%flavour
-Dallas' 1-wire bus is useful to connect slow 1-pin devices such as
-iButtons and thermal sensors.
-This package contains Dallas' 1-wire bus driver modules for the Linux
-kernel package %name-%version-%release.
 %endif
 
 
@@ -2213,10 +2201,12 @@ gen_rpmmodfile ipmi %buildroot%modules_dir/kernel/drivers/{acpi/acpi_ipmi,char/i
 %{?_enable_irda:gen_rpmmodfile irda %buildroot%modules_dir/kernel/{,drivers/}net/irda}
 %{?_enable_isdn:gen_rpmmodfile isdn %buildroot%modules_dir/kernel/{drivers/isdn,net/bluetooth/cmtp}}
 %{?_enable_tokenring:gen_rpmmodfile tokenring %buildroot%modules_dir/kernel/{drivers/net/{tokenring,pcmcia/ibmtr_cs.ko},net/802/tr.ko}}
-%{?_enable_usb_gadget:gen_rpmmodfile usb-gadget %buildroot%modules_dir/kernel/drivers/usb/gadget}
-%{?_enable_video:gen_rpmmodlist %buildroot%modules_dir/kernel/drivers/video/* | grep -xv '%modules_dir/kernel/drivers/video/uvesafb.ko' > video.rpmmodlist}
+%{?_enable_usb_gadget:gen_rpmmodlist %buildroot%modules_dir/kernel/drivers/usb/gadget/* | grep -xv '%modules_dir/kernel/drivers/usb/gadget/udc-core.ko' > usb-gadget.rpmmodlist}
+%{?_enable_video:gen_rpmmodlist %buildroot%modules_dir/kernel/drivers/video/* | grep -xv '%modules_dir/kernel/drivers/video/uvesafb.ko' | grep -xv '%modules_dir/kernel/drivers/video/sis' | grep -xv '%modules_dir/kernel/drivers/video/backlight' | grep -v '^%modules_dir/kernel/drivers/video/.*sys.*\.ko$' > video.rpmmodlist}
+%{?_enable_video:gen_rpmmodlist %buildroot%modules_dir/kernel/drivers/video/backlight/* | grep -xv '%modules_dir/kernel/drivers/video/backlight/lcd.ko' >> video.rpmmodlist}
+%{?_enable_media:gen_rpmmodlist %buildroot%modules_dir/kernel/drivers/media/* | grep -xv '%modules_dir/kernel/drivers/media/media.ko' > media.rpmmodlist}
 %{?_enable_ide:gen_rpmmodfile ide %buildroot%modules_dir/kernel/drivers/{ide,leds/ledtrig-ide-disk.ko}}
-for i in %{?_enable_edac:edac} %{?_enable_media:media} %{?_enable_mtd:mtd} %{?_enable_w1:w1}; do
+for i in %{?_enable_edac:edac} %{?_enable_mtd:mtd}; do
 	gen_rpmmodfile $i %buildroot%modules_dir/kernel/drivers/$i
 done
 for i in %{?_enable_joystick:joystick} %{?_enable_tablet:tablet} %{?_enable_touchscreen:touchscreen}; do
@@ -2263,8 +2253,6 @@ sed 's/^/%%exclude &/' *.rpmmodlist > exclude-drivers.rpmmodlist
 %{?_enable_atm:%kernel_modules_package_post atm}
 
 %{?_enable_hamradio:%kernel_modules_package_post hamradio}
-
-%{?_enable_w1:%kernel_modules_package_post w1}
 
 %{?_enable_watchdog:%kernel_modules_package_post watchdog}
 
@@ -2390,7 +2378,7 @@ done)
 %{?_enable_caif:%exclude %modules_dir/kernel/drivers/net/caif}
 %{?_enable_hippi:%exclude %modules_dir/kernel/drivers/net/hippi}
 %exclude %modules_dir/kernel/drivers/net/plip
-%exclude %modules_dir/kernel/drivers/net/slip
+%exclude %modules_dir/kernel/drivers/net/slip/slip.ko
 %exclude %modules_dir/kernel/net/dccp
 %exclude %modules_dir/kernel/net/decnet
 %exclude %modules_dir/kernel/net/econet
@@ -2436,8 +2424,6 @@ done)
 %{?_enable_atm:%kernel_modules_package_files atm}
 
 %{?_enable_hamradio:%kernel_modules_package_files hamradio}
-
-%{?_enable_w1:%kernel_modules_package_files w1}
 
 %{?_enable_mtd:%kernel_modules_package_files mtd}
 
@@ -2499,7 +2485,7 @@ done)
 %{?_enable_caif:%modules_dir/kernel/drivers/net/caif}
 %{?_enable_hippi:%modules_dir/kernel/drivers/net/hippi}
 %modules_dir/kernel/drivers/net/plip
-%modules_dir/kernel/drivers/net/slip
+%modules_dir/kernel/drivers/net/slip/slip.ko
 #modules_dir/kernel/net/ceph
 %modules_dir/kernel/net/dccp
 %modules_dir/kernel/net/decnet
@@ -2683,6 +2669,13 @@ done)
 
 
 %changelog
+* Thu Apr 11 2013 Led <led@altlinux.ru> 3.4.39-alt8
+- removed subpackage kernel-modules-w1-*
+- moved udc-core.ko form kernel-modules-usb-gadget-* subpackage to kernel-image-*
+- moved media.ko form kernel-modules-media-* subpackage to kernel-image-*
+- moved lcd.ko, fb_sys_fops.ko, syscopyarea.ko, sysfillrect.ko, sysimgblt.ko,
+  sisfb.ko from kernel-modules-video-* subpackage to kernel-image-*
+
 * Thu Apr 11 2013 Led <led@altlinux.ru> 3.4.39-alt7
 - updated:
   + fix-drivers-tty
