@@ -1,25 +1,30 @@
 Name: appliance-build-asterisk
 Summary: Packages required for build Asterisk
 BuildArch: noarch
-Version: 4.0.1
-Release: alt2
+Version: 4.0.2
+Release: alt1
 License: GPL
 Group: System/Base
 
-Requires: asterisk1.8-devel
+Requires: asterisk11-devel
+Requires: asterisk11-sources
 Requires: asterisk-build-hacks
 Requires: autoconf_2.60
 Requires: automake_1.9
+Requires: binutils-devel
 Requires: dahdi-linux-headers
 Requires: doxygen
+Requires: flex
 Requires: fonts-type1-urw
 Requires: gcc-c++
 Requires: graphviz
 Requires: gtk+-devel
-Requires: libjack-devel
-Requires: kdelibs-devel
+Requires: jackit-devel
 Requires: libalsa-devel
 Requires: libavcodec-devel
+Requires: libbluez-devel
+Requires: libcap-devel
+Requires: libcorosync-devel
 Requires: libcurl-devel
 Requires: libdb1-devel
 Requires: libexpat-devel
@@ -27,42 +32,50 @@ Requires: libfreetds-devel
 Requires: libgmime-devel
 Requires: libgsm-devel
 Requires: libgtk+2-devel
+Requires: libical-devel
 Requires: libidn-devel
 Requires: libiksemel-devel
 Requires: libilbc-devel
+Requires: libjack-devel
+Requires: libkeyutils-devel
 Requires: libldap-devel
+Requires: libltdl7-devel
 Requires: libltdl-devel
 Requires: liblua5-devel
 Requires: libmISDN-devel
 Requires: libmysqlclient-devel
-Requires: libtinfo-devel
+Requires: libMySQL-devel
+Requires: libncurses-devel
+Requires: libneon-devel
 Requires: libnet-snmp-devel
 Requires: libnewt-devel
+Requires: libnl-devel
 Requires: libogg-devel
-Requires: libopenh323_1.19-devel
 Requires: libopenr2-devel
 Requires: libpopt-devel
 Requires: libportaudio2-devel
 Requires: libpq-devel
-Requires: libpri
 Requires: libpri-devel
 Requires: libpw1.11-devel
-Requires: libqt3-devel
 Requires: libradiusclient-ng-devel
 Requires: libreadline-devel
 Requires: libresample-devel
 Requires: librpm-devel
+Requires: libsasl2-devel
 Requires: libSDL-devel
 Requires: libSDL_image-devel
-Requires: libSDL_sound-devel
+Requires: libsensors3-devel
+Requires: libspandsp6-devel
 Requires: libspeex-devel
 Requires: libsqlite3-devel
 Requires: libsqlite-devel
+Requires: libsrtp
 Requires: libss7-devel
 Requires: libssl-devel
 Requires: libstdc++-devel
 Requires: libtiff-devel
 Requires: libtinfo-devel
+Requires: libtonezone-dahdi-devel
 Requires: libunixODBC-devel
 Requires: libusb-compat-devel
 Requires: libvorbis-devel
@@ -70,15 +83,15 @@ Requires: libvpb-devel
 Requires: libwrap-devel
 Requires: libX11-devel
 Requires: libxml2-devel
-Requires: mpg123
 Requires: ncompress
+Requires: openssl
 Requires: perl-devel
 Requires: postgresql-devel
-Requires: rpm-build-mono
-Requires: sox
-Requires: sqlite-devel
+Requires: rpm-build-gir
 Requires: tcl-devel
+Requires: texlive-base-bin
 Requires: uw-imap-devel
+Requires: wget
 Requires: zlib-devel
 
 %description
@@ -87,6 +100,12 @@ Requires: zlib-devel
 %files
 
 %changelog
+* Thu Apr 11 2013 Denis Smirnov <mithraen@altlinux.ru> 4.0.2-alt1
+- script for autogenerate deps list
+
+* Thu Apr 11 2013 Denis Smirnov <mithraen@altlinux.ru> 4.0.1-alt3
+- use Asterisk 11 (last LTS release)
+
 * Thu Apr 11 2013 Denis Smirnov <mithraen@altlinux.ru> 4.0.1-alt2
 - use Asterisk 1.8
 
