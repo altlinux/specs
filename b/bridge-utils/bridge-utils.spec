@@ -1,19 +1,15 @@
 Name: bridge-utils
 Version: 1.5
-Release: alt1
+Release: alt2
 
 Summary: Utilities for configuring the linux ethernet bridge
 License: GPLv2+
 Group: System/Base
 
-URL: http://www.linux-foundation.org/en/Net:Bridge
-Source: http://downloads.sf.net/bridge/bridge-utils-%version.tar.gz
-Source1: bridge.init
-Source2: bridge.sysconfig
-
-Patch0: bridge-utils-1.0.4-inc.patch
-Patch1: bridge-utils-1.0.4-kernheaders.patch
-Patch3: bridge-utils-1.4-unknown-command.patch
+URL: http://www.linuxfoundation.org/collaborate/workgroups/networking/bridge
+# git://git.kernel.org/pub/scm/linux/kernel/git/shemminger/bridge-utils
+# git://git.altlinux.org/gears/b/bridge-utils.git
+Source: %name-%version-%release.tar
 
 Obsoletes: bridgex
 
@@ -21,31 +17,28 @@ Obsoletes: bridgex
 %define _sbindir /sbin
 
 %description
-This package contains utilities for configuring the linux ethernet bridge. The
-linux ethernet bridge can be used for connecting multiple ethernet devices
-together. The connecting is fully transparent: hosts connected to one ethernet
-device see hosts connected to the other ethernet devices directly.
+This package contains utilities for configuring the linux ethernet
+bridge.  The linux ethernet bridge can be used for connecting multiple
+ethernet devices together.  The connecting is fully transparent: hosts
+connected to one ethernet device see hosts connected to the other
+ethernet devices directly.
 
 %prep
-%setup
-%patch0 -p1
-%patch1 -p1
-%patch3 -p1
+%setup -n %name-%version-%release
 
 %build
 autoconf
-%configure --with-linux-headers=`pwd`
-%make_build CFLAGS="%optflags"
+%configure --with-linux-headers=%_includedir/linux-default/include
+%make_build CFLAGS='%optflags'
 
 %install
 %makeinstall_std
-
-install -m755 %SOURCE1 -D %buildroot%_initrddir/bridge
-install -m644 %SOURCE2 -D %buildroot%_sysconfdir/sysconfig/bridge
+install -Dpm755 bridge.init %buildroot%_initrddir/bridge
+install -Dpm644 bridge.sysconfig %buildroot%_sysconfdir/sysconfig/bridge
 
 %files
 %config(noreplace) %_sysconfdir/sysconfig/*
-%config(noreplace) %_initrddir/*
+%config(noreplace) %_initdir/*
 %_sbindir/*
 %_man8dir/*
 %doc AUTHORS ChangeLog README THANKS TODO doc/[A-LN-Z]* tests
@@ -57,6 +50,9 @@ install -m644 %SOURCE2 -D %buildroot%_sysconfdir/sysconfig/bridge
 %preun_service bridge
 
 %changelog
+* Thu Apr 11 2013 Dmitry V. Levin <ldv@altlinux.org> 1.5-alt2
+- Updated to v1.5-11-g97d6888.
+
 * Mon Apr 25 2011 Victor Forsiuk <force@altlinux.org> 1.5-alt1
 - 1.5 (supports hairpin mode).
 
