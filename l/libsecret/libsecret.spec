@@ -4,10 +4,11 @@
 %def_disable static
 %def_enable gtk_doc
 %def_enable introspection
+%def_enable vala
 
 Name: libsecret
 Version: %ver_major
-Release: alt1
+Release: alt2
 
 Summary: A client library for the Secret Service DBus API
 Group: System/Libraries
@@ -21,6 +22,8 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 BuildRequires: libgio-devel >= %glib_ver
 BuildRequires: libgcrypt-devel gtk-doc intltool xsltproc
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel}
+%{?_enable_vala:BuildRequires: vala-tools}
+
 # for check
 BuildRequires: /proc xvfb-run dbus-tools-gui python-module-dbus python-module-pygobject libgjs
 
@@ -104,6 +107,13 @@ xvfb-run %make check
 %_libdir/%name-%api_ver.so
 %_libdir/pkgconfig/%name-%api_ver.pc
 %_libdir/pkgconfig/%name-unstable.pc
+%if_enabled vala
+%_vapidir/%name-%api_ver.vapi
+%_vapidir/%name-%api_ver.deps
+%_vapidir/%name-unstable.deps
+%_vapidir/%name-unstable.vapi
+%_vapidir/mock-service-0.vapi
+%endif
 
 %files devel-doc
 %_datadir/gtk-doc/html/*
@@ -120,6 +130,9 @@ xvfb-run %make check
 
 
 %changelog
+* Fri Apr 12 2013 Yuri N. Sedunov <aris@altlinux.org> 0.15-alt2
+- added vala bindigs to -devel subpackage  (ALT #28841)
+
 * Mon Mar 18 2013 Yuri N. Sedunov <aris@altlinux.org> 0.15-alt1
 - 0.15
 
