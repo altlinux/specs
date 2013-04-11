@@ -1,11 +1,11 @@
 %define skeldir %_sysconfdir/skel.homeros.ru_RU.UTF-8
 
 Name: homeros-core
-Version: 20120718
+Version: 20130412
 Release: alt1
-Summary: The set of scripts and predefined settings for ALT Linux Homeros distribution
+Summary: The set of scripts and settings for ALT Linux Homeros
 Group: System/Configuration/Other
-URL: http://homeros.altlinux.org
+URL: http://homeros.altlinux.org/
 License: GPL
 BuildArch: noarch
 Packager: Michael Pozhidaev <msp@altlinux.ru>
@@ -13,107 +13,69 @@ BuildRequires: etcskel emacs-nox emacs-devel
 
 Source: %name-%version.tar.gz
 
-%package -n etcskel-homeros
-Summary: /etc/skel directory for ALT Linux Homeros distribution
-Group: System/Configuration/Other
-License: GPL
-%add_python_req_skip orca re time
-
-%package -n homeros-tools
-Summary: The set of script for ALT Linux Homeros distribution
+%package -n homeros-install
+Summary: The scripts for ALT Linux Homeros installation
 Group: System/Configuration/Other
 License: GPL
 
-%package -n homeros-xutils
-Summary: The set of scripts to run some applications in X session
-Group: System/Configuration/Other
-License: GPL
-Requires: mplayer xinit gqview xmodmap xpdf-reader
-
-%package -n homeros-mobile
-Summary: The set of scripts for power control on mobile devices
-Group: System/Configuration/Other
-License: GPL
-
-%package -n homeros-media
-Summary: Media files for ALT Linux Homeros distributions
-Group: System/Configuration/Other
-License: GPL
-
-%package -n homeros-emacs-menu
-Summary: The menu for quick application launch in Homeros Friend distributions
+%package -n homeros-emacs
+Summary: The set of GNU Emacs scripts for ALT Linux Homeros
 Group: Editors
 License: GPL
 Requires: emacs-base
 
 %package -n homeros-live-data
-Summary: Various data files for ALT Linux Homeros LiveCD system
+Summary: Various data files for ALT Linux Homeros LiveCD
 Group: System/Configuration/Other
 License: GPL
 
 %description
-The set of scripts and predefined settings for ALT Linux Homeros distribution
+The set of scripts and settings for ALT Linux Homeros
 
-%description -n etcskel-homeros
-This package contains initial content of newly created 
-home directories. This content will be copied into 
-users private files on new account creation.
+%description -n homeros-install
+The scripts from this package implement LiveCD cloning technique for ALT Linux Homeros installation.
 
-%description -n homeros-tools
-This package contains set of scripts to simplify 
-using ALT Linux distribution.
-
-%description -n homeros-xutils
-The set of scripts to run some applications in X session
-
-%description -n homeros-mobile
-The set of scripts for power control on mobile devices
-
-%description -n homeros-media
-This package contains media files for ALT Linux Homeros distribution.
-
-%description -n homeros-emacs-menu
-This package contains scripts to add starting menu to emacs for Homeros users.
+%description -n homeros-emacs
+This package contains GNU Emacs scripts for ALT Linux Homeros.
 
 %description -n homeros-live-data
-The package with various data files for ALT Linux Homeros LiveCD system
+The package with various data files for ALT Linux Homeros LiveCD environment.
 
 %prep
 %setup -q
 %build
-%byte_compile_file emacs-menu/homeros-menu.el
+%byte_compile_file fsroot/usr/share/emacs/site-lisp/homeros-menu.el
 
 %install
 ./homeros-core-install %buildroot
 
-%files -n etcskel-homeros
+%files
 %config %skeldir
-
-%files -n homeros-tools
-#%_bindir/enable-orca-autostart
 %_bindir/useradd-homeros
-
-%files -n homeros-xutils
+%_datadir/sounds/homeros
 %_bindir/run-gqview-without-escape
 %_bindir/show-movie
 %_bindir/show-photo
 %_bindir/show-pdf
 
-%files -n homeros-mobile
-%_bindir/battery-status
+%files -n homeros-install
+%_bindir/homeros-install
+/usr/libexec/homeros-install
+%_datadir/homeros-install
 
-%files -n homeros-media
-%_datadir/sounds/homeros
-
-%files -n homeros-emacs-menu
+%files -n homeros-emacs
 %_datadir/homeros-emacs-menu
 %_emacslispdir/*
 %_sysconfdir/rc.d/init.d/homeros-emacs-menu
 
 %files -n homeros-live-data
-%_datadir/homeros-live
+%_datadir/homeros-live-data
 
 %changelog
+* Fri Apr 12 2013 Michael Pozhidaev <msp@altlinux.ru> 20130412-alt1
+- homeros-install deep clean up
+- New packages layout: homeros-core, homeros-install, homeros-emacs and homeros-live-data
+
 * Wed Jul 18 2012 Michael Pozhidaev <msp@altlinux.ru> 20120718-alt1
 - emacs23 req changed to emacs-nox
 
