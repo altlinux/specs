@@ -21,7 +21,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.4.39
-Release: alt8
+Release: alt9
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -2202,9 +2202,14 @@ gen_rpmmodfile ipmi %buildroot%modules_dir/kernel/drivers/{acpi/acpi_ipmi,char/i
 %{?_enable_isdn:gen_rpmmodfile isdn %buildroot%modules_dir/kernel/{drivers/isdn,net/bluetooth/cmtp}}
 %{?_enable_tokenring:gen_rpmmodfile tokenring %buildroot%modules_dir/kernel/{drivers/net/{tokenring,pcmcia/ibmtr_cs.ko},net/802/tr.ko}}
 %{?_enable_usb_gadget:gen_rpmmodlist %buildroot%modules_dir/kernel/drivers/usb/gadget/* | grep -xv '%modules_dir/kernel/drivers/usb/gadget/udc-core.ko' > usb-gadget.rpmmodlist}
-%{?_enable_video:gen_rpmmodlist %buildroot%modules_dir/kernel/drivers/video/* | grep -xv '%modules_dir/kernel/drivers/video/uvesafb.ko' | grep -xv '%modules_dir/kernel/drivers/video/sis' | grep -xv '%modules_dir/kernel/drivers/video/backlight' | grep -v '^%modules_dir/kernel/drivers/video/.*sys.*\.ko$' > video.rpmmodlist}
-%{?_enable_video:gen_rpmmodlist %buildroot%modules_dir/kernel/drivers/video/backlight/* | grep -xv '%modules_dir/kernel/drivers/video/backlight/lcd.ko' >> video.rpmmodlist}
-%{?_enable_media:gen_rpmmodlist %buildroot%modules_dir/kernel/drivers/media/* | grep -xv '%modules_dir/kernel/drivers/media/media.ko' > media.rpmmodlist}
+%if_enabled video
+gen_rpmmodlist %buildroot%modules_dir/kernel/drivers/video/* | grep -xv '%modules_dir/kernel/drivers/video/uvesafb.ko' | grep -xv '%modules_dir/kernel/drivers/video/sis' | grep -xv '%modules_dir/kernel/drivers/video/backlight' | grep -v '^%modules_dir/kernel/drivers/video/.*sys.*\.ko$' > video.rpmmodlist
+gen_rpmmodlist %buildroot%modules_dir/kernel/drivers/video/backlight/* | grep -xv '%modules_dir/kernel/drivers/video/backlight/lcd.ko' >> video.rpmmodlist
+%endif
+%if_enabled media
+gen_rpmmodlist %buildroot%modules_dir/kernel/drivers/media/* | grep -xv '%modules_dir/kernel/drivers/media/media.ko' | grep -xv '%modules_dir/kernel/drivers/media/video' > media.rpmmodlist
+gen_rpmmodlist %buildroot%modules_dir/kernel/drivers/media/video/* | grep -xv '%modules_dir/kernel/drivers/media/video/videodev.ko' >> media.rpmmodlist
+%endif
 %{?_enable_ide:gen_rpmmodfile ide %buildroot%modules_dir/kernel/drivers/{ide,leds/ledtrig-ide-disk.ko}}
 for i in %{?_enable_edac:edac} %{?_enable_mtd:mtd}; do
 	gen_rpmmodfile $i %buildroot%modules_dir/kernel/drivers/$i
@@ -2669,6 +2674,9 @@ done)
 
 
 %changelog
+* Thu Apr 11 2013 Led <led@altlinux.ru> 3.4.39-alt9
+- moved videodev.ko form kernel-modules-media-* subpackage to kernel-image-*
+
 * Thu Apr 11 2013 Led <led@altlinux.ru> 3.4.39-alt8
 - removed subpackage kernel-modules-w1-*
 - moved udc-core.ko form kernel-modules-usb-gadget-* subpackage to kernel-image-*
