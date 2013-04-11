@@ -1,7 +1,7 @@
 %define oname Zope2
 Name: python-module-%oname
-Version: 2.13.7
-Release: alt2.1
+Version: 2.13.19
+Release: alt1
 Summary: Zope2 application server / web framework
 License: ZPLv2.1
 Group: Development/Python
@@ -81,6 +81,7 @@ cp -fR doc/.build/pickle %buildroot%python_sitelibdir/%oname/
 %files
 %doc *.txt
 %_bindir/*
+%exclude %_bindir/zpasswd
 %python_sitelibdir/*
 %exclude %python_sitelibdir/*/tests
 %exclude %python_sitelibdir/*/*/*test*
@@ -105,6 +106,9 @@ cp -fR doc/.build/pickle %buildroot%python_sitelibdir/%oname/
 %doc doc/.build/html/*
 
 %changelog
+* Thu Apr 11 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.13.19-alt1
+- Version 2.13.19
+
 * Mon Oct 24 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 2.13.7-alt2.1
 - Rebuild with Python-2.7
 
