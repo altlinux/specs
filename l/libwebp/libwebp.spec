@@ -1,5 +1,5 @@
 Name: libwebp
-Version: 0.2.1
+Version: 0.3.0
 Release: alt1
 
 Summary: Library and tools for the WebP graphics format
@@ -66,6 +66,9 @@ images more efficiently.
 %_man1dir/*
 
 %changelog
+* Thu Apr 11 2013 Yuri N. Sedunov <aris@altlinux.org> 0.3.0-alt1
+- 0.3.0
+
 * Tue Mar 05 2013 Yuri N. Sedunov <aris@altlinux.org> 0.2.1-alt1
 - 0.2.1
 
