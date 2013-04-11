@@ -1,11 +1,11 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/pkg-config /usr/sbin/httpd /usr/sbin/httpd2 libICE-devel libSM-devel libX11-devel libgio-devel pkgconfig(dbus-1) pkgconfig(gdk-x11-2.0) pkgconfig(gio-2.0) pkgconfig(glib-2.0) pkgconfig(gtk+-2.0) pkgconfig(libcanberra-gtk)
+BuildRequires: /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/pkg-config /usr/sbin/httpd /usr/sbin/httpd2 libICE-devel libSM-devel libX11-devel libgio-devel pkgconfig(dbus-1) pkgconfig(gdk-x11-2.0) pkgconfig(gio-2.0) pkgconfig(glib-2.0) pkgconfig(gtk+-2.0) pkgconfig(libcanberra-gtk) pkgconfig(libnotify)
 # END SourceDeps(oneline)
 %define _libexecdir %_prefix/libexec
 Summary: Mate user file sharing
 Name: mate-user-share
-Version: 1.5.0
-Release: alt4_0
+Version: 1.6.0
+Release: alt2
 License: GPLv2+
 Group: System/Libraries
 URL: http://pub.mate-desktop.org
@@ -20,7 +20,7 @@ BuildRequires: desktop-file-utils
 BuildRequires: mate-doc-utils
 BuildRequires: libselinux-devel
 BuildRequires: libdbus-glib-devel
-BuildRequires: libmatenotify-devel
+BuildRequires: mate-desktop-devel
 BuildRequires: mate-file-manager-devel
 BuildRequires: libunique-devel
 BuildRequires: gettext
@@ -70,10 +70,17 @@ rm -f %buildroot%_libdir/caja/extensions-2.0/libcaja-share-extension.la
 %{_datadir}/applications/*
 %{_sysconfdir}/xdg/autostart/mate-user-share.desktop
 %{_datadir}/glib-2.0/schemas/org.mate.FileSharing.gschema.xml
+%{_datadir}/MateConf/gsettings/mate-user-share.convert
 %{_datadir}/icons/hicolor/*/apps/mate-obex-server.png
 %{_libdir}/caja/extensions-2.0/*.so
 
 %changelog
+* Thu Apr 11 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1.6.0-alt2
+- use mate-desktop instead libmatenotify
+
+* Tue Apr 09 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.0-alt1_0
+- new version
+
 * Sat Mar 30 2013 Igor Vlasenko <viy@altlinux.ru> 1.5.0-alt4_0
 - fixed build
 
