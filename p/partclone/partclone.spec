@@ -1,5 +1,5 @@
 Name: partclone
-Version: 0.2.45
+Version: 0.2.58
 Release: alt1
 
 Summary: File System Clone Utilities
@@ -26,6 +26,9 @@ reiser4, btrfs, ntfs, fat, vmfs, hfs+ file system.
 #%patch1 -p1
 
 subst 's/ -static//g' configure.ac configure
+# Exclude fail-mbr from build process
+subst 's/ fail-mbr//g' Makefile.in Makefile.am
+
 
 %build
 # NB: Due to buggy configure checks --disable-somefeature options does not
@@ -53,6 +56,9 @@ subst 's/ -static//g' configure.ac configure
 %_man8dir/*
 
 %changelog
+* Thu Apr 11 2013 Andrey Cherepanov <cas@altlinux.org> 0.2.58-alt1
+- 0.2.58
+
 * Fri Mar 16 2012 Victor Forsiuk <force@altlinux.org> 0.2.45-alt1
 - 0.2.45
 
