@@ -1,6 +1,6 @@
 Name: i3
-Version: 4.4
-Release: alt3
+Version: 4.5.1
+Release: alt2
 
 Summary: I3 window manager
 License: BSD-like
@@ -12,6 +12,9 @@ Source1: alt.i3.config
 Source2: i3-logo.png
 
 Packager: %packager
+
+# It requires dmenu for launching programs (Ctrl-d keybinding)
+Requires: dmenu
 
 # Automatically added by buildreq on Sat Sep 29 2012
 BuildRequires: flex libXcursor-devel libev-devel libpango-devel libpcre-devel libstartup-notification-devel libxcbutil-devel libxcbutil-icccm-devel libxcbutil-keysyms-devel libyajl-devel perl-Pod-Parser
@@ -116,6 +119,12 @@ install -pm644 -D %SOURCE1 %buildroot%docdir/
 %_includedir/*
 
 %changelog
+* Fri Apr 12 2013 Andrey Bergman <vkni@altlinux.org> 4.5.1-alt2
+- Added dmenu to Requires
+
+* Fri Apr 12 2013 Andrey Bergman <vkni@altlinux.org> 4.5.1-alt1
+- Version update
+
 * Fri Jan 18 2013 Andrey Bergman <vkni@altlinux.org> 4.4-alt3
 - Added perl-Pod-Parser buildreq.
 
