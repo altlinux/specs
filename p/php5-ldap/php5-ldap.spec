@@ -2,7 +2,7 @@
 
 Name: php5-%php5_extension
 Version: %php5_version
-Release: %php5_release
+Release: %php5_release.1
 
 Summary: LDAP module for PHP5
 Group: System/Servers
@@ -17,6 +17,8 @@ BuildRequires: php5-devel = %php5_version
 #BuildRequires: php5-devel = %php5_version-alt2
 
 BuildRequires: libldap-devel libsasl2-devel
+
+Requires: php5-libs = %php5_version-%php5_release
 
 %description
 The %name includes a dynamic shared object (DSO) that adds
@@ -62,6 +64,9 @@ install -D -m 644 %SOURCE2 %buildroot/%php5_extconf/%php5_extension/params
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Rebuild with php5-%php5_version-%php5_release
+
+* Fri Apr 12 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 5.3.23.20130314-alt1.0
+- dependence on php5-libs added
 
 * Wed Nov 14 2012 Anton Farygin <rider@altlinux.ru> 5.3.18.20121017-alt1
 - Rebuild with php5-5.3.18.20121017-alt1
