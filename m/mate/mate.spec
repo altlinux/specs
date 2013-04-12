@@ -2,7 +2,7 @@
 
 Name: mate
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: MATE Desktop installers
 License: %gpl2plus
@@ -152,6 +152,7 @@ Requires: mate-notification-daemon
 #Requires: gedit-plugins
 ## Stock multimedia applications
 Requires: mate-media
+Requires: gst-plugins-good
 ## Default music player
 #Requires: rhythmbox
 ## Default media player
@@ -377,6 +378,9 @@ itself).
 #%files a11y
 
 %changelog
+* Fri Apr 12 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1.6.0-alt2
+- gst-plugins-good added to mate-default
+
 * Thu Apr 11 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1.6.0-alt1
 - mate-file-manager-dropbox removed from mate-maxi
 
