@@ -2,7 +2,7 @@
 
 Name: xfsprogs
 Version: 3.1.8
-Release: alt1
+Release: alt2
 
 Summary: Utilities for managing the XFS filesystem
 License: LGPL v2.1 (libhandle), GPL v2 (the rest)
@@ -60,6 +60,18 @@ You should install libxfs-devel if you want to develop XFS
 filesystem-specific programs, If you install libxfs-devel, you'll
 also want to install xfsprogs.
 
+%package -n libxfs-qa-devel
+Summary: XFS QA filesystem-specific headers
+Group: Development/C
+Requires: libxfs-devel = %version-%release
+
+%description -n libxfs-qa-devel
+libxfs-qa-devel contains headers needed to build the xfstests
+QA suite.
+
+You should install xfsprogs-qa-devel only if you are interested
+in building or running the xfstests QA suite.
+
 %if_enabled static
 %package -n libxfs-devel-static
 Summary: XFS filesystem-specific static libraries
@@ -91,7 +103,7 @@ autoconf
 make DEBUG=-DNDEBUG LIBTOOL="`pwd`/libtool"
 
 %install
-make DIST_ROOT=%buildroot install install-dev
+make DIST_ROOT=%buildroot install install-dev install-qa
 mkdir -p %buildroot%_libdir
 
 for f in %buildroot/%_lib/*.so; do
@@ -120,8 +132,69 @@ chrpath -d %buildroot%_libdir/libxlog.so*
 
 %files -n libxfs-devel
 %_libdir/*.so
-%_includedir/*
+%dir %_includedir/xfs
+%_includedir/xfs/handle.h
+%_includedir/xfs/jdm.h
+%_includedir/xfs/linux.h
+%_includedir/xfs/platform_defs.h
+%_includedir/xfs/xfs.h
+%_includedir/xfs/xfs_fs.h
+%_includedir/xfs/xqm.h
 %_man3dir/*
+
+%files -n libxfs-qa-devel
+%_includedir/xfs/atomic.h
+%_includedir/xfs/bitops.h
+%_includedir/xfs/cache.h
+%_includedir/xfs/hlist.h
+%_includedir/xfs/kmem.h
+%_includedir/xfs/libxfs.h
+%_includedir/xfs/libxlog.h
+%_includedir/xfs/list.h
+%_includedir/xfs/parent.h
+%_includedir/xfs/radix-tree.h
+%_includedir/xfs/swab.h
+%_includedir/xfs/xfs_ag.h
+%_includedir/xfs/xfs_alloc.h
+%_includedir/xfs/xfs_alloc_btree.h
+%_includedir/xfs/xfs_arch.h
+%_includedir/xfs/xfs_attr_leaf.h
+%_includedir/xfs/xfs_attr_sf.h
+%_includedir/xfs/xfs_bit.h
+%_includedir/xfs/xfs_bmap.h
+%_includedir/xfs/xfs_bmap_btree.h
+%_includedir/xfs/xfs_btree.h
+%_includedir/xfs/xfs_btree_trace.h
+%_includedir/xfs/xfs_buf_item.h
+%_includedir/xfs/xfs_da_btree.h
+%_includedir/xfs/xfs_dfrag.h
+%_includedir/xfs/xfs_dinode.h
+%_includedir/xfs/xfs_dir2.h
+%_includedir/xfs/xfs_dir2_block.h
+%_includedir/xfs/xfs_dir2_data.h
+%_includedir/xfs/xfs_dir2_leaf.h
+%_includedir/xfs/xfs_dir2_node.h
+%_includedir/xfs/xfs_dir2_sf.h
+%_includedir/xfs/xfs_dir_leaf.h
+%_includedir/xfs/xfs_dir_sf.h
+%_includedir/xfs/xfs_extfree_item.h
+%_includedir/xfs/xfs_ialloc.h
+%_includedir/xfs/xfs_ialloc_btree.h
+%_includedir/xfs/xfs_inode.h
+%_includedir/xfs/xfs_inode_item.h
+%_includedir/xfs/xfs_inum.h
+%_includedir/xfs/xfs_log.h
+%_includedir/xfs/xfs_log_priv.h
+%_includedir/xfs/xfs_log_recover.h
+%_includedir/xfs/xfs_metadump.h
+%_includedir/xfs/xfs_mount.h
+%_includedir/xfs/xfs_quota.h
+%_includedir/xfs/xfs_rtalloc.h
+%_includedir/xfs/xfs_sb.h
+%_includedir/xfs/xfs_trace.h
+%_includedir/xfs/xfs_trans.h
+%_includedir/xfs/xfs_trans_space.h
+%_includedir/xfs/xfs_types.h
 
 %if_enabled static
 %files -n libxfs-devel-static
@@ -131,6 +204,9 @@ chrpath -d %buildroot%_libdir/libxlog.so*
 # TODO: consider http://cvs.pld-linux.org/cgi-bin/cvsweb/packages/xfsprogs/
 
 %changelog
+* Fri Apr 12 2013 Andrey Cherepanov <cas@altlinux.org> 3.1.8-alt2
+- Create new package libxfs-qa-devel with full pack of includes
+
 * Sun Apr 22 2012 Michael Shigorin <mike@altlinux.org> 3.1.8-alt1
 - 3.1.8
 
