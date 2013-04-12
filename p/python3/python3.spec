@@ -59,7 +59,7 @@
 Summary: Version 3 of the Python programming language aka Python 3000
 Name: python3
 Version: %pybasever.1
-Release: alt1
+Release: alt3
 License: Python
 Group: Development/Python3
 
@@ -86,38 +86,34 @@ Source: %name-%version.tar
 # Was Patch0 in ivazquez' python3000 specfile:
 Patch1: Python-3.1.1-rpath.patch
 
-# The four TestMIMEAudio tests fail due to "audiotest.au" not being packaged.
-# It's simplest to remove them:
-Patch3: 00003-remove-mimeaudio-tests.patch
-
 Patch102: python-3.3.0b1-lib64.patch
 
+# 00104 #
 # Only used when "%_lib" == "lib64"
 # Another lib64 fix, for distutils/tests/test_install.py; not upstream:
 Patch104: 00104-lib64-fix-for-test_install.patch
 
-# Patch the Makefile.pre.in so that the generated Makefile doesn't try to build
-# a libpythonMAJOR.MINOR.a (bug 550692):
-Patch111: 00111-no-static-lib.patch
 
-# Patch112: python-2.7rc1-debug-build.patch: this is not relevant to Python 3,
-# for 3.2 onwards
-
+# 00113 #
 # Add configure-time support for the COUNT_ALLOCS and CALL_PROFILE options
 # described at http://svn.python.org/projects/python/trunk/Misc/SpecialBuilds.txt
 # so that if they are enabled, they will be in that build's pyconfig.h, so that
 # extension modules will reliably use them
+# Not yet sent upstream
 Patch113: 00113-more-configuration-flags.patch
 
+# 00114 #
 # Add flags for statvfs.f_flag to the constant list in posixmodule (i.e. "os")
 # (rhbz:553020); partially upstream as http://bugs.python.org/issue7647
+# Not yet sent upstream
 Patch114: 00114-statvfs-f_flag-constants.patch
 
+# 00125 #
 # COUNT_ALLOCS is useful for debugging, but the upstream behaviour of always
 # emitting debug info to stdout on exit is too verbose and makes it harder to
 # use the debug build.  Add a "PYTHONDUMPCOUNTS" environment variable which
 # must be set to enable the output on exit
-# Not yet sent upstream:
+# Not yet sent upstream
 Patch125: 00125-less-verbose-COUNT_ALLOCS.patch
 
 # In my koji builds, /root/bin is in the PATH for some reason
@@ -131,16 +127,14 @@ Patch125: 00125-less-verbose-COUNT_ALLOCS.patch
 # Not yet sent upstream
 Patch129: python-3.2.1-fix-test-subprocess-with-nonreadable-path-dir.patch
 
-# Python 2's:
-#   Patch130: python-2.7.2-add-extension-suffix-to-python-config.patch
-# is not relevant to Python 3 (for 3.2 onwards)
-
+# 00131 #
 # The four tests in test_io built on top of check_interrupted_write_retry
 # fail when built in Koji, for ppc and ppc64; for some reason, the SIGALRM
 # handlers are never called, and the call to write runs to completion
 # (rhbz#732998)
 Patch131: 00131-disable-tests-in-test_io.patch
 
+# 00132 #
 # Add non-standard hooks to unittest for use in the "check" phase below, when
 # running selftests within the build:
 #   @unittest._skipInRpmBuild(reason)
@@ -154,55 +148,43 @@ Patch131: 00131-disable-tests-in-test_io.patch
 # these unittest hooks in their own "check" phases)
 Patch132: 00132-add-rpmbuild-hooks-to-unittest.patch
 
-# 00133-skip-test_dl.patch is not relevant for python3: the "dl" module no
-# longer exists
-
+# 00134 #
 # Fix a failure in test_sys.py when configured with COUNT_ALLOCS enabled
 # Not yet sent upstream
 Patch134: 00134-fix-COUNT_ALLOCS-failure-in-test_sys.patch
 
+# 00135 #
 # test_weakref's test_callback_in_cycle_resurrection doesn't work with
 # COUNT_ALLOCS, as the metrics keep "C" alive.  Work around this for our
 # debug build:
 # Not yet sent upstream
 Patch135: 00135-fix-test-within-test_weakref-in-debug-build.patch
 
-# Patch136: 00136-skip-tests-of-seeking-stdin-in-rpmbuild.patch does not seem
-# to be needed by python3
-
+# 00137 #
 # Some tests within distutils fail when run in an rpmbuild:
 Patch137: 00137-skip-distutils-tests-that-fail-in-rpmbuild.patch
 
-# Patch138: 00138-fix-distutils-tests-in-debug-build.patch is not relevant for
-# python3
-
+# 00139 #
 # ARM-specific: skip known failure in test_float:
 #  http://bugs.python.org/issue8265 (rhbz#706253)
 Patch139: 00139-skip-test_float-known-failure-on-arm.patch
 
-# Patch140: 00140-skip-test_ctypes-known-failure-on-sparc.patch does not appear
-# to be relevant for python3
-
+# 00141 #
 # Fix test_gc's test_newinstance case when configured with COUNT_ALLOCS:
+# Not yet sent upstream
 Patch141: 00141-fix-test_gc_with_COUNT_ALLOCS.patch
 
+# 00142 #
 # Some pty tests fail when run in mock (rhbz#714627):
 Patch142: 00142-skip-failing-pty-tests-in-rpmbuild.patch
 
+# 00143 #
 # Fix the --with-tsc option on ppc64, and rework it on 32-bit ppc to avoid
 # aliasing violations (rhbz#698726)
 # Sent upstream as http://bugs.python.org/issue12872
 Patch143: 00143-tsc-on-ppc.patch
 
-# (Optionally) disable the gdbm module:
-# python.spec's
-#   Patch144: 00144-no-gdbm.patch
-# is not needed in python3.spec
-
-# python.spec's
-#   Patch145: 00145-force-sys-platform-to-be-linux2.patch
-# is upstream for Python 3 as of 3.2.2
-
+# 00146 #
 # Support OpenSSL FIPS mode (e.g. when OPENSSL_FORCE_FIPS_MODE=1 is set)
 # - handle failures from OpenSSL (e.g. on attempts to use MD5 in a
 #   FIPS-enforcing environment)
@@ -217,31 +199,10 @@ Patch143: 00143-tsc-on-ppc.patch
 # - don't build the _md5 and _sha* modules; rely on the _hashlib implementation
 #   of hashlib
 # (rhbz#563986)
-Patch146: 00146-python3-3.3.1-alt-hashlib-fips.patch
-
-# Add a sys._debugmallocstats() function
-# Sent upstream as http://bugs.python.org/issue14785
-# Upstream as of Python 3.3.0
-#  Patch147: 00147-add-debug-malloc-stats.patch
-
-# Cherrypick fix for dbm version detection to cope with gdbm-1.9's magic values
-# Taken from upstream http://bugs.python.org/issue13007 (rhbz#742242)
-# Patch148: 00148-gdbm-1.9-magic-values.patch
-
-# Cherrypick fix for distutils not using __pycache__ when byte-compiling files
-# Based on upstream http://bugs.python.org/issue11254 (rhbz#722578)
-# (upstream commits 27a36b05caed and 651e84363001):
-# Patch149: 00149-backport-issue11254-pycache-bytecompilation-fix.patch
-# Fix a regex in test_gdb so that it doesn't choke when gdb provides a full
-# path to Python/bltinmodule.c:
-# Committed upstream as 77824:abcd29c9a791 as part of fix for
-# http://bugs.python.org/issue12605
-#  Patch152: 00152-fix-test-gdb-regex.patch
+Patch146: 00146-hashlib-fips.patch
 
 # 00158 #
-#  Patch158: 00158-fix-hashlib-leak.patch
-# in python.spec
-# TODO: python3 status?
+# Upstream as of Python 3.3.1
 
 # 00159 #
 #  Patch159: 00159-correct-libdb-include-path.patch
@@ -256,17 +217,77 @@ Patch146: 00146-python3-3.3.1-alt-hashlib-fips.patch
 # Not yet sent upstream
 Patch160: 00160-disable-test_fs_holes-in-rpm-build.patch
 
-# 00161 #
-# (Was only needed for Python 3.3.0b1)
-
-# 00162 #
-# (Was only needed for Python 3.3.0b1)
-
 # 00163 #
 # Some tests within test_socket fail intermittently when run inside Koji;
 # disable them using unittest._skipInRpmBuild
 # Not yet sent upstream
 Patch163: 00163-disable-parts-of-test_socket-in-rpm-build.patch
+
+# 00165 #
+# python.spec has:
+#   Patch165: 00165-crypt-module-salt-backport.patch
+# which is a backport from 3.3 and thus not relevant to "python3"
+
+# 00166 #
+#  Patch166: 00166-fix-fake-repr-in-gdb-hooks.patch
+# in python.spec
+# TODO: python3 status?
+
+# 00167 #
+#  Patch167: 00167-disable-stack-navigation-tests-when-optimized-in-test_gdb.patch
+# in python.spec
+# TODO: python3 status?
+
+# 00168 #
+#  Patch168: 00168-distutils-cflags.patch
+# in python.spec
+# TODO: python3 status?
+
+# 00169 #
+#  Patch169: 00169-avoid-implicit-usage-of-md5-in-multiprocessing.patch
+# in python.spec
+# TODO: python3 status?
+
+# 00170 #
+#  Patch170: 00170-gc-assertions.patch
+# in python.spec
+# TODO: python3 status?
+
+# 00171 #
+# python.spec had:
+#  Patch171: 00171-raise-correct-exception-when-dev-urandom-is-missing.patch
+# TODO: python3 status?
+
+# 00172 #
+# python.spec had:
+#  Patch172: 00172-use-poll-for-multiprocessing-socket-connection.patch
+# TODO: python3 status?
+
+# 00174 #
+#  Patch174: 00174-fix-for-usr-move.patch
+# TODO: python3 status?
+
+# 00175 #
+# Fix for configure.ac mistakenly detecting
+#   checking whether gcc supports ParseTuple __format__... yes
+# when it doesn't, when compiling with gcc 4.8
+#
+# Sent upstream as http://bugs.python.org/issue17547
+# (rhbz#927358)
+Patch175: 00175-fix-configure-Wformat.patch
+
+# 00177 #
+# Patch for potential unicode error when determining OS release names
+# http://bugs.python.org/issue17429
+# (rhbz#922149)
+# Does not affect python2 (python2 uses a byte string so it doesn't need to decode)
+Patch177: 00177-platform-unicode.patch
+
+# 00178 #
+# Don't duplicate various FLAGS in sysconfig values
+# http://bugs.python.org/issue17679
+# Does not affect python2 AFAICS (different sysconfig values initialization)
+Patch178: 00178-dont-duplicate-flags-in-sysconfig.patch
 
 Patch201: python-3.3.0-autoconf-sem_open_check-alt.patch
 
@@ -287,7 +308,7 @@ Url: http://www.python.org/
 
 Provides: python(abi) = %pybasever
 
-Requires: %name-base%{?_isa} = %version-%release
+Requires: %name-base%{?_isa} = %EVR
 
 %description
 Python 3 is a new version of the language that is incompatible with the 2.x
@@ -298,10 +319,9 @@ considerably, and a lot of deprecated features have finally been removed.
 %package base
 Summary: Python 3 runtime libraries
 Group: Development/Python3
-Requires: %name = %version-%release
-Requires: %name-modules-tkinter = %version-%release
-Provides: %name-libs = %version-%release
-Obsoletes: %name-libs < %version-%release
+Requires: %name = %EVR
+Provides: %name-libs = %EVR
+Obsoletes: %name-libs < %EVR
 %py3_provides builtins
 
 %description base
@@ -310,10 +330,10 @@ This package contains files used to embed Python 3 into applications.
 %package dev
 Summary: Libraries and header files needed for Python 3 development
 Group: Development/Python3
-Requires: %name = %version-%release
-Conflicts: %name < %version-%release
+Requires: %name = %EVR
+Conflicts: %name < %EVR
 Provides: %name-devel = %pybasever
-Provides: lib%name-devel = %version-%release
+Provides: lib%name-devel = %EVR
 
 %description dev
 This package contains libraries and header files used to build applications
@@ -329,9 +349,9 @@ This package contains Python3 shared library
 %package tools
 Summary: A collection of tools included with Python 3
 Group: Development/Python3
-Requires: %name = %version-%release
-Requires: %name-modules-tkinter = %version-%release
-Requires: %name-modules-curses = %version-%release
+Requires: %name = %EVR
+Requires: %name-modules-tkinter = %EVR
+Requires: %name-modules-curses = %EVR
 
 %description tools
 This package contains several tools included with Python 3
@@ -339,16 +359,24 @@ This package contains several tools included with Python 3
 %package modules-tkinter
 Summary: A GUI toolkit for Python 3
 Group: Development/Python3
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description modules-tkinter
 The Tkinter (Tk interface) program is an graphical user interface for
 the Python scripting language.
 
+%package modules-idlelib
+Summary: A IDLE lib for Python 3
+Group: Development/Python3
+Requires: %name-modules-tkinter = %EVR
+
+%description modules-idlelib
+IDLE is Python's Tkinter-based Integrated DeveLopment Environment.
+
 %package modules-sqlite3
 Summary: DB-API 2.0 interface for SQLite databases
 Group: Development/Python3
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description modules-sqlite3
 SQLite is a C library that provides a lightweight disk-based database
@@ -361,7 +389,7 @@ code to a larger database such as PostgreSQL or Oracle.
 %package modules-curses
 Summary: Python3 "curses" module
 Group: Development/Python3
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description modules-curses
 An interface to the curses library, providing portable terminal
@@ -373,11 +401,11 @@ open-source curses library hosted on Linux and the BSD variants of UNIX.
 %package test
 Summary: The test modules from the main python 3 package
 Group: Development/Python3
-Requires: %name = %version-%release
-Requires: %name-modules-tkinter = %version-%release
-Requires: %name-modules-curses = %version-%release
-Requires: %name-modules-sqlite3 = %version-%release
-Requires: %name-tools = %version-%release
+Requires: %name = %EVR
+Requires: %name-modules-idlelib = %EVR
+Requires: %name-modules-curses = %EVR
+Requires: %name-modules-sqlite3 = %EVR
+Requires: %name-tools = %EVR
 
 %description test
 The test modules from the main %name package.
@@ -416,15 +444,12 @@ done
 # Apply patches:
 #
 %patch1 -p1
-%patch3 -p1 -b .remove-mimeaudio-tests
 
 %if "%_lib" == "lib64"
 %patch102 -p1
 %patch104 -p1
 %endif
 
-# %patch111 -p1
-# 112: not for python3
 %patch113 -p1
 %patch114 -p1
 
@@ -437,33 +462,32 @@ done
 %endif
 
 %patch132 -p1
-# 00133: not for python3
 %patch134 -p1
 %patch135 -p1
-# 00136: not for python3
 %patch137 -p1
-# 00138: not for python3
 %ifarch %arm
 %patch139 -p1
 %endif
-# 00140: not for python3
 %patch141 -p1
 %patch142 -p1
 %patch143 -p1 -b .tsc-on-ppc
-# 00144: not for python3
-# 00145: not for python3
-%patch146 -p2
-# 00147: upstream as of Python 3.3.0
-# 00148: upstream as of Python 3.2.3
-# 00149: upstream as of Python 3.2.3
-# 00151: not for python3
-# 00152: upstream as of Python 3.3.0b2
+%patch146 -p1
 #00158: FIXME
 #00159: FIXME
 %patch160 -p1
-# 00161: was only needed for Python 3.3.0b1
-# 00162: was only needed for Python 3.3.0b1
 %patch163 -p1
+#00165: TODO
+#00166: TODO
+#00167: TODO
+#00168: TODO
+#00169: TODO
+#00170: TODO
+#00171: TODO
+#00172: TODO
+#00174: TODO
+%patch175 -p1
+%patch177 -p1
+%patch178 -p1
 
 %patch201 -p2
 %if_enabled test_posix_fadvise
@@ -484,6 +508,9 @@ sed --in-place \
 mkdir ../build-shared
 %autoreconf
 cp -rl * ../build-shared/
+
+# Add target for optimized Power7 binaries:
+sed -i -e "s/ppc64-\*/ppc64-\* \| ppc64p7-\*/" config.sub
 
 %build
 topdir=$(pwd)
@@ -814,7 +841,6 @@ WITHIN_PYTHON_RPM_BUILD= LD_LIBRARY_PATH=`pwd` ./python -m test.regrtest --verbo
 %pylibdir/encodings
 %pylibdir/html
 %pylibdir/http
-%pylibdir/idlelib
 
 %dir %pylibdir/importlib/
 %dir %pylibdir/importlib/__pycache__/
@@ -904,6 +930,9 @@ WITHIN_PYTHON_RPM_BUILD= LD_LIBRARY_PATH=`pwd` ./python -m test.regrtest --verbo
 %dir %pylibdir/turtledemo/__pycache__/
 %pylibdir/turtledemo/__pycache__/*%bytecode_suffixes
 
+%files modules-idlelib
+%pylibdir/idlelib
+
 %files modules-sqlite3
 %dir %pylibdir/sqlite3/
 %dir %pylibdir/sqlite3/__pycache__/
@@ -928,6 +957,15 @@ WITHIN_PYTHON_RPM_BUILD= LD_LIBRARY_PATH=`pwd` ./python -m test.regrtest --verbo
 %pylibdir/unittest/test
 
 %changelog
+* Fri Apr 12 2013 Aleksey Avdeev <solo@altlinux.ru> 3.3.1-alt3
+- add subpackage %%name-modules-idlelib
+
+* Fri Apr 12 2013 Aleksey Avdeev <solo@altlinux.ru> 3.3.1-alt2
+- fix gcc 4.8 incompatibility (rhbz#927358); regenerate autotool
+  intermediates
+- fix error in platform.platform() when non-ascii byte strings are
+  decoded to unicode (rhbz#922149)
+
 * Fri Apr 12 2013 Aleksey Avdeev <solo@altlinux.ru> 3.3.1-alt1
 - version up to 3.3.1
 - skip test_posix_fadvise: RLIMIT_CPU 1000000 unavailable in hasher
