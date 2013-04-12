@@ -4,7 +4,7 @@ Name: polkit-qt-1
 %define minor 103
 %define bugfix 0
 Version: %major.%minor.%bugfix
-Release: alt2
+Release: alt3
 
 Group: Development/KDE and QT
 Summary: Qt support for applications using PolicyKit
@@ -20,6 +20,7 @@ Source: %name-%version.tar.bz2
 # upstream
 Patch1: 0001-Sync-FindGObject.cmake-with-the-one-in-kdelibs.patch
 Patch2: 0002-Normalize-connect-using-Qt-s-normalize.patch
+Patch3: 0003-reference-counting-of-GObjects.patch
 # FC
 Patch100: polkit-qt-0.95.1-install-cmake-find.patch
 
@@ -65,6 +66,7 @@ Development files for %name
 %setup -q -n %name-%version
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 %patch100 -p1
 #sed -i "s|\${LIB_INSTALL_DIR}|%_K4link \${LIB_INSTALL_DIR}|" CMakeLists.txt
 
@@ -95,6 +97,9 @@ Development files for %name
 
 
 %changelog
+* Fri Apr 12 2013 Sergey V Turchin <zerg@altlinux.org> 0.103.0-alt3
+- add upstream patch for reference counting of GObjects
+
 * Wed Mar 13 2013 Sergey V Turchin <zerg@altlinux.org> 0.103.0-alt2
 - sync patches with FC
 
