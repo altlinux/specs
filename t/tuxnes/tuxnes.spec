@@ -1,6 +1,6 @@
 Name: tuxnes
 Version: 0.75
-Release: alt5.1
+Release: alt5.2
 
 Packager: Ilya Mashkin <oddity at altlinux dot ru>
 
@@ -19,7 +19,7 @@ Patch3: tuxnes-0.75-xshm.patch
 Patch4: tuxnes-0.75-exec-stack.patch
 
 # Automatically added by buildreq on Wed Feb 02 2005
-BuildRequires: gcc gcc-c++ xorg-libs zlib-devel libSDL-devel libnetpbm-devel libXext-devel libXpm-devel
+BuildRequires: gcc gcc-c++ zlib-devel libSDL-devel libnetpbm-devel libXext-devel libXpm-devel
 
 ExclusiveArch: %ix86
 
@@ -64,6 +64,9 @@ install -D -pm 755 romfixer %buildroot%_bindir/romfixer
 
 
 %changelog
+* Fri Apr 12 2013 Andrey Cherepanov <cas@altlinux.org> 0.75-alt5.2
+- Fix build with new xorg
+
 * Thu Aug 18 2011 Ilya Mashkin <oddity@altlinux.ru> 0.75-alt5.1
 - update requires
 
