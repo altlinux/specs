@@ -1,6 +1,6 @@
 Name: ant
 Version: 1.8.4
-Release: alt3
+Release: alt4
 # optional py and pl scripts in /usr/share/ant/bin
 %filter_from_requires /perl/d
 %filter_from_requires /python/d
@@ -612,7 +612,8 @@ install -p -m 644 build/lib/ant-launcher.jar %{buildroot}%{_javadir}/%{name}-lau
 %add_to_maven_depmap org.apache.ant %{name}-launcher %{version} JPP %{name}-launcher
 %add_to_maven_depmap ant %{name}-launcher %{version} JPP %{name}-launcher
 
-install -p -m 644 build/lib/ant-testutil.jar %{buildroot}%{_javadir}/%{name}-testutil-%{version}.jar
+install -p -m 644 build/lib/ant-testutil.jar %{buildroot}%{_javadir}/%{name}/%{name}-testutil-%{version}.jar
+ln -s %{name}/%{name}-testutil-%{version}.jar %{buildroot}%{_javadir}/ant-testutil.jar
 %add_to_maven_depmap org.apache.ant %{name}-testutil %{version} JPP %{name}-testutil
 %add_to_maven_depmap ant %{name}-testutil %{version} JPP %{name}-testutil
 install -p -m 644 build/lib/ant-jmf.jar %{buildroot}%{_javadir}/%{name}/ant-jmf-%{version}.jar
@@ -889,7 +890,8 @@ tag=`/bin/echo %{name}-%{version}-%{release} | %{__sed} 's|\.|_|g'`
 %endif
 
 %files testutil
-%{_javadir}/%{name}-testutil-%{version}.jar
+%{_javadir}/%{name}/%{name}-testutil-%{version}.jar
+%{_javadir}/%{name}/%{name}-testutil.jar
 %{_javadir}/%{name}-testutil.jar
 %config(noreplace) %{_sysconfdir}/%{name}.d/testutil
 %{_mavenpomdir}/JPP-%{name}-testutil.pom
@@ -1079,6 +1081,9 @@ tag=`/bin/echo %{name}-%{version}-%{release} | %{__sed} 's|\.|_|g'`
 # --------------------------------
 
 %changelog
+* Fri Apr 12 2013 Igor Vlasenko <viy@altlinux.ru> 1.8.4-alt4
+- fixed ant-testutil location
+
 * Wed Mar 20 2013 Igor Vlasenko <viy@altlinux.ru> 1.8.4-alt3
 - updated license tag
 
