@@ -1,16 +1,10 @@
-# vim: set ft=spec: -*- rpm-spec -*-
-
-%def_disable check
-
 Name: libxml-ruby
-Version: 1.1.3
-Release: alt2
-
+Version: 2.6.0
+Release: alt1
 Summary: Ruby language bindings for the GNOME Libxml2 XML toolkit
 Group: Development/Ruby
 License: MIT
-Url: http://libxml.rubyforge.org/
-
+URL: http://xml4r.github.io/%name/
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
@@ -18,48 +12,60 @@ BuildPreReq: rpm-build-ruby
 BuildRequires: libruby-devel libxml2-devel ruby-tool-setup zlib-devel
 
 %description
-The LibXML/Ruby project provides Ruby language bindings for the
-GNOME Libxml2 XML toolkit. It is free software, released under the
-MIT License.
+The LibXML/Ruby project provides Ruby language bindings for the GNOME Libxml2 XML
+toolkit.
 
-Libxml-ruby's primary advantage over REXML is performance - if speed
-is your need, these are good libraries to consider, as demonstrated
-by the informal benchmark below.
 
 %package doc
 Summary: Documentation files for %name
-Group: Documentation
+Group: Development/Documentation
+BuildArch: noarch
 
 %description doc
-Documentation files for %name
+Documentation files for %name.
+
 
 %prep
 %setup -q
 %patch -p1
 %update_setup_rb
-sed -i 's/Config:/Rb&/g' ext/libxml/extconf.rb
+
 
 %build
 %ruby_config
 %ruby_build
 
+
 %install
 %ruby_install
+rm -rf %buildroot%ruby_sitelibdir/{[[:digit:]]*,libs}
 %rdoc ext/libxml/*.c lib/
+ls -d %buildroot%ruby_ri_sitedir/* | grep -v '/LibXML$' | xargs rm -rf
+install -d -m 0755 %buildroot%_docdir/%name-%version
+gzip -9c HISTORY > %buildroot%_docdir/%name-%version/HISTORY.gz
+
 
 %check
 %ruby_test_unit -Ilib:ext/libxml:test test/test_suite.rb
 
+
 %files
-%doc README
 %ruby_sitearchdir/*
 %ruby_sitelibdir/*
 
+
 %files doc
-%doc CHANGES
-%doc %ruby_ri_sitedir/LibXML
+%doc %_docdir/%name-%version
+%doc %ruby_ri_sitedir/*
+
 
 %changelog
+* Fri Apr 12 2013 Led <led@altlinux.ru> 2.6.0-alt1
+- 2.6.0
+- cleaned up %%description
+- updated URL
+- fixed Group for %%name-doc subpackage
+
 * Fri Dec 07 2012 Led <led@altlinux.ru> 1.1.3-alt2
 - Rebuilt with ruby-1.9.3-alt1
 - fixed build with ruby 1.9
