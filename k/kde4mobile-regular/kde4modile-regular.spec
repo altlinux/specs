@@ -1,6 +1,6 @@
 Name:    kde4mobile-regular
 Version: 4.10
-Release: alt3
+Release: alt4
 
 Group: Graphical desktop/KDE
 Summary: KDE4 mobile common collection
@@ -31,7 +31,7 @@ Requires: kde4-declarative-plasmoids
 Requires: kde4-plasma-mobile
 Requires: kde4-share-like-connect
 #Requires: kde4-settings-kmobile
-%ifarch arm
+%ifarch %arm
 Requires: kde4-startactive
 %endif
 
@@ -73,6 +73,9 @@ KDE Active package to easy select packages during install
 %files
 
 %changelog
+* Fri Apr 12 2013 Sergey V Turchin <zerg@altlinux.org> 4.10-alt4
+- fix requires
+
 * Thu Apr 11 2013 Sergey V Turchin <zerg@altlinux.org> 4.10-alt3
 - fix requires
 
