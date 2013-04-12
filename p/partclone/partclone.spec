@@ -1,6 +1,6 @@
 Name: partclone
 Version: 0.2.58
-Release: alt1
+Release: alt2
 
 Summary: File System Clone Utilities
 License: GPLv2+
@@ -14,6 +14,7 @@ Patch1: partclone-0.2.22-alt-group_desc.patch
 # optimized out: libaal-devel libcom_err-devel libgpg-error libncurses-devel libtinfo-devel pkg-config
 BuildRequires: libe2fs-devel libncursesw-devel libntfs-devel libprogsreiserfs-devel libreiser4-devel libuuid-devel
 BuildRequires: libvmfs-devel > 0.2.1-alt1
+BuildRequires: libxfs-qa-devel
 
 # TODO: build with ufs (need libufs2), jfs (need fixed build of jfsutils)
 
@@ -43,6 +44,7 @@ subst 's/ fail-mbr//g' Makefile.in Makefile.am
 	--enable-fat \
 	--enable-ntfs \
 	--enable-vmfs \
+	--enable-xfs \
 	--enable-ncursesw
 %make_build CC="gcc -I/usr/include/vmfs"
 
@@ -56,6 +58,9 @@ subst 's/ fail-mbr//g' Makefile.in Makefile.am
 %_man8dir/*
 
 %changelog
+* Fri Apr 12 2013 Andrey Cherepanov <cas@altlinux.org> 0.2.58-alt2
+- Enable XFS support
+
 * Thu Apr 11 2013 Andrey Cherepanov <cas@altlinux.org> 0.2.58-alt1
 - 0.2.58
 
