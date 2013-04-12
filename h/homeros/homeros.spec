@@ -1,61 +1,63 @@
 Name: homeros
-Version: 20120718
+Version: 20130412
 Release: alt1
 Packager: Michael Pozhidaev <msp@altlinux.ru>
 BuildArch: noarch
 License: GPL
-Summary: The set of installing packages to prepare accessibility environment
+Summary: The set of metapackages for Homeros installation
 URL: http://homeros.altlinux.org
 Group: Accessibility
 
 %package -n speech-default
 Group: Sound
 License: GPL
-Summary: Installs default speech output engine
-Requires: voiceman voiceman-server voiceman-tools espeak RHVoice textlus-rhvoice
+Summary: Installs default speech output engines
+Requires: voiceman voiceman-server voiceman-tools espeak RHVoice
 
 %package emacspeak
 Group: Accessibility
 License: GPL
-Summary: Installs accessible environment based on emacspeak audio desktop
-Requires: speech-default
-Requires: yasr
-Requires: etcskel-homeros homeros-tools homeros-media homeros-emacs-menu emacs-removable-media
+Summary: Installs emacspeak accessible environment for blind users
+Requires: speech-default yasr
+Requires: homeros-core homeros-emacs
 Requires: emacs-nox emacspeak emacs24-gnus w3m emacs-w3m
 
 %package orca
 Group: Accessibility
 License: GPL
 Summary: Installs accessible environment based on GNOME and Orca screen reader
-Requires: speech-default
-Requires: etcskel-homeros homeros-tools homeros-media yasr
+Requires: speech-default yasr
+Requires: homeros-core
 #FIXME: openoffice or libreoffice
-Requires: orca firefox firefox-ru
+#Requires: orca firefox firefox-ru
 
 %description
-The set of installing packages to prepare accessible 
-environment for blind people.
+The set of metapackages to prepare accessible 
+environment for blind users.
 
 %description -n speech-default
-This package installs set of utils to enable speech output. After
-installation user must call voiceman-enable for every speech
-synthesizer he want to use (list of all available synthesizers can be
-obtained with voiceman-available command) and than start the server
-with command "service voiceman start".
+This package installs the set of utils to enable speech output. After
+installation user must call voiceman-enable for each speech
+synthesizer he wants to use (list of all available synthesizers can be
+obtained with voiceman-available command). After that the server should be launched 
+with "service voiceman start" command.
 
 %description emacspeak
 This package installs accessible environment for blind people based on emacspeak audio desktop.
-It also prepares general Homeros-specific instruments.
+It also prepares general speech output.
 
 %description orca
 This package installs accessible environment for blind people based on GNOME and Orca.
-It also prepares general Homeros-specific instruments.
+(currently unmaintained)
 
 %files -n speech-default
 %files emacspeak
 %files orca
 
 %changelog
+* Fri Apr 12 2013 Michael Pozhidaev <msp@altlinux.ru> 20130412-alt1
+- The sets of required packages are updated to reflect changes in homeros-core package
+
 * Wed Jul 18 2012 Michael Pozhidaev <msp@altlinux.ru> 20120718-alt1
 - emacs23 req changed to emacs-nox
 - ru_tts removed from speech-default
