@@ -3,7 +3,7 @@
 
 Name: host2cat
 Version: 1.01
-Release: alt4
+Release: alt6
 Packager: Grigory Batalov <bga@altlinux.ru>
 
 Summary: Custom DNS resolver
@@ -16,6 +16,7 @@ Source1: %name.init
 Source2: %name.sysconfig
 Source3: squid.conf
 Source4: %name.openresolv
+SOURCE5: README.ALT.host2cat
 
 # Automatically added by buildreq on Fri Apr 10 2009
 BuildRequires: libadns-devel libmemcache-devel
@@ -38,10 +39,8 @@ DNS resolver for web content filtering with web interface.
 %package -n squid-conf-%name
 Summary: adapted squid config
 Group: System/Servers
-Requires: squid-common squid-helpers
-Provides: squid-conf = %version-%release, %_sysconfdir/squid/squid.conf
-%{expand:%%global o_list %(for n in default; do echo -n "squid-conf-$n "; done)}
-%{?o_list:Conflicts: %o_list}
+Requires: squid-common squid-helpers libshell
+Requires: squid-server >= 3.1.19-alt2
 
 %description -n squid-conf-%name
 This package contains squid config adapted for %name.
@@ -73,7 +72,8 @@ mkdir -p %buildroot{%_cachedir/%name,%webserver_cgibindir,%_libexecdir/%name}
 install -m0755 -D %name %buildroot%_sbindir/%name
 install -m0755 -D %SOURCE1 %buildroot%_initdir/%name
 install -m0644 -D %SOURCE2 %buildroot%_sysconfdir/sysconfig/%name
-install -m0644 -D %SOURCE3 %buildroot%_sysconfdir/squid/squid.conf
+install -m0644 -D %SOURCE3 %buildroot%_sysconfdir/squid/squid.conf.host2cat
+install -m0644 -D %SOURCE5 %buildroot%_sysconfdir/squid/README.ALT.host2cat
 install -m0644 -D %SOURCE4 %buildroot%subscribers_dir/%name
 
 install -m0755 contrib/get_file.pl %buildroot%webserver_cgibindir/get_file.pl
@@ -132,12 +132,22 @@ htpasswd2 -b %_sysconfdir/squid/passwd netpolice netpolice
 %attr(644,apache2,root) %_cachedir/%name/filter.db
 
 %files -n squid-conf-%name
-%config(noreplace) %_sysconfdir/squid/squid.conf
+%config(noreplace) %_sysconfdir/squid/squid.conf.host2cat
+%doc %_sysconfdir/squid/README.ALT.host2cat
 
 %files -n openresolv-%name
 %subscribers_dir/%name
 
 %changelog
+* Thu Apr 11 2013 Andrey Cherepanov <cas@altlinux.org> 1.01-alt6
+- Remove post and preun scripts for change Squid configuration
+- Add README.ALT.host2cat to squid-conf-host2cat to help change
+  Squid configuration manually
+
+* Wed Apr 10 2013 Andrey Cherepanov <cas@altlinux.org> 1.01-alt5
+- Don't conflict with /etc/squid/squid.conf, just replace default config
+  file by /etc/squid/squid.conf.host2cat
+
 * Wed Nov 07 2012 Paul Wolneykien <manowar@altlinux.ru> 1.01-alt4
 - Fix the post-install hook: require apache2-htpasswd.
 
