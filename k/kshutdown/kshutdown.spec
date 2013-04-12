@@ -1,6 +1,6 @@
 Name: kshutdown
 Version: 0.4.0
-Release: alt3.1
+Release: alt3.2
 
 Summary: A Shut Down Utility for KDE.
 License: GPL
@@ -13,7 +13,7 @@ Source0: %name-%version.tar.bz2
 Patch0: %name-0.4.0-alt-DSO.patch
 
 
-BuildRequires: xorg-libs fontconfig freetype2 gcc-c++ kde-settings kdelibs-devel  libjpeg-devel libpng-devel libqt3-devel libstdc++-devel  qt3-designer xml-utils zlib-devel libtqt-devel
+BuildRequires: fontconfig freetype2 gcc-c++ kde-settings kdelibs-devel  libjpeg-devel libpng-devel libqt3-devel libstdc++-devel  qt3-designer xml-utils zlib-devel libtqt-devel
 
 %description
 KShutDown is an advanced shut down utility for KDE.
@@ -50,6 +50,9 @@ install -p -m644 %buildroot/%_datadir/applnk/Utilities/%name.desktop %buildroot/
 %_iconsdir/*/*/apps/%name.png
 
 %changelog
+* Fri Apr 12 2013 Andrey Cherepanov <cas@altlinux.org> 0.4.0-alt3.2
+- Fix build with new xorg
+
 * Wed Jun 13 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.0-alt3.1
 - Fixed build
 
