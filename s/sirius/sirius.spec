@@ -1,6 +1,6 @@
 Name: sirius
 Version: 0.8.0
-Release: alt2.2
+Release: alt2.3
 
 Summary: Othello game
 Summary (ru_RU.UTF-8): Игра реверси
@@ -12,7 +12,7 @@ Source0: %name-%version.tar.gz
 Patch0: fix.patch
 Patch1: %name.desktop.in.patch
 Patch2: %name-0.8.0-alt-DSO.patch
-BuildRequires: ORBit2-devel xorg-libs esound-devel fontconfig freetype2 glib2-devel glibc-devel-static gnome-vfs2-devel libGConf2-devel libalsa-devel libart_lgpl-devel libatk-devel libaudiofile-devel libbonobo2-devel libbonoboui-devel libexpat libgnome-devel libgnomecanvas-devel libgnomeui-devel libgtk+2-devel libjpeg-devel libpango-devel libpopt-devel libssl-devel libxml2-devel pkgconfig rootfiles zlib-devel
+BuildRequires: ORBit2-devel esound-devel fontconfig freetype2 glib2-devel glibc-devel-static gnome-vfs2-devel libGConf2-devel libalsa-devel libart_lgpl-devel libatk-devel libaudiofile-devel libbonobo2-devel libbonoboui-devel libexpat libgnome-devel libgnomecanvas-devel libgnomeui-devel libgtk+2-devel libjpeg-devel libpango-devel libpopt-devel libssl-devel libxml2-devel pkgconfig rootfiles zlib-devel
 
 BuildPreReq: libX11-devel libSM-devel libICE-devel
 
@@ -51,6 +51,9 @@ therefore be adjusted in several ways to give you a suitable opponent.
 %doc README ChangeLog
 
 %changelog
+* Fri Apr 12 2013 Andrey Cherepanov <cas@altlinux.org> 0.8.0-alt2.3
+- Fix build with new xorg
+
 * Tue Jun 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.0-alt2.2
 - Fixed build
 
