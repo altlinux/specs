@@ -2,7 +2,7 @@
 
 Name: exquisite
 Version: 1.0.0
-Release: alt0.1
+Release: alt0.2
 
 Summary: Enlightenment bootsplash program
 Group: Graphical desktop/Enlightenment
@@ -21,6 +21,8 @@ integrate with existing boot setups (sysvinit or systemd) bia messaging
 
 %prep
 %setup
+subst 's|../src/bin|%_bindir|
+	s|../data|%_datadir/%name/data|' demo/run-demo.sh
 
 %build
 %autoreconf
@@ -39,6 +41,9 @@ integrate with existing boot setups (sysvinit or systemd) bia messaging
 %doc AUTHORS README demo/run-demo.sh
 
 %changelog
+* Fri Apr 12 2013 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt0.2
+- fixed paths in run-demo.sh
+
 * Thu Apr 11 2013 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt0.1
 - first preview for Sisyphus
 
