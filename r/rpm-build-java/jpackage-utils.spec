@@ -37,7 +37,7 @@
 
 Name:           rpm-build-java
 Version:        5.0.0
-Release:        alt28
+Release:        alt29
 Epoch:          0
 URL:            http://www.jpackage.org/
 License:        BSD
@@ -483,6 +483,9 @@ rm -f $RPM_BUILD_ROOT%{_bindir}/mvn-{local,rpmbuild}
 %_bindir/mvn-package
 
 %changelog
+* Fri Apr 12 2013 Igor Vlasenko <viy@altlinux.ru> 0:5.0.0-alt29
+- fixes in osgi.prov
+
 * Thu Mar 07 2013 Igor Vlasenko <viy@altlinux.ru> 0:5.0.0-alt28
 - added maven-local
 - sync with javapackages-tools = 0.12.6
