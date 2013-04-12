@@ -1,12 +1,13 @@
 Name: lksctp-tools
 Summary: Linux Kernel SCTP tools
-Version: 1.0.13
-Release: alt2
+Version: 1.0.14
+Release: alt1
 License: GPL2
 Group: System/Kernel and hardware
 BuildRequires: glibc-devel-static
 Url: http://lksctp.sourceforge.net/
 Source: %name-%version.tar
+Patch: %name-%version-%release.patch
 
 %package -n liblksctp
 Summary: Linux Kernel SCTP library
@@ -35,6 +36,7 @@ Linux Kernel SCTP tools
 
 %prep
 %setup
+%patch -p1
 
 %build
 %autoreconf -fisv
@@ -67,6 +69,9 @@ mkdir -p %buildroot
 %_libdir/lksctp-tools/*.a
 
 %changelog
+* Fri Apr 12 2013 Denis Smirnov <mithraen@altlinux.ru> 1.0.14-alt1
+- new version 1.0.14
+
 * Fri Feb 01 2013 Denis Smirnov <mithraen@altlinux.ru> 1.0.13-alt2
 - add gear-cronbuild support
 
