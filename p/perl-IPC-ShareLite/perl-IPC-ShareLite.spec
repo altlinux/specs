@@ -1,7 +1,7 @@
 %define dist IPC-ShareLite
 Name: perl-%dist
 Version: 0.17
-Release: alt2
+Release: alt3
 
 Summary: Light-weight interface to shared memory
 License: GPL or Artistic
@@ -13,6 +13,8 @@ Source: %dist-%version.tar.gz
 # This patch is kept here for historic reasons
 Patch: perl-IPC-ShareLite-fixOwl.patch
 
+Patch1: perl-IPC-ShareLite-alt-hack-build.patch
+
 BuildRequires: perl-Test-Pod perl-CPAN-Meta
 
 %description
@@ -23,6 +25,7 @@ use this module.
 
 %prep
 %setup -q -n %dist-%version
+%patch1 -p2
 
 %build
 %perl_vendor_build
@@ -36,6 +39,9 @@ use this module.
 %perl_vendor_autolib/IPC
 
 %changelog
+* Fri Apr 12 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.17-alt3
+- build hackarounded
+
 * Fri Aug 31 2012 Vladimir Lettiev <crux@altlinux.ru> 0.17-alt2
 - rebuilt for perl-5.16
 - perl-CPAN-Meta required for build
