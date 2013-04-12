@@ -39,7 +39,7 @@
 
 Name: mnogosearch
 Version: 3.3.12
-Release: alt1
+Release: alt1.1
 
 Summary: a full-featured search engine for intranet and internet servers
 Summary(ru_RU.UTF-8): поисковая машина для серверов интернет и интранет
@@ -638,6 +638,9 @@ fi
 %endif
 
 %changelog
+* Fri Apr 12 2013 Michael Shigorin <mike@altlinux.org> 3.3.12-alt1.1
+- rebuilt against libmysqlclient.so.18
+
 * Sun Aug 26 2012 Nikolay A. Fetisov <naf@altlinux.ru> 3.3.12-alt1
 - Picked up from orphaned
 - New version 3.3.12
