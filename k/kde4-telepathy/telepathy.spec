@@ -1,6 +1,6 @@
 Name: kde4-telepathy
 Version: 4.10.2
-Release: alt1
+Release: alt2
 
 Group: Graphical desktop/KDE
 Summary: KDE Telepathy handler
@@ -10,6 +10,7 @@ License: GPLv2+
 BuildArch: noarch
 
 Requires: telepathy-mission-control
+Requires: telepathy-gabble
 Requires: kde4-ktp-accounts-kcm kde4-ktp-approver
 Requires: kde4-ktp-auth-handler
 Requires: kde4-ktp-call-ui
@@ -25,6 +26,9 @@ Requires: kde4-ktp-text-ui
 %files
 
 %changelog
+* Fri Apr 12 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.2-alt2
+- update requires
+
 * Thu Apr 11 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.2-alt1
 - fix requires
 
