@@ -1,7 +1,7 @@
 %define oname Zope2
 Name: python-module-%oname
 Version: 2.13.19
-Release: alt1
+Release: alt2
 Summary: Zope2 application server / web framework
 License: ZPLv2.1
 Group: Development/Python
@@ -78,6 +78,12 @@ install -p -m644 %SOURCE1 %buildroot%python_sitelibdir
 
 cp -fR doc/.build/pickle %buildroot%python_sitelibdir/%oname/
 
+# There is a file in the package named .DS_Store or .DS_Store.gz, 
+# the file name used by Mac OS X to store folder attributes.  
+# Such files are generally useless in packages and were usually accidentally 
+# included by copying complete directories from the source tarball.
+find $RPM_BUILD_ROOT \( -name '*.DS_Store' -o -name '*.DS_Store.gz' \) -print -delete
+
 %files
 %doc *.txt
 %_bindir/*
@@ -89,6 +95,7 @@ cp -fR doc/.build/pickle %buildroot%python_sitelibdir/%oname/
 %exclude %python_sitelibdir/*/*/*/*/tests
 %exclude %python_sitelibdir/*/Test*
 %exclude %python_sitelibdir/Test*
+%exclude %python_sitelibdir/*/*/examples
 %exclude %python_sitelibdir/%oname/pickle
 
 %files tests
@@ -98,6 +105,7 @@ cp -fR doc/.build/pickle %buildroot%python_sitelibdir/%oname/
 %python_sitelibdir/*/*/*/*/tests
 %python_sitelibdir/*/Test*
 %python_sitelibdir/Test*
+%python_sitelibdir/*/*/examples
 
 %files pickles
 %python_sitelibdir/%oname/pickle
@@ -106,6 +114,10 @@ cp -fR doc/.build/pickle %buildroot%python_sitelibdir/%oname/
 %doc doc/.build/html/*
 
 %changelog
+* Fri Apr 12 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.13.19-alt2
+- Applied repocop patch
+- Moved examples into tests subpackage
+
 * Thu Apr 11 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.13.19-alt1
 - Version 2.13.19
 
