@@ -20,13 +20,13 @@
 %define flavour %base_flavour-%sub_flavour
 
 Name: kernel-image-%flavour
-Version: 3.4.39
-Release: alt10
+Version: 3.4.40
+Release: alt1
 
 %define kernel_req %nil
 %define kernel_prov %nil
 %define kernel_branch 3.4
-%define kernel_stable_version 39
+%define kernel_stable_version 40
 %define kernel_extra_version .%kernel_stable_version
 #define kernel_extra_version %nil
 
@@ -2674,6 +2674,9 @@ done)
 
 
 %changelog
+* Fri Apr 12 2013 Led <led@altlinux.ru> 3.4.40-alt1
+- 3.4.40
+
 * Fri Apr 12 2013 Led <led@altlinux.ru> 3.4.39-alt10
 - updated:
   + fix-net-wimax
