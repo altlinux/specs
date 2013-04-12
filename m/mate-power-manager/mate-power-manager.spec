@@ -6,20 +6,19 @@ BuildRequires: /usr/bin/docbook2man /usr/bin/glib-genmarshal /usr/bin/glib-gette
 %define _libexecdir %_prefix/libexec
 Name:          mate-power-manager
 Version:       1.6.0
-Release:       alt3
+Release:       alt3_1
 Summary:       MATE power management service
 License:       GPLv2+
 URL:           http://pub.mate-desktop.org
-Source0:       http://pub.mate-desktop.org/releases/1.6/%{name}-%{version}.tar.xz
-Patch0:	mpm-alt-logind-support.patch
+Source0:       http://pub.mate-desktop.org/releases/1.5/%{name}-%{version}.tar.xz
 
 BuildRequires: libcairo-devel
 BuildRequires: libdbus-glib-devel
 BuildRequires: desktop-file-utils
 BuildRequires: libcanberra-devel
-BuildRequires: libmatenotify-devel
 BuildRequires: glib2-devel
 BuildRequires: gtk2-devel
+BuildRequires: libnotify-devel
 BuildRequires: mate-common
 BuildRequires: mate-control-center-devel
 BuildRequires: mate-doc-utils
@@ -30,9 +29,9 @@ BuildRequires: rarian-compat
 BuildRequires: systemd-devel
 BuildRequires: libunique-devel
 BuildRequires: libupower-devel
-BuildRequires: libnotify-devel
+BuildRequires: xmlto
 Source44: import.info
-
+Patch33: mpm-alt-logind-support.patch
 
 %description
 MATE Power Manager uses the information and facilities provided by UPower
@@ -41,22 +40,26 @@ displaying icons and handling user callbacks in an interactive MATE session.
 
 %prep
 %setup -q
-%patch -p2
+%patch33 -p2
 NOCONFIGURE=1 ./autogen.sh
 
-
 %build
-%configure  --disable-static --disable-scrollkeeper --enable-applets --without-systemdinhibit
-make V=1 %{?_smp_mflags}
+%configure --disable-static --enable-applets \
+     --enable-docbook-docs \
+     --enable-unique \
+     --with-systemdinhibit \
+     --with-gtk=2.0 \
+     --disable-schemas-compile \
+     --disable-scrollkeeper
 
+make %{?_smp_mflags} V=1
 
 %install
 make DESTDIR=%{buildroot} install
 %find_lang %{name} --all-name
+
 desktop-file-install                               \
      --delete-original                             \
-     --remove-category=MATE                        \
-     --add-category=X-Mate                         \
      --dir=%{buildroot}%{_datadir}/applications    \
 %{buildroot}%{_datadir}/applications/*.desktop
 
@@ -84,8 +87,12 @@ desktop-file-install                               \
 %{_sysconfdir}/xdg/autostart/mate-power-manager.desktop
 %{_libexecdir}/mate-brightness-applet
 %{_libexecdir}/mate-inhibit-applet
+%{_datadir}/MateConf/gsettings/mate-power-manager.convert
 
 %changelog
+* Thu Apr 11 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.0-alt3_1
+- new fc release
+
 * Tue Apr 09 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1.6.0-alt3
 - crash fixed
 
