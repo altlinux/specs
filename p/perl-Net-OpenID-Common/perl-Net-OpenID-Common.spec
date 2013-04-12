@@ -2,7 +2,7 @@
 
 Name: perl-%module
 Version: 1.14
-Release: alt1
+Release: alt2
 
 Summary: Libraries shared between Net::OpenID::Consumer and Net::OpenID::Server
 License: Perl
@@ -14,7 +14,7 @@ Source: http://www.cpan.org/modules/by-module/Net/%module-%version.tar.gz
 BuildArch: noarch
 
 # Automatically added by buildreq on Fri Mar 09 2012
-BuildRequires: perl-Crypt-DH-GMP perl-HTTP-Message perl-Math-BigInt perl-XML-Simple perl-devel
+BuildRequires: perl-Crypt-DH-GMP perl-HTTP-Message perl-Math-BigInt perl-XML-Simple perl-devel perl-HTML-Parser
 
 %description
 Libraries shared between Net::OpenID::Consumer and Net::OpenID::Server.
@@ -32,5 +32,8 @@ Libraries shared between Net::OpenID::Consumer and Net::OpenID::Server.
 %perl_vendor_privlib/Net/OpenID/
 
 %changelog
+* Fri Apr 12 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1.14-alt2
+- build fixed
+
 * Fri Mar 09 2012 Victor Forsiuk <force@altlinux.org> 1.14-alt1
 - Initial build.
