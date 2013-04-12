@@ -1,12 +1,15 @@
 Epoch: 0
 # BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
+AutoReq: yes,noosgi
+BuildRequires: rpm-build-java-osgi
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name: sac
 Version: 1.3
-Release: alt2_13jpp7
+Release: alt3_13jpp7
 Summary: Java standard interface for CSS parser
 License: W3C
 Group: System/Libraries
@@ -72,6 +75,9 @@ install -pm 644 %{SOURCE3} \
 %{_javadocdir}/%{name}
 
 %changelog
+* Fri Apr 12 2013 Igor Vlasenko <viy@altlinux.ru> 0:1.3-alt3_13jpp7
+- added osgi provides
+
 * Fri Aug 24 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.3-alt2_13jpp7
 - new release
 
