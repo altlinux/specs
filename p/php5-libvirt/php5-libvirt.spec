@@ -2,7 +2,7 @@
 
 Name: php5-libvirt
 Version: 0.4.6
-Release: alt3
+Release: alt3.%php5_version.%php5_release
 
 Summary: PHP language binding for Libvirt
 Group: System/Servers
@@ -13,13 +13,14 @@ Source: %name-%version.tar
 Source1: php-%php5_extension.ini
 Source2: php-%php5_extension-params.sh
 
-Patch: %name-%version-%release.patch
+Patch: %name-%version.patch
 
 BuildRequires(pre): rpm-build-php5 rpm-build-licenses
 BuildRequires: php5-devel = %php5_version
 BuildRequires: libvirt-devel
 BuildRequires: libxml2-devel
 BuildRequires: xsltproc
+Requires: php5-libs = %php5_version-%php5_release
 
 %description
 PHP language bindings for Libvirt API.
@@ -50,6 +51,9 @@ install -D -m 644 %SOURCE2 %buildroot/%php5_extconf/%php5_extension/params
 %php5_extdir/*
 
 %changelog
+* %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
+- Rebuild with php5-%version-%release
+
 * Tue Apr 09 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.4.6-alt3
 - rebuild with php5 5.3.23.20130314-alt1
 
