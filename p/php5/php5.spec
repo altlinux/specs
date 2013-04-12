@@ -325,6 +325,9 @@ chrpath -d %buildroot%_bindir/phpinfo-%_php5_version
 %doc tests run-tests.php 
 
 %changelog
+* Fri Apr 12 2013 Anton V. Boyarshinov <boyarsh@altlinux.org> 5.3.24.20130412-alt1
+- new version
+
 * Tue Apr  2 2013 Anton V. Boyarshinov <boyarsh@altlinux.org> 5.3.23.20130314-alt1
 - new version
 
