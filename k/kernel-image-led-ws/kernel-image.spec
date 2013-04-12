@@ -21,7 +21,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.4.39
-Release: alt9
+Release: alt10
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -2674,6 +2674,10 @@ done)
 
 
 %changelog
+* Fri Apr 12 2013 Led <led@altlinux.ru> 3.4.39-alt10
+- updated:
+  + fix-net-wimax
+
 * Thu Apr 11 2013 Led <led@altlinux.ru> 3.4.39-alt9
 - moved videodev.ko form kernel-modules-media-* subpackage to kernel-image-*
 
