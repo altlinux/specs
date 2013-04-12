@@ -5,7 +5,7 @@
 
 Name:    apache2-mod_perl
 Version: 2.0.7
-Release: alt4
+Release: alt5
 
 Summary: An embedded Perl interpreter for the Apache2 Web server
 Summary(ru_RU.UTF-8): Встроенный интерпретатор Perl для веб-сервера Apache2
@@ -29,6 +29,9 @@ Patch0: mod_perl-2.0.2-multilib.patch
 Patch1: mod_perl-2.0.5-lfs.patch
 Patch2: mod_perl-2.0.7-alt-HTTP_Headers_version_fix.patch
 Patch3: mod_perl-2.0.7-alt-disable_prctl_set_name.patch
+
+# https://rt.cpan.org/Public/Bug/Display.html?id=83916
+Patch4: hash_attack.patch
 
 Provides: mod_perl = %version
 
@@ -129,6 +132,7 @@ module.
 %patch1 -p1
 %patch2
 %patch3
+%patch4 -p1
 
 # Complete installation with separate projects
 tar xvf %SOURCE4
@@ -288,6 +292,9 @@ fi
 %doc docs/*
 
 %changelog
+* Fri Apr 12 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 2.0.7-alt5
+- build fixed
+
 * Sun Dec 16 2012 Nikolay A. Fetisov <naf@altlinux.ru> 2.0.7-alt4
 - Disable changing the proctitle (Closes: #26892, #27924)
 
