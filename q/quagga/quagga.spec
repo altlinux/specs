@@ -6,7 +6,7 @@
 
 Name: quagga
 
-%define baseversion 0.99.22
+%define baseversion 0.99.22.1
 Release: alt1
 
 %if %cvs
@@ -308,6 +308,9 @@ cp -f tools/zc.pl $RPM_BUILD_ROOT%_bindir
 %doc doc/draft-zebra-00.* doc/BGP-TypeCode
 
 %changelog
+* Fri Apr 12 2013 Sergey Y. Afonin <asy@altlinux.ru> 0.99.22.1-alt1
+- new version
+
 * Sat Mar 02 2013 Sergey Y. Afonin <asy@altlinux.ru> 0.99.22-alt1
 - new version
 - added init script and configuration file for Babel (untested)
