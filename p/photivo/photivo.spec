@@ -1,10 +1,11 @@
 %define gimpplugindir %(gimptool-2.0 --gimpplugindir)
 # /usr/bin/hg identify | cut -c -12
-%define rev 50b234e492b
+%define rev 6256ff175312
+%def_without gimp
 
 Name: photivo
 Version: 0
-Release: alt7.%{rev}
+Release: alt8.%{rev}
 
 Summary: Photivo photo processor
 Group: Graphics
@@ -81,7 +82,7 @@ qmake-qt4 PREFIX=%_prefix
 %install
 %make INSTALL_ROOT=%buildroot install
 # install gimp plugin
-install -pD -m755 ptGimp %buildroot%gimpplugindir/ptGimp
+%{?_with_gimp:install -pD -m755 ptGimp %buildroot%gimpplugindir/ptGimp}
 
 # install utilities
 #install -pD -m755 ptClear %buildroot%_bindir/PtClear
@@ -104,10 +105,15 @@ find %buildroot%_datadir/%name -type f -print0|xargs -r0 chmod 644 --
 %_datadir/applications/*
 %_datadir/pixmaps/photivo-appicon.png
 
+%if_with gimp
 %files -n gimp-plugin-%name
 %gimpplugindir/ptGimp
+%endif
 
 %changelog
+* Fri Apr 12 2013 Yuri N. Sedunov <aris@altlinux.org> 0-alt8.6256ff175312
+- built current snapshot
+
 * Thu Jan 24 2013 Yuri N. Sedunov <aris@altlinux.org> 0-alt7.50b234e492b
 - rebuilt against libexiv2.so.12
 
