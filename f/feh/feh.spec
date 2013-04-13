@@ -1,7 +1,7 @@
-#define rev 
+%define rev 7fbd8d9f
 Name: feh
 Version: 2.9.1
-Release: alt1
+Release: alt1.%rev
 Summary: Image viewer using Imlib 2
 Group: Graphics
 License: BSD
@@ -46,6 +46,9 @@ cp %_builddir/%name-%version/man/*.1 %buildroot%_man1dir/
 %doc AUTHORS ChangeLog README TODO
 
 %changelog
+* Sat Apr 13 2013 Andrew Clark <andyc@altlinux.org> 2.9.1-alt1.7fbd8d9f
+- version update to 2.9.1-alt1.7fbd8d9f
+
 * Sun Feb 17 2013 Andrew Clark <andyc@altlinux.org> 2.9.1-alt1
 - version update to 2.9.1-alt1
 
