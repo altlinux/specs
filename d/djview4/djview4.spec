@@ -1,23 +1,30 @@
+Name: djview4
+Version: 4.8
+Release: alt1
+
+Summary: DjVu viewers, encoders and utilities (QT4 based version)
+License: GPLv2+
+Group: Publishing
+Url: http://djvu.sourceforge.net/djview4.html
+
+# http://download.sourceforge.net/djvu/djview-%version.tar.gz
+Source: djview-%version.tar
+
+Patch1: djview-4.8-rh-swap.patch
+Patch2: djview-4.8-rh-include.patch
+
 %def_disable static
 %define qtdir %_libdir/qt4
 
-Summary: DjVu viewers, encoders and utilities (QT4 based version)
-Name: djview4
-Version: 4.5
-Release: alt1.1
-License: GPL
-Group: Publishing
-Source: %name-%version.tar.bz2
-Url: http://djvulibre.djvuzone.org/
+Provides: djvu-viewer = %EVR
+Obsoletes: djvu-viewer < %EVR
 
-Packager: Evgeny Sinelnikov <sin@altlinux.ru>
-
-# Automatically added by buildreq on Wed Oct 10 2007
-BuildRequires: gcc-c++ libXext-devel libjpeg-devel libqt4-devel libqt4-network xdg-utils xorg-cf-files
-BuildRequires: libdjvu-devel >= 3.5.18
-
-# added by hands
+BuildRequires: libdjvu-devel >= 3.5.25
 BuildRequires: browser-plugins-npapi-devel
+
+# Automatically added by buildreq on Sat Apr 13 2013
+# optimized out: fontconfig gnu-config libICE-devel libSM-devel libX11-devel libXext-devel libqt4-core libqt4-gui libqt4-network libstdc++-devel pkg-config phonon-devel xorg-xproto-devel
+BuildRequires: gcc-c++ glib2-devel libXt-devel libdjvu-devel libqt4-devel libtiff-devel xdg-utils
 
 %description
 This package contains the djview4 viewer and browser plugin.
@@ -42,6 +49,7 @@ Highlights:
 %package -n mozilla-plugin-djvu4
 Summary: DjVu NPAPI plugin (QT4 based version)
 Group: Networking/WWW
+Requires: %name = %EVR
 Requires: browser-plugins-npapi 
 Conflicts: mozilla-plugin-djvu < 4.1
 Obsoletes: mozilla-plugin-djvu < 4.1
@@ -52,30 +60,29 @@ by means of the small shared library named nsdejavu.so.
 The djview3 distributed with djvulibre uses the same approach.
 
 %prep
-%setup -q -n %name-%version
+%setup -n djview-%version
+%patch1 -p1
+%patch2 -p1
+
+sed -i '/^#/d' desktopfiles/djvulibre-djview4.desktop
+sed -i 's,^\(plugindir[[:space:]]*=[[:space:]]*\).*,\1%browser_plugins_path,' nsdejavu/Makefile.in
 
 %build
-# hack for NPAPI location
-%__subst 's,-rpath ${plugindir},-rpath %browser_plugins_path,' nsdejavu/Makefile.in
-%__subst 's,^plugindir[[:space:]]*=.*,plugindir = %buildroot%browser_plugins_path,' nsdejavu/Makefile.in
-
 export QTDIR=%qtdir
 export PATH=$QTDIR/bin:$PATH
-%configure %{subst_enable static} PTHREAD_LIBS="-lpthread"
-%make #NO SMP
+%configure %{subst_enable static}
+%make_build NSDEJAVU_LIBS='-lXt -lX11'
 
 %install
-%makeinstall
-
-#install-gnome: FORCE
-%__install -pD -m 644 desktopfiles/hi32-djview4.png %buildroot%_niconsdir/djvulibre-djview4.png
-%__install -pD -m 644 desktopfiles/djvulibre-djview4.desktop %buildroot%_desktopdir/djvulibre-djview4.desktop
-
-#hack for djvu-viewer compatibility
-rm -f %buildroot%_bindir/djview
-rm -f %buildroot%_mandir/man1/djview.1
+%makeinstall_std
+rm %buildroot%_datadir/djvu/%name/desktop/prebuilt-hi*-djview4.png
+install -Dpm644 desktopfiles/hi32-djview4.png \
+	%buildroot%_niconsdir/djvulibre-djview4.png
+install -Dpm644 desktopfiles/djvulibre-djview4.desktop \
+	%buildroot%_desktopdir/djvulibre-djview4.desktop
 
 %find_lang %name
+%set_verify_elf_method strict
 
 %files
 %_bindir/djview*
@@ -89,6 +96,9 @@ rm -f %buildroot%_mandir/man1/djview.1
 %_mandir/man?/nsdejavu*
 
 %changelog
+* Sat Apr 13 2013 Dmitry V. Levin <ldv@altlinux.org> 4.8-alt1
+- Updated to 4.8.
+
 * Wed Sep 30 2009 Alexey Gladkov <legion@altlinux.ru> 4.5-alt1.1
 - NMU: Rebuilt with browser-plugins-npapi.
 
