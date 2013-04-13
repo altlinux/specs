@@ -3,7 +3,7 @@ BuildRequires: gcc-c++
 # END SourceDeps(oneline)
 Name:           gemdropx
 Version:        0.9
-Release:        alt6_10
+Release:        alt6_11
 Summary:        Falling blocks puzzlegame
 Group:          Games/Other
 License:        GPL+
@@ -39,7 +39,7 @@ cp -a data/sounds $RPM_BUILD_ROOT%{_datadir}/%{name}
  
 # below is the desktop file and icon stuff.
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/applications
-desktop-file-install  \
+desktop-file-install \
   --dir $RPM_BUILD_ROOT%{_datadir}/applications %{SOURCE1}
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/32x32/apps
 convert data/images/%{name}-icon.xpm \
@@ -55,6 +55,9 @@ convert data/images/%{name}-icon.xpm \
 
 
 %changelog
+* Sat Apr 13 2013 Igor Vlasenko <viy@altlinux.ru> 0.9-alt6_11
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.9-alt6_10
 - update to new release by fcimport
 
