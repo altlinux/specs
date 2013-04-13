@@ -1,6 +1,6 @@
 Name: libalsa
-Version: 1.0.26
-Release: alt3
+Version: 1.0.27
+Release: alt2
 Epoch: 1
 
 Summary: Advanced Linux Sound Architecture (ALSA) library
@@ -152,6 +152,12 @@ done
 %_bindir/aserver
 
 %changelog
+* Sat Apr 13 2013 Michael Shigorin <mike@altlinux.org> 1:1.0.27-alt2
+- retag
+
+* Sat Apr 13 2013 Michael Shigorin <mike@altlinux.org> 1:1.0.27-alt1
+- 1.0.27
+
 * Sat Mar 09 2013 Michael Shigorin <mike@altlinux.org> 1:1.0.26-alt3
 - alsa-modindex.conf: promote USB audio, demote HDMI audio example
   (closes: #28648)
