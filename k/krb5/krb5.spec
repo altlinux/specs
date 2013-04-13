@@ -1,6 +1,6 @@
 
 Name: krb5
-Version: 1.11.1
+Version: 1.11.2
 Release: alt1
 
 %define _docdir %_defaultdocdir/%name-%version
@@ -23,7 +23,6 @@ Patch8: krb5-1.10-fedora-kpasswd_tcp.patch
 Patch9: krb5-1.10-fedora-kprop-mktemp.patch
 Patch11: krb5-1.11-fedora-selinux-label.patch
 Patch12: krb5-fedora-kvno-230379.patch
-Patch22: krb5-1.11.1-upsream-fix-memory-leak-gitd2a66c.patch
 
 
 BuildRequires: /dev/pts /proc
@@ -142,7 +141,6 @@ MIT Kerberos.
 %patch9 -p1
 %patch11 -p1
 %patch12 -p1
-%patch22 -p1
 
 %build
 
@@ -264,7 +262,7 @@ touch %buildroot%_sysconfdir/krb5.keytab
 %_sbindir/sim_server
 %_sbindir/sserver
 %_man1dir/sclient.1*
-# %%_man1dir/krb5-config.1*
+%_man1dir/krb5-config.1*
 %exclude %_man1dir/krb5-send-pr.1*
 %_man8dir/sserver.8*
 
@@ -342,6 +340,10 @@ touch %buildroot%_sysconfdir/krb5.keytab
 # {{{ changelog
 
 %changelog
+* Sat Apr 13 2013 Ivan A. Melnikov <iv@altlinux.org> 1.11.2-alt1
+- 1.11.2;
+- drop obsolete patch 22.
+
 * Sat Mar 30 2013 Ivan A. Melnikov <iv@altlinux.org> 1.11.1-alt1
 - 1.11.1
   + fix a null pointer dereference in the KDC PKINIT code
