@@ -8,7 +8,7 @@
 %define oversion 7_0
 Name: icebw
 Version: 7.0
-Release: alt1
+Release: alt1.qa1
 
 Summary: Free financial accounting system with GTK interface
 
@@ -47,6 +47,9 @@ make install install \
 %_datadir/locale/uk/LC_MESSAGES/%oname.mo
 
 %changelog
+* Sun Apr 14 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 7.0-alt1.qa1
+- NMU: rebuilt with libmysqlclient.so.18.
+
 * Wed Aug 31 2011 Andrey Cherepanov <cas@altlinux.org> 7.0-alt1
 - New version 7.0
 
