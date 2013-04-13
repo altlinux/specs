@@ -6,7 +6,7 @@
 Summary: A Virtual Database Hosting DSO module for the apache web server
 Name: apache2-mod_vdbh
 Version: 1.0.3
-Release: alt1.1
+Release: alt1.1.qa1
 Group: System/Servers
 License: GPL
 Url: http://www.synthemesc.com/mod_vdbh/
@@ -50,6 +50,9 @@ install -m 644 %SOURCE2 %buildroot%apache2_mods_available
 %apache2_moduledir/*.so
 
 %changelog
+* Sun Apr 14 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.0.3-alt1.1.qa1
+- NMU: rebuilt with libmysqlclient.so.18.
+
 * Mon Dec 06 2010 Igor Vlasenko <viy@altlinux.ru> 1.0.3-alt1.1
 - rebuild with new libmysqlclient by request of libmysqlclient maintainer
 
