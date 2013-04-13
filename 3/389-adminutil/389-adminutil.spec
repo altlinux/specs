@@ -1,6 +1,6 @@
 Name: 389-adminutil
 Version: 1.1.15
-Release: alt1
+Release: alt1.qa1
 License: LGPLv2
 Url: http://port389.org
 Group: System/Libraries
@@ -62,6 +62,9 @@ rm -f %buildroot%_libdir/lib*.la
 %_includedir/libadmsslutil
 
 %changelog
+* Sun Apr 14 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.1.15-alt1.qa1
+- NMU: rebuilt with libicuuc.so.50.
+
 * Tue Mar 27 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 1.1.15-alt1
 - 1.1.15
 
