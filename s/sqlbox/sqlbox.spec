@@ -1,7 +1,7 @@
 Summary: DB-Based Kannel Box for message queueing
 Name: sqlbox
 Version: 0.7.2
-Release: alt1.2
+Release: alt1.2.qa1
 License: Kannel
 Group: Communications
 Url: http://www.kannel.org/~aguerrieri/
@@ -58,6 +58,9 @@ strip %buildroot%_sbindir/sqlbox
 %_sbindir/*
 
 %changelog
+* Sun Apr 14 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.7.2-alt1.2.qa1
+- NMU: rebuilt with libmysqlclient.so.18.
+
 * Thu Apr 21 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7.2-alt1.2
 - Fixed build
 
