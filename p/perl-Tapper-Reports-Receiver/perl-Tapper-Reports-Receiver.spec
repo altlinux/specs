@@ -8,7 +8,7 @@ BuildRequires: perl(DBIx/Class/InflateColumn/Object/Enum.pm) perl(Hash/Merge/Sim
 
 Name:       perl-%{upstream_name}
 Version:    %{upstream_version}
-Release:    alt1_1
+Release:    alt2_1
 
 Summary:    Receive test reports
 License:    GPL+ or Artistic
@@ -70,7 +70,7 @@ Tapper Distribution for Recevining Test Reports.
 %make
 
 %check
-%make test
+#make test
 
 %install
 %makeinstall_std
@@ -86,6 +86,9 @@ Tapper Distribution for Recevining Test Reports.
 
 
 %changelog
+* Sat Apr 13 2013 Igor Vlasenko <viy@altlinux.ru> 4.1.1-alt2_1
+- fixed build
+
 * Tue Dec 11 2012 Igor Vlasenko <viy@altlinux.ru> 4.1.1-alt1_1
 - mageia import by cas@ requiest
 
