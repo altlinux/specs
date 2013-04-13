@@ -11,7 +11,7 @@
 %def_disable gtk_doc
 
 Name: rhythmbox
-Version: %ver_major
+Version: %ver_major.1
 Release: alt1%rev
 
 Summary: Music Management Application
@@ -471,6 +471,9 @@ ln -s %_licensedir/GPL-2 %buildroot%pkgdocdir/COPYING
 %exclude %_libdir/%name/sample-plugins/
 
 %changelog
+* Sat Apr 13 2013 Yuri N. Sedunov <aris@altlinux.org> 2.99.1-alt1
+- 2.99.1
+
 * Sun Apr 07 2013 Yuri N. Sedunov <aris@altlinux.org> 2.99-alt1
 - 2.99
 - enabled visualizer plugin
