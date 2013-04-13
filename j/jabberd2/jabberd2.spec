@@ -26,7 +26,7 @@ Version: %majver.%minver
 %ifndef git
 Release: %rel
 %else
-Release: %rel.git.%git
+Release: %rel.git.%git.qa1
 %endif
 
 Summary: Jabber IM server 2nd version
@@ -496,6 +496,9 @@ install -pD -m644 %SOURCE8 %buildroot%_sysconfdir/logrotate.d/%name
 %endif
 
 %changelog
+* Sun Apr 14 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.2.14-alt1.git.e21b878.qa1
+- NMU: rebuilt with libmysqlclient.so.18.
+
 * Mon Jan 16 2012 L.A. Kostis <lakostis@altlinux.ru> 2.2.14-alt1.git.e21b878
 - GIT snapshot e21b878.
 - fix init.d scripts permissions.
