@@ -9,7 +9,7 @@
 
 Name: courier-authlib
 Version: 0.63.0
-Release: alt0.2
+Release: alt0.2.qa1
 Summary: Courier authentication library -- tool and utilities
 License: GPL
 Group: System/Libraries
@@ -334,6 +334,9 @@ chown courier:courier %_sysconfdir/%name/userdb*
 %_libdir/%name/libauthmysql*.so.*
 
 %changelog
+* Sun Apr 14 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.63.0-alt0.2.qa1
+- NMU: rebuilt with libmysqlclient.so.18.
+
 * Mon Jan 16 2012 L.A. Kostis <lakostis@altlinux.ru> 0.63.0-alt0.2
 - rebuild for soname set-versions.
 
