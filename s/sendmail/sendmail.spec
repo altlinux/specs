@@ -1,9 +1,9 @@
 Name: sendmail
 
-%define tarbolversion 8.14.5
+%define tarbolversion 8.14.6
 
-Version: 8.14.5
-Release: alt3
+Version: 8.14.6
+Release: alt1
 
 Packager: Sergey Y. Afonin <asy@altlinux.ru>
 
@@ -65,7 +65,7 @@ Patch10: %name-mrs-8.12.11.patch
 Patch50: %name-contrib-expn.pl-tempfile.patch
 
 #errata
-Patch100: %name-8.14.5-two_AUTH_lines.patch
+Patch100: %name-8.14.6.milter.EHLOmacros.patch
 
 %add_findreq_skiplist */include/*
 
@@ -493,6 +493,9 @@ EOF
 %doc docs/LICENSE
 
 %changelog
+* Sat Apr 13 2013 Sergey Y. Afonin <asy@altlinux.ru> 8.14.6-alt1
+- New version (with errata 2013-01-18: 8.14.6.milter.EHLOmacros)
+
 * Mon May 28 2012 Sergey Y. Afonin <asy@altlinux.ru> 8.14.5-alt3
 - fixed building with --no-copy-dt-needed-entries in new ld
 - do not create demo ssl certs
