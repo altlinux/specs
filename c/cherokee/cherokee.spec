@@ -7,7 +7,7 @@
 
 Name: cherokee
 Version: 1.2.101
-Release: alt2
+Release: alt2.qa1
 
 Summary: Flexible and Fast Webserver
 License: GPLv2+
@@ -100,6 +100,9 @@ install -pDm 644 %_sourcedir/cherokee.logrotate %buildroot/etc/logrotate.d/chero
 %_datadir/aclocal/*
 
 %changelog
+* Sun Apr 14 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.2.101-alt2.qa1
+- NMU: rebuilt with libmysqlclient.so.18.
+
 * Tue Dec 27 2011 Victor Forsiuk <force@altlinux.org> 1.2.101-alt2
 - Fix RPATH issue.
 
