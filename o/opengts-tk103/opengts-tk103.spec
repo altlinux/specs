@@ -1,6 +1,6 @@
 Name: opengts-tk103
 Version: 0.0.2
-Release: alt2
+Release: alt2.qa1
 
 Summary: Tools for tk103 gps tracker
 License: GPLv3
@@ -50,6 +50,9 @@ install -pD -m644 %SOURCE7 %buildroot%_sysconfdir/opengts-tk103/sms.conf
 %_bindir/*
 
 %changelog
+* Sun Apr 14 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.0.2-alt2.qa1
+- NMU: rebuilt with libmysqlclient.so.18.
+
 * Mon Jan 31 2011 Timur Aitov <timonbl4@altlinux.org> 0.0.2-alt2
 - 0.0.2-alt2
 
