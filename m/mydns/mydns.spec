@@ -1,6 +1,6 @@
 Name: mydns
 Version: 1.2.8.31
-Release: alt2
+Release: alt2.qa1
 License: GPL
 Summary: A MySQL-based Internet DNS server
 Group: System/Servers
@@ -118,6 +118,9 @@ export DONT_GPRINTIFY=1
 %endif
 
 %changelog
+* Sun Apr 14 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.2.8.31-alt2.qa1
+- NMU: rebuilt with libmysqlclient.so.18.
+
 * Tue Apr 24 2012 Slava Dubrovskiy <dubrsl@altlinux.org> 1.2.8.31-alt2
 - Fix build
 
