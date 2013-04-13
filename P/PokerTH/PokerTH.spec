@@ -1,7 +1,7 @@
 # vim: set ft=spec: -*- rpm-spec -*-
 
 Name: PokerTH
-Version: 1.0
+Version: 1.0.1
 Release: alt1
 
 Summary: Texas Hold'em poker game
@@ -49,6 +49,9 @@ install -pm755 pokerth bin/pokerth_server %buildroot%_bindir
 %_pixmapsdir/pokerth.png
 
 %changelog
+* Mon Apr 08 2013 Mikhail Efremov <sem@altlinux.org> 1.0.1-alt1
+- [1.0.1]
+
 * Mon Jan 07 2013 Mikhail Efremov <sem@altlinux.org> 1.0-alt1
 - [1.0]
 
