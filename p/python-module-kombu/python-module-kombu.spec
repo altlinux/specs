@@ -1,7 +1,7 @@
 %define module_name kombu
 
 Name: python-module-%module_name
-Version: 2.1.7
+Version: 2.5.10
 Release: alt1
 Group: System/Base
 License: BSD License
@@ -35,10 +35,14 @@ provide proven and tested solutions to common messaging problems.
 mv %buildroot%_target_libdir_noarch %buildroot%_libdir
 %endif
 
+
 %files
 %doc AUTHORS Changelog FAQ LICENSE README.rst THANKS TODO
 %python_sitelibdir/kombu*
 
 %changelog
+* Sat Apr 13 2013 Slava Dubrovskiy <dubrsl@altlinux.org> 2.5.10-alt1
+- new version (ALT #28838)
+
 * Fri May 04 2012 Slava Dubrovskiy <dubrsl@altlinux.org> 2.1.7-alt1
 - build for ALT
