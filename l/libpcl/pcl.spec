@@ -2,11 +2,10 @@
 BuildRequires(pre): rpm-macros-fedora-compat
 # END SourceDeps(oneline)
 BuildRequires: vtk-python libgomp-devel
-%add_optflags %optflags_shared
 %define oldname pcl
 Name:           libpcl
 Version:        1.6.0
-Release:        alt1_2
+Release:        alt1_4
 Summary:        Library for point cloud processing
 
 Group:          System/Libraries
@@ -14,16 +13,16 @@ License:        BSD
 URL:            http://pointclouds.org/
 Source0:        http://www.pointclouds.org/assets/files/1.6.0/PCL-1.6.0-Source.tar.bz2
 Patch0:         PCL-1.4.0-Source-fedora.patch
-Patch1:         pcl-1.5.1-gcc47.patch
+Patch1:         pcl-1.6.0-boost153.patch
 
 # For plain building
-BuildRequires:  ctest cmake gcc-c++ boost-devel boost-filesystem-devel boost-wave-devel boost-graph-parallel-devel boost-math-devel boost-mpi-devel boost-program_options-devel boost-signals-devel boost-intrusive-devel boost-asio-devel
+BuildRequires: ctest cmake gcc-c++ boost-devel boost-filesystem-devel boost-wave-devel boost-graph-parallel-devel boost-math-devel boost-mpi-devel boost-program_options-devel boost-signals-devel boost-intrusive-devel boost-asio-devel
 # Documentation
 BuildRequires:  doxygen graphviz python-module-sphinx
 %if ! 0%{?rhel} || 0%{?rhel} >= 6
 BuildRequires:  texlive-latex-recommended
 %else
-BuildRequires:  /usr/bin/latex texlive-latex-recommended
+BuildRequires: /usr/bin/latex texlive-latex-recommended
 %endif
 
 # mandatory
@@ -34,7 +33,6 @@ BuildRequires:  qhull-devel libusb-devel libgtest-devel libqt4-devel
 BuildRequires:  openni-devel
 %endif
 Source44: import.info
-Provides: pcl = %{version}-%{release}
 
 %description
 The Point Cloud Library (or PCL) is a large scale, open project for point
@@ -48,18 +46,19 @@ fitting and segmentation.
 Summary:        Development files for %{oldname}
 Group:          Development/C
 Requires:       %{name} = %{version}-%{release}
-Provides: pcl-devel = %{version}-%{release}
+Requires:       eigen3
+%ifarch %{ix86} x86_64
+%endif
 
 %description    devel
-The %%{oldname}-devel package contains libraries and header files for
-developing applications that use %%{oldname}.
+The %{oldname}-devel package contains libraries and header files for
+developing applications that use %{oldname}.
 
 
 %package        tools
 Summary:        Point cloud tools and viewers
 Group:          Development/Tools
 Requires:       %{name} = %{version}-%{release}
-Provides: pcl-tools = %{version}-%{release}
 
 %description    tools
 This package contains tools for point cloud file processing and viewers
@@ -72,16 +71,16 @@ Group:          Documentation
 %if ! 0%{?rhel} || 0%{?rhel} >= 6
 BuildArch:      noarch
 %endif
-Provides: pcl-doc = %{version}-%{release}
 
 %description    doc
-The %%{oldname}-doc package contains API documentation for the Point Cloud
+The %{oldname}-doc package contains API documentation for the Point Cloud
 Library.
 
 
 %prep
 %setup -q -n PCL-%{version}-Source
 %patch0 -p2 -b .fedora
+%patch1 -p0 -b .boost153
 
 # Just to make it obvious we're not using any of these
 rm -rf  3rdparty
@@ -137,9 +136,11 @@ popd
 mv doc/tutorials/html doc/tutorials/tutorials
 
 for f in $RPM_BUILD_ROOT%{_bindir}/{openni_image,pcd_grabber_viewer,pcd_viewer,openni_viewer,oni_viewer}; do
-	mv $f $RPM_BUILD_ROOT%{_bindir}/pcl_$(basename $f)
+	if [ -f $f ]; then
+		mv $f $RPM_BUILD_ROOT%{_bindir}/pcl_$(basename $f)
+	fi
 done
-rm $RPM_BUILD_ROOT%{_bindir}/{openni_fast_mesh,openni_ii_normal_estimation,openni_voxel_grid}
+rm $RPM_BUILD_ROOT%{_bindir}/{openni_fast_mesh,openni_ii_normal_estimation,openni_voxel_grid} ||:
 
 mkdir -p $RPM_BUILD_ROOT%{_libdir}/cmake/pcl
 mv $RPM_BUILD_ROOT%{_datadir}/%{oldname}-*/*.cmake $RPM_BUILD_ROOT%{_libdir}/cmake/pcl
@@ -181,6 +182,9 @@ rm -rf $RPM_BUILD_ROOT%{_datadir}/doc/%{oldname}-1.6
 
 
 %changelog
+* Sat Apr 13 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.0-alt1_4
+- fixed build
+
 * Thu Dec 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.6.0-alt1_2
 - initial fc import
 
