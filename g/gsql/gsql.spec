@@ -1,6 +1,6 @@
 Name: gsql
 Version: 0.2.2
-Release: alt1.1
+Release: alt1.1.qa1
 
 Summary: Integrated database development tool for GNOME
 
@@ -83,6 +83,9 @@ rm -f %buildroot/usr/share/doc/gsql/AUTHORS
 # %_omfdir/%name
 
 %changelog
+* Sun Apr 14 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.2.2-alt1.1.qa1
+- NMU: rebuilt with libmysqlclient.so.18.
+
 * Thu Feb 02 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.2-alt1.1
 - Remove bad RPATH
 
