@@ -1,6 +1,6 @@
 Name: ocaml-mysql
 Version: 1.0.4
-Release: alt5
+Release: alt5.qa1
 
 Summary: MySQL bindings for OCaml
 License: LGPL
@@ -56,6 +56,9 @@ install -p -m644 *.{mli,cmi,cma,cmxa,a} META %buildroot%_libdir/ocaml/site-lib/m
 %_libdir/ocaml/stublibs/dll*.so
 
 %changelog
+* Sun Apr 14 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.0.4-alt5.qa1
+- NMU: rebuilt with libmysqlclient.so.18.
+
 * Wed Jan 11 2012 Alexey Shabalin <shaba@altlinux.ru> 1.0.4-alt5
 - rebuilt for new ocaml
 - patch for CVE 2009-2942 Missing escape function
