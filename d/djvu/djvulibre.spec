@@ -1,48 +1,34 @@
 Name: djvu
-Version: 3.5.22
-Release: alt1.3
+Version: 3.5.25.3
+Release: alt1
 
 Summary: DjVu viewers, encoders and utilities
 License: GPLv2+
 Group: Publishing
 Url: http://djvu.sourceforge.net/
-Packager: Evgeny Sinelnikov <sin@altlinux.org>
+
 # http://download.sourceforge.net/djvu/djvulibre-%version.tar.gz
 Source: djvulibre-%version.tar
-Patch: djvu-3.5.22-alt-glibc-2.11.3.patch
-Patch1: djvu-3.5.22-alt-glibc-2.16.patch
-Patch2: djvu-3.5.22-alt-gcc4.7.patch
+Patch: djvulibre-3.5.22-rh-cdefs.patch
 
-BuildRequires: browser-plugins-npapi-devel chrpath
-# Automatically added by buildreq on Fri Nov 19 2010
-BuildRequires: gcc-c++ imake libXt-devel libjpeg-devel libqt3-devel libtiff-devel xdg-utils xorg-cf-files
+# Automatically added by buildreq on Sat Apr 13 2013
+# optimized out: libstdc++-devel
+BuildRequires: gcc-c++ libjpeg-devel libtiff-devel xdg-utils
 
 %def_disable static
 
 %description
 DjVu is a web-centric format and software platform for distributing documents
-and images.  DjVu content downloads faster, displays and renders faster, looks
-nicer on a screen, and consume less client resources than competing formats.
-DjVu was originally developed at AT&T Labs-Research by Leon Bottou, Yann
-LeCun, Patrick Haffner, and many others.  In March 2000, AT&T sold DjVu to
-LizardTech Inc. who now distributes Windows/Mac plug-ins, and commercial
-encoders (mostly on Windows)
+and images. DjVu can advantageously replace PDF, PS, TIFF, JPEG, and GIF for
+distributing scanned documents, digital documents, or high-resolution pictures.
+DjVu content downloads faster, displays and renders faster, looks nicer on a
+screen, and consume less client resources than competing formats. DjVu images
+display instantly and can be smoothly zoomed and panned with no lengthy
+re-rendering.
 
-In an effort to promote DjVu as a Web standard, the LizardTech management was
-enlightened enough to release the reference implementation of DjVu under the
-GNU GPL in October 2000.  DjVuLibre (which means free DjVu), is an enhanced
-version of that code maintained by the original inventors of DjVu. It is
-compatible with version 3.5 of the LizardTech DjVu software suite.
-
-DjVulibre-3.5 contains:
-- a standalone DjVu viewer based on the Qt library.
-- A browser plugin that works with most Unix browsers.
-- A full-fledged wavelet-based compressor for pictures.
-- A simple compressor for bitonal (black and white) scanned pages.
-- A compressor for palettized images (a la GIF/PNG).
-- A set of utilities to manipulate and assemble DjVu images and documents.
-- A set of decoders to convert DjVu to a number of other formats.
-- An up-to-date version of the C++ DjVu Reference Library.
+DjVuLibre is a free (GPL'ed) implementation of DjVu, including decoders,
+simple encoders, and utilities.  The viewer and browser plugin are in
+their own separate packages.
 
 %package common
 Summary: DjVu shared files
@@ -51,97 +37,62 @@ BuildArch: noarch
 
 %description common
 DjVu is a web-centric format and software platform for distributing documents
-and images.  DjVu content downloads faster, displays and renders faster, looks
-nicer on a screen, and consume less client resources than competing formats.
-DjVu was originally developed at AT&T Labs-Research by Leon Bottou, Yann
-LeCun, Patrick Haffner, and many others.  In March 2000, AT&T sold DjVu to
-LizardTech Inc. who now distributes Windows/Mac plug-ins, and commercial
-encoders (mostly on Windows)
+and images. DjVu can advantageously replace PDF, PS, TIFF, JPEG, and GIF for
+distributing scanned documents, digital documents, or high-resolution pictures.
+DjVu content downloads faster, displays and renders faster, looks nicer on a
+screen, and consume less client resources than competing formats. DjVu images
+display instantly and can be smoothly zoomed and panned with no lengthy
+re-rendering.
 
-In an effort to promote DjVu as a Web standard, the LizardTech management was
-enlightened enough to release the reference implementation of DjVu under the
-GNU GPL in October 2000.  DjVuLibre (which means free DjVu), is an enhanced
-version of that code maintained by the original inventors of DjVu. It is
-compatible with version 3.5 of the LizardTech DjVu software suite.
-
-DjVulibre-3.5 contains:
-- a standalone DjVu viewer based on the Qt library.
-- A browser plugin that works with most Unix browsers.
-- A full-fledged wavelet-based compressor for pictures.
-- A simple compressor for bitonal (black and white) scanned pages.
-- A compressor for palettized images (a la GIF/PNG).
-- A set of utilities to manipulate and assemble DjVu images and documents.
-- A set of decoders to convert DjVu to a number of other formats.
-- An up-to-date version of the C++ DjVu Reference Library.
+This package contains data files shared among DjVu subpackages.
 
 %package -n lib%name
-Summary: DjVu encoder libraries
+Summary: DjVu encoder runtime library
 Group: System/Libraries
+Requires: %name-common = %EVR
 
 %description -n lib%name
-DjVu shared libraries.
+This package contains DjVu encoder runtime library.
 
 %package utils
 Summary: DjVu utilites
 Group: Publishing
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 %description utils
-DjVu encoder and support utilites.
+This package contains DjVu encoder and support utilites.
 
 %package xmltools
 Summary: DjVu XML tools
 Group: Publishing
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 %description xmltools
-DjVu XML tools.
-
-%package viewer
-Summary: standalone DjVu viewer
-Group: Publishing
-Requires: lib%name = %version-%release
-Requires: %name-common = %version-%release
-
-%description viewer
-A standalone DjVu viewer based on the Qt library.
-
-%package -n mozilla-plugin-%name
-Summary: DjVu NPAPI plugin
-Group: Networking/WWW
-Requires: lib%name = %version-%release
-Requires: %name-common = %version-%release
-Requires: browser-plugins-npapi
-Obsoletes: %name-plugin
-
-%description -n mozilla-plugin-%name
-DjVu NPAPI plugin.
+This package contains DjVu XML tools.
 
 %package doc
-Summary: docs about DjVu technology
+Summary: DjVu documenation
 Group: Publishing
 BuildArch: noarch
-Requires: %name-viewer
 
 %description doc
-Some useful documents about DjVu technology.
-can be used as test samples.
+This package contains documentaion about DjVu technology,
+can be also used as test samples.
 
 %package -n lib%name-devel
-Summary: devel headers for libdjvu
+Summary: Development files for lib%name
 Group: Development/C++
-Requires: lib%name = %version-%release
-Provides: %name-devel = %version-%release
-Obsoletes: %name-devel < %version-%release
+Requires: lib%name = %EVR
+Provides: %name-devel = %EVR
+Obsoletes: %name-devel < %EVR
 
 %description -n lib%name-devel
-Headers for lib%name for making apps using DjVu
-technology.
+This package contains development files for lib%name.
 
 %package -n lib%name-devel-static
 Summary: static version of libdjvu
 Group: Development/C++
-Requires: lib%name-devel = %version-%release
+Requires: lib%name-devel = %EVR
 
 %description -n lib%name-devel-static
 Static version of lib%name for apps using DjVu
@@ -149,47 +100,47 @@ technology.
 
 %prep
 %setup -n djvulibre-%version
-%patch -p2
-%patch1 -p2
-%patch2 -p2
+%patch -p1
 
 %build
-# hack for NPAPI location
-sed -i 's,-rpath ${plugindir},-rpath %browser_plugins_path,' gui/nsdejavu/Makefile.in
-sed -i 's,^plugindir[[:space:]]*=.*,plugindir = %browser_plugins_path,' gui/nsdejavu/Makefile.in
-
-%add_optflags -fpermissive
+%autoreconf
 %configure %{subst_enable static} --enable-threads
-make OPTS='%optflags' NSDEJAVU_LIBS='-lXext -lX11' #NO SMP
+%make_build V=1 OPTS='%optflags' \
+	PNGICONS="$(cd desktopfiles && echo prebuilt-hi*-djvu.png |sed s/prebuilt-//g)"
 
 %install
-%makeinstall_std
-for f in %buildroot%_bindir/*; do
-	readelf -d "$f" 2>/dev/null |fgrep -qs RPATH || continue
-	chrpath -d "$f"
-done
+%makeinstall_std \
+	PNGICONS="$(cd desktopfiles && echo prebuilt-hi*-djvu.png |sed s/prebuilt-//g)"
+find %buildroot%_datadir/djvu -name 'prebuilt-hi*-djvu.png' -delete
 
-#install-gnome: FORCE
-install -pD -m644 desktopfiles/hi22-djvu.png %buildroot%_iconsdir/hicolor/22x22/mimetypes/image-vnd.djvu.mime.png
-install -pD -m644 desktopfiles/hi32-djvu.png %buildroot%_iconsdir/hicolor/32x32/mimetypes/image-vnd.djvu.mime.png
-install -pD -m644 desktopfiles/hi48-djvu.png %buildroot%_iconsdir/hicolor/48x48/mimetypes/image-vnd.djvu.mime.png
-install -pD -m644 desktopfiles/hi32-djview3.png %buildroot%_niconsdir/djvulibre-djview3.png
-install -pD -m644 desktopfiles/djvulibre-mime.xml %buildroot%_datadir/mime/packages/djvulibre-mime.xml
-install -pD -m644 desktopfiles/vnd.djvu.desktop %buildroot%_datadir/mimelnk/image/vnd.djvu.desktop
-install -pD -m644 desktopfiles/djvulibre-djview3.desktop %buildroot%_desktopdir/djvulibre-djview3.desktop
+pushd desktopfiles
+for f in hi*-djvu.png; do
+	i=${f%%-djvu.png};
+	i=${i#hi}
+	install -Dpm644 "$f" \
+		%buildroot%_iconsdir/hicolor/"$i"x"$i"/mimetypes/image-vnd.djvu.mime.png
+done
+install -Dpm644 djvulibre-mime.xml %buildroot%_datadir/mime/packages/djvulibre-mime.xml
+install -Dpm644 vnd.djvu.desktop %buildroot%_datadir/mimelnk/image/vnd.djvu.desktop
+popd
+
+%define docdir %_docdir/%name-%version
+mkdir -p %buildroot%docdir
+cp -a COPYRIGHT NEWS README doc %buildroot%docdir/
 
 %find_lang %name
-
-rm -rf %buildroot%_mandir/ja
+%set_verify_elf_method strict
 
 %files common
-%doc README COPYRIGHT COPYING INSTALL NEWS TODO
-%_datadir/djvu
+%_datadir/djvu/
 %_iconsdir/*/*/*/*.png
 %_datadir/mime*/*
+%dir %docdir/
+%docdir/[CNR]*
 
 %files doc
-%doc doc
+%dir %docdir/
+%docdir/doc/
 
 %files -f %name.lang -n lib%name
 %_libdir/*.so.*
@@ -198,23 +149,11 @@ rm -rf %buildroot%_mandir/ja
 %_bindir/*
 %_mandir/man?/*
 %exclude %_bindir/*xml*
-%exclude %_bindir/djview*
 %exclude %_mandir/man?/*xml*
-%exclude %_mandir/man?/djview*
-%exclude %_mandir/man?/nsdejavu*
 
 %files xmltools
 %_bindir/*xml*
 %_mandir/man?/*xml*
-
-%files viewer
-%_bindir/djview*
-%_mandir/man?/djview*
-%_desktopdir/*.desktop
-
-%files -n mozilla-plugin-%name
-%browser_plugins_path/*.so*
-%_mandir/man?/nsdejavu*
 
 %files -n lib%name-devel
 %_libdir/*.so
@@ -227,6 +166,9 @@ rm -rf %buildroot%_mandir/ja
 %endif #static
 
 %changelog
+* Sat Apr 13 2013 Dmitry V. Levin <ldv@altlinux.org> 3.5.25.3-alt1
+- Updated to 3.5.25.3.
+
 * Tue Dec 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.5.22-alt1.3
 - Fixed build with glibc 2.16 and gcc 4.7
 
