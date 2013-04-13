@@ -1,10 +1,10 @@
 %define oldname lohit-kannada-fonts
 %global fontname lohit-kannada
-%global fontconf 66-%{fontname}.conf
+%global fontconf 65-0-%{fontname}.conf
 
 Name:           fonts-ttf-lohit-kannada
 Version:        2.5.3
-Release:        alt1_1
+Release:        alt1_2
 Summary:        Free Kannada font
 
 Group:          System/Fonts/True type
@@ -23,6 +23,7 @@ This package provides a free Kannada truetype/opentype font.
 
 %prep
 %setup -q -n %{fontname}-%{version} 
+mv 66-%{fontname}.conf 65-0-lohit-kannada.conf
 
 
 %build
@@ -85,6 +86,9 @@ fi
 
 
 %changelog
+* Sat Apr 13 2013 Igor Vlasenko <viy@altlinux.ru> 2.5.3-alt1_2
+- update to new release by fcimport
+
 * Tue Feb 05 2013 Igor Vlasenko <viy@altlinux.ru> 2.5.3-alt1_1
 - update to new release by fcimport
 
