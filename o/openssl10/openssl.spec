@@ -1,5 +1,5 @@
 Name: openssl10
-Version: 1.0.0k
+Version: 1.0.1e
 Release: alt1
 
 Summary: OpenSSL - Secure Sockets Layer and cryptography shared libraries and tools
@@ -12,27 +12,33 @@ Source: openssl-%version.tar
 Source1: openssl-config
 Source2: Makefile.certificate
 Source3: make-dummy-cert
+Source4: cc.sh
 
-Patch01: openssl-1.0.0b-owl-alt-issetugid.patch
-Patch02: openssl-1.0.0b-alt-krb5.patch
-Patch03: openssl-1.0.0f-alt-config.patch
-Patch04: openssl-1.0.0b-gosta-pkcs12-fix.patch
-Patch05: openssl-1.0.0k-rh-alt-soversion.patch
-Patch06: openssl-1.0.0b-rh-enginesdir.patch
-Patch07: openssl-1.0.0b-rh-rpath.patch
-Patch08: openssl-1.0.0b-rh-test-use-localhost.patch
-Patch09: openssl-1.0.0b-rh-default-paths.patch
-Patch11: openssl-1.0.0i-rh-man.patch
-Patch12: openssl-1.0.0b-rh-ia64-asm.patch
-Patch13: openssl-1.0.0b-rh-x509.patch
-Patch14: openssl-1.0.0b-rh-version-engines.patch
-Patch16: openssl-1.0.0b-rh-alt-ipv6-apps.patch
-Patch17: openssl-1.0.0k-rh-env-zlib.patch
-Patch18: openssl-1.0.0b-rh-aesni.patch
-Patch22: openssl-1.0.0d-rh-apps-dgst.patch
-Patch23: openssl-1.0.0d-rh-xmpp-starttls.patch
-Patch24: openssl-1.0.0d-rh-padlock64.patch
-Patch25: openssl-1.0.0k-rh-secure-getenv.patch
+Patch01: openssl-owl-alt-issetugid.patch
+Patch02: openssl-alt-krb5.patch
+Patch03: openssl-alt-config.patch
+Patch04: openssl-alt-fips_premain_dso.patch
+Patch05: openssl-gosta-pkcs12-fix.patch
+Patch06: openssl-rh-alt-soversion.patch
+Patch07: openssl-rh-enginesdir.patch
+Patch08: openssl-rh-rpath.patch
+Patch09: openssl-rh-test-use-localhost.patch
+Patch11: openssl-rh-pod2man-timezone.patch
+Patch12: openssl-rh-perlpath.patch
+Patch13: openssl-rh-default-paths.patch
+Patch14: openssl-rh-x509-issuer-hash.patch
+Patch15: openssl-rh-X509_load_cert_file.patch
+Patch16: openssl-rh-version-engines.patch
+Patch17: openssl-rh-doc-noeof.patch
+Patch18: openssl-rh-ipv6-apps.patch
+Patch19: openssl-rh-env-zlib.patch
+Patch21: openssl-rh-algo-doc.patch
+Patch22: openssl-rh-apps-dgst.patch
+Patch23: openssl-rh-alt-xmpp-starttls.patch
+Patch24: openssl-rh-chil-fixes.patch
+Patch25: openssl-rh-alt-secure-getenv.patch
+Patch26: openssl-rh-dh-1024.patch
+Patch27: openssl-rh-padlock64.patch
 
 %define shlib_soversion 10
 %define compat_shlib_versions 1.0.0 1.0.0a
@@ -56,6 +62,8 @@ Provides: libcrypto = %version-%release
 Conflicts: libcrypto7 < 0.9.8o-alt3, libssl7 < 0.9.8o-alt3, libssl6 < 0.9.8d-alt6
 # due to openssldir migration
 Conflicts: openssl < 0:0.9.8d-alt1
+# due to runtime openssl version check
+Conflicts: openssh-common < 5.9p1-alt5
 Requires: ca-certificates
 # Backwards compatibility with alien libssl packages.
 Provides: %(for i in %compat_shlib_versions; do echo -n "libcrypto.so.$i%lib_suffix "; done)
@@ -226,31 +234,39 @@ on the command line.
 %patch07 -p1
 %patch08 -p1
 %patch09 -p1
+
 %patch11 -p1
 %patch12 -p1
 %patch13 -p1
 %patch14 -p1
+%patch15 -p1
 %patch16 -p1
 %patch17 -p1
 %patch18 -p1
+%patch19 -p1
+%patch21 -p1
 %patch22 -p1
 %patch23 -p1
 %patch24 -p1
 %patch25 -p1
+%patch26 -p1
+%patch27 -p1
 
 find -type f -name \*.orig -delete
 
 # Correct shared library name.
-subst 's/\\\$(SHLIB_MAJOR)\.\\\$(SHLIB_MINOR)/\\$(VERSION)/g' Configure
-subst 's/\$(SHLIB_MAJOR)\.\$(SHLIB_MINOR)/\$(VERSION)/g' Makefile.org
+sed -i 's/@SHLIB_SOVERSION@/%shlib_soversion/g' Configure Makefile.*
+sed -i 's/\\\$(SHLIB_MAJOR)\.\\\$(SHLIB_MINOR)/\\$(VERSION)/g' Configure
+sed -i 's/\$(SHLIB_MAJOR)\.\$(SHLIB_MINOR)/\$(VERSION)/g' Makefile.org
+sed -i 's/\(^#define[[:space:]]\+SHLIB_VERSION_NUMBER[[:space:]]\+\).*/\1"%version"/' crypto/opensslv.h
 
 # Correct compilation options.
 %add_optflags -fno-strict-aliasing -Wa,--noexecstack
-subst 's/-O\([0-9s]\>\)\?\( -fomit-frame-pointer\)\?\( -m.86\)\?/\\\$(RPM_OPT_FLAGS)/' \
+sed -i 's/-O\([0-9s]\>\)\?\( -fomit-frame-pointer\)\?\( -m.86\)\?/\\\$(RPM_OPT_FLAGS)/' \
 	Configure
 
 # Be more verbose.
-subst -p 's/^\([[:space:]]\+\)@/\1/' Makefile*
+sed -i 's/^\([[:space:]]\+\)@[[:space:]]*/\1/' Makefile*
 
 %build
 ADD_ARGS=%_os-%_arch
@@ -273,11 +289,12 @@ ADD_ARGS=linux-generic32
 	--with-krb5-flavor=MIT \
 	--with-krb5-dir=%prefix \
 %endif
-	enable-gost enable-md2 enable-rfc3779 enable-tlsext zlib \
+	enable-camellia enable-cms enable-gost enable-md2 \
+	enable-rfc3779 enable-seed enable-tlsext zlib \
 	$ADD_ARGS
 
 # SMP-incompatible build.
-make SHLIB_SOVERSION=%shlib_soversion
+make
 
 # Make soname symlinks.
 /sbin/ldconfig -nv .
@@ -287,11 +304,11 @@ touch -r libcrypto.so.%version libcrypto-stamp
 touch -r libssl.so.%version libssl-stamp
 
 LD_LIBRARY_PATH=`pwd` make rehash
-LD_LIBRARY_PATH=`pwd` make test
 
 %install
 # The make_install macro doesn't work here.
 make install \
+	CC=%_sourcedir/cc.sh \
 	INSTALL_PREFIX=%buildroot \
 	MANDIR=%_mandir
 
@@ -341,7 +358,7 @@ for f in passwd.1 err.3 rand.3 threads.3 config.5; do
 	name="${f%%.*}"
 	sect="${f##*.}"
 	NAME=`printf %%s "$name" |tr '[:lower:]' '[:upper:]'`
-	subst "s/\\<$NAME $sect\\>/SSL&/" %buildroot%_mandir/man"$sect/$f"
+	sed -i "s/\\<$NAME $sect\\>/SSL&/" %buildroot%_mandir/man"$sect/$f"
 	mv -v %buildroot%_mandir/man"$sect"/{,ssl}"$f"
 	find %buildroot%_mandir -type f -print0 |
 		xargs -r0 grep -FZl "\\fI$name\\fR\\|($sect)" -- |
@@ -379,6 +396,9 @@ install -pm644 CHANGES* LICENSE NEWS README* engines/ccgost/README.gost \
 bzip2 -9 %buildroot%docdir/CHANGES*
 cp -a demos doc %buildroot%docdir/
 rm -rf %buildroot%docdir/doc/{apps,crypto,ssl}
+
+%check
+LD_LIBRARY_PATH=%buildroot/%_lib make test
 
 %if_enabled compat
 %pre -n openssl
@@ -437,6 +457,11 @@ fi
 %_man1dir/tsget.*
 
 %changelog
+* Wed Apr 10 2013 Dmitry V. Levin <ldv@altlinux.org> 1.0.1e-alt1
+- Updated to OpenSSL_1_0_1e-21-g0e9dd38.
+- Updated patches from Fedora openssl-1.0.1e-4.
+- Changed section where tests are run from %%build to %%check.
+
 * Wed Feb 27 2013 Dmitry V. Levin <ldv@altlinux.org> 1.0.0k-alt1
 - Updated to OpenSSL_1_0_0k-15-g0e05f88
   (fixes CVE-2013-0166 and CVE-2013-0169).
