@@ -8,7 +8,7 @@
 
 Name: yaz
 Version: 3.0.53
-Release: alt1
+Release: alt1.qa1
 
 Summary: Z39.50/SRW/SRU toolkit
 License: Revised BSD License
@@ -142,6 +142,9 @@ bzip2 --best --force --keep NEWS
 %_docdir/%name/
 
 %changelog
+* Sun Apr 14 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 3.0.53-alt1.qa1
+- NMU: rebuilt with libicuuc.so.50.
+
 * Thu Jul 14 2011 Dmitry V. Levin <ldv@altlinux.org> 3.0.53-alt1
 - Updated to 3.0.53.
 - Enabled test suite.
