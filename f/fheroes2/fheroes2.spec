@@ -1,4 +1,4 @@
-%define rev svn3036
+%define rev svn3061
 Name: fheroes2
 Version: 20130303
 Release: alt1.%rev
@@ -55,6 +55,9 @@ install -pm 644 {AUTHORS,changelog.txt,COPYING,LICENSE,README} %buildroot%_docdi
 
 
 %changelog
+* Sat Apr 13 2013 Andrew Clark <andyc@altlinux.org> 20130303-alt1.svn3061
+- version update 20130303-alt1.svn3061
+
 * Wed Mar 13 2013 Andrew Clark <andyc@altlinux.ru> 20130303-alt1.svn3036
 - version update 20130303-alt1.svn3036
 
