@@ -1,10 +1,10 @@
 %define oldname lohit-gujarati-fonts
 %global fontname lohit-gujarati
-%global fontconf 66-%{fontname}.conf
+%global fontconf 65-0-%{fontname}.conf
 
 Name:           fonts-ttf-lohit-gujarati
-Version:        2.5.2
-Release:        alt1_2
+Version:        2.5.3
+Release:        alt1_1
 Summary:        Free Gujarati font
 
 Group:          System/Fonts/True type
@@ -23,6 +23,7 @@ This package provides a free Gujarati truetype/opentype font.
 
 %prep
 %setup -q -n %{fontname}-%{version} 
+mv 66-%{fontname}.conf 65-0-lohit-gujarati.conf
 
 %build
 make %{?_smp_mflags}
@@ -84,6 +85,9 @@ fi
 
 
 %changelog
+* Sat Apr 13 2013 Igor Vlasenko <viy@altlinux.ru> 2.5.3-alt1_1
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 2.5.2-alt1_2
 - update to new release by fcimport
 
