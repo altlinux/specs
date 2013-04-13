@@ -5,7 +5,7 @@
 
 Name: opendbx
 Version: 1.4.3
-Release: alt1.2
+Release: alt1.2.qa1
 
 Summary: Unified database layer with a clean and lightweight interface
 Summary(de):	Bibliothek zum Zugriff auf Datenbanken über eine einheitliche Schnittstelle
@@ -164,6 +164,9 @@ sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' libtool
 %endif
 
 %changelog
+* Sun Apr 14 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.4.3-alt1.2.qa1
+- NMU: rebuilt with libmysqlclient.so.18.
+
 * Fri Feb 10 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4.3-alt1.2
 - Removed bad RPATH
 
