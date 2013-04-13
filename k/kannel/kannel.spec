@@ -9,7 +9,7 @@
 Summary: WAP and SMS gateway
 Name: kannel
 Version: 1.5.0
-Release: alt1.cvs%cvs_build.1
+Release: alt1.cvs%cvs_build.1.qa1
 License: Kannel
 Group: Communications
 URL: http://www.kannel.org/
@@ -149,6 +149,9 @@ install -m 755 %SOURCE4 %buildroot%_sysconfdir/monitrc.d/kannel
 %_libdir/kannel/*.a
 
 %changelog
+* Sun Apr 14 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.5.0-alt1.cvs20091101.1.qa1
+- NMU: rebuilt with libmysqlclient.so.18.
+
 * Tue Dec 07 2010 Igor Vlasenko <viy@altlinux.ru> 1.5.0-alt1.cvs20091101.1
 - rebuild with new libmysqlclient by request of libmysqlclient maintainer
 
