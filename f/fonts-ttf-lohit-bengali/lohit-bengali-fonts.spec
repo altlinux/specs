@@ -1,10 +1,10 @@
 %define oldname lohit-bengali-fonts
 %global fontname lohit-bengali
-%global fontconf 66-%{fontname}.conf
+%global fontconf 65-0-%{fontname}.conf
 
 Name:        fonts-ttf-lohit-bengali
 Version:        2.5.3
-Release:        alt1_1
+Release:        alt1_2
 Summary:        Free Bengali font
 Group:          System/Fonts/True type
 License:        OFL
@@ -22,6 +22,8 @@ This package provides a free Bengali truetype/opentype font.
 
 %prep
 %setup -q -n %{fontname}-%{version} 
+mv 66-%{fontname}.conf 65-0-lohit-bengali.conf
+
 
 %build
 make %{?_smp_mflags}
@@ -83,6 +85,9 @@ fi
 
 
 %changelog
+* Sat Apr 13 2013 Igor Vlasenko <viy@altlinux.ru> 2.5.3-alt1_2
+- update to new release by fcimport
+
 * Tue Feb 05 2013 Igor Vlasenko <viy@altlinux.ru> 2.5.3-alt1_1
 - update to new release by fcimport
 
