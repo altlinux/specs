@@ -1,6 +1,6 @@
 Name: liboil
 Version: 0.3.17
-Release: alt1
+Release: alt1.qa1
 
 Summary: Library of Optimized Inner Loops
 License: BSD-style
@@ -117,6 +117,9 @@ make -k -C testsuite check
 %pkgdocdir/examples/
 
 %changelog
+* Sun Apr 14 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.3.17-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sat Nov 06 2010 Dmitry V. Levin <ldv@altlinux.org> 0.3.17-alt1
 - Updated to liboil-0.3.17-2-g7059160.
 
