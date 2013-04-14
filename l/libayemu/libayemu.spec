@@ -1,6 +1,6 @@
 Name: libayemu
 Version: 1.0.0
-Release: alt2
+Release: alt2.qa1
 
 Summary: AY/YM emulation library 
 License: GPL
@@ -65,6 +65,9 @@ You'll only need this package if you are doing development.
 %_libdir/libayemu.a*
 
 %changelog
+* Sun Apr 14 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.0.0-alt2.qa1
+- NMU: rebuilt for debuginfo.
+
 * Thu Oct 28 2010 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.0-alt2
 - Rebuilt for soname set-versions
 
