@@ -1,6 +1,6 @@
 Name: libxf86config
 Version: 1.0
-Release: alt2
+Release: alt2.qa1
 
 Summary: A library for reading and writing xorg configuration files
 License: MIT/X11
@@ -62,6 +62,9 @@ reading and writing xorg configuration files.
 
 
 %changelog
+* Sun Apr 14 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.0-alt2.qa1
+- NMU: rebuilt for debuginfo.
+
 * Thu Oct 21 2010 Vladislav Zavjalov <slazav@altlinux.org> 1.0-alt2
 - rebuild for soname set-versions
 
