@@ -4,7 +4,7 @@
 
 Name: volpack
 Version: 1.0c7
-Release: alt1.1
+Release: alt1.1.qa1
 
 Summary: Portable library for fast volume rendering
 License: BSD
@@ -86,6 +86,9 @@ popd
 %doc doc/ examples/
 
 %changelog
+* Sun Apr 14 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.0c7-alt1.1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Tue Nov 09 2010 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0c7-alt1.1
 - Rebuilt for soname set-versions
 
