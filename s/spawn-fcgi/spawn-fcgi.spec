@@ -3,7 +3,7 @@
 
 Name: spawn-fcgi
 Version: 1.6.2
-Release: alt3
+Release: alt3.qa1
 
 Summary: spawn FastCGI applications
 License: BSD
@@ -59,6 +59,9 @@ install -pDm644 altlinux/spawn-fcgi.sysconfig %buildroot%_sysconfdir/sysconfig/s
 %dir %attr(1770,root,%spawn_fcgi_group) %_var/run/spawn-fcgi
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.6.2-alt3.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sun Sep 19 2010 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.6.2-alt3
 - typo in initscript fixed
 
