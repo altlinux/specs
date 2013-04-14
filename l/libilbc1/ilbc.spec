@@ -1,6 +1,6 @@
 Name: libilbc1
 Version: 0.0.2
-Release: alt1
+Release: alt1.qa1
 
 Summary: iLBC is a library for the iLBC low bit rate speech codec.
 License: Global IP Sound iLBC Public License, v2.0
@@ -56,6 +56,9 @@ cp -pr doc/api/html %buildroot%docdir/
 %_libdir/libilbc.so
 
 %changelog
+* Sun Apr 14 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.0.2-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Wed Dec 08 2010 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.0.2-alt1
 - 0.0.2 released
 
