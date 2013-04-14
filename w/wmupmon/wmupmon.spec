@@ -1,6 +1,6 @@
 Name: wmupmon
 Version: 0.1.3
-Release: alt4
+Release: alt4.1
 
 Packager: Alexey Voinov <voins@altlinux.ru>
 
@@ -16,7 +16,7 @@ Patch0: %name-0.1.3-alt-warnings-fix.patch
 Patch1: %name-0.1.2-alt-src-memory_leak_fix.patch
 
 # Automatically added by buildreq on Sun Mar 26 2006
-BuildRequires: imake libICE-devel libX11-devel libXext-devel libXpm-devel libXt-devel xorg-cf-files xorg-x11-proto-devel
+BuildRequires: imake libICE-devel libX11-devel libXext-devel libXpm-devel libXt-devel xorg-cf-files xorg-proto-devel
 
 %description
 wmupmon  is a program to monitor system uptime. It is a dockapp that is
@@ -44,6 +44,9 @@ install -D -pm644 %SOURCE1 $RPM_BUILD_ROOT%_menudir/%name
 %_menudir/*
 
 %changelog
+* Sun Apr 14 2013 Andrey Cherepanov <cas@altlinux.org> 0.1.3-alt4.1
+- Fix build with new xorg
+
 * Wed Nov 04 2009 Alexey Voinov <voins@altlinux.ru> 0.1.3-alt4
 - update_menus removed
 
