@@ -3,7 +3,7 @@
 Summary:	Game Music Emulators library
 Name:		libgme
 Version:	0.5.5
-Release:	alt1
+Release:	alt1.qa1
 Source0:	http://game-music-emu.googlecode.com/files/%{srcname}-%{version}.tbz2
 License:	LGPLv2+
 Group:		System/Libraries
@@ -53,6 +53,9 @@ mv %buildroot%_prefix/lib/ %buildroot%_libdir
 %_includedir/gme
 
 %changelog
+* Sun Apr 14 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.5.5-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sun Sep 26 2010 Motsyo Gennadi <drool@altlinux.ru> 0.5.5-alt1
 - initial build for ALT Linux from MDV package
 
