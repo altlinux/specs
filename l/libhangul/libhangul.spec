@@ -1,6 +1,6 @@
 Name: libhangul
 Version: 0.0.11
-Release: alt1
+Release: alt1.qa1
 
 License: LGPLv2+
 Url: http://kldp.net/projects/hangul/
@@ -47,6 +47,9 @@ rm $RPM_BUILD_ROOT%_libdir/%name.la
 %_libdir/*.so
 
 %changelog
+* Sun Apr 14 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.0.11-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sun Jan 02 2011 Ilya Mashkin <oddity@altlinux.ru> 0.0.11-alt1
 - Build for ALT Linux
 
