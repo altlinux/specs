@@ -2,7 +2,7 @@
 
 Name: libshout
 Version: 1.0.9
-Release: alt5
+Release: alt5.qa1
 
 Summary: libshout - icecast source streaming library
 Group: System/Libraries
@@ -78,6 +78,9 @@ rm -rf -- %buildroot%_prefix/doc
 %endif
 
 %changelog
+* Sun Apr 14 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.0.9-alt5.qa1
+- NMU: rebuilt for set-versioned provides.
+
 * Tue Jul 14 2009 Nikolay A. Fetisov <naf@altlinux.ru> 1.0.9-alt5
 - Fix buffer overflow in sock_connect_wto() function.
 - Build with -Werror.
