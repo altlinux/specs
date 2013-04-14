@@ -1,6 +1,9 @@
+%define _name dbus-python
+%def_disable check
+
 Name: python-module-dbus
 Version: 1.1.1
-Release: alt2
+Release: alt4
 
 Summary: Python bindings for D-BUS library
 License: AFL/GPL
@@ -15,18 +18,27 @@ Patch2: dbus-python-1.1.1-alt-usc4-impaired-python-hack2-around.patch
 %setup_python_module dbus
 
 Requires: dbus
-Provides: dbus-python = %version-%release
+Provides: %_name = %version-%release
 Provides: %name-data = %version-%release
 Obsoletes: %name-data < %version-%release
 
 BuildRequires: libdbus-devel >= 1.6 libdbus-glib-devel
-# python with ucs4 support
-BuildRequires: python-dev 
-#>= 2.7.3-alt5
-# for check
-BuildRequires: /proc dbus-tools dbus-tools-gui python-module-pygobject3 glibc-i18ndata
+BuildRequires: python-devel python3-devel
+BuildRequires: python-module-pygobject3
+# for python3
+BuildRequires: rpm-build-python3 python3-devel python3-module-pygobject3
+%{?_enable_check:BuildRequires: /proc dbus-tools dbus-tools-gui glibc-i18ndata}
 
 %description
+D-Bus python bindings for use with python programs.
+
+%package -n python3-module-dbus
+Summary: Python3 bindings for D-BUS library
+License: AFL/GPL
+Group: Development/Python3
+Requires: dbus
+
+%description -n python3-module-dbus
 D-Bus python bindings for use with python programs.
 
 %package devel
@@ -34,13 +46,16 @@ Summary: Python bindings for D-BUS library (devel package)
 Group: Development/Python
 Requires: %name = %version-%release
 %py_package_provides %modulename-devel = %version-%release
+Provides: python3-module-dbus-devel = %version-%release
 
 %description devel
 D-Bus python bindings for use with python programs.
 Development package.
 
 %prep
-%setup -q -n dbus-python-%version
+%setup -n %_name-%version
+%setup -D -c -n %_name-%version
+mv %_name-%version py3build
 %patch -p1
 %patch2 -p1
 
@@ -49,14 +64,29 @@ Development package.
 export am_cv_python_pythondir=%python_sitelibdir
 
 %autoreconf
-%configure
+%configure PYTHON=%__python
 %make_build
 
-%install
-%make DESTDIR=%buildroot install
+pushd py3build
+export am_cv_python_pythondir=%python3_sitelibdir
+%autoreconf
+%configure PYTHON=/usr/bin/python3 \
+	PYTHON_LIBS="$(python3-config --libs)"
+%make_build
+popd
 
+%install
+for d in {.,py3build}; do
+pushd $d
+%makeinstall_std
+popd
+done
+
+%if_enabled check
 %check
 %make check
+%make check -C py3build
+%endif
 
 %files
 %python_sitelibdir/*.so
@@ -69,9 +99,23 @@ export am_cv_python_pythondir=%python_sitelibdir
 %_pkgconfigdir/dbus-python.pc
 
 %exclude %python_sitelibdir/*.la
+
+%files -n python3-module-dbus
+%python3_sitelibdir/*.so
+%python3_sitelibdir/dbus/
+
+%exclude %python3_sitelibdir/*.la
+
 %exclude %_docdir/dbus-python
 
 %changelog
+* Sun Apr 14 2013 Yuri N. Sedunov <aris@altlinux.org> 1.1.1-alt4
+- rebuilt to remove separate python3-module-dbus from Sisyphus
+
+* Sun Apr 14 2013 Yuri N. Sedunov <aris@altlinux.org> 1.1.1-alt3
+- new python3-module-dbus subpackage
+- %%check temporarily disabled
+
 * Tue Dec 11 2012 Igor Vlasenko <viy@altlinux.ru> 1.1.1-alt2
 - fix for our usc4-impaired python 2.7 build as patch2
   thanks to vsu@ and ldv@. (closes: #28202)
