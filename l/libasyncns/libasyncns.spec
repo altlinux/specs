@@ -1,6 +1,6 @@
 Name: libasyncns
 Version: 0.8
-Release: alt2
+Release: alt2.qa1
 
 Summary: Asyncronous name service query library
 License: LGPLv2.1+
@@ -77,6 +77,9 @@ make doxygen
 %doc doxygen/html
 
 %changelog
+* Sun Apr 14 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.8-alt2.qa1
+- NMU: rebuilt for debuginfo.
+
 * Mon Nov 01 2010 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8-alt2
 - Rebuilt for soname set-versions
 
