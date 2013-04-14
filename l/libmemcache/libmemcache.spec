@@ -2,7 +2,7 @@
 
 Name: libmemcache
 Version: 1.4.0.rc2
-Release: alt3
+Release: alt3.qa1
 
 Summary: A high performance C API for memcached
 License: BSD
@@ -67,6 +67,9 @@ This package contains the static %name library.
 %endif
 
 %changelog
+* Sun Apr 14 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.4.0.rc2-alt3.qa1
+- NMU: rebuilt for debuginfo.
+
 * Thu Oct 28 2010 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4.0.rc2-alt3
 - Rebuilt for soname set-versions
 
