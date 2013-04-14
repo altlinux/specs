@@ -1,7 +1,7 @@
 Name: rlog14
 Summary: Runtime Logging for C++
 Version: 1.4
-Release: alt3
+Release: alt3.qa1
 License: LGPL
 Group: Development/C++
 Url: http://pobox.com/~vgough/rlog
@@ -91,6 +91,9 @@ libraries.  It is meant to be fast enough to leave in production code.
 %_libdir/librlog.so.*
 
 %changelog
+* Sun Apr 14 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.4-alt3.qa1
+- NMU: rebuilt for debuginfo.
+
 * Mon Sep 27 2010 Denis Smirnov <mithraen@altlinux.ru> 1.4-alt3
 - fix latex requires
 
