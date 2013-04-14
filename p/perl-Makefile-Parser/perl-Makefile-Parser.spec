@@ -1,7 +1,7 @@
 %define dist Makefile-Parser
 Name: perl-%dist
 Version: 0.215
-Release: alt1
+Release: alt2
 
 Summary: Simple parser for Makefiles
 License: %perl_license
@@ -37,6 +37,7 @@ of my own.
 %setup -n %dist-%version
 
 %build
+%define _without_test 1
 %perl_vendor_build INSTALLMAN1DIR=%_man1dir
 
 %install
@@ -49,6 +50,10 @@ of my own.
 %_man1dir/*
 
 %changelog
+* Sun Apr 14 2013 Artem Zolochevskiy <azol@altlinux.ru> 0.215-alt2
+- disable build test
+- add spelling errors patch taken from Debian
+
 * Mon Apr 16 2012 Vladimir Lettiev <crux@altlinux.ru> 0.215-alt1
 - 0.211 -> 0.215 (Closes: #27223)
 
