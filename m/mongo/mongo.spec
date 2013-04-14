@@ -1,6 +1,6 @@
 Name: mongo
 Version: 2.0.6
-Release: alt1.1
+Release: alt1.1.qa1
 Summary: mongo client shell and tools
 License: AGPL 3.0
 Url: http://www.mongodb.org
@@ -123,6 +123,9 @@ scons -c
 %_libdir/libmongoclient.a
 
 %changelog
+* Sun Apr 14 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.0.6-alt1.1.qa1
+- NMU: rebuilt with libboost_*.so.1.53.0.
+
 * Sat Dec 01 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.6-alt1.1
 - Rebuilt with Boost 1.52.0
 
