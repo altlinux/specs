@@ -4,7 +4,7 @@
 
 Name: libgnomecanvasmm
 Version: %major.0
-Release: alt1.qa1
+Release: alt1.qa2
 
 Summary: A C++ interface for GNOME 2 canvas library
 License: LGPL
@@ -75,6 +75,9 @@ cd docs/reference && %make
 %doc docs/reference/html
 
 %changelog
+* Sun Apr 14 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.26.0-alt1.qa2
+- NMU: rebuilt for debuginfo.
+
 * Sat Nov 27 2010 Igor Vlasenko <viy@altlinux.ru> 2.26.0-alt1.qa1
 - rebuild using girar-nmu to require/provide setversion 
   by request of mithraen@
