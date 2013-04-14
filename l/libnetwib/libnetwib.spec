@@ -3,7 +3,7 @@ Packager: Repocop Q. A. Robot <repocop@altlinux.org>
 
 Name: libnetwib
 Version: 5.34.0
-Release: alt2
+Release: alt2.qa1
 
 Summary: Functions for network programs
 License: GPL
@@ -73,6 +73,9 @@ cd src
 %_bindir/netwib*-config
 
 %changelog
+* Sun Apr 14 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 5.34.0-alt2.qa1
+- NMU: rebuilt for debuginfo.
+
 * Wed Nov 10 2010 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.34.0-alt2
 - Rebuilt for soname set-versions
 
