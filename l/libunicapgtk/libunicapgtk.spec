@@ -1,7 +1,7 @@
 Summary: Library to access different kinds of (video) capture devices
 Name: libunicapgtk
 Version: 0.9.8
-Release: alt2
+Release: alt2.qa1
 License: GPLv2+
 Group: Development/C
 Url: http://www.unicap-imaging.org/
@@ -56,6 +56,9 @@ rm -f %buildroot%_libdir/{,unicap2/cpi/}*.{a,la}
 %_datadir/gtk-doc/html/*
 
 %changelog
+* Sun Apr 14 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.9.8-alt2.qa1
+- NMU: rebuilt for debuginfo.
+
 * Tue Dec 14 2010 Vitaly Kuznetsov <vitty@altlinux.ru> 0.9.8-alt2
 - rebuild for soname set-version
 
