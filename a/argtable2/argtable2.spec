@@ -1,6 +1,6 @@
 Name: argtable2
 Version: 10
-Release: alt2
+Release: alt2.qa1
 
 Summary: An ANSI C library for parsing GNU style command line arguments
 License: LGPL
@@ -107,6 +107,9 @@ Examples for developing programs based on %name.
 
 
 %changelog
+* Sun Apr 14 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 10-alt2.qa1
+- NMU: rebuilt for debuginfo.
+
 * Fri Oct 29 2010 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 10-alt2
 - Rebuilt for soname set-versions
 
