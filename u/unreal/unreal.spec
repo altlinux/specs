@@ -2,7 +2,7 @@
 
 Name: unreal
 Version: 3.2.8.1
-Release: alt1
+Release: alt1.qa1
 
 Summary: UnrealIRCD is a powerful irc daemon
 License: GPL
@@ -154,6 +154,9 @@ subst 's,-a %chroot/dev/log,,' %_sysconfdir/sysconfig/syslogd >/dev/null 2>&1 ||
 %doc doc
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 3.2.8.1-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Wed Oct 13 2010 Vladimir V. Kamarzin <vvk@altlinux.org> 3.2.8.1-alt1
 - 3.2.8.1. Security fix:
   http://www.unrealircd.com/txt/unrealsecadvisory.20090413.txt
