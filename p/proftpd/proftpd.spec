@@ -2,7 +2,7 @@
 
 Name: proftpd
 Version: %ver
-Release: alt2
+Release: alt2.qa1
 
 %define _libexecdir %{expand:%_libdir}
 %def_disable tests
@@ -637,6 +637,9 @@ fi
 %_controldir/%name
 
 %changelog
+* Sun Apr 14 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.3.3rel-alt2.qa1
+- NMU: rebuilt with libmysqlclient.so.18.
+
 * Thu Nov 04 2010 Afanasov Dmitry <ender@altlinux.org> 1.3.3rel-alt2
 - 1.3.3c stable release (closes: #24471)
 
