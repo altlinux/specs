@@ -1,6 +1,6 @@
 Name: callweaver
 Version: 1.2
-Release: alt1.svn5593.1.3
+Release: alt1.svn5593.1.3.qa1
 
 Summary: CallWeaver IP PBX
 License: GPL
@@ -298,6 +298,9 @@ mv %buildroot/%_sysconfdir/%name/QUICKSTART.ru_RU.UTF-8 %buildroot/%_docdir/%nam
 %files full
 
 %changelog
+* Sun Apr 14 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.2-alt1.svn5593.1.3.qa1
+- NMU: rebuilt with libmysqlclient.so.18.
+
 * Mon Sep 03 2012 Dmitry V. Levin <ldv@altlinux.org> 1.2-alt1.svn5593.1.3
 - Built with libtiff.so.5.
 
