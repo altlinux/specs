@@ -1,6 +1,6 @@
 Name: emdros
 Version: 3.1.1
-Release: alt1.2
+Release: alt1.2.qa1
 
 Summary: The database engine for analyzed or annotated text
 License: GPL
@@ -240,6 +240,9 @@ tests/mqllingtry -b SQLite3
 %doc SWIG/python/dir.py
 
 %changelog
+* Sun Apr 14 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 3.1.1-alt1.2.qa1
+- NMU: rebuilt with libmysqlclient.so.18.
+
 * Thu Jun 14 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.1.1-alt1.2
 - Fixed build
 
