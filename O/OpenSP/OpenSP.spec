@@ -1,6 +1,6 @@
 Name: OpenSP
 Version: 1.5.2
-Release: alt3
+Release: alt3.qa1
 
 %def_disable static
 %def_enable http
@@ -112,6 +112,9 @@ rm -f %buildroot%_docdir/%name-%version/ABOUT-NLS
 %endif	# enabled static
 
 %changelog
+* Sun Apr 14 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.5.2-alt3.qa1
+- NMU: rebuilt for debuginfo.
+
 * Thu Oct 28 2010 Yuri N. Sedunov <aris@altlinux.org> 1.5.2-alt3
 - rebuild
 
