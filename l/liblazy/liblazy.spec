@@ -2,7 +2,7 @@
 
 Name: liblazy
 Version: 0.2
-Release: alt3
+Release: alt3.qa1
 
 Summary: D-Bus methods provided for convenience
 License: LGPL
@@ -65,6 +65,9 @@ autoreconf -fisv
 %endif
 
 %changelog
+* Sun Apr 14 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.2-alt3.qa1
+- NMU: rebuilt for debuginfo.
+
 * Tue Nov 09 2010 Damir Shayhutdinov <damir@altlinux.ru> 0.2-alt3
 - Rebuilt to generate symbol provides
 
