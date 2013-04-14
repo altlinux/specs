@@ -1,6 +1,6 @@
 Name: liblockfile
 Version: 1.08
-Release: alt3
+Release: alt3.qa1
 
 Summary: NFS-safe locking library, includes dotlockfile program
 License: LGPL v2+ (library), GPL v2+ (dotlockfile)
@@ -58,6 +58,9 @@ ln -sf $(basename %buildroot%_libdir/liblockfile.so.1.*) %buildroot%_libdir/libl
 %_man3dir/maillock.3*
 
 %changelog
+* Sun Apr 14 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.08-alt3.qa1
+- NMU: rebuilt for debuginfo.
+
 * Thu Oct 21 2010 Vladimir V. Kamarzin <vvk@altlinux.org> 1.08-alt3
 - Rebuild for soname-set versions
 
