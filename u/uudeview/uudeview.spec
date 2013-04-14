@@ -1,6 +1,6 @@
 Name: uudeview
 Version: 0.5.20
-Release: alt5.1
+Release: alt5.1.qa1
 
 Summary: smart uuenc/xxenc/base64 encoder/decoder
 License: GPL
@@ -81,6 +81,9 @@ mkdir -p %buildroot%_datadir/doc/%name-%version
 %doc doc/library.ps doc/library.dvi doc/library.ltx doc/library.pdf
 
 %changelog
+* Sun Apr 14 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.5.20-alt5.1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Tue Nov 09 2010 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.20-alt5.1
 - Rebuilt for soname set-versions
 
