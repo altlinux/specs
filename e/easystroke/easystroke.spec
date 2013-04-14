@@ -2,7 +2,7 @@
 #
 
 Name:     easystroke
-Version:  0.5.6
+Version:  0.5.99.2
 Release:  alt1
 
 Summary: a gesture-recognition application for X11
@@ -19,11 +19,11 @@ Patch1:  %name-0.5.5.1-alt-desktop.patch
 Patch2:  %name-0.5.5.1-alt-debuginfo.patch
 
 BuildRequires(pre): rpm-build-licenses
-BuildRequires: librsvg-utils
+# Automatically added by buildreq on Sun Apr 14 2013
+# optimized out: at-spi2-atk boost-devel fontconfig fontconfig-devel glib2-devel libX11-devel libXext-devel libXfixes-devel libXi-devel libat-spi2-core libatk-devel libatkmm-devel libcairo-devel libcairo-gobject libcairo-gobject-devel libcairomm-devel libdbus-devel libdbus-glib libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libglibmm-devel libgtk+3-devel libpango-devel libpangomm-devel libsigc++2-devel libstdc++-devel libwayland-client libwayland-cursor libwayland-server perl-Encode perl-Locale-gettext pkg-config xorg-fixesproto-devel xorg-inputproto-devel xorg-kbproto-devel xorg-xextproto-devel xorg-xproto-devel
+BuildRequires: boost-devel-headers gcc-c++ git-core help2man intltool libXtst-devel libdbus-glib-devel libgtkmm3-devel ruby ruby-stdlibs xorg-sdk
 
-# Automatically added by buildreq on Thu Jan 05 2012
-# optimized out: boost-devel fontconfig fontconfig-devel glib2-devel libX11-devel libXext-devel libXi-devel libatk-devel libatkmm-devel libcairo-devel libcairomm-devel libdbus-devel libdbus-glib libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libglibmm-devel libgtk+2-devel libpango-devel libpangomm-devel libsigc++2-devel libstdc++-devel perl-Encode perl-Locale-gettext pkg-config xorg-fixesproto-devel xorg-inputproto-devel xorg-xextproto-devel xorg-xproto-devel
-BuildRequires: boost-devel-headers gcc-c++ help2man intltool libXfixes-devel libXtst-devel libdbus-glib-devel libgtkmm2-devel xorg-sdk
+BuildRequires: librsvg-utils
 
 
 %description
@@ -72,6 +72,9 @@ mkdir -p -- %buildroot%_miconsdir %buildroot%_niconsdir %buildroot%_liconsdir
 %_iconsdir/hicolor/scalable/apps/%name.svg
 
 %changelog
+* Sun Apr 14 2013 Nikolay A. Fetisov <naf@altlinux.ru> 0.5.99.2-alt1
+- New version
+
 * Sun Feb 10 2013 Nikolay A. Fetisov <naf@altlinux.ru> 0.5.6-alt1
 - New version
 
