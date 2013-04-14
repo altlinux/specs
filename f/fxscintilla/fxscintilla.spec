@@ -4,7 +4,7 @@
 
 Name: fxscintilla
 Version: 1.78.0
-Release: alt1
+Release: alt1.qa1
 
 Summary: Scintilla widget for the FOX GUI toolkit
 Group: System/Libraries
@@ -65,6 +65,9 @@ bzip -9 ChangeLog
 %_pkgconfigdir/*
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.78.0-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Tue Jul 07 2009 Alexey I. Froloff <raorn@altlinux.org> 1.78.0-alt1
 - Built for Sisyphus
 
