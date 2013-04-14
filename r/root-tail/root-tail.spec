@@ -3,7 +3,7 @@
 
 Name: root-tail
 Version: 1.2
-Release: alt3
+Release: alt3.qa1
 
 Summary: Print text directly to X11 root window
 Group: Text tools
@@ -38,6 +38,9 @@ xmkmf -a
 %_man1dir/%name.1*
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.2-alt3.qa1
+- NMU: rebuilt for debuginfo.
+
 * Mon Mar 09 2009 Slava Semushin <php-coder@altlinux.ru> 1.2-alt3
 - Fixed typo in manual page (debian #343230)
 
