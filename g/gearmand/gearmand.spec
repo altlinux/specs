@@ -4,7 +4,7 @@
 Summary: Gearman provides a generic application framework to farm out work to other machines.
 Name: gearmand
 Version: %version
-Release: %release
+Release: alt1.6.qa1
 Source0: %name.tar
 Patch0:  %name-0.18-alt-fix_headers.patch
 License: BSD
@@ -53,6 +53,9 @@ make install DESTDIR=%buildroot
 
 
 %changelog
+* Sun Apr 14 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.18-alt1.6.qa1
+- NMU: rebuilt with libboost_*.so.1.53.0.
+
 * Fri Nov 30 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.18-alt1.6
 - Rebuilt with Boost 1.52.0
 
