@@ -1,6 +1,6 @@
 Name: multicat
 Version: 1.0
-Release: alt1
+Release: alt1.qa1
 Summary: A set of tools designed to manipulate multicast streams
 License: GPLv2+
 Group: Video
@@ -56,5 +56,8 @@ install -pm755 {aggregartp,desaggregartp,ingests,multicat,offsets}  %buildroot%_
 %_bindir/*
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.0-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Mon Mar 01 2010 Konstantin Pavlov <thresh@altlinux.org> 1.0-alt1
 - Initial build for ALT Linux Sisyphus.
