@@ -1,6 +1,6 @@
 Name: prescanic
 Version: 0.8
-Release: alt2.qa1
+Release: alt2.qa2
 
 Summary: IP Scanner that catalogs all information
 Summary(ru_RU.UTF-8): Сканер IP адресов, упорядочивающий все сведения
@@ -12,7 +12,6 @@ Packager: Malo Skryleve <malo@altlinux.org>
 Source: %name-%version.tar.bz2
 Patch: %name-0.8-alt-makefile.patch
 
-Requires: libmysqlclient16 libpcap
 BuildRequires: libmysqlclient-devel libpcap-devel
 
 %description
@@ -31,7 +30,7 @@ anonymous ftp detection, telnet banner parsing, and more.
 %patch -p1
 
 %build
-%make
+%make_build
 
 %install
 mkdir -p %buildroot%_bindir
@@ -42,6 +41,9 @@ mkdir -p %buildroot%_bindir
 %_bindir/*
 
 %changelog
+* Sun Apr 14 2013 Dmitry V. Levin <ldv@altlinux.org> 0.8-alt2.qa2
+- NMU: removed invalid manual package requirements.
+
 * Sun Apr 14 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.8-alt2.qa1
 - NMU: rebuilt with libmysqlclient.so.18.
 
