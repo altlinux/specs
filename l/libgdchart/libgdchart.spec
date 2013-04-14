@@ -1,6 +1,6 @@
 Name: libgdchart
 Version: 0.11.5
-Release: alt1.1
+Release: alt1.1.qa1
 
 Packager: Victor Forsiuk <force@altlinux.org>
 
@@ -53,6 +53,9 @@ install -pm644 libgdc.so* %buildroot%_libdir
 %_libdir/lib*.so
 
 %changelog
+* Sun Apr 14 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.11.5-alt1.1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sun Nov 14 2010 Denis Smirnov <mithraen@altlinux.ru> 0.11.5-alt1.1
 - rebuild (with the help of girar-nmu utility)
 
