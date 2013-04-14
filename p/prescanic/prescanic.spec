@@ -1,6 +1,6 @@
 Name: prescanic
 Version: 0.8
-Release: alt2
+Release: alt2.qa1
 
 Summary: IP Scanner that catalogs all information
 Summary(ru_RU.UTF-8): Сканер IP адресов, упорядочивающий все сведения
@@ -42,6 +42,9 @@ mkdir -p %buildroot%_bindir
 %_bindir/*
 
 %changelog
+* Sun Apr 14 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.8-alt2.qa1
+- NMU: rebuilt with libmysqlclient.so.18.
+
 * Thu Aug 18 2011 Malo Skryleve <malo@altlinux.org> 0.8-alt2
 Fixed require dependency libmysqlclient16
 
