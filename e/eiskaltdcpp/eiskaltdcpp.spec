@@ -1,6 +1,6 @@
 Name: eiskaltdcpp
 Version: 2.2.7
-Release: alt1.1
+Release: alt1.1.qa1
 Summary: EiskaltDC++ - Direct Connect client
 License: GPLv3
 Group: Networking/File transfer
@@ -176,6 +176,9 @@ popd
 %_datadir/%name/cli
 
 %changelog
+* Sun Apr 14 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.2.7-alt1.1.qa1
+- NMU: rebuilt with libboost_*.so.1.53.0.
+
 * Tue Dec 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.2.7-alt1.1
 - Fixed build with Boost 1.52.0
 - Built with Qt Declarative Ui and PCRE support
