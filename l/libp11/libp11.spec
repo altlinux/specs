@@ -2,7 +2,7 @@
 
 Name: libp11
 Version: 0.2.7
-Release: alt1.qa1
+Release: alt1.qa2
 
 Summary: Library for using PKCS#11 modules
 Group: System/Libraries
@@ -63,6 +63,9 @@ Development files for %name.
 
 
 %changelog
+* Sun Apr 14 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.2.7-alt1.qa2
+- NMU: rebuilt for debuginfo.
+
 * Thu Nov 25 2010 Igor Vlasenko <viy@altlinux.ru> 0.2.7-alt1.qa1
 - rebuild using girar-nmu to require/provide setversion 
   by request of mithraen@
