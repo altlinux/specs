@@ -1,6 +1,6 @@
 Name: xbt
 Version: 0.2.9
-Release: alt1.2
+Release: alt1.2.qa1
 
 Summary: A BitTorrent tracker written in C++
 
@@ -56,6 +56,9 @@ install -D -m 644 Tracker/xbt_tracker.conf.default %buildroot%_sysconfdir/xbt_tr
 #%config %_initrddir/xbt_tracker
 
 %changelog
+* Sun Apr 14 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.2.9-alt1.2.qa1
+- NMU: rebuilt with libmysqlclient.so.18.
+
 * Tue Jun 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.9-alt1.2
 - Fixed build
 
