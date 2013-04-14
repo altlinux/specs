@@ -1,33 +1,42 @@
-%define dist Cache-Memcached-Fast
-Name: perl-%dist
-Version: 0.19
-Release: alt2
+## SPEC file for Perl module Cache::Memcached::Fast
+
+Name: perl-Cache-Memcached-Fast
+Version: 0.21
+Release: alt1
 
 Summary: Perl client for memcached
-License: GPL or Artistic
+
+License: %perl_license
 Group: Development/Perl
 
-URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+%define real_name Cache-Memcached-Fast
+URL: http://search.cpan.org/dist/Cache-Memcached-Fast/
 
-# Automatically added by buildreq on Sat Oct 08 2011
-BuildRequires: perl-IO-Compress perl-Test-Pod perl-Test-Pod-Coverage
+Packager: Nikolay A. Fetisov <naf@altlinux.ru>
+
+Source: %real_name-%version.tar
+
+BuildRequires(pre): perl-devel rpm-build-licenses
+
+# Automatically added by buildreq on Sun Apr 14 2013
+# optimized out: perl-Compress-Raw-Zlib perl-Devel-Symdump perl-Pod-Coverage perl-Pod-Escapes perl-Pod-Parser perl-Pod-Simple perl-devel
+BuildRequires: perl-IO-Compress perl-Test-Pod perl-Test-Pod-Coverage ruby ruby-stdlibs
 
 %description
 Cache::Memcahced::Fast is a Perl client for memcached, a memory cache
 daemon (http://www.danga.com/memcached/).  Module core is implemented
-in C and tries hard to minimize number of system calls and to avoid
+in C and tries hard  to minimize number of system calls  and to avoid
 any key/value copying for speed.  As a result, it has very low CPU
 consumption.
 
-API is largely compatible with Cache::Memcached, original pure Perl
+API is largely compatible with  Cache::Memcached,  original pure Perl
 client, most users of the original module may start using this module
 by installing it and adding "::Fast" to the old name in their scripts
 (see "Compatibility with Cache::Memcached" section in the module
 documentation for full details).
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %real_name-%version
 
 %build
 %perl_vendor_build
@@ -37,10 +46,14 @@ documentation for full details).
 
 %files
 %doc Changes README
+%exclude /.perl.req
 %perl_vendor_autolib/Cache
 %perl_vendor_archlib/Cache
 
 %changelog
+* Sun Apr 14 2013 Nikolay A. Fetisov <naf@altlinux.ru> 0.21-alt1
+- New version 0.21
+
 * Fri Aug 31 2012 Vladimir Lettiev <crux@altlinux.ru> 0.19-alt2
 - rebuilt for perl-5.16
 
