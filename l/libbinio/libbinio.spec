@@ -1,7 +1,7 @@
 # stalled, check 14.01.2009
 Name: libbinio
 Version: 1.4
-Release: alt3.qa1
+Release: alt3.qa2
 
 Summary: Binary I/O stream class library
 
@@ -69,6 +69,9 @@ Static libbinio library.
 #%_libdir/lib*.a
 
 %changelog
+* Sun Apr 14 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.4-alt3.qa2
+- NMU: rebuilt for debuginfo.
+
 * Thu Nov 25 2010 Igor Vlasenko <viy@altlinux.ru> 1.4-alt3.qa1
 - rebuild using girar-nmu to require/provide setversion 
   by request of mithraen@
