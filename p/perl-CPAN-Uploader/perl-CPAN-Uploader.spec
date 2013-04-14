@@ -1,7 +1,7 @@
 ## SPEC file for Perl module CPAN-Uploader
 
 Name: perl-CPAN-Uploader
-Version: 0.103002
+Version: 0.103004
 Release: alt1
 
 Summary: Perl module to upload things to the CPAN
@@ -20,9 +20,9 @@ AutoReqProv: perl, yes
 BuildRequires(pre): rpm-build-licenses perl-devel
 
 
-# Automatically added by buildreq on Sat Jan 28 2012
-# optimized out: perl-HTTP-Date perl-HTTP-Message perl-URI
-BuildRequires: perl-Getopt-Long-Descriptive perl-Term-ReadKey perl-devel perl-libwww
+# Automatically added by buildreq on Sun Apr 14 2013
+# optimized out: perl-Data-OptList perl-File-Which perl-HTTP-Date perl-HTTP-Message perl-IO-Socket-IP perl-IO-Socket-SSL perl-IPC-Run3 perl-Module-Implementation perl-Module-Runtime perl-Net-HTTP perl-Net-HTTPS perl-Net-IDN-Encode perl-Net-SSLeay perl-Params-Util perl-Params-Validate perl-Pod-Escapes perl-Pod-Simple perl-Probe-Perl perl-Sub-Exporter perl-Sub-Install perl-Try-Tiny perl-URI perl-Unicode-Normalize perl-devel perl-libwww perl-unicore
+BuildRequires: perl-File-HomeDir perl-Getopt-Long-Descriptive perl-LWP-Protocol-https perl-Term-ReadKey perl-Test-Pod perl-Test-Script ruby ruby-stdlibs
 
 %description
 Perl module CPAN::Uploader upload things to the CPAN.
@@ -44,6 +44,9 @@ Perl module CPAN::Uploader upload things to the CPAN.
 %_bindir/cpan-upload
 
 %changelog
+* Sun Apr 14 2013 Nikolay A. Fetisov <naf@altlinux.ru> 0.103004-alt1
+- New version
+
 * Mon Jan 07 2013 Nikolay A. Fetisov <naf@altlinux.ru> 0.103002-alt1
 - New version
 
