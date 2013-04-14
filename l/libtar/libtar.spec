@@ -1,6 +1,6 @@
 Name: libtar
 Version: 1.2.11
-Release: alt1.1
+Release: alt1.1.qa1
 
 Packager: Victor Forsiuk <force@altlinux.org>
 
@@ -70,6 +70,9 @@ autoconf
 %_man3dir/*
 
 %changelog
+* Sun Apr 14 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.2.11-alt1.1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sun Nov 14 2010 Denis Smirnov <mithraen@altlinux.ru> 1.2.11-alt1.1
 - rebuild (with the help of girar-nmu utility)
 
