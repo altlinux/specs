@@ -1,6 +1,6 @@
 Name:		ditchers
 Version:	1.2
-Release:	alt4.1
+Release:	alt4.1.qa1
 Group:		Games/Arcade
 Summary:	Underground tanks dig tunnels in the soil and destroys opponents
 Source:		%name-%version.tar.gz
@@ -113,6 +113,9 @@ done
 %_gamesdatadir/%name/*
 
 %changelog
+* Sun Apr 14 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.2-alt4.1.qa1
+- NMU: rebuilt with libboost_*.so.1.53.0.
+
 * Sat Dec 01 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2-alt4.1
 - Rebuilt with Boost 1.52.0
 
