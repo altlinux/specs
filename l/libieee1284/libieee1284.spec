@@ -1,6 +1,6 @@
 Name: libieee1284
 Version: 0.2.11
-Release: alt2.qa1
+Release: alt2.qa2
 
 Summary: A library for interfacing IEEE 1284-compatible devices
 
@@ -56,6 +56,9 @@ ln -s -f /usr/share/license/GPL-2 COPYING
 %_man3dir/*
 
 %changelog
+* Sun Apr 14 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.2.11-alt2.qa2
+- NMU: rebuilt for debuginfo.
+
 * Thu Nov 25 2010 Igor Vlasenko <viy@altlinux.ru> 0.2.11-alt2.qa1
 - rebuild using girar-nmu to require/provide setversion 
   by request of mithraen@
