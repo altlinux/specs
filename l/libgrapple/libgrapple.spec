@@ -1,6 +1,6 @@
 Name: libgrapple
 Version: 0.9.8
-Release: alt1.1
+Release: alt1.1.qa1
 
 Summary: A network layer designed for games
 
@@ -53,6 +53,9 @@ Header files for %name.
 #%doc examples/
 
 %changelog
+* Sun Apr 14 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.9.8-alt1.1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Tue Dec 07 2010 Igor Vlasenko <viy@altlinux.ru> 0.9.8-alt1.1
 - rebuild with new openssl and/or boost by request of git.alt administrator
 
