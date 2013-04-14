@@ -1,6 +1,6 @@
 Name: libassuan0
 Version: 1.0.5
-Release: alt5.1
+Release: alt5.1.qa1
 
 Summary: IPC library used by some GnuPG related software
 License: LGPLv2.1+
@@ -99,6 +99,9 @@ mv %buildroot%_libdir/libassuan{0,}.so
 %endif
 
 %changelog
+* Sun Apr 14 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.0.5-alt5.1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Wed Nov 10 2010 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.5-alt5.1
 - Rebuilt for soname set-versions
 
