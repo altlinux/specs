@@ -1,7 +1,7 @@
 Summary: 389 Directory Server
 Name: 389-ds
 Version: 1.2.10.12
-Release: alt1
+Release: alt1.qa1
 License: GPLv2
 Url: http://port389.org
 Group: System/Servers
@@ -118,6 +118,9 @@ echo "Upgrading 389-ds < 1.2.10.0, manual Offline upgrade is required!
 Turn 389-ds off and make 'setup-ds -u' then"
 
 %changelog
+* Sun Apr 14 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.2.10.12-alt1.qa1
+- NMU: rebuilt with libicuuc.so.50.
+
 * Mon Jul 09 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 1.2.10.12-alt1
 - 1.2.10.12
 
