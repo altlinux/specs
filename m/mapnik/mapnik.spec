@@ -1,6 +1,6 @@
 Name: mapnik
 Version: 2.0.1
-Release: alt3.3
+Release: alt3.3.qa1
 Summary: Free Toolkit for developing mapping applications
 Group: Engineering
 License: LGPLv2+
@@ -202,6 +202,9 @@ install -p -m 644 %name.pc %buildroot%_pkgconfigdir/%name.pc
 %doc demo/python demo/test
 
 %changelog
+* Sun Apr 14 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.0.1-alt3.3.qa1
+- NMU: rebuilt with libboost_*.so.1.53.0.
+
 * Mon Nov 26 2012 Ivan A. Melnikov <iv@altlinux.org> 2.0.1-alt3.3
 - Rebuilt with Boost 1.52.0
 

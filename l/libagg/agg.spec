@@ -1,6 +1,6 @@
 Name: libagg
 Version: 2.5
-Release: alt3
+Release: alt3.qa1
 Summary: Anti-Grain Geometry
 Group: System/Libraries
 URL: http://www.antigrain.com
@@ -45,6 +45,9 @@ Libraries, headers, and support files necessary to compile applications using ag
 %_datadir/aclocal/*.m4
 
 %changelog
+* Sun Apr 14 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.5-alt3.qa1
+- NMU: rebuilt for set-versioned provides.
+
 * Mon Nov 24 2008 Valery Inozemtsev <shrek@altlinux.ru> 2.5-alt3
 - droped unused libs/headers
 
