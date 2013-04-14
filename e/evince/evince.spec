@@ -8,7 +8,7 @@
 
 Name: evince
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 Summary: A document viewer
 License: GPL
 Group: Office
@@ -22,6 +22,7 @@ BuildRequires: gcc-c++ gnome-common gtk-doc gnome-icon-theme intltool libdbus-gl
 BuildRequires: yelp-tools itstool
 BuildRequires: libdjvu-devel libgnome-keyring-devel libnautilus-devel libpoppler-glib-devel libspectre-devel libtiff-devel
 BuildRequires: libxml2-devel libkpathsea-devel libgail3-devel gsettings-desktop-schemas-devel zlib-devel libsecret-devel
+BuildRequires: libarchive-devel
 %{?_enable_xps:BuildRequires: libgxps-devel}
 BuildRequires: libSM-devel libICE-devel libXi-devel
 
@@ -79,7 +80,6 @@ GObject introspection devel data for the Evince library
 [ ! -d m4 ] && mkdir m4
 
 %build
-gnome-doc-prepare -f
 %autoreconf
 %configure \
 	--disable-schemas-compile \
@@ -160,6 +160,9 @@ subst '/NoDisplay/d' %buildroot%_desktopdir/%name.desktop
 %exclude %_libdir/nautilus/extensions-3.0/libevince-properties-page.la
 
 %changelog
+* Mon Apr 15 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.0-alt2
+- rebuilt to drop libarchive.so.2 dependence
+
 * Tue Mar 26 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.0-alt1
 - 3.8.0
 
