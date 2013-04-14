@@ -1,6 +1,6 @@
 Name: lockfile-progs
 Version: 0.1.11
-Release: alt2
+Release: alt2.qa1
 
 Summary: Programs for locking and unlocking files and mailboxes
 License: GPLv2
@@ -66,6 +66,9 @@ install lockfile-progs.1 %buildroot%_man1dir/mail-touchlock.1
 %_man1dir/mail-unlock.1*
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.1.11-alt2.qa1
+- NMU: rebuilt for debuginfo.
+
 * Tue May 19 2009 Vladimir V. Kamarzin <vvk@altlinux.org> 0.1.11-alt2
 - Fix building with gcc4.4
 
