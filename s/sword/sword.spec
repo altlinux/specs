@@ -1,7 +1,7 @@
 %define major 1.6
 Name: sword
 Version: %major.0
-Release: alt3.qa4
+Release: alt3.qa5
 
 Summary: The SWORD Project framework for manipulating Bible texts
 Summary(ru_RU.UTF-8): Проект SWORD - оболочка для работы с текстами Библии
@@ -89,6 +89,9 @@ popd
 %_pkgconfigdir/*.pc
 
 %changelog
+* Sun Apr 14 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.6.0-alt3.qa5
+- NMU: rebuilt with libicuuc.so.50.
+
 * Wed Nov 07 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.6.0-alt3.qa4
 - Fixed build with gcc 4.7
 
