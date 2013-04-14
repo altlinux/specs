@@ -9,7 +9,7 @@
 Summary: AICCU - SixXS Automatic IPv6 Connectivity Client Utility
 Name: aiccu
 Version: 2007.01.15
-Release: alt2
+Release: alt2.qa1
 License: BSD
 Group: System/Configuration/Networking
 Url: http://www.sixxs.net/tools/aiccu
@@ -63,6 +63,9 @@ install -pm755 %SOURCE2 %buildroot%_initdir/%name
 %attr(600, root,root) %config(noreplace) %_sysconfdir/sysconfig/%name
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2007.01.15-alt2.qa1
+- NMU: rebuilt for debuginfo.
+
 * Thu Nov 19 2009 Afanasov Dmitry <ender@altlinux.org> 2007.01.15-alt2
 - rebuild with gnutls v2.8.5
 
