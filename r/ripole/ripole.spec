@@ -2,7 +2,7 @@
 Summary: Extracts attachments out of mailpack format emails
 Name: ripole
 Version: 0.2.0
-Release: alt3
+Release: alt3.qa1
 License: BSD
 Group: Networking/Mail
 Url: http://www.pldaniels.com/ripole/
@@ -67,6 +67,9 @@ CFLAGS="$CFLAGS -I. -fPIC -DPIC -D_REENTRANT" \
 %_libdir/*.a
 
 %changelog
+* Sun Apr 14 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.2.0-alt3.qa1
+- NMU: rebuilt for set-versioned provides.
+
 * Thu Jul 02 2009 Alexey Shabalin <shaba@altlinux.ru> 0.2.0-alt3
 - rewrite patch0 and specify a tag with `--tag'
 
