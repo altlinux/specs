@@ -1,7 +1,7 @@
 Summary: C library for parsing, writing and creating RSS files or streams
 Name: libmrss
 Version: 0.19.2
-Release: alt1.1
+Release: alt1.1.qa1
 License: LGPLv2
 Group: System/Libraries
 Source0: http://www.autistici.org/bakunin/libmrss/%name-%version.tar.gz
@@ -41,6 +41,9 @@ make
 %_pkgconfigdir/*.pc
 
 %changelog
+* Sun Apr 14 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.19.2-alt1.1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sun Nov 14 2010 Denis Smirnov <mithraen@altlinux.ru> 0.19.2-alt1.1
 - rebuild (with the help of girar-nmu utility)
 
