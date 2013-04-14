@@ -9,7 +9,7 @@ Packager: Repocop Q. A. Robot <repocop@altlinux.org>
 
 Name: libdha
 Version: 1.0
-Release: alt1
+Release: alt1.qa1
 Summary: Library of Direct Hardware Access
 License: GPL
 Group: System/Libraries
@@ -107,6 +107,9 @@ install -m 0644 pci_*.h %buildroot%_includedir/%name/
 
 
 %changelog
+* Sun Apr 14 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.0-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Mon Nov 01 2010 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0-alt1
 - Rebuilt for soname set-versions
 
