@@ -1,6 +1,6 @@
 ## SPEC file for Perl module B::Keywords
 
-%define version    1.12
+%define version    1.13
 %define release    alt1
 
 Name: perl-B-Keywords
@@ -45,6 +45,9 @@ non-function keywords (like __DATA__, NULL) to the @Functions array.
 %perl_vendor_privlib/B/Keywords*
 
 %changelog
+* Sun Apr 14 2013 Nikolay A. Fetisov <naf@altlinux.ru> 1.13-alt1
+- New version 1.13
+
 * Mon Sep 10 2012 Vladimir Lettiev <crux@altlinux.ru> 1.12-alt1
 - 1.10 -> 1.12
 
