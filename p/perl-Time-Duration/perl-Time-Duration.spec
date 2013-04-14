@@ -1,14 +1,9 @@
-## SPEC file for Perl module Time::Duration
-## Used in ikiwiki
-
-%define version    1.06
-%define release    alt1
-
 Name: perl-Time-Duration
-Version: %version
-Release: alt1.1
+Version: 1.1
+Release: alt1
+Epoch: 1
 
-Summary: rounded or exact English expression of durations  
+Summary: rounded or exact English expression of durations
 
 License: %perl_license
 Group: Development/Perl
@@ -18,12 +13,13 @@ Packager: Nikolay A. Fetisov <naf@altlinux.ru>
 BuildArch: noarch
 
 %define real_name Time-Duration
-Source: %real_name-%version.tar.bz2
+Source: %real_name-%version.tar
 
 AutoReqProv: perl, yes
 BuildPreReq: rpm-build-licenses perl-devel
 
-# Automatically added by buildreq on Mon Feb 18 2008
+# Automatically added by buildreq on Sun Apr 14 2013
+# optimized out: perl-Devel-Symdump perl-Pod-Coverage perl-Pod-Escapes perl-Pod-Parser perl-Pod-Simple perl-devel
 BuildRequires: perl-Test-Pod perl-Test-Pod-Coverage
 
 %description
@@ -45,6 +41,9 @@ durations in rounded or exact terms.
 %perl_vendor_privlib/Time/Duration*
 
 %changelog
+* Sun Apr 14 2013 Nikolay A. Fetisov <naf@altlinux.ru> 1:1.1-alt1
+- New version
+
 * Mon Nov 22 2010 Igor Vlasenko <viy@altlinux.ru> 1.06-alt1.1
 - repair after perl 5.12 upgrade using girar-nmu
 
