@@ -3,7 +3,7 @@
 
 Name: %shortname
 Version: 0.5.5
-Release: alt3
+Release: alt3.qa1
 
 License: LGPL
 Url: http://personal.penny-craal.org/midianian/hack/
@@ -80,6 +80,9 @@ based on frag-opt.
 %endif
 
 %changelog
+* Sun Apr 14 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.5.5-alt3.qa1
+- NMU: rebuilt for debuginfo.
+
 * Mon Nov 01 2010 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.5-alt3
 - Rebuilt for soname set-versions
 
