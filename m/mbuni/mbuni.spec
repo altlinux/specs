@@ -1,7 +1,7 @@
 %set_automake_version 1.9
 Name: mbuni
 Version: 1.4.0
-Release: alt7
+Release: alt7.qa1
 Summary: Open Source MMS Gateway
 
 Group: System/Servers
@@ -54,6 +54,9 @@ mkdir -p %buildroot%_runtimedir/mbuni
 %doc doc AUTHORS ChangeLog
 
 %changelog
+* Sun Apr 14 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.4.0-alt7.qa1
+- NMU: rebuilt with libmysqlclient.so.18.
+
 * Mon Mar 21 2011 Denis Smirnov <mithraen@altlinux.ru> 1.4.0-alt7
 - fix build 
 
