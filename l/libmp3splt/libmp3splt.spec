@@ -1,6 +1,6 @@
 Name: libmp3splt
 Version: 0.5.6
-Release: alt1.1
+Release: alt1.1.qa1
 
 Summary: library for mp3splt, a mp3/ogg splitter
 License: GPLv2 or later
@@ -59,6 +59,9 @@ cp %SOURCE1 src/
 %_datadir/aclocal/mp3splt.m4
 
 %changelog
+* Sun Apr 14 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.5.6-alt1.1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Thu Jan 20 2011 Igor Vlasenko <viy@altlinux.ru> 0.5.6-alt1.1
 - rebuild for set:provides by request of mithraen
 
