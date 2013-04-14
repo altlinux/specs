@@ -2,7 +2,7 @@
 
 Name: wmpower
 Version: 0.4.3
-Release: alt1
+Release: alt1.qa1
 
 Summary: ACPI power status monitor for Window Maker
 Group: Graphical desktop/Window Maker
@@ -36,6 +36,9 @@ graphically see (and set) the power management status of his laptop.
 %_bindir/*
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.4.3-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sun Mar 28 2010 Alexey I. Froloff <raorn@altlinux.org> 0.4.3-alt1
 - [0.4.3]
 - Dropped menu entry and unneeded docs
