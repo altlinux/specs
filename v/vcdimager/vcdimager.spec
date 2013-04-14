@@ -5,7 +5,7 @@
 
 Name: vcdimager
 Version: %ver_major.23
-%define release alt2.3
+%define release alt2.4
 
 %ifdef cvsdate
 Release: %{release}cvs%cvsdate
@@ -147,6 +147,9 @@ done
 %endif
 
 %changelog
+* Sun Apr 14 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.7.23-alt2.4
+- NMU: rebuilt for debuginfo.
+
 * Wed Nov 24 2010 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7.23-alt2.3
 - Rebuilt for soname set-versions
 
