@@ -1,6 +1,6 @@
 Name: xplanet
 Version: 1.2.2
-Release: alt1
+Release: alt1.qa1
 
 Summary: OpenGL based planet renderer
 License: GPL
@@ -49,6 +49,9 @@ export CC=gcc-4.3 CXX=g++-4.3
 %doc ChangeLog README AUTHORS TODO
 
 %changelog
+* Sun Apr 14 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.2.2-alt1.qa1
+- NMU: rebuilt for libtiff.so.5.
+
 * Sat Oct 08 2011 Michael Shigorin <mike@altlinux.org> 1.2.2-alt1
 - 1.2.2 (thx fedorawatch)
 - patch1 merged upstream
