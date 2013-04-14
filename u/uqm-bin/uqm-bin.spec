@@ -4,7 +4,7 @@
 %define what bin
 Name: %rname-%what
 Version: 0.6.2
-Release: alt3.1
+Release: alt3.1.qa1
 
 Group: Games/Adventure
 Summary: The Ur-Quan Masters (port of the classic space game StarControl 2).
@@ -107,6 +107,9 @@ install -m 644 %SOURCE12 %buildroot/%_iconsdir/hicolor/48x48/apps/%rname.png
 %_iconsdir/hicolor/*/apps/%rname.png
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.6.2-alt3.1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Tue Mar 02 2010 Andrey Rahmatullin <wrar@altlinux.ru> 0.6.2-alt3.1
 - change OpenAL buildreq back to libopenal-devel
 
