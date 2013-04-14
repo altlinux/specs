@@ -1,6 +1,6 @@
 Name: isync
 Version: 1.0.4
-Release: alt1.1
+Release: alt1.1.qa1
 
 Summary: Utility to synchronize IMAP mailboxes with local maildir folders
 License: GPLv2+
@@ -41,6 +41,9 @@ non-permanent internet collection (dIMAP).
 %doc AUTHORS NEWS README TODO src/mbsyncrc.sample src/compat/isyncrc.sample
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.0.4-alt1.1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Tue Dec 07 2010 Igor Vlasenko <viy@altlinux.ru> 1.0.4-alt1.1
 - rebuild with new openssl and/or boost by request of git.alt administrator
 
