@@ -2,7 +2,7 @@
 
 Name: ccid
 Version: 1.3.13
-Release: alt1
+Release: alt1.qa1
 
 Summary: USB CCID IFD Handler
 Group: System/Libraries
@@ -45,6 +45,9 @@ Devices) driver for PC/SC Lite.
 %_man8dir/Kobil_mIDentity_switch.8*
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.3.13-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sun Jun 27 2010 Alexey I. Froloff <raorn@altlinux.org> 1.3.13-alt1
 - [1.3.13]
 
