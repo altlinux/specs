@@ -2,7 +2,7 @@
 
 Name: policyd
 Version: 1.82
-Release: alt3.1
+Release: alt3.1.qa1
 
 Summary: Postfix Policyd Daemon
 
@@ -110,6 +110,9 @@ install -p -m 0750 -D -- %SOURCE6 %buildroot%_sysconfdir/chroot.d/%name.lib
 				%dir %chrootdir/%_lib
 
 %changelog
+* Sun Apr 14 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.82-alt3.1.qa1
+- NMU: rebuilt with libmysqlclient.so.18.
+
 * Tue Dec 07 2010 Igor Vlasenko <viy@altlinux.ru> 1.82-alt3.1
 - rebuild with new libmysqlclient by request of libmysqlclient maintainer
 
