@@ -1,5 +1,5 @@
 Name: geary
-Version: 0.3.0
+Version: 0.3.1
 Release: alt1
 
 Summary: Email client
@@ -46,6 +46,9 @@ Geary's development.
 %_iconsdir/*/*/apps/*
 
 %changelog
+* Sat Apr 13 2013 Igor Zubkov <icesik@altlinux.org> 0.3.1-alt1
+- 0.3.0 -> 0.3.1
+
 * Fri Mar 29 2013 Igor Zubkov <icesik@altlinux.org> 0.3.0-alt1
 - Initial build for Sisyphus
 
