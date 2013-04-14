@@ -4,7 +4,7 @@
 
 Name: mariadb
 Version: 5.5.30
-Release: alt11
+Release: alt12
 
 Summary: A very fast and reliable SQL database engine
 License: GPLv2 with exceptions
@@ -20,6 +20,10 @@ Source6: mysqld_wrapper
 Source7: safe_mysqld
 Source10: mysql.tmpfiles.d
 Source11: mysqld.service
+
+Source12: mysqld-prepare-db-dir
+Source13: mysqld-wait-ready
+
 # the following patches are rediffed from the mysql-5.5 src.rpm to mariadb-5.5
 # fedora patches
 Patch1: mariadb-5.5-errno.patch
@@ -295,8 +299,13 @@ install -Dm 755 %SOURCE7 %buildroot%_sbindir/safe_mysqld
 install -Dm0644 ALT/mysqld.sysconfig %buildroot%_sysconfdir/sysconfig/mysqld
 install -m0644 ALT/my.cnf %buildroot%_sysconfdir/my.cnf
 
-install -Dm 0644 %SOURCE10 %buildroot/etc/tmpfiles.d/mysql.conf
-install -Dm 644 %SOURCE11 %buildroot/lib/systemd/system/mysqld.service
+install -Dm 0644 %SOURCE10 %buildroot%_tmpfilesdir/mysql.conf
+install -Dm 644 %SOURCE11 %buildroot%_unitdir/mysqld.service
+sed -i 's|@dir@|%_libexecdir/%name|g' %buildroot%_unitdir/mysqld.service
+mkdir -p %buildroot%_libexecdir/%name
+install -Dm 755 %SOURCE12 %buildroot%_libexecdir/%name
+install -Dm 755 %SOURCE13 %buildroot%_libexecdir/%name
+
 
 install -Dm 644 support-files/mysql-log-rotate.sh %buildroot%_sysconfdir/logrotate.d/mysql
 
@@ -454,11 +463,13 @@ fi
 %files server
 %doc README COPYING
 %_initdir/mysqld
-%_sysconfdir/tmpfiles.d/mysql.conf
+%_tmpfilesdir/mysql.conf
 %_sysconfdir/logrotate.d/mysql
 %config(noreplace) %_sysconfdir/sysconfig/mysqld
 %config(noreplace) %_sysconfdir/my.cnf
-/lib/systemd/system/mysqld.service
+%_unitdir/mysqld.service
+%dir %_libexecdir/%name
+%_libexecdir/%name/*
 
 %_libdir/mysql/plugin
 %_datadir/mysql
@@ -617,6 +628,9 @@ fi
 %_libdir/libmysqld.so
 
 %changelog
+* Sun Apr 14 2013 Dmitriy Kulik <lnkvisitor@altlinux.org> 5.5.30-alt12
+- Fix systemd service
+
 * Tue Apr 02 2013 Michael Shigorin <mike@altlinux.org> 5.5.30-alt11
 - devel subpackage:
   + added extra Provides: which have been missed out optimistically
