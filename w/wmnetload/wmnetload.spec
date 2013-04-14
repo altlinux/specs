@@ -3,7 +3,7 @@
 
 Name: wmnetload
 Version: 1.3
-Release: alt6
+Release: alt6.qa1
 
 Summary: dockapp which monitor network interfaces
 Summary(ru_RU.UTF-8): апплет, который следит за сетевыми интерфейсами
@@ -63,6 +63,9 @@ install -pD -m 644 %SOURCE2 %buildroot%_man1dir/%name.1
 %_menudir/%name
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.3-alt6.qa1
+- NMU: rebuilt for debuginfo.
+
 * Tue Jan 04 2011 Slava Semushin <php-coder@altlinux.ru> 1.3-alt6
 - Imported manual page from Debian (deb #608580)
 - Spec cleanup
