@@ -1,6 +1,6 @@
 Name: mathopd
 Version: 1.5p6
-Release: alt1
+Release: alt1.qa1
 
 Summary: Fast, lightweight, non-forking HTTP server for UN*X systems.
 License: GPL
@@ -115,6 +115,9 @@ id -un %name >/dev/null 2>&1 || /usr/sbin/useradd -s /dev/null -d %mylogdir -r %
 echo "NOTE: %name account still exist, remove it manually if you need"
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.5p6-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Wed Jul 01 2009 Denis Smirnov <mithraen@altlinux.ru> 1.5p6-alt1
 - update to 1.5p6
 - Mathopd can now (optionally) allow //, /./ and /../ in URL paths. Thanks for
