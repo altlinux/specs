@@ -1,6 +1,6 @@
 Name: libbtree
 Version: 0.0.1
-Release: alt3.qa2
+Release: alt3.qa3
 
 Summary: library to read Multitran databases
 License: LGPL
@@ -51,6 +51,9 @@ Contents static libraries for %name
 %_libdir/*.a
 
 %changelog
+* Sun Apr 14 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.0.1-alt3.qa3
+- NMU: rebuilt for debuginfo.
+
 * Thu Nov 25 2010 Igor Vlasenko <viy@altlinux.ru> 0.0.1-alt3.qa2
 - rebuild using girar-nmu to require/provide setversion 
   by request of mithraen@
