@@ -5,7 +5,7 @@ Summary: Nimbus GTK2 theme
 Summary(ru_RU.UTF8): Тема для GTK2 Numbus
 Name: %gtk2_prefix-%real_name
 Version: 0.1.3
-Release: alt1
+Release: alt1.qa1
 License: GPL
 Group: Graphical desktop/GNOME
 URL: http://dlc.sun.com/osol/jds/downloads/extras/
@@ -49,6 +49,9 @@ Nimbus - стандартная тема GTK2 используемая в OpenSo
 %exclude %{_libdir}/gtk-2.0/*/engines/libnimbus.la
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.1.3-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Thu Sep 03 2009 Denis Koryavov <dkoryavov@altlinux.org> 0.1.3-alt1
 - Version update
 
