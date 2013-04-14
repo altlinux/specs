@@ -1,6 +1,6 @@
 Name: gimp-plugin-dbp
 Version: 1.1.9
-Release: alt1.1
+Release: alt1.1.qa1
 
 Summary: DBP (David's Batch Processor) Gimp plugin
 License: %gpl2plus
@@ -48,6 +48,9 @@ install -D dbp %buildroot/%_gimpplugindir/dbp
 %doc dbp.html
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.1.9-alt1.1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Mon Apr 13 2009 Vladimir V. Kamarzin <vvk@altlinux.org> 1.1.9-alt1.1
 - Rebuild by mentor
 
