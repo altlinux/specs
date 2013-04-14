@@ -2,7 +2,7 @@
 
 Name: dspam
 Version: 3.9.0
-Release: alt1.beta2.2
+Release: alt1.beta2.2.qa1
 Summary: DSPAM is an open-source, freely available anti-spam solution
 License: GPL
 Group:	 Networking/Mail
@@ -310,6 +310,9 @@ install -pD %SOURCE6 %buildroot%_sysconfdir/logrotate.d/%name
 %_datadir/%name-%version/dspam.http
 
 %changelog
+* Sun Apr 14 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 3.9.0-alt1.beta2.2.qa1
+- NMU: rebuilt with libmysqlclient.so.18.
+
 * Tue Jul 24 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.9.0-alt1.beta2.2
 - Rebuilt for debuginfo (ALT #26910)
 
