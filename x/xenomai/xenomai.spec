@@ -7,7 +7,7 @@
 Summary: Real-Time Framework for Linux
 Name: %{name}
 Version: %{version}
-Release: %{release}
+Release: alt1.qa1
 Source0: %{name}.tar
 Packager: Michail Yakushin <silicium@altlinux.org>
 License: GPL
@@ -83,6 +83,9 @@ rm -f $RPM_BUILD_ROOT/%{_bindir}/xeno-info
 %{_libdir}/lib*.a*
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.4.8-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Tue Jun 02 2009 Michail Yakushin <silicium@altlinux.ru> 2.4.8-alt1
 - 2.4.8 
 
