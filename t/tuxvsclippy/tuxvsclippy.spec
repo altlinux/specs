@@ -3,7 +3,7 @@
 
 Name: tuxvsclippy
 Version: 0.2.5
-Release: alt3.1
+Release: alt3.1.qa1
 
 Summary: Tux vs Clippy originated as an xbox game
 
@@ -81,6 +81,9 @@ EOF
 %_desktopdir/*
 
 %changelog
+* Sun Apr 14 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.2.5-alt3.1.qa1
+- NMU: rebuilt for libtiff.so.5.
+
 * Wed Jun 20 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.5-alt3.1
 - Fixed build
 
