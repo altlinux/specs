@@ -2,7 +2,7 @@
 
 Name: gkrellm-%shortname
 Version: 2.2.13
-Release: alt1
+Release: alt1.qa1
 
 Summary: GKrellM plugin which shows 3 most cpu intensive processes
 License: GPL
@@ -38,6 +38,9 @@ mkdir -p %buildroot%_libdir/gkrellm2/plugins
 %_libdir/gkrellm2/plugins/*.so
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.2.13-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Thu Aug 20 2009 Andrey Rahmatullin <wrar@altlinux.ru> 2.2.13-alt1
 - 2.2.13
 
