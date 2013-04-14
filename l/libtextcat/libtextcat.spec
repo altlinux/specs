@@ -1,6 +1,6 @@
 Name: libtextcat
 Version: 2.2
-Release: alt4
+Release: alt4.qa1
 
 Summary: Text categorisation library
 License: BSD
@@ -58,6 +58,9 @@ cp -a conf.txt %buildroot%_datadir/libtextcat/
 %_includedir/*
 
 %changelog
+* Sun Apr 14 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.2-alt4.qa1
+- NMU: rebuilt for debuginfo.
+
 * Thu Jan 27 2011 Victor Forsiuk <force@altlinux.org> 2.2-alt4
 - Rebuilt for soname set-versions.
 
