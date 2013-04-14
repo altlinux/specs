@@ -1,5 +1,5 @@
 Name: pavucontrol
-Version: 1.0
+Version: 2.0
 Release: alt1
 
 Summary: PulseAudio Volume Control
@@ -11,8 +11,7 @@ Source: %name-%version.tar
 
 Requires: pulseaudio-daemon >= 1.0
 
-BuildRequires: gcc-c++ intltool libcanberra-gtk2-devel libglademm-devel libpulseaudio-devel lynx
-#BuildRequires: gcc-c++ intltool libcanberra-gtk3-devel libgtkmm3-devel libsigc++2-devel libpulseaudio-devel lynx
+BuildRequires: gcc-c++ intltool libcanberra-gtk3-devel libgtkmm3-devel libsigc++2-devel libpulseaudio-devel lynx
 
 %description
 PulseAudio Volume Control (pavucontrol) is a simple GTK based volume
@@ -25,7 +24,7 @@ the volume of hardware devices and of each playback stream seperately.
 
 %build
 %autoreconf
-%configure --disable-gtk3
+%configure
 %make_build
 
 %install
@@ -41,6 +40,9 @@ the volume of hardware devices and of each playback stream seperately.
 %doc README doc/README.html doc/style.css
 
 %changelog
+* Sun Apr 14 2013 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.0-alt1
+- 2.0 released
+
 * Fri Dec 16 2011 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.0-alt1
 - 1.0 released
 
