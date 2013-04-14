@@ -2,7 +2,7 @@ Summary:  389 Directory Server Gateway (dsgw)
 
 Name: 389-dsgw
 Version: 1.1.9
-Release: alt1
+Release: alt1.qa1
 License: GPLv2
 Packager: Vitaly Kuznetsov <vitty@altlinux.ru>
 Url: http://port389.org
@@ -56,6 +56,9 @@ export adminutil_lib=-L%_libdir/
 %_sbindir/setup-ds-dsgw
 
 %changelog
+* Sun Apr 14 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.1.9-alt1.qa1
+- NMU: rebuilt with libicuuc.so.50.
+
 * Sat May 05 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 1.1.9-alt1
 - 1.1.9
 
