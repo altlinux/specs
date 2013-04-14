@@ -1,6 +1,6 @@
 Name: usbutils
 Version: 0.90
-Release: alt2
+Release: alt2.qa1
 
 Summary: Linux USB utilities
 License: GPLv2+
@@ -45,6 +45,9 @@ rm -f %buildroot%_sbindir/update-usbids.sh
 
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.90-alt2.qa1
+- NMU: rebuilt for debuginfo.
+
 * Tue Sep 07 2010 Andrey Rahmatullin <wrar@altlinux.org> 0.90-alt2
 - use usbids instead of hwdatabase
 
