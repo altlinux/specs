@@ -10,7 +10,7 @@ BuildRequires: /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/glib-m
 
 Name:           mate-document-viewer
 Version:        1.6.0
-Release:        alt1_0
+Release:        alt1_0.qa1
 Summary:        Document viewer
 
 License:        GPLv2+ and GFDL
@@ -241,6 +241,9 @@ rm -f $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/icon-theme.cache
 %{_libdir}/atril/3/backends/pixbufdocument.atril-backend
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.6.0-alt1_0.qa1
+- NMU: rebuilt with libarchive.so.13.
+
 * Tue Apr 09 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.0-alt1_0
 - new version
 

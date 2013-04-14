@@ -39,7 +39,7 @@
 
 Name: tracker
 Version: %ver_major.0
-Release: alt1
+Release: alt1.qa1
 
 Summary: Tracker is a powerfull desktop-oriented search tool and indexer
 License: GPLv2+
@@ -352,6 +352,9 @@ find %{buildroot} -type f -name "*.la" -exec rm -f {} ';'
 %endif
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.16.0-alt1.qa1
+- NMU: rebuilt with libarchive.so.13.
+
 * Tue Mar 19 2013 Alexey Shabalin <shaba@altlinux.ru> 0.16.0-alt1
 - 0.16.0
 - upstream deleted search_bar, flickr, playlist support
