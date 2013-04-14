@@ -1,6 +1,6 @@
 Name: libXevie
 Version: 1.0.3
-Release: alt1
+Release: alt1.qa1
 Summary: X Event Interceptor Library
 License: MIT/X11
 Group: System/Libraries
@@ -48,6 +48,9 @@ develop programs which make use of %name
 %_man3dir/*
 
 %changelog
+* Sun Apr 14 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.0.3-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sun Oct 31 2010 Valery Inozemtsev <shrek@altlinux.ru> 1.0.3-alt1
 - 1.0.3
 
