@@ -7,7 +7,7 @@
 
 Name: %name
 Version: 2.0.5
-Release: alt1
+Release: alt1.qa1
 
 Group: Graphical desktop/KDE
 Summary: Crystal style for KDE4
@@ -38,6 +38,9 @@ This is the port of the famous Crystal kwin decoration theme to KDE 4.x.
 %_K4apps/kwin/*.desktop
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.0.5-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Fri Aug 14 2009 Andrey Rahmatullin <wrar@altlinux.ru> 2.0.5-alt1
 - 2.0.5
 
