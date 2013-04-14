@@ -2,7 +2,7 @@
 
 Name: redirector
 Version: 3.2.8
-Release: alt1
+Release: alt1.qa1
 
 Summary: rejik3 is a redirector for squid
 License: GPL
@@ -135,6 +135,9 @@ fi
 %dir %_localstatedir/%name/dbl
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 3.2.8-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Wed Jan 26 2011 Vladimir V. Kamarzin <vvk@altlinux.org> 3.2.8-alt1
 - 3.2.8
 
