@@ -9,7 +9,7 @@
 
 Name: libglademm
 Version: %major.7
-Release: alt2.qa1
+Release: alt2.qa2
 Summary: C++ interface of glade2 library
 License: LGPL
 Group: System/Libraries
@@ -74,6 +74,9 @@ subst "s|gnomemm-2.6/libglademm-2.4/docs|%name-%version|g" docs/reference/doxyge
 %_docdir/%name-doc-%version
 
 %changelog
+* Sun Apr 14 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.6.7-alt2.qa2
+- NMU: rebuilt for debuginfo.
+
 * Thu Nov 25 2010 Igor Vlasenko <viy@altlinux.ru> 2.6.7-alt2.qa1
 - rebuild using girar-nmu to require/provide setversion 
   by request of mithraen@
