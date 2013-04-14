@@ -1,7 +1,6 @@
 Name: uzbl
 Version: 20111001
-Release: alt1.1
-
+Release: alt1.2
 Group: Networking/WWW
 License: GPL
 Summary: The uzbl web interface tools
@@ -12,6 +11,7 @@ Packager: Vladislav Zavjalov <slazav@altlinux.org>
 URL: http://www.uzbl.org
 
 Source0: %name-%version.tar
+Patch:   %name-remove-deprecated.patch
 
 BuildRequires: libwebkitgtk3-devel
 
@@ -20,6 +20,7 @@ The uzbl web interface tools
 
 %prep
 %setup
+%patch -p1
 
 %build
 %make PREFIX=/usr DESTDIR=%buildroot
@@ -55,6 +56,9 @@ ln -s -- uzbl-tabbed %buildroot/%_bindir/uzbl
 %_datadir/vim/syntax/uzbl.vim
 
 %changelog
+* Sun Apr 14 2013 Andrey Cherepanov <cas@altlinux.org> 20111001-alt1.2
+- Fix build with new glib2
+
 * Mon Nov 07 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 20111001-alt1.1
 - Rebuild with Python-2.7
 
