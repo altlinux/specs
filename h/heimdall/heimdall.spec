@@ -3,8 +3,8 @@
 %def_without gui
 
 Name:    heimdall
-Version: 1.3.2
-Release: alt1
+Version: 1.4.1
+Release: alt1.rc2
 
 Summary: tool suite to flash firmware onto Samsung smartphones
 
@@ -18,7 +18,7 @@ Packager: Nikolay A. Fetisov <naf@altlinux.ru>
 Source0: %name-%version.tar
 Patch0:  %name-%version-%release.patch
 
-Patch1:  %name-1.3.2-alt-fix_install.patch
+Patch1:  %name-1.4.1-alt-fix_install.patch
 
 BuildRequires(pre): rpm-build-licenses
 
@@ -106,5 +106,8 @@ cd ..
 %endif
 
 %changelog
+* Sun Apr 14 2013 Nikolay A. Fetisov <naf@altlinux.ru> 1.4.1-alt1.rc2
+- New version
+
 * Sun Sep 09 2012 Nikolay A. Fetisov <naf@altlinux.ru> 1.3.2-alt1
 - Initial build for ALT Linux
