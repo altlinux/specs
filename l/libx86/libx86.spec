@@ -1,6 +1,6 @@
 Name: libx86
 Version: 1.1
-Release: alt9
+Release: alt9.qa1
 Summary: a hardware-independent library for executing real-mode x86 code
 Url: http://www.codon.org.uk/~mjg59/libx86/
 License: BSD
@@ -81,6 +81,9 @@ BACKEND=x86emu
 %endif
 
 %changelog
+* Sun Apr 14 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.1-alt9.qa1
+- NMU: rebuilt for debuginfo.
+
 * Mon Oct 11 2010 Vladislav Zavjalov <slazav@altlinux.org> 1.1-alt9
 - spec: don't use make_install_std macro
 
