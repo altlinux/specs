@@ -1,6 +1,6 @@
 Name: libspiro
 Version: 20071029
-Release: alt2.qa1
+Release: alt2.qa2
 
 Summary: Raph Levien's spiro splines library
 
@@ -48,6 +48,9 @@ mkdir -p %buildroot%_includedir/
 %_includedir/*
 
 %changelog
+* Sun Apr 14 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 20071029-alt2.qa2
+- NMU: rebuilt for debuginfo.
+
 * Thu Nov 25 2010 Igor Vlasenko <viy@altlinux.ru> 20071029-alt2.qa1
 - rebuild using girar-nmu to require/provide setversion 
   by request of mithraen@
