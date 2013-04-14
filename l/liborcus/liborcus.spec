@@ -1,6 +1,6 @@
 Name: liborcus
 Version: 0.3.0
-Release: alt1
+Release: alt1.qa1
 Summary: Standalone file import filter library for spreadsheet documents
 
 Group: System/Libraries
@@ -64,6 +64,9 @@ rm -f %buildroot/%_libdir/*.la
 %_bindir/orcus-xml-dump
 
 %changelog
+* Sun Apr 14 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.3.0-alt1.qa1
+- NMU: rebuilt with libboost_*.so.1.53.0.
+
 * Tue Feb 05 2013 Fr. Br. George <george@altlinux.ru> 0.3.0-alt1
 - Initial build from FC
 
