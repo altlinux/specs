@@ -1,6 +1,6 @@
 Name: libtiger
 Version: 0.3.4
-Release: alt1
+Release: alt1.qa1
 Summary: rendering library for Kate streams
 Group: System/Libraries
 License: LGPLv2+
@@ -47,6 +47,9 @@ needed to develop applications with Tiger
 %_pkgconfigdir/*.pc
 
 %changelog
+* Sun Apr 14 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.3.4-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sun Jan 16 2011 Valery Inozemtsev <shrek@altlinux.ru> 0.3.4-alt1
 - 0.3.4
 
