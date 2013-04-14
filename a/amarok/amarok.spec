@@ -5,7 +5,7 @@
 
 Name: amarok
 Version: 1.4.10
-Release: alt14
+Release: alt14.qa1
 
 Summary: Amarok is a music player for KDE.
 License: GPL
@@ -276,6 +276,9 @@ rm -fr %buildroot%_K3datadir/apps/%name/scripts/templates
 %_K3datadir/services/amarok_daap-mediadevice.desktop
 
 %changelog
+* Sun Apr 14 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.4.10-alt14.qa1
+- NMU: rebuilt with libmysqlclient.so.18.
+
 * Thu May 31 2012 Roman Savochenko <rom_as@altlinux.ru> 1.4.10-alt14
 - Revert to original 1.4.10 version from T6 for some bugs TDE-3.5.13 fix.
 
