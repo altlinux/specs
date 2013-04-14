@@ -3,7 +3,7 @@
 
 Name: lib%origname
 Version: 1.6.4
-Release: alt2
+Release: alt2.qa1
 
 Packager: Victor Forsiuk <force@altlinux.org>
 
@@ -61,6 +61,9 @@ GtkImageView Reference Manual.
 %_gtk_docdir/*
 
 %changelog
+* Sun Apr 14 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.6.4-alt2.qa1
+- NMU: rebuilt for debuginfo.
+
 * Wed Nov 10 2010 Victor Forsiuk <force@altlinux.org> 1.6.4-alt2
 - Rebuilt for soname set-versions.
 
