@@ -3,7 +3,7 @@
 
 Name: libgtkhtml
 Version: %ver_major.1
-Release: alt1
+Release: alt1.qa1
 
 Summary: GTK HTML widget 2
 License: LGPL
@@ -103,6 +103,9 @@ linked applications with GtkHTML.
 %endif
 
 %changelog
+* Sun Apr 14 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.11.1-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Wed Nov 10 2010 Yuri N. Sedunov <aris@altlinux.org> 2.11.1-alt1
 - 2.11.1
 
