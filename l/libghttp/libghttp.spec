@@ -1,6 +1,6 @@
 Name: libghttp
 Version: 1.0.9
-Release: alt6
+Release: alt6.qa1
 
 Summary: GNOME HTTP client library
 License: LGPL
@@ -101,6 +101,9 @@ cp -p AUTHORS ChangeLog doc/ghttp.html %buildroot%pkgdocdir/
 %endif
 
 %changelog
+* Sun Apr 14 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.0.9-alt6.qa1
+- NMU: rebuilt for debuginfo.
+
 * Mon Nov 01 2010 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.9-alt6
 - Rebuilt for soname set-versions
 
