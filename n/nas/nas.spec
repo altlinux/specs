@@ -5,7 +5,7 @@
 Name: nas
 %define dname %{name}d
 Version: 1.9.2
-Release: alt4.1
+Release: alt4.1.qa1
 Summary: Network Audio System - a portable, network-transparent audio system
 Group: Sound
 License: distributable
@@ -219,6 +219,9 @@ echo "# See %dname.conf(5) and sample at %_docdir/%dname-*/" > %buildroot%_sysco
 
 
 %changelog
+* Sun Apr 14 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.9.2-alt4.1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Fri Nov 05 2010 Vladimir Lettiev <crux@altlinux.ru> 1.9.2-alt4.1
 - rebuilt with perl 5.12
 
