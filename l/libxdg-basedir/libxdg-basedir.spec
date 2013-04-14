@@ -1,6 +1,6 @@
 Name: libxdg-basedir
 Version: 1.1.1
-Release: alt1
+Release: alt1.qa1
 
 Summary: This library implements functions to list the directories according to the specification and provides a few higher-level functions for use with the specification
 License: MIT
@@ -47,6 +47,9 @@ make
 %_includedir/*
 
 %changelog
+* Sun Apr 14 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.1.1-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Mon Oct 25 2010 Terechkov Evgenii <evg@altlinux.org> 1.1.1-alt1
 - 1.1.1
 - Spec cleanup
