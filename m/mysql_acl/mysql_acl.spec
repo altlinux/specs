@@ -1,6 +1,6 @@
 Name: mysql_acl
 Version: 0.1.1
-Release: alt3
+Release: alt3.qa1
 
 Summary: Mysql based external acl helper for Squid Proxy
 
@@ -50,6 +50,9 @@ find %_builddir/%name-%version -type f -print0 | xargs -r0 %__subst "s|/usr/lib|
 %_man8dir/*
 
 %changelog
+* Sun Apr 14 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.1.1-alt3.qa1
+- NMU: rebuilt with libmysqlclient.so.18.
+
 * Sat Nov 27 2010 Slava Dubrovskiy <dubrsl@altlinux.org> 0.1.1-alt3
 - Rebuild with new MySQL
 
