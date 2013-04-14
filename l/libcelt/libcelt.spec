@@ -1,6 +1,6 @@
 Name: libcelt
 Version: 0.10.0
-Release: alt1
+Release: alt1.qa1
 Serial: 1
 Summary: The CELT Low-Latency Audio Compression Codec
 Group: System/Libraries
@@ -66,6 +66,9 @@ Basic utilities for encoding, decoding and manipulating Ogg CELT streams
 %_bindir/celt*
 
 %changelog
+* Sun Apr 14 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1:0.10.0-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Wed Dec 22 2010 Valery Inozemtsev <shrek@altlinux.ru> 1:0.10.0-alt1
 - 0.10.0
 
