@@ -3,7 +3,7 @@
 
 Name: scrot
 Version: 0.8
-Release: alt2
+Release: alt2.qa1
 
 Summary: Screen-shot capture using Imlib 2
 License: BSD
@@ -48,6 +48,9 @@ rm -f configure.in
 %_defaultdocdir/%name-%version/
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.8-alt2.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sat Apr 11 2009 Slava Semushin <php-coder@altlinux.ru> 0.8-alt2
 - Fixed typos in --help output and manual page (deb #233835)
 
