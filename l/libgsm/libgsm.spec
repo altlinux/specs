@@ -1,18 +1,17 @@
 Name: libgsm
 Version: 1.0.13
-Release: alt7
+Release: alt8
 
 Summary: GSM audio encoding/decoding library
 License: Free/Copyright Technische Universitaet Berlin
 Group: System/Libraries
-
-Url: http://user.cs.tu-berlin.de/~jutta/toast.html
-
+Url: http://www.quut.com/gsm/
 Packager: Denis Smirnov <mithraen@altlinux.ru>
 
-Source: ftp://ftp.cs.tu-berlin.de/pub/local/kbs/tubmik/gsm/gsm-%version.tar.gz
-Patch: %name-1.0.10-pld-makefile.patch
-Patch1: %name.link.patch
+# http://www.quut.com/gsm/gsm-%version.tar.gz
+Source: gsm-%version.tar
+Patch1: gsm-pld-alt-makefile.patch
+Patch2: gsm-rh-warnings.patch
 
 %description
 This is a free and public implementation of GSM audio encoding and
@@ -22,6 +21,7 @@ audio over the Internet.
 %package utils
 Summary: Utilities for compress/decompress audio files using GSM format
 Group: Sound
+Requires: %name = %version-%release
 
 %description utils
 This package contains utilities - tost, untoast and tcat (works without
@@ -44,24 +44,23 @@ Requires: %name-devel = %version-%release
 GSM Audio Encoding/decoding static library.
 
 %prep
-%setup -q -n gsm-1.0-pl13
-%patch -p1
-%patch1 -p0
+%setup -n gsm-1.0-pl13
+%patch1 -p1
+%patch2 -p1
 
 %build
-sed -i "s!ROOT)/lib!ROOT)/%_lib!" Makefile
-%make_build OPTFLAGS="${CFLAGS:-%optflags}" WAV49="-DWAV49"
-%make addtst
+%make_build SLIB=%_lib OPTFLAGS='%optflags -D_REENTRANT'
 
 %install
-install -d %buildroot{%_bindir,%_mandir/man{1,3},%_includedir,%_libdir}
-%makeinstall INSTALL_ROOT=%buildroot
-
-mkdir -p %buildroot%_includedir/gsm
-ln -s ../gsm.h %buildroot%_includedir/gsm/gsm.h
+mkdir -p %buildroot{%_bindir,%_mandir/man{1,3},%_includedir/gsm,%_libdir}
+%makeinstall_std SLIB=%_lib INSTALL_ROOT=%buildroot
+ln -s gsm/gsm.h %buildroot%_includedir/
 
 echo .so toast.1 >%buildroot%_man1dir/tcat.1
 echo .so toast.1 >%buildroot%_man1dir/untoast.1
+
+%check
+LD_LIBRARY_PATH=%buildroot%_libdir make tst addtst SLIB=%_lib
 
 %files
 %doc COPYRIGHT ChangeLog MACHINES MANIFEST README
@@ -76,10 +75,12 @@ echo .so toast.1 >%buildroot%_man1dir/untoast.1
 %_includedir/*
 %_man3dir/*
 
-%files devel-static
-%_libdir/%name.a
-
 %changelog
+* Sun Apr 14 2013 Dmitry V. Levin <ldv@altlinux.org> 1.0.13-alt8
+- Fixed build.
+- Fixed debuginfo.
+- Dropped libgsm-devel-static.
+
 * Wed Feb 20 2013 Denis Smirnov <mithraen@altlinux.ru> 1.0.13-alt7
 - add symlink %_includedir/gsm/gsm.h (ALT #28579)
 
