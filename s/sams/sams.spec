@@ -3,7 +3,7 @@
 
 Name: sams
 Version: 1.0.5
-Release: alt1
+Release: alt1.qa1
 Summary: SAMS (Squid Account Management System)
 License: GPLv2 or later
 Group: System/Servers
@@ -163,6 +163,9 @@ mkdir -p %buildroot%webdir/%name
 %dir %attr(2775,root,apache) %webdir/sams/data
 
 %changelog
+* Sun Apr 14 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.0.5-alt1.qa1
+- NMU: rebuilt with libmysqlclient.so.18.
+
 * Mon Oct 18 2010 Anton A. Vinogradov <arc@altlinux.org> 1.0.5-alt1
 - build for ALT Linux Sisyphus
 
