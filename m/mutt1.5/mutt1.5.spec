@@ -7,7 +7,7 @@
 %define branch 1.5
 Name: %oname%branch
 Version: 1.5.21
-Release: alt2
+Release: alt2.qa1
 Serial: 3
 
 %def_without dotlock
@@ -153,6 +153,9 @@ EOF
 %docdir
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 3:1.5.21-alt2.qa1
+- NMU: rebuilt for debuginfo.
+
 * Thu Nov 18 2010 Alexey I. Froloff <raorn@altlinux.org> 3:1.5.21-alt2
 - hg snapshot 20101013 AKA 57568da7d9aa
 
