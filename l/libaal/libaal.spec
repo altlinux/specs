@@ -2,7 +2,7 @@
 
 Name: libaal
 Version: 1.0.5
-Release: alt3.1
+Release: alt3.1.qa1
 
 Packager: Victor Forsiuk <force@altlinux.org>
 
@@ -96,6 +96,9 @@ mv %buildroot/%_lib/*.so %buildroot%_libdir/
 %endif
 
 %changelog
+* Sun Apr 14 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.0.5-alt3.1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sun Nov 14 2010 Denis Smirnov <mithraen@altlinux.ru> 1.0.5-alt3.1
 - rebuild (with the help of girar-nmu utility)
 
