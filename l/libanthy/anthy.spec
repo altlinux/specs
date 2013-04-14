@@ -3,7 +3,7 @@
 
 Name:  libanthy
 Version: 9100h
-Release: alt1
+Release: alt1.qa1
 # The entire source code is LGPLv2+ and dictionaries is GPLv2.
 License: LGPLv2+ and GPLv2
 URL:  http://sourceforge.jp/projects/anthy/
@@ -138,6 +138,9 @@ rm -rf $RPM_BUILD_ROOT%{_libdir}/lib*.{la,a}
 
 
 %changelog
+* Sun Apr 14 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 9100h-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sun Dec 12 2010 Ilya Mashkin <oddity@altlinux.ru> 9100h-alt1
 - Build for ALT Linux only libanthy
 
