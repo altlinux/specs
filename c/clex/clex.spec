@@ -3,7 +3,7 @@
 %define Name CLEX
 Name: clex
 Version: 4.2
-Release: alt1
+Release: alt1.qa1
 Summary: A file manager with a full-screen user interface
 License: %gpl2plus
 Group: File tools
@@ -48,6 +48,9 @@ favorite shell.
 
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 4.2-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sun Mar 15 2009 Led <led@altlinux.ru> 4.2-alt1
 - 4.2
 
