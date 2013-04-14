@@ -10,7 +10,7 @@
 
 Name: micq
 Version: 0.5.0.3
-Release: alt2.1
+Release: alt2.1.qa1
 
 License: GPL
 Url: http://micq.ukeer.de/
@@ -126,6 +126,9 @@ Manual pages for %name in Spanish, German, French, and Brazilian Portuguese lang
 %_mandir/%LANG_UK/man?/*
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.5.0.3-alt2.1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Tue Dec 07 2010 Igor Vlasenko <viy@altlinux.ru> 0.5.0.3-alt2.1
 - rebuild with new openssl and/or boost by request of git.alt administrator
 
