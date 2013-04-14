@@ -7,7 +7,7 @@
 Summary: libGringotts, a strongbox library
 Name: libgringotts
 Version: 1.2.1
-Release: alt1.1
+Release: alt1.1.qa1
 License: GPL
 Group: System/Libraries
 URL: http://devel.pluto.linux.it/projects/Gringotts/
@@ -57,6 +57,9 @@ make DESTDIR=%buildroot install
 #exclude %{_libdir}/*.la
 
 %changelog
+* Sun Apr 14 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.2.1-alt1.1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Thu Nov 25 2010 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.1-alt1.1
 - Rebuilt for soname set-versions
 
