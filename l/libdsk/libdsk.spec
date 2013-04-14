@@ -5,7 +5,7 @@
 
 Name: libdsk
 Version: 1.2.1
-Release: alt2.qa1
+Release: alt2.qa2
 
 Summary: General floppy and diskimage access library
 Group: System/Libraries
@@ -98,6 +98,9 @@ floppies or disk image files for emulated machines.
 %_man1dir/*
 
 %changelog
+* Sun Apr 14 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.2.1-alt2.qa2
+- NMU: rebuilt for debuginfo.
+
 * Thu Nov 25 2010 Igor Vlasenko <viy@altlinux.ru> 1.2.1-alt2.qa1
 - rebuild using girar-nmu to require/provide setversion 
   by request of mithraen@
