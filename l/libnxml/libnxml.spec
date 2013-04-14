@@ -2,7 +2,7 @@
 
 Name: libnxml
 Version: 0.18.1
-Release: alt2
+Release: alt2.qa1
 
 Summary: C library for parsing, writing and creating XML 1.0 and 1.1 files or streams
 License: LGPL 2.1
@@ -61,6 +61,9 @@ It supports utf-8, utf-16be and utf-16le, ucs-4 (1234, 4321, 2143, 2312).
 %endif
 
 %changelog
+* Sun Apr 14 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.18.1-alt2.qa1
+- NMU: rebuilt for debuginfo.
+
 * Mon Nov 01 2010 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.18.1-alt2
 - Rebuilt for soname set-versions
 
