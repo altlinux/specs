@@ -1,6 +1,6 @@
 Name: ucl
 Version: 1.03
-Release: alt3.qa1
+Release: alt3.qa2
 Packager: Fr. Br. George <george@altlinux.ru>
 Summary: The UCL Compression Library
 License: GPL
@@ -80,6 +80,9 @@ This package contains the %name development library and header files.
 %_includedir/*
 
 %changelog
+* Sun Apr 14 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.03-alt3.qa2
+- NMU: rebuilt for debuginfo.
+
 * Mon Nov 29 2010 Igor Vlasenko <viy@altlinux.ru> 1.03-alt3.qa1
 - rebuild using girar-nmu to require/provide setversion 
   by request of mithraen@
