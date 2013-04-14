@@ -3,7 +3,7 @@
 # %%branch_switch set %%branch_release use
 #%%define branch_switch Mxx
 
-%define apache_version 2.2.22
+%define apache_version 2.2.24
 
 %define mmn 20051115
 
@@ -39,7 +39,7 @@
 
 Name:    %apache2_name
 Version: %apache_version
-Release: %branch_release alt17
+Release: %branch_release alt1
 
 License: %asl
 Group: System/Servers
@@ -100,7 +100,7 @@ Source71: apache2-cert-sh.sh
 # + http://mpm-itk.sesse.net/apache2.2-mpm-itk-2.2.17-01/*.patch
 # + http://www.telana.com/files/httpd-2.2.3-peruser-0.3.0.patch
 # + http://www.peruser.org/trac/projects/peruser/attachment/wiki/PeruserAttachments/httpd-2.2.3-peruser-0.3.0-dc3.patch
-Patch1: apache2-%version-alt-all-0.7.patch
+Patch1: apache2-%version-alt-all-0.1.patch
 
 BuildRequires(pre): rpm-macros-branch
 BuildRequires(pre): rpm-macros-apache2 >= 3.12
@@ -905,7 +905,7 @@ s|%%apache2_sslcertsh|%apache2_sslcertsh|g
 pushd docs/man
 
 %if "%apache2_branch" != ""
-MANS="ab.1 apachectl.8 apxs.1 dbmmanage.1 htdigest.1 htpasswd.1 httpd.8 rotatelogs.8 logresolve.1 suexec.8"
+MANS="ab.8 apachectl.8 apxs.8 dbmmanage.1 htdigest.1 htpasswd.1 httpd.8 rotatelogs.8 logresolve.8 suexec.8"
 for manpage in $MANS; do
     mv ${manpage} `echo ${manpage}|sed -e "s/\./%apache2_branch./"`
 done
@@ -1636,11 +1636,11 @@ exit 0
 %attr(0700,%apache2_user,%apache2_group) %dir %apache2_localstatedir/lib/dav
 
 %apache2_mandir/man1/*
-%exclude %apache2_mandir/man1/apxs*
-%exclude %apache2_mandir/man1/ab*
 %exclude %apache2_mandir/man1/htpasswd*
 
 %apache2_mandir/man8/*
+%exclude %apache2_mandir/man8/apxs*
+%exclude %apache2_mandir/man8/ab*
 %exclude %apache2_mandir/man8/htcacheclean*
 %exclude %apache2_mandir/man8/suexec*
 
@@ -1745,7 +1745,7 @@ exit 0
 
 %files ab
 %apache2_bindir/ab*
-%apache2_mandir/man1/ab*
+%apache2_mandir/man8/ab*
 
 %files htpasswd
 %apache2_bindir/htpasswd*
@@ -1767,7 +1767,7 @@ exit 0
 
 
 %apache2_sbindir/apxs*
-%apache2_mandir/man1/apxs*
+%apache2_mandir/man8/apxs*
 %dir %apache2_installbuilddir/
 %apache2_installbuilddir/[clprs]*.mk
 %apache2_installbuilddir/instdso.sh
@@ -1801,6 +1801,11 @@ exit 0
 %ghost %apache2_sites_enabled/000-default_https-compat.conf
 
 %changelog
+* Sun Apr 14 2013 Aleksey Avdeev <solo@altlinux.ru> 2.2.24-alt1
+- 2.2.24
+- Security fixes (CVE-2012-3499, CVE-2012-4558, CVE-2012-0883,
+  CVE-2012-2687)
+
 * Tue Feb 12 2013 Aleksey Avdeev <solo@altlinux.ru> 2.2.22-alt17
 - Fix %%name-base: Add Requires %%name-mods
 
