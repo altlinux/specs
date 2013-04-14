@@ -8,7 +8,7 @@
 
 Name: cyrus-sasl2
 Version: 2.1.24
-Release: alt6.cvs.%cvsdate.1
+Release: alt7.cvs.%cvsdate
 
 Summary: SASL2 is the Simple Authentication and Security Layer
 License: Freely Distributable
@@ -283,6 +283,9 @@ install -m0600 %SOURCE5 %buildroot%_sysconfdir/sysconfig/saslauthd
 %endif
 
 %changelog
+* Sun Apr 14 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.1.24-alt7.cvs.20090508
+- NMU: rebuilt with libmysqlclient.so.18.
+
 * Thu Feb 02 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.1.24-alt6.cvs.20090508.1
 - Removed bad RPATH
 
