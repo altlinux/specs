@@ -1,6 +1,6 @@
 Name: wvdial
 Version: 1.61
-Release: alt3.git20090513
+Release: alt3.git20090513.qa1
 
 Summary: A heuristic autodialer for PPP connections
 License: LGPL
@@ -49,6 +49,9 @@ negotiate the PPP connection using any mechanism needed.
 %doc CHANGES FAQ MENUS README TODO
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.61-alt3.git20090513.qa1
+- NMU: rebuilt for debuginfo.
+
 * Wed May 13 2009 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.61-alt3.git20090513
 - Rebuild with gcc 4.4
 
