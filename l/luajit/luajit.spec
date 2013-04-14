@@ -1,14 +1,15 @@
 Name: luajit
-Version: 2.0
+Version: 2.0.1
 Release: alt1
-License: MIT
-Url: http://luajit.org
-Source: %name-%version.tar
-Group: Development/Other
-Summary: a Just-In-Time Compiler for Lua
-Packager: Slava Dubrovskiy <dubrsl@altlinux.ru>
 
-#BuildRequires:
+Summary: a Just-In-Time Compiler for Lua
+License: MIT
+Group: Development/Other
+Url: http://luajit.org
+Packager: Slava Dubrovskiy <dubrsl@altlinux.ru>
+# git://git.altlinux.org/gears/l/luajit.git
+Source: %name-%version.tar
+Requires: lib%name = %EVR
 
 %description
 LuaJIT is a Just-In-Time Compiler (JIT) for the Lua programming language. 
@@ -27,7 +28,7 @@ It may be embedded or used as a general-purpose, stand-alone language.
 %package -n lib%name-devel
 Summary:  Development package that includes the luajit header files
 Group: Development/Other
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 %description -n lib%name-devel
 LuaJIT is a Just-In-Time Compiler (JIT) for the Lua programming language. 
@@ -37,6 +38,7 @@ It may be embedded or used as a general-purpose, stand-alone language.
 %package -n lib%name-devel-static
 Summary: static library for luajit
 Group: System/Libraries
+Requires: lib%name-devel = %EVR
         
 %description -n lib%name-devel-static
 LuaJIT is a Just-In-Time Compiler (JIT) for the Lua programming language. 
@@ -47,29 +49,32 @@ It may be embedded or used as a general-purpose, stand-alone language.
 %setup
 
 %build
-%make amalg PREFIX=%_prefix
+%make_build amalg PREFIX=%_prefix TARGET_STRIP='@:' Q=
 
 %install
-%makeinstall_std PREFIX=%_prefix LDCONFIG=true INSTALL_LIB=%buildroot%_libdir
+%makeinstall_std PREFIX=%_prefix LDCONFIG=true INSTALL_LIB=%buildroot%_libdir Q=
 
 
 %files
 %_bindir/*
-%_datadir/%name-*
 %_man1dir/*
 
 %files -n lib%name
 %_libdir/*.so.*
+%_datadir/%name-*
 
 %files -n lib%name-devel
 %doc doc/*
 %_libdir/*.so
-%_includedir/%name-%version
+%_includedir/*
 %_pkgconfigdir/*
 
 %files -n lib%name-devel-static
 %_libdir/*.a
 
 %changelog
+* Sun Apr 14 2013 Dmitry V. Levin <ldv@altlinux.org> 2.0.1-alt1
+- NMU: updated v2.0.1-fixed-14-gb1327bc, fixed build.
+
 * Sun Dec 16 2012 Slava Dubrovskiy <dubrsl@altlinux.org> 2.0-alt1
-- Buld for ALT
+- Build for ALT
