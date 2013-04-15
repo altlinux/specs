@@ -1,6 +1,6 @@
 Name: mazen
 Version: 1.0.1
-Release: alt1
+Release: alt1.qa1
 
 Summary: Simple Gnome-base maze creator
 License: GPLv3
@@ -56,5 +56,8 @@ EOF
 %_desktopdir/*
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.0.1-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sat Jan 29 2011 Slava Dubrovskiy <dubrsl@altlinux.org> 1.0.1-alt1
 - initial build for ALT
