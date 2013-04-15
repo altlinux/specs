@@ -1,6 +1,6 @@
 Name: wavplay
 Version: 1.4
-Release: alt1
+Release: alt1.qa1
 Summary: Utility to play WAV files
 Group: Sound
 License: GPL2
@@ -36,5 +36,8 @@ ln -s wavplay %buildroot%_bindir/wavrec
 %_bindir/*
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.4-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Wed Apr 21 2010 Yuriy Shirokov <yushi@altlinux.org> 1.4-alt1
 - First separated spec for ALT Linux
