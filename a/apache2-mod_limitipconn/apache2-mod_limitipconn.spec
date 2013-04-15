@@ -3,7 +3,7 @@
 Summary: Limit simultaneous connections by an IP address
 Name: apache2-%oname
 Version: 0.23
-Release: alt1
+Release: alt1.qa1
 License: GPL
 Group: System/Servers
 Packager: Boris Savelev <boris@altlinux.org>
@@ -42,5 +42,8 @@ install -m 644 %SOURCE2 %buildroot%apache2_mods_available
 %apache2_moduledir/*.so
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.23-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Tue Jan 20 2009 Boris Savelev <boris@altlinux.org> 0.23-alt1
 - initial build for Sisyphus
