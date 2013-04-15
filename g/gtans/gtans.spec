@@ -1,6 +1,6 @@
 Name: gtans
 Version: 1.99.0
-Release: alt1
+Release: alt1.qa1
 
 Packager: Victor Forsyuk <force@altlinux.org>
 
@@ -46,6 +46,9 @@ install -pD -m644 %SOURCE1 %buildroot%_desktopdir/gtans.desktop
 %_desktopdir/*
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.99.0-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Tue Jan 13 2009 Victor Forsyuk <force@altlinux.org> 1.99.0-alt1
 - 1.99.0
 
