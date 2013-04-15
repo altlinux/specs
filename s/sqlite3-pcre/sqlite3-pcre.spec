@@ -1,6 +1,6 @@
 Name: sqlite3-pcre
 Version: 0.1
-Release: alt1
+Release: alt1.qa1
 
 Summary: Perl-compatible regular expression support for the SQLite
 License: Public Domain
@@ -40,5 +40,8 @@ install -pD -m755 pcre.so %buildroot%_libdir/sqlite3/pcre.so
 %_libdir/sqlite3/pcre.so
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.1-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Thu Nov 02 2006 Alexey Tourbin <at@altlinux.ru> 0.1-alt1
 - initial revision
