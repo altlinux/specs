@@ -1,6 +1,6 @@
 Name: tcpreen
 Version: 1.4.4
-Release: alt1
+Release: alt1.qa1
 
 Summary: TCP network re-engineering tool
 License: GPLv2 only
@@ -34,6 +34,9 @@ not on the lower level transmission protocol as packet sniffers do.
 %_man1dir/*
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.4.4-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Mon Dec 24 2007 Victor Forsyuk <force@altlinux.org> 1.4.4-alt1
 - 1.4.4
 
