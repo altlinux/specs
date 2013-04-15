@@ -1,6 +1,6 @@
 Name: xeyes
 Version: 1.1.1
-Release: alt1
+Release: alt1.qa1
 
 Summary: display the X Window System logo
 License: MIT/X11
@@ -35,6 +35,9 @@ The xeyes program displays the X Window System logo. That's all.
 %_man1dir/*
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.1.1-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Wed Dec 08 2010 Fr. Br. George <george@altlinux.ru> 1.1.1-alt1
 - Autobuild version bump to 1.1.1
 
