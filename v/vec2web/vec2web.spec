@@ -1,6 +1,6 @@
 Name: vec2web
 Version: 2.0.4.7
-Release: alt4
+Release: alt4.qa1
 
 Summary: Converter from DXF to other image formats
 License: GPL
@@ -51,6 +51,9 @@ install -pD -m755 %name/%name %buildroot%_bindir/%name
 %_bindir/*
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.0.4.7-alt4.qa1
+- NMU: rebuilt for debuginfo.
+
 * Wed Oct 29 2008 Andrey Rahmatullin <wrar@altlinux.ru> 2.0.4.7-alt4
 - fix build
 
