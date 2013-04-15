@@ -1,6 +1,6 @@
 Name: hyenae
 Version: 0.36
-Release: alt1
+Release: alt1.qa1
 License: GPLv3
 Summary: %name is a highly flexible and platform independent network packet generator
 Group: Networking/Other
@@ -48,5 +48,8 @@ Group: Networking/Other
 %_man1dir/hyenaed.*
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.36-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sun Dec 26 2010 Slava Dubrovskiy <dubrsl@altlinux.org> 0.36-alt1
 - Build for ALT
