@@ -1,6 +1,6 @@
 Name: fping
 Version: 2.4b2
-Release: alt4
+Release: alt4.qa1
 %define srcname %name-%{version}_to
 
 Summary: %name - A tool to quickly ping N number of hosts to determine their reachability
@@ -61,6 +61,9 @@ install -pD -m755 %SOURCE1 "%buildroot%_controldir/fping"
 %doc README INSTALL ChangeLog
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.4b2-alt4.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sun Apr 06 2008 Dmitry Lebkov <dlebkov@altlinux.ru> 2.4b2-alt4
 - add control(8) support (#11891). Default state is restricted.
 
