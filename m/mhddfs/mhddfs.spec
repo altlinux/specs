@@ -1,6 +1,6 @@
 Name: mhddfs
 Version: 0.1.37
-Release: alt1
+Release: alt1.qa1
 
 Summary: file system for unifying several mount points into one
 License: GPLv3
@@ -36,6 +36,9 @@ install -pDm644 %name.1 %buildroot%_man1dir/%name.1
 %doc ChangeLog README*
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.1.37-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Fri Aug 06 2010 Vladimir V. Kamarzin <vvk@altlinux.org> 0.1.37-alt1
 - 0.1.37 (Closes: #23856).
 
