@@ -1,7 +1,7 @@
 Summary: Static Multicast Routing Daemon
 Name: smcroute
 Version: 0.94.1
-Release: alt2
+Release: alt2.qa1
 License: GPL
 Group: System/Servers
 Source: %name-%version.tar
@@ -46,6 +46,9 @@ install -m755 -D %SOURCE1 %buildroot%_initdir/%name
 %_man8dir/*
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.94.1-alt2.qa1
+- NMU: rebuilt for debuginfo.
+
 * Mon Mar 01 2010 Afanasov Dmitry <ender@altlinux.org> 0.94.1-alt2
 - build with ipv6 support but disable it by default
 
