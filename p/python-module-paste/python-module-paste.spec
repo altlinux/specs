@@ -4,7 +4,7 @@
 
 Name: python-module-%modulename
 Version: 1.7.5.1
-Release: alt1.hg20130207
+Release: alt2.hg20130207
 
 Summary: Tools for using a Web Server Gateway Interface stack
 License: MIT
@@ -64,9 +64,7 @@ cp -a . ../python3
 %python_build
 %if_with python3
 pushd ../python3
-for i in $(find ./ -name '*.py'); do
-	2to3 -w $i
-done
+find -type f -name '*.py' -exec 2to3 -w -n '{}' +
 sed -i 's|/usr/bin/env python|/usr/bin/env python3|' \
 	tests/cgiapp_data/*
 %python3_build
@@ -96,6 +94,9 @@ popd
 %endif
 
 %changelog
+* Mon Apr 15 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.7.5.1-alt2.hg20130207
+- Use 'find... -exec...' instead of 'for ... $(find...'
+
 * Tue Apr 02 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.7.5.1-alt1.hg20130207
 - New snapshot
 
