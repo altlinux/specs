@@ -1,6 +1,6 @@
 Name: xsnow
 Version: 1.42
-Release: alt4
+Release: alt4.qa1
 
 Summary: An X Window System based dose of Christmas cheer
 License: MIT
@@ -48,6 +48,9 @@ install -pDm644 %SOURCE1 %buildroot%_liconsdir/%name.png
 %_liconsdir/*
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.42-alt4.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sun Dec 13 2009 Michael Shigorin <mike@altlinux.org> 1.42-alt4
 - an icon is now correctly placed 48x48 one (thx repocop)
 
