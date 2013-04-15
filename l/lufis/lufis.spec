@@ -1,6 +1,6 @@
 Name: lufis
 Version: 0.3
-Release: alt2
+Release: alt2.qa1
 
 Summary: Wrapper to use lufs modules with fuse kernel support
 License: GPL
@@ -41,6 +41,9 @@ install lufis %buildroot%_bindir/
 %doc ChangeLog README
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.3-alt2.qa1
+- NMU: rebuilt for debuginfo.
+
 * Wed Sep 07 2005 Serge Pavlovsky <pal@altlinux.ru> 0.3-alt2
 - built with new libfuse
 
