@@ -1,6 +1,6 @@
 Name: wmtimer
 Version: 2.92
-Release: alt2
+Release: alt2.qa1
 
 Summary: Run command at specified time
 License: GPL
@@ -36,6 +36,9 @@ install -pD -m644 %_sourcedir/wmtimer.1 %buildroot%_man1dir/wmtimer.1
 %_man1dir/*
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.92-alt2.qa1
+- NMU: rebuilt for debuginfo.
+
 * Fri Oct 20 2006 Victor Forsyuk <force@altlinux.org> 2.92-alt2
 - Added man-page from Debian.
 - Fix initial timer beep in wmtimer.c when using -c mode (Debian patch).
