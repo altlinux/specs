@@ -1,7 +1,7 @@
 
 Name: alsamixer-qt4
 Version: 0.6.0
-Release: alt1
+Release: alt1.qa1
 
 Summary: GUI mixer application for ALSA
 License: GPLv3
@@ -60,6 +60,9 @@ EOF
 %doc %_docdir/*
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.6.0-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Wed Jan 12 2011 Ivan A. Melnikov <iv@altlinux.org> 0.6.0-alt1
 - Initial build for ALTLinux.
 
