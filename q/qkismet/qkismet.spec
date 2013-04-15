@@ -1,6 +1,6 @@
 Name: qkismet
 Version: 0.3.1
-Release: alt1
+Release: alt1.qa1
 
 Summary: Qt4 frontend to kismet
 License: %gpl2plus
@@ -36,6 +36,9 @@ sed -i 's,-pipe ,%optflags ,g' Makefile.Release
 %_bindir/*
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.3.1-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Tue Sep 22 2009 Andrey Rahmatullin <wrar@altlinux.ru> 0.3.1-alt1
 - 0.3.1
 
