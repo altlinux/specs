@@ -1,6 +1,6 @@
 Name: nepim
 Version: 0.53
-Release: alt1
+Release: alt1.qa1
 
 Packager: Victor Forsyuk <force@altlinux.org>
 
@@ -39,6 +39,9 @@ install -pD -m755 src/nepim %buildroot%_bindir/nepim
 %_bindir/*
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.53-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Wed Dec 24 2008 Victor Forsyuk <force@altlinux.org> 0.53-alt1
 - 0.53
 
