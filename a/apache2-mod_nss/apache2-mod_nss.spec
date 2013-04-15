@@ -4,7 +4,7 @@
 Name: apache2-mod_nss
 Summary: Apache 2.0 module for implementing crypto using the Mozilla NSS crypto libraries
 Version: 1.0.8
-Release: alt1
+Release: alt1.qa1
 License: Apache 2.0
 Group: System/Servers
 Url: http://directory.fedoraproject.org
@@ -56,6 +56,9 @@ install -m 755 gencert %buildroot%apache_confdir/nss-gencert
 %doc docs/mod_nss.html README
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.0.8-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sat Sep 06 2008 Vitaly Kuznetsov <vitty@altlinux.ru> 1.0.8-alt1
 - 1.0.8
 
