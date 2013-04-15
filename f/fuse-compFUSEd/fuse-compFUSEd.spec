@@ -2,7 +2,7 @@
 
 Name: fuse-compFUSEd
 Version: 200712321
-Release: alt2
+Release: alt2.qa1
 License: GPL2
 Group: System/Kernel and hardware
 Url: http://www.biggerbytes.be/documents-related-to-compfused
@@ -49,6 +49,9 @@ install plugins/*.so %buildroot%_libdir/%origname/plugins/
 %_libdir/%origname/
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 200712321-alt2.qa1
+- NMU: rebuilt for debuginfo.
+
 * Mon Dec 06 2010 Ildar Mulyukov <ildar@altlinux.ru> 200712321-alt2
 - remove lzo plugin
 - fix lzo2 plugin
