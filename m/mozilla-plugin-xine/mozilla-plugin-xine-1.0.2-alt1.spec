@@ -1,7 +1,7 @@
 %define pname xine-plugin
 Name: mozilla-plugin-xine
 Version: 1.0.2
-Release: alt1.1
+Release: alt1.1.qa1
 Summary: Media plugin for mozilla compatible browsers using libxine backend
 Group: Video
 License: %gpl2plus
@@ -49,6 +49,9 @@ rm -rf %buildroot%browser_plugins_path/*.la
 
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.0.2-alt1.1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Fri Oct 02 2009 Alexey Gladkov <legion@altlinux.ru> 1.0.2-alt1.1
 - NMU: Rebuilt with browser-plugins-npapi.
 
