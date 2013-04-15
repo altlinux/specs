@@ -1,6 +1,6 @@
 Name: xmms-eff-eq
 Version: 0.7
-Release: alt2
+Release: alt2.qa1
 
 %define _progname eq-xmms
 
@@ -43,6 +43,9 @@ EQ -- модуль графического эквалайзера для XMMS, который обрабатывает всё, что в 
 %doc AUTHORS BUGS COPYING README SKINS TODO README.alt
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.7-alt2.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sun Nov 01 2009 Dmitriy Khanzhin <jinn@altlinux.ru> 0.7-alt2
 - internal RPM macros are replaced by real commands
 
