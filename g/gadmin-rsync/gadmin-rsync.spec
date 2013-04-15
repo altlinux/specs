@@ -1,6 +1,6 @@
 Name: gadmin-rsync
 Version: 0.0.9
-Release: alt2
+Release: alt2.qa1
 
 Summary: Gadmin-rsync - An easy to use GTK+ frontend for the rsync backup client and server.
 Group: System/Configuration/Other
@@ -66,6 +66,9 @@ done
 %_liconsdir/%name.png
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.0.9-alt2.qa1
+- NMU: rebuilt for debuginfo.
+
 * Wed Mar 12 2008 Eugene Ostapets <eostapets@altlinux.ru> 0.0.9-alt2
 - fix desktop entry (tnx repocop)
 - fix icons (tnx repocop)
