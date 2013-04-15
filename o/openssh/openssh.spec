@@ -1,6 +1,6 @@
 Name: openssh
 Version: 5.9p1
-Release: alt5
+Release: alt6
 
 Summary: OpenSSH free Secure Shell (SSH) implementation
 License: BSD-style
@@ -346,6 +346,9 @@ printf 'op\nsgr0\n' | tput -S 2>/dev/null ||:
 %attr(751,root,root) %dir %_libexecdir
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin <ldv@altlinux.org> 5.9p1-alt6
+- ssh-keygen: updated fix for #24682 to libcrypto >= 1.0.1 (closes: #28850).
+
 * Fri Apr 12 2013 Dmitry V. Levin <ldv@altlinux.org> 5.9p1-alt5
 - Relaxed runtime OpenSSL version check.
 
