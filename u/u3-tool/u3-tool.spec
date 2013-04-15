@@ -1,6 +1,6 @@
 Name: u3-tool
 Version: 0.3
-Release: alt1
+Release: alt1.qa1
 
 Summary:  U3 Flash disk feature control tool
 License: GPLv2+
@@ -39,6 +39,9 @@ This program can:
 %doc AUTHORS ChangeLog README TODO
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.3-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Wed Aug 25 2010 Michael Shigorin <mike@altlinux.org> 0.3-alt1
 - built for ALT Linux
 
