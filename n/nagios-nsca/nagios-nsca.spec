@@ -7,7 +7,7 @@
 
 Name: nagios-%realname
 Version: 2.7.2
-Release: alt3
+Release: alt3.qa1
 
 Summary: NSCA -- Nagios(R) Service Checks Acceptor daemon
 License: GPL
@@ -91,6 +91,9 @@ install -pDm0640 sample-config/send_nsca.cfg %buildroot/%_sysconfdir/send_nsca.c
 %doc Changelog README SECURITY
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.7.2-alt3.qa1
+- NMU: rebuilt for debuginfo.
+
 * Mon Jan 12 2009 Dmitry Lebkov <dlebkov@altlinux.ru> 2.7.2-alt3
 - fixes according to repocop repotrts:
   + add LSB headers to init-script
