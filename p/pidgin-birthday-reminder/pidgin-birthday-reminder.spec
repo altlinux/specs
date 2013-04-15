@@ -1,6 +1,6 @@
 Name: pidgin-birthday-reminder
 Version: 1.6
-Release: alt1
+Release: alt1.qa1
 Summary: Birthday Reminder plugin for Pidgin
 
 Group: Networking/Instant messaging
@@ -37,6 +37,9 @@ be set by hand or be automatically filled-in for ICQ, MSN and XMPP protocols.
 %_datadir/sounds/pidgin/birthday_reminder/
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.6-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Fri Aug 13 2010 Alexey Shabalin <shaba@altlinux.ru> 1.6-alt1
 - 1.6
 - change Url of Home Page
