@@ -2,7 +2,7 @@ Name: dcfldd
 %define flavour 1
 %define mainver 1.3.4
 Version: %mainver.%flavour
-Release: alt1
+Release: alt1.qa1
 
 Summary: dcfldd is an enhanced version of GNU dd with features useful for forensics and security
 Group: File tools
@@ -45,6 +45,9 @@ dcfldd has the following additional features:
 %_man1dir/*
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.3.4.1-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Fri Mar 14 2008 Maxim Ivanov <redbaron@altlinux.ru> 1.3.4.1-alt1
 - Initial build for Sisyphus
 
