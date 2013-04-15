@@ -1,6 +1,6 @@
 Name: hugs98
 Version: 20060921
-Release: alt5
+Release: alt5.qa1
 
 %define real_version Sep2006
 
@@ -111,6 +111,9 @@ __EOF__
 %_desktopdir/%name.desktop
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 20060921-alt5.qa1
+- NMU: rebuilt for debuginfo.
+
 * Wed Nov 19 2008 Konstantin Baev <kipruss@altlinux.org> 20060921-alt5
 - Fix repocop errors - remove update_menus macros
   update BuildRequires
