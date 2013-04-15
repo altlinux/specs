@@ -1,6 +1,6 @@
 %define oname flup
 %define version 1.0.3
-%define release alt1
+%define release alt2
 %define subrel hg20120223
 %setup_python_module %oname
 
@@ -9,7 +9,7 @@
 Summary: Random assortment of WSGI servers, middleware
 Name: python-module-%oname
 Version: %version
-Release: %release.%subrel.1
+Release: %release.%subrel
 # http://hg.saddi.com/flup-server
 Source0: %modulename.tar.bz2
 License: BSD
@@ -70,9 +70,7 @@ cp -a . ../python3
 %python_build
 %if_with python3
 pushd ../python3
-for i in $(find ./ -name '*.py'); do
-	2to3 -w $i
-done
+find -type f -name '*.py' -exec 2to3 -w '{}' +
 %python3_build
 popd
 %endif
@@ -109,6 +107,9 @@ cp -fR docs/build/pickle %buildroot%python_sitelibdir_noarch/%oname/
 %endif
 
 %changelog
+* Mon Apr 15 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.3-alt2.hg20120223
+- Use 'find... -exec...' instead of 'for ... $(find...'
+
 * Sun Mar 17 2013 Aleksey Avdeev <solo@altlinux.ru> 1.0.3-alt1.hg20120223.1
 - Rebuild with Python-3.3
 - Fix non-identical noarch packages (python{,3}-module-flup)
