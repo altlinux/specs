@@ -1,6 +1,6 @@
 Name: igmpproxy
 Version: 0.1
-Release: alt1
+Release: alt1.qa1
 
 Summary: Dynamic Multicast Routing Daemon
 License: GPLv2
@@ -35,5 +35,8 @@ between networks.
 %_man8dir/*
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.1-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Fri May 07 2010 Vitaly Kuznetsov <vitty@altlinux.ru> 0.1-alt1
 - Initial
