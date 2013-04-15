@@ -1,6 +1,6 @@
 Name: mpeg2vidcodec
 Version: 1.2
-Release: alt1
+Release: alt1.qa1
 
 Summary: MPEG-2 Encoder / Decoder 
 Summary(ru_RU.UTF-8): MPEG-2 кодер и декодер
@@ -36,5 +36,8 @@ cd mpeg2
 %doc mpeg2/README mpeg2/doc/* mpeg2/src/mpeg2dec/EXAMPLES mpeg2/src/mpeg2dec/IEEE1180 mpeg2/src/mpeg2dec/SPATIAL.DOC
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.2-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sun Apr 11 2004 Vyacheslav Dikonov <slava@altlinux.ru> 1.2-alt1
 - Initial build
