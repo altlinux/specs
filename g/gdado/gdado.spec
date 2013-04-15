@@ -1,6 +1,6 @@
 Name: gdado
 Version: 2.2
-Release: alt5
+Release: alt5.qa1
 
 Summary: Very simple application that simulates dice rolling
 License: GPL
@@ -57,6 +57,9 @@ install -m644 %SOURCE1 %buildroot%_datadir/pixmaps/gdado.png
 %_datadir/pixmaps/gdado.png
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.2-alt5.qa1
+- NMU: rebuilt for debuginfo.
+
 * Wed Dec 03 2008 Igor Zubkov <icesik@altlinux.org> 2.2-alt5
 - apply patch from repocop
 
