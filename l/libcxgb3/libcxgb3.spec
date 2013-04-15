@@ -3,7 +3,7 @@
 
 Name: libcxgb3
 Version: 1.2.5
-Release: alt1
+Release: alt1.qa1
 Summary: Chelsio T3 RNIC Open Fabrics Userspace Library
 Group: System/Libraries
 License: %gpl2only, %bsdstyle
@@ -60,6 +60,9 @@ bzip2 -9fk ChangeLog
 
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.2.5-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Mon Aug 16 2010 Andriy Stepanov <stanv@altlinux.ru> 1.2.5-alt1
 - New version
 
