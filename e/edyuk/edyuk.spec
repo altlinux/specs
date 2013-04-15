@@ -3,7 +3,7 @@
 Summary: Edyuk is a Free crossplatform Qt4 IDE
 Name: edyuk
 Version: 1.1.0
-Release: alt2.%svn.1
+Release: alt2.%svn.1.qa1
 License: GPL
 Group: Development/KDE and QT
 Packager: Boris Savelev <boris@altlinux.org>
@@ -85,6 +85,9 @@ mv %buildroot%_iconsdir/default.kde %buildroot%_iconsdir/hicolor
 %_includedir/qt4/Edyuk
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.1.0-alt2.svn973.1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Wed Apr 07 2010 Boris Savelev <boris@altlinux.org> 1.1.0-alt2.svn973.1
 - drop mime xml
 
