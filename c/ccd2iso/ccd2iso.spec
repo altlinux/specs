@@ -1,6 +1,6 @@
 Name: ccd2iso
 Version: 0.3
-Release: alt1
+Release: alt1.qa1
 
 Summary:  CloneCD image to ISO image file converter
 Summary (ru_RU.UTF-8): Программа для преобразования образов CloneCD в ISO
@@ -31,5 +31,8 @@ ccd2iso - средство преобразования образов диск�
 %doc README
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.3-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Fri Feb 02 2007 Vyacheslav Dikonov <slava@altlinux.ru> 0.3-alt1
 - ALTLinux build
