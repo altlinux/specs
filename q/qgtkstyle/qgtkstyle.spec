@@ -1,6 +1,6 @@
 Name: qgtkstyle
 Version: 0.0
-Release: alt1.r594
+Release: alt1.r594.qa1
 
 Summary: Qt style rendered using GTK
 License: GPLv2
@@ -32,6 +32,9 @@ qmake-qt4
 %_libdir/qt4/plugins/styles/libgtkstyle.so
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.0-alt1.r594.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sun May 18 2008 Igor Zubkov <icesik@altlinux.org> 0.0-alt1.r594
 - build for Sisyphus
 
