@@ -1,6 +1,6 @@
 Name: clisp
 Version: 2.48
-Release: alt1
+Release: alt1.qa1
 Serial: 1
 
 Summary: Common Lisp (ANSI CL) implementation
@@ -83,11 +83,15 @@ make prefix=%prefix DESTDIR=%buildroot \
 %_libdir/clisp*
 %_emacslispdir/*
 %exclude %_libdir/clisp*/full
+%_datadir/aclocal/clisp.m4
 %_mandir/man?/*
 %_docdir/%name-%version
 %exclude %_datadir/vim
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1:2.48-alt1.qa1
+- NMU: rebuilt with libsigsegv.so.2.
+
 * Wed Aug 26 2009 Ilya Mashkin <oddity@altlinux.ru> 1:2.48-alt1
 - 2.48
 

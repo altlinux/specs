@@ -24,7 +24,7 @@
 Name: maxima
 Version: 5.30.0
 %define maxima_version 5.30.0
-Release: alt1
+Release: alt1.qa1
 Summary: Maxima Computer Algebra System
 License: GPL
 Group: Sciences/Mathematics
@@ -538,6 +538,9 @@ cd %maxima_dir
 
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 5.30.0-alt1.qa1
+- NMU: rebuilt with libsigsegv.so.2.
+
 * Sun Apr 07 2013 Ilya Mashkin <oddity@altlinux.ru> 5.30.0-alt1
 - 5.30.0
 
