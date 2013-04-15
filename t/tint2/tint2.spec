@@ -1,6 +1,6 @@
 Name: tint2
 Version: 0.11
-Release: alt1
+Release: alt1.qa1
 Summary: Simple panel/taskbar made for modern x window managers
 
 Group: Graphical desktop/Other
@@ -41,6 +41,9 @@ rm -rf %buildroot/{%_datadir,%_docdir}/%name
 %_liconsdir/*.png
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.11-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Fri Jul 2 2010 Andrew Clark <andyc@altlinux.org> 0.11-alt1
 - version update to 0.11-alt1
 
