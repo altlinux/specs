@@ -1,6 +1,6 @@
 Name: sreadahead
 Version: 1.0
-Release: alt1
+Release: alt1.qa1
 
 Packager: Victor Forsiuk <force@altlinux.org>
 
@@ -33,6 +33,9 @@ install -p -m755 sreadahead %buildroot/sbin/
 /var/lib/sreadahead
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.0-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Fri Aug 20 2010 Victor Forsiuk <force@altlinux.org> 1.0-alt1
 - 1.0
 
