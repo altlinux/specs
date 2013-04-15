@@ -1,6 +1,6 @@
 Name:		hda-verb
 Version:	0.3
-Release:	alt1
+Release:	alt1.qa1
 Summary:	Tool to send commands (verbs) to HD-Audio codecs
 License:	%gpl2plus
 Group:		System/Configuration/Hardware
@@ -31,6 +31,9 @@ CONFIG_SND_HDA_HWDEP option enabled.
 %{_sbindir}/hda-verb
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.3-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Fri Sep 04 2009 Michael Pozhidaev <msp@altlinux.ru> 0.3-alt1
 - First rpm for ALT Linux Sisyphus
 
