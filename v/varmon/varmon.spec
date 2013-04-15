@@ -1,6 +1,6 @@
 Name: varmon
 Version: 1.2.1
-Release: alt1
+Release: alt1.qa1
 
 Summary: RAID management tool for Mylex DAC960/DAC1164 controllers
 License: GPL
@@ -39,6 +39,9 @@ install -D varmon %buildroot%_sbindir/varmon
 %_sbindir/varmon
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.2.1-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sun Dec 28 2008 Ilya Mashkin <oddity@altlinux.org> 1.2.1-alt1
 - 1.2.1
 
