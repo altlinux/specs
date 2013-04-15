@@ -1,6 +1,6 @@
 Name: ocamldsort
 Version: 0.14.4
-Release: alt1
+Release: alt1.qa1
 Packager: Grigory Batalov <bga@altlinux.ru>
 
 Summary: Makefile helper for OCaml
@@ -37,6 +37,9 @@ mv ocamldsort.opt ocamldsort
 %doc README
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.14.4-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Thu Oct 04 2007 Grigory Batalov <bga@altlinux.ru> 0.14.4-alt1
 - New upstream release.
 
