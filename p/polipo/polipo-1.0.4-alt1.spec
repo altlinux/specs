@@ -1,7 +1,7 @@
 Packager: Repocop Q. A. Robot <repocop@altlinux.org>
 Name: polipo
 Version: 1.0.4
-Release: alt1.1
+Release: alt1.1.qa1
 Summary: Single-threaded non blocking HTTP proxy
 License: %mit
 Group: System/Servers
@@ -69,6 +69,9 @@ install -pD -m 0755 %SOURCE1 %buildroot%_initdir/%name
 
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.0.4-alt1.1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Mon Nov 02 2009 Igor Vlasenko <viy@altlinux.ru> 1.0.4-alt1.1
 - NMU (by repocop): the following fixes applied:
   * obsolete-call-in-post-install-info for polipo
