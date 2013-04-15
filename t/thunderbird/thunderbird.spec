@@ -3,7 +3,7 @@
 
 Summary:	Thunderbird is Mozilla's e-mail client
 Name:		thunderbird
-Version:	17.0.3
+Version:	17.0.5
 Release:	alt1
 License:	MPL/GPL
 Group:		Networking/Mail
@@ -61,10 +61,10 @@ BuildRequires: python-modules-logging
 BuildRequires: python-modules-sqlite3
 
 # Mozilla requires
-BuildRequires:	libnspr-devel       >= 4.9.2-alt1
-BuildRequires:	libnss-devel        >= 3.13.6-alt1
-BuildRequires:	libnss-devel-static >= 3.13.6-alt1
-BuildRequires:	xulrunner-devel     >= 16.0.1-alt1
+BuildRequires:	libnspr-devel       >= 4.9.6-alt1
+BuildRequires:	libnss-devel        >= 3.14.3-alt1
+BuildRequires:	libnss-devel-static >= 3.14.3-alt1
+BuildRequires:	xulrunner-devel     >= 20.0-alt1
 
 Provides:	mailclient
 Obsoletes:	thunderbird-calendar
@@ -104,7 +104,7 @@ Summary: Enigmail - GPG support for Mozilla Thunderbird
 Group: Networking/Mail
 Url: http://enigmail.mozdev.org/
 
-Provides: %name-enigmail = 1.4.5
+Provides: %name-enigmail = 1.5.1
 Requires: %name = %version-%release
 
 Obsoletes: thunderbird-enigmail < 0.95.7-alt2
@@ -371,7 +371,7 @@ rm -rf -- \
 	#
 
 #ver=%version
-ver=19.0
+ver=20.0
 sed -i \
 	-e "s,^\\(MaxVersion\\)=.*,\\1=${ver%%.*}.*,g" \
 	%buildroot/%tbird_prefix/application.ini
@@ -503,6 +503,20 @@ rm -f -- %buildroot/%lightning_ciddir/application.ini
 %_sysconfdir/rpm/macros.d/%name
 
 %changelog
+* Thu Apr 11 2013 Alexey Gladkov <legion@altlinux.ru> 17.0.5-alt1
+- New version (17.0.5).
+- Enigmail (1.5.1).
+- Fixed:
+  + MFSA 2013-40 Out-of-bounds array read in CERT_DecodeCertPackage
+  + MFSA 2013-38 Cross-site scripting (XSS) using timed history navigations
+  + MFSA 2013-36 Bypass of SOW protections allows cloning of protected nodes
+  + MFSA 2013-35 WebGL crash with Mesa graphics driver on Linux
+  + MFSA 2013-34 Privilege escalation through Mozilla Updater
+  + MFSA 2013-32 Privilege escalation through Mozilla Maintenance Service
+  + MFSA 2013-31 Out-of-bounds write in Cairo library
+  + MFSA 2013-30 Miscellaneous memory safety hazards (rv:20.0 / rv:17.0.5)
+  + MFSA 2013-29 Use-after-free in HTML Editor
+
 * Fri Mar 01 2013 Alexey Gladkov <legion@altlinux.ru> 17.0.3-alt1
 - New version (17.0.3).
 - Fixed:

@@ -13,7 +13,7 @@
 
 Summary:	XUL Runner
 Name:		xulrunner
-Version:	19.0.2
+Version:	20.0
 Release:	alt1
 
 License:	MPL/GPL/LGPL
@@ -79,11 +79,12 @@ BuildRequires: python-module-distribute
 BuildRequires: python-modules-compiler
 BuildRequires: python-modules-logging
 BuildRequires: python-modules-sqlite3
+BuildRequires: python-modules-json
 
 # Mozilla requires
-BuildRequires: libnspr-devel       >= 4.9.5-alt1
-BuildRequires: libnss-devel        >= 3.14.2-alt1
-BuildRequires: libnss-devel-static >= 3.14.2-alt1
+BuildRequires: libnspr-devel       >= 4.9.6-alt1
+BuildRequires: libnss-devel        >= 3.14.3-alt1
+BuildRequires: libnss-devel-static >= 3.14.3-alt1
 
 BuildRequires: autoconf_2.13
 %set_autoconf_version 2.13
@@ -288,6 +289,7 @@ rm -f -- \
 	./%xulr_prefix/run-mozilla.sh \
 	./%xulr_prefix/LICENSE \
 	./%xulr_prefix/README.txt \
+	./%xulr_prefix/js-gdb.py \
 	./%xulr_prefix/dictionaries/* \
 	./%_libdir/pkgconfig/gtkmozembed*.pc \
 	#
@@ -354,6 +356,21 @@ ln -sf $(relative "%xulr_prefix/libmozalloc.so" "%xulr_develdir/sdk/lib/libmozal
 %_datadir/rpm-build-mozilla/mozilla-sh-functions
 
 %changelog
+* Wed Apr 10 2013 Alexey Gladkov <legion@altlinux.ru> 20.0-alt1
+- New release (20.0).
+- Fixed:
+  + MFSA 2013-40 Out-of-bounds array read in CERT_DecodeCertPackage
+  + MFSA 2013-39 Memory corruption while rendering grayscale PNG images
+  + MFSA 2013-38 Cross-site scripting (XSS) using timed history navigations
+  + MFSA 2013-37 Bypass of tab-modal dialog origin disclosure
+  + MFSA 2013-36 Bypass of SOW protections allows cloning of protected nodes
+  + MFSA 2013-35 WebGL crash with Mesa graphics driver on Linux
+  + MFSA 2013-34 Privilege escalation through Mozilla Updater
+  + MFSA 2013-33 World read and write access to app_tmp directory on Android
+  + MFSA 2013-32 Privilege escalation through Mozilla Maintenance Service
+  + MFSA 2013-31 Out-of-bounds write in Cairo library
+  + MFSA 2013-30 Miscellaneous memory safety hazards (rv:20.0 / rv:17.0.5)
+
 * Sat Mar 09 2013 Alexey Gladkov <legion@altlinux.ru> 19.0.2-alt1
 - New release (19.0.2).
 - Fixed:
