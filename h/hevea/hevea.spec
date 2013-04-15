@@ -2,7 +2,7 @@
 
 Name: hevea
 Version: 1.10
-Release: alt3
+Release: alt3.qa1
 Packager: Grigory Batalov <bga@altlinux.ru>
 
 Group: Publishing
@@ -55,6 +55,9 @@ rm -f config.sh
 %doc README CHANGES LICENSE pub.txt
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.10-alt3.qa1
+- NMU: rebuilt for debuginfo.
+
 * Tue Oct 06 2009 Grigory Batalov <bga@altlinux.ru> 1.10-alt3
 - Remove obsolete post-install scripts and thus tetex dependence.
 - Move templates to arch-independent directory.
