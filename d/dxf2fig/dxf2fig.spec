@@ -1,6 +1,6 @@
 Name: dxf2fig
 Version: 2.13
-Release: alt1
+Release: alt1.qa1
 
 Summary: Autocad DXF to xfig convertor
 License: GPL
@@ -28,5 +28,8 @@ Autocad DXF to xfig convertor utility.
 %_bindir/%{name}
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.13-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sat Nov 19 2005 Igor Vlasenko <viy@altlinux.ru> 2.13-alt1
 - initial build
