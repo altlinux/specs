@@ -1,6 +1,6 @@
 Name: tcpxtract
 Version: 1.0.1
-Release: alt1
+Release: alt1.qa1
 
 Summary: Tool for extracting files from network traffic
 License: GPL
@@ -40,5 +40,8 @@ echo "rar(10000000, Rar\x21);" >> tcpxtract.conf
 %_man1dir/*
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.0.1-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Thu Jun 21 2007 Victor Forsyuk <force@altlinux.org> 1.0.1-alt1
 - Initial build.
