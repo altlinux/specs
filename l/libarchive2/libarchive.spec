@@ -2,7 +2,7 @@
 %define libarchive libarchive
 Name: libarchive2
 Version: 2.8.5
-Release: alt3
+Release: alt4
 
 Group: System/Libraries
 Summary: A library for handling streaming archive formats
@@ -63,7 +63,7 @@ developing applications that use %name.
 
 
 %prep
-%setup -qn %rname-%version
+%setup -n %rname-%version
 install -m 0644 %SOURCE1 libarchive.map
 install -m 0644 %SOURCE2 libarchive.lds
 %patch1 -p1
@@ -86,22 +86,17 @@ autoreconf -fisv
 
 
 %install
-%make DESTDIR=%buildroot  install
+%makeinstall_std
 
 
 %files -n %libarchive
 %doc README NEWS
 %_libdir/*.so.*
 
-%files devel
-%doc
-%_includedir/*
-%_man3dir/*
-%_man5dir/*
-%_libdir/*.so
-%_pkgconfigdir/*.pc
-
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin <ldv@altlinux.org> 2.8.5-alt4
+- Dropped libarchive2-devel subpackage.
+
 * Mon Mar 11 2013 Sergey V Turchin <zerg@altlinux.org> 2.8.5-alt3
 - create compatibility package
 
