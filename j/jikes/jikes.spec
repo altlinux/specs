@@ -1,6 +1,6 @@
 Name: jikes
 Version: 1.22
-Release: alt1.1
+Release: alt1.1.qa1
 
 Summary: Java source to bytecode compiler
 License: IBM Public License
@@ -41,6 +41,9 @@ make
 /usr/include/*.h
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.22-alt1.1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Tue Jan 18 2005 ALT QA Team Robot <qa-robot@altlinux.org> 1.22-alt1.1
 - Rebuilt with libstdc++.so.6.
 - Remove gcc3.3-c++ from BuildReq.
