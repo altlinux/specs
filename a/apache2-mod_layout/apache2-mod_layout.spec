@@ -7,7 +7,7 @@
 Summary: Add custom header and/or footers for apache
 Name: apache2-mod_layout
 Version: 5.1
-Release: alt1
+Release: alt1.qa1
 Group: System/Servers
 License: BSD-style
 Url: http://software.tangent.org/
@@ -51,6 +51,9 @@ install -m 644 %SOURCE2 %buildroot%apache2_mods_available
 %apache2_moduledir/*.so
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 5.1-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Mon Feb 09 2009 Boris Savelev <boris@altlinux.org> 5.1-alt1
 - initial build for Sisyphus from Mandriva
 
