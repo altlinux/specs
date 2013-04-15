@@ -3,7 +3,7 @@
 Name: cloop
 Version: 2.628
 %define subver -2
-Release: alt1
+Release: alt1.qa1
 Summary: %name kernel module and utils
 License: %gpl2only
 Group: Development/Kernel
@@ -70,6 +70,9 @@ rm -rf kernel-source-%name-%version
 
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.628-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Thu Jan 08 2009 Led <led@altlinux.ru> 2.628-alt1
 - 2.628-2
 
