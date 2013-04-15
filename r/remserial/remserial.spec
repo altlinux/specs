@@ -3,7 +3,7 @@ License: GPL
 Group: System/Kernel and hardware
 Summary: Serial and Network Communication Software Package
 Version: 1.4
-Release: alt1
+Release: alt1.qa1
 Url: http://lpccomp.bc.ca/remserial/
 Source: %name.tar
 Packager: Boris Savelev <boris@altlinux.org>
@@ -28,6 +28,9 @@ install -Dp -m 755 %name %buildroot%_bindir/%name
 %_bindir/%name
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.4-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sun Jan 31 2010 Boris Savelev <boris@altlinux.org> 1.4-alt1
 - new verison
 - build with optflags
