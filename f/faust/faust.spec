@@ -1,6 +1,6 @@
 Name: faust
 Version: 0.9.9.4
-Release: alt2
+Release: alt2.qa1
 
 Summary: FAUST is a compiled language for real-time audio signal processing
 License: GPL
@@ -122,6 +122,9 @@ popd
 %doc %_docdir/%name-%version/README.faust2appls
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.9.9.4-alt2.qa1
+- NMU: rebuilt for debuginfo.
+
 * Fri Jul 31 2009 Timur Batyrshin <erthad@altlinux.org> 0.9.9.4-alt2
 - minor gcc fixes
 
