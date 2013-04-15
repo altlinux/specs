@@ -1,7 +1,7 @@
 Packager: Repocop Q. A. Robot <repocop@altlinux.org>
 Name: lss
 Version: 0.1.6
-Release: alt1.1
+Release: alt1.1.qa1
 
 Summary: LSS is a symbol browser to help creating LaTeX documents with many math symbols.
 License: GNU GPL
@@ -43,6 +43,9 @@ Features
 %_pixmapsdir/*
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.1.6-alt1.1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Mon Nov 02 2009 Igor Vlasenko <viy@altlinux.ru> 0.1.6-alt1.1
 - NMU (by repocop): the following fixes applied:
   * update_menus for lss
