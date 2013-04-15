@@ -1,6 +1,6 @@
 Name: gimp-plugin-normalmap
 Version: 1.2.2
-Release: alt1
+Release: alt1.qa1
 
 Summary: This is a plugin for GIMP for normal maps creation
 License: GPLv2+
@@ -31,6 +31,9 @@ install -pDm755 normalmap %buildroot%_libdir/gimp/2.0/plug-ins/normalmap
 %doc README
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.2.2-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Thu Dec 09 2010 Dmitry V. Levin <ldv@altlinux.org> 1.2.2-alt1
 - Updated to 1.2.2.
 
