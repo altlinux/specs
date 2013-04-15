@@ -1,6 +1,6 @@
 Name: xtux
 Version: 20030306
-Release: alt5
+Release: alt5.qa1
 
 Summary: X11 client server network game featuring opensource mascots
 License: GPL
@@ -77,6 +77,9 @@ install -pD -m644 %SOURCE4 %buildroot%_miconsdir/%name.png
 
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 20030306-alt5.qa1
+- NMU: rebuilt for debuginfo.
+
 * Mon Nov 17 2008 Andrey Rahmatullin <wrar@altlinux.ru> 20030306-alt5
 - remove update_*/clean_* invocations
 
