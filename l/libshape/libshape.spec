@@ -1,7 +1,7 @@
 %define oname shapelib
 Name: libshape
 Version: 1.3.0b2
-Release: alt1
+Release: alt1.qa1
 
 Summary: API in "C" for Shapefile handling
 
@@ -76,6 +76,9 @@ cd contrib
 %_libdir/*.so
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.3.0b2-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sat Nov 13 2010 Vitaly Lipatov <lav@altlinux.ru> 1.3.0b2-alt1
 - initial build for ALT Linux Sisyphus
 
