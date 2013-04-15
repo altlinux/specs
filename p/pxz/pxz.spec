@@ -1,6 +1,6 @@
 Name: pxz
 Version: 4.999.9beta
-Release: alt2
+Release: alt2.qa1
 
 Summary: Parallel LZMA compressor using liblzma
 License: GPLv2+
@@ -33,6 +33,9 @@ This significantly reduces compression time.
 %_man1dir/*
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 4.999.9beta-alt2.qa1
+- NMU: rebuilt for debuginfo.
+
 * Thu Nov 18 2010 Dmitry V. Levin <ldv@altlinux.org> 4.999.9beta-alt2
 - Rebuilt with liblzma.so.5.
 
