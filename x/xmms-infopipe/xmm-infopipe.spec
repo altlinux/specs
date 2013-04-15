@@ -1,6 +1,6 @@
 Name:		xmms-infopipe
 Version:	1.3
-Release:	alt1
+Release:	alt1.qa1
 Summary:	InfoPipe plugin for XMMS
 Group:		Sound
 License:	GPL
@@ -36,5 +36,8 @@ make DESTDIR=$RPM_BUILD_ROOT install
 %doc AUTHORS ChangeLog README applications/lirc-say.pl applications/xmms-info.php applications/xmms-info.pl
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.3-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Tue Jul 26 2005 Nick S. Grechukh <gns@altlinux.ru> 1.3-alt1
 - initial build for Sisyphus
