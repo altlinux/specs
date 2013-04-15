@@ -2,7 +2,7 @@
 %define Name MPFC
 Name: %bname-flac
 Version: 0.2.1
-Release: alt3
+Release: alt3.qa1
 Summary: FLAC format playback plugin for %Name
 License: %gpl2plus
 Group: Sound
@@ -38,6 +38,9 @@ FLAC format playback plugin for %Name.
 
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.2.1-alt3.qa1
+- NMU: rebuilt for debuginfo.
+
 * Wed Sep 24 2008 Led <led@altlinux.ru> 0.2.1-alt3
 - rebuild with lib%bname.so.0
 
