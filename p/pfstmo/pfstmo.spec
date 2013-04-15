@@ -1,6 +1,6 @@
 Name: pfstmo
 Version: 1.4
-Release: alt1
+Release: alt1.qa1
 
 Packager: Victor Forsyuk <force@altlinux.org>
 
@@ -37,6 +37,9 @@ animations.
 %_man1dir/*
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.4-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Thu Nov 26 2009 Victor Forsyuk <force@altlinux.org> 1.4-alt1
 - 1.4
 
