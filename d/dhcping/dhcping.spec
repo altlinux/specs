@@ -5,7 +5,7 @@
 Summary: DHCP daemon ping program
 Name: dhcping
 Version: 1.2
-Release: alt2
+Release: alt2.qa1
 License: BSD
 Group: Communications
 Packager: Pavlov Konstantin <thresh@altlinux.ru>
@@ -34,6 +34,9 @@ server is still functioning.
 %_bindir/dhcping
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.2-alt2.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sat Jan 27 2007 Pavlov Konstantin <thresh@altlinux.ru> 1.2-alt2
 - Minor spec cleanup.
 - Added Packager field.
