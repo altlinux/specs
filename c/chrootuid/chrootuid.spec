@@ -3,7 +3,7 @@
 
 Name: chrootuid
 Version: 1.3
-Release: alt2
+Release: alt2.qa1
 
 Summary: Chrootuid is a tool to one-step chroot and drop privilleges operation
 License: Distributable
@@ -37,6 +37,9 @@ install chrootuid.1 %buildroot%_man1dir
 %doc README* *license
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.3-alt2.qa1
+- NMU: rebuilt for debuginfo.
+
 * Wed Dec 11 2002 Alexander Bokovoy <ab@altlinux.ru> 1.3-alt2
 - Fixed:
     + return codes for errors
