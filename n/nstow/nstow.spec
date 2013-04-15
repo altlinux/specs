@@ -1,6 +1,6 @@
 Name: nstow
 Version: 1.0
-Release: alt1
+Release: alt1.qa1
 
 Summary: nstow - manage software installation from the command-line
 License: GPL
@@ -36,5 +36,8 @@ mv %buildroot%_man1dir/stow.1 %buildroot%_man1dir/nstow.1
 %_man1dir/%name.*
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.0-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sat May 06 2006 Igor Zubkov <icesik@altlinux.ru> 1.0-alt1
 - Initial build for Sisyphus
