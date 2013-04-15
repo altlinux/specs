@@ -1,7 +1,7 @@
 # vim:set ft=spec: -*- rpm-spec -*- 
 Name: wmctrl
 Version: 1.07
-Release: alt4
+Release: alt4.qa1
 
 Summary: Tool to interact with an EWMH/NetWM compatible X Window Manager.
 Summary(ru_RU.KOI8-R): Утилита для взаимодействия с оконными менеджерами, соответствующими стандартам EWMH/NetWM
@@ -41,6 +41,9 @@ install -p -m755 -D %name %buildroot/%_x11bindir/%name
 %doc README AUTHORS ChangeLog COPYING 
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.07-alt4.qa1
+- NMU: rebuilt for debuginfo.
+
 * Thu Sep 04 2008 Gleb Stiblo <ulfr@altlinux.ru> 1.07-alt4
 - buildreq fixed
 
