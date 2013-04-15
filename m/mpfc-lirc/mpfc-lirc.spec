@@ -2,7 +2,7 @@
 %define Name MPFC
 Name: %bname-lirc
 Version: 0.1
-Release: alt1
+Release: alt1.qa1
 Summary: Lirc control plugin for %Name
 License: %gpl2plus
 Group: Sound
@@ -40,5 +40,8 @@ This plugin works by mapping lirc events to mpfc actions.
 
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.1-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Thu Oct 16 2008 Led <led@altlinux.ru> 0.1-alt1
 - initial revision
