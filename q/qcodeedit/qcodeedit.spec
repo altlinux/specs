@@ -2,7 +2,7 @@
 Summary: QCodeEdit is a framework designed to make edition of source code easy for both users and developers.
 Name: qcodeedit
 Version: 2.2.2
-Release: alt2
+Release: alt2.qa1
 License: GPL
 Group: Development/KDE and QT
 Packager: Boris Savelev <boris@altlinux.org>
@@ -73,6 +73,9 @@ cp -ap example %buildroot%_datadir/%name/
 %_qt4dir/plugins/designer/libqcodeedit-plugin.so
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.2.2-alt2.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sat Mar 14 2009 Boris Savelev <boris@altlinux.org> 2.2.2-alt2
 - fix summary in lib%name-designer
 
