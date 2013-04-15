@@ -1,7 +1,7 @@
 %define req_ver_mlt 0.7.8
 
 Name: kdenlive
-Version: 0.9.4
+Version: 0.9.6
 Release: alt1
 
 Summary: KDE Non Linear Video Editor
@@ -9,7 +9,7 @@ Summary(ru_RU.utf8): Редактор нелинейного видео монт
 Summary(ru_UA.utf8): Редактор нелінійного монтажу для KDE
 License: GPL
 Group: Video
-URL: http://sourceforge.net/projects/%name/
+URL: http://kdenlive.org/
 
 Requires: mlt-utils >= %req_ver_mlt frei0r-plugins /usr/bin/ffmpeg
 Requires: recordmydesktop dvdauthor dvgrab genisoimage
@@ -40,6 +40,8 @@ DV, HDV and AVCHD(not complete yet) editing.
 %setup -q
 mv altlinux/po .
 #cat %SOURCE1 > po/ru/kdenlive.po
+rm -rf doc
+mv altlinux/doc .
 #%patch1 -p1
 %patch2 -p1
 
@@ -63,6 +65,9 @@ mv altlinux/po .
 %_K4xdg_mime/*
 
 %changelog
+* Mon Apr 15 2013 Sergey V Turchin <zerg@altlinux.org> 0.9.6-alt1
+- new version
+
 * Thu Jan 31 2013 Sergey V Turchin <zerg@altlinux.org> 0.9.4-alt1
 - new version
 
