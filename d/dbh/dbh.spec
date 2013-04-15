@@ -1,6 +1,6 @@
 Name: dbh
 Version: 4.5.0
-Release: alt1
+Release: alt1.qa1
 
 Summary: Disk based hash library
 License: GPL
@@ -65,6 +65,9 @@ export LDFLAGS="$LDFLAGS -lm"
 %exclude %_libdir/*.a
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 4.5.0-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Mon Nov 06 2006 Eugene Ostapets <eostapets@altlinux.ru> 4.5.0-alt1
 - 4.5.0
 
