@@ -1,6 +1,6 @@
 Name: magicrescue
 Version: 1.1.9
-Release: alt1
+Release: alt1.qa1
 
 Packager: Victor Forsiuk <force@altlinux.org>
 
@@ -53,6 +53,9 @@ rm -f %buildroot%_libdir/magicrescue/gimp-resave.pl
 %_man1dir/*
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.1.9-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Wed Jun 16 2010 Victor Forsiuk <force@altlinux.org> 1.1.9-alt1
 - 1.1.9
 - Add recipe for rar archives (upstream forgot to add it to tarball).
