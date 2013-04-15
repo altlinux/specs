@@ -2,7 +2,7 @@
 
 Name: libxml++
 Version: 1.0.5
-Release: alt3.1
+Release: alt3.1.qa1
 
 Summary: libxml++ is a C++ wrapper for the libxml XML parser library.
 License: LGPL
@@ -74,6 +74,9 @@ statically linked applications.
 %endif
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.0.5-alt3.1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Mon Nov 02 2009 Igor Vlasenko <viy@altlinux.ru> 1.0.5-alt3.1
 - NMU (by repocop): the following fixes applied:
   * post_ldconfig for libxml++
