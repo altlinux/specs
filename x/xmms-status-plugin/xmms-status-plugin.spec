@@ -1,6 +1,6 @@
 Name: xmms-status-plugin
 Version: 1.0
-Release: alt1
+Release: alt1.qa1
 
 Summary: A docklet for XMMS
 Group: Sound
@@ -44,6 +44,9 @@ autoconf
 %_datadir/xmms/status_docklet/*
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.0-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sun Apr 15 2007 Igor Zubkov <icesik@altlinux.org> 1.0-alt1
 - 0.9 -> 1.0
 
