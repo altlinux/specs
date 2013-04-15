@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.1.3
-Release: alt4.1
+Release: alt5
 Epoch: 1
 
 Summary: Tool for producing documentation for Python projects
@@ -198,9 +198,7 @@ install -p -m644 %python3_sitelibdir/%oname/objects.inv ../python3/tests
 %if_with python3
 pushd ../python3
 
-for i in $(find ./ -name '*.py'); do
-	2to3 -w -n $i
-done
+find -type f -name '*.py' -exec 2to3 -w -n '{}' +
 sed -i 's|python|python3|' doc/Makefile
 sed -i 's|mimetools|email|g' tests/etree13/HTMLTreeBuilder.py
 sed -i 's|%_bindir/python|%_bindir/python3|' tests/coverage.py
@@ -360,6 +358,9 @@ popd
 %endif
 
 %changelog
+* Mon Apr 15 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:1.1.3-alt5
+- Use 'find... -exec...' instead of 'for ... $(find...'
+
 * Thu Mar 21 2013 Aleksey Avdeev <solo@altlinux.ru> 1:1.1.3-alt4.1
 - Rebuild with Python-3.3
 
