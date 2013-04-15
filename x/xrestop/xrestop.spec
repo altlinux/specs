@@ -1,6 +1,6 @@
 Name: xrestop
 Version: 0.4
-Release: alt4
+Release: alt4.qa1
 
 Summary: A 'top' like tool for monitoring X Client server resource usage
 License: GPLv2+
@@ -39,6 +39,9 @@ server side leakage.
 %doc AUTHORS ChangeLog README
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.4-alt4.qa1
+- NMU: rebuilt for debuginfo.
+
 * Mon Dec 01 2008 Andrey Rahmatullin <wrar@altlinux.ru> 0.4-alt4
 - fix buildreqs
 
