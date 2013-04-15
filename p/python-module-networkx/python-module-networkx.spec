@@ -5,7 +5,7 @@
 
 Name:           python-module-%oname
 Version:        1.8
-Release:        alt2.git20130303
+Release:        alt3.git20130303
 Summary:        Creates and Manipulates Graphs and Networks
 Group:          Development/Python
 License:        LGPLv2+
@@ -119,9 +119,7 @@ sed -i 's|@PYVER@|%_python_version|g' doc/Makefile
 
 %if_with python3
 pushd ../python3
-for i in $(find ./ -name '*.py'); do
-	2to3 -w -n $i
-done
+find -type f -name '*.py' -exec 2to3 -w -n '{}' +
 %python3_build_debug
 popd
 %endif
@@ -198,6 +196,9 @@ cp -fR doc/build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Mon Apr 15 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.8-alt3.git20130303
+- Use 'find... -exec...' instead of 'for ... $(find...'
+
 * Mon Apr 01 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.8-alt2.git20130303
 - New snapshot
 
