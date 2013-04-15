@@ -1,6 +1,6 @@
 Name: dvdbackup
 Version: 0.4.1
-Release: alt1
+Release: alt1.qa1
 
 Summary: DVD-copy tool
 License: GPL
@@ -42,6 +42,9 @@ make
 %{_bindir}/%{name}
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.4.1-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sun Sep 20 2009 Igor Vlasenko <viy@altlinux.ru> 0.4.1-alt1
 - new version from http://dvdbackup.sourceforge.net
 
