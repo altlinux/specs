@@ -1,6 +1,6 @@
 Name: kumir-console
 Version: 1.7.2
-Release: alt1
+Release: alt1.qa1
 
 Summary: Console interpreter of Kumir programming language
 Summary(ru_RU.UTF-8): Консольный интерпретатор языка программирования Кумир
@@ -48,5 +48,8 @@ cp -r share/kumir %buildroot%_datadir/
 %_datadir/kumir
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.7.2-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Wed Dec 01 2010 Denis Kirienko <dk@altlinux.ru> 1.7.2-alt1
 - Initial build for Sisyphus
