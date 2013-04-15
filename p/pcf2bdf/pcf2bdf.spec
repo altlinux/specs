@@ -1,6 +1,6 @@
 Name: pcf2bdf
 Version: 1.04
-Release: alt1.1
+Release: alt1.1.qa1
 
 Summary: Pcf2bdf is a font de-compiler
 Summary(ru_RU.KOI8-R): Pcf2bdf - декомпилятор шрифтов
@@ -45,6 +45,9 @@ gzip.
 %_man1dir/%name.1.*
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.04-alt1.1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Tue Jan 18 2005 ALT QA Team Robot <qa-robot@altlinux.org> 1.04-alt1.1
 - Rebuilt with libstdc++.so.6.
 
