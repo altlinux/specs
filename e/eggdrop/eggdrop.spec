@@ -4,7 +4,7 @@
 
 Name: eggdrop
 Version: 1.6.19
-Release: alt2
+Release: alt2.qa1
 
 Summary: Eggdrop is an IRC bot, written in C
 License: GPL
@@ -120,6 +120,9 @@ rm -rf %buildroot%_datadir/%name/doc
 %doc doc/* README*
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.6.19-alt2.qa1
+- NMU: rebuilt for debuginfo.
+
 * Mon May 18 2009 Vladimir V. Kamarzin <vvk@altlinux.org> 1.6.19-alt2
 - Security fix: eggdrop remote crash vulnerability (incomplete patch for
   CVE-2007-2807) (Closes: #20067)
