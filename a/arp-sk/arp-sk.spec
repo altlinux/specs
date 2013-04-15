@@ -1,6 +1,6 @@
 Name: arp-sk
 Version: 0.0.16
-Release: alt1
+Release: alt1.qa1
 Summary: ARP traffic generation tools
 
 License: GPL
@@ -76,6 +76,9 @@ install -pm644 %SOURCE2 %buildroot%_sysconfdir/sysconfig/arp-sk
 %config(noreplace) %_sysconfdir/sysconfig/%name
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.0.16-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Fri Sep 29 2006 Pavlov Konstantin <thresh@altlinux.ru> 0.0.16-alt1
 - initial version.
 
