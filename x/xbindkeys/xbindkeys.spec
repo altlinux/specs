@@ -2,7 +2,7 @@
 
 Name: xbindkeys
 Version: 1.8.4
-Release: alt1
+Release: alt1.qa1
 
 Summary: Binds keys or mouse buttons to shell commands under X
 License: GPLv2+
@@ -41,6 +41,9 @@ a simple configuration file, and is independant of the window manager.
 %doc AUTHORS BUGS ChangeLog README TODO xbindkeys_show*
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.8.4-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Tue Dec  7 2010 Terechkov Evgenii <evg@altlinux.org> 1.8.4-alt1
 - 1.8.4
 
