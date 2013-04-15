@@ -11,7 +11,7 @@
 %define teaname tile
 Name: tcl-tile
 Version: 0.8.2
-Release: alt1
+Release: alt1.qa1
 Summary: The Tile Widget Set
 License: %mit
 Group: Development/Tcl
@@ -177,6 +177,9 @@ __INDEX__
 
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.8.2-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Mon Jan 28 2008 Led <led@altlinux.ru> 0.8.2-alt1
 - 0.8.2
 - cleaned up spec
