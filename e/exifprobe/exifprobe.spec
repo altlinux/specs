@@ -1,6 +1,6 @@
 Name: exifprobe
 Version: 2.0.1
-Release: alt1
+Release: alt1.qa1
 
 Summary: Shows the content and structure of cooked or raw digital camera images
 License: BSD
@@ -35,6 +35,9 @@ install -d $RPM_BUILD_ROOT{%_bindir,%_man1dir}
 %doc ABOUT_PIM CAMERA_makes_and_models CREDITS DESCRIPTION MAKER_NOTES
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.0.1-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Wed Aug 03 2005 Victor Forsyuk <force@altlinux.ru> 2.0.1-alt1
 - 2.0.1
 
