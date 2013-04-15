@@ -1,6 +1,6 @@
 Name: dvipng
 Version: 1.14
-Release: alt1
+Release: alt1.qa1
 
 Summary: Makes PNG graphics from DVI files
 License: LGPLv3+
@@ -34,6 +34,9 @@ make dvipng.info
 %exclude %_infodir/dir
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.14-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Fri Dec 17 2010 Victor Forsiuk <force@altlinux.org> 1.14-alt1
 - 1.14
 
