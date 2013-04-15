@@ -1,6 +1,6 @@
 Name: dvbackup
 Version: 0.0.4
-Release: alt1
+Release: alt1.qa1
 Group: Archiving/Backup
 Summary: Backup to digital camcoders
 Summary(ru_RU.KOI8-R): Архивирование на цифровые видеокамеры
@@ -69,6 +69,9 @@ popd
 %_man1dir/*
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.0.4-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Tue Apr 13 2004 Grigory Batalov <bga@altlinux.ru> 0.0.4-alt1
 - Updated to CVS version 20030816 (0.0.5?)
 - Manpages from Debian imported
