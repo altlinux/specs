@@ -1,7 +1,7 @@
 Summary: Network traffic recorder
 Name: tcpflow
 Version: 0.21
-Release: alt1
+Release: alt1.qa1
 License: GPL
 Group: Monitoring
 Url: http://www.circlemud.org/~jelson/software/tcpflow/
@@ -59,6 +59,9 @@ sed -i -e 's:__BINARY__:%_bindir/%name:' %buildroot%_controldir/%name
 %config %_controldir/%name
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.21-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Tue Sep 02 2008 Afanasov Dmitry <ender@altlinux.org> 0.21-alt1
 - initial build
 
