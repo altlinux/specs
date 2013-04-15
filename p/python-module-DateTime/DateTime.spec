@@ -4,8 +4,8 @@
 
 Name: python-module-%oname
 Epoch: 1
-Version: 3.0.3
-Release: alt1.1
+Version: 4.0
+Release: alt1
 Summary: Encapsulation of date/time values
 License: ZPLv2.1
 Group: Development/Python
@@ -73,9 +73,7 @@ cp -a . ../python3
 %python_build
 %if_with python3
 pushd ../python3
-for i in $(find ./ -name '*.py'); do
-	2to3 -w -n $i
-done
+find -type f -name '*.py' -exec 2to3 -w '{}' +
 %python3_build
 popd
 %endif
@@ -107,6 +105,9 @@ popd
 %endif
 
 %changelog
+* Mon Apr 15 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:4.0-alt1
+- Version 4.0
+
 * Fri Mar 22 2013 Aleksey Avdeev <solo@altlinux.ru> 1:3.0.3-alt1.1
 - Rebuild with Python-3.3
 
