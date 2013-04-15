@@ -1,6 +1,6 @@
 Name: ipaudit
 Version: 1.0
-Release: alt1rc9
+Release: alt1rc9.qa1
 Copyright: GPL
 Group: Monitoring
 Source: %{name}-%{version}rc9.tar.gz
@@ -55,6 +55,9 @@ make install DESTDIR=%buildroot
 
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.0-alt1rc9.qa1
+- NMU: rebuilt for debuginfo.
+
 * Thu Sep 30 2010 Ilya Mashkin <oddity@altlinux.ru> 1.0-alt1rc9
 - 1.0rc9
 - spec cleanup
