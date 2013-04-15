@@ -1,7 +1,7 @@
 Version: 1.9.5
 Summary: Cisco-like telnet command-line library
 Name: libcli
-Release: alt1
+Release: alt1.qa1
 License: LGPL
 Group: System/Libraries
 Source: %name-%version.tar
@@ -42,5 +42,8 @@ sed -i 's|/lib|/%_lib|g' Makefile
 %{_includedir}/*.h
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.9.5-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sun Dec 19 2010 Terechkov Evgenii <evg@altlinux.org> 1.9.5-alt1
 - Initial build for ALT Linux Sisyphus
