@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.1.1
-Release: alt2.svn20090926.1
+Release: alt3.svn20090926
 Summary: Fast RPC or encoded calls between WSGI apps
 License: MIT
 Group: Development/Python
@@ -86,10 +86,8 @@ cp -a . ../python3
 %python_build
 %if_with python3
 pushd ../python3
-for i in $(find ./ -name '*.py'); do
-	sed -i 's|%_bindir/env python|%_bindir/env python3|' $i
-	2to3 -w -n $i
-done
+find -type f -name '*.py' -exec sed -i 's|%_bindir/env python|%_bindir/python3|' -- '{}' +
+find -type f -name '*.py' -exec 2to3 -w -n '{}' +
 sed -i 's|simplejson|json|' httpencode/json.py
 %python3_build
 popd
@@ -128,6 +126,9 @@ popd
 %endif
 
 %changelog
+* Mon Apr 15 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.1-alt3.svn20090926
+- Use 'find... -exec...' instead of 'for ... $(find...'
+
 * Fri Mar 22 2013 Aleksey Avdeev <solo@altlinux.ru> 0.1.1-alt2.svn20090926.1
 - Rebuild with Python-3.3
 
