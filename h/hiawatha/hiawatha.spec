@@ -1,5 +1,5 @@
 Name: hiawatha
-Version: 7.8.2
+Version: 9.0
 Release: alt1
 
 Summary: A secure and advanced webserver
@@ -11,9 +11,11 @@ Source: http://www.hiawatha-webserver.org/files/hiawatha-%version.tar.gz
 Source1: hiawatha.init
 Source2: hiawatha.logrotate
 Patch1: hiawatha-6.12-nobody99.patch
+Patch2: hiawatha-9.0-libs-in-system-place.patch
 
+BuildRequires(pre): cmake
 # Automatically added by buildreq on Mon Mar 28 2011
-BuildRequires: libssl-devel libxslt-devel zlib-devel
+BuildRequires: libssl-devel libxslt-devel zlib-devel 
 
 %description
 Hiawatha is an advanced and secure Web server for Unix. It has been written with
@@ -27,13 +29,18 @@ available Web servers are offering.
 %prep
 %setup
 %patch1 -p1
+%patch2 -p2
 
 %build
-%configure --localstatedir=/var --enable-xslt
-%make_build
+%cmake \
+    -DCMAKE_INSTALL_NAME_DIR=%_libdir \
+    -DLIB_INSTALL_DIR=%_libdir \
+    -DCONFIG_DIR=%_sysconfdir/hiawatha \
+    -DWEBROOT_DIR=/var/www/hiawatha
+%make_build -C BUILD
 
 %install
-%makeinstall_std
+%makeinstall_std -C BUILD
 install -d %buildroot%_logdir/hiawatha
 install -pDm 755 %_sourcedir/hiawatha.init %buildroot%_initrddir/hiawatha
 install -pDm 644 %_sourcedir/hiawatha.logrotate %buildroot/etc/logrotate.d/hiawatha
@@ -51,12 +58,18 @@ install -pDm 644 %_sourcedir/hiawatha.logrotate %buildroot/etc/logrotate.d/hiawa
 %config(noreplace) /etc/logrotate.d/hiawatha
 %dir /var/www/hiawatha
 %config(noreplace) /var/www/hiawatha/*
-%_bindir/*
-%_sbindir/*
+%_bindir/ssi-cgi
+%_sbindir/cgi-wrapper
+%_sbindir/hiawatha
+%_sbindir/wigwam
+%_libdir/libpolarssl.so*
 %_man1dir/*
 %_logdir/hiawatha
 
 %changelog
+* Mon Apr 15 2013 Andrey Cherepanov <cas@altlinux.org> 9.0-alt1
+- New version (ALT #28848)
+
 * Sat Nov 26 2011 Victor Forsiuk <force@altlinux.org> 7.8.2-alt1
 - 7.8.2
 
