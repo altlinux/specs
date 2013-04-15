@@ -1,6 +1,6 @@
 Name: ifstat
 Version: 1.1
-Release: alt1
+Release: alt1.qa1
 
 Summary: InterFace STATistics
 License: GPL
@@ -50,6 +50,9 @@ unset CC CXX
 %_man1dir/*
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.1-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sat Jan 03 2004 Michael Shigorin <mike@altlinux.ru> 1.1-alt1
 - built for ALT Linux
 - based on PLD spec 1.0-2 by <kloczek at pld.org.pl> (which is based on spec
