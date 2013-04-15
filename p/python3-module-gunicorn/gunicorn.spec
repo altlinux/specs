@@ -1,7 +1,7 @@
 %define oname gunicorn
 Name: python3-module-%oname
 Version: 0.14.4
-Release: alt2.git20120604.1
+Release: alt3.git20120604
 Summary: WSGI HTTP Server for UNIX (Python 3)
 License: Mit
 Group: Development/Python3
@@ -40,9 +40,7 @@ This package contains documentation for gunicorn.
 %prep
 %setup
 
-for i in $(find ./ -name '*.py'); do
-	2to3 -w -n $i
-done
+find -type f -name '*.py' -exec 2to3 -w -n '{}' +
 
 %build
 %python3_build
@@ -65,6 +63,9 @@ popd
 %doc doc/htdocs examples
 
 %changelog
+* Mon Apr 15 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.14.4-alt3.git20120604
+- Use 'find... -exec...' instead of 'for ... $(find...'
+
 * Fri Mar 22 2013 Aleksey Avdeev <solo@altlinux.ru> 0.14.4-alt2.git20120604.1
 - Rebuild with Python-3.3
 
