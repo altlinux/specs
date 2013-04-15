@@ -1,6 +1,6 @@
 Name: bing
 Version: 1.1.3
-Release: alt1
+Release: alt1.qa1
 
 Summary: Bing, a point-to-point bandwidth measurement tool (b from Bandwith)
 License: BSD
@@ -43,6 +43,9 @@ install -pD -m644 unix/bing.8 %buildroot%_man8dir/bing.8
 %_man8dir/bing*
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.1.3-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Fri Nov 17 2006 Michael Shigorin <mike@altlinux.org> 1.1.3-alt1
 - added Russian summary charset (was omitted; fixes #5105)
 - escaped macro in changelog
