@@ -1,6 +1,6 @@
 Name: isicom
 Version: 3.09
-Release: alt0.1
+Release: alt0.1.qa1
 
 Summary: Multitech Intelligent Serial Internal (ISI) Support Tools
 
@@ -54,6 +54,9 @@ install -m 644 *.bin %buildroot/%_datadir/%name
 %_datadir/%name
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 3.09-alt0.1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Wed Oct 26 2005 Vitaly Lipatov <lav@altlinux.ru> 3.09-alt0.1
 - new version
 - change packager
