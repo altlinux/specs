@@ -1,6 +1,6 @@
 Name: pam_keystore
 Version: 0.1.2
-Release: alt1.svn1226
+Release: alt1.svn1226.qa1
 
 Summary: Store user password in kernel keystore 
 License: %asl
@@ -37,6 +37,9 @@ cp %SOURCE1 %buildroot%_docdir/%name-%version/
 /%_lib/security/*
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.1.2-alt1.svn1226.qa1
+- NMU: rebuilt for debuginfo.
+
 * Fri Apr 17 2009 Ivanov Maxim <redbaron@altlinux.org> 0.1.2-alt1.svn1226
 - Initial build for Sisyphus 
 
