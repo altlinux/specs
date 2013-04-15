@@ -1,7 +1,7 @@
 # handle initscript style change (c) mike@ :)
 Name: dante
 Version: 1.2.2
-Release: alt2
+Release: alt2.qa1
 
 %define service sockd
 %define srcname %name-%version
@@ -187,6 +187,9 @@ _EOF_
 %config(noreplace) %_initdir/%service
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.2.2-alt2.qa1
+- NMU: rebuilt for debuginfo.
+
 * Tue Dec 21 2010 Timur Aitov <timonbl4@altlinux.org> 1.2.2-alt2
 - mod sockd
 
