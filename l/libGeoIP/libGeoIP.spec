@@ -4,8 +4,8 @@
 %def_disable check
 
 Name: lib%{origname}
-Version: 1.4.8
-Release: alt1.1
+Version: 1.5.0
+Release: alt1
 
 Summary: GeoIP is a C library find what country an IP address or hostname originates from
 License: LGPLv2.1+
@@ -83,12 +83,16 @@ make check
 %doc ChangeLog
 %_includedir/*
 %_libdir/*.so
+%_pkgconfigdir/geoip.pc
 
 %files tools
 %_bindir/*
 %_man1dir/*
 
 %changelog
+* Mon Apr 15 2013 Yuri N. Sedunov <aris@altlinux.org> 1.5.0-alt1
+- 1.5.0
+
 * Thu Dec 15 2011 Michael Shigorin <mike@altlinux.org> 1.4.8-alt1.1
 - NMU: moved "make check" to %%check section,
   disabled by default due to hasher network isolation,
