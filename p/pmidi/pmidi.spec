@@ -1,6 +1,6 @@
 Name: pmidi
 Version: 1.6.0
-Release: alt1
+Release: alt1.qa1
 
 Summary: A MIDI sound file player.
 Group: Sound
@@ -41,6 +41,9 @@ or SB AWE32/64.
 %doc AUTHORS ChangeLog NEWS README
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.6.0-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sun Dec 21 2003 Yuri N. Sedunov <aris@altlinux.ru> 1.6.0-alt1
 - 1.6.0
 
