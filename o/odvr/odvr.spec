@@ -1,7 +1,7 @@
 Summary: Odvr is a user-space driver for Olympus digital voice recorders
 Name: odvr
 Version: 0.1.5
-Release: alt1
+Release: alt1.qa1
 License: GPLv3
 Group: System/Configuration/Hardware
 Packager: Slava Dubrovskiy <dubrsl@altlinux.ru>
@@ -48,5 +48,8 @@ EOF
 %_datadir/applications/%name.desktop
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.1.5-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sat Dec 11 2010 Slava Dubrovskiy <dubrsl@altlinux.org> 0.1.5-alt1
 - Build for ALT
