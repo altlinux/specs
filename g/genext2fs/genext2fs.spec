@@ -1,6 +1,6 @@
 Name: genext2fs
 Version: 1.4.1
-Release: alt1
+Release: alt1.qa1
 
 Summary: genext2fs creates a virtual ext2 file system in a single file
 Copyright: GPL
@@ -35,6 +35,9 @@ CC=gcc \
 %_man8dir/*
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.4.1-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Mon Jun 11 2007 Victor Forsyuk <force@altlinux.org> 1.4.1-alt1
 - 1.4.1
 
