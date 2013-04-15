@@ -2,7 +2,7 @@
 
 Name: wmhdaps
 Version: 0.04
-Release: alt2
+Release: alt2.qa1
 
 Summary: Harddisk Active Protection System visualization DockApp
 Group: Graphical desktop/Window Maker
@@ -42,6 +42,9 @@ install -p -m755 wmhdaps/wmhdaps %buildroot%_bindir/%name
 %_bindir/%name
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.04-alt2.qa1
+- NMU: rebuilt for debuginfo.
+
 * Tue Jan 23 2007 Sir Raorn <raorn@altlinux.ru> 0.04-alt2
 - Fix model rotaton
 
