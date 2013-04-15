@@ -1,6 +1,6 @@
 Name: nano
 Version: 2.2.4
-Release: alt1
+Release: alt1.qa1
 
 Summary: Pico editor clone with enhancements
 License: %gpl3plus/%fdl v1.2+
@@ -78,6 +78,9 @@ install -pD -m 644 %SOURCE6 %buildroot%_datadir/%name/xorg.nanorc
 %config(noreplace) %_sysconfdir/nanorc
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.2.4-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sat May 08 2010 Artem Zolochevskiy <azol@altlinux.ru> 2.2.4-alt1
 - update to 2.2.4
 - don't package COPYING and ChangLog files (according to Docs Policy)
