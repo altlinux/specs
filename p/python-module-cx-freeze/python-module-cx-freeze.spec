@@ -1,5 +1,5 @@
 Version: 4.2.3
-Release: alt3.svn20120223.1
+Release: alt4.svn20120223
 %setup_python_module cx_Freeze
 %define origname cx-freeze
 
@@ -109,9 +109,7 @@ cp -a . ../python3
 %if_with python3
 pushd ../python3
 sed -i 's|\(libname =.*\)|\1 + "%_python3_abiflags"|' setup.py
-for i in $(find ./ -name '*.py'); do
-	2to3 -w -n $i
-done
+find -type f -name '*.py' -exec 2to3 -w '{}' +
 %python3_build_debug
 popd
 %endif
@@ -163,6 +161,9 @@ rm -f $(find %buildroot -name 'windist*')
 %endif
 
 %changelog
+* Mon Apr 15 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.2.3-alt4.svn20120223
+- Use 'find... -exec...' instead of 'for ... $(find...'
+
 * Sat Mar 23 2013 Aleksey Avdeev <solo@altlinux.ru> 4.2.3-alt3.svn20120223.1
 - Rebuild with Python-3.3
 
