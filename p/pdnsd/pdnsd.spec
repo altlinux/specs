@@ -1,6 +1,6 @@
 Name: pdnsd
 Version: 1.2.7
-Release: alt1
+Release: alt1.qa1
 
 Summary: A caching DNS proxy for small networks and dialup users
 License: %gpl3plus
@@ -100,6 +100,9 @@ chown root:%name %_cachedir/%name/%name.cache
 %preun_service %name
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.2.7-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sat Sep 06 2008 Andrey Rahmatullin <wrar@altlinux.ru> 1.2.7-alt1
 - 1.2.7-par
 - use /dev/urandom as the RNG source
