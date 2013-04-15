@@ -6,7 +6,7 @@
 
 Name: mod_gzip
 Version: 1.3.26.1a
-Release: alt3
+Release: alt3.qa1
 
 Summary: Apache module: On-the-fly compression of HTML documents
 Group: System/Servers
@@ -53,6 +53,9 @@ ln -s %_docdir/%name-%version/ %buildroot%apache_moddocdir/%name
 %doc ChangeLog docs/manual/english/*
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.3.26.1a-alt3.qa1
+- NMU: rebuilt for debuginfo.
+
 * Wed Feb 07 2007 Victor Forsyuk <force@altlinux.org> 1.3.26.1a-alt3
 - Requires apache (fix ALT#10380).
 
