@@ -4,7 +4,7 @@
 %define oname logilab-common
 Name: python-module-%oname
 Version: 0.59.0
-Release: alt1.hg20130215
+Release: alt2.hg20130215
 
 Summary: Useful miscellaneous modules used by Logilab projects
 License: LGPLv2.1+
@@ -77,12 +77,10 @@ rm corbautils.py
 %if_with python3
 pushd ../python3
 rm corbautils.py
-for i in $(find ./ -name '*.py'); do
-	sed -i 's|unittest2|unittest|g' $i
-	if [ "$i" != "./setup.py" ]; then
-		2to3 -w -n $i
-	fi
-done
+cp setup.py setup.py.back
+find -type f -name '*.py' -exec sed -i 's|unittest2|unittest|g' -- '{}' +
+find -type f -name '*.py' -exec 2to3 -w -n '{}' +
+mv -f setup.py.back setup.py
 %python3_build
 popd
 %endif
@@ -124,6 +122,9 @@ rm -f build/lib/logilab/__init__.py
 %endif
 
 %changelog
+* Mon Apr 15 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.59.0-alt2.hg20130215
+- Use 'find... -exec...' instead of 'for ... $(find...'
+
 * Thu Feb 28 2013 Aleksey Avdeev <solo@altlinux.ru> 0.59.0-alt1.hg20130215
 - Version 0.59.0
 
