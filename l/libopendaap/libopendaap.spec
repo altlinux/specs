@@ -1,7 +1,7 @@
 Summary: Library for connection to iTunes music shares
 Name: libopendaap
 Version: 0.4.0
-Release: alt1.1
+Release: alt1.1.qa1
 License: GPL
 Group: Networking/Other
 Url: http://crazney.net/programs/itunes/libopendaap.html
@@ -49,6 +49,9 @@ you will need to install %name-devel.
 %_man3dir/*
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.4.0-alt1.1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Wed Nov 04 2009 Igor Vlasenko <viy@altlinux.ru> 0.4.0-alt1.1
 - NMU (by repocop): the following fixes applied:
   * post_ldconfig for libopendaap
