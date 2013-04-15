@@ -1,6 +1,6 @@
 Name: vpnc
 Version: 0.5.3
-Release: alt4
+Release: alt4.qa1
 
 Summary: Client for cisco vpn concentrator
 Group: Networking/Remote access
@@ -82,6 +82,9 @@ touch %buildroot%_var/run/vpnc/pid \
 %config(noreplace) %_sysconfdir/vpnc/vpnc-script
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.5.3-alt4.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sun Nov 21 2010 Alexey Shabalin <shaba@altlinux.ru> 0.5.3-alt4
 - update buildreq
 - add PIE to CFLAGS, pie to LDFLAGS (patch5)
