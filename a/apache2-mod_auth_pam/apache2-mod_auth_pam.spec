@@ -3,7 +3,7 @@
 Summary: PAM authentication module for Apache
 Name: apache2-mod_auth_pam
 Version: 1.1.1
-Release: alt3
+Release: alt3.qa1
 License: GPL
 Group: System/Servers
 Packager: Boris Savelev <boris@altlinux.org>
@@ -54,6 +54,9 @@ install -m 644 %SOURCE3 %buildroot%_sysconfdir/pam.d
 %_sysconfdir/pam.d/httpd2
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.1.1-alt3.qa1
+- NMU: rebuilt for debuginfo.
+
 * Mon Aug 24 2009 Boris Savelev <boris@altlinux.org> 1.1.1-alt3
 - add patch from debian
 - split loader for modules to auth_pam and auth_sys_group
