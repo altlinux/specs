@@ -1,6 +1,6 @@
 Name: recover
 Version: 1.3c
-Release: alt1
+Release: alt1.qa1
 
 Summary: Utility which automates the rtecovery of lost files
 License: GPL
@@ -31,6 +31,9 @@ install -p -m644 -D recover_questions $RPM_BUILD_ROOT%_datadir/%name/recover_que
 %doc CHANGES README
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.3c-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Wed Mar 26 2003 Stanislav Ievlev <inger@altlinux.ru> 1.3c-alt1
 - 1.3c
 
