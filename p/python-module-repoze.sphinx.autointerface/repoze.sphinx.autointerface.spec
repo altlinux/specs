@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.7.1
-Release: alt1
+Release: alt2
 Summary: Auto-generate Sphinx API docs from Zope interfaces
 License: BSD
 Group: Development/Python
@@ -21,7 +21,8 @@ BuildRequires: python3-devel python3-module-distribute
 BuildPreReq: python-tools-2to3
 %endif
 
-%py_requires repoze.sphinx zope.interface sphinx
+%py_requires zope.interface sphinx
+Requires: python-module-repoze.sphinx = %EVR
 
 %description
 This package defines an extension for the `Sphinx` documentation system.
@@ -32,7 +33,8 @@ The extension allows generation of API documentation by introspection of
 %package -n python3-module-%oname
 Summary: Auto-generate Sphinx API docs from Zope interfaces (Python 3)
 Group: Development/Python3
-%py3_requires repoze.sphinx zope.interface sphinx jinja2.tests
+%py3_requires zope.interface sphinx jinja2.tests
+Requires: python3-module-repoze.sphinx = %EVR
 
 %description -n python3-module-%oname
 This package defines an extension for the `Sphinx` documentation system.
@@ -69,9 +71,7 @@ cp -a . ../python3
 %python_build
 %if_with python3
 pushd ../python3
-for i in $(find ./ -name '*.py'); do
-	2to3 -w -n $i
-done
+find -type f -name '*.py' -exec 2to3 -w -n '{}' +
 %python3_build
 popd
 %endif
@@ -122,6 +122,9 @@ touch %buildroot%python3_sitelibdir/repoze/sphinx/__init__.py
 %endif
 
 %changelog
+* Mon Apr 15 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7.1-alt2
+- Use 'find... -exec...' instead of 'for ... $(find...'
+
 * Sun Mar 03 2013 Aleksey Avdeev <solo@altlinux.ru> 0.7.1-alt1
 - Version 0.7.1
 
