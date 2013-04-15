@@ -1,6 +1,6 @@
 Name: tuxracer
 Version: 0.61
-Release: alt13
+Release: alt13.qa1
 
 Packager: Victor Forsyuk <force@altlinux.org>
 
@@ -92,6 +92,9 @@ install -pD -m644 %SOURCE5 %buildroot%_desktopdir/tuxracer.desktop
 %_gamesdatadir/tuxracer/
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.61-alt13.qa1
+- NMU: rebuilt for debuginfo.
+
 * Wed Sep 30 2009 Victor Forsyuk <force@altlinux.org> 0.61-alt13
 - Fix FTBFS due to missing libtoolize call in current configure macro.
 
