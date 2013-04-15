@@ -1,6 +1,6 @@
 Name: pidgin-rhythmbox
 Version: 2.0
-Release: alt2
+Release: alt2.qa1
 
 Summary: Pidgin-Rhythmbox
 Group: Sound
@@ -39,6 +39,9 @@ song's lyrics by using Google's "I'm Feeling Lucky" feature.
 %_libdir/pidgin/%name.*
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.0-alt2.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sun Jul 27 2008 Igor Zubkov <icesik@altlinux.org> 2.0-alt2
 - don't use obsolete macros
 
