@@ -1,6 +1,6 @@
 Name: yabasic
 Version: 2.763
-Release: alt3
+Release: alt3.qa1
 
 Summary: Small basic interpreter with printing and graphics
 
@@ -44,6 +44,9 @@ no extra effort. Yabasic runs under Unix and Windows; it is small
 %_man1dir/*
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.763-alt3.qa1
+- NMU: rebuilt for debuginfo.
+
 * Wed Mar 10 2010 Vitaly Lipatov <lav@altlinux.ru> 2.763-alt3
 - add autoreconf, migrate to git
 
