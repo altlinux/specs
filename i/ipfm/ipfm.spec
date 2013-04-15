@@ -1,6 +1,6 @@
 Name: ipfm
 Version: 0.11.5
-Release: alt1
+Release: alt1.qa1
 
 Summary: IP Flow Meter - bandwidth analysis tool
 License: GPL
@@ -71,6 +71,9 @@ install -pD -m600 %SOURCE3 %buildroot%_sysconfdir/%name.conf
 %preun_service %name
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.11.5-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sat Jul 16 2005 Ilya G. Evseev <evseev@altlinux.ru> 0.11.5-alt1
 - Initial build
 
