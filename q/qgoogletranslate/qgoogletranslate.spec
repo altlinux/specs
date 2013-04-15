@@ -6,7 +6,7 @@ Name:		qgoogletranslate
 License:	GPLv2
 Group:		System/Internationalization
 Version:	0.2b.%bld
-Release:	alt1
+Release:	alt1.qa1
 Summary:	GUI for Google Translate engine
 Summary(ru_RU.UTF8): Графический интерфейс к сервису Google Translate
 Summary(uk_UA.UTF8): Графічний інтерфейс до сервісу Google Translate
@@ -62,6 +62,9 @@ convert -resize 128x128 rc/icons/wicon.png %buildroot%_giconsdir/%name.png
 %_giconsdir/%name.png
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.2b.build7-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Thu Aug 12 2010 Motsyo Gennadi <drool@altlinux.ru> 0.2b.build7-alt1
 - initial build for ALT Linux
 - fix #23797
