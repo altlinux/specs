@@ -1,6 +1,6 @@
 Name: lsdbus
 Version: 0.1
-Release: alt1
+Release: alt1.qa1
 
 Summary: utility to scan the system and session message bus
 License: GPLv2
@@ -38,6 +38,9 @@ install -m644 lsdbus.1 %buildroot%_man1dir/
 %_man1dir/*
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.1-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Mon Apr 14 2008 Igor Zubkov <icesik@altlinux.org> 0.1-alt1
 - build for Sisyphus
 
