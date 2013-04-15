@@ -1,5 +1,5 @@
 Name: alterator-x11
-Version: 1.98.2
+Version: 1.98.3
 Release: alt1
 
 Url: http://www.altlinux.com
@@ -85,6 +85,9 @@ Scripts which creates simple configuration files in
 %_bindir/xsetup*
 
 %changelog
+* Mon Apr 15 2013 Mikhail Efremov <sem@altlinux.org> 1.98.3-alt1
+- Run make-initrd in compat mode too (closes: #21932).
+
 * Fri Sep 07 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1.98.2-alt1
 - the modesetting driver added to the drivers database
 
