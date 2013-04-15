@@ -1,6 +1,6 @@
 Name: ttaenc
 Version: 3.4.1
-Release: alt3
+Release: alt3.qa1
 Summary: The True Audio (TTA) codec lossless audio compressor
 Summary(uk_UA.CP1251): Безвтратний аудіокомпресор кодека TTA (The True Audio)
 Summary(ru_RU.CP1251): Аудиокомпрессор без потерь кодека TTA (The True Audio)
@@ -77,6 +77,9 @@ install -D -m 0755 %name %buildroot%_bindir/%name
 
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 3.4.1-alt3.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sun Feb 15 2009 Led <led@altlinux.ru> 3.4.1-alt3
 - cleaned up CFLAGS
 
