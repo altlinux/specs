@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.5.0
-Release: alt1.hg20120329.1
+Release: alt2.hg20120329
 Summary: A constraint satisfaction problem solver written in 100%% pure Python
 
 Group: Development/Python
@@ -88,11 +88,9 @@ touch ../python3/test/__init__.py
 %python_build
 %if_with python3
 pushd ../python3
-for i in $(find ./ -name '*.py'); do
-	if [ "$i" != "./setup.py" ]; then
-		2to3 -w -n $i
-	fi
-done
+cp setup.py setup.py.bak
+find -type f -name '*.py' -exec 2to3 -w -n '{}' +
+mv -f setup.py.bak setup.py
 sed -i "s|print.*|print(src, '->', dest, file=sys.stderr)|" setup.py
 %python3_build
 popd
@@ -127,6 +125,9 @@ rm -f %buildroot%python3_sitelibdir/logilab/__init__.py*
 %endif
 
 %changelog
+* Mon Apr 15 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.0-alt2.hg20120329
+- Use 'find... -exec...' instead of 'for ... $(find...'
+
 * Fri Mar 22 2013 Aleksey Avdeev <solo@altlinux.ru> 0.5.0-alt1.hg20120329.1
 - Rebuild with Python-3.3
 
