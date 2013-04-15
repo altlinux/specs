@@ -1,6 +1,6 @@
 Name: pdftohtml
 Version: 0.40a
-Release: alt1
+Release: alt1.qa1
 
 Summary: %name is a utility which converts PDF files into HTML and XML formats.
 License: GNU GPL
@@ -32,6 +32,9 @@ Use %name -dev jpeg -c -enc KOI8-R file.pdf to convert russian documents.
 %_bindir/*
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.40a-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Mon Nov 27 2006 Eugene Ostapets <eostapets@altlinux.ru> 0.40a-alt1
 - first build
 
