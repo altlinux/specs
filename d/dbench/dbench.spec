@@ -1,6 +1,6 @@
 Name: dbench
 Version: 4.0
-Release: alt3
+Release: alt3.qa1
 
 Summary: Filesystem and TCP networking benchmark similar to Netbench
 License: GPLv3
@@ -56,6 +56,9 @@ Architecture independent data files for dbench.
 %_man1dir/*
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 4.0-alt3.qa1
+- NMU: rebuilt for debuginfo.
+
 * Tue Nov 09 2010 Victor Forsiuk <force@altlinux.org> 4.0-alt3
 - Fix man page (closes: #24498).
 
