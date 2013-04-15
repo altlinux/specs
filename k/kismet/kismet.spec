@@ -2,7 +2,7 @@
 
 Name: kismet
 Version: 2010.07.R1
-Release: alt1.1
+Release: alt1.1.qa1
 
 Summary: Kismet wireless tools
 License: GPLv2+
@@ -190,6 +190,9 @@ rm -f %buildroot%_bindir/%name
 %_docdir/%name-plugins-%version/
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2010.07.R1-alt1.1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Tue Dec 07 2010 Igor Vlasenko <viy@altlinux.ru> 2010.07.R1-alt1.1
 - rebuild with new openssl and/or boost by request of git.alt administrator
 
