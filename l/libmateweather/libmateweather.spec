@@ -5,7 +5,7 @@ BuildRequires: /usr/bin/glib-gettextize /usr/bin/gtkdocize glib2-devel libgio-de
 # END SourceDeps(oneline)
 %define _libexecdir %_prefix/libexec
 Name:          libmateweather
-Version:       1.6.0
+Version:       1.6.1
 Release:       alt1_1
 Summary:       Libraries to allow MATE Desktop to display weather information
 License:       GPLv2+
@@ -75,6 +75,9 @@ cat libmateweather-locations.lang >> %{name}.lang
 
 
 %changelog
+* Mon Apr 15 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.1-alt1_1
+- new fc release
+
 * Sat Apr 06 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.0-alt1_1
 - new fc release
 

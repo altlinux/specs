@@ -4,12 +4,12 @@ BuildRequires: /usr/bin/glib-genmarshal /usr/bin/glib-gettextize libgio-devel pk
 # END SourceDeps(oneline)
 %define _libexecdir %_prefix/libexec
 Name:           mate-media
-Version:        1.5.2
+Version:        1.6.0
 Release:        alt1_1
 Summary:        MATE media programs
 License:        GPLv2+ and LGPLv2+
 URL:            http://mate-desktop.org
-Source0:        http://pub.mate-desktop.org/releases/1.5/%{name}-%{version}.tar.xz
+Source0:        http://pub.mate-desktop.org/releases/1.6/%{name}-%{version}.tar.xz
 
 BuildRequires:  libclutter-gst2.0-devel
 BuildRequires:  libdbus-glib-devel
@@ -92,6 +92,9 @@ desktop-file-install                                                    \
 %{_datadir}/MateConf/gsettings/mate-volume-control.convert
 
 %changelog
+* Mon Apr 15 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.0-alt1_1
+- new fc release
+
 * Sun Apr 07 2013 Igor Vlasenko <viy@altlinux.ru> 1.5.2-alt1_1
 - new fc release
 

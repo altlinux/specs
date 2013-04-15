@@ -6,7 +6,7 @@ BuildRequires: /usr/bin/asn1Parser /usr/bin/gcov /usr/bin/genhtml /usr/bin/glib-
 Summary:        Framework for managing passwords and other secrets
 Name:           mate-keyring
 Version:        1.6.0
-Release:        alt1_1
+Release:        alt1_2
 License:        GPLv2+ and LGPLv2+
 URL:            http://mate-desktop.org
 Source0:        http://pub.mate-desktop.org/releases/1.5/%{name}-%{version}.tar.xz
@@ -38,9 +38,9 @@ secrets for the user, storing them encrypted with a main password.
 Applications can use the mate-keyring library to integrate with the keyring.
 
 %package devel
+Group: Development/C
 Summary: Development files for mate-keyring
 License: LGPLv2+
-Group: Development/C
 Requires: %{name}%{?_isa} = %{version}-%{release}
 
 %description devel
@@ -58,7 +58,6 @@ Shared library for MATE Desktop pam auth
 
 
 %prep
-#%setup -q -n mate-keyring-%{version}
 %setup -q
 %patch33 -p1
 %patch34 -p1
@@ -71,9 +70,7 @@ NOCONFIGURE=1 ./autogen.sh
    --disable-static                    \
    --with-gtk=2.0                      \
    --disable-schemas-compile           \
-   --enable-gcov                       \
-   --libexecdir=/usr/libexec           \
-   --with-pam-dir=%_pam_modules_dir \
+   --with-pam-dir=/%{_lib}/security/   \
    --with-root-certs=/usr/share/ca-certificates
 
 # avoid unneeded direct dependencies
@@ -83,11 +80,7 @@ make %{?_smp_mflags} V=1
 
 %install
 make DESTDIR=%{buildroot} install
-find %{buildroot} -name '*.la' -exec rm -rf {} ';'
-find %{buildroot} -name '*.a' -exec rm -rf {} ';'
-
-# Fix permissions on mate-keyring-daemon
-chmod 0755 %{buildroot}%{_bindir}/mate-keyring-daemon
+find %{buildroot} -name '*.la' -exec rm -fv {} ';'
 
 %find_lang %{name}
 # do we need it ?
@@ -99,13 +92,15 @@ chmod 0755 %{buildroot}%{_bindir}/mate-keyring-daemon
 %files -f %{name}.lang
 %doc AUTHORS NEWS README COPYING COPYING.LIB
 %{_bindir}/mate-keyring
-%{_bindir}/mate-keyring-daemon
+# see also bug #668831 for gnome-keyring related backround
+%attr(0755,root,root)  %{_bindir}/mate-keyring-daemon
 %{_sysconfdir}/xdg/autostart/mate-keyring-pkcs11.desktop
 %{_sysconfdir}/xdg/autostart/mate-keyring-secrets.desktop
 %{_sysconfdir}/xdg/autostart/mate-keyring-ssh.desktop
 %{_sysconfdir}/xdg/autostart/mate-keyring-gpg.desktop
 %{_libexecdir}/mate-keyring-prompt
-%{_libdir}/lib*.so.*
+%{_libdir}/libmategck.so.0*
+%{_libdir}/libmategcr.so.0*
 %{_libdir}/mate-keyring/
 %{_libdir}/pkcs11/mate-keyring-pkcs11.so
 %{_datadir}/dbus-1/services/*.service
@@ -121,8 +116,7 @@ chmod 0755 %{buildroot}%{_bindir}/mate-keyring-daemon
 
 
 %files pam
-%doc AUTHORS COPYING COPYING.LIB README
-%_pam_modules_dir/pam_mate_keyring.so
+/%{_lib}/security/pam_mate_keyring.so
 
 %files devel
 %doc %{_datadir}/gtk-doc/html/mate-gck/
@@ -130,10 +124,15 @@ chmod 0755 %{buildroot}%{_bindir}/mate-keyring-daemon
 %{_includedir}/mategcr/
 %{_includedir}/mate-gck/
 %{_includedir}/gck/
-%{_libdir}/lib*.so
-%{_libdir}/pkgconfig/*
+%{_libdir}/libmategck.so
+%{_libdir}/libmategcr.so
+%{_libdir}/pkgconfig/mate-gck-0.pc
+%{_libdir}/pkgconfig/mate-gcr-0.pc
 
 %changelog
+* Mon Apr 15 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.0-alt1_2
+- new fc release
+
 * Sat Apr 06 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.0-alt1_1
 - new fc release
 

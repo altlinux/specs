@@ -1,39 +1,33 @@
 Group: File tools
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/glib-mkenums /usr/bin/gtkdocize /usr/bin/scrollkeeper-config gcc-c++ libICE-devel libSM-devel libgio-devel pkgconfig(gio-2.0) pkgconfig(gio-unix-2.0) pkgconfig(gthread-2.0) pkgconfig(libcanberra-gtk) pkgconfig(xext) zlib-devel
+BuildRequires: /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/glib-mkenums /usr/bin/gtkdocize /usr/bin/scrollkeeper-config gcc-c++ libICE-devel libSM-devel libgio-devel pkgconfig(gio-2.0) pkgconfig(gio-unix-2.0) pkgconfig(gtk+-2.0) pkgconfig(libcanberra-gtk) pkgconfig(libgtop-2.0) pkgconfig(xext) zlib-devel
 # END SourceDeps(oneline)
 %define _libexecdir %_prefix/libexec
 Name:           mate-utils
 Version:        1.6.0
-Release:        alt1
+Release:        alt1_1
 Summary:        MATE utility programs
 
 License:        GPLv2+ and LGPLv2+
 URL:            http://mate-desktop.org
 Source0:        http://pub.mate-desktop.org/releases/1.4/%{name}-%{version}.tar.xz
 
-# 1 = build, undef = dont build
-%define gdict_applet 1
-
 BuildRequires:  desktop-file-utils
+BuildRequires: e2fsprogs-devel libe2fs-devel
+BuildRequires:  glib2-devel
+BuildRequires:  gsettings-desktop-schemas-devel
 BuildRequires:  hardlink
+BuildRequires:  libcanberra-devel
+BuildRequires:  libgtop2-devel
+BuildRequires:  libX11-devel
+BuildRequires:  libXmu-devel
 BuildRequires:  mate-common
-BuildRequires:  pkgconfig(e2p)
-BuildRequires:  pkgconfig(glib-2.0)
-BuildRequires:  pkgconfig(gtk+-2.0)
-BuildRequires:  pkgconfig(libcanberra)
-BuildRequires:  pkgconfig(libgtop-2.0)
-%if 0%{?gdict_applet:1}
-BuildRequires:  mate-panel-devel
-%endif
 BuildRequires:  mate-desktop-devel
 BuildRequires:  mate-doc-utils
-BuildRequires:  pkgconfig(x11)
-BuildRequires:  pkgconfig(xmu)
+BuildRequires:  mate-panel-devel
 BuildRequires:  popt-devel
 BuildRequires:  rarian-compat
 BuildRequires:  consolehelper
-BuildRequires:  gsettings-desktop-schemas-devel
 Source44: import.info
 Obsoletes: Obsoletes: mate-utils-libs < 1.5.0-alt2_1
 Conflicts: mate-utils-libs < 1.5.0-alt2_1
@@ -62,23 +56,21 @@ view various system log files.
 
 %prep
 %setup -q
-#%if 0%{?gdict_applet:1}
-#sed -i -e 's@libmatepanelapplet-2.0@libmatepanelapplet-4.0@g' configure.ac
-#%endif
 NOCONFIGURE=1 ./autogen.sh
 
 
 %build
 %configure \
-        --disable-static \
-        --disable-scrollkeeper \
-        --disable-schemas-compile \
-        --enable-gdict-applet%{!?gdict_applet:=no}
+    --disable-static            \
+    --disable-scrollkeeper      \
+    --disable-schemas-compile   \
+    --enable-gdict-applet       \
+    --enable-gtk-doc-html       \
+    --enable-ipv6=yes           \
+    --disable-schemas-compile   \
+    --with-x
 
-#sed -i -e 's/ -shared / -Wl,-O1,--as-needed\0 /g' libtool
-
-make V=1 %{?_smp_mflags}
-
+make %{?_smp_mflags} V=1
 
 %install
 make DESTDIR=%{buildroot} install 
@@ -106,12 +98,12 @@ ln -s %{_bindir}/consolehelper %{buildroot}%{_bindir}/mate-system-log
 
 rm -fv $RPM_BUILD_ROOT%{_libdir}/*.la
 
-desktop-file-install --vendor ""                     \
-  --delete-original                                  \
-  --remove-category="MATE"                           \
-  --add-category="X-Mate"                            \
-  --dir %{buildroot}%{_datadir}/applications      \
-  %{buildroot}%{_datadir}/applications/*
+desktop-file-install                          \
+  --remove-category="MATE"                    \
+  --add-category="X-Mate"                     \
+  --delete-original                           \
+  --dir %{buildroot}%{_datadir}/applications  \
+%{buildroot}%{_datadir}/applications/*
 
 # save space by linking identical images in translated docs
 hardlink -c -v %{buildroot}%{_datadir}/mate/help
@@ -147,9 +139,7 @@ cat mate-search-tool.lang >> %{name}.lang
 %{_datadir}/mate-disk-usage-analyzer/
 %{_datadir}/pixmaps/mate-search-tool/
 %{_libdir}/libmatedict.so.*
-%if 0%{?gdict_applet}
 %{_libexecdir}/mate-dictionary-applet
-%endif
 %{_mandir}/man1/mate-dictionary.1*
 %{_mandir}/man1/mate-search-tool.1*
 %{_mandir}/man1/mate-screenshot.1*
@@ -174,7 +164,7 @@ cat mate-search-tool.lang >> %{name}.lang
 %files devel
 %{_libdir}/libmatedict.so
 %{_libdir}/pkgconfig/mate-dict.pc
-%{_includedir}/mate-dict/
+%{_includedir}/mate-dict
 
 
 %files -n mate-system-log -f mate-system-log.lang
@@ -191,6 +181,9 @@ cat mate-search-tool.lang >> %{name}.lang
 
 
 %changelog
+* Mon Apr 15 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.0-alt1_1
+- new fc release
+
 * Thu Apr 11 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1.6.0-alt1
 - 1.6.0
 

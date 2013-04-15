@@ -4,8 +4,8 @@ BuildRequires: /usr/bin/glib-gettextize /usr/bin/gtkdocize libgio-devel pkgconfi
 # END SourceDeps(oneline)
 %define _libexecdir %_prefix/libexec
 Name:           mate-file-manager-sendto
-Version:        1.5.0
-Release:        alt1_3
+Version:        1.6.0
+Release:        alt1_1
 Summary:        MATE file manager send to
 License:        GPLv2+
 URL:            http://www.mate-desktop.org
@@ -39,10 +39,9 @@ Development libraries and headers for mate-file-manager-sendto
 %build
 NOCONFIGURE=1 ./autogen.sh
 %configure   \
-          --disable-static             \
-          --disable-schemas-compile    \
-          --with-gnu-ld                \
-          --with-gajim
+    --disable-static             \
+    --disable-schemas-compile    \
+    --with-gajim
 
 make %{?_smp_mflags} V=1
 
@@ -74,6 +73,9 @@ find %{buildroot} -name '*.a' -exec rm -rf {} ';'
 %{_libdir}/pkgconfig/caja-sendto.pc
 
 %changelog
+* Mon Apr 15 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.0-alt1_1
+- new fc release
+
 * Wed Mar 13 2013 Igor Vlasenko <viy@altlinux.ru> 1.5.0-alt1_3
 - new fc release
 
