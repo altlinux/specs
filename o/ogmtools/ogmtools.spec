@@ -1,6 +1,6 @@
 Name: ogmtools
 Version: 1.5
-Release: alt2
+Release: alt2.qa1
 
 Summary: Tools for Ogg media streams
 License: GPL
@@ -40,6 +40,9 @@ media streams. OGM is used for "OGG media streams".
 %doc README ChangeLog TODO
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.5-alt2.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sat Sep 19 2009 Igor Zubkov <icesik@altlinux.org> 1.5-alt2
 - rebuild
 
