@@ -2,7 +2,7 @@
 %def_with python3
 
 Version: 2.4.5
-Release: alt1.git20120328.1
+Release: alt2.git20120328
 %setup_python_module %oname
 
 Summary: psycopg2 is a PostgreSQL database adapter for Python
@@ -93,9 +93,7 @@ cp -a . ../python3
 %python_build_debug
 %if_with python3
 pushd ../python3
-for i in $(find ./ -name '*.py'); do
-	2to3 -w $i
-done
+find -type f -name '*.py' -exec 2to3 -w -n '{}' +
 %python3_build
 popd
 %endif
@@ -147,6 +145,9 @@ install -m644 psycopg2da/*.zcml %buildroot/%python_sitelibdir/psycopg2da/
 %endif
 
 %changelog
+* Mon Apr 15 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.4.5-alt2.git20120328
+- Use 'find... -exec...' instead of 'for ... $(find...'
+
 * Fri Mar 22 2013 Aleksey Avdeev <solo@altlinux.ru> 2.4.5-alt1.git20120328.1
 - Rebuild with Python-3.3
 
