@@ -1,6 +1,6 @@
 Name: bidilink
 Version: 0.1
-Release: alt1
+Release: alt1.qa1
 
 Summary: bidilink - Bidirectional stream linker
 Group: File tools
@@ -48,6 +48,9 @@ an incoming connection
 %_man1dir/bidilink.*
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.1-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Thu Jan 17 2008 Igor Zubkov <icesik@altlinux.org> 0.1-alt1
 - build for Sisyphus
 
