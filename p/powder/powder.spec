@@ -3,7 +3,7 @@
 
 Name:           powder
 Version:        42.3
-Release:        alt3
+Release:        alt3.qa1
 
 Summary:        Physical simulator which allows to construct objects using different materials
 License:        GPLv2
@@ -96,6 +96,9 @@ echo %_bindir/%name %_bindir/%name-sse3 10 > %buildroot/%_altdir/%name-sse3
 %_altdir/*
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 42.3-alt3.qa1
+- NMU: rebuilt for debuginfo.
+
 * Tue Oct 19 2010 Anton Chernyshov <ach@altlinux.org> 42.3-alt3
 - add new compile options - make powder with support sse,sse2,sse3
 - add alternatives support to allow user select correct executable to run
