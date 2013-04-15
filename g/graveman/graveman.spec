@@ -1,7 +1,7 @@
 Name: graveman
 %define fver 0.3.12-5
 Version: 0.3.12.5
-Release: alt3
+Release: alt3.qa1
 
 Packager: Victor Forsyuk <force@altlinux.org>
 
@@ -55,6 +55,9 @@ rm -rf %buildroot%_mandir/{fr,nl}/
 %_man1dir/*
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.3.12.5-alt3.qa1
+- NMU: rebuilt for debuginfo.
+
 * Mon Jan 19 2009 Victor Forsyuk <force@altlinux.org> 0.3.12.5-alt3
 - Remove obsolete install time scripts.
 
