@@ -7,7 +7,7 @@
 Summary: grsecurity RBAC Administration Toolset
 Name: gradm
 Version: 2.1.12
-Release: alt1
+Release: alt1.qa1
 License: GPL
 Group: System/Kernel and hardware
 Url: http://www.grsecurity.net
@@ -59,6 +59,9 @@ install -m 0755 regression/grtest %buildroot/sbin/
 %_sysconfdir/grsec
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.1.12-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Thu Jun 04 2009 Michail Yakushin <silicium@altlinux.ru> 2.1.12-alt1
 - initial build for ALT 
 
