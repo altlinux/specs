@@ -1,6 +1,6 @@
 Name: splint
 Version: 3.1.2
-Release: alt2
+Release: alt2.qa1
 
 Summary: Secure Programming Lint - annotation-assisted static program checker
 Group: Development/C
@@ -53,6 +53,9 @@ ln -s %name %buildroot%_bindir/lclint
 %_man1dir/%name.1.*
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 3.1.2-alt2.qa1
+- NMU: rebuilt for debuginfo.
+
 * Tue Jul 29 2008 Slava Semushin <php-coder@altlinux.ru> 3.1.2-alt2
 - Added Packager tag (noted by repocop)
 - More proper License tag
