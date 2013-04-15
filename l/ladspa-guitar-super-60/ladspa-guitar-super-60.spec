@@ -1,6 +1,6 @@
 Name: ladspa-guitar-super-60
 Version: 1.0
-Release: alt1.1
+Release: alt1.1.qa1
 Summary: LADSPA plugin to simulate Fender Super 60 amp
 Summary(ru_RU.KOI8-R): Плагин LADSPA для иммитации усилителя Fender Super 60 amp
 License: GPL
@@ -57,6 +57,9 @@ export CFLAGS="%optflags"
 %_ladspa_path/*.so
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.0-alt1.1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Mon Dec 22 2003 Mikhail Yakshin <greycat@altlinux.org> 1.0-alt1.1
 - Fixed text relocations
 
