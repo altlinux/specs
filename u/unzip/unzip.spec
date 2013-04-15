@@ -1,6 +1,6 @@
 Name: unzip
 Version: 6.0
-Release: alt2
+Release: alt2.qa1
 
 Packager: Victor Forsyuk <force@altlinux.org>
 
@@ -59,6 +59,9 @@ ln -s unzip %buildroot%_bindir/zipinfo
 %doc BUGS LICENSE
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 6.0-alt2.qa1
+- NMU: rebuilt for debuginfo.
+
 * Mon Sep 21 2009 Victor Forsyuk <force@altlinux.org> 6.0-alt2
 - Fix ALT #21137.
 
