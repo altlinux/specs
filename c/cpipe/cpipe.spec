@@ -1,6 +1,6 @@
 Name: cpipe
 Version: 3.0.2
-Release: alt1
+Release: alt1.qa1
 
 Summary: Counting pipe
 Group: Development/Tools
@@ -40,6 +40,9 @@ chmod 0644 %buildroot%_man1dir/%{name}*
 %_man1dir/*
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 3.0.2-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Tue Mar 30 2010 Vitaly Lipatov <lav@altlinux.ru> 3.0.2-alt1
 - new version 3.0.2 (with rpmrb script)
 
