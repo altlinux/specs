@@ -1,6 +1,6 @@
 Name: rng-tools
 Version: 3
-Release: alt1
+Release: alt1.qa1
 
 Summary: Random number generator related utilities
 License: GPLv2+
@@ -47,6 +47,9 @@ install -m644 %SOURCE3 %buildroot%_sysconfdir/modutils.d/%name
 %_man8dir/rngd.8*
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 3-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Mon Oct 25 2010 Victor Forsiuk <force@altlinux.org> 3-alt1
 - Version 3.
 
