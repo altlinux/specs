@@ -2,7 +2,7 @@
 
 Name: libipathverbs
 Version: 1.2
-Release: alt1
+Release: alt1.qa1
 Summary: PathScale InfiniPath HCA Userspace Driver
 Group: System/Libraries
 License: %gpl2only
@@ -57,6 +57,9 @@ touch ChangeLog NEWS
 
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.2-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Thu Aug 19 2010 Andriy Stepanov <stanv@altlinux.ru> 1.2-alt1
 - New version (OFED 1.5.1)
 
