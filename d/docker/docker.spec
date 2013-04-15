@@ -3,7 +3,7 @@
 
 Name: docker
 Version: 1.5
-Release: alt2
+Release: alt2.qa1
 
 Summary: Docker is a docking application (WindowMaker dock app) which acts as a system tray for KDE and GNOME2. 
 License: GPL
@@ -39,6 +39,9 @@ panel or environment.
 %_bindir/%name
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.5-alt2.qa1
+- NMU: rebuilt for debuginfo.
+
 * Mon Apr 03 2006 Sir Raorn <raorn@altlinux.ru> 1.5-alt2
 - Spec cleanup, updated buildreqs
 - Fixed link with -Wl,--as-needed
