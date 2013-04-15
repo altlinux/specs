@@ -3,7 +3,7 @@
 
 Name: mpdscribble
 Version: 0.18.1
-Release: alt2
+Release: alt2.qa1
 
 Summary: Audioscrobbler client for mpd
 License: GPLv2+
@@ -55,6 +55,9 @@ sed -i '/^dist_sysconf_DATA/d' Makefile.am
 %doc AUTHORS NEWS README doc/%name.conf
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.18.1-alt2.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sun Nov 15 2009 Slava Semushin <php-coder@altlinux.ru> 0.18.1-alt2
 - Fixed build (compile without -Wcast-qual)
 
