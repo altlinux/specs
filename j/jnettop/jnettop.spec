@@ -1,6 +1,6 @@
 Name: jnettop
 Version: 0.13.0
-Release: alt3
+Release: alt3.qa1
 
 Packager: Victor Forsyuk <force@altlinux.org>
 
@@ -51,6 +51,9 @@ autoreconf -fisv
 %_datadir/jnettop/jnettop-lookup-nmb
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.13.0-alt3.qa1
+- NMU: rebuilt for debuginfo.
+
 * Fri Jun 20 2008 Victor Forsyuk <force@altlinux.org> 0.13.0-alt3
 - Split nmblookup resolver script to own package to avoid "heavy" main package
   dependency on samba-client (fix #15240).
