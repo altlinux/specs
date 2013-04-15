@@ -1,6 +1,6 @@
 Name: whatmask
 Version: 1.2
-Release: alt2
+Release: alt2.qa1
 
 Summary: Whatmask - Convert between different netmask types and display helpful network information
 License: GPL
@@ -32,6 +32,9 @@ give useful information about the network block in question.
 %_man1dir/whatmask.*
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.2-alt2.qa1
+- NMU: rebuilt for debuginfo.
+
 * Thu May 15 2008 Igor Zubkov <icesik@altlinux.org> 1.2-alt2
 - add Packager tag
 
