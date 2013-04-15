@@ -7,7 +7,7 @@
 Summary: Restrict the number of simultaneous connections per vhost
 Name: apache2-mod_vhost_limit
 Version: 0.2
-Release: alt1
+Release: alt1.qa1
 Group: System/Servers
 License: Apache License
 Url: http://apache.ivn.cl/
@@ -42,6 +42,9 @@ install -m 644 %SOURCE2 %buildroot%apache2_mods_available
 %apache2_moduledir/*.so
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.2-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Mon Feb 09 2009 Boris Savelev <boris@altlinux.org> 0.2-alt1
 - initial build for Sisyphus from Mandriva
 
