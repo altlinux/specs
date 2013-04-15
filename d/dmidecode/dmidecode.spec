@@ -1,6 +1,6 @@
 Name: dmidecode
 Version: 2.11
-Release: alt1
+Release: alt1.qa1
 
 Summary: Dmidecode is a tool for dumping a computer's DMI table
 License: GPLv2+
@@ -35,6 +35,9 @@ subst 's/-O./%optflags/' Makefile
 %_man8dir/*
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.11-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Tue Jan 25 2011 Victor Forsiuk <force@altlinux.org> 2.11-alt1
 - 2.11
 
