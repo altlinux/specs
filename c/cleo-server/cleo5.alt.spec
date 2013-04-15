@@ -1,7 +1,7 @@
 Summary: Cleo batch system. Server part.
 Name: cleo-server
 Version: 5.13a
-Release: alt2.1
+Release: alt2.1.qa1
 License: GPL
 Group: System/Servers
 Source: cleo-%{version}.tgz
@@ -100,6 +100,9 @@ fakeroot make DESTDIR=%buildroot RCDIR=%_initdir install \
 %_perl_lib_path/Cleo/Conn.pm
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 5.13a-alt2.1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Fri Nov 05 2010 Vladimir Lettiev <crux@altlinux.ru> 5.13a-alt2.1
 - rebuilt with perl 5.12
 
