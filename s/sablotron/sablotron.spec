@@ -7,7 +7,7 @@
 Summary: XSLT, XPath and DOM processor
 Name: sablotron
 Version: 1.0.3
-Release: alt1.1
+Release: alt1.1.qa1
 License: GPL
 Group: System/Base
 Url: http://www.gingerall.org/sablotron.html
@@ -82,6 +82,9 @@ export SABLOT_GPL="1"
 %_libdir/libsablot.a
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.0.3-alt1.1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Wed Nov 10 2010 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.3-alt1.1
 - Rebuilt for soname set-versions
 
