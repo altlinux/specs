@@ -1,6 +1,6 @@
 Name: zzuf
 Version: 0.12
-Release: alt1
+Release: alt1.qa1
 Summary: Transparent application input fuzzer
 License: DWTFYWTPL
 Group: Toys
@@ -37,6 +37,9 @@ find %buildroot -type f -name "*.la" -delete
 %_man1dir/*
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.12-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Thu Aug 14 2008 Pavlov Konstantin <thresh@altlinux.ru> 0.12-alt1
 - 0.12 release.
 
