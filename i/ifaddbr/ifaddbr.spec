@@ -1,6 +1,6 @@
 Name: ifaddbr
 Version: 0.02
-Release: alt1
+Release: alt1.qa1
 Source: %name-%version.tar
 Packager: Anton Protopopov <aspsk@altlinux.org>
 
@@ -24,6 +24,9 @@ and to enslave interface to that bridge.
 %_sysconfdir/udev/rules.d/*
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.02-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Thu Apr 23 2009 Anton Protopopov <aspsk@altlinux.org> 0.02-alt1
 - Imitate (virtual) ifclone functionality directly in ifaddbr
 
