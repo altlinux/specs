@@ -1,6 +1,6 @@
 Name: socat2
 Version: 2.0.0
-Release: alt2
+Release: alt2.qa1
 
 Summary: 'socket cat' - multipurpose relay for bidirectional data transfer
 License: GPL
@@ -46,6 +46,9 @@ echo '#define HAVE_DEV_PTMX 1' >> config.h
 %doc README* EXAMPLES FAQ SECURITY CHANGES doc/*.html doc/*.css
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.0.0-alt2.qa1
+- NMU: rebuilt for debuginfo.
+
 * Thu Nov 11 2010 Kirill A. Shutemov <kas@altlinux.org> 2.0.0-alt2
 - 2.0.0-b4
 
