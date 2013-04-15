@@ -1,6 +1,6 @@
 Name: xmahjongg
 Version: 3.7
-Release: alt2
+Release: alt2.qa1
 
 Packager: Victor Forsyuk <force@altlinux.org>
 
@@ -37,6 +37,9 @@ install -pD -m644 %SOURCE1 %buildroot%_desktopdir/xmahjongg.desktop
 %_desktopdir/*
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 3.7-alt2.qa1
+- NMU: rebuilt for debuginfo.
+
 * Wed Dec 17 2008 Victor Forsyuk <force@altlinux.org> 3.7-alt2
 - Remove obsolete install time scripts.
 
