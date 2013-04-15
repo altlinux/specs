@@ -1,6 +1,6 @@
 Name: farsight
 Version: 0.1.28
-Release: alt3.1
+Release: alt3.1.qa1
 
 Summary: A audio/video conferencing framework
 Group: System/Libraries
@@ -80,6 +80,9 @@ developing applications that use %name.
 %_datadir/gtk-doc/html/%name
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.1.28-alt3.1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Mon Dec 22 2008 Afanasov Dmitry <ender@altlinux.org> 0.1.28-alt3.1
 - rebuild with libjingle-0.3.12
 
