@@ -1,6 +1,6 @@
 Name: e2fsimage
 Version: 0.2.2
-Release: alt2
+Release: alt2.qa1
 Summary: Create and populate an ext2 filesystem image as non-root user
 License: %bsdstyle
 Group: System/Kernel and hardware
@@ -45,6 +45,9 @@ gzip -dc man/%name.1.gz > %buildroot%_man1dir/%name.1
 
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.2.2-alt2.qa1
+- NMU: rebuilt for debuginfo.
+
 * Mon Nov 03 2008 Led <led@altlinux.ru> 0.2.2-alt2
 - cleaned up spec
 
