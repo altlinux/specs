@@ -1,6 +1,6 @@
 Name: exif
 Version: 0.6.20
-Release: alt1
+Release: alt1.qa1
 
 Summary: exif is a small command-line utility to show EXIF information hidden in JPEG files
 License: GPLv2+
@@ -39,6 +39,9 @@ exif is a small command-line utility to show EXIF information embedded in JPEG f
 %_man1dir/*
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.6.20-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Thu Jan 13 2011 Victor Forsiuk <force@altlinux.org> 0.6.20-alt1
 - 0.6.20
 
