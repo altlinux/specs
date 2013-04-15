@@ -1,6 +1,6 @@
 Name: stalonetray
 Version: 0.7.6
-Release: alt1
+Release: alt1.qa1
 
 Summary: STand Alone TRAY (notification area) implementation
 License: GPLv2+
@@ -40,6 +40,9 @@ make check
 %_mandir/man*/*
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.7.6-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sat Apr 04 2009 Vitaly Kuznetsov <vitty@altlinux.ru> 0.7.6-alt1
 - initial for ALT
 
