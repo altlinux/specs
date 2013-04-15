@@ -1,6 +1,6 @@
 Name: libtsmux
 Version: 0.2.0
-Release: alt1.1
+Release: alt1.1.qa1
 
 Summary: Library for muxing of MPEG Transport Streams
 Group: System/Libraries
@@ -47,6 +47,9 @@ Header files and libraries for libtsmux
 %_pkgconfigdir/tsmux.pc
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.2.0-alt1.1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Fri Nov 06 2009 Repocop Q. A. Robot <repocop@altlinux.org> 0.2.0-alt1.1
 - NMU (by repocop): the following fixes applied:
   * post_ldconfig for libtsmux
