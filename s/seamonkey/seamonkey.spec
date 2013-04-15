@@ -13,7 +13,7 @@
 
 Name: seamonkey
 Version: 2.15.2
-Release: alt1
+Release: alt2
 Epoch:   1
 Summary: Web browser and mail reader
 License: MPL/NPL
@@ -66,7 +66,7 @@ BuildRequires(pre): browser-plugins-npapi-devel
 
 # Automatically added by buildreq on Sun Jul 16 2006
 BuildPreReq: mozldap-devel
-BuildRequires: gcc-c++ libdnet-devel libgtk+2-devel libIDL-devel wget libarchive lbzip2 libpixman-devel
+BuildRequires: gcc-c++ libdnet-devel libgtk+2-devel libIDL-devel wget libarchive-devel lbzip2 libpixman-devel
 BuildRequires: libjpeg-devel libpng-devel libXinerama-devel libXext-devel
 BuildRequires: libXp-devel libXt-devel makedepend net-tools unzip libalsa-devel yasm libwireless-devel
 BuildRequires: xorg-cf-files zip libXft-devel libvpx-devel
@@ -397,6 +397,9 @@ printf '%_bindir/xbrowser\t%_bindir/%name\t100\n' > %buildroot%_altdir/%name
 %_sysconfdir/rpm/macros.d/%name
 
 %changelog
+* Mon Apr 15 2013 Andrey Cherepanov <cas@altlinux.org> 1:2.15.2-alt2
+- Build with libarchive-devel instead of libarchive
+
 * Wed Feb 27 2013 Andrey Cherepanov <cas@altlinux.org> 1:2.15.2-alt1
 - New version 2.15.2
 
