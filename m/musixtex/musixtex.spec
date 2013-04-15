@@ -1,6 +1,6 @@
 Name: musixtex
 Version: T101
-Release: alt3.1
+Release: alt3.1.qa1
 Source: ftp://ctan.tug.org/tex-archive/macros/musixtex/taupin/%{name}-%{version}.tar.gz
 Source1: musixtex-install.sh
 Source2: musixtex-readme
@@ -75,6 +75,9 @@ install -m755 systems/c-source/musixflx $RPM_BUILD_ROOT%{_bindir}
 
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> T101-alt3.1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Fri Nov 06 2009 Repocop Q. A. Robot <repocop@altlinux.org> T101-alt3.1
 - NMU (by repocop): the following fixes applied:
   * altlinux-policy-tex-obsolete-util-calls-in-post for musixtex
