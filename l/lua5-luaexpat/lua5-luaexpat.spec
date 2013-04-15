@@ -1,7 +1,7 @@
 %define oname luaexpat
 Name: lua5-luaexpat
 Version: 1.1
-Release: alt1
+Release: alt1.qa1
 Summary: SAX XML parser for Lua based on the Expat library
 License: MIT
 Group: Development/Other
@@ -40,5 +40,8 @@ make \
 %doc README doc/* tests
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.1-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Mon Jun 21 2010 Ildar Mulyukov <ildar@altlinux.ru> 1.1-alt1
 - initial build for ALTLinux
