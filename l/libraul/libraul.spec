@@ -3,7 +3,7 @@
 
 Name: libraul
 Version: 0.7.0
-Release: alt1
+Release: alt1.qa1
 
 Summary: utility library for realtime multi-threaded audio applications
 License: %gpl2plus
@@ -85,6 +85,9 @@ export lt_cv_deplibs_check_method=pass_all
 %doc %_docdir/%name-doc/
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.7.0-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Tue Nov 23 2010 Timur Batyrshin <erthad@altlinux.org> 0.7.0-alt1
 - 0.7.0
 
