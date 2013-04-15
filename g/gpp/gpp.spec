@@ -1,6 +1,6 @@
 Name: gpp
 Version: 2.24
-Release: alt1
+Release: alt1.qa1
 
 Summary: General-purpose preprocessor with customizable syntax
 License: GPL
@@ -38,6 +38,9 @@ Lesser General Public Licence.
 %_bindir/*
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.24-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Mon Sep 20 2004 Mikhail Yakshin <greycat@altlinux.ru> 2.24-alt1
 - 2.24
 
