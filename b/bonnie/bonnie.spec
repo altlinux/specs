@@ -1,6 +1,6 @@
 Name: bonnie
 Version: 1.4
-Release: alt3
+Release: alt3.qa1
 
 Summary: Unix filesystem performance benchmark
 License: Artistic
@@ -34,6 +34,9 @@ install -pD -m644 bonnie.1 %buildroot%_man1dir/bonnie.1
 %doc bonnie.doc README
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.4-alt3.qa1
+- NMU: rebuilt for debuginfo.
+
 * Mon Feb 18 2008 Victor Forsyuk <force@altlinux.org> 1.4-alt3
 - Include sys/user.h for PAGE_MASK definition due to unexported
   asm/page.h in glibc-kernheaders-2.6.18-alt4.
