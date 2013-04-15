@@ -1,6 +1,6 @@
 Name: agrep
 Version: 2.04
-Release: alt1
+Release: alt1.qa1
 
 Summary: Approximate grep
 License: distributable not for profit, free use
@@ -51,6 +51,9 @@ install -pD -m644 %SOURCE1 $RPM_BUILD_DIR/%name-%version/README.ALT
 
 %define date	%(echo `LC_ALL="C" date +"%a %b %d %Y"`)
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.04-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sun Jun 08 2003 Michael Shigorin <mike@altlinux.ru> 2.04-alt1
 - built for ALT Linux
 - based on PLD spec; 
