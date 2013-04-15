@@ -1,6 +1,6 @@
 Name: qca-tls
 Version: 1.0
-Release: alt7.1
+Release: alt7.1.qa1
 
 License: GPLv2+
 Group: Networking/Instant messaging
@@ -47,6 +47,9 @@ cp libqca-tls.so %buildroot%_libdir/qt3/plugins/crypto/
 %doc README
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.0-alt7.1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Thu Dec 16 2010 Dmitry V. Levin <ldv@altlinux.org> 1.0-alt7.1
 - Fixed build with openssl-1.0.
 
