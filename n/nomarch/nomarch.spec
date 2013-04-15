@@ -1,6 +1,6 @@
 Name: nomarch
 Version: 1.4
-Release: alt1
+Release: alt1.qa1
 
 Summary: GPLed Arc de-archiver
 
@@ -36,6 +36,9 @@ make %{?_smp_mflags} CFLAGS="%optflags"
 %attr(0755,root,root) %_bindir/*
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.4-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sun Dec 12 2010 Ilya Mashkin <oddity@altlinux.ru> 1.4-alt1
 - Build for ALT Linux
 
