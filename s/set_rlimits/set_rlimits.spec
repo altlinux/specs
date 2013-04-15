@@ -5,7 +5,7 @@
 
 Name: %name
 Version: %version
-Release: alt1
+Release: alt1.qa1
 
 Summary: %name - allow non-priviledged access to realtime scheduling
 License: GPL
@@ -42,6 +42,9 @@ gcc $CFLAGS -o %name %name.c
 %doc README Changelog
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.2.0-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Mon Apr 04 2006 LAKostis <lakostis at altlinux.ru> 1.2.0-alt1
 - new version 1.2.0 with new name.
 
