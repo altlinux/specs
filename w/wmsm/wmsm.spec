@@ -1,6 +1,6 @@
 Name: wmsm
 Version: 0.2.1
-Release: alt2.qa1
+Release: alt2.qa2
 Summary: System monitor for WindowMaker
 License: GPL
 Packager: Lebedev Sergey <barabashka@altlinux.org>
@@ -43,6 +43,9 @@ install -p -D -m644 %SOURCE1 %buildroot/%_menudir/%name
 %_menudir/%name
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.2.1-alt2.qa2
+- NMU: rebuilt for debuginfo.
+
 * Fri Nov 13 2009 Repocop Q. A. Robot <repocop@altlinux.org> 0.2.1-alt2.qa1
 - NMU (by repocop): the following fixes applied:
   * update_menus for wmsm
