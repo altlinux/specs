@@ -4,7 +4,7 @@
 
 Name: wise
 Version: 2.4.1
-Release: %release
+Release: alt1.qa1
 Summary: Comparisons of DNA and protein sequences
 Group: Sciences/Biology
 License: GPL
@@ -62,6 +62,9 @@ echo "setenv WISECONFIGDIR %_datadir/%name" > %buildroot%_sysconfdir/profile.d/%
 %config(noreplace) %_sysconfdir/profile.d/*
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.4.1-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Mon Jul 06 2009 Boris Savelev <boris@altlinux.org> 2.4.1-alt1
 - initial build from Mandriva
 
