@@ -1,6 +1,6 @@
 Name: wdfs
 Version: 1.4.2
-Release: alt1
+Release: alt1.qa1
 
 Summary: WebDAV File System
 
@@ -37,6 +37,9 @@ repositiories via WebDAV.
 %_bindir/wdfs
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.4.2-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Wed Jan 20 2010 Ilya Shpigor <elly@altlinux.org> 1.4.2-alt1
 - initial build for ALT Linux Sisyphus
 
