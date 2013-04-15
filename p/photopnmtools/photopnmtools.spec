@@ -1,6 +1,6 @@
 Name: photopnmtools
 Version: 1.3
-Release: alt1
+Release: alt1.qa1
 
 Summary: Toolset for postprocessing photographic images, based on PPM
 License: Artistic
@@ -39,5 +39,8 @@ install -p -m755 {hsy,pnm,ppm}*[^c] %buildroot%_bindir/
 %_bindir/*
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.3-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Fri Jul 20 2007 Victor Forsyuk <force@altlinux.org> 1.3-alt1
 - Initial build.
