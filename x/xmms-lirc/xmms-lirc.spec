@@ -1,6 +1,6 @@
 Name: xmms-lirc
 Version: 1.4
-Release: alt2
+Release: alt2.qa1
 
 Summary: Infra-red control plugin for XMMS
 License: GPL
@@ -30,6 +30,9 @@ Allow to control XMMS by your infra-red remote control, required LIRC
 %doc lircrc AUTHORS ChangeLog NEWS README
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.4-alt2.qa1
+- NMU: rebuilt for debuginfo.
+
 * Thu Nov 27 2003 Kachalov Anton <mouse@altlinux.ru> 1.4-alt2
 - removed .la file
 
