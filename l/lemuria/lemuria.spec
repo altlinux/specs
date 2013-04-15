@@ -4,7 +4,7 @@
 Summary: OpenGL plugin for xmms
 Name: lemuria
 Version: 2.1.0
-Release: alt2
+Release: alt2.qa1
 License: GPL
 Group: Video
 Packager: Hihin Ruslan <ruslandh@altlinux.ru>
@@ -57,6 +57,9 @@ rm -f %buildroot/%_libdir/gmerlin/plugins/*.la
 %xmms_effectdir/*.so*
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.1.0-alt2.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sun Dec 05 2010 Hihin Ruslan <ruslandh@altlinux.ru> 2.1.0-alt2
 - add BuildRequires libGLU-devel
 
