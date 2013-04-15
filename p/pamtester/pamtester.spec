@@ -1,6 +1,6 @@
 Name: pamtester
 Version: 0.1.12
-Release: alt1
+Release: alt1.qa1
 License: GPL
 Group: Accessibility
 Summary: Utility for testing pluggable authentication modules (PAM) facility
@@ -31,5 +31,8 @@ management mechanism in many unices and similar OSes including Solaris, HP-UX,
 %_man1dir/pamtester.*
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.1.12-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Wed Jan 26 2011 Afanasov Dmitry <ender@altlinux.org> 0.1.12-alt1
 - initial build
