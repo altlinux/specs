@@ -1,6 +1,6 @@
 Name: vmoconv
 Version: 1.0
-Release: alt2
+Release: alt2.qa1
 License: GPL
 Group: Communications
 URL: http://triq.net/obex/downloads.html
@@ -45,6 +45,9 @@ autoreconf -fisv
 %doc AUTHORS README THANKS
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.0-alt2.qa1
+- NMU: rebuilt for debuginfo.
+
 * Mon Dec 29 2006 Yury Aliaev <mutabor@altlinux.org> 1.0-alt2
 - fixed build with new toolchain (some includes were missed)
 
