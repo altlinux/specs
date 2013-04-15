@@ -1,6 +1,6 @@
 Name: qstat
 Version: 2.11
-Release: alt1
+Release: alt1.qa1
 Summary: Game server browsing utility
 License: Artistic
 Group: Networking/Other
@@ -43,6 +43,9 @@ Terminous, Wheel of Time, and Daikatana.
 %_bindir/qstat
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.11-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Mon Nov 13 2006 Pavlov Konstantin <thresh@altlinux.ru> 2.11-alt1
 - 2.11 release.
 - Added packager field.
