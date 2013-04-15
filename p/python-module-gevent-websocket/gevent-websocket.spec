@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.3.6
-Release: alt1.hg20120723.1
+Release: alt2.hg20120723
 Summary: Websocket handler for the gevent pywsgi server, a Python network library
 License: BSD
 Group: Development/Python
@@ -52,9 +52,7 @@ cp -a . ../python3
 %python_build
 %if_with python3
 pushd ../python3
-for i in $(find ./ -name '*.py'); do
-	2to3 -w -n $i
-done
+find -type f -name '*.py' -exec 2to3 -w -n '{}' +
 %python3_build
 popd
 %endif
@@ -78,6 +76,9 @@ popd
 %endif
 
 %changelog
+* Mon Apr 15 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.6-alt2.hg20120723
+- Use 'find... -exec...' instead of 'for ... $(find...'
+
 * Fri Mar 22 2013 Aleksey Avdeev <solo@altlinux.ru> 0.3.6-alt1.hg20120723.1
 - Rebuild with Python-3.3
 
