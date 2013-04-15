@@ -2,7 +2,7 @@
 %define Name MPFC
 Name: %bname-remote
 Version: 0.1
-Release: alt1
+Release: alt1.qa1
 Summary: Remote interface for %Name
 License: %gpl2plus
 Group: Sound
@@ -41,5 +41,8 @@ Remote interface for %Name.
 
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.1-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Wed Oct 15 2008 Led <led@altlinux.ru> 0.1-alt1
 - initial build
