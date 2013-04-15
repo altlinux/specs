@@ -2,7 +2,7 @@
 
 Name: mkzftree
 Version: 1.0.7
-Release: alt1
+Release: alt1.qa1
 
 Summary: Create a zisofs/RockRidge compressed file tree
 Summary(ru_RU.CP1251): Подготовка сжатого дерева файлов
@@ -45,6 +45,9 @@ the "ZF" compression records.
 %doc README CHANGES
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.0.7-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Thu Nov 30 2006 Eugene Ostapets <eostapets@altlinux.ru> 1.0.7-alt1
 - 1.0.7
 
