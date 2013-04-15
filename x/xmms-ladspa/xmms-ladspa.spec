@@ -2,7 +2,7 @@
 
 Name: xmms-ladspa
 Version: 0.7
-Release: alt1.1
+Release: alt1.1.qa1
 
 Summary: A LADSPA effect plugin for XMMS
 Group: Sound
@@ -49,6 +49,9 @@ find . -type f -print0|xargs -r0 %__subst 's,"ladspa.h",<ladspa.h>,' --
 %doc ChangeLog PLUGINS README 
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.7-alt1.1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Fri Apr 13 2007 Igor Zubkov <icesik@altlinux.org> 0.7-alt1.1
 - NMU
 - fix linking (#11434)
