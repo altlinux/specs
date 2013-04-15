@@ -1,6 +1,6 @@
 Name: stress
 Version: 1.0.4
-Release: alt1
+Release: alt1.qa1
 
 Packager: Victor Forsiuk <force@altlinux.org>
 
@@ -39,6 +39,9 @@ system is under heavy load.
 %_infodir/stress*
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.0.4-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Mon Mar 22 2010 Victor Forsiuk <force@altlinux.org> 1.0.4-alt1
 - 1.0.4
 
