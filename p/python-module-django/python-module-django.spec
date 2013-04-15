@@ -1,6 +1,6 @@
 %define branch 1.5
 %define version %branch.1
-%define release alt1
+%define release alt1.1
 %define origname Django
 %define oname django
 %define py3_name python3-module-%oname
@@ -247,10 +247,8 @@ Conflicts: python-module-django1.2-doc
 rm -rf ../python3
 cp -a . ../python3
 pushd ../python3
-for i in $(find ./ -name '*.py'); do
-	sed -i 's|%_bindir/env python|%_bindir/env python3|' $i
-	sed -i 's|.*from future_builtins import zip.*||' $i
-done
+find -type f -name '*.py' -exec sed -i 's|%_bindir/env python|%_bindir/python3|' -- '{}' +
+find -type f -name '*.py' -exec sed -i 's|.*from future_builtins import zip.*||' -- '{}' +
 popd
 %endif
 
@@ -378,6 +376,9 @@ popd
 %endif
 
 %changelog
+* Mon Apr 15 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.5.1-alt1.1
+- Use 'find... -exec...' instead of 'for ... $(find...'
+
 * Wed Apr 03 2013 Aleksey Avdeev <solo@altlinux.ru> 1.5.1-alt1
 - Version 1.5.1
 - Fix python3-module-django
