@@ -6,7 +6,7 @@ Packager: Repocop Q. A. Robot <repocop@altlinux.org>
 Name: vidix
 %define lname lib%name
 Version: 1.0.0
-Release: alt0.2.1
+Release: alt0.2.1.qa1
 Summary: VIDeo Interface for *niX
 License: GPL
 Group: System/Libraries
@@ -127,6 +127,9 @@ CFLAGS="%optflags" sh ./configure --prefix=%_prefix --libdir=%_libdir --cc=gcc
 
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.0.0-alt0.2.1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Mon Nov 02 2009 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt0.2.1
 - NMU (by repocop): the following fixes applied:
   * post_ldconfig for libvidix
