@@ -1,6 +1,6 @@
 Name: libunrar3
 Version: 3.8.5
-Release: alt1
+Release: alt1.qa1
 
 Packager: Sergey Y. Afonin <asy@altlinux.ru>
 
@@ -50,6 +50,9 @@ install -D dll.hpp $RPM_BUILD_ROOT%_includedir/libunrar3/dll.hpp
 %_includedir/libunrar3/dll.hpp
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 3.8.5-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Thu Nov 13 2008 Sergey Y. Afonin <asy@altlinux.ru> 3.8.5-alt1
 - new version
 
