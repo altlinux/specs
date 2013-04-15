@@ -3,7 +3,7 @@
 
 Name: parc
 Version: 00.05.01
-Release: alt1
+Release: alt1.qa1
 
 Summary: Palm database archiver
 Group: File tools
@@ -38,6 +38,9 @@ bunch of little utilities that you might otherwise use.
 %_man1dir/%name.1*
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 00.05.01-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Thu Jan 12 2006 Sir Raorn <raorn@altlinux.ru> 00.05.01-alt1
 - Built for Sisyphus
 
