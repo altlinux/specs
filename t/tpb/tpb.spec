@@ -2,7 +2,7 @@ Name: tpb
 Version: 0.6.5
 # Subversion revision 318
 # see svn://svn.savannah.nongnu.org/tpb
-Release: alt1.r318
+Release: alt1.r318.qa1
 Packager: Grigory Batalov <bga@altlinux.ru>
 
 Summary: IBM ThinkPad button support utility
@@ -69,6 +69,9 @@ subst 's!__BINDIR__!%_bindir!' %buildroot%_sysconfdir/X11/xinit.d/tbp
 %_man1dir/*
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.6.5-alt1.r318.qa1
+- NMU: rebuilt for debuginfo.
+
 * Fri Dec 12 2008 Grigory Batalov <bga@altlinux.ru> 0.6.5-alt1.r318
 - Build requirements were updated.
 
