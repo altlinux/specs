@@ -1,7 +1,7 @@
 Summary: Driver for the Lexmark 2050 printer
 Name: c2050
 Version: 0.4
-Release: alt1
+Release: alt1.qa1
 
 Packager: Stanislav Ievlev <inger@altlinux.org>
 
@@ -35,5 +35,8 @@ done
 
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.4-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Tue Nov 06 2007 Stanislav Ievlev <inger@altlinux.org> 0.4-alt1
 - Initial build
