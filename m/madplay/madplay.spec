@@ -1,6 +1,6 @@
 Name: madplay
 Version: 0.15.2b
-Release: alt2
+Release: alt2.qa1
 
 Summary: High quality MPEG audio decoder
 Summary(ru_RU.CP1251): Декодер аудиофайлов формата MPEG
@@ -54,6 +54,9 @@ MAD - это высокачественный декодер аудиофайлов формата MPEG.
 %doc CHANGES README INSTALL CREDITS COPYRIGHT TODO VERSION
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.15.2b-alt2.qa1
+- NMU: rebuilt for debuginfo.
+
 * Thu Mar 04 2004 Andrey Astafiev <andrei@altlinux.ru> 0.15.2b-alt2
 - 0.15.2b
 - Renamed from mad to madplay.
