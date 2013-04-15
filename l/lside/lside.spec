@@ -1,6 +1,6 @@
 Name: lside
 Version: 0.1
-Release: alt1
+Release: alt1.qa1
 License: GPL
 Group: System/Kernel and hardware
 Url: http://lside.berlios.de
@@ -30,6 +30,9 @@ have a Linux kernel which supports the /proc/ide interface.
 %_bindir/*
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.1-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sat Jan 26 2008 Eugene Ostapets <eostapets@altlinux.ru> 0.1-alt1
 - first build
 
