@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.9.6
-Release: alt1
+Release: alt1.1
 
 Summary: a collection of tools for internationalizing Python applications
 License: BSD
@@ -74,10 +74,8 @@ python scripts/import_cldr.py CLDR/
 %if_with python3
 pushd ../python3
 python scripts/import_cldr.py CLDR/
-for i in $(find ./ -name '*.py'); do
-	sed -i 's|%_bindir/env python|%_bindir/env python3|' $i
-	2to3 -w -n $i
-done
+find -type f -name '*.py' -exec sed -i 's|%_bindir/env python|%_bindir/python3|' -- '{}' +
+find -type f -name '*.py' -exec 2to3 -w '{}' +
 sed -i \
 	's|from UserDict import DictMixin|from collections import MutableMapping as DictMixin|' \
 	babel/localedata.py
@@ -112,6 +110,9 @@ python setup.py test
 %endif
 
 %changelog
+* Mon Apr 15 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.6-alt1.1
+- Use 'find... -exec...' instead of 'for ... $(find...'
+
 * Thu Feb 21 2013 Aleksey Avdeev <solo@altlinux.ru> 0.9.6-alt1
 - 0.9.6
 
