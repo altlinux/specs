@@ -1,6 +1,6 @@
 Name: atomix
 Version: 2.14.0
-Release: alt7
+Release: alt7.qa1
 
 Packager: Victor Forsiuk <force@altlinux.org>
 
@@ -51,6 +51,9 @@ install -pDm644 %_sourcedir/atomix-icon48.png %buildroot%_liconsdir/atomix-icon.
 %attr(0664,games,games) %_localstatedir/games/atomix.scores
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.14.0-alt7.qa1
+- NMU: rebuilt for debuginfo.
+
 * Tue Oct 19 2010 Victor Forsiuk <force@altlinux.org> 2.14.0-alt7
 - Refresh BuildRequires.
 
