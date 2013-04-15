@@ -1,6 +1,6 @@
 Name: unace
 Version: 1.2b
-Release: alt3
+Release: alt3.qa1
 
 Summary: ACE unarchiver
 License: Freely distributable
@@ -44,6 +44,9 @@ install -pDm755 %name %buildroot%_bindir/%name
 # 2.5 is closed source and known insecure (#24907)
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.2b-alt3.qa1
+- NMU: rebuilt for debuginfo.
+
 * Fri Jan 28 2011 Michael Shigorin <mike@altlinux.org> 1.2b-alt3
 - applied patch from Gentoo to fix CAN-2005-0160, CAN-2005-0161
   (closes: #24907)
