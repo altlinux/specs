@@ -1,7 +1,7 @@
 Summary: Generate statistics on any textfile
 Name: genstats
 Version: 1.0.0
-Release: alt1
+Release: alt1.qa1
 License: GPL2
 Group: Text tools
 Source0: http://www.vanheusden.com/genstats/%name-%version.tgz
@@ -31,6 +31,9 @@ install -m 644 %name.1 %buildroot%_man1dir/%name.1
 %_man1dir/%name.1*
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.0.0-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sat Sep  4 2010 Terechkov Evgenii <evg@altlinux.org> 1.0.0-alt1
 - Initial build for ALT Linux Sisyphus
 
