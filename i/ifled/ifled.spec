@@ -1,6 +1,6 @@
 Name:		ifled
 Version:	0.6
-Release:	alt2
+Release:	alt2.qa1
 Group:		Monitoring
 License:	GPL
 Summary:	Keyboard LED interface activity indicator
@@ -49,6 +49,9 @@ install %SOURCE2 %buildroot%_sysconfdir/sysconfig/%name
 %doc ChangeLog README README.ALT
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.6-alt2.qa1
+- NMU: rebuilt for debuginfo.
+
 * Mon May 31 2004 Denis Ovsienko <pilot@altlinux.ru> 0.6-alt2
 - cleaned up initscript and spec
 - ifled service is off by default
