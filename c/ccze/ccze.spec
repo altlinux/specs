@@ -1,6 +1,6 @@
 Name: ccze
 Version: 0.2.1
-Release: alt6
+Release: alt6.qa1
 
 Packager: Victor Forsyuk <force@altlinux.org>
 
@@ -57,6 +57,9 @@ src/ccze-dump >%buildroot%_sysconfdir/cczerc
 %_man7dir/*
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.2.1-alt6.qa1
+- NMU: rebuilt for debuginfo.
+
 * Tue Aug 04 2009 Victor Forsyuk <force@altlinux.org> 0.2.1-alt6
 - Upstream is dead. Point URL to Debian package page (better than nothing).
 
