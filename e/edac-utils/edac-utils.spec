@@ -1,6 +1,6 @@
 Name: edac-utils
 Version: 0.16
-Release: alt2
+Release: alt2.qa1
 
 Summary: Userspace helper for kernel EDAC drivers (ECC)
 Group: System/Kernel and hardware
@@ -61,6 +61,9 @@ mv %buildroot/etc/init.d/edac %buildroot/%_initdir
 %_includedir/edac.h
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.16-alt2.qa1
+- NMU: rebuilt for debuginfo.
+
 * Wed Jun 03 2009 Vitaly Kuznetsov <vitty@altlinux.ru> 0.16-alt2
 - post_service/preun_service removed
 
