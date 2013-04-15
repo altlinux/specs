@@ -1,6 +1,6 @@
 Name: xrcode
 Version: 1.0
-Release: alt3
+Release: alt3.qa1
 
 Url: ftp://oskin.macomnet.ru/pub/linux/misc
 License: GPL
@@ -65,6 +65,9 @@ install -m755 recode %buildroot%_bindir/rcode
 # TODO: In function `main': the use of `tmpnam' is dangerous, better use `mkstemp'
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.0-alt3.qa1
+- NMU: rebuilt for debuginfo.
+
 * Mon Jun 05 2006 Michael Shigorin <mike@altlinux.org> 1.0-alt3
 - fixed build with gcc4 (thanks vsu@, gns@ and morozov@ for advice)
 - minor spec cleanup
