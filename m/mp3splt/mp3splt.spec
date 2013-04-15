@@ -1,6 +1,6 @@
 Name: mp3splt
 Version: 2.2.5
-Release: alt1
+Release: alt1.qa1
 
 Summary: utility to split mp3 and ogg files without decoding
 License: GPLv2 or later
@@ -39,6 +39,9 @@ few seconds.
 %_man1dir/%name.1*
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.2.5-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sun Jun 14 2009 Alex V. Myltsev <avm@altlinux.ru> 2.2.5-alt1
 - New version.
 
