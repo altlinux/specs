@@ -1,6 +1,6 @@
 Name: units
 Version: 1.88
-Release: alt1
+Release: alt1.qa1
 
 Summary: A utility for converting amounts from one unit to another
 License: GPLv3+
@@ -41,6 +41,9 @@ find -type f -print0 |
 %doc NEWS README
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.88-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sun Mar 07 2010 Dmitry V. Levin <ldv@altlinux.org> 1.88-alt1
 - Updated to 1.88.
 - Cleaned up specfile.
