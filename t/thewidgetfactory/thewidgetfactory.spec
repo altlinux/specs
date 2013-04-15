@@ -2,7 +2,7 @@ Name: thewidgetfactory
 Summary: Test tool for GTK2 theme
 Summary(ru_RU.UTF8): Утилита для тестирования созданной темы GTK2
 Version: 0.2.1
-Release: alt3
+Release: alt3.qa1
 License: GPL
 Group: Development/Other
 
@@ -73,6 +73,9 @@ install -m 644 %SOURCE3 $RPM_BUILD_ROOT%_liconsdir/%name.png
 %_niconsdir/%name.png
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.2.1-alt3.qa1
+- NMU: rebuilt for debuginfo.
+
 * Fri Nov 13 2009 Denis Koryavov <dkoryavov@altlinux.org> 0.2.1-alt3
 - Repocop warnings is taken into account.
 
