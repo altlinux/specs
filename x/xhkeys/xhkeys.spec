@@ -1,6 +1,6 @@
 Name: xhkeys
 Version: 2.2.1
-Release: alt2
+Release: alt2.qa1
 
 Summary: xhkeys - a tool for your special keyboard
 License: GPL
@@ -61,6 +61,9 @@ install -p -m755 xhkeys_mixer.so %buildroot%_libdir/xhkeys/
 %_libdir/xhkeys/*.so
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.2.1-alt2.qa1
+- NMU: rebuilt for debuginfo.
+
 * Mon Jul 14 2008 Igor Zubkov <icesik@altlinux.org> 2.2.1-alt2
 - fix build
 - buildreq
