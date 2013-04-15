@@ -11,7 +11,7 @@ BuildRequires: chrpath
 Summary: C++ wrapper for GtkGlExt
 Name: libgtkglextmm
 Version: 1.2.0
-Release: alt2_15
+Release: alt2_15.1
 License: LGPLv2+
 Group: System/Libraries
 URL: http://gtkglext.sourceforge.net
@@ -19,6 +19,7 @@ URL: http://gtkglext.sourceforge.net
 Source0: http://dl.sourceforge.net/sourceforge/gtkglext/%{oldname}-%{version}.tar.bz2
 Patch0: gtkglextmm-1.2.0-aclocal.diff
 Patch1: fix_ftbfs_gtk_2_20.patch
+Patch2: gtkglextmm-1.2.0-fix-deprecated.patch
 
 BuildRequires: gtkglext-devel >= %{gtkglext_major}
 BuildRequires: libgtkmm2-devel >= %{gtkmm_major}
@@ -44,6 +45,7 @@ and developer docs for gtkglextmm.
 %setup -q -n gtkglextmm-%{version}
 %patch0 -p1
 %patch1 -p1
+%patch2 -p2
 
 %build
 %configure --disable-static --disable-dependency-tracking
@@ -72,6 +74,9 @@ done
 %doc %{_datadir}/doc/%{oldname}-%{gtkglextmm_major}/html/
 
 %changelog
+* Mon Apr 15 2013 Andrey Cherepanov <cas@altlinux.org> 1.2.0-alt2_15.1
+- Fix deprecated functions use
+
 * Sat Jan 26 2013 Igor Vlasenko <viy@altlinux.ru> 1.2.0-alt2_15
 - applied repocop patches
 
