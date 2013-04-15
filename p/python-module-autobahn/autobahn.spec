@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.5.14
-Release: alt1.git20130210.1
+Release: alt2.git20130210
 Summary: WebSocket & WAMP for Python/Twisted
 License: Apache License 2.0
 Group: Development/Python
@@ -78,9 +78,7 @@ popd
 
 %if_with python3
 pushd ../python3/%oname
-for i in $(find ./ -name '*.py'); do
-	2to3 -w -n $i
-done
+find -type f -name '*.py' -exec 2to3 -w '{}' +
 %python3_build_debug
 popd
 %endif
@@ -122,6 +120,9 @@ popd
 %endif
 
 %changelog
+* Mon Apr 15 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.14-alt2.git20130210
+- Use 'find... -exec...' instead of 'for ... $(find...'
+
 * Fri Mar 22 2013 Aleksey Avdeev <solo@altlinux.ru> 0.5.14-alt1.git20130210.1
 - Rebuild with Python-3.3
 
