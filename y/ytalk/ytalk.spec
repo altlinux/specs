@@ -1,6 +1,6 @@
 Name: ytalk
 Version: 3.3.0
-Release: alt1
+Release: alt1.qa1
 
 Summary: A chat program for multiple users
 License: GPL
@@ -37,6 +37,9 @@ easy-to-use menu of commands.
 %_man1dir/ytalk*
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 3.3.0-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Mon Oct 03 2005 Victor Forsyuk <force@altlinux.ru> 3.3.0-alt1
 - New version.
 - License now GPL.
