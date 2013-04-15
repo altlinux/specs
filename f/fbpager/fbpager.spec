@@ -3,7 +3,7 @@
 
 Name: fbpager
 Version: 0.1.4
-Release: alt8
+Release: alt8.qa1
 
 Summary: Workspaces pager for Fluxbox
 Summary(ru_RU.CP1251): Пейджер рабочих столов для Fluxbox
@@ -55,6 +55,9 @@ install -pD -m 644 %SOURCE1 %buildroot%_menudir/%name
 %_menudir/%name
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.1.4-alt8.qa1
+- NMU: rebuilt for debuginfo.
+
 * Wed Apr 15 2009 Afanasov Dmitry <ender@altlinux.org> 0.1.4-alt8
 - 8e0927e... from git://git.fluxbox.org/fbpager.git.
   + Added autogen.sh from fluxbox and regenerated autogen/autoconf files
