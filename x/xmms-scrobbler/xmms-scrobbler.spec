@@ -7,7 +7,7 @@
 
 Name: xmms-scrobbler
 Version: 0.4.0
-Release: alt1
+Release: alt1.qa1
 
 Summary: XMMS Audioscrobbler plugin
 License: LGPL
@@ -60,6 +60,9 @@ BMP plugin to send your listening data to audioscrobbler.
 %endif
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.4.0-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sun Jun 27 2010 Michael Shigorin <mike@altlinux.org> 0.4.0-alt1
 - 0.4.0 (maybe closes: #15857)
 - disabled BMP plugin build by default (fixes welcome)
