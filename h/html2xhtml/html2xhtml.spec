@@ -1,6 +1,6 @@
 Name: html2xhtml
 Version: 1.1.2.2
-Release: alt1
+Release: alt1.qa1
 
 Summary: Converts HTML files into XHTML
 License: GPLv2
@@ -34,6 +34,9 @@ among several XHTML DTDs (1.0, 1.1, Basic, etc.)
 %doc AUTHORS README TODO
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.1.2.2-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sun Oct 16 2010 Paul Wolneykien <manowar@altlinux.ru> 1.1.2.2-alt1
 - Initial release for ALT Linux.
 
