@@ -6,7 +6,7 @@
 Name: flake
 %define lname lib%name
 Version: 0.11.5
-Release: alt0.2
+Release: alt0.2.qa1
 Summary: FLAC audio encoder
 License: %lgpl2plus
 Group: Sound
@@ -129,6 +129,9 @@ popd
 
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.11.5-alt0.2.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sun Mar 08 2009 Led <led@altlinux.ru> 0.11.5-alt0.2
 - SVN revision 243
 
