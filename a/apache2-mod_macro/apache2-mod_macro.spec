@@ -6,7 +6,7 @@
 Summary: DSO module for the apache web server
 Name: apache2-mod_macro
 Version: 1.1.10
-Release: alt1
+Release: alt1.qa1
 Group: System/Servers
 License: BSD-style
 Url: http://www.coelho.net/mod_macro/
@@ -48,6 +48,9 @@ install -m 644 %SOURCE2 %buildroot%apache2_mods_available
 %apache2_moduledir/*.so
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.1.10-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Mon Feb 09 2009 Boris Savelev <boris@altlinux.org> 1.1.10-alt1
 - initial build for Sisyphus from Mandriva
 
