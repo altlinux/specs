@@ -1,7 +1,7 @@
 Name: perftest
 Summary: IB Performance tests
 Version: 1.3.0
-Release: alt1
+Release: alt1.qa1
 License: %gpl2only
 Group: Monitoring
 Url: http://www.openfabrics.org
@@ -31,6 +31,9 @@ install -m 0755 ib_{clock_test,{read,send,write}_{bw,lat},write_bw_postlist} rdm
 %_bindir/*
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.3.0-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Thu Dec 16 2010 Timur Aitov <timonbl4@altlinux.org> 1.3.0-alt1
 - New version
 
