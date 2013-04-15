@@ -1,6 +1,6 @@
 Name: gtkipcalc
 Version: 1.0
-Release: alt4.1.qa1
+Release: alt4.1.qa2
 
 Summary: GUI tool for network calculations
 License: GPL
@@ -40,6 +40,9 @@ install -p -D -m644 %SOURCE1 %buildroot%_desktopdir/
 
 %doc ABOUT-NLS AUTHORS COPYING ChangeLog INSTALL NEWS README TODO
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.0-alt4.1.qa2
+- NMU: rebuilt for debuginfo.
+
 * Mon Dec 07 2009 Repocop Q. A. Robot <repocop@altlinux.org> 1.0-alt4.1.qa1
 - NMU (by repocop): the following fixes applied:
   * update_menus for gtkipcalc
