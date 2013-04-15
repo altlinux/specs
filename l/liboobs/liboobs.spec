@@ -1,6 +1,6 @@
 Name: liboobs
 Version: 2.30.1
-Release: alt1
+Release: alt1.qa1
 
 Summary: GObject based interface to system-tools-backends - shared library
 License: GPL
@@ -69,6 +69,9 @@ This package contain documentation files.
 %_datadir/gtk-doc/html/%name
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.30.1-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Mon Sep 20 2010 Vladimir Lettiev <crux@altlinux.ru> 2.30.1-alt1
 - New version 2.30.1
 
