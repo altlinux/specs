@@ -1,6 +1,6 @@
 Name: sendip
 Version: 2.5
-Release: alt4
+Release: alt4.qa1
 
 Summary: A command line tool to allow sending arbitrary IP packets
 License: GPL
@@ -39,6 +39,9 @@ data to be added to the packet.
 %doc VERSION README CHANGES TODO contrib
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.5-alt4.qa1
+- NMU: rebuilt for debuginfo.
+
 * Tue Jun 06 2006 Vladimir V Kamarzin <vvk@altlinux.ru> 2.5-alt4
 - Build without -Werror
 
