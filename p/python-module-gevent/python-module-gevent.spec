@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.0
-Release: alt3.git20130221.1
+Release: alt4.git20130221
 
 Summary: Python network library that uses greenlet and libevent for easy and scalable concurrency
 
@@ -14,7 +14,7 @@ Url: http://pypi.python.org/pypi/%oname
 
 %py_requires greenlet
 
-# https://github.com/SiteSupport/gevent.git
+# https://github.com/sitesupport/gevent.git
 Source: %oname-%version.tar
 
 # Automatically added by buildreq on Wed Feb 03 2010
@@ -112,10 +112,7 @@ popd
 %if_with python3
 pushd ../python3
 %python3_install
-for i in $(find %buildroot%python3_sitelibdir -name '*.py')
-do
-	2to3 -w -n $i
-done
+find %buildroot%python3_sitelibdir -type f -name '*.py' -exec 2to3 -w -n '{}' +
 popd
 %endif
 
@@ -148,6 +145,9 @@ popd
 %endif
 
 %changelog
+* Mon Apr 15 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0-alt4.git20130221
+- Use 'find... -exec...' instead of 'for ... $(find...'
+
 * Sat Mar 23 2013 Aleksey Avdeev <solo@altlinux.ru> 1.0-alt3.git20130221.1
 - Rebuild with Python-3.3
 
