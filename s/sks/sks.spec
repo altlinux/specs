@@ -1,7 +1,7 @@
 Summary: Synchronizing Key Server
 Name: sks
 Version: 1.1.10
-Release: alt2.qa1.1
+Release: alt2.qa2
 License: GPL
 Group: System/Servers
 Source: http://minskyprimus.net/sks/releases/%name-%version.tar.gz
@@ -80,6 +80,9 @@ mkdir -p %buildroot%_var/spool/%name/{messages,failed_messages}
 %_man8dir/*
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.1.10-alt2.qa2
+- NMU: rebuilt for debuginfo.
+
 * Wed Nov 24 2010 Igor Vlasenko <viy@altlinux.ru> 1.1.10-alt2.qa1.1
 - repair after perl 5.12 upgrade using girar-nmu
 
