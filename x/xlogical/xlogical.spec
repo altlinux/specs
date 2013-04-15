@@ -1,6 +1,6 @@
 Name: xlogical
 Version: 1.0
-Release: alt8
+Release: alt8.qa1
 Serial: 1
 Summary: SDL logical arcade game
 Summary(ru_RU.KOI8-R): Логическая игра под управлением SDL
@@ -70,6 +70,9 @@ install -pD -m644 %SOURCE5 %buildroot%_datadir/applications/%name.desktop
 %doc ChangeLog README TODO NEWS AUTHORS
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1:1.0-alt8.qa1
+- NMU: rebuilt for debuginfo.
+
 * Fri Nov 05 2010 Fr. Br. George <george@altlinux.ru> 1:1.0-alt8
 - Serial added because of alt* < ipl7mdk*
 
