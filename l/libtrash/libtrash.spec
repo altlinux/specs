@@ -1,6 +1,6 @@
 Name: libtrash
 Version: 3.1
-Release: alt1.1
+Release: alt1.1.qa1
 
 Summary: %name - a trash can for GNU/Linux
 License: GNU GPL
@@ -43,6 +43,9 @@ mkdir -p %buildroot{%_libdir,%_sysconfdir}
 %_libdir/%name.*
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 3.1-alt1.1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Mon Nov 02 2009 Igor Vlasenko <viy@altlinux.ru> 3.1-alt1.1
 - NMU (by repocop): the following fixes applied:
   * post_ldconfig for libtrash
