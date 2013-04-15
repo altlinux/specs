@@ -1,7 +1,7 @@
 %define plugin bonk
 Name: xmms-in-%plugin
 Version: 0.12
-Release: alt1
+Release: alt1.qa1
 Summary: Bonk input plugin for XMMS
 Summary(uk_UA.CP1251): Плагін вводу Bonk для XMMS
 Summary(ru_RU.CP1251): Плагин ввода Bonk для XMMS
@@ -40,5 +40,8 @@ install -pD -m644 lib%plugin.so %buildroot%xmmsindir/lib%plugin.so
 
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.12-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Wed Feb 01 2006 Led <led@altlinux.ru> 0.12-alt1
 - initial build
