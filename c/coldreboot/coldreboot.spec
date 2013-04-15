@@ -1,6 +1,6 @@
 Name: coldreboot
 Version: 0.2
-Release: alt2
+Release: alt2.qa1
 
 Summary: Tool to halt and reboot very fast
 License: GPL
@@ -31,6 +31,9 @@ make
 %_sysconfdir/rc.d/rc.reboot
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.2-alt2.qa1
+- NMU: rebuilt for debuginfo.
+
 * Tue Jun 01 2010 Lenar Shakirov <snejok@altlinux.ru> 0.2-alt2
 - Spec cleaned: thanks to rpmcs
 
