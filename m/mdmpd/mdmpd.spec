@@ -1,6 +1,6 @@
 Name: mdmpd
 Version: 0.4
-Release: alt1
+Release: alt1.qa1
 
 Summary: A daemon for monitor MD multipath devices
 License: GPL
@@ -54,6 +54,9 @@ install -pD -m744 %SOURCE1 %buildroot%_initdir/%name
 %_initdir/%name
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.4-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Fri May 19 2006 Ilya Evseev <evseev@altlinux.ru> 0.4-alt1
 - updated to version 0.4, fixed gcc4.1 warnings
 
