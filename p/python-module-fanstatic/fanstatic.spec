@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.16
-Release: alt1.1
+Release: alt2
 Summary: Flexible static resources for web applications
 License: BSD
 Group: Development/Python
@@ -100,9 +100,7 @@ export LC_ALL=en_US.UTF-8
 %python_build
 %if_with python3
 pushd ../python3
-for i in $(find ./ -name '*.py'); do
-	2to3 -w -n $i
-done
+find -type f -name '*.py' -exec 2to3 -w '{}' +
 %python3_build
 popd
 %endif
@@ -149,6 +147,9 @@ cp -fR doc/_build/pickle %buildroot%python_sitelibdir/fanstatic/
 %endif
 
 %changelog
+* Mon Apr 15 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.16-alt2
+- Use 'find... -exec...' instead of 'for ... $(find...'
+
 * Fri Mar 22 2013 Aleksey Avdeev <solo@altlinux.ru> 0.16-alt1.1
 - Rebuild with Python-3.3
 
