@@ -2,7 +2,7 @@
 
 Name: libnes
 Version: 1.1.0
-Release: alt1
+Release: alt1.qa1
 Summary: NetEffect RNIC Userspace Library
 Group: System/Libraries
 License: %gpl2only
@@ -57,6 +57,9 @@ which may be useful for debugging.
 
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.1.0-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Wed Dec 15 2010 Timur Aitov <timonbl4@altlinux.org> 1.1.0-alt1
 - New version
 
