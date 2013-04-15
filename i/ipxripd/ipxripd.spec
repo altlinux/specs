@@ -1,6 +1,6 @@
 Name: ipxripd
 Version: 0.8
-Release: alt6
+Release: alt6.qa1
 
 Packager: Dmitry Lebkov <dlebkov@altlinux.ru>
 
@@ -57,6 +57,9 @@ install -p -m644 -D ipx_ticks.5 %buildroot%_mandir/man5/ipx_ticks.5
 %preun_service %name
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.8-alt6.qa1
+- NMU: rebuilt for debuginfo.
+
 * Mon Aug 25 2003 Dmitry Lebkov <dlebkov@altlinux.ru> 0.8-alt6
 - spec-file fixes - add usage of RPM_OPT_FLAGS at build stage
 
