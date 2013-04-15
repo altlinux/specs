@@ -3,7 +3,7 @@
 %define modname rpaf
 Name: mod_rpaf
 Version: 0.6
-Release: alt4
+Release: alt4.qa1
 Summary: Apache module for reverse proxy add forward
 License: GPL
 Url: http://stderr.net/apache/rpaf/
@@ -97,6 +97,9 @@ install -D -p -m 0755 %name.so %buildroot%apache_moduledir/%name.so
 %apache2_moduledir/%name.so
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.6-alt4.qa1
+- NMU: rebuilt for debuginfo.
+
 * Wed Dec 30 2009 Boris Savelev <boris@altlinux.org> 0.6-alt4
 - fix package summary (closes: #21836)
 
