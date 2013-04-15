@@ -1,6 +1,6 @@
 Name: mod_index_rss
 Version: 1.0
-Release: alt1
+Release: alt1.qa1
 
 Summary: On-the-fly RSS output of directories
 Group: System/Servers
@@ -50,5 +50,8 @@ chmod -x faq.html
 %doc faq.html
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.0-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Fri Sep 01 2006 Victor Forsyuk <force@altlinux.ru> 1.0-alt1
 - Initial build.
