@@ -3,7 +3,7 @@
 
 Name: ladspa-%_name-plugins
 Version: 0.3.0
-Release: alt0.5%beta.1
+Release: alt0.5%beta.1.qa1
 
 Summary: The oscillators LADSPA plugins
 License: GPL
@@ -46,6 +46,9 @@ CPPFLAGS="$CPPFLAGS %optflags"; export CPPFLAGS
 %doc AUTHORS README
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.3.0-alt0.5.1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Tue Jan 18 2005 ALT QA Team Robot <qa-robot@altlinux.org> 0.3.0-alt0.5.1
 - Rebuilt with libstdc++.so.6.
 
