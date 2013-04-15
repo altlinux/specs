@@ -1,6 +1,6 @@
 Name: gqview
 Version: 2.1.5
-Release: alt7
+Release: alt7.qa1
 
 Summary: Image viewer and browser utility
 License: GPLv2+
@@ -55,6 +55,9 @@ install -pD -m644 gqview.png %buildroot%_liconsdir/gqview.png
 %_man1dir/*
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.1.5-alt7.qa1
+- NMU: rebuilt for debuginfo.
+
 * Thu Jul 15 2010 Vladislav Zavjalov <slazav@altlinux.org> 2.1.5-alt7
 - enhance image scrolling (closes #23770)
 
