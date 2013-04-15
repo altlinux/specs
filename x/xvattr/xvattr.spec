@@ -1,6 +1,6 @@
 Name: xvattr
 Version: 1.3
-Release: alt6
+Release: alt6.qa1
 
 Packager: Victor Forsiuk <force@altlinux.org>
 
@@ -36,6 +36,9 @@ install -pD -m755 xvattr %buildroot%_bindir/xvattr
 %_man1dir/*
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.3-alt6.qa1
+- NMU: rebuilt for debuginfo.
+
 * Fri Nov 26 2010 Victor Forsiuk <force@altlinux.org> 1.3-alt6
 - Add to BuildRequires perl package needed to generate man page.
 
