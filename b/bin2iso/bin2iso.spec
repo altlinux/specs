@@ -1,6 +1,6 @@
 Name: bin2iso
 Version: 1.9
-Release: alt1
+Release: alt1.qa1
 
 Summary: Convert ".bin" files into ISO or WAV
 Summary(ru_RU.UTF-8): Преобразователь файлов ".bin" в формат ISO и/или WAV.
@@ -29,5 +29,8 @@ A program to convert ".bin" images into iso or wav files.
 %_bindir/%name
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.9-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sun Feb 12 2006 Vyacheslav Dikonov <slava@altlinux.ru> 1.9-alt1
 - ALTLinux build
