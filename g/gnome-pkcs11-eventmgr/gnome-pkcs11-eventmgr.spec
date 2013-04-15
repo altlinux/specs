@@ -2,7 +2,7 @@
 
 Name: gnome-pkcs11-eventmgr
 Version: 1.0
-Release: alt1
+Release: alt1.qa1
 
 Summary: Simple PKCS#11 event manager for GNOME
 Group: Graphical desktop/GNOME
@@ -31,6 +31,9 @@ Simple PKCS#11 event manager for GNOME.
 %_bindir/*
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.0-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Wed Sep 09 2009 Alexey I. Froloff <raorn@altlinux.org> 1.0-alt1
 - Initial build
 
