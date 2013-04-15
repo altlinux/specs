@@ -1,6 +1,6 @@
 Name: easytag
 Version: 2.1.6
-Release: alt7
+Release: alt7.qa1
 
 Summary: Audio files tag viewer/editor
 Summary(ru_RU.UTF-8): Утилита для редактирования тегов звуковых файлов
@@ -71,6 +71,9 @@ mv %buildroot%_pixmapsdir/EasyTAG_icon.xpm %buildroot%_pixmapsdir/easytag.xpm
 %_datadir/applications/*
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.1.6-alt7.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sat Oct 10 2009 Denis Koryavov <dkoryavov@altlinux.org> 2.1.6-alt7
 - Really fix russian translation.
 
