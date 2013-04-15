@@ -5,9 +5,9 @@ Version: 0.3
 %define release alt0.1
 
 %ifdef cvsdate
-Release: alt0.1cvs20031027.1
+Release: alt0.1cvs20031027.1.qa1
 %else
-Release: %release
+Release: alt0.1cvs20031027.1.qa2
 %endif
 
 Summary: Texitheque is a set of small documentation utilities
@@ -86,6 +86,9 @@ Here is a rough feature set overview:
 %doc AUTHORS ChangeLog NEWS README
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.3-alt0.1cvs20031027.1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sun Nov 07 2010 Vladimir Lettiev <crux@altlinux.ru> 0.3-alt0.1cvs20031027.1
 - rebuilt with perl 5.12
 
