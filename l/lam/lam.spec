@@ -1,6 +1,6 @@
 Name: lam
 Version: 7.1.4
-Release: alt4
+Release: alt4.qa1
 
 %define mpi_prefix %_libexecdir/%name
 %define mpi_sysconfdir %_sysconfdir/%name
@@ -184,6 +184,9 @@ EOF
 %mpi_prefix/man/man3
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 7.1.4-alt4.qa1
+- NMU: rebuilt for debuginfo.
+
 * Mon May 25 2009 Denis Pynkin <dans@altlinux.ru> 7.1.4-alt4
 - Fixed build for sisyphus
 
