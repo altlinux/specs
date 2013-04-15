@@ -1,6 +1,6 @@
 Name: videogen
 Version: 0.33
-Release: alt1
+Release: alt1.qa1
 
 # 0.16-ipl4 somehow got its serial, so we have to bear with that
 Serial: 2
@@ -56,6 +56,9 @@ install -pD %name.1x %buildroot%_x11mandir/man1/%name.1x
 %doc README CHANGES BUGS THANKS videogen.conf.sample
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2:0.33-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Fri Sep 10 2010 Michael Shigorin <mike@altlinux.org> 2:0.33-alt1
 - 0.33
 
