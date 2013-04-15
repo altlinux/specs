@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.9.0
-Release: alt1.hg20130321
+Release: alt2.hg20130321
 Summary: Provides some classes to make unified access to different RDBMS possible
 
 Group: Development/Python
@@ -100,11 +100,9 @@ touch ../python3/test/__init__.py
 %python_build
 %if_with python3
 pushd ../python3
-for i in $(find ./ -name '*.py'); do
-	if [ "$i" != "./setup.py" ]; then
-		2to3 -w -n $i
-	fi
-done
+cp setup.py setup.py.bak
+find -type f -name '*.py' -exec 2to3 -w -n '{}' +
+mv -f setup.py.bak setup.py
 %python3_build
 popd
 %endif
@@ -138,6 +136,9 @@ rm -f %buildroot%python3_sitelibdir/logilab/__init__.py*
 %endif
 
 %changelog
+* Mon Apr 15 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.9.0-alt2.hg20130321
+- Use 'find... -exec...' instead of 'for ... $(find...'
+
 * Mon Apr 01 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.9.0-alt1.hg20130321
 - Version 1.9.0
 
