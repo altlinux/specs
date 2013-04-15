@@ -1,6 +1,6 @@
 Name: cdp
 Version: 0.33
-Release: alt3
+Release: alt3.qa1
 Epoch: 1
 
 Summary: An interactive text-mode program for controlling audio CD-ROMs
@@ -50,6 +50,9 @@ ln -s cdp %buildroot%_bindir/cdplay
 %doc ChangeLog README
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1:0.33-alt3.qa1
+- NMU: rebuilt for debuginfo.
+
 * Thu Jul 23 2009 Dmitry V. Levin <ldv@altlinux.org> 1:0.33-alt3
 - Fixed build with fresh toolchain.
 
