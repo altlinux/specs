@@ -2,7 +2,7 @@
 
 Name: qconf
 Version: 1.4
-Release: alt1
+Release: alt1.qa1
 
 Summary: Allows you to have a nice configure script for your qmake-based project
 Group: Development/KDE and QT
@@ -43,6 +43,9 @@ familiar configuration interface on unix.
 
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.4-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Mon Mar 22 2010 Anton A. Vinogradov <arc@altlinux.org> 1.4-alt1
 - release bump only
 
