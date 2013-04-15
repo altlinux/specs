@@ -1,6 +1,6 @@
 Name: ladspa-caps
 Version: 0.4.2
-Release: alt1
+Release: alt1.qa1
 Summary: Collection of refined realtime-capable LADSPA plugins
 Summary(ru_RU.UTF-8): Сборник плагинов LADSPA реального времени
 License: GPL
@@ -65,6 +65,9 @@ sed -i 's/^OPTS = -O2 -ffast-math -funroll-loops -Wall -fPIC -DPIC$/OPTS = -O2 -
 %_ladspa_path/*.so
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.4.2-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sun Jul 05 2009 Mikhail Yakshin <greycat@altlinux.org> 0.4.2-alt1
 - 0.4.2
 
