@@ -1,6 +1,6 @@
 Name: xmms-in-speex
 Version: 0.9.2b
-Release: alt1
+Release: alt1.qa1
 
 Summary: Speex input plugin for XMMS
 License: GPL
@@ -37,6 +37,9 @@ export CFLAGS="%optflags %optflags_shared -I%_includedir/speex"
 %_libdir/xmms/Input/*
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.9.2b-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Mon Dec 18 2006 Yury Aliaev <mutabor@altlinux.org> 0.9.2b-alt1
 - Version 0.9.2b
 - Fixed build with modern gcc and ld
