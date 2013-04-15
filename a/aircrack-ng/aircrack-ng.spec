@@ -1,6 +1,6 @@
 Name: aircrack-ng
 Version: 1.1
-Release: alt2
+Release: alt2.qa1
 
 Summary: 802.11 WEP and WPA-PSK key recovery program
 License: GPLv2+
@@ -41,6 +41,9 @@ sed -i 's,^\(CFLAGS\s\+?= \).*,\1%optflags,' common.mak
 %doc %_docdir/*
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.1-alt2.qa1
+- NMU: rebuilt for debuginfo.
+
 * Tue Dec 21 2010 Timur Aitov <timonbl4@altlinux.org> 1.1-alt2
 - Add iw in dependence
 
