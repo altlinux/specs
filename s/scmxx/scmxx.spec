@@ -1,6 +1,6 @@
 Name: scmxx
 Version: 0.9.0
-Release: alt2
+Release: alt2.qa1
 
 Epoch: 20030703
 
@@ -56,6 +56,9 @@ iconv -futf-8 -tkoi8-r docs/scmxx.ru.1 > %buildroot%_mandir/ru/man1/scmxx.1
 %_mandir/ru/man1/*
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 20030703:0.9.0-alt2.qa1
+- NMU: rebuilt for debuginfo.
+
 * Wed Jun 07 2006 Valery Inozemtsev <shrek@altlinux.ru> 20030703:0.9.0-alt2
 - fixed #9676
 
