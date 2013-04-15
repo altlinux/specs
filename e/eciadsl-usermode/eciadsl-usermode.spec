@@ -1,7 +1,7 @@
 Summary: A beta-quality usermode driver for the ECI ADSL USB modem
 Name: eciadsl-usermode
 Version: 0.12
-Release: alt2
+Release: alt2.qa1
 Url: http://eciadsl.flashtux.org/
 License: GPL
 Group: Networking/Other
@@ -98,6 +98,9 @@ echo "and INSTALL files located in /usr/share/doc/%name-%version"
 
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.12-alt2.qa1
+- NMU: rebuilt for debuginfo.
+
 * Mon Mar 31 2008 Kirill Maslinsky <kirill@altlinux.org> 0.12-alt2
 - fix build (see git log for details)
 
