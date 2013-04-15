@@ -1,6 +1,6 @@
 Name: playvtx
 Version: 0.9.2
-Release: alt1
+Release: alt1.qa1
 
 Summary: VTX file format player based on AY/YM emulation library
 Group: Sound
@@ -32,6 +32,9 @@ This is player for AY/YM sound chip music packed to VTX format.
 %_bindir/playvtx
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.9.2-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Wed Mar 25 2009 Igor Zubkov <icesik@altlinux.org> 0.9.2-alt1
 - 0.9.1 -> 0.9.2
 
