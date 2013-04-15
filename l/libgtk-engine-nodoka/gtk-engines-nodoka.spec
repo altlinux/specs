@@ -3,7 +3,7 @@
 
 Name:           %engine_prefix-%_name
 Version:        0.7.2
-Release:        alt2
+Release:        alt2.qa1
 Summary:        The Nodoka GTK2 Theme Engine
 Summary(ru_RU.UTF8): Модуль прорисовки тем GTK2 Nodoka
 
@@ -80,6 +80,9 @@ find $RPM_BUILD_ROOT -name *.la | xargs rm -f || true
 %{_datadir}/themes/Nodoka*
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.7.2-alt2.qa1
+- NMU: rebuilt for debuginfo.
+
 * Thu Apr 02 2009 Denis Koryavov <dkoryavov@altlinux.org> 0.7.2-alt2
 Added metacity and xfwm themes
 
