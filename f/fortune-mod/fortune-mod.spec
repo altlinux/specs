@@ -2,7 +2,7 @@
 
 Name: fortune-mod
 Version: 1.99.1
-Release: alt5
+Release: alt5.qa1
 
 Summary: A program which will display a fortune
 License: BSD
@@ -106,6 +106,9 @@ race, if needs be.  Needs be.
 %_gamesdatadir/fortune/off/*
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.99.1-alt5.qa1
+- NMU: rebuilt for debuginfo.
+
 * Thu Jun 10 2010 Alexey I. Froloff <raorn@altlinux.org> 1.99.1-alt5
 - Fix segfault on x86_64 (closes: #23084)
 
