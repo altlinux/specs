@@ -1,6 +1,6 @@
 Name: kccmp
 Version: 0.2
-Release: alt2
+Release: alt2.qa1
 
 Summary: Kernel configuration comparison
 License: GPL
@@ -42,6 +42,9 @@ install -p %name %buildroot%_bindir/
 %doc README
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.2-alt2.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sun Oct 26 2008 Andrey Rahmatullin <wrar@altlinux.ru> 0.2-alt2
 - fix build
 
