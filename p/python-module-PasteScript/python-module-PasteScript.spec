@@ -1,5 +1,5 @@
 %define version 1.7.5
-%define release alt1.hg20120208.1
+%define release alt2.hg20120208
 %define oname PasteScript
 
 %def_with python3
@@ -63,9 +63,8 @@ cp -a . ../python3
 pushd ../python3
 sed -i 's|%_bindir/env python|%_bindir/env python3|' \
 	tests/test_logging_config.py scripts/paster
-for i in scripts/paster $(find ./ -name '*.py'); do
-	2to3 -w -n $i
-done
+2to3 -w -n scripts/paster
+find -type f -name '*.py' -exec 2to3 -w '{}' +
 %python3_build
 popd
 %endif
@@ -94,9 +93,13 @@ popd
 %_bindir/paster3
 %python3_sitelibdir/paste/script
 %python3_sitelibdir/%modulename-*
+%exclude %python3_sitelibdir/tests
 %endif
 
 %changelog
+* Mon Apr 15 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:1.7.5-alt2.hg20120208
+- Use 'find... -exec...' instead of 'for ... $(find...'
+
 * Fri Mar 22 2013 Aleksey Avdeev <solo@altlinux.ru> 1:1.7.5-alt1.hg20120208.1
 - Rebuild with Python-3.3
 
