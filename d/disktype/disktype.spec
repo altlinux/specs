@@ -1,6 +1,6 @@
 Name: disktype
 Version: 9
-Release: alt2
+Release: alt2.qa1
 
 Summary: A disk and disk image format analyzer
 Group: File tools
@@ -32,6 +32,9 @@ install -pDm 644 disktype.1 %buildroot%_man1dir/disktype.1
 %_man1dir/*
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 9-alt2.qa1
+- NMU: rebuilt for debuginfo.
+
 * Wed Sep 12 2007 Victor Forsyuk <force@altlinux.org> 9-alt2
 - Build with glibc-kernheaders instead of linux-libc-headers.
 
