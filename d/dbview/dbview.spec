@@ -1,6 +1,6 @@
 Name: dbview
 Version: 1.0.4
-Release: alt1
+Release: alt1.qa1
 
 License: GPL
 Url: ftp://metalab.unc.edu/pub/Linux/apps/database/proprietary/
@@ -42,6 +42,9 @@ install -m 644 %name.1 $RPM_BUILD_ROOT%_man1dir
 %_man1dir/%name.1.gz
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.0.4-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sun Sep 26 2010 Ilya Mashkin <oddity@altlinux.ru> 1.0.4-alt1
 - 1.0.4 (Closes: #16975)
 
