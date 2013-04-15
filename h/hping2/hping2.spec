@@ -4,7 +4,7 @@
 
 Name:		hping2
 Version:	2.0.0
-Release:	alt4.%beta.qa2
+Release:	alt4.%beta.qa3
 Packager:	Igor Homyakov <homyakov at altlinux dot ru>
 
 Provides:	hping = %version
@@ -84,6 +84,9 @@ find . -type d \( -name 'CVS' -o -name '.svn' -o -name '.git' -o -name '.hg' -o 
 %doc docs/ utils/
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.0.0-alt4.rc2.qa3
+- NMU: rebuilt for debuginfo.
+
 * Sat Nov 07 2009 Repocop Q. A. Robot <repocop@altlinux.org> 2.0.0-alt4.rc2.qa2
 - NMU: pkg-contains-cvs-or-svn-control-dir as %%doc for hping2
 
