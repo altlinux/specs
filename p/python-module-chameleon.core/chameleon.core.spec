@@ -4,7 +4,7 @@
 
 Name: python-module-%oname.core
 Version: 2.11
-Release: alt1.git20130114.1
+Release: alt2.git20130114
 Summary: Chameleon Template Compiler
 License: BSD
 Group: Development/Python
@@ -87,9 +87,7 @@ ln -s ../objects.inv docs/
 %python_build
 %if_with python3
 pushd ../python3
-for i in $(find ./ -name '*.py'); do
-	2to3 -w $i
-done
+find -type f -name '*.py' -exec 2to3 -w '{}' +
 %python3_build
 popd
 %endif
@@ -133,6 +131,9 @@ cp -fR _build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Mon Apr 15 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.11-alt2.git20130114
+- Use 'find... -exec...' instead of 'for ... $(find...'
+
 * Fri Mar 22 2013 Aleksey Avdeev <solo@altlinux.ru> 2.11-alt1.git20130114.1
 - Rebuild with Python-3.3
 
