@@ -1,6 +1,6 @@
 Name: nail
 Version: 10.7
-Release: alt1
+Release: alt1.qa1
 
 Summary: The /bin/nail program for send and receive MIME conformant mail
 License: BSD
@@ -34,6 +34,9 @@ and offers extensions for MIME messages, POP3 and SMTP.
 %doc COPYING README AUTHORS INSTALL ChangeLog
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 10.7-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Tue Apr 20 2004 Anton Farygin <rider@altlinux.ru> 10.7-alt1
 - new version
 
