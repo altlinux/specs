@@ -1,6 +1,6 @@
 Name: hnb
 Version: 1.9.18
-Release: alt1
+Release: alt1.qa1
 
 Summary: Hierarchical ncurses/batch data organizer and XML editor
 License: GPL
@@ -37,5 +37,8 @@ random notes, and probably many more I haven't thought of yet..
 %doc README doc
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.9.18-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Wed Sep 21 2005 Vladimir V Kamarzin <vvk@altlinux.ru> 1.9.18-alt1
 - Initial build for Sisyphus
