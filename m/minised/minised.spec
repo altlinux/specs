@@ -1,7 +1,7 @@
 %define svnrev 106
 Name: minised
 Version: 1.12
-Release: alt2
+Release: alt2.qa1
 Summary: Smaller, cheaper, faster SED implementation
 License: GPL
 Group: Editors
@@ -41,6 +41,9 @@ install -D -m 0644 {,%buildroot%_man1dir/}%name.1
 
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.12-alt2.qa1
+- NMU: rebuilt for debuginfo.
+
 * Mon Nov 10 2008 Led <led@altlinux.ru> 1.12-alt2
 - SVN revision 106
 
