@@ -3,7 +3,7 @@
 
 Name: wmbday
 Version: 0.3.1
-Release: alt5
+Release: alt5.qa1
 
 Summary: This dockapp will remind you of birthdays
 Summary(ru_RU.CP1251): Ётот апплет будет напоминать вам о дн€х рождени€
@@ -83,6 +83,9 @@ install -pD -m 644 %SOURCE1 %buildroot%_menudir/%name
 %_menudir/%name
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.3.1-alt5.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sat Nov 29 2008 Slava Semushin <php-coder@altlinux.ru> 0.3.1-alt5
 - Removed obsolete %%update_menus/%%clean_menus calls (noted by repocop)
 
