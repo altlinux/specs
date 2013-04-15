@@ -3,7 +3,7 @@
 
 Name: %base-wonderland
 Version: 1.0
-Release: alt1
+Release: alt1.qa1
 
 Summary: A GTK+2 theme engine - Wonderland (Bluecurve)
 Summary(ru_RU.UTF-8): Модуль прорисовки "Страна чудес" (Bluecurve) для GTK+2
@@ -37,6 +37,9 @@ Wonderland (also known as RedHat Bluecurve) theme engine.
 %doc AUTHORS README ChangeLog NEWS
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.0-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sun Feb 02 2003 Vyacheslav Dikonov <slava@altlinux.ru> 1.0-alt1
 - ALTLinux build
 
