@@ -1,7 +1,7 @@
 # Node: _localstatedir has other value (/var) in other distro
 Name: mlocate
 Version: 0.23.1
-Release: alt1
+Release: alt1.qa1
 
 Summary: An utility for finding files by name
 
@@ -66,6 +66,9 @@ fi
 %ghost %_localstatedir/mlocate/mlocate.db
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.23.1-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Tue Oct 26 2010 Vitaly Lipatov <lav@altlinux.ru> 0.23.1-alt1
 - initial build for ALT Linux Sisyphus
 
