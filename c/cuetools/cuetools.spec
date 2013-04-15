@@ -1,6 +1,6 @@
 Name: cuetools
 Version: 1.3.1
-Release: alt4
+Release: alt4.qa1
 
 Summary: cue and toc file parsers and utilities
 Group: Sound
@@ -48,6 +48,9 @@ install -pD extras/cuetag.sh %buildroot%_bindir/cuetag
 %_man1dir/cue*.1*
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.3.1-alt4.qa1
+- NMU: rebuilt for debuginfo.
+
 * Wed Feb 11 2009 Afanasov Dmitry <ender@altlinux.org> 1.3.1-alt4
 - install cuetag.sh in %_bindir as cuetag
 
