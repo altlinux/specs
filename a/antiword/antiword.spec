@@ -1,6 +1,6 @@
 Name: antiword
 Version: 0.37
-Release: alt3.1
+Release: alt3.1.qa1
 
 Summary: Antiword an application to display Microsoft(R) Word files
 License: GPL
@@ -49,6 +49,9 @@ cp -a Resources/ %buildroot%_datadir/%name
 %_bindir/kantiword
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.37-alt3.1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Fri Jun 08 2007 Slava Semushin <php-coder@altlinux.ru> 0.37-alt3.1
 - NMU
 - Exclude antiword.{1,man} and COPYING files from package
