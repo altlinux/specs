@@ -1,7 +1,7 @@
 Summary: Graphical client for Firebird
 Name: flamerobin
 Version: 0.9.0
-Release: alt2.qa1
+Release: alt2.qa2
 License: BSD style
 Group: Databases
 Packager: Boris Savelev <boris@altlinux.org>
@@ -45,6 +45,9 @@ convert -size 48x48 ./res/fricon128.png %buildroot%_liconsdir/%name.png
 %_miconsdir/%name.png
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.9.0-alt2.qa2
+- NMU: rebuilt for debuginfo.
+
 * Tue Nov 17 2009 Repocop Q. A. Robot <repocop@altlinux.org> 0.9.0-alt2.qa1
 - NMU (by repocop): the following fixes applied:
   * pixmap-in-deprecated-location for flamerobin
