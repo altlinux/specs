@@ -1,6 +1,6 @@
 Name: kanjipad
 Version: 2.0.0
-Release: alt1
+Release: alt1.qa1
 
 Summary: enter Japanese hieroglyphs (kanji) graphically
 License: GPL
@@ -39,6 +39,9 @@ cp %SOURCE50 %SOURCE51 %buildroot%_man1dir/
 %doc README
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.0.0-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Fri Sep 22 2006 Alex V. Myltsev <avm@altlinux.ru> 2.0.0-alt1
 - Initial build for Sisyphus.
 
