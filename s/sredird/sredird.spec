@@ -1,6 +1,6 @@
 Name: sredird
 Version: 2.2.2
-Release: alt2
+Release: alt2.qa1
 
 Summary: RFC 2217-compliant serial port redirector
 License: GPL
@@ -40,6 +40,9 @@ install -pD -m644 %SOURCE1 %buildroot%_sysconfdir/xinetd.d/sredir-tcp
 %doc README
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.2.2-alt2.qa1
+- NMU: rebuilt for debuginfo.
+
 * Mon Jun 25 2007 Michael Shigorin <mike@altlinux.org> 2.2.2-alt2
 - added xinetd configuration file, thanks luch@ (#12139)
 
