@@ -1,6 +1,6 @@
 Name: httperf
 Version: 0.9.0
-Release: alt3
+Release: alt3.qa1
 
 Packager: Victor Forsiuk <force@altlinux.org>
 
@@ -67,6 +67,9 @@ cp -a html icons %buildroot%pkgdocdir
 %pkgdocdir/httperf-paper.ps.gz
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.9.0-alt3.qa1
+- NMU: rebuilt for debuginfo.
+
 * Tue Dec 07 2010 Victor Forsiuk <force@altlinux.org> 0.9.0-alt3
 - Rebuilt with libssl10.
 
