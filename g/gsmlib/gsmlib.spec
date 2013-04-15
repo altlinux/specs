@@ -1,6 +1,6 @@
 Name: gsmlib
 Version: 1.11
-Release: alt4.041028
+Release: alt4.041028.qa1
 
 Summary: Library to access GSM mobile phones through GSM modems
 License: LGPLv2
@@ -100,6 +100,9 @@ subst 's/^gsmsstk/#gsmsstk/g; s/gsmsiexfer gsmsstk/gsmsiexfer/' ext/Makefile.am
 %_libdir/*.so
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.11-alt4.041028.qa1
+- NMU: rebuilt for debuginfo.
+
 * Thu Jan 27 2011 Victor Forsiuk <force@altlinux.org> 1.11-alt4.041028
 - Rebuilt for soname set-versions.
 
