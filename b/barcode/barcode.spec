@@ -1,6 +1,6 @@
 Name: barcode
 Version: 0.98
-Release: alt5.qa1
+Release: alt5.qa2
 Group: Graphics
 Summary: Utility to generate printable barcodes in PostScript format
 Summary(ru_RU.UTF-8): Утилита для генерации штрих-кодов для печати в формате PostScript
@@ -87,6 +87,9 @@ find . -type d \( -name 'CVS' -o -name '.svn' -o -name '.git' -o -name '.hg' -o 
 %_libdir/libbarcode.a
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.98-alt5.qa2
+- NMU: rebuilt for debuginfo.
+
 * Thu Jan 14 2010 Repocop Q. A. Robot <repocop@altlinux.org> 0.98-alt5.qa1
 - NMU (by repocop): the following fixes applied:
   * pkg-contains-cvs-or-svn-control-dir for barcode
