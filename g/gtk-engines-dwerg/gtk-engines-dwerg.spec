@@ -2,7 +2,7 @@
 
 Name: gtk-engines-dwerg
 Version: 0.5
-Release: alt1
+Release: alt1.qa1
 
 Summary: A GTK+2 theme engine - Dwerg
 Summary(ru_RU.UTF-8): Модуль прорисовки Dwerg для GTK+2
@@ -36,6 +36,9 @@ Dwerg theme engine.
 %doc AUTHORS README ChangeLog NEWS
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.5-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sun Feb 02 2003 Vyacheslav Dikonov <slava@altlinux.ru> 0.5-alt1
 - ALTLinux build
 
