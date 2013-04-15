@@ -1,6 +1,6 @@
 Name: mod_throttle
 Version: 3.1.2
-Release: alt2
+Release: alt2.qa1
 
 Summary: A module which implements the bandwidth and request throttling for Apache.
 License: Apache
@@ -57,6 +57,9 @@ rm -f %ap_mod_doc/%name
 %config(noreplace) %ap_mod_conf/%name.conf
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 3.1.2-alt2.qa1
+- NMU: rebuilt for debuginfo.
+
 * Wed Aug 15 2007 Michael Shigorin <mike@altlinux.org> 3.1.2-alt2
 - just rebuilt an orphan
 
