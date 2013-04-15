@@ -1,6 +1,6 @@
 Name: wmMoonClock
 Version: 1.27
-Release: alt4
+Release: alt4.qa1
 
 Packager: Sir Raorn <raorn@altlinux.ru>
 
@@ -47,6 +47,9 @@ install -p -D -pm644 %name.1 $RPM_BUILD_ROOT%_man1dir/%name.1
 %_man1dir/%name.1*
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.27-alt4.qa1
+- NMU: rebuilt for debuginfo.
+
 * Thu Aug 27 2009 Alexey I. Froloff <raorn@altlinux.org> 1.27-alt4
 - Applied Debian patches (closes: #18547)
   + Add southern hemisphere support
