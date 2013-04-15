@@ -1,7 +1,7 @@
 Summary: This tool creates XviD configuration files
 Name: xvid4conf
 Version: 1.12
-Release: alt1
+Release: alt1.qa1
 URL: http://zebra.fh-weingarten.de/~transcode/xvid4conf/
 Source0: %url/%{name}-%{version}.tar.bz2
 License: GPL
@@ -33,6 +33,9 @@ used with XviD 1.0 (dev-api-4)
 %doc AUTHORS COPYING ChangeLog README 
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.12-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Mon Nov 14 2005 Maxim Tyurin <mrkooll@altlinux.ru> 1.12-alt1
 - new version
 
