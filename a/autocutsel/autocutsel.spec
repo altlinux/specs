@@ -1,6 +1,6 @@
 Name: autocutsel
 Version: 0.9.0
-Release: alt1.1
+Release: alt1.1.qa1
 
 Summary: Autocutsel synchronizes the two copy/paste buffers mainly used by X applications. It also unifies "clipboards" between VNC servers and Windows.
 License: GPL
@@ -60,6 +60,9 @@ chmod 755 %buildroot%_x11sysconfdir/xinit.d/%name.sh
 %_x11sysconfdir/xinit.d/*
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.9.0-alt1.1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Wed Dec 08 2010 Igor Vlasenko <viy@altlinux.ru> 0.9.0-alt1.1
 - rebuild with new openssl and/or boost by request of git.alt administrator
 
