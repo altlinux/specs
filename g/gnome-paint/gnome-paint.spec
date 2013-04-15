@@ -1,6 +1,6 @@
 Name: gnome-paint
 Version: 0.4.0
-Release: alt1
+Release: alt1.qa1
 Summary: Easy to use paint program for GNOME
 
 Group: Graphics
@@ -50,6 +50,9 @@ desktop-file-install \
 %_datadir/%name/
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.4.0-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Thu Dec 30 2010 Radik Usupov <radik@altlinux.org> 0.4.0-alt1
 - 0.4.0
 
