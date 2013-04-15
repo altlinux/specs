@@ -3,7 +3,7 @@
 
 Name: %engine_prefix-%_name
 Version: 0.1
-Release: alt1
+Release: alt1.qa1
 
 Summary: Anachron GTK2 engine
 Summary(ru_RU.UTF-8):Модуль прорисовки Anachron для GTK2
@@ -43,5 +43,8 @@ A GTK+ 2.x engine implemented in by Dennis Moehlmann based on the design of the 
 %exclude %engines_dir/*.la
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.1-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Wed Dec 06 2006 Vyacheslav Dikonov <slava@altlinux.ru> 0.1-alt1
 - ALTLinux build
