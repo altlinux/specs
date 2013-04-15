@@ -4,7 +4,7 @@
 
 Name: iperf
 Version: 2.0.5
-Release: alt1
+Release: alt1.qa1
 
 Summary: Iperf was developed as a modern alternative for measuring TCP and UDP bandwidth performance
 License: GPL
@@ -65,6 +65,9 @@ rm -f doc/Makefile*
 %doc README doc/* ChangeLog AUTHORS
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.0.5-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Fri Nov  5 2010 Terechkov Evgenii <evg@altlinux.org> 2.0.5-alt1
 - 2.0.5
 
