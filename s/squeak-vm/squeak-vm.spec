@@ -5,7 +5,7 @@
 
 Name: squeak-vm
 Version: %{major}.%{minor}
-Release: alt2
+Release: alt2.qa1
 Summary: The Squeak virtual machine
 Group: Development/Other
 License: MIT
@@ -82,6 +82,9 @@ ln -s %{major}-%{minor} %{buildroot}/%{_libdir}/squeak/current
 %{_mandir}/man*/*
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 4.0.3.2202-alt2.qa1
+- NMU: rebuilt for debuginfo.
+
 * Fri May 07 2010 Aleksey Lim <alsroot@altlinux.org> 4.0.3.2202-alt2
 - remove squeak.sh that fetches kdebase-libs
 
