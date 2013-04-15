@@ -1,6 +1,6 @@
 Name: xmms-out-pulse
 Version: 0.9.4
-Release: alt1
+Release: alt1.qa1
 
 Summary: xmms-pulse is an XMMS output plugin for the PulseAudio sound server
 Group: Sound
@@ -38,6 +38,9 @@ xmms-pulse is an XMMS output plugin for the PulseAudio sound server.
 %xmms_outputdir/*.la
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.9.4-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Wed Mar 05 2008 Igor Zubkov <icesik@altlinux.org> 0.9.4-alt1
 - 0.9.3 -> 0.9.4
 - buildreq
