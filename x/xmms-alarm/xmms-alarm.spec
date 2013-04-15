@@ -1,6 +1,6 @@
 Name:		xmms-alarm
 Version:	0.3.6
-Release:	alt1
+Release:	alt1.qa1
 Summary:	An alarm plugin for XMMS
 Summary(ru_RU.KOI8-R): Плагин-будильник для XMMS
 Group:		Sound
@@ -47,6 +47,9 @@ autoconf
 %doc AUTHORS ChangeLog README
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.3.6-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Mon May 10 2004 Denis Ovsienko <pilot@altlinux.ru> 0.3.6-alt1
 - rebuilt for current Sisyphus
 - Russian tags
