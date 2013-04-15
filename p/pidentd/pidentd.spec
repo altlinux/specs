@@ -1,6 +1,6 @@
 Name: pidentd
 Version: 3.0.19
-Release: alt1
+Release: alt1.qa1
 
 Summary: An implementation of the RFC1413 identification server.
 Copyright: Public domain/GPL
@@ -64,6 +64,9 @@ install -p -m755 -D %SOURCE3 $RPM_BUILD_ROOT%_initdir/identd
 %doc *BUGS ChangeLog FAQ INSTALL README Y2K doc/*.txt
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 3.0.19-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sat Jun 03 2006 Denis Ovsienko <pilot@altlinux.ru> 3.0.19-alt1
 - building the latest version
 - fixing #7746
