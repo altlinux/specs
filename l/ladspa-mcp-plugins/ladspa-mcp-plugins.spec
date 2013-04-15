@@ -3,7 +3,7 @@
 
 Name: ladspa-%_name-plugins
 Version: 0.4.0
-Release: alt1%beta
+Release: alt1%beta.qa1
 
 Summary: The Moog VCF LADSPA plugins
 License: GPL
@@ -56,6 +56,9 @@ CPPFLAGS="$CPPFLAGS %optflags"; export CPPFLAGS
 %doc AUTHORS README
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.4.0-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sat Dec 13 2008 Yuri N. Sedunov <aris@altlinux.org> 0.4.0-alt1
 - 0.4.0
 - changed %%Url
