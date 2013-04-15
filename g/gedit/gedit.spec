@@ -7,7 +7,7 @@
 %def_enable zeitgeist
 
 Name: gedit
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: gEdit is a small but powerful text editor for GNOME
@@ -56,7 +56,7 @@ BuildPreReq: libpeas-devel >= %peas_ver
 BuildPreReq: libgtksourceview3-devel >= %gtksourceview_ver
 BuildRequires: desktop-file-utils
 BuildRequires: gnome-common libxml2-devel libsoup-devel libSM-devel libICE-devel gsettings-desktop-schemas-devel
-%{?_enable_zeitgeist:BuildRequires: libzeitgeist-devel}
+%{?_enable_zeitgeist:BuildRequires: libzeitgeist2.0-devel}
 %{?_enable_python:BuildRequires: rpm-build-python3 python3-devel python3-module-pygobject3-devel}
 %{?_enable_introspection:BuildPreReq: gobject-introspection-devel >= 0.10.2 libgtk+3-gir-devel libgtksourceview3-gir-devel}
 
@@ -210,6 +210,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %endif
 
 %changelog
+* Mon Apr 15 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.1-alt1
+- 3.8.1
+
 * Mon Mar 25 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.0-alt1
 - 3.8.0
 

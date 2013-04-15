@@ -3,7 +3,7 @@
 %define gedit_pluginsdir %_libdir/gedit/plugins
 
 Name: gedit-plugins
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Plugins for GEdit
@@ -81,7 +81,7 @@ if [ -d "%buildroot%gedit_pluginsdir/%{1}" ]; then \
     done \
 fi >>files_list_%{1}
 
-%define plugins bookmarks drawspaces dashboard bracketcompletion charmap codecomment colorpicker gpdefs joinlines showtabbar smartspaces terminal multiedit wordcompletion sessionsaver commander textsize synctex taglist
+%define plugins bookmarks drawspaces dashboard bracketcompletion charmap codecomment colorpicker colorschemer gpdefs joinlines showtabbar smartspaces terminal multiedit wordcompletion sessionsaver commander textsize synctex taglist
 
 # commander plugin has subdirectories
 echo "%gedit_pluginsdir/commander/commands/" > files_list_commander
@@ -100,6 +100,9 @@ done
 %exclude %gedit_pluginsdir/*.la
 
 %changelog
+* Mon Apr 15 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.1-alt1
+- 3.8.1
+
 * Mon Mar 25 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.0-alt1
 - 3.8.0
 
