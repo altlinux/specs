@@ -1,6 +1,6 @@
 Name: shd-tcp-tools
 Version: 0.05
-Release: alt1
+Release: alt1.qa1
 
 Packager: Victor Forsyuk <force@altlinux.org>
 
@@ -29,6 +29,9 @@ shd-tcp-tools is a set of TCP network tools.
 %doc ChangeLog.txt readme.txt
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.05-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Tue Aug 26 2008 Victor Forsyuk <force@altlinux.org> 0.05-alt1
 - 0.05
 
