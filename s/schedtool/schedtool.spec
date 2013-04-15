@@ -1,7 +1,7 @@
 # vim:set ft=spec: -*- rpm-spec -*-
 Name: schedtool
 Version: 1.3.0
-Release: alt1
+Release: alt1.qa1
 
 Summary: Tool for setting and querying scheduling parameters
 License: GPL
@@ -47,6 +47,9 @@ schedtool now supports setting the  CPU-affinity  introduced  in  linux
 %_bindir/*
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.3.0-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Tue Nov 25 2008 Gleb Stiblo <ulfr@altlinux.ru> 1.3.0-alt1
 - new upstream version:
   bring schedtool to new glibc affinity api (cpu_set_t) & 
