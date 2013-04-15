@@ -1,6 +1,6 @@
 Name: loiq
 Version: 0.2.3
-Release: alt1
+Release: alt1.qa1
 
 Summary: Low Orbit Ion Cannon ported to C++/Qt4
 License: GPLv3
@@ -42,6 +42,9 @@ install -pDm0755 %name %buildroot%_bindir/%name
 %doc README
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.2.3-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Thu Dec 09 2010 Vladimir V. Kamarzin <vvk@altlinux.org> 0.2.3-alt1
 - Initial build for Sisyphus.
 
