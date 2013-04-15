@@ -6,7 +6,7 @@
 Summary: Portable Media Player library (PMPlib)
 Name: %name
 Version: %version
-Release: %release.qa1
+Release: alt0.1.qa2
 License: LGPL
 Packager: Alex Karpov <karpov@altlinux.ru>
 Url: http://pmplib.sourceforge.net/
@@ -85,6 +85,9 @@ This package contains a frontend program (EasyPMP) for PMPlib.
 %_mandir/man1/easypmp.1*
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.14-alt0.1.qa2
+- NMU: rebuilt for debuginfo.
+
 * Wed Sep 01 2010 Repocop Q. A. Robot <repocop@altlinux.org> 0.14-alt0.1.qa1
 - NMU (by repocop): the following fixes applied:
   * deprecated-packages-info-i18n-common for pmplib
