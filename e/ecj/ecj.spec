@@ -12,7 +12,7 @@ Epoch: 1
 Summary: Eclipse Compiler for Java
 Name: ecj
 Version: 3.4.2
-Release: alt4_7jpp6
+Release: alt4_7jpp6.qa1
 URL: http://www.eclipse.org
 License: EPL
 Group: System/Internationalization
@@ -120,6 +120,9 @@ install -pm 644 pom.xml \
 %{_libdir}/gcj/%{name}
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1:3.4.2-alt4_7jpp6.qa1
+- NMU: rebuilt for debuginfo.
+
 * Thu Aug 19 2010 Igor Vlasenko <viy@altlinux.ru> 1:3.4.2-alt4_7jpp6
 - removed Req: java-gcj-compat (closes: #23902)
 
