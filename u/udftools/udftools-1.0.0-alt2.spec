@@ -8,7 +8,7 @@ Packager: Repocop Q. A. Robot <repocop@altlinux.org>
 
 Name: udftools
 Version: 1.0.0
-Release: alt2.1
+Release: alt2.1.qa1
 Summary: Tools for work with UDF filesystems and CD-R(W)/DVD packet writing drives
 Group: Archiving/Cd burning
 License: %gpl2plus
@@ -65,6 +65,9 @@ BuildRequires: rpm-build-licenses
 
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.0.0-alt2.1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Mon Nov 02 2009 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt2.1
 - NMU (by repocop): the following fixes applied:
   * post_ldconfig for udftools
