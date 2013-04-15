@@ -1,6 +1,6 @@
 Name: squidGuard
 Version: 1.4
-Release: alt1
+Release: alt1.qa1
 
 %define _dbhomedir %_localstatedir/%name
 
@@ -79,6 +79,9 @@ Neither squidGuard nor Squid can be used to
 #%_dbhomedir
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.4-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Mon Dec 29 2008 Vladimir Scherbaev <vladimir@altlinux.org> 1.4-alt1
 - New version 1.4
 
