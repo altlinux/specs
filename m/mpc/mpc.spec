@@ -2,7 +2,7 @@
 
 Name: mpc
 Version: 0.19
-Release: alt1
+Release: alt1.qa1
 Summary: Command line tool to interface MPD
 License: %gpl2plus
 Group: Sound
@@ -44,6 +44,9 @@ Daemon. %name connects to a MPD running on a machine via a network.
 
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.19-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sun Oct 24 2010 Alexey Morsov <swi@altlinux.ru> 0.19-alt1
 - new release version
 
