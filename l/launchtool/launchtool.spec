@@ -1,6 +1,6 @@
 Name: launchtool
 Version: 0.7
-Release: alt1
+Release: alt1.qa1
 
 Packager: Victor Forsyuk <force@altlinux.org>
 
@@ -40,5 +40,8 @@ install -pD -m644 launchtool.1 %buildroot%_man1dir/launchtool.1
 %_man1dir/*
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.7-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Mon Jan 05 2009 Victor Forsyuk <force@altlinux.org> 0.7-alt1
 - Initial build.
