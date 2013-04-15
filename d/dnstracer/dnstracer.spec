@@ -1,6 +1,6 @@
 Name: dnstracer
 Version: 1.9
-Release: alt1
+Release: alt1.qa1
 
 Summary: A tool to trace DNS queries
 License: BSD
@@ -32,6 +32,9 @@ servers which know the data.
 %_bindir/*
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.9-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Tue Sep  9 2008 Terechkov Evgenii <evg@altlinux.ru> 1.9-alt1
 - 1.9
 
