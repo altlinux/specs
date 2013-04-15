@@ -1,6 +1,6 @@
 Name: mt-st
 Version: 1.1
-Release: alt1
+Release: alt1.qa1
 
 Summary: Programs to control tape device operations
 License: GPL
@@ -32,6 +32,9 @@ rewinding, ejecting, skipping files and blocks and more.
 %doc README* *.lsm stinit.def.examples
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.1-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Thu Sep 18 2008 Vladimir V. Kamarzin <vvk@altlinux.org> 1.1-alt1
 - 1.1
 - Patches now integrated into source tree (see git repo)
