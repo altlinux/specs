@@ -1,6 +1,6 @@
 Name: hello
 Version: 2.4
-Release: alt2
+Release: alt2.qa1
 
 Summary: GNU hello, THE greeting printing program
 Group: Development/C
@@ -36,6 +36,9 @@ GNU General Public License, users are free to share and change it.
 %_mandir/man?/*
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.4-alt2.qa1
+- NMU: rebuilt for debuginfo.
+
 * Thu May 21 2009 Andrey Rahmatullin <wrar@altlinux.ru> 2.4-alt2
 - remove obsolete %%{,un}install_info calls 
 
