@@ -1,6 +1,6 @@
 Name: metacam
 Version: 1.2
-Release: alt2
+Release: alt2.qa1
 
 Packager: Victor Forsyuk <force@altlinux.org>
 
@@ -41,6 +41,9 @@ install -pD -m755 metacam %buildroot%_bindir/metacam
 %doc BUGS README* THANKS layout.txt
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.2-alt2.qa1
+- NMU: rebuilt for debuginfo.
+
 * Tue Oct 28 2008 Victor Forsyuk <force@altlinux.org> 1.2-alt2
 - Fix FTBFS with gcc4.3.
 
