@@ -1,7 +1,7 @@
 
 Name: hts_engine
 Version: 1.03
-Release: alt1
+Release: alt1.qa1
 Packager: Michael Pozhidaev <msp@altlinux.ru>
 
 Summary: API version of hts_engine speech synthesis system
@@ -50,6 +50,9 @@ make DESTDIR=%buildroot install
 %_libdir/*.a
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.03-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Wed Jul 28 2010 Michael Pozhidaev <msp@altlinux.ru> 1.03-alt1
 - First release for ALT LInux Sisyphus
 
