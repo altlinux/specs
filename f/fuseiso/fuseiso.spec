@@ -1,6 +1,6 @@
 Name: fuseiso
 Version: 20070708
-Release: alt2
+Release: alt2.qa1
 
 Summary: Mount ISO filesystem images as a non-root user
 Group: File tools
@@ -38,6 +38,9 @@ Supported image types: ISO, BIN (single track only), NRG, MDF, IMG (CCD).
 %_bindir/%name
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 20070708-alt2.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sun Nov 16 2008 Igor Zubkov <icesik@altlinux.org> 20070708-alt2
 - update Url
 
