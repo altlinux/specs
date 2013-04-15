@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 3.4
-Release: alt1.1
+Release: alt2
 
 Summary: lex and yacc python implementation
 
@@ -50,9 +50,7 @@ cp -a . ../python3
 %python_build
 %if_with python3
 pushd ../python3
-for i in $(find ./ -name '*.py'); do
-	2to3 -w -n $i
-done
+find -type f -name '*.py' -exec 2to3 -w -n '{}' +
 %python3_build
 popd
 %endif
@@ -79,6 +77,9 @@ popd
 %endif
 
 %changelog
+* Mon Apr 15 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.4-alt2
+- Use 'find... -exec...' instead of 'for ... $(find...'
+
 * Fri Mar 22 2013 Aleksey Avdeev <solo@altlinux.ru> 3.4-alt1.1
 - Rebuild with Python-3.3
 
