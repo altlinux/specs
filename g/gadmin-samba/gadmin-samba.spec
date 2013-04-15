@@ -1,6 +1,6 @@
 Name: gadmin-samba
 Version: 0.2.4
-Release: alt2
+Release: alt2.qa1
 
 Summary: Gadmin-samba -- A GTK+ administation tool for the SAMBA server.
 Group: System/Configuration/Other
@@ -69,6 +69,9 @@ done
 %_localstatedir/samba/netlogon/*
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.2.4-alt2.qa1
+- NMU: rebuilt for debuginfo.
+
 * Wed Mar 12 2008 Eugene Ostapets <eostapets@altlinux.ru> 0.2.4-alt2
 - fix desktop entry (tnx repocop)
 - fix icons (tnx repocop)
