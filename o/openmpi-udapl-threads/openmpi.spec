@@ -31,7 +31,7 @@
 Name: %pkgname
 
 Version: 1.4.1
-Release: alt2
+Release: alt2.qa1
 
 %define mpi_prefix %_libexecdir/%name
 %define mpi_sysconfdir %_sysconfdir/%name
@@ -290,6 +290,9 @@ EOF
 %mpi_prefix/lib/libvt*
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.4.1-alt2.qa1
+- NMU: rebuilt for debuginfo.
+
 * Mon Aug 16 2010 Andriy Stepanov <stanv@altlinux.ru> 1.4.1-alt2
 - Add patches from www.openfabrics.org
 
