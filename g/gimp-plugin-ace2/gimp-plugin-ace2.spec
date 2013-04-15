@@ -2,7 +2,7 @@
 
 Name: gimp-plugin-ace2
 Version: 0.6.7
-Release: alt1
+Release: alt1.qa1
 
 Summary: Adaptive Contrast Enhancement plugin for Gimp
 License: GPLv2+
@@ -39,5 +39,8 @@ details that most wide-sweeping contrast-enhancements pass over.
 %_datadir/gimp-ace
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.6.7-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Fri Sep 07 2007 Victor Forsyuk <force@altlinux.org> 0.6.7-alt1
 - Initial build.
