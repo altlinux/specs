@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.2.9
-Release: alt1.1
+Release: alt2
 Epoch: 1
 Summary: rdflib wrapper for Python
 License: BSD
@@ -59,10 +59,8 @@ cp -a . ../python3
 %python_build
 %if_with python3
 pushd ../python3
-for i in $(find ./ -name '*.py'); do
-	sed -i 's|%_bindir/env python|%_bindir/env python3|' $i
-	2to3 -w -n $i
-done
+find -type f -name '*.py' -exec sed -i 's|%_bindir/env python|%_bindir/python3|' -- '{}' +
+find -type f -name '*.py' -exec 2to3 -w '{}' +
 for i in rdfalchemy/sparql/sesame2.py \
 	rdfalchemy/sparql/parsers.py
 do
@@ -95,6 +93,9 @@ mv %buildroot%_bindir/sparql %buildroot%_bindir/sparql3
 %endif
 
 %changelog
+* Mon Apr 15 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:0.2.9-alt2
+- Use 'find... -exec...' instead of 'for ... $(find...'
+
 * Fri Mar 22 2013 Aleksey Avdeev <solo@altlinux.ru> 1:0.2.9-alt1.1
 - Rebuild with Python-3.3
 
