@@ -1,6 +1,6 @@
 Name: udis86
 Version: 1.7
-Release: alt1
+Release: alt1.qa1
 
 Summary: Disassembler for x86 and x86-64
 License: BSD
@@ -64,5 +64,8 @@ Documentation for x86 and x86-64 disassembler.
 %_includedir/*
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.7-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sun Oct 31 2010 Victor Forsiuk <force@altlinux.org> 1.7-alt1
 - Initial build.
