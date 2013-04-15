@@ -1,6 +1,6 @@
 Name:		gnocky
 Version:	0.0.7
-Release:	alt1.1
+Release:	alt1.1.qa1
 Summary:	GLib2/GTK+2 frontend for gnokii using libglade
 Group:		Communications
 License:	GPLv2
@@ -35,6 +35,9 @@ BuildRequires: libglade-devel libgnokii-devel
 %_datadir/%name/*
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.0.7-alt1.1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Mon Sep 20 2010 Fr. Br. George <george@altlinux.ru> 0.0.7-alt1.1
 - Fix patch
 
