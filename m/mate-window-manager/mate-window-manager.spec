@@ -5,7 +5,7 @@ BuildRequires: /usr/bin/gdk-pixbuf-csource /usr/bin/glib-gettextize /usr/bin/mat
 BuildRequires: libcanberra-gtk2-devel
 %define _libexecdir %_prefix/libexec
 Name:           mate-window-manager
-Version:        1.6.0
+Version:        1.6.1
 Release:        alt1_1
 Summary:        MATE Desktop window manager
 License:        LGPLv2+ and GPLv2+
@@ -93,7 +93,7 @@ desktop-file-install                                \
 
 
 %files -f marco.lang
-%doc AUTHORS COPYING README
+%doc AUTHORS COPYING README ChangeLog
 %{_bindir}/marco
 %{_bindir}/marco-message
 %{_datadir}/applications/marco.desktop
@@ -133,6 +133,9 @@ desktop-file-install                                \
 
 
 %changelog
+* Thu Apr 11 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.1-alt1_1
+- new fc release
+
 * Sat Apr 06 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.0-alt1_1
 - new fc release
 
