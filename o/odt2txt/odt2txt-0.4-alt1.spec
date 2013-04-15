@@ -1,6 +1,6 @@
 Name: odt2txt
 Version: 0.4
-Release: alt1
+Release: alt1.qa1
 Summary: Extract text from OpenDocument Text files
 License: %gpl2only
 Group: Text tools
@@ -40,6 +40,9 @@ install -D -m 0644 {,%buildroot%_man1dir/}%name.1
 
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.4-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Wed Aug 20 2008 Led <led@altlinux.ru> 0.4-alt1
 - 0.4
 
