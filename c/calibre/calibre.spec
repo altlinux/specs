@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 Name: calibre
 Version: 0.8.55
-Release: alt1.2
+Release: alt1.3
 Summary: A e-book library management application
 Summary(ru_RU.UTF8): Программа для работы с личной электронной библиотекой
 License: GPL
@@ -20,6 +20,8 @@ BuildRequires: gcc-c++ libImageMagick-devel libX11-devel libXext-devel libchm-de
 
 BuildRequires: libicu-devel libsqlite3-devel python-modules-json libqt4-devel libqt4-core python-module-PyQt4
 
+BuildRequires: chrpath
+BuildRequires: xdg-utils
 BuildRequires: /proc
 
 %description
@@ -53,6 +55,7 @@ sed -i "s/env python2/env python/" setup/install.py
 python setup.py install --staging-libdir=%buildroot%_libdir --libdir=%_libdir --prefix=%_prefix --root=%buildroot --staging-root=%buildroot/%_prefix
 %find_lang --with-kde %name
 mv %buildroot{/usr,}/etc
+chrpath -d %buildroot%_libdir/%name/%name/plugins/*.so
 
 %files -f %name.lang
 %doc README Changelog.yaml
@@ -65,6 +68,9 @@ mv %buildroot{/usr,}/etc
 %exclude %_datadir/%name/fonts/liberation/
 
 %changelog
+* Mon Apr 15 2013 Andrey Cherepanov <cas@altlinux.org> 0.8.55-alt1.3
+- Correct install icons and remove rpath from plugins
+
 * Thu Jan 17 2013 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.8.55-alt1.2
 - rebuild with new sip
 
