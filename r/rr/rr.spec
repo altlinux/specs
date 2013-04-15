@@ -1,6 +1,6 @@
 Name: rr
 Version: 1.3
-Release: alt1
+Release: alt1.qa1
 
 Summary: retain / recall file and directory paths
 License: GPLv2+
@@ -34,6 +34,9 @@ install -pD -m644 %name.1 %buildroot%_man1dir/%name.1
 %doc CHANGES README
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.3-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Tue Oct 30 2007 Michael Shigorin <mike@altlinux.org> 1.3-alt1
 - built for ALT Linux
 
