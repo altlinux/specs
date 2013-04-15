@@ -1,6 +1,6 @@
 Name: qpfstmo
 Version: 1.0
-Release: alt1
+Release: alt1.qa1
 
 Summary: HDR Tone Mapping GUI
 License: GPL
@@ -32,5 +32,8 @@ install -pD -m755 qpfstmo %buildroot%_bindir/qpfstmo
 %_bindir/*
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.0-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Mon Jun 18 2007 Victor Forsyuk <force@altlinux.org> 1.0-alt1
 - Initial build.
