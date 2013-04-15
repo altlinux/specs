@@ -1,6 +1,6 @@
 Name: wavsplit
 Version: 1.2.1
-Release: alt5
+Release: alt5.qa1
 
 Packager: Victor Forsyuk <force@altlinux.org>
 
@@ -38,6 +38,9 @@ install -d %buildroot{%_bindir,%_man1dir}
 %_man1dir/*
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.2.1-alt5.qa1
+- NMU: rebuilt for debuginfo.
+
 * Mon Oct 19 2009 Victor Forsyuk <force@altlinux.org> 1.2.1-alt5
 - Remove in-spec translations.
 
