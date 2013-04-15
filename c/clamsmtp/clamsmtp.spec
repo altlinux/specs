@@ -1,6 +1,6 @@
 Name: clamsmtp
 Version: 1.10
-Release: alt2
+Release: alt2.qa1
 
 Summary: SMTP virus-scanning proxy
 License: BSD
@@ -57,6 +57,9 @@ install -m644 %SOURCE3 %_builddir/%name-%version/README.ALT-ru_RU.UTF-8
 %attr(3775,root,mail) %dir %_var/run/%name
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.10-alt2.qa1
+- NMU: rebuilt for debuginfo.
+
 * Mon May 31 2010 Mikhail Efremov <sem@altlinux.org> 1.10-alt2
 - drop alt-mkstemp patch
 
