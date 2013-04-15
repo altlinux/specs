@@ -1,6 +1,6 @@
 Name: mod_auth_pam
 Version: 1.1.1
-Release: alt1
+Release: alt1.qa1
 
 Summary: pluggable authentication module for Apache
 License: GPL
@@ -51,6 +51,9 @@ fi
 %doc doc samples README
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.1.1-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Wed Mar 10 2004 Dimitry V. Ketov <dketov@altlinux.ru> 1.1.1-alt1
 - Initial build for Sisyphus
 
