@@ -2,7 +2,7 @@
 Summary: Parallel Virtual Machine
 Name: pvm
 Version: 3.4.6
-Release: alt1.1
+Release: alt1.1.qa1
 License: freely distributable
 Group: System/Base
 Url: http://www.epm.ornl.gov/pvm/pvm_home.html
@@ -213,6 +213,9 @@ cp hoster/*.3 %buildroot%_man3dir
 %_datadir/%name/*
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 3.4.6-alt1.1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Mon Jul 06 2009 Boris Savelev <boris@altlinux.org> 3.4.6-alt1.1
 - fix PVM_ROOT for x86_64
 
