@@ -1,6 +1,6 @@
 Name: lha
 Version: 1.14i
-Release: alt2
+Release: alt2.qa1
 Serial: 2
 
 %define addver -ac20050924p1
@@ -49,6 +49,9 @@ install -pD -m0755 src/%name $RPM_BUILD_ROOT%_bindir/%name
 %_bindir/*
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2:1.14i-alt2.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sun Apr 15 2007 Michael Shigorin <mike@altlinux.org> 2:1.14i-alt2
 - ac20050924p1: security fixes for CVE-2006-4335, CVE-2006-4337,
   CVE-2006-4338 (DoS, system access)
