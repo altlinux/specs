@@ -3,7 +3,7 @@
 
 Name: sipcalc
 Version: 1.1.5
-Release: alt1
+Release: alt1.qa1
 
 Summary: Advanced console-based ip subnet calculator
 License: %bsd
@@ -39,6 +39,9 @@ of information about a given subnet.
 %_man1dir/*
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.1.5-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Mon Jul 20 2009 Artem Zolochevskiy <azol@altlinux.ru> 1.1.5-alt1
 - update to 1.1.5
 
