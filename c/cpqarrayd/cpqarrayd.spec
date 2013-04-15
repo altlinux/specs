@@ -2,7 +2,7 @@
 
 Name: cpqarrayd
 Version: 2.3
-Release: alt1
+Release: alt1.qa1
 
 Summary: SmartArray controllers monitoring
 License: GPLv2+
@@ -58,6 +58,9 @@ install -pDm644 %SOURCE2 %buildroot%_sysconfdir/sysconfig/%name
 %_initdir/%name
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.3-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Mon Sep 20 2010 Michael Shigorin <mike@altlinux.org> 2.3-alt1
 - built for ALT Linux
 - adapted PLD package with Fedora patch
