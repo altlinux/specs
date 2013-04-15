@@ -2,7 +2,7 @@
 
 Name: 	libmpcdec
 Version: 1.2.2
-Release: alt2.1
+Release: alt2.1.qa1
 Summary: Portable Musepack decoder library
 License: BSD
 Packager: Repocop Q. A. Robot <repocop@altlinux.org>
@@ -32,6 +32,9 @@ Compatibility package.
 %_libdir/*.so.*
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.2.2-alt2.1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Wed Nov 04 2009 Igor Vlasenko <viy@altlinux.ru> 1.2.2-alt2.1
 - NMU (by repocop): the following fixes applied:
   * post_ldconfig for libmpcdec
