@@ -4,12 +4,11 @@
 
 Name: python-module-%oname
 Version: 4.1.0
-Release: alt1
+Release: alt1.1
 Summary: Zope Component Architecture
 License: ZPLv2.1
 Group: Development/Python
 Url: http://pypi.python.org/pypi/zope.component/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # git://github.com/zopefoundation/zope.component.git
 Source: %name-%version.tar
@@ -91,9 +90,7 @@ cp -a . ../python3
 %python_build
 %if_with python3
 pushd ../python3
-for i in $(find ./ -name '*.py'); do
-	2to3 -w $i
-done
+find -type f -name '*.py' -exec 2to3 -w -n '{}' +
 %python3_build
 popd
 %endif
@@ -138,6 +135,9 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 
 %changelog
+* Mon Apr 15 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.1.0-alt1.1
+- Use 'find... -exec...' instead of 'for ... $(find...'
+
 * Sun Mar 03 2013 Aleksey Avdeev <solo@altlinux.ru> 4.1.0-alt1
 - Version 4.1.0-alt1
 
