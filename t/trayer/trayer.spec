@@ -1,6 +1,6 @@
 Name: trayer
 Version: 1.0.5
-Release: alt2
+Release: alt2.qa1
 License: BSD
 
 Group: Graphical desktop/Other
@@ -37,6 +37,9 @@ about it on its homepage: http://fbpanel.sourceforge.net/
 %doc COPYING README
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.0.5-alt2.qa1
+- NMU: rebuilt for debuginfo.
+
 * Tue Oct 19 2010 Denis Smirnov <mithraen@altlinux.ru> 1.0.5-alt2
 - fix build
 
