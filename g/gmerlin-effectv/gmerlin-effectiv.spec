@@ -1,6 +1,6 @@
 Name: gmerlin-effectv
 Version: 1.1.2
-Release: alt1
+Release: alt1.qa1
 Summary: This package contains most effects from EffecTV for gmerlin
 
 Group: Sound
@@ -41,6 +41,9 @@ rm -f %buildroot%_libdir/gmerlin/plugins/*.la
 %_libdir/gmerlin/plugins/*.so
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.1.2-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sun Apr 25 2010 Hihin Ruslan <ruslandh@altlinux.ru> 1.1.2-alt1
 - initial build for ALT Linux Sisyphus
 
