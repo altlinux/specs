@@ -1,6 +1,6 @@
 Name: mingw32-binutils
 Version: 2.19.51.0.14
-Release: alt1.1
+Release: alt1.1.qa1
 Summary: MinGW Windows binutils
 
 License: GPLv2+ and LGPLv2+ and GPLv3+ and LGPLv3+
@@ -64,6 +64,9 @@ ln -sf ../../..%_bindir/%_mingw32_target-dllwrap \
 %prefix/%_mingw32_target/lib/ldscripts
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.19.51.0.14-alt1.1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Wed Nov 24 2010 Igor Vlasenko <viy@altlinux.ru> 2.19.51.0.14-alt1.1
 - repair after perl 5.12 upgrade using girar-nmu
 
