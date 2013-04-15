@@ -1,6 +1,6 @@
 Name: vorbisgain
 Version: 0.37
-Release: alt1
+Release: alt1.qa1
 
 Summary: Adds tags to Ogg Vorbis files to adjust the volume
 License: GPL 2.1
@@ -55,6 +55,9 @@ compatible. xmms will support this feature from release 1.2.8.
 %doc NEWS README vorbisgain.txt
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.37-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Mon Jan 29 2007 Michael Shigorin <mike@altlinux.org> 0.37-alt1
 - 0.37
 - built for ALT Linux (based on largely cleaned up Mandriva spec
