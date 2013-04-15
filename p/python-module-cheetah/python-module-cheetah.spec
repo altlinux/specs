@@ -6,7 +6,7 @@
 Summary: Template engine and code-generator
 Name: %packagename
 Version: 2.4.4
-Release: alt1.1
+Release: alt2
 Source0: %origname-%version.tar.gz
 License: MIT
 Group: Development/Python
@@ -82,9 +82,7 @@ cp -a . ../python3
 %python_build_debug
 %if_with python3
 pushd ../python3
-for i in $(find ./ -name '*.py'); do
-	2to3 -w $i
-done
+find -type f -name '*.py' -exec 2to3 -w '{}' +
 %python3_build
 popd
 %endif
@@ -92,9 +90,7 @@ popd
 %install
 %if_with python3
 pushd ../python3
-for i in $(find ./ -name '*.py'); do
-	2to3 -w $i
-done
+find -type f -name '*.py' -exec 2to3 -w '{}' +
 %python3_install
 popd
 pushd %buildroot%_bindir
@@ -125,6 +121,9 @@ popd
 %endif
 
 %changelog
+* Mon Apr 15 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.4.4-alt2
+- Use 'find... -exec...' instead of 'for ... $(find...'
+
 * Fri Mar 22 2013 Aleksey Avdeev <solo@altlinux.ru> 2.4.4-alt1.1
 - Rebuild with Python-3.3
 
