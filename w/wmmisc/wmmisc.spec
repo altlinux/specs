@@ -1,6 +1,6 @@
 Name: wmmisc
 Version: 1.1
-Release: alt1
+Release: alt1.qa1
 
 Summary: Display various info in WindowMaker Dock
 License: GPL
@@ -28,6 +28,9 @@ Display various info in WindowMaker Dock.
 %_bindir/*
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.1-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Fri Oct 20 2006 Victor Forsyuk <force@altlinux.org> 1.1-alt1
 - 1.1
 - Updated build requirements.
