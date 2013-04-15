@@ -1,6 +1,6 @@
 Name: tree
 Version: 1.0.0
-Release: alt4
+Release: alt4.qa1
 Epoch: 1
 
 Summary: A utility which displays a tree view of the contents of directories
@@ -36,6 +36,9 @@ specified directories in a tree-like format.
 %_mandir/man?/*
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1:1.0.0-alt4.qa1
+- NMU: rebuilt for debuginfo.
+
 * Fri Jul 04 2008 Alex V. Myltsev <avm@altlinux.ru> 1:1.0.0-alt4
 - fix: always return to the starting directory (closes #16263)
 
