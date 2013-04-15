@@ -1,6 +1,6 @@
 Name: numlock
 Version: 2.0
-Release: alt2.1
+Release: alt2.1.qa1
 Serial: 1
 
 Summary: Numlock key locker
@@ -53,6 +53,9 @@ rm %buildroot%_x11mandir/fr/man?/*
 #%lang(fr)%_x11mandir/fr/man?/*
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1:2.0-alt2.1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Tue Dec 02 2008 Valery Inozemtsev <shrek@altlinux.ru> 1:2.0-alt2.1
 - NMU:
   * updated build dependencies
