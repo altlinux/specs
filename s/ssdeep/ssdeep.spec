@@ -3,7 +3,7 @@ Url: http://ssdeep.sourceforge.net
 License: GPL v2 or later
 Group: Sciences/Mathematics
 Version: 2.5
-Release: alt1
+Release: alt1.qa1
 Summary: Context Triggered Piecewise Hashing values
 Source: http://dl.sourceforge.net/project/%name/%name-%version/%name-%version.tar.gz
 
@@ -69,6 +69,9 @@ Static library for libfuzzy, %summary
 %_libdir/*.a
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.5-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Tue Jul 13 2010 Fr. Br. George <george@altlinux.ru> 2.5-alt1
 - New version
 
