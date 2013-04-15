@@ -1,7 +1,7 @@
 Summary:       Decodes a variety of digital transmission modes (DTMF,ZVEI,AX.25 etc)
 Name:          multimon
 Version:       0.1
-Release:       alt1.1
+Release:       alt1.1.qa1
 License:       GPL v2
 Group:         Sound
 Source:        %name-%version.tar
@@ -28,6 +28,9 @@ install -D -m 755 bin-$( uname -m )/mkcostab %buildroot/%_bindir/mkcostab
 %_bindir/*
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.1-alt1.1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sun Mar 07 2010 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1-alt1.1
 - Renamed %_bindir/gen -> %_bindir/%name-gen
 
