@@ -1,7 +1,7 @@
 %define oname luafilesystem
 Name: lua5-luafilesystem
 Version: 1.5.0_2_gae5a05d
-Release: alt1
+Release: alt1.qa1
 Summary: Lua library to complement functions related to file systems
 License: MIT
 Group: Development/Other
@@ -41,5 +41,8 @@ install -p src/*.so %buildroot%_libdir/lua5/
 %doc README doc/* tests
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.5.0_2_gae5a05d-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Mon Jun 21 2010 Ildar Mulyukov <ildar@altlinux.ru> 1.5.0_2_gae5a05d-alt1
 - initial build for ALTLinux
