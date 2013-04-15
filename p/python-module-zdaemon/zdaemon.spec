@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 4.0.0
-Release: alt1.a1
+Release: alt2.a1
 Summary: Daemon process control library and tools for Unix-based systems
 License: ZPL
 Group: Development/Python
@@ -82,9 +82,7 @@ cp -a . ../python3
 %python_build
 %if_with python3
 pushd ../python3
-for i in $(find ./ -name '*.py'); do
-	2to3 -w $i
-done
+find -type f -name '*.py' -exec 2to3 -w -n '{}' +
 %python3_build
 popd
 %endif
@@ -121,6 +119,9 @@ mv %buildroot%_bindir/zdaemon %buildroot%_bindir/zdaemon3
 %endif
 
 %changelog
+* Mon Apr 15 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.0-alt2.a1
+- Use 'find... -exec...' instead of 'for ... $(find...'
+
 * Mon Apr 08 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.0-alt1.a1
 - Version 4.0.0a1
 
