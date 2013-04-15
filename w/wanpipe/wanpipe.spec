@@ -1,10 +1,10 @@
 %set_verify_elf_method relaxed
-%define kernel_flavour el-smp
+%define kernel_flavour ovz-el
 %add_findreq_skiplist %_sysconfdir/*
 
 Name: wanpipe
 Summary: %name
-Version: 3.5.20
+Version: 7.0.1
 Release: alt1
 License: GPL
 Group: System/Kernel and hardware
@@ -15,11 +15,7 @@ BuildPreReq: less
 Url: http://wiki.sangoma.com/wanpipe-linux-drivers
 Packager: Denis Smirnov <mithraen@altlinux.ru>
 Source: %name-%version.tar
-Patch1: %name.buildroot.patch
-Patch2: %name.altlinux.patch
-Patch3: %name.fix-build.patch
-Patch4: %name.rc.conf.patch
-Patch5: %name.dahdi.patch
+Patch: %name-%version-%release.patch
 
 %package -n kernel-source-wanpipe
 Summary: %name
@@ -77,11 +73,7 @@ BuildArch: noarch
 
 %prep
 %setup
-%patch1
-%patch2 -p2
-%patch3 -p2
-%patch4 -p1
-%patch5 -p2
+%patch -p1
 find -type f -name '*.swp' -delete
 find -type f -name '*.bak' -delete
 find -type f -name '*.orig' -delete
@@ -102,7 +94,7 @@ tmp_root=`realpath "$tmp_root"`
 tmp_kernel=`realpath "$tmp_kernel"`
 mkdir -p $tmp_root/etc/wanpipe
 mkdir -p $tmp_kernel
-krn=%_usrsrc/`ls -1 %_usrsrc | grep ^linux-.*-%kernel_flavour-alt | sort -n | tail`
+krn=%_usrsrc/`ls -1 %_usrsrc | grep ^linux-.*-%kernel_flavour-alt | sort -n | tail -1`
 rsync -ak --delete $krn/ $tmp_kernel/
 inc=`realpath $tmp_kernel/include`
 bd=$tmp_root
@@ -148,10 +140,8 @@ rm -f %buildroot/etc/wanpipe/util/wan_aftup/*.o
 %_usrsrc/kernel/sources/kernel-source-%name-%version.tar.bz2
 
 %files -n libsangoma
-%_libdir/libsangoma.so.3
-%_libdir/libsangoma.so.3.0.5
-%_libdir/libstelephony.so.2
-%_libdir/libstelephony.so.2.0.0
+%_libdir/libsangoma.so.*
+%_libdir/libstelephony.so.*
 
 %files -n libsangoma-devel
 %_libdir/libsangoma.so
@@ -165,9 +155,11 @@ rm -f %buildroot/etc/wanpipe/util/wan_aftup/*.o
 %files complete
 
 %files docs
-%doc doc/*
 
 %changelog
+* Mon Apr 15 2013 Denis Smirnov <mithraen@altlinux.ru> 7.0.1-alt1
+- 7.0.1
+
 * Sat Jul 09 2011 Denis Smirnov <mithraen@altlinux.ru> 3.5.20-alt1
 - 3.5.20
 
