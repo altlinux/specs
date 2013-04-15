@@ -1,6 +1,6 @@
 Name: portsentry
 Version: 1.2
-Release: alt1
+Release: alt1.qa1
 
 Summary: Advanced portscan detector
 Summary(ru_RU.UTF-8): Детектор сканирования портов
@@ -80,6 +80,9 @@ chmod 640 %_logdir/%name/{blocked,blocked.{atcp,audp},history}
 %attr(640,root,adm) %ghost %_logdir/%name/*
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.2-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Fri Sep 23 2005 Aleksandr Blokhin 'Sass' <sass@altlinux.ru> 1.2-alt1
 - 1.2
 - Changed License
