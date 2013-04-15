@@ -1,6 +1,6 @@
 Name: qnetwalk
 Version: 1.3
-Release: alt3
+Release: alt3.qa1
 
 Group: Games/Puzzles
 Summary: Qt-version of the popular NetWalk game
@@ -55,6 +55,9 @@ convert -resize 48x48 pics/computer2.png %buildroot/%_iconsdir/hicolor/48x48/app
 %doc ChangeLog README
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.3-alt3.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sun Nov  7 2010 Terechkov Evgenii <evg@altlinux.org> 1.3-alt3
 - Fix build with gcc4.5
 
