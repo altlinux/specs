@@ -3,7 +3,7 @@
 Summary: dmraid (Device-mapper RAID tool and library)
 Name: dmraid
 Version: 1.0.0.rc14
-Release: alt1
+Release: alt1.qa1
 License: GPL
 Group: System/Base
 Url: http://people.redhat.com/heinzm/sw/dmraid
@@ -42,6 +42,9 @@ install -m 755 tools/dmraid.static %buildroot/sbin/dmraid.static
 /sbin/*
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.0.0.rc14-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Mon Jun 11 2007 L.A. Kostis <lakostis@altlinux.ru> 1.0.0.rc14-alt1
 - build for ALTLinux.
 
