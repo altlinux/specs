@@ -1,6 +1,6 @@
 Name: nettee
 Version: 0.1.9.1
-Release: alt1
+Release: alt1.qa1
 
 Packager: Victor Forsyuk <force@altlinux.org>
 
@@ -34,5 +34,8 @@ install -Dp -m 0644 nettee.1 %buildroot%_man1dir/nettee.1
 %_man1dir/*
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.1.9.1-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sat Jul 25 2009 Victor Forsyuk <force@altlinux.org> 0.1.9.1-alt1
 - Initial build.
