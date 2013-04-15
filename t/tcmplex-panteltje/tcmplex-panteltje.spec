@@ -5,7 +5,7 @@
 Summary: Audio/Video multiplexer
 Name: %name
 Version: %version
-Release: %release
+Release: alt1.qa1
 License: GPL
 Group: Video
 Url: http://panteltje.com/panteltje/dvd/
@@ -37,6 +37,9 @@ channels.
 %_bindir/tcmplex
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.4.7-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sun Apr 16 2006 LAKostis <lakostis at altlinux.ru> 0.4.7-alt1
 - rebuild for ALTLinux distribution.
 
