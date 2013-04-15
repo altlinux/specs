@@ -1,6 +1,6 @@
 Name: xbanner
 Version: 1.31
-Release: alt1
+Release: alt1.qa1
 Epoch: 1
 
 Summary: A program for customizing the look of the standard XDM interface
@@ -48,6 +48,9 @@ make CFLAGS="%optflags" BINDIR=%_bindir XLIBDIR=%_libdir
 %doc *.xpm samples docs/*
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1:1.31-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Wed Apr 23 2008 Dmitry V. Levin <ldv@altlinux.org> 1:1.31-alt1
 - Merged fixes from Debian xbanner package.
 - Updated release numbering.
