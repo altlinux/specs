@@ -5,7 +5,7 @@ Group: System/Kernel and hardware
 Summary: A Combined Serial and Network Communication Software Package
 Provides: kermit
 Version: 8.0.211
-Release: alt1.1.1
+Release: alt1.1.1.qa1
 Url: http://www.columbia.edu/kermit/
 Source: %archiv_name.tar.bz2
 Source1: skel.kermrc
@@ -60,6 +60,9 @@ install -D -m 644 %{S:1} %buildroot%_sysconfdir/skel/.kermrc
 %_bindir/*
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 8.0.211-alt1.1.1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Tue Dec 07 2010 Igor Vlasenko <viy@altlinux.ru> 8.0.211-alt1.1.1
 - rebuild with new openssl and/or boost by request of git.alt administrator
 
