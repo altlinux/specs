@@ -1,6 +1,6 @@
 Name: gsynaptics
 Version: 0.9.16
-Release: alt3
+Release: alt3.qa1
 
 Summary: a settings tool for Synaptics touchpad driver
 License: GPL v2
@@ -48,6 +48,9 @@ mv %buildroot%_datadir/gnome/autostart/%name-init.desktop \
 %_pixmapsdir/touchpad.png
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.9.16-alt3.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sat May 29 2010 Alexander Myltsev <avm@altlinux.ru> 0.9.16-alt3
 - BuildRequire intltool.
 
