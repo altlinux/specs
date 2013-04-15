@@ -1,6 +1,6 @@
 Name: cpuspeed
 Version: 1.5
-Release: alt1
+Release: alt1.qa1
 
 Packager: Victor Forsyuk <force@altlinux.org>
 
@@ -55,6 +55,9 @@ install -pD -m644 %_sourcedir/cpuspeed.conf %buildroot%_sysconfdir/sysconfig/cpu
 %_initdir/cpuspeed
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.5-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Thu Oct 23 2008 Victor Forsyuk <force@altlinux.org> 1.5-alt1
 - 1.5
 
