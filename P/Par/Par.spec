@@ -8,7 +8,7 @@
 
 Name: %name
 Version: %ver
-Release: %rel
+Release: %rel.qa1
 
 Summary: Filter for reformatting paragraphs
 License: distributable
@@ -44,6 +44,9 @@ examples).
 %_man1dir/*
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.52-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Thu Jun 19 2003 Sir Raorn <raorn@altlinux.ru> 1.52-alt1
 - Built for Sisyphus (based on PLD's spec)
 
