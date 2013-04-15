@@ -12,7 +12,7 @@
 
 Name: ss5
 Version: 3.6.4
-Release: alt2.rel3.2
+Release: alt2.rel3.2.qa1
 
 Summary: Full featured SOCKS4 and SOCKS5 server
 Summary(ru_RU.UTF-8): Многофункциональный сервер SOCKS4 и SOCKS5
@@ -119,6 +119,9 @@ find . -type f -name *.so -exec %__install -m644 '{}' %buildroot%_libdir/%name/ 
 
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 3.6.4-alt2.rel3.2.qa1
+- NMU: rebuilt for debuginfo.
+
 * Mon Oct 05 2009 Michael Shigorin <mike@altlinux.org> 3.6.4-alt2.rel3.2
 - NMU: security fix for CVE-2009-2368 (array index overflow) (ALT #20701)
   + thanks crux@ for heads-up
