@@ -1,6 +1,6 @@
 Name: etherwake
 Version: 1.09
-Release: alt1
+Release: alt1.qa1
 
 Summary: A little tool to send magic Wake-on-LAN packets
 License: GPL
@@ -41,5 +41,8 @@ ln -s etherwake.8 %buildroot%_man8dir/ether-wake.8
 %_man8dir/*
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.09-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Wed Feb 03 2010 Dmitry V. Levin <ldv@altlinux.org> 1.09-alt1
 - Initial revision based on Debian etherwake 1.09-3.
