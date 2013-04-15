@@ -1,13 +1,12 @@
 Name: cairo-dock
-Version: 3.0.2
-Release: alt1.1
+Version: 3.1.0
+Release: alt1.r33
 Summary: A light and eye-candy dock to launch your programs easily
 License: GPLv3+
 Group: Graphical desktop/Other
 Url: https://launchpad.net/cairo-dock-core
 
-Source: http://launchpad.net/cairo-dock-core/3.0/%version/+download/%name-%version.tar
-#.gz
+Source: %name-%version.tar
 
 # Automatically added by buildreq on Thu Apr 12 2012 (-bi)
 # optimized out: GraphicsMagick GraphicsMagick-common cmake-modules elfutils fontconfig fontconfig-devel glib2-devel libGL-devel libX11-devel libXext-devel libXfixes-devel libXi-devel libXrender-devel libatk-devel libcairo-devel libcairo-gobject libcairo-gobject-devel libdbus-devel libdbus-glib libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libpango-devel libstdc++-devel libwayland-client libwayland-server pkg-config python-base xorg-compositeproto-devel xorg-fixesproto-devel xorg-inputproto-devel xorg-renderproto-devel xorg-xextproto-devel xorg-xproto-devel
@@ -80,6 +79,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_pkgconfigdir/*.pc
 
 %changelog
+* Mon Apr 15 2013 Andrey Cherepanov <cas@altlinux.org> 3.1.0-alt1.r33
+- New version 3.1.0-r33
+
 * Wed Nov 14 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0.2-alt1.1
 - Fixed build
 

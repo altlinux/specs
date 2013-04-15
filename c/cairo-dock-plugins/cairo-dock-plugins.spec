@@ -2,14 +2,14 @@
 
 Summary: Plugins for cairo-dock
 Name: cairo-dock-plugins
-Version: 3.0.2
+Version: 3.1.0
 Release: alt1
 License: GPLv3+
 Group: Graphical desktop/Other
 Packager: Alexey Shabalin <shaba@altlinux.ru>
 Url: https://launchpad.net/cairo-dock-plug-ins
 
-Source: http://launchpad.net/cairo-dock-plug-ins/3.0/%version/+download/%name-%version.tar
+Source: %name-%version.tar
 #.gz
 Patch: %name-alt-deps.patch
 
@@ -906,6 +906,9 @@ This applet allows you to write texts and monitor your system with a "text style
 %find_lang %name
 
 %changelog
+* Mon Apr 15 2013 Andrey Cherepanov <cas@altlinux.org> 3.1.0-alt1
+- New version 3.1.0
+
 * Thu Jun 28 2012 Ildar Mulyukov <ildar@altlinux.ru> 3.0.2-alt1
 - new version
 - fixed %packagename-common deps
