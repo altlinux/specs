@@ -1,6 +1,6 @@
 Name: lazy
 Version: 0.24d
-Release: alt2
+Release: alt2.qa1
 
 Summary: Lazy - a console-based CD player with CDDB support to display song titles
 License: GPL
@@ -35,6 +35,9 @@ if the CD-ROM drive does not have an analog audio cable connected to it.
 %_sysconfdir/.lazyrc
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.24d-alt2.qa1
+- NMU: rebuilt for debuginfo.
+
 * Fri Sep 10 2004 Andrey Semenov <mitrofan@altlinux.ru> 0.24d-alt2
 - add .lazyrc file
 
