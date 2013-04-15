@@ -2,7 +2,7 @@
 
 Name: xcalib
 Version: 0.8
-Release: alt3
+Release: alt3.qa1
 
 Packager: Victor Forsyuk <force@altlinux.org>
 
@@ -42,6 +42,9 @@ install -m644 *.icc %buildroot%_iccdir/
 %doc README README.profilers
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.8-alt3.qa1
+- NMU: rebuilt for debuginfo.
+
 * Tue Dec 02 2008 Victor Forsyuk <force@altlinux.org> 0.8-alt3
 - Renew build requirements to fix FTBFS.
 
