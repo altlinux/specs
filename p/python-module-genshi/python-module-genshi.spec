@@ -1,7 +1,7 @@
 %def_with python3
 
-Version: 0.6
-Release: alt2.1
+Version: 0.7
+Release: alt1
 %setup_python_module genshi
 
 Name: python-module-genshi
@@ -14,7 +14,6 @@ Packager: Python Development Team <python@packages.altlinux.org>
 
 Obsoletes: python-module-Genshi
 
-BuildArch: noarch
 BuildPreReq: %py_dependencies setuptools
 %if_with python3
 BuildRequires(pre): rpm-build-python3
@@ -28,6 +27,19 @@ components for parsing, generating, and processing HTML, XML or
 other textual content for output generation on the web. The major
 feature is a template language, which is heavily inspired by Kid.
 
+%package tests
+Summary: Tests for Genshi
+Group: Development/Python
+Requires: %name = %EVR
+
+%description tests
+Genshi is a Python library that provides an integrated set of
+components for parsing, generating, and processing HTML, XML or
+other textual content for output generation on the web. The major
+feature is a template language, which is heavily inspired by Kid.
+
+This package contains tests for Genshi.
+
 %if_with python3
 %package -n python3-module-genshi
 Summary: A toolkit for stream-based generation of output for the web (Python 3)
@@ -39,6 +51,19 @@ Genshi is a Python library that provides an integrated set of
 components for parsing, generating, and processing HTML, XML or
 other textual content for output generation on the web. The major
 feature is a template language, which is heavily inspired by Kid.
+
+%package -n python3-module-genshi-tests
+Summary: Tests for Genshi
+Group: Development/Python
+Requires: python3-module-genshi = %EVR
+
+%description -n python3-module-genshi-tests
+Genshi is a Python library that provides an integrated set of
+components for parsing, generating, and processing HTML, XML or
+other textual content for output generation on the web. The major
+feature is a template language, which is heavily inspired by Kid.
+
+This package contains tests for Genshi.
 %endif
 
 %package doc
@@ -78,9 +103,7 @@ cp -a . ../python3
 %python_build
 %if_with python3
 pushd ../python3
-for i in $(find ./ -name '*.py'); do
-	2to3 -w $i
-done
+find -type f -name '*.py' -exec 2to3 -w '{}' +
 %python3_build
 popd
 %endif
@@ -97,6 +120,12 @@ popd
 %dir %python_sitelibdir/%modulename
 %dir %python_sitelibdir/%modulename/filters/
 %dir %python_sitelibdir/%modulename/template/
+%exclude %python_sitelibdir/%modulename/tests
+%exclude %python_sitelibdir/%modulename/*/tests
+
+%files tests
+%python_sitelibdir/%modulename/tests
+%python_sitelibdir/%modulename/*/tests
 
 %files doc
 %doc doc
@@ -107,9 +136,18 @@ popd
 %if_with python3
 %files -n python3-module-genshi
 %python3_sitelibdir/*
+%exclude %python3_sitelibdir/%modulename/tests
+%exclude %python3_sitelibdir/%modulename/*/tests
+
+%files -n python3-module-genshi-tests
+%python3_sitelibdir/%modulename/tests
+%python3_sitelibdir/%modulename/*/tests
 %endif
 
 %changelog
+* Mon Apr 15 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7-alt1
+- Version 0.7
+
 * Fri Mar 22 2013 Aleksey Avdeev <solo@altlinux.ru> 0.6-alt2.1
 - Rebuild with Python-3.3
 
