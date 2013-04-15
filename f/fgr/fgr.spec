@@ -1,6 +1,6 @@
 Name: fgr
 Version: 4.5.0
-Release: alt2
+Release: alt2.qa1
 
 Summary: File content search command
 License: GPL
@@ -43,6 +43,9 @@ autoconf
 %exclude %_pkgconfigdir/*.pc
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 4.5.0-alt2.qa1
+- NMU: rebuilt for debuginfo.
+
 * Wed Jan 09 2008 Eugene Ostapets <eostapets@altlinux.ru> 4.5.0-alt2
 - fix build with new autotools
 
