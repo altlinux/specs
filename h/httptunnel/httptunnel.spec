@@ -1,6 +1,6 @@
 Name: httptunnel
 Version: 3.0.5
-Release: alt2
+Release: alt2.qa1
 
 Url: http://www.nocrew.org/software/httptunnel.html
 
@@ -42,6 +42,9 @@ the firewall.
 %doc AUTHORS COPYING ChangeLog DISCLAIMER FAQ HACKING NEWS README TODO
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 3.0.5-alt2.qa1
+- NMU: rebuilt for debuginfo.
+
 * Wed Nov 19 2008 Denis Smirnov <mithraen@altlinux.ru> 3.0.5-alt2
 - cleanup spec
 
