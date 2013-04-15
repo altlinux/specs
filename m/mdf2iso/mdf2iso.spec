@@ -1,6 +1,6 @@
 Name: mdf2iso
 Version: 0.3.0
-Release: alt2
+Release: alt2.qa1
 Summary: MDF to ISO Converter
 License: GPL
 Group: Archiving/Cd burning
@@ -33,6 +33,9 @@ Alcohol 120%% (c) (tm) bin image to the standard ISO-9660 format.
 %_bindir/%name
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.3.0-alt2.qa1
+- NMU: rebuilt for debuginfo.
+
 * Tue Jan 30 2007 Pavlov Konstantin <thresh@altlinux.ru> 0.3.0-alt2
 - Added largefiles support patch.
 - Added packager field.
