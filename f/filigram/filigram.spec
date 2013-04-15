@@ -1,6 +1,6 @@
 Name:		filigram
 Version:	7422
-Release:	alt1
+Release:	alt1.qa1
 Group:		Sciences/Mathematics
 License:	MIT/X11
 Summary:	Pretty pictures generation by mathematical means
@@ -30,6 +30,9 @@ install -D %name %buildroot%_bindir/%name
 %_bindir/*
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 7422-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Mon Aug 23 2010 Fr. Br. George <george@altlinux.ru> 7422-alt1
 - Initial build for ALT
 
