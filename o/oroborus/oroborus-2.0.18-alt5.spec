@@ -1,7 +1,7 @@
 %define Name Oroborus
 Name: oroborus
 Version: 2.0.18
-Release: alt5.qa1
+Release: alt5.qa2
 Summary: Small window manager for the X Window System
 Summary(uk_UA.CP1251): Маленький віконний менеджер для X Window System
 Summary(ru_RU.CP1251): Маленький оконный менеджер для X Window System
@@ -132,6 +132,9 @@ __MENU__
 
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.0.18-alt5.qa2
+- NMU: rebuilt for debuginfo.
+
 * Sun Nov 08 2009 Repocop Q. A. Robot <repocop@altlinux.org> 2.0.18-alt5.qa1
 - NMU (by repocop): the following fixes applied:
   * update_wms for oroborus
