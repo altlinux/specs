@@ -1,6 +1,6 @@
 Name: chess
 Version: 5.07
-Release: alt3
+Release: alt3.qa1
 
 %define real_name gnu%name
 
@@ -63,6 +63,9 @@ install -pm644 book.dat %buildroot%_gamesdatadir/%real_name
 %_datadir/games/%real_name
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 5.07-alt3.qa1
+- NMU: rebuilt for debuginfo.
+
 * Tue Aug 04 2009 Egor Vyscrebentsov <evyscr@altlinux.org> 5.07-alt3
 - new packager
 - add Packager: tag
