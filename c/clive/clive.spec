@@ -1,6 +1,6 @@
 Name: clive
 Version: 0.4.5
-Release: alt3
+Release: alt3.qa1
 
 Summary: clive is a console client for LiveJournal.com
 License: BSD-like
@@ -35,6 +35,9 @@ clive is a console client for LiveJournal.com.
 %_datadir/clive/cliverc-example.conf
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.4.5-alt3.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sat Jan 27 2007 Pavlov Konstantin <thresh@altlinux.ru> 0.4.5-alt3
 - Changed packager field.
 - Added autoreconf macro.
