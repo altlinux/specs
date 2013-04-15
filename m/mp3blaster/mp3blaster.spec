@@ -3,7 +3,7 @@
 
 Name: mp3blaster
 Version: 3.2.5
-Release: alt1
+Release: alt1.qa1
 
 Group: Sound
 Summary: An interactive text-console based mp3 player
@@ -55,6 +55,9 @@ rm -fv -- src/getopt*
 %_man1dir/splay.1.*
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 3.2.5-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sun Apr 12 2009 Slava Semushin <php-coder@altlinux.ru> 3.2.5-alt1
 - Updated to 3.2.5
 - New maintainer
