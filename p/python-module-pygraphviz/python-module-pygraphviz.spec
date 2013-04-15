@@ -4,7 +4,7 @@
 
 Name: python-module-%module_name
 Version: 1.2
-Release: alt1.svn20120328.1
+Release: alt2.svn20120328
 
 Summary: Python wrapper for the Graphviz Agraph data structure
 
@@ -79,9 +79,7 @@ sed -i 's|@PY3@.*||' pygraphviz/graphviz.i
 %if_with python3
 pushd ../python3
 rm -f %module_name/graphviz_wrap.c %module_name/graphviz.py
-for i in $(find ./ -name '*.py'); do
-	2to3 -w -n $i
-done
+find -type f -name '*.py' -exec 2to3 -w -n '{}' +
 sed -i 's|UserDict\.DictMixin|collections.MutableMapping|' \
 	%module_name/agraph.py
 sed -i 's|import UserDict|import collections|' \
@@ -119,6 +117,9 @@ popd
 %endif
 
 %changelog
+* Mon Apr 15 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2-alt2.svn20120328
+- Use 'find... -exec...' instead of 'for ... $(find...'
+
 * Fri Mar 22 2013 Aleksey Avdeev <solo@altlinux.ru> 1.2-alt1.svn20120328.1
 - Rebuild with Python-3.3
 
