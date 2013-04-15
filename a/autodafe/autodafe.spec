@@ -1,11 +1,11 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-fedora-compat
-BuildRequires: /usr/bin/col /usr/bin/dvipdf /usr/bin/dvips /usr/bin/emacs /usr/bin/emacsclient /usr/bin/gconftool-2 /usr/bin/gdb /usr/bin/groff /usr/bin/gvim /usr/bin/gzip /usr/bin/ldd /usr/bin/md5sum /usr/bin/perl /usr/bin/pkg-config /usr/bin/valgrind /usr/bin/xemacs bzlib-devel gcc-c++ gcc-fortran glib2-devel libX11-devel libao-devel libdbus-devel libfuse-devel libgcrypt-devel libgmp-devel libncurses-devel libreadline-devel pkgconfig(gconf-2.0) pkgconfig(gdk-pixbuf-xlib-2.0) pkgconfig(glib-2.0) pkgconfig(gtk+-2.0) pkgconfig(libglade-2.0) pkgconfig(x11) python-devel unzip zlib-devel
+BuildRequires: /usr/bin/col /usr/bin/dvipdf /usr/bin/dvips /usr/bin/emacs /usr/bin/emacsclient /usr/bin/gconftool-2 /usr/bin/gdb /usr/bin/groff /usr/bin/gvim /usr/bin/gzip /usr/bin/ldd /usr/bin/md5sum /usr/bin/perl /usr/bin/pkg-config /usr/bin/valgrind bzlib-devel gcc-c++ gcc-fortran glib2-devel libX11-devel libao-devel libdbus-devel libfuse-devel libgcrypt-devel libgmp-devel libncurses-devel libreadline-devel pkgconfig(gconf-2.0) pkgconfig(gdk-pixbuf-xlib-2.0) pkgconfig(glib-2.0) pkgconfig(gtk+-2.0) pkgconfig(libglade-2.0) pkgconfig(x11) python-devel unzip zlib-devel
 # END SourceDeps(oneline)
 Summary:  Fuzzing framework
 Name: autodafe
 Version: 0.1
-Release: alt1_6
+Release: alt2_6
 License: GPLv2+
 Group: Development/Tools
 URL: http://autodafe.sourceforge.net/
@@ -67,6 +67,9 @@ mv ./etc/generator/autodafe $RPM_BUILD_ROOT%{_datadir}
 %doc docs/tutorials.tgz
 
 %changelog
+* Mon Apr 15 2013 Igor Vlasenko <viy@altlinux.ru> 0.1-alt2_6
+- fixed build
+
 * Sat Jan 21 2012 Igor Vlasenko <viy@altlinux.ru> 0.1-alt1_6
 - update to new release by fcimport
 
