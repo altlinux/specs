@@ -1,6 +1,6 @@
 Name: mimetex
 Version: 1.71
-Release: alt1.rev20090617
+Release: alt1.rev20090617.qa1
 
 Summary: Mimetex ets you easily embed LaTeX math in your html pages 
 License: GPL
@@ -42,6 +42,9 @@ gcc -DAA mimetex.c gifsave.c -lm -o mimetex.cgi
 %doc COPYING README mimetex.html
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.71-alt1.rev20090617.qa1
+- NMU: rebuilt for debuginfo.
+
 * Tue Jul 14 2009 Vladimir A. Svyatoshenko <svyt@altlinux.ru> 1.71-alt1.rev20090617
 - new security update revision
 
