@@ -1,6 +1,6 @@
 Name: timelimit
 Version: 1.5
-Release: alt1
+Release: alt1.qa1
 
 Summary: Limit a process's absolute execution time
 
@@ -34,5 +34,8 @@ install -m644 -D %name.1 %buildroot%_man1dir/%name.1
 %_man1dir/*
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.5-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sun Mar 21 2010 Vitaly Lipatov <lav@altlinux.ru> 1.5-alt1
 - initial release for ALT Linux Sisyphus
