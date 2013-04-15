@@ -1,6 +1,6 @@
 Name: o3read
 Version: 0.0.4
-Release: alt3
+Release: alt3.qa1
 
 Summary: o3read is a standalone converter for the OpenOffice.org swriter and scalc formats
 License: GPL
@@ -48,6 +48,9 @@ The utility utftolatin1 converts from utf8 to 8859-1.
 %_man1dir/*
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.0.4-alt3.qa1
+- NMU: rebuilt for debuginfo.
+
 * Fri Aug 20 2010 Ilya Mashkin <oddity@altlinux.ru> 0.0.4-alt3
 - rebuild
 
