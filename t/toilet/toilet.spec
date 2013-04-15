@@ -1,6 +1,6 @@
 Name: toilet
 Version: 0.1
-Release: alt1
+Release: alt1.qa1
 
 Summary: The Other Implementation's letters
 Packager: Pavlov Konstantin <thresh@altlinux.ru>
@@ -45,6 +45,9 @@ touch AUTHORS
 %_man1dir/toilet.*
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.1-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Tue Nov 21 2006 Pavlov Konstantin <thresh@altlinux.ru> 0.1-alt1
 - 0.1 release.
 
