@@ -1,6 +1,6 @@
 Name: mar
 Version: 20070301
-Release: alt1
+Release: alt1.qa1
 
 Summary: mar - Mandrake Archiver
 License: GPL
@@ -30,6 +30,9 @@ make
 %_includedir/mar-extract-only.h
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 20070301-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Fri Mar  2 2007 Sergey Bolshakov <sbolshakov@altlinux.ru> 20070301-alt1
 - rebuilt against glibc
 
