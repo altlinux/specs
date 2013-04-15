@@ -2,7 +2,7 @@
 
 Name: wmwifi
 Version: 0.6
-Release: alt1
+Release: alt1.qa1
 
 Summary: A wireless network signal stength monitor for Window Maker
 Group: Graphical desktop/Window Maker
@@ -41,6 +41,9 @@ being enabled in the kernel.
 %_man1dir/%name.1*
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.6-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Thu Feb 22 2007 Sir Raorn <raorn@altlinux.ru> 0.6-alt1
 - Built for Sisyphus
 
