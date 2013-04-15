@@ -1,6 +1,6 @@
 Name: wmtop
 Version: 0.84
-Release: alt5
+Release: alt5.qa1
 
 Packager: Victor Forsyuk <force@altlinux.org>
 
@@ -36,6 +36,9 @@ install -p -D -m644 %SOURCE1 %buildroot%_menudir/wmtop
 %_menudir/*
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.84-alt5.qa1
+- NMU: rebuilt for debuginfo.
+
 * Wed Dec 17 2008 Victor Forsyuk <force@altlinux.org> 0.84-alt5
 - Remove obsolete install time scripts.
 
