@@ -2,7 +2,7 @@
 
 Name: welcome2l
 Version: 3.04
-Release: alt4
+Release: alt4.qa1
 
 Summary: Linux ANSI boot logo
 License: GPL
@@ -39,6 +39,9 @@ produce 80 column ANSI screens.
 %doc AUTHORS ChangeLog INSTALL README THANKS
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 3.04-alt4.qa1
+- NMU: rebuilt for debuginfo.
+
 * Mon Sep 30 2002 Stanislav Ievlev <inger@altlinux.ru> 3.04-alt4
 - rebuild with gcc3
 
