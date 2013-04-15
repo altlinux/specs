@@ -1,6 +1,6 @@
 Name: shorten
 Version: 3.6.1
-Release: alt1
+Release: alt1.qa1
 
 Packager: Victor Forsyuk <force@altlinux.org>
 
@@ -31,5 +31,8 @@ and lossless modes.
 %_man1dir/*
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 3.6.1-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Wed Aug 27 2008 Victor Forsyuk <force@altlinux.org> 3.6.1-alt1
 - Initial build.
