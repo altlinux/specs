@@ -2,7 +2,7 @@
 
 Name: dvd+rw-tools
 Version: 7.1
-Release: alt1
+Release: alt1.qa1
 Summary: Toolchain for mastering recordable DVD media
 License: %gpl2plus
 Group: Archiving/Cd burning
@@ -59,6 +59,9 @@ install -p -m644 growisofs.1 %buildroot%_man1dir/
 
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 7.1-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Tue Sep 16 2008 Led <led@altlinux.ru> 7.1-alt1
 - cleaned up spec
 
