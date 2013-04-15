@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.5.2
-Release: alt2.1
+Release: alt3
 Summary: Library to build a custom SMTP server
 License: MIT
 Group: Development/Python
@@ -96,9 +96,7 @@ cp -a . ../python3
 %python_build
 %if_with python3
 pushd ../python3
-for i in $(find ./ -name '*.py'); do
-	2to3 -w -n $i
-done
+find -type f -name '*.py' -exec 2to3 -w -n '{}' +
 %python3_build
 popd
 %endif
@@ -141,6 +139,9 @@ popd
 %endif
 
 %changelog
+* Mon Apr 15 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.2-alt3
+- Use 'find... -exec...' instead of 'for ... $(find...'
+
 * Fri Mar 22 2013 Aleksey Avdeev <solo@altlinux.ru> 0.5.2-alt2.1
 - Rebuild with Python-3.3
 
