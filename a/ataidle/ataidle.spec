@@ -1,7 +1,7 @@
 Summary: Utility to sets the idle timer on ATA hard drives
 Name: ataidle
 Version: 2.5
-Release: alt1
+Release: alt1.qa1
 Source0: %name-%version.tar
 License: BSD
 Group: System/Kernel and hardware
@@ -29,6 +29,9 @@ install $RPM_BUILD_DIR/%name-%version/ataidle.8 $RPM_BUILD_ROOT/%_mandir/man8
 %_mandir/man8/*
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.5-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Thu Dec 02 2010 Anton Farygin <rider@altlinux.ru> 2.5-alt1
 - new version
 
