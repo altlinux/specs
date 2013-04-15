@@ -2,7 +2,7 @@
 
 Name: ggz-gtk-games
 Version: 0.0.14.1
-Release: alt2
+Release: alt2.qa1
 
 Summary: GGZ Games for GTK+ user interface
 License: GPL
@@ -89,6 +89,9 @@ fi
 %_datadir/ggz/
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.0.14.1-alt2.qa1
+- NMU: rebuilt for debuginfo.
+
 * Wed Mar 25 2009 Igor Zubkov <icesik@altlinux.org> 0.0.14.1-alt2
 - bzip2 ChangeLog
 
