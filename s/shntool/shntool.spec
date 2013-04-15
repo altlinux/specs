@@ -1,6 +1,6 @@
 Name: shntool
 Version: 3.0.10
-Release: alt1
+Release: alt1.qa1
 
 Packager: Victor Forsyuk <force@altlinux.org>
 
@@ -43,6 +43,9 @@ popd
 %_man1dir/*
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 3.0.10-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Fri Jul 24 2009 Victor Forsyuk <force@altlinux.org> 3.0.10-alt1
 - 3.0.10
 
