@@ -5,7 +5,7 @@
 
 Name: 3proxy
 Version: 0.6.1
-Release: alt1
+Release: alt1.qa1
 
 Summary: Proxy server
 
@@ -94,6 +94,9 @@ install -pD -m644 README-ALT* %buildroot%_datadir/%name-%version/
 %_datadir/%name-%version
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.6.1-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sat Dec 19 2009 Afanasov Dmitry <ender@altlinux.org> 0.6.1-alt1
 - new version
 
