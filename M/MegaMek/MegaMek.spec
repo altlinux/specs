@@ -1,12 +1,14 @@
 # BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
+%define fedora 19
 # camel-case name at the request of the upstream maintainers.
 Name: MegaMek
 Version: 0.30.11
-Release: alt2_9jpp7
+Release: alt2_11jpp7
 Summary: A portable, network-enabled BattleTech engine
 
 Group: Games/Other
@@ -118,7 +120,10 @@ install -pm 755 stats.pl \
   $RPM_BUILD_ROOT%{_bindir}/MegaMek-stats
 
 install -dm 755 $RPM_BUILD_ROOT%{_datadir}/applications
-desktop-file-install --vendor fedora \
+desktop-file-install \
+%if 0%{?fedora} && 0%{?fedora} < 19
+  --vendor fedora \
+%endif
   --dir $RPM_BUILD_ROOT%{_datadir}/applications \
   --add-category X-Fedora \
   MegaMek.desktop
@@ -135,13 +140,20 @@ install -pm 644 %{SOURCE1} \
 %{_datadir}/MegaMek
 %{_bindir}/MegaMek
 %{_bindir}/MegaMek-stats
+%if 0%{?fedora} && 0%{?fedora} < 19
 %{_datadir}/applications/fedora-MegaMek.desktop
+%else
+%{_datadir}/applications/MegaMek.desktop
+%endif
 %{_datadir}/pixmaps/MegaMek-icon.png
 
 %dir %attr(-,root,root) %{_libdir}/gcj/%{name}
 %{_libdir}/gcj/%{name}/MegaMek.jar.*
 
 %changelog
+* Tue Apr 16 2013 Igor Vlasenko <viy@altlinux.ru> 0.30.11-alt2_11jpp7
+- update to new release by jppimport
+
 * Mon Aug 20 2012 Igor Vlasenko <viy@altlinux.ru> 0.30.11-alt2_9jpp7
 - update to new release by jppimport
 
