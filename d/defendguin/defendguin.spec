@@ -1,6 +1,6 @@
 Name: defendguin
 Version: 0.0.12
-Release: alt1
+Release: alt1.qa1
 
 Packager: Victor Forsyuk <force@altlinux.org>
 
@@ -55,6 +55,9 @@ install -d %buildroot{%_bindir,%_man6dir}
 %_datadir/%name
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.0.12-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Wed Dec 23 2009 Victor Forsyuk <force@altlinux.org> 0.0.12-alt1
 - 0.0.12
 
