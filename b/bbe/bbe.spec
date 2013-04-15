@@ -1,6 +1,6 @@
 Name: bbe
 Version: 0.2.2
-Release: alt5
+Release: alt5.qa1
 
 Summary: Binary block editor
 Group: Text tools
@@ -43,6 +43,9 @@ install -p AUTHORS ChangeLog %buildroot%_docdir/%name-%version/
 %doc %_docdir/%name-%version/*
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.2.2-alt5.qa1
+- NMU: rebuilt for debuginfo.
+
 * Wed Dec 16 2009 Igor Zubkov <icesik@altlinux.org> 0.2.2-alt5
 - update Url
 
