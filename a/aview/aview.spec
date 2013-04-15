@@ -1,6 +1,6 @@
 Name: aview
 Version: 1.3.0
-Release: alt2.rc1
+Release: alt2.rc1.qa1
 
 Summary: High quality ascii-art image (pnm) browser and animation (fli/flc) player
 License: GPL
@@ -46,6 +46,9 @@ Features:
 %_man1dir/*
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.3.0-alt2.rc1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Fri Oct 24 2008 Sergey Kurakin <kurakin@altlinux.org> 1.3.0-alt2.rc1
 - fixed unsafe tmp usage in scripts
 
