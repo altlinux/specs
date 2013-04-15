@@ -1,6 +1,6 @@
 Name:           fuse-convmvfs
 Version:        0.2.4
-Release: 	alt1
+Release: 	alt1.qa1
 Summary:        FUSE-Filesystem to convert filesystem encodings
 
 Group:          System/Kernel and hardware
@@ -35,6 +35,9 @@ make install DESTDIR=%buildroot
 
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.2.4-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Thu Mar 06 2008 Eugene Ostapets <eostapets@altlinux.ru> 0.2.4-alt1
 - new version
 
