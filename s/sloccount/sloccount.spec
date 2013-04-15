@@ -1,6 +1,6 @@
 Name: sloccount
 Version: 2.26
-Release: alt1
+Release: alt1.qa1
 
 Summary: Measures source lines of code (SLOC) in programs
 License: GPL
@@ -37,6 +37,9 @@ make install_man PREFIX=%buildroot%_prefix
 %doc sloccount.html ChangeLog
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.26-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Thu Jun 07 2007 Victor Forsyuk <force@altlinux.org> 2.26-alt1
 - 2.26
 
