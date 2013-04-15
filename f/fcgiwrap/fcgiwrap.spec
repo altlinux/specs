@@ -1,7 +1,7 @@
 Summary: Simple FastCGI wrapper for CGI scripts
 Name: fcgiwrap
 Version: 1.0.3
-Release: alt1
+Release: alt1.qa1
 License: BSD-style
 Group: System/Servers
 URL: http://nginx.localdomain.pl/wiki/FcgiWrap
@@ -36,5 +36,8 @@ autoreconf -fisv
 %_man8dir/*
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.0.3-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Tue Oct 19 2010 Anton Farygin <rider@altlinux.ru> 1.0.3-alt1
 - first build for Sisyphus
