@@ -1,12 +1,12 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-fedora-compat
-BuildRequires: /usr/bin/col /usr/bin/dvipdf /usr/bin/dvips /usr/bin/emacs /usr/bin/emacsclient /usr/bin/gconftool-2 /usr/bin/gdb /usr/bin/groff /usr/bin/gvim /usr/bin/gzip /usr/bin/ldd /usr/bin/md5sum /usr/bin/perl /usr/bin/pkg-config /usr/bin/valgrind /usr/bin/xemacs bzlib-devel gcc-c++ gcc-fortran glib2-devel libX11-devel libao-devel libdbus-devel libfuse-devel libgcrypt-devel libgmp-devel libncurses-devel libreadline-devel libxml2-devel pkgconfig(gconf-2.0) pkgconfig(gdk-pixbuf-xlib-2.0) pkgconfig(glib-2.0) pkgconfig(gtk+-2.0) pkgconfig(libglade-2.0) pkgconfig(x11) python-devel unzip zlib-devel
+BuildRequires: /usr/bin/col /usr/bin/dvipdf /usr/bin/dvips /usr/bin/emacs /usr/bin/emacsclient /usr/bin/gconftool-2 /usr/bin/gdb /usr/bin/groff /usr/bin/gvim /usr/bin/gzip /usr/bin/ldd /usr/bin/md5sum /usr/bin/perl /usr/bin/pkg-config /usr/bin/valgrind bzlib-devel gcc-c++ gcc-fortran glib2-devel libX11-devel libao-devel libdbus-devel libfuse-devel libgcrypt-devel libgmp-devel libncurses-devel libreadline-devel libxml2-devel pkgconfig(gconf-2.0) pkgconfig(gdk-pixbuf-xlib-2.0) pkgconfig(glib-2.0) pkgconfig(gtk+-2.0) pkgconfig(libglade-2.0) pkgconfig(x11) python-devel unzip zlib-devel
 # END SourceDeps(oneline)
 # Name of the project is avl, despite Debian using libavl, because they cannot
 # do otherwise.
 Name:           avl
 Version:        0.3.5
-Release:        alt1_2
+Release:        alt2_2
 Summary:        AVL tree manipulation library
 
 Group:          System/Libraries
@@ -57,6 +57,9 @@ find $RPM_BUILD_ROOT%{_libdir} -type f -exec chmod +x '{}' \;
 
 
 %changelog
+* Mon Apr 15 2013 Igor Vlasenko <viy@altlinux.ru> 0.3.5-alt2_2
+- fixed build
+
 * Sat Jan 21 2012 Igor Vlasenko <viy@altlinux.ru> 0.3.5-alt1_2
 - update to new release by fcimport
 
