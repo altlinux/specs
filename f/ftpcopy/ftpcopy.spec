@@ -1,6 +1,6 @@
 Name: ftpcopy
 Version: 0.6.7
-Release: alt1
+Release: alt1.qa1
 
 Summary: An ftp mirroring tool
 License: Free, no warranties
@@ -32,6 +32,9 @@ install -p -m644 %name-%version/doc/* $RPM_BUILD_ROOT%_man1dir
 %doc %name-%version/src/{ChangeLog,INSTALL,NEWS,README,THANKS}
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.6.7-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sat Oct 23 2004 Sasha Martsinuk <scampler@altlinux.ru> 0.6.7-alt1
 - 0.6.7
 
