@@ -4,7 +4,7 @@
 
 Name:           python-module-%oname
 Version:        2.1
-Release:        alt1.b1
+Release:        alt2.b1
 Summary:        Identification and authentication framework for WSGI
 Group:          Development/Python
 License:        BSD-derived
@@ -27,7 +27,8 @@ BuildPreReq: python3-module-paste python3-module-distribute
 BuildPreReq: python-tools-2to3
 %endif
 
-%py_requires repoze paste zope.interface
+%py_requires paste zope.interface
+Requires: python-module-repoze = %EVR
 
 %description
 repoze.who is an identification and authentication framework for
@@ -44,7 +45,8 @@ application.
 %package -n python3-module-%oname
 Summary: Identification and authentication framework for WSGI (Python 3)
 Group: Development/Python3
-%py3_requires repoze paste zope.interface
+%py3_requires paste zope.interface
+Requires: python3-module-repoze = %EVR
 
 %description -n python3-module-%oname
 repoze.who is an identification and authentication framework for
@@ -158,9 +160,7 @@ cp -a . ../python3
 %python_build
 %if_with python3
 pushd ../python3
-for i in $(find ./ -name '*.py'); do
-	2to3 -w -n $i
-done
+find -type f -name '*.py' -exec 2to3 -w -n '{}' +
 %python3_build
 popd
 %endif
@@ -252,6 +252,9 @@ popd
 %endif
 
 %changelog
+* Mon Apr 15 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.1-alt2.b1
+- Use 'find... -exec...' instead of 'for ... $(find...'
+
 * Sun Mar 03 2013 Aleksey Avdeev <solo@altlinux.ru> 2.1-alt1.b1
 - Version 2.1b1
 
