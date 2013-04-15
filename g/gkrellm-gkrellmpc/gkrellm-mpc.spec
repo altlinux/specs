@@ -2,7 +2,7 @@
 
 Name: gkrellm-%plugin
 Version: 0.1_beta10
-Release: alt4
+Release: alt4.qa1
 
 Summary: GKrellM plugin to control Music Player Daemon
 License: GPL
@@ -43,6 +43,9 @@ install -m755 %plugin.so %buildroot%_libdir/gkrellm2/plugins/%plugin.so
 %_libdir/gkrellm2/plugins/%plugin.so
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.1_beta10-alt4.qa1
+- NMU: rebuilt for debuginfo.
+
 * Wed May 02 2007 Andrey Rahmatullin <wrar@altlinux.ru> 0.1_beta10-alt4
 - fix fd leak
 
