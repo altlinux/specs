@@ -2,7 +2,7 @@
 %define over 4
 Name: arptables
 Version: %ver.%over
-Release: alt1
+Release: alt1.qa1
 
 Summary: A filtering tool for a bridging firewall
 License: GPL
@@ -37,6 +37,9 @@ touch %buildroot%_sysconfdir/%name
 %_man8dir/%name.*
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.0.3.4-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Mon Mar 08 2010 Boris Savelev <boris@altlinux.org> 0.0.3.4-alt1
 - new version
 - add service, man, scripts
