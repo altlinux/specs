@@ -1,6 +1,6 @@
 Name: nxscramble
 Version: 0.1
-Release: alt4
+Release: alt4.qa1
 
 Summary: Utility which scrambles password string same way as Nomachine NX client
 Group: Text tools
@@ -33,6 +33,9 @@ cd build
 %_bindir/nxscramble
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.1-alt4.qa1
+- NMU: rebuilt for debuginfo.
+
 * Tue May 26 2009 Lenar Shakirov <snejok@altlinux.ru> 0.1-alt4
 - Url added. Thanks to repocop!
 
