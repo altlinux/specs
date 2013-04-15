@@ -3,7 +3,7 @@
 
 Name: wmmemload
 Version: 0.1.6
-Release: alt6
+Release: alt6.qa1
 
 Summary: This dockapp displays memory and swap space usage
 Summary(ru_RU.CP1251): Этот апплет отображает использование памяти и файла подкачки
@@ -70,6 +70,9 @@ install -pD -m 644 %SOURCE1 %buildroot%_menudir/%name
 %_menudir/%name
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.1.6-alt6.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sat Nov 29 2008 Slava Semushin <php-coder@altlinux.ru> 0.1.6-alt6
 - Removed obsolete %%update_menus/%%clean_menus calls (noted by repocop)
 
