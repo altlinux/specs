@@ -1,6 +1,6 @@
 Name: clens
 Version: 0.2
-Release: alt3
+Release: alt3.qa1
 
 Summary: Corrects lens barrel distortion
 License: GPL
@@ -45,6 +45,9 @@ install data/*.txt %buildroot%_datadir/clens
 %exclude /usr/doc/clens
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.2-alt3.qa1
+- NMU: rebuilt for debuginfo.
+
 * Mon Jul 16 2007 Victor Forsyuk <force@altlinux.org> 0.2-alt3
 - Better Summary and description.
 - Include lens profiles from hugin project.
