@@ -1,6 +1,6 @@
 Name: fatresize
 Version: 1.0.3
-Release: alt11.git20090730
+Release: alt11.git20090730.qa1
 License: %gpl2plus
 Group: File tools
 Summary: The FAT16/FAT32 non-destructive resizer.
@@ -40,6 +40,9 @@ The FAT16/FAT32 non-destructive resizer.
 
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.0.3-alt11.git20090730.qa1
+- NMU: rebuilt for debuginfo.
+
 * Thu Apr 01 2010 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.3-alt11.git20090730
 - Version 1.0.3
 
