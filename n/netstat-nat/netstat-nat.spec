@@ -3,7 +3,7 @@
 
 Name: netstat-nat
 Version: 1.4.9
-Release: alt1
+Release: alt1.qa1
 
 Summary: A tool that displays NAT connections
 License: %gpl2plus
@@ -41,6 +41,9 @@ ln -sf %_licensedir/GPL-2 COPYING
 %_man1dir/*
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.4.9-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sun Dec 09 2007 Artem Zolochevskiy <azol@altlinux.ru> 1.4.9-alt1
 - new version
 - use macro for License tag
