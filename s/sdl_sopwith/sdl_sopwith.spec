@@ -1,6 +1,6 @@
 Name: sdl_sopwith
 Version: 1.7.4
-Release: alt2
+Release: alt2.qa1
 
 Packager: Victor Forsiuk <force@altlinux.org>
 
@@ -45,6 +45,9 @@ rm -rf %buildroot/%_docdir/sopwith
 %doc NEWS doc/keys.txt
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.7.4-alt2.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sun Oct 31 2010 Victor Forsiuk <force@altlinux.org> 1.7.4-alt2
 - Executable name was wrong in desktop file, fix it (closes: #24439).
 
