@@ -1,6 +1,6 @@
 Name: wmDownload
 Version: 0.1.2a
-Release: alt3
+Release: alt3.qa1
 
 Summary: WindowMaker dockapp that display how much data received
 Summary(ru_RU.UTF-8): отображает количество переданых данных
@@ -41,6 +41,9 @@ install -D -pm 644 %SOURCE1 %buildroot%_menudir/%name
 %_menudir/*
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.1.2a-alt3.qa1
+- NMU: rebuilt for debuginfo.
+
 * Wed Oct 28 2009 Igor Zubkov <icesik@altlinux.org> 0.1.2a-alt3
 - rebuild
 
