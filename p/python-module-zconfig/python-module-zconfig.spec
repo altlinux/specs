@@ -4,7 +4,7 @@
 
 Name: python-module-%modulename
 Version: 3.0.4
-Release: alt1.git20130313
+Release: alt2.git20130313
 
 Summary: Python configuration module from Zope
 License: ZPL
@@ -111,9 +111,10 @@ cp -a . ../python3
 %python_build
 %if_with python3
 pushd ../python3
-for i in $(find ./ -name '*.py') scripts/zconfig*; do
+for i in scripts/zconfig*; do
 	2to3 -w $i
 done
+find -type f -name '*.py' -exec 2to3 -w -n '{}' +
 %python3_build
 popd
 %endif
@@ -156,6 +157,9 @@ popd
 %endif
 
 %changelog
+* Mon Apr 15 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0.4-alt2.git20130313
+- Use 'find... -exec...' instead of 'for ... $(find...'
+
 * Mon Apr 08 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0.4-alt1.git20130313
 - Version 3.0.4
 
