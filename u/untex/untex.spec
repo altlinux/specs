@@ -1,6 +1,6 @@
 Name: untex
 Version: 1.3
-Release: alt1
+Release: alt1.qa1
 
 Summary: untex - strip LaTeX comands from input
 License: GPL
@@ -32,5 +32,8 @@ ments (or standard input) and prints the output to standard output.
 %_man1dir/%name.*
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.3-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sat Apr 29 2006 Igor Zubkov <icesik@altlinux.ru> 1.3-alt1
 - Initial build for Sisyphus
