@@ -6,7 +6,7 @@ Name: frink
 URL: http://catless.ncl.ac.uk/Programs/%Name
 Version: 2.2.2
 %define subver p4
-Release: alt1
+Release: alt1.qa1
 Summary: Static Testing and Formatting for Tcl Programs
 Group: Development/Tcl
 License: BSD
@@ -45,6 +45,9 @@ bzip2 --best --keep --force ChangeLog
 
 
 %changelog -n frink
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.2.2-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Fri Oct 27 2006 Led <led@altlinux.ru> 2.2.2-alt1
 - initial build for Sisyphus
 
