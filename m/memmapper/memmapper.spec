@@ -1,6 +1,6 @@
 Name: memmapper
 Version: 1.42
-Release: alt1
+Release: alt1.qa1
 
 Summary: mmapper - access every resource attached to the machine
 License: GPLv3
@@ -35,6 +35,9 @@ install -pD -m755 memmapper %buildroot%_sbindir/memmapper
 %_sbindir/%name
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.42-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sun Oct 31 2010 Victor Forsiuk <force@altlinux.org> 1.42-alt1
 - 1.42
 - Build with disassembler.
