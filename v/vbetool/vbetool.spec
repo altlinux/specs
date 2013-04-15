@@ -1,6 +1,6 @@
 Name: vbetool
 Version: 1.2.2
-Release: alt1
+Release: alt1.qa1
 
 Summary: Run real-mode video BIOS code to alter hardware state
 
@@ -44,6 +44,9 @@ install -m 0644 -D udev-video-post-example.rules %buildroot%_sysconfdir/udev/rul
 %_sysconfdir/udev/rules.d/92-video-post.rules
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.2.2-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Mon Mar 22 2010 Vitaly Lipatov <lav@altlinux.ru> 1.2.2-alt1
 - new version 1.2.2 from new codebase (thanks, Fedora)
 
