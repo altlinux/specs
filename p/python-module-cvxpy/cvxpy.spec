@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.1
-Release: alt1.svn20130211.1
+Release: alt2.svn20130211
 Summary: Python package for modeling optimization problems
 License: GPLv3
 Group: Development/Python
@@ -50,9 +50,7 @@ cp -a . ../python3
 %python_build_debug
 %if_with python3
 pushd ../python3
-for i in $(find ./ -name '*.py'); do
-	2to3 -w -n $i
-done
+find -type f -name '*.py' -exec 2to3 -w '{}' +
 %python3_build_debug
 popd
 %endif
@@ -74,6 +72,9 @@ popd
 %endif
 
 %changelog
+* Mon Apr 15 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1-alt2.svn20130211
+- Use 'find... -exec...' instead of 'for ... $(find...'
+
 * Fri Mar 22 2013 Aleksey Avdeev <solo@altlinux.ru> 0.1-alt1.svn20130211.1
 - Rebuild with Python-3.3
 
