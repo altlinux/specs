@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 2012.1.2
-Release: alt1.git20120607.1
+Version: 2013.1
+Release: alt1.git20130314
 Summary: C metaprogramming toolkit for Python
 License: MIT
 Group: Development/Python
@@ -88,9 +88,7 @@ ln -s ../objects.inv doc/source
 %python_build_debug
 %if_with python3
 pushd ../python3
-for i in $(find ./ -name '*.py'); do
-	2to3 -w -n $i
-done
+find -type f -name '*.py' -exec 2to3 -w '{}' +
 %python3_build_debug
 popd
 %endif
@@ -103,7 +101,7 @@ popd
 pushd ../python3
 %python3_install
 popd
-mv %buildroot%_includedir/%oname %buildroot%_includedir/%oname-py3
+#mv %buildroot%_includedir/%oname %buildroot%_includedir/%oname-py3
 %endif
 %python_install
 
@@ -114,7 +112,7 @@ cp -fR doc/build/pickle \
 %doc doc/build/html/*
 %python_sitelibdir/*
 %exclude %python_sitelibdir/%oname/pickle
-%_includedir/%oname
+#_includedir/%oname
 
 %files pickles
 %python_sitelibdir/%oname/pickle
@@ -122,10 +120,13 @@ cp -fR doc/build/pickle \
 %if_with python3
 %files -n python3-module-%oname
 %python3_sitelibdir/*
-%_includedir/%oname-py3
+#_includedir/%oname-py3
 %endif
 
 %changelog
+* Mon Apr 15 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2013.1-alt1.git20130314
+- Version 2013.1
+
 * Fri Mar 22 2013 Aleksey Avdeev <solo@altlinux.ru> 2012.1.2-alt1.git20120607.1
 - Rebuild with Python-3.3
 
