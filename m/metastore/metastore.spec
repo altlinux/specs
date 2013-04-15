@@ -1,6 +1,6 @@
 Name: metastore
 Version: 0.0
-Release: alt1
+Release: alt1.qa1
 
 Summary: Metastore stores metadata for git
 License: GPL2
@@ -33,6 +33,9 @@ make install DESTDIR=%buildroot
 %doc README examples
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.0-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Tue Feb 19 2008 Terechkov Evgenii <evg@altlinux.ru> 0.0-alt1
 - Rebuild with new sisyphus_check
 
