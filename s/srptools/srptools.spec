@@ -1,6 +1,6 @@
 Name: srptools
 Version: 0.0.4.1
-Release: alt2
+Release: alt2.qa1
 Summary: Tools for SRP/IB
 Group: Networking/Other
 License: %gpl2only
@@ -50,6 +50,9 @@ fi
 
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.0.4.1-alt2.qa1
+- NMU: rebuilt for debuginfo.
+
 * Thu Sep 02 2010 Andriy Stepanov <stanv@altlinux.ru> 0.0.4.1-alt2
 - Rebuild with new libibumad
 
