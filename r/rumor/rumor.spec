@@ -1,6 +1,6 @@
 Name: rumor
 Version: 1.0.3
-Release: alt1.beta
+Release: alt1.beta.qa1
 
 Summary: Really Unintelligent Music transcriptOR
 License: %gpl2only
@@ -42,5 +42,8 @@ command-line options.
 %_infodir/*
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.0.3-alt1.beta.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sun Sep 27 2009 Artem Zolochevskiy <azol@altlinux.ru> 1.0.3-alt1.beta
 - initial build for Sisyphus
