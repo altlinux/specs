@@ -14,7 +14,7 @@
 
 Name: nagios-%realname
 Version: 2.12
-Release: alt3%rev.qa1.1
+Release: alt3%rev.qa2
 
 Summary: NRPE -- Nagios(R) Remote Plug-ins Execution daemon.
 Summary(ru_RU.UTF-8): NRPE -- Сервер выполнения команд Nagios(R) на удаленном хосте.
@@ -161,6 +161,9 @@ install -m 0644 contrib/README.nrpe_check_control %buildroot/%plugin_docdir/
 %exclude %plugin_docdir/nrpe.xinetd
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.12-alt3.qa2
+- NMU: rebuilt for debuginfo.
+
 * Tue Dec 07 2010 Igor Vlasenko <viy@altlinux.ru> 2.12-alt3.qa1.1
 - rebuild with new openssl and/or boost by request of git.alt administrator
 
