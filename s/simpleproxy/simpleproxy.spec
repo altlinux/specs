@@ -1,6 +1,6 @@
 Name: simpleproxy
 Version: 3.4
-Release: alt1
+Release: alt1.qa1
 
 Summary: Simple TCP/IP proxy
 License: GPL
@@ -31,6 +31,9 @@ config file.
 %_man1dir/*
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 3.4-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Fri Aug 26 2005 Victor Forsyuk <force@altlinux.ru> 3.4-alt1
 - 3.4
 
