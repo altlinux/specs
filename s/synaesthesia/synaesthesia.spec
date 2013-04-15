@@ -1,6 +1,6 @@
 Name: synaesthesia
 Version: 2.4
-Release: alt1
+Release: alt1.qa1
 
 Summary: This program visualizes audio input
 License: GPL
@@ -32,6 +32,9 @@ positioning information to give a two dimensional display.
 %_bindir/*
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.4-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Mon Jun 26 2006 Michael Shigorin <mike@altlinux.org> 2.4-alt1
 - 2.4
 - built for ALT Linux
