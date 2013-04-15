@@ -1,6 +1,6 @@
 Name: ucblogo
 Version: 6.0
-Release: alt2
+Release: alt2.qa1
 Summary: An interpreter for the Logo programming language
 Group: Development/Functional
 License: GPLv2+
@@ -117,6 +117,9 @@ rm -f $RPM_BUILD_ROOT%_datadir/emacs/site-lisp/logo/*.el
 %_datadir/emacs/site-lisp/site-start.d
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 6.0-alt2.qa1
+- NMU: rebuilt for debuginfo.
+
 * Fri Nov 05 2010 Fr. Br. George <george@altlinux.ru> 6.0-alt2
 - Resurrect build:
 - tetex-related patch nd pre/post section removed
