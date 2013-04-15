@@ -1,6 +1,6 @@
 Name: gpsbabel
 Version: 1.3.6
-Release: alt2
+Release: alt2.qa1
 Packager: Grigory Batalov <bga@altlinux.ru>
 
 Summary: A tool to convert between various formats used by GPS devices
@@ -56,6 +56,9 @@ dvips -o gpsbabel.ps doc.dvi
 %_bindir/%name
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.3.6-alt2.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sat Oct 31 2009 Grigory Batalov <bga@altlinux.ru> 1.3.6-alt2
 - Rebuilt with texlive.
 
