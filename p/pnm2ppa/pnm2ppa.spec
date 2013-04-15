@@ -2,7 +2,7 @@ Summary: Drivers for printing to HP PPA printers
 
 Name: pnm2ppa
 Version: 1.04
-Release: alt1
+Release: alt1.qa1
 
 Packager: Stanislav Ievlev <inger@altlinux.org>
 
@@ -58,6 +58,9 @@ chmod 644 docs/en/LICENSE
 %config(noreplace) /etc/pnm2ppa.conf
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.04-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Wed Nov 07 2007 Stanislav Ievlev <inger@altlinux.org> 1.04-alt1
 - Build as a separate package
 
