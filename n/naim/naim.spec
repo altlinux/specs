@@ -1,6 +1,6 @@
 Name: naim
 Version: 0.11.8.3.2
-Release: alt2
+Release: alt2.qa1
 
 Summary: An ncurses-based console AIM, ICQ, IRC, and Lily client
 Group: Networking/Instant messaging
@@ -38,6 +38,9 @@ rm -fr %buildroot/%_includedir
 %_man1dir/*
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.11.8.3.2-alt2.qa1
+- NMU: rebuilt for debuginfo.
+
 * Wed Oct 21 2009 Igor Zubkov <icesik@altlinux.org> 0.11.8.3.2-alt2
 - Don't create group 'naim author' (closes: #16454)
 
