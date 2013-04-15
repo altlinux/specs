@@ -1,6 +1,6 @@
 Name:		tweak
 Version:	3.01
-Release:	alt2
+Release:	alt2.qa1
 Summary:	An efficient hex editor
 License:	MIT/X11
 Group:		Development/Other
@@ -34,6 +34,9 @@ rm -f %name.1 btree.html
 
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 3.01-alt2.qa1
+- NMU: rebuilt for debuginfo.
+
 * Wed Sep 01 2010 Fr. Br. George <george@altlinux.ru> 3.01-alt2
 - Homepage URL added
 
