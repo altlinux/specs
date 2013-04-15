@@ -4,7 +4,7 @@
 
 Name: 		%name
 Version: 	%version
-Release: %release
+Release: alt1.qa1
 
 Summary: 	SQL Shell. It is intended as a replacement for the Sybase 'isql'.
 License: 	GPL
@@ -61,6 +61,9 @@ make DESTDIR=%buildroot install.man
 %doc doc/FAQ doc/RELEASE doc/sample.* doc/*.sqshrc doc/sqsh.html
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.1.5-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Tue Jul 01 2008 Dmitry Lebkov <dlebkov@altlinux.ru> 2.1.5-alt1
 - 2.1.5
 - rebuild with FreeTDS v0.82
