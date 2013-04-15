@@ -1,6 +1,6 @@
 Name: pptpd
 Version: 1.3.4
-Release: alt7
+Release: alt7.qa1
 
 Summary: A PPTP server daemon
 Summary(ru_RU.KOI8-R): Сервер сетевых соединений PPTP
@@ -83,6 +83,9 @@ install -pD -m600 %SOURCE2 %buildroot%_sysconfdir/sysconfig/%name
 %doc AUTHORS NEWS README* TODO samples tools ChangeLog* html
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.3.4-alt7.qa1
+- NMU: rebuilt for debuginfo.
+
 * Wed Oct 13 2010 Vladimir V. Kamarzin <vvk@altlinux.org> 1.3.4-alt7
 - Relax dependency on ppp.
 
