@@ -1,7 +1,7 @@
 %define rname mscore
 
 Name: musescore
-Version: 1.2
+Version: 1.3
 Release: alt1
 
 Summary: A free WYSIWYG music score typesetter
@@ -12,7 +12,7 @@ Url: http://mscore.sourceforge.net/
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-Source: http://prdownloads.sf.net/%rname/%rname-%version.tar
+Source: http://prdownloads.sf.net/%rname/%rname-%version.tar.bz2
 Source1: mscore.desktop
 Patch1: mscore-dso-linking.patch
 
@@ -38,6 +38,7 @@ if you get ALSA lib seq_hw.c:457:(snd_seq_hw_open) open /dev/snd/seq failed: No 
 %setup -n %rname-%version
 sed -i "s| -m32||g" mscore/CMakeLists.txt
 %patch1 -p1 -b .dso
+sed -i 's@":/fonts@"%_datadir/mscore-%version/fonts@g' mscore/mscore/mscore.cpp
 
 %build
 export PATH=$PATH:%_qt4dir/bin
@@ -49,6 +50,7 @@ cmake \
         -DBUILD_SCRIPTGEN=FALSE \
 	../mscore
 # compile translations
+make lupdate
 make lrelease
 # run build
 %make_build
@@ -58,17 +60,24 @@ cp %SOURCE1 .
 %install
 cd build
 %makeinstall_std
+for f in ../mscore/mscore/fonts/*.ttf; do
+	install -D $f %buildroot%_datadir/mscore-%version/fonts/$(basename $f)
+done
 
 chrpath -d %buildroot%_bindir/mscore
 
 %files
 %_bindir/mscore
 %_desktopdir/mscore.desktop
-%_datadir/mscore-1.2/
+%_datadir/mscore-%version
 %_qt4dir/plugins/designer/libawlplugin.so
 %_pixmapsdir/mscore.*
 
 %changelog
+* Mon Apr 15 2013 Fr. Br. George <george@altlinux.ru> 1.3-alt1
+- Version up
+- Fix broken fonts usage in 1.2
+
 * Sat Jun  2 2012 Terechkov Evgenii <evg@altlinux.org> 1.2-alt1
 - 1.2
 
