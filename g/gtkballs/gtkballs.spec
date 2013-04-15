@@ -1,6 +1,6 @@
 Name: gtkballs
 Version: 3.1.5
-Release: alt4
+Release: alt4.qa1
 
 Summary: A simple logic game like Lines
 License: GPL
@@ -86,6 +86,9 @@ chgrp games %_localstatedir/games/gtkballs-scores
 chmod 0664 %_localstatedir/games/gtkballs-scores
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 3.1.5-alt4.qa1
+- NMU: rebuilt for debuginfo.
+
 * Thu Jul 30 2009 Michael Shigorin <mike@altlinux.org> 3.1.5-alt4
 - fixed desktop file (repocop), moved it into a separate source
 - minor spec cleanup
