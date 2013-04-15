@@ -1,8 +1,8 @@
 %define dist TiffIO
 %define major 1
-%define minor 2
+%define minor 4
 %define beta  0
-%define distrel   e
+%define distrel   a
 %define altrel  alt4
 #
 %define tar  %dist-%major%minor%beta%distrel
@@ -24,7 +24,7 @@ Url: http://artis.inrialpes.fr/Logiciels/TiffIO
 License: CeCILL_V1
 
 
-Source: ftp://tiffio.sourceforge.net/%tar.tgz
+Source: %tar.tar
 
 
 # Automatically added by buildreq on Thu Apr 21 2011 (-bi)
@@ -65,6 +65,9 @@ install -m 0644 %PLUGIN %buildroot/%INSTDIR
 %docdir %DOCDIR
 
 %changelog
+* Mon Apr 15 2013 Sergey V Turchin <zerg@altlinux.org> 140-alt4.a
+- new version
+
 * Tue Nov 06 2012 Sergey V Turchin <zerg@altlinux.org> 120-alt4.e
 - rebuilt with new libtiff
 
