@@ -1,7 +1,7 @@
 %define oname rudeconfig
 Name: librudeconfig
 Version: 5.0.5
-Release: alt1
+Release: alt1.qa1
 
 Summary: Library (C++ API) for reading and writing configuration/.ini files
 
@@ -58,6 +58,9 @@ to develop C++ applications using %name.
 %_man3dir/*
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 5.0.5-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Fri Sep 03 2010 Vitaly Lipatov <lav@altlinux.ru> 5.0.5-alt1
 - initial build for ALT Linux Sisyphus (thanks, Fedora)
 
