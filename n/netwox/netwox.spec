@@ -1,6 +1,6 @@
 Name: netwox
 Version: 5.34.0
-Release: alt1
+Release: alt1.qa1
 
 Summary: A toolbox for network administrators and network hackers
 License: GPL
@@ -43,6 +43,9 @@ rm -f doc/gpl.txt
 %doc doc misc README.TXT
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 5.34.0-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Fri Apr 21 2006 Vladimir V Kamarzin <vvk@altlinux.ru> 5.34.0-alt1
 - new version (5.34.0)
 
