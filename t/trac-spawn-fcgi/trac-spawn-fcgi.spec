@@ -8,7 +8,7 @@
 
 Name: trac-spawn-fcgi
 Version: 0.2
-Release: %_release
+Release: %_release.qa1
 Packager: Grigory Batalov <bga@altlinux.ru>
 
 Summary: Trac FastCGI frontend spawn daemon
@@ -71,6 +71,9 @@ touch %buildroot%_var/run/%name/%name.pid
 %ghost %_var/run/%name/%name.pid
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.2-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sun Mar 25 2007 Grigory Batalov <bga@altlinux.ru> 0.2-alt1
 - Update spawn-fcgi.c to version 1.4.13.
 
