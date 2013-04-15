@@ -1,6 +1,6 @@
 Name: penguin-command
 Version: 1.6.11
-Release: alt1.qa1
+Release: alt1.qa2
 
 Summary: A clone of the classic Missile Command game
 Summary(ru_RU.UTF-8): Клон классической игры Missile Command
@@ -60,6 +60,9 @@ Penguin Command, за исключением музыки, распростра�
 %_man6dir/*
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.6.11-alt1.qa2
+- NMU: rebuilt for debuginfo.
+
 * Tue Nov 24 2009 Repocop Q. A. Robot <repocop@altlinux.org> 1.6.11-alt1.qa1
 - NMU (by repocop): the following fixes applied:
   * update_menus for penguin-command
