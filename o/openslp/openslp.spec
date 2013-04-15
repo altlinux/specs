@@ -1,6 +1,6 @@
 Name: openslp
 Version: 1.2.1
-Release: alt4
+Release: alt4.qa1
 
 Summary: OpenSLP implementation of Service Location Protocol V2
 License: BSD-style
@@ -124,6 +124,9 @@ mkdir -p %buildroot%_sysconfdir/slp.reg.d
 %_includedir/*
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.2.1-alt4.qa1
+- NMU: rebuilt for debuginfo.
+
 * Fri Oct 01 2010 Dmitry V. Levin <ldv@altlinux.org> 1.2.1-alt4
 - Cleaned up the package a bit.
 - Built with libcrypto.so.10.
