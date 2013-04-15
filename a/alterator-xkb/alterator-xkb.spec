@@ -2,7 +2,7 @@
 
 Name: alterator-xkb
 Version: 3.0
-Release: alt2
+Release: alt2.qa1
 
 Packager: Stanislav Ievlev <inger@altlinux.org>
 
@@ -40,6 +40,9 @@ alterator module for XKB administration
 %_alterator_backend3dir/*
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 3.0-alt2.qa1
+- NMU: rebuilt for debuginfo.
+
 * Mon Oct 12 2009 Stanislav Ievlev <inger@altlinux.org> 3.0-alt2
 - fix desktop file (closes: #21757)
 
