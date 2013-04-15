@@ -3,7 +3,7 @@
 
 Name: %engine_prefix-%_name
 Version: 0.9.11
-Release: alt1
+Release: alt1.qa1
 
 Summary: Ubuntulooks GTK2 engine
 Summary(ru_RU.UTF-8):Модуль прорисовки Ubuntulooks для GTK2
@@ -42,5 +42,8 @@ Ubuntulooks - самостоятельный вариант Clearlooks 2.7, со
 %exclude %engines_dir/*.la
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.9.11-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Wed Dec 06 2006 Vyacheslav Dikonov <slava@altlinux.ru> 0.9.11-alt1
 - ALTLinux build
