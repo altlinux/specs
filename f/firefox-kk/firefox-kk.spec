@@ -2,7 +2,7 @@
 %define ciddir	%firefox_noarch_extensionsdir/%cid
 
 Name:		firefox-kk
-Version:	19.0.2
+Version:	20.0
 Release:	alt1
 Summary:	Kazakh (KZ) Language Pack for Firefox
 
@@ -44,6 +44,9 @@ ln -s %_datadir/myspell/kk_KZ.dic %buildroot/%ciddir/dictionaries/kk.dic
 %ciddir
 
 %changelog
+* Mon Apr 15 2013 Alexey Gladkov <legion@altlinux.ru> 20.0-alt1
+- New version (20.0)
+
 * Mon Mar 11 2013 Alexey Gladkov <legion@altlinux.ru> 19.0.2-alt1
 - New version (19.0.2)
 - First build for ALT Linux.
