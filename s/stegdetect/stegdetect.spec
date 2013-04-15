@@ -1,6 +1,6 @@
 Name: stegdetect
 Version: 0.6
-Release: alt3
+Release: alt3.qa1
 
 Summary: Detect and extract steganography messages inside JPEG
 License: BSD
@@ -43,6 +43,9 @@ libtoolize -i
 %_man1dir/*
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.6-alt3.qa1
+- NMU: rebuilt for debuginfo.
+
 * Wed Sep 30 2009 Victor Forsyuk <force@altlinux.org> 0.6-alt3
 - Fix FTBFS due to missing libtoolize call in current configure macro.
 
