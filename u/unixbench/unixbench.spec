@@ -1,6 +1,6 @@
 Name: unixbench
 Version: 5.1.2
-Release: alt2
+Release: alt2.qa1
 
 Summary: The BYTE UNIX Benchmarks
 License: Distributable
@@ -42,6 +42,9 @@ cp -a testdir/* %buildroot%_datadir/inquisitor/unixbench-testdir
 # TODO: make less inquisitor-specific?
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 5.1.2-alt2.qa1
+- NMU: rebuilt for debuginfo.
+
 * Fri Feb 12 2010 Michael Shigorin <mike@altlinux.org> 5.1.2-alt2
 - finally got around to gratefully accept fixes by vx8400@gmail
 
