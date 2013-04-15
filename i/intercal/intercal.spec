@@ -1,6 +1,6 @@
 Name: intercal
 Version: 0.24
-Release: alt1
+Release: alt1.qa1
 
 Summary: The language that kills the weak and drives mad the strong
 License: GPL, except for ick-wrap.c
@@ -53,5 +53,8 @@ popd
 %doc BUGS NEWS README doc/ examples/ %name.el
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.24-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Mon Sep 26 2005 Andrey Rahmatullin <wrar@altlinux.ru> 0.24-alt1
 - initial build
