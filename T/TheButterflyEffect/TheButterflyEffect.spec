@@ -1,7 +1,7 @@
 Name:		TheButterflyEffect
 # sed -n '/APPRELEASE/s/.*"\(.*\)".*/\1/p' src/tbe_global.h
 Version:	8.2
-Release:	alt1
+Release:	alt1.qa1
 License:	GPL
 Group:		Games/Puzzles
 Summary:	Combine mechanical elements to achieve a simple goal in the most complex way
@@ -43,6 +43,9 @@ install -D -m755 %name %buildroot%_gamesbindir/%name
 %_gamesdatadir/%name
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 8.2-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Mon Dec 06 2010 Fr. Br. George <george@altlinux.ru> 8.2-alt1
 - Version up
 - Milestone based versioning used
