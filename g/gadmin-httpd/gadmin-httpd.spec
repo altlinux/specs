@@ -1,6 +1,6 @@
 Name: gadmin-httpd
 Version: 0.1.0
-Release: alt2
+Release: alt2.qa1
 
 Summary: Gadmin-httpd -- A GTK+ administation tool for the Apache Web server.
 Group: System/Configuration/Other
@@ -64,6 +64,9 @@ done
 %_liconsdir/%name.png
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.1.0-alt2.qa1
+- NMU: rebuilt for debuginfo.
+
 * Wed Mar 12 2008 Eugene Ostapets <eostapets@altlinux.ru> 0.1.0-alt2
 - fix desktop file (tnx repocop)
 - fix icons (tnx repocop)
