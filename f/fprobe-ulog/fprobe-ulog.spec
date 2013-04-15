@@ -4,7 +4,7 @@
 
 Name: %name
 Version: 1.1
-Release: alt4
+Release: alt4.qa1
 Summary: fprobe-ulog: a NetFlow probe
 Group: Monitoring
 License: GPL
@@ -67,6 +67,9 @@ mkdir -p %buildroot%fprobedir
 %dir %attr(1775,root,%fuser) %fprobedir
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.1-alt4.qa1
+- NMU: rebuilt for debuginfo.
+
 * Tue Sep 02 2008 Terechkov Evgenii <evg@altlinux.ru> 1.1-alt4
 - Patch0 by lioka@ added (fixes #14162)
 
