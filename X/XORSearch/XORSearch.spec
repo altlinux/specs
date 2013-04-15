@@ -1,7 +1,7 @@
 Name:		XORSearch
 Version:	1.6.0
 %define		_ver 1_6_0
-Release:	alt1
+Release:	alt1.qa1
 License:	Public domain
 Group:		File tools
 Summary:	Search for a given string in an XOR, ROL or ROT encoded binary file
@@ -31,6 +31,9 @@ install -D %name %buildroot%_bindir/%name
 %_bindir/*
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.6.0-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Tue Jul 13 2010 Fr. Br. George <george@altlinux.ru> 1.6.0-alt1
 - Initial build for ALT
 
