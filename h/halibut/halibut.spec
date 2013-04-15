@@ -1,6 +1,6 @@
 Name:		halibut
 Version:	1.0
-Release:	alt1
+Release:	alt1.qa1
 License:	BSD-like
 Group:		Text tools
 Summary:	Yet another free document preparation system
@@ -28,6 +28,9 @@ mkdir -p %buildroot%_bindir %buildroot%_man1dir
 %_man1dir/*
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.0-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Mon Aug 23 2010 Fr. Br. George <george@altlinux.ru> 1.0-alt1
 - Initial build from scratch
 
