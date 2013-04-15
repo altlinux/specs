@@ -1,6 +1,6 @@
 Name: ha
 Version: 0.999
-Release: alt2
+Release: alt2.qa1
 Summary: HA archiver
 Summary (ru_RU.UTF-8): Архиватор HA
 License: GPL
@@ -36,6 +36,9 @@ install -p -m644 -D %name.1 $RPM_BUILD_ROOT%_man1dir/%name.1
 %doc *.txt
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.999-alt2.qa1
+- NMU: rebuilt for debuginfo.
+
 * Fri Sep 10 2010 Anton Farygin <rider@altlinux.ru> 0.999-alt2
 - added man page from Debian
 - removed binary file from source tarball
