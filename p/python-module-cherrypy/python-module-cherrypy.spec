@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%modulename
-Version: 3.2.2
-Release: alt1.hg20120408.1
+Version: 3.2.4
+Release: alt1.hg20130409
 
 %setup_python_module %modulename
 
@@ -82,9 +82,7 @@ cp -a . ../python3
 %python_build
 %if_with python3
 pushd ../python3
-for i in $(find ./ -name '*.py'); do
-	2to3 -w $i ||:
-done
+find -type f -name '*.py' -exec 2to3 -w '{}' +
 sed -i 's|%_bindir/python|%_bindir/python3|' \
 	cherrypy/process/servers.py cherrypy/test/sessiondemo.py
 sed -i 's|%_bindir/env python|%_bindir/env python3|' cherrypy/cherryd
@@ -119,6 +117,9 @@ mv %buildroot%_bindir/cherryd %buildroot%_bindir/cherryd3
 %endif
 
 %changelog
+* Mon Apr 15 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.2.4-alt1.hg20130409
+- Version 3.2.4
+
 * Fri Mar 22 2013 Aleksey Avdeev <solo@altlinux.ru> 3.2.2-alt1.hg20120408.1
 - Rebuild with Python-3.3
 
