@@ -2,7 +2,7 @@
 
 Name: gimp-plugin-metadata
 Version: 1.0
-Release: alt1
+Release: alt1.qa1
 
 Summary: Gimp plugin to list image metadata
 # There is a line in README stating that license for plugin is "GPL" but file
@@ -41,5 +41,8 @@ file, or write one to a file. You can also attach a color profile to an image
 %_libdir/gimp/%gimpver/plug-ins/*
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.0-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Wed Sep 12 2007 Victor Forsyuk <force@altlinux.org> 1.0-alt1
 - Initial build.
