@@ -7,8 +7,8 @@
 %define subst_enable_to() %{expand:%%{?_enable_%{1}:--enable-%{2}}} %{expand:%%{?_disable_%{1}:--disable-%{2}}}
 
 Name: musl
-Version: 0.9.9
-Release: alt18
+Version: 0.9.10
+Release: alt1
 Group: System/Libraries
 Summary: musl libc - new standard library
 License: MIT
@@ -114,6 +114,9 @@ echo "%musl_dir/lib" > %buildroot%_sysconfdir/ld.so.conf.d/%name-%_lib.conf
 
 
 %changelog
+* Mon Apr 15 2013 Led <led@altlinux.ru> 0.9.10-alt1
+- 0.9.10
+
 * Tue Apr 09 2013 Led <led@altlinux.ru> 0.9.9-alt18
 - updated from upstream's SCM
 
