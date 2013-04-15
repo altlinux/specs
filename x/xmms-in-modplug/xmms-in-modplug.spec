@@ -1,6 +1,6 @@
 Name: xmms-in-modplug
 Version: 2.05
-Release: alt4
+Release: alt4.qa1
 
 Summary: Xmms plugin based on libmodplug library.
 License: GPL
@@ -55,6 +55,9 @@ This package contains console module player based on libmodplug library
 %_bindir/*
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.05-alt4.qa1
+- NMU: rebuilt for debuginfo.
+
 * Wed Nov 05 2008 Michael Shigorin <mike@altlinux.org> 2.05-alt4
 - fixed build with gcc 4.3
 - changed Packager: to myself
