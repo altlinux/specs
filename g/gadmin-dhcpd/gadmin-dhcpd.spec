@@ -1,6 +1,6 @@
 Name: gadmin-dhcpd
 Version: 0.4.2
-Release: alt2
+Release: alt2.qa1
 
 Summary: Gadmin-dhcpd is a fast and easy to use GTK+ administration tool for the ISC DHCPD server
 Group: Development/C
@@ -71,6 +71,9 @@ done
 %_liconsdir/%name.png
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.4.2-alt2.qa1
+- NMU: rebuilt for debuginfo.
+
 * Wed Mar 12 2008 Eugene Ostapets <eostapets@altlinux.ru> 0.4.2-alt2
 - fix desktop file (tnx repocop)
 - fix icons (tnx repocop)
