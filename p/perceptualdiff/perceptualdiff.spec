@@ -1,6 +1,6 @@
 Name: perceptualdiff
 Version: 1.1.1
-Release: alt1
+Release: alt1.qa1
 
 Packager: Victor Forsyuk <force@altlinux.org>
 
@@ -35,6 +35,9 @@ cmake -DCMAKE_INSTALL_PREFIX:PATH=%_prefix .
 %_bindir/*
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.1.1-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Mon Jun 22 2009 Victor Forsyuk <force@altlinux.org> 1.1.1-alt1
 - 1.1.1
 
