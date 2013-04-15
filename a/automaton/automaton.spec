@@ -1,3 +1,6 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 # Upstream uses version-release.  Control the madness here.
@@ -7,7 +10,7 @@ BuildRequires: jpackage-compat
 
 Name:           automaton
 Version:        %{upver}r%{uprel}
-Release:        alt1_3jpp7
+Release:        alt1_4jpp7
 Summary:        A Java finite state automata/regular expression library
 
 Group:          Development/Java
@@ -36,7 +39,7 @@ symbolic representation based on intervals of Unicode characters.
 Summary:        A Java finite state automata/regular expression library
 Group:          Development/Documentation
 BuildArch:      noarch
-Requires:       automaton = %{version}-%{release}
+Requires:       %{name} = %{version}-%{release}
 
 %description javadoc
 Javadoc documentation for automaton.
@@ -63,6 +66,9 @@ mv doc $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Tue Apr 16 2013 Igor Vlasenko <viy@altlinux.ru> 1.11r8-alt1_4jpp7
+- update to new release by jppimport
+
 * Mon Aug 20 2012 Igor Vlasenko <viy@altlinux.ru> 1.11r8-alt1_3jpp7
 - update to new release by jppimport
 
