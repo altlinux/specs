@@ -1,6 +1,6 @@
 Name: scmpc
 Version: 0.2.2
-Release: alt1.0
+Release: alt1.0.qa1
 
 Summary: Audioscrobbler client for MPD
 License: GPL
@@ -37,6 +37,9 @@ mv %buildroot{%_datadir/%name/scmpc.conf,%_docdir/%name-%version/}
 %doc %_docdir/%name-%version/
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.2.2-alt1.0.qa1
+- NMU: rebuilt for debuginfo.
+
 * Fri Mar 30 2007 ALT QA Team Robot <qa-robot@altlinux.org> 0.2.2-alt1.0
 - Rebuilt due to libcurl.so.3 -> libcurl.so.4 soname change.
 
