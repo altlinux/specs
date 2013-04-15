@@ -1,6 +1,6 @@
 Name: rzip
 Version: 2.1
-Release: alt1
+Release: alt1.qa1
 License: GPL
 Summary: A large-file compression program 
 Summary(ru_RU.CP1251): Программа для сжатия очень больших файлов
@@ -43,6 +43,9 @@ install -m 644 %name.1 %buildroot%_man1dir/
 %_man1dir/rzip.1.gz
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.1-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Tue Oct 10 2006 Andrew Kornilov <hiddenman@altlinux.ru> 2.1-alt1
 - New version
 * Sun Jul 10 2005 Andrew Kornilov <hiddenman@altlinux.ru> 2.0-alt4
