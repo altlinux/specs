@@ -1,6 +1,6 @@
 Name: gbdfed
 Version: 1.6
-Release: alt2
+Release: alt2.qa1
 
 Packager: Victor Forsiuk <force@altlinux.org>
 
@@ -51,6 +51,9 @@ install -pD -m644 %_sourcedir/gbdfed48x48.png %buildroot%_liconsdir/gbdfed.png
 %_liconsdir/*
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.6-alt2.qa1
+- NMU: rebuilt for debuginfo.
+
 * Tue Oct 19 2010 Victor Forsiuk <force@altlinux.org> 1.6-alt2
 - Remove GDK_DISABLE_DEPRECATED and GTK_DISABLE_DEPRECATED to allow
   build with recent libgtk+ (2.22).
