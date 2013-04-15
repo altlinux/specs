@@ -1,6 +1,6 @@
 Name: kdiff3
 Version: 0.9.95
-Release: alt2
+Release: alt2.qa1
 
 Summary: Compares and merges 2 or 3 files or directories
 License: GPL
@@ -81,6 +81,9 @@ done
 %_iconsdir/*/*/apps/%name.png
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.9.95-alt2.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sun Nov 14 2010 Alexey Morozov <morozov@altlinux.org> 0.9.95-alt2
 - added kdiff3-0.9.95-alt-docbook_version.patch (#2) to fix build
   process
