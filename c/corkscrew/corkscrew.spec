@@ -1,6 +1,6 @@
 Name: corkscrew
 Version: 2.0
-Release: alt1
+Release: alt1.qa1
 
 Summary: Tool for tunneling SSH through HTTP proxies
 License: GPLv2+
@@ -32,5 +32,8 @@ install -pD -m644 %_sourcedir/corkscrew.1 %buildroot%_man1dir/corkscrew.1
 %_man1dir/*
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.0-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Wed Nov 07 2007 Victor Forsyuk <force@altlinux.org> 2.0-alt1
 - Initial build.
