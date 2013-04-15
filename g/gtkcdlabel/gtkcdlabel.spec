@@ -1,6 +1,6 @@
 Name: gtkcdlabel
 Version: 1.0pre8
-Release: alt4
+Release: alt4.qa1
 
 Summary: a utility to generate cd covers with cdlabelgen
 License: GPL
@@ -51,6 +51,9 @@ install -pD -m644 %name.desktop %buildroot%_desktopdir/%name.desktop
 # - evince isn't a hard dependency, it's only suggested but configurable
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.0pre8-alt4.qa1
+- NMU: rebuilt for debuginfo.
+
 * Tue May 06 2008 Michael Shigorin <mike@altlinux.org> 1.0pre8-alt4
 - moved desktop file to current location, thanks viy@
 - removed dependency on evince
