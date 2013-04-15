@@ -1,6 +1,6 @@
 Name: jpegpixi
 Version: 1.1.1
-Release: alt1
+Release: alt1.qa1
 
 Summary: Command line tool to fix bad pixels in digital photos
 Group: Graphics
@@ -36,6 +36,9 @@ with CCD defects.
 %_man1dir/*
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.1.1-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Fri Apr 07 2006 Victor Forsyuk <force@altlinux.ru> 1.1.1-alt1
 - 1.1.1
 
