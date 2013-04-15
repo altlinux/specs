@@ -1,6 +1,6 @@
 Name: libdbus-qt
 Version: 0.62
-Release: alt9.1.1
+Release: alt9.1.1.qa1
 Summary: QT3/KDE bindings for D-Bus
 URL: http://dbus.freedesktop.org/
 License: GPL or Academic Free License
@@ -56,6 +56,9 @@ Developer package for QT3/KDE bindings for D-Bus.
 %_libdir/*.so
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.62-alt9.1.1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sun Nov 14 2010 Denis Smirnov <mithraen@altlinux.ru> 0.62-alt9.1.1
 - rebuild (with the help of girar-nmu utility)
 
