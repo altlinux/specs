@@ -1,6 +1,6 @@
 Name: iat
 Version: 0.1.7
-Release: alt1
+Release: alt1.qa1
 
 Packager: Victor Forsyuk <force@altlinux.org>
 
@@ -32,6 +32,9 @@ and converting them into ISO-9660.
 %exclude %_includedir/*
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.1.7-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Thu Sep 03 2009 Victor Forsyuk <force@altlinux.org> 0.1.7-alt1
 - 0.1.7
 
