@@ -1,6 +1,6 @@
 Name: gnugo
 Version: 3.8
-Release: alt1
+Release: alt1.qa1
 
 Packager: Victor Forsyuk <force@altlinux.org>
 
@@ -38,6 +38,9 @@ install -pD -m644 %SOURCE1 %buildroot%_desktopdir/gnugo.desktop
 %_infodir/gnugo.*
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 3.8-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Tue Jun 30 2009 Victor Forsyuk <force@altlinux.org> 3.8-alt1
 - 3.8
 
