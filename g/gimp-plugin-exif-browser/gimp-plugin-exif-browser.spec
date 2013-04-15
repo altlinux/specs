@@ -3,7 +3,7 @@
 
 Name: gimp-plugin-exif-browser
 Version: 0.1.0
-Release: alt1
+Release: alt1.qa1
 
 Packager: Victor Forsyuk <force@altlinux.org>
 
@@ -36,5 +36,8 @@ GIMP plugin that permits the user to view EXIF data from jpeg files.
 # Help and i18n files not packaged 'cause they just stubs now...
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.1.0-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Fri Oct 17 2008 Victor Forsyuk <force@altlinux.org> 0.1.0-alt1
 - Initial build.
