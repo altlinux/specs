@@ -1,6 +1,6 @@
 Name: paketto
 Version: 1.10
-Release: alt3
+Release: alt3.qa1
 
 Summary: Unusual TCP/IP testing tools
 License: BSD
@@ -53,6 +53,9 @@ mv %buildroot%_man1dir/lc.1 %buildroot%_man8dir/lc.8
 %exclude %_includedir
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.10-alt3.qa1
+- NMU: rebuilt for debuginfo.
+
 * Thu Dec 24 2009 Victor Forsyuk <force@altlinux.org> 1.10-alt3
 - Fix file conflict with mono-devel: move lc.1 to section 8.
 
