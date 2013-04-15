@@ -1,6 +1,6 @@
 Name: tetex-bibtex8
 Version: 3.71
-Release: alt1
+Release: alt1.qa1
 
 Summary: An 8-bit Implementation of BibTeX 0.99 with multilanguage support
 Summary(ru_RU.CP1251): BibTeX со встроенной многоязыковой поддержкой
@@ -70,5 +70,8 @@ iconv -f cp866 -t cp1251 cp866rus.csf > cp1251rus.csf
 /usr/share/texmf/bibtex/csf/*.csf
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 3.71-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Fri Dec 30 2005 Igor Vlasenko <viy@altlinux.ru> 3.71-alt1
 - initial build
