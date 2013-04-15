@@ -3,7 +3,7 @@
 Name: libsdp
 Summary: LD_PRELOAD-able library for using SDP
 Version: 1.1.103
-Release: alt1
+Release: alt1.qa1
 License: %gpl2only
 Group: System/Libraries
 Url: http://www.openfabrics.org
@@ -70,6 +70,9 @@ Static %name library.
 
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.1.103-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Thu Dec 16 2010 Timur Aitov <timonbl4@altlinux.org> 1.1.103-alt1
 - New version
 
