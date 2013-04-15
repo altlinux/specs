@@ -4,7 +4,7 @@
 
 Name: dst
 Version: 0.1
-Release: alt2
+Release: alt2.qa1
 
 Summary: Userspace program for DST.
 License: GPL
@@ -36,6 +36,9 @@ export CFLAGS="-I %_builddir/kernel-source-%module_name-%module_version"
 %_sbindir/%name
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.1-alt2.qa1
+- NMU: rebuilt for debuginfo.
+
 * Thu Sep 25 2008 Boris Savelev <boris@altlinux.org> 0.1-alt2
 - Warn if there is no security file during exporting node initialization.
 - Bump default maximum amount of pages to 32: 31 is maximum number of pages from ext3 on common block device in single request.
