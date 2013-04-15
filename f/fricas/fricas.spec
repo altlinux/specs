@@ -1,6 +1,6 @@
 Name: fricas
 Version: 1.1.8
-Release: alt2
+Release: alt2.qa1
 
 Summary: FriCAS Computer Algebra System
 License: Modified BSD License
@@ -74,6 +74,9 @@ install -D -m644 %SOURCE4 %buildroot%_desktopdir/%name.desktop
 
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.1.8-alt2.qa1
+- NMU: rebuilt with libsigsegv.so.2.
+
 * Wed Mar 06 2013 Ilya Mashkin <oddity@altlinux.ru> 1.1.8-alt2
 - rebuild with sbcl 1.1.5
 
