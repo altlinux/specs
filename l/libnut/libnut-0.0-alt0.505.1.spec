@@ -12,10 +12,10 @@ Name: libnut
 Version: 0.0
 %define rel 1
 %ifdef svnrev
-Release: alt0.%svnrev.%rel.1
+Release: alt0.%svnrev.%rel.1.qa1
 Source: %name-svn-r%svnrev.tar.bz2
 %else
-Release: alt%rel.1
+Release: alt%rel.1.qa1
 Source: %name-%version.tar.bz2
 %endif
 Patch0: %name-svn-r505-makefile.patch
@@ -133,6 +133,9 @@ install -m 0755 nututils/{nut{index,merge},avireader} %buildroot%_bindir/
 
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.0-alt0.505.1.1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Wed Nov 04 2009 Igor Vlasenko <viy@altlinux.ru> 0.0-alt0.505.1.1
 - NMU (by repocop): the following fixes applied:
   * post_ldconfig for libnut
