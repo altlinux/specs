@@ -1,6 +1,6 @@
 Name: mtxe
 Version: 1.0.2
-Release: alt1
+Release: alt1.qa1
 
 License: GPL
 Url: http://koti.mbnet.fi/midiania/hack
@@ -35,6 +35,9 @@ Yet another matrix engine.
 %_man1dir/*
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.0.2-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Fri Jan 05 2007 Pavlov Konstantin <thresh@altlinux.ru> 1.0.2-alt1
 - 1.0.2 release. 
 
