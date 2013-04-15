@@ -3,7 +3,7 @@
 
 Name: cutmp3
 Version: 2.0.2
-Release: alt1
+Release: alt1.qa1
 
 Summary: small console editor mp3 files without quality loss
 License: GPLv2
@@ -40,6 +40,9 @@ install -pD -m 644 %name.1 %buildroot%_man1dir/%name.1
 %_man1dir/%name.1.*
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.0.2-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Wed Aug 11 2010 Slava Semushin <php-coder@altlinux.ru> 2.0.2-alt1
 - 2.0.2
 
