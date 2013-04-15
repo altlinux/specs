@@ -1,6 +1,6 @@
 Name: fbgetty
 Version: 0.1.698
-Release: alt4
+Release: alt4.qa1
 
 Packager: Victor Forsyuk <force@altlinux.org>
 
@@ -58,6 +58,9 @@ ln -s /sbin/fbgetty %buildroot%_sbindir/fbgetty
 %doc examples/README_examples examples/test/issue.* examples/test/test.sh
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.1.698-alt4.qa1
+- NMU: rebuilt for debuginfo.
+
 * Thu Oct 15 2009 Victor Forsyuk <force@altlinux.org> 0.1.698-alt4
 - Remove deprecated (by filetriggers) info files handling in installation scripts.
 
