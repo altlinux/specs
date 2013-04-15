@@ -1,6 +1,6 @@
 Name: jam
 Version: 2.5
-Release: alt1
+Release: alt1.qa1
 
 Summary: Jam is a powerful and highly customizable utility to build programs.
 License: GPL
@@ -33,6 +33,9 @@ mkdir -p %buildroot%_bindir
 %_bindir/jam
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.5-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Mon Sep 19 2005 Pavlov Konstantin <thresh@altlinux.ru> 2.5-alt1
 - Initial build for Sisyphus.
 
