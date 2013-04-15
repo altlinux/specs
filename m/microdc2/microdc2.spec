@@ -1,6 +1,6 @@
 Name: microdc2
 Version: 0.15.6
-Release: alt7
+Release: alt7.qa1
 
 Summary: A command-line based Direct Connect client
 License: GPL
@@ -73,6 +73,9 @@ rm -f %buildroot%_man1dir/microdc.pl.1
 %_pixmapsdir/%name.png
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.15.6-alt7.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sat Feb 13 2010 Boris Savelev <boris@altlinux.org> 0.15.6-alt7
 - build with system bzlib
 - clean spec
