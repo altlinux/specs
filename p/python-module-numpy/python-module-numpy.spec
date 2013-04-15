@@ -14,7 +14,7 @@
 
 Name: python-module-%oname
 Version: %majver.0.0
-Release: alt7.git20121009.1
+Release: alt8.git20121009
 
 Summary: NumPy: array processing for numbers, strings, records, and objects
 License: BSD
@@ -413,17 +413,13 @@ sed -i 's|^includedir.*|includedir=%_includedir/%oname|' \
 rm -rf ../python3
 cp -a . ../python3
 pushd ../python3
-for i in $(find ./ -type f); do
-	sed -i 's|%_bindir/env python|%_bindir/env python3|' $i
-	sed -i 's|%_bindir/python|%_bindir/python3|' $i
-done
+find -type f -exec sed -i 's|%_bindir/python|%_bindir/python3|' -- '{}' +
+find -type f -exec sed -i 's|%_bindir/env python|%_bindir/python3|' -- '{}' +
 install -m644 %SOURCE1 %SOURCE2 .
 sed -i 's|@LIBDIR@|%_libdir|g' site.cfg
 sed -i 's|@PYVER@|%_python3_version|g' site.cfg doc/Makefile
 sed -i 's|pyrexc|pyrexc3|' numpy/distutils/command/build_src.py
-for i in $(find doc/ -name '*.py'); do
-	2to3 -w -n $i
-done
+find doc/ -type f -name '*.py' -exec 2to3 -w -n '{}' +
 
 cat <<EOF >%oname/__svn_version__.py
 version='%version'
@@ -1060,6 +1056,9 @@ rm -fR %python_sitelibdir/numpydoc*.egg-info
 # TODO: restore requirement on scipy for tests
 
 %changelog
+* Mon Apr 15 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.0-alt8.git20121009
+- Use 'find... -exec...' instead of 'for ... $(find...'
+
 * Fri Mar 22 2013 Aleksey Avdeev <solo@altlinux.ru> 2.0.0-alt7.git20121009.1
 - Rebuild with Python-3.3
 
