@@ -1,6 +1,6 @@
 Name: hermes
 Version: 1.3.3
-Release: alt5
+Release: alt5.qa1
 
 Summary: Hermes pixel format conversion library
 License: LGPL
@@ -92,6 +92,9 @@ Static libraries for the %name
 %endif
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.3.3-alt5.qa1
+- NMU: rebuilt for debuginfo.
+
 * Tue Dec 02 2008 Igor Zubkov <icesik@altlinux.org> 1.3.3-alt5
 - apply patch from repocop
 
