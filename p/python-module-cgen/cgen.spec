@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 2012.1
-Release: alt1.1
+Release: alt2
 Summary: C/C++ source generation from an AST
 License: MIT
 Group: Development/Python
@@ -68,9 +68,7 @@ ln -s ../objects.inv doc/source
 %python_build_debug
 %if_with python3
 pushd ../python3
-for i in $(find ./ -name '*.py'); do
-	2to3 -w -n $i
-done
+find -type f -name '*.py' -exec 2to3 -w '{}' +
 %python3_build_debug
 popd
 %endif
@@ -104,6 +102,9 @@ cp -fR doc/build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Mon Apr 15 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2012.1-alt2
+- Use 'find... -exec...' instead of 'for ... $(find...'
+
 * Sun Mar 24 2013 Aleksey Avdeev <solo@altlinux.ru> 2012.1-alt1.1
 - Rebuild with Python-3.3
 
