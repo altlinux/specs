@@ -1,6 +1,6 @@
 Name: xmms-in-vtx
 Version: 0.9.1
-Release: alt1
+Release: alt1.qa1
 
 Summary: Plays VTX files containing music from the ZX Spectrum
 License: GPL
@@ -43,6 +43,9 @@ total time 31:15. More tunes could be found on http://vtx.microfor.ru
 %exclude %xmms_inputdir/*.la
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.9.1-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Wed Mar 25 2009 Igor Zubkov <icesik@altlinux.org> 0.9.1-alt1
 - 0.8.1 -> 0.9.1
 
