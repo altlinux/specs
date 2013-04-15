@@ -1,6 +1,6 @@
 Name: kasumi
 Version: 2.5
-Release: alt1
+Release: alt1.qa1
 
 License: GPLv2+
 Url: http://kasumi.sourceforge.jp/
@@ -35,6 +35,9 @@ rm -rf $RPM_BUILD_ROOT%_datadir/applications/*.desktop
 %doc AUTHORS COPYING ChangeLog NEWS README
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.5-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sun Dec 12 2010 Ilya Mashkin <oddity@altlinux.ru> 2.5-alt1
 - Build for ALT Linux
 
