@@ -1,6 +1,6 @@
 Name: libsexymm
 Version: 0.1.9
-Release: alt2.1
+Release: alt2.1.qa1
 
 Summary: collection of additional gtkmm widgets - library
 Group: System/Libraries
@@ -72,6 +72,9 @@ These are the C++ bindings (header files).
 %_pkgconfigdir/libsexymm.pc
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.1.9-alt2.1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Fri Nov 06 2009 Repocop Q. A. Robot <repocop@altlinux.org> 0.1.9-alt2.1
 - NMU (by repocop): the following fixes applied:
   * post_ldconfig for libsexymm
