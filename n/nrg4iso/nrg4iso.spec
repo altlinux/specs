@@ -1,6 +1,6 @@
 Name: nrg4iso
 Version: 1.0.1
-Release: alt1
+Release: alt1.qa1
 
 Summary: A tool to convert Nero (.nrg) CD images to ISO 9660 images
 License: BSD
@@ -29,6 +29,9 @@ install -pD -m755 nrg4iso %buildroot%_bindir/nrg4iso
 %_bindir/*
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.0.1-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Wed Oct 24 2007 Victor Forsyuk <force@altlinux.org> 1.0.1-alt1
 - 1.0.1
 - Fixed to work with large files.
