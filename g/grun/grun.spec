@@ -1,6 +1,6 @@
 Name: grun
 Version: 0.9.3
-Release: alt1
+Release: alt1.qa1
 
 Summary: GTK based Run dialog
 
@@ -41,6 +41,9 @@ you use a window-manager (e.g. IceWM) where you can define a keyboard shortcut (
 %_man1dir/%name.*
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.9.3-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Wed Mar 25 2009 Vitaly Kuznetsov <vitty@altlinux.ru> 0.9.3-alt1
 - Initial
 
