@@ -1,6 +1,6 @@
 Name: wkhtmltopdf
 Version: 0.9.9
-Release: alt1
+Release: alt1.qa1
 
 Summary: Command line utility to convert html to pdf using WebKit
 License: %gpl3plus
@@ -40,6 +40,9 @@ install -D -m 644 wkhtmltopdf.1.gz %buildroot%_man1dir/wkhtmltopdf.1.gz
 %_man1dir/*
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.9.9-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sun Jul 25 2010 Artem Zolochevskiy <azol@altlinux.ru> 0.9.9-alt1
 - update to 0.9.9
 - add Debian patch to fix some typos
