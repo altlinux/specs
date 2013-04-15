@@ -1,7 +1,7 @@
 %define oname pam-script
 Name: pam_script
 Version: 1.1.4
-Release: alt1
+Release: alt1.qa1
 
 Summary: This PAM module can invoke scripts within the PAM stack
 
@@ -47,5 +47,8 @@ rm -f %buildroot/%_sysconfdir/pam-script/logscript
 %_man7dir/*
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.1.4-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Thu Sep 30 2010 Vitaly Lipatov <lav@altlinux.ru> 1.1.4-alt1
 - initial build for ALT Linux Sisyphus
