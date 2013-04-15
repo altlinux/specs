@@ -1,6 +1,6 @@
 Name: irextools
 Version: 0.3
-Release: alt1
+Release: alt1.qa1
 
 Summary: PDF merge and metadata support tools for iRex DR1000 e-ink devices
 Summary (ru_RU.UTF-8): Объединение PDF и заметок и поддержка метаданных для устройств iRex DR1000
@@ -49,5 +49,8 @@ the documents.
 %doc README TODO
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.3-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sun Jan 18 2009 Vyacheslav Dikonov <slava@altlinux.ru> 0.3-alt1
 - ALTLinux build
