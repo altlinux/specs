@@ -12,7 +12,7 @@ Name: tokyodystopia
 %define lname lib%name
 Summary: A full-text search system for Tokyo Cabinet
 Version: 0.9.13
-Release: alt2
+Release: alt2.qa1
 License: %lgpl2plus
 Group: Databases
 URL: http://tokyocabinet.sourceforge.net/
@@ -138,6 +138,9 @@ mv %buildroot{%_datadir/%name,%_docdir/%name-%version}
 
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.9.13-alt2.qa1
+- NMU: rebuilt for debuginfo.
+
 * Wed Nov 11 2009 Led <led@altlinux.ru> 0.9.13-alt2
 - rebuild with libtokyocabinet.so.9
 
