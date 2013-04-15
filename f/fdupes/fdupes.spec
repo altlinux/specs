@@ -3,7 +3,7 @@
 
 Name: fdupes
 Version: 1.40
-Release: alt2
+Release: alt2.qa1
 
 Summary: Identifies duplicate files within given directories
 License: %mit
@@ -39,6 +39,9 @@ mkdir -p %buildroot%_man1dir
 %_man1dir/*
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.40-alt2.qa1
+- NMU: rebuilt for debuginfo.
+
 * Wed Oct 01 2008 Artem Zolochevskiy <azol@altlinux.ru> 1.40-alt2
 - fixed manpage name (#17404)
 
