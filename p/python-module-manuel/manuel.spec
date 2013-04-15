@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.7.2
-Release: alt1
+Release: alt2
 Summary: Manuel lets you build tested documentation
 License: ZPL
 Group: Development/Python
@@ -75,9 +75,7 @@ cp -a . ../python3
 %python_build
 %if_with python3
 pushd ../python3
-for i in $(find ./ -name '*.py'); do
-	2to3 -w $i
-done
+find -type f -name '*.py' -exec 2to3 -w -n '{}' +
 %python3_build
 popd
 %endif
@@ -112,6 +110,9 @@ popd
 %endif
 
 %changelog
+* Mon Apr 15 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.7.2-alt2
+- Use 'find... -exec...' instead of 'for ... $(find...'
+
 * Mon Apr 01 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.7.2-alt1
 - Version 1.7.2
 
