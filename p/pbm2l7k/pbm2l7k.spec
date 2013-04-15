@@ -2,7 +2,7 @@ Summary: Converts PBM stream to Lexmark 7000, 7200 and 5700 printer language
 
 Name: pbm2l7k
 Version: 990321
-Release: alt1
+Release: alt1.qa1
 
 Provides: lexmark700linux = %version
 
@@ -36,5 +36,8 @@ done
 %_bindir/*
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 990321-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Tue Nov 06 2007 Stanislav Ievlev <inger@altlinux.org> 990321-alt1
 - Initial build
