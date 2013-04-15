@@ -1,7 +1,7 @@
 Summary: RSS reader
 Name: rsstail
 Version: 1.6
-Release: alt1
+Release: alt1.qa1
 License: GPL2
 Group: Networking/File transfer
 Source0: http://www.vanheusden.com/rsstail/%name-%version.tgz
@@ -29,5 +29,8 @@ mkdir -p %buildroot{%_bindir,%_man1dir}
 %doc readme.txt
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.6-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Fri Sep  3 2010 Terechkov Evgenii <evg@altlinux.org> 1.6-alt1
 - Initial build for ALT Linux Sisyphus
