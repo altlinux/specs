@@ -1,6 +1,6 @@
 Name: m-ping
 Version: 0.4
-Release: alt2
+Release: alt2.qa1
 
 Summary: Visual graphical ping, traceroute and whois tool
 License: GPLv2
@@ -46,6 +46,9 @@ install -pD -m644 res/%name.png %buildroot/%_liconsdir/%name.png
 %doc README
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.4-alt2.qa1
+- NMU: rebuilt for debuginfo.
+
 * Wed Dec 22 2010 Alexandr Boltris <alex@altlinux.org> 0.4-alt2
 - added menu entry
 
