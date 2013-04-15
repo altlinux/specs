@@ -2,7 +2,7 @@
 
 Name: refocus-it
 Version: 2.0.0
-Release: alt2
+Release: alt2.qa1
 
 Summary: Tool to refocus images acquired by a defocused camera
 License: GPLv2+
@@ -55,6 +55,9 @@ rm -rf %buildroot/usr/share/help
 %gimpplugindir/plug-ins/*
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.0.0-alt2.qa1
+- NMU: rebuilt for debuginfo.
+
 * Mon Nov 26 2007 Victor Forsyuk <force@altlinux.org> 2.0.0-alt2
 - "Requires" for gimp was misplaced and put in standalone package, not
   gimp plugin.
