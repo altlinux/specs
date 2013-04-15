@@ -1,6 +1,6 @@
 Name: docbook-to-man
 Version: 2.0.0
-Release: alt1
+Release: alt1.qa1
 
 Summary: Converter from DocBook SGML into roff man macros
 License: MIT
@@ -42,5 +42,8 @@ install -d %buildroot%_bindir %buildroot/usr/share/sgml
 %_datadir/sgml/transpec
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.0.0-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Fri Feb 08 2008 Victor Forsyuk <force@altlinux.org> 2.0.0-alt1
 - Initial build.
