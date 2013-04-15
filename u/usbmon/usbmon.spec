@@ -1,6 +1,6 @@
 Name: usbmon
 Version: 5.4
-Release: alt1
+Release: alt1.qa1
 
 Summary: A basic front-end to usbmon
 Group: System/Base
@@ -36,6 +36,9 @@ install -p -m 755 -t %buildroot%_sbindir usbmon
 %_man8dir/usbmon.8*
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 5.4-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Wed Dec 01 2010 Denis Baranov <baraka@altlinux.org> 5.4-alt1
 - Initial build for ALTLinux
 
