@@ -1,6 +1,6 @@
 Name: bmon
 Version: 2.1.0
-Release: alt1.1
+Release: alt1.1.qa1
 
 Summary: A portable bandwidth monitor
 License: GPL 
@@ -44,6 +44,9 @@ a summary of statistics for a set of nodes.
 %doc TODO BUGS etc/ trem/ xtra/ 
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.1.0-alt1.1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sat Apr 17 2010 Sergey Y. Afonin <asy@altlinux.ru> 2.1.0-alt1.1
 - rebuilt with new librrd
 
