@@ -1,6 +1,6 @@
 Name: obpager
 Version: 1.8
-Release: alt2
+Release: alt2.qa1
 
 Summary: OBPager is a simple pager dockapp designed for use with netwm-compliant WM
 License: GPL
@@ -52,6 +52,9 @@ install -m755 %name %buildroot%_bindir/
 %_bindir/%name
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.8-alt2.qa1
+- NMU: rebuilt for debuginfo.
+
 * Wed Dec 03 2008 Igor Zubkov <icesik@altlinux.org> 1.8-alt2
 - fix build
 
