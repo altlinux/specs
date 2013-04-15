@@ -1,6 +1,6 @@
 Name: lsdvd
 Version: 0.16
-Release: alt3
+Release: alt3.qa1
 
 Summary: list contents of DVD disks
 
@@ -41,6 +41,9 @@ mkdir -p %buildroot/%_bindir
 %doc AUTHORS NEWS README
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.16-alt3.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sat Sep 19 2009 Terechkov Evgenii <evg@altlinux.ru> 0.16-alt3
 - Spec translation removed
 - Rebuild with new libdvdread
