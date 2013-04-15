@@ -2,7 +2,7 @@
 
 Name: ltspfs
 Version: 0.3
-Release: alt4.%cvs
+Release: alt4.%cvs.qa1
 
 Summary: LTSP.org's %name
 License: GPL
@@ -49,6 +49,9 @@ install -pDm755 %SOURCE2 %buildroot%_initdir/%name
 %preun_service %name
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.3-alt4.20070117.qa1
+- NMU: rebuilt for debuginfo.
+
 * Tue Mar 02 2010 Michael Shigorin <mike@altlinux.org> 0.3-alt4.20070117
 - added an initscript to work around #22929
 
