@@ -1,5 +1,5 @@
 Name: tutka
-Version: 0.12.4
+Version: 0.12.5
 Release: alt1
 
 Summary: tracker style MIDI sequencer
@@ -9,6 +9,7 @@ Url: http://www.nongnu.org/tutka/
 
 Packager: Timur Batyrshin <erthad@altlinux.org>
 Source0: %name-%version.tar.bz2
+Patch:   %name-remove-deprecated-funcs.patch
 
 BuildPreReq: rpm-build-licenses
 BuildRequires: gcc-c++ libalsa-devel libgtk+2-devel libgnomeui-devel libxml2-devel libglade-devel
@@ -22,6 +23,7 @@ GNU GPL.
    
 %prep
 %setup
+%patch -p2
 
 %build
 %configure
@@ -42,6 +44,10 @@ mv %buildroot%_pixmapsdir/* %buildroot/%_liconsdir/
 %_datadir/%name
 
 %changelog
+* Mon Apr 15 2013 Andrey Cherepanov <cas@altlinux.org> 0.12.5-alt1
+- New version 0.12.5
+- Remove deprecated function g_thread*
+
 * Sun Sep 13 2009 Timur Batyrshin <erthad@altlinux.org> 0.12.4-alt1
 - initial build for sisyphus
 
