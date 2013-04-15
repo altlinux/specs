@@ -1,6 +1,6 @@
 Name:		xautolock
 Version:	2.2
-Release:	alt1
+Release:	alt1.qa1
 Group:		Graphical desktop/Other
 Summary:	Monitor X window system activity and fire up a program when idle
 License:	GPL
@@ -37,6 +37,9 @@ xmkmf -a
 %_man1dir/%name.*
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.2-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Wed Aug 18 2010 Fr. Br. George <george@altlinux.ru> 2.2-alt1
 - Initial build from scratch
 
