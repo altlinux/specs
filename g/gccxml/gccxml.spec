@@ -1,6 +1,6 @@
 Name: gccxml
 Version: 0.9
-Release: alt1.cvs20081111
+Release: alt1.cvs20081111.qa1
 
 Summary: XML output frontend for GNU C++
 License: GPLv2
@@ -41,6 +41,9 @@ make install DESTDIR=%buildroot
 %doc %_defaultdocdir/%name-%version
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.9-alt1.cvs20081111.qa1
+- NMU: rebuilt for debuginfo.
+
 * Tue Nov 11 2008 Alexander Myltsev <avm@altlinux.ru> 0.9-alt1.cvs20081111
 - Initial build for Sisyphus.
 
