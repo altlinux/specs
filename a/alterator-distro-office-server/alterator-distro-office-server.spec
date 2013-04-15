@@ -1,6 +1,6 @@
 Name: alterator-distro-office-server
 Version: 1.0
-Release: alt18
+Release: alt18.qa1
 
 Provides: alterator-office-server = %version
 Obsoletes: alterator-office-server
@@ -48,6 +48,9 @@ special alterator modules for ALT Linux Office Server:
 %_libexecdir/alterator/hooks/*.d/*
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.0-alt18.qa1
+- NMU: rebuilt for debuginfo.
+
 * Fri Dec 24 2010 Andrey Cherepanov <cas@altlinux.org> 1.0-alt18
 - revert for alterator
 
