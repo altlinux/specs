@@ -1,6 +1,6 @@
 Name: mcl
 Version: 1.008.09.149
-Release: alt1
+Release: alt1.qa1
 
 Summary: Markov cluster algorithm for graphs
 License: GPLv3
@@ -37,6 +37,9 @@ mv %buildroot/%_datadir/doc/%name install-doc
 %_man7dir/*
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.008.09.149-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sun Jun 21 2009 Kirill Maslinsky <kirill@altlinux.org> 1.008.09.149-alt1
 - Initial build for ALT Linux Sisyphus
 
