@@ -1,6 +1,6 @@
 Name: tong
 Version: 1.0
-Release: alt3
+Release: alt3.qa1
 
 Summary: Tetris meets Pong
 Summary(ru_RU.KOI8-R): Тетрис, скрещённый с Понгом
@@ -66,6 +66,9 @@ install -pD -m644 %SOURCE1 %buildroot%_desktopdir/%name.desktop
 %_gamesdatadir/%name/media
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.0-alt3.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sat Aug 22 2009 Alexey Rusakov <ktirf@altlinux.org> 1.0-alt3
 - Put the game data to a separate noarch subpackage.
 - Massive spec cleanup:
