@@ -4,9 +4,9 @@
 
 Name: python-module-%oname
 Version: 0.0.10
-Release: alt1
+Release: alt2
 Summary: Python implementation of subunit test streaming protocol
-License: Apache of BSD
+License: Apache or BSD
 Group: Development/Python
 Url: http://pypi.python.org/pypi/python-subunit/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
@@ -36,6 +36,7 @@ write for other languages.
 %package -n python3-module-%oname
 Summary: Python 3 implementation of subunit test streaming protocol
 Group: Development/Python3
+%add_python3_req_skip gtk pynotify
 
 %description -n python3-module-%oname
 Subunit is a streaming protocol for test results. The protocol is human
@@ -93,9 +94,7 @@ cp -a . ../python3
 %python_build
 %if_with python3
 pushd ../python3
-for i in $(find ./ -name '*.py'); do
-	2to3 -w $i
-done
+find -type f -name '*.py' -exec 2to3 -w -n '{}' +
 %python3_build
 popd
 %endif
@@ -138,6 +137,9 @@ popd
 %endif
 
 %changelog
+* Mon Apr 15 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.10-alt2
+- Use 'find... -exec...' instead of 'for ... $(find...'
+
 * Tue Apr 02 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.10-alt1
 - Version 0.0.10
 
