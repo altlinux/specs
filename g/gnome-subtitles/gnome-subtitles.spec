@@ -1,6 +1,6 @@
 Name: gnome-subtitles
 Version: 1.0
-Release: alt1.git.75.gcf1c9d0
+Release: alt1.git.75.gcf1c9d0.qa1
 Summary: subtitle editor
 License: GPL2
 Group: Video
@@ -52,6 +52,9 @@ subst '/sublibdir/d' %buildroot%_bindir/%name
 %doc AUTHORS ChangeLog* MAINTAINERS NEWS README
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.0-alt1.git.75.gcf1c9d0.qa1
+- NMU: rebuilt for debuginfo.
+
 * Fri Oct 15 2010 Ildar Mulyukov <ildar@altlinux.ru> 1.0-alt1.git.75.gcf1c9d0
 - new version
 - fix CVE-2010-3357 (closes: #24316)
