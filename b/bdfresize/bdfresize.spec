@@ -6,7 +6,7 @@
 
 Name: bdfresize
 Version: 1.5
-Release: alt2
+Release: alt2.qa1
 
 Summary: A Tool for Resizing BDF Format Fonts
 License: GPL
@@ -49,6 +49,9 @@ CFLAGS="%optflags" %configure
 %_man1dir/*
 
 %changelog -n bdfresize
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.5-alt2.qa1
+- NMU: rebuilt for debuginfo.
+
 * Thu Oct 20 2005 Michael Shigorin <mike@altlinux.org> 1.5-alt2
 - applied gcc34 patch from Momonga Linux
 - removed INSTALL file
