@@ -1,7 +1,7 @@
 Summary: OpenPGP Public Key Server
 Name: pks
 Version: 0.9.6
-Release: alt1
+Release: alt1.qa1
 License: BSD-like (with advertising clause)
 Group: System/Servers
 Packager: Boris Savelev <boris@altlinux.org>
@@ -123,5 +123,8 @@ mkdir -p  %buildroot%_var/run/pks %buildroot%_var/lib/pks/incoming %buildroot%_v
 %_includedir/db2/db_cxx.h
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.9.6-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Mon Mar 10 2008 Boris Savelev <boris@altlinux.org> 0.9.6-alt1
 - initial build
