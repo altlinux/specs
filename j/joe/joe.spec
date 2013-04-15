@@ -1,6 +1,6 @@
 Name: joe
 Version: 3.7
-Release: alt2
+Release: alt2.qa1
 
 Packager: Victor Forsyuk <force@altlinux.org>
 
@@ -83,6 +83,9 @@ rm -rf %buildroot%_defaultdocdir
 %doc HINTS LIST NEWS README
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 3.7-alt2.qa1
+- NMU: rebuilt for debuginfo.
+
 * Tue Dec 16 2008 Victor Forsyuk <force@altlinux.org> 3.7-alt2
 - Remove obsolete install time scripts.
 
