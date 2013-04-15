@@ -1,6 +1,6 @@
 Name:		libglui
 Version:	2.36
-Release:	alt1
+Release:	alt1.qa1
 Summary:	GL User Interface Library
 Group:		System/Libraries
 URL:		http://glui.sourceforge.net/
@@ -89,6 +89,9 @@ ln -s %name.so.0 %buildroot%_libdir/%name.so
 %_libexecdir/%name/*
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.36-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sat Jul 03 2010 Fr. Br. George <george@altlinux.ru> 2.36-alt1
 - Initial build for ALT
 
