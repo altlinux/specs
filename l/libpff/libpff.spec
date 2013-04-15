@@ -1,6 +1,6 @@
 Name: libpff
 Version: 20100510
-Release: alt1
+Release: alt1.qa1
 Summary: Library to to access the Personal Folder File (PFF) and the Offline Folder File (OFF) format. PFF is used in PAB (Personal Address Book), PST (Personal Storage Table) and OST (Offline Storage Table) files
 Group: System/Libraries
 License: LGPL
@@ -59,6 +59,9 @@ make DESTDIR=$RPM_BUILD_ROOT install
 %_man1dir/*
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 20100510-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Fri Jul 09 2010 Fr. Br. George <george@altlinux.ru> 20100510-alt1
 - Initial build for ALT
 
