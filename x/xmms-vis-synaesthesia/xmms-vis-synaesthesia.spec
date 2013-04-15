@@ -1,6 +1,6 @@
 Name: xmms-vis-synaesthesia
 Version: 0.0.3
-Release: alt4
+Release: alt4.qa1
 
 Summary: Synaesthesia for xmms
 License: GPL v2+
@@ -44,6 +44,9 @@ Port Synaesthesii dla xmms
 %xmms_visualizationdir/*
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.0.3-alt4.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sun Jan 30 2011 Sergei Epiphanov <serpiph@altlinux.ru> 0.0.3-alt4
 - Increase data buffer
 - Fix window resizing
