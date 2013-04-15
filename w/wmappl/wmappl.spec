@@ -1,6 +1,6 @@
 Name: wmappl
 Version: 0.71
-Release: alt2
+Release: alt2.qa1
 
 Packager: Victor Forsyuk <force@altlinux.org>
 
@@ -38,6 +38,9 @@ is executed.
 %_man5dir/*
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.71-alt2.qa1
+- NMU: rebuilt for debuginfo.
+
 * Tue Oct 06 2009 Victor Forsyuk <force@altlinux.org> 0.71-alt2
 - Refreshed BuildRequires to fix repocop warning.
 
