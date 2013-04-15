@@ -2,7 +2,7 @@
 
 Name: pfqueue
 Version: 0.5.6
-Release: alt2
+Release: alt2.qa1
 
 Summary: Queue Scanner and Frontend for Postfix and Exim
 License: GPL
@@ -76,6 +76,9 @@ chmod 0644 NEWS README AUTHORS
 %_libdir/libpfqueue.so
 
 %changelog
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.5.6-alt2.qa1
+- NMU: rebuilt for debuginfo.
+
 * Tue Dec 09 2008 Vladimir V. Kamarzin <vvk@altlinux.org> 0.5.6-alt2
 - Remove obsolete %%post_ldconfig/%%postun_ldconfig calls
 - Minor spec cleanup
