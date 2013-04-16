@@ -18,7 +18,7 @@
 
 Name: sim
 Version: 0.9.6
-Release: alt0.1.%svn.3
+Release: alt0.1.%svn.4
 Serial: 1
 
 Group: Networking/Instant messaging
@@ -40,6 +40,7 @@ Patch1: %name-0.9.4.4-alt-simqt.patch
 Patch2: sim-0.9.4.3-double-message-fix.patch
 Patch4: %name-0.9.5-fix-autoconf-2.64.diff
 Patch5: sim-0.9.6-alt-DSO.patch
+patch6: sim-0.9.5-libxml2.9.patch
 
 BuildPreReq: libXScrnSaver-devel
 
@@ -165,6 +166,7 @@ echo "Building for Master 2.2"
 # #%patch2 -p1
 # #%patch4 -p1
 %patch5 -p2
+%patch6 -p0 -R
 
 #%%__subst 's,\.la\>,.so,' admin/acinclude.m4.in
 #%%__subst "s/\-ansi /\-fPIC -DPIC /g" admin/acinclude.m4.in
@@ -251,6 +253,9 @@ rm -rf %buildroot%_libdir/libsim.so
 %_iconsdir/*/*/*/*.png
 
 %changelog
+* Tue Apr 16 2013 Andrey Cherepanov <cas@altlinux.org> 1:0.9.6-alt0.1.svn3186.4
+- Fix build with libxml2-2.9
+
 * Mon Jul 16 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:0.9.6-alt0.1.svn3186.3
 - Fixed build
 
