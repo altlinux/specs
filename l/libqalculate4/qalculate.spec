@@ -2,7 +2,7 @@
 
 Name: libqalculate4
 Version: 0.9.6
-Release: alt3.1
+Release: alt3.1.qa1
 
 Summary: libqalculate compat libraries
 Group: System/Libraries
@@ -74,6 +74,9 @@ with libqalculate.
 %endif
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.9.6-alt3.1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Fri Dec 24 2010 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.6-alt3.1
 - Rebuilt with libcln6
 
