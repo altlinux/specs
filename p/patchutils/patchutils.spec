@@ -1,5 +1,5 @@
 Name: patchutils
-Version: 0.3.2
+Version: 0.3.3
 Release: alt1
 
 Summary: Patchutils is a small collection of programs that operate on patch files
@@ -11,8 +11,8 @@ Url: http://cyberelk.net/tim/patchutils/
 Source: %name-%version-%release.tar
 
 Requires: patch, diffutils, mktemp >= 1:1.3.1
-Provides: interdiff
-Obsoletes: interdiff
+Provides: interdiff = %EVR
+Obsoletes: interdiff < %EVR
 
 BuildRequires: libzio-devel, xmlto
 
@@ -71,7 +71,7 @@ bzip2 -9k ChangeLog
 %make_build
 
 %install
-%makeinstall
+%makeinstall_std
 
 %check
 %make_build -k check
@@ -82,6 +82,12 @@ bzip2 -9k ChangeLog
 %doc AUTHORS BUGS ChangeLog.bz2 NEWS* TODO
 
 %changelog
+* Tue Apr 16 2013 Dmitry V. Levin <ldv@altlinux.org> 0.3.3-alt1
+- Updated to v0.3.3-1-gc6325fb.
+
+* Mon Sep 24 2012 Dmitry V. Levin <ldv@altlinux.org> 0.3.2-alt2
+- Updated to 0.3.2-14-gc1d1946.
+
 * Fri Feb 18 2011 Dmitry V. Levin <ldv@altlinux.org> 0.3.2-alt1
 - Updated to 0.3.2.
 - Enabled test suite.
