@@ -2,30 +2,37 @@
 BuildRequires: gcc-c++ libcrystalhd-devel
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
+%global majorminor 1.0
 %global date 20120405
 
-Summary:        Broadcom Crystal HD device interface library
-Name:           libcrystalhd
-Version:        3.10.0
-Release:        alt1_3
-License:        LGPLv2
-Group:          System/Libraries
-#Source:         http://www.broadcom.com/docs/support/crystalhd/crystalhd_linux_20100703.zip
+Summary:       Broadcom Crystal HD device interface library
+Name:          libcrystalhd
+Version:       3.10.0
+Release:       alt1_4
+License:       LGPLv2
+Group:         System/Libraries
+URL:           http://www.broadcom.com/support/crystal_hd/
+ExcludeArch:   s390 s390x
+
+#Source:       http://www.broadcom.com/docs/support/crystalhd/crystalhd_linux_20100703.zip
 # This tarball and README are inside the above zip file...
 # Patch generated from http://git.linuxtv.org/jarod/crystalhd.git
-Source0:        libcrystalhd-%{date}.tar.bz2
-Source1:        README_07032010
+Source0:       libcrystalhd-%{date}.tar.bz2
+Source1:       README_07032010
 # We're going to use even newer firmware for now
-Source2:        bcm70012fw.bin
-Source3:        bcm70015fw.bin
+Source2:       bcm70012fw.bin
+Source3:       bcm70015fw.bin
 # LICENSE file is copy-n-pasted from http://www.broadcom.com/support/crystal_hd/
-Source4:        LICENSE
-Source9:        libcrystalhd-snapshot.sh
-Patch0:         libcrystalhd-nosse2.patch
-URL:            http://www.broadcom.com/support/crystal_hd/
-ExcludeArch:    s390 s390x
-BuildRequires:  autoconf automake libtool
-Requires:       firmware-crystalhd
+Source4:       LICENSE
+Source5:       libcrystalhd-snapshot.sh
+Patch0:        libcrystalhd-nosse2.patch
+# https://patchwork2.kernel.org/patch/2247431/
+Patch1:        crystalhd-gst-Port-to-GStreamer-1.0-API.patch
+
+BuildRequires: autoconf automake libtool
+BuildRequires: gstreamer1.0-devel >= %{majorminor}
+BuildRequires: gst-plugins1.0-devel >= %{majorminor}
+Requires:      firmware-crystalhd
 Source44: import.info
 
 %description
@@ -54,17 +61,11 @@ Requires:      %{name} = %{version}-%{release}
 Firmwares for the Broadcom Crystal HD (bcm970012 and bcm970015)
 video decoders.
 
-%define        majorminor 0.10
-%define        _gst 0.10.30
-%define        _gstpb 0.10.30
-
 %package -n gstreamer-plugin-crystalhd
 Summary:       Gstreamer crystalhd decoder plugin
 Group:         Sound
 Requires:      %{name} = %{version}-%{release}
-Requires:      gst-plugins-base
-BuildRequires: gstreamer-devel >= %{_gst}
-BuildRequires: gst-plugins-devel >= %{_gstpb}
+Requires:      gst-plugins-base1.0
 
 %description -n gstreamer-plugin-crystalhd
 Gstreamer crystalhd decoder plugin
@@ -76,6 +77,7 @@ cp %{SOURCE1} %{SOURCE4} .
 %patch0 -p1 -b .nosse2
 sed -i -e 's|-msse2||' linux_lib/libcrystalhd/Makefile
 %endif
+%patch1 -p1 -b .gst1
 
 %build
 pushd linux_lib/libcrystalhd/ > /dev/null 2>&1
@@ -83,8 +85,10 @@ pushd linux_lib/libcrystalhd/ > /dev/null 2>&1
 #make CPPFLAGS="%{optflags}" %{?_smp_mflags}
 make %{?_smp_mflags}
 popd > /dev/null 2>&1
+
 pushd filters/gst/gst-plugin/ > /dev/null 2>&1
 sh autogen.sh || :
+
 %configure
 make %{?_smp_mflags} \
   CFLAGS="-I%{_builddir}/%{buildsubdir}/include -I%{_builddir}/%{buildsubdir}/linux_lib/libcrystalhd" \
@@ -95,14 +99,17 @@ popd > /dev/null 2>&1
 pushd linux_lib/libcrystalhd/ > /dev/null 2>&1
 make install LIBDIR=%{_libdir} DESTDIR=$RPM_BUILD_ROOT
 popd > /dev/null 2>&1
+
 pushd filters/gst/gst-plugin/ > /dev/null 2>&1
 make install DESTDIR=$RPM_BUILD_ROOT
-rm -f $RPM_BUILD_ROOT%{_libdir}/gstreamer-0.10/libgstbcmdec.{a,la}
+rm -f $RPM_BUILD_ROOT%{_libdir}/gstreamer-1.0/libgstbcmdec.{a,la}
 popd > /dev/null 2>&1
+
 rm -rf $RPM_BUILD_ROOT/lib/firmware/
 mkdir -p $RPM_BUILD_ROOT/lib/firmware/
 cp -p %{SOURCE2} $RPM_BUILD_ROOT/lib/firmware/
 cp -p %{SOURCE3} $RPM_BUILD_ROOT/lib/firmware/
+
 #Install udev rule
 mkdir -p $RPM_BUILD_ROOT%{_sysconfdir}/udev/rules.d
 install -pm 0644 driver/linux/20-crystalhd.rules \
@@ -129,6 +136,9 @@ install -pm 0644 driver/linux/20-crystalhd.rules \
 
 
 %changelog
+* Tue Apr 16 2013 Igor Vlasenko <viy@altlinux.ru> 3.10.0-alt1_4
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 3.10.0-alt1_3
 - update to new release by fcimport
 
