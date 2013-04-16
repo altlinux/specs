@@ -4,8 +4,8 @@
 %def_enable gnome_bluetooth
 
 Name: gnome-shell
-Version: %ver_major.0.1
-Release: alt2
+Version: %ver_major.1
+Release: alt1
 
 Summary: Window management and application launching for GNOME
 Group: Graphical desktop/GNOME
@@ -13,21 +13,18 @@ License: GPLv2+
 Url: https://live.gnome.org/GnomeShell
 Packager: GNOME Maintainers Team <gnome at packages.altlinux.org>
 
-Source: %name-%version.tar
-#Source: http://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+#Source: %name-%version.tar
+Source: http://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 Patch1: %name-3.7.92-alt-gir.patch
 # use gnome3-applications.menu
 Patch2: %name-3.5.91-avoid-alt-menus.patch
 Patch3: %name-3.6.2-alt-invalid_user_shell.patch
-
-# boyarch@
-Patch20: 0001-org-gnome-shell-use-litebox-setting-introduced.patch
-# manowar@
-Patch21: gnome-shell-show-hide-timer.patch
+Patch4: %name-3.8.0-bgo697008-input-source-switch.patch
 
 Obsoletes: gnome-shell-extension-per-window-input-source
 
 Requires: %name-data = %version-%release
+Requires: gnome-session >= %ver_major
 
 %define clutter_ver 1.13.6
 %define gjs_ver 1.33.2
@@ -132,9 +129,7 @@ GNOME Shell.
 %patch1 -p1 -b .gir
 %patch2 -p1 -b .menu
 %patch3 -b .shells
-
-#%%patch20 -p2 -b .modal
-#%%patch21 -p2 -b .timer
+#%%patch4 -p1 -b .keyb
 
 %build
 NOCONFIGURE=1 ./autogen.sh
@@ -191,6 +186,9 @@ rm -f %buildroot%_libdir/%name/*.la
 %_datadir/gtk-doc/html/st/
 
 %changelog
+* Tue Apr 16 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.1-alt1
+- 3.8.1
+
 * Thu Apr 04 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.0.1-alt2
 - after 3.8.0.1 snapshot (ae5cdea5)
 

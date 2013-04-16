@@ -1,19 +1,28 @@
 %define rname glibmm
-%define major 2.35
+%define major 2.36
+%def_disable snapshot
 
 Name: libglibmm
-Version: %major.9
+Version: %major.0
 Release: alt1
+
 Summary: C++ wrapper for GLib
 License: LGPL
 Group: System/Libraries
 Url: http://gtkmm.sourceforge.net/
 Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 
+%if_enabled snapshot
+Source: %rname-%version.tar
+%else
 Source: ftp://ftp.gnome.org/pub/gnome/sources/glibmm/%major/%rname-%version.tar.xz
+%endif
+
+%define glib_ver 2.36.1
 
 AutoReq: yes, noperl
-BuildRequires: gcc-c++ mm-common libgio-devel >= 2.35.9 libsigc++2.0-devel
+BuildRequires: gcc-c++ libgio-devel >= %glib_ver libsigc++2.0-devel
+BuildRequires: mm-common perl-XML-Parser doxygen xsltproc graphviz
 
 %description
 A C++ interface for glib library.
@@ -50,13 +59,22 @@ This package contains all API documentation for glibmm.
 %setup -q -n %rname-%version
 
 %build
+%if_enabled snapshot
+mm-common-prepare --force --copy
+%endif
+
 %autoreconf
 %configure \
-	--disable-static
+	--disable-static \
+%if_enabled snapshot
+	--enable-maintainer-mode \
+	--enable-documentation
+%endif
+
 %make_build
 
 %install
-%make DESTDIR=%buildroot install
+%makeinstall_std
 
 %check
 %make check
@@ -76,6 +94,9 @@ This package contains all API documentation for glibmm.
 %_docdir/%rname-2.4
 
 %changelog
+* Tue Apr 16 2013 Yuri N. Sedunov <aris@altlinux.org> 2.36.0-alt1
+- 2.36.0
+
 * Tue Mar 19 2013 Yuri N. Sedunov <aris@altlinux.org> 2.35.9-alt1
 - 2.35.9
 

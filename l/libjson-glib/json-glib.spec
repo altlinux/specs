@@ -1,12 +1,12 @@
 %define _name json-glib
-%define ver_major 0.15
+%define ver_major 0.16
 %define api_ver 1.0
 %def_disable gtk_doc
 %def_disable static
 %def_enable introspection
 
 Name: lib%_name
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: Library for JavaScript Object Notation format
@@ -89,6 +89,9 @@ GObject introspection devel data for the JSON-GLib library
 %endif
 
 %changelog
+* Tue Apr 16 2013 Yuri N. Sedunov <aris@altlinux.org> 0.16.0-alt1
+- 0.16.0
+
 * Wed Sep 19 2012 Yuri N. Sedunov <aris@altlinux.org> 0.15.2-alt1
 - 0.15.2
 

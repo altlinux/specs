@@ -13,7 +13,7 @@
 %def_enable gst_1
 
 Name: empathy
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Instant Messaging Client for GNOME
@@ -151,7 +151,7 @@ rm -f data/%name.desktop
 
 %check
 # empathy-parser-test failed
-#xvfb-run %make check
+# xvfb-run %make check
 
 
 %files
@@ -204,6 +204,9 @@ rm -f data/%name.desktop
 
 
 %changelog
+* Mon Apr 15 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.1-alt1
+- 3.8.1
+
 * Mon Mar 25 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.0-alt1
 - 3.8.0
 - geocode support temporarily disabled

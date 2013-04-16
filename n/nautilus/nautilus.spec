@@ -9,7 +9,7 @@
 %def_enable selinux
 
 Name: nautilus
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Nautilus is a network user environment
@@ -218,6 +218,9 @@ ln -sf %_licensedir/LGPL-2 COPYING
 
 
 %changelog
+* Tue Apr 16 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.1-alt1
+- 3.8.1
+
 * Mon Mar 25 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.0-alt1
 - 3.8.0
 

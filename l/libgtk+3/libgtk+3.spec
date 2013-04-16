@@ -16,7 +16,7 @@
 
 
 Name: libgtk+3
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: The GIMP ToolKit (GTK+)
@@ -375,6 +375,9 @@ cp examples/*.c examples/Makefile* %buildroot/%_docdir/%name-devel-%version/exam
 %exclude %fulllibpath/*/*.la
 
 %changelog
+* Mon Apr 15 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.1-alt1
+- 3.8.1
+
 * Tue Mar 26 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.0-alt1
 - 3.8.0
 - enabled wayland and broadway backends

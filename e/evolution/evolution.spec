@@ -19,7 +19,7 @@
 
 Name: evolution
 Version: %ver_major.1
-Release: alt0.1
+Release: alt1
 
 Summary: Integrated GNOME mail client, calendar and address book
 License: GPLv2+
@@ -27,8 +27,8 @@ Group: Office
 Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 Url: http://www.gnome.org/projects/%name/
 
-Source: %name-%version.tar
-#Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+#Source: %name-%version.tar
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 
 ### Patches ###
 # hack to properly link against ldap libs
@@ -328,6 +328,9 @@ rm -rf %buildroot%_localstatedir/scrollkeeper
 %_datadir/glib-2.0/schemas/org.gnome.evolution.spamassassin.gschema.xml
 
 %changelog
+* Sun Apr 14 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.1-alt1
+- 3.8.1 release
+
 * Tue Apr 02 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.1-alt0.1
 - 3.8.1 snapshot (b00e0e1)
 

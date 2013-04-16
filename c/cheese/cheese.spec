@@ -6,7 +6,7 @@
 %def_enable introspection
 
 Name: cheese
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Cheese is a Photobooth-inspired application for taking pictures and videos
@@ -21,7 +21,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/cheese/%ver_major/%name-%version.t
 %define gtk_ver 3.4.4
 %define desktop_ver 3.0.0
 %define gst_ver 0.11
-%define vala_ver 0.14.0
+%define vala_ver 0.18.0
 %define clutter_ver 1.10.0
 
 Requires: lib%name = %version-%release
@@ -153,6 +153,9 @@ GObject introspection devel data for the Cheese library.
 %endif
 
 %changelog
+* Tue Apr 16 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.1-alt1
+- 3.8.1
+
 * Tue Mar 26 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.0-alt1
 - 3.8.0
 

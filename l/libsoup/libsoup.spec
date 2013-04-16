@@ -6,8 +6,8 @@
 %def_enable introspection
 
 Name: libsoup
-Version: %ver_major.0
-Release: alt1.1
+Version: %ver_major.1
+Release: alt1
 
 Summary: HTTP client/server library for GNOME
 Group: System/Libraries
@@ -15,8 +15,8 @@ License: LGPLv2+
 Url: https://live.gnome.org/LibSoup
 Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 
-Source: %name-%version.tar
-#Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+#Source: %name-%version.tar
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 
 Source1: %name-compat.map
 Source2: %name-compat.lds
@@ -214,6 +214,9 @@ install -p -m644 %_sourcedir/%name-{,gnome-}compat.{map,lds} %name/
 %endif
 
 %changelog
+* Tue Apr 16 2013 Yuri N. Sedunov <aris@altlinux.org> 2.42.1-alt1
+- 2.42.1
+
 * Tue Apr 02 2013 Yuri N. Sedunov <aris@altlinux.org> 2.42.0-alt1.1
 - after 2.42.0 snapshot (6666b3cd)
 

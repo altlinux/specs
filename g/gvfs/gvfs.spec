@@ -21,7 +21,7 @@
 %def_disable gtk_doc
 
 Name: gvfs
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: The GNOME virtual filesystem libraries
@@ -35,7 +35,7 @@ Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 Patch: gvfs-1.11.3-alt-gettext.patch
 Patch1: gvfs-1.16.0-archive-integration.patch
 Patch3: gvfs-1.14.1-libgvfsdaemon+headers_install.patch
-Patch4: gvfs-1.15.3-alt-lfs.patch
+Patch4: gvfs-1.16.1-alt-lfs.patch
 Patch5: gvfs-1.15.4-alt-tmpfiles_dir.patch
 
 %{?_enable_gdu:Obsoletes: gnome-mount <= 0.8}
@@ -425,6 +425,9 @@ killall -USR1 gvfsd >&/dev/null || :
 %exclude %_libdir/gio/modules/*.la
 
 %changelog
+* Tue Apr 16 2013 Yuri N. Sedunov <aris@altlinux.org> 1.16.1-alt1
+- 1.16.1
+
 * Mon Mar 25 2013 Yuri N. Sedunov <aris@altlinux.org> 1.16.0-alt1
 - 1.16.0
 - new gnome-online-accounts backend

@@ -8,7 +8,7 @@
 %define _localstatedir %_var
 
 Name: colord
-Version: 0.1.31
+Version: 0.1.33
 Release: alt1
 
 Summary: Color daemon
@@ -189,9 +189,9 @@ touch %buildroot%_localstatedir/lib/%name/storage.db
 %endif
 
 # monitor test profiles
-%_icccolordir/colord/bluish.icc
+%_icccolordir/colord/Bluish.icc
 %_icccolordir/colord/SwappedRedAndGreen.icc
-%_icccolordir/colord/gamma*.icc
+%_icccolordir/colord/Gamma*.icc
 
 # named color profiles
 %_icccolordir/colord/x11-colors.icc
@@ -203,8 +203,10 @@ touch %buildroot%_localstatedir/lib/%name/storage.db
 %_icccolordir/colord/FOGRA29L_uncoated.icc
 %_icccolordir/colord/FOGRA30L_uncoated_yellowish.icc
 %_icccolordir/colord/FOGRA40L_SC_paper.icc
+%_icccolordir/colord/FOGRA45L_lwc.icc
+%_icccolordir/colord/FOGRA47L_uncoated.icc
 %_icccolordir/colord/GRACoL*.icc
-%_icccolordir/colord/ISOnewspaper26.icc
+%_icccolordir/colord/IFRA26S_2004_newsprint.icc
 %_icccolordir/colord/SNAP*.icc
 %_icccolordir/colord/SWOP*.icc
 %endif
@@ -214,12 +216,13 @@ touch %buildroot%_localstatedir/lib/%name/storage.db
 %_icccolordir/colord/BetaRGB.icc
 %_icccolordir/colord/BruceRGB.icc
 %_icccolordir/colord/DonRGB4.icc
+%_icccolordir/colord/ECI-RGBv1.icc
 %_icccolordir/colord/ECI-RGBv2.icc
 %_icccolordir/colord/EktaSpacePS5.icc
 %_icccolordir/colord/WideGamutRGB.icc
 
 # other named color profiles not generally useful
-%_icccolordir/colord/crayons.icc
+%_icccolordir/colord/Crayons.icc
 
 %files -n lib%name
 %_libdir/libcolord.so.*
@@ -251,6 +254,9 @@ touch %buildroot%_localstatedir/lib/%name/storage.db
 
 
 %changelog
+* Tue Apr 16 2013 Yuri N. Sedunov <aris@altlinux.org> 0.1.33-alt1
+- 0.1.33
+
 * Sat Mar 23 2013 Yuri N. Sedunov <aris@altlinux.org> 0.1.31-alt1
 - 0.1.31
 

@@ -10,7 +10,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-settings-daemon
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: A program that manages general GNOME settings
@@ -87,7 +87,7 @@ Requires: %name = %version-%release
 The %name-tests package provides programms for testing GSD plugins.
 
 %prep
-%setup -q
+%setup
 
 %build
 %autoreconf
@@ -110,7 +110,6 @@ The %name-tests package provides programms for testing GSD plugins.
 %dir %_libdir/%name-%api_ver
 %_libdir/%name-%api_ver/a11y-keyboard.gnome-settings-plugin
 %_libdir/%name-%api_ver/a11y-settings.gnome-settings-plugin
-#%_libdir/%name-%api_ver/background.gnome-settings-plugin
 %_libdir/%name-%api_ver/clipboard.gnome-settings-plugin
 %_libdir/%name-%api_ver/color.gnome-settings-plugin
 %_libdir/%name-%api_ver/cursor.gnome-settings-plugin
@@ -119,7 +118,6 @@ The %name-tests package provides programms for testing GSD plugins.
 %_libdir/%name-%api_ver/liba11y-keyboard.so
 %_libdir/%name-%api_ver/liba11y-settings.so
 %_libdir/%name-%api_ver/libgsd.so
-#%_libdir/%name-%api_ver/libbackground.so
 %_libdir/%name-%api_ver/libclipboard.so
 %_libdir/%name-%api_ver/libcolor.so
 %_libdir/%name-%api_ver/libcursor.so
@@ -143,7 +141,6 @@ The %name-tests package provides programms for testing GSD plugins.
 %_libdir/%name-%api_ver/power.gnome-settings-plugin
 %_libdir/%name-%api_ver/print-notifications.gnome-settings-plugin
 %_libdir/%name-%api_ver/screensaver-proxy.gnome-settings-plugin
-#%_libdir/%name-%api_ver/smartcard.gnome-settings-plugin
 %_libdir/%name-%api_ver/sound.gnome-settings-plugin
 %_libdir/%name-%api_ver/wacom.gnome-settings-plugin
 %_libdir/%name-%api_ver/xrandr.gnome-settings-plugin
@@ -199,6 +196,12 @@ The %name-tests package provides programms for testing GSD plugins.
 
 
 %changelog
+* Tue Apr 16 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.1-alt1
+- 3.8.1
+
+* Thu Apr 11 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.0-alt1.1
+- updated from upstream git (307f421)
+
 * Tue Mar 26 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.0-alt1
 - 3.8.0
 

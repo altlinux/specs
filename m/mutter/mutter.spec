@@ -1,21 +1,22 @@
+%define ver_major 3.8
 %def_enable privatelib
-%def_disable gtk_doc
+%def_enable gtk_doc
 
 Name: mutter
-Version: 3.8.0
+Version: %ver_major.1
 Release: alt1
 Epoch: 1
+
 Summary: Clutter based compositing GTK3 Window Manager
-License: GPLv2+
 Group: Graphical desktop/GNOME
-Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
+License: GPLv2+
 Url: http://ftp.gnome.org/pub/gnome/sources/%name
+Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 
 Requires: lib%name = %epoch:%version-%release
 Requires: zenity
 
-Source: %name-%version.tar
-Patch: %name-%version-%release.patch
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 
 BuildPreReq: rpm-build-gnome gnome-common
 BuildPreReq: intltool >= 0.34.90
@@ -96,7 +97,6 @@ Development docs package for mutter
 
 %prep
 %setup -q
-# %%patch -p1
 
 %build
 %autoreconf
@@ -153,6 +153,9 @@ DATADIRNAME=share %configure \
 
 
 %changelog
+* Tue Apr 16 2013 Yuri N. Sedunov <aris@altlinux.org> 1:3.8.1-alt1
+- 3.8.1
+
 * Wed Mar 27 2013 Alexey Shabalin <shaba@altlinux.ru> 1:3.8.0-alt1
 - 3.8.0
 
