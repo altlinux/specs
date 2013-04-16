@@ -2,7 +2,7 @@
 
 Name: alterator-ldap-users
 Version: 0.8
-Release: alt5
+Release: alt6
 
 Source: %name-%version.tar
 
@@ -42,6 +42,11 @@ alterator module for local and ldap users administration
 %_datadir/alterator/type/*
 
 %changelog
+* Mon Apr 15 2013 Andrey Cherepanov <cas@altlinux.org> 0.8-alt6
+- Make photo replacemet picture more abstract
+- Remove fixed size for file selector that made it truncated
+- Don't distribute button in source selection
+
 * Thu Dec 06 2012 Andrey Cherepanov <cas@altlinux.org> 0.8-alt5
 - Perform direct group management without caching (ALT #27882)
 - Fix behaviour in mode with tcb source
