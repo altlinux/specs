@@ -1,6 +1,6 @@
 Name: libalsa
 Version: 1.0.27
-Release: alt2
+Release: alt3
 Epoch: 1
 
 Summary: Advanced Linux Sound Architecture (ALSA) library
@@ -67,6 +67,11 @@ Advanced Linux Sound Architecture (ALSA) Developer Documentation
 %prep
 %setup
 %patch -p1
+# Replace "include" with "__include__" in public header files
+# to make them compilable by "gcc -ansi" again.
+find include -type f -print0 |
+	xargs -r0 grep -FZl ' inline ' -- |
+	xargs -r0 sed -i 's/ inline / __inline__ /g' --
 
 %build
 %autoreconf
@@ -152,6 +157,10 @@ done
 %_bindir/aserver
 
 %changelog
+* Tue Apr 16 2013 Dmitry V. Levin <ldv@altlinux.org> 1:1.0.27-alt3
+- libalsa-alsa: replaced "include" with "__include__", to make
+  header files compilable by "gcc -ansi" as they were in 1.0.26.
+
 * Sat Apr 13 2013 Michael Shigorin <mike@altlinux.org> 1:1.0.27-alt2
 - retag
 
