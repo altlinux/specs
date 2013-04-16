@@ -1,6 +1,6 @@
 Name:		zaz
 Version:	1.0.0
-Release:	alt1
+Release:	alt1.qa1
 Group:		Games/Arcade
 License:	GPLv3
 Source:		http://sunet.dl.sourceforge.net/project/%name/%name-%version.tar.gz
@@ -70,6 +70,9 @@ install -m755 %name.sh %buildroot%_bindir/%name
 
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.0.0-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sun Sep 05 2010 Fr. Br. George <george@altlinux.ru> 1.0.0-alt1
 - Version up
 
