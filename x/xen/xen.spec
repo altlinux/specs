@@ -4,7 +4,7 @@
 Summary: Xen is a virtual machine monitor
 Name: xen
 Version: 4.1.3
-Release: alt3
+Release: alt3.1
 Group: Development/Kernel
 License: GPLv2+ and LGPLv2+ and BSD
 Url: http://xen.org/
@@ -26,7 +26,8 @@ Patch4: xen-dumpdir.patch
 Patch10: xen-no-werror.patch
 
 Patch100: xen-configure-xend.patch
-Patch104: xen-4.1.0-alt-various-underlink.patch
+Patch103: xen-4.1.3-alt-ulong.patch
+Patch104: xen-4.1.2-alt-various-underlink.patch
 Patch105: xen-4.0.0-remove-rcstatus-alt.patch
 Patch106: xen-4.0.0-libfsimage-soname-alt.patch
 Patch107: xen-4.0.0-i586-fpic.patch
@@ -115,6 +116,7 @@ which manage Xen virtual machines.
 
 %patch100 -p1
 
+%patch103 -p1
 %patch104 -p2
 %patch105 -p2
 %patch106 -p2
@@ -282,6 +284,9 @@ diff -u f1.list f2.list || true
 # sysconfig
 %config(noreplace) %attr(0644,root,root) %_sysconfdir/sysconfig/xencommons
 
+# completions
+%_sysconfdir/bash_completion.d/xl.sh
+
 # Programs run by other programs
 %dir %_libdir/%name
 %dir %_libdir/%name/bin
@@ -409,6 +414,9 @@ diff -u f1.list f2.list || true
 %_libdir/*.a
 
 %changelog
+* Tue Apr 16 2013 Fr. Br. George <george@altlinux.ru> 4.1.3-alt3.1
+- Fix build (DSO and underinclude)
+
 * Mon Oct 29 2012 Lenar Shakirov <snejok@altlinux.ru> 4.1.3-alt3
 - xen-4.1.3-qemu-revert-O_DIRECT.patch added:
   * fix loading from boot discs with phy:/dev/cdrom
