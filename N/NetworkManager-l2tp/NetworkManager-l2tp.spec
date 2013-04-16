@@ -1,11 +1,11 @@
-%define nm_version 0.9.4
-%define nm_applet_version 0.9.4
+%define nm_version 0.9.8
+%define nm_applet_version 0.9.8
 #define git_date .git20120624
 %define git_date %nil
 %define ppp_version 2.4.5
 
 Name: NetworkManager-l2tp
-Version: 0.9.6
+Version: 0.9.8
 Release: alt1%git_date
 License: %gpl2plus
 Group: System/Configuration/Networking
@@ -83,12 +83,16 @@ fi
 %files gnome -f %name.lang
 %_libdir/NetworkManager/lib*.so*
 %_libexecdir/NetworkManager/nm-l2tp-auth-dialog
-%_datadir/gnome-vpn-properties/l2tp/nm-l2tp-dialog.ui
+%_datadir/gnome-vpn-properties/l2tp
 
 %exclude %_libdir/NetworkManager/*.la
 %exclude %_libdir/pppd/%ppp_version/*.la
 
 %changelog
+* Tue Apr 16 2013 Mikhail Efremov <sem@altlinux.org> 0.9.8-alt1
+- Own %_datadir/gnome-vpn-properties/l2tp.
+- Updated to 0.9.8.
+
 * Tue Nov 06 2012 Mikhail Efremov <sem@altlinux.org> 0.9.6-alt1
 - Build with GTK+3.
 - Updated to 0.9.6.
