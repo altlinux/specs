@@ -1,5 +1,5 @@
 Name: ceph
-Version: 0.56.4
+Version: 0.60
 Release: alt1
 Summary: User space components of the Ceph file system
 Group: System/Base
@@ -16,6 +16,7 @@ BuildRequires: boost-devel-headers gcc-c++ libaio-devel libcurl-devel
 BuildRequires: libedit-devel libexpat-devel libfcgi-devel libfuse-devel
 BuildRequires: libgperftools-devel libgtkmm2-devel libkeyutils-devel
 BuildRequires: libnss-devel libuuid-devel boost-program_options-devel
+BuildRequires: libleveldb-devel libsnappy-devel
 
 BuildRequires(pre): rpm-build-python
 
@@ -111,9 +112,6 @@ object storage.
 rm -rf ceph-object-corpus
 ln -s ceph-object-corpus_sub ceph-object-corpus
 
-rm -rf src/leveldb
-ln -s leveldb_sub src/leveldb
-
 rm -rf src/libs3
 ln -s libs3_sub src/libs3
 
@@ -165,6 +163,8 @@ mkdir -p %buildroot%_sysconfdir/ceph/
 %_bindir/ceph-mon
 %_bindir/ceph-mds
 %_bindir/ceph-osd
+%_bindir/ceph_filestore_dump
+%_bindir/ceph_mon_store_converter
 %_bindir/ceph-rbdnamer
 %_bindir/ceph-dencoder
 %_bindir/librados-config
@@ -216,7 +216,10 @@ mkdir -p %buildroot%_sysconfdir/ceph/
 
 %files fuse
 %_bindir/ceph-fuse
+%_bindir/rbd-fuse
+%_sbindir/mount.fuse.ceph
 %_mandir/man8/ceph-fuse.8*
+%_mandir/man8/rbd-fuse.8*
 
 %files devel
 %_includedir/cephfs/
@@ -252,6 +255,10 @@ mkdir -p %buildroot%_sysconfdir/ceph/
 %python_sitelibdir_noarch/*
 
 %changelog
+* Tue Apr 16 2013 Alexei Takaseev <taf@altlinux.org> 0.60-alt1
+- 0.60
+- remove leveldb source, user system libs
+
 * Tue Mar 26 2013 Alexei Takaseev <taf@altlinux.org> 0.56.4-alt1
 - 0.56.4
 
