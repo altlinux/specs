@@ -1,6 +1,6 @@
 Name:	 xblast
 Version: 2.10.3
-Release: alt3
+Release: alt3.qa1
 Summary: The X11 bomberman team game
 License: GPL
 Icon: %{name}_32x32.png
@@ -62,6 +62,9 @@ install -D %SOURCE4 %buildroot%_desktopdir/%name.desktop
 %doc README INSTALL ChangeLog AUTHORS NEWS
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.10.3-alt3.qa1
+- NMU: rebuilt for debuginfo.
+
 * Wed Sep 01 2010 Fr. Br. George <george@altlinux.ru> 2.10.3-alt3
 - Repocop warnings fixed
 
