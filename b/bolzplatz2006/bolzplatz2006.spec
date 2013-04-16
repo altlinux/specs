@@ -2,14 +2,6 @@
 BuildRequires(pre): rpm-build-java
 BuildRequires: gcc-c++ unzip
 # END SourceDeps(oneline)
-Summary(de): Bolzplatz 2006 ist ein spaßiges Fußballspiel im 3D-Comic-Stil
-Summary(fr): Coup de Foot 2006 est un jeu comique en 3D
-Summary(de): Bolzplatz 2006 ist ein spaßiges Fußballspiel im 3D-Comic-Stil
-Summary(fr): Coup de Foot 2006 est un jeu comique en 3D
-Summary(fr): Coup de Foot 2006 est un jeu comique en 3D
-Summary(de): Bolzplatz 2006 ist ein spaßiges Fußballspiel im 3D-Comic-Stil
-Summary(fr): Coup de Foot 2006 est un jeu comique en 3D
-Summary(de): Bolzplatz 2006 ist ein spaßiges Fußballspiel im 3D-Comic-Stil
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 # Copyright (c) 2007 oc2pus <toni@links2linux.de>
@@ -21,7 +13,7 @@ BuildRequires: jpackage-compat
 
 Name:           bolzplatz2006
 Version:        1.0.3
-Release:        alt1_22jpp7
+Release:        alt1_24jpp7
 Summary:        Slam Soccer 2006 is a funny football game in 3D-comic-style
 Summary(fr):    Coup de Foot 2006 est un jeu comique en 3D
 Summary(de):    Bolzplatz 2006 ist ein spaßiges Fußballspiel im 3D-Comic-Stil
@@ -57,7 +49,7 @@ BuildRequires:  libXt-devel libXrender-devel libvorbis-devel desktop-file-utils
 Requires:       sdljava dom4j vecmath1.2 jpackage-utils
 Requires:       icon-theme-hicolor autodownloader
 # These are dynamically opened by lwjgl:
-Requires:       libopenal
+Requires:       libopenal1
 Source44: import.info
 
 %description
@@ -221,12 +213,8 @@ install -m 755 %{SOURCE3} $RPM_BUILD_ROOT%{_bindir}/%{name}-settings
 # icon and menu-entry
 install -p -m 644 %{SOURCE1} \
   $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/16x16/apps
-desktop-file-install --vendor fedora            \
-  --dir $RPM_BUILD_ROOT%{_datadir}/applications \
-  %{SOURCE4}
-desktop-file-install --vendor fedora            \
-  --dir $RPM_BUILD_ROOT%{_datadir}/applications \
-  %{SOURCE5}
+desktop-file-install --dir $RPM_BUILD_ROOT%{_datadir}/applications %{SOURCE4}
+desktop-file-install --dir $RPM_BUILD_ROOT%{_datadir}/applications %{SOURCE5}
 
 # needed "data" files
 install -p -m 644 %{name}-functions.sh %{SOURCE8} %{SOURCE9} \
@@ -239,11 +227,14 @@ install -p -m 644 %{name}-functions.sh %{SOURCE8} %{SOURCE9} \
 %{_libdir}/%{name}
 %{_datadir}/%{name}
 %{_javadir}/%{name}
-%{_datadir}/applications/fedora-%{name}*.desktop
+%{_datadir}/applications/%{name}*.desktop
 %{_datadir}/icons/hicolor/16x16/apps/%{name}.png
 
 
 %changelog
+* Tue Apr 16 2013 Igor Vlasenko <viy@altlinux.ru> 1.0.3-alt1_24jpp7
+- update to new release by jppimport
+
 * Mon Jan 21 2013 Igor Vlasenko <viy@altlinux.ru> 1.0.3-alt1_22jpp7
 - update to new release by jppimport
 
