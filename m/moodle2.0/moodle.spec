@@ -12,7 +12,7 @@
 #Name: %moodlepackagename
 Name: moodle2.0
 Version: %packagversion.%packagedate
-Release: %branch_release alt1
+Release: %branch_release alt2
 
 Summary: The Course Management System Moodle
 License: %gpl3plus
@@ -33,7 +33,7 @@ Source23: %moodle_name.httpd2.inc.conf
 Patch1: %name-alt-cli-install-distrolib.patch
 
 Requires: %name-base = %version-%release
-Requires: %name-auth-pam
+Requires: %name-auth-pam >= 2.0.0.2009112400.0.20120706-alt1
 Provides: %moodle_name = %version-%release
 
 BuildRequires(pre): rpm-macros-branch
@@ -143,7 +143,7 @@ Requires: %apache2_extra_enabled
 Requires: %apache2_extra_start
 Requires: %apache2_mods_start
 Requires: %apache2_confdir_inc
-Requires: %name-base
+Requires: %name-base >= 2.0.10.20120706-alt1
 Requires: %moodle_dir
 Requires: %moodle_datadir
 Requires: apache2-mod_php5
@@ -157,7 +157,7 @@ Conflicts: %moodle_name-base >= 2.1
 %package local-mysql
 Summary: installed mysql-server on localhost for Moodle
 Group: Networking/WWW
-Requires: %name-base
+Requires: %name-base >= 2.0.10.20120706-alt1
 Requires: MySQL-server
 Requires: php5-mysqli
 Provides: %moodle_name-local-mysql = %version-%release
@@ -186,7 +186,7 @@ Summary: PAM authentication for Moodle
 Group: Networking/WWW
 
 Requires: pecl-pam
-Requires: %name-base
+Requires: %name-base >= 2.0.10.20120706-alt1
 Requires: %moodle_authdir
 Requires: %moodle_name-version >= %auth_pam_moodlerequires
 Provides: %moodle_name-appfor = 2.0
@@ -410,6 +410,9 @@ exit 0
 %moodle_authdir/pam/
 
 %changelog
+* Tue Apr 16 2013 Aleksey Avdeev <solo@altlinux.ru> 2.0.10.20120706-alt2
+- Fix requires
+
 * Sat Jul 07 2012 Cronbuild Service <cronbuild@altlinux.org> 2.0.10.20120706-alt1
 - repocop cronbuild 20120707. At your service.
 - 2.0.10 (Build: 20120706)
