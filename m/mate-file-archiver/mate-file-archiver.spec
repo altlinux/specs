@@ -5,12 +5,12 @@ BuildRequires: /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/glib-m
 %define _libexecdir %_prefix/libexec
 %define oldname mate-file-archiver
 Name:           mate-file-archiver
-Version:        1.5.1
-Release:        alt1_6
+Version:        1.6.0
+Release:        alt1_1
 Summary:        MATE Desktop file archiver
 License:        GPLv2+ and LGPLv2+
 URL:            http://mate-desktop.org
-Source0:        http://pub.mate-desktop.org/releases/1.5/%{name}-%{version}.tar.xz
+Source0:        http://pub.mate-desktop.org/releases/1.6/%{name}-%{version}.tar.xz
 
 BuildRequires:  mate-common
 BuildRequires:  desktop-file-utils
@@ -58,8 +58,6 @@ make %{?_smp_mflags} V=1
 make install DESTDIR=%{buildroot}
 
 desktop-file-install                                \
-    --remove-category="MATE"                        \
-    --add-category="X-Mate"                         \
     --delete-original                               \
     --dir %{buildroot}%{_datadir}/applications      \
 %{buildroot}%{_datadir}/applications/engrampa.desktop
@@ -84,6 +82,9 @@ find %{buildroot} -name "*.la" -exec rm -f {} ';'
 
 
 %changelog
+* Mon Apr 15 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.0-alt1_1
+- new fc release
+
 * Tue Mar 05 2013 Igor Vlasenko <viy@altlinux.ru> 1.5.1-alt1_6
 - new fc release
 

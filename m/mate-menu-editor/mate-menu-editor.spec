@@ -5,8 +5,8 @@ BuildRequires: /usr/bin/glib-gettextize
 # END SourceDeps(oneline)
 %define _libexecdir %_prefix/libexec
 Name:           mate-menu-editor
-Version:        1.5.0
-Release:        alt2_2
+Version:        1.6.0
+Release:        alt1_1
 Summary:        MATE Desktop menu editor
 License:        LGPLv2+
 URL:            http://mate-desktop.org
@@ -46,9 +46,6 @@ desktop-file-install                                  \
         --dir=%{buildroot}%{_datadir}/applications    \
 %{buildroot}%{_datadir}/applications/mozo.desktop
 
-%check
-desktop-file-validate %{buildroot}%{_datadir}/applications/mozo.desktop
-
 %files -f %{name}.lang
 %doc AUTHORS COPYING README
 %{_bindir}/mozo
@@ -58,6 +55,9 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/mozo.desktop
 %{python_sitelibdir_noarch}/Mozo
 
 %changelog
+* Mon Apr 15 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.0-alt1_1
+- new fc release
+
 * Wed Mar 27 2013 Igor Vlasenko <viy@altlinux.ru> 1.5.0-alt2_2
 - new fc release
 

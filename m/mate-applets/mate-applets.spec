@@ -7,7 +7,7 @@ BuildRequires: xvfb-run
 %define _libexecdir %_prefix/libexec
 %define fedora 19
 Name:           mate-applets
-Version:        1.6.0
+Version:        1.6.1
 Release:        alt1_1
 Summary:        MATE Desktop panel applets
 License:        GPLv2+ and LGPLv2+
@@ -45,7 +45,6 @@ BuildRequires: rarian-compat
 BuildRequires: librarian-devel
 BuildRequires: libstartup-notification-devel
 Buildrequires: libupower-devel
-Requires:      libnotify
 Source44: import.info
 Patch33: mate-applets-1.5.1-alt-geyes_schema.patch
 Patch34: gnome-applets-2.6.0-alt-install_makefile.patch
@@ -70,9 +69,9 @@ NOCONFIGURE=1 ./autogen.sh
     --enable-polkit                          \
     --enable-networkmanager                  \
     --enable-ipv6                            \
+    --disable-cpufreq                        \
     --enable-frequency-selector              \
     --enable-suid                            \
-    --disable-cpufreq                        \
     --disable-timer-applet                   \
     --libexecdir=%{_libexecdir}/mate-applets 
 
@@ -151,6 +150,9 @@ install -pD -m 644 %{SOURCE45} %buildroot%_sysconfdir/polkit-1/localauthority/50
 %_sysconfdir/polkit-1/localauthority/50-local.d/01-cpufreq.pkla
 
 %changelog
+* Mon Apr 15 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.1-alt1_1
+- new fc release
+
 * Sat Apr 06 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.0-alt1_1
 - new fc release
 

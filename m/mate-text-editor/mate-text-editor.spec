@@ -5,8 +5,8 @@ BuildRequires: /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/glib-m
 %define _libexecdir %_prefix/libexec
 Summary:  Text editor for the MATE desktop
 Name:     mate-text-editor
-Version:  1.5.0
-Release:  alt2_1
+Version:  1.6.0
+Release:  alt1_1
 License:  GPLv2+
 Group:    Editors
 URL:      http://mate-desktop.org
@@ -24,7 +24,6 @@ BuildRequires: iso-codes-devel
 #BuildRequires: libattr-devel
 BuildRequires: libSM-devel
 BuildRequires: mate-common
-#BuildRequires: mate-conf-devel
 BuildRequires: mate-doc-utils
 BuildRequires: pango-devel
 BuildRequires: python-module-pygobject-devel
@@ -73,9 +72,7 @@ find ./*/*/* -type f -exec chmod 644 {} \;
         --enable-gtk-doc-html     \
         --enable-gvfs-metadata    \
         --enable-python           \
-        --disable-schemas-compile \
-        --with-gnu-ld
-
+        --disable-schemas-compile
 
 make %{?_smp_mflags} V=1
 
@@ -108,7 +105,7 @@ desktop-file-install --delete-original             \
 %{_datadir}/glib-2.0/schemas/org.mate.pluma.gschema.xml
 %{_datadir}/glib-2.0/schemas/org.mate.pluma.plugins.filebrowser.gschema.xml
 %{_datadir}/glib-2.0/schemas/org.mate.pluma.plugins.time.gschema.xml
-
+%{_datadir}/MateConf/gsettings/pluma.convert
 
 %files devel
 %{_includedir}/pluma
@@ -117,6 +114,9 @@ desktop-file-install --delete-original             \
 
 
 %changelog
+* Tue Apr 16 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.0-alt1_1
+- new fc release
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 1.5.0-alt2_1
 dropped obsolete mate-conf BR:
 
