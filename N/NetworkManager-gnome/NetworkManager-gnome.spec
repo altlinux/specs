@@ -5,7 +5,7 @@
 
 Name: NetworkManager-gnome
 Version: 0.9.8.0
-Release: alt2%git_date
+Release: alt3%git_date
 License: %gpl2plus
 Group: Graphical desktop/GNOME
 Summary: GNOME applications for use with NetworkManager
@@ -27,6 +27,7 @@ BuildRequires: libgnome-bluetooth-devel
 BuildRequires: iso-codes-devel
 BuildRequires: gnome-common
 BuildRequires: libgudev-devel
+BuildRequires: libmm-glib-devel
 BuildRequires: gobject-introspection-devel libgtk+%gtkver-gir-devel
 
 Requires: NetworkManager >= %nm_version
@@ -92,6 +93,7 @@ GObject introspection devel data for the libnm-gtk.
     --libexecdir=%_libexecdir/NetworkManager \
 	--localstatedir=%_var \
     --with-gtkver=%gtkver \
+    --with-modem-manager-1 \
     --enable-more-warnings=error
 
 %make_build
@@ -145,6 +147,10 @@ fi
 %_datadir/gir-1.0/NMGtk-1.0.gir
 
 %changelog
+* Tue Apr 16 2013 Mikhail Efremov <sem@altlinux.org> 0.9.8.0-alt3
+- Enable new ModemManager1 interface support (closes: #28788).
+- Updated Russian translation (from upstream git).
+
 * Tue Mar 12 2013 Mikhail Efremov <sem@altlinux.org> 0.9.8.0-alt2
 - Autostart nm-applet in the KDE too (closes: #28666).
 
