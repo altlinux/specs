@@ -1,6 +1,6 @@
 Name: havp
 Version: 0.92
-Release: alt1
+Release: alt1.qa1
 
 Summary: (HTTP Antivirus Proxy) is a proxy with anti-virus scanner
 
@@ -123,6 +123,9 @@ EOF
 %dir %attr(3770,%name,root) %_logdir/%name
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.92-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Tue Jul 27 2010 Slava Dubrovskiy <dubrsl@altlinux.org> 0.92-alt1
 - Update to 0.92
   + Add SCANMIME and SKIPMIME options
