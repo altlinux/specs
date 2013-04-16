@@ -6,7 +6,7 @@ BuildRequires: libsystemd-login-devel
 %define _libexecdir %_prefix/libexec
 Name:           mate-screensaver
 Version:        1.6.0
-Release:        alt2
+Release:        alt2_1
 Summary:        MATE Screensaver
 License:        GPLv2+ and LGPLv2+
 URL:            http://pub.mate-desktop.org
@@ -73,8 +73,8 @@ NOCONFIGURE=1 ./autogen.sh
             --with-console-kit \
             --enable-docbook-docs \
             --enable-authentication-scheme=helper \
-	    --with-passwd-helper=%_libexecdir/%name/%name-chkpwd-helper \
-            --enable-locking
+           --with-passwd-helper=%_libexecdir/%name/%name-chkpwd-helper \
+	   --enable-locking
 
 make %{?_smp_mflags} V=1
 gcc -o %name-chkpwd-helper $RPM_OPT_FLAGS %SOURCE45 -lpam
@@ -121,6 +121,9 @@ install -m 755 %name-chkpwd-helper %buildroot%_libexecdir/%name/
 
 
 %changelog
+* Tue Apr 16 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.0-alt2_1
+- new fc release
+
 * Thu Apr 11 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1.6.0-alt2
 - password check fixed: use setgid helper
 
