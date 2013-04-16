@@ -1,6 +1,6 @@
 Name: read-edid
 Version: 2.0.0
-Release: alt2
+Release: alt2.qa1
 Group: System/Configuration/Other
 License: GPL
 Packager: Vladislav Zavjalov <slazav@altlinux.org>
@@ -36,6 +36,9 @@ summary.
 %_sbindir/*
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.0.0-alt2.qa1
+- NMU: rebuilt for debuginfo.
+
 * Tue Sep 08 2009 Vladislav Zavjalov <slazav@altlinux.org> 2.0.0-alt2
 - change Packager, rebuild with new libx86
 
