@@ -1,5 +1,5 @@
 Name: installer-feature-simply-livecd
-Version: 0.8.1
+Version: 0.8.2
 Release: alt1
 
 Summary: LiveCD install hooks for Simply Linux.
@@ -39,19 +39,26 @@ LiveCD install hooks for Simply Linux.
 %define init_hookdir %_libexecdir/alterator/hooks/livecd-initinstall.d
 %define pre_hookdir %_libexecdir/alterator/hooks/livecd-preinstall.d
 %define post_hookdir %_libexecdir/alterator/hooks/livecd-postinstall.d
+mkdir -p %buildroot%_datadir/livecd-install/alterator-menu/
 mkdir -p %buildroot%init_hookdir
 mkdir -p %buildroot%pre_hookdir
 mkdir -p %buildroot%post_hookdir
 install -pm755 livecd-initinstall.d/* %buildroot%init_hookdir/
 install -pm755 livecd-preinstall.d/* %buildroot%pre_hookdir/
 install -pm755 livecd-postinstall.d/* %buildroot%post_hookdir/
+cp -ar alterator-menu/ %buildroot%_datadir/livecd-install
 
 %files
 %init_hookdir/*
 %pre_hookdir/*
 %post_hookdir/*
+%_datadir/livecd-install/
 
 %changelog
+* Tue Apr 16 2013 Mikhail Efremov <sem@altlinux.org> 0.8.2-alt1
+- lightdm: Set icon theme SimpleSL.
+- Hide alterator-logs in the acc.
+
 * Wed Mar 27 2013 Mikhail Efremov <sem@altlinux.org> 0.8.1-alt1
 - Explicitly enable prefdm.service.
 - Disable krb5kdc service.
