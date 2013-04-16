@@ -1,6 +1,6 @@
 Name: SpamOracle
 Version: 1.4
-Release: alt1
+Release: alt1.qa1
 
 Group: Networking/Mail
 Summary: Spam filter
@@ -42,6 +42,9 @@ make install BINDIR=%buildroot%_bindir MANDIR=%buildroot%_mandir
 %doc README* Changes
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.4-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Wed Mar  4 2009 Terechkov Evgenii <evg@altlinux.ru> 1.4-alt1
 - 1.4
 - Spec cleanup
