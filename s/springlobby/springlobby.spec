@@ -2,11 +2,14 @@
 BuildRequires(pre): rpm-macros-fedora-compat
 BuildRequires: gcc-c++ libSDL_sound-devel libgcrypt-devel libgnutls-devel libgpg-error-devel libidn-devel libogg-devel libuuid-devel libvorbis-devel perl(FileHandle.pm) perl(Text/Wrap.pm) pkgconfig(ogg) pkgconfig(vorbis) pkgconfig(vorbisfile) zlib-devel
 # END SourceDeps(oneline)
-BuildRequires: boost-devel boost-filesystem-devel
+# undefined symbol: L_*, LOG_*, parse32 in libFileSystem
+# those are from static libUtil, in main binary
+%set_verify_elf_method unresolved=relaxed
+BuildRequires: boost-devel boost-filesystem-devel boost-signals-devel libpng-devel
 %define fedora 19
 Name:			springlobby
-Version:		0.147
-Release:		alt1_4
+Version:		0.169
+Release:		alt1_2
 Summary:		A lobby client for the spring RTS game engine
 
 Group:			Games/Other
@@ -14,13 +17,14 @@ Group:			Games/Other
 License:		GPLv2
 URL:			http://springlobby.info
 Source0:		http://www.springlobby.info/tarballs/springlobby-%{version}.tar.bz2
-Patch0:			springlobby-gtkfix.patch
+#Patch0:			springlobby-gtkfix.patch
 
 BuildRequires: ctest cmake
 BuildRequires:	wxGTK-devel libtorrent-rasterbar-devel
 BuildRequires:	libSDL-devel SDL_sound-devel libSDL_mixer-devel
 BuildRequires:	desktop-file-utils gettext
 BuildRequires:	libopenal-devel libcurl-devel
+BuildRequires:	libalure-devel
 
 # There are other "lobbies" for spring, make a virtual-provides
 Provides:		spring-lobby = %{version}-%{release}
@@ -31,13 +35,15 @@ Requires:		springrts
 # Spring does not build on PPC, exclude it here too
 ExcludeArch:	ppc ppc64
 Source44: import.info
+Patch33: springlobby-0.169-alt-linkage.patch
 
 %description
 SpringLobby is a free cross-platform lobby client for the Spring RTS project.
 
 %prep
 %setup -q
-%patch0 -p0 -b .springlobby-gtkfix
+%patch33 -p1
+#%patch0 -p0 -b .springlobby-gtkfix
 
 %build
 # Use boost filesystem 2 explicitly (bug 654807)
@@ -53,6 +59,11 @@ make %{?_smp_mflags}
 
 %install
 %makeinstall_std
+
+# Manually copy the missing libraries.
+mkdir -p $RPM_BUILD_ROOT/%{_libdir}
+cp ./src/downloader/lib/src/libCurlWrapper.so $RPM_BUILD_ROOT/%{_libdir}
+cp ./src/downloader/lib/src/FileSystem/libFileSystem.so $RPM_BUILD_ROOT/%{_libdir}
 
 # Handled in %%doc
 rm -rf $RPM_BUILD_ROOT%{_datadir}/doc/
@@ -73,10 +84,16 @@ desktop-file-install	\
 %files -f %{name}.lang
 %doc AUTHORS NEWS README COPYING THANKS
 %{_bindir}/*
+%{_libdir}/*
+# wildcard _libdir/*
+%exclude %_prefix/lib/debug
 %{_datadir}/applications/*.desktop
 %{_datadir}/icons/hicolor/scalable/apps/*.svg
 
 %changelog
+* Tue Apr 16 2013 Igor Vlasenko <viy@altlinux.ru> 0.169-alt1_2
+- fc update
+
 * Tue Feb 26 2013 Igor Vlasenko <viy@altlinux.ru> 0.147-alt1_4
 - update to new release by fcimport
 
