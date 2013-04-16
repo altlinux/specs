@@ -1,6 +1,6 @@
 Name:		treplo
 Version:	0.01
-Release:	alt1
+Release:	alt1.qa1
 Group:		Games/Other
 Summary:	Meaningless period generator in russian
 Summary(ru_RU.KOI8-R):	Генератор бессмысленных русских фраз
@@ -42,6 +42,9 @@ install *.dat %buildroot%_datadir/%name/
 %_datadir/%name/*
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.01-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Tue Feb 10 2009 Fr. Br. George <george@altlinux.ru> 0.01-alt1
 - Initial build from DOS sources
 
