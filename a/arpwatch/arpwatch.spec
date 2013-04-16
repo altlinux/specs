@@ -1,22 +1,21 @@
 Name: arpwatch
 Version: 2.1a15
-Release: alt7
+Release: alt8
 Epoch: 2
 
 %define arpwatch_user _arpwd
 %define arpwatch_group _arpwd
 
 Summary: Network monitoring tools for tracking IP addresses on the network
-Summary(ru_RU.KOI8-R): Утилиты для отслеживания соответствия IP адресов в сети
 Group: Monitoring
 License: BSD
-Url: ftp://ftp.ee.lbl.gov
-Packager: Dmitry V. Levin <ldv@altlinux.org>
+Url: http://ee.lbl.gov/
 
-# %url/%name-%version.tar.gz
+# ftp://ftp.ee.lbl.gov/%name-%version.tar.gz
 Source: arpwatch-%version.tar
 Source1: arpwatch.init
 Source2: arpwatch.sysconfig
+Source3: arpwatch.service
 
 Patch: arpwatch-%version-%release.patch
 
@@ -39,24 +38,25 @@ which will automatically keep traffic of the IP addresses on your
 network.
 
 %prep
-%setup -q
+%setup
 %patch -p1
 
 %build
 export ac_cv_path_V_SENDMAIL=%_sbindir/sendmail
-autoreconf -fisv
+%autoreconf
 %configure
 
 %make_build ARPDIR=%_vararpwatch
 
 %install
-mkdir -p %buildroot{%_vararpwatch,%_sbindir,%_man8dir,%_initdir}
+mkdir -p %buildroot{%_vararpwatch,%_sbindir,%_man8dir,%_initdir,%_unitdir}
 mkdir -p %buildroot/etc/sysconfig
-%make_install DESTDIR=%buildroot install install-man
+%makeinstall_std install-man
 
 install -pm755 arp2ethers massagevendor %buildroot%_vararpwatch/
 install -pm644 *.awk *.dat %buildroot%_vararpwatch/
 
+install -pm644 %_sourcedir/arpwatch.service %buildroot%_unitdir/
 install -pm755 %_sourcedir/arpwatch.init %buildroot%_initdir/%name
 install -pm644 %_sourcedir/arpwatch.sysconfig %buildroot/etc/sysconfig/%name
 
@@ -74,6 +74,7 @@ install -pm644 %_sourcedir/arpwatch.sysconfig %buildroot/etc/sysconfig/%name
 %files
 %_sbindir/*
 %_mandir/man?/*
+%_unitdir/*
 %config(noreplace) %_initdir/%name
 %config(noreplace) /etc/sysconfig/%name
 %attr(1775,root,%arpwatch_group) %dir %_vararpwatch
@@ -85,6 +86,12 @@ install -pm644 %_sourcedir/arpwatch.sysconfig %buildroot/etc/sysconfig/%name
 %doc README CHANGES
 
 %changelog
+* Thu Jun 07 2012 Dmitry V. Levin <ldv@altlinux.org> 2:2.1a15-alt8
+- arpwatch: changed to exit with zero code on signal.
+- arpwatch: added -D option.
+- Packaged arpwatch.service (closes: #28027).
+- Updated ethercodes.dat.
+
 * Thu Mar 04 2010 Dmitry V. Levin <ldv@altlinux.org> 2:2.1a15-alt7
 - Sorted ethercodes.dat using C collation.
 - Cleaned up specfile a bit.
