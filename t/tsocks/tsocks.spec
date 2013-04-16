@@ -1,7 +1,7 @@
 %define		real_version	1.8beta5
 Name:		tsocks
 Version:	1.8
-Release:	alt1
+Release:	alt1.qa1
 Summary:	Library for catching network connections, redirecting them on a SOCKS server
 Group:		Security/Networking
 License:	GPLv2+
@@ -49,6 +49,9 @@ make install DESTDIR=$RPM_BUILD_ROOT
 %{_mandir}/man?/*
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.8-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Fri Sep 24 2010 Mykola Grechukh <gns@altlinux.ru> 1.8-alt1
 - built for ALT Linux
 
