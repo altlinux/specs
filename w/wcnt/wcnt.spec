@@ -1,7 +1,7 @@
 Summary: Wav Composer (Not Toilet), modular audio synthesis sequencer, and sampler
 Name: wcnt
 Version: 1.26.4
-Release: alt1
+Release: alt1.qa1
 License: GPL
 Group: Sound
 Source: %name-src-%version.tar.bz2
@@ -73,6 +73,9 @@ install Makefile \
 %_datadir/%name/*
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.26.4-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sat Feb 28 2009 Fr. Br. George <george@altlinux.ru> 1.26.4-alt1
 - Initial build from openSuSE
 
