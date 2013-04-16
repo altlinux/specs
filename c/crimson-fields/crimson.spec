@@ -1,7 +1,7 @@
 %define sname crimson
 Name:		crimson-fields
 Version:	0.5.3
-Release:	alt1
+Release:	alt1.qa1
 License:	GPL
 Group:		Games/Strategy
 URL:		http://crimson.seul.org
@@ -50,6 +50,9 @@ install -m 644 gfx/%sname.png %buildroot%_liconsdir/
 %_datadir/applications/%sname.desktop
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.5.3-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Thu Mar 19 2009 Fr. Br. George <george@altlinux.ru> 0.5.3-alt1
 - Version up
 
