@@ -1,7 +1,7 @@
 Name:		kover
 Summary:	WYSIWYG CD cover printer with CDDB support
 Version:	4
-Release:	alt1
+Release:	alt1.qa1
 Source:		http://lisas.de/kover/%name-%version.tar.bz2
 Source1:	%name.desktop
 Patch0:		%name-fix-mimetypes.patch
@@ -61,6 +61,9 @@ cd -
 %_desktopdir/kde4/%name.desktop
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 4-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Tue May 11 2010 Fr. Br. George <george@altlinux.ru> 4-alt1
 - New version
 
