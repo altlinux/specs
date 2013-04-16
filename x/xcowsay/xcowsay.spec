@@ -1,6 +1,6 @@
 Name: xcowsay
 Version: 1.3
-Release: alt1
+Release: alt1.qa1
 Summary: displays a cute cow and message on your desktop
 Group: Games/Other
 License: GPL
@@ -33,6 +33,9 @@ xcowsay displays a cute cow and message on your desktop. Inspired by the origina
 %_man6dir/xcow*
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.3-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sun Nov 14 2010 Fr. Br. George <george@altlinux.ru> 1.3-alt1
 - Autobuild version bump to 1.3
 
