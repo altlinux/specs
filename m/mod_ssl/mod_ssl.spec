@@ -23,7 +23,7 @@
 
 Name: mod_ssl
 Version: 2.8.31
-Release: alt3%release_tag
+Release: alt3.qa1
 
 Summary: An SSL module for the Apache Web server
 License: BSD
@@ -303,6 +303,9 @@ fi
 %doc index.html stamp.gif
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.8.31-alt3.qa1
+- NMU: rebuilt for debuginfo.
+
 * Thu Dec 16 2010 Dmitry V. Levin <ldv@altlinux.org> 2.8.31-alt3%release_tag
 - Fixed build with openssl-1.0, patch from PLD.
 
