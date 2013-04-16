@@ -1,7 +1,7 @@
 Name: qbittorrent
-Version: 2.9.3
+Version: 3.0.9
 Epoch: 1
-Release: alt1.5
+Release: alt1
 
 Summary: qBittorrent is a bittorrent client written in C++ / Qt4 using the good libtorrent library.
 Summary(ru_RU.UTF-8): qBittorrent - bittorrent клиент написаный на C++ / Qt4, использующий библиотеку libtorrent.
@@ -21,14 +21,12 @@ BuildPreReq: desktop-file-utils
 
 BuildRequires: boost-devel boost-filesystem boost-filesystem-devel boost-datetime boost-program-options-devel boost-asio-devel
 BuildRequires: gcc-c++ libqt4-devel >= 4.4
-BuildRequires: libtorrent-rasterbar7-devel >= %libtorrent_version 
+BuildRequires: libtorrent-rasterbar-devel >= %libtorrent_version 
 BuildRequires: GeoIP-Lite-Country
 BuildRequires: libnotify-devel
 
-Requires: libtorrent-rasterbar7 >= %libtorrent_version 
 Requires: python-modules-ctypes
 Requires: GeoIP-Lite-Country
-Requires(post,postun): desktop-file-utils
 
 %description
 qBittorrent is a bittorrent client written in C++ / Qt4 using the good 
@@ -50,6 +48,14 @@ qBittorrent стремиться быть хорошей альтернатив�
 %patch -p0
 #cp -f %SOURCE2 %SOURCE3 src/lang/
 
+# Adapt to new Boost
+subst 's/BOOST_FILESYSTEM_VERSION=2/BOOST_FILESYSTEM_VERSION=3/' src/src.pro
+
+# Fix use libtorrent-rasterbar >= 1.0.0
+subst 's,^#if LIBTORRENT_VERSION_MINOR > 15,#if LIBTORRENT_VERSION_MAJOR > 0 || LIBTORRENT_VERSION_MINOR > 15,g'   $(find src -name '*.cpp' -o -name '*.h')
+subst 's,^#if LIBTORRENT_VERSION_MINOR <,#if LIBTORRENT_VERSION_MAJOR == 0 \&\& LIBTORRENT_VERSION_MINOR <,g'      $(find src -name '*.cpp' -o -name '*.h')
+subst 's,^#if LIBTORRENT_VERSION_MINOR >= 16,#if LIBTORRENT_VERSION_MAJOR > 0 || LIBTORRENT_VERSION_MINOR >= 16,g' $(find src -name '*.cpp' -o -name '*.h')
+
 %build
 %_configure_script --prefix=%buildroot%_usr --qtdir=%_qt4dir
 %make_build
@@ -66,6 +72,9 @@ qBittorrent стремиться быть хорошей альтернатив�
 %_datadir/icons/hicolor/*/*/*
 
 %changelog
+* Tue Apr 16 2013 Andrey Cherepanov <cas@altlinux.org> 1:3.0.9-alt1
+- New version 3.0.9 (ALT #28367)
+
 * Fri Nov 30 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:2.9.3-alt1.5
 - Rebuilt with updated libtorrent-rasterbar
 
