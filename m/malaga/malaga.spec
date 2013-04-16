@@ -3,7 +3,7 @@ BuildRequires: gcc-c++ libreadline-devel
 # END SourceDeps(oneline)
 Name:           malaga
 Version:        7.12 
-Release:        alt2_13
+Release:        alt2_14
 Summary:        A programming language for automatic language analysis
 
 Group:          Development/Other
@@ -18,6 +18,7 @@ Patch0:         malaga-rename-map_file.diff
 # Malshow needs to be linked with -lm as Fedora's ld doesn't do implicit
 # linking anymore
 Patch1:         malaga-malshow-lm.patch
+Patch2:         malaga-aarch64.patch
 
 BuildRequires:  gtk2-devel readline-devel
 Requires: lib%{name} = %{version}-%{release}
@@ -55,6 +56,7 @@ Library files for %{name}.
 %setup -q
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 # Remove "@" marks so that the build process is more verbose
 sed -i.debug -e 's|^\([ \t][ \t]*\)@|\1|' Makefile.in
 # Remove "-s" so binaries won't be stripped
@@ -97,6 +99,9 @@ chmod 0755 $RPM_BUILD_ROOT%{_libdir}/libmalaga.so*
 
 
 %changelog
+* Tue Apr 16 2013 Igor Vlasenko <viy@altlinux.ru> 7.12-alt2_14
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 7.12-alt2_13
 - update to new release by fcimport
 
