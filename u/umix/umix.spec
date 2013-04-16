@@ -1,7 +1,7 @@
 Summary:	Program for adjusting soundcard mixers (OSS only). 
 Name:		umix
 Version:	1.0.2
-Release:	alt3
+Release:	alt3.qa1
 License:	GPL
 Url:		http://umix.sf.net/
 Group:		Sound
@@ -36,6 +36,9 @@ Modprobe snd-mixer-oss for OSS mixer support.
 %doc AUTHORS ChangeLog NEWS README TODO
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.0.2-alt3.qa1
+- NMU: rebuilt for debuginfo.
+
 * Tue Aug 25 2009 Fr. Br. George <george@altlinux.ru> 1.0.2-alt3
 - No ALSA support is here, add a warning
 
