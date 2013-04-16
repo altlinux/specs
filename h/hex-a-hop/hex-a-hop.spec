@@ -3,7 +3,7 @@ Url: http://www.aceinternet.co.uk/~mokona/
 License: GPL
 Group: Games/Puzzles
 Version: 1.0.0
-Release: alt4
+Release: alt4.qa1
 Summary: Puzzle game based on hexagonal tiles
 Summary(ru_RU.KOI8-R): Игра-головоломка с шестиугольными плитками
 Source: %name.tar.gz
@@ -55,6 +55,9 @@ cp -a levels.dat graphics %buildroot%_gamesdatadir/%name/
 %_mandir/*/*
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.0.0-alt4.qa1
+- NMU: rebuilt for debuginfo.
+
 * Tue May 11 2010 Fr. Br. George <george@altlinux.ru> 1.0.0-alt4
 - Fix repocop warnings
 
