@@ -1,6 +1,6 @@
 Name:		biniax2
 Version:	1.30
-Release:	alt2
+Release:	alt2.qa1
 License:	ZLib
 Group:		Games/Puzzles
 Summary:	Colour block logic game with original gameplay
@@ -74,6 +74,9 @@ cp -r data %buildroot%_gamesdatadir/%name/data
 %_gamesdatadir/%name/*
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.30-alt2.qa1
+- NMU: rebuilt for debuginfo.
+
 * Wed Jun 03 2009 Fr. Br. George <george@altlinux.ru> 1.30-alt2
 - Repocop fixes
 
