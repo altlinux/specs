@@ -4,7 +4,7 @@ Packager: Denis Smirnov <mithraen@altlinux.ru>
 
 Name: libpw1.11
 Version: 1.11.2
-Release: alt0.9cvs20061011.3
+Release: alt0.9cvs20061011.4
 
 Summary: Portable Windows Libary
 Summary(ru_RU.KOI8-R): Переносимая Windows-библиотека
@@ -23,8 +23,9 @@ Patch1: libpw-1.11.gcc47.patch
 %def_without dc
 %def_without avc
 
-# Automatically added by buildreq on Sat Jan 21 2006
-BuildRequires: aalib-devel flex gcc-c++ libSDL_sound-devel libalsa-devel libexpat-devel libldap-devel libsasl2-devel libssl-devel libstdc++-devel xorg-proto-devel
+# Automatically added by buildreq on Tue Apr 16 2013 (-bb)
+# optimized out: elfutils gnu-config libX11-devel libcom_err-devel libkrb5-devel libstdc++-devel python-base
+BuildRequires: flex gcc-c++ libSDL-devel libXext-devel libalsa-devel libexpat-devel libldap-devel libpw1.11-devel libsasl2-devel libssl-devel libv4l-devel
 
 BuildPreReq: bison libv4l-devel
 BuildPreReq: libexpat-devel > 1.95.6-alt1
@@ -162,6 +163,9 @@ ln -snf %_datadir/%_name/make/ptlib-config %buildroot%_bindir/ptlib-config
 %endif
 
 %changelog
+* Tue Apr 16 2013 Denis Smirnov <mithraen@altlinux.ru> 1.11.2-alt0.9cvs20061011.4
+- update build requires
+
 * Tue Oct 16 2012 Denis Smirnov <mithraen@altlinux.ru> 1.11.2-alt0.9cvs20061011.3
 - fix build with gcc47
 
