@@ -1,6 +1,6 @@
 Name: numlockx
 Version: 1.2
-Release: alt1
+Release: alt1.qa1
 Summary: NumLockX turns on NumLock after starting X
 
 Group: System/X11
@@ -35,6 +35,9 @@ install -p -D %SOURCE1 %buildroot%_sysconfdir/X11/xinit.d/%name.sh
 %doc AUTHORS README LICENSE
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.2-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Fri Nov 05 2010 Fr. Br. George <george@altlinux.ru> 1.2-alt1
 - Autobuild version bump to 1.2
 
