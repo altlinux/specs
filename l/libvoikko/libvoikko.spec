@@ -5,8 +5,8 @@ BuildRequires: gcc-c++
 %add_optflags %optflags_shared
 %{!?python_sitelib: %global python_sitelib %(%{__python} -c "from distutils.sysconfig import get_python_lib; print get_python_lib()")}
 Name:           libvoikko
-Version:        3.5
-Release:        alt1_3
+Version:        3.6
+Release:        alt1_1
 Summary:        Voikko is a library for spellcheckers and hyphenators
 
 Group:          System/Libraries
@@ -115,6 +115,9 @@ install -pm 0644 python/libvoikko.py $RPM_BUILD_ROOT%{python_sitelibdir_noarch}/
 %{python_sitelibdir_noarch}/%{name}.py*
 
 %changelog
+* Tue Apr 16 2013 Igor Vlasenko <viy@altlinux.ru> 3.6-alt1_1
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 3.5-alt1_3
 - update to new release by fcimport
 
