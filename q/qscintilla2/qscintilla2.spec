@@ -6,7 +6,7 @@
 Summary: QScintilla is a port to Qt of Neil Hodgson's Scintilla C++ editor class
 Name: qscintilla2
 Version: 2.7
-Release: alt3
+Release: alt3.1
 License: GPL
 Group: Development/KDE and QT
 Source: qscintilla-gpl-%version.tar.gz
@@ -29,6 +29,7 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-sip-devel
 BuildPreReq: python3-module-PyQt4-devel
 %endif
+BuildRequires: chrpath
 
 %description
 Qscintilla is a free source code editing component. It comes with complete
@@ -358,6 +359,9 @@ cp -a doc/Scintilla %buildroot%_docdir/%libname-%version
 cp -a doc/html-Qt3 %buildroot%_docdir/%libname-%version
 cp -a doc/html-Qt4Qt5 %buildroot%_docdir/%libname-%version
 
+# Quick fix RPATH
+chrpath -d %buildroot%python_sitelibdir/PyQt4/Qsci.so 
+
 %if_with qt3
 %files -n %libname-qt3
 %_qt3dir/lib/*.so.*
@@ -422,6 +426,9 @@ cp -a doc/html-Qt4Qt5 %buildroot%_docdir/%libname-%version
 %_docdir/%libname-%version
 
 %changelog
+* Tue Apr 16 2013 Andrey Cherepanov <cas@altlinux.org> 2.7-alt3.1
+- Remove standard library path from RPATH
+
 * Fri Mar 01 2013 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.7-alt3
 - rebuilt without python3
 
