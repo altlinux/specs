@@ -5,7 +5,7 @@
 
 Name: NetworkManager-sstp
 Version: 0.9.4.0
-Release: alt2
+Release: alt2.1
 License: %gpl2plus
 Group: System/Configuration/Networking
 Summary:  NetworkManager VPN plugin for SSTP
@@ -13,6 +13,7 @@ Summary:  NetworkManager VPN plugin for SSTP
 Url: http://www.gnome.org/projects/NetworkManager/
 
 Source: %name-%version.tar
+Patch:  gtk-table-to-gtk-grid.patch
 Requires: NetworkManager >= %nm_version
 Requires: sstp-client
 Requires: ppp = %ppp_version
@@ -45,6 +46,7 @@ NetworkManager panel applet.
 
 %prep
 %setup
+%patch -p1
 
 %build
 rm -f m4/{intltool,libtool,lt~obsolete,ltoptions,ltsugar,ltversion}.m4
@@ -87,6 +89,9 @@ fi
 %exclude %_libdir/NetworkManager/lib*.la
 
 %changelog
+* Tue Apr 16 2013 Andrey Cherepanov <cas@altlinux.org> 0.9.4.0-alt2.1
+- Replace deprecated GtkTable by GtkGrid
+
 * Thu Oct 25 2012 Alexey Shabalin <shaba@altlinux.ru> 0.9.4.0-alt2
 - snapshot build
 - rebuild with new sstp-client
