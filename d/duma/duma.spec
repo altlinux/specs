@@ -7,7 +7,7 @@
 Summary: Detect Unintended Memory Access
 Name: duma
 Version: 2.5.15
-Release: alt2
+Release: alt2.qa1
 License: GPL
 Group: Development/Other
 Url: http://duma.sourceforge.net/
@@ -67,6 +67,9 @@ sed -i 's@%_lib/@%_libdir@g' gdbinit.rc
 %_includedir/*
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.5.15-alt2.qa1
+- NMU: rebuilt for debuginfo.
+
 * Wed Apr 14 2010 Fr. Br. George <george@altlinux.ru> 2.5.15-alt2
 - Loader script real library path fix
 - Some documentation added
