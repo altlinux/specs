@@ -12,7 +12,7 @@
 #Name: %moodlepackagename
 Name: moodle
 Version: %packagversion.%packagedate
-Release: %branch_release alt1
+Release: %branch_release alt2
 
 Summary: The Course Management System Moodle
 License: %gpl2plus
@@ -33,9 +33,9 @@ Patch1: %name-alt-install-directorypermissions.patch
 Patch2: %name-alt-install-datadir-fix.patch
 
 Requires: %name-base = %version-%release
-Requires: %name-auth-pam
-Requires: %name-mod-journal
-Requires: %name-mod-hotpot
+Requires: %name-auth-pam >= 1.9.19.2007101592.04.0.20130114-alt1
+Requires: %name-mod-journal >= 1.9.19.20130114-alt1
+Requires: %name-mod-hotpot >= 2.4.13.2007101513.0.20130114-alt1
 
 BuildRequires(pre): rpm-macros-branch
 BuildRequires(pre): rpm-macros-moodle >= 2.4
@@ -433,6 +433,9 @@ exit 0
 %moodle_questionformatdir/hotpot/
 
 %changelog
+* Tue Apr 16 2013 Aleksey Avdeev <solo@altlinux.ru> 1.9.19.20130114-alt2
+- Fix requires for %%name subpackage
+
 * Sat Jan 12 2013 Cronbuild Service <cronbuild@altlinux.org> 1.9.19.20130114-alt1
 - repocop cronbuild 20130112. At your service.
 - 1.9.19+ (Build: 20130114)
