@@ -1,6 +1,6 @@
 Name: units
-Version: 1.88
-Release: alt1.qa1
+Version: 2.01
+Release: alt1
 
 Summary: A utility for converting amounts from one unit to another
 License: GPLv3+
@@ -8,7 +8,6 @@ Group: Office
 Url: http://www.gnu.org/software/units/units.html
 # ftp://ftp.gnu.org/pub/gnu/%name/%name-%version.tar.gz
 Source: %name-%version.tar
-Patch: units-1.88-alt-texinfo.patch
 BuildRequires: libreadline-devel
 
 %description
@@ -18,13 +17,9 @@ another.  The units program can handle multiplicative scale changes as
 well as conversions such as Fahrenheit to Celsius.
 
 %prep
-%setup -q
-%patch -p1
+%setup
 # remove generated files
 rm parse.tab.c *.info*
-find -type f -print0 |
-	xargs -r0 fgrep -lZ /usr/local -- |
-	xargs -r0 sed -i 's,/usr/local,%prefix,g' --
 
 %build
 %configure
@@ -33,14 +28,21 @@ find -type f -print0 |
 %install
 %makeinstall_std
 
+%check
+%make_build -k check
+
 %files
 %_bindir/*
-%_datadir/%name.dat
+%_datadir/%name/
 %_infodir/*.info*
 %_man1dir/*
 %doc NEWS README
 
 %changelog
+* Tue Apr 16 2013 Dmitry V. Levin <ldv@altlinux.org> 2.01-alt1
+- Updated to 2.01.
+- Enabled test suite.
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.88-alt1.qa1
 - NMU: rebuilt for debuginfo.
 
