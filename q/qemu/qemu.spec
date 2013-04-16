@@ -128,7 +128,7 @@
 
 Name: qemu
 Version: 1.4.0
-Release: alt1
+Release: alt1.1
 
 Summary: QEMU CPU Emulator
 License: GPL/LGPL/BSD
@@ -558,6 +558,9 @@ fi
 %_bindir/vscclient
 
 %changelog
+* Tue Apr 16 2013 Fr. Br. George <george@altlinux.ru> 1.4.0-alt1.1
+- Fix test (FC patch)
+
 * Mon Feb 18 2013 Alexey Shabalin <shaba@altlinux.ru> 1.4.0-alt1
 - 1.4.0
 
