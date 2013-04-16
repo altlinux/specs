@@ -1,6 +1,6 @@
 Name: pdd-by
 Version: 0.3
-Release: alt2.1
+Release: alt2.1.qa1
 
 Summary: PDD training
 License: GPLv3
@@ -55,6 +55,9 @@ cp ui/* %buildroot%_datadir/%name/ui
 %dir %attr(755,root,root) %_datadir/%name
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.3-alt2.1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Thu Dec 16 2010 Dmitry V. Levin <ldv@altlinux.org> 0.3-alt2.1
 - Blind rebuild without libyaml.
 
