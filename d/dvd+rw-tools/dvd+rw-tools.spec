@@ -2,7 +2,7 @@
 
 Name: dvd+rw-tools
 Version: 7.1
-Release: alt1.qa1
+Release: alt1.qa1.1
 Summary: Toolchain for mastering recordable DVD media
 License: %gpl2plus
 Group: Archiving/Cd burning
@@ -12,6 +12,14 @@ Patch1: %name-5.17.4.8.6-alt-setmntent.patch
 Patch2: %name-5.17.4.8.6-alt-subfs.patch
 Patch3: %name-6.0-alt-umount.patch
 Patch4: %name-7.0-gentoo-limitschange.patch
+# FC
+Patch10: dvd+rw-tools-7.0-dvddl.patch
+Patch11: dvd+rw-tools-7.0-reload.patch
+Patch12: dvd+rw-tools-7.0-wctomb.patch
+Patch13: dvd+rw-tools-7.0-wexit.patch
+Patch14: dvd+rw-tools-7.1-lastshort.patch
+Patch15: dvd+rw-tools-7.1-noevent.patch
+
 Requires(pre): dvdrwtools-control >= 1.2-alt2
 Requires: mkisofs >= 1.10
 
@@ -22,8 +30,8 @@ BuildRequires: rpm-build-licenses
 %description
 Collection of tools to master DVD+RW/+R/-R/-RW media.
 
-%description -l ru_RU.CP1251
-Набор утилит для подготовки и записи на DVD+RW/+R/-R/-RW носители.
+%description -l ru_RU.UTF-8
+РќР°Р±РѕСЂ СѓС‚РёР»РёС‚ РґР»СЏ РїРѕРґРіРѕС‚РѕРІРєРё Рё Р·Р°РїРёСЃРё РЅР° DVD+RW/+R/-R/-RW РЅРѕСЃРёС‚РµР»Рё.
 
 
 %prep
@@ -32,7 +40,12 @@ Collection of tools to master DVD+RW/+R/-R/-RW media.
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
-
+%patch10 -p0
+%patch11 -p1
+%patch12 -p0
+%patch13 -p1
+%patch14 -p1
+%patch15 -p1
 
 %build
 %make_build CFLAGS="%optflags" CXXFLAGS="%optflags"
@@ -59,6 +72,9 @@ install -p -m644 growisofs.1 %buildroot%_man1dir/
 
 
 %changelog
+* Tue Apr 16 2013 Sergey V Turchin <zerg@altlinux.org> 7.1-alt1.qa1.1
+- NMU: sync patches with FC (ALT#28851)
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 7.1-alt1.qa1
 - NMU: rebuilt for debuginfo.
 
