@@ -1,6 +1,6 @@
 Name: libtirpc
-Version: 0.2.2
-Release: alt0.4
+Version: 0.2.3
+Release: alt1
 
 Summary: transport-independent RPC library
 License: BSD
@@ -8,7 +8,7 @@ Group: System/Libraries
 
 Source0: %name-%version-%release.tar
 
-BuildRequires: libgssglue-devel
+BuildRequires: libkrb5-devel
 
 %package devel
 Summary: TI-RPC library and headers
@@ -56,6 +56,9 @@ done
 %_man3dir/*
 
 %changelog
+* Tue Apr 16 2013 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.2.3-alt1
+- 0.2.3 released
+
 * Fri Apr 22 2011 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.2.2-alt0.4
 - 0.2.2 rc4
 
