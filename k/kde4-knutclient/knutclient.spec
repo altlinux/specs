@@ -1,9 +1,7 @@
-%define _iskde 1
-
 %define rname knutclient
 Name:      kde4-%rname
-Version:   1.0.4
-Release:   alt1.qa1
+Version:   1.0.5
+Release:   alt1
 
 Group:     Monitoring
 Summary:   A GUI client for NUT
@@ -42,6 +40,9 @@ Knutclient - это графический KDE-клиент системы ра�
 %_K4iconsdir/*/*/apps/%{rname}*.*
 
 %changelog
+* Tue Apr 16 2013 Sergey V Turchin <zerg@altlinux.org> 1.0.5-alt1
+- new version
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.0.4-alt1.qa1
 - NMU: rebuilt for debuginfo.
 
