@@ -1,6 +1,6 @@
 Name: sipsak
 Version: 0.9.6
-Release: alt1.1
+Release: alt1.1.qa1
 Summary: CLI tool for SIP developers and administrators
 License: GPL
 Group: Communications
@@ -34,6 +34,9 @@ simple tests on SIP applications and devices.
 %doc AUTHORS INSTALL COPYING README NEWS TODO
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.9.6-alt1.1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Wed Dec 08 2010 Igor Vlasenko <viy@altlinux.ru> 0.9.6-alt1.1
 - rebuild with new openssl and/or boost by request of git.alt administrator
 
