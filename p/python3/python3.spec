@@ -59,7 +59,7 @@
 Summary: Version 3 of the Python programming language aka Python 3000
 Name: python3
 Version: %pybasever.1
-Release: alt3
+Release: alt4
 License: Python
 Group: Development/Python3
 
@@ -308,7 +308,7 @@ Url: http://www.python.org/
 
 Provides: python(abi) = %pybasever
 
-Requires: %name-base%{?_isa} = %EVR
+Requires: %name-base = %EVR
 
 %description
 Python 3 is a new version of the language that is incompatible with the 2.x
@@ -319,10 +319,11 @@ considerably, and a lot of deprecated features have finally been removed.
 %package base
 Summary: Python 3 runtime libraries
 Group: Development/Python3
-Requires: %name = %EVR
 Provides: %name-libs = %EVR
 Obsoletes: %name-libs < %EVR
 %py3_provides builtins
+%filter_from_requires /^%name[[:space:]]/d
+%filter_from_requires /^\/usr\/bin\/%name/d
 
 %description base
 This package contains files used to embed Python 3 into applications.
@@ -342,6 +343,7 @@ with and native libraries for Python 3
 %package -n libpython3
 Summary: Python3 shared library
 Group: Development/Python3
+Requires: %name-base = %EVR
 
 %description -n libpython3
 This package contains Python3 shared library
@@ -359,24 +361,16 @@ This package contains several tools included with Python 3
 %package modules-tkinter
 Summary: A GUI toolkit for Python 3
 Group: Development/Python3
-Requires: %name = %EVR
+Provides: %name-modules-idlelib = %EVR
+Obsoletes: %name-modules-idlelib < 3.3.1-alt4
 
 %description modules-tkinter
 The Tkinter (Tk interface) program is an graphical user interface for
 the Python scripting language.
 
-%package modules-idlelib
-Summary: A IDLE lib for Python 3
-Group: Development/Python3
-Requires: %name-modules-tkinter = %EVR
-
-%description modules-idlelib
-IDLE is Python's Tkinter-based Integrated DeveLopment Environment.
-
 %package modules-sqlite3
 Summary: DB-API 2.0 interface for SQLite databases
 Group: Development/Python3
-Requires: %name = %EVR
 
 %description modules-sqlite3
 SQLite is a C library that provides a lightweight disk-based database
@@ -389,7 +383,6 @@ code to a larger database such as PostgreSQL or Oracle.
 %package modules-curses
 Summary: Python3 "curses" module
 Group: Development/Python3
-Requires: %name = %EVR
 
 %description modules-curses
 An interface to the curses library, providing portable terminal
@@ -402,7 +395,7 @@ open-source curses library hosted on Linux and the BSD variants of UNIX.
 Summary: The test modules from the main python 3 package
 Group: Development/Python3
 Requires: %name = %EVR
-Requires: %name-modules-idlelib = %EVR
+Requires: %name-modules-tkinter = %EVR
 Requires: %name-modules-curses = %EVR
 Requires: %name-modules-sqlite3 = %EVR
 Requires: %name-tools = %EVR
@@ -915,9 +908,11 @@ WITHIN_PYTHON_RPM_BUILD= LD_LIBRARY_PATH=`pwd` ./python -m test.regrtest --verbo
 %_bindir/2to3-%pybasever
 %_bindir/idle*
 %pylibdir/Tools
+%exclude %pylibdir/Tools/scripts/run_tests.py
 %doc %pylibdir/Doc
 
 %files modules-tkinter
+%pylibdir/idlelib
 %pylibdir/tkinter
 %exclude %pylibdir/tkinter/test
 %dynload_dir/_tkinter.cpython-%pyshortver%pyabi.so
@@ -929,9 +924,6 @@ WITHIN_PYTHON_RPM_BUILD= LD_LIBRARY_PATH=`pwd` ./python -m test.regrtest --verbo
 %pylibdir/turtledemo/*.cfg
 %dir %pylibdir/turtledemo/__pycache__/
 %pylibdir/turtledemo/__pycache__/*%bytecode_suffixes
-
-%files modules-idlelib
-%pylibdir/idlelib
 
 %files modules-sqlite3
 %dir %pylibdir/sqlite3/
@@ -955,8 +947,15 @@ WITHIN_PYTHON_RPM_BUILD= LD_LIBRARY_PATH=`pwd` ./python -m test.regrtest --verbo
 %dynload_dir/_testcapi.cpython-%pyshortver%pyabi.so
 %pylibdir/tkinter/test
 %pylibdir/unittest/test
+%pylibdir/Tools/scripts/run_tests.py
 
 %changelog
+* Tue Apr 16 2013 Aleksey Avdeev <solo@altlinux.ru> 3.3.1-alt4
+- remove subpackage %%name-modules-idlelib (moved to
+  %%name-modules-tkinter)
+- move %%_libdir/python*/Tools/scripts/run_tests.py to subpackage
+  %%name-test
+
 * Fri Apr 12 2013 Aleksey Avdeev <solo@altlinux.ru> 3.3.1-alt3
 - add subpackage %%name-modules-idlelib
 
