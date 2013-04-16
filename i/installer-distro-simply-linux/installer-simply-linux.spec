@@ -1,6 +1,6 @@
 Name: installer-distro-simply-linux
 Version: 7.0
-Release: alt2
+Release: alt3
 
 Summary: Installer common files
 Summary(ru_RU.UTF-8): Общие пакеты для установки дистрибутива "Simply linux"
@@ -114,6 +114,13 @@ Installer stage3
 %_datadir/alterator/ui/simply-linux
 
 %changelog
+* Tue Apr 16 2013 Mikhail Efremov <sem@altlinux.org> 7.0-alt3
+- lightdm: Set icon theme SimpleSL.
+- Enable bluetoothd.service.
+- Drop alterator-menu/module-expert-list,*-order-list.
+- Hide alterator-logs in the acc.
+- Fix alterator-menu postinstall hook perms.
+
 * Wed Mar 27 2013 Mikhail Efremov <sem@altlinux.org> 7.0-alt2
 - Explicitly enable prefdm.service.
 - Disable krb5kdc service.
