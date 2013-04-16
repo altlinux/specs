@@ -7,14 +7,14 @@ BuildRequires: jpackage-compat
 %global		_newname Vuze
 
 Name:		azureus
-Version:	4.8.1.2
-Release:	alt1_2jpp7
+Version:	4.9.0.0
+Release:	alt1_1jpp7
 Summary:	A BitTorrent Client
 Group:		Networking/WWW
 License:	GPLv2+
 URL:		http://azureus.sourceforge.net
 
-Source0:	http://downloads.sourceforge.net/azureus/%{_newname}_4812_source.zip
+Source0:	http://downloads.sourceforge.net/azureus/%{_newname}_4900_source.zip
 
 Source1:	azureus.script
 Source2:	Azureus.desktop
@@ -37,20 +37,23 @@ Patch22:	azureus-no-update-manager-UpdateMonitor.patch
 Patch27:	azureus-SecureMessageServiceClientHelper-bcprov.patch
 Patch28:	azureus-configuration.patch
 
-Patch50:	azureus-4.0.0.4-boo-windows.diff
+#Patch50:	azureus-4.0.0.4-boo-windows.diff
 Patch51:	azureus-4.0.0.4-boo-osx.diff
 Patch53:	azureus-4.0.0.4-boo-updating-w32.diff
 Patch54:	azureus-4.0.0.4-screw-win32utils.diff
 
-Patch56:	azureus-4.0.0.4-silly-java-tricks-are-for-kids.diff
+#Patch56:	azureus-4.0.0.4-silly-java-tricks-are-for-kids.diff
 Patch57:	azureus-4.0.0.4-stupid-invalid-characters.diff
 
 Patch58:	azureus-4.2.0.4-java5.patch
 
 Patch59:	azureus-4.8.1.2-fix-compile.patch
 
+Patch60:	azureus-4.8.1.2-no-bundled-apache-commons.patch
+
 BuildRequires:	ant jpackage-utils >= 1.5 xml-commons-apis
 BuildRequires:	apache-commons-cli log4j
+BuildRequires:	apache-commons-lang
 BuildRequires:	bouncycastle >= 1.33-3
 BuildRequires:	eclipse-swt >= 3.5
 BuildRequires:	junit
@@ -68,7 +71,7 @@ Source44: import.info
 
 
 %description 
-Azureus (now %%{_newname}) implements the BitTorrent protocol using java
+Azureus (now %{_newname}) implements the BitTorrent protocol using java
 and comes bundled with many invaluable features for both beginners and
 advanced users.
 
@@ -79,73 +82,39 @@ cp %{SOURCE4} .
 
 %patch2 -p0 -b .cache-size
 %patch3 -p1 -b .remove-manifest-classpath
-%patch9 -p0 -b .no-shared-plugins
-#%patch12 -p1 -b .no-updates-PluginInitializer
-#%patch13 -p1 -b .no-updates-PluginInterfaceImpl
-#%patch14 -p1 -b .no-update-manager-AzureusCoreImpl
-#%patch15 -p1 -b .no-update-manager-CorePatchChecker
-#%patch16 -p1 -b .no-update-manager-CoreUpdateChecker
-#%patch19 -p1 -b .no-update-manager-PluginUpdatePlugin
-#%patch20 -p1 -b .no-update-manager-SWTUpdateChecker
-#%patch22 -p1 -b .no-update-manager-UpdateMonitor
+%patch9 -p1 -b .no-shared-plugins
+
 %patch27 -p1 -b .nobcprov
-#%patch28 -p0 -b .configuration 
 
-#rm com/aelitis/azureus/core/update -rf
-#find ./ -name osx | xargs rm -r
-#find ./ -name macosx | xargs rm -r
-#find ./ -name win32 | xargs rm -r
-#find ./ -name Win32\* | xargs rm -r
-# Remove test code
-
-rm org/gudy/azureus2/platform/macosx/access/cocoa/CocoaJavaBridge.java
-rm org/gudy/azureus2/platform/macosx/PlatformManagerImpl.java
-rm org/gudy/azureus2/platform/win32/PlatformManagerImpl.java
-rm org/gudy/azureus2/platform/macosx/access/jnilib/OSXAccess.java
-rm org/gudy/azureus2/platform/win32/access/AEWin32Access.java
-rm org/gudy/azureus2/platform/win32/access/impl/AEWin32AccessInterface.java
-rm org/gudy/azureus2/platform/win32/access/impl/AEWin32AccessImpl.java
-rm org/gudy/azureus2/platform/macosx/NativeInvocationBridge.java
-rm org/gudy/azureus2/platform/macosx/PListEditor.java
-rm org/gudy/azureus2/platform/win32/access/AEWin32AccessException.java
-rm org/gudy/azureus2/platform/win32/access/AEWin32AccessListener.java
-rm org/gudy/azureus2/platform/win32/access/AEWin32Manager.java
-rm org/gudy/azureus2/platform/win32/access/impl/AEWin32AccessCallback.java
-rm org/gudy/azureus2/platform/win32/access/impl/AEWin32AccessExceptionImpl.java
-rm org/gudy/azureus2/platform/win32/PlatformManagerUpdateChecker.java
-%patch50 -p1 -b .boo-windows
 
 rm org/gudy/azureus2/ui/swt/osx/CarbonUIEnhancer.java
 rm org/gudy/azureus2/ui/swt/osx/Start.java
 rm org/gudy/azureus2/ui/swt/win32/Win32UIEnhancer.java
 %patch51 -p1 -b .boo-osx
 %patch53 -p1 -b .boo-updating-w32
-#%patch54 -b .screw-win32utils
 
-%patch56 -p1 -b .silly-java-tricks-are-for-kids
 %patch57  -p1 -b stupid-invalid-characters
 
 %patch58 -p1 -b .java5
 
 %patch59 -p1 -b .fix-compile
 
+%patch60 -p1 -b .no-bundled-apache-commons
+
 #hacks to org.eclipse.swt.widgets.Tree2 don't compile.
 rm -fR org/eclipse
-
-
-#sed -i -e \
-#  "s|sun.security.action.GetPropertyAction|gnu.java.security.action.GetPropertyAction|" \
-#  org/gudy/azureus2/core3/internat/MessageText.java
 
 # Convert line endings...
 sed -i 's/\r//' ChangeLog.txt
 chmod 644 *.txt
 
+#remove bundled libs
+rm -fR org/apache
 
 %build
 mkdir -p build/libs
 build-jar-repository -p build/libs bcprov apache-commons-cli log4j \
-  junit
+  junit apache-commons-lang
 
 #ppc seems to have eclipse-swt.ppc64 installed so libdir can't be used
 if [ -e /usr/lib/eclipse/swt.jar ];then
@@ -228,6 +197,9 @@ touch %{_datadir}/icons/hicolor
 %{_datadir}/azureus
 
 %changelog
+* Tue Apr 16 2013 Igor Vlasenko <viy@altlinux.ru> 4.9.0.0-alt1_1jpp7
+- update to new release by jppimport
+
 * Thu Feb 14 2013 Igor Vlasenko <viy@altlinux.ru> 4.8.1.2-alt1_2jpp7
 - update to new release by jppimport
 
