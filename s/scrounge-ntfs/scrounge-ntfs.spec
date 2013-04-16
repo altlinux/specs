@@ -1,6 +1,6 @@
 Name: scrounge-ntfs
 Version: 0.9
-Release: alt2
+Release: alt2.qa1
 
 Summary: Data recovery program for NTFS file systems
 
@@ -31,6 +31,9 @@ Reads each block of the hard disk to and retrieves rebuilds file system tree on 
 %_man8dir/*
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.9-alt2.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sun Jul 25 2010 Vitaly Lipatov <lav@altlinux.ru> 0.9-alt2
 - fix build, build from git
 
