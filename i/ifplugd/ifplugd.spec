@@ -1,6 +1,6 @@
 Name: ifplugd
 Version: 0.28
-Release: alt4
+Release: alt4.qa1
 
 Summary: Detect and perform actions when an ethernet cable is (un)plugged
 License: GPL
@@ -90,6 +90,9 @@ install -pD -m755 %SOURCE1 %buildroot%_initdir/%name
 # - import Debian's apm script (suspend/resume ifplugd)
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.28-alt4.qa1
+- NMU: rebuilt for debuginfo.
+
 * Mon Jan 21 2008 Michael Shigorin <mike@altlinux.org> 0.28-alt4
 - added Gentoo patch to fix build with current includes
 - small spec cleanups
