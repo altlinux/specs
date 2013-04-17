@@ -1,6 +1,6 @@
 Name: filezilla
 Version: 3.3.3
-Release: alt1
+Release: alt1.qa1
 Summary: FileZilla is a fast and reliable FTP client
 Packager: Stanislav Yadykin <tosick@altlinux.ru>
 
@@ -40,6 +40,9 @@ of useful features and an intuitive interface
 %_man5dir/*
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 3.3.3-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Wed Jun 30 2010 Stanislav Yadykin <tosick@altlinux.ru> 3.3.3-alt1
 - 3.3.3
 
