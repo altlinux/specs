@@ -6,7 +6,7 @@
 
 Name: tclx
 Version: 8.4
-Release: alt6
+Release: alt6.qa1
 Serial: 1
 
 Summary: Tcl extensions for POSIX systems
@@ -47,6 +47,9 @@ and message catalogs.
 %_mandir/mann/*
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1:8.4-alt6.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sat Jul 22 2006 Sergey Bolshakov <sbolshakov@altlinux.ru> 1:8.4-alt6
 - CVS snapshot @20060125
 - fixed build on x86_64
