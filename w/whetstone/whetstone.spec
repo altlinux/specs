@@ -1,6 +1,6 @@
 Name: whetstone
 Version: 1.2
-Release: alt2
+Release: alt2.qa1
 
 Summary: Whetstone Double Precision Benchmark
 License: Distributable
@@ -28,6 +28,9 @@ Whetstone Double Precision Benchmark
 # TODO: track down precise tarball source
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.2-alt2.qa1
+- NMU: rebuilt for debuginfo.
+
 * Thu Oct 15 2009 Michael Shigorin <mike@altlinux.org> 1.2-alt2
 - built for Sisyphus
 
