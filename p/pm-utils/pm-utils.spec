@@ -1,6 +1,6 @@
 Name: pm-utils
 Version: 1.4.1
-Release: alt2
+Release: alt2.qa1
 Summary: Tools to suspend and hibernate computer
 Summary(ru_RU.UTF-8):  Набор утилит для приостановления работы компьютера.
 Url: http://pm-utils.freedesktop.org/
@@ -62,6 +62,9 @@ done
 %doc doc/*
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.4.1-alt2.qa1
+- NMU: rebuilt for debuginfo.
+
 * Mon Oct 18 2010 Ildar Mulyukov <ildar@altlinux.ru> 1.4.1-alt2
 - add fix to NM hook from FD bugzilla (closes: #24321) (merged into
 	%name-alt-misc.patch)
