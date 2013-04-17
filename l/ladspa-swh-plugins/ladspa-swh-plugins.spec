@@ -2,7 +2,7 @@
 
 Name: ladspa-%_name
 Version: 0.4.11
-Release: alt3
+Release: alt3.qa1
 
 Summary: A set of audio plugins for LADSPA
 Summary(ru_RU.KOI8-R): Набор модулей LADSPA от Стива Хэрриса и сотоварищей
@@ -59,6 +59,9 @@ autoreconf -ifsv
 %doc AUTHORS README ChangeLog README.gsm ladspa-swh.html
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.4.11-alt3.qa1
+- NMU: rebuilt for debuginfo.
+
 * Thu Aug 27 2009 Damir Shayhutdinov <damir@altlinux.ru> 0.4.11-alt3
 - Fix BuildReq
 
