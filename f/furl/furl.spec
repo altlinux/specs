@@ -1,7 +1,7 @@
 Summary: Display the HTTP headers returned by webservers
 Name: furl
 Version: 2.1
-Release: alt1
+Release: alt1.qa1
 License: GPL
 Group: Networking/WWW
 URL: http://www.gumbynet.org.uk/software/furl.html
@@ -30,5 +30,8 @@ in response to client requests.
 
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.1-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Tue Jul 18 2006 Mikhail Pokidko <pma@altlinux.ru> 2.1-alt1
 - Initial build
