@@ -1,6 +1,6 @@
 Name: latex2rtf
 Version: 1.9.19
-Release: alt1
+Release: alt1.qa1
 
 Summary: Convert a LaTeX file to an RTF file
 Summary(ru_RU.KOI8-R): Преобразователь файлов LaTeX в формат RTF
@@ -49,6 +49,9 @@ information is translated to RTF.
 %_docdir/%name-%version
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.9.19-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Wed Jul 02 2008 Vitaly Lipatov <lav@altlinux.ru> 1.9.19-alt1
 - new version 1.9.19 (with rpmrb script)
 
