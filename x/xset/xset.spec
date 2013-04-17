@@ -1,6 +1,6 @@
 Name: xset
 Version: 1.2.1
-Release: alt1
+Release: alt1.qa1
 Summary: user preference utility for X
 License: MIT/X11
 Group: System/X11
@@ -35,6 +35,9 @@ This program is used to set various user preference options of the display
 %_man1dir/*
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.2.1-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Thu Nov 11 2010 Valery Inozemtsev <shrek@altlinux.ru> 1.2.1-alt1
 - 1.2.1
 
