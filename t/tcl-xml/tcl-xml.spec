@@ -1,6 +1,6 @@
 Name: tcl-xml
 Version: 3.1
-Release: alt4
+Release: alt4.qa1
 
 Summary: XML parsers for Tcl
 License: BSD
@@ -79,6 +79,9 @@ make -C libxml2
 %_includedir/tclxml-libxml2
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 3.1-alt4.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sun Aug  5 2007 Sergey Bolshakov <sbolshakov@altlinux.ru> 3.1-alt4
 - fixed pure-tcl parser to do hard reset
 
