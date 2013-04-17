@@ -1,6 +1,6 @@
 Name: scponly
 Version: 4.8
-Release: alt2
+Release: alt2.qa1
 
 Summary: Limited shell for secure file transfers
 License: GPL
@@ -152,6 +152,9 @@ done
 %doc AUTHOR BUILDING-JAILS.TXT CHANGELOG CONTRIB COPYING README TODO build_extras/setup_chroot.sh.RH9
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 4.8-alt2.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sun Jul 19 2009 Ilya Mashkin <oddity@altlinux.ru> 4.8-alt2
 - fix build with gcc
 - Add patch to prevent restriction bypass using OpenSSH's scp options -F
