@@ -3,7 +3,7 @@
 Name: littlewizard
 Summary: Development Environment for Children
 Version: 1.2.2
-Release: alt2
+Release: alt2.qa1
 License: GPL
 Group: Games/Educational
 Source0: %name-%version.tar.bz2
@@ -68,6 +68,9 @@ install -D %buildroot%_pixmapsdir/%name/%name-icon.png %buildroot%_niconsdir/%na
 %_libdir/liblw.so
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.2.2-alt2.qa1
+- NMU: rebuilt for debuginfo.
+
 * Thu Oct 08 2009 Fr. Br. George <george@altlinux.ru> 1.2.2-alt2
 - Repocop warnings fixed
 
