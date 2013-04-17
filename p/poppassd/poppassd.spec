@@ -4,7 +4,7 @@
 Summary:	Eudora Poppassd modified to support PAM
 Name:		poppassd
 Version:	1.8.5
-Release:	alt1
+Release:	alt1.qa1
 License:	GPL
 Group:		System/Servers
 Source0:	http://echelon.pl/pubs/%{name}-%{version}.tar.gz
@@ -49,5 +49,8 @@ available.
 %attr(640,root,root) %config(noreplace) %__xinetdir/%name
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.8.5-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Wed Feb 07 2007 Serhii Hlodin <hlodin@altlinux.ru> 1.8.5-alt1
 - Initial build 
