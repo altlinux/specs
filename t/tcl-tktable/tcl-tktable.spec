@@ -5,7 +5,7 @@
 
 Name: tcl-tktable
 Version: 2.9
-Release: alt3
+Release: alt3.qa1
 
 Summary: tktable is a table/matrix widget extension to tk/tcl
 License: BSD
@@ -53,6 +53,9 @@ state is  normal).
 %_mandir/mann/*
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.9-alt3.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sat Jul 22 2006 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.9-alt3
 - fixed build on x86_64
 
