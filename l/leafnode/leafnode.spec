@@ -1,6 +1,6 @@
 Name: leafnode
 Version: 1.11.8
-Release: alt1
+Release: alt1.qa1
 
 Summary: Leafnode - a leafsite NNTP server
 License: Artistic
@@ -115,6 +115,9 @@ chmod -R u=rwX,go=rX %_spooldir/news/
 %_bindir/*
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.11.8-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Mon Jun 14 2010 Michael Shigorin <mike@altlinux.org> 1.11.8-alt1
 - 1.11.8 (bugfixes)
 
