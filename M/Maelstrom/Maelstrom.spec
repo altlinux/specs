@@ -3,7 +3,7 @@
 
 Name: Maelstrom
 Version: 3.0.6
-Release: alt3.1
+Release: alt3.1.qa1
 
 Summary: Rockin' asteroids game
 License: GPL for code, artwork and sounds can be redistributed only with Maelstrom
@@ -121,6 +121,9 @@ rm -f %buildroot%_bindir/{macres,playwave,snd2wav}
 #_menudir/*
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 3.0.6-alt3.1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Tue Aug 11 2009 Ilya Mashkin <oddity@altlinux.ru> 3.0.6-alt3.1
 - fix desktop file
 
