@@ -1,6 +1,6 @@
 Name: setserial
 Version: 2.17
-Release: alt2
+Release: alt2.qa1
 Epoch: 1
 
 Summary: A utility for configuring serial ports
@@ -54,6 +54,9 @@ install -pDm644 %name.8 %buildroot%_man8dir/%name.8
 %doc README rc.serial
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1:2.17-alt2.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sun Mar 28 2010 Michael Shigorin <mike@altlinux.org> 1:2.17-alt2
 - dropped hardwired HAYES ESP support from spec
   as it was dropped from kernel headers (thanks kas@)
