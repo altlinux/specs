@@ -2,7 +2,7 @@
 
 Name: zelax-pflash
 Version: 1.0.11
-Release: alt2
+Release: alt2.qa1
 Packager: Sergey Y. Afonin <asy@altlinux.ru>
 
 Summary: Utility for flash programming for Zelax modems.
@@ -62,6 +62,9 @@ libtoolize -i
 %doc README.alt README.alt.koi8-r NEWS AUTHORS
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.0.11-alt2.qa1
+- NMU: rebuilt for debuginfo.
+
 * Tue Sep 29 2009 Sergey Y. Afonin <asy@altlinux.ru> 1.0.11-alt2
 - Fixed in spec:
   Added "libtoolize -i" for building with libtool_2.2.
