@@ -1,7 +1,7 @@
 Summary: Cute breakout-like
 Name: circuslinux
 Version: 1.0.3
-Release: alt7
+Release: alt7.qa1
 License: GPL
 Url: http://newbreedsoftware.com/circus-linux/
 Group: Games/Arcade
@@ -59,6 +59,9 @@ install -D %name.desktop %buildroot/%_desktopdir/%name.desktop
 %_desktopdir/%name.desktop
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.0.3-alt7.qa1
+- NMU: rebuilt for debuginfo.
+
 * Wed Sep 23 2009 Fr. Br. George <george@altlinux.ru> 1.0.3-alt7
 - Fix *64 build
 - Fix repocop warnings
