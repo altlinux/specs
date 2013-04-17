@@ -1,7 +1,7 @@
 
 Name: nvram-wakeup
 Version: 0.99b
-Release: alt1
+Release: alt1.qa1
 
 Summary: a tool to read/write the WakeUp time from/to the BIOS
 License: GPL
@@ -48,6 +48,9 @@ a hook script, that allows VDR to set a wake up time, when it powers down.
 %_mandir/man?/*
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.99b-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sat Jan 10 2009 Ilya Mashkin <oddity@altlinux.ru> 0.99b-alt1
 - new version 0.99b
 - droped old patches
