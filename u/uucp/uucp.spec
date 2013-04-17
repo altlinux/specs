@@ -1,6 +1,6 @@
 Name: uucp
 Version: 1.07
-Release: alt3
+Release: alt3.qa1
 
 Summary: The %name utility for copying files between systems
 License: GPL
@@ -114,6 +114,9 @@ chmod go-rwx %_logdir/%name/Debug
 %doc sample contrib
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.07-alt3.qa1
+- NMU: rebuilt for debuginfo.
+
 * Mon Mar 08 2010 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.07-alt3
 - unneeded req on install-info dropped
 - unneeded req on sysklogd changed to syslog-common (#21797)
