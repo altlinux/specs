@@ -2,7 +2,7 @@
 
 Name: fuse-%origname
 Version: 0.4
-Release: alt1.1
+Release: alt1.1.qa1
 License: GPL2
 Group: System/Kernel and hardware
 Url: http://chunkfs.florz.de/
@@ -44,6 +44,9 @@ mkdir examples && cp -a writeoverlay.sh examples
 %_man1dir/*
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.4-alt1.1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Mon Nov 29 2010 Igor Vlasenko <viy@altlinux.ru> 0.4-alt1.1
 - repair after perl 5.12 upgrade using girar-nmu
 
