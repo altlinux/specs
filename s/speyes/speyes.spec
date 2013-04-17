@@ -1,6 +1,6 @@
 Name: speyes
 Version: 1.2.0
-Release: alt6
+Release: alt6.qa1
 
 Packager: Alexey Voinov <voins@altlinux.ru>
 
@@ -42,6 +42,9 @@ install -D -pm644 %SOURCE1 $RPM_BUILD_ROOT%_menudir/%name
 %_menudir/*
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.2.0-alt6.qa1
+- NMU: rebuilt for debuginfo.
+
 * Mon Sep 21 2009 Alexey Voinov <voins@altlinux.ru> 1.2.0-alt6
 - update_menus removed
 
