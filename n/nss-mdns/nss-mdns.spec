@@ -1,6 +1,6 @@
 Name: nss-mdns
 Version: 0.10
-Release: alt3
+Release: alt3.qa1
 
 Summary: nss-mdns provides host name resolution via Multicast DNS
 License: GPL
@@ -80,6 +80,9 @@ fi
 /%_lib/libnss_*.so.*
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.10-alt3.qa1
+- NMU: rebuilt for debuginfo.
+
 * Tue Dec 30 2008 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.10-alt3
 - prereq on chrooted >= 0.3.5-alt1 moved to subpackage (#18401)
 
