@@ -1,7 +1,7 @@
 Summary: A program for mount Symbian OS file system using blutooth, irda and NFS
 Name: p3nfs
 Version: 5.19
-Release: alt1.qa1
+Release: alt1.qa2
 Group: Communications
 License: GPL
 Packager: Dmitri Kuzishchin <dim@altlinux.ru>
@@ -73,6 +73,9 @@ cp ../p3nfs-doc-1/*  $RPM_BUILD_ROOT/usr/share/doc/p3nfs-5.19
 
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 5.19-alt1.qa2
+- NMU: rebuilt for debuginfo.
+
 * Wed Dec 02 2009 Repocop Q. A. Robot <repocop@altlinux.org> 5.19-alt1.qa1
 - NMU (by repocop): the following fixes applied:
   * docdir-is-not-owned for p3nfs
