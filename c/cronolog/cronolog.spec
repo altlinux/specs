@@ -1,6 +1,6 @@
 Name: cronolog
 Version: 1.6.2
-Release: alt1
+Release: alt1.qa1
 
 Summary: A file rotation program for Apache.
 License: GPL
@@ -34,6 +34,9 @@ template uses the same format specifiers as the Unix date command
 
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.6.2-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sat Dec 06 2003 Alex Murygin <murygin@altlinux.ru> 1.6.2-alt1
 - First build for Sisyphus.
 
