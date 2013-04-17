@@ -4,7 +4,7 @@ Packager: Denis Smirnov <mithraen@altlinux.ru>
 
 Name: fuse-siefs
 Version: 0.5
-Release: alt8
+Release: alt8.qa1
 
 Summary: Work with storage memory of Siemens mobiles via datacable
 Summary(ru_RU.KOI8-R): Работа с памятью мобильных телефонов Сименс
@@ -124,6 +124,9 @@ ln -s /usr/bin/siefs $RPM_BUILD_ROOT/sbin/mount.siefs
 %doc README AUTHORS COPYING
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.5-alt8.qa1
+- NMU: rebuilt for debuginfo.
+
 * Wed Feb 21 2007 Denis Smirnov <mithraen@altlinux.ru> 0.5-alt8
 - rebuild with new fuse
 - remove dependency to fuse version
