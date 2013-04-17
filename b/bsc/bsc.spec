@@ -1,6 +1,6 @@
 Name:		bsc
 Version:	4.1.0
-Release:	alt1
+Release:	alt1.qa1
 
 Summary:	BeeSoft Commander
 License:	GPLv2
@@ -45,5 +45,8 @@ make
 %_pixmapsdir/BeesoftCommander.png
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 4.1.0-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Mon Feb 07 2011 Andrey Cherepanov <cas@altlinux.org> 4.1.0-alt1
 - Initial build in Sisyphus
