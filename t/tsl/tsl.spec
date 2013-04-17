@@ -2,7 +2,7 @@
 
 Name: %_name
 Version: 0.1.1a
-Release: alt1
+Release: alt1.qa1
 
 Summary: Telnet Scripting Language
 License: GPL
@@ -30,5 +30,8 @@ SMTP, and other TCP protocols using a simple interpreted language.
 %doc AUTHORS ChangeLog COPYING README
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.1.1a-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Thu Jul 20 2006 Grigorij Mogaev <zcrendel@altlinux.ru> 0.1.1a-alt1
 - initial rpm.
