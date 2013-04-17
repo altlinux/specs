@@ -1,6 +1,6 @@
 Name: wiki2html
 Version: 0.1
-Release: alt1
+Release: alt1.qa1
 
 Summary: Convert wiki source to HTML
 
@@ -34,6 +34,9 @@ install -m0755 -D %name %buildroot%_bindir/%name
 %_bindir/%name
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.1-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Fri Nov 30 2007 Vitaly Lipatov <lav@altlinux.ru> 0.1-alt1
 - fix Url (thanks to Nick Shaforostoff), fix Source Url
 
