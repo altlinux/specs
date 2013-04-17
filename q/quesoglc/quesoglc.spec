@@ -4,7 +4,7 @@ License:	LGPL
 Group:		System/X11
 Summary:	QuesoGLC is a free implementation of SGI's OpenGL Character Renderer (GLC)
 Version:	0.7.2
-Release:	alt2
+Release:	alt2.qa1
 Source:		%name-%version.tar
 Packager:	Anton Farygin <rider@altlinux.ru>
 URL:		http://quesoglc.sourceforge.net/
@@ -56,6 +56,9 @@ executes the command.
 
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.7.2-alt2.qa1
+- NMU: rebuilt for debuginfo.
+
 * Tue Jan 25 2011 Anton Farygin <rider@altlinux.ru> 0.7.2-alt2
 - rebuild in new environment
 
