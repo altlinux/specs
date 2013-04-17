@@ -1,7 +1,7 @@
 Summary: Utility for creation bootable FAT disk
 Name: makebootfat
 Version: 1.4
-Release: alt1
+Release: alt1.qa1
 Group: 	System/Kernel and hardware
 License: %gpl2plus
 URL: http://advancemame.sourceforge.net/doc-makebootfat.html
@@ -47,6 +47,9 @@ install -p -m644 %{SOURCE3} $RPM_BUILD_ROOT%{_libdir}/%{name}/x86
 
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.4-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Thu May 27 2010 Mykola Grechukh <gns@altlinux.ru> 1.4-alt1
 - initial build for ALT Linux
 
