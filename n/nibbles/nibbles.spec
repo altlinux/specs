@@ -2,7 +2,7 @@
 Summary: NCurses based nibbles game
 Name: nibbles
 Version: 0.0.4
-Release: alt1.qa1
+Release: alt1.qa2
 License: GPL
 Group: Games/Arcade
 Source0: http://www.earth.li/projectpurple/files/%name-v%version.tar.gz
@@ -44,6 +44,9 @@ cp -a nibbles.levels %buildroot%_datadir/games
 %doc README TODO HISTORY CREDITS example.nibblerc
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.0.4-alt1.qa2
+- NMU: rebuilt for debuginfo.
+
 * Thu Feb 04 2010 Repocop Q. A. Robot <repocop@altlinux.org> 0.0.4-alt1.qa1
 - NMU (by repocop): the following fixes applied:
   * vendor-tag for nibbles
