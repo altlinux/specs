@@ -1,6 +1,6 @@
 Name: gl-117
 Version: 1.3.2
-Release: alt1
+Release: alt1.qa1
 
 Summary: GL-117 is an action flight simulator
 License: GPL
@@ -43,5 +43,8 @@ GL-117 is an action flight simulator for Linux/Unix and MSWindows. Enter the Eag
 
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.3.2-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sun Mar 22 2009 Alexander Gvozdev  <gab@altlinux.ru> 1.3.2-alt1
 - Initial build for ALT Linux.
