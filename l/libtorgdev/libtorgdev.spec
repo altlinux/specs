@@ -1,7 +1,7 @@
 %define oname torgdev
 Name: libtorgdev
 Version: 3.5
-Release: alt2
+Release: alt2.qa1
 
 Summary: support for the special commercial devices
 Summary(ru_RU.KOI8-R): поддержка торговых устройств
@@ -87,6 +87,9 @@ install -pD -m640 example/cardread-gp %buildroot%_sysconfdir/xinetd.d/cardread-g
 %_includedir/*
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 3.5-alt2.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sat Jan 10 2009 Vitaly Lipatov <lav@altlinux.ru> 3.5-alt2
 - hack library building
 
