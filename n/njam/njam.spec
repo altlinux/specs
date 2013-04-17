@@ -1,6 +1,6 @@
 Name: njam
 Version: 1.25
-Release: alt1
+Release: alt1.qa1
 
 Summary: Njam is fast-paced cross-platform pacman-like game written in C++ using SDL library
 
@@ -46,6 +46,9 @@ Features
 %_datadir/%name/
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.25-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Mon Jan 03 2011 Vitaly Lipatov <lav@altlinux.ru> 1.25-alt1
 - fix build, cleanup spec, update buildreqs
 
