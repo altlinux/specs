@@ -1,6 +1,6 @@
 Name: vblade
 Version: 19
-Release: alt1
+Release: alt1.qa1
 
 Summary: Virtual EtherDrive (R) blade daemon
 Group: System/Kernel and hardware
@@ -53,6 +53,9 @@ install -D -m644 %SOURCE2 %buildroot%_sysconfdir/%name.conf
 %_man8dir/vblade.8*
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 19-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sat Oct 25 2008 Alexander Volkov <vaa@altlinux.org> 19-alt1
 - New build for ALT
 
