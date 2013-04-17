@@ -11,7 +11,7 @@
 %define bugfix 2
 Name: kde4base
 Version: %major.%minor.%bugfix
-Release: alt1
+Release: alt2
 
 Group: Graphical desktop/KDE
 Summary: K Desktop Environment 4 - Core Files
@@ -51,7 +51,7 @@ BuildRequires: bzlib-devel gcc-c++ libjpeg-devel libpcre-devel libtidy-devel
 BuildRequires: libqimageblitz-devel soprano soprano-backend-redland libsoprano-devel libstrigi-devel
 BuildRequires: libungif-devel xml-utils glib2-devel
 BuildRequires: kde4libs-devel >= %version
-BuildRequires: kde4pimlibs-devel kde4-nepomuk-core-devel
+BuildRequires: kde4pimlibs-devel kde4-nepomuk-core-devel kde4-nepomuk-widgets-devel
 BuildRequires: kde4base-workspace-devel >= %version
 BuildRequires: desktop-file-utils
 
@@ -606,6 +606,10 @@ desktop-file-install --mode=0755 --dir %buildroot%_K4xdg_apps --add-category=X-P
 
 
 %changelog
+* Wed Apr 17 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.2-alt2
+- optimize Places plasma applet
+- fix build requires
+
 * Fri Apr 05 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.2-alt1
 - new version
 
