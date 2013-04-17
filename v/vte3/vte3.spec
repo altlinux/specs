@@ -2,7 +2,7 @@
 %define ver_major 0.34
 
 Name: %{_name}3
-Version: %ver_major.3
+Version: %ver_major.4
 Release: alt1
 
 %def_enable pty_helper
@@ -173,6 +173,7 @@ find %buildroot -type f -name '*.la' -delete
 %pkgdocdir/NEWS
 %pkgdocdir/README
 %_libdir/*.so.*
+%_sysconfdir/profile.d/vte.sh
 %if_enabled pty_helper
 #%dir %helperdir
 #%attr(2711,root,utmp) %helperdir/gnome-pty-helper
@@ -202,6 +203,9 @@ find %buildroot -type f -name '*.la' -delete
 %endif
 
 %changelog
+* Mon Apr 15 2013 Yuri N. Sedunov <aris@altlinux.org> 0.34.4-alt1
+- 0.34.4
+
 * Tue Mar 26 2013 Yuri N. Sedunov <aris@altlinux.org> 0.34.3-alt1
 - 0.34.3
 

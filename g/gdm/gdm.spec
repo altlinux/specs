@@ -27,8 +27,8 @@
 %def_disable fallback_greeter
 
 Name: gdm
-Version: %ver_major.0
-Release: alt2
+Version: %ver_major.1
+Release: alt1
 
 Summary: The GNOME Display Manager
 License: GPLv2+
@@ -36,7 +36,7 @@ URL: ftp://ftp.gnome.org/
 Group: Graphical desktop/GNOME
 Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 
-Source: %name-%version.tar
+Source: %name-%version.tar.xz
 Source1: gdm_xdmcp.control
 Source2: gdm.wms-method
 
@@ -384,6 +384,9 @@ xvfb-run %make check
 %endif
 
 %changelog
+* Tue Apr 16 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.1-alt1
+- 3.8.1
+
 * Fri Apr 05 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.0-alt2
 - after 3.8.0 snapshot (7a040a9)
 - updated buildreqs

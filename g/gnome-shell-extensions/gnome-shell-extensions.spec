@@ -3,7 +3,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-shell-extensions
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: GNOME Shell Extensions
@@ -75,8 +75,8 @@ __EOF__
 %_datadir/gnome-shell/theme/classic-toggle-off-us.svg
 %_datadir/gnome-shell/theme/classic-toggle-on-intl.svg
 %_datadir/gnome-shell/theme/classic-toggle-on-us.svg
+%_datadir/gnome-shell/theme/classic-process-working.svg
 %_datadir/gnome-shell/theme/gnome-classic.css
-
 %exclude %_datadir/xsessions/gnome-classic.desktop
 
 ## Extensions
@@ -213,6 +213,9 @@ __EOF__
 
 
 %changelog
+* Wed Apr 17 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.1-alt1
+- 3.8.1
+
 * Tue Mar 26 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.0-alt1
 - 3.8.0
 

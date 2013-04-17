@@ -9,7 +9,7 @@
 %def_with cheese
 
 Name: gnome-control-center
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: GNOME Control Center
@@ -22,7 +22,6 @@ Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 #Source: %name-%version.tar
 Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 Patch: %name-3.7.92-alt-lfs.patch
-Patch1: %name-3.8.0-alt-ru.po.patch
 
 # From configure.ac
 %define gtk_ver 3.5.13
@@ -32,7 +31,6 @@ Patch1: %name-3.8.0-alt-ru.po.patch
 %define xft_ver 2.1.2
 %define libmetacity_ver 2.30.0
 %define gsds_ver 3.7.91
-%define notify_ver 0.7.3
 %define nm_ver 0.9.1.90
 %define gnome_menus_ver 3.7.90
 %define goa_ver 3.7.91
@@ -65,7 +63,6 @@ BuildPreReq: libgtk+3-devel >= %gtk_ver
 BuildPreReq: glib2-devel >= %glib_ver
 BuildPreReq: libgnome-desktop3-devel >= %desktop_ver
 BuildPreReq: gsettings-desktop-schemas-devel >= %gsds_ver
-BuildPreReq: libnotify-devel >= %notify_ver
 BuildPreReq: gnome-settings-daemon-devel >= %sett_daemon_ver
 BuildPreReq: libcolord-devel >= %colord_ver
 BuildPreReq: libcolord-gtk-devel
@@ -124,7 +121,6 @@ you'll want to install this package.
 %prep
 %setup
 %patch -p1 -b .lfs
-%patch1
 
 %build
 %autoreconf
@@ -171,6 +167,9 @@ you'll want to install this package.
 %_datadir/pkgconfig/gnome-keybindings.pc
 
 %changelog
+* Tue Apr 16 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.1-alt1
+- 3.8.1
+
 * Tue Mar 26 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.0-alt1
 - 3.8.0
 

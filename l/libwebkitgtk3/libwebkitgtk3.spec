@@ -5,6 +5,8 @@
 %define gtk_ver 3.0
 
 %define oname webkit
+%define _name webkitgtk
+
 # none/opengl/cairo/clutter
 %define acceleration_backend opengl
 %def_enable introspection
@@ -16,12 +18,12 @@
 
 Summary: Web browser engine
 Name: libwebkitgtk3
-Version: 2.0.0
-Release: alt2
+Version: 2.0.1
+Release: alt1
 License: %bsd %lgpl2plus
 Group: System/Libraries
 Url: http://www.webkitgtk.org/
-Source: %oname-%version.tar
+Source: %_name-%version.tar.xz
 Source1: webkit_symbols.filter
 
 Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
@@ -215,7 +217,7 @@ Requires: libwebkit2gtk-devel = %version-%release
 GObject introspection data for the Webkit2 library
 
 %prep
-%setup -q -n %oname-%version
+%setup -q -n %_name-%version
 cp %SOURCE1 Source/autotools/symbols.filter
 
 # fix build translations
@@ -327,6 +329,9 @@ xvfb-run make check
 %endif
 
 %changelog
+* Tue Apr 16 2013 Yuri N. Sedunov <aris@altlinux.org> 2.0.1-alt1
+- 2.0.1
+
 * Mon Apr 01 2013 Yuri N. Sedunov <aris@altlinux.org> 2.0.0-alt2
 - update symbols.filter for WebkitPluginProcess
 

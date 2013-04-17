@@ -1,7 +1,7 @@
 %define ver_major 1.7
 
 Name: meld
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: Meld Diff Viewer
@@ -37,7 +37,7 @@ once.
 
 %prep
 %setup
-%patch
+#%%patch
 # fix prefix
 subst s'|/usr/local|/usr|' INSTALL
 
@@ -67,6 +67,9 @@ subst s'|/usr/local|/usr|' INSTALL
 %doc NEWS
 
 %changelog
+* Tue Apr 16 2013 Yuri N. Sedunov <aris@altlinux.org> 1.7.2-alt1
+- 1.17.2
+
 * Thu Feb 28 2013 Yuri N. Sedunov <aris@altlinux.org> 1.7.1-alt1
 - 1.7.1
 - required python(gtksourceview2)

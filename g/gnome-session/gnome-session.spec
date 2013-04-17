@@ -3,7 +3,7 @@
 %def_enable systemd
 
 Name: gnome-session
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: The gnome session programs for the GNOME GUI desktop environment
@@ -32,8 +32,8 @@ Patch11: gnome-session-3.3.92-nv30.patch
 
 PreReq: xinitrc libcanberra-gnome libcanberra-gtk3
 Requires: altlinux-freedesktop-menu-gnome3
-Requires: gstreamer dbus-tools-gui
-Requires: gnome-filesystem metacity-gnome
+Requires: dbus-tools-gui
+Requires: gnome-filesystem
 Requires: gnome-settings-daemon >= 3.0.0
 Requires: upower polkit-gnome gcr
 
@@ -161,6 +161,10 @@ install -pD -m644 %SOURCE1 %buildroot%_iconsdir/gnome.svg
 %exclude %_datadir/xsessions/gnome.desktop
 
 %changelog
+* Mon Apr 15 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.1-alt1
+- 3.8.1
+- removed metacity-gnome from rqs (ALT #28840)
+
 * Tue Mar 26 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.0-alt1
 - 3.8.0
 

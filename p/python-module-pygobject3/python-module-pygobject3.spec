@@ -7,8 +7,8 @@
 %def_disable devel_doc
 
 Name: python-module-%{_name}3
-Version: %major.0
-Release: alt2
+Version: %major.1
+Release: alt1
 
 Summary: Python bindings for GObject
 
@@ -207,6 +207,9 @@ popd
 %endif
 
 %changelog
+* Mon Apr 15 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.1-alt1
+- 3.8.1
+
 * Thu Apr 04 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.0-alt2
 - moved pygtkcompat to separate subpackages (ALT #28787)
 

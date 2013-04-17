@@ -1,7 +1,7 @@
 %define ver_major 3.8
 
 Name: vino
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: A remote desktop system for GNOME
@@ -53,6 +53,9 @@ export LDFLAGS="$LDFLAGS -lgcrypt"
 %doc AUTHORS NEWS README docs/TODO docs/remote-desktop.txt docs/debugging.txt
 
 %changelog
+* Tue Apr 16 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.1-alt1
+- 3.8.1
+
 * Tue Mar 26 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.0-alt1
 - 3.8.0
 

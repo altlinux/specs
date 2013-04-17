@@ -6,7 +6,7 @@
 %def_enable introspection
 
 Name: lib%{_name}3
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: GtkSourceView text widget library
@@ -126,6 +126,9 @@ xvfb-run %make check
 %endif
 
 %changelog
+* Mon Apr 15 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.1-alt1
+- 3.8.1
+
 * Mon Mar 25 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.0-alt1
 - 3.8.0
 

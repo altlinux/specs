@@ -1,10 +1,10 @@
 %define ver_major 3.8
-%def_disable clutter
+%def_enable clutter
 # tests require colord running and g-c-m installed
 %def_disable check
 
 Name: gnome-color-manager
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Color profile manager for the GNOME desktop
@@ -111,6 +111,10 @@ ln -sf %_licensedir/GPL-2 COPYING
 %doc README NEWS AUTHORS
 
 %changelog
+* Mon Apr 15 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.1-alt1
+- 3.8.1
+- enabled clutter suport
+
 * Tue Mar 26 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.0-alt1
 - 3.8.0
 
