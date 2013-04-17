@@ -1,6 +1,6 @@
 Name: yauap
 Version: 0.2.4
-Release: alt1
+Release: alt1.qa1
 
 Summary: A simple commandline frontend for GStreamer
 Group: Sound
@@ -37,6 +37,9 @@ install -m 755 yauap %buildroot%_bindir/
 %_bindir/%name
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.2.4-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Fri Apr 03 2009 Ilya Mashkin <oddity@altlinux.ru> 0.2.4-alt1
 - 0.2.4
 
