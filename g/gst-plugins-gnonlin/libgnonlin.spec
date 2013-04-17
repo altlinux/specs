@@ -2,7 +2,7 @@
 
 Name: gst-plugins-gnonlin
 Version: 0.10.16
-Release: alt1
+Release: alt1.qa1
 Summary: GStreamer extension library for non-linear editing
 Group: Video
 License: LGPL
@@ -46,6 +46,9 @@ applications. It introduces the concept of a timeline.
 %_libdir/gstreamer-0.10/libgnl.so
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.10.16-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Tue Sep 07 2010 Valery Inozemtsev <shrek@altlinux.ru> 0.10.16-alt1
 - 0.10.16
 
