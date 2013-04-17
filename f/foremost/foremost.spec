@@ -1,6 +1,6 @@
 Name: foremost
 Version: 1.5.4
-Release: alt1
+Release: alt1.qa1
 
 Summary: Recover files by "carving" them from a raw disk
 
@@ -51,6 +51,9 @@ install -d %buildroot{%_bindir,%_man1dir,%_sysconfdir}
 %config(noreplace) %_sysconfdir/%name.conf
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.5.4-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Thu Jul 03 2008 Vitaly Lipatov <lav@altlinux.ru> 1.5.4-alt1
 - new version 1.5.4 (with rpmrb script)
 
