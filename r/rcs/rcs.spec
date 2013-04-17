@@ -1,6 +1,6 @@
 Name: rcs
 Version: 5.7
-Release: alt1
+Release: alt1.qa1
 Serial: 1
 
 Summary: Revision Control System (RCS) file version management tools.
@@ -44,6 +44,9 @@ export \
 %doc CREDITS NEWS REFS
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1:5.7-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Fri Feb 17 2006 Dmitry V. Levin <ldv@altlinux.org> 1:5.7-alt1
 - Imported patches from FC rcs package.
 - Cleaned up specfile.
