@@ -21,7 +21,7 @@ Version: %version
 
 License: GPL
 Url: http://xawdecode.sourceforge.net/
-Release: %branch_point.%branch.%revision.qa1
+Release: %branch_point.%branch.%revision.qa2
 Packager: Hihin Ruslan <ruslandh@altlinux.ru>
 Source0: %name-%version.tar.gz
 Patch0: libxdtv-i18n-ru-2.4.0.patch
@@ -63,6 +63,9 @@ export FLAGS="%optflags -DNDEBUG -DNO_DEBUG -D_GNU_SOURCE "
 %exclude %_libdir/%base/*.la
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.4.0-alt2.S1.1.qa2
+- NMU: rebuilt for debuginfo.
+
 * Tue Nov 10 2009 Repocop Q. A. Robot <repocop@altlinux.org> 2.4.0-alt2.S1.1.qa1
 - NMU (by repocop): the following fixes applied:
   * post_ldconfig for libxdtv-theme-carbone-ru
