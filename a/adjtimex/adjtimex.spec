@@ -1,14 +1,13 @@
 Name: adjtimex
-Version: 1.21
+Version: 1.29
 Release: alt1
 
 Summary: Utility to display or set the kernel time variables
-License: GPL
+License: GPLv2+
 Group: System/Kernel and hardware
-Url: ftp://ftp.debian.org/debian/pool/main/a/adjtimex/
-Packager: Dmitry V. Levin <ldv@altlinux.org>
+Url: http://ftp.debian.org/debian/pool/main/a/adjtimex/
 
-# ftp://ibiblio.org/pub/Linux/system/admin/time/adjtimex-%version.tar.gz
+# ftp://ftp.debian.org/debian/pool/main/a/adjtimex/adjtimex_%version.orig.tar.gz
 Source: %name-%version-%release.tar
 
 %description
@@ -21,7 +20,7 @@ adjtimex can optionally adjust the system clock using the CMOS clock as
 a reference, and can log times for long-term estimation of drift rates.
 
 %prep
-%setup -q -n %name-%version-%release
+%setup -n %name-%version-%release
 bzip2 -9k ChangeLog
 
 %build
@@ -38,6 +37,9 @@ install -pD -m644 adjtimex.8 %buildroot%_man8dir/adjtimex.8
 %doc README* COPYRIGHT ChangeLog.bz2
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin <ldv@altlinux.org> 1.29-alt1
+- Updated to 1.29.
+
 * Sat Jan 13 2007 Dmitry V. Levin <ldv@altlinux.org> 1.21-alt1
 - Updated to 1.21
 
