@@ -1,6 +1,6 @@
 Name: lrzsz
 Version: 0.12.20
-Release: alt1
+Release: alt1.qa1
 Epoch: 1
 
 Summary: Programs for communicating over Z-, Y- & X-modem protocols.
@@ -57,6 +57,9 @@ rzsz.
 %_man1dir/*
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1:0.12.20-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Mon May 26 2008 Michael Shigorin <mike@altlinux.org> 1:0.12.20-alt1
 - adopt/cleanup/rebuild
 
