@@ -2,7 +2,7 @@
 
 Name: xmms-in-cdparanoia
 Version: 0.1
-Release: alt3
+Release: alt3.qa1
 
 Summary: Digital CD playback plugin for XMMS
 License: GPL
@@ -41,6 +41,9 @@ install -pD -m755 Input/cdparanoia/.libs/libcdparanoia.so \
 %xmms_inputdir/*.so
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.1-alt3.qa1
+- NMU: rebuilt for debuginfo.
+
 * Thu May 15 2008 Igor Zubkov <icesik@altlinux.org> 0.1-alt3
 - add Packager tag
 - buildreq
