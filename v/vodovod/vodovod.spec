@@ -1,6 +1,6 @@
 Name: vodovod
 Version: 1.10r19
-Release: alt1.qa2
+Release: alt1.qa3
 Summary: A pipe connecting game
 
 Group: Games/Arcade
@@ -86,6 +86,9 @@ find . -type d \( -name 'CVS' -o -name '.svn' -o -name '.git' -o -name '.hg' -o 
 %config(noreplace) %_localstatedir/games/%name.sco
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.10r19-alt1.qa3
+- NMU: rebuilt for debuginfo.
+
 * Fri Dec 24 2010 Michael Shigorin <mike@altlinux.org> 1.10r19-alt1.qa2
 - adjusted default font location (closes: #21062)
 
