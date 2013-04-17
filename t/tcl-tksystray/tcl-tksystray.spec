@@ -1,6 +1,6 @@
 Name: tcl-tksystray
 Version: 0.2
-Release: alt2
+Release: alt2.qa1
 
 Summary: FreeDesktop dock plugin for Tk apps
 License: GPL
@@ -34,6 +34,9 @@ autoconf
 %_tcldatadir/tray%version/
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.2-alt2.qa1
+- NMU: rebuilt for debuginfo.
+
 * Wed Nov 18 2009 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.2-alt2
 - support for obsolete KDE_NET_WM_SYSTEM_TRAY dropped
 
