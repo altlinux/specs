@@ -2,7 +2,7 @@
 
 Name: gkrellm-%plugin
 Version: 2.0.0
-Release: alt2
+Release: alt2.qa1
 
 Summary: GKrellM reminder plugin
 License: GPL
@@ -41,6 +41,9 @@ mkdir -p %buildroot%_libdir/gkrellm2/plugins
 %_libdir/gkrellm2/plugins/%plugin.so
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.0.0-alt2.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sun Mar 30 2003 Alex Murygin <murygin@altlinux.ru> 2.0.0-alt2
 - Added russian translation
 - Added i18n support
