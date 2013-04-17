@@ -1,6 +1,6 @@
 Name:		highmoon
 Version: 	1.2.4
-Release:	alt2.qa1
+Release:	alt2.qa2
 Summary:	Artillery/Worms-like Game in Open Space
 Source0:	http://highmoon.gerdsmeier.net/%name-%version.tar.gz
 Patch1:		%name-1.2.3-mdkconf.patch.bz2
@@ -73,6 +73,9 @@ convert -size 48x48 icon.png %buildroot%_liconsdir/%name.png
 %_datadir/applications/%name.desktop
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.2.4-alt2.qa2
+- NMU: rebuilt for debuginfo.
+
 * Tue Nov 17 2009 Repocop Q. A. Robot <repocop@altlinux.org> 1.2.4-alt2.qa1
 - NMU (by repocop): the following fixes applied:
   * pixmap-in-deprecated-location for highmoon
