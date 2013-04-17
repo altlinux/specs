@@ -1,6 +1,6 @@
 Name: fairymax
 Version: 4.8j
-Release: alt1
+Release: alt1.qa1
 
 Summary: Fairy-Max, a sub-2KB (source) micro-Max Chess program
 License: Public domain
@@ -43,6 +43,9 @@ install -pDm644 %SOURCE2 %buildroot%_man6dir/%name.6
 # - consider -DSHATRANJ
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 4.8j-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Wed Oct 21 2009 Michael Shigorin <mike@altlinux.org> 4.8j-alt1
 - built for ALT Linux (current xboard defaults to fairymax engine)
   + ini file location, manpage and description borrowed from Debian
