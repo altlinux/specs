@@ -3,7 +3,7 @@
 
 Name: gkrellm-%plugin
 Version: 0.3.2
-Release: alt3
+Release: alt3.qa1
 
 Summary: GKrellM aclock plugin
 Summary(ru_RU.CP1251): Аналоговые часы для GKrellM 
@@ -49,6 +49,9 @@ mkdir -p %buildroot%_libdir/gkrellm2/plugins
 %_libdir/gkrellm2/plugins/gkrell%plugin.so
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.3.2-alt3.qa1
+- NMU: rebuilt for debuginfo.
+
 * Tue May 18 2004 Alex Murygin <murygin@altlinux.ru> 0.3.2-alt3
 - renamed to gkrellm-{NAME}
 - added russian summary, description
