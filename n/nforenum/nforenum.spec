@@ -1,6 +1,6 @@
 Name: nforenum
 Version: 3.4.6
-Release: alt1
+Release: alt1.qa1
 Summary: NFORenum is a format correcter and linter for the NFO programming language.
 Group: Development/Tools
 License: GPLv2+
@@ -32,6 +32,9 @@ done
 %_bindir/*
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 3.4.6-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Tue Sep 01 2009 Anton Farygin <rider@altlinux.ru> 3.4.6-alt1
 - first build for Sisyphus
 
