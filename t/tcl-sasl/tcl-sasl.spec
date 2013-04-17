@@ -1,6 +1,6 @@
 Name: tcl-sasl
 Version: 1.0
-Release: alt1
+Release: alt1.qa1
 
 Summary: Tcl bindings to SASL2 library
 License: Distributable
@@ -34,6 +34,9 @@ make
 %_tcldatadir/*
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.0-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sun Dec 28 2008 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.0-alt1
 - updated to TEA 3.5 and current autotools
 
