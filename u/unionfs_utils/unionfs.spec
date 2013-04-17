@@ -2,7 +2,7 @@ Name: unionfs_utils
 Version:       0.2.1
 License:       GPL
 Group: 	       System/Kernel and hardware
-Release:       alt1
+Release:       alt1.qa1
 Source0:       %name-%version.tar
 URL:	       http://www.fsl.cs.sunysb.edu/project-unionfs.html
 Summary:       Utilities to operate w/ unionfs
@@ -43,6 +43,9 @@ uniondbg  runs  unionfs  debugging ioctls.
 %_mandir/man8/*
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.2.1-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Tue Mar 11 2008 Anton Farygin <rider@altlinux.ru> 0.2.1-alt1
 - first build new generation of unionfs_utils for Sisyphus
 
