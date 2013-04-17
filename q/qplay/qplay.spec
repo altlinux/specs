@@ -1,6 +1,6 @@
 Name: qplay  
 Version: 0.7.3
-Release: alt0.1
+Release: alt0.1.qa1
 
 Summary: console MP3/Ogg player
 License: GPL
@@ -31,6 +31,9 @@ qplay is a console music player that features a user-friendly inferface for mana
 %_man1dir/*
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.7.3-alt0.1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Thu Jul 21 2005 Nick S. Grechukh <gns@altlinux.ru> 0.7.3-alt0.1
 initial release for Sisyphus
 
