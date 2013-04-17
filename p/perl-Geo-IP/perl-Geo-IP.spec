@@ -1,8 +1,8 @@
 %define module Geo-IP
 
 Name: perl-%module
-Version: 1.40
-Release: alt2
+Version: 1.41
+Release: alt1
 
 Packager: Victor Forsyuk <force@altlinux.org>
 
@@ -42,6 +42,9 @@ find lib/ example/ -type f -print0 | xargs -r0 %__subst -p 's./usr/local/share/G
 %perl_vendor_autolib/Geo
 
 %changelog
+* Wed Apr 17 2013 Andrey Cherepanov <cas@altlinux.org> 1.41-alt1
+- New version 1.41 with correct test for libGeoIP-1.5.0
+
 * Fri Aug 31 2012 Vladimir Lettiev <crux@altlinux.ru> 1.40-alt2
 - rebuilt for perl-5.16
 
