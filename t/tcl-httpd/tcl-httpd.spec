@@ -4,7 +4,7 @@
 
 Name: tcl-httpd
 Version: 3.5.1
-Release: alt1
+Release: alt1.qa1
 
 %define docdir %_defaultdocdir/%name-%version/
 %define htdocs %docdir/htdocs
@@ -195,6 +195,9 @@ EOF
 %_tcldatadir/limit1.0
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 3.5.1-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sun Aug 31 2008 Sergey Bolshakov <sbolshakov@altlinux.ru> 3.5.1-alt1
 - rebuilt against tcl8.5
 
