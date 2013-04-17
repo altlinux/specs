@@ -1,6 +1,6 @@
 Name: tcl-dom
 Version: 3.1
-Release: alt3
+Release: alt3.qa1
 
 Summary: A DOM bindings for Tcl
 License: BSD
@@ -73,6 +73,9 @@ make
 %_includedir/tcldom-libxml2
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 3.1-alt3.qa1
+- NMU: rebuilt for debuginfo.
+
 * Wed Jun 27 2007 Sergey Bolshakov <sbolshakov@altlinux.ru> 3.1-alt3
 - rebuilt
 
