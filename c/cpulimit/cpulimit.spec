@@ -1,6 +1,6 @@
 Name: cpulimit
 Version: 1.1
-Release: alt1
+Release: alt1.qa1
 
 Summary: CPU Usage Limiter
 
@@ -34,6 +34,9 @@ cp -p %name %buildroot%_bindir/%name
 %_bindir/%name
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.1-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Mon Jul 06 2009 Vitaly Lipatov <lav@altlinux.ru> 1.1-alt1
 - initial release for ALT Linux Sisyphus
 
