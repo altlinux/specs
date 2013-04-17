@@ -5,7 +5,7 @@
 Summary: WMMemMon - A dockapp to monitor memory/swap usages
 Name: WMMemMon
 Version: 1.0.1
-Release: alt3
+Release: alt3.qa1
 License: GPL
 Group: Graphical desktop/Window Maker
 
@@ -49,6 +49,9 @@ install -p -D -m644 %SOURCE1 $RPM_BUILD_ROOT%_menudir/%iname
 %_menudir/*
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.0.1-alt3.qa1
+- NMU: rebuilt for debuginfo.
+
 * Wed Nov 04 2009 Alexey Voinov <voins@altlinux.ru> 1.0.1-alt3
 - update_menus removed
 
