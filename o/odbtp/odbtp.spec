@@ -1,6 +1,6 @@
 Name: odbtp
 Version: 1.1.4
-Release: alt1.qa1
+Release: alt1.qa2
 
 Summary: Accessing win32-based databases using TCP/IP protocol
 
@@ -69,6 +69,9 @@ install examples/odbtp.conf %buildroot%_sysconfdir/%name
 #%_libdir/libodbtp.a
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.1.4-alt1.qa2
+- NMU: rebuilt for debuginfo.
+
 * Wed Dec 02 2009 Repocop Q. A. Robot <repocop@altlinux.org> 1.1.4-alt1.qa1
 - NMU (by repocop): the following fixes applied:
   * post_ldconfig for odbtp
