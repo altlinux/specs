@@ -27,7 +27,7 @@
 %def_disable fallback_greeter
 
 Name: gdm
-Version: %ver_major.1
+Version: %ver_major.1.1
 Release: alt1
 
 Summary: The GNOME Display Manager
@@ -384,6 +384,9 @@ xvfb-run %make check
 %endif
 
 %changelog
+* Wed Apr 17 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.1.1-alt1
+- 3.8.1.1
+
 * Tue Apr 16 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.1-alt1
 - 3.8.1
 
