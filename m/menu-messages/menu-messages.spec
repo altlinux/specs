@@ -1,6 +1,6 @@
 %def_with merged_po
 Name: menu-messages
-Version: 0.3.2
+Version: 0.3.3
 Release: alt1
 
 Group: System/Base
@@ -70,6 +70,9 @@ update_menus_bin=%_bindir/update-menus
 %files -f menu-messages.lang
 
 %changelog
+* Thu Apr 18 2013 Igor Vlasenko <viy@altlinux.ru> 0.3.3-alt1
+- updated freedesktop menu categories translations
+
 * Sat May 28 2011 Igor Vlasenko <viy@altlinux.ru> 0.3.2-alt1
 - updated menu entries translations
 
