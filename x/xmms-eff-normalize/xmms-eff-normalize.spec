@@ -2,7 +2,7 @@
 
 Name: xmms-eff-normalize
 Version: 0.8.3
-Release: alt2.1
+Release: alt2.1.qa1
 
 Summary: Normalizing plugin for XMMS
 License: GPL2+
@@ -44,6 +44,9 @@ install -m755 src/.libs/*.so %buildroot%xmms_effectdir
 %xmms_effectdir/*.so
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.8.3-alt2.1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sun Nov 18 2007 Terechkov Evgenii <evg@altlinux.ru> 0.8.3-alt2.1
 - Patch2 added (fixes #11436, thanks to icesik@!)
 
