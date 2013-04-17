@@ -1,6 +1,6 @@
 Name: eflite
 Version: 0.4.2
-Release: alt1
+Release: alt1.qa1
 
 Summary: FLite Emacspeak server
 License: GPL
@@ -32,6 +32,9 @@ make
 %_man1dir/*
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.4.2-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Tue Aug  4 2009 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.4.2-alt1
 - 0.4.2 released
 
