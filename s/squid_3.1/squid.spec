@@ -9,7 +9,7 @@
 Name: %{bname}_%ver
 Version: %ver.23
 %define langpack_ver 20121005
-Release: alt4
+Release: alt5
 Summary: The Squid proxy caching server
 License: GPLv2
 Group: System/Servers
@@ -49,6 +49,7 @@ BuildRequires: doxygen  graphviz fonts-ttf-freefont
 BuildRequires: gcc-c++ libcap-devel libdb4-devel libldap-devel libltdl-devel
 BuildRequires: libpam-devel libsasl2-devel libssl-devel perl-Pod-Parser
 BuildRequires: w3c-libwww-devel cppunit-devel
+BuildRequires: libkrb5-devel
 %{?_enable_ecap:BuildRequires: libecap-devel = 0.0.3}
 %{?_enable_esi:BuildRequires: libxml2-devel libexpat-devel}
 # Used by smb_auth.pl,pop3.pl and squid_db_auth, required on find-requires stage:
@@ -270,6 +271,10 @@ chown -R %bname:%bname %_spooldir/%bname >/dev/null 2>&1 ||:
 
 
 %changelog
+* Wed Apr 17 2013 Led <led@altlinux.ru> 3.1.23-alt5
+- updated BuildRequires
+- squid_kerb_auth: fix config.test
+
 * Thu Apr 11 2013 Led <led@altlinux.ru> 3.1.23-alt4
 - updated Conflicts
 
