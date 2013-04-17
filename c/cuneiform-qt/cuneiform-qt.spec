@@ -1,6 +1,6 @@
 Name:		cuneiform-qt
 Version:	0.1.2
-Release:	alt1
+Release:	alt1.qa1
 Summary:	GUI frontend for Cuneiform OCR
 
 License:	GPLv3+
@@ -47,6 +47,9 @@ convert -resize 16x16 icons/%name.png %buildroot%_miconsdir/%name.png
 %_liconsdir/%name.png
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.1.2-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Fri Apr 10 2009 Andrey Cherepanov <cas@altlinux.org> 0.1.2-alt1
 - Fix build with Qt 4.3 
 
