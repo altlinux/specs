@@ -3,7 +3,7 @@
 Name: pcal
 
 Version: 4.11.0
-Release: alt1
+Release: alt1.qa1
     
 Summary: PostScript calendar generation program
 Summary(ru_RU.UTF-8): программа для создания календарей в формате PostScript
@@ -56,6 +56,9 @@ install doc/pcal.man %buildroot%_man1dir/%name.1
 %_man1dir/%{name}*
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 4.11.0-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sat Feb 23 2008 Nikolay A. Fetisov <naf@altlinux.ru> 4.11.0-alt1
 - Initial build for ALT Linux Sisyphus
 
