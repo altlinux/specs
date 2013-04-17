@@ -1,6 +1,6 @@
 Name: nickle
 Version: 2.68
-Release: alt1.1
+Release: alt1.1.qa1
 Summary: A programming language-based prototyping environment
 
 Group: Development/Other
@@ -67,6 +67,9 @@ chmod a-x examples/turtle/snowflake.5c
 %_includedir/nickle
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.68-alt1.1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sun Aug 23 2009 Slava Semushin <php-coder@altlinux.ru> 2.68-alt1.1
 - NMU
 - Rebuild with gcc 4.4.1-alt1 to fix crash after start (Closes: #21061)
