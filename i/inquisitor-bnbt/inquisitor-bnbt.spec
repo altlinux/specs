@@ -1,6 +1,6 @@
 Name: inquisitor-bnbt
 Version: 20060727
-Release: alt1.beta85
+Release: alt1.beta85.qa1
 
 Summary: A C++ BitTorrent Tracker
 License: LGPL 2.1+
@@ -36,6 +36,9 @@ install -pDm755 bnbt %buildroot%_bindir/bnbt
 %_bindir/bnbt
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 20060727-alt1.beta85.qa1
+- NMU: rebuilt for debuginfo.
+
 * Mon Nov 02 2009 Michael Shigorin <mike@altlinux.org> 20060727-alt1.beta85
 - built for ALT Linux
 - fixed build with gcc-4.4
