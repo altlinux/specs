@@ -9,7 +9,7 @@
 Summary: Widget based on Xaw3d
 Name: %name
 Version: %version
-Release: alt2.qa2
+Release: alt2.qa3
 Url: http://sourceforge.net/projects/xawm/
 Source: %name-%version.src.tar.gz
 License: MIT
@@ -60,6 +60,9 @@ xmkmf
 %_includedir/X11/XawM/*
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.6-alt2.qa3
+- NMU: rebuilt for debuginfo.
+
 * Thu Nov 25 2010 Igor Vlasenko <viy@altlinux.ru> 1.6-alt2.qa2
 - rebuild using girar-nmu to require/provide setversion 
   by request of mithraen@
