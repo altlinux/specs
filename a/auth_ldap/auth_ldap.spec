@@ -1,6 +1,6 @@
 Name: auth_ldap
 Version: 1.6.1
-Release: alt1.1.1
+Release: alt1.1.1.qa1
 
 Summary: This is a LDAP authentication module for Apache
 Summary(ru_RU.KOI8-R):  Модуль LDAP-аутентификации для Apache
@@ -88,6 +88,9 @@ fi
 %doc *.html PROBLEMS
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.6.1-alt1.1.1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Thu Sep 24 2009 ALT QA Team Robot <ldv@altlinux.org> 1.6.1-alt1.1.1
 - Automated blind dumb rebuild with libldap-devel-2.4.16-alt4.4.
 
