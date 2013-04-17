@@ -1,7 +1,7 @@
 Name: hexalate
 Summary: A color matching game
 Version: 1.0.1
-Release: alt1
+Release: alt1.qa1
 License: GPLv3+
 Group: Games/Arcade
 Url: http://gottcode.org/hexalate/
@@ -32,6 +32,9 @@ sed -i 's/Qt;Game;/Game;LogicGame;/' icons/%name.desktop
 %_datadir/applications/%name.desktop
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.0.1-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Wed Jun 02 2010 Fr. Br. George <george@altlinux.ru> 1.0.1-alt1
 - Version up
 
