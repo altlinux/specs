@@ -1,7 +1,7 @@
 Summary: A binary delta generator
 Name: xdelta3
 Version: 3.0u
-Release: alt1
+Release: alt1.qa1
 Source0: http://xdelta.googlecode.com/files/%name-%version.tar
 Patch0: %name-%version-%release.patch
 Url: http://xdelta.org
@@ -45,6 +45,9 @@ install -m 755 xdelta3 \
 %_bindir/*
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 3.0u-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Tue Nov 25 2008 Anton Farygin <rider@altlinux.ru> 3.0u-alt1
 - new version
 
