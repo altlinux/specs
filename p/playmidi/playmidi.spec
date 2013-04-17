@@ -1,6 +1,6 @@
 Name: playmidi
 Version: 2.5
-Release: alt4
+Release: alt4.qa1
 
 Summary: A MIDI sound file player
 License: GPL
@@ -84,6 +84,9 @@ done
 %_x11dir/bin/x%name
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.5-alt4.qa1
+- NMU: rebuilt for debuginfo.
+
 * Mon Dec 01 2008 Michael Shigorin <mike@altlinux.org> 2.5-alt4
 - fixed BuildRequires (libXext-devel)
 
