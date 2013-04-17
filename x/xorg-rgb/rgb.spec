@@ -1,6 +1,6 @@
 Name: xorg-rgb
 Version: 1.0.4
-Release: alt1
+Release: alt1.qa1
 Summary: uncompile an rgb color-name database
 License: MIT/X11
 Group: System/X11
@@ -40,6 +40,9 @@ one that X was built with, and may be overridden on the  command  line.
 %_man1dir/*
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.0.4-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Thu Oct 07 2010 Valery Inozemtsev <shrek@altlinux.ru> 1.0.4-alt1
 - 1.0.4
 
