@@ -1,6 +1,6 @@
 Name: libfame
 Version: 0.9.1
-Release: alt5
+Release: alt5.qa1
 
 Summary: library for fast MPEG video encoding
 License: LGPL
@@ -77,6 +77,9 @@ rm -f acinclude.m4
 %endif
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.9.1-alt5.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sat Nov 22 2008 Valery Inozemtsev <shrek@altlinux.ru> 0.9.1-alt5
 - removed obsolete %%post_ldconfig/%%postun_ldconfig calls
 
