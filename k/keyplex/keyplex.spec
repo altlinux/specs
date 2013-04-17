@@ -3,7 +3,7 @@
 Name: keyplex
  
 Version: 0.2
-Release: alt1
+Release: alt1.qa1
     
 Summary: keyboard multiplexer for X11 terminals
 
@@ -45,5 +45,8 @@ all keystrokes and mouse-button2 (paste) to them.
 %_bindir/%name
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.2-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Wed Feb 04 2009 Nikolay A. Fetisov <naf@altlinux.ru> 0.2-alt1
 - Initial build for ALT Linux Sisyphus
