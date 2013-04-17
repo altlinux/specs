@@ -1,6 +1,6 @@
 Name: imgdiff
 Version: 1.0
-Release: alt2
+Release: alt2.qa1
 
 Packager: Vladislav Zavjalov <slazav@altlinux.org>
 
@@ -27,6 +27,9 @@ diff for images
 %_mandir/man1/*
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.0-alt2.qa1
+- NMU: rebuilt for debuginfo.
+
 * Tue Nov 25 2008 Vladislav Zavjalov <slazav@altlinux.org> 1.0-alt2
 - fix include
 
