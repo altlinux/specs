@@ -3,7 +3,7 @@
 
 Name: smtptrapd
 Version: 1.4
-Release: alt1
+Release: alt1.qa1
 
 Summary: a SMTP daemon that always returns a 4xx soft error
 
@@ -54,6 +54,9 @@ install -m 0640 -- %SOURCE2 %buildroot%_sysconfdir/sysconfig/%name
 %config			    %_initdir/%name
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.4-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Wed Jan 09 2008 Nikolay A. Fetisov <naf@altlinux.ru> 1.4-alt1
 - Initial build for ALT Linux Sisyphus
 
