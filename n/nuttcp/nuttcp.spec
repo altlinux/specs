@@ -1,6 +1,6 @@
 Name: nuttcp
 Version: 6.1.2
-Release: alt2
+Release: alt3
 Summary: TCP/UDP network testing tool 
 Group: Monitoring
 License: GPLv2
@@ -44,6 +44,9 @@ install -pD -m 640 %_builddir/%name-%version/xinetd.d/%name %buildroot%_sysconfd
 %config(noreplace) %_sysconfdir/xinetd.d/%name
 
 %changelog
+* Wed Apr 17 2013 Andrew Clark <andyc@altlinux.org> 6.1.2-alt3
+- rebuilt for debuginfo
+
 * Sat Dec 25 2010 Andrew Clark <andyc@altlinux.org> 6.1.2-alt2
 - xinet.d path fixes (#24755)
 
