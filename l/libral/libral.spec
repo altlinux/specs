@@ -1,7 +1,7 @@
 %define oversion 0.9.6
 Name: libral
 Version: 0.96
-Release: alt0.1.qa1
+Release: alt0.1.qa2
 
 Summary: An address book engine
 
@@ -67,6 +67,9 @@ This package contain header files for libral.
 %_datadir/gtk-doc/html/libRAL/
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.96-alt0.1.qa2
+- NMU: rebuilt for debuginfo.
+
 * Tue Nov 24 2009 Repocop Q. A. Robot <repocop@altlinux.org> 0.96-alt0.1.qa1
 - NMU (by repocop): the following fixes applied:
   * post_ldconfig for libral
