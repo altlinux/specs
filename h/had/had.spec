@@ -1,6 +1,6 @@
 Name: had
 Version: 1.0.8
-Release: alt2
+Release: alt2.qa1
 
 Summary: High Aviability Daemon
 License: BSD
@@ -50,6 +50,9 @@ cd src
 %doc docs
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.0.8-alt2.qa1
+- NMU: rebuilt for debuginfo.
+
 * Thu Sep 27 2007 Eugene Prokopiev <enp@altlinux.ru> 1.0.8-alt2
 - minor spec changes - thanks to php-coder@
 
