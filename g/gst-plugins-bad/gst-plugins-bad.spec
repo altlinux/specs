@@ -8,7 +8,7 @@
 
 Name: %gst_plugins-bad
 Version: %ver_major.23
-Release: alt1
+Release: alt2
 Summary: A set of GStreamer plugins that need more quality
 Group: System/Libraries
 License: LGPL
@@ -103,6 +103,9 @@ gtkdocize
 %endif
 
 %changelog
+* Wed Apr 17 2013 Andrey Cherepanov <cas@altlinux.org> 0.10.23-alt2
+- Add missing plugin documentation (plugin-voamrwbenc.xml)
+
 * Tue Feb 21 2012 Valery Inozemtsev <shrek@altlinux.ru> 0.10.23-alt1
 - 0.10.23
 
