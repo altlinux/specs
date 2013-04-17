@@ -1,7 +1,7 @@
 %define oname libwab
 Name: wabread
 Version: 060901
-Release: alt0.1
+Release: alt0.1.qa1
 
 Summary: Read binary .wab files produced by the Windows Address Book
 
@@ -33,6 +33,9 @@ read broken files and recover deleted addresses.
 %_bindir/%name
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 060901-alt0.1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sun Sep 10 2006 Vitaly Lipatov <lav@altlinux.ru> 060901-alt0.1
 - new version (060901)
 
