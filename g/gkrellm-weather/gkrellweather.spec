@@ -3,7 +3,7 @@
 
 Name: gkrellm-%plugin
 Version: 2.0.6
-Release: alt1
+Release: alt1.qa1
 
 Summary: GKrellM weather plugin
 Summary(ru_RU.CP1251): Плагин GKrellM для отображения погоды
@@ -49,6 +49,9 @@ install -D -m755 GrabWeather %buildroot%_libdir/gkrellm2/GrabWeather
 %_libdir/gkrellm2/GrabWeather
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.0.6-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Tue May 18 2004 Alex Murygin <murygin@altlinux.ru> 2.0.6-alt1
 - renamed to gkrellm-{NAME}
 - new version
