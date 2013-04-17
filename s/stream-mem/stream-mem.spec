@@ -1,6 +1,6 @@
 Name: stream-mem
 Version: 5.8
-Release: alt2
+Release: alt2.qa1
 
 Summary: STREAM: Sustainable Memory Bandwidth in High Performance Computers
 License: GPL
@@ -30,6 +30,9 @@ cp -a %SOURCE1 Makefile
 %_bindir/*
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 5.8-alt2.qa1
+- NMU: rebuilt for debuginfo.
+
 * Thu Oct 15 2009 Michael Shigorin <mike@altlinux.org> 5.8-alt2
 - built for Sisyphus
 
