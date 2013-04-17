@@ -1,6 +1,6 @@
 Name: cvoicecontrol
 Version: 0.9
-Release: alt2.alpha
+Release: alt2.alpha.qa1
 %define beta alpha
 
 Group: Sound
@@ -44,6 +44,9 @@ install cvoicecontrol/microphone_config  %buildroot/%_bindir
 %attr(755,root,root) %_bindir/*
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.9-alt2.alpha.qa1
+- NMU: rebuilt for debuginfo.
+
 * Mon Oct 28 2002 Sergey V Turchin <zerg@altlinux.ru> 0.9-alt2.alpha
 - rebuild with gcc3.2
 
