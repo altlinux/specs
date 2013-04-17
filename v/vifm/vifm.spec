@@ -1,6 +1,6 @@
 Name: vifm
 Version: 0.3
-Release: alt0.1
+Release: alt0.1.qa1
 
 Summary: file manager with vi-like keybindings. 
 License: GPL
@@ -32,6 +32,9 @@ autoreconf -fisv
 %_datadir/vifm
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.3-alt0.1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Thu Jul 21 2005 Nick S. Grechukh <gns@altlinux.ru> 0.3-alt0.1
 initial release for Sisyphus
 
