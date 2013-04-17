@@ -4,7 +4,7 @@
 
 Name: gst-plugins-gl
 Version: %ver_major.2
-Release: alt1
+Release: alt1.qa1
 Summary: GStreamer OpenGL plugins
 Group: System/Libraries
 License: GPL
@@ -67,6 +67,9 @@ touch ABOUT-NLS config.rpath
 %_pkgconfigdir/*.pc
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.10.2-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Tue Sep 07 2010 Valery Inozemtsev <shrek@altlinux.ru> 0.10.2-alt1
 - 0.10.2
 
