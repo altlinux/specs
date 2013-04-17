@@ -3,7 +3,7 @@
 
 Name: wmdiskmon
 Version: 0.0.2
-Release: alt3
+Release: alt3.qa1
 
 Summary: This dockapp monitors your disks usage
 Summary(ru_RU.CP1251): Этот апплет следит за использованием вашего жесткого диска
@@ -56,6 +56,9 @@ install -pD -m 644 %SOURCE1 %buildroot%_menudir/%name
 %_menudir/%name
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.0.2-alt3.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sat Nov 29 2008 Slava Semushin <php-coder@altlinux.ru> 0.0.2-alt3
 - Removed obsolete %%update_menus/%%clean_menus calls (noted by repocop)
 
