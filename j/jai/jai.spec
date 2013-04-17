@@ -1,6 +1,6 @@
 Name: jai
 Version: 1.1.3
-Release: alt1
+Release: alt1.qa1
 
 %define distversion	1_1_3
 %define doc_distversion	1_1
@@ -78,6 +78,9 @@ cp -pr %name-apidocs/*     $RPM_BUILD_ROOT%javadocdir/%name
 %endif
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.1.3-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sat Feb 03 2007 Damir Shayhutdinov <damir@altlinux.ru> 1.1.3-alt1
 - New version
 
