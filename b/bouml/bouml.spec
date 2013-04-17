@@ -1,6 +1,6 @@
 Name: bouml
 Version: 4.22.2
-Release: alt1
+Release: alt1.qa1
 
 Summary: BOUML is a free UML 2 tool box
 
@@ -59,6 +59,9 @@ export PATH=%_qt3dir/bin:$PATH
 %doc README ChangeLog.bz2
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 4.22.2-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Wed Dec 15 2010 Yuriy Kashirin <uka@altlinux.ru> 4.22.2-alt1
 - New version, see ChangeLog for more details
 - The previous releases of BOUML cannot read a project saved
