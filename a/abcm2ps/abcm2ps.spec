@@ -1,6 +1,6 @@
 Name: abcm2ps
 Version: 5.9.3
-Release: alt1
+Release: alt1.qa1
 Summary: a program to typeset abc tunes into Postscript
 License: GPL
 Url: http://moinejf.free.fr
@@ -35,6 +35,9 @@ rm -rf %buildroot%_docdir/%name/
 
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 5.9.3-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Fri Jan 09 2009 Yuri Fil <yurifil@altlinux.org> 5.9.3-alt1
 - new version of abcm2ps
 
