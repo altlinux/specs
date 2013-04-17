@@ -1,6 +1,6 @@
 Name: trackballs
 Version: 1.1.4
-Release: alt1
+Release: alt1.qa1
 
 Summary: Steer a marble ball through a labyrinth
 License: GPLv2+
@@ -90,6 +90,9 @@ ln -sf ../../fonts/ttf/dejavu/DejaVuSans.ttf \
 %doc AUTHORS ChangeLog FAQ README TODO
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.1.4-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Mon Jun 07 2010 Dmitry V. Levin <ldv@altlinux.org> 1.1.4-alt1
 - Updated to 1.1.4.
 - Really fixed "will always overflow destination buffer" bug.
