@@ -1,6 +1,6 @@
 Name: fslsfonts
 Version: 1.0.3
-Release: alt1
+Release: alt1.qa1
 Summary: list fonts served by X font server
 License: MIT/X11
 Group: System/X11
@@ -39,6 +39,9 @@ expanded by the shell.
 %_man1dir/*
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.0.3-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sat Oct 30 2010 Valery Inozemtsev <shrek@altlinux.ru> 1.0.3-alt1
 - 1.0.3
 
