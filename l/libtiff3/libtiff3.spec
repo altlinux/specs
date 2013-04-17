@@ -1,6 +1,6 @@
 Name: libtiff3
 Version: 3.5.7
-Release: alt8
+Release: alt8.qa1
 
 Summary: A library of functions for manipulating TIFF format image files
 License: BSD-like
@@ -83,6 +83,9 @@ install -pDm644 libtiff/libtiff.so.3.5 %buildroot%_libdir/libtiff.so.%version
 %doc COPYRIGHT README
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 3.5.7-alt8.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sun Dec 27 2009 Michael Shigorin <mike@altlinux.org> 3.5.7-alt8
 - rebuilt for Sisyphus, thanks Denis G. Samsonenko
   + needed e.g. for Canon's proprietary printer drivers
