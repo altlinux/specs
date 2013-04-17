@@ -1,6 +1,6 @@
 Name: iftop
 Version: 0.17
-Release: alt4
+Release: alt4.qa1
 
 Summary: Display bandwidth usage on an interface
 License: GPL
@@ -75,6 +75,9 @@ install -pD -m755 iftop.control %buildroot%_controldir/iftop
 %doc ChangeLog README TODO
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.17-alt4.qa1
+- NMU: rebuilt for debuginfo.
+
 * Wed Jan 20 2010 Michael Shigorin <mike@altlinux.org> 0.17-alt4
 - disabled subshell execution, thanks Ali Jawad for heads-up
 - spec cleanup
