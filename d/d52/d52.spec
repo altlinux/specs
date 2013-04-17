@@ -2,7 +2,7 @@ Name: d52
 Version: 3.4.1
 License: GPL
 Group: Development/Other
-Release: alt1.qa1
+Release: alt1.qa2
 Source: %name.tar
 BuildPreReq: gcc
 Summary: D52 Microcontroller Disassemblers
@@ -27,6 +27,9 @@ mkdir -p obj
 # Another way is to rewrite the spec to use relative doc paths.
 %dir %_docdir/d52-%version 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 3.4.1-alt1.qa2
+- NMU: rebuilt for debuginfo.
+
 * Wed Feb 03 2010 Repocop Q. A. Robot <repocop@altlinux.org> 3.4.1-alt1.qa1
 - NMU (by repocop): the following fixes applied:
   * docdir-is-not-owned for d52
