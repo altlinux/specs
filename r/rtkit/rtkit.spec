@@ -1,6 +1,6 @@
 Name: rtkit
 Version: 0.8
-Release: alt1
+Release: alt1.qa1
 Summary: Realtime Policy and Watchdog Daemon
 Group: System/Servers
 License: GPLv3+ and BSD
@@ -47,6 +47,9 @@ processes.
 %_man8dir/*.8*
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.8-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Mon Jul 05 2010 Valery Inozemtsev <shrek@altlinux.ru> 0.8-alt1
 - 0.8
 
