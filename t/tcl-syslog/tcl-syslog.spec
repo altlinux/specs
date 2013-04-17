@@ -1,6 +1,6 @@
 Name: tcl-syslog
 Version: 2.0
-Release: alt5.1
+Release: alt5.1.qa1
 
 Summary: Syslog tcl lib
 Group: Development/Tcl
@@ -47,6 +47,9 @@ mv %buildroot/usr/lib/tcl/*.so.* %buildroot%_libdir/tcl/
 %_datadir/tcl/syslog
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.0-alt5.1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sun Oct 24 2010 Denis Smirnov <mithraen@altlinux.ru> 2.0-alt5.1
 - rebuild (with the help of girar-nmu utility)
 
