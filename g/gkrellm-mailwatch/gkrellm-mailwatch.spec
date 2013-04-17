@@ -2,7 +2,7 @@
 
 Name: gkrellm-%plugin
 Version: 2.4.2
-Release: alt1
+Release: alt1.qa1
 
 Summary: GKrellM mailwatch plugin
 License: GPL
@@ -34,6 +34,9 @@ mkdir -p %buildroot%_libdir/gkrellm2/plugins
 %_libdir/gkrellm2/plugins/%plugin.so
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.4.2-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sat Jun 28 2003 Alex Murygin <murygin@altlinux.ru> 2.4.2-alt1
 - new version
 
