@@ -2,7 +2,7 @@
 
 Name: ical
 Version: 2.3.3
-Release: alt3
+Release: alt3.qa1
 
 Summary: An X Window System-based calendar program
 License: BSD-Style
@@ -52,6 +52,9 @@ rm -f contrib/ical.spec
 %_mandir/man1/%name.1*
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.3.3-alt3.qa1
+- NMU: rebuilt for debuginfo.
+
 * Mon May 11 2009 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.3.3-alt3
 - rebuilt with recent gcc
 
