@@ -3,7 +3,7 @@ License: GPL v2 or later
 Group: Games/Puzzles
 Summary: Guess where the crystals are hidden, by watching your shots
 Version: 1.4.8
-Release: alt1
+Release: alt1.qa1
 Url: http://www.linux-games.com/black-box/
 Source: %name-%version.tar.bz2
 Source1: %name.desktop
@@ -56,6 +56,9 @@ install -D %SOURCE1 %buildroot/%_desktopdir/%name.dsektop
 %_desktopdir/%name.dsektop
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.4.8-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sun Jan 04 2009 Fr. Br. George <george@altlinux.ru> 1.4.8-alt1
 - Version up
 
