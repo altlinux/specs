@@ -1,6 +1,6 @@
 Name: mmsrip
 Version: 0.7.0
-Release: alt1
+Release: alt1.qa1
 Packager: Sergey Y. Afonin <asy@altlinux.ru>
 
 Summary: MMSRIP is a client for the proprietary protocol MMS
@@ -36,5 +36,8 @@ It actually saves to a file the content being streamed.
 %_mandir/man?/*
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.7.0-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Wed Jan 14 2009 Sergey Y. Afonin <asy@altlinux.ru> 0.7.0-alt1
 - Initial build for AltLinux
