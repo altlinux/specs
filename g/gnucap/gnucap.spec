@@ -1,7 +1,7 @@
 %define ver 2009-08-22
 Name: gnucap
 Version: 20090822
-Release: alt1
+Release: alt1.qa1
 
 Summary: GNU Circuit Analysis Package
 
@@ -45,6 +45,9 @@ release.
 %_man1dir/*
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 20090822-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Thu Aug 27 2009 Vitaly Lipatov <lav@altlinux.ru> 20090822-alt1
 - new version 20090822 (with rpmrb script)
 
