@@ -2,7 +2,7 @@
 
 Name: tcl-incrtcl
 Version: 3.4.0
-Release: alt1
+Release: alt1.qa1
 
 Summary: [Incr Tcl] is an object-oriented extension of the Tcl language
 License: BSD
@@ -111,6 +111,9 @@ mv %buildroot%_tcllibdir/lib*stub*.a %buildroot%_libdir/
 #_libdir/libitkstub%major.a
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 3.4.0-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Thu Dec 27 2007 Sergey Bolshakov <sbolshakov@altlinux.ru> 3.4.0-alt1
 - updated to CVS shapshot @ 20071106 and rebuilt against tcl8.5
 
