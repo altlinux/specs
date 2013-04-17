@@ -1,6 +1,6 @@
 Name: sdlaplay
 Version: 0.0.4
-Release: alt1
+Release: alt1.qa1
 Summary: SDL audio player
 License: GPLv2
 Group: Sound
@@ -29,6 +29,9 @@ SDL audio player
 %_bindir/*
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.0.4-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Mon Jul 27 2009 Valery Inozemtsev <shrek@altlinux.ru> 0.0.4-alt1
 - 0.0.4
 
