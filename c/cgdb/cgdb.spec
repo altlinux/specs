@@ -1,7 +1,7 @@
 Name: cgdb
 Summary: Frontend for GDB
 Version: 0.6.4
-Release: alt3
+Release: alt3.qa1
 Url: http://cgdb.sourceforge.net/
 License: GPL2
 Group: Development/Debuggers
@@ -42,6 +42,9 @@ printf '#define HAVE_DEV_PTMX 1\n' >> config.h
 %_man1dir/*
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.6.4-alt3.qa1
+- NMU: rebuilt for debuginfo.
+
 * Thu Dec 17 2009 Alexey Gladkov <legion@altlinux.ru> 0.6.4-alt3
 - Remove obsolete macros.
 
