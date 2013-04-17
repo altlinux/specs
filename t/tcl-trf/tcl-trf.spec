@@ -7,7 +7,7 @@
 
 Name: tcl-%teaname
 Version: 2.1
-Release: alt7
+Release: alt7.qa1
 
 Summary: A tcl extension called Tcl Data transformations
 License: BSD
@@ -82,6 +82,9 @@ This package includes header files for Trf.
 %_tcllibdir/libTrfstub2.1.a
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.1-alt7.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sat Jul 22 2006 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.1-alt7
 - updated from CVS @20060124
 - fixed build on x86_64
