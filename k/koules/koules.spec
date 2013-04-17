@@ -1,6 +1,6 @@
 Name: koules
 Version: 1.4
-Release: alt9
+Release: alt9.qa1
 
 Summary: Action game with multiplayer, network and sound support
 License: GPL
@@ -93,6 +93,9 @@ install -pDm644 %SOURCE1 %buildroot%_desktopdir/%name.desktop
 # - consider soundwrapper (right now DOESN'T work for me w/emu10k1)
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.4-alt9.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sun Dec 13 2009 Michael Shigorin <mike@altlinux.org> 1.4-alt9
 - buildreq (repocop)
 
