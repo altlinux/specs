@@ -2,7 +2,7 @@
 
 Name: tcl-udp
 Version: 1.0.9
-Release: alt1
+Release: alt1.qa1
 
 Summary: A tcl extension, wich provides UDP sockets for Tcl
 License: BSD
@@ -40,5 +40,8 @@ make test TCLSH_ENV='LD_LIBRARY_PATH=.'
 %_mandir/mann/udp.*
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.0.9-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Fri Oct 17 2008 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.0.9-alt1
 - initial build
