@@ -2,7 +2,7 @@
 
 Name:    conserver
 Version: 8.1.16
-Release: alt1.1
+Release: alt1.1.qa1
 
 Summary:  Serial console server daemon/client
 License:  %bsd
@@ -100,6 +100,9 @@ fi
 %config(noreplace) %{_sysconfdir}/conserver.passwd
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 8.1.16-alt1.1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Wed Dec 08 2010 Igor Vlasenko <viy@altlinux.ru> 8.1.16-alt1.1
 - rebuild with new openssl and/or boost by request of git.alt administrator
 
