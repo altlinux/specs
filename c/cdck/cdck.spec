@@ -1,6 +1,6 @@
 Name: cdck
 Version: 0.7.0
-Release: alt1.1
+Release: alt1.1.qa1
 
 Summary: CD/DVD check tools
 
@@ -45,6 +45,9 @@ rm -f %buildroot%_libdir/libcdck.a
 %_man1dir/*
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.7.0-alt1.1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Wed Nov 24 2010 Igor Vlasenko <viy@altlinux.ru> 0.7.0-alt1.1
 - repair after perl 5.12 upgrade using girar-nmu
 
