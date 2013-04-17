@@ -3,7 +3,7 @@
 
 Name: gkrellm-%plugin
 Version: 0.4.4
-Release: alt1
+Release: alt1.qa1
 
 Summary: GKrellM shoot plugin
 Summary(ru_RU.CP1251): Плагин shoot для GKrellM
@@ -56,6 +56,9 @@ mkdir -p %buildroot%_libdir/gkrellm2/plugins
 %_libdir/gkrellm2/plugins/gkrell%plugin.so
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.4.4-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sat Sep 06 2008 Andrey Rahmatullin <wrar@altlinux.ru> 0.4.4-alt1
 - 0.4.4
 
