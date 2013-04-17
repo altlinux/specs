@@ -1,6 +1,6 @@
 Name: pinfo
 Version: 0.6.9
-Release: alt3
+Release: alt3.qa1
 
 Summary: Przemek's Info Viewer - a (much) better info
 Group: System/Base
@@ -45,6 +45,9 @@ ln -s %name %buildroot%_bindir/pman
 %_infodir/*.info*
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.6.9-alt3.qa1
+- NMU: rebuilt for debuginfo.
+
 * Thu Apr 23 2009 Afanasov Dmitry <ender@altlinux.org> 0.6.9-alt3
 - alt changes patch:
   + incorporate debian fix_segfault patch.
