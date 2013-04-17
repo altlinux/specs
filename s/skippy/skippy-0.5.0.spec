@@ -2,7 +2,7 @@ Packager: Alex Negulescu <alecs@altlinux.org>
 Summary: Full-screen task-switcher
 Name: skippy
 Version: 0.5.0
-Release: alt2
+Release: alt2.qa1
 License: GPL
 Group: Graphical desktop/KDE
 Url: http://thegraveyard.org/skippy.php
@@ -55,6 +55,9 @@ EOF
 %_datadir/pixmaps/skippy.png
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.5.0-alt2.qa1
+- NMU: rebuilt for debuginfo.
+
 * Wed Jan 12 2011 Alex Negulescu <alecs@altlinux.org> 0.5.0-alt2
 - patched for x86_64
 * Sun May 17 2009 Alex Negulescu <alecs@altlinux.org> 0.5.0-alt1
