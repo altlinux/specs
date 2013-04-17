@@ -7,7 +7,7 @@
 
 Name: jp2a
 Version: %version
-Release: %release.0
+Release: alt1.0.qa1
 
 Summary: an utility for converting JPEG images to ASCII
 Summary(ru_RU.UTF-8): утилита для конвертации изображений JPEG в ASCII art
@@ -49,6 +49,9 @@ jp2a - небольшая утилита командной строки для 
 %_man1dir/%{name}*
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.0.6-alt1.0.qa1
+- NMU: rebuilt for debuginfo.
+
 * Fri Mar 30 2007 ALT QA Team Robot <qa-robot@altlinux.org> 1.0.6-alt1.0
 - Rebuilt due to libcurl.so.3 -> libcurl.so.4 soname change.
 
