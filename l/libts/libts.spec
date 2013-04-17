@@ -3,7 +3,7 @@
 
 Name: libts
 Version: 1.0
-Release: alt1
+Release: alt1.qa1
 
 Summary: tslib - touchscreen access library
 
@@ -60,6 +60,9 @@ rm -f %buildroot%plugindir/*.la
 %_pkgconfigdir/*.pc
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.0-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sun Jan 10 2010 Vitaly Lipatov <lav@altlinux.ru> 1.0-alt1
 - initial build for ALT Linux Sisyphus (thanks, Mandriva)
 
