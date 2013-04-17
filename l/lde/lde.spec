@@ -1,6 +1,6 @@
 Name: lde
 Version: 2.6.1
-Release: alt0.1
+Release: alt0.1.qa1
 
 Summary: Linux Disk Editor
 Summary(ru_RU.KOI8-R): Редактор диска для Linux
@@ -65,6 +65,9 @@ EOF
 #%_menudir/%name
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.6.1-alt0.1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Mon May 29 2006 Vitaly Lipatov <lav@altlinux.ru> 2.6.1-alt0.1
 - new version (2.6.1)
 
