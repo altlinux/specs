@@ -1,7 +1,7 @@
 Name: arpsend
 Summary: arpsend - tool for network diagnostics and testing
 Version: 1.2.2
-Release: alt1
+Release: alt1.qa1
 License: GPL/BSD/BSD-like
 Group: System/Configuration/Networking
 URL: http://www.net.princeton.edu/software/arpsend/
@@ -37,6 +37,9 @@ network administrators.
 %doc COPYING* README NEWS TODO ChangeLog AUTHORS
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.2.2-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Fri Dec 19 2008 Anton Farygin <rider@altlinux.ru> 1.2.2-alt1
 - new version
 
