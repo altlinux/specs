@@ -1,6 +1,6 @@
 Name: orbital_eunuchs_sniper
 Version: 1.30
-Release: alt3.qa1
+Release: alt3.qa2
 Url: http://www.icculus.org/oes/
 Source0: %name-%version.tar.gz
 Source11: %name-16x16.png
@@ -78,6 +78,9 @@ EOF
 %_gamesbindir/*
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.30-alt3.qa2
+- NMU: rebuilt for debuginfo.
+
 * Sat Nov 14 2009 Repocop Q. A. Robot <repocop@altlinux.org> 1.30-alt3.qa1
 - NMU (by repocop): the following fixes applied:
   * pixmap-in-deprecated-location for orbital_eunuchs_sniper
