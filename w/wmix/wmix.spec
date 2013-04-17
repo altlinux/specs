@@ -1,6 +1,6 @@
 Name: wmix
 Version: 3.1
-Release: alt3
+Release: alt3.qa1
 
 Packager: Victor Forsyuk <force@altlinux.org>
 
@@ -43,6 +43,9 @@ install -pm0644  %SOURCE3 .
 %_menudir/*
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 3.1-alt3.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sat Aug 21 2010 Michael Shigorin <mike@altlinux.org> 3.1-alt3
 - fixed menu file not to reference obsolete binary location
   (closes: #23565)
