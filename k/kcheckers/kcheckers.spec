@@ -2,7 +2,7 @@
 
 Name: kcheckers
 Version: 0.8.1
-Release: alt3
+Release: alt3.qa1
 
 Group: Games/Boards
 Summary: Classic boardgame - checkers
@@ -67,6 +67,9 @@ install -Dm 0644 %SOURCE4 %buildroot/%_iconsdir/hicolor/48x48/apps/%name.png
 %doc ChangeLog AUTHORS
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.8.1-alt3.qa1
+- NMU: rebuilt for debuginfo.
+
 * Fri Feb 12 2010 Sergey V Turchin <zerg@altlinux.org> 0.8.1-alt3
 - don't use deprecated macroses in specfile
 - fix build requires
