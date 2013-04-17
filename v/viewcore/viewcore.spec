@@ -1,7 +1,7 @@
 Summary: ELF core file debugger
 Name: viewcore
 Version: 0.1
-Release: alt3.1
+Release: alt3.1.qa1
 License: GPL
 Group: Development/Debuggers
 Packager: Denis Smirnov <mithraen@altlinux.ru>
@@ -30,6 +30,9 @@ Program to debug ELF core files.
 %attr(0755, root, root) %_bindir/viewcore
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.1-alt3.1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sun Oct 24 2010 Denis Smirnov <mithraen@altlinux.ru> 0.1-alt3.1
 - rebuild (with the help of girar-nmu utility)
 
