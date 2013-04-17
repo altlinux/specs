@@ -1,7 +1,7 @@
 %define oname abuse
 Name: abuse_sdl
 Version: 0.7.1
-Release: alt2
+Release: alt2.qa1
 Packager: Fr. Br. George <george@altlinux.ru>
 Summary: The classic Crack-Dot-Com game
 License: GPL
@@ -94,6 +94,9 @@ ln -s ambship2.wav Ambship2.wav
 %_gamesdatadir/abuse
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.7.1-alt2.qa1
+- NMU: rebuilt for debuginfo.
+
 * Tue Jan 19 2010 Fr. Br. George <george@altlinux.ru> 0.7.1-alt2
 - Fix icon names
 
