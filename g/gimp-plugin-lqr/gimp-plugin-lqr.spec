@@ -4,7 +4,7 @@
 
 Name: gimp-plugin-lqr
 Version: 0.7.0
-Release: alt1
+Release: alt1.qa1
 
 Packager: Victor Forsiuk <force@altlinux.org>
 
@@ -45,6 +45,9 @@ the picture in a consistent way.
 %gimpdatadir/scripts/*
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.7.0-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Wed May 26 2010 Victor Forsiuk <force@altlinux.org> 0.7.0-alt1
 - 0.7.0
 
