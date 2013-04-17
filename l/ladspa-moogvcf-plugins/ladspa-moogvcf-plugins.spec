@@ -2,7 +2,7 @@
 
 Name: ladspa-%_name-plugins
 Version: 1.1
-Release: alt1
+Release: alt1.qa1
 
 Summary: The Moog VCF LADSPA plugin
 License: GPL
@@ -49,6 +49,9 @@ CXXFLAGS="%optflags"; export CXXFLAGS
 %doc AUTHORS README ams/
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.1-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sun Feb 04 2007 Damir Shayhutdinov <damir@altlinux.ru> 1.1-alt1
 - Fix build on modern Sisyphus
 
