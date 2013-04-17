@@ -1,6 +1,6 @@
 Name: xinput
 Version: 1.5.3
-Release: alt1
+Release: alt1.qa1
 Summary: utility to configure and test XInput devices
 License: MIT/X11
 Group: System/X11
@@ -33,6 +33,9 @@ xinput - utility to configure and test XInput devices
 %_man1dir/*
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.5.3-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Thu Nov 11 2010 Valery Inozemtsev <shrek@altlinux.ru> 1.5.3-alt1
 - 1.5.3
 
