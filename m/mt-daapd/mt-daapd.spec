@@ -3,7 +3,7 @@
 Summary: A multi-threaded implementation of Apple's DAAP server
 Name: mt-daapd
 Version: 0.2.4.1586
-Release: alt1
+Release: alt1.qa1
 License: GPL
 Group: System/Servers
 URL: http://www.mt-daapd.org
@@ -94,6 +94,9 @@ fi
 
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.2.4.1586-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Thu Jan 15 2009 Stanislav Yadykin <tosick@altlinux.org> 0.2.4.1586-alt1
 - new version
 - init script improvements
