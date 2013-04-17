@@ -1,7 +1,7 @@
 %define tarname squashfs
 Name: squashfs3
 Version: 3.4
-Release: alt2
+Release: alt2.qa1
 
 Summary: squashfs support
 License: GPL
@@ -60,6 +60,9 @@ ln -sf ../../sbin/mksquashfs3 %buildroot%_bindir/mksquashfs3
 %_bindir/*
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 3.4-alt2.qa1
+- NMU: rebuilt for debuginfo.
+
 * Thu May 28 2009 Anton Farygin <rider@altlinux.ru> 3.4-alt2
 - build squashfs version 3 as separate package
 
