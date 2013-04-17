@@ -18,7 +18,7 @@
 Name: %name
 Summary: %summary
 Version: %version
-Release: %branch_point.%revision.qa1
+Release: %branch_point.%revision.qa2
 License: GPL
 Url: http://xawdecode.sourceforge.net/
 Packager: Hihin Ruslan <ruslandh@altlinux.ru>
@@ -78,6 +78,9 @@ install -m 644 xdtv_wizard-ru-cp1251.conf %buildroot%_sysconfdir/xdtv
 %_sysconfdir/xdtv/xdtv_wizard-*.conf
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.4.0-alt3.1.qa2
+- NMU: rebuilt for debuginfo.
+
 * Tue Nov 10 2009 Repocop Q. A. Robot <repocop@altlinux.org> 2.4.0-alt3.1.qa1
 - NMU (by repocop): the following fixes applied:
   * post_ldconfig for libxdtv-i18n-ru
