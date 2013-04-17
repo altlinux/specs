@@ -1,7 +1,7 @@
 Name: xcolors
 Version: 1.5a
 %define Level 6
-Release: alt6.2
+Release: alt6.2.qa1
 
 Summary: Display and select X11 named colors
 Summary(ru_RU.KOI8-R): Показывает все именованные цвета X11
@@ -38,6 +38,9 @@ xmkmf
 
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.5a-alt6.2.qa1
+- NMU: rebuilt for debuginfo.
+
 * Thu Dec 04 2008 Fr. Br. George <george@altlinux.ru> 1.5a-alt6.2
 - libXext-devel added
 
