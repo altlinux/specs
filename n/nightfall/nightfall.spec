@@ -1,6 +1,6 @@
 Name: nightfall
 Version: 1.70
-Release: alt1
+Release: alt1.qa1
 Summary: Nightfall is an astronomy application for emulation of eclipsing stars
 
 License: GPLv2+
@@ -43,6 +43,9 @@ desktop-file-install --vendor fedora --dir $RPM_BUILD_ROOT%_datadir/applications
 %_datadir/applications/fedora-nightfall.desktop
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.70-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sun Dec 20 2009 Ilya Mashkin <oddity@altlinux.ru> 1.70-alt1
 - 1.70
 
