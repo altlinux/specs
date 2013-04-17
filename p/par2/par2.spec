@@ -1,6 +1,6 @@
 Name: par2
 Version: 0.4
-Release: alt3
+Release: alt3.qa1
 
 Summary: File verification and repair tool
 Summary(ru_RU.CP1251): Утилита для проверки и восстановления файлов
@@ -49,6 +49,9 @@ chmod a-x NEWS ChangeLog
 %_bindir/*
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.4-alt3.qa1
+- NMU: rebuilt for debuginfo.
+
 * Mon Mar 05 2007 Slava Dubrovskiy <dubrsl@altlinux.org> 0.4-alt3
 - Recovery from orphaned
 - Update buildreq
