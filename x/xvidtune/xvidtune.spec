@@ -1,6 +1,6 @@
 Name: xvidtune
 Version: 1.0.2
-Release: alt1
+Release: alt1.qa1
 
 Summary: video mode tuner for Xorg
 License: MIT/X11
@@ -37,6 +37,9 @@ Xvidtune is a client interface to the X server video mode extension.
 %_man1dir/*
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.0.2-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sat Jan 16 2010 Valery Inozemtsev <shrek@altlinux.ru> 1.0.2-alt1
 - 1.0.2
 
