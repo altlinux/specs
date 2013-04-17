@@ -1,6 +1,6 @@
 Name: ttytest
 Version: 1.3
-Release: alt4
+Release: alt4.qa1
 Summary: ttytest async read-write test and logical stub for terminal lines
 License: GPL
 Group: System/Libraries
@@ -49,6 +49,9 @@ ttytest это маленький и простой консольный тест-"лестница" для терминальных \
 %_docdir/*
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.3-alt4.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sat May 09 2009 Sergey Shilov <hsv@altlinux.org> 1.3-alt4
 - run libtoolize before auticonf
 
