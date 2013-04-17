@@ -1,6 +1,6 @@
 Name: mboxstats
 Version: 3.1
-Release: alt1
+Release: alt1.qa1
 
 Summary: mbox stats
 License: GPL
@@ -35,6 +35,9 @@ install -pD -m755 %name %buildroot%_bindir/%name
 # - MIME/cyrillics support, if ever ;-) [from:, subject:]
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 3.1-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Wed Dec 24 2008 Michael Shigorin <mike@altlinux.org> 3.1-alt1
 - built for ALT Linux
 
