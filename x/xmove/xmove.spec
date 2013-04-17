@@ -2,7 +2,7 @@
 
 Name: xmove
 Version: 2.0
-Release: alt1
+Release: alt1.qa1
 Summary: X11 pseudoserver to dynamically move X11 applications
 %if %beta
 Source0: ftp://ftp.cs.columbia.edu/pub/xmove/%name.%{version}beta%beta.tar.bz2
@@ -55,6 +55,9 @@ rm -rf %buildroot
 %_man1dir/xmove*
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.0-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Wed Aug 29 2007 Fr. Br. George <george@altlinux.ru> 2.0-alt1
 - Initial build for ALT
 
