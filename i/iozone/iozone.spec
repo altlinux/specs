@@ -1,7 +1,7 @@
 Name: iozone
 %define minor 303
 Version: 3.%minor
-Release: alt1
+Release: alt1.qa1
 
 Summary: IOzone Filesystem Benchmark
 Summary(ru_RU.KOI8-R): Эталонный тест файловой подсистемы IOzone
@@ -82,6 +82,9 @@ catdoc Run_rules.doc >Run_rules.txt
 %_datadir/%name/
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 3.303-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Wed Jul 02 2008 Vitaly Lipatov <lav@altlinux.ru> 3.303-alt1
 - new version 3.303 (with rpmrb script)
 
