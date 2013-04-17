@@ -2,7 +2,7 @@
 
 Name: ladspa-%_name-plugins
 Version: 0.2.8
-Release: alt2
+Release: alt2.qa1
 
 Summary: Bandlimited LADSPA Oscillator Plugins
 License: GPL
@@ -51,6 +51,9 @@ assist in building synthesis networks.
 %doc doc/*.txt
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.2.8-alt2.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sun Feb 04 2007 Damir Shayhutdinov <damir@altlinux.ru> 0.2.8-alt2
 - Fix plugin build
 
