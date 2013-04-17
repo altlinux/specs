@@ -1,6 +1,6 @@
 Name: ocrad
 Version: 0.20
-Release: alt1
+Release: alt1.qa1
 
 Summary: Ocrad is an OCR program based on a feature extraction method
 License: GPL
@@ -45,6 +45,9 @@ make install-man DESTDIR=%buildroot
 %_man1dir/*
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.20-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sun Dec 12 2010 Ilya Mashkin <oddity@altlinux.ru> 0.20-alt1
 - 0.20
 
