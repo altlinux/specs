@@ -6,7 +6,7 @@
 
 Name: tcl-memchan
 Version: 2.2.1
-Release: alt3
+Release: alt3.qa1
 
 Summary: A tcl extension implementing memory channels
 License: BSD
@@ -49,6 +49,9 @@ placed into them in memory, not on disk.
 %_mandir/mann/*
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.2.1-alt3.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sat Jul 22 2006 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.2.1-alt3
 - fixed build for x86_64
 
