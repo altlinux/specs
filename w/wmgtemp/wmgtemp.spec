@@ -1,6 +1,6 @@
 Name: wmgtemp
 Version: 1.1
-Release: alt1
+Release: alt1.qa1
 
 Summary: Dock app for WindowMaker that displays the CPU and SYS temperatures
 License: Artistic
@@ -37,6 +37,9 @@ install -p -D -m644 %SOURCE1 $RPM_BUILD_ROOT%_menudir/%name
 %_menudir/*
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.1-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Wed Oct 20 2010 Victor Forsiuk <force@altlinux.org> 1.1-alt1
 - 1.1 (this version built with libsensors3).
 - License is actually Artistic, not GPL.
