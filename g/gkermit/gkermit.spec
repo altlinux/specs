@@ -2,7 +2,7 @@
 
 Name: gkermit
 Version: 1.00
-Release: alt1
+Release: alt1.qa1
 
 Summary: Transfer files with the Kermit protocol
 
@@ -43,6 +43,9 @@ cp gkermit.nr.bz2 %buildroot%_man1dir/gkermit.1.bz2
 %_man1dir/*
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.00-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Fri Jul 25 2008 Vitaly Lipatov <lav@altlinux.ru> 1.00-alt1
 - initial build for ALT Linux Sisyphus
 
