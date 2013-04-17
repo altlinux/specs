@@ -5,7 +5,7 @@ Summary:                DAV module for Apache 1.3.x
 Summary(ru_RU.KOI8-R):  Модуль DAV под Apache 1.3.x
 Name: mod_dav
 Version: 1.0.3
-Release: alt4
+Release: alt4.qa1
 Group: System/Servers
 License: Apache
 URL: http://www.webdav.org/mod_dav/
@@ -79,6 +79,9 @@ fi
 %attr(-,apache,apache) %_var/lock/dav/
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.0.3-alt4.qa1
+- NMU: rebuilt for debuginfo.
+
 * Thu Mar 30 2006 Sergei Epiphanov <serpiph@altlinux.ru> 1.0.3-alt4
 - Fixing unresolved symbols from gdbm
 - Setting relaxed for unresolved
