@@ -1,6 +1,6 @@
 Name: sercd
 Version: 3.0.0
-Release: alt1
+Release: alt1.qa1
 
 Summary: Serial port redirector.
 License: GPL
@@ -38,6 +38,9 @@ install -m755 -D sercd.xinetd %buildroot/%_sysconfdir/sercd
 
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 3.0.0-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Fri Jan 09 2009 Ilya Mashkin <oddity@altlinux.ru> 3.0.0-alt1
 - 3.0.0
 
