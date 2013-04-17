@@ -1,6 +1,6 @@
 Name: hmount
 Version: 0.2.2
-Release: alt1
+Release: alt1.qa1
 
 Packager: Alexey Borovskoy <alb@altlinux.ru>
 
@@ -41,6 +41,9 @@ of programs and libraries.
 %doc AUTHORS COPYING ChangeLog NEWS README TODO
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.2.2-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Mon Oct 26 2009 Alexey Borovskoy <alb@altlinux.ru> 0.2.2-alt1
 - Build for Sisyphus.
 
