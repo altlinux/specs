@@ -1,7 +1,7 @@
 Summary: Integrated scm, wiki, issue tracker and project environment
 Name: trac
-Version: 0.12.3
-Release: alt1
+Version: 1.0
+Release: alt3
 Source: http://ftp.edgewall.com/pub/trac/%name-%version.tar
 Source1: trac-0.9-alt-apache2.conf
 Source3: trac-0.9.4-alt-nginx.cgi.conf
@@ -14,7 +14,7 @@ Source9: trac.sysconfig
 Source10: trac-restrict-env
 Source11: Alt-linux-team-bar-small.png
 
-Patch: trac-0.11.6-tracd-drop-privileges.patch
+#Patch: trac-0.11.6-tracd-drop-privileges.patch
 Patch1: trac-0.11.7-trac-admin-initenv-fixp-group-privileges.patch
 
 #Patches from Debian
@@ -79,9 +79,9 @@ This package contains trac FastCGI web frontend
 
 %prep
 %setup -q
-%patch -p1
+###patch -p1
 %patch1 -p1
-%patch2 -p1
+###patch2 -p1
 ##patch3 -p1
 
 cp %SOURCE3 nginx-A.trac.cgi.conf
@@ -167,11 +167,20 @@ install -m 644 %SOURCE11 %buildroot%python_sitelibdir/%name/htdocs/Alt-linux-tea
 %files -n python-module-trac-fcgi
 %python_sitelibdir/%name/web/fcgi_frontend.*
 %python_sitelibdir/%name/web/_fcgi.*
-%doc cgi-bin
+#doc cgi-bin
 %doc nginx-A.trac.cgi.conf nginx-A.trac.fcgi.conf
 %doc cherokee-A.trac.cgi.conf cherokee-A.trac.fcgi.conf
 
 %changelog
+* Wed Apr 17 2013 Valentin Rosavitskiy <valintinr@altlinux.org> 1.0-alt3
+- 1.0 Fixed attachments folder permissions
+
+* Wed Apr 17 2013 Valentin Rosavitskiy <valintinr@altlinux.org> 1.0-alt2
+- 1.0 New version
+
+* Tue Sep 11 2012 Slava Dubrovskiy <dubrsl@altlinux.org> 1.0-alt1
+- 1.0
+
 * Sun Mar 04 2012 Slava Dubrovskiy <dubrsl@altlinux.org> 0.12.3-alt1
 - 0.12.3
 
