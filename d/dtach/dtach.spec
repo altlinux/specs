@@ -1,6 +1,6 @@
 Name: dtach
 Version: 0.8
-Release: alt1
+Release: alt1.qa1
 
 Summary: A simple program that emulates the detach feature of screen
 Group: System/Base
@@ -37,6 +37,9 @@ full-screen applications such as emacs.
 %_man1dir/%name.*
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.8-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sat Jan 10 2009 Ilya Mashkin <oddity@altlinux.ru> 0.8-alt1
 - 0.8
 
