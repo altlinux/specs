@@ -2,7 +2,7 @@
 
 Name: xmms-eff-defx
 Version: 0.9.9
-Release: alt3
+Release: alt3.qa1
 
 Epoch: 20071220
 
@@ -49,6 +49,9 @@ install -pD -m755 lib/libdefx.so %buildroot%xmms_effectdir/libdefx.so
 %xmms_effectdir/libdefx.so
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 20071220:0.9.9-alt3.qa1
+- NMU: rebuilt for debuginfo.
+
 * Thu Dec 20 2007 Michael Shigorin <mike@altlinux.ru> 20071220:0.9.9-alt3
 - fixed x86_64 build
 
