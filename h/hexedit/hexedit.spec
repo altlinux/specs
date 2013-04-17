@@ -1,47 +1,45 @@
 Name: hexedit
-Version: 1.2.12
-Release: alt1.0
+Version: 1.2.13
+Release: alt1
 
-Summary: View and edit files in hexadecimal or in ASCII
-Summary(ru_RU.KOI8-R): Редактор файлов в ASCII- или шестнадцатиричном режиме
-License: GPL
+Summary: A hexadecimal file viewer and editor
+License: GPLv2+
 Group: Editors
-URL: http://merd.sourceforge.net/pixel/hexedit.html
+URL: http://rigaux.org/hexedit.html
 
-Source: http://merd.sf.net/pixel/hexedit-%version.src.tgz
-Patch: %name-1.2.2-rh-makefile.patch
+# http://rigaux.org/%name-%version.src.tgz
+Source: %name-%version.tar
+Patch1: hexedit-rh-config.patch
+Patch2: hexedit-rh-man-color.patch
 
-# Automatically added by buildreq on Thu Sep 29 2005
-BuildRequires: libncurses-devel libtinfo-devel
+BuildRequires: libncurses-devel
 
 %description
-hexedit shows a file both in ASCII and in hexadecimal. The file can be
-a device as the file is read a piece at a time. You can modify the
-file and search through it.
-
-%description -l ru_RU.KOI8-R
-hexedit отображает содержимое файла одновременно в ASCII и шестнадцатиричном
-представлении. При этом не накладывается никаких ограничений на тип файла;
-в частности, это может быть файл устройства. В открытом файле можно
-осуществлять поиск и редактирование.
+hexedit shows a file both in ASCII and in hexadecimal.  The file can be
+a device as the file is read a piece at a time.  You can modify the file
+and search through it.
 
 %prep
-%setup -q -n %name
-%patch -p1
+%setup
+%patch1 -p1
+%patch2 -p1
 
 %build
 %configure
 %make_build
 
 %install
-%makeinstall
+%makeinstall_std
 
 %files
-%doc Changes TODO
+%doc *.lsm Changes TODO
 %_bindir/*
 %_man1dir/*
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin <ldv@altlinux.org> 1.2.13-alt1
+- Updated to 1.2.13.
+
 * Mon Apr 16 2007 ALT QA Team Robot <qa-robot@altlinux.org> 1.2.12-alt1.0
 - Automated rebuild.
 
