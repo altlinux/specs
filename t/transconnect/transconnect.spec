@@ -2,7 +2,7 @@
 
 Name: transconnect
 Version: 1.3
-Release: alt5
+Release: alt5.qa1
 
 Summary: use internet with HTTP CONNECT
 License: GPL
@@ -41,6 +41,9 @@ install -D -p -m 644 tconn.conf %buildroot%_sysconfdir/transconnect.conf
 %_libdir/lib%name.so.*
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.3-alt5.qa1
+- NMU: rebuilt for debuginfo.
+
 * Tue Oct 26 2010 Yauheni Kaliuta <tren@altlinux.ru> 1.3-alt5
 - Generate proxyfy script to use proper libdir. (#24370)
 
