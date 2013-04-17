@@ -1,6 +1,6 @@
 Name: mod_security
 Version: 1.9.5
-Release: alt2
+Release: alt2.qa1
 
 Summary: Tighten web applications security for Apache 1.3
 License: GPL
@@ -103,6 +103,9 @@ subst "/Include conf\/addon-modules\/mod_security\.conf/d" %_sysconfdir/httpd/co
 %doc CHANGES README* httpd.conf.example-minimal util doc
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.9.5-alt2.qa1
+- NMU: rebuilt for debuginfo.
+
 * Tue Apr 28 2009 Denis Smirnov <mithraen@altlinux.ru> 1.9.5-alt2
 - comment SecRule
 
