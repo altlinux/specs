@@ -1,6 +1,6 @@
 Name: multiget
 Version: 1.2.0
-Release: alt1
+Release: alt1.qa1
 
 Summary: An easy-to-use GUI file downloader
 Group: Networking/File transfer
@@ -51,6 +51,9 @@ install -pD -m 644 %SOURCE2 %buildroot%_datadir/pixmaps/%name.png
 %exclude %_prefix/doc/%name
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.2.0-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Fri Feb 12 2010 Yuri N. Sedunov <aris@altlinux.org> 1.2.0-alt1
 - first build for Sisyphus
 
