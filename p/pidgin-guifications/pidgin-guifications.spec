@@ -5,7 +5,7 @@
 Summary:    Guifications Plugin for Pidgin
 Name:       pidgin-guifications
 Version:    2.16
-Release:    alt1
+Release:    alt1.qa1
 
 License:    GPL
 Group:      Networking/Instant messaging
@@ -43,6 +43,9 @@ Guifications is a graphical notification plugin for the open source instant mess
 %_datadir/pixmaps/pidgin/guifications/*
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.16-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Mon Feb 04 2008 Alexey Shabalin <shaba@altlinux.ru> 2.16-alt1
 - 2.16
 - update source url
