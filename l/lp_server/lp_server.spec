@@ -1,6 +1,6 @@
 Name: lp_server
 Version: 1.1.6
-Release: alt1
+Release: alt1.qa1
 
 Summary: Exports a printer port to network
 
@@ -54,6 +54,9 @@ install -D %SOURCE2 %buildroot/%_sysconfdir/sysconfig/%name
 %_sysconfdir/sysconfig/%name
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.1.6-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Fri Feb 03 2006 Vitaly Lipatov <lav@altlinux.ru> 1.1.6-alt1
 - add init file for sysvinit, add sysconfig file (thanks to pv@)
 - add patch for background mode
