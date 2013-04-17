@@ -1,6 +1,6 @@
 Name: userpasswd
 Version: 0.2.10
-Release: alt3
+Release: alt3.qa1
 
 Group: System/Configuration/Other
 Summary: The graphical tool for changing password
@@ -34,6 +34,9 @@ graphical tool for changing password.
 %_datadir/pixmaps/*
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.2.10-alt3.qa1
+- NMU: rebuilt for debuginfo.
+
 * Wed Sep 09 2009 Sergey V Turchin <zerg@altlinux.org> 0.2.10-alt3
 - using desktop-file for applications menu (closes: 21505)
 
