@@ -1,6 +1,6 @@
 Version:	0.5.2
 Name:		quassel
-Release:	alt1
+Release:	alt1.qa1
 Summary:	Quassel - IRC client
 License: 	GPLv3
 Group: 		Networking/IRC
@@ -43,6 +43,9 @@ cp -rf icons/hicolor %buildroot%_iconsdir/
 %_iconsdir/*/*/apps/%name.png
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.5.2-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sat Apr 10 2010 Motsyo Gennadi <drool@altlinux.ru> 0.5.2-alt1
 - 0.5.2
 
