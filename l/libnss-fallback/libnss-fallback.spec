@@ -1,7 +1,7 @@
 
 Name: libnss-fallback
 Version: 0.0.1
-Release: alt2
+Release: alt2.qa1
 
 Summary: NSS library module for localhost fallback
 License: GPL
@@ -60,6 +60,9 @@ update_chrooted all
 /%_lib/*.so.*
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.0.1-alt2.qa1
+- NMU: rebuilt for debuginfo.
+
 * Thu Feb 26 2009 Evgeny Sinelnikov <sin@altlinux.ru> 0.0.1-alt2
 - Add automatic module configurtion during installation process
 
