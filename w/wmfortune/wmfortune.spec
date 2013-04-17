@@ -1,6 +1,6 @@
 Name:		wmfortune
 Version:	0.241
-Release:	alt4.qa1
+Release:	alt4.qa2
 
 Packager:	Alexey Voinov <voins@altlinux.ru>
 
@@ -34,6 +34,9 @@ install -p -D -m644 %SOURCE1 $RPM_BUILD_ROOT%_menudir/%name
 %_menudir/*
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.241-alt4.qa2
+- NMU: rebuilt for debuginfo.
+
 * Thu Feb 04 2010 Repocop Q. A. Robot <repocop@altlinux.org> 0.241-alt4.qa1
 - NMU (by repocop): the following fixes applied:
   * update_menus for wmfortune
