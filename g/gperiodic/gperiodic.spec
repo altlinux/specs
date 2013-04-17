@@ -1,6 +1,6 @@
 Name: gperiodic
 Version: 2.0.10
-Release: alt4
+Release: alt4.qa1
 
 Summary: Program for browsing the periodic table
 License: GPL
@@ -45,6 +45,9 @@ install -p -m644 %SOURCE1 %buildroot%_man1dir/
 %doc README NEWS AUTHORS ChangeLog gpl.txt
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.0.10-alt4.qa1
+- NMU: rebuilt for debuginfo.
+
 * Thu Dec 04 2008 Michael Shigorin <mike@altlinux.org> 2.0.10-alt4
 - applied repocop patch
 
