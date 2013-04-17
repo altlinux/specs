@@ -1,6 +1,6 @@
 Name: lib765
 Version: 0.4.1
-Release: alt2.qa1
+Release: alt2.qa2
 
 Summary: Library to emulate the uPD765a floppy controller (aka Intel 8272)
 Group: System/Libraries
@@ -59,6 +59,9 @@ programs that use the %name library.
 %_libdir/*.so
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.4.1-alt2.qa2
+- NMU: rebuilt for debuginfo.
+
 * Fri Nov 26 2010 Igor Vlasenko <viy@altlinux.ru> 0.4.1-alt2.qa1
 - rebuild using girar-nmu to require/provide setversion 
   by request of mithraen@
