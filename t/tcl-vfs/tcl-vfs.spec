@@ -6,7 +6,7 @@
 
 Name: tcl-%teaname
 Version: 1.3
-Release: alt7
+Release: alt7.qa1
 
 Summary: A TCL virtual file system extension
 License: BSD
@@ -55,6 +55,9 @@ sed -i 's/@lib@/%_lib/' pkgIndex.tcl.in
 %_mandir/mann/*
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.3-alt7.qa1
+- NMU: rebuilt for debuginfo.
+
 * Fri Sep  1 2006 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.3-alt7
 - fixed #8677
 
