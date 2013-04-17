@@ -1,6 +1,6 @@
 Name: ettcp
 Version: 1.0
-Release: alt5
+Release: alt5.qa1
 
 Summary: A tool for testing TCP throughut between two nodes
 License: Public Domain
@@ -53,6 +53,9 @@ mkdir -p %buildroot{%_man1dir,%_bindir,%_sysconfdir/xinetd.d}
 %_sysconfdir/xinetd.d/*
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.0-alt5.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sat Aug 01 2009 Michael Shigorin <mike@altlinux.org> 1.0-alt5
 - added explicit Conflicts: suck (repocop)
 - minor spec cleanup
