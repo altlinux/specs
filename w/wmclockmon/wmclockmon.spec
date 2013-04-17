@@ -3,7 +3,7 @@
 
 Name: wmclockmon
 Version: 0.8.1
-Release: alt5
+Release: alt5.qa1
 
 Summary: displays a clock in 12/24h mode with alarm mode and 7 different LCD styles
 License: GPLv2
@@ -54,6 +54,9 @@ install -pD -m 644 %SOURCE1 %buildroot%_menudir/%name
 %_menudir/%name
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.8.1-alt5.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sun Jun 13 2010 Slava Semushin <php-coder@altlinux.ru> 0.8.1-alt5
 - Porting to GTK+2 (patch from Debian, see deb #437442)
 
