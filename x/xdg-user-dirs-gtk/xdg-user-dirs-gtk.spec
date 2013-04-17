@@ -1,6 +1,6 @@
 Name: xdg-user-dirs-gtk
 Version: 0.8
-Release: alt1
+Release: alt1.qa1
 Summary: Gnome integration of special directories
 Group: Graphical desktop/GNOME
 License: GPLv2+
@@ -39,6 +39,9 @@ locale changes.
 %_bindir/*
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.8-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Mon Aug 10 2009 Valery Inozemtsev <shrek@altlinux.ru> 0.8-alt1
 - initial release
 
