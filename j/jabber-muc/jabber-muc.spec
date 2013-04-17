@@ -5,7 +5,7 @@
 
 Name: jabber-muc
 Version: 0.8
-Release: alt0.3.%revision
+Release: alt0.3.%revision.qa1
 
 Summary: MU-Conference service for Jabber (using JCR)
 Group: System/Servers
@@ -82,6 +82,9 @@ install -pD -m0755 %SOURCE3 %buildroot%_jabber_component_dir/%name
 %_jabber_component_dir/*
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.8-alt0.3.r51.qa1
+- NMU: rebuilt for debuginfo.
+
 * Thu Jan 24 2008 Alexey Sidorov <alexsid@altlinux.ru> 0.8-alt0.3.r51
 - update jabber-config adapter (use xmlstarlet)
 - New SVN revision:
