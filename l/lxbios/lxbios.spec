@@ -1,6 +1,6 @@
 Name: lxbios
 Version: 2.0.1
-Release: alt0.1
+Release: alt0.1.qa1
 
 Summary: LinuxBIOS utility program
 
@@ -40,6 +40,9 @@ cp lxbios.1.gz %buildroot%_man1dir/
 %_man1dir/*
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.0.1-alt0.1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sun Dec 24 2006 Vitaly Lipatov <lav@altlinux.ru> 2.0.1-alt0.1
 - new version 2.0.1 (with rpmrb script)
 
