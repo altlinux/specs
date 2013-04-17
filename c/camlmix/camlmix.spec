@@ -1,6 +1,6 @@
 Name: camlmix
 Version: 1.3.0
-Release: alt1
+Release: alt1.qa1
 Summary: Generic preprocessor for OCaml program with embedded text.
 
 Group: Development/ML
@@ -35,5 +35,8 @@ make install PREFIX=%buildroot/usr
 %_bindir/*
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.3.0-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Mon Sep 23 2008 Veaceslav Grecea <slavutich@altlinux.org> 1.3.0-alt1
 - Initial build for ALT Linux
