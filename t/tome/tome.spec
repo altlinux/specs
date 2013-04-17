@@ -2,7 +2,7 @@
 
 Name:		tome
 Version: 	2.3.5
-Release: 	alt2
+Release: 	alt2.qa1
 
 Packager:	Alexey Voinov <voins@altlinux.ru>
 
@@ -73,6 +73,9 @@ fi
 %varpath/module.lua
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.3.5-alt2.qa1
+- NMU: rebuilt for debuginfo.
+
 * Tue Aug 12 2008 Alexey Voinov <voins@altlinux.ru> 2.3.5-alt2
 - update_menus removed
 - /usr/games -> /usr/bin migration
