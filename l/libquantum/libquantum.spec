@@ -1,6 +1,6 @@
 Name: libquantum
 Version: 1.1.0
-Release: alt1
+Release: alt1.qa1
 
 Summary: The C library for quantum computing and quantum simulation
 
@@ -46,6 +46,9 @@ in development of the %name-based applications.
 %_libdir/*.so
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.1.0-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Wed Mar 03 2010 Vitaly Lipatov <lav@altlinux.ru> 1.1.0-alt1
 - new version 1.1.0 (with rpmrb script)
 
