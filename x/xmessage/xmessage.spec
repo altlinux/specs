@@ -1,6 +1,6 @@
 Name: xmessage
 Version: 1.0.3
-Release: alt1
+Release: alt1.qa1
 Summary: display a message or query in a window
 License: MIT/X11
 Group: System/X11
@@ -39,6 +39,9 @@ the button to standard output.
 %_man1dir/*
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.0.3-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sat Jan 30 2010 Valery Inozemtsev <shrek@altlinux.ru> 1.0.3-alt1
 - 1.0.3
 
