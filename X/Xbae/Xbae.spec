@@ -2,7 +2,7 @@
 
 Name: Xbae
 Version: 4.60.4
-Release: alt2.qa1
+Release: alt2.qa2
 
 Summary: The Motif matrix and caption widgets
 License: MIT
@@ -114,6 +114,9 @@ rm -rf %buildroot%_datadir/%name/
 %doc doc/[^M]*
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 4.60.4-alt2.qa2
+- NMU: rebuilt for debuginfo.
+
 * Fri Nov 26 2010 Igor Vlasenko <viy@altlinux.ru> 4.60.4-alt2.qa1
 - rebuild using girar-nmu to require/provide setversion 
   by request of mithraen@
