@@ -2,7 +2,7 @@
 
 Name: tcl-%teaname
 Version: 2.2
-Release: alt1
+Release: alt1.qa1
 
 Summary: TkTreeCtrl is a multi-column hierarchical listbox widget for the Tk GUI toolkit
 License: BSD
@@ -39,6 +39,9 @@ install -m0644 -D treectrl.n %buildroot%_mandir/mann/treectrl.n
 %_mandir/mann/*
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.2-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Mon Nov 27 2006 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.2-alt1
 - 2.2 released
 
