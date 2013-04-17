@@ -3,7 +3,7 @@
 Name: hammerhead
 
 Version: 2.1.4
-Release: alt1
+Release: alt1.qa1
 Epoch: 1
 
 Summary: a stress testing tool for web servers
@@ -87,6 +87,9 @@ install -m 0644 doc/hammerhead.1 %buildroot%_man1dir/
 
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1:2.1.4-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sun Oct 10 2010 Nikolay A. Fetisov <naf@altlinux.ru> 1:2.1.4-alt1
 - New version
 - Fix typo in package version
