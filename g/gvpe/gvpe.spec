@@ -6,7 +6,7 @@
 
 Name: gvpe
 Version: %version
-Release: %release.1
+Release: alt1.1.qa1
 
 Summary: virtual ethernet SSL VPN
 
@@ -91,6 +91,9 @@ cp -- %SOURCE5 README.ALT.utf-8
 %_infodir/*
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.22-alt1.1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Wed Dec 08 2010 Igor Vlasenko <viy@altlinux.ru> 2.22-alt1.1
 - rebuild with new openssl and/or boost by request of git.alt administrator
 
