@@ -2,7 +2,7 @@
 
 Name: hibernate-script
 Version: 2.0
-Release: alt3
+Release: alt3.qa1
 
 Summary: Software suspend 2 hibernate script
 License: GPL
@@ -101,6 +101,9 @@ __EOF__
 %_man8dir/*.8*
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.0-alt3.qa1
+- NMU: rebuilt for debuginfo.
+
 * Wed Apr 07 2010 Valery Inozemtsev <shrek@altlinux.ru> 2.0-alt3
 - added pm-utils compatibility script
 
