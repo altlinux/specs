@@ -1,6 +1,6 @@
 Name: ddd
 Version: 3.3.12
-Release: alt1
+Release: alt1.qa1
 
 Summary: Graphical debugger front-end for GDB, DBX, Ladebug, JDB, Perl, Python
 License: GPL
@@ -142,6 +142,9 @@ rmdir $RPM_BUILD_ROOT%_datadir/%name-%version/%name
 %docdir/html
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 3.3.12-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Thu Sep 03 2009 Ilya Mashkin <oddity@altlinux.ru> 3.3.12-alt1
 - 3.3.12
 - remove old macros
