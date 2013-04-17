@@ -1,6 +1,6 @@
 Name: rman
 Version: 3.2
-Release: alt1
+Release: alt1.qa1
 
 Summary: reverse compile man pages from formatted form to a number of source formats
 License: Artistic
@@ -41,6 +41,9 @@ matted translation as a backup.
 %_man1dir/*
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 3.2-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Tue Jan 03 2006 Valery Inozemtsev <shrek@altlinux.ru> 3.2-alt1
 - initial release
 
