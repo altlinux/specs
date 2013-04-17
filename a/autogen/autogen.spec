@@ -1,6 +1,6 @@
 Name: autogen
 Version: 5.9.9
-Release: alt1.1
+Release: alt1.1.qa1
 
 Summary: AutoGen - The Automated Program Generator
 License: %gpl2plus
@@ -98,6 +98,9 @@ This package is needed to write programs that use AutoOpts API.
 %exclude %_libdir/*.a
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 5.9.9-alt1.1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Tue Nov 03 2009 Alexey Rusakov <ktirf@altlinux.org> 5.9.9-alt1.1
 - Build with guile18 (thanks to boyarsh@ for a nudge).
 
