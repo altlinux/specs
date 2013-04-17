@@ -2,7 +2,7 @@
 %define oname guiloader
 Name: lib%oname
 Version: 2.7.1
-Release: alt0.1
+Release: alt0.1.qa1
 
 Summary: A high-performance and compact GuiXml loader library
 
@@ -58,5 +58,8 @@ for developing applications with %oname
 %_pkgconfigdir/*
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.7.1-alt0.1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sun Jul 30 2006 Vitaly Lipatov <lav@altlinux.ru> 2.7.1-alt0.1
 - initial build for ALT Linux Sisyphus
