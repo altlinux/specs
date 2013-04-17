@@ -1,6 +1,6 @@
 Name: dhcdrop
 Version: 0.5
-Release: alt1
+Release: alt2
 Summary: Drop dhcp offers from illegitimate dhcp server.
 Group: System/Servers
 License: GPL
@@ -34,6 +34,9 @@ Drop dhcp offers from illegitimate dhcp server
 %_mandir/ru/man8/*
 
 %changelog
+* Wed Apr 17 2013 Andrew Clark <andyc@altlinux.org> 0.5-alt2
+- rebuilt for debuginfo
+
 * Wed Aug 19 2009 Andrew Clark <andyc@altlinux.org> 0.5-alt1
 - initial build for ALT.
 
