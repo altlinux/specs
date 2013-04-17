@@ -6,7 +6,7 @@ Summary:	Purple-based antispam bot for Pidgin
 Name:		purple-plugin-bot-sentry
 Version:	1.1.0
 
-Release:	alt3.qa1
+Release:	alt3.qa2
 License:	GPL
 Group:		Networking/Instant messaging
 Url:		http://sourceforge.net/projects/pidgin-bs/
@@ -37,6 +37,9 @@ Bot Sentry is a Pidgin (libpurple) plugin to prevent Instant Message (IM) spam. 
 %_libdir/purple-2
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.1.0-alt3.qa2
+- NMU: rebuilt for debuginfo.
+
 * Wed Sep 01 2010 Repocop Q. A. Robot <repocop@altlinux.org> 1.1.0-alt3.qa1
 - NMU (by repocop): the following fixes applied:
   * deprecated-packages-info-i18n-common for purple-plugin-bot-sentry
