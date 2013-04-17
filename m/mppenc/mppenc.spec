@@ -1,6 +1,6 @@
 Name: mppenc
 Version: 1.16
-Release: alt0.1
+Release: alt0.1.qa1
 
 Summary: The latest StreamVersion7 encoder
 
@@ -39,5 +39,8 @@ make install
 %_bindir/%name
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.16-alt0.1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Thu Dec 28 2006 Vitaly Lipatov <lav@altlinux.ru> 1.16-alt0.1
 - initial build for ALT Linux Sisyphus
