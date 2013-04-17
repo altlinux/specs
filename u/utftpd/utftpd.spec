@@ -1,6 +1,6 @@
 Name: utftpd
 Version: 0.2.4
-Release: alt2
+Release: alt2.qa1
 Packager: Sergey Y. Afonin <asy@altlinux.ru>
 
 Summary: utftpd - Enhanced TFTP server
@@ -88,6 +88,9 @@ touch $RPM_BUILD_ROOT%_sysconfdir/{utftpd.cdb,utftpd.tmp}
 %_mandir/man1/utftp.1*
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.2.4-alt2.qa1
+- NMU: rebuilt for debuginfo.
+
 * Tue Jan 10 2006 Sergey Y. Afonin <asy@altlinux.ru> 0.2.4-alt2
 - fix: set sticky bit to /var/lib/tftp
 - change: move changelog of PLD package to utftpd.changelog.pld
