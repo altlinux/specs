@@ -1,6 +1,6 @@
 Name: isomaster
 Version: 1.3.8
-Release: alt1
+Release: alt1.qa1
 
 Summary: An open-source, graphical CD image editor
 License: GPL
@@ -37,6 +37,9 @@ rm -rf %buildroot%_defaultdocdir/bkisofs
 %_desktopdir/*.desktop
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.3.8-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Thu Jan 06 2011 Michael Shigorin <mike@altlinux.org> 1.3.8-alt1
 - 1.3.8
 
