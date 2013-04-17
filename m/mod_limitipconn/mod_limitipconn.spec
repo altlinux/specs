@@ -1,6 +1,6 @@
 Name: mod_limitipconn
 Version: 0.04
-Release: alt3
+Release: alt3.qa1
 
 Summary: Limit simultaneous connections by an IP address
 License: X11
@@ -41,6 +41,9 @@ install -pD -m644 %name.so %buildroot%_libdir/apache/%name.so
 # - conditional patch application
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.04-alt3.qa1
+- NMU: rebuilt for debuginfo.
+
 * Thu Feb 22 2007 Michael Shigorin <mike@altlinux.org> 0.04-alt3
 - added patches from project page (mutually exclusive):
   + LocalIP (by Chan Leung) to exempt given IP address (not applied)
