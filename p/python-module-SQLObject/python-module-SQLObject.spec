@@ -9,7 +9,7 @@
 
 Name: python-module-SQLObject
 Version: 1.3.2
-Release: alt1
+Release: alt1.1
 
 Summary: Object-Relational Manager, aka database wrapper for Python
 
@@ -110,6 +110,7 @@ pushd ../%py3dir
 pushd %buildroot%_bindir
 for f in `ls`
 do
+	2to3 -wn $f
 	mv $f $f-%__python3_version
 	ln -s $f-%__python3_version ${f}3
 done
@@ -143,6 +144,9 @@ popd
 %doc docs/*
 
 %changelog
+* Wed Apr 17 2013 Fr. Br. George <george@altlinux.ru> 1.3.2-alt1.1
+- Fix build with 2to3
+
 * Wed Mar 20 2013 Aleksey Avdeev <solo@altlinux.ru> 1.3.2-alt1
 - Version 1.3.2
 - Added module for Python 3
