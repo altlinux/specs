@@ -4,7 +4,7 @@
 
 Name:		ichatsrvd
 Version:	0.24
-Release: alt3.1.1
+Release: alt3.1.1.qa1
 License:	Distributable
 Group:		System/Servers
 Source0:	%name-%version.tar.bz2
@@ -64,6 +64,9 @@ service %name stop
 %dir %attr(2770,root,%privgroup) /var/run/ichatsrvd
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.24-alt3.1.1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Wed Dec 08 2010 Igor Vlasenko <viy@altlinux.ru> 0.24-alt3.1.1
 - rebuild with new openssl and/or boost by request of git.alt administrator
 
