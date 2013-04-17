@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.7.3
-Release: alt1
+Release: alt1.1
 Summary: template library written in Python
 
 Group: Development/Python
@@ -20,6 +20,7 @@ Requires: python-module-beaker
 BuildArch: noarch
 BuildRequires: python-module-setuptools python-module-markupsafe
 %if_with python3
+BuildRequires: /usr/bin/2to3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-distribute
 BuildPreReq: python3-module-markupsafe
@@ -75,6 +76,7 @@ pushd ../python3
 %python3_install
 popd
 mv %buildroot%_bindir/mako-render %buildroot%_bindir/mako-render3
+2to3 -wn %buildroot%_bindir/mako-render3
 %endif
 %python_install
 
@@ -93,6 +95,9 @@ mv %buildroot%_bindir/mako-render %buildroot%_bindir/mako-render3
 %endif
 
 %changelog
+* Wed Apr 17 2013 Fr. Br. George <george@altlinux.ru> 0.7.3-alt1.1
+- Fix build with 2to3
+
 * Wed Feb 20 2013 Aleksey Avdeev <solo@altlinux.ru> 0.7.3-alt1
 - Version 0.7.3
 
