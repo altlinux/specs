@@ -3,7 +3,7 @@
 
 Name: submount
 Version: 0.9
-Release: alt5.2
+Release: alt5.2.qa1
 %define module_name     subfs
 %define module_version  %version
 %define module_release  %release
@@ -133,6 +133,9 @@ done
 %attr(0644,root,root) %kernel_src/kernel-source-%module_name%pkgsuffix-%module_version.tar.*
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.9-alt5.2.qa1
+- NMU: rebuilt for debuginfo.
+
 * Thu Jan 27 2011 Michael Shigorin <mike@altlinux.org> 0.9-alt5.2
 - rebuilt (see #24924)
 
