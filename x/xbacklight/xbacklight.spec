@@ -1,6 +1,6 @@
 Name: xbacklight
 Version: 1.1.1
-Release: alt1
+Release: alt1.qa1
 Summary: adjust backlight brightness using RandR extension
 License: MIT/X11
 Group: System/X11
@@ -35,6 +35,9 @@ control and changes them all in the same way.
 %_man1dir/*
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.1.1-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sat Oct 10 2009 Valery Inozemtsev <shrek@altlinux.ru> 1.1.1-alt1
 - 1.1.1
 
