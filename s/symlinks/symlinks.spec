@@ -1,19 +1,18 @@
 Name: symlinks
-Version: 1.2
+Version: 1.4
 Release: alt1
 Epoch: 1
 
-Summary: A utility which maintains a system's symbolic links.
-Summary(ru_RU.KOI8-R): Утилита для работы с символическими ссылками в системе.
-License: distributable
+Summary: A utility which maintains a system's symbolic links
+License: Copyright only
 Group: File tools
-Packager: Dmitry V. Levin <ldv@altlinux.org>
 
-# ftp://sunsite.unc.edu/pub/Linux/utils/file/symlinks-%version.tar.bz2
-Source: symlinks-%version.tar
-Patch1: symlinks-1.2-rh-fixman.patch
-Patch2: symlinks-1.2-deb-alt.patch
-Patch3: symlinks-1.2-rh-short.patch
+# http://ibiblio.org/pub/Linux/utils/file/%name-%version.tar.gz
+Source: %name-%version.tar
+# http://packages.debian.org/changelogs/pool/main/s/symlinks/symlinks_1.2-4.2/symlinks.copyright
+Source1: symlinks-LICENSE.txt
+Patch1: symlinks-coverity-readlink.patch
+Patch2: symlinks-coverity-overrun-dynamic.patch
 
 %description
 The symlinks utility performs maintenance on symbolic links.  Symlinks
@@ -22,24 +21,27 @@ nonexistent files.  Symlinks can also automatically convert absolute
 symlinks to relative symlinks.
 
 %prep
-%setup -q
+%setup
 %patch1 -p1
 %patch2 -p1
-%patch3 -p1
-sed -i 's/stddef\.h/stdlib.h/' symlinks.c
+install -pm644 %SOURCE1 .
 
 %build
-%__cc %optflags `getconf LFS_CFLAGS` symlinks.c -o symlinks
+%make_build CFLAGS="%optflags $(getconf LFS_CFLAGS)"
 
 %install
-install -pD -m755 symlinks %buildroot%_bindir/symlinks
-install -pD -m644 symlinks.8 %buildroot%_man1dir/symlinks.1
+install -Dpm755 symlinks %buildroot%_bindir/symlinks
+install -Dpm644 symlinks.8 %buildroot%_man1dir/symlinks.1
 
 %files
 %_bindir/*
 %_man1dir/*
+%doc symlinks-LICENSE.txt
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin <ldv@altlinux.org> 1:1.4-alt1
+- Updated to 1.4, synced patches with Fedora.
+
 * Wed Apr 23 2008 Dmitry V. Levin <ldv@altlinux.org> 1:1.2-alt1
 - Merged fixes from FC and Debian symlinks packages.
 - Updated release numbering.
