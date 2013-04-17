@@ -1,6 +1,6 @@
 Name: ls4sweep
 Version: 0.3.0
-Release: alt1
+Release: alt1.qa1
 
 Summary: Policy-based listing old backups for sweeping
 License: GPL
@@ -80,6 +80,9 @@ after creation.
 %doc %name.html TODO LICENSE
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.3.0-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Tue Jan  6 2009 Ilya Evseev <evseev@altlinux.ru> 0.3.0-alt1
 - updated to new version 0.3.0 with 64-bit filesystems support
 
