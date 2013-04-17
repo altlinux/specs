@@ -1,6 +1,6 @@
 Name: deltarpm
 Version: 3.3
-Release: alt0.1
+Release: alt0.1.qa1
 
 Summary: Tools to Create and Apply deltarpms
 
@@ -43,6 +43,9 @@ make DESTDIR=%buildroot prefix="%prefix" mandir="%_mandir" rpmdumpheader="%_libd
 #%_libdir/rpm/rpmdumpheader
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 3.3-alt0.1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Thu Feb 16 2006 Vitaly Lipatov <lav@altlinux.ru> 3.3-alt0.1
 - initial build for ALT Linux Sisyphus
 - note: %name contains rsyncable version of zlib
