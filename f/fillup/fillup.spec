@@ -1,6 +1,6 @@
 Name: fillup
 Version: 1.42
-Release: alt6
+Release: alt6.qa1
 
 Summary: Tool for merging config files
 License: GPL
@@ -65,6 +65,9 @@ install -pDm644 SGML/fillup.8.gz %buildroot%_man8dir/%name.8.gz
 
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.42-alt6.qa1
+- NMU: rebuilt for debuginfo.
+
 * Thu Dec 04 2008 Michael Shigorin <mike@altlinux.org> 1.42-alt6
 - applied repocop patch
 
