@@ -1,6 +1,6 @@
 Name: rfkill
 Version: 0.4
-Release: alt1
+Release: alt1.qa1
 
 Summary: A tool to use /dev/rfkill
 License: BSD-style
@@ -32,6 +32,9 @@ buttons and subsystem interfaces.
 %_man8dir/*
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.4-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Tue Apr 27 2010 Mykola Grechukh <gns@altlinux.ru> 0.4-alt1
 - new version from upstream
 
