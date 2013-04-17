@@ -1,6 +1,6 @@
 Name: ncc
 Version: 2.6
-Release: alt0.1
+Release: alt0.1.qa1
 
 Summary: ncc - The new generation C compiler
 
@@ -54,6 +54,9 @@ cp doc/nognu %buildroot%_includedir/
 %_includedir/*
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.6-alt0.1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Tue Feb 06 2007 Vitaly Lipatov <lav@altlinux.ru> 2.6-alt0.1
 - new version 2.6 (with rpmrb script)
 
