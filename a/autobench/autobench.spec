@@ -1,6 +1,6 @@
 Name: autobench
 Version: 2.1.2
-Release: alt1
+Release: alt1.qa1
 
 Summary:  Utils for automatic benchmarking a web server
 License: GPL
@@ -46,6 +46,9 @@ into a spreadsheet for analysis/graphing.
 
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.1.2-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Fri Feb 20 2009 Denis Klimov <zver@altlinux.org> 2.1.2-alt1
 - Initial build for ALT Linux
 
