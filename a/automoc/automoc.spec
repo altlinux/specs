@@ -1,7 +1,7 @@
 
 Name: automoc
 Version: 0.9.88
-Release: alt1
+Release: alt1.qa1
 
 Group: Development/KDE and QT
 Summary: %name for KDE4
@@ -37,6 +37,9 @@ BuildRequires: cmake gcc-c++ libqt4-devel >= 4.4 kde-common-devel >= 4
 %_K4libdir/automoc4
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.9.88-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Wed Jan 28 2009 Sergey V Turchin <zerg at altlinux dot org> 0.9.88-alt1
 - new version
 
