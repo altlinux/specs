@@ -1,6 +1,6 @@
 Name: dahdi-mithraen
 Version: 0.2
-Release: alt1
+Release: alt1.qa1
 Summary: Utilites for dahdi drivers
 License: GPL
 Group: System/Kernel and hardware
@@ -34,6 +34,9 @@ Obsoletes: zaptel-mithraen
 %attr(2711,root,_asterisk) %_sbindir/dahdi_testspeed
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.2-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Fri Oct 23 2009 Denis Smirnov <mithraen@altlinux.ru> 0.2-alt1
 - remove old zaptel support
 
