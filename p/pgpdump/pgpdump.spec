@@ -1,6 +1,6 @@
 Name: pgpdump
 Version: 0.26
-Release: alt1
+Release: alt1.qa1
 
 Summary: PGP packet visualizer
 License:  %bsd
@@ -38,5 +38,8 @@ install -D pgpdump.1 %buildroot%_man1dir/pgpdump.1
 %_man1dir/pgpdump.*
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.26-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sun May 24 2009 Yury Yurevich <anarresti@altlinux.org> 0.26-alt1
 - initial build
