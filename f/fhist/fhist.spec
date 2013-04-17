@@ -1,7 +1,7 @@
 Summary: file history and comparison tools
 Name: fhist
 Version: 1.17
-Release: alt2
+Release: alt2.qa1
 License: %gpl3plus
 Group: Development/Other
 Source: %name-%version.tar
@@ -40,6 +40,9 @@ make RPM_BUILD_ROOT=$RPM_BUILD_ROOT install
 %_man1dir/*
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.17-alt2.qa1
+- NMU: rebuilt for debuginfo.
+
 * Fri Sep 25 2009 Alexey Voinov <voins@altlinux.ru> 1.17-alt2
 - url updated
 
