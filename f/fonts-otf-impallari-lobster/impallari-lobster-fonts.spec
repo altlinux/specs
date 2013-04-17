@@ -1,3 +1,4 @@
+Group: System/Fonts/True type
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
@@ -7,10 +8,9 @@ BuildRequires: unzip
 
 Name:           fonts-otf-impallari-lobster
 Version:        1.4
-Release:        alt3_4
+Release:        alt3_6
 Summary:        Hand written font with various ligatures for better connecting of letters
 
-Group:          System/Fonts/True type
 License:        OFL
 URL:            http://www.impallari.com/lobster/
 Source0:        http://www.impallari.com/lobster/releases/lobster-font-1.4.zip
@@ -18,8 +18,6 @@ Source1:        %{oldname}-fontconfig.conf
 
 BuildArch:      noarch
 BuildRequires:  fontpackages-devel
-
-Obsoletes: lobster-fonts < 1.3-2
 Source44: import.info
 
 %description
@@ -27,7 +25,7 @@ Hand written font with various ligatures for better connecting
 of letters.
 
 %prep
-%setup -q -c 
+%setup -n %{oldname}-%{version} -q -c 
 pushd Lobster\ 1.4/
 for file in License.txt Readme.txt ; do
  sed "s|\r||g" $file > $file.new && \
@@ -41,8 +39,6 @@ popd
 
 
 %install
-rm -fr %{buildroot}
-
 install -m 0755 -d %{buildroot}%{_fontdir}
 install -m 0644 -p Lobster\ 1.4/*.otf %{buildroot}%{_fontdir}
 
@@ -51,6 +47,7 @@ install -m 0755 -d %{buildroot}%{_fontconfig_templatedir} \
 
 install -m 0644 -p %{SOURCE1} \
         %{buildroot}%{_fontconfig_templatedir}/%{fontconf}
+
 ln -s %{_fontconfig_templatedir}/%{fontconf} \
       %{buildroot}%{_fontconfig_confdir}/%{fontconf}
 # generic fedora font import transformations
@@ -98,6 +95,9 @@ fi
 
 
 %changelog
+* Tue Apr 16 2013 Igor Vlasenko <viy@altlinux.ru> 1.4-alt3_6
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.4-alt3_4
 - update to new release by fcimport
 
