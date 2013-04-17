@@ -2,7 +2,7 @@
 Summary: Exploring Euclidean geometry 
 Name:    kseg	
 Version: 0.403
-Release: alt2.qa2
+Release: alt2.qa3
 
 License: GPL
 Url:     http://www.mit.edu/~ibaran/%name.html	
@@ -68,6 +68,9 @@ desktop-file-install \
 
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.403-alt2.qa3
+- NMU: rebuilt for debuginfo.
+
 * Sat Nov 14 2009 Repocop Q. A. Robot <repocop@altlinux.org> 0.403-alt2.qa2
 - NMU (by repocop): the following fixes applied:
   * obsolete-call-in-post-gtk-update-icon-cache for kseg
