@@ -1,6 +1,6 @@
 Name: cdecl
 Version: 2.5
-Release: alt2
+Release: alt2.qa1
 Epoch: 1
 
 Summary: Programs for encoding and decoding C and C++ function declarations.
@@ -45,6 +45,9 @@ ln -snf %name $RPM_BUILD_ROOT%_bindir/c++decl
 %_mandir/man?/*
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1:2.5-alt2.qa1
+- NMU: rebuilt for debuginfo.
+
 * Fri May 08 2009 Damir Shayhutdinov <damir@altlinux.ru> 1:2.5-alt2
 - Fixed build with new glibc (getline name clash)
 
