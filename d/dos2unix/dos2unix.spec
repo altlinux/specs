@@ -1,7 +1,7 @@
 Summary: Text file format converter
 Name: dos2unix
 Version: 3.1
-Release: alt1
+Release: alt1.qa1
 Group: Text tools
 License: Freely distributable
 Source: %name-%version.tar.bz2
@@ -48,6 +48,9 @@ done
 %_man1dir/*
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 3.1-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Fri Apr 27 2007 Serhii Hlodin <hlodin@altlinux.ru> 3.1-alt1
 - Initial build
 
