@@ -3,7 +3,7 @@
 
 Name: p910nd
 Version: 0.92
-Release: alt1
+Release: alt1.qa1
 
 Summary: Tiny non-spooling printer daemon
 
@@ -54,6 +54,9 @@ install *.pl %buildroot%_datadir/%name/
 
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.92-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sat Nov 15 2008 Vitaly Lipatov <lav@altlinux.ru> 0.92-alt1
 - new version 0.92 (with rpmrb script)
 
