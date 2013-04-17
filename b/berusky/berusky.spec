@@ -1,7 +1,7 @@
 Summary:        Berusky, 2D logic game
 Name:           berusky
 Version:        1.1
-Release:        alt1.2
+Release:        alt1.2.qa1
 License:        GPL
 Group:     Games/Other
 Source:         http://www.anakreon.cz/download/berusky/tar.gz/%{name}-%{version}.tar.gz
@@ -49,6 +49,9 @@ popd
 %_datadir/%name/*
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.1-alt1.2.qa1
+- NMU: rebuilt for debuginfo.
+
 * Thu Jan 07 2010 Dmitriy Kulik <lnkvisitor at altlinux.org> 1.1-alt1.2
 - NMU (by repocop): the following fixes applied:
   * docdir-is-not-owned for berusky
