@@ -1,6 +1,6 @@
 %define soversion 1
 Name: libuv
-Version: 0.10.3
+Version: 0.10.4
 Release: alt1
 Summary: Evented I/O for NodeJS
 Group: Development/Tools
@@ -20,7 +20,7 @@ and libev on Unix systems. We intend to eventually contain all platform differen
 Summary:        Devel package for libuv
 Group:          Development/Other
 License:        GPL
-Requires:	%name = %version
+Requires:	%name = %version-%release
 
 %description devel
 libuv header and build tools
@@ -47,6 +47,9 @@ cp -R include/* %buildroot%_includedir
 
 
 %changelog
+* Thu Apr 18 2013 Dmitriy Kulik <lnkvisitor@altlinux.org> 0.10.4-alt1
+- 0.10.4
+
 * Sat Apr 06 2013 Dmitriy Kulik <lnkvisitor@altlinux.org> 0.10.3-alt1
 - 0.10.3
 
