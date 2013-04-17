@@ -3,7 +3,7 @@
 
 Name: poedit
 Version: 1.4.6.1
-Release: alt2
+Release: alt2.qa1
 
 Summary: Cross-platform translation files editor
 Summary(ru_RU.CP1251): Кроссплатформенный редактор файлов переводов
@@ -54,6 +54,9 @@ wxLocale библиотеки wxWindows.
 %_iconsdir/hicolor/scalable/apps/%name.svg
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.4.6.1-alt2.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sun Sep 05 2010 Slava Semushin <php-coder@altlinux.ru> 1.4.6.1-alt2
 - Added gettext-tools to Requires (Closes: #24017)
 
