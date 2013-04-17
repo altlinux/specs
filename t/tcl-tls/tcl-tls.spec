@@ -1,6 +1,6 @@
 Name: tcl-tls
 Version: 1.6.1
-Release: alt1
+Release: alt1.qa1
 
 Summary: A tcl extension, wich adds SSL ability to any Tcl channel
 License: BSD
@@ -36,6 +36,9 @@ make
 %_tcldatadir/tls%version
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.6.1-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Mon Dec 06 2010 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.6.1-alt1
 - 1.6.1 released
 
