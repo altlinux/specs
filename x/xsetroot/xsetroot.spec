@@ -1,6 +1,6 @@
 Name: xsetroot
 Version: 1.1.0
-Release: alt1
+Release: alt1.qa1
 Summary: root window parameter setting utility for X
 License: MIT/X11
 Group: System/X11
@@ -40,6 +40,9 @@ tics will be reset to the default state.
 %_man1dir/*
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.1.0-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sat Oct 30 2010 Valery Inozemtsev <shrek@altlinux.ru> 1.1.0-alt1
 - 1.1.0
 
