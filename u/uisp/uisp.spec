@@ -1,6 +1,6 @@
 Name:           uisp
 Version:        20050207
-Release:        alt1
+Release:        alt1.qa1
 Summary:        Universal In-System Programmer for Atmel AVR and 8051
 
 
@@ -50,6 +50,9 @@ make install DESTDIR=%buildroot
 
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 20050207-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Wed Mar 12 2008 Evgeny Sinelnikov <sin@altlinux.ru> 20050207-alt1
 - Initial ALT Linux release
 
