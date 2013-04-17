@@ -6,7 +6,7 @@
 
 Name: libmal
 Version: 0.44
-Release: alt3
+Release: alt3.qa1
 
 Group: System/Libraries
 Summary: MAL library for AvantGo
@@ -107,6 +107,9 @@ export CFLAGS="%optflags" CXXFLAGS="%optflags"
 %endif
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.44-alt3.qa1
+- NMU: rebuilt for debuginfo.
+
 * Tue Jan 25 2011 Sergey V Turchin <zerg@altlinux.org> 0.44-alt3
 - rebuilt
 
