@@ -1,6 +1,6 @@
 Name: html-xml-utils
 Version: 5.5
-Release: alt1
+Release: alt1.qa1
 
 Summary: A number of simple utilties for manipulating HTML and XML files
 License: GPL
@@ -57,6 +57,9 @@ DESTDIR=%buildroot %make_install install
 %doc README AUTHORS ChangeLog TODO
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 5.5-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Wed Sep 16 2009 Denis Klimov <zver@altlinux.org> 5.5-alt1
 - updated to version 5.5
 - remove needless -q param from %setup macros
