@@ -1,6 +1,6 @@
 Name: rssh
 Version: 2.3.2
-Release: alt0.1
+Release: alt0.1.qa1
 
 Summary: Restricted shell for scp or sftp
 
@@ -40,6 +40,9 @@ both.
 
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.3.2-alt0.1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sat Jan 07 2006 Vitaly Lipatov <lav@altlinux.ru> 2.3.2-alt0.1
 - new version
 - add Packager, some fixes in files section
