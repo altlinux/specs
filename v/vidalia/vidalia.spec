@@ -1,6 +1,6 @@
 Name: vidalia
 Version: 0.2.9
-Release: alt2
+Release: alt2.qa1
 Summary: GUI controller for the Tor Onion Routing Network
 Group: Networking/Other
 License: GPLv2+
@@ -55,6 +55,9 @@ chmod -x contrib/*
 %_iconsdir/hicolor/*/apps/%name.png
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.2.9-alt2.qa1
+- NMU: rebuilt for debuginfo.
+
 * Mon Nov 01 2010 Mykola Grechukh <gns@altlinux.ru> 0.2.9-alt2
 - build fixed (prereq: rpm-build-qt4=>rpm-macros-qt4)
 
