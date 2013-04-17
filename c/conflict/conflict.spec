@@ -2,7 +2,7 @@
 
 Name: conflict
 Version: 6.2
-Release: alt1_%date
+Release: alt1_%date.qa1
 
 Summary: displays conflicting filenames in your execution path
 License: BSD-style
@@ -34,6 +34,9 @@ point in the path).
 
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 6.2-alt1_20040901.qa1
+- NMU: rebuilt for debuginfo.
+
 * Wed Feb 09 2005 Alex Murygin <murygin@altlinux.ru> 6.2-alt1_20040901
 - new version
 
