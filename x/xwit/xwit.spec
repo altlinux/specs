@@ -1,6 +1,6 @@
 Name: xwit
 Version: 3.4
-Release: alt2
+Release: alt2.qa1
 Summary: Window interface tool 
 Source: ftp://ftp.x.org/contrib/utilities/xwit-%version.tar.gz
 License: MIT/X11
@@ -33,6 +33,9 @@ xmkmf
 %_man1dir/*
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 3.4-alt2.qa1
+- NMU: rebuilt for debuginfo.
+
 * Fri Jun 04 2010 Fr. Br. George <george@altlinux.ru> 3.4-alt2
 - Freshen build
 
