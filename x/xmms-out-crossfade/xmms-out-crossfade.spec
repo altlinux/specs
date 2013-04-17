@@ -2,7 +2,7 @@
 
 Name: xmms-out-crossfade
 Version: 0.3.14
-Release: alt2
+Release: alt2.qa1
 
 Epoch: 20091213
 
@@ -74,6 +74,9 @@ subst 's,PLAYER_BIN="\$XMMS,&-bin,' configure.in
 %xmms_outputdir/libcrossfade.*
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 20091213:0.3.14-alt2.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sun Dec 13 2009 Michael Shigorin <mike@altlinux.org> 20091213:0.3.14-alt2
 - enabled id3lib support
 - buildreq (thx repocop)
