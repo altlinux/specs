@@ -1,6 +1,6 @@
 Name: rdate
 Version: 1.4
-Release: alt5
+Release: alt5.qa1
 
 Summary: Tool for retrieving the date/time from another machine on your network
 Summary(ru_RU.KOI8-R): Программа для чтения удалённых часов и установки по ним местных
@@ -47,6 +47,9 @@ install -p -m644 -D %name.1 %buildroot%_man1dir/%name.1
 %_man1dir/*
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.4-alt5.qa1
+- NMU: rebuilt for debuginfo.
+
 * Fri Sep 22 2006 Stanislav Yadykin <tosick@altlinux.ru> 1.4-alt5
 - fixed summary encoding
 
