@@ -1,6 +1,6 @@
 Name: gputils
 Version: 0.13.7
-Release: alt1
+Release: alt1.qa1
 
 Summary: Development utilities for Microchip (TM) PIC (TM) microcontrollers
 
@@ -42,6 +42,9 @@ an up-to-date list of what gputils can do.
 %doc AUTHORS ChangeLog NEWS README doc/gputils.pdf doc/gputils.ps
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.13.7-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sun May 03 2009 Vitaly Lipatov <lav@altlinux.ru> 0.13.7-alt1
 - new version 0.13.7 (with rpmrb script) (fix bug #19884)
 
