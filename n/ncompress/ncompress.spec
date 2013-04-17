@@ -1,17 +1,20 @@
 Name: ncompress
-Version: 4.2.4.2
+Version: 4.2.4.4
 Release: alt1
 
 Summary: Fast compression and decompression utilities
 License: Public domain
 Group: Archiving/Compression
 Url: http://ncompress.sourceforge.net/
-Packager: Dmitry V. Levin <ldv@altlinux.org>
 
-# ftp://ibiblio.org/pub/Linux/utils/compress/ncompress-%version.tar.bz2
-Source: ncompress-%version.tar
-Patch1: ncompress-4.2.4-rh-lfs.patch
-Patch2: ncompress-4.2.4-rh-endians.patch
+# http://downloads.sourceforge.net/ncompress/%name-%version.tar.gz
+Source: %name-%version.tar
+Patch1: ncompress-4.2.4.4-rh-lfs.patch
+Patch2: ncompress-4.2.4.4-rh-filenamelen.patch
+Patch3: ncompress-4.2.4.4-rh-2GB.patch
+Patch4: ncompress-4.2.4.4-rh-endians.patch
+Patch5: ncompress-4.2.4.4-rh-memmove.patch
+Patch6: ncompress-4.2.4.4-rh-silence-gcc.patch
 
 %description
 This package contains the compress and uncompress file compression and
@@ -20,9 +23,13 @@ compress utility (.Z file extensions).  These utilities can't handle
 gzipped (.gz file extensions) files, but gzip can handle compressed files.
 
 %prep
-%setup -q
+%setup
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
+%patch4 -p1
+%patch5 -p1
+%patch6 -p1
 
 %build
 %add_optflags -DNOFUNCDEF -DDIRENT -DSYSDIR -DUTIME_H -DUSERMEM=800000 -DREGISTERS=20 -DIBUFSIZ=1024 -DOBUFSIZ=1024
@@ -31,19 +38,15 @@ gzipped (.gz file extensions) files, but gzip can handle compressed files.
 %add_optflags -DBYTEORDER=4321
 %endif
 
-%ifarch sparc m68k armv4l ppc
+%ifarch %arm
 %add_optflags -DBYTEORDER=1234
-%endif
-
-%ifarch alpha
-%add_optflags -DNOALLIGN=0 -DBYTEORDER=4321
 %endif
 
 %__cc %optflags `getconf LFS_CFLAGS` -DCOMPILE_DATE="\"`LC_TIME=C date +%%Y%%m%%d`\"" compress42.c -o compress
 
 %install
-install -pD -m755 compress %buildroot%_bindir/compress
-install -pD -m644 compress.1 %buildroot%_man1dir/compress.1
+install -Dpm755 compress %buildroot%_bindir/compress
+install -Dpm644 compress.1 %buildroot%_man1dir/compress.1
 ln -s compress %buildroot%_bindir/uncompress
 ln -s compress.1 %buildroot%_man1dir/uncompress.1
 
@@ -53,6 +56,9 @@ ln -s compress.1 %buildroot%_man1dir/uncompress.1
 %doc Acknowleds Changes LZW.INFO README
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin <ldv@altlinux.org> 4.2.4.4-alt1
+- Updated 4.2.4.4, synced patches with Fedora.
+
 * Wed Apr 23 2008 Dmitry V. Levin <ldv@altlinux.org> 4.2.4.2-alt1
 - Updated to 4.2.4.2.
 
