@@ -1,6 +1,6 @@
 Name: dhrystone
 Version: 2.1
-Release: alt2
+Release: alt2.qa1
 
 Summary: The BYTE UNIX Benchmarks: Dhrystone
 License: Distributable
@@ -30,6 +30,9 @@ The BYTE UNIX Benchmarks: DHRYSTONE by Reinhold P. Weicker
 # - track down precise tarball source
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.1-alt2.qa1
+- NMU: rebuilt for debuginfo.
+
 * Thu Oct 15 2009 Michael Shigorin <mike@altlinux.org> 2.1-alt2
 - built for Sisyphus
 
