@@ -1,6 +1,6 @@
 Name: gnubik
 Version: 2.3
-Release: alt1.qa2
+Release: alt1.qa3
 
 Summary: gnubik -  an interactive, graphic Magic cube program
 Summary(ru_RU.UTF-8): gnubik - трёхмерный кубик-рубик
@@ -53,6 +53,9 @@ install -pD -m644 doc/%name.6 %buildroot%_man6dir
 %_man6dir/gnubik.*
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.3-alt1.qa3
+- NMU: rebuilt for debuginfo.
+
 * Mon Dec 14 2009 Repocop Q. A. Robot <repocop@altlinux.org> 2.3-alt1.qa2
 - NMU (by repocop): the following fixes applied:
   * secondary menu category for gnubik
