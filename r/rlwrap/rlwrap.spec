@@ -1,6 +1,6 @@
 Name: rlwrap
 Version: 0.30
-Release: alt1
+Release: alt1.qa1
 Serial: 1
 
 Summary: Line editor - readline wrapper
@@ -40,6 +40,9 @@ install -D -m644 %SOURCE1 %buildroot/%_datadir/%name/sbcl
 %_datadir/%name
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1:0.30-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Thu Jan 08 2009 Ilya Mashkin <oddity@altlinux.ru> 1:0.30-alt1
 - 0.30
 
