@@ -1,6 +1,6 @@
 Name: sharutils
 Version: 4.6.3
-Release: alt1.1.qa1
+Release: alt1.1.qa2
 
 Summary: The GNU shar utilities for packaging and unpackaging shell archives
 License: GPL
@@ -122,6 +122,9 @@ subst 's,info remsync,info sharutils,' remsync.1
 %_mandir/man?/remsync*
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 4.6.3-alt1.1.qa2
+- NMU: rebuilt for debuginfo.
+
 * Sat Nov 14 2009 Repocop Q. A. Robot <repocop@altlinux.org> 4.6.3-alt1.1.qa1
 - NMU (by repocop): the following fixes applied:
   * obsolete-call-in-post-install-info for sharutils
