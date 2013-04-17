@@ -1,6 +1,6 @@
 Name:		qcat
 Version:	0.5
-Release:	alt5.1
+Release:	alt5.1.qa1
 Summary:	A catalog application for various media types
 Group:		Databases
 License:	GPLv2
@@ -54,6 +54,9 @@ convert -resize 16x16 icons/db_icons/catalog_enabled.png %buildroot%_miconsdir/%
 %_desktopdir/%name.desktop
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.5-alt5.1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Tue Nov 23 2010 Motsyo Gennadi <drool@altlinux.ru> 0.5-alt5.1
 - full fix build for Qt4.7 (thanks to DOOMer for patch)
 
