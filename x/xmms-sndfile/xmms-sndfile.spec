@@ -2,7 +2,7 @@
 
 Name: xmms-sndfile
 Version: 1.2
-Release: alt2
+Release: alt2.qa1
 
 Summary: Input plugin for XMMS to use libsndfile
 License: GPL
@@ -47,6 +47,9 @@ Xmms_sndfile - это входной плагин для XMMS (Система Мультимедиа Х),
 %doc AUTHORS ChangeLog NEWS README TODO
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.2-alt2.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sun Dec 07 2008 Michael Shigorin <mike@altlinux.org> 1.2-alt2
 - adopted an orphan (xmms-minimal dependency)
 - updated Url:
