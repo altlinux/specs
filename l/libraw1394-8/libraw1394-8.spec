@@ -2,7 +2,7 @@
 %define oname libraw1394
 Name: libraw1394-8
 Version: 1.2.1
-Release: alt1.qa1
+Release: alt1.qa2
 
 Summary: FireWire interface library
 
@@ -87,6 +87,9 @@ touch ChangeLog
 %_pkgconfigdir/*
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.2.1-alt1.qa2
+- NMU: rebuilt for debuginfo.
+
 * Thu Nov 25 2010 Igor Vlasenko <viy@altlinux.ru> 1.2.1-alt1.qa1
 - rebuild using girar-nmu to require/provide setversion 
   by request of mithraen@
