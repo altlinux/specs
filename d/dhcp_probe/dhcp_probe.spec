@@ -1,6 +1,6 @@
 Name: dhcp_probe
 Version: 1.3.0
-Release: alt1
+Release: alt1.qa1
 Summary: Tool for discover DHCP and BootP servers
 License: %bsdstyle
 Group: Networking/Other
@@ -37,5 +37,8 @@ A network administrator can use this tool to locate unauthorized DHCP and BootP 
 %_man5dir/*
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.3.0-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sun Apr 12 2009 Anton Farygin <rider@altlinux.ru> 1.3.0-alt1
 - first build for Sisyphus
