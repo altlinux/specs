@@ -1,6 +1,6 @@
 Name: screen-message
 Version: 0.6
-Release: alt1
+Release: alt1.qa1
 
 Summary: Screen message show given text in fullscreen
 License: %gpl2plus
@@ -35,6 +35,9 @@ install -m 755 sm.py %buildroot%_bindir
 %_man1dir/*
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.6-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Tue Feb 19 2008 Terechkov Evgenii <evg@altlinux.ru> 0.6-alt1
 - Rebuild with new sisyphus_check
 - Url tag removed (was dummy anyway)
