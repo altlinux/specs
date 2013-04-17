@@ -1,6 +1,6 @@
 Name: tcl-thread
 Version: 2.6.5
-Release: alt1
+Release: alt1.qa1
 
 Summary: A tcl extension implementing memory channels
 License: BSD
@@ -38,6 +38,9 @@ sed -i 's/@lib@/%_lib/' pkgIndex.tcl.in
 %_mandir/mann/*
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.6.5-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Fri Jun 13 2008 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.6.5-alt1
 - 2.6.5 released
 
