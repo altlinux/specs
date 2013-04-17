@@ -1,7 +1,7 @@
 Name: apache2-mod_fcgid
 Summary: Apache2 module for high-performance server-side scripting 
 Version: 2.2
-Release: alt2
+Release: alt2.qa1
 License: GPL
 Group: System/Servers
 URL: http://fastcgi.coremail.cn/
@@ -54,6 +54,9 @@ install -d -m 755 %buildroot%_localstatedir/run/mod_fcgid/fcgid_sock
 %apache2_confdir/*
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.2-alt2.qa1
+- NMU: rebuilt for debuginfo.
+
 * Tue Sep 02 2008 Evgeny Sinelnikov <sin@altlinux.ru> 2.2-alt2
 - Fixed for new macroses from rpm-macros-apache2
 
