@@ -3,7 +3,7 @@
 Summary: a file construction tool
 Name: cook
 Version: 2.32
-Release: alt1
+Release: alt1.qa1
 License: %gpl3plus
 Group: Development/Other
 Source: http://miller.emu.id.au/pmiller/software/cook/%name-%version.tar.bz2
@@ -127,6 +127,9 @@ mv $RPM_BUILD_ROOT%_libdir/%name/* $RPM_BUILD_ROOT%_datadir/locale
 
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.32-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Fri Aug 15 2008 Alexey Voinov <voins@altlinux.ru> 2.32-alt1
 - new version (2.32)
 - noarch documentation subpackages
