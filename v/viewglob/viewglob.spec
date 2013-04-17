@@ -1,6 +1,6 @@
 Name: viewglob
 Version: 2.0.4
-Release: alt1
+Release: alt1.qa1
 
 Summary: filesystem visualization add-on for Bash and Zsh
 License: GPL
@@ -39,6 +39,9 @@ highlighting file selections and potential name completions dynamically.
 %_libdir/%name
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.0.4-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sat Jan 10 2009 Ilya Mashkin <oddity@altlinux.ru> 2.0.4-alt1
 - 2.0.4
 
