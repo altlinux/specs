@@ -1,7 +1,7 @@
 Summary: IRC proxy server
 Name: dircproxy
 Version: 1.1.0
-Release: alt1
+Release: alt1.qa1
 License: GPL
 Group: Networking/Chat
 URL: http://kimihia.org.nz/projects/dircproxy/
@@ -48,5 +48,8 @@ cp %buildroot%_datadir/%name/dircproxyrc  %buildroot%_sysconfdir/%name
 
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.1.0-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Wed Jul 19 2006 Mikhail Pokidko <pma@altlinux.ru> 1.1.0-alt1
 - Initial build. Added init-script, ALT-specific patches.
