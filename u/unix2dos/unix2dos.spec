@@ -1,7 +1,7 @@
 Summary: unix2dos - UNIX to DOS text file format converter
 Name: unix2dos
 Version: 2.2
-Release: alt1
+Release: alt1.qa1
 License: distributable
 Group: Text tools
 Source: %name-%version.src.tar.gz
@@ -41,6 +41,9 @@ done
 %_man1dir/*
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.2-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Fri Apr 27 2007 Serhii Hlodin <hlodin@altlinux.ru> 2.2-alt1
 - Initial release 
 
