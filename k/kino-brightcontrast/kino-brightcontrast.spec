@@ -2,7 +2,7 @@
 
 Name: kino-brightcontrast
 Version: 0.4
-Release: alt3
+Release: alt3.qa1
 
 Summary: Brightness & Contrast Kino plugin
 License: GPL
@@ -45,6 +45,9 @@ http://www.sources.ru/magazine/0805/paint.html
 #   know his way around C so bugreport will suffice
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.4-alt3.qa1
+- NMU: rebuilt for debuginfo.
+
 * Mon Dec 29 2008 Michael Shigorin <mike@altlinux.org> 0.4-alt3
 - fixed build (BR += libglade-devel)
 
