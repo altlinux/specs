@@ -5,7 +5,7 @@
 Summary: 3D Athena Widgets with W95 look and feel
 Name: %name
 Version: %version
-Release: %release.qa1
+Release: alt2.qa2
 Url: http://www.netsw.org/x11/libs/xaw95/
 Packager: Hihin Ruslan <ruslandh@altlinux.ru>
 Source: %name-%version-src.tar.gz
@@ -90,6 +90,9 @@ rm -rf %buildroot/%_x11libdir/Xaw95/*so*
 %_x11libdir/libXaw95.a
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.1-alt2.qa2
+- NMU: rebuilt for debuginfo.
+
 * Tue Nov 10 2009 Repocop Q. A. Robot <repocop@altlinux.org> 1.1-alt2.qa1
 - NMU (by repocop): the following fixes applied:
   * distribution-tag for libXaw95-devel
