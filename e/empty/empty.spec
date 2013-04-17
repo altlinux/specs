@@ -1,6 +1,6 @@
 Name:    empty
 Version: 0.6.18b
-Release: alt1
+Release: alt1.qa1
 
 Summary: Run interactive console applications in batch mode
 License: Common Public License
@@ -60,6 +60,9 @@ Empty - это утилита, которая служит для организации автоматического выполнения
 %doc README CHANGELOG examples
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.6.18b-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sat Oct 17 2009 Ilya Mashkin <oddity@altlinux.ru> 0.6.18b-alt1
 - update to new version 0.6.18
 
