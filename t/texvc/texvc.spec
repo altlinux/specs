@@ -2,7 +2,7 @@ Name: texvc
 Summary: TeX support for MediaWiki
 Group: Networking/WWW
 Version: 1.14.0
-Release: alt4
+Release: alt4.qa1
 License: GPL
 
 Url: http://www.mediawiki.org/
@@ -35,6 +35,9 @@ install -D -m 755 texvc_tex %buildroot%_bindir/texvc_test
 %_bindir/texvc_tex
 %_bindir/texvc_test
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.14.0-alt4.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sat Jan 30 2010 Denis Smirnov <mithraen@altlinux.ru> 1.14.0-alt4
 - fix requires (ALT #22620)
 
