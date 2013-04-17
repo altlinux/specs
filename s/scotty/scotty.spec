@@ -3,7 +3,7 @@
 
 Name: scotty
 Version: 3.0.0
-Release: alt5
+Release: alt5.qa1
 Serial: 2
 
 Summary: A Tcl extension to build network management applications
@@ -111,6 +111,9 @@ install -p -m0640 -D unix/nmicmpd.xinetd %buildroot%_sysconfdir/xinetd.d/nmicmpd
 %_man8dir/nmicmpd.8*
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2:3.0.0-alt5.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sun Dec 23 2007 Sergey Bolshakov <sbolshakov@altlinux.ru> 2:3.0.0-alt5
 - rebuilt against tcl 8.5
 
