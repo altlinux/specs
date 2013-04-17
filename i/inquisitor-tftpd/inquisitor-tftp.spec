@@ -2,7 +2,7 @@
 
 Name: inquisitor-tftpd
 Version: 0.48
-Release: alt1
+Release: alt1.qa1
 
 Summary: The server for the Trivial File Transfer Protocol (TFTP)
 License: BSD
@@ -61,6 +61,9 @@ install -pDm640 %SOURCE1 %buildroot%_sysconfdir/xinetd.d/%origname
 %dir %_localstatedir/tftpboot
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.48-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Mon Nov 02 2009 Michael Shigorin <mike@altlinux.org> 0.48-alt1
 - forked the package to include inquisitor logging patch
 - dropped client subpackage, only server differs
