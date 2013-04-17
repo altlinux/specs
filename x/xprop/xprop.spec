@@ -1,6 +1,6 @@
 Name: xprop
 Version: 1.2.0
-Release: alt1
+Release: alt1.qa1
 Summary: property displayer for X
 License: MIT/X11
 Group: System/X11
@@ -37,6 +37,9 @@ information.
 %_man1dir/*
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.2.0-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sat Oct 30 2010 Valery Inozemtsev <shrek@altlinux.ru> 1.2.0-alt1
 - 1.2.0
 
