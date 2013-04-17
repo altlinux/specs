@@ -1,6 +1,6 @@
 Name: pyro
 Version: 1.5
-Release: alt6
+Release: alt6.qa1
 
 Summary: Pyrotechnics, an OpenGL-based firework simulator.
 License: GPL
@@ -42,6 +42,9 @@ to save screenshots.
 %_datadir/pyro/water.jpg
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.5-alt6.qa1
+- NMU: rebuilt for debuginfo.
+
 * Mon Dec 01 2008 Michael Shigorin <mike@altlinux.org> 1.5-alt6
 - buildreq
 
