@@ -1,6 +1,6 @@
 Name: tunctl
 Version: 1.5
-Release: alt1
+Release: alt1.qa1
 Epoch: 1
 
 Summary: Tool to create and manage persistent TUN/TAP interfaces
@@ -38,6 +38,9 @@ install -pm0644 -D %name.8 %buildroot%_man8dir/%name.8
 %_man8dir/%name.8*
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1:1.5-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Fri Mar 19 2010 Sergey Bolshakov <sbolshakov@altlinux.ru> 1:1.5-alt1
 - 1.5 released
 
