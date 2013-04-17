@@ -1,6 +1,6 @@
 Name: emu8051
 Version: 0.71
-Release: alt1
+Release: alt1.qa1
 License: MIT
 Group: Emulators
 BuildPreReq: libncurses-devel gcc-c++
@@ -73,6 +73,9 @@ bash install.sh %buildroot
 
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.71-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sat Jan 05 2008 Yury A. Romanov <damned@altlinux.ru> 0.71-alt1
 - Initial build
 - Added spec file and scripts for building/installing
