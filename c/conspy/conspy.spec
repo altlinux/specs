@@ -1,6 +1,6 @@
 Name: conspy
 Version: 1.7
-Release: alt1
+Release: alt1.qa1
 
 Summary: Remote control for text mode virtual consoles
 
@@ -36,6 +36,9 @@ touch NEWS
 %_man1dir/*
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.7-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Fri Oct 09 2009 Vitaly Lipatov <lav@altlinux.ru> 1.7-alt1
 - new version 1.7 (with rpmrb script)
 
