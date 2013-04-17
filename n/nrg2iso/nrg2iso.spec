@@ -1,7 +1,7 @@
 Name:		nrg2iso
 Summary:	Convert NRG images to ISO
 Version:	0.4
-Release:	alt1
+Release:	alt1.qa1
 License:	GPL
 Group:		File tools
 Source:		http://gregory.kokanosky.free.fr/v4/linux/%{name}-%{version}.tar.gz
@@ -28,6 +28,9 @@ Quite useful if you don't want to buy or start Windows and Burning Rom...
 %doc gpl.txt CHANGELOG
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.4-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Wed Aug 17 2005 Stanislav Yadykin <tosick@altlinux.ru> 0.4-alt1
 - 0.4
 - fixed build various target platforms
