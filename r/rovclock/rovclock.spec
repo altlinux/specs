@@ -1,6 +1,6 @@
 Name: rovclock
 Version: 0.6e
-Release: alt1
+Release: alt1.qa1
 
 Summary: Radeon overclocking utility
 License: GPL v2
@@ -34,6 +34,9 @@ install -pD -m755 %name %buildroot%_bindir/%name
 %_bindir/*
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.6e-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sun Mar 30 2008 Michael Shigorin <mike@altlinux.org> 0.6e-alt1
 - built for ALT Linux
 - spec based on PLD rev1.4
