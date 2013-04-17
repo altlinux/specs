@@ -2,7 +2,7 @@ Summary: Palm Doc file format conversion
 Summary(ru_RU.KOI8-R): Конвертор файлов в/из Palm Doc формат
 Name: txt2pdbdoc
 Version: 1.4.4
-Release: alt2
+Release: alt2.qa1
 Source: %name-%version.tar.gz
 Group: Communications
 License: GPL
@@ -31,6 +31,9 @@ Packager: Ilya Mashkin <oddity@altlinux.ru>
 %_bindir/*
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.4.4-alt2.qa1
+- NMU: rebuilt for debuginfo.
+
 * Thu Jul 23 2009 Ilya Mashkin <oddity@altlinux.ru> 1.4.4-alt2
 - fix build
 - add Packager
