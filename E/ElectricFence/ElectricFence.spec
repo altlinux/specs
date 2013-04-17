@@ -1,6 +1,6 @@
 Name: ElectricFence
 Version: 2.2.2
-Release: alt3
+Release: alt3.qa1
 
 Summary: A debugger which detects memory allocation violations
 
@@ -60,6 +60,9 @@ echo ".so man3/efence.3" > %buildroot%_mandir/man3/libefence.3
 %doc README CHANGES
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.2.2-alt3.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sun Jan 02 2011 Vitaly Lipatov <lav@altlinux.ru> 2.2.2-alt3
 - use strerror instead obsoleted str_error variable
 - add patches from Fedora
