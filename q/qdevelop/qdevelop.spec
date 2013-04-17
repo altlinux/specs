@@ -1,6 +1,6 @@
 Name:		qdevelop
 Version:	0.28
-Release:	alt3
+Release:	alt3.qa1
 Summary:	IDE dedicated to QT4
 License:	GPLv2
 Group:		Development/KDE and QT
@@ -77,6 +77,9 @@ install -pD -m644 resources/images/logo.png %buildroot%_iconsdir/hicolor/128x128
 %_desktopdir/%name.desktop
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.28-alt3.qa1
+- NMU: rebuilt for debuginfo.
+
 * Thu Jul 29 2010 Motsyo Gennadi <drool@altlinux.ru> 0.28-alt3
 - added patch for qt4.7
 
