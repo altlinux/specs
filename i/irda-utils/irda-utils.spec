@@ -1,6 +1,6 @@
 Name: irda-utils
 Version: 0.9.18
-Release: alt3
+Release: alt3.qa1
 
 Summary: Utilities for infrared communication between devices
 License: GPL
@@ -82,6 +82,9 @@ done
 %_man8dir/*
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.9.18-alt3.qa1
+- NMU: rebuilt for debuginfo.
+
 * Mon Sep 14 2009 Michael Shigorin <mike@altlinux.org> 0.9.18-alt3
 - moved ifcfg-irlan0 to docs (closes: #21560)
 
