@@ -1,6 +1,6 @@
 Name: lomoco
 Version: 1.0
-Release: alt6
+Release: alt6.qa1
 
 Summary: Logitech mouse control tool
 License: GPL
@@ -50,6 +50,9 @@ install -pD -m644 %SOURCE1 %buildroot%_sysconfdir/sysconfig/logitech_mouse
 %_man1dir/*
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.0-alt6.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sun Sep 26 2010 Michael Shigorin <mike@altlinux.org> 1.0-alt6
 - rebuilt with helper in /lib/udev, thanks ldv@
 
