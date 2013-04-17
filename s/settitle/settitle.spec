@@ -1,7 +1,7 @@
 Name: settitle
 Summary: Set Screen or Xterm window title
 Version: 0.0.5
-Release: alt2
+Release: alt2.qa1
 License: GPL
 Group: System/Base
 
@@ -24,6 +24,9 @@ Source: %name-%version.tar
 %_bindir/is_screen
 %_bindir/settitle
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.0.5-alt2.qa1
+- NMU: rebuilt for debuginfo.
+
 * Tue Oct 06 2009 Denis Smirnov <mithraen@altlinux.ru> 0.0.5-alt2
 - add Url tag
 
