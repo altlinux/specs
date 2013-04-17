@@ -1,6 +1,6 @@
 Name:		WMCPULoad
 Version:	1.1.0
-Release:        alt1
+Release:        alt1.qa1
 
 Summary:	WindowMaker DockApp that displays current CPU usage
 License:	GPL
@@ -37,6 +37,9 @@ install -p -D -m644 %SOURCE1 $RPM_BUILD_ROOT%_menudir/%name
 
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.1.0-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sun Jun 07 2009 Alexey Voinov <voins@altlinux.ru> 1.1.0-alt1
 - url updated [#20236]
 - buildreqs fixed
