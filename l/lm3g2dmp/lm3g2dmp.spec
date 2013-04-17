@@ -1,7 +1,7 @@
 %define cvsdate 20060427
 Name: lm3g2dmp
 Version: 0.00
-Release: alt1.cvs.%cvsdate
+Release: alt1.cvs.%cvsdate.qa1
 
 Summary: Sphinx utility for convert language model to binary dump file
 Summary(ru_RU.UTF-8): Утилита sphinx для конвертирования языковой модели в dump файл
@@ -31,6 +31,9 @@ install -D %name %buildroot%_bindir/%name
 %_bindir/%name
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.00-alt1.cvs.20060427.qa1
+- NMU: rebuilt for debuginfo.
+
 * Thu Jan 10 2008 Denis Klimov <zver@altlinux.ru> 0.00-alt1.cvs.20060427
 - initial build for ALT Linux
 
