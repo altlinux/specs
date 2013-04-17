@@ -1,6 +1,6 @@
 Name: wmWeather
 Version: 1.31
-Release: alt4
+Release: alt4.qa1
 
 Summary: Applet that displays the weather
 License: GPL
@@ -63,6 +63,9 @@ install -m644 %SOURCE2 $RPM_BUILD_DIR/%name-%version/README.ALT
 # TODO: try to analyse /etc/localtime to get location?
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.31-alt4.qa1
+- NMU: rebuilt for debuginfo.
+
 * Thu Dec 04 2008 Michael Shigorin <mike@altlinux.org> 1.31-alt4
 - applied repocop patch
 
