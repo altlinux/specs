@@ -1,6 +1,6 @@
 Name: cdctl
 Version: 0.15
-Release: alt1
+Release: alt1.qa1
 
 Summary: Controls your cdrom drive
 License: Free for non-commercial use
@@ -37,6 +37,9 @@ install -pD -m644 %name.1 %buildroot%_man1dir/%name.1
 %doc README LICENSE NEWS NUTSANDBOLTS PUBLICKEY
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.15-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Mon Jan 21 2008 Michael Shigorin <mike@altlinux.org> 0.15-alt1
 - built for ALT Linux
 - somewhat upgraded spec fashion. :)
