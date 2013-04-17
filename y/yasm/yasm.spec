@@ -1,6 +1,6 @@
 Name: yasm
 Version: 1.1.0
-Release: alt1
+Release: alt1.qa1
 
 Summary: Rewrite of the NASM assembler under the "new" BSD License
 License: BSD
@@ -56,6 +56,9 @@ ln -s ytasm %buildroot%_bindir/tasm
 %_libdir/*.a
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.1.0-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sat Oct 30 2010 Afanasov Dmitry <ender@altlinux.org> 1.1.0-alt1
 - 1.1.0 release.
 - add vsyasm: Visual Studio 2010 special frontend.
