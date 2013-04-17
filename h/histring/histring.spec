@@ -1,6 +1,6 @@
 Name: histring
 Version: 1.1.0
-Release: alt1
+Release: alt1.qa1
 License: GPL2
 Group: Text tools
 Url: git://git.grml.org/histring.git
@@ -33,5 +33,8 @@ install -m644 debian/histring.1 %buildroot%_man1dir
 %doc README
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.1.0-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sat Sep 26 2009 Ildar Mulyukov <ildar@altlinux.ru> 1.1.0-alt1
 - 1st version for Sisyphus
