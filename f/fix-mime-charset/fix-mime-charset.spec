@@ -1,6 +1,6 @@
 Name: fix-mime-charset
 Version: 0.5.3
-Release: alt3.1
+Release: alt3.1.qa1
 
 Summary: Fix incorrect charset information in Content-Type MIME headers of e-mail messages
 License: GPL v2
@@ -57,6 +57,9 @@ ln -s %_licensedir/GPL-2 COPYING
 %_man1dir/*
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.5.3-alt3.1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Wed Nov 24 2010 Igor Vlasenko <viy@altlinux.ru> 0.5.3-alt3.1
 - repair after perl 5.12 upgrade using girar-nmu
 
