@@ -1,6 +1,6 @@
 Name: libeap
 Version: 0.7.2
-Release: alt1
+Release: alt1.qa1
 
 Summary: EAP Peer shared library
 License: GPL/BSD
@@ -41,6 +41,9 @@ make -C eap_peer
 %_pkgconfigdir/*.pc
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.7.2-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Mon Oct 25 2010 Alexey I. Froloff <raorn@altlinux.org> 0.7.2-alt1
 - updated to 0.7.2
 
