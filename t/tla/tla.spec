@@ -1,6 +1,6 @@
 Name: tla
 Version: 1.3.5
-Release: alt1.1
+Release: alt1.1.qa1
 #define subver -fix-1
 %define subver %nil
 
@@ -76,6 +76,9 @@ install -pm644 %_sourcedir/tla{,-gpg-check}.1 %buildroot%_man1dir/
 %doc %_docdir/%name-%version/
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.3.5-alt1.1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Wed Jun 25 2008 Valery Inozemtsev <shrek@altlinux.ru> 1.3.5-alt1.1
 - NMU: rebuild with libneon.so.27
 
