@@ -1,6 +1,6 @@
 Name: emacs-mew
 Version: 6.2.52
-Release: alt1
+Release: alt1.qa1
 License: GPL
 Group: Editors
 Url: http://www.mew.org/
@@ -60,6 +60,9 @@ make install DESTDIR=%buildroot
 %_emacslispdir/mew/*.el
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 6.2.52-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Tue Sep 22 2009 Alexey Voinov <voins@altlinux.ru> 6.2.52-alt1
 - new version (6.2.52)
 - -el subpackage is now noarch
