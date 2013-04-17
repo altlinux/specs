@@ -1,6 +1,6 @@
 Name: fxload
 Version: 2002_04_11
-Release: alt2
+Release: alt2.qa1
 
 Summary: fxload
 License: GPL
@@ -46,6 +46,9 @@ install -pD -m644 %_builddir/%name-%version/COPYING         %buildroot%_docdir/%
 %doc %_docdir/%name/*
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2002_04_11-alt2.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sun Mar 30 2008 Alexander Gvozdev <gab@altlinux.ru> 2002_04_11-alt2
 - Compiling error fix on i586
 * Wed Feb 28 2007 Alexander Gvozdev <gab@altlinux.ru> 2002_04_11-alt1
