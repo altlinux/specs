@@ -3,7 +3,7 @@
 
 Name: gkrellm-%plugin
 Version: 0.2
-Release: alt2.1
+Release: alt2.1.qa1
 
 Summary: GKrellM webmon plugin
 Summary(ru_RU.CP1251): Плагин webmon для GKrellM
@@ -55,6 +55,9 @@ md5 суммы с предыдущими. Если страница изменилась, изменится цвет плагина
 %_libdir/gkrellm2/plugins/*.so
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.2-alt2.1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Fri Dec 29 2006 ALT QA Team Robot <qa-robot@altlinux.org> 0.2-alt2.1
 - Rebuilt due to libcrypto.so.4 -> libcrypto.so.6 soname change.
 
