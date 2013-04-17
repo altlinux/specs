@@ -2,7 +2,7 @@ Summary: Various ip-tools
 Summary(ru_RU.CP1251): Различные IP-утилиты
 Name: ip-tools
 Version: 0.1
-Release: alt1
+Release: alt1.qa1
 License: GPLv2
 Group: Networking/Other
 Source: %name-%version.tar.gz
@@ -33,6 +33,9 @@ host-имя и наоборот, особенно полезные в ip-up
 %_bindir/*
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.1-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Fri Dec 14 2007 Motsyo Gennadi <drool@altlinux.ru> 0.1-alt1
 - build for Sisyphus
 - cleanup spec
