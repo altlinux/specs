@@ -1,6 +1,6 @@
 Name: listener
 Version: 1.7.2
-Release: alt1
+Release: alt1.qa1
 
 Summary: listener is a sounds detection program
 Group: Sound
@@ -38,6 +38,9 @@ again.
 %doc manual.html
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.7.2-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Wed Oct 08 2008 Ilya Mashkin <oddity@altlinux.ru> 1.7.2-alt1
 - 1.7.2
 
