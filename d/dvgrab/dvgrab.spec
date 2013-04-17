@@ -1,6 +1,6 @@
 Name: dvgrab
 Version: 3.5
-Release: alt1
+Release: alt1.qa1
 
 Summary: A program to copy Digital Video data from a DV camcorder
 License: GPL
@@ -41,6 +41,9 @@ dvgrab копирует цифровое видео с DV-видеокамеры на жёсткий диск
 %doc AUTHORS ChangeLog NEWS README TODO 
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 3.5-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sat Feb 20 2010 Michael Shigorin <mike@altlinux.org> 3.5-alt1
 - 3.5
 - patch merged upstream
