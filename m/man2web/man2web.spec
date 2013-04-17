@@ -1,7 +1,7 @@
 Summary: Converts man pages to html
 Name: man2web
 Version: 0.88
-Release: alt1
+Release: alt1.qa1
 License: GPL
 Group: Networking/WWW
 Source: %name-%version.tar.gz
@@ -38,6 +38,9 @@ install %SOURCE1 %buildroot%_sysconfdir/
 %config(noreplace) %_sysconfdir/%name.conf
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.88-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Thu Dec 06 2007 Fr. Br. George <george@altlinux.ru> 0.88-alt1
 - Initial build for ALT
 
