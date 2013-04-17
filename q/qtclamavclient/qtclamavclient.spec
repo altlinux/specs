@@ -1,6 +1,6 @@
 Name:		qtclamavclient
 Version:	0.02
-Release:	alt4
+Release:	alt4.qa1
 Summary:	QT3 ClamAv client
 License:	GPLv2
 Group:		Security/Antivirus
@@ -108,6 +108,9 @@ convert -resize 16x16 clamav.xpm %buildroot%_miconsdir/%name.png
 %_liconsdir/%name.png
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.02-alt4.qa1
+- NMU: rebuilt for debuginfo.
+
 * Thu Nov 20 2008 Motsyo Gennadi <drool@altlinux.ru> 0.02-alt4
 - delete post/postun scripts (new rpm)
 
