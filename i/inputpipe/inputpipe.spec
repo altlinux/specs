@@ -2,7 +2,7 @@
 
 Name: inputpipe
 Version: 0.0.0
-Release: alt1.svn%svn_revision
+Release: alt1.svn%svn_revision.qa1
 
 Summary: Client/server application for making any input device network-transparent
 
@@ -52,6 +52,9 @@ mkdir -p %buildroot%_bindir
 %_bindir/inputpipe-client
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.0.0-alt1.svn11919.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sat Dec 20 2008 Denis Klimov <zver@altlinux.org> 0.0.0-alt1.svn11919
 - Initial build for ALT Linux
 
