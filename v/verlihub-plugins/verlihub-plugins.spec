@@ -2,7 +2,7 @@
 
 Name: verlihub-plugins
 Version: 0.1
-Release: alt2.qa1
+Release: alt2.qa2
 
 Summary: Plugins for verlihub
 
@@ -47,6 +47,9 @@ done
 #%python_sitelibdir/*
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.1-alt2.qa2
+- NMU: rebuilt for debuginfo.
+
 * Wed Dec 02 2009 Repocop Q. A. Robot <repocop@altlinux.org> 0.1-alt2.qa1
 - NMU (by repocop): the following fixes applied:
   * post_ldconfig for verlihub-plugins
