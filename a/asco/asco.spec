@@ -1,6 +1,6 @@
 Name: asco
 Version: 0.4.6
-Release: alt1
+Release: alt1.qa1
 
 Summary: A SPICE Circuit Optimizer
 
@@ -38,6 +38,9 @@ install -D -m755 %name %buildroot%_bindir/%name
 %_bindir/*
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.4.6-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Fri Aug 03 2007 Vitaly Lipatov <lav@altlinux.ru> 0.4.6-alt1
 - new version 0.4.6 (with rpmrb script)
 
