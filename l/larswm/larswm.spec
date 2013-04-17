@@ -1,6 +1,6 @@
 Name: larswm
 Version: 7.5.3
-Release: alt2.1.qa1
+Release: alt2.1.qa2
 
 Group: Graphical desktop/Other
 Summary: Lars Tiling Window Manager
@@ -50,6 +50,9 @@ EOF
 %_liconsdir/*
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 7.5.3-alt2.1.qa2
+- NMU: rebuilt for debuginfo.
+
 * Tue Feb 09 2010 Repocop Q. A. Robot <repocop@altlinux.org> 7.5.3-alt2.1.qa1
 - NMU (by repocop): the following fixes applied:
   * update_wms for larswm
