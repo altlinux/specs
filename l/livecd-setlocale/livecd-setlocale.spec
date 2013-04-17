@@ -1,6 +1,6 @@
 Name: livecd-setlocale
 Version: 0.2.0
-Release: alt1
+Release: alt2
 
 Summary: Automatically set locale from /proc/cmdline
 License: GPL
@@ -23,11 +23,17 @@ mkdir -p %buildroot%_initdir/
 install -pDm755 {livecd-setlocale,%buildroot%_initdir}/livecd-setlocale
 install -pDm644 {livecd-setlocale,%buildroot%_unitdir}/livecd-setlocale.service
 
+%preun
+%preun_service %name
+
 %files 
 %_initdir/livecd-setlocale
 %_unitdir/livecd-setlocale.service
 
 %changelog
+* Wed Apr 17 2013 Mikhail Efremov <sem@altlinux.org> 0.2.0-alt2
+- Use preun_service.
+
 * Fri Dec 21 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.2.0-alt1
 - service file added
 
