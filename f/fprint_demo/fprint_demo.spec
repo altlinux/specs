@@ -1,6 +1,6 @@
 Name: fprint_demo
 Version: 0.4
-Release: alt1
+Release: alt1.qa1
 
 Summary: GTK+ application to demonstrate and test libfprint's capabilities
 
@@ -35,6 +35,9 @@ library, libfprint.
 %_bindir/fprint_demo
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.4-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Fri Dec 12 2008 Denis Klimov <zver@altlinux.org> 0.4-alt1
 - Init build for ALT Linux
 
