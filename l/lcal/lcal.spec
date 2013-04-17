@@ -3,7 +3,7 @@
 Name: lcal
 
 Version: 2.1.0
-Release: alt1
+Release: alt1.qa1
     
 Summary: PostScript lunar calendar generation program
 Summary(ru_RU.UTF-8): программа для создания календарей фаз Луны в формате PostScript
@@ -47,6 +47,9 @@ install lcal.man %buildroot%_man1dir/%name.1
 %_man1dir/%{name}*
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.1.0-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Thu Feb 28 2008 Nikolay A. Fetisov <naf@altlinux.ru> 2.1.0-alt1
 - Initial build for ALT Linux Sisyphus
 
