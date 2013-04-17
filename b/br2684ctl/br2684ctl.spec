@@ -6,7 +6,7 @@
 Name: br2684ctl
  
 Version: %version
-Release: %release
+Release: alt1.qa1
     
 Summary: utility for configuring RFC 2684 ATM/Ethernet bridging
 
@@ -61,6 +61,9 @@ install -m 0644 -- %name.8 %buildroot%_man8dir/
 %_mandir/man8/*
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 20040226-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Mon Jan 08 2007 Nikolay A. Fetisov <naf@altlinux.ru> 20040226-alt1
 - Initial build for ALT Linux Sisyphus
 
