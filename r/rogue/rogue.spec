@@ -1,6 +1,6 @@
 Name: rogue
 Version: 5.4.4
-Release: alt1.qa2
+Release: alt1.qa3
 Packager: Fr. Br. George <george@altlinux.ru>
 Group: Games/Adventure
 License: BSD
@@ -45,6 +45,9 @@ install -p -D -m 644 %SOURCE2 %buildroot%_niconsdir/%name.png
 %doc LICENSE.TXT %name.doc %name.html %name.me
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 5.4.4-alt1.qa3
+- NMU: rebuilt for debuginfo.
+
 * Sat Nov 14 2009 Repocop Q. A. Robot <repocop@altlinux.org> 5.4.4-alt1.qa2
 - NMU (by repocop): the following fixes applied:
   * obsolete-call-in-post-gtk-update-icon-cache for rogue
