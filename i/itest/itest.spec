@@ -3,7 +3,7 @@
 %define		srcname iTest
 Version:	1.4.1.1
 Name:		itest
-Release:	alt1.%svn.1
+Release:	alt1.%svn.1.qa1
 Summary:	%srcname is a simple examination system
 Summary(ru_RU.UTF8): %srcname - простая система проведения тестов, экзаменов
 License: 	GPLv2
@@ -91,6 +91,9 @@ convert -resize 16x16 iTestServer/images/%{name}server.png %buildroot%_miconsdir
 %_desktopdir/%{name}server.desktop
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.4.1.1-alt1.svn77.1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Tue Nov 23 2010 Motsyo Gennadi <drool@altlinux.ru> 1.4.1.1-alt1.svn77.1
 - fix build for Qt4.7 (thanks to DOOMer for patch)
 
