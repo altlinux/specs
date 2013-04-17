@@ -7,7 +7,7 @@
 
 Name: tcl-%teaname
 Version: 2.1.1
-Release: alt7
+Release: alt7.qa1
 
 Summary: GNU readline for the Tcl scripting language
 License: BSD
@@ -58,6 +58,9 @@ autoreconf -fisv -Iaux
 %_mandir/mann/%srcname.n.*
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.1.1-alt7.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sat Jul 22 2006 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.1.1-alt7
 - fixed build on x86_64
 
