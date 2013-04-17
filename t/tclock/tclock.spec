@@ -1,6 +1,6 @@
 Name: tclock
 Version: 1.0.1
-Release: alt5
+Release: alt5.qa1
 
 Summary: Simple transparent X11 analog clock
 Group: Monitoring
@@ -38,6 +38,9 @@ xmkmf
 %_x11mandir/man?/%name.*
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.0.1-alt5.qa1
+- NMU: rebuilt for debuginfo.
+
 * Tue Dec 02 2008 Fr. Br. George <george@altlinux.ru> 1.0.1-alt5
 - libXext-devel added
 
