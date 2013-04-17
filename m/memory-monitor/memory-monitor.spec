@@ -1,6 +1,6 @@
 Name:		memory-monitor
 Version:	1.1
-Release:	alt2
+Release:	alt2.qa1
 Summary:	Qt4-based memory monitor
 Source0:	http://www.smultron.net/project/memory-monitor/%name-%version.tar.gz
 Source1:	%name.png
@@ -54,6 +54,9 @@ convert -resize 16x16 %name.png %buildroot%_miconsdir/%name.png
 %_desktopdir/%name.desktop
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.1-alt2.qa1
+- NMU: rebuilt for debuginfo.
+
 * Thu Nov 20 2008 Motsyo Gennadi <drool@altlinux.ru> 1.1-alt2
 - delete post/postun scripts (new rpm)
 
