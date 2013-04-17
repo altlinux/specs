@@ -1,5 +1,5 @@
 Name:		basqet
-Version:	0.1.4
+Version:	0.2.0
 Release:	alt1
 Summary:	Basqet - Notes and Data in Baskets
 License:	GPL
@@ -38,6 +38,9 @@ qmake-qt4 PREFIX=/usr
 %_pixmapsdir/%name.png
 
 %changelog
+* Wed Apr 17 2013 Andrey Cherepanov <cas@altlinux.org> 0.2.0-alt1
+- New version 0.2.0
+
 * Fri Feb 04 2011 Andrey Cherepanov <cas@altlinux.org> 0.1.4-alt1
 - Initial build in Sisyphus
 
