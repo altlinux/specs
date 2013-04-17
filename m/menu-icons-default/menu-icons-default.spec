@@ -1,5 +1,5 @@
 Name: menu-icons-default
-Version: 0.2.0.15
+Version: 0.2.0.16
 Release: alt1
 
 Group: Graphical desktop/Other
@@ -55,6 +55,9 @@ install -m644 64x64/apps/*.png %buildroot%_iconsdir/hicolor/64x64/apps/
 %_iconsdir/hicolor/scalable/apps/*
 
 %changelog
+* Wed Apr 17 2013 Igor Vlasenko <viy@altlinux.ru> 0.2.0.16-alt1
+- added feed
+
 * Wed Apr 17 2013 Igor Vlasenko <viy@altlinux.ru> 0.2.0.15-alt1
 - added humanities and maps
 
