@@ -1,7 +1,7 @@
 %define		src qOrganizer
 Version:	3.1
 Name:		qorganizer
-Release:	alt4
+Release:	alt4.qa1
 Summary:	qOrganizer is a personal organizer
 License: 	GPLv2
 Group: 		Office
@@ -47,6 +47,9 @@ convert -resize 48x48 images/logo.png %buildroot%_liconsdir/%name.png
 %_iconsdir/hicolor/*/apps/%name.png
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 3.1-alt4.qa1
+- NMU: rebuilt for debuginfo.
+
 * Mon Apr 06 2009 Motsyo Gennadi <drool@altlinux.ru> 3.1-alt4
 - fix build with qt4.5 (thanks to E.Ostapets for help)
 - refresh BuildReq (run buildreq -bi)
