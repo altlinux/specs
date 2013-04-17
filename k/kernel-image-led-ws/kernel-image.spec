@@ -21,7 +21,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.4.41
-Release: alt1
+Release: alt2
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -130,9 +130,9 @@ Release: alt1
 #define allocator SLAB
 
 %Extra_modules vboxhost 4.2.12
-#Extra_modules vboxguest 4.2.8
+#Extra_modules vboxguest 4.2.12
 #Extra_modules fglrx 8.97.100.7
-#Extra_modules netatop 0.1.1
+#Extra_modules netatop 0.2
 
 %define strip_mod_opts --strip-unneeded -R .comment
 
@@ -2674,6 +2674,10 @@ done)
 
 
 %changelog
+* Wed Apr 17 2013 Led <led@altlinux.ru> 3.4.41-alt2
+- updated:
+  + feat-net--netatop
+
 * Wed Apr 17 2013 Led <led@altlinux.ru> 3.4.41-alt1
 - 3.4.41
 
