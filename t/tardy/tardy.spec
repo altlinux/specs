@@ -1,7 +1,7 @@
 Summary:	a tar post-processor
 Name:		tardy
 Version:	1.17
-Release:	alt2
+Release:	alt2.qa1
 
 Packager:	Alexey Voinov <voins@altlinux.ru>
 
@@ -49,6 +49,9 @@ Note that all of these affect ALL files in the archive.
 %_man1dir/tardy_license.1*
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.17-alt2.qa1
+- NMU: rebuilt for debuginfo.
+
 * Tue Jun 02 2009 Alexey Voinov <voins@altlinux.ru> 1.17-alt2
 - fixed problem with const and strchr
 
