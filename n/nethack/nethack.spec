@@ -3,7 +3,7 @@ License:        NetHack General Public License
 Group:          Games/Adventure 
 Version:        3.4.3
 %define ver	343
-Release:        alt1
+Release:        alt1.qa1
 Summary:        Character Based RPG
 Source0:        %name-%ver-src.tar.bz2
 Source1:        SuSE.tar.bz2
@@ -144,6 +144,9 @@ install -m 755 util/{dgn_comp,dlb,lev_comp,makedefs,recover,tile2x11} $RPM_BUILD
 %_gamesbindir/nethack
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 3.4.3-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sun Jun 17 2007 Fr. Br. George <george@altlinux.ru> 3.4.3-alt1
 - Initial build for ALT
 
