@@ -1,6 +1,6 @@
 Version:	0.2.1
 Name:		netfleet
-Release:	alt1
+Release:	alt1.qa1
 Summary:	NetFleet is a multi-threaded(!) download utility
 License: 	GPLv3
 Group: 		Networking/File transfer
@@ -43,5 +43,8 @@ convert -resize 16x16 images/%name.xpm %buildroot%_miconsdir/%name.png
 %_liconsdir/%name.png
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.2.1-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Fri Nov 27 2009 Motsyo Gennadi <drool@altlinux.ru> 0.2.1-alt1
 - initial build for ALT Linux
