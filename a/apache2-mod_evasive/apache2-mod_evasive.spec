@@ -8,7 +8,7 @@
 
 Name: apache2-%module_name
 Version: %version
-Release: %release
+Release: alt1.qa1
 
 Summary: Apache 2.x evasive module to minimize HTTP DoS or brute force attacks
 
@@ -121,6 +121,9 @@ fi
 %dir %apache2_spooldir/%module_name
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.10.1-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Fri Dec 12 2008 Nikolay A. Fetisov <naf@altlinux.ru> 1.10.1-alt1
 - Initial build for ALT Linux Sisyphus
 
