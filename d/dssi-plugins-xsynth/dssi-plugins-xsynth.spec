@@ -3,7 +3,7 @@
 
 Name: dssi-plugins-%_name
 Version: 0.9.0
-Release: alt2%beta
+Release: alt2%beta.qa1
 
 Summary: Xsynth plugin for DSSI
 License: GPL
@@ -52,6 +52,9 @@ Interface (DSSI).
 %doc AUTHORS ChangeLog README TODO
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.9.0-alt2.qa1
+- NMU: rebuilt for debuginfo.
+
 * Tue Sep 16 2008 Alex Karpov <karpov@altlinux.ru> 0.9.0-alt2
 - updated build requirements
 
