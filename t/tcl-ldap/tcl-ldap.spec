@@ -6,7 +6,7 @@
 
 Name: tcl-%srcname
 Version: 3.0
-Release: alt9.1
+Release: alt9.1.qa1
 
 Summary: LDAP extension to TCL
 License: BSD
@@ -41,6 +41,9 @@ exception of extended operations (a LDAP v3 feature).
 %doc license.terms ldap.htm
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 3.0-alt9.1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Thu Sep 24 2009 ALT QA Team Robot <ldv@altlinux.org> 3.0-alt9.1
 - Automated blind dumb rebuild with libldap-devel-2.4.16-alt4.4.
 
