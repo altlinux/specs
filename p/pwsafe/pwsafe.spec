@@ -1,6 +1,6 @@
 Name: pwsafe
 Version: 0.2.0
-Release: alt1.1
+Release: alt1.1.qa1
 Summary: A unix commandline program that manages encrypted password databases
 Summary(ru_RU.KOI8-R): Управление из командной строки зашифрованным файлом с паролями
 
@@ -40,6 +40,9 @@ make install DESTDIR=$RPM_BUILD_ROOT
 %_mandir/man1/pwsafe.1.gz
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.2.0-alt1.1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Tue Dec 07 2010 Igor Vlasenko <viy@altlinux.ru> 0.2.0-alt1.1
 - rebuild with new openssl and/or boost by request of git.alt administrator
 
