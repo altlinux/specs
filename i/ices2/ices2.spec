@@ -2,7 +2,7 @@
 
 Name: ices2
 Version: 2.0.1
-Release: alt3
+Release: alt3.qa1
 
 Summary: Ices2 - sourcer to use with Icecast2 daemon
 Packager: Pavlov Konstantin <thresh@altlinux.ru>
@@ -62,6 +62,9 @@ install -m755 %SOURCE1 %buildroot%_initdir/%name
 %_initdir/%name
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.0.1-alt3.qa1
+- NMU: rebuilt for debuginfo.
+
 * Fri Aug 18 2006 Pavlov Konstantin <thresh@altlinux.ru> 2.0.1-alt3
 - Added init-script (closes #8925).
 
