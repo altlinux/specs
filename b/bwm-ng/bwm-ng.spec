@@ -1,6 +1,6 @@
 Name: bwm-ng
 Version: 0.6
-Release: alt1
+Release: alt1.qa1
 
 Summary: Bandwidth Monitor NG is a small and simple console-based live bandwidth monitor.
 License: GPLv2+
@@ -49,6 +49,9 @@ install -D -m644 %SOURCE1 $RPM_BUILD_ROOT%_sysconfdir/bwm-ng.conf
 
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.6-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sun Sep 30 2007 Ilya Mashkin <oddity at altlinux.ru> 0.6-alt1
 - new version 0.6
 
