@@ -1,6 +1,6 @@
 Name: libsieve
 Version: 2.2.5
-Release: alt1.qa1
+Release: alt1.qa2
 
 Summary: Standalone library providing an interpreter for RFC 3028 Sieve and various extensions
 License: CMU and LGPL
@@ -86,6 +86,9 @@ cd src
 %_libdir/%name.a
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.2.5-alt1.qa2
+- NMU: rebuilt for debuginfo.
+
 * Tue Nov 10 2009 Repocop Q. A. Robot <repocop@altlinux.org> 2.2.5-alt1.qa1
 - NMU (by repocop): the following fixes applied:
   * post_ldconfig for libsieve
