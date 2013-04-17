@@ -1,14 +1,17 @@
 Name: cstream
-Version: 2.7.6
+Version: 3.0.0
 Release: alt1
 
 Summary: General-purpose stream-handling tool
 License: MIT
 Group: File tools
 Url: http://www.cons.org/cracauer/cstream.html
-Packager: Dmitry V. Levin <ldv@altlinux.org>
-Source: cstream-%version.tar
-Patch: cstream-2.7.6-rh-Wextra.patch
+# http://www.cons.org/cracauer/download/%name-%version.tar.gz
+Source: %name-%version.tar
+Patch2: %name-%version-rh-Wextra.patch
+Patch3: %name-%version-rh-double-assignment.patch
+Patch4: %name-%version-rh-configure-fix.patch
+Patch5: %name-%version-rh-meh.patch
 
 %description
 cstream filters data streams, much like the UNIX tool dd(1).
@@ -19,17 +22,18 @@ bandwidth limiting and reporting and support for FIFOs.
 Data limits and throughput rate calculation will work for files > 4 GB.
 
 %prep
-%setup -q
-%patch -p1
+%setup
+%patch2 -p1
+%patch3 -p1
+%patch4 -p1
+%patch5 -p1
 
 %build
 %configure
-%make_build 
-%make check
+%make_build
 
 %install
-%make_install install DESTDIR="%buildroot"
-%make installcheck DESTDIR="%buildroot"
+%makeinstall_std
 
 %files
 %_bindir/*
@@ -37,6 +41,9 @@ Data limits and throughput rate calculation will work for files > 4 GB.
 %doc CHANGES COPYRIGHT README TODO
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin <ldv@altlinux.org> 3.0.0-alt1
+- Updated to 3.0.0, synced patches with Fedora.
+
 * Sun Feb 08 2009 Dmitry V. Levin <ldv@altlinux.org> 2.7.6-alt1
 - Packaged for ALT Linux.
 
