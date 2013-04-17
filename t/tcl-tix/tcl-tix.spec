@@ -1,6 +1,6 @@
 Name: tcl-tix
 Version: 8.4.3
-Release: alt1
+Release: alt1.qa1
 
 Summary: A set of capable widgets for Tk
 License: BSD
@@ -74,6 +74,9 @@ cp -a demos %buildroot%_tcldatadir/Tix%version
 %_tcldatadir/Tix%version/demos
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 8.4.3-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Tue Dec 16 2008 Sergey Bolshakov <sbolshakov@altlinux.ru> 8.4.3-alt1
 - 8.4.3 released
 
