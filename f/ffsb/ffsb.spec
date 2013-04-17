@@ -2,7 +2,7 @@
 
 Name: ffsb
 Version: 6.0
-Release: alt0.2
+Release: alt0.2.qa1
 
 Summary: The Flexible Filesystem Benchmark
 License: GPLv2+
@@ -34,6 +34,9 @@ multiple groups of threads across multiple filesystems.
 %_bindir/%name
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 6.0-alt0.2.qa1
+- NMU: rebuilt for debuginfo.
+
 * Fri Aug 14 2009 Michael Shigorin <mike@altlinux.org> 6.0-alt0.2
 - 6.0-rc2 built for ALT Linux (suggested by led@)
 - based on Fedora spec
