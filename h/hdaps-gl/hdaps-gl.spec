@@ -1,6 +1,6 @@
 Name: hdaps-gl
 Version: 0.0.5
-Release: alt1
+Release: alt1.qa1
 
 Summary: GL-based laptop model that rotates in real-time via hdaps
 License: GPLv2
@@ -37,6 +37,9 @@ install -pDm644 %SOURCE2 %buildroot%_desktopdir/%name.desktop
 %_desktopdir/*
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.0.5-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Thu Apr 02 2009 Michael Shigorin <mike@altlinux.org> 0.0.5-alt1
 - built for ALT Linux
 - fixed build with -Wl,--as-needed (whoops, also in gentoo already)
