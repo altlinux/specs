@@ -1,6 +1,6 @@
 Name: aewan
 Version: 1.0.01
-Release: alt1
+Release: alt1.qa1
 
 Summary: Ascii-art Editor Without a Name
 License: GPL
@@ -32,6 +32,9 @@ Aewan is a multi-layered ascii-art/animation editor that produces both stand-alo
 %doc README CHANGELOG COPYING TODO
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.0.01-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Fri Apr 06 2007 Alexandra Panyukova <mex3@altlinux.ru> 1.0.01-alt1
 Initial build
 
