@@ -1,7 +1,7 @@
 Name: ulog-acctd
 Summary: ulog-acctd - A userspace network accounting daemon
 Version: 0.4.3
-Release: alt6.qa1
+Release: alt6.qa2
 License: GPL
 Group: System/Servers
 Url: http://alioth.debian.org/projects/pkg-ulog-acctd
@@ -65,6 +65,9 @@ cp -a %name-%version-contrib-billing-example contrib/billing-example
 %doc doc/README COPYING contrib
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.4.3-alt6.qa2
+- NMU: rebuilt for debuginfo.
+
 * Tue Nov 10 2009 Repocop Q. A. Robot <repocop@altlinux.org> 0.4.3-alt6.qa1
 - NMU (by repocop): the following fixes applied:
   * obsolete-call-in-post-install-info for ulog-acctd
