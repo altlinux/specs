@@ -1,6 +1,6 @@
 Name: psutils
 Version: p17
-Release: alt2
+Release: alt2.qa1
 Epoch: 1
 
 Summary: PostScript utilities
@@ -43,6 +43,9 @@ make -f Makefile.unix install BUILDROOT="%buildroot"
 %_man1dir/*
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1:p17-alt2.qa1
+- NMU: rebuilt for debuginfo.
+
 * Wed Feb 27 2008 Fr. Br. George <george@altlinux.ru> 1:p17-alt2
 - Pageflip patch
 
