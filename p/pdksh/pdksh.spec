@@ -1,6 +1,6 @@
 Name: pdksh
 Version: 5.2.14
-Release: alt2
+Release: alt2.qa1
 Epoch: 1
 
 Summary: A public domain clone of the Korn shell (ksh)
@@ -52,6 +52,9 @@ ln -s ksh %buildroot%_bindir/%name
 %doc BUG-REPORTS ChangeLog* CONTRIBUTORS LEGAL NEWS NOTES PROJECTS README
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1:5.2.14-alt2.qa1
+- NMU: rebuilt for debuginfo.
+
 * Fri Mar 21 2008 Michael Shigorin <mike@altlinux.org> 1:5.2.14-alt2
 - fixed build with current coreutils
   + patch from Gentoo, see http://bugs.gentoo.org/31835
