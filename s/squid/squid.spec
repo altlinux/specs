@@ -5,7 +5,7 @@
 
 Name: squid
 Version: 3.2.9
-Release: alt3
+Release: alt4
 %define langpack_ver 20121005
 Summary: The Squid proxy caching server
 License: GPLv2
@@ -40,6 +40,7 @@ BuildRequires: doxygen  graphviz fonts-ttf-freefont
 BuildRequires: gcc-c++ libcap-devel libdb4-devel libldap-devel libltdl-devel
 BuildRequires: libpam-devel libsasl2-devel libssl-devel perl-Pod-Parser
 BuildRequires: w3c-libwww-devel cppunit-devel
+BuildRequires: libkrb5-devel
 %{?_enable_ecap:BuildRequires: libecap-devel >= 0.2.0}
 %{?_enable_esi:BuildRequires: libxml2-devel libexpat-devel}
 # Used by smb_auth.pl,pop3.pl and squid_db_auth, required on find-requires stage:
@@ -142,10 +143,10 @@ sed -i -r '1s|^(#!/usr/)local(/bin/perl)|\1\2|' {contrib,scripts}/*.pl
 	--enable-cache-digests \
 	--enable-x-accelerator-vary \
 	--enable-auth \
-	--enable-basic-auth-helpers="DB LDAP MSNT MSNT-multi-domain NCSA NIS PAM POP3 RADIUS SASL SMB SSPI fake getpwnam" \
-	--enable-ntlm-auth-helpers="SSPI fake smb_lm" \
+	--enable-basic-auth-helpers="DB LDAP MSNT MSNT-multi-domain NCSA NIS PAM POP3 RADIUS SASL SMB fake getpwnam" \
+	--enable-ntlm-auth-helpers="fake smb_lm" \
 	--enable-digest-auth-helpers="LDAP eDirectory file" \
-	--enable-negotiate-auth-helpers="SSPI kerberos warpper" \
+	--enable-negotiate-auth-helpers="kerberos wrapper" \
 	--enable-external-acl-helpers="AD_group LDAP_group LM_group eDirectory_userip file_userip kerberos_ldap_group session unix_group wbinfo_group" \
 	--enable-storeio="aufs diskd rock ufs" \
 	--enable-disk-io \
@@ -170,7 +171,7 @@ install -pD -m 0644 %SOURCE3 %buildroot%_sysconfdir/logrotate.d/%name
 
 install -d -m 0755 %buildroot{%_logdir,%_spooldir}/%name
 
-install -p -m 0644 helpers/{basic_auth/SSPI,external_acl/{AD,LM,kerberos_ldap}_group,negotiate_auth/kerberos}/*.8 %buildroot%_man8dir/
+install -p -m 0644 helpers/{external_acl/{AD,LM,kerberos_ldap}_group,negotiate_auth/kerberos}/*.8 %buildroot%_man8dir/
 
 install -p -m 0755 %SOURCE4 %buildroot%_libexecdir/%name/
 install -d -m 0755 %buildroot%_datadir/snmp/mibs
@@ -199,7 +200,6 @@ done
 install -p -m 0644 helpers/basic_auth/SMB/ChangeLog %buildroot%_docdir/%name-%version/helpers/ChangeLog.$i
 install -p -m 0644 helpers/basic_auth/MSNT/README.html %buildroot%_docdir/%name-%version/helpers/README.MSNT.html
 install -p -m 0644 helpers/basic_auth/MSNT-multi-domain/README.txt %buildroot%_docdir/%name-%version/helpers/README.MSNT-multi-domain
-install -p -m 0644 helpers/ntlm_auth/SSPI/readme.txt %buildroot%_docdir/%name-%version/helpers/README.ntlm_auth_SSPI
 install -p -m 0644 helpers/basic_auth/MSNT/msntauth.conf.default %buildroot%_docdir/%name-%version/helpers/
 
 
@@ -286,6 +286,10 @@ chown -R %name:%name %_spooldir/%name >/dev/null 2>&1 ||:
 
 
 %changelog
+* Wed Apr 17 2013 Led <led@altlinux.ru> 3.2.9-alt4
+- updated BuildRequires
+- negotiate_kerberos_auth: fix config.test (ALT#28859)
+
 * Thu Apr 11 2013 Led <led@altlinux.ru> 3.2.9-alt3
 - updated Conflicts
 
