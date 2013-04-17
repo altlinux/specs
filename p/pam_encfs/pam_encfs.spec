@@ -1,6 +1,6 @@
 Name: pam_encfs
 Version: 0.1.4.4
-Release: alt1
+Release: alt1.qa1
 
 Summary: Mount fuse-encfs partitions when login
 License: GPL
@@ -51,6 +51,9 @@ install -D -m600 pam_encfs.conf %buildroot%_sysconfdir/security/pam_encfs.conf
 %doc README
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.1.4.4-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Tue Sep 28 2010 Mykola Grechukh <gns@altlinux.ru> 0.1.4.4-alt1
 - new version
 
