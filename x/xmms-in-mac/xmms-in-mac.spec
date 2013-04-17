@@ -1,6 +1,6 @@
 Name: xmms-in-mac
 Version: 0.3.1
-Release: alt3
+Release: alt3.qa1
 
 Summary: an input plugin for xmms to play Monkey's Audio files (APE)
 Group: Sound
@@ -69,6 +69,9 @@ rm -f %buildroot%_libdir/xmms/*/*.la
 %doc AUTHORS BUGS COPYING ChangeLog NEWS README TODO XMMS_MAC-ALTLinux-permission.eml
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.3.1-alt3.qa1
+- NMU: rebuilt for debuginfo.
+
 * Wed May 27 2009 Michael Shigorin <mike@altlinux.org> 0.3.1-alt3
 - fixed macro abuse
 - cleanup *.la
