@@ -1,7 +1,7 @@
 %define svnrev 192
 Name: mtx
 Version: 1.3.12
-Release: alt1
+Release: alt1.qa1
 
 Summary: SCSI Media Changer and Backup Device Control
 License: GPL
@@ -32,6 +32,9 @@ jukeboxes, and tape drives.
 %_man1dir/*
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.3.12-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Mon Aug 23 2010 Vladimir V. Kamarzin <vvk@altlinux.org> 1.3.12-alt1
 - 1.3.12 (Closes: #23921)
 
