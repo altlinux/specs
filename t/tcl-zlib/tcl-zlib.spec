@@ -1,6 +1,6 @@
 Name: tcl-zlib
 Version: 2.0.1
-Release: alt2
+Release: alt2.qa1
 
 Summary: Zlib support for Tcl
 License: BSD
@@ -36,6 +36,9 @@ make
 %_tcldatadir/zlib%version/pkgIndex.tcl
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.0.1-alt2.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sat Oct 25 2008 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.0.1-alt2
 - fixed build on x86_64
 
