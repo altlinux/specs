@@ -1,7 +1,7 @@
 Summary: Computational Chemistry DFT program
 Name: abinit
 Version: 6.0.4
-Release: alt1
+Release: alt1.qa1
 License: GPL
 Group: Sciences/Chemistry
 Url: http://www.abinit.org/
@@ -60,6 +60,9 @@ find $RPM_BUILD_ROOT \( -name 'Thumbs.db' -o -name 'Thumbs.db.gz' \) -print -del
 %_bindir/*
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 6.0.4-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Tue Jun 01 2010 Ilya Mashkin <oddity@altlinux.ru> 6.0.4-alt1
 - 6.0.4
 
