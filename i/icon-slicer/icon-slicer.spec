@@ -1,6 +1,6 @@
 Name: icon-slicer
 Version: 0.3
-Release: alt2
+Release: alt2.qa1
 Summary: Utility for icon theme generation
 License: MIT
 Group: Development/Tools
@@ -35,6 +35,9 @@ Utility for generating icon themes and libXcursor cursor themes.
 %doc AUTHORS ChangeLog README TODO
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.3-alt2.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sat May 09 2009 Aleksey Lim <alsroot@altlinux.org> 0.3-alt2
 - fix SL#297
 
