@@ -40,7 +40,7 @@ BuildRequires: jpackage-1.4-compat
 
 Name:           jsvc
 Version:        1.0.1
-Release:        alt4_6jpp1.7
+Release:        alt4_6jpp1.7.qa1
 Epoch:          1
 Summary:        Jakarta Commons Daemon Package
 License:        Apache Software License 2.0
@@ -186,6 +186,9 @@ fi
 %endif
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1:1.0.1-alt4_6jpp1.7.qa1
+- NMU: rebuilt for debuginfo.
+
 * Fri May 18 2007 Igor Vlasenko <viy@altlinux.ru> 1:1.0.1-alt4_6jpp1.7
 - jsvc is again split into separate package
 
