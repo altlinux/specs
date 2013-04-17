@@ -1,6 +1,6 @@
 Name: mrprojext
 Version: 1.3.1
-Release: alt2.qa1
+Release: alt2.qa2
 
 Summary: mrprojext - MrProject-Databasefile-Extractor and -Converter
 Summary(ru_RU.KOI8-R): Программа извлечения и конвертирования данных из файлов MrProject
@@ -44,6 +44,9 @@ And (as converter) it can rewrite the extracted result as MrProject-, Evolution-
 %_datadir/doc/*
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.3.1-alt2.qa2
+- NMU: rebuilt for debuginfo.
+
 * Thu Jan 14 2010 Repocop Q. A. Robot <repocop@altlinux.org> 1.3.1-alt2.qa1
 - NMU (by repocop): the following fixes applied:
   * update_menus for mrprojext
