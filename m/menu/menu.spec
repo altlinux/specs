@@ -2,7 +2,7 @@
 
 Name: menu
 Version: 2.1.41
-Release: alt21
+Release: alt22
 
 Group: System/Base
 Summary: Menu system
@@ -191,6 +191,10 @@ sh -n %buildroot%_sysconfdir/firsttime.d/menu
 %doc doc/{*html,README*,BUGS,menu.txt*} AUTHORS debian/changelog debian/copyright examples
 
 %changelog
+* Wed Apr 17 2013 Igor Vlasenko <viy@altlinux.ru> 2.1.41-alt22
+- added support for new freedesktop categories:
+    Feed,Maps,Humanities,Spirituality,Shooter.
+
 * Tue Oct 09 2012 Igor Vlasenko <viy@altlinux.ru> 2.1.41-alt21
 - fixed build with gcc4.7
 
