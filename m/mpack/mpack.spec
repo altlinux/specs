@@ -1,6 +1,6 @@
 Name: mpack
 Version: 1.6
-Release: alt2
+Release: alt2.qa1
 
 Summary: %name and munpack MIME e-mail utilities
 Copyright: Distributable
@@ -36,6 +36,9 @@ The Macintosh version can also decode messages in split-BinHex format.
 %doc README.unix
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.6-alt2.qa1
+- NMU: rebuilt for debuginfo.
+
 * Wed Nov 26 2008 Anton Farygin <rider@altlinux.ru> 1.6-alt2
 - cleanup specfile
 - added patches from Debian
