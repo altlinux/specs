@@ -1,12 +1,11 @@
 Name: fakeroot
-Version: 1.12.2
+Version: 1.18.4
 Release: alt1
 
 Summary: Run a command in an environment faking root privileges for file manipulation
-License: GPL
+License: GPLv3+
 Group: Development/Other
 Url: http://packages.qa.debian.org/f/fakeroot.html
-Packager: Dmitry V. Levin <ldv@altlinux.org>
 
 # http://git.altlinux.org/people/ldv/packages/?p=fakeroot.git
 Source: %name-%version-%release.tar
@@ -39,7 +38,8 @@ autoreconf -fisv
 %configure --libdir=%_libdir/libfakeroot --enable-static=no
 %make_build LIBCPATH=/%_lib/libc.so.6
 
-%{!?__buildreqs:%{!?_without_check:%{!?_disable_check:%make_build check}}}
+%check
+%make_build -k check
 
 %install
 %makeinstall libdir=%buildroot%_libdir/libfakeroot
@@ -52,6 +52,9 @@ find %buildroot%_libdir -type f -name \*.la -delete
 %doc debian/changelog.bz2 doc/README* DEBUG
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin <ldv@altlinux.org> 1.18.4-alt1
+- Updated to 1.18.4.
+
 * Mon Apr 13 2009 Dmitry V. Levin <ldv@altlinux.org> 1.12.2-alt1
 - Updated to 1.12.2.
 
