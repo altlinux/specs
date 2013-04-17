@@ -1,6 +1,6 @@
 Name: metakit
 Version: 2.4.9.7
-Release: alt1
+Release: alt1.qa1
 
 %define tclpkg Mk4tcl
 %define soname libmk4.so.1
@@ -122,6 +122,9 @@ find doc demos -type f -print0 |
 %endif 
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.4.9.7-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Thu Dec 04 2008 Michael Shigorin <mike@altlinux.org> 2.4.9.7-alt1
 - 2.4.9.7
 - applied repocop patch
