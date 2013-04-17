@@ -1,6 +1,6 @@
 Name: calcurse
 Version: 2.8
-Release: alt1
+Release: alt1.qa1
 
 Summary: Calcurse is a text-based personal organizer
 Group: Office
@@ -40,6 +40,9 @@ system.
 %_man1dir/*
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.8-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Fri Aug 27 2010 Ilya Mashkin <oddity@altlinux.ru> 2.8-alt1
 - 2.8
 
