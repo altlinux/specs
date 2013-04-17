@@ -1,7 +1,7 @@
 %define orig_name libopensync-plugin-palm
 Name: libopensync0-plugin-palm
 Version: 0.22
-Release: alt2
+Release: alt2.qa1
 
 Summary: Palm plugin for OpenSync
 License: GPL
@@ -56,6 +56,9 @@ rm -f %buildroot%_libdir/opensync/formats/*.la
 
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.22-alt2.qa1
+- NMU: rebuilt for debuginfo.
+
 * Thu Oct 16 2008 Andriy Stepanov <stanv@altlinux.ru> 0.22-alt2
 - Stable version.
 
