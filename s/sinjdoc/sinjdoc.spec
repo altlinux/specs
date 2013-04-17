@@ -3,7 +3,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           sinjdoc
 Version:        0.5
-Release:        alt1_8jpp5
+Release:        alt1_8jpp5.qa1
 Summary:        Documentation generator for Java source code
 
 Group:          Development/Java
@@ -63,6 +63,9 @@ aot-compile-rpm
 %{_libdir}/gcj/%{name}
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.5-alt1_8jpp5.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sat May 23 2009 Igor Vlasenko <viy@altlinux.ru> 0.5-alt1_8jpp5
 - first build
 
