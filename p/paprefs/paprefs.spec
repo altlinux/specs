@@ -1,6 +1,6 @@
 Name: paprefs
 Version: 0.9.8
-Release: alt1.1
+Release: alt1.1.qa1
 
 Summary: PulseAudio Preferences
 License: GPL
@@ -47,6 +47,9 @@ PulseAudio 0.9.5 this modules is loaded by default.)
 %_datadir/paprefs/paprefs.glade
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.9.8-alt1.1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sun Aug 09 2009 Ilya Mashkin <oddity@altlinux.ru> 0.9.8-alt1.1
 - fix .desktop file (Closes: #20896)
 
