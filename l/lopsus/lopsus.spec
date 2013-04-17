@@ -1,7 +1,7 @@
 
 Name: lopsus
 Version: 1.4.0.1
-Release: alt1
+Release: alt1.qa1
 
 URL: http://www.marigostra.ru/developments/lopsus.html
 License: %gpl3plus
@@ -60,6 +60,9 @@ make DESTDIR=%buildroot install
 %_bindir/%name-page
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.4.0.1-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Wed Dec 30 2009 Michael Pozhidaev <msp@altlinux.ru> 1.4.0.1-alt1
 - New version
 
