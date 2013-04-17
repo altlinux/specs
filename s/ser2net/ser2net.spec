@@ -1,6 +1,6 @@
 Name: ser2net
 Version: 2.5
-Release: alt1
+Release: alt1.qa1
 Summary: The ser2net daemon allows telnet and tcp sessions to be established with a unit's serial ports.
 License: GPL
 Group: System/Servers
@@ -56,6 +56,9 @@ or serial port, the connection is refused with an error message.
 %doc README NEWS ChangeLog COPYING INSTALL AUTHORS
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.5-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Tue Apr 15 2008 Eugene Prokopiev <enp@altlinux.ru> 2.5-alt1
 - first build for Sisyphus
 
