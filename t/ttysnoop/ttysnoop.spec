@@ -1,6 +1,6 @@
 Name: ttysnoop
 Version: 0.12d
-Release: alt1
+Release: alt1.qa1
 
 Summary: Program to snoop on a TTY through another
 License: distributable
@@ -48,6 +48,9 @@ install -d %buildroot%_spooldir/%name
 %_man8dir/*
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.12d-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sun Apr 12 2009 Michael Shigorin <mike@altlinux.org> 0.12d-alt1
 - initial build for ALT Linux Sisyphus (spec from PLD)
 - applied Debian patch (as is)
