@@ -1,6 +1,6 @@
 Name: mstflint
 Version: 1.4
-Release: alt2
+Release: alt2.qa1
 
 Summary: Mellanox firmware burning application
 License: GPL/BSD
@@ -29,6 +29,9 @@ make DESTDIR=%buildroot install
 %_includedir/mtcr_ul/*.h
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.4-alt2.qa1
+- NMU: rebuilt for debuginfo.
+
 * Tue Aug 17 2010 Andriy Stepanov <stanv@altlinux.ru> 1.4-alt2
 - New version (OFED 1.5.1)
 
