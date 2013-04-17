@@ -1,7 +1,7 @@
 %define oname beep
 Name: beep-speaker
 Version: 1.2.2
-Release: alt1
+Release: alt1.qa1
 
 Summary: Beep the pc speaker any number of ways
 
@@ -42,6 +42,9 @@ install -m 644 beep.1 %buildroot%_man1dir/
 %_man1dir/*
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.2.2-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sun Mar 30 2008 Vitaly Lipatov <lav@altlinux.ru> 1.2.2-alt1
 - initial build for ALT Linux Sisyphus
 
