@@ -1,6 +1,6 @@
 Name: geda
 Version: 20060123
-Release: alt0.1
+Release: alt0.1.qa1
 
 Summary: Project browser for gEDA
 
@@ -35,6 +35,9 @@ make DESTDIR=%buildroot install
 %_bindir/*
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 20060123-alt0.1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sun Jun 11 2006 Vitaly Lipatov <lav@altlinux.ru> 20060123-alt0.1
 - new version (20060123)
 
