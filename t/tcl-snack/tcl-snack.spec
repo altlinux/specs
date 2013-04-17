@@ -4,7 +4,7 @@
 
 Name: tcl-snack
 Version: 2.2.10
-Release: alt4
+Release: alt4.qa1
 
 Summary: Snack - a sound toolkit for scripting languages
 License: GPL
@@ -104,6 +104,9 @@ chmod 0644 doc/*
 %_tcldatadir/%teaname%version/demos
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.2.10-alt4.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sun May 10 2009 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.2.10-alt4
 - rebuilt with new gcc
 
