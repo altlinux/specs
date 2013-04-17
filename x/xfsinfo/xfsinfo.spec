@@ -1,6 +1,6 @@
 Name: xfsinfo
 Version: 1.0.2
-Release: alt2
+Release: alt2.qa1
 
 Summary: X font server information utility
 License: MIT/X11
@@ -39,6 +39,9 @@ available.
 %_man1dir/*
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.0.2-alt2.qa1
+- NMU: rebuilt for debuginfo.
+
 * Mon Jun 16 2008 Valery Inozemtsev <shrek@altlinux.ru> 1.0.2-alt2
 - fixed buildrequires
 
