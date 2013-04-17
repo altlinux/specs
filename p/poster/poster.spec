@@ -2,7 +2,7 @@
 %define subver 20050907
 Name: poster
 Version: 1.0.1
-Release: alt3.%subver
+Release: alt3.%subver.qa1
 
 Group: Publishing
 Summary: An utility to scale postscript
@@ -51,6 +51,9 @@ install -m 544 %{name}.1 %buildroot/%_man1dir
 
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.0.1-alt3.20050907.qa1
+- NMU: rebuilt for debuginfo.
+
 * Thu Sep 11 2008 Sergey V Turchin <zerg at altlinux dot org> 1.0.1-alt3.20050907
 - fix #16590
 - revert to 20050907
