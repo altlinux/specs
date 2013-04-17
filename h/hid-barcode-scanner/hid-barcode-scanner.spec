@@ -1,6 +1,6 @@
 Name: hid-barcode-scanner
 Version: 0.1
-Release: alt1
+Release: alt1.qa1
 
 Summary: HID barcode scanner interface
 Group: System/Kernel and hardware
@@ -32,6 +32,9 @@ and send all data from this device to the standart output.
 %doc README
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.1-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Fri May 08 2009 Michael A. Kangin <prividen@altlinux.org> 0.1-alt1
 - Release for Sisyphus
 
