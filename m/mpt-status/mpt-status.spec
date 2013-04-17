@@ -1,6 +1,6 @@
 Name: mpt-status
 Version: 1.2.0
-Release: alt2
+Release: alt2.qa1
 
 Summary: MPT Fusion based RAID inquiry tool for LSI Logic HBAs
 License: GPL v2+
@@ -75,6 +75,9 @@ install -pD -m755 %SOURCE4 %buildroot%_sbindir/%name-install
 %_sbindir/%name-install
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.2.0-alt2.qa1
+- NMU: rebuilt for debuginfo.
+
 * Mon Mar 24 2008 Michael Shigorin <mike@altlinux.org> 1.2.0-alt2
 - don't break monitoring subpackage installation if there's 
   no controller present: just leave a message
