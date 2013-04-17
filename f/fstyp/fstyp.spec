@@ -1,6 +1,6 @@
 Name: fstyp
 Version: 0.1
-Release: alt7
+Release: alt7.qa1
 
 Summary: filesystem type identifier
 Summary(ru_RU.KOI8-R): автоопределение типа файловой системы
@@ -42,6 +42,9 @@ UNIX-системах. fstyp может эвристическими методами определить
 %doc AUTHORS ChangeLog COPYING
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.1-alt7.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sun Oct 24 2010 Denis Smirnov <mithraen@altlinux.ru> 0.1-alt7
 - rebuild
 
