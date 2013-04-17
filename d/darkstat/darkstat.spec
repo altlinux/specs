@@ -1,7 +1,7 @@
 Summary: Network traffic analyzer
 Name:    darkstat
 Version: 3.0.707
-Release: alt1
+Release: alt1.qa1
 License: GPL
 Group:   Monitoring
 Url: http://dmr.ath.cx/net/darkstat/
@@ -34,6 +34,9 @@ all sorts of useless but interesting statistics.
 %_sbindir/darkstat
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 3.0.707-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Wed Apr 02 2008 Nick S. Grechukh <gns@altlinux.org> 3.0.707-alt1
 - first build to sisyphus. TODO: steal nice initscript from debian
 
