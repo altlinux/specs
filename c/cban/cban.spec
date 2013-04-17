@@ -2,7 +2,7 @@ Summary:	Current BANdwidth by Nicu Pavel
 Summary(ru_RU.UTF8): Current BANdwidth - утилита отображения сетевого трафика
 Name:		cban
 Version:	0.1.8
-Release:	alt2.2
+Release:	alt2.2.qa1
 License:	GPLv2
 Group:		Monitoring
 Url:		http://panic.eu.org/linux/cban/
@@ -47,6 +47,9 @@ export OPTFLAGS='%optflags'
 %_sbindir/%name
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.1.8-alt2.2.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sun Nov 22 2009 Motsyo Gennadi <drool@altlinux.ru> 0.1.8-alt2.2
 - fixed russian locale for Summary
 
