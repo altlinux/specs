@@ -1,6 +1,6 @@
 Name: xmms-in-tta
 Version: 1.2
-Release: alt2
+Release: alt2.qa1
 
 Summary: TTA input plugin for XMMS
 License: LGPL
@@ -47,6 +47,9 @@ ln -s libxmms-tta.so.0.0.0 %buildroot%xmmsindir/libxmms-tta.so
 %xmmsindir
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.2-alt2.qa1
+- NMU: rebuilt for debuginfo.
+
 * Tue Jun 02 2009 Michael Shigorin <mike@altlinux.org> 1.2-alt2
 - fixed FTBFS with recent libtool
 - me as a Packager:
