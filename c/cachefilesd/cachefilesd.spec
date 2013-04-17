@@ -1,6 +1,6 @@
 Name: cachefilesd
 Version: 0.10.1
-Release: alt1
+Release: alt1.qa1
 
 Summary: caching backend for use with FS-Cache
 License: GPL
@@ -43,6 +43,9 @@ mkdir -p %buildroot%_cachedir/fscache
 %dir %attr(700,root,root) %_cachedir/fscache
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.10.1-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Tue Nov 16 2010 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.10.1-alt1
 - 0.10.1 released
 
