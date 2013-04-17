@@ -1,7 +1,7 @@
 Summary: Utility to wrap a Linux kernel and initrd into an ELF or NBI file
 Name: wraplinux
 Version: 1.1
-Release: alt1
+Release: alt1.qa1
 License: GPL2
 Group: System/Kernel and hardware
 Url: http://www.kernel.org/pub/linux/utils/boot/wraplinux/
@@ -37,6 +37,9 @@ single file in ELF or NBI format, as required by some booting protocols.
 %_man1dir/wraplinux.1*
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.1-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Thu Feb 14 2008 Hihin Ruslan <ruslandh@altlinux.ru> 1.1-alt1
 - ALT Linux adaptation
 
