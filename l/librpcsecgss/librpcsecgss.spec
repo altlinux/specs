@@ -2,7 +2,7 @@
 
 Name: librpcsecgss
 Version: 0.19
-Release: alt1
+Release: alt1.qa1
 
 Summary: RPCSEC_GSS implementation
 License: BSD
@@ -65,6 +65,9 @@ done
 %endif
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.19-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sat Nov 06 2010 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.19-alt1
 - 0.19 released
 
