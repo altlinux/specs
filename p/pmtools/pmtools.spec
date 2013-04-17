@@ -2,7 +2,7 @@ Summary: Intel ACPI investigation tools
 Summary(ru_RU.UTF-8): Утилиты для исследования ACPI
 Name: pmtools
 Version: 20071116
-Release: alt1
+Release: alt1.qa1
 License: GPL
 Group: System/Kernel and hardware
 Url: http://ftp.kernel.org/pub/linux/kernel/people/lenb/acpi/utils/
@@ -45,6 +45,9 @@ install -m0755 madt/madt %buildroot%_bindir
 %_sbindir/*
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 20071116-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sun Feb 08 2009 Andriy Stepanov <stanv@altlinux.ru> 20071116-alt1
 - Switch up to new version
 
