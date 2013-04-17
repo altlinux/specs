@@ -1,6 +1,6 @@
 Name: AcetoneISO2
 Version: 2.3
-Release: alt1
+Release: alt1.qa1
 
 Summary: CD/DVD Image Manipulator
 
@@ -82,6 +82,9 @@ make INSTALL_ROOT=%buildroot install
 %_niconsdir/Acetino2.png
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.3-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Wed Dec 15 2010 Anatoly Lyutin <vostok@altlinux.org> 2.3-alt1
 - 2.3
 - Added in requires fuseiso (ALT #24751)
