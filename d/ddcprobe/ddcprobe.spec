@@ -1,6 +1,6 @@
 Name: 	ddcprobe
 Version: 3.0
-Release: alt1
+Release: alt1.qa1
 Summary: Tool for reading EDID from DDC
 Summary(ru_RU.UTF-8): Утилита для чтения EDID из DDC
 License: LGPL
@@ -30,6 +30,9 @@ ddcprobe is a tool for reading and parsing EDID from DDC.
 %_sbindir/*
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 3.0-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Thu Sep 17 2009 Vladislav Zavjalov <slazav@altlinux.org> 3.0-alt1
 - rewrite code (closes: #21481, #21482, #21483)
 - use libx86
