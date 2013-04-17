@@ -1,6 +1,6 @@
 Name: yasr
 Version: 0.6.7
-Release: alt7
+Release: alt7.qa1
 Packager: Michael Pozhidaev <msp@altlinux.ru>
 
 Summary: %name - yet another screen reader
@@ -48,6 +48,9 @@ make
 %doc ChangeLog BUGS CREDITS NEWS README TODO
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.6.7-alt7.qa1
+- NMU: rebuilt for debuginfo.
+
 * Fri Dec 17 2010 Michael Pozhidaev <msp@altlinux.ru> 0.6.7-alt7
 - Added voiceman-emacspeak-yasr script to adjust speech attributes for voiceman-1.5.0
 
