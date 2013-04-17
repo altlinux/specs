@@ -1,6 +1,6 @@
 Name:		wmeyes
 Version:	1.2
-Release:	alt3
+Release:	alt3.qa1
 
 Packager:	Alexey Voinov <voins@altlinux.ru>
 
@@ -40,6 +40,9 @@ install -D -pm644 %SOURCE1 $RPM_BUILD_ROOT%_menudir/%name
 %_menudir/*
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.2-alt3.qa1
+- NMU: rebuilt for debuginfo.
+
 * Mon Nov 09 2009 Alexey Voinov <voins@altlinux.ru> 1.2-alt3
 - update_menus removed
 
