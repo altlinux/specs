@@ -1,6 +1,6 @@
 Name: pstotext
 Version: 1.9
-Release: alt2
+Release: alt2.qa1
 
 Summary: PostScript to text converter
 License: Digital's paranoid but open-source license
@@ -33,6 +33,9 @@ install -pDm644 pstotext.1 %buildroot%_man1dir/%name.1
 %_man1dir/%name.1*
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.9-alt2.qa1
+- NMU: rebuilt for debuginfo.
+
 * Tue Apr 07 2009 Michael Shigorin <mike@altlinux.org> 1.9-alt2
 - updated Url:
 - spec cleanup
