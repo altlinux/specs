@@ -1,6 +1,6 @@
 Name: uw-imap
 Version: 2004g
-Release: alt3.1
+Release: alt3.1.qa1
 
 Summary: Server daemons for IMAP and POP network mail protocols
 License: BSD
@@ -302,6 +302,9 @@ fi
 %endif
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2004g-alt3.1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Thu Oct 28 2010 Denis Smirnov <mithraen@altlinux.ru> 2004g-alt3.1
 - rebuild (with the help of girar-nmu utility)
 
