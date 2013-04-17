@@ -1,6 +1,6 @@
 Name: dictd
 Version: 1.9.15
-Release: alt5
+Release: alt5.qa1
 Serial: 1
 
 Url: http://www.dict.org/
@@ -212,6 +212,9 @@ fi
 #%_man1dir/dictl.1*
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1:1.9.15-alt5.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sat Jan 12 2008 Vitaly Lipatov <lav@altlinux.ru> 1:1.9.15-alt5
 - disable recode dependens: do not install dictl script and man
   (we already have transiterable recoding in dict)
