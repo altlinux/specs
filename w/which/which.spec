@@ -3,7 +3,7 @@
 
 Name: which
 Version: 2.20
-Release: alt2
+Release: alt2.qa1
 
 Summary: Displays where a particular program in your path is located
 License: GPLv3
@@ -40,6 +40,9 @@ rm -f -- %buildroot%_infodir/dir
 %_infodir/%name.info.*
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.20-alt2.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sat May 30 2009 Slava Semushin <php-coder@altlinux.ru> 2.20-alt2
 - Removed obsolete %%install_info/%%uninstall_info calls
 
