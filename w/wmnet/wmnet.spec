@@ -1,6 +1,6 @@
 Name:		wmnet
 Version:	1.06
-Release:	alt4
+Release:	alt4.qa1
 Packager:	Alexey Voinov <voins@altlinux.ru>
 
 Summary:	Applet that monitors the network
@@ -36,6 +36,9 @@ install -p -D -m 644 %SOURCE1 $RPM_BUILD_ROOT%_menudir/%name
 %_menudir/*
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.06-alt4.qa1
+- NMU: rebuilt for debuginfo.
+
 * Fri Dec 26 2008 Alexey Voinov <voins@altlinux.ru> 1.06-alt4
 - update_menus calls were removed
 
