@@ -1,6 +1,6 @@
 Name: xconsole
 Version: 1.0.4
-Release: alt1
+Release: alt1.qa1
 
 Summary: monitor system console messages with X
 License: MIT/X11
@@ -36,6 +36,9 @@ The xconsole program displays messages which are usually sent to /dev/console.
 %_man1dir/*
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.0.4-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Fri Sep 24 2010 Valery Inozemtsev <shrek@altlinux.ru> 1.0.4-alt1
 - 1.0.4
 
