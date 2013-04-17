@@ -1,6 +1,6 @@
 Name: xvinfo
 Version: 1.1.1
-Release: alt1
+Release: alt1.qa1
 Summary: Print out X-Video extension adaptor information
 License: MIT/X11
 Group: System/X11
@@ -34,6 +34,9 @@ with the display that are accesible through the X-Video extension
 %_man1dir/*
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.1.1-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sat Nov 06 2010 Valery Inozemtsev <shrek@altlinux.ru> 1.1.1-alt1
 - 1.1.1
 
