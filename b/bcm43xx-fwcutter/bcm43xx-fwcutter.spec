@@ -3,7 +3,7 @@
 
 Name: bcm43xx-fwcutter
 Version: 006
-Release: alt1
+Release: alt1.qa1
 
 Summary: Utility for extracting Broadcom 43xx firmware
 License: %gpl2plus
@@ -36,6 +36,9 @@ ln -sf %_licensedir/GPL-2 COPYING
 %_man1dir/*
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 006-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Wed Sep 19 2007 Artem Zolochevskiy <azol@altlinux.ru> 006-alt1
 - initial build for Sisyphus
 
