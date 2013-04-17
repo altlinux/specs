@@ -1,7 +1,7 @@
 Summary: A Pluggable Authentication Module for Kerberos 5.
 Name: pam_krb5
 Version: 3.13
-Release: alt1.1
+Release: alt1.1.qa1
 Source0: pam_krb5-%version.tar.bz2
 License: BSD or LGPLv2+
 Group: System/Base
@@ -36,6 +36,9 @@ make install DESTDIR=%buildroot
 %doc README* LICENSE NEWS
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 3.13-alt1.1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Mon Nov 29 2010 Igor Vlasenko <viy@altlinux.ru> 3.13-alt1.1
 - repair after perl 5.12 upgrade using girar-nmu
 
