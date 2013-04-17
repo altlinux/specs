@@ -1,6 +1,6 @@
 Name: uvcview
 Version: 20071108
-Release: alt1.1.qa1
+Release: alt1.1.qa2
 
 %define LANG                    ru
 
@@ -76,6 +76,9 @@ install -D -m 644 %SOURCE2 %buildroot%_niconsdir/uvcview.png
 %_niconsdir/uvcview.png
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 20071108-alt1.1.qa2
+- NMU: rebuilt for debuginfo.
+
 * Tue Nov 10 2009 Repocop Q. A. Robot <repocop@altlinux.org> 20071108-alt1.1.qa1
 - NMU (by repocop): the following fixes applied:
   * update_menus for uvcview
