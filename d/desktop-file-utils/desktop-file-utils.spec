@@ -2,7 +2,7 @@
 %define _emacs_startscriptsdir %_sysconfdir/emacs/site-start.d
 
 Name: desktop-file-utils
-Version: 0.20.0.patchset5
+Version: 0.21.0.patchset1
 Release: alt1
 
 Summary: Utilities for manipulating .desktop files
@@ -105,6 +105,11 @@ touch %buildroot/%_desktopdir/mimeinfo.cache
 %_emacslispdir/%emacs_mode-mode.el
 
 %changelog
+* Wed Apr 17 2013 Igor Vlasenko <viy@altlinux.ru> 0.21.0.patchset1-alt1
+- 0.21 patchset1:
+  desktop-file-utils-0.21-altlinux-add-de-to-main-categories.patch
+  desktop-file-utils-0.21-altlinux-fix-TextTools.patch
+
 * Fri Aug 03 2012 Igor Vlasenko <viy@altlinux.ru> 0.20.0.patchset5-alt1
 - patchset5 (added MATE, TDE, Razor as categories)
 
