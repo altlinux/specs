@@ -2,7 +2,7 @@
 
 Name: fuse-funion
 Version: 0.4.3
-Release: alt1
+Release: alt1.qa1
 
 Summary: FunionFS - An union filesystem for FUSE
 
@@ -45,6 +45,9 @@ install %distname -m755 %buildroot%_bindir
 %_bindir/*
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.4.3-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Tue Aug 07 2007 Vitaly Lipatov <lav@altlinux.ru> 0.4.3-alt1
 - new version 0.4.3 (with rpmrb script)
 
