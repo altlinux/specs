@@ -7,7 +7,7 @@
 
 Name: %gst_plugins-good
 Version: %ver_major.31
-Release: alt1
+Release: alt2
 Summary: A set of GStreamer plugins considered good
 Group: System/Libraries
 License: LGPL
@@ -93,6 +93,9 @@ fi
 %_gtk_docdir/*
 
 %changelog
+* Wed Apr 17 2013 Andrey Cherepanov <cas@altlinux.org> 0.10.31-alt2
+- fix build with recent kernels, the v4l2_buffer input field was removed
+
 * Tue Feb 21 2012 Valery Inozemtsev <shrek@altlinux.ru> 0.10.31-alt1
 - 0.10.31
 
