@@ -1,6 +1,6 @@
 Name: xapian-omega
 Version: 1.2.3
-Release: alt1
+Release: alt1.qa1
 
 Summary: A CGI search frontend and indexers built on Xapian
 
@@ -73,6 +73,9 @@ rm -rf %buildroot%_docdir/%name/
 %_man1dir/scriptindex.1*
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.2.3-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Tue Oct 12 2010 Michael Shigorin <mike@altlinux.org> 1.2.3-alt1
 - NMU: 1.2.3
 - dropped xapian-config hack (#22629 fixed long ago)
