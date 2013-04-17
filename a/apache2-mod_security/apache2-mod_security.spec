@@ -8,7 +8,7 @@
 
 Name: apache2-%module_name
 Version: %version
-Release: %release
+Release: alt1.qa1
 
 Summary: Tighten web applications security for Apache 2.x
 
@@ -171,6 +171,9 @@ fi
 %doc doc/*
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.5.9-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Mon Mar 30 2009 Nikolay A. Fetisov <naf@altlinux.ru> 2.5.9-alt1
 - New version:
   + Security fix: remote DoS when parsing multipart content with 
