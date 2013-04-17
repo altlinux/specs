@@ -12,7 +12,7 @@
 %def_enable ctpp2
 
 Name: nginx
-Version: 1.2.7
+Version: 1.2.8
 Release: alt1
 
 Summary: Fast HTTP server
@@ -253,6 +253,9 @@ sed -i 's/\(types_hash_bucket_size[[:space:]]*\)[[:space:]]32[[:space:]]*;[[:spa
 %preun_service %name
 
 %changelog
+* Wed Apr 17 2013 Anton Farygin <rider@altlinux.ru> 1.2.8-alt1
+- new version
+
 * Wed Mar 13 2013 Anton Farygin <rider@altlinux.ru> 1.2.7-alt1
 - new version
 
