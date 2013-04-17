@@ -2,7 +2,7 @@ Name: netdate
 License: Public Domain
 Group: Networking/Other
 Version: 1.2
-Release: alt2
+Release: alt2.qa1
 Summary: Set Date and Time by ARPA Internet RFC 868
 #Url: http://www.ibiblio.org/pub/linux/system/network/sunacm/Other/netdate/
 Url: ftp://ftp.suse.com/pub/people/kukuk/ipv6/
@@ -47,6 +47,9 @@ install -m 755 %SOURCE2 %buildroot%_initdir/%name
 /usr/sbin/netdate
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.2-alt2.qa1
+- NMU: rebuilt for debuginfo.
+
 * Tue Apr 29 2008 Fr. Br. George <george@altlinux.ru> 1.2-alt2
 - Fix unmets
 
