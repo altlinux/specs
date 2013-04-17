@@ -1,6 +1,6 @@
 Name: libmspack
 Version: 0.0.20060920alpha
-Release: alt3
+Release: alt3.qa1
 
 Summary: Compressors and decompressors for Microsoft compression formats
 
@@ -52,6 +52,9 @@ in development of the %name-based applications.
 %_libdir/*.so
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.0.20060920alpha-alt3.qa1
+- NMU: rebuilt for debuginfo.
+
 * Wed Jan 07 2009 Vitaly Lipatov <lav@altlinux.ru> 0.0.20060920alpha-alt3
 - fix Url
 
