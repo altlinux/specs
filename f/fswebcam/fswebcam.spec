@@ -5,7 +5,7 @@
 Summary: Tiny and flexible webcam program
 Name: fswebcam
 Version: 20070108
-Release: alt1
+Release: alt1.qa1
 License: GPL
 Group: Video
 
@@ -41,6 +41,9 @@ device, and overlaying a caption or image.
 %_mandir/man1/fswebcam.1.gz
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 20070108-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Mon Oct 29 2007 Hihin Ruslan <ruslandh@altlinux.ru> 20070108-alt1
 -- First build for ALT Linux.
  
