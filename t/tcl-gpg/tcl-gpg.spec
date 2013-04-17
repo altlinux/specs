@@ -1,6 +1,6 @@
 Name: tcl-gpg
 Version: 1.0
-Release: alt2
+Release: alt2.qa1
 
 Summary: A Tcl interface to GNU Privacy Guard
 License: BSD
@@ -37,6 +37,9 @@ autoconf
 %_mandir/mann/*
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.0-alt2.qa1
+- NMU: rebuilt for debuginfo.
+
 * Mon Jan 11 2010 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.0-alt2
 - updated to svn rev.72
 
