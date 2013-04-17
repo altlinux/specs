@@ -1,6 +1,6 @@
 Name: gnome-mastermind
 Version: 0.3.1
-Release: alt1
+Release: alt1.qa1
 
 Summary: A Mastermind clone for GNOME Desktop
 
@@ -48,5 +48,8 @@ about how the game works and is played.
 %_iconsdir/*/*/apps/*
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.3.1-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sun Jan 04 2009 Vitaly Lipatov <lav@altlinux.ru> 0.3.1-alt1
 - initial build for ALT Linux Sisyphus
