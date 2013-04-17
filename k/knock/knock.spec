@@ -1,6 +1,6 @@
 Name: knock
 Version: 0.5
-Release: alt6
+Release: alt6.qa1
 
 Summary: knock is a port-knocking client
 License: GPL
@@ -76,6 +76,9 @@ fi
 %_man1dir/knockd.1*
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.5-alt6.qa1
+- NMU: rebuilt for debuginfo.
+
 * Thu Dec 04 2008 Michael Shigorin <mike@altlinux.org> 0.5-alt6
 - added condstop to initscript (per repocop advice)
 
