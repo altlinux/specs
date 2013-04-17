@@ -2,7 +2,7 @@
 Summary: Extracts attachments out of mailpack format emails
 Name: ripmime
 Version: 1.4.0.9
-Release: alt1
+Release: alt1.qa1
 License: BSD
 Group: Networking/Mail
 Url: http://www.pldaniels.com/ripmime/
@@ -78,6 +78,9 @@ This package provides development files for the %name library.
 %_libdir/*.a
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.4.0.9-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Thu Jul 02 2009 Alexey Shabalin <shaba@altlinux.ru> 1.4.0.9-alt1
 - 1.4.0.9
 - rewrite patch0 and specify a tag with `--tag'
