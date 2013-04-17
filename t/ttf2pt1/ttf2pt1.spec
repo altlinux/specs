@@ -1,6 +1,6 @@
 Name: ttf2pt1
 Version: 3.4.4
-Release: alt1
+Release: alt1.qa1
 
 Group: Publishing
 Summary: True Type Font to Postscript Type 1 Converter
@@ -41,6 +41,9 @@ install %name.1 %buildroot%_man1dir/
 %doc CHANGES README FONTS FONTS.hpux 
 
 %changelog
+* Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 3.4.4-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Mon Aug 17 2009 Michael A. Kangin <prividen@altlinux.org> 3.4.4-alt1
 - Initial build for Sisyphus
 
