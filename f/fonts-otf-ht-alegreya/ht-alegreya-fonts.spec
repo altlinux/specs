@@ -1,7 +1,7 @@
+Group: System/Fonts/True type
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
-Group: System/Fonts/True type
 %define oldname ht-alegreya-fonts
 %global fontname alegreya
 %global fontconf 60-%{fontname}.conf
@@ -22,7 +22,7 @@ elements designed in an atmosphere of diversity.
 
 Name:		fonts-otf-ht-alegreya
 Version:	1.004
-Release:	alt1_1
+Release:	alt1_2
 Summary:	A Serif typeface originally intended for literature
 License:	OFL
 URL:		http://www.huertatipografica.com.ar/tipografias/alegreya/ejemplos.html
@@ -46,7 +46,7 @@ Summary:	SmallCaps variant of the Alegreya font family
 This is the SmallCaps variant, in which the Capital letters are smaller.
 
 %prep
-%setup -q -c
+%setup -n %{oldname}-%{version} -q -c
 sed -i 's/\r//' OFL.txt
 
 %build
@@ -111,13 +111,16 @@ fi
 %{_fontbasedir}/*/%{_fontstem}/Alegreya-*.otf
 %doc OFL.txt
 
-%files -n fonts-otf-ht-%{fontname}-smallcaps
+%files -n fonts-otf-ht-alegreya-smallcaps
 %{_fontconfig_templatedir}/60-%{fontname}SC.conf
 %config(noreplace) %{_fontconfig_confdir}/60-%{fontname}SC.conf
 %{_fontbasedir}/*/%{_fontstem}/AlegreyaSC-*.otf
 %doc OFL.txt
 
 %changelog
+* Wed Apr 17 2013 Igor Vlasenko <viy@altlinux.ru> 1.004-alt1_2
+- converted for ALT Linux by srpmconvert tools
+
 * Mon Nov 05 2012 Igor Vlasenko <viy@altlinux.ru> 1.004-alt1_1
 - fc import
 
