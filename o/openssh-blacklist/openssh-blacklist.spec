@@ -1,11 +1,10 @@
 Name: openssh-blacklist
-Version: 0.3
+Version: 0.3.1
 Release: alt1
 
 Summary: Blacklist file for openssh
 License: GPLv3+
 Group: Networking/Remote access
-Packager: Dmitry V. Levin <ldv@altlinux.org>
 
 # ftp://ftp.debian.org/debian/pool/main/o/%name/%{name}_%{version}.tar.gz
 Source: %name-%version.tar
@@ -28,11 +27,13 @@ This package contains blacklist file utils used to create and verify
 blacklist files for openssh.
 
 %prep
-%setup -q -a1
+%setup -a1
 
 %build
-%__cc %optflags utils-%version/blacklist-check.c -o %name-check
-%__cc %optflags utils-%version/blacklist-encode.c -o %name-encode
+%__cc %optflags $(getconf LFS_CFLAGS) \
+	utils-%version/blacklist-check.c -o %name-check
+%__cc %optflags $(getconf LFS_CFLAGS) \
+	utils-%version/blacklist-encode.c -o %name-encode
 cat [DR]SA-{1024,2048}.[bl]e{32,64} |./%name-encode 6 >blacklist
 
 %install
@@ -47,5 +48,8 @@ install -pm755 %name-{check,encode} %buildroot%_bindir/
 %_bindir/*
 
 %changelog
+* Thu Apr 18 2013 Dmitry V. Levin <ldv@altlinux.org> 0.3.1-alt1
+- Enabled LFS support.
+
 * Mon May 26 2008 Dmitry V. Levin <ldv@altlinux.org> 0.3-alt1
 - Initial revision.
