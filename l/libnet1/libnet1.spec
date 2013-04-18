@@ -1,7 +1,7 @@
 %define realname libnet
 Name: %{realname}1
 Version: 1.0.2a
-Release: alt3
+Release: alt3.qa1
 Epoch: 1
 
 Summary: A C library for portable packet creation
@@ -163,6 +163,9 @@ cp -a doc/COPYING doc/CHANGELOG* doc/README doc/TODO* extra/* html \
 %endif
 
 %changelog
+* Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1:1.0.2a-alt3.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sat Nov 06 2010 Dmitry V. Levin <ldv@altlinux.org> 1:1.0.2a-alt3
 - Rebuilt for soname set-versions.
 
