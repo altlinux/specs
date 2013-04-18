@@ -22,7 +22,7 @@
 
 %def_without manual
 %def_with additions
-%def_without webservice
+%def_with webservice
 %def_without java
 %def_with vnc
 %def_with vde
@@ -42,6 +42,10 @@
 %define vboxdir %_libdir/virtualbox
 %endif
 
+%if_with webservice
+%define vboxwebdir %_localstatedir/vboxwebsrv
+%endif
+
 %define vboxdatadir %_datadir/virtualbox
 %define vboxadddir %vboxdir/additions
 
@@ -50,7 +54,7 @@
 
 
 Name: virtualbox
-Version: 4.2.10
+Version: 4.2.12
 Release: alt1
 
 Summary: VM VirtualBox OSE - Virtual Machine for x86 hardware
@@ -72,6 +76,8 @@ Source5:	60-vboxadd.perms
 Source6:	vboxadd-service.sysconfig
 Source7:	vboxadd.init
 Source8:	vboxadd-service.init
+Source9:	vboxweb-service.sysconfig
+Source10:	vboxweb-service.init
 Source13:	http://download.virtualbox.org/%name/%version/UserManual.pdf
 Source15:	os_altlinux.png
 Source16:	os_altlinux_64.png
@@ -144,6 +150,15 @@ Group: Emulators
 %description guest-utils
 This packages contains basic utils for VirtualBox OSE guest systems.
 It allows to share files and sync time with host system.
+
+%package webservice
+Summary: VirtualBox Web Service
+Group: Emulators
+Requires: %name = %version-%release
+
+%description webservice
+This packages contains VirtualBox web service API daemon.
+It allows to control virtual machines via web interface.
 
 %package -n %modname
 Summary: Sources for VirtualBox module
@@ -279,9 +294,6 @@ export GCC_VERSION=4.3
 %if_without additions
 echo "VBOX_WITH_X11_ADDITIONS    := " >> LocalConfig.kmk
 %endif
-%if_with webservice
-echo "VBOX_WITHOUT_SPLIT_SOAPC   := 1" >> LocalConfig.kmk
-%endif
 # don't build testcases to save time, they are not needed for the package
 echo "VBOX_WITH_TESTCASES        :=" >> LocalConfig.kmk
 echo "VBOX_WITH_TESTSUITE        :=" >> LocalConfig.kmk
@@ -371,6 +383,9 @@ cp -a \
     *.py \
     components/ \
     sdk/ \
+%if_with webservice
+    vboxwebsrv \
+%endif
     %buildroot%vboxdir
 
 cp -a \
@@ -379,7 +394,15 @@ cp -a \
     %buildroot%vboxdatadir
 
 # create links
-for n in VBoxBFE VBoxManage VBoxSDL VirtualBox VBoxTunctl xpidl; do
+for n in VBoxBFE \
+         VBoxManage \
+         VBoxSDL \
+         VBoxTunctl \
+         VirtualBox \
+%if_with webservice
+         vboxwebsrv \
+%endif
+         xpidl; do
     ln -s $(relative %vboxdir/$n %_bindir/$n) %buildroot%_bindir
 done
 
@@ -479,6 +502,21 @@ mkdir -p %buildroot%_defaultdocdir/%name-doc-%version
 cp %SOURCE13 %SOURCE17 %SOURCE20 %buildroot%_defaultdocdir/%name-doc-%version/
 tar -xf %SOURCE21 -C %buildroot%_defaultdocdir/%name-doc-%version/
 
+%if_with vnc
+ cp -a ExtensionPacks/VNC %buildroot%vboxdir/ExtensionPacks/
+%endif
+
+%if_with webservice
+  mkdir -p %buildroot%vboxwebdir
+
+# install vboxweb-service initscript
+  install -Dp %SOURCE10 %buildroot%_initdir/vboxweb-service
+
+# install sysconfig for vboxweb-service
+  mkdir -p %buildroot%_sysconfdir/sysconfig
+  cp %SOURCE9 %buildroot%_sysconfdir/sysconfig/vboxweb-service
+%endif
+
 %pre
 %pre_control %name
 
@@ -506,14 +544,24 @@ mountpoint -q /dev || {
 %pre guest-additions
 /usr/sbin/groupadd -r -f vboxadd
 
+%if_with webservice
+%pre webservice
+/usr/sbin/useradd -r -g vboxusers -d %vboxwebdir -c 'VirtualBox Web Service' -n vboxwebsrv -s /bin/sh >/dev/null 2>&1 ||:
+%endif
+
 %files
 %_bindir/*
+%vboxdir/*
 %exclude %_bindir/xpidl
 %if_with additions
 %exclude %_bindir/VBoxClient
 %exclude %_bindir/VBoxControl
 %exclude %_bindir/VBoxService
 %exclude %vboxadddir
+%endif
+%if_with webservice
+%exclude %_bindir/vboxwebsrv
+%exclude %vboxdir/vboxwebsrv
 %endif
 %dir %vboxdir
 %dir %vboxdir/ExtensionPacks
@@ -522,7 +570,6 @@ mountpoint -q /dev || {
 %attr(4710,root,vboxusers) %vboxdir/VBoxNetAdpCtl
 %attr(4710,root,vboxusers) %vboxdir/VBoxSDL
 %attr(4710,root,vboxusers) %vboxdir/VirtualBox
-%vboxdir/*
 %exclude %vboxdir/sdk
 %exclude %vboxdir/xpidl
 %vboxdatadir/nls
@@ -580,6 +627,15 @@ mountpoint -q /dev || {
 %_x11modulesdir/dri/vboxvideo_dri.so
 %endif
 
+%if_with webservice
+%files webservice
+%_initrddir/vboxweb-service
+%config(noreplace) %_sysconfdir/sysconfig/vboxweb-service
+%dir %attr(0750,vboxwebsrv,vboxusers) %vboxwebdir
+%vboxdir/vboxwebsrv
+%_bindir/vboxwebsrv
+%endif
+
 %files common
 %_initdir/%name
 %_controldir/%name
@@ -596,6 +652,11 @@ mountpoint -q /dev || {
 %vboxdir/sdk
 
 %changelog
+* Thu Apr 18 2013 Evgeny Sinelnikov <sin@altlinux.ru> 4.2.12-alt1
+- Update to last release of stable branch 4.2
+- Enable build with webservice
+- Fix installation of VNC ExtensionPack
+
 * Sun Mar 17 2013 Evgeny Sinelnikov <sin@altlinux.ru> 4.2.10-alt1
 - Update to last stable release with multiple fixes for Sisyphus
 
