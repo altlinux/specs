@@ -1,22 +1,21 @@
 Name: dictd
-Version: 1.9.15
-Release: alt5.qa1
+Version: 1.12.1
+Release: alt1
 Serial: 1
 
 Url: http://www.dict.org/
 License: GPL
 
-Packager: Alexey Dyachenko <alexd@altlinux.ru>
-
-Source: ftp://ftp.dict.org/pub/dict/dictd-%version.tar.bz2
-Source2: dictd
+Source: %name-%version.tar.gz
+Source2: dictd.init
 Source3: dictdconfig
 Source4: dictd.conf
 Source5: dict.conf
 Source6: dictd-control
 Source7: dictd-README.ALT
+Source8: dictd.service
 
-Patch: %name-%version-natspec.patch
+Patch: %name-1.9.15-natspec.patch
 
 Patch10: dict-1.9.15-alt-utf8.patch
 Patch11: dict-1.9.11-alt-fix_utf.patch
@@ -27,8 +26,6 @@ Patch12: dictl-alt-params.path
 Summary: dict server that serves dictionaries for clients
 Summary(ru_RU.KOI8-R): Сервер словарей, обслуживающий клиентов по протоколу dict
 Group: System/Servers
-
-PreReq: chkconfig
 
 # Automatically added by buildreq on Thu Sep 22 2005
 BuildRequires: flex groff-base tetex-core tetex-dvips tetex-latex transfig zlib-devel
@@ -84,7 +81,6 @@ This package contains header files for dictd server plugins
 
 %description -n dict-devel -l ru_RU.KOI8-R
 Данный пакет содержит заголовочные файлы для сборки модулей к серверу dictd
-
 # ------- dict description ------ #
 %package -n dict
 # Name: dictd
@@ -99,11 +95,10 @@ easy to use.
 %description -n dict -l ru_RU.KOI8-R
 Данный пакет содержит консольный клиент для DICT-сервера. Он лёгок и
 прост в работе.
-
 # --------------- real part ----------------  #
 
 %prep
-%setup -q
+%setup
 %patch
 #%patch10 -p0
 #%patch11 -p1
@@ -111,7 +106,7 @@ easy to use.
 cp %SOURCE7 README.ALT
 
 %build
-%__autoreconf
+%autoreconf
 %configure --without-local-zlib --with-natspec
 %make_build
 %make -C doc/ rfc.txt
@@ -156,6 +151,7 @@ EXTRAOPTIONS="--locale ru_RU.UTF-8 \$LISTENTO"
 EOF
 
 install -D -m 755 %SOURCE6 %buildroot%_controldir/dictd
+install -D %SOURCE8 %buildroot%_unitdir/dictd.service
 
 %pre
 %_sbindir/groupadd -r dictd &>/dev/null ||:
@@ -182,6 +178,7 @@ fi
 %_initdir/%name
 %_datadir/%name
 %_localstatedir/%name
+%_unitdir/dictd.service
 
 %files -n dict-tools
 %_bindir/dictfmt
@@ -204,14 +201,18 @@ fi
 %files -n dict
 %doc README
 %config(noreplace) %_sysconfdir/dict.conf
+%exclude %_bindir/dictl
+%exclude %_man1dir/dictl.*
 %_bindir/dict
 %_bindir/colorit
-#%_bindir/dictl
 %_man1dir/dict.1*
 %_man1dir/colorit.1*
-#%_man1dir/dictl.1*
 
 %changelog
+* Thu Apr 18 2013 Fr. Br. George <george@altlinux.ru> 1:1.12.1-alt1
+- Autobuild version bump to 1.12.1
+- Add systemd service file
+
 * Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1:1.9.15-alt5.qa1
 - NMU: rebuilt for debuginfo.
 
