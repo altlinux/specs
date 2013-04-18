@@ -1,12 +1,11 @@
 Name: popa3d
-Version: 1.0.2
-Release: alt4
+Version: 1.0.3
+Release: alt1
 
 Summary: Post Office Protocol (POP3) server
 License: GPLv2+
 Group: System/Servers
 Url: http://www.openwall.com/popa3d/
-Packager: Dmitry V. Levin <ldv@altlinux.org>
 
 # ftp://ftp.openwall.com/pub/projects/popa3d/popa3d-%version.tar.gz
 Source: popa3d-%version.tar
@@ -58,6 +57,9 @@ install -pD -m640 %_sourcedir/popa3d.xinetd \
 %doc popa3d.eps.bz2
 
 %changelog
+* Thu Apr 18 2013 Dmitry V. Levin <ldv@altlinux.org> 1.0.3-alt1
+- Updated to 1.0.3.
+
 * Wed Jun 23 2010 Dmitry V. Levin <ldv@altlinux.org> 1.0.2-alt4
 - /etc/pam.d/popa3d: Changed to use common-login.
 
