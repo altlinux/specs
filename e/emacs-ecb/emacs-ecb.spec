@@ -1,12 +1,12 @@
 # -*- coding: utf-8; mode: rpm-spec -*-
 # $Id: emacs-ecb.spec,v 1.6 2005/12/14 22:27:41 eugene Exp $
 
-Version: 2.40
-Release: alt3.cvs20100518
-Name: emacs-ecb
+Version: 2.41
+Release: alt1.gitf68d13d22a
+Name:    emacs-ecb
 License: GPL
-Group: Editors
-Url: http://ecb.sf.net
+Group:   Editors
+Url:     http://ecb.sf.net
 Summary: Emacs Code Browser
 Summary(ru_RU.UTF-8): Броузер кода для Emacs
 
@@ -26,7 +26,7 @@ BuildPreReq: emacs-X11-program
 BuildRequires(build): emacs-cedet >= 1.0-alt0.13.pre7
 
 # Automatically added by buildreq on Mon Nov 01 2004
-BuildRequires: emacs-common emacs-elib emacs-jdee
+BuildRequires: emacs-common emacs-elib emacs-jdee emacs-leim
 
 %description
 This is code browser for Emacs for C, C++, Java
@@ -98,6 +98,9 @@ install -m 644 NEWS %buildroot%_docdir/%name/
 
 
 %changelog
+* Thu Apr 18 2013 Andrey Cherepanov <cas@altlinux.org> 2.41-alt1.gitf68d13d22a
+- Build ecb from alexott git: git://github.com/emacsmirror/ecb.git
+
 * Tue Apr 05 2011 Eugene Vlasov <eugvv@altlinux.ru> 2.40-alt3.cvs20100518
 - Rebuild with cedet-1.0
 
