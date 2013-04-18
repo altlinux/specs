@@ -1,5 +1,5 @@
 Name: installer-feature-simply-livecd
-Version: 0.8.2
+Version: 0.8.3
 Release: alt1
 
 Summary: LiveCD install hooks for Simply Linux.
@@ -55,6 +55,9 @@ cp -ar alterator-menu/ %buildroot%_datadir/livecd-install
 %_datadir/livecd-install/
 
 %changelog
+* Thu Apr 18 2013 Mikhail Efremov <sem@altlinux.org> 0.8.3-alt1
+- Add 'removable' initinstall hook.
+
 * Tue Apr 16 2013 Mikhail Efremov <sem@altlinux.org> 0.8.2-alt1
 - lightdm: Set icon theme SimpleSL.
 - Hide alterator-logs in the acc.
