@@ -1,11 +1,10 @@
 Name: chkfontpath
-Version: 2.0.2
+Version: 2.0.3
 Release: alt1
 
 Summary: Simple interface for editing the font path for the X font server
-License: GPL
+License: GPLv2+
 Group: System/Configuration/Other
-Packager: Dmitry V. Levin <ldv@altlinux.org>
 
 Source: %name-%version.tar
 
@@ -16,19 +15,22 @@ scripts of RPM packages when fonts are added or removed, but it may be
 useful as a stand-alone utility in some instances.
 
 %prep
-%setup -q
+%setup
 
 %build
 %make_build
 
 %install
-%make_install install DESTDIR=%buildroot
+%makeinstall_std
 
 %files
 %_sbindir/*
 %_mandir/man?/*
 
 %changelog
+* Thu Apr 18 2013 Dmitry V. Levin <ldv@altlinux.org> 2.0.3-alt1
+- Built with LFS support enabled.
+
 * Sat Apr 07 2007 Dmitry V. Levin <ldv@altlinux.org> 2.0.2-alt1
 - Fixed compilation warnings.
 
