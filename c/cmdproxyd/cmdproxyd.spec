@@ -1,11 +1,10 @@
 Name: cmdproxyd
-Version: 0.1
-Release: alt2
+Version: 0.2
+Release: alt1
 
 Summary: A command proxy daemon
-License: GPL
+License: GPLv2+
 Group: System/Servers
-Packager: Dmitry V. Levin <ldv@altlinux.org>
 
 Source: %name-%version.tar
 
@@ -15,7 +14,7 @@ PreReq: shadow-utils, service
 This is a command proxy daemon.
 
 %prep
-%setup -q
+%setup
 
 %build
 %make_build CFLAGS="%optflags -Werror -W"
@@ -39,6 +38,9 @@ install -pD -m644 %name.sysconfig %buildroot%_sysconfdir/sysconfig/%name
 %_sbindir/*
 
 %changelog
+* Wed Aug 11 2010 Dmitry V. Levin <ldv@altlinux.org> 0.2-alt1
+- Minor fixes and enhancements.
+
 * Tue Apr 10 2007 Dmitry V. Levin <ldv@altlinux.org> 0.1-alt2
 - Reduced macro abuse in specfile.
 
