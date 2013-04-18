@@ -1,6 +1,6 @@
 Name: vitmp
 Version: 1.0
-Release: alt4
+Release: alt4.qa1
 
 Summary: The temporary text files editor
 License: public domain
@@ -33,6 +33,9 @@ install -pD -m644 %_sourcedir/vitmp.1 %buildroot%_man1dir/vitmp.1
 %_man1dir/*
 
 %changelog
+* Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.0-alt4.qa1
+- NMU: rebuilt for debuginfo.
+
 * Thu Apr 12 2007 Dmitry V. Levin <ldv@altlinux.org> 1.0-alt4
 - Rebuilt.
 
