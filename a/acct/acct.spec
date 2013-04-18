@@ -1,33 +1,27 @@
 Name: acct
-Version: 6.4
-Release: alt0.6
+Version: 6.6.1
+Release: alt1
 
 Summary: Utilities for monitoring process activities.
-License: GPLv2+
+License: GPLv3+
 Group: Monitoring
 Url: http://www.gnu.org/software/acct/
-Packager: Dmitry V. Levin <ldv@altlinux.org>
 
-# ftp://ftp.gnu.org/gnu/acct/acct-%version.tar.bz2
-%define srcname acct-%version-pre1
-# http://www.physik3.uni-rostock.de/tim/kernel/utils/acct/%srcname.tar.gz
-Source: %srcname.tar
+# ftp://ftp.gnu.org/gnu/acct/acct-%version.tar.gz
+Source: acct-%version.tar
 
-Source1: acct.init
-Source2: acct.log
-Source3: dump-acct.8
-Source4: dump-utmp.8
+Source1: mklog.sh
+Source2: acct.init
+Source3: acct.service
+Source4: acct.log
+Source5: dump-acct.8
 
-Patch0: acct-6.4pre1-owl-doc.patch
-Patch1: acct-6.4pre1-owl-devpts.patch
-Patch2: acct-6.4pre1-owl-sa-help.patch
-Patch3: acct-6.4pre1-alt-texinfo.patch
-Patch4: acct-6.4pre1-alt-ctime.patch
-Patch5: acct-6.4pre1-alt-program_name.patch
-Patch6: acct-6.4pre1-alt-warnings.patch
+Patch1: acct-owl-doc.patch
+Patch2: acct-alt-program_name.patch
+Patch3: acct-rh-doc.patch
 
-Obsoletes: psacct
 Provides: psacct = %version-%release
+Obsoletes: psacct < %version-%release
 
 %description
 The acct package contains several utilities for monitoring process
@@ -38,29 +32,20 @@ The accton command turns process accounting on or off.  The sa command
 summarizes information about previously executed commands.
 
 %prep
-%setup -q -n %srcname
-rm *.info getopt*
-sed -i 's/\<getopt[1]\?\.[hc]\>//g' Makefile.am
-%patch0 -p1
+%setup
+rm *.info
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
-%patch4 -p1
-%patch5 -p1
-%patch6 -p1
-find -type f -name \*.orig -delete
 
 %build
-%autoreconf
-%configure
+%configure --enable-linux-multiformat
 %make_build
 
 %install
-mkdir -p %buildroot{/sbin,%prefix,/var/account}
-%makeinstall
-
-install -pm644 %_sourcedir/dump-{acct,utmp}.8 \
-	%buildroot%_man8dir/
+mkdir -p %buildroot{/sbin,/var/account}
+%makeinstall_std
+install -pm644 %_sourcedir/dump-acct.8 %buildroot%_man8dir/
 
 # These come from SysVinit.
 mv %buildroot%_bindir/last %buildroot%_bindir/last-acct
@@ -68,30 +53,29 @@ mv %buildroot%_man1dir/last.1 %buildroot%_man1dir/last-acct.1
 
 # Move accton to /sbin, leaving historical symlink
 mv %buildroot%_sbindir/accton %buildroot/sbin/accton
-ln -s ../../sbin/accton %buildroot%_sbindir/accton
+ln -r -s %buildroot/sbin/accton %buildroot%_sbindir/
 
 touch %buildroot/var/account/{p,usr,sav}acct
 install -pD -m755 %_sourcedir/acct.init \
 	%buildroot%_initdir/acct
+install -pD -m644 %_sourcedir/acct.service \
+	%buildroot%_unitdir/acct.service
 install -pD -m640 %_sourcedir/acct.log \
-	%buildroot%_sysconfdir/logrotate.d/%name
+	%buildroot%_sysconfdir/logrotate.d/acct
+install -pm700 %_sourcedir/mklog.sh \
+	%buildroot/sbin/acct-mklog
 
 %post
-umask 177
-for f in /var/account/{p,usr,sav}acct; do
-	test -e "$f" && continue ||:
-        touch "$f" &&
-		chown 0:0 "$f" &&
-		chmod 600 "$f"
-done
-%post_service %name
+/sbin/acct-mklog {p,usr,sav}acct
+%post_service acct
 
 %preun
-%preun_service %name
+%preun_service acct
 
 %files
-%config(noreplace) %_initdir/%name
-%config(noreplace) %_sysconfdir/logrotate.d/%name
+%config(noreplace) %_sysconfdir/logrotate.d/acct
+%_initdir/acct
+%_unitdir/acct.service
 /sbin/*
 %_bindir/*
 %_sbindir/*
@@ -102,6 +86,10 @@ done
 %doc AUTHORS README NEWS ChangeLog TODO
 
 %changelog
+* Thu Apr 18 2013 Dmitry V. Levin <ldv@altlinux.org> 6.6.1-alt1
+- Updated to 6.6.1.
+- Added systemd support (closes: #28012).
+
 * Mon Nov 09 2009 Dmitry V. Levin <ldv@altlinux.org> 6.4-alt0.6
 - Remove obsolete %%install_info/%%uninstall_info calls.
 - Remove obsolete explicit package requirements.
