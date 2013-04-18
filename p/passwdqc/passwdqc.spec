@@ -1,12 +1,11 @@
 Name: passwdqc
-Version: 1.2.2
+Version: 1.2.3
 Release: alt1
 
 Summary: A passphrase strength checking and policy enforcement toolset
 License: LGPLv2+
 Group: System/Base
 Url: http://www.openwall.com/passwdqc/
-Packager: Dmitry V. Levin <ldv@altlinux.org>
 
 # http://www.openwall.com/passwdqc/%name-%version.tar.gz
 Source: %name-%version-%release.tar
@@ -105,7 +104,7 @@ All features are optional and can be (re-)configured without
 rebuilding.
 
 %prep
-%setup -q -n %name-%version-%release
+%setup -n %name-%version-%release
 
 %build
 %add_optflags -W -Werror
@@ -114,7 +113,7 @@ rebuilding.
 	CFLAGS_bin='%optflags'
 
 %install
-%make_install install DESTDIR=%buildroot \
+%makeinstall_std \
 	SHARED_LIBDIR=/%_lib DEVEL_LIBDIR=%_libdir SECUREDIR=/%_lib/security
 install -pD -m755 passwdqc.control \
         %buildroot%_controldir/passwdqc-enforce
@@ -147,6 +146,9 @@ install -pD -m755 passwdqc.control \
 %_man1dir/*
 
 %changelog
+* Thu Apr 18 2013 Dmitry V. Levin <ldv@altlinux.org> 1.2.3-alt1
+- Merged with 1.2.3-owl1.
+
 * Fri Jul 16 2010 Dmitry V. Levin <ldv@altlinux.org> 1.2.2-alt1
 - Merged with 1.2.2-owl1.
 
