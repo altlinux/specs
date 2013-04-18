@@ -1,13 +1,12 @@
 Name: mailx
 Version: 8.1.2
-Release: alt6
+Release: alt7
 
 %def_without lockspool
 
 Summary: The /bin/mail program for sending e-mail messages
 License: BSD-style
 Group: Networking/Mail
-Packager: Dmitry V. Levin <ldv@altlinux.org>
 
 Source: mailx-%version.tar
 Patch: mailx-%version-%release.patch
@@ -23,18 +22,19 @@ The /bin/mail program provides the traditional interface to reading
 and sending e-mail messages.  It is often used in shell scripts.
 
 %prep
-%setup -q
+%setup
 %patch -p1
 
 %build
-%{?_with_lockspool:%add_optflags -DUSE_LOCKSPOOL}
+%{expand:%%add_optflags %(getconf LFS_CFLAGS)}
 %add_optflags -DMAXLOGNAME=32
+%{?_with_lockspool:%add_optflags -DUSE_LOCKSPOOL}
 %make_build
 make -C USD.doc USD.txt
 bzip2 -9 USD.doc/USD.txt
 
 %install
-%make_install install DESTDIR=%buildroot
+%makeinstall_std
 
 %files
 /bin/*
@@ -45,6 +45,9 @@ bzip2 -9 USD.doc/USD.txt
 %doc USD.doc/*.bz2
 
 %changelog
+* Thu Apr 18 2013 Dmitry V. Levin <ldv@altlinux.org> 8.1.2-alt7
+- Built with LFS support enabled.
+
 * Thu Oct 01 2009 Stanislav Ievlev <inger@altlinux.org> 8.1.2-alt6
 - change shell defaults (closes: #21791)
 
