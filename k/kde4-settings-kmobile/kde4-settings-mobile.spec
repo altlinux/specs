@@ -11,7 +11,7 @@
 %define bugfix 0
 Name: kde4-settings-%theme
 Version: %major.%minor.%bugfix
-Release: alt8
+Release: alt9
 
 Group: Graphical desktop/KDE
 Summary: %Theme - specific KDE settings
@@ -88,6 +88,9 @@ install -m 0755 profile.d/startkde %buildroot/%thisconfdir/
 %config %thisconfdir
 
 %changelog
+* Thu Apr 18 2013 Sergey V Turchin <zerg@altlinux.org> 0.3.0-alt9
+- fix setup keyboard on generic locales
+
 * Fri Mar 29 2013 Sergey V Turchin <zerg@altlinux.org> 0.3.0-alt8
 - setup maliit keyboard layout
 
