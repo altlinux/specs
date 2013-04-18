@@ -1,7 +1,7 @@
 %define origname libopenh323
 Name: libopenh323_1.19
 Version: 1.19.0.1
-Release: alt9
+Release: alt9.1
 
 Summary: OpenH323 Library
 
@@ -19,7 +19,7 @@ Obsoletes: openh323_1
 Conflicts: %origname
 
 # Automatically added by buildreq on Sun Feb 06 2005
-BuildRequires: gcc-c++ hostinfo libSDL_sound-devel libexpat-devel libldap-devel
+BuildRequires: gcc-c++ hostinfo libSDL_sound-devel libSDL-devel libexpat-devel libldap-devel
 BuildRequires: libsasl2-devel libssl-devel libstdc++-devel
 
 BuildPreReq: libpw1.11-devel libspeex-devel
@@ -92,6 +92,9 @@ rm -f %buildroot%_libdir/libopenh323.@SHAREDLIBEXT@ ||:
 %_datadir/openh323
 
 %changelog
+* Thu Apr 18 2013 Fr. Br. George <george@altlinux.ru> 1.19.0.1-alt9.1
+- Fix dependencies
+
 * Sat Jan 26 2013 Denis Smirnov <mithraen@altlinux.ru> 1.19.0.1-alt9
 - fix non-strict dependency
 - small fixes
