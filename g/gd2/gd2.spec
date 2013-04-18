@@ -1,6 +1,6 @@
 Name: gd2
 Version: 2.0.35
-Release: alt5
+Release: alt6
 
 Summary: A graphics library for drawing image files in various formats
 License: BSD-style
@@ -145,6 +145,9 @@ cp -a index.html COPYING %buildroot%docdir/
 %exclude %_bindir/gdlib-config
 
 %changelog
+* Thu Apr 18 2013 Vladimir Lettiev <crux@altlinux.ru> 2.0.35-alt6
+- Fixed gdImageFill stack overflow comparison (libGD #177)
+
 * Thu Sep 27 2012 Dmitry V. Levin <ldv@altlinux.org> 2.0.35-alt5
 - Check max colors while loading gd palette image (fixes CVE-2009-3546).
 
