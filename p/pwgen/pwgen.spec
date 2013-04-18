@@ -1,6 +1,6 @@
 Name: pwgen
 Version: 2.06
-Release: alt1
+Release: alt2
 
 Summary: Password generation utility
 License: GPLv2+
@@ -16,6 +16,7 @@ passwords.
 
 %prep
 %setup
+sed -i 's/^AC_PROG_CC/&\nAC_SYS_LARGEFILE/' configure.in
 
 %build
 %configure
@@ -30,6 +31,9 @@ passwords.
 %doc ChangeLog
 
 %changelog
+* Fri Apr 19 2013 Dmitry V. Levin <ldv@altlinux.org> 2.06-alt2
+- Built with LFS support enabled.
+
 * Wed Sep 29 2010 Dmitry V. Levin <ldv@altlinux.org> 2.06-alt1
 - Updated to 2.06.
 
