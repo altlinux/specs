@@ -1,6 +1,6 @@
 Name: html2text
 Version: 1.3.2a
-Release: alt2
+Release: alt2.qa1
 
 Summary: An HTML-to-text converter
 License: GPL
@@ -56,6 +56,9 @@ Konfigurationsdatei beeinflussbar.
 %doc CHANGES.bz2 CREDITS KNOWN_BUGS README RELEASE_NOTES TODO
 
 %changelog
+* Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.3.2a-alt2.qa1
+- NMU: rebuilt for debuginfo.
+
 * Wed Sep 07 2005 Dmitry V. Levin <ldv@altlinux.org> 1.3.2a-alt2
 - Additional convention enforcement on patch file names.
 
