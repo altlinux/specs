@@ -1,7 +1,7 @@
 Name: tcptraceroute
 Version: 1.5
 %define subver beta7
-Release: alt5
+Release: alt5.qa1
 %define srcname tcptraceroute-%version%subver
 
 Summary: A traceroute implementation using TCP packets
@@ -89,6 +89,9 @@ install -pD -m755 %_sourcedir/tcptraceroute.control \
 %_docdir/%name-%version
 
 %changelog
+* Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.5-alt5.qa1
+- NMU: rebuilt for debuginfo.
+
 * Thu Apr 12 2007 Dmitry V. Levin <ldv@altlinux.org> 1.5-alt5
 - Added summary to control script.
 
