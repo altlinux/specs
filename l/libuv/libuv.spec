@@ -1,7 +1,7 @@
 %define soversion 1
 Name: libuv
 Version: 0.10.4
-Release: alt1
+Release: alt1.1
 Summary: Evented I/O for NodeJS
 Group: Development/Tools
 License: MIT License
@@ -34,19 +34,22 @@ libuv header and build tools
 
 %install
 mkdir -p %buildroot{%_libdir,%_includedir}
-install libuv.so %buildroot%_libdir/libuv.so.%soversion
-ln -s libuv.so.%soversion %buildroot%_libdir/libuv.so
+install libuv.so %buildroot%_libdir/libuv.so
+#ln -s libuv.so %buildroot%_libdir/libuv.so
 cp -R include/* %buildroot%_includedir
 
 %files
-%_libdir/*.so.*
+%_libdir/*.so
 
 %files devel
-%_libdir/*.so
+#%_libdir/*.so
 %_includedir/*
 
 
 %changelog
+* Thu Apr 18 2013 Dmitriy Kulik <lnkvisitor@altlinux.org> 0.10.4-alt1.1
+- Build without soname
+
 * Thu Apr 18 2013 Dmitriy Kulik <lnkvisitor@altlinux.org> 0.10.4-alt1
 - 0.10.4
 
