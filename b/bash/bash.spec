@@ -2,7 +2,7 @@ Name: bash
 %define bash_version 3.2
 %define bash_patchlevel 51
 Version: %bash_version.%bash_patchlevel
-Release: alt1
+Release: alt1.qa1
 
 Summary: The GNU Bourne Again SHell (Bash)
 Group: Shells
@@ -291,6 +291,9 @@ EOF
 %_includedir/*
 
 %changelog
+* Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 3.2.51-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sun Mar 21 2010 Dmitry V. Levin <ldv@altlinux.org> 3.2.51-alt1
 - Updated to 3.2 patchlevel 51.
 
