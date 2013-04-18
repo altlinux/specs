@@ -1,13 +1,12 @@
 Name: time
 Version: 1.7
-Release: alt2
+Release: alt3
 Epoch: 1
 
 Summary: The GNU time program for measuring system resource usage
 License: GPLv2+
 Group: Monitoring
-Packager: Dmitry V. Levin <ldv@altlinux.org>
-
+Url: http://www.gnu.org/software/time/
 # ftp://ftp.gnu.org/gnu/time/time-%version.tar.gz
 Source: time-%version.tar
 Patch: time-%version-%release.patch
@@ -26,12 +25,11 @@ The GNU version can format the output in arbitrary ways by using a
 printf-style format string to include various resource measurements.
 
 %prep
-%setup -q
+%setup
 %patch -p1
 
 %build
 %autoreconf
-
 %configure
 %make_build
 
@@ -44,6 +42,10 @@ printf-style format string to include various resource measurements.
 %doc AUTHORS NEWS README
 
 %changelog
+* Thu Apr 18 2013 Dmitry V. Levin <ldv@altlinux.org> 1:1.7-alt3
+- Merged two fixes from Fedora (closes: #28749).
+- Built with LFS support enabled.
+
 * Sun May 17 2009 Dmitry V. Levin <ldv@altlinux.org> 1:1.7-alt2
 - Removed obsolete %%install_info/%%uninstall_info calls.
 
