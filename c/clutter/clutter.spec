@@ -12,7 +12,7 @@
 %def_disable wayland_compositor
 
 Name: clutter
-Version: 1.14.0
+Version: 1.14.2
 Release: alt1
 Summary: Clutter Core Library
 License: LGPLv2+
@@ -161,6 +161,9 @@ gtkdocize
 
 
 %changelog
+* Thu Apr 18 2013 Alexey Shabalin <shaba@altlinux.ru> 1.14.2-alt1
+- 1.14.2
+
 * Tue Mar 26 2013 Alexey Shabalin <shaba@altlinux.ru> 1.14.0-alt1
 - 1.14.0
 
