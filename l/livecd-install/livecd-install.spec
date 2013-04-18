@@ -1,5 +1,5 @@
 Name: livecd-install
-Version: 0.8.4
+Version: 0.8.5
 Release: alt1
 
 Summary: Permanently install Live system
@@ -57,6 +57,9 @@ install -m 0755 zdg-user-dirs-install.sh %buildroot%_x11sysconfdir/profile.d/
 %_x11sysconfdir/profile.d/*
 
 %changelog
+* Thu Apr 18 2013 Mikhail Efremov <sem@altlinux.org> 0.8.5-alt1
+- setup-plymouth: Disable plymouth if root on luks only.
+
 * Thu Mar 28 2013 Mikhail Efremov <sem@altlinux.org> 0.8.4-alt1
 - Fix firsttime flag-file path.
 
