@@ -4,8 +4,8 @@
 %define label digiKam
 Name: kde4-%rname
 %define lname lib%name
-Version: 3.0.0
-Release: alt0.1
+Version: 3.1.0
+Release: alt1
 
 Summary: digiKam is an advanced digital photo management application for linux
 License: %gpl2plus
@@ -20,15 +20,16 @@ BuildRequires(pre): rpm-build-licenses kde-common-devel
 BuildPreReq: libpng-devel
 
 # Automatically added by buildreq on Wed Sep 01 2010
-BuildRequires: doxygen gcc-c++ graphviz kde4graphics-devel kde4pimlibs-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXext-devel libXft-devel libXinerama-devel libXpm-devel libXrandr-devel libXt-devel libXtst-devel libXv-devel libXxf86vm-devel libgphoto2-devel libjasper-devel libjpeg-devel liblensfun-devel liblqr-devel libxkbfile-devel soprano libtiff-devel
+BuildRequires: doxygen gcc-c++ graphviz kde4graphics-devel kde4pimlibs-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXext-devel libXft-devel libXinerama-devel libXpm-devel libXrandr-devel libXt-devel libXtst-devel libXv-devel libXxf86vm-devel libgphoto2-devel libjasper-devel libjpeg-devel liblensfun-devel liblqr-devel libxkbfile-devel libtiff-devel
 BuildRequires: libpgf-devel libclapack-devel libusb-compat-devel liblcms2-devel
+BuildRequires: kde4libs-devel libkface-devel libkgeomap-devel boost-devel
+BuildRequires: soprano-backend-virtuoso soprano-backend-redland soprano kde4-nepomuk-core-devel
+BuildRequires: libopencv-devel libsqlite-devel
 
 %if_enabled marble
 BuildRequires: kde4edu-devel
 %endif
 
-# buildreq sucks
-BuildRequires: kde4libs-devel soprano-backend-virtuoso soprano-backend-redland libkface-devel libkgeomap-devel boost-devel
 
 Requires: libqt4-sql-sqlite kde4base-runtime libkipi4 libqt4-sql-mysql
 Requires: %lname = %version-%release
@@ -42,8 +43,7 @@ Patch1: build-without-mysql.patch
 Patch2: i18n.patch
 Patch3: digikam-boost-1.48.patch
 Patch4: digikam-old-libkipi.patch
-Patch5: digikam-arm-cast-to-qreal.patch
-                                                 
+
 %description
 DigiKam is an advanced digital photo management application for KDE.
 Photos can be collected into albums which can be sorted chronologically,
@@ -144,14 +144,30 @@ Marble support for %lname.
 %patch2 -p2
 #%%patch3 -p0
 #%%patch4 -p1
-%patch5 -p2
+
+# change double to qreal for casting on arm
+find -type f -name \*.cpp | \
+while read f ; do
+    sed -i 's|<double>|<qreal>|g' $f
+done
+find -type f -name \*.h | \
+while read f ; do
+    sed -i 's|<double>|<qreal>|g' $f
+done
 
 %build
-%K4build -DENABLE_INTERNALMYSQL=no
+%K4build \
+    -DENABLE_INTERNALMYSQL=OFF \
+    -DENABLE_LCMS2=ON
 
 %install
 %K4install
+
 rm -rf %buildroot%_man1dir
+
+rm -f %buildroot/%_K4i18n/*/*/kipiplugin*
+rm -f %buildroot/%_K4i18n/*/*/libkipi.*
+rm -f %buildroot/%_K4i18n/*/*/libkgeomap*
 %K4find_lang --with-kde %rname
 
 %files
@@ -195,6 +211,9 @@ rm -rf %buildroot%_man1dir
 %_K4link/*.so
 
 %changelog
+* Thu Apr 18 2013 Sergey V Turchin <zerg@altlinux.org> 3.1.0-alt1
+- 3.1.0 release
+
 * Thu Dec 13 2012 Sergey V Turchin <zerg@altlinux.org> 3.0.0-alt0.1
 - 3.0.0-beta3
 
