@@ -1,11 +1,10 @@
 Name: consolehelper
-Version: 0.3.0
+Version: 0.3.1
 Release: alt1
 
 Group: System/Configuration/Other
 Summary: A wrapper that helps console users run system programs
 License: GPLv2+
-Packager: Dmitry V. Levin <ldv@altlinux.org>
 
 Source: %name-%version.tar
 
@@ -69,6 +68,9 @@ popd
 %_man8dir/*
 
 %changelog
+* Thu Apr 18 2013 Dmitry V. Levin <ldv@altlinux.org> 0.3.1-alt1
+- Built with LFS support enabled.
+
 * Tue Jul 20 2010 Dmitry V. Levin <ldv@altlinux.org> 0.3.0-alt1
 - consolehelper.8: described /etc/security/console.apps/ (closes: #10181).
 - Changed error notification dialog to return back to
