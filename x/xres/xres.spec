@@ -1,6 +1,6 @@
 Name: xres
 Version: 1.3
-Release: alt1
+Release: alt1.qa1
 
 Summary: Tool for changing the X screen resolution
 License: GPL
@@ -31,6 +31,9 @@ xvfb-run -a %buildroot%_bindir/xres
 %_bindir/*
 
 %changelog
+* Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.3-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sun Apr 11 2010 Dmitry V. Levin <ldv@altlinux.org> 1.3-alt1
 - Fixed build with fresh xorg.
 - Updated build requirements.
