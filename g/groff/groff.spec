@@ -1,6 +1,6 @@
 Name: groff
 Version: 1.20.1
-Release: alt0.20091013.1
+Release: alt0.20091013.1.qa1
 
 Summary: A document formatting system
 License: GPL
@@ -309,6 +309,9 @@ fi
 %_docdir/%name-%version/[a-z]*
 
 %changelog
+* Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.20.1-alt0.20091013.1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Fri Nov 05 2010 Vladimir Lettiev <crux@altlinux.ru> 1.20.1-alt0.20091013.1
 - rebuilt with perl 5.12
 
