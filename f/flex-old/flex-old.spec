@@ -1,6 +1,6 @@
 Name: flex-old
 Version: 2.5.4a
-Release: alt2
+Release: alt3
 
 Summary: The old version of the fast lexical analyzer generator
 License: BSD
@@ -24,13 +24,15 @@ being developed.  You should normally choose flex, unless you have
 legacy lexer files that do not work with a modern flex.
 
 %prep
-%setup -q -n flex-2.5.4
+%setup -n flex-2.5.4
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
 
 %build
+%{expand:%%add_optflags %(getconf LFS_CFLAGS)}
+
 # Force regeneration of skel.c
 rm skel.c
 
@@ -49,6 +51,9 @@ ln -s libfl.a %buildroot%_libdir/libl.a
 ln -s flex.1 %buildroot%_man1dir/lex.1
 ln -s flex.1 %buildroot%_man1dir/flex++.1
 
+%check
+%make_build bigcheck
+
 %files
 %_bindir/*
 %_libdir/*.*a
@@ -58,6 +63,9 @@ ln -s flex.1 %buildroot%_man1dir/flex++.1
 %doc COPYING NEWS README MISC/testxxLexer.l
 
 %changelog
+* Thu Apr 18 2013 Dmitry V. Levin <ldv@altlinux.org> 2.5.4a-alt3
+- Built with LFS support enabled.
+
 * Tue Sep 08 2009 Dmitry V. Levin <ldv@altlinux.org> 2.5.4a-alt2
 - Removed obsolete %%install_info/%%uninstall_info calls.
 
