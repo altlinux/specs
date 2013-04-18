@@ -1,6 +1,6 @@
 Name: powermgmt-base
 Version: 1.22
-Release: alt1
+Release: alt1.qa1
 
 Summary: Common utils and configs for power management
 License: GPL
@@ -44,6 +44,9 @@ management that are common to APM and ACPI.
 %dir /var/run/apm
 
 %changelog
+* Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.22-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sat Jun 11 2005 Dmitry V. Levin <ldv@altlinux.org> 1.22-alt1
 - Updated to 1.21.
 - scripts.d/hwclock: do nothing if clock is in synced mode.
