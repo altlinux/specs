@@ -4,8 +4,8 @@
 #%%define branch_switch Mxx
 
 %define packagversion 2.4.3
-%define packagedate 20130318
-%define packagemoodleversion 2012120303.00
+%define packagedate 20130411
+%define packagemoodleversion 2012120303.05
 %define moodlebranch 2.4
 %define moodlepackagename %moodle_name%moodlebranch
 
@@ -178,8 +178,8 @@ Conflicts: %moodle_name-base >= 2.5
 #%description local-pgsql
 #%summary
 
-%define auth_pam_moodlerequires 2011112900
-%define auth_pam_packagemoodleversion 2011112900
+%define auth_pam_moodlerequires 2012112900
+%define auth_pam_packagemoodleversion 2012112900
 %define auth_pam_packagemoodlerelease 2.4.0
 %package auth-pam
 Version: %auth_pam_packagemoodlerelease.%auth_pam_packagemoodleversion.0.%packagedate
@@ -411,6 +411,10 @@ exit 0
 %moodle_authdir/pam/
 
 %changelog
+* Thu Apr 18 2013 Cronbuild Service <cronbuild@altlinux.org> 2.4.3.20130411-alt1
+- repocop cronbuild 20130418. At your service.
+- 2.4.3+ (Build: 20130411)
+
 * Wed Apr 17 2013 Aleksey Avdeev <solo@altlinux.ru> 2.4.3.20130318-alt1
 - Rename package to moodle2.4
 - 2.4.3 (Build: 20130318)
