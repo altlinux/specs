@@ -1,6 +1,6 @@
 Name: lua5-posix
 Version: 5.1.1
-Release: alt1
+Release: alt1.qa1
 Epoch: 1
 
 Summary: POSIX library for Lua
@@ -34,6 +34,9 @@ install -pD -m755 posix.so %buildroot%_libdir/lua5/posix.so
 %_libdir/lua5/posix.so
 
 %changelog
+* Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1:5.1.1-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Mon Sep 28 2009 Alexey Tourbin <at@altlinux.ru> 1:5.1.1-alt1
 - updated to 5.1.1
 - disabled mkstemp patch for now
