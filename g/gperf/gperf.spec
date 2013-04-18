@@ -1,12 +1,11 @@
 Name: gperf
 Version: 3.0.4
-Release: alt2
+Release: alt3
 
 Summary: A perfect hash function generator
-License: GPLv2+
+License: GPLv3+
 Group: Development/C
 Url: http://www.gnu.org/software/gperf/
-Packager: Dmitry V. Levin <ldv@altlinux.org>
 
 Source: ftp://ftp.gnu.org/gnu/gperf/gperf-%version.tar
 Patch: gperf-%version-%release.patch
@@ -20,11 +19,11 @@ that allows recognition of a key word in a set of words using exactly
 one probe into the data structure.
 
 %prep
-%setup -q
+%setup
 %patch -p1
 
 %build
-%add_optflags -fno-strict-aliasing
+%{expand:%%add_optflags %(getconf LFS_CFLAGS) -fno-strict-aliasing}
 %define docdir %_docdir/%name-%version
 %configure --docdir=%docdir
 %make_build
@@ -43,6 +42,9 @@ install -pm644 AUTHORS NEWS README %buildroot%docdir/
 %docdir
 
 %changelog
+* Fri Apr 19 2013 Dmitry V. Levin <ldv@altlinux.org> 3.0.4-alt3
+- Built with LFS support enabled.
+
 * Wed Sep 09 2009 Dmitry V. Levin <ldv@altlinux.org> 3.0.4-alt2
 - Removed obsolete %%install_info/%%uninstall_info calls.
 - Moved "make check" to %%check section.
