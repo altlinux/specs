@@ -1,7 +1,7 @@
 %define svn_rev 852
 Name: cdrkit
 Version: 1.1.11
-Release: alt1
+Release: alt1.qa1
 Epoch: 1
 
 Summary: A collection of command-line CD/DVD recording utilities
@@ -249,6 +249,9 @@ ln -snf wodim %_bindir/cdrecord
 %exclude %_man1dir/dirsplit.*
 
 %changelog
+* Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1:1.1.11-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sat Dec 04 2010 Dmitry V. Levin <ldv@altlinux.org> 1:1.1.11-alt1
 - Updated to cdrkit-1.1.11 release.
 
