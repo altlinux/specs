@@ -32,7 +32,7 @@
 
 Name: transcode
 Version: 1.1.5
-Release: alt5.2
+Release: alt6
 
 Summary: A linux video stream processing utility
 
@@ -220,6 +220,9 @@ find . -type d \( -name 'CVS' -o -name '.svn' -o -name '.git' -o -name '.hg' -o 
 %doc contrib/subrip/subtitleripper/{README*,ChangeLog}
 
 %changelog
+* Fri Apr 19 2013 Anton Farygin <rider@altlinux.ru> 1.1.5-alt6
+- Rebuild with new libImageMagick
+
 * Mon Oct 08 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.5-alt5.2
 - Rebuilt with libpng15
 

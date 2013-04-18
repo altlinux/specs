@@ -1,6 +1,6 @@
 Name: opendx
 Version: 4.4.4
-Release: alt4.1
+Release: alt5
 Summary: Open Visualization Data Explorer
 License: IBM Public License
 Group: Graphics
@@ -126,6 +126,9 @@ install -d %buildroot%_mandir/manl
 %_libexecdir/dx/html
 
 %changelog
+* Thu Apr 18 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.4.4-alt5
+- Rebuilt with new ImageMagick
+
 * Fri Jun 08 2012 Anton Farygin <rider@altlinux.ru> 4.4.4-alt4.1
 - Rebuild with new libImageMagick
 

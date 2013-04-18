@@ -10,10 +10,10 @@
 %define nxml_version 0.2.20041004
 %define cedet_version 1.0
 
-%define cedet_release alt7
+%define cedet_release alt8
 
 %define cvsdate 20090110
-%define rel_base alt6
+%define rel_base alt8
 
 # subpackages to build;
 %def_enable nox
@@ -1544,6 +1544,12 @@ install -p -m755 %SOURCE51 %buildroot%_bindir/check-shadows
 
 
 %changelog
+* Fri Apr 19 2013 Terechkov Evgenii <evg@altlinux.org> 24.3-alt8
+- Cedet release updated
+
+* Thu Apr 18 2013 Terechkov Evgenii <evg@altlinux.org> 24.3-alt7
+- Rebuild with new libImageMagick
+
 * Fri Mar 15 2013 Terechkov Evgenii <evg@altlinux.org> 24.3-alt6
 - 24.3
 

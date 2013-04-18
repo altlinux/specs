@@ -2,7 +2,7 @@
 
 Name: gnustep-IMImage
 Version: 2004
-Release: alt1
+Release: alt2
 Summary: IMImage image Inspector for GWorkspace.app to preview many types of graphics formats
 License: GPLv2+
 Group: Graphical desktop/GNUstep
@@ -33,7 +33,7 @@ can also be used to preview Type 1 and TrueType fonts.
 	debug=yes \
 	strip=no \
 	shared=yes \
-	AUXILIARY_CPPFLAGS='-O2 -I%_includedir/ImageMagick' \
+	AUXILIARY_CPPFLAGS='-O2 -I%_includedir/ImageMagick-6' \
 	GNUSTEP_MAKEFILES=%_datadir/GNUstep/Makefiles
  
 %install
@@ -46,6 +46,9 @@ can also be used to preview Type 1 and TrueType fonts.
 %_libdir/GNUstep
 
 %changelog
+* Sat Apr 20 2013 Anton Farygin <rider@altlinux.ru> 2004-alt2
+- Rebuilt with new ImageMagick
+
 * Tue Feb 26 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2004-alt1
 - Initial build for Sisyphus
 
