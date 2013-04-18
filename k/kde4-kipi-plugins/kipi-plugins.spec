@@ -11,7 +11,7 @@
 %define rname kipi-plugins
 Name: kde4-%rname
 %define beta %nil
-Version: 3.0.0
+Version: 3.1.0
 Release: alt1
 
 Group: Graphics
@@ -113,6 +113,9 @@ fi
 %install
 %K4install
 
+rm -f %buildroot/%_K4i18n/*/*/digikam*
+rm -f %buildroot/%_K4i18n/*/*/libkipi.*
+rm -f %buildroot/%_K4i18n/*/*/libkgeomap*
 %K4find_lang --with-kde %rname
 find %buildroot/%_K4i18n -type f -name kipiplugin\*.mo | sed "s|\.mo$||" | \
 while read f; do echo `basename "$f"`; done | sort -u | \
@@ -170,6 +173,9 @@ done
 %_K4libdir/libkipiplugins.so.%libsover.*
 
 %changelog
+* Thu Apr 18 2013 Sergey V Turchin <zerg@altlinux.org> 3.1.0-alt1
+- 3.1.0 release
+
 * Mon Feb 11 2013 Sergey V Turchin <zerg@altlinux.org> 3.0.0-alt1
 - 3.0.0 release
 
