@@ -1,6 +1,6 @@
 Name: mp3info
 Version: 0.8.5a
-Release: alt1
+Release: alt3
 
 Summary: Utility for MP3 information and tag modification
 License: GPL
@@ -21,8 +21,6 @@ Packager: Michael Shigorin <mike@altlinux.org>
 
 # Automatically added by buildreq on Fri May 15 2009
 BuildRequires: libgtk+2-devel libncurses-devel
-
-Summary(ru_RU.KOI8-R): Утилита для просмотра информации о MP3-файлах и изменения тегов
 
 %package -n g%name
 Summary: Utility for MP3 information and tag modification
@@ -59,10 +57,10 @@ sed -i 's/$//' *.c
 
 %build
 #def_enable Werror
-%make_build CFLAGS="%optflags" mp3info gmp3info
+%make_build CFLAGS="%optflags $(getconf LFS_CFLAGS)" mp3info gmp3info
 
 %install
-make install INSTALL="install -pD" DESTDIR="%buildroot"
+%makeinstall_std INSTALL="install -pD"
 install -pDm644 %_sourcedir/mp3info.desktop %buildroot%_desktopdir/%name.desktop
 install -pDm644 %_sourcedir/mp3info-16.xpm %buildroot%_miconsdir/%name.xpm
 install -pDm644 %_sourcedir/mp3info-32.xpm %buildroot%_niconsdir/%name.xpm
@@ -84,6 +82,9 @@ ln -s mp3info.1 "%buildroot%_man1dir/gmp3info"
 %doc README ChangeLog *.lsm
 
 %changelog
+* Fri Apr 19 2013 Dmitry V. Levin <ldv@altlinux.org> 0.8.5a-alt3
+- Built with LFS support enabled.
+
 * Fri May 15 2009 Michael Shigorin <mike@altlinux.org> 0.8.5a-alt1
 - 0.8.5a
   + potential buffer overflow fix
