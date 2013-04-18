@@ -3,7 +3,7 @@
 %define gnome3ver 3.90
 
 Name: altlinux-freedesktop-menu
-Version: 0.62
+Version: 0.63
 %if_without backport
 Release: alt1
 %else
@@ -56,20 +56,6 @@ Provides: %name-gnomish-menu
 
 %description shallow-menu
 freedesktop.org compliant altlinux menu with shallow layout
-
-%if_with gnome2
-%package gnomish-menu
-Summary: altlinux freedesktop menu with shallow layout (GNOME-based)
-Group: Graphical desktop/Other
-Requires(pre): %name-common
-Requires: %name-common > 0.39
-Provides: %name-provider
-Requires: gnome2-menus-resources
-
-%description gnomish-menu
-freedesktop.org compliant altlinux menu with shallow layout
-that use GNOME desktop directories and looks like GNOME menu.
-%endif
 
 %package xfce
 Summary: xfce freedesktop menu
@@ -230,7 +216,9 @@ ok=1
 for i in desktop-directories/*.directory; do
     j=`basename $i`
     if ! grep $j ignore.list >/dev/null && ! grep 'Name\[ru\]=' $i >/dev/null; then
+    	echo
         echo "$j is not translated - please, update po files"
+	echo
 	ok=0
     fi
 done
@@ -250,8 +238,6 @@ install -D -m644 layout/kde4-merged.menu %buildroot%_sysconfdir/kde4/xdg/menus/a
 
 install -m0644 altlinux-directories/*.directory %buildroot/%_datadir/desktop-directories/
 
-ln -s gnome3-applications.menu %buildroot%_sysconfdir/xdg/menus/gnome-applications.menu
-
 # alternatives
 mkdir -p %buildroot%_altdir
 cat <<EOF >>%buildroot%_altdir/%name-nested-menu
@@ -259,9 +245,6 @@ cat <<EOF >>%buildroot%_altdir/%name-nested-menu
 EOF
 cat <<EOF >>%buildroot%_altdir/%name-shallow-menu
 %_sysconfdir/xdg/menus/altlinux-applications.menu	%_sysconfdir/xdg/menus/altlinux-applications-shallow.menu	100
-EOF
-cat <<EOF >>%buildroot%_altdir/%name-gnomish-menu
-%_sysconfdir/xdg/menus/altlinux-applications.menu	%_sysconfdir/xdg/menus/altlinux-applications-shallow-gnomish.menu	80
 EOF
 
 %post lxde
@@ -285,11 +268,6 @@ touch /etc/xdg/menus/lxde-applications.menu
 %files shallow-menu
 %_altdir/%name-shallow-menu
 
-%if_with gnome2
-%files gnomish-menu
-%_altdir/%name-gnomish-menu
-%endif
-
 %files xfce
 #config (noreplace) is too dangerous for unexpirienced user
 %verify(not mtime) %config %_sysconfdir/xdg/menus/xfce-applications.menu
@@ -303,7 +281,6 @@ touch /etc/xdg/menus/lxde-applications.menu
 %files gnome3
 %verify(not mtime) %config %_sysconfdir/xdg/menus/gnome-applications.menu
 %dir %_sysconfdir/xdg/menus/gnome-applications-merged
-%verify(not mtime) %config %_sysconfdir/xdg/menus/gnome3-applications.menu
 %dir %_sysconfdir/xdg/menus/gnome3-applications-merged
 
 %files cinnamon
@@ -339,6 +316,11 @@ touch /etc/xdg/menus/lxde-applications.menu
 %_datadir/kde4/desktop-directories/altlinux-*.directory
 
 %changelog
+* Thu Apr 18 2013 Igor Vlasenko <viy@altlinux.ru> 0.63-alt1
+- support for new categories in 1.1-draft standard:
+  Adult,Feed,Maps,Humanities,Spirituality.
+  closes: 28739
+
 * Thu Apr 11 2013 Igor Vlasenko <viy@altlinux.ru> 0.62-alt1
 - added Conflicts/Obsoletes on gnome2 menu in gnome3 menu
 - removed gnome2 menu
