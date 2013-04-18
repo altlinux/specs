@@ -1,15 +1,14 @@
 Name: talk
 Version: 0.17
-Release: alt3
+Release: alt4
 Serial: 1
 
 Summary: Talk client for one-on-one Internet chatting
 License: BSD
 Group: Networking/Chat
-Summary(ru_RU.KOI8-R): Клиентская программа для частных разговоров
-Packager: Dmitry V. Levin <ldv@altlinux.org>
 
-Source: ftp://ftp.ibiblio.org/pub/Linux/system/network/chat/netkit-ntalk-%version.tar.bz2
+# ftp://ftp.ibiblio.org/pub/Linux/system/network/chat/netkit-ntalk-%version.tar.gz
+Source: netkit-ntalk-%version.tar
 Source1: ntalk.xinetd
 Patch1: ntalk-0.17-alt-build.patch
 Patch2: ntalk-0.17-alt-defaults.patch
@@ -25,7 +24,6 @@ BuildRequires: libncursesw-devel
 
 %package server
 Summary: talk server for the talk program
-Summary(ru_RU.KOI8-R): Сервер для частных разговоров
 Group: System/Servers
 PreReq: shadow-utils
 Obsoletes: ntalk
@@ -36,20 +34,11 @@ Internet talk protocol, which allows you to chat with other users
 on different systems.  Talk is a communication program which copies
 lines from one terminal to the terminal of another user.
 
-%description -l ru_RU.KOI8-R
-Этот пакет содержит клиентскую программу для общения через протокол
-talk, который позволяет вам общаться с другими пользователями на вашей
-или другой системе.  Talk - это коммуникационная программа, копирующая
-строки с терминала на терминал другого пользователя.
-
 %description server
 This is the talk server.
 
-%description -l ru_RU.KOI8-R server
-Этот пакет содержит сервер talk.
-
 %prep
-%setup -q -n netkit-ntalk-%version
+%setup -n netkit-ntalk-%version
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
@@ -57,11 +46,10 @@ This is the talk server.
 %patch5 -p1
 %patch6 -p1
 %patch7 -p1
-%__subst s/ncurses/ncursesw/g configure
+sed -i s/ncurses/ncursesw/g configure
 
 %build
-%add_optflags -D_GNU_SOURCE -Werror
-CFLAGS="%optflags" ./configure
+CFLAGS="%optflags -D_GNU_SOURCE $(getconf LFS_CFLAGS) -Werror" ./configure
 %make_build
 
 %install
@@ -87,6 +75,9 @@ chmod 711 %buildroot%_sbindir/*
 %doc README BUGS ChangeLog
 
 %changelog
+* Thu Apr 18 2013 Dmitry V. Levin <ldv@altlinux.org> 1:0.17-alt4
+- Built with LFS support enabled.
+
 * Sun Nov 12 2006 Dmitry V. Levin <ldv@altlinux.org> 1:0.17-alt3
 - Fixed build with -D_FORTIFY_SOURCE=2 -Werror.
 - Fixed a few fd leaks on error path.
