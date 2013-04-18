@@ -1,6 +1,6 @@
 
 Name: instead
-Version: 1.8.3
+Version: 1.9.0
 Release: alt1
 Group: Games/Adventure
 License: GPLv2
@@ -82,6 +82,9 @@ mkdir -p %buildroot%_localstatedir/%name/games
 %_desktopdir/%name.desktop
 
 %changelog
+* Thu Apr 18 2013 Fr. Br. George <george@altlinux.ru> 1.9.0-alt1
+- Autobuild version bump to 1.9.0
+
 * Thu Feb 14 2013 Fr. Br. George <george@altlinux.ru> 1.8.3-alt1
 - Autobuild version bump to 1.8.3
 
