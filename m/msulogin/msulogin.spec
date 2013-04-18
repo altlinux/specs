@@ -1,12 +1,11 @@
 Name: msulogin
-Version: 0.9.1.1
+Version: 1.0
 Release: alt1
 
 Summary: The single user mode login program (sulogin)
 License: GPLv2+
 Group: System/Base
 Url: http://www.openwall.com/msulogin/
-Packager: Dmitry V. Levin <ldv@altlinux.org>
 
 %def_with selinux
 
@@ -29,7 +28,7 @@ sulogin, this one supports having multiple root accounts on a system.
 make CFLAGS="-c %optflags" LDFLAGS= %{?_with_selinux:WITH_SELINUX=1}
 
 %install
-%make_install install DESTDIR=%buildroot MANDIR=%_mandir
+%makeinstall_std MANDIR=%_mandir
 
 %files
 %doc LICENSE
@@ -37,6 +36,9 @@ make CFLAGS="-c %optflags" LDFLAGS= %{?_with_selinux:WITH_SELINUX=1}
 %_mandir/man?/*
 
 %changelog
+* Thu Apr 18 2013 Dmitry V. Levin <ldv@altlinux.org> 1.0-alt1
+- Merged with 1.0-owl1.
+
 * Mon Aug 02 2010 Dmitry V. Levin <ldv@altlinux.org> 0.9.1.1-alt1
 - Implemented SELinux support (by Mikhail Efremov).
 
