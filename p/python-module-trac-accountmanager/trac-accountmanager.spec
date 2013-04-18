@@ -1,24 +1,15 @@
-%define tarname accountmanagerplugin
-Name: python-module-trac-accountmanager
-%define r_minor r9425
-Version: 0.12
-Release: alt1.%r_minor.1
-
 Summary: User account management plugin for Trac
-
-Group: Development/Python
-# FIXME: unknown?
-License: http://www.opensource.org/licenses/mit-license.php
+Name: python-module-trac-accountmanager
+Version: 0.5
+Release: alt1.r12976
 Url: http://trac-hacks.org/wiki/AccountManagerPlugin
-
-Packager: Vitaly Lipatov <lav@altlinux.ru>
-
-Source: %{tarname}_%version-%r_minor.zip
+Source: %name-%version.tar
+Packager: Valentin Rosavitskiy <valintinr@altlinux.org>
+License: BSD
+Group: Development/Python
+Epoch: 1
 
 BuildArch: noarch
-
-# manually removed: python-module-Pyrex python-module-Rabbyt python-module-lxml
-# Automatically added by buildreq on Sun Jan 06 2008
 BuildRequires: python-module-MySQLdb python-module-ruledispatch python-module-setuptools unzip
 
 %description
@@ -30,22 +21,23 @@ The AccountManager offers several features for managing user accounts:
  * administration of user accounts
 
 %prep
-%setup -q -n %tarname/trunk
+%setup -q
 
 %build
-%__python setup.py build
+%python_build
 
 %install
-%__python setup.py install --root %buildroot
-
-#Fix rights for template
-chmod -R a+r %buildroot%python_sitelibdir/acct_mgr/templates/*
+%python_build_install
 
 %files
-%doc README
-%python_sitelibdir/*
+%doc README README.hashes README.update COPYING
+%python_sitelibdir/acct_mgr/
+%python_sitelibdir/TracAccountManager-0.5dev-py2.7.egg-info/
 
 %changelog
+* Thu Apr 18 2013 Valentin Rosavitskiy <valintinr@altlinux.org> 1:0.5-alt1.r12976
+- New version
+
 * Wed Oct 26 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 0.12-alt1.r9425.1
 - Rebuild with Python-2.7
 
