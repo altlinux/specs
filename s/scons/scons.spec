@@ -1,5 +1,5 @@
 Name: scons
-Version: 2.1.0
+Version: 2.3.0
 Release: alt1
 
 Summary: an Open Source software construction tool
@@ -82,6 +82,9 @@ python setup.py install -O1 --skip-build \
 %_mandir/man?/*
 
 %changelog
+* Thu Apr 18 2013 Evgeny Sinelnikov <sin@altlinux.ru> 2.3.0-alt1
+- Update to 2.3.0
+
 * Sun Jan 29 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 2.1.0-alt1
 - 2.1.0
 
