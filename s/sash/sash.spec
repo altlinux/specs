@@ -1,6 +1,6 @@
 Name: sash
 Version: 3.4
-Release: alt2
+Release: alt2.qa1
 Epoch: 1
 
 Summary: A statically linked shell, including some built-in basic commands
@@ -42,6 +42,9 @@ fgrep -C1 Permission sash.h >copyright
 %doc copyright
 
 %changelog
+* Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1:3.4-alt2.qa1
+- NMU: rebuilt for debuginfo.
+
 * Wed Sep 24 2008 Dmitry V. Levin <ldv@altlinux.org> 1:3.4-alt2
 - Use ext2fs/ext2_fs.h instead of linux/ext2_fs.h for build.
 
