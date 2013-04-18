@@ -1,6 +1,6 @@
 Name: perl-JavaScript-V8
-Version: 0.065
-Release: alt1.030f7c7.1
+Version: 0.070
+Release: alt1
 
 Summary: JavaScript::V8 - Perl interface to the V8 JavaScript engine
 License: Perl
@@ -31,6 +31,10 @@ BuildRequires: perl-devel gcc-c++ perl-ExtUtils-XSpp libv8-devel
 %doc Changes README
 
 %changelog
+* Wed Apr 17 2013 Andrey Cherepanov <cas@altlinux.org> 0.070-alt1
+- New version 0.07
+- Replace deprecated V8 functions
+
 * Sun Jan 20 2013 Dmitriy Kulik <lnkvisitor@altlinux.org> 0.065-alt1.030f7c7.1
 - Rebuild with new version of v8
 
