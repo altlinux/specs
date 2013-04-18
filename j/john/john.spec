@@ -1,5 +1,5 @@
 Name: john
-Version: 1.7.6.1
+Version: 1.7.9.7
 Release: alt1
 %define charsets_version 20051216
 
@@ -7,13 +7,20 @@ Summary: John the Ripper password cracker
 License: GPL
 Group: System/Base
 Url: http://www.openwall.com/john/
-Packager: Dmitry V. Levin <ldv@altlinux.org>
 
 # ftp://ftp.openwall.com/pub/projects/john/john-%version.tar
 # git://git.altlinux.org/gears/j/john
 Source0: %name-%version-%release.tar
 # ftp://ftp.openwall.com/pub/projects/john/john-charsets-%charsets_version.tar.gz
 Source1: john-charsets-%charsets_version.tar
+
+%def_enable avx
+%def_enable xop
+%def_enable omp
+
+%if_enabled omp
+BuildRequires: libgomp-devel
+%endif
 
 Summary(ru_RU.UTF-8): Взломщик шифрованных паролей путём перебора
 
@@ -30,73 +37,126 @@ of other hash types are supported as well.
 %prep
 %setup -n %name-%version-%release -a1
 
-%ifarch x86_64
-%define cflags -c %optflags -Wall -DJOHN_SYSTEMWIDE=1
-%else
-%define cflags -c %optflags -finline-limit=2000 --param inline-unit-growth=2000 -Wall -DJOHN_SYSTEMWIDE=1
-%endif
-%define with_cpu_fallback 0
+%define cflags -c %optflags -DJOHN_SYSTEMWIDE=1 $(getconf LFS_CFLAGS)
+%define _make_bin %__make
+%define john_execdir /usr/libexec/john
 
 %build
 cd src
+
+make() {
+	%make_build "$@"
+	%{!?_without_check:%{!?_without_test:%__make check}}
+}
+
+CPU_FALLBACK=
+mv_john() {
+	mv ../run/john ../run/john-$1
+	%__make clean
+	CPU_FALLBACK="\\\"john-$1\\\""
+}
+
 %ifarch %ix86
-%define john_execdir /usr/libexec/john
-%define with_cpu_fallback 1
-%ifarch athlon athlon_xp i786 i886 i986
-make linux-x86-mmx CFLAGS='%cflags'
-%else
-make linux-x86-any CFLAGS='%cflags'
-%{!?_without_check:%{!?_without_test:%__make check}}
-mv ../run/john ../run/john-non-mmx
-make clean
-make linux-x86-mmx CFLAGS='%cflags -DCPU_FALLBACK=1'
-%endif #athlon athlon_xp i786 i886 i986
-%{!?_without_check:%{!?_without_test:%__make check}}
-mv ../run/john ../run/john-non-sse
-make clean
-make linux-x86-sse2 CFLAGS='%cflags -DCPU_FALLBACK=1'
+# non-OpenMP builds
+make linux-x86-any CFLAGS="%cflags"
+mv_john %_target_cpu
+make linux-x86-mmx CFLAGS="%cflags -DCPU_FALLBACK=1 -DCPU_FALLBACK_BINARY='$CPU_FALLBACK'"
+mv_john mmx
+make linux-x86-sse2 CFLAGS="%cflags -DCPU_FALLBACK=1 -DCPU_FALLBACK_BINARY='$CPU_FALLBACK'"
+%define john_last sse2
+%if_enabled avx
+mv_john sse2
+make linux-x86-avx CFLAGS="%cflags -DCPU_FALLBACK=1 -DCPU_FALLBACK_BINARY='$CPU_FALLBACK'"
+%define john_last avx
+%if_enabled xop
+mv_john avx
+make linux-x86-xop CFLAGS="%cflags -DCPU_FALLBACK=1 -DCPU_FALLBACK_BINARY='$CPU_FALLBACK'"
+%define john_last xop
+%endif #xop
+%endif #avx
+# OpenMP builds
+%if_enabled omp
+mv_john %john_last
+OMP_FALLBACK='\"john-%_target_cpu\"'
+make linux-x86-any CFLAGS="%cflags -fopenmp -DOMP_FALLBACK=1 -DOMP_FALLBACK_BINARY='$OMP_FALLBACK'" OMPFLAGS=-fopenmp
+mv_john omp-%_target_cpu
+eval CPU_FALLBACK="$CPU_FALLBACK"
+OMP_FALLBACK='"john-mmx"'
+make linux-x86-mmx CFLAGS="%cflags -fopenmp -mmmx" CFLAGS_MAIN="%cflags -fopenmp -DCPU_FALLBACK=1 -DCPU_FALLBACK_BINARY='$CPU_FALLBACK' -DOMP_FALLBACK=1 -DOMP_FALLBACK_BINARY='$OMP_FALLBACK'" OMPFLAGS='-fopenmp -mmmx'
+mv_john omp-mmx
+eval CPU_FALLBACK="$CPU_FALLBACK"
+OMP_FALLBACK='"john-sse2"'
+make linux-x86-sse2 CFLAGS="%cflags -fopenmp -msse2" CFLAGS_MAIN="%cflags -fopenmp -DCPU_FALLBACK=1 -DCPU_FALLBACK_BINARY='$CPU_FALLBACK' -DOMP_FALLBACK=1 -DOMP_FALLBACK_BINARY='$OMP_FALLBACK'" OMPFLAGS='-fopenmp -msse2'
+%if_enabled avx
+mv_john omp-sse2
+OMP_FALLBACK='\"john-avx\"'
+make linux-x86-avx CFLAGS="%cflags -fopenmp -DCPU_FALLBACK=1 -DCPU_FALLBACK_BINARY='$CPU_FALLBACK' -DOMP_FALLBACK=1 -DOMP_FALLBACK_BINARY='$OMP_FALLBACK'" OMPFLAGS=-fopenmp
+%if_enabled xop
+mv_john omp-avx
+OMP_FALLBACK='\"john-xop\"'
+make linux-x86-xop CFLAGS="%cflags -fopenmp -DCPU_FALLBACK=1 -DCPU_FALLBACK_BINARY='$CPU_FALLBACK' -DOMP_FALLBACK=1 -DOMP_FALLBACK_BINARY='$OMP_FALLBACK'" OMPFLAGS=-fopenmp
+%endif #xop
+%endif #avx
+%endif #omp
 %endif #%ix86
+
 %ifarch x86_64
-make linux-x86-64 CFLAGS='%cflags'
-%endif
-%ifarch alpha alphaev5 alphaev56 alphapca56 alphaev6 alphaev67
-make linux-alpha CFLAGS='%cflags'
-%endif
-%ifarch sparc sparcv9
-make linux-sparc CFLAGS='%cflags'
-%endif
-%ifarch ppc
-make linux-ppc32 CFLAGS='%cflags'
-%endif
-%{!?_without_check:%{!?_without_test:%__make check}}
+# non-OpenMP builds
+make linux-x86-64 CFLAGS="%cflags"
+%define john_last sse2
+%if_enabled avx
+mv_john sse2
+make linux-x86-64-avx CFLAGS="%cflags -DCPU_FALLBACK=1 -DCPU_FALLBACK_BINARY='$CPU_FALLBACK'"
+%define john_last avx
+%if_enabled xop
+mv_john avx
+make linux-x86-64-xop CFLAGS="%cflags -DCPU_FALLBACK=1 -DCPU_FALLBACK_BINARY='$CPU_FALLBACK'"
+%define john_last xop
+%endif #xop
+%endif #avx
+# OpenMP builds
+%if_enabled omp
+mv_john %john_last
+OMP_FALLBACK='\"john-sse2\"'
+make linux-x86-64 CFLAGS="%cflags -fopenmp -DOMP_FALLBACK=1 -DOMP_FALLBACK_BINARY='$OMP_FALLBACK'" OMPFLAGS=-fopenmp
+%if_enabled avx
+mv_john omp-sse2
+OMP_FALLBACK='\"john-avx\"'
+make linux-x86-64-avx CFLAGS="%cflags -fopenmp -DCPU_FALLBACK=1 -DCPU_FALLBACK_BINARY='$CPU_FALLBACK' -DOMP_FALLBACK=1 -DOMP_FALLBACK_BINARY='$OMP_FALLBACK'" OMPFLAGS=-fopenmp
+%if_enabled xop
+mv_john omp-avx
+OMP_FALLBACK='\"john-xop\"'
+make linux-x86-64-xop CFLAGS="%cflags -fopenmp -DCPU_FALLBACK=1 -DCPU_FALLBACK_BINARY='$CPU_FALLBACK' -DOMP_FALLBACK=1 -DOMP_FALLBACK_BINARY='$OMP_FALLBACK'" OMPFLAGS=-fopenmp
+%endif #xop
+%endif #avx
+%endif #omp
+%endif #x86_64
 
 %install
-mkdir -p %buildroot{%_bindir,%_datadir/john}
-install -m 700 run/john %buildroot%_bindir/
+mkdir -p %buildroot{%_bindir,%john_execdir,{/etc,%_datadir}/john}
+install -pm755 run/john{,-*} %buildroot%john_execdir/
+ln -r -s %buildroot%john_execdir/john %buildroot%_bindir/
 cp -a run/un* %buildroot%_bindir/
-%if %with_cpu_fallback
-mkdir -p %buildroot%john_execdir
-install -m 700 run/john-* %buildroot%john_execdir/
-%endif
-install -m 644 -p run/{john.conf,password.lst} \
+install -pm644 run/john.conf %buildroot/etc/john/
+install -pm644 run/password.lst \
 	john-charsets-%charsets_version/*.chr \
 	%buildroot%_datadir/john/
-install -m 644 -p run/mailer doc/
+ln -r -s %buildroot/etc/john/john.conf %buildroot%_datadir/john/
+install -pm644 run/{mailer,relbench} doc/
 
 %files
 %doc doc/*
-%attr(750,root,wheel) %_bindir/john
-%_bindir/un*
-%if %with_cpu_fallback
-%dir %john_execdir
-%attr(750,root,wheel) %john_execdir/*
-%endif
-%dir %_datadir/john
-%attr(640,root,wheel) %config(noreplace) %_datadir/john/john.conf
-%attr(644,root,root) %_datadir/john/password.lst
-%attr(644,root,root) %_datadir/john/*.chr
+%attr(750,root,wheel) %dir /etc/john/
+%attr(750,root,wheel) %dir %john_execdir/
+%config(noreplace) /etc/john/*
+%_bindir/*
+%john_execdir/*
+%_datadir/john/
 
 %changelog
+* Thu Apr 18 2013 Dmitry V. Levin <ldv@altlinux.org> 1.7.9.7-alt1
+- Synced with 1.7.9.7-owl1.
+
 * Fri Jul 16 2010 Dmitry V. Levin <ldv@altlinux.org> 1.7.6.1-alt1
 - Synced with 1.7.6.1-owl1.
 
