@@ -26,7 +26,7 @@
 %define bugfix 2
 Name: kde4network
 Version: %major.%minor.%bugfix
-Release: alt1
+Release: alt2
 
 Packager: Sergey V Turchin <zerg at altlinux dot org>
 
@@ -79,7 +79,7 @@ BuildRequires: libmediastreamer-devel libssl-devel
 BuildRequires: libmediastreamer-ilbc
 %endif
 BuildRequires: libsqlite3-devel libidn-devel boost-devel libopenslp-devel libjasper-devel
-BuildRequires: libqimageblitz-devel libxml2-devel libxslt-devel libnxcl-devel libmms-devel
+BuildRequires: libqimageblitz-devel libxml2-devel libxslt-devel libmms-devel
 BuildRequires: libjpeg-devel libavahi-qt4-devel bzlib-devel libldap-devel
 BuildRequires: libotr-devel libmeanwhile-devel libgadu-devel libv4l-devel libmsn-devel
 BuildRequires: rpm-macros-browser-plugins shared-desktop-ontologies
@@ -474,6 +474,9 @@ chmod 0755 %buildroot/etc/control.d/facilities/kppp-kde4
 %_K4dbus_interfaces/*
 
 %changelog
+* Thu Apr 18 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.2-alt2
+- fix build requires
+
 * Tue Apr 09 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.2-alt1
 - new version
 
