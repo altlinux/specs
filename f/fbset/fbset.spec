@@ -1,14 +1,12 @@
 Name: fbset
 Version: 2.1
-Release: alt1
+Release: alt2
 Serial: 1
 
 Summary: Framebuffer device maintenance utilities
 License: GPL
 Group: System/Kernel and hardware
 Url: http://users.telenet.be/geertu/Linux/fbdev/
-Packager: Dmitry V. Levin <ldv@altlinux.org>
-
 # http://users.telenet.be/geertu/Linux/fbdev/fbset-%version.tar.gz
 Source: fbset-%version.tar
 
@@ -22,14 +20,14 @@ frame buffer device.  The frame buffer device provides a simple and
 unique interface to access different kinds of graphic displays.
 
 %prep
-%setup -q
+%setup
 %patch -p1
 
 %build
-make CC=gcc CFLAGS="%optflags"
+make CC=gcc CFLAGS="%optflags $(getconf LFS_CFLAGS)"
 
 %install
-make install DESTDIR=%buildroot
+%makeinstall_std
 mkdir -p %buildroot%_sbindir
 ln -s ../bin/{fbset,modeline2fb} %buildroot%_sbindir/
 
@@ -41,6 +39,9 @@ ln -s ../bin/{fbset,modeline2fb} %buildroot%_sbindir/
 %doc FAQ etc/*
 
 %changelog
+* Thu Apr 18 2013 Dmitry V. Levin <ldv@altlinux.org> 1:2.1-alt2
+- Built with LFS support enabled.
+
 * Wed Jan 24 2007 Dmitry V. Levin <ldv@altlinux.org> 1:2.1-alt1
 - Imported fixes and enhancements from Debian fbset_2.1-19.diff
 - Packaged con2fbmap, moved utils to %_bindir.
