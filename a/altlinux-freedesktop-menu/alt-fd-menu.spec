@@ -3,7 +3,7 @@
 %define gnome3ver 3.90
 
 Name: altlinux-freedesktop-menu
-Version: 0.63
+Version: 0.64
 %if_without backport
 Release: alt1
 %else
@@ -229,7 +229,8 @@ rm ignore.list
 %makeinstall_std
 install -Dm755 altlinux-freedesktop-menu-post.sh %buildroot%_sbindir/altlinux-freedesktop-menu-post
 install -Dm755 altlinux-freedesktop-menu.filetrigger %buildroot%_rpmlibdir/altlinux-freedesktop-menu.filetrigger
-#find_lang %name
+
+ln -s gnome3-applications.menu %buildroot%_sysconfdir/xdg/menus/gnome-applications.menu
 
 mkdir -p %buildroot%_sysconfdir/xdg/menus/{,enlightenment-,gnome-,gnome3-,cinnamon-,kde3-,lxde-,mate-,xfce-}applications-merged
 mkdir -p %buildroot%_sysconfdir/xdg/menus/{,mate-,cinnamon-}settings-merged
@@ -246,6 +247,8 @@ EOF
 cat <<EOF >>%buildroot%_altdir/%name-shallow-menu
 %_sysconfdir/xdg/menus/altlinux-applications.menu	%_sysconfdir/xdg/menus/altlinux-applications-shallow.menu	100
 EOF
+
+#find_lang %name
 
 %post lxde
 # hack around lxde
@@ -279,7 +282,8 @@ touch /etc/xdg/menus/lxde-applications.menu
 %dir %_sysconfdir/xdg/menus/lxde-applications-merged
 
 %files gnome3
-%verify(not mtime) %config %_sysconfdir/xdg/menus/gnome-applications.menu
+%verify(not mtime) %config %_sysconfdir/xdg/menus/gnome3-applications.menu
+%_sysconfdir/xdg/menus/gnome-applications.menu
 %dir %_sysconfdir/xdg/menus/gnome-applications-merged
 %dir %_sysconfdir/xdg/menus/gnome3-applications-merged
 
@@ -316,6 +320,9 @@ touch /etc/xdg/menus/lxde-applications.menu
 %_datadir/kde4/desktop-directories/altlinux-*.directory
 
 %changelog
+* Thu Apr 18 2013 Igor Vlasenko <viy@altlinux.ru> 0.64-alt1
+- restored gnome3 symlinks
+
 * Thu Apr 18 2013 Igor Vlasenko <viy@altlinux.ru> 0.63-alt1
 - support for new categories in 1.1-draft standard:
   Adult,Feed,Maps,Humanities,Spirituality.
