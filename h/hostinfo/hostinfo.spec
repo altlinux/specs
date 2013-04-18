@@ -1,12 +1,11 @@
 Name: hostinfo
 Version: 2.2
-Release: alt5
+Release: alt6
 
 Summary: Utility for looking up hostnames and IP addresses
 License: BSD-style
 Group: System/Configuration/Networking
 Url: http://www.jmknoble.net/software/hostinfo
-Packager: Dmitry V. Levin <ldv@altlinux.org>
 
 # due to resolve(1).
 Conflicts: net-tools < 0:1.60-alt10
@@ -26,24 +25,19 @@ thus, it uses a combination of the local system's "host database"
 (/etc/hosts and/or NIS/NIS+) and the DNS resolver.
 
 %prep
-%setup -q
+%setup
 %patch -p1
 install -pm644 %_sourcedir/{resolve.c,resolve.1.inc} .
 
 %build
-make OPTFLAGS="%optflags"
+make OPTFLAGS='%optflags -D_GNU_SOURCE'
 help2man -N -s1 -i hostinfo.1.inc ./hostinfo >hostinfo.1
 gcc %optflags resolve.c -o resolve
 help2man -N -s1 -i resolve.1.inc ./resolve >resolve.1
 
-
 %install
-%make_install install \
-	prefix="%prefix" \
-	DESTDIR="%buildroot" \
-	#
+%makeinstall_std prefix="%prefix"
 install -pD -m644 hostinfo.1 %buildroot%_man1dir/hostinfo.1
-
 install -pm755 resolve %buildroot%_bindir/
 install -pm644 resolve.1 %buildroot%_man1dir/
 
@@ -53,6 +47,9 @@ install -pm644 resolve.1 %buildroot%_man1dir/
 %doc ChangeLog
 
 %changelog
+* Fri Apr 19 2013 Dmitry V. Levin <ldv@altlinux.org> 2.2-alt6
+- Fixed compilation warnings.
+
 * Mon Oct 27 2008 Dmitry V. Levin <ldv@altlinux.org> 2.2-alt5
 - resolve: Fixed build with fresh glibc headers.
 
