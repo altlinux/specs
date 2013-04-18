@@ -1,6 +1,6 @@
 # TODO: see spec from PLD with separate packages
 Name: global
-Version: 6.2.2
+Version: 6.2.8
 Release: alt1
 
 Summary: Source code tag system
@@ -17,7 +17,7 @@ Source: http://tamacom.com/global/global-%version.tar
 
 # Automatically added by buildreq on Tue Apr 17 2012
 # optimized out: emacs-base emacs-cedet-speedbar emacs-common emacs-ecb emacs23-cedet fontconfig libX11-locales libgdk-pixbuf libtinfo-devel libwayland-client libwayland-server
-BuildRequires: ctags emacs-X11 emacs-ecb-el emacs-git emacs-jdee glibc-devel-static libltdl7-devel libncurses-devel
+BuildRequires: ctags glibc-devel libltdl7-devel libncurses-devel
 
 %description
 GNU GLOBAL is a source code tag system that works the same way across
@@ -75,6 +75,10 @@ rm -f %buildroot%_libdir/gtags/*.la
 %_man1dir/gozilla*
 
 %changelog
+* Thu Apr 18 2013 Vitaly Lipatov <lav@altlinux.ru> 6.2.8-alt1
+- new version 6.2.8 (with rpmrb script)
+- remove emacs build requires
+
 * Tue Apr 17 2012 Vitaly Lipatov <lav@altlinux.ru> 6.2.2-alt1
 - new version 6.2.2 (with rpmrb script)
 - update buildreqs
