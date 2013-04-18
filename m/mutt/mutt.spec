@@ -1,23 +1,22 @@
 Name: mutt
 Version: 1.4.2.3
-Release: alt4
-Serial: 3
+Release: alt6
+Epoch: 3
 
 %def_without dotlock
 %define docdir %_docdir/mutt-%version
 
 Summary: A text mode mail and news user agent
-License: GPL
+License: GPLv2+
 Group: Networking/Mail
 Url: http://www.mutt.org/
-Packager: Dmitry V. Levin <ldv@altlinux.org>
 
 # ftp://ftp.mutt.org/pub/mutt/mutt-%version.tar.gz
 Source: mutt-%version.tar
 Source1: http://jblosser.firinn.org/pub/config/mutt/mutt-16.xpm
 Source2: http://jblosser.firinn.org/pub/config/mutt/mutt-32.xpm
 Source3: http://www.math.fu-berlin.de/~guckes/mutt/mutt-48.xpm
-Source4: mutt.menu
+Source4: mutt.desktop
 Source5: http://www.fefe.de/muttfaq/faq.html
 Source6: mutt-FAQ.ru.html
 Source7: http://solidlinux.com/~justin/mutt/mutt-gnupg-howto.txt
@@ -64,7 +63,7 @@ customization including arbitrary message headers, key remapping, colors,
 and more.
 
 %prep
-%setup -q
+%setup
 install -pm755 %SOURCE10 .
 
 %patch11 -p1
@@ -107,7 +106,7 @@ export mutt_cv_groupwrite=no
 # Correct manual name (#2710).
 %__subst -p 's,/manual\.txt\\n,/manual.txt.bz2\\n,g' Muttrc.head.in
 
-%add_optflags -D_GNU_SOURCE -fno-strict-aliasing
+%{expand:%%add_optflags %(getconf LFS_CFLAGS) -D_GNU_SOURCE -fno-strict-aliasing}
 make -C m4 -f Makefile.am.in
 autoreconf -fisv -I m4
 %configure \
@@ -135,9 +134,7 @@ make -C doc clean-real
 install -pD -m644 %SOURCE1 %buildroot%_miconsdir/mutt.xpm
 install -pD -m644 %SOURCE2 %buildroot%_niconsdir/mutt.xpm
 install -pD -m644 %SOURCE3 %buildroot%_liconsdir/mutt.xpm
-
-# Menu.
-install -pD -m644 %SOURCE4 %buildroot%_menudir/mutt
+install -pD -m644 %SOURCE4 %buildroot%_desktopdir/%name.desktop
 
 # More docs.
 install -p -m644 %SOURCE5 %SOURCE6 %SOURCE7 %SOURCE8 *.nntp \
@@ -166,13 +163,19 @@ rm %buildroot%_sysconfdir/mime.types
 %_bindir/muttbug
 %_bindir/pgp*
 %_mandir/man?/*
-%_menudir/mutt
+%_desktopdir/%name.desktop
 %_miconsdir/*.xpm
 %_niconsdir/*.xpm
 %_liconsdir/*.xpm
 %docdir
 
 %changelog
+* Fri Apr 19 2013 Dmitry V. Levin <ldv@altlinux.org> 3:1.4.2.3-alt6
+- Build with LFS support enabled.
+
+* Wed May 25 2011 Dmitry V. Levin <ldv@altlinux.org> 3:1.4.2.3-alt5
+- Converted menu to desktop (by Igor Vlasenko).
+
 * Fri Oct 01 2010 Dmitry V. Levin <ldv@altlinux.org> 3:1.4.2.3-alt4
 - Added hooks to handle xzipped folders.
 - Rebuilt with libssl.so.10.
