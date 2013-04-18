@@ -1,7 +1,7 @@
 Summary: Generator Tools for Coding SOAP/XML Web Services in C and C++
 Name: gsoap
-Version: 2.7.15
-Release: alt1.1.qa1
+Version: 2.7.17
+Release: alt1
 License: GPLv2+
 Group: Development/Tools
 URL: http://gsoap2.sourceforge.net
@@ -174,6 +174,7 @@ make check
 %_datadir/gsoap/import/WS-Header.h
 %_datadir/gsoap/import/wsp.h
 %_datadir/gsoap/import/wsrp.h
+%_datadir/gsoap/import/wsse11.h
 %_datadir/gsoap/import/wsse2.h
 %_datadir/gsoap/import/wsse.h
 %_datadir/gsoap/import/wsu.h
@@ -196,7 +197,9 @@ make check
 %_datadir/gsoap/WS/WS-Discovery.wsdl
 %_datadir/gsoap/WS/WS-Enumeration.wsdl
 %_datadir/gsoap/WS/WS-Policy.xsd
+%_datadir/gsoap/WS/WS-Policy12.xsd
 %_datadir/gsoap/WS/WS-Routing.xsd
+%_datadir/gsoap/WS/WS-SecurityPolicy.xsd
 %_datadir/gsoap/WS/WS-typemap.dat
 %_datadir/gsoap/WS/discovery.xsd
 %_datadir/gsoap/WS/ds.xsd
@@ -206,6 +209,8 @@ make check
 %_datadir/gsoap/WS/wsu.xsd
 %dir %_datadir/gsoap/custom
 %_datadir/gsoap/custom/README.txt
+%_datadir/gsoap/custom/duration.c
+%_datadir/gsoap/custom/duration.h
 %_datadir/gsoap/custom/long_double.c
 %_datadir/gsoap/custom/long_double.h
 %_datadir/gsoap/custom/struct_timeval.c
@@ -253,6 +258,8 @@ make check
 %_datadir/gsoap/plugin/threads.h
 %_datadir/gsoap/plugin/wsaapi.c
 %_datadir/gsoap/plugin/wsaapi.h
+%_datadir/gsoap/plugin/wsrmapi.c
+%_datadir/gsoap/plugin/wsrmapi.h
 %_datadir/gsoap/plugin/wsse2api.c
 %_datadir/gsoap/plugin/wsse2api.h
 %_datadir/gsoap/plugin/wsseapi.c
@@ -279,6 +286,11 @@ make check
 
 
 %changelog
+* Thu Apr 18 2013 Evgeny Sinelnikov <sin@altlinux.ru> 2.7.17-alt1
+- Update to last stable release with 2.7.x branch
+- Fix SOAP_NEW with parenthesis for gcc compatibility
+- Fix GSOAPSSL linking flags
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.7.15-alt1.1.qa1
 - NMU: rebuilt for debuginfo.
 
