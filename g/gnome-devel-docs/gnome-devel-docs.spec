@@ -2,7 +2,7 @@
 
 Name: gnome-devel-docs
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: General GNOME Developper Documentation
 License: %fdl
@@ -19,11 +19,10 @@ Provides: gnome-users-guide
 Obsoletes: gnome2-user-docs
 Provides: gnome2-user-docs
 
-PreReq: librarian
-
-BuildPreReq: rpm-build-gnome rpm-build-licenses rpm-build-gir
+BuildPreReq: rpm-build-gnome rpm-build-licenses
 BuildPreReq: yelp-tools
 BuildRequires: intltool xml-utils xsltproc
+#BuildPreReq: rpm-build-gir
 
 %description
 This package contains documents which are targeted for GNOME developers.
@@ -61,6 +60,9 @@ This package is a part of %name and provides demos for GNOME developpers
 %_datadir/help/*/gnome-devel-demos/
 
 %changelog
+* Thu Apr 18 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.0-alt2
+- removed excessive dependencies on all typelibs
+
 * Tue Mar 26 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.0-alt1
 - 3.8.0
 
