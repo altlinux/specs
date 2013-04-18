@@ -1,6 +1,6 @@
 Name: hashalot
 Version: 0.3
-Release: alt1
+Release: alt1.qa1
 
 Summary: Binary hash generator
 License: GPL
@@ -35,6 +35,9 @@ autoreconf -fisv
 %_man8dir/*
 
 %changelog
+* Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.3-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Sun Apr 08 2007 Dmitry V. Levin <ldv@altlinux.org> 0.3-alt1
 - Updated to 0.3.
 - Added -q option.
