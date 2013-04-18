@@ -1,27 +1,27 @@
+%def_enable static
 %def_disable cross
-%define ccomp gcc
+%def_without selinux
+%def_without libgcc
 
 %define Alias TinyCC
 %define alias tinycc
 %define Name TCC
 Name: tcc
 %define lname lib%name
-Version: 0.9.25
-Release: alt4
+Version: 0.9.26
+Release: alt1
 Summary: A small but hyper fast C compiler
 Group: Development/C
-License: %lgpl21plus
+License: LGPLv2.1+
 URL: http://bellard.org/%name
 Source: http://download.savannah.nongnu.org/releases/tinycc//%name-%version.tar
 Patch: %name-%version-%release.patch
 Provides: %alias = %version-%release
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-BuildRequires(pre): rpm-build-licenses
-%if %ccomp == tcc
+%if "%__cc" == tcc
 BuildRequires: tcc >= 0.9.23-alt3
 %endif
-BuildPreReq: perl-podlators
+BuildPreReq: perl-podlators /usr/bin/texi2html
 
 %description
 %Alias (aka %Name) is a small but hyper fast C compiler. Unlike other C
@@ -87,32 +87,42 @@ This package contains documentation for %Name.
 
 
 %prep
-%setup
+%setup -q
 %patch -p1
-sed -i -e 's|/usr/local/bin/|%_bindir/|g' %name-doc.* examples/ex1.c
+sed -i 's|/usr/local/bin/|%_bindir/|g' README %name-doc.* examples/ex[14].c
+sed -i '/^TCCFLAGS/s/^.*$/& -lm/' tests/tests2/Makefile
 
 
 %build
-%define _optlevel 3
-%configure \
-    %{subst_enable cross} \
-    %{?ccomp:--cc=%ccomp} \
-    --docdir=%_docdir/%name-%version
-
-sed -i 's|\(\$(INSTALL)\) -s|\1|' Makefile
+./configure \
+	--prefix=%_prefix \
+	--libdir=%_libdir \
+	%{?__cc:--cc=%__cc} \
+	--extra-cflags="%optflags" \
+	--docdir=%_docdir/%name-%version \
+	%{?_disable_static:--disable-static} \
+	%{?_enable_cross:--enable-cross} \
+	%{?_with_selinux:--with-selinux} \
+	%{?_with_libgcc:--with-libgcc} \
+	--disable-rpath
 %make_build
-bzip2 -9fk Changelog
 
 
 %install
-%make_install DESTDIR=%buildroot install
-install -m 0644 Changelog.* README TODO %buildroot%_docdir/%name-%version/
+%makeinstall_std
+install -m 0644 README TODO %buildroot%_docdir/%name-%version/
+gzip -9c Changelog > %buildroot%_docdir/%name-%version/Changelog.gz
+
+
+%check
+make test
 
 
 %files
 %_bindir/*
-%_man1dir/*
 %_libdir/%name
+%_man1dir/*
+%_infodir/*
 
 
 %files -n %lname-devel
@@ -129,6 +139,16 @@ install -m 0644 Changelog.* README TODO %buildroot%_docdir/%name-%version/
 
 
 %changelog
+* Thu Apr 18 2013 Led <led@altlinux.ru> 0.9.26-alt1
+- 0.9.26
+- Makefile:
+  + don't strip binaries when install
+  + dont' link with libm
+- updated BuildRequires
+- cleaned up spec
+- build with default %%_optlevel
+- added %%check section
+
 * Wed Mar 23 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.25-alt4
 - Really rebuilt for debuginfo
 
