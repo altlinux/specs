@@ -1,6 +1,6 @@
 Name: x11-ssh-askpass
 Version: 1.2.4.1
-Release: alt4
+Release: alt4.qa1
 Serial: 1
 
 Summary: An X11-based passphrase dialog for use with OpenSSH
@@ -75,6 +75,9 @@ EOF
 %doc README TODO ChangeLog SshAskpass*.ad
 
 %changelog
+* Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1:1.2.4.1-alt4.qa1
+- NMU: rebuilt for debuginfo.
+
 * Fri Dec 26 2008 Dmitry V. Levin <ldv@altlinux.org> 1:1.2.4.1-alt4
 - Switched to alternatives-0.4.
 - Updated build dependencies.
