@@ -22,7 +22,7 @@ BuildRequires: /usr/bin/awk /usr/bin/gawk /usr/bin/mkfontdir /usr/bin/perl unzip
 
 Name:           fonts-bitmap-japanese
 Version:        0.20080710
-Release:        alt2_12
+Release:        alt2_13
 License:        Public Domain and BSD and mplus
 Group:          System/Fonts/True type
 BuildArch:      noarch
@@ -378,6 +378,9 @@ fi
 %{cataloguedir}/*
 
 %changelog
+* Fri Apr 19 2013 Igor Vlasenko <viy@altlinux.ru> 0.20080710-alt2_13
+- fc update
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.20080710-alt2_12
 - update to new release by fcimport
 
