@@ -1,6 +1,6 @@
 Name: xfdiff
 Version: 4.5.0
-Release: alt4.2
+Release: alt4.2.qa1
 
 Summary: Patch Manager and Difference Viewer
 Group: Text tools
@@ -52,6 +52,9 @@ chrpath -d %buildroot%_bindir/xfdiff4
 %_pixmapsdir/xfdiff-icon.png
 
 %changelog
+* Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 4.5.0-alt4.2.qa1
+- NMU: rebuilt for updated dependencies.
+
 * Tue Feb 07 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.5.0-alt4.2
 - Removed bad RPATH
 
