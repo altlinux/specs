@@ -1,11 +1,11 @@
 %define ver_major 3.8
 %def_enable glade
 %def_disable vala
-%def_disable gtk_doc
+%def_enable gtk_doc
 
 Name: anjuta
-Version: %ver_major.0
-Release: alt1.1
+Version: %ver_major.1
+Release: alt1
 Summary: GNOME IDE for C and C++
 Group: Development/GNOME and GTK+
 License: GPLv2+
@@ -98,8 +98,8 @@ This plugin lets you run DevHelp from inside Anjuta.
 %define anjuta_pixmapsdir %_pixmapsdir/%name
 
 %add_findprov_lib_path %anjuta_libdir
-%add_findreq_skiplist %anjuta_datadir/project/python/src/*.py
-%add_findreq_skiplist %anjuta_datadir/project/pygtk/src/*.py
+%add_findreq_skiplist %anjuta_datadir/templates/python/src/*.py
+%add_findreq_skiplist %anjuta_datadir/templates/pygtk/src/*.py
 
 %prep
 %setup -q
@@ -172,7 +172,6 @@ NOCONFIGURE=1 ./autogen.sh
 %exclude %anjuta_datadir/ui/*devhelp*.ui
 
 %anjuta_datadir/anjuta_project.template
-%anjuta_datadir/project
 
 %schemasdir/org.gnome.anjuta*gschema.xml
 %exclude %schemasdir/org.gnome.anjuta.cvs.gschema.xml
@@ -221,6 +220,10 @@ NOCONFIGURE=1 ./autogen.sh
 %exclude %anjuta_pixmapsdir/*devhelp*
 
 %changelog
+* Fri Apr 19 2013 Alexey Shabalin <shaba@altlinux.ru> 3.8.1-alt1
+- 3.8.1
+- enabled building gtk-doc files
+
 * Sat Mar 30 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.0-alt1.1
 - disabled building gtk-doc files (broken after libxml2 update)
 
