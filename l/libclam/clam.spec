@@ -1,7 +1,7 @@
 Summary: CLAM - C++ Library for Audio and Music
 Name: libclam
 Version: 1.3.0
-Release: alt1.4
+Release: alt1.4.qa1
 License: GPL
 Url: http://clam.iua.upf.edu
 Group: System/Libraries
@@ -114,6 +114,9 @@ mv %buildroot%_prefix/libX/* %buildroot%_libdir
 %doc doxygen/*
 
 %changelog
+* Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.3.0-alt1.4.qa1
+- NMU: rebuilt for updated dependencies.
+
 * Thu Dec 06 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.0-alt1.4
 - Fixed build with glibc 2.16
 
