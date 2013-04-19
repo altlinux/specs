@@ -1,6 +1,6 @@
 Name: lincity-ng
 Version: 2.0
-Release: alt1.1.qa1
+Release: alt1.1.qa2
 
 Summary: LinCity-NG is a city simulation game. It is a polished and improved version of the classic LinCity game.
 Summary(ru_RU.UTF-8): LinCity-NG - это игра-симулятор города. Она представляет собой улучшенную версию классической игры LinCity.
@@ -88,6 +88,9 @@ mv %buildroot/%_gamesdatadir/pixmaps		%buildroot/%_datadir/
 %dir %_docdir/lincity-ng-%version 
 
 %changelog
+* Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.0-alt1.1.qa2
+- NMU: rebuilt for updated dependencies.
+
 * Tue May 24 2011 Repocop Q. A. Robot <repocop@altlinux.org> 2.0-alt1.1.qa1
 - NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
 - applied repocop fixes:
