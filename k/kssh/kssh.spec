@@ -1,6 +1,6 @@
 Name: kssh
 Version: 0.7
-Release: alt9.1
+Release: alt9.1.qa1
 
 Summary: SSH frontend for KDE with many configurable options
 License: GPL
@@ -51,6 +51,9 @@ echo 'Categories=Application;Network;' >> %buildroot/%_K3xdg_apps//%name.desktop
 %doc README AUTHORS
 
 %changelog
+* Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.7-alt9.1.qa1
+- NMU: rebuilt for updated dependencies.
+
 * Sat Feb 11 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7-alt9.1
 - Removed bad RPATH
 
