@@ -1,7 +1,7 @@
 Packager: Repocop Q. A. Robot <repocop@altlinux.org>
 Name: slsnif
 Version: 0.4.4
-Release: alt1.1
+Release: alt1.1.qa1
 
 Summary: %name is a serial line sniffer
 License: GPL
@@ -39,6 +39,9 @@ make -f gcc.mak DESTDIR=%buildroot install
 %dir %_docdir/slsnif-%version 
 
 %changelog
+* Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.4.4-alt1.1.qa1
+- NMU: rebuilt for updated dependencies.
+
 * Mon Nov 02 2009 Igor Vlasenko <viy@altlinux.ru> 0.4.4-alt1.1
 - NMU (by repocop): the following fixes applied:
   * docdir-is-not-owned for slsnif
