@@ -1,6 +1,6 @@
 Name: evrouter
 Version: 0.4
-Release: alt1
+Release: alt1.qa1
 Summary: An input layer event router for Linux
 License: GPLv2
 Group: System/Configuration/Hardware
@@ -32,5 +32,8 @@ commands.
 %_man1dir/*
 
 %changelog
+* Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.4-alt1.qa1
+- NMU: rebuilt for updated dependencies.
+
 * Wed Aug 24 2011 Egor Glukhov <kaman@altlinux.org> 0.4-alt1
 - Initial build for Sisyphus
