@@ -1,6 +1,6 @@
 Name: libXp
 Version: 1.0.0
-Release: alt5
+Release: alt5.qa1
 Summary: X Print Library
 License: MIT/X11
 Group: System/Libraries
@@ -46,6 +46,9 @@ develop programs which make use of %name.
 %_man3dir/*
 
 %changelog
+* Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.0.0-alt5.qa1
+- NMU: rebuilt for updated dependencies.
+
 * Tue Feb 15 2011 Alexey Tourbin <at@altlinux.ru> 1.0.0-alt5
 - rebuilt for debuginfo
 
