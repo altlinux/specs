@@ -4,7 +4,7 @@
 
 Name: uwsgi
 Version: 0.9.6.5
-Release: alt1.2
+Release: alt1.2.qa1
 
 Summary: fast (pure C), self-healing, developer-friendly WSGI server
 License: GPLv2
@@ -63,6 +63,9 @@ install -pDm0644 altlinux/%name.logrotate %buildroot%_sysconfdir/logrotate.d/%na
 %doc ChangeLog README contrib django
 
 %changelog
+* Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.9.6.5-alt1.2.qa1
+- NMU: rebuilt for updated dependencies.
+
 * Wed Jun 20 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.6.5-alt1.2
 - Fixed build
 
