@@ -1,6 +1,6 @@
 Name: qmpdclient
 Version: 1.1.3
-Release: alt2.qa2
+Release: alt2.qa3
 
 Summary: Qt4-based mpd client
 License: %gpl2plus
@@ -65,6 +65,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %doc AUTHORS Changelog INSTALL README THANKSTO
 
 %changelog
+* Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.1.3-alt2.qa3
+- NMU: rebuilt for updated dependencies.
+
 * Mon Jul 16 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.3-alt2.qa2
 - Fixed build
 
