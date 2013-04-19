@@ -2,7 +2,7 @@
 
 Name: fuse-obexfs
 Version: 0.11
-Release: alt0.rc3.qa1
+Release: alt0.rc3.qa2
 
 Summary: FUSE based filesystem using ObexFTP
 Group: System/Kernel and hardware
@@ -40,6 +40,9 @@ FUSE callbacks.
 %_bindir/obexautofs
 
 %changelog
+* Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.11-alt0.rc3.qa2
+- NMU: rebuilt for updated dependencies.
+
 * Tue May 17 2011 Repocop Q. A. Robot <repocop@altlinux.org> 0.11-alt0.rc3.qa1
 - NMU (by repocop): the following fixes applied:
   * specfile-macros-get_dep-is-deprecated for fuse-obexfs
