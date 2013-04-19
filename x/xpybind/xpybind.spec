@@ -1,6 +1,6 @@
 Name: xpybind
 Version: 0.8.0
-Release: alt2.1
+Release: alt2.1.qa1
 
 Summary: bind X11 Window System key sequences to Python functions
 License: GPL
@@ -48,6 +48,9 @@ subst s!python2\.3!python%__python_version! src/Makefile src/xpybind.c
 
 
 %changelog
+* Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.8.0-alt2.1.qa1
+- NMU: rebuilt for updated dependencies.
+
 * Sat Oct 22 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 0.8.0-alt2.1
 - Rebuild with Python-2.7
 
