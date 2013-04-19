@@ -43,7 +43,7 @@
 
 Name: italc2
 Version: 2.0.1
-Release: %branch_release alt8.1
+Release: %branch_release alt9
 
 Summary: Didactical software for teachers etc
 Summary(de_DE.UTF-8): Didaktische Software fuer Lehrer usw
@@ -328,6 +328,9 @@ mv %buildroot%_datadir/italc/JavaViewer %buildroot%docdir/
 %icons16x16dir/imc.png
 
 %changelog
+* Fri Apr 19 2013 Aleksey Avdeev <solo@altlinux.ru> 2.0.1-alt9
+- Version 2.0.1 (commit f6a5dbd2199adaabf1f2f66f493d8df01e3de237)
+
 * Thu Oct 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.1-alt8.1
 - Rebuilt with libpng15
 
