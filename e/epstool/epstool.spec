@@ -1,6 +1,6 @@
 Name: epstool
 Version: 3.08
-Release: alt5
+Release: alt5.qa1
 
 Summary: Working with EPS bounding boxes and preview images
 License: GPLv2+
@@ -47,6 +47,9 @@ fix bounding boxes and convert to bitmaps. Features:
 %_man1dir/*
 
 %changelog
+* Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 3.08-alt5.qa1
+- NMU: rebuilt for updated dependencies.
+
 * Fri Dec 12 2008 Dmitry V. Levin <ldv@altlinux.org> 3.08-alt5
 - Fixed build with new toolchain.
 
