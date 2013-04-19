@@ -1,7 +1,7 @@
 %define _name gupnp-dlna
 
 Name: libgupnp-dlna
-Version: 0.10.0
+Version: 0.10.1
 Release: alt1
 Summary: A collection of helpers for building UPnP AV applications
 
@@ -100,6 +100,9 @@ NOCONFIGURE=1 ./autogen.sh
 %_datadir/gtk-doc/html/*
 
 %changelog
+* Fri Apr 19 2013 Alexey Shabalin <shaba@altlinux.ru> 0.10.1-alt1
+- 0.10.1
+
 * Fri Mar 29 2013 Alexey Shabalin <shaba@altlinux.ru> 0.10.0-alt1
 - 0.10.0
 
