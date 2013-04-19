@@ -1,7 +1,7 @@
 #  08 April 2008: the project is stopped
 Name: libqwtplot3d
 Version: 0.3.0
-Release: alt1.svn20090915.3
+Release: alt1.svn20090915.3.qa1
 
 Summary: 3D plotting widget extension to the Qt GUI
 
@@ -62,6 +62,9 @@ done
 %_libdir/libqwtplot3d.so
 
 %changelog
+* Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.3.0-alt1.svn20090915.3.qa1
+- NMU: rebuilt for updated dependencies.
+
 * Sun Mar 27 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.0-alt1.svn20090915.3
 - BuildRequires: replaced libmesa-devel by libGL-devel and libGLU-devel
 
