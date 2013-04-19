@@ -1,6 +1,6 @@
 Name: snownews
 Version: 1.5.10
-Release: alt3.1
+Release: alt3.1.qa1
 
 Summary: Text mode RSS newsreader
 License: GPL2
@@ -53,6 +53,9 @@ install -m 644 %SOURCE1 %buildroot%_desktopdir/
 %doc --no-dereference COPYING
 
 %changelog
+* Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.5.10-alt3.1.qa1
+- NMU: rebuilt for updated dependencies.
+
 * Mon Jul 16 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.5.10-alt3.1
 - Fixed build
 
