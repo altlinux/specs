@@ -1,6 +1,6 @@
 Name: procmail
 Version: 3.22
-Release: alt8
+Release: alt8.qa1
 
 Summary: The procmail mail processing program
 License: GPLv2+ or Artistic
@@ -76,6 +76,9 @@ install -pm644 %_sourcedir/mailstat.1 %buildroot%_man1dir/
 %doc Artistic FAQ FEATURES HISTORY.bz2 KNOWN_BUGS README README.Maildir examples
 
 %changelog
+* Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 3.22-alt8.qa1
+- NMU: rebuilt for debuginfo.
+
 * Tue May 19 2009 Dmitry V. Levin <ldv@altlinux.org> 3.22-alt8
 - Fixed build with fresh toolchain.
 
