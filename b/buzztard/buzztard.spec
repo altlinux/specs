@@ -15,7 +15,7 @@ License: GPLv2+
 Group: Sound
 Summary: A free replacement of closed source software Buzz
 Version: 0.6.0
-Release: %prerel.svn20100715
+Release: %prerel.svn20100715.qa1
 Url: http://www.buzztard.org
 Packager: Egor Glukhov <kaman@altlinux.org>
 
@@ -475,6 +475,9 @@ popd
 %_xdgmimedir/audio/x-bm?.xml
 
 %changelog
+* Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.6.0-alt4.svn20100715.qa1
+- NMU: rebuilt for updated dependencies.
+
 * Sat Aug 20 2011 Egor Glukhov <kaman@altlinux.org> 0.6.0-alt4.svn20100715
 - Rebuilt with new fluidsynth
 
