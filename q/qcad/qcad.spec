@@ -2,7 +2,7 @@ Name: qcad
 Summary: a professional CAD system
 Summary(ru_RU.UTF-8): Профессиональная CAD система
 Version: 2.0.5.0
-Release: alt6.qa2
+Release: alt6.qa3
 Url: http://www.ribbonsoft.com/qcad.html
 License: GPL
 Group: Graphics
@@ -91,6 +91,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_iconsdir/hicolor/*/apps/%name.png
 
 %changelog
+* Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.0.5.0-alt6.qa3
+- NMU: rebuilt for updated dependencies.
+
 * Sat May 21 2011 Repocop Q. A. Robot <repocop@altlinux.org> 2.0.5.0-alt6.qa2
 - NMU: fix desktop permissions
 
