@@ -5,7 +5,7 @@ Group: Networking/Other
 Requires: portmap
 Conflicts: nfs-server
 Version: 2.2beta51
-Release: alt1
+Release: alt1.qa1
 Summary: Userspace NFS server daemons
 URL: ftp://linux.mathematik.tu-darmstadt.de/pub/linux/people/okir
 Source: %sname-2.2beta47.tar.bz2
@@ -85,5 +85,8 @@ rm -f $RPM_BUILD_ROOT/usr/share/man/man8/showmount*
 /etc/rc.d/init.d/*
 
 %changelog
+* Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.2beta51-alt1.qa1
+- NMU: rebuilt for updated dependencies.
+
 * Tue Jan 13 2004 Anton Farygin <rider@altlinux.ru> 2.2beta51-alt1
 - first build for Sisyphus
