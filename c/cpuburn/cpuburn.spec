@@ -1,6 +1,6 @@
 Name: cpuburn
 Version: 1.4
-Release: alt5
+Release: alt5.qa1
 
 Summary: CPU testing utilities
 License: GPL
@@ -39,6 +39,9 @@ done
 %_bindir/*
 
 %changelog
+* Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.4-alt5.qa1
+- NMU: rebuilt for debuginfo.
+
 * Tue Jan 23 2007 Dmitry V. Levin <ldv@altlinux.org> 1.4-alt5
 - Mark utilities as not requiring executable stack.
 - Merged asm fix from Debian cpuburn package.
