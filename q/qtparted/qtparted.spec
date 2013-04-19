@@ -22,7 +22,7 @@ Packager: Repocop Q. A. Robot <repocop@altlinux.org>
 %define Name QtParted
 Name: qtparted
 Version: 0.5.0
-Release: alt1
+Release: alt1.qa1
 Group: System/Configuration/Hardware
 Summary: Flexible GUI partitioning tool
 Summary(ru_RU.CP1251): Графический инструмент для работы с разделами жесткого диска
@@ -127,6 +127,9 @@ install -p -m644 doc/%name.1 %buildroot%_man1dir
 
 
 %changelog
+* Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.5.0-alt1.qa1
+- NMU: rebuilt for updated dependencies.
+
 * Sat Apr 16 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.0-alt1
 - Version 0.5.0
 
