@@ -1,6 +1,6 @@
 Name: gnome-libs
 Version: 1.4.2
-Release: alt11.3
+Release: alt11.3.qa1
 
 Summary: Main GNOME libraries
 License: LGPL
@@ -243,6 +243,9 @@ cp %{SOURCE1} $RPM_BUILD_ROOT%_bindir
 %endif	# enabled static
 
 %changelog
+* Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.4.2-alt11.3.qa1
+- NMU: rebuilt for updated dependencies.
+
 * Sun Sep 30 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4.2-alt11.3
 - Fixed using of png_get_valid
 
