@@ -1,6 +1,6 @@
 Name: bbrun
 Version: 1.4
-Release: alt3.3
+Release: alt3.3.qa1
 
 Summary: A simple run window with dropdown history list
 License: GPL
@@ -67,6 +67,9 @@ EOF
 %_miconsdir/%name.xpm
 
 %changelog
+* Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.4-alt3.3.qa1
+- NMU: rebuilt for updated dependencies.
+
 * Tue Jul 17 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4-alt3.3
 - Fixed build
 
