@@ -1,6 +1,6 @@
 Name:		libclastfm
 Version:	0.5
-Release:	alt1.git.968af0ab
+Release:	alt1.git.968af0ab.qa1
 Summary:	Unofficial C-API for the Last.fm web service
 
 Group:		System/Libraries
@@ -46,6 +46,9 @@ This package contains the development files for %{name}.
 %_pkgconfigdir/libclastfm.pc
 
 %changelog
+* Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.5-alt1.git.968af0ab.qa1
+- NMU: rebuilt for updated dependencies.
+
 * Fri Apr 20 2012 Egor Glukhov <kaman@altlinux.org> 0.5-alt1.git.968af0ab
 - Initial build for Sisyphus
 
