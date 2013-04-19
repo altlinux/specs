@@ -7,7 +7,7 @@
 
 Name: teeworlds
 Version: 0.6.1
-Release: alt1
+Release: alt1.qa1
 
 Summary: Cute little buggers with guns
 License: distributable
@@ -178,6 +178,9 @@ install -pDm644 altlinux/server-ictf.cfg %buildroot%_sysconfdir/%origname/server
 %_datadir/teeworlds
 
 %changelog
+* Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.6.1-alt1.qa1
+- NMU: rebuilt for updated dependencies.
+
 * Tue Aug 09 2011 Vladimir V. Kamarzin <vvk@altlinux.org> 0.6.1-alt1
 - 0.6.1.
 - No instagib.
