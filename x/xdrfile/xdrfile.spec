@@ -1,6 +1,6 @@
 Name: xdrfile
 Version: 1.1.1
-Release: alt2
+Release: alt2.qa1
 Summary: Reading and writing trr and xtc files
 License: LGPL v3
 Group: Development/Tools
@@ -74,6 +74,9 @@ chrpath -d %buildroot%_bindir/trr2xtc
 %_libdir/*.a
 
 %changelog
+* Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.1.1-alt2.qa1
+- NMU: rebuilt for updated dependencies.
+
 * Wed Dec 14 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.1-alt2
 - Removed RPATH
 
