@@ -1,6 +1,6 @@
 Name: powermanga
 Version: 0.90
-Release: alt3.1
+Release: alt3.1.qa1
 Summary: Shoot them up with 3d graphics
 
 License: %gpl3plus
@@ -71,6 +71,9 @@ install -Dpm 644 %SOURCE202 %buildroot/%_liconsdir/%name.png
 %_datadir/games/%name
 
 %changelog
+* Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.90-alt3.1.qa1
+- NMU: rebuilt for updated dependencies.
+
 * Mon Jul 16 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.90-alt3.1
 - Fixed build
 
