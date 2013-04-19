@@ -1,7 +1,7 @@
 Name: supertux
 Summary: SuperMario like game
 Version: 0.1.3
-Release: alt3
+Release: alt3.qa1
 License: GPL
 Group: Games/Arcade
 Url: http://super-tux.sf.net/
@@ -50,6 +50,9 @@ install -m644 %SOURCE13 -D %buildroot%_liconsdir/%name.png
 %_pixmapsdir/%name.png
 
 %changelog
+* Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.1.3-alt3.qa1
+- NMU: rebuilt for updated dependencies.
+
 * Sun Apr 10 2011 Lenar Shakirov <snejok@altlinux.ru> 0.1.3-alt3
 - Fixed build: BuildReqs: libmesa-devel -> libGL-devel
 - Spec cleaned: thanks to rpmcs script!
