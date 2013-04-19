@@ -1,6 +1,6 @@
 Name: bash-builtin-lockf
 Version: 0.3.1
-Release: alt1
+Release: alt1.qa1
 
 Summary: lockf bash builtin
 License: GPLv2+
@@ -29,6 +29,9 @@ install -pDm644 lockf %buildroot/usr/lib/bash/lockf
 /usr/lib/bash/*
 
 %changelog
+* Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.3.1-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Wed Jan 28 2009 Dmitry V. Levin <ldv@altlinux.org> 0.3.1-alt1
 - Fixed typo in the help output.
 
