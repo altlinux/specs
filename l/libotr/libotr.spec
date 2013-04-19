@@ -2,7 +2,7 @@
 %define libname libotr2
 Name: libotr
 Version: 3.2.0
-Release: alt3.1
+Release: alt3.1.qa1
 
 Group: Networking/Instant messaging
 Summary: Off-The-Record Messaging library and toolkit
@@ -109,6 +109,9 @@ sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' libtool
 %_man1dir/*
 
 %changelog
+* Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 3.2.0-alt3.1.qa1
+- NMU: rebuilt for updated dependencies.
+
 * Sat Feb 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.2.0-alt3.1
 - Removed bad RPATH
 
