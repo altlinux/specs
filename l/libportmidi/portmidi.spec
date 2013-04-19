@@ -1,6 +1,6 @@
 Name: libportmidi
 Version: 217
-Release: alt2
+Release: alt2.qa1
 Summary: Platform Independent Library for MIDI I/O
 License: MIT
 Group: Sound
@@ -53,6 +53,9 @@ cmake . \
 %_includedir/*
 
 %changelog
+* Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 217-alt2.qa1
+- NMU: rebuilt for updated dependencies.
+
 * Tue Feb 08 2011 Egor Glukhov <kaman@altlinux.org> 217-alt2
 - Fixed specfile
 
