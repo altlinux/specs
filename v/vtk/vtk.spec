@@ -4,7 +4,7 @@
 %define ver 5.10
 Name: vtk
 Version: %ver.1
-Release: alt2
+Release: alt3
 Summary: The Visualization Toolkit, an Object-Oriented Approach to 3D Graphics
 License: BSD-like
 Group: Development/Tools
@@ -20,12 +20,12 @@ Requires: lib%name = %version-%release
 
 BuildRequires(pre): rpm-build-tcl rpm-build-python /proc
 BuildPreReq: gcc-c++ tcl-devel tk-devel cmake libGLU-devel libXt-devel
-BuildPreReq: %mpiimpl-devel libmysqlclient-devel postgresql-devel
-BuildPreReq: boost-devel boost-mpi-devel boost-filesystem-devel
-BuildPreReq: boost-graph-parallel-devel libmpe2-devel libsz2-devel
-BuildPreReq: libfreetype-devel libnetcdf-mpi-devel libjpeg-devel
+BuildPreReq: libmysqlclient-devel postgresql-devel
+BuildPreReq: boost-devel boost-filesystem-devel
+BuildPreReq: boost-graph-parallel-devel
+BuildPreReq: libfreetype-devel libnetcdf-devel libjpeg-devel
 BuildPreReq: libxml2-devel libexpat-devel libftgl220-devel libpng-devel
-BuildPreReq: libtiff-devel zlib-devel libhdf5-mpi-devel libsqlite3-devel
+BuildPreReq: libtiff-devel zlib-devel libhdf5-devel libsqlite3-devel
 BuildPreReq: doxygen graphviz qt4-devel libgsl-devel ctest
 BuildPreReq: libbfd-devel libnumpy-devel chrpath libopenmotif-devel
 BuildPreReq: %name-data >= %version libavcodec53
@@ -33,7 +33,7 @@ BuildPreReq: python-devel libXxf86misc-devel libimlxx-devel libstlport-devel
 BuildPreReq: libdc1394-devel ffmpeg2theora libtheora-devel
 BuildPreReq: libgsm-devel libvorbis-devel libtag-devel
 BuildPreReq: libslurm-devel slurm-utils gnuplot
-BuildPreReq: libcgns-mpi-devel inkscape texlive-latex-base
+BuildPreReq: libcgns-seq-devel inkscape texlive-latex-base
 BuildPreReq: texlive-latex-extra texlive-science
 BuildPreReq: qt4-common qt4-dbus qt4-designer python-module-PyQt4-devel
 BuildPreReq: phonon-devel libqt4-clucene python-module-sip-devel
@@ -79,7 +79,7 @@ Group: Development/C++
 Requires: %name = %version-%release
 Requires: %name-tcl = %version-%release
 Requires: lib%name = %version-%release
-Requires: %mpiimpl-devel libstdc++4.5-devel libqt4-devel
+Requires: libstdc++4.5-devel libqt4-devel
 Requires: libfreetype-devel
 
 %description -n lib%name-devel
@@ -216,7 +216,7 @@ Summary: The Visualization Toolkit (VTK) Python bindings
 Group: Development/Python
 Requires: lib%name-python = %version-%release
 Requires: python-module-pygtkglext_git
-%add_python_req_skip gtk.GDK
+%add_python_req_skip gtk.GDK vtkParallelPython
 %py_requires gtk_git
 
 %description -n python-module-%name
@@ -278,15 +278,14 @@ sed -i 's|@PYVER@|%_python_version|g' \
 LIB64=64
 %endif
 sed -i "s|@64@|$LIB64|g" CMakeCache.txt CMakeLists.txt \
-	Utilities/vtkhdf5/src/H5make_libsettings.c
+	Utilities/vtkhdf5/src/H5make_libsettings.c \
+	Utilities/vtkhdf5/c++/src/h5c++.in
 
 %build
-mpi-selector --set %mpiimpl
-source %mpidir/bin/mpivars.sh
 PATH=$PATH:%_qt4dir/bin
 
 export VTK_DATA_ROOT=%_datadir/%name-%ver
-FLAGS="%optflags %optflags_shared -I%mpidir/include -I%_includedir/gsl"
+FLAGS="%optflags %optflags_shared -I%_libdir/hdf5-seq/include -I%_includedir/gsl"
 FLAGS="$FLAGS -DHAVE_SYS_TIME_H -DHAVE_SYS_TYPES_H -DHAVE_SYS_SOCKET_H"
 %ifarch x86_64
 FLAGS="$FLAGS -D__USE_LARGEFILE64"
@@ -300,16 +299,15 @@ cmake \
 	-DCMAKE_C_FLAGS:STRING="$FLAGS" \
 	-DCMAKE_CXX_FLAGS:STRING="$FLAGS" \
 	-DCMAKE_Fortran_FLAGS:STRING="$FLAGS" \
-	-DMPIDIR:STRING="%mpidir" \
 	-DSIP_INCLUDE_DIR:PATH=%_includedir/%_python_version \
 	-DVTK_INSTALL_QT_PLUGIN_DIR:PATH=%buildroot%_qt4_plugindir/designer \
 	.
 tar -czf src.tar.gz Examples
+export LD_LIBRARY_PATH=$PWD/bin
 %make_build
 
 %install
 export VTK_DATA_ROOT=%_datadir/%name-%ver
-source %mpidir/bin/mpivars.sh
 %makeinstall
 
 install -d %buildroot%_libdir
@@ -364,16 +362,18 @@ install -m644 bin/libvtkmy* \
 #	chrpath -r %mpidir/lib bin/$i
 #	install -m755 bin/$i %buildroot%_bindir
 #done
-pushd %buildroot%_bindir
-for i in $(ls); do
-	chrpath -r %mpidir/lib $i ||:
-done
-popd
-pushd %buildroot%_libdir
-for i in $(ls *.so); do
-	chrpath -r %mpidir/lib $i
-done
-popd
+#pushd %buildroot%_bindir
+#for i in $(ls); do
+	#chrpath -r %_libdir/hdf5-seq/lib $i ||:
+#	chrpath -d $i
+#done
+#popd
+#pushd %buildroot%_libdir
+#for i in $(ls *.so); do
+	#chrpath -r %_libdir/hdf5-seq/lib $i
+#	chrpath -d $i
+#done
+#popd
 
 sed -i 's|%buildroot||g' \
 	$(find %buildroot%_datadir/%name-%ver-examples/Examples -name '*.cmake')
@@ -415,7 +415,7 @@ rm -f %_libdir/%name
 %files
 %doc Copyright.txt README.html
 %_bindir/lproj
-%_bindir/pvtk
+#_bindir/pvtk
 %_bindir/vtk
 %_bindir/vtkEncodeString
 
@@ -423,15 +423,15 @@ rm -f %_libdir/%name
 %_libdir/*.so.*
 %exclude %_libdir/*TCL.so.*
 %exclude %_libdir/*Python*.so.*
-%exclude %_libdir/libCosmo.so.*
-%exclude %_libdir/libVPIC.so.*
+#exclude %_libdir/libCosmo.so.*
+#exclude %_libdir/libVPIC.so.*
 %dir %_libdir/%name-%ver
 %dir %_datadir/%name-%ver
 %_datadir/%name-%ver/vtkChemistry
 
-%files -n lib%name-utils
-%_libdir/libCosmo.so.*
-%_libdir/libVPIC.so.*
+#files -n lib%name-utils
+#_libdir/libCosmo.so.*
+#_libdir/libVPIC.so.*
 
 %files -n lib%name-devel
 %_libdir/*.so
@@ -468,7 +468,7 @@ rm -f %_libdir/%name
 %files examples
 %_bindir/*
 %exclude %_bindir/lproj
-%exclude %_bindir/pvtk
+#exclude %_bindir/pvtk
 %exclude %_bindir/vtk
 %exclude %_bindir/vtkEncodeString
 %exclude %_bindir/*Tcl*
@@ -503,6 +503,9 @@ rm -f %_libdir/%name
 %python_sitelibdir/*/test
 
 %changelog
+* Fri Apr 19 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.10.1-alt3
+- Rebuilt without MPI
+
 * Sun Feb 10 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.10.1-alt2
 - Rebuilt with Boost 1.53.0
 
