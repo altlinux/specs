@@ -4,7 +4,7 @@
 %define oname mayavi
 Name:           Mayavi
 Version:        4.2.1
-Release:        alt2.git20121228
+Release:        alt3.git20121228
 Summary:        Scientific data 3-dimensional visualizer
 
 Group:          Graphics
@@ -23,11 +23,12 @@ BuildRequires: python-module-sphinx-devel libnumpy-devel
 BuildRequires: python-module-vtk /proc strace
 BuildPreReq: desktop-file-utils
 BuildPreReq: python-module-sip-devel libpympi-devel
-BuildPreReq: python-module-PyQt4-devel /usr/bin/ssh python-module-pyMPI
+BuildPreReq: python-module-PyQt4-devel /usr/bin/ssh vtk-python
 BuildPreReq: libGL-devel libGLU-devel xvfb-run
+BuildPreReq: python-module-traits python%_python_version(traits.api)
 
 Provides: %oname = %version-%release
-%py_requires %oname tvtk wx
+#py_requires %oname tvtk wx
 #Requires: python-module-%oname.tests = %version-%release
 Requires:       python-module-apptools
 #Requires:       python-module-EnthoughtBase
@@ -37,6 +38,8 @@ Requires:       python-module-traits
 Requires:       python-module-wx
 #Requires:       python-module-TraitsGUI
 #Requires:       python-module-TraitsBackendQt
+Requires: python-module-mayavi = %EVR
+Requires: python-module-tvtk = %EVR
 
 %add_python_req_skip test tvtk_classes
 
@@ -118,14 +121,16 @@ This package contains documentation for Mayavi, scientific data
 %setup
 
 %build
-source %mpidir/bin/mpivars.sh
+#source %mpidir/bin/mpivars.sh
 
 export PYTHONPATH=$PWD:$PWD/docs/source/mayavi/sphinxext
 xvfb-run --server-args="-screen 0 1024x768x24" \
 	python setup.py build
+#xvfb-run --server-args="-screen 0 1024x768x24" \
+#	pvtkpython setup.py build
 
 %install
-source %mpidir/bin/mpivars.sh
+#source %mpidir/bin/mpivars.sh
 
 export PYTHONPATH=$PWD:$PWD/docs/source/mayavi/sphinxext
 xvfb-run --server-args="-screen 0 1024x768x24" \
@@ -178,6 +183,9 @@ ln -s %_liconsdir/mayavi2.png %buildroot%_niconsdir/
 %doc docs/*.txt docs/pdf examples docs/build/tvtk docs/build/mayavi
 
 %changelog
+* Fri Apr 19 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.2.1-alt3.git20121228
+- Fixed build
+
 * Wed Jan 30 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.2.1-alt2.git20121228
 - New snapshot
 
