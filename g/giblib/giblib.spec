@@ -1,6 +1,6 @@
 Name: giblib
 Version: 1.2.4
-Release: alt0.4
+Release: alt0.4.qa1
 
 Summary: Simple library and a wrapper for imlib2.
 License: BSD
@@ -81,6 +81,9 @@ This package contains giblib static libraries.
 %endif
 
 %changelog
+* Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.2.4-alt0.4.qa1
+- NMU: rebuilt for updated dependencies.
+
 * Wed Mar 30 2011 Slava Semushin <php-coder@altlinux.ru> 1.2.4-alt0.4
 - NMU
 - Updated BuildRequires to get rid of xorg-x11-devel (fixed build)
