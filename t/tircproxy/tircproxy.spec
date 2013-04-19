@@ -1,6 +1,6 @@
 Name: tircproxy
 Version: 0.4.5
-Release: alt3
+Release: alt3.qa1
 
 Summary: (transparent) IRC proxy with DCC support.
 Source: tircproxy-0.4.5.tar.gz
@@ -13,6 +13,9 @@ Source1: tircproxy.service
 Source2: tircproxy.conf.example
 
 %changelog
+* Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.4.5-alt3.qa1
+- NMU: rebuilt for updated dependencies.
+
 %description
 Tircproxy is a program designed to help IRC users who are not directly 
 connected to the internet, but are behind a firewall based on Linux or 
