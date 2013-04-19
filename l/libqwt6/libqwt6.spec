@@ -1,7 +1,7 @@
 %define oname libqwt
 Name: %{oname}6
 Version: 6.0.1
-Release: alt3
+Release: alt3.qa1
 
 Summary: 2D plotting widget extension to the Qt GUI
 
@@ -129,6 +129,9 @@ popd
 #_man3dir/*
 
 %changelog
+* Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 6.0.1-alt3.qa1
+- NMU: rebuilt for updated dependencies.
+
 * Fri Apr 27 2012 Sergey Bolshakov <sbolshakov@altlinux.ru> 6.0.1-alt3
 - rebuild with rpm optflags
 
