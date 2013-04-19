@@ -3,7 +3,7 @@
 Summary: Tool used to mount local media on an Xterminal from the terminals server
 Name: ltspfsd
 Version: 0.3
-Release: alt0.2.2
+Release: alt0.2.2.qa1
 License: GPL
 Group: Networking/Other
 URL: http://wiki.ltsp.org/twiki/bin/view/Ltsp/LtspFS
@@ -68,6 +68,9 @@ install -m 0700 %SOURCE3 %buildroot/sbin/ltspfs_umount
 
 
 %changelog
+* Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.3-alt0.2.2.qa1
+- NMU: rebuilt for updated dependencies.
+
 * Thu Jul 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3-alt0.2.2
 - Fixed build
 
