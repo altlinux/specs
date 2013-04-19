@@ -1,7 +1,7 @@
 %define Name KeyLaunch
 Name: keylaunch
 Version: 1.3.3
-Release: alt1
+Release: alt1.qa1
 Summary: Small utility for binding commands to a hot key.
 Summary(uk_UA.CP1251): Маленька утиліта для призначення командам "гарячих клавіш"
 Summary(ru_RU.CP1251): Маленькая утилита для назначения командам "горячих клавиш"
@@ -47,5 +47,8 @@ gzip --best --stdout -- debian/changelog > changelog.gz
 
 
 %changelog
+* Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.3.3-alt1.qa1
+- NMU: rebuilt for updated dependencies.
+
 * Fri Jun 16 2006 Led <led@altlinux.ru> 1.3.3-alt1
 - initial build
