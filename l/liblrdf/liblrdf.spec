@@ -2,7 +2,7 @@
 
 Name: liblrdf
 Version: 0.4.0
-Release: alt3.1
+Release: alt3.1.qa1
 
 Summary: Library for handling RDF descriptions of audio plugins
 License: GPLv2+
@@ -64,6 +64,9 @@ applications which will use libraries from %name.
 %doc AUTHORS ChangeLog NEWS README
 
 %changelog
+* Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.4.0-alt3.1.qa1
+- NMU: rebuilt for updated dependencies.
+
 * Sat Aug 20 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.0-alt3.1
 - Rebuilt for debuginfo
 
