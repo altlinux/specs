@@ -2,7 +2,7 @@
 
 Name: Ri-li
 Version: 2.0.1
-Release: alt3.2
+Release: alt3.2.qa1
 
 Summary: Ri-li arcade game
 License: GPL v2 or GPL v3
@@ -94,6 +94,9 @@ EOF
 %_desktopdir/%{name}.desktop
 
 %changelog
+* Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.0.1-alt3.2.qa1
+- NMU: rebuilt for updated dependencies.
+
 * Mon Mar 28 2011 Igor Vlasenko <viy@altlinux.ru> 2.0.1-alt3.2
 - NMU: converted debian menu to freedesktop
 
