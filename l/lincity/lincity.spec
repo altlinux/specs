@@ -1,6 +1,6 @@
 Name: lincity
 Version: 1.12.1
-Release: alt2.1
+Release: alt2.1.qa1
 
 Summary: SimCity clone
 Group: Games/Strategy
@@ -54,6 +54,9 @@ EOF
 %_desktopdir/%{name}.desktop
 
 %changelog
+* Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.12.1-alt2.1.qa1
+- NMU: rebuilt for updated dependencies.
+
 * Mon Mar 28 2011 Igor Vlasenko <viy@altlinux.ru> 1.12.1-alt2.1
 - NMU: converted debian menu to freedesktop
 
