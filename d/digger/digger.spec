@@ -1,6 +1,6 @@
 Name: digger
 Version: 20020314
-Release: alt4.qa2
+Release: alt4.qa3
 
 Summary: A Game of Digger
 License: Distributable
@@ -55,6 +55,9 @@ echo "Please see %url/faq.html" >> FAQ
 %_desktopdir/*
 
 %changelog
+* Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 20020314-alt4.qa3
+- NMU: rebuilt for updated dependencies.
+
 * Sat Mar 26 2011 Igor Vlasenko <viy@altlinux.ru> 20020314-alt4.qa2
 - converted debian menu to freedesktop
 
