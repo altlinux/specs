@@ -6,7 +6,7 @@
 #%%define trust_paths %_sysconfdir/pki/ca-trust/source:%_datadir/pki/ca-trust-source
 
 Name: lib%_name
-Version: 0.18.0
+Version: 0.18.1
 Release: alt1
 
 Summary: Library for loading and sharing PKCS#11 modules
@@ -83,7 +83,7 @@ This package contains development documentation for %_name library.
 %install
 %makeinstall_std
 mkdir -p %buildroot%_sysconfdir/pkcs11/modules
-install -p -m755 %SOURCE1 %buildroot/%_datadir/%_name/
+install -p -m755 %SOURCE1 %buildroot/%_libdir/%_name/
 
 # alternatives
 mkdir -p %buildroot%_altdir
@@ -98,6 +98,7 @@ EOF
 %_bindir/%_name
 %_libdir/lib%_name.so.*
 %_libdir/%_name-proxy.so
+%dir %_libdir/%_name
 %dir %_datadir/%_name
 %dir %_datadir/%_name/modules
 %dir %_sysconfdir/pkcs11
@@ -110,8 +111,8 @@ EOF
 %files trust
 %_libdir/pkcs11/%_name-trust.so
 %_datadir/%_name/modules/%_name-trust.module
-%_datadir/%_name/p11-kit-extract-trust
-%_altdir/%name
+%_libdir/%_name/p11-kit-extract-trust
+#%_altdir/%name
 %exclude %_libdir/pkcs11/p11-kit-trust.la
 %endif
 
@@ -124,6 +125,9 @@ EOF
 %_datadir/gtk-doc/html/%_name
 
 %changelog
+* Fri Apr 19 2013 Yuri N. Sedunov <aris@altlinux.org> 0.18.1-alt1
+- 0.18.1
+
 * Wed Apr 10 2013 Dmitry V. Levin <ldv@altlinux.org> 0.18.0-alt1
 - Updated to 0.18.0 (stable).
 
