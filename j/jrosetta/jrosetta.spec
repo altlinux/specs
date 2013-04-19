@@ -1,50 +1,70 @@
 Name: jrosetta
-Version: 1.0.2
-Release: alt2
+Version: 1.0.4
+Release: alt1
 Summary: A common base to build a graphical console
 
-Group: Development/Java
+Group:   Development/Java
 License: GPLv2
-Url: http://dev.artenum.com/projects/JRosetta/
-#http://dev.artenum.com/projects/JRosetta/download/JRosetta-1-0-2/data/src-gpl?action=download&nodecorator
-Packager: Vitaly Kuznetsov <vitty@altlinux.ru>
+Url:     http://dev.artenum.com/projects/JRosetta/
+Packager: Andrey Cherepanov <cas@altlinux.org>
 
-Source: %name-%version-gpl.tar
+Source: %name-%version.tar
 
 BuildArch: noarch
 
-BuildRequires: rpm-build-java ant
+BuildRequires(pre): rpm-build-java
+BuildRequires: java-devel
+BuildRequires: maven
+BuildRequires: maven-surefire-plugin
+BuildRequires: maven-surefire-provider-junit4
 
 %description
-JRosetta provides a common base for graphical component that could be used
-to build a graphical console in Swing with the latest requirements, such as
-command history, completion and so on for instance for scripting language
-or command line.
+JRosetta provides a common base for graphical component that could be
+used to build a graphical console in Swing with the latest requirements,
+such as command history, completion and so on for instance for scripting
+language or command line.
 
 %prep
-%setup -q -n %name-%version-gpl
+%setup -q 
 #wrong-file-end-of-line-encoding
-cp -p CHANGE.txt CHANGE.txt.CRLF
-%__subst 's/\r//' CHANGE.txt
-touch -r CHANGE.txt.CRLF CHANGE.txt
-rm CHANGE.txt.CRLF
+subst 's/\r//' CHANGE.txt COPYRIGHT.txt
 
 %build
-%ant make
+mvn-rpmbuild -e install javadoc:aggregate
 
 %install
 mkdir -p %buildroot%_javadir
+cp -p modules/%name-api/target/%name-api-%version.jar \
+    %buildroot%_javadir/%name-API-%version.jar
+ln -s %name-API-%version.jar %buildroot%_javadir/%name-API.jar
+cp -p modules/%name-engine/target/%name-engine-%version.jar \
+    %buildroot%_javadir/%name-engine-%version.jar
+ln -s %name-engine-%version.jar %buildroot%_javadir/%name-engine.jar
 
-for j in jrosetta-API jrosetta-engine ; do
-  install -pm 0644 dist/${j}.jar %buildroot%_javadir/${j}-%version.jar
-  ln -fs ${j}-%version.jar %buildroot%_javadir/${j}.jar
-done
+mkdir -p %buildroot%_javadocdir/%name
+cp -rp target/site/apidocs $RPM_BUILD_ROOT%{_javadocdir}/%{name}
+
+install -d -m 755 %buildroot%_mavenpomdir
+install -pm 644 pom.xml  \
+        %buildroot%_mavenpomdir/JPP-%name.pom
+install -pm 644 modules/%name-api/pom.xml  \
+        %buildroot%_mavenpomdir/JPP-%name-API.pom
+install -pm 644 modules/%name-engine/pom.xml  \
+        %buildroot%_mavenpomdir/JPP-%name-engine.pom
+
 
 %files
-%doc CHANGE.txt COPYRIGHT LICENSE.txt
-%_javadir/jrosetta*.jar
+%doc CHANGE.txt COPYRIGHT.txt LICENSE.txt
+%_mavenpomdir/JPP-%name.pom
+%_mavenpomdir/JPP-%name-*.pom
+%_javadir/%name-*.jar
+%_javadocdir/%name
 
 %changelog
+* Fri Apr 19 2013 Andrey Cherepanov <cas@altlinux.org> 1.0.4-alt1
+- New version (ALT #28870)
+- Build by maven
+
 * Thu Sep 10 2009 Vitaly Kuznetsov <vitty@altlinux.ru> 1.0.2-alt2
 - Fix BuildRequires (ALT #21518)
 
