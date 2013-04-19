@@ -1,6 +1,6 @@
 Name: imule
 Version: 1.4.6
-Release: alt4.qa2
+Release: alt4.qa3
 
 Summary: P2P file sharing software which connects through the anonymous I2P network
 License: GPL
@@ -51,6 +51,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %doc %_defaultdocdir/%name-%version
 
 %changelog
+* Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.4.6-alt4.qa3
+- NMU: rebuilt for updated dependencies.
+
 * Wed Dec 05 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4.6-alt4.qa2
 - Fixed build with gcc 4.7 & glibc 2.16
 
