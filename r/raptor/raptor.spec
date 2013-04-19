@@ -3,7 +3,7 @@
 
 Name: raptor
 Version: 1.4.21
-Release: alt3
+Release: alt3.qa1
 
 Summary: Raptor RDF Parser Toolkit for Redland
 License: LGPLv2+ or ASL 2.0
@@ -93,6 +93,9 @@ chrpath -d %buildroot%_bindir/rapper
 %_datadir/gtk-doc/html/*
 
 %changelog
+* Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.4.21-alt3.qa1
+- NMU: rebuilt for updated dependencies.
+
 * Wed Dec 14 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4.21-alt3
 - Fixed RPATH
 
