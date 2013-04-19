@@ -12,7 +12,7 @@
 %define bname kdcraw
 Name: lib%bname
 Version: 0.1.5
-Release: alt3.1
+Release: alt3.1.qa1
 Group: System/Libraries
 Summary: C++ interface around dcraw binary program
 License: %gpl2plus
@@ -129,6 +129,9 @@ install -pD -m 0644 %name/dcraw/%bname.1 %buildroot%_man1dir/%bname.1
 
 
 %changelog
+* Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.1.5-alt3.1.qa1
+- NMU: rebuilt for updated dependencies.
+
 * Fri Jun 08 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.5-alt3.1
 - Fixed build
 
