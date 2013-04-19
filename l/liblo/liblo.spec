@@ -2,7 +2,7 @@
 
 Name: liblo
 Version: 0.25
-Release: alt2.1
+Release: alt2.1.qa1
 
 Summary: Open Source implementation of the Open Sound Control protocol
 License: GPL
@@ -57,6 +57,9 @@ sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' libtool
 %doc examples/*.c
 
 %changelog
+* Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.25-alt2.1.qa1
+- NMU: rebuilt for updated dependencies.
+
 * Sat Feb 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.25-alt2.1
 - Removed bad RPATH
 
