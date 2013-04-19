@@ -1,6 +1,6 @@
 Name: liborigin2
 Version: 20110829
-Release: alt1
+Release: alt1.qa1
 Summary: A library for reading OriginLab project files, version 2
 License: BSD
 Group: System/Libraries
@@ -68,6 +68,9 @@ cp -fR doc/html/* %buildroot%_docdir/%name/
 %_docdir/%name
 
 %changelog
+* Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 20110829-alt1.qa1
+- NMU: rebuilt for updated dependencies.
+
 * Wed Sep 07 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 20110829-alt1
 - Version 20110829
 
