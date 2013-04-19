@@ -1,6 +1,6 @@
 Name: procinfo
 Version: 18
-Release: alt1
+Release: alt1.qa1
 Serial: 1
 
 Packager: Dmitry V. Levin <ldv@altlinux.org>
@@ -50,6 +50,9 @@ done
 %doc README CHANGES
 
 %changelog
+* Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1:18-alt1.qa1
+- NMU: rebuilt for updated dependencies.
+
 * Tue Jun 08 2004 Stanislav Ievlev <inger@altlinux.org> 1:18-alt1
 - rebuild in hasher
 - added patch from RH to use sysconf for retrieving number of system processors
