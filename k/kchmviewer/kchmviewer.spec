@@ -1,6 +1,6 @@
 Name: kchmviewer
 Version: 5.2
-Release: alt1
+Release: alt1.qa1
 
 Summary: A chm (MS HTML help file format) viewer (with KDE4 support)
 License: %gpl3plus
@@ -92,6 +92,9 @@ install -pD -m644 packages/kchmviewer.png %buildroot%_K4datadir/icons/hicolor/12
 
 
 %changelog
+* Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 5.2-alt1.qa1
+- NMU: rebuilt for updated dependencies.
+
 * Sat Feb 05 2011 Ivan A. Melnikov <iv@altlinux.org> 5.2-alt1
 - 5.2
 - patch updated
