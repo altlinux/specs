@@ -6,7 +6,7 @@
 
 Name: libglade
 Version: %ver_major.4
-Release: alt5
+Release: alt5.qa1
 
 Summary: libglade library
 License: LGPL
@@ -175,6 +175,9 @@ export ac_cv_path_PYTHON=/bin/false
 %endif
 
 %changelog
+* Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.6.4-alt5.qa1
+- NMU: rebuilt for updated dependencies.
+
 * Fri Mar 18 2011 Alexey Tourbin <at@altlinux.ru> 2.6.4-alt5
 - libglade-2.0.pc: disabled dependency on libxml2-devel
 
