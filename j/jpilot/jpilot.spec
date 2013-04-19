@@ -4,7 +4,7 @@ Name: jpilot
 Summary: Palm pilot desktop for Linux
 Summary(ru_RU.KOI8-R): Palm pilot desktop для Linux
 Version: 0.99.9
-Release: alt7.qa4
+Release: alt7.qa5
 
 Packager: Pavlov Konstantin <thresh@altlinux.ru>
 
@@ -141,6 +141,9 @@ rm -f %buildroot%_libdir/%name/plugins/*.la
 %_libdir/jpilot/plugins/prefs.h
 
 %changelog
+* Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.99.9-alt7.qa5
+- NMU: rebuilt for updated dependencies.
+
 * Thu Mar 31 2011 Igor Vlasenko <viy@altlinux.ru> 0.99.9-alt7.qa4
 - NMU: converted debian menu to freedesktop
 
