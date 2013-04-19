@@ -1,6 +1,6 @@
 Name:		net-scripts
 Version:	0.5.6
-Release:	alt2
+Release:	alt2.qa1
 Summary:	The system network scripts
 Summary(ru_RU.KOI8-R): Системные сценарии для управления сетью
 License:	GPL
@@ -110,6 +110,9 @@ done
 %doc ifcfg-pentanet0.example config-pentanet0.example
 
 %changelog
+* Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.5.6-alt2.qa1
+- NMU: rebuilt for updated dependencies.
+
 * Sun Aug 05 2012 Dmitry V. Levin <ldv@altlinux.org> 0.5.6-alt2
 - Rebuilt.
 
