@@ -1,6 +1,6 @@
 Name:		serveez
 Version:	0.1.5
-Release:	alt3.qa2
+Release:	alt3.qa3
 License:	GPL
 Group:		System/Servers
 Summary:	A server framework.
@@ -95,6 +95,9 @@ sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' libtool
 %_libdir/libserveez.a
 
 %changelog
+* Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.1.5-alt3.qa3
+- NMU: rebuilt for updated dependencies.
+
 * Tue Feb 07 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.5-alt3.qa2
 - Removed bad RPATH
 
