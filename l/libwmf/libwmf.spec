@@ -1,6 +1,6 @@
 Name: libwmf
 Version: 0.2.8.4
-Release: alt10
+Release: alt10.qa1
 
 Summary: A library to convert wmf files
 License: GPL
@@ -108,6 +108,9 @@ install -p -m644 ChangeLog CREDITS README TODO %buildroot%_docdir/%name-%version
 %_docdir/%name-%version
 
 %changelog
+* Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.2.8.4-alt10.qa1
+- NMU: rebuilt for updated dependencies.
+
 * Fri Sep 28 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.8.4-alt10
 - Rebuilt with libpng15
 
