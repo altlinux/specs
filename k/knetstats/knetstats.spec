@@ -2,7 +2,7 @@
 
 Name: knetstats
 Version: 1.6.2
-Release: alt4.1.qa1
+Release: alt4.1.qa2
 
 Group: Monitoring
 Summary: Network monitor applet for KDE
@@ -93,6 +93,9 @@ install -m 0644 %buildroot/%_K3xdg_apps/%name.desktop %buildroot/%_K3start/%name
 %_K3start/%name.desktop
 
 %changelog
+* Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.6.2-alt4.1.qa2
+- NMU: rebuilt for updated dependencies.
+
 * Tue Aug 21 2012 Repocop Q. A. Robot <repocop@altlinux.org> 1.6.2-alt4.1.qa1
 - NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
 - applied repocop fixes:
