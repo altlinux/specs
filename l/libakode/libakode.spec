@@ -7,9 +7,9 @@ Version: 2.0.2
 %define beta %nil
 %define rlz alt11
 %if "%beta" == "%nil"
-Release: %rlz
+Release: %rlz.qa1
 %else
-Release: %rlz.%beta
+Release: %rlz.%beta.qa1
 %endif
 
 Group: Sound
@@ -189,6 +189,9 @@ Polypaudio support for %name
 
 
 %changelog
+* Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.0.2-alt11.qa1
+- NMU: rebuilt for updated dependencies.
+
 * Mon Aug 08 2011 Sergey V Turchin <zerg@altlinux.org> 2.0.2-alt11
 - fix to build with libav
 
