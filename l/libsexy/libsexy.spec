@@ -1,6 +1,6 @@
 Name: libsexy
 Version: 0.1.11
-Release: alt3.2
+Release: alt3.2.qa1
 
 Summary: A library that does naughty things to good widgets
 License: LGPL
@@ -65,6 +65,9 @@ API documentation for %name generated with gtk-doc.
 %_datadir/gtk-doc/html/*
 
 %changelog
+* Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.1.11-alt3.2.qa1
+- NMU: rebuilt for updated dependencies.
+
 * Tue Mar 29 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.11-alt3.2
 - Rebuilt for debuginfo
 
