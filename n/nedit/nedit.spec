@@ -1,7 +1,7 @@
 Name: nedit
 Version: 5.5
 #%%define rc_ver RC2
-Release: alt3.qa1
+Release: alt3.qa2
 %define srcname %name-%version%{?rc_ver:%rc_ver}%{?!rc_ver:-src}
 
 Summary: A text editor for the X Window System
@@ -80,6 +80,9 @@ install -pD -m644 %SOURCE4 %buildroot%_liconsdir/%name.png
 %doc README ReleaseNotes doc/NEdit.ad doc/*.txt.bz2
 
 %changelog
+* Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 5.5-alt3.qa2
+- NMU: rebuilt for updated dependencies.
+
 * Sun Apr 10 2011 Igor Vlasenko <viy@altlinux.ru> 5.5-alt3.qa1
 NMU: converted menu to desktop file
 
