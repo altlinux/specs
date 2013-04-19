@@ -1,29 +1,28 @@
 Name: nslint
-Version: 2.1a7
+Version: 3.1
 Release: alt1
 
 Summary: A DNS lint checker
 License: BSD-style
 Group: Networking/Other
 Url: ftp://ftp.ee.lbl.gov
-Packager: Dmitry V. Levin <ldv@altlinux.org>
 
-# %url/nslint-%version.tar.gz
+# %url/%name-%version.tar.gz
 Source: nslint-%version.tar
 
 %description
 Performs consistency checks on DNS files.
 
 %prep
-%setup -q
+%setup
 
 %build
 %configure
 %make_build
 
 %install
-install -pD -m755 nslint %buildroot%_bindir/nslint
-install -pD -m644 nslint.8 %buildroot%_man8dir/nslint.8
+install -Dpm755 nslint %buildroot%_bindir/nslint
+install -Dpm644 nslint.8 %buildroot%_man8dir/nslint.8
 
 %files
 %_bindir/*
@@ -31,6 +30,9 @@ install -pD -m644 nslint.8 %buildroot%_man8dir/nslint.8
 %doc README CHANGES
 
 %changelog
+* Fri Apr 19 2013 Dmitry V. Levin <ldv@altlinux.org> 3.1-alt1
+- Updated to 3.1.
+
 * Wed Apr 18 2007 Dmitry V. Levin <ldv@altlinux.org> 2.1a7-alt1
 - Updated to 2.1a7.
 
