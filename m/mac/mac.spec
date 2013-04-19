@@ -8,7 +8,7 @@
 
 Name: mac
 Version: 3.99.u4
-Release: alt6.b5.2
+Release: alt6.b5.2.qa1
 
 Summary: Monkey's Audio Codec
 License: Distributable (see License.htm)
@@ -145,6 +145,9 @@ mv src/License.htm .
 %endif
 
 %changelog
+* Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 3.99.u4-alt6.b5.2.qa1
+- NMU: rebuilt for updated dependencies.
+
 * Sat Aug 20 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.99.u4-alt6.b5.2
 - Rebuilt for debuginfo
 
