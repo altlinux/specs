@@ -1,17 +1,16 @@
 Name: fastjar
 Version: 0.98
-Release: alt1
+Release: alt2
 
 Summary: Archive tool for Java archives
 License: GPLv2+
 Group: Development/Java
 Url: http://savannah.nongnu.org/projects/fastjar/
-Packager: Dmitry V. Levin <ldv@altlinux.org>
 
 # http://download.savannah.gnu.org/releases/fastjar/fastjar-%version.tar.gz
-Source: fastjar-%version.tar
+Source: %name-%version.tar
 
-Patch: fastjar-%version-%release.patch
+Patch: %name-%version-%release.patch
 
 BuildRequires: zlib-devel
 
@@ -40,6 +39,9 @@ fgrep -lZ _LT_ m4/* |xargs -r0 rm -fv --
 %doc AUTHORS README NEWS TODO
 
 %changelog
+* Fri Apr 19 2013 Dmitry V. Levin <ldv@altlinux.org> 0.98-alt2
+- Built with LFS support enabled.
+
 * Tue Sep 08 2009 Dmitry V. Levin <ldv@altlinux.org> 0.98-alt1
 - Updated to 0.98.
 - Removed obsolete %%install_info/%%uninstall_info calls.
