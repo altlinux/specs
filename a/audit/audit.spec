@@ -1,5 +1,5 @@
 Name: audit
-Version: 2.2.1
+Version: 2.2.3
 Release: alt1
 
 Packager: Anton Farygin <rider@altlinux.com>
@@ -97,6 +97,8 @@ install -Dpm755 %name.init %buildroot/%_initdir/%{name}d
 #install rotate script
 install -Dpm755 %name.cron %buildroot/%_sysconfdir/cron.weekly/%{name}d
 
+install -pD -m644 init.d/%{name}d.service %buildroot%_unitdir/%{name}d.service
+
 %post
 %post_service %{name}d
 
@@ -108,6 +110,7 @@ install -Dpm755 %name.cron %buildroot/%_sysconfdir/cron.weekly/%{name}d
 %config(noreplace) %_sysconfdir/cron.weekly/%{name}d
 %_initdir/%{name}d
 %attr(700,root,root) %_logdir/%name
+%config %_unitdir/%{name}d.service
 
 /sbin/ausearch
 /sbin/aureport
@@ -158,6 +161,10 @@ install -Dpm755 %name.cron %buildroot/%_sysconfdir/cron.weekly/%{name}d
 %python_sitelibdir/*
 
 %changelog
+* Fri Apr 19 2013 Anton Farygin <rider@altlinux.ru> 2.2.3-alt1
+- new version
+- add systemd support
+
 * Wed Sep 19 2012 Anton Farygin <rider@altlinux.ru> 2.2.1-alt1
 - new version
 
