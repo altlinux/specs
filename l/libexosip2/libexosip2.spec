@@ -1,6 +1,6 @@
 Name: libexosip2
 Version: 3.5.0
-Release: alt1
+Release: alt1.qa1
 
 Group: System/Libraries
 Summary: The eXtended osip library
@@ -67,6 +67,9 @@ This package contains tools related to eXosip library.
 %_bindir/sip_reg
 
 %changelog
+* Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 3.5.0-alt1.qa1
+- NMU: rebuilt for updated dependencies.
+
 * Sat Feb 12 2011 Egor Glukhov <kaman@altlinux.org> 3.5.0-alt1
 - 3.5.0
 
