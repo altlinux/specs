@@ -1,6 +1,6 @@
 Name: xfce4-session
 Version: 4.10.0
-Release: alt2.git20130327
+Release: alt3.git20130327
 
 Summary: Session manager for XFce desktop environment
 Summary (ru): Менеджер сессий для окружения рабочего стола Xfce
@@ -117,6 +117,9 @@ install -Dm0644 %SOURCE1 %buildroot%_x11sysconfdir/wmsession.d/10Xfce4
 %_libdir/xfce4/session/balou*
 
 %changelog
+* Thu Apr 18 2013 Mikhail Efremov <sem@altlinux.org> 4.10.0-alt3.git20130327
+- Lock screen when sleep in case of systemd too.
+
 * Wed Apr 10 2013 Mikhail Efremov <sem@altlinux.org> 4.10.0-alt2.git20130327
 - Use sudo for suspend/hibernate as fallback.
 - Add systemd-logind support for suspend/hibernate.
