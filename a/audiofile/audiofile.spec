@@ -2,7 +2,7 @@
 
 Name: audiofile
 Version: 0.3.2
-Release: alt3
+Release: alt3.qa1
 
 Summary: Library to handle various audio file formats
 License: LGPL
@@ -108,6 +108,9 @@ sed -ri \
 %endif
 
 %changelog
+* Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.3.2-alt3.qa1
+- NMU: rebuilt for updated dependencies.
+
 * Wed Jun 06 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.2-alt3
 - Fixed build
 
