@@ -1,6 +1,6 @@
 Name: colorifer
 Version: 1.0.1
-Release: alt15
+Release: alt15.qa1
 
 Summary: Simple program output colorifer
 License: GPLv2+
@@ -65,6 +65,9 @@ mkdir -p %buildroot%_datadir/%name/
 %_libdir/*.so.*
 
 %changelog
+* Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.0.1-alt15.qa1
+- NMU: rebuilt for updated dependencies.
+
 * Thu Jul 12 2012 Dmitry V. Levin <ldv@altlinux.org> 1.0.1-alt15
 - Fixed build with new gcc and ld.
 
