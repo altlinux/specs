@@ -1,6 +1,6 @@
 Name: libcdaudio
 Version: 0.99.12p2
-Release: alt3
+Release: alt3.qa1
 
 Summary: A library of functions for controlling audio CD-ROM players
 License: GPL
@@ -55,6 +55,9 @@ needed for libcdaudio development.
 %_pkgconfigdir/*
 
 %changelog
+* Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.99.12p2-alt3.qa1
+- NMU: rebuilt for updated dependencies.
+
 * Sat Oct 08 2011 Alexey Tourbin <at@altlinux.ru> 0.99.12p2-alt3
 - rebuilt for debuginfo
 - imported Fedora patches
