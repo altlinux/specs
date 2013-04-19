@@ -61,7 +61,7 @@
 Name: mpd-mini
 Version: 0.16.4
 %define prerel %nil
-Release: alt1
+Release: alt1.qa1
 Summary: Light version of Music Player Daemon (%Name)
 License: GPLv2+
 Group: Sound
@@ -293,6 +293,9 @@ bzip2 --best %buildroot%_docdir/%oname-%version/NEWS
 
 
 %changelog
+* Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.16.4-alt1.qa1
+- NMU: rebuilt for updated dependencies.
+
 * Sat Sep 17 2011 Slava Semushin <php-coder@altlinux.ru> 0.16.4-alt1
 - Updated to 0.16.4
 
