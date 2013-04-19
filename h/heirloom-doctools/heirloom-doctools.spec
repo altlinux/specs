@@ -1,6 +1,6 @@
 Name: heirloom-doctools
 Version: 080407
-Release: alt1
+Release: alt1.qa1
 
 Summary: The Heirloom Documentation Tools
 License: Various, see LICENSE dir
@@ -53,5 +53,8 @@ input are supported.
 %_mandir/5man
 
 %changelog
+* Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 080407-alt1.qa1
+- NMU: rebuilt for updated dependencies.
+
 * Mon Mar 30 2009 Andrey Rahmatullin <wrar@altlinux.ru> 080407-alt1
 - initial build
