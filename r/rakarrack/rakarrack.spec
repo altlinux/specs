@@ -1,6 +1,6 @@
 Name: rakarrack
 Version: 0.6.2
-Release: alt2.git.56026bac.1.qa1
+Release: alt2.git.56026bac.1.qa2
 Summary: Guitar effects for Linux
 License: GPLv2+
 Group: Sound
@@ -71,6 +71,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_datadir/doc/%name
 
 %changelog
+* Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.6.2-alt2.git.56026bac.1.qa2
+- NMU: rebuilt for updated dependencies.
+
 * Tue May 24 2011 Repocop Q. A. Robot <repocop@altlinux.org> 0.6.2-alt2.git.56026bac.1.qa1
 - NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
 - applied repocop fixes:
