@@ -9,7 +9,7 @@
 
 Name: xqf
 Version: 1.0.5
-Release: alt2.1
+Release: alt2.1.qa1
 Summary: X11 QStat Frontend
 Packager: Pavlov Konstantin <thresh@altlinux.ru>
 License: GPL
@@ -73,6 +73,9 @@ export CPPFLAGS=-I/usr/include/GeoIP
 #%%_menudir/%name
 
 %changelog
+* Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.0.5-alt2.1.qa1
+- NMU: rebuilt for updated dependencies.
+
 * Sat Jun 16 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.5-alt2.1
 - Fixed build
 
