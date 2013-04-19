@@ -1,6 +1,6 @@
 Name: gamin
 Version: 0.1.10
-Release: alt5.2
+Release: alt5.2.qa1
 
 %def_disable static
 %def_disable debug
@@ -151,6 +151,9 @@ a subset of the FAM (File Alteration Monitor) system.
 %python_sitelibdir/*
 
 %changelog
+* Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.1.10-alt5.2.qa1
+- NMU: rebuilt for updated dependencies.
+
 * Wed Aug 15 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.10-alt5.2
 - Disabled checking
 
