@@ -1,12 +1,11 @@
 Name: genromfs
 Version: 0.5.2
-Release: alt0.2
+Release: alt0.3
 
 Summary: Utility for creating romfs filesystems
-License: GPL
+License: GPLv2+
 Group: System/Kernel and hardware
 Url: http://romfs.sourceforge.net
-Packager: Dmitry V. Levin <ldv@altlinux.org>
 
 Source: http://prdownloads.sourceforge.net/romfs/genromfs-%version.tar
 
@@ -18,17 +17,18 @@ read-only filesystems supported by the Linux kernel.  Romfs filesystems
 are mainly used for the initial RAM disks used during installation.
 
 %prep
-%setup -q
+%setup
 
 %build
 %def_enable Werror
-make CFLAGS="%optflags -DVERSION=\\\"%version\\\"" LDFLAGS="%optflags"
+make CFLAGS="%optflags $(getconf LFS_CFLAGS) -DVERSION=\\\"%version\\\"" \
+	LDFLAGS="%optflags"
 
 %install
 install -pDm755 genromfs %buildroot/bin/genromfs
 install -pDm644 genromfs.8 %buildroot%_man8dir/genromfs.8
 mkdir -p %buildroot%_bindir
-ln -s ../../bin/genromfs %buildroot%_bindir/
+ln -r -s %buildroot/bin/genromfs %buildroot%_bindir/
 
 %files
 /bin/*
@@ -37,6 +37,9 @@ ln -s ../../bin/genromfs %buildroot%_bindir/
 %doc NEWS *.txt genrommkdev
 
 %changelog
+* Fri Apr 19 2013 Dmitry V. Levin <ldv@altlinux.org> 0.5.2-alt0.3
+- Built with LFS support enabled.
+
 * Mon Oct 16 2006 Dmitry V. Levin <ldv@altlinux.org> 0.5.2-alt0.2
 - Fixed build with -D_FORTIFY_SOURCE=2 -Werror.
 
