@@ -1,6 +1,6 @@
 Name: fish
 Version: 1.23.1
-Release: alt2
+Release: alt2.qa1
 
 Summary: A friendly interactive shell
 License: GPLv2+
@@ -71,6 +71,9 @@ fi
 %_mandir/man1/xsel.1x*
 
 %changelog
+* Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.23.1-alt2.qa1
+- NMU: rebuilt for updated dependencies.
+
 * Sun Mar 06 2011 Kirill A. Shutemov <kas@altlinux.org> 1.23.1-alt2
 - Do not compress /usr/share/fish/man/*
 
