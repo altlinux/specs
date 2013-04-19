@@ -3,7 +3,7 @@
 
 Name: mjpegtools
 Version: 1.9.0
-Release: alt6
+Release: alt6.qa1
 
 Summary: Tools for recording, editing, playing back mpeg-encoding video under linux
 License: GPL
@@ -134,6 +134,9 @@ rm -f %buildroot%_infodir/dir
 %_libdir/*.a
 
 %changelog
+* Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.9.0-alt6.qa1
+- NMU: rebuilt for updated dependencies.
+
 * Fri Sep 28 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.9.0-alt6
 - Rebuilt with libpng15
 
