@@ -1,26 +1,25 @@
 Name: mingetty
 Version: 1.01
-Release: alt3
+Release: alt4
 
 Summary: A compact getty program for virtual consoles only
-License: GPL
+License: GPLv2+
 Group: System/Base
-Packager: Dmitry V. Levin <ldv@altlinux.org>
 
 # This url is no longer valid:
 # ftp://jurix.jura.uni-sb.de/pub/linux/source/system/daemons/
 Source: mingetty-%version.tar
 
-Patch1: mingetty-1.00-alt-Makefile.patch
-Patch2: mingetty-1.01-owl-logname.patch
-Patch3: mingetty-1.00-owl-alt-syslog.patch
-Patch4: mingetty-1.00-owl-alt-bound.patch
-Patch5: mingetty-1.00-alt-read_eof.patch
-Patch6: mingetty-1.01-suse-owl-alt-vhangup.patch
-Patch7: mingetty-1.01-alt-logname_valid_characters.patch
-Patch8: mingetty-1.01-alt-progname.patch
-Patch9: mingetty-1.01-alt-std_fd.patch
-Patch10: mingetty-1.01-alt-release.patch
+Patch0: mingetty-1.00-alt-Makefile.patch
+Patch1: mingetty-1.01-owl-logname.patch
+Patch2: mingetty-1.00-owl-alt-syslog.patch
+Patch3: mingetty-1.00-owl-alt-bound.patch
+Patch4: mingetty-1.00-alt-read_eof.patch
+Patch5: mingetty-1.01-suse-owl-alt-vhangup.patch
+Patch6: mingetty-1.01-alt-logname_valid_characters.patch
+Patch7: mingetty-1.01-alt-progname.patch
+Patch8: mingetty-1.01-alt-std_fd.patch
+Patch9: mingetty-1.01-alt-release.patch
 
 Requires: login >= 0:0.60-alt1
 
@@ -30,7 +29,8 @@ use only on virtual consoles.  mingetty lacks certain functionality
 needed for serial lines (you may use the mgetty program in that case).
 
 %prep
-%setup -q
+%setup
+%patch0 -p1
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
@@ -40,7 +40,6 @@ needed for serial lines (you may use the mgetty program in that case).
 %patch7 -p1
 %patch8 -p1
 %patch9 -p1
-%patch10 -p1
 
 %build
 make
@@ -53,6 +52,9 @@ make install
 %_man8dir/*
 
 %changelog
+* Fri Apr 19 2013 Dmitry V. Levin <ldv@altlinux.org> 1.01-alt4
+- Built with LFS support enabled.
+
 * Sat Apr 07 2007 Dmitry V. Levin <ldv@altlinux.org> 1.01-alt3
 - Updated progname patch.
 
