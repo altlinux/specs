@@ -2,7 +2,7 @@
 
 Name: directfb
 Version: 1.1.0
-Release: alt4.1
+Release: alt4.1.qa1
 
 Summary: %realname - drivers and binaries
 License: GPL
@@ -125,6 +125,9 @@ find \
 %files -n lib%name-devel-static -f %name-static.files
 
 %changelog
+* Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.1.0-alt4.1.qa1
+- NMU: rebuilt for updated dependencies.
+
 * Wed Sep 26 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.0-alt4.1
 - Rebuilt with libpng15
 
