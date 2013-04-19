@@ -1,6 +1,6 @@
 Name: manedit
 Version: 1.2.1
-Release: alt1.qa3
+Release: alt1.qa4
 
 Summary: Manual page viewer and editor
 Summary(ru_RU.CP1251): Программа для редактирования и просмотра документации
@@ -101,6 +101,9 @@ EOF
 %doc AUTHORS README INSTALL LICENSE
 
 %changelog
+* Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.2.1-alt1.qa4
+- NMU: rebuilt for updated dependencies.
+
 * Thu Jul 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.1-alt1.qa3
 - Fixed build
 
