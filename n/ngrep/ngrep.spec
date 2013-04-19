@@ -1,6 +1,6 @@
 Name: ngrep
 Version: 1.46
-Release: alt0.1
+Release: alt0.2
 
 Summary: ngrep - network grep
 License: BSD-style
@@ -60,6 +60,9 @@ install -pD -m644 %name.8 %buildroot%_man8dir/%name.8
 %doc doc/*.txt usage.html
 
 %changelog
+* Fri Apr 19 2013 Dmitry V. Levin <ldv@altlinux.org> 1.46-alt0.2
+- Built with LFS support enabled.
+
 * Fri Nov 19 2010 Dmitry V. Levin <ldv@altlinux.org> 1.46-alt0.1
 - Updated to 1.45-35-g16ba99a.
 - Switched to PCRE.
