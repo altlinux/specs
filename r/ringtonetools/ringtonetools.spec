@@ -1,6 +1,6 @@
 Name: ringtonetools
 Version: 2.26
-Release: alt1
+Release: alt1.qa1
 
 Summary: Tool for converting ringtones and logos for mobile phones
 License: Distributable
@@ -57,6 +57,9 @@ ems.
 %_bindir/*
 
 %changelog
+* Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.26-alt1.qa1
+- NMU: rebuilt for updated dependencies.
+
 * Sun Dec 11 2005 Michael Shigorin <mike@altlinux.org> 2.26-alt1
 - 2.26
 
