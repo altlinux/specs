@@ -1,6 +1,6 @@
 Name: jack_mixer
 Version: 9
-Release: alt1.1
+Release: alt1.1.qa1
 Summary: Jack Audio Mixer
 License: GPLv2+
 Group: Sound
@@ -42,6 +42,9 @@ unset GCONF_DISABLE_MAKEFILE_SCHEMA_INSTALL
 %_datadir/%name
 
 %changelog
+* Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 9-alt1.1.qa1
+- NMU: rebuilt for updated dependencies.
+
 * Sat Oct 22 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 9-alt1.1
 - Rebuild with Python-2.7
 
