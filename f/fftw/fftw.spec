@@ -1,6 +1,6 @@
 Name: fftw
 Version: 2.1.5
-Release: alt7
+Release: alt7.qa1
 
 Summary: Fast Fourier transform library
 License: GPL
@@ -112,6 +112,9 @@ popd
 %_libdir/*.a
 
 %changelog
+* Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.1.5-alt7.qa1
+- NMU: rebuilt for updated dependencies.
+
 * Thu Oct 20 2011 Alexey Tourbin <at@altlinux.ru> 2.1.5-alt7
 - Rebuilt for debuginfo
 
