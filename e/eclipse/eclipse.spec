@@ -30,7 +30,7 @@ Epoch:  1
 Summary:        An open, extensible IDE
 Name:           eclipse
 Version:        %{eclipse_version}
-Release:        alt4_7jpp7
+Release:        alt5_7jpp7
 License:        EPL
 Group:          Editors
 URL:            http://www.eclipse.org/
@@ -97,6 +97,7 @@ Source44: import.info
 Patch33: eclipse-3.7.0-alt-as-needed-statically-link-xpcomglue.patch
 Patch34: eclipse-3.7.0-alt-libgnomeproxy-gcc-as-needed.patch
 Patch35: eclipse-3.7.0-alt-swt-linux-as-needed.patch
+Patch41: eclipse-4.2.0-alt-swt-enable-depercated-glib2-headers.patch
 Source45: fix_share_symlinks_to_libdir.pl
 
 %description
@@ -269,6 +270,7 @@ pushd build/eclipse-%version-*
 %patch33 -p2
 %patch34 -p2
 %patch35 -p2
+%patch41 -p2
 popd
 %patch73 -p0
 
@@ -714,6 +716,9 @@ touch %buildroot/etc/eclipse.ini
 %{_mavendepmapfragdir}/%{name}-equinox-osgi
 
 %changelog
+* Fri Apr 19 2013 Igor Vlasenko <viy@altlinux.ru> 1:4.2.0-alt5_7jpp7
+- fixed build
+
 * Sat Sep 29 2012 Igor Vlasenko <viy@altlinux.ru> 1:4.2.0-alt4_7jpp7
 - build with lucene3
 
