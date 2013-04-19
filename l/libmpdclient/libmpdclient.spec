@@ -3,7 +3,7 @@
 
 Name: libmpdclient
 Version: 2.5
-Release: alt1.1
+Release: alt1.1.qa1
 
 Summary: MPD client library
 License: BSD-like
@@ -50,6 +50,9 @@ Header files for MPD client library.
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.5-alt1.1.qa1
+- NMU: rebuilt for updated dependencies.
+
 * Fri Jun 08 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.5-alt1.1
 - Fixed build
 
