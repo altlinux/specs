@@ -1,6 +1,6 @@
 Name:		WMmp 
 Version:	0.10.0
-Release:	alt2
+Release:	alt2.qa1
 
 Summary:	A (Window Maker) dock app for interfacing MPD.
 License: 	GPL
@@ -33,6 +33,9 @@ A (Window Maker) dock app for interfacing MPD.
 %_man1dir/%name.1.gz
 
 %changelog
+* Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.10.0-alt2.qa1
+- NMU: rebuilt for updated dependencies.
+
 * Tue Apr 19 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 0.10.0-alt2
 - fix build
 
