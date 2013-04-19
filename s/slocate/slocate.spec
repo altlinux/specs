@@ -1,6 +1,6 @@
 Name: slocate
 Version: 0.2.16
-Release: alt1
+Release: alt1.qa1
 Serial: 1
 
 Summary: Finds files on a system via central file name database
@@ -43,6 +43,9 @@ install -pD -m644 /dev/null %buildroot%_localstatedir/locate/locatedb
 %attr(640,root,%name) %verify(not md5 mtime size) %ghost %_localstatedir/locate/locatedb
 
 %changelog
+* Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1:0.2.16-alt1.qa1
+- NMU: rebuilt for debuginfo.
+
 * Tue Nov 04 2008 Dmitry V. Levin <ldv@altlinux.org> 1:0.2.16-alt1
 - locate: Fixed offset calculation (closes: #17771).
 - mklocatedb: Optimized write syscalls (Alexey Tourbin).
