@@ -5,7 +5,7 @@
 
 Name: psad
 Version: 2.1.7
-Release: alt1
+Release: alt1.qa1
 
 Summary: psad analyzes iptables log messages for suspect traffic
 License: GPL
@@ -165,6 +165,9 @@ fi
 %config(noreplace) %_sysconfdir/%name/snort_rules/*
 
 %changelog
+* Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.1.7-alt1.qa1
+- NMU: rebuilt for updated dependencies.
+
 * Thu Oct 20 2011 Alexey Tourbin <at@altlinux.ru> 2.1.7-alt1
 - 2.0.5 -> 2.1.7
 - bundled perl modules not packaged
