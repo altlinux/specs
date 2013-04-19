@@ -1,6 +1,6 @@
 Name: boswars
 Version: 2.6.1
-Release: alt1.1
+Release: alt1.1.qa1
 Summary: Bos Wars is a futuristic real-time strategy game
 Group: Games/Strategy
 License: GPLv2
@@ -61,6 +61,9 @@ install -p -m 644 graphics/ui/elites_claw.png \
 %_datadir/%name
 
 %changelog
+* Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.6.1-alt1.1.qa1
+- NMU: rebuilt for updated dependencies.
+
 * Fri Sep 28 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.6.1-alt1.1
 - Rebuilt with libpng15
 
