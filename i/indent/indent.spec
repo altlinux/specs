@@ -1,12 +1,11 @@
 Name: indent
 Version: 2.2.11
-Release: alt1
+Release: alt2
 
 Summary: A GNU program for formatting C code
 License: GPLv3+
 Group: Development/C
 Url: http://indent.isidore-it.eu/beautify.html
-Packager: Dmitry V. Levin <ldv@altlinux.org>
 
 # http://indent.isidore-it.eu/%name-%version.tar.gz
 Source: %name-%version.tar
@@ -14,6 +13,14 @@ Source: %name-%version.tar
 Patch1: indent-2.2.11-alt-i18n.patch
 Patch2: indent-2.2.11-alt-man.patch
 Patch3: indent-2.2.11-deb-texinfo.patch
+Patch4: indent-2.2.11-alt-lfs.patch
+Patch5: indent-2.2.11-rh-Do-not-split-decimal-float-suffix-from-constant.patch
+Patch6: indent-2.2.11-rh-Return-non-zero-exit-code-on-tests-failure.patch
+Patch7: indent-2.2.11-rh-Fix-compiler-warnings.patch
+Patch8: indent-2.2.11-rh-Allow-64-bit-stat.patch
+Patch9: indent-2.2.11-rh-Fix-copying-overlapping-comment.patch
+
+BuildRequires: gperf
 
 %description
 Indent is a GNU program for formatting C code so that it is easier to
@@ -27,10 +34,18 @@ handle things properly.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
+%patch5 -p1
+%patch6 -p1
+%patch7 -p1
+%patch8 -p1
+%patch9 -p1
+rm src/gperf*.c
 rm po/*.gmo
 sed -i 's/^\(all-local\|install-data-local\):.*/\1:/' doc/Makefile.*
 
 %build
+%autoreconf
 %configure
 %make_build
 
@@ -39,6 +54,9 @@ sed -i 's/^\(all-local\|install-data-local\):.*/\1:/' doc/Makefile.*
 rm %buildroot%_bindir/texinfo2man
 %find_lang %name
 
+%check
+make -C regression
+
 %files -f %name.lang
 %_bindir/indent
 %_mandir/man?/*.*
@@ -46,6 +64,11 @@ rm %buildroot%_bindir/texinfo2man
 %doc AUTHORS ChangeLog NEWS README
 
 %changelog
+* Fri Apr 19 2013 Dmitry V. Levin <ldv@altlinux.org> 2.2.11-alt2
+- Merged fixes from Fedora.
+- Enabled LFS support.
+- Enabled regression testing during build.
+
 * Thu Oct 07 2010 Dmitry V. Levin <ldv@altlinux.org> 2.2.11-alt1
 - Updated to 2.2.11 (closes: #19289).
 
