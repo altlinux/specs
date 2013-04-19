@@ -3,7 +3,7 @@
 
 Name: pachi
 Version: 1.0
-Release: alt3.qa3
+Release: alt3.qa4
 
 Summary: Cool 2D game like Manic Miner, Jet set Willy and more from the 80s
 License: GPLv2
@@ -85,6 +85,9 @@ install -pD -m644 Tgfx/%name-48.png %buildroot%_liconsdir/%name.png
 %_gamesdatadir/%name
 
 %changelog
+* Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.0-alt3.qa4
+- NMU: rebuilt for updated dependencies.
+
 * Thu Jul 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0-alt3.qa3
 - Disabled -Werror from compiler flags
 
