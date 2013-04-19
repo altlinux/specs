@@ -1,6 +1,6 @@
 Name: pam_alreadyloggedin
 Version: 0.3.2
-Release: alt1
+Release: alt1.qa1
 
 %def_without libpam
 %def_with    libpam0
@@ -66,6 +66,9 @@ install -pD -m644 login.sso %buildroot%examples_dir/login
 %_man8dir/%name.8.gz
 
 %changelog
+* Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.3.2-alt1.qa1
+- NMU: rebuilt for updated dependencies.
+
 * Wed Nov 22 2006 Ilya Evseev <evseev@altlinux.ru> 0.3.2-alt1
 - prevent gcc4 stack protection problem: http://wiki.sisyphus.ru/devel/gcc4
 - include syslog.h to sources
