@@ -3,7 +3,7 @@
 
 Name: lib%real_name
 Version: 0.2.9
-Release: alt3
+Release: alt3.qa1
 
 Summary: The EventLog library implements a set of functions for handle event records.
 License: distributable
@@ -73,6 +73,9 @@ done
 %endif
 
 %changelog
+* Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.2.9-alt3.qa1
+- NMU: rebuilt for updated dependencies.
+
 * Thu Feb 10 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.9-alt3
 - Rebuilt for debuginfo
 
