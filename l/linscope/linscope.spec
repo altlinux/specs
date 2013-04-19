@@ -1,6 +1,6 @@
 Name: linscope
 Version: 0.3.2
-Release: alt4.qa1
+Release: alt4.qa2
 
 Summary: Network scanner for network shares (SMB)
 License: GPL
@@ -54,6 +54,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %doc CHANGES.TXT README.TXT TODO.TXT README.ALT
 
 %changelog
+* Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.3.2-alt4.qa2
+- NMU: rebuilt for updated dependencies.
+
 * Tue May 24 2011 Repocop Q. A. Robot <repocop@altlinux.org> 0.3.2-alt4.qa1
 - NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
 - applied repocop fixes:
