@@ -2,7 +2,7 @@
 
 Name: kesi
 Version: 0.9
-Release: alt1.4
+Release: alt1.4.qa1
 
 Summary: KESI Easy SQL Import - A tool to import CSV files into SQL tables
 License: GPL
@@ -41,6 +41,9 @@ sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' libtool
 %_iconsdir/hicolor/*/apps/kesi.*
 
 %changelog
+* Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.9-alt1.4.qa1
+- NMU: rebuilt for updated dependencies.
+
 * Wed Jul 18 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9-alt1.4
 - Fixed build
 
