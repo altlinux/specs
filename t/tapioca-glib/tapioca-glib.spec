@@ -1,6 +1,6 @@
 Name: tapioca-glib
 Version: 0.14.1.2
-Release: alt3
+Release: alt3.qa1
 
 Summary: A framework for Voice over IP (VoIP) and Instant Messaging (IM)
 Group: Networking/Instant messaging
@@ -87,6 +87,9 @@ sed -i 's|^\(INSTALL_DATA\).*|\1 = cp -f|' tapioca/core/Makefile
 %_datadir/gtk-doc/html/tapioca-glib-core/
 
 %changelog
+* Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.14.1.2-alt3.qa1
+- NMU: rebuilt for updated dependencies.
+
 * Tue Mar 22 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.14.1.2-alt3
 - Rebuilt for debuginfo
 
