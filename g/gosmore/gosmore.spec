@@ -1,6 +1,6 @@
 Name: gosmore
 Version: 0.0.0.20101111
-Release: alt4.svn.24204
+Release: alt4.svn.24204.qa1
 Summary: Openstreetmap.org viewer / wayfinder / search client
 License: GPLv2+
 Group: Sciences/Geosciences
@@ -36,6 +36,9 @@ found in modern handheld GPS receivers.
 %_desktopdir/%name.desktop
 
 %changelog
+* Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.0.0.20101111-alt4.svn.24204.qa1
+- NMU: rebuilt for updated dependencies.
+
 * Tue Jul 05 2011 Egor Glukhov <kaman@altlinux.org> 0.0.0.20101111-alt4.svn.24204
 - Fixed build
 
