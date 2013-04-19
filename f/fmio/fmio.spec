@@ -2,7 +2,7 @@
 
 Name: fmio
 Version: 2.0.8
-Release: alt2.2
+Release: alt2.2.qa1
 
 Summary: fmio, FM radio card manipulation utility
 License: BSD
@@ -102,6 +102,9 @@ install -pm644 %SOURCE2 README.fedora
 %config(noreplace) %_sysconfdir/wmfmiorc
 
 %changelog
+* Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.0.8-alt2.2.qa1
+- NMU: rebuilt for updated dependencies.
+
 * Wed Jul 18 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.8-alt2.2
 - Fixed build
 
