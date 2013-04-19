@@ -4,7 +4,7 @@
 # --with mysql --with pgsql
 Name: flow-tools
 Version: 0.68
-Release: alt6.1
+Release: alt6.1.qa1
 
 Summary: Tool set for working with NetFlow data version %version
 License: BSD
@@ -139,6 +139,9 @@ rm -f %buildroot%_libdir/*.la
 %_bindir/flow-rptfmt
 
 %changelog
+* Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.68-alt6.1.qa1
+- NMU: rebuilt for updated dependencies.
+
 * Sat Oct 22 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 0.68-alt6.1
 - Rebuild with Python-2.7
 
