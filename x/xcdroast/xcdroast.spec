@@ -1,6 +1,6 @@
 Name: xcdroast
 Version: 0.98alpha16
-Release: alt1.qa3
+Release: alt1.qa4
 Serial: 6
 
 %define _xcdroastlibdir %_prefix/lib/%name
@@ -142,6 +142,9 @@ mkdir -p %buildroot%_xcdroastlibdir/{lang,xpms}
 #%doc README doc/DOCUMENTATION doc/README.AIX doc/README.HPUX doc/README.nonroot doc/README.setup-bulgarian.html doc/FAQ doc/README.atapi doc/README.MacOSX doc/README.ProDVD doc/TRANSLATION.HOWTO
 
 %changelog
+* Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 6:0.98alpha16-alt1.qa4
+- NMU: rebuilt for updated dependencies.
+
 * Wed Jun 20 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 6:0.98alpha16-alt1.qa3
 - Fixed build
 
