@@ -1,6 +1,6 @@
 Name: e2tools
 Version: 0.0.16
-Release: alt2
+Release: alt2.qa1
 
 Summary: Manipulate files in unmounted ext2/ext3 filesystems
 License: GPL+
@@ -69,6 +69,9 @@ sh %SOURCE1
 %_mandir/man?/*
 
 %changelog
+* Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.0.16-alt2.qa1
+- NMU: rebuilt for updated dependencies.
+
 * Tue Apr 26 2011 Dmitry V. Levin <ldv@altlinux.org> 0.0.16-alt2
 - Fixed build, cleaned up specfile.
 - Synced with Fedora e2tools-0.0.16-17.
