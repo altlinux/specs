@@ -2,7 +2,7 @@
 
 Name: atlas
 Version: 3.9.35
-Release: alt1
+Release: alt1.qa1
 
 Summary: Automatically Tuned Linear Algebra Software (the BLAS library)
 License: BSD
@@ -246,6 +246,9 @@ well as a few routines from LAPACK.
 %pkgdocdir/*.pdf.gz
 
 %changelog
+* Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 3.9.35-alt1.qa1
+- NMU: rebuilt for updated dependencies.
+
 * Sun Apr 03 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.9.35-alt1
 - Version 3.9.35
 
