@@ -3,7 +3,7 @@
 Summary: SELinux policy core utilities
 Name: policycoreutils
 Version: 2.1.13
-Release: alt4
+Release: alt5
 License: GPLv2
 Group: System/Base
 Url: http://userspace.selinuxproject.org
@@ -21,6 +21,8 @@ Source11: restorecond.service
 Source12: mcstransd.service
 Patch0: %name-%version-%release.patch
 Patch1: policycoreutils-alt-autorelabel-fix-path.patch
+Patch2: policycoreutils-alt-fix-free-groups.patch
+Patch3: policycoreutils-alt-mcstrans.patch
 %define mcstrans_ver 0.3.3
 Requires: python-module-semanage python-module-audit
 
@@ -111,6 +113,8 @@ system-config-selinux is a utility for managing the SELinux environment.
 %setup
 %patch0 -p1
 %patch1 -p1
+%patch2 -p2
+%patch3 -p2
 sed -i '/^override CFLAGS/s/ -Werror//g' sandbox/Makefile
 sed -i 's/\( awk \)-S /\1/g' setfiles/Makefile
 
@@ -272,6 +276,9 @@ cp -r mcstrans/share/* %buildroot%_datadir/mcstrans/
 
 
 %changelog
+* Wed Apr 17 2013 Timur Aitov <timonbl4@altlinux.org> 2.1.13-alt5
+- mcstransd: convert sensitivity and categoryset separately
+
 * Wed Apr 03 2013 Led <led@altlinux.ru> 2.1.13-alt4
 - newrole: add CAP_SETGID to list fo drop_capabilities() (ALT#28784)
 
