@@ -2,7 +2,7 @@ Name:		gtkperf
 Summary:	GTK+ performance tester
 Summary(ru_RU.UTF-8): Утилита для тестирования производительности модулей прорисовки GTK+
 Version:	0.40
-Release:	alt1.qa2
+Release:	alt1.qa3
 License:	GPLv2
 Group:		System/X11
 Source0:	%{name}-%{version}.tar.gz
@@ -57,6 +57,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %{_datadir}/applications/*
 
 %changelog
+* Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.40-alt1.qa3
+- NMU: rebuilt for updated dependencies.
+
 * Sat May 21 2011 Repocop Q. A. Robot <repocop@altlinux.org> 0.40-alt1.qa2
 - NMU: fix desktop permissions
 
