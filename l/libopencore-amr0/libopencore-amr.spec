@@ -5,7 +5,7 @@
 
 Name: %libname%soversion
 Version: 0.1.2
-Release: alt2.1
+Release: alt2.1.qa1
 Summary: OpenCore implementation of AMR speech codec.
 
 Group: System/Libraries
@@ -102,6 +102,9 @@ the Google Android project.
 %_pkgconfigdir/opencore-amrnb.pc
 
 %changelog
+* Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.1.2-alt2.1.qa1
+- NMU: rebuilt for updated dependencies.
+
 * Sat Nov 10 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.2-alt2.1
 - Rebuilt for debuginfo
 
