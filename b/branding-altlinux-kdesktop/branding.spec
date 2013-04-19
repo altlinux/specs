@@ -6,7 +6,7 @@
 
 Name: branding-%brand-%smalltheme
 Version: 7.0.0
-Release: alt8
+Release: alt9
 BuildArch: noarch
 
 %define theme %name
@@ -455,6 +455,9 @@ fi
 %_datadir/kde4/apps/kio_desktop/DesktopLinks/indexhtml.desktop
 
 %changelog
+* Fri Apr 19 2013 Sergey V Turchin <zerg at altlinux dot org> 7.0.0-alt9
+- fix grub terminal box background color
+
 * Mon Apr 08 2013 Sergey V Turchin <zerg at altlinux dot org> 7.0.0-alt8
 - fix requires
 
