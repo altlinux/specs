@@ -1,6 +1,6 @@
 Name: yodl
 Version: 3.00.0
-Release: alt1
+Release: alt1.qa1
 Epoch: 1
 
 Summary: Yet oneOther Document Language
@@ -75,6 +75,9 @@ done
 %_docdir/%name
 
 %changelog
+* Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1:3.00.0-alt1.qa1
+- NMU: rebuilt for updated dependencies.
+
 * Sun Aug 28 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:3.00.0-alt1
 - Version 3.00.0
 
