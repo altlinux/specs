@@ -2,7 +2,7 @@
 
 Name: wmMatrix
 Version: 0.2
-Release: alt3.qa1
+Release: alt3.qa2
 Summary: DockApp version of Jamie Zawinski's xmatrix screensaver hack
 Group: Graphical desktop/Window Maker
 License: GPL
@@ -43,6 +43,9 @@ install -m644 %_sourcedir/%name.menu %buildroot%_menudir/%name
 %_menudir/%name
 
 %changelog
+* Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.2-alt3.qa2
+- NMU: rebuilt for updated dependencies.
+
 * Tue May 17 2011 Repocop Q. A. Robot <repocop@altlinux.org> 0.2-alt3.qa1
 - NMU (by repocop): the following fixes applied:
   * update_menus for wmMatrix
