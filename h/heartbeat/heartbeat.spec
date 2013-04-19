@@ -13,7 +13,7 @@
 Summary: Heartbeat subsystem for High-Availability Linux
 Name: heartbeat
 Version: 2.1.3
-Release: alt5.2
+Release: alt5.2.qa1
 License: GPL/LGPL
 Url: http://linux-ha.org/
 Group: System/Servers
@@ -363,6 +363,9 @@ install -d %buildroot/%_var/lib/%name/pengine
 %endif #static
 
 %changelog
+* Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.1.3-alt5.2.qa1
+- NMU: rebuilt for updated dependencies.
+
 * Wed Jul 11 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.1.3-alt5.2
 - Fixed build
 
