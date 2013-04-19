@@ -1,6 +1,6 @@
 Name: evilwm
 Version: 1.0.1
-Release: alt1
+Release: alt1.qa1
 
 Summary: a minimalist window manager derived from aewm
 License: BSD-like
@@ -47,6 +47,9 @@ BuildRequires: libXext-devel libXrandr-devel libXrender-devel
 %_man1dir/%name.*
 
 %changelog
+* Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.0.1-alt1.qa1
+- NMU: rebuilt for updated dependencies.
+
 * Tue Mar 22 2011 Lenar Shakirov <snejok@altlinux.ru> 1.0.1-alt1
 - New version
 
