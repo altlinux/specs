@@ -2,7 +2,7 @@
 
 Name: gkrellm-%shortname
 Version: 0.1.2
-Release: alt1
+Release: alt1.qa1
 
 Summary: GKrellM plugin which provides a simple countdown clock
 License: GPL
@@ -35,6 +35,9 @@ scroll the time.
 %_libdir/gkrellm2/plugins/*.so
 
 %changelog
+* Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.1.2-alt1.qa1
+- NMU: rebuilt for updated dependencies.
+
 * Wed Apr 11 2007 Andrey Rahmatullin <wrar@altlinux.ru> 0.1.2-alt1
 - 0.1.2
 - update Url:
