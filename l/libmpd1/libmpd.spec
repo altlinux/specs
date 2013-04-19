@@ -7,7 +7,7 @@
 
 Name: %libname%sonum
 Version: 0.19.0
-Release: alt3
+Release: alt3.qa1
 Summary: Client library for MPD
 License: GPLv2+
 Group: System/Libraries
@@ -104,6 +104,9 @@ install -m 0644 doc/html/* %buildroot%_docdir/%name-%version/html/
 %endif
 
 %changelog
+* Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.19.0-alt3.qa1
+- NMU: rebuilt for updated dependencies.
+
 * Sun Apr 24 2011 Dmitry V. Levin <ldv@altlinux.org> 0.19.0-alt3
 - Disabled %libname-devel-static.
 - Rebuilt for debuginfo.
