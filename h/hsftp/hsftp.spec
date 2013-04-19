@@ -1,6 +1,6 @@
 Name: hsftp
 Version: 1.15
-Release: alt1
+Release: alt1.qa1
 
 Summary: FTP-type client using SSH to transfer files
 License: GPL
@@ -40,6 +40,9 @@ but uses ssh to transport commands and data.
 %_man1dir/*
 
 %changelog
+* Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.15-alt1.qa1
+- NMU: rebuilt for updated dependencies.
+
 * Tue Dec 06 2005 Michael Shigorin <mike@altlinux.org> 1.15-alt1
 - built for ALT Linux
 
