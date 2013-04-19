@@ -1,6 +1,6 @@
 Name: libguess
 Version: 0.2.0
-Release: alt4
+Release: alt4.qa1
 
 Summary: library for detecting far east encodings
 
@@ -49,6 +49,9 @@ ln -sf %name.so.%version %buildroot%_libdir/%name.so
 %_libdir/*.so
 
 %changelog
+* Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.2.0-alt4.qa1
+- NMU: rebuilt for updated dependencies.
+
 * Fri Mar 04 2011 Alexey Tourbin <at@altlinux.ru> 0.2.0-alt4
 - rebuilt for debuginfo
 
