@@ -1,7 +1,7 @@
 Name: libosip2
 Summary: The GNU oSIP library
 Version: 3.5.0
-Release: alt1
+Release: alt1.qa1
 License: LGPL
 Group: System/Libraries
 Url: http://www.gnu.org/software/osip/osip.html
@@ -63,6 +63,9 @@ Static version of the GNU oSIP library.
 %endif
 
 %changelog
+* Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 3.5.0-alt1.qa1
+- NMU: rebuilt for updated dependencies.
+
 * Sat Feb 12 2011 Egor Glukhov <kaman@altlinux.org> 3.5.0-alt1
 - 3.5.0
 
