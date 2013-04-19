@@ -1,6 +1,6 @@
 Name: ncpfs
 Version: 2.2.6
-Release: alt9
+Release: alt9.qa1
 
 Summary: Utilities for the %name filesystem, a NetWare client for Linux
 License: GPL
@@ -178,6 +178,9 @@ done
 %doc ipx-1.0/COPYING ipx-1.0/README README.ipxdump
 
 %changelog
+* Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.2.6-alt9.qa1
+- NMU: rebuilt for updated dependencies.
+
 * Wed Mar 09 2011 Dmitry V. Levin <ldv@altlinux.org> 2.2.6-alt9
 - Imported fix of race conditions in ncpmount/ncpumount operations
   from Fedora (fixes CVE-2009-3297).
