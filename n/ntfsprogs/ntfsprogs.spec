@@ -3,7 +3,7 @@
 
 Name: ntfsprogs
 Version: 2.0.0
-Release: alt8.1
+Release: alt8.1.qa1
 
 Summary: NTFS filesystem utilities
 License: GPLv2+
@@ -150,6 +150,9 @@ rm -f %buildroot%_man8dir/libntfs-gnomevfs.*
 
 
 %changelog
+* Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.0.0-alt8.1.qa1
+- NMU: rebuilt for updated dependencies.
+
 * Fri Feb 10 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.0-alt8.1
 - Removed bad RPATH
 
