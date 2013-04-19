@@ -1,6 +1,6 @@
 Name: libbotan
 Version: 1.8.10
-Release: alt2.1
+Release: alt2.1.qa1
 
 Summary: A C++ Crypto Library
 License: BSD
@@ -66,6 +66,9 @@ cp -rp readme.txt doc/{examples,scripts} %buildroot%_defaultdocdir/%name-%versio
 %doc %_defaultdocdir/%name-%version
 
 %changelog
+* Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.8.10-alt2.1.qa1
+- NMU: rebuilt for updated dependencies.
+
 * Thu Aug 30 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.8.10-alt2.1
 - Rebuilt with gmp 5.0.5
 
