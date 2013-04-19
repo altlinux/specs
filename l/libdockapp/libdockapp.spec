@@ -2,7 +2,7 @@
 
 Name: libdockapp
 Version: 0.6.2
-Release: alt1.1
+Release: alt1.1.qa1
 
 Summary: DockApp Making Standard Library
 Group: System/Libraries
@@ -66,6 +66,9 @@ This package contains header files needed for development.
 %_includedir/*.h
 
 %changelog
+* Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.6.2-alt1.1.qa1
+- NMU: rebuilt for updated dependencies.
+
 * Tue Jul 24 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.2-alt1.1
 - Rebuilt for set-versions
 
