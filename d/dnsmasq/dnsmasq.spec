@@ -1,7 +1,7 @@
 Name: dnsmasq
-Version: 2.65
+Version: 2.66
 
-Release: alt2
+Release: alt1
 Summary: A lightweight caching nameserver
 License: %gpl2plus
 Group: System/Servers
@@ -12,11 +12,11 @@ Source2: %name.sysconfig
 Source3: %name-helper
 Source4: %name.service
 Patch: %name-%version-%release.patch
-# Patches from Fedora
-Patch2: dnsmasq-2.65-Correct-behaviour-for-TCP-queries-to-allowed-address.patch
 
 BuildPreReq: glibc-kernheaders
 BuildRequires(pre): rpm-build-licenses
+
+BuildRequires: libidn-devel
 
 %define sysconfig_file %_sysconfdir/sysconfig/%name
 
@@ -48,10 +48,11 @@ Dnsmasq не поддерживает пересылку DNS-зон и поэтому не может использоваться
 %setup
 %patch -p1
 
-%patch2 -p1
-
 # Setup version
 sed -r -i "s;-DVERSION=.+;-DVERSION='\\\\\"%version\\\\\"';" Makefile
+
+#enable IDN support
+sed -i 's;/\* #define HAVE_IDN \*/;#define HAVE_IDN;' src/config.h
 
 %build
 %make_build
@@ -95,6 +96,13 @@ fi
 %doc contrib/dnslist contrib/dynamic-dnsmasq
 
 %changelog
+* Fri Apr 19 2013 Mikhail Efremov <sem@altlinux.org> 2.66-alt1
+- Patch from upstream git:
+  + Fix wrong size in memset() call.
+- Enable IDN support.
+- Drop obsoleted patch.
+- Updated to 2.66.
+
 * Mon Mar 11 2013 Mikhail Efremov <sem@altlinux.org> 2.65-alt2
 - dnsmasq-helper: Fix exit status (closes: #28658).
 
