@@ -1,6 +1,6 @@
 Name: plib
 Version: 1.8.5
-Release: alt3
+Release: alt3.qa1
 
 Summary: Steve's Portable Game Library
 License: LGPL
@@ -52,6 +52,9 @@ Development libraries and header files for %name.
 %_includedir/%name
 
 %changelog
+* Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.8.5-alt3.qa1
+- NMU: rebuilt for updated dependencies.
+
 * Thu Sep 27 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.8.5-alt3
 - Rebuilt for debuginfo
 
