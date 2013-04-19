@@ -3,7 +3,7 @@
 
 Name: lib%xx_name
 Version: 2.06
-Release: alt2.1
+Release: alt2.1.qa1
 
 Summary: JSON parser for C++ written with Boost.Spirit
 License: The Code Project Open License (CPOL) 1.02
@@ -68,6 +68,9 @@ popd
 %_libdir/*.so
 
 %changelog
+* Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.06-alt2.1.qa1
+- NMU: rebuilt for updated dependencies.
+
 * Thu Dec 06 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.06-alt2.1
 - Fixed build with Boost 1.52.0
 
