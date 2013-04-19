@@ -1,7 +1,7 @@
 # vim:set ft=spec: -*- rpm-spec -*-
 Name: briquolo
 Version: 0.5.7
-Release: alt5.1
+Release: alt5.1.qa1
 
 Group: Games/Arcade
 Summary: OpenGL-based 3D breakout
@@ -85,6 +85,9 @@ install -m 644 %SOURCE3 %buildroot/%_pixmapsdir/%name.png
 %doc README*
 
 %changelog
+* Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.5.7-alt5.1.qa1
+- NMU: rebuilt for updated dependencies.
+
 * Fri Sep 28 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.7-alt5.1
 - Rebuilt with libpng15
 
