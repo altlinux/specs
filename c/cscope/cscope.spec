@@ -2,7 +2,7 @@
 
 Name: cscope
 Version: 15.7a
-Release: alt1.qa1
+Release: alt1.qa2
 
 Summary: Cscope is a text screen based source browsing tool
 Group: Development/Other
@@ -53,6 +53,9 @@ find . -type d \( -name 'CVS' -o -name '.svn' -o -name '.git' -o -name '.hg' -o 
 %_man1dir/*
 
 %changelog
+* Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 15.7a-alt1.qa2
+- NMU: rebuilt for updated dependencies.
+
 * Wed May 18 2011 Repocop Q. A. Robot <repocop@altlinux.org> 15.7a-alt1.qa1
 - NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
 - applied repocop fixes:
