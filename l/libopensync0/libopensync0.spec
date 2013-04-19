@@ -1,6 +1,6 @@
 Name: libopensync0
 Version: 0.22
-Release: alt4.2
+Release: alt4.2.qa1
 
 Summary: A Platform and Distribution Independent Synchronization Framework
 License: %lgpl2plus
@@ -99,6 +99,9 @@ mkdir -p %buildroot%_datadir/opensync/defaults
 %dir %python_sitelibdir/*
 
 %changelog
+* Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.22-alt4.2.qa1
+- NMU: rebuilt for updated dependencies.
+
 * Fri Jul 20 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.22-alt4.2
 - Fixed build
 
