@@ -3,7 +3,7 @@
 
 Name: minicom
 Version: 2.5
-Release: alt1.hg
+Release: alt1.hg.qa1
 
 Group: Communications
 Summary: A text-menu-driven modem control and terminal emulation program
@@ -121,6 +121,9 @@ EOF
 %lang(ru) %doc %name.FAQ.ru
 
 %changelog
+* Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.5-alt1.hg.qa1
+- NMU: rebuilt for updated dependencies.
+
 * Tue Apr 26 2011 Vladimir V. Kamarzin <vvk@altlinux.org> 2.5-alt1.hg
 - Update to latest hg HEAD v2.5-23-gecee7eb.
 
