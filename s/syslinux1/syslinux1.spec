@@ -2,7 +2,7 @@
 Summary: Simple kernel loader which boots from a FAT filesystem
 Name: %{rname}1
 Version: 1.62
-Release: alt4.1
+Release: alt4.1.qa1
 License: GPL v2 or later
 Group: System/Kernel and hardware
 Packager: Kachalov Anton <mouse@altlinux.ru>
@@ -53,6 +53,9 @@ install -c pxelinux.0 %buildroot%_libdir/%rname
 %_libdir/syslinux
 
 %changelog
+* Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.62-alt4.1.qa1
+- NMU: rebuilt for updated dependencies.
+
 * Thu Aug 09 2007 Slava Semushin <php-coder@altlinux.ru> 1.62-alt4.1
 - NMU
 - Changed License tag from 'BSD' to 'GPL v2 or later' (#12459)
