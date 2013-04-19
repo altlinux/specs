@@ -1,11 +1,12 @@
 Name: dahdi-linux
 Summary: DAHDI drivers for Digium hardware and Asterisk
-Version: 2.6.1
+Version: 2.6.2
 Release: alt1
 License: GPL
 Group: System/Kernel and hardware
 Packager: Denis Smirnov <mithraen@altlinux.ru>
 Source: %name-%version.tar
+Patch: %name-%version-%release.patch
 Url: http://downloads.asterisk.org/pub/telephony/dahdi-linux/
 
 %package headers
@@ -42,6 +43,7 @@ Dahdi drivers only
 
 %prep
 %setup
+%patch -p1
 sed -i 's/^all:.*/all:/' drivers/dahdi/firmware/Makefile
 t="$RPM_SOURCE_DIR/kernel-source-dahdi-%version"
 rm -rf "$t"
@@ -74,6 +76,9 @@ tar cjf \
 %_usrsrc/kernel/sources/kernel-source-dahdi-%version.tar.bz2
 
 %changelog
+* Fri Apr 19 2013 Denis Smirnov <mithraen@altlinux.ru> 2.6.2-alt1
+- new version 2.6.2
+
 * Sun Sep 02 2012 Denis Smirnov <mithraen@altlinux.ru> 2.6.1-alt1
 - 2.6.1
 
