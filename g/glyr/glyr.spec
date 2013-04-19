@@ -1,6 +1,6 @@
 Name: glyr
 Version: 0.9.8
-Release: alt1
+Release: alt1.qa1
 Summary: Music related metadata searchengine
 License: GPLv3
 Group: System/Libraries
@@ -72,5 +72,8 @@ Glyr development files.
 %_pkgconfigdir/*.pc
 
 %changelog
+* Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.9.8-alt1.qa1
+- NMU: rebuilt for updated dependencies.
+
 * Fri Apr 20 2012 Egor Glukhov <kaman@altlinux.org> 0.9.8-alt1
 - Initial build for Sisyphus
