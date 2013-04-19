@@ -1,10 +1,10 @@
 Name: dahdi-tools
 Summary: DAHDI tools for Digium hardware and Asterisk
-Version: 2.6.1
-Release: alt3
+Version: 2.6.2
+Release: alt1
 License: GPL
 Group: System/Kernel and hardware
-BuildRequires: dahdi-linux-headers gcc-c++ libncurses-devel libnewt-devel libpcap-devel libusb-compat-devel module-init-tools perl-Pod-Parser ppp-devel rpm-build-ruby wget
+BuildRequires: dahdi-linux-headers gcc-c++ libncurses-devel libnewt-devel libpcap-devel libusb-compat-devel module-init-tools perl-Pod-Parser ppp-devel wget
 %define astattr %attr(4510,_asterisk,pbxadmin)
 Packager: Denis Smirnov <mithraen@altlinux.ru>
 Requires: firmware-dahdi
@@ -17,6 +17,7 @@ Requires: perl-Dahdi = %version-%release
 Patch1: dahdi.perl.patch
 Patch2: dahdi.perl.fix.patch
 Patch3: dahdi.build.patch
+Patch4: %name-%version-%release.patch
 Source: dahdi-tools.tar
 
 %package -n dahdi
@@ -134,6 +135,7 @@ Dahdi tools only
 
 %prep
 %setup -c
+%patch4 -p1
 %patch1 -p2
 %patch2 -p1
 %patch3 -p1
@@ -252,6 +254,9 @@ install -m755 dahdi_pcap %buildroot%_sbindir/dahdi_pcap
 %_libdir/pppd/*/*.so
 
 %changelog
+* Fri Apr 19 2013 Denis Smirnov <mithraen@altlinux.ru> 2.6.2-alt1
+- new version 2.6.2
+
 * Sat Feb 02 2013 Denis Smirnov <mithraen@altlinux.ru> 2.6.1-alt3
 - remove unused config with options for wct4xxp
 
