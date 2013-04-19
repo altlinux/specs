@@ -3,7 +3,7 @@
 
 Name: netris
 Version: 0.52
-Release: alt5.2
+Release: alt5.2.qa1
 
 Summary: A free network version of Tetris
 Summary(ru_RU.CP1251): Свободная версия сетевого тетриса
@@ -75,6 +75,9 @@ EOF
 %_man6dir/%name.6.*
 
 %changelog
+* Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.52-alt5.2.qa1
+- NMU: rebuilt for updated dependencies.
+
 * Sat Apr 23 2011 Igor Vlasenko <viy@altlinux.ru> 0.52-alt5.2
 - NMU: desktop file cleanup (thanks to php-coder@)
 
