@@ -1,6 +1,6 @@
 Name: pekwm
 Version: 0.1.13
-Release: alt2.git.c78330ee.1
+Release: alt2.git.c78330ee.1.qa1
 Summary: Fast & lightweight window manager
 License: GPLv2
 Group: Graphical desktop/Other
@@ -42,6 +42,9 @@ install -pD -m644 %SOURCE1 %buildroot/%_sysconfdir/X11/wmsession.d/08%name
 %_man1dir/%name.1.gz
 
 %changelog
+* Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.1.13-alt2.git.c78330ee.1.qa1
+- NMU: rebuilt for updated dependencies.
+
 * Fri Sep 28 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.13-alt2.git.c78330ee.1
 - Rebuilt with libpng15
 
