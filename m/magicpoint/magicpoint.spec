@@ -1,6 +1,6 @@
 Name: magicpoint
 Version: 1.13a
-Release: alt1.1
+Release: alt1.1.qa1
 
 Summary: Presentation tool
 Group: Office
@@ -90,6 +90,9 @@ make
 %doc COPYRIGHT FAQ README* RELNOTES SYNTAX USAGE sample
 
 %changelog
+* Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.13a-alt1.1.qa1
+- NMU: rebuilt for updated dependencies.
+
 * Thu Jul 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.13a-alt1.1
 - Fixed build
 
