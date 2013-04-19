@@ -1,6 +1,6 @@
 Name: gshutdown
 Version: 0.3
-Release: alt0.svn634.1
+Release: alt0.svn634.1.qa1
 License: GPL
 Group: Graphical desktop/Other
 Url: http://gshutdown.tuxfamily.org
@@ -56,6 +56,9 @@ Features :
 %_mandir/*/*
 
 %changelog
+* Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.3-alt0.svn634.1.qa1
+- NMU: rebuilt for updated dependencies.
+
 * Wed Jul 11 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3-alt0.svn634.1
 - Fixed build
 
