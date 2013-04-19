@@ -12,7 +12,7 @@
 
 Name: %{engine_prefix}s-default
 Version: %ver_major.2
-Release: alt2
+Release: alt2.qa1
 Serial: 1
 
 Summary: Default GTK+2 theme engines
@@ -310,6 +310,9 @@ This package contains development files for %_name
 %exclude %engines_dir/*.la
 
 %changelog
+* Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1:2.20.2-alt2.qa1
+- NMU: rebuilt for updated dependencies.
+
 * Wed Apr 04 2012 Yuri N. Sedunov <aris@altlinux.org> 1:2.20.2-alt2
 - fixed build against glib-2.32
 
