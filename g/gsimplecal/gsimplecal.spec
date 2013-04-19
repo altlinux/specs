@@ -1,6 +1,6 @@
 Name: gsimplecal
 Version: 0.8
-Release: alt1
+Release: alt1.qa1
 
 Summary: Simple and lightweight GTK calendar
 License: BSD-Style
@@ -34,5 +34,8 @@ to be launched upon clock click, but of course it will work without it.
 %_man1dir/*
 
 %changelog
+* Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.8-alt1.qa1
+- NMU: rebuilt for updated dependencies.
+
 * Mon May 9 2011 Egor Glukhov <kaman@altlinux.org> 0.8-alt1
 - Initial build
