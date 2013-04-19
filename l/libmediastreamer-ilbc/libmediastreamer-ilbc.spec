@@ -1,6 +1,6 @@
 Name: libmediastreamer-ilbc
 Version: 2.0.3
-Release: alt1
+Release: alt1.qa1
 
 Group: System/Libraries
 Summary: An iLBC codec mediastreamer plugin
@@ -37,5 +37,8 @@ export ILBC_CFLAGS=-I/usr
 %_libdir/mediastreamer/plugins/*
 
 %changelog
+* Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.0.3-alt1.qa1
+- NMU: rebuilt for updated dependencies.
+
 * Thu Mar 24 2011 Egor Glukhov <kaman@altlinux.org> 2.0.3-alt1
 - Initial build for Sisyphus
