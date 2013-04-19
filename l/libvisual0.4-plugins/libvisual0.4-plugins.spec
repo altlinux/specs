@@ -3,7 +3,7 @@
 
 Name: %{_name}0.4-plugins
 Version: 0.4.0
-Release: alt3
+Release: alt3.qa1
 
 Summary: Libvisual library plugins
 License: LGPL
@@ -112,6 +112,9 @@ rm -f %buildroot%_libdir/%_name-0.4/actor/actor_gstreamer.so
 %_libdir/%_name-0.4/input/input_mplayer.so
 
 %changelog
+* Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.4.0-alt3.qa1
+- NMU: rebuilt for updated dependencies.
+
 * Mon Mar 28 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.0-alt3
 - Rebuilt for debuginfo
 - BuildRequires: added flex and replaced libmesa-devel by libGL-devel
