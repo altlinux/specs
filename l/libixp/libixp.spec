@@ -1,6 +1,6 @@
 Name: libixp
 Version: 0.5
-Release: alt1
+Release: alt1.qa1
 
 Summary: Plan9 file protocol library
 License: MIT
@@ -78,6 +78,9 @@ or from shell scripts.
 %_man1dir/ixpc.1*
 
 %changelog
+* Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.5-alt1.qa1
+- NMU: rebuilt for updated dependencies.
+
 * Thu Apr 14 2011 Fr. Br. George <george@altlinux.ru> 0.5-alt1
 - Autobuild version bump to 0.5
 - Static libraries separated
