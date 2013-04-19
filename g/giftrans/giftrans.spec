@@ -1,27 +1,41 @@
 Name: giftrans
 Version: 1.12.2
-Release: alt1
+Release: alt2
 Epoch: 1
-Packager: Dmitry V. Levin <ldv@altlinux.org>
 
 Summary: A program for making transparent GIFs from non-transparent GIFs
 License: GPLv2+
 Group: Graphics
 # ftp://ftp.rz.uni-karlsruhe.de/pub/net/www/tools/giftrans-%version.tar.bz2
 Source: giftrans-%version.tar
-Patch: giftrans-1.12.2-deb-alt.patch
+Patch01: 01_relocate_rgb.diff
+Patch10: 10_local_colour_tables.diff
+Patch11: 11_ignore_comments.diff
+Patch12: 12_initialise_gct_size.diff
+Patch20: 20_manpage_escape_warning.diff
+Patch21: 21_manpage_hyphens.diff
+Patch22: 22_manpage_remove_distribution_section.diff
+Patch23: 23_manpage_additional_credentials.diff
 
 %description
 This packages contains the giftrans utility, which allows for setting
-the transparent or background color, changing colors, adding or removing
-comments.
+a specific transparent or background color of GIF images as well as
+changing colors, adding or removing comments; it also provides the
+ability to analyze GIF contents.
 
 %prep
 %setup
-%patch -p1
+%patch01 -p1
+%patch10 -p1
+%patch11 -p1
+%patch12 -p1
+%patch20 -p1
+%patch21 -p1
+%patch22 -p1
+%patch23 -p1
 
 %build
-%__cc %optflags -o giftrans giftrans.c
+%__cc %optflags $(getconf LFS_CFLAGS) -o giftrans giftrans.c
 
 %install
 mkdir -p %buildroot/{%_bindir,%_man1dir}
@@ -33,6 +47,10 @@ install -pm644 giftrans.1 %buildroot%_man1dir/
 %_man1dir/*
 
 %changelog
+* Fri Apr 19 2013 Dmitry V. Levin <ldv@altlinux.org> 1:1.12.2-alt2
+- Updated Debian patches.
+- Built with LFS support enabled.
+
 * Wed Apr 23 2008 Dmitry V. Levin <ldv@altlinux.org> 1:1.12.2-alt1
 - Merged fixes from Debian giftrans package.
 - Updated release numbering.
