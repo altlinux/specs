@@ -1,6 +1,6 @@
 Name: jtalk
 Version: 20060521
-Release: alt1.qa1
+Release: alt1.qa2
 
 Summary: Jtalk is a simple Jabber client
 Group: Networking/Instant messaging
@@ -44,6 +44,9 @@ create accounts and so on, you need another, more complete, Jabber client.
 
 
 %changelog
+* Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 20060521-alt1.qa2
+- NMU: rebuilt for updated dependencies.
+
 * Wed Sep 01 2010 Repocop Q. A. Robot <repocop@altlinux.org> 20060521-alt1.qa1
 - NMU (by repocop): the following fixes applied:
   * deprecated-packages-info-i18n-common for jtalk
