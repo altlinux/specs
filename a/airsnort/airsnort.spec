@@ -1,6 +1,6 @@
 Name: airsnort
 Version: 0.2.7e
-Release: alt4.qa2.1
+Release: alt4.qa3
 
 Summary: 802.11b/g WEP Encryption key cracker
 Summary(ru_RU.KOI8-R): Приложение для взлома ключей в 802.11b/g WEP сетях
@@ -51,6 +51,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_man1dir/*
 
 %changelog
+* Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.2.7e-alt4.qa3
+- NMU: rebuilt for updated dependencies.
+
 * Sat May 21 2011 Repocop Q. A. Robot <repocop@altlinux.org> 0.2.7e-alt4.qa2.1
 - NMU: fix desktop permissions
 
