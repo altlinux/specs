@@ -1,7 +1,7 @@
 %define oname gtkhotkey
 Name: lib%oname
 Version: 0.1
-Release: alt1.qa2
+Release: alt1.qa3
 
 Summary: Cross Platform Library For Using Desktop Wide Hotkeys
 
@@ -55,6 +55,9 @@ in development of the lib%name-based applications.
 %_datadir/gtk-doc/html/*
 
 %changelog
+* Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.1-alt1.qa3
+- NMU: rebuilt for updated dependencies.
+
 * Fri Jul 20 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1-alt1.qa2
 - Fixed build
 
