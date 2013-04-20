@@ -1,6 +1,6 @@
 Name: daemontools
 Version: 0.76
-Release: alt12
+Release: alt13
 Summary: Daemontools by DJB
 License: Public domain
 Group: System/Servers
@@ -10,6 +10,7 @@ Packager: Denis Smirnov <mithraen@altlinux.ru>
 
 Source: %name-%version.tar
 Source1: %name.rpm.macro
+Source2: %name.service
 
 Patch: %name-%version.command.patch
 Patch1: %name.errno.patch
@@ -60,6 +61,7 @@ mkdir -p %buildroot/bin %buildroot%_sysconfdir/daemontools.d
 
 cp -a admin/%name-%version/command/* %buildroot/bin/
 install -D -m644 %SOURCE1 %buildroot%_rpmmacrosdir/%name
+install -D -m644 %SOURCE2 %buildroot/lib/systemd/system/%name.service
 
 %post
 if grep svscanboot %_sysconfdir/inittab >/dev/null
@@ -80,6 +82,14 @@ if [ ! -f %_sysconfdir/daemontools.d/.gitignore ]; then
 	echo supervise > %_sysconfdir/daemontools.d/.gitignore
 fi
 
+# systemd support
+systemctl=/bin/systemctl
+if [ -f "$systemctl" ]; then
+    $systemctl enable daemontools.service ||:
+    $systemctl start daemontools.service ||:
+fi
+
+
 %files
 /bin/envdir
 /bin/envuidgid
@@ -98,6 +108,7 @@ fi
 /bin/svstat
 /bin/tai64n
 /bin/tai64nlocal
+/lib/systemd/system/%name.service
 
 %files common
 %dir %_sysconfdir/daemontools.d
@@ -106,6 +117,9 @@ fi
 %_rpmmacrosdir/%name
 
 %changelog
+* Sat Apr 20 2013 Denis Smirnov <mithraen@altlinux.ru> 0.76-alt13
+- systemd support
+
 * Mon Jan 31 2011 Denis Smirnov <mithraen@altlinux.ru> 0.76-alt12
 - add daemontools_log_install macro
 
