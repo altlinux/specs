@@ -1,5 +1,6 @@
-%define dversion	6.7.8
-%define drelease	2
+%define mversion	6
+%define dversion	%mversion.8.4
+%define drelease	10
 %define qlev		Q16
 %define mgkdir		ImageMagick
 %define soname		4
@@ -8,7 +9,7 @@
 %def_enable x
 Name: ImageMagick
 Version: %dversion.%drelease
-Release: alt2.1
+Release: alt1
 
 Summary: An X application for displaying and manipulating images
 License: OpenSource
@@ -33,7 +34,7 @@ BuildPreReq: libpng-devel
 # Automatically added by buildreq on Wed Nov 03 2010
 BuildRequires: ImageMagick-tools bzlib-devel curl gcc-c++ glibc-devel-static graphviz groff-base imake libXext-devel libXt-devel libdjvu-devel libjasper-devel libjbig-devel liblcms-devel liblqr-devel librsvg-devel libtiff-devel libwmf-devel libxml2-devel openexr-devel perl-devel transfig xdg-utils xorg-cf-files 
 
-BuildRequires: libjasper-devel libjbig-devel liblcms-devel libtiff-devel libwmf-devel libxml2-devel perl-devel chrpath openexr-devel liblqr-devel libdjvu-devel
+BuildRequires: libjasper-devel libjbig-devel liblcms-devel libtiff-devel libwmf-devel libxml2-devel perl-devel chrpath openexr-devel liblqr-devel libdjvu-devel libltdl-devel perl-parent
 %if_enabled librsvg
 BuildRequires: librsvg-devel libpixman-devel
 %endif
@@ -130,7 +131,7 @@ rm PerlMagick/t/montage.t
 	--with-gs-font-dir=%_datadir/fonts/type1/urw \
 	--with-gvc=yes \
 	--with-lqr=yes \
-	--enable-hdri \
+	--disable-hdri \
 	--with-perl \
 	%{subst_enable x} \
 	--with-perl-options="PREFIX=%_prefix INSTALLDIRS=vendor" \
@@ -155,6 +156,7 @@ popd
 %__install -pD -m644 %SOURCE4 %buildroot%_liconsdir/%name.png
 
 chrpath -d %buildroot%perl_vendor_archlib/auto/Image/Magick/Magick.so
+chrpath -d %buildroot%perl_vendor_archlib/auto/Image/Magick//Q16/Q16.so
 
 %files
 
@@ -186,10 +188,10 @@ chrpath -d %buildroot%perl_vendor_archlib/auto/Image/Magick/Magick.so
 %dir %_libdir/%mgkdir-%dversion/modules-%qlev/coders
 %dir %_libdir/%mgkdir-%dversion/modules-%qlev/filters
 %_libdir/%mgkdir-%dversion/modules-%qlev/*/*
-%dir %_datadir/%mgkdir-%dversion
-%dir %_sysconfdir/%name
-%_datadir/%mgkdir-%dversion/*
-%config %_sysconfdir/%name/*
+%dir %_datadir/%mgkdir-%mversion
+%dir %_sysconfdir/%name-%mversion
+%_datadir/%mgkdir-%mversion/*
+%config %_sysconfdir/%name-%mversion/*
 %_libdir/*.so.*
 
 %files -n lib%name-devel
@@ -200,7 +202,7 @@ chrpath -d %buildroot%perl_vendor_archlib/auto/Image/Magick/Magick.so
 %_bindir/*-config
 %_includedir/*
 %_libdir/*.so
-%_libdir/%mgkdir-%dversion/config
+%_libdir/%mgkdir-%dversion/config-%qlev
 %_pkgconfigdir/*.pc
 %_man1dir/*-config.1*
 
@@ -215,6 +217,10 @@ chrpath -d %buildroot%perl_vendor_archlib/auto/Image/Magick/Magick.so
 %endif
 
 %changelog
+* Tue Apr 16 2013 Anton Farygin <rider@altlinux.ru> 6.8.4.10-alt1
+- new version
+- disabled HDRI
+
 * Thu Oct 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 6.7.8.2-alt2.1
 - Rebuilt with libpng15
 

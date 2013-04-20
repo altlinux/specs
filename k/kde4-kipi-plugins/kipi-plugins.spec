@@ -12,7 +12,7 @@
 Name: kde4-%rname
 %define beta %nil
 Version: 3.1.0
-Release: alt1
+Release: alt2
 
 Group: Graphics
 Summary: KDE image Interface Plugins
@@ -173,6 +173,9 @@ done
 %_K4libdir/libkipiplugins.so.%libsover.*
 
 %changelog
+* Thu Apr 18 2013 Sergey V Turchin <zerg@altlinux.org> 3.1.0-alt2
+- rebuild with new ImageMagick
+
 * Thu Apr 18 2013 Sergey V Turchin <zerg@altlinux.org> 3.1.0-alt1
 - 3.1.0 release
 

@@ -4,7 +4,7 @@
 
 Name: rss_glx
 Version: 0.9.1
-Release: alt2
+Release: alt3
 
 Summary: Really Slick Screensavers
 License: GNU GPL
@@ -16,7 +16,7 @@ Patch0: rss-glx-0.9.1-alt-DSO.patch
 Packager: Michael Shigorin <mike@altlinux.org>
 # git://git.altlinux.org/people/mike/packages/rss_glx.git
 
-BuildRequires(pre): xscreensaver-devel kde-common-devel
+BuildRequires(pre): rpm-build-xscreensaver kde-common-devel
 
 # Automatically added by buildreq on Sun Nov 09 2008 (-bi)
 BuildRequires: bzlib-devel gcc-c++ libImageMagick-devel libXt-devel libglew-devel
@@ -105,6 +105,9 @@ install -pm644 %name.xss %buildroot%xss_ad_dir/%name.xss
 %_Kapplnk/System/ScreenSavers/*.desktop
 
 %changelog
+* Fri Apr 19 2013 Anton Farygin <rider@altlinux.ru> 0.9.1-alt3
+- Rebuild with new libImageMagick
+
 * Thu Jun 14 2012 Anton Farygin <rider@altlinux.ru> 0.9.1-alt2
 - Rebuild with new libImageMagick
 

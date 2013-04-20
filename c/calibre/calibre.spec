@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 Name: calibre
 Version: 0.8.55
-Release: alt1.3
+Release: alt1.4
 Summary: A e-book library management application
 Summary(ru_RU.UTF8): Программа для работы с личной электронной библиотекой
 License: GPL
@@ -68,6 +68,9 @@ chrpath -d %buildroot%_libdir/%name/%name/plugins/*.so
 %exclude %_datadir/%name/fonts/liberation/
 
 %changelog
+* Thu Apr 18 2013 Anton Farygin <rider@altlinux.ru> 0.8.55-alt1.4
+- rebuild with new ImageMagick
+
 * Mon Apr 15 2013 Andrey Cherepanov <cas@altlinux.org> 0.8.55-alt1.3
 - Correct install icons and remove rpath from plugins
 
