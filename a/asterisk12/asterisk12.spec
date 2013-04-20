@@ -1,4 +1,5 @@
-%define svn_revision 385632.1
+%define svn_revision 385632.2
+%add_verify_elf_skiplist %_libdir/libasteriskssl12.so.1
 
 Name: asterisk12
 Summary: Open source PBX
@@ -67,8 +68,6 @@ BuildPreReq: libunixODBC-devel libltdl-devel
 BuildPreReq: liblua5-devel
 BuildPreReq: postgresql-devel libpq-devel
 BuildPreReq: librpm-devel libnet-snmp-devel libwrap-devel perl-devel
-%define svn_revision 385632.1
-%add_verify_elf_skiplist %_libdir/libasteriskssl12.so.1
 %def_with debug
 %def_enable debug
 %def_without		hoard
@@ -648,6 +647,8 @@ menuselect/menuselect  \
     --enable DEBUG_THREADS \
     --enable DETECT_DEADLOCKS \
     --enable DO_CRASH \
+    --enable BETTER_BACKTRACES \
+    --enable G711_NEW_ALGORITHM \
     --enable chan_usbradio \
     --enable chan_misdn \
     --enable res_jabber \
@@ -1253,6 +1254,9 @@ ln -sf libasteriskssl12.so.1 %buildroot%_libdir/libasteriskssl12.so
 %_libdir/libasteriskssl12.so.1
 
 %changelog
+* Sat Apr 20 2013 Denis Smirnov <mithraen@altlinux.ru> 12-alt0.385632.2
+- enable BETTER_BACKTRACES and G711_NEW_ALGORITHM
+
 * Tue Apr 16 2013 Denis Smirnov <mithraen@altlinux.ru> 12-alt0.385632.1
 - fix packaging new modules
 
