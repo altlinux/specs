@@ -28,7 +28,7 @@
 
 Name: gdm
 Version: %ver_major.1.1
-Release: alt1
+Release: alt1.1
 
 Summary: The GNOME Display Manager
 License: GPLv2+
@@ -345,9 +345,9 @@ xvfb-run %make check
 %_datadir/gdm/greeter/applications/gnome-shell.desktop
 %_datadir/gdm/greeter/applications/mime-dummy-handler.desktop
 %_datadir/gdm/greeter/applications/mimeapps.list
-%_datadir/gdm/greeter/autostart/orca-autostart.desktop
 %_datadir/gnome-session/sessions/gdm-fallback.session
 %_datadir/gnome-session/sessions/gdm-shell.session
+%exclude %_datadir/gdm/greeter/autostart/orca-autostart.desktop
 
 %files libs
 %_libdir/libgdm.so.*
@@ -384,6 +384,9 @@ xvfb-run %make check
 %endif
 
 %changelog
+* Sat Apr 20 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.1.1-alt1.1
+- removed %%_datadir/gdm/greeter/autostart/orca-autostart.desktop
+
 * Wed Apr 17 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.1.1-alt1
 - 3.8.1.1
 
