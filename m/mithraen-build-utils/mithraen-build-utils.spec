@@ -1,6 +1,6 @@
 Name: mithraen-build-utils
 Summary: Simple utilites that simplify development to me
-Version: 0.1.16
+Version: 0.1.17
 Release: alt1
 License: GPL
 Group: Development/Other
@@ -33,6 +33,9 @@ install -m755 * %buildroot/%_bindir/
 %files
 %_bindir/*
 %changelog
+* Sun Apr 21 2013 Denis Smirnov <mithraen@altlinux.ru> 0.1.17-alt1
+- build-daemon: oneshot mode
+
 * Sat Jan 26 2013 Denis Smirnov <mithraen@altlinux.ru> 0.1.16-alt1
 - add /bin/bash shebang to scripts that need bash
 - add subtask-add utility
