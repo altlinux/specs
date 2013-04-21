@@ -4,8 +4,8 @@
 %define module_name  perl
 
 Name:    apache2-mod_perl
-Version: 2.0.7
-Release: alt5
+Version: 2.0.8
+Release: alt1
 
 Summary: An embedded Perl interpreter for the Apache2 Web server
 Summary(ru_RU.UTF-8): Встроенный интерпретатор Perl для веб-сервера Apache2
@@ -25,13 +25,9 @@ Source6: Apache-Reload-0.12.tar
 Source7: docs-2.0.tar
 
 
-Patch0: mod_perl-2.0.2-multilib.patch
 Patch1: mod_perl-2.0.5-lfs.patch
 Patch2: mod_perl-2.0.7-alt-HTTP_Headers_version_fix.patch
 Patch3: mod_perl-2.0.7-alt-disable_prctl_set_name.patch
-
-# https://rt.cpan.org/Public/Bug/Display.html?id=83916
-Patch4: hash_attack.patch
 
 Provides: mod_perl = %version
 
@@ -128,11 +124,14 @@ module.
 
 %prep
 %setup -n mod_perl-%version
-%patch0 -p1
 %patch1 -p1
 %patch2
 %patch3
-%patch4 -p1
+
+## CHECK AND REMOVE IT!
+echo "===Applying dirty fix for ALT#28877 - remove it when perl-Module-CoreList will be upgraded==="
+sed -e 's/eval {require Module::CoreList}/eval {require Module::CoreList} and 0/' -i lib/Apache2/Build.pm
+##
 
 # Complete installation with separate projects
 tar xvf %SOURCE4
@@ -292,6 +291,9 @@ fi
 %doc docs/*
 
 %changelog
+* Sun Apr 21 2013 Nikolay A. Fetisov <naf@altlinux.ru> 2.0.8-alt1
+- New version 2.0.8
+
 * Fri Apr 12 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 2.0.7-alt5
 - build fixed
 
