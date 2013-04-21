@@ -1,6 +1,6 @@
 Name: python-module-feedparser
 Version: 5.1.3
-Release: alt1
+Release: alt1.1
 Epoch: 1
 
 %define sname feedparser
@@ -19,6 +19,7 @@ BuildRequires: python-module-distribute
 
 # http://feedparser.googlecode.com/files/feedparser-%version.tar.bz2
 Source: %sname-%version.tar
+Patch:  %sname-disable-test_gzip_struct_error.patch
 
 %description
 Universal feed parser is a Python module for downloading and parsing
@@ -38,6 +39,7 @@ This package contains documentation for the Universal feed parser.
 
 %prep
 %setup -n %sname-%version
+%patch -p2
 find -type f -print0 |
 	xargs -r0 sed -i 's/\r//' --
 
@@ -69,6 +71,10 @@ PYTHONPATH=%buildroot%python_sitelibdir %__python feedparsertest.py
 %endif
 
 %changelog
+* Sun Apr 21 2013 Andrey Cherepanov <cas@altlinux.org> 1:5.1.3-alt1.1
+- Disable test_gzip_struct_error until http://bugs.python.org/issue1159051
+  is completely fixed
+
 * Wed Apr 03 2013 Dmitry V. Levin <ldv@altlinux.org> 1:5.1.3-alt1
 - Updated to 5.1.3.
 
