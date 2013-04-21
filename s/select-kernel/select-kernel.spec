@@ -1,5 +1,5 @@
 Name: select-kernel
-Version: 0.99.1
+Version: 0.99.2
 Release: alt1
 
 Summary: Tool to install/upgrade/remove system kernel
@@ -8,6 +8,7 @@ Group: System/Kernel and hardware
 
 Packager: Anatoly Kitaykin <cetus@altlinux.ru>
 Source: %name-%version.tar
+Url: http://git.altlinux.org/people/cetus/packages/select-kernel.git
 BuildArch: noarch
 
 %description
@@ -31,6 +32,9 @@ install -pDm755 %name %buildroot%_sbindir/%name
 %_sbindir/*
 
 %changelog
+* Mon Apr 22 2013 Anatoly Kitaikin <cetus@altlinux.org> 0.99.2-alt1
+- Fixed dialog boxes on xterm family
+
 * Fri Aug 31 2012 Anatoly Kitaykin <cetus@altlinux.org> 0.99.1-alt1
 - Initial build
 
