@@ -1,6 +1,6 @@
 Name: alterator-bacula
 Version: 0.8
-Release: alt1
+Release: alt2
 
 Source:%name-%version.tar
 
@@ -46,12 +46,18 @@ module for Bacula backup system
 %files
 %config(noreplace) %_sysconfdir/alterator/bacula
 %_datadir/alterator/ui/*
+%exclude %_datadir/alterator/ui/bacula/local-backup/
 %_alterator_backend3dir/*
+%exclude %_alterator_backend3dir/bacula-local-backup
 %_datadir/alterator/applications/*
+%exclude %_datadir/alterator/applications/bacula-local-backup.desktop
 %_datadir/alterator/steps/*
 %_datadir/alterator/type/*
 
 %changelog
+* Sun Apr 21 2013 Michael Shigorin <mike@altlinux.org> 0.8-alt2
+- drop reportedly broken local-backup UI and desktop file (closes: #28854)
+
 * Tue Apr 19 2011 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.8-alt1
 - chroot after restore added (if alteratord & alterator-grub are found)
 
