@@ -2,7 +2,7 @@
 
 Name:    rex
 Version: 0.41.2
-Release: alt1
+Release: alt2
 
 Summary: (R)?ex - Remote Execution Framework
 
@@ -16,6 +16,7 @@ Source0: %name-%version.tar
 Patch0:  %name-%version-%release.patch
 
 Patch1:  %name-0.38.0-alt-update_system.patch
+Patch2:  %name-0.41.2-sudo_backquotes.patch
 
 BuildArch: noarch
 
@@ -36,6 +37,7 @@ and software deployment.
 %patch0 -p1
 
 %patch1 -p0
+%patch2 -p0
 
 %build
 %perl_vendor_build
@@ -56,6 +58,9 @@ and software deployment.
 
 
 %changelog
+* Sun Apr 21 2013 Nikolay A. Fetisov <naf@altlinux.ru> 0.41.2-alt2
+- Fix backquotes in remote sudo() calls
+
 * Sun Apr 21 2013 Nikolay A. Fetisov <naf@altlinux.ru> 0.41.2-alt1
 - New version
 
