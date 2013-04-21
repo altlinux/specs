@@ -9,9 +9,14 @@
 #define libgc boehm
 %define libgc included
 
+%def_with sgen
+%ifnarch %ix86 x86_64
+%def_without sgen
+%endif
+
 Name: mono
-Version: 2.10.8
-Release: alt1
+Version: 2.10.11
+Release: alt2
 License: %gpllgpl2only %mit %mpl
 Url: http://www.mono-project.com/
 Group: Development/Other
@@ -20,6 +25,7 @@ Packager: Mono Maintainers Team <mono@packages.altlinux.org>
 Summary: The mono CIL runtime, suitable for running .NET code
 
 Source: http://www.go-mono.com/sources/%name/%name-%version.tar
+Source2: monolite.tar
 Source13: System.Windows.Forms.dll.config
 Source14: System.Data.dll.config
 
@@ -47,7 +53,7 @@ BuildRequires: libgdiplus-devel >= 2.10
 # we deleted the bootstrapping binaries. If you
 # need to bootstrap mono, comment out this BuildRequires
 # and don't delete the binaries in %%prep.
-BuildRequires: mono-mcs
+#BuildRequires: mono-mcs
 
 Requires: /proc
 BuildPreReq: /proc
@@ -75,6 +81,9 @@ and Mono.*).
 %config(noreplace) %_sysconfdir/mono/*/machine.config
 %config(noreplace) %_sysconfdir/mono/*/settings.map
 %config(noreplace) %_sysconfdir/mono/config
+%if_with sgen
+%_bindir/mono-sgen
+%endif
 %_bindir/mono
 %_bindir/mono-test-install
 %_bindir/certmgr
@@ -86,7 +95,6 @@ and Mono.*).
 %_bindir/sn
 %_libdir/libikvm-native.so
 %_libdir/libMonoPosixHelper.so
-%_libdir/libMonoSupportW.so
 %dir %_monodir/compat-*
 %dir %_monodir/gac
 %_monodir/*/certmgr.exe*
@@ -164,7 +172,6 @@ and Mono.*).
 %_man5dir/mono-config.*
 %_man1dir/mozroots.*
 %doc AUTHORS COPYING.LIB ChangeLog NEWS README
-%exclude %_monodir/*/Mono.Security.Win32*
 
 %package configuration-crypto
 Summary: Mono utility classes to encrypt/decrypt configuration file sections
@@ -227,6 +234,33 @@ This package contains header files for libmono.so.0 shared library.
 %_includedir/mono-2.0
 %_libdir/libmono-2.0.so
 %_pkgconfigdir/mono-2.pc
+
+%if_with sgen
+%package -n libmonosgen
+License: LGPL v2.1 only
+Summary: Library for embedding Mono in your Application (sgen version)
+Group: System/Libraries
+
+%description -n libmonosgen
+A Library for embedding Mono in your Application (sgen version).
+
+%files -n libmonosgen
+%_libdir/libmonosgen-2.0.so.*
+
+%package -n libmonosgen-devel
+License: LGPL v2.1 only
+Summary: Development files for libmonosgen
+Group: Development/C
+Requires: libmonosgen = %version-%release
+
+%description -n libmonosgen-devel
+Development files for libmonosgen.
+
+%files -n libmonosgen-devel
+%_libdir/libmonosgen-2.0.so
+%_pkgconfigdir/monosgen-2.pc
+%_bindir/mono-sgen-gdb.py
+%endif
 
 %package -n monodis
 Summary: CIL image content dumper and disassembler
@@ -493,7 +527,7 @@ and daemons with Mono. It also includes stubs for the following
 %_monodir/*/mono-xmltool.exe*
 %_monodir/*/RabbitMQ.Client
 %_monodir/*/RabbitMQ.Client.dll*
-%_monodir/*/RabbitMQ.Client.Apigen.exe*
+%_monodir/*/RabbitMQ.Client*.exe*
 %_monodir/*/System.Management
 %_monodir/*/System.Management.dll*
 %_monodir/*/System.Messaging
@@ -940,6 +974,9 @@ tools.
 #%patch5 -p1
 %patch6 -p1
 
+mkdir -p mcs/class/lib
+tar -xf %SOURCE2 -C mcs/class/lib
+
 %build
 %ifdef __buildreqs
 # workaround strace hanging
@@ -948,27 +985,35 @@ export with_sigaltstack=no
 %add_optflags -fno-strict-aliasing
 export CFLAGS="%optflags"
 
-%autoreconf
+NOCONFIGURE=1 ./autogen.sh
+# %autoreconf
 
 # Add undeclared Arg
 sed -i "61a #define ARG_MAX     _POSIX_ARG_MAX" mono/io-layer/wapi_glob.h
 
 # %%undefine __libtoolize
 %configure \
-	--disable-static \
-	--with-static_mono=no \
 	--with-gc=%libgc \
-	--with-sgen=no \
-	--enable-parallel-mark=yes \
-	--with-profile4=yes \
+	%{subst_with sgen} \
+%ifarch x86_64
+	--with-large-heap=yes \
+	--enable-big-arrays \
+%endif
+	--enable-parallel-mark \
+	--with-profile4 \
+	--with-profile2 \
 	--with-tls=pthread \
 	--disable-quiet-build \
-	--with-mcs-docs=yes
+%ifnarch %ix86 x86_64
+	--disable-system-aot \
+%endif
+	--without-moonlight \
+	--without-monotouch \
+	--with-jit \
+	--disable-dtrace \
+	--with-mcs-docs
 
-# temporary build without moonlight
-# 	--with-moonlight=yes \
-
-%make V=1
+%make
 
 %install
 %make_install DESTDIR=%buildroot install
@@ -983,6 +1028,10 @@ rm -f %buildroot%_bindir/mono-find-requires
 # This was removed upstream:
 rm -f %buildroot%_monodir/2.0/mcs.exe.so
 
+# remove Windows-only stuff
+rm -rf %buildroot%_prefix/lib/mono/*/Mono.Security.Win32*
+rm -f %buildroot%_libdir/libMonoSupportW.*
+
 %find_lang mcs
 
 # install *.config files
@@ -995,6 +1044,13 @@ deps=$(pkg-config --print-{errors,requires} %buildroot%_pkgconfigdir/mono.pc)
 [ -z "$deps" ]
 
 %changelog
+* Sun Apr 21 2013 Led <led@altlinux.ru> 2.10.11-alt2
+- fixed build: removed configure options --disable-static and --with-static_mono=no
+
+* Mon Feb 25 2013 Alexey Shabalin <shaba@altlinux.ru> 2.10.11-alt1
+- 2.10.11
+- build with sgen support
+
 * Wed Feb 08 2012 Alexey Shabalin <shaba@altlinux.ru> 2.10.8-alt1
 - 2.10.8
 - add mvc, configuration-crypto subpackages
