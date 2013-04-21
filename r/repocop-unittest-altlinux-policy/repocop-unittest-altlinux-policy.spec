@@ -1,6 +1,6 @@
 Name: repocop-unittest-altlinux-policy
 Version: 0.30
-Release: alt3
+Release: alt4
 BuildArch: noarch
 Packager: Igor Vlasenko <viy@altlinux.ru>
 Url: http://repocop.altlinux.org
@@ -42,6 +42,9 @@ done
 %_datadir/repocop/fixscripts/*
 
 %changelog
+* Mon Apr 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.30-alt4
+- bugfix release
+
 * Sun Apr 21 2013 Igor Vlasenko <viy@altlinux.ru> 0.30-alt3
 - bugfix release
 
