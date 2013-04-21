@@ -5,7 +5,7 @@
 
 Name: Xdmf
 Version: 20100923
-Release: alt20
+Release: alt21
 Summary: eXtensible Data Model and Format
 License: Free
 Group: Sciences/Other
@@ -236,6 +236,9 @@ rm -f $(find Examples -name '*.o')
 %doc Examples/*
 
 %changelog
+* Sun Apr 21 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 20100923-alt21
+- Fixed build
+
 * Sun Apr 07 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 20100923-alt20
 - Rebuilt with libmysqlclient.so.18
 
