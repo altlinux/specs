@@ -6,7 +6,7 @@ BuildRequires: gcc-c++
 %add_optflags %optflags_shared
 Name:           libifp
 Version:        1.0.0.2
-Release:        alt2_13
+Release:        alt2_13.qa1
 Summary:        A general-purpose library-driver for iRiver's iFP portable audio players
 
 Group:          System/Base
@@ -45,7 +45,7 @@ make %{?_smp_mflags}
 make install DESTDIR=$RPM_BUILD_ROOT
 find $RPM_BUILD_ROOT -name \*.la -exec rm {} \;
 install -D -m 0755 %{SOURCE1} $RPM_BUILD_ROOT/sbin/libifp-hotplug
-install -D -m 0644 %{SOURCE2} $RPM_BUILD_ROOT%{_sysconfdir}/udev/rules.d/10-libifp.rules
+install -D -m 0644 %{SOURCE2} $RPM_BUILD_ROOT%_udevrulesdir/10-libifp.rules
 # kill rpath
 for i in `find %buildroot{%_bindir,%_libdir,/usr/libexec,/usr/lib,/usr/sbin} -type f -perm -111`; do
 	chrpath -d $i ||:
@@ -56,7 +56,7 @@ done
 %{_bindir}/*
 %{_libdir}/*.so.*
 /sbin/*
-%{_sysconfdir}/udev/rules.d/*.rules
+%_udevrulesdir/*.rules
 
 %files devel
 %{_includedir}/*.h
@@ -64,6 +64,11 @@ done
 %{_mandir}/man3/*
 
 %changelog
+* Mon Apr 22 2013 Repocop Q. A. Robot <repocop@altlinux.org> 1.0.0.2-alt2_13.qa1
+- NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
+- applied repocop fixes:
+  * udev-files-in-etc for libifp
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 1.0.0.2-alt2_13
 - update to new release by fcimport
 
