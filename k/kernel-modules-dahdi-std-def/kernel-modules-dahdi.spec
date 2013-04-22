@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build	1
 
 %define module_name	dahdi
-%define module_version	2.6.1
-%define module_release alt3
+%define module_version	2.6.2
+%define module_release alt1
 
 %define flavour	std-def
 BuildRequires(pre): rpm-build-kernel
@@ -184,6 +184,9 @@ popd
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Mon Apr 22 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 2.6.2-alt1
+- new version
 
 * Wed Feb 20 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 2.6.1-alt3
 - build with kernel 3.8 fixed
