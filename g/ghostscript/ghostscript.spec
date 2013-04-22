@@ -1,22 +1,21 @@
-%define gsver	9.05
-%define ijsver	0.35
-
 Name: ghostscript
-Version: %gsver
-Release: alt1.1
+Version: 9.07
+Release: alt1
 
+%define ijsver	0.35
+%global origver %version
 %define esp_name esp-ghostscript
 %define gnu_name gnu-ghostscript
 
-URL: http://www.ghostscript.com
+Url: http://www.ghostscript.com
 
-# Included CMap data is Redistributable, no modification permitted, 
+# Included CMap data is Redistributable, no modification permitted,
 License: GPLv3+ and Redistributable, no modification permitted
 
 Summary: PostScript interpreter and renderer, most printer drivers
 Group: Publishing
 
-Source: http://ghostscript.com/releases/%name-%version.tar
+Source: %name-%version.tar.gz
 
 Patch1: ghostscript-rh-cups-filters.patch
 Patch2: ghostscript-rh-Fontmap.local.patch
@@ -26,99 +25,89 @@ Patch5: ghostscript-rh-multilib.patch
 Patch6: ghostscript-rh-noopt.patch
 Patch7: ghostscript-rh-runlibfileifexists.patch
 Patch8: ghostscript-rh-scripts.patch
-Patch9: ghostscript-alt-ijs-version.patch
-Patch10: ghostscript-rh-ijs-automake-ver.patch
-Patch11: ghostscript-alt-gstoraster-avoid-buidroot.patch
+Patch9: ghostscript-rh-icc-missing-check.patch
+
+Patch100: ghostscript-alt-ijs-version.patch
+Patch101: ghostscript-alt-gstoraster-avoid-buidroot.patch
 
 #compatibility requires
-Requires: %name-classic = %gsver-%release
-Provides: %esp_name = %gsver, %gnu_name = %gsver
+Requires: %name-classic = %version-%release
+Provides: %esp_name = %version, %gnu_name = %version
 Obsoletes: %gnu_name, %esp_name
 
-BuildPreReq: libcairo-devel zlib-devel fontconfig-devel libjasper-devel libpaper-devel
-
-# Automatically added by buildreq on Fri Aug 03 2007 (-bi)
-BuildRequires: gcc-c++ glibc-devel-static imake libcups-devel libgtk+2-devel libjpeg-devel libgnutls-devel  libssl-devel libtiff-devel libXext-devel libXt-devel xorg-cf-files libpng-devel
-
-%package -n libijs
-Version: %{ijsver}_%gsver
-Summary: Dynamic library for the IJS printer driver plug-in interface
-Group: Publishing
-Url: http://www.linuxprinting.org/ijs/
-Provides: libespijs = %{ijsver}_%gsver, libgnuijs = %{ijsver}_%gsver
-Obsoletes: libgnuijs, libespijs
-
-%package -n libijs-devel
-Version: %{ijsver}_%gsver
-Summary: Headers and links for compiling against
-Group: Development/C
-Url: http://www.linuxprinting.org/ijs/
-Requires: libijs = %{ijsver}_%gsver-%release
-Provides: libespijs-devel = %{ijsver}_%gsver, libgnuijs-devel = %{ijsver}_%gsver
-Obsoletes: libgnuijs-devel, libespijs-devel
+# Automatically added by buildreq on Mon Apr 22 2013
+# optimized out: at-spi2-atk fontconfig fontconfig-devel glib2-devel gnu-config libICE-devel libSM-devel libX11-devel libXext-devel libat-spi2-core libatk-devel libcairo-devel libcairo-gobject libcairo-gobject-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libpango-devel libpng-devel libwayland-client libwayland-cursor libwayland-server pkg-config xorg-xproto-devel zlib-devel
+BuildRequires: glibc-devel-static imake libXt-devel libcups-devel libgtk+3-devel libjpeg-devel libpaper-devel libtiff-devel xorg-cf-files
 
 %package module-X
 Summary: PostScript interpreter and renderer (additional support for X)
-Version: %gsver
 Group: Publishing
-PreReq: %name-classic = %gsver-%release
-Provides: %esp_name-module-X = %gsver, %gnu_name-module-X = %gsver
+PreReq: %name-classic = %version-%release
+Provides: %esp_name-module-X = %version, %gnu_name-module-X = %version
 Obsoletes: %gnu_name-module-X, %esp_name-module-X
 
 %package utils
 Summary: Additional tools for configuring printers
-Version: %gsver
 Group: Publishing
-PreReq: %name-classic = %gsver-%release
-Provides: %esp_name-utils = %gsver, %gnu_name-utils = %gsver
+PreReq: %name-classic = %version-%release
+Provides: %esp_name-utils = %version, %gnu_name-utils = %version
 Obsoletes: %gnu_name-utils, %esp_name-utils
 BuildArch: noarch
 
 %package -n libgs
 Summary: Shared library for %name
-Version: %gsver
 Group: Publishing
-Provides: %esp_name-lib = %gsver, %gnu_name-lib = %gsver, %name-lib = %gsver
+Provides: %esp_name-lib = %version, %gnu_name-lib = %version, %name-lib = %version
 Obsoletes: %gnu_name-lib, %esp_name-lib, %name-lib
 
 %package -n libgs-devel
 Summary: Development library for %name
-Version: %gsver
 Group: Development/C
 
 %package classic
 Summary: classic edition of %name
-Version: %gsver
 Group: Publishing
-PreReq: %name-common = %gsver-%release libgs = %gsver-%release
-Provides: %esp_name-classic = %gsver, %gnu_name-classic = %gsver, %name-minimal = %gsver
+PreReq: %name-common = %version-%release libgs = %version-%release
+Provides: %esp_name-classic = %version, %gnu_name-classic = %version, %name-minimal = %version
 Obsoletes: %gnu_name-classic, %esp_name-classic, %name-minimal
 
 %package gtk
 Summary: %name with gtk
-Version: %gsver
 Group: Publishing
-PreReq: %name-lib = %gsver-%release, %name-common = %gsver-%release
-Provides: %esp_name-gtk = %gsver, %gnu_name-gtk = %gsver
+PreReq: %name-lib = %version-%release, %name-common = %version-%release
+Provides: %esp_name-gtk = %version, %gnu_name-gtk = %version
 Obsoletes: %gnu_name-gtk, %esp_name-gtk
 
 %package common
 Summary: Common files for the %name
-Version: %gsver
 Group: Publishing
 Requires: urw-fonts >= 1.1
-Requires: %name-classic = %gsver-%release
-Provides: %esp_name-common = %gsver, %gnu_name-common = %gsver
+Requires: %name-classic = %version-%release
+Provides: %esp_name-common = %version, %gnu_name-common = %version
 Obsoletes: %gnu_name-common, %esp_name-common
 BuildArch: noarch
 
+%package -n libijs
+Summary: Dynamic library for the IJS printer driver plug-in interface
+Version: %{ijsver}_%version
+Group: Publishing
+Provides: libespijs = %version, libgnuijs = %version
+Obsoletes: libgnuijs, libespijs
+
+%package -n libijs-devel
+Summary: Headers and links for compiling against
+Group: Development/C
+Requires: libijs = %version-%release
+Provides: libespijs-devel = %version, libgnuijs-devel = %version
+Obsoletes: libgnuijs-devel, libespijs-devel
+
 %package cups
 Summary: CUPS specific files %name
-Version: %gsver
+Version: %origver
 Group: Publishing
-Requires: %name = %gsver-%release
+Requires: %name = %version-%release
 Requires: bc
-Provides: %esp_name-cups = %gsver
+Provides: %esp_name-cups = %version
 
 %description
 Ghostscript is a set of software that provides a PostScript(TM) interpreter,
@@ -179,10 +168,10 @@ Common files for the %name
 CUPS specific files %name
 
 %prep
-%setup -q
+%setup
 
 # force system library usage
-rm -rf -- libpng zlib jpeg jasper
+rm -rf -- libpng zlib jpeg jasper freetype
 
 %patch1 -p1
 %patch2 -p1
@@ -192,13 +181,12 @@ rm -rf -- libpng zlib jpeg jasper
 %patch6 -p1
 %patch7 -p1
 %patch8 -p1
-%patch9 -p1
-%patch10 -p1
-%patch11 -p2
 
-%autoreconf
+%patch100 -p1
+%patch101 -p2
 
 %build
+%autoreconf
 export CFLAGS=-DA4
 
 %configure --enable-dynamic \
@@ -214,29 +202,27 @@ export CFLAGS=-DA4
 %_datadir/ghostscript/conf.d \
 #
 
-#NO SMP
-%make
-%make so
+%make_build
+%make_build so
 
 cd ijs
     ./autogen.sh
     %configure --enable-shared --enable-static
-    %make
+    %make_build
 cd -
 
 %install
-
 make install soinstall \
-	prefix=$RPM_BUILD_ROOT%{_prefix} \
-	mandir=$RPM_BUILD_ROOT%{_mandir} \
-	datadir=$RPM_BUILD_ROOT%{_datadir} \
-	gsincludedir=$RPM_BUILD_ROOT%{_includedir}/ghostscript/ \
-	bindir=$RPM_BUILD_ROOT%{_bindir} \
-	libdir=$RPM_BUILD_ROOT%{_libdir} \
-	docdir=$RPM_BUILD_ROOT%{_docdir}/%{name}-%gsver \
-	gsdir=$RPM_BUILD_ROOT%{_datadir}/%{name} \
-	gsdatadir=$RPM_BUILD_ROOT%{_datadir}/%{name}/%gsver \
-	gssharedir=$RPM_BUILD_ROOT%{_libdir}/%{name}/%gsver \
+	prefix=$RPM_BUILD_ROOT%prefix \
+	mandir=$RPM_BUILD_ROOT%_mandir \
+	datadir=$RPM_BUILD_ROOT%_datadir \
+	gsincludedir=$RPM_BUILD_ROOT%_includedir/ghostscript/ \
+	bindir=$RPM_BUILD_ROOT%_bindir \
+	libdir=$RPM_BUILD_ROOT%_libdir \
+	docdir=$RPM_BUILD_ROOT%_docdir/%name-%version \
+	gsdir=$RPM_BUILD_ROOT%_datadir/%name \
+	gsdatadir=$RPM_BUILD_ROOT%_datadir/%name/%version \
+	gssharedir=$RPM_BUILD_ROOT%_libdir/%name/%version \
 	CUPSSERVERROOT=$RPM_BUILD_ROOT`cups-config --serverroot` \
 	CUPSSERVERBIN=$RPM_BUILD_ROOT`cups-config --serverbin` \
 	CUPSDATA=$RPM_BUILD_ROOT`cups-config --datadir`
@@ -249,7 +235,7 @@ cd ijs
 cd -
 
 rm -rf -- %buildroot%_mandir/de
-rm -rf -- %buildroot%_datadir/ghostscript/%gsver/Resource/Font
+rm -rf -- %buildroot%_datadir/ghostscript/%version/Resource/Font
 rm -f  -- %buildroot%_bindir/ijs_{client,server}_example
 
 # X11.so always gets loaded, even with 'gs --help'
@@ -259,9 +245,8 @@ echo %name-module-X >%buildroot/etc/buildreqs/packages/ignore.d/%name-module-X
 mkdir -p %buildroot/%_datadir/ghostscript/conf.d
 
 %files
-
 %files common
-%doc %_docdir/%name-%gsver
+%doc %_docdir/%name-%version
 %_datadir/ghostscript
 %_datadir/ghostscript/conf.d
 %_bindir/pdf2dsc
@@ -312,6 +297,11 @@ mkdir -p %buildroot/%_datadir/ghostscript/conf.d
 %_includedir/ijs
 
 %changelog
+* Mon Apr 22 2013 Fr. Br. George <george@altlinux.ru> 9.07-alt1
+- Autobuild version bump to 9.07
+- Update FC patchset
+- Build with system freetype
+
 * Fri Sep 28 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 9.05-alt1.1
 - Rebuilt with libpng15
 
@@ -482,7 +472,6 @@ mkdir -p %buildroot/%_datadir/ghostscript/conf.d
 - 7.07.1
 - change font path
 - fix requires module-X and drivers (added virtual providing %name-rip)
-	 
 
 * Fri May 16 2003 Stanislav Ievlev <inger@altlinux.ru> 7.05.6-alt0.8
 - added pnm2ppa and pbm2ppa (old version of pnm2ppa) drivers for HP PPA WinPrinters
