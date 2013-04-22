@@ -3,13 +3,13 @@
 %define src_ver 0.60
 Name: aspell-be
 Version: %src_ver
-Release: alt2
+Release: alt2.qa1
 
 Summary: GNU Aspell Belarusian Word List Package
 Summary(be_BY.UTF-8): Слоўнік беларускае мовы для GNU Aspell
 Summary(ru_RU.UTF-8): Словарь белорусского языка для GNU Aspell
 License: GPL
-Group: System/Internationalization
+Group: Text tools
 Url: http://aspell.net/
 
 Source: http://mova.linux.by/aspell/aspell6-be-%build_ver.tar.bz2
@@ -42,6 +42,11 @@ GNU Aspell Belarusian Word List Package
 %_datadir/*
 
 %changelog
+* Mon Apr 22 2013 Repocop Q. A. Robot <repocop@altlinux.org> 0.60-alt2.qa1
+- NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
+- applied repocop fixes:
+  * altlinux-policy-rpm-group-should-be-text-tools for aspell-be
+
 * Mon Jul 19 2004 Vital Khilko <vk@altlinux.ru> 0.60-alt2
 - rebuilded for #4441
 
