@@ -18,14 +18,14 @@
 %endif
 
 %define somver 3
-%define sover %somver.2.0
+%define sover %somver.3.0
 
 %define topsomver 0
 %define topsover %topsomver.0.0
 
 Name: %oname-%scalar_type
-Version: 3.3_p5
-Release: alt2
+Version: 3.3_p6
+Release: alt1
 Summary: Portable, Extensible Toolkit for Scientific Computation (%scalar_type scalars)
 License: BSD
 Group: Sciences/Mathematics
@@ -789,6 +789,9 @@ sed -i 's|\(\-lpetsc\)|-L%ldir/lib \1|' \
 %ldir/sources
 
 %changelog
+* Mon Apr 22 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.3_p6-alt1
+- Version 3.3-p6
+
 * Thu Feb 21 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.3_p5-alt2
 - Added PKG_CONFIG_PATH into %_bindir/%name.sh
 
