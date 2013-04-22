@@ -3,7 +3,7 @@ BuildRequires(pre): rpm-macros-fedora-compat
 # END SourceDeps(oneline)
 Name:           sugar-distance
 Version:        34
-Release:        alt1_1
+Release:        alt1_1.qa1
 Summary:        Distance measurement for Sugar
 
 Group:          Graphical desktop/Sugar
@@ -39,12 +39,23 @@ find %{buildroot}%{sugaractivitydir}Distance.activity/arange.py -type f -name \*
 
 %find_lang org.laptop.AcousticMeasure
 
+# It is the file in the package whose name matches the format emacs or vim uses 
+# for backup and autosave files. It may have been installed by  accident.
+find $RPM_BUILD_ROOT \( -name '.*.swp' -o -name '#*#' -o -name '*~' \) -print -delete
+# failsafe cleanup if the file is declared as %%doc
+find . \( -name '.*.swp' -o -name '#*#' -o -name '*~' \) -print -delete
+
 %files -f org.laptop.AcousticMeasure.lang
 %doc NEWS
 %{sugaractivitydir}/Distance.activity/
 
 
 %changelog
+* Mon Apr 22 2013 Repocop Q. A. Robot <repocop@altlinux.org> 34-alt1_1.qa1
+- NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
+- applied repocop fixes:
+  * backup-file-in-package for sugar-distance
+
 * Wed Mar 13 2013 Igor Vlasenko <viy@altlinux.ru> 34-alt1_1
 - update from fc18 release
 
