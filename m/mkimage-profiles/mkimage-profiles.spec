@@ -1,5 +1,5 @@
 Name: mkimage-profiles
-Version: 0.9.11
+Version: 0.9.12
 Release: alt1
 
 Summary: ALT Linux based distribution metaprofile
@@ -78,6 +78,9 @@ cp -a * %buildroot%mpdir
 %doc %docs/*
 
 %changelog
+* Mon Apr 22 2013 Michael Shigorin <mike@altlinux.org> 0.9.12-alt1
+- four weeks later...
+
 * Mon Mar 25 2013 Michael Shigorin <mike@altlinux.org> 0.9.11-alt1
 - persistent icewm
 
