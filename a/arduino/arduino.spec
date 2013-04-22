@@ -6,7 +6,7 @@ BuildRequires: jpackage-compat
 Name:		arduino
 Epoch:		1
 Version:	1.0.1
-Release:	alt2_4jpp7
+Release:	alt2_4jpp7.qa1
 Summary:	An IDE for Arduino-compatible electronics prototyping platforms
 Group:		Development/Java
 License:	GPLv2+ and LGPLv2+ and CC-BY-SA
@@ -173,6 +173,12 @@ else
    exit 2
 fi
 
+# It is the file in the package whose name matches the format emacs or vim uses 
+# for backup and autosave files. It may have been installed by  accident.
+find $RPM_BUILD_ROOT \( -name '.*.swp' -o -name '#*#' -o -name '*~' \) -print -delete
+# failsafe cleanup if the file is declared as %%doc
+find . \( -name '.*.swp' -o -name '#*#' -o -name '*~' \) -print -delete
+
 
 
 %files
@@ -207,6 +213,11 @@ fi
 
 
 %changelog
+* Mon Apr 22 2013 Repocop Q. A. Robot <repocop@altlinux.org> 1:1.0.1-alt2_4jpp7.qa1
+- NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
+- applied repocop fixes:
+  * backup-file-in-package for arduino-core
+
 * Tue Mar 19 2013 Igor Vlasenko <viy@altlinux.ru> 1:1.0.1-alt2_4jpp7
 - fc update
 
