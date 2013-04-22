@@ -1,5 +1,5 @@
 Name: repocop-unittest-systemd
-Version: 0.02
+Version: 0.04
 Release: alt1
 BuildArch: noarch
 Packager: Igor Vlasenko <viy@altlinux.ru>
@@ -43,6 +43,12 @@ done
 %_datadir/repocop/fixscripts/*
 
 %changelog
+* Mon Apr 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.04-alt1
+- bugfix release
+
+* Mon Apr 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.03-alt1
+- bugfix release
+
 * Sun Apr 21 2013 Igor Vlasenko <viy@altlinux.ru> 0.02-alt1
 - added *-files-in-etc tests and patch generators
 
