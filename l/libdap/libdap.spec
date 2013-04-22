@@ -6,7 +6,7 @@ BuildRequires: chrpath
 Name: libdap
 Summary: The C++ DAP2 library from OPeNDAP
 Version: 3.11.3
-Release: alt2_3
+Release: alt2_3.qa1
 
 License: LGPLv2+
 Group: Development/C
@@ -56,6 +56,7 @@ will use libdap.
 %package doc
 Summary: Documentation of the libdap library
 Group: Documentation
+BuildArch: noarch
 
 %description doc
 Documentation of the libdap library.
@@ -78,7 +79,7 @@ make docs
 
 
 %install
-make install DESTDIR=$RPM_BUILD_ROOT INSTALL="%{__install} -p"
+make install DESTDIR=$RPM_BUILD_ROOT INSTALL="install -p"
 rm $RPM_BUILD_ROOT%{_libdir}/*.la
 mv $RPM_BUILD_ROOT%{_bindir}/dap-config-pkgconfig $RPM_BUILD_ROOT%{_bindir}/dap-config
 
@@ -120,6 +121,12 @@ done
 
 
 %changelog
+* Mon Apr 22 2013 Repocop Q. A. Robot <repocop@altlinux.org> 3.11.3-alt2_3.qa1
+- NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
+- applied repocop fixes:
+  * arch-dep-package-consists-of-usr-share for libdap-doc
+  * postclean-03-private-rpm-macros for the spec file
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 3.11.3-alt2_3
 - update to new release by fcimport
 
