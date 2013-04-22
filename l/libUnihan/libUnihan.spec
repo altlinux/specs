@@ -10,7 +10,7 @@ Name:           libUnihan
 %define         libUnihan_ver_major 0
 %define         libUnihan_ver_minor 5
 Version:        %{libUnihan_ver_major}.%{libUnihan_ver_minor}.3
-Release:        alt4_9
+Release:        alt4_9.qa1
 Group:          System/Libraries
 License:        LGPLv2+
 Summary:        C library for Unihan character database in fifth normal form 
@@ -45,6 +45,7 @@ Group:      Documentation
 License:        LGPLv2+
 BuildRequires:  doxygen
 Requires:       %{name} = %{version}-%{release}
+BuildArch: noarch
 
 %description doc
 The libUnihan C API documents in Doxygen style.
@@ -82,6 +83,11 @@ make install DESTDIR=$RPM_BUILD_ROOT
 %doc doc/html
 
 %changelog
+* Mon Apr 22 2013 Repocop Q. A. Robot <repocop@altlinux.org> 0.5.3-alt4_9.qa1
+- NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
+- applied repocop fixes:
+  * arch-dep-package-consists-of-usr-share for libUnihan-doc
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.5.3-alt4_9
 - update to new release by fcimport
 
