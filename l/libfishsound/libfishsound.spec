@@ -4,7 +4,7 @@ BuildRequires: /usr/bin/doxygen /usr/bin/pkg-config /usr/bin/valgrind
 %add_optflags %optflags_shared
 Name:           libfishsound
 Version:        1.0.0
-Release:        alt3_6
+Release:        alt3_6.qa1
 Summary:        Simple programming interface for Xiph.Org codecs
 
 Group:          System/Libraries
@@ -42,6 +42,7 @@ Summary:        Documentation for %{name}
 Group:          Documentation
 # note: intentionally not noarch; contains a target-specific Makefile
 Requires:       %{name} = %{version}-%{release}
+BuildArch: noarch
 
 %description    doc
 The %{name}-doc package contains the documentation for %{name}.
@@ -107,6 +108,11 @@ mv src/examples .
 
 
 %changelog
+* Mon Apr 22 2013 Repocop Q. A. Robot <repocop@altlinux.org> 1.0.0-alt3_6.qa1
+- NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
+- applied repocop fixes:
+  * arch-dep-package-consists-of-usr-share for libfishsound-doc
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt3_6
 - update to new release by fcimport
 
