@@ -21,7 +21,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.4.41
-Release: alt2
+Release: alt3
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -2674,6 +2674,10 @@ done)
 
 
 %changelog
+* Mon Apr 22 2013 Led <led@altlinux.ru> 3.4.41-alt3
+- updated:
+  + feat-drivers-net-ethernet-atheros--alx
+
 * Wed Apr 17 2013 Led <led@altlinux.ru> 3.4.41-alt2
 - updated:
   + feat-net--netatop
