@@ -1,7 +1,7 @@
 Summary: CLAM - C++ Library for Audio and Music
 Name: libclam
 Version: 1.3.0
-Release: alt1.4.qa1
+Release: alt1.4.qa2
 License: GPL
 Url: http://clam.iua.upf.edu
 Group: System/Libraries
@@ -51,6 +51,7 @@ clam-core, clam-processing, clam-audioio, clam-vmfl and clam-vmqt.
 %package doc
 Summary: Contains the clam-framework documentation and some example programs
 Group: Documentation
+BuildArch: noarch
 
 %description doc
 This package contains the framework documentation and some example programs.
@@ -114,6 +115,11 @@ mv %buildroot%_prefix/libX/* %buildroot%_libdir
 %doc doxygen/*
 
 %changelog
+* Mon Apr 22 2013 Repocop Q. A. Robot <repocop@altlinux.org> 1.3.0-alt1.4.qa2
+- NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
+- applied repocop fixes:
+  * arch-dep-package-consists-of-usr-share for libclam-doc
+
 * Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.3.0-alt1.4.qa1
 - NMU: rebuilt for updated dependencies.
 
