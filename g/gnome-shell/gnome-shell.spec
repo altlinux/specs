@@ -5,7 +5,7 @@
 
 Name: gnome-shell
 Version: %ver_major.1
-Release: alt1
+Release: alt2
 
 Summary: Window management and application launching for GNOME
 Group: Graphical desktop/GNOME
@@ -16,10 +16,8 @@ Packager: GNOME Maintainers Team <gnome at packages.altlinux.org>
 #Source: %name-%version.tar
 Source: http://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 Patch1: %name-3.7.92-alt-gir.patch
-# use gnome3-applications.menu
-Patch2: %name-3.5.91-avoid-alt-menus.patch
 Patch3: %name-3.6.2-alt-invalid_user_shell.patch
-Patch4: %name-3.8.0-bgo697008-input-source-switch.patch
+Patch4: %name-3.8.1-bgo697008-input-source-switch.patch
 
 Obsoletes: gnome-shell-extension-per-window-input-source
 
@@ -127,7 +125,6 @@ GNOME Shell.
 %prep
 %setup -q
 %patch1 -p1 -b .gir
-%patch2 -p1 -b .menu
 %patch3 -b .shells
 #%%patch4 -p1 -b .keyb
 
@@ -136,9 +133,7 @@ NOCONFIGURE=1 ./autogen.sh
 %configure \
 	--enable-gtk-doc \
     --disable-schemas-compile
-
-#    --with-ca-certificates=%_datadir/ca-certificates/ca-bundle.crt
-%make
+%make_build
 
 %install
 %make DESTDIR=%buildroot \
@@ -186,6 +181,9 @@ rm -f %buildroot%_libdir/%name/*.la
 %_datadir/gtk-doc/html/st/
 
 %changelog
+* Mon Apr 22 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.1-alt2
+- removed useless gnome-shell-3.5.91-avoid-alt-menus.patch
+
 * Tue Apr 16 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.1-alt1
 - 3.8.1
 
