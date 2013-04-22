@@ -1,7 +1,7 @@
 %define module ALTLinux-ACL
 
 Name: perl-%module
-Version: 0.12
+Version: 0.13
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -33,6 +33,9 @@ BuildRequires: perl-devel perl(Pod/Usage.pm) perl-RPM perl-IPC-Run3 perl(Data/Ar
 %_bindir/*
 
 %changelog
+* Mon Apr 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.13-alt1
+- arguments check
+
 * Tue Sep 25 2012 Igor Vlasenko <viy@altlinux.ru> 0.12-alt1
 - improved altlinux-acl-filter-list-by-access
 
