@@ -2,7 +2,7 @@
 
 Name: fortune-mod
 Version: 1.99.1
-Release: alt5.qa1
+Release: alt5.qa2
 
 Summary: A program which will display a fortune
 License: BSD
@@ -83,8 +83,8 @@ race, if needs be.  Needs be.
 	FORTMANDIR=%buildroot/%_mandir/man6 \
 	install
 
-%__tar xvf %SOURCE1 -C %buildroot%_gamesdatadir/fortune/
-%__tar xvf %SOURCE2 -C %buildroot%_gamesdatadir/fortune/
+tar xvf %SOURCE1 -C %buildroot%_gamesdatadir/fortune/
+tar xvf %SOURCE2 -C %buildroot%_gamesdatadir/fortune/
 
 %files
 
@@ -106,6 +106,13 @@ race, if needs be.  Needs be.
 %_gamesdatadir/fortune/off/*
 
 %changelog
+* Tue Apr 23 2013 Repocop Q. A. Robot <repocop@altlinux.org> 1.99.1-alt5.qa2
+- NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
+- applied repocop fixes:
+  * arch-dep-package-consists-of-usr-share for fortunes-offensive
+  * arch-dep-package-consists-of-usr-share for fortunes
+  * postclean-03-private-rpm-macros for the spec file
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.99.1-alt5.qa1
 - NMU: rebuilt for debuginfo.
 
