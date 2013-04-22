@@ -2,8 +2,8 @@
 Name: btier
 %define module_name %name
 Version: 0.9.9.9
-%define rel 7
-Release: alt3
+%define rel 8
+Release: alt4
 Summary: %Name - a blockdevice that provides automated tiered storage
 License: GPLv2
 Group: System/Base
@@ -29,7 +29,9 @@ Provides: %{name}_setup = %version-%release
 %name is a kernel block device that creates a tiered device out of multiple
 smaller devices with automatic migration and smart placement of data chunks based
 up-on access patterns.
-This package contains btier_setup - The setup utility for %name.
+This package contains:
+  - btier_setup - the setup utility for %name
+  - btier_inspect - a tool that can be used to backup and restore btier metadata
 
 
 %package doc
@@ -62,18 +64,17 @@ This package contains sources for %name kernel module.
 
 
 %build
-%make_build CC="%__cc %optflags" clionly
-
-gzip -9c Changelog > Changelog.gz
+%make_build CC="%__cc %optflags" cli/btier_setup cli/btier_inspect
 
 
 %install
 install -d -m 0755 %buildroot{%_sbindir,%_man1dir,%_usrsrc/kernel/sources,%_docdir/%name-%version/examples/fio}
-install -m 0755 cli/%{name}_setup %buildroot%_sbindir/
+install -m 0755 cli/%{name}_{setup,inspect} %buildroot%_sbindir/
 install -m 0644 man/*.1 %buildroot%_man1dir/
 install -m 0644 tools/{show_*,writetest.c} %buildroot%_docdir/%name-%version/examples/
 install -m 0644 tools/fio/* %buildroot%_docdir/%name-%version/examples/fio/
-install -m 0644 Changelog.* TODO Documentation/* %buildroot%_docdir/%name-%version/
+install -m 0644 TODO Documentation/* %buildroot%_docdir/%name-%version/
+gzip -9c Changelog > %buildroot%_docdir/%name-%version/Changelog.gz
 
 tar --transform='s,^.*/,/%module_name-%version/,' -cJf %kernel_srcdir/%module_name-%version.tar.xz kernel/%name/*
 
@@ -92,6 +93,11 @@ tar --transform='s,^.*/,/%module_name-%version/,' -cJf %kernel_srcdir/%module_na
 
 
 %changelog
+* Mon Apr 22 2013 Led <led@altlinux.ru> 0.9.9.9-alt4
+- 0.9.9.9-8:
+  + added btier_inspect - a tool that can be used to backup and restore btier
+    metadata
+
 * Wed Apr 10 2013 Led <led@altlinux.ru> 0.9.9.9-alt3
 - 0.9.9.9-7
 
