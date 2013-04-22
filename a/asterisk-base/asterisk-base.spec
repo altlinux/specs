@@ -1,6 +1,6 @@
 Name: asterisk-base
 Summary: User and groups for asterisk-related packages
-Version: 0.64
+Version: 0.65
 Release: alt1
 License: GPL
 Group: System/Servers
@@ -208,6 +208,9 @@ echo "options wct4xxp t1e1override=0xff" > %buildroot%_sysconfdir/modprobe.d/dah
 %_sysconfdir/modprobe.d/dahdi.conf
 
 %changelog
+* Mon Apr 22 2013 Denis Smirnov <mithraen@altlinux.ru> 0.65-alt1
+- systemd: start asterisk after postgresql and mysql
+
 * Wed Jan 30 2013 Denis Smirnov <mithraen@altlinux.ru> 0.64-alt1
 - remove /var/run/asterisk dir
 
