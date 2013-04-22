@@ -1,6 +1,6 @@
 Name: syslinux
 Version: 4.04
-Release: alt6
+Release: alt7
 Serial: 2
 
 Summary: Simple kernel loader which boots from a FAT filesystem
@@ -14,16 +14,17 @@ Source0: %name-%version.tar.bz2
 Source1: isolinux-config
 Source2: README.gfxboot
 # SuSE
-Patch1: syslinux-4.04-cwd.diff
-Patch2: syslinux-4.04-iso9660.diff
-Patch3: syslinux-4.04-isohybrid-hex-option-parsing.diff
+Patch1: syslinux-4.04-iso9660.diff
+Patch2: syslinux-4.04-cwd.diff
+Patch3: syslinux-4.04-noinitrd.diff
 Patch4: syslinux-4.04-mboot_bootif.diff
 Patch5: syslinux-4.04-md5pass.diff
-Patch6: syslinux-4.04-noinitrd.diff
-Patch7: syslinux-4.04-gcc47.diff
-Patch8: syslinux-4.04-libext2fs.diff
-# upstream
-Patch200: syslinux-4.04-isohybrid-0.12.patch
+Patch6: syslinux-4.04-gcc47.diff
+Patch7: syslinux-4.04-libext2fs.diff
+Patch8: syslinux-4.04-isohybrid_efi.diff
+Patch9: syslinux-4.04-isohybrid_efi_optional.diff
+Patch10: syslinux-4.04-isohybrid_mbr.diff
+Patch11: syslinux-4.04-localboot.diff
 
 #BuildPrereq: nasm perl-base
 # Automatically added by buildreq on Tue Oct 28 2008 (-bi)
@@ -65,13 +66,15 @@ Read main packages description
 %setup -q
 %patch1 -p1
 %patch2 -p1
-#patch3 -p1
+%patch3 -p1
 %patch4 -p1
 %patch5 -p1
-%patch6 -p1
+%patch6 -p0
 %patch7 -p0
 %patch8 -p0
-%patch200 -p2
+%patch9 -p1
+%patch10 -p1
+%patch11 -p1
 install -m 0644 %SOURCE2 .
 
 %build
@@ -122,6 +125,9 @@ install -m 0755 %SOURCE1 %buildroot/%_bindir
 /boot/extlinux
 
 %changelog
+* Mon Apr 22 2013 Sergey V Turchin <zerg@altlinux.org> 2:4.04-alt7
+- sync patches with SuSE
+
 * Mon Feb 04 2013 Sergey V Turchin <zerg@altlinux.org> 2:4.04-alt6
 - add patch from SuSE to fix build with gcc-4.7
 
