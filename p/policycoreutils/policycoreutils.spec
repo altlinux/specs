@@ -3,7 +3,7 @@
 Summary: SELinux policy core utilities
 Name: policycoreutils
 Version: 2.1.13
-Release: alt5
+Release: alt6
 License: GPLv2
 Group: System/Base
 Url: http://userspace.selinuxproject.org
@@ -276,6 +276,9 @@ cp -r mcstrans/share/* %buildroot%_datadir/mcstrans/
 
 
 %changelog
+* Mon Apr 22 2013 Andriy Stepanov <stanv@altlinux.ru> 2.1.13-alt6
+- newrole: add CAP_AUDIT_WRITE to list fo drop_capabilities()
+
 * Wed Apr 17 2013 Timur Aitov <timonbl4@altlinux.org> 2.1.13-alt5
 - mcstransd: convert sensitivity and categoryset separately
 
