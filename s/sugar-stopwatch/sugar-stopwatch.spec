@@ -3,7 +3,7 @@ BuildRequires(pre): rpm-macros-fedora-compat
 # END SourceDeps(oneline)
 Name:           sugar-stopwatch
 Version:        18
-Release:        alt1_1
+Release:        alt1_1.qa1
 Summary:        Simple stopwatch for Sugar
 
 Group:          Graphical desktop/Sugar
@@ -38,12 +38,23 @@ python ./setup.py build
 python ./setup.py install --prefix=%{buildroot}/%{_prefix}
 %find_lang org.laptop.StopWatchActivity
 
+# It is the file in the package whose name matches the format emacs or vim uses 
+# for backup and autosave files. It may have been installed by  accident.
+find $RPM_BUILD_ROOT \( -name '.*.swp' -o -name '#*#' -o -name '*~' \) -print -delete
+# failsafe cleanup if the file is declared as %%doc
+find . \( -name '.*.swp' -o -name '#*#' -o -name '*~' \) -print -delete
+
 %files -f org.laptop.StopWatchActivity.lang
 #%doc AUTHORS COPYING NEWS
 %{sugaractivitydir}/StopWatch.activity/
 
 
 %changelog
+* Mon Apr 22 2013 Repocop Q. A. Robot <repocop@altlinux.org> 18-alt1_1.qa1
+- NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
+- applied repocop fixes:
+  * backup-file-in-package for sugar-stopwatch
+
 * Wed Mar 13 2013 Igor Vlasenko <viy@altlinux.ru> 18-alt1_1
 - update from fc18 release
 
