@@ -1,6 +1,6 @@
 Name: musixtex
 Version: T101
-Release: alt3.1.qa1
+Release: alt3.1.qa2
 Source: ftp://ctan.tug.org/tex-archive/macros/musixtex/taupin/%{name}-%{version}.tar.gz
 Source1: musixtex-install.sh
 Source2: musixtex-readme
@@ -23,6 +23,7 @@ documentation and the MusiXTeX+plain format.
 Summary: Documentation for MusixTeX
 Group: Publishing
 Requires:	%{name} = %{version}
+BuildArch: noarch
 
 %description doc
 This package contents documentation for MisicTeX - Tex extensions for
@@ -42,7 +43,7 @@ This program meets the second stage in MusiXTeX's three-pass system.
 
 %build
 cd systems/c-source
-%{__cc} -o musixflx musixflx.c
+gcc -o musixflx musixflx.c
 
 %install
 export PREFIX=$RPM_BUILD_ROOT
@@ -75,6 +76,12 @@ install -m755 systems/c-source/musixflx $RPM_BUILD_ROOT%{_bindir}
 
 
 %changelog
+* Mon Apr 22 2013 Repocop Q. A. Robot <repocop@altlinux.org> T101-alt3.1.qa2
+- NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
+- applied repocop fixes:
+  * arch-dep-package-consists-of-usr-share for musixtex-doc
+  * postclean-03-private-rpm-macros for the spec file
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> T101-alt3.1.qa1
 - NMU: rebuilt for debuginfo.
 
