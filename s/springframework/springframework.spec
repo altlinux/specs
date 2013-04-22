@@ -4,7 +4,7 @@ BuildRequires: jpackage-compat
 Name: springframework
 Summary: Spring Java Application Framework
 Version: 3.1.1
-Release: alt1_10jpp7
+Release: alt1_10jpp7.qa1
 Epoch: 0
 License: ASL 2.0
 Group: Development/Java
@@ -210,8 +210,8 @@ This package contains javadoc for %{name}.
 %package aop
 Summary: Spring Aspect Oriented Framework
 Group: Development/Java
-Requires: %{name}-beans = %{version}-%{release}
-Requires: %{name} = %{version}-%{release}
+Requires: %{name}-beans = %{?epoch:%epoch:}%{version}-%{release}
+Requires: %{name} = %{?epoch:%epoch:}%{version}-%{release}
 Requires: apache-commons-logging
 Requires: apache-commons-pool
 Requires: aopalliance
@@ -228,7 +228,7 @@ aspects and provides declarative transaction management without EJB.
 %package beans
 Summary: Spring Bean Factory
 Group: Development/Java
-Requires: %{name} = %{version}-%{release}
+Requires: %{name} = %{?epoch:%epoch:}%{version}-%{release}
 Requires: atinject
 Requires: cglib
 Requires: tomcat-el-2.2-api
@@ -241,11 +241,11 @@ managing beans of any nature, using potentially any kind of storage facility.
 %package context
 Summary: Spring Application Context
 Group: Development/Java
-Requires: %{name} = %{version}-%{release}
-Requires: %{name}-aop = %{version}-%{release}
-Requires: %{name}-beans = %{version}-%{release}
-Requires: %{name}-expression = %{version}-%{release}
-Requires: %{name}-instrument = %{version}-%{release}
+Requires: %{name} = %{?epoch:%epoch:}%{version}-%{release}
+Requires: %{name}-aop = %{?epoch:%epoch:}%{version}-%{release}
+Requires: %{name}-beans = %{?epoch:%epoch:}%{version}-%{release}
+Requires: %{name}-expression = %{?epoch:%epoch:}%{version}-%{release}
+Requires: %{name}-instrument = %{?epoch:%epoch:}%{version}-%{release}
 Requires: aspectjweaver
 Requires: atinject
 Requires: backport-util-concurrent
@@ -271,11 +271,11 @@ enterprise-centric.
 %package context-support
 Summary:  Spring Context Support
 Group:    Development/Java
-Requires: %{name} = %{version}-%{release}
-Requires: %{name}-beans = %{version}-%{release}
-Requires: %{name}-context = %{version}-%{release}
-Requires: %{name}-jdbc = %{version}-%{release}
-Requires: %{name}-tx = %{version}-%{release}
+Requires: %{name} = %{?epoch:%epoch:}%{version}-%{release}
+Requires: %{name}-beans = %{?epoch:%epoch:}%{version}-%{release}
+Requires: %{name}-context = %{?epoch:%epoch:}%{version}-%{release}
+Requires: %{name}-jdbc = %{?epoch:%epoch:}%{version}-%{release}
+Requires: %{name}-tx = %{?epoch:%epoch:}%{version}-%{release}
 Requires: apache-commons-collections
 Requires: freemarker >= 2.3.19
 Requires: geronimo-commonj
@@ -295,7 +295,7 @@ UI templating, mail and caching.
 %package expression
 Summary: Spring Expression Language (SpEL)
 Group: Development/Java
-Requires: %{name} = %{version}-%{release}
+Requires: %{name} = %{?epoch:%epoch:}%{version}-%{release}
 
 %description expression
 The Spring Expression Language (SpEL for short) is a powerful expression
@@ -305,7 +305,7 @@ language that supports querying and manipulating an object graph at runtime.
 %package instrument
 Summary: Spring Instrumentation
 Group: Development/Java
-Requires: %{name} = %{version}-%{release}
+Requires: %{name} = %{?epoch:%epoch:}%{version}-%{release}
 
 %description instrument
 The Spring Instrumentation Framework exposes performance and resource utilization
@@ -316,10 +316,10 @@ container.
 %package jdbc
 Summary: Spring JDBC
 Group: Development/Java
-Requires: %{name} = %{version}-%{release}
-Requires: %{name}-beans = %{version}-%{release}
-Requires: %{name}-context = %{version}-%{release}
-Requires: %{name}-tx = %{version}-%{release}
+Requires: %{name} = %{?epoch:%epoch:}%{version}-%{release}
+Requires: %{name}-beans = %{?epoch:%epoch:}%{version}-%{release}
+Requires: %{name}-context = %{?epoch:%epoch:}%{version}-%{release}
+Requires: %{name}-tx = %{?epoch:%epoch:}%{version}-%{release}
 Requires: c3p0
 Requires: geronimo-jta
 Requires: h2
@@ -333,12 +333,12 @@ development with JDBC.
 %package jms
 Summary:  Spring jms
 Group:    Development/Java
-Requires: %{name} = %{version}-%{release}
-Requires: %{name}-aop = %{version}-%{release}
-Requires: %{name}-beans = %{version}-%{release}
-Requires: %{name}-context = %{version}-%{release}
-Requires: %{name}-oxm = %{version}-%{release}
-Requires: %{name}-tx = %{version}-%{release}
+Requires: %{name} = %{?epoch:%epoch:}%{version}-%{release}
+Requires: %{name}-aop = %{?epoch:%epoch:}%{version}-%{release}
+Requires: %{name}-beans = %{?epoch:%epoch:}%{version}-%{release}
+Requires: %{name}-context = %{?epoch:%epoch:}%{version}-%{release}
+Requires: %{name}-oxm = %{?epoch:%epoch:}%{version}-%{release}
+Requires: %{name}-tx = %{?epoch:%epoch:}%{version}-%{release}
 Requires: aopalliance
 Requires: apache-commons-pool
 Requires: geronimo-jms
@@ -353,13 +353,13 @@ This package provide Java Message Service 1.0.2/1.1 support.
 %package orm
 Summary:  Spring ORM
 Group:    Development/Java
-Requires: %{name} = %{version}-%{release}
-Requires: %{name}-aop = %{version}-%{release}
-Requires: %{name}-beans = %{version}-%{release}
-Requires: %{name}-context = %{version}-%{release}
-Requires: %{name}-jdbc = %{version}-%{release}
-Requires: %{name}-tx = %{version}-%{release}
-Requires: %{name}-web = %{version}-%{release}
+Requires: %{name} = %{?epoch:%epoch:}%{version}-%{release}
+Requires: %{name}-aop = %{?epoch:%epoch:}%{version}-%{release}
+Requires: %{name}-beans = %{?epoch:%epoch:}%{version}-%{release}
+Requires: %{name}-context = %{?epoch:%epoch:}%{version}-%{release}
+Requires: %{name}-jdbc = %{?epoch:%epoch:}%{version}-%{release}
+Requires: %{name}-tx = %{?epoch:%epoch:}%{version}-%{release}
+Requires: %{name}-web = %{?epoch:%epoch:}%{version}-%{release}
 Requires: aopalliance
 Requires: eclipselink
 Requires: geronimo-jta
@@ -379,9 +379,9 @@ support, TopLink support, iBATIS support.
 %package oxm
 Summary:  Spring OXM
 Group:    Development/Java
-Requires: %{name} = %{version}-%{release}
-Requires: %{name}-beans = %{version}-%{release}
-Requires: %{name}-context = %{version}-%{release}
+Requires: %{name} = %{?epoch:%epoch:}%{version}-%{release}
+Requires: %{name}-beans = %{?epoch:%epoch:}%{version}-%{release}
+Requires: %{name}-context = %{?epoch:%epoch:}%{version}-%{release}
 Requires: aopalliance
 Requires: apache-commons-lang
 Requires: glassfish-jaxb
@@ -398,12 +398,12 @@ for XML with JAXB context and JiBX binding factories.
 %package struts
 Summary:  Spring Web Struts
 Group:    Development/Java
-Requires: %{name} = %{version}-%{release}
-Requires: %{name}-beans = %{version}-%{release}
-Requires: %{name}-context = %{version}-%{release}
-Requires: %{name} = %{version}-%{release}
-Requires: %{name}-web = %{version}-%{release}
-Requires: %{name}-webmvc = %{version}-%{release}
+Requires: %{name} = %{?epoch:%epoch:}%{version}-%{release}
+Requires: %{name}-beans = %{?epoch:%epoch:}%{version}-%{release}
+Requires: %{name}-context = %{?epoch:%epoch:}%{version}-%{release}
+Requires: %{name} = %{?epoch:%epoch:}%{version}-%{release}
+Requires: %{name}-web = %{?epoch:%epoch:}%{version}-%{release}
+Requires: %{name}-webmvc = %{?epoch:%epoch:}%{version}-%{release}
 Requires: apache-commons-beanutils
 Requires: jakarta-taglibs-standard
 Requires: jboss-jsp-2.2-api
@@ -419,7 +419,7 @@ application with Spring
 %package tx
 Summary: Spring Transaction Management
 Group: Development/Java
-Requires: %{name} = %{version}-%{release}
+Requires: %{name} = %{?epoch:%epoch:}%{version}-%{release}
 
 %description tx
 Spring provides a consistent abstraction for transaction management that
@@ -431,11 +431,11 @@ access abstractions.
 %package web
 Summary:  Spring Web
 Group:    Development/Java
-Requires: %{name} = %{version}-%{release}
-Requires: %{name}-aop = %{version}-%{release}
-Requires: %{name}-beans = %{version}-%{release}
-Requires: %{name}-context = %{version}-%{release}
-Requires: %{name}-oxm = %{version}-%{release}
+Requires: %{name} = %{?epoch:%epoch:}%{version}-%{release}
+Requires: %{name}-aop = %{?epoch:%epoch:}%{version}-%{release}
+Requires: %{name}-beans = %{?epoch:%epoch:}%{version}-%{release}
+Requires: %{name}-context = %{?epoch:%epoch:}%{version}-%{release}
+Requires: %{name}-oxm = %{?epoch:%epoch:}%{version}-%{release}
 Requires: aopalliance
 Requires: apache-commons-fileupload >= 1.2.2-5
 Requires: axis
@@ -462,14 +462,14 @@ resolver, HTTP-based remoting support.
 %package webmvc
 Summary:  Spring Web Servlet
 Group:    Development/Java
-Requires: %{name} = %{version}-%{release}
-Requires: %{name}-beans = %{version}-%{release}
-Requires: %{name}-context = %{version}-%{release}
-Requires: %{name}-context-support = %{version}-%{release}
-Requires: %{name}-expression = %{version}-%{release}
-Requires: %{name}-orm = %{version}-%{release}
-Requires: %{name}-oxm = %{version}-%{release}
-Requires: %{name}-web = %{version}-%{release}
+Requires: %{name} = %{?epoch:%epoch:}%{version}-%{release}
+Requires: %{name}-beans = %{?epoch:%epoch:}%{version}-%{release}
+Requires: %{name}-context = %{?epoch:%epoch:}%{version}-%{release}
+Requires: %{name}-context-support = %{?epoch:%epoch:}%{version}-%{release}
+Requires: %{name}-expression = %{?epoch:%epoch:}%{version}-%{release}
+Requires: %{name}-orm = %{?epoch:%epoch:}%{version}-%{release}
+Requires: %{name}-oxm = %{?epoch:%epoch:}%{version}-%{release}
+Requires: %{name}-web = %{?epoch:%epoch:}%{version}-%{release}
 Requires: apache-poi
 Requires: freemarker
 Requires: geronimo-jta
@@ -498,11 +498,11 @@ iText and POI.
 %package webmvc-portlet
 Summary:  Spring Web Portlet
 Group:    Development/Java
-Requires: %{name} = %{version}-%{release}
-Requires: %{name}-beans = %{version}-%{release}
-Requires: %{name}-context = %{version}-%{release}
-Requires: %{name}-web = %{version}-%{release}
-Requires: %{name}-webmvc = %{version}-%{release}
+Requires: %{name} = %{?epoch:%epoch:}%{version}-%{release}
+Requires: %{name}-beans = %{?epoch:%epoch:}%{version}-%{release}
+Requires: %{name}-context = %{?epoch:%epoch:}%{version}-%{release}
+Requires: %{name}-web = %{?epoch:%epoch:}%{version}-%{release}
+Requires: %{name}-webmvc = %{?epoch:%epoch:}%{version}-%{release}
 Requires: apache-commons-fileupload >= 1.2.2-5
 Requires: jboss-el-2.2-api
 Requires: jboss-jsp-2.2-api
@@ -731,5 +731,10 @@ cp -pr target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}/.
 
 
 %changelog
+* Mon Apr 22 2013 Repocop Q. A. Robot <repocop@altlinux.org> 0:3.1.1-alt1_10jpp7.qa1
+- NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
+- applied repocop fixes:
+  * beehive-log-dependency-needs-epoch-x86_64 for springframework
+
 * Thu Sep 13 2012 Igor Vlasenko <viy@altlinux.ru> 0:3.1.1-alt1_10jpp7
 - first build
