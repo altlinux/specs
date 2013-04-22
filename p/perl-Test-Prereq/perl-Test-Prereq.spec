@@ -4,7 +4,7 @@
 
 Name: perl-Test-Prereq
 Version: 1.037
-Release: alt2
+Release: alt3
 
 Summary: Check if Makefile.PL has the right pre-requisites
 
@@ -17,7 +17,6 @@ Packager: Nikolay A. Fetisov <naf@altlinux.ru>
 
 Source: %real_name-%version.tar
 Patch0: %real_name-1.037-alt-fix_pod_encoding.patch
-Patch1: %real_name-1.037-alt-fix_tests.patch
 
 BuildArch: noarch
 
@@ -36,7 +35,6 @@ pre-requisites.
 %prep
 %setup -q -n %real_name-%version
 %patch0
-%patch1
 
 %build
 %perl_vendor_build
@@ -49,6 +47,9 @@ pre-requisites.
 %perl_vendor_privlib/Test/Prereq*
 
 %changelog
+* Mon Apr 22 2013 Nikolay A. Fetisov <naf@altlinux.ru> 1.037-alt3
+- Fix build with new Module::CoreList
+
 * Sun Apr 14 2013 Nikolay A. Fetisov <naf@altlinux.ru> 1.037-alt2
 - Fix build with Perl 5.16.3
 
