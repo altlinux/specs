@@ -14,9 +14,9 @@
 %define oname petsc4py
 %define ldir %_libdir/petsc-%scalar_type
 Name: %oname-%scalar_type
-Version: 3.3
+Version: 3.3.1
 %define exampledir %_docdir/%oname-%version/examples
-Release: alt1.hg20121217
+Release: alt1.hg20130420
 Summary: PETSc for Python (%scalar_type scalars)
 License: Public
 Group: Sciences/Mathematics
@@ -206,6 +206,9 @@ done
 %endif
 
 %changelog
+* Mon Apr 22 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.3.1-alt1.hg20130420
+- Version 3.3.1
+
 * Thu Jan 31 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.3-alt1.hg20121217
 - New snapshot
 
