@@ -37,7 +37,7 @@ BuildRequires: jpackage-compat
 
 Name:           xml-security
 Version:        1.4.5
-Release:        alt1_4jpp7
+Release:        alt1_4jpp7.qa1
 Epoch:          0
 Summary:        Implementation of W3C security standards for XML
 License:        ASL 2.0
@@ -75,7 +75,7 @@ W3C standards :
 %package javadoc
 Summary:        Javadoc for %{name}
 Group:          Development/Java
-Requires:       %{name} = %{version}-%{release}
+Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
 BuildArch: noarch
 
 %description javadoc
@@ -147,6 +147,11 @@ cp -pr src_samples/* $RPM_BUILD_ROOT%{_datadir}/%{name}
 %{_datadir}/%{name}
 
 %changelog
+* Mon Apr 22 2013 Repocop Q. A. Robot <repocop@altlinux.org> 0:1.4.5-alt1_4jpp7.qa1
+- NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
+- applied repocop fixes:
+  * beehive-log-dependency-needs-epoch-x86_64 for xml-security
+
 * Wed Sep 19 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.4.5-alt1_4jpp7
 - new release
 
