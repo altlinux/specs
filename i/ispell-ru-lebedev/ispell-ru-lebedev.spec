@@ -6,7 +6,7 @@
 
 Name: ispell-ru-lebedev
 Version: 0.99g5
-Release: alt11
+Release: alt11.qa1
 
 Packager: Sergey Kurakin <kurakin@altlinux.org>
 
@@ -14,7 +14,7 @@ Summary: Russian ispell dictionary, KOI8-R, "io" and "ie" spelling allowed
 Summary(ru_RU.UTF-8): Словарь русского языка для ispell, KOI8-R, разрешена замена "ё" на "е"
 Summary(be_BY.UTF-8): Слоўнік рускае мовы для ispell, KOI8-R, дазволена зьмена "ё" на "е"
 License: distributable
-Group: System/Internationalization
+Group: Text tools
 URL: http://scon155.phys.msu.su/~swan/orthography.html
 
 # Note: ispell and aspell hash files are architecture-dependent.
@@ -48,7 +48,7 @@ BuildConflicts:	aspell-ispell
 Summary: Russian ispell dictionary, CP1251, "io" and "ie" spelling allowed
 Summary(ru_RU.UTF-8): Словарь русского языка для ispell, CP1251, разрешена замена "ё" на "е"
 Summary(be_BY.UTF-8): Слоўнік рускае мовы для ispell, CP1251, дазволена зьмена "ё" на "е"
-Group: System/Internationalization
+Group: Text tools
 PreReq: alternatives >= 0.4
 Requires: ispell >= %ispell_version
 Provides: ispell-dictionary, ispell-ru-cp1251 = %version
@@ -58,7 +58,7 @@ Obsoletes: irussian, ispell-rus, ispell-russian, rispell, ispell-ru-cp1251
 Summary: Russian dictionary for GNU Aspell
 Summary(ru_RU.UTF-8): Словарь русского языка для GNU Aspell
 Summary(be_BY.UTF-8): Слоўнік рускае мовы для GNU Aspell
-Group: System/Internationalization
+Group: Text tools
 PreReq: alternatives >= 0.4
 Requires: aspell >= %aspell_version
 Provides: aspell-dictionary, aspell-ru = %version
@@ -70,7 +70,7 @@ Obsoletes: aspell-ru-lebedev-common-ie, aspell-ru-lebedev-common-io
 %package -n hunspell-ru-lebedev
 Summary: Russian dictionary for myspell/hunspell, "io" and "ie" spelling allowed
 Summary(ru_RU.UTF-8): Словарь русского языка для myspell/hunspell, разрешена замена "ё" на "е"
-Group: System/Internationalization
+Group: Text tools
 BuildArch: noarch
 PreReq: alternatives >= 0.4
 Requires: libhunspell
@@ -79,7 +79,7 @@ Provides: hunspell-ru
 %package -n hunspell-ru-lebedev-ie
 Summary: Russian dictionary for myspell/hunspell, only "ie" spelling allowed
 Summary(ru_RU.UTF-8): Словарь русского языка для myspell/hunspell без поддержки буквы "ё"
-Group: System/Internationalization
+Group: Text tools
 BuildArch: noarch
 PreReq: alternatives >= 0.4
 Requires: libhunspell
@@ -88,7 +88,7 @@ Provides: hunspell-ru
 %package -n hunspell-ru-lebedev-io
 Summary: Russian dictionary for myspell/hunspell, "io" required
 Summary(ru_RU.UTF-8): Словарь русского языка для myspell/hunspell с обязательным употреблением буквы "ё"
-Group: System/Internationalization
+Group: Text tools
 BuildArch: noarch
 PreReq: alternatives >= 0.4
 Requires: libhunspell
@@ -116,7 +116,7 @@ BuildArch: noarch
 Summary: Russian ispell dictionary, KOI8-R, only "ie" spelling allowed
 Summary(ru_RU.UTF-8): Словарь русского языка для ispell, KOI8-R, без поддержки буквы "ё"
 Summary(be_BY.UTF-8): Слоўнік рускае мовы для ispell, KOI8-R, бяз літары "ё"
-Group: System/Internationalization
+Group: Text tools
 Requires: ispell >= %ispell_version
 Provides: ispell-dictionary, ispell-ru = %version
 Obsoletes: irussian, ispell-rus, ispell-russian, rispell, ispell-ru
@@ -125,7 +125,7 @@ Obsoletes: irussian, ispell-rus, ispell-russian, rispell, ispell-ru
 Summary: Russian ispell dictionary, CP1251, only "ie" spelling allowed
 Summary(ru_RU.UTF-8): Словарь русского языка для ispell, CP1251, без поддержки буквы "ё"
 Summary(be_BY.UTF-8): Слоўнік рускае мовы для ispell, CP1251, бяз літары "ё"
-Group: System/Internationalization
+Group: Text tools
 PreReq: alternatives >= 0.4
 Requires: ispell >= %ispell_version
 Provides: ispell-dictionary, ispell-ru-cp1251 = %version
@@ -135,7 +135,7 @@ Obsoletes: irussian, ispell-rus, ispell-russian, rispell, ispell-ru-cp1251
 Summary: Russian ispell dictionary, KOI8-R, "io" required
 Summary(ru_RU.UTF-8): Словарь русского языка для ispell, KOI8-R, обязательное употребление буквы 'ё'
 Summary(be_BY.UTF-8): Слоўнік рускае мовы для ispell, KOI8-R, абавязковае выкарыстаньне літары 'ё'
-Group: System/Internationalization
+Group: Text tools
 PreReq: alternatives >= 0.4
 Requires: ispell >= %ispell_version
 Provides: ispell-dictionary, ispell-ru = %version
@@ -145,7 +145,7 @@ Obsoletes: irussian, ispell-rus, ispell-russian, rispell, ispell-ru
 Summary: Russian ispell dictionary, CP1251, 'io' required
 Summary(ru_RU.UTF-8): Словарь русского языка для ispell, CP1251, обязательное употребление 'ё'
 Summary(be_BY.UTF-8): Слоўнік рускае мовы для ispell, CP1251, абавязковае выкарыстаньне літары 'ё'
-Group: System/Internationalization
+Group: Text tools
 PreReq: alternatives >= 0.4
 Requires: ispell >= %ispell_version
 Provides: ispell-dictionary
@@ -736,6 +736,20 @@ EOF
 
 
 %changelog
+* Mon Apr 22 2013 Repocop Q. A. Robot <repocop@altlinux.org> 0.99g5-alt11.qa1
+- NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
+- applied repocop fixes:
+  * altlinux-policy-rpm-group-should-be-text-tools for aspell-ru-lebedev
+  * altlinux-policy-rpm-group-should-be-text-tools for hunspell-ru-lebedev-ie
+  * altlinux-policy-rpm-group-should-be-text-tools for hunspell-ru-lebedev-io
+  * altlinux-policy-rpm-group-should-be-text-tools for hunspell-ru-lebedev
+  * altlinux-policy-rpm-group-should-be-text-tools for ispell-ru-lebedev
+  * altlinux-policy-rpm-group-should-be-text-tools for ispell-ru-lebedev-io-cp1251
+  * altlinux-policy-rpm-group-should-be-text-tools for ispell-ru-lebedev-ie
+  * altlinux-policy-rpm-group-should-be-text-tools for ispell-ru-lebedev-cp1251
+  * altlinux-policy-rpm-group-should-be-text-tools for ispell-ru-lebedev-io
+  * altlinux-policy-rpm-group-should-be-text-tools for ispell-ru-lebedev-ie-cp1251
+
 * Sun Feb 26 2012 Sergey Kurakin <kurakin@altlinux.org> 0.99g5-alt11
 - a few more words
 
