@@ -6,7 +6,7 @@ BuildRequires: python-devel
 Summary: Drizzle Client & Protocol Library
 Name: libdrizzle
 Version: 0.8
-Release: alt3_10
+Release: alt3_10.qa1
 # All code is BSD, except libdrizzle/sha1.{c,h} which are Public Domain
 License: BSD and Public Domain
 Group: System/Libraries
@@ -36,6 +36,7 @@ Development files for the Drizzle Client & Protocol Library
 Group: Documentation 
 Summary: Drizzle Client & Protocol Library Documentation
 Requires: %{name} = %{version}-%{release}
+BuildArch: noarch
 
 %description doc 
 Documentation files for the Drizzle Client & Protocol Library
@@ -70,6 +71,11 @@ rm -f %{buildroot}/%{_libdir}/libdrizzle.la
 %doc docs/api docs/dev
 
 %changelog
+* Mon Apr 22 2013 Repocop Q. A. Robot <repocop@altlinux.org> 0.8-alt3_10.qa1
+- NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
+- applied repocop fixes:
+  * arch-dep-package-consists-of-usr-share for libdrizzle-doc
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.8-alt3_10
 - update to new release by fcimport
 
