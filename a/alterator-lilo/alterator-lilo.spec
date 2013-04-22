@@ -1,6 +1,6 @@
 Name: alterator-lilo
 Version: 1.8.2
-Release: alt2
+Release: alt3
 
 Summary: alterator module for lilo setup
 License: GPL
@@ -38,6 +38,10 @@ alterator module for lilo setup
 %_datadir/%name
 
 %changelog
+* Thu Feb 21 2013 Roman Savochenko <rom_as@altlinux.ru> 1.8.2-alt3
+- "udevadm trigger" into backend3 script call disable for prevent Video-XOrg
+  crash for mostly ATI Radeon and old NVidia.
+
 * Tue Feb 15 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 1.8.2-alt2
 - rebuild with new libdevmapper versioning
 
