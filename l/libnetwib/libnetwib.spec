@@ -3,7 +3,7 @@ Packager: Repocop Q. A. Robot <repocop@altlinux.org>
 
 Name: libnetwib
 Version: 5.34.0
-Release: alt2.qa1
+Release: alt2.qa2
 
 Summary: Functions for network programs
 License: GPL
@@ -29,6 +29,7 @@ documentation.
 %package doc
 Summary: Documentation for %name library
 Group: Development/Documentation
+BuildArch: noarch
 
 %package devel
 Summary: Headers and libraries for %name
@@ -73,6 +74,11 @@ cd src
 %_bindir/netwib*-config
 
 %changelog
+* Mon Apr 22 2013 Repocop Q. A. Robot <repocop@altlinux.org> 5.34.0-alt2.qa2
+- NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
+- applied repocop fixes:
+  * arch-dep-package-consists-of-usr-share for libnetwib-doc
+
 * Sun Apr 14 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 5.34.0-alt2.qa1
 - NMU: rebuilt for debuginfo.
 
