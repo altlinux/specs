@@ -1,5 +1,5 @@
 Name: installer-feature-kdesktop-services
-Version: 0.5.2
+Version: 0.6.0
 Release: alt1
 
 Summary: Setup services for start/not start on boot
@@ -26,6 +26,9 @@ install -pm755 *.sh %buildroot%hookdir/
 %hookdir/*
 
 %changelog
+* Mon Apr 22 2013 Sergey V Turchin <zerg@altlinux.org> 0.6.0-alt1
+- update default services list
+
 * Mon Apr 08 2013 Sergey V Turchin <zerg@altlinux.org> 0.5.2-alt1
 - enable crond
 
