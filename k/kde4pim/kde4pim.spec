@@ -19,7 +19,7 @@
 %define bugfix 2
 Name: kde4pim
 Version: %major.%minor.%bugfix
-Release: alt1
+Release: alt2
 
 Group: Graphical desktop/KDE
 Summary: K Desktop Environment
@@ -63,7 +63,7 @@ Source: ftp://ftp.kde.org/pub/kde/stable/%version/src/%rname-%version.tar
 # Upstream
 # ALT
 Patch101: kdepim-4.0.80-alt-kmail-acctlocal-lock.patch
-#
+Patch102: kdepim-4.10.2-alt-nepomuk-warning.patch
 Patch103: kdepim-4.7.1-alt-force-7bit-cte.patch
 Patch104: kdepim-4.7.2-alt-migration.patch
 
@@ -1044,7 +1044,7 @@ based on kdepim.
 %prep
 %setup -q -n %rname-%version
 ###%patch101 -p1
-#
+%patch102 -p1
 #%patch103 -p1
 #%patch104 -p1
 
@@ -1586,6 +1586,9 @@ based on kdepim.
 
 
 %changelog
+* Mon Apr 22 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.2-alt2
+- remove nepomuk warning
+
 * Mon Apr 08 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.2-alt1
 - new version
 
