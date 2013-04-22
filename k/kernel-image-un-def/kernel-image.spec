@@ -1,5 +1,5 @@
 Name: kernel-image-un-def
-Release: alt1
+Release: alt2
 epoch:1 
 %define kernel_base_version	3.8
 %define kernel_sublevel	.8
@@ -547,6 +547,9 @@ find %buildroot%_docdir/kernel-doc-%base_flavour-%version/DocBook \
 %exclude %modules_dir/kernel/drivers/staging/media/lirc/
 
 %changelog
+* Mon Apr 22 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.8.8-alt2
+- EFI_VARS set back to m
+
 * Wed Apr 17 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.8.8-alt1
 - 3.8.8
 - EFI_VARS set to y
