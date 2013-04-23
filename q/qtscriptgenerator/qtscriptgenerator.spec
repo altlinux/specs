@@ -2,7 +2,7 @@
 
 Name: qtscriptgenerator
 Version: 0.2.0
-Release: alt1
+Release: alt2
 
 Group: Development/KDE and QT
 Summary: Qt bindings for Qt Script
@@ -20,6 +20,7 @@ Patch50: qtscriptgenerator-0.1.0-gcc44.patch
 Patch51: memory_alignment_fix.diff
 Patch52: qtscriptgenerator-kde_phonon443.patch
 Patch53: qtscriptgenerator-src-0.1.0-qmake_target.path.patch
+Patch54: qtscriptgenerator-0.2.0-arm-ftbfs-float.patch
 
 BuildRequires(pre): libqt4-devel kde-common-devel
 BuildRequires: gcc-c++ phonon-devel xsltproc
@@ -47,6 +48,7 @@ from within Qt Script.
 %patch51 -p1
 %patch52 -p1
 %patch53 -p1
+%patch54 -p1
 
 cat >>qtbindings/qtbindingsbase.pri <<__EOF__
 CONFIG -= debug_ang_release
@@ -110,6 +112,9 @@ cp -a tools/qsexec/README.TXT README.qsexec
 %_qt4dir/plugins/script/libqtscript*
 
 %changelog
+* Tue Apr 23 2013 Sergey V Turchin <zerg@altlinux.org> 0.2.0-alt2
+- fixed build on arm
+
 * Tue Jul 24 2012 Sergey V Turchin <zerg@altlinux.org> 0.2.0-alt1
 - new version
 
