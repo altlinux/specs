@@ -9,7 +9,7 @@ Version: 4.0
 %define lodir %_libdir/%name
 %define uname libreoffice4
 %define conffile %_sysconfdir/sysconfig/%uname
-Release: alt6
+Release: alt7
 Summary: LibreOffice Productivity Suite
 License: LGPL
 Group: Office
@@ -55,7 +55,7 @@ Patch213: openoffice.org-3.1.1.ooo105784.vcl.sniffscriptforsubs.patch
 # optimized out: ant boost-devel boost-devel-headers boost-interprocess-devel boost-intrusive-devel bzlib-devel cppunit fontconfig fontconfig-devel fonts-ttf-java-1.6.0-sun glib2-devel gstreamer-devel icu-utils java java-devel jpackage-utils junit kde4libs libGL-devel libGLU-devel libICE-devel libSM-devel libX11-devel libXext-devel libXinerama-devel libXrandr-devel libXrender-devel libXt-devel libatk-devel libcairo-devel libcom_err-devel libcurl-devel libdbus-devel libdbus-glib libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgdk-pixbuf-xlib libgio-devel libgmp-devel libgpg-error libgst-plugins libkrb5-devel libncurses-devel libnspr-devel libpango-devel libpcre-devel libpng-devel libpoppler-devel libpq-devel libqt4-core libqt4-devel libqt4-gui libssl-devel libstdc++-devel libsystemd-daemon libtinfo-devel libunixODBC-devel libwayland-client libwayland-server libwpd9-devel libxml2-devel perl-Compress-Raw-Zlib pkg-config poppler-data python-base tzdata tzdata-java xerces-j2 xml-common xml-commons-jaxp-1.3-apis xml-utils xorg-kbproto-devel xorg-randrproto-devel xorg-renderproto-devel xorg-xextproto-devel xorg-xproto-devel xsltproc xz zlib-devel
 BuildRequires: ant-testutil cppunit-devel flex fonts-ttf-liberation gcc-c++ gperf gst-plugins-devel imake junit4 kde4libs-devel libGConf-devel libcups-devel libdb4-devel libdbus-glib-devel libexpat-devel libgtk+2-devel libhunspell-devel libicu-devel libjpeg-devel libldap-devel liblpsolve-devel libmpfr-devel libmysqlclient-devel libmythes-devel libncursesw-devel libneon-devel libnss-devel liborcus-devel libpoppler-cpp-devel libreadline-devel libvigra-devel libwpg2-devel libwps-devel libxslt-devel perl-Archive-Zip postgresql-devel unzip xorg-cf-files zenity zip
 
-BuildRequires: libbluez-devel libhyphen-devel libclucene-core-devel libgtk+3-devel python3-devel
+BuildRequires: libbluez-devel libhyphen-devel libclucene-core-devel libgtk+3-devel python3-devel liblcms2-devel libraptor-devel libredland-devel
 
 %set_verify_elf_method unresolved=relaxed
 %add_findreq_skiplist %lodir/share/config/webcast/*
@@ -236,6 +236,7 @@ test -r %conffile && . %conffile ||:
         --with-system-hunspell \
         --with-system-icu \
         --with-system-jpeg \
+	--with-system-lcms2 \
         --with-system-libwpd \
         --with-system-libwpg \
         --with-system-libwps \
@@ -251,6 +252,7 @@ test -r %conffile && . %conffile ||:
         --with-system-orcus \
         --with-system-poppler \
         --with-system-postgresql \
+	--with-system-redland \
 	--with-system-vigra \
         --with-system-zlib \
 	\
@@ -387,12 +389,13 @@ install -D libreoffice.config %buildroot%conffile
 %lodir/share/extensions/package.txt
 %lodir/share/extensions/presentation-minimizer
 %lodir/share/extensions/report-builder
+%_iconsdir/*/*/apps/libreoffice%{version}-*.*g
 
 %files standalone
 %_bindir/lo4*
 %exclude %_bindir/libreoffice%version
 %_desktopdir/libreoffice%{version}-*
-%_iconsdir/*/*/apps/libreoffice%{version}-*.*g
+%exclude %_iconsdir/*/*/apps/libreoffice%{version}-*.*g
 
 %files integrated
 %_bindir/*
@@ -428,6 +431,10 @@ install -D libreoffice.config %buildroot%conffile
 %langpack -l kk -n Kazakh
 
 %changelog
+* Mon Apr 22 2013 Fr. Br. George <george@altlinux.ru> 4.0-alt7
+- Closes: 28883
+- Drop some internal libraries build
+
 * Thu Apr 18 2013 Fr. Br. George <george@altlinux.ru> 4.0-alt6
 - Version up to 4.0.2.2
 - Incoprporate useful RH patches
