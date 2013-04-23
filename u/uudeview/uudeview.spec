@@ -1,6 +1,6 @@
 Name: uudeview
 Version: 0.5.20
-Release: alt5.1.qa1
+Release: alt5.1.qa2
 
 Summary: smart uuenc/xxenc/base64 encoder/decoder
 License: GPL
@@ -25,6 +25,7 @@ Summary: Documentation for uudeview - smart uuenc/xxenc/base64 encoder/decoder
 Summary(ru_RU.KOI8-R): Документация для uudeview - быстрого uuenc/xxenc/base64 кодера/декодера
 License: GPL
 Group: Text tools
+BuildArch: noarch
 
 %description doc
 Smart multi-file multi-part decoder for uuencoded,
@@ -81,6 +82,11 @@ mkdir -p %buildroot%_datadir/doc/%name-%version
 %doc doc/library.ps doc/library.dvi doc/library.ltx doc/library.pdf
 
 %changelog
+* Tue Apr 23 2013 Repocop Q. A. Robot <repocop@altlinux.org> 0.5.20-alt5.1.qa2
+- NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
+- applied repocop fixes:
+  * arch-dep-package-consists-of-usr-share for uudeview-doc
+
 * Sun Apr 14 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.5.20-alt5.1.qa1
 - NMU: rebuilt for debuginfo.
 
