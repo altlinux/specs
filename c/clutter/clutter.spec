@@ -7,13 +7,13 @@
 %def_enable gdk_pixbuf
 
 # libcogl compiled with --enable-wayland-egl-platform required
-%def_disable wayland_backend
+%def_enable wayland_backend
 # libcogl compiled with --enable-wayland-egl-server required
 %def_disable wayland_compositor
 
 Name: clutter
 Version: 1.14.2
-Release: alt1
+Release: alt2
 Summary: Clutter Core Library
 License: LGPLv2+
 Group: System/Libraries
@@ -161,6 +161,9 @@ gtkdocize
 
 
 %changelog
+* Tue Apr 23 2013 Yuri N. Sedunov <aris@altlinux.org> 1.14.2-alt2
+- enabled wayland backend
+
 * Thu Apr 18 2013 Alexey Shabalin <shaba@altlinux.ru> 1.14.2-alt1
 - 1.14.2
 
