@@ -3,7 +3,7 @@
 
 Name: chuck
 Version: 1.2.1.3
-Release: alt2.qa2
+Release: alt2.qa3
 
 Summary: Strongly-timed, Concurrent, and On-the-fly Audio Programming Language
 License: %gpl2plus
@@ -61,6 +61,7 @@ This package contains common files for ChucK
 Summary: Documentation for ChucK
 Group: Sound
 Requires: chuck-common = %version-%release
+BuildArch: noarch
 
 %description doc
 ChucK is a new (and developing) audio programming language for real-time
@@ -284,6 +285,11 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_altdir/%mAname-jack
 
 %changelog
+* Tue Apr 23 2013 Repocop Q. A. Robot <repocop@altlinux.org> 1.2.1.3-alt2.qa3
+- NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
+- applied repocop fixes:
+  * arch-dep-package-consists-of-usr-share for chuck-doc
+
 * Tue Jul 17 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.1.3-alt2.qa2
 - Fixed build
 
