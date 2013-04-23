@@ -2,7 +2,7 @@
 
 Name: alterator-ldap-groups
 Version: 0.6.2
-Release: alt1
+Release: alt2
 
 Source: %name-%version.tar
 
@@ -46,6 +46,10 @@ Alterator module for LDAP groups administration
 %_hooksdir/91-ldap-groups
 
 %changelog
+* Tue Apr 23 2013 Andrey Cherepanov <cas@altlinux.org> 0.6.2-alt2
+- Disable show of group flags (default, local)
+- Don't distribute button in source selection
+
 * Thu Nov 01 2012 Andrey Cherepanov <cas@altlinux.org> 0.6.2-alt1
 - Support empty lines and comments beginning from # in group-init-list
 - Add groups 'users' and 'admins' for NT domain
