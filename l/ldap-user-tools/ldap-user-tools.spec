@@ -3,17 +3,17 @@
 
 Name:    ldap-user-tools
 Version: 0.8.2
-Release: alt1
+Release: alt2
 
 Summary: Utilities to work with LDAP users
 Group:   Development/Other
 License: GPL
 
-
 Source:  %name-%version.tar
 
 BuildArch: noarch
-# HEREDOC code
+
+BuildRequires: gettext-tools
 Requires: ruby(ldap) ruby(ldap/ldif) openldap-servers perl-Crypt-SmbHash alterator-kdc
 Requires: alterator-openldap-functions >= 0.3
 
@@ -22,6 +22,9 @@ Utilities to work with LDAP users
 
 %prep
 %setup
+
+%build
+make -C po
 
 %install
 for i in scripts/*; do
@@ -32,8 +35,11 @@ install -Dpm444 schema/kerberos.schema %buildroot/%_ldapconfdir/schema/kerberos.
 install -Dpm755 bin/mkntpasswd %buildroot/%_sbindir/mkntpasswd
 install -Dpm755 hooks/ldap-domain %buildroot/%_hooksdir/21-ldap-domain
 install -pm755 -d %buildroot/%_sysconfdir/alterator/openldap
+%makeinstall_std -C po
 
-%files
+%find_lang %name
+
+%files -f %name.lang
 %_sbindir/ldap-*
 %_sbindir/mkntpasswd
 %_ldapconfdir/slapd-template.conf
@@ -42,6 +48,10 @@ install -pm755 -d %buildroot/%_sysconfdir/alterator/openldap
 %dir %_sysconfdir/alterator/openldap
 
 %changelog
+* Tue Apr 23 2013 Andrey Cherepanov <cas@altlinux.org> 0.8.2-alt2
+- Allow only lowercase letters in username
+- Add localization files for use from alterator-ldap-users
+
 * Wed Nov 07 2012 Andrey Cherepanov <cas@altlinux.org> 0.8.2-alt1
 - Check if Kerberos is working
 

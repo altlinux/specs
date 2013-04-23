@@ -2,13 +2,13 @@
 
 Name: alterator-ldap-users
 Version: 0.8
-Release: alt6
+Release: alt7
 
 Source: %name-%version.tar
 
 Packager: Dmitriy Kruglikov <dkr@altlinux.org>
 
-Summary: alterator module for ldap users administration
+Summary: Alterator module for ldap users administration
 License: GPL
 Group: System/Configuration/Other
 BuildArch: noarch
@@ -23,7 +23,7 @@ Conflicts: alterator-fbi < 5.18-alt1
 BuildPreReq: alterator >= 4.11-alt1
 
 %description
-alterator module for local and ldap users administration
+Alterator module for local and ldap users administration
 
 %prep
 %setup -q
@@ -42,6 +42,9 @@ alterator module for local and ldap users administration
 %_datadir/alterator/type/*
 
 %changelog
+* Tue Apr 23 2013 Andrey Cherepanov <cas@altlinux.org> 0.8-alt7
+- Support localization of ldap-user-tools helper scripts output
+
 * Mon Apr 15 2013 Andrey Cherepanov <cas@altlinux.org> 0.8-alt6
 - Make photo replacemet picture more abstract
 - Remove fixed size for file selector that made it truncated
