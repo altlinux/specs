@@ -42,7 +42,7 @@
 %define Name GraphicsMagick
 Name: %Name
 %define lname lib%name
-Version: 1.3.17
+Version: 1.3.18
 Release: alt1
 Summary: An X application for displaying and manipulating images
 Summary(ru_RU.UTF-8): Программа для отображения и редактирования изображений
@@ -333,9 +333,9 @@ export \
     MAGICK_CONFIGURE_PATH=$PWD/config \
     MAGICK_CODER_MODULE_PATH=$PWD/coders/.libs \
     MAGICK_FILTER_MODULE_PATH=$PWD/filters/.libs
-./utilities/gm convert -border 0x51 -bordercolor none -depth 8 images/gm-282{x180t,}.png
+./utilities/gm convert -border 0x51 -bordercolor none -depth 8 www/images/gm-125{x80t,}.png
 for s in 192 128 96 72 64 48 36 32 24 22 16; do
-    ./utilities/gm convert -depth 8 -resize ${s}x$s images/{gm-282,%name-$s}.png
+    ./utilities/gm convert -depth 8 -resize ${s}x$s www/images/{gm-125,%name-$s}.png
 done
 %endif
 
@@ -373,7 +373,7 @@ __EOF__
 
 %if_with x
 for s in 192 128 96 72 64 48 36 32 24 22 16; do
-    install -D -m 0644 {images/%name-$s,%buildroot%_iconsdir/hicolor/${s}x$s/apps/%name}.png
+    install -D -m 0644 {www/images/%name-$s,%buildroot%_iconsdir/hicolor/${s}x$s/apps/%name}.png
 done
 %if_with menu
 install -d -m 0755 %buildroot%_desktopdir
@@ -504,6 +504,9 @@ __MENU__
 %endif
 
 %changelog
+* Tue Apr 23 2013 Slava Dubrovskiy <dubrsl@altlinux.org> 1.3.18-alt1
+- New version
+
 * Sun Oct 14 2012 Slava Dubrovskiy <dubrsl@altlinux.org> 1.3.17-alt1
 - New version
 - Bugfix release (CVE-2012-3438 and CVE-2012-3386)
