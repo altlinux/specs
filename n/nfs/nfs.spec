@@ -1,6 +1,6 @@
 Name: nfs
-Version: 1.2.6
-Release: alt2
+Version: 1.2.8
+Release: alt1
 Epoch: 1
 
 Summary: The Linux NFS clients, utilities and server
@@ -11,7 +11,7 @@ Url: http://nfs.sourceforge.net/
 Source0: %name-%version-%release.tar
 
 BuildRequires: libblkid-devel libevent-devel libnfsidmap-devel >= 0.23 libwrap-devel
-BuildRequires: libkrb5-devel libgssglue-devel librpcsecgss-devel >= 0.19
+BuildRequires: libkrb5-devel librpcsecgss-devel >= 0.19 libsqlite3-devel
 BuildRequires: libcap-devel libtirpc-devel libkeyutils-devel libmount-devel
 BuildRequires: libdevmapper-devel
 
@@ -149,6 +149,7 @@ touch /var/lock/subsys/rpc.svcgssd
 
 %_sbindir/exportfs
 %_sbindir/nfsstat
+%_sbindir/nfsdcltrack
 %_sbindir/rpc.mountd
 %_sbindir/rpc.nfsd
 %_sbindir/rpc.svcgssd
@@ -157,6 +158,7 @@ touch /var/lock/subsys/rpc.svcgssd
 %_man7dir/nfsd.*
 %_man8dir/exportfs.*
 %_man8dir/nfsstat.*
+%_man8dir/nfsdcltrack.*
 %_man8dir/mountd.*
 %_man8dir/rpc.mountd.*
 %_man8dir/nfsd.*
@@ -186,6 +188,7 @@ touch /var/lock/subsys/rpc.svcgssd
 %_initdir/nfslock
 %_initdir/gssd
 %systemd_unitdir/blkmap.service
+%systemd_unitdir/blkmapd.service
 %systemd_unitdir/idmapd.service
 %systemd_unitdir/nfslock.service
 %systemd_unitdir/gssd.service
@@ -234,6 +237,9 @@ touch /var/lock/subsys/rpc.svcgssd
 %_man8dir/nfsiostat.*
 
 %changelog
+* Tue Apr 23 2013 Sergey Bolshakov <sbolshakov@altlinux.ru> 1:1.2.8-alt1
+- 1.2.8 released
+
 * Wed Oct 31 2012 Sergey Bolshakov <sbolshakov@altlinux.ru> 1:1.2.6-alt2
 - selinux security_label exports option support added (closes: 27906)
 - more systemd related changes (shaba@)

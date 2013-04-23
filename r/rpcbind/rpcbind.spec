@@ -1,6 +1,6 @@
 Name: rpcbind
 Version: 0.2.1
-Release: alt0.5
+Release: alt0.6
 
 Summary: RPC port mapper
 License: BSD
@@ -86,6 +86,9 @@ fo=/var/run/control/portmap
 %dir %attr(770,root,rpc) %_localstatedir/rpcbind
 
 %changelog
+* Tue Apr 16 2013 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.2.1-alt0.6
+- 0.2.1-rc4 released
+
 * Mon Apr 25 2011 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.2.1-alt0.5
 - fixed rpcbind not dropping privs to `rpc' user
 
