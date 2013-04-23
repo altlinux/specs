@@ -6,14 +6,14 @@
 %def_disable gles2
 %endif
 
-%def_disable wayland_egl
+%def_enable wayland_egl
 %def_disable wayland_server
 %def_disable kms_egl_platform
 
 
 Name: libcogl
 Version: 1.14.0
-Release: alt1
+Release: alt2
 Summary: A library for using 3D graphics hardware to draw pretty pictures
 
 Group: System/Libraries
@@ -34,7 +34,7 @@ BuildRequires: libXcomposite-devel >= 0.4 libXext-devel libXdamage-devel libX11-
 BuildRequires: libGL-devel
 BuildRequires: libpango-devel libpango-gir-devel
 %{?_enable_gles2:BuildRequires: libGLES-devel >= 8.0}
-%{?_enable_wayland_egl:BuildRequires: libwayland-client-devel libwayland-egl-devel}
+%{?_enable_wayland_egl:BuildRequires: libwayland-client-devel libwayland-cursor-devel libwayland-egl-devel}
 %{?_enable_wayland_server:BuildRequires: libwayland-server-devel >= 1.0.0}
 %{?_kms_egl_platform:BuildRequires: libdrm-devel libgbm-devel}
 
@@ -134,6 +134,9 @@ NOCONFIGURE=1 ./autogen.sh
 %_datadir/gtk-doc/html/*
 
 %changelog
+* Tue Apr 23 2013 Yuri N. Sedunov <aris@altlinux.org> 1.14.0-alt2
+- enabled wayland-egl backend
+
 * Tue Mar 26 2013 Alexey Shabalin <shaba@altlinux.ru> 1.14.0-alt1
 - 1.14.0
 
