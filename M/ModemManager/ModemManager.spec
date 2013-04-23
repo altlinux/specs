@@ -1,4 +1,4 @@
-%define git_date .git20130326
+%define git_date .git20130422
 #define git_date %nil
 
 %define dbus_version 1.1
@@ -161,6 +161,9 @@ fi
 %doc %_datadir/gtk-doc/html/libmm-glib
 
 %changelog
+* Tue Apr 23 2013 Mikhail Efremov <sem@altlinux.org> 0.7.990-alt1.git20130422
+- Upstream git snapshot (master branch).
+
 * Wed Mar 27 2013 Mikhail Efremov <sem@altlinux.org> 0.7.990-alt1.git20130326
 - Preset/disable MM service in case of systemd.
 - Upstream git snapshot (master branch).
