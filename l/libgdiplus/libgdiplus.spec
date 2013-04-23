@@ -3,8 +3,8 @@
 %define cairo system
 
 Name: libgdiplus
-Version: 2.10.8
-Release: alt2
+Version: 2.10.9
+Release: alt1
 
 Summary: An Open Source implementation of the GDI+ API.
 License: MPL
@@ -61,6 +61,9 @@ NOCONFIGURE=1 ./autogen.sh --skip-cairo
 %_libdir/*.so
 
 %changelog
+* Tue Apr 23 2013 Alexey Shabalin <shaba@altlinux.ru> 2.10.9-alt1
+- 2.10.9
+
 * Tue Sep 25 2012 Alexey Shabalin <shaba@altlinux.ru> 2.10.8-alt2
 - fix build with png-1.5
 
