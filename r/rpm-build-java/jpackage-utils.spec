@@ -37,7 +37,7 @@
 
 Name:           rpm-build-java
 Version:        5.0.0
-Release:        alt29
+Release:        alt30
 Epoch:          0
 URL:            http://www.jpackage.org/
 License:        BSD
@@ -323,11 +323,15 @@ install -pm 644 etc/java.conf ${RPM_BUILD_ROOT}%{_sysconfdir}/java
 install -pm 644 etc/jpackage-release ${RPM_BUILD_ROOT}%{_sysconfdir}/java
 install -pm 644 java-utils/* ${RPM_BUILD_ROOT}${_javadir}-utils
 
-%{__mkdir_p} ${RPM_BUILD_ROOT}%_rpmmacrosdir
+mkdir -p ${RPM_BUILD_ROOT}%_rpmmacrosdir
 install -pm 644 misc/macros.jpackage ${RPM_BUILD_ROOT}%_rpmmacrosdir/jpackage
-%{__mkdir_p} ${RPM_BUILD_ROOT}%_man1dir/
-install -pm 644 man/* ${RPM_BUILD_ROOT}%_man1dir/
-%{__mkdir_p} ${RPM_BUILD_ROOT}${_javadir}-utils/xml
+mkdir -p ${RPM_BUILD_ROOT}%_man1dir/
+mkdir -p ${RPM_BUILD_ROOT}%_man5dir/
+mkdir -p ${RPM_BUILD_ROOT}%_man7dir/
+install -pm 644 man/*.1 ${RPM_BUILD_ROOT}%_man1dir/
+install -pm 644 man/*.5 ${RPM_BUILD_ROOT}%_man5dir/
+install -pm 644 man/*.7 ${RPM_BUILD_ROOT}%_man7dir/
+mkdir -p ${RPM_BUILD_ROOT}${_javadir}-utils/xml
 install -pm 644 xml/* ${RPM_BUILD_ROOT}${_javadir}-utils/xml
 
 cat <<EOF > jpackage-utils-%{version}.files
@@ -455,7 +459,7 @@ rm -f $RPM_BUILD_ROOT%{_bindir}/mvn-{local,rpmbuild}
 %_bindir/rebuild-jar-repository
 %_bindir/rebuild-security-providers
 %_sbindir/update-maven-depmap
-%_mandir/man1/*
+%_mandir/man?/*
 %doc LICENSE.txt HEADER.JPP doc/* etc/httpd-javadoc.conf
 %doc jpackage-utils-safe/README.ALT
 %if_enabled gcj_filesystem
@@ -483,6 +487,9 @@ rm -f $RPM_BUILD_ROOT%{_bindir}/mvn-{local,rpmbuild}
 %_bindir/mvn-package
 
 %changelog
+* Tue Apr 23 2013 Igor Vlasenko <viy@altlinux.ru> 0:5.0.0-alt30
+- proper man page locations (closes: 28885)
+
 * Fri Apr 12 2013 Igor Vlasenko <viy@altlinux.ru> 0:5.0.0-alt29
 - fixes in osgi.prov
 
