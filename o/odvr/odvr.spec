@@ -1,7 +1,7 @@
 Summary: Odvr is a user-space driver for Olympus digital voice recorders
 Name: odvr
 Version: 0.1.5
-Release: alt1.qa1
+Release: alt1.qa2
 License: GPLv3
 Group: System/Configuration/Hardware
 Packager: Slava Dubrovskiy <dubrsl@altlinux.ru>
@@ -26,10 +26,10 @@ capabilities are implemented.
 %install
 install -D %name %buildroot%_bindir/%name
 install -D %name-gui %buildroot%_bindir/%name-gui
-install -D 41-odvr.rules %buildroot%_sysconfdir/udev/rules.d/41-odvr.rules
+install -D 41-odvr.rules %buildroot%_udevrulesdir/41-odvr.rules
 
-%__mkdir_p %buildroot%_desktopdir
-%__cat > %buildroot%_datadir/applications/%name.desktop << EOF
+mkdir -p %buildroot%_desktopdir
+cat > %buildroot%_datadir/applications/%name.desktop << EOF
 [Desktop Entry]
 Name=odvr
 GenericName=Get wav from Olympus DVRs
@@ -44,10 +44,16 @@ EOF
 %files
 %doc COPYING README
 %_bindir/*
-%config %_sysconfdir/udev/rules.d/*
+%config %_udevrulesdir/*
 %_datadir/applications/%name.desktop
 
 %changelog
+* Tue Apr 23 2013 Repocop Q. A. Robot <repocop@altlinux.org> 0.1.5-alt1.qa2
+- NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
+- applied repocop fixes:
+  * udev-files-in-etc for odvr
+  * postclean-03-private-rpm-macros for the spec file
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.1.5-alt1.qa1
 - NMU: rebuilt for debuginfo.
 
