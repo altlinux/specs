@@ -58,7 +58,7 @@ BuildRequires: jpackage-compat
 
 Name:           jetty
 Version:        8.1.5
-Release:        alt4_6jpp7
+Release:        alt4_6jpp7.qa1
 Summary:        Java Webserver and Servlet Container
 
 Group:          Networking/WWW
@@ -811,11 +811,11 @@ JETTY_PID=\$JETTY_RUN/jetty.pid
 EO_RC
 ) > %{buildroot}%{apphomedir}/.jettyrc
 
-mkdir -p %{buildroot}%{_sysconfdir}/tmpfiles.d
+mkdir -p %{buildroot}%_tmpfilesdir
 ( cat << EOF
 D /var/run/%{name} 0755 %username %{username} -
 EOF
-) > %{buildroot}%{_sysconfdir}/tmpfiles.d/%{name}.conf
+) > %{buildroot}%_tmpfilesdir/%{name}.conf
 
 rm -fr %{buildroot}%{apphomedir}/logs
 ln -s %{logdir} %{buildroot}%{apphomedir}/logs
@@ -868,7 +868,7 @@ getent passwd %username &>/dev/null || useradd  -r  -g %username \
 %preun_service jetty
 
 %files
-%config(noreplace) %{_sysconfdir}/tmpfiles.d/%{name}.conf
+%config(noreplace) %_tmpfilesdir/%{name}.conf
 %config(noreplace) %attr(644, root, root) %{_sysconfdir}/logrotate.d/%{name}
 %{_bindir}/*
 %config(noreplace) %{confdir}
@@ -1036,6 +1036,11 @@ getent passwd %username &>/dev/null || useradd  -r  -g %username \
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Wed Apr 24 2013 Repocop Q. A. Robot <repocop@altlinux.org> 8.1.5-alt4_6jpp7.qa1
+- NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
+- applied repocop fixes:
+  * systemd-files-in-etc for jetty
+
 * Mon Mar 25 2013 Igor Vlasenko <viy@altlinux.ru> 8.1.5-alt4_6jpp7
 - fixed init script
 
