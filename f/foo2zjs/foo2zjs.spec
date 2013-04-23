@@ -1,6 +1,6 @@
 Name: foo2zjs
 Version: 20120601
-Release: alt2
+Release: alt2.qa1
 
 Summary: ZJS (some HP/Minolta) printer driver
 Summary(ru_RU.UTF8): ZJS драйвер для некоторых принтеров HP/Minolta
@@ -169,14 +169,14 @@ foo2oak:
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
-%__subst 's,/tmp/,$TMPDIR/,' foo2hiperc-wrapper.in
-%__subst 's,/tmp/,$TMPDIR/,' foo2hp2600-wrapper.in
-%__subst 's,/tmp/,$TMPDIR/,' foo2lava-wrapper.in
-%__subst 's,/tmp/,$TMPDIR/,' foo2oak-wrapper.in
-%__subst 's,/tmp/,$TMPDIR/,' foo2qpdl-wrapper.in
-%__subst 's,/tmp/,$TMPDIR/,' foo2slx-wrapper.in
-%__subst 's,/tmp/,$TMPDIR/,' foo2xqx-wrapper.in
-%__subst 's,/tmp/,$TMPDIR/,' foo2zjs-wrapper.in
+sed -i 's,/tmp/,$TMPDIR/,' foo2hiperc-wrapper.in
+sed -i 's,/tmp/,$TMPDIR/,' foo2hp2600-wrapper.in
+sed -i 's,/tmp/,$TMPDIR/,' foo2lava-wrapper.in
+sed -i 's,/tmp/,$TMPDIR/,' foo2oak-wrapper.in
+sed -i 's,/tmp/,$TMPDIR/,' foo2qpdl-wrapper.in
+sed -i 's,/tmp/,$TMPDIR/,' foo2slx-wrapper.in
+sed -i 's,/tmp/,$TMPDIR/,' foo2xqx-wrapper.in
+sed -i 's,/tmp/,$TMPDIR/,' foo2zjs-wrapper.in
 
 %build
 %make CFLAGS="%optflags"
@@ -196,12 +196,12 @@ mkdir -p %buildroot%_sysconfdir/udev/rules.d
 install -m644 %SOURCE1 README-UTF8.ALT
 install -m755 getweb %buildroot%_bindir/
 install -m700 %SOURCE2 %buildroot%_sbindir/
-%__install -pD -m644 %SOURCE3 %buildroot%_desktopdir/hplj1020.desktop
-%__install -pD -m644 %SOURCE4 %buildroot%_miconsdir/hplj1020.png
-%__install -pD -m644 %SOURCE5 %buildroot%_niconsdir/hplj1020.png
-%__install -pD -m644 %SOURCE6 %buildroot%_liconsdir/hplj1020.png
+install -pD -m644 %SOURCE3 %buildroot%_desktopdir/hplj1020.desktop
+install -pD -m644 %SOURCE4 %buildroot%_miconsdir/hplj1020.png
+install -pD -m644 %SOURCE5 %buildroot%_niconsdir/hplj1020.png
+install -pD -m644 %SOURCE6 %buildroot%_liconsdir/hplj1020.png
 
-%__install -pD -m644 %SOURCE7 %buildroot%_sysconfdir/udev/rules.d/11-hplj10xx.rules
+install -pD -m644 %SOURCE7 %buildroot%_udevrulesdir/11-hplj10xx.rules
 
 #ln -s %_datadir/ppd/foo2zjs %buildroot%_datadir/cups/model/foo2zjs-ppd
 
@@ -235,7 +235,7 @@ rm %buildroot/usr/share/foomatic/db/source/printer/Samsung-CLP-620.xml
 /bin/*
 %_bindir/*
 %_sbindir/hplj*
-%_sysconfdir/udev/rules.d/*
+%_udevrulesdir/*
 %dir %_localstatedir/foo2zjs/
 %_localstatedir/foo2zjs/*
 %_localstatedir/foo2hiperc/*
@@ -252,6 +252,12 @@ rm %buildroot/usr/share/foomatic/db/source/printer/Samsung-CLP-620.xml
 %exclude %_localstatedir/foo2zjs/hplj10xx_gui.tcl
 
 %changelog
+* Tue Apr 23 2013 Repocop Q. A. Robot <repocop@altlinux.org> 20120601-alt2.qa1
+- NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
+- applied repocop fixes:
+  * udev-files-in-etc for foo2zjs
+  * postclean-03-private-rpm-macros for the spec file
+
 * Sat Mar 23 2013 Igor Vlasenko <viy@altlinux.ru> 20120601-alt2
 - NMU: removed conflict with foomatic-db (closes: 28741)
 
