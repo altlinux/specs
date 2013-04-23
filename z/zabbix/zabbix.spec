@@ -10,8 +10,8 @@
 %endif
 
 Name: zabbix
-Version: 2.0.5
-Release: alt2
+Version: 2.0.6
+Release: alt1
 
 Packager: Alexei Takaseev <taf@altlinux.ru>
 
@@ -455,6 +455,9 @@ fi
 %doc misc/snmptrap/* migrate.sh
 
 %changelog
+* Tue Apr 23 2013 Alexei Takaseev <taf@altlinux.org> 1:2.0.6-alt1
+- 2.0.6 release
+
 * Wed Apr 03 2013 Alexei Takaseev <taf@altlinux.org> 1:2.0.5-alt2
 - change buildreq 'libMySQL-devel' to 'libmysqlclient-devel'
 
