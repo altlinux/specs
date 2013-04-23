@@ -1,6 +1,6 @@
 Name: lomoco
 Version: 1.0
-Release: alt6.qa1
+Release: alt6.qa2
 
 Summary: Logitech mouse control tool
 License: GPL
@@ -38,18 +38,23 @@ make udev-rules
 %install
 %makeinstall
 install -pD -m755 udev/udev.lomoco %buildroot/lib/udev/lomoco
-install -pD -m644 udev/lomoco.rules %buildroot%_sysconfdir/udev/rules.d/40-lomoco.rules
+install -pD -m644 udev/lomoco.rules %buildroot%_udevrulesdir/40-lomoco.rules
 install -pD -m644 %SOURCE1 %buildroot%_sysconfdir/sysconfig/logitech_mouse
 
 %files
 %doc AUTHORS ChangeLog NEWS README
 %_bindir/%name
 %_sysconfdir/sysconfig/logitech_mouse
-%_sysconfdir/udev/rules.d/*.rules
+%_udevrulesdir/*.rules
 /lib/udev/lomoco
 %_man1dir/*
 
 %changelog
+* Tue Apr 23 2013 Repocop Q. A. Robot <repocop@altlinux.org> 1.0-alt6.qa2
+- NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
+- applied repocop fixes:
+  * udev-files-in-etc for lomoco
+
 * Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.0-alt6.qa1
 - NMU: rebuilt for debuginfo.
 
