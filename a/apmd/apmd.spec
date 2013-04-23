@@ -1,6 +1,6 @@
 Name: apmd
 Version: 3.2.2
-Release: alt6
+Release: alt6.qa1
 Epoch: 1
 %define subver 3
 
@@ -31,7 +31,7 @@ Packager: Michael Shigorin <mike@altlinux.org>
 # Automatically added by buildreq on Wed May 13 2009
 BuildRequires: libXaw-devel libXext-devel
 
-Requires: libapm = %version-%release
+Requires: libapm = %{?epoch:%epoch:}%version-%release
 PreReq: powermgmt-base
 Requires(post): %post_service
 Requires(preun): %preun_service
@@ -44,7 +44,7 @@ Summary(ru_RU.UTF-8): Утилиты управления системой пи�
 Summary: The X11 utility that displays APM BIOS information
 Summary(ru_RU.UTF-8): Графическая утилита для показа информации BIOS об APM
 Group: System/XFree86
-Requires: %name = %version-%release
+Requires: %name = %{?epoch:%epoch:}%version-%release
 Provides: %name-x11 = %version-%release
 Obsoletes: %name-x11
 
@@ -57,7 +57,7 @@ Group: System/Libraries
 Summary: The development library and header files for APM
 Summary(ru_RU.UTF-8): Средства разработки для доступа к APM
 Group: Development/C
-Requires: libapm = %version-%release
+Requires: libapm = %{?epoch:%epoch:}%version-%release
 Provides: apmd-devel = %version-%release
 Obsoletes: apmd-devel
 
@@ -66,7 +66,7 @@ Obsoletes: apmd-devel
 Summary: The development library for linking APM access functions statically
 Summary(ru_RU.UTF-8): Статическая библиотека для работы с APM
 Group: Development/C
-Requires: libapm-devel = %version-%release
+Requires: libapm-devel = %{?epoch:%epoch:}%version-%release
 %endif
 
 %description
@@ -227,6 +227,11 @@ install -pD -m644 %SOURCE3 %buildroot%_sysconfdir/sysconfig/%name
 %endif
 
 %changelog
+* Tue Apr 23 2013 Repocop Q. A. Robot <repocop@altlinux.org> 1:3.2.2-alt6.qa1
+- NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
+- applied repocop fixes:
+  * beehive-log-dependency-needs-epoch-x86_64 for apmd
+
 * Thu Nov 08 2012 Igor Vlasenko <viy@altlinux.ru> 1:3.2.2-alt6
 - fixed x86_64 build
 - added but not applied apmd-3.2.2-mageia-graphicswitch.patch
