@@ -23,7 +23,7 @@
 %def_enable asm_optimize
 
 %def_enable strip_beam
-%def_enable pdf_opt
+%def_disable pdf_opt
 
 %ifarch amd64
 %define x86_64 amd64
@@ -55,7 +55,7 @@ Name: erlang
 %define subver 2
 Version: %ver.%subver
 %define plevel b
-Release: alt2
+Release: alt3
 Summary: A programming language developed by Ericsson
 License: %epl
 Group: Development/Erlang
@@ -1282,6 +1282,9 @@ symlinks -scdr %buildroot
 
 
 %changelog
+* Tue Apr 23 2013 Dmitry V. Levin <ldv@altlinux.org> R15B.2-alt3
+- Disabled pdf_opt because ghostscript no longer provides pdfopt.
+
 * Tue Oct 23 2012 Pavel Shilovsky <piastry@altlinux.org> R15B.2-alt2
 - Not include deleted win32reg into stdlib
 
