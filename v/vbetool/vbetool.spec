@@ -1,6 +1,6 @@
 Name: vbetool
 Version: 1.2.2
-Release: alt1.qa1
+Release: alt1.qa2
 
 Summary: Run real-mode video BIOS code to alter hardware state
 
@@ -36,14 +36,19 @@ initialize the video card from scratch.
 
 %install
 %makeinstall_std
-install -m 0644 -D udev-video-post-example.rules %buildroot%_sysconfdir/udev/rules.d/92-video-post.rules
+install -m 0644 -D udev-video-post-example.rules %buildroot%_udevrulesdir/92-video-post.rules
 
 %files
 %_sbindir/vbetool
 %_man1dir/*
-%_sysconfdir/udev/rules.d/92-video-post.rules
+%_udevrulesdir/92-video-post.rules
 
 %changelog
+* Tue Apr 23 2013 Repocop Q. A. Robot <repocop@altlinux.org> 1.2.2-alt1.qa2
+- NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
+- applied repocop fixes:
+  * udev-files-in-etc for vbetool
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.2.2-alt1.qa1
 - NMU: rebuilt for debuginfo.
 
