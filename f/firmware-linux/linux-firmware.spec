@@ -1,6 +1,6 @@
 Name: firmware-linux
-Version: 20130313
-Release: alt2
+Version: 20130423
+Release: alt1
 
 Summary: Firmware files used by the Linux kernel
 License: GPL+ and GPLv2+ and MIT and Redistributable, no modification permitted
@@ -18,6 +18,9 @@ Obsoletes: firmware-iwl1000
 Obsoletes: firmware-iwl3945 firmware-iwl4965 firmware-iwl5000 firmware-iwl5150 
 Obsoletes: firmware-iwl6000 firmware-iwl6050 
 Requires: firmware-ipw2200 firmware-ipw2100 firmware-ipw3945
+Provides:  firmware-carl9170-1.9.4 firmware-i2400m firmware-rt2870 firmware-rt3090
+Obsoletes: firmware-carl9170-1.9.4 firmware-i2400m firmware-rt2870 firmware-rt3090
+
 Requires: udev
 
 %description
@@ -52,6 +55,11 @@ rm %buildroot/lib/firmware/{WHENCE,LICENCE.*}
 %exclude /lib/firmware/carl9170fw
 
 %changelog
+* Tue Apr 23 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 20130423-alt1
+- updated from git
+- added prov/obs firmware-carl9170-1.9.4 firmware-i2400m firmware-rt2870
+  firmware-rt3090 (closes #27624)
+
 * Fri Mar 15 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 20130313-alt2
 - sources exluded (closes: #28682)
 
