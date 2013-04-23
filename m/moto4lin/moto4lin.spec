@@ -1,7 +1,7 @@
 BuildRequires: desktop-file-utils
 Name: moto4lin
 Version: 0.3
-Release: alt7.qa1
+Release: alt7.qa2
 
 Summary: File manager for Motorola P2K phones
 Summary(ru_RU.CP1251): Программа для управления файлами на мобильных телефонах Motorola P2K
@@ -52,7 +52,7 @@ done
 
 %install
 %make_install INSTALL_ROOT=%buildroot install
-install -pD -m644 %SOURCE1 %buildroot%_sysconfdir/udev/rules.d/75-%name.rules
+install -pD -m644 %SOURCE1 %buildroot%_udevrulesdir/75-%name.rules
 for s in 64 48 36 32 24 22 16; do
     install -D -m 0644 {%name-$s,%buildroot%_iconsdir/hicolor/${s}x$s/apps/%name}.png
 done
@@ -75,7 +75,7 @@ desktop-file-install --dir %buildroot%_desktopdir \
 
 
 %files
-%_sysconfdir/udev/rules.d/*
+%_udevrulesdir/*
 %_bindir/*
 %_datadir/%name/
 %doc Changelog INSTALL README
@@ -84,6 +84,11 @@ desktop-file-install --dir %buildroot%_desktopdir \
 
 
 %changelog
+* Tue Apr 23 2013 Repocop Q. A. Robot <repocop@altlinux.org> 0.3-alt7.qa2
+- NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
+- applied repocop fixes:
+  * udev-files-in-etc for moto4lin
+
 * Tue Jun 07 2011 Repocop Q. A. Robot <repocop@altlinux.org> 0.3-alt7.qa1
 - NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
 - applied repocop fixes:
