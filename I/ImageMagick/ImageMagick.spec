@@ -9,7 +9,7 @@
 %def_enable x
 Name: ImageMagick
 Version: %dversion.%drelease
-Release: alt1
+Release: alt2
 
 Summary: An X application for displaying and manipulating images
 License: OpenSource
@@ -130,6 +130,7 @@ rm PerlMagick/t/montage.t
 	--with-fontpath=%_datadir/fonts/type1/urw \
 	--with-gs-font-dir=%_datadir/fonts/type1/urw \
 	--with-gvc=yes \
+	--with-rsvg=yes \
 	--with-lqr=yes \
 	--disable-hdri \
 	--with-perl \
@@ -217,6 +218,9 @@ chrpath -d %buildroot%perl_vendor_archlib/auto/Image/Magick//Q16/Q16.so
 %endif
 
 %changelog
+* Tue Apr 23 2013 Anton Farygin <rider@altlinux.ru> 6.8.4.10-alt2
+- build with rsvg again
+
 * Tue Apr 16 2013 Anton Farygin <rider@altlinux.ru> 6.8.4.10-alt1
 - new version
 - disabled HDRI
