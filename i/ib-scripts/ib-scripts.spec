@@ -1,6 +1,6 @@
 name: ib-scripts
 version:1.0.0
-release:alt1
+release:alt1.qa1
 Summary:Scripts for runting infiniband 
 Group:System/Kernel and hardware
 License:GPL
@@ -19,8 +19,8 @@ Scripts for runing infiniband in HPC clusters
 %build
 
 %install
-mkdir -p %buildroot%_sysconfdir/udev/rules.d/
-cp etc/udev/rules.d/90-ib.rules %buildroot%_sysconfdir/udev/rules.d/
+mkdir -p %buildroot%_udevrulesdir/
+cp etc/udev/rules.d/90-ib.rules %buildroot%_udevrulesdir/
 
 mkdir -p %buildroot%_sysconfdir/modprobe.d/
 cp etc/modprobe.d/* %buildroot%_sysconfdir/modprobe.d/
@@ -35,11 +35,16 @@ cp etc/init.d/* %buildroot%_sysconfdir/rc.d/init.d/
 %preun_service ib
 
 %files 
-%_sysconfdir/udev/rules.d/*
+%_udevrulesdir/*
 %attr(0755,root,root) %_sysconfdir/rc.d/init.d/*
 %_sysconfdir/modprobe.d/*
 
 %changelog
+* Tue Apr 23 2013 Repocop Q. A. Robot <repocop@altlinux.org> 1.0.0-alt1.qa1
+- NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
+- applied repocop fixes:
+  * udev-files-in-etc for ib-scripts
+
 * Tue Feb 26 2008 Michail Yakushin <silicium@altlinux.ru> 1.0.0-alt1
 - moved from kernel-image-hpc 
 
