@@ -13,7 +13,7 @@
 
 Name: libxerces-c28
 Version: 2.8.0
-Release: alt3.qa3
+Release: alt3.qa4
 
 Summary: Xerces-C++ validating XML parser
 
@@ -85,6 +85,7 @@ manipulating, and validating XML documents.
 %package doc
 Group: System/Libraries
 Summary: Documentation for Xerces-C++ validating XML parser
+BuildArch: noarch
 
 %description doc
 Documentation for Xerces-C++.
@@ -146,6 +147,11 @@ install -m644 -D %SOURCE1 %buildroot%_pkgconfigdir/xerces-c.pc
 %_bindir/*
 
 %changelog
+* Tue Apr 23 2013 Repocop Q. A. Robot <repocop@altlinux.org> 2.8.0-alt3.qa4
+- NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
+- applied repocop fixes:
+  * arch-dep-package-consists-of-usr-share for libxerces-c28-doc
+
 * Fri Apr 06 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.8.0-alt3.qa3
 - Avoid conflict with libxerces-c
 - Moved utils into utils subpackage
