@@ -1,7 +1,7 @@
 Summary: Tools for using C-motech hardware with Linux
 Name: cmotech-tools
 Version: 0.1
-Release: alt1.r17.qa1
+Release: alt1.r17.qa2
 License: GPLv3
 Group: System/Configuration/Networking
 Url: http://cmotech-tools.sourceforge.net/
@@ -23,14 +23,22 @@ make
 
 %install
 make install DESTDIR=%buildroot rulesdir=%_sysconfdir/udev/rules.d udevdir=/lib/udev
+# sysconf/udev policy - /etc is for user
+mkdir -p %buildroot%_udevrulesdir/
+mv %buildroot%_sysconfdir/udev/rules.d/* %buildroot%_udevrulesdir/
 
 %files
 %doc README
 %_sbindir/cmotech-cdswitch
-%config %_sysconfdir/udev/rules.d/cmotech.rules
+%config %_udevrulesdir/cmotech.rules
 /lib/udev/cmotech-cdswitch.sh
 
 %changelog
+* Tue Apr 23 2013 Repocop Q. A. Robot <repocop@altlinux.org> 0.1-alt1.r17.qa2
+- NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
+- applied repocop fixes:
+  * udev-files-in-etc for cmotech-tools
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.1-alt1.r17.qa1
 - NMU: rebuilt for debuginfo.
 
