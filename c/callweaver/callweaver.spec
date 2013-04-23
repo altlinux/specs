@@ -1,6 +1,6 @@
 Name: callweaver
 Version: 1.2
-Release: alt1.svn5593.1.3.qa1
+Release: alt1.svn5593.1.3.qa2
 
 Summary: CallWeaver IP PBX
 License: GPL
@@ -50,6 +50,7 @@ PostgreSQL resources for CallWeaver IP PBX
 Summary: CallWeaver IP PBX documentation and configuration samples
 Group: System/Servers
 Requires: %name = %version-%release
+BuildArch: noarch
 %description docs
 CallWeaver IP PBX documentation and configuration samples
 
@@ -298,6 +299,11 @@ mv %buildroot/%_sysconfdir/%name/QUICKSTART.ru_RU.UTF-8 %buildroot/%_docdir/%nam
 %files full
 
 %changelog
+* Tue Apr 23 2013 Repocop Q. A. Robot <repocop@altlinux.org> 1.2-alt1.svn5593.1.3.qa2
+- NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
+- applied repocop fixes:
+  * arch-dep-package-consists-of-usr-share for callweaver-docs
+
 * Sun Apr 14 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.2-alt1.svn5593.1.3.qa1
 - NMU: rebuilt with libmysqlclient.so.18.
 
