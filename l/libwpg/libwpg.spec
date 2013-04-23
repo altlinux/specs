@@ -1,6 +1,6 @@
 Name: libwpg
 Version: 0.1.3
-Release: alt2.qa2
+Release: alt2.qa3
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 Summary: Library for importing and converting Corel WordPerfect(tm) Graphics images
@@ -40,6 +40,7 @@ Requires: libwpg
 BuildRequires: doxygen
 Summary: Documentation of libwpg API
 Group: Documentation
+BuildArch: noarch
 
 %description docs
 Documentation of libwpg API for developing with libwpg
@@ -56,8 +57,8 @@ sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' configure
 %install
 %makeinstall_std
 
-%__rm -rf %buildroot%_libdir/libwpg*.la
-#%__rm -rf %buildroot $RPM_BUILD_DIR/file.list.%name
+rm -rf %buildroot%_libdir/libwpg*.la
+#rm -rf %buildroot $RPM_BUILD_DIR/file.list.%name
 
 %files
 %_libdir/libwpg*.so.*
@@ -75,6 +76,12 @@ sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' configure
 %doc %_docdir/%name/
 
 %changelog
+* Tue Apr 23 2013 Repocop Q. A. Robot <repocop@altlinux.org> 0.1.3-alt2.qa3
+- NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
+- applied repocop fixes:
+  * arch-dep-package-consists-of-usr-share for libwpg-docs
+  * postclean-03-private-rpm-macros for the spec file
+
 * Tue Apr 10 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.3-alt2.qa2
 - Removed bad RPATH
 
