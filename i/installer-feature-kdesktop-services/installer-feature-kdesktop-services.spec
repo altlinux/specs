@@ -1,5 +1,5 @@
 Name: installer-feature-kdesktop-services
-Version: 0.6.0
+Version: 0.6.1
 Release: alt1
 
 Summary: Setup services for start/not start on boot
@@ -26,6 +26,9 @@ install -pm755 *.sh %buildroot%hookdir/
 %hookdir/*
 
 %changelog
+* Tue Apr 23 2013 Sergey V Turchin <zerg@altlinux.org> 0.6.1-alt1
+- fix setup services
+
 * Mon Apr 22 2013 Sergey V Turchin <zerg@altlinux.org> 0.6.0-alt1
 - update default services list
 
