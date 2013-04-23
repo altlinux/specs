@@ -8,7 +8,7 @@ BuildRequires: gcc-c++ libcrystalhd-devel
 Summary:       Broadcom Crystal HD device interface library
 Name:          libcrystalhd
 Version:       3.10.0
-Release:       alt1_4
+Release:       alt1_4.qa1
 License:       LGPLv2
 Group:         System/Libraries
 URL:           http://www.broadcom.com/support/crystal_hd/
@@ -114,6 +114,9 @@ cp -p %{SOURCE3} $RPM_BUILD_ROOT/lib/firmware/
 mkdir -p $RPM_BUILD_ROOT%{_sysconfdir}/udev/rules.d
 install -pm 0644 driver/linux/20-crystalhd.rules \
   $RPM_BUILD_ROOT%{_sysconfdir}/udev/rules.d
+# sysconf/udev policy - /etc is for user
+mkdir -p %buildroot%_udevrulesdir/
+mv %buildroot%_sysconfdir/udev/rules.d/* %buildroot%_udevrulesdir/
 
 
 %files
@@ -127,7 +130,7 @@ install -pm 0644 driver/linux/20-crystalhd.rules \
 
 %files -n firmware-crystalhd
 %doc LICENSE
-%config %{_sysconfdir}/udev/rules.d/20-crystalhd.rules
+%config %_udevrulesdir/20-crystalhd.rules
 /lib/firmware/bcm70012fw.bin
 /lib/firmware/bcm70015fw.bin
 
@@ -136,6 +139,11 @@ install -pm 0644 driver/linux/20-crystalhd.rules \
 
 
 %changelog
+* Tue Apr 23 2013 Repocop Q. A. Robot <repocop@altlinux.org> 3.10.0-alt1_4.qa1
+- NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
+- applied repocop fixes:
+  * udev-files-in-etc for firmware-crystalhd
+
 * Tue Apr 16 2013 Igor Vlasenko <viy@altlinux.ru> 3.10.0-alt1_4
 - update to new release by fcimport
 
