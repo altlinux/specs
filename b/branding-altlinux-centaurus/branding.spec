@@ -6,7 +6,7 @@
 
 Name: branding-%brand-%theme
 Version: 6.9.0 
-Release: alt22
+Release: alt23
 
 BuildRequires: cpio fonts-ttf-dejavu fonts-ttf-droid
 BuildRequires: design-bootloader-source >= 5.0-alt2
@@ -364,6 +364,9 @@ subst 's/#theme-name=/theme-name=Clearlooks-Phenix/' /etc/lightdm/lightdm-gtk-gr
 %_desktopdir/indexhtml.desktop
 
 %changelog
+* Tue Apr 23 2013 Andrey Cherepanov <cas@altlinux.org> 6.9.0-alt23
+- Disable white color for step title in LiveCD installer
+
 * Thu Apr 11 2013 Andrey Cherepanov <cas@altlinux.org> 6.9.0-alt22
 - Set different qss style file for LiveCD
 - Colorize bootloader bottom bar
