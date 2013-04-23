@@ -1,6 +1,6 @@
 Name: pam_alreadyloggedin
 Version: 0.3.2
-Release: alt1.qa1
+Release: alt1.qa2
 
 %def_without libpam
 %def_with    libpam0
@@ -64,8 +64,18 @@ install -pD -m644 login.sso %buildroot%examples_dir/login
 %examples_dir/login
 %exclude %pamconfdir/login.sso
 %_man8dir/%name.8.gz
+# The package does not own its own docdir subdirectory.
+# The line below is added by repocop to fix this bug in a straightforward way. 
+# Another way is to rewrite the spec to use relative doc paths.
+%dir %_docdir/pam_alreadyloggedin-%version 
+%dir %examples_dir
 
 %changelog
+* Tue Apr 23 2013 Repocop Q. A. Robot <repocop@altlinux.org> 0.3.2-alt1.qa2
+- NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
+- applied repocop fixes:
+  * docdir-is-not-owned for pam_alreadyloggedin
+
 * Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.3.2-alt1.qa1
 - NMU: rebuilt for updated dependencies.
 
