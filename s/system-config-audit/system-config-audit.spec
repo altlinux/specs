@@ -1,6 +1,6 @@
 Name: system-config-audit
 Epoch: 1
-Version: 0.4.20
+Version: 0.4.21
 Release: alt1
 
 Summary: Utility for editing audit configuration
@@ -38,7 +38,6 @@ audit subsystem.
 %_bindir/%name
 %_datadir/applications/%name.desktop
 %_datadir/%name
-%python_sitelibdir_noarch/%name
 %_libexecdir/%name-server
 %_datadir/applications/%name.desktop
 %_libexecdir/%name-server-real
@@ -46,6 +45,10 @@ audit subsystem.
 %config(noreplace) %_sysconfdir/security/console.apps/%name-server
 
 %changelog
+* Tue Apr 23 2013 Mikhail Efremov <sem@altlinux.org> 1:0.4.21-alt1
+- Drop obsoleted patch.
+- Updated to 0.4.21.
+
 * Thu Apr 12 2012 Mikhail Efremov <sem@altlinux.org> 1:0.4.20-alt1
 - server.c: Include missing header.
 - Fix for automake 1.11.2.
