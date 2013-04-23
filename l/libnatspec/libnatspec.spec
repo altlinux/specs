@@ -1,6 +1,6 @@
 Name: libnatspec
 Version: 0.2.6
-Release: alt2.qa2
+Release: alt2.qa3
 
 Summary: Library for national and language-specific issues
 
@@ -39,6 +39,7 @@ in a various programs depends on locale and messages.
 %package devel-examples
 Summary: Examples of %name using
 Group: Development/Documentation
+BuildArch: noarch
 
 %description devel-examples
 The %name-devel package contains examples of patches
@@ -91,6 +92,11 @@ mv %buildroot%_libdir/%{name}.* %buildroot/%_lib
 
 
 %changelog
+* Tue Apr 23 2013 Repocop Q. A. Robot <repocop@altlinux.org> 0.2.6-alt2.qa3
+- NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
+- applied repocop fixes:
+  * arch-dep-package-consists-of-usr-share for libnatspec-devel-examples
+
 * Fri Oct 05 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.6-alt2.qa2
 - Rebuilt for debuginfo (ALT #27806)
 
