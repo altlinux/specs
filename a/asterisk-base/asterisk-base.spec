@@ -1,6 +1,6 @@
 Name: asterisk-base
 Summary: User and groups for asterisk-related packages
-Version: 0.65
+Version: 0.66
 Release: alt1
 License: GPL
 Group: System/Servers
@@ -109,7 +109,7 @@ for s in *.conf; do
 done
 cd udev
 for s in *.rules; do
-    install -D -m 644 "$s" %buildroot%_sysconfdir/udev/rules.d/$s
+    install -D -m 644 "$s" %buildroot%_udevrulesdir/$s
 done
 popd
 mkdir -p %buildroot/usr/lib/asterisk/agi-bin
@@ -140,7 +140,7 @@ install -D -m755 asterisk-initscript/asterisk-init      %buildroot%_initdir/aste
 install -D -m644 asterisk-initscript/asterisk-monit     %buildroot%_sysconfdir/monitrc.d/asterisk
 install -D -m644 asterisk-initscript/asterisk-logrotate %buildroot%_sysconfdir/logrotate.d/asterisk
 install -D -m664 asterisk-initscript/sysconfig			%buildroot%_sysconfdir/sysconfig/asterisk
-install -D -m644 asterisk-initscript/asterisk.tmpfiles %buildroot%_sysconfdir/tmpfiles.d/asterisk.conf
+install -D -m644 asterisk-initscript/asterisk.tmpfiles %buildroot%_tmpfilesdir/asterisk.conf
 install -D -m644 asterisk-initscript/asterisk.service %buildroot/lib/systemd/system/asterisk.service
 install -D -m775 asterisk.filetrigger %buildroot/usr/lib/rpm/asterisk.filetrigger
 install -D -m775 asterisk-base/select-asterisk %buildroot/usr/sbin/select-asterisk
@@ -195,7 +195,7 @@ echo "options wct4xxp t1e1override=0xff" > %buildroot%_sysconfdir/modprobe.d/dah
 %_sysconfdir/monitrc.d/asterisk
 %_sysconfdir/logrotate.d/asterisk
 %attr(0664,root,pbxadmin) %_sysconfdir/sysconfig/asterisk
-%_sysconfdir/tmpfiles.d/asterisk.conf
+%_tmpfilesdir/asterisk.conf
 /lib/systemd/system/asterisk.service
 
 %files -n asterisk-keys
@@ -204,10 +204,13 @@ echo "options wct4xxp t1e1override=0xff" > %buildroot%_sysconfdir/modprobe.d/dah
 %files -n asterisk-user
 
 %files -n dahdi-udev
-%_sysconfdir/udev/rules.d/00-dahdi.rules
+%_udevrulesdir/00-dahdi.rules
 %_sysconfdir/modprobe.d/dahdi.conf
 
 %changelog
+* Wed Apr 24 2013 Denis Smirnov <mithraen@altlinux.ru> 0.66-alt1
+- repocop fixes
+
 * Mon Apr 22 2013 Denis Smirnov <mithraen@altlinux.ru> 0.65-alt1
 - systemd: start asterisk after postgresql and mysql
 
