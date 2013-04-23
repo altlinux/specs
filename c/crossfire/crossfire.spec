@@ -3,7 +3,7 @@
 
 Name: crossfire
 Version: 1.11.0
-Release: alt1.qa5
+Release: alt1.qa6
 Summary: Multiplayer graphical role-playing game
 Summary(ru_RU.UTF-8): Многопользовательская графическая ролевая игра
 License: GPL
@@ -67,6 +67,7 @@ Summary(ru_RU.UTF-8): Документация для игры crossfire
 Group: Games/Adventure
 
 Requires: crossfire-client
+BuildArch: noarch
 
 %description doc
 crossfire is a multiplayer graphical arcade and adventure game made for
@@ -177,6 +178,11 @@ install -d %buildroot%_localstatedir/games/%name/datafiles
 
 
 %changelog
+* Tue Apr 23 2013 Repocop Q. A. Robot <repocop@altlinux.org> 1.11.0-alt1.qa6
+- NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
+- applied repocop fixes:
+  * arch-dep-package-consists-of-usr-share for crossfire-doc
+
 * Wed Mar 27 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.11.0-alt1.qa5
 - Fixed build
 
