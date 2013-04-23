@@ -1,6 +1,6 @@
 Name: stk
 Version: 4.4.1
-Release: alt1.1.qa1
+Release: alt1.1.qa2
 License: GPL
 Group: Sound
 Summary: C++ classes for audio digital signal processing
@@ -70,6 +70,7 @@ Static LibSTK library.
 %package doc
 Summary: Documentation for the sound synthesis toolkit (STK)
 Group: Documentation
+BuildArch: noarch
 %description doc
 This package contains the documentation for the sound synthesis
 toolkit. The documentation is developer oriented and covers all
@@ -154,6 +155,11 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %doc doc/html doc/*.txt
 
 %changelog
+* Tue Apr 23 2013 Repocop Q. A. Robot <repocop@altlinux.org> 4.4.1-alt1.1.qa2
+- NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
+- applied repocop fixes:
+  * arch-dep-package-consists-of-usr-share for stk-doc
+
 * Tue May 24 2011 Repocop Q. A. Robot <repocop@altlinux.org> 4.4.1-alt1.1.qa1
 - NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
 - applied repocop fixes:
