@@ -1,12 +1,12 @@
 %define policy_name altlinux
-%define date 20130422
+%define date 20130425
 %define seconf %_sysconfdir/selinux/config
 %define default_mode permissive
 
 Summary: SELinux %policy_name policy
 Name: selinux-policy-altlinux
 Version: 0.0.1
-Release: alt2
+Release: alt3
 License: %distributable
 Group: System/Base
 Source: %name-%date.tar
@@ -88,7 +88,7 @@ fi
 %dir %policy_conf/modules/active/modules
 %dir %policy_conf/policy
 %dir %policy_data
-%dir %_sysconfdir/secutiry/alt.newrole
+%dir %_sysconfdir/security/alt.newrole
 
 %policy_conf/contexts/dbus_contexts
 %policy_conf/contexts/default_contexts
@@ -99,10 +99,12 @@ fi
 
 %policy_data/*.pp
 
-%attr(0755,root,root) %_sysconfdir/secutiry/alt.newrole/helper
-%attr(0755,root,root) %_sysconfdir/secutiry/alt.newrole/mktmpdir
-%attr(0755,root,root) %_sysconfdir/secutiry/alt.newrole/mkworkdir
-%config(noreplace) %_sysconfdir/secutiry/alt.newrole/config
+%attr(0755,root,root) %_sysconfdir/security/alt.newrole/helper
+%attr(0755,root,root) %_sysconfdir/security/alt.newrole/mkdirs
+%config(noreplace) %_sysconfdir/security/alt.newrole/dirs
+%config(noreplace) %_sysconfdir/security/alt.newrole/config
+
+%_bindir/kde4sl
 
 /lib/systemd/selinux-autorelabel
 %_unitdir/selinux-autorelabel-mark.service
@@ -112,6 +114,9 @@ fi
 %doc /usr/share/doc/selinux-policy-altlinux/README
 
 %changelog
+* Wed Apr 24 2013 Andriy Stepanov <stanv@altlinux.ru> 0.0.1-alt3
+- Build: 20130425
+
 * Fri Apr 19 2013 Andriy Stepanov <stanv@altlinux.ru> 0.0.1-alt2
 - Build: 20130422
 
