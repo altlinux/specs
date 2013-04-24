@@ -1,8 +1,8 @@
 %define rname pangomm
-%define major 2.28
+%define major 2.34
 
 Name: lib%rname
-Version: %major.3
+Version: %major.0
 Release: alt1
 
 Summary: This library provides a C++ interface to pango
@@ -15,7 +15,8 @@ Conflicts: libgtkmm2 < 2.14.1
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%rname/%major/%rname-%version.tar.xz
 
-BuildRequires: mm-common gcc-c++ libcairomm-devel libglibmm-devel libpango-devel
+%define glib_ver 2.36.0
+BuildRequires: mm-common gcc-c++ libcairomm-devel libglibmm-devel >= %glib_ver libpango-devel
 
 %description
 This library provides a C++ interface to pango.
@@ -66,6 +67,9 @@ BuildArch: noarch
 %_docdir/%rname-1.4
 
 %changelog
+* Wed Apr 24 2013 Yuri N. Sedunov <aris@altlinux.org> 2.34.0-alt1
+- 2.34.0
+
 * Tue Sep 27 2011 Yuri N. Sedunov <aris@altlinux.org> 2.28.3-alt1
 - 2.28.3
 
