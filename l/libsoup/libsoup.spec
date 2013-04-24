@@ -6,7 +6,7 @@
 %def_enable introspection
 
 Name: libsoup
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: HTTP client/server library for GNOME
@@ -43,6 +43,8 @@ BuildRequires: docbook-dtds docbook-style-xsl common-licenses
 BuildRequires: gtk-doc xml-common xsltproc intltool
 BuildRequires: glib-networking
 %{?_enable_introspection:BuildPreReq: gobject-introspection-devel >= %gi_ver}
+# for check
+BuildRequires: /proc curl
 
 %description
 libsoup is an HTTP client/server library for GNOME. It uses GObjects
@@ -167,7 +169,7 @@ install -p -m644 %_sourcedir/%name-{,gnome-}compat.{map,lds} %name/
 
 %check
 # some tests failed in hasher
-#%%make check
+%make check
 
 %install
 %makeinstall_std
@@ -214,6 +216,9 @@ install -p -m644 %_sourcedir/%name-{,gnome-}compat.{map,lds} %name/
 %endif
 
 %changelog
+* Thu Apr 25 2013 Yuri N. Sedunov <aris@altlinux.org> 2.42.2-alt1
+- 2.42.2
+
 * Tue Apr 16 2013 Yuri N. Sedunov <aris@altlinux.org> 2.42.1-alt1
 - 2.42.1
 
