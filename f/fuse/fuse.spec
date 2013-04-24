@@ -1,6 +1,6 @@
 Name: fuse
 Version: 2.9.2
-Release: alt1
+Release: alt2
 
 Summary: a tool for creating virtual filesystems
 License: GPL
@@ -78,6 +78,9 @@ rm -fr %buildroot%_sysconfdir/init.d
 
 mkdir -p %buildroot/lib/udev/devices
 touch %buildroot/lib/udev/devices/{f,c}use
+# sysconf/udev policy - /etc is for user
+mkdir -p %buildroot%_udevrulesdir/
+mv %buildroot%_sysconfdir/udev/rules.d/* %buildroot%_udevrulesdir/
 
 %pre
 %_sbindir/groupadd -r -f fuse
@@ -90,7 +93,7 @@ touch %buildroot/lib/udev/devices/{f,c}use
 %files
 %doc AUTHORS NEWS README Filesystems README.NFS
 %_sysconfdir/control.d/facilities/fusermount
-%_sysconfdir/udev/rules.d/*
+%_udevrulesdir/*
 /sbin/mount.fuse
 %attr(4710,root,fuse) %_bindir/fusermount
 %_bindir/ulockmgr_server
@@ -109,6 +112,9 @@ touch %buildroot/lib/udev/devices/{f,c}use
 %_pkgconfigdir/*.pc
 
 %changelog
+* Wed Apr 24 2013 Denis Smirnov <mithraen@altlinux.ru> 2.9.2-alt2
+- repocop fixes
+
 * Mon Nov 19 2012 Pavel Shilovsky <piastry@altlinux.org> 2.9.2-alt1
 - 2.9.2
 - remove mmap patch
