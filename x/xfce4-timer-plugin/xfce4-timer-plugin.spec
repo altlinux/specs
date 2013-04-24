@@ -1,6 +1,6 @@
 Name: xfce4-timer-plugin
-Version: 0.6.2
-Release: alt3
+Version: 1.0.2
+Release: alt1
 
 Summary: Timer plugin for XFCE 4.4
 License: %gpl2plus
@@ -14,7 +14,7 @@ Patch: %name-%version-%release.patch
 BuildRequires(pre): rpm-build-licenses
 
 BuildPreReq: rpm-build-xfce4 xfce4-dev-tools
-BuildPreReq: libxfce4util-devel libxfcegui4-devel libxfce4panel-devel
+BuildPreReq: libxfce4util-devel libxfce4ui-devel libxfce4panel-devel
 BuildRequires: perl-XML-Parser intltool
 
 %description
@@ -41,6 +41,10 @@ of them can be run at a time.
 %_datadir/xfce4/panel/plugins/*.desktop
 
 %changelog
+* Tue Apr 23 2013 Mikhail Efremov <sem@altlinux.org> 1.0.2-alt1
+- Updated from upstream git.
+- Updated to 1.0.2.
+
 * Mon Apr 16 2012 Mikhail Efremov <sem@altlinux.org> 0.6.2-alt3
 - Rebuild against libxfce4util.so.6 (libxfce4util-4.9).
 
