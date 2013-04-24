@@ -1,6 +1,6 @@
 Name: clementine
 Version: 1.1.1
-Release: alt2
+Release: alt3
 Summary: A music player and library organiser
 
 Group: Sound
@@ -12,6 +12,8 @@ Source0: %name-%version.tar.gz
 Source1: clementine_48.png
 Patch: %name-1.1.1-alt-desktop.patch
 Patch2: clementine-0.6-alt-install-icons.patch
+# fc
+Patch3: clementine-1.1.1-libimobiledevice-fix.patch
 
 BuildRequires(pre): rpm-build-licenses
 BuildRequires: boost-devel-headers cmake gcc-c++ gstreamer-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdmcp-devel libXft-devel libXinerama-devel libXpm-devel libXrandr-devel libXt-devel libXtst-devel libXv-devel libgio-devel libglew-devel libgpod-devel libimobiledevice-devel liblastfm-devel libmtp-devel libqt4-opengl libqt4-sql libqt4-webkit libqt4-xmlpatterns libtag-devel libxkbfile-devel python-module-sip qt4-designer subversion
@@ -32,6 +34,7 @@ advantage of Qt4.
 %setup
 %patch -p2
 %patch2 -p1
+%patch3 -p1
 
 %build
 %K4build -DSTATIC_SQLITE=on -DBUILD_WERROR=off
@@ -48,6 +51,9 @@ advantage of Qt4.
 %_datadir/kde4/services
 
 %changelog
+* Wed Apr 24 2013 Yuri N. Sedunov <aris@altlinux.org> 1.1.1-alt3
+- rebuilt against libimobiledevice.so.4
+
 * Sat Jan 12 2013 Vladimir Didenko <cow@altlinux.org> 1.1.1-alt2
 - Enable Google Drive support
 

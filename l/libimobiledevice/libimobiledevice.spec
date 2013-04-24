@@ -1,17 +1,18 @@
 Name: libimobiledevice
 Version: 1.1.5
-Release: alt0.1
+Release: alt1
 
 Summary: Library for connecting to Apple iPhone and iPod touch
 Group: System/Libraries
 License: LGPLv2+
 Url: http://www.libimobiledevice.org/
 
-Source: %url/downloads/l/%name-%version.tar
+Source: %url/downloads/l/%name-%version.tar.bz2
+Patch: %name-1.1.5-alt-link.patch
 
-%define plist_ver 1.8
+%define plist_ver 1.9
 %define usbmuxd_ver 1.0.8
-%define cython_ver 0.16
+%define cython_ver 0.18
 
 BuildPreReq: libplist-devel >= %plist_ver
 BuildPreReq: libusbmuxd-devel >= %usbmuxd_ver
@@ -41,6 +42,7 @@ Python bindings for libimobiledevice.
 
 %prep
 %setup
+%patch -b .link
 
 %build
 %autoreconf
@@ -68,6 +70,9 @@ Python bindings for libimobiledevice.
 %exclude %python_sitelibdir/imobiledevice.la
 
 %changelog
+* Fri Mar 22 2013 Yuri N. Sedunov <aris@altlinux.org> 1.1.5-alt1
+- 1.1.5 release
+
 * Sat Jun 09 2012 Yuri N. Sedunov <aris@altlinux.org> 1.1.5-alt0.1
 - 1.1.5 snapshot
 

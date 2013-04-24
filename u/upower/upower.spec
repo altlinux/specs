@@ -3,7 +3,7 @@
 
 Name: upower
 Version: 0.9.20
-Release: alt1
+Release: alt2
 Summary: Power Management Service
 License: GPLv2+
 Group: System/Libraries
@@ -119,6 +119,9 @@ rm -f acinclude.m4
 %_datadir/gir-1.0/*.gir
 
 %changelog
+* Wed Apr 24 2013 Yuri N. Sedunov <aris@altlinux.org> 0.9.20-alt2
+- rebuilt against libimobiledevice.so.4
+
 * Tue Mar 19 2013 Valery Inozemtsev <shrek@altlinux.ru> 0.9.20-alt1
 - 0.9.20
 

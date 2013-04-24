@@ -1,5 +1,5 @@
 Name: libplist
-Version: 1.8
+Version: 1.10
 Release: alt1
 
 Summary: Library for manipulating Apple Binary and XML Property Lists
@@ -8,8 +8,11 @@ License: LGPLv2+
 Url: http://www.libimobiledevice.org/
 
 Source: http://github.com/downloads/JonathanBeck/%name/%name-%version.tar.bz2
+# fc
+Patch: libplist-1.8-fc-cmake_lib_suffix.patch
 
-BuildRequires: gcc-c++ cmake libxml2-devel xml-utils python-devel swig python-module-Cython
+BuildRequires: gcc-c++ cmake libxml2-devel xml-utils python-devel swig
+BuildRequires: python-module-Cython >= 0.18
 
 %description
 libplist is a library for manipulating Apple Binary and XML Property Lists
@@ -51,19 +54,20 @@ Python libraries and bindings for %name
 
 %prep
 %setup -q
+%patch -p1
 
 %build
 %cmake -DCMAKE_INSTALL_LIBDIR=%_lib
 pushd BUILD
-%make
+%make_build
 
 %install
 pushd BUILD
-make DESTDIR=%buildroot install
+%makeinstall_std
 
 %files
-%_bindir/plutil
-%_bindir/plutil-%version
+%_bindir/plistutil
+%_bindir/plistutil-%version
 %_libdir/libplist.so.*
 %doc AUTHORS README
 
@@ -86,6 +90,12 @@ make DESTDIR=%buildroot install
 %python_sitelibdir/plist.so
 
 %changelog
+* Thu Apr 11 2013 Yuri N. Sedunov <aris@altlinux.org> 1.10-alt1
+- 1.10
+
+* Tue Mar 19 2013 Yuri N. Sedunov <aris@altlinux.org> 1.9-alt1
+- 1.9
+
 * Sun Apr 08 2012 Yuri N. Sedunov <aris@altlinux.org> 1.8-alt1
 - 1.8
 
