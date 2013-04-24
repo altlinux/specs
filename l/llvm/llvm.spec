@@ -2,7 +2,7 @@
 
 Name: llvm
 Version: 3.2
-Release: alt2
+Release: alt3
 Summary: The Low Level Virtual Machine
 Group: Development/C
 License: NCSA
@@ -15,7 +15,11 @@ Patch0: llvm-2.6-timestamp.patch
 Patch1: llvm-3.2-R600-tstellar-git-b53ed46.patch
 Patch2: llvm-3.2-R600-tstellar-mesa-9.1.patch
 
-BuildRequires: chrpath groff python-dev dejagnu gcc-c++ ocamldoc tcl perl-devel perl-Pod-Parser zip libffi-devel
+# Automatically added by buildreq on Wed Apr 24 2013
+# optimized out: gnu-config groff-base libstdc++-devel ocaml perl-podlators python-base python-modules-compiler tcl
+BuildRequires: dejagnu gcc-c++ groff-extra groff-ps libffi-devel ocamldoc perl-devel perl-Pod-Parser python-modules zip
+
+BuildRequires: chrpath
 %if_enabled doxygen
 BuildRequires: doxygen graphviz
 %endif
@@ -139,13 +143,14 @@ HTML documentation for LLVM's OCaml binding.
 %add_python_req_skip AppKit
 
 %prep
-%setup -q -n llvm-%version.src -a1 %{?_with_gcc:-a2}
+%setup -n llvm-%version.src -a1 %{?_with_gcc:-a2}
 mv clang-%version.src tools/clang
-%patch0 -p1 -b .timestamp
-%patch1 -p1 -b .r600
-%patch2 -p1 -b .mesa-9.1
+%patch0 -p1
+%patch1 -p1
+%patch2 -p1
 sed -i "s|%{version}svn|%version|g" configure
 sed -i 's|/lib /usr/lib $lt_ld_extra|%_libdir $lt_ld_extra|' configure
+sed -i 's/\(OmitFramePointer := \).*/\1/' Makefile.rules
 
 %build
 %configure \
@@ -170,7 +175,7 @@ sed -i 's|(PROJ_prefix)/lib|(PROJ_prefix)/%_lib/%name|g' Makefile.config
 # llvm-config.cpp hardcodes lib in it
 sed -i 's|ActiveLibDir = ActivePrefix + "/lib"|ActiveLibDir = ActivePrefix + "/%_lib/%name"|g' tools/llvm-config/llvm-config.cpp
 
-%make_build
+%make_build REQUIRES_RTTI=1 KEEP_SYMBOLS=1 VERBOSE=1
 
 %check
 # no current unexpected failures. Use || true if they recur to force ignore
@@ -178,7 +183,7 @@ make check 2>&1 | tee llvm-testlog.txt
 (cd tools/clang && make test 2>&1) | tee clang-testlog.txt
 
 %install
-make DESTDIR=%buildroot PROJ_docsdir=/moredocs install
+%makeinstall_std KEEP_SYMBOLS=1 VERBOSE=1 PROJ_docsdir=/moredocs
 
 # Create ld.so.conf.d entry
 mkdir -p %buildroot%_sysconfdir/ld.so.conf.d
@@ -300,6 +305,9 @@ ln -s LLVM-Config.cmake %buildroot%_datadir/CMake/Modules/LLVMConfig.cmake
 %endif
 
 %changelog
+* Tue Apr 23 2013 Dmitry V. Levin <ldv@altlinux.org> 3.2-alt3
+- Fixed build to enable proper debuginfo information.
+
 * Sat Mar 09 2013 Valery Inozemtsev <shrek@altlinux.ru> 3.2-alt2
 - update R600 target to mesa-9.1
 
