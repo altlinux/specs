@@ -1,5 +1,5 @@
 Name: alterator-squid
-Version: 1.4
+Version: 1.4.1
 Release: alt1
 
 BuildArch: noarch
@@ -16,7 +16,8 @@ Requires: caterva-alterator-kit-sh >= 2.0-alt1
 Requires: alterator-net-iptables >= 4.4-alt1
 Requires: alterator-ldap-groups >= 0.1-alt2
 Requires: alterator-fbi >= 5.11-alt2
-Requires: squid >= 3.0.STABLE15-alt2
+Requires: squid >= 3.2.9
+Requires: squid-helpers
 Requires: alterator-openldap-functions >= 0.1-alt1
 Requires: alterator-service-functions >= 2.0.0-alt1
 
@@ -51,7 +52,16 @@ cp -rp caterva/* %buildroot%_sysconfdir/caterva/squid/
 %_alterator_backend3dir/squid-commit
 %_bindir/*
 
+
+%post
+subst 's/squid_kerb_auth/negotiate_kerberos_auth/;s/pam_auth/basic_pam_auth/;s/squid_ldap_group/ext_ldap_group_acl/' /etc/squid/squid.conf
+
 %changelog
+* Wed Apr 24 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1.4.1-alt1
+- fixed configuration for squid 3.2
+- migration script added
+- this is the LAST metalterator-based version
+
 * Mon Mar 25 2013 Paul Wolneykien <manowar@altlinux.org> 1.4-alt1
 - Require alterator-service-functions >= 2.0.0-alt1.
 - Cleanup the spec.
