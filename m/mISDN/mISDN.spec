@@ -3,7 +3,7 @@
 Name: mISDN
 Summary: %name library utilites
 Version: 1.1.5
-Release: alt1
+Release: alt2
 License: LGPL
 Group: System/Servers
 Url: http://www.misdn.org/
@@ -90,7 +90,7 @@ subst 's!linux/isdn_compat.h!isdn_compat.h!' include/*.h
 cp -a mISDN kernel-source-%name-%version
 mkdir -p %buildroot%_usrsrc/kernel/sources
 du -hsc kernel-source-%name-%version
-%__tar cjf \
+tar cjf \
         %buildroot%_usrsrc/kernel/sources/kernel-source-%name-%version.tar.bz2 \
 	    kernel-source-%name-%version
 
@@ -100,8 +100,8 @@ cp -a include/linux/*.h include/
 mkdir -p %buildroot%_libdir
 %make_install INSTALL_PREFIX=%buildroot install
 
-install -d %buildroot%_sysconfdir/udev/rules.d
-install %SOURCE2 %buildroot%_sysconfdir/udev/rules.d/00-misdn.rules
+install -d %buildroot%_udevrulesdir
+install %SOURCE2 %buildroot%_udevrulesdir/00-misdn.rules
 
 %ifarch x86_64
 mv %buildroot/usr/lib/* %buildroot%_libdir/
@@ -131,12 +131,15 @@ mv %buildroot/usr/lib/* %buildroot%_libdir/
 %_bindir/voipisdn
 %_bindir/misdnportinfo
 %_bindir/mISDNdebugtool
-%_sysconfdir/udev/rules.d/00-misdn.rules
+%_udevrulesdir/00-misdn.rules
 
 %files -n kernel-source-%name
 %_usrsrc/kernel/sources/kernel-source-%name-%version.tar.bz2
 
 %changelog
+* Wed Apr 24 2013 Denis Smirnov <mithraen@altlinux.ru> 1.1.5-alt2
+- repocop fixes
+
 * Fri Nov 16 2012 Denis Smirnov <mithraen@altlinux.ru> 1.1.5-alt1
 - 1.1.5
 
