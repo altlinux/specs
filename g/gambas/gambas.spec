@@ -6,7 +6,7 @@
 
 Name:    gambas
 Version: 2.24.0
-Release: alt2
+Release: alt3
 
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
@@ -807,6 +807,9 @@ install -pD -m644 gambas.desktop %buildroot%_desktopdir/gambas2.desktop
 %_datadir/gambas2/info/gb.xml.xslt.list
 
 %changelog
+* Wed Apr 24 2013 Andrey Cherepanov <cas@altlinux.org> 2.24.0-alt3
+- Rebuild with new version of poppler
+
 * Sun Apr 07 2013 Andrey Cherepanov <cas@altlinux.org> 2.24.0-alt2
 - Rebuild with new version of poppler
 

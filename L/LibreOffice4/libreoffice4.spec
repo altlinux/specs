@@ -9,7 +9,7 @@ Version: 4.0
 %define lodir %_libdir/%name
 %define uname libreoffice4
 %define conffile %_sysconfdir/sysconfig/%uname
-Release: alt7
+Release: alt7.1
 Summary: LibreOffice Productivity Suite
 License: LGPL
 Group: Office
@@ -431,6 +431,9 @@ install -D libreoffice.config %buildroot%conffile
 %langpack -l kk -n Kazakh
 
 %changelog
+* Wed Apr 24 2013 Sergey V Turchin <zerg@altlinux.org> 4.0-alt7.1
+- NMU: rebuilt with new poppler
+
 * Mon Apr 22 2013 Fr. Br. George <george@altlinux.ru> 4.0-alt7
 - Closes: 28883
 - Drop some internal libraries build
