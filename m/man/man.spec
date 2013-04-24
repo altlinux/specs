@@ -3,7 +3,7 @@
 
 Name: man
 Version: 1.6g
-Release: alt1
+Release: alt2
 
 Summary: Programs for formating and displaying the manual pages
 License: GPL
@@ -67,6 +67,7 @@ Summary: Tools for finding documentation about Linux system
 Group: System/Base
 BuildArch: noarch
 Requires: %name = %version-%release
+Requires: libshell
 
 %description whatis
 This package contains parts of the man system which is used for
@@ -203,6 +204,9 @@ echo done.
 %attr(644,cacheman,man) %ghost %_cachedir/man/X11R6/whatis
 
 %changelog
+* Wed Apr 24 2013 Alexey Gladkov <legion@altlinux.ru> 1.6g-alt2
+- makewhatis: Fix quoting (ALT#28873) (thx Mikhail Efremov).
+
 * Sat Mar 23 2013 Alexey Gladkov <legion@altlinux.ru> 1.6g-alt1
 - New version (1.6g).
 
