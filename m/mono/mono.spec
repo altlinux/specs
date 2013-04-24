@@ -16,7 +16,7 @@
 
 Name: mono
 Version: 2.10.11
-Release: alt2
+Release: alt3
 License: %gpllgpl2only %mit %mpl
 Url: http://www.mono-project.com/
 Group: Development/Other
@@ -1044,6 +1044,9 @@ deps=$(pkg-config --print-{errors,requires} %buildroot%_pkgconfigdir/mono.pc)
 [ -z "$deps" ]
 
 %changelog
+* Wed Apr 24 2013 Alexey Shabalin <shaba@altlinux.ru> 2.10.11-alt3
+- fixed dllmap for libgdiplus
+
 * Sun Apr 21 2013 Led <led@altlinux.ru> 2.10.11-alt2
 - fixed build: removed configure options --disable-static and --with-static_mono=no
 
