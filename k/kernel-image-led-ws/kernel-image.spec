@@ -21,7 +21,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.4.41
-Release: alt3
+Release: alt4
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -450,8 +450,9 @@ Patch0561: linux-%kernel_branch.34-fix-include-linux.patch
 Patch0570: linux-%kernel_branch.20-fix-init.patch
 
 Patch0580: linux-%kernel_branch.34-fix-kernel.patch
-Patch0581: linux-%kernel_branch.39-fix-kernel-irq.patch
-Patch0582: linux-%kernel_branch.39-fix-kernel-power.patch
+Patch0581: linux-%kernel_branch.41-fix-kernel--rcutree.patch
+Patch0582: linux-%kernel_branch.39-fix-kernel-irq.patch
+Patch0583: linux-%kernel_branch.39-fix-kernel-power.patch
 
 Patch0590: linux-%kernel_branch.25-fix-lib.patch
 Patch0591: linux-%kernel_branch.29-fix-lib--btree.patch
@@ -1605,6 +1606,7 @@ cd linux-%version
 %patch0580 -p1
 %patch0581 -p1
 %patch0582 -p1
+%patch0583 -p1
 
 # fix-lib*
 %patch0590 -p1
@@ -2674,6 +2676,11 @@ done)
 
 
 %changelog
+* Wed Apr 24 2013 Led <led@altlinux.ru> 3.4.41-alt4
+- added:
+  + fix-kernel--rcutree
+  + feat-drivers-block--btier
+
 * Mon Apr 22 2013 Led <led@altlinux.ru> 3.4.41-alt3
 - updated:
   + feat-drivers-net-ethernet-atheros--alx
