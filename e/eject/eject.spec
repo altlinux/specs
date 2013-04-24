@@ -1,6 +1,6 @@
 Name: eject
 Version: 2.1.5
-Release: alt3
+Release: alt3.qa1
 
 Summary: A program that ejects removable media using software control
 Group: System/Kernel and hardware
@@ -50,6 +50,9 @@ autoreconf -fisv
 %doc AUTHORS ChangeLog NEWS README
 
 %changelog
+* Wed Apr 24 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.1.5-alt3.qa1
+- NMU: rebuilt for debuginfo.
+
 * Thu Jun 28 2007 Sergey V Turchin <zerg at altlinux dot org> 2.1.5-alt3
 - update Russian translation
 - fix return code and proper output of usage()
