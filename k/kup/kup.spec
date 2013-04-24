@@ -1,5 +1,5 @@
 Name:       kup
-Version:    0.3.2
+Version:    0.3.4
 Release:    alt1
 Summary:    Kernel.org Uploader
 
@@ -10,7 +10,12 @@ Source0:    https://www.kernel.org/pub/software/network/kup/kup-%{version}.tar.x
 Source1:    kup-server-tmpfiles.conf
 BuildArch:  noarch
 
-BuildRequires: gnupg perl-BSD-Resource perl-Config-Simple perl-Encode perl-Git
+BuildRequires: gnupg
+BuildRequires: perl-Digest-SHA
+BuildRequires: perl-BSD-Resource
+BuildRequires: perl-Config-Simple
+BuildRequires: perl-Encode
+BuildRequires: perl-Git
 
 %description
 Kup is a secure upload tool used by kernel developers to upload
@@ -60,9 +65,9 @@ install -pm 0644 kup-server.cfg %buildroot/%_sysconfdir/kup/kup-server.cfg
 # Runtime directories and files
 mkdir -pm 0755 \
 	%buildroot/%_localstatedir/kup/{pub,tmp,pgp} \
-	%buildroot/%_sysconfdir/tmpfiles.d
+	%buildroot/%_tmpfilesdir
 
-install -pm 0644 %SOURCE1 %buildroot/%_sysconfdir/tmpfiles.d/kup-server.conf
+install -pm 0644 %SOURCE1 %buildroot/%_tmpfilesdir/kup-server.conf
 touch %buildroot/%_localstatedir/run/kup/lock
 
 %files
@@ -72,7 +77,7 @@ touch %buildroot/%_localstatedir/run/kup/lock
 
 %files server
 %doc README test
-%config(noreplace) %_sysconfdir/tmpfiles.d/kup-server.conf
+%config(noreplace) %_tmpfilesdir/kup-server.conf
 %config %dir %_sysconfdir/kup
 %config(noreplace) %_sysconfdir/kup/kup-server.cfg
 %_bindir/kup-server
@@ -88,6 +93,10 @@ touch %buildroot/%_localstatedir/run/kup/lock
 %_bindir/genrings
 
 %changelog
+* Wed Apr 24 2013 Alexey Gladkov <legion@altlinux.ru> 0.3.4-alt1
+- Upstream 0.3.4
+- Move kup-server.conf to /lib/tmpfiles.d.
+
 * Thu Jan 12 2012 Alexey Gladkov <legion@altlinux.ru> 0.3.2-alt1
 - Upstream 0.3.2
 
