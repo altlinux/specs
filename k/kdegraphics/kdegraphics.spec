@@ -12,7 +12,7 @@
 
 Name: kdegraphics
 Version: 3.5.13.1
-Release: alt3
+Release: alt4
 
 Group: Graphical desktop/KDE
 Summary: K Desktop Environment - Graphics
@@ -686,6 +686,9 @@ install -m 0644 %SOURCE1 %buildroot/%_K3conf/kghostviewrc
 
 
 %changelog
+* Wed Apr 24 2013 Sergey V Turchin <zerg@altlinux.org> 3.5.13.1-alt4
+- rebuilt with new poppler
+
 * Sun Apr 07 2013 Roman Savochenko <rom_as@altlinux.ru> 3.5.13.1-alt3
 - Build with current poppler fix.
 - Update from origin/v3.5.13-sru.
@@ -709,6 +712,9 @@ install -m 0644 %SOURCE1 %buildroot/%_K3conf/kghostviewrc
 
 * Sun Jun 16 2012 Roman Savochenko <rom_as@altlinux.ru> 3.5.13-alt2
 - Build by DSO fix.
+
+* Wed Jun 13 2012 Sergey V Turchin <zerg@altlinux.org> 3.5.12-alt3.M60P.1
+- built for M60P
 
 * Thu Feb 23 2012 Roman Savochenko <rom_as@altlinux.ru> 3.5.13-alt1
 - TDE 3.5.13 release build

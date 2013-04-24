@@ -1,6 +1,6 @@
 Name: pdf2djvu
 Version: 0.7.16
-Release: alt1
+Release: alt1.1
 
 Summary: PDF to DjVu converter
 License: GPLv2
@@ -35,6 +35,9 @@ pdf2djvu creates DjVu files from PDF files. It's able to extract:
 %_man1dir/*
 
 %changelog
+* Wed Apr 24 2013 Sergey V Turchin <zerg@altlinux.org> 0.7.16-alt1.1
+- NMU: rebuilt with new poppler
+
 * Mon Apr 08 2013 L.A. Kostis <lakostis@altlinux.ru> 0.7.16-alt1
 - Updated to 0.7.16.
 

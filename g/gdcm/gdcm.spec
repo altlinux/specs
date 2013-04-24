@@ -1,6 +1,6 @@
 Name:           gdcm
 Version:        2.2.3
-Release:        alt1
+Release:        alt2
 Summary:        DiCoM is a C++ library for DICOM medical files
 Group:          System/Libraries
 License:        BSD
@@ -139,6 +139,9 @@ sed -i '28,36d' CMakeLists.txt
 
 
 %changelog
+* Tue Apr 23 2013 Slava Dubrovskiy <dubrsl@altlinux.org> 2.2.3-alt2
+- Rebuild for poppler
+
 * Tue Apr 09 2013 Slava Dubrovskiy <dubrsl@altlinux.org> 2.2.3-alt1
 - 2.2.3
 

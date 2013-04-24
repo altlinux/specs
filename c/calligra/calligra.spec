@@ -10,7 +10,7 @@
 
 Name: calligra
 Version: 2.6.1
-Release: alt3
+Release: alt4
 Epoch: 0
 %define libname lib%name
 
@@ -641,6 +641,9 @@ cp -ar %SOURCE1 cmake/modules/
 %_K4libdir/lib*.so.*
 
 %changelog
+* Wed Apr 24 2013 Sergey V Turchin <zerg@altlinux.org> 0:2.6.1-alt4
+- rebuild with new poppler
+
 * Mon Apr 08 2013 Sergey V Turchin <zerg@altlinux.org> 0:2.6.1-alt3
 - rebuild with new poppler
 - fix requires

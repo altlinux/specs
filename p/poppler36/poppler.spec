@@ -14,14 +14,14 @@
 %def_enable gir
 
 %define rname poppler
-%define somajor 35
+%define somajor 36
 %define somajor_cpp 0
 %define somajor_qt 3
 %define somajor_qt4 4
 %define somajor_glib 8
 %define major 0
 %define minor 22
-%define bugfix 2
+%define bugfix 3
 Name: %rname%somajor
 Version: %major.%minor.%bugfix
 Release: alt1
@@ -335,6 +335,9 @@ export QT4DIR=%_qt4dir
 %endif
 
 %changelog
+* Tue Apr 23 2013 Sergey V Turchin <zerg@altlinux.org> 0.22.3-alt1
+- new version
+
 * Thu Mar 14 2013 Sergey V Turchin <zerg@altlinux.org> 0.22.2-alt1
 - new version
 

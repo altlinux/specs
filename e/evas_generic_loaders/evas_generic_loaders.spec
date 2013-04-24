@@ -1,9 +1,9 @@
 Name: evas_generic_loaders
 Version: 1.7.6
 %ifdef beta
-Release: alt1.%beta
+Release: alt2.%beta
 %else
-Release: alt1
+Release: alt2
 %endif
 
 Summary: A set of loaders for Evas
@@ -51,6 +51,9 @@ loader.
 %doc AUTHORS COPYING README
 
 %changelog
+* Tue Apr 23 2013 Yuri N. Sedunov <aris@altlinux.org> 1.7.6-alt2
+- rebuilt against libpoppler.so.36
+
 * Tue Apr 09 2013 Yuri N. Sedunov <aris@altlinux.org> 1.7.6-alt1
 - 1.7.6
 
