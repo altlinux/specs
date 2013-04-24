@@ -1,6 +1,6 @@
 Name: ossp
 Version: 1.3.2
-Release: alt8
+Release: alt9
 
 Summary: OSS Proxy - emulate OSS device using CUSE
 Group: System/Kernel and hardware
@@ -34,6 +34,9 @@ install -D -m755 osspd.init %buildroot%_initdir/osspd
 install -D -m644 modprobe %buildroot%_sysconfdir/modprobe.d/osspd.conf
 install -D -m644 osspd.config %buildroot%_sysconfdir/sysconfig/osspd
 install -D -m644 %SOURCE1 %buildroot%_unitdir/osspd.service
+# sysconf/udev policy - /etc is for user
+mkdir -p %buildroot%_udevrulesdir/
+mv %buildroot%_sysconfdir/udev/rules.d/* %buildroot%_udevrulesdir/
 
 %preun
 %preun_service osspd
@@ -41,7 +44,7 @@ install -D -m644 %SOURCE1 %buildroot%_unitdir/osspd.service
 %post_service osspd
 
 %files
-%_sysconfdir/udev/rules.d/98-osscuse.rules
+%_udevrulesdir/98-osscuse.rules
 %_sbindir/ossp-alsap
 %_sbindir/ossp-padsp
 %attr(2711,root,cuse) %_sbindir/osspd
@@ -51,6 +54,9 @@ install -D -m644 %SOURCE1 %buildroot%_unitdir/osspd.service
 %_unitdir/osspd.service
 
 %changelog
+* Wed Apr 24 2013 Denis Smirnov <mithraen@altlinux.ru> 1.3.2-alt9
+- repocop fixes
+
 * Thu Jan 31 2013 Denis Smirnov <mithraen@altlinux.ru> 1.3.2-alt8
 - add systemd service file
 
