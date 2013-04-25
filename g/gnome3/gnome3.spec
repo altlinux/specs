@@ -1,8 +1,8 @@
-%define ver_major 3.7
+%define ver_major 3.8
 
 Name: gnome3
-Version: %ver_major.1
-Release: alt2
+Version: %ver_major.0
+Release: alt1
 
 Summary: GNOME 3 Desktop installers
 License: %gpl3plus
@@ -55,8 +55,10 @@ A set of virtual packages for GNOME Desktop version 3 installation.
 %package minimal
 Summary: GNOME 3 Desktop minimal installer
 Group: Graphical desktop/GNOME
-Obsoletes: %name-sisyphus-minimal
-Provides: %name-sisyphus-minimal = %version-%release
+Obsoletes: gnome-sisyphus-minimal
+Provides: gnome-sisyphus-minimal = %version-%release
+Obsoletes: gnome-minimal
+Provides: gnome-minimal = %version-%release
 
 # GNOME Desktop Core
 Requires: gnome-session >= %session_ver
@@ -81,7 +83,7 @@ Requires: yelp >= %ver_major
 # GNOME Utilities
 Requires: gnome-search-tool >= 3.6.0
 Requires: gnome-system-monitor >= %ver_major
-Requires: gucharmap >= 3.5.99
+Requires: gucharmap >= %ver_major
 Requires: gnome-calculator >= %ver_major
 
 # Applications
@@ -119,8 +121,12 @@ Doesn't install games and media programs.
 %package default
 Summary: GNOME 2 Desktop installer for optimal user's requirements
 Group: Graphical desktop/GNOME
-Requires: %name-minimal = %version-%release
+Obsoletes: gnome-sisyphus-default
+Provides: gnome-sisyphus-default = %version-%release
+Obsoletes: gnome-default
+Provides: gnome-default = %version-%release
 
+Requires: %name-minimal = %version-%release
 ## Color manager
 Requires: gnome-color-manager
 ## Password keeper
@@ -189,6 +195,8 @@ Requires: sushi
 Requires: alacarte
 # Weather application
 Requires: gnome-weather >= %ver_major
+# Clock application
+Requires: gnome-clocks >= %ver_major
 
 # Look & Feel
 ## All default themes
@@ -365,6 +373,9 @@ itself).
 #%files a11y
 
 %changelog
+* Thu Apr 25 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.0-alt1
+- Obsoletes/Provides gnome-default
+
 * Thu Mar 21 2013 Yuri N. Sedunov <aris@altlinux.org> 3.7.1-alt2
 - added pulseaudio-daemon to -minimal, gnome-shell-extensions,
   gnome-weather to -default
