@@ -1,15 +1,14 @@
 
 Summary: Extracts attachments out of mailpack format emails
 Name: ripole
-Version: 0.2.0
-Release: alt3.qa1
+Version: 0.2.2
+Release: alt1
 License: BSD
 Group: Networking/Mail
 Url: http://www.pldaniels.com/ripole/
 Packager: Alexey Shabalin <shaba@altlinux.org>
-Source0: http://www.pldaniels.com/ripole/%name-%version.tar.bz2
-Patch0: ripole-0.2.0-shared.patch
-Patch1: ripole-0.2.0-dev.diff
+Source0: http://www.pldaniels.com/ripole/%name-%version.tar.gz
+Patch0: ripole-%version-shared.patch
 
 %description
 ripOLE is a small program/library designed to pull out attachments from OLE2
@@ -41,8 +40,7 @@ This package contains the development files for ripOLE.
 
 %prep
 %setup
-%patch0 -p1
-%patch1 -p1
+%patch0 -p2
 
 %build
 %undefine __libtoolize
@@ -64,9 +62,12 @@ CFLAGS="$CFLAGS -I. -fPIC -DPIC -D_REENTRANT" \
 %dir %_includedir/%name
 %_includedir/%name/*
 %_libdir/*.so
-%_libdir/*.a
+%exclude %_libdir/*.a
 
 %changelog
+* Thu Apr 25 2013 Ildar Mulyukov <ildar@altlinux.ru> 0.2.2-alt1
+- new version
+
 * Sun Apr 14 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.2.0-alt3.qa1
 - NMU: rebuilt for set-versioned provides.
 
