@@ -1,10 +1,10 @@
 %define base_name apt-conf
 %define distro branch
-%define Distro p6 branch
+%define Distro p7 branch
 
 Name: %base_name-%distro
-Version: 6.0.0
-Release: alt7
+Version: 7.0.0
+Release: alt1
 
 Summary: A set of apt configuration files for %distribution %Distro
 License: GPL
@@ -24,7 +24,7 @@ This package contains default apt configuration for %distribution %Distro.
 %setup
 
 %build
-%make_build REPOSITORIES=p6
+%make_build REPOSITORIES=p7
 
 %install
 %makeinstall
@@ -43,6 +43,9 @@ fi
 %config(noreplace) %_sysconfdir/apt
 
 %changelog
+* Thu Apr 25 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 7.0.0-alt1
+- p7 branch
+
 * Tue May 22 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 6.0.0-alt7
 - move to new x86_64-i586 repository
 
