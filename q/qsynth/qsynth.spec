@@ -1,5 +1,5 @@
 Name: qsynth
-Version: 0.3.6
+Version: 0.3.7
 Release: alt1
 
 Summary: QSynth is a GUI front-end for FluidSynth
@@ -36,13 +36,10 @@ QSynth -- это графическая надстройка над FluidSynth. В будущем
 %prep
 %setup -q
 
-# move translations to proper locations
-subst 's@share/locale@share/qsynth/locale@g' Makefile* src/CMakeLists.txt src/%name.cpp
-
 %build
 export QTDIR=%qtdir
 export PATH=%qtdir/bin:$PATH
-%configure
+%configure --localedir=%_datadir/%name/locale
 
 # SMP-incompatible build
 %make
@@ -50,14 +47,20 @@ export PATH=%qtdir/bin:$PATH
 %install
 %make DESTDIR=%buildroot install
 
-%files
+%find_lang --with-qt %name
+
+%files -f %name.lang
 %_bindir/%name
 %_datadir/applications/*
 %_iconsdir/hicolor/*/*/*.png
-%_datadir/%name/*
+%dir %_datadir/%name
+%dir %_datadir/%name/locale
 %doc AUTHORS ChangeLog README TODO
 
 %changelog
+* Tue Apr 16 2013 Yuri N. Sedunov <aris@altlinux.org> 0.3.7-alt1
+- 0.3.7
+
 * Fri Aug 19 2011 Yuri N. Sedunov <aris@altlinux.org> 0.3.6-alt1
 - 0.3.6
 
