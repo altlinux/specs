@@ -1,0 +1,63 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires: /usr/bin/gtkdoc-mkdb gcc-c++
+# END SourceDeps(oneline)
+Name:           libpcapnav
+Version:        0.8
+Release:        alt1_8
+Summary:        Wrapper library for libpcap offering navigation inside of a tracefile
+
+Group:          System/Libraries
+License:        MIT with advertising
+URL:            http://netdude.sourceforge.net/
+Source0:        http://downloads.sourceforge.net/netdude/libpcapnav-%{version}.tar.gz
+
+BuildRequires:  libpcap-devel gtk-doc >= 0.6 /bin/sed
+Source44: import.info
+
+%description
+Libpcapnav is a libpcap wrapper library that allows navigation to arbitrary
+packets in a tcpdump trace file between reads, using timestamps or percentage
+offsets. It was originally based on Vern Paxson's tcpslice tool.
+
+
+%package        devel
+Summary:        Development files for %{name}
+Group:          Development/C
+Requires:       %{name} = %{version}-%{release}
+
+%description    devel
+The %{name}-devel package contains libraries and header files for
+developing applications that use %{name}.
+
+
+%prep
+%setup -q
+# Fixup the -L call in the pkg-config file
+sed -i -e 's/libdirs=-L@libdir@/libdirs=/' pcapnav-config.in
+
+
+%build
+%configure --disable-static
+make %{?_smp_mflags}
+
+
+%install
+make install DESTDIR=%{buildroot} INSTALL="%{__install} -p"
+find %{buildroot} -name '*.la' -exec rm -f {} ';'
+
+
+%files
+%doc AUTHORS ChangeLog COPYING README
+%{_libdir}/*.so.*
+
+%files devel
+%doc README COPYING
+%{_bindir}/pcapnav-config
+%{_includedir}/*
+%{_libdir}/*.so
+%{_datadir}/gtk-doc/html/pcapnav/
+
+%changelog
+* Thu Apr 25 2013 Igor Vlasenko <viy@altlinux.ru> 0.8-alt1_8
+- initial fc import
+
