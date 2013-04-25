@@ -1,4 +1,5 @@
 %set_verify_elf_method unresolved=relaxed
+%define _libexecdir %_prefix/libexec
 
 %define ver_major 3.8
 %define api_ver 3.0
@@ -8,7 +9,7 @@
 
 Name: gedit
 Version: %ver_major.1
-Release: alt1
+Release: alt2
 
 Summary: gEdit is a small but powerful text editor for GNOME
 License: GPLv2
@@ -20,6 +21,8 @@ Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 AutoReqProv: nopython
 %define __python %nil
 %{?_enable_python:%py3_provides gedit}
+%define  gedit_pluginsdir %_libdir/gedit/plugins
+%add_python3_compile_include %gedit_pluginsdir
 
 %define pkglibdir %_libdir/%name
 %define pkgdatadir %_datadir/%name
@@ -111,8 +114,6 @@ BuildArch: noarch
 %description devel-doc
 This package contains documentation needed to develop plugins for gedit.
 
-%define _libexecdir %_prefix/libexec
-%define  gedit_pluginsdir %_libdir/gedit/plugins
 
 %prep
 %setup -q
@@ -210,6 +211,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %endif
 
 %changelog
+* Thu Apr 25 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.1-alt2
+- rebuilt to update dependencies
+
 * Mon Apr 15 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.1-alt1
 - 3.8.1
 
