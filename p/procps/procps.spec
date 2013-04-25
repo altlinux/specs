@@ -1,5 +1,5 @@
 Name: procps
-Version: 3.3.6
+Version: 3.3.7
 Release: alt1
 
 Summary: System and process monitoring utilities
@@ -86,7 +86,7 @@ mkdir -p %buildroot/%_lib
 mv %buildroot%_libdir/*.so.* %buildroot/%_lib/
 
 %check
-%make_build -k check
+make check
 
 %files
 /bin/*
@@ -104,6 +104,9 @@ mv %buildroot%_libdir/*.so.* %buildroot/%_lib/
 %_pkgconfigdir/*.pc
 
 %changelog
+* Thu Apr 25 2013 Dmitry V. Levin <ldv@altlinux.org> 3.3.7-alt1
+- Updated to v3.3.7-15-g53fd7dd.
+
 * Wed Jan 16 2013 Dmitry V. Levin <ldv@altlinux.org> 3.3.6-alt1
 - Updated to procps-ng 3.3.6 (closes: #18136, #27296).
 
