@@ -1,5 +1,5 @@
 Name: mpfr
-Version: 3.1.1
+Version: 3.1.2
 Release: alt1
 
 Summary: Multiple Precision Floating-Point library
@@ -105,6 +105,9 @@ install -pm644 %_sourcedir/mpfrxx.h %buildroot%_includedir/
 %endif
 
 %changelog
+* Thu Apr 25 2013 Dmitry V. Levin <ldv@altlinux.org> 3.1.2-alt1
+- Updated to v3.1.2.
+
 * Wed Jul 04 2012 Dmitry V. Levin <ldv@altlinux.org> 3.1.1-alt1
 - Updated to v3.1.1.
 
