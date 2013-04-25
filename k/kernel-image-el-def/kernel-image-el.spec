@@ -7,8 +7,8 @@
 
 Name: kernel-image-%flavour
 Version: 2.6.32
-Release: alt4
-%define erelease 358.2.1.el6
+Release: alt5
+%define erelease 358.6.1.el6
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -100,7 +100,7 @@ BuildRequires: patch >= 2.6.1-alt1
 %{?_enable_man:BuildRequires: xmlto}
 %{?_with_perf:BuildRequires: libnewt-devel python-dev binutils-devel libelf-devel asciidoc elfutils-devel >= 0.138}
 
-Requires: bootloader-utils >= 0.4.17
+Requires: bootloader-utils >= 0.4.21
 Requires: module-init-tools >= 3.1
 Requires: mkinitrd >= 1:2.9.9-alt1
 Requires: startup >= 0.9.8.24.1
@@ -473,10 +473,6 @@ tar --transform='s,^,kernel-src-%flavour-%kversion-%krelease/,' \
 %endif
 
 
-%preun
-/sbin/installkernel --remove %kversion-%flavour-%krelease
-
-
 %files
 /boot/*
 %dir %modules_dir
@@ -545,6 +541,11 @@ tar --transform='s,^,kernel-src-%flavour-%kversion-%krelease/,' \
 
 
 %changelog
+* Thu Apr 25 2013 Led <led@altlinux.ru> 2.6.32-alt5
+- 2.6.32-358.6.1.el6
+- updated Requires
+- disabled preun script
+
 * Sun Mar 17 2013 Led <led@altlinux.ru> 2.6.32-alt4
 - macvlan: receive multicast with local address
 
