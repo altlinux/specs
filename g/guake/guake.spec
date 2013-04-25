@@ -4,7 +4,7 @@ Name: guake
 Summary: guake - a drop-down terminal
 Summary(ru.UTF-8):guake — выпадающий эмулятор терминала
 Version: 0.4.4
-Release: alt1
+Release: alt2
 License: GPL v2+
 Group: Terminals
 URL: http://guake.org/
@@ -67,16 +67,18 @@ mkdir -p %buildroot%gnome_autostartdir
 ln -s %_desktopdir/%name.desktop %buildroot%gnome_autostartdir/guake.desktop
 
 %post
-%gconf2_install guake
+%gconf2_install %name
 
 %preun
-%gconf2_uninstall guake
+if [ $1 = 0 ]; then
+  %gconf2_uninstall %name
+fi
 
 
 %files -f %name.lang
 %defattr(644,root,root,755)
 %doc AUTHORS ChangeLog COPYING README TODO
-%_sysconfdir/gconf/schemas/%name.schemas
+%config %_sysconfdir/gconf/schemas/*
 %attr(755,root,root) %_bindir/*
 %python_sitearch/%name
 %_desktopdir/*.desktop
@@ -88,6 +90,9 @@ ln -s %_desktopdir/%name.desktop %buildroot%gnome_autostartdir/guake.desktop
 %gnome_autostartdir/guake.desktop
 
 %changelog
+* Thu Apr 25 2013 Dmitriy Kulik <lnkvisitor@altlinux.org> 0.4.4-alt2
+- Fix spec
+
 * Thu Feb 07 2013 Dmitriy Kulik <lnkvisitor@altlinux.org> 0.4.4-alt1
 - New version
 - Update from fc18
