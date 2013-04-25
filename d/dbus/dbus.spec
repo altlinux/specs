@@ -7,7 +7,7 @@
 %define	systemdsystemunitdir /lib/systemd/system
 
 Name: dbus
-Version: 1.6.8
+Version: 1.6.10
 Release: alt1
 
 Summary: D-BUS is a simple IPC framework based on messages.
@@ -196,6 +196,9 @@ touch %buildroot%_sysconfdir/machine-id
 %dir %_datadir/dbus-1/interfaces
 
 %changelog
+* Thu Apr 25 2013 Valery Inozemtsev <shrek@altlinux.ru> 1.6.10-alt1
+- 1.6.10
+
 * Wed Oct 03 2012 Valery Inozemtsev <shrek@altlinux.ru> 1.6.8-alt1
 - 1.6.8
 
