@@ -1,0 +1,84 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires: /usr/bin/doxygen /usr/bin/valgrind gcc-c++
+# END SourceDeps(oneline)
+Name:      libgta
+Version:   1.0.4
+Release:   alt1_1
+Summary:   Library that implements the Generic Tagged Arrays file format
+Group:     System/Libraries
+License:   LGPLv2+
+URL:       http://gta.nongnu.org
+Source0:   http://download.savannah.nongnu.org/releases/gta/%{name}-%{version}.tar.xz
+BuildRequires: doxygen
+BuildRequires: bzip2-devel
+BuildRequires: zlib-devel
+BuildRequires: liblzma-devel
+Source44: import.info
+
+%description
+Libgta is a portable library that implements the GTA (Generic Tagged Arrays)
+file format. It provides interfaces for C and C++.
+
+
+%package devel
+Summary:  Development Libraries for %{name}
+Group:    Development/C
+Requires: %{name}%{?_isa} = %{version}-%{release}
+
+%description devel
+The %{name}-devel package contains libraries and header files for
+developing applications that use %{name}.
+
+
+%package doc
+Summary:  API documentation for %{name}
+Group:    Documentation
+Requires: %{name} = %{version}-%{release}
+BuildArch: noarch
+
+%description doc
+The %{name}-doc package contains HTML API documentation and
+examples for %{name}.
+
+
+%prep
+%setup -q
+
+# Preserve date for headers
+# Sent to gta-list@nongnu.org
+sed -i 's/-m 644/-pm 644/' configure
+
+
+%build
+%configure --disable-static
+make %{?_smp_mflags} V=1
+
+%install
+make install DESTDIR=%{buildroot}
+
+# Remove documentation; will install it with doc macro
+rm -rf %{buildroot}%{_docdir}
+
+
+%check
+make check V=1
+
+
+%files 
+%doc COPYING AUTHORS README
+%{_libdir}/%{name}.so.*
+
+%files devel
+%{_libdir}/pkgconfig/gta.pc
+%{_includedir}/gta
+%{_libdir}/%{name}.so
+
+%files doc
+%doc doc/example*
+%doc doc/reference
+
+
+%changelog
+* Thu Apr 25 2013 Igor Vlasenko <viy@altlinux.ru> 1.0.4-alt1_1
+- initial fc import
+
