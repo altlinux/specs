@@ -1,7 +1,7 @@
-%define ver_major 3.7
+%define ver_major 3.8
 
 Name: gnome-games
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: GNOME games
@@ -52,6 +52,9 @@ GlChess:	a chess game which supports several chess engines.
 %files
 
 %changelog
+* Thu Apr 25 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.0-alt1
+- 3.8.0
+
 * Wed Jan 09 2013 Yuri N. Sedunov <aris@altlinux.org> 3.7.2-alt1
 - made virtual package after gnome-games split
 
