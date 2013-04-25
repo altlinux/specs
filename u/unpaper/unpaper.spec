@@ -1,23 +1,25 @@
 Name: unpaper
-Version: 0.4
-Release: alt2
-License: GPLv2
-Group: Publishing
-# URL: http://unpaper.berlios.de
-Url: https://github.com/Flameeyes/unpaper/tree/unpaper-0.4
-
-Packager: Yury Aliaev <mutabor@altlinux.ru>
-
-# Source: http://download.berlios.de/%name/%name-%version.tar.gz
-Source: %name-%version.tar
+Version: 0.4.2
+Release: alt1
 
 Summary: unpaper is a post-processing tool for scanned sheets of paper
 Summary(ru_RU.UTF-8): unpaper есть программа для обработки страниц после сканирования
 
+License: GPLv2
+Group: Publishing
+# URL: http://unpaper.berlios.de
+
+Url: http://www.flameeyes.eu/projects/unpaper
+
+Packager: Yury Aliaev <mutabor@altlinux.ru>
+
+# Git: https://github.com/Flameeyes/unpaper.git
+Source: http://www.flameeyes.eu/files/%name-%version.tar
+
 BuildPreReq: docbook-style-xsl
 # Automatically added by buildreq on Fri May 25 2012
 # optimized out: libgpg-error xml-common
-BuildRequires: libdb4-devel libnss-mdns netpbm xsltproc
+BuildRequires: libdb4-devel netpbm xsltproc
 
 %description
 unpaper is a post-processing tool for scanned sheets of paper,
@@ -44,19 +46,23 @@ unpaper есть программа для обработки страниц п�
 %setup
 
 %build
-%autoreconf
 %configure
 %make_build
 
 %install
-%make DESTDIR=%buildroot install
+%makeinstall_std
 
 %files
 %_bindir/*
 %_man1dir/*
-%doc AUTHORS COPYING INSTALL NEWS README TODO doc/* html/*
+%doc %_docdir/%name/
+%doc AUTHORS NEWS README TODO
 
 %changelog
+* Thu Apr 25 2013 Vitaly Lipatov <lav@altlinux.ru> 0.4.2-alt1
+- cleanup spec
+- new version 0.4.2 (with rpmrb script)
+
 * Sat May 26 2012 Malo Skryleve <malo@altlinux.org> 0.4-alt2
 - Fixed some errors
 
