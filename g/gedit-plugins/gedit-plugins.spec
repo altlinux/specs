@@ -1,10 +1,11 @@
 %define ver_major 3.8
 %def_enable python
 %define gedit_pluginsdir %_libdir/gedit/plugins
+%add_python3_compile_include %gedit_pluginsdir
 
 Name: gedit-plugins
 Version: %ver_major.1
-Release: alt1
+Release: alt2
 
 Summary: Plugins for GEdit
 License: GPL
@@ -65,41 +66,21 @@ This package contains various plugins for gEdit, including Charmap, Terminal, an
 %install
 %make_install install DESTDIR=%buildroot
 
-%find_lang --with-gnome --output=files_list %name
+%find_lang --with-gnome %name
 
-# All the dancing below is about potential splitting of plugins into
-# subpackages.
-%define fill_plugin_fileset() \
-for f in %{1}.{plugin,py,pyc,pyo} lib%{1}.so; do \
-    [ -r "%buildroot%gedit_pluginsdir/$f" ] && echo "%gedit_pluginsdir/$f"; \
-done >>files_list_%{1}; \
-if [ -d "%buildroot%gedit_pluginsdir/%{1}" ]; then \
-    echo "%%dir %gedit_pluginsdir/%{1}" \
-    for e in py pyc pyo; do \
-        [ -r "%buildroot%gedit_pluginsdir/%{1}" ] && \
-            echo "%gedit_pluginsdir/%{1}/*.$e" \
-    done \
-fi >>files_list_%{1}
-
-%define plugins bookmarks drawspaces dashboard bracketcompletion charmap codecomment colorpicker colorschemer gpdefs joinlines showtabbar smartspaces terminal multiedit wordcompletion sessionsaver commander textsize synctex taglist
-
-# commander plugin has subdirectories
-echo "%gedit_pluginsdir/commander/commands/" > files_list_commander
-
-for p in %plugins; do
-    %fill_plugin_fileset $p
-    cat files_list_$p >>files_list
-done
-
-%files -f files_list
+%files -f %name.lang
 %dir %_datadir/gedit/plugins
 %_datadir/gedit/plugins/*
+%gedit_pluginsdir/*
 %config %_datadir/glib-2.0/schemas/org.gnome.gedit.plugins.drawspaces.gschema.xml
 %config %_datadir/glib-2.0/schemas/org.gnome.gedit.plugins.terminal.gschema.xml
 
 %exclude %gedit_pluginsdir/*.la
 
 %changelog
+* Thu Apr 25 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.1-alt2
+- rebuilt to update dependencies
+
 * Mon Apr 15 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.1-alt1
 - 3.8.1
 
