@@ -1,6 +1,6 @@
 Name: alterator-distro-backup-server
 Version: 0.7
-Release: alt2
+Release: alt3
 
 Source:%name-%version.tar
 
@@ -17,9 +17,9 @@ Requires: alterator-root
 Requires: alterator-datetime
 Requires: alterator-logs >= 0.7-alt5
 Requires: alterator-root
-Requires: MySQL-server
+Requires: mysql-server
 Requires: MySQL-server-control 
-Requires: MySQL-client
+Requires: mysql-client
 Requires(pre): bacula-director-mysql >= 3.0.2-alt6
 
 BuildArch: noarch
@@ -56,6 +56,10 @@ cp -a logs %buildroot%_sysconfdir/alterator/
 %_alterator_backend3dir/*
 
 %changelog
+* Thu Apr 25 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.7-alt3
+- use virtual mysql-server/client requires for match both 
+  MySQL and mariadb
+
 * Wed Dec 12 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.7-alt2
 - bogus backticks removed
 
