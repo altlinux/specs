@@ -9,7 +9,7 @@
 %def_enable x
 Name: ImageMagick
 Version: %dversion.%drelease
-Release: alt2
+Release: alt2.1
 
 Summary: An X application for displaying and manipulating images
 License: OpenSource
@@ -25,7 +25,7 @@ Source2: imagemagick16.png
 Source3: imagemagick32.png
 Source4: imagemagick48.png
 Patch1: ImageMagick-depends.patch
-
+Patch2: ImageMagick-6.8.4-10-alt-invalid_read.patch
 
 Requires: ghostscript-classic fonts-type1-urw lib%name = %version-%release
 
@@ -109,13 +109,14 @@ Requires: %name-tools
 BuildArch: noarch
 
 %description doc
-Documentation for %name 
+Documentation for %name
 
 %def_disable static
 
 %prep
 %setup -q -n %name-%dversion-%drelease
 %patch1 -p2
+%patch2 -p2
 touch config.rpath
 
 # XXX tests fail
@@ -218,6 +219,9 @@ chrpath -d %buildroot%perl_vendor_archlib/auto/Image/Magick//Q16/Q16.so
 %endif
 
 %changelog
+* Thu Apr 25 2013 Fr. Br. George <george@altlinux.ru> 6.8.4.10-alt2.1
+- Avoid ImageMagick pipe i/o bug
+
 * Tue Apr 23 2013 Anton Farygin <rider@altlinux.ru> 6.8.4.10-alt2
 - build with rsvg again
 
