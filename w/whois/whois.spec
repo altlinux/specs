@@ -1,5 +1,5 @@
 Name: whois
-Version: 5.0.23
+Version: 5.0.24
 Release: alt1
 
 Summary: Intelligent WHOIS client
@@ -46,6 +46,9 @@ install -pDm644 whois.conf %buildroot/etc/whois.conf
 %config(noreplace) /etc/whois.conf
 
 %changelog
+* Fri Apr 26 2013 Dmitry V. Levin <ldv@altlinux.org> 5.0.24-alt1
+- Updated to 5.0.24.
+
 * Tue Apr 16 2013 Dmitry V. Levin <ldv@altlinux.org> 5.0.23-alt1
 - Updated to 5.0.23.
 
