@@ -1,6 +1,6 @@
 
 Name: rsyslog
-Version: 7.2.6
+Version: 7.2.7
 Release: alt1
 
 Summary: Enhanced system logging and kernel message trapping daemon
@@ -27,7 +27,7 @@ BuildRequires: librelp-devel >= 1.0.1
 BuildRequires: libgnutls-devel libgcrypt-devel
 BuildRequires: libnet-snmp-devel
 BuildRequires: libnet-devel
-BuildRequires: libestr-devel >= 0.1.2
+BuildRequires: libestr-devel >= 0.1.5
 BuildRequires: libee-devel >= 0.4.0
 BuildRequires: libjson-devel
 BuildRequires: liblognorm-devel >= 0.3.1
@@ -359,7 +359,6 @@ ln -s ../rsyslog.service %buildroot%systemd_unitdir/syslog.target.wants/rsyslog.
 %systemd_unitdir/../altlinux-rsyslog-extrasockets
 %systemd_unitdir/syslog.target.wants/rsyslog.service
 %dir %mod_dir
-%mod_dir/compat.so
 %mod_dir/imfile.so
 %mod_dir/imklog.so
 %mod_dir/imkmsg.so
@@ -456,6 +455,9 @@ ln -s ../rsyslog.service %buildroot%systemd_unitdir/syslog.target.wants/rsyslog.
 %doc html_docs/*
 
 %changelog
+* Fri Apr 26 2013 Alexey Shabalin <shaba@altlinux.ru> 7.2.7-alt1
+- 7.2.7
+
 * Thu Mar 14 2013 Alexey Shabalin <shaba@altlinux.ru> 7.2.6-alt1
 - 7.2.6
 
