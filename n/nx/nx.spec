@@ -3,7 +3,7 @@
 
 Name: nx
 Version: 3.5.1
-Release: alt11
+Release: alt12
 
 Summary: Next Generation Remote Display
 
@@ -362,6 +362,9 @@ ln -fs ../libXrender-nx.so.1 %buildroot%_libdir/nxserver/libXrender.so.1
 %_man1dir/*
 
 %changelog
+* Mon Apr 22 2013 Michael Shigorin <mike@altlinux.org> 3.5.1-alt12
+- rebuilt against current openssl ("version mismatch" error)
+
 * Sat Mar 23 2013 Vitaly Lipatov <lav@altlinux.ru> 3.5.1-alt11
 - build in Sisyphus (ALT bug # 27515)
 
