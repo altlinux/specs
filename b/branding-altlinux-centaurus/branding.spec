@@ -1,12 +1,12 @@
 %define theme centaurus
 %define Theme Centaurus
-%define codename Cheiron
+%define codename Pholus
 %define brand altlinux
 %define Brand ALT Linux
 
 Name: branding-%brand-%theme
 Version: 6.9.9 
-Release: alt1
+Release: alt2
 
 BuildRequires: cpio fonts-ttf-dejavu fonts-ttf-droid
 BuildRequires: design-bootloader-source >= 5.0-alt2
@@ -364,6 +364,9 @@ subst 's/#theme-name=/theme-name=Clearlooks-Phenix/' /etc/lightdm/lightdm-gtk-gr
 %_desktopdir/indexhtml.desktop
 
 %changelog
+* Fri Apr 26 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 6.9.9-alt2
+- codename changed to Pholus
+
 * Fri Apr 26 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 6.9.9-alt1
 - set beta state
 
