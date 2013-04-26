@@ -1,6 +1,6 @@
 Name: repocop-report-distrodb
 Version: 0.15
-Release: alt1
+Release: alt2
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
 
@@ -39,6 +39,9 @@ ln -s repocop-report-distrodb %buildroot/%_bindir/repocop-report-distromap-db
 #%_man1dir/repocop-report-prometeus-*
 
 %changelog
+* Fri Apr 26 2013 Igor Vlasenko <viy@altlinux.ru> 0.15-alt2
+- bugfix release
+
 * Thu Apr 25 2013 Igor Vlasenko <viy@altlinux.ru> 0.15-alt1
 - extra db
 
