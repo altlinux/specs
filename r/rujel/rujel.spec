@@ -1,7 +1,7 @@
 %define backup_dir %_localstatedir/%{name}/previous_versions/`date +%%F_%%H%%M`
 
 Name:		rujel
-Version:	0.9.6
+Version:	0.9.7
 Release:	alt1
 
 Summary:	RUJEL is a web-portal application for maintaining online markbook in schools.
@@ -18,7 +18,7 @@ Packager:  	Gennady Kushnir <baywind@altlinux.org>
 Source:		%{name}-%{version}.tar
 Patch1:		%{name}-alt-config.patch
 
-BuildRequires:	rpm-macros-webobjects
+BuildRequires(pre):	rpm-macros-webobjects
 Requires: 	java >= 1.5 webobjects mysql junixsocket
 
 Provides:	Rujel RujelDiary PListWOEditor
@@ -211,6 +211,8 @@ fi
 %config %wo_configdir/rujel/RujelReports
 
 %changelog
+* Thu Apr 25 2013 Gennady Kushnir <baywind@altlinux.org> 0.9.7-alt1
+- upstream update (3ae42113...)
 * Tue Dec 04 2012 Gennady Kushnir <baywind@altlinux.org> 0.9.6-alt1
 - upstream update (e8be9a44...)
 * Fri Aug 31 2012 Gennady Kushnir <baywind@altlinux.org> 0.9.5-alt2
