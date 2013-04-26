@@ -20,13 +20,13 @@
 %define flavour %base_flavour-%sub_flavour
 
 Name: kernel-image-%flavour
-Version: 3.4.41
-Release: alt5
+Version: 3.4.42
+Release: alt1
 
 %define kernel_req %nil
 %define kernel_prov %nil
 %define kernel_branch 3.4
-%define kernel_stable_version 41
+%define kernel_stable_version 42
 %define kernel_extra_version .%kernel_stable_version
 #define kernel_extra_version %nil
 
@@ -505,7 +505,7 @@ Patch0663: linux-%kernel_branch.20-fix-sound-soc-omap--snd-soc-omap-mcbsp.patch
 Patch0671: linux-%kernel_branch.20-fix-tools--perf.patch
 Patch0672: linux-%kernel_branch.20-fix-tools-hv.patch
 
-Patch0680: linux-%kernel_branch.35-fix-virt-kvm.patch
+Patch0680: linux-%kernel_branch.42-fix-virt-kvm.patch
 Patch0681: linux-%kernel_branch.25-fix-virt-kvm--kvm-amd.patch
 
 
@@ -775,7 +775,8 @@ PreReq: coreutils module-init-tools >= 3.1 %name = %kversion-%release
 %define kernel_doc_package_std_body() \
 Group: Documentation \
 %{?base_flavour:Provides: kernel-%{1}-%base_flavour = %version-%release} \
-Provides: kernel-%{1}-%flavour = %version-%release \
+Obsoletes: kernel-%{1}-%flavour-%kernel_branch \
+Provides: kernel-%{1}-%flavour-%kernel_branch = %version-%release \
 BuildArch: noarch \
 AutoProv: no \
 AutoReq: no
@@ -1112,18 +1113,19 @@ These are OProfile module and vmlinux file for your Linux system.
 %endif
 
 
-%package -n kernel-headers-modules-%flavour-%kernel_branch
+%package -n kernel-headers-modules-%flavour
 Summary: Headers and other files needed for building kernel modules
 Group: Development/Kernel
 %{?kgcc_version:Requires: gcc%kgcc_version}
-Provides: kernel-headers-modules-%flavour = %version-%release
+Obsoletes: kernel-headers-modules-%flavour-%kernel_branch
+Provides: kernel-headers-modules-%flavour-%kernel_branch = %version-%release
 Provides: kernel-devel-%flavour = %version-%release
 %{?base_flavour:Provides: kernel-devel-%base_flavour = %version-%release}
 Provides: kernel-devel = %version-%release
 #Obsoletes: kernel-headers-modules-%flavour = %version
 AutoProv: no
 
-%description -n kernel-headers-modules-%flavour-%kernel_branch
+%description -n kernel-headers-modules-%flavour
 This package contains header files, Makefiles and other parts of the
 Linux kernel build system which are needed to build kernel modules for
 the Linux kernel package %name-%version-%release.
@@ -1161,18 +1163,19 @@ This package contains performance analysis tools for Linux
 %endif
 
 
-%package -n kernel-headers-%flavour-%kernel_branch
+%package -n kernel-headers-%flavour
 Summary: Header files for the Linux kernel
 Group: Development/Kernel
 Requires: kernel-headers-common >= 1.1.5
 Provides: kernel-headers = %version
 %{?base_flavour:Provides: kernel-headers-%base_flavour = %version}
-Provides: kernel-headers-%flavour = %version-%release
+Obsoletes: kernel-headers-%flavour-%kernel_branch
+Provides: kernel-headers-%flavour-%kernel_branch = %version-%release
 #Obsoletes: kernel-headers-%flavour = %version
 Provides: %kheaders_dir/include
 AutoProv: no
 
-%description -n kernel-headers-%flavour-%kernel_branch
+%description -n kernel-headers-%flavour
 This package makes Linux kernel headers corresponding to the Linux
 kernel package %name-%version-%release available for building
 userspace programs (if this version of headers is selected by
@@ -1180,11 +1183,11 @@ adjust_kernel_headers).
 
 
 %if_enabled docs
-%package -n kernel-doc-%flavour-%kernel_branch
+%package -n kernel-doc-%flavour
 Summary: Linux kernel %kversion-%flavour documentation
 %kernel_doc_package_std_body doc
 
-%description -n kernel-doc-%flavour-%kernel_branch
+%description -n kernel-doc-%flavour
 This package contains documentation files for Linux kernel package
 kernel-image-%flavour-%kversion-%krelease
 The documentation files contained in this package may be different
@@ -1194,11 +1197,11 @@ in the kernel and update the documentation to reflect these changes.
 
 
 %if_enabled htmldocs
-%package -n kernel-docbook-%flavour-%kernel_branch
+%package -n kernel-docbook-%flavour
 Summary: Linux kernel %kversion-%flavour HTML API documentation
 %kernel_doc_package_std_body docbook
 
-%description -n kernel-docbook-%flavour-%kernel_branch
+%description -n kernel-docbook-%flavour
 This package contains API documentation HTML files for Linux kernel
 package kernel-image-%flavour-%kversion-%krelease
 The documentation files contained in this package may be different
@@ -1209,14 +1212,14 @@ in the kernel and update the documentation to reflect these changes.
 
 
 %if_enabled man
-%package -n kernel-man-%flavour-%kernel_branch
+%package -n kernel-man-%flavour
 Summary: Linux kernel %kversion-%flavour man pages
 %kernel_doc_package_std_body man
 Provides: kernel-man = %version-%release
 Conflicts: kernel-man > %version-%release
 Conflicts: kernel-man < %version-%release
 
-%description -n kernel-man-%flavour-%kernel_branch
+%description -n kernel-man-%flavour
 This package contains man pages for Linux kernel package
 kernel-image-%flavour-%kversion-%krelease
 The man pages contained in this package may be different from the similar
@@ -1228,16 +1231,17 @@ update the documentation to reflect these changes.
 
 
 %if_with src
-%package -n kernel-src-%flavour-%kernel_branch
+%package -n kernel-src-%flavour
 Summary: Linux kernel %kversion-%flavour sources
 Group: Development/Kernel
 %{?base_flavour:Provides: kernel-src-%base_flavour = %version-%release}
-Provides: kernel-src-%flavour = %version-%release
+Obsoletes: kernel-src-%flavour-%kernel_branch
+Provides: kernel-src-%flavour-%kernel_branch = %version-%release
 BuildArch: noarch
 AutoProv: no
 AutoReq: no
 
-%description -n kernel-src-%flavour-%kernel_branch
+%description -n kernel-src-%flavour
 This package contains sources for Linux kernel package
 kernel-image-%flavour-%kversion-%krelease
 %endif
@@ -2149,7 +2153,7 @@ install -m 0644 tools/perf/{CREDITS,design.txt,Documentation/examples.txt} %buil
 
 # install documentation
 %if_enabled docs
-install -d %buildroot%_docdir/kernel-doc-%flavour-%kernel_branch/
+install -d %buildroot%_docdir/kernel-doc-%flavour/
 for I in Documentation/*; do
 	case "$(basename "$I")" in
 		DocBook)
@@ -2157,17 +2161,17 @@ for I in Documentation/*; do
 			for J in "$I"/*.tmpl; do
 				j=$(basename "$J" .tmpl)
 				[ -d "$I/$j" ] || continue
-				install -d -m 0755 %buildroot%_docdir/kernel-doc-%flavour-%kernel_branch/DocBook/"$j"
-				install -m 0644 "$I/$j"/*.html %buildroot%_docdir/kernel-doc-%flavour-%kernel_branch/DocBook/"$j"/
-				install -m 0644 "$I/$j.html" %buildroot%_docdir/kernel-doc-%flavour-%kernel_branch/DocBook/
+				install -d -m 0755 %buildroot%_docdir/kernel-doc-%flavour/DocBook/"$j"
+				install -m 0644 "$I/$j"/*.html %buildroot%_docdir/kernel-doc-%flavour/DocBook/"$j"/
+				install -m 0644 "$I/$j.html" %buildroot%_docdir/kernel-doc-%flavour/DocBook/
 			done
 %endif
 			;;
 		[a-z][a-z]_[A-Z][A-Z]|Makefile|dontdiff) ;;
-		*) cp -aL "$I" %buildroot%_docdir/kernel-doc-%flavour-%kernel_branch/ ;;
+		*) cp -aL "$I" %buildroot%_docdir/kernel-doc-%flavour/ ;;
 	esac
 done
-find %buildroot%_docdir/kernel-doc-%flavour-%kernel_branch -type f -name Makefile -delete
+find %buildroot%_docdir/kernel-doc-%flavour -type f -name Makefile -delete
 %if_enabled man
 install -d %buildroot%kmandir
 install -m 0644 Documentation/DocBook/man/* %buildroot%kmandir/
@@ -2299,10 +2303,10 @@ sed 's/^/%%exclude &/' *.rpmmodlist > exclude-drivers.rpmmodlist
 
 %{?_enable_oprofile:%kernel_modules_package_post oprofile}
 
-%post -n kernel-headers-%flavour-%kernel_branch
+%post -n kernel-headers-%flavour
 %post_kernel_headers %kversion-%flavour-%krelease
 
-%postun -n kernel-headers-%flavour-%kernel_branch
+%postun -n kernel-headers-%flavour
 %postun_kernel_headers %kversion-%flavour-%krelease
 
 
@@ -2559,7 +2563,7 @@ done)
 %endif
 
 
-%files -n kernel-headers-%flavour-%kernel_branch
+%files -n kernel-headers-%flavour
 %kheaders_dir
 
 
@@ -2650,7 +2654,7 @@ done)
 %endif
 
 
-%files -n kernel-headers-modules-%flavour-%kernel_branch
+%files -n kernel-headers-modules-%flavour
 %kbuild_dir
 %old_kbuild_dir
 %dir %modules_dir
@@ -2658,32 +2662,37 @@ done)
 
 
 %if_enabled docs
-%files -n kernel-doc-%flavour-%kernel_branch
-%doc %_docdir/kernel-doc-%flavour-%kernel_branch
-%{?_enable_htmldocs:%exclude %_docdir/kernel-doc-%flavour-%kernel_branch/DocBook}
+%files -n kernel-doc-%flavour
+%doc %_docdir/kernel-doc-%flavour
+%{?_enable_htmldocs:%exclude %_docdir/kernel-doc-%flavour/DocBook}
 
 
 %if_enabled htmldocs
-%files -n kernel-docbook-%flavour-%kernel_branch
-%doc %dir %_docdir/kernel-doc-%flavour-%kernel_branch
-%doc %_docdir/kernel-doc-%flavour-%kernel_branch/DocBook
+%files -n kernel-docbook-%flavour
+%doc %dir %_docdir/kernel-doc-%flavour
+%doc %_docdir/kernel-doc-%flavour/DocBook
 %endif
 
 
 %if_enabled man
-%files -n kernel-man-%flavour-%kernel_branch
+%files -n kernel-man-%flavour
 %kmandir
 %endif
 %endif
 
 
 %if_with src
-%files -n kernel-src-%flavour-%kernel_branch
+%files -n kernel-src-%flavour
 %_usrsrc/kernel
 %endif
 
 
 %changelog
+* Fri Apr 26 2013 Led <led@altlinux.ru> 3.4.42-alt1
+- 3.4.42
+- updated:
+  + fix-virt-kvm
+
 * Fri Apr 26 2013 Led <led@altlinux.ru> 3.4.41-alt5
 - added:
   + feat-drivers-acpi--bbswitch
