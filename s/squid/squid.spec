@@ -5,7 +5,7 @@
 
 Name: squid
 Version: 3.2.9
-Release: alt4
+Release: alt5
 %define langpack_ver 20121005
 Summary: The Squid proxy caching server
 License: GPLv2
@@ -286,6 +286,9 @@ chown -R %name:%name %_spooldir/%name >/dev/null 2>&1 ||:
 
 
 %changelog
+* Fri Apr 26 2013 Led <led@altlinux.ru> 3.2.9-alt5
+- added upstream fixes
+
 * Wed Apr 17 2013 Led <led@altlinux.ru> 3.2.9-alt4
 - updated BuildRequires
 - negotiate_kerberos_auth: fix config.test (ALT#28859)
