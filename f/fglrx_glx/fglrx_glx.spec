@@ -1,4 +1,4 @@
-%define cat_ver 13.1
+%define cat_ver 13.4
 
 # main switch :)
 # before 11-2:
@@ -26,7 +26,7 @@
 %define ati_rel 1
 
 Name: fglrx_glx
-Version: 9.012
+Version: 12.104
 Release: alt1
 Summary: ATI/AMD Proprietary Linux Display Driver
 Group: System/Kernel and hardware
@@ -38,7 +38,7 @@ License: Proprietary
 #Provides: libGL
 Provides: xorg-drv-fglrx
 
-Source0: http://www2.ati.com/drivers/linux/amd-driver-installer-catalyst-%cat_ver-linux-x86.x86_64.run
+Source0: http://www2.ati.com/drivers/linux/amd-catalyst-%cat_ver-linux-x86.x86_64.run
 Source2: fglrx-switch.c
 #Source3: catalyst_1010_linux.pdf
 
@@ -337,6 +337,9 @@ sh %SOURCE14 -x %buildroot%_datadir/hwdatabase/videoaliases/fglrx.xinf -f %build
 %_usrsrc/*
 
 %changelog
+* Fri Apr 26 2013 Ilya Mashkin <oddity@altlinux.ru> 12.104-alt1
+- Version 12.104 (Catalyst 13.4)
+
 * Sun Jan 20 2013 Ilya Mashkin <oddity@altlinux.ru> 9.012-alt1
 - Version 9.012 (Catalyst 13.1)
 
