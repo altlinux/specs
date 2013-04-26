@@ -2,7 +2,7 @@
 
 #BuildRequires: 
 Name: autorepo-altnode-repocop
-Version: 0.08
+Version: 0.09
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -34,6 +34,9 @@ cp repocop-* $RPM_BUILD_ROOT%_bindir
 %_bindir/*
 
 %changelog
+* Fri Apr 26 2013 Igor Vlasenko <viy@altlinux.ru> 0.09-alt1
+- new distrodb format
+
 * Thu Apr 25 2013 Igor Vlasenko <viy@altlinux.ru> 0.08-alt1
 - distrodb-extra support
 
