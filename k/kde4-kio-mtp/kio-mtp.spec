@@ -2,8 +2,8 @@
 
 %define rname kio-mtp
 Name: kde4-%rname
-Version: 0.70
-Release: alt2
+Version: 0.75
+Release: alt1
 
 Group: Networking/Remote access
 Summary: KIO-Slave to acces newtwork shares via autofs
@@ -42,6 +42,9 @@ via the MTP protocol.
 %_K4apps/solid/actions/solid_mtp.desktop
 
 %changelog
+* Fri Apr 26 2013 Sergey V Turchin <zerg@altlinux.org> 0.75-alt1
+- new version
+
 * Wed Feb 06 2013 Sergey V Turchin <zerg@altlinux.org> 0.70-alt2
 - update from master branch
 
