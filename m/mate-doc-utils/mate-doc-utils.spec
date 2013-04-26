@@ -6,7 +6,7 @@ BuildRequires: python-devel
 %define _libexecdir %_prefix/libexec
 Name:           mate-doc-utils
 Summary:        MATE Desktop doc utils
-Version:        1.6.0
+Version:        1.6.1
 Release:        alt1_1
 License:        GPLv2+ and LGPLv2+
 URL:            http://mate-desktop.org
@@ -39,9 +39,6 @@ Requires:       gnome-doc-utils
 Source44: import.info
 Patch33: mate-doc-utils-0.14.0-package.patch
 
-#Fix https://bugzilla.redhat.com/show_bug.cgi?id=888807
-#Patch0: fix_mock_build_errors.patch
-
 %description
 mate-doc-utils is a collection of documentation utilities for the Mate
 project.  Notably, it contains utilities for building documentation and
@@ -50,8 +47,6 @@ XSLT style sheets that were once distributed with Yelp.
 
 %prep
 %setup -q
-#%patch0 -p1
-NOCONFIGURE=1 ./autogen.sh
 %patch33 -p1
 
 %build
@@ -85,6 +80,9 @@ rm -rf $RPM_BUILD_ROOT/%{_datadir}/mate-doc-utils/mate-debian.sh
 %{_datadir}/pkgconfig/mate-doc-utils.pc
 
 %changelog
+* Thu Apr 25 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.1-alt1_1
+- new fc release
+
 * Sat Apr 06 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.0-alt1_1
 - new fc release
 

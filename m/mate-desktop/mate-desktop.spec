@@ -6,7 +6,7 @@ BuildRequires: /usr/bin/glib-gettextize /usr/bin/gtkdocize libgio-devel pkgconfi
 Summary:        Shared code for mate-panel, mate-session, mate-file-manager, etc
 Name:           mate-desktop
 Version:        1.6.0
-Release:        alt1_1
+Release:        alt1_2
 URL:            http://mate-desktop.org
 Source0:        http://pub.mate-desktop.org/releases/1.6/%{name}-%{version}.tar.xz
 License:        GPLv2+ and LGPLv2+ and MIT
@@ -128,6 +128,9 @@ mkdir -p %buildroot%{_datadir}/mate-about
 
 
 %changelog
+* Thu Apr 25 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.0-alt1_2
+- sync with new fc release
+
 * Sat Apr 06 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.0-alt1_1
 - new fc release
 
