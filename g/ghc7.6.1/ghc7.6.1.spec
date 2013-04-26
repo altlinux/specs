@@ -1,36 +1,26 @@
-# Using -fPIC make GC 50%% more slow
-%set_verify_elf_method textrel=relaxed
-%define _configure_target %nil
-
-%def_without hscolour
-
 Name: ghc7.6.1
 Version: 7.6.1
-Release: alt2
+Release: alt3
 
 Summary: Glasgow Haskell Compilation system
 License: BSD style w/o adv. clause
 Group: Development/Haskell
 Url: http://haskell.org/ghc/
-
 Packager: Denis Smirnov <mithraen@altlinux.ru>
 
 Source: %name-%version.tar
 Patch: ghc-%version-%release.patch
-Requires: %name-common
-Requires: gmp-devel
-Requires: llvm
 
-BuildRequires: docbook-dtds docbook-style-xsl ghc7.6.1 libelf-devel libgmp-devel libncurses-devel libedit-devel texlive-latex-base fonts-type1-cm-super-tex time xmltex xorg-cf-files xsltproc
-BuildRequires: docbook-utils-print
-BuildRequires: rpm-build-haskell
-BuildRequires: libbfd-devel
-BuildRequires: texlive-latex-base
-BuildRequires: llvm-devel
+Requires: %name-common
+
+# Automatically added by buildreq on Fri Apr 26 2013
+# optimized out: ghc7.6.1-common gnu-config libgmp-devel libgpg-error libtinfo-devel pkg-config python-base time xml-common xml-utils zlib-devel
+BuildRequires: binutils-devel docbook-dtds docbook-style-xsl ghc7.6.1 libelf-devel libffi-devel libncurses-devel xsltproc
 
 # Can't build when installed
 #BuildRequires: dblatex
 
+%def_without hscolour
 %if_with hscolour
 BuildRequires: ghc(hscolour)
 %endif
@@ -62,31 +52,25 @@ Preformatted documentation for the Glasgow Haskell Compiler
 (GHC) and its libraries. Install it if you like to have local
 access to the documentation in PostScript and HTML format.
 Alternatively, the documentation is available online at
-
-  http://haskell.org/ghc/documentation.html
+http://haskell.org/ghc/documentation.html
 
 %prep
 %setup
 %patch -p1
 
 %build
+%define _configure_target %nil
 #autoreconf -fisv
 ./boot
 %configure
-make
+%make_build V=1
 
 %install
-# This is a cruel hack: There seems to be no way to install the Haddock
-# documentation into the build directory, because DESTDIR is alway prepended.
-# Furthermore, rpm removes the target documentation directory before the doc
-# macros are processed. Therefore we have to copy things back into safety... :-P
-make DESTDIR=%buildroot \
-	HADDOCK_DOCS=YES docdir=%_docdir/%name-doc-%version \
-	install
-cp -a %buildroot%_docdir/%name-doc-%version/html html-docs
-
-# 'make install' installs lots of LICENSE files. Get rid of them.
-rm -f %buildroot%_docdir/%name/libraries/*/LICENSE
+%define docdir %_docdir/%name-%version
+%makeinstall_std docdir=%docdir
+mv %buildroot%docdir/html/* %buildroot%docdir/
+rmdir %buildroot%docdir/html
+cp -a ANNOUNCE LICENSE README docs/comm %buildroot%docdir/
 
 # generate fake .pkg configs for core packages.
 # haskell.prov will convert them to package provides.
@@ -140,21 +124,25 @@ sed -i 's!/html/!/!' %buildroot%_libdir/ghc-%version/package.conf.d/*.conf
 %exclude %_bindir/runhaskell
 
 %_libdir/ghc-%version
-%doc ANNOUNCE README
+%dir %docdir/
+%docdir/[ALR]*
 %_bindir/*
 %_man1dir/%name.1*
 %ghost %_libdir/ghc-%version/package.conf.old
 %dir %_libdir/ghc-%version/package.conf.d
 
 %files doc
-# TODO
-#%doc docs/docbook-cheat-sheet/docbook-cheat-sheet
-%doc docs/comm
-#%doc docs/users_guide/users_guide
-#%doc libraries/Cabal/doc/Cabal
-%doc html-docs/*
+%docdir/
+%exclude %docdir/[AR]*
 
 %changelog
+* Fri Apr 26 2013 Dmitry V. Levin <ldv@altlinux.org> 7.6.1-alt3
+- Changed ghc defaults to use -fasm instead of -llvm.
+- Built ghc using gcc instead of llvm.
+- Fixed documentation packaging.
+- Built with system libffi.
+- Updated build dependencies.
+
 * Fri Nov 30 2012 Denis Smirnov <mithraen@altlinux.ru> 7.6.1-alt2
 - rebuild with ghc 7.6.1
 
