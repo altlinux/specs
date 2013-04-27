@@ -1,9 +1,7 @@
 %define oname ProofreadPage
-%define major 1.16
-%define revision r66814
 
 Name: mediawiki-extensions-%oname
-Version: %major.%revision
+Version: 1.20
 Release: alt1
 
 BuildArch: noarch
@@ -17,10 +15,8 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 License: GPL
 
 BuildPreReq: rpm-build-mediawiki >= 0.2
-Requires: mediawiki-common >= 1.16
+Requires: mediawiki-common >= 1.20
 
-# It is new feature etersoft-build-utils since 1.7.6: supports commented real url
-# Source-url: http://upload.wikimedia.org/ext-dist/%oname-MW%major-%revision.tar.gz
 Source: %name-%version.tar
 
 %description
@@ -41,6 +37,9 @@ in the statistical count of text units.
 %files -f %oname.files
 
 %changelog
+* Sat Apr 27 2013 Vitaly Lipatov <lav@altlinux.ru> 1.20-alt1
+- new version (1.20 compatible)
+
 * Thu Sep 15 2011 Vitaly Lipatov <lav@altlinux.ru> 1.16.r66814-alt1
 - new version (1.16.r66814) with rpmgs script
 
