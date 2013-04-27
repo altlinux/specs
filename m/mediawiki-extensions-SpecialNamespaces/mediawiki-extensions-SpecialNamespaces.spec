@@ -1,8 +1,8 @@
 %define oname SpecialNamespaces
 
 Name: mediawiki-extensions-%oname
-Version: 1.0
-Release: alt2
+Version: 1.0gerrit
+Release: alt1
 
 Summary: Add new namespaces from Special:Namespaces page
 
@@ -16,7 +16,7 @@ BuildArch: noarch
 
 BuildPreReq: rpm-build-mediawiki >= 0.3
 
-Requires: mediawiki-common
+Requires: mediawiki-common >= 1.20
 
 Source: %oname-%version.tar
 
@@ -36,6 +36,9 @@ originally released under GPL by Stephanie Amanda Stevens.
 %doc README
 
 %changelog
+* Sat Apr 27 2013 Vitaly Lipatov <lav@altlinux.ru> 1.0gerrit-alt1
+- update to gerrit:39720 (unreviewed)
+
 * Thu Sep 29 2011 Vitaly Lipatov <lav@altlinux.ru> 1.0-alt2
 - fix missed <?php ?>
 
