@@ -1,5 +1,5 @@
 Name:     apt-repo
-Version:  1.1.1
+Version:  1.1.2
 Release:  alt1
 
 Summary:  Script for manipulation APT repository list
@@ -36,6 +36,10 @@ gzip %buildroot%_man1dir/%name.1
 %doc %_man1dir/%{name}*
 
 %changelog
+* Sat Apr 27 2013 Andrey Cherepanov <cas@altlinux.org> 1.1.2-alt1
+- Add support for branches t6, p7, t7
+- Use apt-repo clean instead clear
+
 * Tue Nov 20 2012 Andrey Cherepanov <cas@altlinux.org> 1.1.1-alt1
 - Add apt-repo clear command to remove all cdrom and task repositories
 - Fix add cdrom source if it exist in list
