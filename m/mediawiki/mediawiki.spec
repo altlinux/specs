@@ -1,9 +1,10 @@
 %define webappdir %webserver_webappsdir/mediawiki
+%define major 1.20
 
 Summary: A wiki engine, typical installation (with Apache2, MySQL and TeX support) 
 Name: mediawiki
-Version: 1.16.0
-Release: alt1.1
+Version: %major.4
+Release: alt2
 License: %gpl2plus
 Group: Networking/WWW
 Url: http://www.mediawiki.org/
@@ -12,7 +13,7 @@ Packager: Aleksey Avdeev <solo@altlinux.ru>
 
 BuildArch: noarch
 
-Source0: http://download.wikimedia.org/mediawiki/1.16/%name-%version.tar.gz
+Source0: http://download.wikimedia.org/mediawiki/%major/%name-%version.tar.gz
 Source1: mediawiki-apache2-alt-configs.tar
 Source2: README.ALT-ru_RU.UTF-8
 Source3: install_php_config.sh
@@ -25,10 +26,11 @@ BuildRequires(pre): rpm-macros-apache2
 BuildRequires(pre): rpm-build-licenses
 BuildPreReq: apache2-devel
 BuildPreReq: rpm-build-webserver-common
+BuildPreReq: rpm-build-mediawiki >= 0.3
 
 Requires: %name-common = %version-%release
-Requires: %name-apache2 %name-mysql 
-Requires: php5-eaccelerator ImageMagick
+Requires: %name-apache2 %name-mysql
+Requires: php5-apc ImageMagick
 
 %description
 MediaWiki is the software used for Wikipedia and the other Wikimedia
@@ -53,6 +55,14 @@ Group: Networking/WWW
 PreReq: webserver-common
 Requires: php-engine >= 5
 Requires: diffutils
+
+Provides: mediawiki-extensions-ParserFunctions
+Provides: mediawiki-extensions-ConfirmEdit
+
+Obsoletes: mediawiki-extensions-ParserFunctions
+Obsoletes: mediawiki-extensions-ConfirmEdit
+
+Conflicts: mediawiki-extensions-FCKEditor
 
 %description -n %name-common
 %summary
@@ -98,18 +108,32 @@ Requires: texvc
 %description -n %name-tex
 %summary
 
+%package -n %name-hiphop
+Summary: Package with hihop support for %name
+Group: Networking/WWW
+Requires: %name-common = %version-%release
+
+%description -n %name-hiphop
+%summary
+
 
 %prep
-%setup -q
+%setup
 
 %build
 
 %install
-mkdir -p %buildroot%_datadir/mediawiki
+mkdir -p %buildroot%_mediawikidir
 
-# Copy to buildroot only needed files and directories
-cp -r bin cache config extensions images includes languages maintenance serialized \
-      skins *.php *.php5 *.phtml  %buildroot%_datadir/mediawiki/
+# Copy to buildroot all files and directories exclude unneeded
+cp -r * %buildroot%_mediawikidir/
+# Not needed in the package
+rm -rf %buildroot%_mediawikidir/maintenance/dev/
+rm -rf %buildroot%_mediawikidir/tests/
+rm -rf %buildroot%_mediawikidir/{*.php5,*.phtml}
+rm -rf %buildroot%_mediawikidir/{COPYING,CREDITS,FAQ,HISTORY,README,RELEASE-NOTES-*,UPGRADE}
+
+mkdir -p %buildroot%_mediawikidir/config/
 
 sed -i -e "s/__VERSION__/%version/g" %SOURCE2
 sed -i -e "s/__VERSION__/%version/g" %SOURCE5
@@ -119,8 +143,8 @@ install -m 644 %SOURCE4 ./
 install -m 644 %SOURCE5 ./
 
 # remove undeeded parts
-rm -fr %buildroot%_datadir/mediawiki/includes/zhtable
-find %buildroot%_datadir/mediawiki/ \
+rm -fr %buildroot%_mediawikidir/includes/zhtable
+find %buildroot%_mediawikidir/ \
   \( -name .htaccess -or -name \*.cmi \) \
   -print0 \
   | xargs -r0 rm
@@ -129,22 +153,22 @@ find %buildroot -name .svnignore -print0 | xargs -r0 rm
 find %buildroot -name \*.commoncode -print0 | xargs -r0 rm
 
 # fix permissions
-chmod +x %buildroot%_datadir/mediawiki/bin/*
-find %buildroot%_datadir/mediawiki -name \*.pl -print0 | xargs -r0 chmod +x
+chmod +x %buildroot%_mediawikidir/bin/*
+find %buildroot%_mediawikidir -name \*.pl -print0 | xargs -r0 chmod +x
 
 
 mkdir -p %buildroot%webappdir
-cd %buildroot%_datadir/mediawiki
+cd %buildroot%_mediawikidir
 mv cache images %buildroot%webappdir/
 ln -sf %webappdir/{cache,images} .
-mkdir config/LocalSettings.d
+mkdir config/LocalSettings.d/
 install -m 644 %SOURCE7 config/LocalSettings.d/
 ln -sf %webappdir/config/LocalSettings.php config/
 
 cd %buildroot%webappdir/
 mkdir -p config/LocalSettings.d
 install -m 600 %SOURCE6 config/
-ln -s %_datadir/mediawiki wiki
+ln -s %_mediawikidir wiki
 
 # Configs for apache2
 mkdir -p %buildroot%apache2_confdir
@@ -155,16 +179,26 @@ popd
 
 
 # config for -tex package
-cat > %buildroot%_datadir/%name/config/LocalSettings.d/10-%name-tex.php << EOF
+cat > %buildroot%_mediawiki_settings_dir/10-%name-tex.php << EOF
 <?php
 \$wgUseTeX = true;
 \$wgTexvc  = "%_bindir/texvc";
 ?>
 EOF
 
+# config for enable bundled ParserFunctions
+cat > %buildroot%_mediawiki_settings_dir/50-ParserFunctions.php << EOF
+<?php
+
+require_once("\$IP/extensions/ParserFunctions/ParserFunctions.php");
+
+?>
+EOF
+
+
 %pre -n %name-common
-if [ -L %_datadir/mediawiki/config ]; then 
-	rm -f %_datadir/mediawiki/config
+if [ -L %_mediawikidir/config ]; then 
+	rm -f %_mediawikidir/config
 fi
 if [ -d %_datadir/%name/images -a ! -L %_datadir/%name/images ]; then
 	rmdir %_datadir/%name/images 2>/dev/null || {
@@ -189,18 +223,19 @@ exit 0
 
 %files -n %name-common
 %add_findreq_skiplist %_datadir/%name/config/LocalSettings.php
-%_datadir/mediawiki	
-%exclude %_datadir/%name/config/LocalSettings.d/10-%name-tex.php
-%attr(2750,root,%webserver_group) %dir %webappdir
-%attr(2770,root,%webserver_group) %dir %webappdir/config
-%attr(2770,root,%webserver_group) %dir %webappdir/config/LocalSettings.d
-%attr(2770,root,%webserver_group) %dir %webappdir/images
-%attr(2770,root,%webserver_group) %dir %webappdir/cache
-%webappdir/wiki
+%_mediawikidir/
+%exclude %_mediawiki_settings_dir/10-%name-tex.php
+%exclude %_datadir/%name/maintenance/hiphop/
+%attr(2750,root,%webserver_group) %dir %webappdir/
+%attr(2770,root,%webserver_group) %dir %webappdir/config/
+%attr(2770,root,%webserver_group) %dir %webappdir/config/LocalSettings.d/
+%attr(2775,root,%webserver_group) %dir %webappdir/images/
+%attr(2770,root,%webserver_group) %dir %webappdir/cache/
+%webappdir/wiki/
 %webappdir/images/*
-%webappdir/config/*
+%webappdir/config/AdminSettings.sample
 
-%doc COPYING CREDITS docs FAQ HISTORY INSTALL README RELEASE-NOTES UPGRADE StartProfiler.sample
+%doc COPYING CREDITS docs FAQ HISTORY README RELEASE-NOTES-%major UPGRADE StartProfiler.sample
 %doc README.ALT-ru_RU.UTF-8 README.UPGRADE.ALT-ru_RU.UTF-8 install_php_config.sh mediawiki.ini
 
 
@@ -215,11 +250,25 @@ exit 0
 %files -n %name-postgresql
 
 %files -n %name-tex
-%_datadir/%name/config/LocalSettings.d/10-%name-tex.php
+%_mediawiki_settings_dir/10-%name-tex.php
 
+# have no hiphop in the repo
+#%files -n %name-hiphop
+#%_datadir/%name/maintenance/hiphop/
 
 
 %changelog
+* Sat Apr 27 2013 Vitaly Lipatov <lav@altlinux.ru> 1.20.4-alt2
+- update README.UPGRADE.ALT
+- use macros from rpm-build-mediawiki
+- enable ParserFunctions
+
+* Mon Apr 22 2013 Vitaly Lipatov <lav@altlinux.ru> 1.20.4-alt1
+- 1.20.4 release
+
+* Tue Feb 26 2013 Vitaly Lipatov <lav@altlinux.ru> 1.20.2-alt1
+- 1.20.2 release
+
 * Sat Oct 22 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 1.16.0-alt1.1
 - Rebuild with Python-2.7
 

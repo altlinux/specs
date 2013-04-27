@@ -1,12 +1,9 @@
 %define oname UserMerge
-%define major 1.16
-%define dversion MW%major
-#define dversion trunk
-%define revision r66255
 
 Name: mediawiki-extensions-%oname
-Version: %major.%revision
+Version: 1.7.0
 Release: alt1
+Serial: 1
 
 BuildArch: noarch
 
@@ -20,10 +17,8 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 License: GPL
 
 BuildPreReq: rpm-build-mediawiki >= 0.2
-Requires: mediawiki-common
+Requires: mediawiki-common >= 1.20
 
-# It is new feature etersoft-build-utils since 1.7.6: supports commented real url
-# Source-url: http://upload.wikimedia.org/ext-dist/%oname-%dversion-%revision.tar.gz
 Source: %oname-%version.tar
 
 %description
@@ -43,5 +38,8 @@ user_id 0 and ask you to confirm merge to Anonymous.
 %files -f %oname.files
 
 %changelog
+* Sat Apr 27 2013 Vitaly Lipatov <lav@altlinux.ru> 1:1.7.0-alt1
+- update to 1.7.0 against MW 1.20
+
 * Sun Aug 15 2010 Vitaly Lipatov <lav@altlinux.ru> 1.16.r66255-alt1
 - initial build for ALT Linux Sisyphus

@@ -2,8 +2,8 @@
 %define filename accesscontrol
 
 Name: mediawiki-extensions-%oname
-Version: 1.2
-Release: alt2
+Version: 2.1
+Release: alt1
 
 BuildArch: noarch
 
@@ -16,8 +16,7 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 License: GPL
 
 BuildPreReq: rpm-build-mediawiki >= 0.2
-# from site: 1.11.0 to 1.16, but not 1.16.2, not 1.17, not 1.18 alpha, not 1.19 alpha
-Requires: mediawiki-common = 1.16.0
+Requires: mediawiki-common >= 1.20
 
 Requires: mediawiki-extensions-SpecialNamespaces
 
@@ -33,8 +32,8 @@ See also description in russian: http://kb.etersoft.ru/%D0%A1%D0%BF%D1%80%D0%B0%
 
 %prep
 %setup -n %filename-%version
-%patch -p2
-%patch1 -p2
+#patch -p2
+#patch1 -p2
 
 %install
 %mediawiki_ext_install 50 %oname
@@ -42,6 +41,9 @@ See also description in russian: http://kb.etersoft.ru/%D0%A1%D0%BF%D1%80%D0%B0%
 %files -f %oname.files
 
 %changelog
+* Sat Apr 27 2013 Vitaly Lipatov <lav@altlinux.ru> 2.1-alt1
+- new version 2.1 for 1.20 and above
+
 * Thu Sep 29 2011 Vitaly Lipatov <lav@altlinux.ru> 1.2-alt2
 - add russian translation
 - add fixes

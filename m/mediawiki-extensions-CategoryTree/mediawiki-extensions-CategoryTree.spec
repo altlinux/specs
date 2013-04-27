@@ -1,9 +1,7 @@
 %define oname CategoryTree
-%define dversion MW1.16
-%define revision r62678
 
 Name: mediawiki-extensions-%oname
-Version: 0.0.1
+Version: 1.20
 Release: alt1
 
 BuildArch: noarch
@@ -17,10 +15,8 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 License: GPL
 
 BuildPreReq: rpm-build-mediawiki >= 0.2
-Requires: mediawiki-common >= 1.16
+Requires: mediawiki-common >= 1.20
 
-# It is new feature etersoft-build-utils since 1.7.6: supports commented real url
-# Source-url: http://upload.wikimedia.org/ext-dist/%oname-%dversion-%revision.tar.gz
 Source: %oname-%version.tar
 
 
@@ -39,5 +35,8 @@ subst "3i\$wgUseAjax = true;" %buildroot%_mediawiki_settings_dir/50-%oname.php
 %files -f %oname.files
 
 %changelog
+* Sat Apr 27 2013 Vitaly Lipatov <lav@altlinux.ru> 1.20-alt1
+- update to 1.20 version
+
 * Wed Jun 08 2011 Vitaly Lipatov <lav@altlinux.ru> 0.0.1-alt1
 - initial build for ALT Linux Sisyphus
