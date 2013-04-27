@@ -1,6 +1,6 @@
 Name: ghc7.6.1
 Version: 7.6.1
-Release: alt3
+Release: alt4
 
 Summary: Glasgow Haskell Compilation system
 License: BSD style w/o adv. clause
@@ -12,10 +12,11 @@ Source: %name-%version.tar
 Patch: ghc-%version-%release.patch
 
 Requires: %name-common
+Requires: libgmp-devel
 
 # Automatically added by buildreq on Fri Apr 26 2013
-# optimized out: ghc7.6.1-common gnu-config libgmp-devel libgpg-error libtinfo-devel pkg-config python-base time xml-common xml-utils zlib-devel
-BuildRequires: binutils-devel docbook-dtds docbook-style-xsl ghc7.6.1 libelf-devel libffi-devel libncurses-devel xsltproc
+# optimized out: ghc7.6.1-common gnu-config libgpg-error libtinfo-devel pkg-config python-base time xml-common xml-utils zlib-devel
+BuildRequires: binutils-devel docbook-dtds docbook-style-xsl ghc7.6.1 libelf-devel libffi-devel libgmp-devel libncurses-devel xsltproc
 
 # Can't build when installed
 #BuildRequires: dblatex
@@ -136,6 +137,9 @@ sed -i 's!/html/!/!' %buildroot%_libdir/ghc-%version/package.conf.d/*.conf
 %exclude %docdir/[AR]*
 
 %changelog
+* Sat Apr 27 2013 Dmitry V. Levin <ldv@altlinux.org> 7.6.1-alt4
+- Reintroduced libgmp-devel runtime requirement.
+
 * Fri Apr 26 2013 Dmitry V. Levin <ldv@altlinux.org> 7.6.1-alt3
 - Changed ghc defaults to use -fasm instead of -llvm.
 - Built ghc using gcc instead of llvm.
