@@ -1,6 +1,6 @@
 Name: smbldap-tools
-Version: 0.9.6
-Release: alt3
+Version: 0.9.10
+Release: alt1
 
 Summary: User & Group administration tools for Samba-OpenLDAP
 License: GPL
@@ -13,7 +13,7 @@ Patch1: smbldap-tools-0.9.2-alt-separate_users_and_groups_in_smbldap_migrate_uni
 
 Requires: perl >= 5.6, samba, perl-ldap, perl-Crypt-SmbHash, perl-Digest-SHA1, perl-Unicode-MapUTF8, perl-Encode-JP, perl(FindBin.pm), perl(Getopt/Std.pm), perl(MIME/Base64.pm), perl(Net/LDAP.pm), perl(Net/LDAP/LDIF.pm), perl(Unicode/MapUTF8.pm), perl(lib.pm), perl-base
 AutoReq: yes, noperl
-BuildRequires: samba perl-ldap perl-Crypt-SmbHash perl-Digest-SHA1 perl-Unicode-MapUTF8 perl-Encode-JP
+BuildRequires: samba perl-ldap perl-Crypt-SmbHash perl-Digest-SHA1 perl-Unicode-MapUTF8 perl-Encode-JP perl-podlators
 
 BuildArch: noarch
 
@@ -26,29 +26,60 @@ tools to manage users, groups and passwords.
 %prep
 %setup
 #patch1 -p1
-echo '# idmapinplace="0"' >> smbldap.conf
-subst "s,/opt/IDEALX/sbin,%_sbindir," *.conf configure.pl
-subst "s,/etc/opt/IDEALX,%_sysconfdir," *.conf configure.pl smbldap-populate smbldap_tools.pm
-rm -f smbldap-tools.spec
+
+#Fix podlator section
+cat << EOF >> smbldap-config.pl
+
+exit(0);
+
+########################################
+=head1 NAME
+
+smbldap-config - Smbldap-config
+
+=head1 DESCRIPTION
+
+The smbldap-config command configure 
+
+=cut
+
+#'
+EOF
+
+%autoreconf
+%configure
 
 %build
+%make_build
+
 %install
-%makeinstall
+%make install DESTDIR=%buildroot
 mv doc/migration_scripts/smbldap-migrate-unix-accounts %buildroot%_sbindir/smbldap-migrate-unix-accounts
 mv doc/migration_scripts/smbldap-migrate-unix-groups %buildroot%_sbindir/smbldap-migrate-unix-groups
 
-mkdir -p %buildroot%perl_vendor_privlib
-mv %buildroot%_sbindir/smbldap_tools.pm %buildroot%perl_vendor_privlib
+#install configs
+mkdir -p %buildroot%_sysconfdir/smbldap-tools
+install smbldap.conf %buildroot%_sysconfdir/smbldap-tools/smbldap.conf
+install smbldap_bind.conf %buildroot%_sysconfdir/smbldap-tools/smbldap_bind.conf
+
+#install man
+mkdir -p %buildroot%_man8dir
+cp *.8 %buildroot%_man8dir/
 
 %files
 %_sbindir/*
 %attr(0644,root,root) %perl_vendor_privlib/*
 %doc CONTRIBUTORS COPYING ChangeLog FILES INFRA README INSTALL TODO
-%doc doc/smb.conf doc/slapd.conf doc/*.pdf
+%doc doc/*.*
+%dir %_sysconfdir/smbldap-tools/
 %config(noreplace) %_sysconfdir/smbldap-tools/smbldap.conf
-%config(noreplace) %_sysconfdir/smbldap-tools/smbldap_bind.conf
+%attr(0600,root,root) %config(noreplace) %_sysconfdir/smbldap-tools/smbldap_bind.conf
+%_man8dir/*
 
 %changelog
+* Sat Apr 27 2013 Slava Dubrovskiy <dubrsl@altlinux.org> 0.9.10-alt1
+- 0.9.10
+
 * Wed Feb 16 2011 Michael Shigorin <mike@altlinux.org> 0.9.6-alt3
 - added russian docs (closes: #23395)
 
