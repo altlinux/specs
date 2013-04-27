@@ -3,7 +3,7 @@
 
 Name: hal
 Version: 0.5.15
-Release: alt1
+Release: alt2
 Summary: Hardware Abstraction Layer
 Group: System/Servers
 License: AFL/GPL
@@ -19,6 +19,7 @@ Patch1: hal-0.5.14-alt-ntfs-options.patch
 Patch2: hal-0.5.14-alt-v4l.patch
 Patch3: hal-0.5.14-alt-glib2.patch
 Patch4: hal-0.5.15-udev-direct.patch
+Patch5: hal-0.5.15-udevadmin-infoR.patch
 
 
 AutoReq: yes, noshell
@@ -59,6 +60,7 @@ Headers for HAL
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
+%patch5 -p1
 
 rm -f gtk-doc.make acinclude.m4
 
@@ -127,6 +129,9 @@ mkdir -p %buildroot%_sysconfdir/hal/fdi/{information,policy,preprobe}
 %_pkgconfigdir/*
 
 %changelog
+* Sat Apr 27 2013 Roman Savochenko <rom_as@altlinux.org> 0.5.15-alt2
+- Restore path for replace "udevadmin info -r" to fixed "/dev"
+
 * Sun Apr 07 2013 Roman Savochenko <rom_as@altlinux.org> 0.5.15-alt1
 - Working without UDEV events socket by direct libudev is implemented.
 - Enabled haldaemon service.
