@@ -4,9 +4,9 @@
 %define mcid muttator@mozdev.org
 %define vciddir 	%firefox_noarch_extensionsdir/%vcid
 %define mciddir 	%tbird_noarch_extensionsdir/%mcid
-%define ver 3.6
+%define ver 3.8
 %define mver 1.2
-%define ft_release alt2.hg20121005
+%define ft_release alt3.hg20130426
 %define workdir %firefox_name-%vname-%ver
 %define mworkdir %tbird_name-%mname-%mver
 
@@ -17,7 +17,7 @@ Summary: Browser add-on for Firefox, which makes it like the Vim text editor
 Group: Networking/WWW
 License: MPL 1.1/GPL 2.0/LGPL 2.1
 URL: http://%vname.org/
-# hg clone https://code.google.com/p/vimperator-labs/
+# hg clone https://vimperator-labs.googlecode.com/hg/vimperator-labs
 Source: %firefox_name-%vname-%version.tar.bz2
 Source1: asciidoc.tar.bz2
 Requires: %firefox_name >= 3.0
@@ -114,6 +114,9 @@ install -m644 %mname/contrib/vim/ftdetect/%mname.vim\
 %vim_ftdetect_dir/%mname.vim
 
 %changelog
+* Sun Apr 28 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.8-alt3.hg20130426
+- Version 3.8
+
 * Fri Dec 21 2012 Andrey Cherepanov <cas@altlinux.org> 3.6-alt2.hg20121005
 - Adapt for Firefox 17.0 and Thunderbird 17.0
 
