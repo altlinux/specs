@@ -1,5 +1,5 @@
 %define abiversion 52
-%define main_version 0.%abiversion.14
+%define main_version 0.%abiversion.15
 %define _name newt
 
 Name: %_name%abiversion
@@ -101,6 +101,9 @@ docbook2html -u tutorial.sgml
 
 %find_lang --with-gnome %_name
 
+%check
+%make test
+
 %files -n lib%name -f %_name.lang
 %_libdir/*.so.*
 
@@ -123,6 +126,9 @@ docbook2html -u tutorial.sgml
 %_libdir/*.*a
 
 %changelog
+* Sun Apr 28 2013 Slava Dubrovskiy <dubrsl@altlinux.org> 0.52.15-alt1
+- 0.52.15
+
 * Fri Dec 09 2011 Slava Dubrovskiy <dubrsl@altlinux.org> 0.52.14-alt1
 - 0.52.14
 
