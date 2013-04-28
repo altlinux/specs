@@ -8,8 +8,8 @@
 %def_enable introspection
 
 Name: gnumeric
-Version: %ver_major.1
-Release: alt2
+Version: %ver_major.2
+Release: alt1
 
 Summary: A full-featured spreadsheet for GNOME
 License: GPLv2+ GPLv3+
@@ -32,7 +32,7 @@ Provides: python%__python_version(Gnumeric)
 %define gsf_ver 1.14.25
 %define gda_ver 4.0
 %define desktop_file_utils_ver 0.10
-%define goffice_ver 0.10.1
+%define goffice_ver 0.10.2
 
 PreReq: scrollkeeper >= %scrollkeeper_ver
 Requires(post,postun): desktop-file-utils >= %desktop_file_utils_ver
@@ -128,12 +128,12 @@ gnome-doc-prepare --copy --force
 	%{subst_with perl} \
 	%{?_enable_introspection:--enable-introspection=yes}
 
-%make_build DATADIRNAME=share
+%make_build
 
 %install
-%make DESTDIR=%buildroot DATADIRNAME=share install
+%makeinstall_std
 
-%find_lang --with-gnome --output=%name.lang %name %name-functions
+%find_lang --with-gnome --output=%name.lang %name %name-%version %name-%version-functions
 
 %files
 %_bindir/*
@@ -174,6 +174,9 @@ gnome-doc-prepare --copy --force
 %_pkgconfigdir/*
 
 %changelog
+* Sat Apr 27 2013 Yuri N. Sedunov <aris@altlinux.org> 1.12.2-alt1
+- 1.12.2
+
 * Sun Mar 10 2013 Yuri N. Sedunov <aris@altlinux.org> 1.12.1-alt2
 - set DATADIRNAME correctly (ALT #28652)
 

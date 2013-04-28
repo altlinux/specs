@@ -12,10 +12,9 @@
 %def_disable gtk_doc
 %endif
 
-
 Name: glib2
 Version: %ver_major.1
-Release: alt1
+Release: alt2
 
 Summary: A library of handy utility functions
 License: %lgpl2plus
@@ -39,6 +38,11 @@ Source10: glib2.sh
 Source11: glib2.csh
 
 Patch: glib-2.35.9-alt-compat-version-script.patch
+# stop spam about deprecated paths in schemas
+Patch1: glib-2.36.1-alt-deprecated_paths-nowarning.patch
+# upstream patches that depend on ALT #28903
+Patch10: glib-2.36.1-up-f3b1054b0ebb4912f700e08da0c3d35c30113e79.patch
+Patch11: glib-2.36.1-up-518e3104bf6cdb5d8e6b43d3b721805db5951139.patch
 
 %def_with locales
 %if_with locales
@@ -193,6 +197,9 @@ This package contains documentation for GIO.
 %prep
 %setup -n glib-%version
 %patch
+%patch1
+%patch10 -p1
+%patch11 -p1
 
 %if_with sys_pcre
 rm glib/pcre/*.[ch]
@@ -206,9 +213,7 @@ install -p -m644 %_sourcedir/gio-compat.map gio/compat.map
 install -p -m644 %_sourcedir/gio-compat.lds gio/compat.lds
 
 # abicheck always ok
-for d in glib gio gobject; do
-echo : >> $d/abicheck.sh
-done
+subst '/exit 1/d' check-abis.sh
 
 %build
 %if_enabled snapshot
@@ -379,6 +384,11 @@ install -pD -m 755 filetrigger %buildroot%_rpmlibdir/gsettings.filetrigger
 
 
 %changelog
+* Sat Apr 27 2013 Yuri N. Sedunov <aris@altlinux.org> 2.36.1-alt2
+- suppressed warnings about deprecated paths in schemas
+- applied upstream patches related to BGO ##698716, 698081
+  and ALT #28903
+
 * Tue Apr 16 2013 Yuri N. Sedunov <aris@altlinux.org> 2.36.1-alt1
 - 2.36.1
 

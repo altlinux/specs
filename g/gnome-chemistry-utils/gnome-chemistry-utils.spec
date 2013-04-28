@@ -10,8 +10,8 @@
 %endif
 
 Name: gnome-chemistry-utils
-Version: %ver_major.0
-Release: alt2
+Version: %ver_major.2
+Release: alt1
 
 Summary: A set of chemical utilities
 Group: Sciences/Chemistry
@@ -24,11 +24,11 @@ Patch1: %name-0.10.12-alt-mozplugindir.patch
 Requires: %name-data = %version-%release bodr chemical-mime-data
 
 BuildRequires: gcc-c++ doxygen docbook-dtds
-BuildRequires: gnome-doc-utils gnome-common intltool
+BuildRequires: gnome-doc-utils gnome-common intltool scrollkeeper man
 BuildRequires: libgio-devel libgnomeoffice%goffice_api_ver-devel
 %{?_enable_gnumeric:BuildRequires: libspreadsheet-devel}
 BuildRequires: libgsf-devel libopenbabel-devel libGLU-devel
-BuildRequires: bodr chemical-mime-data scrollkeeper
+BuildRequires: bodr chemical-mime-data
 %{?_enable_mozilla:BuildRequires: xulrunner-devel browser-plugins-npapi-devel}
 
 %description
@@ -132,6 +132,9 @@ spreadsheet program.
 %endif
 
 %changelog
+* Sat Apr 27 2013 Yuri N. Sedunov <aris@altlinux.org> 0.14.2-alt1
+- 0.14.2
+
 * Sat Mar 09 2013 Yuri N. Sedunov <aris@altlinux.org> 0.14.0-alt2
 - rebuilt for new gnumeric-1.12.1
 - arch independent data moved to separate subpackage
