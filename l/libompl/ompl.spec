@@ -1,0 +1,96 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-fedora-compat
+BuildRequires: gcc-c++ python-devel
+# END SourceDeps(oneline)
+%add_optflags %optflags_shared
+%define oldname ompl
+Name:           libompl
+Version:        0.11.1
+Release:        alt1_4
+Summary:        The Open Motion Planning Library
+
+Group:          System/Libraries
+License:        BSD
+URL:            http://ompl.kavrakilab.org/
+Source0:        https://bitbucket.org/%{oldname}/%{oldname}/downloads/%{oldname}-%{version}-Source.tar.gz
+# This patch adds LIB_SUFFIX to the library installation directory, so that
+# libraries get installed to /usr/lib64 on 64 bit systems.  It also
+# moves the installation directory of the odeint library
+# Not yet submitted upstream
+Patch0:         ompl-0.11.1-fedora.patch
+BuildRequires: boost-devel boost-filesystem-devel boost-wave-devel boost-graph-parallel-devel boost-math-devel boost-mpi-devel boost-program_options-devel boost-signals-devel boost-intrusive-devel boost-asio-devel
+BuildRequires: ctest cmake
+BuildRequires:  doxygen
+BuildRequires:  graphviz
+BuildRequires:  libode-devel
+BuildRequires:  ruby
+Source44: import.info
+Provides: ompl = %{version}-%{release}
+
+%description
+The Open Motion Planning Library (OMPL) consists of many state-of-the-art 
+sampling-based motion planning algorithms. OMPL itself does not contain 
+any code related to, e.g., collision checking or visualization. This is 
+a deliberate design choice, so that OMPL is not tied to a particular 
+collision checker or visualization front end.
+
+%package        devel
+Summary:        Development files for %{oldname}
+Group:          Development/C
+Requires:       %{name} = %{version}-%{release}
+Provides: ompl-devel = %{version}-%{release}
+
+%description    devel
+The %{oldname}-devel package contains libraries and header files for
+developing applications that use %{oldname}.
+
+
+%prep
+%setup -q -n %{oldname}-%{version}-Source
+%patch0 -p2 -b .fedora
+
+%build
+# Python bindings are disabled because dependencies pygccxml and pyplusplus are not packaged for Fedora
+mkdir build
+cd build
+%{fedora_cmake} -DCMAKE_SKIP_RPATH=ON \
+  -DOMPL_BUILD_PYBINDINGS=OFF \
+  -DOMPL_LIB_INSTALL_DIR=%{_lib} \
+  -DBOOST_LIBRARYDIR=%{_libdir} \
+  -DODE_LIB_PATH=%{_libdir} \
+  -DBUILD_OMPL_TESTS=ON  \
+  -DOMPL_ODESOLVER=ON ..
+
+make %{?_smp_mflags}
+make doc
+rm -f doc/html/installdox
+
+%install
+make -C build install DESTDIR=%{buildroot}
+mkdir -p %{buildroot}%{_datadir}/cmake/Modules
+cp %{buildroot}%{_datadir}/ompl/ompl-config.cmake %{buildroot}%{_datadir}/cmake/Modules/FindOMPL.cmake
+
+rm -f %{buildroot}%{_datadir}/%{oldname}/demos/*.py
+rm -rf %{buildroot}%{_includedir}/%{oldname}/CMakeFiles
+rm -rf %{buildroot}%{_bindir}
+
+#%check
+#export LD_LIBRARY_PATH=$(pwd)/build/lib
+#make -C build test
+
+%files
+%doc LICENSE README.md
+%{_libdir}/libompl.so.*
+
+%files devel
+%doc doc/html
+%{_libdir}/libompl.so
+%{_includedir}/%{oldname}
+%{_datadir}/%{oldname}
+%{_libdir}/pkgconfig/*.pc
+%{_datadir}/cmake/Modules/FindOMPL.cmake
+
+%changelog
+* Sun Apr 28 2013 Igor Vlasenko <viy@altlinux.ru> 0.11.1-alt1_4
+- initial fc import
+
