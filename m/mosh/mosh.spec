@@ -1,5 +1,5 @@
 Name: mosh
-Version: 1.2.3
+Version: 1.2.4
 Release: alt1
 Summary: Mobile shell that supports roaming and intelligent local echo
 
@@ -40,6 +40,9 @@ Mosh is a remote terminal application that supports:
 %_mandir/man1/mosh-server.1.gz
 
 %changelog
+* Sun Apr 28 2013 Slava Dubrovskiy <dubrsl@altlinux.org> 1.2.4-alt1
+- version 1.2.4
+
 * Mon Feb 18 2013 Slava Dubrovskiy <dubrsl@altlinux.org> 1.2.3-alt1
 - version 1.2.3
 
