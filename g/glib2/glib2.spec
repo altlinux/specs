@@ -14,7 +14,7 @@
 
 Name: glib2
 Version: %ver_major.1
-Release: alt2
+Release: alt3
 
 Summary: A library of handy utility functions
 License: %lgpl2plus
@@ -199,7 +199,7 @@ This package contains documentation for GIO.
 %patch
 %patch1
 %patch10 -p1
-%patch11 -p1
+#%%patch11 -p1
 
 %if_with sys_pcre
 rm glib/pcre/*.[ch]
@@ -384,6 +384,9 @@ install -pD -m 755 filetrigger %buildroot%_rpmlibdir/gsettings.filetrigger
 
 
 %changelog
+* Mon Apr 29 2013 Yuri N. Sedunov <aris@altlinux.org> 2.36.1-alt3
+- disabled patch11
+
 * Sat Apr 27 2013 Yuri N. Sedunov <aris@altlinux.org> 2.36.1-alt2
 - suppressed warnings about deprecated paths in schemas
 - applied upstream patches related to BGO ##698716, 698081
