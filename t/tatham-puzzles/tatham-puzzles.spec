@@ -1,5 +1,5 @@
 Name: tatham-puzzles
-Version: 9794
+Version: 9835
 Release: alt1
 License: MIT
 Group: Games/Puzzles
@@ -34,11 +34,13 @@ Stand-alone solvers for some of the %name puzzles.
 
 %description -l ru_RU.UTF-8 -n %name-solvers
 Набор "решалок" к некоторым головоломкам из %name.
+
 %prep
-%setup -n puzzles-r%version
+%setup -n puzzles-r%version -a2
+
 ./mkfiles.pl
 sed -f %SOURCE1 < Makefile > Makefile.linux
-tar xf %SOURCE2
+
 sed '/^IN=/s@.*@IN="%_defaultdocdir/%name-%version/index.html"@
 /^GBD=/s@.*@GBD="%_gamesbindir"@' < %SOURCE3 > %name
 
@@ -103,6 +105,13 @@ install *.info* %buildroot%_infodir/
 %_infodir/*%{name}*
 
 %changelog
+* Mon Apr 29 2013 Fr. Br. George <george@altlinux.ru> 9835-alt1
+- Autobuild version bump to 9835
+- Drop ImageMagick pipe hack
+
+* Tue Apr 23 2013 Fr. Br. George <george@altlinux.ru> 9794-alt2
+- Avoid ImageMagick pipe i/o bug
+
 * Sun Mar 31 2013 Fr. Br. George <george@altlinux.ru> 9794-alt1
 - Autobuild version bump to 9794
 
