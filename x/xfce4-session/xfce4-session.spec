@@ -1,6 +1,6 @@
 Name: xfce4-session
 Version: 4.10.0
-Release: alt3.git20130426
+Release: alt4.git20130426
 
 Summary: Session manager for XFce desktop environment
 Summary (ru): Менеджер сессий для окружения рабочего стола Xfce
@@ -117,6 +117,9 @@ install -Dm0644 %SOURCE1 %buildroot%_x11sysconfdir/wmsession.d/10Xfce4
 %_libdir/xfce4/session/balou*
 
 %changelog
+* Mon Apr 29 2013 Mikhail Efremov <sem@altlinux.org> 4.10.0-alt4.git20130426
+- xinitrc: Migrate old Xkb settings to the new scheme.
+
 * Sun Apr 28 2013 Mikhail Efremov <sem@altlinux.org> 4.10.0-alt3.git20130426
 - Upstream git snapshot (closes: #28903).
 

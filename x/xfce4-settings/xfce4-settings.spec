@@ -1,6 +1,6 @@
 Name: xfce4-settings
-Version: 4.10.0
-Release: alt1
+Version: 4.11.0
+Release: alt1.git20130423
 Summary: Settings Manager for Xfce
 Summary (ru_RU.UTF-8): Менеджер настроек Xfce
 
@@ -17,7 +17,7 @@ Patch: %name-%version-%release.patch
 BuildRequires(pre): rpm-build-licenses
 
 BuildPreReq: rpm-build-xfce4 xfce4-dev-tools > 4.5 libxfce4ui-devel libexo-devel >= 0.6.0 libxfconf-devel libgarcon-devel >= 0.1.10
-BuildRequires: intltool libICE-devel libXcursor-devel libXi-devel libXrandr-devel libglade-devel libnotify-devel libwnck-devel libxklavier-devel
+BuildRequires: intltool libICE-devel libXcursor-devel libXi-devel libXrandr-devel libglade-devel libnotify-devel libwnck-devel libxklavier-devel libupower-devel
 
 Requires: libgarcon-settings-manager-menu
 
@@ -36,6 +36,8 @@ for the Xfce desktop.
 %patch -p1
 
 %build
+# Don't use git tag in version.
+%xfce4_drop_gitvtag xfce4_settings_version_tag configure.ac.in
 %xfce4reconf
 %configure  \
 	--enable-debug=no \
@@ -60,8 +62,13 @@ install -pDm0755 %SOURCE1 %buildroot%_bindir/xfce4-fixkeyboard
 %config(noreplace) %_sysconfdir/xdg/xfce4/xfconf/xfce-perchannel-xml/xsettings.xml
 %_sysconfdir/xdg/menus/xfce-settings-manager.menu
 %_desktopdir/*.desktop
+%_iconsdir/*/*/*/*.png
 
 %changelog
+* Mon Apr 29 2013 Mikhail Efremov <sem@altlinux.org> 4.11.0-alt1.git20130423
+- xfce4-fixkeyboard: Update for new xfce4-settings.
+- Upsatream git snapshot.
+
 * Sun Apr 29 2012 Mikhail Efremov <sem@altlinux.org> 4.10.0-alt1
 - Updated to 4.10.0.
 
