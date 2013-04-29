@@ -1,6 +1,6 @@
 Name: alterator-l10n
 Version: 2.9
-Release: alt58
+Release: alt59
 
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
@@ -110,6 +110,9 @@ make check
 %lang(kk) %_datadir/locale/kk/LC_MESSAGES/*.mo
 
 %changelog
+* Mon Apr 29 2013 Andrey Cherepanov <cas@altlinux.org> 2.9-alt59
+- Update Russian translation of alterator-pkg
+
 * Wed Apr 03 2013 Andrey Cherepanov <cas@altlinux.org> 2.9-alt58
 - Update Russian translation of timezone-2003b
 
