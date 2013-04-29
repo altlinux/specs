@@ -1,5 +1,5 @@
 Name: bedup
-Version: 0.0.8
+Version: 0.9.0
 Release: alt1
 
 Summary: Deduplication for Btrfs
@@ -14,6 +14,8 @@ Group: File tools
 Source: %name-%version.tar
 
 BuildRequires: python-dev python-module-cffi python-module-pycparser python-module-distribute
+
+Requires: python-module-pycparser python-module-markupsafe python-module-pysqlite2
 
 %description
 bedup looks for new and changed files, making sure that multiple copies
@@ -35,5 +37,9 @@ so that scans are incremental and low-impact.
 %python_sitelibdir/%name-%version-*.egg-info
 
 %changelog
+* Mon Apr 29 2013 Vitaly Lipatov <lav@altlinux.ru> 0.9.0-alt1
+- new version
+- fix requires
+
 * Mon Apr 08 2013 Vitaly Lipatov <lav@altlinux.ru> 0.0.8-alt1
 - initial build for ALT Linux Sisyphus
