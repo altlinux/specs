@@ -4,8 +4,8 @@
 %define _root_sbindir /sbin
 
 Name: cryptsetup
-Version: 1.4.2
-Release: alt2
+Version: 1.6.1
+Release: alt1
 
 Summary: utility to setup a encrypted disks with LUKS support
 Summary(ru_RU.UTF-8): утилита управления зашифрованными дисковыми разделами с поддержкой LUKS
@@ -23,8 +23,10 @@ Requires: lib%name = %version-%release
 
 BuildRequires(pre): rpm-build-licenses
 # Automatically added by buildreq on Sun Nov 15 2009
-BuildRequires: libdevmapper-devel libgcrypt-devel libpopt-devel libuuid-devel
+BuildRequires: libdevmapper-devel libpopt-devel libuuid-devel
 BuildRequires: libudev-devel libselinux-devel
+BuildRequires: libgcrypt-devel
+BuildRequires: python-devel
 
 # Rename package from cryptsetup-luks-1.0.6-alt0.pre2 to cryptsetup-1.0.6-alt1
 Provides:  cryptsetup-luks = %version
@@ -108,6 +110,33 @@ LUKS ( Linux Unified Key Setup ) - разрабатываемый стандар
 необходим Вам  только  если Вы планируете  разрабатывать или
 компилировать какие-либо приложения с поддержкой LUKS.
 
+%package veritysetup
+Group: System/Kernel and hardware
+Summary: A utility for setting up dm-verity volumes
+Requires: lib%name = %version-%release
+
+%description veritysetup
+The veritysetup package contains a utility for setting up
+disk verification using dm-verity kernel module.
+
+%package reencrypt
+Group: System/Kernel and hardware
+Summary: A utility for offline reencryption of LUKS encrypted disks.
+Requires: lib%name = %version-%release
+
+%description reencrypt
+This package contains cryptsetup-reencrypt utility which
+can be used for offline reencryption of disk in situ.
+
+%package -n python-module-%name
+Group: Development/Python
+Summary: Python bindings for libcryptsetup
+Requires: lib%name = %version-%release
+
+%description -n python-module-%name
+This package provides Python bindings for libcryptsetup, a library
+for setting up disk encryption using dm-crypt kernel module.
+
 %prep
 %setup -n %name-%version -a2
 %patch0 -p1
@@ -120,7 +149,7 @@ ln -s -- $(relative %_licensedir/GPL-2 %_docdir/%name/COPYING) COPYING
 
 %build
 NOCONFIGURE=1 ./autogen.sh
-%configure --sbindir=%_root_sbindir --libdir=/%_lib
+%configure --sbindir=%_root_sbindir --libdir=/%_lib --enable-cryptsetup-reencrypt --enable-python
 %make
 
 gcc debian/askpass.c -o debian/askpass
@@ -149,7 +178,6 @@ install -Dpm 755 debian/askpass %buildroot/lib/%name/askpass
 
 %find_lang %name
 
-
 %files -f %name.lang
 %doc docs/*
 %doc AUTHORS FAQ README
@@ -157,7 +185,7 @@ install -Dpm 755 debian/askpass %buildroot/lib/%name/askpass
 %doc README.ALT.utf-8
 %_root_sbindir/%name
 %_sbindir/%name
-%_man8dir/*
+%_man8dir/%name.*
 %attr(600,root,root) %config(noreplace) %_sysconfdir/sysconfig/cryptdisks
 %_sysconfdir/rc.d/scripts/cryptdisks-early
 %_sysconfdir/rc.d/scripts/cryptdisks
@@ -175,7 +203,23 @@ install -Dpm 755 debian/askpass %buildroot/lib/%name/askpass
 %_libdir/lib%name.so
 %_pkgconfigdir/*
 
+%files veritysetup
+%_man8dir/veritysetup.*
+%_root_sbindir/veritysetup
+
+%files reencrypt
+%_man8dir/cryptsetup-reencrypt.*
+%_root_sbindir/cryptsetup-reencrypt
+
+%files -n python-module-%name
+%python_sitelibdir/*.so
+%exclude %python_sitelibdir/*.la
+
 %changelog
+* Mon Apr 29 2013 Alexey Shabalin <shaba@altlinux.ru> 1.6.1-alt1
+- 1.6.1
+- add packages python-module-cryptsetup, veritysetup, reencrypt
+
 * Fri Nov 09 2012 Timur Aitov <timonbl4@altlinux.org> 1.4.2-alt2
 - add init scripts
 
