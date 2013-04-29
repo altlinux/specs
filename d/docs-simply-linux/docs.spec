@@ -7,8 +7,8 @@
 %define variants docs-office-server docs-backup-server docs-desktop docs-school-master docs-school-junior docs-school-lite docs-school-server docs-kdesktop docs-school-terminal docs-school-newlite docs-centaurus docs-simply-linux docs-lxdesktop docs-lxdesktop-lite
 
 Name: docs-%variant
-Version: 6.0.1
-Release: alt3
+Version: 7.0
+Release: alt1
 
 Summary: %Variant documentation
 License: %fdl
@@ -42,6 +42,9 @@ ln -s $(relative %_docsinstalldir %_documentationdir) %buildroot%_documentationd
 %_documentationdir
 
 %changelog
+* Mon Apr 29 2013 Artem Zolochevskiy <azol@altlinux.ru> 7.0-alt1
+- initial 7.0 version
+
 * Fri Mar 09 2012 Artem Zolochevskiy <azol@altlinux.ru> 6.0.1-alt3
 - fix some typos
 
