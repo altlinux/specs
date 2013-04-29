@@ -1,6 +1,6 @@
 Name: xfce4-xkb-plugin
 Version: 0.5.4.3
-Release: alt3
+Release: alt4.git20130403
 
 Summary: XKB layout switch plugin for the XFce panel
 Summary(ru_RU.UTF-8): Дополнение для панели Xfce для работы с раскладками клавиатуры
@@ -15,10 +15,8 @@ Patch: %name-%version-%release.patch
 BuildRequires(pre): rpm-build-licenses
 
 BuildPreReq: rpm-build-xfce4 xfce4-dev-tools
-BuildPreReq: libxfce4panel-devel libxfce4ui-devel
+BuildPreReq: libxfce4panel-devel libxfce4ui-devel libgarcon-devel
 BuildRequires: libSM-devel librsvg-devel libwnck-devel libxklavier-devel perl-XML-Parser xorg-cf-files intltool
-# For changes in 2f7b8cf19159af2bf487c9c4074cd4c7f6dea2ba
-BuildRequires: libxfconf-devel
 
 Requires: xfce4-panel
 
@@ -31,7 +29,6 @@ XFce panel.
 работать с раскладками клавиатуры.
 Возможности:
 * выбор вариантов отображения текущей раскладки (флаг/буквенный вариант)
-* выбор комбинации клавишь для переключения раскладки
 * гибкая настройка управления раскладкой (глобально, для каждого
   приложения или для каждого окна).
 
@@ -41,6 +38,8 @@ XFce panel.
 %patch -p1
 
 %build
+# Don't use git tag in version.
+%xfce4_drop_gitvtag xkb_version_tag configure.in.in
 %xfce4reconf
 %configure \
     --enable-debug=no
@@ -51,7 +50,7 @@ XFce panel.
 %find_lang %name
 
 %files -f %name.lang
-%doc README ChangeLog AUTHORS
+%doc README AUTHORS
 %_libexecdir/xfce4/panel-plugins/*
 %dir %_datadir/xfce4/xkb
 %dir %_datadir/xfce4/xkb/flags
@@ -59,6 +58,10 @@ XFce panel.
 %_datadir/xfce4/panel/plugins/*.desktop
 
 %changelog
+* Mon Apr 29 2013 Mikhail Efremov <sem@altlinux.org> 0.5.4.3-alt4.git20130403
+- Drop obsoleted patches.
+- Upstream git snapshot.
+
 * Thu Jun 14 2012 Mikhail Efremov <sem@altlinux.org> 0.5.4.3-alt3
 - Fix group name validation.
 - Fix reading xkb settings from xfconf.
