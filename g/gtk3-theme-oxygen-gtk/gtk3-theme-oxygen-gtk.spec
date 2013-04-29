@@ -2,7 +2,7 @@
 %define gtk3_prefix gtk3-theme
 
 Name: %gtk3_prefix-%real_name
-Version: 1.1.2
+Version: 1.1.3
 Release: alt1
 Serial: 1
 
@@ -22,7 +22,7 @@ Source0: %{real_name}-%{version}.tar
 BuildRequires: cmake gcc-c++ libdbus-glib-devel libgtk+3-devel
 BuildRequires: kde-common-devel
 BuildRequires: libXScrnSaver-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXinerama-devel
-BuildRequires: libXpm-devel libXrandr-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel
+BuildRequires: libXpm-devel libXrandr-devel libXt-devel libXtst-devel libXv-devel libXxf86vm-devel
 BuildRequires: libxkbfile-devel libpixman-devel
 
 %description
@@ -48,6 +48,9 @@ This is GTK3 port of default KDE4 Oxygen style.
 %_datadir/themes/%real_name
 
 %changelog
+* Mon Apr 29 2013 Sergey V Turchin <zerg@altlinux.org> 1:1.1.3-alt1
+- new version
+
 * Thu Jan 31 2013 Sergey V Turchin <zerg@altlinux.org> 1:1.1.2-alt1
 - new version
 
