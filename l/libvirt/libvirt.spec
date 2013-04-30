@@ -96,7 +96,7 @@
 
 Name: libvirt
 Version: 1.0.4
-Release: alt1
+Release: alt2
 Summary: Library providing a simple API virtualization
 License: LGPLv2+
 Group: System/Libraries
@@ -858,6 +858,9 @@ fi
 %doc examples/python
 
 %changelog
+* Tue Apr 30 2013 Alexey Shabalin <shaba@altlinux.ru> 1.0.4-alt2
+- add workaround for paranoid permitions of dnsmasq
+
 * Thu Apr 11 2013 Alexey Shabalin <shaba@altlinux.ru> 1.0.4-alt1
 - 1.0.4
 - add patches from v1.0.4-maint
