@@ -6,7 +6,7 @@ BuildRequires: gcc-c++
 %add_optflags %optflags_shared
 Name:           libifp
 Version:        1.0.0.2
-Release:        alt2_13.qa1
+Release:        alt2_14
 Summary:        A general-purpose library-driver for iRiver's iFP portable audio players
 
 Group:          System/Base
@@ -15,8 +15,15 @@ URL:            http://ifp-driver.sourceforge.net/
 Source0:        http://dl.sourceforge.net/ifp-driver/%{name}-%{version}.tar.gz
 Source1:        libifp.hotplug
 Source2:        10-libifp.rules
+# autoconf-2.69 breaks configure.in (likely configure.in is the broken part)
+# Upstream is dead, so fix it here:
+Patch0:         libifp-1.0.0.2-fix-broken-configure.in.diff
 
-BuildRequires: libusb-compat-devel libusb-devel doxygen
+BuildRequires:  autoconf
+BuildRequires:  automake
+BuildRequires:  doxygen
+BuildRequires:  libtool
+BuildRequires: libusb-compat-devel libusb-devel
 Source44: import.info
 
 %description
@@ -36,8 +43,10 @@ libifp.
 
 %prep
 %setup -q
+%patch0 -p0
 
 %build
+autoreconf -fiv
 %configure --with-libusb --disable-static
 make %{?_smp_mflags}
 
@@ -45,7 +54,7 @@ make %{?_smp_mflags}
 make install DESTDIR=$RPM_BUILD_ROOT
 find $RPM_BUILD_ROOT -name \*.la -exec rm {} \;
 install -D -m 0755 %{SOURCE1} $RPM_BUILD_ROOT/sbin/libifp-hotplug
-install -D -m 0644 %{SOURCE2} $RPM_BUILD_ROOT%_udevrulesdir/10-libifp.rules
+install -D -m 0644 %{SOURCE2} $RPM_BUILD_ROOT%{_sysconfdir}/udev/rules.d/10-libifp.rules
 # kill rpath
 for i in `find %buildroot{%_bindir,%_libdir,/usr/libexec,/usr/lib,/usr/sbin} -type f -perm -111`; do
 	chrpath -d $i ||:
@@ -56,7 +65,7 @@ done
 %{_bindir}/*
 %{_libdir}/*.so.*
 /sbin/*
-%_udevrulesdir/*.rules
+%{_sysconfdir}/udev/rules.d/*.rules
 
 %files devel
 %{_includedir}/*.h
@@ -64,6 +73,9 @@ done
 %{_mandir}/man3/*
 
 %changelog
+* Tue Apr 30 2013 Igor Vlasenko <viy@altlinux.ru> 1.0.0.2-alt2_14
+- update to new release by fcimport
+
 * Mon Apr 22 2013 Repocop Q. A. Robot <repocop@altlinux.org> 1.0.0.2-alt2_13.qa1
 - NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
 - applied repocop fixes:
