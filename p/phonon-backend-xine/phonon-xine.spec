@@ -1,7 +1,10 @@
+%ifndef EVR
+%define EVR %{?epoch:%epoch:}%{version}-%{release}
+%endif
 
 Name: phonon-backend-xine
 Version: 4.4.4
-Release: alt4
+Release: alt5
 
 Group: System/Libraries
 Summary: Xine phonon backend
@@ -41,12 +44,18 @@ Xine phonon backend
 %K4install
 
 
-%files
+%files -n phonon-backend-0-xine
 %_qt4dir/plugins/phonon_backend/phonon_xine.so
 %_K4srv/phononbackends/xine.desktop
 %_iconsdir/hicolor/*/apps/phonon-xine.*
 
 %changelog
+* Tue Apr 30 2013 Sergey V Turchin <zerg@altlinux.org> 4.4.4-alt5
+- fix package name
+
+* Mon Mar 04 2013 Sergey V Turchin <zerg@altlinux.org> 4.4.4-alt3.M60P.1
+- build for M60P
+
 * Fri Mar 01 2013 Sergey V Turchin <zerg@altlinux.org> 4.4.4-alt4
 - update code from master branch
 - rename package for uprages
