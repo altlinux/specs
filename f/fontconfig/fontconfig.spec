@@ -1,6 +1,6 @@
 Name: fontconfig
 Version: 2.10.91
-Release: alt6
+Release: alt7
 
 Summary: Font configuration and customization library and utilities
 Group: System/Configuration/Other
@@ -33,9 +33,6 @@ documentation required for development of fontconfig-based software.
 %prep
 %setup -q
 %patch -p1
-for f in conf.d/??-sub-pixel-*.conf ; do
-    sed -i 's|mode="append"|mode="assign"|' $f
-done
 
 %build
 %autoreconf
@@ -111,6 +108,10 @@ find -L %_sysconfdir/fonts/conf.d -type l -delete
 %docdir/%name-devel*
 
 %changelog
+* Tue Apr 30 2013 Sergey V Turchin <zerg@altlinux.org> 2.10.91-alt7
+- non't use assign instead of append for sub-pixel rendering
+  because configs was fixed
+
 * Thu Mar 28 2013 Sergey V Turchin <zerg@altlinux.org> 2.10.91-alt6
 - add upstream fix against broken sort order with FcFontSort()
 
