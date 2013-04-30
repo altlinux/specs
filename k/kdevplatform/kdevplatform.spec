@@ -5,13 +5,13 @@
 %define _unpackaged_files_terminate_build 1
 
 %if %unstable
-%define pkg_sfx -pre4.4
+%define pkg_sfx -pre4.5
 %define pkg_sfx_other %nil
 %define if_unstable() %{expand:%*}
 %define if_stable() %nil
 %else
 %define pkg_sfx %nil
-%define pkg_sfx_other -pre4.4
+%define pkg_sfx_other -pre4.5
 %define if_unstable()  %nil
 %define if_stable() %{expand:%*}
 %endif
@@ -22,8 +22,8 @@
 %define kdevelop_other kdevelop%{pkg_sfx_other}
 
 Name: %kdevplatform
-Version: 1.4.1
-Release: alt3.git
+Version: 1.5.0
+Release: alt1.git
 Serial: 1
 
 Group: Development/Tools
@@ -41,7 +41,7 @@ Patch2: kdevplatform-alt-translations.patch
 
 BuildRequires(pre): kde4libs-devel >= 4.6.0
 BuildRequires: attica-devel boost-devel cvs gcc-c++ glib2-devel glibc-devel
-BuildRequires: libsubversion-devel libssh2-devel qjson-devel
+BuildRequires: libsubversion-devel libssh2-devel qjson-devel grantlee-devel
 Conflicts: kde4libs < 4.6.0
 
 Conflicts: %{kdevplatform_other}
@@ -209,7 +209,7 @@ make apidox
 %install
 %K4install
 # remove all desktop_extragear-* translations, zerg@ told they aren't needed at all
-find %buildroot -name 'desktop_extragear*.mo' -exec rm {} \; 
+find %buildroot -name 'desktop_extragear*.mo' -exec rm {} \;
 %K4find_lang --output=%name.lang --with-kde          kdevappwizard
 
 for m in \
@@ -233,6 +233,8 @@ done
 %exclude %_K4lib/kdevsubversion.so
 %exclude %_K4lib/kdevgit.so
 %exclude %_K4lib/kdevcvs.so
+%_libdir/grantlee/*/*.so
+%_K4lib/imports/org/kde/kdevplatform
 %_K4apps/kdevcodeutils
 %_K4apps/kdevexternalscript
 %_K4apps/kdevprojectmanagerview
@@ -252,6 +254,9 @@ done
 %_K4apps/kdevgrepview
 %_K4apps/kdevsession
 %_K4apps/kdevsnippet
+%_K4apps/kdevfiletemplates
+%_K4apps/kdevtestview
+%_K4apps/plasma/plasmoids/org.kdevelop.branches
 %_K4srv/kdevquickopen.desktop
 %_K4srv/kcm_kdev_uisettings.desktop
 %_K4srv/kdevfilemanager.desktop
@@ -285,10 +290,17 @@ done
 %_K4srv/kdevexecutescript.desktop
 %_K4srv/kdevprojectdashboard.desktop
 %_K4srv/kdevvcschangesview.desktop
+%_K4srv/kdevelop-dashboard-branches.desktop
+%_K4srv/kdevfiletemplates.desktop
+%_K4srv/kdevtemplatemanager_config.desktop
+%_K4srv/kdevtestview.desktop
+%_K4srv/kdevswitchtobuddy.desktop
 %_K4srvtyp/kdevelopplugin.desktop
 %_K4iconsdir/hicolor/*/actions/run-clean.*
 %_K4iconsdir/hicolor/*/actions/run-install.*
 %_K4iconsdir/hicolor/*/apps/reviewboard.*
+%_K4conf/kdevappwizard.knsrc
+%_K4conf/kdevfiletemplates.knsrc
 
 %files libs
 %_K4libdir/libkdevplatforminterfaces.so.*
@@ -301,6 +313,7 @@ done
 %_K4libdir/libsublime.so.*
 %_K4libdir/libkdevplatformdebugger.so.*
 %_K4libdir/libkdevplatformdocumentation.so.*
+%_K4libdir/libkdevplatformjsontests.so.*
 
 %files -n libkdevplatformtests4%pkg_sfx
 %_K4libdir/libkdevplatformtests.so.*
@@ -327,6 +340,10 @@ done
 %_K4link/lib*.so
 
 %changelog
+* Tue Apr 30 2013 Alexey Morozov <morozov@altlinux.org> 1:1.5.0-alt1.git
+- new git post-1.5.0 snapshot (bc64e4263852bda5668ea51f0910b22fe51309ce,
+  one commit after 1.5.0 release)
+
 * Mon Apr 08 2013 Alexey Morozov <morozov@altlinux.org> 1:1.4.1-alt3.git
 - new git post-1.4.1 snapshot (09b05ae3b18c33dcee09a4b5a21f76f1a365a4a1)
 - Russian translations are synchronized with upstream and slightly updated
