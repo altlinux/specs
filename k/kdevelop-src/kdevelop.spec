@@ -1,5 +1,5 @@
-Version: 4.4.1
-Release: alt2.git
+Version: 4.5.0
+Release: alt1.git
 Serial: 3
 
 %define _unpackaged_files_terminate_build 1
@@ -8,18 +8,18 @@ Serial: 3
 %define with_api_docs 0
 %def_enable okteta
 # from the Project's CMakeLists.txt
-%define build_req_kde_ver_min 4.5.0
-%define build_req_kdeplatform_min 1.4.1
-%define req_kdev_php_min 1.4.0
+%define build_req_kde_ver_min 4.6.0
+%define build_req_kdeplatform_min 1.5.0
+%define req_kdev_php_min 1.5.0
 
 %if %unstable
-%define pkg_sfx -pre4.4
+%define pkg_sfx -pre4.5
 %define pkg_sfx_other %nil
 %define if_unstable() %{expand:%*}
 %define if_stable() %nil
 %else
 %define pkg_sfx %nil
-%define pkg_sfx_other -pre4.4
+%define pkg_sfx_other -pre4.5
 %define if_unstable()  %nil
 %define if_stable() %{expand:%*}
 %endif
@@ -305,6 +305,26 @@ Conflicts: kdevelop-unstable-okteta
 %description -n %kdevelop-okteta
 Okteta KDevelop plugin provides simple Hex Editing
 
+%package -n %kdevelop-php-templates
+Group: Development/Other
+Summary: PHP-specific file templates for KDevelop
+BuildArch: noarch
+Requires: %kdevelop-for-php
+Requires: %kdevelop = %serial:%version-%release
+
+%description -n %kdevelop-php-templates
+File templates for PHP development using KDevelop
+
+%package -n %kdevelop-python-templates
+Group: Development/Other
+Summary: Python-specific file templates for KDevelop
+BuildArch: noarch
+Requires: %kdevelop-for-python
+Requires: %kdevelop = %serial:%version-%release
+
+%description -n %kdevelop-python-templates
+File templates for Python development using KDevelop
+
 %prep
 %setup -q -a 1 -n kdevelop-%version
 %if %post_version
@@ -348,7 +368,8 @@ find %buildroot -name 'desktop_extragear*.mo' -exec rm {} \;
 %K4find_lang --output=%name.lang --with-kde          kdevelop
 for m in \
 kdevcmakebuilder kdevcmake kdevcpp kdevcustommake kdevformatters \
- kdevmakebuilder kdevelopsessions kdevmanpage plasma_runner_kdevelopsessions
+ kdevmakebuilder kdevelopsessions kdevmanpage plasma_runner_kdevelopsessions \
+ kdevcustombuildsystem
 do
     %K4find_lang --output=%name.lang --with-kde --append $m
 done
@@ -376,16 +397,28 @@ done
 %_K4lib/kdevqthelp_config.so
 %_K4srv/kdevqthelp*.desktop
 %_K4apps/kdevappwizard/templates/*make_qt4*.tar.bz2
+%_K4apps/kdevfiletemplates/templates/qt*.tar.bz2
+%_K4apps/kdevfiletemplates/templates/qobject*.tar.bz2
+%_K4apps/kdevfiletemplates/templates/cpp_qtestlib.tar.bz2
+%_K4apps/kdevfiletemplates/templates/cpp_qtestlib_kde.tar.bz2
+%_K4apps/kdevfiletemplates/templates/cpp_qtestlib_kdevelop.tar.bz2
 %_K4conf/kdevelop-qthelp.knsrc
 
 %files -n %kdevelop-mini -f %name.lang
-%doc AUTHORS ChangeLog NEWS README HACKING TODO
+%doc AUTHORS NEWS README HACKING TODO
 %_K4bindir/kdevelop
 %_K4bindir/kdevelop!
 %_K4lib/kcm_kdev_makebuilder.so
 %_K4lib/kcm_kdevcmake_settings.so
+%_K4lib/kcm_kdev_cmakebuilder.so
 %_K4lib/kdevcmakebuilder.so
 %_K4lib/kdevcmakemanager.so
+
+%_K4lib/kcm_kdevcustombuildsystem.so
+%_K4lib/kdevcustombuildsystem.so
+
+%_K4lib/kdevexecuteplasmoid.so
+
 %_K4lib/kdevcpplanguagesupport.so
 %_K4lib/kdevcustommakemanager.so
 %_K4lib/kdevmakebuilder.so
@@ -408,7 +441,20 @@ done
 %_K4apps/kdevelop
 %_K4apps/kdevcppsupport
 %_K4apps/plasma
+%dir %_K4apps/kdevappwizard
+%dir %_K4apps/kdevappwizard/templates
 %_K4apps/kdevappwizard/templates/cmake_plaincpp.tar.bz2
+%dir %_K4apps/kdevcodegen
+%dir %_K4apps/kdevcodegen/templates
+%_K4apps/kdevcodegen/templates/*.txt
+%_K4apps/kdevcodegen/templates/cpp_*.cpp
+%_K4apps/kdevcodegen/templates/cpp_*.h
+%dir %_K4apps/kdevfiletemplates
+%dir %_K4apps/kdevfiletemplates/templates
+%_K4apps/kdevfiletemplates/templates/c_gobject*.tar.bz2
+%_K4apps/kdevfiletemplates/templates/cmake_module*.tar.bz2
+%_K4apps/kdevfiletemplates/templates/cpp_basic*.tar.bz2
+%_K4apps/kdevfiletemplates/templates/private_pointer.tar.bz2
 %_K4xdg_apps/kdevelop.desktop
 %_K4xdg_apps/kdevelop_ps.desktop
 %_K4conf/kdeveloprc
@@ -434,7 +480,17 @@ done
 %_K4includedir/kdevelop
 #%doc %_K4doc/en/kdevelop-apidocs/
 
+%files -n %kdevelop-php-templates
+%_K4apps/kdevfiletemplates/templates/php_phpunit.tar.bz2
+
+%files -n %kdevelop-python-templates
+%_K4apps/kdevfiletemplates/templates/python_*.tar.bz2
+
 %changelog
+* Tue Apr 30 2013 Alexey Morozov <morozov@altlinux.org> 3:4.5.0-alt1.git
+- a post 4.5.0 snapshot (ff1b813e716271de6bfab7f7be75a3e808650754,
+  one minor commit after v4.5.0)
+
 * Mon Apr  8 2013 Alexey Morozov <morozov@altlinux.org> 3:4.4.1-alt2.git
 - a post-4.4.1 snapshot (0f2c97bf42c60484ba1ad73021f904c4dc34d3eb)
 - explicitly remove desktop_extragear*.mo files from the build

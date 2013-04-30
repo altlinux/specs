@@ -1,20 +1,20 @@
 %define _unpackaged_files_terminate_build 1
 %define unstable 0
-%define post_version 1
+%define post_version 0
 
 %define build_req_kde_ver 4.6.0
-%define build_req_kdevplatform_ver 1.4.1
-%define build_req_kdevelop_ver 4.4.1
+%define build_req_kdevplatform_ver 1.5.0
+%define build_req_kdevelop_ver 4.5.0
 %define build_req_kdev_pg_qt_ver 1.0.0
 
 %if %unstable
-%define pkg_sfx -pre4.4
+%define pkg_sfx -pre4.5
 %define pkg_sfx_other %nil
 %define if_unstable() %{expand:%*}
 %define if_stable() %nil
 %else
 %define pkg_sfx %nil
-%define pkg_sfx_other -pre4.4
+%define pkg_sfx_other -pre4.5
 %define if_unstable()  %nil
 %define if_stable() %{expand:%*}
 %endif
@@ -27,8 +27,8 @@
 %define kdevelop_pg_qt kdevelop-pg-qt
 
 Name: %kdevelop-for-php
-Version: 1.4.1
-Release: alt1.git
+Version: 1.5.0
+Release: alt1
 Serial: 3
 
 Summary: PHP Language Plugin for KDevelop/Quanta.
@@ -95,12 +95,16 @@ EOF
 %_K4lib/kdevphpdocs.so
 %_K4lib/kdevphpdocs_config.so
 %_K4lib/kdevphplanguagesupport.so
+%_K4lib/kdevphpunitprovider.so
 %_libdir/*.so
 %_K4apps/kdevphpsupport
 %_K4cfg/phpdocssettings.kcfg
 %_K4srv/*
 
 %changelog
+* Tue Apr 30 2013 Alexey Morozov <morozov@altlinux.org> 3:1.5.0-alt1
+- 1.5.0 release
+
 * Fri Nov 30 2012 Alexey Morozov <morozov@altlinux.org> 3:1.4.1-alt1.git
 - a post v1.4.1 git snapshot (be2f9b818501ed33ef12f9edd30166eba3aa2269)
 - updated Russian translations

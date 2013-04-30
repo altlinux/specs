@@ -2,13 +2,13 @@
 %define unstable 0
 
 %if %unstable
-%define pkg_sfx -pre4.4
+%define pkg_sfx -pre4.5
 %define pkg_sfx_other %nil
 %define if_unstable() %{expand:%*}
 %define if_stable() %nil
 %else
 %define pkg_sfx %nil
-%define pkg_sfx_other -pre4.4
+%define pkg_sfx_other -pre4.5
 %define if_unstable()  %nil
 %define if_stable() %{expand:%*}
 %endif
@@ -22,15 +22,15 @@
 %define kdevelop_qmake kdevelop%{pkg_sfx}-qmake
 %define kdevelop_qmake_other kdevelop%{pkg_sfx_other}-qmake
 
-%define build_kdevplatform_ver 1.4.0
-%define build_kdevelop_ver 4.4.0
+%define build_kdevplatform_ver 1.5.0
+%define build_kdevelop_ver 4.5.0
 %define build_kdev_pg_qt_ver 1.0.0
 
 %define build_kdelibs_ver 4.6.0
 
 Name: %kdevelop_qmake
-Version: 1.3.60
-Release: alt0.3.git
+Version: 1.4.60
+Release: alt0.1.git
 
 Group: Development/Other
 Summary: QMake plugin for KDevelop
@@ -79,19 +79,17 @@ rm -f %buildroot%_K4includedir/kdevelop/qmake/iqmakebuilder.h
 %_K4lib/kdevqmake*.so
 %_K4lib/kcm_kdev_qmake*.so
 %_K4apps/kdevappwizard/templates/qmake_qt4*
-%_K4apps/kdevqmakebuilder/data.kdev4
+%_K4apps/kdevqmakebuilder
 %_K4srv/kdevqmake*.desktop
 %_K4srv/kcm_kdev_qmake*.desktop
 
 %changelog
-* Thu Oct 18 2012 Alexey Morozov <morozov@altlinux.org> 1.3.60-alt0.3.git
-- build the package for the stable KDevelop (4.4)
+* Tue Apr 30 2013 Alexey Morozov <morozov@altlinux.org> 1.4.60-alt0.1.git
+- Build a pre-release git snapshot (eba41ae94f3b69595c83dc889b79e44a9e2bd23a)
+  for KDevelop-4.5
 
 * Mon Oct 15 2012 Alexey Morozov <morozov@altlinux.org> 1.3.60-alt0.2.git
 - New git snapshot (828d773b49bde7646bd9dbdcb50c253f3bb65029)
-
-* Fri Apr 20 2012 Alexey Morozov <morozov@altlinux.org> 0.1.13-alt2.git
-- Adjusted dependency on KDevelop (kdevelop-base -> kdevelop-mini)
 
 * Thu Apr 05 2012 Alexey Morozov <morozov@altlinux.org> 1.3.60-alt0.1.git
 - a build for an unstable version of KDevelop (pre4.4), git
