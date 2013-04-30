@@ -1,17 +1,20 @@
-Group: Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-fedora-compat
 BuildRequires: gcc-c++
 # END SourceDeps(oneline)
+Group: Other
+%add_optflags %optflags_shared
 %define fedora 19
 %global _short_name igtl
+%global _full_name openigtlink
+%global _full_cap_name OpenIGTLink
 %global _ver_major 1
 %global _ver_minor 9
 %global _ver_release 7
 
 Name:		lib%{_short_name}
 Version:	%{_ver_major}.%{_ver_minor}.%{_ver_release}
-Release:	alt1_9
+Release:	alt1_10
 Summary:	Network communication library for image-guided therapy
 
 License:	BSD
@@ -75,7 +78,7 @@ Requires:	%{name}%{?_isa} = %{version}-%{release}
 The %{name}-doc package contains documentation for %{name}
 
 %prep
-%setup -q -n openigtlink-OpenIGTLink-4caf9cf
+%setup -q -n %{_full_name}-%{_full_cap_name}-4caf9cf
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
@@ -93,7 +96,7 @@ pushd %{_target_platform}
     -DCMAKE_BUILD_TYPE:STRING="RelWithDebInfo"\
     -DCMAKE_VERBOSE_MAKEFILE=ON\
     -DOpenIGTLink_INSTALL_LIB_DIR=%{_lib} \
-    -DOpenIGTLink_INSTALL_PACKAGE_DIR=%{_datadir}/cmake/Modules/ \
+    -DOpenIGTLink_INSTALL_PACKAGE_DIR=%{_libdir}/cmake/%{_full_cap_name}/ \
     -DBUILD_TESTING=ON \
     -DBUILD_DOCUMENTATION=ON \
     -DPDFLATEX_COMPILER=%{_bindir}/pdflatex
@@ -132,7 +135,7 @@ make test -C %{_target_platform}
 %dir %{_includedir}/%{_short_name}/
 %{_includedir}/%{_short_name}/*
 %{_libdir}/*.so
-%{_datadir}/cmake/Modules/
+%{_libdir}/cmake/%{_full_cap_name}/
 
 %files doc
 %{_docdir}/%{name}-%{version}/OpenIGTLinkIJ2008.pdf
@@ -142,6 +145,9 @@ make test -C %{_target_platform}
 
 
 %changelog
+* Tue Apr 30 2013 Igor Vlasenko <viy@altlinux.ru> 1.9.7-alt1_10
+- update to new release by fcimport
+
 * Thu Apr 25 2013 Igor Vlasenko <viy@altlinux.ru> 1.9.7-alt1_9
 - initial fc import
 
