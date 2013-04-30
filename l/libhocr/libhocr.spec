@@ -16,7 +16,7 @@ BuildRequires: chrpath
 
 Name:		libhocr
 Version:	0.10.17
-Release:	alt2_13
+Release:	alt2_14
 Summary:	A Hebrew optical character recognition library
 
 Group:		System/Libraries
@@ -115,7 +115,7 @@ find %{buildroot} -name '*.a' -exec rm -f {} ';'
 rm -f %{buildroot}/%{hocrdocdir}/NEWS		# Empty, not usefull.
 rm -f %{buildroot}/%{hocrdocdir}/INSTALL	# Not needed anymore ;-)
 
-desktop-file-install --vendor="fedora"		\
+desktop-file-install \
 	--add-category="Graphics"		\
 	--delete-original			\
 	--dir=%{buildroot}%{_datadir}/applications	\
@@ -170,6 +170,9 @@ done
 
 
 %changelog
+* Tue Apr 30 2013 Igor Vlasenko <viy@altlinux.ru> 0.10.17-alt2_14
+- update to new release by fcimport
+
 * Tue Apr 02 2013 Igor Vlasenko <viy@altlinux.ru> 0.10.17-alt2_13
 - update to new release by fcimport
 
