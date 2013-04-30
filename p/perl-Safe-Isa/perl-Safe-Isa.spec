@@ -3,13 +3,13 @@ BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Safe-Isa
-Version:        1.000002
-Release:        alt1_2
+Version:        1.000003
+Release:        alt1_1
 Summary:        Call isa, can, does and DOES safely on things that may not be objects
 License:        GPL+ or Artistic
 Group:          Development/Perl
 URL:            http://search.cpan.org/dist/Safe-Isa/
-Source0:        http://www.cpan.org/authors/id/M/MS/MSTROUT/Safe-Isa-%{version}.tar.gz
+Source0:        http://search.cpan.org/CPAN/authors/id/E/ET/ETHER/Safe-Isa-%{version}.tar.gz
 BuildArch:      noarch
 BuildRequires:  perl(Exporter.pm)
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
@@ -45,6 +45,7 @@ make pure_install DESTDIR=%{buildroot}
 
 find %{buildroot} -type f -name .packlist -exec rm -f {} \;
 
+# %{_fixperms} %{buildroot}/*
 
 %check
 make test
@@ -54,6 +55,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Tue Apr 30 2013 Igor Vlasenko <viy@altlinux.ru> 1.000003-alt1_1
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 1.000002-alt1_2
 - update to new release by fcimport
 
