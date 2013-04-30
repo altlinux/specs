@@ -1,4 +1,4 @@
-%define git_date .git20111125
+%define git_date .git20130426
 
 %def_enable git
 %def_enable subversion
@@ -12,6 +12,7 @@ License: %gpl2plus
 Group: Graphical desktop/XFce
 
 URL: http://goodies.xfce.org/projects/thunar-plugins/thunar-vcs-plugin
+# git://git.xfce.org/thunar-plugins/thunar-vcs-plugin
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
@@ -21,7 +22,7 @@ BuildPreReq: rpm-build-xfce4 xfce4-dev-tools
 BuildRequires: libThunar-devel libgio-devel libxfce4util-devel libexo-devel
 BuildRequires: libgtk+2-devel
 %if_enabled subversion
-BuildRequires: libapr1-devel libsubversion-devel
+BuildRequires: libapr1-devel libsubversion-devel libaprutil1-devel
 %endif
 
 %description
@@ -55,6 +56,11 @@ menu. It also shows the svn file status in the file properties window.
 %exclude %_libdir/thunarx-*/*.la
 
 %changelog
+* Tue Apr 30 2013 Mikhail Efremov <sem@altlinux.org> 0.1.4-alt2.git20130426
+- Fix build with current libaprutil1.
+- Enable subversion 1.7 support.
+- Upstream git snapshot.
+
 * Wed Apr 18 2012 Mikhail Efremov <sem@altlinux.org> 0.1.4-alt2.git20111125
 - Rebuild against libxfce4util.so.6 (libxfce4util-4.9).
 
