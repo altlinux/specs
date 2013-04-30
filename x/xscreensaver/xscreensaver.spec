@@ -1,6 +1,4 @@
 # vim: set ft=spec: -*- spec -*-
-# gnome3 in sisyphus
-%def_without gnome2
 
 %define _libexecdir /usr/libexec
 
@@ -12,7 +10,7 @@
 
 Name: xscreensaver
 Version: 5.14
-Release: alt3
+Release: alt4
 Summary: A screen saver and locker for the X window system
 License: BSD
 Group: Graphical desktop/Other
@@ -32,6 +30,9 @@ Source5: xscreensaver-hacks-gl
 
 Source6: ru.po
 
+Source7: xscreensaver-config.xsl  
+Source8: xscreensaver-config.sh  
+
 Requires: xli urlview appres
 Requires: %name-hack
 Provides: %name-contrib = %version-%release
@@ -45,7 +46,7 @@ BuildPrereq: gnome-screensaver-utils
 %endif
 # Automatically added by buildreq on Mon Apr 18 2011
 # optimized out: fontconfig fontconfig-devel glib2-devel libGL-devel libICE-devel libSM-devel libX11-devel libXext-devel libXrender-devel libXt-devel libatk-devel libcairo-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgdk-pixbuf-xlib libgio-devel libgtk+2-devel libpango-devel perl-XML-Parser pkg-config xorg-inputproto-devel xorg-randrproto-devel xorg-renderproto-devel xorg-xextproto-devel xorg-xf86miscproto-devel xorg-xf86vidmodeproto-devel xorg-xproto-devel
-BuildRequires: bc imake intltool libGLU-devel libXi-devel libXinerama-devel libXmu-devel libXpm-devel libXrandr-devel libXxf86misc-devel libXxf86vm-devel libglade-devel libgle-devel libjpeg-devel libpam-devel libxml2-devel xorg-cf-files gdk-pixbuf-devel
+BuildRequires: bc imake intltool libGLU-devel libXi-devel libXinerama-devel libXmu-devel libXpm-devel libXrandr-devel libXxf86misc-devel libXxf86vm-devel libglade-devel libgle-devel libjpeg-devel libpam-devel libxml2-devel xorg-cf-files gdk-pixbuf-devel xsltproc
 
 %description
 A modular screen saver and locker for the X Window System.
@@ -102,35 +103,31 @@ can draw on the root window as a display mode.
 
 This package contains OpenGL xscreensaver hacks.
 
-%if_with gnome2
-%package -n gnome-screensaver-modules-xscreensaver
-Summary: A screen saver and locker for the X window system - GNOME Screensaver modules
+%package -n mate-screensaver-modules-xscreensaver
+Summary: A screen saver and locker for the X window system - MATE Screensaver modules
 Group: Graphical desktop/Other
 Requires: %name-modules = %version-%release
-Requires: gnome-screensaver
-Provides: gnome-screensaver-module
+Requires: mate-screensaver
 
-%description -n gnome-screensaver-modules-xscreensaver
+%description -n mate-screensaver-modules-xscreensaver
 A modular screen saver and locker for the X Window System.
 Highly customizable: allows the use of any program that
 can draw on the root window as a display mode.
 
-This package contains modules for GNOME Screensaver.
+This package contains modules for MATE Screensaver.
 
-%package -n gnome-screensaver-modules-xscreensaver-gl
-Summary: A screen saver and locker for the X window system - GNOME Screensaver modules
+%package -n mate-screensaver-modules-xscreensaver-gl
+Summary: A screen saver and locker for the X window system - MATE Screensaver modules
 Group: Graphical desktop/Other
 Requires: %name-modules-gl = %version-%release
-Requires: gnome-screensaver
-Provides: gnome-screensaver-module
+Requires: mate-screensaver
 
-%description -n gnome-screensaver-modules-xscreensaver-gl
+%description -n mate-screensaver-modules-xscreensaver-gl
 A modular screen saver and locker for the X Window System.
 Highly customizable: allows the use of any program that
 can draw on the root window as a display mode.
 
-This package contains OpenGL modules for GNOME Screensaver.
-%endif
+This package contains OpenGL modules for MATE Screensaver.
 
 %package modules
 Summary: A screen saver and locker for the X window system - standard modules
@@ -243,12 +240,10 @@ MkModuleFilelists() {
     echo "%xss_conf_dir/$module.xml" >> "%name-hacks-$name"
     echo "%xss_hack_dir/$module" >> "%name-modules-$name"
     [ -f "%buildroot%_man6dir/$module.6" ] && echo "%_man6dir/$module.6*" >> "%name-modules-$name" ||:
-%if_with gnome2
     pushd %buildroot%_datadir/applications/screensavers
-    %_libexecdir/gnome-screensaver/gnome-screensaver-migrate-xscreensaver-config.sh %buildroot%xss_conf_dir/$module.xml
+    %SOURCE8 %buildroot%xss_conf_dir/$module.xml
     popd
-    echo "%_datadir/applications/screensavers/xscreensaver-$module.desktop" >> "%name-gnome-$name"
-%endif
+    echo "%_datadir/applications/screensavers/xscreensaver-$module.desktop" >> "%name-mate-$name"
   done < "$list"
 }
 
@@ -310,13 +305,14 @@ MkModuleFilelists %_sourcedir/xscreensaver-hacks-gl gl
 %files modules-gl -f xscreensaver-modules-gl
 %dir %xss_hack_dir
 
-%if_with gnome2
-%files -n gnome-screensaver-modules-xscreensaver -f xscreensaver-gnome-std
+%files -n mate-screensaver-modules-xscreensaver -f xscreensaver-mate-std
 
-%files -n gnome-screensaver-modules-xscreensaver-gl -f xscreensaver-gnome-gl
-%endif
+%files -n mate-screensaver-modules-xscreensaver-gl -f xscreensaver-mate-gl
 
 %changelog
+* Tue Apr 30 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 5.14-alt4
+- resurrect gnome* subpackages as mate*
+
 * Fri Feb 03 2012 Andrey Cherepanov <cas@altlinux.org> 5.14-alt3
 - Fix xscreensaver-demo Russian localization (closes: #26110)
 
