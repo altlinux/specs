@@ -3,7 +3,7 @@ BuildRequires: unzip
 # END SourceDeps(oneline)
 Name:           lure
 Version:        1.1
-Release:        alt2_8
+Release:        alt2_9
 Summary:        Lure of the Temptress - Adventure Game
 Group:          Games/Other
 # For further discussion on distribution rights see:
@@ -45,7 +45,7 @@ mkdir -p $RPM_BUILD_ROOT%{_datadir}/%{name}
 install -p -m 644 *.vga *.ega $RPM_BUILD_ROOT%{_datadir}/%{name}
 
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/applications
-desktop-file-install             \
+desktop-file-install \
   --dir $RPM_BUILD_ROOT%{_datadir}/applications \
   %{SOURCE1}
 
@@ -53,10 +53,13 @@ desktop-file-install             \
 %files
 %doc *.txt Manual.pdf PROTECT.PDF README
 %{_datadir}/%{name}
-%{_datadir}/applications/%{name}.desktop
+%{_datadir}/applications/*%{name}.desktop
 
 
 %changelog
+* Tue Apr 30 2013 Igor Vlasenko <viy@altlinux.ru> 1.1-alt2_9
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 1.1-alt2_8
 - update to new release by fcimport
 
