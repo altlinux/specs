@@ -6,7 +6,7 @@
 
 Name: branding-%brand-%smalltheme
 Version: 7.0.0
-Release: alt9
+Release: alt10
 BuildArch: noarch
 
 %define theme %name
@@ -414,9 +414,9 @@ cat '/%_datadir/themes/%XdgThemeName/panel-default-setup.entries' > \
 %_datadir/%name/os-release
 
 %post release
-if ! [ -e %_sysconfdir/os-release ] ; then
-    cat %buildroot/%_datadir/%name/os-release > %_sysconfdir/os-release
-    chmod 0644 %_sysconfdir/os-release
+if ! [ -e %_sysconfdir/os-release -a -s %_sysconfdir/os-release ] ; then
+    cat %_datadir/%name/os-release > %_sysconfdir/os-release ||:
+    chmod 0644 %_sysconfdir/os-release ||:
 fi
 
 %files notes
@@ -455,6 +455,9 @@ fi
 %_datadir/kde4/apps/kio_desktop/DesktopLinks/indexhtml.desktop
 
 %changelog
+* Tue Apr 30 2013 Sergey V Turchin <zerg at altlinux dot org> 7.0.0-alt10
+- fix setup /etc/os-release
+
 * Fri Apr 19 2013 Sergey V Turchin <zerg at altlinux dot org> 7.0.0-alt9
 - fix grub terminal box background color
 
