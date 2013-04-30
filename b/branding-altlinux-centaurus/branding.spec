@@ -6,7 +6,7 @@
 
 Name: branding-%brand-%theme
 Version: 6.9.9 
-Release: alt2
+Release: alt3
 
 BuildRequires: cpio fonts-ttf-dejavu fonts-ttf-droid
 BuildRequires: design-bootloader-source >= 5.0-alt2
@@ -364,6 +364,9 @@ subst 's/#theme-name=/theme-name=Clearlooks-Phenix/' /etc/lightdm/lightdm-gtk-gr
 %_desktopdir/indexhtml.desktop
 
 %changelog
+* Tue Apr 30 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 6.9.9-alt3
+- wallpaper from Ark Desktop added
+
 * Fri Apr 26 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 6.9.9-alt2
 - codename changed to Pholus
 
