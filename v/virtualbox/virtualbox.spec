@@ -55,7 +55,7 @@
 
 Name: virtualbox
 Version: 4.2.12
-Release: alt1
+Release: alt2
 
 Summary: VM VirtualBox OSE - Virtual Machine for x86 hardware
 License: GPL
@@ -652,6 +652,9 @@ mountpoint -q /dev || {
 %vboxdir/sdk
 
 %changelog
+* Tue Apr 30 2013 Evgeny Sinelnikov <sin@altlinux.ru> 4.2.12-alt2
+- Fix rpath for VBoxOGL.so and VBoxOGL*spu.so (Closes: 27340)
+
 * Thu Apr 18 2013 Evgeny Sinelnikov <sin@altlinux.ru> 4.2.12-alt1
 - Update to last release of stable branch 4.2
 - Enable build with webservice
