@@ -4,14 +4,14 @@ BuildRequires: gcc-c++ unzip
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
 %define oldname flann
-%define fedora 18
+%define fedora 19
 %if 0%{?rhel} < 6 && ! 0%{?fedora}
 %{!?python_sitearch: %global python_sitearch %(/usr/bin/python26 -c "from distutils.sysconfig import get_python_lib; print get_python_lib(1)")}
 %endif
 
 Name:           libflann
-Version:        1.8.1
-Release:        alt2_3
+Version:        1.8.4
+Release:        alt1_1
 Summary:        Fast Library for Approximate Nearest Neighbors
 
 Group:          Development/C
@@ -21,7 +21,7 @@ Source0:        http://www.cs.ubc.ca/~mariusm/uploads/FLANN/%{oldname}-%{version
 
 # Prevent the buildsysem from running setup.py, not submitted upstream
 Patch0:         flann-1.6.11.fixpyflann.patch 
-BuildRequires:  ctest cmake
+BuildRequires: ctest cmake
 BuildRequires:  zlib-devel
 
 %if 0%{?fedora}
@@ -68,7 +68,6 @@ Static libraries for flann.
 Summary: Python bindings for flann
 Group: Development/Python
 Requires: %{name} = %{version}-%{release}
-Requires: python-module-numpy python-module-numpy-addons python-module-numpy-testing
 
 %description -n python-module-libflann
 Python bindings for flann
@@ -125,6 +124,9 @@ rm -rf %{buildroot}%{_datadir}/doc/flann
 %{python_sitelibdir}/flann-%{version}*.egg-info
 
 %changelog
+* Tue Apr 30 2013 Igor Vlasenko <viy@altlinux.ru> 1.8.4-alt1_1
+- update to new release by fcimport
+
 * Mon Feb 11 2013 Igor Vlasenko <viy@altlinux.ru> 1.8.1-alt2_3
 - update to new release by fcimport
 
