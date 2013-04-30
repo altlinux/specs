@@ -3,17 +3,12 @@
 
 Summary: A pipeline manipulation library
 Name: libpipeline
-Version: 1.2.2
-Release: alt1_4
+Version: 1.2.3
+Release: alt1_1
 License: GPLv3+
 Group: Development/C
 URL: http://libpipeline.nongnu.org/
 Source: http://download.savannah.gnu.org/releases/libpipeline/libpipeline-%{version}.tar.gz
-
-# resolves: #876108
-Patch0: libpipeline-1.2.2-peek-offset.patch
-# fixed memory leaks detected by valgrind
-Patch1: libpipeline-1.2.2-valgrind.patch
 
 BuildRequires: libtool libcheck-devel
 
@@ -39,8 +34,6 @@ to develop programs that use libpipeline library.
 
 %prep
 %setup -q
-%patch0 -p1 -b .peek-offset
-%patch1 -p1 -b .valgrind-mem
 
 %build
 %{configure}
@@ -64,6 +57,9 @@ rm $RPM_BUILD_ROOT/%{_libdir}/libpipeline.la
 %{_mandir}/man3/*
 
 %changelog
+* Tue Apr 30 2013 Igor Vlasenko <viy@altlinux.ru> 1.2.3-alt1_1
+- update to new release by fcimport
+
 * Thu Mar 21 2013 Igor Vlasenko <viy@altlinux.ru> 1.2.2-alt1_4
 - update to new release by fcimport
 
