@@ -60,7 +60,7 @@
 %define beta %nil
 
 Name: strongswan
-Version: 5.0.3
+Version: 5.0.4
 Release: alt1
 
 Summary: StrongSWAN IPSEC implementation
@@ -208,6 +208,10 @@ cp -a testing/ %buildroot%pkgdocdir/
 # - review configurables (see also fedora-proposed spec)
 
 %changelog
+* Tue Apr 30 2013 Michael Shigorin <mike@altlinux.org> 5.0.4-alt1
+- 5.0.4: CVE-2013-2944 fix (ECDSA signature vulnerability
+  if openssl backend is loaded)
+
 * Sat Apr 06 2013 Michael Shigorin <mike@altlinux.org> 5.0.3-alt1
 - 5.0.3
 
