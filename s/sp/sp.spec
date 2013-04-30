@@ -1,6 +1,6 @@
 Name:           sp
 Version:        5.2.1
-Release:        alt5
+Release:        alt7
 Summary:        School Portal
 Summary(ru):    Школьный портал
 License:        Distributable, non-free
@@ -9,7 +9,7 @@ Url:            http://spcms.ru
 Packager:       Andrey Stroganov <dja@altlinux.org>
 Source:         sp-5.2.1.tar
 BuildRequires:  fpc
-Requires:       perl-base perl-CGI perl-CGI-Session perl-Archive-Zip perl-GD perl-GD-Graph perl-CGI-SpeedyCGI perl-Magick perl-Mail-Sender perl-Text-Iconv perl-DBD-InterBase perl-HTML-TagFilter pwgen perl-IO-Compress xinetd mpg123
+Requires:       perl-base perl-CGI perl-CGI-Session perl-Archive-Zip perl-GD perl-GD-Graph perl-CGI-SpeedyCGI perl-Magick perl-Mail-Sender perl-Text-Iconv perl-DBD-InterBase perl-HTML-TagFilter pwgen perl-IO-Compress xinetd mpg123 perl-libwww
 Requires(post): apache2 firebird-classic squid-server net-tools apache-common
 Autoprov:       0
 Autoreq:        0
@@ -146,10 +146,25 @@ fi
 # -----------------------------------------------------------
 # Apache
 # -----------------------------------------------------------
-a2enmod cgi
-a2enmod rewrite
-a2enmod deflate
-a2enmod headers
+echo "Turning on apache modules a2enmod cgi rewrite deflate headers"
+APACHE_SP_CONF='/etc/httpd2/conf/mods-start.d/900-sp.conf'
+if ! grep -q 'cgi=yes'        $APACHE_SP_CONF; then
+	echo 'cgi=yes'         >> $APACHE_SP_CONF
+fi
+if ! grep -q 'rewrite=yes'    $APACHE_SP_CONF; then
+	echo 'rewrite=yes'     >> $APACHE_SP_CONF
+fi
+if ! grep -q 'deflate=yes'    $APACHE_SP_CONF; then
+	echo 'deflate=yes'     >> $APACHE_SP_CONF
+fi
+if ! grep -q 'headers=yes'    $APACHE_SP_CONF; then
+	echo 'headers=yes'     >> $APACHE_SP_CONF
+fi
+
+# a2enmod cgi
+# a2enmod rewrite
+# a2enmod deflate
+# a2enmod headers
 
 # Выключем "It Works!"
 a2dissite 000-default
@@ -354,6 +369,12 @@ a2ensite  default
 a2dissite 000-sp
 
 %changelog
+* Tue Apr 30 2013 Andrey V. Stroganov <dja@altlinux.org> 5.2.1-alt7
+- add dependency: perl-libwww
+
+* Mon Apr 29 2013 Andrey V. Stroganov <dja@altlinux.org> 5.2.1-alt6
+- migrate from a2enmod to mods-start.d/* configs in Apache configuration
+
 * Mon Apr 29 2013 Andrey V. Stroganov <dja@altlinux.org> 5.2.1-alt5
 - added notice for xinetd config modification for firebird, remove connect limit
 - remove gallery dirs ownership. photos must stay untouched after sp uninstall
