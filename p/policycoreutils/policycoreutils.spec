@@ -3,7 +3,7 @@
 Summary: SELinux policy core utilities
 Name: policycoreutils
 Version: 2.1.13
-Release: alt7
+Release: alt9
 License: GPLv2
 Group: System/Base
 Url: http://userspace.selinuxproject.org
@@ -276,6 +276,12 @@ cp -r mcstrans/share/* %buildroot%_datadir/mcstrans/
 
 
 %changelog
+* Tue Apr 30 2013 Andriy Stepanov <stanv@altlinux.ru> 2.1.13-alt9
+- newrole: CAP_SETPCAP, capng_lock()
+
+* Mon Apr 29 2013 Andriy Stepanov <stanv@altlinux.ru> 2.1.13-alt8
+- Update gears tags
+
 * Mon Apr 29 2013 Andriy Stepanov <stanv@altlinux.ru> 2.1.13-alt7
 - newrole: patch from policycoreutils-2.1.14-37.fc20.src.rpm
 
