@@ -1,6 +1,6 @@
 Name: libbluray
-Version: 0.2.3
-Release: alt2
+Version: 0.3.0
+Release: alt1
 Summary: BD library
 
 Group: System/Libraries
@@ -10,7 +10,7 @@ Url: http://www.videolan.org/developers/libbluray.html
 Source: %name-%version-%release.tar
 
 BuildRequires: /proc
-BuildRequires: ant java-1.7.0-openjdk-devel libxml2-devel
+BuildRequires: ant java-1.7.0-openjdk-devel libfreetype-devel libxml2-devel
 
 %description
 %summary
@@ -36,8 +36,9 @@ This package contains various utilities using libbluray library.
 sed -i s,noinst_PROGRAMS,bin_PROGRAMS, src/examples/Makefile.am
 
 %build
+export JDK_HOME=/usr/lib/jdk
 %autoreconf
-%configure --with-jdk=/usr/lib/jdk --enable-bdjava
+%configure --enable-bdjava
 %make_build
 
 %install
@@ -57,6 +58,9 @@ install -pm0644 -D src/.libs/libbluray.jar %buildroot%_datadir/libbluray/libblur
 %_bindir/*
 
 %changelog
+* Tue Apr 30 2013 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.3.0-alt1
+- 0.3.0 released
+
 * Sat Feb 23 2013 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.2.3-alt2
 - rebuilt with java 1.7.0
 
