@@ -10,7 +10,7 @@
 
 Name: xscreensaver
 Version: 5.14
-Release: alt4
+Release: alt4.1
 Summary: A screen saver and locker for the X window system
 License: BSD
 Group: Graphical desktop/Other
@@ -310,6 +310,9 @@ MkModuleFilelists %_sourcedir/xscreensaver-hacks-gl gl
 %files -n mate-screensaver-modules-xscreensaver-gl -f xscreensaver-mate-gl
 
 %changelog
+* Tue Apr 30 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 5.14-alt4.1
+- showing screensavers in mate fixed
+
 * Tue Apr 30 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 5.14-alt4
 - resurrect gnome* subpackages as mate*
 
