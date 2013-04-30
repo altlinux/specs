@@ -2,7 +2,7 @@
 %define my_subversion b7
 Name:           html2ps
 Version:        1.0
-Release:        alt2_0.12.%{my_subversion}
+Release:        alt2_0.13.%{my_subversion}
 Summary:        HTML to PostScript converter
 
 Group:          Publishing
@@ -84,7 +84,7 @@ sed -e 's;/usr/bin;%{_bindir};' \
     debian/config/html2psrc > $RPM_BUILD_ROOT%{_sysconfdir}/html2psrc
 
 install -m0755 -p contrib/xhtml2ps/xhtml2ps $RPM_BUILD_ROOT%{_bindir}
-desktop-file-install --vendor="fedora"               \
+desktop-file-install \
   --dir=${RPM_BUILD_ROOT}%{_datadir}/applications         \
   %{SOURCE1}
 
@@ -102,6 +102,9 @@ desktop-file-install --vendor="fedora"               \
 %{_datadir}/applications/*xhtml2ps.desktop
 
 %changelog
+* Tue Apr 30 2013 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_0.13.b7
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_0.12.b7
 - update to new release by fcimport
 
