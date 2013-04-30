@@ -1,0 +1,56 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires: gcc-c++ libsysfs-devel
+# END SourceDeps(oneline)
+Name: libcxgb4
+Version: 1.2.0
+Release: alt1_3
+Summary: Chelsio T4 iWARP HCA Userspace Driver
+Group: System/Libraries
+License: GPLv2 or BSD
+Url: http://www.openfabrics.org/
+Source: http://www.openfabrics.org/downloads/cxgb4/%{name}-%{version}.tar.gz
+Source1: libcxgb4-modprobe.conf
+Patch0:  libcxgb4-1.1.0-type.patch
+BuildRequires: libibverbs-devel >= 1.1.3 libtool
+Obsoletes: %{name}-devel
+ExcludeArch: s390 s390x
+Provides: libibverbs-driver.%{_arch}
+Source44: import.info
+%description
+Userspace hardware driver for use with the libibverbs InfiniBand/iWARP verbs
+library.  This driver enables Chelsio T4 based iWARP capable Ethernet devices.
+
+%package static
+Summary: Static version of the libcxgb4 driver
+Group: System/Libraries
+Requires: %{name} = %{version}-%{release}
+%description static
+Static version of libcxgb4 that may be linked directly to an application.
+
+%prep
+%setup -q
+%patch0 -p1
+
+%build
+%configure
+%{__make} %{?_smp_mflags}
+
+%install
+%{__make} install DESTDIR=$RPM_BUILD_ROOT
+install -p -m 644 -D %{SOURCE1} ${RPM_BUILD_ROOT}%{_sysconfdir}/modprobe.d/libcxgb4.conf
+# remove unpackaged files from the buildroot
+rm -f $RPM_BUILD_ROOT%{_libdir}/*.la
+
+%files
+%{_libdir}/*.so*
+%{_sysconfdir}/libibverbs.d/*.driver
+%{_sysconfdir}/modprobe.d/libcxgb4.conf
+%doc AUTHORS COPYING README
+
+%files static
+%{_libdir}/*.a
+
+%changelog
+* Tue Apr 30 2013 Igor Vlasenko <viy@altlinux.ru> 1.2.0-alt1_3
+- initial fc import
+
