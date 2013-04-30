@@ -3,7 +3,7 @@ BuildRequires: /usr/bin/glib-gettextize
 # END SourceDeps(oneline)
 Name:           lucidlife
 Version:        0.9.2
-Release:        alt3_11
+Release:        alt3_12
 Summary:        A Conway's Life simulator
 
 Group:          Games/Other
@@ -47,7 +47,7 @@ make %{?_smp_mflags}
 %install
 make install DESTDIR=%{buildroot}
 %find_lang %{name}
-desktop-file-install 	\
+desktop-file-install \
 	--dir %{buildroot}%{_datadir}/applications	\
 	--delete-original	\
 	--remove-category=Application	\
@@ -61,10 +61,13 @@ desktop-file-install 	\
 %{_bindir}/%{name}
 %{_datadir}/%{name}
 %{_datadir}/pixmaps/%{name}.png
-%{_datadir}/applications/%{name}.desktop
+%{_datadir}/applications/*%{name}.desktop
 
 
 %changelog
+* Tue Apr 30 2013 Igor Vlasenko <viy@altlinux.ru> 0.9.2-alt3_12
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.9.2-alt3_11
 - update to new release by fcimport
 
