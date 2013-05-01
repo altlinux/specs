@@ -1,12 +1,11 @@
 Name: libmatio
-Version: 1.5.0
+Version: 1.5.1
 Release: alt1
 Summary: Library for reading/writing Matlab MAT files
 
 Group: Development/Other
 License: LGPLv2+
 Url: http://sourceforge.net/projects/matio
-Packager: Vitaly Kuznetsov <vitty@altlinux.ru>
 
 Source: http://downloads.sourceforge.net/matio/matio-%version.tar.gz
 Patch: matio-1.3.3-zlibldflag.patch
@@ -101,6 +100,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_man3dir/*
 
 %changelog
+* Wed May 01 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.5.1-alt1
+- Version 1.5.1 (ALT #28910)
+
 * Sun Oct 28 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.5.0-alt1
 - Version 1.5.0 (ALT #27897)
 
