@@ -1,5 +1,5 @@
-%define branch 0.7
-%define svn svn3381
+%define branch 0.8
+%define svn svn3440
 
 Version: %branch.0
 Epoch: 1
@@ -25,7 +25,7 @@ BuildRequires: libsamplerate-devel libtag-devel >= 1.6 libvorbis-devel
 BuildRequires: libwavpack-devel libalsa-devel libflac-devel libbs2b-devel >= 3.0
 BuildRequires: libprojectM-devel >= 2.0.1 jackit-devel xorg-xf86miscproto-devel
 BuildRequires: libenca-devel libcddb-devel libmms-devel >= 0.4 libwildmidi-devel >= 0.2.3.4
-BuildRequires: libgme-devel libGLU-devel
+BuildRequires: libgme-devel libGLU-devel libsidplayfp-devel
 
 # disable for 5.1
 BuildRequires: libopusfile-devel
@@ -37,6 +37,7 @@ The user interface is similar to winamp or xmms.
 Supported formats:
 - MPEG1 layer 2/3
 - Ogg Vorbis
+- Opus
 - Native FLAC, Ogg FLAC
 - Musepack
 - WavePack
@@ -92,6 +93,7 @@ Other features:
 Поддерживаемые форматы:
 - MPEG1 layer 2/3
 - Ogg Vorbis
+- Opus
 - Native FLAC, Ogg FLAC
 - Musepack
 - WavePack
@@ -147,6 +149,7 @@ Other features:
 Підтримувані формати:
 - MPEG1 layer 2/3
 - Ogg Vorbis
+- Opus
 - Native FLAC, Ogg FLAC
 - Musepack
 - WavePack
@@ -348,6 +351,14 @@ Requires: qmmp = %version-%release
 
 %description -n %name-in-opus
 Qmmp Opus Audio Plugin
+
+%package -n %name-in-sid
+Summary: Qmmp SID Audio Plugin
+Group: Sound
+Requires: qmmp = %version-%release
+
+%description -n %name-in-sid
+This plugin plays Commodore 64 music files using libsidplayfp library
 
 # Visualization plugins
 %package -n %name-vis-analyzer
@@ -571,7 +582,7 @@ Requires: qmmp-vis-analyzer qmmp-scrobbler qmmp-hal qmmp-hotkey
 Requires: qmmp-eff-bs2b qmmp-vis-projectm qmmp-fileops qmmp-converter
 Requires: qmmp-out-jack qmmp-out-oss qmmp-out-null qmmp-http qmmp-mms
 Requires: qmmp-kdenotify qmmp-eff-ladspa qmmp-covermanager
-Requires: qmmp-eff-crossfade qmmp-udisks qmmp-in-gme
+Requires: qmmp-eff-crossfade qmmp-udisks qmmp-in-gme qmmp-in-sid
 Requires: qmmp-streambrowser qmmp-trackchange qmmp-copypaste qmmp-eff-extrastereo
 
 # disable for 5.1
@@ -640,7 +651,7 @@ mkdir -p %buildroot/{%_miconsdir,%_niconsdir,%_liconsdir}
 
 %files -n lib%name
 %_libdir/*.so.0
-%_libdir/*.so.0.7*
+%_libdir/*.so.0.8*
 
 # Output plugins
 %files -n %name-out-pulseaudio
@@ -691,6 +702,9 @@ mkdir -p %buildroot/{%_miconsdir,%_niconsdir,%_liconsdir}
 
 %files -n %name-in-gme
 %_libdir/%name/Input/libgme*
+
+%files -n %name-in-sid
+%_libdir/%name/Input/libsid*
 
 # disable for 5.1
 %files -n %name-in-opus
@@ -786,6 +800,12 @@ mkdir -p %buildroot/{%_miconsdir,%_niconsdir,%_liconsdir}
 %files -n %name-full
 
 %changelog
+* Wed May 01 2013 Motsyo Gennadi <drool@altlinux.ru> 1:0.8.0-alt2.svn3440
+- 0.8.0 svn3440 version
+
+* Sun Apr 28 2013 Motsyo Gennadi <drool@altlinux.ru> 1:0.8.0-alt2.svn3431
+- 0.8.0 svn3431 version
+
 * Sun Apr 07 2013 Motsyo Gennadi <drool@altlinux.ru> 1:0.7.0-alt2.svn3381
 - 0.7.0 svn3381 version
 
