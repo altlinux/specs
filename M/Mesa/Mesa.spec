@@ -3,7 +3,7 @@
 %def_enable wayland_egl
 
 Name: Mesa
-Version: 9.1.1
+Version: 9.1.2
 Release: alt1
 Epoch: 4
 License: MIT
@@ -344,6 +344,12 @@ ln -sf ../..%_sysconfdir/X11/%_lib/libGLESv2.so.2 %_libdir/
 %_bindir/glxgears
 
 %changelog
+* Wed May 01 2013 Valery Inozemtsev <shrek@altlinux.ru> 4:9.1.2-alt1
+- 9.1.2
+
+* Sun Apr 07 2013 Valery Inozemtsev <shrek@altlinux.ru> 4:9.1.1-alt2
+- update to 9.1 git.c7720a2
+
 * Thu Mar 21 2013 Valery Inozemtsev <shrek@altlinux.ru> 4:9.1.1-alt1
 - 9.1.1
 
