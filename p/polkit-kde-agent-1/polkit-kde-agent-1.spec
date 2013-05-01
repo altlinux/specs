@@ -2,7 +2,7 @@
 
 Name: polkit-kde-agent-1
 Version: 0.99.1
-Release: alt2
+Release: alt3
 
 Group: System/Libraries
 Summary: PolicyKit authentication agent for KDE
@@ -10,7 +10,8 @@ Url: https://projects.kde.org/projects/extragear/base/polkit-kde-agent-1
 # ftp://ftp.kde.org/pub/kde/stable/apps/KDE4.x/admin/
 License: GPLv2 / LGPLv2.1+
 
-#Requires: polkit-kde-kcmmodules-1
+Requires: polkit
+
 Conflicts: kde4base-workspace-core <= 4.10.1-alt1
 Provides: policykit-kde = 4.10
 Obsoletes: policykit-kde < 4.10
@@ -44,6 +45,9 @@ echo "add_subdirectory(po)" >> CMakeLists.txt
 %_K4apps/policykit1-kde/
 
 %changelog
+* Wed May 01 2013 Sergey V Turchin <zerg@altlinux.org> 0.99.1-alt3
+- fix requires
+
 * Thu Mar 14 2013 Sergey V Turchin <zerg@altlinux.org> 0.99.1-alt2
 - add translations
 
