@@ -1,6 +1,6 @@
 Name: v4l-utils
-Version: 0.8.8
-Release: alt2
+Version: 0.9.5
+Release: alt1
 
 Summary: Collection of video4linux support libraries and utilities
 License: GPLv2+
@@ -16,15 +16,15 @@ Group: System/Kernel and hardware
 Conflicts: v4l-utils < 0.8.2-alt1
 
 %package -n libv4l
-Summary: video4linux supprot libraries
+Summary: video4linux support libraries
 Group: System/Libraries
 License: LGPLv2+
 
 %package -n libv4l-devel
 Summary: Development files for libv4l
 Group: Development/C
+Requires: libv4l = %version-%release
 License: LGPLv2+
-Requires: libv4l-devel = %version-%release
 
 %description
 Linux V4L2 and DVB API utilities.
@@ -59,41 +59,45 @@ developing applications that use libv4l.
 %setup
 
 %build
-make CFLAGS="%optflags" LIBDIR=%_libdir
+%autoreconf
+%configure --disable-static
+%make_build
 
 %install
-%make_install PREFIX=%prefix LIBDIR=%_libdir DESTDIR=%buildroot install
-cp utils/xc3028-firmware/README README.xc3028-firmware
+%makeinstall_std
 
 %files
-%doc ChangeLog COPYING README README.xc3028-firmware
+%doc ChangeLog COPYING README
 
 %_sbindir/*
 %_bindir/*
 %exclude %_bindir/ir-keytable
 
 %files -n ir-keytable
-/lib/udev/rules.d/70-infrared.rules
-
 %config(noreplace) %_sysconfdir/rc_maps.cfg
-%dir %_sysconfdir/rc_keymaps
-%config(noreplace) %_sysconfdir/rc_keymaps/*
-
+/lib/udev/rules.d/70-infrared.rules
+/lib/udev/rc_keymaps
 %_bindir/ir-keytable
 %_man1dir/ir-keytable.1*
 
 %files -n libv4l
 %doc COPYING.LIB ChangeLog README.lib TODO
 %_libdir/libv4l*.so.*
+%_libdir/libdvbv5.so.*
 %_libdir/libv4l
 
 %files -n libv4l-devel
 %doc README.lib-multi-threading
 %_includedir/libv4l*.h
+%_includedir/dvb-*.h
 %_libdir/libv4l*.so
+%_libdir/libdvbv5.so
 %_pkgconfigdir/*.pc
 
 %changelog
+* Wed May 01 2013 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.9.5-alt1
+- 0.9.5 released
+
 * Tue Oct 02 2012 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.8.8-alt2
 - fix build with gcc-4.7
 
