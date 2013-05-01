@@ -1,11 +1,13 @@
 Name:		libsidplayfp
 Version:	1.0.2
-Release:	alt1
+Release:	alt2
 Summary:	SID chip music module playing library
 Group:		System/Libraries
 License:	GPLv2+
 Url:		http://sourceforge.net/projects/sidplay-residfp/
 Source0:	http://downloads.sourceforge.net/sidplay-residfp/%name-%version.tar.gz
+
+Patch0:		%name-1.0.2_fix_missing_constructor.diff
 
 # Automatically added by buildreq on Sun Apr 28 2013 (-bi)
 # optimized out: elfutils libstdc++-devel pkg-config
@@ -44,6 +46,7 @@ This package contains API documentation for %name.
 
 %prep
 %setup
+%patch0 -p1
 
 %build
 %configure
@@ -71,5 +74,8 @@ make DESTDIR=%buildroot install
 %doc docs/html
 
 %changelog
+* Wed May 01 2013 Motsyo Gennadi <drool@altlinux.ru> 1.0.2-alt2
+- fix missing constructor (Ilya Kotov aka trialuser)
+
 * Sun Apr 28 2013 Motsyo Gennadi <drool@altlinux.ru> 1.0.2-alt1
 - initial build for ALT Linux from FC package
