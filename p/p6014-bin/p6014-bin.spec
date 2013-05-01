@@ -5,7 +5,7 @@
 %define what bin
 Name: %rname-%what
 Version: 0.2.1
-Release: alt1
+Release: alt2
 
 Group: Games/Adventure
 Summary: Mod sequel to Star Control II: The Ur-Quan Masters
@@ -52,13 +52,14 @@ This package contains binary executable program for this game.
 export CFLAGS="%optflags" LDFLAGS="%optflags"
 
 cd sc2
-cp %{SOURCE11} config.state
-echo "INPUT_install_libdir_VALUE='$prefix/%_lib'" >> config.state
+rm -f config.state
 %if_with debug
 echo "CHOICE_debug_VALUE='debug'" >> config.state
 %else
 echo "CHOICE_debug_VALUE='nodebug'" >> config.state
 %endif
+cat %{SOURCE11} >> config.state
+echo "INPUT_install_libdir_VALUE='$prefix/%_lib'" >> config.state
 ./build.sh uqm << __EOF__
 
 
@@ -92,16 +93,18 @@ Categories=Game;AdventureGame;
 Comment=A fan-made sequel to The Ur-Quan Masters
 __EOF__
 
-cat > %buildroot%_desktopdir/%rname-hires.desktop <<__EOF__
-[Desktop Entry]
-Version=1.0
-Type=Application
-Name=Project 6014 - High Resolution
-Exec=%_gamesbindir/%rname -q high -f -o -c hq -r 1024x768
-Icon=%rname
-Categories=Game;AdventureGame;
-Comment=A fan-made sequel to The Ur-Quan Masters (high resolution mode)
-__EOF__
+# when option will appear, uncomment, add option for x4mode
+# and move to corresponding hires packs
+#cat > %buildroot%_desktopdir/%rname-hires.desktop <<__EOF__
+#[Desktop Entry]
+#Version=1.0
+#Type=Application
+#Name=Project 6014 - High Resolution
+#Exec=%_gamesbindir/%rname -q high -f -o
+#Icon=%rname
+#Categories=Game;AdventureGame;
+#Comment=A fan-made sequel to The Ur-Quan Masters (high resolution mode)
+#__EOF__
 
 mkdir -p %buildroot/%_liconsdir/
 install -m 644 %SOURCE10 %buildroot/%_liconsdir/%rname.png
@@ -116,5 +119,8 @@ install -m 644 %SOURCE10 %buildroot/%_liconsdir/%rname.png
 %_liconsdir/%rname.png
 
 %changelog
+* Wed May 01 2013 Igor Vlasenko <viy@altlinux.ru> 0.2.1-alt2
+- dropped hires desktop - misleading as switch to hires x4 is manual
+
 * Mon Apr 29 2013 Igor Vlasenko <viy@altlinux.ru> 0.2.1-alt1
 - initial spec
