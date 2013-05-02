@@ -2,13 +2,14 @@
 %def_enable introspection
 %def_enable vala
 %def_enable print_profiles
+%def_disable bash_completion
 
 %define _libexecdir %_prefix/libexec
 %define _icccolordir %_datadir/color/icc
 %define _localstatedir %_var
 
 Name: colord
-Version: 0.1.33
+Version: 0.1.34
 Release: alt1
 
 Summary: Color daemon
@@ -22,6 +23,7 @@ Source: http://www.freedesktop.org/software/%name/releases/colord-%version.tar.x
 %define colord_user %name
 %define glib_ver 2.31
 %define lcms_ver 2.2
+%define bash_completion_ver 2.0
 
 Requires: lib%name = %version-%release
 
@@ -32,6 +34,7 @@ BuildRequires: libsqlite3-devel libusb-devel libgusb-devel systemd-devel libsyst
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel libgusb-gir-devel}
 %{?_enable_vala:BuildRequires: vala-tools}
 %{?_enable_print_profiles:BuildRequires: argyllcms}
+%{?_enable_bash_completion:BuildRequires: bash-completion > %bash_completion_ver}
 # for check
 BuildRequires: /proc dbus-tools-gui valgrind
 
@@ -105,7 +108,8 @@ This may be useful for CMYK soft-proofing or for extra device support.
 	%{subst_enable reverse} \
 	%{subst_enable vala} \
 	--with-daemon-user=%colord_user \
-	%{?_enable_print_profiles:--enable-print-profiles}
+	%{?_enable_print_profiles:--enable-print-profiles} \
+	%{?_disable_bash_completion:--disable-bash-completion}
 
 %make_build
 
@@ -166,7 +170,7 @@ touch %buildroot%_localstatedir/lib/%name/storage.db
 %dir %_localstatedir/lib/color/icc
 %ghost %_localstatedir/lib/%name/*.db
 %systemd_unitdir/*.service
-%_sysconfdir/bash_completion.d/colormgr-completion.bash
+%{?_enable_bash_completion:%_datadir/bash-completion/completions/colormgr}
 
 %exclude %_libdir/%name-sensors/*.la
 %exclude %_libdir/colord-plugins/*.la
@@ -254,6 +258,9 @@ touch %buildroot%_localstatedir/lib/%name/storage.db
 
 
 %changelog
+* Sun May 05 2013 Yuri N. Sedunov <aris@altlinux.org> 0.1.34-alt1
+- 0.1.34
+
 * Tue Apr 16 2013 Yuri N. Sedunov <aris@altlinux.org> 0.1.33-alt1
 - 0.1.33
 
