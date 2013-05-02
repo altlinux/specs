@@ -1,6 +1,6 @@
 %define _unpackaged_files_terminate_build 1
 %define unstable 0
-%define post_version 1
+%define post_version 0
 
 %define build_req_kde_ver 4.6.0
 %define build_req_kdevplatform_ver 1.5.0
@@ -32,9 +32,9 @@
 %add_findreq_skiplist %_K4apps/kdevpythonsupport/documentation_files/subprocess.py
 
 Name: %kdevelop-for-python
-Version: 1.4.90
+Version: 1.5.0
 Serial: 3
-Release: alt1.git
+Release: alt1
 
 Summary: Python Language Plugin for KDevelop.
 License: GPLv2
@@ -95,6 +95,10 @@ Python Language Plugin for KDevelop.
 %_K4apps/kdevappwizard/templates/*
 
 %changelog
+* Fri May  3 2013 Alexey Morozov <morozov@altlinux.org> 3:1.5.0-alt1
+- Release 1.5.0 (actually, the same codebase as for previous RPM
+  build)
+
 * Tue Apr 30 2013 Alexey Morozov <morozov@altlinux.org> 3:1.4.90-alt1.git
 - Initial build for ALTLinux: a preliminary version of python module for
   KDevelop-1.5.0
