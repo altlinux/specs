@@ -19,7 +19,7 @@
 
 Name: xorg-server
 Version: 1.14.1
-Release: alt1
+Release: alt2
 Epoch: 2
 License: MIT/X11
 Summary: Xserver - X Window System display server
@@ -298,6 +298,9 @@ install -pD -m644 xorg-sdk.rpmmacros %buildroot%_rpmmacrosdir/xorg-sdk
 %_rpmmacrosdir/xorg-sdk
 
 %changelog
+* Thu May 02 2013 Valery Inozemtsev <shrek@altlinux.ru> 2:1.14.1-alt2
+- fixed uninitialized variable in glxdri.c (closes #28782)
+
 * Wed Apr 17 2013 Valery Inozemtsev <shrek@altlinux.ru> 2:1.14.1-alt1
 - 1.14.1
 
