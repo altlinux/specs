@@ -2,7 +2,7 @@
 
 Name: lash
 Version: 0.6.0
-Release: alt0.20090725.5
+Release: alt0.20090725.6
 
 Summary: A session management system for JACK audio systems
 Summary(ru_RU.UTF-8): Менеджер сессий для сервера JACK
@@ -16,7 +16,7 @@ Patch0: %name-0.6.0-alt-DSO.patch
 
 BuildPreReq: rpm-build-licenses
 # Automatically added by buildreq on Tue Aug 04 2009
-BuildRequires: gcc-c++ jackit-devel libalsa-devel libdbus-devel libgtk+2-devel libreadline-devel libuuid-devel libxml2-devel swig tetex-core
+BuildRequires: gcc-c++ jackit-devel libalsa-devel libdbus-devel libgtk+2-devel libreadline-devel libuuid-devel libxml2-devel swig tetex-core python-devel
 
 %description
 LASH is a session management system for GNU/Linux audio applications. It allows
@@ -62,13 +62,13 @@ Requires: liblash = %version-%release
 Static libs for building statically linked software that uses lib%name
 %endif
 
-#%package -n python-module-lash
-#Summary: Python wrapper for LASH
-#Group: Development/Python
-#Requires: liblash = %version-%release
+%package -n python-module-lash
+Summary: Python wrapper for LASH
+Group: Development/Python
+Requires: liblash = %version-%release
 
-#%description -n python-module-lash
-#Python bindings for LASH
+%description -n python-module-lash
+Python bindings for LASH
 
 %prep
 %setup
@@ -76,7 +76,7 @@ Static libs for building statically linked software that uses lib%name
 
 %build
 %autoreconf
-%configure --without-jack-dbus --without-python
+%configure --without-jack-dbus --with-python
 %make_build
 
 %install
@@ -110,6 +110,13 @@ Exec=%_bindir/lash_panel
 Terminal=false
 Type=AudioVideo;Audio;
 EOF
+
+if [ %python_sitelibdir_noarch != %python_sitelibdir ]; then
+  if [ -d %buildroot%python_sitelibdir_noarch ]; then
+    mkdir -p %buildroot%python_sitelibdir
+    mv %buildroot%python_sitelibdir_noarch/* %buildroot%python_sitelibdir/
+  fi
+fi
 
 
 %find_lang %name
@@ -145,13 +152,16 @@ EOF
 %_libdir/lib/liblash.a
 %endif
 
-#%files -n python-module-lash
-#%python_sitelibdir/*lash*.so
-#%python_sitelibdir/*lash*.py
-#%python_sitelibdir/*lash*.pyc
-#%python_sitelibdir/*lash*.pyo
+%files -n python-module-lash
+%python_sitelibdir/*lash*.so
+%python_sitelibdir/*lash*.py
+%python_sitelibdir/*lash*.pyc
+%python_sitelibdir/*lash*.pyo
 
 %changelog
+* Thu May 02 2013 Igor Vlasenko <viy@altlinux.ru> 0.6.0-alt0.20090725.6
+- restored python-module-lash - required by other packages
+
 * Mon Feb 25 2013 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.6.0-alt0.20090725.5
 - fixed build on arm
 
