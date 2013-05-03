@@ -12,7 +12,7 @@
 %def_enable ctpp2
 
 Name: nginx
-Version: 1.2.8
+Version: 1.4.0
 Release: alt1
 
 Summary: Fast HTTP server
@@ -31,7 +31,6 @@ Source8: ngx_ctpp2.tar
 Source9: %name.service
 Patch0: alt-mime-types.patch
 Patch1: nginx-0.8-syslog.patch
-Patch2: nginx-perl-vendor.patch
 
 Packager: Denis Smirnov <mithraen@altlinux.ru>
 
@@ -81,7 +80,8 @@ Fast HTTP server, extremely useful as an Apache frontend
 %if_with syslog
 %patch1 -p2
 %endif
-%patch2 -p2
+
+sed -i 's/INSTALLSITEMAN3DIR=.*/INSTALLDIRS=vendor/' auto/lib/perl/make
 
 %build
 %ifarch i686
@@ -140,6 +140,7 @@ CFLAGS="%optflags $CPU" ./configure \
 	--with-http_gzip_static_module \
 	--with-http_stub_status_module \
 	--with-http_secure_link_module \
+        --with-http_spdy_module \
 %if_with geoip
 	--with-http_geoip_module \
 %endif
@@ -253,6 +254,10 @@ sed -i 's/\(types_hash_bucket_size[[:space:]]*\)[[:space:]]32[[:space:]]*;[[:spa
 %preun_service %name
 
 %changelog
+* Fri May 03 2013 Denis Smirnov <mithraen@altlinux.ru> 1.4.0-alt1
+- 1.4.0
+- enable http_spdy_module
+
 * Wed Apr 17 2013 Anton Farygin <rider@altlinux.ru> 1.2.8-alt1
 - new version
 
