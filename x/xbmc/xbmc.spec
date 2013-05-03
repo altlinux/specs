@@ -1,5 +1,5 @@
 Name: xbmc
-Version: 12.1
+Version: 12.2
 Release: alt1
 
 Summary: XBMC Media Center
@@ -61,10 +61,10 @@ touch xvdr/{NEWS,AUTHORS,ChangeLog}
 	--enable-external-libraries \
 	--disable-external-ffmpeg \
 	--enable-pulse \
+	--with-lirc-device=/var/run/lirc/lircd \
 %ifarch %arm
 	--enable-gles \
 	--disable-projectm \
-	--with-platform=marvell-dove \
 %endif
 	#
 
@@ -162,6 +162,9 @@ E_O_F
 %_datadir/xbmc/userdata
 
 %changelog
+* Fri May 03 2013 Sergey Bolshakov <sbolshakov@altlinux.ru> 12.2-alt1
+- 12.2 released
+
 * Tue Mar 19 2013 Sergey Bolshakov <sbolshakov@altlinux.ru> 12.1-alt1
 - 12.1 Frodo released
 
