@@ -34,7 +34,7 @@
 %define bugfix 13.1
 Name: kdebase
 Version: %major.%minor.%bugfix
-Release: alt6
+Release: alt7
 %define reqver %major.%minor
 
 Summary: Trinity Desktop Environment - Core files
@@ -1948,6 +1948,10 @@ test ! -L %x11confdir/kdm && rm -rf %x11confdir/kdm ||:
 
 
 %changelog
+* Fri May 03 2013 Roman Savochenko <rom_as@altlinux.ru> 3.5.13.1-alt7
+- Update to current 3.5.13-sru branch.
+- Some default configs update.
+
 * Tue Feb 26 2013 Roman Savochenko <rom_as@altlinux.ru> 3.5.13.1-alt6
 - Update to current 3.5.13-sru branch.
 
