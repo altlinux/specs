@@ -6,7 +6,7 @@
 %define ldir %_libdir/petsc-%scalar_type
 Name: %oname-%scalar_type
 Version: 1.1.0
-Release: alt2.bzr20130130
+Release: alt3.bzr20130130
 Epoch: 1
 Summary: C++/Python library for solving differential equations
 License: LGPL v3+
@@ -22,7 +22,7 @@ Requires: python-module-%name = %epoch:%version-%release
 Requires: python-module-%{name}_utils = %epoch:%version-%release
 Requires: gcc%__gcc_version_base-c++ ufc-devel
 Requires: lib%name = %epoch:%version-%release
-BuildPreReq: python-module-petsc-config
+BuildPreReq: python-module-petsc-config libdakota-devel
 BuildPreReq: python-module-Pyro4 python-module-Scientific
 BuildPreReq: python-module-fiat %mpiimpl-devel python-devel libcgal-devel
 BuildPreReq: cmake swig libgts-devel libxml2-devel libnumpy-devel
@@ -350,6 +350,9 @@ sed -i 's|debug optimized||' %buildroot%_pkgconfigdir/%name.pc
 %ldir/python/%{oname}_utils
 
 %changelog
+* Thu May 02 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:1.1.0-alt3.bzr20130130
+- Rebuilt with Trilinos 11.2.3
+
 * Sun Feb 10 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:1.1.0-alt2.bzr20130130
 - Rebuilt with Boost 1.53.0
 

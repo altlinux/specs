@@ -8,7 +8,7 @@ Name: %oname-%scalar_type
 Version: 0.8.0
 %define blibdir %_builddir/%name-%version/lib/%_arch-alt-linux-gnu_opt
 %define clibdir %_builddir/%name-%version/contrib/lib/%_arch-alt-linux-gnu_opt
-Release: alt7.svn20120913
+Release: alt8.svn20120913
 Summary: Numerical simulation of partial differential equations
 License: LGPL v2.1
 Group: Sciences/Mathematics
@@ -38,7 +38,7 @@ BuildPreReq: liboptika10-devel libctrilinos10-devel libpiro10-devel
 BuildPreReq: libmesquite10-devel librythmos10-devel libSTK10-devel
 BuildPreReq: libsacado10-devel libshards10-devel libglobipack10-devel
 BuildPreReq: liboptipack10-devel libpliris10-devel libpamgen10-devel
-BuildPreReq: libseacas10-devel libseacas10-apps-devel libkomplex10-devel
+BuildPreReq: libseacas10-devel libkomplex10-devel libdakota-devel
 BuildPreReq: libfei10-devel libteko10-devel libtrikota10-devel
 BuildPreReq: libintrepid10-devel libphalanx10-devel libmoertel10-devel
 BuildPreReq: libstokhos10-devel liblaspack-devel libnetcdf_c++4-mpi-devel
@@ -482,6 +482,9 @@ popd
 %endif
 
 %changelog
+* Thu May 02 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.0-alt8.svn20120913
+- Rebuilt with Trilinos 11.2.3
+
 * Sun Feb 10 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.0-alt7.svn20120913
 - Rebuilt with Boost 1.53.0
 
@@ -606,4 +609,3 @@ popd
 
 * Thu Aug 27 2009 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.3_rc1-alt1
 - Initial build for Sisyphus
-

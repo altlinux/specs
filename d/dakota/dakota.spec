@@ -1,13 +1,15 @@
+%set_verify_elf_method unresolved=relaxed
+
 %define mpiimpl openmpi
 %define mpidir %_libdir/%mpiimpl
 %set_compress_method gzip
 
 %define teuver 10
 Name: dakota
-Version: 5.2
+Version: 5.3
 %define somver 0
 %define sover %somver.0.0
-Release: alt8
+Release: alt1
 Epoch: 1
 Summary: Design Analysis Kit for Optimization and Terascale Applications
 License: LGPL v2.1
@@ -35,7 +37,7 @@ BuildPreReq: texlive-xetex cmake libxkbfile-devel chrpath
 BuildPreReq: libplplot-fortran-devel libstdc++-devel liblinpack-devel
 BuildPreReq: boost-program_options-devel libgsl-devel libXScrnSaver-devel
 BuildPreReq: libXcomposite-devel libXdamage-devel libXdmcp-devel
-BuildPreReq: libXxf86misc-devel libXxf86vm-devel
+BuildPreReq: libXxf86misc-devel libXxf86vm-devel libsuperlu-devel
 Requires: plplot-tk libnewmat
 
 %description
@@ -92,7 +94,7 @@ cp packages/pecos/packages/LHS/mods/Cparam.f90 \
 cp packages/OPTPP/include/Constraint.h \
 	packages/OPTPP/include/DConstraint.h
 rm -fR methods/OPTPP/newmat11 \
-	packages/plplot packages/boost packages/teuchos \
+	packages/plplot packages/boost \
 	packages/pecos/packages/fftw packages/OPTPP/newmat11
 
 sed -i 's|@SOVERSION@|%somver|g' src/CMakeLists.txt \
@@ -110,96 +112,83 @@ sed -i "s|@64@|$LIB64|g" packages/acro/config/siteconfig.ini
 #done
 
 %build
-mpi-selector --set %mpiimpl
-source %mpidir/bin/mpivars.sh
-export OMPI_LDFLAGS="-Wl,--as-needed,-rpath=%mpidir/lib -L%mpidir/lib"
+#mpi-selector --set %mpiimpl
+#source %mpidir/bin/mpivars.sh
+#export OMPI_LDFLAGS="-Wl,--as-needed,-rpath=%mpidir/lib -L%mpidir/lib"
 
-DEFS="-DOPT_COMPATIBLE -DArith_Kind_ASL=1 -DIEEE_8087=1 -DUSING_DOUBLE"
-DEFS="$DEFS -Duse_namespace -DHAVE_TEUCHOS_BLASFLOAT -DOMPI_SKIP_MPICXX"
-DEFS="$DEFS -DWITH_MPI"
-INCS="-I%_includedir/X11 -I%mpidir/include -I%_includedir/arprec"
-INCS="$INCS -I%_includedir/numpy -I%_includedir/newmat"
-INCS="$INCS -I%_includedir/plplot -I%_includedir/fftw3-mpi"
-INCS="$INCS -I%_includedir/plplot"
-%add_optflags $INCS -fno-strict-aliasing $DEFS %optflags_shared
-LIBS="-larprec -lexpat -lxml2 -ldl -lXmu -lXm -lXt -lpthread -lm"
-LIBS="$LIBS -lteuchos -llapack -lopenblas -lgfortran"
-LIBS="$LIBS -L%mpidir/lib -lmpi_cxx -lmpi -Wl,-R%mpidir/lib -lstdc++"
-export MPIDIR=%mpidir
-export LIBTOOLDIR=$PWD
-#sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' \
-#	configure ltmain.sh *.m4 packages/*/ltmain.sh packages/*/*.m4 \
-#	packages/*/configure
-%configure \
-       --includedir=%_includedir/%name \
-       --enable-shared \
-       --disable-static \
-       --enable-docs \
-       --without-acro \
-       --with-teuchos-include=%_includedir \
-       --with-teuchos-lib=%_libdir \
-       --with-incdirs="$INCS" \
-       --with-blas=openblas \
-       --with-lapack=lapack \
-       --enable-f77 \
-       --with-boost=%_includedir \
-       --with-x \
-       --with-gsl=%prefix \
-       --enable-teuchos-arprec \
-       --with-libs="$LIBS" \
-       --enable-teuchos-expat \
-       --enable-teuchos-libxml2 \
-       --enable-teuchos-boost \
-       --enable-mpi \
-       --with-mpi=%mpidir \
-       --with-python \
-       --with-graphics \
-       --with-plugin \
-			 --without-ampl
+%add_optflags -DOPT_COMPATIBLE -DArith_Kind_ASL=1 -DIEEE_8087=1 -DWITH_MPI
+%add_optflags -Duse_namespace -DHAVE_TEUCHOS_BLASFLOAT -DOMPI_SKIP_MPICXX
+%add_optflags -I%_includedir/X11 -I%mpidir/include -I%_includedir/arprec
+%add_optflags -I%_includedir/numpy -I%_includedir/newmat
+%add_optflags -I%_includedir/plplot -I%_includedir/fftw3-mpi
+%add_optflags -I%_includedir/plplot
+%add_optflags -fno-strict-aliasing %optflags_shared
 
-sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' libtool
-%make_build
+mkdir BUILD
+pushd BUILD
+cmake \
+	-DCMAKE_INSTALL_PREFIX:PATH=%prefix \
+	-DCMAKE_C_FLAGS:STRING="%optflags" \
+	-DCMAKE_CXX_FLAGS:STRING="%optflags" \
+	-DCMAKE_Fortran_FLAGS:STRING="%optflags" \
+	-DBLAS_LIB:FILEPATH=%_libdir/libopenblas.so \
+	-DBLAS_LIBRARY_NAMES:STRING=openblas \
+	-DBLAS_LIBS:FILEPATH=%_libdir/libopenblas.so \
+	-DBUILD_TESTING:BOOL=OFF \
+	-DCMAKE_STRIP:FILEPATH="/bin/echo" \
+	-DDAKOTA_ENABLE_TESTS:BOOL=OFF \
+	-DDAKOTA_HAVE_GSL:BOOL=ON \
+	-DDAKOTA_HAVE_MPI:BOOL=OFF \
+	-DENABLE_DAKOTA_DOCS:BOOL=ON \
+	-DOPTPP_HAVE_MPI:BOOL=OFF \
+	-DHAVE_ACRO:BOOL=OFF \
+	-DHAVE_AMPL:BOOL=OFF \
+	-DCMAKE_SKIP_INSTALL_RPATH:BOOL=ON \
+	-DCMAKE_SKIP_RPATH:BOOL=ON \
+	..
+
+%make_build VERBOSE=1
 
 pushd docs
-%make pdf
-%make -C latex-user pdf-local
 doxygen
+%make -C latex-user docs-pdf-user
+%make -C latex-theory docs-pdf-theory
+popd
+
 popd
 
 %install
-source %mpidir/bin/mpivars.sh
-export OMPI_LDFLAGS="-Wl,--as-needed,-rpath=%mpidir/lib -L%mpidir/lib"
+#source %mpidir/bin/mpivars.sh
+#export OMPI_LDFLAGS="-Wl,--as-needed,-rpath=%mpidir/lib -L%mpidir/lib"
 
-export MPIDIR=%mpidir
-export LIBTOOLDIR=$PWD
+pushd BUILD
 
 %makeinstall_std
 
+%ifarch x86_64
+install -d %buildroot%_libdir
+mv %buildroot%_libexecdir/* %buildroot%_libdir/
+%endif
+
 install -d %buildroot%_datadir/%name
 mv %buildroot%_bindir/%name.input.* %buildroot%_datadir/%name/
-install -d %buildroot%_docdir/%name
-install -m644 docs/latex-user/*.pdf %buildroot%_docdir/%name
 
-# make all static as shared libraries
-pushd %buildroot%_libdir
-for i in libncsuopt libnidr
-do
-	mpic++ -shared -Wl,--whole-archive $i.a -Wl,--no-whole-archive \
-		-o $i.so.%sover -Wl,-soname,$i.so.%somver  -L. -ldakota \
-		-llapack -lopenblas -lm \
-		-L%mpidir/lib -Wl,-rpath,%mpidir/lib -lgfortran -Wl,-z,defs
-	ln -s $i.so.%sover $i.so.%somver
-	ln -s $i.so.%somver $i.so
-done
-popd
-
-for i in %buildroot%_bindir/* %buildroot%_libdir/*.so
-do
-	chrpath -r %mpidir/lib $i || chrpath -d $i ||:
-done
+#for i in %buildroot%_bindir/* %buildroot%_libdir/*.so
+#do
+#	chrpath -r %mpidir/lib $i || chrpath -d $i ||:
+#done
 
 install -d %buildroot%_man3dir
 install -m644 docs/man-dev/man3/* %buildroot%_man3dir
+
+popd
+
+install -d %buildroot%_includedir/%name
+mv %buildroot%_includedir/*.h* %buildroot%_includedir/*.H \
+	%buildroot%_includedir/Makefile* %buildroot%_includedir/*.cmake \
+	%buildroot%_includedir/%name/
+
+# install necessary headers
 
 install -p -m644 \
 	packages/JEGA/eddy/config/include/current_function.hpp \
@@ -208,7 +197,6 @@ install -p -m644 \
 	packages/JEGA/eddy/threads/include/inline/mutex.hpp.inl \
 	packages/JEGA/eddy/threads/include/inline/mutex_lock.hpp.inl \
 	packages/JEGA/eddy/threads/include/thread_exceptions.hpp \
-	packages/DDACE/ddace_config.h \
 	%buildroot%_includedir/%name
 install -d %buildroot%_includedir/%name/threads/include
 install -p -m644 packages/JEGA/eddy/threads/include/config.hpp \
@@ -358,19 +346,22 @@ ln -s ../../macros.hpp \
 %_datadir/%name
 
 %files doc
-%doc docs/latex-user/*.pdf
-%doc docs/html-dev
-%_docdir/%name
+%doc BUILD/docs/latex-user/*.pdf
+%doc BUILD/docs/latex-theory/*.pdf
+%doc BUILD/docs/html-dev
 %_man3dir/*
 
 %files -n lib%name
-%_libdir/*.so.*
+%_libdir/*.so
 
 %files -n lib%name-devel
-%_libdir/*.so
 %_includedir/*
+%_libdir/cmake
 
 %changelog
+* Sat Apr 27 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:5.3-alt1
+- Version 5.3 (without MPI)
+
 * Sun Feb 10 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:5.2-alt8
 - Rebuilt with Boost 1.53.0
 

@@ -1,6 +1,6 @@
 %def_without docs
 #ExclusiveArch: %ix86
-%def_with dakota
+%def_without dakota
 %def_without petsc
 %define mpiimpl openmpi
 %define mpidir %_libdir/%mpiimpl
@@ -14,7 +14,7 @@ interchanging, and provides a full-featured set of concrete classes that \
 implement all abstract interfaces.
 
 %define somver 10
-%define sover %somver.11.0
+%define sover %somver.11.2
 %define scalar_type real
 %define ldir %_libdir/petsc-%scalar_type
 
@@ -25,10 +25,10 @@ Name: %truename-docs
 %else
 Name: %truename
 %endif
-Version: 11.0.3
-Release: alt5
+Version: 11.2.3
+Release: alt1
 Summary: Solution of large-scale, complex multi-physics problems
-License: LGPL
+License: LGPL, BSD-style
 Group: Sciences/Mathematics
 Url: http://trilinos.sandia.gov/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
@@ -57,8 +57,7 @@ BuildPreReq: libscotch-devel libcheck-devel libblacs-devel
 BuildPreReq: libsuperlu_dist-devel libscalapack-devel libmumps-devel
 BuildPreReq: libparmetis0-devel libparpack-mpi-devel libarpack-devel
 BuildPreReq: libadolc-devel libtvmet-devel libchaco-devel libfiatxx-devel
-BuildPreReq: dblatex liboski-%scalar_type-devel
-BuildPreReq: liboski-%scalar_type-devel python-module-docutils
+BuildPreReq: liboski-%scalar_type-devel python-module-docutils dblatex
 BuildPreReq: libblitz-devel libtaucs-devel cmake ctest zlib-devel
 BuildPreReq: libhypre-devel libgomp-devel python-module-pysparse
 BuildPreReq: ghostscript-utils chrpath python-module-pyMPI
@@ -1907,7 +1906,7 @@ This package contains development files for SEACAS applications.
 Summary: SEACAS applications
 Group: Sciences/Mathematics
 Provides: seacas-apps = %version-%release
-Requires: libseacas%somver-apps = %version-%release
+#Requires: libseacas%somver-apps = %version-%release
 
 %description -n seacas%somver-apps
 %longdesc
@@ -2082,6 +2081,7 @@ install -d %buildroot%_includedir/PySundance
 cp ../packages/Sundance/python/src/*.hpp \
 	%buildroot%_includedir/PySundance
 
+%if 0
 pushd packages/Sundance/python
 install -d %buildroot%python_sitelibdir/PySundance
 install -p -m644 src/*.py src/*.so \
@@ -2089,14 +2089,17 @@ install -p -m644 src/*.py src/*.so \
 rm -f %buildroot%python_sitelibdir/PySundance/setup.py
 popd
 %endif
+%endif
 
 %if_with docs
+%if 0
 pushd packages/Sundance/python
 install -d %buildroot%_docdir/PySundance
 %make -C example
 cp -fR example \
 	%buildroot%_docdir/PySundance/
 popd
+%endif
 %endif
 
 popd # BUILD
@@ -2150,11 +2153,11 @@ rm -fR  $(find ./ -name '*.o') \
 	./%_libdir/libnemesis.so*
 #	./%_libexecdir/libnem_spread_app_lib.so* \
 popd
-install -m755 $TOPDIR/packages/seacas/applications/aprepro/aprepro \
-	$TOPDIR/packages/seacas/applications/epu/epu \
-	$TOPDIR/packages/seacas/applications/exodiff/exodiff \
-	$TOPDIR/packages/seacas/applications/exotxt/exotxt \
-	%buildroot%_bindir
+#install -m755 $TOPDIR/packages/seacas/applications/aprepro/aprepro \
+#	$TOPDIR/packages/seacas/applications/epu/epu \
+#	$TOPDIR/packages/seacas/applications/exodiff/exodiff \
+#	$TOPDIR/packages/seacas/applications/exotxt/exotxt \
+#	%buildroot%_bindir
 %endif
 
 # fix RPATH
@@ -2188,9 +2191,6 @@ done
 %ifarch x86_64
 mv %buildroot%_libexecdir/*.so* %buildroot%_libdir/
 %endif
-
-mv %buildroot%prefix/site-packages/*PerceptMesh* \
-	%buildroot%python_sitelibdir/
 %endif
 
 # fix file conflict with libmesh-doc
@@ -2204,7 +2204,7 @@ popd
 %if_without docs
 
 %files
-%doc CHANGELOG README RELEASE_NOTES *.txt
+%doc README RELEASE_NOTES *.txt
 
 %files headers
 %_includedir/*
@@ -2400,10 +2400,10 @@ popd
 %_libdir/libstratimikos*.so
 
 %files -n libteuchos%somver
-%_libdir/libteuchos.so.*
+%_libdir/libteuchos*.so.*
 
 %files -n libteuchos%somver-devel
-%_libdir/libteuchos.so
+%_libdir/libteuchos*.so
 
 %files -n libzoltan%somver
 %_libdir/libzoltan*.so.*
@@ -2425,10 +2425,12 @@ popd
 %ifarch x86_64
 %exclude %python_sitelibdir_noarch/PyTrilinos*
 %endif
-%python_sitelibdir/*PerceptMesh*
+#python_sitelibdir/*PerceptMesh*
 
+%if 0
 %files -n python-module-PySundance
 %python_sitelibdir/PySundance*
+%endif
 
 %files -n libshards%somver
 %_libdir/libshards.so.*
@@ -2505,7 +2507,7 @@ popd
 %_libdir/libglobipack.so
 
 %files -n libseacas%somver
-%_libdir/libIoex.so.*
+#_libdir/libIoex.so.*
 %_libdir/libIogn.so.*
 %_libdir/libIohb.so.*
 %_libdir/libIonit.so.*
@@ -2513,15 +2515,15 @@ popd
 %_libdir/libIoss.so.*
 %_libdir/libIotr.so.*
 %_libdir/libIoxf.so.*
-%_libdir/libaprepro_lib.so.*
-%_libdir/libexodus*.so.*
-%_libdir/libsupes.so.*
-%_libdir/libsuplib.so.*
-%_libdir/libchaco.so.*
-%_libdir/libmapvarlib.so.*
+#_libdir/libaprepro_lib.so.*
+#_libdir/libexodus*.so.*
+#_libdir/libsupes.so.*
+#_libdir/libsuplib.so.*
+#_libdir/libchaco.so.*
+#_libdir/libmapvarlib.so.*
 
 %files -n libseacas%somver-devel
-%_libdir/libIoex.so
+#_libdir/libIoex.so
 %_libdir/libIogn.so
 %_libdir/libIohb.so
 %_libdir/libIonit.so
@@ -2529,26 +2531,26 @@ popd
 %_libdir/libIoss.so
 %_libdir/libIotr.so
 %_libdir/libIoxf.so
-%_libdir/libaprepro_lib.so
-%_libdir/libexodus*.so
-%_libdir/libsupes.so
-%_libdir/libsuplib.so
-%_libdir/libchaco.so
-%_libdir/libmapvarlib.so
+#_libdir/libaprepro_lib.so
+#_libdir/libexodus*.so
+#_libdir/libsupes.so
+#_libdir/libsuplib.so
+#_libdir/libchaco.so
+#_libdir/libmapvarlib.so
 
 %files -n libxpetra%somver
-%_libdir/libmuelu-xpetra*.so.*
+%_libdir/libxpetra*.so.*
 
 %files -n libxpetra%somver-devel
-%_libdir/libmuelu-xpetra*.so
+%_libdir/libxpetra*.so
 
-%files -n libseacas%somver-apps
-%_libdir/libepu_lib.so.*
-%_libdir/*app_lib*.so.*
+#files -n libseacas%somver-apps
+#_libdir/libepu_lib.so.*
+#_libdir/*app_lib*.so.*
 
-%files -n libseacas%somver-apps-devel
-%_libdir/libepu_lib.so
-%_libdir/*app_lib*.so
+#files -n libseacas%somver-apps-devel
+#_libdir/libepu_lib.so
+#_libdir/*app_lib*.so
 
 %files -n seacas%somver-apps
 %_bindir/*
@@ -2587,12 +2589,20 @@ popd
 %dir %_docdir/%truename
 %_docdir/%truename/examples
 
+%if 0
 %files -n python-module-PySundance-examples
 %dir %_docdir/PySundance
 %_docdir/PySundance/example
 %endif
+%endif
 
 %changelog
+* Tue Apr 30 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 11.2.3-alt1
+- Version 11.2.3 (without PySundance)
+
+* Sat Apr 27 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 11.2.2-alt1
+- Version 11.2.2
+
 * Sun Feb 10 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 11.0.3-alt5
 - Rebuilt with Boost 1.53.0
 
