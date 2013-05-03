@@ -7,7 +7,7 @@
 
 Name: %oname-%scalar_type
 Version: 7.3
-Release: alt3.pre.svn20130201
+Release: alt4.pre.svn20130201
 Summary: A Finite Element Differential Equations Analysis Library (%scalar_type scalars)
 License: QPL v1.0
 Group: Sciences/Mathematics
@@ -26,7 +26,7 @@ BuildPreReq: libstratimikos10-devel libbelos10-devel librtop10-devel
 BuildPreReq: libsacado10-devel libthyra10-devel libtrilinos10-devel
 BuildPreReq: libmumps-devel libhypre-devel libsuitesparse-devel
 BuildPreReq: chrpath rpm-macros-make boost-signals-devel
-BuildPreReq: libnetcdf_c++-mpi-devel
+BuildPreReq: libnetcdf_c++-mpi-devel libdakota-devel
 
 Requires: lib%name = %version-%release
 
@@ -217,6 +217,9 @@ chmod +r %buildroot$PETSC_DIR/lib/*.so*
 %endif
 
 %changelog
+* Thu May 02 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 7.3-alt4.pre.svn20130201
+- Rebuilt with Trilinos 11.2.3
+
 * Sun Feb 03 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 7.3-alt3.pre.svn20130201
 - New snapshot
 

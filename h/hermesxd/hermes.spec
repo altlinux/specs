@@ -6,7 +6,7 @@
 %define oname hermes
 Name: %{oname}xd
 Version: 20110822
-Release: alt9
+Release: alt10
 Summary: hp-FEM library
 License: GPL, BSD
 Group: Sciences/Mathematics
@@ -24,7 +24,7 @@ BuildPreReq: %mpiimpl-devel python-devel python-module-sphinx-devel
 BuildPreReq: libkomplex10-devel libexodusii-devel boost-devel
 BuildPreReq: libqd-devel libvtk-devel libvtk-python-devel
 BuildPreReq: libhdf5-mpi-devel libnetcdf-mpi-devel
-BuildPreReq: libGLUT-devel
+BuildPreReq: libGLUT-devel libdakota-devel
 #BuildPreReq: libpetsc-complex-devel libpetsc-real-devel
 
 %description
@@ -222,6 +222,9 @@ cp -fR doc/_build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Fri May 03 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 20110822-alt10
+- Rebuilt with Trilinos 11.2.3
+
 * Sun Oct 28 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 20110822-alt9
 - Rebuilt with Trilinos 11.0.3
 
