@@ -13,7 +13,7 @@ BuildRequires: /usr/bin/glib-gettextize gcc-c++ libgio-devel pkgconfig(dbus-1) p
 
 Name:           mate-mplayer
 Version:        1.0.7
-Release:        alt2_0101
+Release:        alt3_0101
 Summary:        An MPlayer GUI, a full-featured binary
 
 License:        GPLv2+
@@ -38,10 +38,11 @@ BuildRequires:	desktop-file-utils
 
 Requires:       mate-control-center
 Requires:       fuse-gvfs
-Requires:       mencoder%{?_isa}
-Requires:       %{name}-common%{?_isa} = %{version}-%{release}
+Requires:       mencoder
+Requires:       mplayer
+Requires:       %{name}-common = %{version}-%{release}
 
-Provides:       %{name}-binary%{?_isa} = %{version}-%{release}
+Provides:       %{name}-binary = %{version}-%{release}
 Source44: import.info
 Patch33: mate-mplayer-1.0.7-alt-no-mateconf.patch
 
@@ -187,6 +188,9 @@ desktop-file-validate $RPM_BUILD_ROOT%{_datadir}/applications/mate-mplayer.deskt
 
 
 %changelog
+* Sat May 04 2013 Igor Vlasenko <viy@altlinux.ru> 1.0.7-alt3_0101
+- added mplayer dep (closes: 28929)
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 1.0.7-alt2_0101
 dropped obsolete mate-conf BR:
 
