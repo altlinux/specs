@@ -5,7 +5,7 @@ BuildRequires: /usr/bin/glib-genmarshal /usr/bin/glib-gettextize libgio-devel pk
 %define _libexecdir %_prefix/libexec
 Name:           mate-media
 Version:        1.6.0
-Release:        alt1_1
+Release:        alt2_1
 Summary:        MATE media programs
 License:        GPLv2+ and LGPLv2+
 URL:            http://mate-desktop.org
@@ -30,6 +30,7 @@ Patch33: mate-media-1.5.2-alt-gst-mixer.patch
 Patch34: gnome-media-2.29.91-gst-mix_and_new_gvc_no_conflict.patch
 Patch35: gnome-media-2.32.0-g_debug.patch
 Patch36: gnome-media-alt-desktop-ru.po.patch
+Requires: gst-plugins-base
 
 
 %description
@@ -92,6 +93,9 @@ desktop-file-install                                                    \
 %{_datadir}/MateConf/gsettings/mate-volume-control.convert
 
 %changelog
+* Sat May 04 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.0-alt2_1
+- added gst dependency (closes: 28928)
+
 * Mon Apr 15 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.0-alt1_1
 - new fc release
 
