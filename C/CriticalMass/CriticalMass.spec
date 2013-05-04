@@ -1,9 +1,10 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: gcc-c++ libGL-devel libSDL-devel zlib-devel
 # END SourceDeps(oneline)
+%define fedora 19
 Name:           CriticalMass
 Version:        1.5
-Release:        alt2_7
+Release:        alt2_8
 Summary:        SDL/OpenGL space shoot'em up game also known as critter
 Group:          Games/Other
 License:        GPLv2+
@@ -14,7 +15,7 @@ Patch0:         CriticalMass-1.0.2-res-change-rh566533.patch
 Patch1:         CriticalMass-1.5-libpng15.patch
 Patch2:         CriticalMass-1.5-gcc47.patch
 BuildRequires:  libSDL_image-devel libSDL_mixer-devel libpng-devel curl-devel
-BuildRequires:  tinyxml-devel desktop-file-utils
+BuildRequires:  tinyxml-devel desktop-file-utils libtool
 Requires:       icon-theme-hicolor opengl-games-utils
 # Also known as critter, so make "yum install critter" work
 Provides:       critter = %{version}-%{release}
@@ -32,6 +33,8 @@ a tiny spacecraft and sent after them.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
+touch AUTHORS ChangeLog NEWS README
+autoreconf -i -f
 sed -i 's/curl-gnutls/curl/g' configure
 
 %build
@@ -51,7 +54,12 @@ rm $RPM_BUILD_ROOT%{_bindir}/Packer
 
 # below is the desktop file and icon stuff.
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/applications
-desktop-file-install --dir $RPM_BUILD_ROOT%{_datadir}/applications %{SOURCE1}
+desktop-file-install \
+%if 0%{?fedora} && 0%{?fedora} < 19
+              \
+%endif
+  --dir $RPM_BUILD_ROOT%{_datadir}/applications \
+  %{SOURCE1}
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/256x256/apps
 install -p -m 644 critter.png \
   $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/256x256/apps
@@ -61,10 +69,13 @@ install -p -m 644 critter.png \
 %{_bindir}/critter*
 %{_datadir}/Critical_Mass
 %{_mandir}/man6/critter.6*
-%{_datadir}/applications/%{name}.desktop
+%{_datadir}/applications/*%{name}.desktop
 %{_datadir}/icons/hicolor/256x256/apps/critter.png
 
 %changelog
+* Sat May 04 2013 Igor Vlasenko <viy@altlinux.ru> 1.5-alt2_8
+- update to new release by fcimport
+
 * Sun Feb 24 2013 Igor Vlasenko <viy@altlinux.ru> 1.5-alt2_7
 - update to new release by fcimport
 
