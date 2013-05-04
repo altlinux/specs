@@ -1,6 +1,6 @@
 Name:           sp
 Version:        5.2.1
-Release:        alt7
+Release:        alt10
 Summary:        School Portal
 Summary(ru):    Школьный портал
 License:        Distributable, non-free
@@ -55,6 +55,7 @@ rm -rf UDFlib-src
 # mkdir -p %buildroot/
 mkdir -p %buildroot/var/www/cgi-bin/sp/
 mkdir -p %buildroot/var/www/html/sp/
+mkdir -p %buildroot/var/www/html/sp/tmp/{img_report_links,img_report_parallel,img_report_school,img_report_teacher,img_subgrp,img_subj}
 
 # add by snejok@
 cp -r * %buildroot/
@@ -98,6 +99,9 @@ mv UDFLib.dll %buildroot/%_libdir/firebird/UDF/UDFLib.dll
 # Команды, выполняющиеся после распаковки файлов из пакета при установке на целевую систему
 # -------------------------------------------
 %post
+
+# ниже есть команды с относительными путями, для простоты переход делается в первую очередь
+cd /var/www/cgi-bin/sp/
 
 # -----------------------------------------------------------
 # Firebird классик:
@@ -194,10 +198,19 @@ chsh -s /bin/bash apache2
 # Обновление                        2 или больше
 # Удаление последней версии пакета  0
 
-# Чистый XXI поставляется опорталенной
+# -------------------------------
+# Базы
+# -------------------------------
 
-# обновление структуры базы
-perl update-db.pl sp.conf
+# Для ALT Linux XXI поставляется предварительно опорталенной
+
+# выполнять только если установка в первый раз
+if [ "$1" -eq 1 ]; then
+	echo 'Clean databases installed'
+else
+	# обновление структуры базы
+	perl update-db.pl sp.conf
+fi
 
 # больше не нужны
 rm -f -- update-sql.pl update-db.pl
@@ -299,9 +312,6 @@ fi
 # -----------------------------------------------------------
 # SP Setup
 # -----------------------------------------------------------
-
-cd /var/www/cgi-bin/sp/
-
 perl setup.pl --yes
 
 # -----------------------------------------------------------
@@ -369,6 +379,15 @@ a2ensite  default
 a2dissite 000-sp
 
 %changelog
+* Sat May 04 2013 Andrey V. Stroganov <dja@altlinux.org> 5.2.1-alt10
+- do not scan for updates on install; fix tmp path
+
+* Sat May 04 2013 Andrey V. Stroganov <dja@altlinux.org> 5.2.1-alt9
+- fix tmp dirs creation
+
+* Sat May 04 2013 Andrey V. Stroganov <dja@altlinux.org> 5.2.1-alt8
+- fix: chdir before setup.pl; tmp dirs creation
+
 * Tue Apr 30 2013 Andrey V. Stroganov <dja@altlinux.org> 5.2.1-alt7
 - add dependency: perl-libwww
 
