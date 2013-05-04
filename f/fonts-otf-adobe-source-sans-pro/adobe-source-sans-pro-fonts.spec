@@ -7,8 +7,8 @@ BuildRequires: unzip
 %global fontconf 63-%{fontname}.conf
 
 Name:           fonts-otf-adobe-source-sans-pro
-Version:        1.034
-Release:        alt1_2
+Version:        1.050
+Release:        alt1_1
 Summary:        A set of OpenType fonts designed for user interfaces
 
 License:        OFL
@@ -36,7 +36,7 @@ sed -i "s|\r||" LICENSE.txt
 
 %install
 install -m 0755 -d %{buildroot}%{_fontdir}
-install -m 0644 -p *.otf %{buildroot}%{_fontdir}
+install -m 0644 -p OTF/*.otf %{buildroot}%{_fontdir}
 
 install -m 0755 -d %{buildroot}%{_fontconfig_templatedir} \
                    %{buildroot}%{_fontconfig_confdir}
@@ -90,6 +90,9 @@ fi
 
 
 %changelog
+* Sat May 04 2013 Igor Vlasenko <viy@altlinux.ru> 1.050-alt1_1
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 1.034-alt1_2
 - update to new release by fcimport
 
