@@ -1,16 +1,16 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/gtkdocize gobject-introspection-devel pkgconfig(check) pkgconfig(gobject-2.0)
 # END SourceDeps(oneline)
+%add_optflags %optflags_shared
 Name: liblangtag
-Version: 0.4.0
-Release: alt1_3
+Version: 0.5.1
+Release: alt1_1
 Summary: An interface library to access tags for identifying languages
 
 Group: System/Libraries
 License: LGPLv3+
 URL: http://tagoh.bitbucket.org/liblangtag/
 Source0: https://bitbucket.org/tagoh/%{name}/downloads/%{name}-%{version}.tar.bz2
-Patch0: 0001-Fix-build-issues-with-MSVC.patch
 
 BuildRequires: gtk-doc
 BuildRequires: libtool
@@ -56,7 +56,6 @@ The %{name}-doc package contains documentation files for %{name}.
 
 %prep
 %setup -q
-%patch0 -p1
 
 
 %build
@@ -91,6 +90,9 @@ rm -f %{buildroot}/%{_libdir}/*.la %{buildroot}/%{_libdir}/%{name}/*.la
 
 
 %changelog
+* Sat May 04 2013 Igor Vlasenko <viy@altlinux.ru> 0.5.1-alt1_1
+- update to new release by fcimport
+
 * Thu Apr 25 2013 Igor Vlasenko <viy@altlinux.ru> 0.4.0-alt1_3
 - initial fc import
 
