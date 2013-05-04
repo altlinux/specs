@@ -1,11 +1,12 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: libGL-devel libGLU-devel libSDL-devel
 # END SourceDeps(oneline)
+%define fedora 19
 %define prever pre2
 
 Name:           atomorun
 Version:        1.1
-Release:        alt5_0.14.%{prever}
+Release:        alt5_0.15.%{prever}
 Summary:        Jump & Run game where you have to flee an exploding nuclear bomb
 Group:          Games/Other
 License:        GPL+
@@ -15,7 +16,7 @@ Source0:        %{name}-%{version}_%{prever}.tar.gz
 Source1:        atomorun.desktop
 Patch0:         atomorun-1.1-missing-protos.patch
 BuildRequires:  libSDL_mixer-devel libSDL_image-devel libtiffxx-devel libtiff-devel libvorbis-devel
-BuildRequires:  libalsa-devel desktop-file-utils
+BuildRequires:  libalsa-devel desktop-file-utils libtool
 Requires:       icon-theme-hicolor
 Source44: import.info
 
@@ -23,13 +24,17 @@ Source44: import.info
 Atomorun is a OpenGL Jump&Run game where you have to flee an exploding
 nuclear bomb.
 
+
 %prep
 %setup -q -n %{name}-%{version}_%{prever}
 %patch0 -p1
+autoreconf -i -f
+
 
 %build
 %configure
 make %{?_smp_mflags}
+
 
 %install
 %makeinstall_std
@@ -37,10 +42,16 @@ rm $RPM_BUILD_ROOT%{_datadir}/%{name}/pixmaps/atomorun_winicon.ico
 rm -rf $RPM_BUILD_ROOT%{_prefix}/doc/%{name}
 
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/applications
-desktop-file-install --dir $RPM_BUILD_ROOT%{_datadir}/applications %{SOURCE1}
+desktop-file-install \
+%if 0%{?fedora} && 0%{?fedora} < 19
+  --vendor fedora            \
+%endif
+  --dir $RPM_BUILD_ROOT%{_datadir}/applications \
+  %{SOURCE1}
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/48x48/apps
 install -p -m 644 pixmaps/%{name}_icon.png \
   $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/48x48/apps/%{name}.png
+
 
 %files
 %doc AUTHORS ChangeLog COPYING README TODO
@@ -49,7 +60,11 @@ install -p -m 644 pixmaps/%{name}_icon.png \
 %{_datadir}/applications/%{name}.desktop
 %{_datadir}/icons/hicolor/48x48/apps/%{name}.png
 
+
 %changelog
+* Sat May 04 2013 Igor Vlasenko <viy@altlinux.ru> 1.1-alt5_0.15.pre2
+- update to new release by fcimport
+
 * Fri Feb 15 2013 Igor Vlasenko <viy@altlinux.ru> 1.1-alt5_0.14.pre2
 - update to new release by fcimport
 
