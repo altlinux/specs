@@ -1,16 +1,15 @@
 Name: libatomic_ops
-Version: 1.2
+Version: 7.2d
 Release: alt1
 
-Summary: library for accessing hardware provided atomic memory operations
+Summary: A library for accessing hardware provided atomic memory operations
 Group: Development/C
-License: Distributable
-Url: http://www.hpl.hp.com/research/linux/atomic_ops
-
-Source0: %name-%version.tar.bz2
+License: GPLv2+ and MIT
+Url: http://www.hpl.hp.com/research/linux/atomic_ops/
+Source: http://www.hpl.hp.com/research/linux/atomic_ops/download/%name-%version.tar.gz
 
 %package devel-static
-Summary: library for accessing hardware provided atomic memory operations
+Summary: A library for accessing hardware provided atomic memory operations
 Group: Development/C
 
 %description
@@ -38,24 +37,28 @@ atomic memory operations.  These might allow you to write code:
 - To experiment with new and much better thread programming paradigms, etc.
 
 %prep
-%setup
+%setup -n %name-7.2
 
 %build
 %configure
 %make_build
 
 %install
-%makeinstall
-rm -f doc/Makefile*
+%makeinstall_std
+
+%check
+%make_build -k check
 
 %files devel-static
-%doc doc AUTHORS ChangeLog COPYING INSTALL NEWS README
-%_includedir/atomic_ops
-%_includedir/atomic_ops.h
-%_includedir/atomic_ops_malloc.h
-%_includedir/atomic_ops_stack.h
-%_libdir/%{name}*.a
+%_libdir/*.a
+%_includedir/*
+%_pkgconfigdir/*.pc
+%exclude %_datadir/%name/
+%doc AUTHORS ChangeLog README doc/[LR]*
 
 %changelog
+* Sat Sep 01 2012 Dmitry V. Levin <ldv@altlinux.org> 7.2d-alt1
+- Updated to 7.2d.
+
 * Thu Jun 28 2007 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.2-alt1
 - Initial build
