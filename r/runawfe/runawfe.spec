@@ -88,8 +88,8 @@
 %define _sysconfdir_init_d	   %_sysconfdir/rc.d/init.d
 
 Name: runawfe
-Version: 3.5.0
-Release: alt1.svn4065
+Version: 3.6.0
+Release: alt1.svn4694
 Summary: RUNA WFE Workflow/BPM management system
 License: LGPL
 Group: Office
@@ -592,7 +592,10 @@ pushd .
 install -d %buildroot%_sysconfdir_init_d
 cp wfe/resources/distr-build/rpm/common/runawfe %buildroot/%_sysconfdir_init_d
 
-
+%ifdef _unitdir
+install -d %buildroot/%_unitdir
+cp wfe/resources/distr-build/rpm/common/runawfe.service %buildroot/%_unitdir 
+%endif
 
 popd
 
@@ -641,7 +644,7 @@ chkconfig --del runawfe
 
 %postun botstation
 
-cd %JBOSS_ROOT_TARGET/server/%jboss_cfg_botstation
+cd %JBOSS_ROOT_TARGET/server/%jboss_cfg_botstation || exit -1
 rm -Rf log tmp work
 rm -Rf lib
 cd conf && rm -Rf `ls %JBOSS_ROOT_TARGET/server/default/conf`
@@ -741,7 +744,7 @@ chkconfig --del runawfe
 
 %postun server
 
-cd %JBOSS_ROOT_TARGET/server/%jboss_cfg_server
+cd %JBOSS_ROOT_TARGET/server/%jboss_cfg_server || exit -1
 rm -Rf log tmp work
 rm -Rf lib
 cd conf && rm -Rf `ls %JBOSS_ROOT_TARGET/server/default/conf`
@@ -772,7 +775,7 @@ chmod +xxx %_sbindir/runawfe-start.sh
 
 %postun simulation
 
-cd %JBOSS_ROOT_TARGET/server/%jboss_cfg_simulation
+cd %JBOSS_ROOT_TARGET/server/%jboss_cfg_simulation || exit -1
 rm -Rf log tmp work
 rm -Rf lib
 cd conf && rm -Rf `ls %JBOSS_ROOT_TARGET/server/default/conf`
@@ -800,6 +803,10 @@ rm -f %_sbindir/runawfe-start.sh
 %JBOSS_ROOT_TARGET/server/%jboss_cfg_botstation/data/*
 %_sysconfdir_init_d/*
 %_sbindir/runawfe-start-%botstation_id.sh
+
+%ifdef _unitdir
+%_unitdir/*
+%endif
 
 
 
@@ -866,7 +873,9 @@ rm -f %_sbindir/runawfe-start.sh
 %_sysconfdir_init_d/*
 %_sbindir/runawfe-start-%server_id.sh
 
-
+%ifdef _unitdir
+%_unitdir/*
+%endif
 
 
 
@@ -884,6 +893,6 @@ rm -f %_sbindir/runawfe-start.sh
 
 
 %changelog
-* Sun Sep 09 2012 Konstantinov Aleksey <kana@altlinux.org> 3.5.0-alt1.svn4065
+* Sat May 04 2013 Konstantinov Aleksey <kana@altlinux.org> 3.6.0-alt1.svn4694
 - New release
 
