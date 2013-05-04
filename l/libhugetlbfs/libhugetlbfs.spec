@@ -3,8 +3,8 @@ BuildRequires: perl(FindBin.pm) perl(sigtrap.pm)
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
 Name: libhugetlbfs
-Version: 2.15
-Release: alt1_2
+Version: 2.16
+Release: alt1_1
 Summary: A library which provides easy access to huge pages of memory
 
 Group: System/Libraries
@@ -12,10 +12,9 @@ License: LGPLv2+
 URL: http://libhugetlbfs.sourceforge.net/
 Source0: http://downloads.sourceforge.net/libhugetlbfs/%{name}-%{version}.tar.gz
 #Patch0: libhugetlbfs-2.13-s390x-build.patch
+
 BuildRequires: glibc-devel
 BuildRequires: glibc-devel-static
-Conflicts: kernel < 2.6.16
-Obsoletes: libhugetlbfs-test <= 1.1
 
 %define ldscriptdir %{_datadir}/%{name}/ldscripts
 Source44: import.info
@@ -105,6 +104,9 @@ rm -fr $RPM_BUILD_ROOT/%{_sbindir}/
 %exclude /usr/lib/perl5/TLBC
 
 %changelog
+* Sat May 04 2013 Igor Vlasenko <viy@altlinux.ru> 2.16-alt1_1
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 2.15-alt1_2
 - update to new release by fcimport
 
