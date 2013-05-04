@@ -1,9 +1,10 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/doxygen gcc-c++
 # END SourceDeps(oneline)
+%define fedora 19
 Name:           amoebax
-Version:        0.2.0
-Release:        alt5_11
+Version:        0.2.1
+Release:        alt1_1
 Summary:        Action-Puzzle Game
 Group:          Games/Other
 License:        GPLv2+ and Free Art
@@ -11,7 +12,7 @@ URL:            http://www.emma-soft.com/games/amoebax/
 Source0:        http://www.emma-soft.com/games/amoebax/download/amoebax-%{version}.tar.bz2
 Patch0:         amoebax-0.2.0-gcc43.patch
 BuildRequires:  libSDL_mixer-devel libSDL_image-devel zlib-devel libpng-devel
-BuildRequires:  libvorbis-devel doxygen desktop-file-utils
+BuildRequires:  libvorbis-devel doxygen desktop-file-utils libtool
 Requires:       icon-theme-hicolor
 Source44: import.info
 
@@ -32,13 +33,19 @@ mode will let you have a good time with your friends. There is also catchy
 music, funny sound effects, and beautiful screens that sure appeal to everyone
 in the family.
 
+
 %prep
 %setup -q
 %patch0 -p1
+rm m4/objc.m4 
+touch ChangeLog
+autoreconf -i -f
+
 
 %build
 %configure
 make %{?_smp_mflags}
+
 
 %install
 %makeinstall_std
@@ -48,20 +55,28 @@ rm $RPM_BUILD_ROOT%{_datadir}/doc/%{name}/manual.pdf
 # below is the desktop file and icon stuff.
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/applications
 desktop-file-install --dir $RPM_BUILD_ROOT%{_datadir}/applications \
+%if 0%{?fedora} && 0%{?fedora} < 19
+   --delete-original \
+%endif
   $RPM_BUILD_ROOT%{_datadir}/applications/%{name}.desktop
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/scalable/apps
 mv $RPM_BUILD_ROOT%{_datadir}/pixmaps/%{name}.svg \
   $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/scalable/apps
+
 
 %files
 %doc AUTHORS COPYING* NEWS README* THANKS TODO doc/manual.pdf
 %{_bindir}/%{name}
 %{_datadir}/%{name}
 %{_mandir}/man6/%{name}.6*
-%{_datadir}/applications/%{name}.desktop
+%{_datadir}/applications/*%{name}.desktop
 %{_datadir}/icons/hicolor/scalable/apps/%{name}.svg
 
+
 %changelog
+* Sat May 04 2013 Igor Vlasenko <viy@altlinux.ru> 0.2.1-alt1_1
+- update to new release by fcimport
+
 * Mon Feb 11 2013 Igor Vlasenko <viy@altlinux.ru> 0.2.0-alt5_11
 - update to new release by fcimport
 
