@@ -4,13 +4,14 @@ BuildRequires: /usr/bin/find /usr/bin/sdl-config gcc-c++ libGL-devel libGLU-deve
 Summary:        Action game in four spatial dimensions
 Name:           adanaxisgpl
 Version:        1.2.5
-Release:        alt4_14
+Release:        alt4_15
 License:        GPLv2
 Group:          Games/Other
 URL:            http://www.mushware.com/
 Source0:        http://www.mushware.com/files/%{name}-1.2.5.tar.gz
 Patch0:         adanaxisgpl-1.2.5-const.patch
 Patch1:         adanaxisgpl-1.2.5-gcc47.patch
+Patch2:         adanaxisgpl-1.2.5-xdg-open.patch
 BuildRequires:  desktop-file-utils
 BuildRequires:  libfreeglut-devel
 BuildRequires:  expat-devel
@@ -19,6 +20,7 @@ BuildRequires: libtiffxx-devel libtiff-devel
 BuildRequires:  libvorbis-devel
 BuildRequires:  pcre-devel
 BuildRequires:  libSDL_mixer-devel
+BuildRequires:  libtool
 Source44: import.info
 Patch33: adanaxisgpl-1.2.5-alt-nomessages.patch
 
@@ -41,6 +43,8 @@ Shading Language.
 %setup -q
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
+autoreconf -f -i
 %patch33 -p0
 
 
@@ -108,6 +112,9 @@ install -p -m 644 x11/icons/%{name}-48.png %{buildroot}%{_datadir}/icons/hicolor
 
 
 %changelog
+* Sat May 04 2013 Igor Vlasenko <viy@altlinux.ru> 1.2.5-alt4_15
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 1.2.5-alt4_14
 - update to new release by fcimport
 
