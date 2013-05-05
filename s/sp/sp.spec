@@ -1,6 +1,6 @@
 Name:           sp
 Version:        5.2.1
-Release:        alt13
+Release:        alt14
 Summary:        School Portal
 Summary(ru):    Школьный портал
 License:        Distributable, non-free
@@ -159,9 +159,9 @@ fi
 # a2enmod headers
 
 # Выключем "It Works!"
-a2dissite 000-default
+/usr/sbin/a2dissite 000-default
 # Включаем SP
-a2ensite  000-sp
+/usr/sbin/a2ensite 000-sp
 
 echo "Turning off ServerTokens Full in Apache for better security"
 perl -i-original -p -e 's/^ServerTokens Full$/ServerTokens Prod/' /etc/httpd2/conf/extra-available/httpd-default.conf
@@ -195,6 +195,9 @@ chsh -s /bin/bash apache2
 # выполнять только если установка в первый раз
 if [ "$1" -eq 1 ]; then
 	echo 'Clean databases installed'
+	# в альте базы требуют складывать не как принято у нас,
+	# конфиг отныне будем класть как для всех, но патчить его после установки в пакетах для альта
+	perl -i -p -e 's!/opt/xxi/data/!/var/lib/firebird/xxi/!' /var/www/cgi-bin/sp/sp.conf
 else
 	# обновление структуры базы
 	perl update-db.pl sp.conf
@@ -367,6 +370,9 @@ a2ensite  default
 a2dissite 000-sp
 
 %changelog
+* Sun May 05 2013 Andrey V. Stroganov <dja@altlinux.org> 5.2.1-alt14
+patch paths to DBs in sp.conf for alt reqs
+
 * Sun May 05 2013 Andrey V. Stroganov <dja@altlinux.org> 5.2.1-alt13
 removed user dir from files section
 
