@@ -1,6 +1,6 @@
 Name:           sp
 Version:        5.2.1
-Release:        alt10
+Release:        alt13
 Summary:        School Portal
 Summary(ru):    Школьный портал
 License:        Distributable, non-free
@@ -75,6 +75,7 @@ mv UDFLib.dll %buildroot/%_libdir/firebird/UDF/UDFLib.dll
 %attr(440,firebird,firebird) %_libdir/firebird/UDF/UDFLib.dll
 %attr(640,apache,apache)     /var/www/html/.htaccess
 %attr(640,apache,apache)     %config /etc/httpd2/conf/sites-available/000-sp.conf
+%attr(640,apache,apache)     %config /etc/httpd2/conf/mods-start.d/900-sp.conf
 %attr(750,root,root)         %config /etc/xinetd.d/sphelper
 %attr(750,root,root)         /usr/sbin/sp-add-admin
 %attr(750,root,root)         /usr/sbin/sphelper.pl
@@ -90,10 +91,6 @@ mv UDFLib.dll %buildroot/%_libdir/firebird/UDF/UDFLib.dll
 /var/www/html/sp/.htaccess
 %ghost %attr(640,apache,squid) /var/www/sp_htpasswd
 %ghost %attr(640,apache,squid) /var/www/sp_users_allowed
-# %ghost %attr(775,apache,apache) /var/www/html/sp/pic
-# %ghost %attr(777,root,root)     /var/www/html/sp/pic/gallery
-# %ghost %attr(775,apache,apache) /var/www/html/sp/pic/gallery.resize
-# %ghost %attr(775,apache,apache) /var/www/html/sp/pic/gallery.thumbs
 
 # -------------------------------------------
 # Команды, выполняющиеся после распаковки файлов из пакета при установке на целевую систему
@@ -150,20 +147,11 @@ fi
 # -----------------------------------------------------------
 # Apache
 # -----------------------------------------------------------
-echo "Turning on apache modules a2enmod cgi rewrite deflate headers"
-APACHE_SP_CONF='/etc/httpd2/conf/mods-start.d/900-sp.conf'
-if ! grep -q 'cgi=yes'        $APACHE_SP_CONF; then
-	echo 'cgi=yes'         >> $APACHE_SP_CONF
-fi
-if ! grep -q 'rewrite=yes'    $APACHE_SP_CONF; then
-	echo 'rewrite=yes'     >> $APACHE_SP_CONF
-fi
-if ! grep -q 'deflate=yes'    $APACHE_SP_CONF; then
-	echo 'deflate=yes'     >> $APACHE_SP_CONF
-fi
-if ! grep -q 'headers=yes'    $APACHE_SP_CONF; then
-	echo 'headers=yes'     >> $APACHE_SP_CONF
-fi
+#echo "Turning on apache modules: cgi rewrite deflate headers"
+#APACHE_SP_CONF='/etc/httpd2/conf/mods-start.d/900-sp.conf'
+#if ! grep -q 'cgi=yes'        $APACHE_SP_CONF; then
+#	echo 'cgi=yes'         >> $APACHE_SP_CONF
+#fi
 
 # a2enmod cgi
 # a2enmod rewrite
@@ -379,6 +367,15 @@ a2ensite  default
 a2dissite 000-sp
 
 %changelog
+* Sun May 05 2013 Andrey V. Stroganov <dja@altlinux.org> 5.2.1-alt13
+removed user dir from files section
+
+* Sun May 05 2013 Andrey V. Stroganov <dja@altlinux.org> 5.2.1-alt12
+converted SP config part for apache from grep/echo to ready file in repo
+
+* Sat May 04 2013 Andrey V. Stroganov <dja@altlinux.org> 5.2.1-alt0.M60P.1
+- build for p6
+
 * Sat May 04 2013 Andrey V. Stroganov <dja@altlinux.org> 5.2.1-alt10
 - do not scan for updates on install; fix tmp path
 
