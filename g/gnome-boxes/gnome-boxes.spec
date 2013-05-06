@@ -1,11 +1,11 @@
 %define _libexecdir %_prefix/libexec
-%def_disable ovirt
+%def_enable ovirt
 %def_enable usbredir
 %def_enable smartcard
 
 Name: gnome-boxes
 Version: 3.8.1.2
-Release: alt1
+Release: alt2
 Summary: A simple GNOME 3 application to access remote or virtual systems
 Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 Group: Emulators
@@ -103,6 +103,10 @@ intltoolize -f
 %_datadir/gnome-shell/search-providers/gnome-boxes-search-provider.ini
 
 %changelog
+* Mon May 06 2013 Alexey Shabalin <shaba@altlinux.ru> 3.8.1.2-alt2
+- update to upstream/gnome-3-8 branch
+- build with oVirt support
+
 * Fri Apr 19 2013 Alexey Shabalin <shaba@altlinux.ru> 3.8.1.2-alt1
 - 3.8.1.2
 
