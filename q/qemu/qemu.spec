@@ -127,8 +127,8 @@
 # }}}
 
 Name: qemu
-Version: 1.4.0
-Release: alt1.1
+Version: 1.4.1
+Release: alt1
 
 Summary: QEMU CPU Emulator
 License: GPL/LGPL/BSD
@@ -167,7 +167,7 @@ BuildRequires: libpixman-devel >= 0.18.4
 %{?_enable_vnc_png:BuildRequires: libpng-devel}
 %{?_enable_vde:BuildRequires: libvde-devel}
 %{?_enable_aio:BuildRequires: libaio-devel}
-%{?_enable_spice:BuildRequires: libspice-server-devel >= 0.12.0 spice-protocol >= 0.12.2}
+%{?_enable_spice:BuildRequires: libspice-server-devel >= 0.12.0 spice-protocol >= 0.12.3}
 %{?_enable_uuid:BuildRequires: libuuid-devel}
 %{?_enable_smartcard_nss:BuildRequires: libnss-devel >= 3.12.8}
 %{?_enable_usb_redir:BuildRequires: libusbredir-devel >= 0.5}
@@ -558,6 +558,9 @@ fi
 %_bindir/vscclient
 
 %changelog
+* Mon May 06 2013 Alexey Shabalin <shaba@altlinux.ru> 1.4.1-alt1
+- 1.4.1
+
 * Tue Apr 16 2013 Fr. Br. George <george@altlinux.ru> 1.4.0-alt1.1
 - Fix test (FC patch)
 
