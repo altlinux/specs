@@ -1,5 +1,5 @@
 Name: installer-feature-kdesktop-fontconfig
-Version: 0.1
+Version: 0.2
 Release: alt1
 
 Summary: Setup fonts default settings
@@ -26,5 +26,8 @@ install -pm755 *.sh %buildroot%hookdir/
 %hookdir/*
 
 %changelog
+* Mon May 06 2013 Sergey V Turchin <zerg@altlinux.org> 0.2-alt1
+- disable autohint by default
+
 * Wed Mar 16 2011 Sergey V Turchin <zerg@altlinux.org> 0.1-alt1
 - initial release
