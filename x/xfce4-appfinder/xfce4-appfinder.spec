@@ -1,6 +1,6 @@
 Name: xfce4-appfinder
-Version: 4.10.0
-Release: alt1
+Version: 4.10.1
+Release: alt1.git20130425
 
 Summary: Application finder for the XFce4 Desktop Environment
 Summary (ru_RU.UTF-8): Утилита поиска приложений для Xfce
@@ -37,6 +37,8 @@ Desktop entry format.
 %patch -p1
 
 %build
+# Don't use git tag in version.
+%xfce4_drop_gitvtag xfce4_appfinder_version_tag configure.ac.in
 %xfce4reconf
 %configure \
 	--enable-maintainer-mode \
@@ -54,6 +56,10 @@ Desktop entry format.
 %_desktopdir/*
 
 %changelog
+* Mon May 06 2013 Mikhail Efremov <sem@altlinux.org> 4.10.1-alt1.git20130425
+- Bump version (this snapshot is newer then %name-4.10.1 release).
+- Upstream git snapshot.
+
 * Sun Apr 29 2012 Mikhail Efremov <sem@altlinux.org> 4.10.0-alt1
 - Drop obsoleted patches.
 - Updated to 4.10.0.

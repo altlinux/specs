@@ -1,6 +1,6 @@
 Name: xfwm4
-Version: 4.10.0
-Release: alt1
+Version: 4.10.1
+Release: alt1.git20130426
 
 Summary: Window manager for XFce
 Summary (ru_RU.UTF8): Менеджер окон для окружения рабочего стола Xfce
@@ -22,7 +22,6 @@ BuildPreReq: libexo-devel
 BuildRequires: gnome-doc-utils xml-utils xsltproc
 BuildRequires: intltool libSM-devel libXcomposite-devel libXdamage-devel libXext-devel libXrandr-devel libglade-devel
 BuildRequires: libstartup-notification-devel libwnck-devel xorg-cf-files
-BuildRequires: gtk-doc
 
 %description
 %name is a window manager compatable with GNOME, GNOME2, KDE2, KDE3 and
@@ -36,6 +35,8 @@ Xfce. Совместим с окружениями рабочего стола G
 %setup
 
 %build
+# Don't use git tag in version.
+%xfce4_drop_gitvtag xfwm4_version_tag configure.ac.in
 %xfce4reconf
 %configure \
 	--disable-static \
@@ -65,6 +66,10 @@ Xfce. Совместим с окружениями рабочего стола G
 %_libdir/xfce4/*
 
 %changelog
+* Mon May 06 2013 Mikhail Efremov <sem@altlinux.org> 4.10.1-alt1.git20130426
+- Bump version (this snapshot is newer then %name-4.10.1 release).
+- Upstream git snapshot.
+
 * Sun Apr 29 2012 Mikhail Efremov <sem@altlinux.org> 4.10.0-alt1
 - Updated to 4.10.0.
 
