@@ -1,5 +1,5 @@
 Name: virt-viewer
-Version: 0.5.4
+Version: 0.5.6
 Release: alt1
 
 Summary: Virtual Machine Viewer
@@ -13,9 +13,10 @@ BuildRequires: glib2-devel >= 2.22.0
 BuildRequires: libxml2-devel
 BuildRequires: libvirt-devel >= 0.9.7
 BuildRequires: perl-podlators intltool
-BuildRequires: libspice-gtk3-devel >= 0.12.101 spice-protocol >= 0.10.1
+BuildRequires: libspice-gtk3-devel >= 0.16.26 spice-protocol >= 0.10.1
 # BuildRequires: libgtkvnc-devel >= 0.3.8
 BuildRequires: libgtk3vnc-devel >= 0.4.0
+BuildRequires: libgovirt-devel
 
 %description
 Virt Viewer provides a graphical viewer for the guest OS
@@ -30,8 +31,10 @@ using SSL/TLS encryption.
 
 %build
 mkdir -p m4
+touch ChangeLog AUTHORS
+intltoolize --force
 %autoreconf
-%configure --with-gtk=3.0
+%configure --with-gtk=3.0 --with-buildid=-%release
 %make
 
 %install
@@ -43,10 +46,15 @@ mkdir -p m4
 %_bindir/*
 %_man1dir/*
 %_datadir/%name/ui/*.xml
+%_datadir/mime/packages/*.xml
 %_desktopdir/*.desktop
 %_iconsdir/hicolor/*/apps/%name.png
 
 %changelog
+* Mon May 06 2013 Alexey Shabalin <shaba@altlinux.ru> 0.5.6-alt1
+- 0.5.6
+- build with oVirt support
+
 * Wed Sep 19 2012 Alexey Shabalin <shaba@altlinux.ru> 0.5.4-alt1
 - 0.5.4
 
