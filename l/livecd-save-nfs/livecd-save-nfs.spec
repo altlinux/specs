@@ -1,6 +1,6 @@
 Name: livecd-save-nfs
-Version: 0.3
-Release: alt4
+Version: 0.4
+Release: alt1
 
 Summary: tell NetworkManager not touch already UP ifaces
 License: GPL
@@ -21,13 +21,23 @@ tell NetworkManager not touch already UP ifaces
 %install
 mkdir -p %buildroot%_initdir/
 install -pD -m0755 livecd-save-nfs/livecd-save-nfs %buildroot%_initdir/livecd-save-nfs 
+install -pD -m0644 livecd-save-nfs/livecd-save-nfs.service %buildroot%_unitdir/livecd-save-nfs.service
 
+%preun
+%preun_service %name
 
 %files 
 %_initdir/livecd-save-nfs
-
+%_unitdir/livecd-save-nfs.service
 
 %changelog
+* Tue Apr 30 2013 Mikhail Efremov <sem@altlinux.org> 0.4-alt1
+- Expicitly set DISABLED=no (closes: #28499).
+- Add livecd-save-nfs.service.
+- Update for new ethernet devices names.
+- Turning on multicast for Avahi purpose (by george@).
+- Use --request to disable double IP (by george@) (closes: #27082).
+
 * Wed Jun 15 2011 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.3-alt4
 - reverted ip configuration to 0.3-alt1
 
