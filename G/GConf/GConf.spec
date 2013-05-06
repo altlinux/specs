@@ -1,6 +1,6 @@
 %define ver_major 3.2
 %def_disable static
-%def_disable gtk_doc
+%def_enable gtk_doc
 %def_enable introspection
 %def_disable orbit
 %def_enable gsettings
@@ -12,7 +12,7 @@
 
 Name: GConf
 Version: %ver_major.6
-Release: alt1
+Release: alt2
 
 Provides: %oldname = %version
 Obsoletes: %oldname < %version
@@ -27,7 +27,8 @@ Url: http://projects.gnome.org/gconf/
 
 Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 
-Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
+Source: %name-%version.tar
+#Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 Source1: gconf.rpmmacros
 Source2: gconf2_set
 Source3: gconf2_add
@@ -51,6 +52,10 @@ Patch2: GConf-2.18.0.1-reload.patch
 
 # lfs support
 Patch3: GConf-3.2.6-alt-lfs.patch
+
+# https://bugzilla.redhat.com/show_bug.cgi?id=755992
+# ALT #28916
+Patch4: GConf-3.2.6-fc-workaround_crash.patch
 
 %define ORBit_ver 2.12.1
 %define glib_ver 2.25.12
@@ -153,6 +158,7 @@ install -p -m644 %_sourcedir/libgconf.{map,lds} gconf/
 %patch1 -p1
 %patch2 -p1 -b .reload
 %patch3 -p1
+%patch4 -p1
 
 # disable localization for gconfd
 %__subst 's,\(setlocale (.* \"\),\1C,' gconf/gconfd.c
@@ -300,6 +306,10 @@ install -pD -m644 gconftool-2.man %buildroot%_man1dir/gconftool-2.1
 %endif
 
 %changelog
+* Mon May 06 2013 Yuri N. Sedunov <aris@altlinux.org> 3.2.6-alt2
+- updated to b0895e1
+- applied fix for ALT #28916 from fc
+
 * Tue Jan 22 2013 Yuri N. Sedunov <aris@altlinux.org> 3.2.6-alt1
 - 3.2.6
 - no more -sanity-check subpackage
