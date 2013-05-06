@@ -1,4 +1,4 @@
-%define subver 105
+%define subver 116
 
 Name: psi-plus
 Version: 0.16.%subver
@@ -755,6 +755,12 @@ popd
 %_libdir/%name/plugins/libwatcherplugin.so
 
 %changelog
+* Mon May 06 2013 Nazarov Denis <nenderus@altlinux.org> 0.16.116-alt1
+- Version 0.16.116
+
+* Mon Mar 18 2013 Nazarov Denis <nenderus@altlinux.org> 0.16.105-alt0.M60T.1
+- Build for branch t6
+
 * Sun Mar 17 2013 Nazarov Denis <nenderus@altlinux.org> 0.16.105-alt1
 - Version 0.16.105
 
