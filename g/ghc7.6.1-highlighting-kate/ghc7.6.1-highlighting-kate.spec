@@ -7,7 +7,7 @@
 %define pkg_libdir %_libdir/%hsc_name-%hsc_version/lib/%h_pkg_name-%version
 
 Name: %hsc_namever-%f_pkg_name
-Version: 0.5.3.3
+Version: 0.5.3.8
 Release: alt1
 License: GPL
 Packager: Denis Smirnov <mithraen@altlinux.ru>
@@ -46,5 +46,8 @@ syntax descriptions.
 %files -f %name-files.all
 
 %changelog
+* Mon May 06 2013 Denis Smirnov <mithraen@altlinux.ru> 0.5.3.8-alt1
+- new version 0.5.3.8
+
 * Sat Dec 22 2012 Denis Smirnov <mithraen@altlinux.ru> 0.5.3.3-alt1
 - Spec created by cabal2rpm 0.20_08
