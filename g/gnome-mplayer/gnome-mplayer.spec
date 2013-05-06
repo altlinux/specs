@@ -1,5 +1,5 @@
 Name: gnome-mplayer
-Version: 1.0.7
+Version: 1.0.8
 Release: alt1
 
 Summary: is a simple GUI for MPlayer
@@ -72,6 +72,9 @@ rm -rf %buildroot%_docdir/%name
 %nautilus_extdir/lib%name-properties-page.so*
 
 %changelog
+* Mon May 06 2013 Vladimir Lettiev <crux@altlinux.ru> 1.0.8-alt1
+- New version 1.0.8
+
 * Thu Nov 08 2012 Vladimir Lettiev <crux@altlinux.ru> 1.0.7-alt1
 - New version 1.0.7
 
