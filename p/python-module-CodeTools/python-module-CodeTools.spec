@@ -1,6 +1,6 @@
 Name: python-module-CodeTools
 Version: 4.1.0
-Release: alt1.git20130328
+Release: alt2.git20130328
 Summary: Code Analysis and Execution Tools
 
 Group:          Development/Python
@@ -13,7 +13,6 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 BuildArch:      noarch
 BuildRequires:  python-devel, python-module-setuptools
 BuildPreReq: python-module-sphinx-devel python-module-Pygments
-%add_python_req_skip concurrent
 
 %description
 The CodeTools project includes packages that simplify meta-programming
@@ -74,6 +73,9 @@ sphinx-build -E -a -b html -c docs/source -d doctrees docs/source html
 %python_sitelibdir/*/*/*/tests
 
 %changelog
+* Mon May 06 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.1.0-alt2.git20130328
+- Don't skip requirement on concurrent
+
 * Mon May 06 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.1.0-alt1.git20130328
 - Version 4.1.0
 
