@@ -7,8 +7,8 @@
 %define pkg_libdir %_libdir/%hsc_name-%hsc_version/lib/%h_pkg_name-%version
 
 Name: pandoc
-Version: 1.9.4.5
-Release: alt2
+Version: 1.11.1
+Release: alt1
 Summary: Markup conversion tool for markdown
 
 Group: Publishing
@@ -20,7 +20,7 @@ Source100: pandoc.watch
 
 # Automatically added by buildreq on Mon Dec 24 2012
 # optimized out: ghc7.6.1 ghc7.6.1-blaze-builder ghc7.6.1-blaze-html ghc7.6.1-blaze-markup ghc7.6.1-common ghc7.6.1-digest ghc7.6.1-extensible-exceptions ghc7.6.1-hexpat ghc7.6.1-hs-bibutils ghc7.6.1-http ghc7.6.1-json ghc7.6.1-list ghc7.6.1-mtl ghc7.6.1-network ghc7.6.1-pandoc-types ghc7.6.1-parsec ghc7.6.1-regex-base ghc7.6.1-regex-pcre-builtin ghc7.6.1-syb ghc7.6.1-text ghc7.6.1-transformers ghc7.6.1-utf8-string ghc7.6.1-xml ghc7.6.1-zlib libgmp-devel pkg-config
-BuildRequires: ghc7.6.1-alex ghc7.6.1-base64-bytestring ghc7.6.1-c2hs ghc7.6.1-citeproc-hs ghc7.6.1-cpphs ghc7.6.1-happy ghc7.6.1-highlighting-kate ghc7.6.1-hscolour ghc7.6.1-random ghc7.6.1-tagsoup ghc7.6.1-temporary ghc7.6.1-texmath ghc7.6.1-zip-archive zlib-devel
+BuildRequires: ghc7.6.1-alex ghc7.6.1-base64-bytestring ghc7.6.1-c2hs ghc7.6.1-citeproc-hs ghc7.6.1-cpphs ghc7.6.1-happy ghc7.6.1-highlighting-kate ghc7.6.1-hscolour ghc7.6.1-random ghc7.6.1-tagsoup ghc7.6.1-temporary ghc7.6.1-texmath ghc7.6.1-zip-archive zlib-devel ghc7.6.1-data-default
 
 %description
 Pandoc is a Haskell library for converting from one markup format to
@@ -46,6 +46,9 @@ Slidy HTML slide shows.
 %_man5dir/*
 
 %changelog
+* Mon May 06 2013 Denis Smirnov <mithraen@altlinux.ru> 1.11.1-alt1
+- 1.11.1
+
 * Fri Feb 08 2013 Denis Smirnov <mithraen@altlinux.ru> 1.9.4.5-alt2
 - cleanup spec
 

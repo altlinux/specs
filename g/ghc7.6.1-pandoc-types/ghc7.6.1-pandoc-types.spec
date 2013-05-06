@@ -7,8 +7,8 @@
 %define pkg_libdir %_libdir/%hsc_name-%hsc_version/lib/%h_pkg_name-%version
 
 Name: %hsc_namever-%f_pkg_name
-Version: 1.9.1
-Release: alt2
+Version: 1.10
+Release: alt1
 License: GPL
 Packager: Denis Smirnov <mithraen@altlinux.ru>
 Group: Development/Haskell
@@ -52,6 +52,9 @@ documents.
 %files -f %name-files.all
 
 %changelog
+* Mon May 06 2013 Denis Smirnov <mithraen@altlinux.ru> 1.10-alt1
+- new version 1.10
+
 * Sat Dec 22 2012 Denis Smirnov <mithraen@altlinux.ru> 1.9.1-alt2
 - rebuild
 

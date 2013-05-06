@@ -7,7 +7,7 @@
 %define pkg_libdir %_libdir/%hsc_name-%hsc_version/lib/%h_pkg_name-%version
 
 Name: %hsc_namever-%f_pkg_name
-Version: 0.1.2.1
+Version: 0.1.3.4
 Release: alt1
 License: BSD3
 Packager: Denis Smirnov <mithraen@altlinux.ru>
@@ -42,5 +42,8 @@ extracting files from zip archives.
 %files -f %name-files.all
 
 %changelog
+* Mon May 06 2013 Denis Smirnov <mithraen@altlinux.ru> 0.1.3.4-alt1
+- new version 0.1.3.4
+
 * Sat Dec 22 2012 Denis Smirnov <mithraen@altlinux.ru> 0.1.2.1-alt1
 - Spec created by cabal2rpm 0.20_08
