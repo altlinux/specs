@@ -3,8 +3,8 @@
 %def_without python3
 
 Name:           python-module-%oname
-Version:        4.1.1
-Release:        alt1.git20121012
+Version:        4.2.0
+Release:        alt1.git20130328
 Summary:        Enthough Tool Suite Application Tools
 
 Group:          Development/Python
@@ -153,6 +153,9 @@ cp -fR pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Mon May 06 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.2.0-alt1.git20130328
+- Version 4.2.0
+
 * Mon Oct 15 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.1.1-alt1.git20121012
 - Version 4.1.1
 
