@@ -1,6 +1,6 @@
 Name: fontconfig
-Version: 2.10.91
-Release: alt7
+Version: 2.10.92
+Release: alt1
 
 Summary: Font configuration and customization library and utilities
 Group: System/Configuration/Other
@@ -108,6 +108,9 @@ find -L %_sysconfdir/fonts/conf.d -type l -delete
 %docdir/%name-devel*
 
 %changelog
+* Mon May 06 2013 Sergey V Turchin <zerg@altlinux.org> 2.10.92-alt1
+- 2.11 RC2
+
 * Tue Apr 30 2013 Sergey V Turchin <zerg@altlinux.org> 2.10.91-alt7
 - non't use assign instead of append for sub-pixel rendering
   because configs was fixed
