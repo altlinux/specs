@@ -3,8 +3,8 @@
 %def_without python3
 
 Name: python-module-%oname
-Version: 4.0.1
-Release: alt1.git20120221
+Version: 4.0.2
+Release: alt1.git20130328
 Summary: Enthought tools to support Python development
 
 Group: Development/Python
@@ -110,6 +110,9 @@ popd
 %endif
 
 %changelog
+* Mon May 06 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.2-alt1.git20130328
+- Version 4.0.2
+
 * Sat May 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.1-alt1.git20120221
 - New snapshot
 
