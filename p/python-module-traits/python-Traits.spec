@@ -3,8 +3,8 @@
 %def_without python3
 
 Name:           python-module-%oname
-Version:        4.2.1
-Release:        alt1.git20130102
+Version:        4.3.0
+Release:        alt1.git20130329
 Summary:        Explicitly typed attributes for Python
 
 Group:          Development/Python
@@ -162,6 +162,7 @@ popd
 # pickles
 
 install -d %buildroot%python_sitelibdir/%oname
+export PYTHONPATH=%buildroot%python_sitelibdir
 %generate_pickles docs/source docs/source %oname
 sphinx-build -E -a -b html -c docs/source -d doctrees docs/source html
 cp -fR pickle %buildroot%python_sitelibdir/%oname/
@@ -198,6 +199,9 @@ cp -fR pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Mon May 06 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.3.0-alt1.git20130329
+- Version 4.3.0
+
 * Wed Jan 30 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.2.1-alt1.git20130102
 - New snapshot
 
