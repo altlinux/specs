@@ -3,7 +3,7 @@
 %def_enable introspection
 
 Name: gcr
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: A GNOME crypto viewer and prompter
@@ -18,11 +18,15 @@ Requires: libtasn1-utils
 Conflicts: gnome-keyring < 3.3.0
 
 %define glib_ver 2.32.0
+%define p11kit_ver 0.18.1
 
-BuildRequires: gnome-common gtk-doc intltool glib2-devel >= %glib_ver libgtk+3-devel libp11-kit-devel
+BuildRequires: gnome-common gtk-doc intltool glib2-devel >= %glib_ver
+BuildRequires: libp11-kit-devel >= %p11kit_ver libgtk+3-devel
 BuildRequires: libgcrypt-devel libtasn1-devel libtasn1-utils libtasn1-utils gnupg2-gpg
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel libgtk+3-gir-devel}
-#BuildRequires: chrpath
+
+# for check
+BuildRequires: /proc xvfb-run dbus-tools-gui
 
 %description
 GCR is a library for displaying certificates, and crypto UI, accessing
@@ -104,7 +108,8 @@ This package contains development documentation for GCR libraries.
 #  Fatal error: <12>Feb 19 08:48:33 lt-test-subject-public-key: Libgcrypt notice: state transition Power-On => Fatal-Error
 #  out of core in secure memory
 #  
-#%%make check
+
+#xvfb-run %make check
 
 %files -f %name.lang
 %_bindir/gcr-viewer
@@ -157,6 +162,9 @@ This package contains development documentation for GCR libraries.
 %endif
 
 %changelog
+* Sun May 05 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.2-alt1
+- 3.8.2
+
 * Tue Apr 16 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.1-alt1
 - 3.8.1
 

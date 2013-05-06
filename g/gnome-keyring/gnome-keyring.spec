@@ -7,7 +7,7 @@
 %def_enable selinux
 
 Name: gnome-keyring
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: %name is a password keeper for GNOME
@@ -23,7 +23,7 @@ Patch: gnome-keyring-3.6.3-alt-lfs.patch
 %define dbus_ver 1.0
 %define gcrypt_ver 1.2.2
 %define tasn1_ver 0.3.4
-%define p11kit_ver 0.16
+%define p11kit_ver 0.18.1
 %define gcr_ver 3.7.91
 
 Requires: libp11-kit >= %p11kit_ver
@@ -39,7 +39,7 @@ BuildPreReq: gcr-libs-devel >= %gcr_ver
 %{?_enable_valgrind:BuildPreReq: valgrind}
 %{?_enable_selinux:BuildRequires: libselinux-devel}
 # for check
-BuildRequires: xvfb-run
+BuildRequires: /proc xvfb-run dbus-tools-gui
 
 %description
 %name is a program that keep password and other secrets for
@@ -77,8 +77,7 @@ and start the keyring daemon.
 %make_build
 
 %check
-#** (test-data-der:3746): CRITICAL **: egg_symkey_generate_pkcs12: assertion `iterations > 0' failed
-#FAIL
+#ERROR:test-transaction.c:278:test_remove_file_abort: assertion failed (n_data == 3): (0 == 3)
 #xvfb-run %make check
 
 %install
@@ -110,6 +109,9 @@ and start the keyring daemon.
 %exclude /%_lib/security/*.la
 
 %changelog
+* Sun May 05 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.2-alt1
+- 3.8.2
+
 * Tue Apr 16 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.1-alt1
 - 3.8.1
 

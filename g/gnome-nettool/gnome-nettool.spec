@@ -1,4 +1,4 @@
-%define ver_major 3.2
+%define ver_major 3.8
 
 Name: gnome-nettool
 Version: %ver_major.0
@@ -18,6 +18,9 @@ Provides: gnome-netinfo = %version-%release
 Requires: net-tools
 Requires: iputils
 Requires: traceroute
+Requires: bind-utils
+Requires: nmap
+Requires: whois
 
 BuildPreReq: rpm-build-gnome >= 0.6 gnome-common
 BuildPreReq: rpm-build-licenses
@@ -27,7 +30,7 @@ BuildPreReq: desktop-file-utils >= 0.8
 BuildPreReq: intltool >= 0.40.1
 BuildPreReq: libgtk+3-devel >= 2.99.2
 BuildPreReq: libgio-devel libgtop-devel
-BuildRequires: gnome-doc-utils gnome-doc-utils-xslt xsltproc
+BuildRequires: yelp-tools
 
 %description
 GNOME Nettool is a set of front-ends to various networking command-line
@@ -68,6 +71,9 @@ subst '/install-data-hook: update-icon-cache/d' pixmaps/icons/Makefile.in
 %doc README NEWS TODO ChangeLog
 
 %changelog
+* Thu May 02 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.0-alt1
+- 3.8.0
+
 * Fri Apr 13 2012 Yuri N. Sedunov <aris@altlinux.org> 3.2.0-alt1
 - 3.2.0
 
