@@ -1,6 +1,6 @@
 Name: xfce4-session
 Version: 4.10.0
-Release: alt4.git20130426
+Release: alt5.git20130426
 
 Summary: Session manager for XFce desktop environment
 Summary (ru): Менеджер сессий для окружения рабочего стола Xfce
@@ -12,6 +12,10 @@ Packager: XFCE Team <xfce@packages.altlinux.org>
 # Upstream: git://git.xfce.org/xfce/xfce4-session
 Source: %name-%version.tar
 Source1: xfce.wmsession
+# taken from polkit-gnome, license is LGPLv2+, requires because of
+# http://lists.fedoraproject.org/pipermail/devel-announce/2011-February/000758.html
+# Renamed to avoid file conflict with gdm.
+Source2: polkit-gnome-authentication-agent-1-xfce.desktop
 
 Patch: %name-%version-%release.patch
 
@@ -82,6 +86,7 @@ Additional splash screen engines for XFce session manager.
 %install
 %makeinstall_std
 install -Dm0644 %SOURCE1 %buildroot%_x11sysconfdir/wmsession.d/10Xfce4
+install -Dm0644 %SOURCE2 %buildroot%_sysconfdir/xdg/autostart/polkit-gnome-authentication-agent-1-xfce.desktop
 %find_lang %name
 
 %files -f %name.lang
@@ -117,6 +122,9 @@ install -Dm0644 %SOURCE1 %buildroot%_x11sysconfdir/wmsession.d/10Xfce4
 %_libdir/xfce4/session/balou*
 
 %changelog
+* Mon May 06 2013 Mikhail Efremov <sem@altlinux.org> 4.10.0-alt5.git20130426
+- Added gnome-authentication-agent autostart desktop-file (closes: #28920).
+
 * Mon Apr 29 2013 Mikhail Efremov <sem@altlinux.org> 4.10.0-alt4.git20130426
 - xinitrc: Migrate old Xkb settings to the new scheme.
 
