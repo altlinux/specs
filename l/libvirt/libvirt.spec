@@ -95,8 +95,8 @@
 %def_with sasl
 
 Name: libvirt
-Version: 1.0.4
-Release: alt2
+Version: 1.0.5
+Release: alt1
 Summary: Library providing a simple API virtualization
 License: LGPLv2+
 Group: System/Libraries
@@ -667,6 +667,7 @@ fi
 %dir %_datadir/libvirt/schemas
 %_datadir/libvirt/schemas/*.rng
 %_datadir/libvirt/cpu_map.xml
+%_datadir/libvirt/libvirtLogo.png
 
 %if_with sasl
 %config(noreplace) %_sysconfdir/sasl2/libvirt.conf
@@ -850,6 +851,7 @@ fi
 %dir %_datadir/libvirt/api
 %_datadir/libvirt/api/libvirt-api.xml
 %_datadir/libvirt/api/libvirt-qemu-api.xml
+%_datadir/libvirt/api/libvirt-lxc-api.xml
 
 %files -n python-module-%name
 %python_sitelibdir/libvirt*
@@ -858,6 +860,9 @@ fi
 %doc examples/python
 
 %changelog
+* Mon May 06 2013 Alexey Shabalin <shaba@altlinux.ru> 1.0.5-alt1
+- 1.0.5
+
 * Tue Apr 30 2013 Alexey Shabalin <shaba@altlinux.ru> 1.0.4-alt2
 - add workaround for paranoid permitions of dnsmasq
 
