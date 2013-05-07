@@ -9,7 +9,7 @@
 %define sover %somver.2.0
 Name: %oname-%scalar_type
 Version: 3.3_p3
-Release: alt1
+Release: alt2
 Summary: Scalable Library for Eigenvalue Problem Computations (%scalar_type scalars)
 License: LGPL v3
 Group: Sciences/Mathematics
@@ -31,7 +31,7 @@ BuildPreReq: libXt-devel libsowing-devel boost-devel python-module-fiat
 BuildPreReq: libparmetis-devel libblacs-devel libspooles-devel
 BuildPreReq: libtetgen-devel zlib-devel libblocksolve95-devel
 BuildPreReq: libtriangle-devel libsuperlu_dist-devel libsuitesparse-devel
-BuildPreReq: libsuperlu-devel liby12m-devel
+BuildPreReq: libsuperlu-devel liby12m-devel libdakota-devel
 BuildPreReq: cproto libchaco-devel libblopex-devel
 BuildPreReq: libtau-devel libmtl4-devel libmpe2-devel boost-python-devel
 BuildPreReq: libplapack-devel python-devel petsc-%scalar_type-sources
@@ -252,6 +252,9 @@ install -m644 %name.pc %buildroot%_pkgconfigdir/
 %endif
 
 %changelog
+* Tue May 07 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.3_p3-alt2
+- Fixed build
+
 * Fri Feb 01 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.3_p3-alt1
 - Version 3.3-p3
 
@@ -337,3 +340,4 @@ install -m644 %name.pc %buildroot%_pkgconfigdir/
 
 * Mon Jul 13 2009 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0.0_p4-alt1
 - Initial build for Sisyphus
+
