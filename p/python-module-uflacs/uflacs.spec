@@ -2,12 +2,12 @@
 
 Name: python-module-%oname
 Version: 0.2.0
-Release: alt2.bzr20130130
+Release: alt2.git20130322
 Summary: UFL Analyser and Compiler System
 Group: Development/Python
 License: LGPLv3
 URL: https://launchpad.net/uflacs
-# bzr branch lp:uflacs
+# https://bitbucket.org/fenics-project/uflacs.git
 Source: %name-%version.tar
 BuildArch: noarch
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
@@ -34,6 +34,9 @@ processing UFL code in various fashions.
 %python_sitelibdir/*
 
 %changelog
+* Tue May 07 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.0-alt2.git20130322
+- New snapshot
+
 * Thu Jan 31 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.0-alt2.bzr20130130
 - New snapshot
 
