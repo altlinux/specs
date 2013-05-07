@@ -1,6 +1,6 @@
 Name: syfi
-Version: 1.0.0
-Release: alt1.bzr20121029
+Version: 1.1.0
+Release: alt1.bzr20130304
 Summary: Symbolic Finite Elements (SyFi) and The SyFi Form Compiler (SFC)
 License: GPL v2
 Group: Sciences/Mathematics
@@ -11,7 +11,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar.gz
 
 Requires: lib%name = %version-%release
-Requires: python-module-sfc = %version-%release
+#Requires: python-module-sfc = %version-%release
 
 BuildPreReq: python-devel
 BuildPreReq: cmake swig libginac-devel python-module-swiginac ufc-devel ufl
@@ -128,6 +128,7 @@ cmake \
 	-DSYFI_PYTHON_MODULE_DIR:PATH=%_lib/python%_python_version/site-packages \
 	-DSYFI_PKGCONFIG_DIR:PATH=%_lib/pkgconfig \
 	-DSYFI_ENABLE_TESTING:BOOL=ON \
+	-DCMAKE_SKIP_RPATH:BOOL=ON \
 	.
 %make_build VERBOSE=1
 
@@ -139,19 +140,13 @@ popd
 %install
 %makeinstall_std
 
-export PYTHONPATH=%buildroot%python_sitelibdir:%_libexecdir/petsc-real/python
-pushd doc/sfc_reference
-./makedoc.sh
-mv html sfc_reference
-popd
-
 pushd doc
 install -d %buildroot%_docdir/%name
 cp -fR papers presentations reference/reference \
-	sfc_reference/sfc_reference %buildroot%_docdir/%name/
+	manual/*.pdf %buildroot%_docdir/%name/
 popd
 
-chrpath -d %buildroot%python_sitelibdir/_SyFi.so
+#chrpath -d %buildroot%python_sitelibdir/_SyFi.so
 
 %files
 %doc README AUTHORS ChangeLog COPYING
@@ -173,18 +168,21 @@ chrpath -d %buildroot%python_sitelibdir/_SyFi.so
 %files doc
 %doc %_docdir/%name
 
-%files -n sfc
-%_bindir/*
-%_man1dir/*
+#files -n sfc
+#_bindir/*
+#_man1dir/*
 
-%files -n python-module-sfc
-%python_sitelibdir/sfc
+#files -n python-module-sfc
+#python_sitelibdir/sfc
 
 %files demo
 %dir %_datadir/%name
 %_datadir/%name/demo
 
 %changelog
+* Tue May 07 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.0-alt1.bzr20130304
+- Version 1.1.0
+
 * Thu Jan 31 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.0-alt1.bzr20121029
 - New snapshot
 
