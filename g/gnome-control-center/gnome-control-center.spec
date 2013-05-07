@@ -9,7 +9,7 @@
 %def_with cheese
 
 Name: gnome-control-center
-Version: %ver_major.1
+Version: %ver_major.1.5
 Release: alt1
 
 Summary: GNOME Control Center
@@ -167,6 +167,9 @@ you'll want to install this package.
 %_datadir/pkgconfig/gnome-keybindings.pc
 
 %changelog
+* Tue May 07 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.1.5-alt1
+- 3.8.1.5
+
 * Tue Apr 16 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.1-alt1
 - 3.8.1
 
