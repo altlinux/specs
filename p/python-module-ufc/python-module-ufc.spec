@@ -1,18 +1,19 @@
 %define origname ufc
 
 Name:           python-module-%origname
-Version:        2.1.0
-Release:        alt3.bzr20130129
+Version:        2.2.0
+Release:        alt1.git20130501
 Summary:        Unified Form-assembly Code
 Group:          Development/Python
 License:        Public domain
 URL:            http://www.fenics.org/ufc/
-# bzr branch lp:ufc
+# https://bitbucket.org/fenics-project/ufc.git
 Source:        %origname-%version.tar.gz
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 BuildRequires(pre): rpm-build-python
 BuildPreReq: python-devel swig boost-devel gcc-c++ cmake
+BuildPreReq: texlive-latex-recommended ghostscript-utils
 %setup_python_module ufc
 
 %description
@@ -94,6 +95,10 @@ cmake \
 #python_build_debug
 #popd
 
+pushd doc/manual
+%make final
+popd
+
 %install
 %makeinstall_std
 
@@ -114,7 +119,7 @@ install -d %buildroot%_docdir/%origname
 install -p -m644 doc/manual/ufc-user-manual.pdf %buildroot%_docdir/%origname
 
 %files
-%doc AUTHORS ChangeLog README TODO
+%doc AUTHORS ChangeLog README* TODO
 %python_sitelibdir/*
 
 %files -n %origname-devel
@@ -129,6 +134,9 @@ install -p -m644 doc/manual/ufc-user-manual.pdf %buildroot%_docdir/%origname
 %python_sitelibdir_noarch/ufc_utils
 
 %changelog
+* Tue May 07 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.2.0-alt1.git20130501
+- Version 2.2.0
+
 * Tue Apr 30 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.1.0-alt3.bzr20130129
 - Rebuilt with SWIG 2.0.9
 
