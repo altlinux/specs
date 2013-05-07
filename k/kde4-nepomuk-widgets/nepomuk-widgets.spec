@@ -5,7 +5,7 @@
 Name: kde4-nepomuk-widgets
 %define major 4
 %define minor 10
-%define bugfix 2
+%define bugfix 3
 Version: %major.%minor.%bugfix
 Release: alt1
 
@@ -62,6 +62,9 @@ Development files for %name
 
 
 %changelog
+* Tue May 07 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.3-alt1
+- new version
+
 * Wed Apr 03 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.2-alt1
 - new version
 

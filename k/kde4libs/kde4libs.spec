@@ -7,11 +7,11 @@
 
 %define major 4
 %define minor 10
-%define bugfix 2
+%define bugfix 3
 %define rname kdelibs
 Name: kde4libs
 Version: %major.%minor.%bugfix
-Release: alt4
+Release: alt1
 
 %define conflictver %major.%minor-alt0.0.1
 %define conflictver_kdevelop 3.4.1-alt0.0.1
@@ -328,6 +328,9 @@ ln -sf `relative %buildroot/%_kde4_bindir/kde4-config %buildroot/%_K4bindir/kde4
 %_K4includedir/*
 
 %changelog
+* Mon May 06 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.3-alt1
+- new version
+
 * Tue Apr 30 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.2-alt4
 - improve file properties dialog; thenks timonbl4@alt
 
