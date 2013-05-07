@@ -3,7 +3,7 @@ BuildRequires: gcc-c++ unzip
 # END SourceDeps(oneline)
 Name:           nogravity
 Version:        2.00
-Release:        alt2_18
+Release:        alt2_19
 Summary:        Space shooter in 3D
 Group:          Games/Other
 License:        GPLv2+
@@ -91,7 +91,7 @@ mkdir -p $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/48x48/apps
 install -m 755 src/Linux/%{name}-software $RPM_BUILD_ROOT%{_bindir}
 install -m 755 src/Linux/%{name}-opengl   $RPM_BUILD_ROOT%{_bindir}
 install -p -m 755 %{SOURCE7} $RPM_BUILD_ROOT%{_bindir}/%{name}
-desktop-file-install             \
+desktop-file-install \
   --dir $RPM_BUILD_ROOT%{_datadir}/applications \
   %{SOURCE2}
 install -p -m 644 %{SOURCE3} \
@@ -101,11 +101,14 @@ $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/48x48/apps/%{name}.png
 %files
 %doc GNU.TXT README.TXT
 %{_bindir}/%{name}*
-%{_datadir}/applications/%{name}.desktop
+%{_datadir}/applications/*%{name}.desktop
 %{_datadir}/icons/hicolor/48x48/apps/%{name}.png
 
 
 %changelog
+* Tue May 07 2013 Igor Vlasenko <viy@altlinux.ru> 2.00-alt2_19
+- update to new release by fcimport
+
 * Mon Feb 25 2013 Igor Vlasenko <viy@altlinux.ru> 2.00-alt2_18
 - fc update
 
