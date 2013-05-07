@@ -3,7 +3,7 @@
 %def_without builtin_menu
 
 Name: lib%_name
-Version: 0.2.0
+Version: 0.2.1
 Release: alt1
 
 Summary: Implementation of the freedesktop.org menu specification
@@ -120,6 +120,9 @@ BuildArch: noarch
 %doc %_datadir/gtk-doc/html/%_name
 
 %changelog
+* Mon May 06 2013 Mikhail Efremov <sem@altlinux.org> 0.2.1-alt1
+- Updated to 0.2.1.
+
 * Sun Apr 29 2012 Mikhail Efremov <sem@altlinux.org> 0.2.0-alt1
 - Updated to 0.2.0.
 
