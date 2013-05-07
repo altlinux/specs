@@ -9,7 +9,7 @@
 %define oname oofem
 Name: oofem-%scalar_type
 Version: 2.2
-Release: alt5.svn20121029
+Release: alt6.svn20121029
 Summary: Object Oriented Finite Element Code
 License: %gpl2plus
 Group: Sciences/Mathematics
@@ -28,7 +28,7 @@ BuildRequires(pre): rpm-build-licenses
 BuildPreReq: python-devel boost-python-devel libparpack-mpi-devel
 BuildPreReq: %mpiimpl-devel gcc-c++ libslepc-%scalar_type-devel
 BuildPreReq: libX11-devel libXt-devel libICE-devel libXaw-devel libXmu-devel
-BuildPreReq: libparmetis-devel libhdf5-mpi-devel libSM-devel
+BuildPreReq: libparmetis-devel libhdf5-mpi-devel libSM-devel libdakota-devel
 BuildPreReq: libneXtaw-devel libXext-devel doxygen graphviz latex2html
 %if "%scalar_type" == "real"
 BuildPreReq: libimlxx-devel
@@ -329,7 +329,7 @@ pushd Elixir/src
 	--with-x \
 	CPPFLAGS="-I$TOP/Ckit/include" \
 	LIBS="-L$TOP/Ckit/src"
-%make_build
+%make
 popd
 
 # main build
@@ -445,6 +445,9 @@ done
 %endif
 
 %changelog
+* Tue May 07 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.2-alt6.svn20121029
+- Fixed build
+
 * Wed Feb 06 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.2-alt5.svn20121029
 - New snapshot
 
