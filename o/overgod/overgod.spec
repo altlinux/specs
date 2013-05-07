@@ -1,6 +1,6 @@
 Name:           overgod
 Version:        1.0
-Release:        alt2_16
+Release:        alt2_17
 Summary:        Another arcade-style shoot-em-up
 Group:          Games/Other
 License:        GPLv2+
@@ -42,7 +42,7 @@ make install PREFIX=$RPM_BUILD_ROOT%{_prefix}
 
 # below is the desktop file and icon stuff.
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/applications
-desktop-file-install             \
+desktop-file-install \
   --dir $RPM_BUILD_ROOT%{_datadir}/applications \
   %{SOURCE1}
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/48x48/apps
@@ -54,11 +54,14 @@ install -p -m 644 %{SOURCE2} \
 %doc readme.txt licence.txt
 %{_bindir}/overgod
 %{_datadir}/overgod
-%{_datadir}/applications/overgod.desktop
+%{_datadir}/applications/*overgod.desktop
 %{_datadir}/icons/hicolor/48x48/apps/overgod.png
 
 
 %changelog
+* Tue May 07 2013 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_17
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_16
 - update to new release by fcimport
 
