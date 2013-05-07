@@ -9,7 +9,7 @@
 
 Name: %oname-%scalar_type
 Version: 3.3.1
-Release: alt1.hg20130314
+Release: alt2.hg20130314
 Summary: SLEPc for Python (%scalar_type scalars)
 License: Public
 Group: Sciences/Mathematics
@@ -30,7 +30,7 @@ BuildPreReq: python-module-Pygments python-module-sphinx-devel
 BuildPreReq: texlive-latex-extra
 %endif
 BuildPreReq: libtrilinos10-devel libamesos10-devel libepetraext10-devel
-BuildPreReq: libifpack10-devel
+BuildPreReq: libifpack10-devel libdakota-devel
 
 %description
 slepc4py are Python bindings for SLEPc, the Scalable Library for Eigenvalue
@@ -193,6 +193,9 @@ rm -f %ldir/python/%oname/lib/SLEPc.so
 %endif
 
 %changelog
+* Tue May 07 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.3.1-alt2.hg20130314
+- Fixed build
+
 * Mon Apr 22 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.3.1-alt1.hg20130314
 - Version 3.3.1
 
