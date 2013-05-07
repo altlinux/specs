@@ -12,7 +12,7 @@
 %def_enable ctpp2
 
 Name: nginx
-Version: 1.4.0
+Version: 1.4.1
 Release: alt1
 
 Summary: Fast HTTP server
@@ -254,6 +254,10 @@ sed -i 's/\(types_hash_bucket_size[[:space:]]*\)[[:space:]]32[[:space:]]*;[[:spa
 %preun_service %name
 
 %changelog
+* Tue May 07 2013 Denis Smirnov <mithraen@altlinux.ru> 1.4.1-alt1
+- 1.4.1
+- CVE-2013-2028
+
 * Fri May 03 2013 Denis Smirnov <mithraen@altlinux.ru> 1.4.0-alt1
 - 1.4.0
 - enable http_spdy_module
