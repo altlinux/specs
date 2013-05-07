@@ -1,7 +1,7 @@
 
 Name: strigi
-Version: 0.7.7
-Release: alt7
+Version: 0.7.8
+Release: alt1
 
 Summary: The fastest and smallest desktop searching program
 License: LGPL2+
@@ -16,18 +16,8 @@ Source1: %name.watch
 Source2: strigi-daemon.desktop
 Source3: strigiclient.desktop
 
-# FC
-Patch101: 0001-Minor.-Fix-grammar-typo-in-cmake-output.patch
-Patch102: 0002-gcc47-fix-unistd.h-header-required-unconditionally-f.patch
-Patch103: 0003-Fix-return-value-wrong-type.patch
-Patch201: 0001-Fix-xpm-and-xbm-index.patch
-Patch202: 0002-Extract-tracknumber-and-track-count-from-a-value-lik.patch
-Patch203: 0003-Fixed-indexing-of-m3u-files.patch
-Patch204: 0004-Fix-FLAC-Files-Remove-addtional-db-in-replaygain.patch
-Patch205: 0005-Fix-flac-analizer-was-importing-only-one-artist-tag.patch
-Patch206: 0006-Fix-non-numeric-genres-in-id3-v2-mp3-are-ignored.patch
-Patch207: 0007-Opps-Rmoving-a-wrong-commited-file-id3endanalyzer.cp.patch
-Patch208: 0008-fix-parsing-of-genre-field-in-id3v2-tags-and-clean-c.patch
+# SuSE
+Patch101: bug_304439.diff
 
 
 BuildRequires: boost-devel bzlib-devel cmake cppunit-devel dbus-tools-gui gcc-c++ libattr-devel
@@ -69,21 +59,8 @@ This package contains %name development library and headers.
 
 %prep
 %setup
-pushd strigidaemon
 %patch101 -p1
-%patch102 -p1
-%patch103 -p1
-popd
-pushd libstreamanalyzer
-%patch201 -p1
-%patch202 -p1
-%patch203 -p1
-%patch204 -p1
-%patch205 -p1
-%patch206 -p1
-%patch207 -p1
-%patch208 -p1
-popd
+#patch102 -p1
 
 %build
 %Kcmake \
@@ -92,6 +69,7 @@ popd
     -DENABLE_CLUCENE:BOOL=ON \
     -DENABLE_CLUCENE_NG:BOOL=ON \
     -DENABLE_INOTIFY:BOOL=ON \
+    -DENABLE_FAM=OFF \
     -DENABLE_DBUS:BOOL=ON
 %Kmake
 
@@ -109,9 +87,6 @@ install -m0644 %SOURCE3 %buildroot/%_desktopdir/
 %_datadir/%name/
 %dir %_libdir/%name/
 %_libdir/%name/*.so
-%dir %_libdir/libsearchclient/
-%dir %_libdir/libstreamanalyzer/
-%dir %_libdir/libstreams/
 #%_sysconfdir/xdg/autostart/*.desktop
 %_desktopdir/*.desktop
 %doc AUTHORS ChangeLog README* TODO*
@@ -124,13 +99,17 @@ install -m0644 %SOURCE3 %buildroot/%_desktopdir/
 %_includedir/%name/
 %_pkgconfigdir/*.pc
 %dir %_libdir/%name/
-%_libdir/%name/*.cmake
-%_libdir/libsearchclient/*.cmake
-%_libdir/libstreamanalyzer/*.cmake
-%_libdir/libstreams/*.cmake
+%_libdir/cmake/LibSearchClient/
+%_libdir/cmake/LibStreamAnalyzer/
+%_libdir/cmake/LibStreams/
+%_libdir/cmake/Strigi/
+
 
 
 %changelog
+* Tue May 07 2013 Sergey V Turchin <zerg@altlinux.org> 0.7.8-alt1
+- new version
+
 * Fri Jan 25 2013 Sergey V Turchin <zerg@altlinux.org> 0.7.7-alt7
 - fix requires
 
