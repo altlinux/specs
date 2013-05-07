@@ -1,11 +1,11 @@
 Name: instant
-Version: 1.1.0
-Release: alt1.bzr20130123
+Version: 1.2.0
+Release: alt1.git20130502
 Summary: Instant inlining of C and C++ code in Python
 Group: Development/Python
 License: GPL v2.1 / BSD
-URL: https://launchpad.net/instant
-# lp:instant
+URL: http://fenicsproject.org/
+# https://bitbucket.org/fenics-project/instant.git
 Source: %name-%version.tar.gz
 BuildArch: noarch
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
@@ -65,6 +65,9 @@ cp -fR doc/html* doc/Instant.html %buildroot%_docdir/%name/
 %python_sitelibdir_noarch/*
 
 %changelog
+* Tue May 07 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.0-alt1.git20130502
+- Version 1.2.0
+
 * Thu Jan 31 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.0-alt1.bzr20130123
 - Version 1.1.0
 
