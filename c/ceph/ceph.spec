@@ -1,5 +1,5 @@
 Name: ceph
-Version: 0.60
+Version: 0.61
 Release: alt1
 Summary: User space components of the Ceph file system
 Group: System/Base
@@ -16,7 +16,7 @@ BuildRequires: boost-devel-headers gcc-c++ libaio-devel libcurl-devel
 BuildRequires: libedit-devel libexpat-devel libfcgi-devel libfuse-devel
 BuildRequires: libgperftools-devel libgtkmm2-devel libkeyutils-devel
 BuildRequires: libnss-devel libuuid-devel boost-program_options-devel
-BuildRequires: libleveldb-devel libsnappy-devel
+BuildRequires: libleveldb-devel libsnappy-devel libs3-devel
 
 BuildRequires(pre): rpm-build-python
 
@@ -112,8 +112,8 @@ object storage.
 rm -rf ceph-object-corpus
 ln -s ceph-object-corpus_sub ceph-object-corpus
 
-rm -rf src/libs3
-ln -s libs3_sub src/libs3
+#rm -rf src/libs3
+#ln -s libs3_sub src/libs3
 
 %build
 ./autogen.sh
@@ -173,8 +173,10 @@ mkdir -p %buildroot%_sysconfdir/ceph/
 %_bindir/ceph-debugpack
 %_bindir/ceph-coverage
 %_sbindir/ceph-create-keys
+%_sbindir/ceph-disk
 %_sbindir/ceph-disk-activate
 %_sbindir/ceph-disk-prepare
+%_sbindir/ceph-disk-udev
 %_sbindir/mkcephfs
 %_sbindir/mount.ceph
 %_sbindir/rcceph
@@ -255,6 +257,9 @@ mkdir -p %buildroot%_sysconfdir/ceph/
 %python_sitelibdir_noarch/*
 
 %changelog
+* Tue May 07 2013 Alexei Takaseev <taf@altlinux.org> 0.61-alt1
+- 0.61
+
 * Tue Apr 16 2013 Alexei Takaseev <taf@altlinux.org> 0.60-alt1
 - 0.60
 - remove leveldb source, user system libs
