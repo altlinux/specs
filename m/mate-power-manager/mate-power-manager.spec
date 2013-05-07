@@ -1,16 +1,19 @@
 Group: File tools
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/docbook2man /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/xmlto libgio-devel pkgconfig(dbus-1) pkgconfig(gdk-2.0) pkgconfig(gdk-x11-2.0) pkgconfig(gio-2.0) pkgconfig(gtk+-2.0) pkgconfig(libcanberra-gtk) pkgconfig(libsystemd-daemon) pkgconfig(libsystemd-login) pkgconfig(mate-keyring-1) pkgconfig(unique-3.0) pkgconfig(x11) pkgconfig(xext) pkgconfig(xproto) pkgconfig(xrandr) pkgconfig(xrender)
+BuildRequires: /usr/bin/docbook2man /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/xmlto libgio-devel pkgconfig(dbus-1) pkgconfig(gdk-2.0) pkgconfig(gdk-x11-2.0) pkgconfig(gio-2.0) pkgconfig(gtk+-2.0) pkgconfig(libcanberra-gtk) pkgconfig(libsystemd-daemon) pkgconfig(libsystemd-login) pkgconfig(unique-3.0) pkgconfig(x11) pkgconfig(xext) pkgconfig(xproto) pkgconfig(xrandr) pkgconfig(xrender)
 # END SourceDeps(oneline)
 %filter_from_requires /^hal$/d
 %define _libexecdir %_prefix/libexec
 Name:          mate-power-manager
 Version:       1.6.0
-Release:       alt3_1
+Release:       alt3_2
 Summary:       MATE power management service
 License:       GPLv2+
 URL:           http://pub.mate-desktop.org
 Source0:       http://pub.mate-desktop.org/releases/1.5/%{name}-%{version}.tar.xz
+
+#RHBZ #949070
+Patch0: fix_lid_suspend.patch
 
 BuildRequires: libcairo-devel
 BuildRequires: libdbus-glib-devel
@@ -18,6 +21,7 @@ BuildRequires: desktop-file-utils
 BuildRequires: libcanberra-devel
 BuildRequires: glib2-devel
 BuildRequires: gtk2-devel
+BuildRequires: libmatekeyring-devel
 BuildRequires: libnotify-devel
 BuildRequires: mate-common
 BuildRequires: mate-control-center-devel
@@ -31,7 +35,7 @@ BuildRequires: libunique-devel
 BuildRequires: libupower-devel
 BuildRequires: xmlto
 Source44: import.info
-Patch33: mpm-alt-logind-support.patch
+Patch33: 0001-Treat-challenge-as-yes-when-suspend-ability-determen.patch
 
 %description
 MATE Power Manager uses the information and facilities provided by UPower
@@ -40,7 +44,8 @@ displaying icons and handling user callbacks in an interactive MATE session.
 
 %prep
 %setup -q
-%patch33 -p2
+%patch0 -p1
+%patch33 -p1
 NOCONFIGURE=1 ./autogen.sh
 
 %build
@@ -90,6 +95,9 @@ desktop-file-install                               \
 %{_datadir}/MateConf/gsettings/mate-power-manager.convert
 
 %changelog
+* Tue May 07 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.0-alt3_2
+- new fc release
+
 * Thu Apr 11 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.0-alt3_1
 - new fc release
 

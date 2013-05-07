@@ -6,10 +6,13 @@ BuildRequires: /usr/bin/glib-gettextize /usr/bin/gtk-builder-convert libICE-deve
 Summary:        Terminal emulator for MATE
 Name:           mate-terminal
 Version:        1.6.1
-Release:        alt1_1
+Release:        alt1_2
 License:        GPLv3+
 URL:            http://mate-desktop.org
 Source0:        http://pub.mate-desktop.org/releases/1.6/%{name}-%{version}.tar.xz
+
+#Default to black bg white fg, unlimited scrollback, turn off use theme default
+Patch0: better_defaults.patch
 
 BuildRequires: libdconf-devel
 BuildRequires: desktop-file-utils
@@ -33,6 +36,7 @@ clickable URLs.
 
 %prep
 %setup -q
+%patch0 -p1
 NOCONFIGURE=1 ./autogen.sh
 
 %build
@@ -70,6 +74,9 @@ EOF
 %_altdir/%name
 
 %changelog
+* Tue May 07 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.1-alt1_2
+- new fc release
+
 * Thu Apr 11 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.1-alt1_1
 - new fc release
 
