@@ -3,7 +3,7 @@ BuildRequires: gcc-c++ libSDL-devel perl(FileHandle.pm) perl(SDL/Rect.pm) perl(S
 # END SourceDeps(oneline)
 Name:           nazghul
 Version:        0.7.1
-Release:        alt2_4.20120228gitb0a402a
+Release:        alt2_5.20120228gitb0a402a
 Summary:        A computer role-playing game (CRPG) engine
 
 License:        GPLv2+
@@ -76,7 +76,7 @@ make install DESTDIR=%{buildroot}
 
 mv %{buildroot}/%{_bindir}/haxima.sh %{buildroot}/%{_bindir}/haxima
 
-desktop-file-install             \
+desktop-file-install \
     --dir %{buildroot}/%{_datadir}/applications \
     haxima.desktop
 
@@ -93,12 +93,15 @@ install -D -m 644 icons/haxima.png %{buildroot}/%{_datadir}/pixmaps/haxima.png
 %files -n haxima
 %{_bindir}/haxima
 %{_datadir}/nazghul/haxima
-%{_datadir}/applications/haxima.desktop
+%{_datadir}/applications/*haxima.desktop
 %{_datadir}/pixmaps/haxima.png
 %doc USERS_GUIDE haxima-music-license
 
 
 %changelog
+* Tue May 07 2013 Igor Vlasenko <viy@altlinux.ru> 0.7.1-alt2_5.20120228gitb0a402a
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.7.1-alt2_4.20120228gitb0a402a
 - update to new release by fcimport
 
