@@ -2,8 +2,8 @@
 %def_disable gstreamer
 
 Name: tumbler
-Version: 0.1.27
-Release: alt2
+Version: 0.1.29
+Release: alt1
 Summary: A thumbnail D-Bus service
 License: %gpl2plus, %lgpl2plus
 Group: Graphical desktop/XFce
@@ -83,6 +83,10 @@ Development files and headers for %name
 %_pkgconfigdir/*.pc
 
 %changelog
+* Mon May 06 2013 Mikhail Efremov <sem@altlinux.org> 0.1.29-alt1
+- Updated translations from upstream git.
+- Updated to 0.1.29.
+
 * Thu Jan 24 2013 Mikhail Efremov <sem@altlinux.org> 0.1.27-alt2
 - libtumbler-devel: Added strict dependency on libtumbler
     (closes: #28456).
