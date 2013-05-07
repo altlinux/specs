@@ -7,7 +7,7 @@
 
 Name: openfvm-%scalar_type
 Version: 1.4
-Release: alt2.svn20120521
+Release: alt3.svn20120521
 Summary: General three-dimensional Computational Fluid Dynamics (CFD) solver
 
 Group: Sciences/Mathematics
@@ -26,7 +26,7 @@ BuildPreReq: texlive-latex-extra libwxGTK2.9-devel libGL-devel
 BuildPreReq: libGLUT-devel libamesos10-devel libepetraext10-devel
 BuildPreReq: libifpack10-devel libaztecoo10-devel libepetra10-devel
 BuildPreReq: libteuchos10-devel libtrilinos10-devel ghostscript-utils
-BuildPreReq: chrpath libparmetis0-devel libmetis0-devel
+BuildPreReq: chrpath libparmetis0-devel libmetis0-devel libdakota-devel
 
 %description
 OpenFVM is a general CFD solver released under the GPL license. It was
@@ -140,6 +140,9 @@ done
 %endif
 
 %changelog
+* Tue May 07 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4-alt3.svn20120521
+- Fixed build
+
 * Tue Sep 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4-alt2.svn20120521
 - Fixed build
 
