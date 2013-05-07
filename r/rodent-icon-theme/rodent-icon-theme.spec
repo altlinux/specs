@@ -1,42 +1,46 @@
-Name: xfce4-icon-theme
-Version: 4.4.3
-Release: alt1.qa1
+Name: rodent-icon-theme
+Version: 5.0
+Release: alt1
 
-Summary: Rodent vector icon theme for XFce 4
-License: GPL
-Url: http://www.xfce.org/
+Summary: Rodent is a svg (scalable) icon theme
+License: %gpl2plus
+Url: http://sourceforge.net/projects/xffm/files/rodent-icon-theme/
 Group: Graphical desktop/XFce
-Packager: Eugene Ostapets <eostapets@altlinux.ru>
 
-Source: ftp://ftp.berlios.de/pub/xfce-goodies/%version/%name-%version.tar.bz2
+Source: %name-%version.tar
 BuildArch: noarch
 
-Requires: xfce4-panel, libgtk+2-common
-BuildPreReq: xfce4-panel-devel >= %version, xfce4-dev-tools >= 4.4.0
+BuildRequires(pre): rpm-build-licenses
 
-# Automatically added by buildreq on Sun Nov 09 2008
-BuildRequires: intltool
+Obsoletes: xfce4-icon-theme <= 4.4.3
+Provides: xfce4-icon-theme = %version-%release
 
 %description
-Rodent icon theme for the XFce 4.
+Rodent-icon-theme (was xfce4-icon-theme) is a svg (scalable) icon theme
+created by Francois L Clainche and augmented by Pablo Morales Romero.
+It is freedesktop compatible and works with most mayor Linux/BSD desktop
+environments.
 
 %prep
 %setup
 
 %build
-%configure --build=%_arch-alt-linux --host=%_arch-alt-linux
+%configure
 %make_build
 
 %install
-%make install DESTDIR=%buildroot
+%makeinstall_std
 
 %files
-%doc README TODO ChangeLog NEWS INSTALL COPYING AUTHORS
+%doc README INSTALL AUTHORS
 %_datadir/icons/Rodent
-%_datadir/xfce4/mime/*
-%exclude %_pkgconfigdir/*.pc
 
 %changelog
+* Tue May 07 2013 Mikhail Efremov <sem@altlinux.org> 5.0-alt1
+- Return 'Inherits' in the index.theme.
+- Renamed to rodent-icon-theme.
+- Updated to 5.0.
+
 * Sat Nov 07 2009 Repocop Q. A. Robot <repocop@altlinux.org> 4.4.3-alt1.qa1
 - NMU (by repocop): the following fixes applied:
   * obsolete-call-in-post-gtk-update-icon-cache for xfce4-icon-theme
