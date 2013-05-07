@@ -1,7 +1,9 @@
 %define node_name      node
-%define node_version  0.10.2
+%define node_version  0.10.5
 %define node_release   alt1
-%define npmver 1.2.15
+%define npmver 1.2.18
+
+%def_disable check
 
 Name: %node_name
 Version: %node_version
@@ -13,6 +15,7 @@ Url: http://nodejs.org/
 Source: %name-%version.tar
 
 BuildRequires: python-devel gcc-c++ openssl-devel zlib-devel libv8-3.15-devel libuv-devel libcares-devel gyp
+BuildRequires: curl openssl
 Provides: nodejs = %version-%release
 Provides: node.js = %version-%release
 Obsoletes: nodejs < %version-%release
@@ -70,11 +73,19 @@ node programs. It manages dependencies and does other cool stuff.
     --openssl-includes=%_includedir \
     --openssl-use-sys \
     --shared-v8 \
-    --shared-v8-includes=%_includedir
+    --shared-v8-includes=%_includedir 
+#    \
+#    --shared-libuv
+
+mkdir -p ./tools/doc/node_modules/.bin
+ln -s ../marked/bin/marked ./tools/doc/node_modules/.bin/marked
 
 %make_build CXXFLAGS="%{optflags}" CFLAGS="%{optflags}"
 %make doc
-%make jslint
+#%make jslint
+
+%check
+%make_build test
 
 %install
 %makeinstall_std
@@ -101,6 +112,18 @@ chmod 0755 %buildroot%_sysconfdir/profile.d/*
 %_libexecdir/node_modules/npm
 
 %changelog
+* Tue May 07 2013 Dmitriy Kulik <lnkvisitor@altlinux.org> 0.10.5-alt1
+- 0.10.5
+
+* Thu Apr 18 2013 Dmitriy Kulik <lnkvisitor@altlinux.org> 0.10.4-alt1
+- 0.10.4
+- npm 1.2.18
+
+* Sat Apr 06 2013 Dmitriy Kulik <lnkvisitor@altlinux.org> 0.10.3-alt1
+- 0.10.3
+- npm 1.2.17
+- Build with shared libuv
+
 * Fri Mar 29 2013 Dmitriy Kulik <lnkvisitor@altlinux.org> 0.10.2-alt1
 - 0.10.2
 - npm 1.2.15
