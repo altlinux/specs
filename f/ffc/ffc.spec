@@ -1,15 +1,14 @@
 Name:           ffc
-Version:        1.1.0
-Release:        alt1.bzr20130129
+Version:        1.2.0
+Release:        alt1.git20130429
 Epoch: 1
 Summary:        Compiler for finite element variational forms
 Group:          Development/Tools
 License:        LGPL v3
 URL:            https://launchpad.net/ffc
-# bzr branch lp:ffc
+# https://bitbucket.org/fenics-project/ffc.git
 Source: %name-%version.tar.gz
 Source1: http://www.fenics.org/pub/documents/ffc/ffc-user-manual/ffc-user-manual.pdf
-BuildArch: noarch
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Requires: python-module-%name = %epoch:%version-%release
@@ -17,7 +16,7 @@ Requires: python-module-%name = %epoch:%version-%release
 BuildRequires(pre): rpm-build-python
 BuildPreReq: python-devel
 BuildPreReq: libnumpy-devel python-module-fiat python-module-ufc
-BuildPreReq: python-module-ferari
+BuildPreReq: python-module-ferari gcc-c++
 
 %description
 FFC is a compiler for finite element variational forms. From a high-level
@@ -49,7 +48,6 @@ This package contains user manual for UFL (Unified Form Language).
 %package -n python-module-%name
 Summary: Python module of FFC
 Group: Development/Python
-BuildArch: noarch
 Requires: python-module-fiat python-module-ufc python-module-ferari
 %setup_python_module ffc
 %py_provides ffc
@@ -78,7 +76,7 @@ install -d %buildroot%_docdir/%name
 install -p -m644 %SOURCE1 %buildroot%_docdir/%name
 
 %files
-%doc README TODO AUTHORS ChangeLog COPYING
+%doc README* TODO AUTHORS ChangeLog COPYING
 %_bindir/*
 %_man1dir/*
 
@@ -87,9 +85,12 @@ install -p -m644 %SOURCE1 %buildroot%_docdir/%name
 %doc demo
 
 %files -n python-module-%name
-%python_sitelibdir_noarch/*
+%python_sitelibdir/*
 
 %changelog
+* Tue May 07 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:1.2.0-alt1.git20130429
+- Version 1.2.0
+
 * Thu Jan 31 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:1.1.0-alt1.bzr20130129
 - Version 1.1.0
 
