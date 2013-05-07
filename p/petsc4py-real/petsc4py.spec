@@ -16,7 +16,7 @@
 Name: %oname-%scalar_type
 Version: 3.3.1
 %define exampledir %_docdir/%oname-%version/examples
-Release: alt1.hg20130420
+Release: alt2.hg20130420
 Summary: PETSc for Python (%scalar_type scalars)
 License: Public
 Group: Sciences/Mathematics
@@ -34,7 +34,7 @@ BuildPreReq: libmpe2-devel libhdf5-mpi-devel libtriangle-devel libX11-devel
 BuildPreReq: liby12m-devel libsundials-devel libsz2-devel zlib-devel
 BuildPreReq: libexpat-devel libtetgen-devel python-module-mpi4py
 BuildPreReq: python-module-sphinx-devel python-module-Pygments
-BuildPreReq: texlive-latex-base /usr/bin/ssh
+BuildPreReq: texlive-latex-base /usr/bin/ssh libdakota-devel
 BuildPreReq: python-module-Cython gcc-c++ gcc-fortran libgomp-devel
 %if "%scalar_type" == "complex"
 BuildPreReq: libfftw3-mpi-devel
@@ -206,6 +206,9 @@ done
 %endif
 
 %changelog
+* Tue May 07 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.3.1-alt2.hg20130420
+- Fixed build
+
 * Mon Apr 22 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.3.1-alt1.hg20130420
 - Version 3.3.1
 
