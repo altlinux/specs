@@ -7,7 +7,7 @@
 %def_enable introspection
 
 Name: %_name%api_ver
-Version: 0.2.2
+Version: 0.2.3
 Release: alt1
 
 Summary: A audio/video conferencing framework (0.2)
@@ -141,6 +141,9 @@ This package provides development documentation for the Farstream library.
 
 
 %changelog
+* Tue May 07 2013 Yuri N. Sedunov <aris@altlinux.org> 0.2.3-alt1
+- 0.2.3
+
 * Thu Nov 22 2012 Yuri N. Sedunov <aris@altlinux.org> 0.2.2-alt1
 - 0.2.2
 

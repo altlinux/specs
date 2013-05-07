@@ -6,7 +6,7 @@
 %def_enable nm
 
 Name: telepathy-mission-control
-Version: 5.14.0
+Version: 5.14.1
 Release: alt1
 
 Summary: Telepathy mission control plugin library
@@ -21,9 +21,9 @@ BuildRequires: gtk-doc libgio-devel >= 2.28.0 libdbus-glib-devel libtelepathy-gl
 %{?_enable_nm:BuildRequires: NetworkManager-glib-devel}
 %{?_enable_gnome_keyring:BuildRequires: libgnome-keyring-devel}
 
-# for %%check
+# for check
 BuildRequires: python-modules-encodings python-module-twisted-words python-module-twisted-core-gui
-BuildRequires: python-module-dbus python-module-zope.interface
+BuildRequires: python-module-dbus python-module-zope.interface telepathy-logger /proc dbus-tools-gui
 
 %description
 Mission Control, or MC, is a Telepathy component providing a way for
@@ -68,11 +68,11 @@ export CFLAGS="$CFLAGS `pkg-config --cflags glib-2.0` `pkg-config --cflags dbus-
 
 %make_build
 
-#%check #test/twisted/dispatcher/dispatch-activatable.py failed in hasher
-#%%make check
-
 %install
 %make_install DESTDIR=%buildroot install
+
+%check
+#%%make check
 
 %files -n lib%name
 %_bindir/*
@@ -91,6 +91,9 @@ export CFLAGS="$CFLAGS `pkg-config --cflags glib-2.0` `pkg-config --cflags dbus-
 %_datadir/gtk-doc/html/*
 
 %changelog
+* Tue May 07 2013 Yuri N. Sedunov <aris@altlinux.org> 5.14.1-alt1
+- 5.14.1
+
 * Sat Oct 06 2012 Yuri N. Sedunov <aris@altlinux.org> 5.14.0-alt1
 - 5.14.0
 

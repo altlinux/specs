@@ -1,5 +1,5 @@
 Name: telepathy-idle
-Version: 0.1.14
+Version: 0.1.16
 Release: alt1
 
 Summary: A full-featured IRC connection manager
@@ -36,6 +36,9 @@ A full-featured IRC connection manager for telepathy.
 %doc AUTHORS NEWS
 
 %changelog
+* Tue May 07 2013 Yuri N. Sedunov <aris@altlinux.org> 0.1.16-alt1
+- 0.1.16
+
 * Thu Feb 28 2013 Yuri N. Sedunov <aris@altlinux.org> 0.1.14-alt1
 - 0.1.14
 
