@@ -4,12 +4,12 @@
 
 Name:           python-module-fiat
 Version:        1.1.0
-Release:        alt1.bzr20130108
+Release:        alt1.git20130411
 Summary:        FInite element Automatic Tabulator
 Group:          Development/Python
 License:        LGPLv3+
-URL:           https://launchpad.net/fiat
-# bzr branch lp:fiat
+URL:           http://fenicsproject.org/
+# https://bitbucket.org/fenics-project/fiat.git
 Source:        %origname-%version.tar.gz
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
@@ -80,6 +80,9 @@ install -m644 doc/*.pdf %buildroot%_docdir/%origname
 %_docdir/%origname
 
 %changelog
+* Tue May 07 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.0-alt1.git20130411
+- New snapshot
+
 * Thu Jan 31 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.0-alt1.bzr20130108
 - Version 1.1.0
 
