@@ -3,7 +3,7 @@ BuildRequires: gcc-c++
 # END SourceDeps(oneline)
 Name:		npush
 Version:	0.7
-Release:	alt2_8
+Release:	alt2_9
 Summary:	A logic game similar to Sokoban
 
 Group:		Games/Other
@@ -49,7 +49,7 @@ mkdir -p %{buildroot}%{_datadir}/npush
 cp -ra levels*  %{buildroot}%{_datadir}/npush
 
 # desktop file stuff
-desktop-file-install  \
+desktop-file-install \
 	--add-category="LogicGame" \
 	--delete-original \
 	--dir=$RPM_BUILD_ROOT%{_datadir}/applications \
@@ -66,10 +66,13 @@ install -p -m 0644 %{name}.png				\
 %doc CHANGES COPYING CREDITS readme.txt
 %{_bindir}/%{name}
 %{_datadir}/%{name}
-%{_datadir}/applications/%{name}.desktop
+%{_datadir}/applications/*%{name}.desktop
 %{_datadir}/icons/hicolor/*/apps/%{name}.png
 
 %changelog
+* Tue May 07 2013 Igor Vlasenko <viy@altlinux.ru> 0.7-alt2_9
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.7-alt2_8
 - update to new release by fcimport
 
