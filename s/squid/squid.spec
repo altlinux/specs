@@ -4,7 +4,7 @@
 %def_enable esi
 
 Name: squid
-Version: 3.2.10
+Version: 3.2.11
 Release: alt1
 %define langpack_ver 20121005
 Summary: The Squid proxy caching server
@@ -286,6 +286,9 @@ chown -R %name:%name %_spooldir/%name >/dev/null 2>&1 ||:
 
 
 %changelog
+* Tue May 07 2013 Led <led@altlinux.ru> 3.2.11-alt1
+- 3.2.11
+
 * Sun Apr 28 2013 Led <led@altlinux.ru> 3.2.10-alt1
 - 3.2.10
 
