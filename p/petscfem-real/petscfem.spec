@@ -10,7 +10,7 @@
 
 Name: %oname-%scalar_type
 Version: 3.53.1
-Release: alt9.beta
+Release: alt10.beta
 Summary: A General Purpose, Parallel, Multi-Physics FEM Program (%scalar_type scalars)
 License: GPL v2+
 Group: Sciences/Mathematics
@@ -28,6 +28,7 @@ BuildPreReq: texlive-extra-utils svg2pdf latex2html doc++
 BuildPreReq: libhypre-devel-doc ghostscript-utils chrpath
 BuildPreReq: libtrilinos-devel libgaleri-devel c2html
 BuildPreReq: transfig tgif rpm-macros-make perl-devel
+BuildPreReq: libdakota-devel
 
 Requires: lib%name = %version-%release
 
@@ -151,6 +152,9 @@ done
 %endif
 
 %changelog
+* Tue May 07 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.53.1-alt10.beta
+- Fixed build
+
 * Fri Feb 08 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.53.1-alt9.beta
 - New snapshot
 
