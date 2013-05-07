@@ -5,8 +5,8 @@ BuildRequires: gcc-c++ python-devel
 %add_optflags %optflags_shared
 %define oldname ompl
 Name:           libompl
-Version:        0.11.1
-Release:        alt1_4
+Version:        0.12.2
+Release:        alt1_1
 Summary:        The Open Motion Planning Library
 
 Group:          System/Libraries
@@ -17,7 +17,7 @@ Source0:        https://bitbucket.org/%{oldname}/%{oldname}/downloads/%{oldname}
 # libraries get installed to /usr/lib64 on 64 bit systems.  It also
 # moves the installation directory of the odeint library
 # Not yet submitted upstream
-Patch0:         ompl-0.11.1-fedora.patch
+Patch0:         ompl-0.12.2-fedora.patch
 BuildRequires: boost-devel boost-filesystem-devel boost-wave-devel boost-graph-parallel-devel boost-math-devel boost-mpi-devel boost-program_options-devel boost-signals-devel boost-intrusive-devel boost-asio-devel
 BuildRequires: ctest cmake
 BuildRequires:  doxygen
@@ -37,7 +37,7 @@ collision checker or visualization front end.
 %package        devel
 Summary:        Development files for %{oldname}
 Group:          Development/C
-Requires:       %{name} = %{version}-%{release}
+Requires:       %{name}%{?_isa} = %{version}-%{release}
 Provides: ompl-devel = %{version}-%{release}
 
 %description    devel
@@ -47,7 +47,9 @@ developing applications that use %{oldname}.
 
 %prep
 %setup -q -n %{oldname}-%{version}-Source
-%patch0 -p2 -b .fedora
+%patch0 -p0 -b .fedora
+# Get rid of bundled odeint
+rm -rf src/external/omplext_odeint/
 
 %build
 # Python bindings are disabled because dependencies pygccxml and pyplusplus are not packaged for Fedora
@@ -91,6 +93,9 @@ rm -rf %{buildroot}%{_bindir}
 %{_datadir}/cmake/Modules/FindOMPL.cmake
 
 %changelog
+* Tue May 07 2013 Igor Vlasenko <viy@altlinux.ru> 0.12.2-alt1_1
+- update to new release by fcimport
+
 * Sun Apr 28 2013 Igor Vlasenko <viy@altlinux.ru> 0.11.1-alt1_4
 - initial fc import
 
