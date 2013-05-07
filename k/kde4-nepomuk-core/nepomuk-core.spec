@@ -4,9 +4,9 @@
 Name: kde4-nepomuk-core
 %define major  4
 %define minor  10
-%define bugfix 2
+%define bugfix 3
 Version: %major.%minor.%bugfix
-Release: alt2
+Release: alt1
 %define sover %major
 
 Group: Graphical desktop/KDE
@@ -47,6 +47,13 @@ Conflicts: kde4base-runtime-common < 4.9
 %description common
 %name common package
 
+%package -n libnepomukextractor4
+Group: System/Libraries
+Summary: %name library
+Requires: %name-common >= %version-%release
+%description -n libnepomukextractor4
+%name library
+
 %package -n libnepomukcore4
 Group: System/Libraries
 Summary: %name library
@@ -59,7 +66,7 @@ Group: Development/KDE and QT
 Summary: Development files for %name
 Requires: kde4libs-devel
 Requires: %name-common >= %version-%release
-Requires: libnepomukcore4 = %EVR
+Requires: libnepomukextractor4 = %EVR
 %description devel
 Development files for %name
 
@@ -86,15 +93,19 @@ sed -i 's|^\(include.*KDE4Defaults.*\)|\1\ninclude(SopranoAddOntology)|' CMakeLi
 %_K4libdir/libnepomukcommon.so
 %_K4lib/nepomuk*.so
 %_kde4_xdg_apps/nepomuk*.desktop
-%_K4apps/fileindexerservice/nepomukfileindexer.notifyrc
-%_K4apps/nepomukfilewatch/nepomukfilewatch.notifyrc
-%_K4apps/nepomukstorage/nepomukstorage.notifyrc
+%_K4apps/fileindexerservice/
+%_K4apps/nepomukfilewatch/
+%_K4apps/nepomukstorage/
 %_K4start/nepomukserver.desktop
 %_K4srv/nepomuk*.desktop
 %_K4srvtyp/nepomuk*.desktop
 
 %files common
+%dir %_datadir/ontology/kde/
 %_datadir/ontology/kde/*
+
+%files -n libnepomukextractor4
+%_K4libdir/libnepomukextractor.so
 
 %files -n libnepomukcore4
 %_K4libdir/libnepomukcore.so.*
@@ -107,6 +118,9 @@ sed -i 's|^\(include.*KDE4Defaults.*\)|\1\ninclude(SopranoAddOntology)|' CMakeLi
 %_K4link/*.so
 
 %changelog
+* Tue May 07 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.3-alt1
+- new version
+
 * Wed Apr 03 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.2-alt2
 - new version
 
