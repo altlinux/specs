@@ -25,7 +25,7 @@
 
 Name: %oname-%scalar_type
 Version: 3.3_p6
-Release: alt1
+Release: alt2
 Summary: Portable, Extensible Toolkit for Scientific Computation (%scalar_type scalars)
 License: BSD
 Group: Sciences/Mathematics
@@ -55,7 +55,7 @@ BuildPreReq: libXt-devel libsowing-devel boost-devel python-module-fiat
 BuildPreReq: libparmetis-devel libblacs-devel libspooles-devel
 BuildPreReq: libtetgen-devel zlib-devel libblocksolve95-devel
 BuildPreReq: libtriangle-devel libsuperlu_dist-devel libsuitesparse-devel
-BuildPreReq: libsuperlu-devel liby12m-devel
+BuildPreReq: libsuperlu-devel liby12m-devel libdakota-devel
 BuildPreReq: cproto libchaco-devel c2html
 BuildPreReq: libtau-devel libmtl4-devel libmpe2-devel boost-python-devel
 BuildPreReq: libplapack-devel python-devel gdb libnumpy-devel
@@ -789,6 +789,9 @@ sed -i 's|\(\-lpetsc\)|-L%ldir/lib \1|' \
 %ldir/sources
 
 %changelog
+* Tue May 07 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.3_p6-alt2
+- Fixed build
+
 * Mon Apr 22 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.3_p6-alt1
 - Version 3.3-p6
 
@@ -972,3 +975,4 @@ sed -i 's|\(\-lpetsc\)|-L%ldir/lib \1|' \
 
 * Wed Jun 24 2009 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0.0_p6-alt1
 - Initial build for Sisyphus
+
