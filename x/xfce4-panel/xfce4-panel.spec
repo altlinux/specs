@@ -1,8 +1,8 @@
 %define xfce_ver 4.10
 
 Name: xfce4-panel
-Version: 4.10.0
-Release: alt3
+Version: 4.10.1
+Release: alt1.git20130506
 
 Summary: Panel for XFce
 Summary(ru_RU.UTF-8): Панель для окружения рабочего стола Xfce
@@ -67,6 +67,8 @@ This package contains files to develop plugins for XFce panel.
 %patch -p1
 
 %build
+# Don't use git tag in version.
+%xfce4_drop_gitvtag xfce4_panel_version_tag configure.ac.in
 %xfce4reconf
 %configure \
 	--disable-static \
@@ -111,6 +113,10 @@ mkdir -p %buildroot/%_datadir/xfce4/panel-plugins
 %doc %_datadir/gtk-doc/html/libxfce4panel-*/
 
 %changelog
+* Mon May 06 2013 Mikhail Efremov <sem@altlinux.org> 4.10.1-alt1.git20130506
+- Bump version (this snapshot is newer then %name-4.10.1 release).
+- Upstream git snapshot.
+
 * Mon Dec 03 2012 Mikhail Efremov <sem@altlinux.org> 4.10.0-alt3
 - applicationsmenu plugin: Skip empty GenericName.
 - Require xfce4-common.

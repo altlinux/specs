@@ -1,6 +1,6 @@
 Name: xfce4-settings
 Version: 4.11.0
-Release: alt1.git20130423
+Release: alt1.git20130506
 Summary: Settings Manager for Xfce
 Summary (ru_RU.UTF-8): Менеджер настроек Xfce
 
@@ -65,6 +65,10 @@ install -pDm0755 %SOURCE1 %buildroot%_bindir/xfce4-fixkeyboard
 %_iconsdir/*/*/*/*.png
 
 %changelog
+* Tue May 07 2013 Mikhail Efremov <sem@altlinux.org> 4.11.0-alt1.git20130506
+- Drop patch for old libxfce4ui.
+- Upsatream git snapshot.
+
 * Mon Apr 29 2013 Mikhail Efremov <sem@altlinux.org> 4.11.0-alt1.git20130423
 - xfce4-fixkeyboard: Update for new xfce4-settings.
 - Upsatream git snapshot.
