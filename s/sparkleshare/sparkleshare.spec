@@ -1,6 +1,6 @@
 Name: sparkleshare
 Version: 1.0.0
-Release: alt1
+Release: alt2
 
 Summary: Collaboration and sharing tool based on git repositories
 Group: Development/Tools
@@ -14,7 +14,7 @@ Source: %name-%version.tar
 #https://github.com/hbons/SparkleShare/issues/957
 Patch: sparkleshare-0.9.9-trayicon.patch
 
-Requires: git curl
+Requires: git-core curl
 Requires: gvfs-utils
 
 BuildRequires: monodevelop nant libmono-devel
@@ -53,6 +53,9 @@ NOCONFIGURE=1 ./autogen.sh
 %exclude %_iconsdir/ubuntu-mono*
 
 %changelog
+* Wed May 08 2013 Paul Wolneykien <manowar@altlinux.org> 1.0.0-alt2
+- Shrink the deps: depend on git-core instead of git (closes: #28371).
+- Add cronbuild scripts based on the update-source-functions.
+
 * Tue Dec 11 2012 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt1
 - first build for Sisyphus
-
