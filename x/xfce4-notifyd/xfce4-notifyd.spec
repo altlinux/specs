@@ -1,5 +1,5 @@
 Name:           xfce4-notifyd
-Version:        0.2.3
+Version:        0.2.4
 Release:        alt1
 Summary:        Simple notification daemon for Xfce
 Summary(ru_RU.UTF-8): Менеджер уведомлений для Xfce
@@ -23,6 +23,7 @@ BuildPreReq: libexo-devel
 # Automatically added by buildreq on Mon Sep 21 2009
 BuildRequires: intltool libglade-devel
 
+Requires:       xfce4-common
 Requires:       dbus icon-theme-hicolor
 Requires:       notify-send
 Obsoletes:      notification-daemon-xfce <= 0.3.7
@@ -74,6 +75,10 @@ freedesktop.org.
 %_man1dir/*
 
 %changelog
+* Wed May 08 2013 Mikhail Efremov <sem@altlinux.org> 0.2.4-alt1
+- Add xfce4-common requires.
+- Updated to 0.2.4.
+
 * Wed May 08 2013 Mikhail Efremov <sem@altlinux.org> 0.2.3-alt1
 - Fix tests build with --as-needed.
 - Updated from upstream git:
