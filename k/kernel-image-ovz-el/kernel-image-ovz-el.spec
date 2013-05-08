@@ -1,6 +1,6 @@
 Name: kernel-image-ovz-el
 Version: 2.6.32
-Release: alt86
+Release: alt87
 
 %define kernel_base_version	%version
 %define kernel_extra_version	%nil
@@ -46,7 +46,7 @@ Packager: Kernel Maintainers Team <kernel@packages.altlinux.org>
 
 Source11: config-x86
 Source12: config-x86_64
-Patch0: patch-042stab076.5-combined
+Patch0: patch-042stab076.7-combined
 Patch1: %name-%version-%release.patch
 
 ExclusiveArch: i586 i686 x86_64
@@ -74,7 +74,7 @@ BuildRequires: ccache
 BuildRequires: ccache
 %endif
 
-Requires: bootloader-utils >= 0.4.9-alt1
+Requires: bootloader-utils >= 0.4.21
 Requires: module-init-tools >= 3.1
 Requires: mkinitrd >= 1:2.9.9-alt1
 Requires: startup >= 0.8.3-alt1
@@ -616,6 +616,16 @@ find %buildroot%_docdir/kernel-doc-%base_flavour-%version/DocBook \
 %endif # staging
 
 %changelog
+* Tue May 07 2013 Led <led@altlinux.ru> 2.6.32-alt87
+- Update to 042stab076.7
+- usb-storage: add unusual_devs entry for Casio EX-N1 digital camera
+- gspca_pac7302: add support for Genuis Look 317 WebCam
+- updated Requires
+- enabled JFS_FS
+- upstream fixes:
+  + jfs
+  + reiserfs
+
 * Wed Apr 03 2013 Led <led@altlinux.ru> 2.6.32-alt86
 - Update to 042stab076.5
 
