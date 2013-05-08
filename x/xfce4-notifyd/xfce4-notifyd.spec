@@ -1,6 +1,6 @@
 Name:           xfce4-notifyd
-Version:        0.2.2
-Release:        alt3.git20120521
+Version:        0.2.3
+Release:        alt1
 Summary:        Simple notification daemon for Xfce
 Summary(ru_RU.UTF-8): Менеджер уведомлений для Xfce
 
@@ -8,6 +8,7 @@ Group:          Graphical desktop/XFce
 License:        %gpl2only
 URL:            http://spuriousinterrupt.org/projects/xfce4-notifyd
 Source0:        %name-%version.tar
+Patch:          %name-%version-%release.patch
 Packager: XFCE Team <xfce@packages.altlinux.org>
 
 BuildRequires(pre): rpm-build-licenses
@@ -15,7 +16,7 @@ BuildRequires(pre): rpm-build-licenses
 BuildPreReq: rpm-build-xfce4 xfce4-dev-tools
 BuildPreReq: libxfce4ui-devel libxfconf-devel libxfce4util-devel
 BuildPreReq: libdbus-glib-devel libICE-devel libX11-devel libSM-devel
-BuildPreReq: desktop-file-utils
+BuildPreReq: desktop-file-utils libnotify-devel
 # For exo-csource which is needed wnen for --enable-maintainer-mode
 BuildPreReq: libexo-devel
 
@@ -45,7 +46,9 @@ freedesktop.org.
 
 %prep
 %setup
-sed -i 's/m4_define(\[%{name}_version_tag\], \[git\])/m4_define(\[%{name}_version_tag\], \[\])/' configure.ac.in
+%patch -p1
+# Don't use git tag in version.
+%xfce4_drop_gitvtag %{name}_version_tag configure.ac.in
 
 %build
 %xfce4reconf
@@ -71,6 +74,13 @@ sed -i 's/m4_define(\[%{name}_version_tag\], \[git\])/m4_define(\[%{name}_versio
 %_man1dir/*
 
 %changelog
+* Wed May 08 2013 Mikhail Efremov <sem@altlinux.org> 0.2.3-alt1
+- Fix tests build with --as-needed.
+- Updated from upstream git:
+  + Translations.
+  + Fix border drawing when compositing is disabled.
+- Updated to 0.2.3.
+
 * Tue May 22 2012 Mikhail Efremov <sem@altlinux.org> 0.2.2-alt3.git20120521
 - Updated translations from upstream git.
 - Fix BR.
