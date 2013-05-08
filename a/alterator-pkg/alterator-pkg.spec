@@ -4,7 +4,7 @@
 
 Name: alterator-pkg
 Version: 2.6.10
-Release: alt1
+Release: alt2
 
 %add_findreq_skiplist %_libexecdir/alterator/backend3/pkg-init
 %add_findreq_skiplist %_datadir/install2/initinstall.d/*
@@ -60,6 +60,9 @@ additional package installation
 %_alterator_backend3dir/*
 
 %changelog
+* Wed May 08 2013 Andrey Cherepanov <cas@altlinux.org> 2.6.10-alt2
+- Recalculate total installed size on profile change
+
 * Mon Apr 29 2013 Andrey Cherepanov <cas@altlinux.org> 2.6.10-alt1
 - Add profile support in group selection
 
