@@ -1,6 +1,6 @@
 Name: installer-feature-centaurus-profiles
-Version: 0.8
-Release: alt2
+Version: 1.0
+Release: alt1
 
 Summary: Setups package groups from selected vm-profile
 License: GPL
@@ -24,6 +24,9 @@ install -pm755 *.sh %buildroot%hookdir/
 %hookdir/*
 
 %changelog
+* Wed May 08 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1.0-alt1
+- profile-based selection used (see http://www.altlinux.org/Alterator-pkg)
+
 * Thu Feb 07 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.8-alt2
 - check domain-server on server 
 
