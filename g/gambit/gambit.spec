@@ -1,5 +1,5 @@
 Name: gambit
-Version: 4.6.7
+Version: 4.6.8
 Release: alt1
 
 Summary: Gambit-C Scheme programming system
@@ -15,7 +15,7 @@ Packager: Paul Wolneykien <manowar@altlinux.ru>
 Source: %name-%version.tar
 %if_with bootstrap
 Patch0: %name-%version-bootstrap.patch
-%define bootstrap_version 4.6.6
+%define bootstrap_version 4.6.7
 BuildRequires: gambit >= %bootstrap_version
 %endif
 
@@ -166,6 +166,9 @@ cd %name-%version
 %_infodir/*.info*
 
 %changelog
+* Thu May 09 2013 Cronbuild Service <cronbuild@altlinux.org> 4.6.8-alt1
+- repocop cronbuild 20130509. At your service.
+
 * Mon Apr 08 2013 Paul Wolneykien <manowar@altlinux.ru> 4.6.7-alt1
 - Build without bootstrap.
 - Add TODO for --enable-poll option (to be tested with the latest
