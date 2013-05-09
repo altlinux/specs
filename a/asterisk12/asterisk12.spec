@@ -1,13 +1,11 @@
-%define svn_revision 385632.2
-%add_verify_elf_skiplist %_libdir/libasteriskssl12.so.1
-
+%define svn_revision 388107
 Name: asterisk12
 Summary: Open source PBX
 Version: 12
 Release: alt0.%svn_revision
 License: GPL
 Group: System/Servers
-BuildRequires: dahdi-linux-headers flex gcc-c++ graphviz libSDL_image-devel libalsa-devel libavcodec-devel libbluez-devel libcap-devel libcurl-devel libfreetds-devel libgsm-devel libgtk+2-devel libical-devel libiksemel-devel libilbc-devel libjack-devel libkeyutils-devel libltdl7-devel liblua5-devel libmISDN-devel libmysqlclient-devel libncurses-devel libneon-devel libnet-snmp-devel libnewt-devel libopenr2-devel libpopt-devel libportaudio2-devel libpri-devel libpw1.11-devel libradiusclient-ng-devel libresample-devel libsasl2-devel libspandsp6-devel libspeex-devel libsqlite-devel libsqlite3-devel libsrtp libss7-devel libtonezone-dahdi-devel libunixODBC-devel libusb-compat-devel libvorbis-devel libvpb-devel libxml2-devel ncompress openssl postgresql-devel rpm-build-gir rpm-build-ruby texlive-base-bin wget zlib-devel libuuid-devel
+BuildRequires: dahdi-linux-headers flex gcc-c++ graphviz libSDL_image-devel libalsa-devel libavcodec-devel libbluez-devel libcap-devel libcurl-devel libfreetds-devel libgsm-devel libgtk+2-devel libical-devel libiksemel-devel libilbc-devel libjack-devel libkeyutils-devel libltdl7-devel liblua5-devel libmISDN-devel libmysqlclient-devel libncurses-devel libneon-devel libnet-snmp-devel libnewt-devel libopenr2-devel libpopt-devel libportaudio2-devel libpri-devel libpw1.11-devel libradiusclient-ng-devel libresample-devel libsasl2-devel libspandsp6-devel libspeex-devel libsqlite-devel libsqlite3-devel libsrtp libss7-devel libtonezone-dahdi-devel libunixODBC-devel libusb-compat-devel libvorbis-devel libvpb-devel libxml2-devel ncompress openssl postgresql-devel rpm-build-gir texlive-base-bin wget zlib-devel libuuid-devel
 BuildRequires: libtiff-devel
 BuildRequires: libiksemel-devel
 BuildRequires: libradiusclient-ng-devel
@@ -68,6 +66,8 @@ BuildPreReq: libunixODBC-devel libltdl-devel
 BuildPreReq: liblua5-devel
 BuildPreReq: postgresql-devel libpq-devel
 BuildPreReq: librpm-devel libnet-snmp-devel libwrap-devel perl-devel
+%define svn_revision 388107
+%add_verify_elf_skiplist %_libdir/libasteriskssl12.so.1
 %def_with debug
 %def_enable debug
 %def_without		hoard
@@ -823,10 +823,25 @@ ln -sf libasteriskssl12.so.1 %buildroot%_libdir/libasteriskssl12.so
 %astmodule app_userevent
 %astmodule app_verbose
 %astmodule app_waitforring
+%astmodule res_sorcery_realtime
 %astmodule res_sorcery_config
 %astmodule res_sorcery_memory
 %astsample sorcery
 %astsample test_sorcery
+%astmodule res_stasis
+%astmodule res_stasis_http
+%astmodule res_stasis_http_asterisk
+%astmodule res_stasis_http_bridges
+%astmodule res_stasis_http_channels
+%astmodule res_stasis_http_endpoints
+%astmodule res_stasis_http_events
+%astmodule res_stasis_http_playback
+%astmodule res_stasis_http_recordings
+%astmodule res_stasis_http_sounds
+%astsample stasis_http
+%astmodule res_statsd
+%astsample statsd
+/var/lib/asterisk/rest-api/*.json
 %astmodule cdr_csv
 %astmodule cdr_custom
 %astmodule cdr_manager
@@ -1254,6 +1269,9 @@ ln -sf libasteriskssl12.so.1 %buildroot%_libdir/libasteriskssl12.so
 %_libdir/libasteriskssl12.so.1
 
 %changelog
+* Thu May 09 2013 Denis Smirnov <mithraen@altlinux.ru> 12-alt0.388107
+- update from svn revision 388107
+
 * Sat Apr 20 2013 Denis Smirnov <mithraen@altlinux.ru> 12-alt0.385632.2
 - enable BETTER_BACKTRACES and G711_NEW_ALGORITHM
 
