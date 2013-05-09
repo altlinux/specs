@@ -1,7 +1,7 @@
 Name: dahdi-tools
 Summary: DAHDI tools for Digium hardware and Asterisk
 Version: 2.6.2
-Release: alt1
+Release: alt2
 License: GPL
 Group: System/Kernel and hardware
 BuildRequires: dahdi-linux-headers gcc-c++ libncurses-devel libnewt-devel libpcap-devel libusb-compat-devel module-init-tools perl-Pod-Parser ppp-devel wget
@@ -254,6 +254,9 @@ install -m755 dahdi_pcap %buildroot%_sbindir/dahdi_pcap
 %_libdir/pppd/*/*.so
 
 %changelog
+* Sat Apr 20 2013 Denis Smirnov <mithraen@altlinux.ru> 2.6.2-alt2
+- add condrestart target to initscript
+
 * Fri Apr 19 2013 Denis Smirnov <mithraen@altlinux.ru> 2.6.2-alt1
 - new version 2.6.2
 
