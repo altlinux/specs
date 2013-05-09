@@ -2,7 +2,7 @@
 %define _localstatedir %_var
 
 Name: connman
-Version: 1.13
+Version: 1.14
 Release: alt1
 
 Summary: ConnMan is a daemon for managing internet connections.
@@ -107,6 +107,9 @@ install -m0600 -D src/connmand.conf %buildroot%_sysconfdir/sysconfig/connman
 
 
 %changelog
+* Thu May 09 2013 Cronbuild Service <cronbuild@altlinux.org> 1.14-alt1
+- Fresh up to v1.14 with the help of cronbuild and update-source-functions.
+
 * Fri Apr 12 2013 Paul Wolneykien <manowar@altlinux.org> 1.13-alt1
 - Remove the already applied ip6_addr patch.
 - Fresh up to v1.13 with the help of cronbuild and update-source-functions.
