@@ -5,16 +5,16 @@
 %define scalar_type real
 %define ldir %_libdir/petsc-%scalar_type
 Name: %oname-%scalar_type
-Version: 1.1.0
-Release: alt3.bzr20130130
+Version: 1.2.0
+Release: alt1.git20130507
 Epoch: 1
 Summary: C++/Python library for solving differential equations
 License: LGPL v3+
 Group: Sciences/Mathematics
-Url: https://launchpad.net/dolfin
+Url: http://fenicsproject.org/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-# bzr branch lp:dolfin
+# https://bitbucket.org/fenics-project/dolfin.git
 Source: %oname-%version.tar.gz
 Source1: CMakeCache.txt
 
@@ -28,7 +28,7 @@ BuildPreReq: python-module-fiat %mpiimpl-devel python-devel libcgal-devel
 BuildPreReq: cmake swig libgts-devel libxml2-devel libnumpy-devel
 BuildPreReq: boost-devel libvtk-python-devel vtk-python ufc-devel ffc
 BuildPreReq: python-module-viper viper zlib-devel syfi libsyfi-devel
-BuildPreReq: python-module-syfi sfc python-module-sfc
+BuildPreReq: python-module-syfi python-module-ply
 BuildPreReq: boost-filesystem-devel boost-program_options-devel
 BuildPreReq: boost-math-devel boost-signals-devel boost-mpi-devel
 BuildPreReq: libpetsc-%scalar_type-devel gcc-c++ libscotch-devel
@@ -40,7 +40,7 @@ BuildPreReq: python-module-PyTrilinos10 libmpfr-devel
 BuildPreReq: libarmadillo-devel libhypre-devel libqd-devel
 BuildPreReq: petsc-%scalar_type-sources python-module-sphinx-devel
 #BuildPreReq: texlive-latex-extra ghostscript-utils
-BuildPreReq: ghostscript-utils libhwloc-devel
+BuildPreReq: ghostscript-utils libhwloc-devel libqt4-devel libvtk-devel
 #BuildPreReq: libgomp-devel
 
 %description
@@ -202,6 +202,8 @@ This package contains Scalar type independent development files of DOLFIN.
 %prep
 %setup
 
+cmake/scripts/generate-all
+
 mkdir BUILD
 pushd BUILD
 install -p -m644 %SOURCE1 .
@@ -257,7 +259,7 @@ mv %buildroot$PETSC_DIR/share/%oname/data %buildroot%_datadir/%oname/
 #rm -f examples/pde/nonlinear-poisson/cpp/plot.py* \
 #	examples/ode/stiff/cpp/plot.py* \
 #	$(egrep -R 'solution\ import' examples |awk -F : '{print $1}')
-cp -fR ../bench test %buildroot%_datadir/%oname/
+cp -fR ../bench ../test %buildroot%_datadir/%oname/
 popd
 for i in $(egrep -R '@PKG_NAME@' %buildroot%_datadir/%oname/|awk -F : '{print $1}')
 do
@@ -305,7 +307,7 @@ ln -s %_includedir/swig %buildroot$PETSC_DIR/include/
 sed -i 's|debug optimized||' %buildroot%_pkgconfigdir/%name.pc
 
 %files
-%doc AUTHORS COPYING ChangeLog README TODO
+%doc AUTHORS COPYING ChangeLog README* TODO
 %_bindir/*
 %_man1dir/*
 
@@ -350,6 +352,9 @@ sed -i 's|debug optimized||' %buildroot%_pkgconfigdir/%name.pc
 %ldir/python/%{oname}_utils
 
 %changelog
+* Wed May 08 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:1.2.0-alt1.git20130507
+- Version 1.2.0
+
 * Thu May 02 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:1.1.0-alt3.bzr20130130
 - Rebuilt with Trilinos 11.2.3
 
