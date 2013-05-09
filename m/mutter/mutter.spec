@@ -4,7 +4,7 @@
 
 Name: mutter
 Version: %ver_major.1
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: Clutter based compositing GTK3 Window Manager
@@ -16,7 +16,8 @@ Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 Requires: lib%name = %epoch:%version-%release
 Requires: zenity
 
-Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+Source: %name-%version.tar
+#Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 
 BuildPreReq: rpm-build-gnome gnome-common
 BuildPreReq: intltool >= 0.34.90
@@ -153,6 +154,9 @@ DATADIRNAME=share %configure \
 
 
 %changelog
+* Thu May 09 2013 Yuri N. Sedunov <aris@altlinux.org> 1:3.8.1-alt2
+- updated to 2c210e0
+
 * Tue Apr 16 2013 Yuri N. Sedunov <aris@altlinux.org> 1:3.8.1-alt1
 - 3.8.1
 
