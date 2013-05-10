@@ -2,7 +2,7 @@
 
 Name: perl-%module
 Version: 0.19
-Release: alt1
+Release: alt2
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
 
@@ -35,6 +35,9 @@ BuildRequires: perl-devel perl(Pod/Usage.pm)
 %_bindir/distrodb*
 
 %changelog
+* Fri May 10 2013 Igor Vlasenko <viy@altlinux.ru> 0.19-alt2
+- pre-support for autoimports/t7
+
 * Wed May 08 2013 Igor Vlasenko <viy@altlinux.ru> 0.19-alt1
 - renamed distromap-update-* utils to distrodb-update-*
 
