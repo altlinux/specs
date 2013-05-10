@@ -1,99 +1,154 @@
 
 Name: speech-dispatcher
-Version: 0.6.7
-Release: alt5.3
+Version: 0.8
+Release: alt1
 License: %gpl2plus
 Group: Sound
-Summary: Speech dispatcher is a speech output processing service
+Summary: A speech output processing service
 URL: http://www.freebsoft.org/speechd
 Packager: Michael Pozhidaev <msp@altlinux.ru>
 
-# Automatically added by buildreq on Sun Sep 14 2008
-BuildRequires: flite-devel gcc-c++ glib2-devel glibc-devel-static libalsa-devel libdotconf-devel libespeak-devel
+BuildRequires(pre): rpm-build-licenses 
+BuildRequires: libdotconf-devel >= 0.3
+BuildRequires: gcc-c++ glib2-devel glibc-devel-static intltool
+BuildRequires:  libXau-devel  libltdl7-devel 
+BuildRequires: libalsa-devel libao-devel
+BuildRequires: flite-devel  libespeak-devel svox-pico
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-base python3-devel
 
-BuildRequires: rpm-build-licenses rpm-build-python python-base python-devel
+%add_python3_req_skip speechd_config
+%add_python3_req_skip xdg
 
 Source0: %name-%version.tar.gz
+Patch1: speech-dispatcher-0.8-alt-flite.patch
 
-Patch1: speech-dispatcher-0.6.7-alt-flite.patch
-Patch2: speech-dispatcher-0.6.7-alt-python.patch
-Patch3: speech-dispatcher-0.6.7-alt-getline.patch
-Patch4: speech-dispatcher-0.6.7-alt-DSO.patch
-
-%add_python_req_skip speechd_config
 
 %description
-This is the Speech Dispatcher package (speech-dispatcher). It is a part of the
-Free(b)soft project, which is intended to allow blind and visually impaired
+Speech Dispatcher is a part of the Free(b)soft project, which is intended to allow blind and visually impaired
 people to work with computer and Internet based on free software.
 
 %package -n libspeechd
-Summary: Client library for Speech Dispatcher
+Summary: Client library for speech-dispatcher 
 Group: System/Libraries
 
 %description -n libspeechd
-Application can use this library to communicate with Speech Dispatcher service 
-and produce speech output with it.
+Applications can use this library to communicate with speech-dispatcher service and produce speech output.
 
 %package -n libspeechd-devel
 Group: Development/C
-Summary: Development files to use libspeechd to connect to Speech Dispatcher
+Summary: Development files to use libspeechd to connect to speech-dispatcher
 
 %description -n libspeechd-devel
-Application developers can use this library to connect to Speech Dispatcher daemon 
-and produce speech output with it
+Developers can use this library to connect to speech-dispatcher daemon and produce speech output.
 
-%package -n python-module-speechd
+%package output-libao
+Group: Sound
+Summary: libao output module for speech-dispatcher
+
+%description output-libao
+libao output module for speech-dispatcher
+
+%package output-oss
+Group: Sound
+Summary: OSS output module for speech-dispatcher
+
+%description output-oss
+OSS output module for speech-dispatcher
+
+%package module-flite
+Group: Sound
+Summary: Flite support for speech-dispatcher
+
+%description module-flite
+Flite support for speech-dispatcher
+
+%package module-festival
+Group: Sound
+Summary: Festival support for speech-dispatcher
+
+%description module-festival
+Festival support for speech-dispatcher
+
+%package module-pico
+Group: Sound
+Summary: Pico support for speech-dispatcher
+
+%description module-pico
+Pico support for speech-dispatcher
+
+%package -n python3-module-speechd
 Summary: Python client for Speech Dispatcher
 Group: Development/Python
 
-%description -n python-module-speechd
-This python module allows programmers access
-Speech Dispatcher service and send text data to it.
+%description -n python3-module-speechd
+This python module allows programmsaccess speech-dispatcher service.
 
 %prep
 %setup -q 
 %patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p2
-
 %build
 %autoreconf
 %configure
-make
+%make_build
 
 %install
 %make_install DESTDIR='%buildroot' install
 
 # This package has custom python installation via distutils setup 
 # and uses /usr/lib directory even for x86_64;
-if ! [ -d %buildroot%python_sitelibdir ]; then
-    cp -r %buildroot/usr/lib/* %buildroot%_libdir
-fi
+#if ! [ -d %buildroot%python_sitelibdir ]; then
+#    cp -r %buildroot/usr/lib/* %buildroot%_libdir
+#fi
 
 %files
+%doc ANNOUNCE AUTHORS BUGS ChangeLog doc FAQ NEWS README README.packagers README.style README.translators TODO
 %_bindir/*
 %config %_sysconfdir/%name
-%_libdir/%name
-%_libdir/%name-modules
+%dir %_libdir/%name
+%_libdir/%name/spd_alsa.so
+%dir %_libdir/%name-modules
+%_libdir/%name-modules/sd_dummy
+%_libdir/%name-modules/sd_espeak
+%_libdir/%name-modules/sd_generic
 %_datadir/sounds/%name
 %_datadir/%name
 %_infodir/*
-%doc AUTHORS ChangeLog COPYING INSTALL NEWS README TODO
+/usr/share/locale/*/*/*
 
 %files -n libspeechd
-%_libdir/libspeechd.so.2
-%_libdir/libspeechd.so.2.1.1
+%_libdir/libspeechd*.so.*
+%doc COPYING
 
 %files -n libspeechd-devel
 %_includedir/*
 %_libdir/libspeechd.so
+%_pkgconfigdir/*
 
-%files -n python-module-speechd
-%python_sitelibdir/*
+%files output-libao
+%_libdir/%name/spd_libao.so
+
+%files output-oss
+%_libdir/%name/spd_oss.so
+
+%files module-flite
+%_libdir/%name-modules/sd_flite
+
+%files module-festival
+%_libdir/%name-modules/sd_festival
+
+%files module-pico
+%_libdir/%name-modules/sd_pico
+
+%files -n python3-module-speechd
+%python3_sitelibdir/*
 
 %changelog
+* Fri May 10 2013 Michael Pozhidaev <msp@altlinux.ru> 0.8-alt1
+- New version 0.8 (closes: #28819)
+- New subpackages: output-libao, output-oss, module-flite, module-festival, module-pico
+- python-module-speech subpackage is renamed to python3-module-speechdd
+
 * Mon Jul 16 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.7-alt5.3
 - Fixed build
 

@@ -4,7 +4,7 @@ BuildRequires: python-devel
 # END SourceDeps(oneline)
 Name: sugar-write
 Version: 79
-Release: alt1_2
+Release: alt2_2
 Summary: Word processor for Sugar
 Group: Graphical desktop/Sugar
 License: GPLv2+
@@ -19,9 +19,9 @@ Requires: sugar
 
 BuildArch: noarch
 Source44: import.info
-BuildRequires: rpmbuild-helper-sugar-activity
-Obsoletes: sugar-write-activity < %version
-Conflicts: sugar-write-activity < %version
+# speech dispatcher moved to python 3
+%filter_from_requires /^python2...speechd./d
+
 
 %description
 The Write activity provides a word processor for the Sugar interface.
@@ -45,6 +45,9 @@ python ./setup.py install --prefix=$RPM_BUILD_ROOT/%{_prefix}
 
 
 %changelog
+* Fri May 10 2013 Igor Vlasenko <viy@altlinux.ru> 79-alt2_2
+- dropped speechd python dependency. Need proper python3
+
 * Wed Mar 13 2013 Igor Vlasenko <viy@altlinux.ru> 79-alt1_2
 - update from fc18 release
 
