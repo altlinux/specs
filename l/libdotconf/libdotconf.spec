@@ -1,22 +1,16 @@
 
 Name: libdotconf
-Version: 1.0.13
-Release: alt2.qa3
+Version: 1.3
+Release: alt1
 Summary: configuration file parser
 License: %lgpl2only
+Packager: Michael Pozhidaev <msp@altlinux.ru>
 Group: System/Libraries
-URL: http://www.azzit.de/dotconf/
+URL: git://github.com/williamh/dotconf.git
 
-# Automatically added by buildreq on Sun Sep 07 2008
-BuildRequires: glibc-devel-static
-
-BuildRequires: rpm-build-licenses
+BuildRequires: glibc-devel-static rpm-build-licenses
 
 Source: dotconf-%version.tar.gz
-
-Patch1: dotconf-1.0.13-alt-aclocal.patch
-
-Packager: Michael Pozhidaev <msp@altlinux.ru>
 
 %description
 dotconf is a configuration file parser.
@@ -26,55 +20,35 @@ Summary: Development files for dotconf library
 Group: Development/C
 
 %description devel
-dotconf is a configuration file parser.
-This package contains development files
-
-%package devel-static
-Summary: Development files for dotconf library with static library
-Group: Development/C
-Requires: %name-devel
-
-%description devel-static
-dotconf is a configuration file parser.
-This package contains static library
-
-%package -n libpool-devel-static
-Summary: Development static library files for libpool
-Group: Development/C
-
-%description -n libpool-devel-static
-libpool is an auxiliary library, comes with libdotconf.
+Development files for dotconf library
 
 %prep
 %setup -q -n dotconf-%version
-%patch1 -p1
 %build
+%autoreconf
 %configure
-make
+%make_build
 
 %install
 %make_install DESTDIR='%buildroot' install
 
 %files
 #%defattr(-,root,root)
-%doc AUTHORS ChangeLog COPYING doc/dotconf-api.txt doc/dotconf-features.txt NEWS README 
+%doc AUTHORS COPYING README 
 %_libdir/libdotconf*.so.*
 
 %files devel
 %_libdir/libdotconf.so
 %_includedir/dotconf.h
-%_bindir/*
-%_datadir/aclocal/dotconf.m4
-%_libdir/pkgconfig/*
-
-%files devel-static
-%_libdir/libdotconf.a
-
-%files -n libpool-devel-static
-%_includedir/libpool.h
-%_libdir/libpool.a
+%_pkgconfigdir/*
+/usr/share/doc/dotconf
 
 %changelog
+* Fri May 10 2013 Michael Pozhidaev <msp@altlinux.ru> 1.3-alt1
+- New version 1.3
+- devel-static subpackage is removed
+- libpool-devel-static subpackage is removed (no more in original distribution)
+
 * Sun Apr 14 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.0.13-alt2.qa3
 - NMU: rebuilt for debuginfo.
 

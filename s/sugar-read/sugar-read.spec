@@ -1,14 +1,14 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-fedora-compat
 # END SourceDeps(oneline)
-Name: sugar-read
-Version: 106
-Release: alt1_1
-Summary: A document reader for Sugar
-Group: Graphical desktop/Sugar
-License: GPLv2+
-URL: http://wiki.laptop.org/go/Read
-Source0: http://download.sugarlabs.org/sources/sucrose/fructose/Read/Read-%{version}.tar.bz2
+Name:      sugar-read
+Version:   108
+Release:   alt1_1
+Summary:   A document reader for Sugar
+Group:     Graphical desktop/Sugar
+License:   GPLv2+
+URL:       http://wiki.laptop.org/go/Read
+Source0:   http://download.sugarlabs.org/sources/sucrose/fructose/Read/Read-%{version}.tar.bz2
 BuildArch: noarch
 
 BuildRequires: libevince-devel
@@ -20,10 +20,11 @@ BuildRequires: sugar-toolkit-gtk3-devel
 Requires: libevince
 Requires: evince
 Requires: gobject-introspection
-Requires: python-module-BeautifulSoup
 Requires: sugar-toolkit-gtk3
 Source44: import.info
-BuildRequires: rpmbuild-helper-sugar-activity
+# speech dispatcher moved to python 3
+%filter_from_requires /^python2...speechd./d
+
 
 %description
 The Read activity allows the laptop to act as a book reader. It has a
@@ -51,6 +52,9 @@ mkdir -p $RPM_BUILD_ROOT%{sugaractivitydir}
 
 
 %changelog
+* Fri May 10 2013 Igor Vlasenko <viy@altlinux.ru> 108-alt1_1
+- dropped speechd python dependency. Need proper python3
+
 * Tue Dec 11 2012 Igor Vlasenko <viy@altlinux.ru> 106-alt1_1
 - new version; import from fc18
 
