@@ -1,21 +1,18 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires: /usr/bin/glib-gettextize
+# END SourceDeps(oneline)
 Name: seven-gnomes
-Version: 0.3
-Release: alt3.2
+Version: 0.5
+Release: alt1
 
 Summary: Seven Gnomes is the helper utility for Cinelerra.
 License: GPL
 Group: Video
-Url: http://www.roxton.kiev.ua/sevengnomes.html
+Url: http://semiletov.org/sevengnomes.html
 Packager: Igor Vlasenko <viy@altlinux.org>
 
-Source: http://www.roxton.kiev.ua/linux/%name-%version.tar.bz2
+Source: http://semiletov.org/sources/%name-%version.tar
 
-# hack!!!
-BuildPreReq: libgtk+2-devel >= 2.4
-#BuildPreReq: libgtk+2-devel >= 2.6
-#Dependencies are: Gtk+2.6 or higher. 
-
-# Automatically added by buildreq on Mon Oct 31 2005
 BuildRequires: glib2-devel hostinfo libatk-devel libgtk+2-devel libpango-devel pkgconfig
 
 %description
@@ -54,6 +51,9 @@ EOF
 %_desktopdir/%{name}.desktop
 
 %changelog
+* Fri May 10 2013 Igor Vlasenko <viy@altlinux.ru> 0.5-alt1
+- new version
+
 * Sat Mar 26 2011 Igor Vlasenko <viy@altlinux.ru> 0.3-alt3.2
 - converted debian menu to freedesktop
 
