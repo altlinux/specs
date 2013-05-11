@@ -1,6 +1,6 @@
 Summary: Lessfs is an inline data deduplicating filesystem
 Name: lessfs
-Version: 1.5.12
+Version: 1.5.13
 Release: alt1
 License: GPLv3+
 Group: System/Base
@@ -60,6 +60,9 @@ EOF
 %dir %_localstatedir/%name/mta
 
 %changelog
+* Sat May 11 2013 Slava Dubrovskiy <dubrsl@altlinux.org> 1.5.13-alt1
+- New version
+
 * Mon Jun 11 2012 Slava Dubrovskiy <dubrsl@altlinux.org> 1.5.12-alt1
 - Build for ALT
 
