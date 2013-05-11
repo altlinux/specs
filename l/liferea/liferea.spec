@@ -1,34 +1,52 @@
+
 Name: liferea
-Version: 1.9.0
+Version: 1.10.0
 Release: alt1
 Summary: A RSS News Reader for GNOME
 License: GPLv2
 Group: Networking/News
 Url: http://%name.sf.net/
-Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
-Requires(post,preun): GConf
 Obsoletes: %name-gtkhtml < %version-%release %name-xulrunner < %version-%release
 Provides: %name-backend = %version-%release %name-gtkhtml = %version-%release %name-xulrunner = %version-%release
 
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-BuildRequires(Pre): libGConf-devel
-BuildRequires: libSM-devel libICE-devel
+BuildRequires(pre): gobject-introspection-devel
 BuildRequires: libnotify-devel
-BuildRequires: libgtk+3-devel glib2-devel libgio-devel libpango-devel libxml2-devel libxslt-devel libsqlite3-devel
-BuildRequires: libsoup-devel libunique3-devel libwebkitgtk3-devel libjson-glib-devel
-BuildRequires: GConf gcc-c++ intltool
+BuildRequires: libgtk+3-devel >= 3.4.0 glib2-devel libgio-devel libpango-devel libxml2-devel libxslt-devel libsqlite3-devel >= 3.7.0
+BuildRequires: libpeas-devel gsettings-desktop-schemas-devel
+BuildRequires: libgtk+3-gir-devel
+BuildRequires: libsoup-devel libwebkitgtk3-devel libjson-glib-devel
+BuildRequires: gcc-c++ intltool
+
+%set_typelibdir %_libdir/%name/girepository-1.0
 
 %description
-Liferea is a simple FeedReader clone for Unix distributions with GTK2
-(GNOME2 is optional). It is a news aggregator for RSS/RDF feeds which
+Liferea is a simple FeedReader clone for Unix distributions with GTK3
+(GNOME3 is optional). It is a news aggregator for RSS/RDF feeds which
 also supports CDF channels, Atom/Echo/PIE feeds and OCS or OPML
 directories. The problem with FeedReader: for now its only available
 for Windows. There are some projects for GNU/Linux, but no solution for
 GTK/GNOME, which does not require Python or Perl. Liferea tries to fill
 this gap. Liferea is an abbreviation for Linux Feed Reader.
+
+%package plugins-gnome-keyring
+Summary: GNOME Keyring Support for the %name
+Group: Networking/News
+Requires: %name = %version-%release
+
+%description plugins-gnome-keyring
+Allow Liferea to use GNOME keyring as password store
+
+%package plugins-media-player
+Summary: Play music and videos directly from Liferea
+Group: Networking/News
+Requires: %name = %version-%release
+
+%description plugins-media-player
+Play music and videos directly from Liferea
 
 %prep
 %setup -q
@@ -37,8 +55,7 @@ this gap. Liferea is an abbreviation for Linux Feed Reader.
 %build
 %autoreconf
 %configure \
-	-with-gtk=3.0 \
-	--disable-schemas-install \
+	--enable-introspection \
 	--disable-static
 %make_build
 
@@ -47,24 +64,28 @@ this gap. Liferea is an abbreviation for Linux Feed Reader.
 
 %find_lang --with-gnome %name
 
-%post
-%gconf2_install %name
-
-%preun
-if [ $1 = 0 ]; then
-%gconf2_uninstall %name
-fi
-
 %files -f %name.lang
 %doc AUTHORS COPYING ChangeLog
-%_sysconfdir/gconf/schemas/%name.schemas
+%dir %_libdir/%name/plugins
 %_bindir/*
-%_datadir/liferea
+%_libdir/%name/girepository-1.0/*.typelib
+%_datadir/%name
 %_datadir/applications/%name.desktop
+%_datadir/glib-2.0/schemas/*.xml
 %_datadir/icons/hicolor/*/apps/*
-%_man1dir/%name.1*
+%_man1dir/%name.*
+
+%files plugins-gnome-keyring
+%_libdir/%name/plugins/gnome-keyring.*
+
+%files plugins-media-player
+%_libdir/%name/plugins/media-player.*
 
 %changelog
+* Sat May 11 2013 Alexey Shabalin <shaba@altlinux.ru> 1.10.0-alt1
+- 1.10-RC1
+- add plugin packages
+
 * Tue Dec 27 2011 Alexey Shabalin <shaba@altlinux.ru> 1.9.0-alt1
 - 1.9.0
 - build with gtk3
