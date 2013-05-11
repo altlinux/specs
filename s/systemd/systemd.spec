@@ -15,9 +15,10 @@
 %def_enable bootchart
 %def_enable polkit
 %def_enable efi
+%def_without python
 
 Name: systemd
-Version: 201
+Version: 204
 Release: alt1
 Summary: A System and Session Manager
 Url: http://www.freedesktop.org/wiki/Software/systemd
@@ -30,7 +31,6 @@ Source4: prefdm.service
 Source6: altlinux-idetune.service
 Source7: altlinux-update_chrooted.service
 Source8: altlinux-clock-setup.service
-Source14: systemd-bash3
 Source15: network.service
 Source16: altlinux-kmsg-loglevel.service
 Source17: altlinux-save-dmesg.service
@@ -54,10 +54,20 @@ Source42: write_net_rules
 Source43: 75-persistent-net-generator.rules
 Source44: write_cd_rules
 Source45: 75-cd-aliases-generator.rules
-Source46: udev-bash3
 
 Patch1: %name-snapshot.patch
 Patch2: %name-alt-patches.patch
+
+# bash3 completions
+Source51: hostnamectl-bash3
+Source52: journalctl-bash3
+Source53: localectl-bash3
+Source54: loginctl-bash3
+Source55: systemctl-bash3
+Source56: systemd-analyze-bash3
+Source57: systemd-coredumpctl-bash3
+Source58: timedatectl-bash3
+Source59: udevadm-bash3
 
 %define dbus_ver 1.4.6
 
@@ -78,7 +88,7 @@ BuildRequires: glib2-devel >= 2.26 libgio-devel
 BuildRequires: gobject-introspection-devel
 BuildRequires: liblzma-devel
 BuildRequires: kmod-devel >= 5
-BuildRequires: python-devel python-module-sphinx
+%{?_with_python:BuildRequires: python-devel python-module-sphinx}
 BuildRequires: quota
 BuildRequires: gtk-doc
 BuildRequires: libblkid-devel >= 2.20
@@ -101,6 +111,7 @@ Requires: acl
 Requires: libsystemd-daemon = %version-%release
 Requires: libsystemd-login = %version-%release
 Requires: libsystemd-journal = %version-%release
+Requires: %name-utils = %version-%release
 
 # Copy from SysVinit
 PreReq: coreutils
@@ -246,6 +257,14 @@ BuildArch: noarch
 
 %description sysvinit
 Drop-in replacement for the System V init tools of systemd.
+
+%package utils
+Group: System/Configuration/Boot and Init
+Summary: systemd utils
+Conflicts: %name < %version-%release
+
+%description utils
+This package contains utils (systemd-binfmt,systemd-modules-load,systemd-sysctl,systemd-tmpfiles) from systemd.
 
 %package analyze
 Group: System/Configuration/Boot and Init
@@ -449,6 +468,7 @@ intltoolize --force --automake
 %autoreconf
 %configure  \
 	--disable-static \
+	%{subst_with python} \
 	--with-rootprefix="" \
 	--with-rootlibdir=/%_lib \
 	--with-pamlibdir=/%_lib/security \
@@ -519,15 +539,19 @@ ln -s ../var-run.mount %buildroot%_unitdir/local-fs.target.wants
 ln -s systemd-random-seed-load.service %buildroot%_unitdir/random.service
 
 find %buildroot \( -name '*.a' -o -name '*.la' \) -exec rm {} \;
-mkdir -p %buildroot/sbin
+mkdir -p %buildroot/{sbin,bin}
 ln -s ../lib/systemd/systemd %buildroot/sbin/init
-ln -s ../lib/systemd/systemd %buildroot/bin/systemd
-ln -s ../bin/systemctl %buildroot/sbin/reboot
-ln -s ../bin/systemctl %buildroot/sbin/halt
-ln -s ../bin/systemctl %buildroot/sbin/poweroff
-ln -s ../bin/systemctl %buildroot/sbin/shutdown
-ln -s ../bin/systemctl %buildroot/sbin/telinit
-ln -s ../bin/systemctl %buildroot/sbin/runlevel
+ln -s ../lib/systemd/systemd %buildroot/sbin/systemd
+ln -s ../sbin/systemctl %buildroot/sbin/reboot
+ln -s ../sbin/systemctl %buildroot/sbin/halt
+ln -s ../sbin/systemctl %buildroot/sbin/poweroff
+ln -s ../sbin/systemctl %buildroot/sbin/shutdown
+ln -s ../sbin/systemctl %buildroot/sbin/telinit
+ln -s ../sbin/systemctl %buildroot/sbin/runlevel
+
+ln -r -s %buildroot/lib/systemd/systemd-{binfmt,modules-load,sysctl} %buildroot/sbin/
+ln -r -s %buildroot/sbin/systemctl %buildroot/bin/
+
 rm -rf %buildroot%_docdir/systemd
 
 # add defaults services
@@ -567,11 +591,9 @@ rm -f %buildroot%_sysconfdir/systemd/system/display-manager.service
 rm -f %buildroot%_sysconfdir/systemd/system/default.target
 
 # create modules.conf as a symlink to /etc/modules
+mkdir -p %buildroot/lib/modules-load.d
 mkdir -p %buildroot%_sysconfdir/modules-load.d
 ln -s ../modules %buildroot%_sysconfdir/modules-load.d/modules.conf
-
-# add load rtc module at boot time
-mkdir -p %buildroot/lib/modules-load.d
 
 # Make sure the NTP units dir exists
 mkdir -p %buildroot/lib/systemd/ntp-units.d
@@ -588,7 +610,16 @@ touch %buildroot%_sysconfdir/udev/hwdb.bin
 mkdir -p %buildroot%_sysconfdir/bash_completion.d
 rm -f %buildroot%_sysconfdir/bash_completion.d/*
 rm -f %buildroot%_datadir/bash-completion/completions/*
-install -m644 %SOURCE14 %buildroot%_sysconfdir/bash_completion.d/systemd
+install -m644 %SOURCE51 %buildroot%_sysconfdir/bash_completion.d/hostnamectl
+install -m644 %SOURCE52 %buildroot%_sysconfdir/bash_completion.d/journalctl
+install -m644 %SOURCE53 %buildroot%_sysconfdir/bash_completion.d/localectl
+install -m644 %SOURCE54 %buildroot%_sysconfdir/bash_completion.d/loginctl
+install -m644 %SOURCE55 %buildroot%_sysconfdir/bash_completion.d/systemctl
+install -m644 %SOURCE56 %buildroot%_sysconfdir/bash_completion.d/systemd-analyze
+install -m644 %SOURCE57 %buildroot%_sysconfdir/bash_completion.d/systemd-coredumpctl
+install -m644 %SOURCE58 %buildroot%_sysconfdir/bash_completion.d/timedatectl
+install -m644 %SOURCE59 %buildroot%_sysconfdir/bash_completion.d/udevadm
+
 # Add completion for zsh
 install -D shell-completion/systemd-zsh-completion.zsh %buildroot%_datadir/zsh/Completion/Unix/_systemd
 
@@ -646,15 +677,6 @@ ln -s systemd-udevd.service %buildroot%_unitdir/udevd.service
 ln -s ../systemd/systemd-udevd %buildroot/lib/udev/udevd
 ln -s ../lib/systemd/systemd-udevd %buildroot/sbin/udevd
 
-# move udevadm to /sbin
-mv %buildroot/bin/udevadm %buildroot/sbin/udevadm
-sed -i -e 's|/bin/udevadm|/sbin/udevadm|g' \
-	%buildroot/lib/udev/rules.d/71-seat.rules \
-	%buildroot%_unitdir/systemd-udev-settle.service \
-	%buildroot%_unitdir/systemd-udev-trigger.service \
-	%buildroot%_unitdir/initrd-udevadm-cleanup-db.service \
-	%buildroot%_unitdir/initrd-switch-root.target
-
 install -p -m644 %SOURCE21 %buildroot/lib/udev/rules.d/40-ignore-remove.rules
 install -p -m644 %SOURCE22 %buildroot%_sysconfdir/scsi_id.config
 
@@ -696,8 +718,6 @@ install -p -m755 %SOURCE44 %buildroot/lib/udev/
 install -p -m644 %SOURCE45 %buildroot/lib/udev/rules.d/
 ln -s /dev/null %buildroot%_sysconfdir/udev/rules.d/80-net-name-slot.rules
 
-# Add completion for bash3
-install -m644 %SOURCE46 %buildroot%_sysconfdir/bash_completion.d/udev
 
 echo ".so man8/systemd-udevd.8" > %buildroot%_man8dir/udevd.8
 
@@ -711,10 +731,10 @@ install -pD -m755 %SOURCE28 %buildroot%_rpmlibdir/systemd-tmpfiles.filetrigger
 %_sbindir/groupadd -r -f systemd-journal ||:
 
 %post
-/bin/systemd-machine-id-setup >/dev/null 2>&1 || :
+/sbin/systemd-machine-id-setup >/dev/null 2>&1 || :
 /lib/systemd/systemd-random-seed save >/dev/null 2>&1 || :
-/bin/systemctl daemon-reexec >/dev/null 2>&1 || :
-/bin/journalctl --update-catalog >/dev/null 2>&1 || :
+/sbin/systemctl daemon-reexec >/dev/null 2>&1 || :
+/sbin/journalctl --update-catalog >/dev/null 2>&1 || :
 /usr/bin/setfacl -Rnm g:wheel:rx,d:g:wheel:rx,g:adm:rx,d:g:adm:rx /var/log/journal/ >/dev/null 2>&1 || :
 
 if [ $1 -eq 1 ] ; then
@@ -730,7 +750,7 @@ if [ $1 -eq 1 ] ; then
         /bin/ln -sf "$target" %_sysconfdir/systemd/system/default.target 2>&1 || :
 
         # Enable the services we install by default
-        /bin/systemctl enable \
+        /sbin/systemctl enable \
                 getty@.service \
                 remote-fs.target \
                 systemd-readahead-replay.service \
@@ -739,13 +759,13 @@ fi
 
 %postun
 if [ $1 -ge 1 ] ; then
-	/bin/systemctl daemon-reload > /dev/null 2>&1 || :
-	/bin/systemctl try-restart systemd-logind.service >/dev/null 2>&1 || :
+	/sbin/systemctl daemon-reload > /dev/null 2>&1 || :
+	/sbin/systemctl try-restart systemd-logind.service >/dev/null 2>&1 || :
 fi
 
 %preun
 if [ $1 -eq 0 ] ; then
-        /bin/systemctl disable \
+        /sbin/systemctl disable \
                 getty@.service \
                 remote-fs.target \
                 systemd-readahead-replay.service \
@@ -818,7 +838,17 @@ update_chrooted all
 %ghost %config(noreplace) %_sysconfdir/systemd/system/runlevel4.target
 %ghost %config(noreplace) %_sysconfdir/systemd/system/runlevel5.target
 
-/bin/*
+/sbin/systemctl
+/bin/systemctl
+/sbin/systemd
+/sbin/systemd-ask-password
+/sbin/systemd-inhibit
+/sbin/systemd-machine-id-setup
+/sbin/systemd-notify
+/sbin/systemd-tty-ask-password-agent
+/sbin/journalctl
+/sbin/loginctl
+
 %dir /lib/systemd
 /lib/systemd/*
 %dir /usr/lib/systemd
@@ -873,6 +903,33 @@ update_chrooted all
 %exclude %_unitdir/systemd-journal-gatewayd.*
 %exclude %_datadir/systemd/gatewayd
 %endif
+
+# systemd-utils
+%exclude /lib/systemd/systemd-binfmt
+%exclude /lib/systemd/systemd-modules-load
+%exclude /lib/systemd/systemd-sysctl
+%exclude %_unitdir/systemd-tmpfiles-clean.service
+%exclude %_unitdir/systemd-tmpfiles-setup.service
+%exclude %_unitdir/sysinit.target.wants/systemd-tmpfiles-setup.service
+%exclude %_unitdir/systemd-binfmt.service
+%exclude %_unitdir/sysinit.target.wants/systemd-binfmt.service
+%exclude %_unitdir/systemd-modules-load.service
+%exclude %_unitdir/sysinit.target.wants/systemd-modules-load.service
+%exclude %_unitdir/systemd-sysctl.service
+%exclude %_unitdir/sysinit.target.wants/systemd-sysctl.service
+%exclude %_man5dir/tmpfiles.*
+%exclude %_man8dir/systemd-tmpfiles.*
+%exclude %_man5dir/binfmt.*
+%exclude %_man8dir/systemd-binfmt.*
+%exclude %_man5dir/modules-load.*
+%exclude %_man8dir/systemd-modules-load.*
+%exclude %_man5dir/sysctl.*
+%exclude %_man8dir/systemd-sysctl.*
+
+# may be need adapt for ALTLinux?
+%exclude /usr/lib/kernel
+%exclude %_bindir/kernel-install
+%exclude %_man8dir/kernel-install.*
 
 %files -n libsystemd-daemon
 /%_lib/libsystemd-daemon.so.*
@@ -938,6 +995,35 @@ update_chrooted all
 %_man8dir/runlevel.*
 %_initdir/README
 
+%files utils
+/sbin/systemd-tmpfiles
+%_unitdir/systemd-tmpfiles-clean.service
+%_unitdir/systemd-tmpfiles-setup.service
+%_unitdir/sysinit.target.wants/systemd-tmpfiles-setup.service
+%_man5dir/tmpfiles.*
+%_man8dir/systemd-tmpfiles.*
+
+/lib/systemd/systemd-binfmt
+/sbin/systemd-binfmt
+%_unitdir/systemd-binfmt.service
+%_unitdir/sysinit.target.wants/systemd-binfmt.service
+%_man5dir/binfmt.*
+%_man8dir/systemd-binfmt.*
+
+/lib/systemd/systemd-modules-load
+/sbin/systemd-modules-load
+%_unitdir/systemd-modules-load.service
+%_unitdir/sysinit.target.wants/systemd-modules-load.service
+%_man5dir/modules-load.*
+%_man8dir/systemd-modules-load.*
+
+/lib/systemd/systemd-sysctl
+/sbin/systemd-sysctl
+%_unitdir/systemd-sysctl.service
+%_unitdir/sysinit.target.wants/systemd-sysctl.service
+%_man5dir/sysctl.*
+%_man8dir/systemd-sysctl.*
+
 %files analyze
 %_bindir/systemd-analyze
 
@@ -949,23 +1035,19 @@ update_chrooted all
 %endif
 
 %files -n bash-completion-%name
-%_sysconfdir/bash_completion.d/systemd
-#%_datadir/bash-completion/completions/hostnamectl
-#%_datadir/bash-completion/completions/journalctl
-#%_datadir/bash-completion/completions/localectl
-#%_datadir/bash-completion/completions/loginctl
-#%_datadir/bash-completion/completions/systemctl
-#%_datadir/bash-completion/completions/systemd-coredumpctl
-#%_datadir/bash-completion/completions/timedatectl
+%_sysconfdir/bash_completion.d/*
+%exclude %_sysconfdir/bash_completion.d/udevadm
 
 %files -n zsh-completion-%name
 %_datadir/zsh/Completion/Unix/_systemd
 
+%if_with python
 %files -n python-module-%name
 %python_sitelibdir/%name
+%endif
 
 %files -n bash-completion-udev
-%_sysconfdir/bash_completion.d/udev
+%_sysconfdir/bash_completion.d/udevadm
 #%_datadir/bash-completion/completions/udevadm
 
 %files -n libudev1
@@ -1070,6 +1152,17 @@ update_chrooted all
 /lib/udev/write_net_rules
 
 %changelog
+* Sun May 12 2013 Alexey Shabalin <shaba@altlinux.ru> 204-alt1
+- 204
+- add symlink /bin/systemctl -> /sbin/systemctl
+
+* Wed May 08 2013 Alexey Shabalin <shaba@altlinux.ru> 203-alt1
+- 203
+- move root utils to /sbin
+- split systemd-bash3 completion to several files
+- disable build python module
+- add systemd-utils package
+
 * Tue Apr 09 2013 Alexey Shabalin <shaba@altlinux.ru> 201-alt1
 - 201
 
