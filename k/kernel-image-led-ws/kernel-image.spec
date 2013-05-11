@@ -20,13 +20,13 @@
 %define flavour %base_flavour-%sub_flavour
 
 Name: kernel-image-%flavour
-Version: 3.4.42
-Release: alt1
+Version: 3.4.44
+Release: alt3
 
 %define kernel_req %nil
 %define kernel_prov %nil
 %define kernel_branch 3.4
-%define kernel_stable_version 42
+%define kernel_stable_version 44
 %define kernel_extra_version .%kernel_stable_version
 #define kernel_extra_version %nil
 
@@ -38,6 +38,7 @@ Release: alt1
 %define kgcc_version	4.7
 
 %def_enable smp
+%def_disable optimize_for_size
 %def_disable verbose
 %def_disable debug
 %def_disable modversions
@@ -59,7 +60,6 @@ Release: alt1
 %def_enable isdn
 %def_enable telephony
 %def_enable atm
-%def_disable tokenring
 %def_enable fddi
 %def_enable w1
 %def_enable hamradio
@@ -131,7 +131,7 @@ Release: alt1
 
 %Extra_modules vboxhost 4.2.12
 #Extra_modules vboxguest 4.2.12
-#Extra_modules nvidia 310.44
+%Extra_modules nvidia 310.44
 #Extra_modules fglrx 8.97.100.7
 #Extra_modules netatop 0.2
 
@@ -169,12 +169,12 @@ Patch0017: linux-%kernel_branch.20-fix-arch-powerpc-platforms-chrp.patch
 Patch0018: linux-%kernel_branch.20-fix-arch-powerpc-xmon.patch
 Patch0019: linux-%kernel_branch.20-fix-arch-s390.patch
 
-Patch0020: linux-%kernel_branch.20-fix-arch-x86.patch
+Patch0020: linux-%kernel_branch.42-fix-arch-x86.patch
 Patch0021: linux-%kernel_branch.20-fix-arch-x86--apic.patch
 Patch0022: linux-%kernel_branch.20-fix-arch-x86--apm.patch
 Patch0023: linux-%kernel_branch.20-fix-arch-x86--hpet.patch
 Patch0024: linux-%kernel_branch.20-fix-arch-x86--kexec.patch
-Patch0025: linux-%kernel_branch.28-fix-arch-x86--mcheck.patch
+Patch0025: linux-%kernel_branch.42-fix-arch-x86--mcheck.patch
 Patch0026: linux-%kernel_branch.25-fix-arch-x86-cpu--rdrand.patch
 
 Patch0030: linux-%kernel_branch.35-fix-block.patch
@@ -273,7 +273,7 @@ Patch0222: linux-%kernel_branch.20-fix-drivers-hv--hv_vmbus.patch
 Patch0231: linux-%kernel_branch.25-fix-drivers-hwmon--applesmc.patch
 Patch0232: linux-%kernel_branch.25-fix-drivers-hwmon--asc7621.patch
 Patch0233: linux-%kernel_branch.38-fix-drivers-hwmon--asus_atk0110.patch
-Patch0234: linux-%kernel_branch.25-fix-drivers-hwmon--coretemp.patch
+Patch0234: linux-%kernel_branch.42-fix-drivers-hwmon--coretemp.patch
 Patch0235: linux-%kernel_branch.25-fix-drivers-hwmon--fam15h_power.patch
 Patch0236: linux-%kernel_branch.25-fix-drivers-hwmon--i5k_amb.patch
 Patch0237: linux-%kernel_branch.25-fix-drivers-hwmon--k10temp.patch
@@ -388,7 +388,7 @@ Patch0465: linux-%kernel_branch.25-fix-drivers-scsi--mpt2sas.patch
 Patch0466: linux-%kernel_branch.25-fix-drivers-scsi--mvsas.patch
 Patch0467: linux-%kernel_branch.20-fix-drivers-scsi--scsi_mod.patch
 Patch0468: linux-%kernel_branch.20-fix-drivers-scsi--scsi_netlink.patch
-Patch0469: linux-%kernel_branch.20-fix-drivers-scsi--sd_mod.patch
+Patch0469: linux-%kernel_branch.42-fix-drivers-scsi--sd_mod.patch
 Patch0470: linux-%kernel_branch.29-fix-drivers-scsi--st.patch
 Patch0471: linux-%kernel_branch.20-fix-drivers-scsi-device_handler--scsi_dh.patch
 Patch0472: linux-%kernel_branch.39-fix-drivers-scsi-fcoe--fcoe.patch
@@ -398,7 +398,7 @@ Patch0474: linux-%kernel_branch.20-fix-drivers-scsi-megaraid--megaraid_mbox.patc
 Patch0481: linux-%kernel_branch.25-fix-drivers-spi--spi.patch
 Patch0482: linux-%kernel_branch.38-fix-drivers-spi--spi-dw.patch
 
-Patch0490: linux-%kernel_branch.32-fix-drivers-tty.patch
+Patch0490: linux-%kernel_branch.43-fix-drivers-tty.patch
 Patch0491: linux-%kernel_branch.39-fix-drivers-tty-hvc--hvc_console.patch
 Patch0492: linux-%kernel_branch.38-fix-drivers-tty-serial--ifx6x60.patch
 Patch0493: linux-%kernel_branch.38-fix-drivers-tty-serial--mfd.patch
@@ -412,9 +412,10 @@ Patch0502: linux-%kernel_branch.39-fix-drivers-usb-dwc3--dwc3.patch
 Patch0503: linux-%kernel_branch.25-fix-drivers-usb-gadget--g_audio.patch
 Patch0504: linux-%kernel_branch.39-fix-drivers-usb-host--isp116x-hcd.patch
 Patch0505: linux-%kernel_branch.39-fix-drivers-usb-host--uhci-hcd.patch
-Patch0506: linux-%kernel_branch.39-fix-drivers-usb-musb--musb_hdrc.patch
-Patch0507: linux-%kernel_branch.39-fix-drivers-usb-otg--otg.patch
-Patch0508: linux-%kernel_branch.37-fix-drivers-usb-serial--io_ti.patch
+Patch0506: linux-%kernel_branch.44-fix-drivers-usb-host--xhci-hcd.patch
+Patch0507: linux-%kernel_branch.39-fix-drivers-usb-musb--musb_hdrc.patch
+Patch0508: linux-%kernel_branch.39-fix-drivers-usb-otg--otg.patch
+Patch0509: linux-%kernel_branch.37-fix-drivers-usb-serial--io_ti.patch
 
 Patch0511: linux-%kernel_branch.20-fix-drivers-video-aty--radeonfb.patch
 Patch0512: linux-%kernel_branch.20-fix-drivers-video-console--vgacon.patch
@@ -434,79 +435,82 @@ Patch0545: linux-%kernel_branch.30-fix-fs-cifs.patch
 Patch0546: linux-%kernel_branch.35-fix-fs-debugfs.patch
 Patch0547: linux-%kernel_branch.37-fix-fs-ext3.patch
 Patch0548: linux-%kernel_branch.35-fix-fs-ext4.patch
-Patch0549: linux-%kernel_branch.35-fix-fs-gfs2.patch
-Patch0550: linux-%kernel_branch.35-fix-fs-jfs.patch
-Patch0551: linux-%kernel_branch.29-fix-fs-logfs.patch
-Patch0552: linux-%kernel_branch.35-fix-fs-nfs.patch
-Patch0553: linux-%kernel_branch.35-fix-fs-nilfs2.patch
-Patch0554: linux-%kernel_branch.35-fix-fs-ocfs2.patch
-Patch0555: linux-%kernel_branch.31-fix-fs-proc.patch
-Patch0556: linux-%kernel_branch.28-fix-fs-ramfs.patch
-Patch0557: linux-%kernel_branch.20-fix-fs-reiserfs.patch
-Patch0558: linux-%kernel_branch.35-fix-fs-ubifs.patch
-Patch0559: linux-%kernel_branch.35-fix-fs-xfs.patch
+Patch0549: linux-%kernel_branch.42-fix-fs-fuse.patch
+Patch0550: linux-%kernel_branch.35-fix-fs-gfs2.patch
+Patch0551: linux-%kernel_branch.20-fix-fs-hfs.patch
+Patch0552: linux-%kernel_branch.35-fix-fs-jfs.patch
+Patch0553: linux-%kernel_branch.29-fix-fs-logfs.patch
+Patch0554: linux-%kernel_branch.35-fix-fs-nfs.patch
+Patch0555: linux-%kernel_branch.35-fix-fs-nilfs2.patch
+Patch0556: linux-%kernel_branch.35-fix-fs-ocfs2.patch
+Patch0557: linux-%kernel_branch.31-fix-fs-proc.patch
+Patch0558: linux-%kernel_branch.28-fix-fs-ramfs.patch
+Patch0559: linux-%kernel_branch.20-fix-fs-reiserfs.patch
+Patch0560: linux-%kernel_branch.35-fix-fs-ubifs.patch
+Patch0561: linux-%kernel_branch.35-fix-fs-xfs.patch
 
-Patch0561: linux-%kernel_branch.34-fix-include-linux.patch
+Patch0571: linux-%kernel_branch.34-fix-include-linux.patch
 
-Patch0570: linux-%kernel_branch.20-fix-init.patch
+Patch0580: linux-%kernel_branch.20-fix-init.patch
 
-Patch0580: linux-%kernel_branch.34-fix-kernel.patch
-Patch0581: linux-%kernel_branch.41-fix-kernel--rcutree.patch
-Patch0582: linux-%kernel_branch.39-fix-kernel-irq.patch
-Patch0583: linux-%kernel_branch.39-fix-kernel-power.patch
+Patch0590: linux-%kernel_branch.34-fix-kernel.patch
+Patch0591: linux-%kernel_branch.41-fix-kernel--rcutree.patch
+Patch0592: linux-%kernel_branch.39-fix-kernel-irq.patch
+Patch0593: linux-%kernel_branch.39-fix-kernel-power.patch
 
-Patch0590: linux-%kernel_branch.25-fix-lib.patch
-Patch0591: linux-%kernel_branch.29-fix-lib--btree.patch
-Patch0592: linux-%kernel_branch.25-fix-lib--crc32.patch
-Patch0593: linux-%kernel_branch.35-fix-lib-lzo.patch
+Patch0600: linux-%kernel_branch.25-fix-lib.patch
+Patch0601: linux-%kernel_branch.29-fix-lib--btree.patch
+Patch0602: linux-%kernel_branch.25-fix-lib--crc32.patch
+Patch0603: linux-%kernel_branch.35-fix-lib-lzo.patch
 
-Patch0600: linux-%kernel_branch.35-fix-mm.patch
-Patch0601: linux-%kernel_branch.35-fix-mm--bounce.patch
-Patch0602: linux-%kernel_branch.39-fix-mm--cleancache.patch
-Patch0603: linux-%kernel_branch.20-fix-mm--compaction.patch
-Patch0604: linux-%kernel_branch.39-fix-mm--memblock.patch
-Patch0605: linux-%kernel_branch.20-fix-mm--memcontrol.patch
-Patch0606: linux-%kernel_branch.20-fix-mm--memory-failure.patch
-Patch0607: linux-%kernel_branch.20-fix-mm--memory_hotplug.patch
-Patch0608: linux-%kernel_branch.35-fix-mm--mmu.patch
-Patch0609: linux-%kernel_branch.35-fix-mm--slab.patch
-Patch0610: linux-%kernel_branch.35-fix-mm--slub.patch
-Patch0611: linux-%kernel_branch.35-fix-mm--swap.patch
-Patch0612: linux-%kernel_branch.20-fix-mm--zcache.patch
-Patch0613: linux-%kernel_branch.20-fix-mm--zsmalloc.patch
+Patch0610: linux-%kernel_branch.35-fix-mm.patch
+Patch0611: linux-%kernel_branch.35-fix-mm--bounce.patch
+Patch0612: linux-%kernel_branch.39-fix-mm--cleancache.patch
+Patch0613: linux-%kernel_branch.20-fix-mm--compaction.patch
+Patch0614: linux-%kernel_branch.39-fix-mm--memblock.patch
+Patch0615: linux-%kernel_branch.20-fix-mm--memcontrol.patch
+Patch0616: linux-%kernel_branch.20-fix-mm--memory-failure.patch
+Patch0617: linux-%kernel_branch.20-fix-mm--memory_hotplug.patch
+Patch0618: linux-%kernel_branch.43-fix-mm--mmu.patch
+Patch0619: linux-%kernel_branch.35-fix-mm--slab.patch
+Patch0620: linux-%kernel_branch.35-fix-mm--slub.patch
+Patch0621: linux-%kernel_branch.35-fix-mm--swap.patch
+Patch0622: linux-%kernel_branch.20-fix-mm--zcache.patch
+Patch0623: linux-%kernel_branch.20-fix-mm--zsmalloc.patch
 
-Patch0621: linux-%kernel_branch.30-fix-net--dns_resolver.patch
-Patch0622: linux-%kernel_branch.39-fix-net-802--fc.patch
-Patch0623: linux-%kernel_branch.31-fix-net-bridge--bridge.patch
-Patch0624: linux-%kernel_branch.38-fix-net-ceph.patch
-Patch0625: linux-%kernel_branch.37-fix-net-core.patch
-Patch0626: linux-%kernel_branch.39-fix-net-dcb.patch
-Patch0627: linux-%kernel_branch.35-fix-net-ipv4--xfrm.patch
-Patch0628: linux-%kernel_branch.31-fix-net-ipv6.patch
-Patch0629: linux-%kernel_branch.35-fix-net-ipv6--xfrm.patch
-Patch0630: linux-%kernel_branch.39-fix-net-l2tp--l2tp_core.patch
-Patch0631: linux-%kernel_branch.25-fix-net-mac80211.patch
-Patch0632: linux-%kernel_branch.20-fix-net-netfilter--nf_conntrack_ftp.patch
-Patch0633: linux-%kernel_branch.28-fix-net-rds--rds_rdma.patch
-Patch0634: linux-%kernel_branch.35-fix-net-sunrpc.patch
-Patch0635: linux-%kernel_branch.39-fix-net-wimax.patch
-Patch0636: linux-%kernel_branch.35-fix-net-wireless--cfg80211.patch
+Patch0631: linux-%kernel_branch.30-fix-net--dns_resolver.patch
+Patch0632: linux-%kernel_branch.39-fix-net-802--fc.patch
+Patch0633: linux-%kernel_branch.31-fix-net-bridge--bridge.patch
+Patch0634: linux-%kernel_branch.38-fix-net-ceph.patch
+Patch0635: linux-%kernel_branch.42-fix-net-core.patch
+Patch0636: linux-%kernel_branch.39-fix-net-dcb.patch
+Patch0637: linux-%kernel_branch.35-fix-net-ipv4--xfrm.patch
+Patch0638: linux-%kernel_branch.31-fix-net-ipv6.patch
+Patch0639: linux-%kernel_branch.35-fix-net-ipv6--xfrm.patch
+Patch0640: linux-%kernel_branch.39-fix-net-l2tp--l2tp_core.patch
+Patch0641: linux-%kernel_branch.25-fix-net-mac80211.patch
+Patch0642: linux-%kernel_branch.20-fix-net-netfilter--nf_conntrack_ftp.patch
+Patch0643: linux-%kernel_branch.28-fix-net-rds--rds_rdma.patch
+Patch0644: linux-%kernel_branch.35-fix-net-sunrpc.patch
+Patch0645: linux-%kernel_branch.42-fix-net-unix--unix.patch
+Patch0646: linux-%kernel_branch.39-fix-net-wimax.patch
+Patch0647: linux-%kernel_branch.35-fix-net-wireless--cfg80211.patch
 
-Patch0641: linux-%kernel_branch.20-fix-scripts--kconfig.patch
+Patch0651: linux-%kernel_branch.20-fix-scripts--kconfig.patch
 
-Patch0651: linux-%kernel_branch.20-fix-security--apparmor.patch
-Patch0652: linux-%kernel_branch.20-fix-security--security.patch
-Patch0653: linux-%kernel_branch.35-fix-security--selinux.patch
+Patch0661: linux-%kernel_branch.20-fix-security--apparmor.patch
+Patch0662: linux-%kernel_branch.20-fix-security--security.patch
+Patch0663: linux-%kernel_branch.35-fix-security--selinux.patch
 
-Patch0661: linux-%kernel_branch.20-fix-sound-pci-hda--snd-hda-codec-realtek.patch
-Patch0662: linux-%kernel_branch.20-fix-sound-soc-omap--snd-soc-omap.patch
-Patch0663: linux-%kernel_branch.20-fix-sound-soc-omap--snd-soc-omap-mcbsp.patch
+Patch0671: linux-%kernel_branch.20-fix-sound-pci-hda--snd-hda-codec-realtek.patch
+Patch0672: linux-%kernel_branch.20-fix-sound-soc-omap--snd-soc-omap.patch
+Patch0673: linux-%kernel_branch.20-fix-sound-soc-omap--snd-soc-omap-mcbsp.patch
 
-Patch0671: linux-%kernel_branch.20-fix-tools--perf.patch
-Patch0672: linux-%kernel_branch.20-fix-tools-hv.patch
+Patch0681: linux-%kernel_branch.20-fix-tools--perf.patch
+Patch0682: linux-%kernel_branch.20-fix-tools-hv.patch
 
-Patch0680: linux-%kernel_branch.42-fix-virt-kvm.patch
-Patch0681: linux-%kernel_branch.25-fix-virt-kvm--kvm-amd.patch
+Patch0690: linux-%kernel_branch.44-fix-virt-kvm.patch
+Patch0691: linux-%kernel_branch.25-fix-virt-kvm--kvm-amd.patch
 
 
 Patch1001: linux-%kernel_branch.20-feat-arch-arm-mach-omap2--drm.patch
@@ -567,34 +571,33 @@ Patch1175: linux-%kernel_branch.20-feat-fs-binfmt_elf--fatelf.patch
 Patch1176: linux-%kernel_branch.20-feat-fs-dazukofs.patch
 Patch1177: linux-%kernel_branch.18-feat-fs-ext2--secrm.patch
 Patch1178: linux-%kernel_branch.18-feat-fs-ext3--secrm.patch
-Patch1179: linux-%kernel_branch.26-feat-fs-ext4--richacl.patch
+Patch1179: linux-%kernel_branch.44-feat-fs-ext4--richacl.patch
 Patch1180: linux-%kernel_branch.35-feat-fs-ext4--secrm.patch
 Patch1181: linux-%kernel_branch.20-feat-fs-f2fs.patch
 Patch1182: linux-%kernel_branch.18-feat-fs-fat--secrm.patch
-Patch1183: linux-%kernel_branch.20-feat-fs-hfs.patch
-Patch1184: linux-%kernel_branch.18-feat-fs-jbd--secrm.patch
-Patch1185: linux-%kernel_branch.18-feat-fs-jbd2--secrm.patch
-Patch1186: linux-%kernel_branch.25-feat-fs-overlayfs.patch
-Patch1187: linux-%kernel_branch.20-feat-fs-reiser4.patch
-Patch1188: linux-%kernel_branch.20-feat-fs-squashfs--write.patch
-Patch1189: linux-%kernel_branch.28-feat-fs-tmpfs--root.patch
-Patch1190: linux-%kernel_branch.20-feat-fs-unionfs.patch
+Patch1183: linux-%kernel_branch.18-feat-fs-jbd--secrm.patch
+Patch1184: linux-%kernel_branch.18-feat-fs-jbd2--secrm.patch
+Patch1185: linux-%kernel_branch.25-feat-fs-overlayfs.patch
+Patch1186: linux-%kernel_branch.20-feat-fs-reiser4.patch
+Patch1187: linux-%kernel_branch.20-feat-fs-squashfs--write.patch
+Patch1188: linux-%kernel_branch.28-feat-fs-tmpfs--root.patch
+Patch1189: linux-%kernel_branch.20-feat-fs-unionfs.patch
 
-Patch1201: linux-%kernel_branch.27-feat-kernel-power-tuxonice.patch
-Patch1202: linux-%kernel_branch.27-feat-kernel-power-tuxonice--frontswap.patch
+Patch1191: linux-%kernel_branch.27-feat-kernel-power-tuxonice.patch
+Patch1192: linux-%kernel_branch.27-feat-kernel-power-tuxonice--frontswap.patch
 
-Patch1211: linux-%kernel_branch.20-feat-lib--unwind.patch
+Patch1201: linux-%kernel_branch.20-feat-lib--unwind.patch
 
-Patch1221: linux-%kernel_branch.35-feat-mm--frontswap.patch
-Patch1222: linux-%kernel_branch.20-feat-mm--slqb.patch
-Patch1223: linux-%kernel_branch.24-feat-mm--uksm.patch
-Patch1224: linux-%kernel_branch.20-feat-mm--zcache.patch
-Patch1225: linux-%kernel_branch.20-feat-mm--zsmalloc.patch
-Patch1226: linux-%kernel_branch.35-feat-mm--zswap.patch
+Patch1211: linux-%kernel_branch.35-feat-mm--frontswap.patch
+Patch1212: linux-%kernel_branch.20-feat-mm--slqb.patch
+Patch1213: linux-%kernel_branch.24-feat-mm--uksm.patch
+Patch1214: linux-%kernel_branch.20-feat-mm--zcache.patch
+Patch1215: linux-%kernel_branch.20-feat-mm--zsmalloc.patch
+Patch1216: linux-%kernel_branch.35-feat-mm--zswap.patch
 
-Patch1231: linux-%kernel_branch.20-feat-net--netatop.patch
-Patch1232: linux-%kernel_branch.27-feat-net-ipv4-netfilter--ipt_NETFLOW.patch
-Patch1233: linux-%kernel_branch.20-feat-net-netfilter--nf_conntrack_slp.patch
+Patch1221: linux-%kernel_branch.20-feat-net--netatop.patch
+Patch1222: linux-%kernel_branch.27-feat-net-ipv4-netfilter--ipt_NETFLOW.patch
+Patch1223: linux-%kernel_branch.20-feat-net-netfilter--nf_conntrack_slp.patch
 
 
 ExclusiveOS: Linux
@@ -788,8 +791,19 @@ AutoReq: no
 \
 %postun -n kernel-modules-%{1}-%flavour \
 %postun_kernel_modules %kversion-%flavour-%krelease
+
+%define kernel_extmods_package_post() \
+%post -n kernel-extmods-%{1}-%flavour \
+%post_kernel_modules %kversion-%flavour-%krelease \
+\
+%postun -n kernel-extmods-%{1}-%flavour \
+%postun_kernel_modules %kversion-%flavour-%krelease
 %else
 %define kernel_modules_package_post() \
+%nil
+
+%define kernel_extmods_package_post() \
+%nil
 %nil
 %endif
 
@@ -1254,16 +1268,20 @@ v="${M#*=}"
 l="$(rpmquery --qf '%%{LICENSE}\n' kernel-source-$m-$v 2>/dev/null)"
 [ -n "$l" -a "$l" != "(none)" ] && l="License: $l" || l=
 cat <<__PACKAGE__
-%%package -n kernel-modules-$m-%flavour
+%%package -n kernel-extmods-$m-%flavour
+Version: ${v}_%kversion
 Summary: $m kernel modules v$v
 $l
 %kernel_modules_package_std_body $m
+Provides: kernel-modules-$m-%flavour = %version-%release
+Provides: kernel-modules-$m-%flavour = %kversion-%release
 
-%%description -n kernel-modules-$m-%flavour
+%%description -n kernel-extmods-$m-%flavour
 $m kernel modules version $v.
 
 __PACKAGE__
 done)
+%define version %kversion
 %endif
 
 
@@ -1607,77 +1625,80 @@ cd linux-%version
 %patch0557 -p1
 %patch0558 -p1
 %patch0559 -p1
-
-# fix-include-*
+%patch0560 -p1
 %patch0561 -p1
 
+# fix-include-*
+%patch0571 -p1
+
 # fix-init
-%patch0570 -p1
+%patch0580 -p1
 
 # fix-kernel*
-%patch0580 -p1
-%patch0581 -p1
-%patch0582 -p1
-%patch0583 -p1
-
-# fix-lib*
 %patch0590 -p1
 %patch0591 -p1
 %patch0592 -p1
 %patch0593 -p1
 
-# fix-mm*
+# fix-lib*
 %patch0600 -p1
 %patch0601 -p1
 %patch0602 -p1
 %patch0603 -p1
-%patch0604 -p1
-%patch0605 -p1
-%patch0606 -p1
-%patch0607 -p1
-%patch0608 -p1
-%patch0609 -p1
+
+# fix-mm*
 %patch0610 -p1
 %patch0611 -p1
 %patch0612 -p1
 %patch0613 -p1
-
-# fix-net-*
+%patch0614 -p1
+%patch0615 -p1
+%patch0616 -p1
+%patch0617 -p1
+%patch0618 -p1
+%patch0619 -p1
+%patch0620 -p1
 %patch0621 -p1
 %patch0622 -p1
 %patch0623 -p1
-%patch0624 -p1
-%patch0625 -p1
-%patch0626 -p1
-%patch0627 -p1
-%patch0628 -p1
-%patch0629 -p1
-%patch0630 -p1
+
+# fix-net-*
 %patch0631 -p1
 %patch0632 -p1
 %patch0633 -p1
 %patch0634 -p1
 %patch0635 -p1
 %patch0636 -p1
+%patch0637 -p1
+%patch0638 -p1
+%patch0639 -p1
+%patch0640 -p1
+%patch0641 -p1
+%patch0642 -p1
+%patch0643 -p1
+%patch0644 -p1
+%patch0645 -p1
+%patch0646 -p1
+%patch0647 -p1
 
 # fix-scripts--*
-%patch0641 -p1
+%patch0651 -p1
 
 # fix-security--*
-%patch0651 -p1
-%patch0652 -p1
-%patch0653 -p1
-
 %patch0661 -p1
 %patch0662 -p1
 %patch0663 -p1
 
 %patch0671 -p1
 %patch0672 -p1
+%patch0673 -p1
+
+%patch0681 -p1
+%patch0682 -p1
 
 # fix-virt-kvm*
-%patch0680 -p1
-%patch0681 -p1
+%patch0690 -p1
+%patch0691 -p1
 
 
 # feat-arch-*
@@ -1761,26 +1782,25 @@ cd linux-%version
 %patch1187 -p1
 %patch1188 -p1
 %patch1189 -p1
-%patch1190 -p1
 
 # feat-kernel-power-*
-%patch1201 -p1
-%patch1202 -p1
+%patch1191 -p1
+%patch1192 -p1
 
-%patch1211 -p1
+%patch1201 -p1
 
 # feat-mm--*
+%patch1211 -p1
+%patch1212 -p1
+%patch1213 -p1
+%patch1214 -p1
+%patch1215 -p1
+%patch1216 -p1
+
+# feat-net--*
 %patch1221 -p1
 %patch1222 -p1
 %patch1223 -p1
-%patch1224 -p1
-%patch1225 -p1
-%patch1226 -p1
-
-# feat-net--*
-%patch1231 -p1
-%patch1232 -p1
-%patch1233 -p1
 
 
 # get rid of unwanted files resulting from patch fuzz
@@ -1812,7 +1832,6 @@ done
 
 %build
 cd linux-%version
-export ARCH=%base_arch
 
 config_disable()
 {
@@ -1884,7 +1903,7 @@ config_disable \
 config_disable \
 	%{?_disable_smp:SMP} \
 	%{?_disable_modversions:MODVERSIONS} \
-	%{?_disable_compat:SYSCTL_SYSCALL ACPI_PROC_EVENT COMPAT_VDSO I2C_COMPAT PROC_PID_CPUSET SYSFS_DEPRECATED USB_DEVICEFS} \
+	%{?_disable_compat:SYSCTL_SYSCALL ACPI_PROC_EVENT COMPAT_VDSO I2C_COMPAT PROC_PID_CPUSET SYSFS_DEPRECATED USB_DEVICEFS USB_DEVICE_CLASS} \
 	%{?_disable_numa:NUMA} \
 	%{?_disable_video:FB VIDEO_OUTPUT_CONTROL BACKLIGHT_LCD_SUPPORT} \
 	%{?_disable_drm:DRM} \
@@ -1908,7 +1927,6 @@ config_disable \
 	%{?_disable_usb_gadget:USB_GADGET} \
 	%{?_disable_pcmcia:PCCARD PCMCIA} \
 	%{?_disable_atm:ATM} \
-	%{?_disable_tokenring:TR} \
 	%{?_disable_fddi:FDDI} \
 	%{?_disable_hamradio:HAMRADIO} \
 	%{?_disable_w1:W1} \
@@ -1953,6 +1971,7 @@ config_disable \
 config_enable \
 %ifarch i386 i486 i586 i686
 	X86_GENERIC \
+	%{?_enable_optimize_for_size:CC_OPTIMIZE_FOR_SIZE} \
 %endif
 	%{?_enable_debug_section_mismatch:DEBUG_SECTION_MISMATCH} \
 	%{?_enable_modversions:MODVERSIONS} \
@@ -2054,8 +2073,7 @@ echo "Kernel docs built %kversion-%flavour-%krelease"
 
 
 %install
-export ARCH=%base_arch
-pushd linux-%version
+cd linux-%version
 
 install -Dp -m644 System.map %buildroot/boot/System.map-%kversion-%flavour-%krelease
 install -Dp -m644 arch/%base_arch/boot/bzImage %buildroot/boot/vmlinuz-%kversion-%flavour-%krelease
@@ -2188,7 +2206,7 @@ tar --transform='s,^,kernel-src-%flavour-%kversion-%krelease/,' \
 	$XZ -8e > %kernel_srcdir/kernel-src-%flavour-%kversion-%krelease.tar.xz
 %endif
 
-popd
+cd -
 
 rm -rf *.rpmmodlist{,~}
 gen_rpmmodlist() {
@@ -2214,7 +2232,6 @@ gen_rpmmodfile ipmi %buildroot%modules_dir/kernel/drivers/{acpi/acpi_ipmi,char/i
 %{?_enable_hamradio:gen_rpmmodfile hamradio %buildroot%modules_dir/kernel/{drivers/net/hamradio,net/{netrom,rose,ax25}}}
 %{?_enable_irda:gen_rpmmodfile irda %buildroot%modules_dir/kernel/{,drivers/}net/irda}
 %{?_enable_isdn:gen_rpmmodfile isdn %buildroot%modules_dir/kernel/{drivers/isdn,net/bluetooth/cmtp}}
-%{?_enable_tokenring:gen_rpmmodfile tokenring %buildroot%modules_dir/kernel/{drivers/net/{tokenring,pcmcia/ibmtr_cs.ko},net/802/tr.ko}}
 %{?_enable_usb_gadget:gen_rpmmodlist %buildroot%modules_dir/kernel/drivers/usb/gadget/* | grep -xv '%modules_dir/kernel/drivers/usb/gadget/udc-core.ko' > usb-gadget.rpmmodlist}
 %if_enabled video
 gen_rpmmodlist %buildroot%modules_dir/kernel/drivers/video/* | grep -xv '%modules_dir/kernel/drivers/video/uvesafb.ko' | grep -xv '%modules_dir/kernel/drivers/video/sis' | grep -xv '%modules_dir/kernel/drivers/video/backlight' | grep -v '^%modules_dir/kernel/drivers/video/.*sys.*\.ko$' > video.rpmmodlist
@@ -2313,7 +2330,7 @@ sed 's/^/%%exclude &/' *.rpmmodlist > exclude-drivers.rpmmodlist
 %ifdef extra_mods
 %(for m in %extra_mods; do
 cat <<__PACKAGE__
-%kernel_modules_package_post $m
+%kernel_extmods_package_post $m
 
 __PACKAGE__
 done)
@@ -2400,7 +2417,6 @@ done)
 %exclude %modules_dir/kernel/drivers/net/slip/slip.ko
 %exclude %modules_dir/kernel/net/dccp
 %exclude %modules_dir/kernel/net/decnet
-%exclude %modules_dir/kernel/net/econet
 %exclude %modules_dir/kernel/net/ieee802154
 %exclude %modules_dir/kernel/drivers/ieee802154
 %exclude %modules_dir/kernel/net/ipx
@@ -2490,11 +2506,6 @@ done)
 %modules_dir/kernel/net/can
 %modules_dir/kernel/drivers/net/can
 %endif
-%if_enabled tokenring
-%{?_enable_pcmcia:%modules_dir/kernel/drivers/net/pcmcia/ibmtr_cs.ko}
-%modules_dir/kernel/drivers/net/tokenring
-%modules_dir/kernel/net/802/tr.ko
-%endif
 %if_enabled fddi
 %modules_dir/kernel/drivers/net/fddi
 %modules_dir/kernel/net/802/fddi.ko
@@ -2508,7 +2519,6 @@ done)
 #modules_dir/kernel/net/ceph
 %modules_dir/kernel/net/dccp
 %modules_dir/kernel/net/decnet
-%modules_dir/kernel/net/econet
 %modules_dir/kernel/net/ieee802154
 %modules_dir/kernel/drivers/ieee802154
 %modules_dir/kernel/net/ipx
@@ -2609,9 +2619,6 @@ done)
 %firmware_dir/ti_*
 %firmware_dir/tigon
 %{?_enable_hamradio:%firmware_dir/yam}
-%ifarch %ix86
-%{?_enable_tokenring:%firmware_dir/tr_smctr.*}
-%endif
 %firmware_dir/whiteheat*
 %if_enabled alsa
 %{?_enable_pci:%firmware_dir/ess}
@@ -2647,7 +2654,7 @@ done)
 %ifdef extra_mods
 %(for m in %extra_mods; do
 cat <<__PACKAGE__
-%%files -n kernel-modules-$m-%flavour -f linux-%kversion/external/$m.rpmmodlist
+%%files -n kernel-extmods-$m-%flavour -f linux-%kversion/external/$m.rpmmodlist
 
 __PACKAGE__
 done)
@@ -2688,6 +2695,69 @@ done)
 
 
 %changelog
+* Sat May 11 2013 Led <led@altlinux.ru> 3.4.44-alt3
+- updated:
+  + fix-virt-kvm
+- renamed external modules to kernel-extmod-*
+
+* Fri May 10 2013 Led <led@altlinux.ru> 3.4.44-alt2
+- added:
+  + fix-drivers-usb-host--xhci-hcd
+
+* Wed May 08 2013 Led <led@altlinux.ru> 3.4.44-alt1
+- 3.4.44
+- updated:
+  + feat-fs-ext4--richacl
+
+* Tue May 07 2013 Led <led@altlinux.ru> 3.4.43-alt1
+- 3.4.43
+- updated:
+  + fix-drivers-tty
+  + fix-mm--mmu
+  + fix-net-core (CVE-2013-0290)
+- added:
+  + fix-net-unix--unix (CVE-2013-0290)
+- disabled:
+  + UCB1400_CORE
+  + GPIO_UCB1400
+  + TOUCHSCREEN_UCB1400
+
+* Tue Apr 30 2013 Led <led@altlinux.ru> 3.4.42-alt6
+- updated:
+  + fix-drivers-hwmon--coretemp
+- added:
+  + fix-fs-fuse
+- disabled:
+  + IP6_NF_QUEUE
+  + ECONET
+  + USB_DEVICE_CLASS
+- cleaned up spec
+
+* Mon Apr 29 2013 Led <led@altlinux.ru> 3.4.42-alt5
+- updated:
+  + fix-arch-x86
+
+* Mon Apr 29 2013 Led <led@altlinux.ru> 3.4.42-alt4
+- updated:
+  + fix-drivers-tty
+- changed versioning for external modules
+
+* Mon Apr 29 2013 Led <led@altlinux.ru> 3.4.42-alt3
+- removed:
+  + feat-fs-hfs
+- updated:
+  + fix-arch-x86
+  + fix-arch-x86--mcheck
+- added:
+  + fix-fs-hfs
+- cleaned up spec
+- added external modules:
+  + nvidia
+
+* Sat Apr 27 2013 Led <led@altlinux.ru> 3.4.42-alt2
+- updated:
+  + fix-drivers-scsi--sd_mod
+
 * Fri Apr 26 2013 Led <led@altlinux.ru> 3.4.42-alt1
 - 3.4.42
 - updated:
