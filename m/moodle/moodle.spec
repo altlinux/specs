@@ -4,7 +4,7 @@
 #%%define branch_switch Mxx
 
 %define packagversion 1.9.19
-%define packagedate 20130114
+%define packagedate 20130125
 %define packagemoodleversion 2007101592.04
 %define moodlebranch %nil
 %define moodlepackagename %moodle_name%moodlebranch
@@ -12,7 +12,7 @@
 #Name: %moodlepackagename
 Name: moodle
 Version: %packagversion.%packagedate
-Release: %branch_release alt2
+Release: %branch_release alt1
 
 Summary: The Course Management System Moodle
 License: %gpl2plus
@@ -433,6 +433,10 @@ exit 0
 %moodle_questionformatdir/hotpot/
 
 %changelog
+* Sat May 11 2013 Cronbuild Service <cronbuild@altlinux.org> 1.9.19.20130125-alt1
+- repocop cronbuild 20130511. At your service.
+- 1.9.19+ (Build: 20130125)
+
 * Tue Apr 16 2013 Aleksey Avdeev <solo@altlinux.ru> 1.9.19.20130114-alt2
 - Fix requires for %%name subpackage
 
