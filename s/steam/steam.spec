@@ -1,5 +1,5 @@
 Name: steam
-Version: 1.0.0.38
+Version: 1.0.0.39
 Release: alt1
 
 Summary: Launcher for the Steam software distribution service
@@ -52,6 +52,9 @@ savegame and screenshot functionality, and many social features.
 %_pixmapsdir/*
 
 %changelog 
+* Sat May 11 2013 Nazarov Denis <nenderus@altlinux.org> 1.0.0.39-alt1
+- Version 1.0.0.39
+
 * Sat Apr 27 2013 Nazarov Denis <nenderus@altlinux.org> 1.0.0.38-alt1
 - Version 1.0.0.38
 
