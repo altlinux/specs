@@ -2,7 +2,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: bijiben
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: Note editor for GNOME
@@ -13,8 +13,8 @@ Url: https://live.gnome.org/Bijiben
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 
 %define glib_ver 2.28
-%define gtk_ver 3.7.7
-%define tracker_ver 0.15
+%define gtk_ver 3.8.0
+%define tracker_ver 0.16
 
 BuildPreReq: libgtk+3-devel >= %gtk_ver
 BuildPreReq: libgio-devel >= %glib_ver
@@ -54,6 +54,9 @@ desktop integration.
 %doc README AUTHORS NEWS
 
 %changelog
+* Sat May 11 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.2-alt1
+- 3.8.2
+
 * Thu Apr 18 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.1-alt1
 - 3.8.1
 
