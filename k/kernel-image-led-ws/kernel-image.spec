@@ -20,13 +20,13 @@
 %define flavour %base_flavour-%sub_flavour
 
 Name: kernel-image-%flavour
-Version: 3.4.44
-Release: alt3
+Version: 3.4.45
+Release: alt1
 
 %define kernel_req %nil
 %define kernel_prov %nil
 %define kernel_branch 3.4
-%define kernel_stable_version 44
+%define kernel_stable_version 45
 %define kernel_extra_version .%kernel_stable_version
 #define kernel_extra_version %nil
 
@@ -412,7 +412,7 @@ Patch0502: linux-%kernel_branch.39-fix-drivers-usb-dwc3--dwc3.patch
 Patch0503: linux-%kernel_branch.25-fix-drivers-usb-gadget--g_audio.patch
 Patch0504: linux-%kernel_branch.39-fix-drivers-usb-host--isp116x-hcd.patch
 Patch0505: linux-%kernel_branch.39-fix-drivers-usb-host--uhci-hcd.patch
-Patch0506: linux-%kernel_branch.44-fix-drivers-usb-host--xhci-hcd.patch
+Patch0506: linux-%kernel_branch.45-fix-drivers-usb-host--xhci-hcd.patch
 Patch0507: linux-%kernel_branch.39-fix-drivers-usb-musb--musb_hdrc.patch
 Patch0508: linux-%kernel_branch.39-fix-drivers-usb-otg--otg.patch
 Patch0509: linux-%kernel_branch.37-fix-drivers-usb-serial--io_ti.patch
@@ -2695,6 +2695,11 @@ done)
 
 
 %changelog
+* Sun May 12 2013 Led <led@altlinux.ru> 3.4.45-alt1
+- 3.4.45
+- updated:
+  + fix-drivers-usb-host--xhci-hcd
+
 * Sat May 11 2013 Led <led@altlinux.ru> 3.4.44-alt3
 - updated:
   + fix-virt-kvm
