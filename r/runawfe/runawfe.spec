@@ -89,7 +89,7 @@
 
 Name: runawfe
 Version: 3.6.0
-Release: alt1.svn4694
+Release: alt1.svn4700
 Summary: RUNA WFE Workflow/BPM management system
 License: LGPL
 Group: Office
@@ -893,6 +893,6 @@ rm -f %_sbindir/runawfe-start.sh
 
 
 %changelog
-* Sat May 04 2013 Konstantinov Aleksey <kana@altlinux.org> 3.6.0-alt1.svn4694
+* Sun May 12 2013 Konstantinov Aleksey <kana@altlinux.org> 3.6.0-alt1.svn4700
 - New release
 
