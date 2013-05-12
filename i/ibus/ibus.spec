@@ -10,8 +10,8 @@
 %def_enable libgnomekbd
 
 Name: ibus
-Version: 1.5.1
-Release: alt2
+Version: 1.5.2
+Release: alt1
 
 Summary: Intelligent Input Bus for Linux OS
 License: LGPLv2+
@@ -20,14 +20,12 @@ Url: http://code.google.com/p/%name/
 
 Source: http://%name.googlecode.com/files/%name-%version.tar.gz
 Source1: ibus-xinput
+Patch: ibus-1.5.2-up.patch
 # fedora's patches
 Patch1: ibus-810211-no-switch-by-no-trigger.patch
 Patch2: ibus-541492-xkb.patch
 Patch3: ibus-530711-preload-sys.patch
 Patch4: ibus-xx-setup-frequent-lang.patch
-
-# Workaround since for vala >= 0.19
-Patch95: ibus-xx-vapi-build-failure.patch
 
 %define gtk2_binary_version %(pkg-config  --variable=gtk_binary_version gtk+-2.0)
 %define gtk3_binary_version %(pkg-config  --variable=gtk_binary_version gtk+-3.0)
@@ -143,6 +141,7 @@ This package contains IBus im module for python.
 
 %prep
 %setup
+%patch -p1 -b .up
 %patch1 -p1 -b .noswitch
 
 %if_enabled xkb
@@ -152,7 +151,6 @@ rm -f data/dconf/00-upstream-settings
 %endif
 %patch3 -p1
 %patch4 -p1
-%patch95 -p1 -b .vala
 
 %build
 %autoreconf
@@ -229,7 +227,7 @@ fi
 %config %_xinputconf
 %doc AUTHORS README
 
-%exclude %_sysconfdir/bash_completion.d/ibus.bash
+%exclude %_datadir/bash-completion/completions/ibus.bash
 
 %files -n lib%name
 %_libdir/libibus-1.0.so.*
@@ -263,6 +261,10 @@ fi
 %_datadir/gtk-doc/html/*
 
 %changelog
+* Sun May 12 2013 Yuri N. Sedunov <aris@altlinux.org> 1.5.2-alt1
+- 1.5.2
+- updated fc patchset
+
 * Wed Mar 13 2013 Yuri N. Sedunov <aris@altlinux.org> 1.5.1-alt2
 - rebuilt for people/gnome
 
