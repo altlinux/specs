@@ -1,6 +1,6 @@
 Name: nvidia-settings
-Version: 310.32
-Release: alt1
+Version: 319.17
+Release: alt2
 
 Group: System/Configuration/Hardware
 Summary: Tool for configuring the NVIDIA driver
@@ -17,10 +17,10 @@ Source5: nvidia-settings.desktop
 Patch1: xlibs.patch
 Patch2: cflags.patch
 
-#BuildRequires: XFree86-devel XFree86-libs fontconfig freetype2 glib2-devel libatk-devel libgtk+2-devel libpango-devel pkgconfig
-# Automatically added by buildreq on Thu Apr 14 2011 (-bi)
-# optimized out: elfutils fontconfig fontconfig-devel glib2-devel libGL-devel libX11-devel libXext-devel libXrender-devel libatk-devel libcairo-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libpango-devel pkg-config xorg-randrproto-devel xorg-renderproto-devel xorg-videoproto-devel xorg-xextproto-devel xorg-xf86vidmodeproto-devel xorg-xproto-devel
-BuildRequires: libXrandr-devel libXv-devel libXxf86vm-devel libgtk+2-devel libGL-devel
+# Automatically added by buildreq on Mon May 13 2013 (-bi)
+# optimized out: elfutils fontconfig fontconfig-devel glib2-devel libGL-devel libX11-devel libXext-devel libXrender-devel libatk-devel libcairo-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libpango-devel libwayland-client libwayland-server pkg-config python-base xorg-randrproto-devel xorg-renderproto-devel xorg-videoproto-devel xorg-xextproto-devel xorg-xf86vidmodeproto-devel xorg-xproto-devel
+#BuildRequires: libXrandr-devel libXv-devel libXxf86vm-devel libgtk+2-devel libvdpau-devel ruby ruby-stdlibs
+BuildRequires: libXrandr-devel libXv-devel libXxf86vm-devel libgtk+2-devel libGL-devel libvdpau-devel
 
 %description
 The `nvidia-settings` utility is a tool for configuring the NVIDIA
@@ -98,6 +98,15 @@ install -m 0644 src/libXNVCtrl/*.h %buildroot/%_includedir/NVCtrl/
 %_libdir/*.a
 
 %changelog
+* Mon May 13 2013 Sergey V Turchin <zerg@altlinux.org> 319.17-alt2
+- fix build requires
+
+* Mon May 13 2013 Sergey V Turchin <zerg@altlinux.org> 319.17-alt1
+- new version
+
+* Mon Jan 28 2013 Sergey V Turchin <zerg@altlinux.org> 310.32-alt0.M60P.1
+- built for M60P
+
 * Mon Jan 28 2013 Sergey V Turchin <zerg@altlinux.org> 310.32-alt1
 - new version
 
