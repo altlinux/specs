@@ -1,7 +1,7 @@
 Summary: A text formatting package based on SGML
 Name: linuxdoc-tools
 Version: 0.9.68
-Release: alt1
+Release: alt1.1
 License: GPL
 Group: Publishing
 Source: http://http.us.debian.org/debian/pool/main/l/linuxdoc-tools/%{name}_%version.tar.gz
@@ -13,7 +13,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 BuildRequires: flex sgml-common jade groff texinfo OpenSP
 BuildPreReq: texlive-latex-recommended
 
-Requires: groff-base
+Requires: groff-base sgml-common
 
 Provides: sgml-tools = %version-%release
 Obsoletes: sgml-tools
@@ -86,6 +86,9 @@ mv %buildroot%_datadir/%name/*.sty \
 %_mandir/*/*
 
 %changelog
+* Mon May 13 2013 Fr. Br. George <george@altlinux.ru> 0.9.68-alt1.1
+- Add sgml-common to Requires:
+
 * Tue Sep 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.68-alt1
 - Version 0.9.68
 
