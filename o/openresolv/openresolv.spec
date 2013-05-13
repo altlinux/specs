@@ -2,7 +2,7 @@
 
 Name: openresolv
 Version: 3.5.4
-Release: alt3
+Release: alt4
 
 Summary: A framework for managing DNS information 
 License: %bsdstyle
@@ -127,6 +127,10 @@ touch %buildroot%_localstatedir/bind/etc/resolvconf-options.conf
 %endif
 
 %changelog
+* Mon May 13 2013 Mikhail Efremov <sem@altlinux.org> 3.5.4-alt4
+- resolvconf-restartcmd: Use sd_booted utility.
+- resolvconf-restartcmd: Don't use absolute paths for commands.
+
 * Thu Mar 07 2013 Mikhail Efremov <sem@altlinux.org> 3.5.4-alt3
 - Updated test script.
 - Own auto generated files.
