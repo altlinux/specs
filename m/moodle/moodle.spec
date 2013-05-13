@@ -12,7 +12,7 @@
 #Name: %moodlepackagename
 Name: moodle
 Version: %packagversion.%packagedate
-Release: %branch_release alt1
+Release: %branch_release alt2
 
 Summary: The Course Management System Moodle
 License: %gpl2plus
@@ -147,7 +147,8 @@ Conflicts: %moodle_name-base >= 2.0
 Summary: installed mysql-server on localhost for Moodle
 Group: Networking/WWW
 Requires: %name-base < 2.0
-Requires: MySQL-server php5-mysql
+Requires: /usr/sbin/mysqld
+Requires: php5-mysql
 Conflicts: %moodle_name >= 2.0
 Conflicts: %moodle_name-base >= 2.0
 
@@ -433,6 +434,10 @@ exit 0
 %moodle_questionformatdir/hotpot/
 
 %changelog
+* Mon May 13 2013 Aleksey Avdeev <solo@altlinux.ru> 1.9.19.20130125-alt2
+- Change requires: MySQL-server to /usr/sbin/mysqld for mariadb
+  compatibility in moodle-local-mysql
+
 * Sat May 11 2013 Cronbuild Service <cronbuild@altlinux.org> 1.9.19.20130125-alt1
 - repocop cronbuild 20130511. At your service.
 - 1.9.19+ (Build: 20130125)
