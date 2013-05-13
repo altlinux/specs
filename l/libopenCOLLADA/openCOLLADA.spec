@@ -2,39 +2,49 @@
 BuildRequires(pre): rpm-macros-fedora-compat
 BuildRequires: gcc-c++
 # END SourceDeps(oneline)
+Group: System/Libraries
 %add_optflags %optflags_shared
 %define oldname openCOLLADA
-%global AGE 871
 # Upstream does not maintain a soversion so we define one here.
 # abi-compliance-checker will be used to determine if an abi breakage occurs
 # and the soversion will be incremented.
 %global sover 0.1
 
+%global commit 9665d1614b027ffd7815dc745c4fab4d69eb3321
+%global shortcommit %(c=%{commit}; echo ${c:0:7})
+%global upname OpenCOLLADA
+
+# Needs cmake 2.8 so use alternative package on EL.
+%if 0%{?el6}
+%global cmake %cmake28
+%endif
+
 
 Name:           libopenCOLLADA
 Version:        0
-Release:        alt1_14.svn%{AGE}
+Release:        alt1_15.git%{shortcommit}
 License:        MIT
 Summary:        Collada 3D import and export libraries
-Url:            http://www.opencollada.org/
-Group:          System/Libraries
+Url:            https://collada.org/mediawiki/index.php/OpenCOLLADA
 
-# The source for this package was pulled from upstream's svn.  Use the
-# following commands to generate the tarball (revision 863 shown):
-#   svn -r 863 export http://opencollada.googlecode.com/svn/trunk/ openCOLLADA-svn863
-#   tar acf openCOLLADA-svn836.tar.xz openCOLLADA-svn863
-Source0:        %{oldname}-svn%{AGE}.tar.xz
+Source0:        https://github.com/KhronosGroup/OpenCOLLADA/archive/%{commit}/%{upname}-%{shortcommit}.tar.gz
 Source1:        Changelog
 
 Patch0:         openCOLLADA-svn863-cmake.patch
 Patch1:         openCOLLADA-svn863-libs.patch
 Patch2:         openCOLLADA-smp_build.patch
 Patch3:         openCOLLADA-svn871-memcpy.patch
+Patch4:         openCOLLADA-non-existant_includes.patch
+Patch5:         openCOLLADA-svn876-no_var_tracking_assigenments.patch
 
 BuildRequires:  dos2unix
 BuildRequires:  libfftw3-devel
 BuildRequires:  pcre-devel
+%if 0%{?el6}
+BuildRequires:  cmake28
+%else
 BuildRequires: ctest cmake
+%endif
 BuildRequires:  zlib-devel
 BuildRequires:  libxml2-devel
 Source44: import.info
@@ -86,11 +96,12 @@ XML validator for COLLADA files, based on the COLLADASaxFrameworkLoader.
 
 
 %prep
-%setup -q -n %{oldname}-svn%{AGE}
+%setup -q -n %{upname}-%{commit}
 %patch0 -p1 -b .cmake
 %patch1 -p1 -b .libs
 %patch2 -p1 -b .smp
-%patch3 -p1 -b .memcpy
+%patch4 -p1 -b .includes
+%patch5 -p1 -b .no_var_trk
 
 # Remove unused bundled libraries
 rm -rf Externals/{Cg,expat,lib3ds,LibXML,MayaDataModel,pcre,zlib,zziplib}
@@ -158,6 +169,9 @@ cp -a Externals/MathMLSolver/include/* %{buildroot}%{_includedir}/MathMLSolver/
 
 
 %changelog
+* Mon May 13 2013 Igor Vlasenko <viy@altlinux.ru> 0-alt1_15.git9665d16
+- update to new release by fcimport
+
 * Sun Apr 28 2013 Igor Vlasenko <viy@altlinux.ru> 0-alt1_14.svn871
 - initial fc import
 
