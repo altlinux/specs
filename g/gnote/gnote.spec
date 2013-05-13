@@ -1,7 +1,7 @@
 %define _libexecdir /usr/libexec
 
 Name: gnote
-Version: 3.8.0
+Version: 3.8.1
 Release: alt1
 Summary: Note-taking application
 Group: Graphical desktop/GNOME
@@ -54,6 +54,9 @@ desktop-file-install \
 
 %find_lang %name --with-gnome
 
+%check
+%make check
+
 %files -f %name.lang
 %doc COPYING README TODO NEWS AUTHORS
 %_bindir/%name
@@ -68,6 +71,9 @@ desktop-file-install \
 %_datadir/glib-2.0/schemas/*.xml
 
 %changelog
+* Mon May 13 2013 Alexey Shabalin <shaba@altlinux.ru> 3.8.1-alt1
+- 3.8.1
+
 * Wed Mar 27 2013 Alexey Shabalin <shaba@altlinux.ru> 3.8.0-alt1
 - 3.8.0
 
