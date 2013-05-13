@@ -1,6 +1,6 @@
 Name: thunar-media-tags-plugin
-Version: 0.2.0
-Release: alt2
+Version: 0.2.1
+Release: alt1
 
 Summary: Thunar media tag plugin
 License: GPL
@@ -38,6 +38,9 @@ which adds ID3/OGG tag support to the bulk rename dialog.
 %_libdir/thunarx-*/*.so
 
 %changelog
+* Mon May 13 2013 Mikhail Efremov <sem@altlinux.org> 0.2.1-alt1
+- Updated to 0.2.1.
+
 * Tue Dec 06 2011 Mikhail Efremov <sem@altlinux.org> 0.2.0-alt2
 - Don't use empty string as separator.
 
