@@ -1,6 +1,6 @@
 
 Name: deepsolver
-Version: 0.3.1
+Version: 0.3.2
 Release: alt1
 
 Packager: Michael Pozhidaev <msp@altlinux.ru>
@@ -114,6 +114,10 @@ make DESTDIR=%buildroot install
 %_bindir/ds-provides
 
 %changelog
+* Mon May 13 2013 Michael Pozhidaev <msp@altlinux.ru> 0.3.2-alt1
+- External provides references can be specified explicitly (key "--external-provides" for ds-repo and ds-provides)
+- Sources packages file is now also read during external provides references collecting
+
 * Sat Mar 23 2013 Michael Pozhidaev <msp@altlinux.ru> 0.3.1-alt1
 - Sisyphus is chosen as main repository
 - --nothing command line key is changed to --dry-run
