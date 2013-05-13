@@ -12,7 +12,7 @@
 #Name: %moodlepackagename
 Name: moodle2.2
 Version: %packagversion.%packagedate
-Release: %branch_release alt3
+Release: %branch_release alt4
 
 Summary: The Course Management System Moodle
 License: %gpl3plus
@@ -411,6 +411,9 @@ exit 0
 %moodle_authdir/pam/
 
 %changelog
+* Mon May 13 2013 Aleksey Avdeev <solo@altlinux.ru> 2.2.9.20130411-alt4
+- Fix for cronbuild use
+
 * Thu Apr 25 2013 Anton V. Boyarshinov <boyarsh@altlinux.org> 2.2.9.20130411-alt3
 - Change requires: MySQL-server to /usr/sbin/mysqld for mariadb
   compatibility in moodle2.2-local-mysql
