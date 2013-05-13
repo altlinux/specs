@@ -1,7 +1,8 @@
-%global snapshot 20121022
+%add_optflags %optflags_shared
+%global snapshot 20130509
 Name:       libecb
 Version:    0.%{snapshot}
-Release:    alt1_2
+Release:    alt1_1
 Summary:    Compiler built-ins
 Group:      Development/C
 License:    BSD
@@ -31,6 +32,9 @@ install -m 0644 -t %{buildroot}%{_includedir} *.h
 %{_includedir}/*
 
 %changelog
+* Mon May 13 2013 Igor Vlasenko <viy@altlinux.ru> 0.20130509-alt1_1
+- update to new release by fcimport
+
 * Thu Apr 25 2013 Igor Vlasenko <viy@altlinux.ru> 0.20121022-alt1_2
 - initial fc import
 
