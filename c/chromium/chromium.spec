@@ -1,6 +1,6 @@
 %set_verify_elf_method textrel=relaxed
-%define v8_ver 3.15.11.10
-%define rev 187217
+%define v8_ver 3.16.14.10
+%define rev 191765
 
 %def_disable debug
 %def_disable nacl
@@ -12,8 +12,8 @@
 %endif
 
 Name:           chromium
-Version:        25.0.1364.172
-Release:        alt4.r%rev
+Version:        26.0.1410.57
+Release:        alt1.r%rev
 
 Summary:        An open source web browser developed by Google
 License:        BSD-3-Clause and LGPL-2.1+
@@ -45,7 +45,7 @@ Patch17:        chromium-system-glew.patch
 # PATCH-FIX-OPENSUSE disables the requirement for ffmpeg
 Patch20:        chromium-6.0.425.0-ffmpeg-no-pkgconfig.patch
 # PATCH-FIX-OPENSUSE patches in system speex library
-Patch28:        chromium-23.0.1271.64-system-speex.patch
+Patch28:        chromium-system-speex.patch
 # PATCH-FIX-OPENSUSE patches in the system libvpx library
 Patch32:        chromium-7.0.542.0-system-libvpx.patch
 # PATCH-FIX-OPENSUSE remove the rpath in the libraries
@@ -64,6 +64,8 @@ Patch69:	chromium-alt-krb5-fix-path.patch
 Patch71:	chromium-21.0.1158.0-set-desktop-file-name.patch
 # Replace 'struct siginfo' with 'siginfo_t'
 Patch72:	chromium-20.0.1132.57-glib-2.16-use-siginfo_t.patch
+# Fix build with speech-dispatcher >= 0.8
+Patch73:    chromium-speechd-0.8.patch
 
 # Patches from Debian
 Patch80:	nspr.patch
@@ -112,13 +114,15 @@ BuildRequires:  libpam-devel
 BuildRequires:  libpci-devel
 BuildRequires:  libpng12-devel
 BuildRequires:  libpulseaudio-devel
+BuildRequires:  libspeechd-devel >= 0.8
 BuildRequires:  libspeex-devel
 BuildRequires:  libsqlite3-devel
 BuildRequires:  libssl-devel
 BuildRequires:  libudev-devel
-BuildRequires:  libv8-3.15-devel >= %v8_ver
+BuildRequires:  libv8-devel >= %v8_ver
 BuildRequires:  libvpx-devel
 BuildRequires:  libx264-devel
+BuildRequires:  libXdamage-devel
 BuildRequires:  libXrandr-devel
 BuildRequires:  libxslt-devel
 BuildRequires:  libyasm-devel
@@ -151,7 +155,7 @@ BuildRequires:  wdiff
 BuildRequires:  yasm
 #BuildRequires:  zlib-devel
 
-Requires:       libv8-3.15 >= %v8_ver
+Requires:       libv8 >= %v8_ver
 
 Provides: 		webclient, /usr/bin/xbrowser
 BuildPreReq: 	alternatives >= 0.2.0
@@ -205,9 +209,9 @@ to Gnome's Keyring.
 %patch62 -p1
 %patch63 -p2
 %patch64
-%patch8 -p1
+%patch8 -p2
 %patch13 -p2
-%patch14 -p1
+%patch14 -p2
 %patch17 -p1
 #%%patch20 -p1
 %patch28 -p2
@@ -217,8 +221,9 @@ to Gnome's Keyring.
 %patch69 -p2
 %patch71 -p2
 %patch72 -p1
+%patch73 -p2
 
-%patch80 -p1
+%patch80 -p2
 %patch81 -p1
 %patch82 -p1
 #%%patch84 -p1
@@ -231,7 +236,7 @@ to Gnome's Keyring.
 
 # Replace anywhere v8 to system package
 subst 's,v8/tools/gyp/v8.gyp,build/linux/system.gyp,' `find . -type f -a -name *.gyp*`
-sed -i '/v8_shell#host/d' src/chrome/chrome_tests.gypi src/chrome/chrome_tests_unit.gypi
+sed -i '/v8_shell#host/d' src/chrome/chrome_tests.gypi src/chrome/js_unittest_rules.gypi
 grep -Rl '^#include [<"]v8/include' * 2>/dev/null | while read f;do subst 's,^\(#include [<"]\)v8/include/,\1,' "$f";done
 
 echo "svn%rev" > src/build/LASTCHANGE.in
@@ -314,6 +319,8 @@ pushd src
 %endif
 	-Dlinux_use_gold_flags=0 \
 	-Dlinux_use_gold_binary=0 \
+    -Dlinux_link_libpci=1 \
+    -Dlinux_link_libspeechd=1 \
 	-Denable_plugin_installation=0 \
 	-Dlinux_use_tcmalloc=0 \
 	-Duse_pulseaudio=1 \
@@ -440,8 +447,29 @@ printf '%_bindir/%name\t%_libdir/%name/%name-gnome\t15\n' > %buildroot%_altdir/%
 %_altdir/%name-gnome
 
 %changelog
+* Mon May 13 2013 Andrey Cherepanov <cas@altlinux.org> 26.0.1410.57-alt1.r191765
+- New version 26.0.1410.57
+- Security fixes:
+  - High CVE-2013-0927: Unsafe config option loading in Pango.
+- Requires new version speech-dispatcher
+
 * Sun Mar 31 2013 Andrey Cherepanov <cas@altlinux.org> 25.0.1364.172-alt4.r187217
 - Rebuild with libv8-3.15
+
+* Wed Mar 27 2013 Andrey Cherepanov <cas@altlinux.org> 26.0.1410.43-alt1.r189671
+- New version 26.0.1410.43
+- Security fixes:
+  - Medium CVE-2013-0926: Avoid pasting active tags in certain situations.
+  - Low CVE-2013-0925: Avoid leaking URLs to extensions without the tabs permissions.
+  - Low CVE-2013-0924: Check an extension's permissions API usage again file permissions.
+  - Medium CVE-2013-0923: Memory safety issues in the USB Apps API.
+  - Low CVE-2013-0922: Avoid HTTP basic auth brute force attempts.
+  - High CVE-2013-0921: Ensure isolated web sites run in their own processes.
+  - Medium CVE-2013-0920: Use-after-free in extension bookmarks API.
+  - Medium CVE-2013-0919: Use-after-free with pop-up windows in extensions.
+  - Low CVE-2013-0918: Do not navigate dev tools upon drag and drop.
+  - Low CVE-2013-0917: Out-of-bounds read in URL loader.
+  - High CVE-2013-0916: Use-after-free in Web Audio.
 
 * Thu Mar 21 2013 Andrey Cherepanov <cas@altlinux.org> 25.0.1364.172-alt3.r187217
 - Add note that the keys for Google API are only to be used for ALT Linux
