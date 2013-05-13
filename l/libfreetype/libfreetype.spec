@@ -1,6 +1,6 @@
 Name: libfreetype
-Version: 2.4.11
-Release: alt1.1
+Version: 2.4.12
+Release: alt1
 
 Summary: A free and portable font rendering engine
 License: FTL or GPLv2+
@@ -15,9 +15,9 @@ Source1: http://download.savannah.gnu.org/releases/freetype/ft2demos-%version.ta
 Patch5: freetype-2.4.10-osh.patch
 
 Patch1: freetype-2.4.10-alt-compat-version-script.patch
-Patch2: freetype-2.4.10-alt-freetype-config.patch
+Patch2: freetype-2.4.12-alt-freetype-config.patch
 Patch3: freetype-2.4.10-alt-fttrigon.patch
-Patch4: ft2demos-2.4.10-alt-drop-ftgrid.patch
+Patch4: ft2demos-2.4.12-alt-drop-ftgrid.patch
 
 Patch11: freetype-2.4.10-rh-enable-subpixel-rendering.patch
 Patch12: freetype-2.4.10-rh-enable-valid.patch
@@ -167,6 +167,9 @@ mv %buildroot%develdocdir/{FTL.TXT,LICENSE.TXT,CHANGES.bz2} %buildroot%docdir/
 %_bindir/ft*
 
 %changelog
+* Mon May 13 2013 Valery Inozemtsev <shrek@altlinux.ru> 2.4.12-alt1
+- 2.4.12
+
 * Tue Mar 19 2013 Fr. Br. George <george@altlinux.ru> 2.4.11-alt1.1
 - Fix i586 FILE64 build
 
