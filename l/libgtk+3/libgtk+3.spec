@@ -16,7 +16,7 @@
 
 
 Name: libgtk+3
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: The GIMP ToolKit (GTK+)
@@ -317,7 +317,6 @@ cp examples/*.c examples/Makefile* %buildroot/%_docdir/%name-devel-%version/exam
 %dir %_datadir/gtk-%api_ver
 %_datadir/gtk-%api_ver/gtkbuilder.rng
 %_datadir/aclocal/gtk-%api_ver.m4
-#%exclude %_datadir/gtk-%api_ver/demo
 
 %if_enabled wayland
 %_pkgconfigdir/gtk+-wayland-%api_ver.pc
@@ -333,8 +332,6 @@ cp examples/*.c examples/Makefile* %buildroot/%_docdir/%name-devel-%version/exam
 %_bindir/gtk3-demo
 %_bindir/gtk3-demo-application
 %_bindir/gtk3-widget-factory
-#%dir %_datadir/gtk-%api_ver/demo
-#%_datadir/gtk-%api_ver/demo/*
 %_datadir/glib-2.0/schemas/org.gtk.Demo.gschema.xml
 
 %files devel-doc
@@ -375,6 +372,9 @@ cp examples/*.c examples/Makefile* %buildroot/%_docdir/%name-devel-%version/exam
 %exclude %fulllibpath/*/*.la
 
 %changelog
+* Mon May 13 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.2-alt1
+- 3.8.2
+
 * Mon Apr 15 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.1-alt1
 - 3.8.1
 

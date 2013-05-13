@@ -6,7 +6,7 @@
 %def_enable introspection
 
 Name: lib%_name
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: System for layout and rendering of internationalized text
@@ -186,6 +186,9 @@ mkdir -p %buildroot%_sysconfdir/%_name
 %exclude %_libdir/%_name/%module_ver/modules/*.la
 
 %changelog
+* Mon May 13 2013 Yuri N. Sedunov <aris@altlinux.org> 1.34.1-alt1
+- 1.34.1
+
 * Tue Mar 26 2013 Yuri N. Sedunov <aris@altlinux.org> 1.34.0-alt1
 - 1.34.0
 
