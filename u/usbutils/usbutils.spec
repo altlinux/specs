@@ -1,50 +1,49 @@
 Name: usbutils
-Version: 0.90
-Release: alt2.qa1
+Version: 006
+Release: alt1
 
 Summary: Linux USB utilities
 License: GPLv2+
 Group: System/Kernel and hardware
 
 Url: http://sourceforge.net/projects/linux-usb/
+# git://github.com/gregkh/usbutils.git
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-Packager: Andrey Rahmatullin <wrar@altlinux.org>
-
 Requires: usbids
 
-BuildPreReq: libusb-compat-devel zlib-devel
-
+BuildPreReq: libusb-devel >= 1.0.0
 
 %description
 usbutils contains an utility (lsusb) for inspecting devices connected to
 the USB bus.
 
-
 %prep
 %setup
 %patch -p1
-%autoreconf
 
 %build
-%configure --datadir=%_datadir/misc
+%autoreconf
+%configure --datadir=%_datadir/misc --disable-usbids --disable-zlib
 %make_build
 
 %install
 %makeinstall
 rm -f %buildroot%_sbindir/update-usbids.sh
+rm -f %buildroot%_datadir/pkgconfig/usbutils.pc
+rm -f %buildroot%_bindir/lsusb.py
 
 %files
 %_bindir/*
-%_sbindir/*
-%_datadir/pkgconfig/%name.pc
 %_man1dir/*
 %_man8dir/*
-%doc AUTHORS ChangeLog NEWS README
-
+%doc AUTHORS NEWS
 
 %changelog
+* Mon May 13 2013 Alexey Shabalin <shaba@altlinux.ru> 006-alt1
+- 006
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.90-alt2.qa1
 - NMU: rebuilt for debuginfo.
 
