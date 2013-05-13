@@ -1,6 +1,6 @@
 Name: installer-distro-simply-linux
 Version: 7.0
-Release: alt4
+Release: alt5
 
 Summary: Installer common files
 Summary(ru_RU.UTF-8): Общие пакеты для установки дистрибутива "Simply linux"
@@ -114,6 +114,9 @@ Installer stage3
 %_datadir/alterator/ui/simply-linux
 
 %changelog
+* Mon May 13 2013 Mikhail Efremov <sem@altlinux.org> 7.0-alt5
+- Disable NetworkManager-wait-online.service.
+
 * Thu Apr 25 2013 Mikhail Efremov <sem@altlinux.org> 7.0-alt4
 - Enable x11presetdrv.service.
 
