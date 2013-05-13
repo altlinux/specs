@@ -4,7 +4,7 @@
 
 Name: Mesa
 Version: 9.1.2
-Release: alt1
+Release: alt2
 Epoch: 4
 License: MIT
 Summary: OpenGL compatible 3D graphics library
@@ -344,6 +344,9 @@ ln -sf ../..%_sysconfdir/X11/%_lib/libGLESv2.so.2 %_libdir/
 %_bindir/glxgears
 
 %changelog
+* Mon May 13 2013 Valery Inozemtsev <shrek@altlinux.ru> 4:9.1.2-alt2
+- updated to 9.1 git.1e043eb
+
 * Wed May 01 2013 Valery Inozemtsev <shrek@altlinux.ru> 4:9.1.2-alt1
 - 9.1.2
 
