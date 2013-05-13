@@ -1,7 +1,9 @@
 Name: python-module-enchant
 Version: 1.6.5
-Release: alt1.1
+Release: alt2
+%ifdef setup_python_module
 %setup_python_module enchant
+%endif
 
 Summary: PyEnchant is a spellchecking library for Python
 License: GPLv2+
@@ -36,6 +38,10 @@ functionality than is available in the C API.
 
 
 %changelog
+* Mon May 13 2013 Fr. Br. George <george@altlinux.ru> 1.6.5-alt2
+- Implement spacsubst scheme
+- Build for python3 also
+
 * Sun Oct 30 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 1.6.5-alt1.1
 - Rebuild with Python-2.7
 
