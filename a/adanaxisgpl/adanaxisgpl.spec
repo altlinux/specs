@@ -1,10 +1,11 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/find /usr/bin/sdl-config gcc-c++ libGL-devel libGLU-devel libICE-devel libSDL-devel libSM-devel libXext-devel libexpat-devel libogg-devel libpcre-devel perl(Digest/MD5.pm) perl(DirHandle.pm)
 # END SourceDeps(oneline)
+%define fedora 19
 Summary:        Action game in four spatial dimensions
 Name:           adanaxisgpl
 Version:        1.2.5
-Release:        alt4_15
+Release:        alt4_16
 License:        GPLv2
 Group:          Games/Other
 URL:            http://www.mushware.com/
@@ -20,7 +21,6 @@ BuildRequires: libtiffxx-devel libtiff-devel
 BuildRequires:  libvorbis-devel
 BuildRequires:  pcre-devel
 BuildRequires:  libSDL_mixer-devel
-BuildRequires:  libtool
 Source44: import.info
 Patch33: adanaxisgpl-1.2.5-alt-nomessages.patch
 
@@ -44,7 +44,6 @@ Shading Language.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
-autoreconf -f -i
 %patch33 -p0
 
 
@@ -55,22 +54,9 @@ make %{?_smp_mflags}
 # Build .desktop files
 cat > %{name}.desktop <<EOF
 [Desktop Entry]
-Encoding=UTF-8
 Name=Adanaxis GPL
 Comment=An action game in four spatial dimensions
-Exec=%{_bindir}/%{name} 
-Icon=%{name}
-Terminal=false
-Type=Application
-StartupNotify=false
-Categories=Game;ActionGame;
-EOF
-
-cat > %{name}-recover.desktop <<EOF
-[Desktop Entry]
-Name=Adanaxis GPL (Recovery Mode)
-Comment=An action game in four spatial dimensions (Launch in Recovery Mode)
-Exec=%{_bindir}/%{name} --recover
+Exec=%{name} 
 Icon=%{name}
 Terminal=false
 Type=Application
@@ -80,16 +66,16 @@ EOF
 
 
 %install
-make DESTDIR=%{buildroot} INSTALL="install -p" CPPROG="cp -p" install
+%makeinstall_std INSTALL="install -p" CPPROG="cp -p"
 
 # Install desktop files
 mkdir -p %{buildroot}%{_datadir}/applications
-desktop-file-install --vendor=mushware         \
+desktop-file-install                           \
   --dir %{buildroot}%{_datadir}/applications   \
+%if 0%{?fedora} && 0%{?fedora} < 19
+ --vendor=mushware                             \
+%endif
   %{name}.desktop
-desktop-file-install --vendor=mushware         \
-  --dir %{buildroot}%{_datadir}/applications   \
-  %{name}-recover.desktop
 
 # Icons
 mkdir -p -m 755 %{buildroot}%{_datadir}/icons/hicolor/16x16/apps
@@ -102,9 +88,9 @@ install -p -m 644 x11/icons/%{name}-48.png %{buildroot}%{_datadir}/icons/hicolor
 
 %files
 %doc COPYING README ChangeLog AUTHORS
-%{_bindir}/*
+%{_bindir}/%{name}
 %{_datadir}/%{name}
-%{_datadir}/applications/*
+%{_datadir}/applications/*%{name}.desktop
 %{_datadir}/icons/hicolor/16x16/apps/%{name}.png
 %{_datadir}/icons/hicolor/32x32/apps/%{name}.png
 %{_datadir}/icons/hicolor/48x48/apps/%{name}.png
@@ -112,6 +98,9 @@ install -p -m 644 x11/icons/%{name}-48.png %{buildroot}%{_datadir}/icons/hicolor
 
 
 %changelog
+* Mon May 13 2013 Igor Vlasenko <viy@altlinux.ru> 1.2.5-alt4_16
+- update to new release by fcimport
+
 * Sat May 04 2013 Igor Vlasenko <viy@altlinux.ru> 1.2.5-alt4_15
 - update to new release by fcimport
 
