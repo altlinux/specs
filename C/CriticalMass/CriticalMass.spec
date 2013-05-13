@@ -4,7 +4,7 @@ BuildRequires: gcc-c++ libGL-devel libSDL-devel zlib-devel
 %define fedora 19
 Name:           CriticalMass
 Version:        1.5
-Release:        alt2_8
+Release:        alt2_9
 Summary:        SDL/OpenGL space shoot'em up game also known as critter
 Group:          Games/Other
 License:        GPLv2+
@@ -15,7 +15,7 @@ Patch0:         CriticalMass-1.0.2-res-change-rh566533.patch
 Patch1:         CriticalMass-1.5-libpng15.patch
 Patch2:         CriticalMass-1.5-gcc47.patch
 BuildRequires:  libSDL_image-devel libSDL_mixer-devel libpng-devel curl-devel
-BuildRequires:  tinyxml-devel desktop-file-utils libtool
+BuildRequires:  tinyxml-devel desktop-file-utils
 Requires:       icon-theme-hicolor opengl-games-utils
 # Also known as critter, so make "yum install critter" work
 Provides:       critter = %{version}-%{release}
@@ -28,14 +28,14 @@ unprepared, your government was unable to defend its precious resources. As
 a last effort to recapture some of the "goodies", you have been placed into
 a tiny spacecraft and sent after them.
 
+
 %prep
 %setup -q
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
-touch AUTHORS ChangeLog NEWS README
-autoreconf -i -f
 sed -i 's/curl-gnutls/curl/g' configure
+
 
 %build
 %configure
@@ -44,6 +44,7 @@ sed -i 's/curl-gnutls/curl/g' configure
 # from phoning home
 CFLAGS="$RPM_OPT_FLAGS -D_GNU_SOURCE=1 -D_REENTRANT -DGAME_HAS_HERO_PARTICLE -I/usr/include/SDL"
 make CFLAGS="$CFLAGS" CXXFLAGS="$CFLAGS -std=c++0x"
+
 
 %install
 %makeinstall_std
@@ -64,6 +65,7 @@ mkdir -p $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/256x256/apps
 install -p -m 644 critter.png \
   $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/256x256/apps
 
+
 %files
 %doc COPYING Readme.html TODO
 %{_bindir}/critter*
@@ -73,6 +75,9 @@ install -p -m 644 critter.png \
 %{_datadir}/icons/hicolor/256x256/apps/critter.png
 
 %changelog
+* Mon May 13 2013 Igor Vlasenko <viy@altlinux.ru> 1.5-alt2_9
+- update to new release by fcimport
+
 * Sat May 04 2013 Igor Vlasenko <viy@altlinux.ru> 1.5-alt2_8
 - update to new release by fcimport
 
