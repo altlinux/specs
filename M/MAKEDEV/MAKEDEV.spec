@@ -1,6 +1,6 @@
 Name: MAKEDEV
 Version: 3.3.1
-Release: alt20
+Release: alt21
 
 %define revision 3
 
@@ -9,12 +9,12 @@ License: GPL
 Group: System/Kernel and hardware
 
 Url: http://www.lanana.org/docs/device-list/
-Source: %name-%version-%revision.tar.bz2
-Patch: MAKEDEV-3.3.1-alt.patch.bz2
+Source: %name-%version-%revision.tar
+Patch: MAKEDEV-3.3.1-alt.patch
 Patch1: MAKEDEV-3.3.1-alsa-alt.patch
 Patch2: MAKEDEV-3.3.1-dvb-alt.patch
 Patch3: MAKEDEV-3.3.1-alt-pack.patch
-Patch4: MAKEDEV-3.3.1-alt-zaptel.patch
+Patch4: MAKEDEV-3.3.1-alt-dahdi.patch
 Patch5: MAKEDEV-3.3.1-alt-microcode-ACM.patch
 Packager: Michael Shigorin <mike@altlinux.org>
 
@@ -96,7 +96,7 @@ makedev() {
 	# Note that we need RPM 4.0.3-0.71 or higher for this to be of any use,
 	# but otherwise we could screw up ownerships if the destination account
 	# doesn't exist when we run MAKEDEV.
-	%buildroot/dev/MAKEDEV \
+	%buildroot/sbin/MAKEDEV \
 	-c %buildroot%_sysconfdir/makedev.d \
 	-d %buildroot/dev -M $@ | sed "s|%buildroot||g" >> manifest
 }
@@ -106,7 +106,6 @@ rm -f manifest
 %makeinstall devdir=%buildroot/dev
 mkdir -p %buildroot/sbin
 mv -f %buildroot/dev/MAKEDEV %buildroot/sbin
-ln -s ../sbin/MAKEDEV %buildroot/dev/MAKEDEV
 
 makedev adb -m 56
 makedev agpgart
@@ -287,7 +286,6 @@ PCA=/sbin/pam_console_apply
 %udev_test -r dev ||:
 
 %files
-/dev/MAKEDEV
 /sbin/*
 %_sbindir/*
 %_mandir/man?/*
@@ -313,10 +311,14 @@ PCA=/sbin/pam_console_apply
 # - add dev-asterisk (=> no more nonexistant group spam :)
 
 %changelog
+* Sun May 12 2013 Denis Smirnov <mithraen@altlinux.ru> 3.3.1-alt21
+- replace Zaptel to DAHDI
+- remove /dev/MAKEDEV
+
 * Mon Mar 31 2008 Michael Shigorin <mike@altlinux.org> 3.3.1-alt20
 - whoops, unfinished re-re-making of preinstall script
   (alt19 didn't really test for udev due to wrong src.rpm
-  being uploaded)
+  having been chosen for upload)
 - forgot re-adding dev package as well
 - thus rebuilt
 - don't break package uninstallation either
