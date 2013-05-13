@@ -8,7 +8,7 @@ Name: %oname-%scalar_type
 Version: 0.8.0
 %define blibdir %_builddir/%name-%version/lib/%_arch-alt-linux-gnu_opt
 %define clibdir %_builddir/%name-%version/contrib/lib/%_arch-alt-linux-gnu_opt
-Release: alt8.svn20120913
+Release: alt9.svn20120913
 Summary: Numerical simulation of partial differential equations
 License: LGPL v2.1
 Group: Sciences/Mathematics
@@ -24,7 +24,7 @@ BuildPreReq: %mpiimpl-devel libscalapack-devel chrpath
 BuildPreReq: liblapack-devel libX11-devel boost-devel
 BuildPreReq: gcc-c++ gcc-fortran libpetsc-%scalar_type-devel libxdrfile-devel
 BuildPreReq: libtau-devel libmpe2-devel libparpack-mpi-devel libarprec-devel
-BuildPreReq: libslepc-%scalar_type-devel sfc zlib-devel libxml2-devel
+BuildPreReq: libslepc-%scalar_type-devel zlib-devel libxml2-devel
 BuildPreReq: bzlib-devel libtetgen-devel libparmetis-devel libnetcdf-mpi-devel
 BuildPreReq: libvtk-devel libtrilinos10-devel libnox10-devel libtaucs-devel
 #BuildPreReq: doxygen graphviz texlive-latex-extra
@@ -481,6 +481,9 @@ popd
 %endif
 
 %changelog
+* Mon May 13 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.0-alt9.svn20120913
+- Fixed build
+
 * Thu May 02 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.0-alt8.svn20120913
 - Rebuilt with Trilinos 11.2.3
 
