@@ -6,7 +6,7 @@
 %define brand simply
 
 Name: branding-simply-linux
-Version: 6.994.0
+Version: 6.995.0
 Release: alt1
 BuildArch: noarch
 
@@ -412,6 +412,14 @@ subst "s/Theme=.*/Theme=%theme/" /etc/plymouth/plymouthd.conf
 /usr/share/desktop-directories/altlinux-wine.directory
 
 %changelog
+* Mon May 13 2013 Mikhail Efremov <sem@altlinux.org> 6.995.0-alt1
+- Drop autostart/polkit-gnome-authentication-agent-1.desktop.
+- Update index.html.
+- menu:Add virtualbox.desktop.
+- Add TryExec to the recently added desktop files.
+- menu: Add Ri-li.desktop.
+- gfxboot: Move menu to the left a bit.
+
 * Tue Apr 16 2013 Mikhail Efremov <sem@altlinux.org> 6.994.0-alt1
 - xfce settings: Change icon theme Simple -> SimpleSL.
 - slideshow: Update Slide_Simply7_spring_2013.png.
