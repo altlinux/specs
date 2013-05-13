@@ -1,6 +1,6 @@
 Name: cinelerra
 Version: 2.2.0CV
-Release: alt2.20111217.1
+Release: alt2.20111217.2
 
 # inline mmx assembly can cause text relocations
 %set_verify_elf_method textrel=relaxed
@@ -218,8 +218,7 @@ CONFFLAGS="--with-plugindir=%_libdir/%name \
 #  #add_optflags -march=pentium-mmx -mtune=i686
 #endif
 
-%ifarch powerpc
-%else
+%ifarch %ix86 x86_64
 	%define _optlevel 3
 	%add_optflags -ffast-math -mmmx -minline-all-stringops -fprefetch-loop-arrays -funroll-loops
 	#add_optflags -msse -m3dnow # athlonXP
@@ -344,6 +343,9 @@ cp guicast/bootstrap %buildroot%_bindir/guicast_bootstrap1
 %doc doc/README_en
 
 %changelog
+* Mon May 13 2013 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.2.0CV-alt2.20111217.2
+- use mmx on x86 only
+
 * Wed Sep 19 2012 Sergey Kurakin <kurakin@altlinux.org> 2.2.0CV-alt2.20111217.1
 - rebuild with latest libpng and libtiff
 
