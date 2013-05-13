@@ -1,6 +1,6 @@
 Name: girar-nmu
 Version: 1.14
-Release: alt2
+Release: alt3
 
 Summary: git.alt client utilities for NMU automation
 License: GPL
@@ -44,6 +44,9 @@ install -m 644 girar-*.1 %buildroot%_man1dir/
 %_man1dir/*
 
 %changelog
+* Mon May 13 2013 Igor Vlasenko <viy@altlinux.ru> 1.14-alt3
+- bugfix release
+
 * Sun May 12 2013 Igor Vlasenko <viy@altlinux.ru> 1.14-alt2
 - bugfix release
 
