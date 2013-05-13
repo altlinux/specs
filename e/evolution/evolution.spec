@@ -18,7 +18,7 @@
 %define strict_build_settings 1
 
 Name: evolution
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: Integrated GNOME mail client, calendar and address book
@@ -86,7 +86,7 @@ BuildPreReq: libclutter-gtk3-devel >= %clutter_gtk_ver
 %{?_enable_map:BuildPreReq: libchamplain-gtk3-devel >= %champlain_ver libgeoclue-devel libgeocode-glib-devel >= %geocode_ver}
 %{?_enable_image_inline:BuildRequires: libgtkimageview-devel}
 
-BuildRequires: docbook-utils intltool gnome-doc-utils yelp-tools itstool gtk-doc
+BuildRequires: docbook-utils intltool yelp-tools itstool gtk-doc
 BuildRequires: gcc-c++ flex libSM-devel libcom_err-devel gstreamer%gst_api_ver-devel
 BuildRequires: python-modules-compiler python-modules-encodings libnspr-devel libnss-devel libX11-devel libcanberra-gtk3-devel
 BuildRequires: zlib-devel libxml2-devel
@@ -224,9 +224,8 @@ CFLAGS="$CFLAGS \
 %endif
 
 #NOCONFIGURE=1 ./autogen.sh
-gnome-doc-prepare -f
-export ac_cv_path_BOGOFILTER=%_bindir/bogofilter
 %autoreconf
+export ac_cv_path_BOGOFILTER=%_bindir/bogofilter
 export ac_cv_path_SENDMAIL=%_sbindir/sendmail
 export ac_cv_path_SPAMASSASSIN=%_bindir/spamassassin
 export ac_cv_path_SA_LEARN=%_bindir/sa-learn
@@ -328,6 +327,9 @@ rm -rf %buildroot%_localstatedir/scrollkeeper
 %_datadir/glib-2.0/schemas/org.gnome.evolution.spamassassin.gschema.xml
 
 %changelog
+* Sun May 12 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.2-alt1
+- 3.8.2
+
 * Sun Apr 14 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.1-alt1
 - 3.8.1 release
 
