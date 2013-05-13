@@ -1,5 +1,5 @@
 Name: ceph
-Version: 0.61
+Version: 0.61.1
 Release: alt1
 Summary: User space components of the Ceph file system
 Group: System/Base
@@ -257,6 +257,9 @@ mkdir -p %buildroot%_sysconfdir/ceph/
 %python_sitelibdir_noarch/*
 
 %changelog
+* Mon May 13 2013 Alexei Takaseev <taf@altlinux.org> 0.61.1-alt1
+- 0.61.1
+
 * Tue May 07 2013 Alexei Takaseev <taf@altlinux.org> 0.61-alt1
 - 0.61
 
