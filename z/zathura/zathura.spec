@@ -1,7 +1,7 @@
 %define gtk_ver 2
 
 Name: zathura
-Version: 0.2.2
+Version: 0.2.3
 Release: alt1
 
 Summary: A lightweight document viewer
@@ -13,7 +13,7 @@ Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-build-licenses
-BuildRequires: intltool libgtk+%{gtk_ver}-devel libgirara-devel libsqlite3-devel python-module-docutils
+BuildRequires: intltool libgtk+%{gtk_ver}-devel libgirara-devel libsqlite3-devel python-module-docutils libmagic-devel
 
 Conflicts: zatura-pdf-poppler < 0.1.1-alt2
 Conflicts: zatura-djvu < 0.1.1-alt1
@@ -47,6 +47,7 @@ mkdir -p %buildroot%_libdir/zathura
 %find_lang %name
 
 %files -f %name.lang
+%doc LICENSE AUTHORS
 %_bindir/%name
 %dir %_libdir/%name
 %_desktopdir/*
@@ -58,6 +59,11 @@ mkdir -p %buildroot%_libdir/zathura
 %_libdir/pkgconfig/*.pc
 
 %changelog
+* Mon May 13 2013 Mikhail Efremov <sem@altlinux.org> 0.2.3-alt1
+- Fix build with current libmagic.
+- Package LICENSE.
+- Updated to 0.2.3.
+
 * Tue Feb 12 2013 Mikhail Efremov <sem@altlinux.org> 0.2.2-alt1
 - Updated to 0.2.2.
 
