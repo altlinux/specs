@@ -1,6 +1,6 @@
 Name: icu
 Version: 5.1.1
-Release: alt2
+Release: alt3
 Epoch: 1
 Summary: International Components for Unicode
 Group: System/Libraries
@@ -15,6 +15,8 @@ Patch1: icu-5.1.1-alt-fix.patch
 
 BuildRequires: doxygen gcc-c++ libstdc++-devel
 
+%define libicu libicu50
+
 %description
 ICU is a C++ and C library that provides robust and full-featured Unicode
 support
@@ -22,7 +24,7 @@ support
 %package utils
 Summary: International Components for Unicode (utilities)
 Group: Text tools
-Requires: libicu = %epoch:%version-%release
+Requires: %libicu = %epoch:%version-%release
 Provides: icu = %version
 Obsoletes: icu < %version
 
@@ -31,18 +33,20 @@ ICU is a C++ and C library that provides robust and full-featured Unicode
 support. This package contains the utilites for compiling and developing
 programs with ICU
 
-%package -n libicu
+%package -n %libicu
 Summary: International Components for Unicode (libraries)
 Group: System/Libraries
+Provides: libicu = %epoch:%version-%release
+Obsoletes: libicu < %epoch:%version-%release
 
-%description -n libicu
+%description -n %libicu
 ICU is a C++ and C library that provides robust and full-featured Unicode
 support. This package contains the runtime libraries for ICU
 
 %package -n libicu-devel
 Summary: International Components for Unicode (development files)
 Group: Development/C++
-Requires: libicu = %epoch:%version-%release
+Requires: %libicu = %epoch:%version-%release
 Requires: icu-utils = %epoch:%version-%release
 
 %description -n libicu-devel
@@ -60,7 +64,7 @@ ICU is a C++ and C library that provides robust and full-featured Unicode
 support. This package contains sample code for ICU
 
 %prep
-%setup -q -n icu
+%setup -n icu
 %patch -p1
 %patch1 -p2
 
@@ -74,7 +78,7 @@ cd source
 
 %install
 cd source
-%make DESTDIR=%buildroot install
+%makeinstall_std
 cp -a samples %buildroot%_datadir/icu
 rm -f %buildroot%_bindir/icuinfo
 
@@ -86,7 +90,7 @@ rm -f %buildroot%_bindir/icuinfo
 %_man1dir/*
 %_man8dir/*
 
-%files -n libicu
+%files -n %libicu
 %doc *.html *.css
 %_libdir/*.so.*
 
@@ -104,6 +108,9 @@ rm -f %buildroot%_bindir/icuinfo
 %_datadir/icu/samples
 
 %changelog
+* Mon May 13 2013 Dmitry V. Levin <ldv@altlinux.org> 1:5.1.1-alt3
+- Renamed libicu to libicu50 (closes: #28941).
+
 * Thu Dec 27 2012 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:5.1.1-alt2
 - fixed ABI breakage in previous release
 
