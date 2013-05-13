@@ -1,6 +1,6 @@
 Name: thunar-archive-plugin
-Version: 0.3.0
-Release: alt3
+Version: 0.3.1
+Release: alt1
 
 Summary: Thunar archive plugin
 Summary (ru_RU.UTF8): Дополнение к Thunar позволяющее работать с архивами
@@ -8,6 +8,7 @@ License: %gpl2plus
 Group: Graphical desktop/XFce
 Url: http://goodies.xfce.org/projects/thunar-plugins/%name
 Packager: XFCE Team <xfce@packages.altlinux.org>
+# git://git.xfce.org/thunar-plugins/thunar-archive-plugin
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-licenses
@@ -47,13 +48,16 @@ using a single click.
 %find_lang %name
 
 %files -f %name.lang
-%doc README ChangeLog AUTHORS
+%doc README AUTHORS
 %exclude %_libdir/thunarx-*/*.la
 %_libdir/thunarx-*/*.so
 %_libexecdir/%name/
 %_miconsdir/*.png
 
 %changelog
+* Mon May 13 2013 Mikhail Efremov <sem@altlinux.org> 0.3.1-alt1
+- Updated to 0.3.1.
+
 * Wed Apr 18 2012 Mikhail Efremov <sem@altlinux.org> 0.3.0-alt3
 - Updated requires.
 
