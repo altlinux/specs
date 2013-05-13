@@ -12,7 +12,7 @@
 #Name: %moodlepackagename
 Name: moodle2.0
 Version: %packagversion.%packagedate
-Release: %branch_release alt2
+Release: %branch_release alt3
 
 Summary: The Course Management System Moodle
 License: %gpl3plus
@@ -158,7 +158,7 @@ Conflicts: %moodle_name-base >= 2.1
 Summary: installed mysql-server on localhost for Moodle
 Group: Networking/WWW
 Requires: %name-base >= 2.0.10.20120706-alt1
-Requires: MySQL-server
+Requires: /usr/sbin/mysqld
 Requires: php5-mysqli
 Provides: %moodle_name-local-mysql = %version-%release
 Conflicts: %moodle_name >= 2.1
@@ -410,6 +410,10 @@ exit 0
 %moodle_authdir/pam/
 
 %changelog
+* Mon May 13 2013 Aleksey Avdeev <solo@altlinux.ru> 2.0.10.20120706-alt3
+- Change requires: MySQL-server to /usr/sbin/mysqld for mariadb
+  compatibility in moodle2.0-local-mysql
+
 * Tue Apr 16 2013 Aleksey Avdeev <solo@altlinux.ru> 2.0.10.20120706-alt2
 - Fix requires
 
