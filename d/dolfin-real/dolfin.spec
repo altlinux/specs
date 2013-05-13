@@ -6,7 +6,7 @@
 %define ldir %_libdir/petsc-%scalar_type
 Name: %oname-%scalar_type
 Version: 1.2.0
-Release: alt1.git20130507
+Release: alt2.git20130507
 Epoch: 1
 Summary: C++/Python library for solving differential equations
 License: LGPL v3+
@@ -309,6 +309,7 @@ sed -i 's|debug optimized||' %buildroot%_pkgconfigdir/%name.pc
 %files
 %doc AUTHORS COPYING ChangeLog README* TODO
 %_bindir/*
+%exclude %_bindir/dolfin-get-demos
 %_man1dir/*
 
 %files -n lib%name
@@ -330,6 +331,7 @@ sed -i 's|debug optimized||' %buildroot%_pkgconfigdir/%name.pc
 #doc %_docdir/%oname
 
 %files -n %oname-examples
+%_bindir/dolfin-get-demos
 %dir %_datadir/%oname
 %_datadir/%oname/examples
 
@@ -352,6 +354,9 @@ sed -i 's|debug optimized||' %buildroot%_pkgconfigdir/%name.pc
 %ldir/python/%{oname}_utils
 
 %changelog
+* Mon May 13 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:1.2.0-alt2.git20130507
+- Fixed conflict with dolfin-real & dolfin-complex
+
 * Wed May 08 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:1.2.0-alt1.git20130507
 - Version 1.2.0
 
