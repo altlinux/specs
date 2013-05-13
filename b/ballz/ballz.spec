@@ -3,7 +3,7 @@ BuildRequires: gcc-c++
 # END SourceDeps(oneline)
 Name:           ballz
 Version:        1.0.2
-Release:        alt2_7
+Release:        alt2_9
 Summary:        Platform game with some puzzle elements
 Group:          Games/Other
 License:        BSD
@@ -33,7 +33,7 @@ make %{?_smp_mflags}
 
 
 %install
-make install DESTDIR=$RPM_BUILD_ROOT
+%makeinstall_std
 desktop-file-validate %{buildroot}/%{_datadir}/applications/%{name}.desktop
 
 
@@ -47,6 +47,9 @@ desktop-file-validate %{buildroot}/%{_datadir}/applications/%{name}.desktop
 
 
 %changelog
+* Mon May 13 2013 Igor Vlasenko <viy@altlinux.ru> 1.0.2-alt2_9
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 1.0.2-alt2_7
 - update to new release by fcimport
 
