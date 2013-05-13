@@ -1,6 +1,6 @@
 Name: mutt
 Version: 1.4.2.3
-Release: alt6
+Release: alt6.1
 Epoch: 3
 
 %def_without dotlock
@@ -53,7 +53,7 @@ Patch38: mutt-1.4.2.3-alt-bound.patch
 
 Requires: MTA, urlview, mailcap
 
-BuildPreReq: OpenSP groff-base libncursesw-devel libssl-devel sgml-tools
+BuildPreReq: OpenSP groff-base libncursesw-devel libssl-devel sgml-tools sgml-common
 
 %description
 Mutt is a feature-rich text-based mail user agent.  Mutt supports local
@@ -170,6 +170,9 @@ rm %buildroot%_sysconfdir/mime.types
 %docdir
 
 %changelog
+* Mon May 13 2013 Fr. Br. George <george@altlinux.ru> 3:1.4.2.3-alt6.1
+- Rebuild with new linuxdoc-tools
+
 * Fri Apr 19 2013 Dmitry V. Levin <ldv@altlinux.org> 3:1.4.2.3-alt6
 - Build with LFS support enabled.
 
