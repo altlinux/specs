@@ -1,6 +1,6 @@
 Name: strace
 Version: 4.7
-Release: alt19
+Release: alt20
 
 Summary: Tracks and displays system calls associated with a running process
 License: BSD-style
@@ -39,16 +39,19 @@ echo -n %version-%release > .tarball-version
 
 %build
 %autoreconf
+mkdir build
+cd build
+%define _configure_script ../configure
 %configure --enable-gcc-Werror #--enable-maintainer-mode
 # Assume that adjust_kernel_headers --first has been run.
 %make_build IOCTLDIR=/usr/include/linux/../../include
 
 %install
-%makeinstall_std
+%makeinstall_std -C build
 %set_verify_elf_method strict
 
 %check
-make check
+make check -C build
 
 %files
 %_bindir/strace
@@ -60,6 +63,9 @@ make check
 %_bindir/strace-graph
 
 %changelog
+* Wed May 15 2013 Dmitry V. Levin <ldv@altlinux.org> 4.7-alt20
+- Updated to v4.7-226-g1d2435b.
+
 * Sun May 05 2013 Dmitry V. Levin <ldv@altlinux.org> 4.7-alt19
 - Updated to v4.7-190-g2f99788.
 
