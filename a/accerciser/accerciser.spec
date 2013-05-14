@@ -1,7 +1,7 @@
 
 Name: accerciser
-Version: 3.6.2
-Release: alt2
+Version: 3.8.2
+Release: alt1
 
 Summary: An interactive Python tool for querying accessibility information
 Url: http://live.gnome.org/Accerciser
@@ -10,11 +10,17 @@ License: %bsd
 Group: Accessibility
 Packager: Michael Pozhidaev <msp@altlinux.ru>
 
+# use python3
+AutoReqProv: nopython
+%define __python %nil
+
+BuildRequires(pre): rpm-build-python3
+
 # Automatically added by buildreq on Sun Sep 28 2008
-BuildRequires: GConf docbook-dtds gnome-doc-utils-xslt perl-XML-Parser python-devel libgio-devel libgtk+3-devel python-module-pyatspi
+BuildRequires: GConf docbook-dtds gnome-doc-utils-xslt perl-XML-Parser python3-devel libgio-devel libgtk+3-devel python3-module-pyatspi
 
 BuildRequires: rpm-build-licenses rpm-build-gnome gnome-doc-utils libGConf-devel
-BuildPreReq: intltool itstool python-module-pygobject3-devel
+BuildPreReq: intltool itstool python3-module-pygobject3-devel
 BuildRequires: desktop-file-utils libat-spi2-core-devel
 
 BuildArch: noarch
@@ -23,21 +29,21 @@ Source: %name-%version.tar
 # debian watch file (for automation)
 Source100: %name.watch
 
-Requires: python-module-%name = %version-%release
+Requires: python3-module-%name = %version-%release
 
 %description
 An interactive Python accessibility explorer.
 
-%add_python_req_skip gtksourceview
+#%add_python3_req_skip gtksourceview
 
-%package -n python-module-%name
+%package -n python3-module-%name
 Summary: Python module for accerciser
 Group: Development/Python
 BuildArch: noarch
 # The macro below is resolved into an empty string but confuses build process
 #%_python_set_noarch
 
-%description -n python-module-%name
+%description -n python3-module-%name
 An interactive Python accessibility explorer.
 
 This package contains Python module for accerciser.
@@ -46,7 +52,7 @@ This package contains Python module for accerciser.
 %setup
 
 %build
-%configure --disable-scrollkeeper --without-pyreqs
+%configure --without-pyreqs
 %make_build
 
 %install
@@ -69,11 +75,19 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_datadir/icons/hicolor/32x32/apps/%name.png
 %_datadir/icons/hicolor/48x48/apps/accerciser.png
 %_datadir/icons/hicolor/scalable/apps/accerciser.svg
+%_datadir/icons/HighContrast/scalable/apps/accerciser.svg
 
-%files -n python-module-%name
-%python_sitelibdir/%name/
+%files -n python3-module-%name
+%python3_sitelibdir/%name/
 
 %changelog
+* Tue May 14 2013 Paul Wolneykien <manowar@altlinux.org> 3.8.2-alt1
+- new version 3.8.2
+
+* Wed Apr 10 2013 Paul Wolneykien <manowar@altlinux.ru> 3.8.0-alt1
+- Build with Python 3.
+- New version 3.8.0.
+
 * Sat Nov 24 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.6.2-alt2
 - Clean spec
 
