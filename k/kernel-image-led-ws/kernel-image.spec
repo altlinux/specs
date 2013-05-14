@@ -21,7 +21,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.4.45
-Release: alt2
+Release: alt3
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -309,6 +309,7 @@ Patch0312: linux-%kernel_branch.20-fix-drivers-macintosh--adbhid.patch
 
 Patch0321: linux-%kernel_branch.20-fix-drivers-md--dm-mod.patch
 Patch0322: linux-%kernel_branch.20-fix-drivers-md--dm-multipath.patch
+Patch0323: linux-%kernel_branch.44-fix-drivers-md--md-mod.patch
 
 Patch0331: linux-%kernel_branch.25-fix-drivers-media-common-tuners--tda18212.patch
 Patch0332: linux-%kernel_branch.25-fix-drivers-media-common-tuners--tda18218.patch
@@ -1468,8 +1469,10 @@ cd linux-%version
 %patch0311 -p1
 %patch0312 -p1
 
+# fix-drivers-md--*
 %patch0321 -p1
 %patch0322 -p1
+%patch0323 -p1
 
 # fix-drivers-media-*
 %patch0331 -p1
@@ -2695,6 +2698,10 @@ done)
 
 
 %changelog
+* Tue May 14 2013 Led <led@altlinux.ru> 3.4.45-alt3
+- added:
+  + fix-drivers-md--md-mod
+
 * Tue May 14 2013 Led <led@altlinux.ru> 3.4.45-alt2
 - updated:
   + fix-fs
