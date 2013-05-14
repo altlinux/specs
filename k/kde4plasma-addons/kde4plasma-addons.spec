@@ -1,12 +1,17 @@
 %define _kde_alternate_placement 1
-
 %add_findpackage_path %_kde4_bindir
+
+%ifarch %arm
+%def_disable desktop
+%else
+%def_enable desktop
+%endif
 
 %define rname kdeplasma-addons
 Name: kde4plasma-addons
 %define major 4
 %define minor 10
-%define bugfix 2
+%define bugfix 3
 Version: %major.%minor.%bugfix
 Release: alt1
 
@@ -33,11 +38,15 @@ Requires: plasma-applet-filewatcher = %version-%release
 Requires: plasma-applet-frame = %version-%release
 Requires: plasma-applet-fuzzy-clock = %version-%release
 Requires: plasma-applet-incomingmsg = %version-%release
+%if_enabled desktop
 Requires: plasma-applet-icontasks = %version-%release
+%endif
 Requires: plasma-applet-kolourpicker = %version-%release
 Requires: plasma-applet-konqprofiles = %version-%release
 Requires: plasma-applet-konsoleprofiles = %version-%release
+%if_enabled desktop
 Requires: plasma-applet-lancelot = %version-%release
+%endif
 Requires: plasma-applet-leavenote = %version-%release
 Requires: plasma-applet-life = %version-%release
 Requires: plasma-applet-luna = %version-%release
@@ -93,7 +102,9 @@ Requires: plasma-runner-charrunner = %version-%release
 Requires: plasma-runner-datetime = %version-%release
 Requires: plasma-runner-youtube = %version-%release
 Requires: plasma-wallpaper-mandelbrot = %version-%release
+%if_enabled desktop
 Requires: plasma-wallpaper-marble = %version-%release
+%endif
 Requires: plasma-wallpaper-pattern = %version-%release
 Requires: plasma-wallpaper-virus = %version-%release
 Requires: plasma-wallpaper-weather = %version-%release
@@ -107,7 +118,10 @@ BuildRequires: gcc-c++ libldap-devel scim-devel attica-devel libqca2-devel libqa
 BuildRequires: soprano soprano-backend-redland libsoprano-devel kde4-nepomuk-core-devel
 BuildRequires: python-modules-xml shared-mime-info
 BuildRequires: python-devel eigen2 libdbusmenu-qt-devel qoauth-devel qjson-devel
-BuildRequires: kde4network-devel kde4pim-devel kde4graphics-devel kde4edu-devel
+BuildRequires: kde4network-devel kde4pim-devel kde4graphics-devel
+%if_enabled desktop
+BuildRequires: kde4edu-devel
+%endif
 BuildRequires: kde4base-workspace-devel >= %version kde4pimlibs-devel >= %version
 
 %description
@@ -843,6 +857,7 @@ based on %name
 
 %install
 %K4install
+mkdir -p %buildroot/%_K4apps/kdeplasma-addons/
 
 
 %files maxi
@@ -851,11 +866,13 @@ based on %name
 %dir %_K4apps/kdeplasma-addons/
 %_kde4_iconsdir/*/*/*/*.*
 
+%if_enabled desktop
 %files -n plasma-applet-icontasks
 %_K4lib/plasma_applet_icontasks.so
 %_K4apps/desktoptheme/default/icontasks/
 %_K4apps/kdeplasma-addons/mediabuttonsrc
 %_K4srv/plasma-applet-icontasks.desktop
+%endif
 
 %files -n plasma-qmlwallpapers
 %_K4lib/plasma_wallpaper_qml.so
@@ -913,11 +930,6 @@ based on %name
 %_K4lib/krunner_youtube.so
 %_K4srv/plasma-runner-youtube.desktop
 
-%files -n liblancelot4-datamodels
-%_K4libdir/liblancelot-datamodels.so.*
-
-#%files -n libkimpanelruntime4
-#%_K4libdir/libkimpanelruntime.so.*
 
 %files -n plasma-dataengine-kimpanel
 %_K4lib/plasma_engine_kimpanel.so
@@ -1142,6 +1154,7 @@ based on %name
 %_K4lib/plasma_applet_weatherstation.so
 %_K4srv/plasma-applet-weatherstation.desktop
 
+%if_enabled desktop
 %files -n plasma-applet-lancelot
 %_kde4_bindir/lancelot
 %_K4lib/plasma_applet_lancelot_part.so
@@ -1152,9 +1165,12 @@ based on %name
 %_K4xdg_mime/lancelotpart-mime.xml
 %_K4apps/desktoptheme/*/lancelot
 %_K4apps/lancelot
-
+#
+%files -n liblancelot4-datamodels
+%_K4libdir/liblancelot-datamodels.so.*
 %files -n liblancelot4
 %_K4libdir/liblancelot.so.*
+%endif
 
 %files -n plasma-applet-microblog
 %_K4lib/plasma_applet_microblog.so
@@ -1260,9 +1276,11 @@ based on %name
 %_K4srv/plasma-wallpaper-pattern.desktop
 %_K4apps/plasma_wallpaper_pattern
 
+%if_enabled desktop
 %files -n plasma-wallpaper-marble
 %_K4lib/plasma_wallpaper_marble.so
 %_K4srv/plasma-wallpaper-marble.desktop
+%endif
 
 %files -n libplasmacomicprovidercore4
 %_K4libdir/libplasmacomicprovidercore.so.*
@@ -1278,10 +1296,15 @@ based on %name
 
 %files devel
 %_K4apps/cmake/modules/*
+%if_enabled desktop
 %_K4includedir/*
+%endif
 %_K4link/*.so
 
 %changelog
+* Tue May 14 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.3-alt1
+- new version
+
 * Tue Apr 09 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.2-alt1
 - new version
 
