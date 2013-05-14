@@ -1,6 +1,6 @@
 Name: alterator-squid
 Version: 1.4.1
-Release: alt1
+Release: alt2
 
 BuildArch: noarch
 
@@ -54,9 +54,17 @@ cp -rp caterva/* %buildroot%_sysconfdir/caterva/squid/
 
 
 %post
+if diff /etc/squid/squid.conf{.default,} >/dev/null; then
+    cp -f /etc/squid/squid.conf{.documented,}
+fi
 subst 's/squid_kerb_auth/negotiate_kerberos_auth/;s/pam_auth/basic_pam_auth/;s/squid_ldap_group/ext_ldap_group_acl/' /etc/squid/squid.conf
 
 %changelog
+* Mon May 13 2013 Paul Wolneykien <manowar@altlinux.org> 1.4.1-alt2
+- Use .documented config by default.
+- Improve a little of config parser: do not duplicate the file if
+  the header isn't found.
+
 * Wed Apr 24 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1.4.1-alt1
 - fixed configuration for squid 3.2
 - migration script added
