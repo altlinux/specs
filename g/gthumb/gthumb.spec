@@ -8,7 +8,7 @@
 %def_enable web_albums
 
 Name: gthumb
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: An image file viewer and browser for GNOME
@@ -19,10 +19,6 @@ Group: Graphics
 Url: http://gthumb.sourceforge.net/
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
-Source1: %name.ru.po
-
-# remove useless dump_exif_data() function (not compiled against exive2 < 0.21.1)
-Patch: %name-2.13.91-remove_dump_exif_data.patch
 
 # From configure.in
 %define glib_ver 2.32.0
@@ -98,8 +94,6 @@ This package contains headers needed to build extensions for gThumb.
 
 %prep
 %setup -q
-#cp %SOURCE1 po/ru.po
-#%%patch
 
 %build
 %autoreconf
@@ -164,6 +158,9 @@ This package contains headers needed to build extensions for gThumb.
 %_libdir/pkgconfig/*
 
 %changelog
+* Mon May 13 2013 Yuri N. Sedunov <aris@altlinux.org> 3.2.2-alt1
+- 3.2.2
+
 * Tue Apr 16 2013 Yuri N. Sedunov <aris@altlinux.org> 3.2.1-alt1
 - 3.2.1
 

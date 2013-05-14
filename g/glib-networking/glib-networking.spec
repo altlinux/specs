@@ -1,7 +1,7 @@
 %define ver_major 2.36
 
 Name: glib-networking
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: Networking support for GIO
@@ -58,6 +58,9 @@ and a gnutls-based GTlsConnection implementation.
 %exclude %_libdir/gio/modules/*.la
 
 %changelog
+* Tue May 14 2013 Yuri N. Sedunov <aris@altlinux.org> 2.36.2-alt1
+- 2.36.2
+
 * Tue Apr 16 2013 Yuri N. Sedunov <aris@altlinux.org> 2.36.1-alt1
 - 2.36.1
 

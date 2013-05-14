@@ -6,7 +6,7 @@
 %define api_ver 1.0
 
 Name: gnome-online-accounts
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: Provide online accounts information
@@ -132,6 +132,9 @@ This package contains development documentation for the %name libraries.
 %_datadir/gtk-doc/html/goa/
 
 %changelog
+* Tue May 14 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.2-alt1
+- 3.8.2
+
 * Mon Apr 15 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.1-alt1
 - 3.8.1
 
