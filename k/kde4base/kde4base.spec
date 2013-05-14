@@ -8,10 +8,10 @@
 %define rname kdebase
 %define major 4
 %define minor 10
-%define bugfix 2
+%define bugfix 3
 Name: kde4base
 Version: %major.%minor.%bugfix
-Release: alt2
+Release: alt1
 
 Group: Graphical desktop/KDE
 Summary: K Desktop Environment 4 - Core Files
@@ -606,6 +606,9 @@ desktop-file-install --mode=0755 --dir %buildroot%_K4xdg_apps --add-category=X-P
 
 
 %changelog
+* Tue May 14 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.3-alt1
+- new version
+
 * Wed Apr 17 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.2-alt2
 - optimize Places plasma applet
 - fix build requires
