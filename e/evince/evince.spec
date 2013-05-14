@@ -7,16 +7,18 @@
 %def_enable introspection
 
 Name: evince
-Version: %ver_major.0
-Release: alt2
+Version: %ver_major.2
+Release: alt1
+
 Summary: A document viewer
-License: GPL
 Group: Office
+License: GPL
 Url: http://www.gnome.org/projects/evince/
 
-Requires: lib%name = %version-%release
-
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+
+Requires: lib%name = %version-%release
+Requires: gnome-icon-theme-symbolic
 
 BuildRequires: gcc-c++ gnome-common gtk-doc gnome-icon-theme intltool libdbus-glib-devel
 BuildRequires: yelp-tools itstool
@@ -160,6 +162,9 @@ subst '/NoDisplay/d' %buildroot%_desktopdir/%name.desktop
 %exclude %_libdir/nautilus/extensions-3.0/libevince-properties-page.la
 
 %changelog
+* Wed May 15 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.2-alt1
+- 3.8.2
+
 * Mon Apr 15 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.0-alt2
 - rebuilt to drop libarchive.so.2 dependence
 

@@ -1,9 +1,10 @@
 %define ver_major 3.8
 %define _libexecdir %_prefix/libexec
 %def_enable systemd
+%def_enable session_selector
 
 Name: gnome-session
-Version: %ver_major.1
+Version: %ver_major.2.1
 Release: alt1
 
 Summary: The gnome session programs for the GNOME GUI desktop environment
@@ -17,6 +18,7 @@ Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 Source1: gnome.svg
 
 Patch: %name-2.91.6-alt-autosave_session.patch
+Patch1: %name-3.8.2-alt-lfs.patch
 
 # fedora patches:
 # Blacklist NV30: https://bugzilla.redhat.com/show_bug.cgi?id=745202
@@ -36,6 +38,7 @@ Requires: dbus-tools-gui
 Requires: gnome-filesystem
 Requires: gnome-settings-daemon >= 3.0.0
 Requires: upower polkit-gnome gcr
+Requires: xdg-user-dirs
 
 Requires: icon-theme-hicolor gnome-icon-theme-symbolic gnome-themes-standard
 
@@ -52,18 +55,30 @@ BuildRequires: libpangox-compat-devel libgnome-desktop3-devel librsvg-devel libj
 BuildRequires: libX11-devel libXau-devel libXrandr-devel libXrender-devel libXt-devel
 BuildRequires: libSM-devel libXext-devel libXtst-devel libXi-devel libXcomposite-devel libGL-devel
 BuildRequires: GConf browser-plugins-npapi-devel perl-XML-Parser xorg-xtrans-devel
+BuildRequires: docbook-dtds docbook-style-xsl
 %{?_enable_systemd:BuildRequires: systemd-devel >= %systemd_ver libsystemd-login-devel libsystemd-daemon-devel libsystemd-journal-devel libpolkit-devel}
 
 %description
-GNOME (GNU Network Object Model Environment) is a user-friendly
-set of applications and desktop tools to be used in conjunction with a
-window manager for the X Window System.
 
-This package provides tools for the the gnome desktop.
+GNOME (GNU Network Object Model Environment) is a user-friendly set of
+applications and desktop tools to be used in conjunction with a window
+manager for the X Window System.
+
+This package provides the GNOME session manager, as well as a
+configuration program to choose applications starting on login.
+
+%package selector
+Summary: The session selector for the GNOME
+Group: Graphical desktop/GNOME
+Requires: %name = %EVR
+
+%description selector
+This package permits to choose a saved GNOME session.
 
 %prep
 %setup -q
 %patch
+%patch1 -p1 -b .lfs
 %patch11 -p1 -b .nv30
 
 [ ! -d m4 ] && mkdir m4
@@ -72,6 +87,7 @@ This package provides tools for the the gnome desktop.
 %autoreconf
 %configure PATH=$PATH:/sbin \
     %{subst_enable systemd} \
+    %{?_enable_session_selector:--enable-session-selector} \
     --enable-ipv6 \
     --disable-schemas-compile
 
@@ -130,6 +146,27 @@ SCRIPT:
 exec %_bindir/startgnome
 __EOF__
 
+%if_enabled session_selector
+cat <<__START_GNOME__ >startgnome
+#!/bin/sh
+
+. %_datadir/gnome-session/startgnome-common
+
+exec %_bindir/gnome-session-custom-session "\$@"
+__START_GNOME__
+
+install -pD -m755 startgnome %buildroot%_bindir/startgnome-custom
+
+cat << __EOF__ > %buildroot%_sysconfdir/X11/wmsession.d/04Gnome-custom
+NAME=Gnome-custom
+ICON=%_iconsdir/gnome.svg
+DESC=Gnome Session Selector
+EXEC=%_bindir/startgnome-custom
+SCRIPT:
+exec %_bindir/startgnome-custom
+__EOF__
+%endif
+
 install -pD -m644 %SOURCE1 %buildroot%_iconsdir/gnome.svg
 
 %find_lang --with-gnome --output=%name.lang %name-3.0
@@ -138,13 +175,18 @@ install -pD -m644 %SOURCE1 %buildroot%_iconsdir/gnome.svg
 %make check
 
 %files -f %name.lang
-%_bindir/*
+%_bindir/gnome-session
+%_bindir/gnome-session-inhibit
+%_bindir/gnome-session-properties
+%_bindir/gnome-session-quit
+%_bindir/startgnome
 %_libexecdir/gnome-session-check-accelerated
 %_libexecdir/gnome-session-check-accelerated-helper
 %_libexecdir/gnome-session-failed
 %_desktopdir/*.desktop
 %dir %_datadir/%name
-%_datadir/%name/*.ui
+%_datadir/%name/gsm-inhibit-dialog.ui
+%_datadir/%name/session-properties.ui
 %_datadir/%name/hardware-compatibility
 %_datadir/%name/startgnome-common
 %dir %_datadir/%name/sessions
@@ -152,15 +194,33 @@ install -pD -m644 %SOURCE1 %buildroot%_iconsdir/gnome.svg
 %_datadir/%name/sessions/gnome-dummy.session
 %_iconsdir/gnome.svg
 %_iconsdir/hicolor/*/apps/session-properties.*
-%config %_sysconfdir/X11/wmsession.d/*Gnome*
+%config %_sysconfdir/X11/wmsession.d/02Gnome
 %config %_datadir/glib-2.0/schemas/org.gnome.SessionManager.gschema.xml
 %_datadir/GConf/gsettings/%name.convert
-%_mandir/man?/*
+%_man1dir/gnome-session-inhibit.*
+%_man1dir/gnome-session-properties.*
+%_man1dir/gnome-session-quit.*
+%_man1dir/gnome-session.*
 %doc AUTHORS NEWS README
 
 %exclude %_datadir/xsessions/gnome.desktop
 
+%if_enabled session_selector
+%files selector
+%config %_sysconfdir/X11/wmsession.d/04Gnome-custom
+%_bindir/startgnome-custom
+%_bindir/gnome-session-custom-session
+%_bindir/gnome-session-selector
+%_datadir/%name/session-selector.ui
+%_man1dir/gnome-session-selector.*
+%exclude %_datadir/xsessions/gnome-custom-session.desktop
+%endif
+
 %changelog
+* Tue May 14 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.2.1-alt1
+- 3.8.2.1
+- new -selector subpackage
+
 * Mon Apr 15 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.1-alt1
 - 3.8.1
 - removed metacity-gnome from rqs (ALT #28840)
