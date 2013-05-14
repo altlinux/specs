@@ -1,8 +1,8 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-fbi
-Version: 5.28
-Release: alt6
+Version: 5.29
+Release: alt1
 
 Packager: Dmitriy Kruglikov <dkr@altlinux.org>
 
@@ -131,6 +131,10 @@ fi ||:
 
 
 %changelog
+* Wed May 08 2013 Paul Wolneykien <manowar@altlinux.org> 5.29-alt1
+- Fix: do not use "submit" typed buttons as controls in the "acl"
+  module (closes: 28551).
+
 * Mon Dec 10 2012 Paul Wolneykien <manowar@altlinux.ru> 5.28-alt6
 - Remove the 'PIDFile' option from the service unit file
   (closes: 27987).
