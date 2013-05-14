@@ -1,4 +1,4 @@
-%define ver_major 0.9
+%define ver_major 0.10
 %define gst_api_ver 1.0
 %define _libexecdir %_prefix/libexec
 %define _localstatedir %_var
@@ -29,7 +29,7 @@ BuildRequires: libxkbfile-devel libibus-devel
 BuildRequires: libaccountsservice-devel libgnome-desktop3-devel
 BuildRequires: gstreamer%gst_api_ver-devel libclutter-gst2.0-devel
 BuildRequires: libgweather-devel libgnome-online-accounts-devel
-BuildRequires: gdm-libs-devel iso-codes-devel
+BuildRequires: gdm-libs-devel iso-codes-devel libpolkit-devel
 BuildRequires: gobject-introspection-devel libgtk+3-gir-devel
 
 %description
@@ -69,6 +69,7 @@ useradd -rM -d %_localstatedir/lib/%name -s /sbin/nologin %name &>/dev/null || :
 %_datadir/gdm/greeter/applications/%name.desktop
 %_datadir/gdm/greeter/applications/setup-shell.desktop
 %_datadir/gnome-session/sessions/%name.session
+%_datadir/gnome-shell/modes/initial-setup.json
 %_datadir/polkit-1/rules.d/20-gnome-initial-setup.rules
 %attr(1770, %name, %name) %dir %_localstatedir/lib/%name
 %attr(1777, root, %name) %dir %_localstatedir/run/%name
@@ -76,6 +77,9 @@ useradd -rM -d %_localstatedir/lib/%name -s /sbin/nologin %name &>/dev/null || :
 %doc README NEWS
 
 %changelog
+* Tue May 14 2013 Yuri N. Sedunov <aris@altlinux.org> 0.10-alt1
+- 0.10
+
 * Wed Apr 17 2013 Yuri N. Sedunov <aris@altlinux.org> 0.9-alt1
 - 0.9
 

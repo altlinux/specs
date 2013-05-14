@@ -1,9 +1,11 @@
+%define _unpackaged_files_terminate_build 1
+
 %define _name aisleriot
-%define ver_major 3.7
+%define ver_major 3.8
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-games-%_name
-Version: %ver_major.91
+Version: %ver_major.0
 Release: alt1
 
 Summary: A collection of card games
@@ -18,11 +20,12 @@ Provides:  gnome-games-sol = %version-%release
 Provides:  %_name = %version-%release
 
 Requires(post,preun): GConf
+Requires: pysol-cardsets
 
 %define glib_ver 2.32.0
 %define gtk_ver 3.0.0
 
-BuildRequires: intltool yelp-tools libgio-devel >= %glib_ver
+BuildRequires: intltool desktop-file-utils yelp-tools libgio-devel >= %glib_ver
 BuildRequires: libgtk+3-devel >= %gtk_ver libGConf-devel librsvg-devel libcanberra-gtk3-devel
 BuildRequires: libICE-devel libSM-devel gstreamer-devel guile20 libguile20-devel
 BuildRequires: /proc
@@ -35,7 +38,8 @@ which are easy to play with the aid of a mouse.
 %setup -n %_name-%version
 
 %build
-%configure
+%configure \
+    --with-pysol-card-theme-path=%_datadir/games/pysol
 %make
 
 %install
@@ -59,11 +63,17 @@ fi
 %_datadir/%_name
 %_datadir/applications/*.desktop
 %_iconsdir/hicolor/*/apps/*.png
+%_iconsdir/HighContrast/*/apps/*.svg
 %_sysconfdir/gconf/schemas/%_name.schemas
 %_datadir/glib-2.0/schemas/org.gnome.Patience.WindowState.gschema.xml
 %_man6dir/sol.*
 
+%exclude %_libdir/valgrind/aisleriot.supp
+
 %changelog
+* Mon May 13 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.0-alt1
+- 3.8.0
+
 * Wed Mar 06 2013 Yuri N. Sedunov <aris@altlinux.org> 3.7.91-alt1
 - 3.7.91
 

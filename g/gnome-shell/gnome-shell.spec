@@ -4,8 +4,8 @@
 %def_enable gnome_bluetooth
 
 Name: gnome-shell
-Version: %ver_major.1
-Release: alt3
+Version: %ver_major.2
+Release: alt1
 
 Summary: Window management and application launching for GNOME
 Group: Graphical desktop/GNOME
@@ -13,8 +13,8 @@ License: GPLv2+
 Url: https://live.gnome.org/GnomeShell
 Packager: GNOME Maintainers Team <gnome at packages.altlinux.org>
 
-Source: %name-%version.tar
-#Source: http://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+#Source: %name-%version.tar
+Source: http://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 Patch1: %name-3.7.92-alt-gir.patch
 Patch3: %name-3.6.2-alt-invalid_user_shell.patch
 Patch4: %name-3.8.1-bgo697008-input-source-switch.patch
@@ -169,6 +169,7 @@ rm -f %buildroot%_libdir/%name/*.la
 %_datadir/dbus-1/interfaces/org.gnome.ShellSearchProvider.xml
 %_datadir/dbus-1/interfaces/org.gnome.Shell.Screenshot.xml
 %_datadir/dbus-1/interfaces/org.gnome.ShellSearchProvider2.xml
+%_datadir/dbus-1/interfaces/org.gnome.Shell.Screencast.xml
 %_datadir/GConf/gsettings/gnome-shell-overrides.convert
 %_datadir/gnome-control-center/keybindings/50-gnome-shell-screenshot.xml
 %_datadir/gnome-control-center/keybindings/50-gnome-shell-system.xml
@@ -181,6 +182,9 @@ rm -f %buildroot%_libdir/%name/*.la
 %_datadir/gtk-doc/html/st/
 
 %changelog
+* Tue May 14 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.2-alt1
+- 3.8.2
+
 * Thu May 09 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.1-alt3
 - updated to eb2e66c
 

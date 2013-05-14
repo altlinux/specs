@@ -2,7 +2,7 @@
 %def_enable introspection
 
 Name: gsettings-desktop-schemas
-Version: %ver_major.0
+Version: %ver_major.2
 Release: alt1
 
 Summary: A collection of GSettings schemas
@@ -120,6 +120,9 @@ GObject introspection devel data for %name.
 %endif
 
 %changelog
+* Tue May 14 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.2-alt1
+- 3.8.2
+
 * Mon Mar 25 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.0-alt1
 - 3.8.0
 

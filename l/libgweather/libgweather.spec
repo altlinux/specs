@@ -4,7 +4,7 @@
 %def_enable introspection
 
 Name: libgweather
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 Summary: A library for weather information
 
@@ -145,6 +145,9 @@ s:\(.*\)/Locations\.\([^.]*\)\.xml.gz:%lang(\2) \1/Locations.\2.xml.gz:' > %name
 %endif
 
 %changelog
+* Tue May 14 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.2-alt1
+- 3.8.2
+
 * Tue Apr 16 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.1-alt1
 - 3.8.1
 

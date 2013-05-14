@@ -1,7 +1,7 @@
 %define ver_major 3.8
 
 Name: gnome-photos
-Version: %ver_major.0
+Version: %ver_major.2
 Release: alt1
 
 Summary: Photos - access, organize and share your photos on GNOME
@@ -19,8 +19,9 @@ BuildPreReq: libgio-devel >= 2.36.0
 BuildPreReq: libgtk+3-devel >= 3.6.0
 BuildPreReq: libexif-devel >= 0.6.14
 BuildRequires: libbabl-devel libgegl-devel libexempi-devel
-BuildRequires: libclutter-devel liblcms2-devel librsvg-devel
+BuildRequires: liblcms2-devel librsvg-devel
 BuildRequires: libgnome-desktop3-devel libgnome-online-accounts-devel tracker-devel
+BuildRequires: zlib-devel
 BuildRequires: gobject-introspection-devel libgtk+3-gir-devel
 
 %description
@@ -56,6 +57,9 @@ patterns and objectives.
 %doc ARTISTS AUTHORS NEWS README
 
 %changelog
+* Tue May 14 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.2-alt1
+- 3.8.2
+
 * Mon Apr 15 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.0-alt1
 - 3.8.0
 
