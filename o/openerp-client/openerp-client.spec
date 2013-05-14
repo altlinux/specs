@@ -1,56 +1,61 @@
-%define rel %nil
-%define branch stable
-Name: openerp-client
-Version: 5.0.14
-Release: alt2.1
+%define  rev 2102
+%define  branch stable
 
-Summary: Open ERP client - free ERP and CRM software
+Name:    openerp-client
+Version: 7.0
+Release: alt1.r%rev
+Summary: Python-based desktop client, based on the Gnome Toolkit, giving you fast access to any OpenERP Server
 
 License: GPL
-Group: Office
-Url: http://openerp.com
+Group:   Office
+Url:     https://launchpad.net/openobject-client
 
-Packager: Vitaly Lipatov <lav@altlinux.ru>
+Packager: Andrey Cherepanov <cas@altlinux.ru>
 
-Source: http://openerp.com/download/%branch/source/%name-%version%rel.tar
+Source:   %name-%version.tar
+Source1:  %name.desktop
+
+Patch1:   %name-build-translations.patch
 
 BuildArch: noarch
 
 %py_requires libglade
+%py_requires pytz
 
 #add_python_req_skip common modules options printer rpc service tools widget observator screen signal_event widget_search
 %add_python_req_skip win32con win32ui
 
-# manually removed: eric
-# Automatically added by buildreq on Sun Oct 24 2010
 BuildRequires: python-module-egenix-mx-base python-module-paste python-module-peak python-module-pygobject-devel python-module-pygtk-libglade python-modules-encodings
-
+BuildRequires: python-module-pytz
 
 BuildPreReq: rpm-build-python
 
-Provides: tinyerp-client = %version
+Provides:  tinyerp-client = %version
 Obsoletes: tinyerp-client
 
 %description
-Open ERP is a complete ERP and CRM. The main features are accounting
-(analytic and financial), stock management, sales and purchases
-management, tasks automation, marketing campaigns, help desk, POS,
-etc. Technical features include a distributed server, flexible
-workflows, an object database, a dynamic GUI, customizable reports,
-and SOAP and XML-RPC interfaces.
+OpenERP is an open source suite of business applications. OpenERP GTK
+Client (openobject-client) is the Python-based desktop client, based on
+the Gnome Toolkit, giving you fast access to any OpenERP Server.
 
 %prep
-%setup -n %name-%version%rel
+%setup
+%patch1 -p2
+subst "s/^version.*$/version = '%version'/g" bin/release.py
+
+
 # disable library checking due gtk issues
 #__subst "s/^check_modules//" ./setup.py
-%__subst "s|\('path.share':\).*|\1 '%_datadir/%name',|g" bin/options.py
-%__subst "s|\('path.pixmaps':\).*|\1 '%_pixmapsdir/%name',|g" bin/options.py
-%__subst "s|'lib'|'%_lib'|g" bin/options.py
-%__subst 's|self.install_libbase|"%python_sitelibdir"|g' mydistutils.py
+subst "s|\('path.share':\).*|\1 '%_datadir/%name',|g" bin/options.py
+subst "s|\('path.pixmaps':\).*|\1 '%_pixmapsdir/%name',|g" bin/options.py
+subst "s|'lib'|'%_lib'|g" bin/options.py
+subst 's|self.install_libbase|"%python_sitelibdir"|g' mydistutils.py
 
 
 %build
 %python_build
+# Build translations
+make -f Makefile.translation translate_set
 
 %install
 %python_install
@@ -61,19 +66,29 @@ install %name %buildroot%_bindir/
 #mkdir -p %buildroot%_datadir/%name/themes/
 #cp -a bin/themes/* %buildroot%_datadir/%name/themes/
 
+ln -s openerp-client/openerp-icon.png %buildroot%_pixmapsdir/openerp-icon.png
+install -D -m 0644 %SOURCE1 %buildroot/%_desktopdir/openerp-client.desktop
+
 %find_lang %name
 
 %files -f %name.lang
 %_bindir/%name
-%_docdir/%name-%version%rel/
+%doc %_docdir/%name-%version/
 %_datadir/%name/
 %python_sitelibdir/%name/
 %python_sitelibdir/*.egg-info
-#%_desktopdir/*
+%_desktopdir/*
 %_pixmapsdir/*
-%_man1dir/*
+%doc %_man1dir/*
 
 %changelog
+* Tue May 14 2013 Andrey Cherepanov <cas@altlinux.org> 7.0-alt1.r2102
+- New version 7.0 (revision 2102)
+- Translate desktop file into Russian, fix category and icon
+
+* Wed Jan 16 2013 Andrey Cherepanov <cas@altlinux.org> 6.1.1-alt1
+- New version 6.1.1
+
 * Sat Oct 22 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 5.0.14-alt2.1
 - Rebuild with Python-2.7
 
