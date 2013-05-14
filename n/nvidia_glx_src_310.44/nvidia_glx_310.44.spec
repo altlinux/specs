@@ -15,9 +15,9 @@
 %define nv_version 310
 %define nv_release 44
 %define nv_minor %nil
-%define pkg_rel alt111
+%define pkg_rel alt112
 %def_disable common
-%def_enable kernelsource
+%def_disable kernelsource
 
 %define tbver %{nv_version}.%{nv_release}.%{nv_minor}
 %if "%nv_minor" == "%nil"
@@ -357,6 +357,9 @@ fi
 %endif
 
 %changelog
+* Tue May 14 2013 Sergey V Turchin <zerg@altlinux.org> 310.44-alt112
+- don't package kernel module sources
+
 * Wed Apr 03 2013 Sergey V Turchin <zerg@altlinux.org> 310.44-alt111
 - new version
 
