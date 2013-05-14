@@ -2,7 +2,7 @@
 %def_without desklaunch
 Name: icewm-startup
 Version: 0.14
-Release: alt1
+Release: alt2
 
 Summary: simple pluggable IceWM autostart manager
 
@@ -254,7 +254,14 @@ cat <<'EOF' > %buildroot/%icewmconfdir/startup
 #!/bin/sh
 
 # delay before starting programs, to eliminate possible artifacts
-sleep 2
+tmem=`free -m | awk '/Mem/{print $2}'`
+    if [ $tmem -le 512 ]
+	then delay=7
+    elif [ $tmem -gt 1024 ]
+	then delay=3
+    else delay=5
+    fi
+sleep $delay
 # starting all system-wide icewm autostart programs
 for file in %icewmconfdir/startup.d/*; do
   userfile=~/.icewm/startup.d/`echo $file | sed -e 's,%icewmconfdir/startup.d/,,'`
@@ -429,6 +436,9 @@ fi
 %files grun
 
 %changelog
+* Tue May 14 2013 Dmitriy Khanzhin <jinn@altlinux.org> 0.14-alt2
+- delay before starting programs made customizable
+
 * Wed Apr 10 2013 Dmitriy Khanzhin <jinn@altlinux.org> 0.14-alt1
 - added grun subpackage
 
