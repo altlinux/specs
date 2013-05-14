@@ -3,16 +3,16 @@
 # %%branch_switch set %%branch_release use
 #%%define branch_switch Mxx
 
-%define packagversion 2.2.9
-%define packagedate 20130411
-%define packagemoodleversion 2011120509.04
+%define packagversion 2.2.10
+%define packagedate 20130513
+%define packagemoodleversion 2011120510.00
 %define moodlebranch 2.2
 %define moodlepackagename %moodle_name%moodlebranch
 
 #Name: %moodlepackagename
 Name: moodle2.2
 Version: %packagversion.%packagedate
-Release: %branch_release alt4
+Release: %branch_release alt1
 
 Summary: The Course Management System Moodle
 License: %gpl3plus
@@ -411,6 +411,10 @@ exit 0
 %moodle_authdir/pam/
 
 %changelog
+* Tue May 14 2013 Cronbuild Service <cronbuild@altlinux.org> 2.2.10.20130513-alt1
+- repocop cronbuild 20130514. At your service.
+- 2.2.10 (Build: 20130513)
+
 * Mon May 13 2013 Aleksey Avdeev <solo@altlinux.ru> 2.2.9.20130411-alt4
 - Fix for cronbuild use
 
