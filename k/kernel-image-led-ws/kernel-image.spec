@@ -21,7 +21,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.4.45
-Release: alt1
+Release: alt2
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -426,7 +426,7 @@ Patch0521: linux-%kernel_branch.39-fix-drivers-watchdog--watchdog.patch
 
 Patch0531: linux-%kernel_branch.25-fix-firmware--vicam.patch
 
-Patch0540: linux-%kernel_branch.35-fix-fs.patch
+Patch0540: linux-%kernel_branch.44-fix-fs.patch
 Patch0541: linux-%kernel_branch.37-fix-fs--block.patch
 Patch0542: linux-%kernel_branch.35-fix-fs-9p.patch
 Patch0543: linux-%kernel_branch.32-fix-fs-btrfs.patch
@@ -2695,6 +2695,10 @@ done)
 
 
 %changelog
+* Tue May 14 2013 Led <led@altlinux.ru> 3.4.45-alt2
+- updated:
+  + fix-fs
+
 * Sun May 12 2013 Led <led@altlinux.ru> 3.4.45-alt1
 - 3.4.45
 - updated:
