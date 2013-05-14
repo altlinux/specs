@@ -1,6 +1,6 @@
 Name: kernel-image-ovz-el
 Version: 2.6.32
-Release: alt87
+Release: alt88
 
 %define kernel_base_version	%version
 %define kernel_extra_version	%nil
@@ -616,6 +616,9 @@ find %buildroot%_docdir/kernel-doc-%base_flavour-%version/DocBook \
 %endif # staging
 
 %changelog
+* Tue May 14 2013 Led <led@altlinux.ru> 2.6.32-alt88
+- perf: Treat attr.config as u64 in perf_swevent_init() (CVE-2013-2094)
+
 * Tue May 07 2013 Led <led@altlinux.ru> 2.6.32-alt87
 - Update to 042stab076.7
 - usb-storage: add unusual_devs entry for Casio EX-N1 digital camera
