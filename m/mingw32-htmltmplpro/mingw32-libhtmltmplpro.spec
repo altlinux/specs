@@ -6,7 +6,7 @@
 %def_disable static
 
 Name: mingw32-%origname
-Version: 0.9509
+Version: 0.9510
 Release: alt1
 
 Summary: Windows MinGW HTML::Template compatible HTML template library
@@ -118,6 +118,9 @@ autoreconf -fisv
 %endif
 
 %changelog
+* Tue May 14 2013 Igor Vlasenko <viy@altlinux.ru> 0.9510-alt1
+- new version; see Changes
+
 * Tue Feb 28 2012 Igor Vlasenko <viy@altlinux.ru> 0.9509-alt1
 - new version; see Changes
 
