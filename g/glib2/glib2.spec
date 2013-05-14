@@ -13,8 +13,8 @@
 %endif
 
 Name: glib2
-Version: %ver_major.1
-Release: alt3
+Version: %ver_major.2
+Release: alt1
 
 Summary: A library of handy utility functions
 License: %lgpl2plus
@@ -40,9 +40,6 @@ Source11: glib2.csh
 Patch: glib-2.35.9-alt-compat-version-script.patch
 # stop spam about deprecated paths in schemas
 Patch1: glib-2.36.1-alt-deprecated_paths-nowarning.patch
-# upstream patches that depend on ALT #28903
-Patch10: glib-2.36.1-up-f3b1054b0ebb4912f700e08da0c3d35c30113e79.patch
-Patch11: glib-2.36.1-up-518e3104bf6cdb5d8e6b43d3b721805db5951139.patch
 
 %def_with locales
 %if_with locales
@@ -58,7 +55,7 @@ Obsoletes: %name-core < %version
 # use python3
 #AutoReqProv: nopython
 #%define __python %nil
-#%add_python3_lib_path %_datadir/glib-2.0/codegen
+#%%add_python3_lib_path %_datadir/glib-2.0/codegen
 %add_python_lib_path %_datadir/glib-2.0/codegen
 
 %if_with sys_pcre
@@ -198,8 +195,6 @@ This package contains documentation for GIO.
 %setup -n glib-%version
 %patch
 %patch1
-%patch10 -p1
-#%%patch11 -p1
 
 %if_with sys_pcre
 rm glib/pcre/*.[ch]
@@ -225,7 +220,6 @@ NOCONFIGURE=1 ./autogen.sh
 %configure \
     --enable-static \
     %{subst_enable selinux} \
-    --enable-fam \
     --enable-xattr \
     %{?_enable_gtk_doc:--enable-gtk-doc} \
     --enable-included-printf=no \
@@ -277,7 +271,7 @@ install -pD -m 755 filetrigger %buildroot%_rpmlibdir/gsettings.filetrigger
 %check
 # g_mapped_file_new fails on /dev/null in hasher
 # GLib:ERROR:mappedfile.c:52:test_device: assertion failed (error == (g-file-error-quark, 17)): Failed to map /dev/null' /dev/null': mmap() failed: No such device (g-file-error-quark, 7)
-#%%make check
+#%make check
 
 %files
 /%_lib/libglib-2.0.so.0*
@@ -384,6 +378,9 @@ install -pD -m 755 filetrigger %buildroot%_rpmlibdir/gsettings.filetrigger
 
 
 %changelog
+* Mon May 13 2013 Yuri N. Sedunov <aris@altlinux.org> 2.36.2-alt1
+- 2.36.2
+
 * Mon Apr 29 2013 Yuri N. Sedunov <aris@altlinux.org> 2.36.1-alt3
 - disabled patch11
 

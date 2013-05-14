@@ -9,7 +9,7 @@
 %define _localstatedir %_var
 
 Name: colord
-Version: 0.1.34
+Version: 1.0.0
 Release: alt1
 
 Summary: Color daemon
@@ -164,6 +164,7 @@ touch %buildroot%_localstatedir/lib/%name/storage.db
 %_man1dir/cd-create-profile.1.*
 %_man1dir/colormgr.*
 %_man1dir/cd-fix-profile.*
+%_man1dir/colord.conf.1.*
 %attr(755,%colord_user,%colord_group) %dir %_localstatedir/lib/%name
 %attr(755,%colord_user,%colord_group) %dir %_localstatedir/lib/%name/icc
 %dir %_localstatedir/lib/color
@@ -258,6 +259,9 @@ touch %buildroot%_localstatedir/lib/%name/storage.db
 
 
 %changelog
+* Mon May 13 2013 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt1
+- 1.0.0
+
 * Sun May 05 2013 Yuri N. Sedunov <aris@altlinux.org> 0.1.34-alt1
 - 0.1.34
 

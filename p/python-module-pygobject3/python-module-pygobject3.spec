@@ -1,5 +1,3 @@
-%add_findreq_skiplist typelib(Foo)
-
 %define _name pygobject
 %define major 3.8
 %define api_ver 3.0
@@ -7,7 +5,7 @@
 %def_disable devel_doc
 
 Name: python-module-%{_name}3
-Version: %major.1
+Version: %major.2
 Release: alt1
 
 Summary: Python bindings for GObject
@@ -207,6 +205,9 @@ popd
 %endif
 
 %changelog
+* Mon May 13 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.2-alt1
+- 3.8.2
+
 * Mon Apr 15 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.1-alt1
 - 3.8.1
 

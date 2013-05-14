@@ -18,7 +18,7 @@
 
 Summary: Web browser engine
 Name: libwebkitgtk3
-Version: 2.0.1
+Version: 2.0.2
 Release: alt1
 License: %bsd %lgpl2plus
 Group: System/Libraries
@@ -329,6 +329,9 @@ xvfb-run make check
 %endif
 
 %changelog
+* Mon May 13 2013 Yuri N. Sedunov <aris@altlinux.org> 2.0.2-alt1
+- 2.0.2
+
 * Tue Apr 16 2013 Yuri N. Sedunov <aris@altlinux.org> 2.0.1-alt1
 - 2.0.1
 
