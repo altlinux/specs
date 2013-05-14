@@ -4,7 +4,7 @@
 %define nvIF_ver_lteq() %if "%(rpmvercmp '%2' '%1')" >= "0"
 
 %define module_name	nvidia
-%define module_version	310.44
+%define module_version	319.17
 %define module_release	alt1
 %define flavour		std-def
 
@@ -190,6 +190,9 @@ fi
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Tue May 14 2013 Sergey V Turchin <zerg at altlinux dot org> 319.17-alt1..
+- new release (319.17)
 
 * Wed Apr 03 2013 Sergey V Turchin <zerg at altlinux dot org> 310.44-alt1..
 - new releases (310.44 and 304.88)
