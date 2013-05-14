@@ -4,7 +4,7 @@
 %define rname konsole
 %define major 4
 %define minor 10
-%define bugfix 2
+%define bugfix 3
 Name: kde4-konsole
 Version: %major.%minor.%bugfix
 Release: alt1
@@ -85,6 +85,9 @@ __EOF__
 
 
 %changelog
+* Tue May 14 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.3-alt1
+- new version
+
 * Fri Apr 05 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.2-alt1
 - new version
 
