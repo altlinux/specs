@@ -4,7 +4,7 @@
 %define lngg Ukrainian
 
 Name: kde4-i18n-%lng
-Version: 4.10.2
+Version: 4.10.3
 Release: alt1
 
 Group: Graphical desktop/KDE
@@ -92,6 +92,9 @@ fi
 
 
 %changelog
+* Wed May 15 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.3-alt1
+- new version
+
 * Wed Apr 10 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.2-alt1
 - new version
 
