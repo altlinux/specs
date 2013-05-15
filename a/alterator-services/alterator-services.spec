@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-services
-Version: 2.0.1
+Version: 2.0.2
 Release: alt1
 
 Summary: Simple SysV services configurator
@@ -46,6 +46,9 @@ Alterator module for SysV services administration
 %_alterator_backend3dir/*
 
 %changelog
+* Wed May 15 2013 Mikhail Efremov <sem@altlinux.org> 2.0.2-alt1
+- Don't use absolute paths for commands.
+
 * Mon Apr 01 2013 Mikhail Efremov <sem@altlinux.org> 2.0.1-alt1
 - Fix possible unbound variable.
 
