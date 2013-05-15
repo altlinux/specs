@@ -6,7 +6,7 @@ Name: kde4-nepomuk-core
 %define minor  10
 %define bugfix 3
 Version: %major.%minor.%bugfix
-Release: alt1
+Release: alt2
 %define sover %major
 
 Group: Graphical desktop/KDE
@@ -87,6 +87,13 @@ sed -i 's|^\(include.*KDE4Defaults.*\)|\1\ninclude(SopranoAddOntology)|' CMakeLi
 %install
 %K4install
 
+# fix paths in ontology descriptions
+find %buildroot/%_datadir/ontology -type f -name \*.ontology | \
+while read f
+do
+    sed -i 's|Path=.*/share/ontology/\(.*\.trig\)|Path=%_datadir/ontology/\1|' "$f"
+done
+
 %files
 %_kde4_bindir/nepomuk*
 %_K4libdir/libkdeinit4_nepomukserver.so
@@ -118,6 +125,9 @@ sed -i 's|^\(include.*KDE4Defaults.*\)|\1\ninclude(SopranoAddOntology)|' CMakeLi
 %_K4link/*.so
 
 %changelog
+* Thu May 16 2013 Sergey V Turchin <zerg at altlinux dot org> 4.10.3-alt2
+- fix paths in ontology descriptions
+
 * Tue May 07 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.3-alt1
 - new version
 
