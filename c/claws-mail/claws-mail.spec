@@ -1,36 +1,31 @@
-%define		_name		sylpheed
-%define		_newname	claws-mail
-%define		branch		claws
-#define		cvs		.cvs5
-%define     cvs     %nil
+%define		_oldname	sylpheed-claws
 %def_disable	gtk3
 %def_disable 	debug
-Name:	 	%_newname
-Version: 3.9.0
-Release: alt2
 
-Summary:	The bleeding edge branch of Sylpheed, a GTK+ based, lightweight, and fast e-mail client	 
+# libchamplain-gtk is only gtk3
+%if_enabled gtk3
+%def_enable 	geolocation
+%else
+%def_disable	geolocation
+%endif
+%def_disable	bsfilter
+%def_disable	tnef
+
+Name:   	claws-mail
+Version:	3.9.1
+Release: 	alt1
+
+Summary:	Claws Mail is a GTK+ based, user-friendly, lightweight, and fast email client.
 License: 	%gpl3plus
 Group: 		Networking/Mail
 
-Url:		http://%name.sourceforge.net
+Url:		http://www.claws-mail.org
 
 Source: %name-%version.tar
-Patch1:	%name-alt-filters-conv.patch
-Patch6: claws-mail-3.7.6-fix-undo-redo-replace.patch
-Patch7: claws-mail-alt-textviewer.patch
-Patch8: claws-mail-alt-textviewer-pl.patch
+Patch:	%name-%version-%release.patch
 
-# From upstream CVS
-Patch10: claws-mail-3.9.0cvs6.patch
-#
-
-# ALT Specific
-Patch119: claws-mail-alt-masquerade-deps.patch
-Patch120: claws-mail-3.8.1-alt-ssl-certs-paths.patch
-
-Obsoletes:	%_name-%branch < %version
-Provides:	%_name-%branch
+Obsoletes:	%_oldname < %version
+Provides:	%_oldname
 
 BuildRequires(pre): rpm-build-licenses
 
@@ -43,8 +38,70 @@ BuildRequires: libgtk+3-devel
 BuildRequires: libgtk+2-devel
 %endif
 
+# For plugin-archive:
+BuildRequires: libarchive-devel
+
+# For plugin-fancy, plugin-rssyl, plugin-spamreport, plugin-vcalendar
+BuildRequires: libcurl-devel
+
+# For plugin-fancy
+%if_enabled gtk3
+BuildRequires: libwebkitgtk3-devel
+%else
+BuildRequires: libwebkitgtk2-devel
+%endif
+BuildRequires: libsoup-gnome-devel
+
+# For plugin-gdata
+BuildRequires: libgdata-devel
+
+# For plugin-rssyl
+BuildRequires: libxml2-devel
+
+# For plugin-pdfviewer
+BuildRequires: libpoppler-glib-devel
+
+# For plugin-perl
+BuildRequires: perl-devel sed
+
+# For pligin-python
+BuildRequires: python-dev python-module-pygtk-devel
+
+# For plugin-notification
+%def_disable indicator
+%def_enable hotkeys
+BuildRequires: libnotify-devel
+%if_enabled gtk3
+BuildRequires: libcanberra-gtk3-devel
+%else
+BuildRequires: libcanberra-gtk2-devel
+%endif
+%{?_enable_indicator:BuildRequires: libindicate-devel >=  0.3.0}
+%{?_enable_hotkeys:BuildRequires: libgio-devel >= 2.15.6}
+
+# For plugin-geolocation
+%if_enabled geolocation
+BuildRequires: libchamplain-gtk3-devel >= 0.8.0 libsoup-devel
+%endif
+
+# For plugin-tnef
+%if_enabled tnef
+BuildRequires: libytnef-devel
+%endif
+
+# For tools
+BuildRequires:  python
+BuildRequires:	python-modules-encodings
+BuildPreReq:	perl-MIME-tools
+BuildPreReq:	perl-Text-Iconv
+BuildPreReq:	perl-XML-SimpleObject
+BuildPreReq:	perl-URI
+BuildPreReq: 	perl-libwww
+BuildPreReq: 	perl-Text-CSV_XS
+
 %description
-Claws Mail is an email client (and news reader), based on GTK+, featuring
+Claws Mail is an email client (and news reader), based on GTK+,
+featuring
 
     Quick response
     Graceful, and sophisticated interface
@@ -57,8 +114,8 @@ coming from other popular email clients, as well as experienced users.
 Almost all commands are accessible with the keyboard.
 
 The messages are managed in the standard MH format, which features fast
-access and data security. You'll be able to import your emails from almost
-any other email client, and export them just as easily.
+access and data security. You'll be able to import your emails from
+almost any other email client, and export them just as easily.
 
 Lots of extra functionality, like an RSS aggregator, calendar, or laptop
 LED handling, are provided by extra plugins.
@@ -69,35 +126,63 @@ Claws Mail is distributed under the GPL.
 Summary:        Development environment for %name
 Group:          Development/C
 Requires:	%name = %version-%release
-Obsoletes:	%_name-%branch-devel < %version
-Provides:	%_name-%branch-devel
+Obsoletes:	%_oldname-devel < %version
+Provides:	%_oldname-devel
 Requires: rpm-macros-%{name} = %{version}-%{release}
 
 %description 	devel
-This package contains the header files and libraries for building program
-which use %name.
+This package contains the header files and libraries for building
+program which use %name.
 
-%package	plugin-dillo
-Summary:	Dillo browser plugin for %name
+%package	plugins
+Summary:	Install all plugins for %name
 Group:		Networking/Mail
-Requires:	%name = %version
-Requires:	dillo
-Obsoletes:	%_name-%branch-plugin-dillo < %version
-Provides:	%_name-%branch-plugin-dillo
+BuildArch:	noarch
+Requires:	%name = %version-%release
+Requires:	%name-plugin-spamassassin = %version-%release
+Requires:	%name-plugin-bogofilter = %version-%release
+Requires:	%name-plugin-pgpcore = %version-%release
+Requires:	%name-plugin-pgpmime = %version-%release
+Requires:	%name-plugin-pgpinline = %version-%release
+Requires:	%name-plugin-smime = %version-%release
+Requires:	%name-plugin-acpinotifier = %version-%release
+Requires:	%name-plugin-addresskeeper = %version-%release
+Requires:	%name-plugin-archive = %version-%release
+Requires:	%name-plugin-attachwarner = %version-%release
+Requires:	%name-plugin-attremover = %version-%release
+%if_enabled bsfilter
+Requires:	%name-plugin-bsfilter = %version-%release
+%endif
+Requires:	%name-plugin-clamd = %version-%release
+Requires:	%name-plugin-fancy = %version-%release
+Requires:	%name-plugin-fetchinfo = %version-%release
+Requires:	%name-plugin-gdata = %version-%release
+%if_enabled geolocation
+Requires:	%name-plugin-geolocation = %version-%release
+%endif
+Requires:	%name-plugin-mailmbox = %version-%release
+Requires:	%name-plugin-newmail = %version-%release
+Requires:	%name-plugin-notification = %version-%release
+Requires:	%name-plugin-pdfviewer = %version-%release
+Requires:	%name-plugin-perl = %version-%release
+Requires:	%name-plugin-python = %version-%release
+Requires:	%name-plugin-rssyl = %version-%release
+Requires:	%name-plugin-spamreport = %version-%release
+%if_enabled tnef
+Requires:	%name-plugin-tnef = %version-%release
+%endif
+Requires:	%name-plugin-vcalendar = %version-%release
 
-%description	plugin-dillo
-This plugin for %name lets you see HTML content in the messages by means of
-a Dillo embedded browser. This plugin only provides very basic HTML
-support; if you want something more, consider installing
-%name-plugin-gtkhtml2 package.
+%description	plugins
+This virtual package installs all plugins for %name.
 
 %package	plugin-spamassassin
 Summary:	SpamAssassin plugin for %name
 Group:		Networking/Mail
-Requires:	%name = %version
+Requires:	%name = %version-%release
 Requires:	spamassassin
-Obsoletes:	%_name-%branch-plugin-spamassassin < %version
-Provides:	%_name-%branch-plugin-spamassassin
+Obsoletes:	%_oldname-plugin-spamassassin < %version
+Provides:	%_oldname-plugin-spamassassin
 
 %description	plugin-spamassassin
 This plugin for %name provides integration with SpamAssassin.
@@ -105,43 +190,33 @@ This plugin for %name provides integration with SpamAssassin.
 %package	plugin-bogofilter
 Summary:	Bogofilter plugin for %name
 Group:		Networking/Mail
-Requires:	%name = %version
+Requires:	%name = %version-%release
 Requires:	bogofilter bogofilter-utils
-Obsoletes:	%_name-%branch-plugin-bogofilter < %version
-Provides:	%_name-%branch-plugin-bogofilter
+Obsoletes:	%_oldname-plugin-bogofilter < %version
+Provides:	%_oldname-plugin-bogofilter
 
 %description	plugin-bogofilter
 This plugin for %name provides integration with Bogofilter spam checking
 tool.
 
-%package	plugin-trayicon
-Summary:	Tray icon plugin for %name
-Group:		Networking/Mail
-Requires:	%name = %version
-Obsoletes:	%_name-%branch-plugin-trayicon < %version
-Provides:	%_name-%branch-plugin-trayicon
-
-%description	plugin-trayicon
-This plugin for %name provides a tray icon.
-
 %package	plugin-pgpcore
 Summary:	Core PGP plugin for %name
 Group:		Networking/Mail
-Requires:	%name = %version
-Obsoletes:	%_name-%branch-plugin-pgpcore < %version
-Provides:	%_name-%branch-plugin-pgpcore
+Requires:	%name = %version-%release
+Obsoletes:	%_oldname-plugin-pgpcore < %version
+Provides:	%_oldname-plugin-pgpcore
 
 %description	plugin-pgpcore
-This plugin for %name provides core PGP functionality. It is used by other
-encryption/signing plugins.
+This plugin for %name provides core PGP functionality. It is used by
+other encryption/signing plugins.
 
 %package	plugin-pgpmime
 Summary:	PGP/MIME plugin for %name
 Group:		Networking/Mail
-Requires:	%name = %version
-Requires:	%name-plugin-pgpcore = %version
-Obsoletes:	%_name-%branch-plugin-pgpmime < %version
-Provides:	%_name-%branch-plugin-pgpmime
+Requires:	%name = %version-%release
+Requires:	%name-plugin-pgpcore = %version-%release
+Obsoletes:	%_oldname-plugin-pgpmime < %version
+Provides:	%_oldname-plugin-pgpmime
 
 %description	plugin-pgpmime
 This plugin for %name lets you create and see messages encrypted/signed
@@ -150,10 +225,10 @@ with PGP/MIME.
 %package	plugin-pgpinline
 Summary:	PGP/Inline plugin for %name
 Group:		Networking/Mail
-Requires:	%name = %version
-Requires:	%name-plugin-pgpcore = %version
-Obsoletes:	%_name-%branch-plugin-pgpinline < %version
-Provides:	%_name-%branch-plugin-pgpinline
+Requires:	%name = %version-%release
+Requires:	%name-plugin-pgpcore = %version-%release
+Obsoletes:	%_oldname-plugin-pgpinline < %version
+Provides:	%_oldname-plugin-pgpinline
 
 %description	plugin-pgpinline
 This plugin for %name lets you create and see messages encrypted/signed
@@ -162,34 +237,271 @@ with PGP/Inline.
 %package	plugin-smime
 Summary:	S/MIME plugin for %name
 Group:		Networking/Mail
-Requires:	%name = %version
-Requires:	%name-plugin-pgpcore = %version
+Requires:	%name = %version-%release
+Requires:	%name-plugin-pgpcore = %version-%release
 Requires:   dirmngr gnupg2-common
-Obsoletes:	%_name-%branch-plugin-smime < %version
-Provides:	%_name-%branch-plugin-smime
+Obsoletes:	%_oldname-plugin-smime < %version
+Provides:	%_oldname-plugin-smime
 
 %description	plugin-smime
 This plugin for %name lets you create and see messages encrypted/signed
 with S/MIME.
 
+%package	plugin-acpinotifier
+Summary:	Mail notification via LEDs on some laptops (Acer, ASUS, Fujitsu, IBM).
+Group:		Networking/Mail
+Requires:	%name = %version-%release
+
+%description	plugin-acpinotifier
+The AcpiNotifier plugin handles the email LED found on some laptops.
+It makes it possible to see whether you have new emails from the other
+side of the room, without even unlocking the screen. The plugin handles
+the following types of laptops:
+
+ * ACER,
+ * ASUS,
+ * IBM,
+ * Fujitsu,
+ and others.
+
+%package	plugin-addresskeeper
+Summary:	Keeps all recipient addresses in an addressbook folder
+Group:		Networking/Mail
+Requires:	%name = %version-%release
+
+%description	plugin-addresskeeper
+This plugin allows saving outgoing addresses to a designated folder
+in the address book. Addresses are saved only if not found in the
+address book to avoid unwanted duplicates.
+Selecting which headers are scanned for keeping addresses is also
+supported (Any or several of 'To', 'Cc' or 'Bcc').
+
+%package	plugin-archive
+Summary:	Mail archiving functionality for Claws Mail
+Group:		Networking/Mail
+Requires:	%name = %version-%release
+
+%description	plugin-archive
+This plugin adds archiving features to Claws Mail.
+
+%package	plugin-attachwarner
+Summary:	Warn when the user is likely to have forgotten to attach a file.
+Group:		Networking/Mail
+Requires:	%name = %version-%release
+
+%description	plugin-attachwarner
+The AttachWarner verifies that you have attached something to your email
+if you mentioned attachment in the email's body.
+
+%package	plugin-attremover
+Summary:	This plugin lets you remove attachments from emails
+Group:		Networking/Mail
+Requires:	%name = %version-%release
+
+%description	plugin-attremover
+This plugin lets you remove attachments from emails.
+
+%package	plugin-bsfilter
+Summary:	Check messages for spam using Bsfilter
+Group:		Networking/Mail
+Requires:	%name = %version-%release
+Requires:	bsfilter
+
+%description	plugin-bsfilter
+Check all messages that are received from an IMAP, LOCAL or POP account
+for spam using Bsfilter.
+
+%package	plugin-clamd
+Summary:	This plugin scans messages using clamd (Clam AV)
+Group:		Networking/Mail
+Requires:	%name = %version-%release
+Requires:	clamav
+
+%description	plugin-clamd
+This plugin scans all messages that are received from an IMAP, LOCAL or
+POP account using clamd (Clam AV).
+
+%package	plugin-fancy
+Summary:	Renders HTML e-mail using the WebKit library
+Group:		Networking/Mail
+Requires:	%name = %version-%release
+
+%description	plugin-fancy
+The Fancy plugin renders html email using the GTK+ port of WebKit
+library.
+
+%package	plugin-fetchinfo
+Summary:	This plugin inserts headers containing some download information
+Group:		Networking/Mail
+Requires:	%name = %version-%release
+
+%description	plugin-fetchinfo
+This plugin inserts headers containing some download information: UIDL,
+Claws' account name, POP server, user ID and retrieval time.
+
+%package	plugin-gdata
+Summary:	Access to GData (Google services) for Claws Mail
+Group:		Networking/Mail
+Requires:	%name = %version-%release
+
+%description	plugin-gdata
+Access to GData (Google services) for Claws Mail.
+The only currently implemented feature is inclusion of
+Google contacts into the Tab-address completion.
+
+%package	plugin-geolocation
+Summary:	Geolocation functionality for Claws Mail
+Group:		Networking/Mail
+Requires:	%name = %version-%release
+
+%description	plugin-geolocation
+This Claws Mail plugin provides GeoLocation functionality.
+
+%package	plugin-mailmbox
+Summary:	This plugin handles mailboxes in mbox format
+Group:		Networking/Mail
+Requires:	%name = %version-%release
+
+%description	plugin-mailmbox
+This plugin handles mailboxes in mbox format.
+
+%package	plugin-newmail
+Summary:	This plugin writes a msg header summary to a log file
+Group:		Networking/Mail
+Requires:	%name = %version-%release
+
+%description	plugin-newmail
+This plugin writes a msg header summary to a log file,
+(Default: ~/Mail/NewLog), on arrival of new mail *after* sorting.
+
+%package	plugin-notification
+Summary:	Various ways to notify the user of new and unread email
+Group:		Networking/Mail
+Requires:	%name = %version-%release
+
+%description	plugin-notification
+The Notification plugin provides various ways to notify the user of new
+and possibly unread mail. Currently, the following modules are
+implemented:
+
+    * A mail banner (stocks ticker-like widget)
+    * A popup window
+    * A command to be issued on new mail arrival
+
+All modules can be activated or deactivated at compilation time, and are
+highly configurable at run time. It is possible to include only selected
+folders in any module. In general, the notification is executed after
+filtering, so it is possible to exclude spam or other unwanted messages
+from notification.
+
+%package	plugin-pdfviewer
+Summary:	This plugin enables the viewing of PDF and PostScript attachments
+Group:		Networking/Mail
+Requires:	%name = %version-%release
+
+%description	plugin-pdfviewer
+The PDF Viewer plugin renders PDF and Postscript attachments in Claws
+Mail. It features:
+
+  * Moving between document pages, sequentially and jumping to
+    a specific page
+  * Zoom, Rotation, Fit Page, Fit Page Width
+  * Displaying information about the document such as Author, Date,
+    Creator, etc...
+  * Displaying the PDF Index, if available, which allows easily surfing
+    the document
+  * Search text inside the document
+  * Manage links to internal and external documents, if available, such
+    as jumping to the paragraph or section and also opening an external
+    URL or composing a new mail
+
+The Poppler library and GhostScript are required.
+
+%package	plugin-perl
+Summary:	This plugin provides a Perl interface to Claws Mail' filtering mechanism
+Group:		Networking/Mail
+Requires:	%name = %version-%release
+Requires:	perl
+
+%description	plugin-perl
+This plugin is intended to extend the filtering possibilities of Claws
+Mail. It provides a Perl interface to Claws Mail' filtering mechanism,
+allowing the use of full Perl power in email filters.
+
+%package	plugin-python
+Summary:	This plugin provides Python integration features
+Group:		Networking/Mail
+Requires:	%name = %version-%release
+Requires:	python
+
+%description	plugin-python
+This plugin offers Python scripting access to Claws Mail.
+Python code can be entered interactively into an embedded Python
+console, or stored in scripts.
+
+%package	plugin-rssyl
+Summary:	RSS feed aggregator for Claws Mail
+Group:		Networking/Mail
+Requires:	%name = %version-%release
+
+%description	plugin-rssyl
+he RSSyl plugin is an RSS feed aggregator for Claws Mail. It has the
+following features:
+
+    * Handling of RSS 1.0, RSS 2.0, and Atom feeds
+    * Fetching and threaded display of comment feeds
+    * Customisable refresh interval for each feed
+    * Customisable number of feed items to keep for each feed
+
+Navigating in your feeds and posts is done in the same way as you would
+for emails, which makes feed-reading really fast and enjoyable if Claws
+Mail's shortcuts are hardwired into your fingers.
+Also, the RSSyl plugin unleashes its full potential when used with an
+HTML viewer plugin like Dillo or Gtkhtml2Viewer, as this allows fetching
+a post's images and font styles.
+
+%package	plugin-spamreport
+Summary:	This plugin reports spam to various places
+Group:		Networking/Mail
+Requires:	%name = %version-%release
+
+%description	plugin-spamreport
+This Claws Mail plugin allows you to upload your spams to various spam
+reporting places, like http://www.signal-spam.fr/ or http://www.spamcop.net/.
+
+%package	plugin-tnef
+Summary:	This plugin enables reading application/ms-tnef attachments
+Group:		Networking/Mail
+Requires:	%name = %version-%release
+
+%description	plugin-tnef
+The TNEF Parser plugins handles TNEF attachments from Outlook.
+TNEF attachments have a MIME type of "application/ms-tnef" and
+are often named "winmail.dat". They can contain multiple files.
+This plugin parses this kind of attachment and displays the real files
+in the parts list.
+
+%package	plugin-vcalendar
+Summary:	Plugin handles the vCalendar for Claws Mail
+Group:		Networking/Mail
+Requires:	%name = %version-%release
+
+%description	plugin-vcalendar
+This Claws Mail plugin handles the vCalendar format (or rather, the
+meeting subset of it). It displays such mails in a nice format, lets you
+create and send meetings, and creates a virtual folder with the meetings
+you sent or received.
+
 %package	tools
 Summary:	Additional tools for %name
 Group:		Networking/Mail
-Requires:	%name = %version
-Requires:       python
-BuildRequires:  python
-BuildRequires:	python-modules-encodings
-BuildPreReq:	perl-MIME-tools
-BuildPreReq:	perl-Text-Iconv
-BuildPreReq:	perl-XML-SimpleObject
-BuildPreReq:	perl-URI
-BuildPreReq: 	perl-libwww
-BuildPreReq: 	perl-Text-CSV_XS
+Requires:	%name = %version-%release
+Requires:	python
 
 BuildArch: noarch
 
-Obsoletes:	%_name-%branch-tools < %version
-Provides:	%_name-%branch-tools
+Obsoletes:	%_oldname-tools < %version
+Provides:	%_oldname-tools
 
 %description	tools
 additional tools for %name.
@@ -207,11 +519,7 @@ Set of RPM macros for packaging %name-based applications for ALT Linux.
 Install this package if you want to create RPM packages that use %name.
 
 %prep
-%if "%cvs"==""
-%setup -q
-%else
-%setup -q -n  %_name-%branch
-%endif
+%setup
 
 subst "s,\#\!/usr/bin/python2.2,\#\!/usr/bin/python," tools/vcard2xml.py 
 subst "s,\#\!/usr/bin/perl,\#\!/usr/bin/perl -w," tools/OOo2claws-mail.pl
@@ -219,15 +527,10 @@ subst "s,sylpheed,sylpheed-claws," tools/OOo2claws-mail.pl
 subst "s,%%f,%%N," ./src/prefs_quote.c
 echo "Libs: -lenchant -lgnutls" >>%name.pc.in
 
-%patch1 -p1
-%patch6 -p0
-%patch7 -p1
-%patch8 -p1
+# set version
+echo 'echo "%version"' >./version
 
-%patch10 -p0
-
-%patch119 -p1
-%patch120 -p2
+%patch -p1
 
 %autoreconf
 
@@ -236,13 +539,20 @@ echo "Libs: -lenchant -lgnutls" >>%name.pc.in
 		--disable-static \
 		--disable-rpath \
 		--with-lib-prefix=%_usr \
-		--with-aspell-includes=%_includedir \
-		--with-aspell-libs=%_libdir \
 		--with-faqdir=%_datadir/%name \
 		--with-manualdir=%_datadir/%name \
 		--with-config-dir=.%name \
 		--disable-manual \
 		%{subst_enable gtk3} \
+		%if_disabled geolocation
+		--disable-geolocation-plugin \
+		%endif
+		%if_disabled bsfilter
+		--disable-bsfilter-plugin \
+		%endif
+		%if_disabled tnef
+		--disable-tnef_parse-plugin \
+		%endif
 		%if_enabled debug
 		--enable-crash-dialog
 		%else
@@ -261,14 +571,14 @@ rm -vf  %buildroot%_datadir/%name/tools/README*
 rm -vf  %buildroot%_datadir/%name/tools/Makefile*
 
 mkdir -p %buildroot/%_iconsdir
-install -p -m644 %_newname.png %buildroot/%_iconsdir/%_newname.png
+install -p -m644 %name.png %buildroot/%_iconsdir/%name.png
 mkdir -p %buildroot%_pixmapsdir
-ln -s %_iconsdir/%_newname.png %buildroot%_pixmapsdir
+ln -s %_iconsdir/%name.png %buildroot%_pixmapsdir
 
 mkdir -p %buildroot%_rpmmacrosdir
 cat << EOF >  %buildroot%_rpmmacrosdir/%name
 %%_claws_version	%version
-%%_claws_plugins_path %%_libdir/%_newname/plugins
+%%_claws_plugins_path %%_libdir/%name/plugins
 %if_enabled gtk3
 %%_claws_gtkver	3
 %else
@@ -277,40 +587,36 @@ cat << EOF >  %buildroot%_rpmmacrosdir/%name
 EOF
 
 # XXX: Make sure the path below is the same as the path above.
-%define _claws_plugins_path %_libdir/%_newname/plugins
+%define _claws_plugins_path %_libdir/%name/plugins
 
 %find_lang %name
 
 %files -f %name.lang
 %doc AUTHORS ChangeLog* COPYING INSTALL NEWS README* TODO* RELEASE_NOTES 
 %_bindir/%name
-%_bindir/%_name-%branch
-%_man1dir/%_newname.1.gz
+%_bindir/%_oldname
+%_man1dir/%name.1.gz
 %_desktopdir/*.desktop
-%_iconsdir/%_newname.png
-%_iconsdir/hicolor/*x*/apps/%_newname.png
-%_pixmapsdir/%_newname.png
-%dir %_libdir/%_newname
+%_iconsdir/%name.png
+%_iconsdir/hicolor/*x*/apps/%name.png
+%_pixmapsdir/%name.png
+%dir %_libdir/%name
 %dir %_claws_plugins_path
-%dir %_datadir/%_newname
+%dir %_datadir/%name
 
 %files devel
-%_includedir/%_newname
-%_pkgconfigdir/%_newname.pc
+%_includedir/%name
+%_pkgconfigdir/%name.pc
 %exclude %_rpmmacrosdir/*
 #%_rpmmacrosdir/%name
 
-%files plugin-dillo
-%_claws_plugins_path/dillo_viewer.so
+%files plugins
 
 %files plugin-spamassassin
 %_claws_plugins_path/spamassassin.so
 
 %files plugin-bogofilter
 %_claws_plugins_path/bogofilter.so
-
-%files plugin-trayicon
-%_claws_plugins_path/trayicon.so
 
 %files plugin-pgpcore
 %_claws_plugins_path/pgpcore.so
@@ -327,6 +633,75 @@ EOF
 %_claws_plugins_path/smime.so
 %_claws_plugins_path/smime.deps
 
+%files plugin-acpinotifier
+%_claws_plugins_path/acpi_notifier.so
+
+%files plugin-addresskeeper
+%_claws_plugins_path/address_keeper.so
+
+%files plugin-archive
+%_claws_plugins_path/archive.so
+
+%files plugin-attachwarner
+%_claws_plugins_path/attachwarner.so
+
+%files plugin-attremover
+%_claws_plugins_path/att_remover.so
+
+%if_enabled bsfilter
+%files plugin-bsfilter
+%_claws_plugins_path/bsfilter.so
+%endif
+
+%files plugin-clamd
+%_claws_plugins_path/clamd.so
+
+%files plugin-fancy
+%_claws_plugins_path/fancy.so
+
+%files plugin-fetchinfo
+%_claws_plugins_path/fetchinfo.so
+
+%files plugin-gdata
+%_claws_plugins_path/gdata.so
+
+%if_enabled geolocation
+%files plugin-geolocation
+%_claws_plugins_path/geolocation.so
+%endif
+
+%files plugin-mailmbox
+%_claws_plugins_path/mailmbox.so
+
+%files plugin-newmail
+%_claws_plugins_path/newmail.so
+
+%files plugin-notification
+%_claws_plugins_path/notification.so
+
+%files plugin-pdfviewer
+%_claws_plugins_path/pdf_viewer.so
+
+%files plugin-perl
+%_claws_plugins_path/perl.so
+
+%files plugin-python
+%_claws_plugins_path/python.so
+
+%files plugin-rssyl
+%_claws_plugins_path/rssyl.so
+
+%files plugin-spamreport
+%_claws_plugins_path/spamreport.so
+
+%if_enabled tnef
+%files plugin-tnef
+%_claws_plugins_path/tnef_parse.so
+%endif
+
+%files plugin-vcalendar
+%_claws_plugins_path/vcalendar.so
+
 %files tools
 %doc tools/README*
 %_datadir/%name/tools/
@@ -340,6 +715,14 @@ EOF
 
 
 %changelog
+* Wed May 15 2013 Mikhail Efremov <sem@altlinux.org> 3.9.1-alt1
+- Use strict dependences on Claws Mail in the subpackages.
+- Add claws-mail-plugins virtual subpackage.
+- Set Claws version.
+- Drop obsoleted plugins.
+- Updated spec for new version.
+- Updated to 3.9.1.
+
 * Tue Dec 25 2012 Mikhail Efremov <sem@altlinux.org> 3.9.0-alt2
 - Fix 'paths for SSL certs' patch.
 - Patch from upstream:
