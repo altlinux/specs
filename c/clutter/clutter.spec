@@ -12,8 +12,8 @@
 %def_disable wayland_compositor
 
 Name: clutter
-Version: 1.14.2
-Release: alt2
+Version: 1.14.4
+Release: alt1
 Summary: Clutter Core Library
 License: LGPLv2+
 Group: System/Libraries
@@ -161,6 +161,9 @@ gtkdocize
 
 
 %changelog
+* Wed May 15 2013 Alexey Shabalin <shaba@altlinux.ru> 1.14.4-alt1
+- 1.14.4
+
 * Tue Apr 23 2013 Yuri N. Sedunov <aris@altlinux.org> 1.14.2-alt2
 - enabled wayland backend
 
