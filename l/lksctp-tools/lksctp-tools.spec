@@ -1,6 +1,6 @@
 Name: lksctp-tools
 Summary: Linux Kernel SCTP tools
-Version: 1.0.14
+Version: 1.0.15
 Release: alt1
 License: GPL2
 Group: System/Kernel and hardware
@@ -69,6 +69,9 @@ mkdir -p %buildroot
 %_libdir/lksctp-tools/*.a
 
 %changelog
+* Wed May 15 2013 Cronbuild Service <cronbuild@altlinux.org> 1.0.15-alt1
+- new version 1.0.15
+
 * Fri Apr 12 2013 Denis Smirnov <mithraen@altlinux.ru> 1.0.14-alt1
 - new version 1.0.14
 
