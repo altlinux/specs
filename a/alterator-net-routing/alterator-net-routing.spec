@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-net-routing
-Version: 0.4.1
+Version: 0.4.2
 Release: alt1
 
 Packager: Sergey V Turchin <zerg@altlinux.org>
@@ -38,6 +38,9 @@ alterator module for network routing administration
 %_alterator_backend3dir/*
 
 %changelog
+* Wed May 15 2013 Sergey V Turchin <zerg at altlinux dot org> 0.4.2-alt1
+- fix to find etcnet scripts directory
+
 * Mon Dec 27 2010 Sergey V Turchin <zerg at altlinux dot org> 0.4.1-alt1
 - add header titles to web-interface
 - fix to allow empty metric value input
