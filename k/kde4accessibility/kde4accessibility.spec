@@ -5,7 +5,7 @@
 Name: kde4accessibility
 %define major 4
 %define minor 10
-%define bugfix 1
+%define bugfix 3
 Version: %major.%minor.%bugfix
 Release: alt1
 
@@ -26,12 +26,13 @@ Source1: kaccessible-%version.tar
 Source2: kmag-%version.tar
 Source3: kmousetool-%version.tar
 Source4: kmouth-%version.tar
+Patch1: jovie-4.10.3-alt-fix-build.patch
 
 # Automatically added by buildreq on Wed Oct 22 2008 (-bi)
 #BuildRequires: festival flite gcc-c++ kde4base-runtime-devel kde4base-workspace-devel libXScrnSaver-devel libXcomposite-devel libXdamage-devel libXft-devel libXpm-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libalsa-devel libxkbfile-devel rpm-build-ruby xorg-xf86vidmodeproto-devel
 #BuildRequires: festival flite
 BuildRequires(pre): kde4base-workspace-devel
-BuildRequires: gcc-c++ libalsa-devel libspeechd-devel
+BuildRequires: gcc-c++ libalsa-devel libspeechd-devel libqaccessibilityclient-devel
 BuildRequires: kde4base-runtime-devel >= %version kde4base-workspace-devel >= %version
 
 %description
@@ -124,6 +125,9 @@ Header files needed for developing ktts applications.
 
 %prep
 %setup -q -cT -n %rname-%version -a0 -a1 -a2 -a3 -a4
+pushd jovie-*
+%patch1 -p1
+popd
 
 ls -d1 * | \
 while read d
@@ -207,6 +211,9 @@ done
 #%_K4link/*.so
 
 %changelog
+* Tue May 14 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.3-alt1
+- new version
+
 * Wed Mar 06 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.1-alt1
 - new version
 
