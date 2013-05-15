@@ -4,15 +4,15 @@
 #%%define branch_switch Mxx
 
 %define packagversion 1.9.19
-%define packagedate 20130125
-%define packagemoodleversion 2007101592.04
+%define packagedate 20130513
+%define packagemoodleversion 2007101592.05
 %define moodlebranch %nil
 %define moodlepackagename %moodle_name%moodlebranch
 
 #Name: %moodlepackagename
 Name: moodle
 Version: %packagversion.%packagedate
-Release: %branch_release alt2
+Release: %branch_release alt1
 
 Summary: The Course Management System Moodle
 License: %gpl2plus
@@ -434,6 +434,10 @@ exit 0
 %moodle_questionformatdir/hotpot/
 
 %changelog
+* Wed May 15 2013 Cronbuild Service <cronbuild@altlinux.org> 1.9.19.20130513-alt1
+- repocop cronbuild 20130515. At your service.
+- 1.9.19+ (Build: 20130513)
+
 * Mon May 13 2013 Aleksey Avdeev <solo@altlinux.ru> 1.9.19.20130125-alt2
 - Change requires: MySQL-server to /usr/sbin/mysqld for mariadb
   compatibility in moodle-local-mysql
