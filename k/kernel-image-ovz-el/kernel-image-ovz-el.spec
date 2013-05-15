@@ -1,6 +1,6 @@
 Name: kernel-image-ovz-el
 Version: 2.6.32
-Release: alt88
+Release: alt89
 
 %define kernel_base_version	%version
 %define kernel_extra_version	%nil
@@ -46,7 +46,7 @@ Packager: Kernel Maintainers Team <kernel@packages.altlinux.org>
 
 Source11: config-x86
 Source12: config-x86_64
-Patch0: patch-042stab076.7-combined
+Patch0: patch-042stab076.8-combined
 Patch1: %name-%version-%release.patch
 
 ExclusiveArch: i586 i686 x86_64
@@ -74,7 +74,7 @@ BuildRequires: ccache
 BuildRequires: ccache
 %endif
 
-Requires: bootloader-utils >= 0.4.21
+Requires: bootloader-utils >= 0.4.9-alt1
 Requires: module-init-tools >= 3.1
 Requires: mkinitrd >= 1:2.9.9-alt1
 Requires: startup >= 0.8.3-alt1
@@ -616,6 +616,10 @@ find %buildroot%_docdir/kernel-doc-%base_flavour-%version/DocBook \
 %endif # staging
 
 %changelog
+* Wed May 15 2013 Led <led@altlinux.ru> 2.6.32-alt89
+- updated to 042stab076.8
+- restored Requires version of bootloader-utils
+
 * Tue May 14 2013 Led <led@altlinux.ru> 2.6.32-alt88
 - perf: Treat attr.config as u64 in perf_swevent_init() (CVE-2013-2094)
 
