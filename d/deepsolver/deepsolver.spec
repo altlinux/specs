@@ -1,6 +1,6 @@
 
 Name: deepsolver
-Version: 0.3.2
+Version: 0.3.3
 Release: alt1
 
 Packager: Michael Pozhidaev <msp@altlinux.ru>
@@ -114,6 +114,10 @@ make DESTDIR=%buildroot install
 %_bindir/ds-provides
 
 %changelog
+* Wed May 15 2013 Michael Pozhidaev <msp@altlinux.ru> 0.3.3-alt1
+- ds-repo, ds-patch and ds-provides utilities now have --quiet(-q) command line option 
+- ds-patch utility gets provides filtering feature 
+
 * Mon May 13 2013 Michael Pozhidaev <msp@altlinux.ru> 0.3.2-alt1
 - External provides references can be specified explicitly (key "--external-provides" for ds-repo and ds-provides)
 - Sources packages file is now also read during external provides references collecting
