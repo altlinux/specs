@@ -6,7 +6,7 @@
 Name: kde4-kactivities
 %define major 4
 %define minor 10
-%define bugfix 0
+%define bugfix 3
 Version: %major.%minor.%bugfix
 Release: alt1
 
@@ -75,6 +75,13 @@ sed -i 's|^\(INCLUDE.*KDE4Defaults.*\)|\1\ninclude(SopranoAddOntology)|' CMakeLi
 %install
 %K4install
 
+# fix paths in ontology descriptions
+find %buildroot/%_datadir/ontology -type f -name \*.ontology | \
+while read f
+do
+    sed -i 's|Path=.*/share/ontology/\(.*\.trig\)|Path=%_datadir/ontology/\1|' "$f"
+done
+
 
 %files common
 %files
@@ -110,6 +117,10 @@ sed -i 's|^\(INCLUDE.*KDE4Defaults.*\)|\1\ninclude(SopranoAddOntology)|' CMakeLi
 %_K4link/*.so
 
 %changelog
+* Thu May 16 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.3-alt1
+- new version
+- fix paths in ontology description
+
 * Fri Mar 01 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.0-alt1
 - update from 4.10 branch
 
