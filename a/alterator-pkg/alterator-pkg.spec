@@ -4,7 +4,7 @@
 
 Name: alterator-pkg
 Version: 2.6.10
-Release: alt2
+Release: alt3
 
 %add_findreq_skiplist %_libexecdir/alterator/backend3/pkg-init
 %add_findreq_skiplist %_datadir/install2/initinstall.d/*
@@ -60,6 +60,9 @@ additional package installation
 %_alterator_backend3dir/*
 
 %changelog
+* Wed May 15 2013 Andrey Cherepanov <cas@altlinux.org> 2.6.10-alt3
+- Fix repository sources with Arepo 2.0
+
 * Wed May 08 2013 Andrey Cherepanov <cas@altlinux.org> 2.6.10-alt2
 - Recalculate total installed size on profile change
 
