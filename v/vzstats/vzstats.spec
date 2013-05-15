@@ -1,7 +1,7 @@
 %define _libexecdir /usr/libexec
 
 Name: vzstats
-Version: 0.2.1
+Version: 0.3.2
 Release: alt1
 BuildArch: noarch
 Summary: OpenVZ stats collection daemon
@@ -44,9 +44,13 @@ install -Dp -m755 %SOURCE1 %buildroot%_rpmlibdir/vzstats.filetrigger
 %exclude %_libexecdir/%name/vzversion-arch
 %_sysconfdir/cron.monthly/*
 %_rpmlibdir/vzstats.filetrigger
+%_man8dir/%{name}.8.*
 %doc README COPYING
 
 %changelog
+* Wed May 15 2013 Terechkov Evgenii <evg@altlinux.org> 0.3.2-alt1
+- 0.3.2
+
 * Thu May  2 2013 Terechkov Evgenii <evg@altlinux.org> 0.2.1-alt1
 - Initial build based on OpenVZ spec
 
