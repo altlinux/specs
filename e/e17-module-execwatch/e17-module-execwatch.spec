@@ -2,7 +2,7 @@
 
 Name: e17-module-%_name
 Version: 0.0.1
-Release: alt3
+Release: alt4
 
 Summary: %_name module for the Enlightenment desktop
 License: BSD
@@ -39,6 +39,9 @@ checker or for checking if a remote host is available (through ping).
 %doc AUTHORS ChangeLog COPYING* NEWS README
 
 %changelog
+* Thu May 16 2013 Yuri N. Sedunov <aris@altlinux.org> 0.0.1-alt4
+- rebuilt for e17-0.17.3
+
 * Wed Apr 10 2013 Yuri N. Sedunov <aris@altlinux.org> 0.0.1-alt3
 - rebuilt for e17-0.17.2.1
 

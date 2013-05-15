@@ -1,7 +1,7 @@
 %def_disable xine
 
 Name: emotion
-Version: 1.7.6
+Version: 1.7.7
 Release: alt1
 
 Summary: Widget set based on the Enlightenment Foundation Libraries
@@ -13,7 +13,7 @@ Source: http://download.enlightenment.org/releases/%name-%version.tar.bz2
 Patch: emotion-1.7.0-link.patch
 
 BuildRequires: doxygen edje libecore-devel libedje-devel
-BuildRequires: libeet-devel >= 1.7.3 libeeze-devel libeio-devel
+BuildRequires: libeet-devel >= 1.7.7 libeeze-devel libeio-devel
 BuildRequires: libvlc-devel gst-plugins-devel
 %{?_enable_xine:BuildRequires: libxine-devel}
 BuildRequires: chrpath
@@ -78,6 +78,9 @@ developing applications that use Emotion library.
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Wed May 15 2013 Yuri N. Sedunov <aris@altlinux.org> 1.7.7-alt1
+- 1.7.7
+
 * Tue Apr 09 2013 Yuri N. Sedunov <aris@altlinux.org> 1.7.6-alt1
 - 1.7.6
 

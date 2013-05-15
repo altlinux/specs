@@ -1,9 +1,9 @@
 Name: evas_generic_loaders
-Version: 1.7.6
+Version: 1.7.7
 %ifdef beta
-Release: alt2.%beta
+Release: alt1.%beta
 %else
-Release: alt2
+Release: alt1
 %endif
 
 Summary: A set of loaders for Evas
@@ -15,7 +15,7 @@ Url: http://www.enlightenment.org/
 Source: http://download.enlightenment.org/releases/%name-%version.tar.bz2
 
 BuildRequires: gcc-c++
-BuildRequires: libevas-devel >= 1.7.3
+BuildRequires: libevas-devel >= 1.7.7
 BuildRequires: libpoppler-devel
 BuildRequires: libraw-devel-static
 BuildRequires: libspectre-devel
@@ -51,6 +51,9 @@ loader.
 %doc AUTHORS COPYING README
 
 %changelog
+* Wed May 15 2013 Yuri N. Sedunov <aris@altlinux.org> 1.7.7-alt1
+- 1.7.7
+
 * Tue Apr 23 2013 Yuri N. Sedunov <aris@altlinux.org> 1.7.6-alt2
 - rebuilt against libpoppler.so.36
 

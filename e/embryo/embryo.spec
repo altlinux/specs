@@ -1,7 +1,7 @@
 %def_disable static
 
 Name: embryo
-Version: 1.7.6
+Version: 1.7.7
 %ifdef beta
 Release: alt1.%beta
 %else
@@ -15,7 +15,7 @@ URL: http://www.enlightenment.org/
 
 Source: http://download.enlightenment.org/releases/%name-%version.tar.bz2
 
-BuildRequires: libeina-devel >= 1.7.5
+BuildRequires: libeina-devel >= 1.7.7
 %{?_enable_static:BuildPreReq: glibc-devel-static}
 BuildRequires: doxygen
 
@@ -151,6 +151,9 @@ This package contains static libraries
 %endif
 
 %changelog
+* Wed May 15 2013 Yuri N. Sedunov <aris@altlinux.org> 1.7.7-alt1
+- 1.7.7
+
 * Tue Apr 09 2013 Yuri N. Sedunov <aris@altlinux.org> 1.7.6-alt1
 - 1.7.6
 
