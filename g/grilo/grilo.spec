@@ -1,7 +1,7 @@
 %define ver_major 0.2
 
 Name: grilo
-Version: %ver_major.5
+Version: %ver_major.6
 Release: alt1
 Summary: Content discovery framework
 Group: Sound
@@ -9,13 +9,14 @@ License: LGPLv2+
 Url: http://live.gnome.org/Grilo
 
 Source: %name-%version.tar
-Patch1: %name-%version-%release.patch
+#Patch1: %name-%version-%release.patch
 
-BuildRequires: gnome-common
+BuildRequires: gnome-common intltool >= 0.40.0
 BuildRequires: glib2-devel >= 2.29.10 libgio-devel
 BuildRequires: libxml2-devel
 BuildRequires: libgtk+3-devel >= 3.0
 BuildRequires: libsoup-devel >= 2.39.0 libsoup-gir-devel
+BuildRequires: liboauth-devel
 BuildRequires: vala-tools libvala-devel
 BuildRequires: gtk-doc >= 1.10
 BuildRequires: gobject-introspection-devel >= 0.9.0
@@ -83,7 +84,7 @@ Tools for the %name library
 
 %prep
 %setup
-%patch1 -p1
+#%%patch1 -p1
 
 # Fix vala detection for version 0.16
 # sed -i.vala 's/libvala-0.14/libvala-0.16/g' configure*
@@ -104,6 +105,8 @@ NOCONFIGURE=1 ./autogen.sh
 %make_install DESTDIR=%buildroot install
 mkdir -p %buildroot%_libdir/grilo-%ver_major %buildroot%_datadir/grilo-%ver_major/plugins
 
+%find_lang %name
+
 # Remove files that will not be packaged
 rm -f %buildroot%_bindir/grilo-simple-playlist
 
@@ -113,7 +116,7 @@ rm -f %buildroot%_bindir/grilo-simple-playlist
 %_bindir/grilo-test-ui*
 %_man1dir/*
 
-%files -n lib%name
+%files -n lib%name -f %name.lang
 %_libdir/*.so.*
 %dir %_libdir/grilo-%ver_major
 %dir %_datadir/grilo-%ver_major/plugins
@@ -134,6 +137,9 @@ rm -f %buildroot%_bindir/grilo-simple-playlist
 %_gtk_docdir/*
 
 %changelog
+* Thu May 16 2013 Alexey Shabalin <shaba@altlinux.ru> 0.2.6-alt1
+- 0.2.6
+
 * Mon Apr 08 2013 Alexey Shabalin <shaba@altlinux.ru> 0.2.5-alt1
 - 0.2.5
 
