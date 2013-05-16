@@ -1,6 +1,7 @@
 Name: polkit
-Version: 0.110
+Version: 0.111
 Release: alt1
+
 Summary: PolicyKit Authorization Framework
 License: LGPLv2+
 Group: System/Libraries
@@ -14,10 +15,8 @@ Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 Patch1: %name-0.109-alt-helper_path.patch
 
-Requires: libmozjs
-
 BuildRequires: gobject-introspection-devel gtk-doc intltool libexpat-devel libpam-devel
-BuildRequires: libmozjs-devel libsystemd-login-devel systemd-devel
+BuildRequires: libmozjs17-devel libsystemd-login-devel systemd-devel
 # for check
 BuildRequires: /proc dbus-tools-gui
 
@@ -79,7 +78,8 @@ touch ChangeLog
 	--libexecdir=%_prefix/libexec \
 	--localstatedir=%_var \
 	--enable-gtk-doc \
-	--disable-static
+	--disable-static \
+	--enable-libsystemd-login=yes
 %make
 
 %install
@@ -95,7 +95,6 @@ touch ChangeLog
 %_sbindir/groupadd -r -f polkitd 2>/dev/null ||:
 %_sbindir/useradd -r -n -g polkitd -d / \
 	-s /dev/null -c "User for polkitd" polkitd 2>/dev/null ||:
-
 
 %files -f %name-1.lang
 %dir %_sysconfdir/%name-1
@@ -132,7 +131,15 @@ touch ChangeLog
 %files -n lib%name-gir-devel
 %_datadir/gir-1.0/*.gir
 
+# examples
+%exclude %_bindir/pk-example-frobnicate
+%exclude %_datadir/polkit-1/actions/org.freedesktop.policykit.examples.pkexec.policy
+
 %changelog
+* Thu May 16 2013 Yuri N. Sedunov <aris@altlinux.org> 0.111-alt1
+- 0.111
+- build against libmozjs17
+
 * Wed Feb 27 2013 Yuri N. Sedunov <aris@altlinux.org> 0.110-alt1
 - 0.110 release
 
