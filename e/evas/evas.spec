@@ -3,7 +3,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: evas
-Version: 1.7.6.1
+Version: 1.7.7
 %ifdef beta
 Release: alt1.%beta
 %else
@@ -172,6 +172,9 @@ cp -R doc %buildroot%customdocdir
 %exclude %_datadir/evas/examples/evas-buffer-simple.c
 
 %changelog
+* Wed May 15 2013 Yuri N. Sedunov <aris@altlinux.org> 1:1.7.7-alt1
+- 1.7.7
+
 * Tue Apr 09 2013 Yuri N. Sedunov <aris@altlinux.org> 1:1.7.6.1-alt1
 - 1.7.6.1
 

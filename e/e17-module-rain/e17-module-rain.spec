@@ -2,7 +2,7 @@
 
 Name: e17-module-%_name
 Version: 0.0.3
-Release: alt3
+Release: alt4
 
 Summary: %_name module for the Enlightenment desktop
 License: BSD
@@ -37,6 +37,9 @@ A module for the Enlightenment desktop to display rain.
 %doc AUTHORS ChangeLog COPYING* NEWS README
 
 %changelog
+* Thu May 16 2013 Yuri N. Sedunov <aris@altlinux.org> 0.0.3-alt4
+- rebuilt for e17-0.17.3
+
 * Wed Apr 10 2013 Yuri N. Sedunov <aris@altlinux.org> 0.0.3-alt3
 - rebuilt for e17-0.17.2.1
 

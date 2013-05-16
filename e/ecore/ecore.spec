@@ -1,7 +1,7 @@
 %def_disable static
 
 Name: ecore
-Version: 1.7.6
+Version: 1.7.7
 %ifdef beta
 Release: alt1.%beta
 %else
@@ -19,8 +19,8 @@ Source: http://download.enlightenment.org/releases/%name-%version.tar.bz2
 
 %{?_enable_static:BuildPreReq: glibc-devel-static}
 
-BuildPreReq: libeet-devel >= 1.7.3
-BuildPreReq: libevas-devel >= 1.7.3 libeina-devel >= 1.7.3
+BuildPreReq: libeet-devel >= 1.7.7
+BuildPreReq: libevas-devel >= 1.7.7 libeina-devel >= 1.7.7
 
 BuildRequires: fontconfig-devel libcurl-devel libdirectfb-devel libevas-devel
 BuildRequires: libfreetype-devel libICE-devel libjpeg-devel libXcursor-devel
@@ -123,6 +123,9 @@ This package contains Ecore static libraries.
 %endif
 
 %changelog
+* Wed May 15 2013 Yuri N. Sedunov <aris@altlinux.org> 1:1.7.7-alt1
+- 1.7.7
+
 * Tue Apr 09 2013 Yuri N. Sedunov <aris@altlinux.org> 1:1.7.6-alt1
 - 1.7.6
 

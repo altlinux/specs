@@ -1,7 +1,7 @@
 %def_disable static
 
 Name: eio
-Version: 1.7.6.1
+Version: 1.7.7
 %ifdef beta
 Release: alt1.%beta
 %else
@@ -16,9 +16,9 @@ Url: http://www.enlightenment.org/
 # http://svn.enlightenment.org/svn/e/trunk/%name
 Source: http://download.enlightenment.org/releases/%name-%version.tar.bz2
 
-BuildRequires: libeina-devel >= 1.7.3
-BuildRequires: libecore-devel >= 1.7.3
-BuildRequires: libeet-devel >= 1.7.3
+BuildRequires: libeina-devel >= 1.7.7
+BuildRequires: libecore-devel >= 1.7.7
+BuildRequires: libeet-devel >= 1.7.7
 %{?_enable_static:BuildPreReq: glibc-devel-static}
 BuildRequires: doxygen
 
@@ -80,6 +80,9 @@ documentation for Eio.
 %_libdir/pkgconfig/*
 
 %changelog
+* Wed May 15 2013 Yuri N. Sedunov <aris@altlinux.org> 1.7.7-alt1
+- 1.7.7
+
 * Wed Apr 10 2013 Yuri N. Sedunov <aris@altlinux.org> 1.7.6.1-alt1
 - 1.7.6.1
 

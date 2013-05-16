@@ -10,7 +10,7 @@
 # TODO: pam CoreFoundation
 
 Name: e17
-Version: 0.17.2.1
+Version: 0.17.3
 
 %ifdef cvs_date
 Release: %rel.%cvs_date
@@ -59,9 +59,9 @@ Requires: wm-common-freedesktop
 Requires: altlinux-freedesktop-menu-%_name >= 0.55
 %{?_with_pam_helper:Requires: chkpwd-pam}
 
-BuildPreReq: libeet-devel >= 1.7.6
-BuildPreReq: libecore-devel >= 1.7.6
-BuildPreReq: libeio-devel >= 1.7.6
+BuildPreReq: libeet-devel >= 1.7.7
+BuildPreReq: libecore-devel >= 1.7.7
+BuildPreReq: libeio-devel >= 1.7.7
 BuildRequires: libpam-devel libX11-devel libevas-devel libecore-devel
 BuildRequires: edje libedje-devel libeet-devel libeet-utils libembryo-devel libefreet-devel
 BuildRequires: libXext-devel embryo_cc libdbus-devel libedbus-devel
@@ -193,6 +193,9 @@ cp %SOURCE11 %buildroot%_sysconfdir/enlightenment/sysactions.conf
 %_datadir/gnome/wm-properties/*.desktop
 
 %changelog
+* Thu May 16 2013 Yuri N. Sedunov <aris@altlinux.org> 1:0.17.3-alt1
+- 0.17.3
+
 * Wed Apr 10 2013 Yuri N. Sedunov <aris@altlinux.org> 1:0.17.2.1-alt1
 - 0.17.2.1
 - starte17: run empower in background (ALT #28823)

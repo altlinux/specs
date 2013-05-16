@@ -2,7 +2,7 @@
 %def_disable static
 
 Name: eina
-Version: 1.7.6
+Version: 1.7.7
 %ifdef beta
 Release: alt1.%beta
 %else
@@ -103,6 +103,9 @@ documentation for Eina
 %_libdir/pkgconfig/*
 
 %changelog
+* Wed May 15 2013 Yuri N. Sedunov <aris@altlinux.org> 1.7.7-alt1
+- 1.7.7
+
 * Tue Apr 09 2013 Yuri N. Sedunov <aris@altlinux.org> 1.7.6-alt1
 - 1.7.6
 

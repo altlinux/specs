@@ -1,7 +1,7 @@
 %def_disable static
 
 Name: edje
-Version: 1.7.6
+Version: 1.7.7
 %ifdef beta
 Release: alt1.%beta
 %else
@@ -25,12 +25,12 @@ Requires: shared-mime-info
 Requires: lib%name = %version-%release
 Requires: embryo_cc
 
-BuildRequires: libeina-devel >= 1.7.4
-BuildPreReq: libecore-devel >= 1.7.4
-BuildPreReq: libembryo-devel >= 1.7.4
-BuildPreReq: libevas-devel >= 1.7.4
-BuildPreReq: libeet-devel >= 1.7.4
-BuildPreReq: libeio-devel >= 1.7.4
+BuildRequires: libeina-devel >= 1.7.7
+BuildPreReq: libecore-devel >= 1.7.7
+BuildPreReq: libembryo-devel >= 1.7.7
+BuildPreReq: libevas-devel >= 1.7.7
+BuildPreReq: libeet-devel >= 1.7.7
+BuildPreReq: libeio-devel >= 1.7.7
 BuildRequires: liblua5-devel libsndfile-devel
 BuildRequires: doxygen
 
@@ -125,6 +125,9 @@ This package contains static libraries
 
 
 %changelog
+* Wed May 15 2013 Yuri N. Sedunov <aris@altlinux.org> 1.7.7-alt1
+- 1.7.7
+
 * Tue Apr 09 2013 Yuri N. Sedunov <aris@altlinux.org> 1.7.6-alt1
 - 1.7.6
 
