@@ -60,9 +60,9 @@ License:	%gpl2only
 URL:		http://xymon.sourceforge.net/
 
 %if_disabled trunk
-Version:	4.3.10
-Release:	alt4
-Source0:	http://prdownloads.sourceforge.net/xymon/Xymon/%{version}/%{name}-4.3.10.tar.gz
+Version:	4.3.11
+Release:	alt1
+Source0:	http://prdownloads.sourceforge.net/xymon/Xymon/%{version}/%{name}-%{version}.tar.gz
 %else
 %define		trunkVersion	%(svn info ~/svn/xymon/trunk/ | grep ^Revision | awk '{print $2}')
 Version:	0.%{trunkVersion}
@@ -250,6 +250,8 @@ Patch203: xymon.usrlibs.patch
 Patch326: xymon_trunk.httpheaders.patch
 Patch26: xymon.httpheaders.patch
 
+# xymongen bug
+Patch320: xymongen-4311.patch
 
 # TRUNK ONLY
 # use distribution fping instead of building included one
@@ -476,6 +478,8 @@ the Xymon server in NCV format.
 %patch103 -b .pipevmstatfork
 
 %patch203 -b .usrlibs
+
+%patch320
 
 %if_disabled trunk
 %patch26 -b .httpheaders
@@ -1271,6 +1275,12 @@ done
 ################ end extra clients ################
 
 %changelog
+* Thu May 16 2013 Sergey Y. Afonin <asy@altlinux.ru> 4.3.11-alt1
+- new version
+- added xymongen-4311.patch and
+  updated xymon.sections.patch and xymon_trunk.installstaticwww.patch from
+  http://terabithia.org/rpms/xymon/testing/f18/xymon-4.3.11-5.fc18.src.rpm
+
 * Sun Apr 07 2013 Sergey Y. Afonin <asy@altlinux.ru> 4.3.10-alt4
 - moved /usr/bin/bb* to bb-compatibility package
   (resolved conflict with BB - the portable AAlib demo)
