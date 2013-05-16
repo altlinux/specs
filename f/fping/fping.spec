@@ -1,17 +1,15 @@
 Name: fping
-Version: 2.4b2
-Release: alt4.qa1
-%define srcname %name-%{version}_to
+Version: 3.4
+Release: alt1
 
 Summary: %name - A tool to quickly ping N number of hosts to determine their reachability
 Summary(ru_RU.UTF-8): аналог ping для использования в скриптах.
-License: GPL
+License: BSD with advertising
 Group: Security/Networking
-Url: http://www.fping.com
+Url: http://www.fping.org
 
-Source0: http://www.fping.com/download/%name.tar.gz
+Source0: %name-%version.tar.gz
 Source1: fping.control
-Patch: %name-2.4-alt-cleanup.patch
 
 %description
 fping is a ping(1) like program which uses the Internet Control Message
@@ -31,36 +29,42 @@ fping это аналог известной утилиты ping(1) исполь
 адресов.
 
 %prep
-%setup -q -n %srcname
-
-%patch -p1
+%setup -q
 
 %build
-%configure
+%configure \
+    --enable-ipv6 \
+    --enable-ipv4
 
 %make_build
-
-# in original tarball all files executable :(
-chmod -x README INSTALL ChangeLog
 
 %install
 %make_install install DESTDIR=%buildroot
 
-install -pD -m755 %SOURCE1 "%buildroot%_controldir/fping"
+install -d %buildroot%_controldir
+%__sed -e 's|-=BINNAME=-|fping|'  < %SOURCE1 > %buildroot%_controldir/fping
+%__sed -e 's|-=BINNAME=-|fping6|' < %SOURCE1 > %buildroot%_controldir/fping6
+chmod +x %buildroot%_controldir/fping*
 
 %pre
 %pre_control fping
+%pre_control fping6
 
 %post
 %post_control -s public fping
+%post_control -s public fping6
 
 %files
 %_sbindir/*
 %config %_controldir/*
 %_man8dir/*
-%doc README INSTALL ChangeLog
+%doc README doc/README.1992 INSTALL ChangeLog COPYING
 
 %changelog
+* Thu May 16 2013 Sergey Y. Afonin <asy@altlinux.ru> 3.4-alt1
+- 3.4 (with IPv6)
+- fixed license (now "BSD with advertising", same with FC 19 package)
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.4b2-alt4.qa1
 - NMU: rebuilt for debuginfo.
 
