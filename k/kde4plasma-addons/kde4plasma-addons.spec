@@ -13,7 +13,7 @@ Name: kde4plasma-addons
 %define minor 10
 %define bugfix 3
 Version: %major.%minor.%bugfix
-Release: alt1
+Release: alt2
 
 Group: Graphical desktop/KDE
 Summary: kdeplasma is a compilation of plasma items ( runners, applets, plasmoids ) for kde4
@@ -116,7 +116,7 @@ Requires: plasma-qmlwallpapers = %version-%release
 BuildRequires(pre): kde4base-workspace-devel kde4pimlibs-devel
 BuildRequires: gcc-c++ libldap-devel scim-devel attica-devel libqca2-devel libqalculate-devel
 BuildRequires: soprano soprano-backend-redland libsoprano-devel kde4-nepomuk-core-devel
-BuildRequires: python-modules-xml shared-mime-info
+BuildRequires: python-modules-xml shared-mime-info libibus-devel libgio-devel
 BuildRequires: python-devel eigen2 libdbusmenu-qt-devel qoauth-devel qjson-devel
 BuildRequires: kde4network-devel kde4pim-devel kde4graphics-devel
 %if_enabled desktop
@@ -848,6 +848,10 @@ based on %name
 %patch2 -p1
 %patch3 -p1
 
+%if_disabled desktop
+sed -i 's|add_subdirectory(icontasks)|#add_subdirectory(icontasks)|' applets/CMakeLists.txt
+%endif
+
 
 %build
 %K4cmake \
@@ -938,6 +942,7 @@ mkdir -p %buildroot/%_K4apps/kdeplasma-addons/
 
 %files -n plasma-applet-kimpanel
 %_K4exec/kimpanel-scim-panel
+%_K4exec/kimpanel-ibus-panel
 %_K4lib/plasma_applet_kimpanel.so
 %_K4cfg/kimpanelconfig.kcfg
 %_K4srv/plasma-applet-kimpanel.desktop
@@ -1302,6 +1307,9 @@ mkdir -p %buildroot/%_K4apps/kdeplasma-addons/
 %_K4link/*.so
 
 %changelog
+* Thu May 16 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.3-alt2
+- fix build requires
+
 * Tue May 14 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.3-alt1
 - new version
 
