@@ -1,6 +1,6 @@
 Name: alterator-squid
-Version: 1.4.1
-Release: alt2
+Version: 1.4.2
+Release: alt1
 
 BuildArch: noarch
 
@@ -60,6 +60,13 @@ fi
 subst 's/squid_kerb_auth/negotiate_kerberos_auth/;s/pam_auth/basic_pam_auth/;s/squid_ldap_group/ext_ldap_group_acl/' /etc/squid/squid.conf
 
 %changelog
+* Thu May 16 2013 Paul Wolneykien <manowar@altlinux.org> 1.4.2-alt1
+- Add -r option for Kerberos helper to strip out the domain suffixes
+  from user names (closes: 28971).
+- Fix the LDAP-group helper options.
+- Fix/improve the group access generator (closes: 28970).
+- Improve the config parser a little more.
+
 * Mon May 13 2013 Paul Wolneykien <manowar@altlinux.org> 1.4.1-alt2
 - Use .documented config by default.
 - Improve a little of config parser: do not duplicate the file if
