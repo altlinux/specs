@@ -1,6 +1,6 @@
 Name: mdadm
 Version: 3.2.6
-Release: alt1
+Release: alt3
 
 Summary: A tool for managing Soft RAID under Linux
 License: GPLv2+
@@ -38,9 +38,6 @@ install -pD -m755 alt/mdadm.init %buildroot%_initdir/mdadm
 install -pD -m755 misc/syslog-events %buildroot/sbin/mdadm-syslog-events
 install -pD -m600 alt/mdadm.conf %buildroot%_sysconfdir/mdadm.conf
 install -pD -m644 alt/mdadm.service %buildroot%_unitdir/mdadm.service
-install -pD -m644 alt/mdadm-activation.service %buildroot%_unitdir/mdadm-activation.service
-mkdir -p %buildroot%_unitdir/sysinit.target.wants
-ln -s ../mdadm-activation.service %buildroot%_unitdir/sysinit.target.wants
 
 install -pD -m755 alt/checkarray %buildroot%_datadir/mdadm/checkarray
 install -pD -m644 alt/mdadm.sysconfig %buildroot%_sysconfdir/sysconfig/mdadm
@@ -66,6 +63,12 @@ install -pD -m644 alt/mdadm.crond %buildroot%_sysconfdir/cron.d/mdadm
 %doc TODO ChangeLog.bz2 mdadm.conf-example ANNOUNCE-%version alt/README*
 
 %changelog
+* Mon May 13 2013 Alexey Shabalin <shaba@altlinux.ru> 3.2.6-alt3
+- modernize udev rules
+
+* Tue Jan 22 2013 Alexey Shabalin <shaba@altlinux.ru> 3.2.6-alt2
+- drop mdadm-activation.service
+
 * Thu Nov 22 2012 Alexey Shabalin <shaba@altlinux.ru> 3.2.6-alt1
 - 3.2.6
 - add mdadm-activation.service (and add to autorun)
