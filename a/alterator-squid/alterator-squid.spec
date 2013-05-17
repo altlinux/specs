@@ -1,5 +1,5 @@
 Name: alterator-squid
-Version: 1.4.2
+Version: 1.4.3
 Release: alt1
 
 BuildArch: noarch
@@ -60,6 +60,10 @@ fi
 subst 's/squid_kerb_auth/negotiate_kerberos_auth/;s/pam_auth/basic_pam_auth/;s/squid_ldap_group/ext_ldap_group_acl/' /etc/squid/squid.conf
 
 %changelog
+* Fri May 17 2013 Paul Wolneykien <manowar@altlinux.org> 1.4.3-alt1
+- Fix the regress: don't output the individual policies if no auth is
+  configured.
+
 * Thu May 16 2013 Paul Wolneykien <manowar@altlinux.org> 1.4.2-alt1
 - Add -r option for Kerberos helper to strip out the domain suffixes
   from user names (closes: 28971).
