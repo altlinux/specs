@@ -1,6 +1,6 @@
 Name: fping
 Version: 3.4
-Release: alt1
+Release: alt2
 
 Summary: %name - A tool to quickly ping N number of hosts to determine their reachability
 Summary(ru_RU.UTF-8): аналог ping для использования в скриптах.
@@ -51,8 +51,8 @@ chmod +x %buildroot%_controldir/fping*
 %pre_control fping6
 
 %post
-%post_control -s public fping
-%post_control -s public fping6
+%post_control -s restricted fping
+%post_control -s restricted fping6
 
 %files
 %_sbindir/*
@@ -61,6 +61,10 @@ chmod +x %buildroot%_controldir/fping*
 %doc README doc/README.1992 INSTALL ChangeLog COPYING
 
 %changelog
+* Fri May 17 2013 Sergey Y. Afonin <asy@altlinux.ru> 3.4-alt2
+- added "netadmin" facility for control(8), switched to "restricted"
+  by default (ALT 22846#c1)
+
 * Thu May 16 2013 Sergey Y. Afonin <asy@altlinux.ru> 3.4-alt1
 - 3.4 (with IPv6)
 - fixed license (now "BSD with advertising", same with FC 19 package)
@@ -69,10 +73,10 @@ chmod +x %buildroot%_controldir/fping*
 - NMU: rebuilt for debuginfo.
 
 * Sun Apr 06 2008 Dmitry Lebkov <dlebkov@altlinux.ru> 2.4b2-alt4
-- add control(8) support (#11891). Default state is restricted.
+- added control(8) support (ALT #11891). Default state is restricted.
 
 * Sun Apr 08 2007 Dmitry Lebkov <dlebkov@altlinux.ru> 2.4b2-alt3
-- rebuild with latest Sisyphus
+- rebuilt with latest Sisyphus
 
 * Sat Nov 16 2002 Igor Homyakov <homyakov at altlinux dot ru> 2.4b2-alt2
 - spec cleanup (grammatic mistakes, wrong URL: )
