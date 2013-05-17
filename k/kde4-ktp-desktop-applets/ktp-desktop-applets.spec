@@ -3,7 +3,7 @@
 
 %define rname ktp-desktop-applets
 Name: kde4-ktp-desktop-applets
-Version: 0.6.0
+Version: 0.6.1
 Release: alt1
 
 Group: Graphical desktop/KDE
@@ -61,9 +61,8 @@ Requires: libtelepathy-qt4-devel
 %install
 %K4install
 %K4find_lang --with-kde %rname
-%K4find_lang --with-kde --append --output=%rname.lang plasma_applet_ktp_chat
-%K4find_lang --with-kde --append --output=%rname.lang plasma_applet_ktp_contact
-%K4find_lang --with-kde --append --output=%rname.lang plasma_applet_ktp_presence
+%K4find_lang --with-kde --append --output=%rname.lang plasma_applet_org.kde.ktp-presence
+%K4find_lang --with-kde --append --output=%rname.lang plasma_applet_org.kde.ktp-contact
 
 %files -f %rname.lang
 %_K4lib/plasma_applet_ktp_*.so
@@ -76,5 +75,8 @@ Requires: libtelepathy-qt4-devel
 #%_K4includedir/KTp/
 
 %changelog
+* Fri May 17 2013 Sergey V Turchin <zerg@altlinux.org> 0.6.1-alt1
+- new version
+
 * Wed Apr 10 2013 Sergey V Turchin <zerg@altlinux.org> 0.6.0-alt1
 - initial build
