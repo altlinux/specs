@@ -1,6 +1,6 @@
 %define mname nvidia
 Name: kernel-source-%mname
-Version: 310.44
+Version: 319.17
 Release: alt1
 Summary: Linux nvidia module sources
 License: NVIDIA
@@ -23,6 +23,7 @@ tar -xf %kernel_src/%name-%_ver.tar*
 
 
 %build
+ln -sf Makefile.kbuild %name-%_ver/Makefile
 
 
 %install
@@ -35,5 +36,8 @@ tar --transform='s,^%name-%_ver,%mname-%version,' -cJf %buildroot%kernel_src/%mn
 
 
 %changelog
+* Fri May 17 2013 Led <led@altlinux.ru> 319.17-alt1
+- 319.17
+
 * Wed Apr 24 2013 Led <led@altlinux.ru> 310.44-alt1
 - 310.44

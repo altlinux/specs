@@ -21,7 +21,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.4.45
-Release: alt3
+Release: alt4
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -131,7 +131,7 @@ Release: alt3
 
 %Extra_modules vboxhost 4.2.12
 #Extra_modules vboxguest 4.2.12
-%Extra_modules nvidia 310.44
+%Extra_modules nvidia 319.17
 #Extra_modules fglrx 8.97.100.7
 #Extra_modules netatop 0.2
 
@@ -348,7 +348,8 @@ Patch0387: linux-%kernel_branch.25-fix-drivers-net-ethernet-fujitsu--at1700.patc
 Patch0388: linux-%kernel_branch.25-fix-drivers-net-ethernet-i825xx--znet.patch
 Patch0389: linux-%kernel_branch.20-fix-drivers-net-ethernet-ibm--ehea.patch
 Patch0390: linux-%kernel_branch.39-fix-drivers-net-ethernet-intel--ixgbe.patch
-Patch0391: linux-%kernel_branch.25-fix-drivers-net-ethernet-via--via-rhine.patch
+Patch0391: linux-%kernel_branch.45-fix-drivers-net-ethernet-qlogic--qlge.patch
+Patch0392: linux-%kernel_branch.25-fix-drivers-net-ethernet-via--via-rhine.patch
 
 Patch0401: linux-%kernel_branch.38-fix-drivers-net--bonding.patch
 Patch0402: linux-%kernel_branch.38-fix-drivers-net--sb1000.patch
@@ -1405,7 +1406,7 @@ cd linux-%version
 %patch0193 -p1
 %patch0194 -p1
 %patch0195 -p1
-%patch0196 -p1
+#patch0196 -p1
 
 # fix-drivers-hid--*
 %patch0201 -p1
@@ -1517,6 +1518,7 @@ cd linux-%version
 %patch0389 -p1
 %patch0390 -p1
 %patch0391 -p1
+%patch0392 -p1
 
 # fix-drivers-net-*
 %patch0401 -p1
@@ -2698,6 +2700,13 @@ done)
 
 
 %changelog
+* Fri May 17 2013 Led <led@altlinux.ru> 3.4.45-alt4
+- added:
+  + fix-drivers-net-ethernet-qlogic--qlge
+- disabled:
+  + fix-drivers-gpu-vga--vga_switcheroo
+- nvidia 319.17
+
 * Tue May 14 2013 Led <led@altlinux.ru> 3.4.45-alt3
 - added:
   + fix-drivers-md--md-mod
