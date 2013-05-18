@@ -21,7 +21,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.4.45
-Release: alt4
+Release: alt5
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -199,7 +199,8 @@ Patch0071: linux-%kernel_branch.25-fix-drivers-atm--ambassador.patch
 Patch0080: linux-%kernel_branch.25-fix-drivers-base.patch
 Patch0081: linux-%kernel_branch.20-fix-drivers-base--dma-contiguous.patch
 Patch0082: linux-%kernel_branch.25-fix-drivers-base--dma-buf.patch
-Patch0083: linux-%kernel_branch.38-fix-drivers-base-regmap.patch
+Patch0083: linux-%kernel_branch.45-fix-drivers-base-power.patch
+Patch0084: linux-%kernel_branch.38-fix-drivers-base-regmap.patch
 
 Patch0091: linux-%kernel_branch.34-fix-drivers-block--aoe.patch
 Patch0092: linux-%kernel_branch.25-fix-drivers-block--drbd.patch
@@ -255,7 +256,7 @@ Patch0192: linux-%kernel_branch.25-fix-drivers-gpu-drm--gma500_gfx.patch
 Patch0193: linux-%kernel_branch.38-fix-drivers-gpu-drm--i915.patch
 Patch0194: linux-%kernel_branch.20-fix-drivers-gpu-drm--nouveau.patch
 Patch0195: linux-%kernel_branch.38-fix-drivers-gpu-drm--radeon.patch
-Patch0196: linux-%kernel_branch.39-fix-drivers-gpu-vga--vga_switcheroo.patch
+Patch0196: linux-%kernel_branch.45-fix-drivers-gpu-vga--vga_switcheroo.patch
 
 Patch0201: linux-%kernel_branch.38-fix-drivers-hid--hid.patch
 Patch0202: linux-%kernel_branch.20-fix-drivers-hid--hid-apple.patch
@@ -1341,6 +1342,7 @@ cd linux-%version
 %patch0081 -p1
 %patch0082 -p1
 %patch0083 -p1
+%patch0084 -p1
 
 # fix-drivers-block--*
 %patch0091 -p1
@@ -1406,7 +1408,7 @@ cd linux-%version
 %patch0193 -p1
 %patch0194 -p1
 %patch0195 -p1
-#patch0196 -p1
+%patch0196 -p1
 
 # fix-drivers-hid--*
 %patch0201 -p1
@@ -2700,6 +2702,14 @@ done)
 
 
 %changelog
+* Fri May 17 2013 Led <led@altlinux.ru> 3.4.45-alt5
+- added:
+  + fix-drivers-base-power
+- updated:
+  + fix-drivers-gpu-vga--vga_switcheroo
+- enabled:
+  + fix-drivers-gpu-vga--vga_switcheroo
+
 * Fri May 17 2013 Led <led@altlinux.ru> 3.4.45-alt4
 - added:
   + fix-drivers-net-ethernet-qlogic--qlge
