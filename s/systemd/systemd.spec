@@ -7,7 +7,7 @@
 %def_enable readahead
 %def_enable quotacheck
 %def_enable randomseed
-%def_disable coredump
+%def_enable coredump
 %def_disable gcrypt
 %def_disable qrencode
 %def_enable microhttpd
@@ -17,9 +17,15 @@
 %def_enable efi
 %def_without python
 
+%ifarch ia64 %ix86 ppc64 x86_64
+%define mmap_min_addr 65536
+%else
+%define mmap_min_addr 32768
+%endif
+
 Name: systemd
 Version: 204
-Release: alt1
+Release: alt2
 Summary: A System and Session Manager
 Url: http://www.freedesktop.org/wiki/Software/systemd
 Group: System/Configuration/Boot and Init
@@ -44,6 +50,7 @@ Source24: var-run.mount
 Source27: altlinux-first_time.service
 Source28: systemd-tmpfiles.filetrigger
 Source29: tmpfile-systemd-startup-nologin.conf
+Source30: 49-coredump-null.conf
 Source31: 60-raw.rules
 # ALTLinux's default preset policy
 Source32: 99-default.preset
@@ -282,6 +289,14 @@ Requires: %name = %version-%release
 %description journal-gateway
 This service provides access to the journal via HTTP and JSON.
 
+%package coredump
+Group: System/Servers
+Summary: systemd-coredump and systemd-coredumpctl utils
+Requires: %name = %version-%release
+
+%description coredump
+systemd-coredump and systemd-coredumpctl utils.
+
 %package -n bash-completion-%name
 Summary: Bash completion for systemd utils
 Group: Shells
@@ -316,6 +331,7 @@ License: GPLv2+
 PreReq: shadow-utils dmsetup kmod >= 5 util-linux >= 2.20 losetup >= 2.19.1
 PreReq: udev-rules = %version-%release
 PreReq: udev-hwdb = %version-%release
+PreReq: systemd-utils = %version-%release
 Requires: libudev1 = %version-%release
 Provides: hotplug = 2004_09_23-alt18
 Obsoletes: hotplug
@@ -663,6 +679,25 @@ chmod 755 %buildroot%_sysconfdir/profile.d/systemd.sh
 # move libnss_myhostname to /lib
 mv %buildroot%_libdir/libnss_myhostname.so.2 %buildroot/%_lib/libnss_myhostname.so.2
 
+install -m644 %SOURCE29 %buildroot/lib/tmpfiles.d/systemd-startup-nologin.conf
+install -m644 %SOURCE30 %buildroot/lib/sysctl.d/49-coredump-null.conf
+# rpm posttrans filetriggers
+install -pD -m755 %SOURCE28 %buildroot%_rpmlibdir/systemd-tmpfiles.filetrigger
+
+cat >>%buildroot/lib/sysctl.d/50-default.conf <<EOF
+# Indicates the amount of address space which a user process will be
+# restricted from mmaping.  Since kernel null dereference bugs could
+# accidentally operate based on the information in the first couple of
+# pages of memory userspace processes should not be allowed to write to
+# them.  By default, this value in kernel is set to 0 and no protections
+# will be enforced by the security module.  Setting this value to
+# something >= 32k will allow the vast majority of applications to work
+# correctly and provide defense in depth against future potential kernel
+# bugs.  This value is somewhat architecture-dependent, though.
+# Recommended default for x86_64 is 65536.
+vm.mmap_min_addr = %mmap_min_addr
+EOF
+
 #######
 # UDEV
 #######
@@ -723,9 +758,6 @@ echo ".so man8/systemd-udevd.8" > %buildroot%_man8dir/udevd.8
 
 install -p -m644 %SOURCE31 %buildroot%_sysconfdir/udev/rules.d/
 
-install -m644 %SOURCE29 %buildroot/lib/tmpfiles.d/systemd-startup-nologin.conf
-# rpm posttrans filetriggers
-install -pD -m755 %SOURCE28 %buildroot%_rpmlibdir/systemd-tmpfiles.filetrigger
 
 %pre
 %_sbindir/groupadd -r -f systemd-journal ||:
@@ -817,10 +849,15 @@ update_chrooted all
 
 
 %_sysconfdir/profile.d/systemd.sh
-/lib/tmpfiles.d/*.conf
+
+/lib/tmpfiles.d/systemd-startup-nologin.conf
+/lib/tmpfiles.d/systemd.conf
+/lib/tmpfiles.d/tmp.conf
+/lib/tmpfiles.d/x11.conf
+
 %_sysconfdir/modules-load.d/modules.conf
 %_sysconfdir/xdg/systemd
-/lib/sysctl.d/*.conf
+
 
 %config(noreplace) %_sysconfdir/dbus-1/system.d/*.conf
 %config(noreplace) %_sysconfdir/systemd/*.conf
@@ -902,6 +939,11 @@ update_chrooted all
 %exclude /lib/systemd/systemd-journal-gatewayd
 %exclude %_unitdir/systemd-journal-gatewayd.*
 %exclude %_datadir/systemd/gatewayd
+%endif
+%if_enabled coredump
+%exclude %_bindir/systemd-coredumpctl
+%exclude /lib/systemd/systemd-coredump
+%exclude %_man1dir/systemd-coredumpctl.*
 %endif
 
 # systemd-utils
@@ -1000,6 +1042,7 @@ update_chrooted all
 %_unitdir/systemd-tmpfiles-clean.service
 %_unitdir/systemd-tmpfiles-setup.service
 %_unitdir/sysinit.target.wants/systemd-tmpfiles-setup.service
+/lib/tmpfiles.d/legacy.conf
 %_man5dir/tmpfiles.*
 %_man8dir/systemd-tmpfiles.*
 
@@ -1021,6 +1064,8 @@ update_chrooted all
 /sbin/systemd-sysctl
 %_unitdir/systemd-sysctl.service
 %_unitdir/sysinit.target.wants/systemd-sysctl.service
+/lib/sysctl.d/50-default.conf
+/lib/sysctl.d/49-coredump-null.conf
 %_man5dir/sysctl.*
 %_man8dir/systemd-sysctl.*
 
@@ -1032,6 +1077,14 @@ update_chrooted all
 /lib/systemd/systemd-journal-gatewayd
 %_unitdir/systemd-journal-gatewayd.*
 %_datadir/systemd/gatewayd
+%endif
+
+%if_enabled coredump
+%files coredump
+/lib/systemd/systemd-coredump
+%_bindir/systemd-coredumpctl
+/lib/sysctl.d/50-coredump.conf
+%_man1dir/systemd-coredumpctl.*
 %endif
 
 %files -n bash-completion-%name
@@ -1152,6 +1205,16 @@ update_chrooted all
 /lib/udev/write_net_rules
 
 %changelog
+* Fri May 17 2013 Alexey Shabalin <shaba@altlinux.ru> 204-alt2
+- fix permitions for ALTLinux in /lib/tmpfiles.d/legacy.conf
+- move sysctl  and tmpfiles configs to systemd-utils
+- use /sbin/systemd-tmpfiles for create static inodes in SysV init script
+- add systemd-coredump package
+
+* Thu May 16 2013 Michael Shigorin <mike@altlinux.org> 204-alt1.1
+- NMU: apply F18 patch to revert upstream breakage of ethX/ethY
+  renaming, see also RH#896135, FDO#53837, FDO#56929
+
 * Sun May 12 2013 Alexey Shabalin <shaba@altlinux.ru> 204-alt1
 - 204
 - add symlink /bin/systemctl -> /sbin/systemctl
