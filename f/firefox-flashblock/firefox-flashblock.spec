@@ -1,7 +1,7 @@
 # SPEC file for FlashBlock extension
 
 %define rname	flashblock
-%define version 1.5.16
+%define version 1.5.17
 %define release alt1
 %define cid 	\{3d7eb24f-2740-49df-8937-200b1cc08f8a\}
 %define ciddir	%firefox_noarch_extensionsdir/%cid
@@ -54,6 +54,9 @@ fi
 %ciddir
 
 %changelog
+* Sun May 19 2013 Nikolay A. Fetisov <naf@altlinux.ru> 1.5.17-alt1
+- New version 1.5.17
+
 * Tue Dec 18 2012 Andrey Cherepanov <cas@altlinux.org> 1.5.16-alt1
 - New version 1.5.16
 
