@@ -2,7 +2,7 @@
 #
 
 Name:     lucidor
-Version:  0.9.7
+Version:  0.9.8
 Release:  alt1
 
 Summary: E-book reader application
@@ -77,5 +77,8 @@ mkdir -p %buildroot%_miconsdir %buildroot%_niconsdir %buildroot%_liconsdir
 %_iconsdir/hicolor/scalable/apps/%name.svg
 
 %changelog
+* Sun May 19 2013 Nikolay A. Fetisov <naf@altlinux.ru> 0.9.8-alt1
+- New version
+
 * Fri Jan 06 2012 Nikolay A. Fetisov <naf@altlinux.ru> 0.9.7-alt1
 - Initial build for ALT Linux Sisyphus
