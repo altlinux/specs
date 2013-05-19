@@ -1,6 +1,6 @@
 Name: findutils
 Version: 4.5.11
-Release: alt2
+Release: alt3
 
 Summary: The GNU versions of find utilities (find and xargs)
 License: GPLv3+
@@ -12,7 +12,7 @@ Source: %name-%version-%release.tar
 
 %def_enable selinux
 
-BuildRequires: gnulib >= 0.0.7901.076ac82
+BuildRequires: gnulib >= 0.0.7902.92f3a4c
 BuildRequires: glibc-devel-static
 %{?_enable_selinux:BuildRequires: libselinux-devel}
 %{?!_without_check:%{?!_disable_check:BuildRequires: dejagnu}}
@@ -106,6 +106,11 @@ install -pm755 static/find/find %buildroot%_bindir/find.static
 %_bindir/find.static
 
 %changelog
+* Wed May 15 2013 Dmitry V. Levin <ldv@altlinux.org> 4.5.11-alt3
+- find: fixed potential buffer overflow in -execdir and -okdir.
+- Updated to v4.5.11-30-g3d13be5.
+- Built with gnulib v0.0-7902-g92f3a4c.
+
 * Mon Apr 08 2013 Dmitry V. Levin <ldv@altlinux.org> 4.5.11-alt2
 - Updated to v4.5.11-19-g16e147b.
 - Built with gnulib v0.0-7901-g076ac82.
