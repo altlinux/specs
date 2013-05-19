@@ -1,11 +1,11 @@
 Name: libXaw3d
-Version: 1.5e
-Release: alt4
+Version: 1.6.2
+Release: alt1
 
 Summary: A version of the MIT Athena widget set for X
 License: MIT
 Group: System/Libraries
-Url: ftp://ftp.visi.com/users/hawkeyd/
+Url: http://cgit.freedesktop.org/xorg/lib/libXaw3d
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
@@ -17,13 +17,18 @@ Obsoletes: Xaw3d
 BuildRequires: flex imake libXmu-devel libXp-devel libXpm-devel
 BuildRequires: xorg-cf-files
 
-BuildPreReq: libXext-devel
+BuildPreReq: libXext-devel xorg-util-macros
 
 %package devel
 Summary: Header files for development using Xaw3d
 Group: Development/C
 Provides: Xaw3d-devel
 Obsoletes: Xaw3d-devel
+Requires: %name = %version-%release
+
+%package devel-static
+Summary: Static Xaw3d library
+Group: Development/C
 Requires: %name = %version-%release
 
 %description
@@ -43,28 +48,42 @@ applications with minimal or no source code changes.
 This package includes the header files and development libraries required
 for building programs that take full advantage of Xaw3d's features.
 
+%description devel-static
+
+his package includes static library necessary for developing statically
+linked programs that take full advantage of Xaw3d's features.
+
 %prep
 %setup
 
 %build
-cd xc/lib/Xaw3d
-ln -s .. X11
-xmkmf
-make CDEBUGFLAGS="$RPM_OPT_FLAGS" CXXDEBUGFLAGS="$RPM_OPT_FLAGS" \
-    EXTRA_DEFINES="-D_REENTRANT" SHLIBDEF="-D_REENTRANT"
+%autoreconf
+%configure
+%make
 
 %install
-%make_install install DESTDIR=%buildroot -C xc/lib/Xaw3d
+%make_install install DESTDIR=%buildroot
 
 %files
 %_libdir/*.so.*
-%doc xc/lib/Xaw3d/README*
+#%doc README*
 
 %files devel
 %_libdir/*.so
 %_includedir/X11/*
+%dir %_docdir/libXaw3d
+%_docdir/libXaw3d/*
+%_libdir/pkgconfig/xaw3d.pc
+
+%if_enabled static
+%files devel-static
+%_libdir/libXaw3d.a
+%endif
 
 %changelog
+* Sun May 19 2013 Vladislav Zavjalov <slazav@altlinux.org> 1.6.2-alt1
+- 1.6.2
+
 * Sun Mar 20 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.5e-alt4
 - Rebuilt for debuginfo
 

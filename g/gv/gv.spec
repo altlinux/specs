@@ -1,6 +1,6 @@
 Name: gv
 Version: 3.7.4
-Release: alt1
+Release: alt2
 Serial: 1
 
 Packager: Stanislav Ievlev <inger@altlinux.org>
@@ -94,6 +94,9 @@ mv %buildroot/%_datadir/%name/GV %buildroot%_sysconfdir/X11/app-defaults/
 %_liconsdir/*.png
 
 %changelog
+* Wed May 29 2013 Vladislav Zavjalov <slazav@altlinux.org> 1:3.7.4-alt2
+- rebuild with libXaw3d-1.6.2
+
 * Sun May 19 2013 Vladislav Zavjalov <slazav@altlinux.org> 1:3.7.4-alt1
 - 3.7.4
 

@@ -1,6 +1,6 @@
 Name:         xfig
 Version:      3.2.5b
-Release:      alt7
+Release:      alt8
 
 Summary:      An X Window System tool for drawing basic vector graphics.
 Group:        Graphics
@@ -87,6 +87,12 @@ install -D -m 644 xfig.desktop %buildroot/%_desktopdir/xfig.desktop
 /usr/share/doc/xfig
 
 %changelog
+* Wed May 29 2013 Vladislav Zavjalov <slazav@altlinux.org> 3.2.5b-alt8
+- Don't use local SimpleMenu.c with XAW3D1_5E (closes #26956)
+- add -DDXAW_INTERNATIONALIZATION for new libXaw3d-1.6.2
+- f_read.c: delete comments when deleting objects
+- rebuild with libXaw3d-1.6.2
+
 * Sun Oct 14 2012 Vladislav Zavjalov <slazav@altlinux.org> 3.2.5b-alt7
 - restore colors and figure comments after delete_all + undo
 - fix scrollbar on indpanel after mode change
