@@ -21,7 +21,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.4.45
-Release: alt5
+Release: alt6
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -1913,7 +1913,7 @@ config_disable \
 	%{?_disable_compat:SYSCTL_SYSCALL ACPI_PROC_EVENT COMPAT_VDSO I2C_COMPAT PROC_PID_CPUSET SYSFS_DEPRECATED USB_DEVICEFS USB_DEVICE_CLASS} \
 	%{?_disable_numa:NUMA} \
 	%{?_disable_video:FB VIDEO_OUTPUT_CONTROL BACKLIGHT_LCD_SUPPORT} \
-	%{?_disable_drm:DRM} \
+	%{?_disable_drm:DRM VGA_SWITCHEROO} \
 	%{?_disable_ipv6:IPV6} \
 	%{?_disable_apei:ACPI_APEI} \
 	%{?_disable_edac:EDAC} \
@@ -2234,7 +2234,7 @@ mv scsi-base.rpmmodlist scsi-base.rpmmodlist~
 gen_rpmmodfile infiniband %buildroot%modules_dir/kernel/{drivers/{infiniband,scsi/scsi_transport_srp.ko},net/{9p/9pnet_rdma.ko,rds,sunrpc/xprtrdma}}
 gen_rpmmodfile ipmi %buildroot%modules_dir/kernel/drivers/{acpi/acpi_ipmi,char/ipmi,{acpi/acpi_ipmi,hwmon/i{bm,pmi}*}.ko}
 %{?_enable_atm:gen_rpmmodfile atm %buildroot%modules_dir/kernel/{drivers{,/usb},net}/atm}
-%{?_enable_drm:gen_rpmmodfile drm %buildroot%modules_dir/kernel/drivers/gpu/drm}
+%{?_enable_drm:gen_rpmmodfile drm %buildroot%modules_dir/kernel/drivers/gpu}
 %{?_enable_fddi:gen_rpmmodfile fddi %buildroot%modules_dir/kernel/{drivers/net,net/802}/fddi*}
 %{?_enable_hamradio:gen_rpmmodfile hamradio %buildroot%modules_dir/kernel/{drivers/net/hamradio,net/{netrom,rose,ax25}}}
 %{?_enable_irda:gen_rpmmodfile irda %buildroot%modules_dir/kernel/{,drivers/}net/irda}
@@ -2702,6 +2702,10 @@ done)
 
 
 %changelog
+* Sun May 19 2013 Led <led@altlinux.ru> 3.4.45-alt6
+- updated:
+  + fix-drivers-gpu-vga--vga_switcheroo
+
 * Fri May 17 2013 Led <led@altlinux.ru> 3.4.45-alt5
 - added:
   + fix-drivers-base-power
