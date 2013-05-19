@@ -20,13 +20,13 @@
 %define flavour %base_flavour-%sub_flavour
 
 Name: kernel-image-%flavour
-Version: 3.4.45
-Release: alt7
+Version: 3.4.46
+Release: alt1
 
 %define kernel_req %nil
 %define kernel_prov %nil
 %define kernel_branch 3.4
-%define kernel_stable_version 45
+%define kernel_stable_version 46
 %define kernel_extra_version .%kernel_stable_version
 #define kernel_extra_version %nil
 
@@ -250,7 +250,7 @@ Patch0187: linux-%kernel_branch.39-fix-drivers-gpio--gpio-wm831x.patch
 Patch0188: linux-%kernel_branch.39-fix-drivers-gpio--gpio-wm8994.patch
 Patch0189: linux-%kernel_branch.39-fix-drivers-gpio--gpiolib.patch
 
-Patch0190: linux-%kernel_branch.38-fix-drivers-gpu-drm.patch
+Patch0190: linux-%kernel_branch.46-fix-drivers-gpu-drm.patch
 Patch0191: linux-%kernel_branch.25-fix-drivers-gpu-drm--exynosdrm.patch
 Patch0192: linux-%kernel_branch.25-fix-drivers-gpu-drm--gma500_gfx.patch
 Patch0193: linux-%kernel_branch.38-fix-drivers-gpu-drm--i915.patch
@@ -2702,6 +2702,11 @@ done)
 
 
 %changelog
+* Sun May 19 2013 Led <led@altlinux.ru> 3.4.46-alt1
+- 3.4.46
+- updated:
+  + fix-drivers-gpu-drm
+
 * Sun May 19 2013 Led <led@altlinux.ru> 3.4.45-alt7
 - updated:
   + fix-drivers-gpu-vga--vga_switcheroo
