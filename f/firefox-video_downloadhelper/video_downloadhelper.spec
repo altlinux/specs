@@ -1,7 +1,7 @@
 # SPEC file for Video DownloadHelper Firefox extension
 
 %define rname	video_downloadhelper
-%define version 4.9.12
+%define version 4.9.14
 %define release alt1
 %define cid	\{b9db16a4-6edc-47ec-a1f4-b86292ed211d\}
 %define ciddir	%firefox_noarch_extensionsdir/%cid
@@ -55,6 +55,9 @@ fi
 %ciddir
 
 %changelog
+* Sun May 19 2013 Nikolay A. Fetisov <naf@altlinux.ru> 4.9.14-alt1
+- New version 4.9.14
+
 * Thu Dec 20 2012 Andrey Cherepanov <cas@altlinux.org> 4.9.12-alt1
 - New version 4.9.12
 
