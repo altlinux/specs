@@ -1,5 +1,5 @@
 Name: gv
-Version: 3.7.3
+Version: 3.7.4
 Release: alt1
 Serial: 1
 
@@ -94,6 +94,9 @@ mv %buildroot/%_datadir/%name/GV %buildroot%_sysconfdir/X11/app-defaults/
 %_liconsdir/*.png
 
 %changelog
+* Sun May 19 2013 Vladislav Zavjalov <slazav@altlinux.org> 1:3.7.4-alt1
+- 3.7.4
+
 * Fri Feb 17 2012 Vladislav Zavjalov <slazav@altlinux.org> 1:3.7.3-alt1
 - 3.7.3
 
