@@ -1,8 +1,8 @@
 # SPEC file for rex package
 
 Name:    rex
-Version: 0.41.2
-Release: alt2
+Version: 0.41.3
+Release: alt1
 
 Summary: (R)?ex - Remote Execution Framework
 
@@ -58,6 +58,9 @@ and software deployment.
 
 
 %changelog
+* Sun May 19 2013 Nikolay A. Fetisov <naf@altlinux.ru> 0.41.3-alt1
+- New version
+
 * Sun Apr 21 2013 Nikolay A. Fetisov <naf@altlinux.ru> 0.41.2-alt2
 - Fix backquotes in remote sudo() calls
 
