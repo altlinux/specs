@@ -1,5 +1,5 @@
 %define branch 0.8
-%define svn svn3440
+%define svn svn3477
 
 Version: %branch.0
 Epoch: 1
@@ -800,6 +800,9 @@ mkdir -p %buildroot/{%_miconsdir,%_niconsdir,%_liconsdir}
 %files -n %name-full
 
 %changelog
+* Sun May 19 2013 Motsyo Gennadi <drool@altlinux.ru> 1:0.8.0-alt2.svn3477
+- 0.8.0 svn3477 version
+
 * Wed May 01 2013 Motsyo Gennadi <drool@altlinux.ru> 1:0.8.0-alt2.svn3440
 - 0.8.0 svn3440 version
 
