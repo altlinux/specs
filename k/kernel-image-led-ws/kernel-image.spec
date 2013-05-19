@@ -21,7 +21,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.4.45
-Release: alt6
+Release: alt7
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -2702,6 +2702,11 @@ done)
 
 
 %changelog
+* Sun May 19 2013 Led <led@altlinux.ru> 3.4.45-alt7
+- updated:
+  + fix-drivers-gpu-vga--vga_switcheroo
+  + fix-net-dcb
+
 * Sun May 19 2013 Led <led@altlinux.ru> 3.4.45-alt6
 - updated:
   + fix-drivers-gpu-vga--vga_switcheroo
