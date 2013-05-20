@@ -1,5 +1,5 @@
 Name: SPICE
-Version: 0.12.2
+Version: 0.12.3
 Release: alt1
 Summary: Implements the SPICE protocol
 Group: Graphical desktop/Other
@@ -105,6 +105,9 @@ rm -f %buildroot%_libdir/libspice-server.la
 %_pkgconfigdir/spice-server.pc
 
 %changelog
+* Mon May 20 2013 Alexey Shabalin <shaba@altlinux.ru> 0.12.3-alt1
+- 0.12.3
+
 * Mon Feb 18 2013 Alexey Shabalin <shaba@altlinux.ru> 0.12.2-alt1
 - upstream snapshot
 
