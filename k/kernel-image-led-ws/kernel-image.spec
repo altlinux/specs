@@ -21,7 +21,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.4.46
-Release: alt1
+Release: alt2
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -494,7 +494,7 @@ Patch0640: linux-%kernel_branch.39-fix-net-l2tp--l2tp_core.patch
 Patch0641: linux-%kernel_branch.25-fix-net-mac80211.patch
 Patch0642: linux-%kernel_branch.20-fix-net-netfilter--nf_conntrack_ftp.patch
 Patch0643: linux-%kernel_branch.28-fix-net-rds--rds_rdma.patch
-Patch0644: linux-%kernel_branch.35-fix-net-sunrpc.patch
+Patch0644: linux-%kernel_branch.46-fix-net-sunrpc.patch
 Patch0645: linux-%kernel_branch.42-fix-net-unix--unix.patch
 Patch0646: linux-%kernel_branch.39-fix-net-wimax.patch
 Patch0647: linux-%kernel_branch.35-fix-net-wireless--cfg80211.patch
@@ -2702,6 +2702,10 @@ done)
 
 
 %changelog
+* Mon May 20 2013 Led <led@altlinux.ru> 3.4.46-alt2
+- updated:
+  + fix-net-sunrpc
+
 * Sun May 19 2013 Led <led@altlinux.ru> 3.4.46-alt1
 - 3.4.46
 - updated:
