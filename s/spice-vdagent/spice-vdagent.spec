@@ -1,7 +1,7 @@
 %define _localstatedir /var
 
 Name: spice-vdagent
-Version: 0.12.1
+Version: 0.14.0
 Release: alt1
 Summary: Agent for Spice guests
 Group: Networking/Remote access
@@ -12,7 +12,8 @@ Source: http://spice-space.org/download/releases/%name-%version.tar
 Source2: spice-vdagentd.init-alt
 Patch: %name-%version-%release.patch
 
-BuildRequires: spice-protocol libXrandr-devel >= 1.3 libXfixes-devel libXinerama-devel libX11-devel
+BuildRequires: glib2-devel >= 2.12
+BuildRequires: spice-protocol >= 0.12.5 libXrandr-devel >= 1.3 libXfixes-devel libXinerama-devel libX11-devel
 BuildRequires: libpciaccess-devel >= 0.10
 BuildRequires: desktop-file-utils
 BuildRequires: libsystemd-login-devel >= 42 systemd-devel
@@ -55,7 +56,6 @@ install -m 0755 %SOURCE2 %buildroot%_initdir/spice-vdagentd
 %doc COPYING ChangeLog README TODO
 /lib/udev/rules.d/*.rules
 /lib/tmpfiles.d/spice-vdagentd.conf
-%config(noreplace) %_sysconfdir/modules-load.d/spice-vdagentd.conf
 %config(noreplace) %_sysconfdir/rsyslog.d/spice-vdagentd.conf
 %_initddir/spice-vdagentd
 %_unitdir/*
@@ -64,8 +64,12 @@ install -m 0755 %SOURCE2 %buildroot%_initdir/spice-vdagentd
 %_var/run/spice-vdagentd
 %_sysconfdir/xdg/autostart/spice-vdagent.desktop
 %_datadir/gdm/autostart/LoginWindow/spice-vdagent.desktop
+%_man1dir/*
 
 %changelog
+* Mon May 20 2013 Alexey Shabalin <shaba@altlinux.ru> 0.14.0-alt1
+- 0.14.0
+
 * Thu Apr 11 2013 Alexey Shabalin <shaba@altlinux.ru> 0.12.1-alt1
 - 0.12.1
 
