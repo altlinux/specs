@@ -1,5 +1,5 @@
 %define _name nemo
-%define ver_major 1.7
+%define ver_major 1.8
 %define api_ver 3.0
 
 %def_enable exempi
@@ -9,8 +9,8 @@
 %def_enable selinux
 
 Name: nemo
-Version: %ver_major.1
-Release: alt4
+Version: %ver_major.0
+Release: alt1
 
 Summary: default file manager for Cinnamon
 License: GPLv2+
@@ -170,7 +170,7 @@ ln -sf %_licensedir/LGPL-2 COPYING
 %dir %_libdir/%name-%api_ver/components
 %_datadir/mime/packages/nemo.xml
 %_datadir/applications/*.desktop
-%exclude %_sysconfdir/xdg/autostart/nemo-autostart.desktop
+%_sysconfdir/xdg/autostart/nemo-autostart.desktop
 %_datadir/%name
 %_iconsdir/hicolor/*/apps/*.png
 %_iconsdir/hicolor/*/apps/*.svg
@@ -210,6 +210,12 @@ ln -sf %_licensedir/LGPL-2 COPYING
 
 
 %changelog
+* Mon May 6 2013 Vladimir Didenko <cow@altlinux.org> 1.8.0-alt1
+- 1.8.0
+
+* Fri Apr 26 2013 Vladimir Didenko <cow@altlinux.org> 1.7.3-alt1
+- 1.7.3-6-g91617c8
+
 * Fri Apr 5 2013 Vladimir Didenko <cow@altlinux.org> 1.7.1-alt4
 - rebuilt for Sisyphus
 
