@@ -1,12 +1,13 @@
 Name: xfce4-dict
-Version: 0.6.0
-Release: alt3
+Version: 0.7.0
+Release: alt1
 
 Summary: Xfce4 Dictionary - A client program to query different dictionaries
 License: %gpl2plus
 Group: Graphical desktop/XFce
 Packager: XFCE Team <xfce@packages.altlinux.org>
 Url: http://goodies.xfce.org/projects/panel-plugins/%name
+# git://git.xfce.org/apps/xfce4-dict
 Source: %name-%version.tar
 
 Obsoletes: xfce4-dict-plugin < 0.5.2
@@ -15,7 +16,7 @@ Provides: xfce4-dict-plugin
 BuildRequires(pre): rpm-build-licenses
 
 BuildPreReq: rpm-build-xfce4 xfce4-dev-tools
-BuildPreReq: libxfce4panel-devel libxfcegui4-devel libxfce4util-devel
+BuildPreReq: libxfce4panel-devel libxfce4ui-devel libxfce4util-devel
 BuildRequires: intltool
 
 Requires: enchant xdg-utils
@@ -34,10 +35,6 @@ panel plugin for the Xfce panel.
 %setup
 
 %build
-# Fix desktop file path for xfce4-panel >= 4.8
-sed -i 's|^desktopdir = \$(datadir)/xfce4/panel-plugins|desktopdir = \$(datadir)/xfce4/panel/plugins|' \
-   panel-plugin/Makefile.am
-
 %xfce4reconf
 %configure \
     --enable-debug=no
@@ -50,13 +47,18 @@ sed -i 's|^desktopdir = \$(datadir)/xfce4/panel-plugins|desktopdir = \$(datadir)
 %files -f %name.lang
 %doc README ChangeLog AUTHORS
 %_bindir/xfce4-dict
-%_libexecdir/xfce4/panel-plugins/*
+%_libdir/xfce4/panel/plugins/*.so
 %_datadir/xfce4/panel/plugins/*.desktop
 %_desktopdir/*.desktop
 %_man1dir/*
 %_iconsdir/*/*/*/*
 
+%exclude %_libdir/xfce4/panel/plugins/*.la
+
 %changelog
+* Mon May 20 2013 Mikhail Efremov <sem@altlinux.org> 0.7.0-alt1
+- Updated to 0.7.0.
+
 * Mon Apr 16 2012 Mikhail Efremov <sem@altlinux.org> 0.6.0-alt3
 - Rebuild against libxfce4util.so.6 (libxfce4util-4.9).
 
