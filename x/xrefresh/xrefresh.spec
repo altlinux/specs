@@ -1,5 +1,5 @@
 Name: xrefresh
-Version: 1.0.4
+Version: 1.0.5
 Release: alt1
 
 Summary: refresh all or part of an X screen
@@ -39,6 +39,9 @@ color) or the root window background should be used instead.
 %_man1dir/*
 
 %changelog
+* Mon May 20 2013 Fr. Br. George <george@altlinux.ru> 1.0.5-alt1
+- Autobuild version bump to 1.0.5
+
 * Tue May 03 2011 Fr. Br. George <george@altlinux.ru> 1.0.4-alt1
 - Autobuild version bump to 1.0.4
 
