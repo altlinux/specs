@@ -1,15 +1,15 @@
-# 4.0.2.2
+# 4.0.3.3
 %define with_forky yes
 
 Name: LibreOffice4
 Version: 4.0
-%define urelease 2.2
+%define urelease 3.3
 %define uversion %version.%urelease
 %define oopfx lo4
 %define lodir %_libdir/%name
 %define uname libreoffice4
 %define conffile %_sysconfdir/sysconfig/%uname
-Release: alt7.1
+Release: alt8
 Summary: LibreOffice Productivity Suite
 License: LGPL
 Group: Office
@@ -40,12 +40,12 @@ Patch1:	alt-001-MOZILLA_CERTIFICATE_FOLDER.patch
 Patch201: 0001-Related-rhbz-902884-check-for-GetSelectedMasterPage-.patch
 Patch202: 0001-Resolves-fdo-47209-and-rhbz-927223-syntax-highlighte.patch
 Patch203: 0001-Resolves-rhbz-920697-i110881-rhbz-623191-presentatio.patch
-Patch204: 0001-Resolves-rhbz-949238-div-by-zero-on-pagedown-in-0-wi.patch
+#Patch204: 0001-Resolves-rhbz-949238-div-by-zero-on-pagedown-in-0-wi.patch
 Patch205: 0001-Work-around-problem-with-boost-shared_array-NULL-cto.patch
 Patch206: 0001-fix-compile-for-change-to-boost-1.53.0-declaring-sma.patch
 Patch207: 0001-make-evolution-3.6-work-with-address-book.patch
 Patch208: 0001-rhbz-867808-Do-not-throw-RuntimeException-by-pointer.patch
-Patch209: 0001-rhbz-876742-speed-up-table-manipulation-in-Impress.patch
+#Patch209: 0001-rhbz-876742-speed-up-table-manipulation-in-Impress.patch
 Patch210: openoffice.org-2.0.2.rh188467.printingdefaults.patch
 Patch211: openoffice.org-3.0.0.ooo88341.sc.verticalboxes.patch
 Patch212: openoffice.org-3.1.0.ooo101274.opening-a-directory.patch
@@ -160,12 +160,12 @@ echo Direct build
 %patch201 -p1
 %patch202 -p1
 %patch203 -p1
-%patch204 -p1
+#patch204 -p1
 %patch205 -p1
 %patch206 -p1
 %patch207 -p1
 %patch208 -p1
-%patch209 -p1
+#patch209 -p1
 %patch210 -p1
 %patch211 -p1
 %patch212 -p1
@@ -431,6 +431,10 @@ install -D libreoffice.config %buildroot%conffile
 %langpack -l kk -n Kazakh
 
 %changelog
+* Wed May 15 2013 Fr. Br. George <george@altlinux.ru> 4.0-alt8
+- Version up to 4.0.3.3
+- Drop some RH patches accepted by upstream
+
 * Wed Apr 24 2013 Sergey V Turchin <zerg@altlinux.org> 4.0-alt7.1
 - NMU: rebuilt with new poppler
 
