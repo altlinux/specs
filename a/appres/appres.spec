@@ -1,6 +1,6 @@
 Name: appres
-Version: 1.0.3
-Release: alt2
+Version: 1.0.4
+Release: alt1
 
 Summary: list X application resource database
 License: MIT/X11
@@ -20,7 +20,7 @@ names.  It can be used to determine which resources a particular
 program will load.
 
 %prep
-%setup -q
+%setup
 
 %build
 %autoreconf
@@ -37,6 +37,9 @@ program will load.
 %_man1dir/*
 
 %changelog
+* Mon May 20 2013 Fr. Br. George <george@altlinux.ru> 1.0.4-alt1
+- Autobuild version bump to 1.0.4
+
 * Thu Apr 21 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 1.0.3-alt2
 - fix build
 
