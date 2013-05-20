@@ -1,5 +1,5 @@
 Name: chroma
-Version: 1.14
+Version: 1.15
 Release: alt1
 Group: Games/Puzzles
 License: GPLv2
@@ -70,6 +70,9 @@ install -D %name.desktop %buildroot/%_desktopdir/%name.desktop
 %_datadir/%name
 
 %changelog
+* Mon May 20 2013 Fr. Br. George <george@altlinux.ru> 1.15-alt1
+- Autobuild version bump to 1.15
+
 * Thu Jan 12 2012 Fr. Br. George <george@altlinux.ru> 1.14-alt1
 - Autobuild version bump to 1.14
 - As-needed patch implemented by upstream (removed)
