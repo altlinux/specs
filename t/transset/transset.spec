@@ -1,13 +1,13 @@
-Name:		transset
-Version:	1.0.0
-Release:	alt1
-Group:		System/X11
-Summary:	Simple utility to set transparency on a window
-License:	MIT
-Source:		%{name}-%{version}.tar.gz
-URL:		http://cgit.freedesktop.org/xorg/app/transset/
+Name: transset
+Version: 1.0.1
+Release: alt1
+Group: System/X11
+Summary: Simple utility to set transparency on a window
+License: MIT
+Source: %name-%version.tar.gz
+Url: http://cgit.freedesktop.org/xorg/app/transset/
 
-BuildRequires:	xorg-xproto-devel xorg-util-macros
+BuildRequires: xorg-xproto-devel xorg-util-macros
 
 # optimized out: pkg-config xorg-xproto-devel
 BuildRequires: libX11-devel
@@ -40,6 +40,9 @@ Features:
 %_man1dir/*
 
 %changelog
+* Mon May 20 2013 Fr. Br. George <george@altlinux.ru> 1.0.1-alt1
+- Autobuild version bump to 1.0.1
+
 * Wed Aug 29 2012 Fr. Br. George <george@altlinux.ru> 1.0.0-alt1
 - Initial autobuild version bump
 
