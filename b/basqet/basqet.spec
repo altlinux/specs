@@ -1,6 +1,6 @@
 Name:		basqet
 Version:	0.2.0
-Release:	alt1
+Release:	alt2
 Summary:	Basqet - Notes and Data in Baskets
 License:	GPL
 Group:		Office
@@ -9,7 +9,7 @@ Packager: 	Andrey Cherepanov <cas@altlinux.org>
 
 Source:		%{name}_%version-src.tgz
 
-BuildRequires:	gcc-c++, qt4-devel, phonon-backend-xine
+BuildRequires:	gcc-c++, qt4-devel
 
 %description
 The idea is to use baskets to put, not eggs, but notes and ideas (text,
@@ -38,6 +38,9 @@ qmake-qt4 PREFIX=/usr
 %_pixmapsdir/%name.png
 
 %changelog
+* Mon May 20 2013 Andrey Cherepanov <cas@altlinux.org> 0.2.0-alt2
+- Remove phonon-backend-xine requirement
+
 * Wed Apr 17 2013 Andrey Cherepanov <cas@altlinux.org> 0.2.0-alt1
 - New version 0.2.0
 
