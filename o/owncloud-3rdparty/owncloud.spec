@@ -1,7 +1,7 @@
 %define installdir %webserver_webappsdir/owncloud/3rdparty
 
 Name: owncloud-3rdparty
-Version: 5.0.4
+Version: 5.0.6
 Release: alt1
 
 Summary: 3rdparty libs for owncloud
@@ -33,6 +33,9 @@ cp -rp * %buildroot%installdir/
 %installdir/*
 
 %changelog
+* Mon May 20 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 5.0.6-alt1
+- 5.0.6
+
 * Thu Apr 11 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 5.0.4-alt1
 - 5.0.4
 
