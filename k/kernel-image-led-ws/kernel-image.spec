@@ -21,7 +21,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.4.46
-Release: alt2
+Release: alt3
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -450,7 +450,7 @@ Patch0557: linux-%kernel_branch.31-fix-fs-proc.patch
 Patch0558: linux-%kernel_branch.28-fix-fs-ramfs.patch
 Patch0559: linux-%kernel_branch.20-fix-fs-reiserfs.patch
 Patch0560: linux-%kernel_branch.35-fix-fs-ubifs.patch
-Patch0561: linux-%kernel_branch.35-fix-fs-xfs.patch
+Patch0561: linux-%kernel_branch.46-fix-fs-xfs.patch
 
 Patch0571: linux-%kernel_branch.34-fix-include-linux.patch
 
@@ -2702,6 +2702,10 @@ done)
 
 
 %changelog
+* Mon May 20 2013 Led <led@altlinux.ru> 3.4.46-alt3
+- updated:
+  + fix-fs-xfs
+
 * Mon May 20 2013 Led <led@altlinux.ru> 3.4.46-alt2
 - updated:
   + fix-net-sunrpc
