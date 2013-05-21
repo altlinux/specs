@@ -1,11 +1,11 @@
 %define ver_major 3.8
 %def_enable glade
-%def_disable vala
+%def_enable vala
 %def_enable gtk_doc
 
 Name: anjuta
 Version: %ver_major.2
-Release: alt1
+Release: alt2
 Summary: GNOME IDE for C and C++
 Group: Development/GNOME and GTK+
 License: GPLv2+
@@ -220,6 +220,10 @@ NOCONFIGURE=1 ./autogen.sh
 %exclude %anjuta_pixmapsdir/*devhelp*
 
 %changelog
+* Tue May 21 2013 Alexey Shabalin <shaba@altlinux.ru> 3.8.2-alt2
+- snapshot of branch upstream/gnome-3-8
+- enable vala plugin
+
 * Tue May 14 2013 Alexey Shabalin <shaba@altlinux.ru> 3.8.2-alt1
 - 3.8.2
 
