@@ -1,7 +1,7 @@
 %define _kde_alternate_placement 1
 
 Name: bluedevil
-Version: 1.3
+Version: 1.3.1
 Release: alt1
 
 Group: Graphical desktop/KDE
@@ -64,8 +64,6 @@ do
 done
 
 %K4find_lang --with-kde %name
-mkdir -p %buildroot/%_K4includedir
-mv %buildroot/%_K4datadir/include/* %buildroot/%_K4includedir
 
 %files -f %name.lang
 %_kde4_bindir/bluedevil-*
@@ -93,9 +91,12 @@ mv %buildroot/%_K4datadir/include/* %buildroot/%_K4includedir
 
 
 %files devel
-%_K4includedir/actionplugin.h
+%_K4includedir/bluedevil/
 
 %changelog
+* Tue May 21 2013 Sergey V Turchin <zerg@altlinux.org> 1.3.1-alt1
+- new version
+
 * Mon Mar 18 2013 Sergey V Turchin <zerg@altlinux.org> 1.3-alt1
 - new version
 
