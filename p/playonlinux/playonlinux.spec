@@ -2,7 +2,7 @@
 
 Summary: Play your Windows games on Linux
 Name: playonlinux
-Version: 4.1.9
+Version: 4.2.1
 Release: alt1
 License: GPLv3
 Group: Games/Other
@@ -64,6 +64,9 @@ rm -f %buildroot%_datadir/%name/bin/smile
 %_datadir/desktop-directories/%oname.directory
 
 %changelog
+* Tue May 21 2013 Gleb F-Malinovskiy <glebfm@altlinux.org> 4.2.1-alt1
+- 4.2.1
+
 * Tue Jan 22 2013 Gleb F-Malinovskiy <glebfm@altlinux.org> 4.1.9-alt1
 - 4.1.9
 
