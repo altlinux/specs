@@ -11,8 +11,8 @@
 %define rname kipi-plugins
 Name: kde4-%rname
 %define beta %nil
-Version: 3.1.0
-Release: alt2
+Version: 3.2.0
+Release: alt1
 
 Group: Graphics
 Summary: KDE image Interface Plugins
@@ -46,6 +46,7 @@ BuildRequires: libopencv-devel libsane-devel libxslt-devel xsltproc libexpat-dev
 BuildRequires: qoauth-devel qjson-devel herqq-devel qtsoap-devel
 BuildRequires: qt-gstreamer-devel libImageMagick-devel ImageMagick-tools
 BuildRequires: libkvkontakte-devel libmediawiki-devel libtiff-devel flex
+BuildRequires: kde4-nepomuk-core-devel
 
 %description
 The library of the KDE Image Plugin Interface used by digiKam and Gwenview
@@ -173,6 +174,9 @@ done
 %_K4libdir/libkipiplugins.so.%libsover.*
 
 %changelog
+* Tue May 21 2013 Sergey V Turchin <zerg@altlinux.org> 3.2.0-alt1
+- new version
+
 * Thu Apr 18 2013 Sergey V Turchin <zerg@altlinux.org> 3.1.0-alt2
 - rebuild with new ImageMagick
 

@@ -3,7 +3,7 @@
 %define rname libmediawiki
 Name: libmediawiki
 Version: 1.0.0
-Release: alt4
+Release: alt5
 
 Group: System/Libraries
 Summary: KDE C++ interface for MediaWiki
@@ -52,6 +52,9 @@ Development files for %name
 
 
 %changelog
+* Tue May 21 2013 Sergey V Turchin <zerg@altlinux.org> 1.0.0-alt5
+- digikam-3.2.0
+
 * Thu Apr 18 2013 Sergey V Turchin <zerg@altlinux.org> 1.0.0-alt4
 - digikam-3.1.0
 
