@@ -1,7 +1,7 @@
 ## %%define snapshot 20080311
 
 Name: docbook-style-xsl
-Version: 1.78.0
+Version: 1.78.1
 Release: alt1
 Group: Publishing
 
@@ -68,7 +68,7 @@ This package contains extensive documentation to DocBook XSL stylesheets
 in the HTML format.
 
 %prep
-%setup -q -n docbook-xsl-%{actual_version} -b 1
+%setup -n docbook-xsl-%{actual_version} -b 1
 %patch1 -p1 -b .pagesetup
 %patch2 -p1 -b .marginleft
 %patch3 -p1 -b .newmethods
@@ -78,7 +78,7 @@ in the HTML format.
 
 find . -type f -name '*.xsl.orig' -delete
 find . -type f -name '.gitignore' -delete
-find . -type f -perm +a+x -print0 | xargs -r0 chmod a-x
+find . -type f -perm /a+x -print0 | xargs -r0 chmod a-x --
 
 cp -p %{SOURCE4} Makefile
 
@@ -154,6 +154,10 @@ if [ ! -d "%xmlbase/docbook/xsl-stylesheets-%version" ]; then
 fi
 
 %changelog
+* Tue May 21 2013 Dmitry V. Levin <ldv@altlinux.org> 1.78.1-alt1
+- Updated to 1.78.1.
+- Fixed "find -perm" usage.
+
 * Wed Jan 16 2013 Igor Vlasenko <viy@altlinux.ru> 1.78.0-alt1
 - 1.78.0
 - added sgml compat symlink
