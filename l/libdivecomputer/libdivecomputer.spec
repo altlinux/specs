@@ -1,12 +1,13 @@
 Group: Other
+%add_optflags %optflags_shared
 #global        snapdate   20120717
 #global        snaphash   4bc477b
 #global        snapver    {snapdate}.git{snaphash}
 
 Name:           libdivecomputer
-Version:        0.3.0
+Version:        0.4.0
 #Release:        2.{snapver}{?dist}
-Release:        alt1_2
+Release:        alt1_1
 Summary:        Library for communication with dive computers
 
 License:        LGPLv2+
@@ -128,6 +129,9 @@ rm $RPM_BUILD_ROOT/%{_bindir}/{veo250,vtpro,vyper,vyper2}
 %{_libdir}/*.a
 
 %changelog
+* Tue May 21 2013 Igor Vlasenko <viy@altlinux.ru> 0.4.0-alt1_1
+- update to new release by fcimport
+
 * Thu Apr 25 2013 Igor Vlasenko <viy@altlinux.ru> 0.3.0-alt1_2
 - initial fc import
 
