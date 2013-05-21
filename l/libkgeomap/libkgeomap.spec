@@ -1,6 +1,6 @@
 Name: libkgeomap
 Version: 2.0.0
-Release: alt5
+Release: alt6
 
 Group: System/Libraries
 Summary: Libkgeomap is a wrapper around different world-map components
@@ -71,6 +71,9 @@ rm -rf %buildroot/%_K4i18n/*/*/digikam*
 
 
 %changelog
+* Tue May 21 2013 Sergey V Turchin <zerg@altlinux.org> 2.0.0-alt6
+- update from digikam-3.2.0
+
 * Thu Apr 18 2013 Sergey V Turchin <zerg@altlinux.org> 2.0.0-alt5
 - update from digikam-3.1.0
 - package translatons (ALT#26565)
