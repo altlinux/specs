@@ -1,15 +1,15 @@
 Name: gambit-signal
 Version: 1.0
-Release: alt9
+Release: alt10
 Summary: UNIX signal handling library for Gambit-C Scheme programming system
-License: GPL
+License: GPLv3+
 Group: Development/Scheme
 
 Packager: Paul Wolneykien <manowar@altlinux.ru>
 
 BuildPreReq: gambit glibc-devel
 
-Source: %name-%version.tar.gz
+Source: %name-%version.tar
 
 %description
 UNIX signal handling library for Gambit-C Scheme programming system
@@ -29,13 +29,13 @@ This package contains the library link file
 %setup -q
 
 %build
-gsc -:daq- -link -flat -o libgambc-signal.c signal.scm
-gsc -:daq- -obj -cc-options "-D___LIBRARY -D___SHARED -D___PRIMAL" signal.c libgambc-signal.c
-gcc -shared signal.o libgambc-signal.o -lgambc -o libgambc-signal.so
+%make_build
 
 %install
-install -Dp -m0644 libgambc-signal.so %buildroot%{_libdir}/gambit/libgambc-signal.so
-install -Dp -m0644 libgambc-signal.c %buildroot%{_includedir}/gambit/libgambc-signal.c
+%makeinstall
+
+%check
+%make check
 
 %files
 %{_libdir}/gambit/libgambc-signal.so
@@ -44,6 +44,13 @@ install -Dp -m0644 libgambc-signal.c %buildroot%{_includedir}/gambit/libgambc-si
 %{_includedir}/gambit/libgambc-signal.c
 
 %changelog
+* Mon May 20 2013 Paul Wolneykien <manowar@altlinux.org> 1.0-alt10
+- Bundle sources in plain tar.
+- Add the test program.
+- Add getpid and getppid wrappers.
+- Add the Makefile and use it.
+- Refactor the sources, update the licensing information.
+
 * Tue May 14 2013 Paul Wolneykien <manowar@altlinux.org> 1.0-alt9
 - Rebuild with a new version of Gambit
 

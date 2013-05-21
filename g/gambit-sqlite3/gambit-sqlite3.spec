@@ -1,8 +1,8 @@
 Name: gambit-sqlite3
 Version: 1.2
-Release: alt5
+Release: alt6
 Summary: SQLite3 database library for Gambit-C Scheme programming system
-License: GPL
+License: GPLv3+
 Group: Development/Scheme
 URL: http://okmij.org/ftp/Scheme/#databases
 
@@ -10,7 +10,7 @@ Packager: Paul Wolneykien <manowar@altlinux.ru>
 
 BuildPreReq: gambit sqlite3 libsqlite3-devel
 
-Source: %name-%version.tar.gz
+Source: %name-%version.tar
 
 %description
 SQLite3 database library for Gambit-C Scheme programming system
@@ -30,21 +30,13 @@ This package contains the library link file
 %setup -q
 
 %build
-gsc -:daq- -link -flat -o libgambc-sqlite3.c sqlite3.scm
-gsc -:daq- -obj -cc-options "-D___LIBRARY -D___SHARED -D___PRIMAL" sqlite3.c libgambc-sqlite3.c
-gcc -shared sqlite3.o libgambc-sqlite3.o -lgambc -lsqlite3 -o libgambc-sqlite3.so
+%make_build
 
 %install
-install -Dp -m0644 libgambc-sqlite3.so %buildroot%{_libdir}/gambit/libgambc-sqlite3.so
-install -Dp -m0644 libgambc-sqlite3.c %buildroot%{_includedir}/gambit/libgambc-sqlite3.c
+%makeinstall
 
 %check
-echo "Run sqlite3-test.scm to verify the library"
-gsc -:daq- -link %buildroot%{_includedir}/gambit/libgambc-sqlite3.c sqlite3-test.scm
-gsc -:daq- -obj sqlite3-test.c sqlite3-test_.c
-gcc sqlite3-test.o sqlite3-test_.o -lgambc -L%buildroot%{_libdir}/gambit -lgambc-sqlite3 -o sqlite3-test
-export LD_LIBRARY_PATH=%buildroot%{_libdir}/gambit
-./sqlite3-test -:daq-
+%make check
 
 %files
 %doc README COPYRIGHT
@@ -54,6 +46,11 @@ export LD_LIBRARY_PATH=%buildroot%{_libdir}/gambit
 %{_includedir}/gambit/libgambc-sqlite3.c
 
 %changelog
+* Mon May 20 2013 Paul Wolneykien <manowar@altlinux.org> 1.2-alt6
+- Bundle sources in plain tar.
+- Take care of the return code of the sqlite3-test.scm.
+- Use the universal Makefile.
+
 * Tue May 14 2013 Paul Wolneykien <manowar@altlinux.org> 1.2-alt5
 - Rebuild with a new version of Gambit
 
