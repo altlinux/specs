@@ -5,15 +5,14 @@ BuildRequires: /usr/bin/python-config
 %{!?python_sitearch: %global python_sitearch %(%{__python} -c "from distutils.sysconfig import get_python_lib; print get_python_lib(1)")}
 
 Name: btparser
-Version: 0.25
-Release: alt1_2
+Version: 0.26
+Release: alt1_1
 Summary: Parser and analyzer for backtraces produced by GDB
 Group: Development/C
 License: GPLv2+
 URL: http://fedorahosted.org/btparser
 Source0: https://fedorahosted.org/released/btparser/btparser-%{version}.tar.xz
-# remove after packaging version > 0.25
-Patch0: btparser-0.25-strict-aliasing.patch
+BuildRequires: autoconf
 BuildRequires: glib2-devel >= 2.21
 %if 0%{?suse_version}
 BuildRequires: python-devel
@@ -67,7 +66,6 @@ Python bindings for %{name}.
 
 %prep
 %setup -q
-%patch0 -p1
 
 %build
 %configure --disable-static
@@ -98,6 +96,9 @@ make check
 %{python_sitelibdir}/%{name}/*
 
 %changelog
+* Tue May 21 2013 Igor Vlasenko <viy@altlinux.ru> 0.26-alt1_1
+- update to new release by fcimport
+
 * Tue Mar 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.25-alt1_2
 - update to new release by fcimport
 
