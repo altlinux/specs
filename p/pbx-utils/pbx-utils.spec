@@ -1,12 +1,12 @@
 Name: pbx-utils
 Summary: Useful utilites for Asterisk and CallWeaver
-Version: 0.0.14
+Version: 0.0.15
 Release: alt1
 License: GPL
 Group: System/Servers
-BuildRequires: asterisk1.8-devel libdb1-devel libmhash-devel libnewt-devel libpopt-devel libsqlite3-devel libtonezone-dahdi-devel
+BuildRequires: asterisk12-devel libdb1-devel libmhash-devel libnewt-devel libpopt-devel libsqlite3-devel libtonezone-dahdi-devel
 BuildPreReq: dahdi-linux-headers libtonezone-dahdi-devel
-%define ast_ver %{get_version asterisk1.8-devel}
+%define ast_ver %{get_version asterisk12-devel}
 Url: http://sisyphus.ru/ru/srpm/Sisyphus/pbx-utils
 %define agi_dir %_libexecdir/asterisk/agi-bin
 Source: %name-%version.tar
@@ -67,6 +67,15 @@ Group: System/Servers
 %description -n pbx-rawplayer
 simple raw file stdout player
 
+%if_with refcounter
+%package -n pbx-refcounter
+Summary: refcounter (debug utility for Asterisk)
+Group: %group
+
+%description -n pbx-refcounter
+refcounter (debug utility for Asterisk)
+%endif
+
 %package -n pbx-smsq
 Summary: SMS queuing application for Asterisk and CallWeaver
 Group: System/Servers
@@ -111,6 +120,9 @@ Requires: pbx-stereorize = %version-%release
 Requires: pbx-streamplayer = %version-%release
 Requires: zones2indications = %version-%release
 Requires: pbx-astcanary = %version-%release
+%if_with refcounter
+Requires: pbx-refcounter = %version-%release
+%endif
 
 %description all
 This virtual package requires all pbx-utils subpackages
@@ -156,6 +168,11 @@ export CFLAGS=-I/usr/include/asterisk-%ast_ver
 %files -n pbx-rawplayer
 %_sbindir/rawplayer
 
+%if_with refcounter
+%files -n pbx-refcounter
+%attr(0755,root,root) %_sbindir/refcounter
+%endif
+
 %files -n pbx-smsq
 %_sbindir/smsq
 
@@ -171,6 +188,10 @@ export CFLAGS=-I/usr/include/asterisk-%ast_ver
 %attr(0755,root,root) %_sbindir/zones2indications
 
 %changelog
+* Wed May 22 2013 Denis Smirnov <mithraen@altlinux.ru> 0.0.15-alt1
+- add pbx-refcounter
+- import from asterisk12
+
 * Sat Apr 13 2013 Denis Smirnov <mithraen@altlinux.ru> 0.0.14-alt1
 - build with asterisk 1.8
 
