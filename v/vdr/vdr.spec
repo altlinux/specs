@@ -1,5 +1,5 @@
 Name: vdr
-Version: 2.0.1
+Version: 2.0.2
 Release: alt1
 
 Summary: Digital satellite receiver box with advanced features
@@ -187,6 +187,7 @@ Additional Xine plugins for use with VDR frontends.
 %define docdir		%_defaultdocdir/%name-%version
 %define	confdir		%_sysconfdir/vdr
 %define	plugindir	%_libdir/vdr
+%define	resdir		%_datadir/vdr
 %define videodir	%_localstatedir/vdr
 
 %prep
@@ -198,7 +199,7 @@ sed -e 's,^#PREFIX.\+$,PREFIX = %prefix,' \
     -e 's,^#LOCDIR.\+$,LOCDIR = %_datadir/locale,g' \
     -e 's,^#MANDIR.\+$,MANDIR = %_mandir,' \
     -e 's,^#PCDIR.\+$,PCDIR = %_pkgconfigdir,' \
-    -e 's,^#RESDIR.\+$,RESDIR = %_datadir/vdr,g' \
+    -e 's,^#RESDIR.\+$,RESDIR = %resdir,g' \
     -e 's,^#VIDEODIR.\+$,VIDEODIR = %videodir,g' \
     -e 's,^#CONFDIR.\+$,CONFDIR = %confdir,g' \
     -e 's,^#CACHEDIR.\+$,CACHEDIR = %_cachedir/vdr,g' \
@@ -264,7 +265,6 @@ cp -p PLUGINS/src/ttxtsubs/{README,TROUBLESHOOTING} %buildroot%docdir/ttxtsubs
 
 mkdir -p %buildroot%docdir/upnp %buildroot%confdir/plugins/upnp
 cp -p PLUGINS/src/upnp/README %buildroot%docdir/upnp/
-cp -a PLUGINS/src/upnp/httpdocs %buildroot%confdir/plugins/upnp
 touch %buildroot%confdir/plugins/upnp/metadata.db
 
 mkdir -p %buildroot%docdir/vnsiserver
@@ -361,6 +361,9 @@ mkdir -p %buildroot%_runtimedir/vdr %buildroot%_cachedir/vdr
 %plugindir/libvdr-rcu.so.%version
 %plugindir/libvdr-epgtableid0.so.%version
 
+%dir %resdir
+%dir %resdir/plugins
+
 %_man1dir/vdr.1*
 %_man5dir/vdr.5*
 
@@ -455,12 +458,13 @@ mkdir -p %buildroot%_runtimedir/vdr %buildroot%_cachedir/vdr
 %docdir/upnp
 %dir %attr(0770,root,_vdr) %confdir/plugins/upnp
 %config(noreplace) %attr(0600,_vdr,_vdr) %confdir/plugins/upnp/metadata.db
-%confdir/plugins/upnp/httpdocs
+%config(noreplace) %attr(0600,_vdr,_vdr) %confdir/plugins/upnp/channelTitle.conf
 %plugindir/libvdr-upnp.so.%version
 %plugindir/libupnp-dvb-profiler.so.%version
 %plugindir/libupnp-file-provider.so.%version
 %plugindir/libupnp-rec-provider.so.%version
 %plugindir/libupnp-vdr-provider.so.%version
+%resdir/plugins/upnp
 
 %files plugin-vnsiserver -f vnsiserver.lang
 %docdir/vnsiserver
@@ -505,6 +509,9 @@ mkdir -p %buildroot%_runtimedir/vdr %buildroot%_cachedir/vdr
 %_libdir/xine/plugins/*/xineplug_inp_xvdr.so
 
 %changelog
+* Tue May 21 2013 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.0.2-alt1
+- 2.0.2 released
+
 * Sun Apr 14 2013 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.0.1-alt1
 - 2.0.1 released
 
