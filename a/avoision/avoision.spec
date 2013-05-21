@@ -1,6 +1,6 @@
 Name:		avoision
 Version:	1.1
-Release:	alt1_2
+Release:	alt1_3
 Summary:	Arcade style game of evade and capture
 Group:		Text tools
 # Code is GPLv2+, music and graphics are CC-BY-SA
@@ -42,6 +42,9 @@ desktop-file-install --dir %{buildroot}%{_datadir}/applications	%{SOURCE2}
 %{_datadir}/pixmaps/%{name}.png
 
 %changelog
+* Tue May 21 2013 Igor Vlasenko <viy@altlinux.ru> 1.1-alt1_3
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 1.1-alt1_2
 - update to new release by fcimport
 
