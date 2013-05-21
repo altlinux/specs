@@ -8,7 +8,7 @@
 
 Name: bacula
 Version: 5.2.13
-Release: alt1
+Release: alt2
 
 License: AGPLv3
 Summary: Network based backup program
@@ -24,6 +24,7 @@ Source5: bacula-fd.limit
 Source8: bacula-configs-default-%version.tar
 Source9: bacula-icons-%version.tar
 Source10: bacula.sysconfig
+Source11: tmpfiles.conf
 
 BuildRequires: dvd+rw-tools gcc-c++ groff-base libMySQL-devel libssl-devel libncurses-devel libsqlite3-devel libssl libacl-devel libcap-devel python-devel zlib-devel iputils bc postgresql-devel
 
@@ -286,6 +287,9 @@ install -pm 755 %SOURCE1 %buildroot%_initdir/bacula-dir
 install -pm 755 %SOURCE2 %buildroot%_initdir/bacula-fd
 install -pm 755 %SOURCE3 %buildroot%_initdir/bacula-sd
 
+mkdir -p %buildroot%_sysconfdir/tmpfiles.d/
+install -pm 0644 %SOURCE11 %buildroot%_sysconfdir/tmpfiles.d/bacula.conf
+
 install -pD -m644 %_sourcedir/bacula.sysconfig \
 	%buildroot%_sysconfdir/sysconfig/bacula
 install -pD -m644 %_sourcedir/bacula-fd.sysconfig \
@@ -465,6 +469,7 @@ use appropriate %_datadir/bacula/scripts/update_*_tables script"
 %dir %_datadir/bacula
 %dir %_datadir/bacula/scripts
 %dir %_docdir/bacula
+%_sysconfdir/tmpfiles.d/*
 %_man8dir/bacula.8.gz
 %_sbindir/bsmtp
 %_man1dir/bsmtp.1.gz
@@ -630,6 +635,9 @@ use appropriate %_datadir/bacula/scripts/update_*_tables script"
 %files
 
 %changelog
+* Tue May 21 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 5.2.13-alt2
+- tmpfiles.d for bacula added
+
 * Sun Apr 07 2013 Michael Shigorin <mike@altlinux.org> 5.2.13-alt1
 - 5.2.13
 
