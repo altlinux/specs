@@ -8,7 +8,7 @@
 
 Name: tinyca2
 Version: 0.7.5
-Release: alt2
+Release: alt3
 
 Summary: graphical tool for managing a Certification Authority
 Summary(ru_RU.UTF-8): графическая утилита для управления Certification Authority
@@ -35,6 +35,7 @@ Patch0: %name-0.7.0-alt-ru_po.patch
 Patch1: %name-0.7.2-alt-Gtk2_init.patch
 Patch2: %name-0.72-alt-desktop_l10n.patch
 Patch3: %name-0.7.5-alt-fix_qw_parentheses.patch
+Patch4: %name-0.7.5-debian-fix_openssl.patch
 
 AutoReqProv: perl, yes
 BuildRequires: perl-devel, perl-Glib, perl-Gtk2, perl-Locale-gettext
@@ -83,11 +84,12 @@ TinyCA2 поддерживает:
 
 %if "%with_ru" == "1"
 %patch0 -p1
-%endif 
+%endif
 
 %patch1 -p1
 %patch2
 %patch3
+%patch4
 
 %if "%with_ru" == "1"
   /bin/install -m 0644 %SOURCE2 po/ru.po
@@ -96,10 +98,10 @@ TinyCA2 поддерживает:
 
 %build
 # Configure sources
-%__subst 's@./lib@%libdir@g' %name
-%__subst 's@./templates@%templatesdir@g' %name
-%__subst 's@./locale@%localedir@g' %name
-/usr//bin/make -C po
+sed -e 's@./lib@%libdir@g' -i %name
+sed -e 's@./templates@%templatesdir@g' -i %name
+sed -e 's@./locale@%localedir@g' -i %name
+/usr/bin/make -C po
 
 %install
 %if "%with_ru" == "1"
@@ -144,6 +146,9 @@ done
 %_liconsdir/%{name}*
 
 %changelog
+* Tue May 21 2013 Nikolay A. Fetisov <naf@altlinux.ru> 0.7.5-alt3
+- Fix to work with OpenSSL 1.0.1e
+
 * Fri Nov 04 2011 Nikolay A. Fetisov <naf@altlinux.ru> 0.7.5-alt2
 - Fix build with perl 5.14
 
