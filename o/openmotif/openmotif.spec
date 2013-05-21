@@ -4,7 +4,7 @@
 
 Name: openmotif
 Version: 2.3.3
-Release: alt3
+Release: alt4
 
 Summary: The Open Motif
 License: Open Group Public License
@@ -147,14 +147,14 @@ This package contains the Motif demo applications.
 %patch54 -p1
 %patch57 -p2
 
-find -type f -name \*.orig -print -delete
+find -type f -name \*.orig -delete -print
 
 for i in $(find demos/programs -name 'Makefile.*'); do
 	sed -i 's|bindir = \${prefix}/share|bindir = ${prefix}/%_lib|' $i
 done
 
 %build
-%add_optflags -D_FILE_OFFSET_BITS=64
+%{expand:%%add_optflags %(getconf LFS_CFLAGS)}
 %{?!_enable_static:export lt_cv_prog_cc_static_works=no}
 libtoolize --copy --force
 %configure --enable-shared %{subst_enable static}
@@ -175,8 +175,7 @@ for f in %buildroot%_libexecdir/app-defaults/*; do
 done
 
 %if_with demos
-find %buildroot%_libdir/Xm -type f -perm +111
-find %buildroot%_libdir/Xm -type f -perm +111 -exec mv '{}' %buildroot%_bindir/ \;
+#find %buildroot%_libdir/Xm -type f -perm /111 -exec mv -t %buildroot%_bindir -- '{}' '+'
 ls %buildroot%_bindir/* \
 | sed -e "s,%buildroot,,g" \
 | grep -Ev '/(mwm|uil|xmbind)$' >demos.list ||:
@@ -237,6 +236,9 @@ rm -f %_x11includedir/{Mrm,Xm} >/dev/null 2>&1 ||:
 # - actually test mwm?
 
 %changelog
+* Tue May 21 2013 Dmitry V. Levin <ldv@altlinux.org> 2.3.3-alt4
+- Fixed "find -perm" usage.
+
 * Fri Sep 28 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.3.3-alt3
 - Rebuilt with libpng15
 
