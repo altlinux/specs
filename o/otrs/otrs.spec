@@ -1,9 +1,11 @@
+%def_without doc-admin-de
+
 %define installdir %webserver_webappsdir/%name
 %define otrs_user otrs
 
 Name: otrs
-Version: 3.1.10
-Release: alt1
+Version: 3.2.6
+Release: alt2
 
 Summary: Open source Ticket Request System
 Group: Networking/WWW
@@ -16,13 +18,15 @@ BuildArch: noarch
 
 Requires(pre): %{_sbindir}/useradd
 Requires(post): perl
-Requires: webserver-common perl-CGI perl-DBI perl-DBD-mysql perl-Crypt-PasswdMD5 perl-Net-DNS perl-ldap perl-GD perl-GD-Text perl-GD-Graph perl-PDF-API2 perl-Compress-Zlib perl-Unicode-Normalize
+Requires: webserver-common perl-CGI perl-DBI perl-DBD-mysql perl-Crypt-PasswdMD5 perl-Net-DNS perl-ldap perl-GD perl-GD-Text perl-GD-Graph perl-PDF-API2 perl-Compress-Zlib perl-Unicode-Normalize perl-Term-ANSIColor perl-TimeDate perl-YAML-LibYAML
 BuildRequires(pre): rpm-macros-webserver-common rpm-macros-apache2 >= 3.9
 BuildRequires: perl-CGI perl-DBI perl-DBD-mysql perl-Crypt-PasswdMD5 perl-Net-DNS perl-ldap perl-GD perl-GD-Text perl-GD-Graph perl-PDF-API2 perl-Compress-Zlib
 
 Source0: %name-%version.tar.gz
-Source1: apache2.conf
-Source2: README.ALT
+Source1: README.ALT
+Source2: otrs-hold.conf
+Source3: apache2.conf
+
 Patch: patch0.patch
 
 %add_findreq_skiplist */bin/*
@@ -48,11 +52,13 @@ Group: Networking/WWW
 %description doc-admin-en-pdf
 %name admin manual (En)
 
+%if_with doc-admin-de
 %package doc-admin-de-pdf
 Summary: %name admin manual (De)
 Group: Networking/WWW
 %description doc-admin-de-pdf
 %name admin manual (De)
+%endif
 
 %prep
 %setup
@@ -60,21 +66,32 @@ Group: Networking/WWW
 
 %install
 # install apache config
-install -pD -m0644 %_sourcedir/apache2.conf %buildroot%_sysconfdir/httpd2/conf/addon.d/A.%name.conf
+install -pD -m0644 %SOURCE3 %buildroot%_sysconfdir/httpd2/conf/addon.d/A.%name.conf
+
+# install apt's hold file
+install -pD -m0644 %SOURCE2 %buildroot%_sysconfdir/apt/apt.conf.d/%name-hold.conf
+
 # install otrs
 mkdir -p %buildroot%installdir
 cp -rp * %buildroot%installdir/
+
 #install docs
-install -pD -m0644 %_sourcedir/README.ALT README.ALT
+chmod -x CHANGES
+install -pD -m0644 %SOURCE1 README.ALT
 mv %buildroot%installdir/doc/OTRSDatabaseDiagram.mwb OTRSDatabaseDiagram.mwb
 mv %buildroot%installdir/doc/OTRSDatabaseDiagram.png OTRSDatabaseDiagram.png
 mv %buildroot%installdir/doc/manual/en/otrs_admin_book.pdf admin_en.pdf
+%if_with doc-admin-de
 mv %buildroot%installdir/doc/manual/de/otrs_admin_book.pdf admin_de.pdf
+%endif
+
 #replace '/opt/otrs' to '/var/www/webapps/otrs' in all files
 find %buildroot%installdir -type f -exec sed -i -e "s/\/opt\/otrs/\/var\/www\/webapps\/otrs/g" {} \;
+
 # remove files
 find %buildroot%installdir -name *.spec -delete
 find %buildroot%installdir -name *.conf -delete
+
 #install default config
 cp %buildroot%installdir/Kernel/Config.pm.dist %buildroot%installdir/Kernel/Config.pm
 cd %buildroot%installdir/Kernel/Config/
@@ -88,13 +105,11 @@ rm -f %buildroot%installdir/CHANGES
 rm -f %buildroot%installdir/COPYING-Third-Party
 rm -f %buildroot%installdir/CREDITS
 rm -f %buildroot%installdir/Custom/README
-rm -f %buildroot%installdir/INSTALL
+rm -f %buildroot%installdir/INSTALL.md
 rm -f %buildroot%installdir/INSTALL.RedHat
 rm -f %buildroot%installdir/INSTALL.SuSE
-rm -f %buildroot%installdir/README
-rm -f %buildroot%installdir/README.database
-rm -f %buildroot%installdir/README.webserver
-rm -f %buildroot%installdir/UPGRADING
+rm -f %buildroot%installdir/README.*
+rm -f %buildroot%installdir/UPGRADING.md
 
 %pre
 if id %otrs_user >/dev/null 2>&1; then
@@ -127,8 +142,8 @@ rm -rf %_docdir/%name-%version/
 %doc COPYING-Third-Party
 %doc OTRSDatabaseDiagram.mwb
 %doc OTRSDatabaseDiagram.png
-%doc README.ALT
-%doc README
+%doc README.*
+%doc UPGRADING.md
 %doc Custom/README
 %defattr(0775,root, %webserver_group)
 %dir %installdir
@@ -142,16 +157,32 @@ rm -rf %_docdir/%name-%version/
 %installdir/COPYING
 %installdir/RELEASE
 
+%config(noreplace) %attr(0644,root,root) %_sysconfdir/apt/apt.conf.d/%name-hold.conf
+
 %files apache2
 %config(noreplace) %attr(0644,root,root) %_sysconfdir/httpd2/conf/addon.d/A.%name.conf
 
 %files doc-admin-en-pdf
 %doc admin_en.pdf
 
+%if_with doc-admin-de
 %files doc-admin-de-pdf
 %doc admin_de.pdf
+%endif
 
 %changelog
+* Fri May 17 2013 Sergey Y. Afonin <asy@altlinux.ru> 3.2.6-alt2
+- added to Requires:
+  perl-Term-ANSIColor perl-TimeDate perl-YAML-LibYAML
+- added apt's hold file for the package otrs
+
+* Fri May 17 2013 Sergey Y. Afonin <asy@altlinux.ru> 3.2.6-alt1
+- New version (ALT #28490)
+
+* Sun Mar 10 2013 Sergey Y. Afonin <asy@altlinux.ru> 3.2.2-alt1
+- New version
+- disabled doc-admin-de-pdf subpackage (missed in this release)
+
 * Tue Oct 09 2012 Sergey Y. Afonin <asy@altlinux.ru> 3.1.10-alt1
 - New version
    Warning: OTRS 3.1 supports only UTF-8 as internal character set.
