@@ -1,6 +1,6 @@
 Name: galculator
-Version: 2.1
-Release: alt2
+Version: 2.1.2
+Release: alt1
 
 Summary: GTK3 based scientific calculator
 License: GPL
@@ -9,8 +9,7 @@ Group: Sciences/Mathematics
 Url: http://galculator.sourceforge.net
 Source: http://prdownloads.sourceforge.net/%name/%name-%version.tar.bz2
 Source100: galculator.watch
-Patch0: galculator-1.3.4-alt-desktop.patch
-Patch1: galculator-2.1-gtk3-fix.patch
+Patch: galculator-1.3.4-alt-desktop.patch
 Packager: Michael Shigorin <mike@altlinux.org>
 
 # Automatically added by buildreq on Sat Apr 13 2013
@@ -22,8 +21,7 @@ Galculator is a GTK 2 based scientific RPN calculator
 
 %prep
 %setup
-%patch0 -p1
-%patch1 -p0
+%patch -p1
 
 %build
 %configure
@@ -54,6 +52,10 @@ rm -rf %buildroot%_pixmapsdir/
 # - 32x32 and 16x16? (%%_niconsdir and %%_miconsdir)
 
 %changelog
+* Wed May 22 2013 Michael Shigorin <mike@altlinux.org> 2.1.2-alt1
+- new version (watch file uupdate)
+- gtk3 patch merged upstream
+
 * Sat Apr 13 2013 Michael Shigorin <mike@altlinux.org> 2.1-alt2
 - added fedora patch to cope with updated gtk3 (thanks aen@)
 
