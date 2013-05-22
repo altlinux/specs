@@ -23,7 +23,7 @@
 
 Name: brltty
 Version: %pkg_version
-Release: alt2
+Release: alt3
 
 Summary: Braille display driver for Linux/Unix
 Group: System/Servers
@@ -36,9 +36,6 @@ Source44: import.info
 Patch0: brltty-cppflags.patch
 Patch1: brltty-4.5-alt-fix-python-syntax.patch
 Patch2: fix-speechd-includes.patch
-
-# work around a bug in the install process:
-Requires(post): coreutils
 
 %define cython_ver 0.18
 
@@ -240,7 +237,7 @@ popd
 find . \( -path ./doc -o -path ./Documents \) -prune -o \
   \( -name 'README*' -o -name '*.txt' -o -name '*.html' -o \
      -name '*.sgml' -o -name '*.patch' -o \
-     \( -path './Bootdisks/*' -type f -perm +ugo=x \) \) -print |
+     \( -path './Bootdisks/*' -type f -perm /ugo=x \) \) -print |
 while read file; do
    mkdir -p doc/${file%%/*} && cp -rp $file doc/$file || exit 1
 done
@@ -387,6 +384,9 @@ tar xf ru_brltty.tar
 %endif
 
 %changelog
+* Tue May 21 2013 Dmitry V. Levin <ldv@altlinux.org> 4.5-alt3
+- Fixed "find -perm" usage.
+
 * Fri Apr 12 2013 Yuri N. Sedunov <aris@altlinux.org> 4.5-alt2
 - huge spec cleanup
 - new python3-module-brlapi subpackage

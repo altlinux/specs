@@ -1,16 +1,15 @@
 Name: debhelper
-Version: 9.20120830
+Version: 9.20130518
 Release: alt1
 
 Summary: Tools for Debian Packages
-
 Group: System/Configuration/Packaging
-License: GPL
+License: GPLv2+
 Url: http://packages.debian.org/unstable/devel/%name
-
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-Source: http://ftp.debian.org/debian/pool/main/d/%name/%{name}_%version.tar
+# ftp://ftp.debian.org/debian/pool/main/d/%name/%{name}_%version.tar.gz
+Source: %{name}_%version.tar
 
 BuildArch: noarch
 
@@ -21,7 +20,7 @@ BuildRequires: dpkg perl-Test-Pod po4a
 The packages contains helper utilities for Debian alien.
 
 %prep
-%setup -q -n %name
+%setup -n %name
 
 %build
 make -f debian/rules build
@@ -60,6 +59,9 @@ install -m 755 dh_*[^1-9] %buildroot%_bindir
 %_man7dir/*
 
 %changelog
+* Wed May 22 2013 Dmitry V. Levin <ldv@altlinux.org> 9.20130518-alt1
+- Updated to 9.20130518 (fixes "find -perm" usage).
+
 * Thu Sep 20 2012 Vitaly Lipatov <lav@altlinux.ru> 9.20120830-alt1
 - new version 9.20120830 (with rpmrb script)
 
