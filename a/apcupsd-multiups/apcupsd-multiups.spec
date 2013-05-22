@@ -1,5 +1,5 @@
 Name: apcupsd-multiups
-Version: 0.2
+Version: 0.3
 Release: alt1
 Packager: Sergey Y. Afonin <asy@altlinux.ru>
 
@@ -56,8 +56,13 @@ cp apcupsd-multiups.init         $RPM_BUILD_ROOT/%_initdir/%name
 %attr(0755,root,root) %config(noreplace) %_initdir/%name
 
 %changelog
+* Wed May 22 2013 Sergey Y. Afonin <asy@altlinux.ru> 0.3-alt1
+- New version
+- added condstop/condrestart/condreload/status to init script
+
 * Mon May 28 2012 Sergey Y. Afonin <asy@altlinux.ru> 0.2-alt1
-- new version
+- New version
+- fixed checking of configuration in init script
 
 * Fri May 04 2012 Sergey Y. Afonin <asy@altlinux.ru> 0.1-alt1
 - Initial build
