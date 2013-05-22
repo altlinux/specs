@@ -18,6 +18,7 @@
 %def_with lm32
 %def_with unicore32
 %def_without xtensa
+%def_with moxie
 
 %def_disable werror
 %def_enable sdl
@@ -37,17 +38,22 @@
 %def_enable blobs
 %def_enable uuid
 %def_enable smartcard_nss
+%def_disable libusb
 %def_enable usb_redir
-%def_disable opengl
+%def_enable vhost_net
+%def_enable vhost_scsi
+%def_disable glx
 %def_enable guest_agent
 %def_enable tools
 %def_enable spice
 %def_enable libiscsi
 %def_disable seccomp
 %def_disable glusterfs
+%def_enable gtk
+%def_enable tpm
+%def_enable libssh2
 
 %define audio_drv_list %{?_enable_oss:oss} %{?_enable_alsa:alsa} %{?_enable_sdl:sdl} %{?_enable_esound:esd} %{?_enable_pulseaudio:pa}
-%define audio_card_list ac97 es1370 sb16 adlib cs4231a gus hda
 
 %define _group vmusers
 %define rulenum 90
@@ -89,7 +95,7 @@
 
 %if_with mips
 %global target_list_system %target_list_system mips-softmmu mipsel-softmmu mips64-softmmu mips64el-softmmu
-%global target_list_user %target_list_user mips-linux-user mipsel-linux-user
+%global target_list_user %target_list_user mips-linux-user mipsel-linux-user mips64-linux-user mips64el-linux-user mipsn32-linux-user mipsn32el-linux-user
 %endif
 
 %if_with ppc
@@ -124,10 +130,15 @@
 %global target_list_system %target_list_system xtensa-softmmu xtensaeb-softmmu
 %global target_list_user %target_list_user xtensaeb-linux-user
 %endif
+
+%if_with moxie
+%global target_list_system %target_list_system moxie-softmmu
+%endif
+
 # }}}
 
 Name: qemu
-Version: 1.4.1
+Version: 1.5.0
 Release: alt1
 
 Summary: QEMU CPU Emulator
@@ -171,11 +182,14 @@ BuildRequires: libpixman-devel >= 0.18.4
 %{?_enable_uuid:BuildRequires: libuuid-devel}
 %{?_enable_smartcard_nss:BuildRequires: libnss-devel >= 3.12.8}
 %{?_enable_usb_redir:BuildRequires: libusbredir-devel >= 0.5}
-%{?_enable_opengl:BuildRequires: libGL-devel libX11-devel}
+%{?_enable_glx:BuildRequires: libGL-devel libX11-devel}
 %{?_enable_guest_agent:BuildRequires: glib2-devel python-base}
-%{?_enable_libiscsi:BuildRequires: libiscsi-devel >= 1.3.0}
+%{?_enable_libiscsi:BuildRequires: libiscsi-devel >= 1.7.0}
 %{?_enable_seccomp:BuildRequires: libseccomp-devel >= 1.0.0}
 %{?_enable_glusterfs:BuildRequires: glusterfs3-devel}
+%{?_enable_gtk:BuildRequires: libgtk+3-devel >= 3.0.0 libvte3-devel >= 0.32.0}
+%{?_enable_libssh2:BuildRequires: libssh2-devel >= 1.2.8}
+%{?_enable_libusb:BuildRequires: libusb-devel >= 1.0.13}
 
 %description
 QEMU is a fast processor emulator using dynamic translation to achieve
@@ -335,9 +349,15 @@ export CFLAGS="%optflags"
 	--disable-system \
 	--enable-nptl \
 	--enable-guest-base \
+	--disable-attr \
 	--disable-smartcard-nss \
 	--disable-usb-redir \
-	--disable-linux-aio
+	--disable-linux-aio \
+	--disable-linux-aio \
+	--disable-libusb \
+	--disable-libiscsi \
+	--disable-libssh2 \
+	--disable-gtk
 
 # Please do not touch this
 sed -i "/TARGET_ARM/ {
@@ -367,6 +387,8 @@ sed -i '/cpu_model =/ s,arm926,any,' linux-user/main.c
 	%{?_disable_curses:--disable-curses} \
 	%{subst_enable bluez} \
 	%{subst_enable vnc} \
+	%{subst_enable tpm} \
+	%{?_enable_gtk:--enable-gtk --with-gtkabi=3.0} \
 	%{?_disable_vnc_tls:--disable-vnc-tls} \
 	%{?_disable_vnc_sasl:--disable-vnc-sasl} \
 	%{?_disable_vnc_jpeg:--disable-vnc-jpeg} \
@@ -380,7 +402,6 @@ sed -i '/cpu_model =/ s,arm926,any,' linux-user/main.c
 	--disable-sparse \
 	--disable-strip \
 	--audio-drv-list="%audio_drv_list" \
-	--audio-card-list="%audio_card_list" \
 	--enable-mixemu \
 	--disable-xen \
 	--disable-brlapi \
@@ -389,10 +410,14 @@ sed -i '/cpu_model =/ s,arm926,any,' linux-user/main.c
 	--enable-kvm \
 	--enable-nptl \
 	--with-system-pixman \
+	%{?_enable_vhost_net:--enable-vhost-net} \
+	%{?_enable_vhost_scsi:--enable-vhost-scsi } \
 	%{?_enable_smartcard_nss:--enable-smartcard-nss} \
+	%{subst_enable libusb} \
 	%{?_enable_usb_redir:--enable-usb-redir} \
-	%{subst_enable opengl} \
+	%{subst_enable glx} \
 	%{subst_enable libiscsi} \
+	%{subst_enable libssh2} \
 	%{?_disable_guest_agent:--disable-guest-agent} \
 	%{subst_enable tools} \
 	--enable-guest-base \
@@ -407,7 +432,7 @@ sed -i 's/@GROUP@/%_group/g' qemu-kvm.control.in
 
 %define docdir %_docdir/%name-%version
 mv %buildroot%_docdir/qemu %buildroot%docdir
-install -m644 Changelog LICENSE TODO %buildroot%docdir/
+install -m644 LICENSE MAINTAINERS %buildroot%docdir/
 
 %if_enabled binfmt_misc
 find -regex '.*linux-user/qemu.*\.static' -exec install -m755 '{}' %buildroot%_bindir ';'
@@ -434,6 +459,7 @@ install -D -m 0644 %SOURCE9 %buildroot%_unitdir/%name-guest-agent.service
 install -D -p -m 0644 qemu.sasl %buildroot%_sysconfdir/sasl2/%name.conf
 %endif
 
+%find_lang %name
 
 #rm -f %buildroot%_datadir/*/openbios*
 rm -f %buildroot%_datadir/%name/pxe*rom
@@ -502,7 +528,7 @@ fi
 %_unitdir/%name-kvm.service
 /lib/systemd/kvm-modules-load
 
-%files system
+%files system -f %name.lang
 %_bindir/qemu
 %_bindir/qemu-kvm
 %_bindir/kvm
@@ -558,6 +584,12 @@ fi
 %_bindir/vscclient
 
 %changelog
+* Tue May 21 2013 Alexey Shabalin <shaba@altlinux.ru> 1.5.0-alt1
+- 1.5.0
+- build with libssh2
+- build with tpm
+- build with gtk3 ui
+
 * Mon May 06 2013 Alexey Shabalin <shaba@altlinux.ru> 1.4.1-alt1
 - 1.4.1
 
