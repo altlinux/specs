@@ -1,6 +1,6 @@
 Name: installer-feature-desktop-other-fs
-Version: 0.6
-Release: alt3
+Version: 0.7
+Release: alt1
 
 Summary: Mount existing filesystems too
 License: GPL
@@ -20,12 +20,13 @@ License: GPL
 Group: System/Configuration/Other
 Provides: installer-feature-other-fs
 Conflicts: installer-ltsp-school-stage2
+#Requires: installer-scripts-remount-stage2 >= 0.4-alt1
 
 %description stage2
 %summary
 
 %prep
-%setup -q
+%setup
 
 %install
 %makeinstall
@@ -34,6 +35,10 @@ Conflicts: installer-ltsp-school-stage2
 %_datadir/install2/preinstall.d/*
 
 %changelog
+* Wed May 22 2013 Michael Shigorin <mike@altlinux.org> 0.7-alt1
+- use cached data from installer-scripts-remount-stage2 >= 0.4-alt1
+  (see also #29005)
+
 * Thu Aug 04 2011 Mikhail Efremov <sem@altlinux.org> 0.6-alt3
 - stage2: Drop depend on installer-stage2.
 
