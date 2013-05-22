@@ -1,6 +1,6 @@
 Name: parallel
-Version: 20130222
-Release: alt2
+Version: 20130522
+Release: alt1
 
 Summary: A shell tool for executing jobs in parallel
 License: GPLv3
@@ -41,6 +41,12 @@ rm -r %buildroot%_defaultdocdir/%name/
 %_man1dir/*
 
 %changelog
+* Wed May 22 2013 Michael Shigorin <mike@altlinux.org> 20130522-alt1
+- new version (watch file uupdate)
+
+* Mon Apr 22 2013 Michael Shigorin <mike@altlinux.org> 20130422-alt1
+- new version (watch file uupdate)
+
 * Tue Apr 16 2013 Michael Shigorin <mike@altlinux.org> 20130222-alt2
 - buildreq (thus cleaned up extremely weird BRs from 2011)
 
