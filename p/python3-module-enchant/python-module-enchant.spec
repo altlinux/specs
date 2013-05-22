@@ -1,20 +1,20 @@
-Name: python-module-enchant
+Name: python3-module-enchant
 Version: 1.6.5
 Release: alt3
 # XXX this is ugly, need to change when python3 macros set developes
-%ifdef setup_python_module
-%setup_python_module enchant
+%ifdef setup_python3_module
+%setup_python3_module enchant
 %endif
 
 Summary: PyEnchant is a spellchecking library for Python
 License: GPLv2+
-Group: Development/Python
+Group: Development/Python3
 Url: http://packages.python.org/pyenchant/
 BuildArch: noarch
 
 Source: pyenchant-%version.tar
 
-BuildPreReq: python-devel rpm-build-python python-module-setuptools
+BuildPreReq: python3-devel rpm-build-python3 python3-module-setuptools
 BuildRequires: libenchant-devel
 
 %description
@@ -23,10 +23,10 @@ library with the flexibility of Python and a nice "Pythonic"
 object-oriented interface. It also aims to provide some higher-level
 functionality than is available in the C API.
 
-%ifdef setup_python_module
+%ifdef setup_python3_module
 %package gui
 Summary: PyEnchant GUI dialogs
-Group: Development/Python
+Group: Development/Python3
 %description gui
 PyEnchant GUI dialogs
 %endif
@@ -35,20 +35,20 @@ PyEnchant GUI dialogs
 %setup -q -n pyenchant-%version
 
 %build
-%python_build
+%python3_build
 
 %install
-%python_install
+%python3_install
 
 %files
-%python_sitelibdir/enchant
-%exclude %python_sitelibdir/enchant/checker/*CheckerDialog*
-%exclude %python_sitelibdir/enchant/checker/tests.py
+%python3_sitelibdir/enchant
+%exclude %python3_sitelibdir/enchant/checker/*CheckerDialog*
+%exclude %python3_sitelibdir/enchant/checker/tests.py
 
-%ifdef setup_python_module
+%ifdef setup_python3_module
 %files gui
-%python_sitelibdir/enchant/checker/*CheckerDialog*
-%python_sitelibdir/enchant/checker/tests.py
+%python3_sitelibdir/enchant/checker/*CheckerDialog*
+%python3_sitelibdir/enchant/checker/tests.py
 %endif
 
 %changelog
