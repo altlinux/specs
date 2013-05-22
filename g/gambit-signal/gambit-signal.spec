@@ -1,6 +1,6 @@
 Name: gambit-signal
 Version: 1.0
-Release: alt10
+Release: alt11
 Summary: UNIX signal handling library for Gambit-C Scheme programming system
 License: GPLv3+
 Group: Development/Scheme
@@ -44,6 +44,10 @@ This package contains the library link file
 %{_includedir}/gambit/libgambc-signal.c
 
 %changelog
+* Wed May 22 2013 Paul Wolneykien <manowar@altlinux.org> 1.0-alt11
+- Add the proc to access the signal number field in a signal
+  exception.
+
 * Mon May 20 2013 Paul Wolneykien <manowar@altlinux.org> 1.0-alt10
 - Bundle sources in plain tar.
 - Add the test program.
