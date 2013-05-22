@@ -1,7 +1,7 @@
 # Copyright (C) 2006-2012  Dmitry V. Levin <ldv@altlinux.org>
 
 Name: gear
-Version: 2.0.2
+Version: 2.0.3
 Release: alt1
 
 Summary: Get Every Archive from git package Repository
@@ -58,6 +58,11 @@ ln -s gear-store-tags.1 %buildroot%_man1dir/gear-update-tag.1
 %doc QUICKSTART* ABOUT*
 
 %changelog
+* Wed May 22 2013 Dmitry V. Levin <ldv@altlinux.org> 2.0.3-alt1
+- gear-update-src-{cpio,gem,tar,zip}: set safe permissions
+  of the unpacked directory tree.
+- gear: fixed --export-dir support (by Paul Wolneykien).
+
 * Mon Jan 21 2013 Dmitry V. Levin <ldv@altlinux.org> 2.0.2-alt1
 - Fixed typo in specsubst support.
 
