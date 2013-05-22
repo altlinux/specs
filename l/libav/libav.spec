@@ -80,7 +80,7 @@
 # }}}
 
 Name: libav
-Version: 0.8.6
+Version: 0.8.7
 Release: alt1
 Epoch: 1
 
@@ -598,6 +598,9 @@ bzip2 --best --force --keep -- Changelog
 
 # {{{ Changelog
 %changelog
+* Wed May 22 2013 Sergey Bolshakov <sbolshakov@altlinux.ru> 1:0.8.7-alt1
+- 0.8.7 released
+
 * Sun Mar 24 2013 Sergey Bolshakov <sbolshakov@altlinux.ru> 1:0.8.6-alt1
 - 0.8.6 released
 
