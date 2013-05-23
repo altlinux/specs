@@ -1,6 +1,6 @@
 Summary: Scientific Python Development Environment
 Name: spyder
-Version: 2.1.13.1
+Version: 2.2.0
 Release: alt1
 Source0: http://spyderlib.googlecode.com/files/%name-%version.zip
 Source1: %name.desktop
@@ -9,10 +9,13 @@ Group: Development/Python
 Url: http://spyderlib.googlecode.com/
 
 %setup_python_module spyderlib
+%add_python_req_skip _winreg
 
 BuildArch: noarch
 Requires: python-module-matplotlib-qt4
 Requires: python-module-%name-plugins
+# IPython bug
+Requires: python-module-zmq
 
 # Automatically added by buildreq on Sun Jul 29 2012
 # optimized out: python-base python-devel python-module-BeautifulSoup python-module-Pygments python-module-docutils python-module-jinja2 python-module-setuptools python-module-simplejson python-modules python-modules-compiler python-modules-email python-modules-encodings
@@ -83,6 +86,7 @@ install -D -m644 spyderlib/images/spyder.svg %buildroot%_iconsdir/hires/scalable
 %doc README
 %_desktopdir/*.desktop
 %_iconsdir/hires/*/apps/*
+%_pixmapsdir/spyder.png
 %_bindir/*
 %python_sitelibdir/%name-*egg-info
 
@@ -95,6 +99,10 @@ install -D -m644 spyderlib/images/spyder.svg %buildroot%_iconsdir/hires/scalable
 %python_sitelibdir/spyderplugins
 
 %changelog
+* Mon May 20 2013 Fr. Br. George <george@altlinux.ru> 2.2.0-alt1
+- Autobuild version bump to 2.2.0
+- Skip _winreg module dependency
+
 * Sun Mar 31 2013 Fr. Br. George <george@altlinux.ru> 2.1.13.1-alt1
 - Autobuild version bump to 2.1.13.1
 
