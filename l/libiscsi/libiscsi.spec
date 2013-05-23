@@ -1,5 +1,5 @@
 Name: libiscsi
-Version: 1.6.0
+Version: 1.7.0
 Release: alt1
 
 Summary: iSCSI client library
@@ -8,6 +8,8 @@ Group: System/Libraries
 
 Url: https://github.com/sahlberg/libiscsi
 Source: %name-%version.tar
+Patch: %name-%version-%release.patch
+
 Packager: Michael Shigorin <mike@altlinux.org>
 
 BuildRequires: libpopt-devel
@@ -16,8 +18,26 @@ BuildRequires: libpopt-devel
 libiscsi is a library for attaching to iSCSI resources
 across a network.
 
+%package utils
+Summary: iSCSI Client Utilities
+Group: System/Configuration/Networking
+License: GPLv2+
+
+%description utils
+This package provides a set of assorted utilities to connect to iSCSI
+servers without having to set up the Linux iSCSI initiator.
+
+%package devel
+Summary: iSCSI client development libraries
+Group: Development/Other
+Requires: libiscsi = %version-%release
+
+%description devel
+The libiscsi-devel package includes the header files for libiscsi.
+
 %prep
 %setup
+%patch -p1
 
 %build
 ./autogen.sh
@@ -29,36 +49,21 @@ across a network.
 
 %files
 %doc COPYING README TODO
-%_libdir/libiscsi.so.*
-
-%package utils
-Summary: iSCSI Client Utilities
-Group: System/Configuration/Networking
-License: GPLv2+
-
-%description utils
-This package provides a set of assorted utilities to connect to iSCSI
-servers without having to set up the Linux iSCSI initiator.
+%_libdir/%name.so.*
 
 %files utils
-%_bindir/ld_iscsi.so
-%_bindir/iscsi-ls
-%_bindir/iscsi-inq
-
-%package devel
-Summary: iSCSI client development libraries
-Group: Development/Other
-Requires: libiscsi = %version-%release
-
-%description devel
-The libiscsi-devel package includes the header files for libiscsi.
+%_bindir/*
 
 %files devel
-%_includedir/iscsi/iscsi.h
-%_includedir/iscsi/scsi-lowlevel.h
-%_libdir/libiscsi.so
+%_includedir/*
+%_libdir/%name.so
+%_pkgconfigdir/%name.pc
 
 %changelog
+* Wed May 22 2013 Alexey Shabalin <shaba@altlinux.ru> 1.7.0-alt1
+- 1.7.0
+- add pkgconfig file to devel package
+
 * Mon Sep 10 2012 Alexey Shabalin <shaba@altlinux.ru> 1.6.0-alt1
 - 1.6.0
 
