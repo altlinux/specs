@@ -25,7 +25,7 @@
 %endif
 
 Name: samba
-Version: 4.0.5
+Version: 4.0.6
 Release: alt1
 Group: System/Servers
 Summary: The Samba4 CIFS and AD client and server suite
@@ -1059,6 +1059,9 @@ TDB_NO_FSYNC=1 %make_build test
 %_man8dir/pam_winbind.8*
 
 %changelog
+* Thu May 23 2013 Alexey Shabalin <shaba@altlinux.ru> 4.0.6-alt1
+- 4.0.6
+
 * Tue Apr 09 2013 Alexey Shabalin <shaba@altlinux.ru> 4.0.5-alt1
 - 4.0.5
 
