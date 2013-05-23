@@ -2,7 +2,7 @@
 
 Name: kdenlive
 Version: 0.9.6
-Release: alt1
+Release: alt2
 
 Summary: KDE Non Linear Video Editor
 Summary(ru_RU.utf8): Редактор нелинейного видео монтажа для KDE
@@ -11,7 +11,7 @@ License: GPL
 Group: Video
 URL: http://kdenlive.org/
 
-Requires: mlt-utils >= %req_ver_mlt frei0r-plugins /usr/bin/ffmpeg
+Requires: mlt-utils >= %req_ver_mlt frei0r-plugins /usr/bin/avconv /usr/bin/avplay
 Requires: recordmydesktop dvdauthor dvgrab genisoimage
 Requires: icon-theme-oxygen
 
@@ -65,6 +65,9 @@ mv altlinux/doc .
 %_K4xdg_mime/*
 
 %changelog
+* Thu May 23 2013 Sergey V Turchin <zerg@altlinux.org> 0.9.6-alt2
+- fix requires
+
 * Mon Apr 15 2013 Sergey V Turchin <zerg@altlinux.org> 0.9.6-alt1
 - new version
 
