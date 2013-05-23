@@ -1,6 +1,6 @@
 Name: dropbear
 Summary: Relatively small SSH 2 server
-Version: 2013.56
+Version: 2013.58
 Release: alt1
 License: MIT-style
 Group: System/Servers
@@ -75,6 +75,9 @@ install -D dropbearkey.8 %buildroot%_man8dir/dropbearkey.8
 %_bindir/scp
 
 %changelog
+* Mon May 20 2013 Fr. Br. George <george@altlinux.ru> 2013.58-alt1
+- Autobuild version bump to 2013.58
+
 * Mon Apr 01 2013 Fr. Br. George <george@altlinux.ru> 2013.56-alt1
 - Autobuild version bump to 2013.56
 
