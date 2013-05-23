@@ -1,5 +1,5 @@
 Name:     apt-repo
-Version:  1.1.2
+Version:  1.1.3
 Release:  alt1
 
 Summary:  Script for manipulation APT repository list
@@ -36,6 +36,12 @@ gzip %buildroot%_man1dir/%name.1
 %doc %_man1dir/%{name}*
 
 %changelog
+* Thu May 23 2013 Andrey Cherepanov <cas@altlinux.org> 1.1.3-alt1
+- Add arepo 2.0 source too on adding x86_64 branch
+- Show only one warning on non-existing source removal
+- Add official keys for p6 and p7 brahches
+- Display warning about unsupported command
+
 * Sat Apr 27 2013 Andrey Cherepanov <cas@altlinux.org> 1.1.2-alt1
 - Add support for branches t6, p7, t7
 - Use apt-repo clean instead clear
