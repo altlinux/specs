@@ -2,8 +2,8 @@
 %define rel r1
 
 Name: python-module-%_name
-Version: 3.7.4
-Release: alt1.%rel.1.1
+Version: 3.7.15.2
+Release: alt1.%rel
 
 Summary: Another Python SQLite Wrapper
 License: zlib/libpng License
@@ -38,6 +38,9 @@ complete SQLite API into Python.
 %doc doc
 
 %changelog
+* Thu May 23 2013 Alexey Shabalin <shaba@altlinux.ru> 3.7.15.2-alt1.r1
+- 3.7.15.2-r1
+
 * Mon Apr 16 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 3.7.4-alt1.r1.1.1
 - Rebuild to remove redundant libpython2.7 dependency
 
