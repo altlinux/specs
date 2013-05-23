@@ -9,8 +9,8 @@
 %def_enable ibus
 
 Name: cinnamon-control-center
-Version: %ver_major.0
-Release: alt2
+Version: %ver_major.1
+Release: alt1
 
 Summary: Cinnamon Control Center
 License: GPLv2+
@@ -183,6 +183,9 @@ you'll want to install this package.
 
 
 %changelog
+* Tue May 21 2013 Vladimir Didenko <cow@altlinux.org> 1.8.1-alt1
+- 1.8.1
+
 * Thu May 16 2013 Vladimir Didenko <cow@altlinux.org> 1.8.0-alt2
 - Replace gnome_rr_labeler calls by cc_rr_labeler
 - Fix bluetooth panel
