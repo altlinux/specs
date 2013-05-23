@@ -1,7 +1,7 @@
 %define bname busybox
 Name: %bname-source
 Version: 1.21.0
-Release: alt13
+Release: alt14
 Summary: Sources of %bname
 License: GPLv2
 Group: Development/Other
@@ -53,6 +53,9 @@ tar -chJf %buildroot%_usrsrc/%bname-%version.tar.xz .
 
 
 %changelog
+* Thu May 23 2013 Led <led@altlinux.ru> 1.21.0-alt14
+- upstream updates and fixes
+
 * Mon May 20 2013 Led <led@altlinux.ru> 1.21.0-alt13
 - reverts for fix build 'find' applet
 
