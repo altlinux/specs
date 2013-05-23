@@ -1,7 +1,7 @@
 Summary: OCRFeeder is a document layout analysis and optical character recognition system
 Name: ocrfeeder
 Version: 0.7.9
-Release: alt3
+Release: alt4
 License: GPLv3+
 URL: http://live.gnome.org/OCRFeeder
 Group: Graphics
@@ -18,8 +18,8 @@ BuildRequires: python-devel
 Requires: unpaper %packagename = %version
 
 # Automatically added by buildreq on Thu Apr 12 2012
-# optimized out: perl-Encode perl-XML-Parser pkg-config python-base python-devel python-module-distribute python-module-libxml2 python-module-pygobject python-module-pygtk python-modules python-modules-compiler python-modules-encodings
-BuildRequires: glib2-devel gnome-common gnome-doc-utils intltool python-module-Reportlab python-module-enchant python-module-pygnome-extras python-module-pygoocanvas python-module-sane time
+# optimized out: perl-Encode perl-XML-Parser pkg-config python-base python-devel python-module-distribute python-module-libxml2 python-module-pygobject python-modules python-modules-compiler python-modules-encodings
+BuildRequires: glib2-devel gnome-common gnome-doc-utils intltool python-module-Reportlab python-module-enchant python-module-pygnome-extras python-module-pygoocanvas python-module-sane time python-module-pygtk 
 
 %description
 OCRFeeder is a document layout analysis and optical character
@@ -61,6 +61,9 @@ Supplemental module for %name, %summary
 %python_sitelibdir/ocrfeeder
 
 %changelog
+* Thu May 23 2013 Fr. Br. George <george@altlinux.ru> 0.7.9-alt4
+- Fix buildreq
+
 * Sat Apr 28 2012 Fr. Br. George <george@altlinux.ru> 0.7.9-alt3
 - Unpaper black filter threshold customization
 - Window size autoadjustment tune
