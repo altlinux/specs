@@ -5,7 +5,7 @@
 
 %define module_name	nvidia
 %define module_version	319.17
-%define module_release	alt1
+%define module_release	alt2
 %define flavour		std-def
 
 %setup_kernel_module %flavour
@@ -88,7 +88,7 @@ Conflicts: 	kernel-modules-%module_name-%kversion-%flavour-%krelease > %version-
 Conflicts: modutils < 2.4.27-alt4
 
 PreReq: kernel-image-%flavour = %kepoch%kversion-%krelease
-#Requires:       NVIDIA_GLX = %version
+Requires: kernel-modules-drm-%flavour = %kepoch%kversion-%krelease
 Requires:       nvidia_glx_%version
 %if "%legacy1" != "%nil"
 Requires:       nvidia_glx_%legacy1
@@ -190,6 +190,9 @@ fi
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Thu May 23 2013 Sergey V Turchin <zerg at altlinux dot org> 319.17-alt2..
+- require kernel-modules-drm
 
 * Tue May 14 2013 Sergey V Turchin <zerg at altlinux dot org> 319.17-alt1..
 - new release (319.17)
