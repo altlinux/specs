@@ -2,7 +2,7 @@
 
 Name: os-prober
 Version: 1.52
-Release: alt1
+Release: alt2
 
 Summary: Operating systems detector
 License: GPLv2+
@@ -12,8 +12,7 @@ Url: http://packages.debian.org/sid/os-prober
 Packager: Vitaly Kuznetsov <vitty@altlinux.ru>
 Source0: %name-%version.tar
 
-Patch1: %name-1.41-evms-hackaround-alt.patch
-Patch2: %name-1.42-UUID-rootdev-alt.patch
+Patch: %name-1.42-UUID-rootdev-alt.patch
 
 %description
 This is a small package that may be depended on by any bootloader
@@ -22,8 +21,7 @@ them, and work out how to boot other linux installs.
 
 %prep
 %setup
-%patch1 -p2
-%patch2 -p1
+%patch -p1
 
 %build
 %make_build
@@ -62,6 +60,9 @@ mkdir -p %buildroot%_localstatedir/%name
 %_localstatedir/%name
 
 %changelog
+* Thu May 23 2013 Michael Shigorin <mike@altlinux.org> 1.52-alt2
+- dropped evms related hack that is long irrelevant (see #28181)
+
 * Fri May 11 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 1.52-alt1
 - 1.52
 
