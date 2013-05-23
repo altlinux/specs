@@ -2,6 +2,7 @@
 %define set_enable() %{expand:%%force_enable %{1}} %{expand:%%undefine _disable_%{1}}
 
 %def_disable debug
+%def_disable vdpau
 
 %def_disable mmx
 %def_disable sse
@@ -22,7 +23,7 @@
 
 Name: mlt
 Version: 0.8.8
-Release: alt1
+Release: alt2
 Summary: Multimedia framework designed for television broadcasting
 License: GPLv3
 Group: Video
@@ -41,7 +42,10 @@ BuildRequires: ImageMagick-tools gcc-c++ jackit-devel ladspa_sdk libSDL-devel
 BuildRequires: libSDL_image-devel libX11-devel libavdevice-devel libavformat-devel
 BuildRequires: libquicktime-devel libsamplerate-devel libsox-devel libswscale-devel
 BuildRequires: libxml2-devel kde4libs-devel libqt4-devel swig python-devel
-BuildRequires: frei0r-devel libalsa-devel libvdpau-devel
+BuildRequires: frei0r-devel libalsa-devel
+%if_enabled vdpau
+BuildRequires: libvdpau-devel
+%endif
 
 %description
 %Name is a multimedia framework designed for television broadcasting.
@@ -117,7 +121,11 @@ export CC=gcc CXX=g++ CFLAGS="%optflags" QTDIR=%_qt4dir
 	--luma-compress \
 	--enable-motion-est \
 	--avformat-swscale \
+	%if_enabled vdpau
 	--avformat-vdpau \
+	%else
+	--avformat-no-vdpau \
+	%endif
 	%{subst_enable mmx} \
 	%{subst_enable sse} \
 	%{subst_enable sse2} \
@@ -163,6 +171,9 @@ install -pm 0755 src/swig/python/_%name.so %buildroot%python_sitelibdir/
 %python_sitelibdir/*
 
 %changelog
+* Thu May 23 2013 Sergey V Turchin <zerg@altlinux.org> 0.8.8-alt2
+- disable VDPAU by default ( http://www.kdenlive.org/mantis/view.php?id=3070 )
+
 * Thu Jan 31 2013 Sergey V Turchin <zerg@altlinux.org> 0.8.8-alt1
 - new version
 
