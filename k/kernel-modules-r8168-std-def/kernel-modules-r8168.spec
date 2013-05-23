@@ -1,6 +1,6 @@
 %define module_name	r8168
 %define module_version	8.035.00
-%define module_release	alt3
+%define module_release	alt4
 
 %define flavour		std-def
 
@@ -37,8 +37,6 @@ Requires: r8168-blacklist
 Provides:  kernel-modules-%module_name-%kversion-%flavour-%krelease = %version-%release kernel-modules-rtl8168-%flavour
 Obsoletes: kernel-modules-rtl8168-%flavour
 Conflicts: kernel-modules-rtl8168-%flavour
-Conflicts: kernel-modules-%module_name-%kversion-%flavour-%krelease < %version-%release kernel-modules-rtl8168-%kversion-%flavour-%krelease
-Conflicts: kernel-modules-%module_name-%kversion-%flavour-%krelease > %version-%release kernel-modules-rtl8168-%kversion-%flavour-%krelease
 
 %description
 RTL8168 is the Linux device driver released for RealTek RTL8168B/8111B,
@@ -66,6 +64,9 @@ install -Dp -m0744 src/%module_name.ko %buildroot/%module_dir/%module_name.ko
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Thu May 23 2013 Anton V. Boyarshinov <boyarsh@altlinux.org> 8.035.00-alt4
+- conflicts with other versions removed
 
 * Wed Feb 20 2013 Anton V. Boyarshinov <boyarsh@altlinux.org> 8.035.00-alt3
 - build with kernel 3.8 fixed
