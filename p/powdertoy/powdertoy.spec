@@ -1,5 +1,5 @@
 Name: powdertoy
-Version: 263
+Version: 270
 Release: alt1
 Summary: Classic 'falling sand' physics sandbox game
 Group: Games/Educational
@@ -25,7 +25,7 @@ heat!
 %patch -p0
 cat > %name.sh <<@@@
 #!/bin/sh
-test -d "\$HOME/.powdertoy" || 
+test -d "\$HOME/.powdertoy" ||
 { rm -f "\$HOME/.powdertoy"; mkdir -p "\$HOME/.powdertoy/Brushes"; }
 cd "\$HOME/.powdertoy" && \$0.bin
 @@@
@@ -57,14 +57,14 @@ scons -j %__nprocs --lin
 %endif
 
 # TODO this doesn't compile for build263
-# --opengl 
+# --opengl
 
 %install
 # TODO MIME (it can install mime locally!)
 install -D build/powder*-legacy %buildroot%_gamesbindir/%name.bin
 install -m755 %name.sh %buildroot%_gamesbindir/%name
 install -D %name.desktop %buildroot%_desktopdir/%name.desktop
-for N in powder-*.png; do 
+for N in powder-*.png; do
 	install -D $N %buildroot%_iconsdir/hicolor/$(basename ${$##*-} .png)/apps/%nameodone.png
 done
 
@@ -75,6 +75,9 @@ done
 %_iconsdir/hicolor/*/apps/*
 
 %changelog
+* Mon May 20 2013 Fr. Br. George <george@altlinux.ru> 270-alt1
+- Autobuild version bump to 270
+
 * Wed Apr 03 2013 Fr. Br. George <george@altlinux.ru> 263-alt1
 - Switch versioning from version to build number
 - Autobuild version bump to 263
