@@ -1,20 +1,19 @@
 Summary: IPsec-Tools package use the IPsec functionality in the linux-2.5+ kernels.
 Name: ipsec-tools
-Version: 0.8.0
-Release: alt2
+Version: 0.8.1
+Release: alt1
 URL: http://ipsec-tools.sourceforge.net/
 License: BSD
 Group: Security/Networking
 Requires: libipsec = %version-%release
 
-Packager: Dmitry Lebkov <dlebkov@altlinux.ru>
-
-Source0: ftp://ftp.netbsd.org/pub/NetBSD/misc/ipsec-tools/0.7/ipsec-tools-%{version}.tar.bz2
+Source0: http://sourceforge.net/projects/ipsec-tools/files/ipsec-tools/%{version}/ipsec-tools-%{version}.tar
 Source1: %name-racoon.init
 Source2: %name-racoon.sysconfig
 Source3: p1_up_down
 Source4: racoon.conf
 Source5: racoon.pam
+Source6: racoon.service
 
 # patches from ipsec-tools-0.8.0-2.fc16.src.rpm
 # Ignore acquires that are sent by kernel for SAs that are already being
@@ -43,7 +42,7 @@ Patch104: ipsec-tools-0.7.2-alt-gcc44-warns.patch
 Patch105: ipsec-tools-0.8.0-alt-wildcard-psk.patch
 
 #optimized out: libcom_err-devel libkrb5-devel
-BuildRequires: flex libaudit-devel libpam-devel libreadline-devel libselinux-devel libssl-devel
+BuildRequires: flex libaudit-devel libpam-devel libreadline-devel libselinux-devel libssl-devel libldap-devel
 
 %description
 This is the IPsec-Tools package.  You need this package in order to
@@ -111,6 +110,7 @@ sed -i 's|-Werror||g' configure*
 	--enable-audit \
 	--enable-gssapi \
 	--with-libpam \
+	--with-libldap \
 	--enable-adminport=yes
 
 %make
@@ -121,6 +121,7 @@ sed -i 's|-Werror||g' configure*
 mkdir -p %buildroot/%_sysconfdir/racoon/certs
 mkdir -p %buildroot/%_sysconfdir/racoon/scripts
 mkdir -p %buildroot/%_initdir
+mkdir -p %buildroot/%_unitdir
 mkdir -p %buildroot/%_sysconfdir/sysconfig
 mkdir -p %buildroot/%_sysconfdir/pam.d
 install -p -m0600 src/racoon/samples/psk.txt %buildroot%_sysconfdir/racoon/
@@ -129,6 +130,7 @@ install -p -m0700 %SOURCE3 %buildroot%_sysconfdir/racoon/scripts/
 install -m 0755 %SOURCE1 %buildroot%_initdir/racoon
 install -m 0644 %SOURCE2 %buildroot%_sysconfdir/sysconfig/racoon
 install -p -m0644 %SOURCE5 %buildroot%_sysconfdir/pam.d/racoon
+install -p -m0644 %SOURCE6 %buildroot%_unitdir/racoon.service
 
 %preun
 %preun_service racoon
@@ -138,6 +140,7 @@ install -p -m0644 %SOURCE5 %buildroot%_sysconfdir/pam.d/racoon
 
 %files
 %_initdir/racoon
+%_unitdir/racoon.service
 %config(noreplace) %_sysconfdir/racoon/racoon.conf
 %config(noreplace) %_sysconfdir/racoon/psk.txt
 %config(noreplace) %_sysconfdir/sysconfig/racoon
@@ -173,6 +176,11 @@ install -p -m0644 %SOURCE5 %buildroot%_sysconfdir/pam.d/racoon
 
 
 %changelog
+* Thu May 23 2013 Alexey Shabalin <shaba@altlinux.ru> 0.8.1-alt1
+- 0.8.1
+- add systemd unit file
+- build with ldap support
+
 * Wed Feb 20 2013 Denis Baranov <baraka@altlinux.ru> 0.8.0-alt2
 - add compile option enable-adminport=yes
 
