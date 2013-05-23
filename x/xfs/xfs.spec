@@ -1,7 +1,7 @@
 %define xf86 XFree86
 
 Name: xfs
-Version: 1.1.2
+Version: 1.1.3
 Release: alt1
 Serial: 1
 Summary: X font server
@@ -69,6 +69,9 @@ install -pD -m644 %name.config %buildroot%_sysconfdir/X11/fs/config
 %_man1dir/*
 
 %changelog
+* Mon May 20 2013 Fr. Br. George <george@altlinux.ru> 1:1.1.3-alt1
+- Autobuild version bump to 1.1.3
+
 * Mon Aug 20 2012 Fr. Br. George <george@altlinux.ru> 1:1.1.2-alt1
 - Autobuild version bump to 1.1.2
 - Fix buildreq
