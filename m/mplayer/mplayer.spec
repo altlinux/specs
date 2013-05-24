@@ -6,12 +6,12 @@
 %define subst_o_pre() %{expand:%%{?_enable_%{2}:%{1}%{2},}}
 %define subst_o_post() %{expand:%%{?_enable_%{1}:%{1}%{2},}}
 
-#define prerel rc2try2
-%define svnrev 32772
+%define prerel %nil
+#define svnrev 32772
 %define lname mplayer
 %define Name MPlayer
-%define rel 35
-%define subrel 11
+%define rel 1
+%define subrel %nil
 
 #---------------------- BEGIN OF PARAMETERS -------------------------------------
 
@@ -23,17 +23,17 @@
 %def_disable lame_lavc
 %def_enable gui
 %def_disable gtk1
-%def_enable largefiles
 %def_enable termcap
 %def_enable termios
 %def_enable iconv
+%def_enable shm
 %def_enable langinfo
 %def_enable lirc
 %def_disable lircc
 %def_enable joystick
+%def_enable apple_ir
 %def_enable xf86keysym
 %def_enable tv
-%def_disable tv_bsdbt848
 %def_disable tv_v4l1
 %def_enable tv_v4l2
 %def_enable v4l2
@@ -41,13 +41,14 @@
 %def_disable radio_v4l1
 %def_enable radio_v4l2
 %def_enable radio_capture
-%def_disable radio_bsdbt848
-%def_disable pvr
+%def_enable pvr
 %def_enable rtc
 %def_enable network
 %def_disable winsock2
 %def_enable smb
 %def_enable live
+%def_enable vcd
+%def_enable bluray
 %def_enable dvdnav
 %def_enable dvdread
 %def_disable dvdread_int
@@ -58,17 +59,16 @@
 %def_enable unrarexec
 %def_enable osdmenu
 %def_enable sortsub
-%def_disable fribidi
+%def_enable fribidi
 %def_enable enca
-%def_disable inet6
-%def_enable gethostbyname2
+%def_enable inet6
+%def_disable sctp
 %def_enable ftp
 %def_disable vstream
 %def_enable pthreads
 %def_enable ass
 %def_disable ass_int
 %def_disable rpath
-%def_enable bluray
 %def_enable cddb
 %def_enable librtmp
 %def_disable nemesi
@@ -78,6 +78,7 @@
 %def_enable gif
 %def_enable png
 %def_enable jpeg
+%def_enable openjpeg
 %def_enable libcdio
 %def_enable lzo
 %def_enable win32
@@ -85,11 +86,13 @@
 %def_enable xanim
 %def_enable real
 %def_enable xvid
-%def_disable xvid_lavc
+%def_enable xvid_lavc
 %def_enable x264
 %def_disable x264_lavc
 %def_enable ffmpeg
 %def_disable shared_ffmpeg
+%def_enable postproc
+%def_disable vf_lavfi
 %def_disable libavcodec_mpegaudio_hp
 %def_enable faad
 %def_disable tremor_internal
@@ -101,9 +104,10 @@
 %def_disable faac
 %def_disable faac_lavc
 %def_enable ladspa
-%def_disable libbs2b
+%def_enable bs2b
 %def_enable dca
 %def_enable libdv
+%def_enable crystalhd
 %def_enable mad
 %def_disable toolame
 %def_disable twolame
@@ -120,8 +124,7 @@
 %def_enable libgsm
 %def_enable amrnb
 %def_enable amrwb
-%def_disable libopenjpeg
-%def_disable libvpx_lavc
+%def_enable libvpx_lavc
 
 # Video output:
 %def_disable vidix
@@ -158,13 +161,12 @@
 %def_disable zr
 %def_disable bl
 %def_disable tdfxvid
-%def_enable tga
+%def_disable tga
 %def_enable pnm
 %def_enable md5sum
 %def_enable vdpau
 %def_disable matrixview
 %def_enable mpg123
-%def_disable quartz
 %def_enable yuv4mpeg
 %def_disable xvr100
 
@@ -188,8 +190,7 @@
 # Miscellaneous options:
 %def_enable cpu_detection
 %def_enable yasm
-%define ccomp gcc
-%define asm as
+#define asm as
 %define charset UTF-8
 %define language all
 
@@ -215,12 +216,10 @@
 
 # Other parameters
 %def_enable nls
-%def_without soundwrapper
 %def_with htmldocs
 %def_with tools
 %define default_vo %{subst_o xv}%{subst_o sdl}%{subst_o gl2}%{subst_o gl}%{subst_o x11}%{subst_o_pre x vidix}%{subst_o mga}%{subst_o dfbmga}%{subst_o tdfxfb}%{subst_o 3dfx}%{subst_o s3fb}%{subst_o_pre c vidix}%{subst_o_post fbdev 2}%{subst_o vesa}%{subst_o caca}%{subst_o aa}null
 %define default_ao %{subst_o alsa}%{subst_o oss}%{subst_o openal}%{subst_o sdl}%{subst_o pulse}%{subst_o nas}null
-#define odml_chunklen 0x40000000
 
 # ARM
 #%%def_disable armv5te
@@ -237,7 +236,6 @@
 %if_disabled tv
 %set_disable v4l1
 %set_disable v4l2
-%set_disable bsdbt848
 %set_disable pvr
 %endif
 
@@ -299,12 +297,11 @@
 
 
 Name: %lname
-Version: 1.0
+Version: 1.1.1
+Release: alt1
 %ifdef svnrev
-Release: alt%rel.%svnrev.%subrel
 %define pkgver svn-r%svnrev
 %else
-Release: alt%rel
 %define pkgver %version%prerel
 %endif
 Summary: Media player
@@ -326,32 +323,15 @@ Obsoletes: %Name-fonts
 %else
 Requires: %name-fonts
 %endif
-
-Source0: %lname-%pkgver.tar
+Source0: %Name-%pkgver.tar
 # register console mplayer as mime handler
-Source2: mplayer-console.desktop
-Source3: %lname.sh
+Source2: %lname.desktop
 Source4: standard-1.9.tar
 Source5: %lname.conf.in
 Source6: mp_help2msg.awk
 Source7: mp_msg2po.awk
-Patch0: %lname-svn-r32566-subreader.patch
-Patch1: %lname-svn-r29766-dirac.patch
-Patch2: %lname-dvd-ru-svn19389.patch
-Patch3: %Name-1.0pre4-alt-explicit_gif.patch
-Patch4: %lname-svn-r26450-gui.patch
-Patch5: %lname-svn-r32603-desktop.patch
-Patch8: %lname-svn-r23722-VIDM-win32-codec.patch
-# pack for history but don't apply
-Patch12: %lname-uni-svn26991.patch
-Patch13: %lname-svn-r32566-vbe.patch
-
-Patch100: %name-%pkgver-alt-nls.patch
-Patch101: %name-%version-alt-changes.patch
-Patch102: %name-1.0-alt-libpng15.patch
-
-# Automatically added by buildreq on Wed May 30 2007
-#BuildRequires: aalib-devel docbook-dtds docbook-style-xsl esound-devel gcc-c++ kdelibs ladspa_sdk libarts-devel libaudio-devel libavformat-devel libcaca-devel libcdparanoia-devel libdv-devel libdvdnav-devel libdvdread-devel libenca-devel libfribidi-devel libgpm-devel libgtk+2-devel libjpeg-devel liblirc-devel liblive555-devel liblzo2-devel libmesa-devel libmpcdec-devel libopenal-devel libpostproc-devel libpulseaudio-devel libSDL-devel libSDL_image-devel libslang-devel libsmbclient-devel libspeex-devel libswscale-devel libungif-devel libvidix-devel libXinerama-devel libxmms-devel libXvMC-devel libXxf86dga-devel subversion svgalib-devel xsltproc
+Patch0: %name-%version-%release.patch
+Patch1: %name-%version-nls.patch
 
 BuildRequires: %awk libncurses-devel libslang-devel zlib-devel
 BuildRequires: cpp >= 3.3 gcc >= 3.3 gcc-c++ >= 3.3
@@ -361,12 +341,15 @@ BuildRequires: cpp >= 3.3 gcc >= 3.3 gcc-c++ >= 3.3
 %{?_enable_termcap:BuildRequires: libtinfo-devel}
 %{?_enable_smb:BuildRequires: libsmbclient-devel >= 3.0.3}
 %{?_enable_live:BuildRequires: liblive555-devel >= 0.0.0-alt0.2006.03.03}
+%{?_enable_bluray:BuildRequires: libbluray-devel}
 %{?_enable_dvdnav:BuildRequires: libdvdnav-devel >= 0.1.10-alt4}
 %{?_enable_dvdread:BuildRequires: libdvdread-devel}
 %{?_enable_cdparanoia:BuildRequires: libcdparanoia-devel}
 %{?_enable_vstream:BuildRequires: libvstream-client-devel}
+%{?_enable_sctp:BuildRequires: libsctp-devel}
 %if_enabled mplayer
 %{?_enable_lirc:BuildRequires: liblirc-devel}
+%{?_enable_lircc:BuildRequires: lirccd-devel}
 %{?_enable_freetype:BuildRequires: libfreetype-devel >= 2.0.9}
 %{?_enable_fontconfig:BuildRequires: fontconfig-devel}
 %{?_enable_fribidi:BuildRequires: libfribidi-devel}
@@ -378,6 +361,7 @@ BuildRequires: cpp >= 3.3 gcc >= 3.3 gcc-c++ >= 3.3
 %{?_enable_mng:BuildRequires: libmng-devel}
 %{?_enable_png:BuildRequires: libpng-devel}
 %{?_enable_jpeg:BuildRequires: libjpeg-devel}
+%{?_enable_openjpeg:BuildRequires: libopenjpeg-devel}
 %{?_enable_libcdio:BuildRequires: libcdio-devel}
 %{?_enable_lzo:BuildRequires: liblzo2-devel}
 %{?_enable_xvid:BuildRequires: libxvid-devel}
@@ -385,12 +369,14 @@ BuildRequires: cpp >= 3.3 gcc >= 3.3 gcc-c++ >= 3.3
 %{?_enable_shared_ffmpeg:BuildRequires: libffmpeg-devel >= 1:0.5-alt1}
 %{?_enable_tremor:BuildRequires: libtremor-devel}
 %{?_enable_vorbis:BuildRequires: libvorbis-devel}
-%{?_enable_speex:BuildRequires: libspeex-devel}
+%{?_enable_speex:BuildRequires: libspeex-devel >= 1.1}
 %{?_enable_theora:BuildRequires: libtheora-devel}
 %{?_enable_faad:BuildRequires: libfaad-devel}
 %{?_enable_faac:BuildRequires: libfaac-devel}
 %{?_enable_ladspa:BuildRequires: ladspa_sdk}
+%{?_enable_bs2b:BuildRequires: libbs2b-devel}
 %{?_enable_libdv:BuildRequires: libdv-devel}
+%{?_enable_crystalhd:BuildRequires: libcrystalhd-devel}
 %{?_enable_mad:BuildRequires: libmad-devel}
 %{?_enable_xmms:BuildRequires: libxmms-devel}
 %{?_enable_liba52:BuildRequires: liba52-devel}
@@ -402,10 +388,11 @@ BuildRequires: cpp >= 3.3 gcc >= 3.3 gcc-c++ >= 3.3
 %{?_enable_dirac:BuildRequires: libdirac-devel >= 0.10}
 %{?_enable_dca:BuildRequires: libdca-devel}
 %{?_enable_libgsm:BuildRequires: libgsm-devel}
+%{?_enable_libvpx_lavc:BuildRequires: libvpx-devel}
 %{?_enable_librtmp:BuildRequires: librtmp-devel}
+%{?_enable_nemesi:BuildRequires: libnemesi-devel}
 %{?_enable_mpg123:BuildRequires: libmpg123-devel}
 %{?_enable_ass:BuildRequires: libass-devel}
-%{?_enable_bluray:BuildRequires: libbluray-devel}
 
 %{?_enable_xvmc:BuildRequires: libXvMC-devel}
 %if_enabled mplayer
@@ -433,7 +420,7 @@ BuildRequires: cpp >= 3.3 gcc >= 3.3 gcc-c++ >= 3.3
 %{?_enable_esd:BuildRequires: esound-devel}
 %{?_enable_pulse:BuildRequires: libpulseaudio-devel >= 0.9}
 %{?_enable_jack:BuildRequires: jackit-devel}
-%{?_enable_openal:BuildRequires: libopenal1-devel}
+%{?_enable_openal:BuildRequires: libopenal-devel}
 %{?_enable_nas:BuildRequires: libaudio-devel}
 
 %if_enabled gui
@@ -699,381 +686,352 @@ SVCDs from a movie.
 
 
 %prep
-%setup -q -n %lname-%pkgver
-
-%patch100 -p1
-%patch101 -p1
-%patch102 -p2
-
+%setup -q -n %Name-%pkgver
 %patch0 -p1
 %patch1 -p1
-%patch2 -p1
-#patch3 -p1
-%patch4 -p1
-%patch5 -p1
-%patch8 -p1
-%patch13 -p1
-
-%{?_enable_dvdnav:subst 's/--minilibs/--libs/g' configure}
-%{?odml_chunklen:sed -r -i -e 's/^(#[[:blank:]]*define[[:blank:]]+ODML_CHUNKLEN[[:blank:]]+)0x[[:xdigit:]]+/\1%odml_chunklen/' libmpdemux/muxer_avi.c}
 
 %{?svnrev:subst 's/UNKNOWN/%svnrev/' version.sh}
 
 %if_enabled nls
 install -d -m 0755 po
-install -m 0644 %SOURCE6  po/mp_help2msg.awk
-install -m 0644 %SOURCE7  po/mp_msg2po.awk
+install -m 0644 %SOURCE6 po/mp_help2msg.awk
+install -m 0644 %SOURCE7 po/mp_msg2po.awk
 %endif
 
 subst 's|\\/\\/|//|g' help/help_mp-zh_??.h
 
 
 %build
-%define _optlevel 2
-%add_optflags %optflags_notraceback %optflags_fastmath -Wno-switch-enum %{?_enable_smb:-I%_includedir/samba-4.0}
-%ifarch x86_64
-%add_optflags -mtune=k8 -DARCH_X86_64
-%endif
-%ifarch %ix86
-%add_optflags -DARCH_X86_32
-%endif
+%define _optlevel 3
+%add_optflags -Wno-switch-enum -Wno-switch
 %ifarch armh
 %add_optflags -Wa,-mimplicit-it=thumb
 %endif
 export CFLAGS="%optflags"
 ./configure \
-        --target=%_target \
-        --prefix=%_prefix \
-        --bindir=%_bindir \
-        --mandir=%_mandir \
-        --libdir=%_libdir \
-        --datadir=%_datadir/%name \
-        --confdir=%_sysconfdir/%name \
-        %{subst_enable mplayer} \
-				--extra-libs-mplayer="-lvorbisenc" \
-        %{subst_enable mencoder} \
-				--extra-libs-mencoder="-lvorbisenc" \
-        %{subst_enable xss} \
-        %{subst_enable_to lame mp3lame} \
-        %{subst_enable_to lame mp3lame-lavc} \
-        %{subst_enable gui} \
-        %{subst_enable gtk1} \
-        %{subst_enable largefiles} \
-        %{subst_enable termcap} \
-        %{subst_enable termios} \
-        %{subst_enable nls} \
-        %{subst_enable iconv} \
-        %{subst_enable langinfo} \
-        %{subst_enable lirc} \
-        %{subst_enable lircc} \
-        %{subst_enable joystick} \
-        %{subst_enable xf86keysym} \
-        %{subst_enable tv} \
-        %{subst_enable_to tv_bsdbt848 tv-bsdbt848} \
-        %{subst_enable_to tv_v4l1 tv-v4l1} \
-        %{subst_enable_to tv_v4l2 tv-v4l2} \
-        %{subst_enable radio} \
-        %{subst_enable_to radio_v4l1 radio-v4l} \
-        %{subst_enable_to radio_v4l2 radio-v4l2} \
-        %{subst_enable_to radio_capture radio-capture} \
-        %{subst_enable_to radio_bsdbt848 radio-bsdbt848} \
-        %{subst_enable pvr} \
-        %{subst_enable rtc} \
-        %{subst_enable_to network networking} \
-        %{subst_enable winsock2}_h \
-        %{subst_enable smb} \
-        %{subst_enable live} \
-        %{subst_enable dvdnav} \
-        %{subst_enable dvdread} \
-        %{subst_enable vdpau} \
-        %{subst_enable_to dvdread_int dvdread-internal} \
-        %{subst_enable cdparanoia} \
-        %{subst_enable_to bitmap_font bitmap-font} \
-        %{subst_enable freetype} \
-        %{subst_enable fontconfig} \
-        %{subst_enable unrarexec} \
-        %{subst_enable_to osdmenu menu} \
-        %{subst_enable sortsub} \
-        %{subst_enable fribidi} \
-        %{subst_enable enca} \
-        %{subst_enable inet6} \
-        %{subst_enable gethostbyname2} \
-        %{subst_enable ftp} \
-        %{subst_enable vstream} \
-        %{subst_enable pthreads} \
-        %{subst_enable ass} \
-        %{subst_enable_to ass_int ass-internal} \
-        %{subst_enable rpath} \
-        %{subst_enable bluray} \
-        %{subst_enable cddb} \
-        %{subst_enable librtmp} \
-        %{subst_enable nemesi} \
-        %{subst_enable mng} \
-        %{subst_enable gif} \
-        %{subst_enable png} \
-        %{subst_enable jpeg} \
-        %{subst_enable libcdio} \
-        %{subst_enable_to lzo liblzo} \
-        %{subst_enable_to win32 win32dll} \
-        %{?_enable_win32:--codecsdir=%win32_libdir} \
-        %{subst_enable qtx} \
-        %{subst_enable xanim} \
-        %{subst_enable real} \
-        %{subst_enable xvid} \
-        %{subst_enable_to xvid_lavc xvid-lavc} \
-        %{subst_enable x264} \
-        %{subst_enable_to x264_lavc x264-lavc} \
+	--target=%_target \
+	--prefix=%_prefix \
+	--bindir=%_bindir \
+	--mandir=%_mandir \
+	--libdir=%_libdir \
+	--datadir=%_datadir/%name \
+	--confdir=%_sysconfdir/%name \
+	--extra-cflags="%optflags %{?_enable_smb:$(pkg-config --cflags smbclient)}" \
+	%{subst_enable mplayer} \
+	--extra-libs-mplayer="-lvorbisenc" \
+	%{subst_enable mencoder} \
+	--extra-libs-mencoder="-lvorbisenc" \
+	%{subst_enable xss} \
+	%{subst_enable_to lame mp3lame} \
+	%{subst_enable_to lame mp3lame-lavc} \
+	%{subst_enable gui} \
+	%{subst_enable gtk1} \
+	%{subst_enable termcap} \
+	%{subst_enable termios} \
+	%{subst_enable nls} \
+	%{subst_enable iconv} \
+	%{subst_enable shm} \
+	%{subst_enable langinfo} \
+	%{subst_enable lirc} \
+	%{subst_enable lircc} \
+	%{subst_enable joystick} \
+	%{subst_enable_to apple_ir apple-ir} \
+	%{subst_enable xf86keysym} \
+	%{subst_enable tv} \
+	%{subst_enable_to tv_v4l1 tv-v4l1} \
+	%{subst_enable_to tv_v4l2 tv-v4l2} \
+	%{subst_enable radio} \
+	%{subst_enable_to radio_v4l1 radio-v4l} \
+	%{subst_enable_to radio_v4l2 radio-v4l2} \
+	%{subst_enable_to radio_capture radio-capture} \
+	%{subst_enable pvr} \
+	%{subst_enable rtc} \
+	%{subst_enable_to network networking} \
+	%{subst_enable winsock2}_h \
+	%{subst_enable smb} \
+	%{subst_enable live} \
+	%{subst_enable dvdnav} \
+	%{subst_enable dvdread} \
+	%{subst_enable vdpau} \
+	%{subst_enable_to dvdread_int dvdread-internal} \
+	%{subst_enable cdparanoia} \
+	%{subst_enable_to bitmap_font bitmap-font} \
+	%{subst_enable freetype} \
+	%{subst_enable fontconfig} \
+	%{subst_enable unrarexec} \
+	%{subst_enable_to osdmenu menu} \
+	%{subst_enable sortsub} \
+	%{subst_enable fribidi} \
+	%{subst_enable enca} \
+	%{subst_enable inet6} \
+	%{subst_enable ftp} \
+	%{subst_enable vstream} \
+	%{subst_enable pthreads} \
+	%{subst_enable ass} \
+	%{subst_enable_to ass_int ass-internal} \
+	%{subst_enable rpath} \
+	%{subst_enable bluray} \
+	%{subst_enable cddb} \
+	%{subst_enable librtmp} \
+	%{subst_enable nemesi} \
+	%{subst_enable mng} \
+	%{subst_enable gif} \
+	%{subst_enable png} \
+	%{subst_enable jpeg} \
+	%{subst_enable_to openjpeg libopenjpeg} \
+	%{subst_enable libcdio} \
+	%{subst_enable_to lzo liblzo} \
+	%{subst_enable_to win32 win32dll} \
+	%{?_enable_win32:--codecsdir=%win32_libdir} \
+	%{subst_enable qtx} \
+	%{subst_enable xanim} \
+	%{subst_enable real} \
+	%{subst_enable xvid} \
+	%{subst_enable_to xvid_lavc xvid-lavc} \
+	%{subst_enable x264} \
+	%{subst_enable_to x264_lavc x264-lavc} \
 %if_enabled ffmpeg
 %if_enabled shared_ffmpeg
-        --disable-ffmpeg_a \
-        --enable-ffmpeg_so \
+	--disable-ffmpeg_a \
+	--enable-ffmpeg_so \
 %else
-        --disable-ffmpeg_so \
-        --enable-ffmpeg_a \
+	--disable-ffmpeg_so \
+	--enable-ffmpeg_a \
 %endif
 %else
-        --disable-ffmpeg_a \
-        --disable-ffmpeg_so \
+	--disable-ffmpeg_a \
+	--disable-ffmpeg_so \
 %endif
-        %{subst_enable libavcodec_mpegaudio_hp} \
-        %{subst_enable_to tremor_internal tremor-internal} \
-        %{subst_enable_to tremor_low tremor-low} \
-        %{subst_enable tremor} \
-        %{subst_enable_to vorbis libvorbis} \
-        %{subst_enable speex} \
-        %{subst_enable theora} \
-        %{subst_enable faad} \
-        %{subst_enable faac} \
-        %{subst_enable_to faac_lavc faac-lavc} \
-        %{subst_enable ladspa} \
-        %{subst_enable libbs2b} \
-        %{subst_enable_to dca libdca} \
-        %{subst_enable libdv} \
-        %{subst_enable mad} \
-        %{subst_enable toolame} \
-        %{subst_enable twolame} \
-        %{subst_enable xmms} \
-        %{subst_enable mp3lib} \
-        %{subst_enable liba52} \
-        %{subst_enable libmpeg2} \
-        %{subst_enable_to libmpeg2_int libmpeg2-internal} \
-        %{subst_enable_to dirac libdirac-lavc} \
-        %{subst_enable musepack} \
-        %{subst_enable_to nut libnut} \
-        %{subst_enable_to libschroedinger_lavc libschroedinger-lavc} \
-        %{subst_enable_to libdvdcss_internal libdvdcss-internal} \
-        %{subst_enable libgsm} \
-        %{subst_enable_to amrnb libopencore_amrnb} \
-        %{subst_enable_to amrwb libopencore_amrwb} \
-        %{subst_enable libopenjpeg} \
-        %{subst_enable_to libvpx_lavc libvpx-lavc} \
-        %{subst_enable vidix} \
-        %{subst_enable gl} \
-        %{subst_enable dga1} \
-        %{subst_enable dga2} \
-        %{subst_enable vesa} \
-        %{subst_enable svga} \
-        %{subst_enable sdl} \
-        %{subst_enable aa} \
-        %{subst_enable caca} \
-        %{subst_enable ggi} \
-        %{subst_enable ggiwmh} \
-        %{subst_enable directx} \
-        %{subst_enable dxr2} \
-        %{subst_enable dxr3} \
-        %{subst_enable ivtv} \
-        %{subst_enable dvb} \
-        %{subst_enable mga} \
-        %{subst_enable xmga} \
-        %{subst_enable xv} \
-        %{subst_enable xvmc} \
-        %{?_enable_xvmc:%{?xvmclib:--with-xvmclib=%xvmclib}} \
-        %{subst_enable vm} \
-        %{subst_enable xinerama} \
-        %{subst_enable x11} \
-        %{subst_enable xshape} \
-        %{subst_enable fbdev} \
-        %{subst_enable mlib} \
-        %{subst_enable 3dfx} \
-        %{subst_enable tdfxfb} \
-        %{subst_enable s3fb} \
-        %{subst_enable directfb} \
-        %{subst_enable zr} \
-        %{subst_enable bl} \
-        %{subst_enable tdfxvid} \
-        %{subst_enable tga} \
-        %{subst_enable pnm} \
-        %{subst_enable md5sum} \
-        %{subst_enable matrixview} \
-        %{subst_enable mpg123} \
-        %{subst_enable quartz} \
-        %{subst_enable yuv4mpeg} \
-        %{subst_enable xvr100} \
-        %{subst_enable alsa} \
-        %{subst_enable_to oss ossaudio} \
-        %{subst_enable arts} \
-        %{subst_enable esd} \
-        %{subst_enable pulse} \
-        %{subst_enable jack} \
-        %{subst_enable openal} \
-        %{subst_enable nas} \
-        %{subst_enable sgiaudio} \
-        %{subst_enable sunaudio} \
-        %{subst_enable_to waveout win32waveout} \
-        %{subst_enable select} \
-        %{subst_enable dart} \
-        %{subst_enable kai} \
-        %{subst_enable kva} \
-        %{subst_enable select} \
-        %{subst_enable_to cpu_detection runtime-cpudetection} \
-        --cc=%ccomp \
-        --as=%asm \
-        --charset=%charset \
-        --language="%language" \
-        %{subst_enable mmx} \
-        %{subst_enable mmxext} \
-        %{subst_enable 3dnow} \
-        %{subst_enable 3dnowext} \
-        %{subst_enable sse} \
-        %{subst_enable sse2} \
-        %{subst_enable ssse3} \
-        %{subst_enable altivec} \
-        %{subst_enable fastmemcpy} \
+	%{subst_enable postproc} \
+	%{subst_enable_to vf_lavfi vf-lavfi} \
+	%{subst_enable libavcodec_mpegaudio_hp} \
+	%{subst_enable_to tremor_internal tremor-internal} \
+	%{subst_enable_to tremor_low tremor-low} \
+	%{subst_enable tremor} \
+	%{subst_enable_to vorbis libvorbis} \
+	%{subst_enable speex} \
+	%{subst_enable theora} \
+	%{subst_enable faad} \
+	%{subst_enable faac} \
+	%{subst_enable_to faac_lavc faac-lavc} \
+	%{subst_enable ladspa} \
+	%{subst_enable_to bs2b libbs2b} \
+	%{subst_enable_to dca libdca} \
+	%{subst_enable libdv} \
+	%{subst_enable crystalhd} \
+	%{subst_enable mad} \
+	%{subst_enable toolame} \
+	%{subst_enable twolame} \
+	%{subst_enable xmms} \
+	%{subst_enable mp3lib} \
+	%{subst_enable liba52} \
+	%{subst_enable libmpeg2} \
+	%{subst_enable_to libmpeg2_int libmpeg2-internal} \
+	%{subst_enable_to dirac libdirac-lavc} \
+	%{subst_enable musepack} \
+	%{subst_enable_to nut libnut} \
+	%{subst_enable_to libschroedinger_lavc libschroedinger-lavc} \
+	%{subst_enable_to libdvdcss_internal libdvdcss-internal} \
+	%{subst_enable libgsm} \
+	%{subst_enable_to amrnb libopencore_amrnb} \
+	%{subst_enable_to amrwb libopencore_amrwb} \
+	%{subst_enable_to libvpx_lavc libvpx-lavc} \
+	%{subst_enable vidix} \
+	%{subst_enable gl} \
+	%{subst_enable dga1} \
+	%{subst_enable dga2} \
+	%{subst_enable vesa} \
+	%{subst_enable svga} \
+	%{subst_enable sdl} \
+	%{subst_enable aa} \
+	%{subst_enable caca} \
+	%{subst_enable ggi} \
+	%{subst_enable ggiwmh} \
+	%{subst_enable directx} \
+	%{subst_enable dxr2} \
+	%{subst_enable dxr3} \
+	%{subst_enable ivtv} \
+	%{subst_enable dvb} \
+	%{subst_enable mga} \
+	%{subst_enable xmga} \
+	%{subst_enable xv} \
+	%{subst_enable xvmc} \
+	%{?_enable_xvmc:%{?xvmclib:--with-xvmclib=%xvmclib}} \
+	%{subst_enable vm} \
+	%{subst_enable xinerama} \
+	%{subst_enable x11} \
+	%{subst_enable xshape} \
+	%{subst_enable fbdev} \
+	%{subst_enable mlib} \
+	%{subst_enable 3dfx} \
+	%{subst_enable tdfxfb} \
+	%{subst_enable s3fb} \
+	%{subst_enable directfb} \
+	%{subst_enable zr} \
+	%{subst_enable bl} \
+	%{subst_enable tdfxvid} \
+	%{subst_enable tga} \
+	%{subst_enable pnm} \
+	%{subst_enable md5sum} \
+	%{subst_enable matrixview} \
+	%{subst_enable mpg123} \
+	%{subst_enable yuv4mpeg} \
+	%{subst_enable xvr100} \
+	%{subst_enable alsa} \
+	%{subst_enable_to oss ossaudio} \
+	%{subst_enable arts} \
+	%{subst_enable esd} \
+	%{subst_enable pulse} \
+	%{subst_enable jack} \
+	%{subst_enable openal} \
+	%{subst_enable nas} \
+	%{subst_enable sgiaudio} \
+	%{subst_enable sunaudio} \
+	%{subst_enable_to waveout win32waveout} \
+	%{subst_enable select} \
+	%{subst_enable dart} \
+	%{subst_enable kai} \
+	%{subst_enable kva} \
+	%{subst_enable select} \
+	%{subst_enable_to cpu_detection runtime-cpudetection} \
+	--cc=%__cc \
+	%{?asm:--as=%asm} \
+	--charset=%{?charset:%charset}%{!?charset:UTF-8} \
+	--language=%{?language:"%language"}%{!?language:all} \
+	%{subst_enable mmx} \
+	%{subst_enable mmxext} \
+	%{subst_enable 3dnow} \
+	%{subst_enable 3dnowext} \
+	%{subst_enable sse} \
+	%{subst_enable sse2} \
+	%{subst_enable ssse3} \
+	%{subst_enable altivec} \
+	%{subst_enable fastmemcpy} \
+	%{subst_enable profile} \
+	%{subst_enable sighandler} \
+	%{subst_enable_to gdb crash-debug} \
+	%{subst_enable_to dynamic_plugins dynamic-plugins} \
 %if_enabled debug
-        --enable-debug=3 \
+	--enable-debug=3
 %else
-        --disable-debug \
+	--disable-debug
 %endif
-        %{subst_enable profile} \
-        %{subst_enable sighandler} \
-        %{subst_enable_to gdb crash-debug} \
-        %{subst_enable_to dynamic_plugins dynamic-plugins} \
 
-#make_build
-%make
+%make_build
 
 # make conf file
-sed -e 's/^@VO@/vo = %default_vo/' \
-    -e 's/^@AO@/ao = %default_ao/' \
-    -e 's|@CONF_FILE@|%_sysconfdir/%name/%lname.conf|g' \
-    -e 's|@SKINS_DIR@|%_datadir/%name/skins|g' \
-    %SOURCE5 \
-    > etc/%lname.conf
-%if_enabled fontconfig
-echo "fontconfig = yes" >> etc/%lname.conf
-%else
-echo "fontconfig = no" >> etc/%lname.conf
-%endif
+sed	-e 's/^@VO@/vo = %default_vo/' \
+	-e 's/^@AO@/ao = %default_ao/' \
+	-e 's|@CONF_FILE@|%_sysconfdir/%name/%lname.conf|g' \
+	-e 's|@SKINS_DIR@|%_datadir/%name/skins|g' \
+	%SOURCE5 > etc/%lname.conf
+echo "fontconfig = %{?_enable_fontconfig:yes}%{?_disable_fontconfig:no}" >> etc/%lname.conf
 
 %{?_enable_mplayer:%{?_with_tools:%make_build tools}}
 
-%if_with htmldocs
-%ifdef svnrev
 # build HTML documentation from XML files
-%make_build -C DOCS/xml html-chunked
-%endif
-%endif
+%{?_with_htmldocs:%{?svnrev:%make_build -C DOCS/xml html-chunked}}
 
 %if_enabled nls
-pushd po
+cd po
 gawk -f ./mp_help2msg.awk ../help/help_mp-en.h > en.msg
-for h in $(ls ../help/help_mp-*.h | grep -v '..help/help_mp-en.h$'); do
-    l=$(basename ${h/help_mp-} .h)
-    gawk -f ./mp_help2msg.awk $h | awk -f ./mp_msg2po.awk en.msg > $l.po
-    msgfmt -o $l.gmo $l.po
+for h in $(ls ../help/help_mp-*.h | grep -v '/help_mp-en.h$'); do
+	l=$(basename $h .h)
+	l=${l#help_mp-}
+	gawk -f ./mp_help2msg.awk $h | awk -f ./mp_msg2po.awk en.msg > $l.po
+	msgfmt -o $l.gmo $l.po
 done
-popd
+cd -
 %endif
 
 %if_enabled gui
-for s in 128 96 72 64 48 36 32 24 22 16; do
-    convert -border 0x13 -bordercolor none gui/mplayer/pixmaps/MPlayer_mini.xpm \
-    -resize ${s}x$s! -depth 8 gui/mplayer/pixmaps/%lname-$s.png
+for s in 128 96 72 64 36; do
+	convert etc/%{lname}256x256.png -resize ${s}x$s etc/%{lname}${s}x$s.png
 done
 %endif
 
-bzip2 --best --force --keep -- Changelog
+gzip -9c Changelog > Changelog.gz
 
 
 %install
-%make_install DESTDIR=%buildroot install
+%makeinstall_std
 
 %if_enabled mplayer
+install -d -m 0755 %buildroot%_docdir/%name-%version
+install -m 0644 README AUTHORS Changelog.* %buildroot%_docdir/%name-%version/
+install -m 0644 etc/{codecs,input,%lname}.conf %buildroot%_sysconfdir/%name/
+%if_enabled gui
 install -d -m 0755 %buildroot%_datadir/%name/skins
 tar -C %buildroot%_datadir/%name/skins -xf %SOURCE4
 ln -s standard %buildroot%_datadir/%name/skins/default
-%{?_enable_freetype:%{?_disable_fontconfig:ln -s ../fonts/default/Type1/n019003l.pfb %buildroot%_datadir/%name/subfont.ttf}}
 %endif
-
-install -m 0644 etc/{codecs,input,%lname}.conf %buildroot%_sysconfdir/%name/
-
-%if_enabled mplayer
+%{?_enable_freetype:%{?_disable_fontconfig:ln -s ../fonts/default/Type1/n019003l.pfb %buildroot%_datadir/%name/subfont.ttf}}
 %{?_enable_osdmenu:install -m 0644 etc/menu.conf %buildroot%_sysconfdir/%name/}
 %{?_enable_dvb:install -m 0644 etc/dvb-menu.conf %buildroot%_sysconfdir/%name/}
 
 %if_with tools
 install -m 0755 TOOLS/{alaw-gen,asfinfo,avi-fix,avisubdump,dump_mp4,movinfo} %buildroot/%_bindir/
 for f in vobshift; do
-    install -m 0755 TOOLS/$f.py %buildroot/%_bindir/$f
+	install -m 0755 TOOLS/$f.py %buildroot/%_bindir/$f
 done
 for f in calcbpp countquant plotpsnr subedit wma2ogg %{?_enable_mencoder:dvd2divxscript}; do
-    install -m 0755 TOOLS/$f.pl %buildroot/%_bindir/$f
+	install -m 0755 TOOLS/$f.pl %buildroot/%_bindir/$f
 done
 %ifarch %ix86
 install -m 0755 TOOLS/w32codec_dl.pl %buildroot/%_bindir/w32codec_dl
 %endif
 for f in aconvert divx2svcd mencvcd midentify mpconsole mplmult psnr-video subsearch %{?_enable_mencoder:qepdvcd}; do
-    install -m 0755 TOOLS/$f.sh %buildroot/%_bindir/$f
+	install -m 0755 TOOLS/$f.sh %buildroot/%_bindir/$f
 done
 install -pD -m 0644 TOOLS/README %buildroot%_docdir/%name-tools-%version/README
 %endif
-
-%{?_with_soundwrapper:install -pD -m 0755 %SOURCE3 %buildroot%_sysconfdir/bashrc.d/%lname.sh}
 %endif
 
 # docs
 for l in $(ls DOCS/man | grep -v '^en$'); do
 %if_enabled mplayer
-    install -pD -m 0644 DOCS/man/$l/%lname.1 %buildroot%_mandir/$l/man1/%lname.1
-    %{?_enable_mencoder:ln -sf %lname.1 %buildroot%_mandir/$l/man1/mencoder.1}
+	install -pD -m 0644 DOCS/man/$l/%lname.1 %buildroot%_mandir/$l/man1/%lname.1
+	%{?_enable_mencoder:ln -sf %lname.1 %buildroot%_mandir/$l/man1/mencoder.1}
 %else
-    %{?_enable_mencoder:install -pD -m 0644 DOCS/man/$l/mencoder.1 %buildroot%_mandir/$l/man1/mencoder.1}
+	%{?_enable_mencoder:install -pD -m 0644 DOCS/man/$l/mencoder.1 %buildroot%_mandir/$l/man1/mencoder.1}
 %endif
 done
 rm -f %buildroot%_man1dir/mencoder.1
 %{?_enable_mencoder:install -m 0644 DOCS/man/en/%lname.1 %buildroot%_man1dir/mencoder.1}
 %if_with htmldocs
 for l in cs de en es fr hu it pl ru zh_CN; do
-    install -d %buildroot%_docdir/%name-doc-%version/$l
-    install -m 0644 DOCS/HTML/$l/{*.html,*.css} %buildroot%_docdir/%name-doc-%version/$l/
+	install -d %buildroot%_docdir/%name-%version/$l
+	install -m 0644 DOCS/HTML/$l/{*.html,*.css} %buildroot%_docdir/%name-%version/$l/
 done
 %endif
-install -d %buildroot%_docdir/%name-doc-%version/tech/realcodecs
-install -m 0644 DOCS/tech/{MAINTAINERS,TODO,*.txt,mpsub.sub,playtree,wishlist} %buildroot%_docdir/%name-doc-%version/tech/
-install -m 0644 DOCS/tech/realcodecs/{TODO,*.txt} %buildroot%_docdir/%name-doc-%version/tech/realcodecs/
+install -d %buildroot%_docdir/%name-%version/tech/realcodecs
+install -m 0644 DOCS/tech/{MAINTAINERS,TODO,*.txt,mpsub.sub,playtree,wishlist} %buildroot%_docdir/%name-%version/tech/
+install -m 0644 DOCS/tech/realcodecs/{TODO,*.txt} %buildroot%_docdir/%name-%version/tech/realcodecs/
 %find_lang --with-man %lname %lname-man
 
 %if_enabled nls
 for l in po/*.gmo; do
-install -pD -m 0644 $l %buildroot%_datadir/locale/$(basename $l .gmo)/LC_MESSAGES/%name.mo
+	install -pD -m 0644 $l %buildroot%_datadir/locale/$(basename $l .gmo)/LC_MESSAGES/%name.mo
 done
 %endif
-
-%{?_enable_mplayer:%add_verify_elf_skiplist %_libdir/%lname/vidix/*}
 
 %if_enabled gui
-for s in 128 96 72 64 48 36 32 24 22 16; do
-    install -D -m 0644 {gui/mplayer/pixmaps/%lname-$s,%buildroot%_iconsdir/hicolor/${s}x$s/apps/%lname}.png
+for s in 256 128 96 72 64 48 36 32 24 22 16; do
+	install -D -m 0644 {etc/%lname${s}x$s,%buildroot%_iconsdir/hicolor/${s}x$s/apps/%lname}.png
 done
-install -D -m 0644 {etc/%lname,%buildroot%_desktopdir/%name}.desktop
-ln -sf %lname %buildroot%_bindir/g%lname
+install -D -m 0644 {etc/%lname,%buildroot%_desktopdir/%gname}.desktop
 %endif
 
-install -D -m 644 %{SOURCE2} %buildroot/%_desktopdir/%{name}-console.desktop
+%{?_enable_mplayer:install -D -m 0644 %SOURCE2 %buildroot/%_desktopdir/%lname.desktop}
+
+%{?_enable_mplayer:%{?_enable_vidix:%add_verify_elf_skiplist %_libdir/%lname/vidix/*}}
+
 
 %if_enabled mplayer
 %files
-%doc README AUTHORS Changelog.*
+%doc %dir %_docdir/%name-%version
+%doc %_docdir/%name-%version/README
+%doc %_docdir/%name-%version/AUTHORS
 %_bindir/%lname
 %_man1dir/%lname.*
 %dir %_sysconfdir/%name
@@ -1082,9 +1040,8 @@ install -D -m 644 %{SOURCE2} %buildroot/%_desktopdir/%{name}-console.desktop
 %config(noreplace) %verify(not size mtime md5) %_sysconfdir/%name/input.conf
 %{?_enable_osdmenu:%config(noreplace) %verify(not size mtime md5) %_sysconfdir/%name/menu.conf}
 %{?_enable_dvb:%config(noreplace) %verify(not size mtime md5) %_sysconfdir/%name/dvb-menu.conf}
-%{?_with_soundwrapper:%_sysconfdir/bashrc.d/*}
 %dir %_datadir/%name
-%_desktopdir/%{name}-console.desktop
+%_desktopdir/%lname.desktop
 %if_disabled fontconfig
 %if_enabled freetype
 %config(missingok,noreplace) %verify(not link size mtime md5) %_datadir/%name/subfont.ttf
@@ -1097,7 +1054,7 @@ install -D -m 644 %{SOURCE2} %buildroot/%_desktopdir/%{name}-console.desktop
 %if_enabled gui
 %files gui
 %_bindir/%gname
-%_desktopdir/%{name}.desktop
+%_desktopdir/%gname.desktop
 #%%_datadir/pixmaps/*
 %_iconsdir/hicolor/*/apps/*
 %dir %_datadir/%name/skins
@@ -1124,30 +1081,31 @@ install -D -m 644 %{SOURCE2} %buildroot/%_desktopdir/%{name}-console.desktop
 
 
 %files doc-world
-%dir %_docdir/%name-doc-%version
-%lang(cs) %_docdir/%name-doc-%version/cs
-%lang(de) %_docdir/%name-doc-%version/de
-%lang(es) %_docdir/%name-doc-%version/es
-%lang(fr) %_docdir/%name-doc-%version/fr
-%lang(hu) %_docdir/%name-doc-%version/hu
-%lang(it) %_docdir/%name-doc-%version/it
-%lang(pl) %_docdir/%name-doc-%version/pl
-%lang(zh_CN) %_docdir/%name-doc-%version/zh_CN
+%dir %_docdir/%name-%version
+%lang(cs) %_docdir/%name-%version/cs
+%lang(de) %_docdir/%name-%version/de
+%lang(es) %_docdir/%name-%version/es
+%lang(fr) %_docdir/%name-%version/fr
+%lang(hu) %_docdir/%name-%version/hu
+%lang(it) %_docdir/%name-%version/it
+%lang(pl) %_docdir/%name-%version/pl
+%lang(zh_CN) %_docdir/%name-%version/zh_CN
 
 
 %files doc-tech
-%dir %_docdir/%name-doc-%version
-%_docdir/%name-doc-%version/tech
+%dir %_docdir/%name-%version
+%_docdir/%name-%version/tech
+%_docdir/%name-%version/Changelog.*
 
 
 %files doc-en
-%dir %_docdir/%name-doc-%version
-%_docdir/%name-doc-%version/en
+%dir %_docdir/%name-%version
+%_docdir/%name-%version/en
 
 
 %files doc-ru
-%dir %_docdir/%name-doc-%version
-%_docdir/%name-doc-%version/ru
+%dir %_docdir/%name-%version
+%_docdir/%name-%version/ru
 %endif
 
 
@@ -1166,14 +1124,14 @@ install -D -m 644 %{SOURCE2} %buildroot/%_desktopdir/%{name}-console.desktop
 
 
 %files i18n-world
-%lang(cs) %_mandir/cs/man1/*
-%lang(de) %_mandir/de/man1/*
-%lang(es) %_mandir/es/man1/*
-%lang(fr) %_mandir/fr/man1/*
-%lang(hu) %_mandir/hu/man1/*
-%lang(it) %_mandir/it/man1/*
-%lang(pl) %_mandir/pl/man1/*
-%lang(zh_CN) %_mandir/zh_CN/man1/*
+%lang(cs) %_mandir/cs
+%lang(de) %_mandir/de
+%lang(es) %_mandir/es
+%lang(fr) %_mandir/fr
+%lang(hu) %_mandir/hu
+%lang(it) %_mandir/it
+%lang(pl) %_mandir/pl
+%lang(zh_CN) %_mandir/zh_CN
 %if_enabled nls
 %lang(bg) %_datadir/locale/bg/LC_MESSAGES/*
 %lang(cs) %_datadir/locale/cs/LC_MESSAGES/*
@@ -1240,6 +1198,28 @@ install -D -m 644 %{SOURCE2} %buildroot/%_desktopdir/%{name}-console.desktop
 
 
 %changelog
+* Sat May 24 2013 Led <led@altlinux.ru> 1.1.1-alt1
+- 1.1.1 (ALT#28546)
+- cleaned up spec
+- enabled
+  + apple_ir
+  + bs2b
+  + crystalhd
+  + fribidi
+  + inet6
+  + libvpx_lavc
+  + openjpeg
+  + pvr
+  + shm
+  + vcd
+- disabled:
+  + tga
+- build with optlevel 3
+- parallel build
+- removed patches:
+  + MPlayer-1.0pre4-alt-explicit_gif.patch
+  + mplayer-svn-r23722-VIDM-win32-codec.patch
+
 * Fri Feb 22 2013 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.0-alt35.32772.11
 - tweak build parameters for arm
 
