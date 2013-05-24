@@ -1,6 +1,6 @@
 Name: nvidia-settings
-Version: 319.17
-Release: alt2
+Version: 319.21
+Release: alt1
 
 Group: System/Configuration/Hardware
 Summary: Tool for configuring the NVIDIA driver
@@ -98,6 +98,9 @@ install -m 0644 src/libXNVCtrl/*.h %buildroot/%_includedir/NVCtrl/
 %_libdir/*.a
 
 %changelog
+* Fri May 24 2013 Sergey V Turchin <zerg@altlinux.org> 319.21-alt1
+- new version
+
 * Mon May 13 2013 Sergey V Turchin <zerg@altlinux.org> 319.17-alt2
 - fix build requires
 
