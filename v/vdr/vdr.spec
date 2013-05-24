@@ -1,6 +1,6 @@
 Name: vdr
 Version: 2.0.2
-Release: alt1
+Release: alt2
 
 Summary: Digital satellite receiver box with advanced features
 License: GPL
@@ -17,6 +17,7 @@ BuildRequires: libGraphicsMagick-c++-devel libvdpau-devel libxine-devel libzvbi-
 BuildRequires: libGL-devel libGLU-devel libglut-devel libX11-devel libXext-devel
 BuildRequires: libXinerama-devel libXrandr-devel libXrender-devel libXv-devel
 BuildRequires: boost-devel libupnp-devel libtntnet-devel libtntdb-devel libdbus-glib-devel perl-Date-Manip
+BuildRequires: libvdpau-devel libxcb-devel libxcbutil-devel libxcbutil-icccm-devel
 BuildRequires: libcurl-devel
 
 %description
@@ -40,6 +41,11 @@ Summary: VDR theme
 Group: Video
 Requires: vdr = %version-%release
 
+%package plugin-epgsync
+Summary: VDR EPG sync plugin
+Group: Video
+Requires: vdr = %version-%release
+
 %package plugin-femon
 Summary: VDR femon plugin
 Group: Video
@@ -60,8 +66,18 @@ Summary: VDR remote OSD plugin
 Group: Video
 Requires: vdr = %version-%release
 
+%package plugin-remotetimers
+Summary: VDR remote timers plugin
+Group: Video
+Requires: vdr = %version-%release
+
 %package plugin-softdevice
 Summary: VDR ffmpeg plugin
+Group: Video
+Requires: vdr = %version-%release
+
+%package plugin-softhddevice
+Summary: VDR HD-capable ffmpeg plugin
 Group: Video
 Requires: vdr = %version-%release
 
@@ -127,6 +143,9 @@ Softcam plugin  for the Video Disk Recorder (VDR).
 %description plugin-enigmang
 EnigmaNG standalone skin for the Video Disk Recorder (VDR).
 
+%description plugin-epgsync
+imports EPG data from remote VDR server
+
 %description plugin-femon
 DVB Frontend Status Monitor plugin for the Video Disk Recorder (VDR).
 
@@ -139,8 +158,14 @@ Analog PVR-like cards (ivtv, cx18 etc) support for the Video Disk Recorder (VDR)
 %description plugin-remoteosd
 Remote OSD plugin for the Video Disk Recorder (VDR).
 
+%description plugin-remotetimers
+VDR timers manipulations across VDR instances
+
 %description plugin-softdevice
 Softdevice plugin for the Video Disk Recorder (VDR).
+
+%description plugin-softhddevice
+HD-capable (VDPAU) softdevice plugin for the Video Disk Recorder (VDR).
 
 %description plugin-streamdev
 Streaming server and client plugins for the Video Disk Recorder (VDR).
@@ -228,6 +253,9 @@ mkdir -p %buildroot%docdir/enigmang %buildroot%confdir/plugins/skinenigmang
 cp -p PLUGINS/src/enigmang/README %buildroot%docdir/enigmang
 cp -p PLUGINS/src/enigmang/themes/* %buildroot%confdir/themes/
 
+mkdir -p %buildroot%docdir/epgsync
+cp -p PLUGINS/src/epgsync/README %buildroot%docdir/epgsync
+
 mkdir -p %buildroot%docdir/femon
 cp -p PLUGINS/src/femon/README %buildroot%docdir/femon
 
@@ -250,8 +278,14 @@ cp -p PLUGINS/src/svdrpservice/README %buildroot%docdir/svdrpservice
 mkdir -p %buildroot%docdir/remoteosd
 cp -p PLUGINS/src/remoteosd/README %buildroot%docdir/remoteosd
 
+mkdir -p %buildroot%docdir/remotetimers
+cp -p PLUGINS/src/remotetimers/README %buildroot%docdir/remotetimers
+
 mkdir -p %buildroot%docdir/softdevice %buildroot%confdir/plugins/softdevice
 cp -p PLUGINS/src/softdevice/README %buildroot%docdir/softdevice
+
+mkdir -p %buildroot%docdir/softhddevice %buildroot%confdir/plugins/softhddevice
+cp -p PLUGINS/src/softhddevice/README.txt %buildroot%docdir/softhddevice/README
 
 mkdir -p %buildroot%docdir/streamdev
 cp -p PLUGINS/src/streamdev/{README,PROTOCOL} %buildroot%docdir/streamdev
@@ -266,6 +300,7 @@ cp -p PLUGINS/src/ttxtsubs/{README,TROUBLESHOOTING} %buildroot%docdir/ttxtsubs
 mkdir -p %buildroot%docdir/upnp %buildroot%confdir/plugins/upnp
 cp -p PLUGINS/src/upnp/README %buildroot%docdir/upnp/
 touch %buildroot%confdir/plugins/upnp/metadata.db
+rm -rf %buildroot%_defaultdocdir/vdr-upnp-*
 
 mkdir -p %buildroot%docdir/vnsiserver
 cp -p PLUGINS/src/vnsiserver/README %buildroot%docdir/vnsiserver
@@ -297,14 +332,17 @@ mkdir -p %buildroot%_runtimedir/vdr %buildroot%_cachedir/vdr
 %find_lang --output=VDR.lang --append vdr vdr-hello vdr-pictures vdr-skincurses vdr-dvbsddevice vdr-dvbhddevice
 %find_lang --output=sc.lang vdr-sc
 %find_lang --output=enigmang.lang vdr-skinenigmang
+%find_lang --output=epgsync.lang vdr-epgsync
 %find_lang --output=femon.lang vdr-femon
 %find_lang --output=iptv.lang vdr-iptv
 %find_lang --output=pvrinput.lang vdr-pvrinput
 %find_lang --output=softdevice.lang vdr-softdevice
+%find_lang --output=softhddevice.lang vdr-softhddevice
 %find_lang --output=streamdev.lang --append vdr-streamdev-server vdr-streamdev-client
 %find_lang --output=text2skin.lang vdr-text2skin
 %find_lang --output=ttxtsubs.lang vdr-ttxtsubs
 %find_lang --output=remoteosd.lang --append vdr-svdrpservice vdr-remoteosd
+%find_lang --output=remotetimers.lang vdr-remotetimers
 %find_lang --output=upnp.lang vdr-upnp
 %find_lang --output=vnsiserver.lang vdr-vnsiserver
 %find_lang --output=wirbelscan.lang vdr-wirbelscan
@@ -344,6 +382,7 @@ mkdir -p %buildroot%_runtimedir/vdr %buildroot%_cachedir/vdr
 %config(noreplace) %_sysconfdir/sysconfig/vdr
 
 %_bindir/vdr
+%_bindir/svdrpsend
 %_bindir/xmltv2vdr
 
 %dir %plugindir
@@ -365,6 +404,7 @@ mkdir -p %buildroot%_runtimedir/vdr %buildroot%_cachedir/vdr
 %dir %resdir/plugins
 
 %_man1dir/vdr.1*
+%_man1dir/svdrpsend.1*
 %_man5dir/vdr.5*
 
 %dir %attr(0770,root,_vdr) %videodir
@@ -406,6 +446,10 @@ mkdir -p %buildroot%_runtimedir/vdr %buildroot%_cachedir/vdr
 %dir %attr(0770,root,_vdr) %confdir/plugins/skinenigmang
 %plugindir/libvdr-skinenigmang.so.%version
 
+%files plugin-epgsync -f epgsync.lang
+%docdir/epgsync
+%plugindir/libvdr-epgsync.so.%version
+
 %files plugin-femon -f femon.lang
 %docdir/femon
 %plugindir/libvdr-femon.so.%version
@@ -428,6 +472,10 @@ mkdir -p %buildroot%_runtimedir/vdr %buildroot%_cachedir/vdr
 %plugindir/libvdr-remoteosd.so.%version
 %plugindir/libvdr-svdrpservice.so.%version
 
+%files plugin-remotetimers -f remotetimers.lang
+%docdir/remotetimers
+%plugindir/libvdr-remotetimers.so.%version
+
 %files plugin-softdevice -f softdevice.lang
 %docdir/softdevice
 %dir %attr(0770,root,_vdr) %confdir/plugins/softdevice
@@ -435,6 +483,11 @@ mkdir -p %buildroot%_runtimedir/vdr %buildroot%_cachedir/vdr
 %plugindir/libsoftdevice-fb.so.%version
 %plugindir/libsoftdevice-shm.so.%version
 %plugindir/libsoftdevice-xv.so.%version
+
+%files plugin-softhddevice -f softhddevice.lang
+%docdir/softhddevice
+%dir %attr(0770,root,_vdr) %confdir/plugins/softhddevice
+%plugindir/libvdr-softhddevice.so.%version
 
 %files plugin-streamdev -f streamdev.lang
 %docdir/streamdev
@@ -509,6 +562,11 @@ mkdir -p %buildroot%_runtimedir/vdr %buildroot%_cachedir/vdr
 %_libdir/xine/plugins/*/xineplug_inp_xvdr.so
 
 %changelog
+* Fri May 24 2013 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.0.2-alt2
+- epgsync plugin added
+- remotetimers plugin added
+- softhddevice plugin added
+
 * Tue May 21 2013 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.0.2-alt1
 - 2.0.2 released
 
