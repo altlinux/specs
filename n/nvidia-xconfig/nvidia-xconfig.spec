@@ -1,5 +1,5 @@
 Name: nvidia-xconfig
-Version: 319.17
+Version: 319.23
 Release: alt1
 
 Group: System/Configuration/Hardware
@@ -36,6 +36,9 @@ make install PREFIX=%buildroot/%prefix bindir=%buildroot/%_bindir mandir=%buildr
 
 
 %changelog
+* Fri May 24 2013 Sergey V Turchin <zerg@altlinux.org> 319.23-alt1
+- new version
+
 * Mon May 13 2013 Sergey V Turchin <zerg@altlinux.org> 319.17-alt1
 - new version
 
