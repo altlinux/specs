@@ -1,7 +1,7 @@
 %define cfg %_builddir/%name-%version/
 
 Name:       lazarus
-Version:    1.0.6
+Version:    1.0.8
 Release:    alt1
 Epoch:      1
 
@@ -15,8 +15,13 @@ Packager:   Andrey Cherepanov <cas@altlinux.org>
 Source:     %name-%version.tar
 Source2:    extra.tar
 Source3:    environmentoptions.xml
+Source4:    projectoptions.xml
 
 Patch0:     %name-0.9.22-alt-relax-onwine.patch
+Patch1:     %name-set-correct-path-to-xterm.patch
+Patch2:     %name-fix-desktop-file.patch
+Patch3:     %name-fix-install-path-in-Makefile.patch
+Patch4:     %name-1.0.8-fix-fpc-search.patch
 
 BuildRequires: fpc >= 2.6.0 fpc-utils glibc-devel libgtk+2-devel libXi-devel desktop-file-utils 
 BuildRequires: libXext-devel libXtst-devel libGL-devel libGLU-devel libode-devel
@@ -24,7 +29,13 @@ BuildRequires: libXext-devel libXtst-devel libGL-devel libGLU-devel libode-devel
 Requires:   fpc fpc-src fpc-utils gdb libGL-devel libXi-devel libXext-devel libgtk+2-devel
 Requires:   glibc-devel glib-devel libGLU-devel libode-devel
 Requires:   fonts-bitmap-terminus
-Requires:   %name-docs = %version
+Requires:   libdbus-devel
+Requires:   xterm
+
+Provides:   %name-docs = %version
+Obsoletes:  %name-docs < %version
+Provides:   %name-examples = %version
+Obsoletes:  %name-examples < %version
 
 %add_findreq_skiplist %_libdir/%name/examples/* %_libdir/%name/components/*
 
@@ -39,31 +50,17 @@ Lazarus - свободно-распространяемая, с открытым
 Development tool) на FreePascal, использующая библиотеки компонет LCL
 (Lazarus component library).  LCL входят в состав данного пакета.
 
-%package docs
-Summary:    Lazarus docs
-Group:      Development/Other
-#Requires: fpc-docs >= 2.2.4
-
-%description docs
-Lazarus docs
-
-%description docs -l ru_RU.UTF8
-Документация по Lazarus
-
-%package examples
-Summary:    Lazarus examples
-Group:      Development/Other
-
-%description examples
-Lazarus examples
-
-%description examples -l ru_RU.UTF8
-Примеры программ, созданных с помощью Lazarus
-
 %prep
 %setup
 %patch0 -p1
+
 tar xf %SOURCE2
+%patch1 -p2
+%patch2 -p1
+%patch3 -p1
+subst 's|/usr/lib/|%{_libdir}/|' %PATCH4
+%patch4 -p2
+
 install -D -p -m 0644 %SOURCE3 tools/install/linux/environmentoptions.xml
 #sed -i -e 's,@version@,%version,g' tools/install/linux/helpoptions.xml docs/index.ru.html
 
@@ -119,7 +116,6 @@ LAZARUSDIR=%_libdir/%name
 mkdir -p %{buildroot}$LAZARUSDIR
 mkdir -p %{buildroot}%{_bindir}
 mkdir -p %{buildroot}%{_datadir}/pixmaps
-# mkdir -p %%{buildroot}%%{_datadir}/gnome/apps/Development
 mkdir -p %{buildroot}%{_datadir}/applications
 mkdir -p %{buildroot}%{_datadir}/mime/packages
 mkdir -p %{buildroot}%{_mandir}/man1
@@ -129,6 +125,7 @@ install -m 644 images/icons/lazarus128x128.png %{buildroot}%{_datadir}/pixmaps/l
 install -m 644 install/lazarus.desktop %{buildroot}%{_datadir}/applications/lazarus.desktop
 install -m 644 install/lazarus-mime.xml $LazBuildDir%{buildroot}%{_datadir}/mime/packages/lazarus.xml
 ln -sf $LAZARUSDIR/lazarus %{buildroot}%{_bindir}/lazarus-ide
+ln -sf lazarus-ide %{buildroot}%{_bindir}/lazarus
 ln -sf $LAZARUSDIR/startlazarus %{buildroot}%{_bindir}/startlazarus
 ln -sf $LAZARUSDIR/lazbuild %{buildroot}%{_bindir}/lazbuild
 ln -sf $LAZARUSDIR/tools/explorateur_lrs/LRS_Explorer %buildroot%_bindir/LRS_Explorer
@@ -149,9 +146,21 @@ cat tools/install/linux/environmentoptions.xml | sed -e "s#__LAZARUSDIR__#$LAZAR
 mkdir -p %buildroot%_datadir/fpcsrc/packages/fcl-base
 mkdir -p %buildroot%_datadir/fpcsrc/rtl/inc
 
+# fix navigate to line with error (see https://bugs.altlinux.org/25991#c20)
+install -D -p -m 0644 %SOURCE4 %buildroot%_sysconfdir/lazarus/projectoptions.xml
+subst 's|/usr/lib/|%{_libdir}/|' %buildroot%_sysconfdir/lazarus/projectoptions.xml
+
 #Docs
 mv docs/index.html docs/index.en.html
 #mv docs/index.ru.html docs/index.html
+
+# cleanup installation
+rm -rf %buildroot$LAZARUSDIR/debian
+rm -rf %buildroot$LAZARUSDIR/tools/install
+rm -rf %buildroot$LAZARUSDIR/localize.bat
+
+# generate correct compilertest.pas
+echo -e "begin\nend." > %buildroot$LAZARUSDIR/compilertest.pas
 
 %files
 %_libdir/%name
@@ -161,22 +170,23 @@ mv docs/index.html docs/index.en.html
 %_pixmapsdir/lazarus.png
 %_desktopdir/lazarus.desktop
 %_datadir/mime/packages/lazarus.xml
-#_man1dir/*
-%exclude %_libdir/%name/docs
-%exclude %_libdir/%name/examples
-%exclude %_libdir/%name/debian
-%exclude %_libdir/%name/tools/install
+%_man1dir/*
 # fix bug 13256
 %dir %_datadir/fpcsrc/rtl/inc
 %dir %_datadir/fpcsrc/packages/fcl-base
 
-%files docs
-%doc %_libdir/%name/docs
-
-%files examples
-%_libdir/%name/examples
-
 %changelog
+* Fri May 24 2013 Andrey Cherepanov <cas@altlinux.org> 1:1.0.8-alt1
+- New version 1.0.8
+- Fix search FPC compiler with localized output from fpc (ALT #25991)
+- Set correct path to xterm for all existing modules (ALT #24803)
+- Update PowerPDF to 0.9.10 (ALT #24804)
+- Add libdbus-devel and xterm to requires
+- Pack man pages
+- Add patches from Fedora
+- Make symlink /usr/bin/lazarus for lazarus-ide
+- Add docs and examples in main package
+
 * Fri Mar 15 2013 Andrey Cherepanov <cas@altlinux.org> 1:1.0.6-alt1
 - New version 1.0.6
 
