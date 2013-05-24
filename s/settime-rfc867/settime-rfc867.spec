@@ -1,6 +1,6 @@
 Name: settime-rfc867 
 Version: 0.4
-Release: alt1
+Release: alt2
 
 Summary: Set ditetime from hardcoded ldap server
 License: GPL
@@ -27,6 +27,9 @@ install -pD -m0644 %SOURCE2 %buildroot%_unitdir/%name.service
 %config(noreplace) /etc/sysconfig/%name
 
 %changelog
+* Fri May 24 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.4-alt2
+- waiting online added
+
 * Fri May 24 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.4-alt1
 - systemd support added
 
