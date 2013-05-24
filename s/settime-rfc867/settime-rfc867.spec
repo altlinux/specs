@@ -1,5 +1,5 @@
 Name: settime-rfc867 
-Version: 0.3
+Version: 0.4
 Release: alt1
 
 Summary: Set ditetime from hardcoded ldap server
@@ -9,6 +9,7 @@ BuildArch: noarch
 
 Source: %name.init
 Source1: %name.sysconfig
+Source2: %name.service
 
 
 %description
@@ -17,13 +18,18 @@ Set ditetime from hardcoded ldap server via rfc867
 %install
 install -D -m755 %SOURCE0 %buildroot%_initdir/%name
 install -D -m755 %SOURCE1 %buildroot/etc/sysconfig/%name
+install -pD -m0644 %SOURCE2 %buildroot%_unitdir/%name.service
 
 
 %files
 %_initdir/%name
+%_unitdir/%name.service
 %config(noreplace) /etc/sysconfig/%name
 
 %changelog
+* Fri May 24 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.4-alt1
+- systemd support added
+
 * Thu Oct 04 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.3-alt1
 - configuration file added
 - dependence on alterator-auth removed
