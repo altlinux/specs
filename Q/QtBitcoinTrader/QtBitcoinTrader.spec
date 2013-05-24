@@ -1,10 +1,10 @@
 Name: QtBitcoinTrader
-Version: 0.93
-Release: alt2
+Version: 0.94
+Release: alt1
 Summary: Mt.Gox Bitcoin Trading Client
 Url: http://sourceforge.net/projects/bitcointrader/
 Group: Office
-License: GPL2+
+License: GPLv3
 Source0: BitcoinTraderQtSRC_v%{version}.zip
 
 BuildRequires: /usr/bin/convert gcc-c++ unzip libqt4-devel
@@ -38,6 +38,9 @@ convert -resize 16x16 %name.png %buildroot%_miconsdir/%name.png
 %_miconsdir/%name.png
 
 %changelog
+* Fri May 24 2013 Motsyo Gennadi <drool@altlinux.ru> 0.94-alt1
+- 0.94
+
 * Sat May 18 2013 Motsyo Gennadi <drool@altlinux.ru> 0.93-alt2
 - fixed rules
 
