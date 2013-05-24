@@ -1,5 +1,5 @@
 Name: installer-feature-desktop-other-fs
-Version: 0.7
+Version: 0.7.1
 Release: alt1
 
 Summary: Mount existing filesystems too
@@ -35,6 +35,9 @@ Conflicts: installer-ltsp-school-stage2
 %_datadir/install2/preinstall.d/*
 
 %changelog
+* Fri May 24 2013 Michael Shigorin <mike@altlinux.org> 0.7.1-alt1
+- cope with missing LANG (might be related to #29005)
+
 * Wed May 22 2013 Michael Shigorin <mike@altlinux.org> 0.7-alt1
 - use cached data from installer-scripts-remount-stage2 >= 0.4-alt1
   (see also #29005)
