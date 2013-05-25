@@ -2,9 +2,9 @@
 
 %{!?x86_64:%define x86_64 x86_64}
 
-Name: kernel-source-%module_name
+Name: kernel-src-%module_name
 Version: 4.2.12
-Release: alt1
+Release: alt2
 Summary: Linux VirtualBox host modules sources
 License: GPLv2
 Group: Development/Kernel
@@ -35,6 +35,9 @@ tar --transform='s,^\.,/%module_name-%version,' -cJf %kernel_srcdir/%module_name
 
 
 %changelog
+* Sat May 25 2013 Led <led@altlinux.ru> 4.2.12-alt2
+- rename package: kernel-source-* -> kernel-src-*
+
 * Sun Apr 14 2013 Led <led@altlinux.ru> 4.2.12-alt1
 - 4.2.12
 

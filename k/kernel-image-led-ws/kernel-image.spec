@@ -12,7 +12,7 @@
 %define x86_64 x86_64 %intel_64 %amd_64 %via_64
 
 %define extra_modules %nil
-%define Extra_modules() BuildRequires: kernel-source-%1 = %2 \
+%define Extra_modules() BuildRequires: kernel-src-%1 = %2 \
 %global extra_modules %extra_modules %1=%2
 
 %define base_flavour led
@@ -21,7 +21,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.4.47
-Release: alt1
+Release: alt2
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -130,8 +130,8 @@ Release: alt1
 #define allocator SLAB
 
 %Extra_modules vboxhost 4.2.12
-#Extra_modules vboxguest 4.2.12
-%Extra_modules nvidia 319.17
+%Extra_modules vboxguest 4.2.12
+%Extra_modules nvidia 319.23
 #Extra_modules fglrx 8.97.100.7
 #Extra_modules netatop 0.2
 
@@ -1268,7 +1268,7 @@ kernel-image-%flavour-%kversion-%krelease
 %(for M in %extra_modules; do
 m="${M%%=*}"
 v="${M#*=}"
-l="$(rpmquery --qf '%%{LICENSE}\n' kernel-source-$m-$v 2>/dev/null)"
+l="$(rpmquery --qf '%%{LICENSE}\n' kernel-src-$m-$v 2>/dev/null)"
 [ -n "$l" -a "$l" != "(none)" ] && l="License: $l" || l=
 cat <<__PACKAGE__
 %%package -n kernel-extmods-$m-%flavour
@@ -2702,6 +2702,11 @@ done)
 
 
 %changelog
+* Sat May 25 2013 Led <led@altlinux.ru> 3.4.47-alt2
+- nvidia 319.23
+- added external modules:
+  + vboxguest
+
 * Sat May 25 2013 Led <led@altlinux.ru> 3.4.47-alt1
 - 3.4.47
 
