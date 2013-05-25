@@ -2,7 +2,7 @@
 BuildRequires: perl(RPM/Header.pm) perl(Source/Repository/Mass/ALTLinuxBackport.pm) perl-devel perl-ALTLinux-ACL
 # END SourceDeps(oneline)
 Name: autorepo-scripts
-Version: 0.20
+Version: 0.21
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -45,6 +45,9 @@ install -m 755 *.template %buildroot%_datadir/%name/templates/
 %_datadir/%name/templates
 
 %changelog
+* Sat May 25 2013 Igor Vlasenko <viy@altlinux.ru> 0.21-alt1
+- developmant release
+
 * Wed Jan 30 2013 Igor Vlasenko <viy@altlinux.ru> 0.20-alt1
 - developmant release
 
