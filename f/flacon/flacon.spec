@@ -1,5 +1,5 @@
 Name: flacon
-Version: 0.7.2
+Version: 0.8.0
 Release: alt1
 
 Summary: Audio File Encoder
@@ -41,6 +41,15 @@ Extracts audio tracks from audio CD image to separate tracks.
 %_datadir/%name
 
 %changelog
+* Sat May 25 2013 Nazarov Denis <nenderus@altlinux.org> 0.8.0-alt1
+- Version 0.8.0
+
+* Thu Aug 23 2012 Nazarov Denis <nenderus@altlinux.org> 0.7.2-alt0.M60P.1
+- Build for branch p6
+
+* Mon Aug 20 2012 Nazarov Denis <nenderus@altlinux.org> 0.7.2-alt0.M60T.1
+- Build for branch t6
+
 * Mon Aug 20 2012 Nazarov Denis <nenderus@altlinux.org> 0.7.2-alt1
 - Version 0.7.2
 
