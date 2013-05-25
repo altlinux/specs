@@ -1,5 +1,5 @@
 Name: cinnamon
-Version: 1.8.3
+Version: 1.8.6
 Release: alt1
 
 Summary: Window management and application launching for GNOME
@@ -260,6 +260,9 @@ _WM_
 %doc NEWS README
 
 %changelog
+* Sat May 25 2013 Vladimir Didenko <cow@altlinux.org> 1.8.6-alt1
+- 1.8.6-2-g0a892f4
+
 * Tue May 21 2013 Vladimir Didenko <cow@altlinux.org> 1.8.3-alt1
 - 1.8.3-12-g81cc166
 
