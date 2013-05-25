@@ -1,6 +1,6 @@
 Summary: Openfire XMPP Server
 Name: openfire
-Version: 3.8.0
+Version: 3.8.1
 Release: alt1
 
 Source0: openfire_src_3_8_0.tar.gz
@@ -93,6 +93,9 @@ ln -s %_bindir/embedded-db.rc %buildroot%firedir/bin/embedded-db.rc
 %exclude %firedir/lib/*.dll
 
 %changelog
+* Sat May 25 2013 Slava Dubrovskiy <dubrsl@altlinux.org> 3.8.1-alt1
+- New version (close #29006)
+
 * Fri Feb 08 2013 Slava Dubrovskiy <dubrsl@altlinux.org> 3.8.0-alt1
 - New version (close #28522)
 
