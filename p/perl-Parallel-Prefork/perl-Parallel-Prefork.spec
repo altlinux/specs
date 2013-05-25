@@ -1,10 +1,10 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(CPAN.pm) perl(Config.pm) perl(Exporter.pm) perl(Fcntl.pm) perl(List/Util.pm) perl(Test/More.pm) perl(Time/HiRes.pm) perl-devel perl-podlators
+BuildRequires: perl(CPAN.pm) perl(Config.pm) perl(Exporter.pm) perl(Fcntl.pm) perl(List/Util.pm) perl(Test/More.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Parallel-Prefork
-Version:        0.13
-Release:        alt2_5
+Version:        0.14
+Release:        alt1_1
 Summary:        Simple prefork server framework
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -20,6 +20,7 @@ BuildRequires:  perl(Scope/Guard.pm)
 BuildRequires:  perl(Test/Requires.pm)
 BuildRequires:  perl(Parallel/Scoreboard.pm)
 BuildRequires:  perl(Test/SharedFork.pm)
+BuildRequires:  perl(Time/HiRes.pm)
 Source44: import.info
 
 %description
@@ -39,6 +40,7 @@ make pure_install PERL_INSTALL_ROOT=$RPM_BUILD_ROOT
 find $RPM_BUILD_ROOT -type f -name .packlist -exec rm -f {} \;
 find $RPM_BUILD_ROOT -depth -type d -exec rmdir {} 2>/dev/null \;
 
+# %{_fixperms} $RPM_BUILD_ROOT/*
 
 %check
 make test
@@ -48,6 +50,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Sun May 26 2013 Igor Vlasenko <viy@altlinux.ru> 0.14-alt1_1
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.13-alt2_5
 - update to new release by fcimport
 
