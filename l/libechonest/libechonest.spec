@@ -2,23 +2,21 @@
 BuildRequires(pre): rpm-macros-fedora-compat
 BuildRequires: gcc-c++
 # END SourceDeps(oneline)
+Group: System/Libraries
 %add_optflags %optflags_shared
 Name:		libechonest
-Version: 	2.0.1
-Release:	alt1_3
+Version: 	2.1.0
+Release:	alt1_1
 Summary:	C++ wrapper for the Echo Nest API
 
-Group:		System/Libraries
 License:	GPLv2+
 URL:		https://projects.kde.org/projects/playground/libs/libechonest
 Source0:	http://files.lfranchi.com/libechonest-%{version}.tar.bz2
 
-BuildRequires:	ctest cmake
+BuildRequires: ctest cmake
 BuildRequires:	pkgconfig(QJson)
 BuildRequires:	pkgconfig(QtNetwork)
 Source44: import.info
-
-## upstream patches
 
 
 %description
@@ -26,10 +24,9 @@ libechonest is a collection of C++/Qt classes designed to make a developer's
 life easy when trying to use the APIs provided by The Echo Nest.
 
 %package	devel
+Group: Development/C
 Summary:	Development files for %{name}
-Group:		Development/C
 Requires:	%{name}%{?_isa} = %{version}-%{release}
-
 %description	devel
 The %{name}-devel package contains libraries and header files for
 developing applications that use %{name}.
@@ -37,10 +34,6 @@ developing applications that use %{name}.
 
 %prep
 %setup -q
-
-sed -i -e '/add_definitions.*-Werror/d' CMakeLists.txt
-
-
 
 
 %build
@@ -63,9 +56,10 @@ test "$(pkg-config --modversion libechonest)" = "%{version}"
 # besides, there's several known-failures yet anyway -- rex
 #make test -C %%{_target_platform}
 
+
 %files
 %doc AUTHORS COPYING README TODO
-%{_libdir}/libechonest.so.2*
+%{_libdir}/libechonest.so.2.1*
 
 %files devel
 %{_includedir}/echonest/
@@ -74,6 +68,9 @@ test "$(pkg-config --modversion libechonest)" = "%{version}"
 
 
 %changelog
+* Sun May 26 2013 Igor Vlasenko <viy@altlinux.ru> 2.1.0-alt1_1
+- update to new release by fcimport
+
 * Mon Dec 03 2012 Igor Vlasenko <viy@altlinux.ru> 2.0.1-alt1_3
 - update to new release by fcimport
 
