@@ -1,12 +1,12 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: gcc-c++
+BuildRequires: gcc-c++ waf
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
 %define oldname suil
 %global maj 0
 Name:       libsuil
-Version:    0.6.10
-Release:    alt1_2
+Version:    0.6.12
+Release:    alt1_1
 Summary:    A lightweight C library for loading and wrapping LV2 plugin UIs
 
 Group:      System/Libraries
@@ -88,6 +88,9 @@ chmod +x %{buildroot}%{_libdir}/lib%{oldname}-0.so.*
 %{_mandir}/man3/%{oldname}.3*
 
 %changelog
+* Sun May 26 2013 Igor Vlasenko <viy@altlinux.ru> 0.6.12-alt1_1
+- update to new release by fcimport
+
 * Tue Mar 26 2013 Igor Vlasenko <viy@altlinux.ru> 0.6.10-alt1_2
 - fc import
 
