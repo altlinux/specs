@@ -1,5 +1,5 @@
 Name:     apt-repo
-Version:  1.1.3
+Version:  1.1.4
 Release:  alt1
 
 Summary:  Script for manipulation APT repository list
@@ -36,6 +36,10 @@ gzip %buildroot%_man1dir/%name.1
 %doc %_man1dir/%{name}*
 
 %changelog
+* Sat May 25 2013 Andrey Cherepanov <cas@altlinux.org> 1.1.4-alt1
+- Set common key `update` for all branches for easy migration to newer
+  branch because there is no branch-specific key without apt-conf update
+
 * Thu May 23 2013 Andrey Cherepanov <cas@altlinux.org> 1.1.3-alt1
 - Add arepo 2.0 source too on adding x86_64 branch
 - Show only one warning on non-existing source removal
