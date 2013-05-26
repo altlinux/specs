@@ -1,13 +1,13 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: gcc-c++
+BuildRequires: gcc-c++ waf
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
 %define oldname sord
 %global maj 0
 
 Name:       libsord
-Version:    0.10.4
-Release:    alt1_3
+Version:    0.12.0
+Release:    alt1_1
 Summary:    A lightweight Resource Description Framework (RDF) C library
 
 Group:      System/Libraries
@@ -81,6 +81,9 @@ chmod +x %{buildroot}%{_libdir}/lib%{oldname}-%{maj}.so.*
 %{_mandir}/man3/%{oldname}*.3.*
 
 %changelog
+* Sun May 26 2013 Igor Vlasenko <viy@altlinux.ru> 0.12.0-alt1_1
+- update to new release by fcimport
+
 * Tue Mar 26 2013 Igor Vlasenko <viy@altlinux.ru> 0.10.4-alt1_3
 - fc import
 
