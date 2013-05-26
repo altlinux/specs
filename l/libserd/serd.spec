@@ -6,8 +6,8 @@ BuildRequires: waf
 %global maj 0
 
 Name:           libserd
-Version:        0.18.0
-Release:        alt1_2
+Version:        0.18.2
+Release:        alt1_1
 Summary:        A lightweight C library for RDF syntax
 
 Group:          System/Libraries
@@ -79,6 +79,9 @@ chmod +x %{buildroot}%{_libdir}/lib%{oldname}-%{maj}.so.*
 %{_mandir}/man3/*.3*
 
 %changelog
+* Sun May 26 2013 Igor Vlasenko <viy@altlinux.ru> 0.18.2-alt1_1
+- update to new release by fcimport
+
 * Tue Mar 26 2013 Igor Vlasenko <viy@altlinux.ru> 0.18.0-alt1_2
 - fc import
 
