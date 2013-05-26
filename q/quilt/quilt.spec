@@ -1,6 +1,6 @@
 Name: quilt
 Version: 0.60
-Release: alt3
+Release: alt4
 
 Summary: Scripts for working with series of patches
 License: GPLv2+
@@ -62,6 +62,9 @@ install -pm644 AUTHORS TODO quilt.changes doc/README.EMACS doc/*.pdf \
 %docdir/
 
 %changelog
+* Mon May 27 2013 Dmitry V. Levin <ldv@altlinux.org> 0.60-alt4
+- Updated to v0.60-54-g0bdc116.
+
 * Tue May 21 2013 Dmitry V. Levin <ldv@altlinux.org> 0.60-alt3
 - Updated to v0.60-49-g95adfac.
 - Fixed "find -perm" usage.
