@@ -4,7 +4,7 @@
 
 Name: gnustep-back    
 Version: 0.23.1
-Release: alt4.git20130301
+Release: alt4.git20130425
 Summary: The GNUstep back-end library
 License: LGPLv3+ and GPLv3+
 Group: Graphical desktop/GNUstep
@@ -113,6 +113,9 @@ gzip ChangeLog
 %_man1dir/*
 
 %changelog
+* Sun May 26 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.23.1-alt4.git20130425
+- New snapshot
+
 * Wed Mar 20 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.23.1-alt4.git20130301
 - Disabled optimization
 
