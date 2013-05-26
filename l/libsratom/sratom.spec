@@ -6,8 +6,8 @@ BuildRequires: waf
 %global maj 0
 
 Name:       libsratom
-Version:    0.2.0
-Release:    alt1_5
+Version:    0.4.2
+Release:    alt1_4
 Summary:    A C library for serializing LV2 plugins
 
 Group:      System/Libraries
@@ -16,7 +16,7 @@ URL:        http://drobilla.net/software/%{oldname}/
 Source0:    http://download.drobilla.net/%{oldname}-%{version}.tar.bz2
 BuildRequires:  doxygen
 BuildRequires:  graphviz
-BuildRequires:  sord-devel >= 0.8.0
+BuildRequires:  sord-devel >= 0.12.0
 BuildRequires:  lv2-devel >= 1.0.0
 
 
@@ -84,6 +84,9 @@ chmod +x %{buildroot}%{_libdir}/lib%{oldname}-0.so.*
 %{_mandir}/man3/*
 
 %changelog
+* Sun May 26 2013 Igor Vlasenko <viy@altlinux.ru> 0.4.2-alt1_4
+- update to new release by fcimport
+
 * Tue Mar 26 2013 Igor Vlasenko <viy@altlinux.ru> 0.2.0-alt1_5
 - fc import
 
