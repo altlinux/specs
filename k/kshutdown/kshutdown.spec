@@ -1,55 +1,54 @@
 Name: kshutdown
 Version: 0.4.0
-Release: alt3.2
-
-Summary: A Shut Down Utility for KDE.
-License: GPL
+Release: alt4
+Summary: A Shut Down Utility for KDE
+License: GPLv2+
 Group: Graphical desktop/KDE
-Url: http://kshutdown.sourceforge.net
-Packager: Ilya Mashkin <oddity at altlinux dot ru>
+Url: http://%name.sourceforge.net
+Source: %name-%version.tar
+Patch: %name-%version-%release.patch
 
-Source0: %name-%version.tar.bz2
-#Source1: %name.mo
-Patch0: %name-0.4.0-alt-DSO.patch
-
-
-BuildRequires: fontconfig freetype2 gcc-c++ kde-settings kdelibs-devel  libjpeg-devel libpng-devel libqt3-devel libstdc++-devel  qt3-designer xml-utils zlib-devel libtqt-devel
+BuildRequires: gcc-c++ kdelibs-devel libdnet-devel libjpeg-devel libpng-devel zlib-devel xml-utils
 
 %description
 KShutDown is an advanced shut down utility for KDE.
 
+
 %prep
-%setup -q 
-%patch0 -p2
-sed -i 's,\.la,\.so,' configure
+%setup -q
+%patch -p1
+sed -i 's|\.la|.so|g' configure
+
 
 %build
+%add_optflags -I%_includedir/tqtinterface
 %configure --disable-rpath --without-arts
-%set_verify_elf_method textrel=relaxed
-%make_build CXXFLAGS="-I%_includedir/tqtinterface"
+%make_build
+
 
 %install
-make DESTDIR=%buildroot install
-#menu
-mkdir -p %buildroot/%_menudir
-install -p -m644 %buildroot/%_datadir/applnk/Utilities/%name.desktop %buildroot/%_menudir/%name 
-#__mkdir_p %buildroot%_datadir/locale/ru/LC_MESSAGES
-#__install -pD -m644 %%SOURCE1 %buildroot%_datadir/locale/ru/LC_MESSAGES/
-
+%makeinstall_std
 %find_lang %name
+
 
 %files -f %name.lang
 %doc AUTHORS ChangeLog README TODO
-%_bindir/%name
-%_datadir/applnk/Utilities/%name.desktop
-%_datadir/applnk/Utilities/kshutdownwizard.desktop
-#%_datadir/locale/*/LC_MESSAGES/%name.mo
-%_menudir/%name
-%_datadir/apps/%name/
 %doc %_docdir/HTML/en/%name
-%_iconsdir/*/*/apps/%name.png
+%_bindir/*
+%_datadir/applnk/Utilities/*
+%_datadir/apps/*
+%_niconsdir/*
+%_liconsdir/*
+%_iconsdir/locolor/*/apps/*
+
 
 %changelog
+* Sun May 26 2013 Led <led@altlinux.ru> 0.4.0-alt4
+- removed unneeded file
+- build with %%optflags
+- fixed License
+- updated BuildRequires
+
 * Fri Apr 12 2013 Andrey Cherepanov <cas@altlinux.org> 0.4.0-alt3.2
 - Fix build with new xorg
 
