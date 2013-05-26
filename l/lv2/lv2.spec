@@ -1,8 +1,11 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires: waf
+# END SourceDeps(oneline)
 %global debug_package %{nil}
 
 Name:           lv2
-Version:        1.2.0
-Release:        alt1_2
+Version:        1.4.0
+Release:        alt1_1
 Summary:        Audio Plugin Standard
 Group:          System/Libraries
 
@@ -90,6 +93,9 @@ mv %{buildroot}%{_docdir}/%name/* %{buildroot}%{_docdir}/%{name}-%{version}
 %doc %dir %{_docdir}/%{name}-%{version}
 
 %changelog
+* Sun May 26 2013 Igor Vlasenko <viy@altlinux.ru> 1.4.0-alt1_1
+- update to new release by fcimport
+
 * Tue Mar 26 2013 Igor Vlasenko <viy@altlinux.ru> 1.2.0-alt1_2
 - import
 
