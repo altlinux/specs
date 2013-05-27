@@ -25,7 +25,7 @@
 
 Name: systemd
 Version: 204
-Release: alt2
+Release: alt3
 Summary: A System and Session Manager
 Url: http://www.freedesktop.org/wiki/Software/systemd
 Group: System/Configuration/Boot and Init
@@ -855,7 +855,7 @@ update_chrooted all
 /lib/tmpfiles.d/tmp.conf
 /lib/tmpfiles.d/x11.conf
 
-%_sysconfdir/modules-load.d/modules.conf
+
 %_sysconfdir/xdg/systemd
 
 
@@ -1054,6 +1054,7 @@ update_chrooted all
 %_man8dir/systemd-binfmt.*
 
 /lib/systemd/systemd-modules-load
+%_sysconfdir/modules-load.d/modules.conf
 /sbin/systemd-modules-load
 %_unitdir/systemd-modules-load.service
 %_unitdir/sysinit.target.wants/systemd-modules-load.service
@@ -1205,6 +1206,9 @@ update_chrooted all
 /lib/udev/write_net_rules
 
 %changelog
+* Mon May 27 2013 Alexey Shabalin <shaba@altlinux.ru> 204-alt3
+- move /etc/modules-load.d/modules.conf from systemd to systemd-utils
+
 * Fri May 17 2013 Alexey Shabalin <shaba@altlinux.ru> 204-alt2
 - fix permitions for ALTLinux in /lib/tmpfiles.d/legacy.conf
 - move sysctl  and tmpfiles configs to systemd-utils
