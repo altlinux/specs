@@ -1,16 +1,11 @@
 Name: startup
-Version: 0.9.8.38
+Version: 0.9.9.0
 Release: alt1
 
 Summary: The system startup scripts
 License: GPLv2+
 Group: System/Base
-
-%ifarch ia64 %ix86 ppc64 x86_64
-%define mmap_min_addr 65536
-%else
-%define mmap_min_addr 32768
-%endif
+BuildArch: noarch
 
 Source: %name-%version.tar
 
@@ -31,6 +26,8 @@ Requires: hwclock >= 1:2.14-alt1
 Requires: sysvinit-utils
 # due to fsck in rc.sysinit (ALT#22410)
 Requires: /sbin/fsck
+# due to systemd-sysctl, systemd-tmpfiles, and systemd-modules-load.
+Requires: systemd-utils >= 204-alt3
 
 # due to update_wms
 Conflicts: xinitrc < 0:2.4.13-alt1
@@ -51,8 +48,6 @@ change runlevels, and shut the system down cleanly.
 
 %prep
 %setup
-sed 's/@ARCH@/%_arch/;s/@MMAP_MIN_ADDR@/%mmap_min_addr/' \
-	< sysctl.conf.in > sysctl.conf
 
 %install
 mkdir -p %buildroot%_sysconfdir/rc.d/rc{0,1,2,3,4,5,6}.d
@@ -98,6 +93,11 @@ for f in /var/{log/wtmp,run/utmp}; do
 		chmod 664 "$f"
 	fi
 done
+
+if [ -s /etc/sysconfig/i18n -a ! -e /etc/locale.conf ]; then
+	grep -E '^(LANG|LANGUAGE|LC_ADDRESS|LC_COLLATE|LC_CTYPE|LC_IDENTIFICATION|LC_MEASUREMENT|LC_MESSAGES|LC_MONETARY|LC_NAME|LC_NUMERIC|LC_PAPER|LC_TELEPHONE|LC_TIME)=' /etc/sysconfig/i18n > /etc/locale.conf
+	chmod 644 /etc/locale.conf
+fi
 
 # Dup of timeconfig %%post - here to avoid a dependency.
 if [ -L %_sysconfdir/localtime ]; then
@@ -164,6 +164,13 @@ done
 %dir %_localstatedir/rsbac
 
 %changelog
+* Mon May 27 2013 Dmitry V. Levin <ldv@altlinux.org> 0.9.9.0-alt1
+- rc.sysinit:
+  + added sysctl.d support using systemd-sysctl (closes: #20938);
+  + added modules-load.d support using systemd-modules-load;
+  + added tmpfiles.d support using systemd-tmpfiles.
+- scripts/lang: added /etc/locale.conf support (closes: #28525).
+
 * Wed Feb 06 2013 Dmitry V. Levin <ldv@altlinux.org> 0.9.8.38-alt1
 - rc.sysinit: hide plymouth when appropriate (closes: #28515).
 
