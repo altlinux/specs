@@ -1,8 +1,8 @@
 %set_verify_elf_method textrel=relaxed 
-%define rev	47f64084
+%define rev	252d7cbf
 Name:		deadbeef
 Version:	0.5.6
-Release:	alt2.%rev
+Release:	alt3.%rev
 Summary:	DeaDBeeF is an audio player
 Url:		http://deadbeef.sourceforge.net/
 Source0:	http://kent.dl.sourceforge.net/project/deadbeef/%name-%version.tar
@@ -326,6 +326,14 @@ Requires: %name = %version-%release
 %description -n %name-in-aac
 DeaDBeeF AAC Input Plugin
 
+%package -n %name-in-wma
+Summary: DeaDBeeF WMA Input Plugin
+Group: Sound
+Requires: %name = %version-%release
+
+%description -n %name-in-wma
+DeaDBeeF Windows Media Audio (WMA) Input Plugin
+
 # General plugins
 %package -n %name-dsp-supereq
 Summary: DeaDBeeF SuperEQ Plugin
@@ -444,7 +452,8 @@ Scans disk for music files and manages them as database.
 #patch4 -p2
 #patch5 -p2
 %patch6 -p2
-%patch7 -p2
+#patch7 -p2
+
 
 
 sed -i '/m4/ d' Makefile.am
@@ -459,6 +468,8 @@ export CXXFLAGS="%optflags"
 		--enable-ffmpeg=yes \
 		--enable-gtk2=yes \
 		--enable-gtk3=no \
+		--enable-medialib=yes \
+
 
 %make_build
 
@@ -558,6 +569,9 @@ rm -rf %buildroot/%_libdir/%name/*.la
 %files -n %name-in-aac
 %_libdir/%name/aac.*
 
+%files -n %name-in-wma
+%_libdir/%name/wma.*
+
 # General plugins
 %files -n %name-artwork
 %_libdir/%name/artwork.*
@@ -607,6 +621,9 @@ rm -rf %buildroot/%_libdir/%name/*.la
 %files -n %name-incomplete
 
 %changelog
+* Mon May 27 2013 Andrew Clark <andyc@altlinux.org> 0.5.6-alt3.252d7cbf
+- version update to 0.5.6-alt3.252d7cbf
+
 * Fri Dec 14 2012 Vladimir Didenko <cow@altlinux.org> 0.5.6-alt2.47f64084
 - remove waste gdk_threads_enter(Closes: 27966)
 
