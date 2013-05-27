@@ -297,7 +297,7 @@
 
 Name: %lname
 Version: 1.1.1
-Release: alt3
+Release: alt4
 %ifdef svnrev
 %define pkgver svn-r%svnrev
 %else
@@ -687,7 +687,7 @@ install -m 0644 %SOURCE7 po/mp_msg2po.awk
 
 subst 's|\\/\\/|//|g' help/help_mp-zh_??.h
 
-ls DOCS/man/*/%lname.1 | grep -v '^DOCS/man/en/' | xargs sed -i '1i.\" -*- mode: troff; coding: utf-8 -*-'
+ls DOCS/man/*/%lname.1 | grep -v '^DOCS/man/en/' | xargs sed -i '1i.\\" -*- mode: troff; coding: utf-8 -*-'
 
 
 %build
@@ -1189,6 +1189,9 @@ install -D -m 0644 {etc/%lname,%buildroot%_desktopdir/%gname}.desktop
 
 
 %changelog
+* Mon May 27 2013 Led <led@altlinux.ru> 1.1.1-alt4
+- fixed encoding of manpages
+
 * Mon May 27 2013 Led <led@altlinux.ru> 1.1.1-alt3
 - set encoding of manpages
 
