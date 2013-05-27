@@ -1,0 +1,317 @@
+%set_verify_elf_method unresolved=relaxed
+%define hdf5_version 1.8.9
+
+Name:     scilab
+Version:  5.4.1
+Release:  alt1
+Summary:  A high-level language and system for numerical computations
+
+License:  CeCILL
+Group:    Sciences/Mathematics
+
+Packager: Andrey Cherepanov <cas@altlinux.ru>
+
+Obsoletes:%name-doc
+
+Source0: %name-%version.tar.bz2
+Source1: scilab-desktop-ru.tar
+
+Patch1:  scilab-5.4.0-find-jhall.patch
+Patch2:  scilab-5.4.0-find-jgoodies-looks.patch
+Patch3:  scilab-5.4.0-find-xml-apis-ext.patch
+Patch4: scilab-port-to-matio-1.5.patch
+
+URL: http://www.scilab.org
+AutoReq: yes, noshell
+
+BuildRequires(pre): rpm-build-java
+BuildRequires: gcc-fortran
+BuildRequires: gcc-c++
+BuildRequires: libxml2-devel
+
+# Numerical libraries
+# see "http://wiki.scilab.org/Linalg performances"
+BuildRequires: liblapack-devel
+BuildRequires: libarpack-ng-devel
+
+# GUI/Console
+BuildRequires: jpackage-utils
+BuildRequires: java-1.7.0-openjdk-devel
+BuildRequires: /proc
+BuildRequires: ant
+
+BuildRequires: flexdock >= 1.0
+BuildRequires: gluegen2
+BuildRequires: jogl2
+BuildRequires: scirenderer
+BuildRequires: libGL-devel
+BuildRequires: jrosetta >= 1.0.4
+
+BuildRequires: apache-commons-logging
+BuildRequires: javahelp2
+BuildRequires: jlatexmath >= 1.0.2
+BuildRequires: jlatexmath-fop >= 1.0.2
+BuildRequires: jgraphx
+BuildRequires: fop
+BuildRequires: jeuclid
+BuildRequires: batik
+BuildRequires: xmlgraphics-commons
+
+# TCL/TK features
+BuildRequires: tcl-devel
+BuildRequires: tk-devel
+
+Requires:      tcl
+Requires:      tk
+
+# Modelica
+BuildRequires: ocaml
+
+# Documentation
+BuildRequires: saxon
+BuildRequires: docbook-style-xsl
+
+# All optional dependencies are needed to provide a full-featured Scilab
+BuildRequires: gettext-devel
+BuildRequires: libfftw3-devel
+BuildRequires: libmatio-devel
+BuildRequires: libsuitesparse-devel
+BuildRequires: libhdf5-devel
+#?BuildRequires: jhdf5
+BuildRequires: xml-commons-jaxp-1.3-apis
+BuildRequires: checkstyle
+
+BuildRequires: libncurses-devel
+BuildRequires: libgomp4.7-devel
+BuildRequires: libatlas-devel
+BuildRequires: libpcre-devel
+
+# For generated documentation
+BuildRequires: fonts-ttf-liberation
+
+# hdf5 does not bump soname but check at runtime
+#?Requires:      libhdf5-7-seq = %hdf5_version
+#?Requires:      jhdf5
+#BuildRequires: imake libICE-devel xorg-cf-files
+
+Requires: flexdock scirenderer jrosetta
+Requires: apache-commons-logging
+Requires: javahelp2
+Requires: jlatexmath >= 1.0.2
+Requires: jlatexmath-fop >= 1.0.2
+Requires: jgraphx
+Requires: fop
+Requires: jeuclid
+Requires: batik
+Requires: xmlgraphics-commons
+Requires: xml-commons-jaxp-1.3-apis
+Requires: libfftw3
+
+#Requires: jgoodies-looks skinlf ant-commons-logging avalon-framework
+#Requires: docbook-style-xsl saxon
+
+%description
+Scilab is the free software for numerical computation providing a powerful
+computing environment for engineering and scientific applications. It
+includes hundreds of mathematical functions. It has a high level programming
+language allowing access to advanced data structures, 2-D and 3-D graphical
+functions.
+
+%prep
+%setup -q
+tar xf %SOURCE1
+%patch1 -p2
+%patch2 -p2
+%patch3 -p2
+%patch4 -p1
+
+# Update saxon dependency
+# http://bugzilla.scilab.org/show_bug.cgi?id=8479
+sed -i "s/com.icl.saxon.Loader/net.sf.saxon.Version/g" m4/docbook.m4 configure
+rm modules/helptools/src/java/org/scilab/modules/helptools/BuildDocObject.java
+
+# Fix Class-Path in manifest
+sed -i '/name="Class-Path"/d' build.incl.xml
+
+# Fix file-not-utf8
+iconv -f ISO_8859-1 -t UTF-8 COPYING >COPYING.utf8
+mv COPYING.utf8 COPYING
+
+
+%build
+#%%define _configure_target %{_arch}-pc-linux-gnu
+export LDFLAGS="$LDFLAGS -Wl,--no-as-needed"
+aclocal
+%configure --enable-shared \
+           --enable-static=no \
+           --with-tk \
+           --with-gfortran \
+           --with-hdf5-include=%_libdir/hdf5-seq/include/ \
+           --with-tcl-library=%_libdir \
+           --with-tk-library=%_libdir \
+           --with-pic \
+           --enable-build-help
+
+%make
+%make doc
+
+%install
+%makeinstall_std
+%find_lang %name
+
+# Remove more advanced repl, user should use CLI options instead
+rm -fr %buildroot%_desktopdir/%{name}-*.desktop
+# Remove la files
+rm -fr %buildroot%_libdir/%name/*.la
+# Remove MIME package
+rm -f %buildroot%_xdgmimedir/packages/scilab.xml
+
+%files -f %name.lang
+%doc README_Unix COPYING license.txt
+%_bindir/*
+%_libdir/pkgconfig/*
+%_libdir/%name
+%_includedir/%name
+%_datadir/%name
+%_desktopdir/*.desktop
+%_iconsdir/*/*/*/*.png
+
+%changelog
+* Sun May 26 2013 Andrey Cherepanov <cas@altlinux.org> 5.4.1-alt1
+- New version 5.4.1
+- Build docs again (fixed in upstream bug 4134)
+
+* Fri May 24 2013 Andrey Cherepanov <cas@altlinux.org> 5.4.0-alt1
+- New version 5.4.0 (ALT #25996)
+- Translate desktop files into Russian
+- Disable build documentation
+
+* Tue Oct 20 2009 Vitaly Kuznetsov <vitty@altlinux.ru> 5.1.1-alt3
+- build doc (ALT #21904)
+
+* Sat Sep 12 2009 Vitaly Kuznetsov <vitty@altlinux.ru> 5.1.1-alt2
+- remove libumfpack-devel from buildrequres
+
+* Thu Jul 16 2009 Vitaly Kuznetsov <vitty@altlinux.ru> 5.1.1-alt1
+- 5.1.1
+
+* Wed Dec 24 2008 Denis Medvedev <nbr@altlinux.ru> 4.1.2-alt6
+- with gtk2, bugfix for #18307 ALT bugzilla
+
+* Wed Sep 24 2008 Denis Medvedev <nbr@altlinux.ru> 4.1.2-alt5
+- Fix bug with not working editor (#17318) 
+
+* Sat Sep 20 2008 Denis Medvedev <nbr@altlinux.ru> 4.1.2-alt4
+- repocop suggested change /tmp to /home/denis/tmp for safety
+
+* Tue May 06 2008 Denis Medvedev <nbr@altlinux.ru> 4.1.2-alt3
+- bug 15556 - BWidged removed and used in-system
+
+* Tue May 06 2008 Denis Medvedev <nbr@altlinux.ru> 4.1.2-alt1.M40.1
+- Updates to Branch M40
+
+* Tue May 06 2008 Denis Medvedev <nbr@altlinux.ru> 4.1.2-alt2
+- repocop icondirs
+
+* Tue May 06 2008 Denis Medvedev <nbr@altlinux.ru> 4.1.2-alt1
+ - 4.1.2 version from upstream
+
+* Fri Sep 28 2007 Denis Medvedev <nbr@altlinux.ru> 4.1.1-alt1.3
+- Debug option, pic option
+
+* Thu Aug 30 2007 Denis Medvedev <nbr@altlinux.ru> 4.1.1-alt1.2
+- changes for x86_64 compilation
+
+* Tue Aug 28 2007 Denis Medvedev <nbr@altlinux.ru> 4.1.1-alt1.1
+- Taken from orphaned, new version
+
+* Wed Feb 08 2006 ALT QA Team Robot <qa-robot@altlinux.org> 3.1.1-alt1.1
+- Rebuild with libXaw3d.so.8 .
+
+* Tue Dec 20 2005 Dimitry V. Ketov <dketov@altlinux.ru> 3.1.1-alt1
+- 3.1.1
+- app-defaults location fix
+
+* Wed Dec 08 2004 Dimitry V. Ketov <dketov@altlinux.ru> 3.0-alt1
+- 3.0
+- misc. spec bugfixes, sources clean before build
+- menu and new scilab mascot icons
+
+* Tue Apr 08 2003 Stanislav Ievlev <inger@altlinux.ru> 2.7-alt1
+- 2.7
+
+* Mon Oct  7 2002 Sergey Bolshakov <s.bolshakov@belcaf.com> 2.6-alt8
+- rebuilt with tcl 8.4
+
+* Wed Sep 18 2002 Stanislav Ievlev <inger@altlinux.ru> 2.6-alt7
+- rebuild with new XFree86
+
+* Wed Sep 04 2002 Stanislav Ievlev <inger@altlinux.ru> 2.6-alt6
+- rebuild with gcc3
+- termcap -> terminfo
+
+* Sat Jun 15 2002 Sergey Bolshakov <s.bolshakov@belcaf.com> 2.6-alt5
+- rebuilt in new env
+
+* Mon Dec 24 2001 Stanislav Ievlev <inger@altlinux.ru> 2.6-alt4
+- fix links in app-defaults
+
+* Thu Oct 11 2001 Stanislav Ievlev <inger@altlinux.ru> 2.6-alt3
+- MDK merges
+
+* Fri May 25 2001 Stanislav Ievlev <inger@altlinux.ru> 2.6-alt2
+- path bugfix. Remove doc package.
+
+* Thu Apr 12 2001 Stanislav Ievlev <inger@altlinux.ru> 2.6-alt1
+- Up to 2.6. spec clean up and bugfix
+
+* Thu Jan 09 2001 AEN <aen@logic.ru>
+- adopted for RE
+
+* Sun Oct 22 2000 Fernando M. Roxo da Motta <roxo@conectiva.com.br>
+- inserted documentation package
+
+* Fri Oct 20 2000 Fernando M. Roxo da Motta <roxo@conectiva.com.br>
+- Fixed hardwired PATH's
+
+* Wed Oct 18 2000 Fernando M. Roxo da Motta <roxo@conectiva.com.br>
+- Packaged for Conectiva Linux
+- Fixed a lot of macros
+
+* Tue Sep 26 2000 Lenny Cartier <lenny@mandrakesoft.com> 2.4.1-3mdk
+- build release
+- macros
+- menu
+
+* Wed May 03 2000 Lenny Cartier <lenny@mandrakesoft.com> 2.4.1-2mdk
+- bzip2 patches
+- fix group
+
+* Tue Dec 30 1999 Lenny Cartier <lenny@mandrakesoft.com>
+- new in contribs
+- bz2 archive
+
+* Wed Aug 18 1999 Tim Powers <timp@redhat.com>
+- exludearch alpha
+
+* Wed Jul 21 1999 Tim Powers <timp@redhat.com>
+- rebuilt for 6.1
+
+* Wed May 12 1999 Bill Nottingham <notting@redhat.com>
+- clean up dependencies
+
+* Wed May 05 1999 Bill Nottingham <notting@redhat.com>
+- update to 2.4.1
+
+* Fri Oct 23 1998 Jeff Johnson <jbj@redhat.com>
+- Upgrade to 2.4.
+
+* Thu Oct 22 1998 Jeff Johnson <jbj@redhat.com>
+- Fixes to permit compile on alpha.
+- Eliminate lurking dependencies on /bin/sh5 and SCILABGS.
+- Modify default value of SCI variable to be correct for users.
+- Add /usr/bin/scilab symlink.
+
+* Sat Jul 11 1998 Jeff Johnson <jbj@redhat.com>
+- Create powertools package.
+
