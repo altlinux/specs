@@ -297,7 +297,7 @@
 
 Name: %lname
 Version: 1.1.1
-Release: alt2
+Release: alt3
 %ifdef svnrev
 %define pkgver svn-r%svnrev
 %else
@@ -445,42 +445,33 @@ BuildRequires: normalize termutils vcdimager
 %Name is a movie and animation player that supports a wide range of file
 formats, including AVI, MPEG, and Quicktime. It has many MMX/SSE/3DNow! etc.
 optimized native audio and video codecs, but allows using XAnim's and
-RealPlayer's binary codec plugins, and Win32 codec DLLs. It has basic
-VCD/DVD playback functionality, including DVD subtitles, but supports many
-text-based subtitle formats too.
-
-For video and audio output, nearly every existing interface is
-supported including some low-level card-specific drivers
-(for Matrox, Nvidia, 3Dfx and Radeon, Mach64, Permedia3), hardware AC3
-decoding and few hardware MPEG decoding boards such as DVB and
-DXR3/Hollywood+.
-
+RealPlayer's binary codec plugins, and Win32 codec DLLs. It has basic VCD/DVD
+playback functionality, including DVD subtitles, but supports many text-based
+subtitle formats too.
+For video and audio output, nearly every existing interface is supported
+including some low-level card-specific drivers (for Matrox, Nvidia, 3Dfx and
+Radeon, Mach64, Permedia3), hardware AC3 decoding and few hardware MPEG decoding
+boards such as DVB and DXR3/Hollywood+.
 It also supports video grabbing from V4L devices.
-
-This package provides only console version of the %Name. Install
-%name-gui *instead* if you need a nice skinnable GUI player.
+This package provides only console version of the %Name. Install %name-gui
+*instead* if you need a nice skinnable GUI player.
 
 %description -l ru_RU.CP1251
-%Name - это видеопроигрыватель, который поддерживает широкий спектр
-форматов файлов, в том числе AVI, MPEG и Quicktime. В него включено
-множество аудио- и видеокодеков, оптимизированных для MMX, SSE, 3DNow!
-и.т.п. Кроме этого, имеется возможность использования внешних кодеков:
-XAnim, RealPlayer и Win32. Реализованы основные функции для
-проигрывания VCD/DVD, включая субтитры DVD, а также множества других
-текстовых форматов субтитров.
-
+%Name - это видеопроигрыватель, который поддерживает широкий спектр форматов
+файлов, в том числе AVI, MPEG и Quicktime. В него включено множество аудио- и
+видеокодеков, оптимизированных для MMX, SSE, 3DNow! и.т.п. Кроме этого, имеется
+возможность использования внешних кодеков: XAnim, RealPlayer и Win32. Реализованы
+основные функции для проигрывания VCD/DVD, включая субтитры DVD, а также
+множества других текстовых форматов субтитров.
 Поддерживаются практически все способы вывода изображения и звука в
-юниксоподобных системах. Имеются низкоуровневые специализированные
-драйвера для некоторых видеокарт: Matrox, Nvidia, 3Dfx, Radeon,
-Mach64, Permedia3, - аппаратного декодирования AC3, а также нескольких
-плат, аппаратно декодирующих MPEG, таких как DVB и DXR3/Hollywood+.
-
+юниксоподобных системах. Имеются низкоуровневые специализированные драйвера для
+некоторых видеокарт: Matrox, Nvidia, 3Dfx, Radeon, Mach64, Permedia3, аппаратного
+декодирования AC3, а также нескольких плат, аппаратно декодирующих MPEG, таких
+как DVB и DXR3/Hollywood+.
 Кроме этого, %Name способен захватывать сигнал с устройств V4L.
-
-Этот пакет содержит только консольную версию %Name. Вам следует
-устанавливать пакет %name-gui *вместо* данного пакета, если Вам
-требуется видеопроигрыватель с хорошим настраиваемым GUI (графическим
-интерфейсом пользователя).
+Этот пакет содержит только консольную версию %Name. Вам следует устанавливать
+пакет %name-gui *вместо* данного пакета, если Вам требуется видеопроигрыватель с
+хорошим настраиваемым GUI (графическим интерфейсом пользователя).
 
 
 %if_enabled mplayer
@@ -501,37 +492,36 @@ Obsoletes: %Name-gui
 %endif
 
 %description gui
-%Name is a movie and animation player that supports a wide range of
-file formats, including AVI, MPEG, and Quicktime. It has many
-MMX/SSE/3DNow! etc. optimized native audio and video codecs, but allows
-using XAnim's and RealPlayer's binary codec plugins, and Win32 codec
-DLLs. It has basic VCD/DVD playback functionality, including DVD
-subtitles, but supports many text-based subtitle formats too.
-For video and audio output, nearly every existing interface is
-supported including some low-level card-specific drivers (for Matrox,
-Nvidia, 3Dfx and Radeon, Mach64, Permedia3), hardware AC3 decoding and
-few hardware MPEG decoding boards such as DVB and DXR3/Hollywood+.
+%Name is a movie and animation player that supports a wide range of file
+formats, including AVI, MPEG, and Quicktime. It has many MMX/SSE/3DNow! etc.
+optimized native audio and video codecs, but allows using XAnim's and
+RealPlayer's binary codec plugins, and Win32 codec DLLs. It has basic VCD/DVD
+playback functionality, including DVD subtitles, but supports many text-based
+subtitle formats too.
+For video and audio output, nearly every existing interface is supported
+including some low-level card-specific drivers (for Matrox, Nvidia, 3Dfx and
+Radeon, Mach64, Permedia3), hardware AC3 decoding and few hardware MPEG decoding
+boards such as DVB and DXR3/Hollywood+.
 It also supports video grabbing from V4L devices.
-This package provides GUI version of the %Name. A console-only
-version with trimmed down dependencies is also available as %name.
+This package provides GUI version of the %Name.
+A console-only version with trimmed down dependencies is also available as
+%name.
 
 %description gui -l ru_RU.CP1251
-%Name - это видеопроигрыватель, который поддерживает широкий спектр
-форматов файлов, в том числе AVI, MPEG и Quicktime. В него включено
-множество аудио- и видеокодеков, оптимизированных для MMX, SSE, 3DNow!
-и т.п. Кроме этого, имеется возможность использования внешних кодеков:
-XAnim, RealPlayer и Win32. Реализованы основные функции для
-проигрывания VCD/DVD, включая субтитры DVD, а также множества других
-текстовых форматов субтитров.
+%Name - это видеопроигрыватель, который поддерживает широкий спектр форматов
+файлов, в том числе AVI, MPEG и Quicktime. В него включено множество аудио- и
+видеокодеков, оптимизированных для MMX, SSE, 3DNow! и.т.п. Кроме этого, имеется
+возможность использования внешних кодеков: XAnim, RealPlayer и Win32. Реализованы
+основные функции для проигрывания VCD/DVD, включая субтитры DVD, а также
+множества других текстовых форматов субтитров.
 Поддерживаются практически все способы вывода изображения и звука в
-юниксоподобных системах. Имеются низкоуровневые специализированные
-драйвера для некоторых видеокарт: Matrox, Nvidia, 3Dfx, Radeon,
-Mach64, Permedia3, - аппаратного декодирования AC3, а также нескольких
-плат, аппаратно декодирующих MPEG, таких как DVB и DXR3/Hollywood+.
+юниксоподобных системах. Имеются низкоуровневые специализированные драйвера для
+некоторых видеокарт: Matrox, Nvidia, 3Dfx, Radeon, Mach64, Permedia3, аппаратного
+декодирования AC3, а также нескольких плат, аппаратно декодирующих MPEG, таких
+как DVB и DXR3/Hollywood+.
 Кроме этого, %Name способен захватывать сигнал с устройств V4L.
 Этот пакет содержит версию %Name c GUI (графическим интерфейсом).
-Также имеется %name - консольная версия пакета с меньшим числом
-зависимостей.
+Также имеется %name - консольная версия пакета с меньшим числом зависимостей.
 %endif
 %endif
 
@@ -676,9 +666,8 @@ Requires: mencoder
 Requires: %name
 
 %description tools
-Nice scripts and code that makes using %Name and MEncoder easier, for
-example scripts for DVD track encoding in three pass mode or creating
-SVCDs from a movie.
+Nice scripts and code that makes using %Name and MEncoder easier, for example
+scripts for DVD track encoding in three pass mode or creating SVCDs from a movie.
 %endif
 %endif
 
@@ -697,6 +686,8 @@ install -m 0644 %SOURCE7 po/mp_msg2po.awk
 %endif
 
 subst 's|\\/\\/|//|g' help/help_mp-zh_??.h
+
+ls DOCS/man/*/%lname.1 | grep -v '^DOCS/man/en/' | xargs sed -i '1i.\" -*- mode: troff; coding: utf-8 -*-'
 
 
 %build
@@ -943,8 +934,9 @@ cd -
 %endif
 
 %if_enabled gui
-for s in 128 96 72 64 36; do
-	convert etc/%{lname}256x256.png -resize ${s}x$s etc/%{lname}${s}x$s.png
+for s in 128 96 72 64 48 36 32 24 22 16; do
+	S=${s}x$s
+	[ -e etc/%{lname}$S.png ] || convert -resize $S etc/%{lname}{256x256,$S}.png
 done
 %endif
 
@@ -1015,7 +1007,8 @@ done
 
 %if_enabled gui
 for s in 256 128 96 72 64 48 36 32 24 22 16; do
-	install -D -m 0644 {etc/%lname${s}x$s,%buildroot%_iconsdir/hicolor/${s}x$s/apps/%lname}.png
+	S=${s}x$s
+	install -D -m 0644 {etc/%lname$S,%buildroot%_iconsdir/hicolor/$S/apps/%lname}.png
 done
 install -D -m 0644 {etc/%lname,%buildroot%_desktopdir/%gname}.desktop
 %endif
@@ -1196,6 +1189,9 @@ install -D -m 0644 {etc/%lname,%buildroot%_desktopdir/%gname}.desktop
 
 
 %changelog
+* Mon May 27 2013 Led <led@altlinux.ru> 1.1.1-alt3
+- set encoding of manpages
+
 * Mon May 27 2013 Led <led@altlinux.ru> 1.1.1-alt2
 - removed unneeded %%name-i18n-ru subpackage requires
 
