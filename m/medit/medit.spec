@@ -1,6 +1,6 @@
 Name: medit
 Version: 1.1.0
-Release: alt1.1
+Release: alt1.2
 
 Summary: Multiplatform GTK+2 text editor
 License: GPLv2+
@@ -12,6 +12,7 @@ Source1: medit16.png
 Source2: medit32.png
 Patch1: medit-1.0.1-docdir.patch
 Patch2: medit-1.1.0-alt-DSO.patch
+Patch3: medit-1.1.0-alt-russian-translation.patch
 
 # Automatically added by buildreq on Fri Apr 01 2011
 BuildRequires: gcc-c++ intltool libSM-devel libXext-devel libgamin-devel libxml2-devel python-module-pygtk-devel
@@ -32,6 +33,7 @@ Features:
 %setup
 %patch1 -p1
 %patch2 -p2
+%patch3 -p1
 
 %build
 %configure
@@ -57,6 +59,9 @@ rm -f %buildroot%_iconsdir/hicolor/icon-theme.cache
 %_man1dir/%name.*
 
 %changelog
+* Mon May 27 2013 Mikhail Efremov <sem@altlinux.org> 1.1.0-alt1.2
+- Update Russian translation (by azol@).
+
 * Thu Jul 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.0-alt1.1
 - Fixed build
 
