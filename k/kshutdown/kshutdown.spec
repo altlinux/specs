@@ -1,6 +1,6 @@
 Name: kshutdown
-Version: 0.4.0
-Release: alt4
+Version: 0.6.1
+Release: alt1
 Summary: A Shut Down Utility for KDE
 License: GPLv2+
 Group: Graphical desktop/KDE
@@ -8,7 +8,8 @@ Url: http://%name.sourceforge.net
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-BuildRequires: gcc-c++ kdelibs-devel libdnet-devel libjpeg-devel libpng-devel zlib-devel xml-utils
+BuildRequires: rpm-macros-kde-common-devel kdelibs-devel
+BuildRequires: gcc-c++ libdnet-devel libjpeg-devel libpng-devel zlib-devel xml-utils
 
 %description
 KShutDown is an advanced shut down utility for KDE.
@@ -22,6 +23,7 @@ sed -i 's|\.la|.so|g' configure
 
 %build
 %add_optflags -I%_includedir/tqtinterface
+export KDEDIR="$(dirname %_K3bindir)"
 %configure --disable-rpath --without-arts
 %make_build
 
@@ -43,6 +45,9 @@ sed -i 's|\.la|.so|g' configure
 
 
 %changelog
+* Mon May 27 2013 Led <led@altlinux.ru> 0.6.1-alt1
+- 0.6.1
+
 * Sun May 26 2013 Led <led@altlinux.ru> 0.4.0-alt4
 - removed unneeded file
 - build with %%optflags
