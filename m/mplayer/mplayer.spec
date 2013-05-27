@@ -10,7 +10,6 @@
 #define svnrev 32772
 %define lname mplayer
 %define Name MPlayer
-%define rel 1
 %define subrel %nil
 
 #---------------------- BEGIN OF PARAMETERS -------------------------------------
@@ -298,7 +297,7 @@
 
 Name: %lname
 Version: 1.1.1
-Release: alt1
+Release: alt2
 %ifdef svnrev
 %define pkgver svn-r%svnrev
 %else
@@ -645,7 +644,6 @@ Languages support for %Name (except ru%{?_enable_nls: and uk}).
 Group: Video
 Summary: Russian language support for %Name
 BuildArch: noarch
-Requires: man-pages-ru
 Conflicts: %name-i18n < 1.0-35.22229.1
 %{?_enable_mencoder:Provides: mencoder-i18n-ru = %version-%release}
 
@@ -1113,7 +1111,7 @@ install -D -m 0644 {etc/%lname,%buildroot%_desktopdir/%gname}.desktop
 
 
 %files i18n-ru
-%_mandir/ru/man1/*
+%_mandir/ru
 %{?_enable_nls:%_datadir/locale/ru/LC_MESSAGES/*}
 
 
@@ -1198,6 +1196,9 @@ install -D -m 0644 {etc/%lname,%buildroot%_desktopdir/%gname}.desktop
 
 
 %changelog
+* Mon May 27 2013 Led <led@altlinux.ru> 1.1.1-alt2
+- removed unneeded %%name-i18n-ru subpackage requires
+
 * Sat May 24 2013 Led <led@altlinux.ru> 1.1.1-alt1
 - 1.1.1 (ALT#28546)
 - cleaned up spec
