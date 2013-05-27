@@ -1,6 +1,6 @@
 Summary: Graphical network viewer modeled after etherman.
 Name: etherape
-Version: 0.9.12
+Version: 0.9.13
 Release: alt1
 License: GPL
 Group: Networking/Other
@@ -51,6 +51,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 #_var/lib/scrollkeeper/*
 
 %changelog
+* Tue May 28 2013 Ilya Mashkin <oddity@altlinux.ru> 0.9.13-alt1
+- 0.9.13
+
 * Sat Jun 04 2011 Ilya Mashkin <oddity@altlinux.ru> 0.9.12-alt1
 - 0.9.12
 
