@@ -1,6 +1,6 @@
 Name: installer-distro-simply-linux
 Version: 7.0
-Release: alt5
+Release: alt6
 
 Summary: Installer common files
 Summary(ru_RU.UTF-8): Общие пакеты для установки дистрибутива "Simply linux"
@@ -79,6 +79,7 @@ Requires: installer-feature-setup-network-stage3
 Requires: installer-feature-online-repo
 Requires: installer-feature-bell-off-stage3
 Requires: installer-feature-cpufreq-stage3
+Requires: installer-feature-symlinks-from-sbin
 
 Provides: installer-lite-stage3
 Provides: installer-simply-linux-stage3
@@ -114,6 +115,9 @@ Installer stage3
 %_datadir/alterator/ui/simply-linux
 
 %changelog
+* Mon May 27 2013 Mikhail Efremov <sem@altlinux.org> 7.0-alt6
+- Add installer-feature-symlinks-from-sbin.
+
 * Mon May 13 2013 Mikhail Efremov <sem@altlinux.org> 7.0-alt5
 - Disable NetworkManager-wait-online.service.
 
