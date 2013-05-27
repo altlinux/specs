@@ -1,5 +1,5 @@
 Name: livecd-install
-Version: 0.8.5
+Version: 0.8.6
 Release: alt1
 
 Summary: Permanently install Live system
@@ -30,6 +30,9 @@ Requires: make-initrd-luks
 Requires(post): chkconfig
 Requires(preun): chkconfig
 
+# There was 'removable' initinstall hook
+Conflicts: installer-feature-simply-livecd < 0.8.4-alt1
+
 %description
 %summary
 
@@ -57,6 +60,9 @@ install -m 0755 zdg-user-dirs-install.sh %buildroot%_x11sysconfdir/profile.d/
 %_x11sysconfdir/profile.d/*
 
 %changelog
+* Mon May 27 2013 Mikhail Efremov <sem@altlinux.org> 0.8.6-alt1
+- Add 'removable' initinstall hook.
+
 * Thu Apr 18 2013 Mikhail Efremov <sem@altlinux.org> 0.8.5-alt1
 - setup-plymouth: Disable plymouth if root on luks only.
 
