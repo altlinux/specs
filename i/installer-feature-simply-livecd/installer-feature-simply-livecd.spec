@@ -1,5 +1,5 @@
 Name: installer-feature-simply-livecd
-Version: 0.8.3
+Version: 0.8.4
 Release: alt1
 
 Summary: LiveCD install hooks for Simply Linux.
@@ -28,6 +28,7 @@ Requires: installer-feature-nfs-client-stage3
 Requires: installer-feature-online-repo
 Requires: installer-feature-bell-off-stage3
 Requires: installer-feature-cpufreq-stage3
+Requires: installer-feature-symlinks-from-sbin
 
 %description
 LiveCD install hooks for Simply Linux.
@@ -55,6 +56,10 @@ cp -ar alterator-menu/ %buildroot%_datadir/livecd-install
 %_datadir/livecd-install/
 
 %changelog
+* Mon May 27 2013 Mikhail Efremov <sem@altlinux.org> 0.8.4-alt1
+- Drop 'removable' initinstall hook.
+- Add installer-feature-symlinks-from-sbin.
+
 * Thu Apr 18 2013 Mikhail Efremov <sem@altlinux.org> 0.8.3-alt1
 - Add 'removable' initinstall hook.
 
