@@ -39,7 +39,7 @@
 
 Name: tracker
 Version: %ver_major.1
-Release: alt3
+Release: alt4
 
 Summary: Tracker is a powerfull desktop-oriented search tool and indexer
 License: GPLv2+
@@ -154,6 +154,7 @@ This package provides development documentation for %name.
 %package -n lib%name
 Summary: Tracker shared libraries
 Group: System/Libraries
+Conflicts: %name < %version-%release
 
 %description -n lib%name
 This package contains shred Tracker libraries for applications.
@@ -278,7 +279,6 @@ find %{buildroot} -type f -name "*.la" -exec rm -f {} ';'
 %config(noreplace) %_sysconfdir/xdg/autostart/*
 %_datadir/glib-2.0/schemas/*
 %dir %_libdir/%name-%ver_api
-%_libdir/%name-%ver_api/*.so.*
 %_libdir/%name-%ver_api/extract-modules
 %_libdir/%name-%ver_api/writeback-modules
 
@@ -302,6 +302,7 @@ find %{buildroot} -type f -name "*.la" -exec rm -f {} ';'
 %_libdir/libtracker-extract*.so.*
 %_libdir/libtracker-miner*.so.*
 %_libdir/libtracker-sparql*.so.*
+%_libdir/%name-%ver_api/*.so.*
 
 %files utils
 %_bindir/tracker-import
@@ -362,6 +363,9 @@ find %{buildroot} -type f -name "*.la" -exec rm -f {} ';'
 %endif
 
 %changelog
+* Tue May 28 2013 Alexey Shabalin <shaba@altlinux.ru> 0.16.1-alt4
+- move libtracker-common.so.0 and libtracker-data.so.0 to libtracker too
+
 * Tue May 28 2013 Alexey Shabalin <shaba@altlinux.ru> 0.16.1-alt3
 - move shared libraries to libtracker
 
