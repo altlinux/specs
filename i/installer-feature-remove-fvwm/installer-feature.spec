@@ -1,6 +1,6 @@
 Name: installer-feature-remove-fvwm
 Version: 0.6
-Release: alt2
+Release: alt3
 
 Summary: Remove Fvwm if Gnome installed
 License: GPL
@@ -25,6 +25,9 @@ install -pm755 *.sh %buildroot%hookdir/
 %hookdir/*
 
 %changelog
+* Tue May 28 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.6-alt3
+- stderr redirected to /dev/null
+
 * Wed Feb 13 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.6-alt2
 - checking for dms fixed
 
