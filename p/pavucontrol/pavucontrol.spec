@@ -1,6 +1,6 @@
 Name: pavucontrol
 Version: 2.0
-Release: alt1
+Release: alt2
 
 Summary: PulseAudio Volume Control
 Group: Sound
@@ -40,6 +40,9 @@ the volume of hardware devices and of each playback stream seperately.
 %doc README doc/README.html doc/style.css
 
 %changelog
+* Tue May 28 2013 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.0-alt2
+- russian translation updated (closes: #29035)
+
 * Sun Apr 14 2013 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.0-alt1
 - 2.0 released
 
