@@ -27,7 +27,7 @@
 %define rname kdebase-workspace
 Name: kde4base-workspace
 Version: %major.%minor.%bugfix
-Release: alt1
+Release: alt2
 
 Group: Graphical desktop/KDE
 Summary: K Desktop Environment - Workspace
@@ -46,15 +46,17 @@ Source0: ftp://ftp.kde.org/pub/kde/stable/%version/src/%rname-%version.tar
 Source1: pam-kde4
 Source2: pam-kde4-np
 Source3: pam-kde4-kscreensaver
+Source4: kdm.logrotate
 
 # upstream
 # RH
+Patch20: kdebase-workspace-4.6.80-krdb.patch
 Patch21: kde-workspace-4.8.80-battery-plasmoid-showremainingtime.patch
 Patch22: kde-workspace-4.9.90-plasma_konsole.patch
 Patch23: kde-workspace-4.7.80-no_HAL.patch
 Patch24: kdebase-workspace-4.5.90-no_HAL2.patch
 Patch25: kde-workspace-4.9.1-solid_krunner_disable.patch
-Patch26: kde-workspace-4.9.3-systemd-displaymanager.patch
+Patch26: kde-workspace-4.10.2-systemd-displaymanager.patch
 # SuSE
 # MDK
 # upstream
@@ -506,13 +508,14 @@ KDE 4 library
 rm -rf plasma/generic/scriptengines/google_gadgets
 %endif
 
+%patch20 -p1
 %patch21 -p1
 %patch22 -p1
 %patch23 -p1
 %patch24 -p1
 %patch25 -p1
 %if_enabled systemd
-%patch26 -p0
+%patch26 -p1
 %endif
 #
 %patch700 -p1
@@ -668,6 +671,10 @@ sed -i 's|^X-KDE-ServiceTypes=.*||' %buildroot/%_K4xdg_apps/kdm.desktop
 sed -i 's|^X-KDE-ParentApp=.*||' %buildroot/%_K4xdg_apps/kdm.desktop
 sed -i 's|^X-KDE-Library=.*||' %buildroot/%_K4xdg_apps/kdm.desktop
 
+# install logrotate file
+mkdir -p %buildroot/%_sysconfdir/logrotate.d
+install -m 0644 %SOURCE4 %buildroot/%_sysconfdir/logrotate.d/kdm4
+
 # default user face
 mkdir -p %buildroot/%_sysconfdir/firsttime.d/
 cat >%buildroot/%_sysconfdir/firsttime.d/kdm4 <<__EOF__
@@ -702,6 +709,7 @@ chmod 0755 %buildroot/%_sysconfdir/firsttime.d/kdm4
 %config(noreplace) %x11confdir/kdm4/*
 %config %_sysconfdir/alternatives/packages.d/kde4-kdm
 %_sysconfdir/firsttime.d/kdm4
+%config %_sysconfdir/logrotate.d/kdm4
 %config(noreplace) %_sysconfdir/dbus-1/system.d/org.kde.kcontrol.kcmkdm.conf
 %exclude %_K4conf/kdm
 %_kde4_bindir/genkdmconf
@@ -943,6 +951,10 @@ chmod 0755 %buildroot/%_sysconfdir/firsttime.d/kdm4
 %_K4dbus_interfaces/*
 
 %changelog
+* Tue May 28 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.3-alt2
+- add kdm logrotate file
+- prefer telepathy in favorites menu
+
 * Tue May 07 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.3-alt1
 - new version
 
