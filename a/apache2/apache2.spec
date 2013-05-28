@@ -39,7 +39,7 @@
 
 Name:    %apache2_name
 Version: %apache_version
-Release: %branch_release alt1
+Release: %branch_release alt2
 
 License: %asl
 Group: System/Servers
@@ -100,7 +100,7 @@ Source71: apache2-cert-sh.sh
 # + http://mpm-itk.sesse.net/apache2.2-mpm-itk-2.2.17-01/*.patch
 # + http://www.telana.com/files/httpd-2.2.3-peruser-0.3.0.patch
 # + http://www.peruser.org/trac/projects/peruser/attachment/wiki/PeruserAttachments/httpd-2.2.3-peruser-0.3.0-dc3.patch
-Patch1: apache2-%version-alt-all-0.1.patch
+Patch1: apache2-%version-alt-all-0.2.patch
 
 BuildRequires(pre): rpm-macros-branch
 BuildRequires(pre): rpm-macros-apache2 >= 3.12
@@ -1801,6 +1801,10 @@ exit 0
 %ghost %apache2_sites_enabled/000-default_https-compat.conf
 
 %changelog
+* Tue May 28 2013 Aleksey Avdeev <solo@altlinux.ru> 2.2.24-alt2
+- In a2enmod aobavlena mandatory dependency checking for inclusion
+  (Closes: #28992)
+
 * Sun Apr 14 2013 Aleksey Avdeev <solo@altlinux.ru> 2.2.24-alt1
 - 2.2.24
 - Security fixes (CVE-2012-3499, CVE-2012-4558, CVE-2012-0883,
