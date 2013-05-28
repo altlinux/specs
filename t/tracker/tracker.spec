@@ -39,7 +39,7 @@
 
 Name: tracker
 Version: %ver_major.1
-Release: alt2
+Release: alt3
 
 Summary: Tracker is a powerfull desktop-oriented search tool and indexer
 License: GPLv2+
@@ -51,6 +51,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 Patch: %name-%version-%release.patch
 
 Obsoletes: lib%name-client
+Requires: lib%name = %version-%release
 
 %define dbus_ver 1.3.1
 %define glib_ver 2.35.1
@@ -132,6 +133,7 @@ database, tag/metadata database, search tool and indexer.
 %package devel
 Summary: Headers for developing programs that will use %name-miner
 Group: Development/Other
+Requires: lib%name = %version-%release
 Requires: %name = %version-%release
 Obsoletes: lib%name-client-devel
 License: LGPLv2.1+
@@ -149,11 +151,18 @@ BuildArch: noarch
 %description devel-doc
 This package provides development documentation for %name.
 
+%package -n lib%name
+Summary: Tracker shared libraries
+Group: System/Libraries
+
+%description -n lib%name
+This package contains shred Tracker libraries for applications.
+
 %package -n lib%name-gir
 Summary: GObject introspection data for the Tracker library
 Group: System/Libraries
 Requires: %name = %version-%release
-Provides: typelib(Tracker) = %ver_major
+Requires: lib%name = %version-%release
 
 %description -n lib%name-gir
 GObject introspection data for the Tracker library
@@ -285,13 +294,14 @@ find %{buildroot} -type f -name "*.la" -exec rm -f {} ';'
 %_datadir/%name/ontologies
 %_datadir/%name/extract-rules
 
-%_libdir/libtracker-extract*.so.*
-%_libdir/libtracker-miner*.so.*
-%_libdir/libtracker-sparql*.so.*
-
 %_man1dir/tracker-extract.1.gz
 %_man1dir/tracker-writeback.1.gz
 %_man1dir/tracker-store.1.gz
+
+%files -n lib%name
+%_libdir/libtracker-extract*.so.*
+%_libdir/libtracker-miner*.so.*
+%_libdir/libtracker-sparql*.so.*
 
 %files utils
 %_bindir/tracker-import
@@ -352,6 +362,9 @@ find %{buildroot} -type f -name "*.la" -exec rm -f {} ';'
 %endif
 
 %changelog
+* Tue May 28 2013 Alexey Shabalin <shaba@altlinux.ru> 0.16.1-alt3
+- move shared libraries to libtracker
+
 * Tue May 28 2013 Alexey Shabalin <shaba@altlinux.ru> 0.16.1-alt2
 - update hu,ru,pl translations
 
