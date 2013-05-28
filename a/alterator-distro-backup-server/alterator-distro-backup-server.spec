@@ -1,6 +1,6 @@
 Name: alterator-distro-backup-server
 Version: 0.7
-Release: alt3
+Release: alt4
 
 Source:%name-%version.tar
 
@@ -56,8 +56,11 @@ cp -a logs %buildroot%_sysconfdir/alterator/
 %_alterator_backend3dir/*
 
 %changelog
+* Tue May 28 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.7-alt4
+- error message fixed
+
 * Thu Apr 25 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.7-alt3
-- use virtual mysql-server/client requires for match both 
+- use virtual mysql-server/client requires for match both
   MySQL and mariadb
 
 * Wed Dec 12 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.7-alt2
