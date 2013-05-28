@@ -21,7 +21,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.4.47
-Release: alt2
+Release: alt3
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -428,6 +428,7 @@ Patch0514: linux-%kernel_branch.20-fix-drivers-video-omap2-dss.patch
 Patch0521: linux-%kernel_branch.39-fix-drivers-watchdog--watchdog.patch
 
 Patch0531: linux-%kernel_branch.25-fix-firmware--vicam.patch
+Patch0532: linux-%kernel_branch-fix-firmware-radeon.patch
 
 Patch0540: linux-%kernel_branch.44-fix-fs.patch
 Patch0541: linux-%kernel_branch.37-fix-fs--block.patch
@@ -1156,6 +1157,7 @@ and specify %kbuild_dir as the kernel source directory.
 %package -n firmware-kernel-%flavour
 Summary: Firmware for drivers from %name
 Group: System/Kernel and hardware
+License: GPLv2, Redistributable
 AutoProv: no
 AutoReq: no
 
@@ -1608,8 +1610,9 @@ cd linux-%version
 # fix-drivers-watchdog--*
 %patch0521 -p1
 
-# fix-firmware--*
+# fix-firmware-*
 %patch0531 -p1
+%patch0532 -p1
 
 # fix-fs*
 %patch0540 -p1
@@ -2702,6 +2705,13 @@ done)
 
 
 %changelog
+* Tue May 28 2013 Led <led@altlinux.ru> 3.4.47-alt3
+- updated:
+  + feat-drivers-block--btier
+- added:
+  + fix-firmware-radeon
+- fixed License of firmware-kernel-* subpackage
+
 * Sat May 25 2013 Led <led@altlinux.ru> 3.4.47-alt2
 - nvidia 319.23
 - added external modules:
