@@ -79,6 +79,7 @@
 %def_enable jpeg
 %def_enable openjpeg
 %def_enable libcdio
+%def_disable libgtop
 %def_enable lzo
 %def_enable win32
 %def_enable qtx
@@ -164,6 +165,8 @@
 %def_enable pnm
 %def_enable md5sum
 %def_enable vdpau
+%def_enable vaapi
+%def_enable xrender
 %def_disable matrixview
 %def_enable mpg123
 %def_enable yuv4mpeg
@@ -275,8 +278,8 @@
 %set_disable altivec
 %endif
 
-%define win32_libdir    %_libdir/w32codec
-%define xanim_libdir    %_libdir/xanim
+%define win32_libdir %_libdir/w32codec
+%define xanim_libdir %_libdir/xanim
 %define real_libdir %_libdir/real
 
 %{?_disable_win32:%set_disable qtx}
@@ -288,16 +291,21 @@
 %set_disable xf86keysym
 %set_disable vm
 %set_disable vdpau
+%set_disable vaapi
+%set_disable xrender
 %set_disable dga1
 %set_disable dga2
 %endif
 
-%{?_disable_mplayer:%set_without tools}
+%if_disabled mplayer
+%set_without tools
+%set_disable gui
+%endif
 
 
 Name: %lname
 Version: 1.1.1
-Release: alt4
+Release: alt5
 %ifdef svnrev
 %define pkgver svn-r%svnrev
 %else
@@ -306,7 +314,7 @@ Release: alt4
 Summary: Media player
 Summary(uk_UA.CP1251): Медіаплейер
 Summary(ru_RU.CP1251): Медиаплейер
-License: GPL
+License: GPLv2+
 Group: Video
 URL: http://www.mplayerhq.hu
 Packager: Afanasov Dmitry <ender@altlinux.org>
@@ -331,6 +339,7 @@ Source6: mp_help2msg.awk
 Source7: mp_msg2po.awk
 Patch0: %name-%version-%release.patch
 Patch1: %name-%version-nls.patch
+Patch2: %name-%version-vaapi.patch
 
 BuildRequires: %awk libncurses-devel libslang-devel zlib-devel
 BuildRequires: cpp >= 3.3 gcc >= 3.3 gcc-c++ >= 3.3
@@ -355,13 +364,15 @@ BuildRequires: cpp >= 3.3 gcc >= 3.3 gcc-c++ >= 3.3
 %{?_enable_enca:BuildRequires: libenca-devel}
 %endif
 
-%{?_enable_vdpau:BuildRequires: libvdpau-devel libva-devel}
+%{?_enable_vdpau:BuildRequires: libvdpau-devel}
+%{?_enable_vaapi:BuildRequires: pkgconfig(libva) pkgconfig(libva-glx) %{?_enable_xrender:libXrender-devel}}
 %{?_enable_gif:BuildRequires: libungif-devel}
 %{?_enable_mng:BuildRequires: libmng-devel}
 %{?_enable_png:BuildRequires: libpng-devel}
 %{?_enable_jpeg:BuildRequires: libjpeg-devel}
 %{?_enable_openjpeg:BuildRequires: libopenjpeg-devel}
 %{?_enable_libcdio:BuildRequires: libcdio-devel}
+%{?_enable_libgtop:BuildRequires: pkgkonfig(libgtop-2.0)}
 %{?_enable_lzo:BuildRequires: liblzo2-devel}
 %{?_enable_xvid:BuildRequires: libxvid-devel}
 %{?_enable_x264:BuildRequires: libx264-devel}
@@ -422,22 +433,12 @@ BuildRequires: cpp >= 3.3 gcc >= 3.3 gcc-c++ >= 3.3
 %{?_enable_openal:BuildRequires: libopenal-devel}
 %{?_enable_nas:BuildRequires: libaudio-devel}
 
-%if_enabled gui
-BuildRequires: ImageMagick-tools desktop-file-utils
-%if_enabled gtk1
-BuildRequires: gtk+-devel
-%else
-BuildRequires: libgtk+2-devel
-%endif
-%endif
+%{?_enable_gui:BuildRequires: ImageMagick-tools desktop-file-utils gtk+%{?_disable_gtk1:2}-devel}
 %endif
 
 %{?_enable_nls:BuildRequires: gettext-tools}
 
-%if_with tools
-BuildRequires: perl-libwww perl-Math-BigInt libSDL_image-devel
-BuildRequires: normalize termutils vcdimager
-%endif
+%{?_with_tools:BuildRequires: perl-libwww perl-Math-BigInt libSDL_image-devel normalize termutils vcdimager}
 
 %{?_enable_yasm:BuildRequires: yasm}
 
@@ -474,7 +475,35 @@ This package provides only console version of the %Name. Install %name-gui
 хорошим настраиваемым GUI (графическим интерфейсом пользователя).
 
 
-%if_enabled mplayer
+%if_enabled mencoder
+%package -n mencoder
+Group: Video
+Summary: Movie encoder for Unix.
+Summary(ru_RU.CP1251): Кодировщик фильмов для Unix.
+Provides: MEncoder = %version-%release
+Conflicts: %Name < 1.0-alt28
+
+%description -n mencoder
+MEncoder a movie encoder for Unix and is a part of the %name package.
+%endif
+
+
+%if_with tools
+%package tools
+Group: Video
+Summary: %Name/MEncoder tools
+%if_enabled mencoder
+Provides: mencoder-tools = %version-%release
+Requires: mencoder
+%endif
+Requires: %name
+
+%description tools
+Nice scripts and code that makes using %Name and MEncoder easier, for example
+scripts for DVD track encoding in three pass mode or creating SVCDs from a movie.
+%endif
+
+
 %if_enabled gui
 %package gui
 %define gname g%lname
@@ -522,20 +551,6 @@ A console-only version with trimmed down dependencies is also available as
 Кроме этого, %Name способен захватывать сигнал с устройств V4L.
 Этот пакет содержит версию %Name c GUI (графическим интерфейсом).
 Также имеется %name - консольная версия пакета с меньшим числом зависимостей.
-%endif
-%endif
-
-
-%if_enabled mencoder
-%package -n mencoder
-Group: Video
-Summary: Movie encoder for Unix.
-Summary(ru_RU.CP1251): Кодировщик фильмов для Unix.
-Provides: MEncoder = %version-%release
-Conflicts: %Name < 1.0-alt28
-
-%description -n mencoder
-MEncoder a movie encoder for Unix and is a part of the %name package.
 %endif
 
 
@@ -654,36 +669,17 @@ Ukrainian language support for %Name.
 %endif
 
 
-%if_enabled mplayer
-%if_with tools
-%package tools
-Group: Video
-Summary: %Name/MEncoder tools
-%if_enabled mencoder
-Provides: mencoder-tools = %version-%release
-Requires: mencoder
-%endif
-Requires: %name
-
-%description tools
-Nice scripts and code that makes using %Name and MEncoder easier, for example
-scripts for DVD track encoding in three pass mode or creating SVCDs from a movie.
-%endif
-%endif
-
-
 %prep
 %setup -q -n %Name-%pkgver
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 
-%{?svnrev:subst 's/UNKNOWN/%svnrev/' version.sh}
-
-%if_enabled nls
 install -d -m 0755 po
 install -m 0644 %SOURCE6 po/mp_help2msg.awk
 install -m 0644 %SOURCE7 po/mp_msg2po.awk
-%endif
+
+%{?svnrev:subst 's/UNKNOWN/%svnrev/' version.sh}
 
 subst 's|\\/\\/|//|g' help/help_mp-zh_??.h
 
@@ -742,6 +738,8 @@ export CFLAGS="%optflags"
 	%{subst_enable dvdnav} \
 	%{subst_enable dvdread} \
 	%{subst_enable vdpau} \
+	%{subst_enable vaapi} \
+	%{subst_enable xrender} \
 	%{subst_enable_to dvdread_int dvdread-internal} \
 	%{subst_enable cdparanoia} \
 	%{subst_enable_to bitmap_font bitmap-font} \
@@ -916,7 +914,7 @@ sed	-e 's/^@VO@/vo = %default_vo/' \
 	%SOURCE5 > etc/%lname.conf
 echo "fontconfig = %{?_enable_fontconfig:yes}%{?_disable_fontconfig:no}" >> etc/%lname.conf
 
-%{?_enable_mplayer:%{?_with_tools:%make_build tools}}
+%{?_with_tools:%make_build tools}
 
 # build HTML documentation from XML files
 %{?_with_htmldocs:%{?svnrev:%make_build -C DOCS/xml html-chunked}}
@@ -948,32 +946,32 @@ gzip -9c Changelog > Changelog.gz
 
 %if_enabled mplayer
 install -d -m 0755 %buildroot%_docdir/%name-%version
-install -m 0644 README AUTHORS Changelog.* %buildroot%_docdir/%name-%version/
-install -m 0644 etc/{codecs,input,%lname}.conf %buildroot%_sysconfdir/%name/
+install -p -m 0644 README AUTHORS Changelog.* %buildroot%_docdir/%name-%version/
+install -p -m 0644 etc/{codecs,input,%lname}.conf %buildroot%_sysconfdir/%name/
 %if_enabled gui
 install -d -m 0755 %buildroot%_datadir/%name/skins
 tar -C %buildroot%_datadir/%name/skins -xf %SOURCE4
 ln -s standard %buildroot%_datadir/%name/skins/default
 %endif
-%{?_enable_freetype:%{?_disable_fontconfig:ln -s ../fonts/default/Type1/n019003l.pfb %buildroot%_datadir/%name/subfont.ttf}}
-%{?_enable_osdmenu:install -m 0644 etc/menu.conf %buildroot%_sysconfdir/%name/}
-%{?_enable_dvb:install -m 0644 etc/dvb-menu.conf %buildroot%_sysconfdir/%name/}
+%{?_enable_freetype:%{?_disable_fontconfig:ln -s ../fonts/type1/urw/n019003l.pfb %buildroot%_datadir/%name/subfont.ttf}}
+%{?_enable_osdmenu:install -p -m 0644 etc/menu.conf %buildroot%_sysconfdir/%name/}
+%{?_enable_dvb:install -p -m 0644 etc/dvb-menu.conf %buildroot%_sysconfdir/%name/}
 
 %if_with tools
-install -m 0755 TOOLS/{alaw-gen,asfinfo,avi-fix,avisubdump,dump_mp4,movinfo} %buildroot/%_bindir/
+install -p -m 0755 TOOLS/{alaw-gen,asfinfo,avi-fix,avisubdump,dump_mp4,movinfo} %buildroot/%_bindir/
 for f in vobshift; do
-	install -m 0755 TOOLS/$f.py %buildroot/%_bindir/$f
+	install -p -m 0755 TOOLS/$f.py %buildroot/%_bindir/$f
 done
 for f in calcbpp countquant plotpsnr subedit wma2ogg %{?_enable_mencoder:dvd2divxscript}; do
-	install -m 0755 TOOLS/$f.pl %buildroot/%_bindir/$f
+	install -p -m 0755 TOOLS/$f.pl %buildroot/%_bindir/$f
 done
 %ifarch %ix86
-install -m 0755 TOOLS/w32codec_dl.pl %buildroot/%_bindir/w32codec_dl
+install -p -m 0755 TOOLS/w32codec_dl.pl %buildroot/%_bindir/w32codec_dl
 %endif
 for f in aconvert divx2svcd mencvcd midentify mpconsole mplmult psnr-video subsearch %{?_enable_mencoder:qepdvcd}; do
-	install -m 0755 TOOLS/$f.sh %buildroot/%_bindir/$f
+	install -p -m 0755 TOOLS/$f.sh %buildroot/%_bindir/$f
 done
-install -pD -m 0644 TOOLS/README %buildroot%_docdir/%name-tools-%version/README
+install -pD -m 0644 {TOOLS,%buildroot%_docdir/%name-tools-%version}/README
 %endif
 %endif
 
@@ -987,16 +985,16 @@ for l in $(ls DOCS/man | grep -v '^en$'); do
 %endif
 done
 rm -f %buildroot%_man1dir/mencoder.1
-%{?_enable_mencoder:install -m 0644 DOCS/man/en/%lname.1 %buildroot%_man1dir/mencoder.1}
+%{?_enable_mencoder:install -p -m 0644 DOCS/man/en/%lname.1 %buildroot%_man1dir/mencoder.1}
 %if_with htmldocs
 for l in cs de en es fr hu it pl ru zh_CN; do
 	install -d %buildroot%_docdir/%name-%version/$l
-	install -m 0644 DOCS/HTML/$l/{*.html,*.css} %buildroot%_docdir/%name-%version/$l/
+	install -p -m 0644 DOCS/HTML/$l/{*.html,*.css} %buildroot%_docdir/%name-%version/$l/
 done
 %endif
 install -d %buildroot%_docdir/%name-%version/tech/realcodecs
-install -m 0644 DOCS/tech/{MAINTAINERS,TODO,*.txt,mpsub.sub,playtree,wishlist} %buildroot%_docdir/%name-%version/tech/
-install -m 0644 DOCS/tech/realcodecs/{TODO,*.txt} %buildroot%_docdir/%name-%version/tech/realcodecs/
+install -p -m 0644 DOCS/tech/{MAINTAINERS,TODO,*.txt,mpsub.sub,playtree,wishlist} %buildroot%_docdir/%name-%version/tech/
+install -p -m 0644 DOCS/tech/realcodecs/{TODO,*.txt} %buildroot%_docdir/%name-%version/tech/realcodecs/
 %find_lang --with-man %lname %lname-man
 
 %if_enabled nls
@@ -1008,12 +1006,12 @@ done
 %if_enabled gui
 for s in 256 128 96 72 64 48 36 32 24 22 16; do
 	S=${s}x$s
-	install -D -m 0644 {etc/%lname$S,%buildroot%_iconsdir/hicolor/$S/apps/%lname}.png
+	install -pD -m 0644 {etc/%lname$S,%buildroot%_iconsdir/hicolor/$S/apps/%lname}.png
 done
-install -D -m 0644 {etc/%lname,%buildroot%_desktopdir/%gname}.desktop
+install -pD -m 0644 {etc/%lname,%buildroot%_desktopdir/%gname}.desktop
 %endif
 
-%{?_enable_mplayer:install -D -m 0644 %SOURCE2 %buildroot/%_desktopdir/%lname.desktop}
+%{?_enable_mplayer:install -pD -m 0644 %SOURCE2 %buildroot/%_desktopdir/%lname.desktop}
 
 %{?_enable_mplayer:%{?_enable_vidix:%add_verify_elf_skiplist %_libdir/%lname/vidix/*}}
 
@@ -1042,6 +1040,28 @@ install -D -m 0644 {etc/%lname,%buildroot%_desktopdir/%gname}.desktop
 %endif
 
 
+%if_enabled mencoder
+%files -n mencoder
+%_bindir/mencoder
+%_man1dir/mencoder.*
+%if_disabled mplayer
+%doc README AUTHORS Changelog.*
+%dir %_sysconfdir/%name
+%config %_sysconfdir/%name/codecs.conf
+%endif
+%endif
+
+
+%if_with tools
+%files tools
+%_docdir/%name-tools-%version
+%_bindir/*
+%{?_enable_mplayer:%exclude %_bindir/%lname}
+%{?_enable_mencoder:%exclude %_bindir/mencoder}
+%{?_enable_gui:%exclude %_bindir/%gname}
+%endif
+
+
 %if_enabled gui
 %files gui
 %_bindir/%gname
@@ -1051,18 +1071,6 @@ install -D -m 0644 {etc/%lname,%buildroot%_desktopdir/%gname}.desktop
 %dir %_datadir/%name/skins
 %_datadir/%name/skins/standard
 %_datadir/%name/skins/default
-%endif
-%endif
-
-
-%if_enabled mencoder
-%files -n mencoder
-%_bindir/mencoder
-%_man1dir/mencoder.*
-%if_disabled mplayer
-%doc README AUTHORS Changelog.*
-%dir %_sysconfdir/%name
-%config %_sysconfdir/%name/codecs.conf
 %endif
 %endif
 
@@ -1149,46 +1157,18 @@ install -D -m 0644 {etc/%lname,%buildroot%_desktopdir/%gname}.desktop
 %endif
 
 
-%if_enabled mplayer
-%if_with tools
-%files tools
-%_docdir/%name-tools-%version
-#mplayer
-%_bindir/mencvcd
-%_bindir/midentify
-%_bindir/mpconsole
-%_bindir/mplmult
-%_bindir/psnr-video
-%_bindir/wma2ogg
-%if_enabled mencoder
-#mencoder
-%_bindir/dvd2divxscript
-%_bindir/qepdvcd
-%endif
-#common
-%_bindir/aconvert
-%_bindir/divx2svcd
-%_bindir/dump_mp4
-#other
-%_bindir/alaw-gen
-%_bindir/asfinfo
-%_bindir/avi-fix
-%_bindir/avisubdump
-%_bindir/calcbpp
-%_bindir/countquant
-%_bindir/movinfo
-%_bindir/plotpsnr
-%_bindir/subedit
-%_bindir/subsearch
-%_bindir/vobshift
-%ifarch %ix86
-%_bindir/w32codec_dl
-%endif
-%endif
-%endif
-
-
 %changelog
+* Tue May 28 2013 Led <led@altlinux.ru> 1.1.1-alt5
+- upstream fixes
+- fixed License
+- cleaned up BuildRequires
+- cleaned up spec
+- fixed subfont.ttf symlink
+- added VA-API support
+- enabled:
+  + vaapi
+  + xrender
+
 * Mon May 27 2013 Led <led@altlinux.ru> 1.1.1-alt4
 - fixed encoding of manpages
 
