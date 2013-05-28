@@ -2,7 +2,7 @@
 
 Name: cinnamon-meta
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: Cinnamon desktop meta package
 License: %gpl2plus
@@ -80,7 +80,7 @@ Requires: seahorse
 # Clipboard manager
 Requires: parcellite
 # Display manager 
-Requires: gdm gdm-gnome 
+Requires: lightdm lightdm-gtk-greeter
 
 # Default web-browser 
 Requires: firefox
@@ -127,6 +127,9 @@ of default applications.
 %files -n cinnamon-regular
 
 %changelog
+* Tue May 28 2013 Vladimir Didenko <cow@altlinux.org> 1.8.0-alt2
+- replace gdm by lightdm
+
 * Fri May 17 2013 Vladimir Didenko <cow@altlinux.org> 1.8.0-alt1
 - 1.8.0
 - added dependency to cinnamon-control-center
