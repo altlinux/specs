@@ -1,11 +1,11 @@
 %define	name	fontconfig-infinality
 %define version	1
-%define infinality_release	20121110
+%define infinality_release	20130126
 
 Summary: Fontconfig configuration meant to be used in conjunction with Freetype patches from http://www.infinality.net.  
 Name: %{name}
 Version: %{version}
-Release: alt3.git%{infinality_release}
+Release: alt4.git%{infinality_release}
 License: GPL
 Group: System/Configuration/Other
 BuildArch: noarch
@@ -65,6 +65,9 @@ ln -s styles.conf.avail/alt %confinfdir/conf.d
 %doc %_docdir/%{name}-%{version}/
 
 %changelog
+* Mon Jun 17 2013 Vladimir Didenko <cow@altlinux.org> 1-alt4.git20130126
+- new version
+
 * Fri Jan 25 2013 Vladimir Didenko <cow@altlinux.org> 1-alt3.git20121110
 - New alt style based on infinality that uses free fonts for replacements
 

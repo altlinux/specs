@@ -1,8 +1,8 @@
 %define freetypemajorversion 6
 
 Name: libfreetype-infinality
-Version: 2.4.11
-Release: alt6
+Version: 2.4.12
+Release: alt1
 
 Summary: A free and portable font rendering engine with patches from http://www.infinality.net
 License: FTL or GPLv2+
@@ -16,15 +16,12 @@ Source91: infinality-settings.sh
 Source92: README.infinality
 
 Patch1: freetype-2.4.10-alt-compat-version-script.patch
-Patch2: freetype-2.4.10-alt-freetype-config.patch
-Patch3: freetype-2.4.10-alt-fttrigon.patch
+Patch2: freetype-2.4.10-alt-fttrigon.patch
 
-Patch11: freetype-2.4.10-rh-enable-subpixel-rendering.patch
-Patch12: freetype-2.4.10-rh-enable-valid.patch
+Patch11: freetype-2.4.10-rh-enable-valid.patch
 
 #Infinality patches
-Patch91: freetype-enable-subpixel-hinting-infinality-20120615-01.patch
-Patch92: freetype-entire-infinality-patchset-20130104-01.patch
+Patch91: freetype-entire-infinality-patchset-20130514-01.patch
 
 Provides: freetype2-infinality = %version
 Obsoletes: freetype2-infinality < %version
@@ -42,20 +39,17 @@ individual glyphs.  FreeType is not a font server or a complete
 text-rendering library.
 
 This version is compiled with the Infinality patches. It transparently
-overrides the system library using ld.so.conf.d.
+overrides the system library using LD_PRELOAD.
 
 %prep
 %setup -n %name-%version 
 
 %patch1 -p1
 %patch2 -p1
-%patch3 -p1
 
 %patch11 -p1
-%patch12 -p1
 
 %patch91 -p1
-%patch92 -p1
 
 %build
 %add_optflags -fno-strict-aliasing
@@ -89,7 +83,6 @@ popd
 cp %SOURCE91 %buildroot%docdir
 cp %SOURCE92 %buildroot%docdir
 cp %PATCH91 %buildroot%docdir
-cp %PATCH92 %buildroot%docdir
 
 #remove devel data. Infinality package is not oriented on any development
 rm -f %buildroot%_bindir/*-config
@@ -108,6 +101,9 @@ rm -f %buildroot%_datadir/aclocal/*.m4
 %config %{_sysconfdir}/profile.d/infinality-settings.sh
 
 %changelog
+* Tue May 28 2013 Vladimir Didenko <cow@altlinux.ru> 2.4.12-alt1
+- 2.4.12
+
 * Thu Feb 5 2013 Vladimir Didenko <cow@altlinux.ru> 2.4.11-alt6
 - Switched back to LD_PRELOAD because ld.so.conf.d solution
   breaks other packages building
