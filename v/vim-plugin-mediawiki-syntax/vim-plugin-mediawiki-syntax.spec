@@ -1,6 +1,6 @@
 Name: vim-plugin-mediawiki-syntax
 Version: 0.0
-Release: alt4
+Release: alt5
 URL: http://en.wikipedia.org/wiki/Wikipedia:Text_editor_support#Vim
 License: GPL
 Group: Editors
@@ -27,11 +27,11 @@ cp %SOURCE0 .
 
 %build
 ./cutpart %SOURCE0 \
-	"syntax.Wikipedia.vim" "To autodetect files" > syntax.vim
+	"syntax.mediawiki.vim" "ftdetect.mediawiki.vim" > syntax.vim
 ./cutpart %SOURCE0 \
-	"ftdetect.Wikipedia.vim" "articles often only have" > ftdetect.vim
+	"ftdetect.mediawiki.vim" "ftplugin.mediawiki.vim" > ftdetect.vim
 ./cutpart %SOURCE0 \
-	"ftplugin.Wikipedia.vim" "Please feel free to contribute" > ftplugin.vim
+	"Additional Gimmicks" "In-browser editors" > ftplugin.vim
 
 %install
 for d in syntax ftdetect ftplugin; do
@@ -45,6 +45,11 @@ done
 %doc *.wiki
 
 %changelog
+* Tue May 28 2013 Fr. Br. George <george@altlinux.ru> 0.0-alt5
+- Synchronizing with Wikipedia
+- Fix zero generated files bug
+
+
 * Thu Nov 08 2012 Fr. Br. George <george@altlinux.ru> 0.0-alt4
 - Synchronizing with Wikipedia
 
