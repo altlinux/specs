@@ -1,5 +1,5 @@
 Name: QtBitcoinTrader
-Version: 0.94
+Version: 0.96
 Release: alt1
 Summary: Mt.Gox Bitcoin Trading Client
 Url: http://sourceforge.net/projects/bitcointrader/
@@ -38,6 +38,9 @@ convert -resize 16x16 %name.png %buildroot%_miconsdir/%name.png
 %_miconsdir/%name.png
 
 %changelog
+* Tue May 28 2013 Motsyo Gennadi <drool@altlinux.ru> 0.96-alt1
+- 0.96
+
 * Fri May 24 2013 Motsyo Gennadi <drool@altlinux.ru> 0.94-alt1
 - 0.94
 
