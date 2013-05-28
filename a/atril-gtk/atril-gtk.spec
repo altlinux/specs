@@ -1,0 +1,272 @@
+%define glib2_version 1.0
+%define _libexecdir %_prefix/libexec
+%define apiversion 1.5.0
+%define _name atril
+
+%def_disable introspection
+
+Name:           %_name-gtk
+Version:        1.6.0
+Release:        alt2
+Summary:        Document viewer
+
+License:        GPLv2+ and GFDL
+Group:          Publishing
+URL:            http://pub.mate-desktop.org
+Source0:        %name-%version.tar
+Patch:          %_name-%version-%release.patch
+
+BuildRequires:  gtk2-devel
+BuildRequires:  glib2-devel
+BuildRequires:  libpoppler-glib-devel
+BuildRequires:  libXt-devel
+#BuildRequires:  mate-keyring-devel
+BuildRequires:  libglade2-devel
+BuildRequires:  libtiffxx-devel libtiff-devel
+BuildRequires:  libjpeg-devel
+BuildRequires:  libspectre-devel
+BuildRequires:  mate-doc-utils
+BuildRequires:  gettext
+BuildRequires:  desktop-file-utils
+BuildRequires:  mate-icon-theme-devel
+BuildRequires:  libtool
+BuildRequires:  gtk-doc
+BuildRequires:  intltool
+BuildRequires:  t1lib-devel
+%{?_enable_introspection:BuildRequires:  gobject-introspection-devel}
+
+BuildRequires:  mate-common
+BuildRequires:  libcairo-gobject-devel
+BuildRequires: /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/glib-mkenums /usr/bin/gtkdocize gcc-c++ libICE-devel libgdk-pixbuf-gir-devel libgio-devel libgtk+2-gir-devel pkgconfig(cairo) pkgconfig(cairo-pdf) pkgconfig(cairo-ps) pkgconfig(gail) pkgconfig(gail-3.0) pkgconfig(gio-2.0) pkgconfig(gtk+-2.0) pkgconfig(gtk+-3.0) pkgconfig(gtk+-unix-print-2.0) pkgconfig(gtk+-unix-print-3.0) pkgconfig(gtk+-x11-2.0) pkgconfig(gtk+-x11-3.0) pkgconfig(libgxps) pkgconfig(libxml-2.0) pkgconfig(mate-keyring-1) pkgconfig(sm) pkgconfig(x11) zlib-devel
+
+# for the caja properties page
+#BuildRequires: mate-file-manager-devel
+# for the dvi backend
+BuildRequires: libkpathsea-devel
+# for the djvu backend
+BuildRequires: libdjvu-devel
+
+Requires: lib%{name} = %{version}-%{release}
+
+Conflicts: mate-document-viewer
+
+%description
+Atril is simple multi-page document viewer. It can display and print
+Portable Document Format (PDF), PostScript (PS) and Encapsulated
+PostScript (EPS) files. When supported by the document format, evince
+allows searching for text, copying text to the clipboard, hypertext
+navigation, table-of-contents bookmarks and editing of forms.
+
+Support for other document formats such as DVI and DJVU can be added by
+installing additional backends.
+
+(version without MATE-specific)
+
+%package -n lib%name
+Summary: Libraries for the atril document viewer
+Group: System/Libraries
+Conflicts: mate-document-viewer-libs
+
+%description -n lib%name
+This package contains shared libraries needed for atril
+
+
+%package -n lib%name-devel
+Summary: Support for developing backends for the atril document viewer
+Group: Development/C
+Requires: lib%name = %{version}-%{release}
+Conflicts: mate-document-viewer-devel
+
+%description -n lib%name-devel
+This package contains libraries and header files needed for atril
+backend development.
+
+
+%package dvi
+Summary: Atril backend for dvi files
+Group: Publishing
+Requires: %name = %{version}-%{release}
+Conflicts: mate-document-viewer-devel
+
+%description dvi
+This package contains a backend to let evince display dvi files.
+
+
+%package djvu
+Summary: Atril backend for djvu files
+Group: Publishing
+Requires: %name = %{version}-%{release}
+Conflicts: mate-document-viewer-djvu
+
+%description djvu
+This package contains a backend to let evince display djvu files.
+
+%package pixbuf
+Summary: Atril backend for graphics files
+Group: Publishing
+Requires: %name = %{version}-%{release}
+Conflicts: mate-document-viewer-pixbuf
+
+%description pixbuf
+This package contains a backend to let evince display graphics files.
+
+%package xps
+Summary: Atril backend for xps files
+Group: Publishing
+Requires: %name = %{version}-%{release}
+Conflicts: mate-document-viewer-xps
+
+%description xps
+This package contains a backend to let evince display xps files.
+
+%package impress
+Summary: Atril backend for impress files
+Group: Publishing
+Requires: %name = %{version}-%{release}
+Conflicts: mate-document-viewer-impress
+
+%description impress
+This package contains a backend to let evince display impress files.
+
+%prep
+%setup
+%patch -p1
+
+%build
+NOCONFIGURE=1 ./autogen.sh
+%configure \
+	--disable-static \
+	--disable-scrollkeeper \
+	--enable-introspection \
+	--enable-comics \
+	--enable-dvi=yes \
+	--enable-djvu=yes \
+	--enable-t1lib=yes \
+	--enable-pixbuf=yes \
+	--enable-xps=yes \
+	--enable-impress=yes \
+	--with-gtk=2.0 \
+	%{subst_enable introspection} \
+	--without-keyring \
+	--disable-caja      
+
+%make_build V=1 LIBTOOL=/usr/bin/libtool
+
+%install
+%makeinstall_std
+
+%find_lang %_name
+
+mkdir -p %buildroot%{_datadir}/applications
+/bin/rm -rf %buildroot/var/scrollkeeper
+# Get rid of static libs and .la files.
+rm -f %buildroot%{_libdir}/atril/3/backends/*.la
+rm -f %buildroot%{_libdir}/atril/3/backends/*.a
+rm -f %buildroot%{_libdir}/*.la
+rm -f %buildroot%{_libdir}/*.a
+
+# don't ship icon caches
+rm -f %buildroot%{_datadir}/icons/hicolor/icon-theme.cache
+
+%files -f %_name.lang
+%{_bindir}/*
+%{_datadir}/%_name/
+%_desktopdir/%_name.desktop
+%{_datadir}/icons/hicolor/*/apps/atril.*
+%{_mandir}/man1/atril.1.*
+%{_libexecdir}/atril-convert-metadata
+%{_libexecdir}/atrild
+%{_datadir}/dbus-1/services/org.mate.atril.Daemon.service
+%{_datadir}/glib-2.0/schemas/org.mate.Atril.gschema.xml
+%{_datadir}/MateConf/gsettings/atril.convert
+%{_datadir}/thumbnailers/atril.thumbnailer
+%{_datadir}/mate/help/atril/
+%_defaultdocdir/mate/atril/
+%{_datadir}/omf/atril/
+
+%files -n lib%name
+%doc README COPYING NEWS AUTHORS
+%{_libdir}/libatrilview.so.*
+%{_libdir}/libatrildocument.so.*
+%dir %{_libdir}/atril
+%dir %{_libdir}/atril/3
+%dir %{_libdir}/atril/3/backends
+%{_libdir}/atril/3/backends/libpdfdocument.so
+%{_libdir}/atril/3/backends/pdfdocument.atril-backend
+%{_libdir}/atril/3/backends/libpsdocument.so
+%{_libdir}/atril/3/backends/psdocument.atril-backend
+%{_libdir}/atril/3/backends/libtiffdocument.so
+%{_libdir}/atril/3/backends/tiffdocument.atril-backend
+%{_libdir}/atril/3/backends/libcomicsdocument.so
+%{_libdir}/atril/3/backends/comicsdocument.atril-backend
+%if_enabled introspection
+%{_libdir}/girepository-1.0/AtrilDocument-*.typelib
+%{_libdir}/girepository-1.0/AtrilView-*.typelib
+%endif
+
+%files -n lib%name-devel
+%dir %{_includedir}/atril
+%{_includedir}/atril/%apiversion
+%{_libdir}/libatrilview.so
+%{_libdir}/libatrildocument.so
+%{_libdir}/pkgconfig/atril-view-*.pc
+%{_libdir}/pkgconfig/atril-document-*.pc
+%if_enabled introspection
+%{_datadir}/gir-1.0/AtrilDocument-*.gir
+%{_datadir}/gir-1.0/AtrilView-*.gir
+%endif
+
+%files dvi
+%{_libdir}/atril/3/backends/libdvidocument.so*
+%{_libdir}/atril/3/backends/dvidocument.atril-backend
+
+%files djvu
+%{_libdir}/atril/3/backends/libdjvudocument.so
+%{_libdir}/atril/3/backends/djvudocument.atril-backend
+
+%files xps
+%{_libdir}/atril/3/backends/libxpsdocument.so*
+%{_libdir}/atril/3/backends/xpsdocument.atril-backend
+
+%files impress
+%{_libdir}/atril/3/backends/libimpressdocument.so*
+%{_libdir}/atril/3/backends/impressdocument.atril-backend
+
+%files pixbuf
+%{_libdir}/atril/3/backends/libpixbufdocument.so*
+%{_libdir}/atril/3/backends/pixbufdocument.atril-backend
+
+%changelog
+* Tue May 28 2013 Mikhail Efremov <sem@altlinux.org> 1.6.0-alt2
+- Fix path to the documentation page.
+- Drop lockdown functionality.
+- Build without MATE-specific.
+- Rename to atril-gtk.
+
+* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.6.0-alt1_0.qa1
+- NMU: rebuilt with libarchive.so.13.
+
+* Tue Apr 09 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.0-alt1_0
+- new version
+
+* Tue Mar 05 2013 Igor Vlasenko <viy@altlinux.ru> 1.5.0-alt3_0
+- added Req: mate-desktop (closes: 28634)
+
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 1.5.0-alt2_0
+dropped obsolete mate-conf BR:
+
+* Sun Feb 03 2013 Igor Vlasenko <viy@altlinux.ru> 1.5.0-alt1_0
+- new version
+
+* Tue Nov 20 2012 Igor Vlasenko <viy@altlinux.ru> 1.4.0-alt2_1.1.1
+- fixed build
+
+* Wed Oct 24 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1.4.0-alt2_1.1
+- Build for Sisyphus
+
+* Wed Oct 17 2012 Igor Vlasenko <viy@altlinux.ru> 1.4.0-alt2_1
+- adapted alt patches
+
+* Mon Aug 06 2012 Igor Vlasenko <viy@altlinux.ru> 1.4.0-alt1_1
+- 20120801 mate snapshot
+
