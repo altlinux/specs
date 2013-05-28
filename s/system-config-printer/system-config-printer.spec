@@ -1,7 +1,7 @@
 Summary: A printer administration tool
 Name: system-config-printer
-Version: 1.3.11
-Release: alt2
+Version: 1.3.13
+Release: alt1
 License: GPLv2+
 Url: http://cyberelk.net/tim/software/system-config-printer/
 Group: System/Configuration/Printing
@@ -20,6 +20,8 @@ BuildRequires: xmlto
 %py_requires gtk.glade
 Requires: python-module-cupshelpers = %version-%release
 Requires: python-module-cups >= 1.9.61-alt1
+
+%filter_from_requires /PackageKit/d
 
 %description
 system-config-printer is a graphical user interface that allows
@@ -86,6 +88,9 @@ exit 0
 %python_sitelibdir_noarch/cupshelpers-*
 
 %changelog
+* Tue May 28 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1.3.13-alt1
+- 1.3.13
+
 * Mon Apr 01 2013 Andrey Cherepanov <cas@altlinux.org> 1.3.11-alt2
 - Complete Russian translation (ALT #28773)
 
