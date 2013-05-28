@@ -15,9 +15,9 @@
 %define nv_version 319
 %define nv_release 17
 %define nv_minor %nil
-%define pkg_rel alt112
+%define pkg_rel alt113
 %def_disable common
-%def_enable kernelsource
+%def_disable kernelsource
 
 %define tbver %{nv_version}.%{nv_release}.%{nv_minor}
 %if "%nv_minor" == "%nil"
@@ -357,6 +357,9 @@ fi
 %endif
 
 %changelog
+* Tue May 28 2013 Sergey V Turchin <zerg@altlinux.org> 319.17-alt113
+- don't package kernel module sources
+
 * Mon May 13 2013 Sergey V Turchin <zerg@altlinux.org> 319.17-alt112
 - new version
 
