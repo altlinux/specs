@@ -1,18 +1,18 @@
 %define Name BTIER
 Name: btier
 %define module_name %name
-Version: 0.9.9.9
-%define rel 8
-Release: alt4
+Version: 1.0.0
+%define rel %nil
+Release: alt1
 Summary: %Name - a blockdevice that provides automated tiered storage
 License: GPLv2
 Group: System/Base
 URL: http://sourceforge.net/projects/tier/
-Source: %name-%version-%rel.tar
+Source: %name-%version%rel.tar
 Patch: %name-%version-%release.patch
 ExclusiveOS: Linux
 
-BuildRequires: rpm-build-kernel
+BuildRequires: rpm-build-kernel xz
 
 %description
 %name is a kernel block device that creates a tiered device out of multiple
@@ -59,7 +59,7 @@ This package contains sources for %name kernel module.
 
 
 %prep
-%setup -q -n %name-%version-%rel
+%setup -q -n %name-%version%rel
 %patch -p1
 
 
@@ -70,10 +70,11 @@ This package contains sources for %name kernel module.
 %install
 install -d -m 0755 %buildroot{%_sbindir,%_man1dir,%_usrsrc/kernel/sources,%_docdir/%name-%version/examples/fio}
 install -m 0755 cli/%{name}_{setup,inspect} %buildroot%_sbindir/
+install -m 0755 tools/contributed/migrate_blocks_freq.py %buildroot%_sbindir/migrate_blocks_freq
 install -m 0644 man/*.1 %buildroot%_man1dir/
 install -m 0644 tools/{show_*,writetest.c} %buildroot%_docdir/%name-%version/examples/
 install -m 0644 tools/fio/* %buildroot%_docdir/%name-%version/examples/fio/
-install -m 0644 TODO Documentation/* %buildroot%_docdir/%name-%version/
+install -m 0644 TODO Documentation/* tools/contributed/{EXAMPLE,README}* %buildroot%_docdir/%name-%version/
 gzip -9c Changelog > %buildroot%_docdir/%name-%version/Changelog.gz
 
 tar --transform='s,^.*/,/%module_name-%version/,' -cJf %kernel_srcdir/%module_name-%version.tar.xz kernel/%name/*
@@ -93,6 +94,10 @@ tar --transform='s,^.*/,/%module_name-%version/,' -cJf %kernel_srcdir/%module_na
 
 
 %changelog
+* Tue May 28 2013 Led <led@altlinux.ru> 1.0.0-alt1
+- 1.0.0:
+  + added migrate_blocks_freq - a data migration tool
+
 * Mon Apr 22 2013 Led <led@altlinux.ru> 0.9.9.9-alt4
 - 0.9.9.9-8:
   + added btier_inspect - a tool that can be used to backup and restore btier
