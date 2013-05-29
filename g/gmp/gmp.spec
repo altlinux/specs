@@ -1,5 +1,5 @@
 Name: gmp
-Version: 5.1.1
+Version: 5.1.2
 Release: alt1
 
 Summary: GNU MP arbitrary precision arithmetic library
@@ -266,6 +266,9 @@ install -pm644 gmp-mparam.h rand/randmt.h %buildroot%_includedir/
 %endif #cxx
 
 %changelog
+* Wed May 29 2013 Dmitry V. Levin <ldv@altlinux.org> 5.1.2-alt1
+- Updated to 5.1.2.
+
 * Tue Apr 09 2013 Dmitry V. Levin <ldv@altlinux.org> 5.1.1-alt1
 - Updated to 5.1.1.
 - Dropped libmp (it has been removed in 5.1.0).
