@@ -1,6 +1,6 @@
 Name: kinit-utils
 Version: 1.5.25
-Release: alt1
+Release: alt2
 
 Summary: Small utilities built with klibc
 License: BSD/GPL
@@ -17,6 +17,7 @@ Patch4:  ifconfig-readonly-fs.patch
 Patch5:  ifconfig-quiet.patch
 Patch6:  halt.patch
 Patch7:  run-init-env.patch
+Patch8:  ifconfig-ifdown.patch
 
 # Automatically added by buildreq on Wed Nov 11 2009
 BuildRequires: libcap-devel zlib-devel
@@ -38,6 +39,7 @@ embedded systems.
 %patch5 -p0 -b .fix5
 %patch6 -p0 -b .fix6
 %patch7 -p0 -b .fix7
+%patch8 -p0 -b .fix8
 
 %build
 %make_build
@@ -55,6 +57,9 @@ rm -f %buildroot/lib/initrd/bin/fstype
 /lib/initrd
 
 %changelog
+* Mon May 27 2013 Alexey Gladkov <legion@altlinux.ru> 1.5.25-alt2
+- ipconfig: Add -D option.
+
 * Thu Feb 09 2012 Alexey Gladkov <legion@altlinux.ru> 1.5.25-alt1
 - Update kinit sources upto klibc-1.5.25-28-gdfd907c.
 - replace:
