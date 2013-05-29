@@ -1,5 +1,6 @@
+%define soname 0.10
 Name: libuv
-Version: 0.10.5
+Version: 0.10.8
 Release: alt1
 Summary: Evented I/O for NodeJS
 Group: Development/Tools
@@ -16,10 +17,10 @@ libuv is a new platform layer for Node. Its purpose is to abstract IOCP on Windo
 and libev on Unix systems. We intend to eventually contain all platform differences in this library.
 
 %package devel
-Summary:        Devel package for libuv
-Group:          Development/Other
-License:        GPL
-Requires:	%name = %version-%release
+Summary: Devel package for libuv
+Group: Development/Other
+License: GPL
+Requires: %name = %version-%release
 
 %description devel
 libuv header and build tools
@@ -33,18 +34,22 @@ libuv header and build tools
 
 %install
 mkdir -p %buildroot{%_libdir,%_includedir}
-install libuv.so %buildroot%_libdir/libuv.so
+install libuv.so %buildroot%_libdir/libuv.so.%soname
+ln -s libuv.so.%soname %buildroot%_libdir/libuv.so
 cp -R include/* %buildroot%_includedir
 
 %files
-%_libdir/*.so
+%_libdir/*.so.*
 
 %files devel
-#%_libdir/*.so
+%_libdir/*.so
 %_includedir/*
 
 
 %changelog
+* Wed May 29 2013 Dmitriy Kulik <lnkvisitor@altlinux.org> 0.10.8-alt1
+- 0.10.8
+
 * Tue May 07 2013 Dmitriy Kulik <lnkvisitor@altlinux.org> 0.10.5-alt1
 - 0.10.5
 
