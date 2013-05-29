@@ -39,7 +39,7 @@
 
 Name:    %apache2_name
 Version: %apache_version
-Release: %branch_release alt2
+Release: %branch_release alt3
 
 License: %asl
 Group: System/Servers
@@ -1801,8 +1801,8 @@ exit 0
 %ghost %apache2_sites_enabled/000-default_https-compat.conf
 
 %changelog
-* Tue May 28 2013 Aleksey Avdeev <solo@altlinux.ru> 2.2.24-alt2
-- In a2enmod aobavlena mandatory dependency checking for inclusion
+* Wed May 29 2013 Aleksey Avdeev <solo@altlinux.ru> 2.2.24-alt3
+- In a2enmod added a mandatory dependency checking for inclusion
   (Closes: #28992)
 
 * Sun Apr 14 2013 Aleksey Avdeev <solo@altlinux.ru> 2.2.24-alt1
