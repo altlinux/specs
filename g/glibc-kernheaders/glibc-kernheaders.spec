@@ -1,4 +1,4 @@
-%define kernel_base_version 3.8
+%define kernel_base_version 3.9
 %define kernel_source kernel-source-%kernel_base_version
 
 Name: glibc-kernheaders
@@ -74,6 +74,9 @@ done
 %hdr_dir
 
 %changelog
+* Wed May 29 2013 Dmitry V. Levin <ldv@altlinux.org> 3.9.4-alt1
+- Updated to v3.9.4.
+
 * Thu Mar 21 2013 Dmitry V. Levin <ldv@altlinux.org> 3.8.4-alt1
 - Updated to v3.8.4.
 
