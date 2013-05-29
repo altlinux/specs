@@ -1,6 +1,6 @@
 Name: qucs
 Version: 0.0.16
-Release: alt2
+Release: alt3
 Summary: Circuit simulator
 License: GPL
 Group: Education
@@ -10,6 +10,7 @@ Source0: http://ovh.dl.sourceforge.net/sourceforge/qucs/%name-%version.tar.gz
 Source1: %name.desktop
 Source2: qucs-tango-icons.tar.bz2
 Source3: qucs-icons.tar.bz2
+Patch: qucs-0.0.16-qucsdigi.patch
 
 # Automatically added by buildreq on Wed Mar 06 2013
 # optimized out: fontconfig gnu-config libICE-devel libSM-devel libX11-devel libstdc++-devel xorg-xproto-devel
@@ -24,6 +25,7 @@ e.g. DC, AC, S-parameter and harmonic balance analysis.
 %setup
 tar -xjf %SOURCE2 -C qucs
 sed -i '\@<tr1/complex>@d' qucs-core/configure
+%patch -p1
 
 %build
 #autoreconf
@@ -65,6 +67,9 @@ done
 %_man1dir/*
 
 %changelog
+* Wed May 29 2013 Fr. Br. George <george@altlinux.ru> 0.0.16-alt3
+- QnD fix qucsdigi (Closes: 28560)
+
 * Tue Mar 05 2013 Fr. Br. George <george@altlinux.ru> 0.0.16-alt2
 - Fix build on i586
 
