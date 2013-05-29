@@ -1,5 +1,5 @@
 Name: pcre
-Version: 8.32
+Version: 8.33
 Release: alt1
 
 Summary: Perl-compatible regular expression library
@@ -205,6 +205,7 @@ rm aclocal.m4 m4/{libtool,lt*}.m4
 %define docdir %_docdir/%name-%version
 %configure --includedir=%_includedir/%name \
 	--docdir=%docdir \
+	--enable-jit \
 	--enable-pcre8 \
 	--enable-pcre16 \
 	--enable-utf \
@@ -293,6 +294,10 @@ rm %buildroot%_libdir/*.la
 %_man1dir/pcretest.*
 
 %changelog
+* Wed May 29 2013 Dmitry V. Levin <ldv@altlinux.org> 8.33-alt1
+- Updated to 8.33.
+- Enabled JIT compiling support.
+
 * Sun Dec 16 2012 Dmitry V. Levin <ldv@altlinux.org> 8.32-alt1
 - Updated to 8.32.
 
