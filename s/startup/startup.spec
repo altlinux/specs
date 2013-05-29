@@ -1,5 +1,5 @@
 Name: startup
-Version: 0.9.9.0
+Version: 0.9.9.1
 Release: alt1
 
 Summary: The system startup scripts
@@ -27,7 +27,7 @@ Requires: sysvinit-utils
 # due to fsck in rc.sysinit (ALT#22410)
 Requires: /sbin/fsck
 # due to systemd-sysctl, systemd-tmpfiles, and systemd-modules-load.
-Requires: systemd-utils >= 204-alt3
+Requires: systemd-utils >= 204-alt4
 
 # due to update_wms
 Conflicts: xinitrc < 0:2.4.13-alt1
@@ -164,6 +164,11 @@ done
 %dir %_localstatedir/rsbac
 
 %changelog
+* Wed May 29 2013 Dmitry V. Levin <ldv@altlinux.org> 0.9.9.1-alt1
+- raidstop: skip root device in case of partitioned raid (closes: #29027).
+- scripts/cleanup: do not create x11 directories, rely on
+  tmpfiles.d/x11.conf instead.
+
 * Mon May 27 2013 Dmitry V. Levin <ldv@altlinux.org> 0.9.9.0-alt1
 - rc.sysinit:
   + added sysctl.d support using systemd-sysctl (closes: #20938);
