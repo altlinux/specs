@@ -1,6 +1,5 @@
-
 Name: orca
-Version: 3.8.1
+Version: 3.9.2
 Release: alt1
 Summary: A screen reader that provides access to the GNOME desktop by people with visual impairments
 Summary(ru_RU.UTF-8): Программа экранного доступа для людей с ограничениями по зрению 
@@ -12,6 +11,7 @@ URL: http://live.gnome.org/Orca
 Source0: %name-%version.tar
 Source1: voiceman-server
 Source2: %name.watch
+Source3: orca-autostart.desktop
 
 #Patch1: orca-3.2.1-alt-voiceman.patch
 Patch2: orca-3.2.1-alt-punc.patch
@@ -52,12 +52,6 @@ Jaws For Windows компании Freedom Scientific.
 
 %prep
 %setup -q
-# Fix duplicate topdir in 3.8.1
-cd ..
-mv %name-%version{,~}
-mv %name-%version~/%name-%version ./
-rm -rf %name-%version~
-cd %name-%version
 #%patch1 -p1
 %patch2 -p1
 
@@ -73,6 +67,8 @@ cd %name-%version
 #echo voiceman > %buildroot%_datadir/%name/emacspeak-servers/.servers
 #%__install -pD -m755 %SOURCE1 %buildroot%_datadir/%name/emacspeak-servers/voiceman
 
+install -D -m0644 %SOURCE3 %buildroot%_datadir/gdm/greeter/autostart/orca-autostart.desktop
+
 %find_lang --with-gnome %name
 
 %files -f %name.lang
@@ -87,8 +83,15 @@ cd %name-%version
 %dir %_datadir/orca
 %_datadir/orca/*
 %_sysconfdir/xdg/autostart/orca-autostart.desktop
+%_datadir/gdm/greeter/autostart/orca-autostart.desktop
 
 %changelog
+* Wed May 29 2013 Paul Wolneykien <manowar@altlinux.ru> 3.9.2-alt1
+- new version 3.9.2
+
+* Mon May 13 2013 Paul Wolneykien <manowar@altlinux.org> 3.8.1-alt2
+- Add the desktop file to auto-start from GDM.
+
 * Sat May 11 2013 Paul Wolneykien <manowar@altlinux.org> 3.8.1-alt1
 - Fix duplicate topdir in 3.8.1.
 - New version: 3.8.1.
