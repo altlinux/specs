@@ -1,5 +1,5 @@
 Name: libdmx
-Version: 1.1.2
+Version: 1.1.3
 Release: alt1
 Summary: The dmx Library
 License: MIT/X11
@@ -47,6 +47,9 @@ develop programs which make use of %name
 %_man3dir/*
 
 %changelog
+* Wed May 29 2013 Valery Inozemtsev <shrek@altlinux.ru> 1.1.3-alt1
+- 1.1.3
+
 * Thu Mar 08 2012 Valery Inozemtsev <shrek@altlinux.ru> 1.1.2-alt1
 - 1.1.2
 
