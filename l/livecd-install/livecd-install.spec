@@ -1,5 +1,5 @@
 Name: livecd-install
-Version: 0.8.6
+Version: 0.8.7
 Release: alt1
 
 Summary: Permanently install Live system
@@ -60,6 +60,9 @@ install -m 0755 zdg-user-dirs-install.sh %buildroot%_x11sysconfdir/profile.d/
 %_x11sysconfdir/profile.d/*
 
 %changelog
+* Wed May 29 2013 Mikhail Efremov <sem@altlinux.org> 0.8.7-alt1
+- Add disable-efivars postinstall hook.
+
 * Mon May 27 2013 Mikhail Efremov <sem@altlinux.org> 0.8.6-alt1
 - Add 'removable' initinstall hook.
 
