@@ -25,7 +25,7 @@
 
 Name: systemd
 Version: 204
-Release: alt3
+Release: alt4
 Summary: A System and Session Manager
 Url: http://www.freedesktop.org/wiki/Software/systemd
 Group: System/Configuration/Boot and Init
@@ -847,17 +847,12 @@ update_chrooted all
 %dir %_sysconfdir/systemd/user
 %dir %_sysconfdir/systemd/ntp-units.d
 
-
 %_sysconfdir/profile.d/systemd.sh
 
 /lib/tmpfiles.d/systemd-startup-nologin.conf
 /lib/tmpfiles.d/systemd.conf
-/lib/tmpfiles.d/tmp.conf
-/lib/tmpfiles.d/x11.conf
-
 
 %_sysconfdir/xdg/systemd
-
 
 %config(noreplace) %_sysconfdir/dbus-1/system.d/*.conf
 %config(noreplace) %_sysconfdir/systemd/*.conf
@@ -1043,6 +1038,8 @@ update_chrooted all
 %_unitdir/systemd-tmpfiles-setup.service
 %_unitdir/sysinit.target.wants/systemd-tmpfiles-setup.service
 /lib/tmpfiles.d/legacy.conf
+/lib/tmpfiles.d/x11.conf
+/lib/tmpfiles.d/tmp.conf
 %_man5dir/tmpfiles.*
 %_man8dir/systemd-tmpfiles.*
 
@@ -1206,6 +1203,10 @@ update_chrooted all
 /lib/udev/write_net_rules
 
 %changelog
+* Wed May 29 2013 Alexey Shabalin <shaba@altlinux.ru> 204-alt4
+- fix permition of /run/lock/serial (ALT#29032)
+- move tmpfiles.d/{tmp.conf,x11.conf} to systemd-utils
+
 * Mon May 27 2013 Alexey Shabalin <shaba@altlinux.ru> 204-alt3
 - move /etc/modules-load.d/modules.conf from systemd to systemd-utils
 
