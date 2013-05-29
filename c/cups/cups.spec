@@ -1,6 +1,6 @@
 Name: cups
-Version: 1.6.1
-Release: alt8
+Version: 1.6.2
+Release: alt3
 
 Summary: Common Unix Printing System - server package
 License: GPL
@@ -29,27 +29,16 @@ Patch4: cups-1.4.3-rh-no-export-ssllibs.patch
 Patch5: cups-1.4.3-rh-driverd-timeout.patch
 Patch6: cups-1.6.1-rh-lspp.patch
 Patch7: cups-1.4.6-alt-config-libs.patch
-Patch8: cups-1.6.1-defconf.patch
 Patch9: cups-1.6.1-rh-0755.patch
 Patch10: cups-1.6-rh-dnssd-deviceid.patch
-Patch11: cups-1.5.4-rh-usblp-quirks.patch
 Patch15: cups-1.6.1-rh-systemd-socket.patch
 Patch16: cups-1.5.3-translation.patch
-Patch17: cups-1.6.1-ubuntu-prevent-crash-due-to-null-host-name-or-fqdn-from-avahi.patch
-Patch18: cups-1.6.1-ubuntu-fix-crash-on-shutdown-caused-by-broken-avahi-config.patch
 Patch19: cups-1.6.1-ubuntu-work-around-some-broken-ipp-printers.patch
-Patch20: cups-1.6.1-ubuntu-ipp-backend-abort-the-outer-loop-if-we-get-a-failure-from-send-document.patch
-Patch21: cups-1.6.1-ubuntu-ipp-backend-could-get-stuck-in-an-endless-loop-on-certain-network-errors.patch
 Patch22: cups-1.6.1-ubuntu-airprint-support.patch
-Patch23: cups-1.6.1-ubuntu-fix-another-spot-where-avahi-crashes-cupsd-because-it-does-not-handle-null-values-from-its-own-apis.patch
-Patch24: cups-1.6.1-ubuntu-ipp-backend-did-not-send-cancel-request-to-printers-when-a-job-was-canceled-and-printer-did-not-support-create-job.patch
-Patch25: cups-1.6.1-ubuntu-forward-port-cups-1-5-x-cups-browsing.patch
 Patch26: cups-1.6.1-ubuntu-cupsd-no-crash-on-avahi-threaded-poll-shutdown.patch
-Patch27: cups-1.6.1-ubuntu-get-ppd-file-for-statically-configured-bonjour-shared-queues.patch
-Patch28: cups-1.6.1-ubuntu-printers-c-recognize-remote-cups-queue-via-dnssd-uri.patch
 Patch29: cups-1.4-ubuntu-default-error-policy-retry-job.patch
-Patch30: cups-1.6.1-alt-makefile.patch
 Patch31: cups-1.6.1-alt-faq-localization.patch
+Patch32: cups-1.6.2-alt-makefile.patch
 Requires: printer-testpages bc cups-filters
 
 PreReq: lib%name = %version-%release, ghostscript-cups
@@ -162,26 +151,15 @@ tar xf %SOURCE114
 %patch5 -p1
 %patch6 -p1
 %patch7 -p2
-%patch8 -p1
 %patch9 -p1
 %patch10 -p1
-%patch11 -p1
 %patch15 -p1
 %patch16 -p1
-%patch17 -p1
-%patch18 -p1
 %patch19 -p1
-%patch20 -p1
-%patch21 -p1
 %patch22 -p1
-%patch23 -p1
-%patch24 -p1
-%patch25 -p1
 %patch26 -p1
-%patch27 -p1
-%patch28 -p1
 %patch29 -p1
-%patch30 -p1
+%patch32 -p1
 %patch31 -p1
 
 aclocal -I config-scripts
@@ -200,8 +178,9 @@ autoconf -I config-scripts
     --localstatedir=%_var \
     --enable-lspp \
     --enable-avahi \
-    --with-local_protocols='CUPS dnssd' \
-    --with-remote_protocols='CUPS dnssd'
+    --with-local_protocols='dnssd'
+#   --with-local_protocols='CUPS dnssd'  \
+#    --with-remote_protocols='CUPS dnssd'
     #
 
 %make_build
@@ -392,6 +371,35 @@ rm -f /var/cache/cups/ppds.dat
 %_man1dir/ipptool.1.gz
 
 %changelog
+* Wed May 29 2013 Alexander Plehanov <tonik@altlinux.org> 1.6.2-alt3
+- Remove patches,which were applied in upstream version:
+    cups-1.6.1-defconf.patch
+    cups-1.5.4-rh-usblp-quirks.patch
+    cups-1.6.1-ubuntu-prevent-crash-due-to-null-host-name-or-fqdn-from-avahi.patch
+    cups-1.6.1-ubuntu-fix-crash-on-shutdown-caused-by-broken-avahi-config.patch
+    cups-1.6.1-ubuntu-ipp-backend-abort-the-outer-loop-if-we-get-a-failure-from-send-document.patch
+    cups-1.6.1-ubuntu-ipp-backend-could-get-stuck-in-an-endless-loop-on-certain-network-errors.patch
+    cups-1.6.1-ubuntu-fix-another-spot-where-avahi-crashes-cupsd-because-it-does-not-handle-null-values-from-its-own-apis.patch
+    cups-1.6.1-ubuntu-ipp-backend-did-not-send-cancel-request-to-printers-when-a-job-was-canceled-and-printer-did-not-support-create-job.patch
+    cups-1.6.1-ubuntu-get-ppd-file-for-statically-configured-bonjour-shared-queues.patch
+    cups-1.6.1-ubuntu-printers-c-recognize-remote-cups-queue-via-dnssd-uri.patch
+
+- Remove unneeded patches:
+    cups-1.6.1-ubuntu-forward-port-cups-1-5-x-cups-browsing.patch
+    cups-1.6.1-alt-makefile.patch -> updated in cups-1.6.2-alt-makefile.patch
+
+- Updated patches:
+    cups-1.6.0-debian-pidfile.patch
+    cups-1.6.1-rh-lspp.patch
+    cups-1.6.1-ubuntu-airprint-support.patch
+    cups-1.6.1-ubuntu-cupsd-no-crash-on-avahi-threaded-poll-shutdown.patch
+
+* Tue May 21 2013 Alexander Plehanov <tonik@altlinux.org> 1.6.2-alt2
+- Added FAQ localization
+
+* Thu May 16 2013 Alexander Plehanov <tonik@altlinux.org> 1.6.2-alt1
+- New version 1.6.2
+
 * Tue Feb 12 2013 Alexander Plehanov <tonik@altlinux.org> 1.6.1-alt8
 - Fix /locale/cups_ru.po localization
 
