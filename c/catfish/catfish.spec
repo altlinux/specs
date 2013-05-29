@@ -1,20 +1,18 @@
 Name: catfish
 Version: 0.3.2
-Release: alt2.1
+Release: alt3
 Summary: A handy file search tool
 
 Group: File tools
 License: GPLv2+
-Url: http://software.twotoasts.de/index.php?/pages/catfish_summary.html
-Source0: http://software.twotoasts.de/media/%name/%name-%version.tar.gz
-Packager: Fr. Br. George <george@altlinux.ru>
+Url: http://www.twotoasts.de/index.php/catfish/
+Source: http://www.twotoasts.de/media/catfish/%name-%version.tar.gz
 BuildArch: noarch
 
 BuildRequires: gettext
 # search engine
 Requires: %_bindir/locate
 Requires: %_bindir/find
-Requires: gnome-icon-theme
 Requires: python-module-pygtk-libglade
 
 %define _python_req_method normal
@@ -48,7 +46,6 @@ configuration options from the command line.
 # Fix up permissions...
 chmod 0644 po/* [A-Z]* catfish*
 
-%build
 # Some configulation changes
 #
 # msgfmt is fixed.
@@ -66,10 +63,7 @@ sed -i.byte \
 	-e 's|pyc|py|' \
 	%name.in
 
-sed -i.engine \
-	-e 's|Nautilus|nautilus|' \
-	%name.py
-
+%build
 # This configure accepts only the option --prefix
 # and does not accept --libdir= option
 ./configure --prefix=%prefix
@@ -101,6 +95,9 @@ ln -s -f ../locale/ %buildroot%_datadir/%name/
 
 #files engines
 %changelog
+* Wed May 29 2013 Fr. Br. George <george@altlinux.ru> 0.3.2-alt3
+- Catch icon_not_found exception (Closes: 26027)
+
 * Sat Oct 22 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 0.3.2-alt2.1
 - Rebuild with Python-2.7
 
