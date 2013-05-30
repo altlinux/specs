@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-services
-Version: 2.0.2
+Version: 2.0.3
 Release: alt1
 
 Summary: Simple SysV services configurator
@@ -46,6 +46,11 @@ Alterator module for SysV services administration
 %_alterator_backend3dir/*
 
 %changelog
+* Thu May 30 2013 Mikhail Efremov <sem@altlinux.org> 2.0.3-alt1
+- Use desktop-files in case of systemd too.
+- Use 'systemctl show' to get descriptions.
+- Fix displing disabled services in case of systemd.
+
 * Wed May 15 2013 Mikhail Efremov <sem@altlinux.org> 2.0.2-alt1
 - Don't use absolute paths for commands.
 
