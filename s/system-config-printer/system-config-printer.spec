@@ -1,7 +1,7 @@
 Summary: A printer administration tool
 Name: system-config-printer
 Version: 1.3.13
-Release: alt1
+Release: alt2
 License: GPLv2+
 Url: http://cyberelk.net/tim/software/system-config-printer/
 Group: System/Configuration/Printing
@@ -56,8 +56,8 @@ Python module to configure a CUPS print server
 %makeinstall_std udevrulesdir=/lib/udev/rules.d \
 		 udevhelperdir=/lib/udev
 
-mkdir -p %buildroot%_localstatedir/run/udev-configure-printer
-touch %buildroot%_localstatedir/run/udev-configure-printer/usb-uris
+mkdir -p %buildroot/etc/tmpfiles.d/
+install -m0644 tmpfiles.conf %buildroot/etc/tmpfiles.d/system-config-printer.conf
 
 %find_lang system-config-printer
 
@@ -68,8 +68,7 @@ exit 0
 %files udev
 /lib/udev/rules.d/*.rules
 /lib/udev/udev-*-printer
-%dir %_localstatedir/run/udev-configure-printer
-%config(noreplace,missingok) %attr(0644,root,root) %_localstatedir/run/udev-configure-printer/usb-uris
+/etc/tmpfiles.d/*
 
 %files -f system-config-printer.lang
 %doc ChangeLog README
@@ -88,6 +87,10 @@ exit 0
 %python_sitelibdir_noarch/cupshelpers-*
 
 %changelog
+* Thu May 30 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1.3.13-alt2
+- /var/lib/run/... changed to /var/run and tmpfiles.d file added
+  (closes #28362)
+
 * Tue May 28 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1.3.13-alt1
 - 1.3.13
 
