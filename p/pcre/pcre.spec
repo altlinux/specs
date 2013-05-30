@@ -1,6 +1,6 @@
 Name: pcre
 Version: 8.33
-Release: alt1
+Release: alt2
 
 Summary: Perl-compatible regular expression library
 License: BSD-style
@@ -17,6 +17,7 @@ Summary(ru_RU.UTF-8): Библиотека для работы с Perl-совм�
 
 %define libname libpcre3
 %def_enable cpp
+%def_disable jit
 
 BuildRequires: gcc-c++ libreadline-devel
 
@@ -205,13 +206,13 @@ rm aclocal.m4 m4/{libtool,lt*}.m4
 %define docdir %_docdir/%name-%version
 %configure --includedir=%_includedir/%name \
 	--docdir=%docdir \
-	--enable-jit \
 	--enable-pcre8 \
 	--enable-pcre16 \
 	--enable-utf \
 	--enable-unicode-properties \
 	--enable-pcretest-libreadline \
 	%{subst_enable cpp} \
+	%{subst_enable jit} \
 	#
 %make_build
 
@@ -294,6 +295,9 @@ rm %buildroot%_libdir/*.la
 %_man1dir/pcretest.*
 
 %changelog
+* Thu May 30 2013 Dmitry V. Levin <ldv@altlinux.org> 8.33-alt2
+- Disabled JIT compiling support because it pulls in pthread library.
+
 * Wed May 29 2013 Dmitry V. Levin <ldv@altlinux.org> 8.33-alt1
 - Updated to 8.33.
 - Enabled JIT compiling support.
