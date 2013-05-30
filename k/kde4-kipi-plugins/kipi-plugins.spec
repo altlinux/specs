@@ -12,7 +12,7 @@
 Name: kde4-%rname
 %define beta %nil
 Version: 3.2.0
-Release: alt1
+Release: alt2
 
 Group: Graphics
 Summary: KDE image Interface Plugins
@@ -108,7 +108,7 @@ __EOF__
 fi
 
 %build
-%K4cmake
+%K4cmake -DImageMagick_INCLUDE_DIRS=%_includedir/ImageMagick-6
 %K4make
 
 %install
@@ -174,6 +174,9 @@ done
 %_K4libdir/libkipiplugins.so.%libsover.*
 
 %changelog
+* Thu May 30 2013 Sergey V Turchin <zerg@altlinux.org> 3.2.0-alt2
+- fix to build with new ImageMagick
+
 * Tue May 21 2013 Sergey V Turchin <zerg@altlinux.org> 3.2.0-alt1
 - new version
 
