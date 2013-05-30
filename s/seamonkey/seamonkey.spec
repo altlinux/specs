@@ -12,14 +12,14 @@
 %define sm_develdir               %sm_prefix-devel
 
 Name: seamonkey
-Version: 2.15.2
-Release: alt2
+Version: 2.17.1
+Release: alt1
 Epoch:   1
 Summary: Web browser and mail reader
 License: MPL/NPL
 Group: Networking/WWW
 
-Packager: Alexey Gladkov <legion@altlinux.ru>
+Packager:   Andrey Cherepanov <cas@altlinux.org>
 
 Url: http://www.mozilla.org/projects/seamonkey/
 
@@ -85,6 +85,7 @@ BuildRequires: python-module-distribute
 BuildRequires: python-modules-compiler
 BuildRequires: python-modules-logging
 BuildRequires: python-modules-sqlite3
+BuildRequires: python-modules-json
 
 %set_autoconf_version 2.13
 %add_findprov_lib_path %sm_prefix
@@ -302,7 +303,7 @@ unzip -q -u -d %buildroot/%enigmail_ciddir -- \
 %if_with lightning
 mkdir -p %buildroot/%lightning_ciddir
 unzip -q -u -d %buildroot/%lightning_ciddir -- \
-    $dir/mozilla/dist/xpi-stage/lightning.xpi
+    $dir/mozilla/dist/xpi-stage/lightning*.xpi
 
 rm -f -- %buildroot/%lightning_ciddir/application.ini
 %endif
@@ -397,6 +398,28 @@ printf '%_bindir/xbrowser\t%_bindir/%name\t100\n' > %buildroot%_altdir/%name
 %_sysconfdir/rpm/macros.d/%name
 
 %changelog
+* Tue May 28 2013 Andrey Cherepanov <cas@altlinux.org> 1:2.17.1-alt1
+- New version 2.17.1
+- Security fixes:
+  - MFSA 2013-40 Out-of-bounds array read in CERT_DecodeCertPackage
+  - MFSA 2013-39 Memory corruption while rendering grayscale PNG images
+  - MFSA 2013-38 Cross-site scripting (XSS) using timed history navigations
+  - MFSA 2013-37 Bypass of tab-modal dialog origin disclosure
+  - MFSA 2013-36 Bypass of SOW protections allows cloning of protected nodes
+  - MFSA 2013-35 WebGL crash with Mesa graphics driver on Linux
+  - MFSA 2013-34 Privilege escalation through Mozilla Updater
+  - MFSA 2013-31 Out-of-bounds write in Cairo library
+  - MFSA 2013-30 Miscellaneous memory safety hazards
+  - MFSA 2013-29 Use-after-free in HTML Editor
+  - MFSA 2013-28 Use-after-free, out of bounds read, and buffer overflow issues found using Address Sanitizer
+  - MFSA 2013-27 Phishing on HTTPS connection through malicious proxy
+  - MFSA 2013-26 Use-after-free in nsImageLoadingContent
+  - MFSA 2013-25 Privacy leak in JavaScript Workers
+  - MFSA 2013-24 Web content bypass of COW and SOW security wrappers
+  - MFSA 2013-23 Wrapped WebIDL objects can be wrapped again
+  - MFSA 2013-22 Out-of-bounds read in image rendering
+  - MFSA 2013-21 Miscellaneous memory safety hazards
+
 * Mon Apr 15 2013 Andrey Cherepanov <cas@altlinux.org> 1:2.15.2-alt2
 - Build with libarchive-devel instead of libarchive
 
