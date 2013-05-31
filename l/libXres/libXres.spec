@@ -1,5 +1,5 @@
 Name: libXres
-Version: 1.0.6
+Version: 1.0.7
 Release: alt1
 Summary: X Resource Information Extension Library
 License: MIT/X11
@@ -46,6 +46,9 @@ develop programs which make use of %name
 %_man3dir/*
 
 %changelog
+* Fri May 31 2013 Valery Inozemtsev <shrek@altlinux.ru> 1.0.7-alt1
+- 1.0.7
+
 * Thu Mar 08 2012 Valery Inozemtsev <shrek@altlinux.ru> 1.0.6-alt1
 - 1.0.6
 

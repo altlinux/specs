@@ -1,5 +1,5 @@
 Name: libXtst
-Version: 1.2.1
+Version: 1.2.2
 Release: alt1
 Summary: The Xtst Library
 License: MIT/X11
@@ -49,6 +49,9 @@ develop programs which make use of %name
 %_man3dir/*.3*
 
 %changelog
+* Fri May 31 2013 Valery Inozemtsev <shrek@altlinux.ru> 1.2.2-alt1
+- 1.2.2
+
 * Thu Mar 08 2012 Valery Inozemtsev <shrek@altlinux.ru> 1.2.1-alt1
 - 1.2.1
 
