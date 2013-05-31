@@ -14,7 +14,7 @@
 
 Name: glib2
 Version: %ver_major.2
-Release: alt1
+Release: alt2
 
 Summary: A library of handy utility functions
 License: %lgpl2plus
@@ -40,6 +40,7 @@ Source11: glib2.csh
 Patch: glib-2.35.9-alt-compat-version-script.patch
 # stop spam about deprecated paths in schemas
 Patch1: glib-2.36.1-alt-deprecated_paths-nowarning.patch
+Patch2: glib-2.36-add-xvt.patch
 
 %def_with locales
 %if_with locales
@@ -195,6 +196,7 @@ This package contains documentation for GIO.
 %setup -n glib-%version
 %patch
 %patch1
+%patch2 -p2
 
 %if_with sys_pcre
 rm glib/pcre/*.[ch]
@@ -378,6 +380,9 @@ install -pD -m 755 filetrigger %buildroot%_rpmlibdir/gsettings.filetrigger
 
 
 %changelog
+* Fri May 31 2013 Yuri N. Sedunov <aris@altlinux.org> 2.36.2-alt2
+- fixed list of terminal in gio/gdesktopappinfo.c (ALT #29011)
+
 * Mon May 13 2013 Yuri N. Sedunov <aris@altlinux.org> 2.36.2-alt1
 - 2.36.2
 
