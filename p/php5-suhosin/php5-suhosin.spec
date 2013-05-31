@@ -1,15 +1,17 @@
 %define		php5_extension	suhosin
+%define		php5_extension_snapshot	20120520195803
 
 Name:	 	php5-%php5_extension
-Version:	0.9.33
-Release:	alt%php5_version.%php5_release
+Version:	0.9.34
+Release:	alt%php5_version.%php5_release.%php5_extension_snapshot
 
 Summary:	Advanced PHP5 protection system
 Group:		System/Servers
 License:	PHP Licence
 URL:		http://www.hardened-php.net/suhosin/
 
-Source0:	%php5_extension-%version.tar
+# git://github.com/stefanesser/suhosin.git
+Source0:	%name-%version.tar
 Source1:	php-%php5_extension.ini
 Source2:	php-%php5_extension-params.sh
 
@@ -20,7 +22,7 @@ BuildRequires:	php5-devel = %php5_version
 Suhosin is an advanced protection system for PHP servers
 
 %prep
-%setup -q -n %php5_extension-%version
+%setup -q
 
 %build
 phpize
@@ -51,6 +53,12 @@ install -D -m 644 %SOURCE2 %buildroot/%php5_extconf/%php5_extension/params
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Rebuild with php5-%php5_version-%php5_release
+
+* Fri May 17 2013 Aleksey Avdeev <solo@altlinux.ru> 0.9.34-alt5.3.25.20130509.alt1.20120520195803
+- 0.9.34
+
+* Fri Apr 12 2013 Anton V. Boyarshinov <boyarsh@altlinux.org> 0.9.33-alt5.3.24.20130412.alt1
+- Rebuild with php5-5.3.24.20130412-alt1
 
 * Wed Nov 14 2012 Anton Farygin <rider@altlinux.ru> 0.9.33-alt3
 - Rebuild with php5-5.3.18.20121017-alt1

@@ -2,8 +2,11 @@
 %define pecl_name perl
 
 Name: pecl-%pecl_name
-Version: 1.0.0
-Release: alt17.%php5_version.%php5_release
+Version: 1.0.1
+Release: alt1.%php5_version.%php5_release
+# see commit a3d7db22eb7964ea9cb39ea2f866d10df26655d4
+# of git://github.com/do-aki/php-ext-perl.git
+Patch0: %name-1.0.1-alt-fix_php5.4.patch
 
 Summary: Embedded Perl
 
@@ -14,7 +17,6 @@ Url: http://pecl.php.net/package/%pecl_name
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 Source: http://pecl.php.net/get/%pecl_name-%version.tar.bz2
-Patch0: php-5.3-pecl-build.patch
 
 BuildPreReq: rpm-build-pecl
 
@@ -28,7 +30,7 @@ Perl objects.
 
 %prep
 %setup -c
-%patch0 -p0
+%patch -p2
 
 %build
 cd %pecl_name-%version
@@ -55,6 +57,12 @@ phpize
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Rebuild with php5-%php5_version-%php5_release
+
+* Tue May 21 2013 Aleksey Avdeev <solo@altlinux.ru> 1.0.1-alt1.5.3.25.20130509.alt1
+- New version: 1.0.1
+
+* Mon May 13 2013 Anton V. Boyarshinov <boyarsh@altlinux.org> 1.0.0-alt17.5.3.25.20130509.alt1
+- Rebuild with php5-5.3.25.20130509-alt1
 
 * Wed Nov 14 2012 Anton Farygin <rider@altlinux.ru> 1.0.0-alt17
 - Rebuild with php5-5.3.18.20121017-alt1
@@ -106,7 +114,6 @@ phpize
 
 * Thu Jan 28 2010 Anton Farygin <rider@altlinux.ru> 1.0.0-alt2.2
 - NMU: Rebuild with php5-5.2.12.20091216=alt1.
->>>>>>> 1.0.0-alt8.1
 
 * Fri Jul 24 2009 Alexey Gladkov <legion@altlinux.ru> 1.0.0-alt2.1
 - NMU: Rebuild with php5-5.2.11.20090722-alt1.
@@ -116,4 +123,3 @@ phpize
 
 * Sat Mar 01 2008 Vitaly Lipatov <lav@altlinux.ru> 1.0.0-alt1
 - initial build for ALT Linux Sisyphus
-

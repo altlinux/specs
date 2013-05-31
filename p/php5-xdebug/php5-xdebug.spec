@@ -2,7 +2,7 @@
 
 Name: php5-%php5_extension
 Version: %php5_version
-Release: %php5_release.1
+Release: %php5_release
 
 Summary: xdebug extensions
 Group: System/Servers
@@ -64,6 +64,12 @@ echo "zend_extension=%php5_extdir/xdebug.so" >%buildroot%php5_extconf/%php5_exte
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Rebuild with php5-%php5_version-%php5_release
+
+* Sun May 19 2013 Aleksey Avdeev <solo@altlinux.ru> 5.3.25.20130509-alt1.2
+- updated to xdebug 2.2.2
+
+* Fri Apr 12 2013 Anton V. Boyarshinov <boyarsh@altlinux.org> 5.3.24.20130412-alt1.1
+- Rebuild with php5-5.3.24.20130412-alt1
 
 * Wed Nov 14 2012 Anton Farygin <rider@altlinux.ru> 5.3.18.20121017-alt1.1
 - Rebuild with php5-5.3.18.20121017-alt1

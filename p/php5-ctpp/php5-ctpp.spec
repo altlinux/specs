@@ -11,6 +11,7 @@ Group: System/Servers
 Source0: %name-%version.tar
 Source1: php-%php5_extension.ini
 Source2: php-%php5_extension-params.sh
+Patch0: php5-ctpp-2.6.0-alt-fix_php5.4.patch
 
 BuildRequires: gcc-c++ libctpp-devel
 
@@ -26,6 +27,7 @@ database in PHP.
 
 %prep
 %setup
+%patch0 -p2
 
 %build
 %add_optflags -fPIC

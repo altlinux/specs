@@ -15,8 +15,8 @@ Source4: phpinfo.tar
 Source5: php.rpm.macros.standalone
 
 Patch1: php-version.patch
-Patch2: php-cli-build.patch
-Patch3: php-shared-1.patch
+Patch2: php-shared-1.patch
+Patch3: php-cli-build.patch
 Patch5: php-4.0.0-init.patch
 Patch6: php-test-pcntl.patch
 Patch9: php-5.3.3-sapi-scandir.patch
@@ -27,22 +27,19 @@ Patch13: php-4.3.11-dlopen.patch
 # http://www.zend.com/zend/spotlight/error.php#Heading19
 Patch14: php-5.3-alt-division-by-zero.patch
 
-# http://www.hardened-php.net/suhosin/
-Patch15: suhosin-patch-5.3.9-0.9.10.patch
-
 Patch17: php-fix-headers-order.patch
 
 Patch30: php-4.3.11-libtool.patch
 Patch32: php-5.2.1-umask.patch
 Patch33: php-5.2.5-norpath.patch
 Patch34: php-5.1.0b1-cxx.patch
-Patch36: php-5.2.5-lib64.patch
 Patch38: php-no-static-program.patch
 Patch39: php-set-session-save-path.patch
 Patch40: php5-5.2.13-alt-lsattr_path.patch
 Patch41: php5-alt-checklibs.patch
 Patch51: php-5.3.5-alt-build-gcc-version.patch
-Patch52: php-5.3.5-alt-modules-syms-visibility.patch
+Patch52: php-5.4.15-alt-modules-syms-visibility.patch
+Patch60: php-5.4.15-alt-bison-2.7.1.patch
 
 
 PreReq:  php5-libs = %version-%release
@@ -128,26 +125,25 @@ in use by other PHP5-related packages.
 %setup -q -n php5-source -T -D -a4
 %patch1 -p2
 %patch2 -p2
-%patch3 -p1
+%patch3 -p2
 %patch5 -p1
 %patch6 -p1
 %patch9 -p1 -b .scandir
 %patch12 -p2 -b .alternatives
 %patch13 -p1
 %patch14 -p1
-%patch15 -p1 -b .suhosin
 %patch17 -p1
 %patch30 -p0
 %patch32 -p1
 %patch33 -p2
-%patch34 -p0
-%patch36 -p2
-%patch38 -p1
-%patch39 -p1
+%patch34 -p2
+%patch38 -p2
+%patch39 -p2
 %patch40 -p1
 %patch41 -p2
 %patch51 -p2
 %patch52 -p2
+%patch60 -p2
 
 cp Zend/LICENSE Zend/ZEND_LICENSE
 cp Zend/ZEND_CHANGES Zend/ZEND_ChangeLog 
@@ -215,6 +211,7 @@ subst "s,./stamp=$,," build/buildcheck.sh
 	--with-regex=php \
 	--without-pear \
 #
+export NPROCS=1
 %php5_make
 
 %install
@@ -301,7 +298,8 @@ chrpath -d %buildroot%_bindir/phpinfo-%_php5_version
 %_man1dir/php-%_php5_version.1*
 %php5_servicedir/cli
 %doc CODING_STANDARDS CREDITS INSTALL LICENSE
-%doc NEWS README.* Zend/ZEND_* TODO php.ini-* EXTENSIONS
+%doc NEWS README.* Zend/ZEND_* php.ini-* EXTENSIONS
+%doc UPGRADING*
 
 %files libs
 %dir %php5_sysconfdir
@@ -325,6 +323,10 @@ chrpath -d %buildroot%_bindir/phpinfo-%_php5_version
 %doc tests run-tests.php 
 
 %changelog
+* Sat May 18 2013 2013 Aleksey Avdeev <solo@altlinux.ru> 5.4.15.20130509-alt1
+- new version (5.4.15)
+- remove suhosin patch
+
 * Mon May 13 2013 Anton V. Boyarshinov <boyarsh@altlinux.org> 5.3.25.20130509-alt1
 - new version
 

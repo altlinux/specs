@@ -1,6 +1,6 @@
 %define		php5_extension	facedetect
 %define 	real_name	facedetect
-%define		real_version	1.0.1
+%define		real_version	1.1
 
 Name:	 	php5-%{php5_extension}
 Version:	%php5_version
@@ -14,11 +14,11 @@ URL:		http://www.xarg.org/project/php-facedetect/
 
 Packager:	Nikolay A. Fetisov <naf@altlinux.ru>
 
+# git://github.com/infusion/PHP-Facedetect.git
 Source0:	%real_name-%real_version.tar
 Source1:	php-%php5_extension.ini
 Source2:	php-%php5_extension-params.sh
-Patch0:		%real_name-1.0.0-alt-fix_libs.patch
-Patch1:		%real_name-1.0.0-alt-fix_opencv2.patch
+Patch0:		%real_name-%real_version-alt-fix_libs.patch
 
 BuildRequires(pre): rpm-build-php5
 BuildRequires: php5-devel = %php5_version
@@ -33,8 +33,7 @@ associative array of their coordinates.
 %prep
 %setup -T -c
 tar xvf %SOURCE0
-%patch0
-%patch1
+%patch0 -p1
 
 %build
 phpize
@@ -70,6 +69,12 @@ install -D -m 644 -- %SOURCE2 %buildroot/%php5_extconf/%php5_extension/params
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Rebuild with php5-%version-%release
+
+* Sun May 19 2013 Aleksey Avdeev <solo@altlinux.ru> 5.3.25.20130509-alt1.1
+- New module version 1.1 (20111228)
+
+* Fri Apr 12 2013 Anton V. Boyarshinov <boyarsh@altlinux.org> 5.3.24.20130412-alt1
+- Rebuild with php5-5.3.24.20130412-alt1
 
 * Wed Nov 14 2012 Anton Farygin <rider@altlinux.ru> 5.3.18.20121017-alt1
 - Rebuild with php5-5.3.18.20121017-alt1

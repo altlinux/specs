@@ -50,6 +50,7 @@ subst 's@php/ext@php/%_php5_version/ext@g' configure
 %configure \
 	--with-%php5_extension \
 	--with-libdir=%_lib \
+	--with-pdo-mysql=%_usr \
 	#
 
 %php5_make

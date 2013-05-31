@@ -41,6 +41,7 @@ export LDFLAGS=-lphp-%_php5_version
 %configure \
 	--with-%php5_extension \
 	--with-libdir=%_lib \
+	--with-mysql=%_usr \
 	#
 
 %php5_make

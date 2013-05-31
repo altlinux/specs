@@ -60,7 +60,7 @@ ln -s ../ sapi/%php5_sapi
 echo -n > modules/z
 
 CGI_BUILD_VARS=" \
-    PHP_SAPI=default \
+    PHP_SAPI=none \
     PHP_MODULES=sapi/%php5_sapi/php-cgi \
     EXTRA_LIBS=-lphp-%_php5_version \
     BUILD_DIR=. \
@@ -83,7 +83,7 @@ mkdir -p \
 	%buildroot/%php5_servicedir/%php5_sapi \
 	%buildroot/%php5_sysconfdir/%php5_sapi/php.d
 	
-%php5_make_install install-sapi program_suffix=-%_php5_version
+%php5_make_install install-%php5_sapi program_suffix=-%_php5_version
 
 ln -s php-%php5_sapi-%_php5_version %buildroot%_bindir/php5-%php5_sapi
 

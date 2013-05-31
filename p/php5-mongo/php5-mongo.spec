@@ -1,8 +1,8 @@
 %define php5_extension mongo
 
 Name: php5-mongo
-Version: 1.1.0
-Release: alt9.%php5_version.%php5_release
+Version: 1.3.7
+Release: alt1.%php5_version.%php5_release
 
 Summary: PHP MongoDB driver
 License: Apache license
@@ -59,6 +59,12 @@ install -pDm644 %SOURCE2 %buildroot/%php5_extconf/%php5_extension/params
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Rebuild with php5-%php5_version-%php5_release
 
+* Tue May 21 2013 Aleksey Avdeev <solo@altlinux.ru> 1.3.7-alt1.5.3.25.20130509.alt1
+- 1.3.7
+
+* Mon May 13 2013 Anton V. Boyarshinov <boyarsh@altlinux.org> 1.1.0-alt9.5.3.25.20130509.alt1
+- Rebuild with php5-5.3.25.20130509-alt1
+
 * Wed Nov 14 2012 Anton Farygin <rider@altlinux.ru> 1.1.0-alt9
 - Rebuild with php5-5.3.18.20121017-alt1
 
@@ -85,4 +91,3 @@ install -pDm644 %SOURCE2 %buildroot/%php5_extconf/%php5_extension/params
 
 * Sun Jan 02 2011 Denis Smirnov <mithraen@altlinux.ru> 1.1.0-alt1
 - first build for Sisyphus
-

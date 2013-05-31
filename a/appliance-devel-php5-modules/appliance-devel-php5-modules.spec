@@ -2,7 +2,7 @@ Name: appliance-devel-php5-modules
 Summary: PHP5 modules
 BuildArch: noarch
 Version: 4.0.1
-Release: alt1
+Release: alt1.1
 License: GPL
 Group: System/Base
 
@@ -32,7 +32,7 @@ Requires: php5-sockets
 Requires: php5-cgi
 Requires: php5-dba
 Requires: php5-pgsql
-Requires: php5-rrdtool
+Requires: pecl-rrd
 Requires: php5-sqlite
 Requires: php5-xmlrpc
 Requires: php5-xsl
@@ -54,6 +54,8 @@ Requires: php5-xdebug
 %files
 
 %changelog
+* Mon May 27 2013 Aleksey Avdeev <solo@altlinux.ru> 4.0.1-alt1.1
+- Using pecl-rrd instead of php5-rrdtool
+
 * Sun May 06 2012 Denis Smirnov <mithraen@altlinux.ru> 4.0.1-alt1
 - initial build for ALT Linux Sisyphus
-

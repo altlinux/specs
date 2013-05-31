@@ -2,8 +2,8 @@
 %define pecl_name inotify
 
 Name: pecl-%pecl_name
-Version: 0.1.4
-Release: alt8.%php5_version.%php5_release
+Version: 0.1.6
+Release: alt1.%php5_version.%php5_release
 
 Summary: The inotify extension allows to use inotify functions in a PHP script
 
@@ -48,6 +48,12 @@ phpize
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Rebuild with php5-%php5_version-%php5_release
+
+* Fri May 17 2013 Aleksey Avdeev <solo@altlinux.ru> 0.1.6-alt1.5.3.25.20130509.alt1
+- 0.1.6
+
+* Fri Apr 12 2013 Anton V. Boyarshinov <boyarsh@altlinux.org> 0.1.4-alt8.5.3.24.20130412.alt1
+- Rebuild with php5-5.3.24.20130412-alt1
 
 * Wed Nov 14 2012 Anton Farygin <rider@altlinux.ru> 0.1.4-alt8
 - Rebuild with php5-5.3.18.20121017-alt1

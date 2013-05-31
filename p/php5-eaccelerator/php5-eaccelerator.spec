@@ -1,15 +1,17 @@
 %define php5_extension eaccelerator
 
 Name: php5-eaccelerator
-Version: 0.9.6.1
-Release: alt10.%php5_version.%php5_release
+Version: 1.0
+Release: alt1.%php5_version.%php5_release
 
 Summary: PHP accelerator, optimizer, encoder and dynamic content cache
 License: GPL
 Group: System/Servers
 
 Url: http://eaccelerator.net
-Source0: http://bart.eaccelerator.net/source/%version/%php5_extension-%version.tar.bz2
+# http://bart.eaccelerator.net/source/%version/%php5_extension-%version.tar.bz2
+# git://github.com/eaccelerator/eaccelerator.git
+Source0: %name-%version.tar
 Source1: php-%php5_extension.ini
 Source2: php-%php5_extension-params.sh
 
@@ -39,7 +41,7 @@ already has the loader compiled in.
 
 %build
 %add_optflags -fPIC
-pushd %php5_extension-%version
+pushd %name-%version
 phpize
 %configure \
 	--enable-eaccelerator=shared \
@@ -51,7 +53,7 @@ phpize
 popd
 
 %install
-pushd %php5_extension-%version
+pushd %name-%version
 %php5_make_install
 mkdir -p %buildroot/%_cachedir/%php5_extension
 install -pDm644 %SOURCE1 %buildroot/%php5_extconf/%php5_extension/config
@@ -80,6 +82,12 @@ popd
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Rebuild with php5-%php5_version-%php5_release
+
+* Tue May 21 2013 Aleksey Avdeev <solo@altlinux.ru> 1.0-alt1.5.3.25.20130509.alt1
+- 1.0-dev (20120816)
+
+* Mon May 13 2013 Anton V. Boyarshinov <boyarsh@altlinux.org> 0.9.6.1-alt10.5.3.25.20130509.alt1
+- Rebuild with php5-5.3.25.20130509-alt1
 
 * Wed Nov 14 2012 Anton Farygin <rider@altlinux.ru> 0.9.6.1-alt10
 - Rebuild with php5-5.3.18.20121017-alt1
@@ -166,4 +174,3 @@ popd
 
 * Thu Feb 01 2007 Andrew Kornilov <hiddenman@altlinux.ru> 0.9.5-alt1
 - First build for Sisyphus
-

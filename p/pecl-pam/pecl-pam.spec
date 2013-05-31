@@ -19,7 +19,6 @@ Source10: %name-alt-makefile-test.patch
 Requires: pear-core
 
 BuildRequires(pre): rpm-build-pecl
-BuildRequires(pre): rpm-macros-branch
 BuildPreReq: pear-core
 BuildPreReq: libpam0-devel
 

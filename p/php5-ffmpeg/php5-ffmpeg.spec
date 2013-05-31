@@ -21,6 +21,7 @@ Source2:	php-%php5_extension-params.sh
 Patch0:		php5-ffmpeg-0.6.0-alt-RGBA32.patch
 Patch1:		php5-ffmpeg-libav-0.7.patch
 Patch2:		php5-ffmpeg-0.6.0-alt-underlinking_libs.patch
+Patch3:		php5-ffmpeg-fix_php5.4.patch
 
 BuildRequires(pre): rpm-build-php5 rpm-build-licenses
 BuildRequires: php5-devel = %php5_version
@@ -49,6 +50,7 @@ rm -fr -- %real_name-%{real_version}*
 %patch0
 %patch1 -p1
 %patch2
+%patch3 -p2
 
 mv -f -- LICENSE LICENSE.orig
 ln -s -- $(relative %_licensedir/GPL-2 %_docdir/%name/LICENSE) LICENSE
