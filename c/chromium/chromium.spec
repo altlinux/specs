@@ -1,6 +1,6 @@
 %set_verify_elf_method textrel=relaxed
-%define v8_ver 3.16.14.10
-%define rev 191765
+%define v8_ver 3.17.6.14
+%define rev 200836
 
 %def_disable debug
 %def_disable nacl
@@ -12,7 +12,7 @@
 %endif
 
 Name:           chromium
-Version:        26.0.1410.57
+Version:        27.0.1453.93
 Release:        alt1.r%rev
 
 Summary:        An open source web browser developed by Google
@@ -20,7 +20,8 @@ License:        BSD-3-Clause and LGPL-2.1+
 Group:          Networking/WWW
 Url:            http://code.google.com/p/chromium/
 
-Source0:        %name.%version.tar.gz
+Source0:        %name-%version.tar.gz
+
 Source30:       master_preferences
 Source31:       default_bookmarks.html
 Source99:       chrome-wrapper
@@ -62,8 +63,6 @@ Patch67:        chromium_use_gold.patch
 Patch69:	chromium-alt-krb5-fix-path.patch
 # Set appropriate desktop file name for default browser check
 Patch71:	chromium-21.0.1158.0-set-desktop-file-name.patch
-# Replace 'struct siginfo' with 'siginfo_t'
-Patch72:	chromium-20.0.1132.57-glib-2.16-use-siginfo_t.patch
 # Fix build with speech-dispatcher >= 0.8
 Patch73:    chromium-speechd-0.8.patch
 
@@ -122,9 +121,10 @@ BuildRequires:  libudev-devel
 BuildRequires:  libv8-devel >= %v8_ver
 BuildRequires:  libvpx-devel
 BuildRequires:  libx264-devel
+BuildRequires:  libxslt-devel
 BuildRequires:  libXdamage-devel
 BuildRequires:  libXrandr-devel
-BuildRequires:  libxslt-devel
+BuildRequires:  libXtst-devel
 BuildRequires:  libyasm-devel
 BuildRequires:  perl-Switch
 BuildRequires:  pkg-config
@@ -206,7 +206,7 @@ to Gnome's Keyring.
 %prep
 %setup -q -n %name
 
-%patch62 -p1
+#%%patch62 -p1
 %patch63 -p2
 %patch64
 %patch8 -p2
@@ -220,7 +220,6 @@ to Gnome's Keyring.
 #%%patch67 -p1
 %patch69 -p2
 %patch71 -p2
-%patch72 -p1
 %patch73 -p2
 
 %patch80 -p2
@@ -447,6 +446,29 @@ printf '%_bindir/%name\t%_libdir/%name/%name-gnome\t15\n' > %buildroot%_altdir/%
 %_altdir/%name-gnome
 
 %changelog
+* Thu May 30 2013 Andrey Cherepanov <cas@altlinux.org> 27.0.1453.93-alt1.r200836
+- New version 27.0.1453.93
+- Security fixes:
+  - High CVE-2013-2836: Various fixes from internal audits, fuzzing and
+    other initiatives.
+  - High CVE-2013-2837: Use-after-free in SVG.
+  - High CVE-2013-2839: Bad cast in clipboard handling.
+  - High CVE-2013-2840: Use-after-free in media loader.
+  - High CVE-2013-2841: Use-after-free in Pepper resource handling.
+  - High CVE-2013-2842: Use-after-free in widget handling.
+  - High CVE-2013-2843: Use-after-free in speech handling.
+  - High CVE-2013-2844: Use-after-free in style resolution.
+  - High CVE-2013-2845: Memory safety issues in Web Audio.
+  - High CVE-2013-2846: Use-after-free in media loader.
+  - High CVE-2013-2847: Use-after-free race condition with workers.
+  - Medium CVE-2013-2848: Possible data extraction with XSS Auditor.
+  - Low CVE-2013-2849: Possible XSS with drag+drop or copy+paste.
+- Web pages load 5%% faster on average
+- New chrome.syncFileSystem API
+- Improved ranking of predictions, improved spell correction, and
+  numerous fundamental improvements for Omnibox predictions. Please see
+  the Help Center for more information on our updated policies.
+
 * Mon May 13 2013 Andrey Cherepanov <cas@altlinux.org> 26.0.1410.57-alt1.r191765
 - New version 26.0.1410.57
 - Security fixes:

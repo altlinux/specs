@@ -1,7 +1,7 @@
 %define MAJOR_VERSION     3
-%define MINOR_VERSION     16
-%define BUILD_NUMBER      14
-%define PATCH_LEVEL       10
+%define MINOR_VERSION     17
+%define BUILD_NUMBER      6
+%define PATCH_LEVEL       14
 %define soversion %MAJOR_VERSION.%MINOR_VERSION
 Name: v8
 Version: %MAJOR_VERSION.%MINOR_VERSION.%BUILD_NUMBER.%PATCH_LEVEL
@@ -71,6 +71,9 @@ install -p -m644 include/*.h %buildroot%_includedir/
 %_libdir/*.so
 
 %changelog
+* Thu May 30 2013 Andrey Cherepanov <cas@altlinux.org> 3.17.6.14-alt1
+- new version (Closes: #29004)
+
 * Fri Mar 29 2013 Dmitriy Kulik <lnkvisitor@altlinux.org> 3.16.14.10-alt1
 - new version (Closes: #28759)
 - change soname
