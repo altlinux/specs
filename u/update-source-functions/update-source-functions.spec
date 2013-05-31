@@ -1,5 +1,5 @@
 Name: update-source-functions
-Version: 0.1.3
+Version: 0.1.4
 Release: alt1
 
 Summary: A set of functions intended to help with updating a git repository from an upstream source
@@ -36,6 +36,12 @@ mkdir -p m4
 %_bindir/*.sh
 
 %changelog
+* Fri May 31 2013 Paul Wolneykien <manowar@altlinux.org> 0.1.4-alt1
+- Add proc for a git subtree merge.
+- Add support for general git repos.
+- Make BASIC_VERPAT allow only numbers in the version string.
+- Fix handling of relative URIs.
+
 * Thu Apr 11 2013 Paul Wolneykien <manowar@altlinux.org> 0.1.3-alt1
 - Define the basic filename pattern as BASIC_VERPAT.
 - Add basic support of the PyPI.
