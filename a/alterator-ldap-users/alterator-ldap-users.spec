@@ -2,7 +2,7 @@
 
 Name: alterator-ldap-users
 Version: 0.8
-Release: alt7
+Release: alt8
 
 Source: %name-%version.tar
 
@@ -42,6 +42,9 @@ Alterator module for local and ldap users administration
 %_datadir/alterator/type/*
 
 %changelog
+* Fri May 31 2013 Andrey Cherepanov <cas@altlinux.org> 0.8-alt8
+- Fix button look by use standard definition
+
 * Tue Apr 23 2013 Andrey Cherepanov <cas@altlinux.org> 0.8-alt7
 - Support localization of ldap-user-tools helper scripts output
 

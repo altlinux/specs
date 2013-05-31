@@ -2,7 +2,7 @@
 
 Name: alterator-ldap-groups
 Version: 0.6.2
-Release: alt2
+Release: alt3
 
 Source: %name-%version.tar
 
@@ -46,6 +46,9 @@ Alterator module for LDAP groups administration
 %_hooksdir/91-ldap-groups
 
 %changelog
+* Fri May 31 2013 Andrey Cherepanov <cas@altlinux.org> 0.6.2-alt3
+- Fix button look by use standard definition
+
 * Tue Apr 23 2013 Andrey Cherepanov <cas@altlinux.org> 0.6.2-alt2
 - Disable show of group flags (default, local)
 - Don't distribute button in source selection

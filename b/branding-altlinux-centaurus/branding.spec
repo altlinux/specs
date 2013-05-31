@@ -6,7 +6,7 @@
 
 Name: branding-%brand-%theme
 Version: 6.9.9 
-Release: alt3
+Release: alt4
 
 BuildRequires: cpio fonts-ttf-dejavu fonts-ttf-droid
 BuildRequires: design-bootloader-source >= 5.0-alt2
@@ -364,6 +364,10 @@ subst 's/#theme-name=/theme-name=Clearlooks-Phenix/' /etc/lightdm/lightdm-gtk-gr
 %_desktopdir/indexhtml.desktop
 
 %changelog
+* Fri May 31 2013 Andrey Cherepanov <cas@altlinux.org> 6.9.9-alt4
+- Set correct size for typical graphical buttons
+- Set appropriate indent for small hint of fields
+
 * Tue Apr 30 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 6.9.9-alt3
 - wallpaper from Ark Desktop added
 
