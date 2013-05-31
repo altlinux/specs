@@ -1,7 +1,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-disk-utility
-Version: 3.8.0
+Version: 3.8.2
 Release: alt1
 
 Summary: Disk management application
@@ -73,6 +73,9 @@ RAID, SMART monitoring, etc
 %exclude %_libdir/gnome-settings-daemon-3.0/libgdu-sd.la
 
 %changelog
+* Fri May 31 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.2-alt1
+- 3.8.2
+
 * Mon Mar 18 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.0-alt1
 - 3.8.0
 
