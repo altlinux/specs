@@ -305,7 +305,7 @@
 
 Name: %lname
 Version: 1.1.1
-Release: alt5
+Release: alt6
 %ifdef svnrev
 %define pkgver svn-r%svnrev
 %else
@@ -335,8 +335,6 @@ Source0: %Name-%pkgver.tar
 Source2: %lname.desktop
 Source4: standard-1.9.tar
 Source5: %lname.conf.in
-Source6: mp_help2msg.awk
-Source7: mp_msg2po.awk
 Patch0: %name-%version-%release.patch
 Patch1: %name-%version-nls.patch
 Patch2: %name-%version-vaapi.patch
@@ -675,10 +673,6 @@ Ukrainian language support for %Name.
 %patch1 -p1
 %patch2 -p1
 
-install -d -m 0755 po
-install -m 0644 %SOURCE6 po/mp_help2msg.awk
-install -m 0644 %SOURCE7 po/mp_msg2po.awk
-
 %{?svnrev:subst 's/UNKNOWN/%svnrev/' version.sh}
 
 subst 's|\\/\\/|//|g' help/help_mp-zh_??.h
@@ -906,6 +900,8 @@ export CFLAGS="%optflags"
 
 %make_build
 
+%{?_enable_nls:%make_build -C po}
+
 # make conf file
 sed	-e 's/^@VO@/vo = %default_vo/' \
 	-e 's/^@AO@/ao = %default_ao/' \
@@ -918,18 +914,6 @@ echo "fontconfig = %{?_enable_fontconfig:yes}%{?_disable_fontconfig:no}" >> etc/
 
 # build HTML documentation from XML files
 %{?_with_htmldocs:%{?svnrev:%make_build -C DOCS/xml html-chunked}}
-
-%if_enabled nls
-cd po
-gawk -f ./mp_help2msg.awk ../help/help_mp-en.h > en.msg
-for h in $(ls ../help/help_mp-*.h | grep -v '/help_mp-en.h$'); do
-	l=$(basename $h .h)
-	l=${l#help_mp-}
-	gawk -f ./mp_help2msg.awk $h | awk -f ./mp_msg2po.awk en.msg > $l.po
-	msgfmt -o $l.gmo $l.po
-done
-cd -
-%endif
 
 %if_enabled gui
 for s in 128 96 72 64 48 36 32 24 22 16; do
@@ -958,7 +942,7 @@ ln -s standard %buildroot%_datadir/%name/skins/default
 %{?_enable_dvb:install -p -m 0644 etc/dvb-menu.conf %buildroot%_sysconfdir/%name/}
 
 %if_with tools
-install -p -m 0755 TOOLS/{alaw-gen,asfinfo,avi-fix,avisubdump,dump_mp4,movinfo} %buildroot/%_bindir/
+install -p -m 0755 TOOLS/{alaw-gen,asfinfo,avi-fix,avisubdump,dump_mp4,movinfo,netstream,subrip,vivodump} %buildroot/%_bindir/
 for f in vobshift; do
 	install -p -m 0755 TOOLS/$f.py %buildroot/%_bindir/$f
 done
@@ -1001,6 +985,7 @@ install -p -m 0644 DOCS/tech/realcodecs/{TODO,*.txt} %buildroot%_docdir/%name-%v
 for l in po/*.gmo; do
 	install -pD -m 0644 $l %buildroot%_datadir/locale/$(basename $l .gmo)/LC_MESSAGES/%name.mo
 done
+%find_lang %lname
 %endif
 
 %if_enabled gui
@@ -1158,6 +1143,17 @@ install -pD -m 0644 {etc/%lname,%buildroot%_desktopdir/%gname}.desktop
 
 
 %changelog
+* Fri May 31 2013 Led <led@altlinux.ru> 1.1.1-alt6
+- updated ru translation
+- updated uk translation
+- fixed and cleaned up mp_*.awk scripts
+- more verbose mp_msg2po.awk script
+- fixed nls support
+- added to %%name-tools subpackage
+  + netstream
+  + subrip
+  + vivodump
+
 * Tue May 28 2013 Led <led@altlinux.ru> 1.1.1-alt5
 - upstream fixes
 - fixed License
