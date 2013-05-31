@@ -6,7 +6,7 @@
 %define packagetype lang
 %define packagename nl
 %define packagversion 2.4.0
-%define packagedate 201305221539
+%define packagedate 201305291516
 %define moodlebranch 2.4
 %define moodlepackagename %moodle_name%moodlebranch
 %define langname Dutch
@@ -57,6 +57,10 @@ cp -rp * %buildroot%moodle_langdir/
 %moodle_langdir/*
 
 %changelog
+* Fri May 31 2013 Cronbuild Service <cronbuild@altlinux.org> 2.4.0.201305291516-alt1
+- repocop cronbuild 20130531. At your service.
+- nl.zip build 2013-05-29 15:16 UTC
+
 * Fri May 24 2013 Cronbuild Service <cronbuild@altlinux.org> 2.4.0.201305221539-alt1
 - repocop cronbuild 20130524. At your service.
 - nl.zip build 2013-05-22 15:39 UTC
