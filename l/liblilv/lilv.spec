@@ -8,18 +8,19 @@ BuildRequires: gcc-c++
 %global maj 0
 
 Name:       liblilv
-Version:    0.14.4
-Release:    alt1_2
+Version:    0.16.0
+Release:    alt1_1
 Summary:    An LV2 Resource Description Framework Library
 
 Group:      System/Libraries
 License:    MIT
 URL:        http://drobilla.net/software/lilv/
 Source0:    http://download.drobilla.net/%{oldname}-%{version}.tar.bz2
+Patch1:     lilv-0.16.0-gcc.patch
 BuildRequires:  doxygen
 BuildRequires:  graphviz
-BuildRequires:  sord-devel >= 0.5.0
-BuildRequires:  sratom-devel >= 0.2.0
+BuildRequires:  sord-devel >= 0.12.0
+BuildRequires:  sratom-devel >= 0.4.0
 BuildRequires:  lv2-devel >= 1.0.0
 BuildRequires:  python-devel
 BuildRequires:  swig
@@ -58,7 +59,7 @@ This package contains the python libraries for %{oldname}.
 
 %prep
 %setup -n %{oldname}-%{version} -q 
-
+%patch1 -p1 
 # we'll run ld config
 sed -i -e 's|bld.add_post_fun(autowaf.run_ldconfig)||' wscript
 # for packagers sake, build the tests with debug symbols
@@ -103,6 +104,9 @@ chmod +x %{buildroot}%{_libdir}/lib%{oldname}-0.so.*
 %{python_sitelibdir}/_%{oldname}.so
 
 %changelog
+* Fri May 31 2013 Igor Vlasenko <viy@altlinux.ru> 0.16.0-alt1_1
+- update to new release by fcimport
+
 * Tue Mar 26 2013 Igor Vlasenko <viy@altlinux.ru> 0.14.4-alt1_2
 - fc import
 
