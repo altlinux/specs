@@ -1,5 +1,5 @@
 Name: kernel-build-tools
-Version: 0.101
+Version: 0.102
 Release: alt1
 
 Summary: Utilities to build kernel packages for ALT Linux
@@ -55,6 +55,9 @@ install -Dpm644 kernel-macros \
 %_rpmmacrosdir/kernel
 
 %changelog
+* Fri May 31 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.102-alt1
+- added support for 4-component kernel versions in kcode calculation
+
 * Thu Jan 24 2013 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.101-alt1
 - Added km-create-tag script
 
