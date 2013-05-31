@@ -4,7 +4,7 @@ BuildRequires: unzip
 Name: hunspell-ne
 Summary: Nepali hunspell dictionaries
 Version: 20080425
-Release: alt2_6
+Release: alt2_8
 Source: http://nepalinux.org/downloads/ne_NP_dict.zip
 Group: Text tools
 URL: http://nepalinux.org/downloads
@@ -19,6 +19,11 @@ Nepali hunspell dictionaries.
 
 %prep
 %setup -q -c -n ne_NP_dict
+sed -i 's|चलन/चल्ती/15,22|चलनचल्ती/15,22|g' ne_NP.dic
+sed -i 's|निजामती/I15,22|निजामती/15,22|g' ne_NP.dic
+
+# Remove ^M and trailing whitespace characters
+sed -i 's/\r//;s/[ \t]*$//' ne_NP.dic
 
 %build
 
@@ -39,6 +44,9 @@ popd
 %{_datadir}/myspell/*
 
 %changelog
+* Fri May 31 2013 Igor Vlasenko <viy@altlinux.ru> 20080425-alt2_8
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 20080425-alt2_6
 - update to new release by fcimport
 
