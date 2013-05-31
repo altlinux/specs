@@ -5,7 +5,7 @@ BuildRequires: gcc-c++ perl(IO/Handle.pm)
 %define _hardened_build 1
 Name:             fuse-zfs
 Version:          0.7.0
-Release:          alt1_10
+Release:          alt1_11
 Summary:          ZFS ported to Linux FUSE
 Group:            System/Base
 License:          CDDL
@@ -120,6 +120,9 @@ fi
 %config(noreplace) %_initdir/zfs-fuse
 
 %changelog
+* Fri May 31 2013 Igor Vlasenko <viy@altlinux.ru> 0.7.0-alt1_11
+- update to new release by fcimport
+
 * Mon Feb 18 2013 Igor Vlasenko <viy@altlinux.ru> 0.7.0-alt1_10
 - update to new release by fcimport
 
