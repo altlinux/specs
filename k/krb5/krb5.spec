@@ -1,7 +1,7 @@
 
 Name: krb5
 Version: 1.11.2
-Release: alt2
+Release: alt3
 
 %define _docdir %_defaultdocdir/%name-%version
 
@@ -342,6 +342,11 @@ touch %buildroot%_sysconfdir/krb5.keytab
 # {{{ changelog
 
 %changelog
+* Fri May 31 2013 Andrey Cherepanov <cas@altlinux.org> 1.11.2-alt3
+- Increase run order from 40 to 41 to prevent error reading from LDAP:
+  'preauth pkinit failed to initialize: No realms configured correctly
+  for pkinit support'
+
 * Tue May 14 2013 Ivan A. Melnikov <iv@altlinux.org> 1.11.2-alt2
 - add patch 23 from upstream git to fix kpasswd udp ping-pong
   (CVE-2002-2443).
