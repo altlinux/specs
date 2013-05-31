@@ -1,7 +1,7 @@
 %define ver_major 0.3
 
 Name: d-feet
-Version: %ver_major.3
+Version: %ver_major.4
 Release: alt1
 
 Summary: A powerful D-Bus Debugger
@@ -13,7 +13,9 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 
 BuildArch: noarch
 
-BuildRequires: python-module-pygobject3-devel python-module-setuptools
+BuildRequires: gnome-common python-module-pygobject3-devel python-module-setuptools
+BuildRequires: python-tools-pep8 intltool yelp-tools libgtk+3-devel libgtk+3-gir-devel >= 3.6.0
+BuildRequires: dbus-tools-gui
 
 %description
 D-Feet is an easy to use D-Bus debugger.
@@ -26,22 +28,34 @@ objects.
 %setup
 
 %build
-%python_build
+%autoreconf
+%configure
+%make_build
 
 %install
-%python_install
+%makeinstall_std
+
+%find_lang %name dfeet
+
+%check
+#%%make check
+
 
 %files
 %_bindir/%name
 %python_sitelibdir_noarch/dfeet
-%python_sitelibdir_noarch/*.egg-info/
-%_datadir/dfeet/
-%_datadir/applications/dfeet.desktop
+%_datadir/d-feet/
+%_datadir/applications/d-feet.desktop
+%_datadir/glib-2.0/schemas/org.gnome.d-feet.gschema.xml
 %_iconsdir/hicolor/*x*/apps/*.png
 %_iconsdir/hicolor/*/apps/*.svg
+%_iconsdir/HighContrast/scalable/apps/d-feet.svg
 %doc AUTHORS README NEWS
 
 %changelog
+* Fri May 31 2013 Yuri N. Sedunov <aris@altlinux.org> 0.3.4-alt1
+- 0.3.4
+
 * Sat Jan 12 2013 Yuri N. Sedunov <aris@altlinux.org> 0.3.3-alt1
 - 0.3.3
 
