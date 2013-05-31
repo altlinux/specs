@@ -10,7 +10,7 @@
 %endif
 
 Name: epiphany
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: Epiphany is a GNOME web browser.
@@ -135,6 +135,9 @@ GObject introspection devel data for the Epiphany
 %endif
 
 %changelog
+* Fri May 31 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.2-alt1
+- 3.8.2
+
 * Tue Apr 16 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.1-alt1
 - 3.8.1
 
