@@ -1,12 +1,12 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/bison gcc-c++ pkgconfig(libcurl) zlib-devel
+BuildRequires: /usr/bin/bison gcc-c++ pkgconfig(libcurl)
 # END SourceDeps(oneline)
 BuildRequires: chrpath
 %add_optflags %optflags_shared
 Name: libdap
 Summary: The C++ DAP2 library from OPeNDAP
-Version: 3.11.3
-Release: alt2_3.qa1
+Version: 3.11.7
+Release: alt1_1
 
 License: LGPLv2+
 Group: Development/C
@@ -14,9 +14,6 @@ URL: http://www.opendap.org/
 Source0: http://www.opendap.org/pub/source/libdap-%{version}.tar.gz
 #Don't run HTTP tests - builders don't have network connections
 Patch0:  libdap-3.10.2-offline.patch
-# Compile with gcc 4.7
-Patch3:  libdap-gcc47.patch
-
 
 BuildRequires: cppunit-devel
 BuildRequires: curl-devel
@@ -24,6 +21,7 @@ BuildRequires: doxygen
 BuildRequires: graphviz
 BuildRequires: libuuid-devel
 BuildRequires: libxml2-devel
+BuildRequires: libssl-devel
 
 Provides: bundled(gnulib)
 Source44: import.info
@@ -56,7 +54,6 @@ will use libdap.
 %package doc
 Summary: Documentation of the libdap library
 Group: Documentation
-BuildArch: noarch
 
 %description doc
 Documentation of the libdap library.
@@ -65,7 +62,6 @@ Documentation of the libdap library.
 %prep
 %setup -q
 %patch0 -p1 -b .offline
-%patch3 -p1 -b .gcc47
 iconv -f latin1 -t utf8 < COPYRIGHT_W3C > COPYRIGHT_W3C.utf8
 touch -r COPYRIGHT_W3C COPYRIGHT_W3C.utf8
 mv COPYRIGHT_W3C.utf8 COPYRIGHT_W3C
@@ -79,7 +75,7 @@ make docs
 
 
 %install
-make install DESTDIR=$RPM_BUILD_ROOT INSTALL="install -p"
+make install DESTDIR=$RPM_BUILD_ROOT INSTALL="%{__install} -p"
 rm $RPM_BUILD_ROOT%{_libdir}/*.la
 mv $RPM_BUILD_ROOT%{_bindir}/dap-config-pkgconfig $RPM_BUILD_ROOT%{_bindir}/dap-config
 
@@ -121,6 +117,9 @@ done
 
 
 %changelog
+* Fri May 31 2013 Igor Vlasenko <viy@altlinux.ru> 3.11.7-alt1_1
+- update to new release by fcimport
+
 * Mon Apr 22 2013 Repocop Q. A. Robot <repocop@altlinux.org> 3.11.3-alt2_3.qa1
 - NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
 - applied repocop fixes:
