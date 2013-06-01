@@ -21,7 +21,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.4.47
-Release: alt4
+Release: alt5
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -451,7 +451,7 @@ Patch0565: linux-%kernel_branch.35-fix-fs-nilfs2.patch
 Patch0566: linux-%kernel_branch.35-fix-fs-ocfs2.patch
 Patch0567: linux-%kernel_branch.31-fix-fs-proc.patch
 Patch0568: linux-%kernel_branch.28-fix-fs-ramfs.patch
-Patch0569: linux-%kernel_branch.20-fix-fs-reiserfs.patch
+Patch0569: linux-%kernel_branch.47-fix-fs-reiserfs.patch
 Patch0570: linux-%kernel_branch.35-fix-fs-ubifs.patch
 Patch0571: linux-%kernel_branch.46-fix-fs-xfs.patch
 
@@ -2712,6 +2712,10 @@ done)
 
 
 %changelog
+* Sat Jun 01 2013 Led <led@altlinux.ru> 3.4.47-alt5
+- updated:
+  + fix-fs-reiserfs
+
 * Fri May 31 2013 Led <led@altlinux.ru> 3.4.47-alt4
 - added:
   + fix-drivers-target-iscsi (CVE-2013-2850)
