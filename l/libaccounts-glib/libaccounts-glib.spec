@@ -1,25 +1,23 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/gtkdocize pkgconfig(dbus-1) pkgconfig(glib-2.0) pkgconfig(gobject-2.0)
+BuildRequires: /usr/bin/gtkdocize /usr/bin/xmllint /usr/bin/xsltproc docbook-dtds pkgconfig(gio-2.0) pkgconfig(gio-unix-2.0) pkgconfig(glib-2.0) pkgconfig(gobject-2.0) python-devel
 # END SourceDeps(oneline)
-%add_optflags %optflags_shared
 Name:		libaccounts-glib
-Version:	0.45
-Release:	alt3_5
+Version:	1.8
+Release:	alt1_1
 Group:		System/Libraries
-Summary:	Nokia Maemo Accounts base library
+Summary:	Accounts framework for Linux and POSIX based platforms
 License:	LGPLv2
-URL:		http://gitorious.org/accounts-sso/accounts-glib
-# extracted from http://repo.meego.com/MeeGo/builds/trunk/daily/core/repos/source/libaccounts-glib-0.45-1.1.src.rpm
-Source0:	%{name}-%{version}.tar.gz
+URL:		https://code.google.com/p/accounts-sso/
+Source0:	https://accounts-sso.googlecode.com/files/%{name}-%{version}.tar.gz
 BuildRequires:	libdbus-glib-devel
 BuildRequires:	libxml2-devel
 BuildRequires:	libsqlite3-devel
 BuildRequires:	libcheck-devel
+BuildRequires:	gobject-introspection-devel
 # no needed for final release tarball
 BuildRequires:	libtool
 BuildRequires:	gtk-doc
 Source44: import.info
-Patch33: libaccounts-glib-0.45-alt-gcc47.patch
 
 %description
 %{summary}.
@@ -33,9 +31,16 @@ Requires:	%{name} = %{version}-%{release}
 The %{name}-devel package contains libraries and header files for
 developing applications that use %{name}.
 
+%package docs
+Group: System/Libraries
+Summary:	Documentation for %{name}
+BuildArch:	noarch
+
+%description docs
+The %{name}-docs package contains documentation for %{name}.
+
 %prep
 %setup -q
-%patch33 -p1
 
 %build
 gtkdocize
@@ -60,18 +65,37 @@ rm -f %{buildroot}%{_bindir}/*test*
 rm -rf %{buildroot}%{_datadir}/libaccounts-glib0-test
 
 %files
-%doc COPYING AUTHORS
+%doc COPYING AUTHORS INSTALL ChangeLog README NEWS
+%{_bindir}/ag-backup
+%{_bindir}/ag-tool
+%{_mandir}/man1/ag-backup.1*
+%{_mandir}/man1/ag-tool.1*
 %dir %{_datadir}/backup-framework
 %dir %{_datadir}/backup-framework/applications
 %{_datadir}/backup-framework/applications/*.conf
 %{_libdir}/%{name}.so.*
+%{_libdir}/girepository-1.0/Accounts-1.0.typelib
+%dir %{_datadir}/xml/
+%dir %{_datadir}/xml/accounts/
+%dir %{_datadir}/xml/accounts/schema/
+%dir %{_datadir}/xml/accounts/schema/dtd
+%{_datadir}/xml/accounts/schema/dtd/accounts-*.dtd
 
 %files devel
 %{_libdir}/%{name}.so
 %{_libdir}/pkgconfig/%{name}.pc
 %{_includedir}/%{name}
+%{_datadir}/gir-1.0/Accounts-1.0.gir
+%{_datadir}/vala/vapi/accounts.deps
+%{_datadir}/vala/vapi/accounts.vapi
+
+%files docs
+%doc %{_datadir}/gtk-doc/html/libaccounts-glib/
 
 %changelog
+* Sat Jun 01 2013 Igor Vlasenko <viy@altlinux.ru> 1.8-alt1_1
+- new fc release
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.45-alt3_5
 - update to new release by fcimport
 
