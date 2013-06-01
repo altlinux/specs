@@ -4,10 +4,10 @@ BuildRequires: perl(Socket.pm)
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
-%define fedora 18
+%define fedora 19
 Name:           jss
 Version:        4.2.6
-Release:        alt4_28jpp7
+Release:        alt4_29jpp7
 Summary:        Java Security Services (JSS)
 
 Group:          System/Libraries
@@ -138,7 +138,7 @@ sed -i -e 's;LINUX3_1;LINUX3_6;' mozilla/security/coreconf/Linux3.6.mk
 
 
 # 3.0(t6), 3.5(SIS) kernels support
-for i in 0 3 4 5 6 7 8; do
+for i in 0 3 4 5 6 7 8 9; do
 cp -p mozilla/security/coreconf/Linux3.1.mk mozilla/security/coreconf/Linux3.$i.mk
 sed -i -e 's;LINUX3_1;LINUX3_'$i';' mozilla/security/coreconf/Linux3.$i.mk
 done
@@ -198,6 +198,9 @@ ln -s %_libdir/java/jss4.jar %buildroot%_javadir/jss4.jar
 
 
 %changelog
+* Sat Jun 01 2013 Igor Vlasenko <viy@altlinux.ru> 4.2.6-alt4_29jpp7
+- new release
+
 * Mon Jan 28 2013 Igor Vlasenko <viy@altlinux.ru> 4.2.6-alt4_28jpp7
 - fixed build
 
