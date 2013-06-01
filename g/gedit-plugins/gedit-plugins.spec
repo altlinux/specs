@@ -4,8 +4,8 @@
 %add_python3_compile_include %gedit_pluginsdir
 
 Name: gedit-plugins
-Version: %ver_major.1
-Release: alt2
+Version: %ver_major.2
+Release: alt1
 
 Summary: Plugins for GEdit
 License: GPL
@@ -78,6 +78,9 @@ This package contains various plugins for gEdit, including Charmap, Terminal, an
 %exclude %gedit_pluginsdir/*.la
 
 %changelog
+* Sun Jun 02 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.2-alt1
+- 3.8.2
+
 * Thu Apr 25 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.1-alt2
 - rebuilt to update dependencies
 
