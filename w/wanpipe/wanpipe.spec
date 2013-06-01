@@ -4,7 +4,7 @@
 
 Name: wanpipe
 Summary: %name
-Version: 7.0.1
+Version: 7.0.3
 Release: alt1
 License: GPL
 Group: System/Kernel and hardware
@@ -157,6 +157,9 @@ rm -f %buildroot/etc/wanpipe/util/wan_aftup/*.o
 %files docs
 
 %changelog
+* Sat Jun 01 2013 Denis Smirnov <mithraen@altlinux.ru> 7.0.3-alt1
+- 7.0.3
+
 * Mon Apr 15 2013 Denis Smirnov <mithraen@altlinux.ru> 7.0.1-alt1
 - 7.0.1
 
