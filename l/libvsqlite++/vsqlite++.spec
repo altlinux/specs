@@ -1,0 +1,82 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires: gcc-c++
+# END SourceDeps(oneline)
+%define oldname vsqlite++
+Name:        libvsqlite++
+Version:    0.3.11
+Release:    alt1_2
+Summary:    Well designed C++ sqlite 3.x wrapper library
+
+Group:      Development/C
+License:    BSD
+URL:        https://github.com/vinzenz/vsqlite--
+Source0:    http://evilissimo.fedorapeople.org/releases/vsqlite--/%{version}/%{oldname}-%{version}.tar.gz
+
+BuildRequires:  premake
+BuildRequires: boost-devel boost-filesystem-devel boost-wave-devel boost-graph-parallel-devel boost-math-devel boost-mpi-devel boost-program_options-devel boost-signals-devel boost-intrusive-devel boost-asio-devel
+BuildRequires:  libsqlite3-devel
+BuildRequires:  libtool
+BuildRequires:  doxygen
+BuildRequires:  graphviz
+Source44: import.info
+
+%description
+VSQLite++ is a C++ wrapper for sqlite3 using the C++ standard library and boost.
+VSQLite++ is designed to be easy to use and focuses on simplicity.
+
+%package devel
+Summary:        Development files for %{oldname}
+Group:          Development/C
+Requires:       %{name} = %{version}-%{release}
+
+%description devel
+This package contains development files for %{oldname}.
+
+%package doc
+BuildArch:      noarch
+Summary:        Development documentation for %{oldname}
+Group:          Development/C
+
+%description doc
+This package contains development documentation files for %{oldname}.
+
+%prep
+%setup -n %{oldname}-%{version} -q
+
+%build
+%configure
+sed -i -e 's! -shared ! -Wl,--as-needed\0!g' libtool
+make %{?_smp_mflags}
+doxygen Doxyfile
+
+%install
+# devel & base
+install -p -m 755 -d %{buildroot}%{_libdir}
+# devel only
+install -p -m 755 -d %{buildroot}%{_includedir}/sqlite/ext
+install -m 644 include/sqlite/*.hpp %{buildroot}%{_includedir}/sqlite
+install -m 644 include/sqlite/ext/*.hpp %{buildroot}%{_includedir}/sqlite/ext
+# docs
+install -p -m 755 -d %{buildroot}%{_docdir}
+
+# build for all
+make DESTDIR=%{buildroot} install
+
+%files doc
+%doc ChangeLog README COPYING examples/sqlite_wrapper.cpp html/*
+
+%files devel
+%doc ChangeLog README COPYING
+%{_libdir}/libvsqlitepp.so
+%{_includedir}/sqlite
+# Don't add .la/.a to the package
+%exclude %{_libdir}/libvsqlitepp.a
+
+%files
+%doc ChangeLog README COPYING
+%{_libdir}/libvsqlitepp.so.*
+
+%changelog
+* Sat Jun 01 2013 Igor Vlasenko <viy@altlinux.ru> 0.3.11-alt1_2
+- new version
+
