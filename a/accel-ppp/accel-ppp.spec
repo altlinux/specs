@@ -1,6 +1,6 @@
 Name: accel-ppp
 Version: 1.7.3
-Release: alt1
+Release: alt2
 Summary: High performance PPTP/L2TP/PPPoE server
 Group: System/Servers
 
@@ -36,15 +36,9 @@ Features:
 %setup
 %patch0 -p1
 
-for i in `find . -type f -name CMakeLists.txt -print`
-do
-    sed -i 's/lib\/accel-ppp/${LIB_DIR}/' $i
-done
-
 %build
 %cmake \
       -DCMAKE_SKIP_RPATH=FALSE \
-      -DLIB_DIR=%_libdir/%name \
       -DBUILD_DRIVER=FALSE \
       -DCMAKE_INSTALL_PREFIX=%prefix \
       -DRADIUS=TRUE \
@@ -74,9 +68,11 @@ echo "0" > %buildroot%_runtimedir/accel-ppp/seq
 %config %_sysconfdir/logrotate.d/*
 %config(noreplace) %_sysconfdir/tmpfiles.d/*
 %_sysconfdir/accel-ppp.conf.dist
+%_bindir/accel-cmd
 %_sbindir/accel-pppd
 %_libdir/%name
 %_datadir/accel-ppp/
+%_mandir/man1/accel-cmd*
 %_mandir/man5/accel-ppp.conf.5*
 %_runtimedir/accel-ppp/
 %_runtimedir/accel-ppp/*
@@ -89,6 +85,9 @@ echo "0" > %buildroot%_runtimedir/accel-ppp/seq
 %preun_service %name
 
 %changelog
+* Sun Jun 02 2013 Alexei Takaseev <taf@altlinux.org> 1.7.3-alt2
+- update to git:3cc23d37c3c93ca7240f52fe5121513bcd6c3db8
+
 * Tue Dec 11 2012 Alexei Takaseev <taf@altlinux.org> 1.7.3-alt1
 - 1.7.3
 
