@@ -9,7 +9,7 @@
 
 Name: gedit
 Version: %ver_major.2
-Release: alt1
+Release: alt2
 
 Summary: gEdit is a small but powerful text editor for GNOME
 License: GPLv2
@@ -32,6 +32,7 @@ AutoReqProv: nopython
 Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 Patch: %name-3.6.0-alt-settings.patch
 Patch1: %name-2.91.6-alt-link.patch
+Patch2: %name-3.8-ru.po.patch
 
 # From configure.ac
 %define glib_ver 2.28.0
@@ -116,9 +117,11 @@ This package contains documentation needed to develop plugins for gedit.
 
 
 %prep
-%setup -q
+%setup
+
 %patch -p1 -b .settings
 %patch1 -b .link
+%patch2 -p1 -b .ru.po
 
 rm -f data/gedit.desktop.in
 
@@ -211,6 +214,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %endif
 
 %changelog
+* Sun Jun 02 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.2-alt2
+- updated russian translation from git
+
 * Mon May 13 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.2-alt1
 - 3.8.2
 
