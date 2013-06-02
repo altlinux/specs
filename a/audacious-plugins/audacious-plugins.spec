@@ -2,7 +2,7 @@
 %define rel %nil
 %define oname audacious
 Name: audacious-plugins
-Version: 3.3.2
+Version: 3.3.4
 Release: alt1
 
 Summary: Plugins for Audacious
@@ -88,6 +88,9 @@ This package contains the base I/O plugins:
 %_libdir/%oname/*
 
 %changelog
+* Sun Jun 02 2013 Andrey Cherepanov <cas@altlinux.org> 3.3.4-alt1
+- new version 3.3.4
+
 * Sun Dec 09 2012 Vitaly Lipatov <lav@altlinux.ru> 3.3.2-alt1
 - new version 3.3.2 (with rpmrb script)
 
