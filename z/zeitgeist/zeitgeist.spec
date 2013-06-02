@@ -1,9 +1,12 @@
 %define major 0.9
 %define api_ver 2.0
+%define _libexecdir %_prefix/libexec
 %define _noarchpkgconfigdir %_datadir/pkgconfig
 
+%def_enable fts
+
 Name: zeitgeist
-Version: %major.12
+Version: %major.13
 Release: alt1
 
 Summary: Framework providing Desktop activity awareness
@@ -27,7 +30,8 @@ Requires: lib%name%api_ver = %version-%release
 BuildRequires: python-devel python-module-rdflib
 BuildRequires: raptor
 BuildRequires: gettext perl-XML-Parser intltool gtk-doc
-BuildRequires: gcc-c++ glib2-devel libsqlite3-devel libgio-devel libdbus-devel libxapian-devel
+BuildRequires: gcc-c++ glib2-devel libsqlite3-devel libgio-devel libdbus-devel
+BuildRequires: libxapian-devel
 BuildRequires: libgtk+3-devel libjson-glib-devel
 BuildRequires: libtelepathy-glib-devel >= %tp_glib_ver
 BuildRequires: gobject-introspection-devel
@@ -141,12 +145,15 @@ popd
 
 %build
 %autoreconf
-%configure --disable-static PYTHON=%__python
+%configure --disable-static \
+	%{subst_enable fts} \
+	PYTHON=%__python
 %make_build
 
 pushd py3build
 %autoreconf
 %configure --disable-static \
+    %{subst_enable fts} \
     --enable-gtk-doc \
     PYTHON=/usr/bin/python3
 %make_build
@@ -171,6 +178,11 @@ rm -rf %buildroot%_prefix/doc/
 %_man1dir/%name-*.*
 %_sysconfdir/xdg/autostart/zeitgeist-datahub.desktop
 %_datadir/bash-completion/completions/%name-daemon
+
+%if_enabled fts
+%_libexecdir/%name-fts
+%_datadir/dbus-1/services/org.gnome.zeitgeist.fts.service
+%endif
 
 %files -n python-module-%name%api_ver
 %python_sitelibdir_noarch/zeitgeist/
@@ -201,6 +213,10 @@ rm -rf %buildroot%_prefix/doc/
 %endif
 
 %changelog
+* Sun Jun 02 2013 Yuri N. Sedunov <aris@altlinux.org> 0.9.13-alt1
+- 0.9.13
+- enabled FTS support
+
 * Mon Apr 15 2013 Yuri N. Sedunov <aris@altlinux.org> 0.9.12-alt1
 - 0.9.12
 - fixed syntax for python3
