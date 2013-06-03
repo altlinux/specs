@@ -1,5 +1,5 @@
 Name: lftp
-Version: 4.4.5
+Version: 4.4.8
 Release: alt1
 
 Summary: Sophisticated command line file transfer program
@@ -22,7 +22,7 @@ Patch: lftp-%version-%release.patch
 Requires: less
 
 # Automatically added by buildreq on Thu Jan 02 2003
-BuildRequires: gcc-c++ libexpat-devel libncurses-devel libreadline-devel libssl-devel desktop-file-utils
+BuildRequires: desktop-file-utils gcc-c++ libexpat-devel libncurses-devel libreadline-devel libssl-devel zlib-devel
 
 %description
 lftp is sophisticated file transfer program with command-line
@@ -84,6 +84,9 @@ desktop-file-install --dir %buildroot%_desktopdir %_sourcedir/lftp.desktop
 %doc AUTHORS README.* THANKS TODO lftp.lsm BUGS
 
 %changelog
+* Mon Jun 03 2013 Dmitry V. Levin <ldv@altlinux.org> 4.4.8-alt1
+- Updated to 4.4.8.
+
 * Mon Apr 08 2013 Dmitry V. Levin <ldv@altlinux.org> 4.4.5-alt1
 - Updated to 4.4.5.
 
