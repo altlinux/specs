@@ -6,11 +6,11 @@
 
 Name: %realname%dialect
 Version: 1.11.6
-Release: alt2
+Release: alt3
 
-%add_findreq_skiplist %_datadir/%realname%suff/config.guess
+%define mydatadir %_datadir/%realname%suff
 %set_compress_method gzip
-%define _perl_lib_path %perl_vendor_privlib:%_datadir/%realname%suff
+%define _perl_lib_path %perl_vendor_privlib:%mydatadir
 %{?filter_from_requires:%filter_from_requires /^perl(Automake/d}
 %{?filter_from_provides:%filter_from_provides /^perl(Automake/d}
 
@@ -31,7 +31,7 @@ Obsoletes: %realname
 PreReq: automake-common, alternatives >= 0:0.4
 Requires: autoconf >= 2:2.62
 
-BuildPreReq: autoconf >= 2:2.58, texinfo >= 4.7, help2man, perl-threads
+BuildPreReq: autoconf >= 2:2.58, texinfo >= 4.7, gnu-config, help2man, perl-threads
 %{!?__buildreqs:%{!?_without_check:%{!?_disable_check:BuildRequires: dejagnu expect flex gcc-c++ gcc-fortran makedepend}}}
 
 %description
@@ -58,6 +58,12 @@ chmod a+x tests/*.test
 %install
 %makeinstall_std MAKEINFOFLAGS=--no-split
 
+# replace config.* copies with symlinks to original files
+for f in %_datadir/gnu-config/config.*; do
+	[ -f "$f" ] || continue
+	ln -frs %buildroot"$f" %buildroot%mydatadir/"${f##*/}"
+done
+
 mv %buildroot%_infodir/%realname.info %buildroot%_infodir/%realname%suff.info
 
 mkdir -p %buildroot%_sysconfdir/buildreqs/files/ignore.d
@@ -74,7 +80,7 @@ cat <<EOF >%buildroot%_altdir/%name
 %_bindir/aclocal-default	%_bindir/aclocal%suff	%_bindir/%realname%suff
 %_man1dir/%realname.1.gz	%_man1dir/%realname%suff.1.gz	%_bindir/%realname%suff
 %_man1dir/aclocal.1.gz	%_man1dir/aclocal%suff.1.gz	%_bindir/%realname%suff
-%_datadir/%realname	%_datadir/%realname%suff	%_bindir/%realname%suff
+%_datadir/%realname	%mydatadir	%_bindir/%realname%suff
 %_infodir/%realname.info.gz	%_infodir/%realname%suff.info.gz	%_bindir/%realname%suff
 EOF
 
@@ -94,11 +100,14 @@ install -pm644 AUTHORS README THANKS NEWS.bz2 TODO.bz2 \
 %_bindir/*%suff
 %_man1dir/*%suff.1.gz
 %_datadir/aclocal%suff
-%_datadir/%realname%suff
+%mydatadir
 %_infodir/*.info*
 %docdir
 
 %changelog
+* Mon Jun 03 2013 Dmitry V. Levin <ldv@altlinux.org> 1.11.6-alt3
+- Replaced config.* copies with symlinks to original files.
+
 * Sun Sep 09 2012 Dmitry V. Levin <ldv@altlinux.org> 1.11.6-alt2
 - aclocal: backported upstream fix for perl 5.16.0.
 
