@@ -2,7 +2,7 @@
 %define mpidir %_libdir/%mpiimpl
 
 Name: tau
-Version: 2.22.1
+Version: 2.22.2
 Release: alt1
 Summary: TAU Portable Profiling Package
 License: BSD-like
@@ -394,6 +394,9 @@ rm -f %buildroot%_libdir/*/*.so %buildroot%_bindir/tau_ebs2otf.pl \
 %exclude %_javadir/jargs.jar
 
 %changelog
+* Mon Jun 03 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.22.2-alt1
+- Version 2.22.2
+
 * Thu Feb 21 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.22.1-alt1
 - Version 2.22.1
 
