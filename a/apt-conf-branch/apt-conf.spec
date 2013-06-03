@@ -4,7 +4,7 @@
 
 Name: %base_name-%distro
 Version: 7.0.0
-Release: alt1
+Release: alt2
 
 Summary: A set of apt configuration files for %distribution %Distro
 License: GPL
@@ -12,7 +12,8 @@ Group: System/Configuration/Packaging
 
 Source: %name-%version.tar
 
-Provides: %base_name = %version-%release, %_sysconfdir/apt/pkgpriorities
+Provides: %base_name = %version-%release, %_sysconfdir/apt/pkgpriorities apt-conf-centaurus = %version-%release
+Obsoletes: apt-conf-centaurus
 Conflicts: apt <= 0:0.5.15cnc6-alt14, apt-conf-sisyphus
 %{expand:%%global o_list apt-conf < 0:4.0 %(for n in Castle Compact Junior Master Spring centaurus desktop hpc junior master office-server platform5 school server terminal; do echo -n "apt-conf-$n "; done)}
 %{?o_list:Conflicts: %o_list}
@@ -43,6 +44,9 @@ fi
 %config(noreplace) %_sysconfdir/apt
 
 %changelog
+* Mon Jun 03 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 7.0.0-alt2
+- provides/obsoletes for apt-conf-centaurus added
+
 * Thu Apr 25 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 7.0.0-alt1
 - p7 branch
 
