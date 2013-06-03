@@ -23,11 +23,11 @@
 
 %define major 4
 %define minor 10
-%define bugfix 3
+%define bugfix 4
 %define rname kdebase-workspace
 Name: kde4base-workspace
 Version: %major.%minor.%bugfix
-Release: alt2
+Release: alt1
 
 Group: Graphical desktop/KDE
 Summary: K Desktop Environment - Workspace
@@ -951,6 +951,9 @@ chmod 0755 %buildroot/%_sysconfdir/firsttime.d/kdm4
 %_K4dbus_interfaces/*
 
 %changelog
+* Mon Jun 03 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.4-alt1
+- new version
+
 * Tue May 28 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.3-alt2
 - add kdm logrotate file
 - prefer telepathy in favorites menu
