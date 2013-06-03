@@ -305,7 +305,7 @@
 
 Name: %lname
 Version: 1.1.1
-Release: alt6
+Release: alt7
 %ifdef svnrev
 %define pkgver svn-r%svnrev
 %else
@@ -1143,6 +1143,12 @@ install -pD -m 0644 {etc/%lname,%buildroot%_desktopdir/%gname}.desktop
 
 
 %changelog
+* Mon Jun 03 2013 Led <led@altlinux.ru> 1.1.1-alt7
+- mp_msg2po.awk: fix po generation
+- mp_help2msg.awk: fixed
+- fixed ru translation
+- updated uk translation
+
 * Fri May 31 2013 Led <led@altlinux.ru> 1.1.1-alt6
 - updated ru translation
 - updated uk translation
