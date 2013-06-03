@@ -4,7 +4,7 @@
 
 Name: alterator-pkg
 Version: 2.6.11
-Release: alt1
+Release: alt2
 
 %add_findreq_skiplist %_libexecdir/alterator/backend3/pkg-init
 %add_findreq_skiplist %_datadir/install2/initinstall.d/*
@@ -24,6 +24,7 @@ Requires: alterator >= 4.6-alt3 alterator-sh-functions libshell alterator-l10n >
 Requires: alterator-browser-qt >= 2.17.0
 Requires: apt >= 0.5.15lorg2-alt23
 Requires: alterator-lookout => 2.4-alt1
+Requires: altlinux-repos
 Conflicts: alterator-fbi < 5.10-alt1
 
 Provides: alterator-apt = %version
@@ -60,6 +61,9 @@ additional package installation
 %_alterator_backend3dir/*
 
 %changelog
+* Tue Jun 18 2013 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.6.11-alt2
+- add R: altlinux-repos
+
 * Tue Jun 11 2013 Andrey Cherepanov <cas@altlinux.org> 2.6.11-alt1
 - Localize units in total installed size
 
