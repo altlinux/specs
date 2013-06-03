@@ -1,5 +1,5 @@
 Name: sisyphus_check
-Version: 0.8.38
+Version: 0.8.39
 Release: alt1
 
 Summary: package checker for Sisyphus
@@ -32,6 +32,10 @@ cp -a -- sisyphus_check.d %buildroot%_sysconfdir/%name/check.d
 %_bindir/*
 
 %changelog
+* Mon Jun 03 2013 Dmitry V. Levin <ldv@altlinux.org> 0.8.39-alt1
+- 210-check-kernel (kernel_version_code):
+  + changed algorithm for 4-component kernel versions support.
+
 * Fri May 31 2013 Dmitry V. Levin <ldv@altlinux.org> 0.8.38-alt1
 - 100-check-deps: allowed kernel deps in packages built from kernel-image-*.
 - 210-check-kernel:
