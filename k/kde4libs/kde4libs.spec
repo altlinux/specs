@@ -7,7 +7,7 @@
 
 %define major 4
 %define minor 10
-%define bugfix 3
+%define bugfix 4
 %define rname kdelibs
 Name: kde4libs
 Version: %major.%minor.%bugfix
@@ -328,6 +328,9 @@ ln -sf `relative %buildroot/%_kde4_bindir/kde4-config %buildroot/%_K4bindir/kde4
 %_K4includedir/*
 
 %changelog
+* Mon Jun 03 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.4-alt1
+- new version
+
 * Mon May 06 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.3-alt1
 - new version
 

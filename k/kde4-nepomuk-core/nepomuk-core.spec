@@ -4,9 +4,9 @@
 Name: kde4-nepomuk-core
 %define major  4
 %define minor  10
-%define bugfix 3
+%define bugfix 4
 Version: %major.%minor.%bugfix
-Release: alt2
+Release: alt1
 %define sover %major
 
 Group: Graphical desktop/KDE
@@ -125,6 +125,9 @@ done
 %_K4link/*.so
 
 %changelog
+* Mon Jun 03 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.4-alt1
+- new version
+
 * Thu May 16 2013 Sergey V Turchin <zerg at altlinux dot org> 4.10.3-alt2
 - fix paths in ontology descriptions
 
