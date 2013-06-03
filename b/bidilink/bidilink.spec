@@ -1,8 +1,8 @@
 Name: bidilink
 Version: 0.1
-Release: alt1.qa1
+Release: alt2
 
-Summary: bidilink - Bidirectional stream linker
+Summary: Bidirectional stream linker
 Group: File tools
 License: GPLv2+
 
@@ -12,7 +12,7 @@ Source0: %name-%version.tar.gz
 
 Packager: Igor Zubkov <icesik@altlinux.org>
 
-# Automatically added by buildreq on Thu Jan 17 2008
+# Automatically added by buildreq on Mon Jun 03 2013
 BuildRequires: lynx xmltoman
 
 %description
@@ -31,7 +31,7 @@ drivers:
 an incoming connection
 * unix-client:SOCKNAME - Connect to a local Unix domain socket
 * unix-server:SOCKNAME - Listen on a local Unix domain socket
-								     
+
 %prep
 %setup -q
 
@@ -48,6 +48,9 @@ an incoming connection
 %_man1dir/bidilink.*
 
 %changelog
+* Mon Jun 03 2013 Igor Zubkov <icesik@altlinux.org> 0.1-alt2
+- Cleanup summary
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.1-alt1.qa1
 - NMU: rebuilt for debuginfo.
 
