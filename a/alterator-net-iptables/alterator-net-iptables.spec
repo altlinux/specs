@@ -1,5 +1,5 @@
 Name: alterator-net-iptables
-Version: 4.19
+Version: 4.19.1
 Release: alt1
 
 Packager: Vladislav Zavjalov <slazav@altlinux.org>
@@ -57,6 +57,9 @@ touch -- %buildroot%_logdir/%name
 %_logdir/alterator-net-iptables
 
 %changelog
+* Mon Jun 03 2013 Mikhail Efremov <sem@altlinux.org> 4.19.1-alt1
+- index.scm: Update ifaces and services lists on IP version change.
+
 * Wed Nov 14 2012 Mikhail Efremov <sem@altlinux.org> 4.19-alt1
 - iptables_helper: Allow networks in the IR module.
 - iptables_helper: Fix regexp for default services.
