@@ -1,6 +1,6 @@
 %define		php5_extension	gmagick
 %define 	real_name	gmagick
-%define		real_version	1.0.0
+%define		real_version	1.1.2RC1
 
 Name:	 	php5-%{php5_extension}
 Version:	%php5_version
@@ -17,8 +17,6 @@ Packager:	Nikolay A. Fetisov <naf@altlinux.ru>
 Source0:	%real_name-%real_version.tar
 Source1:	php-%php5_extension.ini
 Source2:	php-%php5_extension-params.sh
-
-Patch0:		gmagick-1.0.0b1-alt-fix_api.patch
 
 BuildRequires(pre): rpm-build-php5
 
@@ -38,7 +36,6 @@ opacity).
 %prep
 %setup -T -c
 tar xvf %SOURCE0
-%patch0
 chmod a-x *
 
 %build
@@ -74,6 +71,12 @@ install -D -m 644 -- %SOURCE2 %buildroot/%php5_extconf/%php5_extension/params
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Rebuild with php5-%version-%release
+
+* Tue May 21 2013 Aleksey Avdeev <solo@altlinux.ru> 5.3.25.20130509-alt1.1
+- 1.1.2RC1
+
+* Mon May 13 2013 Anton V. Boyarshinov <boyarsh@altlinux.org> 5.3.25.20130509-alt1
+- Rebuild with php5-5.3.25.20130509-alt1
 
 * Wed Nov 14 2012 Anton Farygin <rider@altlinux.ru> 5.3.18.20121017-alt1
 - Rebuild with php5-5.3.18.20121017-alt1

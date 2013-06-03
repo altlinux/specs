@@ -1,4 +1,4 @@
-%define		php5_extension	sqlite
+%define		php5_extension	sqlite3
 
 Name:	 	php5-%php5_extension
 Version:	%php5_version
@@ -10,6 +10,9 @@ License:	PHP Licence
 
 Source1:	php-%php5_extension.ini
 Source2:	php-%php5_extension-params.sh
+
+Provides: php5-sqlite = %EVR
+Obsoletes: php5-sqlite < 5.4.15
 
 BuildRequires(pre): rpm-build-php5
 BuildRequires:	php5-devel = %php5_version
@@ -23,6 +26,7 @@ This is an extension for the SQLite Embeddable SQL Database Engine.
 %setup -T -c
 cp -pr %php5_extsrcdir/%php5_extension/* .
 ln -s %php5_extsrcdir ext
+ln -s config0.m4 config.m4
 
 %build
 phpize
@@ -54,6 +58,7 @@ install -D -m 644 %SOURCE2 %buildroot/%php5_extconf/%php5_extension/params
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Rebuild with php5-%version-%release
+- Rename package to php5-sqlite3
 
 * Wed Nov 14 2012 Anton Farygin <rider@altlinux.ru> 5.3.18.20121017-alt1
 - Rebuild with php5-5.3.18.20121017-alt1

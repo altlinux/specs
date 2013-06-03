@@ -13,7 +13,7 @@
 
 %define		php5_extension	mnogosearch
 %define 	real_name	mnogosearch
-%define		real_version	3.3.12
+%define		real_version	3.3.14
 
 
 
@@ -49,7 +49,7 @@
 
 Name:	 	php5-%php5_extension-multidb
 Version:	%php5_version
-Release:	%php5_release.1
+Release:	%php5_release
 
 %define common_summary_for PHP5 mnogosearch extension for
 %define common_desc_for mnoGoSearch is a full-featured SQL based web search engine.\
@@ -257,6 +257,12 @@ done
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Rebuild with php5-%php5_version-%php5_release
+
+* Sun May 19 2013 Aleksey Avdeev <solo@altlinux.ru> 5.3.25.20130509-alt1.2
+- New version: 3.3.14
+
+* Fri Apr 12 2013 Anton V. Boyarshinov <boyarsh@altlinux.org> 5.3.24.20130412-alt1.1
+- Rebuild with php5-5.3.24.20130412-alt1
 
 * Fri Jan 04 2013 Nikolay A. Fetisov <naf@altlinux.ru> 5.3.18.20121017-alt1.1
 - Rebuild with php5-5.3.18.20121017-alt1.1

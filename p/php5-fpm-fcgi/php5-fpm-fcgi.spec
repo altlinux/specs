@@ -2,7 +2,7 @@
 
 Name: php5-fpm-fcgi
 Version: %php5_version
-Release: %php5_release.1
+Release: %php5_release
 Summary: The PHP5 HTML-embedded scripting language as a fpm-fcgi binary.
 Group: System/Servers
 Url: http://www.php.net/
@@ -19,7 +19,7 @@ Source4: php5-fpm.logrotate
 Source5: php5-fpm.service
 
 Patch0: php5-fpm-fcgi-5.3.3.20100722-config.m4.patch
-Patch2: php5-fpm-fcgi-5.3.3.20100722-build.patch
+Patch2: php5-fpm-fcgi-5.4.15.20130509-build.patch
 
 BuildRequires(pre): rpm-build-php5
 BuildRequires:	php5-devel = %php5_version

@@ -1,10 +1,10 @@
 %define		php5_extension	imagick
 %define 	real_name	imagick
-%define		real_version	3.0.1
+%define		real_version	3.1.0
 
 Name:	 	php5-%{php5_extension}2
 Version:	%php5_version
-Release:	%php5_release.2
+Release:	%php5_release
 
 Summary:	PHP5 wrapper to the ImageMagick library
 
@@ -14,7 +14,7 @@ URL:		http://pecl.php.net/package/imagick
 
 Packager:	Nikolay A. Fetisov <naf@altlinux.ru>
 
-Source0:	%real_name-%real_version.tar.bz2
+Source0:	%real_name-%real_version.tar
 Source1:	php-%php5_extension.ini
 Source2:	php-%php5_extension-params.sh
 Patch: imagick-alt-build.patch
@@ -33,7 +33,7 @@ This package contains Imagick with version 2.x API.
 
 %prep
 %setup -T -c
-tar xvfj %SOURCE0
+tar xvf %SOURCE0
 # ./imagick-2.x.x -> ./
 mv -- %real_name-%real_version/* .
 rm -fr -- %real_name-%real_version
@@ -73,6 +73,12 @@ install -D -m 644 -- %SOURCE2 %buildroot/%php5_extconf/%php5_extension/params
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Rebuild with php5-%php5_version-%php5_release
+
+* Mon May 20 2013 Aleksey Avdeev <solo@altlinux.ru> 5.3.25.20130509-alt1.3
+- Updated to 3.1.0RC2
+
+* Mon May 13 2013 Anton V. Boyarshinov <boyarsh@altlinux.org> 5.3.25.20130509-alt1.2
+- Rebuild with php5-5.3.25.20130509-alt1
 
 * Thu Apr 18 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 5.3.24.20130412-alt2
 - Rebuild with ImageMagick.git 6.8.4.10-alt1

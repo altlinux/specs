@@ -38,8 +38,8 @@
 
 
 Name: mnogosearch
-Version: 3.3.12
-Release: alt1.1
+Version: 3.3.14
+Release: alt1
 
 Summary: a full-featured search engine for intranet and internet servers
 Summary(ru_RU.UTF-8): поисковая машина для серверов интернет и интранет
@@ -55,14 +55,14 @@ Source2: mnogosearch.png
 Source3: udm-config.1
 Patch0: indexer.conf.5.patch
 Patch1: %name-3.3.7-alt-docbook.patch
-Patch3: %name-3.3.7-mdk-local_button.patch
+Patch3: %name-3.3.14-alt-local_button.patch
 Patch5: %name-3.3.7-debian-url_escape.patch
-Patch7: %name-3.3.12-overflow_fix.patch
-Patch8: %name-3.3.12-format_fix.patch
-Patch9: %name-3.3.12-uninitialized_fix.patch
-Patch10: %name-3.3.12-removing_unused_variables.patch
-Patch11: %name-3.3.12-check_io_results.patch
-Patch12: %name-3.3.12-fix_misc_errors.patch
+Patch7: %name-3.3.14-alt-overflow_fix.patch
+Patch8: %name-3.3.14-alt-format_fix.patch
+Patch9: %name-3.3.14-alt-uninitialized_fix.patch
+#Patch10: %name-3.3.12-removing_unused_variables.patch
+Patch11: %name-3.3.14-alt-check_io_results.patch
+Patch12: %name-3.3.14-alt-fix_misc_errors.patch
 
 Requires: %name-backend = %version
 
@@ -228,14 +228,14 @@ Requires: %name = %version, webserver-common
 %setup -n %name-%version -q
 %patch0 -p0
 %patch1 -p0
-%patch3 -p0
+%patch3 -p2
 %patch5 -p0
-%patch7 -p0
-%patch8 -p0
-%patch9 -p0
-%patch10 -p0
-%patch11 -p0
-%patch12 -p0
+%patch7 -p2
+%patch8 -p2
+%patch9 -p2
+#%%patch10 -p0
+%patch11 -p2
+%patch12 -p2
 
 mv -f -- COPYING COPYING.GPL.orig
 ln -s -- $(relative %_licensedir/GPL-2 %_docdir/%name/COPYING) COPYING
@@ -370,6 +370,7 @@ done
 install -pD -m 755 -- %SOURCE1 %buildroot%_sysconfdir/cron.daily/%name-dbgen
 
 # HTML docs build and install are broken in 3.3.8
+mkdir -p %buildroot%_prefix/doc/
 cp -- doc/*.html doc/mnogo.css %buildroot%_prefix/doc/
 cp -r -- doc/samples  %buildroot%_prefix/doc/
 mv -- %buildroot%_prefix/doc %buildroot%_datadir/%name/html
@@ -638,6 +639,9 @@ fi
 %endif
 
 %changelog
+* Sun May 19 2013 Aleksey Avdeev <solo@altlinux.ru> 3.3.14-alt1
+- New version 3.3.14
+
 * Fri Apr 12 2013 Michael Shigorin <mike@altlinux.org> 3.3.12-alt1.1
 - rebuilt against libmysqlclient.so.18
 
