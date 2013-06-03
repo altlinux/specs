@@ -1,22 +1,20 @@
-%define svnrev 202
+%define svnrev 215
 %define bname mplayer
 %define skin_dir %_datadir/%bname/skins
-%define excluded_skins standard mini netscape4 trium
 Name: %bname-skins
 Version: 2.0
-Release: alt4
+Release: alt5
 Summary: Skins for MPlayer
 License: Like MPlayer
 Group: Video
 URL: http://%{bname}hq.hu
 Source: %name-svn-r%svnrev.tar
+Patch: %name-%version-%release.patch
 BuildArch: noarch
 Requires: mplayer-gui >= 0.90
 Provides: MPlayer-skins = %version-%release
 Obsoletes: MPlayer-skins
-Packager: Led <led@altlinux.ru>
-AutoProv: no
-AutoReq: no
+AutoReqProv: no
 
 %description
 Skins for MPlayer
@@ -24,22 +22,35 @@ Skins for MPlayer
 
 %prep
 %setup -n %name
-find . -type d -print0 | xargs -0 chmod 755
-find . -type f -print0 | xargs -0 chmod 644
-%{?excluded_skins:[ -z "%excluded_skins" ] || rm -rf %excluded_skins}
+%patch -p1
 
 
 %install
-install -d -m 0755 %buildroot%skin_dir
-cp -a * %buildroot%skin_dir/
+for d in *; do
+	install -d -m 0755 %buildroot%skin_dir/$d
+	for f in $d/*; do
+		[ -d $f ] || install -p -m 0644 $f %buildroot%skin_dir/$d/
+	done
+done
 
 
 %files
 %dir %skin_dir
 %skin_dir/*
+%exclude %skin_dir/Noskin
+%exclude %skin_dir/standard
 
 
 %changelog
+* Tue Jun 04 2013 Led <led@altlinux.ru> 2.0-alt5
+- update to SVR rev. 215
+- cleaned up spec
+- fixed config for skins:
+  + Corelian
+  + avifile
+  + tvisor
+  + xanim
+
 * Thu Jan 22 2009 Led <led@altlinux.ru> 2.0-alt4
 - cleaned up spec
 
