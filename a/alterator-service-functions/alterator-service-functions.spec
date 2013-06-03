@@ -1,5 +1,5 @@
 Name: alterator-service-functions
-Version: 2.0.0
+Version: 2.0.1
 Release: alt1
 
 Packager: Paul Wolneykien <manowar@altlinux.ru>
@@ -25,6 +25,10 @@ Helpers for common service management
 %_bindir/*
 
 %changelog
+* Mon Jun 03 2013 Mikhail Efremov <sem@altlinux.org> 2.0.1-alt1
+- Don't use absolute paths for commands (closes: #28977).
+- Use inittab if runlevel is unknown (closes: #28891).
+
 * Thu Mar 21 2013 Paul Wolneykien <manowar@altlinux.org> 2.0.0-alt1
 - Make service_control() support some combined status options
   (on/start, stop/off).
