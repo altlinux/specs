@@ -1,6 +1,6 @@
 Name: pam_encfs
 Version: 0.1.4.4
-Release: alt1.qa1
+Release: alt2
 
 Summary: Mount fuse-encfs partitions when login
 License: GPL
@@ -8,7 +8,9 @@ Group: System/Base
 
 Packager: Denis Smirnov <mithraen@altlinux.ru>
 
-Source: %name-%version.tar.gz
+Source: %name-%version.tar
+
+Url: https://code.google.com/p/pam-encfs/
 
 BuildRequires(pre): libpam-devel
 
@@ -21,7 +23,6 @@ Patch2: %name.stack-protector.patch
 Summary: Mount fuse-encfs partitions when login
 License: GPL
 Group: System/Base
-Requires(post): coreutils
 Provides: %name = %version-%release
 Obsoletes: %name
 
@@ -32,7 +33,7 @@ Mount fuse-encfs partitions when login
 Mount fuse-encfs partitions when login
 
 %prep
-%setup -q
+%setup
 %patch -p2
 %patch2 -p2
 
@@ -45,14 +46,19 @@ Mount fuse-encfs partitions when login
 	PAM_LIB_DIR=%buildroot/%_lib/security
 
 install -D -m600 pam_encfs.conf %buildroot%_sysconfdir/security/pam_encfs.conf
+
 %files -n %pam_name
 /%_lib/security/*
 %config(noreplace) %_sysconfdir/security/pam_encfs.conf
 %doc README
 
 %changelog
+* Tue Jun 04 2013 Denis Smirnov <mithraen@altlinux.ru> 0.1.4.4-alt2
+- add Url tag
+
 * Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.1.4.4-alt1.qa1
 - NMU: rebuilt for debuginfo.
+- cleanup
 
 * Tue Sep 28 2010 Mykola Grechukh <gns@altlinux.ru> 0.1.4.4-alt1
 - new version
