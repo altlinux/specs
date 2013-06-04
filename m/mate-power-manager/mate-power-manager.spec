@@ -5,15 +5,12 @@ BuildRequires: /usr/bin/docbook2man /usr/bin/glib-genmarshal /usr/bin/glib-gette
 %filter_from_requires /^hal$/d
 %define _libexecdir %_prefix/libexec
 Name:          mate-power-manager
-Version:       1.6.0
-Release:       alt3_2
+Version:       1.6.1
+Release:       alt1_1
 Summary:       MATE power management service
 License:       GPLv2+
 URL:           http://pub.mate-desktop.org
 Source0:       http://pub.mate-desktop.org/releases/1.5/%{name}-%{version}.tar.xz
-
-#RHBZ #949070
-Patch0: fix_lid_suspend.patch
 
 BuildRequires: libcairo-devel
 BuildRequires: libdbus-glib-devel
@@ -28,6 +25,7 @@ BuildRequires: mate-control-center-devel
 BuildRequires: mate-doc-utils
 BuildRequires: mate-keyring-devel
 BuildRequires: mate-panel-devel
+BuildRequires: libpangox-compat-devel
 BuildRequires: popt-devel
 BuildRequires: rarian-compat
 BuildRequires: systemd-devel
@@ -44,15 +42,13 @@ displaying icons and handling user callbacks in an interactive MATE session.
 
 %prep
 %setup -q
-%patch0 -p1
-%patch33 -p1
-NOCONFIGURE=1 ./autogen.sh
 
 %build
 %configure --disable-static --enable-applets \
      --enable-docbook-docs \
      --enable-unique \
      --with-systemdinhibit \
+     --with-systemdsleep   \
      --with-gtk=2.0 \
      --disable-schemas-compile \
      --disable-scrollkeeper
@@ -95,6 +91,9 @@ desktop-file-install                               \
 %{_datadir}/MateConf/gsettings/mate-power-manager.convert
 
 %changelog
+* Tue Jun 04 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.1-alt1_1
+- new fc release
+
 * Tue May 07 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.0-alt3_2
 - new fc release
 
