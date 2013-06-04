@@ -1,9 +1,12 @@
-%define git_date .git20130422
+%define git_date .git20130531
 #define git_date %nil
 
 %define dbus_version 1.1
 %define libdbus_glib_version 0.76
 %define libgudev_version 143
+
+%def_with qmi
+%def_with mbim
 
 Name: ModemManager
 Version: 0.7.990
@@ -22,7 +25,8 @@ BuildRequires(pre): rpm-build-licenses
 
 BuildRequires: libdbus-glib-devel
 BuildRequires: libgudev-devel >= %libgudev_version
-BuildRequires: libqmi-glib-devel
+%{?_with_qmi:BuildRequires: libqmi-glib-devel}
+%{?_with_mbim:BuildRequires: libmbim-glib-devel}
 BuildRequires: intltool
 BuildRequires: ppp-devel
 BuildRequires: libpolkit-devel
@@ -92,7 +96,9 @@ BuildArch: noarch
 	--with-udev-base-dir=/lib/udev \
 	--with-polkit \
 	--with-systemdsystemunitdir=%_unitdir \
-	--with-docs \
+	%{subst_with qmi} \
+	%{subst_with mbim} \
+	--enable-gtk-doc \
 	--with-tests
 
 %make_build
@@ -161,6 +167,10 @@ fi
 %doc %_datadir/gtk-doc/html/libmm-glib
 
 %changelog
+* Tue Jun 04 2013 Mikhail Efremov <sem@altlinux.org> 0.7.990-alt1.git20130531
+- Build with MBIM support.
+- Upstream git snapshot (master branch).
+
 * Tue Apr 23 2013 Mikhail Efremov <sem@altlinux.org> 0.7.990-alt1.git20130422
 - Upstream git snapshot (master branch).
 
