@@ -3,7 +3,7 @@ BuildRequires: gcc-c++ libgmp-devel
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
 Name:           libfplll
-Version:        4.0.3
+Version:        4.0.4
 Release:        alt1_1
 Summary:        LLL-reduces euclidean lattices
 Group:          System/Libraries
@@ -12,11 +12,6 @@ URL:            http://perso.ens-lyon.fr/damien.stehle/fplll/
 Source0:        http://perso.ens-lyon.fr/damien.stehle/fplll/%{name}-%{version}.tar.gz
 
 BuildRequires:  libmpfr-devel
-
-# Improve compatibility with version 3.x
-Patch0:         %{name}-fplllv31.patch
-# Add support for building on aarch64
-Patch1:         %{name}-aarch64.patch
 Source44: import.info
 
 %description
@@ -54,8 +49,6 @@ the functionality of %{name}.
 
 %prep
 %setup -q
-%patch0 -p1
-%patch1 -p1
 
 %build
 %configure --disable-static LDFLAGS="-Wl,--as-needed $RPM_LD_FLAGS"
@@ -94,6 +87,9 @@ make check
 
 
 %changelog
+* Tue Jun 04 2013 Igor Vlasenko <viy@altlinux.ru> 4.0.4-alt1_1
+- update to new release by fcimport
+
 * Mon May 13 2013 Igor Vlasenko <viy@altlinux.ru> 4.0.3-alt1_1
 - update to new release by fcimport
 
