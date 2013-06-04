@@ -305,7 +305,7 @@
 
 Name: %lname
 Version: 1.1.1
-Release: alt7
+Release: alt8
 %ifdef svnrev
 %define pkgver svn-r%svnrev
 %else
@@ -936,6 +936,20 @@ install -p -m 0644 etc/{codecs,input,%lname}.conf %buildroot%_sysconfdir/%name/
 install -d -m 0755 %buildroot%_datadir/%name/skins
 tar -C %buildroot%_datadir/%name/skins -xf %SOURCE4
 ln -s standard %buildroot%_datadir/%name/skins/default
+install -d -m 0755 %buildroot%_datadir/%name/skins/0
+convert -size 8x1 xc:black -define png:format=png24 %buildroot%_datadir/%name/skins/0/0.png
+cat >> %buildroot%_datadir/%name/skins/0/skin <<__EOF__
+section = movieplayer
+  window = main
+    decoration = disable
+    base = 0, 0, 0
+  end
+  window = video
+    base = 0, -1, -1, 640, 480
+    background = 0, 0, 0
+  end
+end
+__EOF__
 %endif
 %{?_enable_freetype:%{?_disable_fontconfig:ln -s ../fonts/type1/urw/n019003l.pfb %buildroot%_datadir/%name/subfont.ttf}}
 %{?_enable_osdmenu:install -p -m 0644 etc/menu.conf %buildroot%_sysconfdir/%name/}
@@ -1053,9 +1067,7 @@ install -pD -m 0644 {etc/%lname,%buildroot%_desktopdir/%gname}.desktop
 %_desktopdir/%gname.desktop
 #%%_datadir/pixmaps/*
 %_iconsdir/hicolor/*/apps/*
-%dir %_datadir/%name/skins
-%_datadir/%name/skins/standard
-%_datadir/%name/skins/default
+%_datadir/%name/skins
 %endif
 %endif
 
@@ -1143,6 +1155,9 @@ install -pD -m 0644 {etc/%lname,%buildroot%_desktopdir/%gname}.desktop
 
 
 %changelog
+* Tue Jun 04 2013 Led <led@altlinux.ru> 1.1.1-alt8
+- added empty skin (named '0') without control panel
+
 * Mon Jun 03 2013 Led <led@altlinux.ru> 1.1.1-alt7
 - mp_msg2po.awk: fix po generation
 - mp_help2msg.awk: fixed
