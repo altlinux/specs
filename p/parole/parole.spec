@@ -1,5 +1,5 @@
 Name: parole
-Version: 0.5.0
+Version: 0.5.1
 Release: alt1
 
 Summary: Media player for the Xfce desktop
@@ -71,6 +71,9 @@ mkdir m4
 %doc %_datadir/gtk-doc/html/*
 
 %changelog
+* Tue Jun 04 2013 Mikhail Efremov <sem@altlinux.org> 0.5.1-alt1
+- Updated to 0.5.1.
+
 * Fri Mar 08 2013 Mikhail Efremov <sem@altlinux.org> 0.5.0-alt1
 - Build with gstreamer1.0.
 - Updated to 0.5.0.
