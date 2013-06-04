@@ -5,7 +5,7 @@
 
 Name: NetworkManager-gnome
 Version: 0.9.8.0
-Release: alt3%git_date
+Release: alt4%git_date
 License: %gpl2plus
 Group: Graphical desktop/GNOME
 Summary: GNOME applications for use with NetworkManager
@@ -36,6 +36,7 @@ Requires: gnome-keyring gcr
 Requires: dbus-tools-gui
 Requires: mobile-broadband-provider-info
 Requires: polkit-gnome
+Requires: iso-codes
 
 %description
 This package contains GNOME utilities and applications for use with
@@ -147,6 +148,9 @@ fi
 %_datadir/gir-1.0/NMGtk-1.0.gir
 
 %changelog
+* Tue Jun 04 2013 Mikhail Efremov <sem@altlinux.org> 0.9.8.0-alt4
+- Require iso-codes.
+
 * Tue Apr 16 2013 Mikhail Efremov <sem@altlinux.org> 0.9.8.0-alt3
 - Enable new ModemManager1 interface support (closes: #28788).
 - Updated Russian translation (from upstream git).
