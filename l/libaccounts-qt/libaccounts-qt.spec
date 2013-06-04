@@ -1,44 +1,38 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-fedora-compat
-BuildRequires: gcc-c++ pkgconfig(glib-2.0) pkgconfig(gobject-2.0)
+BuildRequires: gcc-c++ libqt4-devel pkgconfig(glib-2.0) pkgconfig(gobject-2.0)
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
 Name:		libaccounts-qt
-Version:	0.31
-Release:	alt2_6
-Summary:	Accounts framework
+Version:	1.6
+Release:	alt1_2
+Summary:	Accounts framework Qt bindings
 Group:		System/Libraries
 License:	LGPLv2
-URL:		http://gitorious.org/accounts-sso/accounts-qt
-Source0:	accounts-qt-%{version}.tar.gz
-# Fix compilation error in 64 bit arches
-Patch0:		accounts-qt-0.28-fix-64bit-compilation.patch
-# extracted from http://repo.meego.com/MeeGo/builds/trunk/daily/core/repos/source/libaccounts-qt-0.31-1.5.src.rpm
+URL:		http://code.google.com/p/accounts-sso/
+Source0:	http://accounts-sso.googlecode.com/files/accounts-qt-%{version}.tar.bz2
+Patch0:		accounts-qt-1.6-do-not-initialize-qstring-to-null.patch
+Patch1:		libaccounts-qt-64bitarchs.patch
 BuildRequires:	qt4-devel libaccounts-glib-devel
 BuildRequires:	doxygen graphviz
 Source44: import.info
 
 %description
-Framework to provide accounts.
+Framework to provide accounts for Qt.
 
 %package devel
 Summary:	Development files for accounts-qt
 Group:		Development/C
-Requires:	libaccounts-qt = %{version}-%{release}
-Requires:	qt4-devel
+Requires:	%{name} = %{version}-%{release}
+Requires:	qt4-devel%{?_isa}
 
 %description devel
 Headers, development libraries and documentation for accounts-qt.
 
 %prep
 %setup -q -n accounts-qt-%{version}
-%patch0 -p1
-
-sed -i 's\{INSTALL_PREFIX}/lib\{INSTALL_PREFIX}/%{_lib}\g' common-installs-config.pri
-sed -i 's\{INSTALL_PREFIX}/lib\{INSTALL_PREFIX}/%{_lib}\g' Accounts/Accounts.pro
-sed -i 's\usr/lib\usr/%{_lib}\g' Accounts/accounts.prf
-sed -i 's\usr/lib\usr/%{_lib}\g' Accounts/accounts-qt.pc
-sed -i 's\{prefix}/lib\{prefix}/%{_lib}\g' Accounts/accounts-qt.pc
+%patch0 -p1 -b .do-not-initialize-qstring-to-null
+%patch1 -p1 -b .64bitarchs
 
 %build
 export PATH=%{_qt4_bindir}:$PATH
@@ -61,16 +55,17 @@ mv %{buildroot}%{_docdir}/accounts-qt %{buildroot}%{_docdir}/libaccounts-qt
 %files
 %doc COPYING
 %{_libdir}/lib*.so.*
-%{_bindir}/account-tool
 
 %files devel
 %{_libdir}/lib*.so
 %{_includedir}/accounts-qt/
 %{_libdir}/pkgconfig/accounts-qt.pc
-%{_datadir}/qt4/mkspecs/*
 %{_docdir}/libaccounts-qt
 
 %changelog
+* Tue Jun 04 2013 Igor Vlasenko <viy@altlinux.ru> 1.6-alt1_2
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.31-alt2_6
 - update to new release by fcimport
 
