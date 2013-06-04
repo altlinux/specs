@@ -4,8 +4,8 @@
 %define nvIF_ver_lteq() %if "%(rpmvercmp '%2' '%1')" >= "0"
 
 %define module_name	nvidia
-%define module_version	319.17
-%define module_release	alt2
+%define module_version	319.23
+%define module_release	alt1
 %define flavour		std-pae
 
 %setup_kernel_module %flavour
@@ -190,6 +190,9 @@ fi
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Fri May 24 2013 Sergey V Turchin <zerg at altlinux dot org> 319.23-alt1..
+- new release (319.23)
 
 * Thu May 23 2013 Sergey V Turchin <zerg at altlinux dot org> 319.17-alt2..
 - require kernel-modules-drm
