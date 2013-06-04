@@ -1,7 +1,7 @@
 %define ver_major 1.7
 
 Name: meld
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: Meld Diff Viewer
@@ -13,8 +13,6 @@ Url: http://meld.sourceforge.net/
 Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
-# don't run update-{desktop,mime}-database
-Patch: %name-1.7.1-alt-makefile.patch
 
 BuildArch: noarch
 
@@ -37,7 +35,7 @@ once.
 
 %prep
 %setup
-#%%patch
+
 # fix prefix
 subst s'|/usr/local|/usr|' INSTALL
 
@@ -67,6 +65,9 @@ subst s'|/usr/local|/usr|' INSTALL
 %doc NEWS
 
 %changelog
+* Tue Jun 04 2013 Yuri N. Sedunov <aris@altlinux.org> 1.7.3-alt1
+- 1.7.3
+
 * Tue Apr 16 2013 Yuri N. Sedunov <aris@altlinux.org> 1.7.2-alt1
 - 1.17.2
 
