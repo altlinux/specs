@@ -1,5 +1,5 @@
 Name: libXv
-Version: 1.0.7
+Version: 1.0.8
 Release: alt1
 Summary: The Xv Library
 License: MIT/X11
@@ -46,6 +46,9 @@ develop programs which make use of %name
 %_man3dir/*
 
 %changelog
+* Tue Jun 04 2013 Valery Inozemtsev <shrek@altlinux.ru> 1.0.8-alt1
+- 1.0.8
+
 * Thu Mar 08 2012 Valery Inozemtsev <shrek@altlinux.ru> 1.0.7-alt1
 - 1.0.7
 
