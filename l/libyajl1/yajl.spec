@@ -2,7 +2,7 @@
 
 Name: libyajl1
 Version: 1.0.11
-Release: alt2
+Release: alt3
 
 Summary: Yet Another JSON Library
 Group: System/Legacy libraries
@@ -18,6 +18,16 @@ BuildRequires: cmake
 %description
 Yet Another JSON Library (YAJL).
 
+%package -n %name-devel
+Summary: Yet Another JSON Library (development headers)
+Group: Development/C
+Requires: %name = %version-%release
+Conflicts: libyajl-devel
+
+%description -n %name-devel
+Development headers for Yet Another JSON Library (YAJL).
+
+
 %prep
 %setup
 %patch -p1
@@ -32,7 +42,14 @@ Yet Another JSON Library (YAJL).
 %files
 %_libdir/libyajl.so.*
 
+%files -n %name-devel
+%_includedir/yajl
+%_libdir/libyajl.so
+
 %changelog
+* Tue Jun 04 2013 Sergey Y. Afonin <asy@altlinux.ru> 1.0.11-alt3
+- return devel package (ALT #27558)
+
 * Wed Jun 13 2012 Alexey Shabalin <shaba@altlinux.ru> 1.0.11-alt2
 - build as legacy libraries "libyajl1" for compat
 
