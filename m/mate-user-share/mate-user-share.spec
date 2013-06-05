@@ -1,17 +1,16 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/pkg-config /usr/sbin/httpd /usr/sbin/httpd2 libICE-devel libSM-devel libX11-devel libgio-devel pkgconfig(dbus-1) pkgconfig(gdk-x11-2.0) pkgconfig(gio-2.0) pkgconfig(glib-2.0) pkgconfig(gtk+-2.0) pkgconfig(libcanberra-gtk) pkgconfig(libnotify)
+BuildRequires: /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/pkg-config /usr/sbin/httpd /usr/sbin/httpd2 libICE-devel libSM-devel libX11-devel libgio-devel pkgconfig(dbus-1) pkgconfig(gdk-x11-2.0) pkgconfig(gio-2.0) pkgconfig(glib-2.0) pkgconfig(gtk+-2.0) pkgconfig(libcanberra-gtk)
 # END SourceDeps(oneline)
 %define _libexecdir %_prefix/libexec
 Summary: Mate user file sharing
-Name: mate-user-share
+Name:    mate-user-share
 Version: 1.6.0
-Release: alt2
+Release: alt2_3
 License: GPLv2+
-Group: System/Libraries
-URL: http://pub.mate-desktop.org
-Source0: http://pub.mate-desktop.org/releases/1.5/%{name}-%{version}.tar.xz
+Group:   System/Libraries
+URL:     http://mate-desktop.org
+Source0: http://pub.mate-desktop.org/releases/1.6/%{name}-%{version}.tar.xz
 
-#BuildRequires: mate-conf-devel
 BuildRequires: gtk2-devel
 BuildRequires: httpd apache2-mod_dnssd
 BuildRequires: mate-bluetooth-devel
@@ -20,17 +19,17 @@ BuildRequires: desktop-file-utils
 BuildRequires: mate-doc-utils
 BuildRequires: libselinux-devel
 BuildRequires: libdbus-glib-devel
-BuildRequires: mate-desktop-devel
+BuildRequires: libnotify-devel
 BuildRequires: mate-file-manager-devel
 BuildRequires: libunique-devel
-BuildRequires: gettext
-BuildRequires: perl(XML/Parser.pm) intltool
-BuildRequires: scrollkeeper
+BuildRequires: perl(XML/Parser.pm)
 BuildRequires: mate-common
 
 Requires: httpd
 Requires: obex-data-server
 Requires: apache2-mod_dnssd
+Requires: icon-theme-hicolor
+Source44: import.info
 
 %description
 mate-user-share is a small package that binds together various free
@@ -47,34 +46,46 @@ The program also allows to share files using ObexFTP over Bluetooth.
 
 %prep
 %setup -q
+# nedded to create missing configure and make files
+NOCONFIGURE=1 ./autogen.sh
 
 %build
-NOCONFIGURE=1 ./autogen.sh
-%configure
+%configure \
+    --disable-scrollkeeper \
+    --disable-static
+
 make %{?_smp_mflags}
 
 %install
 make install DESTDIR=$RPM_BUILD_ROOT INSTALL="install -p"
 
-rm -f %buildroot%_libdir/caja/extensions-2.0/libcaja-share-extension.la
+rm -f $RPM_BUILD_ROOT%{_libdir}/caja/extensions-2.0/*.la
 
-%find_lang %{name} --all-name
+# no need to provide a convert file for mateconf user settings,
+# because Mate started with gsettings in f17/18
+rm -f $RPM_BUILD_ROOT%{_datadir}/MateConf/gsettings/mate-user-share.convert
+
+%find_lang %{name}
+
+desktop-file-validate ${RPM_BUILD_ROOT}/%{_datadir}/applications/mate-user-share-properties.desktop
+desktop-file-validate ${RPM_BUILD_ROOT}/%{_sysconfdir}/xdg/autostart/mate-user-share.desktop
 
 %files -f %{name}.lang
 %doc README COPYING NEWS
-%{_bindir}/*
-%{_libexecdir}/*
-# wildcard _libexecdir/*
-%exclude %_prefix/lib/debug
-%{_datadir}/mate-user-share
-%{_datadir}/applications/*
+%{_bindir}/mate-file-share-properties
+%{_libexecdir}/mate-user-share
+%{_datadir}/mate-user-share/
+%{_datadir}/applications/mate-user-share-properties.desktop
 %{_sysconfdir}/xdg/autostart/mate-user-share.desktop
-%{_datadir}/glib-2.0/schemas/org.mate.FileSharing.gschema.xml
-%{_datadir}/MateConf/gsettings/mate-user-share.convert
 %{_datadir}/icons/hicolor/*/apps/mate-obex-server.png
 %{_libdir}/caja/extensions-2.0/*.so
+%{_datadir}/glib-2.0/schemas/org.mate.FileSharing.gschema.xml
+
 
 %changelog
+* Tue Jun 04 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.0-alt2_3
+- new fc release
+
 * Thu Apr 11 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1.6.0-alt2
 - use mate-desktop instead libmatenotify
 

@@ -7,11 +7,14 @@ BuildRequires(pre): browser-plugins-npapi-devel
 %define oldname mate-session-manager
 Name:           mate-session
 Version:        1.6.0
-Release:        alt2_1
+Release:        alt2_3
 Summary:        MATE Desktop session manager
 License:        GPLv2+
 URL:            http://mate-desktop.org
 Source0:        http://pub.mate-desktop.org/releases/1.6/%{oldname}-%{version}.tar.xz
+
+#Patch from upstream to fix race condition that launches multiple caja windows on first login
+Patch0:         x-caja.patch
 
 BuildRequires:  libdbus-glib-devel
 BuildRequires:  desktop-file-utils
@@ -23,8 +26,10 @@ BuildRequires:  mate-common
 BuildRequires:  mate-icon-theme
 BuildRequires:  mate-polkit-devel
 BuildRequires:  pango-devel
+BuildRequires:  libpangox-compat-devel
 BuildRequires:  libpolkit-devel
 BuildRequires:  libupower-devel
+BuildRequires:  systemd-devel
 BuildRequires:  xmlto
 Source44: import.info
 Patch33: mate-session-manager-cflags.patch
@@ -40,17 +45,20 @@ full-featured user session.
 
 %prep
 %setup -n %{oldname}-%{version} -q
+%patch0 -p1
 %patch33 -p1
-
+ 
 %build
 NOCONFIGURE=1 ./autogen.sh
 %configure --disable-static \
            --enable-ipv6 \
            --with-gtk=2.0 \
            --with-default-wm=marco \
+           --enable-docbook-docs \
+           --with-systemd \
            --with-x
-make %{?_smp_mflags} V=1
 
+make %{?_smp_mflags} V=1
 
 %install
 make install DESTDIR=%{buildroot}
@@ -104,7 +112,6 @@ __EOF__
 install -pD -m644 %SOURCE45 %buildroot%_iconsdir/hicolor/64x64/apps/mate.png
 
 
-
 %files -f %{oldname}.lang
 %doc AUTHORS COPYING README
 %{_mandir}/man1/*
@@ -118,7 +125,7 @@ install -pD -m644 %SOURCE45 %buildroot%_iconsdir/hicolor/64x64/apps/mate.png
 %{_datadir}/icons/hicolor/scalable/apps/mate-session-properties.svg
 %{_datadir}/glib-2.0/schemas/org.mate.session.gschema.xml
 %{_datadir}/xsessions/mate.desktop
-%{_datadir}/doc/mate-session/dbus/mate-session.html
+%{_datadir}/doc/mate-session
 %{_datadir}/MateConf/gsettings/mate-session.convert
 
 %_bindir/*
@@ -129,6 +136,9 @@ install -pD -m644 %SOURCE45 %buildroot%_iconsdir/hicolor/64x64/apps/mate.png
 
 
 %changelog
+* Tue Jun 04 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.0-alt2_3
+- new fc release
+
 * Tue Apr 09 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.0-alt2_1
 - added Requires: mate-desktop (closes: 28825)
 

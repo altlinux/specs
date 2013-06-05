@@ -5,11 +5,12 @@ BuildRequires: /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/gtkdoc
 Name:       mate-file-manager
 Summary:    File manager for MATE
 Version:    1.6.1
-Release:    alt2_1
+Release:    alt2_4
 License:    GPLv2+ and LGPLv2+
 Group:      Graphical desktop/Other
 URL:        http://mate-desktop.org
 Source0:    http://pub.mate-desktop.org/releases/1.6/%{name}-%{version}.tar.xz
+Source1:    caja-autostart.desktop
 
 Requires:   gamin
 Requires:   filesystem
@@ -109,6 +110,9 @@ rm -f $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/.icon-theme.cache
 
 mkdir -p $RPM_BUILD_ROOT%{_libdir}/caja/extensions-2.0
 
+desktop-file-install \
+     --dir=$RPM_BUILD_ROOT%{_sysconfdir}/xdg/autostart %{SOURCE1}
+
 desktop-file-install									\
 	--delete-original								\
 	--dir=$RPM_BUILD_ROOT%{_datadir}/applications					\
@@ -122,7 +126,7 @@ $RPM_BUILD_ROOT%{_datadir}/applications/*.desktop
 %doc AUTHORS COPYING COPYING-DOCS COPYING.LIB NEWS README
 %{_bindir}/*
 %{_datadir}/caja
-%{_libdir}/caja/extensions-2.0
+%{_libdir}/caja
 %{_datadir}/pixmaps/caja/
 %{_datadir}/applications/*.desktop
 %{_datadir}/icons/hicolor/*/apps/caja.png
@@ -133,6 +137,7 @@ $RPM_BUILD_ROOT%{_datadir}/applications/*.desktop
 %{_datadir}/mime/packages/caja.xml
 %{_datadir}/MateConf/gsettings/caja.convert
 %{_datadir}/dbus-1/services/org.mate.freedesktop.FileManager1.service
+%{_sysconfdir}/xdg/autostart/caja-autostart.desktop
 
 %files extensions
 %{_libdir}/libcaja-extension.so.*
@@ -147,6 +152,9 @@ $RPM_BUILD_ROOT%{_datadir}/applications/*.desktop
 
 
 %changelog
+* Tue Jun 04 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.1-alt2_4
+- new fc release
+
 * Tue Apr 30 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.1-alt2_1
 - added 0001-Fix-radio-buttons-and-GSettings-in-preferences-windo.patch
 

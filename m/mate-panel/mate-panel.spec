@@ -5,17 +5,20 @@ BuildRequires: /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/gtkdoc
 %define _libexecdir %_prefix/libexec
 Name:           mate-panel
 Version:        1.6.0
-Release:        alt1_1
+Release:        alt1_2
 Summary:        MATE Desktop panel applets
 #libs are LGPLv2+ applications GPLv2+
 License:        GPLv2+
 URL:            http://mate-desktop.org
 Source0:        http://pub.mate-desktop.org/releases/1.5/%{name}-%{version}.tar.xz
+Source1:        panel-default-layout.dist
+
 Requires:       %{name}-libs%{?_isa} = %{version}-%{release}
 # needed as nothing else requires it
 Requires:       mate-session-manager
 #for fish
 Requires:       fortune-mod
+Requires:       icon-theme-hicolor
 
 BuildRequires:  libdbus-glib-devel
 BuildRequires:  libdconf-devel
@@ -90,6 +93,8 @@ desktop-file-install \
         --dir=%{buildroot}%{_datadir}/applications \
 %{buildroot}%{_datadir}/applications/mate-panel.desktop
 
+install -D -m 0644 %SOURCE1 $RPM_BUILD_ROOT%{_datadir}/mate-panel/panel-default-layout.dist
+
 %find_lang %{name}
 rm %{buildroot}%{_libexecdir}/mate-panel/mate-panel-add
 
@@ -109,7 +114,7 @@ rm %{buildroot}%{_libexecdir}/mate-panel/mate-panel-add
 %{_datadir}/icons/hicolor/*/*/*
 %{_datadir}/mate/help/mate-applet-clock/
 %{_datadir}/mate/help/mate-applet-fish/
-%{_datadir}/mate-panel
+%{_datadir}/mate-panel/
 %{_datadir}/mate-panelrc
 %{_datadir}/MateConf/gsettings/mate-panel.convert
 %{_datadir}/dbus-1/services/org.mate.panel.applet.ClockAppletFactory.service
@@ -130,6 +135,9 @@ rm %{buildroot}%{_libexecdir}/mate-panel/mate-panel-add
 
 
 %changelog
+* Tue Jun 04 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.0-alt1_2
+- new fc release
+
 * Sat Apr 06 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.0-alt1_1
 - new fc release
 

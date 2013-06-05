@@ -5,10 +5,19 @@ BuildRequires: /usr/bin/glib-gettextize /usr/bin/gtkdocize libgio-devel pkgconfi
 %define _libexecdir %_prefix/libexec
 Summary:        Shared code for mate-panel, mate-session, mate-file-manager, etc
 Name:           mate-desktop
-Version:        1.6.0
-Release:        alt1_2
+Version:        1.6.1
+Release:        alt1_6
 URL:            http://mate-desktop.org
 Source0:        http://pub.mate-desktop.org/releases/1.6/%{name}-%{version}.tar.xz
+# fix fedora backgrounds and
+# workaround for x-caja-desktop window issue
+Source1:        mate-fedora.gschema.override
+Source2:        gnu-cat.gif
+Source3:        gnu-cat_navideno_v3.png
+#enable gnucat
+Patch0:         mate-desktop_enable_gnucat.patch
+
+
 License:        GPLv2+ and LGPLv2+ and MIT
 
 BuildRequires:  desktop-file-utils
@@ -17,6 +26,7 @@ BuildRequires:  gtk2-devel
 BuildRequires:  gtk-doc
 BuildRequires:  mate-common
 BuildRequires:  mate-doc-utils
+BuildRequires:  libpangox-compat-devel
 BuildRequires:  libstartup-notification-devel
 BuildRequires:  libunique-devel
 
@@ -24,19 +34,21 @@ Requires: lib%{name} = %{version}-%{release}
 Requires: altlinux-freedesktop-menu-common
 Requires: pygtk2
 Requires: xdg-user-dirs-gtk
-
+Obsoletes: mate-desktop < %{version}-%{release}
 Obsoletes: libmate 
 Obsoletes: libmatecanvas 
 Obsoletes: libmatecomponent 
 Obsoletes: libmatecomponentui 
-Obsoletes: libmatenotify 
 Obsoletes: libmateui 
+Obsoletes: mate-conf
+Obsoletes: mate-conf-devel
 Obsoletes: mate-conf-editor
 Obsoletes: mate-conf-gtk
 Obsoletes: mate-mime-data
 Obsoletes: mate-vfs
-Requires:  libnotify
-Requires:  mate-panel
+Obsoletes: libmatenotify
+Requires: libnotify
+Requires: mate-panel
 Source44: import.info
 Patch33: mate-desktop-1.5.0-alt-settings.patch
 Patch34: mate-desktop-1.5.5-alt-default_background_path.patch
@@ -67,10 +79,10 @@ libmatedesktop.
 
 %prep
 %setup -q
-%patch33 -p1
-%patch34 -p1
-NOCONFIGURE=1 ./autogen.sh
-
+%patch0 -p1 -b .guncat
+cp %SOURCE2 mate-about/gnu-cat.gif
+cp %SOURCE3 mate-about/gnu-cat_navideno_v3.png
+autoreconf -i -f
 
 %build
 %configure \
@@ -82,7 +94,8 @@ NOCONFIGURE=1 ./autogen.sh
      --enable-unique                                       \
      --enable-gtk-doc                                      \
      --with-pnp-ids-path="%{_datadir}/hwdatabase/pnp.ids"      \
-     --with-omf-dir=%{_datadir}/omf/mate-desktop
+     --with-omf-dir=%{_datadir}/omf/mate-desktop           \
+     --enable-gnucat
 
 make %{?_smp_mflags} V=1
 
@@ -100,6 +113,8 @@ desktop-file-install                                         \
 
 #install -D -m 0644 %SOURCE1 %{buildroot}%{_sysconfdir}/xdg/autostart/user-dirs-update-mate.desktop
 
+install -D -m 0644 %SOURCE1 $RPM_BUILD_ROOT%{_datadir}/glib-2.0/schemas/mate-fedora.gschema.override
+
 %find_lang %{name}
 
 mkdir -p %buildroot%{_datadir}/mate-about
@@ -110,24 +125,30 @@ mkdir -p %buildroot%{_datadir}/mate-about
 %{_bindir}/mate-about
 #%{_sysconfdir}/xdg/autostart/user-dirs-update-mate.desktop
 %{_datadir}/applications/mate-about.desktop
-%{_datadir}/mate/help/*/*/*.xml
-%{_datadir}/omf/mate-desktop/
-%{_datadir}/mate-about/
+%{_datadir}/mate
+%{_datadir}/omf/mate-desktop
+%{_datadir}/mate-about
 %{_datadir}/glib-2.0/schemas/org.mate.*.gschema.xml
-%{_mandir}/man1/mate-about.1*
-%{_datadir}/MateConf/gsettings/mate-desktop.convert
+%{_datadir}/glib-2.0/schemas/mate-fedora.gschema.override
+%{_mandir}/man1/*
+%{_datadir}/MateConf/gsettings
+%doc %{_datadir}/gtk-doc/html/mate-desktop
+%{_datadir}/pixmaps/gnu-cat.gif
+%{_datadir}/pixmaps/gnu-cat_navideno_v3.png
 
 %files -n libmate-desktop
 %{_libdir}/libmate-desktop-2.so.*
 
 %files devel
-%{_datadir}/gtk-doc/html/mate-desktop
 %{_libdir}/libmate-desktop-2.so
 %{_libdir}/pkgconfig/mate-desktop-2.0.pc
 %{_includedir}/mate-desktop-2.0
 
 
 %changelog
+* Tue Jun 04 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.1-alt1_6
+- new fc release
+
 * Thu Apr 25 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.0-alt1_2
 - sync with new fc release
 
