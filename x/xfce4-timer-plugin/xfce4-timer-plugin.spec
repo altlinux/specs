@@ -1,5 +1,5 @@
 Name: xfce4-timer-plugin
-Version: 1.0.2
+Version: 1.5.0
 Release: alt1
 
 Summary: Timer plugin for XFCE 4.4
@@ -8,6 +8,7 @@ Group: Graphical desktop/XFce
 Url: http://goodies.xfce.org/projects/panel-plugins/%name
 Packager: XFCE Team <xfce@packages.altlinux.org>
 
+# git.alt:packages/xfce4-timer-plugin.git
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
@@ -41,6 +42,10 @@ of them can be run at a time.
 %_datadir/xfce4/panel/plugins/*.desktop
 
 %changelog
+* Wed Jun 05 2013 Mikhail Efremov <sem@altlinux.org> 1.5.0-alt1
+- Updated translations from upstream git.
+- Updated to 1.5.0.
+
 * Tue Apr 23 2013 Mikhail Efremov <sem@altlinux.org> 1.0.2-alt1
 - Updated from upstream git.
 - Updated to 1.0.2.
