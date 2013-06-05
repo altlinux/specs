@@ -1,6 +1,6 @@
 Name: xfce4-mount-plugin
-Version: 0.6.3
-Release: alt2
+Version: 0.6.4
+Release: alt1.git20130427
 
 Summary: Mount plugin for XFce Desktop
 License: %gpl2plus
@@ -28,6 +28,9 @@ information on each device.
 %prep
 %setup
 
+# Don't use git tag in version.
+%xfce4_drop_gitvtag mount_version_tag configure.ac.in
+
 %build
 %xfce4reconf
 %configure \
@@ -47,6 +50,10 @@ information on each device.
 %exclude %_libdir/xfce4/panel/plugins/*.la
 
 %changelog
+* Wed Jun 05 2013 Mikhail Efremov <sem@altlinux.org> 0.6.4-alt1.git20130427
+- Upstream git snapshot.
+- Updated to 0.6.4.
+
 * Fri May 04 2012 Mikhail Efremov <sem@altlinux.org> 0.6.3-alt2
 - Don't package *.la file.
 
