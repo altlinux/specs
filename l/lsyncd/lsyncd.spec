@@ -1,14 +1,21 @@
 Name: lsyncd
-Version: 2.0.5
-Release: alt1
+Version: 2.1.4
+Release: alt1.git.3c9f8833
 Summary: File change monitoring and synchronization daemon
-
 Group: File tools
 License: %gpl2plus
-Url: http://code.google.com/p/lsyncd/
-Source0: http://lsyncd.googlecode.com/files/%name-%version.tar.gz
+Url: https://github.com/axkibe/lsyncd
+Source: %name-%version.tar
 
-BuildRequires: liblua5-devel rpm-build-licenses lua5
+Requires: rsync
+
+BuildRequires: liblua5-devel rpm-build-licenses lua5 asciidoc-a2x
+
+%def_without tests
+
+%if_with tests
+BuildRequires: lua5-posix rsync openssh /proc
+%endif
 
 %description
 Lsyncd watches a local directory trees event monitor interface (inotify).
@@ -23,18 +30,46 @@ not hamper local file system performance.
 %prep
 %setup
 
+subst "s|/path/to/trg/|%_sysconfdir|" examples/lecho.lua
+subst "s|src|%_sysconfdir|" examples/lecho.lua
+
 %build
+%autoreconf
 %configure
 %make_build
 
+
 %install
 %makeinstall_std
+install -D -m 0755 lsyncd.init %buildroot%_initdir/lsyncd
+install -D -m 0644 examples/lecho.lua %buildroot%_sysconfdir/%name/lsyncd.conf.lua
+
+%if_with tests
+%check
+%make check
+%endif
+
+%post
+%post_service %name
+
+%preun
+%preun_service %name
+
 
 %files
+%dir %_sysconfdir/%name
+%config(noreplace) %_sysconfdir/%name/*
 %_bindir/%name
+%_initdir/*
 %_man1dir/%name.1*
-%doc ChangeLog examples
+%doc ChangeLog examples COPYING
 
 %changelog
+* Wed Jun 05 2013 Slava Dubrovskiy <dubrsl@altlinux.org> 2.1.4-alt1.git.3c9f8833
+- Update to last git version
+- Move to git
+- Add init script
+- Add config file
+
 * Sat Jan  7 2012 Terechkov Evgenii <evg@altlinux.org> 2.0.5-alt1
 - Initial build for ALT Linux Sisyphus
