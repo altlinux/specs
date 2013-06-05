@@ -1,6 +1,6 @@
 Name: xfce4-systemload-plugin
 Version: 1.1.1
-Release: alt1
+Release: alt2
 
 Summary: System load plugin for the XFce panel
 Summary(ru_RU.CP1251): Отображение использования ресурсов системы на панели XFce
@@ -11,6 +11,7 @@ Packager: XFCE Team <xfce@packages.altlinux.org>
 
 # git://git.xfce.org/panel-plugins/xfce4-systemload-plugin
 Source: %name-%version.tar
+Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-build-licenses
 
@@ -30,6 +31,7 @@ Requires: xfce4-panel >= 4.9
 
 %prep
 %setup
+%patch -p1
 
 %build
 %xfce4reconf
@@ -50,6 +52,9 @@ Requires: xfce4-panel >= 4.9
 %exclude %_libdir/xfce4/panel/plugins/*.la
 
 %changelog
+* Wed Jun 05 2013 Mikhail Efremov <sem@altlinux.org> 1.1.1-alt2
+- Updated translations from upstream git.
+
 * Mon Jul 02 2012 Mikhail Efremov <sem@altlinux.org> 1.1.1-alt1
 - Updated to 1.1.1.
 
