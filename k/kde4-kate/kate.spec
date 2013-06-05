@@ -12,7 +12,7 @@
 %define rname kate
 %define major 4
 %define minor 10
-%define bugfix 3
+%define bugfix 4
 Name: kde4-kate
 Version: %major.%minor.%bugfix
 Release: alt1
@@ -245,6 +245,9 @@ kde4_add_text_mimes %buildroot%_K4xdg_apps/kwrite.desktop
 %_K4link/lib*.so
 
 %changelog
+* Wed Jun 05 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.4-alt1
+- new version
+
 * Tue May 14 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.3-alt1
 - new version
 
