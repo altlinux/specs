@@ -1,6 +1,6 @@
 Name: gtk-doc
-Version: 1.18
-Release: alt2
+Version: 1.19
+Release: alt1
 
 Summary: API documentation generation tool for GTK+ and GNOME
 Group: Development/Other
@@ -12,31 +12,32 @@ Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 
 Requires: sgml-common >= 0.6.3-alt11
 Requires: docbook-dtds >= 4.3-alt1
-Requires: gnome-doc-utils >= 0.3.2
-#Requires: docbook-style-dsssl
 Requires: docbook-style-xsl
-#Requires: openjade >= 1.3.1
 Requires: libxml2 >= 2.3.6
 Requires: xsltproc
 Requires: perl-base >= 1:5.6.0
+Requires: highlight
+# for SGML
+Requires: openjade >= 1.3.1
+Requires: docbook-style-dsssl
 
 # hack for broken perl autoreq
 Provides: perl(gtkdoc-common.pl)
 
+#Source: %name-%version.tar
 Source: ftp://ftp.gnome.org/gnome/sources/%name/%version/%name-%version.tar.xz
-Patch: %name-1.18-alt-m4.patch
 
 BuildArch: noarch
 
-# Automatically added by buildreq on Sun Mar 12 2006
-BuildRequires: docbook-dtds scrollkeeper xml-common xml-utils
-
+BuildRequires: docbook-dtds xml-common xml-utils
 BuildRequires: common-licenses rpm-build-licenses rpm-build-gnome
-BuildRequires: gnome-doc-utils >= 0.3.2
+BuildRequires: yelp-tools
 BuildRequires: docbook-dtds >= 1.0-alt7
 BuildRequires: docbook-style-xsl
-BuildRequires: perl-base >= 1:5.6.0
-BuildRequires: librarian
+BuildRequires: perl-base >= 1:5.6.0 bc highlight
+# for SGML
+BuildRequires: docbook-style-dsssl
+BuildRequires: openjade >= 1.3.1
 # for check
 BuildRequires: glib2-devel
 
@@ -69,14 +70,12 @@ used by GTK+, GLib and GNOME.
 
 %prep
 %setup
-%patch -b .glibdep
 
 # Move this doc file to avoid name collisions
 mv doc/README doc/README.docs
 rm -f examples/*~
 
 %build
-gnome-doc-prepare -f --copy
 %autoreconf
 %undefine _configure_target
 export ac_cv_path_JADE=%_bindir/openjade
@@ -85,7 +84,8 @@ export ac_cv_path_XSLTPROC=%_bindir/xsltproc
 export ac_cv_path_DBLATEX=%_bindir/dblatex
 %configure \
     --with-xml-catalog=%_sysconfdir/xml/catalog \
-    --docdir=%pkgdocdir
+    --docdir=%pkgdocdir \
+    --with-highlight=highlight
 %make_build
 
 %check
@@ -137,6 +137,12 @@ cp -a examples %buildroot%pkgdocdir/
 %pkgdocdir/COPYING-DOCS
 
 %changelog
+* Wed Jun 05 2013 Yuri N. Sedunov <aris@altlinux.org> 1.19-alt1
+- 1.19
+
+* Sat Mar 30 2013 Yuri N. Sedunov <aris@altlinux.org> 1.18.1-alt0.1
+- 1.18.1 snapshot (8972559)
+
 * Thu Dec 08 2011 Yuri N. Sedunov <aris@altlinux.org> 1.18-alt2
 - fixed gtk-doc.m4 for glib independent packages
 
