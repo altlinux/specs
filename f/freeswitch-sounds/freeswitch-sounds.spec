@@ -1,5 +1,5 @@
 Name: freeswitch-sounds
-Version: 1.0.13
+Version: 1.0.24
 Release: alt1
 
 Summary: Set of sound files for use with freeswitch
@@ -82,6 +82,10 @@ done
 %files ru-ru-elena-32000 -f FILES.ru-ru-elena-32000
 
 %changelog
+* Wed Jun 05 2013 Anton Farygin <rider@altlinux.ru> 1.0.24-alt1
+- new version
+- updated russian voices
+
 * Sat May  8 2010 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.0.13-alt1
 - russian voice added
 
