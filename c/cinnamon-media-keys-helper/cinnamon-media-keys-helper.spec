@@ -9,7 +9,7 @@
 
 Name: cinnamon-media-keys-helper
 Version: %ver_major.4
-Release: alt1
+Release: alt2
 
 Summary: A media keys handler based on gnome-settings-daemon-3.6
 License: GPLv2+
@@ -92,5 +92,8 @@ cp %SOURCE1 %buildroot/%_datadir/applications/
 %_datadir/applications/%name.desktop
 
 %changelog
+* Wed Jun 5 2013 Vladimir Didenko <cow@altlinux.org> 3.6.4-alt2
+- Don't display desktop file
+
 * Tue May 14 2013 Vladimir Didenko <cow@altlinux.org> 3.6.4-alt1
 - Initial build for Sisyphus

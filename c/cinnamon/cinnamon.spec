@@ -1,5 +1,5 @@
 Name: cinnamon
-Version: 1.8.6
+Version: 1.8.7
 Release: alt1
 
 Summary: Window management and application launching for GNOME
@@ -14,6 +14,8 @@ Source1: %name.desktop
 Source2: %name.session
 Source3: %name-menu.png
 Source4: %{name}2d.session
+Source5: start%{name}
+Source6: start%{name}2d
 
 Patch: %name-%version-%release.patch
 
@@ -182,24 +184,8 @@ desktop-file-install                                 \
  --dir=$RPM_BUILD_ROOT%_datadir/applications       \
  $RPM_BUILD_ROOT%_datadir/applications/cinnamon-settings.desktop
 
-cat > start%name << _START_
-#!/bin/sh
-
-. /usr/share/gnome-session/startgnome-common
-
-CLUTTER_DISABLE_XINPUT=1 exec /usr/bin/gnome-session --session=%name "$@"
-_START_
-
-cat > start%{name}2d << _START_
-#!/bin/sh
-
-. /usr/share/gnome-session/startgnome-common
-
-CLUTTER_DISABLE_XINPUT=1 exec /usr/bin/gnome-session --session=%{name}2d "$@"
-_START_
-
-install -pD -m755 start%name %buildroot%_bindir/start%name
-install -pD -m755 start%{name}2d %buildroot%_bindir/start%{name}2d
+install -pD -m755 %SOURCE5 %buildroot%_bindir/start%name
+install -pD -m755 %SOURCE6 %buildroot%_bindir/start%{name}2d
 
 mkdir -p %buildroot%_x11sysconfdir/wmsession.d
 cat > %buildroot%_x11sysconfdir/wmsession.d/02Cinnamon << _WM_
@@ -260,6 +246,10 @@ _WM_
 %doc NEWS README
 
 %changelog
+* Tue Jun 4 2013 Vladimir Didenko <cow@altlinux.org> 1.8.7-alt1
+- 1.8.7
+- remove gnome-shell.desktop before start
+
 * Sat May 25 2013 Vladimir Didenko <cow@altlinux.org> 1.8.6-alt1
 - 1.8.6-2-g0a892f4
 
