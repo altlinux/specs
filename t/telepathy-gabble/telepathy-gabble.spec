@@ -1,8 +1,5 @@
-%def_enable voip
-%def_enable ft
-
 Name: telepathy-gabble
-Version: 0.17.2
+Version: 0.17.4
 Release: alt1
 
 Summary: Jabber/XMPP connection manager
@@ -40,8 +37,6 @@ with Jabber/XMPP servers, including Google Talk.
 %autoreconf
 %configure \
 	--disable-static \
-	%{subst_enable voip} \
-	%{subst_enable ft} \
 	--with-ca-certificates="%_datadir/ca-certificates/ca-bundle.crt"
 %make_build
 
@@ -49,7 +44,7 @@ with Jabber/XMPP servers, including Google Talk.
 %make_build DESTDIR=%buildroot install
 
 %check
-# jingle/call-codecoffer.py failed (1 of 233)
+#jingle-share/test-send-file.py --timeout error
 #%%make check
 
 %files
@@ -74,6 +69,9 @@ with Jabber/XMPP servers, including Google Talk.
 %exclude %_libdir/telepathy/gabble-0/*/*.la
 
 %changelog
+* Wed Jun 05 2013 Yuri N. Sedunov <aris@altlinux.org> 0.17.4-alt1
+- 0.17.4
+
 * Thu Feb 28 2013 Yuri N. Sedunov <aris@altlinux.org> 0.17.2-alt1
 - 0.17.2
 
