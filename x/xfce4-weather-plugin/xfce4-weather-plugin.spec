@@ -1,6 +1,6 @@
 Name: xfce4-weather-plugin
 Version: 0.8.3
-Release: alt1
+Release: alt2
 
 Summary: Weather plugin for the XFce panel
 License: %gpl2plus
@@ -45,7 +45,12 @@ Requires: xfce4-panel >= 4.8.0
 %_datadir/xfce4/panel/plugins/*.desktop
 %_liconsdir/*.png
 
+%exclude %_libdir/xfce4/panel/plugins/*.la
+
 %changelog
+* Wed Jun 05 2013 Mikhail Efremov <sem@altlinux.org> 0.8.3-alt2
+- Don't package *.la files.
+
 * Tue Feb 19 2013 Mikhail Efremov <sem@altlinux.org> 0.8.3-alt1
 - Updated to 0.8.3.
 
