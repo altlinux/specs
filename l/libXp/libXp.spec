@@ -1,16 +1,21 @@
 Name: libXp
-Version: 1.0.0
-Release: alt5.qa1
+Version: 1.0.2
+Release: alt1
 Summary: X Print Library
 License: MIT/X11
 Group: System/Libraries
 Url: http://xorg.freedesktop.org
 Packager: XOrg Maintainer Team <xorg@packages.altlinux.org>
 
-Source: %name-%version.tar.bz2
+Source: %name-%version.tar.gz
 
-BuildRequires: libX11-devel libXau-devel libXext-devel libXdmcp-devel
-BuildRequires: xorg-proto-devel xorg-printproto-devel xorg-util-macros
+##BuildRequires: libX11-devel libXau-devel libXext-devel libXdmcp-devel
+##BuildRequires: xorg-proto-devel xorg-printproto-devel xorg-util-macros
+BuildRequires: xorg-util-macros
+
+# Automatically added by buildreq on Wed Jun 05 2013
+# optimized out: libX11-devel libXau-devel pkg-config xorg-xproto-devel
+BuildRequires: libXext-devel xorg-printproto-devel
 
 %description
 X Print Library
@@ -19,14 +24,13 @@ X Print Library
 Summary: X Print Library and Header Files
 Group: Development/C
 Requires: %name = %version-%release
-Conflicts: XFree86-devel < 4.4 xorg-x11-devel <= 6.9.0
 
 %description devel
 %name-devel contains the libraries and header files needed to
 develop programs which make use of %name.
 
 %prep
-%setup -q
+%setup
 
 %build
 %autoreconf
@@ -46,6 +50,10 @@ develop programs which make use of %name.
 %_man3dir/*
 
 %changelog
+* Wed Jun 05 2013 Fr. Br. George <george@altlinux.ru> 1.0.2-alt1
+- Autobuild version bump to 1.0.2
+- Recalculate buildreq
+
 * Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.0.0-alt5.qa1
 - NMU: rebuilt for updated dependencies.
 
