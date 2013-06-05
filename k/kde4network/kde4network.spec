@@ -17,13 +17,12 @@
 %endif
 %def_disable knewsticker
 %def_enable kopete_irc
-%def_disable kopete_telepathy
 %def_enable kopete_googletalk
 
 %define rname kdenetwork
 %define major 4
 %define minor 10
-%define bugfix 3
+%define bugfix 4
 Name: kde4network
 Version: %major.%minor.%bugfix
 Release: alt1
@@ -69,9 +68,6 @@ BuildRequires(pre): kde4libs-devel
 BuildRequires: gcc-c++ libqca2-devel libgmp-devel
 BuildRequires: libvncserver-devel libgpgme-devel libexpat-devel
 BuildRequires: soprano soprano-backend-redland libsoprano-devel
-%if_enabled kopete_telepathy
-BuildRequires: libtapioca-qt-devel libtelepathy-qt-devel
-%endif
 BuildRequires: libortp-devel >= 0.13
 %if_enabled kopete_googletalk
 BuildRequires: libspeex-devel libalsa-devel
@@ -82,11 +78,11 @@ BuildRequires: libsqlite3-devel libidn-devel boost-devel libopenslp-devel libjas
 BuildRequires: libqimageblitz-devel libxml2-devel libxslt-devel libmms-devel
 BuildRequires: libjpeg-devel libavahi-qt4-devel bzlib-devel libldap-devel
 BuildRequires: libotr-devel libmeanwhile-devel libgadu-devel libv4l-devel libmsn-devel
-BuildRequires: rpm-macros-browser-plugins shared-desktop-ontologies
+BuildRequires: rpm-macros-browser-plugins
 BuildRequires: libktorrent-devel libtelepathy-qt4-devel
 BuildRequires: kde4libs-devel >= %version kde4pimlibs-devel >= %version
 BuildRequires: kde4base-workspace-devel >= %version kde4base-devel >= %version
-BuildRequires: soprano-backend-redland soprano-backend-virtuoso soprano
+BuildRequires: shared-desktop-ontologies-devel soprano-backend-redland soprano-backend-virtuoso soprano
 BuildRequires: kde4-nepomuk-core-devel
 
 %description
@@ -244,7 +240,6 @@ based on %name.
     -DWITH_irc:BOOL=%{?_enable_kopete_irc:ON}%{!?_enable_kopete_irc:OFF} \
     -DWITH_msn:BOOL=ON \
     -DMOZPLUGIN_INSTALL_DIR:PATH=%browser_plugins_path \
-    -DWITH_telepathy:BOOL=%{?_enable_kopete_telepathy:ON}%{!?_enable_kopete_telepathy:OFF} \
     -DWITH_GOOGLETALK:BOOL=%{?_enable_kopete_googletalk:ON}%{!?_enable_kopete_googletalk:OFF} \
     -DSAMBA_PACKAGE_NAME=\\\"samba\\\" \
     -DENABLE_EMBEDDED_TORRENT_SUPPORT=false
@@ -474,6 +469,9 @@ chmod 0755 %buildroot/etc/control.d/facilities/kppp-kde4
 %_K4dbus_interfaces/*
 
 %changelog
+* Wed Jun 05 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.4-alt1
+- new version
+
 * Tue May 14 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.3-alt1
 - new version
 
