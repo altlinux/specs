@@ -4,8 +4,8 @@
 %def_with pam
 
 Name: monit
-Version: 5.5
-Release: alt3
+Version: 5.5.1
+Release: alt1
 
 Summary: Process monitor and restart utility
 License: AGPLv3
@@ -157,6 +157,9 @@ fi
 # - each "check file" += "every 48 cycles"
 
 %changelog
+* Wed Jun 05 2013 Michael Shigorin <mike@altlinux.org> 5.5.1-alt1
+- new version (watch file uupdate)
+
 * Thu Nov 22 2012 Michael Shigorin <mike@altlinux.org> 5.5-alt3
 - relocated monit binary from %_bindir to /bin (closes: #27990)
 
