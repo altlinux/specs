@@ -1,6 +1,6 @@
 %set_verify_elf_method textrel=relaxed
 %define v8_ver 3.17.6.14
-%define rev 200836
+%define rev 202711
 
 %def_disable debug
 %def_disable nacl
@@ -12,7 +12,7 @@
 %endif
 
 Name:           chromium
-Version:        27.0.1453.93
+Version:        27.0.1453.110
 Release:        alt1.r%rev
 
 Summary:        An open source web browser developed by Google
@@ -446,6 +446,21 @@ printf '%_bindir/%name\t%_libdir/%name/%name-gnome\t15\n' > %buildroot%_altdir/%
 %_altdir/%name-gnome
 
 %changelog
+* Wed Jun 05 2013 Andrey Cherepanov <cas@altlinux.org> 27.0.1453.110-alt1.r202711
+- New version 27.0.1453.110
+- Security fixes:
+  - Critical CVE-2013-2863: Memory corruption in SSL socket handling.
+  - High CVE-2013-2856: Use-after-free in input handling.
+  - High CVE-2013-2857: Use-after-free in image handling.
+  - High CVE-2013-2858: Use-after-free in HTML5 Audio.
+  - High CVE-2013-2859: Cross-origin namespace pollution.
+  - High CVE-2013-2860: Use-after-free with workers accessing database APIs.
+  - High CVE-2013-2861: Use-after-free with SVG.
+  - High CVE-2013-2862: Memory corruption in Skia GPU handling.
+  - High CVE-2013-2864: Bad free in PDF viewer.
+  - High CVE-2013-2865: Various fixes from internal audits, fuzzing and other initiatives. 
+  - Medium CVE-2013-2855: Memory corruption in dev tools API.
+
 * Thu May 30 2013 Andrey Cherepanov <cas@altlinux.org> 27.0.1453.93-alt1.r200836
 - New version 27.0.1453.93
 - Security fixes:
