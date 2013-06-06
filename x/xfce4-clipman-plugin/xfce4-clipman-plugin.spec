@@ -1,6 +1,6 @@
 Name: xfce4-clipman-plugin
 Version: 1.2.3
-Release: alt1
+Release: alt2
 
 Summary: Clipboard history plugin for the XFce panel
 Summary(ru_RU.UTF-8): Менеджер буфера обмена для XFce
@@ -16,7 +16,9 @@ BuildRequires(pre): rpm-build-licenses
 
 BuildPreReq: rpm-build-xfce4 xfce4-dev-tools
 BuildPreReq: libxfce4panel-devel libexo-devel libxfce4ui-devel libxfconf-devel libxfce4util-devel
-BuildRequires: intltool libSM-devel libglade-devel xorg-cf-files libunique-devel libXtst-devel gtk-doc itstool
+BuildRequires: intltool libSM-devel libglade-devel xorg-cf-files libunique-devel libXtst-devel
+# For documentation
+BuildRequires: gtk-doc itstool gnome-doc-utils
 
 Requires: xfce4-panel
 
@@ -36,6 +38,8 @@ Clipman это менеджер буфера обмена для Xfce. Он со
 
 %prep
 %setup -a1
+# Don't use git tag in version.
+%xfce4_drop_gitvtag project_version_tag configure.ac.in
 
 %build
 %xfce4reconf
@@ -70,6 +74,11 @@ Clipman это менеджер буфера обмена для Xfce. Он со
 %exclude %_libdir/xfce4/panel/plugins/*.la
 
 %changelog
+* Thu Jun 06 2013 Mikhail Efremov <sem@altlinux.org> 1.2.3-alt2
+- Fix build: require gnome-doc-utils.
+- Updated from upstream git
+    (translations and minor code improvement).
+
 * Fri Apr 13 2012 Mikhail Efremov <sem@altlinux.org> 1.2.3-alt1
 - Updated to 1.2.3.
 
