@@ -1,4 +1,4 @@
-%define svn_revision 388667
+%define svn_revision 390667
 Name: asterisk12
 Summary: Open source PBX
 Version: 12
@@ -66,7 +66,7 @@ BuildPreReq: libunixODBC-devel libltdl-devel
 BuildPreReq: liblua5-devel
 BuildPreReq: postgresql-devel libpq-devel
 BuildPreReq: librpm-devel libnet-snmp-devel libwrap-devel perl-devel
-%define svn_revision 388667
+%define svn_revision 390667
 %add_verify_elf_skiplist %_libdir/libasteriskssl12.so.1
 %def_with debug
 %def_enable debug
@@ -805,7 +805,6 @@ ln -sf libasteriskssl12.so.1 %buildroot%_libdir/libasteriskssl12.so
 %astmodule app_macro
 %astmodule app_milliwatt
 %astmodule app_channelredirect
-%astmodule app_parkandannounce
 %astmodule app_playback
 %astmodule app_privacy
 %astmodule app_read
@@ -862,7 +861,6 @@ ln -sf libasteriskssl12.so.1 %buildroot%_libdir/libasteriskssl12.so
 %astmodule res_convert
 %astmodule res_clioriginate
 %astmodule app_dial
-%astmodule chan_local
 %astmodule format_g729
 %astmodule format_g719
 %astmodule format_sln
@@ -884,10 +882,8 @@ ln -sf libasteriskssl12.so.1 %buildroot%_libdir/libasteriskssl12.so
 %astmodule app_confbridge
 %astsample confbridge
 %astmodule bridge_builtin_features
-%astmodule bridge_multiplexed
 %astmodule bridge_simple
 %astmodule bridge_softmix
-%astmodule chan_bridge
 %astmodule app_originate
 %astmodule app_playtones
 %astmodule format_siren14
@@ -982,6 +978,22 @@ ln -sf libasteriskssl12.so.1 %buildroot%_libdir/libasteriskssl12.so
 %astmodule res_sorcery_astdb
 %astmodule res_stasis_websocket
 %astsample stasis_core
+%astmodule res_stasis_answer
+%astmodule res_stasis_json_asterisk
+%astmodule res_stasis_json_bridges
+%astmodule res_stasis_json_channels
+%astmodule res_stasis_json_endpoints
+%astmodule res_stasis_json_events
+%astmodule res_stasis_json_playback
+%astmodule res_stasis_json_recordings
+%astmodule res_stasis_json_sounds
+%astmodule res_stasis_playback
+%astmodule app_bridgewait
+%astmodule bridge_builtin_interval_features
+%astmodule bridge_holding
+%astmodule bridge_native_rtp
+%astmodule res_parking
+%astsample res_parking
 
 %files -n aelparse12
 %_sbindir/aelparse-%version
@@ -1269,6 +1281,27 @@ ln -sf libasteriskssl12.so.1 %buildroot%_libdir/libasteriskssl12.so
 %_libdir/libasteriskssl12.so.1
 
 %changelog
+* Thu Jun 06 2013 Denis Smirnov <mithraen@altlinux.ru> 12-alt0.390667
+- update from svn revision 390667
+
+* Tue Jun 04 2013 Denis Smirnov <mithraen@altlinux.ru> 12-alt0.390389
+- update from svn revision 390389
+
+* Fri May 31 2013 Denis Smirnov <mithraen@altlinux.ru> 12-alt0.390175
+- update from svn revision 390175
+
+* Thu May 30 2013 Denis Smirnov <mithraen@altlinux.ru> 12-alt0.390107
+- update from svn revision 390107
+
+* Wed May 22 2013 Denis Smirnov <mithraen@altlinux.ru> 12-alt0.389473
+- update from svn revision 389473
+
+* Sun May 19 2013 Denis Smirnov <mithraen@altlinux.ru> 12-alt0.389054
+- update from svn revision 389054
+
+* Sat May 18 2013 Denis Smirnov <mithraen@altlinux.ru> 12-alt0.389048
+- update from svn revision 389048
+
 * Tue May 14 2013 Denis Smirnov <mithraen@altlinux.ru> 12-alt0.388667
 - update from svn revision 388667
 
