@@ -3,7 +3,7 @@
 
 Summary:	Thunderbird is Mozilla's e-mail client
 Name:		thunderbird
-Version:	17.0.5
+Version:	17.0.6
 Release:	alt1
 License:	MPL/GPL
 Group:		Networking/Mail
@@ -64,7 +64,7 @@ BuildRequires: python-modules-sqlite3
 BuildRequires:	libnspr-devel       >= 4.9.6-alt1
 BuildRequires:	libnss-devel        >= 3.14.3-alt1
 BuildRequires:	libnss-devel-static >= 3.14.3-alt1
-BuildRequires:	xulrunner-devel     >= 20.0-alt1
+BuildRequires:	xulrunner-devel     >= 21.0-alt1
 
 Provides:	mailclient
 Obsoletes:	thunderbird-calendar
@@ -87,9 +87,6 @@ BuildRequires: autoconf_2.13
 %define tbird_idldir                 %_datadir/idl/%name
 %define tbird_includedir             %_includedir/%name
 %define tbird_develdir               %tbird_prefix-devel
-
-%define tbird_arch_extensionsdir     %tbird_prefix/extensions
-%define tbird_noarch_extensionsdir   %tbird_datadir/extensions
 
 %description
 Thunderbird is Mozilla's next generation e-mail client.
@@ -311,8 +308,6 @@ dir="$PWD/objdir"
 
 %__mkdir_p \
 	%buildroot/%_bindir \
-	%buildroot/%tbird_arch_extensionsdir \
-	%buildroot/%tbird_noarch_extensionsdir \
 	%buildroot/%mozilla_arch_extdir/%tbird_cid \
 	%buildroot/%mozilla_noarch_extdir/%tbird_cid \
 	%buildroot/%_datadir/applications \
@@ -323,9 +318,6 @@ dir="$PWD/objdir"
 	includedir=%buildroot/%tbird_includedir \
 	mozappdir=%buildroot/%tbird_prefix \
 	#
-
-ln -sf -- $(relative "%tbird_noarch_extensionsdir" "%tbird_prefix/") \
-	%buildroot/%tbird_prefix/extensions-noarch
 
 #(set +x
 #	for l in libldap60.so libldif60.so libprldap60.so; do
@@ -371,7 +363,7 @@ rm -rf -- \
 	#
 
 #ver=%version
-ver=20.0
+ver=21.0
 sed -i \
 	-e "s,^\\(MaxVersion\\)=.*,\\1=${ver%%.*}.*,g" \
 	%buildroot/%tbird_prefix/application.ini
@@ -428,7 +420,7 @@ mkdir -p %buildroot/%calendar_timezones_ciddir
 unzip -q -u -d %buildroot/%calendar_timezones_ciddir -- \
 	$dir/mozilla/dist/xpi-stage/calendar-timezones.xpi
 
-rm -rf -- %buildroot/%tbird_arch_extensionsdir/calendar-timezones@mozilla.org
+rm -rf -- %buildroot/%tbird_prefix/extensions/calendar-timezones@mozilla.org
 rm -f -- %buildroot/%lightning_ciddir/application.ini
 %endif
 
@@ -456,8 +448,6 @@ rm -f -- %buildroot/%lightning_ciddir/application.ini
 %files 
 %_bindir/*
 %tbird_prefix
-#tbird_arch_extensionsdir
-%tbird_noarch_extensionsdir
 %mozilla_arch_extdir/%tbird_cid
 %mozilla_noarch_extdir/%tbird_cid
 %defattr(0644,root,root,0755)
@@ -503,6 +493,16 @@ rm -f -- %buildroot/%lightning_ciddir/application.ini
 %_sysconfdir/rpm/macros.d/%name
 
 %changelog
+* Wed Jun 05 2013 Alexey Gladkov <legion@altlinux.ru> 17.0.6-alt1
+- New version (17.0.6).
+- Fixed:
+  + MFSA 2013-48 Memory corruption found using Address Sanitizer
+  + MFSA 2013-47 Uninitialized functions in DOMSVGZoomEvent
+  + MFSA 2013-46 Use-after-free with video and onresize event
+  + MFSA 2013-44 Local privilege escalation through Mozilla Maintenance Service
+  + MFSA 2013-42 Privileged access for content level constructor
+  + MFSA 2013-41 Miscellaneous memory safety hazards (rv:21.0 / rv:17.0.6)
+
 * Thu Apr 11 2013 Alexey Gladkov <legion@altlinux.ru> 17.0.5-alt1
 - New version (17.0.5).
 - Enigmail (1.5.1).

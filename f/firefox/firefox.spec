@@ -3,14 +3,12 @@
 %define firefox_cid                    \{ec8030f7-c20a-464f-9b0e-13a3a9e97384\}
 %define firefox_prefix                 %_libdir/firefox
 %define firefox_datadir                %_datadir/firefox
-%define firefox_arch_extensionsdir     %firefox_prefix/extensions
-%define firefox_noarch_extensionsdir   %firefox_datadir/extensions
 
 Summary:              The Mozilla Firefox project is a redesign of Mozilla's browser
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox
-Version:        20.0
+Version:        21.0
 Release:        alt1
 License:        MPL/GPL/LGPL
 Group:          Networking/WWW
@@ -145,6 +143,7 @@ export LIBDIR="%_libdir"
 export XULSDK="%xulr_develdir"
 export LIBIDL_CONFIG=/usr/bin/libIDL-config-2
 export srcdir="$PWD"
+export SHELL=/bin/sh
 
 %__autoconf
 
@@ -164,7 +163,7 @@ make -f client.mk \
 %__cc %optflags \
 	-Wall -Wextra \
 	-DMOZ_PLUGIN_PATH=\"%browser_plugins_path\" \
-	-DXUL_APP_FILE=\"%firefox_prefix/application.ini\" \
+	-DXUL_APP_FILE=\"%firefox_prefix/browser/application.ini\" \
 	%SOURCE7 -o firefox
 
 
@@ -172,9 +171,6 @@ make -f client.mk \
 cd mozilla
 
 %__mkdir_p \
-	%buildroot/%firefox_prefix/plugins \
-	%buildroot/%firefox_arch_extensionsdir \
-	%buildroot/%firefox_noarch_extensionsdir \
 	%buildroot/%mozilla_arch_extdir/%firefox_cid \
 	%buildroot/%mozilla_noarch_extdir/%firefox_cid \
 	#
@@ -183,13 +179,10 @@ cd mozilla
     mozappdir=%buildroot/%firefox_prefix \
     #
 
-ln -sf -- $(relative "%firefox_noarch_extensionsdir" "%firefox_prefix/") \
-        %buildroot/%firefox_prefix/extensions-noarch
-
 # install altlinux-specific configuration
-install -D -m 644 %SOURCE8 %buildroot/%firefox_prefix/defaults/preferences/all-altlinux.js
+install -D -m 644 %SOURCE8 %buildroot/%firefox_prefix/browser/defaults/preferences/all-altlinux.js
 
-cat > %buildroot/%firefox_prefix/defaults/preferences/firefox-l10n.js <<EOF
+cat > %buildroot/%firefox_prefix/browser/defaults/preferences/firefox-l10n.js <<EOF
 pref("intl.locale.matchOS",		true);
 pref("general.useragent.locale",	"chrome://global/locale/intl.properties");
 EOF
@@ -204,7 +197,7 @@ done
 # searchplugins
 cp -a -- \
 	searchplugins/* \
-	%buildroot/%firefox_prefix/searchplugins/
+	%buildroot/%firefox_prefix/browser/searchplugins/
 
 # install rpm-build-firefox
 mkdir -p -- \
@@ -222,6 +215,8 @@ cd %buildroot
 #	-e 's,\(MinVersion\)=.*,\1=5.0.1,g' \
 #	-e 's,\(MaxVersion\)=.*,\1=5.0.1,g' \
 #	./%firefox_prefix/application.ini
+
+mv -f ./%firefox_prefix/application.ini ./%firefox_prefix/browser/application.ini
 
 # install menu file
 %__install -D -m 644 %SOURCE6 ./%_datadir/applications/firefox.desktop
@@ -243,8 +238,6 @@ done
 %_altdir/firefox
 %_bindir/firefox
 %firefox_prefix
-%firefox_arch_extensionsdir
-%firefox_noarch_extensionsdir
 %mozilla_arch_extdir/%firefox_cid
 %mozilla_noarch_extdir/%firefox_cid
 %_datadir/applications/firefox.desktop
@@ -259,6 +252,18 @@ done
 %_rpmmacrosdir/firefox
 
 %changelog
+* Sat Jun 01 2013 Alexey Gladkov <legion@altlinux.ru> 21.0-alt1
+- New release (21.0).
+- Fixed:
+  + MFSA 2013-48 Memory corruption found using Address Sanitizer
+  + MFSA 2013-47 Uninitialized functions in DOMSVGZoomEvent
+  + MFSA 2013-46 Use-after-free with video and onresize event
+  + MFSA 2013-45 Mozilla Updater fails to update some Windows Registry entries
+  + MFSA 2013-44 Local privilege escalation through Mozilla Maintenance Service
+  + MFSA 2013-43 File input control has access to full path
+  + MFSA 2013-42 Privileged access for content level constructor
+  + MFSA 2013-41 Miscellaneous memory safety hazards (rv:21.0 / rv:17.0.6)
+
 * Wed Apr 10 2013 Alexey Gladkov <legion@altlinux.ru> 20.0-alt1
 - New release (20.0).
 - Fixed:

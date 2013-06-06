@@ -13,7 +13,7 @@
 
 Summary:	XUL Runner
 Name:		xulrunner
-Version:	20.0
+Version:	21.0
 Release:	alt1
 
 License:	MPL/GPL/LGPL
@@ -29,9 +29,6 @@ Source4:	xpi-mimeinfo.xml
 
 Patch0:		xulrunner-no-version.patch
 Patch2:		xulrunner-noarch-extensions.patch
-
-# https://bugzilla.redhat.com/show_bug.cgi?id=304121
-Patch10:	rhbz-304121.patch
 
 Patch100:	mozilla-192-path.patch
 #Patch101:	mozilla-pkgconfig.patch
@@ -145,8 +142,6 @@ tar -xf %SOURCE1
 #patch1 -p1
 %patch2 -p1
 
-%patch10 -p2
-
 %patch100 -p1
 #patch101 -p1
 %patch104 -p1
@@ -191,6 +186,7 @@ export LIBDIR='%_libdir'
 export INCLUDEDIR='%_includedir'
 export LIBIDL_CONFIG='/usr/bin/libIDL-config-2'
 export srcdir="$PWD"
+export SHELL=/bin/sh
 
 sed -i \
 	-e 's,^MOZ_APP_NAME[[:space:]]*=.*,MOZ_APP_NAME = %xulr_name,' \
@@ -356,6 +352,18 @@ ln -sf $(relative "%xulr_prefix/libmozalloc.so" "%xulr_develdir/sdk/lib/libmozal
 %_datadir/rpm-build-mozilla/mozilla-sh-functions
 
 %changelog
+* Fri May 31 2013 Alexey Gladkov <legion@altlinux.ru> 21.0-alt1
+- New release (21.0).
+- Fixed:
+  + MFSA 2013-48 Memory corruption found using Address Sanitizer
+  + MFSA 2013-47 Uninitialized functions in DOMSVGZoomEvent
+  + MFSA 2013-46 Use-after-free with video and onresize event
+  + MFSA 2013-45 Mozilla Updater fails to update some Windows Registry entries
+  + MFSA 2013-44 Local privilege escalation through Mozilla Maintenance Service
+  + MFSA 2013-43 File input control has access to full path
+  + MFSA 2013-42 Privileged access for content level constructor
+  + MFSA 2013-41 Miscellaneous memory safety hazards (rv:21.0 / rv:17.0.6)
+
 * Wed Apr 10 2013 Alexey Gladkov <legion@altlinux.ru> 20.0-alt1
 - New release (20.0).
 - Fixed:
