@@ -5,7 +5,7 @@
 
 Name: gnustep-%oname
 Version: 1.7.0
-Release: alt4.git20130312
+Release: alt4.git20130424
 Summary: GNUstep Objective-C Runtime
 License: BSD
 Group: Development/Objective-C
@@ -164,6 +164,9 @@ install -p -m644 class.h visibility.h method_list.h \
 %_libdir/libGNUObjCRuntime.so
 
 %changelog
+* Thu Jun 06 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.7.0-alt4.git20130424
+- New snapshot
+
 * Mon Mar 18 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.7.0-alt4.git20130312
 - Set CMAKE_BUILD_TYPE to Release (ALT #28693)
 
