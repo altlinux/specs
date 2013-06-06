@@ -7,7 +7,7 @@
 %define alterator_cfg %_sysconfdir/alterator
 
 Name: alterator-browser-qt
-Version: 2.18.10
+Version: 2.19.0
 Release: alt1
 
 Source:%name-%version.tar
@@ -82,6 +82,9 @@ ln -s %alterator_cfg/design-browser-qt %buildroot/%_datadir/%name/design/current
 
 
 %changelog
+* Thu Jun 06 2013 Sergey V Turchin <zerg at altlinux dot org> 2.19.0-alt1
+- add displaysize info widget
+
 * Fri Apr 26 2013 Sergey V Turchin <zerg at altlinux dot org> 2.18.10-alt1
 - fix signal/slot when selection changed in checktree
 
