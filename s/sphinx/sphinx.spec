@@ -1,6 +1,6 @@
 Name: sphinx
-Version: 2.0.7
-Release: alt2
+Version: 2.0.8
+Release: alt1
 Summary: Free open-source SQL full-text search engine
 
 Group: Text tools
@@ -170,6 +170,9 @@ make install DESTDIR=%buildroot INSTALL="%__install -p -c"
 %_libdir/libsphinxclient.a
 
 %changelog
+* Thu Jun 06 2013 Igor Zubkov <icesik@altlinux.org> 2.0.8-alt1
+- 2.0.7 -> 2.0.8
+
 * Thu Jun 06 2013 Igor Zubkov <icesik@altlinux.org> 2.0.7-alt2
 - Rebuilt with new unixODBC 2.3.1-alt1
 
