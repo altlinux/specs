@@ -1,6 +1,6 @@
 Name: pommed
 Version: 1.39
-Release: alt3
+Release: alt4
 
 Summary: Apple laptops hotkeys event handler
 License: GPLv2
@@ -14,13 +14,16 @@ Patch0: pommed-1.39-alt-build.patch
 Patch1: pommed-1.22-alt-fix-desktop-files.patch
 Patch2: pommed-1.39-alt-rpm_opt_flags.patch
 
+# http://alioth.debian.org/tracker/download.php/31066/412713/313891/5185/0001-Add-support-for-LCD-back-light-on-latest-kernels.patch
+Patch10: 0001-Add-support-for-LCD-back-light-on-latest-kernels.patch
+
 Packager: Igor Zubkov <icesik@altlinux.org>
 
 ExclusiveArch: x86_64 %ix86
 
-# Automatically added by buildreq on Mon Apr 16 2012
-# optimized out: fontconfig fontconfig-devel glib2-devel libX11-devel libatk-devel libcairo-devel libdbus-devel libdbus-glib libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libpango-devel libwayland-client libwayland-server pkg-config xorg-xextproto-devel xorg-xproto-devel
-BuildRequires: libXext-devel libXpm-devel libalsa-devel libaudiofile-devel libconfuse-devel libdbus-glib-devel libgtk+2-devel libpci-devel
+# Automatically added by buildreq on Thu Jun 06 2013
+# optimized out: fontconfig fontconfig-devel glib2-devel libX11-devel libXext-devel libatk-devel libcairo-devel libdbus-devel libdbus-glib libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libpango-devel libwayland-client libwayland-server pkg-config xorg-xextproto-devel xorg-xproto-devel
+BuildRequires:  libXpm-devel libalsa-devel libaudiofile-devel libconfuse-devel libdbus-glib-devel libgtk+2-devel libpci-devel
 
 %description
 pommed handles the hotkeys found on the Apple MacBook Pro, MacBook and
@@ -62,6 +65,8 @@ each item controlled by pommed.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
+
+%patch10 -p1
 
 %build
 %make_build
@@ -146,6 +151,9 @@ cp icons/gpomme_32x32.xpm %buildroot%_niconsdir/wmpomme.xpm
 %_niconsdir/wmpomme.xpm
 
 %changelog
+* Thu Jun 06 2013 Igor Zubkov <icesik@altlinux.org> 1.39-alt4
+- Add support for LCD back-light on latest kernels
+
 * Tue May 08 2012 Igor Zubkov <icesik@altlinux.org> 1.39-alt3
 - use RPM_OPT_FLAGS
 
