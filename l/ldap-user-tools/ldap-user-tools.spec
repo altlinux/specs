@@ -2,8 +2,8 @@
 %define _hooksdir %_sysconfdir/hooks/hostname.d
 
 Name:    ldap-user-tools
-Version: 0.8.2
-Release: alt2
+Version: 0.8.3
+Release: alt1
 
 Summary: Utilities to work with LDAP users
 Group:   Development/Other
@@ -48,6 +48,11 @@ install -pm755 -d %buildroot/%_sysconfdir/alterator/openldap
 %dir %_sysconfdir/alterator/openldap
 
 %changelog
+* Wed Jun 05 2013 Andrey Cherepanov <cas@altlinux.org> 0.8.3-alt1
+- Add support to map and unmap Samba and domain groups
+- Add -g <gid> option to ldap-groupmod to change group GID
+- Correct check missing values for options in ldap-groupmod
+
 * Tue Apr 23 2013 Andrey Cherepanov <cas@altlinux.org> 0.8.2-alt2
 - Allow only lowercase letters in username
 - Add localization files for use from alterator-ldap-users

@@ -6,7 +6,7 @@
 
 Name: branding-%brand-%theme
 Version: 6.9.9 
-Release: alt4
+Release: alt5
 
 BuildRequires: cpio fonts-ttf-dejavu fonts-ttf-droid
 BuildRequires: design-bootloader-source >= 5.0-alt2
@@ -364,6 +364,9 @@ subst 's/#theme-name=/theme-name=Clearlooks-Phenix/' /etc/lightdm/lightdm-gtk-gr
 %_desktopdir/indexhtml.desktop
 
 %changelog
+* Thu Jun 06 2013 Andrey Cherepanov <cas@altlinux.org> 6.9.9-alt5
+- Fix window close icon size
+
 * Fri May 31 2013 Andrey Cherepanov <cas@altlinux.org> 6.9.9-alt4
 - Set correct size for typical graphical buttons
 - Set appropriate indent for small hint of fields
