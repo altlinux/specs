@@ -1,8 +1,8 @@
 %define _hooksdir %_sysconfdir/hooks/hostname.d
 
 Name: alterator-ldap-groups
-Version: 0.6.2
-Release: alt3
+Version: 0.6.3
+Release: alt1
 
 Source: %name-%version.tar
 
@@ -13,7 +13,7 @@ License: GPL
 Group: System/Configuration/Other
 BuildArch: noarch
 
-Requires: alterator >= 2.9 ldap-user-tools >= 0.2 alterator-auth >= 0.9-alt3
+Requires: alterator >= 2.9 ldap-user-tools >= 0.8.3 alterator-auth >= 0.9-alt3
 Requires: alterator-sh-functions >= 0.11-alt2
 Requires: shadow-groups >= 4.0.4.1-alt9
 Requires: alterator-l10n >= 2.7-alt6
@@ -46,6 +46,9 @@ Alterator module for LDAP groups administration
 %_hooksdir/91-ldap-groups
 
 %changelog
+* Thu Jun 06 2013 Andrey Cherepanov <cas@altlinux.org> 0.6.3-alt1
+- Add mapping to system UNIX and Samba group
+
 * Fri May 31 2013 Andrey Cherepanov <cas@altlinux.org> 0.6.2-alt3
 - Fix button look by use standard definition
 

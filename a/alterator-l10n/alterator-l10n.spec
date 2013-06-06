@@ -1,6 +1,6 @@
 Name: alterator-l10n
 Version: 2.9
-Release: alt61
+Release: alt62
 
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
@@ -110,6 +110,9 @@ make check
 %lang(kk) %_datadir/locale/kk/LC_MESSAGES/*.mo
 
 %changelog
+* Thu Jun 06 2013 Andrey Cherepanov <cas@altlinux.org> 2.9-alt62
+- Update localization for alterator-ldap-groups
+
 * Thu May 16 2013 Paul Wolneykien <manowar@altlinux.org> 2.9-alt61
 - Update the English alterator-squid manual.
 - Update the Russian alterator-squid manual.
