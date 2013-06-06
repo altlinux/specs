@@ -1,6 +1,6 @@
 Name: libdmtx
 Version: 0.7.2
-Release: alt3
+Release: alt4
 Summary: Library for working with Data Matrix 2D bar-codes
 
 Group: System/Libraries
@@ -90,6 +90,8 @@ The vala-%name package contains bindings for using %name from Vala.
 chmod a-x wrapper/{php,python}/README
 %patch0 -p0
 
+sed -i 's|static function_entry |static zend_function_entry |' wrapper/php/dmtx_write.c
+
 %build
 %configure --disable-static --enable-php --enable-python --enable-ruby --enable-vala
 #  --enable-java           enable Java bindings
@@ -151,6 +153,9 @@ popd
 %_datadir/vala/vapi/libdmtx.vapi
 
 %changelog
+* Thu Jun  6 2013 Fr. Br. George <george@altlinux.ru> 0.7.2-alt4
+- Fix build
+
 * Fri Apr 19 2013 Anton Farygin <rider@altlinux.ru> 0.7.2-alt3
 - Rebuild with new libImageMagick
 
