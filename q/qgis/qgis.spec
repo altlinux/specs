@@ -1,226 +1,300 @@
-# FIXME: grass is poorly packaged /usr/lib/grass62/lib/
-# http://www.cmake.org/Wiki/CMake_RPATH_handling
-#set_verify_elf_method unresolved=relaxed
+# WARNING: Rebuild QGIS whenever a new version of GRASS is shipped! Even though the soname might stay the same, it won't work anymore.
+# http://hub.qgis.org/issues/5274
 
 Name: qgis
-Version: 1.7.4
-Release: alt2
+Version: 1.8.0
+Release: alt1
 Summary: A user friendly Open Source Geographic Information System
-
+License: GPLv3+ with exceptions
 Group: Sciences/Geosciences
-License: GPLv2+
 Url: http://qgis.org/
 
-Packager: Ilya Mashkin <oddity@altlinux.ru>
+Packager: Andrey Kolotov <qwest@altlinux.org>
 
-Source: http://qgis.org/downloads/%name-%version.tar.bz2
+Source: %name-%version.tar
+# %%name-mapserver-httpd.conf
+# %%name-mapserver-README.fedora
 
-Source1: %name.desktop
+# Fix detection problem for GRASS libraries
+Patch0: %name-1.5.0-fedora-grass.patch
 
-Patch0: python-site-packages-dir-0.9.1.patch
-Patch1: %name-0.9.1.patch
-Patch2: qgis-1.5.0-grass.patch
-Patch3: %name-1.6.0-sip.patch
-Patch4: %name-alt-external-qwtpolar.patch
+# http://hub.qgis.org/issues/5809
+# Crash when datasource is moved or deleted
+Patch1: %name-1.8.0-fedora-datasource-crash.patch
 
-# http://osgeo-org.1560.n6.nabble.com/Problems-building-qgis-td4125345.html#a4125347
-Patch5: %name-alt-sip.patch
+# TODO: Upstream (fedora's)
+# Use system version of qextserialport library
+Patch2: %name-1.8.0-fedora-alt-qextserialport.patch
 
-# http://hub.qgis.org/issues/3562
-Patch6: %name-libqwt6.patch
+# Fix unresolved symbols in grass based libs
+%set_verify_elf_method unresolved=relaxed
 
-BuildRequires: ccmake flex gcc4.5 gcc4.5-c++ libexpat-devel libgdal-devel
-BuildRequires: libgeos-devel libgsl-devel libnss-mysql libpth-devel libqt3-devel
-BuildRequires: libqt4-devel libsqlite3-devel postgresql-devel python-module-PyQt4-devel
-BuildRequires: perl-Net-FastCGI perl-FCGI libfcgi-devel
-BuildRequires:  libproj-devel python-module-sip-devel subversion chrpath
-BuildRequires: libqwtpolar-devel libqwtplot3d-devel libplotmm-devel libqwt6-devel
+# Set proper libexec directory
+%define _libexecdir %prefix/libexec
+
+# TODO: Pyspatialite is included if you use the bundled libspatialite.
+# Some plug-ins need it.
+# The license is not totally clear, see:
+# http://code.google.com/p/pyspatialite/issues/detail?id=3
+# It also is sort of a fork of pysqlite, which is not elegant.
+
+BuildRequires: gcc-c++
+BuildRequires: cmake
 BuildRequires: desktop-file-utils
-# BuildRequires: grass grass-devel
+BuildRequires: libexpat-devel
+BuildRequires: libfcgi-devel
+BuildRequires: flex bison
+BuildRequires: libgdal-devel
+BuildRequires: libgeos-devel
+BuildRequires: grass-devel
+BuildRequires: libgsl-devel
+BuildRequires: libspatialite-devel
+BuildRequires: postgresql-devel
+BuildRequires: libproj-devel
+BuildRequires: python-module-PyQt4-devel
+# PyQwt-devel
+BuildRequires: python-devel
+BuildRequires: libqt4-devel
+BuildRequires: qt4-mobility-devel
+# qt4-webkit-devel
+BuildRequires: libqt4-devel
+BuildRequires: libqt4-webkit
+
+BuildRequires: libqwt6-devel
+BuildRequires: qextserialport-devel
+BuildRequires: libqwtpolar-devel
+BuildRequires: python-module-sip-devel >= 4.10
+BuildRequires: spatialindex-devel
+BuildRequires: libsqlite3-devel
+
+Requires: gpsbabel
+
+# We don't want to provide private Python extension libs
+%add_findprov_skiplist %%python_sitelibdir/%%name/*.so 
 
 %description
-Quantum GIS (QGIS) is a user friendly Open Source Geographic Information
-System (GIS) that runs on Linux, Unix, Mac OSX, and Windows. QGIS supports
-vector, raster, and database formats. QGIS is licensed under the GNU
-General Public License. QGIS lets you browse and create map data on your
-computer. It supports many common spatial data formats (e.g. ESRI ShapeFile,
-geotiff). QGIS supports plugins to do things like display tracks from your GPS.
+Geographic Information System (GIS) manages, analyzes, and displays
+databases of geographic information. Quantum GIS (QGIS) supports shape
+file viewing and editing, spatial data storage with PostgreSQL/PostGIS,
+projection on-the-fly, map composition, and a number of other features
+via a plugin interface. QGIS also supports display of various
+geo-referenced raster and Digital Elevation Model (DEM) formats
+including GeoTIFF, Arc/Info ASCII Grid, and USGS ASCII DEM.
 
-#%package devel
-#Summary: Headers and libraries for building against qgis
-#Group: Development/Libraries
-#Requires: %name = %version-%release
-#
-#%description devel
-#Headers and libraries for building against qgis
+%package devel
+Summary: Development Libraries for the Quantum GIS
+Group: Development/C
+Requires: %name = %version-%release
 
-#package grass
-#Summary: GRASS plugins for qgis
-#Group: Sciences/Geosciences
-#Requires: %name = %version-%release
-#Requires: grass
+%description devel
+Development packages for Quantum GIS including the C header files.
 
-#description grass
-#GRASS plugins for qgis
+%package grass 
+Summary: GRASS Support Libraries for Quantum GIS
+Group: Sciences/Geosciences
+Requires: %name = %version-%release
+Requires: grass
+  
+%description grass
+GRASS plugin for Quantum GIS required to interface with the GRASS
+system.
 
-#%package python
-#Summary: python integration and plugins
-#Group: Applications/Engineering
-#Requires: %name = %version-%release
-#
-#%description python
-#python integration and plugins
+%package python 
+Summary: Python integration and plug-ins for Quantum GIS
+Group: Sciences/Geosciences
+Requires: %name = %version-%release
+Requires: python-module-gdal
+Requires: python-module-PyQt4
+# SPI API >= 9.1
+Requires: python-module-sip
 
-#package theme-nkids
-#Summary: Addtional theme for qgis - nkids
-#Group: Sciences/Geosciences
-#Requires: %name = %version-%release
+%description python
+Python integration and plug-ins for Quantum GIS.
 
-#%description theme-nkids
-#Addtional theme for qgis - nkids
+%package mapserver 
+Summary: FCGI based OGC web map server
+Group: Sciences/Geosciences
+Requires: %name = %version-%release
+Requires: libfcgi
+
+%description mapserver
+This FastCGI OGC web map server implements OGC WMS 1.3.0 and 1.1.1.
+The services are prepared as regular projects in QGIS. They're rendered
+using the QGIS libraries. The server also supports SLD (Styled Layer
+Descriptor) for styling. Sample configurations for Httpd and Lighttpd
+are included.
+
+Please refer to %name-mapserver-README for details!
 
 %prep
-%setup -q -n %{name}-%version
+%setup
+%patch0 -p1
+%patch1 -p1
+%patch2 -p1
 
-
-
-%patch2 -p1 -b .grass
-##patch3 -p0
-%patch4 -p2
-#patch5 -p2
-%patch6 -p2
+# Delete bundled libs
+rm -rf src/core/spatialite
+rm -rf src/core/gps/qwtpolar
+rm -rf src/core/gps/qextserialport
 
 %build
-export CC=gcc-4.5 CXX=g++-4.5
-
-# FIXIT in grass package
-#for dir in %_libdir/grass*/ ; do
-#	GRASS_PREFIX=$dir
-#done
-GRASS_PREFIX=%_libdir
-
+CFLAGS="${CFLAGS:-%optflags}"; export CFLAGS;
+CXXFLAGS="${CXXFLAGS:-%optflags}"; export CXXFLAGS;
 cmake \
-	-D QGIS_MANUAL_SUBDIR=share/man \
-	-D QGIS_LIB_SUBDIR=%_lib \
-	-D QGIS_PLUGIN_SUBDIR=%_lib/qgis \
-	-D WITH_BINDINGS:BOOL=TRUE \
-	-D BINDINGS_GLOBAL_INSTALL:BOOL=TRUE \
-	-D GRASS_PREFIX=$GRASS_PREFIX \
-	-D GDAL_INCLUDE_DIR=%_includedir/gdal \
-	-D GDAL_LIBRARY=%_libdir/libgdal.so \
-	-D GEOS_LIBRARY=%_libdir/libgeos_c.so \
-	-D CMAKE_INSTALL_PREFIX=%_prefix \
-	-D CMAKE_SKIP_RPATH:BOOL=TRUE \
-	-D QWTPOLAR_INCLUDE_DIR:PATH=%_includedir/qwt \
+	-DCMAKE_C_FLAGS_RELEASE:STRING="-DNDEBUG" \
+	-DCMAKE_CXX_FLAGS_RELEASE:STRING="-DNDEBUG" \
+	-DCMAKE_Fortran_FLAGS_RELEASE:STRING="-DNDEBUG" \
+	-DCMAKE_VERBOSE_MAKEFILE:BOOL=ON \
+	-DCMAKE_INSTALL_PREFIX:PATH=%_prefix \
+	-DINCLUDE_INSTALL_DIR:PATH=%_includedir \
+	-DLIB_INSTALL_DIR:PATH=%_libdir \
+	-DSYSCONF_INSTALL_DIR:PATH=%_sysconfdir \
+	-DSHARE_INSTALL_PREFIX:PATH=%_datadir \
+%if "%_lib" == "lib64"
+	-DLIB_SUFFIX="64" \
+%endif
+	-DBUILD_SHARED_LIBS:BOOL=ON \
+	-DCMAKE_SKIP_RPATH:BOOL=ON \
+	-DQGIS_LIB_SUBDIR:PATH=%_lib \
+	-DQGIS_MANUAL_SUBDIR:PATH=/share/man \
+	-DQGIS_PLUGIN_SUBDIR:PATH=%_lib/%name \
+	-DQGIS_CGIBIN_SUBDIR:PATH=%_libexecdir/%name \
+	-DWITH_BINDINGS:BOOL=TRUE \
+	-DGRASS_PREFIX:PATH=%_libdir/grass \
+	-DWITH_MAPSERVER:BOOL=TRUE \
+	-DBINDINGS_GLOBAL_INSTALL:BOOL=TRUE \
+	-DGDAL_INCLUDE_DIR:PATH=%_includedir/gdal \
+	-DGDAL_LIBRARY:PATH=%_libdir/libgdal.so \
+	-DGEOS_LIBRARY:PATH=%_libdir/libgeos_c.so \
+	-DENABLE_TESTS:BOOL=FALSE \
+	-DWITH_INTERNAL_QWTPOLAR:BOOL=FALSE \
+	-DWITH_INTERNAL_QEXTSERIALPORT:BOOL=FALSE \
+	-DWITH_PYSPATIALITE:BOOL=FALSE \
+	-DWITH_SPATIALITE:BOOL=TRUE \
+	-DWITH_INTERNAL_SPATIALITE:BOOL=FALSE \
+	-DQEXTSERIALPORT_INCLUDE_DIR:PATH=%_includedir/qt4/QtExtSerialPort \
+	-DQWTPOLAR_INCLUDE_DIR:PATH=%_includedir/qwt \
+	-DWITH_QTMOBILITY:BOOL=TRUE \
+	-DWITH_TOUCH:BOOL=TRUE \
 	.
-#	-D CMAKE_SKIP_RPATH:BOOL=ON
-#make_build
-
-make VERBOSE=1
+%make_build
 
 %install
-# check sipconfig from python-module-sip for LFLAGS's RPATH
-# hack before fix https://bugzilla.altlinux.org/show_bug.cgi?id=14655
-#chrpath -d python/core/core.so python/gui/gui.so
-#makeinstall_std
+%makeinstall_std
 
-make install DESTDIR=%buildroot
+# Install desktop files
+desktop-file-install --dir=%buildroot%_datadir/applications ./altlinux/%name.desktop
+desktop-file-install --dir=%buildroot%_datadir/applications ./altlinux/qbrowser.desktop
 
-# remove headers and so files
-rm -rf %buildroot%_includedir/%name
-rm -f %buildroot%_libdir/*.so
+# Install MIME type definitions
+install -pd %buildroot%_datadir/mime/packages
+install -pm0644 ./altlinux/%name.xml %buildroot%_datadir/mime/packages/%name.xml
+install -pd %buildroot%_datadir/mimelnk/application
+install -pt %buildroot%_datadir/mimelnk/application ./altlinux/mimelnk/*
 
-# install desktop file
-install -d %buildroot/{%_pixmapsdir,%_desktopdir}
-install -m0644 \
-	%buildroot/%_datadir/%name/images/icons/qgis-icon.png \
-	%buildroot/%_pixmapsdir/%name.png
-install -m0644 %SOURCE1 %buildroot%_desktopdir/%name.desktop
+# Install application and MIME icons
+install -pd %buildroot%_datadir/pixmaps
+install -pd %buildroot%_datadir/icons/hicolor/16x16/apps
+install -pd %buildroot%_datadir/icons/hicolor/scalable/apps
+install -pd %buildroot%_datadir/icons/hicolor/128x128/mimetypes
+install -pm0644 \
+	%buildroot%_datadir/%name/images/icons/%name-icon.png \
+	%buildroot%_datadir/pixmaps/%name.png
+install -pm0644 \
+	images/icons/%name-icon-16x16.png \
+	%buildroot%_datadir/icons/hicolor/16x16/apps/%name.png
+install -pm0644 \
+	images/icons/%{name}_icon.svg \
+	%buildroot%_datadir/icons/hicolor/scalable/apps/%name.svg
+install -pm0644 \
+	%buildroot%_datadir/%name/images/icons/%name-mime-icon.png \
+	%buildroot%_datadir/icons/hicolor/128x128/mimetypes/application-x-qgis-layer-settings.png
+install -pm0644 \
+	%buildroot%_datadir/%name/images/icons/%name-mime-icon.png \
+	%buildroot%_datadir/icons/hicolor/128x128/mimetypes/application-x-qgis-project.png
 
+# Packed by %%doc in mapserver, see qgis-mapserver-README
+rm -f %buildroot%_libexecdir/%name/wms_metadata.xml
+rm -f %buildroot%_libexecdir/%name/admin.sld
 
-%ifarch x86_64
-mv %buildroot/usr/lib/%name/qgis_help  %buildroot%_libdir/%name/qgis_help
-%endif
+# Remove files packaged by doc
+pushd %buildroot%_datadir/%name/doc
+rm -f BUGS \
+	CHANGELOG \
+	CODING \
+	COPYING \
+	INSTALL \
+	PROVENANCE \
+	README
+popd
 
-%find_lang %name --with-kde
-desktop-file-install --dir %buildroot%_desktopdir \
-	--add-category=Engineering \
-	%buildroot%_desktopdir/qgis.desktop
+# Name of locale is wrong
+mv %buildroot%_datadir/qgis/i18n/qgis_sr_CS-Latn.qm \
+	%buildroot%_datadir/qgis/i18n/qgis_sr@latin.qm
+%find_lang %name --with-qt
 
+%files -f %{name}.lang
+#TODO: Encoding problem on the help page
+# CONTRIBUTORS and AUTHORS are intended be viewed in the About-Box
+# ChangeLog is 4 MB, therefore don't ship it
+%doc BUGS NEWS CODING COPYING Exception_to_GPL_for_Qt.txt PROVENANCE README
+# QGIS shows these files in the GUI
+%_datadir/%name/doc
 
-%files
-%doc BUGS COPYING CHANGELOG README
+%dir %_datadir/%name/i18n/
+%_libdir/lib%{name}_analysis.so.*
+%_libdir/lib%{name}_core.so.*
+%_libdir/lib%{name}_gui.so.*
+%_libdir/lib%{name}sqlanyconnection.so.*
+%_libdir/lib%{name}_networkanalysis.so.*
+%_libdir/%name
 %_bindir/%name
-#_bindir/%{name}_help
-#%_bindir/msexport
-%_libdir/lib%{name}*.so.*
-%_libdir/libqgispython.so.*
-%dir %_libdir/%name/
-#_libdir/%name/libcopyrightlabelplugin.so
-#_libdir/%name/libdelimitedtextplugin.so
-#_libdir/%name/libdelimitedtextprovider.so
-#_libdir/%name/libgeorefplugin.so
-#_libdir/%name/libgpsimporterplugin.so
-#_libdir/%name/libgpxprovider.so
-%_libdir/%name/*.so
-%_libdir/%name/qgis_help
-#_libdir/%name/libnortharrowplugin.so
-#_libdir/%name/libogrprovider.so
-#_libdir/%name/libpggeoprocessingplugin.so
-#_libdir/%name/libpostgresprovider.so
-#_libdir/%name/libscalebarplugin.so
-###_libdir/%name/libquickprintplugin.so
-#_libdir/%name/libspitplugin.so
-#_libdir/%name/libwfsplugin.so
-#_libdir/%name/libmemoryprovider.so
-#_libdir/%name/libwfsprovider.so
-#_libdir/%name/libwmsprovider.so
-#_libdir/%name/libcoordinatecaptureplugin.so
-#_libdir/%name/libdiagramoverlay.so
-#libdir/%name/libdisplacementplugin.so
-#_libdir/%name/libdxf2shpconverterplugin.so
-#_libdir/%name/libevis.so
-#_libdir/%name/libinterpolationplugin.so
-#_libdir/%name/libofflineeditingplugin.so
-###_libdir/%name/libogrconverterplugin.so
-#_libdir/%name/liboracleplugin.so
-#_libdir/%name/libosmprovider.so
-#_libdir/%name/librasterterrainplugin.so
-#_libdir/%name/libspatialiteprovider.so
-#_libdir/%name/libspatialqueryplugin.so
-%_datadir/%name/doc/
-%_pixmapsdir/%name.png
-%_desktopdir/%name.desktop
+%_bindir/qbrowser
+%_man1dir/%{name}*
 %dir %_datadir/%name/
-%_datadir/%name/i18n/
-%_datadir/%name/images/
-%_datadir/%name/python/
-%_datadir/%name/resources/
-%_datadir/%name/svg/
-#dir %_datadir/%name/themes/
-#dir %_datadir/%name/themes/default/
-#_datadir/%name/themes/default/*.png
-%python_sitelibdir/%name/
-%python_sitelibdir/pyspatialite/
-%_man1dir/*
+%_datadir/mime/packages/%name.xml
+%_datadir/pixmaps/%name.png
+%_datadir/icons/hicolor/16x16/apps/%name.png
+%_datadir/icons/hicolor/128x128/mimetypes/application-x-%name-project.png
+%_datadir/icons/hicolor/128x128/mimetypes/application-x-%name-layer-settings.png
+%_datadir/icons/hicolor/scalable/apps/%name.svg
+%_datadir/applications/*.desktop
+%_datadir/%name/images
+%_datadir/%name/resources
+%_datadir/%name/svg
+%exclude %_libdir/libqgisgrass.so.*
+%exclude %_libdir/%name/libgrassprovider.so
+%exclude %_libdir/%name/libgrassrasterprovider.so
+%exclude %_libdir/%name/libgrassplugin.so
+%exclude %_libdir/%name/grass
+%_datadir/mimelnk/application/*
 
-#%files devel
-#%_includedir/%name
+%files devel
+%_datadir/%name/FindQGIS.cmake
+%_includedir/%name
+%_libdir/lib%{name}*.so
 
-#files grass
-#%_libdir/libqgisgrass.so.*
-###_libdir/libqgisgrass.so
-#_libdir/%name/libgrass*.so
-#_datadir/%name/grass/
-#%_datadir/%name/themes/default/grass
+%files grass
+%_libdir/lib%{name}grass.so.*
+%_libdir/%name/libgrassprovider.so
+%_libdir/%name/libgrassrasterprovider.so
+%_libdir/%name/libgrassplugin.so
+%_libdir/%name/grass
+%_datadir/%name/grass
 
-#%files python
-#%_datadir/%name/python
+%files python
+%_libdir/libqgispython.so.*
+%_datadir/%name/python
+%python_sitelibdir/%name
 
-#files theme-nkids
-#_datadir/%name/themes/nkids
+%files mapserver
+%doc ./src/mapserver/admin.sld ./src/mapserver/wms_metadata.xml ./altlinux/%{name}-mapserver-README ./altlinux/%name-mapserver-httpd.conf
+%_libexecdir/%name
 
 %changelog
+* Fri Jun 07 2013 Ivan Ovcherenko <asdus@altlinux.org> 1.8.0-alt1
+- New upstream release
+
 * Fri Oct 19 2012 Ilya Mashkin <oddity@altlinux.ru> 1.7.4-alt2
 - fix build 
 

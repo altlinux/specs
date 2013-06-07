@@ -1,6 +1,6 @@
 Name: grass
 Version: 6.4.2
-Release: alt1.1
+Release: alt1.2
 
 %def_with mysql
 %def_with postgres
@@ -120,6 +120,16 @@ ln -s ../../share/doc/%grassdir/ docs
 #longtitle="Geographic Resources Analysis Support System"
 #EOF
 
+# Create versionless symlinks for binary and libdir
+# The libdir symlink is handy for QGIS. QGIS asks the user for gisbase
+# and then stores it. See Fedora BZ 711860
+# Ubuntu does it the same way
+#
+# The binary symlink may keeps us from creating the desktop file
+# And we will can just pack it
+ln -s %_bindir/%name%grassfix %buildroot%_bindir/%name
+ln -s %_libdir/%name-%version %buildroot%_libdir/%name
+
 %post
 [ ! -L %_lockdir/grass62/locks ] || rm -f %_lockdir/grass62/locks
 [ $1 -ne 1 ] || ln -s %_lockdir/grass%grassfix %_libdir/%grassdir/locks
@@ -138,6 +148,7 @@ rm -f  %_libdir/%grassdir/locks
 %_libdir/%grassdir/docs
 %_libdir/%grassdir/bin
 %dir %_libdir/%grassdir/lib
+%_libdir/%name
 #_libdir/%grassdir/lib/*.%{version}*.so
 %_libdir/%grassdir/bwidget
 %_libdir/%grassdir/driver
@@ -164,6 +175,9 @@ rm -f  %_libdir/%grassdir/locks
 /usr/share/doc/%grassdir
 
 %changelog
+* Fri Jun 07 2013 Ivan Ovcherenko <asdus@altlinux.org> 6.4.2-alt1.2
+- Create versionless symlinks
+
 * Thu Mar 28 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 6.4.2-alt1.1
 - build fixed
 
