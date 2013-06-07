@@ -1,21 +1,20 @@
-# vim: set ft=spec : -*- rpm-spec -*-
 
-Name: puppet
-Version: 2.7.5
-Release: alt1.2
+Name:    puppet
+Version: 2.7.21
+Release: alt1
 
 Summary: System administration - Automated
-Group: System/Servers
+Group:   System/Servers
 License: MIT
-Url: http://reductivelabs.com/projects/puppet/
+Url:     https://puppetlabs.com/
 
 BuildArch: noarch
 
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-# Automatically added by buildreq on Sat Nov 01 2008 (-bi)
-BuildRequires: rpm-build-ruby ruby-facter ruby-tool-rdoc
+#AutoReq: yes,noruby
+BuildRequires: rpm-build-ruby ruby-facter
 
 %description
 Puppet lets you centrally manage every important aspect of your
@@ -31,14 +30,6 @@ PreReq: %name = %version-%release
 
 %description http_server-mongrel
 Mongrel HTTP server for Puppet.
-
-%package http_server-webrick 
-Summary: WEBrick HTTP server for Puppet
-Group: System/Servers
-PreReq: %name = %version-%release
-
-%description http_server-webrick
-WEBrick HTTP server for Puppet.
 
 %package server
 Summary: Server for the puppet system management tool
@@ -80,9 +71,12 @@ install -p -m644 conf/altlinux/puppet.sysconfig %buildroot%_sysconfdir/sysconfig
 install -p -m644 conf/altlinux/puppetmaster.sysconfig %buildroot%_sysconfdir/sysconfig/puppetmaster
 install -p -m644 conf/altlinux/logrotate %buildroot%_sysconfdir/logrotate.d/puppet
 
+rm -rf %buildroot/usr/lib/ruby/site_ruby/puppet/util/windows*
+rm -rf %buildroot/usr/lib/ruby/site_ruby/puppet/module_tool/skeleton/templates/generator/spec
+
 %pre
-%_sbindir/groupadd -r -f _puppet
-%_sbindir/useradd -r -n -g _puppet -d %_localstatedir/puppet -s /dev/null -c Puppet _puppet >/dev/null 2>&1 ||:
+%_sbindir/groupadd -r -f puppet
+%_sbindir/useradd -r -n -g puppet -d %_localstatedir/puppet -s /dev/null -c Puppet _puppet >/dev/null 2>&1 ||:
 
 %post
 %post_service puppetd
@@ -112,7 +106,6 @@ install -p -m644 conf/altlinux/logrotate %buildroot%_sysconfdir/logrotate.d/pupp
 %_sbindir/puppetqd
 %ruby_sitelibdir/*
 %exclude %ruby_sitelibdir/puppet/network/http/mongrel*
-%exclude %ruby_sitelibdir/puppet/network/http/webrick*
 %exclude %ruby_sitelibdir/puppet/network/http_server/*
 %_man8dir/pi.8*
 %_man8dir/puppet.8*
@@ -124,17 +117,13 @@ install -p -m644 conf/altlinux/logrotate %buildroot%_sysconfdir/logrotate.d/pupp
 %_man8dir/puppetdoc.8*
 %_man8dir/puppet-*.8*
 
-%attr(1770,_puppet,_puppet) %dir %_localstatedir/puppet
-%attr(1770,root,_puppet) %dir %_logdir/puppet
-%attr(1770,root,_puppet) %dir %_var/run/puppet
+%attr(1770,_puppet,puppet) %dir %_localstatedir/puppet
+%attr(1770,root,puppet) %dir %_logdir/puppet
+%attr(1770,root,puppet) %dir %_var/run/puppet
 
 %files http_server-mongrel
 %ruby_sitelibdir/puppet/network/http/mongrel*
 %ruby_sitelibdir/puppet/network/http_server/mongrel.rb 
-
-%files http_server-webrick
-%ruby_sitelibdir/puppet/network/http/webrick*
-%ruby_sitelibdir/puppet/network/http_server/webrick.rb 
 
 %files server
 %config %_initdir/puppetmasterd
@@ -147,10 +136,15 @@ install -p -m644 conf/altlinux/logrotate %buildroot%_sysconfdir/logrotate.d/pupp
 %_man8dir/puppetrun.8*
 %_man8dir/puppetmasterd.8*
 %_man8dir/puppetca.8*
-%attr(1770,root,_puppet) %dir %_logdir/puppet
-%attr(1770,root,_puppet) %dir %_var/run/puppet
+%attr(1770,root,puppet) %dir %_logdir/puppet
+%attr(1770,root,puppet) %dir %_var/run/puppet
 
 %changelog
+* Fri Jun 07 2013 Andrey Cherepanov <cas@altlinux.org> 2.7.21-alt1
+- New version 2.7.21 (ALT #28695)
+- Use system group `puppet` instead `_puppet` (ALT #28273)
+- New format of puppet.conf (ALT #28517)
+
 * Fri Nov 30 2012 Led <led@altlinux.ru> 2.7.5-alt1.2
 - Rebuilt with ruby-1.9.3-alt1
 
