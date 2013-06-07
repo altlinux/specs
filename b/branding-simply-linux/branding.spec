@@ -6,7 +6,7 @@
 %define brand simply
 
 Name: branding-simply-linux
-Version: 6.995.0
+Version: 6.996.0
 Release: alt1
 BuildArch: noarch
 
@@ -273,6 +273,7 @@ install -pD -m644 components/systemd/os-release %buildroot%_sysconfdir/os-releas
 pushd notes
 %makeinstall
 popd
+ln -s license.ru.html %buildroot%_datadir/alt-notes/license.uk.html
 
 mkdir -p %buildroot/etc/skel/XDG-Templates.skel/
 
@@ -297,7 +298,9 @@ install -pDm0755 xfce-settings/scripts/zdg-move-templates.sh %buildroot%_sysconf
 #slideshow
 mkdir -p %buildroot/usr/share/install2/slideshow
 mkdir -p %buildroot/etc/alterator
-install slideshow/slides/*  %buildroot/usr/share/install2/slideshow/
+cp -a slideshow/slides-*  %buildroot/usr/share/install2/slideshow/
+# Set English slideshow as default
+ln -s slides-en %buildroot/usr/share/install2/slideshow/slides
 install slideshow/slideshow.conf %buildroot/etc/alterator/
 
 #indexhtml
@@ -412,6 +415,17 @@ subst "s/Theme=.*/Theme=%theme/" /etc/plymouth/plymouthd.conf
 /usr/share/desktop-directories/altlinux-wine.directory
 
 %changelog
+* Fri Jun 07 2013 Mikhail Efremov <sem@altlinux.org> 6.996.0-alt1
+- menu: Add remmina.desktop.
+- Updated slideshow.
+- Add Ukrainian start/release-notes pages.
+- Really use russian license text for Ukrainian.
+- menu: Hide xfce4-mixer.
+- xfce settings: Use pavucontrol instead of xfce4-mixer.
+- Add Ukrainian slideshow.
+- Add English slideshow.
+- Support localized slideshow.
+
 * Mon May 13 2013 Mikhail Efremov <sem@altlinux.org> 6.995.0-alt1
 - Drop autostart/polkit-gnome-authentication-agent-1.desktop.
 - Update index.html.
