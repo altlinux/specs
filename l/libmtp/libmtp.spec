@@ -2,7 +2,7 @@
 %define sover 9
 
 Name: libmtp
-Version: 1.1.5
+Version: 1.1.6
 Release: alt1
 Packager: Dmitriy Khanzhin <jinn@altlinux.ru>
 
@@ -13,7 +13,7 @@ Group: System/Libraries
 Url: http://libmtp.sourceforge.net/
 
 Source: %name-%version.tar
-Patch1: %name-1.1.3-alt-udev-rules.patch
+Patch1: %name-%version-%release.patch
 
 # Automatically added by buildreq on Sat Apr 18 2009
 BuildRequires: libusb-devel
@@ -37,7 +37,7 @@ Requires: %name-devel = %version-%release
 
 %package -n %name-examples
 Summary: %name usage examples
-Group: Accessibility
+Group: Sound
 Requires: %name = %version-%release
 
 %description
@@ -64,30 +64,36 @@ This package contains example programs for communicating with MTP devices.
 %patch1 -p1
 
 %build
-%configure %{subst_enable static}
+touch config.rpath
+%autoreconf
+%configure %{subst_enable static} --disable-mtpz
 %make_build
 
 %install
 %make DESTDIR=%buildroot install
 /bin/bzip2 -9 ChangeLog
-/bin/install -D -m644 %name.fdi %buildroot%_datadir/hal/fdi/information/20thirdparty/10-usb-music-players-%name%sover.fdi
+
+# Replace links with relative links
+rm -f %buildroot%_bindir/mtp-{delfile,getfile,newfolder,sendfile,sendtr}
+pushd %buildroot%_bindir
+ln -sf mtp-connect mtp-delfile
+ln -sf mtp-connect mtp-getfile
+ln -sf mtp-connect mtp-newfolder
+ln -sf mtp-connect mtp-sendfile
+ln -sf mtp-connect mtp-sendtr
+popd
 
 rm -rf %buildroot%_docdir/%name-%version/html
-
-%pre -n %name%sover
-# create group
-/usr/sbin/groupadd -fr camera || :
 
 %files -n %name%sover
 %_libdir/*.so.*
 /lib/udev/rules.d/*
 /lib/udev/mtp-probe
-%_datadir/hal/fdi/information/20thirdparty/*
 %doc AUTHORS ChangeLog* README TODO
 
 %files -n %name-devel
 %_includedir/*
-%_libdir/pkgconfig/*
+%_pkgconfigdir/*
 %_libdir/*.so
 
 %if_enabled static
@@ -99,6 +105,12 @@ rm -rf %buildroot%_docdir/%name-%version/html
 %_bindir/*
 
 %changelog
+* Fri Jun 07 2013 Alexey Shabalin <shaba@altlinux.ru> 1.1.6-alt1
+- 1.1.6
+- drop create group camera in pre
+- drop hal support
+- drop libmtp-1.1.3-alt-udev-rules.patch
+
 * Mon Nov 19 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1.1.5-alt1
 - 1.1.5
 
