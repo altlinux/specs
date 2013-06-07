@@ -1,6 +1,6 @@
 Name: xfce4-clipman-plugin
 Version: 1.2.3
-Release: alt2
+Release: alt3
 
 Summary: Clipboard history plugin for the XFce panel
 Summary(ru_RU.UTF-8): Менеджер буфера обмена для XFce
@@ -11,6 +11,7 @@ Packager: XFCE Team <xfce@packages.altlinux.org>
 
 Source: %name-%version.tar
 Source1: %name-doc.tar
+Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-build-licenses
 
@@ -38,8 +39,18 @@ Clipman это менеджер буфера обмена для Xfce. Он со
 
 %prep
 %setup -a1
+# There is no git submodule under doc/ already.
+# Remove it from the auto generated patch
+sed -i '/^diff --git a\/doc b\/doc/,/^-Subproject commit/d' %_sourcedir/%name-%version-%release.patch
+%patch -p1
+
 # Don't use git tag in version.
 %xfce4_drop_gitvtag project_version_tag configure.ac.in
+
+# Set version 1.2.3. This is not the new version, just 1.2.3
+# with updated translations.
+# MUST BE REMOVED AFTER UPDATE TO THE REAL NEW VERSION!
+sed -i 's;^m4_define(\[project_version_micro\], \[4\]);m4_define([project_version_micro], [3]);' configure.ac.in
 
 %build
 %xfce4reconf
@@ -74,6 +85,9 @@ Clipman это менеджер буфера обмена для Xfce. Он со
 %exclude %_libdir/xfce4/panel/plugins/*.la
 
 %changelog
+* Fri Jun 07 2013 Mikhail Efremov <sem@altlinux.org> 1.2.3-alt3
+- Really update translations.
+
 * Thu Jun 06 2013 Mikhail Efremov <sem@altlinux.org> 1.2.3-alt2
 - Fix build: require gnome-doc-utils.
 - Updated from upstream git
