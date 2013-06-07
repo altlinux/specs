@@ -22,7 +22,7 @@
 %define kdevelop_other kdevelop%{pkg_sfx_other}
 
 Name: %kdevplatform
-Version: 1.5.0
+Version: 1.5.1
 Release: alt1.git
 Serial: 1
 
@@ -340,6 +340,10 @@ done
 %_K4link/lib*.so
 
 %changelog
+* Thu Jun  6 2013 Alexey Morozov <morozov@altlinux.org> 1:1.5.1-alt1.git
+- new git post-1.5.1 snapshot (515fd3c06b26188a170ab6346c76ffd61c05fdb5,
+  one commit after 1.5.1 release)
+
 * Tue Apr 30 2013 Alexey Morozov <morozov@altlinux.org> 1:1.5.0-alt1.git
 - new git post-1.5.0 snapshot (bc64e4263852bda5668ea51f0910b22fe51309ce,
   one commit after 1.5.0 release)

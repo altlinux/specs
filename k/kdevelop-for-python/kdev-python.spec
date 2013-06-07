@@ -32,7 +32,7 @@
 %add_findreq_skiplist %_K4apps/kdevpythonsupport/documentation_files/subprocess.py
 
 Name: %kdevelop-for-python
-Version: 1.5.0
+Version: 1.5.1
 Serial: 3
 Release: alt1
 
@@ -95,6 +95,9 @@ Python Language Plugin for KDevelop.
 %_K4apps/kdevappwizard/templates/*
 
 %changelog
+* Fri Jun  7 2013 Alexey Morozov <morozov@altlinux.org> 3:1.5.1-alt1
+- Release 1.5.1
+
 * Fri May  3 2013 Alexey Morozov <morozov@altlinux.org> 3:1.5.0-alt1
 - Release 1.5.0 (actually, the same codebase as for previous RPM
   build)
