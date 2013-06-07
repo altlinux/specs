@@ -1,5 +1,5 @@
 Name: livecd-install
-Version: 0.8.7
+Version: 0.8.8
 Release: alt1
 
 Summary: Permanently install Live system
@@ -60,6 +60,9 @@ install -m 0755 zdg-user-dirs-install.sh %buildroot%_x11sysconfdir/profile.d/
 %_x11sysconfdir/profile.d/*
 
 %changelog
+* Fri Jun 07 2013 Michael Shigorin <mike@altlinux.org> 0.8.8-alt1
+- Add Ukrainian translation to desktop file.
+
 * Wed May 29 2013 Mikhail Efremov <sem@altlinux.org> 0.8.7-alt1
 - Add disable-efivars postinstall hook.
 
