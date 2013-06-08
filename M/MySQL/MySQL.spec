@@ -1,6 +1,6 @@
 Name: MySQL
-Version: 5.5.30
-Release: alt3
+Version: 5.5.32
+Release: alt1
 
 %def_without debug
 %def_without libs
@@ -648,6 +648,9 @@ fi
 %_datadir/sql-bench
 
 %changelog
+* Sat Jun 08 2013 Michael Shigorin <mike@altlinux.org> 5.5.32-alt1
+- 5.5.32
+
 * Mon Apr 01 2013 Michael Shigorin <mike@altlinux.org> 5.5.30-alt3
 - made subpackages with client libraries and devel headers optional,
   turned these off by default since mariadb provides them and looks
