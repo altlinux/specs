@@ -1,7 +1,7 @@
 
 Name: krb5
-Version: 1.11.2
-Release: alt3
+Version: 1.11.3
+Release: alt1
 
 %define _docdir %_defaultdocdir/%name-%version
 
@@ -23,7 +23,6 @@ Patch8: krb5-1.10-fedora-kpasswd_tcp.patch
 Patch9: krb5-1.10-fedora-kprop-mktemp.patch
 Patch11: krb5-1.11-fedora-selinux-label.patch
 Patch12: krb5-fedora-kvno-230379.patch
-Patch23: krb5-1.11.2-upstream-fix-kpasswd-udp-pingpong-gitcf1a0c411.patch
 
 
 BuildRequires: /dev/pts /proc
@@ -142,7 +141,6 @@ MIT Kerberos.
 %patch9 -p1
 %patch11 -p1
 %patch12 -p1
-%patch23 -p1
 
 %build
 
@@ -342,6 +340,10 @@ touch %buildroot%_sysconfdir/krb5.keytab
 # {{{ changelog
 
 %changelog
+* Sat Jun 08 2013 Ivan A. Melnikov <iv@altlinux.org> 1.11.3-alt1
+- 1.11.3
+- drop obsolete patch 23.
+
 * Fri May 31 2013 Andrey Cherepanov <cas@altlinux.org> 1.11.2-alt3
 - Increase run order from 40 to 41 to prevent error reading from LDAP:
   'preauth pkinit failed to initialize: No realms configured correctly
