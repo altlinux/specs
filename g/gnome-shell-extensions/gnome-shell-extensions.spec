@@ -3,7 +3,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-shell-extensions
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: GNOME Shell Extensions
@@ -77,6 +77,7 @@ __EOF__
 %_datadir/gnome-shell/theme/classic-toggle-on-us.svg
 %_datadir/gnome-shell/theme/classic-process-working.svg
 %_datadir/gnome-shell/theme/gnome-classic.css
+%_datadir/glib-2.0/schemas/org.gnome.shell.extensions.classic-overrides.gschema.xml
 %exclude %_datadir/xsessions/gnome-classic.desktop
 
 ## Extensions
@@ -173,26 +174,12 @@ __EOF__
 %_datadir/gnome-shell/extensions/workspace-indicator@gnome-shell-extensions.%domain/convenience.js
 %_datadir/gnome-shell/extensions/workspace-indicator@gnome-shell-extensions.%domain/prefs.js
 
-# default-min-max
-%dir %_datadir/gnome-shell/extensions/default-min-max@gnome-shell-extensions.gcampax.github.com
-%_datadir/gnome-shell/extensions/default-min-max@gnome-shell-extensions.gcampax.github.com/convenience.js
-%_datadir/gnome-shell/extensions/default-min-max@gnome-shell-extensions.gcampax.github.com/extension.js
-%_datadir/gnome-shell/extensions/default-min-max@gnome-shell-extensions.gcampax.github.com/metadata.json
-%_datadir/gnome-shell/extensions/default-min-max@gnome-shell-extensions.gcampax.github.com/stylesheet.css
-
 # launch-new-instance
 %dir %_datadir/gnome-shell/extensions/launch-new-instance@gnome-shell-extensions.gcampax.github.com
 %_datadir/gnome-shell/extensions/launch-new-instance@gnome-shell-extensions.gcampax.github.com/convenience.js
 %_datadir/gnome-shell/extensions/launch-new-instance@gnome-shell-extensions.gcampax.github.com/extension.js
 %_datadir/gnome-shell/extensions/launch-new-instance@gnome-shell-extensions.gcampax.github.com/metadata.json
 %_datadir/gnome-shell/extensions/launch-new-instance@gnome-shell-extensions.gcampax.github.com/stylesheet.css
-
-# static-workspaces
-%dir %_datadir/gnome-shell/extensions/static-workspaces@gnome-shell-extensions.gcampax.github.com
-%_datadir/gnome-shell/extensions/static-workspaces@gnome-shell-extensions.gcampax.github.com/convenience.js
-%_datadir/gnome-shell/extensions/static-workspaces@gnome-shell-extensions.gcampax.github.com/extension.js
-%_datadir/gnome-shell/extensions/static-workspaces@gnome-shell-extensions.gcampax.github.com/metadata.json
-%_datadir/gnome-shell/extensions/static-workspaces@gnome-shell-extensions.gcampax.github.com/stylesheet.css
 
 # window-list
 %dir %_datadir/gnome-shell/extensions/window-list@gnome-shell-extensions.gcampax.github.com
@@ -213,6 +200,9 @@ __EOF__
 
 
 %changelog
+* Sat Jun 08 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.3-alt1
+- 3.8.3
+
 * Tue May 14 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.2-alt1
 - 3.8.2
 

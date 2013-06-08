@@ -9,7 +9,7 @@
 %def_enable introspection
 
 Name: %{_name}3
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: Library with common API for various GNOME 3 modules
@@ -159,6 +159,9 @@ GObject introspection devel data for the %_name library
 
 
 %changelog
+* Sat Jun 08 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.3-alt1
+- 3.8.3
+
 * Tue May 14 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.2-alt1
 - 3.8.2
 

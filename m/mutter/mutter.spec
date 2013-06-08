@@ -3,7 +3,7 @@
 %def_enable gtk_doc
 
 Name: mutter
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 Epoch: 1
 
@@ -29,7 +29,7 @@ BuildRequires: libcairo-devel >= 1.10.0
 BuildRequires: gsettings-desktop-schemas-devel >= 3.7.3
 BuildRequires: libXcomposite-devel libXfixes-devel libXrender-devel libXdamage-devel libXi-devel >= 1.6.0
 BuildRequires: libXcursor-devel libX11-devel libXinerama-devel libXext-devel libXrandr-devel libSM-devel libICE-devel
-BuildRequires: libclutter-devel >= 1.13.5 libcogl-devel >= 1.13.3
+BuildRequires: libclutter-devel >= 1.14.3 libcogl-devel >= 1.13.3
 BuildRequires: libgdk-pixbuf-devel
 BuildRequires: gtk-doc
 BuildRequires: libstartup-notification-devel zenity libcanberra-gtk3-devel
@@ -154,6 +154,9 @@ DATADIRNAME=share %configure \
 
 
 %changelog
+* Sat Jun 08 2013 Yuri N. Sedunov <aris@altlinux.org> 1:3.8.3-alt1
+- 3.8.3
+
 * Tue May 14 2013 Yuri N. Sedunov <aris@altlinux.org> 1:3.8.2-alt1
 - 3.8.2
 
