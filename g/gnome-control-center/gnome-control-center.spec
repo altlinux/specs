@@ -9,7 +9,7 @@
 %def_with cheese
 
 Name: gnome-control-center
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: GNOME Control Center
@@ -35,7 +35,7 @@ Patch: %name-3.7.92-alt-lfs.patch
 %define gnome_menus_ver 3.7.90
 %define goa_ver 3.7.91
 %define acc_ver 0.6.30
-%define sett_daemon_ver 3.7.91
+%define sett_daemon_ver 3.8.3
 %define cheese_ver 3.5.92
 %define bt_ver 3.5.92
 %define systemd_ver 40
@@ -167,6 +167,9 @@ you'll want to install this package.
 %_datadir/pkgconfig/gnome-keybindings.pc
 
 %changelog
+* Sat Jun 08 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.3-alt1
+- 3.8.3
+
 * Tue May 14 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.2-alt1
 - 3.8.2
 

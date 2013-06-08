@@ -10,7 +10,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-settings-daemon
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: A program that manages general GNOME settings
@@ -39,6 +39,8 @@ Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 
 Requires: dconf >= %dconf_ver
 Requires: colord >= %colord_ver
+Requires: system-config-printer
+Requires: system-config-printer-udev
 %{?_enable_ibus:Requires:ibus >= %ibus_ver}
 
 # From configure.ac
@@ -153,7 +155,6 @@ The %name-tests package provides programms for testing GSD plugins.
 #%_libexecdir/gnome-fallback-mount-helper
 %_libexecdir/gsd-backlight-helper
 %_libexecdir/gsd-wacom-led-helper
-%_libexecdir/gsd-input-sources-switcher
 %_datadir/%name
 %_iconsdir/hicolor/*/*/*.png
 %_iconsdir/hicolor/*/*/*.svg
@@ -196,6 +197,9 @@ The %name-tests package provides programms for testing GSD plugins.
 
 
 %changelog
+* Sat Jun 08 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.3-alt1
+- 3.8.3
+
 * Tue May 14 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.2-alt1
 - 3.8.2
 
