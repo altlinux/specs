@@ -20,13 +20,13 @@
 %define flavour %base_flavour-%sub_flavour
 
 Name: kernel-image-%flavour
-Version: 3.4.47
-Release: alt5
+Version: 3.4.48
+Release: alt1
 
 %define kernel_req %nil
 %define kernel_prov %nil
 %define kernel_branch 3.4
-%define kernel_stable_version 47
+%define kernel_stable_version 48
 %define kernel_extra_version .%kernel_stable_version
 #define kernel_extra_version %nil
 
@@ -208,6 +208,7 @@ Patch0093: linux-%kernel_branch.35-fix-drivers-block--nbd.patch
 Patch0094: linux-%kernel_branch.20-fix-drivers-block--zram.patch
 
 Patch0101: linux-%kernel_branch.39-fix-drivers-bluetooth--btmrvl.patch
+Patch0102: linux-%kernel_branch.47-fix-drivers-bluetooth--btusb.patch
 
 Patch0111: linux-%kernel_branch.20-fix-drivers-char--lp.patch
 Patch0112: linux-%kernel_branch.25-fix-drivers-char-agp--intel-agp.patch
@@ -401,8 +402,6 @@ Patch0474: linux-%kernel_branch.20-fix-drivers-scsi-megaraid--megaraid_mbox.patc
 Patch0481: linux-%kernel_branch.25-fix-drivers-spi--spi.patch
 Patch0482: linux-%kernel_branch.38-fix-drivers-spi--spi-dw.patch
 
-Patch0491: linux-%kernel_branch.47-fix-drivers-target-iscsi.patch
-
 Patch0500: linux-%kernel_branch.43-fix-drivers-tty.patch
 Patch0501: linux-%kernel_branch.39-fix-drivers-tty-hvc--hvc_console.patch
 Patch0502: linux-%kernel_branch.38-fix-drivers-tty-serial--ifx6x60.patch
@@ -509,9 +508,13 @@ Patch0671: linux-%kernel_branch.20-fix-security--apparmor.patch
 Patch0672: linux-%kernel_branch.20-fix-security--security.patch
 Patch0673: linux-%kernel_branch.35-fix-security--selinux.patch
 
-Patch0681: linux-%kernel_branch.20-fix-sound-pci-hda--snd-hda-codec-realtek.patch
-Patch0682: linux-%kernel_branch.20-fix-sound-soc-omap--snd-soc-omap.patch
-Patch0683: linux-%kernel_branch.20-fix-sound-soc-omap--snd-soc-omap-mcbsp.patch
+Patch0681: linux-%kernel_branch.47-fix-sound-pci-hda--snd-hda-codec.patch
+Patch0682: linux-%kernel_branch.47-fix-sound-pci-hda--snd-hda-codec-analog.patch
+Patch0683: linux-%kernel_branch.47-fix-sound-pci-hda--snd-hda-codec-idt.patch
+Patch0684: linux-%kernel_branch.20-fix-sound-pci-hda--snd-hda-codec-realtek.patch
+Patch0685: linux-%kernel_branch.47-fix-sound-pci-hda--snd-hda-intel.patch
+Patch0686: linux-%kernel_branch.20-fix-sound-soc-omap--snd-soc-omap.patch
+Patch0687: linux-%kernel_branch.20-fix-sound-soc-omap--snd-soc-omap-mcbsp.patch
 
 Patch0691: linux-%kernel_branch.20-fix-tools--perf.patch
 Patch0692: linux-%kernel_branch.20-fix-tools-hv.patch
@@ -1357,6 +1360,7 @@ cd linux-%version
 
 # fix-drivers-bluetooth--*
 %patch0101 -p1
+%patch0102 -p1
 
 # fix-drivers-char-*
 %patch0111 -p1
@@ -1585,7 +1589,6 @@ cd linux-%version
 %patch0482 -p1
 
 # fix-drivers-target-*
-%patch0491 -p1
 
 # fix-drivers-tty*
 %patch0500 -p1
@@ -1706,10 +1709,16 @@ cd linux-%version
 %patch0672 -p1
 %patch0673 -p1
 
+# fix-sound-*
 %patch0681 -p1
 %patch0682 -p1
 %patch0683 -p1
+%patch0684 -p1
+%patch0685 -p1
+%patch0686 -p1
+%patch0687 -p1
 
+# fix-tools-*
 %patch0691 -p1
 %patch0692 -p1
 
@@ -2712,6 +2721,17 @@ done)
 
 
 %changelog
+* Sat Jun 08 2013 Led <led@altlinux.ru> 3.4.48-alt1
+- 3.4.48
+- removed:
+  + fix-drivers-target-iscsi
+- added:
+  + fix-drivers-bluetooth--btusb
+  + fix-sound-pci-hda--snd-hda-codec
+  + fix-sound-pci-hda--snd-hda-codec-analog
+  + fix-sound-pci-hda--snd-hda-codec-idt
+  + fix-sound-pci-hda--snd-hda-intel
+
 * Sat Jun 01 2013 Led <led@altlinux.ru> 3.4.47-alt5
 - updated:
   + fix-fs-reiserfs
