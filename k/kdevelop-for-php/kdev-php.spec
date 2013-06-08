@@ -1,6 +1,6 @@
 %define _unpackaged_files_terminate_build 1
 %define unstable 0
-%define post_version 0
+%define post_version 1
 
 %define build_req_kde_ver 4.6.0
 %define build_req_kdevplatform_ver 1.5.0
@@ -27,8 +27,8 @@
 %define kdevelop_pg_qt kdevelop-pg-qt
 
 Name: %kdevelop-for-php
-Version: 1.5.0
-Release: alt1
+Version: 1.5.1
+Release: alt1.git
 Serial: 3
 
 Summary: PHP Language Plugin for KDevelop/Quanta.
@@ -102,6 +102,9 @@ EOF
 %_K4srv/*
 
 %changelog
+* Fri Jun  7 2013 Alexey Morozov <morozov@altlinux.org> 3:1.5.1-alt1.git
+- v1.5.1 release
+
 * Tue Apr 30 2013 Alexey Morozov <morozov@altlinux.org> 3:1.5.0-alt1
 - 1.5.0 release
 

@@ -1,10 +1,10 @@
-Version: 4.5.0
-Release: alt1.git
+Version: 4.5.1
+Release: alt1
 Serial: 3
 
 %define _unpackaged_files_terminate_build 1
 %define unstable 0
-%define post_version 1
+%define post_version 0
 %define with_api_docs 0
 %def_enable okteta
 # from the Project's CMakeLists.txt
@@ -487,6 +487,13 @@ done
 %_K4apps/kdevfiletemplates/templates/python_*.tar.bz2
 
 %changelog
+* Fri Jun  7 2013 Alexey Morozov <morozov@altlinux.org> 3:4.5.1-alt1
+- v4.5.1 release
+
+* Tue Apr 30 2013 Alexey Morozov <morozov@altlinux.org> 3:4.5.0-alt1.git
+- a post 4.5.0 snapshot (ff1b813e716271de6bfab7f7be75a3e808650754,
+
+  one minor commit after v4.5.0)
 * Tue Apr 30 2013 Alexey Morozov <morozov@altlinux.org> 3:4.5.0-alt1.git
 - a post 4.5.0 snapshot (ff1b813e716271de6bfab7f7be75a3e808650754,
   one minor commit after v4.5.0)
