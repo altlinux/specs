@@ -10,7 +10,7 @@
 
 Name: %{_name}3
 Version: %ver_major.3
-Release: alt1
+Release: alt2
 
 Summary: Library with common API for various GNOME 3 modules
 License: %gpl2plus, %fdl
@@ -119,7 +119,7 @@ GObject introspection devel data for the %_name library
     %{subst_enable static} \
     %{?_enable_gtk_doc:--enable-gtk-doc} \
     --with-gnome-distributor=%gnome_distributor \
-    --with-pnp-ids-path=%_datadir/misc
+    --with-pnp-ids-path=%_datadir/misc/pnp.ids
 
 %make_build
 
@@ -159,6 +159,9 @@ GObject introspection devel data for the %_name library
 
 
 %changelog
+* Sun Jun 09 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.3-alt2
+- fixed pnp.ids path
+
 * Sat Jun 08 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.3-alt1
 - 3.8.3
 
