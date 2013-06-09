@@ -21,7 +21,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.4.48
-Release: alt1
+Release: alt2
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -377,30 +377,32 @@ Patch0431: linux-%kernel_branch.39-fix-drivers-power--ab8500.patch
 Patch0432: linux-%kernel_branch.39-fix-drivers-power--charger-manager.patch
 Patch0433: linux-%kernel_branch.39-fix-drivers-power--da9030_battery.patch
 
-Patch0440: linux-%kernel_branch.38-fix-drivers-regulator.patch
-Patch0441: linux-%kernel_branch.39-fix-drivers-regulator--88pm8607.patch
-Patch0442: linux-%kernel_branch.39-fix-drivers-regulator--ab8500.patch
-Patch0443: linux-%kernel_branch.39-fix-drivers-regulator--regulator.patch
+Patch0441: linux-%kernel_branch.47-fix-drivers-ptp--ptp_pch.patch
 
-Patch0451: linux-%kernel_branch.25-fix-drivers-rtc--rtc-m41t80.patch
+Patch0450: linux-%kernel_branch.38-fix-drivers-regulator.patch
+Patch0451: linux-%kernel_branch.39-fix-drivers-regulator--88pm8607.patch
+Patch0452: linux-%kernel_branch.39-fix-drivers-regulator--ab8500.patch
+Patch0453: linux-%kernel_branch.39-fix-drivers-regulator--regulator.patch
 
-Patch0461: linux-%kernel_branch.25-fix-drivers-scsi--aha1542.patch
-Patch0462: linux-%kernel_branch.25-fix-drivers-scsi--aic94xx.patch
-Patch0463: linux-%kernel_branch.36-fix-drivers-scsi--hv_storvsc.patch
-Patch0464: linux-%kernel_branch.38-fix-drivers-scsi--lpfc.patch
-Patch0465: linux-%kernel_branch.25-fix-drivers-scsi--mpt2sas.patch
-Patch0466: linux-%kernel_branch.25-fix-drivers-scsi--mvsas.patch
-Patch0467: linux-%kernel_branch.20-fix-drivers-scsi--scsi_mod.patch
-Patch0468: linux-%kernel_branch.20-fix-drivers-scsi--scsi_netlink.patch
-Patch0469: linux-%kernel_branch.42-fix-drivers-scsi--sd_mod.patch
-Patch0470: linux-%kernel_branch.29-fix-drivers-scsi--st.patch
-Patch0471: linux-%kernel_branch.20-fix-drivers-scsi-device_handler--scsi_dh.patch
-Patch0472: linux-%kernel_branch.39-fix-drivers-scsi-fcoe--fcoe.patch
-Patch0473: linux-%kernel_branch.20-fix-drivers-scsi-ibmvscsi--ibmvscsic.patch
-Patch0474: linux-%kernel_branch.20-fix-drivers-scsi-megaraid--megaraid_mbox.patch
+Patch0461: linux-%kernel_branch.25-fix-drivers-rtc--rtc-m41t80.patch
 
-Patch0481: linux-%kernel_branch.25-fix-drivers-spi--spi.patch
-Patch0482: linux-%kernel_branch.38-fix-drivers-spi--spi-dw.patch
+Patch0471: linux-%kernel_branch.25-fix-drivers-scsi--aha1542.patch
+Patch0472: linux-%kernel_branch.25-fix-drivers-scsi--aic94xx.patch
+Patch0473: linux-%kernel_branch.36-fix-drivers-scsi--hv_storvsc.patch
+Patch0474: linux-%kernel_branch.38-fix-drivers-scsi--lpfc.patch
+Patch0475: linux-%kernel_branch.25-fix-drivers-scsi--mpt2sas.patch
+Patch0476: linux-%kernel_branch.25-fix-drivers-scsi--mvsas.patch
+Patch0477: linux-%kernel_branch.20-fix-drivers-scsi--scsi_mod.patch
+Patch0478: linux-%kernel_branch.20-fix-drivers-scsi--scsi_netlink.patch
+Patch0479: linux-%kernel_branch.42-fix-drivers-scsi--sd_mod.patch
+Patch0480: linux-%kernel_branch.29-fix-drivers-scsi--st.patch
+Patch0481: linux-%kernel_branch.20-fix-drivers-scsi-device_handler--scsi_dh.patch
+Patch0482: linux-%kernel_branch.39-fix-drivers-scsi-fcoe--fcoe.patch
+Patch0483: linux-%kernel_branch.20-fix-drivers-scsi-ibmvscsi--ibmvscsic.patch
+Patch0484: linux-%kernel_branch.20-fix-drivers-scsi-megaraid--megaraid_mbox.patch
+
+Patch0491: linux-%kernel_branch.25-fix-drivers-spi--spi.patch
+Patch0492: linux-%kernel_branch.38-fix-drivers-spi--spi-dw.patch
 
 Patch0500: linux-%kernel_branch.43-fix-drivers-tty.patch
 Patch0501: linux-%kernel_branch.39-fix-drivers-tty-hvc--hvc_console.patch
@@ -803,10 +805,10 @@ AutoReq: no
 %postun_kernel_modules %kversion-%flavour-%krelease
 
 %define kernel_extmods_package_post() \
-%post -n kernel-extmods-%{1}-%flavour \
+%post -n kernel-modules-%{1}-%flavour \
 %post_kernel_modules %kversion-%flavour-%krelease \
 \
-%postun -n kernel-extmods-%{1}-%flavour \
+%postun -n kernel-modules-%{1}-%flavour \
 %postun_kernel_modules %kversion-%flavour-%krelease
 %else
 %define kernel_modules_package_post() \
@@ -1059,7 +1061,7 @@ These are DRM modules for your Linux system.
 Summary: Linux media driver modules
 Provides: kernel-modules-lirc-%flavour = %version-%release
 # Needed for webcams
-Requires: kernel-modules-sound-ext-%flavour = %kversion-%release
+Requires: kernel-modules-alsa-%flavour = %kversion-%release
 %kernel_modules_package_std_body media
 
 %description -n kernel-modules-media-%flavour
@@ -1279,15 +1281,15 @@ v="${M#*=}"
 l="$(rpmquery --qf '%%{LICENSE}\n' kernel-src-$m-$v 2>/dev/null)"
 [ -n "$l" -a "$l" != "(none)" ] && l="License: $l" || l=
 cat <<__PACKAGE__
-%%package -n kernel-extmods-$m-%flavour
+%%package -n kernel-modules-$m-%flavour
 Version: ${v}_%kversion
 Summary: $m kernel modules v$v
 $l
 %kernel_modules_package_std_body $m
-Provides: kernel-modules-$m-%flavour = %version-%release
+Provides: kernel-extmods-$m-%flavour = %version-%release
 Provides: kernel-modules-$m-%flavour = %kversion-%release
 
-%%description -n kernel-extmods-$m-%flavour
+%%description -n kernel-modules-$m-%flavour
 $m kernel modules version $v.
 
 __PACKAGE__
@@ -1559,36 +1561,37 @@ cd linux-%version
 %patch0432 -p1
 %patch0433 -p1
 
-# fix-drivers-regulator*
-%patch0440 -p1
+# fix-drivers-ptp--*
 %patch0441 -p1
-%patch0442 -p1
-%patch0443 -p1
+
+# fix-drivers-regulator*
+%patch0450 -p1
+%patch0451 -p1
+%patch0452 -p1
+%patch0453 -p1
 
 # fix-drivers-rtc--*
-%patch0451 -p1
+%patch0461 -p1
 
 # fix-drivers-scsi-*
-%patch0461 -p1
-%patch0462 -p1
-%patch0463 -p1
-%patch0464 -p1
-%patch0465 -p1
-%patch0466 -p1
-%patch0467 -p1
-%patch0468 -p1
-%patch0469 -p1
-%patch0470 -p1
 %patch0471 -p1
 %patch0472 -p1
 %patch0473 -p1
 %patch0474 -p1
-
-# fix-drivers-spi--*
+%patch0475 -p1
+%patch0476 -p1
+%patch0477 -p1
+%patch0478 -p1
+%patch0479 -p1
+%patch0480 -p1
 %patch0481 -p1
 %patch0482 -p1
+%patch0483 -p1
+%patch0484 -p1
 
-# fix-drivers-target-*
+# fix-drivers-spi--*
+%patch0491 -p1
+%patch0492 -p1
 
 # fix-drivers-tty*
 %patch0500 -p1
@@ -2680,7 +2683,7 @@ done)
 %ifdef extra_mods
 %(for m in %extra_mods; do
 cat <<__PACKAGE__
-%%files -n kernel-extmods-$m-%flavour -f linux-%kversion/external/$m.rpmmodlist
+%%files -n kernel-modules-$m-%flavour -f linux-%kversion/external/$m.rpmmodlist
 
 __PACKAGE__
 done)
@@ -2721,6 +2724,13 @@ done)
 
 
 %changelog
+* Sun Jun 09 2013 Led <led@altlinux.ru> 3.4.48-alt2
+- updated:
+  + feat-drivers-block--btier
+- added:
+  + fix-drivers-ptp--ptp_pch
+- renamed external modules to kernel-modules-*
+
 * Sat Jun 08 2013 Led <led@altlinux.ru> 3.4.48-alt1
 - 3.4.48
 - removed:
