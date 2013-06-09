@@ -1,6 +1,6 @@
 %define module_name     vhba
-%define module_version  20120422
-%define module_release alt2
+%define module_version  20130607
+%define module_release alt1
 
 %define flavour         un-def
 BuildRequires(pre): rpm-build-kernel
@@ -71,6 +71,9 @@ install -Dp -m0755 %SOURCE2 %buildroot%_initdir/%module_name
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Sun Jun 09 2013 Nazarov Denis <nenderus@altlinux.org> 20130607-alt1
+- Version 20130607
 
 * Mon Dec 17 2012 Gleb F-Malinovskiy <glebfm@altlinux.org> 20120422-alt2
 - new template
