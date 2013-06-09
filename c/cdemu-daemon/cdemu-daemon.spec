@@ -1,6 +1,6 @@
 Name: cdemu-daemon
-Version: 2.0.0
-Release: alt2
+Version: 2.1.0
+Release: alt1
 
 Summary: CDEmu daemon
 License: GPLv2+
@@ -13,7 +13,7 @@ Source0: %name-%version.tar.bz2
 
 BuildRequires: cmake
 BuildRequires: libao-devel >= 0.8.0
-BuildRequires: libmirage-devel >= 2.0.0
+BuildRequires: libmirage-devel >= 2.1.0
 
 %description
 This is CDEmu daemon, the userspace daemon part of the userspace-cdemu suite, a 
@@ -52,6 +52,7 @@ popd
 %defattr(-,root,root,-)
 %doc AUTHORS ChangeLog COPYING INSTALL NEWS README
 %_bindir/%name
+%dir %_libexecdir/%name
 %_libexecdir/%name/%name-session.sh
 %_mandir/man8/*
 %dir %_datadir/dbus-1
@@ -59,6 +60,9 @@ popd
 %_datadir/dbus-1/services/*.service
 
 %changelog
+* Sun Jun 09 2013 Nazarov Denis <nenderus@altlinux.org> 2.1.0-alt1
+- Version 2.1.0
+
 * Tue Dec 25 2012 Nazarov Denis <nenderus@altlinux.org> 2.0.0-alt2
 - Fix build requires and libexec directory path
 

@@ -1,6 +1,6 @@
 Name: libmirage
-Version: 2.0.0
-Release: alt2
+Version: 2.1.0
+Release: alt1
 
 Summary: A CD-ROM image access library
 License: GPLv2+
@@ -11,7 +11,7 @@ Packager: Nazarov Denis <nenderus@altlinux.org>
 
 Source0: %name-%version.tar.bz2
 
-BuildRequires: bzlib-devel cmake glib-networking gobject-introspection-devel gtk-doc glibc-core libGConf liblzma-devel libsndfile-devel time zlib-devel
+BuildRequires: bzlib-devel cmake glib-networking gobject-introspection-devel gtk-doc glibc-core libGConf liblzma-devel libsamplerate-devel libsndfile-devel time zlib-devel
 
 %description
 This is libMirage library, a CD-ROM image access library, and part of the 
@@ -58,8 +58,8 @@ find %buildroot%_libdir -name *.la -or -name \*.a | xargs rm -f
 %_defattr
 %doc AUTHORS ChangeLog COPYING NEWS INSTALL README
 %_libdir/libmirage.so.*
-%dir %_libdir/libmirage-2.0
-%_libdir/libmirage-2.0/*.so
+%dir %_libdir/libmirage-2.1
+%_libdir/libmirage-2.1/*.so
 %_datadir/mime/packages/*.xml
 
 %files devel
@@ -67,6 +67,7 @@ find %buildroot%_libdir -name *.la -or -name \*.a | xargs rm -f
 %_libdir/libmirage.so
 %_libdir/girepository-1.0/*
 %_pkgconfigdir/%name.pc
+%dir %_includedir/%name
 %_includedir/%name/*.h
 %_datadir/gir-1.0/*
 %dir %_datadir/gtk-doc
@@ -74,6 +75,9 @@ find %buildroot%_libdir -name *.la -or -name \*.a | xargs rm -f
 %doc %_datadir/gtk-doc/html/%name
 
 %changelog
+* Sun Jun 09 2013 Nazarov Denis <nenderus@altlinux.org> 2.1.0-alt1
+- Version 2.1.0
+
 * Tue Dec 25 2012 Nazarov Denis <nenderus@altlinux.org> 2.0.0-alt2
 - Fix post-install unowned files
 
