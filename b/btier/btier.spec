@@ -1,7 +1,7 @@
 %define Name BTIER
 Name: btier
 %define module_name %name
-Version: 1.0.0
+Version: 1.0.2
 %define rel %nil
 Release: alt1
 Summary: %Name - a blockdevice that provides automated tiered storage
@@ -94,6 +94,9 @@ tar --transform='s,^.*/,/%module_name-%version/,' -cJf %kernel_srcdir/%module_na
 
 
 %changelog
+* Sun Jun 09 2013 Led <led@altlinux.ru> 1.0.2-alt1
+- 1.0.2
+
 * Tue May 28 2013 Led <led@altlinux.ru> 1.0.0-alt1
 - 1.0.0:
   + added migrate_blocks_freq - a data migration tool
