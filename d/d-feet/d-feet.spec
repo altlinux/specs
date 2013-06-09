@@ -1,7 +1,7 @@
 %define ver_major 0.3
 
 Name: d-feet
-Version: %ver_major.4
+Version: %ver_major.5
 Release: alt1
 
 Summary: A powerful D-Bus Debugger
@@ -35,13 +35,12 @@ objects.
 %install
 %makeinstall_std
 
-%find_lang %name dfeet
+%find_lang --with-gnome --output=%name.lang %name dfeet
 
 %check
 #%%make check
 
-
-%files
+%files -f %name.lang
 %_bindir/%name
 %python_sitelibdir_noarch/dfeet
 %_datadir/d-feet/
@@ -53,6 +52,9 @@ objects.
 %doc AUTHORS README NEWS
 
 %changelog
+* Sun Jun 09 2013 Yuri N. Sedunov <aris@altlinux.org> 0.3.5-alt1
+- 0.3.5
+
 * Fri May 31 2013 Yuri N. Sedunov <aris@altlinux.org> 0.3.4-alt1
 - 0.3.4
 
