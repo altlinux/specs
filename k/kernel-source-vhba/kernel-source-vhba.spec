@@ -1,5 +1,5 @@
 Name: kernel-source-vhba
-Version: 20120422
+Version: 20130607
 Release: alt1
 
 Summary: Source for VHBA module
@@ -46,6 +46,9 @@ install -Dp -m0644 %SOURCE1 %buildroot%_sysconfdir/udev/rules.d/60-vhba.rules
 %config %_sysconfdir/udev/rules.d/60-vhba.rules
 
 %changelog
+* Sun Jun 09 2013 Nazarov Denis <nenderus@altlinux.org> 20130607-alt1
+- Version 20130607
+
 * Tue Apr 24 2012 Nazarov Denis <nenderus@altlinux.org> 20120422-alt1
 - Version 20120422
 
