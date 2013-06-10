@@ -1,7 +1,7 @@
 %define _hooksdir %_sysconfdir/hooks/hostname.d
 
 Name: alterator-ldap-groups
-Version: 0.6.3
+Version: 0.6.4
 Release: alt1
 
 Source: %name-%version.tar
@@ -46,6 +46,10 @@ Alterator module for LDAP groups administration
 %_hooksdir/91-ldap-groups
 
 %changelog
+* Mon Jun 10 2013 Andrey Cherepanov <cas@altlinux.org> 0.6.4-alt1
+- No wrap checkbox text
+- Localization support for system group combobox
+
 * Thu Jun 06 2013 Andrey Cherepanov <cas@altlinux.org> 0.6.3-alt1
 - Add mapping to system UNIX and Samba group
 
