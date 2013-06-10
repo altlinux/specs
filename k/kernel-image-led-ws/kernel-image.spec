@@ -21,7 +21,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.4.48
-Release: alt2
+Release: alt3
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -175,7 +175,8 @@ Patch0022: linux-%kernel_branch.20-fix-arch-x86--apm.patch
 Patch0023: linux-%kernel_branch.20-fix-arch-x86--hpet.patch
 Patch0024: linux-%kernel_branch.20-fix-arch-x86--kexec.patch
 Patch0025: linux-%kernel_branch.42-fix-arch-x86--mcheck.patch
-Patch0026: linux-%kernel_branch.25-fix-arch-x86-cpu--rdrand.patch
+Patch0026: linux-%kernel_branch.47-fix-arch-x86--microcode.patch
+Patch0027: linux-%kernel_branch.25-fix-arch-x86-cpu--rdrand.patch
 
 Patch0030: linux-%kernel_branch.35-fix-block.patch
 Patch0031: linux-%kernel_branch.35-fix-block--blk-integrity.patch
@@ -1322,6 +1323,7 @@ cd linux-%version
 %patch0024 -p1
 %patch0025 -p1
 %patch0026 -p1
+%patch0027 -p1
 
 # fix-block*
 %patch0030 -p1
@@ -2724,6 +2726,10 @@ done)
 
 
 %changelog
+* Mon Jun 10 2013 Led <led@altlinux.ru> 3.4.48-alt3
+- added:
+  + fix-arch-x86--microcode
+
 * Sun Jun 09 2013 Led <led@altlinux.ru> 3.4.48-alt2
 - updated:
   + feat-drivers-block--btier
