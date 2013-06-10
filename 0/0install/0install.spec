@@ -1,10 +1,10 @@
 Name: 0install
-Version: 1.15
+Version: 2.2
 Release: alt1
 Summary: Decentralised cross-distribution software installation system
 Group: System/Configuration/Packaging
 Source: %name-%version.tar.bz2
-Patch: 0install-1.15-man1dir.patch
+Patch: 0install-2.2-man1dir.patch
 Url: http://0install.net/
 License: LGPLv2
 BuildArch: noarch
@@ -73,10 +73,9 @@ Bash completion for %name
 %_man1dir/*
 %_desktopdir/*
 %_iconsdir/hicolor/*/apps/*
-%_datadir/desktop-directories/*
 
 %files -n %packagename -f zero-install.lang
-%_xdgmenusdir/applications-merged/*
+#_xdgmenusdir/applications-merged/*
 %python_sitelibdir/zeroinstall*
 
 %files -n zsh-completion-%name
@@ -86,6 +85,10 @@ Bash completion for %name
 %_datadir/bash-completion/completions/0install
 
 %changelog
+* Mon Jun 10 2013 Fr. Br. George <george@altlinux.ru> 2.2-alt1
+- Autobuild version bump to 2.2
+- Fix patch
+
 * Tue Feb 19 2013 Fr. Br. George <george@altlinux.ru> 1.15-alt1
 - Autobuild version bump to 1.15
 - Fix patch
