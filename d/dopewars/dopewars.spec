@@ -9,7 +9,7 @@ BuildRequires: glib2-devel libSDL-devel libesd-devel libgtk+2-devel libncurses-d
 Summary:	A drug dealing game
 Name:		dopewars
 Version:	1.5.12
-Release:	alt1_12.%{rel}svn
+Release:	alt1_13.%{rel}svn
 URL:		http://dopewars.sourceforge.net/
 License:	GPLv2+
 Group:		Games/Other
@@ -18,6 +18,9 @@ Group:		Games/Other
 # svn co https://svn.sourceforge.net/svnroot/dopewars/dopewars/trunk dopewars
 # tar jcf dopewars-%{version}-%{rel}svn.tar.bz2
 Source0:	%{name}-%{version}-%{rel}svn.tar.bz2
+
+# Add ARM64 support (BZ #925272)
+Patch0:		dopewars-aarch64.patch
 
 BuildRequires:	esound-devel
 BuildRequires:	desktop-file-utils
@@ -55,6 +58,7 @@ the Simple DirectMedia Layer mixer (SDL_mixer).
 %prep
 #%setup -q
 %setup -q -n %{name}
+%patch0 -p1 -b .aarch64
 # Clean out svn stuff
 find . -name .svn | xargs rm -rf;
 # Fix documentation
@@ -104,6 +108,9 @@ rm -rf %{buildroot}%{_docdir}
 %{_libdir}/dopewars/libsound_sdl.so
 
 %changelog
+* Mon Jun 10 2013 Igor Vlasenko <viy@altlinux.ru> 1.5.12-alt1_13.1033svn
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 1.5.12-alt1_12.1033svn
 - update to new release by fcimport
 
