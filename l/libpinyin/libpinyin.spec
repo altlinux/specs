@@ -6,7 +6,7 @@ Group: Other
 %global snapshot 0
 
 Name:           libpinyin
-Version:        0.9.91
+Version:        0.9.92
 Release:        alt1_1
 Summary:        Library to deal with pinyin
 
@@ -96,6 +96,9 @@ find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 %{_mandir}/man1/*.1.*
 
 %changelog
+* Mon Jun 10 2013 Igor Vlasenko <viy@altlinux.ru> 0.9.92-alt1_1
+- update to new release by fcimport
+
 * Tue May 07 2013 Igor Vlasenko <viy@altlinux.ru> 0.9.91-alt1_1
 - update to new release by fcimport
 
