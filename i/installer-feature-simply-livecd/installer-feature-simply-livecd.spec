@@ -1,5 +1,5 @@
 Name: installer-feature-simply-livecd
-Version: 0.8.5
+Version: 0.8.6
 Release: alt1
 
 Summary: LiveCD install hooks for Simply Linux.
@@ -56,6 +56,9 @@ cp -ar alterator-menu/ %buildroot%_datadir/livecd-install
 %_datadir/livecd-install/
 
 %changelog
+* Mon Jun 10 2013 Mikhail Efremov <sem@altlinux.org> 0.8.6-alt1
+- Enable cpufreq-simple.service.
+
 * Fri May 31 2013 Mikhail Efremov <sem@altlinux.org> 0.8.5-alt1
 - Add module-expert-list (by cas@).
 
