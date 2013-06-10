@@ -1,5 +1,5 @@
 Name: tatham-puzzles
-Version: 9840
+Version: 9861
 Release: alt1
 License: MIT
 Group: Games/Puzzles
@@ -105,6 +105,9 @@ install *.info* %buildroot%_infodir/
 %_infodir/*%{name}*
 
 %changelog
+* Mon Jun 10 2013 Fr. Br. George <george@altlinux.ru> 9861-alt1
+- Autobuild version bump to 9861
+
 * Mon May 20 2013 Fr. Br. George <george@altlinux.ru> 9840-alt1
 - Autobuild version bump to 9840
 
