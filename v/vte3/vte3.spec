@@ -2,7 +2,7 @@
 %define ver_major 0.34
 
 Name: %{_name}3
-Version: %ver_major.5
+Version: %ver_major.6
 Release: alt1
 
 %def_enable pty_helper
@@ -155,7 +155,6 @@ find %buildroot -type f -name '*.la' -delete
 
 %files
 %_bindir/*
-%config %_sysconfdir/profile.d/%_name.sh
 
 %if 0
 %files utils
@@ -203,6 +202,9 @@ find %buildroot -type f -name '*.la' -delete
 %endif
 
 %changelog
+* Mon Jun 10 2013 Yuri N. Sedunov <aris@altlinux.org> 0.34.6-alt1
+- 0.34.6
+
 * Mon May 13 2013 Yuri N. Sedunov <aris@altlinux.org> 0.34.5-alt1
 - 0.34.5
 
