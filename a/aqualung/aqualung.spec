@@ -1,6 +1,6 @@
 Name: aqualung
 Summary: Aqualung is a music player for the GNU/Linux operating system
-Version: 0.9svn1251
+Version: 0.9svn1270
 Release: alt1
 License: GPL
 Group: Sound
@@ -10,8 +10,9 @@ Patch: %name-ffmpeg-0.7.1.patch
 #Source:			%name-%version.tar.gz
 Url: http://aqualung.sf.net
 
-# Automatically added by buildreq on Mon Mar 14 2011
-BuildRequires: gcc-c++ libalsa-devel libavformat-devel libcddb-devel libcdio-devel libflac-devel libgtk+2-devel libjack-devel liblame-devel liblrdf-devel liblua5-devel libmac-devel libmad-devel libmodplug-devel libmpcdec-devel liboggz-devel libpulseaudio-devel libsamplerate-devel libsndfile-devel libspeex-devel libvorbis-devel libwavpack-devel libxml2-devel zlib-devel libhid-devel libifp-devel
+# Automatically added by buildreq on Mon Jun 10 2013
+# optimized out: fontconfig fontconfig-devel glib2-devel libatk-devel libavcodec-devel libavutil-devel libcairo-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libogg-devel libopencore-amrnb0 libopencore-amrwb0 libpango-devel libraptor-devel libstdc++-devel libusb-compat libwayland-client libwayland-server pkg-config xz zlib-devel
+BuildRequires: gcc-c++ libalsa-devel libavformat-devel libcddb-devel libcdio-devel libflac-devel libgtk+2-devel libifp-devel libjack-devel liblame-devel liblrdf-devel liblua5-devel libmac-devel libmad-devel libmodplug-devel libmpcdec-devel liboggz-devel libpulseaudio-devel libsamplerate-devel libsndfile-devel libspeex-devel libusb-compat-devel libvorbis-devel libwavpack-devel libxml2-devel
 
 %description
 Aqualung is a music player for the GNU/Linux operating system.
@@ -69,26 +70,19 @@ sed -i 's/\[mad], \[mad],/[mad], [libmad],/' configure.ac
 	--with-cdda=yes \
 	--with-cddb=yes \
 	--with-flac=yes \
-	--with-id3=yes \
 	--with-ifp=yes \
 	--with-jack=yes \
 	--with-ladspa=yes \
 	--with-lame=yes \
 	--with-lavc=yes \
-	--with-loop=yes \
 	--with-mac=yes \
-	--with-metadata=yes \
-	--with-metaedit=yes \
 	--with-mpc=yes \
 	--with-mpeg=yes \
-	--with-mpegstatrec=yes \
 	--with-mod=yes \
-	--with-ogg=yes \
 	--with-oss=yes \
 	--with-sndfile=yes \
 	--with-speex=yes \
 	--with-src=yes \
-	--with-systray=yes \
 	--with-pulse=yes \
 	--with-vorbisenc=yes \
 	--with-wavpack=yes
@@ -123,6 +117,7 @@ install -m 0644 %name.desktop \
 
 %files -f %name.lang
 %doc AUTHORS ChangeLog COPYING README
+%doc %_defaultdocdir/aqualung
 %_bindir/%name
 %_mandir/man1/*
 %dir %_datadir/%name
@@ -131,6 +126,10 @@ install -m 0644 %name.desktop \
 %_desktopdir/%name.desktop
 
 %changelog
+* Mon Jun 10 2013 Fr. Br. George <george@altlinux.ru> 0.9svn1270-alt1
+- Autobuild version bump to 0.9svn1270
+- Cosmetic build fix
+
 * Wed Oct 24 2012 Fr. Br. George <george@altlinux.ru> 0.9svn1251-alt1
 - Autobuild version bump to 0.9svn1251
 
