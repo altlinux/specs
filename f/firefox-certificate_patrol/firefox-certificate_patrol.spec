@@ -2,8 +2,8 @@
 
 %define rname	certificate_patrol
 %define version 2.0.14
-%define release alt1
-%define cid 	\{a23983c0-fd0e-11dc-95ff-0800200c9a66\}
+%define release alt2
+%define cid 	CertPatrol@PSYC.EU
 %define ciddir	%firefox_noarch_extensionsdir/%cid
 
 Name:		%firefox_name-%rname
@@ -77,5 +77,8 @@ fi
 %ciddir
 
 %changelog
+* Sun May 26 2013 Nikolay A. Fetisov <naf@altlinux.ru> 2.0.14-alt2
+- Fix extention CID
+
 * Sun May 19 2013 Nikolay A. Fetisov <naf@altlinux.ru> 2.0.14-alt1
 - Initial build for ALTLinux Sisyphus
