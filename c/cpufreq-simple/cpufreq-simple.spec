@@ -1,6 +1,6 @@
 Name: cpufreq-simple
-Version: 0.2.0
-Release: alt2
+Version: 0.2.1
+Release: alt1
 
 Summary: Simple scripts for managing CPUfreq settings
 License: %gpl2plus
@@ -11,7 +11,7 @@ BuildArch: noarch
 
 BuildRequires(pre): rpm-build-licenses
 
-Requires: cpufrequtils libshell
+Requires: cpufrequtils libshell pm-utils
 
 %description
 Install this package if you would like it to attempt
@@ -45,6 +45,10 @@ install -pDm644 %name.service %buildroot%_unitdir/%name.service
 %_sysconfdir/pm/sleep.d/*
 
 %changelog
+* Mon Jun 10 2013 Mikhail Efremov <sem@altlinux.org> 0.2.1-alt1
+- Don't try to load already loaded module.
+- Require pm-utils.
+
 * Mon Mar 11 2013 Mikhail Efremov <sem@altlinux.org> 0.2.0-alt2
 - Install and package systemd service file.
 
