@@ -13,8 +13,8 @@
 %endif
 
 Name: glib2
-Version: %ver_major.2
-Release: alt2
+Version: %ver_major.3
+Release: alt1
 
 Summary: A library of handy utility functions
 License: %lgpl2plus
@@ -380,6 +380,9 @@ install -pD -m 755 filetrigger %buildroot%_rpmlibdir/gsettings.filetrigger
 
 
 %changelog
+* Mon Jun 10 2013 Yuri N. Sedunov <aris@altlinux.org> 2.36.3-alt1
+- 2.36.3
+
 * Fri May 31 2013 Yuri N. Sedunov <aris@altlinux.org> 2.36.2-alt2
 - fixed list of terminal in gio/gdesktopappinfo.c (ALT #29011)
 
