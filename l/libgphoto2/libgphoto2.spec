@@ -6,7 +6,7 @@
 %define _libexecdir /usr/libexec
 
 Name: libgphoto2
-Version: 2.5.1.1
+Version: 2.5.2
 Release: alt1
 
 Group: System/Libraries
@@ -17,7 +17,7 @@ License: LGPLv2+
 Packager: Dmitriy Khanzhin <jinn@altlinux.ru>
 
 # Automatically added by buildreq on Mon Oct 11 2010
-BuildRequires: doxygen flex gcc-c++ libexif-devel libgd2-devel libjpeg-devel liblockdev-devel libltdl7-devel libusb-compat-devel libusb-devel
+BuildRequires: doxygen flex gcc-c++ libexif-devel libgd2-devel libjpeg-devel liblockdev-devel libltdl7-devel libusb-compat-devel libusb-devel libxml2-devel
 %if_enabled libhal
 BuildRequires: libhal-devel
 %endif
@@ -27,8 +27,7 @@ BuildRequires: libhal-devel
 
 # Url for source code downloads now http://sourceforge.net/project/showfiles.php?group_id=8874
 Source0: %name-%version.tar
-Patch0:  %name-2.4.14-alt-fix-underlinked_libraries.patch
-Patch1:  %name-2.5.0-alt-fix-undef-symbols.patch
+Patch0:  %name-2.5.2-alt-fix-underlinked_libraries.patch
 
 %description
 This library contains all the functionality to access to modern digital
@@ -79,10 +78,10 @@ against %name library.
 %prep
 %setup -n %name-%version
 %patch0 -p1
-%patch1 -p1
 
 %build
 sed -i '/driverdir/d' libgphoto2_port/libgphoto2_port.pc.in
+%add_optflags -I/usr/include/libxml2
 %autoreconf
 export udevscriptdir=/lib/udev
 export utilsdir=%_libexecdir/%name
@@ -179,6 +178,12 @@ do /bin/cp -pr $f ${f}.port ; done
 %endif
 
 %changelog
+* Mon Jun 10 2013 Dmitriy Khanzhin <jinn@altlinux.org> 2.5.2-alt1
+- 2.5.2
+- dropped patch1
+- added libxml2-devel to buildrequires
+  + added add_optflags macro for find libxml2 includes (thx to at@ and ldv@)
+
 * Mon Feb 11 2013 Dmitriy Khanzhin <jinn@altlinux.org> 2.5.1.1-alt1
 - 2.5.1.1
 - print-camera-list moved to /usr/libexec
