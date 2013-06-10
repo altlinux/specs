@@ -1,9 +1,9 @@
 %add_optflags %optflags_shared
-%global gnulib_ver 20120404-stable
+%global gnulib_ver 20130529-stable
 
 Summary: A pipeline manipulation library
 Name: libpipeline
-Version: 1.2.3
+Version: 1.2.4
 Release: alt1_1
 License: GPLv3+
 Group: Development/C
@@ -57,6 +57,9 @@ rm $RPM_BUILD_ROOT/%{_libdir}/libpipeline.la
 %{_mandir}/man3/*
 
 %changelog
+* Mon Jun 10 2013 Igor Vlasenko <viy@altlinux.ru> 1.2.4-alt1_1
+- update to new release by fcimport
+
 * Tue Apr 30 2013 Igor Vlasenko <viy@altlinux.ru> 1.2.3-alt1_1
 - update to new release by fcimport
 
