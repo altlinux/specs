@@ -6,12 +6,12 @@
 #
 # Spec file for Fedora modified by Eric Smith <eric@brouhaha.com>
 
-%global patchlevel bld84
+%global patchlevel bld88
 
 Name:           asl
 URL:            http://john.ccac.rwth-aachen.de:8000/as/index.html
 Version:        1.42
-Release:        alt2_0.13.%{patchlevel}
+Release:        alt2_0.14.%{patchlevel}
 Group:          Development/Tools
 License:        GPLv2+
 Summary:        Macro Assembler AS
@@ -82,6 +82,9 @@ done
 %lang(de) %doc doc/as-DE.html doc/as-DE.txt doc/as-DE.ps doc/as-DE.pdf doc/as-DE.dvi
 
 %changelog -n asl
+* Mon Jun 10 2013 Igor Vlasenko <viy@altlinux.ru> 1.42-alt2_0.14.bld88
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 1.42-alt2_0.13.bld84
 - update to new release by fcimport
 
