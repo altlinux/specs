@@ -1,24 +1,22 @@
-%define pre %nil
 %def_disable static
 %def_disable gmdb2
 
 Name: mdbtools
-Version: 0.6
-Release: alt8cvs20051217%pre
+Version: 0.7
+Release: alt1
 
 Summary: Utilities for use M$ Access databases under Linux
 
 Group: Databases
 License: GPL/LGPL
-Url: http://mdbtools.sourceforge.net/
-Source: http://dl.sourceforge.net/%name/%name-%version%pre.tar.bz2
+Url: https://github.com/brianb/mdbtools
 
-Patch0: %name-as-needed.patch
-Patch1: %name-0.6-alt-sql.patch
+Source: %name-%version.tar
 
 Requires: lib%name = %version-%release
 
 BuildRequires: flex libreadline-devel libunixODBC-devel glib2-devel
+BuildRequires: gtk-doc txt2man
 %{?_enable_gmdb2:BuildRequires: libglade-devel libgnomeui-devel librarian}
 
 %description
@@ -73,22 +71,20 @@ This package contains the libraries needed to build applications
 statically linked with MDB Tools.
 
 %prep
-%setup -q -n %name-%version%pre
-%patch0 -p0
-%patch1 -p1
-subst "s|.*<config\.h>.*||" include/mdbtools.h
+%setup
 
 %build
 %autoreconf
 %configure \
     %{subst_enable static} \
     --with-unixodbc=%_prefix \
-    %{subst_enable gmdb2}
+    %{subst_enable gmdb2} \
+    --enable-gtk-doc
 
 %make_build
 
 %install
-%make_install DESTDIR=%buildroot install
+%makeinstall_std
 
 %files
 %_bindir/*
@@ -117,6 +113,10 @@ subst "s|.*<config\.h>.*||" include/mdbtools.h
 %endif
 
 %changelog
+* Fri Jun 07 2013 Yuri N. Sedunov <aris@altlinux.org> 0.7-alt1
+- go to new upstream: https://github.com/brianb/mdbtools
+- build against libodbcinst.so.2
+
 * Mon Apr 09 2012 Yuri N. Sedunov <aris@altlinux.org> 0.6-alt8cvs20051217
 - don't build gmdb
 

@@ -40,7 +40,7 @@
 %define minor	8
 %define bugfix	4
 %define beta	%nil
-%define rlz alt4
+%define rlz alt5
 %define phonon_ver 4.4.0
 
 Name: %rname%major
@@ -1529,6 +1529,9 @@ install -m 644 %SOURCE104 %buildroot/%_iconsdir/hicolor/64x64/apps/%name.png
 %endif
 
 %changelog
+* Thu Jun 06 2013 Sergey V Turchin <zerg@altlinux.org> 4.8.4-alt5
+- rebuilt with new unixODBC
+
 * Fri Apr 05 2013 Sergey V Turchin <zerg@altlinux.org> 4.8.4-alt4
 - update patch against QTBUG-22829
 

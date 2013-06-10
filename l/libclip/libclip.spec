@@ -8,7 +8,7 @@
 
 Name: libclip
 Version: 1.2.0cvs
-Release: alt4
+Release: alt5
 
 Summary: XBASE/Clipper compatible program compiler - runtime library
 Summary(ru_RU.KOI8-R): Совместимый с XBASE/Clipper компилятор программ -- дополнительные библиотеки
@@ -352,6 +352,9 @@ mv %buildroot%FCLIPDIR/locale.po %buildroot%VCLIPDIR
 %exclude %FCLIPDIR/lib/*.a
 
 %changelog
+* Thu Jun 06 2013 Andrey Cherepanov <cas@altlinux.org> 1.2.0cvs-alt5
+- Rebuild with new version of unixODBC
+
 * Sun Apr 07 2013 Andrey Cherepanov <cas@altlinux.org> 1.2.0cvs-alt4
 - Rebuild with new libmysqlclient
 

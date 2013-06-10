@@ -1,8 +1,8 @@
-%define abiversion 2
+%define rname unixODBC
 
-Name: unixODBC
-Version: 2.3.1
-Release: alt2
+Name: unixODBC-contrib
+Version: 2.2.12
+Release: alt7
 
 Summary: Unix ODBC driver manager and database drivers
 Summary(ru_RU.UTF-8): Система управления драйверами ODBC для unix 
@@ -10,24 +10,23 @@ Group: Databases
 License: LGPL
 Url: http://www.unixODBC.org
 
-Requires: lib%name = %version-%release
+Requires: lib%rname = %version-%release
 Provides: MyODBC = %version-%release
 
-Source0: http://www.unixodbc.org/%name-%version.tar.gz
+Source0: http://www.unixodbc.org/%rname-%version.tar.gz
 
-Source1: %name-odbcinst.ini
-Source2: %name-DataManager.desktop
-Source3: %name-ODBCConfig.desktop
+Source1: %rname-odbcinst.ini
+Source2: %rname-DataManager.desktop
+Source3: %rname-ODBCConfig.desktop
 
-Patch1: %name-depcomp.patch
-Patch3: %name-2.2.11-export-symbols.patch
-Patch4: %name-2.2.11-symbols.patch
-# Patches from Fedora
-Patch10: coverity-fixes.patch
-Patch11: keep-typedefs.patch
-Patch12: so-version-bump.patch
+Patch1: %rname-depcomp.patch
+Patch2: %rname-parserupdate.patch
+Patch3: %rname-2.2.11-stricmp.patch
+Patch4: %rname-2.2.11-symbols.patch
+Patch5: %rname-2.2.12-alt-ltdl.patch
 
-BuildRequires: flex gcc-c++ libltdl7-devel libreadline-devel
+# Automatically added by buildreq on Mon Feb 14 2011
+BuildRequires: flex gcc-c++ libltdl7-devel libqt3-devel libreadline-devel
 
 %description
 UnixODBC is a free/open and solution for ODBC. ODBC is an open
@@ -42,7 +41,7 @@ ODBC представляет из себя открытую специфика�
 Базы данных включает в себя сервера SQL и другие источники данных,
 поддерживаемые ODBC драйверами.
 
-%package -n lib%name%abiversion
+%package -n lib%{rname}1
 Summary: Shared libraries for ODBC
 Summary(ru_RU.UTF-8): Разделяемые библиотеки для ODBC
 Group: Development/Databases
@@ -51,72 +50,34 @@ Provides: libodbc.so()(64bit) libodbcinst.so()(64bit)
 %else
 Provides: libodbc.so libodbcinst.so
 %endif
-Provides: lib%name = %version-%release
 
-%description -n lib%name%abiversion
+%description -n lib%{rname}1
 unixODBC aims to provide a complete ODBC solution for the Linux platform.
 This package contains the shared libraries.
 
-%description -n lib%name%abiversion -l ru_RU.UTF-8
+%description -n lib%{rname}1 -l ru_RU.UTF-8
 unixODBC представляет из себя полную спецификацию ODBC для Linux платформы.
 Этот пакет содержит в себе раделяемые библиотеки.
 
-%package -n lib%name-devel
-Summary: Includes for ODBC development
-Summary(ru_RU.UTF-8): Заголовочные файлы для разработки с использованием ODBC
-Group: Development/Databases
-Requires: lib%name = %version-%release
-
-%description -n lib%name-devel
-unixODBC aims to provide a complete ODBC solution for the Linux platform.
-This package contains the include files for development.
-
-%description -n lib%name-devel -l ru_RU.UTF-8
-unixODBC представляет из себя полную спецификацию ODBC для Linux платформы.
-Этот пакет содержит заголовочные файлы для разработки с использованием ODBC
-
 %prep
-%setup -q
-#rm -r libltdl
+%setup -q -n %rname-%version 
+rm -r libltdl
 %patch1 -p1
+%patch2 -p1
 %patch3 -p1
 %patch4 -p1
-%patch10 -p1
-%patch11 -p1
-%patch12 -p1
-
-chmod 0644 Drivers/MiniSQL/*.c
-chmod 0644 Drivers/nn/*.c
-chmod 0644 Drivers/template/*.c
-chmod 0644 doc/ProgrammerManual/Tutorial/*.html
-chmod 0644 doc/lst/*
-chmod 0644 include/odbcinst.h
-
-# Blow away the embedded libtool and replace with build system's libtool.
-# (We will use the installed libtool anyway, but this makes sure they match.)
-rm -rf config.guess config.sub install-sh ltmain.sh libltdl
-# this hack is so we can build with either libtool 2.2 or 1.5
-libtoolize --install || libtoolize
+%patch5 -p1
 
 %build
-export QTDIR=%_qt4dir
-aclocal
-automake --add-missing
-autoconf
-
-# unixODBC 2.2.14 is not aliasing-safe
-CFLAGS="%{optflags} -fno-strict-aliasing"
-CXXFLAGS="$CFLAGS"
-export CFLAGS CXXFLAGS
-
+export QTDIR=%_qt3dir
+%autoreconf
 %configure \
 	--with-gnu-ld \
-:	--enable-threads \
+	--enable-threads \
 	--enable-gui \
 	--enable-drivers \
-	--enable-driverc \
 	--enable-ltdllib \
-	--with-qt-libraries=%_qt4dir/lib \
+	--with-qt-libraries=%_qt3dir/lib \
 	--disable-static
 %make_build
 
@@ -126,42 +87,25 @@ export CFLAGS CXXFLAGS
 install -pD -m644 %SOURCE1 %buildroot%_sysconfdir/odbcinst.ini
 subst "s,@libdir@,%_libdir," %buildroot%_sysconfdir/odbcinst.ini
 
+install -pD -m644 %SOURCE2 %buildroot%_desktopdir/DataManager.desktop
+install -pD -m644 %SOURCE3 %buildroot%_desktopdir/ODBCConfig.desktop
+install -pD -m644 DataManager/LinuxODBC.xpm %buildroot%_niconsdir/LinuxODBC.xpm
+install -pD -m644 DataManager/ODBC.xpm %buildroot%_miconsdir/odbc.xpm
+
 find doc -name Makefile\* -delete
 
-%files
-%doc AUTHORS COPYING README doc/AdministratorManual doc/UserManual doc/index.html doc/*.gif
-%config(noreplace) %verify(not md5 size mtime) %_sysconfdir/odbc*.ini
-%_bindir/dltest
-%_bindir/isql
-%_bindir/iusql
-%_bindir/odbcinst
-
-%files -n lib%name%abiversion
+%files -n lib%{rname}1
 %_libdir/lib*.so.*
+%exclude %_libdir/libodbcinstQ*.so.*
 %_libdir/libodbc.so
 %_libdir/libodbcinst.so
 %_libdir/libodbcpsql.so
 %_libdir/libodbcpsqlS.so
 %_libdir/libodbcmyS.so
 
-%files -n lib%name-devel
-%doc ChangeLog doc/ProgrammerManual doc/lst
-%_includedir/*
-%_bindir/odbc_config
-%_libdir/lib*.so
-%exclude %_libdir/libodbc.so
-%exclude %_libdir/libodbcinst.so
-%exclude %_libdir/libodbcpsql.so
-%exclude %_libdir/libodbcpsqlS.so
-%exclude %_libdir/libodbcmyS.so
-
 %changelog
-* Thu Jun 13 2013 Andrey Cherepanov <cas@altlinux.org> 2.3.1-alt2
-- according to shared libs policy
-
-* Tue Jun 04 2013 Andrey Cherepanov <cas@altlinux.org> 2.3.1-alt1
-- New version 2.3.1
-- qt-gui is removed from sources
+* Thu Jun 13 2013 Andrey Cherepanov <cas@altlinux.org> 2.2.12-alt7
+- build compat package
 
 * Mon Feb 14 2011 Alexey Tourbin <at@altlinux.ru> 2.2.12-alt6
 - rebuilt for debuginfo

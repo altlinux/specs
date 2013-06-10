@@ -3,7 +3,7 @@
 
 Name:		gambas3
 Version:	3.4.1
-Release:	alt2
+Release:	alt3
 
 Summary:	IDE based on a basic interpreter with object extensions
 Group:		Development/Tools
@@ -1258,6 +1258,9 @@ install -m 0644 -p main/mime/application-x-gambas3.xml %buildroot%_xdgmimedir/pa
 %appdir/info/gb.xml.xslt.*
 
 %changelog
+* Thu Jun 06 2013 Andrey Cherepanov <cas@altlinux.org> 3.4.1-alt3
+- Rebuild with new version of unixODBC
+
 * Wed Apr 24 2013 Andrey Cherepanov <cas@altlinux.org> 3.4.1-alt2
 - Rebuild with new version of poppler
 
