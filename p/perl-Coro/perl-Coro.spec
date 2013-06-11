@@ -1,8 +1,8 @@
 # Spec file for Perl module Coro
 
 Name: perl-Coro
-Version: 6.23
-Release: alt2
+Version: 6.31
+Release: alt1
 
 Summary: cooperative multitasking Perl module
 
@@ -53,6 +53,9 @@ export CORO_INTERFACE=u
 %perl_vendor_autolib/Coro
 
 %changelog
+* Tue Jun 11 2013 Nikolay A. Fetisov <naf@altlinux.ru> 6.31-alt1
+- New version
+
 * Fri Mar 01 2013 Sergey Bolshakov <sbolshakov@altlinux.ru> 6.23-alt2
 - explicitly select ucontext method on arm
 
