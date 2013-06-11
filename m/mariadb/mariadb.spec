@@ -3,8 +3,8 @@
 %define build_bench 1
 
 Name: mariadb
-Version: 5.5.30
-Release: alt12
+Version: 5.5.31
+Release: alt2
 
 Summary: A very fast and reliable SQL database engine
 License: GPLv2 with exceptions
@@ -628,6 +628,12 @@ fi
 %_libdir/libmysqld.so
 
 %changelog
+* Tue Jun 11 2013 Slava Dubrovskiy <dubrsl@altlinux.org> 5.5.31-alt2
+- Fixed check for the first start
+
+* Tue Jun 11 2013 Slava Dubrovskiy <dubrsl@altlinux.org> 5.5.31-alt1
+- New version
+
 * Sun Apr 14 2013 Dmitriy Kulik <lnkvisitor@altlinux.org> 5.5.30-alt12
 - Fix systemd service
 
