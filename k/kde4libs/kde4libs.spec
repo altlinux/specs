@@ -11,7 +11,7 @@
 %define rname kdelibs
 Name: kde4libs
 Version: %major.%minor.%bugfix
-Release: alt1
+Release: alt2
 
 %define conflictver %major.%minor-alt0.0.1
 %define conflictver_kdevelop 3.4.1-alt0.0.1
@@ -109,6 +109,7 @@ Patch1033: kdelibs-4.9.1-alt-cmake-spaces.patch
 Patch1034: kdelibs-4.10.0-alt-find-samba.patch
 Patch1035: kdelibs-4.10.2-alt-flags.patch
 Patch1036: kdelibs-4.10.2-alt-add-protocol-all.patch
+Patch1037: kdelibs-4.10.4-alt-def-plasma-theme-bg.patch
 
 Patch3000: kdelibs-4.4.92-alt-alternate-kconf_update_bin-path.patch
 
@@ -206,6 +207,7 @@ applications for KDE 4.
 %patch1034 -p1
 %patch1035 -p1
 %patch1036 -p1
+%patch1037 -p1
 
 %patch3000 -p1
 
@@ -328,6 +330,9 @@ ln -sf `relative %buildroot/%_kde4_bindir/kde4-config %buildroot/%_K4bindir/kde4
 %_K4includedir/*
 
 %changelog
+* Tue Jun 11 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.4-alt2
+- set default plasma theme background
+
 * Mon Jun 03 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.4-alt1
 - new version
 
