@@ -1,6 +1,6 @@
 Name: xorg-drv-wacom
 Version: 0.20.0
-Release: alt2
+Release: alt3
 Epoch: 1
 Summary: Wacom input driver
 License: GPLv2
@@ -42,11 +42,14 @@ Wacom input driver development package
 
 %install
 %make DESTDIR=%buildroot install
+install -pDm644 10-wacom.rules \
+	%buildroot%_sysconfdir/udev/rules.d/10-wacom.rules
 
 %files
 %_bindir/xsetwacom
 %_x11modulesdir/input/*.so
 %_xorgsysconfigdir/*.conf
+%_sysconfdir/udev/rules.d/10-wacom.rules
 %_man1dir/*.1*
 %_man4dir/*.4*
 
@@ -55,6 +58,9 @@ Wacom input driver development package
 %_pkgconfigdir/*.pc
 
 %changelog
+* Fri Jun 07 2013 Michael Shigorin <mike@altlinux.org> 1:0.20.0-alt3
+- NMU: added udev rules (closes: #26724)
+
 * Wed Mar 06 2013 Valery Inozemtsev <shrek@altlinux.ru> 1:0.20.0-alt2
 - requires XORG_ABI_XINPUT = 19.1
 
