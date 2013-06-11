@@ -3,8 +3,8 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-pkg
-Version: 2.6.10
-Release: alt3
+Version: 2.6.11
+Release: alt1
 
 %add_findreq_skiplist %_libexecdir/alterator/backend3/pkg-init
 %add_findreq_skiplist %_datadir/install2/initinstall.d/*
@@ -60,6 +60,9 @@ additional package installation
 %_alterator_backend3dir/*
 
 %changelog
+* Tue Jun 11 2013 Andrey Cherepanov <cas@altlinux.org> 2.6.11-alt1
+- Localize units in total installed size
+
 * Wed May 15 2013 Andrey Cherepanov <cas@altlinux.org> 2.6.10-alt3
 - Fix repository sources with Arepo 2.0
 
