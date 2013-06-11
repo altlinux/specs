@@ -22,7 +22,7 @@
 
 Name: gvfs
 Version: %ver_major.2
-Release: alt1
+Release: alt2
 
 Summary: The GNOME virtual filesystem libraries
 License: %lgpl2plus
@@ -37,6 +37,9 @@ Patch1: gvfs-1.16.0-archive-integration.patch
 Patch3: gvfs-1.14.1-libgvfsdaemon+headers_install.patch
 Patch4: gvfs-1.16.2-alt-lfs.patch
 Patch5: gvfs-1.15.4-alt-tmpfiles_dir.patch
+# https://bugzilla.altlinux.org/show_bug.cgi?id=29047
+# https://mail.gnome.org/archives/gvfs-list/2013-May/msg00014.html
+Patch6: gvfs-1.16.1-alt-logind-state.patch
 
 %{?_enable_gdu:Obsoletes: gnome-mount <= 0.8}
 %{?_enable_gdu:Obsoletes: gnome-mount-nautilus-properties <= 0.8}
@@ -241,6 +244,7 @@ Bash completion for gvfs.
 %patch3 -p1 -b .headers-install
 %patch4 -p1 -b .lfs
 %patch5 -b .tmpfiles
+%patch6 -p2 -b .logind-state
 
 [ ! -d m4 ] && mkdir m4
 
@@ -425,6 +429,9 @@ killall -USR1 gvfsd >&/dev/null || :
 %exclude %_libdir/gio/modules/*.la
 
 %changelog
+* Tue Jun 11 2013 Yuri N. Sedunov <aris@altlinux.org> 1.16.2-alt2
+- boyarsh@, aen@: gvfs-1.16.1-alt-logind-state.patch (ALT #29047)
+
 * Tue May 14 2013 Yuri N. Sedunov <aris@altlinux.org> 1.16.2-alt1
 - 1.16.2
 
