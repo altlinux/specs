@@ -3,7 +3,7 @@
 %define real_name  Net-Twitter-Lite
 
 Name: perl-Net-Twitter-Lite
-Version: 0.12002
+Version: 0.12004
 Release: alt1
 
 Summary: a Perl interface to the Twitter API
@@ -54,6 +54,9 @@ error handling options.
 %perl_vendor_privlib/Net/Twitter/Lite*
 
 %changelog
+* Tue Jun 11 2013 Nikolay A. Fetisov <naf@altlinux.ru> 0.12004-alt1
+- New version
+
 * Sun Apr 14 2013 Nikolay A. Fetisov <naf@altlinux.ru> 0.12002-alt1
 - New version
 
