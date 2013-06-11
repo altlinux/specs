@@ -1,6 +1,14 @@
 Name: parole
 Version: 0.5.1
-Release: alt1
+Release: alt2
+
+# '1' for gstreamer-1.0
+# '0' or undefined for gstreamer-0.10
+%ifnarch %arm
+%define gstreamer1 1
+%else
+%define gstreamer1 0
+%endif
 
 Summary: Media player for the Xfce desktop
 License: %gpl2plus
@@ -17,7 +25,11 @@ BuildRequires(pre): rpm-build-licenses
 BuildPreReq: rpm-build-xfce4 xfce4-dev-tools
 BuildPreReq: libxfce4ui-devel libxfce4util-devel libexo-devel libxfconf-devel
 BuildRequires: libgtk+2-devel libnotify-devel libtag-devel
+%if %{?gstreamer1}%{!?gstreamer1:0}
 BuildRequires: gstreamer1.0-devel gst-plugins1.0-devel
+%else
+BuildRequires: gstreamer-devel gst-plugins-devel
+%endif
 BuildRequires: libdbus-glib-devel libdbus-devel
 BuildRequires: intltool gtk-doc
 
@@ -48,7 +60,11 @@ mkdir m4
     --disable-static \
     --enable-maintainer-mode \
     --enable-taglib \
-	--with-gstreamer=1.0 \
+%if %{?gstreamer1}%{!?gstreamer1:0}
+    --with-gstreamer=1.0 \
+%else
+    --with-gstreamer=0.10 \
+%endif
     --enable-gtk-doc \
     --enable-debug=no
 %make_build
@@ -71,6 +87,9 @@ mkdir m4
 %doc %_datadir/gtk-doc/html/*
 
 %changelog
+* Tue Jun 11 2013 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.5.1-alt2
+- Build with gstreamer0.10 on %%arm
+
 * Tue Jun 04 2013 Mikhail Efremov <sem@altlinux.org> 0.5.1-alt1
 - Updated to 0.5.1.
 
