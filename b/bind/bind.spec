@@ -1,13 +1,13 @@
 Name: bind
-Version: 9.9.2
-Release: alt5
+Version: 9.9.3
+Release: alt2
 
 Summary: ISC BIND - DNS server
 License: BSD-style
 Group: System/Servers
 Url: http://www.isc.org/products/BIND/
 
-%define vsuffix -P2
+%define vsuffix "P1"
 # NOTE: vsuffix removed from Source0
 # ftp://ftp.isc.org/isc/bind9/%version%vsuffix/bind-%version%vsuffix.tar.gz
 Source0: %name-%version.tar
@@ -42,12 +42,11 @@ Patch0002: 0002-bind-9.8.3-openbsd-owl-pidfile.patch
 Patch0003: 0003-bind-9.9.1-openbsd-owl-chroot-defaults.patch
 Patch0004: 0004-bind-9.9.1-alt-owl-chroot.patch
 Patch0005: 0005-bind-9.8.3-owl-checkconf-chroot.patch
-Patch0006: 0006-bind-9.8.3-alt-isc-config.patch
-Patch0007: 0007-bind-9.8.3-alt-man.patch
-Patch0008: 0008-bind-9.8.3-alt-owl-rndc-confgen.patch
-Patch0009: 0009-bind-9.8.3-alt-nofile.patch
-Patch0010: 0010-bind-9.8.3-fc-exportlib.patch
-Patch0011: 0011-bind-9.9.1-alt-ads-remove.patch
+Patch0006: 0006-bind-9.8.3-alt-man.patch
+Patch0007: 0007-bind-9.8.3-alt-owl-rndc-confgen.patch
+Patch0008: 0008-bind-9.8.3-alt-nofile.patch
+Patch0009: 0009-bind-9.9.1-alt-ads-remove.patch
+Patch0010: 0010-bind-9.9.3-fc-exportlib.patch
 
 # root directory for chrooted environment.
 %define _chrootdir %_localstatedir/bind
@@ -195,7 +194,6 @@ rather than the DNS protocol.
 %patch0008 -p2
 %patch0009 -p2
 %patch0010 -p2
-%patch0011 -p2
 
 install -D -pm644 %_sourcedir/rfc1912.txt doc/rfc/rfc1912.txt
 install -pm644 %_sourcedir/bind.README.bind-devel README.bind-devel
@@ -220,9 +218,9 @@ s,@SBINDIR@,%_sbindir,g;
 ' --
 
 %build
+%autoreconf
 %configure \
 	--localstatedir=/var \
-	--with-libtool \
 	--with-randomdev=/dev/random \
 	--disable-threads \
 	--disable-linux-caps \
@@ -233,11 +231,10 @@ s,@SBINDIR@,%_sbindir,g;
 	--with-export-libdir=%{_libdir} \
 	--with-export-includedir=%{_includedir} \
 	--includedir=%{_includedir}/bind9 \
-	--disable-openssl-version-check
-# Get rid of RPATH.
-sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' libtool
+	--disable-openssl-version-check \
+	--with-libtool \
+	
 %make_build
-
 # Build queryperf
 pushd contrib/queryperf
 	%configure
@@ -443,6 +440,13 @@ fi
 %exclude %docdir/COPYRIGHT
 
 %changelog
+* Tue Jun 11 2013 Fr. Br. George <george@altlinux.ru> 9.9.3-alt2
+- Update to ftp://ftp.isc.org/isc/bind9/9.9.3-P1/bind-9.9.3-P1.tar.gz
+
+* Thu Jun 06 2013 Fr. Br. George <george@altlinux.ru> 9.9.3-alt1
+- Update to ftp://ftp.isc.org/isc/bind9/9.9.3/bind-9.9.3.tar.gz
+- Drop alt-isc-config.patch
+
 * Thu Mar 28 2013 Fr. Br. George <george@altlinux.ru> 9.9.2-alt5
 - Update to ftp://ftp.isc.org/isc/bind9/9.9.2-P2/bind-9.9.2-P2.tar.gz
 - Turn regex support off

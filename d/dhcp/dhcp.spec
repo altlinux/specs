@@ -2,11 +2,11 @@
 # vim: set ft=spec:
 # vim600: set fdm=marker:
 
-#%%define patchlevel rc14
+%define patchlevel -P1
 
 Name: dhcp
 Version: 4.2.5
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: Dynamic Host Configuration Protocol (DHCP) distribution
@@ -557,6 +557,10 @@ fi
 # }}}
 
 %changelog
+* Thu Jun 13 2013 Fr. Br. George <george@altlinux.ru> 1:4.2.5-alt2
+- Update to ftp://ftp.isc.org/isc/dhcp/4.2.5-P1/dhcp-4.2.5-P1.tar.gz
+- Rebuild with bind-9.9.3
+
 * Mon Feb 25 2013 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:4.2.5-alt1
 - george@:
   + Version update to 4.2.5
