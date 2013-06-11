@@ -21,7 +21,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.4.48
-Release: alt3
+Release: alt4
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -2726,6 +2726,12 @@ done)
 
 
 %changelog
+* Mon Jun 10 2013 Led <led@altlinux.ru> 3.4.48-alt4
+- updated:
+  + fix-arch-x86--microcode
+- disabled:
+  + PPS_CLIENT_KTIMER
+
 * Mon Jun 10 2013 Led <led@altlinux.ru> 3.4.48-alt3
 - added:
   + fix-arch-x86--microcode
