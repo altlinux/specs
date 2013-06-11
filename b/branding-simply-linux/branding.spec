@@ -7,7 +7,7 @@
 
 Name: branding-simply-linux
 Version: 7.0.0
-Release: alt1
+Release: alt2
 BuildArch: noarch
 
 BuildRequires: cpio gfxboot >= 4 fonts-ttf-dejavu fonts-ttf-droid
@@ -279,6 +279,7 @@ mkdir -p %buildroot/etc/skel/XDG-Templates.skel/
 
 cp -r xfce-settings/etcskel/* %buildroot/etc/skel/
 cp -r xfce-settings/etcskel/.config %buildroot/etc/skel/
+cp -r xfce-settings/etcskel/.local %buildroot/etc/skel/
 cp -r xfce-settings/etcskel/.gconf %buildroot/etc/skel/
 cp -r xfce-settings/etcskel/.vimrc %buildroot/etc/skel/
 
@@ -387,6 +388,7 @@ subst "s/Theme=.*/Theme=%theme/" /etc/plymouth/plymouthd.conf
 /etc/skel/.wm-select
 /etc/skel/.fonts.conf
 /etc/skel/.config
+/etc/skel/.local
 /etc/skel/.gconf
 /etc/skel/.vimrc
 /usr/share/backgrounds/xfce/*
@@ -415,6 +417,10 @@ subst "s/Theme=.*/Theme=%theme/" /etc/plymouth/plymouthd.conf
 /usr/share/desktop-directories/altlinux-wine.directory
 
 %changelog
+* Tue Jun 11 2013 Mikhail Efremov <sem@altlinux.org> 7.0.0-alt2
+- license.ru.html: Add SL version.
+- xfce settings: Set gnome-mplayer as default for video/*.
+
 * Mon Jun 10 2013 Mikhail Efremov <sem@altlinux.org> 7.0.0-alt1
 - Drop 'beta' status.
 
