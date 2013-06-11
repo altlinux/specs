@@ -1,13 +1,13 @@
 Name: nss-mdns
 Version: 0.10
-Release: alt3.qa1
+Release: alt4
 
 Summary: nss-mdns provides host name resolution via Multicast DNS
 License: GPL
 Group: System/Libraries
 Url: http://www.avahi.org/
 
-Source: %name-%version-%release.tar
+Source: %name-%version.tar
 
 BuildRequires: gcc-c++ libavahi-devel lynx
 
@@ -58,28 +58,34 @@ hosts: files mdns4_minimal [NOTFOUND=return] dns mdns4
 %make install DESTDIR=%buildroot
 
 %post -n lib%name
-if ! grep -q '^hosts:[[:blank:]].\+mdns' /etc/nsswitch.conf; then
-sed -i.rpmorig 's/^\(hosts:[[:blank:]].\+\)\(dns\)$/\1mdns4_minimal [NOTFOUND=return] \2 mdns4/' /etc/nsswitch.conf
-update_chrooted all
+if [ -f /etc/nsswitch.conf ] ; then
+	sed -i.bak '
+	/^hosts:/ !b
+	/\<mdns\(4\|6\)\?\(_minimal\)\?\>/ b
+	s/\([[:blank:]]\+\)dns\>/\1mdns4_minimal [NOTFOUND=return] dns/g
+	' /etc/nsswitch.conf
+	update_chrooted all
 fi
 
 %postun -n lib%name
-if [ "$1" = "0" ]; then
-sed -i -e 's/ mdns4_minimal \[NOTFOUND=return\]//' -e 's/ mdns4//' /etc/nsswitch.conf
-update_chrooted all
+if [ "$1" -eq 0 -a -f /etc/nsswitch.conf ] ; then
+	sed -i.bak '
+	/^hosts:/ !b
+	s/[[:blank:]]\+mdns\(4\|6\)\?\(_minimal\( \[NOTFOUND=return\]\)\?\)\?//g
+	' /etc/nsswitch.conf
+	update_chrooted all
 fi
 
-%triggerpostun -n lib%name -- lib%name < 0.10-alt3
-if ! grep -q '^hosts:[[:blank:]].\+mdns' /etc/nsswitch.conf; then
-sed -i 's/^\(hosts:[[:blank:]].\+\)\(dns\)$/\1mdns4_minimal [NOTFOUND=return] \2 mdns4/' /etc/nsswitch.conf
-update_chrooted all
-fi
 
 %files -n lib%name
 %doc README doc/README.html doc/style.css
 /%_lib/libnss_*.so.*
 
 %changelog
+* Tue Jun 11 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.10-alt4
+- post scripts got from Fedora (closes #29051)
+- postuntrigger removed
+
 * Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.10-alt3.qa1
 - NMU: rebuilt for debuginfo.
 
