@@ -4,7 +4,7 @@
 %define pear_name VersionControl_SVN
 
 Name: pear-%pear_name
-Version: 0.4.0
+Version: 0.5.1
 Release: alt1
 
 Summary: PHP/PEAR simple OO interface for the Subversion
@@ -32,14 +32,6 @@ text files, image files -- just about any collection of files.
 
 %prep
 %setup -n %pear_name-%version
-sed -e 's#301b086ce94948ee606d94988fb7ab06#55648853e4e9cc47963e1990071d433c#' -i package.xml
-sed -e 's#87ce30d8ad06776ed369e73f1c5da6d1#1f2088d8f710eaa62f5c43d8748c2ba1#' -i package.xml
-sed -e 's#aef69a3fdd6257817f16b4ce61aa1cca#d9667d9d5ec09c04f534cbe09382a8e5#' -i package.xml
-sed -e 's#3223949fe055a120be54a7032dd29e95#3966b40803b8bd5e5d4f967ed2524b09#' -i package.xml
-sed -e 's#895ddc851d7c8d3eea7d6b3751fa3307#590d1050644c336f1d154ce1fbcbe004#' -i package.xml
-sed -e 's#5bef13388c02b3ae6250fe73edb6bcfa#bf78a1b691b2fd0e1486ba11744ae30c#' -i package.xml
-sed -e 's#6ce16a38b5e8336d6118584f592cf398#57e0df85e7f6eb93a75f0ad425d6a7c7#' -i package.xml
-sed -e 's#c9c6b2f1fcb0587694949d704753ee9d#497ce523ce745298d15d2b9c32ec7f72#' -i package.xml
 
 %build
 %pear_build
@@ -60,6 +52,9 @@ sed -e 's#c9c6b2f1fcb0587694949d704753ee9d#497ce523ce745298d15d2b9c32ec7f72#' -i
 %pear_xmldir/%pear_name.xml
 
 %changelog
+* Tue Jun 11 2013 Nikolay A. Fetisov <naf@altlinux.ru> 0.5.1-alt1
+- New version 0.5.1
+
 * Thu Apr 26 2012 Nikolay A. Fetisov <naf@altlinux.ru> 0.4.0-alt1
 - New version 0.4.0
 
