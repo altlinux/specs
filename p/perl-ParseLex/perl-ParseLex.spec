@@ -1,7 +1,7 @@
 # Spec file for Perl module ParseLex
 
 Name: perl-ParseLex
-Version: 2.20
+Version: 2.21
 Release: alt1
 
 Summary: generator of lexical analyzers
@@ -52,6 +52,9 @@ rm -f lib/Parse/Template.pm
 %perl_vendor_privlib/Parse/*
 
 %changelog
+* Tue Jun 11 2013 Nikolay A. Fetisov <naf@altlinux.ru> 2.21-alt1
+- New version
+
 * Mon Nov 29 2010 Nikolay A. Fetisov <naf@altlinux.ru> 2.20-alt1
 - New version
 
