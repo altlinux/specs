@@ -1,6 +1,6 @@
 Name: xorg-drv-modesetting
 Version: 0.7.0
-Release: alt1
+Release: alt2
 Summary: Generic modesetting driver fo Xorg 
 License: MIT/X11
 Group: System/X11
@@ -44,6 +44,9 @@ install -m0640 -D cirrus-kms.xinf %buildroot/usr/share/hwdatabase/videoaliases/c
 /usr/share/hwdatabase/videoaliases/cirrus-kms.xinf
 
 %changelog
+* Tue Jun 11 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.7.0-alt2
+- updated from git
+
 * Wed Mar 27 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.7.0-alt1
 - 0.7.0
 
