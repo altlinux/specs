@@ -1,7 +1,7 @@
 # SPEC file for Perl module Imager
 
 Name: perl-Imager
-Version: 0.95
+Version: 0.96
 Release: alt1
 
 Summary: Perl module for generating 24 bit Images
@@ -35,9 +35,6 @@ Imager - модуль  Perl для  создания  и работы с  гра
 %prep
 %setup  -n Imager-%version
 
-sed -e 's@/usr/lib/X11/rgb.txt@/usr/share/X11/rgb.txt@' -i lib/Imager/Color.pm
-sed -e 's@/usr/lib/X11/rgb.txt@/usr/share/X11/rgb.txt@' -i t/t15color.t
-
 %build
 IM_SUPPRESS_PROM=1 %perl_vendor_build
 
@@ -51,6 +48,9 @@ IM_SUPPRESS_PROM=1 %perl_vendor_build
 %exclude /.perl.req
 
 %changelog
+* Wed Jun 12 2013 Nikolay A. Fetisov <naf@altlinux.ru> 0.96-alt1
+- New version 0.96
+
 * Sun Apr 21 2013 Nikolay A. Fetisov <naf@altlinux.ru> 0.95-alt1
 - New version 0.95
 
