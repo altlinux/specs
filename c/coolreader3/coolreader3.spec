@@ -4,8 +4,8 @@
 %define real_name    cr3
 
 Name:     coolreader3
-Version:  3.0.54
-Release:  alt1.1
+Version:  3.0.56
+Release:  alt1
 
 Summary: E-Book reader
 
@@ -84,6 +84,9 @@ install -m0644 -- %SOURCE3 %buildroot%_liconsdir/%real_name.png
 %_liconsdir/%{real_name}*
 
 %changelog
+* Wed Jun 12 2013 Nikolay A. Fetisov <naf@altlinux.ru> 3.0.56-alt1
+- New version
+
 * Thu Oct 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0.54-alt1.1
 - Rebuilt with libpng15
 
