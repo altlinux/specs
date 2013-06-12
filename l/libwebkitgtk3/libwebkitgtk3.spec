@@ -18,7 +18,7 @@
 
 Summary: Web browser engine
 Name: libwebkitgtk3
-Version: 2.0.2
+Version: 2.0.3
 Release: alt1
 License: %bsd %lgpl2plus
 Group: System/Libraries
@@ -151,6 +151,7 @@ allows you to interact with the JavaScript engine directly.
 %package webinspector
 Summary: Data files for WebKit GTK+'s Web Inspector
 Group: Development/GNOME and GTK+
+BuildArch: noarch
 
 %description webinspector
 WebKit GTK+ has a feature called the Web Inspector, which allows
@@ -329,6 +330,9 @@ xvfb-run make check
 %endif
 
 %changelog
+* Wed Jun 12 2013 Yuri N. Sedunov <aris@altlinux.org> 2.0.3-alt1
+- 2.0.3
+
 * Mon May 13 2013 Yuri N. Sedunov <aris@altlinux.org> 2.0.2-alt1
 - 2.0.2
 
