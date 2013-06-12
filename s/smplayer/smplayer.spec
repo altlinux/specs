@@ -1,4 +1,4 @@
-# #%define		svn 4305
+%define		svn 5464
 
 Name:		smplayer
 Summary:	A great MPlayer front-end (QT4)
@@ -8,7 +8,7 @@ License:	GPLv2
 Group:		Video
 Url:		http://smplayer.sourceforge.net
 Version:	0.8.5
-Release:	alt1
+Release:	alt1.%svn
 Packager:	Alexey Morsov <swi@altlinux.ru>
 Source0:	http://downloads.sourceforge.net/smplayer/%name-%version.tar.bz2
 Patch0:		smplayer-paths-fix-alt.patch
@@ -73,6 +73,9 @@ export OPTFLAGS="%optflags"
 %_man1dir/*
 
 %changelog
+* Wed Jun 12 2013 Motsyo Gennadi <drool@altlinux.ru> 0.8.5-alt1.5464
+- svn revision 5464
+
 * Tue May 14 2013 Motsyo Gennadi <drool@altlinux.ru> 0.8.5-alt1
 - 0.8.5
 
