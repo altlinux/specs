@@ -21,7 +21,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.4.48
-Release: alt4
+Release: alt5
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -51,6 +51,7 @@ Release: alt4
 %def_enable x32
 %def_enable debugfs
 %def_disable numa
+%def_disable hotplug_memory
 %def_enable acpi
 %def_enable pci
 %def_disable mca
@@ -184,10 +185,12 @@ Patch0032: linux-%kernel_branch.20-fix-block-partitions--efi.patch
 
 Patch0041: linux-%kernel_branch.35-fix-crypto--cryptomgr.patch
 
-Patch0050: linux-%kernel_branch.39-fix-drivers-acpi.patch
-Patch0051: linux-%kernel_branch.20-fix-drivers-acpi--ec_sys.patch
-Patch0052: linux-%kernel_branch.20-fix-drivers-acpi--thermal.patch
-Patch0053: linux-%kernel_branch.20-fix-drivers-acpi-acpica.patch
+Patch0050: linux-%kernel_branch.47-fix-drivers-acpi.patch
+Patch0051: linux-%kernel_branch.47-fix-drivers-acpi--container.patch
+Patch0052: linux-%kernel_branch.20-fix-drivers-acpi--ec_sys.patch
+Patch0053: linux-%kernel_branch.47-fix-drivers-acpi--pci_slot.patch
+Patch0054: linux-%kernel_branch.20-fix-drivers-acpi--thermal.patch
+Patch0055: linux-%kernel_branch.20-fix-drivers-acpi-acpica.patch
 
 Patch0061: linux-%kernel_branch.25-fix-drivers-ata--ata_piix.patch
 Patch0062: linux-%kernel_branch.25-fix-drivers-ata--pata_amd.patch
@@ -1338,6 +1341,8 @@ cd linux-%version
 %patch0051 -p1
 %patch0052 -p1
 %patch0053 -p1
+%patch0054 -p1
+%patch0055 -p1
 
 # fix-drivers-ata-*
 %patch0061 -p1
@@ -1993,6 +1998,7 @@ config_disable \
 	%{?_disable_zcache:ZCACHE} \
 	%{?_disable_pci:PCI} \
 	%{?_disable_acpi:ACPI} \
+	%{?_disable_hotplug_memory:MEMORY_HOTPLUG} \
 	%{?_disable_math_emu:MATH_EMULATION} \
 	%{?_disable_kallsyms:KALLSYMS} \
 	%{?_disable_oprofile:PROFILING OPROFILE} \
@@ -2726,6 +2732,13 @@ done)
 
 
 %changelog
+* Tue Jun 11 2013 Led <led@altlinux.ru> 3.4.48-alt5
+- updated:
+  + fix-drivers-acpi
+- added:
+  + fix-drivers-acpi--container
+  + fix-drivers-acpi--pci_slot
+
 * Mon Jun 10 2013 Led <led@altlinux.ru> 3.4.48-alt4
 - updated:
   + fix-arch-x86--microcode
