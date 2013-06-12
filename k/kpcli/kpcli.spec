@@ -1,7 +1,7 @@
 # SPEC file for kpcli package
 
 Name: kpcli
-Version: 1.7
+Version: 2.1
 Release: alt1
 
 Summary: command line interface to work with KeePass database files
@@ -50,6 +50,9 @@ install -m 0644 -- %name.1 %buildroot/%_man1dir/
 %_man1dir/%{name}*
 
 %changelog
+* Wed Jun 12 2013 Nikolay A. Fetisov <naf@altlinux.ru> 2.1-alt1
+- New version
+
 * Sun May 19 2013 Nikolay A. Fetisov <naf@altlinux.ru> 1.7-alt1
 - New version
 
