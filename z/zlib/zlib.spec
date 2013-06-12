@@ -1,5 +1,5 @@
 Name: zlib
-Version: 1.2.7
+Version: 1.2.8
 Release: alt1
 
 Summary: The zlib compression and decompression library
@@ -144,6 +144,9 @@ make test
 %_pkgconfigdir/minizip.pc
 
 %changelog
+* Thu Jun 13 2013 Dmitry V. Levin <ldv@altlinux.org> 1.2.8-alt1
+- Updated to v1.2.8.
+
 * Mon Sep 10 2012 Dmitry V. Levin <ldv@altlinux.org> 1.2.7-alt1
 - Updated to v1.2.7.
 
