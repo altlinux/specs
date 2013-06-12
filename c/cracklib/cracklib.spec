@@ -1,9 +1,11 @@
+%def_disable python3
+
 Name: cracklib
-Version: 2.8.19
+Version: 2.9.0
 Release: alt1
 
 Summary: A password-checking library.
-License: %gpl2plus
+License: %lgpl2plus
 Group: System/Libraries
 Url: http://sourceforge.net/projects/%name
 
@@ -13,6 +15,7 @@ Requires: %name-utils = %version-%release
 
 BuildRequires: rpm-build-licenses python-devel libX11-devel libICE-devel
 BuildRequires: zlib-devel
+%{?_enable_python3:BuildRequires: rpm-build-python3 python3-devel}
 
 %package utils
 Summary: The CrackLib utilities for the build dictionaries.
@@ -26,7 +29,12 @@ Requires: %name = %version-%release
 
 %package -n python-module-%name
 Summary: Python module of %name
-Group: Development/C
+Group: Development/Python
+Requires: %name = %version-%release
+
+%package -n python3-module-%name
+Summary: Python3 module of %name
+Group: Development/Python
 Requires: %name = %version-%release
 
 %description
@@ -62,8 +70,13 @@ create new dictionaries for Cracklib.
 %description -n python-module-%name
 This package includes Python module for Cracklib.
 
+%description -n python3-module-%name
+This package includes Python3 module for Cracklib.
+
 %prep
-%setup
+%setup -n %name-%version
+%setup -D -c -n %name-%version
+mv %name-%version py3build
 
 %build
 %autoreconf
@@ -71,6 +84,17 @@ This package includes Python module for Cracklib.
 	--disable-static \
 	--with-x
 %make_build
+
+%if_enabled python3
+pushd py3build
+export PYTHON=python3
+%autoreconf
+%configure \
+	--disable-static \
+	--with-x
+%make_build
+popd
+%endif
 
 %install
 %makeinstall_std
@@ -80,7 +104,16 @@ mv %buildroot%python_sitelibdir_noarch/* \
 	%buildroot%python_sitelibdir/
 %endif
 
-rm -f %buildroot%python_sitelibdir/*.la
+%if_enabled python3
+pushd py3build
+%makeinstall_std
+
+%ifarch x86_64
+mv %buildroot%python3_sitelibdir_noarch/* \
+	%buildroot%python3_sitelibdir/
+%endif
+popd
+%endif
 
 # create words database
 touch %buildroot%_datadir/%name/pw_dict.{hwm,pwd,pwi}
@@ -111,8 +144,22 @@ install -pD -m 755 %name.filetrigger %buildroot%_rpmlibdir/%name.filetrigger
 
 %files -n python-module-%name
 %python_sitelibdir/*
+%exclude %python_sitelibdir/*.la
+
+%if_enabled python3
+%files -n python3-module-%name
+%python3_sitelibdir/*
+%exclude %python3_sitelibdir/*.la
+%endif
 
 %changelog
+* Thu Jun 13 2013 Yuri N. Sedunov <aris@altlinux.org> 2.9.0-alt1
+- 2.9.0
+
+* Mon Jan 07 2013 Yuri N. Sedunov <aris@altlinux.org> 2.8.22-alt1
+- 2.8.22
+- prepared for build of python3-module-%%name subpackage
+
 * Wed Jul 11 2012 Yuri N. Sedunov <aris@altlinux.org> 2.8.19-alt1
 - 2.8.19
 - created empty words database in %install, implemented posttrans filetrigger
