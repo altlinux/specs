@@ -1,29 +1,27 @@
 Name: pigz
-Version: 2.2.4
+Version: 2.3
 Release: alt1
 
 Summary: Parallel Implementation of GZip
-License: %bsdstyle
+License: zlib
 Group: Archiving/Compression
+Url: http://zlib.net/pigz/
+# http://git.altlinux.org/gears/p/pigz.git
+Source: %name-%version-%release.tar
 
-Url: http://zlib.net/%name
-Source: %url/%name-%version.tar.gz
-Packager: Led <led@altlinux.ru>
-
-BuildRequires(pre): rpm-build-licenses
 BuildRequires: zlib-devel
 
 %description
-%name, which stands for Parallel Implementation of GZip, is a fully
-functional replacement for gzip that exploits multiple processors and
-multiple cores to the hilt when compressing data.
+pigz, which stands for Parallel Implementation of GZip, is a fully
+functional replacement for gzip that exploits multiple processors
+and multiple cores to the hilt when compressing data.
 
 %prep
-%setup
+%setup -n %name-%version-%release
 
 %build
 %define _optlevel 3
-%make_build CFLAGS="%optflags"
+%make_build CFLAGS='%optflags'
 
 %install
 install -pDm755 {,%buildroot%_bindir/}%name
@@ -31,12 +29,19 @@ install -pDm644 {,%buildroot%_man1dir/}%name.1
 ln -sf {,%buildroot%_bindir/un}%name
 ln -sf {,%buildroot%_man1dir/un}%name.1
 
+%check
+make test
+
 %files
 %doc README
 %_bindir/*
 %_man1dir/*
 
 %changelog
+* Thu Jun 13 2013 Dmitry V. Levin <ldv@altlinux.org> 2.3-alt1
+- Updated to 2.3.
+- Enabled test suite.
+
 * Sun Apr 22 2012 Michael Shigorin <mike@altlinux.org> 2.2.4-alt1
 - 2.2.4
 
