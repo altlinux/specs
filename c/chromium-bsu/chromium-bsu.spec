@@ -1,6 +1,6 @@
 Name: chromium-bsu
-Version: 0.9.15
-Release: alt2.1
+Version: 0.9.15.1
+Release: alt1
 Summary: Fast paced, arcade-style, top-scrolling space shooter
 License: Artistic
 Group: Games/Arcade
@@ -38,15 +38,15 @@ export FONTCONFIG_CFLAGS="`pkg-config --cflags freetype2`"
 %install
 %makeinstall
 install -D data/png/icon32.png %buildroot%_iconsdir/hicolor/32x32/apps/%name.png
-install -D data/png/icon64.png %buildroot%_iconsdir/hicolor/48x48/apps/%name.png
-install -D data/png/icon64.png %buildroot%_iconsdir/hicolor/64x64/apps/%name.png
+#install -D data/png/icon64.png %buildroot%_iconsdir/hicolor/48x48/apps/%name.png
+#install -D data/png/icon64.png %buildroot%_iconsdir/hicolor/64x64/apps/%name.png
 
 %find_lang %name
 
 %files -f %name.lang
 %doc %_defaultdocdir/%name
 %_bindir/*
-%_pixmapsdir/*
+#_pixmapsdir/*
 %_iconsdir/hicolor/*/apps/*
 %_desktopdir/*
 %_man6dir/*
@@ -56,6 +56,10 @@ install -D data/png/icon64.png %buildroot%_iconsdir/hicolor/64x64/apps/%name.png
 %_datadir/%name/*
 
 %changelog
+* Mon Jun 10 2013 Fr. Br. George <george@altlinux.ru> 0.9.15.1-alt1
+- Autobuild version bump to 0.9.15.1
+- Fix build
+
 * Tue Mar 15 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.15-alt2.1
 - Rebuilt with libftgl2
 
