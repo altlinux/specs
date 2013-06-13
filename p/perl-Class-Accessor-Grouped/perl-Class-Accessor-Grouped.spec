@@ -1,6 +1,6 @@
 %define dist Class-Accessor-Grouped
 Name: perl-Class-Accessor-Grouped
-Version: 0.10006
+Version: 0.10010
 Release: alt1
 
 Summary: Lets you build groups of accessors
@@ -8,12 +8,11 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: %dist-%version.tar
 
 BuildArch: noarch
 
-# Automatically added by buildreq on Mon Dec 27 2010 (-bi)
-BuildRequires: perl-Class-Inspector perl-Class-XSAccessor perl-MRO-Compat perl-Module-Install perl-Sub-Name perl-Test-Exception
+BuildRequires: perl-Module-Runtime perl-Class-XSAccessor perl-Module-Install perl-Sub-Name perl-Test-Exception
 
 %description
 This class lets you build groups of accessors that will call
@@ -21,8 +20,6 @@ different getters and setters.
 
 %prep
 %setup -q -n %dist-%version
-# hack to avoid dependency on pod2text, see Makefile.PL
-rm -f MANIFEST.SKIP
 
 %build
 %perl_vendor_build
@@ -32,9 +29,12 @@ rm -f MANIFEST.SKIP
 
 %files
 %doc Changes README
-%perl_vendor_privlib/Class*
+%perl_vendor_privlib/Class/Accessor/Grouped.pm
 
 %changelog
+* Thu Jun 13 2013 Vladimir Lettiev <crux@altlinux.ru> 0.10010-alt1
+- 0.10006 -> 0.10010
+
 * Wed Sep 12 2012 Vladimir Lettiev <crux@altlinux.ru> 0.10006-alt1
 - 0.10003 -> 0.10006
 
