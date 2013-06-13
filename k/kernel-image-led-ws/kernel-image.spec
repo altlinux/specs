@@ -21,7 +21,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.4.48
-Release: alt5
+Release: alt6
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -105,6 +105,7 @@ Release: alt5
 %def_disable crasher
 %def_disable logo
 %def_enable zcache
+%def_disable taskstats
 %def_enable security
 %def_enable audit
 %def_enable selinux
@@ -1979,6 +1980,7 @@ config_disable \
 	%{?_disable_wireless:WLAN WIRELESS CFG80211 WIMAX} \
 	%{?_disable_isdn:ISDN} \
 	%{?_disable_telephony:PHONE} \
+	%{?_disable_taskstats:TASK\.*} \
 	%{?_disable_security:SECURITY} \
 	%{?_disable_audit:AUDIT} \
 	%{?_disable_selinux:SECURITY_SELINUX} \
@@ -2732,6 +2734,15 @@ done)
 
 
 %changelog
+* Thu Jun 13 2013 Led <led@altlinux.ru> 3.4.48-alt6
+- PCI_IOAPIC=m
+- enabled:
+  + CRYPTO_MANAGER_DISABLE_TESTS
+- disabled:
+  + OSF_PARTITION
+  + UNIXWARE_DISKLABEL
+  + TASK*
+
 * Tue Jun 11 2013 Led <led@altlinux.ru> 3.4.48-alt5
 - updated:
   + fix-drivers-acpi
