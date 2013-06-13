@@ -1,6 +1,6 @@
 %define dist B-Hooks-EndOfScope
 Name: perl-%dist
-Version: 0.11
+Version: 0.12
 Release: alt1
 
 Summary: Execute code after a scope finished compilation
@@ -8,12 +8,11 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/F/FL/FLORA/B-Hooks-EndOfScope-%{version}.tar.gz
+Source: %dist-%version.tar
 
 BuildArch: noarch
 
-# Automatically added by buildreq on Mon Apr 12 2010
-BuildRequires: perl-Module-Install perl-Sub-Exporter perl-Variable-Magic
+BuildRequires: perl-Module-Install perl-Sub-Exporter-Progressive perl-Variable-Magic perl-Module-Implementation perl-Module-Runtime
 
 %description
 This module allows you to execute code when perl finished compiling the
@@ -30,9 +29,12 @@ surrounding scope.
 
 %files
 %doc Changes README
-%perl_vendor_privlib/B*
+%perl_vendor_privlib/B/Hooks/EndOfScope*
 
 %changelog
+* Thu Jun 13 2013 Vladimir Lettiev <crux@altlinux.ru> 0.12-alt1
+- 0.12
+
 * Mon Sep 24 2012 Igor Vlasenko <viy@altlinux.ru> 0.11-alt1
 - automated CPAN update
 
