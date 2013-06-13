@@ -1,6 +1,6 @@
 %define dist Class-XSAccessor
 Name: perl-%dist
-Version: 1.14
+Version: 1.16
 Release: alt1
 
 Summary: Generate fast XS accessors without runtime compilation
@@ -8,7 +8,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: %dist-%version.tar
 
 # Automatically added by buildreq on Fri Oct 07 2011
 BuildRequires: perl-devel perl-threads
@@ -25,7 +25,6 @@ that use arrays for their internal representation.
 %setup -q -n %dist-%version
 
 %build
-export XSUBPP_NO_STATIC_XS=1
 %perl_vendor_build
 
 %install
@@ -33,10 +32,13 @@ export XSUBPP_NO_STATIC_XS=1
 
 %files
 %doc Changes README
-%perl_vendor_archlib/Class
-%perl_vendor_autolib/Class
+%perl_vendor_archlib/Class/XSAccessor*
+%perl_vendor_autolib/Class/XSAccessor
 
 %changelog
+* Thu Jun 13 2013 Vladimir Lettiev <crux@altlinux.ru> 1.16-alt1
+- 1.14 -> 1.16
+
 * Thu Aug 30 2012 Vladimir Lettiev <crux@altlinux.ru> 1.14-alt1
 - 1.12 -> 1.14
 - built for perl-5.16
