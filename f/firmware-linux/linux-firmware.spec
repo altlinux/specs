@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20130423
+Version: 20130613
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -55,6 +55,9 @@ rm %buildroot/lib/firmware/{WHENCE,LICENCE.*}
 %exclude /lib/firmware/carl9170fw
 
 %changelog
+* Thu Jun 13 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 20130613-alt1
+- updated from git
+
 * Tue Apr 23 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 20130423-alt1
 - updated from git
 - added prov/obs firmware-carl9170-1.9.4 firmware-i2400m firmware-rt2870
