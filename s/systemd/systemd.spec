@@ -25,7 +25,7 @@
 
 Name: systemd
 Version: 204
-Release: alt4
+Release: alt5
 Summary: A System and Session Manager
 Url: http://www.freedesktop.org/wiki/Software/systemd
 Group: System/Configuration/Boot and Init
@@ -64,6 +64,7 @@ Source45: 75-cd-aliases-generator.rules
 
 Patch1: %name-snapshot.patch
 Patch2: %name-alt-patches.patch
+Patch3: systemd-204-disable-tmp-mount.patch
 
 # bash3 completions
 Source51: hostnamectl-bash3
@@ -471,6 +472,7 @@ GObject introspection devel data for the GUdev library
 %setup -q
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 %build
 export QUOTAON="/sbin/quotaon"
@@ -1203,6 +1205,9 @@ update_chrooted all
 /lib/udev/write_net_rules
 
 %changelog
+* Thu Jun 13 2013 Sergey V Turchin <zerg@altlinux.org> 204-alt5
+- turn off tmp.mount by default (ALT#29066)
+
 * Wed May 29 2013 Alexey Shabalin <shaba@altlinux.ru> 204-alt4
 - fix permition of /run/lock/serial (ALT#29032)
 - move tmpfiles.d/{tmp.conf,x11.conf} to systemd-utils
