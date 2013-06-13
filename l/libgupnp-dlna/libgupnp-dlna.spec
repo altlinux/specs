@@ -1,7 +1,7 @@
 %define _name gupnp-dlna
 
 Name: libgupnp-dlna
-Version: 0.10.1
+Version: 0.10.2
 Release: alt1
 Summary: A collection of helpers for building UPnP AV applications
 
@@ -16,9 +16,10 @@ BuildRequires: pkgconfig(glib-2.0) >= 2.32 pkgconfig(gobject-2.0) pkgconfig(gmod
 BuildRequires: pkgconfig(gstreamer-1.0) >= 1.0 pkgconfig(gstreamer-pbutils-1.0) >= 1.0
 BuildRequires: gir(GObject) = 2.0 gir(Gst) = 1.0 gir(GstPbutils) = 1.0
 BuildRequires: vala-tools >= 0.18 rpm-build-vala libvala-devel
+BuildRequires: pkgconfig(gobject-introspection-1.0) >= 1.36.0
 BuildRequires: vapi(gupnp-1.0) vapi(libxml-2.0) vapi(gstreamer-pbutils-1.0) vapi(gstreamer-1.0) vapi(gstreamer-base-1.0) vapi(gstreamer-video-1.0)
 BuildRequires: pkgconfig(libxml-2.0) >= 2.5.0
-BuildRequires: gtk-doc
+BuildRequires: gtk-doc xml-utils
 
 %description
 GUPnP is an object-oriented open source framework for creating UPnP
@@ -100,6 +101,9 @@ NOCONFIGURE=1 ./autogen.sh
 %_datadir/gtk-doc/html/*
 
 %changelog
+* Thu Jun 13 2013 Alexey Shabalin <shaba@altlinux.ru> 0.10.2-alt1
+- 0.10.2
+
 * Fri Apr 19 2013 Alexey Shabalin <shaba@altlinux.ru> 0.10.1-alt1
 - 0.10.1
 
