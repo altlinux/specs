@@ -1,7 +1,7 @@
 
 Name: telepathy-logger-qt4
-Version: 0.6.0
-Release: alt2
+Version: 0.8.0
+Release: alt1
 %define sover 1
 %define libname lib%name%sover
 
@@ -60,12 +60,15 @@ export QTDIR=%_qt4dir
 %_libdir/libtelepathy-logger-qt4.so.%sover.*
 
 %files devel
-%_libdir/TelepathyLoggerQt4/
+%_libdir/cmake/TelepathyLoggerQt4/
 %_includedir/telepathy-logger-*/TelepathyLoggerQt*/
 %_libdir/lib*.so
 %_libdir/pkgconfig/TelepathyLoggerQt4.pc
 
 %changelog
+* Thu Jun 13 2013 Sergey V Turchin <zerg@altlinux.org> 0.8.0-alt1
+- new version
+
 * Thu Apr 11 2013 Sergey V Turchin <zerg@altlinux.org> 0.6.0-alt2
 - fix requires
 
