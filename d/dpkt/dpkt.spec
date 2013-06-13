@@ -1,6 +1,6 @@
 Name: dpkt
-Version: 1.7
-Release: alt1.1
+Version: 1.8
+Release: alt1
 Url: http://monkey.org/~dugsong/dpkt/
 License: BSD
 Group: Development/Python
@@ -31,7 +31,7 @@ Authors:
 
 %build
 %python_build
-%make_build doc
+epydoc -o doc -n dpkt -u %url --docformat=plaintext ./dpkt/
 
 %install
 %python_install
@@ -44,6 +44,10 @@ Authors:
 %python_sitelibdir/%modulename
 
 %changelog
+* Mon Jun 10 2013 Fr. Br. George <george@altlinux.ru> 1.8-alt1
+- Autobuild version bump to 1.8
+- Fix docs build
+
 * Sat Oct 22 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 1.7-alt1.1
 - Rebuild with Python-2.7
 
