@@ -7,8 +7,8 @@
 
 Name: kernel-image-%flavour
 Version: 2.6.32
-Release: alt6
-%define erelease 358.6.1.el6
+Release: alt7
+%define erelease 358.11.1.el6
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -541,6 +541,12 @@ tar --transform='s,^,kernel-src-%flavour-%kversion-%krelease/,' \
 
 
 %changelog
+* Thu Jun 13 2013 Led <led@altlinux.ru> 2.6.32-alt7
+- 2.6.32-358.11.1.el6:
+  + CVE-2013-1935
+  + CVE-2013-1943
+  + CVE-2013-2017
+
 * Tue May 14 2013 Led <led@altlinux.ru> 2.6.32-alt6
 - perf: Treat attr.config as u64 in perf_swevent_init() (CVE-2013-2094)
 - added gpu/drm/gma500
