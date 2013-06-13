@@ -2,12 +2,19 @@
 %define _libexecdir %_prefix/libexec
 %def_enable kerberos
 %def_enable owncloud
+%def_enable exchange
+%def_enable facebook
+%def_enable google
+%def_disable flickr
+%def_enable imap_smtp
+%def_enable windows_live
+
 %def_enable gtk_doc
 %define api_ver 1.0
 
 Name: gnome-online-accounts
 Version: %ver_major.2
-Release: alt1
+Release: alt2
 
 Summary: Provide online accounts information
 Group: Graphical desktop/GNOME
@@ -90,7 +97,12 @@ This package contains development documentation for the %name libraries.
 	--enable-facebook \
 	%{subst_enable kerberos} \
 	%{subst_enable owncloud} \
-	--enable-imap-smtp \
+	%{?_enable_imap_smtp:--enable-imap-smtp} \
+	%{subst_enable exchange} \
+	%{subst_enable facebook} \
+	%{subst_enable google} \
+	%{subst_enable flickr} \
+	%{?_enable_windows_live:--enable-windows-live} \
 	%{?_enable_gtk_doc:--enable-gtk-doc}
 
 %make_build
@@ -132,6 +144,9 @@ This package contains development documentation for the %name libraries.
 %_datadir/gtk-doc/html/goa/
 
 %changelog
+* Thu Jun 13 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.2-alt2
+- explicitly enabled some providers
+
 * Tue May 14 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.2-alt1
 - 3.8.2
 
