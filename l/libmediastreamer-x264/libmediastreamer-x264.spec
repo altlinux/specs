@@ -1,12 +1,12 @@
 Name: libmediastreamer-x264
 Version: 1.4.2
-Release: alt1
+Release: alt1.1
 
 Group: System/Libraries
 Summary: A H264 codec mediastreamer plugin
 License: GPLv2+
 Url: http://www.linphone.org/eng/download/git.html
-Packager: Egor Glukhov <kaman@altlinux.org>
+Packager: Alexei Takaseev <taf@altlinux.org>
 
 Source: %name-%version.tar
 BuildPreReq: libortp-devel >= 0.16
@@ -36,6 +36,9 @@ This package contains a H264 codec mediastreamer plugin.
 %_libdir/mediastreamer/plugins/*
 
 %changelog
+* Fri Jun 14 2013 Alexei Takaseev <taf@altlinux.org> 1.4.2-alt1.1
+- Rebuild with new libmediastreamer
+
 * Mon Jan 30 2012 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.4.2-alt1
 - updated from git.6ba1b869
 

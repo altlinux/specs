@@ -1,5 +1,5 @@
 Name: libortp
-Version: 0.20.0
+Version: 0.22.0
 Release: alt1
 
 Group: System/Libraries
@@ -56,13 +56,19 @@ develop programs using the oRTP library.
 %_libdir/*.so.*
 
 %files devel
-%exclude %_docdir/ortp
+%exclude %_docdir/ortp*
 %doc doc/html
 %_libdir/*.so
 %_libdir/pkgconfig/*.pc
 %_includedir/*
 
 %changelog
+* Thu Jun 13 2013 Alexei Takaseev <taf@altlinux.org> 0.22.0-alt1
+- 0.22.0
+
+* Sat Mar 16 2013 Alexei Takaseev <taf@altlinux.org> 0.21.1-alt1
+- 0.21.1
+
 * Sun Jun 24 2012 Alexei Takaseev <taf@altlinux.org> 0.20.0-alt1
 - 0.20.0
 
