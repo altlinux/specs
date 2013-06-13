@@ -1,6 +1,6 @@
 %define dist Devel-GlobalDestruction
 Name: perl-%dist
-Version: 0.09
+Version: 0.011
 Release: alt1
 
 Summary: Expose the flag which marks global destruction
@@ -43,6 +43,9 @@ destruction is in effect.
 %perl_vendor_privlib/Devel
 
 %changelog
+* Thu Jun 13 2013 Vladimir Lettiev <crux@altlinux.ru> 0.011-alt1
+- 0.009 -> 0.011
+
 * Sat Sep 01 2012 Vladimir Lettiev <crux@altlinux.ru> 0.09-alt1
 - 0.04 -> 0.09
 - built for perl-5.16
