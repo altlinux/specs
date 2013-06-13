@@ -20,13 +20,13 @@
 %define flavour %base_flavour-%sub_flavour
 
 Name: kernel-image-%flavour
-Version: 3.4.48
-Release: alt6
+Version: 3.4.49
+Release: alt1
 
 %define kernel_req %nil
 %define kernel_prov %nil
 %define kernel_branch 3.4
-%define kernel_stable_version 48
+%define kernel_stable_version 49
 %define kernel_extra_version .%kernel_stable_version
 #define kernel_extra_version %nil
 
@@ -2734,6 +2734,9 @@ done)
 
 
 %changelog
+* Thu Jun 13 2013 Led <led@altlinux.ru> 3.4.49-alt1
+- 3.4.49
+
 * Thu Jun 13 2013 Led <led@altlinux.ru> 3.4.48-alt6
 - PCI_IOAPIC=m
 - enabled:
