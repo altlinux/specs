@@ -1,7 +1,7 @@
 %define ver_major 0.2
 
 Name: grilo-plugins
-Version: %ver_major.7
+Version: %ver_major.8
 Release: alt1
 Summary: Plugins for the Grilo framework
 Group: Sound
@@ -81,6 +81,9 @@ rm -f %buildroot%_libdir/grilo-%ver_major/*.la
 %_libdir/grilo-%ver_major/*.xml
 
 %changelog
+* Thu Jun 13 2013 Alexey Shabalin <shaba@altlinux.ru> 0.2.8-alt1
+- 0.2.8
+
 * Thu May 16 2013 Alexey Shabalin <shaba@altlinux.ru> 0.2.7-alt1
 - 0.2.7
 
