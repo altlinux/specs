@@ -1,11 +1,9 @@
 %define api_ver 0.90
 %define _libexecdir %prefix/libexec
 %def_enable atspi
-%def_disable clutter
-%def_disable clutter_gtk
 
 Name: eekboard
-Version: 1.0.7
+Version: 1.0.8
 Release: alt1
 
 Summary: An Easy-to-use Virtual Keyboard Toolkit
@@ -14,8 +12,6 @@ License: GPLv3+
 Url: http://fedorahosted.org/eekboard/
 
 Source: http://github.com/downloads/ueno/%name/%name-%version.tar.gz
-# fc patch
-Patch: eekboard-fix-crash.patch
 
 Obsoletes: python-module-%name
 
@@ -26,8 +22,6 @@ BuildRequires: libgtk+3-devel libXtst-devel libxklavier-devel
 BuildRequires: libcroco-devel libcanberra-gtk3-devel gobject-introspection-devel libgtk+3-gir-devel
 BuildRequires: libibus-devel
 %{?_enable_atspi:BuildRequires: libat-spi2-core-devel libdbus-glib-devel}
-%{?_enable_clutter:BuildRequires: libclutter-devel libclutter-gir-devel}
-%{?_enable_clutter_gtk:BuildRequires: libclutter-gtk3-devel libclutter-gtk3-gir-devel}
 BuildRequires: vala-tools
 
 %description
@@ -106,18 +100,15 @@ with other on-screen keyboards.
 
 %prep
 %setup
-%patch -p1 -b .fix_crash
 
 %build
 %configure --disable-static \
-	%{?_enable_atspi:--enable-atspi=yes} \
-	%{?_enable_clutter:--enable-clutter=yes} \
-	%{?_enable_clutter_gtk:--enable-clutter-gtk=yes}
+	%{?_enable_atspi:--enable-atspi=yes}
 
 %make_build
 
 %install
-make DESTDIR=%buildroot install
+%make DESTDIR=%buildroot install
 
 %find_lang %name
 
@@ -171,6 +162,9 @@ make DESTDIR=%buildroot install
 %_sysconfdir/xdg/autostart/%name-autostart.desktop
 
 %changelog
+* Thu Jun 13 2013 Yuri N. Sedunov <aris@altlinux.org> 1.0.8-alt1
+- 1.0.8
+
 * Tue May 29 2012 Yuri N. Sedunov <aris@altlinux.org> 1.0.7-alt1
 - 1.0.7
 
