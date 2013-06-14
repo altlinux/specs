@@ -1,5 +1,5 @@
-%define git_date .git20130531
-#define git_date %nil
+#define git_date .git20130531
+%define git_date %nil
 
 %define dbus_version 1.1
 %define libdbus_glib_version 0.76
@@ -9,7 +9,7 @@
 %def_with mbim
 
 Name: ModemManager
-Version: 0.7.990
+Version: 0.7.991
 Release: alt1%git_date
 License: %gpl2plus
 Group: System/Configuration/Networking
@@ -167,6 +167,9 @@ fi
 %doc %_datadir/gtk-doc/html/libmm-glib
 
 %changelog
+* Wed Jun 05 2013 Mikhail Efremov <sem@altlinux.org> 0.7.991-alt1
+- Updated to 0.7.991.
+
 * Tue Jun 04 2013 Mikhail Efremov <sem@altlinux.org> 0.7.990-alt1.git20130531
 - Build with MBIM support.
 - Upstream git snapshot (master branch).
