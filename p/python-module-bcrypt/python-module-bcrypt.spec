@@ -1,15 +1,14 @@
 Summary: An implementation the OpenBSD Blowfish password hashing algorithm
-Version: 0.1
-Release: alt4.1.1
+Version: 0.3
+Release: alt1
 %setup_python_module bcrypt
 Name: python-module-bcrypt
-Source0: http://www.mindrot.org/files/py-bcrypt/py-%modulename-%version.tar.gz
+Source0: py-bcrypt-%version.tar.gz
 Source1: bfhash
 Source2: bfhash.1
 License: BSD
 Group: Development/Python
-URL: http://www.mindrot.org/projects/py-bcrypt/
-Packager: Fr. Br. George <george@altlinux.ru>
+Url: http://code.google.com/p/py-bcrypt/
 
 %description
 py-bcrypt is an implementation the OpenBSD Blowfish password hashing
@@ -39,6 +38,9 @@ install -D %SOURCE2  %buildroot%_man1dir/bfhash.1
 %_man1dir/*
 
 %changelog
+* Fri Jun 14 2013 Fr. Br. George <george@altlinux.ru> 0.3-alt1
+- Autobuild version bump to 0.3
+
 * Thu Apr 12 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 0.1-alt4.1.1
 - Rebuild to remove redundant libpython2.7 dependency
 
