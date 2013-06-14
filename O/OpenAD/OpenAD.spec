@@ -1,7 +1,7 @@
 %define sover 0
 
 Name: OpenAD
-Version: 20121221
+Version: 20130523
 Release: alt1
 Summary: A tool for automatic differentiation (AD) of numerical computer programs
 License: BSD
@@ -275,6 +275,9 @@ install -m755 openad %buildroot%_bindir
 %doc xaifBooster/doc/*.ps
 
 %changelog
+* Fri Jun 14 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 20130523-alt1
+- Version 20130523
+
 * Thu Feb 07 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 20121221-alt1
 - Version 20121221
 
