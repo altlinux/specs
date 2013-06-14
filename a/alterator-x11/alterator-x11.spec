@@ -1,5 +1,5 @@
 Name: alterator-x11
-Version: 1.98.4
+Version: 1.98.5
 Release: alt1
 
 Url: http://www.altlinux.com
@@ -85,6 +85,10 @@ Scripts which creates simple configuration files in
 %_bindir/xsetup*
 
 %changelog
+* Fri Jun 14 2013 Sergey V Turchin <zerg at altlinux dot org> 1.98.5-alt1
+- disable DisplaySize by default
+- clear DisplaySize when unusable or disabled
+
 * Thu Jun 06 2013 Sergey V Turchin <zerg at altlinux dot org> 1.98.4-alt1
 - add ability to setup display size (ALT#28179)
 
