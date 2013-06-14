@@ -1,5 +1,5 @@
 Name: installer-feature-auto-domain
-Version: 0.2
+Version: 0.3
 Release: alt1
 
 Summary: Sets auth to krb5 if 'krb5' kernel option specified
@@ -24,6 +24,9 @@ install -pm755 *.sh %buildroot%hookdir/
 %hookdir/*
 
 %changelog
+* Fri Jun 14 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.3-alt1
+- dependence on install2-init-functions removed
+
 * Wed Sep 28 2011 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.2-alt1
 - use install2 resolver
 - move to postinstall
