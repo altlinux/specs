@@ -1,7 +1,7 @@
 %define _name libmbim
 
 Name: %_name-glib
-Version: 1.0.0
+Version: 1.2.0
 Release: alt1
 
 Summary: MBIM modem protocol helper library
@@ -20,7 +20,10 @@ BuildRequires: python-modules-json
 BuildRequires: gtk-doc
 
 %description
-MBIM modem protocol helper library
+The Mobile Broadband Interface Model (MBIM) is a new standard
+to communicate with mobile broadband modem devices developed
+by the USB Implementors Forum.
+This package contains MBIM modem protocol helper library.
 
 %package utils
 Summary: MBIM command line utilities
@@ -29,7 +32,10 @@ Group: System/Base
 Requires: %name = %version-%release
 
 %description utils
-MBIM command line utilities
+The Mobile Broadband Interface Model (MBIM) is a new standard
+to communicate with mobile broadband modem devices developed
+by the USB Implementors Forum.
+This package contains MBIM command line utilities.
 
 %package devel
 Summary: Development files for %name
@@ -85,6 +91,10 @@ make check
 
 
 %changelog
+* Fri Jun 14 2013 Mikhail Efremov <sem@altlinux.org> 1.2.0-alt1
+- Improve descriptions.
+- Updated to 1.2.0.
+
 * Tue Jun 04 2013 Mikhail Efremov <sem@altlinux.org> 1.0.0-alt1
 - Use G_GUINT64_FORMAT for printing speed values.
 - Initial build.
