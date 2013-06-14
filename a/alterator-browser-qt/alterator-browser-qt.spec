@@ -7,7 +7,7 @@
 %define alterator_cfg %_sysconfdir/alterator
 
 Name: alterator-browser-qt
-Version: 2.19.0
+Version: 2.19.1
 Release: alt1
 
 Source:%name-%version.tar
@@ -82,6 +82,9 @@ ln -s %alterator_cfg/design-browser-qt %buildroot/%_datadir/%name/design/current
 
 
 %changelog
+* Fri Jun 14 2013 Sergey V Turchin <zerg at altlinux dot org> 2.19.1-alt1
+- fix displaysize delimiter
+
 * Thu Jun 06 2013 Sergey V Turchin <zerg at altlinux dot org> 2.19.0-alt1
 - add displaysize info widget
 
