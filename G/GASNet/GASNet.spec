@@ -6,7 +6,7 @@
 
 %define pname gasnet
 Name: GASNet
-Version: 1.20.0
+Version: 1.20.2
 Release: alt1
 Summary: Network- and language-independent high-performance communication
 License: MIT
@@ -162,6 +162,9 @@ export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib -L%mpidir/lib"
 %_libdir/*.a
 
 %changelog
+* Fri Jun 14 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.20.2-alt1
+- Version 1.20.2
+
 * Mon Feb 04 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.20.0-alt1
 - Version 1.20.0
 
