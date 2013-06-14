@@ -1,5 +1,5 @@
-%define git_date .git20130327
-#define git_date %nil
+#define git_date .git20130327
+%define git_date %nil
 
 %define dbus_version 1.2.12-alt2
 %define libdbus_glib_version 0.76
@@ -14,8 +14,8 @@
 %def_enable introspection
 
 Name: NetworkManager
-Version: 0.9.8.0
-Release: alt5%git_date
+Version: 0.9.8.2
+Release: alt1%git_date
 License: %gpl2plus
 Group: System/Configuration/Networking
 Summary: Network Link Manager and User Applications
@@ -283,6 +283,7 @@ fi
 %config(noreplace) %_sysconfdir/sysconfig/%name
 %{?_enable_systemd:/lib/systemd/system/%name.service}
 %{?_enable_systemd:/lib/systemd/system/%name-wait-online.service}
+%{?_enable_systemd:/lib/systemd/system/%name-dispatcher.service}
 
 %files devel
 %doc %_datadir/gtk-doc/html/%name
@@ -330,6 +331,10 @@ fi
 %exclude %_libdir/pppd/%ppp_version/*.la
 
 %changelog
+* Tue Jun 11 2013 Mikhail Efremov <sem@altlinux.org> 0.9.8.2-alt1
+- dbus: allow talking to the NetworkManager-sstp VPN plugin.
+- Updated to 0.9.8.2.
+
 * Wed Mar 27 2013 Mikhail Efremov <sem@altlinux.org> 0.9.8.0-alt5.git20130327
 - Allow talking to the NetworkManager-l2tp VPN plugin.
 - Use systemctl preset.

@@ -4,8 +4,8 @@
 %define gtkver 3
 
 Name: NetworkManager-gnome
-Version: 0.9.8.0
-Release: alt4%git_date
+Version: 0.9.8.2
+Release: alt1%git_date
 License: %gpl2plus
 Group: Graphical desktop/GNOME
 Summary: GNOME applications for use with NetworkManager
@@ -18,7 +18,7 @@ BuildRequires(pre): rpm-build-licenses
 
 BuildPreReq: libdbus-devel libdbus-glib libGConf-devel libgtk+%gtkver-devel intltool libtool libpolkit1-devel
 
-BuildRequires: libGConf-devel libgnome-keyring-devel libwireless-devel
+BuildRequires: libwireless-devel
 BuildRequires: libnotify-devel
 BuildRequires: NetworkManager-devel >= %nm_version
 BuildRequires: NetworkManager-glib-devel >= %nm_version
@@ -29,6 +29,11 @@ BuildRequires: gnome-common
 BuildRequires: libgudev-devel
 BuildRequires: libmm-glib-devel
 BuildRequires: gobject-introspection-devel libgtk+%gtkver-gir-devel
+BuildRequires: libsecret-devel
+# For migration from libgnome-keyring to libsecret
+BuildRequires: libgnome-keyring-devel
+# For migration connections from gconf
+BuildRequires: libGConf-devel
 
 Requires: NetworkManager >= %nm_version
 Requires: libnm-gtk = %version-%release
@@ -148,6 +153,9 @@ fi
 %_datadir/gir-1.0/NMGtk-1.0.gir
 
 %changelog
+* Fri Jun 14 2013 Mikhail Efremov <sem@altlinux.org> 0.9.8.2-alt1
+- Updated to 0.9.8.2.
+
 * Tue Jun 04 2013 Mikhail Efremov <sem@altlinux.org> 0.9.8.0-alt4
 - Require iso-codes.
 
