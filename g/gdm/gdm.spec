@@ -27,8 +27,8 @@
 %def_disable fallback_greeter
 
 Name: gdm
-Version: %ver_major.1.1
-Release: alt1.1
+Version: %ver_major.3
+Release: alt1
 
 Summary: The GNOME Display Manager
 License: GPLv2+
@@ -48,13 +48,14 @@ Source13: gdm-launch-environment.pam
 #Source11: gdm-smartcard.pam
 #Source12: gdm-fingerprint.pam
 
-# revert this http://git.gnome.org/browse/gdm/commit/?h=gnome-3-6&id=affb42aff901f407502e4d2c0eb65b4f30a1275d
-#Patch: gdm-3.6.2-up-affb42af.patch
 Patch2: gdm-3.2.1.1-alt-Xsession.patch
 Patch7: gdm-3.1.92-alt-Init.patch
 Patch9: gdm-3.2.2-alt-link.patch
 Patch10: gdm-3.2.1.1-alt-invalid_user_shell.patch
 Patch11: gdm-3.8.0-alt-lfs.patch
+
+Obsoletes: %name-gnome
+Provides: %name-gnome = %version-%release
 
 # from configure.ac
 %define dbus_glib_ver 0.74
@@ -167,7 +168,6 @@ This package contains user documentation for Gdm.
 Summary: Fingerprint extension for Gdm
 Group: Graphical desktop/GNOME
 Requires: %name = %version-%release
-Requires: %_libdir/gdm/simple-greeter/extensions
 
 %description extension-fingerprint
 Gdm (the GNOME Display Manager) is a highly configurable
@@ -181,7 +181,6 @@ This package contains Fingerprint extension for Gdm.
 Summary: Smartcard extension for Gdm
 Group: Graphical desktop/GNOME
 Requires: %name = %version-%release
-Requires: %_libdir/gdm/simple-greeter/extensions
 
 %description extension-smartcard
 Gdm (the GNOME Display Manager) is a highly configurable
@@ -211,10 +210,9 @@ Install this package for use with GNOME desktop.
 
 %prep
 %setup -q
-#%%patch -p1 -R
 %patch2 -p1
 %patch7 -p1
-%patch9 -p1 -b .link
+#%%patch9 -p1 -b .link
 #%%patch10 -p1 -b .shells
 %patch11 -p1 -b .lfs
 
@@ -291,6 +289,7 @@ xvfb-run %make check
 %config %_sysconfdir/pam.d/gdm
 %config %_sysconfdir/pam.d/gdm-autologin
 %config %_sysconfdir/pam.d/gdm-password
+%config %_sysconfdir/pam.d/gdm-launch-environment
 %config %_sysconfdir/dbus-1/system.d/%name.conf
 %config %_datadir/glib-2.0/schemas/org.gnome.login-screen.gschema.xml
 %config(noreplace) %_sysconfdir/X11/%name
@@ -308,7 +307,6 @@ xvfb-run %make check
 %_sbindir/*
 %_libexecdir/*
 %dir %_datadir/%name
-%_datadir/%name/*.ui
 %_datadir/%name/locale.alias
 %_datadir/%name/gdb-cmd
 %_datadir/%name/%name.schemas
@@ -325,40 +323,31 @@ xvfb-run %make check
 %attr(1750, gdm, gdm) %dir %_localstatedir/lib/gdm/.local/share
 %attr(1777, root, gdm) %dir %_localstatedir/run/gdm
 
-%dir %_datadir/gdm/simple-greeter/extensions
-%dir %_datadir/gdm/simple-greeter
+# obsolete -gnome subpackage
+%_datadir/gdm/greeter/applications/gnome-shell.desktop
+%_datadir/gdm/greeter/applications/mime-dummy-handler.desktop
+%_datadir/gdm/greeter/applications/gdm-simple-greeter.desktop
+%_datadir/gdm/greeter/applications/mimeapps.list
+%_datadir/gnome-session/sessions/gdm-shell.session
+%exclude %_datadir/gdm/greeter/autostart/orca-autostart.desktop
 
-%_sysconfdir/pam.d/gdm-launch-environment
-%dir %_datadir/gdm/simple-greeter/extensions/unified
-%_datadir/gdm/simple-greeter/extensions/unified/page.ui
 
 %if_enabled split_authentication
-%_libdir/gdm/simple-greeter/extensions/libpassword.so
+#%_libdir/gdm/simple-greeter/extensions/libpassword.so
 %dir %_datadir/gdm/simple-greeter/extensions/password
 %_datadir/gdm/simple-greeter/extensions/password/page.ui
 %endif
 
 %files help -f %name-help.lang
 
-%files gnome
-%_datadir/gdm/greeter/applications/gdm-simple-greeter.desktop
-%_datadir/gdm/greeter/applications/gnome-shell.desktop
-%_datadir/gdm/greeter/applications/mime-dummy-handler.desktop
-%_datadir/gdm/greeter/applications/mimeapps.list
-%_datadir/gnome-session/sessions/gdm-fallback.session
-%_datadir/gnome-session/sessions/gdm-shell.session
-%exclude %_datadir/gdm/greeter/autostart/orca-autostart.desktop
 
 %files libs
 %_libdir/libgdm.so.*
-%_libdir/libgdmsimplegreeter.so.*
 
 %files libs-devel
 %_includedir/gdm/
 %_libdir/libgdm.so
-%_libdir/libgdmsimplegreeter.so
 %_libdir/pkgconfig/gdm.pc
-%_libdir/pkgconfig/gdmsimplegreeter.pc
 
 %files libs-gir
 %_typelibdir/Gdm-%api_ver.typelib
@@ -384,6 +373,10 @@ xvfb-run %make check
 %endif
 
 %changelog
+* Fri Jun 14 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.3-alt1
+- 3.8.3
+- obsoleted gnome subpackage
+
 * Sat Apr 20 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.1.1-alt1.1
 - removed %%_datadir/gdm/greeter/autostart/orca-autostart.desktop
 
