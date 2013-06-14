@@ -21,7 +21,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.4.49
-Release: alt1
+Release: alt2
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -426,7 +426,6 @@ Patch0515: linux-%kernel_branch.39-fix-drivers-usb-host--uhci-hcd.patch
 Patch0516: linux-%kernel_branch.45-fix-drivers-usb-host--xhci-hcd.patch
 Patch0517: linux-%kernel_branch.39-fix-drivers-usb-musb--musb_hdrc.patch
 Patch0518: linux-%kernel_branch.39-fix-drivers-usb-otg--otg.patch
-Patch0519: linux-%kernel_branch.37-fix-drivers-usb-serial--io_ti.patch
 
 Patch0521: linux-%kernel_branch.20-fix-drivers-video-aty--radeonfb.patch
 Patch0522: linux-%kernel_branch.20-fix-drivers-video-console--vgacon.patch
@@ -2734,6 +2733,12 @@ done)
 
 
 %changelog
+* Fri Jun 14 2013 Led <led@altlinux.ru> 3.4.49-alt2
+- removed:
+  + fix-drivers-usb-serial--io_ti
+- updated:
+  + fix-firmware-radeon
+
 * Thu Jun 13 2013 Led <led@altlinux.ru> 3.4.49-alt1
 - 3.4.49
 
