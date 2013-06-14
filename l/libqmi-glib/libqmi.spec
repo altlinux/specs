@@ -1,7 +1,7 @@
 %define _name libqmi
 
 Name: %_name-glib
-Version: 1.2.0
+Version: 1.4.0
 Release: alt1
 
 Summary: QMI modem protocol helper library
@@ -59,7 +59,7 @@ touch README ChangeLog
 %autoreconf
 %configure \
 	--disable-static \
-	--with-docs \
+	--enable-gtk-doc \
 	--with-tests
 %make_build
 
@@ -85,6 +85,9 @@ make check
 
 
 %changelog
+* Fri Jun 14 2013 Mikhail Efremov <sem@altlinux.org> 1.4.0-alt1
+- Updated to 1.4.0.
+
 * Wed Mar 27 2013 Mikhail Efremov <sem@altlinux.org> 1.2.0-alt1
 - devel-doc subpackage: Fix group.
 - Package doc subpackage as noarch.
