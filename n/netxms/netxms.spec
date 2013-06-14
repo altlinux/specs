@@ -1,6 +1,6 @@
 Name: netxms
-Version: 1.2.5
-Release: alt2
+Version: 1.2.7
+Release: alt1
 
 Summary: Open source network monitoring system
 License: GPL
@@ -222,7 +222,10 @@ mkdir -p %buildroot/%_localstatedir/%name/agent
 %_libdir/%name/dbdrv/odbc.ddr
 
 %changelog
-* Fri Jan 11 2013 Eugene Prokopiev <enp@altlinux.ru> 1.2.5-alt2
+* Fri Jun 14 2013 Eugene Prokopiev <enp@altlinux.ru> 1.2.7-alt1
+- new version
+
+* Fri Jan 11 2013 Eugene Prokopiev <enp@altlinux.ru> 1.2.5-
 - new version
 
 * Wed Dec 05 2012 Eugene Prokopiev <enp@altlinux.ru> 1.2.4-alt1
