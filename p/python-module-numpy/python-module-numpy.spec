@@ -14,7 +14,7 @@
 
 Name: python-module-%oname
 Version: %majver.0.0
-Release: alt8.git20121009
+Release: alt8.git20130613
 
 Summary: NumPy: array processing for numbers, strings, records, and objects
 License: BSD
@@ -50,7 +50,7 @@ BuildPreReq: python-module-sphinx-devel python-module-Pygments
 #BuildPreReq: python-module-matplotlib
 BuildPreReq: dvipng doxygen ghostscript-classic ImageMagick-tools
 BuildPreReq: texlive-latex-base texlive-latex-extra
-BuildPreReq: texmf-latex-preview
+BuildPreReq: texmf-latex-preview python-module-matplotlib-sphinxext
 #%if_with tests
 #BuildPreReq: libnumpy-devel
 #%endif
@@ -476,10 +476,10 @@ ln -s %_includedir/%oname-py3 \
 	%buildroot%python3_sitelibdir/%oname/core/include/
 cp -a %oname/numarray/include/%oname/*.h \
 	%buildroot%_includedir/%oname-py3/
-cp build/py3k/build/src.*/%oname/core/include/%oname/{*.h,*.c} \
+cp build/src.*/%oname/core/include/%oname/{*.h,*.c} \
 	%buildroot%_includedir/%oname-py3/
 install -d %buildroot%python3_sitelibdir/%oname/core/lib/npy-pkg-config
-cp -fR build/py3k/build/src.*/%oname/core/lib/npy-pkg-config/* \
+cp -fR build/src.*/%oname/core/lib/npy-pkg-config/* \
 	%buildroot%python3_sitelibdir/%oname/core/lib/npy-pkg-config/
 
 # pkg-config
@@ -619,7 +619,7 @@ cp %oname/numarray/_capi.c \
 	%buildroot%python_sitelibdir/%oname/numarray/
 cp %oname/fft/*.c %oname/fft/*.h \
 	%buildroot%python_sitelibdir/%oname/fft/
-cp %oname/linalg/*.c %oname/linalg/*.h \
+cp %oname/linalg/*.c \
 	%buildroot%python_sitelibdir/%oname/linalg/
 cp -fR %oname/lib/src \
 	%buildroot%python_sitelibdir/%oname/lib/
@@ -645,7 +645,7 @@ cp %oname/numarray/_capi.c \
 	%buildroot%python3_sitelibdir/%oname/numarray/
 cp %oname/fft/*.c %oname/fft/*.h \
 	%buildroot%python3_sitelibdir/%oname/fft/
-cp %oname/linalg/*.c %oname/linalg/*.h \
+cp %oname/linalg/*.c \
 	%buildroot%python3_sitelibdir/%oname/linalg/
 cp -fR %oname/lib/src \
 	%buildroot%python3_sitelibdir/%oname/lib/
@@ -821,7 +821,7 @@ fi
 %exclude %python_sitelibdir/%oname/fft/*.h
 %exclude %python_sitelibdir/%oname/lib/src
 %exclude %python_sitelibdir/%oname/linalg/*.c
-%exclude %python_sitelibdir/%oname/linalg/*.h
+#exclude %python_sitelibdir/%oname/linalg/*.h
 %endif
 %python_sitelibdir/%oname-*.egg-info
 %python_sitelibdir/numpyx*
@@ -868,7 +868,7 @@ fi
 %exclude %python3_sitelibdir/%oname/fft/*.h
 %exclude %python3_sitelibdir/%oname/lib/src
 %exclude %python3_sitelibdir/%oname/linalg/*.c
-%exclude %python3_sitelibdir/%oname/linalg/*.h
+#exclude %python3_sitelibdir/%oname/linalg/*.h
 %endif
 %python3_sitelibdir/%oname-*.egg-info
 #python3_sitelibdir/numpyx*
@@ -969,7 +969,7 @@ fi
 %python_sitelibdir/%oname/core/src/umath
 %python_sitelibdir/%oname/lib/src
 %python_sitelibdir/%oname/linalg/*.c
-%python_sitelibdir/%oname/linalg/*.h
+#python_sitelibdir/%oname/linalg/*.h
 %endif
 %python_sitelibdir/%oname/core/include
 %python_sitelibdir/%oname/numarray/include
@@ -1001,7 +1001,7 @@ fi
 %python3_sitelibdir/%oname/core/src/umath
 %python3_sitelibdir/%oname/lib/src
 %python3_sitelibdir/%oname/linalg/*.c
-%python3_sitelibdir/%oname/linalg/*.h
+#python3_sitelibdir/%oname/linalg/*.h
 %endif
 %python3_sitelibdir/%oname/core/include
 %python3_sitelibdir/%oname/numarray/include
@@ -1056,6 +1056,9 @@ rm -fR %python_sitelibdir/numpydoc*.egg-info
 # TODO: restore requirement on scipy for tests
 
 %changelog
+* Fri Jun 14 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.0-alt8.git20130613
+- New snapshot
+
 * Mon Apr 15 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.0-alt8.git20121009
 - Use 'find... -exec...' instead of 'for ... $(find...'
 
