@@ -1,6 +1,6 @@
 %define module_name	r8168
-%define module_version	8.035.00
-%define module_release	alt4
+%define module_version	8.036.00
+%define module_release	alt1
 
 %define flavour		std-pae
 
@@ -11,7 +11,6 @@
 Name: kernel-modules-%module_name-%flavour
 Version: %module_version
 Release: %module_release.%kcode.%kbuildrelease
-Patch0: r8168-build-3.8.patch
 
 Summary: Linux driver for RealTek Ethernet controllers
 License: GPLv2+
@@ -47,9 +46,6 @@ Gigabit Ethernet controllers with PCI-Express interface.
 rm -rf kernel-source-%module_name-%module_version
 tar -jxvf %kernel_src/kernel-source-%module_name-%module_version.tar.bz2
 %setup -D -T -n kernel-source-%module_name-%module_version
-%if "%kversion" >= "3.8"
-%patch0 -p0
-%endif
 
 %build
 . %_usrsrc/linux-%kversion-%flavour/gcc_version.inc
@@ -64,6 +60,9 @@ install -Dp -m0744 src/%module_name.ko %buildroot/%module_dir/%module_name.ko
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Sat Jun 15 2013 Nazarov Denis <nenderus@altlinux.org> 8.036.00-alt1
+- Version 8.036.00
 
 * Thu May 23 2013 Anton V. Boyarshinov <boyarsh@altlinux.org> 8.035.00-alt4
 - conflicts with other versions removed
