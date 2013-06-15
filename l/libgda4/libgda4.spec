@@ -28,7 +28,7 @@
 
 Name: %{_name}4
 Version: %ver_major.13
-Release: alt1
+Release: alt2
 
 Summary: Library for writing gnome database programs
 Group: System/Libraries
@@ -54,6 +54,7 @@ BuildPreReq: glib2-devel >= 2.12.0
 BuildPreReq: libgio-devel >= 2.12.0
 BuildPreReq: libxslt-devel >= 1.0.9
 BuildPreReq: gtk-doc >= 1.0
+BuildRequires: gnome-doc-utils
 BuildPreReq: libldap-devel >= %ldap_ver libsasl2-devel
 BuildRequires: libjson-glib-devel libunixODBC-devel libssl-devel
 BuildRequires: libgnome-keyring-devel iso-codes-devel
@@ -520,6 +521,10 @@ gnome-doc-prepare -f
 %exclude %_sysconfdir/%_name-%abi_ver/sales_test.db
 
 %changelog
+* Fri Jun 07 2013 Yuri N. Sedunov <aris@altlinux.org> 4.2.13-alt2
+- updated buildreqs
+- rebuild against libmdbtools-0.7
+
 * Tue Oct 09 2012 Yuri N. Sedunov <aris@altlinux.org> 4.2.13-alt1
 - 4.2.13 snapshot (7a3e641)
 - disabled introspection

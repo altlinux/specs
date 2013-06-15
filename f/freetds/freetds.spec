@@ -2,7 +2,7 @@
 
 %define	TDSVER 7.0
 %define	name freetds
-%define	release alt2
+%define	release alt3
 %define	version 0.91
 
 Name:		%name
@@ -175,6 +175,9 @@ useful utilities.
 
 
 %changelog
+* Mon Jun 10 2013 Nikolay A. Fetisov <naf@altlinux.ru> 0.91-alt3
+- Rebuild with unixODBC 2.3.1
+
 * Sun Apr 22 2012 Nikolay A. Fetisov <naf@altlinux.ru> 0.91-alt2
 - Fix RPATH issues
 
