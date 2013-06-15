@@ -1,6 +1,6 @@
 Name: gnubik
-Version: 2.3
-Release: alt1.qa3
+Version: 2.4.1
+Release: alt1
 
 Summary: gnubik -  an interactive, graphic Magic cube program
 Summary(ru_RU.UTF-8): gnubik - трёхмерный кубик-рубик
@@ -22,7 +22,7 @@ BuildRequires: guile18-devel imake libfreeglut-devel libgtkglext-devel xorg-cf-f
 gnubik - an interactive, graphic Magic cube program.
 
 %prep
-%setup -q
+%setup
 #patch0 -p1
 
 %build
@@ -34,25 +34,29 @@ export LDFLAGS="$LDFLAGS -Wl,--no-as-needed"
 %install
 %make_install DESTDIR=%buildroot install
 
-install -D -m 644 %SOURCE1 %buildroot%_datadir/applications/gnubik.desktop
+install -D -m 644 %SOURCE1 %buildroot%_desktopdir/gnubik.desktop
 
 mkdir -p %buildroot%_man6dir/
 
 install -pD -m644 doc/%name.6 %buildroot%_man6dir
 
-
 %find_lang %name
 
 %files -f %name.lang
-%doc AUTHORS ChangeLog NEWS README TODO
+%doc AUTHORS ChangeLog NEWS README TODO THANKS
 %_bindir/gnubik
-%_datadir/applications/gnubik.desktop
+%_desktopdir/gnubik.desktop
+%_iconsdir/hicolor/*/apps/*
 %dir %_datadir/gnubik/
 %_datadir/gnubik/
 %_infodir/gnubik.*
 %_man6dir/gnubik.*
 
 %changelog
+* Sat Jun 15 2013 Fr. Br. George <george@altlinux.ru> 2.4.1-alt1
+- Autobuild version bump to 2.4.1
+- Package icons
+
 * Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.3-alt1.qa3
 - NMU: rebuilt for debuginfo.
 
