@@ -21,7 +21,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.4.49
-Release: alt2
+Release: alt3
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -178,7 +178,8 @@ Patch0023: linux-%kernel_branch.20-fix-arch-x86--hpet.patch
 Patch0024: linux-%kernel_branch.20-fix-arch-x86--kexec.patch
 Patch0025: linux-%kernel_branch.42-fix-arch-x86--mcheck.patch
 Patch0026: linux-%kernel_branch.47-fix-arch-x86--microcode.patch
-Patch0027: linux-%kernel_branch.25-fix-arch-x86-cpu--rdrand.patch
+Patch0027: linux-%kernel_branch.47-fix-arch-x86-cpu.patch
+Patch0028: linux-%kernel_branch.25-fix-arch-x86-cpu--rdrand.patch
 
 Patch0030: linux-%kernel_branch.35-fix-block.patch
 Patch0031: linux-%kernel_branch.35-fix-block--blk-integrity.patch
@@ -366,11 +367,12 @@ Patch0405: linux-%kernel_branch.20-fix-drivers-net-hyperv.patch
 Patch0406: linux-%kernel_branch.39-fix-drivers-net-wimax-i2400m--i2400m.patch
 
 Patch0411: linux-%kernel_branch.25-fix-drivers-net-wireless--iwlwifi.patch
-Patch0412: linux-%kernel_branch.20-fix-drivers-net-wireless-brcm80211--brcmsmac.patch
-Patch0413: linux-%kernel_branch.25-fix-drivers-net-wireless-ipw2x00--libipw.patch
-Patch0414: linux-%kernel_branch.39-fix-drivers-net-wireless-mwifiex--mwifiex.patch
-Patch0415: linux-%kernel_branch.20-fix-drivers-net-wireless-rt2x00--rt2800lib.patch
-Patch0416: linux-%kernel_branch.39-fix-drivers-net-wireless-wl12xx.patch
+Patch0412: linux-%kernel_branch.47-fix-drivers-net-wireless--rtl8187se.patch
+Patch0413: linux-%kernel_branch.20-fix-drivers-net-wireless-brcm80211--brcmsmac.patch
+Patch0414: linux-%kernel_branch.25-fix-drivers-net-wireless-ipw2x00--libipw.patch
+Patch0415: linux-%kernel_branch.39-fix-drivers-net-wireless-mwifiex--mwifiex.patch
+Patch0416: linux-%kernel_branch.20-fix-drivers-net-wireless-rt2x00--rt2800lib.patch
+Patch0417: linux-%kernel_branch.39-fix-drivers-net-wireless-wl12xx.patch
 
 Patch0421: linux-%kernel_branch.27-fix-drivers-platform--asus_oled.patch
 Patch0422: linux-%kernel_branch.20-fix-drivers-platform--hdaps.patch
@@ -503,7 +505,7 @@ Patch0651: linux-%kernel_branch.25-fix-net-mac80211.patch
 Patch0652: linux-%kernel_branch.20-fix-net-netfilter--nf_conntrack_ftp.patch
 Patch0653: linux-%kernel_branch.47-fix-net-netfilter--xt_LOG.patch
 Patch0654: linux-%kernel_branch.28-fix-net-rds--rds_rdma.patch
-Patch0655: linux-%kernel_branch.46-fix-net-sunrpc.patch
+Patch0655: linux-%kernel_branch.47-fix-net-sunrpc.patch
 Patch0656: linux-%kernel_branch.42-fix-net-unix--unix.patch
 Patch0657: linux-%kernel_branch.39-fix-net-wimax.patch
 Patch0658: linux-%kernel_branch.35-fix-net-wireless--cfg80211.patch
@@ -1327,6 +1329,7 @@ cd linux-%version
 %patch0025 -p1
 %patch0026 -p1
 %patch0027 -p1
+%patch0028 -p1
 
 # fix-block*
 %patch0030 -p1
@@ -1555,6 +1558,7 @@ cd linux-%version
 %patch0414 -p1
 %patch0415 -p1
 %patch0416 -p1
+%patch0417 -p1
 
 # fix-drivers-platform--*
 %patch0421 -p1
@@ -2733,6 +2737,13 @@ done)
 
 
 %changelog
+* Sat Jun 15 2013 Led <led@altlinux.ru> 3.4.49-alt3
+- updated:
+  + fix-net-sunrpc
+- added:
+  + fix-arch-x86-cpu
+  + fix-drivers-net-wireless--rtl8187se
+
 * Fri Jun 14 2013 Led <led@altlinux.ru> 3.4.49-alt2
 - removed:
   + fix-drivers-usb-serial--io_ti
