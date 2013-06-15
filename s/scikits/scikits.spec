@@ -1,6 +1,6 @@
 %define oname scikits
 
-%def_enable docs
+%def_disable docs
 
 BuildRequires(pre): rpm-build-python
 %define python_noarch %_libexecdir/python%_python_version/site-packages
@@ -20,7 +20,7 @@ under OSI-approved licenses.
 
 Name: %oname
 Version: 2267
-Release: alt7
+Release: alt8
 Summary: Add-on packages for SciPy
 License: OSI-approved licenses
 Group: Sciences/Other
@@ -644,6 +644,9 @@ done
 %endif
 
 %changelog
+* Sat Jun 15 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2267-alt8
+- Rebuilt with new NumPy
+
 * Sat Oct 13 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2267-alt7
 - Rebuilt with new SciPy
 
