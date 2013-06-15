@@ -2,14 +2,14 @@
 # TODO: Move mpl-data to share?
 
 %define oname matplotlib
-%define major 1.3
+%define major 1.4
 
-%def_enable docs
+%def_disable docs
 %def_with python3
 
 Name: python-module-%oname
 Version: %major.0
-Release: alt4.git20121010
+Release: alt1.git20121010
 
 Summary: Matlab(TM) style python plotting package
 
@@ -19,7 +19,7 @@ Url: http://matplotlib.sourceforge.net
 
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-# https://matplotlib.svn.sourceforge.net/svnroot/matplotlib/trunk
+# https://github.com/matplotlib/matplotlib.git
 Source: %oname-%version.tar
 Source1: setup.cfg
 
@@ -27,7 +27,7 @@ Source1: setup.cfg
 
 BuildPreReq: python3-module-pygobject3
 BuildPreReq: python-module-matplotlib python-module-numpydoc ipython 
-BuildRequires: dvipng gcc-c++ libgtk+2-devel python-module-PyQt4
+BuildRequires: dvipng gcc-c++ libgtk+2-devel python-module-PyQt4-devel
 BuildPreReq: python-module-ctypes python-module-pygtk_git-devel
 BuildPreReq: python-module-qt python-module-wx2.9 graphviz
 BuildPreReq: python-modules-encodings python-modules-tkinter
@@ -40,6 +40,7 @@ BuildPreReq: python-module-scipy-devel rpm-macros-make
 BuildPreReq: libpng-devel libfreetype-devel
 BuildPreReq: python-module-pytz python-module-dateutil
 BuildPreReq: python-module-markupsafe strace libgtk+3-devel
+BuildPreReq: python-module-pyparsing
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel libnumpy-py3-devel python-tools-2to3
@@ -47,6 +48,7 @@ BuildPreReq: python3-module-scipy-devel python3-module-markupsafe
 BuildPreReq: python3-module-pytz python3-module-dateutil
 BuildPreReq:  python3-module-PySide
 BuildPreReq: python3-module-pycairo python3-module-pygobject3-devel
+BuildPreReq: python3-module-pyparsing python3-modules-tkinter
 %endif
 
 #Requires: dvipng %name-gtk = %version-%release
@@ -317,7 +319,7 @@ popd
 pushd ../python3
 %python3_install
 
-subst "s|WXAgg|GTK3Agg|g" \
+subst "s|WXAgg|GTK3Cairo|g" \
 	%buildroot%python3_sitelibdir/%oname/mpl-data/matplotlibrc
 
 export PYTHONPATH=%buildroot%python3_sitelibdir
@@ -369,7 +371,7 @@ popd
 
 install -d %buildroot%_docdir/%name/pdf
 cp -fR examples LICENSE %buildroot%_docdir/%name/
-install -p -m644 README.txt CHANGELOG INSTALL TODO \
+install -p -m644 README.rst CHANGELOG INSTALL TODO \
 	%buildroot%_docdir/%name
 
 %if_enabled docs
@@ -412,7 +414,7 @@ done
 %files
 %doc %dir %_docdir/%name
 %doc %_docdir/%name/LICENSE
-%doc %_docdir/%name/README.txt
+%doc %_docdir/%name/README.rst
 %doc %_docdir/%name/CHANGELOG
 %doc %_docdir/%name/INSTALL
 %doc %_docdir/%name/TODO
@@ -429,7 +431,7 @@ done
 %python_sitelibdir/matplotlib/mpl-data/
 #%python_sitelibdir/matplotlib/config/
 #%python_sitelibdir/enthought/
-%python_sitelibdir/matplotlib/backends/Matplotlib.nib/
+#python_sitelibdir/matplotlib/backends/Matplotlib.nib/
 %dir %python_sitelibdir/matplotlib/backends/
 %python_sitelibdir/matplotlib/backends/backend_agg*
 %python_sitelibdir/matplotlib/backends/*_agg.so
@@ -440,12 +442,12 @@ done
 %python_sitelibdir/matplotlib/backends/backend_pdf*
 %python_sitelibdir/matplotlib/backends/backend_ps*
 %python_sitelibdir/matplotlib/backends/backend_cairo*
-%python_sitelibdir/matplotlib/backends/backend_emf*
+#python_sitelibdir/matplotlib/backends/backend_emf*
 %python_sitelibdir/matplotlib/backends/backend_cocoa*
 %python_sitelibdir/matplotlib/tri
 
 %files fltk
-%python_sitelibdir/matplotlib/backends/backend_fltk*
+#python_sitelibdir/matplotlib/backends/backend_fltk*
 
 #files gtk
 #python_sitelibdir/matplotlib/backends/backend_gtk*
@@ -457,9 +459,9 @@ done
 %files gtk3
 %python_sitelibdir/matplotlib/backends/backend_gtk3*
 
-%files qt
-%python_sitelibdir/matplotlib/backends/backend_qt.*
-%python_sitelibdir/matplotlib/backends/backend_qtagg*
+#files qt
+#python_sitelibdir/matplotlib/backends/backend_qt.*
+#python_sitelibdir/matplotlib/backends/backend_qtagg*
 
 %files wx
 %python_sitelibdir/matplotlib/backends/backend_wx*
@@ -510,11 +512,11 @@ rm -fR %_docdir/%name/pdf
 
 %if_with python3
 %files -n python3-module-%oname
-%doc LICENSE README.txt CHANGELOG INSTALL TODO
+%doc LICENSE README.rst CHANGELOG INSTALL TODO
 %python3_sitelibdir/*.py*
-%exclude %python3_sitelibdir/six.py*
+#exclude %python3_sitelibdir/six.py*
 %python3_sitelibdir/__pycache__/*
-%exclude %python3_sitelibdir/__pycache__/six.*
+#exclude %python3_sitelibdir/__pycache__/six.*
 %python3_sitelibdir/*.egg-info
 %dir %python3_sitelibdir/matplotlib/
 %python3_sitelibdir/matplotlib/*.py*
@@ -528,7 +530,7 @@ rm -fR %_docdir/%name/pdf
 %python3_sitelibdir/matplotlib/mpl-data/
 #%python3_sitelibdir/matplotlib/config/
 #%python3_sitelibdir/enthought/
-%python3_sitelibdir/matplotlib/backends/Matplotlib.nib/
+#python3_sitelibdir/matplotlib/backends/Matplotlib.nib/
 %dir %python3_sitelibdir/matplotlib/backends/
 %python3_sitelibdir/matplotlib/backends/backend_agg*
 %python3_sitelibdir/matplotlib/backends/*_agg.*.so
@@ -539,15 +541,15 @@ rm -fR %_docdir/%name/pdf
 %python3_sitelibdir/matplotlib/backends/backend_pdf*
 %python3_sitelibdir/matplotlib/backends/backend_ps*
 %python3_sitelibdir/matplotlib/backends/backend_cairo*
-%python3_sitelibdir/matplotlib/backends/backend_emf*
+#python3_sitelibdir/matplotlib/backends/backend_emf*
 %python3_sitelibdir/matplotlib/backends/backend_cocoa*
 %dir %python3_sitelibdir/matplotlib/backends/__pycache__
 %python3_sitelibdir/matplotlib/backends/__pycache__/*
-%exclude %python3_sitelibdir/matplotlib/backends/__pycache__/backend_fltk*
+#exclude %python3_sitelibdir/matplotlib/backends/__pycache__/backend_fltk*
 %exclude %python3_sitelibdir/matplotlib/backends/__pycache__/backend_gtk*
 %exclude %python3_sitelibdir/matplotlib/backends/__pycache__/backend_gdk*
-%exclude %python3_sitelibdir/matplotlib/backends/__pycache__/backend_qt.*
-%exclude %python3_sitelibdir/matplotlib/backends/__pycache__/backend_qtagg*
+#exclude %python3_sitelibdir/matplotlib/backends/__pycache__/backend_qt.*
+#exclude %python3_sitelibdir/matplotlib/backends/__pycache__/backend_qtagg*
 %exclude %python3_sitelibdir/matplotlib/backends/__pycache__/backend_wx*
 %exclude %python3_sitelibdir/matplotlib/backends/__pycache__/backend_tk*
 %exclude %python3_sitelibdir/matplotlib/backends/__pycache__/tk*
@@ -557,19 +559,19 @@ rm -fR %_docdir/%name/pdf
 %exclude %python3_sitelibdir/matplotlib/backends/__pycache__/windowing.*
 %python3_sitelibdir/matplotlib/tri
 
-%files -n python3-module-%oname-fltk
-%python3_sitelibdir/matplotlib/backends/backend_fltk*
-%python3_sitelibdir/matplotlib/backends/__pycache__/backend_fltk*
+#files -n python3-module-%oname-fltk
+#python3_sitelibdir/matplotlib/backends/backend_fltk*
+#python3_sitelibdir/matplotlib/backends/__pycache__/backend_fltk*
 
 %files -n python3-module-%oname-gtk3
 %python3_sitelibdir/matplotlib/backends/backend_gtk3*
 %python3_sitelibdir/matplotlib/backends/__pycache__/backend_gtk3*
 
-%files -n python3-module-%oname-qt
-%python3_sitelibdir/matplotlib/backends/backend_qt.*
-%python3_sitelibdir/matplotlib/backends/__pycache__/backend_qt.*
-%python3_sitelibdir/matplotlib/backends/backend_qtagg*
-%python3_sitelibdir/matplotlib/backends/__pycache__/backend_qtagg*
+#files -n python3-module-%oname-qt
+#python3_sitelibdir/matplotlib/backends/backend_qt.*
+#python3_sitelibdir/matplotlib/backends/__pycache__/backend_qt.*
+#python3_sitelibdir/matplotlib/backends/backend_qtagg*
+#python3_sitelibdir/matplotlib/backends/__pycache__/backend_qtagg*
 
 #files -n python3-module-%oname-wx
 #python3_sitelibdir/matplotlib/backends/backend_wx*
@@ -598,6 +600,9 @@ rm -fR %_docdir/%name/pdf
 %endif
 
 %changelog
+* Sat Jun 15 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4.0-alt1.git20121010
+- Version 1.4.x
+
 * Mon Apr 01 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.0-alt4.git20121010
 - Excluded six.py
 
