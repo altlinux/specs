@@ -10,8 +10,8 @@ BuildRequires(pre): rpm-build-python
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.12.0
-Release: alt2.git20121009.1
+Version: 0.13.0
+Release: alt1.git20130614
 
 Summary: SciPy is the library of scientific codes
 
@@ -31,7 +31,7 @@ Source: %oname-%version.tar
 Source1: site.cfg
 
 BuildPreReq: python-module-sympy python-module-scipy
-BuildPreReq: python-module-numpy python-module-matplotlib
+BuildPreReq: python-module-numpy python-module-matplotlib-sphinxext
 BuildPreReq: python-module-numdifftools
 BuildPreReq: libsuitesparse-devel swig /proc rpm-macros-make
 BuildPreReq: python-module-sphinx-devel
@@ -126,7 +126,7 @@ This package contains development files of SciPy.
 Summary: Tests and examples for SciPy
 Group: Development/Python
 Requires: %name = %version-%release
-%add_python_req_skip ext_tools inline_tools swig2_ext symeig vtk
+%add_python_req_skip ext_tools inline_tools swig2_ext symeig vtk weave
 
 %description tests
 SciPy is the library of scientific codes built on top of NumPy.
@@ -221,10 +221,10 @@ sed -i 's|^\(backend\).*|\1 : Agg|' ~/.matplotlib/matplotlibrc
 
 # weave
 
-pushd scipy/weave
-%python_build_debug build_ext build_py build_clib build_scripts \
-	config_fc --fcompiler=gnu95
-popd
+#pushd scipy/weave
+#python_build_debug build_ext build_py build_clib build_scripts \
+#	config_fc --fcompiler=gnu95
+#popd
 
 %if_with python3
 pushd ../python3
@@ -233,10 +233,10 @@ pushd ../python3
 
 # weave
 
-pushd scipy/weave
-%python3_build_debug build_ext build_py build_clib build_scripts \
-	config_fc --fcompiler=gnu95
-popd
+#pushd scipy/weave
+#python3_build_debug build_ext build_py build_clib build_scripts \
+#	config_fc --fcompiler=gnu95
+#popd
 
 popd
 %endif
@@ -244,10 +244,10 @@ popd
 %install
 %python_install install_lib install_headers \
 	install_data config_fc
-pushd scipy/weave
-%python_install install_lib install_headers \
-	install_data config_fc
-popd
+#pushd scipy/weave
+#python_install install_lib install_headers \
+#	install_data config_fc
+#popd
 
 install -m644 %oname/__svn_version__.py \
 	%buildroot%python_sitelibdir/%oname
@@ -262,14 +262,14 @@ for i in $(find ./ -name '*.h' |grep -v weave); do
 		%buildroot%_includedir/%oname/$dir
 done
 popd
-pushd %buildroot%python_noarch/weave
-for i in $(find ./ -name '*.h'); do
-	dir=$(echo $i|sed 's|\(.*\)/.*|\1|')
-	install -d %buildroot%_includedir/weave/$dir
-	ln -s %python_noarch/weave/$i \
-		%buildroot%_includedir/weave/$dir
-done
-popd
+#pushd %buildroot%python_noarch/weave
+#for i in $(find ./ -name '*.h'); do
+#	dir=$(echo $i|sed 's|\(.*\)/.*|\1|')
+#	install -d %buildroot%_includedir/weave/$dir
+#	ln -s %python_noarch/weave/$i \
+#		%buildroot%_includedir/weave/$dir
+#done
+#popd
 install -p -m644 $(find ./ -name fortranobject.h) \
 	%buildroot%_includedir/%oname
 
@@ -281,10 +281,10 @@ sed -i \
 
 %python3_install install_lib install_headers \
 	install_data config_fc
-pushd scipy/weave
-%python3_install install_lib install_headers \
-	install_data config_fc
-popd
+#pushd scipy/weave
+#python3_install install_lib install_headers \
+#	install_data config_fc
+#popd
 
 install -m644 %oname/__svn_version__.py \
 	%buildroot%python3_sitelibdir/%oname
@@ -299,17 +299,17 @@ for i in $(find ./ -name '*.h' |grep -v weave); do
 		%buildroot%_includedir/%oname-py3/$dir
 done
 popd
-pushd %buildroot%python3_sitelibdir_noarch/weave
-for i in $(find ./ -name '*.h'); do
-	dir=$(echo $i|sed 's|\(.*\)/.*|\1|')
-	install -d %buildroot%_includedir/weave-py3/$dir
-	ln -s %python3_sitelibdir_noarch/weave/$i \
-		%buildroot%_includedir/weave-py3/$dir
-done
-for i in $(find ./ -name '*.py'); do
-	2to3 -w -n $i
-done
-popd
+#pushd %buildroot%python3_sitelibdir_noarch/weave
+#for i in $(find ./ -name '*.h'); do
+#	dir=$(echo $i|sed 's|\(.*\)/.*|\1|')
+#	install -d %buildroot%_includedir/weave-py3/$dir
+#	ln -s %python3_sitelibdir_noarch/weave/$i \
+#		%buildroot%_includedir/weave-py3/$dir
+#done
+#for i in $(find ./ -name '*.py'); do
+#	2to3 -w -n $i
+#done
+#popd
 install -p -m644 $(find ./ -name fortranobject.h) \
 	%buildroot%_includedir/%oname-py3
 popd
@@ -337,7 +337,7 @@ cp -fR doc/build/html %buildroot%_docdir/%name/
 #	%buildroot%_docdir/%name/pdf/
 #install -p -m644 doc/build/plot_directive/tutorial/*.pdf \
 #	%buildroot%_docdir/%name/pdf/tutorial
-install -p -m644 LICENSE.txt README.txt THANKS.txt TOCHANGE.txt LATEST.txt \
+install -p -m644 LICENSE.txt README.rst THANKS.txt TOCHANGE.txt LATEST.txt \
 	%buildroot%_docdir/%name/
 
 # pickles
@@ -351,6 +351,8 @@ for i in $(find ./ -name tests -type d) \
 do
 	touch $i/__init__.py
 done
+
+rm -f %buildroot%python_sitelibdir/scipy/pickle/generated/scipy-stats-rv_discrete-1.py
 
 %find_lang %name
 
@@ -372,8 +374,8 @@ done
 %exclude %python_sitelibdir/%oname/pickle
 %endif
 %exclude %python_sitelibdir/%oname/weave/blitz
-%exclude %python_noarch/weave
-%exclude %python_noarch/weave-*.egg-info
+#exclude %python_noarch/weave
+#exclude %python_noarch/weave-*.egg-info
 
 %files tests
 %python_sitelibdir/%oname/*/examples
@@ -386,24 +388,24 @@ done
 %_includedir/*
 %if_with python3
 %exclude %_includedir/%oname-py3
-%exclude %_includedir/weave-py3
+#exclude %_includedir/weave-py3
 %endif
 %python_sitelibdir/%oname/weave/blitz
 
 %if_with python3
 %files -n python3-module-%oname -f %name.lang
 %python3_sitelibdir/*
-%exclude %python3_sitelibdir/%oname/*/examples
+#exclude %python3_sitelibdir/%oname/*/examples
 %exclude %python3_sitelibdir/%oname/*/tests
 %exclude %python3_sitelibdir/%oname/*/*/tests
 %exclude %python3_sitelibdir/%oname/*/*/*/tests
 %exclude %python3_sitelibdir/%oname/*/*/*/*/tests
-%exclude %python3_sitelibdir/%oname/weave/blitz
-%exclude %python3_sitelibdir_noarch/weave
-%exclude %python3_sitelibdir_noarch/weave-*.egg-info
+#exclude %python3_sitelibdir/%oname/weave/blitz
+#exclude %python3_sitelibdir_noarch/weave
+#exclude %python3_sitelibdir_noarch/weave-*.egg-info
 
 %files -n python3-module-%oname-tests
-%python3_sitelibdir/%oname/*/examples
+#python3_sitelibdir/%oname/*/examples
 %python3_sitelibdir/%oname/*/tests
 %python3_sitelibdir/%oname/*/*/tests
 %python3_sitelibdir/%oname/*/*/*/tests
@@ -411,8 +413,8 @@ done
 
 %files -n python3-module-%oname-devel
 %_includedir/%oname-py3
-%_includedir/weave-py3
-%python3_sitelibdir/%oname/weave/blitz
+#_includedir/weave-py3
+#python3_sitelibdir/%oname/weave/blitz
 %endif
 
 %if_enabled docs
@@ -428,6 +430,7 @@ done
 %python_sitelibdir/%oname/pickle
 %endif
 
+%if 0
 %_python_set_noarch
 %files -n python-module-weave
 %doc scipy/weave/LICENSE.txt scipy/weave/README.txt
@@ -450,8 +453,12 @@ done
 %python3_sitelibdir_noarch/weave/examples
 %python3_sitelibdir_noarch/weave/tests
 %endif
+%endif
 
 %changelog
+* Sat Jun 15 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.13.0-alt1.git20130614
+- Version 0.13.0
+
 * Sat Mar 30 2013 Aleksey Avdeev <solo@altlinux.ru> 0.12.0-alt2.git20121009.1
 - Rebuild with Python-3.3
 - Fix non-identical noarch packages (python{,3}-module-weave)
