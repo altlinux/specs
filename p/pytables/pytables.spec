@@ -4,8 +4,8 @@
 %def_without python3
 
 Name: py%oname
-Version: 2.4.0
-Release: alt2.git20120720
+Version: 3.0.0
+Release: alt1.git20130601
 Epoch: 1
 Summary: Managing hierarchical datasets
 License: MIT
@@ -99,7 +99,7 @@ This package contains python module of PyTables.
 Summary: Tests and examples for PyTables (Python 3)
 Group: Development/Python3
 %add_python3_req_skip numarray
-%py3_requires %oname
+Requires: python3-module-%oname = %EVR
 
 %description -n python3-module-%oname-tests
 PyTables is a package for managing hierarchical datasets and designed
@@ -122,7 +122,7 @@ This package contains tests and examples for PyTables.
 Summary: Benchmarks for PyTables (Python 3)
 Group: Development/Python3
 %add_python3_req_skip numarray chararray recarray recarray2 Numeric psyco
-%py3_requires %oname
+Requires: python3-module-%oname = %EVR
 
 %description -n python3-module-%oname-bench
 PyTables is a package for managing hierarchical datasets and designed
@@ -191,7 +191,7 @@ This package contains python module of PyTables.
 Summary: Tests and examples for PyTables
 Group: Development/Python
 %add_python_req_skip numarray
-%py_requires %oname
+Requires: python-module-%oname = %EVR
 
 %description -n python-module-%oname-tests
 PyTables is a package for managing hierarchical datasets and designed
@@ -214,7 +214,7 @@ This package contains tests and examples for PyTables.
 Summary: Benchmarks for PyTables
 Group: Development/Python
 %add_python_req_skip numarray chararray recarray recarray2 Numeric psyco
-%py_requires %oname
+Requires: python-module-%oname = %EVR
 
 %description -n python-module-%oname-bench
 PyTables is a package for managing hierarchical datasets and designed
@@ -275,7 +275,7 @@ install -d %buildroot%_docdir/%name/pdf
 install -p -m644 LICENSE.txt README.txt RELEASE_NOTES.txt THANKS \
 	%buildroot%_docdir/%name
 cp -fR LICENSES %buildroot%_docdir/%name
-install -p -m644 doc/*.pdf %buildroot%_docdir/%name/pdf
+install -p -m644 doc/build/latex/*.pdf %buildroot%_docdir/%name/pdf
 cp -fR doc/html %buildroot%_docdir/%name/
 
 cp -fR examples %buildroot%python_sitelibdir/%oname/
@@ -327,6 +327,9 @@ cp -fR bench contrib %buildroot%python_sitelibdir/%oname/
 %_docdir/%name
 
 %changelog
+* Sun Jun 16 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:3.0.0-alt1.git20130601
+- Version 3.0.0
+
 * Tue Oct 16 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:2.4.0-alt2.git20120720
 - Rebuilt with updated NumPy
 
