@@ -1,8 +1,9 @@
+Url: http://www.altlinux.org/Appliances
 Name: appliance-build-asterisk
 Summary: Packages required for build Asterisk
 BuildArch: noarch
 Version: 4.0.2
-Release: alt1
+Release: alt2
 License: GPL
 Group: System/Base
 
@@ -100,6 +101,9 @@ Requires: zlib-devel
 %files
 
 %changelog
+* Sun Jun 16 2013 Denis Smirnov <mithraen@altlinux.ru> 4.0.2-alt2
+- add Url tag
+
 * Thu Apr 11 2013 Denis Smirnov <mithraen@altlinux.ru> 4.0.2-alt1
 - script for autogenerate deps list
 

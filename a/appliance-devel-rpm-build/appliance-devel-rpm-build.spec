@@ -1,8 +1,9 @@
+Url: http://www.altlinux.org/Appliances
 Name: appliance-devel-rpm-build
 Summary: Virtual package that require all rpm-build-* packages
 BuildArch: noarch
 Version: 4.0.1
-Release: alt2
+Release: alt3
 License: GPL
 Group: Development/Other
 
@@ -48,6 +49,9 @@ Requires: rpm-build-xscreensaver
 %files
 
 %changelog
+* Sun Jun 16 2013 Denis Smirnov <mithraen@altlinux.ru> 4.0.1-alt3
+- add Url tag
+
 * Fri Jan 25 2013 Denis Smirnov <mithraen@altlinux.ru> 4.0.1-alt2
 - remove requires to rpm-build-seamonkey
 

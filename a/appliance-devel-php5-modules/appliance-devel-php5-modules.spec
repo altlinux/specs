@@ -1,8 +1,9 @@
+Url: http://www.altlinux.org/Appliances
 Name: appliance-devel-php5-modules
 Summary: PHP5 modules
 BuildArch: noarch
 Version: 4.0.1
-Release: alt1.1
+Release: alt2
 License: GPL
 Group: System/Base
 
@@ -54,6 +55,9 @@ Requires: php5-xdebug
 %files
 
 %changelog
+* Sun Jun 16 2013 Denis Smirnov <mithraen@altlinux.ru> 4.0.1-alt2
+- add Url tag
+
 * Mon May 27 2013 Aleksey Avdeev <solo@altlinux.ru> 4.0.1-alt1.1
 - Using pecl-rrd instead of php5-rrdtool
 

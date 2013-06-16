@@ -1,8 +1,9 @@
+Url: http://www.altlinux.org/Appliances
 Name: appliance-asterisk-gateway
 Summary: Simple Asterisk gateway
 BuildArch: noarch
 Version: 4.0.2
-Release: alt1
+Release: alt2
 License: GPL
 Group: System/Base
 
@@ -19,6 +20,9 @@ Requires: appliance-pbx-hardware
 %files
 
 %changelog
+* Sun Jun 16 2013 Denis Smirnov <mithraen@altlinux.ru> 4.0.2-alt2
+- add Url tag
+
 * Thu Apr 11 2013 Denis Smirnov <mithraen@altlinux.ru> 4.0.2-alt1
 - use asterisk 1.8 
 
