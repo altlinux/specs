@@ -9,7 +9,7 @@
 
 Name: python-module-%oname
 Version: %major.0
-Release: alt1.git20121010
+Release: alt2.git20130611
 
 Summary: Matlab(TM) style python plotting package
 
@@ -328,7 +328,7 @@ export PYTHONPATH=%buildroot%python3_sitelibdir
 # matplotlib can use system fonts, so drop these copies (thanks, PLD)
 #rm -f %buildroot%python3_sitelibdir/matplotlib/mpl-data/Vera*.ttf
 
-sed -i 's|^\(backend\).*|\1 : GTK3Agg|' \
+sed -i 's|^\(backend\).*|\1 : GTK3Cairo|' \
 	%buildroot%python3_sitelibdir/%oname/mpl-data/matplotlibrc
 
 # fonts
@@ -354,7 +354,7 @@ popd
 %python_install
 
 # Use gtk by default
-subst "s|WXAgg|GTK3Agg|g" \
+subst "s|WXAgg|GTK3Cairo|g" \
 	%buildroot%python_sitelibdir/%oname/mpl-data/matplotlibrc
 
 export PYTHONPATH=%buildroot%python_sitelibdir
@@ -384,7 +384,7 @@ cp -fR doc/build/latex/*.pdf %buildroot%_docdir/%name/pdf/
 # matplotlib can use system fonts, so drop these copies (thanks, PLD)
 #rm -f %buildroot%python_sitelibdir/matplotlib/mpl-data/Vera*.ttf
 
-sed -i 's|^\(backend\).*|\1 : GTK3Agg|' \
+sed -i 's|^\(backend\).*|\1 : GTK3Cairo|' \
 	%buildroot%python_sitelibdir/%oname/mpl-data/matplotlibrc
 
 # fonts
@@ -445,6 +445,7 @@ done
 #python_sitelibdir/matplotlib/backends/backend_emf*
 %python_sitelibdir/matplotlib/backends/backend_cocoa*
 %python_sitelibdir/matplotlib/tri
+%python_sitelibdir/matplotlib/compat
 
 %files fltk
 #python_sitelibdir/matplotlib/backends/backend_fltk*
@@ -558,6 +559,7 @@ rm -fR %_docdir/%name/pdf
 %exclude %python3_sitelibdir/matplotlib/backends/__pycache__/backend_macosx.*
 %exclude %python3_sitelibdir/matplotlib/backends/__pycache__/windowing.*
 %python3_sitelibdir/matplotlib/tri
+%python3_sitelibdir/matplotlib/compat
 
 #files -n python3-module-%oname-fltk
 #python3_sitelibdir/matplotlib/backends/backend_fltk*
@@ -600,6 +602,10 @@ rm -fR %_docdir/%name/pdf
 %endif
 
 %changelog
+* Sun Jun 16 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4.0-alt2.git20130611
+- Added compat for main package
+- Set default backend: GTK3Cairo
+
 * Sat Jun 15 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4.0-alt1.git20121010
 - Version 1.4.x
 
