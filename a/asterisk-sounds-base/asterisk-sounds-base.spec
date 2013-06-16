@@ -1,7 +1,8 @@
 Name: asterisk-sounds-base
 Summary: sounds for Asterisk
 Version: 0.1
-Release: alt1
+Release: alt2
+Url: http://downloads.asterisk.org/pub/telephony/sounds/
 License: GPL
 Group: System/Servers
 BuildArch: noarch
@@ -78,6 +79,9 @@ mkdir -p %buildroot%sound_dir/{en,en_AU,ru,fr,es}
 %dir %sound_dir/ru
 
 %changelog
+* Sun Jun 16 2013 Denis Smirnov <mithraen@altlinux.ru> 0.1-alt2
+- add Url tag
+
 * Sun Jul 24 2011 Denis Smirnov <mithraen@altlinux.ru> 0.1-alt1
 - first build for Sisyphus
 
