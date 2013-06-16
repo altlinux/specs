@@ -1,6 +1,6 @@
 Name: sfepy
 Version: 2012.4
-Release: alt1.git20130203
+Release: alt2.git20130203
 Summary: Simple finite elements in Python (SfePy)
 License: New BSD License
 Group: Sciences/Mathematics
@@ -19,7 +19,7 @@ BuildPreReq: python-module-pyparsing ipython pytables swig
 BuildPreReq: libtetgen-devel libnetgen-devel libnumpy-devel
 BuildPreReq: doxygen graphviz texlive-latex-extra dvipng
 BuildPreReq: python-module-sphinx-devel python-module-Pygments
-BuildPreReq: python-module-tables-tests python-module-Pyrex
+BuildPreReq: python-module-tables-tests python-module-Pyrex xvfb-run
 
 %description
 A finite element analysis software based primarily on NumPy and SciPy.
@@ -103,7 +103,9 @@ sed -i 's|@PYVER@|%_python_version|g' doc/Makefile
 
 %build
 export PYTHONPATH=$PWD:$PWD/script
-%python_build_debug build_ext
+xvfb-run --server-args="-screen 0 1024x768x24" \
+	python setup.py build
+#python_build_debug build_ext
 #pushd sfepy/terms
 #sed -i "28s|\(terms.i'\)|\1, '*.c'|" extmods/setup.py
 #python_build_debug build_ext
@@ -111,7 +113,9 @@ export PYTHONPATH=$PWD:$PWD/script
 
 %install
 export PYTHONPATH=$PWD:$PWD/script
-%python_install
+xvfb-run --server-args="-screen 0 1024x768x24" \
+	python setup.py install --root=%buildroot
+#python_install
 #pushd sfepy/terms
 #python_install
 #popd
@@ -121,8 +125,11 @@ touch %buildroot%python_sitelibdir/%name/script/__init__.py
 export PYTHONPATH=%buildroot%python_sitelibdir
 pushd doc
 doxygen doxygen.config
-%make_build -C doc/latex
-%make_build pickle
+export LC_ALL=en_US.UTF-8
+xvfb-run --server-args="-screen 0 1024x768x24" \
+	make -C doc/latex
+#make_build -C doc/latex
+#make_build pickle
 popd
 install -p -m644 homogen.py %buildroot%python_sitelibdir
 
@@ -131,7 +138,7 @@ install -p -m644 homogen.py %buildroot%python_sitelibdir
 install -d %buildroot%_docdir/%name/pdf
 install -m644 doc/doc/latex/*.pdf %buildroot%_docdir/%name/pdf
 cp -fR doc/doc/html %buildroot%_docdir/%name/
-cp -fR doc/_build/pickle %buildroot%python_sitelibdir/%name/
+#cp -fR doc/_build/pickle %buildroot%python_sitelibdir/%name/
 
 %files
 %doc AUTHORS LICENSE README doc/txt/*.txt
@@ -139,7 +146,7 @@ cp -fR doc/_build/pickle %buildroot%python_sitelibdir/%name/
 
 %files -n python-module-%name
 %python_sitelibdir/*
-%exclude %python_sitelibdir/%name/pickle
+#exclude %python_sitelibdir/%name/pickle
 %exclude %python_sitelibdir/%name/tests
 %exclude %python_sitelibdir/%name/base/testing.py*
 %exclude %python_sitelibdir/%name/examples
@@ -150,8 +157,8 @@ cp -fR doc/_build/pickle %buildroot%python_sitelibdir/%name/
 %files doc
 %_docdir/%name
 
-%files -n python-module-%name-pickles
-%python_sitelibdir/%name/pickle
+#files -n python-module-%name-pickles
+#python_sitelibdir/%name/pickle
 
 %files -n python-module-%name-tests
 %python_sitelibdir/%name/tests
@@ -161,6 +168,9 @@ cp -fR doc/_build/pickle %buildroot%python_sitelibdir/%name/
 %python_sitelibdir/%name/examples
 
 %changelog
+* Sun Jun 16 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2012.4-alt2.git20130203
+- Rebuilt with updated NumPy
+
 * Tue Feb 19 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2012.4-alt1.git20130203
 - Version 2012.4
 
