@@ -1,6 +1,6 @@
 Name: alterator-l10n
 Version: 2.9
-Release: alt63
+Release: alt64
 
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
@@ -110,6 +110,9 @@ make check
 %lang(kk) %_datadir/locale/kk/LC_MESSAGES/*.mo
 
 %changelog
+* Mon Jun 17 2013 Sergey V Turchin <zerg at altlinux dot org> 2.9-alt64
+- update x11 russian translation
+
 * Fri Jun 14 2013 Sergey V Turchin <zerg at altlinux dot org> 2.9-alt63
 - update x11 and net-routing russian translation
 
