@@ -4,7 +4,7 @@
 
 Name:           python-module-%oname
 Version:        4.3.0
-Release:        alt1.git20130329
+Release:        alt2.git20130329
 Summary:        Explicitly typed attributes for Python
 
 Group:          Development/Python
@@ -199,6 +199,9 @@ cp -fR pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Mon Jun 17 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.3.0-alt2.git20130329
+- Rebuilt with updated NumPy
+
 * Mon May 06 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.3.0-alt1.git20130329
 - Version 4.3.0
 
