@@ -6,7 +6,7 @@
 %define ldir %_libdir/petsc-%scalar_type
 Name: %oname-%scalar_type
 Version: 1.2.0
-Release: alt2.git20130507
+Release: alt3.git20130507
 Epoch: 1
 Summary: C++/Python library for solving differential equations
 License: LGPL v3+
@@ -354,6 +354,9 @@ sed -i 's|debug optimized||' %buildroot%_pkgconfigdir/%name.pc
 %ldir/python/%{oname}_utils
 
 %changelog
+* Mon Jun 17 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:1.2.0-alt3.git20130507
+- Rebuilt with updated NumPy
+
 * Mon May 13 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:1.2.0-alt2.git20130507
 - Fixed conflict with dolfin-real & dolfin-complex
 
