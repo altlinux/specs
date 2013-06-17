@@ -17,7 +17,7 @@
 %endif
 %def_disable knewsticker
 %def_enable kopete_irc
-%def_enable kopete_googletalk
+%def_disable kopete_googletalk
 
 %define rname kdenetwork
 %define major 4
@@ -25,7 +25,7 @@
 %define bugfix 4
 Name: kde4network
 Version: %major.%minor.%bugfix
-Release: alt1
+Release: alt2
 
 Packager: Sergey V Turchin <zerg at altlinux dot org>
 
@@ -70,8 +70,8 @@ BuildRequires: libvncserver-devel libgpgme-devel libexpat-devel
 BuildRequires: soprano soprano-backend-redland libsoprano-devel
 BuildRequires: libortp-devel >= 0.13
 %if_enabled kopete_googletalk
-BuildRequires: libspeex-devel libalsa-devel
-BuildRequires: libmediastreamer-devel libssl-devel
+BuildRequires: libspeex-devel libalsa-devel libssl-devel
+BuildRequires(pre): libmediastreamer-devel
 BuildRequires: libmediastreamer-ilbc
 %endif
 BuildRequires: libsqlite3-devel libidn-devel boost-devel libopenslp-devel libjasper-devel
@@ -469,6 +469,9 @@ chmod 0755 %buildroot/etc/control.d/facilities/kppp-kde4
 %_K4dbus_interfaces/*
 
 %changelog
+* Mon Jun 17 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.4-alt2
+- built kopete without googletalk voice support
+
 * Wed Jun 05 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.4-alt1
 - new version
 
