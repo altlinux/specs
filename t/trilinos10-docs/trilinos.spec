@@ -1,6 +1,7 @@
 %def_with docs
-ExclusiveArch: %ix86
+#ExclusiveArch: %ix86
 %def_with dakota
+%def_without dakota
 %def_without petsc
 %define mpiimpl openmpi
 %define mpidir %_libdir/%mpiimpl
@@ -14,7 +15,7 @@ interchanging, and provides a full-featured set of concrete classes that \
 implement all abstract interfaces.
 
 %define somver 10
-%define sover %somver.11.0
+%define sover %somver.11.2
 %define scalar_type real
 %define ldir %_libdir/petsc-%scalar_type
 
@@ -25,10 +26,10 @@ Name: %truename-docs
 %else
 Name: %truename
 %endif
-Version: 11.0.3
+Version: 11.2.3
 Release: alt1
 Summary: Solution of large-scale, complex multi-physics problems
-License: LGPL
+License: LGPL, BSD-style
 Group: Sciences/Mathematics
 Url: http://trilinos.sandia.gov/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
@@ -57,8 +58,7 @@ BuildPreReq: libscotch-devel libcheck-devel libblacs-devel
 BuildPreReq: libsuperlu_dist-devel libscalapack-devel libmumps-devel
 BuildPreReq: libparmetis0-devel libparpack-mpi-devel libarpack-devel
 BuildPreReq: libadolc-devel libtvmet-devel libchaco-devel libfiatxx-devel
-BuildPreReq: dblatex liboski-%scalar_type-devel
-BuildPreReq: liboski-%scalar_type-devel python-module-docutils
+BuildPreReq: liboski-%scalar_type-devel python-module-docutils dblatex
 BuildPreReq: libblitz-devel libtaucs-devel cmake ctest zlib-devel
 BuildPreReq: libhypre-devel libgomp-devel python-module-pysparse
 BuildPreReq: ghostscript-utils chrpath python-module-pyMPI
@@ -551,6 +551,8 @@ Requires: libifpack%somver = %version-%release
 Requires: libamesos%somver = %version-%release
 Requires: libaztecoo%somver = %version-%release
 Requires: libepetra%somver = %version-%release
+Requires: libbelos%somver = %version-%release
+Requires: libseacas%somver = %version-%release
 
 %description -n libsundance%somver
 %longdesc
@@ -566,6 +568,17 @@ Summary: Development files of rapid development of finite-element solutions
 Group: Development/C++
 Requires: %name-headers = %version-%release
 Requires: libsundance%somver = %version-%release
+Requires: libteuchos%somver-devel = %version-%release
+Requires: libthyra%somver-devel = %version-%release
+Requires: librtop%somver-devel = %version-%release
+Requires: libnox%somver-devel = %version-%release
+Requires: libml%somver-devel = %version-%release
+Requires: libifpack%somver-devel = %version-%release
+Requires: libamesos%somver-devel = %version-%release
+Requires: libaztecoo%somver-devel = %version-%release
+Requires: libepetra%somver-devel = %version-%release
+Requires: libbelos%somver-devel = %version-%release
+Requires: libseacas%somver-devel = %version-%release
 Provides: libsundance-devel = %version-%release
 Conflicts: libsundance-devel < %version-%release
 
@@ -583,6 +596,8 @@ Summary: Python interface to Sundance
 Group: Development/Python
 %setup_python_module PySundance
 %py_provides PySundance
+Requires: libsundance%somver = %version-%release
+Requires: libteuchos%somver = %version-%release
 
 %description -n python-module-PySundance
 %longdesc
@@ -650,6 +665,8 @@ Requires: libml%somver = %version-%release
 Requires: libamesos%somver = %version-%release
 Requires: libaztecoo%somver = %version-%release
 Requires: libepetra%somver = %version-%release
+Requires: libbelos%somver = %version-%release
+Requires: libkokkos%somver = %version-%release
 
 %description -n libfei%somver
 %longdesc
@@ -663,6 +680,13 @@ Summary: Development files of finite Element Interface to linear solvers
 Group: Development/C++
 Requires: %name-headers = %version-%release
 Requires: libfei%somver = %version-%release
+Requires: libteuchos%somver-devel = %version-%release
+Requires: libml%somver-devel = %version-%release
+Requires: libamesos%somver-devel = %version-%release
+Requires: libaztecoo%somver-devel = %version-%release
+Requires: libepetra%somver-devel = %version-%release
+Requires: libbelos%somver-devel = %version-%release
+Requires: libkokkos%somver-devel = %version-%release
 Provides: libfei-devel = %version-%release
 Conflicts: libfei-devel < %version-%release
 
@@ -930,6 +954,7 @@ Requires: libthyra%somver = %version-%release
 Requires: libepetraext%somver = %version-%release
 Requires: libepetra%somver = %version-%release
 Requires: libteuchos%somver = %version-%release
+Requires: libteko%somver = %version-%release
 
 %description -n libnox%somver
 %longdesc
@@ -942,6 +967,16 @@ Summary: Development files of nonlinear solver package (Trilinos Project)
 Group: Development/C++
 Requires: %name-headers = %version-%release
 Requires: libnox%somver = %version-%release
+Requires: libstratimikos%somver-devel = %version-%release
+Requires: libml%somver-devel = %version-%release
+Requires: libifpack%somver-devel = %version-%release
+Requires: libamesos%somver-devel = %version-%release
+Requires: libaztecoo%somver-devel = %version-%release
+Requires: libthyra%somver-devel = %version-%release
+Requires: libepetraext%somver-devel = %version-%release
+Requires: libepetra%somver-devel = %version-%release
+Requires: libteuchos%somver-devel = %version-%release
+Requires: libteko%somver-devel = %version-%release
 Provides: libnox-devel = %version-%release
 Conflicts: libnox-devel < %version-%release
 
@@ -1112,7 +1147,7 @@ Requires: libaztecoo%somver = %version-%release
 Requires: libepetraext%somver = %version-%release
 Requires: libifpack%somver = %version-%release
 Requires: libml%somver = %version-%release
-
+Requires: libbelos%somver = %version-%release
 Requires: librtop%somver = %version-%release
 Requires: lib%name = %version-%release
 Requires: libzoltan%somver = %version-%release
@@ -1134,6 +1169,20 @@ Summary: Development files of unified set of Thyra-based wrappers
 Group: Development/C++
 Requires: %name-headers = %version-%release
 Requires: libstratimikos%somver = %version-%release
+Requires: libamesos%somver-devel = %version-%release
+Requires: libthyra%somver-devel = %version-%release
+Requires: libepetra%somver-devel = %version-%release
+Requires: libteuchos%somver-devel = %version-%release
+Requires: libaztecoo%somver-devel = %version-%release
+Requires: libepetraext%somver-devel = %version-%release
+Requires: libifpack%somver-devel = %version-%release
+Requires: libml%somver-devel = %version-%release
+Requires: libbelos%somver-devel = %version-%release
+Requires: librtop%somver-devel = %version-%release
+Requires: lib%name-devel = %version-%release
+Requires: libzoltan%somver-devel = %version-%release
+Requires: libgaleri%somver-devel = %version-%release
+Requires: libfei%somver-devel = %version-%release
 Provides: libstratimikos-devel = %version-%release
 Conflicts: libstratimikos-devel < %version-%release
 
@@ -1174,6 +1223,7 @@ routines.
 %package -n libzoltan%somver
 Summary: A toolkit of parallel services for simulations (Trilinos Project)
 Group: System/Libraries
+Requires: libteuchos%somver = %version-%release
 
 %description -n libzoltan%somver
 %longdesc
@@ -1190,6 +1240,7 @@ Summary: Development files of a toolkit of parallel services for simulations
 Group: Development/C++
 Requires: %name-headers = %version-%release
 Requires: libzoltan%somver = %version-%release
+Requires: libteuchos%somver-devel = %version-%release
 Provides: libzoltan-devel = %version-%release
 Conflicts: libzoltan-devel < %version-%release
 
@@ -1283,6 +1334,12 @@ Requires: libml%somver = %version-%release
 Requires: libteuchos%somver = %version-%release
 Requires: libzoltan%somver = %version-%release
 Requires: libnox%somver = %version-%release
+Requires: libSTK%somver = %version-%release
+Requires: libanasazi%somver = %version-%release
+Requires: libintrepid%somver = %version-%release
+Requires: libkomplex%somver = %version-%release
+Requires: libpliris%somver = %version-%release
+Requires: libshards%somver = %version-%release
 Requires: libhdf5-mpi
 %setup_python_module PyTrilinos
 %py_requires mpi4py
@@ -1372,6 +1429,7 @@ This package contains development files of MESQUITE.
 Summary: Easy access to GUI input methods for trilinos users' programs
 Group: System/Libraries
 Provides: liboptika = %version-%release
+Requires: libteuchos%somver = %version-%release
 
 %description -n liboptika%somver
 %longdesc
@@ -1398,6 +1456,7 @@ Summary: Development files of Optika package
 Group: Development/C++
 Requires: %name-headers = %version-%release
 Requires: liboptika%somver = %version-%release
+Requires: libteuchos%somver-devel = %version-%release
 Provides: liboptika-devel = %version-%release
 
 %description -n liboptika%somver-devel
@@ -1412,6 +1471,8 @@ This package contains development files of Optika.
 Summary: Collection of simple Thyra-based Optimization ANAs
 Group: System/Libraries
 Provides: liboptipack = %version-%release
+Requires: libteuchos%somver = %version-%release
+Requires: libthyra%somver = %version-%release
 
 %description -n liboptipack%somver
 %longdesc
@@ -1442,6 +1503,18 @@ This package contains development files of OptiPack.
 Summary: Strategy package for embedded analysis capabilitites
 Group: System/Libraries
 Provides: libpiro = %version-%release
+Requires: libepetra%somver = %version-%release
+Requires: libepetraext%somver = %version-%release
+Requires: libloca%somver = %version-%release
+Requires: libmoocho%somver = %version-%release
+Requires: libnox%somver = %version-%release
+Requires: libstokhos%somver = %version-%release
+Requires: libstratimikos%somver = %version-%release
+Requires: libteuchos%somver = %version-%release
+Requires: libthyra%somver = %version-%release
+%if_with dakota
+Requires: libtrikota%somver = %version-%release
+%endif
 
 %description -n libpiro%somver
 %longdesc
@@ -1459,7 +1532,19 @@ turn driven by non-intrusive analysis routines.
 Summary: Development files of Piro, strategy package for embedded analysis capabilitites
 Group: Development/C++
 Requires: %name-headers = %version-%release
-Requires: libpiro%somver = %version-%release
+Requires: libpiro%somver-devel = %version-%release
+Requires: libepetra%somver-devel = %version-%release
+Requires: libepetraext%somver-devel = %version-%release
+Requires: libloca%somver-devel = %version-%release
+Requires: libmoocho%somver-devel = %version-%release
+Requires: libnox%somver-devel = %version-%release
+Requires: libstokhos%somver-devel = %version-%release
+Requires: libstratimikos%somver-devel = %version-%release
+Requires: libteuchos%somver-devel = %version-%release
+Requires: libthyra%somver-devel = %version-%release
+%if_with dakota
+Requires: libtrikota%somver-devel = %version-%release
+%endif
 Provides: libpiro-devel = %version-%release
 
 %description -n libpiro%somver-devel
@@ -1480,6 +1565,13 @@ This package contains development files of Piro.
 Summary: Stokhos Discretization Method
 Group: System/Libraries
 Provides: libstokhos = %version-%release
+Requires: libepetra%somver = %version-%release
+Requires: libepetraext%somver = %version-%release
+Requires: libifpack%somver = %version-%release
+Requires: libisorropia%somver = %version-%release
+Requires: libml%somver = %version-%release
+Requires: libnox%somver = %version-%release
+Requires: libteuchos%somver = %version-%release
 
 %description -n libstokhos%somver
 %longdesc
@@ -1496,6 +1588,13 @@ Summary: Stokhos Discretization Method
 Group: Development/C++
 Requires: %name-headers = %version-%release
 Requires: libstokhos%somver = %version-%release
+Requires: libepetra%somver-devel = %version-%release
+Requires: libepetraext%somver-devel = %version-%release
+Requires: libifpack%somver-devel = %version-%release
+Requires: libisorropia%somver-devel = %version-%release
+Requires: libml%somver-devel = %version-%release
+Requires: libnox%somver-devel = %version-%release
+Requires: libteuchos%somver-devel = %version-%release
 Provides: libstokhos-devel = %version-%release
 
 %description -n libstokhos%somver-devel
@@ -1514,6 +1613,13 @@ This package contains development files of Stokhos.
 Summary: The Sierra Toolkit Mesh
 Group: System/Libraries
 Provides: libSTK = %version-%release
+Requires: libfei%somver = %version-%release
+Requires: libintrepid%somver = %version-%release
+Requires: libseacas%somver = %version-%release
+Requires: libshards%somver = %version-%release
+Requires: libteuchos%somver = %version-%release
+Requires: libtrilinos%somver = %version-%release
+Requires: libzoltan%somver = %version-%release
 
 %description -n libSTK%somver
 %longdesc
@@ -1529,6 +1635,13 @@ Summary: Development files of the Sierra Toolkit Mesh
 Group: Development/C++
 Requires: %name-headers = %version-%release
 Requires: libSTK%somver = %version-%release
+Requires: libfei%somver-devel = %version-%release
+Requires: libintrepid%somver-devel = %version-%release
+Requires: libseacas%somver-devel = %version-%release
+Requires: libshards%somver-devel = %version-%release
+Requires: libteuchos%somver-devel = %version-%release
+Requires: libtrilinos%somver-devel = %version-%release
+Requires: libzoltan%somver-devel = %version-%release
 Provides: libSTK-devel = %version-%release
 
 %description -n libSTK%somver-devel
@@ -1546,6 +1659,13 @@ This package contains development files of STK.
 Summary: C interface to Trilinos
 Group: System/Libraries
 Provides: libctrilinos = %version-%release
+Requires: libamesos%somver = %version-%release
+Requires: libaztecoo%somver = %version-%release
+Requires: libepetra%somver = %version-%release
+Requires: libgaleri%somver = %version-%release
+Requires: libifpack%somver = %version-%release
+Requires: libpliris%somver = %version-%release
+Requires: libteuchos%somver = %version-%release
 
 %description -n libctrilinos%somver
 %longdesc
@@ -1563,6 +1683,7 @@ Requires: libgaleri%somver-devel = %version-%release
 Requires: libaztecoo%somver-devel = %version-%release
 Requires: libepetra%somver-devel = %version-%release
 Requires: libteuchos%somver-devel = %version-%release
+Requires: libpliris%somver-devel = %version-%release
 Provides: libctrilinos-devel = %version-%release
 
 %description -n libctrilinos%somver-devel
@@ -1576,6 +1697,12 @@ This package contains development files of CTrilinos.
 Summary: For block and physics-based preconditioners
 Group: System/Libraries
 Provides: libteko = %version-%release
+Requires: libepetra%somver = %version-%release
+Requires: libepetraext%somver = %version-%release
+Requires: libisorropia%somver = %version-%release
+Requires: libstratimikos%somver = %version-%release
+Requires: libteuchos%somver = %version-%release
+Requires: libthyra%somver = %version-%release
 
 %description -n libteko%somver
 %longdesc
@@ -1618,6 +1745,7 @@ This package contains development files of Teko.
 Summary: Collection of Scalar 1D globalizaton utilities
 Group: System/Libraries
 Provides: libglobipack = %version-%release
+Requires: libteuchos%somver = %version-%release
 
 %description -n libglobipack%somver
 %longdesc
@@ -1631,6 +1759,7 @@ Summary: Development files of GlobiPack
 Group: Development/C++
 Requires: %name-headers = %version-%release
 Requires: libglobipack%somver = %version-%release
+Requires: libteuchos%somver-devel = %version-%release
 Provides: libglobipack-devel = %version-%release
 
 %description -n libglobipack%somver-devel
@@ -1646,6 +1775,10 @@ This package contains development files of GlobiPack.
 Summary: Dakota framework underneath Trilinos as if it were another Trilinos package
 Group: System/Libraries
 Provides: libtrikota = %version-%release
+Requires: libepetra%somver = %version-%release
+Requires: libepetraext%somver = %version-%release
+Requires: libteuchos%somver = %version-%release
+Requires: libthyra%somver = %version-%release
 
 %description -n libtrikota%somver
 %longdesc
@@ -1661,6 +1794,11 @@ a convenience class and some simple example problems.
 Summary: Development files of TriKota
 Group: Development/C++
 Requires: %name-headers = %version-%release
+Requires: libtrikota%somver = %version-%release
+Requires: libepetra%somver-devel = %version-%release
+Requires: libepetraext%somver-devel = %version-%release
+Requires: libteuchos%somver-devel = %version-%release
+Requires: libthyra%somver-devel = %version-%release
 Provides: libtrikota-devel = %version-%release
 
 %description -n libtrikota%somver-devel
@@ -1679,6 +1817,7 @@ This package contains development files of TriKota.
 Summary: Extra libraries for Trilinos
 Group: System/Libraries
 Provides: libseacas = %version-%release
+Requires: libpamgen%somver = %version-%release
 
 %description -n libseacas%somver
 %longdesc
@@ -1690,6 +1829,7 @@ Summary: Development files of SEACAS
 Group: Development/C++
 Requires: libseacas%somver = %version-%release
 Requires: %name-headers = %version-%release
+Requires: libpamgen%somver-devel = %version-%release
 Provides: libseacas-devel = %version-%release
 
 %description -n libseacas%somver-devel
@@ -1703,6 +1843,9 @@ This package contains development files of SEACAS.
 Summary: Unified interface to the underlying sparse linear algebra library
 Group: System/Libraries
 Provides: libxpetra = %version-%release
+Requires: libepetra%somver = %version-%release
+Requires: libkokkos%somver = %version-%release
+Requires: libteuchos%somver = %version-%release
 
 %description -n libxpetra%somver
 %longdesc
@@ -1735,6 +1878,7 @@ Summary: Libraries for SEACAS applications
 Group: System/Libraries
 Provides: libseacas-apps = %version-%release
 Requires: libseacas%somver = %version-%release
+Requires: libzoltan%somver = %version-%release
 
 %description -n libseacas%somver-apps
 %longdesc
@@ -1748,6 +1892,8 @@ Group: Development/C++
 Requires: libseacas%somver = %version-%release
 Requires: libseacas%somver-apps = %version-%release
 Requires: %name-headers = %version-%release
+Requires: libseacas%somver-devel = %version-%release
+Requires: libzoltan%somver-devel = %version-%release
 Provides: libseacas-apps-devel = %version-%release
 
 %description -n libseacas%somver-apps-devel
@@ -1761,7 +1907,7 @@ This package contains development files for SEACAS applications.
 Summary: SEACAS applications
 Group: Sciences/Mathematics
 Provides: seacas-apps = %version-%release
-Requires: libseacas%somver-apps = %version-%release
+#Requires: libseacas%somver-apps = %version-%release
 
 %description -n seacas%somver-apps
 %longdesc
@@ -1936,6 +2082,7 @@ install -d %buildroot%_includedir/PySundance
 cp ../packages/Sundance/python/src/*.hpp \
 	%buildroot%_includedir/PySundance
 
+%if 0
 pushd packages/Sundance/python
 install -d %buildroot%python_sitelibdir/PySundance
 install -p -m644 src/*.py src/*.so \
@@ -1943,14 +2090,17 @@ install -p -m644 src/*.py src/*.so \
 rm -f %buildroot%python_sitelibdir/PySundance/setup.py
 popd
 %endif
+%endif
 
 %if_with docs
+%if 0
 pushd packages/Sundance/python
 install -d %buildroot%_docdir/PySundance
 %make -C example
 cp -fR example \
 	%buildroot%_docdir/PySundance/
 popd
+%endif
 %endif
 
 popd # BUILD
@@ -2004,11 +2154,11 @@ rm -fR  $(find ./ -name '*.o') \
 	./%_libdir/libnemesis.so*
 #	./%_libexecdir/libnem_spread_app_lib.so* \
 popd
-install -m755 $TOPDIR/packages/seacas/applications/aprepro/aprepro \
-	$TOPDIR/packages/seacas/applications/epu/epu \
-	$TOPDIR/packages/seacas/applications/exodiff/exodiff \
-	$TOPDIR/packages/seacas/applications/exotxt/exotxt \
-	%buildroot%_bindir
+#install -m755 $TOPDIR/packages/seacas/applications/aprepro/aprepro \
+#	$TOPDIR/packages/seacas/applications/epu/epu \
+#	$TOPDIR/packages/seacas/applications/exodiff/exodiff \
+#	$TOPDIR/packages/seacas/applications/exotxt/exotxt \
+#	%buildroot%_bindir
 %endif
 
 # fix RPATH
@@ -2042,9 +2192,6 @@ done
 %ifarch x86_64
 mv %buildroot%_libexecdir/*.so* %buildroot%_libdir/
 %endif
-
-mv %buildroot%prefix/site-packages/*PerceptMesh* \
-	%buildroot%python_sitelibdir/
 %endif
 
 # fix file conflict with libmesh-doc
@@ -2058,7 +2205,7 @@ popd
 %if_without docs
 
 %files
-%doc CHANGELOG README RELEASE_NOTES *.txt
+%doc README RELEASE_NOTES *.txt
 
 %files headers
 %_includedir/*
@@ -2254,10 +2401,10 @@ popd
 %_libdir/libstratimikos*.so
 
 %files -n libteuchos%somver
-%_libdir/libteuchos.so.*
+%_libdir/libteuchos*.so.*
 
 %files -n libteuchos%somver-devel
-%_libdir/libteuchos.so
+%_libdir/libteuchos*.so
 
 %files -n libzoltan%somver
 %_libdir/libzoltan*.so.*
@@ -2279,10 +2426,12 @@ popd
 %ifarch x86_64
 %exclude %python_sitelibdir_noarch/PyTrilinos*
 %endif
-%python_sitelibdir/*PerceptMesh*
+#python_sitelibdir/*PerceptMesh*
 
+%if 0
 %files -n python-module-PySundance
 %python_sitelibdir/PySundance*
+%endif
 
 %files -n libshards%somver
 %_libdir/libshards.so.*
@@ -2359,7 +2508,7 @@ popd
 %_libdir/libglobipack.so
 
 %files -n libseacas%somver
-%_libdir/libIoex.so.*
+#_libdir/libIoex.so.*
 %_libdir/libIogn.so.*
 %_libdir/libIohb.so.*
 %_libdir/libIonit.so.*
@@ -2367,15 +2516,15 @@ popd
 %_libdir/libIoss.so.*
 %_libdir/libIotr.so.*
 %_libdir/libIoxf.so.*
-%_libdir/libaprepro_lib.so.*
-%_libdir/libexodus*.so.*
-%_libdir/libsupes.so.*
-%_libdir/libsuplib.so.*
-%_libdir/libchaco.so.*
-%_libdir/libmapvarlib.so.*
+#_libdir/libaprepro_lib.so.*
+#_libdir/libexodus*.so.*
+#_libdir/libsupes.so.*
+#_libdir/libsuplib.so.*
+#_libdir/libchaco.so.*
+#_libdir/libmapvarlib.so.*
 
 %files -n libseacas%somver-devel
-%_libdir/libIoex.so
+#_libdir/libIoex.so
 %_libdir/libIogn.so
 %_libdir/libIohb.so
 %_libdir/libIonit.so
@@ -2383,26 +2532,26 @@ popd
 %_libdir/libIoss.so
 %_libdir/libIotr.so
 %_libdir/libIoxf.so
-%_libdir/libaprepro_lib.so
-%_libdir/libexodus*.so
-%_libdir/libsupes.so
-%_libdir/libsuplib.so
-%_libdir/libchaco.so
-%_libdir/libmapvarlib.so
+#_libdir/libaprepro_lib.so
+#_libdir/libexodus*.so
+#_libdir/libsupes.so
+#_libdir/libsuplib.so
+#_libdir/libchaco.so
+#_libdir/libmapvarlib.so
 
 %files -n libxpetra%somver
-%_libdir/libmuelu-xpetra*.so.*
+%_libdir/libxpetra*.so.*
 
 %files -n libxpetra%somver-devel
-%_libdir/libmuelu-xpetra*.so
+%_libdir/libxpetra*.so
 
-%files -n libseacas%somver-apps
-%_libdir/libepu_lib.so.*
-%_libdir/*app_lib*.so.*
+#files -n libseacas%somver-apps
+#_libdir/libepu_lib.so.*
+#_libdir/*app_lib*.so.*
 
-%files -n libseacas%somver-apps-devel
-%_libdir/libepu_lib.so
-%_libdir/*app_lib*.so
+#files -n libseacas%somver-apps-devel
+#_libdir/libepu_lib.so
+#_libdir/*app_lib*.so
 
 %files -n seacas%somver-apps
 %_bindir/*
@@ -2441,15 +2590,34 @@ popd
 %dir %_docdir/%truename
 %_docdir/%truename/examples
 
+%if 0
 %files -n python-module-PySundance-examples
 %dir %_docdir/PySundance
 %_docdir/PySundance/example
 %endif
+%endif
 
 %changelog
+* Tue Apr 30 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 11.2.3-alt1
+- Version 11.2.3 (without PySundance)
+
+* Sat Apr 27 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 11.2.2-alt1
+- Version 11.2.2
+
+* Sun Feb 10 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 11.0.3-alt5
+- Rebuilt with Boost 1.53.0
+
+* Sun Jan 27 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 11.0.3-alt4
+- Fixed non-strict inter-package dependencies (ALT #28442)
+
+* Thu Nov 29 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 11.0.3-alt3
+- Rebuilt with Boost 1.52.0
+
+* Mon Oct 29 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 11.0.3-alt2
+- Enabled build of converters from/to matlab files
+
 * Sun Oct 28 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 11.0.3-alt1
 - Version 11.0.3
 
 * Mon Aug 20 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 10.12.2-alt1
 - Version 10.12.2
-
