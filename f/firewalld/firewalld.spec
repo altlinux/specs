@@ -1,5 +1,5 @@
 Name: firewalld
-Version: 0.3.2
+Version: 0.3.3
 Release: alt1
 
 Summary: A firewall daemon with D-BUS interface providing a dynamic firewall
@@ -73,6 +73,7 @@ install -pDm755 %SOURCE1 %buildroot%_initdir/%name
 %systemd_unitdir/firewalld.service
 %config(noreplace) %_sysconfdir/dbus-1/system.d/FirewallD.conf
 %_datadir/polkit-1/actions/org.fedoraproject.FirewallD1.policy
+%_datadir/bash-completion/completions/*
 %python_sitelibdir_noarch/firewall
 %_man1dir/*
 %_man5dir/*
@@ -86,6 +87,9 @@ install -pDm755 %SOURCE1 %buildroot%_initdir/%name
 %_datadir/firewalld/
 
 %changelog
+* Mon Jun 17 2013 Mikhail Efremov <sem@altlinux.org> 0.3.3-alt1
+- Updated to 0.3.3.
+
 * Tue May 14 2013 Mikhail Efremov <sem@altlinux.org> 0.3.2-alt1
 - Updated to 0.3.2.
 
