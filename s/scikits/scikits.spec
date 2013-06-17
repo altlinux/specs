@@ -20,7 +20,7 @@ under OSI-approved licenses.
 
 Name: %oname
 Version: 2267
-Release: alt9
+Release: alt10
 Summary: Add-on packages for SciPy
 License: OSI-approved licenses
 Group: Sciences/Other
@@ -267,7 +267,7 @@ Conflicts: python-module-%name < %version-%release
 %py_requires scikits.statsmodels.docs.sphinxext.docscrape_sphinx
 #py_requires scikits.openopt.solvers.optimizers
 %add_python_req_skip compression docscrape docscrape_sphinx
-%add_python_req_skip optimizers svm
+%add_python_req_skip optimizers svm rpy
 
 %description -n python-module-%name-examples
 %longdesc
@@ -644,6 +644,9 @@ done
 %endif
 
 %changelog
+* Mon Jun 17 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2267-alt10
+- examples: don't require rpy
+
 * Mon Jun 17 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2267-alt9
 - Enabled docs
 
