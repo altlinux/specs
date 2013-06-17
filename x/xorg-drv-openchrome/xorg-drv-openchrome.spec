@@ -1,5 +1,5 @@
 Name: xorg-drv-openchrome
-Version: 0.3.2
+Version: 0.3.3
 Release: alt1
 Epoch: 1
 Summary: VIA openchrome graphics driver
@@ -58,6 +58,9 @@ is available at dri.sourceforge.net.
 %_man4dir/*
 
 %changelog
+* Mon Jun 17 2013 Valery Inozemtsev <shrek@altlinux.ru> 1:0.3.3-alt1
+- 0.3.3
+
 * Thu Mar 28 2013 Valery Inozemtsev <shrek@altlinux.ru> 1:0.3.2-alt1
 - 0.3.2
 
