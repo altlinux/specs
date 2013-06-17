@@ -12,7 +12,7 @@
 %def_disable	tnef
 
 Name:   	claws-mail
-Version:	3.9.1
+Version:	3.9.2
 Release: 	alt1
 
 Summary:	Claws Mail is a GTK+ based, user-friendly, lightweight, and fast email client.
@@ -715,6 +715,15 @@ EOF
 
 
 %changelog
+* Mon Jun 17 2013 Mikhail Efremov <sem@altlinux.org> 3.9.2-alt1
+- Fixes from upstream git:
+    + fix a bunch of compiler warnings.
+    + Revert undesired effect of fixing bug #2927.
+    + fix debian bug #711864, 'claws-mail-vcalendar-plugin:
+       when creating meeting GTK_IS_COMBO_BOX_TEXT failed'.
+    + fix double-free crasher in Edit Accounts dialogue.
+- Updated to 3.9.2.
+
 * Wed May 15 2013 Mikhail Efremov <sem@altlinux.org> 3.9.1-alt1
 - Use strict dependences on Claws Mail in the subpackages.
 - Add claws-mail-plugins virtual subpackage.
