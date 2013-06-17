@@ -7,7 +7,7 @@
 
 Name: %oname-%scalar_type
 Version: 1.8
-Release: alt15
+Release: alt16
 Summary: C++ library for (adaptive) finite element developping (%scalar_type scalars)
 License: GPLv2+
 Group: Sciences/Mathematics
@@ -173,6 +173,9 @@ done
 %endif
 
 %changelog
+* Mon Jun 17 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.8-alt16
+- New snapshot
+
 * Thu Oct 11 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.8-alt15
 - New snapshot
 
@@ -214,3 +217,4 @@ done
 
 * Mon Jan 31 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.8-alt2
 - Initial build for Sisyphus
+
