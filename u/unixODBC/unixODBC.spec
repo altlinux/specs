@@ -2,7 +2,7 @@
 
 Name: unixODBC
 Version: 2.3.1
-Release: alt3
+Release: alt4
 
 Summary: Unix ODBC driver manager and database drivers
 Summary(ru_RU.UTF-8): Система управления драйверами ODBC для unix 
@@ -10,7 +10,7 @@ Group: Databases
 License: LGPL
 Url: http://www.unixODBC.org
 
-Requires: lib%name = %version-%release
+Requires: lib%name%abiversion = %version-%release
 Provides: MyODBC = %version-%release
 
 Source0: http://www.unixodbc.org/%name-%version.tar.gz
@@ -46,8 +46,7 @@ ODBC представляет из себя открытую специфика�
 Summary: Shared libraries for ODBC
 Summary(ru_RU.UTF-8): Разделяемые библиотеки для ODBC
 Group: Development/Databases
-Provides: lib%name = %version-%release
-Obsoletes: lib%name < %version-%release
+Conflicts: lib%{name}1 < 2.2.12-alt8
 %ifarch x86_64
 Provides: libodbc.so()(64bit) libodbcinst.so()(64bit)
 %else
@@ -66,7 +65,7 @@ unixODBC представляет из себя полную специфика�
 Summary: Includes for ODBC development
 Summary(ru_RU.UTF-8): Заголовочные файлы для разработки с использованием ODBC
 Group: Development/Databases
-Requires: lib%name = %version-%release
+Requires: lib%name%abiversion = %version-%release
 
 %description -n lib%name-devel
 unixODBC aims to provide a complete ODBC solution for the Linux platform.
@@ -139,14 +138,29 @@ find doc -name Makefile\* -delete
 
 %files -n lib%name%abiversion
 %_libdir/lib*.so.*
+%_libdir/libodbc.so
+%_libdir/libodbcinst.so
+%_libdir/libodbcpsql.so
+%_libdir/libodbcpsqlS.so
+%_libdir/libodbcmyS.so
 
 %files -n lib%name-devel
 %doc ChangeLog doc/ProgrammerManual doc/lst
 %_includedir/*
 %_bindir/odbc_config
 %_libdir/lib*.so
+%exclude %_libdir/libodbc.so
+%exclude %_libdir/libodbcinst.so
+%exclude %_libdir/libodbcpsql.so
+%exclude %_libdir/libodbcpsqlS.so
+%exclude %_libdir/libodbcmyS.so
 
 %changelog
+* Mon Jun 17 2013 Andrey Cherepanov <cas@altlinux.org> 2.3.1-alt4
+- Move provides hacks for java to appropriate package
+- Set conflict to old libunixODBC with duplicate files
+- Remove obsolete rule to libunixODBC
+
 * Mon Jun 17 2013 Andrey Cherepanov <cas@altlinux.org> 2.3.1-alt3
 - Move *.so to libunixODBC-devel package
 - Obsolete libunixODBC

@@ -2,7 +2,7 @@
 
 Name: unixODBC-compat
 Version: 2.2.12
-Release: alt9
+Release: alt10
 
 Summary: Unix ODBC driver manager and database drivers
 Summary(ru_RU.UTF-8): Система управления драйверами ODBC для unix 
@@ -46,6 +46,8 @@ ODBC представляет из себя открытую специфика�
 Summary: Shared libraries for ODBC
 Summary(ru_RU.UTF-8): Разделяемые библиотеки для ODBC
 Group: Development/Databases
+Provides:  lib%{rname} = %version-%release
+Obsoletes: lib%{rname} < %version-%release
 
 %description -n lib%{rname}1
 unixODBC aims to provide a complete ODBC solution for the Linux platform.
@@ -93,6 +95,9 @@ find doc -name Makefile\* -delete
 %exclude %_libdir/libodbcpsql.so.2*
 
 %changelog
+* Mon Jun 17 2013 Andrey Cherepanov <cas@altlinux.org> 2.2.12-alt10
+- Provide libunixODBC for smooth upgrade (ALT #29080)
+
 * Mon Jun 17 2013 Andrey Cherepanov <cas@altlinux.org> 2.2.12-alt9
 - Remove wrong provides
 
