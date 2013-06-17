@@ -1,7 +1,7 @@
 %define oname shiboken
 Name: %oname-py3
 Version: 1.1.2
-Release: alt1.1
+Release: alt2.git20130527
 Summary: Generates bindings for C++ libraries using CPython source code (Python 3)
 License: GPLv2, LGPLv2.1
 Group: Development/KDE and QT
@@ -99,10 +99,8 @@ popd
 %install
 %makeinstall_std -C BUILD
 
-gzip ChangeLog
-
 %files
-%doc ChangeLog* COPYING*
+%doc COPYING* AUTHORS
 %doc BUILD/doc/html
 %_bindir/*
 %_man1dir/*
@@ -120,6 +118,9 @@ gzip ChangeLog
 %python3_sitelibdir/*
 
 %changelog
+* Tue Jun 18 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.2-alt2.git20130527
+- New snapshot
+
 * Tue Feb 19 2013 Aleksey Avdeev <solo@altlinux.ru> 1.1.2-alt1.1
 - Fix build with Python 3.3
 
