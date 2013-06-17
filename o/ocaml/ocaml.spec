@@ -9,39 +9,36 @@
 
 Name: ocaml
 Version: 3.12.1
-Release: alt1
+Release: alt2
 
 Summary: The Objective Caml compiler and programming environment
 License: QPL & LGPL
 Group: Development/ML
 
 Url: http://caml.inria.fr/
-Packager: Pavlov Konstantin <thresh@altlinux.ru>
+Packager: %packager
 
 Source0: %name-%version.tar
 Source1: ocaml-refman.html.tar
 Source2: ocaml-3.12-refman.pdf
-Source4: %name.menu
-Source5: http://caml.inria.fr/oreilly-book/ocaml-ora-book.pdf
-Source6: ocaml-reqprov.ml
+Source3: %name.desktop
+Source4: http://caml.inria.fr/oreilly-book/ocaml-ora-book.pdf
+Source5: ocaml-reqprov.ml
 
-Patch1: ocaml-3.04+7-threadhack.patch
-Patch2: ocaml-3.12.1-alt-stdlib-pdf.patch
-Patch3: ocaml-3.09.1-tinfo.patch
-Patch4: ocaml-3.12.1-alt-tcltk8.5.patch
-Patch5: ocaml-3.04-pld-objinfo.patch
-Patch6: ocaml-3.12.1-alt-mk-reqprov.patch
-Patch7: ocaml-3.10.0-pld-db4.patch
-Patch8: ocaml-3.12.1-alt-mk-odoc_info-toplevellib_cmxa.patch
-Patch9: ocaml-3.10.2-alt-tags-camlp4lib-no-use_dynlink.patch
-Patch10: ocaml-3.12.0-rpath.patch
-Patch11: ocaml-3.12.1-deb-ocamlopt-arm-add-.type-directive-for-code-symbols.patch
+Patch1: ocaml-3.12.1-alt-stdlib-pdf.patch
+Patch2: ocaml-3.09.1-tinfo.patch
+Patch3: ocaml-3.12.1-alt-tcltk8.5.patch
+Patch4: ocaml-3.12.1-alt-mk-reqprov.patch
+Patch5: ocaml-3.10.0-pld-db4.patch
+Patch6: ocaml-3.12.1-alt-mk-odoc_info-toplevellib_cmxa.patch
+Patch7: ocaml-3.12.0-rpath.patch
+Patch8: ocaml-3.12.1-deb-ocamlopt-arm-add-.type-directive-for-code-symbols.patch
 
 Requires: rpm-build-ocaml >= 1.1
 BuildPreReq: rpm-build-ocaml >= 1.1
 
-# Automatically added by buildreq on Tue Apr 01 2008
-BuildRequires: libdb4-devel libtinfo-devel tetex-latex tk-devel
+# Automatically added by buildreq on Sat Jun 15 2013
+BuildRequires: libdb4-devel libtinfo-devel tk-devel texlive-latex-base texlive-latex-recommended
 
 # Better keep those deps explicit, just in case
 BuildRequires: libX11-devel
@@ -114,9 +111,9 @@ Conflicts: %name < %version, %name > %version
 Objective Caml is a high-level, strongly-typed, functional and
 object-oriented programming language from the ML family of languages.
 
-This package comprises two batch compilers (a fast bytecode compiler and an
-optimizing native-code compiler), an interactive toplevel system, Lex&Yacc
-tools, a replay debugger, and a comprehensive library.
+This package comprises two batch compilers (a fast bytecode compiler and
+an optimizing native-code compiler), an interactive toplevel system,
+Lex&Yacc tools, a replay debugger, and a comprehensive library.
 
 %description runtime
 Objective Caml is a high-level, strongly-typed, functional and
@@ -199,17 +196,14 @@ with Objective Caml" O'Reilly book translation.
 %setup -q -T -b 0 
 %setup -q -T -D -a 1
 
-#%patch1 -p1
+%patch1 -p1
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
-#%patch5 -p1
+%patch5 -p1
 %patch6 -p1
 %patch7 -p1
 %patch8 -p1
-#%patch9 -p1
-%patch10 -p1
-%patch11 -p1
 
 # grrr ...
 #%__cat <<EOF |ed - emacs/Makefile
@@ -217,12 +211,9 @@ with Objective Caml" O'Reilly book translation.
 #wq
 #EOF
 
-cp %SOURCE5 ./
+cp %SOURCE4 ./
 
 cp %SOURCE2   ./ocaml-refman.pdf
-
-## replace a bootstrap compiler 
-#(cd boot; bzcat %%SOURCE6 | tar -xvvf -)
 
 %build
 
@@ -235,7 +226,7 @@ make BYTECCCOMPOPTS="%optflags" NATIVECCCOMPOPTS="%optflags" ocamlopt
 make BYTECCCOMPOPTS="%optflags" NATIVECCCOMPOPTS="%optflags" opt opt.opt
 make -C ocamldoc stdlib.pdf
 
-install -pD -m644 %SOURCE6 tools/reqprov.ml
+install -pD -m644 %SOURCE5 tools/reqprov.ml
 make -C tools reqprov
 
 %install
@@ -280,7 +271,7 @@ while read f; do [ -f "${f%%.cmx}.o" ] || rm "$f"; done
 #(add-to-list 'auto-mode-alist '("\\\\.mli?$" . caml-mode))
 #EOF
 
-install -pD -m644 %SOURCE4 %buildroot%_menudir/%name
+install -pm644 -D %SOURCE1 %buildroot%_desktopdir/%name.desktop
 
 %files
 %doc Changes LICENSE README 
@@ -293,7 +284,6 @@ install -pD -m644 %SOURCE4 %buildroot%_menudir/%name
 %exclude %_man1dir/ocamlbuild*
 %exclude %_man1dir/ocamldoc*
 %_man3dir/*.3o*
-%_menudir/ocaml
 %_libdir/ocaml/camlheader
 %_libdir/ocaml/camlheader_ur
 %_libdir/ocaml/expunge
@@ -310,6 +300,7 @@ install -pD -m644 %SOURCE4 %buildroot%_menudir/%name
 %_libdir/ocaml/vmthreads/
 # %_datadir/emacs/site-lisp/*
 # %config(noreplace) %_sysconfdir/emacs/site-start.d/*
+%_desktopdir/%name.desktop
 
 %files runtime
 %_bindir/ocamlrun
@@ -366,6 +357,11 @@ install -pD -m644 %SOURCE4 %buildroot%_menudir/%name
 %doc htmlman/* ocamldoc/stdlib.pdf ocaml-refman.pdf ocaml-ora-book.pdf
 
 %changelog
+* Fri Jun 14 2013 Andrey Bergman <vkni@altlinux.org> 3.12.1-alt2
+- Removed deprecated patches.
+- Removed .menu, added .desktop.
+- Corrected BuildReq for using TeXLive instead of teTeX.
+
 * Fri Dec 16 2011 Alexey Shabalin <shaba@altlinux.ru> 3.12.1-alt1
 - 3.12.1
 
