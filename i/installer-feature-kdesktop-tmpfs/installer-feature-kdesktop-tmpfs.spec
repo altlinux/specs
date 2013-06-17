@@ -1,5 +1,5 @@
 Name: installer-feature-kdesktop-tmpfs
-Version: 2.0
+Version: 2.1
 Release: alt1
 
 Summary: Setup services for start/not start on boot
@@ -30,6 +30,10 @@ install -pm755 *.sh %buildroot%hookdir/
 %hookdir/*
 
 %changelog
+* Mon Jun 17 2013 Sergey V Turchin <zerg@altlinux.org> 2.1-alt1
+- don't mask tmp.mount unit
+- add nosuid option for /tmp
+
 * Thu May 16 2013 Sergey V Turchin <zerg@altlinux.org> 2.0-alt1
 - mask tmp.mount unit
 
