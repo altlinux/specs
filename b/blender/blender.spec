@@ -1,6 +1,6 @@
 Name: blender
-Version: 2.63
-Release: alt0.2
+Version: 2.67b
+Release: alt2
 
 Summary: 3D modeling, animation, rendering and post-production
 License: GPL
@@ -16,15 +16,20 @@ Patch2: %name-2.47-alt-usertempdir.patch
 Patch3: %name-2.49b-alt-ld.patch
 Patch4: %name-2.49b-alt-qhull.patch
 Patch5: %name-2.62-alt-libav.patch
+Patch6: %name-2.66-alt-libav.patch
 Patch7: 0004-install_in_usr_lib.patch
 Patch8: 0006-locales_directory_install.patch
 Patch9: 0009-do_not_use_version_number_in_the_system_path.patch
 Patch10: 0011-look_for_droid_ttf_with_fontconfig.patch
+Patch11: %name-2.66-alt-pcre.patch
+Patch12: %name-2.67a-rna.patch
+Patch13: %name-2.67b-node_efficiency_tools.patch
 
 BuildRequires(pre): rpm-build-python3
 
 %add_python3_path %_libexecdir/%name/scripts
 %add_python3_req_skip _bpy
+%add_python3_req_skip _bpy_path
 %add_python3_req_skip BPyWindow
 %add_python3_req_skip mathutils
 %add_python3_req_skip bge
@@ -36,8 +41,9 @@ Provides: python%_python3_version(bpy)
 Provides: python%_python3_version(BPyMesh)
 Provides: python%_python3_version(bmesh)
 
-# Automatically added by buildreq on Fri Feb 17 2012
-BuildRequires: cmake gcc-c++ libSDL-devel libXi-devel libavdevice-devel libavformat-devel libfftw3-devel libfreetype-devel libglew-devel libjpeg-devel libopenal-devel libpng-devel libswscale-devel libtiff-devel openexr-devel python3-dev boost-devel libjack-devel libsndfile-devel libopenjpeg-devel
+# Automatically added by buildreq on Thu May 09 2013
+# optimized out: boost-devel cmake cmake-modules fontconfig ilmbase-devel libGL-devel libGLU-devel libX11-devel libXau-devel libXext-devel libXfixes-devel libavcodec-devel libavutil-devel libdc1394-22 libfreetype-devel libopencore-amrnb0 libopencore-amrwb0 libraw1394-11 libstdc++-devel pkg-config python3 python3-base xorg-inputproto-devel xorg-kbproto-devel xorg-xproto-devel zlib-devel
+BuildRequires: boost-devel-headers boost-filesystem-devel boost-locale-devel ctest fontconfig-devel gcc-c++ libSDL-devel libXi-devel libavdevice-devel libavformat-devel libfftw3-devel libglew-devel libjack-devel libjpeg-devel libopenCOLLADA-devel libopenal-devel libopenjpeg-devel libpcre-devel libpng-devel libsndfile-devel libswscale-devel libtiff-devel libxml2-devel openexr-devel python3-dev python3-module-distribute tinyxml-devel
 
 %description
 Fully integrated creation suite, offering a broad range of essential
@@ -68,11 +74,15 @@ Languages support for blender
 #patch2 -p1
 #patch3 -p2
 #patch4 -p2
-%patch5 -p2
+#patch5 -p2
+%patch6 -p1
 %patch7 -p1
 %patch8 -p1
 %patch9 -p1
 %patch10 -p1
+%patch11 -p1
+%patch12 -p1
+%patch13 -p1
 
 
 #sed -i 's|\(CFLAGS\=\"\)|\1 -g |' release/plugins/bmake
@@ -100,11 +110,14 @@ cmake .. -DCMAKE_INSTALL_PREFIX=%{_prefix} \
  -DWITH_CODEC_FFMPEG=ON \
  -DWITH_GAMEENGINE=ON \
  -DWITH_CXX_GUARDEDALLOC=OFF \
- -DWITH_BUILTIN_GLEW=OFF \
  -DWITH_INSTALL_PORTABLE=OFF \
  -DWITH_PYTHON_SAFETY=ON \
  -DWITH_PLAYER=ON \
  -DWITH_OPENMP=OFF \
+ -DWITH_OPENCOLLADA=ON \
+ -DWITH_FONTCONFIG=ON \
+ -DWITH_CYCLES=OFF \
+ -DWITH_OPENIMAGEIO=OFF \
  -DPYTHON_VERSION="3.3" \
 #
 
@@ -112,7 +125,7 @@ cmake .. -DCMAKE_INSTALL_PREFIX=%{_prefix} \
 cd ..
 
 install -d release/plugins/include
-install -m 644 source/blender/blenpluginapi/*.h release/plugins/include
+#install -m 644 source/blender/blenpluginapi/*.h release/plugins/include
 
 #chmod +x release/plugins/bmake
 #make -C release/plugins/
@@ -136,6 +149,7 @@ install -pD -m755 cmake-make/bin/%{name}player %buildroot%_bindir/%{name}player
 install -d %buildroot%_libexecdir/%name
 cp -a release/scripts %buildroot%_libexecdir/%name
 cp -a release/datafiles/locale %buildroot%_datadir
+install -pD -m644 release/datafiles/locale/languages %buildroot%_datadir/%name/locale/languages
 
 #/bin/install -m644 release/VERSION %%buildroot%%_datadir/%%name
 #/bin/install -m644 bin/.blender/.Blanguages %%buildroot%%_datadir/%%name
@@ -154,12 +168,37 @@ cp -a release/datafiles/locale %buildroot%_datadir
 
 %_libexecdir/%name/
 #exclude %%_datadir/%%name/.Blanguages
+%exclude %_datadir/locale/languages
 
 %files i18n -f %name.lang
 #_datadir/%%name/.Blanguages
+%_datadir/%name/locale/languages
 
 
 %changelog
+* Mon Jun 17 2013 Andrey Liakhovets <aoliakh@altlinux.org> 2.67b-alt2
+- Build with boost (+ boost-filesystem, boost-locale)
+- Build with OpenCOLLADA
+- Build with fontconfig
+- Build with pcre: *-2.66-alt-pcre.patch added
+- no blenpluginapi (removed in upstream)
+- remove default WITH_BUILTIN_GLEW=OFF and WITH_BOOST=ON options
+- *-2.67b-node_efficiency_tools.patch added (fix syntax error in 2.67b)
+- RNA patch from Fedora expanded
+- *-alt-libav.patch reworked
+   (*-2.62-* fixed in upstream, *-2.66-* corresponds to alt libav*)
+- 0006-locales_directory_install.patch: *.mo and languages separated
+- 0009-do_not_use_version_number_in_the_system_path.patch updated
+- 0011-look_for_droid_ttf_with_fontconfig.patch updated and corrected
+- skip _bpy_path python requirement
+
+* Wed Jun 05 2013 Sergei Epiphanov <serpiph@altlinux.ru> 2.67b-alt1
+- New version
+- Add RNA patch from Fedora
+
+* Wed Apr 10 2013 Sergei Epiphanov <serpiph@altlinux.ru> 2.66-alt1
+- New version
+
 * Thu Mar 14 2013 Aleksey Avdeev <solo@altlinux.ru> 2.63-alt0.2
 - Rebuilt with python3-3.3
 
