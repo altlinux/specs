@@ -1,5 +1,5 @@
 Name: alterator-x11
-Version: 1.98.6
+Version: 1.98.7
 Release: alt1
 
 Url: http://www.altlinux.com
@@ -85,6 +85,9 @@ Scripts which creates simple configuration files in
 %_bindir/xsetup*
 
 %changelog
+* Mon Jun 17 2013 Sergey V Turchin <zerg at altlinux dot org> 1.98.7-alt1
+- polish DisplaySize UI
+
 * Fri Jun 14 2013 Sergey V Turchin <zerg at altlinux dot org> 1.98.6-alt1
 - simplify DisplaySize UI
 
