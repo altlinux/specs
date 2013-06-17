@@ -2,7 +2,7 @@
 
 Name: unixODBC
 Version: 2.3.1
-Release: alt2
+Release: alt3
 
 Summary: Unix ODBC driver manager and database drivers
 Summary(ru_RU.UTF-8): Система управления драйверами ODBC для unix 
@@ -46,12 +46,13 @@ ODBC представляет из себя открытую специфика�
 Summary: Shared libraries for ODBC
 Summary(ru_RU.UTF-8): Разделяемые библиотеки для ODBC
 Group: Development/Databases
+Provides: lib%name = %version-%release
+Obsoletes: lib%name < %version-%release
 %ifarch x86_64
 Provides: libodbc.so()(64bit) libodbcinst.so()(64bit)
 %else
 Provides: libodbc.so libodbcinst.so
 %endif
-Provides: lib%name = %version-%release
 
 %description -n lib%name%abiversion
 unixODBC aims to provide a complete ODBC solution for the Linux platform.
@@ -138,24 +139,18 @@ find doc -name Makefile\* -delete
 
 %files -n lib%name%abiversion
 %_libdir/lib*.so.*
-%_libdir/libodbc.so
-%_libdir/libodbcinst.so
-%_libdir/libodbcpsql.so
-%_libdir/libodbcpsqlS.so
-%_libdir/libodbcmyS.so
 
 %files -n lib%name-devel
 %doc ChangeLog doc/ProgrammerManual doc/lst
 %_includedir/*
 %_bindir/odbc_config
 %_libdir/lib*.so
-%exclude %_libdir/libodbc.so
-%exclude %_libdir/libodbcinst.so
-%exclude %_libdir/libodbcpsql.so
-%exclude %_libdir/libodbcpsqlS.so
-%exclude %_libdir/libodbcmyS.so
 
 %changelog
+* Mon Jun 17 2013 Andrey Cherepanov <cas@altlinux.org> 2.3.1-alt3
+- Move *.so to libunixODBC-devel package
+- Obsolete libunixODBC
+
 * Thu Jun 13 2013 Andrey Cherepanov <cas@altlinux.org> 2.3.1-alt2
 - according to shared libs policy
 

@@ -1,8 +1,8 @@
 %define rname unixODBC
 
-Name: unixODBC-contrib
+Name: unixODBC-compat
 Version: 2.2.12
-Release: alt7
+Release: alt8
 
 Summary: Unix ODBC driver manager and database drivers
 Summary(ru_RU.UTF-8): Система управления драйверами ODBC для unix 
@@ -12,6 +12,7 @@ Url: http://www.unixODBC.org
 
 Requires: lib%rname = %version-%release
 Provides: MyODBC = %version-%release
+Obsoletes: unixODBC-contrib
 
 Source0: http://www.unixodbc.org/%rname-%version.tar.gz
 
@@ -74,10 +75,8 @@ export QTDIR=%_qt3dir
 %configure \
 	--with-gnu-ld \
 	--enable-threads \
-	--enable-gui \
-	--enable-drivers \
 	--enable-ltdllib \
-	--with-qt-libraries=%_qt3dir/lib \
+    --with-qt-libraries=%_qt3dir/lib \
 	--disable-static
 %make_build
 
@@ -96,14 +95,12 @@ find doc -name Makefile\* -delete
 
 %files -n lib%{rname}1
 %_libdir/lib*.so.*
-%exclude %_libdir/libodbcinstQ*.so.*
-%_libdir/libodbc.so
-%_libdir/libodbcinst.so
-%_libdir/libodbcpsql.so
-%_libdir/libodbcpsqlS.so
-%_libdir/libodbcmyS.so
+%exclude %_libdir/libodbcpsql.so.2*
 
 %changelog
+* Mon Jun 17 2013 Andrey Cherepanov <cas@altlinux.org> 2.2.12-alt8
+- Fix file conflicts (ALT #29077)
+
 * Thu Jun 13 2013 Andrey Cherepanov <cas@altlinux.org> 2.2.12-alt7
 - build compat package
 
