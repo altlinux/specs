@@ -1,6 +1,6 @@
 Name: kernel-image-ovz-el
 Version: 2.6.32
-Release: alt89
+Release: alt95
 
 %define kernel_base_version	%version
 %define kernel_extra_version	%nil
@@ -46,7 +46,7 @@ Packager: Kernel Maintainers Team <kernel@packages.altlinux.org>
 
 Source11: config-x86
 Source12: config-x86_64
-Patch0: patch-042stab076.8-combined
+Patch0: patch-042stab078.22-combined
 Patch1: %name-%version-%release.patch
 
 ExclusiveArch: i586 i686 x86_64
@@ -187,54 +187,16 @@ Group: System/Kernel and hardware
 Provides:  kernel-modules-drm-%kversion-%flavour-%krelease = %version-%release
 Conflicts: kernel-modules-drm-%kversion-%flavour-%krelease < %version-%release
 Conflicts: kernel-modules-drm-%kversion-%flavour-%krelease > %version-%release
-Prereq: coreutils
-Prereq: module-init-tools >= 3.1
-Prereq: %name = %version-%release
-Requires(postun): %name = %version-%release
-
-%package -n kernel-modules-drm-nouveau-%flavour
-Summary: The Direct Rendering Infrastructure modules for NVIDIA cards
-Group: System/Kernel and hardware
+Provides:  kernel-modules-drm-nouveau-%flavour = %version-%release
 Provides:  kernel-modules-drm-nouveau-%kversion-%flavour-%krelease = %version-%release
-Conflicts: kernel-modules-drm-nouveau-%kversion-%flavour-%krelease < %version-%release
-Conflicts: kernel-modules-drm-nouveau-%kversion-%flavour-%krelease > %version-%release
-Requires: kernel-modules-drm-%kversion-%flavour-%krelease = %version-%release
-Prereq: coreutils
-Prereq: module-init-tools >= 3.1
-Prereq: %name = %version-%release
-Requires(postun): %name = %version-%release
-
-%package -n kernel-modules-drm-radeon-%flavour
-Summary: The Direct Rendering Infrastructure modules for ATI cards
-Group: System/Kernel and hardware
+Provides:  kernel-modules-drm-radeon-%flavour = %version-%release
 Provides:  kernel-modules-drm-radeon-%kversion-%flavour-%krelease = %version-%release
-Conflicts: kernel-modules-drm-radeon-%kversion-%flavour-%krelease < %version-%release
-Conflicts: kernel-modules-drm-radeon-%kversion-%flavour-%krelease > %version-%release
-Requires: kernel-modules-drm-%kversion-%flavour-%krelease = %version-%release
 Prereq: coreutils
 Prereq: module-init-tools >= 3.1
 Prereq: %name = %version-%release
 Requires(postun): %name = %version-%release
 
 %description -n kernel-modules-drm-%flavour
-The Direct Rendering Infrastructure, also known as the DRI, is a framework
-for allowing direct access to graphics hardware in a safe and efficient
-manner.  It includes changes to the X server, to several client libraries,
-and to the kernel.  The first major use for the DRI is to create fast
-OpenGL implementations.
-
-These are modules for your ALT Linux system
-
-%description -n kernel-modules-drm-nouveau-%flavour
-The Direct Rendering Infrastructure, also known as the DRI, is a framework
-for allowing direct access to graphics hardware in a safe and efficient
-manner.  It includes changes to the X server, to several client libraries,
-and to the kernel.  The first major use for the DRI is to create fast
-OpenGL implementations.
-
-These are modules for your ALT Linux system
-
-%description -n kernel-modules-drm-radeon-%flavour
 The Direct Rendering Infrastructure, also known as the DRI, is a framework
 for allowing direct access to graphics hardware in a safe and efficient
 manner.  It includes changes to the X server, to several client libraries,
@@ -591,14 +553,6 @@ find %buildroot%_docdir/kernel-doc-%base_flavour-%version/DocBook \
 
 %files -n kernel-modules-drm-%flavour
 %modules_dir/kernel/drivers/gpu/drm
-%exclude %modules_dir/kernel/drivers/gpu/drm/nouveau
-%exclude %modules_dir/kernel/drivers/gpu/drm/radeon
-
-%files -n kernel-modules-drm-nouveau-%flavour
-%modules_dir/kernel/drivers/gpu/drm/nouveau
-
-%files -n kernel-modules-drm-radeon-%flavour
-%modules_dir/kernel/drivers/gpu/drm/radeon
 
 %if_enabled kvm
 %files -n kernel-modules-kvm-%flavour
@@ -616,6 +570,30 @@ find %buildroot%_docdir/kernel-doc-%base_flavour-%version/DocBook \
 %endif # staging
 
 %changelog
+* Fri Jun 14 2013 Led <led@altlinux.ru> 2.6.32-alt95
+- Update to 042stab078.22
+
+* Sat Jun 08 2013 Led <led@altlinux.ru> 2.6.32-alt94
+- Update to 042stab078.21
+
+* Tue Jun 04 2013 Led <led@altlinux.ru> 2.6.32-alt93
+- Update to 042stab078.20
+
+* Wed May 22 2013 Led <led@altlinux.ru> 2.6.32-alt92
+- Update to 042stab078.16
+- moved nouveau and radeon DRM modules to kernel-modules-drm-* subpackage
+- removed kernel-modules-drm-nouveau-* and kernel-modules-drm-radeon-*
+  subpackages
+
+* Sun May 19 2013 Led <led@altlinux.ru> 2.6.32-alt91
+- Update to 042stab078.13
+
+* Fri May 17 2013 Led <led@altlinux.ru> 2.6.32-alt90
+- Update to 042stab078.11
+- disabled:
+  + DRM_I810 (broken)
+  + ATH9K_HTC (broken)
+
 * Wed May 15 2013 Led <led@altlinux.ru> 2.6.32-alt89
 - updated to 042stab076.8
 - restored Requires version of bootloader-utils
