@@ -1,12 +1,12 @@
 Name: mkimage-profiles
-Version: 0.9.16
+Version: 1.1.0
 Release: alt1
 
 Summary: ALT Linux based distribution metaprofile
 License: GPLv2+
 Group: Development/Other
 
-Url: http://www.altlinux.org/Mkimage/Profiles/m-p
+Url: http://altlinux.org/m-p
 Source: %name-%version.tar
 Packager: Michael Shigorin <mike@altlinux.org>
 
@@ -37,7 +37,7 @@ to choose from, and some ready-made image recipes as well.
 
 Make no mistake: constructing distributions isn't just fun, it takes
 a lot of passion and knowledge to produce a non-trivial one.  So m-p
-(the short nick for mkimage-profiles) is complex too.  If you need
+(the short alias for mkimage-profiles) is complex too.  If you need
 -- or want -- to make just a few tweaks to an existing recipe, it might
 be easier to comprehend the generated profile (aka builddir) which
 contains only the needed subprofiles, script hooks and package lists
@@ -78,6 +78,17 @@ cp -a * %buildroot%mpdir
 %doc %docs/*
 
 %changelog
+* Mon Jun 17 2013 Michael Shigorin <mike@altlinux.org> 1.1.0-alt1
+- 1.1.x branch: public alpha development status
+  + new subprofile: rootfs
+  + new features: armh*, deflogin, init, services
+  + refactored features: build-*, efi, fonts, live, x11*
+  + tar2vm got rewritten as tar2fs, gained ARM support
+- minor spec metadata update
+
+* Mon Jun 17 2013 Michael Shigorin <mike@altlinux.org> 1.0.0-alt1
+- 1.0
+
 * Mon Jun 10 2013 Michael Shigorin <mike@altlinux.org> 0.9.16-alt1
 - 1.0pre
 
