@@ -5,7 +5,7 @@
 %define sover %somver.0.0
 
 Name: adios
-Version: 1.4.1
+Version: 1.5.0
 Release: alt1
 Summary: The Adaptable IO System (ADIOS)
 License: BSD
@@ -13,10 +13,10 @@ Group: Sciences/Mathematics
 Url: http://www.olcf.ornl.gov/center-projects/adios/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-Source: http://users.nccs.gov/~pnorbert/adios-1.4.1.tar.gz
-Source1: http://users.nccs.gov/~pnorbert/ADIOS-UsersManual-1.4.1.pdf
+Source: http://users.nccs.gov/~pnorbert/adios-1.5.0.tar.gz
+Source1: http://users.nccs.gov/~pnorbert/ADIOS-UsersManual-1.5.0.pdf
 Source2: https://users.nccs.gov/~lot/skel/skel-doc.pdf
-Source3: http://users.nccs.gov/~pnorbert/ADIOS-DevManual-1.4.1.pdf
+Source3: http://users.nccs.gov/~pnorbert/ADIOS-DevManual-1.5.0.pdf
 Source4: http://users.nccs.gov/~pnorbert/ADIOS-vizschema.pdf
 
 %add_verify_elf_skiplist %_libdir/%name/examples/C/*
@@ -205,6 +205,9 @@ rmdir %buildroot%_libdir/tmp
 %doc *.pdf
 
 %changelog
+* Mon Jun 17 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.5.0-alt1
+- Version 1.5.0
+
 * Fri Feb 01 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4.1-alt1
 - Version 1.4.1
 
