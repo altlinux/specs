@@ -1,21 +1,20 @@
 Name: ocaml-zip
-Version: 1.04
-Release: alt1
+Version: 1.05
+Release: alt2
 Summary: OCaml library for reading and writing zip, jar and gzip files
 
 Group: Development/ML
 License: LGPLv2.1+ with exceptions
 Url: http://pauillac.inria.fr/~xleroy/software.html
-Packager: Veaceslav Grecea <slavutich@altlinux.org>
+Packager: %packager
 
-Source: http://caml.inria.fr/distrib/bazar-ocaml/camlzip-%version.tar.bz2
+Source: http://forge.ocamlcore.org/frs/download.php/1037/camlzip-%version.tar.gz
 Patch: ocaml-zip-alt-fix-make.patch
 
 # Automatically added by buildreq on Wed Jul 16 2008
 BuildRequires: ocaml zlib-devel
 
 BuildRequires(pre): ocaml
-Requires: ocaml-runtime = %{get_SVR ocaml-runtime}
 
 %description
 This Objective Caml library provides easy access to compressed files
@@ -54,6 +53,12 @@ cp META %buildroot%_libdir/ocaml/site-lib/zip
 %ocamlsitelib/zip
 
 %changelog
+* Mon Jun 17 2013 Andrey Bergman <vkni@altlinux.org> 1.05-alt2
+- Corrected packager field.
+
+* Mon Jun 17 2013 Andrey Bergman <vkni@altlinux.org> 1.05-alt1
+- Update to version 1.05.
+
 * Wed Jan 11 2012 Alexey Shabalin <shaba@altlinux.ru> 1.04-alt1
 - 1.04
 
