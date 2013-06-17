@@ -1,8 +1,8 @@
 %define subscribers_dir /lib/resolvconf
 
 Name: openresolv
-Version: 3.5.4
-Release: alt4
+Version: 3.5.5
+Release: alt1
 
 Summary: A framework for managing DNS information 
 License: %bsdstyle
@@ -127,6 +127,9 @@ touch %buildroot%_localstatedir/bind/etc/resolvconf-options.conf
 %endif
 
 %changelog
+* Mon Jun 17 2013 Mikhail Efremov <sem@altlinux.org> 3.5.5-alt1
+- Updated to 3.5.5.
+
 * Mon May 13 2013 Mikhail Efremov <sem@altlinux.org> 3.5.4-alt4
 - resolvconf-restartcmd: Use sd_booted utility.
 - resolvconf-restartcmd: Don't use absolute paths for commands.
