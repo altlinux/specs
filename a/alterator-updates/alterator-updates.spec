@@ -1,6 +1,6 @@
 Name: alterator-updates
 Version: 0.2
-Release: alt1
+Release: alt2
 
 Packager: Stanislav Ievlev <inger@altlinux.org>
 
@@ -12,6 +12,7 @@ Group: System/Configuration/Other
 Requires: alterator >= 4.10-alt1
 Requires: sisyphus-updates >= 0.1-alt4 avahi-tools
 Requires: alterator-l10n >= 2.1-alt7
+Requires: altlinux-repos
 Conflicts: alterator-lookout < 1.6-alt4
 Conflicts: alterator-fbi < 5.17-alt3
 
@@ -39,6 +40,9 @@ dialog based interface for alterator
 %_datadir/alterator/applications/*
 
 %changelog
+* Mon Jun 03 2013 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.2-alt2
+- add R: altlinux-repos
+
 * Mon Aug 03 2009 Stanislav Ievlev <inger@altlinux.org> 0.2-alt1
 - use workflow 'none'
 - share callbacks between qt and html ui

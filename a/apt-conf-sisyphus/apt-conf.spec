@@ -3,20 +3,21 @@
 %define Distro Sisyphus
 
 Name: %base_name-%distro
-Version: 5.2
-Release: alt1
+Version: 7.0
+Release: alt2
 
 Summary: A set of apt configuration files for %distribution %Distro
 License: GPL
 Group: System/Configuration/Packaging
-Packager: Dmitry V. Levin <ldv@altlinux.org>
 
 Source: %name-%version.tar
+
+BuildRequires: altlinux-repos
 
 Provides: %base_name = %version-%release, %_sysconfdir/apt/pkgpriorities
 PreReq: coreutils
 Conflicts: apt <= 0:0.5.15cnc6-alt14
-%{expand:%%global o_list apt-conf < 0:4.0 %(for n in Castle Compact Junior Master Spring branch desktop hpc junior master office-server platform5 school server terminal; do echo -n "apt-conf-$n "; done)}
+%{expand:%%global o_list apt-conf < 0:4.0 %(for n in Castle Compact Junior Master Spring branch centaurus cert6 desktop hpc junior master office-server platform5 pegatron school school-server server t6 terminal; do echo -n "apt-conf-$n "; done)}
 %{?o_list:Obsoletes: %o_list}
 
 %description
@@ -45,6 +46,13 @@ fi
 %config(noreplace) %_sysconfdir/apt
 
 %changelog
+* Mon Jun 03 2013 Gleb F-Malinovskiy <glebfm@altlinux.org> 7.0-alt2
+- move desktop files to altlinux-repos package
+
+* Wed May 22 2013 Dmitry V. Levin <ldv@altlinux.org> 7.0-alt1
+- pkgpriorities: updated (from raorn@; closes: #19221).
+- vendors.list.d/alt.list: removed obsolete keys.
+
 * Wed Apr 14 2010 Dmitry V. Levin <ldv@altlinux.org> 5.2-alt1
 - Updated mirrors.
 

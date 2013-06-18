@@ -4,13 +4,15 @@
 
 Name: %base_name-%distro
 Version: 7.0.0
-Release: alt2
+Release: alt3
 
 Summary: A set of apt configuration files for %distribution %Distro
 License: GPL
 Group: System/Configuration/Packaging
 
 Source: %name-%version.tar
+
+BuildRequires: altlinux-repos
 
 Provides: %base_name = %version-%release, %_sysconfdir/apt/pkgpriorities apt-conf-centaurus = %version-%release
 Obsoletes: apt-conf-centaurus
@@ -44,6 +46,9 @@ fi
 %config(noreplace) %_sysconfdir/apt
 
 %changelog
+* Mon Jun 03 2013 Gleb F-Malinovskiy <glebfm@altlinux.org> 7.0.0-alt3
+- move desktop files to altlinux-repos package
+
 * Mon Jun 03 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 7.0.0-alt2
 - provides/obsoletes for apt-conf-centaurus added
 

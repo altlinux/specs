@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-mirror
-Version: 0.4.1
+Version: 0.4.2
 Release: alt1
 
 BuildArch: noarch
@@ -15,7 +15,7 @@ Packager: Stanislav Ievlev <inger@altlinux.org>
 Group: System/Configuration/Other
 
 Requires: alterator >= 3.9-alt2 alterator-sh-functions >= 0.10-alt5 libshell sisyphus-mirror > 0.7.2-alt1
-Requires: alterator-l10n >= 2.4-alt9
+Requires: alterator-l10n >= 2.4-alt9 altlinux-repos
 
 BuildPreReq: alterator >= 3.5-alt1
 
@@ -49,6 +49,13 @@ install -Dpm640 %name.logrotate %buildroot%_sysconfdir/logrotate.d/%name
 %attr(700,root,adm) %_logdir/%name
 
 %changelog
+* Mon Jun 10 2013 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.4.2-alt1
+- fix lang (ALT#21593)
+- drop x86_32
+
+* Mon Jun 03 2013 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.4.1-alt2
+- add R: altlinux-repos
+
 * Fri May 04 2012 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.4.1-alt1
 - add support for new arepo
 
