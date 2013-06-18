@@ -1,19 +1,21 @@
-%define rname	be
-%define cid	langpack-be@firefox.mozilla.org
-%define ciddir 	%firefox_noarch_extensionsdir/%cid
+%define cid            langpack-be@firefox.mozilla.org
+%define cid_dir        %firefox_noarch_extensionsdir/%cid
+
+%define cid_dict       be@dictionaries.addons.mozilla.org
+%define cid_dict_dir   %firefox_noarch_extensionsdir/%cid_dict
 
 Name:		firefox-be
 Version:	21.0
-Release:	alt1
+Release:	alt2
 Summary:	Belarusian (BE) Language Pack for Firefox
 
 License:	GPL
 Group:		Networking/WWW
 URL:		http://mozilla-be.sourceforge.net
 
-Source0:	%rname.xpi
+Source0:	be.xpi
 
-Requires:	hunspell-%rname
+Requires:	hunspell-be
 
 BuildRequires(pre):	rpm-build-firefox
 BuildRequires:		unzip
@@ -30,15 +32,47 @@ The Mozilla Firefox Belarusian translation.
 
 %install
 cd ..
-mkdir -p %buildroot/%ciddir/dictionaries
-cp -r %cid/* %buildroot/%ciddir
-ln -s %_datadir/myspell/be_BY.aff %buildroot/%ciddir/dictionaries/%rname.aff
-ln -s %_datadir/myspell/be_BY.dic %buildroot/%ciddir/dictionaries/%rname.dic
+
+mkdir -p -- \
+	%buildroot/%cid_dir \
+	%buildroot/%cid_dict_dir/dictionaries
+
+# Install translation
+cp -r -- %cid/* %buildroot/%cid_dir
+
+# Install dictionary
+cat > %buildroot/%cid_dict_dir/install.rdf <<-EOF
+	<?xml version="1.0"?>
+	<RDF xmlns="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+	     xmlns:em="http://www.mozilla.org/2004/em-rdf#">
+	  <Description about="urn:mozilla:install-manifest"
+	               em:id="%cid_dict"
+	               em:name="Belarusian (BE) Dictionary"
+	               em:version="%version"
+	               em:type="64"
+	               em:unpack="true"
+	               em:creator="Mozilla Russia">
+	    <em:targetApplication>
+	      <Description>
+	        <em:id>{ec8030f7-c20a-464f-9b0e-13a3a9e97384}</em:id>
+	        <em:minVersion>%version</em:minVersion>
+	        <em:maxVersion>%version.*</em:maxVersion>
+	      </Description>
+	    </em:targetApplication>
+	  </Description>
+	</RDF>
+EOF
+ln -s %_datadir/myspell/be_BY.aff %buildroot/%cid_dict_dir/dictionaries/be.aff
+ln -s %_datadir/myspell/be_BY.dic %buildroot/%cid_dict_dir/dictionaries/be.dic
 
 %files
-%ciddir
+%cid_dir
+%cid_dict_dir
 
 %changelog
+* Tue Jun 18 2013 Alexey Gladkov <legion@altlinux.ru> 21.0-alt2
+- Add dictionary extension (ALT#29063).
+
 * Wed Jun 05 2013 Alexey Gladkov <legion@altlinux.ru> 21.0-alt1
 - New version (21.0).
 
