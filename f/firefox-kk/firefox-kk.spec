@@ -1,9 +1,12 @@
-%define cid	langpack-kk@firefox.mozilla.org
-%define ciddir	%firefox_noarch_extensionsdir/%cid
+%define cid            langpack-kk@firefox.mozilla.org
+%define cid_dir        %firefox_noarch_extensionsdir/%cid
+
+%define cid_dict       kk@dictionaries.addons.mozilla.org
+%define cid_dict_dir   %firefox_noarch_extensionsdir/%cid_dict
 
 Name:		firefox-kk
 Version:	21.0
-Release:	alt1
+Release:	alt2
 Summary:	Kazakh (KZ) Language Pack for Firefox
 
 License:	MPL/GPL/LGPL
@@ -29,21 +32,47 @@ The Mozilla Firefox Kazakh translation.
 %install
 cd ..
 
-%__mkdir_p %buildroot/%ciddir/dictionaries
+mkdir -p -- \
+	%buildroot/%cid_dir \
+	%buildroot/%cid_dict_dir/dictionaries
 
-%__cp -r %cid/* %buildroot/%ciddir
-ln -s %_datadir/myspell/kk_KZ.aff %buildroot/%ciddir/dictionaries/kk.aff
-ln -s %_datadir/myspell/kk_KZ.dic %buildroot/%ciddir/dictionaries/kk.dic
+# Install translation
+cp -r -- %cid/* %buildroot/%cid_dir
 
-#sed -r -i \
-#    -e 's,<em:maxVersion>4.0</em:maxVersion>,<em:maxVersion>4.*</em:maxVersion>,g' \
-#    -e 's,<em:minVersion>4.0</em:minVersion>,<em:minVersion>4.0</em:minVersion>,g' \
-#    %buildroot/%ciddir/install.rdf
+# Install dictionary
+cat > %buildroot/%cid_dict_dir/install.rdf <<-EOF
+	<?xml version="1.0"?>
+	<RDF xmlns="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+	     xmlns:em="http://www.mozilla.org/2004/em-rdf#">
+	  <Description about="urn:mozilla:install-manifest"
+	               em:id="%cid_dict"
+	               em:name="Kazakh (KZ) Dictionary"
+	               em:version="%version"
+	               em:type="64"
+	               em:unpack="true"
+	               em:creator="Mozilla Russia">
+	    <em:targetApplication>
+	      <Description>
+	        <em:id>{ec8030f7-c20a-464f-9b0e-13a3a9e97384}</em:id>
+	        <em:minVersion>%version</em:minVersion>
+	        <em:maxVersion>%version.*</em:maxVersion>
+	      </Description>
+	    </em:targetApplication>
+	  </Description>
+	</RDF>
+EOF
+ln -s %_datadir/myspell/kk_KZ.aff %buildroot/%cid_dict_dir/dictionaries/kk.aff
+ln -s %_datadir/myspell/kk_KZ.dic %buildroot/%cid_dict_dir/dictionaries/kk.dic
+
 
 %files
-%ciddir
+%cid_dir
+%cid_dict_dir
 
 %changelog
+* Tue Jun 18 2013 Alexey Gladkov <legion@altlinux.ru> 21.0-alt2
+- Add dictionary extension (ALT#29063).
+
 * Wed Jun 05 2013 Alexey Gladkov <legion@altlinux.ru> 21.0-alt1
 - New version (21.0)
 

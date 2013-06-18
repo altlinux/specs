@@ -1,48 +1,78 @@
-%define rname uk
-%define LName Ukrainian
-%define CCode UA
-%define ccode ua
+%define cid            langpack-uk@firefox.mozilla.org
+%define cid_dir        %firefox_noarch_extensionsdir/%cid
 
-%define cid langpack-%rname@firefox.mozilla.org
-%define ciddir %firefox_noarch_extensionsdir/%cid
+%define cid_dict       uk@dictionaries.addons.mozilla.org
+%define cid_dict_dir   %firefox_noarch_extensionsdir/%cid_dict
 
 Name: firefox-uk
 Version: 21.0
-Release: alt1
+Release: alt2
 
-Summary: %LName (%CCode) Language Pack for Firefox
+Summary: Ukrainian (UA) Language Pack for Firefox
 License: %gpl2plus
 Group: Networking/WWW
 
-URL: http://www.mozilla.org.%ccode
-Source: http://releases.mozilla.org/pub/mozilla.org/firefox/releases/%version/linux-i686/xpi/%rname.xpi
+URL: http://www.mozilla.org.ua
+Source: uk.xpi
+
 Packager: Alexey Gladkov <legion@altlinux.ru>
 
-Requires: hunspell-%rname
+Requires: hunspell-uk
 BuildArch: noarch
+
 BuildRequires(pre): rpm-build-firefox rpm-build-licenses
 BuildRequires: unzip
 
 %description
-The Mozilla Firefox %LName translation.
+The Mozilla Firefox Ukrainian translation.
 
 %prep
 %setup -c -n %name-%version/%cid
 
 %install
-install -d -m 0755 %buildroot/%ciddir/dictionaries
-cp -r * %buildroot/%ciddir/
-for f in aff dic; do
-    ln -sf {%_datadir/myspell/%{rname}_,%buildroot/%ciddir/dictionaries/%rname-}%CCode.$f
-done
+cd ..
 
-%postun
-[ "$1" = 0 -a -d "%ciddir" ] && rm -rf "%ciddir" ||:
+mkdir -p -- \
+	%buildroot/%cid_dir \
+	%buildroot/%cid_dict_dir/dictionaries
+
+# Install translation
+cp -r -- %cid/* %buildroot/%cid_dir
+
+# Install dictionary
+cat > %buildroot/%cid_dict_dir/install.rdf <<-EOF
+	<?xml version="1.0"?>
+	<RDF xmlns="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+	     xmlns:em="http://www.mozilla.org/2004/em-rdf#">
+	  <Description about="urn:mozilla:install-manifest"
+	               em:id="%cid_dict"
+	               em:name="Ukrainian (UA) Dictionary"
+	               em:version="%version"
+	               em:type="64"
+	               em:unpack="true"
+	               em:creator="Mozilla Russia">
+	    <em:targetApplication>
+	      <Description>
+	        <em:id>{ec8030f7-c20a-464f-9b0e-13a3a9e97384}</em:id>
+	        <em:minVersion>%version</em:minVersion>
+	        <em:maxVersion>%version.*</em:maxVersion>
+	      </Description>
+	    </em:targetApplication>
+	  </Description>
+	</RDF>
+EOF
+ln -s %_datadir/myspell/uk_UA.aff %buildroot/%cid_dict_dir/dictionaries/uk.aff
+ln -s %_datadir/myspell/uk_UA.dic %buildroot/%cid_dict_dir/dictionaries/uk.dic
+
 
 %files
-%ciddir
+%cid_dir
+%cid_dict_dir
 
 %changelog
+* Tue Jun 18 2013 Alexey Gladkov <legion@altlinux.ru> 21.0-alt2
+- Add dictionary extension (ALT#29063).
+
 * Wed Jun 05 2013 Alexey Gladkov <legion@altlinux.ru> 21.0-alt1
 - New version (21.0)
 

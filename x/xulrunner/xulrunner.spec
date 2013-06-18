@@ -14,7 +14,7 @@
 Summary:	XUL Runner
 Name:		xulrunner
 Version:	21.0
-Release:	alt1
+Release:	alt2
 
 License:	MPL/GPL/LGPL
 Group:		Networking/Other
@@ -28,7 +28,7 @@ Source3:	xulrunner-mozconfig
 Source4:	xpi-mimeinfo.xml
 
 Patch0:		xulrunner-no-version.patch
-Patch2:		xulrunner-noarch-extensions.patch
+#Patch2:	xulrunner-noarch-extensions.patch
 
 Patch100:	mozilla-192-path.patch
 #Patch101:	mozilla-pkgconfig.patch
@@ -140,7 +140,7 @@ tar -xf %SOURCE1
 
 %patch0 -p1
 #patch1 -p1
-%patch2 -p1
+#patch2 -p1
 
 %patch100 -p1
 #patch101 -p1
@@ -197,7 +197,7 @@ MOZ_UPDATER=
 MOZ_JAVAXPCOM=
 MOZ_NATIVE_NSPR=1
 MOZ_SERVICES_SYNC=1
-MOZ_EXTENSIONS_DEFAULT=" gio"
+MOZ_SERVICES_HEALTHREPORT=1
 MOZ_ENABLE_WARNINGS_AS_ERRORS=
 EOF
 
@@ -285,6 +285,7 @@ rm -f -- \
 	./%xulr_prefix/run-mozilla.sh \
 	./%xulr_prefix/LICENSE \
 	./%xulr_prefix/README.txt \
+	./%xulr_prefix/README.xulrunner \
 	./%xulr_prefix/js-gdb.py \
 	./%xulr_prefix/dictionaries/* \
 	./%_libdir/pkgconfig/gtkmozembed*.pc \
@@ -352,6 +353,10 @@ ln -sf $(relative "%xulr_prefix/libmozalloc.so" "%xulr_develdir/sdk/lib/libmozal
 %_datadir/rpm-build-mozilla/mozilla-sh-functions
 
 %changelog
+* Tue Jun 18 2013 Alexey Gladkov <legion@altlinux.ru> 21.0-alt2
+- Add missing healthreport service (ALT#29062).
+- Remove extensions-noarch support.
+
 * Fri May 31 2013 Alexey Gladkov <legion@altlinux.ru> 21.0-alt1
 - New release (21.0).
 - Fixed:
