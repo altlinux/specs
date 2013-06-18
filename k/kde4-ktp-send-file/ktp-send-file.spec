@@ -3,7 +3,7 @@
 
 %define rname ktp-send-file
 Name: kde4-ktp-send-file
-Version: 0.6.1
+Version: 0.6.2
 Release: alt1
 
 Group: Graphical desktop/KDE
@@ -62,6 +62,9 @@ Requires: libtelepathy-qt4-devel
 #%_K4includedir/KTp/
 
 %changelog
+* Tue Jun 18 2013 Sergey V Turchin <zerg@altlinux.org> 0.6.2-alt1
+- new version
+
 * Fri May 17 2013 Sergey V Turchin <zerg@altlinux.org> 0.6.1-alt1
 - new version
 
