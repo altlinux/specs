@@ -4,7 +4,7 @@
 
 Name: telepathy-qt4
 Version: 0.9.3
-Release: alt4
+Release: alt5
 
 Summary: Telepathy framework - Qt4 connection manager library 
 License: GPLv2
@@ -16,6 +16,7 @@ Packager: Nazarov Denis <nenderus@altlinux.ru>
 Source0: http://telepathy.freedesktop.org/releases/telepathy-qt4/%name-%version.tar.gz
 Patch1: alt-fix-install.patch
 Patch2: alt-pkgconfig.patch
+Patch3: alt-autoconnect.patch
 
 # Automatically added by buildreq on Tue Apr 03 2012 (-bi)
 # optimized out: cmake-modules elfutils farstream farstream-devel fontconfig glib2-devel gstreamer-devel libdbus-devel libdbus-glib libdbus-glib-devel libgio-devel libqt4-clucene libqt4-core libqt4-dbus libqt4-devel libqt4-gui libqt4-help libqt4-network libqt4-opengl libqt4-qt3support libqt4-script libqt4-sql libqt4-sql-sqlite libqt4-svg libqt4-test libqt4-xml libstdc++-devel libtelepathy-farstream libtelepathy-glib libtelepathy-glib-devel libxml2-devel pkg-config python-base python-devel python-modules python-modules-compiler python-modules-email python-modules-encodings python-modules-logging python-modules-xml xml-utils
@@ -48,6 +49,7 @@ Development libraries and header files for %name.
 %setup
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 %build
 export PATH=%_qt4dir/bin:$PATH
@@ -76,6 +78,9 @@ popd
 %_includedir/telepathy-qt4
 
 %changelog
+* Tue Jun 18 2013 Sergey V Turchin <zerg@altlinux.org> 0.9.3-alt5
+- connect automatically by default
+
 * Thu Apr 11 2013 Sergey V Turchin <zerg@altlinux.org> 0.9.3-alt4
 - fix requires
 
