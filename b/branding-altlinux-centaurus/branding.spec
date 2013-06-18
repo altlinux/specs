@@ -5,8 +5,8 @@
 %define Brand ALT Linux
 
 Name: branding-%brand-%theme
-Version: 6.9.9 
-Release: alt6
+Version: 7.0.0 
+Release: alt1
 
 BuildRequires: cpio fonts-ttf-dejavu fonts-ttf-droid
 BuildRequires: design-bootloader-source >= 5.0-alt2
@@ -20,9 +20,9 @@ BuildRequires: libqt4-devel
 
 BuildRequires: ImageMagick fontconfig bc libGConf-devel
 
-%define status_en RC
-%define status RC
-%define ProductName_ru Альт Линукс 7.0 Кентавр (RC)
+%define status_en %nil
+%define status %nil
+%define ProductName_ru Альт Линукс 7.0 Кентавр
 
 # All existing branding without this branding
 %define variants altlinux-backup-server altlinux-desktop altlinux-gnome-desktop altlinux-kdesktop altlinux-lite altlinux-lxdesktop altlinux-office-desktop altlinux-office-server altlinux-school-server altlinux-sisyphus altlinux-spt altlinux-tablet altlinux-workbench informika-schoolmaster ivk-chainmail lxde-desktop lxde-school-lite Platform6-server-light school-junior school-lite school-master school-server school-teacher school-terminal simply-linux sisyphus-server-light 
@@ -364,6 +364,9 @@ subst 's/#theme-name=/theme-name=Clearlooks-Phenix/' /etc/lightdm/lightdm-gtk-gr
 %_desktopdir/indexhtml.desktop
 
 %changelog
+* Tue Jun 18 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 7.0.0-alt1
+- release version
+
 * Tue Jun 11 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 6.9.9-alt6
 - slideshow added
 
