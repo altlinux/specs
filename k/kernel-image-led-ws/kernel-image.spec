@@ -21,7 +21,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.4.49
-Release: alt3
+Release: alt4
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -2737,6 +2737,10 @@ done)
 
 
 %changelog
+* Tue Jun 18 2013 Led <led@altlinux.ru> 3.4.49-alt4
+- enabled:
+  + DRM_LOAD_EDID_FIRMWARE
+
 * Sat Jun 15 2013 Led <led@altlinux.ru> 3.4.49-alt3
 - updated:
   + fix-net-sunrpc
