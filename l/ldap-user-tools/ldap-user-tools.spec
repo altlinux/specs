@@ -2,7 +2,7 @@
 %define _hooksdir %_sysconfdir/hooks/hostname.d
 
 Name:    ldap-user-tools
-Version: 0.8.3
+Version: 0.8.4
 Release: alt1
 
 Summary: Utilities to work with LDAP users
@@ -48,6 +48,11 @@ install -pm755 -d %buildroot/%_sysconfdir/alterator/openldap
 %dir %_sysconfdir/alterator/openldap
 
 %changelog
+* Tue Jun 18 2013 Andrey Cherepanov <cas@altlinux.org> 0.8.4-alt1
+- Fix username check regexp for workstation
+- Fix missing workstation list in ldap-getent
+- Fix workstation remove in ldap-userdel
+
 * Wed Jun 05 2013 Andrey Cherepanov <cas@altlinux.org> 0.8.3-alt1
 - Add support to map and unmap Samba and domain groups
 - Add -g <gid> option to ldap-groupmod to change group GID
