@@ -2,8 +2,9 @@
 %define sover %somver.7.3
 Name: cint
 Summary: An interpreter for C and C++ code
-Version: 7.3.00
-Release: alt1.svn20091016.2
+Version: 5.34.00
+Release: alt1.svn20121129
+Epoch: 1
 Group: Development/Tools
 License: MIT
 URL: http://root.cern.ch/drupal/content/cint
@@ -12,7 +13,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 # svn co http://root.cern.ch/svn/root/trunk/cint cint
 Source: %name-%version-source.tar.gz
 
-Requires: lib%name-devel = %version-%release
+Requires: lib%name-devel = %EVR
 
 BuildPreReq: libreadline-devel gcc-c++ libtinfo-devel libncurses-devel
 BuildPreReq: python-devel
@@ -48,7 +49,7 @@ This package contains shared libraries of CINT.
 %package -n lib%name-devel
 Summary: Development files of CINT interpreter
 Group: Development/C++
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 %description -n lib%name-devel
 CINT is an interpreter for C and C++ code. It is useful e.g. for situations
@@ -62,7 +63,7 @@ This package contains development files of CINT.
 %package -n lib%name-devel-static
 Summary: Static libraries of CINT interpreter
 Group: Development/C++
-Requires: lib%name-devel = %version-%release
+Requires: lib%name-devel = %EVR
 
 %description -n lib%name-devel-static
 CINT is an interpreter for C and C++ code. It is useful e.g. for situations
@@ -117,7 +118,8 @@ export CXXFLAGS="%optflags"
 	--coreversion=new \
 	--checkstack \
 	--inputmode=C++ \
-	--readlinelib=%_libdir/libreadline.so
+	--readlinelib=%_libdir/libreadline.so \
+	--coreversion=current
 %make_build
 
 %install
@@ -162,6 +164,9 @@ mv %buildroot%_man2dir/security.2 %buildroot%_man2dir/%name-security.2
 %doc %_docdir/%name/demo
 
 %changelog
+* Tue Jun 18 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:5.34.00-alt1.svn20121129
+- Version 5.34.00
+
 * Wed Mar 16 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 7.3.00-alt1.svn20091016.2
 - Rebuilt for debuginfo
 
