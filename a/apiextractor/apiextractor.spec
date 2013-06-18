@@ -1,12 +1,13 @@
 Name: apiextractor
 Version: 0.10.11
-Release: alt1.git20120104
+Release: alt1.git20130522
 Summary: Development of bindings of Qt-based libraries for high level languages
 License: GPLv2
 Group: Development/KDE and QT
 Url: http://www.pyside.org/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
+# git://gitorious.org/pyside/apiextractor.git
 Source: %name-%version.tar
 
 BuildPreReq: cmake ctest libqt4-devel phonon-devel
@@ -120,6 +121,9 @@ popd
 %doc doc/html/*
 
 %changelog
+* Mon Jun 17 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.10.11-alt1.git20130522
+- New snapshot
+
 * Fri May 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.10.11-alt1.git20120104
 - Version 0.10.11
 

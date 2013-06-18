@@ -1,12 +1,13 @@
 Name: shiboken
 Version: 1.1.2
-Release: alt1
+Release: alt1.git20130527
 Summary: Generates bindings for C++ libraries using CPython source code
 License: GPLv2, LGPLv2.1
 Group: Development/KDE and QT
 Url: http://www.pyside.org/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
+# git://gitorious.org/pyside/shiboken.git
 Source: %name-%version.tar
 
 BuildPreReq: cmake libqt4-devel gcc-c++ libgeneratorrunner-devel
@@ -91,10 +92,8 @@ popd
 %install
 %makeinstall_std -C BUILD
 
-gzip ChangeLog
-
 %files
-%doc ChangeLog* COPYING*
+%doc COPYING* AUTHORS
 %doc BUILD/doc/html
 %_bindir/*
 %_man1dir/*
@@ -112,6 +111,9 @@ gzip ChangeLog
 %python_sitelibdir/*
 
 %changelog
+* Mon Jun 17 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.2-alt1.git20130527
+- New snapshot
+
 * Tue Sep 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.2-alt1
 - Version 1.1.2
 

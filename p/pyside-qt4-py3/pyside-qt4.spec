@@ -1,6 +1,6 @@
 Name: pyside-qt4-py3
 Version: 1.1.2
-Release: alt1.1
+Release: alt2.git20130522
 Summary: Python bindings for the Qt cross-platform application and UI framework (Python 3)
 License: LGPLv2.1
 Group: Development/Tools
@@ -132,7 +132,7 @@ rmdir %buildroot%python3_sitelibdir/PySide-*
 #popd
 
 %files -n lib%name
-%doc ChangeLog COPYING
+%doc COPYING
 %_libdir/*.so.*
 %_datadir/PySide*
 
@@ -149,6 +149,9 @@ rmdir %buildroot%python3_sitelibdir/PySide-*
 %python3_sitelibdir/*
 
 %changelog
+* Mon Jun 17 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.2-alt2.git20130522
+- New snapshot
+
 * Thu Mar 21 2013 Aleksey Avdeev <solo@altlinux.ru> 1.1.2-alt1.1
 - Rebuild with Python-3.3
 
