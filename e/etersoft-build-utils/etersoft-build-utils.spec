@@ -1,7 +1,7 @@
 # NOTE: do not use clean_spec or rpmcs for this spec
 
 Name: etersoft-build-utils
-Version: 2.0.25
+Version: 2.0.26
 Release: alt1
 
 Summary: A set of rpm build utilities from Etersoft
@@ -68,6 +68,19 @@ RECOMMENDED packages: gcc-c++ perl-libwww ccache elinks mutt hasher curl
 %config(noreplace) %_sysconfdir/eterbuild/repos/*
 
 %changelog
+* Tue Jun 18 2013 Vitaly Lipatov <lav@altlinux.ru> 2.0.26-alt1
+- rpmbph: use tmpdir for repack src.rpm
+- repl hack: reqs x86_64 and i586 package versions
+- update pkgrepls
+- git: fix missed date detection
+- gremote: add -o option for add origin repo
+- rpmpub: add -s option to disable set tag and sign src.rpm
+- rpmlog: make changelog entries in the right order
+- introduce grebase: dialog rebase
+- repl: fix recursive replacement
+- rpmgs: fix get xz tarball
+- add hack for build wine on x86_64 yum-based
+
 * Mon Mar 04 2013 Vitaly Lipatov <lav@altlinux.ru> 2.0.25-alt1
 - rpmcs: do not use all rules for revert requires
 - rpmcs: add --skip-reqs support
