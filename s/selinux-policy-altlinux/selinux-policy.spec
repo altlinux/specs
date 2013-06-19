@@ -1,12 +1,12 @@
 %define policy_name altlinux
-%define date 20130425
+%define date 20130619
 %define seconf %_sysconfdir/selinux/config
 %define default_mode permissive
 
 Summary: SELinux %policy_name policy
 Name: selinux-policy-altlinux
-Version: 0.0.1
-Release: alt3
+Version: 0.0.2
+Release: alt1
 License: %distributable
 Group: System/Base
 Source: %name-%date.tar
@@ -88,6 +88,8 @@ fi
 %dir %policy_conf/modules/active/modules
 %dir %policy_conf/policy
 %dir %policy_data
+%dir %policy_data/support
+%dir %policy_data/modules
 %dir %_sysconfdir/security/alt.newrole
 
 %policy_conf/contexts/dbus_contexts
@@ -98,6 +100,11 @@ fi
 %policy_conf/contexts/securetty_types
 
 %policy_data/*.pp
+%policy_data/modules/*.pp
+%policy_data/*.if
+
+%policy_data/support/*.spt
+%policy_data/Makefile
 
 %attr(0755,root,root) %_sysconfdir/security/alt.newrole/helper
 %attr(0755,root,root) %_sysconfdir/security/alt.newrole/mkdirs
@@ -114,6 +121,12 @@ fi
 %doc /usr/share/doc/selinux-policy-altlinux/README
 
 %changelog
+* Wed Jun 19 2013 Andriy Stepanov <stanv@altlinux.ru> 0.0.2-alt1
+- Build: 20130619
+
+* Mon May 20 2013 Andriy Stepanov <stanv@altlinux.ru> 0.0.1-alt4
+- Build: 20130520
+
 * Wed Apr 24 2013 Andriy Stepanov <stanv@altlinux.ru> 0.0.1-alt3
 - Build: 20130425
 
