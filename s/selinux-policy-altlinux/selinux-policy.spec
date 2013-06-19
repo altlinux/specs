@@ -6,7 +6,7 @@
 Summary: SELinux %policy_name policy
 Name: selinux-policy-altlinux
 Version: 0.0.2
-Release: alt1
+Release: alt2
 License: %distributable
 Group: System/Base
 Source: %name-%date.tar
@@ -39,6 +39,12 @@ cp -a * %buildroot
 %post
 # Always install new policy
 semodule -n -s %policy_name -b %policy_data/base.pp
+
+# Always install all modules
+for i in %policy_data/modules/*.pp; do
+echo -e "\t\t* Install module $(basename "$i")" 
+semodule -n -s %policy_name -i "$i"
+done
 
 # Install
 if [ $1 -eq 1 ]; then
@@ -121,6 +127,9 @@ fi
 %doc /usr/share/doc/selinux-policy-altlinux/README
 
 %changelog
+* Wed Jun 19 2013 Andriy Stepanov <stanv@altlinux.ru> 0.0.2-alt2
+- Post script for modules
+
 * Wed Jun 19 2013 Andriy Stepanov <stanv@altlinux.ru> 0.0.2-alt1
 - Build: 20130619
 
