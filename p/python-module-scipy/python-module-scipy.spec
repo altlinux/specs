@@ -11,7 +11,7 @@ BuildRequires(pre): rpm-build-python
 
 Name: python-module-%oname
 Version: 0.13.0
-Release: alt1.git20130614
+Release: alt2.git20130614
 
 Summary: SciPy is the library of scientific codes
 
@@ -44,7 +44,7 @@ BuildPreReq: %py_dependencies scikits.statsmodels.docs.sphinxext
 
 BuildRequires: gcc-c++ gcc-fortran liblapack-devel python-module-Pyrex
 BuildRequires: python-module-ctypes libnumpy-devel python-modules-curses
-BuildRequires: libsuitesparse-devel
+BuildRequires: libsuitesparse-devel python-module-Cython0.18
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-distribute
@@ -419,8 +419,9 @@ rm -f %buildroot%python_sitelibdir/scipy/pickle/generated/scipy-stats-rv_discret
 
 %if_enabled docs
 %files doc-html
-%dir %_docdir/%name
-%_docdir/%name/html
+#dir %_docdir/%name
+#_docdir/%name/html
+%_docdir/%name
 
 #files doc-pdf
 #dir %_docdir/%name
@@ -456,6 +457,9 @@ rm -f %buildroot%python_sitelibdir/scipy/pickle/generated/scipy-stats-rv_discret
 %endif
 
 %changelog
+* Wed Jun 19 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.13.0-alt2.git20130614
+- Fixed build
+
 * Sat Jun 15 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.13.0-alt1.git20130614
 - Version 0.13.0
 
