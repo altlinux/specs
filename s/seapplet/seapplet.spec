@@ -1,5 +1,5 @@
 Name: seapplet
-Version: 0.1.1
+Version: 0.2.0
 Release: alt1
 
 Summary: Applet for selinux
@@ -43,6 +43,9 @@ install -m644 %name.desktop %buildroot/%_sysconfdir/xdg/autostart/%name.desktop
 
 
 %changelog
+* Wed Jun 19 2013 Timur Aitov <timonbl4@altlinux.org> 0.2.0-alt1
+- print color code
+
 * Tue Jun 18 2013 Andrey Kolotov <qwest@altlinux.org> 0.1.1-alt1
 - Changed the colors of the indicator (closes: #29083).
 - Fixed selecting the last level (closes: #29084).
