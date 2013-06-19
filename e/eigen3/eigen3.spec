@@ -1,6 +1,6 @@
 %define oname eigen
 Name: %{oname}3
-Version: 3.1.2
+Version: 3.1.3
 Release: alt1
 Summary: C++ template library for linear algebra
 License: LGPLv3+ or GPLv2+
@@ -27,7 +27,7 @@ numerical solvers, and related algorithms.
 %package docs
 Summary: Documentation for Eigen3
 Group: Development/Documentation
-BuildArch: noarch
+#BuildArch: noarch
 
 %description docs
 Eigen is a C++ template library for linear algebra: matrices, vectors,
@@ -98,6 +98,9 @@ install -m755 BUILD/doc/examples/* %buildroot%_bindir
 %doc BUILD/doc/html/*
 
 %changelog
+* Wed Jun 19 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.1.3-alt1
+- Version 3.1.3
+
 * Mon Feb 04 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.1.2-alt1
 - Version 3.1.2
 
