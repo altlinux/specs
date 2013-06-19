@@ -21,8 +21,8 @@
 
 Summary: Request Tracker (RT) is an enterprise-grade issue tracking system
 Name: %fullrtname
-Version: 3.8.15
-Release: alt3
+Version: 3.8.17
+Release: alt1
 Group: Networking/WWW
 License: GPL
 Url: http://www.bestpractical.com/rt/
@@ -367,6 +367,9 @@ echo ""
 %files sqlite
 
 %changelog
+* Wed Jun 19 2013 Andrew Kornilov <hiddenman@altlinux.ru> 3.8.17-alt1
+- Version 3.8.17. Lots of CVE fixed
+
 * Tue Jan 15 2013 Andrew Kornilov <hiddenman@altlinux.ru> 3.8.15-alt3
 - Version 3.8.15. Lots of security fixes since 3.8.10
 
