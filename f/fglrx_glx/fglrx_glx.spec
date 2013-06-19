@@ -18,7 +18,7 @@
 Name: %{bname}_glx
 %define ksname kernel-source-%bname
 Version: 13.101
-Release: alt1
+Release: alt2
 Summary: ATI/AMD Proprietary Linux Display Driver
 Group: System/Kernel and hardware
 URL: http://www.amd.com
@@ -132,6 +132,7 @@ install -pD -m 0644 {%archdir/usr/X11R6/%_lib,%buildroot%_libdir/X11}/modules/dr
 
 ln -sr %buildroot%_libdir{/X11/modules,}/dri/fglrx_dri.so
 ln -sr %buildroot%_libdir/X11/{modules/dri/fglrx_,fglrx/lib}dri.so
+ln -sr %buildroot%_libdir/X11/{modules/dri/fglrx_dri.so,fglrx/libEGL.so.1}
 
 install -pD -m 0644 {%xfdir/usr/X11R6/%_lib,%buildroot%_libdir/X11}/modules/linux/libfglrxdrm.so
 
@@ -139,6 +140,7 @@ ln -s {fglrx-,%buildroot%_libdir/X11/fglrx/}libglx.so
 
 install -p -m 0644 {%xfdir/usr/X11R6/%_lib/modules/extensions,%archdir/usr/X11R6/%_lib}/fglrx/*  %buildroot%_libdir/X11/fglrx/
 ln -s fglrx-libGL.so.1.2 %buildroot%_libdir/X11/fglrx/libGL.so.1
+ln -sr %buildroot%_libdir/X11/fglrx/{fglrx-libGL.so.1.2,libGLESv2.so.2}
 
 install -p -m 0644 %archdir/usr{/X11R6,}/%_lib/lib* %buildroot%_libdir/
 install -p -m 0755 %archdir/usr/%_lib/fglrx/* %buildroot%_libdir/fglrx/
@@ -249,6 +251,9 @@ chrpath -d %buildroot{%_bindir/amdcccle,%_sbindir/amdnotifyui}
 
 
 %changelog
+* Fri Jun 14 2013 Led <led@altlinux.ru> 13.101-alt2
+- added libEGL.so.1 and libGLESv2.so.2 symlinks
+
 * Tue Jun 04 2013 Led <led@altlinux.ru> 13.101-alt1
 - 13.101 (Catalyst 13.6 beta)
 - cleaned up spec
@@ -743,4 +748,3 @@ chrpath -d %buildroot{%_bindir/amdcccle,%_sbindir/amdnotifyui}
 
 * Wed Jul 16 2003 Peter Novodvorsky <nidd@altlinux.com> 2.9.12-alt1
 - initial release.
-
