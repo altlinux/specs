@@ -1,6 +1,6 @@
 %define mversion	6
-%define dversion	%mversion.8.4
-%define drelease	10
+%define dversion	%mversion.8.6
+%define drelease	0
 %define qlev		Q16
 %define mgkdir		ImageMagick
 %define soname		4
@@ -9,7 +9,7 @@
 %def_enable x
 Name: ImageMagick
 Version: %dversion.%drelease
-Release: alt2.1
+Release: alt1
 
 Summary: An X application for displaying and manipulating images
 License: OpenSource
@@ -25,7 +25,6 @@ Source2: imagemagick16.png
 Source3: imagemagick32.png
 Source4: imagemagick48.png
 Patch1: ImageMagick-depends.patch
-Patch2: ImageMagick-6.8.4-10-alt-invalid_read.patch
 
 Requires: ghostscript-classic fonts-type1-urw lib%name = %version-%release
 
@@ -116,13 +115,13 @@ Documentation for %name
 %prep
 %setup -q -n %name-%dversion-%drelease
 %patch1 -p2
-%patch2 -p2
 touch config.rpath
 
 # XXX tests fail
 rm PerlMagick/t/composite.t
 rm PerlMagick/t/filter.t
 rm PerlMagick/t/montage.t
+subst 's,2.69,2.68,' configure.ac
 
 %build
 %autoreconf
@@ -160,6 +159,7 @@ popd
 chrpath -d %buildroot%perl_vendor_archlib/auto/Image/Magick/Magick.so
 chrpath -d %buildroot%perl_vendor_archlib/auto/Image/Magick//Q16/Q16.so
 
+mv %buildroot%_docdir/%name-6 %buildroot%_docdir/%name-%dversion
 %files
 
 %files tools
@@ -219,6 +219,10 @@ chrpath -d %buildroot%perl_vendor_archlib/auto/Image/Magick//Q16/Q16.so
 %endif
 
 %changelog
+* Wed Jun 19 2013 Anton Farygin <rider@altlinux.ru> 6.8.6.0-alt1
+- new version
+- removed ImageMagick-6.8.4-10-alt-invalid_read.patch (obsoleted by upstream)
+
 * Thu Apr 25 2013 Fr. Br. George <george@altlinux.ru> 6.8.4.10-alt2.1
 - Avoid ImageMagick pipe i/o bug
 
