@@ -8,7 +8,7 @@
 
 Name: docs-%variant
 Version: 7.0
-Release: alt1
+Release: alt2
 
 Summary: %Variant documentation
 License: %fdl
@@ -42,6 +42,9 @@ ln -s $(relative %_docsinstalldir %_documentationdir) %buildroot%_documentationd
 %_documentationdir
 
 %changelog
+* Wed Jun 19 2013 Artem Zolochevskiy <azol@altlinux.ru> 7.0-alt2
+- update doc
+
 * Fri Apr 26 2013 Artem Zolochevskiy <azol@altlinux.ru> 7.0-alt1
 - initial 7.0 version
 
