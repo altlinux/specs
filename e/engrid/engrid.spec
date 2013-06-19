@@ -2,7 +2,7 @@
 
 Name: engrid
 Version: 1.4
-Release: alt3.git20120704.1
+Release: alt3.git20130518
 Summary: Mesh generation software with CFD applications in mind
 License: GPL v3 or later
 Group: Sciences/Physics
@@ -15,7 +15,8 @@ Source: %name-%version.tar
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: libvtk-devel libcgns-mpi-devel
 BuildPreReq: libqt4-devel gcc-c++ libnetgen-devel
-BuildPreReq: python-tools-2to3
+BuildPreReq: python-tools-2to3 libnetcdf_c++-devel
+BuildPreReq: libgomp-devel
 
 %add_python3_req_skip BPyAddMesh bpy_extras mathutils
 %add_python3_path %_datadir/blender/scripts/blender
@@ -47,7 +48,7 @@ done
 %build
 pushd src
 
-%add_optflags -I%_includedir/vtk-%vtk_ver
+%add_optflags -I%_includedir/vtk-%vtk_ver -I%_libdir/hdf5-seq/include/netcdf
 qmake-qt4 QMAKE_CFLAGS_RELEASE="%optflags" \
 	QMAKE_CXXFLAGS_RELEASE="%optflags" engrid.pro
 %make_build
@@ -95,6 +96,9 @@ install -p -m644 src/blender_scripts/2.4/* src/blender_scripts/2.63a/* \
 %doc manual tutorials
 
 %changelog
+* Wed Jun 19 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4-alt3.git20130518
+- New snapshot
+
 * Wed Mar 20 2013 Aleksey Avdeev <solo@altlinux.ru> 1.4-alt3.git20120704.1
 - Rebuild with Python-3.3
 
