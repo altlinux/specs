@@ -1,25 +1,24 @@
 Name: live-install
-Version: 20120113
+Version: 20130619
 Release: alt1
-Summary: The script to clone ALT Linux system from LiveCD to a hard disk
+Summary: Copy altlinux live to fixed disk
 Group: System/Configuration/Other
 License: GPL
 BuildArch: noarch
-Packager: Michael Pozhidaev <msp@altlinux.ru>
 
-Requires: lilo, fstyp
+Requires: syslinux-extlinux grub2-pc fstyp
+Requires: rsync mdadm fdisk gdisk
 
 Source: %name-%version.tar.gz
 
 %description
-The script to clone ALT Linux system from LiveCD to a hard disk
+%summary
 
 %prep
 %setup -q
 %build
 %install
-install -d -m 755 %buildroot/%_sbindir/
-install -pD -m 755 live-install* %buildroot/%_sbindir/
+install -pD -m 755 %name %buildroot/%_sbindir/%name
 install -pD -m 644 dev.cpio.bz2 %buildroot/%_datadir/%name/dev.cpio.bz2
 mkdir -p %buildroot/%_datadir/%name/scripts.d
 
@@ -29,11 +28,19 @@ mkdir -p %buildroot/%_datadir/%name/scripts.d
 %dir %_datadir/%name/scripts.d
 
 %changelog
-* Fri Jan 13 2012 Michael Pozhidaev <msp@altlinux.ru> 20120113-alt1
-- Added --no-lilo command line option
+* Wed Jun 19 2013 Eugene Prokopiev <enp@altlinux.ru> 20130619-alt1
+- add option to rename default user
 
-* Sun Jan 08 2012 Michael Pozhidaev <msp@altlinux.ru> 20120108-alt1
-- New approach based on splitted scripts
+* Mon May 13 2013 Eugene Prokopiev <enp@altlinux.ru> 20130513-alt1
+- major improvements implemented by prividen@:
+  + use existing mountpoint for system installation
+  + install loader on all disks in mdraid array
+  + grub2 support
+
+* Mon Apr 15 2013 Eugene Prokopiev <enp@altlinux.ru> 20130415-alt1
+- add run directory
+- g/lilo/extlinux/g
+- cleanup
 
 * Mon Nov 21 2011 Eugene Prokopiev <enp@altlinux.ru> 20111121-alt1
 - fix removing obsoleted remount_rw package
@@ -61,7 +68,7 @@ mkdir -p %buildroot/%_datadir/%name/scripts.d
 - add scripts.d
 
 * Sun Feb 06 2011 Michael Pozhidaev <msp@altlinux.ru> 20110206-alt1
-- Package was renamed from homeros-install to live-install
+- Package was renamed from homeros--install to live-install
 
 * Sun Jan 30 2011 Michael Pozhidaev <msp@altlinux.ru> 20110130-alt1
 - Removed altlinux user from installed system
