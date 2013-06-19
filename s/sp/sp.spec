@@ -1,6 +1,6 @@
 Name:           sp
 Version:        5.2.1
-Release:        alt14
+Release:        alt20
 Summary:        School Portal
 Summary(ru):    Школьный портал
 License:        Distributable, non-free
@@ -68,14 +68,15 @@ mv UDFLib.dll %buildroot/%_libdir/firebird/UDF/UDFLib.dll
 # Список файлов, которые попадут в пакет
 # -------------------------------------------
 %files
-%defattr(440, apache, apache, 755)
-%attr(640,apache,apache)     %config(noreplace) /var/www/cgi-bin/sp/sp.conf
+%defattr(440, apache2, apache2, 755)
+%attr(640,apache2,mail)      %config(noreplace) /var/www/cgi-bin/sp/sp.conf
 %dir /var/lib/firebird/xxi/
 %attr(660,firebird,firebird) %config(noreplace) /var/lib/firebird/xxi/*
 %attr(440,firebird,firebird) %_libdir/firebird/UDF/UDFLib.dll
-%attr(640,apache,apache)     /var/www/html/.htaccess
-%attr(640,apache,apache)     %config /etc/httpd2/conf/sites-available/000-sp.conf
-%attr(640,apache,apache)     %config /etc/httpd2/conf/mods-start.d/900-sp.conf
+%attr(640,apache2,apache2)     /var/www/html/.htaccess
+%attr(640,apache2,apache2)     %config /etc/httpd2/conf/sites-available/000-sp.conf
+%attr(640,apache2,apache2)     %config /etc/httpd2/conf/mods-start.d/900-sp.conf
+%attr(640,apache2,apache2)     %config /etc/httpd2/conf/sites-start.d/000-sp.conf
 %attr(750,root,root)         %config /etc/xinetd.d/sphelper
 %attr(750,root,root)         /usr/sbin/sp-add-admin
 %attr(750,root,root)         /usr/sbin/sphelper.pl
@@ -89,8 +90,8 @@ mv UDFLib.dll %buildroot/%_libdir/firebird/UDF/UDFLib.dll
 /var/www/cgi-bin/sp/.htaccess
 /var/www/html/sp/*
 /var/www/html/sp/.htaccess
-%ghost %attr(640,apache,squid) /var/www/sp_htpasswd
-%ghost %attr(640,apache,squid) /var/www/sp_users_allowed
+%ghost %attr(640,apache2,squid) /var/www/sp_htpasswd
+%ghost %attr(640,apache2,squid) /var/www/sp_users_allowed
 
 # -------------------------------------------
 # Команды, выполняющиеся после распаковки файлов из пакета при установке на целевую систему
@@ -158,14 +159,21 @@ fi
 # a2enmod deflate
 # a2enmod headers
 
-# Выключем "It Works!"
-/usr/sbin/a2dissite 000-default
-# Включаем SP
-/usr/sbin/a2ensite 000-sp
+# echo "Setting School Portal as default site..."
 
-echo "Turning off ServerTokens Full in Apache for better security"
-perl -i-original -p -e 's/^ServerTokens Full$/ServerTokens Prod/' /etc/httpd2/conf/extra-available/httpd-default.conf
-echo "Current Apache config file saved: /etc/httpd2/conf/extra-available/httpd-default.conf-original"
+# Выключем "It Works!"
+# /usr/sbin/a2dissite 000-default
+# if [ -e /etc/httpd2/conf/sites-start.d/000-default.conf ]; then
+	# mv -vf /etc/httpd2/conf/sites-start.d/000-default.conf /etc/httpd2/conf/sites-start.d/000-default.conf-disabled
+	# # rm -f /etc/httpd2/conf/sites-start.d/000-default.conf
+# fi
+
+# Включаем SP
+# /usr/sbin/a2ensite 000-sp
+
+# echo "Turning off ServerTokens Full in Apache for better security"
+# perl -i-original -p -e 's/^ServerTokens Full$/ServerTokens Prod/' /etc/httpd2/conf/extra-available/httpd-default.conf
+# echo "Current Apache config file saved: /etc/httpd2/conf/extra-available/httpd-default.conf-original"
 
 chown apache2.apache2 /var/www/html/.htaccess
 
@@ -366,10 +374,29 @@ fi
 %preun
 
 # возвращаем всё как было
-a2ensite  default
-a2dissite 000-sp
+# mv /etc/httpd2/conf/sites-start.d/000-default.conf-disabled /etc/httpd2/conf/sites-start.d/000-default.conf
+# a2ensite  default
+# a2dissite 000-sp
 
 %changelog
+* Mon May 06 2013 Andrey V. Stroganov <dja@altlinux.org> 5.2.1-alt20
+add sites.start.d apache config for sp
+
+* Mon May 06 2013 Andrey V. Stroganov <dja@altlinux.org> 5.2.1-alt19
+fixed clean databases
+
+* Mon May 06 2013 Andrey V. Stroganov <dja@altlinux.org> 5.2.1-alt18
+rollback default site replacement (2)
+
+* Mon May 06 2013 Andrey V. Stroganov <dja@altlinux.org> 5.2.1-alt17
+rollback default site replacement
+
+* Mon May 06 2013 Andrey V. Stroganov <dja@altlinux.org> 5.2.1-alt16
+fix preun script
+
+* Mon May 06 2013 Andrey V. Stroganov <dja@altlinux.org> 5.2.1-alt15
+fix permissions; replace a2dissite with rm symlink
+
 * Sun May 05 2013 Andrey V. Stroganov <dja@altlinux.org> 5.2.1-alt14
 patch paths to DBs in sp.conf for alt reqs
 
