@@ -1,6 +1,6 @@
 Name: fastbit
-Version: ibis1.3.5.1
-Release: alt1.svn20130111
+Version: ibis1.3.7
+Release: alt1.svn20130615
 Summary: An Efficient Compressed Bitmap Index Technology
 License: LGPL v2.1 or later
 Group: Development/Databases
@@ -184,6 +184,9 @@ gzip ChangeLog
 %_javadocdir/%name
 
 %changelog
+* Thu Jun 20 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> ibis1.3.7-alt1.svn20130615
+- Version ibis1.3.7
+
 * Mon Feb 04 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> ibis1.3.5.1-alt1.svn20130111
 - Version ibis1.3.5.1
 
