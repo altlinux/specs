@@ -1,6 +1,6 @@
 Name: strace
 Version: 4.8
-Release: alt1
+Release: alt2
 
 Summary: Tracks and displays system calls associated with a running process
 License: BSD-style
@@ -14,6 +14,8 @@ Source: %name-%version-%release.tar
 Conflicts: rpm-utils <= 0:0.9.11-alt1
 
 BuildRequires: libacl-devel libaio-devel
+# for test suite
+%{?!_without_check:%{?!_disable_check:BuildRequires: /proc}}
 
 %package utils
 Summary: Processes strace output and displays a graph of invoked subprocesses
@@ -51,7 +53,8 @@ cd build
 %set_verify_elf_method strict
 
 %check
-make check -C build
+export SLEEP_A_BIT='sleep 0.1'
+%make_build -k check -C build/tests
 
 %files
 %_bindir/strace
@@ -63,6 +66,9 @@ make check -C build
 %_bindir/strace-graph
 
 %changelog
+* Thu Jun 20 2013 Dmitry V. Levin <ldv@altlinux.org> 4.8-alt2
+- Updated to v4.8-16-gfdfa47a.
+
 * Mon Jun 03 2013 Dmitry V. Levin <ldv@altlinux.org> 4.8-alt1
 - Updated to v4.8.
 
