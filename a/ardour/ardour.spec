@@ -4,7 +4,7 @@
 
 Name:    ardour
 Version: 3.2
-Release: alt1
+Release: alt2
 
 Summary: Professional multi-track audio recording application
 License: GPLv2+
@@ -62,6 +62,7 @@ BuildRequires: raptor2-devel
 #Requires:      harvid
 #Requires:      xjadeo
 
+Requires:       jack-audio-connection-kit
 
 %description
 Ardour is a digital audio workstation. You can use it to record, edit
@@ -144,6 +145,10 @@ cp -f %buildroot%_datadir/%name2/icons/application-x-ardour_48px.png %buildroot%
 %_iconsdir/ardour3.png
 
 %changelog
+* Thu Jun 20 2013 Andrey Cherepanov <cas@altlinux.org> 3.2-alt2
+- Beautify desktop file
+- Add Jack server connector to requires
+
 * Wed Jun 19 2013 Andrey Cherepanov <cas@altlinux.org> 3.2-alt1
 - New version 3.2 (ALT #29087)
 
