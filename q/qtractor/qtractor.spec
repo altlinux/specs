@@ -14,7 +14,7 @@ BuildRequires: /usr/bin/pkg-config gcc-c++ libX11-devel libXext-devel libmad-dev
 Summary:       Audio/MIDI multi-track sequencer
 Name:          qtractor
 Version:       0.5.8
-Release:       alt1
+Release:       alt1.1
 License:       GPLv2+
 Group:         Sound
 URL:           http://qtractor.sourceforge.net/
@@ -82,6 +82,9 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/%{name}.desktop
 %{_bindir}/%{name}
 
 %changelog
+* Thu Jun 20 2013 Andrey Cherepanov <cas@altlinux.org> 0.5.8-alt1.1
+- Rebuild with new version liblo
+
 * Tue Mar 26 2013 Igor Vlasenko <viy@altlinux.ru> 0.5.8-alt1
 - manual update to 0.5.8
 

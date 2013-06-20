@@ -1,6 +1,6 @@
 Name: din
 Version: 5.2.1
-Release: alt1
+Release: alt1.1
 License: GPLv2
 Summary: Edit waveforms in a GUI, and watch the sound change before your ears
 Group: Sound
@@ -57,6 +57,9 @@ done
 %_pixmapsdir/*
 
 %changelog
+* Thu Jun 20 2013 Andrey Cherepanov <cas@altlinux.org> 5.2.1-alt1.1
+- Rebuild with new version liblo
+
 * Sun Mar 31 2013 Fr. Br. George <george@altlinux.ru> 5.2.1-alt1
 - Autobuild version bump to 5.2.1
 - Fix paths

@@ -1,75 +1,152 @@
-%define beta beta11
-%define subbeta .1
-%define name2 ardour2
+%set_verify_elf_method unresolved=relaxed
 
-Name: ardour
-Version: 2.8.14
-Release: alt1.1
+%define name2 ardour3
 
-Summary: Ardour is a multichannel hard disk recorder and digital audio workstation
-License: GPL
-Group: Sound
-Url: http://ardour.org
+Name:    ardour
+Version: 3.2
+Release: alt1
+
+Summary: Professional multi-track audio recording application
+License: GPLv2+
+Group:   Sound
+Url:     http://ardour.org
 
 Packager: Alex Karpov <karpov@altlinux.ru>
 
-Source: http://releases.ardour.org/%name-%version.tar
+Source:  %name-%version.tar
+Source1: ardour3.desktop
+Source2: ardour3-3.2-ru.po
 
-Patch0: %name-2.7.1-alt.patch
-Patch1: %name-2.0rc1-x86_64-alt.patch
+BuildRequires: boost-devel
+BuildRequires: cppunit-devel >= 1.12.0
+BuildRequires: doxygen
+BuildRequires: gcc-c++
+BuildRequires: graphviz
+BuildRequires: libalsa-devel
+BuildRequires: libaubio-devel >= 0.3.2
+BuildRequires: libcurl-devel >= 7.0.0
+BuildRequires: libcwiid-devel
+BuildRequires: libfftw3-devel
+BuildRequires: libflac-devel >= 1.2.1
+BuildRequires: libgnomecanvasmm-devel
+BuildRequires: libgtk+2-devel
+BuildRequires: libjack-devel
+BuildRequires: liblilv-devel >= 0.14
+BuildRequires: liblo-devel >= 0.26
+BuildRequires: liblrdf-devel >= 0.4.0
+# FIXME BuildRequires: libltc-devel >= 1.1.0
+BuildRequires: libogg-devel >= 1.1.2
+BuildRequires: libredland-devel
+BuildRequires: librubberband-devel
+BuildRequires: libsamplerate-devel
+BuildRequires: libserd-devel >= 0.14.0
+BuildRequires: libsndfile-devel >= 1.0.18
+BuildRequires: libsord-devel >= 0.8.0
+BuildRequires: libsratom-devel >= 0.4.0
+BuildRequires: libsuil-devel >= 0.6.0
+BuildRequires: libsqlite3-devel
+BuildRequires: libuuid-devel
+BuildRequires: libusb-devel
+BuildRequires: libvamp-devel
+BuildRequires: libxml2-devel
+BuildRequires: libxslt-devel
+BuildRequires: lv2-devel >= 1.0.15
+BuildRequires: /proc
+BuildRequires: python-devel
+BuildRequires: raptor2-devel
 
-#BuildPreReq: tetex-dvips
-#BuildPreReq: jackit-devel >= 0.116.1
-#BuildRequires: boost-devel cvs flex gcc-c++ ghostscript-utils jackit-devel ladspa_sdk
-#BuildRequires: libalsa-devel libaubio-devel libfftw3-devel libflac-devel
-#BuildRequires: libgnomecanvasmm-devel liblo-devel liblrdf-devel libsamplerate-devel
-#BuildRequires: libsoundtouch-devel libusb-devel libxslt-devel rcs scons swig tetex-latex
+# FIXME
+#Requires:      jackit
+#Requires:      gtk-engines2
+# For video import
+#Requires:      harvid
+#Requires:      xjadeo
 
-# Automatically added by buildreq on Wed Oct 14 2009
-BuildRequires: boost-devel-headers cvs flex gcc-c++ ghostscript-utils gns3 iotop libalsa-devel libaubio-devel libcurl-devel libgnomecanvasmm-devel libjack-devel liblo-devel liblrdf-devel libsamplerate-devel libsndfile-devel libxslt-devel pympd python-module-FuncDesigner python-module-MySQLdb python-module-OpenGL python-module-PySolFC python-module-PyXML python-module-Rabbyt python-module-Reportlab python-module-argparse python-module-chardet python-module-cheetah python-module-config python-module-cupshelpers python-module-cvxopt python-module-django-cms python-module-django-command-extensions python-module-django-tagging python-module-elementtree python-module-eyeD3 python-module-imaging python-module-matplotlib python-module-mutagen python-module-pivy python-module-psycopg2 python-module-pycollada python-module-pyxdg python-module-renpy python-module-scipy python-module-silvercity python-module-smbc python-module-twisted-core python-module-unittest2 python-module-virtinst python-module-wx2.9 python-module-z3c.recipe.sphinxdoc raptor2-devel rcs scons swig
 
 %description
-Ardour is a multichannel hard disk recorder (HDR) and digital audio 
-workstation (DAW). It is capable of simultaneous recording of 24 or more
-channels of 32 bit audio at 48kHz. Ardour is intended to function as a
-"professional" HDR system, replacing dedicated hardware solutions such
-as the Mackie HDR and provide the same or better functionality as 
-proprietary software DAWs such as ProTools, Samplitude, Logic Audio,
-Nuendo and Cubase VST/SX.
+Ardour is a digital audio workstation. You can use it to record, edit
+and mix multi-track audio. You can produce your own CDs, mix video sound
+tracks, or just experiment with new ideas about music and sound.
+
+Ardour capabilities include: multi channel recording, non-destructive
+editing with unlimited undo/redo, full automation support, a powerful
+mixer, unlimited tracks/busses/plugins, time-code synchronization, and
+hardware control from surfaces like the Mackie Control Universal.
+
+You must have jackd running and an ALSA sound driver to use Ardour.
+If you are new to jackd, try qjackctl.
+
+See the online user manual at http://en.flossmanuals.net/ardour/index/
 
 %prep
-%setup -qn %name-%version
-%patch0
-%patch1
-sed -i s,@libdir@,%_libdir, SConstruct
+%setup -q
+cp %SOURCE2 gtk2_ardour/po/ru.po
+
+# Generate revision number
+echo '#include "ardour/revision.h"' > libs/ardour/revision.cc
+echo 'namespace ARDOUR { const char* revision = "%version"; }' >> libs/ardour/revision.cc
 
 %build
-scons PREFIX=/usr DIST_TARGET=none SYSLIBS=yes \
-%ifarch x86_64
-DIST_TARGET=x86_64
-%endif
+./waf configure \
+    --prefix=%_prefix \
+    --libdir=%_libdir \
+    --configdir=%_sysconfdir \
+    --program-name=Ardour \
+    --nls \
+    --docs
+
+./waf build \
+    --nls \
+    --docs
+
+./waf i18n_mo
 
 %install
-mkdir %buildroot
-scons DESTDIR=%buildroot install \
-%ifarch x86_64
-DIST_TARGET=x86_64
-%endif
+./waf install --destdir=%buildroot
+
+install -d -m 0755 %buildroot%_desktopdir
+install -m 644 %SOURCE1 %buildroot%_desktopdir/
+
+install -d -m 0755 %buildroot%_iconsdir
+cp -f %buildroot%_datadir/%name2/icons/application-x-ardour_48px.png %buildroot%_iconsdir/ardour3.png
 
 %add_findprov_lib_path %_libdir/%name2
-%find_lang --output=%name.lang lib%name2 libgtkmm2ext gtk2_ardour
+%find_lang --output=%name.lang %name2 gtk2_ardour3 gtkmm2ext3
 
 %files -f %name.lang
-%_sysconfdir/%name2/
+%doc README
 %_bindir/*
-%_libdir/%name2/
-%_datadir/%name2/
-
-%ifnarch %ix86 x86_64
-%set_verify_elf_method textrel=relaxed
-%endif
+%dir %_datadir/%name2
+%_libdir/%name2/*.so
+%_libdir/%name2/sanityCheck
+%_libdir/%name2/ardour-%{version}
+%_libdir/%name2/*.so.*
+%_libdir/%name2/panners/*.so
+%_libdir/%name2/panners/*.so.*
+%_libdir/%name2/surfaces/*.so
+%_libdir/%name2/surfaces/*.so.*
+%_libdir/%name2/engines/*.so
+%_libdir/%name2/vamp/*.so
+%_libdir/%name2/vamp/*.so.*
+%_datadir/%name2
+%_desktopdir/*.desktop
+%dir %_sysconfdir/%name2
+%config(noreplace) %_sysconfdir/%name2/%{name2}_ui_default.conf
+%config(noreplace) %_sysconfdir/%name2/%{name2}_ui_light.rc
+%config(noreplace) %_sysconfdir/%name2/%{name2}_ui_dark.rc
+%config(noreplace) %_sysconfdir/%name2/ardour.menus
+%config(noreplace) %_sysconfdir/%name2/ardour_system.rc
+%config(noreplace) %_sysconfdir/%name2/step_editing.bindings
+%config(noreplace) %_sysconfdir/%name2/mnemonic-us.bindings
+%config(noreplace) %_sysconfdir/%name2/mixer.bindings
+%dir %_sysconfdir/%name2/export
+%config(noreplace) %_sysconfdir/%name2/export/CD.format
+%_iconsdir/ardour3.png
 
 %changelog
+* Wed Jun 19 2013 Andrey Cherepanov <cas@altlinux.org> 3.2-alt1
+- New version 3.2 (ALT #29087)
+
 * Thu Oct 18 2012 Alex Karpov <karpov@altlinux.ru> 2.8.14-alt1.1
 - build fixed
 

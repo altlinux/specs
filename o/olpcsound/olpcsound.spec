@@ -2,7 +2,7 @@
 
 Name: olpcsound
 Version: 5.10.1
-Release: alt3.1.1
+Release: alt3.1.2
 Summary: Csound - sound synthesis language and library, OLPC subset
 License: LGPLv2+
 Group: Sound
@@ -111,6 +111,9 @@ python  \
 %{python_sitelibdir}/*
 
 %changelog
+* Thu Jun 20 2013 Andrey Cherepanov <cas@altlinux.org> 5.10.1-alt3.1.2
+- Rebuild with new version liblo
+
 * Sat Oct 22 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 5.10.1-alt3.1.1
 - Rebuild with Python-2.7
 
