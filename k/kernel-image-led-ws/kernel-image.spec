@@ -20,13 +20,13 @@
 %define flavour %base_flavour-%sub_flavour
 
 Name: kernel-image-%flavour
-Version: 3.4.49
-Release: alt5
+Version: 3.4.50
+Release: alt1
 
 %define kernel_req %nil
 %define kernel_prov %nil
 %define kernel_branch 3.4
-%define kernel_stable_version 49
+%define kernel_stable_version 50
 %define kernel_extra_version .%kernel_stable_version
 #define kernel_extra_version %nil
 
@@ -2737,6 +2737,11 @@ done)
 
 
 %changelog
+* Thu Jun 20 2013 Led <led@altlinux.ru> 3.4.50-alt1
+- 3.4.50
+- disabled:
+  + ATH9K_LEGACY_RATE_CONTROL
+
 * Thu Jun 20 2013 Led <led@altlinux.ru> 3.4.49-alt5
 - updated:
   + fix-net-sunrpc
