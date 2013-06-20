@@ -6,8 +6,8 @@
 %define ldir %_libdir/petsc-%scalar_type
 
 Name: %oname-%scalar_type
-Version: 7.3
-Release: alt4.pre.svn20130201
+Version: 8.0
+Release: alt1.pre.svn20130617
 Summary: A Finite Element Differential Equations Analysis Library (%scalar_type scalars)
 License: QPL v1.0
 Group: Sciences/Mathematics
@@ -26,7 +26,8 @@ BuildPreReq: libstratimikos10-devel libbelos10-devel librtop10-devel
 BuildPreReq: libsacado10-devel libthyra10-devel libtrilinos10-devel
 BuildPreReq: libmumps-devel libhypre-devel libsuitesparse-devel
 BuildPreReq: chrpath rpm-macros-make boost-signals-devel
-BuildPreReq: libnetcdf_c++-mpi-devel libdakota-devel
+BuildPreReq: libnetcdf_c++-mpi-devel libdakota-devel cmake
+BuildPreReq: libdakota-devel
 
 Requires: lib%name = %version-%release
 
@@ -77,7 +78,7 @@ This package contains data files for deal.II.
 %package -n lib%name
 Summary: Shared libraries of deal.II (%scalar_type scalars)
 Group: System/Libraries
-Requires: %name-data = %version-%release
+#Requires: %name-data = %version-%release
 
 %description -n lib%name
 deal.II is a C++ program library targeted at the computational solution
@@ -122,8 +123,8 @@ deal.II.
 %prep
 %setup
 
-rm -fR contrib/tbb contrib/boost* contrib/umfpack contrib/dx
-sed -i 's|@PETSC_DIR@|%ldir|g' configure.in
+rm -fR bundled/tbb* bundled/boost* bundled/umfpack
+#sed -i 's|@PETSC_DIR@|%ldir|g' configure.in
 
 %build
 source %_bindir/petsc-%scalar_type.sh
@@ -131,66 +132,50 @@ export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib -L%mpidir/lib"
 export PATH=$PATH:%_qt4dir/bin
 export MPIDIR=%mpidir
 
-%autoreconf
 INCS="-I%_includedir/hypre -I%_includedir/gsl -I%_includedir/tbb"
-DEFS="-DBOOST_FILESYSTEM_VERSION=2 -DHAS_C99_TR1_CMATH"
-DEFS="$DEFS -DDEAL_II_USE_EXTERNAL_BOOST"
+DEFS="-DHAS_C99_TR1_CMATH -DDEAL_II_USE_EXTERNAL_BOOST"
 %add_optflags $INCS $DEFS -fno-strict-aliasing -std=gnu99 -fpermissive
-%configure \
-	--enable-mpi \
-	--enable-threads \
-	--enable-shared \
-	--with-multithreading \
-	--with-boost=%prefix \
-	--with-petsc=$PETSC_DIR \
-	--with-slepc=$PETSC_DIR \
-	--with-trilinos=%prefix \
-	--with-trilinos-libs=%_libdir \
-	--with-arpack=%prefix \
-	--with-mumps=%prefix \
-	--with-scalapack=%prefix \
-	--with-blacs=%prefix \
-	--with-blas=openblas \
-	--with-zlib=z \
-	--with-netcdf=%mpidir \
-	--with-netcdf-include=%mpidir/include/netcdf-3 \
-	--with-metis=%mpidir \
-	--with-metis-libs=%_libdir \
-	--with-umfpack-include=%_includedir/suitesparse \
-	--with-lapack=lapack \
-	--with-p4est=%prefix
-mkdir -p lib/optimized
-#mkdir -p lib/debug
-%make_build_ext contrib TOPDIR=$PWD
-%make_ext optimized TOPDIR=$PWD
+
+cmake \
+	-DCMAKE_BUILD_TYPE:STRING=Release \
+	-DCMAKE_C_FLAGS:STRING="%optflags" \
+	-DCMAKE_CXX_FLAGS:STRING="%optflags" \
+	-DCMAKE_INSTALL_PREFIX:PATH=%prefix \
+	-DBLAS_blas_LIBRARY:FILEPATH=%_libdir/libopenblas.so \
+	-DCMAKE_STRIP:FILEPATH="/bin/echo" \
+	-DDEAL_II_COMPONENT_DOCUMENTATION:BOOL=ON \
+	-DDEAL_II_COMPONENT_PARAMETER_GUI:BOOL=ON \
+	-DDEAL_II_CXX_FLAGS_RELEASE:STRING="%optflags" \
+	-DDEAL_II_FORCE_BUNDLED_FUNCTIONPARSER:BOOL=ON \
+	-DDEAL_II_WITH_LAPACK:BOOL=ON \
+	-DDEAL_II_WITH_MPI:BOOL=ON \
+	-DDEAL_II_WITH_MUMPS:BOOL=ON \
+	-DDEAL_II_WITH_NETCDF:BOOL=ON \
+	-DDEAL_II_WITH_P4EST:BOOL=ON \
+	-DDEAL_II_WITH_PETSC:BOOL=ON \
+	-DDEAL_II_WITH_SLEPC:BOOL=ON \
+	-DDEAL_II_WITH_UMFPACK:BOOL=ON \
+	-DHDF5_DIR:PATH=%mpidir \
+	-DHDF5_INCLUDE_DIR:PATH=%mpidir/include \
+	-DMPI_LIBRARY:FILEPATH=%mpidir/lib/libmpi.so \
+	-DNETCDF_INCLUDE_DIR:PATH=%mpidir/include/netcdf \
+	-DPETSC_DIR:PATH=%ldir \
+	.
+%make_build VERBOSE=1
 
 %install
 source %_bindir/petsc-%scalar_type.sh
 export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib -L%mpidir/lib"
 
-install -d %buildroot$PETSC_DIR/bin
-install -d %buildroot$PETSC_DIR/lib
-install -d %buildroot$PETSC_DIR/include
-install -d %buildroot$PETSC_DIR/meshes
+%makeinstall_std
 
-install -m755 lib/bin/* %buildroot$PETSC_DIR/bin
-mv lib/*.so* %buildroot$PETSC_DIR/lib/
-cp -fR include/* %buildroot$PETSC_DIR/include/
-install -m644 lib/meshes/* %buildroot$PETSC_DIR/meshes
-
-install -d %buildroot/$PETSC_DIR/share/dealII
-cp -fR common %buildroot/$PETSC_DIR/share/dealII/
-
-for i in %buildroot$PETSC_DIR/lib/*.so; do
-	chrpath -r %mpidir/lib:$PETSC_DIR/lib $i
-done
-for i in report_features make_dependencies expand_instantiations
-do
-	chrpath -r %mpidir/lib:$PETSC_DIR/lib \
-		%buildroot$PETSC_DIR/share/dealII/common/scripts/$i
-done
-
-chmod +r %buildroot$PETSC_DIR/lib/*.so*
+install -d %buildroot%ldir/lib
+install -d %buildroot%_docdir/%name
+pushd %buildroot%prefix
+mv bin include common cmake %buildroot%ldir/
+mv lib/cmake lib/*.so* %buildroot%ldir/lib/
+mv doc examples %buildroot%_docdir/%name/
+popd
 
 %files
 %doc doc/license.html
@@ -198,25 +183,25 @@ chmod +r %buildroot$PETSC_DIR/lib/*.so*
 
 %files devel-common
 %ldir/include/*
-%ldir/share/dealII
-
-%files data
-%ldir/meshes
+%ldir/common
 
 %files -n lib%name
 %ldir/lib/*.so.*
-#exclude %ldir/lib/*.g.so.*
 
 %files -n lib%name-devel
 %ldir/lib/*.so
-#exclude %ldir/lib/*.g.so
+%ldir/cmake
+%ldir/lib/cmake
 
 %if "%scalar_type" == "real"
 %files -n lib%oname-devel-doc
-%doc doc examples
+%_docdir/%name
 %endif
 
 %changelog
+* Tue Jun 18 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 8.0-alt1.pre.svn20130617
+- Version 8.0.pre
+
 * Thu May 02 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 7.3-alt4.pre.svn20130201
 - Rebuilt with Trilinos 11.2.3
 
