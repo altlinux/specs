@@ -1,6 +1,6 @@
 %define module_name fail2ban
 Name: %module_name
-Version: 0.8.7.1
+Version: 0.8.10
 Release: alt1
 
 Summary: Fail2Ban is an intrusion prevention framework
@@ -39,7 +39,7 @@ install -pD -m 744 %SOURCE1 %buildroot%_initdir/fail2ban
 %python_install
 
 %files
-%doc README
+%doc ChangeLog README.md THANKS TODO
 %_datadir/%module_name
 %_bindir/%module_name-*
 %dir %_sysconfdir/%module_name
@@ -48,9 +48,12 @@ install -pD -m 744 %SOURCE1 %buildroot%_initdir/fail2ban
 %config(noreplace) %_sysconfdir/%module_name/*.d/*.conf
 %_var/run/fail2ban
 %_initdir/fail2ban
-%_man1dir/fail2ban-*
+%_man1dir/*
 
 %changelog
+* Thu Jun 20 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.10-alt1
+- Version 0.8.10
+
 * Mon Nov 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.7.1-alt1
 - Version 0.8.7.1 (ALT #27951)
 
