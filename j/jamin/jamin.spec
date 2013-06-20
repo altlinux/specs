@@ -2,7 +2,7 @@
 
 Name: jamin
 Version: 0.95.0
-Release: alt2
+Release: alt2.1
 
 Summary: JAMin is a Realtime Mastering Processor
 Summary(ru_RU.KOI8-R): JAMin -- приложение для мастеринга звука
@@ -87,6 +87,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %doc AUTHORS ChangeLog NEWS README TODO
 
 %changelog
+* Thu Jun 20 2013 Andrey Cherepanov <cas@altlinux.org> 0.95.0-alt2.1
+- Rebuild with new version liblo
+
 * Thu May 24 2012 Fr. Br. George <george@altlinux.ru> 0.95.0-alt2
 - DSO list completion
 

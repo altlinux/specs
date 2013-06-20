@@ -2,7 +2,7 @@
 
 Name: dssi
 Version: 1.1.1
-Release: alt1
+Release: alt1.1
 
 Summary: Disposable Soft Synth Interface specification & examples
 License: LGPL
@@ -68,6 +68,9 @@ export QTDIR=%qtdir
 %_libdir/pkgconfig/*
 
 %changelog
+* Thu Jun 20 2013 Andrey Cherepanov <cas@altlinux.org> 1.1.1-alt1.1
+- Rebuild with new version liblo
+
 * Tue Dec 13 2011 Alex Karpov <karpov@altlinux.ru> 1.1.1-alt1
 - new version
 

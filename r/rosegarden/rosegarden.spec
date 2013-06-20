@@ -1,7 +1,7 @@
 #define status beta
 Name: rosegarden
 Version: 13.02
-Release: alt1
+Release: alt1.1
 
 Summary: MIDI and audio seqencer and musical notation editor
 License: GPL
@@ -53,6 +53,9 @@ or home recording environments.
 %_datadir/mime/packages/*
 
 %changelog
+* Thu Jun 20 2013 Andrey Cherepanov <cas@altlinux.org> 13.02-alt1.1
+- Rebuild with new version liblo
+
 * Mon Feb 25 2013 Alex Karpov <karpov@altlinux.ru> 13.02-alt1
 - new version
 
