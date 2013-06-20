@@ -21,7 +21,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.4.49
-Release: alt4
+Release: alt5
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -505,7 +505,7 @@ Patch0651: linux-%kernel_branch.25-fix-net-mac80211.patch
 Patch0652: linux-%kernel_branch.20-fix-net-netfilter--nf_conntrack_ftp.patch
 Patch0653: linux-%kernel_branch.47-fix-net-netfilter--xt_LOG.patch
 Patch0654: linux-%kernel_branch.28-fix-net-rds--rds_rdma.patch
-Patch0655: linux-%kernel_branch.47-fix-net-sunrpc.patch
+Patch0655: linux-%kernel_branch.49-fix-net-sunrpc.patch
 Patch0656: linux-%kernel_branch.42-fix-net-unix--unix.patch
 Patch0657: linux-%kernel_branch.39-fix-net-wimax.patch
 Patch0658: linux-%kernel_branch.35-fix-net-wireless--cfg80211.patch
@@ -2737,6 +2737,10 @@ done)
 
 
 %changelog
+* Thu Jun 20 2013 Led <led@altlinux.ru> 3.4.49-alt5
+- updated:
+  + fix-net-sunrpc
+
 * Tue Jun 18 2013 Led <led@altlinux.ru> 3.4.49-alt4
 - enabled:
   + DRM_LOAD_EDID_FIRMWARE
