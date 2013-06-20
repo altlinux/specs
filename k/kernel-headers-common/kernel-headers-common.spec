@@ -1,6 +1,6 @@
 Name: kernel-headers-common
-Version: 1.2.3
-Release: alt1.1
+Version: 1.2.4
+Release: alt1
 
 Summary: Common header files for the Linux kernel
 License: GPL
@@ -11,6 +11,7 @@ Source0: adjust_kernel_headers
 Source1: adjust_kernel_headers.8
 Source2: kheaders.init
 Source3: kheaders.service
+Source4: kheaders.filetrigger
 
 %define base_arch %_target_cpu
 %ifarch %ix86 x86_32 x86_64
@@ -42,6 +43,8 @@ sed -i 's/@VERSION@/%version/g' -- \
 install -pm644 %_sourcedir/adjust_kernel_headers.8 %buildroot%_man8dir/
 install -pm644 %_sourcedir/kheaders.service %buildroot%systemd_unitdir/
 install -pD -m755 %_sourcedir/kheaders.init %buildroot%_initdir/kheaders
+mkdir -p %buildroot%_rpmlibdir/
+install -m755 %_sourcedir/kheaders.filetrigger %buildroot%_rpmlibdir/
 mkdir -p %buildroot%_includedir
 mkdir -p %buildroot%_sysconfdir/sysconfig/kernel
 mkdir -p %buildroot%_prefix/lib/kernel
@@ -90,6 +93,7 @@ done
 
 %files
 %systemd_unitdir/kheaders.service
+%_rpmlibdir/kheaders.filetrigger
 %_initdir/kheaders
 %_sbindir/adjust_kernel_headers
 %_man8dir/*
@@ -112,6 +116,9 @@ done
 %ghost /var/run/kernel/*
 
 %changelog
+* Thu Jun 20 2013 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.2.4-alt1
+- Add kheaders.filetrigger for kernel headers adjustment.
+
 * Thu Feb 14 2013 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.2.3-alt1.1
 - Rebuilt for newer %%arm macro.
 
