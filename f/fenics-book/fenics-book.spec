@@ -1,13 +1,13 @@
 Name: fenics-book
 Summary: A book about FEniCS project
-Version: 20120123
+Version: 20130430
 Release: alt1
 Group: Documentation
 License: FDL
-URL: http://www.fenics.org/wiki/FEniCS_book
+URL: http://fenicsproject.org/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-# bzr branch lp:fenics-book
+# https://bitbucket.org/fenics-project/fenics-book.git
 Source: %name-%version.tar.gz
 Source1: http://www.tug.org/texlive/devsrc/Master/texmf-dist/tex/latex/emptypage/emptypage.sty
 Source2: http://www.tug.org/texlive/devsrc/Master/texmf-dist/tex/latex/todonotes/todonotes.sty
@@ -39,6 +39,9 @@ install -p -m644 %SOURCE1 %SOURCE2 packages
 %doc book.pdf
 
 %changelog
+* Thu Jun 20 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 20130430-alt1
+- Updated
+
 * Fri Jan 27 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 20120123-alt1
 - Updated
 
