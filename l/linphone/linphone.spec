@@ -1,6 +1,6 @@
 Name: linphone
-Version: 3.5.2
-Release: alt2.1
+Version: 3.6.0
+Release: alt1
 License: GPLv2+
 Url: http://www.linphone.org/
 
@@ -88,7 +88,7 @@ This package contains development files for %name.
 %files common
 %doc AUTHORS ChangeLog NEWS README TODO
 %_libdir/*.so.*
-%exclude %_docdir/%name
+%exclude %_docdir/%name-%version
 %exclude %_datadir/gnome
 %exclude %_mandir/cs
 %exclude %_man1dir/sipomatic.1.gz
@@ -116,6 +116,9 @@ This package contains development files for %name.
 %_libdir/*.so
 
 %changelog
+* Fri Jun 14 2013 Alexei Takaseev <taf@altlinux.org> 3.6.0-alt1
+- 3.6.0
+
 * Wed Apr 10 2013 Andrey Cherepanov <cas@altlinux.org> 3.5.2-alt2.1
 - replace deprecated g_static_mutex* by GMutex
 

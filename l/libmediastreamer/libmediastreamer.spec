@@ -1,5 +1,5 @@
 Name: libmediastreamer
-Version: 2.8.2
+Version: 2.9.0
 Release: alt1
 
 Group: System/Libraries
@@ -17,8 +17,8 @@ Patch0: %name-%version-%release.patch
 BuildRequires: intltool doxygen gcc-c++ libSDL-devel libX11-devel libalsa-devel
 BuildRequires: libavcodec-devel libpulseaudio-devel libspeex-devel
 BuildRequires: libswscale-devel libtheora-devel libv4l-devel libgsm-devel
-BuildRequires: libXv-devel libjack-devel libsamplerate-devel
-BuildRequires: libvpx-devel libortp-devel >= 0.17
+BuildRequires: libXv-devel libjack-devel libsamplerate-devel libglew-devel
+BuildRequires: libvpx-devel libortp-devel >= 0.17 vim-common
 
 %description
 Mediastreamer2 is a GPL licensed library to make audio and video
@@ -48,7 +48,6 @@ develop programs using the mediastreamer2 library.
 %prep
 %setup
 %patch0 -p1
-mkdir m4
 
 %build
 %define _optlevel 3
@@ -80,7 +79,6 @@ mkdir -p %buildroot/%_libdir/mediastreamer/plugins
 %_datadir/mediastreamer
 
 %files devel
-%exclude %_docdir/mediastreamer
 %doc help/doc/html
 %_libdir/*.so
 %_libdir/pkgconfig/*.pc
@@ -88,6 +86,9 @@ mkdir -p %buildroot/%_libdir/mediastreamer/plugins
 %_includedir/*
 
 %changelog
+* Fri Jun 14 2013 Alexei Takaseev <taf@altlinux.org> 2.9.0-alt1
+- 2.9.0
+
 * Sun Jun 24 2012 Alexei Takaseev <taf@altlinux.org> 2.8.2-alt1
 - 2.8.2
 
