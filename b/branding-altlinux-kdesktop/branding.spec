@@ -6,7 +6,7 @@
 
 Name: branding-%brand-%smalltheme
 Version: 7.0.0
-Release: alt10
+Release: alt11
 BuildArch: noarch
 
 %define theme %name
@@ -29,8 +29,8 @@ BuildRequires: ImageMagick fontconfig bc libGConf-devel
 
 %define Theme_ru KDesktop
 %define Brand_ru Альт Линукс
-%define status_en beta
-%define status бета
+%define status_en RC
+%define status RC
 %define variants altlinux-desktop altlinux-office-desktop altlinux-office-server altlinux-lite altlinux-workbench school-master altlinux-gnome-desktop
 
 Source: %name.tar
@@ -283,7 +283,7 @@ ID=altlinux
 VERSION_ID=%version
 PRETTY_NAME="%distribution %version %Theme %status_en (%codename)"
 ANSI_COLOR="1;33"
-CPE_NAME="cpe:/o:alt_linux:%smalltheme:%version"
+CPE_NAME="cpe:/o:%brand:%smalltheme:%version"
 HOME_URL="%url"
 BUG_REPORT_URL="https://bugs.altlinux.org/"
 __EOF__
@@ -455,6 +455,9 @@ fi
 %_datadir/kde4/apps/kio_desktop/DesktopLinks/indexhtml.desktop
 
 %changelog
+* Thu Jun 20 2013 Sergey V Turchin <zerg at altlinux dot org> 7.0.0-alt11
+- change status to RC
+
 * Tue Apr 30 2013 Sergey V Turchin <zerg at altlinux dot org> 7.0.0-alt10
 - fix setup /etc/os-release
 
