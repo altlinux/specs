@@ -1,6 +1,6 @@
 Name: gnome-subtitles
-Version: 1.0
-Release: alt1.git.75.gcf1c9d0.qa1
+Version: 1.3
+Release: alt1
 Summary: subtitle editor
 License: GPL2
 Group: Video
@@ -11,9 +11,10 @@ Packager: Ildar Mulyukov <ildar@altlinux.ru>
 Source: %name.tar
 #git://git.gnome.org/gnome-subtitles
 
-# Automatically added by buildreq on Mon Feb 01 2010 (-bi)
-BuildRequires: GConf gst-plugins-devel gtk-doc intltool libgnome-sharp mono-mcs python-modules-compiler time
-BuildRequires: libgnome-sharp-devel gst-plugins-devel mono-devel libGConf-devel libgtk+2-devel gnome-common
+# Automatically added by buildreq on Thu Jun 20 2013 (-bi)
+# optimized out: GConf docbook-dtds elfutils glib2-devel gnome-doc-utils-xslt gstreamer1.0-devel libdbus-glib libgpg-error libgst-plugins1.0 libgtk-sharp2 mono mono-csharp mono-mcs mono-mscorlib monodis perl-XML-Parser pkg-config python-base python-module-distribute python-module-libxml2 python-module-zope python-modules python-modules-compiler python-modules-encodings rpm-build-mono xml-common xml-utils xsltproc
+BuildRequires: gnome-doc-utils gst-plugins1.0-devel gtk-doc intltool libgnome-sharp mono-devel mono-web time
+BuildRequires: libgnome-sharp-devel mono-devel libGConf-devel libgtk+3-devel gnome-common
 
 %description
 Gnome Subtitles is a subtitle editor for the GNOME desktop. It supports the
@@ -21,8 +22,8 @@ most common text-based subtitle formats and allows for subtitle editing,
 translation and synchronization.
 
 %prep
-%setup -q -n %name
-ln -s /usr/share/gnome-doc-utils/gnome-doc-utils.make . ||:
+%setup -n %name
+ln -s %_datadir/gnome-doc-utils/gnome-doc-utils.make . ||:
 
 %build
 %autoreconf
@@ -34,10 +35,9 @@ make
 #chmod -x build/*.dll build/*.exe
 %makeinstall_std
 # desktop menu and icons
-mkdir -p %buildroot%_liconsdir/
-mv %buildroot%_pixmapsdir/%name.png %buildroot%_liconsdir/
-subst 's|\.png$||' %buildroot%_desktopdir/%name.desktop
-subst '/sublibdir/d' %buildroot%_bindir/%name
+mkdir -p %buildroot%_iconsdir/hicolor/scalable/apps/
+mv %buildroot%_pixmapsdir/*.svg %buildroot%_iconsdir/hicolor/scalable/apps/
+%__subst '/sublibdir/d' %buildroot%_bindir/%name
 
 %find_lang --with-gnome %name
 
@@ -46,12 +46,15 @@ subst '/sublibdir/d' %buildroot%_bindir/%name
 %_bindir/%name
 %_libdir/%name
 %_desktopdir/%name.desktop
-%_liconsdir/%name.png
+%_iconsdir/hicolor/scalable/apps/*.svg
 %_datadir/gnome/help/%name
 %_man1dir/%name.*
 %doc AUTHORS ChangeLog* MAINTAINERS NEWS README
 
 %changelog
+* Thu Jun 20 2013 Ildar Mulyukov <ildar@altlinux.ru> 1.3-alt1
+- new version with gtk+3 interface
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.0-alt1.git.75.gcf1c9d0.qa1
 - NMU: rebuilt for debuginfo.
 
