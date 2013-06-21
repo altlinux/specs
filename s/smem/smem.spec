@@ -1,14 +1,16 @@
 Name: smem
-Version: 1.0
-Release: alt1.1
+Version: 1.3
+Release: alt1
 
 Summary: Report application memory usage in a meaningful way
+
 License: GPLv2+
 Group: Monitoring
-
 Url: http://www.selenic.com/smem
-Source0: http://www.selenic.com/smem/download/%name-%version.tar.gz
+
+Source0: http://www.selenic.com/smem/download/%name-%version.tar
 Source1: http://www.selenic.com/smem/index.html
+
 Packager: Michael Shigorin <mike@altlinux.org>
 
 Conflicts: secure_delete
@@ -47,6 +49,10 @@ install -pDm644 smem.8 %buildroot%_man8dir/smem.8
 %doc smem.html COPYING
 
 %changelog
+* Fri Jun 21 2013 Vitaly Lipatov <lav@altlinux.ru> 1.3-alt1
+- new version (1.3) with rpmgs script (ALT bug #29082)
+- cleanup spec
+
 * Wed Oct 26 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 1.0-alt1.1
 - Rebuild with Python-2.7
 
