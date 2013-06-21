@@ -9,7 +9,7 @@ Hebrew from the Culmus project.
 
 Name:           fonts-ttf-culmus
 Version:        0.130
-Release:        alt1_1
+Release:        alt1_2
 Summary:        Fonts for Hebrew from Culmus project
 
 Group:          System/Fonts/True type
@@ -302,7 +302,7 @@ Obsoletes:      culmus-fonts-compat < %{version}-%{release}
 %description -n %{fontname}-shofar-fonts
 %common_desc
 
-%files -n %{?fontname:%fontname}%{!?fontname:%oldname}-shofar-fonts
+%files -n culmus-shofar-fonts
 %{_fontconfig_templatedir}/%{fontconf}-shofar.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-shofar.conf
 %{_fontbasedir}/*/%{_fontstem}/Shofar*.ttf
@@ -417,6 +417,9 @@ fi
 
 
 %changelog
+* Fri Jun 21 2013 Igor Vlasenko <viy@altlinux.ru> 0.130-alt1_2
+- update to new release by fcimport
+
 * Thu Mar 21 2013 Igor Vlasenko <viy@altlinux.ru> 0.130-alt1_1
 - update to new release by fcimport
 
