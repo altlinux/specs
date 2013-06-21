@@ -1,6 +1,6 @@
 Name: gnofract4d
-Version: 3.14
-Release: alt2
+Version: 3.14.1
+Release: alt1
 Summary: Gnofract 4D is a Gnome-based program to draw fractals
 
 Group: Sciences/Mathematics
@@ -59,6 +59,9 @@ mv %buildroot%_pixmapsdir/*.png %buildroot%_liconsdir/
 %_desktopdir/*
 
 %changelog
+* Fri Jun 21 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.14.1-alt1
+- Version 3.14.1
+
 * Wed Sep 26 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.14-alt2
 - Rebuilt with libpng15
 
