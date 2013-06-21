@@ -1,6 +1,6 @@
 Name:    1c-preinstall
 Version: 8.3
-Release: alt1
+Release: alt2
 
 Summary: Set correct environment for 1C:Enterprise client
 License: GPL
@@ -22,7 +22,7 @@ This metapackage is intend to deploy correct environment for
 Tested with 1C:Enterprise client version 8.3.3.641
 
 %post
-ln -s "$(basename %_libdir/libMagickWand*.so.*)" %_libdir/libWand.so.1
+ln -sf "$(basename %_libdir/libMagickWand*.so.*)" %_libdir/libWand.so.1
 /sbin/ldconfig
 
 %preun
@@ -32,5 +32,8 @@ rm -f %_libdir/libWand.so.1
 %files
 
 %changelog
+* Fri Jun 21 2013 Andrey Cherepanov <cas@altlinux.org> 8.3-alt2
+- Force create symbolic link
+
 * Wed Jun 19 2013 Andrey Cherepanov <cas@altlinux.org> 8.3-alt1
 - Initial build in Sisyphus
