@@ -1,28 +1,29 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: CUnit-devel libxml2-devel
+BuildRequires: libexpat-devel libxml2-devel
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
-Name:           libmetalink
-Version:        0.0.3
-Release:        alt3_7
-Summary:        A Metalink C library
-Group:          System/Libraries
-License:        MIT
-URL:            https://launchpad.net/libmetalink
-Source0:        http://launchpad.net/libmetalink/trunk/%{version}/+download/%{name}-%{version}.tar.bz2
-BuildRequires:  libexpat-devel
+Name:		libmetalink
+Version:	0.1.2
+Release:	alt1_3
+Summary:	Metalink library written in C
+Group:		System/Libraries
+License:	MIT
+URL:		https://launchpad.net/libmetalink
+Source0:	http://launchpad.net/libmetalink/trunk/packagingfix/+download/%{name}-%{version}.tar.bz2
+BuildRequires:	expat-devel
+BuildRequires:	CUnit-devel
 Source44: import.info
 
 %description
 libmetalink is a Metalink C library. It adds Metalink functionality such as
 parsing Metalink XML files to programs written in C.
 
-%package       devel
-Summary:       A Metalink C library devel package
-Group:         Development/C
-Requires:      %{name} = %{version}-%{release}
+%package	devel
+Summary:	Files needed for developing with %{name}
+Group:		Development/C
+Requires:	%{name}%{?_isa} = %{version}-%{release}
 
-%description   devel
+%description	devel
 Files needed for building applications with libmetalink.
 
 %prep
@@ -32,6 +33,8 @@ Files needed for building applications with libmetalink.
 %configure --disable-static
 make %{?_smp_mflags}
 
+%check
+make check
 
 %install
 make install DESTDIR=$RPM_BUILD_ROOT
@@ -39,20 +42,25 @@ find $RPM_BUILD_ROOT -name *.la -exec rm {} \;
 
 %files
 %doc COPYING README 
-%doc %{_docdir}/libmetalink/sample.c 
-%doc %{_docdir}/libmetalink/ubuntu-7_10-server-i386_iso.metalink
 %{_libdir}/libmetalink.so.*
-%{_mandir}/man3/*
 
 
 %files devel
-%{_includedir}/metalink/
-%{_includedir}/metalink/metalink*.h
+%dir %{_includedir}/metalink/
+%{_includedir}/metalink/metalink_error.h
+%{_includedir}/metalink/metalink.h
+%{_includedir}/metalink/metalink_parser.h
+%{_includedir}/metalink/metalink_types.h
+%{_includedir}/metalink/metalinkver.h
 %{_libdir}/libmetalink.so
 %{_libdir}/pkgconfig/%{name}.pc
+%{_mandir}/man3/*
 
 
 %changelog
+* Fri Jun 21 2013 Igor Vlasenko <viy@altlinux.ru> 0.1.2-alt1_3
+- update to new release by fcimport
+
 * Wed Jun 13 2012 Igor Vlasenko <viy@altlinux.ru> 0.0.3-alt3_7
 - fixed build
 
