@@ -1,6 +1,6 @@
 Name: installer-distro-simply-linux
 Version: 7.0
-Release: alt7
+Release: alt8
 
 Summary: Installer common files
 Summary(ru_RU.UTF-8): Общие пакеты для установки дистрибутива "Simply linux"
@@ -78,7 +78,6 @@ Requires: installer-feature-nfs-client-stage3
 Requires: installer-feature-setup-network-stage3
 Requires: installer-feature-online-repo
 Requires: installer-feature-bell-off-stage3
-Requires: installer-feature-cpufreq-stage3
 Requires: installer-feature-symlinks-from-sbin
 Requires: installer-feature-efi-stage3
 
@@ -116,6 +115,9 @@ Installer stage3
 %_datadir/alterator/ui/simply-linux
 
 %changelog
+* Fri Jun 21 2013 Mikhail Efremov <sem@altlinux.org> 7.0-alt8
+- Drop installer-feature-cpufreq-stage3.
+
 * Fri May 31 2013 Mikhail Efremov <sem@altlinux.org> 7.0-alt7
 - Add module-expert-list (by cas@).
 - Add installer-feature-efi-stage3.

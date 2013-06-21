@@ -1,6 +1,6 @@
 Name: installer-feature-simply-livecd
 Version: 0.8.6
-Release: alt1
+Release: alt2
 
 Summary: LiveCD install hooks for Simply Linux.
 License: GPL
@@ -27,7 +27,6 @@ Requires: installer-feature-sudo-enable-by-default-stage2
 Requires: installer-feature-nfs-client-stage3
 Requires: installer-feature-online-repo
 Requires: installer-feature-bell-off-stage3
-Requires: installer-feature-cpufreq-stage3
 Requires: installer-feature-symlinks-from-sbin
 
 %description
@@ -56,6 +55,9 @@ cp -ar alterator-menu/ %buildroot%_datadir/livecd-install
 %_datadir/livecd-install/
 
 %changelog
+* Fri Jun 21 2013 Mikhail Efremov <sem@altlinux.org> 0.8.6-alt2
+- Drop installer-feature-cpufreq-stage3.
+
 * Mon Jun 10 2013 Mikhail Efremov <sem@altlinux.org> 0.8.6-alt1
 - Enable cpufreq-simple.service.
 
