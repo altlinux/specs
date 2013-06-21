@@ -3,7 +3,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-shell-extensions
-Version: %ver_major.3
+Version: %ver_major.3.1
 Release: alt1
 
 Summary: GNOME Shell Extensions
@@ -16,7 +16,7 @@ BuildArch: noarch
 
 Source: http://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 
-Requires: gnome-shell >= %version
+Requires: gnome-shell >= 3.8.3
 
 BuildRequires: gnome-common intltool libgnome-desktop3-devel libgtop-devel
 
@@ -200,6 +200,9 @@ __EOF__
 
 
 %changelog
+* Sat Jun 22 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.3.1-alt1
+- 3.8.3.1
+
 * Sat Jun 08 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.3-alt1
 - 3.8.3
 
