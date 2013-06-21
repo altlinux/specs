@@ -1,6 +1,6 @@
 Name: kernel-build-tools
-Version: 0.102
-Release: alt2
+Version: 0.103
+Release: alt1
 
 Summary: Utilities to build kernel packages for ALT Linux
 License: GPL
@@ -55,6 +55,10 @@ install -Dpm644 kernel-macros \
 %_rpmmacrosdir/kernel
 
 %changelog
+* Thu Jun 20 2013 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.103-alt1
+- kernel-macros:
+  + deprecated %%post_kernel_headers and %%postun_kernel_headers.
+
 * Mon Jun 03 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.102-alt2
 - 4-component kernel versions in kcode calculation changed
 
