@@ -15,21 +15,21 @@
 
 Name: perl-TheSchwartz
 Version: 1.10
-Release: alt1
+Release: alt2
 
 Summary: TheSchwartz is a reliable job queue system
 
 License: Artistic
 Group: Development/Perl
-Url: http://www.cpan.org
+Url: %CPAN %m_distro
 
 Packager: Denis Baranov <baraka@altlinux.ru>
 
 BuildArch: noarch
-Source: %m_distro-%version.tar.gz
+Source: http://www.cpan.org/modules/by-module/%m_distro-%version.tar
 
-# Automatically added by buildreq on Thu Mar 10 2011
-BuildRequires: libnss-role perl-DBD-Pg perl-DBD-mysql perl-Data-ObjectDriver perl-Module-Install
+# Automatically added by buildreq on Fri Jun 21 2013
+BuildRequires: perl-Data-ObjectDriver perl-devel
 
 %description
 TheSchwartz is a reliable job queue system.
@@ -53,9 +53,14 @@ is used to automatically dispatch to the proper class to do the actual work.
 %perl_vendor_install
 
 %files
-%perl_vendor_privlib/TheSchwartz/*
+%_bindir/schwartzmon
+%perl_vendor_privlib/TheSchwartz.pm
+%perl_vendor_privlib/TheSchwartz/
 
 %changelog
+* Fri Jun 21 2013 Vitaly Lipatov <lav@altlinux.ru> 1.10-alt2
+- cleanup spec, fix packing
+
 * Thu Mar 10 2011 Denis Baranov <baraka@altlinux.ru> 1.10-alt1
 - initial build for ALT Linux Sisyphus
 
