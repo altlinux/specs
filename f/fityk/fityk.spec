@@ -6,7 +6,7 @@
 Summary: Tool for fitting and analyzing data
 Name: fityk
 Version: 1.2.1
-Release: alt1.git20130117
+Release: alt1.git20130512
 License: GPL
 Group: Sciences/Other
 Url: https://github.com/wojdyr/fityk
@@ -200,6 +200,9 @@ popd
 %endif
 
 %changelog
+* Fri Jun 21 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.1-alt1.git20130512
+- New snapshot
+
 * Mon Apr 01 2013 Aleksey Avdeev <solo@altlinux.ru> 1.2.1-alt1.git20130117
 - Version 1.2.1 (12a914462f8f621ca4b21101abecd424593d96aa)
 
