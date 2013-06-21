@@ -1,6 +1,6 @@
 %define module_name	fglrx
 %define module_version	13.101
-%define module_release alt1
+%define module_release alt2
 
 %define flavour std-pae
 BuildRequires(pre): kernel-headers-modules-std-pae
@@ -32,6 +32,8 @@ Conflicts: kernel-modules-%module_name-%kversion-%flavour-%krelease > %version-%
 
 PreReq: kernel-image-%flavour = %kepoch%kversion-%krelease
 
+Requires: fglrx_glx
+
 ExclusiveArch: %karch
 
 %description
@@ -60,6 +62,9 @@ install -pD -m 0644 {,%buildroot%module_dir/}%module_name.ko
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Fri Jun 21 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 13.101-alt2
+- dependence on fglrx_glx added
 
 * Fri Jun 07 2013 Led <led@altlinux.ru> 13.101-alt1
 - 13.101
