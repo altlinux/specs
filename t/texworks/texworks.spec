@@ -1,6 +1,6 @@
 Name: texworks
-Version: 0.4.4
-Release: alt2
+Version: 0.4.5
+Release: alt1
 
 Summary: A simple IDE for authoring TeX documents
 Summary(ru_RU.UTF-8): Простой редактор для документов TeX
@@ -13,7 +13,7 @@ Packager: Denis Kirienko <dk@altlinux.ru>
 BuildPreReq: gcc-c++ libqt4-devel libhunspell-devel libdbus-devel libpoppler-qt4-devel unzip
 Requires: libqt4-core
 
-Source0: texworks-0.4.4-r1004.tar.gz
+Source0: texworks-0.4.5-r1281.tar.gz
 Source2: TeXworks-manual-r1029.pdf
 Source4: %{name}-alt-icons.tar.bz2
 
@@ -90,6 +90,9 @@ install -m 644 -D TeXworks-48x48.png %buildroot%_liconsdir/TeXworks.png
 %{_docdir}/%{name}-%{version}/TeXworks-manual-*.pdf
 
 %changelog
+* Fri Jun 21 2013 Denis Kirienko <dk@altlinux.org> 0.4.5-alt1
+- Version 0.4.5 (SVN 1281)
+
 * Sun Apr 07 2013 Denis Kirienko <dk@altlinux.org> 0.4.4-alt2
 - Rebuild with new libpoppler
 
