@@ -1,6 +1,6 @@
 Name: cpufreq-simple
-Version: 0.2.1
-Release: alt2
+Version: 0.3.1
+Release: alt1
 
 Summary: Simple scripts for managing CPUfreq settings
 License: %gpl2plus
@@ -22,13 +22,14 @@ as well as reduce heat and noise.
 %setup
 
 %install
-install -pDm755 %name %buildroot%_bindir/cpufreq-simple
+install -pDm755 %name %buildroot%_sbindir/cpufreq-simple
 install -pDm755 detect-cpufreq-module %buildroot%_bindir/detect-cpufreq-module
 install -pDm755 %name.init %buildroot%_initdir/%name
-install -pDm644 %name.udev-rules %buildroot%_sysconfdir/udev/rules.d/96-%name.rules
+install -pDm644 %name.udev-rules %buildroot%_udevrulesdir/96-%name.rules
 install -pDm644 %name.sysconfig %buildroot%_sysconfdir/sysconfig/%name
-install -pDm755 %name.pm-utils %buildroot%_sysconfdir/pm/sleep.d/90%name
+install -pDm755 %name.pm-utils %buildroot%_libexecdir/pm-utils/sleep.d/90%name
 install -pDm644 %name.service %buildroot%_unitdir/%name.service
+install -pDm644 %name-wake.service %buildroot%_unitdir/%name-wake.service
 
 %post
 %post_service %name
@@ -39,12 +40,23 @@ install -pDm644 %name.service %buildroot%_unitdir/%name.service
 %files
 %config(noreplace) %_sysconfdir/sysconfig/%name
 %_bindir/*
+%_sbindir/*
 %_initdir/%name
-%_unitdir/%name.service
-%_sysconfdir/udev/rules.d/*.rules
-%_sysconfdir/pm/sleep.d/*
+%_unitdir/*.service
+%_udevrulesdir/*.rules
+%_libexecdir/pm-utils/sleep.d/*
 
 %changelog
+* Fri Jun 21 2013 Mikhail Efremov <sem@altlinux.org> 0.3.1-alt1
+- Move cpufreq-simple from %%_bindir to %%_sbindir.
+- Ensure that PATH is correct.
+- Use proper directories for udev rule and pm-utils script.
+
+* Fri Jun 21 2013 Mikhail Efremov <sem@altlinux.org> 0.3.0-alt1
+- Install cpufreq-simple-wake.service too.
+- Use different "default" governors for different drivers.
+- Add cpufreq-simple-wake.service.
+
 * Fri Jun 14 2013 Mikhail Efremov <sem@altlinux.org> 0.2.1-alt2
 - Drop pm-utils deps again.
 
