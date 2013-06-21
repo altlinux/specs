@@ -1,10 +1,10 @@
 %define mpiimpl openmpi
 %define mpidir %_libdir/%mpiimpl
 
-%define over 3.19-1
+%define over 3.23
 Name: freefemxx
-Version: 3.19_1
-Release: alt2
+Version: 3.23
+Release: alt1
 Summary: Implementation of a language dedicated to the finite element method
 License: LGPL v2.1+
 Group: Sciences/Mathematics
@@ -133,6 +133,9 @@ export MPIDIR=%mpidir
 %doc DOC/*.pdf
 
 %changelog
+* Fri Jun 21 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.23-alt1
+- Version 3.23
+
 * Tue Oct 02 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.19_1-alt2
 - Fixed build with gcc 4.7
 
