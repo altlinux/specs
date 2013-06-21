@@ -1,6 +1,6 @@
 Name: gambit-dsock
 Version: 1.0
-Release: alt1
+Release: alt2
 Summary: UNIX domain sockets for Gambit-C Scheme programming system
 License: GPLv3+
 Group: Development/Scheme
@@ -44,5 +44,9 @@ This package contains the library link file
 %{_includedir}/gambit/libgambc-dsock.c
 
 %changelog
+* Tue May 28 2013 Paul Wolneykien <manowar@altlinux.org> 1.0-alt2
+- Test the polling timeout of 0 trying to accept a connection.
+- Add procs helping to analyse a domain socket exception.
+
 * Tue May 21 2013 Paul Wolneykien <manowar@altlinux.org> 1.0-alt1
 - Initial release for ALT Linux.
