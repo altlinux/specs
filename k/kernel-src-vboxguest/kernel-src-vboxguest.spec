@@ -3,7 +3,7 @@
 %{!?x86_64:%define x86_64 x86_64}
 
 Name: kernel-src-%module_name
-Version: 4.2.12
+Version: 4.2.14
 Release: alt1
 Summary: Linux VirtualBox guest modules sources
 License: GPLv2
@@ -35,6 +35,9 @@ tar --transform='s,^\.,/%module_name-%version,' -cJf %kernel_srcdir/%module_name
 
 
 %changelog
+* Sat Jun 22 2013 Led <led@altlinux.ru> 4.2.14-alt1
+- 4.2.14
+
 * Sat May 25 2013 Led <led@altlinux.ru> 4.2.12-alt1
 - 4.2.12
 - rename package: kernel-source-* -> kernel-src-*
