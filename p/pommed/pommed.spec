@@ -1,6 +1,6 @@
 Name: pommed
 Version: 1.39
-Release: alt4
+Release: alt5
 
 Summary: Apple laptops hotkeys event handler
 License: GPLv2
@@ -9,6 +9,7 @@ Url: http://alioth.debian.org/projects/pommed
 
 Source0: %name-%version.tar.gz
 Source1: %name.init
+Source2: %name.service
 
 Patch0: pommed-1.39-alt-build.patch
 Patch1: pommed-1.22-alt-fix-desktop-files.patch
@@ -76,6 +77,9 @@ each item controlled by pommed.
 mkdir -p %buildroot%_initdir/
 install -p -m0755 %SOURCE1 %buildroot%_initdir/pommed
 
+mkdir -p %buildroot%_unitdir/
+install -p -m0644 %SOURCE2 %buildroot%_unitdir/
+
 mkdir -p %buildroot%_sbindir/
 cp pommed/pommed %buildroot%_sbindir/
 mkdir -p %buildroot%_datadir/pommed/
@@ -131,6 +135,7 @@ cp icons/gpomme_32x32.xpm %buildroot%_niconsdir/wmpomme.xpm
 %config(noreplace) %_sysconfdir/pommed.conf
 %config(noreplace) %_sysconfdir/dbus-1/system.d/pommed.conf
 %attr(755,root,root) %config(noreplace) %_initdir/pommed
+%_unitdir/pommed.service
 %_sbindir/pommed
 %dir %_datadir/pommed
 %_datadir/pommed/click.wav
@@ -151,6 +156,9 @@ cp icons/gpomme_32x32.xpm %buildroot%_niconsdir/wmpomme.xpm
 %_niconsdir/wmpomme.xpm
 
 %changelog
+* Sat Jun 22 2013 Igor Zubkov <icesik@altlinux.org> 1.39-alt5
+- Add systemd service file
+
 * Thu Jun 06 2013 Igor Zubkov <icesik@altlinux.org> 1.39-alt4
 - Add support for LCD back-light on latest kernels
 
