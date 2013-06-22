@@ -3,15 +3,15 @@
 %{!?x86_64:%define x86_64 x86_64}
 
 Name: kernel-src-%module_name
-Version: 4.2.12
-Release: alt2
+Version: 4.2.14
+Release: alt1
 Summary: Linux VirtualBox host modules sources
 License: GPLv2
 Group: Development/Kernel
 URL: http://www.virtualbox.org
 BuildArch: noarch
 Source: %module_name-%version.tar
-Patch: %module_name-%version-%release.patch
+#Patch: %module_name-%version-%release.patch
 ExclusiveArch: %ix86 %x86_64
 
 BuildRequires: rpm-build-kernel
@@ -22,7 +22,7 @@ VirtualBox host modules sources for Linux kernel.
 
 %prep
 %setup -n %module_name-%version
-%patch -p1
+#patch -p1
 
 
 %install
@@ -35,6 +35,9 @@ tar --transform='s,^\.,/%module_name-%version,' -cJf %kernel_srcdir/%module_name
 
 
 %changelog
+* Sat Jun 22 2013 Led <led@altlinux.ru> 4.2.14-alt1
+- 4.2.14
+
 * Sat May 25 2013 Led <led@altlinux.ru> 4.2.12-alt2
 - rename package: kernel-source-* -> kernel-src-*
 
