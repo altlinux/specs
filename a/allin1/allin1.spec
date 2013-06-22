@@ -1,11 +1,11 @@
 Name: allin1
 Version: 0.5.0
-Release: alt5
+Release: alt6
 
 Summary: The all-in-one monitoring dockapplet
 License: GPLv2+
 Group: Graphical desktop/Window Maker
-Url: http://ilpettegolo.altervista.org/linux_allin1.en.shtml
+Url: http://sourceforge.net/projects/allinone/
 
 Packager: Igor Zubkov <icesik@altlinux.org>
 
@@ -49,9 +49,13 @@ window manager.
 %config(noreplace) %_sysconfdir/allin1.conf
 %_bindir/allin1
 %_man1dir/allin1.*
-%_mandir/it/man1/allin1.*
+%lang(it) %_mandir/it/man1/allin1.*
 
 %changelog
+* Sat Jun 22 2013 Igor Zubkov <icesik@altlinux.org> 0.5.0-alt6
+- Update Url
+- Use %%lang
+
 * Fri Oct 05 2012 Igor Zubkov <icesik@altlinux.org> 0.5.0-alt5
 - rebuilt for debuginfo
 
