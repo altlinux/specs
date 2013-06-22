@@ -1,8 +1,8 @@
 Name: supertux2
 Version: 0.3.4
-Release: alt2
+Release: alt3
 
-Summary: SuperTux is a classic 2D jump'n run sidescroller game in a Super Mario style
+Summary: Classic 2D jump'n run sidescroller game in a Super Mario style
 
 License: GPLv3
 Group: Games/Arcade
@@ -100,6 +100,10 @@ rm -rf %buildroot/%_docdir/supertux2/
 %exclude %_datadir/supertux2/sounds/normalize.sh
 
 %changelog
+* Sat Jun 22 2013 Igor Zubkov <icesik@altlinux.org> 0.3.4-alt3
+- fix Summary
+- git snapshot from 0fdd44fa8c98960abcd6a956c85ba362e45df39e
+
 * Wed Jan 30 2013 Igor Zubkov <icesik@altlinux.org> 0.3.4-alt2
 - git snapshot from 60478aa53db0d2874acc495037ff4f94b2efc3ae
 - %%exclude %%_datadir/supertux2/sounds/normalize.sh
