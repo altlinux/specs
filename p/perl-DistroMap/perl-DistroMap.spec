@@ -2,7 +2,7 @@
 
 Name: perl-%module
 Version: 0.19
-Release: alt2
+Release: alt3
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
 
@@ -35,6 +35,9 @@ BuildRequires: perl-devel perl(Pod/Usage.pm)
 %_bindir/distrodb*
 
 %changelog
+* Sat Jun 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.19-alt3
+- higher priority for the stem map
+
 * Fri May 10 2013 Igor Vlasenko <viy@altlinux.ru> 0.19-alt2
 - pre-support for autoimports/t7
 
