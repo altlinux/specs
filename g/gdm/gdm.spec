@@ -27,7 +27,7 @@
 %def_disable fallback_greeter
 
 Name: gdm
-Version: %ver_major.3
+Version: %ver_major.3.1
 Release: alt1
 
 Summary: The GNOME Display Manager
@@ -331,6 +331,10 @@ xvfb-run %make check
 %_datadir/gnome-session/sessions/gdm-shell.session
 %exclude %_datadir/gdm/greeter/autostart/orca-autostart.desktop
 
+# fallback greeter
+%_datadir/gdm/gdm-greeter-login-window.ui
+%_datadir/gdm/simple-greeter/
+%_datadir/gnome-session/sessions/gdm-fallback.session
 
 %if_enabled split_authentication
 #%_libdir/gdm/simple-greeter/extensions/libpassword.so
@@ -343,11 +347,14 @@ xvfb-run %make check
 
 %files libs
 %_libdir/libgdm.so.*
+%_libdir/libgdmsimplegreeter.so.*
 
 %files libs-devel
 %_includedir/gdm/
 %_libdir/libgdm.so
+%_libdir/libgdmsimplegreeter.so
 %_libdir/pkgconfig/gdm.pc
+%_libdir/pkgconfig/gdmsimplegreeter.pc
 
 %files libs-gir
 %_typelibdir/Gdm-%api_ver.typelib
@@ -373,6 +380,9 @@ xvfb-run %make check
 %endif
 
 %changelog
+* Sat Jun 22 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.3.1-alt1
+- 3.8.3.1
+
 * Fri Jun 14 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.3-alt1
 - 3.8.3
 - obsoleted gnome subpackage
