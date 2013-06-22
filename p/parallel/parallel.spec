@@ -1,5 +1,5 @@
 Name: parallel
-Version: 20130522
+Version: 20130622
 Release: alt1
 
 Summary: A shell tool for executing jobs in parallel
@@ -41,6 +41,9 @@ rm -r %buildroot%_defaultdocdir/%name/
 %_man1dir/*
 
 %changelog
+* Sat Jun 22 2013 Michael Shigorin <mike@altlinux.org> 20130622-alt1
+- new version (watch file uupdate)
+
 * Wed May 22 2013 Michael Shigorin <mike@altlinux.org> 20130522-alt1
 - new version (watch file uupdate)
 
