@@ -1,5 +1,5 @@
 Name: xonotic
-Version: 0.6.0
+Version: 0.7.0
 Release: alt1
 
 Summary: A free multi-player first person shooter
@@ -7,14 +7,16 @@ Group: Games/Arcade
 License: GPLv2+
 Url: http://www.xonotic.org/
 
-Source0: Xonotic.tar.bz2
+# stripped version of original xonotic-0.7.0.zip
+Source0: Xonotic.tar.xz
 
 Requires: %name-data = %version
 
 Packager: Igor Zubkov <icesik@altlinux.org>
 
-# Automatically added by buildreq on Sat Oct 20 2012
-BuildRequires: libSDL-devel libXext-devel libXpm-devel libXxf86vm-devel libalsa-devel libjpeg-devel
+# Automatically added by buildreq on Sat Jun 22 2013
+# optimized out: libGL-devel libX11-devel xorg-kbproto-devel xorg-xextproto-devel xorg-xf86vidmodeproto-devel xorg-xproto-devel xz
+BuildRequires:  libSDL-devel libXext-devel libXpm-devel libXxf86vm-devel libalsa-devel libfreetype-devel libjpeg-devel
 
 %description
 Xonotic is a free (GPL), fast-paced first-person shooter that works on 
@@ -82,6 +84,9 @@ EOF
 %_iconsdir/hicolor/*/apps/%name.svg
 
 %changelog
+* Sat Jun 22 2013 Igor Zubkov <icesik@altlinux.org> 0.7.0-alt1
+- 0.6.0 -> 0.7.0
+
 * Sat Oct 20 2012 Igor Zubkov <icesik@altlinux.org> 0.6.0-alt1
 - build for Sisyphus
 

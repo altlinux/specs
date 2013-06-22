@@ -1,5 +1,5 @@
 Name: xonotic-data
-Version: 0.6.0
+Version: 0.7.0
 Release: alt1
 
 Summary: Xonotic data files (graphics, music, maps etc)
@@ -7,12 +7,12 @@ Group: Games/Arcade
 License: GPLv2+
 Url: http://www.xonotic.org/
 
-Source0: font-nimbussansl-20120308.pk3
-Source1: font-xolonium-20120308.pk3
-Source2: xonotic-20120308-data.pk3
-Source3: xonotic-20120308-maps.pk3
-Source4: xonotic-20120308-music.pk3
-Source5: xonotic-20120308-nexcompat.pk3
+Source0: font-nimbussansl-20130605.pk3
+Source1: font-xolonium-20130605.pk3
+Source2: xonotic-20130605-data.pk3
+Source3: xonotic-20130605-maps.pk3
+Source4: xonotic-20130605-music.pk3
+Source5: xonotic-20130605-nexcompat.pk3
 
 Requires: xonotic = %version
 
@@ -38,6 +38,9 @@ install -pm644 %SOURCE5 %buildroot%_datadir/xonotic/data/
 %_datadir/xonotic/
 
 %changelog
+* Thu Jun 13 2013 Igor Zubkov <icesik@altlinux.org> 0.7.0-alt1
+- 0.6.0 -> 0.7.0
+
 * Sat Oct 20 2012 Igor Zubkov <icesik@altlinux.org> 0.6.0-alt1
 - build for Sisyphus
 
