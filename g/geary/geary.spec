@@ -1,6 +1,6 @@
 Name: geary
 Version: 0.3.1
-Release: alt1
+Release: alt2
 
 Summary: Email client
 License: LGPLv2.1+
@@ -8,6 +8,8 @@ Group: Networking/Mail
 Url: http://www.yorba.org/projects/geary/
 
 Source0: %name-%version.tar.xz
+
+Patch0: geary-0.3.1-alt-desktop-file.patch
 
 Packager: Igor Zubkov <icesik@altlinux.org>
 
@@ -24,6 +26,7 @@ Geary's development.
 
 %prep
 %setup -q
+%patch0 -p1
 
 %build
 ./configure --prefix=%_prefix
@@ -46,6 +49,9 @@ Geary's development.
 %_iconsdir/*/*/apps/*
 
 %changelog
+* Sat Jun 22 2013 Igor Zubkov <icesik@altlinux.org> 0.3.1-alt2
+- Fix desktop file
+
 * Sat Apr 13 2013 Igor Zubkov <icesik@altlinux.org> 0.3.1-alt1
 - 0.3.0 -> 0.3.1
 
