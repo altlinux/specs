@@ -12,8 +12,8 @@
 %define debug %nil
 
 Name: wine
-Version: 1.5.24
-Release: alt1
+Version: 1.6.0
+Release: alt0.rc3
 Epoch: 1
 
 Summary: Environment for running Windows applications (Etersoft edition)
@@ -107,7 +107,7 @@ Requires: fonts-ttf-core
 %endif
 
 # We need predownloaded Gecko engine
-Requires: wine-gecko = 1.9
+Requires: wine-gecko = 2.21
 
 Requires: lib%name = %epoch:%version-%release
 Provides: %name-utils
@@ -435,6 +435,9 @@ rm -rf %buildroot%_mandir/*.UTF-8
 
 
 %changelog
+* Sat Jun 22 2013 Vitaly Lipatov <lav@altlinux.ru> 1:1.6.0-alt0.rc3
+- new build 1.6-rc3 (use wine-gecko 2.21)
+
 * Wed Feb 20 2013 Vitaly Lipatov <lav@altlinux.ru> 1:1.5.24-alt1
 - new version 1.5.24
 
