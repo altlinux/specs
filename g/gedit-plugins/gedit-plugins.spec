@@ -4,7 +4,7 @@
 %add_python3_compile_include %gedit_pluginsdir
 
 Name: gedit-plugins
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: Plugins for GEdit
@@ -38,7 +38,9 @@ BuildPreReq: libgtk+3-devel >= %gtk_ver
 BuildPreReq: libgtksourceview3-devel >= %gtksourceview_ver
 BuildPreReq: gedit-devel >= %gedit_ver
 BuildPreReq: libpeas-devel >= %peas_ver
-# For Charmap plugin
+# for git plugin
+BuildRequires: libgit2-glib-devel
+# for Charmap plugin
 BuildPreReq: libgucharmap-devel >= 3.0.0
 %{?_enable_python:BuildRequires: rpm-build-python3 python3-devel python3-module-pygobject3-devel}
 BuildRequires: libSM-devel libxml2-devel python3-module-dbus-devel libvte3-devel
@@ -78,6 +80,9 @@ This package contains various plugins for gEdit, including Charmap, Terminal, an
 %exclude %gedit_pluginsdir/*.la
 
 %changelog
+* Sat Jun 22 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.3-alt1
+- 3.8.3
+
 * Sun Jun 02 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.2-alt1
 - 3.8.2
 
