@@ -5,10 +5,10 @@
 
 %define unstable 0
 %define lilo 1
-%define kuser 0
+%define kuser 1
 %define kcmlinuz 0
 %define kwuftpd 0
-%define kpackage 0
+%define kpackage 1
 %define kxconfig 0
 %define knetworkconf 0
 
@@ -16,7 +16,7 @@
 %add_findprov_lib_path %_libdir/kde3
 
 Name: kdeadmin
-Version: 3.5.13.1
+Version: 3.5.13.2
 Release: alt1
 Serial: 1
 
@@ -35,6 +35,8 @@ Source15: kwuftpd.helper
 
 # ALT patches
 Patch1000: kdeadmin-3.1.1-ksysv-alt.patch
+Patch1001: kdeadmin-3.5.13-kpackage-work-locale.patch
+Patch1002: kdeadmin-3.5.13.2-trinityHomeToKDE.patch
 
 Requires: %name-kcron = %version-%release
 Requires: %name-kdat = %version-%release
@@ -209,6 +211,8 @@ This tool allows you to manipulate the PAM configuration files for each
 %setup -q -n %name-%version
 cp -ar altlinux/admin ./
 %patch1000 -p1
+%patch1001 -p1
+%patch1002 -p1
 
 sed -i '\|\${kdeinit}_LDFLAGS[[:space:]]=[[:space:]].*-no-undefined|s|-no-undefined|-no-undefined -Wl,--warn-unresolved-symbols|' admin/am_edit
 for f in `find $PWD -type f -name Makefile.am`
@@ -227,6 +231,8 @@ do
     sed -i -e 's|\(.*_la_LIBADD[[:space:]]*\)=\(.*\)|\1= -lDCOP \$(LIB_KHTML) \$(LIB_KIO) \$(LIB_KDEUI) \$(LIB_KDECORE) \$(LIB_QT) \2|' $f
 done
 
+cp -Rp /usr/share/libtool/aclocal/libtool.m4 admin/libtool.m4.in
+cp -Rp /usr/share/libtool/config/ltmain.sh admin/ltmain.sh
 make -f admin/Makefile.common cvs ||:
 
 %build
@@ -299,7 +305,8 @@ DO_NOT_COMPILE="$DO_NOT_COMPILE knetworkconf"
 %if !%knetworkconf
 	    --without-knetworkconf \
 %endif
-            --with-pam=yes
+            --with-pam=yes \
+	    --enable-gcc-hidden-visibility=no
 
 sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' libtool
 %make_build
@@ -311,29 +318,29 @@ sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' libtool
 
 %K3install
 
-mkdir -p %buildroot/%prefix/sbin \
+mkdir -p %buildroot/%_K3sbindir \
          %buildroot/%_sysconfdir/pam.d \
          %buildroot/%_sysconfdir/security/console.apps
 
-%if %kpackage
-install -c -m 644 %SOURCE11 %buildroot/%_sysconfdir/security/console.apps/kpackage
-install -c -m 644 %SOURCE10 %buildroot/%_sysconfdir/pam.d/kpackage
-mv %buildroot/%_K3bindir/kpackage %buildroot/%_K3sbindir
-(cd %buildroot/%_K3bindir && ln -fs consolehelper kpackage)
-%endif
+###%if %kpackage
+# install -c -m 644 %SOURCE11 %buildroot/%_sysconfdir/security/console.apps/kpackage
+# install -c -m 644 %SOURCE10 %buildroot/%_sysconfdir/pam.d/kpackage
+# mv %buildroot/%_K3bindir/kpackage %buildroot/%_K3sbindir
+# (cd %buildroot/%_K3bindir && ln -fs %_bindir/consolehelper kpackage)
+###%endif
 
-%if %kuser
-install -c -m 644 %SOURCE13 %buildroot/%_sysconfdir/security/console.apps/kuser
-install -c -m 644 %SOURCE12 %buildroot/%_sysconfdir/pam.d/kuser
-mv %buildroot/%_K3bindir/kuser %buildroot/%_K3sbindir
-(cd %buildroot/%_K3bindir && ln -fs consolehelper kuser)
-%endif
+###%if %kuser
+# install -c -m 644 %SOURCE13 %buildroot/%_sysconfdir/security/console.apps/kuser
+# install -c -m 644 %SOURCE12 %buildroot/%_sysconfdir/pam.d/kuser
+# mv %buildroot/%_K3bindir/kuser %buildroot/%_K3sbindir
+# (cd %buildroot/%_K3bindir && ln -fs %_bindir/consolehelper kuser)
+###%endif
 
 %if %kwuftpd
 install -c -m 644 %SOURCE15 %buildroot/%_sysconfdir/security/console.apps/kwuftpd
 install -c -m 644 %SOURCE14 %buildroot/%_sysconfdir/pam.d/kwuftpd
 mv %buildroot/%_K3bindir/kwuftpd %buildroot/%_K3sbindir
-(cd %buildroot/%_K3bindir && ln -fs consolehelper kwuftpd)
+(cd %buildroot/%_K3bindir && ln -fs %_bindir/consolehelper kwuftpd)
 %endif
 
 
@@ -360,13 +367,13 @@ mv %buildroot/%_K3bindir/kwuftpd %buildroot/%_K3sbindir
 %if %kpackage
 %files kpackage
 %_K3bindir/kpackage
-%_K3sbindir/kpackage
+#%_K3sbindir/kpackage
 %_K3apps/kpackage
 %_kde3_iconsdir/*/*/apps/kpackage.png
 %_K3xdg_apps/kpackage.desktop
-%_K3mimelnk/application/x-debian-package.desktop
-%config(noreplace) %_sysconfdir/pam.d/kpackage
-%config(noreplace) %_sysconfdir/security/console.apps/kpackage
+#_K3mimelnk/application/x-debian-package.desktop
+#%config(noreplace) %_sysconfdir/pam.d/kpackage
+#%config(noreplace) %_sysconfdir/security/console.apps/kpackage
 %doc %_K3doc/en/kpackage
 %endif
 
@@ -384,12 +391,13 @@ mv %buildroot/%_K3bindir/kwuftpd %buildroot/%_K3sbindir
 %files kuser
 #%config %_datadir/config/kuserrc
 %_K3bindir/kuser
-%_K3sbindir/kuser
+#%_K3sbindir/kuser
 %_K3apps/kuser
 %_K3xdg_apps/kuser.desktop
 %_kde3_iconsdir/*/*/apps/kuser*
-%config(noreplace) %_sysconfdir/pam.d/kuser
-%config(noreplace) %_sysconfdir/security/console.apps/kuser
+%_K3cfg/kuser.kcfg
+#%config(noreplace) %_sysconfdir/pam.d/kuser
+#%config(noreplace) %_sysconfdir/security/console.apps/kuser
 %doc %_K3doc/en/kuser
 %endif
 
@@ -414,6 +422,7 @@ mv %buildroot/%_K3bindir/kwuftpd %buildroot/%_K3sbindir
 %files lilo
 %_K3xdg_apps/lilo.desktop
 %_K3lib/kcm_lilo*.so*
+%doc %_K3doc/en/lilo-config
 %endif
 
 %if %kxconfig
@@ -430,6 +439,9 @@ mv %buildroot/%_K3bindir/kwuftpd %buildroot/%_K3sbindir
 %_K3bindir/secpolicy
 
 %changelog
+* Sun Jun 23 2013 Roman Savochenko <rom_as@altlinux.ru> 1:3.5.13.2-alt1
+- Release TDE version 3.5.13.2
+
 * Sun Oct 14 2012 Roman Savochenko <rom_as@altlinux.ru> 1:3.5.13.1-alt1
 - Release TDE version 3.5.13.1
 
