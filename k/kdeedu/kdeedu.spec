@@ -17,8 +17,8 @@
 %set_verify_elf_method no
 
 Name: kdeedu
-Version: 3.5.13.1
-Release: alt1.1.qa1
+Version: 3.5.13.2
+Release: alt1
 
 Group: Graphical desktop/KDE
 Summary: K Desktop Environment - kdeedu
@@ -38,6 +38,7 @@ Patch18: kdeedu-3.5.10-alt-desktop-directories.patch
 Patch19: kdeedu-3.5.10-alt-rename-indiserver.patch
 Patch21: tde-3.5.13-build-defdir-autotool.patch
 Patch22: cvs-auto_version_check.patch
+Patch23: kdeedu-3.5.13.2-trinityHomeToKDE.patch
 
 #Requires: %name-flashkard = %version-%release
 Requires: %name-kalzium = %version-%release
@@ -343,6 +344,7 @@ Vocabulary Trainer
 # %patch19 -p1
 %patch21
 %patch22
+%patch23 -p1
 
 %if %_keep_libtool_files
 for f in `find $PWD -type f -name Makefile.am`
@@ -647,6 +649,9 @@ chmod a-s %buildroot/%_bindir/*
 %_includedir/libkdeedu/
 
 %changelog
+* Sun Jun 23 2013 Roman Savochenko <rom_as@altlinux.ru> 3.5.13.2-alt1
+- Release TDE version 3.5.13.2
+
 * Sun Apr 14 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 3.5.13.1-alt1.1.qa1
 - NMU: rebuilt with libboost_*.so.1.53.0.
 
