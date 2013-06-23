@@ -14,7 +14,7 @@
 %add_findprov_lib_path %_libkde
 
 Name: kdeaddons
-Version: 3.5.13.1
+Version: 3.5.13.2
 Release: alt1
 
 Group: Graphical desktop/KDE
@@ -28,6 +28,7 @@ Patch100: 3.5.12-alt-disable-konq-rellinks.patch
 Patch101: 3.5.12-alt-fix-linking.patch
 Patch102: 3.5.0-alt-noatun-plugins-fix-linking.patch
 Patch103: 3.5.10-alt-fix-compile.patch
+Patch104: kdeaddons-3.5.13.2-trinityHomeToKDE.patch
 
 Requires: %name-akregator = %version-%release
 %if_with atlantik
@@ -235,6 +236,7 @@ cp -ar altlinux/admin ./
 %patch101 -p1
 # %patch102 -p1
 # %patch103 -p1
+%patch104 -p1
 
 
 sed -i '\|\${kdeinit}_LDFLAGS[[:space:]]=[[:space:]].*-no-undefined|s|-no-undefined|-no-undefined -Wl,--warn-unresolved-symbols|' admin/am_edit
@@ -499,6 +501,9 @@ sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' libtool
 %endif
 
 %changelog
+* Sun Jun 23 2013 Roman Savochenko <rom_as@altlinux.ru> 3.5.13.2-alt1
+- Release TDE version 3.5.13.2
+
 * Sun Oct 14 2012 Roman Savochenko <rom_as@altlinux.ru> 3.5.13.1-alt1
 - Release TDE version 3.5.13.1
 
