@@ -12,7 +12,7 @@
 %add_findpackage_path %_K3bindir
 
 Name: kdebindings
-Version: 3.5.13.1
+Version: 3.5.13.2
 Release: alt1
 
 Summary: bindings to KDE libraries for various programming languages 
@@ -37,6 +37,7 @@ Patch2: kdebindings-3.5.12-alt-perl-ccflags.patch
 Patch5: kdebindings-3.5.10-alt-ruby-getopts.patch
 Patch6: kdebindings-3.5.12-alt-ruby-paths.patch
 Patch7: kdebindings-3.5.10-alt-ruby-compile.patch
+Patch8: kdebindings-3.5.13.2-trinityHomeToKDE.patch
 
 BuildRequires(pre): kdelibs-devel gtk+-devel libgtk+2-devel
 BuildRequires: kdebase-devel libstdc++-devel gcc-c++ libjpeg-devel perl-devel libpng-devel
@@ -205,6 +206,7 @@ cp -ar altlinux/admin ./
 #%patch6 -p1
 #%patch7 -p1
 ##%endif
+%patch8 -p1
 
 sed -i '\|\${kdeinit}_LDFLAGS[[:space:]]=[[:space:]].*-no-undefined|s|-no-undefined|-no-undefined -Wl,--warn-unresolved-symbols|' admin/am_edit
 for f in `find $PWD -type f -name Makefile.am`
@@ -387,6 +389,9 @@ cp -pr korundum/rubylib/rbkconfig_compiler/{autoexample.rb,exampleprefs_base.kcf
 
 
 %changelog
+* Sun Jun 23 2013 Roman Savochenko <rom_as@altlinux.ru> 3.5.13.2-alt1
+- Release TDE version 3.5.13.2
+
 * Sun Oct 14 2012 Roman Savochenko <rom_as@altlinux.ru> 3.5.13.1-alt1
 - Release TDE version 3.5.13.1
 
