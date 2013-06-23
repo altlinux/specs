@@ -13,7 +13,7 @@
 %add_verify_elf_skiplist %_libdir/libkommanderwidgets.so*
 
 Name: kdewebdev
-Version: 3.5.13.1
+Version: 3.5.13.2
 Release: alt1
 
 Group: Graphical desktop/KDE
@@ -36,6 +36,7 @@ Patch2: kommander-3.5.9-fix-linking.patch
 Patch3: kxsldbg-3.5.0-fix-linking.patch
 Patch4: quanta-3.5.0-fix-linking.patch
 Patch5: quanta-3.5.12-no-la.patch
+Patch6: kdewebdev-3.5.13.2-trinityHomeToKDE.patch
 
 # security
 # end security
@@ -137,6 +138,7 @@ cp -ar altlinux/admin ./
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
+%patch6 -p1
 
 mkdir quanta-doc
 for f in altlinux/css altlinux/html altlinux/javascript altlinux/php altlinux/mysql altlinux/mysql5
@@ -301,6 +303,9 @@ rm -f %buildroot/%_K3apps/quanta/doc/install.sh
 %_K3xdg_apps/kfilereplace.desktop
 
 %changelog
+* Sun Jun 23 2013 Roman Savochenko <rom_as@altlinux.ru> 3.5.13.2-alt1
+- Release TDE version 3.5.13.2
+
 * Sun Oct 14 2012 Roman Savochenko <rom_as@altlinux.ru> 3.5.13.1-alt1
 - Release TDE version 3.5.13.1
 
