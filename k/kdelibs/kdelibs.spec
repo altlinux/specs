@@ -21,8 +21,8 @@
 
 %define major 3
 %define minor 5
-%define bugfix 13.1
-%define rel alt10
+%define bugfix 13.2
+%define rel alt1
 Name: kdelibs
 Version: %major.%minor.%bugfix
 Release: %rel
@@ -184,7 +184,7 @@ BuildRequires: gcc-c++ libalsa-devel libcups-devel libltdl7-devel
 BuildRequires: libjpeg-devel libldap-devel libpcre-devel
 BuildRequires: libpng-devel libqt3-devel libssl-devel libstdc++-devel libtiff-devel
 BuildRequires: libutempter-devel libxml2-devel libxslt-devel netpbm libnetpbm-devel
-BuildRequires: qt3-doc xml-utils zlib-devel libkrb5-devel libidn-devel
+BuildRequires: qt3-doc xml-utils zlib-devel liblzma-devel libkrb5-devel libidn-devel
 BuildRequires: libkrb5-devel libaspell-devel libacl-devel libattr-devel
 BuildRequires: libavahi-qt3-devel pkg-config liblua5-devel libjasper-devel
 BuildRequires: glibc-utils glibc-devel glib2-devel
@@ -386,6 +386,7 @@ then
     -DWITH_CUPS=ON \
     -DWITH_LUA=OFF \
     -DWITH_TIFF=ON \
+    -DWITH_LZMA=ON \
     -DWITH_JASPER=ON \
     -DWITH_OPENEXR=ON \
     -DWITH_UTEMPTER=ON \
@@ -654,6 +655,9 @@ done
 #%doc %_K3doc/en/%name-*-apidocs
 
 %changelog
+* Sun Jun 23 2013 Roman Savochenko <rom_as@altlinux.ru> 3.5.13.2-alt1
+- Release TDE version 3.5.13.2
+
 * Fri May 10 2013 Roman Savochenko <rom_as@altlinux.ru> 3.5.13.1-alt10
 - Update to current 3.5.13-sru branch.
 
