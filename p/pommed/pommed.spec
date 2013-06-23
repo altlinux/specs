@@ -1,6 +1,6 @@
 Name: pommed
 Version: 1.39
-Release: alt6
+Release: alt7
 
 Summary: Apple laptops hotkeys event handler
 License: GPLv2
@@ -156,6 +156,9 @@ cp icons/gpomme_32x32.xpm %buildroot%_niconsdir/wmpomme.xpm
 %_niconsdir/wmpomme.xpm
 
 %changelog
+* Sun Jun 23 2013 Igor Zubkov <icesik@altlinux.org> 1.39-alt7
+- Add lsb header to init file
+
 * Sun Jun 23 2013 Igor Zubkov <icesik@altlinux.org> 1.39-alt6
 - Fix desktop files
 
