@@ -9,7 +9,7 @@
 %add_findprov_lib_path %_libkde
 
 Name: kdeaccessibility
-Version: 3.5.13.1
+Version: 3.5.13.2
 Release: alt1
 
 Group: Graphical desktop/KDE
@@ -26,6 +26,7 @@ Requires: %name-ktts = %version-%release
 Requires: %name-kbstate = %version-%release
 
 Source: %name-%version.tar
+Patch0: kdeaccessibility-3.5.13.2-trinityHomeToKDE.patch
 
 # Automatically added by buildreq on Fri Mar 05 2004 (-bi)
 BuildRequires: gcc-c++
@@ -117,6 +118,7 @@ Panel applet that shows the state of the modifier keys
 
 %prep
 %setup -q
+%patch0 -p1
 cp -ar altlinux/admin ./
 
 sed -i '\|\${kdeinit}_LDFLAGS[[:space:]]=[[:space:]].*-no-undefined|s|-no-undefined|-no-undefined -Wl,--warn-unresolved-symbols|' admin/am_edit
@@ -256,6 +258,9 @@ export PATH=%_bindir:$PATH
 %_K3apps/kicker/applets/kbstateapplet.desktop
 
 %changelog
+* Sun Jun 23 2013 Roman Savochenko <rom_as@altlinux.ru> 3.5.13.2-alt1
+- Release TDE version 3.5.13.2
+
 * Sun Oct 14 2012 Roman Savochenko <rom_as@altlinux.ru> 3.5.13.1-alt1
 - Release TDE version 3.5.13.1
 
