@@ -10,8 +10,8 @@
 %define with_xscreensaver 1
 
 Name: kdeartwork
-Version: 3.5.13.1
-Release: alt2
+Version: 3.5.13.2
+Release: alt1
 
 Group: Graphical desktop/KDE
 Summary: KDE Artwork (empty package)
@@ -540,8 +540,8 @@ install -dm 0755 %buildroot/%_kde3_iconsdir
 
 %endif
 
-[ -d %buildroot/%_K3iconsdir/Locolor -a ! -d %buildroot/%_kde3_iconsdir/locolor ] && \
-    mv %buildroot/%_K3iconsdir/Locolor %buildroot/%_kde3_iconsdir/locolor
+[ -d %buildroot/%_K3iconsdir/locolor -a ! -d %buildroot/%_kde3_iconsdir/locolor ] && \
+    mv %buildroot/%_K3iconsdir/locolor %buildroot/%_kde3_iconsdir/locolor
 
 for iconsdir in %buildroot/%_kde3_iconsdir %buildroot/%_K3iconsdir
 do
@@ -670,6 +670,9 @@ done
 %_K3apps/kworldclock/maps/*
 
 %changelog
+* Sun Jun 23 2013 Roman Savochenko <rom_as@altlinux.ru> 3.5.13.2-alt1
+- Release TDE version 3.5.13.2
+
 * Mon Oct 29 2012 Roman Savochenko <rom_as@altlinux.ru> 3.5.13.1-alt2
 - Build with -O2 and -g.
 
