@@ -21,7 +21,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.4.50
-Release: alt1
+Release: alt2
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -114,7 +114,8 @@ Release: alt1
 %def_enable smack
 %def_enable yama
 %def_enable thp
-%def_enable kvm
+%def_disable kvm
+%def_enable kvm_ext
 %def_enable hyperv
 %def_disable paravirt_guest
 %def_disable kvm_quest
@@ -131,8 +132,9 @@ Release: alt1
 
 #define allocator SLAB
 
-%Extra_modules vboxhost 4.2.12
-%Extra_modules vboxguest 4.2.12
+%Extra_modules vboxhost 4.2.14
+%Extra_modules vboxguest 4.2.14
+%Extra_modules kvm 3.9
 %Extra_modules nvidia 319.23
 #Extra_modules fglrx 8.97.100.7
 #Extra_modules netatop 0.2
@@ -527,7 +529,7 @@ Patch0687: linux-%kernel_branch.20-fix-sound-soc-omap--snd-soc-omap-mcbsp.patch
 Patch0691: linux-%kernel_branch.20-fix-tools--perf.patch
 Patch0692: linux-%kernel_branch.20-fix-tools-hv.patch
 
-Patch0700: linux-%kernel_branch.44-fix-virt-kvm.patch
+Patch0700: linux-%kernel_branch.49-fix-virt-kvm.patch
 Patch0701: linux-%kernel_branch.25-fix-virt-kvm--kvm-amd.patch
 
 
@@ -743,7 +745,11 @@ ExclusiveArch: %x86_64 %ix86
 %define extra_mods %(echo "%extra_modules" | sed 's/=[^ ]*//g')
 %endif
 
-BuildPreReq: rpm-build-kernel
+%if %(echo "%extra_mods" | grep -q '\bkvm\b' && echo 1 || echo 0)
+%def_enable kvm_ext
+%endif
+
+BuildPreReq: rpm-build-kernel >= 0.103
 BuildRequires: dev86 flex
 BuildRequires: libdb4-devel
 %{?kgcc_version:BuildRequires: gcc%kgcc_version}
@@ -2025,6 +2031,7 @@ config_enable \
 	%{?_enable_pcsp:SND_PCSP=m} \
 	%{?_enable_secrm:EXT[234]_SECRM FAT_SECRM} \
 	%{?_enable_nfs_swap:NFS_SWAP} \
+	%{?_enable_kvm_ext:KVM_EXTERNAL} \
 	%{?_enable_lnfs:NFS_V4_SECURITY_LABEL NFSD_V4_SECURITY_LABEL} \
 	%{?_enable_kallsyms:KALLSYMS} \
 	%{?allocator:%allocator}
@@ -2308,6 +2315,15 @@ sed 's/^/%%exclude &/' *.rpmmodlist > exclude-drivers.rpmmodlist
 %endif
 
 
+%if 0
+%post -n kernel-headers-%flavour
+%post_kernel_headers %kversion-%flavour-%krelease
+
+%postun -n kernel-headers-%flavour
+%postun_kernel_headers %kversion-%flavour-%krelease
+%endif
+
+
 %kernel_modules_package_post scsi
 
 %kernel_modules_package_post infiniband
@@ -2362,13 +2378,6 @@ sed 's/^/%%exclude &/' *.rpmmodlist > exclude-drivers.rpmmodlist
 
 %{?_enable_oprofile:%kernel_modules_package_post oprofile}
 
-%post -n kernel-headers-%flavour
-%post_kernel_headers %kversion-%flavour-%krelease
-
-%postun -n kernel-headers-%flavour
-%postun_kernel_headers %kversion-%flavour-%krelease
-
-
 %ifdef extra_mods
 %(for m in %extra_mods; do
 cat <<__PACKAGE__
@@ -2408,6 +2417,7 @@ done)
 %exclude %modules_dir/kernel/drivers/usb/misc/emi*
 %endif
 %{?_enable_kvm:%exclude %modules_dir/kernel/arch/*/kvm}
+%{?_enable_kvm_ext:%exclude %modules_dir/kernel/arch/*/kvm}
 %if_enabled hyperv
 %exclude %modules_dir/kernel/drivers/hv
 %exclude %modules_dir/kernel/drivers/hid/hid-hyperv.ko
@@ -2737,6 +2747,19 @@ done)
 
 
 %changelog
+* Sun Jun 23 2013 Led <led@altlinux.ru> 3.4.50-alt2
+- updated:
+  + fix-virt-kvm
+- disabled:
+  + ATH9K_AHB
+- cleaned up configs
+- disabled kvm
+- added external modules:
+  + kvm
+- vboxhost 4.2.14
+- vboxguest 4.2.14
+- disabled kernel-headers post scripts
+
 * Thu Jun 20 2013 Led <led@altlinux.ru> 3.4.50-alt1
 - 3.4.50
 - disabled:
