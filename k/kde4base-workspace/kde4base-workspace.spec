@@ -27,7 +27,7 @@
 %define rname kdebase-workspace
 Name: kde4base-workspace
 Version: %major.%minor.%bugfix
-Release: alt1
+Release: alt2
 
 Group: Graphical desktop/KDE
 Summary: K Desktop Environment - Workspace
@@ -114,6 +114,7 @@ Patch1045: kdebase-workspace-4.10.0-alt-def-plasma-desktop-immutability.patch
 Patch1046: kdebase-workspace-4.10.0-alt-pager-refresh-layout.patch
 Patch1047: kdebase-workspace-4.10.0-alt-def-oxygen-widgets.patch
 Patch1048: kdebase-workspace-4.10.0-alt-def-oxygen-kwin.patch
+Patch1049: kdebase-workspace-4.10.4-alt-mobile-netbook.patch
 
 BuildRequires(pre): kde4libs-devel rpm-build-python
 BuildRequires(pre): NetworkManager-devel
@@ -572,6 +573,7 @@ rm -rf plasma/generic/scriptengines/google_gadgets
 %patch1046 -p1
 %patch1047 -p1
 %patch1048 -p1
+%patch1049 -p1
 
 grep -q X-KDE-RootOnly kdm/kcm/kdm.desktop \
     || echo "X-KDE-RootOnly=true" >>kdm/kcm/kdm.desktop
@@ -911,9 +913,9 @@ chmod 0755 %buildroot/%_sysconfdir/firsttime.d/kdm4
 %_K4libdir/libprocesscore.so.*
 %files -n libksignalplotter4
 %_K4libdir/libksignalplotter.so.*
-%if_enabled desktop
 %files -n libplasmagenericshell4
 %_K4libdir/libplasmagenericshell.so.*
+%if_enabled desktop
 %files -n libsystemsettingsview4
 %_K4libdir/libsystemsettingsview.so.*
 %endif
@@ -951,6 +953,9 @@ chmod 0755 %buildroot/%_sysconfdir/firsttime.d/kdm4
 %_K4dbus_interfaces/*
 
 %changelog
+* Mon Jun 24 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.4-alt2
+- build plasma-netbook for mobile profile
+
 * Mon Jun 03 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.4-alt1
 - new version
 
