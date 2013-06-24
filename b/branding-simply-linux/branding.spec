@@ -7,7 +7,7 @@
 
 Name: branding-simply-linux
 Version: 7.0.0
-Release: alt3
+Release: alt4
 BuildArch: noarch
 
 BuildRequires: cpio gfxboot >= 4 fonts-ttf-dejavu fonts-ttf-droid
@@ -284,7 +284,6 @@ cp -r xfce-settings/etcskel/.gconf %buildroot/etc/skel/
 cp -r xfce-settings/etcskel/.vimrc %buildroot/etc/skel/
 
 install -m 644 xfce-settings/etcskel/.wm-select %buildroot/etc/skel/
-install -m 644 xfce-settings/etcskel/.fonts.conf %buildroot/etc/skel/
 
 mkdir -p %buildroot/usr/share/backgrounds/xfce/vladstudio.com/1600x1200
 mkdir -p %buildroot/usr/share/backgrounds/xfce/vladstudio.com/1680x1050
@@ -386,7 +385,6 @@ subst "s/Theme=.*/Theme=%theme/" /etc/plymouth/plymouthd.conf
 %_sysconfdir/X11/profile.d/zdg-move-templates.sh
 /etc/skel/XDG-Templates.skel/
 /etc/skel/.wm-select
-/etc/skel/.fonts.conf
 /etc/skel/.config
 /etc/skel/.local
 /etc/skel/.gconf
@@ -417,6 +415,10 @@ subst "s/Theme=.*/Theme=%theme/" /etc/plymouth/plymouthd.conf
 /usr/share/desktop-directories/altlinux-wine.directory
 
 %changelog
+* Mon Jun 24 2013 Mikhail Efremov <sem@altlinux.org> 7.0.0-alt4
+- Fix user's fonts.conf location.
+- Fix license.ru.html.
+
 * Fri Jun 21 2013 Mikhail Efremov <sem@altlinux.org> 7.0.0-alt3
 - xfce settings: Autophoto disabled.
 - xfce settings: Drop unneded files.
