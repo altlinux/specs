@@ -1,7 +1,7 @@
 %define cfg %_builddir/%name-%version/
 
 Name:       lazarus
-Version:    1.0.8
+Version:    1.0.10
 Release:    alt1
 Epoch:      1
 
@@ -176,6 +176,9 @@ echo -e "begin\nend." > %buildroot$LAZARUSDIR/compilertest.pas
 %dir %_datadir/fpcsrc/packages/fcl-base
 
 %changelog
+* Mon Jun 24 2013 Andrey Cherepanov <cas@altlinux.org> 1:1.0.10-alt1
+- New version 1.0.10
+
 * Fri May 24 2013 Andrey Cherepanov <cas@altlinux.org> 1:1.0.8-alt1
 - New version 1.0.8
 - Fix search FPC compiler with localized output from fpc (ALT #25991)
