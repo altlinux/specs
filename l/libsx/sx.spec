@@ -7,13 +7,13 @@ BuildRequires(pre): rpm-build-python
 
 Summary: Tool to extract reports and run plug-ins against those extracted reports
 Name: libsx
-Version: 2.14
+Version: 2.15
 Release: alt1_1
 URL: http://fedorahosted.org/sx
 # tar.gz archive created from a tagged git tree:
 # $ git clone http://git.fedorahosted.org/git/sx.git
 # $ cd sx
-# $ git archive --format=tar --prefix=sx-2.14/ sx-2.14 | gzip > sx-2.14.tar.gz
+# $ git archive --format=tar --prefix=sx-2.15/ sx-2.15 | gzip > sx-2.15.tar.gz
 Source0: %{oldname}-%{version}.tar.gz
 License: GPLv2
 Group: System/Libraries
@@ -48,6 +48,9 @@ has a class defined.
 
 
 %changelog
+* Mon Jun 24 2013 Igor Vlasenko <viy@altlinux.ru> 2.15-alt1_1
+- update to new release by fcimport
+
 * Mon Feb 18 2013 Igor Vlasenko <viy@altlinux.ru> 2.14-alt1_1
 - update to new release by fcimport
 
