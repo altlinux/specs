@@ -1,19 +1,15 @@
 Name: libnetfilter_queue
-Version: 0.0.15
-Release: alt1.4
+Version: 1.0.2
+Release: alt1
 
 Summary: API to packets that have been queued by the kernel packet filter
 Url: http://netfilter.org/projects/libnetfilter_queue/
-Packager: Avramenko Andrew <liks@altlinux.ru>
 License: GPL
 Group: System/Libraries
 Source: %name-%version.tar
-Source1: ip_queue.h
-Patch0: libnetfilter_queue-0.0.15-alt-DSO.patch
-Requires: libnfnetlink
 
 # Automatically added by buildreq on Wed Aug 08 2007
-BuildRequires: gcc-c++ libnfnetlink-devel
+BuildRequires: gcc-c++ libnfnetlink-devel libmnl-devel
 
 %description
 libnetfilter_queue is a userspace library providing an API to packets that have 
@@ -30,14 +26,10 @@ Development part of libnetfilter_queue.
 
 %prep
 %setup
-%patch0 -p2
-
-mkdir -p include/linux/netfilter_ipv4
-install -p -m644 %SOURCE1 include/linux/netfilter_ipv4
 
 %build
+autoreconf -fisv
 %configure --disable-static
-sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' libtool
 %make_build
 
 %install
@@ -55,6 +47,10 @@ make install DESTDIR=%buildroot
 %_libdir/pkgconfig/*
 
 %changelog
+* Tue Jun 25 2013 Anton Farygin <rider@altlinux.ru> 1.0.2-alt1
+- New version
+- cleanup spec
+
 * Thu Dec 06 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.15-alt1.4
 - Fixed build
 
