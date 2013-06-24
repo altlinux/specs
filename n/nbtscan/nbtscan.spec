@@ -1,8 +1,8 @@
 Name: nbtscan
 Version: 1.5.1
-Release: alt3
+Release: alt4
 
-Summary: NBTScan - NetBIOS Name Network Scanner
+Summary: NetBIOS Name Network Scanner
 License: GPLv2
 Group: Networking/Other
 Url: http://www.inetcat.org/software/nbtscan.html
@@ -31,13 +31,16 @@ NetBIOS computer name, logged-in user name and MAC address
 
 %install
 mkdir -p %buildroot%_bindir/
-install -m755 nbtscan %buildroot%_bindir/
+install -m0755 nbtscan %buildroot%_bindir/
 
 %files
 %doc ChangeLog README
 %_bindir/nbtscan
 
 %changelog
+* Mon Jun 24 2013 Igor Zubkov <icesik@altlinux.org> 1.5.1-alt4
+- Fix package summary
+
 * Wed Oct 03 2012 Igor Zubkov <icesik@altlinux.org> 1.5.1-alt3
 - rebuilt for debuginfo
 
