@@ -2,7 +2,7 @@
 
 Name: libfreetype-infinality
 Version: 2.4.12
-Release: alt1
+Release: alt2
 
 Summary: A free and portable font rendering engine with patches from http://www.infinality.net
 License: FTL or GPLv2+
@@ -39,7 +39,7 @@ individual glyphs.  FreeType is not a font server or a complete
 text-rendering library.
 
 This version is compiled with the Infinality patches. It transparently
-overrides the system library using LD_PRELOAD.
+overrides the system library using ld.so.conf.d mechanism.
 
 %prep
 %setup -n %name-%version 
@@ -65,14 +65,15 @@ sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' builds/unix/libtool
 %install
 %makeinstall_std
 
-%define ld_preload_script_name infinality-ld-preload.sh
-%define ld_preload_script %buildroot%{_sysconfdir}/profile.d/%ld_preload_script_name
+%define ld_so_conf %_sysconfdir/ld.so.conf.d/%name-%_arch.conf
+ld_so_conf=%ld_so_conf
+mkdir -p %buildroot${ld_so_conf%%/*}
+echo %_libdir/%name > %buildroot%ld_so_conf
+chmod 644 %buildroot%ld_so_conf
+%filter_from_provides '/^libfreetype\.so\./d'
 
-mkdir -p %buildroot%{_sysconfdir}/profile.d/
-/bin/echo "export LD_PRELOAD=/usr/'\$LIB'/%{name}/libfreetype.so.%{freetypemajorversion}:\$LD_PRELOAD" > %ld_preload_script
-chmod 755 %ld_preload_script
-
-install -pD -m755 %SOURCE91 %buildroot%_sysconfdir/profile.d/
+mkdir -p %buildroot%_sysconfdir/X11/profile.d
+install -pm755 %SOURCE91 %buildroot%_sysconfdir/X11/profile.d/
 
 %define docdir %{_docdir}/%name-%version
 mkdir -p %buildroot%docdir
@@ -97,10 +98,15 @@ rm -f %buildroot%_datadir/aclocal/*.m4
 %files
 %docdir
 %_libdir/%name/
-%{_sysconfdir}/profile.d/%ld_preload_script_name
-%config %{_sysconfdir}/profile.d/infinality-settings.sh
+%config %_sysconfdir/X11/profile.d/infinality-settings.sh
+%config %ld_so_conf
 
 %changelog
+* Mon Jun 24 2013 Dmitry V. Levin <ldv@altlinux.org> 2.4.12-alt2
+- infinality-settings.sh: relocated from /etc/profile.d/ to
+  /etc/X11/profile.d/ (closes: #29093).
+- Reintroduced ld.so.conf.d based configuration (closes: #29095).
+
 * Tue May 28 2013 Vladimir Didenko <cow@altlinux.ru> 2.4.12-alt1
 - 2.4.12
 
