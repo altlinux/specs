@@ -1,6 +1,6 @@
 Name: simple-mtpfs
 Version: 0.1
-Release: alt1
+Release: alt2
 Summary: Fuse-based MTP driver
 Group: System/Kernel and hardware
 License: GPLv2+
@@ -38,5 +38,8 @@ MTP device files.
 %doc COPYING README
 
 %changelog
+* Sun Jun 23 2013 Terechkov Evgenii <evg@altlinux.org> 0.1-alt2
+- Update from git
+
 * Tue May 21 2013 Terechkov Evgenii <evg@altlinux.org> 0.1-alt1
 - Initial build for ALT Linux Sisyphus (based on Fedora spec)
