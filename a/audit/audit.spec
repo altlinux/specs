@@ -1,5 +1,5 @@
 Name: audit
-Version: 2.2.3
+Version: 2.3.1
 Release: alt1
 
 Packager: Anton Farygin <rider@altlinux.com>
@@ -116,6 +116,7 @@ install -pD -m644 init.d/%{name}d.service %buildroot%_unitdir/%{name}d.service
 /sbin/aureport
 %_bindir/auvirt
 %attr(750,root,root) /sbin/auditctl
+%attr(750,root,root) /sbin/augenrules
 %attr(750,root,root) /sbin/auditd
 %attr(750,root,root) /sbin/autrace
 %attr(750,root,root) /sbin/audispd
@@ -133,7 +134,8 @@ install -pD -m644 init.d/%{name}d.service %buildroot%_unitdir/%{name}d.service
 
 %attr(700,root,root) %dir %_sysconfdir/%name
 %config(noreplace) %attr(600,root,root) %_sysconfdir/%name/auditd.conf
-%config(noreplace) %attr(600,root,root) %_sysconfdir/%name/audit.rules
+%attr(700,root,root) %dir %_sysconfdir/%name/rules.d
+%config(noreplace) %attr(600,root,root) %_sysconfdir/%name/rules.d/audit.rules
 
 %attr(700,root,root) %dir %_sysconfdir/audispd
 %config(noreplace) %attr(640,root,root) /etc/audisp/*.conf
@@ -161,6 +163,9 @@ install -pD -m644 init.d/%{name}d.service %buildroot%_unitdir/%{name}d.service
 %python_sitelibdir/*
 
 %changelog
+* Mon Jun 24 2013 Anton Farygin <rider@altlinux.ru> 2.3.1-alt1
+- new version
+
 * Fri Apr 19 2013 Anton Farygin <rider@altlinux.ru> 2.2.3-alt1
 - new version
 - add systemd support
