@@ -1,6 +1,6 @@
 %define mversion	6
 %define dversion	%mversion.8.6
-%define drelease	0
+%define drelease	1
 %define qlev		Q16
 %define mgkdir		ImageMagick
 %define soname		4
@@ -219,6 +219,9 @@ mv %buildroot%_docdir/%name-6 %buildroot%_docdir/%name-%dversion
 %endif
 
 %changelog
+* Mon Jun 24 2013 Anton Farygin <rider@altlinux.ru> 6.8.6.1-alt1
+- new version
+
 * Wed Jun 19 2013 Anton Farygin <rider@altlinux.ru> 6.8.6.0-alt1
 - new version
 - removed ImageMagick-6.8.4-10-alt-invalid_read.patch (obsoleted by upstream)
