@@ -1,7 +1,7 @@
 %define msxver 0.3.1
 %define sfxver 0.2.3
 Name: openttd-3rd-party
-Version: 0.4.4
+Version: 0.4.7
 Release: alt1
 
 Summary: 3rd Party data files for openttd
@@ -42,6 +42,9 @@ cp openmsx-%msxver/*.{mid,obm} %buildroot%_datadir/games/openttd/gm
 
 
 %changelog
+* Tue Jun 25 2013 Anton Farygin <rider@altlinux.ru> 0.4.7-alt1
+- new version
+
 * Fri Jul 20 2012 Anton Farygin <rider@altlinux.ru> 0.4.4-alt1
 - new version
 
