@@ -1,6 +1,6 @@
 Name: gnupg2
-Version: 2.0.19
-Release: alt2
+Version: 2.0.20
+Release: alt1
 
 Group: Text tools
 Summary: The GNU Privacy Guard suite
@@ -16,10 +16,8 @@ Patch1: gnupg-1.6.9-xloadimage.patch
 Patch2: gnupg-1.9.20-alt-libpcsclite.patch
 Patch3: gnupg-2.0.18-alt-agent-fix-password-request.patch
 Patch4: gnupg-2.0.19-alt-texinfo.patch
-Patch5: gnupg-2.0.19-alt-bound.patch
-Patch6: gnupg-2.0.16-rh-tests-s2kcount.patch
-Patch7: gnupg-2.0.18-rh-protect-tool-env.patch
-Patch8: gnupg-2.0.16-rh-ocsp-keyusage.patch
+Patch11: gnupg-2.0.18-rh-protect-tool-env.patch
+Patch12: gnupg-2.0.20-rh-ocsp-keyusage.patch
 
 %define docdir %_docdir/gnupg-%version
 
@@ -58,10 +56,8 @@ functionality up into several modules.
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
-%patch5 -p1
-%patch6 -p1
-%patch7 -p1
-%patch8 -p1
+%patch11 -p1
+%patch12 -p1
 rm doc/*.info*
 
 %build
@@ -107,6 +103,9 @@ install -pm644 AUTHORS NEWS THANKS %buildroot%docdir/
 %docdir
 
 %changelog
+* Tue Jun 25 2013 Dmitry V. Levin <ldv@altlinux.org> 2.0.20-alt1
+- Updated to 2.0.20.
+
 * Fri Oct 26 2012 Dmitry V. Levin <ldv@altlinux.org> 2.0.19-alt2
 - Fixed potential heap corruption in "gpg2 -v --version",
   (reported by amike@; closes: #26666).
