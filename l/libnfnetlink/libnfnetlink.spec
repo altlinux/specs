@@ -1,11 +1,10 @@
 Name: libnfnetlink
-Version: 1.0.0
-Release: alt1.2.qa1
+Version: 1.0.1
+Release: alt1
 Serial: 1
 
 Summary: libnfnetlink - low-level nfnetlink message processing functions
 Url: http://netfilter.org/projects/libnfnetlink/
-Packager: Avramenko Andrew <liks@altlinux.ru>
 License: GPL
 Group: System/Libraries
 
@@ -48,6 +47,9 @@ make install DESTDIR=%buildroot
 %_libdir/pkgconfig/*
 
 %changelog
+* Mon Jun 24 2013 Anton Farygin <rider@altlinux.ru> 1:1.0.1-alt1
+- New version
+
 * Thu Aug 23 2012 Repocop Q. A. Robot <repocop@altlinux.org> 1:1.0.0-alt1.2.qa1
 - NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
 - applied repocop fixes:

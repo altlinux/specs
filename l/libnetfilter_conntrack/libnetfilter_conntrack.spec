@@ -1,6 +1,6 @@
 Name: libnetfilter_conntrack
-Version: 0.9.0
-Release: alt1.qa1
+Version: 1.0.3
+Release: alt1
 Serial: 1
 
 Summary: API to the in-kernel connection tracking state table.
@@ -13,7 +13,7 @@ Source: %name-%version.tar
 
 Requires: libnfnetlink
 # Automatically added by buildreq on Sat Oct 30 2010
-BuildRequires: libnfnetlink-devel rpm-build-licenses
+BuildRequires: libnfnetlink-devel rpm-build-licenses libmnl-devel
 
 %description
 libnetfilter_conntrack is a userspace library providing a programming
@@ -51,6 +51,9 @@ rm -f %buildroot%_libdir/%name/*.la
 
 
 %changelog
+* Mon Jun 24 2013 Anton Farygin <rider@altlinux.ru> 1:1.0.3-alt1
+- New version
+
 * Thu Aug 23 2012 Repocop Q. A. Robot <repocop@altlinux.org> 1:0.9.0-alt1.qa1
 - NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
 - applied repocop fixes:
