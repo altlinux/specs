@@ -1,6 +1,6 @@
 Name: gsl
-Version: 1.15
-Release: alt2.bzr20130127
+Version: 1.15.90
+Release: alt1.bzr20130614
 
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
@@ -149,6 +149,9 @@ install -p -m644 ChangeLog.* NEWS.* AUTHORS README THANKS TODO \
 %doc %_docdir/lib%name-%version/examples
 
 %changelog
+* Tue Jun 25 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.15.90-alt1.bzr20130614
+- Version 1.15.90
+
 * Mon Feb 04 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.15-alt2.bzr20130127
 - New snapshot
 
