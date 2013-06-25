@@ -1,6 +1,6 @@
 Name: installer-feature-centaurus-keyring
 Version: 0.1
-Release: alt1
+Release: alt2
 
 Summary: disable redundant ssh keyrings
 License: GPL
@@ -25,6 +25,9 @@ install -pm755 *.sh %buildroot%hookdir/
 %hookdir/*
 
 %changelog
+* Tue Jun 25 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.1-alt2
+- typo fixed
+
 * Tue Jun 25 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.1-alt1
 - initial build
 
