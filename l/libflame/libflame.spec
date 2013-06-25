@@ -1,10 +1,10 @@
 %define mpiimpl openmpi
 %define mpidir %_libexecdir/%mpiimpl
 %define somver 0
-%define sover %somver.99.99
+%define sover %somver.112.26
 
 Name: libflame
-Version: r9999
+Version: r11226
 Release: alt1
 Summary: Formal Linear Algebra Method Environment
 License: LGPL v2.1
@@ -141,6 +141,9 @@ mv doxygen/html %buildroot%_docdir/%name/
 %doc examples
 
 %changelog
+* Tue Jun 25 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> r11226-alt1
+- Version r11226
+
 * Tue Feb 05 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> r9999-alt1
 - Version r9999
 
