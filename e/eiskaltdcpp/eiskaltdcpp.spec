@@ -1,6 +1,6 @@
 Name: eiskaltdcpp
-Version: 2.2.7
-Release: alt1.1.qa1
+Version: 2.2.8
+Release: alt1
 Summary: EiskaltDC++ - Direct Connect client
 License: GPLv3
 Group: Networking/File transfer
@@ -9,7 +9,7 @@ Packager: Aeliya Grevnyov <gray_graff@altlinux.org>
 
 Source: %name-%version.tar
 #Patch: eiskaltdcpp-2.2.5-alt-DSO.patch
-Patch1: eiskaltdcpp-2.2.7-alt-boost-1.52.0.patch
+#Patch1: eiskaltdcpp-2.2.7-alt-boost-1.52.0.patch
 
 BuildRequires: cmake gcc-c++ libqt4-devel bzlib-devel libaspell-devel liblua5-devel
 BuildRequires: libgtk+2-devel libglade-devel glib2-devel libpango-devel libnotify-devel 
@@ -90,7 +90,7 @@ command line interface for XML-RPC Daemon
 %prep
 %setup
 #%%patch -p2
-%patch1 -p2
+#%%patch1 -p2
 
 %build
 %add_optflags -fno-strict-aliasing $(pkg-config libpcre --cflags)
@@ -176,6 +176,9 @@ popd
 %_datadir/%name/cli
 
 %changelog
+* Tue Jun 25 2013 Aeliya Grevnyov <gray_graff@altlinux.org> 2.2.8-alt1
+- 2.2.8 release (ALT#29105)
+
 * Sun Apr 14 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.2.7-alt1.1.qa1
 - NMU: rebuilt with libboost_*.so.1.53.0.
 
