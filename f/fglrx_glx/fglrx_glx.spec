@@ -18,7 +18,7 @@
 Name: %{bname}_glx
 %define ksname kernel-source-%bname
 Version: 13.101
-Release: alt2
+Release: alt3
 Summary: ATI/AMD Proprietary Linux Display Driver
 Group: System/Kernel and hardware
 URL: http://www.amd.com
@@ -139,8 +139,16 @@ install -pD -m 0644 {%xfdir/usr/X11R6/%_lib,%buildroot%_libdir/X11}/modules/linu
 ln -s {fglrx-,%buildroot%_libdir/X11/fglrx/}libglx.so
 
 install -p -m 0644 {%xfdir/usr/X11R6/%_lib/modules/extensions,%archdir/usr/X11R6/%_lib}/fglrx/*  %buildroot%_libdir/X11/fglrx/
-ln -s fglrx-libGL.so.1.2 %buildroot%_libdir/X11/fglrx/libGL.so.1
-ln -sr %buildroot%_libdir/X11/fglrx/{fglrx-libGL.so.1.2,libGLESv2.so.2}
+ln -s fglrx-libGL.so.1.2 %buildroot%_libdir/X11/fglrx/libGL.so.1.2
+ln -s libGL.so.1.2 %buildroot%_libdir/X11/fglrx/libGL.so.1
+ln -s fglrx-libGL.so.1.2 %buildroot%_libdir/X11/fglrx/libGLESv2.so.2
+
+%if 0
+ln -s {fglrx/fglrx-,%buildroot%_libdir/}libGL.so.1.2
+%else
+install -d -m 0755 %buildroot%_sysconfdir/ld.so.conf.d
+echo "%_libdir/X11/fglrx" > %buildroot%_sysconfdir/ld.so.conf.d/fglrx-%_lib
+%endif
 
 install -p -m 0644 %archdir/usr{/X11R6,}/%_lib/lib* %buildroot%_libdir/
 install -p -m 0755 %archdir/usr/%_lib/fglrx/* %buildroot%_libdir/fglrx/
@@ -227,6 +235,7 @@ chrpath -d %buildroot{%_bindir/amdcccle,%_sbindir/amdnotifyui}
 #%_fdidir/*
 # temporarily excluded:
 #%%exclude %_libdir/libAMDXvBA.*
+%_sysconfdir/ld.so.conf.d/*
 
 
 %files -n %bname-tools -f %bname-tools.lang
@@ -251,6 +260,10 @@ chrpath -d %buildroot{%_bindir/amdcccle,%_sbindir/amdnotifyui}
 
 
 %changelog
+* Tue Jun 25 2013 Led <led@altlinux.ru> 13.101-alt3
+- added %%_libdir/fglrx/libGL.so.1.2 symlink
+- added %%_libdir/fglrx to %%_sysconfdir/ld.so.conf.d/
+
 * Fri Jun 14 2013 Led <led@altlinux.ru> 13.101-alt2
 - added libEGL.so.1 and libGLESv2.so.2 symlinks
 
