@@ -1,5 +1,5 @@
 Name: unison
-Version: 2.45.4
+Version: 2.45.28
 Release: alt1
 
 Summary: File-synchronization tool
@@ -37,6 +37,9 @@ cp -f src/unison $RPM_BUILD_ROOT%_bindir
 %_bindir/*
 
 %changelog
+* Tue Jun 25 2013 Anton Farygin <rider@altlinux.ru> 2.45.28-alt1
+- new version
+
 * Thu Jul 12 2012 Anton Farygin <rider@altlinux.ru> 2.45.4-alt1
 - first build for Sisyphus
 
