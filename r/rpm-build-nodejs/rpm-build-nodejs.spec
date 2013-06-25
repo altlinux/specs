@@ -1,6 +1,6 @@
 %define pkg nodejs
 Name: rpm-build-%pkg
-Version: 0.2
+Version: 0.3
 Release: alt1
 
 Summary: RPM helper scripts for building %pkg packages
@@ -10,6 +10,7 @@ Group: Development/Other
 URL: http://www.altlinux.org/Node.JS_Policy
 
 Source: %name-%version.tar
+Patch: macros.nodejs-alt.patch
 
 BuildArch: noarch
 
@@ -26,12 +27,13 @@ License: GPL
 Group: Development/Other
 
 %description -n rpm-macros-%pkg
-RPM marcos for building %pkg packages.
+RPM macros for building %pkg packages.
 
 See %url for detailed %pkg packaging policy.
 
 %prep
 %setup
+%patch0 -p2
 
 %install
 mkdir -p %buildroot/%_rpmmacrosdir/
@@ -59,6 +61,9 @@ install -D -m755 nodejs-symlink-deps  %buildroot%_datadir/%name/%pkg-symlink-dep
 %_rpmmacrosdir/%pkg
 
 %changelog
+* Tue Jun 25 2013 Igor Vlasenko <viy@altlinux.ru> 0.3-alt1
+- bugfixes
+
 * Sun Jun 23 2013 Igor Vlasenko <viy@altlinux.ru> 0.2-alt1
 - bugfixes
 - TODO: sync with nodejs-0.10.12-1 after node update
