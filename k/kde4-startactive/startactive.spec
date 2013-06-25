@@ -4,7 +4,7 @@
 %define rname startactive
 Name: kde4-startactive
 Version: 0.3
-Release: alt3
+Release: alt4
 
 Group: Graphical desktop/KDE
 Summary: KDE mobile environment startup
@@ -76,6 +76,9 @@ __EOF__
 %_K4apps/startactive/
 
 %changelog
+* Tue Jun 25 2013 Sergey V Turchin <zerg@altlinux.org> 0.3-alt4
+- allow to start custom modules
+
 * Tue Nov 20 2012 Sergey V Turchin <zerg@altlinux.org> 0.3-alt3
 - fix startup
 
