@@ -2,7 +2,7 @@
 %define exec_prefix /
 %define _prefix /
 Name: ipset
-Version: 6.12.1
+Version: 6.19
 Release: alt1
 
 Summary: Tools for managing sets of IP or ports with iptables
@@ -15,9 +15,8 @@ Patch0: %name-%version-%release.patch
 BuildRequires: libmnl-devel
 
 %description
-IP sets are a framework inside the Linux 2.4.x and 2.6.x kernel,
-which can be administered by the ipset utility.
-Depending on the type, currently an IP set may store IP addresses,
+IP sets are a framework inside the Linux kernel, which can be administered by 
+the ipset utility. Depending on the type, currently an IP set may store IP addresses,
 (TCP/UDP) port numbers or IP addresses with MAC addresses in a way,
 which ensures lightning speed when matching an entry against a set.
 
@@ -28,6 +27,26 @@ ipset may be the proper tool for you, if you want to
    without performance penalty;
  * express complex IP address and ports based rulesets with one single
    iptables rule and benefit from the speed of IP sets
+
+%package -n lib%{name}6
+Summary: Dynamic library for %name
+License: LGPLv2+
+Group: Development/C
+
+%description -n lib%{name}6
+The lib%{name}6 package contains the dynamic libraries needed for 
+applications to use the %name framework.
+
+%package -n lib%{name}6-devel
+Summary: Header files for lin%name
+License: LGPLv2+
+Group: Development/C
+Requires: lib%{name}6 = %version-%release
+
+%description -n lib%{name}6-devel
+The lib%{name}6 package contains the header files needed for
+developing applications that need to use the %name framework libraries.
+
 
 %package -n kernel-source-ipset
 Summary: Linux ipset modules sources
@@ -51,6 +70,11 @@ mv kernel kernel-source-%name-%version
 
 %install
 %makeinstall prefix=%buildroot/ exec_prefix=%buildroot/ sbindir=%buildroot/sbin libdir=%buildroot/%_lib
+mkdir -p $RPM_BUILD_ROOT/%_libdir
+pushd $RPM_BUILD_ROOT/%_libdir
+LIBNAME=`basename \`ls $RPM_BUILD_ROOT/%{_lib}/libipset.so.3.*.*\``
+ln -s ../../%{_lib}/$LIBNAME libipset.so
+popd
 
 mkdir -p %kernel_srcdir
 tar -cjf %kernel_srcdir/kernel-source-%name-%version.tar.bz2 kernel-source-%name-%version
@@ -60,10 +84,20 @@ tar -cjf %kernel_srcdir/kernel-source-%name-%version.tar.bz2 kernel-source-%name
 /sbin/*
 %_man8dir/*
 
+%files -n lib%{name}6
+%attr(755,root,root) /%{_lib}/libipset.so.3*
+
+%files -n lib%{name}6-devel
+%_includedir/lib%name/*.h
+%_libdir/*.so
+
 %files -n kernel-source-ipset
 %attr(0644,root,root) %kernel_src/kernel-source-%name-%version.tar.bz2
 
 %changelog
+* Tue Jun 25 2013 Anton Farygin <rider@altlinux.ru> 6.19-alt1
+- new version
+
 * Wed Jun 06 2012 Anton Farygin <rider@altlinux.ru> 6.12.1-alt1
 - new version
 
