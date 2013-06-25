@@ -8,7 +8,7 @@
 
 Name: docs-%variant
 Version: 7.0
-Release: alt3
+Release: alt4
 
 Summary: %Variant documentation
 License: %fdl
@@ -42,6 +42,9 @@ ln -s $(relative %_docsinstalldir %_documentationdir) %buildroot%_documentationd
 %_documentationdir
 
 %changelog
+* Tue Jun 25 2013 Artem Zolochevskiy <azol@altlinux.ru> 7.0-alt4
+- update dvd- usb-burn section
+
 * Thu May 16 2013 Alexandr Boltris <alex@altlinux.org> 7.0-alt3
 - update set-up printer (thx Nickolay Rogalskiy)
 - added acc method for package install
