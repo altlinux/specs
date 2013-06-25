@@ -1,7 +1,7 @@
 %define node_name      node
-%define node_version  0.10.8
+%define node_version  0.10.12
 %define node_release   alt1
-%define npmver 1.2.23
+%define npmver 1.2.32
 
 %def_disable check
 
@@ -16,6 +16,7 @@ Source: %name-%version.tar
 
 BuildRequires: python-devel gcc-c++ openssl-devel zlib-devel libv8-3.15-devel libcares-devel gyp
 BuildRequires: curl openssl
+Provides: nodejs(engine)
 Provides: nodejs = %version-%release
 Provides: node.js = %version-%release
 Obsoletes: nodejs < %version-%release
@@ -111,6 +112,11 @@ chmod 0755 %buildroot%_sysconfdir/profile.d/*
 %exclude %_libexecdir/node_modules/npm/node_modules/node-gyp/gyp/tools/emacs
 
 %changelog
+* Wed Jun 26 2013 Dmitriy Kulik <lnkvisitor@altlinux.org> 0.10.12-alt1
+- 0.10.12
+- npm 1.2.32
+- Provides: nodejs(engine) by viy@
+
 * Wed May 29 2013 Dmitriy Kulik <lnkvisitor@altlinux.org> 0.10.8-alt1
 - 0.10.8
 - npm 1.2.23
