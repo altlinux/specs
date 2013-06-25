@@ -5,7 +5,7 @@
 %set_verify_elf_method unresolved=relaxed
 
 Name: wireshark
-Version: 1.8.2
+Version: 1.10.0
 Release: alt1
 
 Summary: The BugTraq Award Winning Network Traffic Analyzer
@@ -193,6 +193,7 @@ export ac_cv_lib_lualib_luaL_openlib=no
 %_bindir/randpkt
 %_bindir/rawshark
 %_bindir/text2pcap
+%_bindir/reordercap
 %_man1dir/capinfos.*
 %_man1dir/randpkt.*
 %_man1dir/dftest.*
@@ -201,6 +202,7 @@ export ac_cv_lib_lualib_luaL_openlib=no
 %_man1dir/mergecap.*
 %_man1dir/rawshark.*
 %_man1dir/text2pcap.*
+%_man1dir/reordercap.*
 %_man4dir/wireshark-filter.*
 %_datadir/%name
 %dir %_libdir/%name
@@ -233,6 +235,9 @@ export ac_cv_lib_lualib_luaL_openlib=no
 %_libdir/libwiretap.so
 
 %changelog
+* Tue Jun 25 2013 Anton Farygin <rider@altlinux.ru> 1.10.0-alt1
+- new version
+
 * Tue Sep 18 2012 Anton Farygin <rider@altlinux.ru> 1.8.2-alt1
 - new version
 
