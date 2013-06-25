@@ -7,7 +7,7 @@
 %define bugfix 4
 Name: kde4-konsole
 Version: %major.%minor.%bugfix
-Release: alt1
+Release: alt2
 
 Group: Terminals
 Summary: Terminal emulator for KDE
@@ -70,7 +70,10 @@ __EOF__
 
 %files
 %config %_sysconfdir/alternatives/packages.d/kde4-konsole
-%attr(2711,root,utempter) %_K4bindir/konsole
+# adding to utmp don't work because dbus checking for saved guid
+#attr(2711,root,utempter) %_K4bindir/konsole
+%_K4bindir/konsole
+#
 %_K4bindir/konsoleprofile
 %_K4libdir/libkdeinit4_konsole.so
 %_K4libdir/libkonsoleprivate.so
@@ -85,6 +88,9 @@ __EOF__
 
 
 %changelog
+* Tue Jun 25 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.4-alt2
+- remove sgid(adding to utmp don't work because dbus checking for saved guid)
+
 * Tue Jun 04 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.4-alt1
 - new version
 
