@@ -4,7 +4,7 @@
 
 Name: nss_ldap
 Version: 265
-Release: alt3
+Release: alt4
 Packager: Anton Gorlov <stalker@altlinux.ru>
 
 Summary: NSS library for LDAP
@@ -124,6 +124,9 @@ rm -f $RPM_BUILD_ROOT%_sysconfdir/ldap.conf
 #
 
 %changelog
+* Tue Jun 25 2013 Sergey Bolshakov <sbolshakov@altlinux.ru> 265-alt4
+- fix build on arm
+
 * Thu Oct 04 2012 Andrey Cherepanov <cas@altlinux.org> 265-alt3
 - Provide nss-ldap for adapted alterator-auth
 - Override hacked bits/libc_lock.h from glibc
