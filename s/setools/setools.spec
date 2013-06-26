@@ -5,7 +5,7 @@
 
 Name: setools
 Version: %setools_maj_ver.%setools_min_ver
-Release: alt1
+Release: alt2
 License: %gpl2plus
 URL: http://oss.tresys.com/projects/setools
 Source: %name-%version.tar
@@ -194,7 +194,7 @@ This package includes the following graphical tools:
 %patch6 -p0
 %patch7 -p0
 %patch8 -p1
-%patch9 -p1
+#patch9 -p1
 
 find . -name Makefile.am -exec sed -i -e 's/ -fpic/ -fPIC/' \{} \;
 
@@ -330,6 +330,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_datadir/applications/*
 
 %changelog
+* Wed Jun 26 2013 Andriy Stepanov <stanv@altlinux.ru> 3.3.8-alt2
+- New version
+
 * Wed Jun 26 2013 Andriy Stepanov <stanv@altlinux.ru> 3.3.8-alt1
 - NewVersion
 
