@@ -1,5 +1,5 @@
 Name: eepm
-Version: 1.2.6
+Version: 1.2.8
 Release: alt1
 
 Summary: Etersoft EPM package manager
@@ -45,6 +45,9 @@ install -m 0755 packed/serv.sh %buildroot/%_datadir/%name/serv-packed.sh
 mkdir -p %buildroot%_sysconfdir/bash_completion.d/
 install -m 0644 bash_completion/serv %buildroot%_sysconfdir/bash_completion.d/serv
 
+# shebang.req.files
+chmod a+x %buildroot%_datadir/%name/{serv-,epm-}*
+
 %files
 %doc README TODO LICENSE
 %_bindir/epm*
@@ -57,6 +60,18 @@ install -m 0644 bash_completion/serv %buildroot%_sysconfdir/bash_completion.d/se
 %_sysconfdir/bash_completion.d/serv
 
 %changelog
+* Wed Jun 26 2013 Vitaly Lipatov <lav@altlinux.ru> 1.2.8-alt1
+- add epmql short command for epm -ql
+- autoremove: add --auto support for yum
+- epm-simulate: rewrite check yum result with store_output
+
+* Wed Jun 19 2013 Vitaly Lipatov <lav@altlinux.ru> 1.2.7-alt1
+- add epmu == epm update command
+- serv: fix without param checking
+- serv: fixes for systemd after real use
+- epm-install: fix Slackware install with sudocmd_foreach
+- epm-install: do not fall to hi level if rpm is already installed
+
 * Tue Apr 30 2013 Vitaly Lipatov <lav@altlinux.ru> 1.2.6-alt1
 - epm Install: do package base update only if really need install something
 
