@@ -5,8 +5,8 @@
 %define cid_dict_dir   %firefox_noarch_extensionsdir/%cid_dict
 
 Name:		firefox-be
-Version:	21.0
-Release:	alt2
+Version:	22.0
+Release:	alt1
 Summary:	Belarusian (BE) Language Pack for Firefox
 
 License:	GPL
@@ -70,6 +70,9 @@ ln -s %_datadir/myspell/be_BY.dic %buildroot/%cid_dict_dir/dictionaries/be.dic
 %cid_dict_dir
 
 %changelog
+* Mon Jul 01 2013 Alexey Gladkov <legion@altlinux.ru> 22.0-alt1
+- New version (22.0).
+
 * Tue Jun 18 2013 Alexey Gladkov <legion@altlinux.ru> 21.0-alt2
 - Add dictionary extension (ALT#29063).
 

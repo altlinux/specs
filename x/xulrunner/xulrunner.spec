@@ -13,8 +13,8 @@
 
 Summary:	XUL Runner
 Name:		xulrunner
-Version:	21.0
-Release:	alt2
+Version:	22.0
+Release:	alt1
 
 License:	MPL/GPL/LGPL
 Group:		Networking/Other
@@ -32,7 +32,7 @@ Patch0:		xulrunner-no-version.patch
 
 Patch100:	mozilla-192-path.patch
 #Patch101:	mozilla-pkgconfig.patch
-Patch104:	mozilla-nongnome-proxies.patch
+#Patch104:	mozilla-nongnome-proxies.patch
 
 Requires:	%name-libs = %version-%release
 
@@ -144,7 +144,7 @@ tar -xf %SOURCE1
 
 %patch100 -p1
 #patch101 -p1
-%patch104 -p1
+#patch104 -p1
 
 #echo 5.0.1 > config/milestone.txt
 
@@ -353,6 +353,24 @@ ln -sf $(relative "%xulr_prefix/libmozalloc.so" "%xulr_develdir/sdk/lib/libmozal
 %_datadir/rpm-build-mozilla/mozilla-sh-functions
 
 %changelog
+* Thu Jun 20 2013 Alexey Gladkov <legion@altlinux.ru> 22.0-alt1
+- New release (22.0).
+- Fixed:
+  + MFSA 2013-62 Inaccessible updater can lead to local privilege escalation
+  + MFSA 2013-61 Homograph domain spoofing in .com, .net and .name
+  + MFSA 2013-60 getUserMedia permission dialog incorrectly displays location
+  + MFSA 2013-59 XrayWrappers can be bypassed to run user defined methods in a privileged context
+  + MFSA 2013-58 X-Frame-Options ignored when using server push with multi-part responses
+  + MFSA 2013-57 Sandbox restrictions not applied to nested frame elements
+  + MFSA 2013-56 PreserveWrapper has inconsistent behavior
+  + MFSA 2013-55 SVG filters can lead to information disclosure
+  + MFSA 2013-54 Data in the body of XHR HEAD requests leads to CSRF attacks
+  + MFSA 2013-53 Execution of unmapped memory through onreadystatechange event
+  + MFSA 2013-52 Arbitrary code execution within Profiler
+  + MFSA 2013-51 Privileged content access and execution via XBL
+  + MFSA 2013-50 Memory corruption found using Address Sanitizer
+  + MFSA 2013-49 Miscellaneous memory safety hazards (rv:22.0 / rv:17.0.7)
+
 * Tue Jun 18 2013 Alexey Gladkov <legion@altlinux.ru> 21.0-alt2
 - Add missing healthreport service (ALT#29062).
 - Remove extensions-noarch support.

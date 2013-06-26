@@ -3,7 +3,7 @@
 
 Summary:	Thunderbird is Mozilla's e-mail client
 Name:		thunderbird
-Version:	17.0.6
+Version:	17.0.7
 Release:	alt1
 License:	MPL/GPL
 Group:		Networking/Mail
@@ -363,7 +363,7 @@ rm -rf -- \
 	#
 
 #ver=%version
-ver=21.0
+ver=22.0
 sed -i \
 	-e "s,^\\(MaxVersion\\)=.*,\\1=${ver%%.*}.*,g" \
 	%buildroot/%tbird_prefix/application.ini
@@ -493,6 +493,18 @@ rm -f -- %buildroot/%lightning_ciddir/application.ini
 %_sysconfdir/rpm/macros.d/%name
 
 %changelog
+* Sun Jun 30 2013 Alexey Gladkov <legion@altlinux.ru> 17.0.7-alt1
+- New version (17.0.7).
+- Fixed:
+  + MFSA 2013-59 XrayWrappers can be bypassed to run user defined methods in a privileged context
+  + MFSA 2013-56 PreserveWrapper has inconsistent behavior
+  + MFSA 2013-55 SVG filters can lead to information disclosure
+  + MFSA 2013-54 Data in the body of XHR HEAD requests leads to CSRF attacks
+  + MFSA 2013-53 Execution of unmapped memory through onreadystatechange event
+  + MFSA 2013-51 Privileged content access and execution via XBL
+  + MFSA 2013-50 Memory corruption found using Address Sanitizer
+  + MFSA 2013-49 Miscellaneous memory safety hazards (rv:22.0 / rv:17.0.7)
+
 * Wed Jun 05 2013 Alexey Gladkov <legion@altlinux.ru> 17.0.6-alt1
 - New version (17.0.6).
 - Fixed:
