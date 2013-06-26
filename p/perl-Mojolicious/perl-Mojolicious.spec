@@ -1,5 +1,5 @@
 Name: perl-Mojolicious
-Version: 3.57
+Version: 4.16
 Release: alt1
 Summary: Real-time web framework
 
@@ -7,8 +7,11 @@ Group: Development/Perl
 License: Perl
 Url: %CPAN Mojolicious
 
+Source0: %name-%version.tar
+Source1: hypnotoad.init
+Source2: hypnotoad.sysconfig
+
 BuildArch: noarch
-Source: %name-%version.tar
 BuildRequires: perl-devel perl-EV perl-Digest-SHA perl-Encode perl-I18N-LangTags perl-Locale-Maketext perl-unicore perl-Encode-JP perl-Pod-Simple perl-IO-Socket-SSL perl-podlators perl-Compress-Raw-Zlib perl-IO-Compress
 
 %description
@@ -40,20 +43,30 @@ Features:
 
 %install
 %perl_vendor_install
+mkdir -p %buildroot/%_initdir
+cp %SOURCE1 %buildroot/%_initdir/hypnotoad
+mkdir -p %buildroot/%_sysconfdir/sysconfig
+cp %SOURCE2 %buildroot/%_sysconfdir/sysconfig/hypnotoad
 
 %files
 %_bindir/hypnotoad
 %_bindir/mojo
 %_bindir/morbo
+%_initdir/hypnotoad
+%_sysconfdir/sysconfig/hypnotoad
 %_man1dir/hypnotoad.1*
 %_man1dir/mojo.1*
 %_man1dir/morbo.1*
 %perl_vendor_privlib/Mojo*
 %perl_vendor_privlib/Test/Mojo.pm
 %perl_vendor_privlib/ojo.pm
-%doc LICENSE Changes README.pod
+%doc LICENSE Changes
 
 %changelog
+* Wed Jun 26 2013 Eugene Prokopiev <enp@altlinux.ru> 4.16-alt1
+- 3.57 -> 4.16
+- Add simple initscript for hypnotoad
+
 * Mon Nov 19 2012 Eugene Prokopiev <enp@altlinux.ru> 3.57-alt1
 - 3.44 -> 3.57
 
