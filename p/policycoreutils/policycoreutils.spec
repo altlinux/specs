@@ -2,8 +2,8 @@
 
 Summary: SELinux policy core utilities
 Name: policycoreutils
-Version: 2.1.13
-Release: alt9
+Version: 2.1.14
+Release: alt1
 License: GPLv2
 Group: System/Base
 Url: http://userspace.selinuxproject.org
@@ -34,6 +34,7 @@ BuildRequires: desktop-file-utils
 BuildRequires: python-module-sepolgen
 BuildRequires: glib2-devel libdbus-glib-devel
 BuildRequires: libcap-ng-devel libpcre-devel libcgroup-devel
+BuildRequires: libsetools-devel >= 3.3.8
 
 %description
 policycoreutils contains the policy core utilities that are required
@@ -102,7 +103,6 @@ Group: System/Base
 Requires: policycoreutils = %version-%release
 #Requires: setools-console
 Requires: selinux-policy
-BuildArch: noarch
 
 %description gui
 system-config-selinux is a utility for managing the SELinux environment.
@@ -176,6 +176,7 @@ cp -r mcstrans/share/* %buildroot%_datadir/mcstrans/
 %preun mcstransd
 %preun_service mcstrans
 
+%add_python_req_skip yum
 
 %files -f %name.lang
 /sbin/restorecon
@@ -196,6 +197,7 @@ cp -r mcstrans/share/* %buildroot%_datadir/mcstrans/
 %_bindir/chcat
 %_bindir/secon
 %_bindir/semodule_*
+%_bindir/sepolicy
 %_man1dir/*
 %_man5dir/*
 %_man8dir/*
@@ -258,16 +260,21 @@ cp -r mcstrans/share/* %buildroot%_datadir/mcstrans/
 %_bindir/system-config-selinux
 %_bindir/selinux-polgengui
 %_datadir/applications/system-config-selinux.desktop
+%_xdgconfigdir/autostart/restorecond.desktop
 %_datadir/applications/selinux-polgengui.desktop
 %_iconsdir/hicolor/24x24/apps/system-config-selinux.png
 %_datadir/system-config-selinux/*.py*
 #%_datadir/system-config-selinux/selinux.tbl
 %_datadir/system-config-selinux/*png
 %_datadir/system-config-selinux/*.glade
+%dir %python_sitelibdir/sepolicy
+%dir %python_sitelibdir/sepolicy/templates
+%python_sitelibdir/sepolicy/*.py*
+%python_sitelibdir/sepolicy/templates/*.py*
+%python_sitelibdir/sepolicy/*.so
+%python_sitelibdir/*.egg-info
+%_datadir/dbus-1/services/org.selinux.Restorecond.service
 %dir %_datadir/system-config-selinux
-%dir %_datadir/system-config-selinux/templates
-%_datadir/system-config-selinux/polgen.py
-%_datadir/system-config-selinux/templates/*.py*
 %config(noreplace) %_sysconfdir/pam.d/system-config-selinux
 %config(noreplace) %_sysconfdir/pam.d/selinux-polgengui
 %config(noreplace) %_sysconfdir/security/console.apps/system-config-selinux
@@ -276,6 +283,9 @@ cp -r mcstrans/share/* %buildroot%_datadir/mcstrans/
 
 
 %changelog
+* Wed Jun 26 2013 Andriy Stepanov <stanv@altlinux.ru> 2.1.14-alt1
+- New Version
+
 * Tue Apr 30 2013 Andriy Stepanov <stanv@altlinux.ru> 2.1.13-alt9
 - newrole: CAP_SETPCAP, capng_lock()
 
