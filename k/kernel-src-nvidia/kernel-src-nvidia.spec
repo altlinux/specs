@@ -1,6 +1,6 @@
 %define mname nvidia
 Name: kernel-src-%mname
-Version: 319.23
+Version: 319.32
 Release: alt1
 Summary: Linux nvidia module sources
 License: NVIDIA
@@ -37,6 +37,9 @@ tar --transform='s,^%sname,%mname-%version,' -cJf %buildroot%kernel_src/%mname-%
 
 
 %changelog
+* Wed Jun 26 2013 Led <led@altlinux.ru> 319.32-alt1
+- 319.32
+
 * Sat May 25 2013 Led <led@altlinux.ru> 319.23-alt1
 - 319.23
 - rename package: kernel-source-* -> kernel-src-*
