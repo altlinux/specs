@@ -25,7 +25,7 @@
 
 Name: %oname-%scalar_type
 Version: 3.3_p6
-Release: alt2
+Release: alt3
 Summary: Portable, Extensible Toolkit for Scientific Computation (%scalar_type scalars)
 License: BSD
 Group: Sciences/Mathematics
@@ -789,6 +789,9 @@ sed -i 's|\(\-lpetsc\)|-L%ldir/lib \1|' \
 %ldir/sources
 
 %changelog
+* Thu Jun 27 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.3_p6-alt3
+- Rebuilt with new libhdf5
+
 * Tue May 07 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.3_p6-alt2
 - Fixed build
 
@@ -975,4 +978,3 @@ sed -i 's|\(\-lpetsc\)|-L%ldir/lib \1|' \
 
 * Wed Jun 24 2009 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0.0_p6-alt1
 - Initial build for Sisyphus
-

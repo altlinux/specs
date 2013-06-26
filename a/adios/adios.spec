@@ -6,7 +6,7 @@
 
 Name: adios
 Version: 1.5.0
-Release: alt1
+Release: alt2
 Summary: The Adaptable IO System (ADIOS)
 License: BSD
 Group: Sciences/Mathematics
@@ -205,6 +205,9 @@ rmdir %buildroot%_libdir/tmp
 %doc *.pdf
 
 %changelog
+* Thu Jun 27 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.5.0-alt2
+- Rebuilt with new libhdf5
+
 * Mon Jun 17 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.5.0-alt1
 - Version 1.5.0
 

@@ -26,7 +26,7 @@ Name: %truename-docs
 Name: %truename
 %endif
 Version: 11.2.3
-Release: alt1
+Release: alt2
 Summary: Solution of large-scale, complex multi-physics problems
 License: LGPL, BSD-style
 Group: Sciences/Mathematics
@@ -2597,6 +2597,9 @@ popd
 %endif
 
 %changelog
+* Thu Jun 27 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 11.2.3-alt2
+- Rebuilt with new libhdf5
+
 * Tue Apr 30 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 11.2.3-alt1
 - Version 11.2.3 (without PySundance)
 

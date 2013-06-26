@@ -7,7 +7,7 @@
 %define sover %somver.2.0
 Name: %oname-%scalar_type
 Version: 2.01
-Release: alt5.svn20120408
+Release: alt6.svn20120408
 Summary: Self-Adapting Large-scale Solver Architecture (%scalar_type scalars)
 License: LGPL
 Group: Sciences/Mathematics
@@ -136,7 +136,7 @@ for i in nmd anamod syspro
 do
 	pushd $i
 	mkdir -p doc
-	%make_build lib
+	%make lib
 %if "%scalar_type" == "real"
 	%make_build documentation
 %endif
@@ -210,8 +210,8 @@ done
 %_libdir/petsc-%scalar_type/lib/*.so
 %_libdir/petsc-%scalar_type/include/*
 
-%files -n lib%name-devel-static
-%_libdir/petsc-%scalar_type/lib/*.a
+#files -n lib%name-devel-static
+#_libdir/petsc-%scalar_type/lib/*.a
 
 %files tests
 %dir %_libdir/petsc-%scalar_type/testing
@@ -228,6 +228,10 @@ done
 %endif
 
 %changelog
+* Thu Jun 27 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.01-alt6.svn20120408
+- Rebuilt with new libhdf5
+- Disabled static package
+
 * Mon Aug 13 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.01-alt5.svn20120408
 - New snapshot
 

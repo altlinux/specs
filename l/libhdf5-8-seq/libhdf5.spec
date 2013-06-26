@@ -1,19 +1,19 @@
 #TODO: examples packing
 
 %define oname hdf5
-%define sover 7
-%define cpp_sover 7
-%define f_sover 7
-%define hl_sover 7
+%define sover 8
+%define cpp_sover 8
+%define f_sover 8
+%define hl_sover 8
 %define hdfdir %_libdir/%oname-seq
 %define priority 30
 Name: lib%oname-%sover-seq
-Version: 1.8.9
-Release: alt3
+Version: 1.8.11
+Release: alt1
 
 Summary: Hierarchical Data Format 5 library
 
-Group: System/Legacy libraries
+Group: System/Libraries
 License: Nearly BSD, but changed sources must be marked
 Url: http://www.hdfgroup.org/HDF5/
 
@@ -172,22 +172,22 @@ echo "%_pkgconfigdir/%oname.pc %_pkgconfigdir/%oname-seq.pc %priority" >> \
 %hdfdir/lib/libhdf5-%sover.settings
 %_altdir/%name.alternatives
 
-#files -n lib%oname-devel
-#hdfdir/lib/lib*.so
-#hdfdir/include/*
-#_pkgconfigdir/*
-#_altdir/%name-devel.alternatives
+%files -n lib%oname-devel
+%hdfdir/lib/lib*.so
+%hdfdir/include/*
+%_pkgconfigdir/*
+%_altdir/%name-devel.alternatives
 
-#files -n %oname-%sover-tools
-#hdfdir/bin/*
-#_altdir/%oname-tools.alternatives
+%files -n %oname-%sover-tools
+%hdfdir/bin/*
+%_altdir/%oname-tools.alternatives
 
-#files -n %oname-examples
-#_docdir/hdf5_examples
+%files -n %oname-examples
+%_docdir/hdf5_examples
 
 %changelog
-* Tue Jul 02 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.8.9-alt3
-- Moved this version into System/Legacy libraries
+* Wed Jun 26 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.8.11-alt1
+- Version 1.8.11
 
 * Tue Oct 02 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.8.9-alt2
 - Rebuilt with gcc 4.7
