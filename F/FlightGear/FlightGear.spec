@@ -1,6 +1,6 @@
 Name: FlightGear
 Version: 2.10.0
-Release: alt2
+Release: alt2.1
 
 Summary: open-source flight simulator
 License: GPL
@@ -102,6 +102,9 @@ rm -rf %buildroot%_datadir/locale
 %_desktopdir/%name.desktop
 
 %changelog
+* Wed Jun 26 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.10.0-alt2.1
+- Rebuilt with new libfltk
+
 * Tue Feb 19 2013 Michael Shigorin <mike@altlinux.org> 2.10.0-alt2
 - dropped stale version.h stating it's 2.8.0 still
   (so fgroot data version was being mistreated)

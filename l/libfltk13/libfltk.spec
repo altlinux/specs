@@ -2,7 +2,7 @@
 %define major 1.3
 
 Name: %{oname}13
-Version: %major.0.r9812
+Version: %major.0.r9945
 Release: alt1
 
 Summary: Multiplatform C++ GUI Fast Light ToolKit
@@ -10,7 +10,7 @@ License: LGPL
 Group: System/Libraries
 URL: http://www.fltk.org/
 
-# http://svn.easysw.com/public/fltk/fltk/branches/branch-1.3/
+# http://seriss.com/public/fltk/fltk/branches/branch-1.3/
 Source: %name-%version.tar
 Source1: CMakeCache.txt
 
@@ -100,18 +100,22 @@ cp -fR documentation/html %buildroot%_docdir/fltk-%version/
 mv %buildroot%prefix/man/* %buildroot%_mandir/
 
 %files
+%_bindir/fluid
 %_libdir/*.so.*
 %dir %_docdir/fltk-%version
 %_docdir/fltk-%version/ANNOUNCEMENT
 %_docdir/fltk-%version/CREDITS
 %_docdir/fltk-%version/README
+%_mandir/man1/fluid.1*
 
 %files -n %oname-devel
 %_bindir/*
+%exclude %_bindir/fluid
 %_libdir/*.so
 %_includedir/*
 %_libdir/FLTK-1.3
 %_mandir/man?/*
+%exclude %_mandir/man1/fluid.1*
 
 %files doc
 %_docdir/fltk-%version
@@ -120,6 +124,9 @@ mv %buildroot%prefix/man/* %buildroot%_mandir/
 %exclude %_docdir/fltk-%version/README
 
 %changelog
+* Tue Jun 25 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.0.r9945-alt1
+- New snapshot
+
 * Tue Feb 05 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.0.r9812-alt1
 - New snapshot
 
