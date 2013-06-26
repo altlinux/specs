@@ -1,11 +1,11 @@
 %define setools_maj_ver 3.3
-%define setools_min_ver 7
+%define setools_min_ver 8
 
 %define autoconf_ver 2.59
 
 Name: setools
 Version: %setools_maj_ver.%setools_min_ver
-Release: alt4
+Release: alt1
 License: %gpl2plus
 URL: http://oss.tresys.com/projects/setools
 Source: %name-%version.tar
@@ -330,6 +330,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_datadir/applications/*
 
 %changelog
+* Wed Jun 26 2013 Andriy Stepanov <stanv@altlinux.ru> 3.3.8-alt1
+- NewVersion
+
 * Wed Oct 03 2012 Led <led@altlinux.ru> 3.3.7-alt4
 - fixed build with recent libsepol
 - added patches from openSUSE
