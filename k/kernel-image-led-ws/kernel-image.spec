@@ -21,7 +21,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.4.50
-Release: alt2
+Release: alt3
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -135,7 +135,7 @@ Release: alt2
 %Extra_modules vboxhost 4.2.14
 %Extra_modules vboxguest 4.2.14
 %Extra_modules kvm 3.9
-%Extra_modules nvidia 319.23
+%Extra_modules nvidia 319.32
 #Extra_modules fglrx 8.97.100.7
 #Extra_modules netatop 0.2
 
@@ -260,12 +260,13 @@ Patch0188: linux-%kernel_branch.39-fix-drivers-gpio--gpio-wm8994.patch
 Patch0189: linux-%kernel_branch.39-fix-drivers-gpio--gpiolib.patch
 
 Patch0190: linux-%kernel_branch.46-fix-drivers-gpu-drm.patch
-Patch0191: linux-%kernel_branch.25-fix-drivers-gpu-drm--exynosdrm.patch
-Patch0192: linux-%kernel_branch.25-fix-drivers-gpu-drm--gma500_gfx.patch
-Patch0193: linux-%kernel_branch.38-fix-drivers-gpu-drm--i915.patch
-Patch0194: linux-%kernel_branch.20-fix-drivers-gpu-drm--nouveau.patch
-Patch0195: linux-%kernel_branch.38-fix-drivers-gpu-drm--radeon.patch
-Patch0196: linux-%kernel_branch.45-fix-drivers-gpu-vga--vga_switcheroo.patch
+Patch0191: linux-%kernel_branch.50-fix-drivers-gpu-drm--drm.patch
+Patch0192: linux-%kernel_branch.25-fix-drivers-gpu-drm--exynosdrm.patch
+Patch0193: linux-%kernel_branch.25-fix-drivers-gpu-drm--gma500_gfx.patch
+Patch0194: linux-%kernel_branch.38-fix-drivers-gpu-drm--i915.patch
+Patch0195: linux-%kernel_branch.20-fix-drivers-gpu-drm--nouveau.patch
+Patch0196: linux-%kernel_branch.38-fix-drivers-gpu-drm--radeon.patch
+Patch0197: linux-%kernel_branch.45-fix-drivers-gpu-vga--vga_switcheroo.patch
 
 Patch0201: linux-%kernel_branch.38-fix-drivers-hid--hid.patch
 Patch0202: linux-%kernel_branch.20-fix-drivers-hid--hid-apple.patch
@@ -444,25 +445,26 @@ Patch0542: linux-%kernel_branch-fix-firmware-radeon.patch
 Patch0550: linux-%kernel_branch.44-fix-fs.patch
 Patch0551: linux-%kernel_branch.37-fix-fs--block.patch
 Patch0552: linux-%kernel_branch.35-fix-fs-9p.patch
-Patch0553: linux-%kernel_branch.32-fix-fs-btrfs.patch
-Patch0554: linux-%kernel_branch.38-fix-fs-ceph.patch
-Patch0555: linux-%kernel_branch.30-fix-fs-cifs.patch
-Patch0556: linux-%kernel_branch.35-fix-fs-debugfs.patch
-Patch0557: linux-%kernel_branch.37-fix-fs-ext3.patch
-Patch0558: linux-%kernel_branch.35-fix-fs-ext4.patch
-Patch0559: linux-%kernel_branch.42-fix-fs-fuse.patch
-Patch0560: linux-%kernel_branch.35-fix-fs-gfs2.patch
-Patch0561: linux-%kernel_branch.20-fix-fs-hfs.patch
-Patch0562: linux-%kernel_branch.35-fix-fs-jfs.patch
-Patch0563: linux-%kernel_branch.29-fix-fs-logfs.patch
-Patch0564: linux-%kernel_branch.35-fix-fs-nfs.patch
-Patch0565: linux-%kernel_branch.35-fix-fs-nilfs2.patch
-Patch0566: linux-%kernel_branch.35-fix-fs-ocfs2.patch
-Patch0567: linux-%kernel_branch.31-fix-fs-proc.patch
-Patch0568: linux-%kernel_branch.28-fix-fs-ramfs.patch
-Patch0569: linux-%kernel_branch.47-fix-fs-reiserfs.patch
-Patch0570: linux-%kernel_branch.35-fix-fs-ubifs.patch
-Patch0571: linux-%kernel_branch.46-fix-fs-xfs.patch
+Patch0553: linux-%kernel_branch.50-fix-fs-autofs4.patch
+Patch0554: linux-%kernel_branch.32-fix-fs-btrfs.patch
+Patch0555: linux-%kernel_branch.38-fix-fs-ceph.patch
+Patch0556: linux-%kernel_branch.30-fix-fs-cifs.patch
+Patch0557: linux-%kernel_branch.35-fix-fs-debugfs.patch
+Patch0558: linux-%kernel_branch.37-fix-fs-ext3.patch
+Patch0559: linux-%kernel_branch.35-fix-fs-ext4.patch
+Patch0560: linux-%kernel_branch.42-fix-fs-fuse.patch
+Patch0561: linux-%kernel_branch.35-fix-fs-gfs2.patch
+Patch0562: linux-%kernel_branch.20-fix-fs-hfs.patch
+Patch0563: linux-%kernel_branch.35-fix-fs-jfs.patch
+Patch0564: linux-%kernel_branch.29-fix-fs-logfs.patch
+Patch0565: linux-%kernel_branch.35-fix-fs-nfs.patch
+Patch0566: linux-%kernel_branch.35-fix-fs-nilfs2.patch
+Patch0567: linux-%kernel_branch.50-fix-fs-ocfs2.patch
+Patch0568: linux-%kernel_branch.31-fix-fs-proc.patch
+Patch0569: linux-%kernel_branch.28-fix-fs-ramfs.patch
+Patch0570: linux-%kernel_branch.47-fix-fs-reiserfs.patch
+Patch0571: linux-%kernel_branch.35-fix-fs-ubifs.patch
+Patch0572: linux-%kernel_branch.46-fix-fs-xfs.patch
 
 Patch0581: linux-%kernel_branch.34-fix-include-linux.patch
 
@@ -794,7 +796,7 @@ Group: System/Kernel and hardware \
 Provides: kernel-modules-%{1}-%kversion-%flavour-%krelease = %kversion-%release \
 Conflicts: kernel-modules-%{1}-%kversion-%flavour-%krelease < %kversion-%release \
 Conflicts: kernel-modules-%{1}-%kversion-%flavour-%krelease > %kversion-%release \
-Requires(postun): %name = %kversion-%release \
+Requires: %name = %kversion-%release \
 AutoProv: no, %kernel_prov \
 AutoReq: no, %kernel_req \
 PreReq: coreutils module-init-tools >= 3.1 %name = %kversion-%release
@@ -1071,7 +1073,6 @@ These are DRM modules for your Linux system.
 %if_enabled media
 %package -n kernel-modules-media-%flavour
 Summary: Linux media driver modules
-Provides: kernel-modules-lirc-%flavour = %version-%release
 # Needed for webcams
 Requires: kernel-modules-alsa-%flavour = %kversion-%release
 %kernel_modules_package_std_body media
@@ -1436,6 +1437,7 @@ cd linux-%version
 %patch0194 -p1
 %patch0195 -p1
 %patch0196 -p1
+%patch0197 -p1
 
 # fix-drivers-hid--*
 %patch0201 -p1
@@ -1666,6 +1668,7 @@ cd linux-%version
 %patch0569 -p1
 %patch0570 -p1
 %patch0571 -p1
+%patch0572 -p1
 
 # fix-include-*
 %patch0581 -p1
@@ -2747,6 +2750,14 @@ done)
 
 
 %changelog
+* Wed Jun 26 2013 Led <led@altlinux.ru> 3.4.50-alt3
+- updated:
+  + fix-fs-ocfs2
+- added:
+  + fix-drivers-gpu-drm--drm
+  + fix-fs-autofs4
+- nvidia 319.32
+
 * Sun Jun 23 2013 Led <led@altlinux.ru> 3.4.50-alt2
 - updated:
   + fix-virt-kvm
