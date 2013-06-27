@@ -1,5 +1,5 @@
 Name: linphone
-Version: 3.6.0
+Version: 3.6.1
 Release: alt1
 License: GPLv2+
 Url: http://www.linphone.org/
@@ -116,6 +116,9 @@ This package contains development files for %name.
 %_libdir/*.so
 
 %changelog
+* Thu Jun 27 2013 Alexei Takaseev <taf@altlinux.org> 3.6.1-alt1
+- 3.6.1
+
 * Fri Jun 14 2013 Alexei Takaseev <taf@altlinux.org> 3.6.0-alt1
 - 3.6.0
 
