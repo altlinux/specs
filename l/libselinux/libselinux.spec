@@ -1,7 +1,7 @@
 %def_with python
 
 Name: libselinux
-Version: 2.1.12
+Version: 2.1.13
 Release: alt1
 Summary: SELinux library
 License: Public Domain
@@ -115,6 +115,9 @@ TELINIT=/sbin/telinit
 
 
 %changelog
+* Thu Jun 27 2013 Andriy Stepanov <stanv@altlinux.ru> 2.1.13-alt1
+- New version
+
 * Sun Sep 23 2012 Led <led@altlinux.ru> 2.1.12-alt1
 - 2.1.12
 - cleaned up spec
