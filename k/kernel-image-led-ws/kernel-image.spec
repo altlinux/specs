@@ -21,7 +21,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.4.50
-Release: alt3
+Release: alt4
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -136,7 +136,9 @@ Release: alt3
 %Extra_modules vboxguest 4.2.14
 %Extra_modules kvm 3.9
 %Extra_modules nvidia 319.32
-#Extra_modules fglrx 8.97.100.7
+%Extra_modules knem 1.0.0
+#Extra_modules fglrx 13.101
+#Extra_modules zfs 0.6.1
 #Extra_modules netatop 0.2
 
 %define strip_mod_opts --strip-unneeded -R .comment
@@ -451,7 +453,7 @@ Patch0555: linux-%kernel_branch.38-fix-fs-ceph.patch
 Patch0556: linux-%kernel_branch.30-fix-fs-cifs.patch
 Patch0557: linux-%kernel_branch.35-fix-fs-debugfs.patch
 Patch0558: linux-%kernel_branch.37-fix-fs-ext3.patch
-Patch0559: linux-%kernel_branch.35-fix-fs-ext4.patch
+Patch0559: linux-%kernel_branch.50-fix-fs-ext4.patch
 Patch0560: linux-%kernel_branch.42-fix-fs-fuse.patch
 Patch0561: linux-%kernel_branch.35-fix-fs-gfs2.patch
 Patch0562: linux-%kernel_branch.20-fix-fs-hfs.patch
@@ -594,7 +596,7 @@ Patch1176: linux-%kernel_branch.20-feat-fs-dazukofs.patch
 Patch1177: linux-%kernel_branch.18-feat-fs-ext2--secrm.patch
 Patch1178: linux-%kernel_branch.18-feat-fs-ext3--secrm.patch
 Patch1179: linux-%kernel_branch.44-feat-fs-ext4--richacl.patch
-Patch1180: linux-%kernel_branch.35-feat-fs-ext4--secrm.patch
+Patch1180: linux-%kernel_branch.50-feat-fs-ext4--secrm.patch
 Patch1181: linux-%kernel_branch.20-feat-fs-f2fs.patch
 Patch1182: linux-%kernel_branch.18-feat-fs-fat--secrm.patch
 Patch1183: linux-%kernel_branch.18-feat-fs-jbd--secrm.patch
@@ -2609,7 +2611,10 @@ done)
 
 %if "%sub_flavour" != "guest"
 %{?_enable_guest:%kernel_modules_package_files guest}
-%{?_enable_drm:%dir %modules_dir/kernel/drivers/gpu/drm}
+%if_enabled drm
+%dir %modules_dir/kernel/drivers/gpu
+%dir %modules_dir/kernel/drivers/gpu/drm
+%endif
 %endif
 
 
@@ -2750,6 +2755,13 @@ done)
 
 
 %changelog
+* Thu Jun 27 2013 Led <led@altlinux.ru> 3.4.50-alt4
+- updated:
+  + fix-fs-ext4
+- fixed %%files of kernel-modules-guest-*
+- added external modules:
+  + knem
+
 * Wed Jun 26 2013 Led <led@altlinux.ru> 3.4.50-alt3
 - updated:
   + fix-fs-ocfs2
