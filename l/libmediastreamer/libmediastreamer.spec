@@ -1,5 +1,5 @@
 Name: libmediastreamer
-Version: 2.9.0
+Version: 2.9.1
 Release: alt1
 
 Group: System/Libraries
@@ -86,6 +86,9 @@ mkdir -p %buildroot/%_libdir/mediastreamer/plugins
 %_includedir/*
 
 %changelog
+* Thu Jun 27 2013 Alexei Takaseev <taf@altlinux.org> 2.9.1-alt1
+- 2.9.1
+
 * Fri Jun 14 2013 Alexei Takaseev <taf@altlinux.org> 2.9.0-alt1
 - 2.9.0
 
