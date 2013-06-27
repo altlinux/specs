@@ -2,7 +2,7 @@
 %def_with python
 
 Name: libsemanage
-Version: 2.1.9
+Version: 2.1.10
 Release: alt1
 Summary: Library, which provides an interface for SELinux management
 Group: System/Libraries
@@ -106,6 +106,9 @@ ln -sf /%_lib/libsemanage.so.1 %buildroot/%_libdir/libsemanage.so
 
 
 %changelog
+* Thu Jun 27 2013 Andriy Stepanov <stanv@altlinux.ru> 2.1.10-alt1
+- New version
+
 * Sun Sep 23 2012 Led <led@altlinux.ru> 2.1.9-alt1
 - 2.1.9
 - cleaned up spec
