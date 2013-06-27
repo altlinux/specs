@@ -1,21 +1,13 @@
 Name: libunwind
-Version: 0.99
-Release: alt5.2
+Version: 1.1
+Release: alt1
 
-%define frysksnap 20070405cvs
-%define upstreamsnap 070224
 Summary: An unwinding library
 License: BSD
 Group: Development/Debuggers
 Url: http://savannah.nongnu.org/projects/libunwind
-Packager: Yuriy Kashirin <uka@altlinux.ru>
 
-Source: http://download.savannah.nongnu.org/releases/libunwind/libunwind-snap-%upstreamsnap.tar.gz
-Patch0: %name-%version-%release.patch
-#Patch1: libunwind-snap-%upstreamsnap-frysk%frysksnap.patch
-#Patch2: libunwind-makefile-alt.patch
-
-BuildRequires: glibc gcc make tar gzip automake libtool autoconf
+Source: %name-%version.tar
 
 %description
 Libunwind provides a C ABI to determine the call-chain of a program.
@@ -24,35 +16,21 @@ Libunwind provides a C ABI to determine the call-chain of a program.
 Summary: Development package for libunwind
 Group: Development/Debuggers
 Requires: libunwind = %version-%release
+
 %description devel
 The libunwind-devel package includes the libraries and header files for
 libunwind.
 
 %prep
-%setup -q -n %name-%version-alpha
-
-%patch -p1
-#patch1 -p1 -E
-#patch2 -p0
-
-# New files from Patch1:
-chmod +x tests/run-ptrace-stepper
-chmod +x tests/run-ptrace-signull
+%setup
 
 %build
-mkdir -p config
-aclocal
-libtoolize --install
-autoheader
-automake --add-missing
-autoconf
-%configure --disable-static --enable-shared
+%autoreconf
+%configure --disable-static
 make
 
 %install
 %makeinstall
-rm -f %buildroot/%_libdir/libunwind*.la
-
 
 %files
 %doc COPYING README NEWS
@@ -60,10 +38,14 @@ rm -f %buildroot/%_libdir/libunwind*.la
 
 %files devel
 %_libdir/libunwind*.so
+%_pkgconfigdir/*.pc
 %_mandir/*/*
 %_includedir/*
 
 %changelog
+* Thu Jun 27 2013 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.1-alt1
+- 1.1 release
+
 * Mon Mar 21 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.99-alt5.2
 - Rebuilt for debuginfo
 
