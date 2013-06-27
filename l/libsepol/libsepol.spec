@@ -1,7 +1,7 @@
 %def_disable check
 
 Name: libsepol
-Version: 2.1.8
+Version: 2.1.9
 Release: alt1
 Summary: SELinux binary policy manipulation library
 License: LGPLv2+
@@ -95,6 +95,9 @@ on binary policies such as customizing policy boolean settings.
 %exclude %_man8dir/genpol*
 
 %changelog
+* Thu Jun 27 2013 Andriy Stepanov <stanv@altlinux.ru> 2.1.9-alt1
+- New version
+
 * Sun Sep 23 2012 Led <led@altlinux.ru> 2.1.8-alt1
 - 2.1.8
 - cleaned up spec
