@@ -1,6 +1,6 @@
 Name: octave
 Version: 3.6.4
-Release: alt1
+Release: alt3
 
 %define docdir %_defaultdocdir/%name-%version
 
@@ -151,6 +151,12 @@ install -pm0755 -D %SOURCE1 %buildroot%_rpmlibdir/%name.filetrigger
 %docdir/liboctave
 
 %changelog
+* Wed Jun 26 2013 Paul Wolneykien <manowar@altlinux.org> 3.6.4-alt3
+- Rebuild with the new version of libfltk: v1.3.0.r9945.
+
+* Fri Jun 21 2013 Paul Wolneykien <manowar@altlinux.org> 3.6.4-alt2
+- Rebuild with the new version of libglpk: 4.51.
+
 * Wed Apr 10 2013 Paul Wolneykien <manowar@altlinux.org> 3.6.4-alt1
 - Update to the new upstream release 3.6.4 with the help of cronbuild scripts.
 - Update the cronbuild scripts to use the update-source-functions package.
