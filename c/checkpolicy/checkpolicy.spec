@@ -1,5 +1,5 @@
 Name: checkpolicy
-Version: 2.1.11
+Version: 2.1.12
 Release: alt1
 Summary: SELinux policy compiler
 Group: System/Configuration/Other
@@ -47,6 +47,9 @@ done
 
 
 %changelog
+* Thu Jun 27 2013 Andriy Stepanov <stanv@altlinux.ru> 2.1.12-alt1
+- New version
+
 * Mon Sep 24 2012 Led <led@altlinux.ru> 2.1.11-alt1
 - 2.1.11
 - cleaned up spec
