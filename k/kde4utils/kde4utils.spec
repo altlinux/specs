@@ -9,7 +9,7 @@ Name: kde4utils
 %define minor 10
 %define bugfix 3
 Version: %major.%minor.%bugfix
-Release: alt1
+Release: alt2
 
 Group: Graphical desktop/KDE
 Summary: K Desktop Environment
@@ -29,10 +29,8 @@ Requires: %name-laptop = %version-%release
 %endif
 Requires: %name-ktimer = %version-%release
 Requires: %name-kwallet = %version-%release
-Requires: %name-superkaramba = %version-%release
 Requires: %name-ark = %version-%release
 Requires: %name-sweeper = %version-%release
-Requires: kde4-print-manager
 
 Source00: ark-%version.tar
 Source01: filelight-%version.tar
@@ -83,6 +81,15 @@ KDE utilites
 * ktimer: execute programs after some time
 * sweeper
 * kwalletmanager
+
+%package maxi
+Summary: %name maximum package
+Group: Graphical desktop/KDE
+Requires: %name
+Requires: %name-superkaramba
+Requires: kde4-print-manager
+%description maxi
+Maximum package of %name
 
 %package common
 Summary: %name core files
@@ -302,6 +309,7 @@ done
 %K4install
 
 
+%files maxi
 %files
 %files common
 #%doc README
@@ -481,6 +489,9 @@ done
 
 
 %changelog
+* Fri Jun 28 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.3-alt2
+- dont require superkaramba and kde4-print-manager by default
+
 * Wed May 15 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.3-alt1
 - new version
 
