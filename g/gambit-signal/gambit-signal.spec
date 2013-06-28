@@ -1,6 +1,6 @@
 Name: gambit-signal
-Version: 1.0
-Release: alt11
+Version: 1.1
+Release: alt1
 Summary: UNIX signal handling library for Gambit-C Scheme programming system
 License: GPLv3+
 Group: Development/Scheme
@@ -44,6 +44,11 @@ This package contains the library link file
 %{_includedir}/gambit/libgambc-signal.c
 
 %changelog
+* Wed Jun 26 2013 Paul Wolneykien <manowar@altlinux.org> 1.1-alt1
+- Use Gambit's interrupts to pass on the received signals.
+- Raise the exception interrupting the recipient thread.
+- Exit with status of 1 when the test fails.
+
 * Wed May 22 2013 Paul Wolneykien <manowar@altlinux.org> 1.0-alt11
 - Add the proc to access the signal number field in a signal
   exception.
