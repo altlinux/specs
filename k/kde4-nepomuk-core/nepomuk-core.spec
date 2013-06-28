@@ -6,7 +6,7 @@ Name: kde4-nepomuk-core
 %define minor  10
 %define bugfix 4
 Version: %major.%minor.%bugfix
-Release: alt1
+Release: alt2
 %define sover %major
 
 Group: Graphical desktop/KDE
@@ -16,6 +16,7 @@ License: LGPLv2+
 
 Requires: %name-common = %EVR
 Requires: libnepomukcore4 = %EVR
+Requires: soprano soprano-backend-redland soprano-backend-virtuoso
 
 Source: %rname-%version.tar
 # ALT
@@ -125,6 +126,9 @@ done
 %_K4link/*.so
 
 %changelog
+* Fri Jun 28 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.4-alt2
+- require soprano
+
 * Mon Jun 03 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.4-alt1
 - new version
 
