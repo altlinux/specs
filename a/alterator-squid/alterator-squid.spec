@@ -1,5 +1,5 @@
 Name: alterator-squid
-Version: 1.4.4
+Version: 1.4.5
 Release: alt1
 
 BuildArch: noarch
@@ -60,6 +60,11 @@ fi
 subst 's/squid_kerb_auth/negotiate_kerberos_auth/;s/pam_auth/basic_pam_auth/;s/squid_ldap_group/ext_ldap_group_acl/' /etc/squid/squid.conf
 
 %changelog
+* Fri Jun 28 2013 Paul Wolneykien <manowar@altlinux.org> 1.4.5-alt1
+- Check both the 'enabled' and the 'active' status values of the
+  service.
+- Simplify the start-stop proc.
+
 * Thu May 23 2013 Paul Wolneykien <manowar@altlinux.org> 1.4.4-alt1
 - Restart Squid if proxy mode was changed.
 - Make Squid reload on every configuration update (closes: 28017).
