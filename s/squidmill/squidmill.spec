@@ -1,25 +1,29 @@
 Name: squidmill
-Version: 2.2
-Release: alt4
+Version: 2.4
+Release: alt1
 
 Source: %name-%version.tar
 
 Packager: Paul Wolneykien <manowar@altlinux.ru>
 
-Summary: Squid access log file processing utility
-License: GPL
+Summary: Squid proxy server access log collector with rounding support
+License: GPLv3+
 Group: System/Configuration/Other
 
-# Automatically added by buildreq on Mon Apr 20 2009
-BuildRequires: gambit gambit-sqlite3-devel gambit-signal-devel rpm-macros-fillup
+BuildRequires: gambit
+BuildRequires: gambit-sqlite3-devel >= 1.2-alt7
+BuildRequires: gambit-signal-devel >= 1.1-alt1
+BuildRequires: gambit-dsock-devel >= 1.1-alt1
+BuildRequires: rpm-macros-fillup sqlite3 /usr/bin/dc
+
+Requires: gambit-sqlite3 >= 1.2-alt7
+Requires: gambit-signal >= 1.1-alt1
+Requires: gambit-dsock >= 1.1-alt1
 
 %description
-Squidmill unility can acquire and integrate information from
-Squid proxy server access log files. Rounding function can be used to
-save space (and reporting time).
-
-Online database update service and anacron job file for rounding an old
-data are included.
+Squidmill daemon acquires and integrates information from a
+Squid proxy server access log files. Rounding is supported to
+save space and reporting time.
 
 %prep
 %setup
@@ -29,18 +33,51 @@ data are included.
 
 %install
 %makeinstall initdir=%buildroot%{_initdir} unitdir=%buildroot%_unitdir
+mkdir -p %buildroot%_var/run/squidmill
+
+%check
+%make check
 
 %preun
 %preun_service squidmill
 
 %files
 %_sbindir/squidmill
-%_sysconfdir/cron.daily/squidmill
 %_initdir/squidmill
 %_unitdir/squidmill.service
 %_sysconfdir/sysconfig/squidmill
+%attr(0755, squid, squid) %dir %_var/run/squidmill
 
 %changelog
+* Thu Jun 27 2013 Paul Wolneykien <manowar@altlinux.org> 2.4-alt1
+- Keep on trying to read the files in the follow mode in the case
+  of an error.
+- Explicitly require gambit-* versions.
+- Run service squidmill as forking daemon.
+- Update the program internal version number.
+- Bulk insert without an explicit transaction (faster!).
+- Server socket for DB-file, client otherwise.
+- Require gambit-signal >= 1.1.
+- Require gambit-dsock >= 1.1.
+- Check and round the existing data before inserting the new data.
+- Lock the DB-mutex over the whole transaction. Select data with
+  no explicit transaction.
+- Use MAXRECORDS configuration parameter to specify the rounding size.
+- Round every N rows not minutes.
+- Add option for a log-file.
+- Update the license and the description.
+- Use bulk size of 1 by default.
+- Make the checks when building the package.
+- Implement the SQL-server.
+- Remove the DB-reopen stuff.
+
+* Tue May 14 2013 Paul Wolneykien <manowar@altlinux.ru> 2.3-alt1
+- Make use of the rounding period value in the service files.
+- Add configuration option for rounding period, 1440 min by default.
+- Rounding period of 0 means no rounding.
+- Remove the anacron daily job.
+- Implement in-process rounding.
+
 * Mon Apr 08 2013 Paul Wolneykien <manowar@altlinux.ru> 2.2-alt4
 - Rebuild with a new version of Gambit.
 
