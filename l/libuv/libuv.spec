@@ -1,6 +1,6 @@
-%define soname 0.10
+%define soname 0.11
 Name: libuv
-Version: 0.10.8
+Version: 0.11.5
 Release: alt1
 Summary: Evented I/O for NodeJS
 Group: Development/Tools
@@ -47,6 +47,9 @@ cp -R include/* %buildroot%_includedir
 
 
 %changelog
+* Sat Jun 29 2013 Dmitriy Kulik <lnkvisitor@altlinux.org> 0.11.5-alt1
+- 0.11.5
+
 * Wed May 29 2013 Dmitriy Kulik <lnkvisitor@altlinux.org> 0.10.8-alt1
 - 0.10.8
 
