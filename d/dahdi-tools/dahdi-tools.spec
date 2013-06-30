@@ -1,7 +1,7 @@
 Name: dahdi-tools
 Summary: DAHDI tools for Digium hardware and Asterisk
-Version: 2.6.2
-Release: alt3
+Version: 2.7.0
+Release: alt1
 License: GPL
 Group: System/Kernel and hardware
 BuildRequires: dahdi-linux-headers gcc-c++ libncurses-devel libnewt-devel libpcap-devel libusb-compat-devel module-init-tools perl-Pod-Parser ppp-devel wget
@@ -205,8 +205,6 @@ install -m755 dahdi_pcap %buildroot%_sbindir/dahdi_pcap
 %_man8dir/astribank_hexload.8.gz
 %_sbindir/astribank_tool
 %_man8dir/astribank_tool.8.gz
-%_sbindir/fpga_load
-%_man8dir/fpga_load.8.gz
 %_sbindir/astribank_is_starting
 %_man8dir/astribank_is_starting.8.gz
 %_sbindir/twinstar
@@ -254,6 +252,9 @@ install -m755 dahdi_pcap %buildroot%_sbindir/dahdi_pcap
 %_libdir/pppd/*/*.so
 
 %changelog
+* Sun Jun 30 2013 Denis Smirnov <mithraen@altlinux.ru> 2.7.0-alt1
+- new version 2.7.0
+
 * Tue May 14 2013 Denis Smirnov <mithraen@altlinux.ru> 2.6.2-alt3
 - add condstop target to initscript
 
