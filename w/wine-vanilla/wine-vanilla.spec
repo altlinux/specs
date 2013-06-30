@@ -1,6 +1,6 @@
 Name: wine-vanilla
 Version: 1.6.0
-Release: alt0.rc3
+Release: alt0.rc4
 
 Summary: Wine - environment for running Windows 16/32/64 bit applications
 
@@ -42,6 +42,9 @@ BuildRequires: libalsa-devel jackit-devel libgsm-devel libmpg123-devel
 BuildRequires: libopenal-devel libGLU-devel
 BuildRequires: libusb-devel libieee1284-devel
 BuildRequires: libv4l-devel gstreamer-devel gst-plugins-devel
+
+# udev needed for udev version detect
+BuildRequires: libudev-devel udev libdbus-devel
 
 BuildRequires: libICE-devel libSM-devel
 BuildRequires: libX11-devel libXau-devel libXaw-devel libXrandr-devel
@@ -342,6 +345,9 @@ rm -rf %buildroot%_mandir/*.UTF-8
 %exclude %_libdir/wine/libwinecrt0.a
 
 %changelog
+* Sun Jun 30 2013 Vitaly Lipatov <lav@altlinux.ru> 1.6.0-alt0.rc4
+- new version 1.6-rc4
+
 * Sat Jun 22 2013 Vitaly Lipatov <lav@altlinux.ru> 1.6.0-alt0.rc3
 - new version 1.6-rc3, requires wine-gecko 2.21
 
