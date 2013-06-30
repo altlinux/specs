@@ -13,7 +13,7 @@
 
 Name: wine
 Version: 1.6.0
-Release: alt0.rc3
+Release: alt0.rc4
 Epoch: 1
 
 Summary: Environment for running Windows applications (Etersoft edition)
@@ -46,13 +46,10 @@ AutoReq: yes, noperl
 
 #==========================================================================
 
-# Needed freetype (it is recommended to use 2.1.10 for better results)
-%define freetype_ver 2.1.9
-
 # General dependencies
 BuildRequires: rpm-build-intro
 BuildRequires: gcc util-linux flex bison
-BuildRequires: fontconfig-devel libfreetype-devel >= %freetype_ver
+BuildRequires: fontconfig-devel libfreetype-devel
 BuildRequires: libncurses-devel libncursesw-devel libtinfo-devel
 BuildRequires: libssl-devel zlib-devel libldap-devel libgnutls-devel
 BuildRequires: libxslt-devel libxml2-devel
@@ -61,8 +58,10 @@ BuildRequires: libusb-devel libgphoto2-devel libsane-devel libcups-devel
 BuildRequires: libalsa-devel jackit-devel libieee1284-devel libhal-devel
 BuildRequires: libopenal-devel libGLU-devel
 BuildRequires: libv4l-devel gstreamer-devel gst-plugins-devel libgsm-devel libmpg123-devel
+
 # udev needed for udev version detect
-BuildRequires: libudev-devel udev
+BuildRequires: libudev-devel udev libdbus-devel
+
 
 # Note: xorg-x11-devel requires all X11 devel packages, but missed on Fedora based systems
 # Require here all subpackages
@@ -435,6 +434,9 @@ rm -rf %buildroot%_mandir/*.UTF-8
 
 
 %changelog
+* Sun Jun 30 2013 Vitaly Lipatov <lav@altlinux.ru> 1:1.6.0-alt0.rc4
+- new build 1.6-rc4
+
 * Sat Jun 22 2013 Vitaly Lipatov <lav@altlinux.ru> 1:1.6.0-alt0.rc3
 - new build 1.6-rc3 (use wine-gecko 2.21)
 
