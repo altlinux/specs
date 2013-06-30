@@ -6,9 +6,10 @@
 %def_with python
 %def_with perl
 %def_enable introspection
+%def_disable check
 
 Name: gnumeric
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: A full-featured spreadsheet for GNOME
@@ -29,10 +30,10 @@ Provides: python%__python_version(Gnumeric)
 %endif
 
 %define scrollkeeper_ver 0.3.14
-%define gsf_ver 1.14.25
+%define gsf_ver 1.14.27
 %define gda_ver 4.0
 %define desktop_file_utils_ver 0.10
-%define goffice_ver 0.10.2
+%define goffice_ver 0.10.3
 
 PreReq: scrollkeeper >= %scrollkeeper_ver
 Requires(post,postun): desktop-file-utils >= %desktop_file_utils_ver
@@ -48,6 +49,7 @@ BuildRequires: intltool gnome-doc-utils zlib-devel librarian
 %{?_with_perl:BuildRequires: perl-devel}
 %{?_with_python:BuildRequires: python-module-pygobject3-devel}
 %{?_with_gda:BuildRequires: libgda4-devel >= %gda_ver libgnomedb4-devel}
+%{?_enable_check:BuildRequires: xvfb-run}
 
 %description
 Gnumeric is a modern full-featured spreadsheet program.  Gnumeric
@@ -135,6 +137,9 @@ gnome-doc-prepare --copy --force
 
 %find_lang --with-gnome --output=%name.lang %name %name-%version %name-%version-functions
 
+%check
+%{?_enable_check:xvfb-run %make check}
+
 %files
 %_bindir/*
 %_libdir/%name/
@@ -174,6 +179,9 @@ gnome-doc-prepare --copy --force
 %_pkgconfigdir/*
 
 %changelog
+* Sun Jun 30 2013 Yuri N. Sedunov <aris@altlinux.org> 1.12.3-alt1
+- 1.12.3
+
 * Sat Apr 27 2013 Yuri N. Sedunov <aris@altlinux.org> 1.12.2-alt1
 - 1.12.2
 
