@@ -6,7 +6,7 @@
 
 %define rname kdepimlibs
 Name: kde4pimlibs
-Version: 4.10.4
+Version: 4.10.5
 Release: alt1
 
 Group: System/Libraries
@@ -91,6 +91,9 @@ Header files for developing applications using %name.
 
 
 %changelog
+* Mon Jul 01 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.5-alt1
+- new version
+
 * Mon Jun 03 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.4-alt1
 - new version
 
