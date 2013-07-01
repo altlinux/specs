@@ -1,8 +1,8 @@
 %define _name hargyllcms
 
 Name: argyllcms
-Version: 1.4.0
-Release: alt2
+Version: 1.5.1
+Release: alt1
 
 Summary: ICC compatible color management system
 Group: Graphics
@@ -11,7 +11,7 @@ License: GPLv3 and MIT
 URL: http://gitorious.org/%_name
 Source: http://people.freedesktop.org/~hughsient/releases/%_name-%version.tar.xz
 
-BuildRequires: libusb-devel libtiff-devel libjpeg-devel libX11-devel libXext-devel
+BuildRequires: libusb-devel libtiff-devel zlib-devel libjpeg-devel libX11-devel libXext-devel
 BuildRequires: libXxf86vm-devel libXinerama-devel libXScrnSaver-devel libXrandr-devel
 
 %description
@@ -62,12 +62,9 @@ This package contains the Argyll color management system documentation.
 %_bindir/*
 %_libdir/libargyll.so.*
 %_libdir/libargyllicc.so.*
-%_libdir/libargyllusb.so.*
 %exclude %_libdir/libargyll.so
 %exclude %_libdir/libargyllicc.so
-%exclude %_libdir/libargyllusb.so
 %_datadir/color/argyll/
-/lib/udev/rules.d/55-Argyll.rules
 %doc README *.txt
 
 %files doc
@@ -76,6 +73,9 @@ This package contains the Argyll color management system documentation.
 %exclude %_datadir/doc
 
 %changelog
+* Mon Jul 01 2013 Yuri N. Sedunov <aris@altlinux.org> 1.5.1-alt1
+- 1.5.1
+
 * Sun Apr 07 2013 Yuri N. Sedunov <aris@altlinux.org> 1.4.0-alt2
 - rebuild against libtiff.so.5
 
