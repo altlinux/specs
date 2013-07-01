@@ -3,7 +3,7 @@
 %define ver_major 2.6
 
 Name: lib%_name%ver_major
-Version: %ver_major.15
+Version: %ver_major.16
 Release: alt1
 
 Summary: MIME library
@@ -21,6 +21,8 @@ BuildPreReq: zlib-devel
 BuildPreReq: libgtk-sharp2-devel >= 2.4.0 libgtk-sharp2-gapi
 BuildPreReq: gtk-doc >= 1.8 docbook-utils
 BuildRequires: gcc-c++ mono-mcs mono-devel
+BuildRequires: gobject-introspection-devel >= 1.30.0
+BuildRequires: libvala-devel vala vala-tools
 BuildRequires: /proc
 
 %description
@@ -35,6 +37,23 @@ PreReq: %name = %version-%release
 %description -n lib%_name-devel
 This package contains development files required for packaging
 libgmime-based software.
+
+%package gir
+Summary: GObject introspection data for the gmime library
+Group: System/Libraries
+Requires: %name = %version-%release
+
+%description gir
+GObject introspection data for the gmime library
+
+%package -n lib%_name-gir-devel
+Summary: GObject introspection devel data for the gmime library
+Group: Development/GNOME and GTK+
+BuildArch: noarch
+Requires: %name-gir = %version-%release
+
+%description -n lib%_name-gir-devel
+GObject introspection devel data for the gmime library
 
 %package -n lib%_name-devel-doc
 Summary: Development documentation for %name
@@ -82,6 +101,8 @@ gtkdocize --copy
 %configure  %{subst_enable static} \
 	    --disable-rpath \
 	    --enable-mono \
+	    --enable-introspection \
+	    --enable-vala \
 	    --enable-largefile \
 	    --enable-gtk-doc \
 	    --enable-smime
@@ -98,6 +119,14 @@ gtkdocize --copy
 %_includedir/*
 %_libdir/*.so
 %_pkgconfigdir/%_name-%ver_major.pc
+%_datadir/vala/vapi/*.vapi
+%_datadir/vala/vapi/*.deps
+
+%files gir
+%_typelibdir/*.typelib
+
+%files -n lib%_name-gir-devel
+%_girdir/*.gir
 
 %files -n lib%_name-devel-doc
 %_gtk_docdir/*
@@ -116,6 +145,11 @@ gtkdocize --copy
 %endif
 
 %changelog
+* Mon Jul 01 2013 Alexey Shabalin <shaba@altlinux.ru> 2.6.16-alt1
+- 2.6.16
+- build with vala support
+- add GObject introspection packages
+
 * Fri Apr 26 2013 Alexey Shabalin <shaba@altlinux.ru> 2.6.15-alt1
 - 2.6.15
 
