@@ -1,5 +1,5 @@
 Name: mkimage-profiles
-Version: 1.1.0
+Version: 1.1.1
 Release: alt1
 
 Summary: ALT Linux based distribution metaprofile
@@ -78,6 +78,9 @@ cp -a * %buildroot%mpdir
 %doc %docs/*
 
 %changelog
+* Mon Jul 01 2013 Michael Shigorin <mike@altlinux.org> 1.1.1-alt1
+- cuboxism
+
 * Mon Jun 17 2013 Michael Shigorin <mike@altlinux.org> 1.1.0-alt1
 - 1.1.x branch: public alpha development status
   + new subprofile: rootfs
