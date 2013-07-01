@@ -3,7 +3,7 @@
 
 Name: libmtp
 Version: 1.1.6
-Release: alt1
+Release: alt2
 Packager: Dmitriy Khanzhin <jinn@altlinux.ru>
 
 Summary: a library for accessing Media Transfer Protocol devices
@@ -66,7 +66,12 @@ This package contains example programs for communicating with MTP devices.
 %build
 touch config.rpath
 %autoreconf
-%configure %{subst_enable static} --disable-mtpz
+%configure \
+	%{subst_enable static} \
+	--disable-mtpz \
+	--with-udev-group=audio \
+	--with-udev-mode=0660
+
 %make_build
 
 %install
@@ -105,6 +110,9 @@ rm -rf %buildroot%_docdir/%name-%version/html
 %_bindir/*
 
 %changelog
+* Mon Jul 01 2013 Alexey Shabalin <shaba@altlinux.ru> 1.1.6-alt2
+- build with --with-udev-group=audio and --with-udev-mode=0660
+
 * Fri Jun 07 2013 Alexey Shabalin <shaba@altlinux.ru> 1.1.6-alt1
 - 1.1.6
 - drop create group camera in pre
