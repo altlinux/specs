@@ -1,15 +1,16 @@
 %define mname kvm
 Name: kernel-src-%mname
-Version: 3.9
+Version: 3.9.8
 Release: alt1
 Summary: KVM Linux kernel module sources
 Group: Development/Kernel
 BuildArch: noarch
 License: GPLv2+
 URL: http://www.linux-kvm.org
-Source: %mname-kmod-%version.tar
-Patch: %mname-kmod-%version-alt.patch
-Provides: kernel-source-kvm = %version-%release
+Source: %mname-kmod-3.9.tar
+Patch0: %mname-kmod-%version.patch
+Patch1: %mname-kmod-3.9-alt.patch
+Provides: kernel-source-%mname = %version-%release
 
 BuildRequires: rpm-build-kernel
 
@@ -18,8 +19,9 @@ This package contains sources for the KVM Linux kernel modules.
 
 
 %prep
-%setup -q -n %mname-kmod-%version
-%patch -p1
+%setup -q -n %mname-kmod-3.9
+%patch0 -p1
+%patch1 -p1
 
 
 %install
@@ -29,10 +31,13 @@ tar -C .. --transform "s/^$D/%mname-%version/" -cJf %buildroot%kernel_src/%mname
 
 
 %files
-%_usrsrc/*
+%_usrsrc/kernel
 
 
 %changelog
+* Sun Jun 30 2013 Led <led@altlinux.ru> 3.9.8-alt1
+- 3.9.8
+
 * Sat Jun 22 2013 Led <led@altlinux.ru> 3.9-alt1
 - 3.9
 

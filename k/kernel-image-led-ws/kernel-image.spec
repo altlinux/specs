@@ -20,13 +20,13 @@
 %define flavour %base_flavour-%sub_flavour
 
 Name: kernel-image-%flavour
-Version: 3.4.50
-Release: alt4
+Version: 3.4.51
+Release: alt1
 
 %define kernel_req %nil
 %define kernel_prov %nil
 %define kernel_branch 3.4
-%define kernel_stable_version 50
+%define kernel_stable_version 51
 %define kernel_extra_version .%kernel_stable_version
 #define kernel_extra_version %nil
 
@@ -115,7 +115,6 @@ Release: alt4
 %def_enable yama
 %def_enable thp
 %def_disable kvm
-%def_enable kvm_ext
 %def_enable hyperv
 %def_disable paravirt_guest
 %def_disable kvm_quest
@@ -134,9 +133,10 @@ Release: alt4
 
 %Extra_modules vboxhost 4.2.14
 %Extra_modules vboxguest 4.2.14
-%Extra_modules kvm 3.9
+%Extra_modules kvm 3.9.8
 %Extra_modules nvidia 319.32
 %Extra_modules knem 1.0.0
+%Extra_modules exfat 1.1.3
 #Extra_modules fglrx 13.101
 #Extra_modules zfs 0.6.1
 #Extra_modules netatop 0.2
@@ -265,7 +265,7 @@ Patch0190: linux-%kernel_branch.46-fix-drivers-gpu-drm.patch
 Patch0191: linux-%kernel_branch.50-fix-drivers-gpu-drm--drm.patch
 Patch0192: linux-%kernel_branch.25-fix-drivers-gpu-drm--exynosdrm.patch
 Patch0193: linux-%kernel_branch.25-fix-drivers-gpu-drm--gma500_gfx.patch
-Patch0194: linux-%kernel_branch.38-fix-drivers-gpu-drm--i915.patch
+Patch0194: linux-%kernel_branch.50-fix-drivers-gpu-drm--i915.patch
 Patch0195: linux-%kernel_branch.20-fix-drivers-gpu-drm--nouveau.patch
 Patch0196: linux-%kernel_branch.38-fix-drivers-gpu-drm--radeon.patch
 Patch0197: linux-%kernel_branch.45-fix-drivers-gpu-vga--vga_switcheroo.patch
@@ -2422,7 +2422,6 @@ done)
 %exclude %modules_dir/kernel/drivers/usb/misc/emi*
 %endif
 %{?_enable_kvm:%exclude %modules_dir/kernel/arch/*/kvm}
-%{?_enable_kvm_ext:%exclude %modules_dir/kernel/arch/*/kvm}
 %if_enabled hyperv
 %exclude %modules_dir/kernel/drivers/hv
 %exclude %modules_dir/kernel/drivers/hid/hid-hyperv.ko
@@ -2755,6 +2754,14 @@ done)
 
 
 %changelog
+* Sun Jun 30 2013 Led <led@altlinux.ru> 3.4.51-alt1
+- 3.4.51
+- updated:
+  + fix-drivers-gpu-drm--i915
+- added external modules:
+  + exfat
+- kvm 3.9.8
+
 * Thu Jun 27 2013 Led <led@altlinux.ru> 3.4.50-alt4
 - updated:
   + fix-fs-ext4

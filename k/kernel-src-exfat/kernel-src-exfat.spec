@@ -1,0 +1,37 @@
+%define mname exfat
+Name: kernel-src-%mname
+Version: 1.1.3
+Release: alt1
+Summary: Linux read/write kernel driver for the exFAT file system
+Group: Development/Kernel
+BuildArch: noarch
+License: GPLv2
+URL: https://github.com/rxrz/exfat-nofuse
+Source: %mname-%version.tar
+Patch: %mname-%version-%release.patch
+Provides: kernel-source-%mname = %version-%release
+
+BuildRequires: rpm-build-kernel
+
+%description
+Linux read/write kernel driver for the exFAT file system.
+This package contains sources for the exFAT Linux kernel modules.
+
+
+%prep
+%setup -q -n %mname-%version
+%patch -p1
+
+
+%install
+install -d -m 0755 %buildroot%kernel_src
+tar -C .. -cJf %buildroot%kernel_src/%mname-%version.tar.xz %mname-%version
+
+
+%files
+%_usrsrc/kernel
+
+
+%changelog
+* Sun Jun 30 2013 Led <led@altlinux.ru> 1.1.3-alt1
+- 1.1.3
