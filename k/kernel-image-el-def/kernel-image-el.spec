@@ -7,7 +7,7 @@
 
 Name: kernel-image-%flavour
 Version: 2.6.32
-Release: alt7
+Release: alt8
 %define erelease 358.11.1.el6
 
 %define kernel_req %nil
@@ -541,6 +541,9 @@ tar --transform='s,^,kernel-src-%flavour-%kversion-%krelease/,' \
 
 
 %changelog
+* Tue Jul 02 2013 Led <led@altlinux.ru> 2.6.32-alt8
+- fixed freeing RCU-protected IP-options (CVE-2013-2224)
+
 * Thu Jun 13 2013 Led <led@altlinux.ru> 2.6.32-alt7
 - 2.6.32-358.11.1.el6:
   + CVE-2013-1935
