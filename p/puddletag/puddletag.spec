@@ -1,5 +1,5 @@
 Name: puddletag
-Version: 0.10.6.3
+Version: 1.0.1
 Release: alt1
 
 Summary: Feature rich, easy to use tag editor
@@ -9,11 +9,13 @@ Group: File tools
 URL: http://puddletag.sourceforge.net/
 Source: http://downloads.sourceforge.net/puddletag/puddletag-%version.tar.gz
 
+Patch0: %name-1.0.1-translations_dir.diff
+
 BuildArch: noarch
 
 # Automatically added by buildreq on Tue Mar 15 2011 (-bi)
 BuildRequires: python-devel python-modules-encodings subversion
-BuildRequires: desktop-file-utils
+BuildRequires: desktop-file-utils libqt4-devel
 
 %description
 Puddletag is an audio tag editor. Unlike most taggers, it uses a
@@ -34,9 +36,11 @@ Supported formats: ID3v1, ID3v2 (mp3), MP4 (mp4, m4a, etc.), VorbisComments
 
 %prep
 %setup
+%patch0 -p1
 
 %build
 %python_build
+lrelease-qt4 ./translations/*.ts
 
 %install
 %python_install
@@ -44,6 +48,8 @@ desktop-file-install --dir %buildroot%_desktopdir \
 	--add-category=Audio \
 	--add-category=AudioVideoEditing \
 	%buildroot%_desktopdir/puddletag.desktop
+mkdir -p %buildroot%_datadir/%name/translations
+cp -a ./translations/*.qm %buildroot%_datadir/%name/translations/
 
 %files
 %_bindir/*
@@ -51,8 +57,12 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_desktopdir/*
 %_pixmapsdir/*
 %_man1dir/*
+%_datadir/%name/translations
 
 %changelog
+* Mon Jul 01 2013 Motsyo Gennadi <drool@altlinux.ru> 1.0.1-alt1
+- 1.0.1
+
 * Fri Jan 06 2012 Victor Forsiuk <force@altlinux.org> 0.10.6.3-alt1
 - 0.10.6.3
 
