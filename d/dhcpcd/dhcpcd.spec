@@ -1,6 +1,6 @@
 Name: dhcpcd
 Epoch: 1
-Version: 5.6.8
+Version: 6.0.2
 Release: alt1
 
 Summary: DHCP Client
@@ -39,7 +39,9 @@ which it is running. It also tries to renew the lease time according to RFC2131.
         --dbdir=%_localstatedir/%name \
         --serviceexists='[ -x %_initdir/"$1" ]' \
         --servicecmd='/sbin/service "$1" >/dev/null 2>&1' \
-        --with-hook=ntp.conf
+        --with-hook=ntp.conf \
+        --enable-ipv4 \
+        --enable-ipv6
 %make_build
 
 %install
@@ -65,6 +67,9 @@ fi
 /lib/%name/%name-run-hooks
 
 %changelog
+* Mon Jul 01 2013 Mikhail Efremov <sem@altlinux.org> 1:6.0.2-alt1
+- Updated to 6.0.2.
+
 * Tue Apr 09 2013 Mikhail Efremov <sem@altlinux.org> 1:5.6.8-alt1
 - Fix a memory leak (from upstream git).
 - Updated to 5.6.8.
