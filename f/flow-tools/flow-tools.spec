@@ -4,7 +4,7 @@
 # --with mysql --with pgsql
 Name: flow-tools
 Version: 0.68
-Release: alt6.1.qa1
+Release: alt7
 
 Summary: Tool set for working with NetFlow data version %version
 License: BSD
@@ -23,6 +23,7 @@ Patch6: flow-tools-0.68-alt-x86_64-time.patch
 
 Patch20: flow-tools-0.67-mysql.patch
 Patch21: flow-tools-0.68-alt-bug9607.patch
+Patch22: flow-tools-0.68-aligment.patch
 
 # not used now
 Patch102: flow-tools-0.67-config.patch
@@ -91,6 +92,9 @@ This package contains scripts to provide ASCII, HTML, RRD output
 %patch21 -p1
 %endif
 
+# ALT bug # 28532
+%patch22 -p0
+
 %build
 %autoreconf
 
@@ -139,6 +143,9 @@ rm -f %buildroot%_libdir/*.la
 %_bindir/flow-rptfmt
 
 %changelog
+* Sun Jun 30 2013 Vitaly Lipatov <lav@altlinux.ru> 0.68-alt7
+- fix aligment issue (ALT bug # 28532)
+
 * Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.68-alt6.1.qa1
 - NMU: rebuilt for updated dependencies.
 
