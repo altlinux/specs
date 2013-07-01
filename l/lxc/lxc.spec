@@ -24,12 +24,12 @@
 
 Name: lxc
 Version: 0.9.0
-Release: alt1.alpha3
+Release: alt2
 Packager: Denis Pynkin <dans@altlinux.org>
 
 URL: http://lxc.sourceforge.net
 Source: http://dl.sourceforge.net/sourceforge/%name/%name-%{version}.tar
-#Patch: %name-%version-%release.patch
+Patch: %name-%version-%release.patch
 
 Summary: %name : Linux Container
 Group: System/Configuration/Other
@@ -64,7 +64,7 @@ development of the linux containers.
 
 %prep
 %setup
-#%patch -p1
+%patch -p1
 
 %build
 CFLAGS+=-I%_includedir/linux-default/include/
@@ -100,6 +100,7 @@ mkdir -p %buildroot%_cachedir/%name
 %_man1dir/*
 %_man5dir/*
 %_man7dir/*
+%dir %_docdir/%name
 %_docdir/%name/*
 %dir %_localstatedir/%name
 %dir %_cachedir/%name
@@ -112,6 +113,10 @@ mkdir -p %buildroot%_cachedir/%name
 %_libdir/*.so
 
 %changelog
+* Mon Jul 01 2013 Denis Pynkin <dans@altlinux.org> 0.9.0-alt2
+- 0.9.0 release
+- fixed #29113, Thanks to legion@.
+
 * Sun Mar 10 2013 Denis Pynkin <dans@altlinux.org> 0.9.0-alt1.alpha3
 - New version
 
