@@ -21,7 +21,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.4.51
-Release: alt3
+Release: alt4
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -501,7 +501,7 @@ Patch0633: linux-%kernel_branch.20-fix-mm--zsmalloc.patch
 Patch0641: linux-%kernel_branch.30-fix-net--dns_resolver.patch
 Patch0642: linux-%kernel_branch.39-fix-net-802--fc.patch
 Patch0643: linux-%kernel_branch.31-fix-net-bridge--bridge.patch
-Patch0644: linux-%kernel_branch.38-fix-net-ceph.patch
+Patch0644: linux-%kernel_branch.50-fix-net-ceph.patch
 Patch0645: linux-%kernel_branch.42-fix-net-core.patch
 Patch0646: linux-%kernel_branch.39-fix-net-dcb.patch
 Patch0647: linux-%kernel_branch.35-fix-net-ipv4--xfrm.patch
@@ -2755,6 +2755,10 @@ done)
 
 
 %changelog
+* Tue Jul 02 2013 Led <led@altlinux.ru> 3.4.51-alt4
+- updated:
+  + fix-net-ceph (CVE-2013-1059)
+
 * Tue Jul 02 2013 Led <led@altlinux.ru> 3.4.51-alt3
 - updated:
   + fix-block
