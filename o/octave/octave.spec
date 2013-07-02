@@ -1,6 +1,6 @@
 Name: octave
 Version: 3.6.4
-Release: alt3
+Release: alt4
 
 %define docdir %_defaultdocdir/%name-%version
 
@@ -151,6 +151,9 @@ install -pm0755 -D %SOURCE1 %buildroot%_rpmlibdir/%name.filetrigger
 %docdir/liboctave
 
 %changelog
+* Tue Jul 02 2013 Paul Wolneykien <manowar@altlinux.org> 3.6.4-alt4
+- Rebuild with a new version of libhdf5.
+
 * Wed Jun 26 2013 Paul Wolneykien <manowar@altlinux.org> 3.6.4-alt3
 - Rebuild with the new version of libfltk: v1.3.0.r9945.
 
