@@ -2,7 +2,7 @@
 %define pre .alpha2
 Name: labplot
 Version: 2.0.0
-Release: alt6.svn20090921
+Release: alt7.svn20090921
 
 Summary: Function and Data Plotter
 
@@ -117,6 +117,9 @@ popd
 %_libdir/scidavis
 
 %changelog
+* Tue Jul 02 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.0-alt7.svn20090921
+- Rebuilt with new libhdf5
+
 * Tue Jul 10 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.0-alt6.svn20090921
 - Rebuilt with libhdf5-7-seq 1.8.8-alt2
 
