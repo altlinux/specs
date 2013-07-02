@@ -5,7 +5,7 @@
 
 Name: py%oname
 Version: 3.0.0
-Release: alt1.git20130601
+Release: alt2.git20130601
 Epoch: 1
 Summary: Managing hierarchical datasets
 License: MIT
@@ -327,6 +327,9 @@ cp -fR bench contrib %buildroot%python_sitelibdir/%oname/
 %_docdir/%name
 
 %changelog
+* Tue Jul 02 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:3.0.0-alt2.git20130601
+- Rebuilt with new libhdf5
+
 * Sun Jun 16 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:3.0.0-alt1.git20130601
 - Version 3.0.0
 
