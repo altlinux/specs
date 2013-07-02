@@ -21,7 +21,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.4.51
-Release: alt1
+Release: alt2
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -134,11 +134,12 @@ Release: alt1
 %Extra_modules vboxhost 4.2.14
 %Extra_modules vboxguest 4.2.14
 %Extra_modules kvm 3.9.8
-%Extra_modules nvidia 319.32
 %Extra_modules knem 1.0.0
 %Extra_modules exfat 1.1.3
 #Extra_modules fglrx 13.101
-#Extra_modules zfs 0.6.1
+%Extra_modules spl 0.6.1
+%Extra_modules zfs 0.6.1
+#Extra_modules nvidia 319.32
 #Extra_modules netatop 0.2
 
 %define strip_mod_opts --strip-unneeded -R .comment
@@ -566,7 +567,7 @@ Patch1102: linux-%kernel_branch.20-feat-drivers-misc--rts_pstor.patch
 
 Patch1111: linux-%kernel_branch.27-feat-drivers-net-ethernet-alacritech.patch
 Patch1112: linux-%kernel_branch.27-feat-drivers-net-ethernet-alacritech--slicoss.patch
-Patch1113: linux-%kernel_branch.35-feat-drivers-net-ethernet-atheros--alx.patch
+Patch1113: linux-%kernel_branch.50-feat-drivers-net-ethernet-atheros--alx.patch
 Patch1114: linux-%kernel_branch.20-feat-drivers-net-wireless-rtl8187se.patch
 Patch1115: linux-%kernel_branch.20-feat-drivers-net-wireless-rtl8192e.patch
 Patch1116: linux-%kernel_branch.20-feat-drivers-net-wireless-rtl8192u.patch
@@ -2114,7 +2115,7 @@ echo "Building kernel %kversion-%flavour-%krelease"
 
 echo "Kernel built %kversion-%flavour-%krelease"
 
-%{?extra_mods:%make_build -f Makefile.external %extra_mods && echo "External modules built"}
+%{?extra_mods:%make_build -f Makefile.external $(echo " %extra_mods " | sed 's/ spl / /') && echo "External modules built"}
 
 # psdocs, pdfdocs don't work yet
 %{?_enable_htmldocs:%def_enable builddocs}
@@ -2754,6 +2755,16 @@ done)
 
 
 %changelog
+* Tue Jul 02 2013 Led <led@altlinux.ru> 3.4.51-alt2
+- updated:
+  + feat-drivers-net-ethernet-atheros--alx
+- Makefile.external: fixed unowned dirs
+- removed external modules:
+  + nvidia
+- added external modules:
+  + spl
+  + zfs
+
 * Sun Jun 30 2013 Led <led@altlinux.ru> 3.4.51-alt1
 - 3.4.51
 - updated:
