@@ -3,7 +3,7 @@
 
 Name: grace
 Version: 5.1.22
-Release: alt9.3
+Release: alt9.4
 
 Summary: WYSIWYG tool to make two-dimensional plots of scientific data
 License: GPL
@@ -134,6 +134,9 @@ GRACE_HOME=%_datadir/grace %_datadir/grace/auxiliary/set_default_enc
 # - look into printing support
 
 %changelog
+* Tue Jul 02 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.1.22-alt9.4
+- Rebuilt with new libhdf5
+
 * Fri Sep 28 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.1.22-alt9.3
 - Rebuilt with libpng15
 
