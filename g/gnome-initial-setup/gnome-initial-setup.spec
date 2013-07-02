@@ -1,4 +1,4 @@
-%define ver_major 0.10
+%define ver_major 0.12
 %define gst_api_ver 1.0
 %define _libexecdir %_prefix/libexec
 %define _localstatedir %_var
@@ -14,7 +14,7 @@ Url: https://live.gnome.org/GnomeOS/Design/Whiteboards/InitialSetup
 
 Source: http://download.gnome.org/sources/%name/%ver_major/%name-%version.tar.xz
 
-Requires: gdm
+Requires: dconf gdm
 
 %global nm_ver 0.9
 %global glib_ver 2.29.4
@@ -77,6 +77,9 @@ useradd -rM -d %_localstatedir/lib/%name -s /sbin/nologin %name &>/dev/null || :
 %doc README NEWS
 
 %changelog
+* Tue Jul 02 2013 Yuri N. Sedunov <aris@altlinux.org> 0.12-alt1
+- 0.12
+
 * Tue May 14 2013 Yuri N. Sedunov <aris@altlinux.org> 0.10-alt1
 - 0.10
 
