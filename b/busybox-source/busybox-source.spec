@@ -1,7 +1,7 @@
 %define bname busybox
 Name: %bname-source
 Version: 1.21.1
-Release: alt1
+Release: alt2
 Summary: Sources of %bname
 License: GPLv2
 Group: Development/Other
@@ -53,6 +53,9 @@ tar -chJf %buildroot%_usrsrc/%bname-%version.tar.xz .
 
 
 %changelog
+* Tue Jul 02 2013 Led <led@altlinux.ru> 1.21.1-alt2
+- upstream fixes
+
 * Mon Jul 01 2013 Led <led@altlinux.ru> 1.21.1-alt1
 - 1.21.1
 
