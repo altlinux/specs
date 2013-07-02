@@ -1,6 +1,6 @@
 Name: ncurses
 Version: 5.9
-Release: alt3
+Release: alt4
 
 %define rootdatadir /lib
 
@@ -22,7 +22,7 @@ Obsoletes: ncurses3
 Requires: termutils-devel = %version-%release
 
 # Automatically added by buildreq on Thu Nov 12 2009
-BuildRequires: libgpm-devel libncurses-devel
+BuildRequires: libgpm-devel libncurses-devel gcc-c++
 
 #build parameters
 %def_with utf8
@@ -30,7 +30,7 @@ BuildRequires: libgpm-devel libncurses-devel
 %def_with normal
 %def_without debug
 %def_without profile
-%def_without cxx
+%def_with cxx
 %def_with gpm
 %def_without ada
 %def_without libtool
@@ -420,11 +420,11 @@ pushd build-utf8
 %if_with cxx
 # Build c++ shared library.
 pushd lib
-g++ -shared -Wl,-soname,libncursesw++.so.5 -o libncursesw++.so.%version \
-	-Wl,-whole-archive libncursesw++.a -Wl,-no-whole-archive \
+g++ -shared -Wl,-soname,libncurses++w.so.5 -o libncurses++w.so.%version \
+	-Wl,-whole-archive libncurses++w.a -Wl,-no-whole-archive \
 	-L. -lform -lmenu -lpanel -lncurses -ltinfo
-ln -s libncursesw++.so.%version libncursesw++.so.5
-ln -s libncursesw++.so.5 libncursesw++.so
+ln -s libncurses++w.so.%version libncurses++w.so.5
+ln -s libncurses++w.so.5 libncurses++w.so
 popd # lib
 # Rebuild c++ demo.
 rm -f c++/demo
@@ -454,9 +454,9 @@ pushd build-utf8
 ln -s %name %buildroot%_includedir/%{name}w
 %if_with cxx
 # Install c++ shared library.
-install -pm644 lib/libncursesw++.so.%version %buildroot%_libdir/
-ln -s libncursesw++.so.%version %buildroot%_libdir/libncursesw++.so.5
-ln -s libncursesw++.so.5 %buildroot%_libdir/libncursesw++.so
+install -pm644 lib/libncurses++w.so.%version %buildroot%_libdir/
+ln -s libncurses++w.so.%version %buildroot%_libdir/libncurses++w.so.5
+ln -s libncurses++w.so.5 %buildroot%_libdir/libncurses++w.so
 %endif # with_cxx
 popd # build-utf8
 %endif # with_utf8
@@ -664,6 +664,11 @@ done
 %endif # with_utf8
 
 %changelog
+* Tue Jul 02 2013 Fr. Br. George <george@altlinux.ru> 5.9-alt4
+- Thanks asdus@ for tuning this up
+- Version up to 5.9-20130622
+- Enable C++ bindings
+
 * Mon Jan 21 2013 Fr. Br. George <george@altlinux.ru> 5.9-alt3
 Make terminfo noarch
 
