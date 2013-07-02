@@ -22,7 +22,7 @@
 
 Name: gvfs
 Version: %ver_major.3
-Release: alt1
+Release: alt2
 
 Summary: The GNOME virtual filesystem libraries
 License: %lgpl2plus
@@ -41,6 +41,9 @@ Patch5: gvfs-1.15.4-alt-tmpfiles_dir.patch
 # https://mail.gnome.org/archives/gvfs-list/2013-May/msg00014.html
 Patch6: gvfs-1.16.1-alt-logind-state.patch
 
+# from upstream
+Patch10: gvfs-1.16.3-up-afc_new_api.patch
+
 %{?_enable_gdu:Obsoletes: gnome-mount <= 0.8}
 %{?_enable_gdu:Obsoletes: gnome-mount-nautilus-properties <= 0.8}
 
@@ -57,7 +60,9 @@ Patch6: gvfs-1.16.1-alt-logind-state.patch
 %define mtp_ver 1.1.5
 %define goa_ver 3.7.90
 %define libarchive_ver 3.0.22
+%define imobiledevice_ver 1.1.5
 
+Requires: dconf
 %{?_enable_hal:Requires: gnome-mount}
 %{?_enable_gdu:Requires: gnome-disk-utility >= %gdu_ver}
 %{?_enable_udisks2:Requires: udisks2}
@@ -86,7 +91,7 @@ BuildRequires: libgcrypt-devel
 %{?_enable_samba:BuildPreReq: libsmbclient-devel}
 %{?_enable_archive:BuildPreReq: libarchive-devel >= %libarchive_ver}
 %{?_enable_gdu:BuildPreReq: libgdu-devel >= %gdu_ver libgudev-devel}
-%{?_enable_afc:BuildPreReq: libimobiledevice-devel >= 1.1.3}
+%{?_enable_afc:BuildPreReq: libimobiledevice-devel >= %imobiledevice_ver}
 %{?_enable_afp:BuildPreReq: libgcrypt-devel}
 %{?_enable_udisks2:BuildPreReq: libudisks2-devel >= %udisks_ver}
 %{?_enable_libmtp:BuildPreReq: libmtp-devel >= %mtp_ver}
@@ -117,6 +122,7 @@ Requires: %{get_dep fuse}
 Summary: Samba backend for gvfs
 Group: System/Libraries
 Requires: %name = %version-%release
+Requires: samba-client
 
 %package backend-obexftp
 Summary: Obexftp backend for gvfs
@@ -152,6 +158,7 @@ Requires: %name = %version-%release
 Summary: gnome-online-accounts backend for gvfs
 Group: System/Libraries
 Requires: %name = %version-%release
+Requires: gnome-online-accounts
 
 %package backends
 Summary: All backends for gvfs
@@ -245,6 +252,7 @@ Bash completion for gvfs.
 %patch4 -p1 -b .lfs
 %patch5 -b .tmpfiles
 %patch6 -p2 -b .logind-state
+%patch10 -p1
 
 [ ! -d m4 ] && mkdir m4
 
@@ -429,6 +437,12 @@ killall -USR1 gvfsd >&/dev/null || :
 %exclude %_libdir/gio/modules/*.la
 
 %changelog
+* Tue Jul 02 2013 Yuri N. Sedunov <aris@altlinux.org> 1.16.3-alt2
+- fixed afc backend for libimobiledevice new api from upstream
+- added dependencies:
+  backend-smb -> samba-client (ALT #29107)
+- backend-goa -> gnome-online-accounts
+
 * Fri Jun 14 2013 Yuri N. Sedunov <aris@altlinux.org> 1.16.3-alt1
 - 1.16.3
 
