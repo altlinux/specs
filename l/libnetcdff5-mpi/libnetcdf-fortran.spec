@@ -10,7 +10,7 @@
 
 Name: %sname%sover-mpi
 Version: %major.2
-Release: alt1
+Release: alt2
 
 Summary: Libraries to use the Unidata network Common Data Form (netCDF), Fortran interface
 
@@ -21,7 +21,7 @@ Url: http://www.unidata.ucar.edu/packages/netcdf/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Requires(post,preun): alternatives
-Requires: libhdf5-7-mpi libnetcdf7-mpi
+Requires: libhdf5-8-mpi libnetcdf7-mpi
 Provides: %sname-mpi = %version-%release
 Provides: %sname%sover-mpi = %version-%release
 Conflicts: %sname%sover-mpi < %version-%release
@@ -194,6 +194,9 @@ popd
 %_man3dir/*
 
 %changelog
+* Tue Jul 02 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.2-alt2
+- Rebuilt with new libhdf5
+
 * Fri Sep 14 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.2-alt1
 - Initial build for Sisyphus
 
