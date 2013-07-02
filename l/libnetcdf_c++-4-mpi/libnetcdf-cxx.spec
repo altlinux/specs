@@ -10,7 +10,7 @@
 
 Name: %sname-%sover-mpi
 Version: %major.2
-Release: alt2
+Release: alt3
 
 Summary: Libraries to use the Unidata network Common Data Form (netCDF) v3, C++ interface
 
@@ -21,7 +21,7 @@ Url: http://www.unidata.ucar.edu/packages/netcdf/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Requires(post,preun): alternatives
-Requires: libhdf5-7-mpi libnetcdf7-mpi
+Requires: libhdf5-8-mpi libnetcdf7-mpi
 Conflicts: %sname < 4.0.1-alt6
 Provides: %sname-mpi = %version-%release
 Provides: %sname-%sover-mpi = %version-%release
@@ -183,6 +183,9 @@ popd
 %_infodir/*
 
 %changelog
+* Tue Jul 02 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.2-alt3
+- Rebuilt with new libhdf5
+
 * Tue Sep 18 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.2-alt2
 - Forced requirement on libnetcdf7-mpi-debuginfo for
   libnetcdf_c++-4-mpi-debuginfo
