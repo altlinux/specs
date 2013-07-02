@@ -1,7 +1,7 @@
 %define oname mathgl
 Name: lib%oname
 Version: 2.0.3
-Release: alt3
+Release: alt4
 
 Summary: Library of fast C++ routines for the plotting of the data
 
@@ -147,6 +147,9 @@ mv %buildroot%_pixmapsdir/udav.png %buildroot%_liconsdir/
 %_liconsdir/udav.*
 
 %changelog
+* Tue Jul 02 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.3-alt4
+- Rebuilt with new libhdf5
+
 * Wed Jun 26 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.3-alt3
 - Rebuilt with new libfltk
 
