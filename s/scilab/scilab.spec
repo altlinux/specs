@@ -3,7 +3,7 @@
 
 Name:     scilab
 Version:  5.4.1
-Release:  alt1
+Release:  alt1.1
 Summary:  A high-level language and system for numerical computations
 
 License:  CeCILL
@@ -177,6 +177,9 @@ rm -f %buildroot%_xdgmimedir/packages/scilab.xml
 %_iconsdir/*/*/*/*.png
 
 %changelog
+* Tue Jul 02 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.4.1-alt1.1
+- Rebuilt with new libhdf5
+
 * Sun May 26 2013 Andrey Cherepanov <cas@altlinux.org> 5.4.1-alt1
 - New version 5.4.1
 - Build docs again (fixed in upstream bug 4134)
