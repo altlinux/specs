@@ -5,7 +5,7 @@
 Name: zfs
 %define lname lib%name
 Version: 0.6.1
-Release: alt1
+Release: alt2
 Summary: ZFS on Linux
 License: GPLv2+
 Group: System/Kernel and hardware
@@ -145,6 +145,7 @@ install -pD -m 0644 {,%kernel_srcdir/}%name-%version.tar.xz
 %files utils
 %doc AUTHORS COPYRIGHT DISCLAIMER META OPENSOLARIS.LICENSE README*
 /sbin/*
+%_bindir/*
 %_sbindir/*
 %_man1dir/*
 %_man5dir/*
@@ -164,5 +165,8 @@ install -pD -m 0644 {,%kernel_srcdir/}%name-%version.tar.xz
 
 
 %changelog
+* Tue Jul 02 2013 Led <led@altlinux.ru> 0.6.1-alt2
+- upstream fixes
+
 * Tue Jun 18 2013 Led <led@altlinux.ru> 0.6.1-alt1
 - initial build
