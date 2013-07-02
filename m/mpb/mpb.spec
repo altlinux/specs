@@ -1,6 +1,6 @@
 Name: mpb
 Version: 1.4.2
-Release: alt3
+Release: alt4
 Summary: MIT Photonic Bands
 License: GPLv2+
 Group: Sciences/Physics
@@ -74,6 +74,9 @@ export CPPFLAGS="%optflags"
 %doc doc/*
 
 %changelog
+* Tue Jul 02 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4.2-alt4
+- Rebuilt with new libhdf5
+
 * Tue Oct 23 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4.2-alt3
 - Rebuilt with libctl 3.2.1
 - Built with support of HDF5
