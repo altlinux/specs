@@ -13,7 +13,7 @@
 %define nv_version 319
 %define nv_release 32
 %define nv_minor %nil
-%define pkg_rel alt120
+%define pkg_rel alt121
 %define set_gl_nvidia_ver 0.9.0
 
 %define tbver %{nv_version}.%{nv_release}.%{nv_minor}
@@ -69,6 +69,7 @@ Version: %nv_version.%nv_release.%nv_minor
 Release: %pkg_rel
 
 Source: set_gl_nvidia-%set_gl_nvidia_ver.tar.bz2
+Source1: alternate-install-present
 
 BuildRequires: kernel-build-tools libsysfs-devel
 ExclusiveArch: %ix86 x86_64
@@ -162,6 +163,9 @@ ld --shared nvidianull.o -o libnvidianull.so
 %__mkdir_p %buildroot/%xinf_dir
 %__mkdir_p %buildroot/%nv_workdirdir
 
+# prompt user to don't use nvidia-installer
+mkdir -p %buildroot/usr/lib/nvidia/
+install -m 0644 %SOURCE1 %buildroot/usr/lib/nvidia/
 
 %__install -m 0755 set_gl_nvidia*/nvidia %buildroot/%xdrv_d/nvidia
 #%__ln_s ../../../..%xdrv_d/nvidia %buildroot/%xdrv_d_old/nvidia
@@ -230,9 +234,14 @@ fi
 #
 %x11_lib_dir/libnvidia-cfg.so.?
 %x11_lib_dir/libvdpau_nvidia.so
+#
+/usr/lib/nvidia/alternate-install-present
 
 
 %changelog
+* Tue Jul 02 2013 Sergey V Turchin <zerg@altlinux.org> 319.32-alt121
+- prompt user to don't use nvidia-installer
+
 * Wed Jun 26 2013 Sergey V Turchin <zerg@altlinux.org> 319.32-alt120
 - bump version
 
