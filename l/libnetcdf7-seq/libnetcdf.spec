@@ -10,7 +10,7 @@
 
 Name: %sname%sover-seq
 Version: %major.2.1.1
-Release: alt2
+Release: alt3
 
 Summary: Libraries to use the Unidata network Common Data Form (netCDF)
 
@@ -228,6 +228,9 @@ rm -fR %_includedir/netcdf-3 %_includedir/netcdf \
 %exclude %_man3dir/netcdf.3*
 
 %changelog
+* Wed Jun 26 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.2.1.1-alt3
+- Rebuilt with new libhdf5
+
 * Sat Sep 15 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.2.1.1-alt2
 - Avoid conflict with man-pages
 

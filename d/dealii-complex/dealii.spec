@@ -7,7 +7,7 @@
 
 Name: %oname-%scalar_type
 Version: 8.0
-Release: alt1.pre.svn20130617
+Release: alt2.pre.svn20130617
 Summary: A Finite Element Differential Equations Analysis Library (%scalar_type scalars)
 License: QPL v1.0
 Group: Sciences/Mathematics
@@ -199,6 +199,9 @@ popd
 %endif
 
 %changelog
+* Thu Jun 27 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 8.0-alt2.pre.svn20130617
+- Rebuilt with new libhdf5
+
 * Tue Jun 18 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 8.0-alt1.pre.svn20130617
 - Version 8.0.pre
 
@@ -283,3 +286,4 @@ popd
 
 * Sat Jan 01 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 6.4-alt1.pre.svn20101223
 - Initial build for Sisyphus
+

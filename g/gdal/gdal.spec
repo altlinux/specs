@@ -8,7 +8,7 @@
 Summary: The Geospatial Data Abstraction Library (GDAL)
 Name: gdal
 Version: 1.8.0
-Release: alt3
+Release: alt3.1
 Group: Sciences/Geosciences
 
 License: MIT
@@ -191,6 +191,9 @@ done
 %exclude %perl_vendor_archlib/Geo/GDAL/*.dox
 
 %changelog
+* Tue Jul 02 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.8.0-alt3.1
+- Rebuilt with new libhdf5
+
 * Sun Jan 27 2013 Fr. Br. George <george@altlinux.ru> 1.8.0-alt3
 - Move python module out of .egg directory (Closes: #26462)
 

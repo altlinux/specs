@@ -1,7 +1,7 @@
 %define hdf5dir %_libdir/hdf5-seq
 Name: h5py
 Version: 2.2.0
-Release: alt1.a1.hg20120919
+Release: alt2.a1.hg20120919
 Summary: Python interface to the Hierarchical Data Format library, version 5
 License: MIT
 Group: Development/Python
@@ -195,6 +195,9 @@ cp -fR docs/build/pickle %buildroot%python_sitelibdir/%name/
 %python_sitelibdir/%name/pickle
 
 %changelog
+* Wed Jun 26 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.2.0-alt2.a1.hg20120919
+- Rebuilt with new libhdf5
+
 * Tue Feb 05 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.2.0-alt1.a1.hg20120919
 - Version 2.2.0a1
 
