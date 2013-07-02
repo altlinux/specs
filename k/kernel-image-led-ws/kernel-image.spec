@@ -21,7 +21,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.4.51
-Release: alt2
+Release: alt3
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -186,7 +186,7 @@ Patch0026: linux-%kernel_branch.47-fix-arch-x86--microcode.patch
 Patch0027: linux-%kernel_branch.47-fix-arch-x86-cpu.patch
 Patch0028: linux-%kernel_branch.25-fix-arch-x86-cpu--rdrand.patch
 
-Patch0030: linux-%kernel_branch.35-fix-block.patch
+Patch0030: linux-%kernel_branch.50-fix-block.patch
 Patch0031: linux-%kernel_branch.35-fix-block--blk-integrity.patch
 Patch0032: linux-%kernel_branch.20-fix-block-partitions--efi.patch
 
@@ -2755,6 +2755,11 @@ done)
 
 
 %changelog
+* Tue Jul 02 2013 Led <led@altlinux.ru> 3.4.51-alt3
+- updated:
+  + fix-block
+  + fix-fs-ocfs2
+
 * Tue Jul 02 2013 Led <led@altlinux.ru> 3.4.51-alt2
 - updated:
   + feat-drivers-net-ethernet-atheros--alx
