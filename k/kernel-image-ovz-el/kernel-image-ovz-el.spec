@@ -1,6 +1,6 @@
 Name: kernel-image-ovz-el
 Version: 2.6.32
-Release: alt96
+Release: alt97
 
 %define kernel_base_version	%version
 %define kernel_extra_version	%nil
@@ -570,6 +570,10 @@ find %buildroot%_docdir/kernel-doc-%base_flavour-%version/DocBook \
 %endif # staging
 
 %changelog
+* Tue Jul 02 2013 Led <led@altlinux.ru> 2.6.32-alt97
+- fixed freeing RCU-protected IP-options (CVE-2013-2224)
+- enabled OCFS2_FS
+
 * Fri Jun 21 2013 Led <led@altlinux.ru> 2.6.32-alt96
 - Update to 042stab078.26
 
