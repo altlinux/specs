@@ -4,9 +4,9 @@
 Name: kde4-nepomuk-core
 %define major  4
 %define minor  10
-%define bugfix 4
+%define bugfix 5
 Version: %major.%minor.%bugfix
-Release: alt2
+Release: alt1
 %define sover %major
 
 Group: Graphical desktop/KDE
@@ -126,6 +126,9 @@ done
 %_K4link/*.so
 
 %changelog
+* Mon Jul 01 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.5-alt1
+- new version
+
 * Fri Jun 28 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.4-alt2
 - require soprano
 

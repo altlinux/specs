@@ -7,7 +7,7 @@
 %def_disable systemd
 %endif
 %def_disable google
-%ifarch %arm
+%if_enabled kde_mobile
 %def_disable desktop
 %else
 %def_enable desktop
@@ -23,11 +23,11 @@
 
 %define major 4
 %define minor 10
-%define bugfix 4
+%define bugfix 5
 %define rname kdebase-workspace
 Name: kde4base-workspace
 Version: %major.%minor.%bugfix
-Release: alt2
+Release: alt1
 
 Group: Graphical desktop/KDE
 Summary: K Desktop Environment - Workspace
@@ -49,6 +49,7 @@ Source3: pam-kde4-kscreensaver
 Source4: kdm.logrotate
 
 # upstream
+Patch1: kdebug-311188.patch
 # RH
 Patch20: kdebase-workspace-4.6.80-krdb.patch
 Patch21: kde-workspace-4.8.80-battery-plasmoid-showremainingtime.patch
@@ -57,10 +58,6 @@ Patch23: kde-workspace-4.7.80-no_HAL.patch
 Patch24: kdebase-workspace-4.5.90-no_HAL2.patch
 Patch25: kde-workspace-4.9.1-solid_krunner_disable.patch
 Patch26: kde-workspace-4.10.2-systemd-displaymanager.patch
-# SuSE
-# MDK
-# upstream
-Patch700: kde-workspace-kwin-reenable-xrender-effects.diff
 # Ubuntu
 Patch850: kubuntu_11_fix_root_only_kcms.diff
 Patch851: kubuntu_always_show_kickoff_subtext.diff
@@ -115,6 +112,7 @@ Patch1046: kdebase-workspace-4.10.0-alt-pager-refresh-layout.patch
 Patch1047: kdebase-workspace-4.10.0-alt-def-oxygen-widgets.patch
 Patch1048: kdebase-workspace-4.10.0-alt-def-oxygen-kwin.patch
 Patch1049: kdebase-workspace-4.10.4-alt-mobile-netbook.patch
+Patch1050: kdebase-workspace-4.10.4-alt-mobile-kwin-buildopts.patch
 
 BuildRequires(pre): kde4libs-devel rpm-build-python
 BuildRequires(pre): NetworkManager-devel
@@ -509,6 +507,8 @@ KDE 4 library
 rm -rf plasma/generic/scriptengines/google_gadgets
 %endif
 
+%patch1 -p1
+#
 %patch20 -p1
 %patch21 -p1
 %patch22 -p1
@@ -518,8 +518,6 @@ rm -rf plasma/generic/scriptengines/google_gadgets
 %if_enabled systemd
 %patch26 -p1
 %endif
-#
-%patch700 -p1
 #
 %patch850 -p1
 %patch851 -p1
@@ -574,6 +572,7 @@ rm -rf plasma/generic/scriptengines/google_gadgets
 %patch1047 -p1
 %patch1048 -p1
 %patch1049 -p1
+%patch1050 -p1
 
 grep -q X-KDE-RootOnly kdm/kcm/kdm.desktop \
     || echo "X-KDE-RootOnly=true" >>kdm/kcm/kdm.desktop
@@ -953,6 +952,12 @@ chmod 0755 %buildroot/%_sysconfdir/firsttime.d/kdm4
 %_K4dbus_interfaces/*
 
 %changelog
+* Tue Jul 02 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.5-alt1
+- new version
+
+* Tue Jun 25 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.4-alt3
+- build kwin decorations for mobile profile
+
 * Mon Jun 24 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.4-alt2
 - build plasma-netbook for mobile profile
 

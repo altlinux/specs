@@ -6,7 +6,7 @@
 Name: kde4-kactivities
 %define major 4
 %define minor 10
-%define bugfix 3
+%define bugfix 5
 Version: %major.%minor.%bugfix
 Release: alt1
 
@@ -117,6 +117,9 @@ done
 %_K4link/*.so
 
 %changelog
+* Mon Jul 01 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.5-alt1
+- new version
+
 * Thu May 16 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.3-alt1
 - new version
 - fix paths in ontology description

@@ -1,5 +1,11 @@
 %define _kde_alternate_placement 1
 
+%if_enabled kde_mobile
+%def_disable desktop
+%else
+%def_enable desktop
+%endif
+
 %def_enable hupnp
 
 %add_findpackage_path %_kde4_bindir
@@ -7,11 +13,11 @@
 
 %define major 4
 %define minor 10
-%define bugfix 4
+%define bugfix 5
 %define rname kdelibs
 Name: kde4libs
 Version: %major.%minor.%bugfix
-Release: alt2
+Release: alt1
 
 %define conflictver %major.%minor-alt0.0.1
 %define conflictver_kdevelop 3.4.1-alt0.0.1
@@ -225,10 +231,10 @@ export XDG_DATA_DIRS=%_K4datadir:%_datadir
 #    -DKDE4_ENABLE_FINAL:BOOL=ON \
 %K4cmake \
     -DKDE4_ENABLE_FPIE:BOOL=ON \
-%ifarch %arm
-    -DKDE_PLATFORM_PROFILE="Mobile" \
-%else
+%if_enabled desktop
     -DKDE_PLATFORM_PROFILE="Desktop" \
+%else
+    -DKDE_PLATFORM_PROFILE="Mobile" \
 %endif
     -DPCRE_INCLUDE_DIR=%_includedir/pcre \
 %if_enabled hupnp
@@ -330,6 +336,9 @@ ln -sf `relative %buildroot/%_kde4_bindir/kde4-config %buildroot/%_K4bindir/kde4
 %_K4includedir/*
 
 %changelog
+* Mon Jul 01 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.5-alt1
+- new version
+
 * Tue Jun 11 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.4-alt2
 - set default plasma theme background
 
