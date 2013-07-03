@@ -1,7 +1,7 @@
 %define distro centaurus
 Name: installer-distro-%distro
-Version: 6.9
-Release: alt7
+Version: 7.0
+Release: alt1
 
 Summary: Installer files for Centaurus distro 
 License: GPL
@@ -67,6 +67,9 @@ cp -a * %buildroot%install2dir/
 %files stage3
 
 %changelog
+* Wed Jul 03 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 7.0-alt1
+- use cups.service instead cups.socket
+
 * Tue Mar 12 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 6.9-alt7
 - some sysVinit services disabled in systemd
 
