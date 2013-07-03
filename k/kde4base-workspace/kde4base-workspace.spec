@@ -27,7 +27,7 @@
 %define rname kdebase-workspace
 Name: kde4base-workspace
 Version: %major.%minor.%bugfix
-Release: alt1
+Release: alt2
 
 Group: Graphical desktop/KDE
 Summary: K Desktop Environment - Workspace
@@ -49,7 +49,6 @@ Source3: pam-kde4-kscreensaver
 Source4: kdm.logrotate
 
 # upstream
-Patch1: kdebug-311188.patch
 # RH
 Patch20: kdebase-workspace-4.6.80-krdb.patch
 Patch21: kde-workspace-4.8.80-battery-plasmoid-showremainingtime.patch
@@ -507,8 +506,6 @@ KDE 4 library
 rm -rf plasma/generic/scriptengines/google_gadgets
 %endif
 
-%patch1 -p1
-#
 %patch20 -p1
 %patch21 -p1
 %patch22 -p1
@@ -952,6 +949,9 @@ chmod 0755 %buildroot/%_sysconfdir/firsttime.d/kdm4
 %_K4dbus_interfaces/*
 
 %changelog
+* Wed Jul 03 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.5-alt2
+- drop patch against KDEBUG-311188
+
 * Tue Jul 02 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.5-alt1
 - new version
 
