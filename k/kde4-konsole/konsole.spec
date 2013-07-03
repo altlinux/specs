@@ -4,10 +4,10 @@
 %define rname konsole
 %define major 4
 %define minor 10
-%define bugfix 4
+%define bugfix 5
 Name: kde4-konsole
 Version: %major.%minor.%bugfix
-Release: alt2
+Release: alt1
 
 Group: Terminals
 Summary: Terminal emulator for KDE
@@ -88,6 +88,9 @@ __EOF__
 
 
 %changelog
+* Wed Jul 03 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.5-alt1
+- new version
+
 * Tue Jun 25 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.4-alt2
 - remove sgid(adding to utmp don't work because dbus checking for saved guid)
 
