@@ -15,7 +15,7 @@
 
 Name: NetworkManager
 Version: 0.9.8.2
-Release: alt1%git_date
+Release: alt2%git_date
 License: %gpl2plus
 Group: System/Configuration/Networking
 Summary: Network Link Manager and User Applications
@@ -331,6 +331,9 @@ fi
 %exclude %_libdir/pppd/%ppp_version/*.la
 
 %changelog
+* Wed Jul 03 2013 Mikhail Efremov <sem@altlinux.org> 0.9.8.2-alt2
+- Allow to use connections of 'nmconnect' group's members.
+
 * Tue Jun 11 2013 Mikhail Efremov <sem@altlinux.org> 0.9.8.2-alt1
 - dbus: allow talking to the NetworkManager-sstp VPN plugin.
 - Updated to 0.9.8.2.
