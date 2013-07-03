@@ -21,7 +21,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.4.51
-Release: alt4
+Release: alt5
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -135,11 +135,11 @@ Release: alt4
 %Extra_modules vboxguest 4.2.14
 %Extra_modules kvm 3.9.8
 %Extra_modules knem 1.0.0
-%Extra_modules exfat 1.1.3
-#Extra_modules fglrx 13.101
 %Extra_modules spl 0.6.1
 %Extra_modules zfs 0.6.1
+#Extra_modules fglrx 13.101
 #Extra_modules nvidia 319.32
+#Extra_modules exfat 1.1.3
 #Extra_modules netatop 0.2
 
 %define strip_mod_opts --strip-unneeded -R .comment
@@ -594,35 +594,36 @@ Patch1173: linux-%kernel_branch.18-feat-fs--secrm.patch
 Patch1174: linux-%kernel_branch-feat-fs-aufs.patch
 Patch1175: linux-%kernel_branch.20-feat-fs-binfmt_elf--fatelf.patch
 Patch1176: linux-%kernel_branch.20-feat-fs-dazukofs.patch
-Patch1177: linux-%kernel_branch.18-feat-fs-ext2--secrm.patch
-Patch1178: linux-%kernel_branch.18-feat-fs-ext3--secrm.patch
-Patch1179: linux-%kernel_branch.44-feat-fs-ext4--richacl.patch
-Patch1180: linux-%kernel_branch.50-feat-fs-ext4--secrm.patch
-Patch1181: linux-%kernel_branch.20-feat-fs-f2fs.patch
-Patch1182: linux-%kernel_branch.18-feat-fs-fat--secrm.patch
-Patch1183: linux-%kernel_branch.18-feat-fs-jbd--secrm.patch
-Patch1184: linux-%kernel_branch.18-feat-fs-jbd2--secrm.patch
-Patch1185: linux-%kernel_branch.25-feat-fs-overlayfs.patch
-Patch1186: linux-%kernel_branch.20-feat-fs-reiser4.patch
-Patch1187: linux-%kernel_branch.20-feat-fs-squashfs--write.patch
-Patch1188: linux-%kernel_branch.28-feat-fs-tmpfs--root.patch
-Patch1189: linux-%kernel_branch.20-feat-fs-unionfs.patch
+Patch1177: linux-%kernel_branch.50-feat-fs-exfat.patch
+Patch1178: linux-%kernel_branch.18-feat-fs-ext2--secrm.patch
+Patch1179: linux-%kernel_branch.18-feat-fs-ext3--secrm.patch
+Patch1180: linux-%kernel_branch.44-feat-fs-ext4--richacl.patch
+Patch1181: linux-%kernel_branch.50-feat-fs-ext4--secrm.patch
+Patch1182: linux-%kernel_branch.20-feat-fs-f2fs.patch
+Patch1183: linux-%kernel_branch.18-feat-fs-fat--secrm.patch
+Patch1184: linux-%kernel_branch.18-feat-fs-jbd--secrm.patch
+Patch1185: linux-%kernel_branch.18-feat-fs-jbd2--secrm.patch
+Patch1186: linux-%kernel_branch.25-feat-fs-overlayfs.patch
+Patch1187: linux-%kernel_branch.20-feat-fs-reiser4.patch
+Patch1188: linux-%kernel_branch.20-feat-fs-squashfs--write.patch
+Patch1189: linux-%kernel_branch.28-feat-fs-tmpfs--root.patch
+Patch1190: linux-%kernel_branch.20-feat-fs-unionfs.patch
 
-Patch1191: linux-%kernel_branch.27-feat-kernel-power-tuxonice.patch
-Patch1192: linux-%kernel_branch.27-feat-kernel-power-tuxonice--frontswap.patch
+Patch1201: linux-%kernel_branch.27-feat-kernel-power-tuxonice.patch
+Patch1202: linux-%kernel_branch.27-feat-kernel-power-tuxonice--frontswap.patch
 
-Patch1201: linux-%kernel_branch.20-feat-lib--unwind.patch
+Patch1211: linux-%kernel_branch.20-feat-lib--unwind.patch
 
-Patch1211: linux-%kernel_branch.35-feat-mm--frontswap.patch
-Patch1212: linux-%kernel_branch.20-feat-mm--slqb.patch
-Patch1213: linux-%kernel_branch.24-feat-mm--uksm.patch
-Patch1214: linux-%kernel_branch.20-feat-mm--zcache.patch
-Patch1215: linux-%kernel_branch.20-feat-mm--zsmalloc.patch
-Patch1216: linux-%kernel_branch.35-feat-mm--zswap.patch
+Patch1221: linux-%kernel_branch.35-feat-mm--frontswap.patch
+Patch1222: linux-%kernel_branch.20-feat-mm--slqb.patch
+Patch1223: linux-%kernel_branch.24-feat-mm--uksm.patch
+Patch1224: linux-%kernel_branch.20-feat-mm--zcache.patch
+Patch1225: linux-%kernel_branch.20-feat-mm--zsmalloc.patch
+Patch1226: linux-%kernel_branch.35-feat-mm--zswap.patch
 
-Patch1221: linux-%kernel_branch.20-feat-net--netatop.patch
-Patch1222: linux-%kernel_branch.27-feat-net-ipv4-netfilter--ipt_NETFLOW.patch
-Patch1223: linux-%kernel_branch.20-feat-net-netfilter--nf_conntrack_slp.patch
+Patch1231: linux-%kernel_branch.20-feat-net--netatop.patch
+Patch1232: linux-%kernel_branch.27-feat-net-ipv4-netfilter--ipt_NETFLOW.patch
+Patch1233: linux-%kernel_branch.20-feat-net-netfilter--nf_conntrack_slp.patch
 
 
 ExclusiveOS: Linux
@@ -1834,25 +1835,27 @@ cd linux-%version
 %patch1187 -p1
 %patch1188 -p1
 %patch1189 -p1
+%patch1190 -p1
 
 # feat-kernel-power-*
-%patch1191 -p1
-%patch1192 -p1
-
 %patch1201 -p1
+%patch1202 -p1
+
+# feat-lib--*
+%patch1211 -p1
 
 # feat-mm--*
-%patch1211 -p1
-%patch1212 -p1
-%patch1213 -p1
-%patch1214 -p1
-%patch1215 -p1
-%patch1216 -p1
-
-# feat-net--*
 %patch1221 -p1
 %patch1222 -p1
 %patch1223 -p1
+%patch1224 -p1
+%patch1225 -p1
+%patch1226 -p1
+
+# feat-net--*
+%patch1231 -p1
+%patch1232 -p1
+%patch1233 -p1
 
 
 # get rid of unwanted files resulting from patch fuzz
@@ -2755,6 +2758,12 @@ done)
 
 
 %changelog
+* Wed Jul 03 2013 Led <led@altlinux.ru> 3.4.51-alt5
+- added:
+  + feat-fs-exfat
+- removed external modules:
+  + exfat
+
 * Tue Jul 02 2013 Led <led@altlinux.ru> 3.4.51-alt4
 - updated:
   + fix-net-ceph (CVE-2013-1059)
