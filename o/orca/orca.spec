@@ -1,5 +1,5 @@
 Name: orca
-Version: 3.9.2
+Version: 3.9.3
 Release: alt1
 Summary: A screen reader that provides access to the GNOME desktop by people with visual impairments
 Summary(ru_RU.UTF-8): Программа экранного доступа для людей с ограничениями по зрению 
@@ -15,10 +15,13 @@ Source3: orca-autostart.desktop
 
 #Patch1: orca-3.2.1-alt-voiceman.patch
 Patch2: orca-3.2.1-alt-punc.patch
+Patch3: reset-family.patch
 
 #%add_python3_req_skip GNOME GNOME__POA
 
 #Requires: voiceman
+
+BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
 
@@ -47,13 +50,14 @@ if only gnome-minimal is installed.
 Orca - это программа экранного доступа для людей с ограничениями по
 зрению. Она предоставляет речевой интерфейс для работы в среде GNOME,
 а также средства для увеличения изображения на экране.
-Функциональность Orcaочень близка к возможностям популярного пакета
+Функциональность Orca очень близка к возможностям популярного пакета
 Jaws For Windows компании Freedom Scientific.
 
 %prep
 %setup -q
 #%patch1 -p1
 %patch2 -p1
+%patch3 -p2
 
 %build
 %autoreconf
@@ -61,7 +65,7 @@ Jaws For Windows компании Freedom Scientific.
 %make_build
 
 %install
-%make_install DESTDIR=%buildroot install
+%make_install DESTDIR=%buildroot pyexecdir=%python3_sitelibdir install
 
 #%__install -d -m755 %buildroot%_datadir/%name/emacspeak-servers/
 #echo voiceman > %buildroot%_datadir/%name/emacspeak-servers/.servers
@@ -86,6 +90,16 @@ install -D -m0644 %SOURCE3 %buildroot%_datadir/gdm/greeter/autostart/orca-autost
 %_datadir/gdm/greeter/autostart/orca-autostart.desktop
 
 %changelog
+* Wed Jul 03 2013 Paul Wolneykien <manowar@altlinux.ru> 3.9.3-alt1
+- Fix erroneously downloaded orca-autostart.desktop.
+- Build the package noarch.
+- Minor fix in the Russian description.
+- Use the default locale for the default voice if none is specified
+  (patch).
+- Restore plain srcdir packaging.
+- Fresh up to v3.9.3 with the help of cronbuild and
+  update-source-functions.
+
 * Wed May 29 2013 Paul Wolneykien <manowar@altlinux.ru> 3.9.2-alt1
 - new version 3.9.2
 
