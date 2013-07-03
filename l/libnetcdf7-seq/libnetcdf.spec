@@ -2,15 +2,12 @@
 %define oname netcdf
 %define sname lib%oname
 %define sover 7
-%define c_sover 4
-%define c4_sover 1
-%define f_sover 5
 %define priority 30
 %define hdfdir %_libdir/hdf5-seq
 
 Name: %sname%sover-seq
-Version: %major.2.1.1
-Release: alt3
+Version: %major.3.0
+Release: alt1
 
 Summary: Libraries to use the Unidata network Common Data Form (netCDF)
 
@@ -21,7 +18,7 @@ Url: http://www.unidata.ucar.edu/packages/netcdf/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Requires(post,preun): alternatives
-Requires: libhdf5-7-seq
+Requires: libhdf5-8-seq
 Conflicts: %sname-mpi < 4.0.1-alt6 %oname%sover-mpi-tools < 4.0.1-alt6
 Conflicts: %sname-mpi-devel-doc
 Provides: %sname = %version-%release
@@ -226,8 +223,12 @@ rm -fR %_includedir/netcdf-3 %_includedir/netcdf \
 %_man3dir/*
 %exclude %_man3dir/error.3*
 %exclude %_man3dir/netcdf.3*
+%exclude %_man3dir/index.3*
 
 %changelog
+* Wed Jul 03 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.3.0-alt1
+- Version 4.3.0
+
 * Wed Jun 26 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.2.1.1-alt3
 - Rebuilt with new libhdf5
 
