@@ -3,7 +3,7 @@
 
 Name: escript-finley
 Version: 3.3.1
-Release: alt2
+Release: alt3
 Summary: Fast Finite Elements for Partial Differential Equations
 License: OSLv3.0
 Group: Sciences/Mathematics
@@ -41,7 +41,7 @@ reactive transport, plate subduction, and tsunamis.
 %package -n lib%name
 Summary: Shared libraries of Escript
 Group: System/Libraries
-Requires: libhdf5-7-mpi
+Requires: libhdf5-8-mpi
 
 %description -n lib%name
 Escript is a python-based programming tool for mathematical modelling
@@ -184,6 +184,9 @@ install -p -m644 doc/manpage/man1/* %buildroot%_man1dir
 %doc doc/examples
 
 %changelog
+* Thu Jul 04 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.3.1-alt3
+- Requires: libhdf5-8-mpi
+
 * Tue Jul 02 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.3.1-alt2
 - Rebuilt with new libhdf5
 
