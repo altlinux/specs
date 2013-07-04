@@ -8,8 +8,8 @@
 %define mpidir %_libdir/%mpiimpl
 
 Name: %sname%sover-mpi
-Version: %major.2.1.1
-Release: alt2
+Version: %major.3.0
+Release: alt1
 
 Summary: Parallel libraries to use the Unidata network Common Data Form (netCDF)
 
@@ -277,6 +277,9 @@ rm -fR %mpidir/include/netcdf-3 %mpidir/include/netcdf
 %_altdir/%oname-mpi-tools.alternatives
 
 %changelog
+* Wed Jul 03 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.3.0-alt1
+- Version 4.3.0
+
 * Wed Jun 26 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.2.1.1-alt2
 - Rebuilt with new libhdf5
 
