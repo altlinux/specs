@@ -2,7 +2,7 @@
 
 %define rname kruler
 Name: kde4-kruler
-Version: 4.9.1
+Version: 4.10.5
 Release: alt1
 
 Group: Graphics
@@ -65,6 +65,9 @@ KDE 4 core library.
 
 
 %changelog
+* Thu Jul 04 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.5-alt1
+- new version
+
 * Tue Oct 02 2012 Sergey V Turchin <zerg@altlinux.org> 4.9.1-alt1
 - new version
 
