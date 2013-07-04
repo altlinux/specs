@@ -1,6 +1,6 @@
 Name: accel-ppp
 Version: 1.7.3
-Release: alt2
+Release: alt4
 Summary: High performance PPTP/L2TP/PPPoE server
 Group: System/Servers
 
@@ -54,7 +54,7 @@ make install/fast DESTDIR=%buildroot -C BUILD
 
 mkdir -p %buildroot%_sysconfdir/ld.so.conf.d
 
-install -Dpm 644 alt-linux/%name.tmpfiles %buildroot%_sysconfdir/tmpfiles.d/%name.conf
+install -Dpm 644 alt-linux/%name.tmpfiles %buildroot%_tmpfilesdir/%name.conf
 install -d %buildroot%_sysconfdir/{rc.d/init.d,sysconfig,logrotate.d}
 install -pDm0644 alt-linux/%name.sysconfig	%buildroot%_sysconfdir/sysconfig/%name
 install -pDm0755 alt-linux/%name.init		%buildroot%_initdir/%name
@@ -66,7 +66,7 @@ echo "0" > %buildroot%_runtimedir/accel-ppp/seq
 %config(noreplace) %_initdir/*
 %config(noreplace) %_sysconfdir/sysconfig/*
 %config %_sysconfdir/logrotate.d/*
-%config(noreplace) %_sysconfdir/tmpfiles.d/*
+%config(noreplace) %_tmpfilesdir/*
 %_sysconfdir/accel-ppp.conf.dist
 %_bindir/accel-cmd
 %_sbindir/accel-pppd
@@ -85,6 +85,12 @@ echo "0" > %buildroot%_runtimedir/accel-ppp/seq
 %preun_service %name
 
 %changelog
+* Thu Jul 04 2013 Alexei Takaseev <taf@altlinux.org> 1.7.3-alt4
+- update to git:b77ca8764985ebae18d769cdf115e2242bbac98d
+
+* Wed Jun 05 2013 Alexei Takaseev <taf@altlinux.org> 1.7.3-alt3
+- Move tmpfiles.d from etc to %%_tmpfilesdir/
+
 * Sun Jun 02 2013 Alexei Takaseev <taf@altlinux.org> 1.7.3-alt2
 - update to git:3cc23d37c3c93ca7240f52fe5121513bcd6c3db8
 
