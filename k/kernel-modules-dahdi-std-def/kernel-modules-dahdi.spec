@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build	1
 
 %define module_name	dahdi
-%define module_version	2.6.2
+%define module_version	2.7.0
 %define module_release alt1
 
 %define flavour	std-def
@@ -53,9 +53,7 @@ Patch2: dahdi-remove-spinlock_unlocked.patch
 Patch3: dahdi-build-3.2.patch
 %endif
 
-%if "%kversion" >= "3.8"
-Patch4: dahdi-build-3.8.patch
-%endif
+Patch4: dahdi-2.7.0-fix.patch
 
 %description
 dahdi modules, that needed for all Digium hardware, and some compatible
@@ -78,9 +76,7 @@ rm -rf kernel-source-%module_name-%module_version
 tar -jxvf %kernel_src/kernel-source-%module_name-%module_version.tar.bz2
 
 %setup -D -T -n kernel-source-%module_name-%module_version
-%if "%kversion" >= "3.8"
-%patch4 -p0
-%endif
+%patch4
 
 %build
 pushd dahdi
@@ -142,39 +138,7 @@ sed -e 's|%_builddir/||' < Module.symvers \
 popd
 
 %files
-%defattr(644,root,root,755)
-%dir %module_dir
-%dir %module_dir/xpp
-%dir %module_dir/wcte12xp
-%dir %module_dir/wctdm24xxp
-%dir %module_dir/wctc4xxp
-%dir %module_dir/wct4xxp
-%dir %module_dir/wcb4xxp
-%dir %module_dir/voicebus
-
-%module_dir/xpp/xpd_echo.ko
-%module_dir/xpp/xpp_usb.ko
-%module_dir/xpp/xpp.ko
-%module_dir/xpp/xpd_pri.ko
-%module_dir/xpp/xpd_fxs.ko
-%module_dir/xpp/xpd_fxo.ko
-%module_dir/xpp/xpd_bri.ko
-%module_dir/xpp/xpd_echo.ko
-%module_dir/wcte12xp/wcte12xp.ko
-%module_dir/wcte11xp.ko
-%module_dir/wctdm24xxp/wctdm24xxp.ko
-%module_dir/wctdm.ko
-%module_dir/wctc4xxp/wctc4xxp.ko
-%module_dir/wct4xxp/wct4xxp.ko
-%module_dir/wct1xxp.ko
-%module_dir/wcfxo.ko
-%module_dir/wcb4xxp/wcb4xxp.ko
-%module_dir/voicebus/dahdi_voicebus.ko
-%module_dir/tor2.ko
-%module_dir/pciradio.ko
-%module_dir/dahdi_*.ko
-%module_dir/dahdi.ko
-%module_dir/dahdi_dynamic_ethmf.ko
+%module_dir
 
 %files -n kernel-headers-%module_name-%flavour
 %module_headers_dir
@@ -184,6 +148,9 @@ popd
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Thu Jul  4 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 2.7.0-alt1
+- new version
 
 * Mon Apr 22 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 2.6.2-alt1
 - new version
