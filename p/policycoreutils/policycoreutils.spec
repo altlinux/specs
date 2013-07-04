@@ -3,7 +3,7 @@
 Summary: SELinux policy core utilities
 Name: policycoreutils
 Version: 2.1.14
-Release: alt1
+Release: alt2
 License: GPLv2
 Group: System/Base
 Url: http://userspace.selinuxproject.org
@@ -23,6 +23,7 @@ Patch0: %name-%version-%release.patch
 Patch1: policycoreutils-alt-autorelabel-fix-path.patch
 Patch2: policycoreutils-alt-fix-free-groups.patch
 Patch3: policycoreutils-alt-mcstrans.patch
+Patch4: policycoreutils-alt-newrole.patch
 %define mcstrans_ver 0.3.3
 Requires: python-module-semanage python-module-audit
 
@@ -115,6 +116,7 @@ system-config-selinux is a utility for managing the SELinux environment.
 %patch1 -p1
 %patch2 -p2
 %patch3 -p2
+%patch4 -p1
 sed -i '/^override CFLAGS/s/ -Werror//g' sandbox/Makefile
 sed -i 's/\( awk \)-S /\1/g' setfiles/Makefile
 
@@ -283,6 +285,9 @@ cp -r mcstrans/share/* %buildroot%_datadir/mcstrans/
 
 
 %changelog
+* Thu Jul 04 2013 Andriy Stepanov <stanv@altlinux.ru> 2.1.14-alt2
+- Add newrole capabilities
+
 * Wed Jun 26 2013 Andriy Stepanov <stanv@altlinux.ru> 2.1.14-alt1
 - New Version
 
