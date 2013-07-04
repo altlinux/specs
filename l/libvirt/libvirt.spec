@@ -95,7 +95,7 @@
 %def_with sasl
 
 Name: libvirt
-Version: 1.0.5.1
+Version: 1.1.0
 Release: alt1
 Summary: Library providing a simple API virtualization
 License: LGPLv2+
@@ -146,8 +146,9 @@ BuildRequires: bridge-utils libblkid-devel
 BuildRequires: libgcrypt-devel libgnutls-devel
 BuildRequires: libreadline-devel
 BuildRequires: libtasn1-devel
+BuildRequires: libattr-devel attr
 BuildRequires: perl-Pod-Parser
-BuildRequires: libxml2-devel xml-utils xsltproc w3c-markup-validator-libs
+BuildRequires: libxml2-devel xml-utils xsltproc w3c-markup-validator-libs xhtml1-dtds
 BuildRequires: python-devel python-module-distribute
 BuildRequires: iproute2 perl-Pod-Parser
 
@@ -317,7 +318,6 @@ an implementation of the hypervisor driver APIs using
 Xen
 %endif
 
-
 %if_with libxl
 %package daemon-driver-libxl
 Summary: Libxl driver plugin for the libvirtd daemon
@@ -329,6 +329,19 @@ The Libxl driver plugin for the libvirtd daemon, providing
 an implementation of the hypervisor driver APIs using
 Libxl
 %endif
+
+%if_with vbox
+%package daemon-driver-vbox
+Summary: VirtualBox driver plugin for the libvirtd daemon
+Group: System/Libraries
+Requires: %name-daemon = %version-%release
+
+%description daemon-driver-vbox
+The vbox driver plugin for the libvirtd daemon, providing
+an implementation of the hypervisor driver APIs using
+VirtualBox
+%endif
+
 %endif #driver_modules
 
 %package qemu-common
@@ -429,6 +442,23 @@ Requires: %name-daemon-driver-storage = %version-%release
 %description xen
 Server side daemon, driver and default network & firewall configs
 required to manage the virtualization capabilities of Xen.
+
+%package vbox
+Summary: Server side daemon, driver & default configs required to run VirtualBox guests
+Group: System/Servers
+Requires: %name-daemon-config-network = %version-%release
+Requires: %name-daemon-config-nwfilter = %version-%release
+Requires: %name-daemon = %version-%release
+%if_with driver_modules
+Requires: %name-daemon-driver-vbox = %version-%release
+Requires: %name-daemon-driver-nodedev = %version-%release
+Requires: %name-daemon-driver-secret = %version-%release
+Requires: %name-daemon-driver-storage = %version-%release
+%endif
+
+%description vbox
+Server side daemon, driver and default network & firewall configs
+required to manage the virtualization capabilities of VirtualBox.
 
 %package client
 Summary: Client side library and utilities of the libvirt library
@@ -651,7 +681,7 @@ fi
 %doc docs/libvirt-api.xml
 
 %files client -f %name.lang
-%doc AUTHORS ChangeLog.gz README COPYING.LIB TODO
+%doc AUTHORS ChangeLog.gz README COPYING COPYING.LESSER TODO
 %_libdir/lib*.so.*
 
 %config(noreplace) %_sysconfdir/libvirt/libvirt.conf
@@ -724,6 +754,7 @@ fi
 
 %if_with polkit
 %_datadir/polkit-1/actions/org.libvirt.unix.policy
+%_datadir/polkit-1/actions/org.libvirt.api.policy
 %endif
 
 %if_with network
@@ -793,6 +824,11 @@ fi
 %files daemon-driver-libxl
 %_libdir/%name/connection-driver/libvirt_driver_libxl.so
 %endif
+
+%if_with vbox
+%files daemon-driver-vbox
+%_libdir/%name/connection-driver/libvirt_driver_vbox.so
+%endif
 %endif #driver_modules
 
 %if_with qemu
@@ -801,6 +837,8 @@ fi
 %config(noreplace) %_sysconfdir/logrotate.d/libvirtd.qemu
 %dir %attr(0700, root, root) %_localstatedir/run/libvirt/qemu
 %dir %attr(0750, %qemu_user, %qemu_group) %_localstatedir/lib/libvirt/qemu
+%dir %attr(0750, %qemu_user, %qemu_group) %_localstatedir/lib/libvirt/qemu/channel
+%dir %attr(0750, %qemu_user, %qemu_group) %_localstatedir/lib/libvirt/qemu/channel/target
 %dir %attr(0750, %qemu_user, %qemu_group) %_localstatedir/cache/libvirt/qemu
 %dir %attr(0700, root, root) %_localstatedir/log/libvirt/qemu
 %_datadir/augeas/lenses/libvirtd_qemu.aug
@@ -842,6 +880,10 @@ fi
 %dir %attr(0700, root, root) %_localstatedir/lib/libvirt/libxl
 %endif
 
+%if_with vbox
+%files vbox
+%endif
+
 %endif #if_with libvirtd
 
 %files devel
@@ -860,6 +902,10 @@ fi
 %doc examples/python
 
 %changelog
+* Wed Jul 03 2013 Alexey Shabalin <shaba@altlinux.ru> 1.1.0-alt1
+- v1.1.0-maint branch
+- add vbox subpackages
+
 * Mon May 20 2013 Alexey Shabalin <shaba@altlinux.ru> 1.0.5.1-alt1
 - 1.0.5.1
 
