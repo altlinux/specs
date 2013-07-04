@@ -15,7 +15,7 @@
 
 Name: NetworkManager
 Version: 0.9.8.2
-Release: alt2%git_date
+Release: alt3%git_date
 License: %gpl2plus
 Group: System/Configuration/Networking
 Summary: Network Link Manager and User Applications
@@ -331,6 +331,9 @@ fi
 %exclude %_libdir/pppd/%ppp_version/*.la
 
 %changelog
+* Thu Jul 04 2013 Mikhail Efremov <sem@altlinux.org> 0.9.8.2-alt3
+- Change group name 'nmconnect' to '_nmconnect'.
+
 * Wed Jul 03 2013 Mikhail Efremov <sem@altlinux.org> 0.9.8.2-alt2
 - Allow to use connections of 'nmconnect' group's members.
 
