@@ -7,7 +7,7 @@
 
 Name: branding-simply-linux
 Version: 7.0.0
-Release: alt5
+Release: alt6
 BuildArch: noarch
 
 BuildRequires: cpio gfxboot >= 4 fonts-ttf-dejavu fonts-ttf-droid
@@ -415,6 +415,9 @@ subst "s/Theme=.*/Theme=%theme/" /etc/plymouth/plymouthd.conf
 /usr/share/desktop-directories/altlinux-wine.directory
 
 %changelog
+* Thu Jul 04 2013 Mikhail Efremov <sem@altlinux.org> 7.0.0-alt6
+- menu: Fix GenericName of winefile.
+
 * Tue Jun 25 2013 Mikhail Efremov <sem@altlinux.org> 7.0.0-alt5
 - xfce settings: Disable GNOME compatibility mode.
 
