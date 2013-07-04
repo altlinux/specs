@@ -1,7 +1,7 @@
 %define sover 1
 Name: metis
-Version: 5.0.2
-Release: alt2
+Version: 5.1.0
+Release: alt1
 Summary: Family of Multilevel Partitioning Algorithms
 License: GPL
 Group: Sciences/Mathematics
@@ -130,6 +130,9 @@ rm -fR %_libexecdir/metis
 %_datadir/%name
 
 %changelog
+* Thu Jul 04 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.1.0-alt1
+- Version 5.1.0
+
 * Fri Jun 22 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.0.2-alt2
 - Removed native directory %_libexecdir/metis
 
