@@ -20,13 +20,13 @@
 %define flavour %base_flavour-%sub_flavour
 
 Name: kernel-image-%flavour
-Version: 3.4.51
-Release: alt5
+Version: 3.4.52
+Release: alt1
 
 %define kernel_req %nil
 %define kernel_prov %nil
 %define kernel_branch 3.4
-%define kernel_stable_version 51
+%define kernel_stable_version 52
 %define kernel_extra_version .%kernel_stable_version
 #define kernel_extra_version %nil
 
@@ -135,12 +135,12 @@ Release: alt5
 %Extra_modules vboxguest 4.2.14
 %Extra_modules kvm 3.9.8
 %Extra_modules knem 1.0.0
-%Extra_modules spl 0.6.1
 %Extra_modules zfs 0.6.1
 #Extra_modules fglrx 13.101
 #Extra_modules nvidia 319.32
 #Extra_modules exfat 1.1.3
 #Extra_modules netatop 0.2
+#Extra_modules spl 0.6.1
 
 %define strip_mod_opts --strip-unneeded -R .comment
 
@@ -1879,7 +1879,7 @@ install -m644 %SOURCE1 %SOURCE2 .
 %ifdef extra_mods
 install -m 0644 %SOURCE10 ./Makefile.external
 install -d -m 0755 external
-for m in %extra_modules; do
+for m in $(echo " %extra_modules " | sed 's/ zfs\(=.* \)/ spl\1&/'); do
 	tar -C external -xf %kernel_src/${m%%=*}-${m#*=}.tar*
 done
 %endif
@@ -2118,7 +2118,7 @@ echo "Building kernel %kversion-%flavour-%krelease"
 
 echo "Kernel built %kversion-%flavour-%krelease"
 
-%{?extra_mods:%make_build -f Makefile.external $(echo " %extra_mods " | sed 's/ spl / /') && echo "External modules built"}
+%{?extra_mods:%make_build -f Makefile.external %extra_mods && echo "External modules built"}
 
 # psdocs, pdfdocs don't work yet
 %{?_enable_htmldocs:%def_enable builddocs}
@@ -2148,7 +2148,7 @@ cp %buildroot%modules_dir/modules.dep{,.inkernel}
 make -f Makefile.external DESTDIR=%buildroot \
 	%{!?_enable_debug:%{?strip_mod_opts:INSTALL_MOD_STRIP="%strip_mod_opts"}} \
 	INSTALL_MOD_PATH=%modules_dir \
-	%extra_mods
+	$(echo " %extra_mods " | sed 's/ zfs / zfs_spl /')
 %endif
 
 %{?_enable_oprofile:install -m 0644 vmlinux %buildroot%modules_dir/}
@@ -2758,6 +2758,9 @@ done)
 
 
 %changelog
+* Thu Jul 04 2013 Led <led@altlinux.ru> 3.4.52-alt1
+- 3.4.52
+
 * Wed Jul 03 2013 Led <led@altlinux.ru> 3.4.51-alt5
 - added:
   + feat-fs-exfat
