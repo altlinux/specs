@@ -6,7 +6,7 @@
 
 Name: branding-%brand-%theme
 Version: 7.0.0 
-Release: alt1
+Release: alt2
 
 BuildRequires: cpio fonts-ttf-dejavu fonts-ttf-droid
 BuildRequires: design-bootloader-source >= 5.0-alt2
@@ -218,7 +218,7 @@ ALT Linux index.html welcome page.
 
 %build
 autoconf
-THEME=%theme NAME='%Theme' BRAND_FNAME='%Brand' BRAND='%brand' STATUS_EN=%status_en STATUS=%status VERSION=%version PRODUCT_NAME_RU='%ProductName_ru' X86='%x86' ./configure 
+THEME=%theme NAME='%Theme' BRAND_FNAME='%Brand' BRAND='%brand' STATUS_EN=%status_en STATUS=%status VERSION=%version PRODUCT_NAME_RU='%ProductName_ru' CODENAME='%codename' X86='%x86' ./configure 
 make
 
 %install
@@ -364,6 +364,9 @@ subst 's/#theme-name=/theme-name=Clearlooks-Phenix/' /etc/lightdm/lightdm-gtk-gr
 %_desktopdir/indexhtml.desktop
 
 %changelog
+* Thu Jul 04 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 7.0.0-alt2
+- os-release fixed
+
 * Tue Jun 18 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 7.0.0-alt1
 - release version
 
