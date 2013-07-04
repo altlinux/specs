@@ -21,7 +21,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.4.52
-Release: alt1
+Release: alt2
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -215,7 +215,7 @@ Patch0084: linux-%kernel_branch.38-fix-drivers-base-regmap.patch
 
 Patch0091: linux-%kernel_branch.34-fix-drivers-block--aoe.patch
 Patch0092: linux-%kernel_branch.25-fix-drivers-block--drbd.patch
-Patch0093: linux-%kernel_branch.35-fix-drivers-block--nbd.patch
+Patch0093: linux-%kernel_branch.50-fix-drivers-block--nbd.patch
 Patch0094: linux-%kernel_branch.20-fix-drivers-block--zram.patch
 
 Patch0101: linux-%kernel_branch.39-fix-drivers-bluetooth--btmrvl.patch
@@ -413,6 +413,7 @@ Patch0481: linux-%kernel_branch.20-fix-drivers-scsi-device_handler--scsi_dh.patc
 Patch0482: linux-%kernel_branch.39-fix-drivers-scsi-fcoe--fcoe.patch
 Patch0483: linux-%kernel_branch.20-fix-drivers-scsi-ibmvscsi--ibmvscsic.patch
 Patch0484: linux-%kernel_branch.20-fix-drivers-scsi-megaraid--megaraid_mbox.patch
+Patch0485: linux-%kernel_branch.50-fix-drivers-scsi-osd--osd.patch
 
 Patch0491: linux-%kernel_branch.25-fix-drivers-spi--spi.patch
 Patch0492: linux-%kernel_branch.38-fix-drivers-spi--spi-dw.patch
@@ -1611,6 +1612,7 @@ cd linux-%version
 %patch0482 -p1
 %patch0483 -p1
 %patch0484 -p1
+%patch0485 -p1
 
 # fix-drivers-spi--*
 %patch0491 -p1
@@ -2758,6 +2760,13 @@ done)
 
 
 %changelog
+* Thu Jul 04 2013 Led <led@altlinux.ru> 3.4.52-alt2
+- updated:
+  + fix-block (CVE-2013-2851)
+  + fix-drivers-block--nbd (CVE-2013-2851)
+- added:
+  + fix-drivers-scsi-osd--osd (CVE-2013-2851)
+
 * Thu Jul 04 2013 Led <led@altlinux.ru> 3.4.52-alt1
 - 3.4.52
 
