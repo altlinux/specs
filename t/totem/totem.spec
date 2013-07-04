@@ -35,7 +35,7 @@
 
 Name: totem
 Version: %ver_major.2
-Release: alt1
+Release: alt2
 
 Summary: Movie player for GNOME 3
 Group: Video
@@ -50,6 +50,7 @@ Obsoletes: %name-plugins-publish  %name-plugins-iplayer
 Provides: %name-backend = %version %name-backend-gstreamer = %version %name-backend-xine = %version
 
 Requires: lib%name = %version-%release
+Requires: dconf gnome-icon-theme
 Requires: gstreamer%gst_api_ver >= %gst_ver
 Requires: gst-plugins-base%gst_api_ver
 Requires: gst-plugins-good%gst_api_ver
@@ -414,6 +415,9 @@ find %buildroot%_libdir -name \*.la -delete
 %_datadir/gtk-doc/html/*
 
 %changelog
+* Thu Jul 04 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.2-alt2
+- added lost dependencies
+
 * Tue May 14 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.2-alt1
 - 3.8.2
 
