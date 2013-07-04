@@ -1,8 +1,8 @@
 %define _sbindir /sbin
 
 Name: reiserfsprogs
-Version: 3.6.22
-Release: alt2
+Version: 3.6.23
+Release: alt1
 Summary: The utilities to create Reiserfs volume
 License: GPLv2 with "Anti-Plagiarism" modification
 Group: System/Kernel and hardware
@@ -11,6 +11,7 @@ Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 Obsoletes: reiserfs-utils
 Provides: reiserfs-utils = %version-%release
+Conflicts: progsreiserfs < 0.3.0.5-alt3
 
 # Automatically added by buildreq on Tue Aug 31 2010
 BuildRequires: libuuid-devel
@@ -35,8 +36,6 @@ Reiserfs.
 
 %install
 %makeinstall_std
-ln -s mkreiserfs.8 %buildroot%_man8dir/mkfs.reiserfs.8
-ln -s reiserfsck.8 %buildroot%_man8dir/fsck.reiserfs.8
 
 
 %files
@@ -46,6 +45,9 @@ ln -s reiserfsck.8 %buildroot%_man8dir/fsck.reiserfs.8
 
 
 %changelog
+* Thu Jul 04 2013 Led <led@altlinux.ru> 3.6.23-alt1
+- 3.6.23
+
 * Tue Mar 12 2013 Led <led@altlinux.ru> 3.6.22-alt2
 - removed conflicts of progsreiserfs
 
