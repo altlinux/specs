@@ -8,7 +8,7 @@
 
 Name: evince
 Version: %ver_major.2
-Release: alt2
+Release: alt2.1
 
 Summary: A document viewer
 Group: Office
@@ -19,7 +19,7 @@ Url: http://www.gnome.org/projects/evince/
 Source: %name-%version.tar
 
 Requires: lib%name = %version-%release
-Requires: gnome-icon-theme-symbolic
+Requires: gnome-icon-theme gnome-icon-theme-symbolic
 Requires: dconf
 
 BuildRequires: gcc-c++ gnome-common gtk-doc gnome-icon-theme intltool libdbus-glib-devel
@@ -164,6 +164,9 @@ subst '/NoDisplay/d' %buildroot%_desktopdir/%name.desktop
 %exclude %_libdir/nautilus/extensions-3.0/libevince-properties-page.la
 
 %changelog
+* Thu Jul 04 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.2-alt2.1
+- added dependendence for icons to work without gnome-shell installed
+
 * Mon Jul 01 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.2-alt2
 - updated to 3059e01 (in particular fixed CVE-2013-3718)
 - added gnome-icon-theme-symbolic, dconf to rqs
