@@ -3,7 +3,7 @@
 
 Name: grace
 Version: 5.1.22
-Release: alt9.4
+Release: alt9.5
 
 Summary: WYSIWYG tool to make two-dimensional plots of scientific data
 License: GPL
@@ -35,7 +35,7 @@ BuildRequires: imake libXbae-devel libXmu-devel libXp-devel libXpm-devel libfftw
 %{?_with_pdflib:BuildRequires: libpdflib-lite-devel}
 # argh
 %{?_with_netcdf:BuildRequires: libnetcdf-devel}
-%{?_with_netcdf:Requires: libnetcdf7 libhdf5-7}
+%{?_with_netcdf:Requires: libnetcdf7 libhdf5-8}
 # no need this conflict now
 #{?_with_netcdf:Conflicts: libnetcdf6-mpi libhdf5-6-mpi mpi-selector openmpi}
 
@@ -134,6 +134,9 @@ GRACE_HOME=%_datadir/grace %_datadir/grace/auxiliary/set_default_enc
 # - look into printing support
 
 %changelog
+* Thu Jul 04 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.1.22-alt9.5
+- Requires: libhdf5-8
+
 * Tue Jul 02 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.1.22-alt9.4
 - Rebuilt with new libhdf5
 
