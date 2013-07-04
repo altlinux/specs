@@ -5,7 +5,7 @@ Serial: 1
 %define octave_descr_name Communications
 Name: octave-%octave_pkg_name
 Version: 1.1.1
-Release: alt1
+Release: alt2
 Summary: Communications.
 
 Group: Sciences/Mathematics
@@ -50,6 +50,9 @@ octave -q -H --no-site-file --eval "pkg prefix %buildroot%_datadir/octave/packag
 %endif
 
 %changelog
+* Tue Jul 02 2013 Paul Wolneykien <manowar@altlinux.org> 1:1.1.1-alt2
+- Rebuild with a new version of libhdf5.
+
 * Tue Jan 08 2013 Paul Wolneykien <manowar@altlinux.ru> 1:1.1.1-alt1
 - updated by octave-package-builder
 
