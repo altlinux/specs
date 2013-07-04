@@ -7,7 +7,7 @@
 
 Name: %{_name}2
 Version: 2.1.0
-Release: alt1
+Release: alt2
 
 Summary: Disk Management Service (Second Edition)
 License: GPLv2+
@@ -16,6 +16,7 @@ Url: http://www.freedesktop.org/wiki/Software/%_name
 
 #Source: %_name-%version.tar
 Source: http://udisks.freedesktop.org/releases/%_name-%version.tar.bz2
+Source1: %name.control
 Patch1: %_name-1.92.0-alt-udiskd_dir.patch
 
 Obsoletes: %_name
@@ -27,6 +28,7 @@ Obsoletes: %_name
 %define libatasmart_ver 0.17
 %define dbus_ver 1.4.0
 
+PreReq: control
 Requires: lib%name = %version-%release
 Requires: /lib/udev/rules.d
 Requires: /usr/sbin/cryptsetup
@@ -111,15 +113,34 @@ This package contains development documentation for lib%name.
 mkdir -p %buildroot%_localstatedir/run/%name
 touch %buildroot%_localstatedir/lib/%name/mtab
 
+# use /media for mounting by default
+mkdir -p %buildroot%_sysconfdir/udev/rules.d
+cat > %buildroot%_sysconfdir/udev/rules.d/99-alt-%name-media-mount-point.rules <<_EOF_
+ENV{ID_FS_USAGE}=="filesystem|other|crypto",
+ENV{UDISKS_FILESYSTEM_SHARED}="0"
+_EOF_
+
+# control support
+install -pD -m755 %SOURCE1 %buildroot%_controldir/%name
+
 %find_lang %name
 
 %check
 %make check
 
+%pre
+if [ -f %_controldir/%name ]; then
+%pre_control %name
+fi
+
+%post
+%post_control -s default %name
+
 %files -f %name.lang
 %_sbindir/umount.%name
 %_bindir/udisksctl
 /lib/udev/rules.d/80-%name.rules
+%_sysconfdir/udev/rules.d/99-alt-%name-media-mount-point.rules
 %dir %_libexecdir/%name
 %_libexecdir/%name/udisksd
 %_datadir/polkit-1/actions/org.freedesktop.%name.policy
@@ -132,6 +153,7 @@ touch %buildroot%_localstatedir/lib/%name/mtab
 %ghost %_localstatedir/lib/%name/mtab
 %attr(0700,root,root) %dir %_localstatedir/run/%name
 %config %systemd_unitdir/udisks2.service
+%config %_controldir/%name
 %doc README AUTHORS NEWS HACKING
 
 %files -n libudisks2
@@ -154,6 +176,10 @@ touch %buildroot%_localstatedir/lib/%name/mtab
 %endif
 
 %changelog
+* Thu Jul 04 2013 Yuri N. Sedunov <aris@altlinux.org> 2.1.0-alt2
+- 99-alt-udisks2-media-mount-point.rules: /media used for mounting
+  Control support to switch mount points for removable media (ALT #27256, #29138)
+
 * Mon Mar 18 2013 Yuri N. Sedunov <aris@altlinux.org> 2.1.0-alt1
 - 2.1.0
 
