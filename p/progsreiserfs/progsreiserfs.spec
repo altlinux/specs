@@ -5,7 +5,7 @@
 Name: progsreiserfs
 %define lname lib%name
 Version: 0.3.0.5
-Release: alt2
+Release: alt3
 Summary: Programs needed for manipulating reiserfs partitions
 Summary(uk_UA.CP1251): Програми для маніпулювання розділами диску з reiserfs
 License: %gpl2plus
@@ -61,7 +61,9 @@ This package includes the libraries needed to statically link software with
 %prep
 %setup -q
 %patch -p1
-sed -i -r 's/(mkfs)\.(reiserfs)/\2.\1/g' doc/mkfs.reiserfs.8
+for f in mk tune; do
+	sed -i -r "s/(${f}fs)\.(reiserfs)/\2.\1/g" doc/${f}fs.reiserfs.8
+done
 [ -e config.rpath ] || :> config.rpath
 
 
@@ -81,8 +83,16 @@ gzip -9c ChangeLog > ChangeLog.gz
 
 %install
 %makeinstall_std
-mv %buildroot%_sbindir/{mkfs.reiserfs,reiserfs.mkfs}
-mv %buildroot%_man8dir/{mkfs.reiserfs,reiserfs.mkfs}.8
+for f in mk tune; do
+	mv %buildroot%_sbindir/{${f}fs.reiserfs,reiserfs.${f}fs}
+	mv %buildroot%_man8dir/{${f}fs.reiserfs,reiserfs.${f}fs}.8
+done
+
+
+%files
+%doc AUTHORS ChangeLog.* NEWS README THANKS
+%_sbindir/*
+%_man8dir/*
 
 
 %if_enabled shared
@@ -103,13 +113,11 @@ mv %buildroot%_man8dir/{mkfs.reiserfs,reiserfs.mkfs}.8
 %endif
 
 
-%files
-%doc AUTHORS ChangeLog.* NEWS README THANKS
-%_sbindir/*
-%_man8dir/*
-
-
 %changelog
+* Thu Jul 04 2013 Led <led@altlinux.ru> 0.3.0.5-alt3
+- rename tunefs.reiserfs* to reiserfs.tunefs*
+  (conflicts w/reiserfsprogs)
+
 * Tue Mar 12 2013 Led <led@altlinux.ru> 0.3.0.5-alt2
 - fixed %name.m4
 - cleaned up BuildRequires
