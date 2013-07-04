@@ -1,7 +1,7 @@
 %define sover 2
 
 Name: ltilib2
-Version: 2.121001
+Version: 2.130703
 Release: alt1
 Summary: Algorithms and data structures frequently used in image processing and computer vision
 License: BSD
@@ -175,6 +175,9 @@ popd
 %doc data/* examples/*
 
 %changelog
+* Thu Jul 04 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.130703-alt1
+- Version 2.130703
+
 * Tue Oct 02 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.121001-alt1
 - Version 2_121001
 
