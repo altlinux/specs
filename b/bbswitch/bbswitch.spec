@@ -1,5 +1,5 @@
 Name: bbswitch
-Version: 0.5
+Version: 0.7
 Release: alt1
 
 Summary: kernel support for power management of nVidia GPU on Optimus enabled laptops.
@@ -49,6 +49,9 @@ tar -cjf %kernel_srcdir/%name-%version.tar.bz2 %name-%version
 %doc NEWS README.md
 
 %changelog
+* Fri Jul 05 2013 Yuri N. Sedunov <aris@altlinux.org> 0.7-alt1
+- updated to v0.7 tag
+
 * Tue Mar 12 2013 Yuri N. Sedunov <aris@altlinux.org> 0.5-alt1
 - updated to v0.5 tag
 
