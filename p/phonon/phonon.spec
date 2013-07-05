@@ -2,7 +2,7 @@
 
 Name: phonon
 Version: 4.6.0
-Release: alt2
+Release: alt3
 
 Group: Graphical desktop/KDE
 Summary: KDE4 Multimedia Framework
@@ -99,6 +99,12 @@ mkdir -p %buildroot/%_qt4dir/plugins/phonon_backend
 %_K4dbus_interfaces/org.kde.Phonon.AudioOutput.xml
 
 %changelog
+* Fri Jul 05 2013 Sergey V Turchin <zerg@altlinux.org> 4.6.0-alt3
+- rebuild
+
+* Tue Feb 21 2012 Sergey V Turchin <zerg@altlinux.org> 4.6.0-alt1.M60P.1
+- built for M60P
+
 * Fri Jan 13 2012 Sergey V Turchin <zerg@altlinux.org> 4.6.0-alt2
 - fix cmake files
 
