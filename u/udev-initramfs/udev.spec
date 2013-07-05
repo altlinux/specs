@@ -1,6 +1,8 @@
+%define _libexecdir /lib/udev
+
 Name: udev-initramfs
 Version: 150
-Release: alt15
+Release: alt16
 Summary: udev built with klibc for use in initramfs
 License: GPLv2+
 Group: System/Configuration/Hardware
@@ -105,7 +107,6 @@ __EOF__
 %configure \
 	CC="$PWD/klcc.sh" \
 	--sbindir=/lib/mkinitrd/udev/sbin \
-	--libexecdir=/lib/mkinitrd/udev/lib/udev \
 	--without-selinux \
 	--disable-debug \
 	--disable-logging \
@@ -133,6 +134,9 @@ done
 
 
 %changelog
+* Fri Jul 05 2013 Led <led@altlinux.ru> 150-alt16
+- fixed %%_libexecdir
+
 * Sat Dec 15 2012 Led <led@altlinux.ru> 150-alt15
 - fixed build with shared klibc
 
