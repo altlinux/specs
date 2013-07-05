@@ -1,9 +1,12 @@
+%def_enable snapshot
+
 %define ver_major 0.16
 %def_disable introspection
+%def_enable gtk_doc
 
 Name: dconf
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: A simple configuration system
 Group: System/Servers
@@ -11,14 +14,18 @@ License: LGPLv2+
 
 Url: https://live.gnome.org/dconf
 
+%if_enabled snapshot
+Source: %name-%version.tar
+%else
 Source: http://download.gnome.org/sources/dconf/%ver_major/%name-%version.tar.xz
+%endif
 Source1: update-dconf-database.filetrigger
 
 Provides: %_rpmlibdir/update-dconf-database.filetrigger
 
 Requires: lib%name = %version-%release dbus
 
-BuildRequires: libgio-devel >= 2.35.2 libgtk+3-devel libxml2-devel vala-tools >= 0.17.0
+BuildRequires: libgio-devel >= 2.35.2 libgtk+3-devel >= 3.4 libxml2-devel vala-tools >= 0.17.0
 BuildRequires: libdbus-devel gtk-doc intltool xsltproc
 %{?_enable_introspection:BuildPreReq: gobject-introspection-devel >= 1.33.3}
 
@@ -105,10 +112,13 @@ This package provides Vala language bindings  for the dconf library
 %define _libexecdir %_prefix/libexec
 
 %prep
-%setup -q
+%setup
+[ ! -d m4 ] && mkdir m4
 
 %build
-%configure
+%{?_enable_snapshot:./autogen.sh}
+%configure \
+	%{?_enable_gtk_doc:--enable-gtk-doc}
 %make_build
 
 %install
@@ -148,9 +158,6 @@ install -pD -m755 {%_sourcedir,%buildroot%_rpmlibdir}/update-dconf-database.file
 
 %files -n dconf-editor
 %_bindir/dconf-editor
-%dir %_datadir/dconf-editor
-%_datadir/dconf-editor/dconf-editor.ui
-%_datadir/dconf-editor/dconf-editor-menu.ui
 %_datadir/applications/dconf-editor.desktop
 %_iconsdir/hicolor/*/apps/*.*
 %_iconsdir/HighContrast/*/apps/dconf-editor.png
@@ -172,6 +179,9 @@ install -pD -m755 {%_sourcedir,%buildroot%_rpmlibdir}/update-dconf-database.file
 %exclude %_datadir/bash-completion/completions/dconf
 
 %changelog
+* Thu Jul 04 2013 Yuri N. Sedunov <aris@altlinux.org> 0.16.0-alt2
+- updated to 4171008
+
 * Tue Mar 26 2013 Yuri N. Sedunov <aris@altlinux.org> 0.16.0-alt1
 - 0.16.0
 
