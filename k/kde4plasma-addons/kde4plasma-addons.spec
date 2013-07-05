@@ -1,7 +1,7 @@
 %define _kde_alternate_placement 1
 %add_findpackage_path %_kde4_bindir
 
-%ifarch %arm
+%if_enabled kde_mobile
 %def_disable desktop
 %else
 %def_enable desktop
@@ -11,7 +11,7 @@
 Name: kde4plasma-addons
 %define major 4
 %define minor 10
-%define bugfix 4
+%define bugfix 5
 Version: %major.%minor.%bugfix
 Release: alt1
 
@@ -1307,6 +1307,9 @@ mkdir -p %buildroot/%_K4apps/kdeplasma-addons/
 %_K4link/*.so
 
 %changelog
+* Fri Jul 05 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.5-alt1
+- new version
+
 * Wed Jun 05 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.4-alt1
 - new version
 
