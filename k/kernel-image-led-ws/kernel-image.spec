@@ -21,7 +21,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.4.52
-Release: alt2
+Release: alt3
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -2760,6 +2760,10 @@ done)
 
 
 %changelog
+* Fri Jul 05 2013 Led <led@altlinux.ru> 3.4.52-alt3
+- updated:
+  + feat-drivers-acpi--bbswitch
+
 * Thu Jul 04 2013 Led <led@altlinux.ru> 3.4.52-alt2
 - updated:
   + fix-block (CVE-2013-2851)
