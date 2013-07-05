@@ -22,7 +22,7 @@
 
 Name: gvfs
 Version: %ver_major.3
-Release: alt2
+Release: alt3
 
 Summary: The GNOME virtual filesystem libraries
 License: %lgpl2plus
@@ -160,6 +160,12 @@ Group: System/Libraries
 Requires: %name = %version-%release
 Requires: gnome-online-accounts
 
+%package backend-mtp
+Summary: MTP support for gvfs
+Group: System/Libraries
+Requires: %name = %version-%release
+
+
 %package backends
 Summary: All backends for gvfs
 Group: System/Libraries
@@ -171,6 +177,7 @@ Requires: gvfs gvfs-backend-smb gvfs-backend-dnssd
 %{?_enable_afp:Requires: gvfs-backend-afp}
 %{?_enable_gtk:Requires: gvfs-backend-recent-files}
 %{?_enable_goa:Requires: gvfs-backend-goa}
+%{?_enable_libmtp:Requires: gvfs-backend-mtp}
 
 %package utils
 Summary: Command line applications for gvfs.
@@ -190,8 +197,8 @@ processes which you talk to via dbus. It also contains a gio module that
 seamlessly adds gvfs support to all applications using the gio API. It also
 supports exposing the gvfs mounts to non-gio applications using fuse.
 
-This package contains the gvfs server,libgvfscommon library, gio modules and
-backends for gvfs: archive, burn, computer, dav, ftp,
+This package contains the gvfs server, libgvfscommon library, gio
+modules and backends for gvfs: archive, burn, computer, dav, ftp,
 gphoto2, http, localtest, network, sftp and trash.
 
 %description devel
@@ -231,6 +238,10 @@ This package contains recent files backend for gvfs.
 
 %description backend-goa
 This package contains gnome-online-accounts backend for gvfs.
+
+%description backend-mtp
+This package provides support for reading and writing files on MTP based
+devices (Media Transfer Protocol) to applications using gvfs.
 
 %description backends
 This virtual package contains the all backends for gvfs.
@@ -305,8 +316,6 @@ killall -USR1 gvfsd >&/dev/null || :
 %{?_enable_hal:%_libexecdir/gvfs-hal-volume-monitor}
 %{?_enable_gdu:%_libexecdir/gvfs-gdu-volume-monitor}
 %{?_enable_udisks2:%_libexecdir/gvfs-udisks2-volume-monitor}
-%{?_enable_libmtp:%_libexecdir/gvfs-mtp-volume-monitor}
-
 %_datadir/dbus-1/services/*
 # gio modules
 %_libdir/gio/modules/*.so
@@ -320,7 +329,7 @@ killall -USR1 gvfsd >&/dev/null || :
 %{?_enable_hal:%_datadir/%name/remote-volume-monitors/hal.monitor}
 %{?_enable_gdu:%_datadir/%name/remote-volume-monitors/gdu.monitor}
 %{?_enable_udisks2:%_datadir/%name/remote-volume-monitors/udisks2.monitor}
-%{?_enable_libmtp:%_datadir/%name/remote-volume-monitors/mtp.monitor}
+
 %_datadir/%name/mounts
 %_datadir/applications/mount-archive.desktop
 
@@ -354,6 +363,12 @@ killall -USR1 gvfsd >&/dev/null || :
 %{?_enable_cdda:%exclude %_datadir/%name/mounts/cdda.mount}
     %exclude %_libexecdir/gvfsd-dnssd
     %exclude %_datadir/%name/mounts/dns-sd.mount
+
+%if_enabled libmtp
+    %exclude %_libexecdir/gvfsd-mtp
+    %exclude %_datadir/%name/mounts/mtp.mount
+    %exclude %_datadir/dbus-1/services/org.gtk.Private.MTPVolumeMonitor.service
+%endif
 
 %if_enabled gtk
 %exclude %_libexecdir/gvfsd-recent
@@ -424,6 +439,15 @@ killall -USR1 gvfsd >&/dev/null || :
 %_datadir/%name/remote-volume-monitors/goa.monitor
 %endif
 
+%if_enabled libmtp
+%files backend-mtp
+%_libexecdir/gvfsd-mtp
+%_libexecdir/gvfs-mtp-volume-monitor
+%_datadir/%name/mounts/mtp.mount
+%_datadir/%name/remote-volume-monitors/mtp.monitor
+%_datadir/dbus-1/services/org.gtk.Private.MTPVolumeMonitor.service
+%endif
+
 %files backends
 
 %files utils
@@ -437,6 +461,9 @@ killall -USR1 gvfsd >&/dev/null || :
 %exclude %_libdir/gio/modules/*.la
 
 %changelog
+* Fri Jul 05 2013 Yuri N. Sedunov <aris@altlinux.org> 1.16.3-alt3
+- new backend-mtp subpackage
+
 * Tue Jul 02 2013 Yuri N. Sedunov <aris@altlinux.org> 1.16.3-alt2
 - fixed afc backend for libimobiledevice new api from upstream
 - added dependencies:
