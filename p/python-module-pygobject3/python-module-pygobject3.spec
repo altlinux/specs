@@ -5,7 +5,7 @@
 %def_disable devel_doc
 
 Name: python-module-%{_name}3
-Version: %major.2
+Version: %major.3
 Release: alt1
 
 Summary: Python bindings for GObject
@@ -205,6 +205,9 @@ popd
 %endif
 
 %changelog
+* Fri Jul 05 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.3-alt1
+- 3.8.3
+
 * Mon May 13 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.2-alt1
 - 3.8.2
 
