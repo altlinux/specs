@@ -2,8 +2,8 @@
 %define mpidir %_libdir/%mpiimpl
 
 Name: parmetis
-Version: 4.0.2
-Release: alt3
+Version: 4.0.3
+Release: alt1
 Summary: Parallel Graph Partitioning and Fill-reducing Matrix Ordering
 License: Free for non-commertial
 Group: Sciences/Mathematics
@@ -196,6 +196,9 @@ popd
 %_datadir/%name
 
 %changelog
+* Fri Jul 05 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.3-alt1
+- Version 4.0.3
+
 * Sun Jun 24 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.2-alt3
 - Rebuilt with OpenMPI 1.6
 
