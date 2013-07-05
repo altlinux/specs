@@ -2,7 +2,7 @@
 
 %define rname libkdeedu
 Name: libkdeedu4
-Version: 4.10.4
+Version: 4.10.5
 Release: alt1
 
 Group: System/Libraries
@@ -77,6 +77,9 @@ Development files for %name
 
 
 %changelog
+* Fri Jul 05 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.5-alt1
+- new version
+
 * Tue Jun 04 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.4-alt1
 - new version
 
