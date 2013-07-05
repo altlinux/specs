@@ -6,7 +6,7 @@
 
 Name: branding-%brand-%smalltheme
 Version: 7.0.0
-Release: alt11
+Release: alt12
 BuildArch: noarch
 
 %define theme %name
@@ -29,8 +29,8 @@ BuildRequires: ImageMagick fontconfig bc libGConf-devel
 
 %define Theme_ru KDesktop
 %define Brand_ru Альт Линукс
-%define status_en RC
-%define status RC
+%define status_en %nil
+%define status %nil
 %define variants altlinux-desktop altlinux-office-desktop altlinux-office-server altlinux-lite altlinux-workbench school-master altlinux-gnome-desktop
 
 Source: %name.tar
@@ -455,6 +455,9 @@ fi
 %_datadir/kde4/apps/kio_desktop/DesktopLinks/indexhtml.desktop
 
 %changelog
+* Fri Jul 05 2013 Sergey V Turchin <zerg at altlinux dot org> 7.0.0-alt12
+- clear status
+
 * Thu Jun 20 2013 Sergey V Turchin <zerg at altlinux dot org> 7.0.0-alt11
 - change status to RC
 
