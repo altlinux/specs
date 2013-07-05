@@ -24,7 +24,7 @@
 %define qsa_major 1
 %define qsa_minor 1
 %define qsa_bugfix 5
-%define rlz alt3
+%define rlz alt4
 Name: %rname%major
 Version: %major.%minor.%bugfix
 Release: %rlz
@@ -159,7 +159,8 @@ BuildRequires: libaudio-devel
 %endif
 BuildRequires: fontconfig-devel 
 %if %build_odbc
-BuildRequires: libiodbc-devel
+BuildRequires: libunixODBC-devel
+#libiodbc-devel
 %endif
 #BuildRequires: libXft-devel
 
@@ -473,7 +474,7 @@ Install this package if you want to create RPM packages that use %name.
 %patch38 -p0
 
 %patch51 -p0
-%patch52 -p0
+##%patch52 -p0	# Include to 3.5.13.2
 %patch53 -p0
 
 %patch100 -p1
@@ -1290,6 +1291,9 @@ install -m 644 %SOURCE103 %buildroot/%_iconsdir/hicolor/48x48/apps/%rname.png
 %_rpmmacrosdir/*
 
 %changelog
+* Sat Jun 22 2013 Roman Savochenko <rom_as@altlinux.ru> 3.3.8d-alt4
+- Update to last Trinity 3.3.8d, branch origin/v3.5.13-sru (tag v3.5.13.2)
+
 * Tue Feb 12 2013 Sergey V Turchin <zerg@altlinux.org> 3.3.8d-alt3
 - rebuilt (ALT #28444)
 
