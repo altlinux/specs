@@ -5,9 +5,9 @@
 Name: kde4admin
 %define major 4
 %define minor 10
-%define bugfix 0
+%define bugfix 5
 Version: %major.%minor.%bugfix
-Release: alt0.1
+Release: alt1
 
 Group: Graphical desktop/KDE
 Summary: K Desktop Environment - Administrative Tools
@@ -106,6 +106,14 @@ Utility to configure new printers.
 #
 %patch11 -p1
 
+ls -d1 * | \
+while read d
+do
+    [ "$d" != "altlinux" ] || continue
+    [ -d "$d" ] || continue
+    echo "add_subdirectory($d)" >> CMakeLists.txt
+done
+
 %build
 NO_BUILD+=" -DBUILD_kuser=FALSE"
 NO_BUILD+=" -DBUILD_lilo-config=FALSE"
@@ -121,13 +129,13 @@ NO_BUILD+=" -DBUILD_kpackage=FALSE"
 
 %files
 %files common
-%doc README
 #exclude %_K4doc/*/kpackage
 #exclude %_K4doc/*/kuser
 #exclude %_K4doc/*/kcontrol/knetworkconf
 #exclude %_K4doc/*/lilo-config
 
 %files kcron
+%doc kcron/README kcron/TODO
 %_K4srv/kcm_cron.desktop
 %_K4lib/kcm_cron.so
 %_K4doc/*/kcron
@@ -141,6 +149,9 @@ NO_BUILD+=" -DBUILD_kpackage=FALSE"
 
 
 %changelog
+* Fri Jul 05 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.5-alt1
+- new version
+
 * Thu Dec 20 2012 Sergey V Turchin <zerg@altlinux.org> 4.10.0-alt0.1
 - new beta version
 
