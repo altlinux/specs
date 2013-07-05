@@ -17,7 +17,7 @@
 %def_enable introspection
 
 Name: libgtk+2
-Version: %ver_major.19
+Version: %ver_major.20
 Release: alt1
 
 Summary: The GIMP ToolKit (GTK+), a library for creating GUIs
@@ -245,7 +245,7 @@ NOCONFIGURE=1 ./autogen.sh
 %make_install DESTDIR=%buildroot install
 install -d %buildroot{%_sysconfdir/gtk-%api_ver,%_libdir/gtk-%api_ver/%binary_ver/engines}
 
-touch %buildroot%_sysconfdir/gtk-%api_ver/gtk.immodules
+touch %buildroot%_libdir/gtk-%api_ver/%binary_ver/immodules.cache
 
 # system wide gtkrc
 cat <<__RC__ > %buildroot%_sysconfdir/gtk-%api_ver/gtkrc
@@ -279,7 +279,7 @@ cat <<EOF > filetrigger
 #!/bin/sh -e
 
 dir=%fulllibpath/immodules
-grep -qs '^'\$dir'' && %_bindir/gtk-query-immodules-%api_ver > %_sysconfdir/gtk-%api_ver/gtk.immodules ||:
+grep -qs '^'\$dir'' && %_bindir/gtk-query-immodules-%api_ver --update-cache ||:
 EOF
 
 install -pD -m 755 filetrigger %buildroot%_rpmlibdir/gtk-%api_ver-immodules-cache.filetrigger
@@ -305,7 +305,7 @@ install -pD -m 755 filetrigger %buildroot%_rpmlibdir/gtk-%api_ver-immodules-cach
 %dir %_sysconfdir/gtk-%api_ver
 %config(noreplace) %_sysconfdir/gtk-%api_ver/gtkrc
 %config(noreplace) %_sysconfdir/gtk-%api_ver/im-multipress.conf
-%ghost %_sysconfdir/gtk-%api_ver/gtk.immodules
+%ghost %_libdir/gtk-%api_ver/%binary_ver/immodules.cache
 %_bindir/gtk-query-immodules-%api_ver
 %_man1dir/gtk-query-immodules*
 %_rpmlibdir/gtk-%api_ver-immodules-cache.filetrigger
@@ -375,6 +375,9 @@ install -pD -m 755 filetrigger %buildroot%_rpmlibdir/gtk-%api_ver-immodules-cach
 %_datadir/gir-1.0/*
 
 %changelog
+* Thu Jul 04 2013 Yuri N. Sedunov <aris@altlinux.org> 2.24.20-alt1
+- 2.24.20
+
 * Sat Jun 22 2013 Yuri N. Sedunov <aris@altlinux.org> 2.24.19-alt1
 - 2.24.19
 
