@@ -7,7 +7,7 @@
 
 Name: %sname%sover-seq
 Version: %major.3.0
-Release: alt1
+Release: alt2
 
 Summary: Libraries to use the Unidata network Common Data Form (netCDF)
 
@@ -194,6 +194,15 @@ for i in $(ls |egrep -v 'nc\-config'); do
 done
 popd
 
+# There is a file in the package with a name starting with <tt>._</tt>, 
+# the file name pattern used by Mac OS X to store resource forks in non-native 
+# file systems. Such files are generally useless in packages and were usually 
+# accidentally included by copying complete directories from the source tarball.
+find $RPM_BUILD_ROOT -name '._*' -size 1 -print0 | xargs -0 grep -lZ 'Mac OS X' -- | xargs -0 rm -f
+# for ones installed as %%doc
+find . -name '._*' -size 1 -print0 | xargs -0 grep -lZ 'Mac OS X' -- | xargs -0 rm -f
+
+
 %pre -n %sname-devel
 rm -fR %_includedir/netcdf-3 %_includedir/netcdf \
 	%hdfdir/include/netcdf-3 %hdfdir/include/netcdf
@@ -226,6 +235,9 @@ rm -fR %_includedir/netcdf-3 %_includedir/netcdf \
 %exclude %_man3dir/index.3*
 
 %changelog
+* Fri Jul 05 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.3.0-alt2
+- Applied repocop patch
+
 * Wed Jul 03 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.3.0-alt1
 - Version 4.3.0
 
