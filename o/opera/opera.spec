@@ -1,5 +1,5 @@
-%define		softver 12.15
-%define		buildver 1748
+%define		softver 12.16
+%define		buildver 1860
 
 Name:		opera
 Version:	%softver.%buildver
@@ -29,7 +29,7 @@ BuildArch:	x86_64
 %endif
 
 # rem for M51
-BuildRequires: libgtk+3
+# #BuildRequires: libgtk+3
 
 BuildRequires: kde4libs libXt libgst-plugins libgtk+2
 
@@ -112,13 +112,16 @@ rm -rf %buildroot%_libdir/opera/opera_autoupdatechecker
 %_libdir/opera/lib%{name}gtk2.so
 
 # rem for M51
-%files -n %name-engines-gtk3
-%_libdir/opera/lib%{name}gtk3.so
+# #%files -n %name-engines-gtk3
+# #%_libdir/opera/lib%{name}gtk3.so
 
 %files -n %name-engines-kde4
 %_libdir/opera/lib%{name}kde4.so
 
 %changelog
+* Fri Jul 05 2013 Motsyo Gennadi <drool@altlinux.ru> 12.16.1860-alt1
+- 12.16 released
+
 * Sat Apr 06 2013 Motsyo Gennadi <drool@altlinux.ru> 12.15.1748-alt1
 - 12.15 released
 
