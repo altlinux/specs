@@ -9,7 +9,7 @@
 
 Name: %sname%sover-mpi
 Version: %major.3.0
-Release: alt1
+Release: alt2
 
 Summary: Parallel libraries to use the Unidata network Common Data Form (netCDF)
 
@@ -246,6 +246,15 @@ for i in %buildroot%mpidir/lib/*.so %buildroot%mpidir/bin/*; do
 	chrpath -r %mpidir/lib $i ||:
 done
 
+# There is a file in the package with a name starting with <tt>._</tt>, 
+# the file name pattern used by Mac OS X to store resource forks in non-native 
+# file systems. Such files are generally useless in packages and were usually 
+# accidentally included by copying complete directories from the source tarball.
+find $RPM_BUILD_ROOT -name '._*' -size 1 -print0 | xargs -0 grep -lZ 'Mac OS X' -- | xargs -0 rm -f
+# for ones installed as %%doc
+find . -name '._*' -size 1 -print0 | xargs -0 grep -lZ 'Mac OS X' -- | xargs -0 rm -f
+
+
 %pre -n %sname-mpi-devel
 rm -fR %mpidir/include/netcdf-3 %mpidir/include/netcdf
 
@@ -277,6 +286,9 @@ rm -fR %mpidir/include/netcdf-3 %mpidir/include/netcdf
 %_altdir/%oname-mpi-tools.alternatives
 
 %changelog
+* Fri Jul 05 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.3.0-alt2
+- Applied repocop patch
+
 * Wed Jul 03 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.3.0-alt1
 - Version 4.3.0
 
