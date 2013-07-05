@@ -10,7 +10,7 @@
 %endif
 %add_findreq_skiplist %_K4apps/kopete_skype/call_*
 
-%ifarch %arm
+%if_enabled kde_desktop
 %def_disable desktop
 %else
 %def_enable desktop
@@ -22,10 +22,10 @@
 %define rname kdenetwork
 %define major 4
 %define minor 10
-%define bugfix 4
+%define bugfix 5
 Name: kde4network
 Version: %major.%minor.%bugfix
-Release: alt3
+Release: alt1
 
 Packager: Sergey V Turchin <zerg at altlinux dot org>
 
@@ -227,10 +227,18 @@ based on %name.
 #%patch20 -p1
 %patch21 -p1
 %patch22 -p1
-%patch23 -p1
+%patch23 -p0
 %if_disabled desktop
 %patch24 -p1
 %endif
+
+ls -d1 * | \
+while read d
+do
+    [ "$d" != "altlinux" ] || continue
+    [ -d "$d" ] || continue
+    echo "add_subdirectory($d)" >> CMakeLists.txt
+done
 
 %build
 %K4cmake \
@@ -285,7 +293,6 @@ chmod 0755 %buildroot/etc/control.d/facilities/kppp-kde4
 
 %files
 %files common
-%doc README
 %dir %_K4srv/kconfiguredialog/
 %_K4snd/KDE-Im-Phone-Ring.wav
 
@@ -313,6 +320,7 @@ chmod 0755 %buildroot/etc/control.d/facilities/kppp-kde4
 %endif
 
 %files kget
+%doc kget/AUTHORS kget/TODO
 %_K4bindir/kget
 %_K4apps/kget/
 %_K4apps/dolphinpart/kpartplugins/kget*
@@ -324,6 +332,7 @@ chmod 0755 %buildroot/etc/control.d/facilities/kppp-kde4
 %_K4lib/plasma_engine_kget.so
 %_K4lib/plasma_kget_barapplet.so
 %_K4lib/plasma_kget_piechart.so
+%_libdir/strigi/strigita_torrent_analyzer.so
 %_K4conf_update/kget*
 %_K4dbus_services/org.kde.kget.service
 %_K4xdg_apps/kget.desktop
@@ -339,6 +348,7 @@ chmod 0755 %buildroot/etc/control.d/facilities/kppp-kde4
 %_K4doc/*/kget
 
 %files kopete
+%doc kopete/AUTHORS kopete/IDENTITY_REFACTORY kopete/README kopete/TODO
 %if_enabled kopete_googletalk
 %_K4bindir/googletalk-call
 %endif
@@ -413,6 +423,7 @@ chmod 0755 %buildroot/etc/control.d/facilities/kppp-kde4
 %_K4libdir/libkopetecontactlist.so.*
 
 %files kppp
+%doc kppp/AUTHORS kppp/README
 %attr(4711, root, root) %_K4bindir/kppp
 %config %_sysconfdir/control.d/facilities/kppp-kde4
 %_K4bindir/kppplogview
@@ -449,6 +460,7 @@ chmod 0755 %buildroot/etc/control.d/facilities/kppp-kde4
 %_K4libdir/libkrfbprivate.so.*
 
 %files krfb
+%doc krfb/AUTHORS krfb/NOTES krfb/README krfb/TODO
 %_K4bindir/krfb
 %_K4lib/krfb_framebuffer_qt.so
 %_K4lib/krfb_framebuffer_x11.so
@@ -467,6 +479,9 @@ chmod 0755 %buildroot/etc/control.d/facilities/kppp-kde4
 %_K4dbus_interfaces/*
 
 %changelog
+* Fri Jul 05 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.5-alt1
+- new version
+
 * Wed Jun 19 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.4-alt3
 - rebuilt with new mediastreamer
 
