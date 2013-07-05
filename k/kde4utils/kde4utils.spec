@@ -7,9 +7,9 @@
 Name: kde4utils
 %define major 4
 %define minor 10
-%define bugfix 3
+%define bugfix 5
 Version: %major.%minor.%bugfix
-Release: alt2
+Release: alt1
 
 Group: Graphical desktop/KDE
 Summary: K Desktop Environment
@@ -489,6 +489,9 @@ done
 
 
 %changelog
+* Fri Jul 05 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.5-alt1
+- new version
+
 * Fri Jun 28 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.3-alt2
 - dont require superkaramba and kde4-print-manager by default
 
