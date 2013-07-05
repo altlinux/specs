@@ -8,7 +8,7 @@ BuildRequires: gcc-c++ libcrystalhd-devel
 Summary:       Broadcom Crystal HD device interface library
 Name:          libcrystalhd
 Version:       3.10.0
-Release:       alt1_4.qa1
+Release:       alt2
 License:       LGPLv2
 Group:         System/Libraries
 URL:           http://www.broadcom.com/support/crystal_hd/
@@ -32,6 +32,7 @@ Patch1:        crystalhd-gst-Port-to-GStreamer-1.0-API.patch
 BuildRequires: autoconf automake libtool
 BuildRequires: gstreamer1.0-devel >= %{majorminor}
 BuildRequires: gst-plugins1.0-devel >= %{majorminor}
+BuildPreReq: kernel-build-tools
 Requires:      firmware-crystalhd
 Source44: import.info
 
@@ -69,6 +70,14 @@ Requires:      gst-plugins-base1.0
 
 %description -n gstreamer-plugin-crystalhd
 Gstreamer crystalhd decoder plugin
+
+%package -n kernel-source-crystalhd
+Release: alt1
+Summary: Linux crystalhd  Broadcom module sources
+Group: Development/Kernel
+
+%description -n kernel-source-crystalhd
+Crystalhd module sources for Linux kernel.
 
 %prep
 %setup -q -n libcrystalhd-%{date}
@@ -118,6 +127,9 @@ install -pm 0644 driver/linux/20-crystalhd.rules \
 mkdir -p %buildroot%_udevrulesdir/
 mv %buildroot%_sysconfdir/udev/rules.d/* %buildroot%_udevrulesdir/
 
+mv driver kernel-source-crystalhd-%version
+%__mkdir_p %kernel_srcdir/
+%__tar jcf %kernel_srcdir/kernel-source-crystalhd-%version.tar.bz2 kernel-source-crystalhd-%version/
 
 %files
 %doc README_07032010 LICENSE
@@ -137,8 +149,13 @@ mv %buildroot%_sysconfdir/udev/rules.d/* %buildroot%_udevrulesdir/
 %files -n gstreamer-plugin-crystalhd
 %{_libdir}/gstreamer-%{majorminor}/*.so
 
+%files -n kernel-source-crystalhd
+/usr/src/kernel/sources/*
 
 %changelog
+* Fri Jul 05 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 3.10.0-alt2
+- packaging kernel-source-crystalhd added
+
 * Tue Apr 23 2013 Repocop Q. A. Robot <repocop@altlinux.org> 3.10.0-alt1_4.qa1
 - NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
 - applied repocop fixes:
