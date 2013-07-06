@@ -18,7 +18,7 @@
 %define with_gnokii 1
 
 Name: kdepim
-Version: 3.5.13.1
+Version: 3.5.13.2
 Release: alt2
 Serial: 1
 
@@ -58,6 +58,7 @@ Patch111: kdepim-3.5.10-alt-gcc4.4.patch
 Patch112: tde-3.5.13-build-defdir.patch
 Patch113: kdepim-3.5.13-cmake-build.patch
 Patch114: kdepim-3.5.13-kpilot-add.patch
+Patch115: kdepim-3.5.13.2-trinityHomeToKDE.patch
 
 Requires: %name-akregator = %version-%release
 Requires: %name-kaddressbook = %version-%release
@@ -377,6 +378,7 @@ install -m 0644 %SOURCE1 %SOURCE2 %SOURCE3 kandy/src
 %patch112
 %patch113 -p1
 #%patch114
+%patch115 -p1
 
 %if %cmake
 %else
@@ -991,6 +993,12 @@ done
 %_K3includedir/index
 
 %changelog
+* Sat Jul 06 2013 Roman Savochenko <rom_as@altlinux.ru> 1:3.5.13.2-alt2
+- Backward rename home dir .trinity to .kde.
+
+* Sun Jun 23 2013 Roman Savochenko <rom_as@altlinux.ru> 1:3.5.13.2-alt1
+- Release TDE version 3.5.13.2
+
 * Mon Oct 29 2012 Roman Savochenko <rom_as@altlinux.ru> 1:3.5.13.1-alt2
 - Build with -O2 and -g.
 
