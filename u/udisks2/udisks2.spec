@@ -7,7 +7,7 @@
 
 Name: %{_name}2
 Version: 2.1.0
-Release: alt2
+Release: alt2.1
 
 Summary: Disk Management Service (Second Edition)
 License: GPLv2+
@@ -116,8 +116,7 @@ touch %buildroot%_localstatedir/lib/%name/mtab
 # use /media for mounting by default
 mkdir -p %buildroot%_sysconfdir/udev/rules.d
 cat > %buildroot%_sysconfdir/udev/rules.d/99-alt-%name-media-mount-point.rules <<_EOF_
-ENV{ID_FS_USAGE}=="filesystem|other|crypto",
-ENV{UDISKS_FILESYSTEM_SHARED}="0"
+ENV{ID_FS_USAGE}=="filesystem|other|crypto", ENV{UDISKS_FILESYSTEM_SHARED}="0"
 _EOF_
 
 # control support
@@ -176,6 +175,9 @@ fi
 %endif
 
 %changelog
+* Sat Jul 06 2013 Yuri N. Sedunov <aris@altlinux.org> 2.1.0-alt2.1
+- 99-alt-udisks2-media-mount-point.rules: fixed syntax
+
 * Thu Jul 04 2013 Yuri N. Sedunov <aris@altlinux.org> 2.1.0-alt2
 - 99-alt-udisks2-media-mount-point.rules: /media used for mounting
   Control support to switch mount points for removable media (ALT #27256, #29138)
