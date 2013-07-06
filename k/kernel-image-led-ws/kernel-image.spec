@@ -21,7 +21,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.4.52
-Release: alt3
+Release: alt4
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -207,11 +207,12 @@ Patch0065: linux-%kernel_branch.25-fix-drivers-ata--pata_sch.patch
 
 Patch0071: linux-%kernel_branch.25-fix-drivers-atm--ambassador.patch
 
-Patch0080: linux-%kernel_branch.25-fix-drivers-base.patch
+Patch0080: linux-%kernel_branch.50-fix-drivers-base.patch
 Patch0081: linux-%kernel_branch.20-fix-drivers-base--dma-contiguous.patch
 Patch0082: linux-%kernel_branch.25-fix-drivers-base--dma-buf.patch
-Patch0083: linux-%kernel_branch.45-fix-drivers-base-power.patch
-Patch0084: linux-%kernel_branch.38-fix-drivers-base-regmap.patch
+Patch0083: linux-%kernel_branch.50-fix-drivers-base--firmware_class.patch
+Patch0084: linux-%kernel_branch.50-fix-drivers-base-power.patch
+Patch0085: linux-%kernel_branch.38-fix-drivers-base-regmap.patch
 
 Patch0091: linux-%kernel_branch.34-fix-drivers-block--aoe.patch
 Patch0092: linux-%kernel_branch.25-fix-drivers-block--drbd.patch
@@ -470,7 +471,7 @@ Patch0570: linux-%kernel_branch.47-fix-fs-reiserfs.patch
 Patch0571: linux-%kernel_branch.35-fix-fs-ubifs.patch
 Patch0572: linux-%kernel_branch.46-fix-fs-xfs.patch
 
-Patch0581: linux-%kernel_branch.34-fix-include-linux.patch
+Patch0581: linux-%kernel_branch.50-fix-include-linux.patch
 
 Patch0590: linux-%kernel_branch.20-fix-init.patch
 
@@ -1375,6 +1376,7 @@ cd linux-%version
 %patch0082 -p1
 %patch0083 -p1
 %patch0084 -p1
+%patch0085 -p1
 
 # fix-drivers-block--*
 %patch0091 -p1
@@ -2760,6 +2762,14 @@ done)
 
 
 %changelog
+* Fri Jul 05 2013 Led <led@altlinux.ru> 3.4.52-alt4
+- updated:
+  + fix-drivers-base
+  + fix-drivers-base-power
+  + fix-include-linux
+- added:
+  + fix-drivers-base--firmware_class
+
 * Fri Jul 05 2013 Led <led@altlinux.ru> 3.4.52-alt3
 - updated:
   + feat-drivers-acpi--bbswitch
