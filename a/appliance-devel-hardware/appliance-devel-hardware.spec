@@ -1,8 +1,9 @@
+Url: http://www.altlinux.org/Appliances
 Name: appliance-devel-hardware
 Summary: Virtual package that require hardware development packages
 BuildArch: noarch
 Version: 4.0.1
-Release: alt1
+Release: alt2
 License: GPL
 Group: Development/Other
 
@@ -10,10 +11,10 @@ Group: Development/Other
 Requires: kicad
 
 # PCB
-Requires: pcb
-Requires: pcb-library
-Requires: pcb-doc
-Requires: pcb-examples
+#Requires: pcb
+#Requires: pcb-library
+#Requires: pcb-doc
+#Requires: pcb-examples
 
 # gEDA
 Requires: geda
@@ -53,6 +54,9 @@ Requires: uisp
 %files
 
 %changelog
+* Fri Jul 05 2013 Denis Smirnov <mithraen@altlinux.ru> 4.0.1-alt2
+- add Url tag
+
 * Sun May 06 2012 Denis Smirnov <mithraen@altlinux.ru> 4.0.1-alt1
 - initial build for ALT Linux Sisyphus
 
