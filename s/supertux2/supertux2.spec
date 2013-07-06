@@ -1,9 +1,8 @@
 Name: supertux2
 Version: 0.3.4
-Release: alt3
+Release: alt4
 
 Summary: Classic 2D jump'n run sidescroller game in a Super Mario style
-
 License: GPLv3
 Group: Games/Arcade
 URL: http://supertux.lethargik.org/
@@ -100,6 +99,9 @@ rm -rf %buildroot/%_docdir/supertux2/
 %exclude %_datadir/supertux2/sounds/normalize.sh
 
 %changelog
+* Sat Jul 06 2013 Igor Zubkov <icesik@altlinux.org> 0.3.4-alt4
+- git snapshot from cabf498f3931ad06fc696ddee840778240fbf130
+
 * Sat Jun 22 2013 Igor Zubkov <icesik@altlinux.org> 0.3.4-alt3
 - fix Summary
 - git snapshot from 0fdd44fa8c98960abcd6a956c85ba362e45df39e
