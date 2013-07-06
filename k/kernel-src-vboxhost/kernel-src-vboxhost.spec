@@ -1,17 +1,17 @@
-%define module_name vboxhost
+%define mname vboxhost
 
 %{!?x86_64:%define x86_64 x86_64}
 
-Name: kernel-src-%module_name
-Version: 4.2.14
+Name: kernel-src-%mname
+Version: 4.2.16
 Release: alt1
 Summary: Linux VirtualBox host modules sources
 License: GPLv2
 Group: Development/Kernel
 URL: http://www.virtualbox.org
 BuildArch: noarch
-Source: %module_name-%version.tar
-#Patch: %module_name-%version-%release.patch
+Source: %mname-%version.tar
+#Patch: %mname-%version-%release.patch
 ExclusiveArch: %ix86 %x86_64
 
 BuildRequires: rpm-build-kernel
@@ -21,13 +21,13 @@ VirtualBox host modules sources for Linux kernel.
 
 
 %prep
-%setup -n %module_name-%version
+%setup -n %mname-%version
 #patch -p1
 
 
 %install
 install -d -m 0755 %buildroot%_usrsrc/kernel/sources
-tar --transform='s,^\.,/%module_name-%version,' -cJf %kernel_srcdir/%module_name-%version.tar.xz .
+tar -C .. -cJf %kernel_srcdir/%mname-%version.tar.xz %mname-%version
 
 
 %files
@@ -35,6 +35,9 @@ tar --transform='s,^\.,/%module_name-%version,' -cJf %kernel_srcdir/%module_name
 
 
 %changelog
+* Sat Jul 06 2013 Led <led@altlinux.ru> 4.2.16-alt1
+- 4.2.16
+
 * Sat Jun 22 2013 Led <led@altlinux.ru> 4.2.14-alt1
 - 4.2.14
 
