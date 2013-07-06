@@ -21,7 +21,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.4.52
-Release: alt4
+Release: alt5
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -131,8 +131,8 @@ Release: alt4
 
 #define allocator SLAB
 
-%Extra_modules vboxhost 4.2.14
-%Extra_modules vboxguest 4.2.14
+%Extra_modules vboxhost 4.2.16
+%Extra_modules vboxguest 4.2.16
 %Extra_modules kvm 3.9.8
 %Extra_modules knem 1.0.0
 %Extra_modules zfs 0.6.1
@@ -433,7 +433,7 @@ Patch0512: linux-%kernel_branch.39-fix-drivers-usb-dwc3--dwc3.patch
 Patch0513: linux-%kernel_branch.25-fix-drivers-usb-gadget--g_audio.patch
 Patch0514: linux-%kernel_branch.39-fix-drivers-usb-host--isp116x-hcd.patch
 Patch0515: linux-%kernel_branch.39-fix-drivers-usb-host--uhci-hcd.patch
-Patch0516: linux-%kernel_branch.45-fix-drivers-usb-host--xhci-hcd.patch
+Patch0516: linux-%kernel_branch.50-fix-drivers-usb-host--xhci-hcd.patch
 Patch0517: linux-%kernel_branch.39-fix-drivers-usb-musb--musb_hdrc.patch
 Patch0518: linux-%kernel_branch.39-fix-drivers-usb-otg--otg.patch
 
@@ -2762,6 +2762,12 @@ done)
 
 
 %changelog
+* Sat Jul 06 2013 Led <led@altlinux.ru> 3.4.52-alt5
+- updated:
+  + fix-drivers-usb-host--xhci-hcd
+- vboxguest 4.2.16
+- vboxhost 4.2.16
+
 * Fri Jul 05 2013 Led <led@altlinux.ru> 3.4.52-alt4
 - updated:
   + fix-drivers-base
