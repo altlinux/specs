@@ -11,8 +11,8 @@
 %add_findprov_lib_path %_libdir/kde3
 
 Name: kdegraphics
-Version: 3.5.13.1
-Release: alt4
+Version: 3.5.13.2
+Release: alt2
 
 Group: Graphical desktop/KDE
 Summary: K Desktop Environment - Graphics
@@ -63,6 +63,8 @@ Patch303: security_02_CVE-2009-1709.diff
 Patch304: xpdf-3.02-CVE-2010-3702.patch
 Patch305: xpdf-3.02-CVE-2010-3704.patch
 Patch306: tde-3.5.13-build-defdir.patch
+Patch307: tde-3.5.13-build-poppler.patch
+Patch308: kdegraphics-3.5.13.2-trinityHomeToKDE.patch
 
 # Automatically added by buildreq on Tue Apr 13 2004 (-bi)
 BuildRequires(pre): cmake glibc-core kdelibs-devel
@@ -359,6 +361,8 @@ pushd kpdf/xpdf
 %patch305 -p0
 popd
 %patch306
+###%patch307
+%patch308 -p1
 
 %if %cmake
 %else
@@ -686,6 +690,12 @@ install -m 0644 %SOURCE1 %buildroot/%_K3conf/kghostviewrc
 
 
 %changelog
+* Sat Jul 06 2013 Roman Savochenko <rom_as@altlinux.ru> 3.5.13.2-alt2
+- Backward rename home dir .trinity to .kde.
+
+* Sun Jun 23 2013 Roman Savochenko <rom_as@altlinux.ru> 3.5.13.2-alt1
+- Release TDE version 3.5.13.2
+
 * Wed Apr 24 2013 Sergey V Turchin <zerg@altlinux.org> 3.5.13.1-alt4
 - rebuilt with new poppler
 
