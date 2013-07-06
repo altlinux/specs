@@ -4,8 +4,8 @@
 %define tIF_ver_lteq() %if "%(rpmvercmp '%2' '%1')" != "-1"
 
 Name: tqtinterface
-Version: 3.5.13.1
-Release: alt2
+Version: 3.5.13.2
+Release: alt1
 
 Group: System/Libraries
 Summary: Interface and abstraction library for Qt and Trinity
@@ -61,6 +61,9 @@ Interface for Qt and Trinity
 %_pkgconfigdir/*.pc
 
 %changelog
+* Sun Jun 23 2013 Roman Savochenko <rom_as@altlinux.ru> 3.5.13.2-alt1
+- Release TDE version 3.5.13.2
+
 * Mon Oct 29 2012 Roman Savochenko <rom_as@altlinux.ru> 3.5.13.1-alt2
 - Build with -O2 and -g.
 
