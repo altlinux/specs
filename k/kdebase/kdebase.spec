@@ -31,10 +31,10 @@
 
 %define major 3
 %define minor 5
-%define bugfix 13.1
+%define bugfix 13.2
 Name: kdebase
 Version: %major.%minor.%bugfix
-Release: alt7
+Release: alt1
 %define reqver %major.%minor
 
 Summary: Trinity Desktop Environment - Core files
@@ -1948,6 +1948,9 @@ test ! -L %x11confdir/kdm && rm -rf %x11confdir/kdm ||:
 
 
 %changelog
+* Sun Jun 23 2013 Roman Savochenko <rom_as@altlinux.ru> 3.5.13.2-alt1
+- Release TDE version 3.5.13.2
+
 * Fri May 03 2013 Roman Savochenko <rom_as@altlinux.ru> 3.5.13.1-alt7
 - Update to current 3.5.13-sru branch.
 - Some default configs update.
