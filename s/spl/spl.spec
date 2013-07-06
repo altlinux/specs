@@ -1,6 +1,6 @@
 Name: spl
 Version: 0.6.1
-Release: alt2
+Release: alt3
 Summary: Solaris Porting Layer (SPL)
 License: GPLv2+
 Group: System/Kernel and hardware
@@ -65,7 +65,7 @@ tar -C .. \
 	--exclude 'include/*Makefile.*' \
 	-cJf %name-%version.tar.xz \
 	%name-%version/module \
-	%name-%version/config/{{install-,ltmain.}sh,config.{awk,guess,sub}} \
+	%name-%version/config/{{install-,ltmain.}sh,config.{awk,guess,sub},missing} \
 	%name-%version/include \
 	%name-%version/{AUTHORS,COPYING,DISCLAIMER,META,configure,%name{.release,_config.h}.in}
 
@@ -89,6 +89,9 @@ install -pD -m 0644 {,%kernel_srcdir/}%name-%version.tar.xz
 
 
 %changelog
+* Sat Jul 06 2013 Led <led@altlinux.ru> 0.6.1-alt3
+- kernel-source-%name: add config/missing
+
 * Tue Jul 02 2013 Led <led@altlinux.ru> 0.6.1-alt2
 - upstream fixes
 
