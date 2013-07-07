@@ -11,7 +11,7 @@
 
 Name: kdegames
 Summary: KDE - Games
-Version: 3.5.13.1
+Version: 3.5.13.2
 Release: alt1
 
 Group: Graphical desktop/KDE
@@ -65,6 +65,7 @@ Patch3: kdegames-3.5.0-fix-makefile.patch
 Patch4: kolf-3.5.0-fix-linking.patch
 Patch5: knetwalk-3.5.0-fix-start.patch
 Patch6: kdegames-3.5.13-buildAutoTools.patch
+Patch7: kdegames-3.5.13.2-trinityHomeToKDE.patch
 
 # Automatically added by buildreq on Mon Apr 08 2002
 BuildRequires: gcc-c++ kde-common
@@ -439,6 +440,7 @@ lskat can be played against the computer.
 #%patch4 -p1
 %patch5 -p1
 %patch6 -p1
+%patch7 -p1
 
 cp -Rp /usr/share/libtool/aclocal/libtool.m4 admin/libtool.m4.in
 cp -Rp /usr/share/libtool/config/ltmain.sh admin/ltmain.sh
@@ -781,6 +783,9 @@ export PATH=%_bindir:$PATH
 %_K3doc/en/kdegames-%version-apidocs
 
 %changelog
+* Sun Jun 23 2013 Roman Savochenko <rom_as@altlinux.ru> 3.5.13.2-alt1
+- Release TDE version 3.5.13.2
+
 * Sun Oct 14 2012 Roman Savochenko <rom_as@altlinux.ru> 3.5.13.1-alt1
 - Release TDE version 3.5.13.1
 
