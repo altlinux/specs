@@ -5,8 +5,8 @@
 %define Name KNEM
 Name: knem
 Summary: High-Performance Intra-Node MPI Communication
-Version: 1.0.0
-Release: alt2
+Version: 1.0.90
+Release: alt1
 License: BSD
 Group: System/Kernel and hardware
 URL: http://runtime.bordeaux.inria.fr/%name
@@ -64,13 +64,17 @@ This package contains API docs for build with %Name.
 
 
 %package -n kernel-source-%name
-Summary: Kernel source for %Name
+Summary: %Name module sources for Linux kernel
 Group: Development/Kernel
 BuildArch: noarch
 Provides: kernel-src-%name = %version-%release
 
 %description -n kernel-source-%name
-This is the source of the kernel-dependant driver for %Name.
+%Name is a Linux kernel module enabling high-performance intra-node MPI
+communication for large messages. %Name offers support for asynchronous
+and vectorial data transfers as well as offloading memory copies on to
+Intel I/OAT hardware.
+This package contains %Name module sources for Linux kernel.
 
 
 %prep
@@ -150,6 +154,10 @@ tar -cJhf %kernel_srcdir/%name-%version.tar.xz %name-%version
 
 
 %changelog
+* Sat Jul 06 2013 Led <led@altlinux.ru> 1.0.90-alt1
+- 1.0.90
+- updated summary and description of kernel-source-%name
+
 * Thu Jun 27 2013 Led <led@altlinux.ru> 1.0.0-alt2
 - cleaned up spec
 

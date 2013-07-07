@@ -21,7 +21,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.4.52
-Release: alt5
+Release: alt6
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -131,16 +131,16 @@ Release: alt5
 
 #define allocator SLAB
 
+#Extra_modules spl 0.6.1
+%Extra_modules zfs 0.6.1
+%Extra_modules kvm 3.9.8
+#Extra_modules nvidia 319.32
+#Extra_modules fglrx 13.101
 %Extra_modules vboxhost 4.2.16
 %Extra_modules vboxguest 4.2.16
-%Extra_modules kvm 3.9.8
-%Extra_modules knem 1.0.0
-%Extra_modules zfs 0.6.1
-#Extra_modules fglrx 13.101
-#Extra_modules nvidia 319.32
+%Extra_modules knem 1.0.90
 #Extra_modules exfat 1.1.3
 #Extra_modules netatop 0.2
-#Extra_modules spl 0.6.1
 
 %define strip_mod_opts --strip-unneeded -R .comment
 
@@ -464,12 +464,13 @@ Patch0563: linux-%kernel_branch.35-fix-fs-jfs.patch
 Patch0564: linux-%kernel_branch.29-fix-fs-logfs.patch
 Patch0565: linux-%kernel_branch.35-fix-fs-nfs.patch
 Patch0566: linux-%kernel_branch.35-fix-fs-nilfs2.patch
-Patch0567: linux-%kernel_branch.50-fix-fs-ocfs2.patch
-Patch0568: linux-%kernel_branch.31-fix-fs-proc.patch
-Patch0569: linux-%kernel_branch.28-fix-fs-ramfs.patch
-Patch0570: linux-%kernel_branch.47-fix-fs-reiserfs.patch
-Patch0571: linux-%kernel_branch.35-fix-fs-ubifs.patch
-Patch0572: linux-%kernel_branch.46-fix-fs-xfs.patch
+Patch0567: linux-%kernel_branch.50-fix-fs-notify-fanotify--fanotify_user.patch
+Patch0568: linux-%kernel_branch.50-fix-fs-ocfs2.patch
+Patch0569: linux-%kernel_branch.31-fix-fs-proc.patch
+Patch0570: linux-%kernel_branch.28-fix-fs-ramfs.patch
+Patch0571: linux-%kernel_branch.47-fix-fs-reiserfs.patch
+Patch0572: linux-%kernel_branch.35-fix-fs-ubifs.patch
+Patch0573: linux-%kernel_branch.46-fix-fs-xfs.patch
 
 Patch0581: linux-%kernel_branch.50-fix-include-linux.patch
 
@@ -1297,19 +1298,27 @@ kernel-image-%flavour-%kversion-%krelease
 %(for M in %extra_modules; do
 m="${M%%=*}"
 v="${M#*=}"
-l="$(rpmquery --qf '%%{LICENSE}\n' kernel-src-$m-$v 2>/dev/null)"
-[ -n "$l" -a "$l" != "(none)" ] && l="License: $l" || l=
+for p in $(rpmquery --whatprovides kernel-src-$m 2>/dev/null); do
+	rpmquery --provides $p | grep -q "^kernel-src-$m = $v-"'*' && break || p=;
+done
+[ -n "$p" ] || p="kernel-src-$m-$v"
+License="$(rpmquery --qf '%%{LICENSE}\n' $p 2>/dev/null)"
+[ -n "$License" -a "$License" != "(none)" ] && License="License: $License" || License=
+S="$(rpmquery --qf '%%{SUMMARY}\n' $p 2>/dev/null | sed -n 's/\( modules*\) sources/\1/p')"
+[ -n "$S" ] || S="$m kernel modules v$v"
+Desc="$(rpmquery --qf '%%{DESCRIPTION}\n' $p 2>/dev/null | sed -n -z 's/\( modules*\) sources/\1/gp')"
+[ -n "$Desc" ] || Desc="$S."
 cat <<__PACKAGE__
 %%package -n kernel-modules-$m-%flavour
 Version: ${v}_%kversion
-Summary: $m kernel modules v$v
-$l
+Summary: $S
+$License
 %kernel_modules_package_std_body $m
 Provides: kernel-extmods-$m-%flavour = %version-%release
 Provides: kernel-modules-$m-%flavour = %kversion-%release
 
 %%description -n kernel-modules-$m-%flavour
-$m kernel modules version $v.
+$Desc
 
 __PACKAGE__
 done)
@@ -1677,6 +1686,7 @@ cd linux-%version
 %patch0570 -p1
 %patch0571 -p1
 %patch0572 -p1
+%patch0573 -p1
 
 # fix-include-*
 %patch0581 -p1
@@ -2762,6 +2772,11 @@ done)
 
 
 %changelog
+* Sun Jul 07 2013 Led <led@altlinux.ru> 3.4.52-alt6
+- added:
+  + fix-fs-notify-fanotify--fanotify_user (CVE-2013-2148)
+- knem 1.0.90
+
 * Sat Jul 06 2013 Led <led@altlinux.ru> 3.4.52-alt5
 - updated:
   + fix-drivers-usb-host--xhci-hcd
