@@ -4,7 +4,7 @@
 %def_with nautilus
 
 Name: gnome-terminal
-Version: %ver_major.3
+Version: %ver_major.4
 Release: alt1
 
 Summary: GNOME Terminal
@@ -16,12 +16,13 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 
 %define glib_ver 2.28.0
 %define gtk_ver 3.0.1
-%define vte_ver 0.32.1
+%define vte_ver 0.34.7
 
 Provides: xvt
 
 PreReq: libvte3 >= %vte_ver
 Requires: common-licenses
+Requires: dconf gnome-icon-theme
 
 BuildRequires: gnome-common intltool yelp-tools desktop-file-utils
 BuildPreReq: libgio-devel >= %glib_ver
@@ -83,7 +84,7 @@ EOF
 %config %_datadir/glib-2.0/schemas/org.gnome.Terminal.gschema.xml
 %_altdir/%name
 %doc --no-dereference COPYING
-%doc AUTHORS ChangeLog NEWS
+%doc AUTHORS NEWS
 
 %if_with nautilus
 %files nautilus
@@ -92,6 +93,9 @@ EOF
 %endif
 
 %changelog
+* Sun Jul 07 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.4-alt1
+- 3.8.4
+
 * Mon Jun 10 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.3-alt1
 - 3.8.3
 

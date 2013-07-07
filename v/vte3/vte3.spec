@@ -2,12 +2,13 @@
 %define ver_major 0.34
 
 Name: %{_name}3
-Version: %ver_major.6
+Version: %ver_major.7
 Release: alt1
 
 %def_enable pty_helper
 %def_disable static
 %def_enable introspection
+%def_enable gtk_doc
 %define gtk_api_ver 3.0
 %define vte_api_ver 2.90
 
@@ -20,10 +21,6 @@ Requires: gnome-pty-helper
 
 Source: ftp://gnome.org/pub/gnome/sources/%name/%ver_major/%_name-%version.tar.xz
 
-# https://bugzilla.gnome.org/show_bug.cgi?id=663779
-# http://bugzilla-attachments.gnome.org/attachment.cgi?id=201649
-Patch: vte-virtual_modifier_mapping.patch
-
 %define gtk3_ver 3.1.9
 %define glib_ver 2.31.13
 %define pango_ver 1.22
@@ -31,6 +28,7 @@ Patch: vte-virtual_modifier_mapping.patch
 
 BuildPreReq: rpm-build-python
 
+BuildRequires: gperf
 BuildRequires: libSM-devel libncurses-devel libcairo-devel
 BuildRequires: intltool >= 0.35.0
 BuildRequires: gtk-doc >= 1.1.0
@@ -113,11 +111,10 @@ GObject introspection devel data for the %name library
 %define pkgdocdir %_docdir/%name-%version
 
 %prep
-%setup -q -n %_name-%version
-
-#%%patch -p1
+%setup -n %_name-%version
 
 %build
+%autoreconf
 %configure \
 	--disable-dependency-tracking \
 	--libexecdir=%helperdir \
@@ -130,7 +127,8 @@ GObject introspection devel data for the %name library
 	--enable-shared \
 	--disable-schemas-compile \
 	%{subst_enable static} \
-	%{subst_enable introspection}
+	%{subst_enable introspection} \
+	%{?_enable_gtk_doc:--enable-gtk-doc}
 
 %make_build
 
@@ -202,6 +200,9 @@ find %buildroot -type f -name '*.la' -delete
 %endif
 
 %changelog
+* Sun Jul 07 2013 Yuri N. Sedunov <aris@altlinux.org> 0.34.7-alt1
+- 0.34.7
+
 * Mon Jun 10 2013 Yuri N. Sedunov <aris@altlinux.org> 0.34.6-alt1
 - 0.34.6
 
