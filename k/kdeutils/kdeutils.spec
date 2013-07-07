@@ -12,7 +12,7 @@
 %add_python_req_skip - karamba
 
 Name: kdeutils
-Version: 3.5.13.1
+Version: 3.5.13.2
 Release: alt1
 
 Group: Graphical desktop/KDE
@@ -55,6 +55,7 @@ Patch101: kcharselect-3.5.0-fix-linking.patch
 Patch103: kdeutils-3.5.1-alt-ksim-configure.patch
 Patch104: kdeutils-3.5.1-alt-ksim-configure_snmp.patch
 Patch105: kdeutils-3.5.13-Ark-Combained.patch
+Patch106: kdeutils-3.5.13.2-trinityHomeToKDE.patch
 
 # Automatically added by buildreq on Mon Apr 08 2002
 #BuildRequires: XFree86-devel XFree86-libs freetype2 gcc-c++ kde-common kdebase kdelibs-devel libarts-devel libjpeg-devel liblcms libmng libpng-devel libqt3-devel libstdc++-devel libtiff-devel zlib-devel
@@ -336,12 +337,13 @@ Development files for %name
 %setup -q -n %name-%version
 cp -ar altlinux/admin ./
 #%patch0 -p1
-%patch1 -p1
+#%patch1 -p1
 #
 %patch101 -p1
 #%patch103 -p1
 #%patch104 -p1
 #%patch105
+%patch106 -p1
 
 sed -i '\|\${kdeinit}_LDFLAGS[[:space:]]=[[:space:]].*-no-undefined|s|-no-undefined|-no-undefined -Wl,--warn-unresolved-symbols|' admin/am_edit
 for f in `find $PWD -type f -name Makefile.am`
@@ -655,6 +657,9 @@ desktop-file-install --dir %buildroot%_K3xdg_apps --add-category=FileTools %buil
 %_includedir/*
 
 %changelog
+* Sun Jun 23 2013 Roman Savochenko <rom_as@altlinux.ru> 3.5.13.2-alt1
+- Release TDE version 3.5.13.2
+
 * Sun Oct 14 2012 Roman Savochenko <rom_as@altlinux.ru> 3.5.13.1-alt1
 - Release TDE version 3.5.13.1
 
