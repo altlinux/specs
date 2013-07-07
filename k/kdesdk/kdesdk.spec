@@ -12,7 +12,7 @@
 %add_findreq_skiplist %_K3bindir/pprof2calltree
 
 Name: kdesdk
-Version: 3.5.13.1
+Version: 3.5.13.2
 Release: alt1
 Packager: Sergey V Turchin <zerg at altlinux dot org>
 
@@ -42,6 +42,7 @@ Source: kdesdk-%version.tar
 Patch11: kdesdk-3.5.12-fix-linking.patch
 Patch12: kdesdk-3.5.0-svn_libs.patch
 Patch13: kdesdk-3.5.6-alt-find-libapr.patch
+Patch14: kdesdk-3.5.13.2-trinityHomeToKDE.patch
 
 # Automatically added by buildreq on Thu Mar 18 2004 (-bi)
 #BuildRequires: XFree86-devel XFree86-libs cvs flex fontconfig freetype2 gcc-c++ kde-settings kdelibs-devel less libarts-devel libdb4.2-devel libiberty-devel libjpeg-devel libpng-devel libqt3-devel libstdc++-devel perl-DBM python qt3-designer termutils xml-utils zlib-devel
@@ -238,6 +239,7 @@ cp -ar altlinux/admin ./
 %patch11 -p1
 %patch12 -p1
 ###%patch13 -p1
+%patch14 -p1
 
 sed -i '\|\${kdeinit}_LDFLAGS[[:space:]]=[[:space:]].*-no-undefined|s|-no-undefined|-no-undefined -Wl,--warn-unresolved-symbols|' admin/am_edit
 for f in `find $PWD -type f -name Makefile.am`
@@ -562,8 +564,8 @@ mv %buildroot/%_K3bindir/svn-clean %buildroot/%_K3bindir/svnclean
 %_K3bindir/zonetab2pot.*
 
 %changelog
-* Sun Oct 14 2012 Roman Savochenko <rom_as@altlinux.ru> 3.5.13.1-alt1
-- Release TDE version 3.5.13.1
+* Sun Jun 23 2013 Roman Savochenko <rom_as@altlinux.ru> 3.5.13.2-alt1
+- Release TDE version 3.5.13.2
 
 * Thu Feb 23 2012 Roman Savochenko <rom_as@altlinux.ru> 3.5.13-alt1
 - TDE 3.5.13 release build
