@@ -9,7 +9,7 @@ Name: beesu
 Version: 2.7
 # Don't ever decrease this version (unless all beesu, nbm, and gbp update) or the subpackages will go backwards.
 # It is easier to do this than to track a separate release field.
-Release: alt2_9
+Release: alt2_11
 Summary: Graphical wrapper for su
 URL: http://www.honeybeenet.altervista.org
 Group: System/Base
@@ -17,8 +17,11 @@ License: GPLv2+
 Source0: http://honeybeenet.altervista.org/beesu/files/beesu-sources/%{name}-%{version}.tar.bz2
 Source1: http://honeybeenet.altervista.org/beesu/files/beesu-manager/nautilus-beesu-manager-%{nbmversion}.tar.bz2
 Source2: http://honeybeenet.altervista.org/beesu/files/beesu-gedit/gedit-beesu-plugin-%{geditver}.tar.bz2
+Source3: nemo-beesu-manager-%{nbmversion}.tar.bz2
 Patch0:  beesu-gedit-plugin-fix.patch
 Patch1:  beesu-nautilus-no-browser.patch
+Patch2:  beesu-gedit-plugin-more-fixes.patch
+Patch3:  beesu-nautilus-scripts-fixes.patch
 BuildRequires: desktop-file-utils
 Requires: pam consolehelper
 Source44: import.info
@@ -41,7 +44,7 @@ to Nautilus using beesu to elevate the user's privileges to root.
 
 %package -n gedit-beesu-plugin
 Version:	%{geditver}
-Requires:	gedit beesu pygtk2
+Requires:	gedit beesu pygtk2 python3
 Group:		System/Base
 Summary:	Allows normal users to open files in gedit as root
 
@@ -51,11 +54,26 @@ files as root (via beesu). After installation, to activate the plugin in
 gedit, go to Edit -> Preferences -> Plugins and check the box next to
 Open as root.
 
+%package -n nemo-beesu-manager
+Version:	%{nbmversion}
+BuildArch:	noarch
+Requires:	beesu zenity nemo
+Group:		Graphical desktop/Other
+Summary:	Utility to add beesu scripts to nemo
+
+%description -n nemo-beesu-manager
+nemo-beesu-manager is a little utility to add some useful scripts
+to the Nemo file browser; nemo-beesu-manager can add scripts
+to Nemo using beesu to elevate the user's privileges to root.
+
 %prep
-%setup -q -a1 -a2
+%setup -q -a1 -a2 -a3
 %patch0 -p1 -b .fix
 %patch1 -p1
+%patch2 -p1
+%patch3 -p1
 chmod -x nautilus-beesu-manager-%{nbmversion}/COPYING nautilus-beesu-manager-%{nbmversion}/README
+chmod -x nemo-beesu-manager-%{nbmversion}/COPYING nemo-beesu-manager-%{nbmversion}/README
 
 %build
 make CFLAGS="%{optflags} -fno-delete-null-pointer-checks"
@@ -85,6 +103,17 @@ popd
 #gbp
 pushd gedit-beesu-plugin-%{geditver}
 make install
+popd
+
+#nemo
+pushd nemo-beesu-manager-%{nbmversion}
+install -p -m 755 nemo-beesu-manager %{buildroot}%{_bindir}
+install -p -m 644 nemo-beesu-manager.png %{buildroot}%{_datadir}/icons/hicolor/32x32/apps/
+desktop-file-install --dir %{buildroot}%{_datadir}/applications --mode 0644 nemo-beesu-manager.desktop
+mkdir -v -p %{buildroot}%{_libexecdir}/nemo-beesu-manager/
+install -p -m 755 libexec/api %{buildroot}%{_libexecdir}/nemo-beesu-manager/
+cp -a libexec/scripts %{buildroot}%{_libexecdir}/nemo-beesu-manager/
+install -p -m 644 libexec/local-launcher %{buildroot}%{_libexecdir}/nemo-beesu-manager/ 
 popd
 mkdir -p %buildroot/etc/pam.d
 cat > %buildroot/etc/pam.d/config-util <<'EOF'
@@ -122,7 +151,17 @@ EOF
 %{_libdir}/gedit/plugins/beesu/beesu.py*
 %{_libexecdir}/gedit-beesu-plugin
 
+%files -n nemo-beesu-manager
+%doc nemo-beesu-manager-%{nbmversion}/COPYING nemo-beesu-manager-%{nbmversion}/README
+%{_bindir}/nemo-beesu-manager
+%{_datadir}/applications/*.desktop
+%{_datadir}/icons/hicolor/32x32/apps/nemo-beesu-manager.png 
+%{_libexecdir}/nemo-beesu-manager/
+
 %changelog
+* Mon Jul 08 2013 Igor Vlasenko <viy@altlinux.ru> 2.7-alt2_11
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 2.7-alt2_9
 - update to new release by fcimport
 
