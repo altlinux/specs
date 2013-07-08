@@ -5,7 +5,7 @@ Group: Other
 #global        snapver    {snapdate}.git{snaphash}
 
 Name:           libdivecomputer
-Version:        0.4.0
+Version:        0.4.1
 #Release:        2.{snapver}{?dist}
 Release:        alt1_1
 Summary:        Library for communication with dive computers
@@ -129,6 +129,9 @@ rm $RPM_BUILD_ROOT/%{_bindir}/{veo250,vtpro,vyper,vyper2}
 %{_libdir}/*.a
 
 %changelog
+* Mon Jul 08 2013 Igor Vlasenko <viy@altlinux.ru> 0.4.1-alt1_1
+- update to new release by fcimport
+
 * Tue May 21 2013 Igor Vlasenko <viy@altlinux.ru> 0.4.0-alt1_1
 - update to new release by fcimport
 
