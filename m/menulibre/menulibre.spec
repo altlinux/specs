@@ -1,5 +1,5 @@
 Name: menulibre
-Version: 13.04.12
+Version: 13.04.17
 Release: alt1
 
 Summary: Advanced menu editor with quicklist support
@@ -57,6 +57,9 @@ cp -a help/* %buildroot%_datadir/gnome/help/%name/
 %_datadir/gnome/help/%name/
 
 %changelog
+* Mon Jul 08 2013 Mikhail Efremov <sem@altlinux.org> 13.04.17-alt1
+- Updated to 13.04.17.
+
 * Wed Apr 24 2013 Mikhail Efremov <sem@altlinux.org> 13.04.12-alt1
 - Fix directory creation.
 - Initial build.
