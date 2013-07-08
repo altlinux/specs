@@ -11,14 +11,17 @@ BuildRequires: gcc-c++ unzip
 # http://upstream-tracker.org/versions/clipper.html
 
 Name:           libpolyclipping
-Version:        5.1.2
-Release:        alt1_1
+Version:        5.1.6
+Release:        alt1_2
 Summary:        Polygon clipping library
 
 Group:          System/Libraries
 License:        Boost
 URL:            http://sourceforge.net/projects/polyclipping
 Source0:        http://downloads.sourceforge.net/%{oldname}/clipper_ver%{version}.zip
+
+# http://sourceforge.net/p/polyclipping/bugs/47/
+Patch0:         %{oldname}-bug47.patch
 
 BuildRequires: ctest cmake
 BuildRequires:  dos2unix
@@ -47,6 +50,7 @@ developing applications that use %{oldname}.
 
 %prep
 %setup -n %{oldname}-%{version} -qc
+%patch0 -p1
 
 # Delete binaries
 find . \( -name "*.exe" -o -name "*.dll" \) -delete
@@ -72,6 +76,9 @@ popd
 %install
 pushd cpp
   make install DESTDIR=%{buildroot}
+
+# Install agg header with corrected include statement
+  sed -e 's/\.\.\/clipper\.hpp/clipper.hpp/' < cpp_agg/agg_conv_clipper.h > %{buildroot}/%{_includedir}/%{oldname}/agg_conv_clipper.h
 popd
 
 
@@ -81,10 +88,13 @@ popd
 %{_libdir}/lib%{oldname}.so.*
 
 %files devel
-%{_includedir}/%{oldname}
+%{_includedir}/%{oldname}/
 %{_libdir}/lib%{oldname}.so
 
 %changelog
+* Mon Jul 08 2013 Igor Vlasenko <viy@altlinux.ru> 5.1.6-alt1_2
+- update to new release by fcimport
+
 * Sun Apr 28 2013 Igor Vlasenko <viy@altlinux.ru> 5.1.2-alt1_1
 - initial fc import
 
