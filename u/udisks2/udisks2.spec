@@ -6,16 +6,16 @@
 %def_enable introspection
 
 Name: %{_name}2
-Version: 2.1.0
-Release: alt2.1
+Version: 2.1.1
+Release: alt0.1
 
 Summary: Disk Management Service (Second Edition)
 License: GPLv2+
 Group: System/Libraries
 Url: http://www.freedesktop.org/wiki/Software/%_name
 
-#Source: %_name-%version.tar
-Source: http://udisks.freedesktop.org/releases/%_name-%version.tar.bz2
+Source: %_name-%version.tar
+#Source: http://udisks.freedesktop.org/releases/%_name-%version.tar.bz2
 Source1: %name.control
 Patch1: %_name-1.92.0-alt-udiskd_dir.patch
 
@@ -175,6 +175,10 @@ fi
 %endif
 
 %changelog
+* Mon Jul 08 2013 Yuri N. Sedunov <aris@altlinux.org> 2.1.1-alt0.1
+- 2.1.1 snapshot (0a150d2)
+- udisks2.control: use is_builtin_mode
+
 * Sat Jul 06 2013 Yuri N. Sedunov <aris@altlinux.org> 2.1.0-alt2.1
 - 99-alt-udisks2-media-mount-point.rules: fixed syntax
 
