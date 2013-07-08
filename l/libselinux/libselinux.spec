@@ -2,13 +2,14 @@
 
 Name: libselinux
 Version: 2.1.13
-Release: alt1
+Release: alt2
 Summary: SELinux library
 License: Public Domain
 Group: System/Libraries
 Url: http://userspace.selinuxproject.org/
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
+Patch1: 0006-introduce-selinux_current_policy_path-from-fedora-needed-by-policycoreutils.patch
 
 %{?_with_python:BuildPreReq: rpm-build-python}
 BuildRequires: libpcre-devel libsepol-devel >= 2.1.4
@@ -65,7 +66,7 @@ This package contains SELinux python bindings.
 %prep
 %setup -q
 %patch -p1
-
+%patch1 -p1
 
 %build
 %make_build CFLAGS="%optflags $(pkg-config libpcre --cflags)" LIBDIR=%_libdir all
@@ -115,6 +116,9 @@ TELINIT=/sbin/telinit
 
 
 %changelog
+* Mon Jul 08 2013 Andriy Stepanov <stanv@altlinux.ru> 2.1.13-alt2
+- Add patch from Fedora: upstream bug.
+
 * Thu Jun 27 2013 Andriy Stepanov <stanv@altlinux.ru> 2.1.13-alt1
 - New version
 
