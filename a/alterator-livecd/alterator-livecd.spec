@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-livecd
-Version: 0.8.2
+Version: 0.8.3
 Release: alt1
 
 Summary: special steps for LiveCD installers
@@ -42,6 +42,11 @@ special steps for LiveCD installers
 %_alterator_backend3dir/*
 
 %changelog
+* Mon Jul 08 2013 Mikhail Efremov <sem@altlinux.org> 0.8.3-alt1
+- Show error message if /mnt/destination is not empty.
+- Don't count size of mounted to the /mnt/destination directories.
+- Updated livecd-start.ru.html.
+
 * Thu May 16 2013 Mikhail Efremov <sem@altlinux.org> 0.8.2-alt1
 - Replace rm-slideshow hook with slideshow hook.
 - Fix error message.
