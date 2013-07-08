@@ -1,5 +1,5 @@
 Name: seabios
-Version: 1.7.2.1
+Version: 1.7.2.2
 Release: alt1
 Summary: Open-source legacy BIOS implementation
 
@@ -79,6 +79,9 @@ install -m 0644 binaries/vgabios*.bin %buildroot%_datadir/seavgabios
 %_datadir/seavgabios/vgabios*.bin
 
 %changelog
+* Thu Jul 04 2013 Alexey Shabalin <shaba@altlinux.ru> 1.7.2.2-alt1
+- 1.7.2.2
+
 * Tue May 07 2013 Alexey Shabalin <shaba@altlinux.ru> 1.7.2.1-alt1
 - 1.7.2.1
 

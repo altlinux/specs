@@ -11,7 +11,7 @@
 %def_with gtk3
 
 Name: libspice-gtk
-Version: 0.19
+Version: 0.20
 Release: alt1
 Summary: A GTK widget for SPICE clients
 
@@ -23,7 +23,7 @@ Source: %name-%version.tar
 Source2: spice-common.tar
 Source3: spice-protocol.tar
 # Patch: %name-%version-%release.patch
-# Patch2: %name-alt-fix.patch
+Patch2: %name-alt-fix.patch
 
 %define vala_ver 0.14
 
@@ -202,7 +202,7 @@ screen-shots of a SPICE desktop
 mv %name-%version %_name-%version
 cd %_name-%version
 # %patch -p1
-# %patch2 -p1
+%patch2 -p1
 echo "%version" > .tarball-version
 cd ..
 %if_with gtk3
@@ -339,6 +339,9 @@ cd ..
 %endif
 
 %changelog
+* Thu Jul 04 2013 Alexey Shabalin <shaba@altlinux.ru> 0.20-alt1
+- 0.20
+
 * Thu Apr 11 2013 Alexey Shabalin <shaba@altlinux.ru> 0.19-alt1
 - 0.19
 

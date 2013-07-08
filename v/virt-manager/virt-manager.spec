@@ -5,33 +5,37 @@
 %define kvm_packages "qemu-kvm,qemu-system"
 %define libvirt_packages "libvirt"
 %define askpass_package "openssh-askpass"
-%define default_graphics "vnc"
-%def_without tui
+%define default_graphics "spice"
 
 Name: virt-manager
-Version: 0.9.5
+Version: 0.10.0
 Release: alt1
 Summary: Virtual Machine Manager
 
-Group: System/Configuration/Other
+Group: Emulators
 License: GPLv2+
 Url: http://virt-manager.org/
 BuildArch: noarch
 
-# git://git.fedorahosted.org/python-virtinst.git
+# git://git.fedorahosted.org/virt-manager.git
 Source: %name-%version.tar
 
-%add_python_req_skip sparkline virtManager
-%add_python_compile_include %_datadir/%name
+Requires: virt-manager-common = %version-%release
+Requires: virt-install = %version-%release
+Requires: python-module-pygobject3
+Requires: libspice-gtk3-gir
+Requires: libgtk3vnc-gir
+Requires: libvirt-glib-gir
+Requires: vte3
 
-Requires: python-module-pygnome-gconf python-module-pygnome-gnome-keyring
-Requires: python-module-vte python-module-spice-gtk python-module-gtkvnc
-Requires: python-module-virtinst >= 0.600.4
-PreReq: GConf2
+BuildRequires: python-devel python-module-distribute
+BuildRequires: libgio
+BuildRequires: intltool
+BuildRequires: /usr/bin/pod2man
 
-# Automatically added by buildreq on Thu Jul 02 2009
-BuildRequires: libgtk+2-devel librarian python-module-pygtk-devel libGConf-devel
-BuildPreReq: intltool gettext perl-Pod-Parser
+%add_python_req_skip virtconv
+%add_python_req_skip virtinst
+%add_python_req_skip virtcli
 
 %description
 Virtual Machine Manager provides a graphical tool for administering
@@ -40,50 +44,91 @@ virtual devices, connect to a graphical or serial console, and see
 resource usage statistics for existing VMs on local or remote machines.
 Uses libvirt as the backend management API.
 
+%package common
+Summary: Common files used by the different Virtual Machine Manager interfaces
+Group: Emulators
+Conflicts: %name < %version-%release
+
+%description common
+Common files used by the different virt-manager interfaces, as well as
+virt-install related tools.
+
+%package -n virt-install
+Summary: Utilities for installing virtual machines
+Group: Emulators
+
+Requires: virt-manager-common = %version-%release
+
+Provides: virt-install
+Provides: virt-clone
+Provides: virt-image
+Provides: virt-convert
+Obsoletes: python-module-virtinst
+
+%description -n virt-install
+Package includes several command line utilities, including virt-install
+(build and install new VMs) and virt-clone (clone an existing virtual
+machine).
+
 %prep
 %setup
 
 %build
-%autoreconf
-intltoolize --force --copy --automake
+python setup.py configure \
+	--pkgversion="%version" \
+	--qemu-user=%qemu_user \
+	--libvirt-package-names=%libvirt_packages \
+	--kvm-package-names=%kvm_packages \
+	--preferred-distros=%preferred_distros \
+	--askpass-package-names=%askpass_package \
+	--default-graphics=%default_graphics
 
-%configure \
-	%{subst_with tui} \
-	--with-qemu-user=%qemu_user \
-	--with-libvirt-package-names=%libvirt_packages \
-	--with-kvm-packages=%kvm_packages \
-	--with-preferred-distros=%preferred_distros \
-	--with-askpass-package=%askpass_package \
-	--with-default-graphics=%default_graphics
-
-%make_build
+#%%python_build
 
 %install
-%makeinstall_std
+#%%python_install
+python setup.py install --root=%buildroot
+
 %find_lang --with-gnome %name
 
-%post
-%gconf2_install %name
-
-%preun
-if [ $1 = 0 ]; then
-%gconf2_uninstall %name
-fi
-
-%files -f %name.lang
-%_sysconfdir/gconf/schemas/%name.schemas
-%_bindir/*
-%_libexecdir/%name-launch
-%_datadir/%name
-#%%_datadir/omf/%name
-#%%_datadir/gnome/help/%name
+%files
+%_bindir/%name
+%_datadir/%name/ui/*.ui
+%_datadir/%name/virt-manager
+%_datadir/%name/virtManager
+%_datadir/%name/icons
 %_desktopdir/%name.desktop
 %_datadir/icons/hicolor/*/apps/%name.png
-%_datadir/dbus-1/services/%name.service
-%_man1dir/*
-%doc AUTHORS ChangeLog NEWS README
+%_datadir/glib-2.0/schemas/*.gschema.xml
+%_man1dir/%name.1*
+%doc README COPYING NEWS
+
+%files common -f %name.lang
+%dir %_datadir/%name
+%_datadir/%name/virtcli
+%_datadir/%name/virtconv
+%_datadir/%name/virtinst
+
+%files -n virt-install
+%_bindir/virt-install
+%_bindir/virt-clone
+%_bindir/virt-image
+%_bindir/virt-convert
+%_datadir/%name/virt-install
+%_datadir/%name/virt-clone
+%_datadir/%name/virt-image
+%_datadir/%name/virt-convert
+%_man1dir/virt-install.1*
+%_man1dir/virt-clone.1*
+%_man1dir/virt-convert.1*
+%_man1dir/virt-image.1*
+%_man5dir/virt-image.5*
 
 %changelog
+* Thu Jul 04 2013 Alexey Shabalin <shaba@altlinux.ru> 0.10.0-alt1
+- 0.10.0
+- add subpackages virt-install and virt-manager-common
+
 * Wed Apr 10 2013 Alexey Shabalin <shaba@altlinux.ru> 0.9.5-alt1
 - 0.9.5
 
