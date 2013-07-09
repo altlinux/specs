@@ -7,7 +7,7 @@
 
 Name: xmonad
 Version: 0.11
-Release: alt1
+Release: alt2
 License: BSD3
 Packager: Denis Smirnov <mithraen@altlinux.ru>
 Group: Development/Haskell
@@ -68,6 +68,9 @@ install -m0644 -D %SOURCE3 %buildroot%_iconsdir/%name.xpm
 %_iconsdir/xmonad.xpm
 
 %changelog
+* Tue Jul 09 2013 Denis Smirnov <mithraen@altlinux.ru> 0.11-alt2
+- rebuild with new ghc-x11
+
 * Fri Jan 18 2013 Denis Smirnov <mithraen@altlinux.ru> 0.11-alt1
 - 0.11
 
