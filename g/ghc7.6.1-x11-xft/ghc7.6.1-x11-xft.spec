@@ -8,7 +8,7 @@
 
 Name: %hsc_namever-%f_pkg_name
 Version: 0.3.1
-Release: alt2
+Release: alt3
 License: LGPL
 Packager: Denis Smirnov <mithraen@altlinux.ru>
 Group: Development/Haskell
@@ -41,6 +41,9 @@ Bindings to the Xft, X Free Type interface library, and some Xrender parts
 %files -f %name-files.all
 
 %changelog
+* Tue Jul 09 2013 Denis Smirnov <mithraen@altlinux.ru> 0.3.1-alt3
+- rebuild with new ghc-x11
+
 * Tue Dec 25 2012 Denis Smirnov <mithraen@altlinux.ru> 0.3.1-alt2
 - rebuild
 

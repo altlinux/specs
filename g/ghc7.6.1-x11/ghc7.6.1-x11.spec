@@ -7,7 +7,7 @@
 %define pkg_libdir %_libdir/%hsc_name-%hsc_version/lib/%h_pkg_name-%version
 
 Name: %hsc_namever-%f_pkg_name
-Version: 1.6.0.2
+Version: 1.6.1.1
 Release: alt1
 License: BSD3
 Packager: Denis Smirnov <mithraen@altlinux.ru>
@@ -19,9 +19,7 @@ Summary: A binding to the X11 graphics library
 
 
 
-# Automatically added by buildreq on Tue Dec 25 2012 (-bb)
-# optimized out: elfutils ghc7.6.1 ghc7.6.1-common libX11-devel libXrender-devel libgmp-devel pkg-config python-base rpm-build-haskell xorg-randrproto-devel xorg-renderproto-devel xorg-xproto-devel
-BuildRequires: gcc-c++ ghc7.6.1-alex ghc7.6.1-c2hs ghc7.6.1-cpphs ghc7.6.1-doc ghc7.6.1-happy ghc7.6.1-hscolour imake libICE-devel libXext-devel libXinerama-devel libXrandr-devel xorg-cf-files
+BuildRequires: gcc-c++ ghc7.6.1-alex ghc7.6.1-c2hs ghc7.6.1-cpphs ghc7.6.1-doc ghc7.6.1-happy ghc7.6.1-hscolour imake libICE-devel libXext-devel libXinerama-devel libXrandr-devel xorg-cf-files ghc7.6.1-data-default
 
 %description
 A Haskell binding to the X11 graphics library. The binding is a direct
@@ -44,6 +42,9 @@ translation of the C binding; for documentation of these calls, refer to
 %files -f %name-files.all
 
 %changelog
+* Mon Jul 08 2013 Denis Smirnov <mithraen@altlinux.ru> 1.6.1.1-alt1
+- new version 1.6.1.1
+
 * Tue Dec 25 2012 Denis Smirnov <mithraen@altlinux.ru> 1.6.0.2-alt1
 - 1.6.0.2
 
