@@ -1,7 +1,7 @@
 Name: dhcpcd
 Epoch: 1
 Version: 6.0.2
-Release: alt1
+Release: alt2
 
 Summary: DHCP Client
 License: %bsdstyle
@@ -67,6 +67,9 @@ fi
 /lib/%name/%name-run-hooks
 
 %changelog
+* Tue Jul 09 2013 Mikhail Efremov <sem@altlinux.org> 1:6.0.2-alt2
+- Use Client ID instead of DUID by default.
+
 * Mon Jul 01 2013 Mikhail Efremov <sem@altlinux.org> 1:6.0.2-alt1
 - Updated to 6.0.2.
 
