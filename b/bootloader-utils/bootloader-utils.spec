@@ -1,5 +1,5 @@
 Name: bootloader-utils
-Version: 0.4.21
+Version: 0.4.22
 Release: alt1
 
 Summary: Bootloader utilities
@@ -79,6 +79,9 @@ mv $f.install $f
 %_rpmlibdir/*.filetrigger
 
 %changelog
+* Tue Jul 09 2013 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.4.22-alt1
+- add support of uboot
+
 * Sun Apr 07 2013 Dmitry V. Levin <ldv@altlinux.org> 0.4.21-alt1
 - kernel.filetrigger: fixed handling of uninstalled kernels
   (by Roman Savochenko; closes: #28647).
