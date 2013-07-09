@@ -24,7 +24,7 @@
 %define qsa_major 1
 %define qsa_minor 1
 %define qsa_bugfix 5
-%define rlz alt4
+%define rlz alt5
 Name: %rname%major
 Version: %major.%minor.%bugfix
 Release: %rlz
@@ -126,6 +126,7 @@ Patch105: qt-3.3.0-alt-shared_libs.patch
 Patch106: qt-3.3.1-alt-iso_c_extension.patch
 Patch107: qt-x11-free-3.3.6-alt-maccyrillic.patch
 Patch108: qt-3.3.8d-alt-arm-no-packed-pointers.patch
+Patch109: qt-x11-free-3.3.8d-Lib64.patch
 
 # Sergey A. Sukiyazov <sukiyazov@mail.ru>
 Patch9000: 9000-qt-x11-free-3.3.3-menubar.patch
@@ -486,6 +487,7 @@ Install this package if you want to create RPM packages that use %name.
 %patch106 -p1
 %patch107 -p1
 %patch108 -p1
+%patch109 -p1
 
 # Corwin
 %patch9000 -p1
@@ -1291,6 +1293,9 @@ install -m 644 %SOURCE103 %buildroot/%_iconsdir/hicolor/48x48/apps/%rname.png
 %_rpmmacrosdir/*
 
 %changelog
+* Tue Jul 09 2013 Roman Savochenko <rom_as@altlinux.ru> 3.3.8d-alt5
+- QMAKE_LIBDIR_QT = $(QTDIR)/lib64 return to QMAKE_LIBDIR_QT = $(QTDIR)/lib.
+
 * Sat Jun 22 2013 Roman Savochenko <rom_as@altlinux.ru> 3.3.8d-alt4
 - Update to last Trinity 3.3.8d, branch origin/v3.5.13-sru (tag v3.5.13.2)
 
