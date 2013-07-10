@@ -1,5 +1,5 @@
 Name: grsync
-Version: 1.2.1
+Version: 1.2.4
 Release: alt1
 
 Summary: Grsync is a GUI for rsync
@@ -12,7 +12,6 @@ Source: http://www.opbyte.it/release/grsync-%version.tar.gz
 Source1: grsync16.png
 Source2: grsync32.png
 Source3: grsync48.png
-Patch1: grsync-1.0.0-desktop.patch
 
 Requires: rsync
 
@@ -25,7 +24,6 @@ directory synchronization tool.
 
 %prep
 %setup
-%patch1 -p1
 
 %build
 # Tiny fix for Icon= line in desktop file (make validator happy)
@@ -55,6 +53,10 @@ install -pD -m644 %_sourcedir/grsync16.png %buildroot%_miconsdir/grsync.png
 %_iconsdir/hicolor/48x48/mimetypes/*
 
 %changelog
+* Wed Jul 10 2013 Michael Shigorin <mike@altlinux.org> 1.2.4-alt1
+- 1.2.4
+- dropped patch (merged upstream)
+
 * Sun Jan 15 2012 Victor Forsiuk <force@altlinux.org> 1.2.1-alt1
 - 1.2.1
 
