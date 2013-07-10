@@ -5,7 +5,7 @@
 
 Name: setools
 Version: %setools_maj_ver.%setools_min_ver
-Release: alt2
+Release: alt3
 License: %gpl2plus
 URL: http://oss.tresys.com/projects/setools
 Source: %name-%version.tar
@@ -28,8 +28,11 @@ BuildPreReq: /proc
 #libsetools
 BuildRequires: flex bison pkgconfig
 BuildRequires: glibc-devel libstdc++-devel gcc gcc-c++
-BuildRequires: libselinux-devel libsepol-devel
-BuildRequires: libsepol-devel-static
+BuildRequires: libselinux-devel
+
+# In libsepol defined version: POLICYDB_VERSION_MAX, so rebuild libsepol first if available.
+BuildRequires: libsepol-devel >= 2.1.9
+BuildRequires: libsepol-devel-static >= 2.1.9
 BuildRequires: libsqlite3-devel libxml2-devel
 BuildRequires: autoconf >= %autoconf_ver automake
 #libsetools,libsetools-tcl
@@ -330,6 +333,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_datadir/applications/*
 
 %changelog
+* Wed Jul 10 2013 Andriy Stepanov <stanv@altlinux.ru> 3.3.8-alt3
+- Rebuild with new libsepol
+
 * Wed Jun 26 2013 Andriy Stepanov <stanv@altlinux.ru> 3.3.8-alt2
 - New version
 
