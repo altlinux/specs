@@ -1,6 +1,6 @@
 
 Name: akonadi
-Version: 1.9.2
+Version: 1.10.0
 Release: alt1
 
 Group: Databases
@@ -20,7 +20,7 @@ Patch101: akonadi-1.1.1-alt-alt-kdebindir.patch
 Patch102: akonadi-1.3.81-alt-mysql-paths.patch
 Patch103: akonadi-1.4.1-alt-disable-mysql_install_db.patch
 Patch104: akonadi-1.6.2-alt-mysql-db-create.patch
-Patch105: akonadi-1.9.1-alt-start-mysqlcheck.patch
+Patch105: akonadi-1.10.0-alt-start-mysqlcheck.patch
 Patch106: akonadi-1.6.2-alt-own-mysql_install_db.patch
 Patch107: akonadi-1.6.2-alt-check-nepomuk.patch
 
@@ -203,6 +203,9 @@ install -m 0755 %SOURCE10 %buildroot/%_bindir/akonadi_mysql_install_db
 %_libdir/pkgconfig/*
 
 %changelog
+* Wed Jul 10 2013 Sergey V Turchin <zerg@altlinux.org> 1.10.0-alt1
+- new version
+
 * Tue May 07 2013 Sergey V Turchin <zerg@altlinux.org> 1.9.2-alt1
 - new version
 
