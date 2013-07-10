@@ -8,7 +8,7 @@
 %def_enable web_albums
 
 Name: gthumb
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: An image file viewer and browser for GNOME
@@ -158,6 +158,9 @@ This package contains headers needed to build extensions for gThumb.
 %_libdir/pkgconfig/*
 
 %changelog
+* Wed Jul 10 2013 Yuri N. Sedunov <aris@altlinux.org> 3.2.3-alt1
+- 3.2.3
+
 * Mon May 13 2013 Yuri N. Sedunov <aris@altlinux.org> 3.2.2-alt1
 - 3.2.2
 
