@@ -9,7 +9,7 @@
 
 Name: %oname-%scalar_type
 Version: 3.3.1
-Release: alt2.hg20130314
+Release: alt2.hg20130514
 Summary: SLEPc for Python (%scalar_type scalars)
 License: Public
 Group: Sciences/Mathematics
@@ -193,6 +193,9 @@ rm -f %ldir/python/%oname/lib/SLEPc.so
 %endif
 
 %changelog
+* Wed Jul 10 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.3.1-alt2.hg20130514
+- New snapshot
+
 * Tue May 07 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.3.1-alt2.hg20130314
 - Fixed build
 

@@ -9,7 +9,7 @@
 %define oname oofem
 Name: oofem-%scalar_type
 Version: 2.2
-Release: alt6.svn20121029
+Release: alt7.svn20121029
 Summary: Object Oriented Finite Element Code
 License: %gpl2plus
 Group: Sciences/Mathematics
@@ -445,6 +445,9 @@ done
 %endif
 
 %changelog
+* Thu Jul 11 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.2-alt7.svn20121029
+- Rebuilt with new PETSc
+
 * Tue May 07 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.2-alt6.svn20121029
 - Fixed build
 
@@ -512,4 +515,3 @@ done
 
 * Sun Oct 11 2009 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0-alt1.svn20091001
 - Initial build for Sisyphus
-

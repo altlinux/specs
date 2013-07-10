@@ -8,8 +8,8 @@
 %define somver 3
 %define sover %somver.2.0
 Name: %oname-%scalar_type
-Version: 3.3_p3
-Release: alt2
+Version: 3.4.0
+Release: alt1
 Summary: Scalable Library for Eigenvalue Problem Computations (%scalar_type scalars)
 License: LGPL v3
 Group: Sciences/Mathematics
@@ -174,6 +174,13 @@ sed -i "s|@ADDLIBS@|$ADDLIBS|" makefile
 ARPACKLIBS="-lparpack_MPI-LINUX,-lscalapack,-larpack_LINUX,-lblacs"
 
 export PETSC_ARCH=linux-gnu
+#	--with-primme \
+#if "%scalar_type" == "real"
+#	--with-primme-flags="-ldprimme" \
+#else
+#	--with-primme-flags="-lzprimme" \
+#endif
+#	--with-primme-dir=%_libdir
 ./configure --prefix=$PETSC_LDIR \
 %if "%scalar_type" == "real"
 	--with-blzpack \
@@ -182,14 +189,8 @@ export PETSC_ARCH=linux-gnu
 	--with-arpack \
 	--with-arpack-flags=$ARPACKLIBS \
 	--with-arpack-dir=%_libdir \
-	--with-primme \
-%if "%scalar_type" == "real"
-	--with-primme-flags="-ldprimme" \
-%else
-	--with-primme-flags="-lzprimme" \
-%endif
-	--with-primme-dir=%_libdir
-%make_build SOVER="%sover" SOMVER="%somver"
+	--without-primme
+%make SOVER="%sover" SOMVER="%somver"
 
 %install
 source %mpidir/bin/mpivars.sh
@@ -238,6 +239,7 @@ install -m644 %name.pc %buildroot%_pkgconfigdir/
 %files -n lib%name-devel
 %ldir/lib/*.so
 %ldir/include/*
+%exclude %ldir/include/finclude/ftn-auto/petscsys.h90
 %ldir/conf/*
 %_pkgconfigdir/*
 
@@ -253,6 +255,9 @@ install -m644 %name.pc %buildroot%_pkgconfigdir/
 %endif
 
 %changelog
+* Tue Jul 09 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.4.0-alt1
+- Version 3.4.0
+
 * Tue May 07 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.3_p3-alt2
 - Fixed build
 

@@ -16,7 +16,7 @@
 Name: %oname-%scalar_type
 Version: 3.3.1
 %define exampledir %_docdir/%oname-%version/examples
-Release: alt2.hg20130420
+Release: alt2.hg20130619
 Summary: PETSc for Python (%scalar_type scalars)
 License: Public
 Group: Sciences/Mathematics
@@ -53,7 +53,7 @@ Group: Development/Python
 %setup_python_module %oname
 Provides: python%_python_version(%oname) = %version-%release
 %py_provides %oname
-Requires: %name = %version-%release
+#Requires: %name = %version-%release
 
 %description -n python-module-%name
 Python module with bindings for PETSc (%scalar_type scalars)
@@ -114,6 +114,7 @@ export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib -L%mpidir/lib"
 #sed -i "s|@PETSCDIR@|$PETSC_DIR|g" conf/core/confutils.py
 #sed -i "s|@MPILIBS@||g" conf/core/confcore.py
 %add_optflags %optflags_shared -fno-strict-aliasing
+%add_optflags -I%ldir/include -I%mpidir/include -include petscviewerhdf5.h
 #python_build
 %make_ext config
 #make_ext cython
@@ -164,25 +165,26 @@ pushd demo/bratu2d
 %make_build_ext bratu2df90
 install -m644 *.so %buildroot%ldir/python
 popd
-pushd demo/poisson3d
+#pushd demo/poisson3d
 #f2py -m del2lib -c del2lib.f90
-%make_build_ext del2lib.so poisson3d
-install -m644 *.so %buildroot%ldir/python
-install -d %buildroot%ldir/bin
-install -m755 poisson3d %buildroot%ldir/bin
-popd
+#make_build_ext del2lib.so poisson3d
+#install -m644 *.so %buildroot%ldir/python
+#install -d %buildroot%ldir/bin
+#install -m755 poisson3d %buildroot%ldir/bin
+#popd
 
-for i in %buildroot%ldir/bin/poisson3d \
-	%buildroot%ldir/python/%oname/lib/PETSc.so
+#for i in %buildroot%ldir/bin/poisson3d \
+#	%buildroot%ldir/python/%oname/lib/PETSc.so
+for i in %buildroot%ldir/python/%oname/lib/PETSc.so
 do
 	chrpath -r %mpidir/lib:%ldir/lib $i
 done
 
-%files
-%doc HISTORY.txt LICENSE.txt README.txt
-%ldir/bin/*
+#files
+#ldir/bin/*
 
 %files -n python-module-%name
+%doc HISTORY.txt LICENSE.txt README.txt
 %dir %ldir/python
 %ldir/python/*
 
@@ -206,6 +208,9 @@ done
 %endif
 
 %changelog
+* Tue Jul 09 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.3.1-alt2.hg20130619
+- New snapshot
+
 * Tue May 07 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.3.1-alt2.hg20130420
 - Fixed build
 

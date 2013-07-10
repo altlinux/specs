@@ -7,7 +7,7 @@
 %define sover %somver.2.0
 Name: %oname-%scalar_type
 Version: 2.01
-Release: alt6.svn20120408
+Release: alt7.svn20120408
 Summary: Self-Adapting Large-scale Solver Architecture (%scalar_type scalars)
 License: LGPL
 Group: Sciences/Mathematics
@@ -228,6 +228,9 @@ done
 %endif
 
 %changelog
+* Mon Jul 15 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.01-alt7.svn20120408
+- Rebuilt with new PETSc
+
 * Thu Jun 27 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.01-alt6.svn20120408
 - Rebuilt with new libhdf5
 - Disabled static package
@@ -286,4 +289,3 @@ done
 
 * Sun Oct 04 2009 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0-alt1
 - Initial build for Sisyphus
-

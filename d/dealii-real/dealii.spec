@@ -7,7 +7,7 @@
 
 Name: %oname-%scalar_type
 Version: 8.0
-Release: alt2.pre.svn20130617
+Release: alt3.pre.svn20130617
 Summary: A Finite Element Differential Equations Analysis Library (%scalar_type scalars)
 License: QPL v1.0
 Group: Sciences/Mathematics
@@ -92,7 +92,7 @@ This package contains shared libraries of deal.II.
 Summary: Development files of deal.II (%scalar_type scalars)
 Group: Development/C++
 Requires: lib%name = %version-%release
-Requires: %name-devel-common = %version-%release
+#Requires: %name-devel-common = %version-%release
 Requires: libpetsc-%scalar_type-devel
 Requires: libslepc-%scalar_type-devel
 Requires: libtrilinos10-devel
@@ -181,9 +181,9 @@ popd
 %doc doc/license.html
 %ldir/bin/*
 
-%files devel-common
-%ldir/include/*
-%ldir/common
+#files devel-common
+#ldir/include/*
+#ldir/common
 
 %files -n lib%name
 %ldir/lib/*.so.*
@@ -192,6 +192,8 @@ popd
 %ldir/lib/*.so
 %ldir/cmake
 %ldir/lib/cmake
+%ldir/include/*
+%ldir/common
 
 %if "%scalar_type" == "real"
 %files -n lib%oname-devel-doc
@@ -199,6 +201,9 @@ popd
 %endif
 
 %changelog
+* Thu Jul 11 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 8.0-alt3.pre.svn20130617
+- Rebuilt with new PETSc
+
 * Thu Jun 27 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 8.0-alt2.pre.svn20130617
 - Rebuilt with new libhdf5
 

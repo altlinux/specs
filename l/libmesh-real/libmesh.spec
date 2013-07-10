@@ -5,21 +5,22 @@
 %define oname libmesh
 %define ldir %_libdir/petsc-%scalar_type
 Name: %oname-%scalar_type
-Version: 0.8.0
+Version: 0.9.2
 %define blibdir %_builddir/%name-%version/lib/%_arch-alt-linux-gnu_opt
 %define clibdir %_builddir/%name-%version/contrib/lib/%_arch-alt-linux-gnu_opt
-Release: alt9.svn20120913
+Release: alt1.rc1.git20130711
 Summary: Numerical simulation of partial differential equations
 License: LGPL v2.1
 Group: Sciences/Mathematics
 Url: http://libmesh.sourceforge.net/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
+# git://github.com/libMesh/libmesh.git
 Source: %oname-%version.tar
 
 Requires: libslepc-%scalar_type
 
-BuildPreReq: python-module-Pyro4 eigen2
+BuildPreReq: python-module-Pyro4 eigen3
 BuildPreReq: %mpiimpl-devel libscalapack-devel chrpath
 BuildPreReq: liblapack-devel libX11-devel boost-devel
 BuildPreReq: gcc-c++ gcc-fortran libpetsc-%scalar_type-devel libxdrfile-devel
@@ -28,6 +29,7 @@ BuildPreReq: libslepc-%scalar_type-devel zlib-devel libxml2-devel
 BuildPreReq: bzlib-devel libtetgen-devel libparmetis-devel libnetcdf-mpi-devel
 BuildPreReq: libvtk-devel libtrilinos10-devel libnox10-devel libtaucs-devel
 #BuildPreReq: doxygen graphviz texlive-latex-extra
+BuildPreReq: doxygen graphviz
 BuildPreReq: libfftw3-mpi-devel libexodusii-devel libparmetis0-devel
 BuildPreReq: libgmp-devel libgmp_cxx-devel libblitz-devel getfemxx
 BuildPreReq: libtbb-devel python-module-sphinx-devel python-module-Pygments
@@ -64,6 +66,7 @@ Summary: Development files of libMesh
 Group: Development/C++
 Requires: %name = %version-%release
 Conflicts: %name-contrib-tools < %version-%release
+Conflicts: %oname-complex-devel
 
 %description devel
 The libMesh library provides a framework for the numerical simulation of
@@ -175,7 +178,7 @@ This package contains contrib tools for libMesh.
 Summary: Examples for libMesh
 Group: Development/Documentation
 #Requires: %name = %version-%release
-BuildArch: noarch
+#BuildArch: noarch
 
 %description examples
 The libMesh library provides a framework for the numerical simulation of
@@ -233,13 +236,13 @@ cp examples/ex9/exact_solution.C examples/..9/exact_solution.C
 
 %prepare_sphinx .
 
-for i in $(find ./ -name Makefile) Make.common.in; do
-	sed -i 's|\-@|-|' $i
-	sed -i 's|@\$|$|' $i
-done
+#for i in $(find ./ -name Makefile) Make.common.in; do
+#	sed -i 's|\-@|-|' $i
+#	sed -i 's|@\$|$|' $i
+#done
 
-rm -fR contrib/nemesis contrib/exodusii contrib/netcdf \
-	contrib/tetgen contrib/metis contrib/parmetis contrib/boost
+#rm -fR contrib/nemesis contrib/exodusii contrib/netcdf \
+#	contrib/tetgen contrib/metis contrib/parmetis contrib/boost
 
 %ifarch x86_64
 LIB64=64
@@ -260,10 +263,11 @@ do
 		's|\$(libmesh_LIBS)\ \$(libmesh_LDFLAGS)|-Wl,-rpath,%mpidir/lib:%ldir/lib -L%blibdir -L%clibdir -lmesh|g' \
 		$i
 done
-sed -i 's|@BLIBDIR@|%blibdir|g' Makefile
+#sed -i 's|@BLIBDIR@|%blibdir|g' Makefile
 
 ./bootstrap
 %add_optflags -DOMPI_IGNORE_CXX_SEEK -DHAVE_NOX -I%_includedir/exodusii
+%add_optflags -fpermissive
 %autoreconf
 %configure \
 	--prefix=%ldir \
@@ -308,67 +312,57 @@ sed -i 's|@BLIBDIR@|%blibdir|g' Makefile
 	--with-glpk-include=%_includedir/glpk \
 	--with-glpk-lib=%_libdir \
 	--with-lapack=lapack \
-	--with-eigen-include=%_includedir/eigen2 \
+	--with-eigen-include=%_includedir/eigen3 \
 	--enable-triangle=yes \
 	--with-boost=yes \
 	--with-boost-libdir=%_libdir
 
-pushd contrib
-%make_build
-popd
+#pushd contrib
+#make_build
+#popd
 
-pushd %clibdir
-for i in $(ls); do
-	if [ "$i" != "liblaspack.so" -a "$i" != "libtriangle.so" ]
-	then
-		mv $i $i.0
-		ln -s $i.0 $i
-	fi
-done
-popd
+#pushd %clibdir
+#for i in $(ls); do
+#	if [ "$i" != "liblaspack.so" -a "$i" != "libtriangle.so" ]
+#	then
+#		mv $i $i.0
+#		ln -s $i.0 $i
+#	fi
+#done
+#popd
 
 function makeIt() {
-	%make_build $1 SLEPC_LIB=-L$SLEPC_DIR/lib \
+	%make_build LIBMESH_OPT_MODE=1 V=1 $1 \
+		SLEPC_LIB=-L$SLEPC_DIR/lib \
 		PACKAGES_LIBS="$(pkg-config petsc-%scalar_type --libs) -L$3 -lexoIIv2c -lglpk -lboost_system" \
 		NEW_LIBDIR="$2" CONTRIB_DIR="$3" ADDLIB="$4 $5 $6 $7 $8 $9"
 }
 
 makeIt '' -L. %clibdir
 
-for i in amr compare grid2grid meshtool; do
-makeIt bin/$i-opt '' %clibdir
-mv bin/$i-opt bin/$i
-done
-
-#makeIt examples '' -L.
-
-#if "%scalar_type" == "real"
-#makeIt doc '' -L.
-#endif
+%if "%scalar_type" == "real"
+pushd doc
+mkdir -p doc/html/doxygen
+doxygen
+%endif
 
 %install
+%makeinstall_std
+
 install -d %buildroot%ldir/bin
+mv %buildroot%_bindir/* %buildroot%ldir/bin/
 install -d %buildroot%ldir/lib
-install -d %buildroot%ldir/include/contrib
-install -d %buildroot%ldir/%oname
+mv %buildroot%_libdir/*.so* %buildroot%ldir/lib/
 
-mv contrib/bin/libmesh-config bin/
-rm -fR bin/*gnu_opt
-install -m755 bin/* contrib/bin/* %buildroot%ldir/bin
-cp -P lib/*/* contrib/lib/*/* %buildroot%ldir/lib
-cp -fR include/* %buildroot%ldir/include/
-cp -fR contrib/gmv/*.h \
-	contrib/gzstream/*.h contrib/libHilbert/include/* \
-	contrib/sfcurves/*.h \
-	%buildroot%ldir/include/contrib/
-
-#if "%scalar_type" == "real"
-#install -d %buildroot%_man3dir
-#install -p -m644 doc/man/man3/* %buildroot%_man3dir
-#endif
+%if "%scalar_type" == "real"
+install -d %buildroot%_man3dir
+install -p -m644 doc/doc/man/man3/* %buildroot%_man3dir
+install -d %buildroot%_docdir/%oname-%version
+cp doc/doc/html/doxygen/* %buildroot%_docdir/%oname-%version/
+%endif
 
 install -d %buildroot%_docdir/%name-%version
-install -p -m644 CHANGES license \
+install -p -m644 AUTHORS ChangeLog NEWS README* \
 	%buildroot%_docdir/%name-%version
 install -d %buildroot%_docdir/%name-%version/contrib
 mkdir tmp
@@ -382,105 +376,90 @@ mv sfcurves/README ../tmp/README.sfcurves
 popd
 install -p -m644 tmp/* %buildroot%_docdir/%name-%version/contrib
 %if "%scalar_type" == "real"
-install -d %buildroot%_docdir/%oname-%version
 install -p -m644 $(find doc -name '*.pdf') \
 	%buildroot%_docdir/%oname-%version
-cp -fR doc/html %buildroot%_docdir/%oname-%version/
+#cp -fR doc/html %buildroot%_docdir/%oname-%version/
 %endif
 
 #rm -f $(find examples -name '*.o')
 #cp -fR examples %buildroot%ldir/%oname
 #cp -fR reference_elements %buildroot%ldir/%oname
 
-#pushd %buildroot%ldir
-#rm -f bin/*.in
-#for i in $(find %oname/examples -name '*opt') \
-#	bin/amr bin/compare bin/meshtool bin/grid2grid
-#do
-#	chrpath -r %_libdir:%mpidir/lib:%ldir/lib $i
-#done
-#popd
-pushd %buildroot%ldir/lib
-rm -f libnetcdf.so* libtetgen.so* libmetis.so* \
-	libparmetis.so* libexodusii.so* libnemesis.so*
-mv %oname.so %oname.so.0
-ln -s %oname.so.0 %oname.so
-for i in $(ls *.so|egrep -v libmesh); do
-	chrpath -r %mpidir/lib $i ||:
-done
-for i in $(ls %buildroot%ldir/bin/*); do
+pushd %buildroot%ldir
+for i in bin/* lib/*.so
+do
 	chrpath -r %mpidir/lib:%ldir/lib $i ||:
 done
-chrpath -r \
-	%mpidir/lib:%ldir/lib libmesh.so
 popd
 
-# resolve file conflicts, delete broken pages
+sed -i 's|^libdir.*|libdir=%ldir/lib|' \
+	%buildroot%_sysconfdir/%oname/*.pc %buildroot%_pkgconfigdir/*.pc
+sed -i 's|^includedir.*|includedir=%ldir/include|' \
+	%buildroot%_sysconfdir/%oname/*.pc %buildroot%_pkgconfigdir/*.pc
 
-#if "%scalar_type" == "real"
-#pushd %buildroot%_man3dir
-#mv statistics.h.3 mesh__statistics.h.3
-#rm -f CompareTypes_* ScalarTraits_* \
-#	boostcopy_enable_if_c_*
-#popd
-#endif
+%if "%scalar_type" == "real"
+pushd %buildroot%_man3dir
+mv statistics.h.3 mesh__statistics.h.3
+rm -f CompareTypes_* ScalarTraits_* \
+	boostcopy_enable_if_c_*
+popd
+%endif
 
 %files
 %doc %dir %_docdir/%name-%version
 %doc %_docdir/%name-%version/*
-%exclude %_docdir/%name-%version/contrib
 %dir %ldir/lib
-%ldir/lib/%oname.so.*
+%ldir/lib/*.so.*
 
 %files devel
+%_sysconfdir/*
 %dir %ldir/bin
 %ldir/bin/%oname-config
-%ldir/lib/%oname.so
+%ldir/lib/*.so
 %ldir/include/*
-%exclude %ldir/include/contrib
+%ldir/Make.common
+%_pkgconfigdir/*
 
 %files tools
 %dir %ldir/bin
-%ldir/bin/amr
-%ldir/bin/compare
-%ldir/bin/grid2grid
-%ldir/bin/meshtool
-%ldir/bin/parameterize.pl
-
-%files contrib
-%doc %dir %_docdir/%name-%version
-%doc %_docdir/%name-%version/contrib
-%ldir/lib/*.so.*
-%exclude %ldir/lib/%oname.so.*
-
-%files contrib-devel
-%ldir/lib/*.so
-%exclude %ldir/lib/%oname.so
-%ldir/include/contrib
-
-%files contrib-tools
-%dir %ldir/bin
 %ldir/bin/*
 %exclude %ldir/bin/%oname-config
-%exclude %ldir/bin/amr
-%exclude %ldir/bin/compare
-%exclude %ldir/bin/grid2grid
-%exclude %ldir/bin/meshtool
-%exclude %ldir/bin/parameterize.pl
 
-%files examples
-#dir %ldir/%oname
-#ldir/%oname/examples
-#ldir/%oname/reference_elements
-%doc examples reference_elements
+#files contrib
+#doc %dir %_docdir/%name-%version
+#doc %_docdir/%name-%version/contrib
+#ldir/lib/*.so.*
+#exclude %ldir/lib/%oname.so.*
+
+#files contrib-devel
+#ldir/lib/*.so
+#exclude %ldir/lib/%oname.so
+#ldir/include/contrib
+
+#files contrib-tools
+#dir %ldir/bin
+#ldir/bin/*
+#exclude %ldir/bin/%oname-config
+#exclude %ldir/bin/amr
+#exclude %ldir/bin/compare
+#exclude %ldir/bin/grid2grid
+#exclude %ldir/bin/meshtool
+#exclude %ldir/bin/parameterize.pl
 
 %if "%scalar_type" == "real"
+%files examples
+%_datadir/reference_elements
+%ldir/examples
+
 %files -n %oname-doc
 %doc %_docdir/%oname-%version
-#_man3dir/*
+%_man3dir/*
 %endif
 
 %changelog
+* Mon Jul 15 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.2-alt1.rc1.git20130711
+- Version 0.9.2-rc1
+
 * Mon May 13 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.0-alt9.svn20120913
 - Fixed build
 
