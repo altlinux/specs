@@ -6,7 +6,7 @@
 %define pkg_libdir %_libdir/%hsc_name-%hsc_version/lib/%h_pkg_name-%version
 
 Name: xmobar
-Version: 0.16
+Version: 0.18
 Release: alt1
 License: BSD3
 Packager: Denis Smirnov <mithraen@altlinux.ru>
@@ -17,9 +17,7 @@ Summary: A Minimalistic Text Based Status Bar
 
 Patch: %name-%version-%release.patch
 
-# Automatically added by buildreq on Tue Dec 25 2012 (-bb)
-# optimized out: elfutils fontconfig fontconfig-devel ghc7.6.1 ghc7.6.1-alsa-core ghc7.6.1-cereal ghc7.6.1-common ghc7.6.1-extensible-exceptions ghc7.6.1-libxml-sax ghc7.6.1-mtl ghc7.6.1-network ghc7.6.1-parsec ghc7.6.1-primitive ghc7.6.1-random ghc7.6.1-text ghc7.6.1-timezone-series ghc7.6.1-transformers ghc7.6.1-utf8-string ghc7.6.1-vector ghc7.6.1-x11 ghc7.6.1-xml-types libX11-devel libXrandr-devel libXrender-devel libfreetype-devel libgmp-devel pkg-config python-base xorg-kbproto-devel xorg-renderproto-devel xorg-xproto-devel
-BuildRequires: ghc7.6.1-alex ghc7.6.1-alsa-mixer ghc7.6.1-c2hs ghc7.6.1-cpphs ghc7.6.1-dbus ghc7.6.1-happy ghc7.6.1-hinotify ghc7.6.1-hscolour ghc7.6.1-libmpd ghc7.6.1-stm ghc7.6.1-timezone-olson ghc7.6.1-x11-xft libXext-devel libXft-devel libXinerama-devel libalsa-devel libwireless-devel libxml2-devel
+BuildRequires: ghc7.6.1-alex ghc7.6.1-alsa-mixer ghc7.6.1-c2hs ghc7.6.1-cpphs ghc7.6.1-dbus ghc7.6.1-happy ghc7.6.1-hinotify ghc7.6.1-hscolour ghc7.6.1-libmpd ghc7.6.1-stm ghc7.6.1-timezone-olson ghc7.6.1-x11-xft libXext-devel libXft-devel libXinerama-devel libalsa-devel libwireless-devel libxml2-devel ghc7.6.1-regex-compat
 
 %description
 Xmobar is a minimalistic text based status bar.
@@ -43,6 +41,9 @@ runghc Setup copy --destdir=%buildroot
 %doc news.md readme.md
 
 %changelog
+* Mon Jul 08 2013 Denis Smirnov <mithraen@altlinux.ru> 0.18-alt1
+- 0.18
+
 * Mon Dec 24 2012 Denis Smirnov <mithraen@altlinux.ru> 0.16-alt1
 - 0.16
 
