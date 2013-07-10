@@ -1,13 +1,13 @@
 %define ver_major 0.3
 
 Name: d-feet
-Version: %ver_major.5
+Version: %ver_major.6
 Release: alt1
 
 Summary: A powerful D-Bus Debugger
 Group: Development/Tools
 License: GPLv2+
-Url: https://live.gnome.org/DFeet/
+Url: https://wiki.gnome.org/DFeet/
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 
@@ -52,6 +52,9 @@ objects.
 %doc AUTHORS README NEWS
 
 %changelog
+* Wed Jul 10 2013 Yuri N. Sedunov <aris@altlinux.org> 0.3.6-alt1
+- 0.3.6
+
 * Sun Jun 09 2013 Yuri N. Sedunov <aris@altlinux.org> 0.3.5-alt1
 - 0.3.5
 
