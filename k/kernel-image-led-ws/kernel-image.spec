@@ -21,7 +21,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.4.52
-Release: alt8
+Release: alt10
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -228,6 +228,7 @@ Patch0111: linux-%kernel_branch.20-fix-drivers-char--lp.patch
 Patch0112: linux-%kernel_branch.25-fix-drivers-char-agp--intel-agp.patch
 Patch0113: linux-%kernel_branch.25-fix-drivers-char-hw_random--amd-rng.patch
 Patch0114: linux-%kernel_branch.25-fix-drivers-char-hw_random--intel-rng.patch
+Patch0115: linux-%kernel_branch.50-fix-drivers-char-hw_random--via-rng.patch
 
 Patch0121: linux-%kernel_branch.20-fix-drivers-connector--cn_proc.patch
 
@@ -372,7 +373,7 @@ Patch0401: linux-%kernel_branch.38-fix-drivers-net--bonding.patch
 Patch0402: linux-%kernel_branch.38-fix-drivers-net--sb1000.patch
 Patch0403: linux-%kernel_branch.39-fix-drivers-net-caif--caif_serial.patch
 Patch0404: linux-%kernel_branch.39-fix-drivers-net-caif--cfspi_slave.patch
-Patch0405: linux-%kernel_branch.20-fix-drivers-net-hyperv.patch
+Patch0405: linux-%kernel_branch.50-fix-drivers-net-hyperv.patch
 Patch0406: linux-%kernel_branch.39-fix-drivers-net-wimax-i2400m--i2400m.patch
 
 Patch0411: linux-%kernel_branch.25-fix-drivers-net-wireless--iwlwifi.patch
@@ -492,7 +493,7 @@ Patch0621: linux-%kernel_branch.29-fix-lib--btree.patch
 Patch0622: linux-%kernel_branch.25-fix-lib--crc32.patch
 Patch0623: linux-%kernel_branch.35-fix-lib-lzo.patch
 
-Patch0630: linux-%kernel_branch.35-fix-mm.patch
+Patch0630: linux-%kernel_branch.50-fix-mm.patch
 Patch0631: linux-%kernel_branch.35-fix-mm--bounce.patch
 Patch0632: linux-%kernel_branch.39-fix-mm--cleancache.patch
 Patch0633: linux-%kernel_branch.20-fix-mm--compaction.patch
@@ -1410,6 +1411,7 @@ cd linux-%version
 %patch0112 -p1
 %patch0113 -p1
 %patch0114 -p1
+%patch0115 -p1
 
 # fix-drivers-connector--*
 %patch0121 -p1
@@ -2785,6 +2787,15 @@ done)
 
 
 %changelog
+* Wed Jul 10 2013 Led <led@altlinux.ru> 3.4.52-alt10
+- updated:
+  + fix-drivers-net-hyperv
+  + fix-mm
+
+* Wed Jul 10 2013 Led <led@altlinux.ru> 3.4.52-alt9
+- added:
+  + fix-drivers-char-hw_random--via-rng
+
 * Tue Jul 09 2013 Led <led@altlinux.ru> 3.4.52-alt8
 - added:
   + fix-drivers-acpi-apei--apei
