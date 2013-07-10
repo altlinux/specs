@@ -3,7 +3,7 @@
 Summary: SELinux policy core utilities
 Name: policycoreutils
 Version: 2.1.14
-Release: alt2
+Release: alt3
 License: GPLv2
 Group: System/Base
 Url: http://userspace.selinuxproject.org
@@ -35,7 +35,9 @@ BuildRequires: desktop-file-utils
 BuildRequires: python-module-sepolgen
 BuildRequires: glib2-devel libdbus-glib-devel
 BuildRequires: libcap-ng-devel libpcre-devel libcgroup-devel
-BuildRequires: libsetools-devel >= 3.3.8
+
+# Build sequence: libsepol -> setools -> policycoreutils
+BuildRequires: libsetools-devel >= 3.3.8-alt3
 
 %description
 policycoreutils contains the policy core utilities that are required
@@ -285,6 +287,9 @@ cp -r mcstrans/share/* %buildroot%_datadir/mcstrans/
 
 
 %changelog
+* Wed Jul 10 2013 Andriy Stepanov <stanv@altlinux.ru> 2.1.14-alt3
+- Rebuild with new setools
+
 * Thu Jul 04 2013 Andriy Stepanov <stanv@altlinux.ru> 2.1.14-alt2
 - Add newrole capabilities
 
