@@ -2,7 +2,7 @@
 %define pm_metod bbswitch
 
 Name: bumblebee
-Version: 3.1
+Version: 3.2.1
 Release: alt1
 
 Summary: Bumblebee - support for NVidia Optimus laptops on Linux
@@ -65,21 +65,26 @@ groupadd -r -f %bumblebeed_group
 %_sbindir/bumblebeed
 %_bindir/optirun
 %exclude %_bindir/%name-bugreport
-/lib/udev/rules.d/99-remove-nvidia-dev.rules
+/lib/udev/rules.d/99-bumblebee-nvidia-dev.rules
 %_sysconfdir/bash_completion.d/%name
 %dir %_sysconfdir/%name
 %config %_sysconfdir/%name/%name.conf
 %config %_sysconfdir/%name/xorg.conf.nouveau
 %config %_sysconfdir/%name/xorg.conf.nvidia
+%dir %_sysconfdir/%name/xorg.conf.d
+%config %_sysconfdir/%name/xorg.conf.d/10-dummy.conf
 %config %systemd_unitdir/bumblebeed.service
 %config %_initdir/bumblebeed
 %_man1dir/bumblebeed.1*
 %_man1dir/optirun.1*
-%doc README.markdown doc/RELEASE_NOTES_3_1
+%doc README.markdown doc/RELEASE_NOTES*
 
 %exclude %_docdir/bumblebee
 
 %changelog
+* Fri Jul 05 2013 Yuri N. Sedunov <aris@altlinux.org> 3.2.1-alt1
+- 3.2.1
+
 * Tue Feb 26 2013 Yuri N. Sedunov <aris@altlinux.org> 3.1-alt1
 - 3.1 (ALT #28605)
 - removed "noreplace" tag for bumblebee.conf
