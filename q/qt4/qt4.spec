@@ -38,9 +38,9 @@
 %define rname	qt
 %define major	4
 %define minor	8
-%define bugfix	4
+%define bugfix	5
 %define beta	%nil
-%define rlz alt5
+%define rlz alt1
 %define phonon_ver 4.4.0
 
 Name: %rname%major
@@ -52,7 +52,7 @@ Release: %rlz
 
 Group: System/Libraries
 Summary: Shared library for the Qt%major GUI toolkit
-Url: http://www.trolltech.com/products/qt/
+Url: http://qt-project.org/
 License: GPLv3 / LGPLv2.1
 
 Requires: lib%name = %version-%release
@@ -81,9 +81,7 @@ Source103: %rname.48.png
 Source104: %rname.64.png
 
 # upstream
-Patch1: QTBUG-29082.patch
 # security
-Patch51: CVE-2011-3922.diff
 # KDE-QT
 Patch101: 0180-window-role.diff
 Patch102: 0188-fix-moc-parser-same-name-header.diff
@@ -91,7 +89,7 @@ Patch103: 0191-listview-alternate-row-colors.diff
 Patch104: 0195-compositing-properties.diff
 Patch105: 0225-invalidate-tabbar-geometry-on-refresh.patch
 # FC
-Patch201: qt-everywhere-opensource-src-4.8.4-QTBUG-22829.patch
+Patch201: qt-everywhere-opensource-src-4.8.5-QTBUG-22829.patch
 Patch202: qt-4.0.1-sans-mono.patch
 Patch203: qt-everywhere-opensource-src-4.6.2-cups.patch
 Patch204: qt-everywhere-opensource-src-4.6.3-glib_eventloop_nullcheck.patch
@@ -99,18 +97,18 @@ Patch205: qt-x11-opensource-src-4.5.1-enable_ft_lcdfilter.patch
 Patch206: qt-everywhere-opensource-src-4.8.3-qdbusconnection_no_debug.patch
 Patch207: qt-everywhere-opensource-src-4.8.1-icu_no_debug.patch
 #
-Patch209: qt-everywhere-opensource-src-4.8.0-QTBUG-21900.patch
+Patch209: qt-everywhere-opensource-src-4.8.5-QTBUG-21900.patch
 Patch210: qt-everywhere-opensource-src-4.8.0-QTBUG-22037.patch
 Patch211: qt-everywhere-opensource-src-4.8.2--assistant-crash.patch
 #
 Patch213: qt-everywhere-opensource-src-4.8.0-tp-qtreeview-kpackagekit-crash.patch
 Patch214: qt-everywhere-opensource-src-4.8.3-no_Werror.patch
 #
-Patch216: qt-everywhere-opensource-src-4.8.3-QTBUG-4862.patch
+Patch216: qt-everywhere-opensource-src-4.8.5-QTBUG-4862.patch
 # MDV
 # ALT
 # by raorn@altlinux
-Patch501: qt-4.8.0-alt-honor-SUSv3-locales.patch
+Patch501: qt-4.8.5-alt-honor-SUSv3-locales.patch
 Patch502: qt-4.7.2-alt-ca-certificates-path.patch
 Patch503: qt-4.7.3-alt-qt-config-add-webkit.patch
 Patch504: qt-4.7.0-alt-fix-gl-loading.patch
@@ -122,7 +120,7 @@ Patch510: qt-4.8.0-alt-ldflags.patch
 Patch511: qt-4.3.2-alt-checkbox-indicator-plastique.patch
 Patch512: qt-4.3.4-alt-uitools-shared.patch
 Patch513: qt-4.5.2-alt-fix-ssl-loading.patch
-Patch514: qt-4.8.3-alt-fix-resolv-loading.patch
+Patch514: qt-4.8.5-alt-fix-resolv-loading.patch
 Patch515: qt-4.6.1-alt-xmlpatterns-fexceptions.patch
 Patch516: qt-4.7.1-alt-sql-ibase-firebird.patch
 # SuSE
@@ -130,7 +128,7 @@ Patch701: handle-tga-files-properly.diff
 Patch702: build-qvfb-tool.diff
 Patch703: libqt4-libtool-nodate.diff
 Patch704: qfatal-noreturn.diff
-Patch705: no-moc-date.diff
+#
 Patch706: qt-never-strip.diff
 Patch707: rcc-stable-dirlisting.diff
 # Sergey A. Sukiyazov <sergey.sukiyazov NEAR gmail.com>
@@ -718,9 +716,7 @@ Install this package if you want to create RPM packages that use %name
 
 %setup -q -n %buildsubdir
 # upstream
-%patch1 -p1
 # security
-%patch51 -p0
 # KDE-QT
 %patch101 -p0
 %patch102 -p0
@@ -766,7 +762,7 @@ Install this package if you want to create RPM packages that use %name
 %patch702 -p0
 %patch703 -p0
 %patch704 -p0
-%patch705 -p0
+#
 %patch706 -p0
 %patch707 -p1
 
@@ -1529,6 +1525,9 @@ install -m 644 %SOURCE104 %buildroot/%_iconsdir/hicolor/64x64/apps/%name.png
 %endif
 
 %changelog
+* Wed Jul 10 2013 Sergey V Turchin <zerg@altlinux.org> 4.8.5-alt1
+- new version
+
 * Thu Jun 06 2013 Sergey V Turchin <zerg@altlinux.org> 4.8.4-alt5
 - rebuilt with new unixODBC
 
