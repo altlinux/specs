@@ -2,8 +2,8 @@
 %def_enable openssl
 
 Name: libircclient
-Version: 1.6
-Release: alt2
+Version: 1.7
+Release: alt1
 
 Summary: Library that implements the client-server IRC protocol
 License: %lgpl2plus
@@ -12,10 +12,7 @@ Group: System/Libraries
 URL: http://www.ulduzsoft.com/libircclient/
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
-Patch1: libircclient-1.6-fedora-install.patch
 Patch2: libircclient-1.6-fedora-rfc.patch
-Patch3: libircclient-1.6-fedora-shared.patch
-Patch4: libircclient-1.6-alt-fix-install-headers.patch
 
 BuildRequires(pre): rpm-build-licenses
 BuildRequires: gcc-c++
@@ -39,10 +36,7 @@ developing applications that use %name.
 %prep
 %setup
 %patch -p1
-%patch1 -p1
 %patch2 -p1
-%patch3 -p1
-%patch4 -p1
 
 %build
 export CFLAGS="%optflags -fPIC"
@@ -55,10 +49,6 @@ export CFLAGS="%optflags -fPIC"
 
 %install
 %makeinstall_std
-mkdir -p %buildroot/%_datadir/doc/libircclient
-mkdir -p %buildroot/%_man3dir
-cp -a doc/{html,rfc1459.txt} %buildroot/%_datadir/doc/libircclient/
-cp -a doc/man/man3/* %buildroot/%_man3dir/
 
 %files
 %_libdir/*.so.*
@@ -66,10 +56,14 @@ cp -a doc/man/man3/* %buildroot/%_man3dir/
 %files devel
 %_includedir/*
 %_libdir/*.so
-%_datadir/doc/%name
-%_man3dir/*
 
 %changelog
+* Wed Jul 10 2013 Mikhail Efremov <sem@altlinux.org> 1.7-alt1
+- Don't strip shared object.
+- Don't build and package devel documentation.
+- Drop obsoleted patches.
+- Updated to 1.7.
+
 * Thu Jul 12 2012 Mikhail Efremov <sem@altlinux.org> 1.6-alt2
 - Install headers in %%_includedir/libircclient/ again.
 
