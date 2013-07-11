@@ -1,10 +1,10 @@
 
 Name: rsyslog
-Version: 7.2.7
+Version: 7.4.1
 Release: alt1
 
 Summary: Enhanced system logging and kernel message trapping daemon
-License: GPLv3+
+License: GPLv3+ ASL2.0
 Group: System/Kernel and hardware
 Url: http://www.rsyslog.com
 Provides: syslogd-daemon
@@ -23,7 +23,7 @@ BuildRequires: libdbi-devel
 BuildRequires: libmysqlclient-devel
 BuildRequires: postgresql-devel
 BuildRequires: libkrb5-devel
-BuildRequires: librelp-devel >= 1.0.1
+BuildRequires: librelp-devel >= 1.0.3
 BuildRequires: libgnutls-devel libgcrypt-devel
 BuildRequires: libnet-snmp-devel
 BuildRequires: libnet-devel
@@ -35,6 +35,8 @@ BuildRequires: libmongo-client-devel >= 0.1.4
 BuildRequires: libuuid-devel
 BuildRequires: libcurl-devel
 BuildRequires: libhiredis-devel >= 0.10.1
+BuildRequires: libsystemd-journal-devel >= 197
+BuildRequires: /usr/bin/rst2man
 
 %define mod_dir /%_lib/%name
 
@@ -58,6 +60,27 @@ while  at the same time being very easy to setup for the novice user.
  o immark.so   - This is the implementation of the build-in mark message input
                  module.
  o imfile.so   - This is the input module for reading text file data.
+
+%package crypto
+Summary: Encryption support
+Group: System/Kernel and hardware
+Requires: %name = %version-%release
+
+%description crypto
+This package containes a module providing log file encryption and a
+command line tool to process encrypted logs.
+
+%package journal
+Summary: Systemd journal support for rsyslog
+Group: System/Kernel and hardware
+Requires: %name = %version-%release
+
+%description journal
+The rsyslog-journal package contains a dynamic shared object that will add
+systemd journal support to rsyslog.
+
+ o imjournal.so - This is the implementation of the systemd journal input module.
+ o omjournal.so - This is the implementation of the systemd journal output module.
 
 %package mysql
 Summary: MySQL support for rsyslog
@@ -257,7 +280,6 @@ BuildArch: noarch
 %description docs-html
 This package contains the HTML documentation for rsyslog.
 
-
 %prep
 %setup -q
 %patch -p1
@@ -283,6 +305,7 @@ export HIREDIS_LIBS=-lhiredis
 	--enable-inet \
 	--enable-klog \
 	--enable-kmsg \
+	--enable-imjournal \
 	--enable-largefile \
 	--enable-libdbi \
 	--enable-mail \
@@ -296,6 +319,7 @@ export HIREDIS_LIBS=-lhiredis
 	--enable-omprog \
 	--enable-omruleset \
 	--enable-omstdout \
+	--enable-omjournal \
 	--enable-omudpspoof \
 	--enable-omuxsock \
 	--enable-pgsql \
@@ -308,8 +332,8 @@ export HIREDIS_LIBS=-lhiredis
 	--enable-relp \
 	--enable-snmp \
 	--enable-zlib \
-	--enable-pthreads \
 	--enable-unlimited-select \
+	--enable-usertools \
 	--with-systemdsystemunitdir=%systemd_unitdir
 
 %make_build
@@ -380,6 +404,16 @@ ln -s ../rsyslog.service %buildroot%systemd_unitdir/syslog.target.wants/rsyslog.
 /sbin/rsyslogd
 %_mandir/man?/rsyslog*
 
+%files crypto
+%_bindir/rscryutil
+%mod_dir/lmcry_gcry.so
+%_man1dir/rscryutil.*
+
+%files journal
+%config(noreplace) %attr(640,root,adm) %_sysconfdir/rsyslog.d/*_journal.conf
+%mod_dir/imjournal.so
+%mod_dir/omjournal.so
+
 %files mysql
 %doc plugins/ommysql/createDB.sql plugins/ommysql/contrib/delete_mysql
 %config(noreplace) %attr(640,root,adm) %_sysconfdir/rsyslog.d/*_mysql.conf
@@ -391,6 +425,7 @@ ln -s ../rsyslog.service %buildroot%systemd_unitdir/syslog.target.wants/rsyslog.
 %mod_dir/ompgsql.so
 
 %files mongo
+%_bindir/logctl
 %config(noreplace) %attr(640,root,adm) %_sysconfdir/rsyslog.d/*_mongo.conf
 %mod_dir/ommongodb.so
 
@@ -455,6 +490,11 @@ ln -s ../rsyslog.service %buildroot%systemd_unitdir/syslog.target.wants/rsyslog.
 %doc html_docs/*
 
 %changelog
+* Thu Jul 11 2013 Alexey Shabalin <shaba@altlinux.ru> 7.4.1-alt1
+- 7.4.1
+- add journal subpackage
+- add crypto subpackage
+
 * Fri Apr 26 2013 Alexey Shabalin <shaba@altlinux.ru> 7.2.7-alt1
 - 7.2.7
 
