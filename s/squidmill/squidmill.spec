@@ -1,6 +1,6 @@
 Name: squidmill
 Version: 2.4
-Release: alt1
+Release: alt2
 
 Source: %name-%version.tar
 
@@ -49,6 +49,9 @@ mkdir -p %buildroot%_var/run/squidmill
 %attr(0755, squid, squid) %dir %_var/run/squidmill
 
 %changelog
+* Thu Jul 11 2013 Paul Wolneykien <manowar@altlinux.org> 2.4-alt2
+- Fix the status proc of the init-script.
+
 * Thu Jun 27 2013 Paul Wolneykien <manowar@altlinux.org> 2.4-alt1
 - Keep on trying to read the files in the follow mode in the case
   of an error.
