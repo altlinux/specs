@@ -1,5 +1,5 @@
 Name: autorepo-altnode-config
-Version: 0.06
+Version: 0.07
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -11,6 +11,7 @@ License: GPL2+
 Source: %name-%version.tar
 
 Requires(pre): postfix rsync-server anonftp vsftpd
+Requires: monit
 
 %description
 %summary
@@ -29,9 +30,12 @@ Requires(pre): nginx
 %build
 
 %install
-mkdir -p $RPM_BUILD_ROOT%_sysconfdir/autorepo/apt
-install -m 644 apt.conf.* sources.list.* $RPM_BUILD_ROOT%_sysconfdir/autorepo/apt/
+mkdir -p %buildroot%_sysconfdir/autorepo/apt
+install -m 644 apt.conf.* sources.list.* %buildroot%_sysconfdir/autorepo/apt/
 install -D -m 644 nginx/autoports.conf %buildroot%_sysconfdir/nginx/sites-enabled.d/autorepo.conf
+
+mkdir -p %buildroot%_sysconfdir/monitrc.d
+install -m 644 monit/* %buildroot%_sysconfdir/monitrc.d
 
 %post
 # postfix
@@ -61,18 +65,28 @@ if grep 'only_from = 127.0.0.1' /etc/xinetd.conf; then
 fi
 service xinetd restart
 
+echo 'include /etc/monitrc.d/*.conf' > /etc/monitrc
+service monit restart ||:
+
 %post nginx
 # nginx
 service nginx restart ||:
+service monit restart ||:
 
 %files
 %_sysconfdir/autorepo/apt/apt.conf.*
 %_sysconfdir/autorepo/apt/sources.list.*
+%config %_sysconfdir/monitrc.d/*.conf
+%exclude %_sysconfdir/monitrc.d/nginx.conf
 
 %files nginx
 %_sysconfdir/nginx/sites-enabled.d/autorepo.conf
+%config %_sysconfdir/monitrc.d/nginx.conf
 
 %changelog
+* Thu Jul 11 2013 Igor Vlasenko <viy@altlinux.ru> 0.07-alt1
+- monit dependency and config files
+
 * Wed Nov 07 2012 Igor Vlasenko <viy@altlinux.ru> 0.06-alt1
 - added debuginfo for t6 and p6
 
