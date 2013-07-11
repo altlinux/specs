@@ -27,7 +27,7 @@
 %define rname kdebase-workspace
 Name: kde4base-workspace
 Version: %major.%minor.%bugfix
-Release: alt2
+Release: alt3
 
 Group: Graphical desktop/KDE
 Summary: K Desktop Environment - Workspace
@@ -112,6 +112,7 @@ Patch1047: kdebase-workspace-4.10.0-alt-def-oxygen-widgets.patch
 Patch1048: kdebase-workspace-4.10.0-alt-def-oxygen-kwin.patch
 Patch1049: kdebase-workspace-4.10.4-alt-mobile-netbook.patch
 Patch1050: kdebase-workspace-4.10.4-alt-mobile-kwin-buildopts.patch
+Patch1051: kdebase-workspace-4.10.4-alt-kcm_fonts_dont_change_on_load.patch
 
 BuildRequires(pre): kde4libs-devel rpm-build-python
 BuildRequires(pre): NetworkManager-devel
@@ -570,6 +571,7 @@ rm -rf plasma/generic/scriptengines/google_gadgets
 %patch1048 -p1
 %patch1049 -p1
 %patch1050 -p1
+%patch1051 -p1
 
 grep -q X-KDE-RootOnly kdm/kcm/kdm.desktop \
     || echo "X-KDE-RootOnly=true" >>kdm/kcm/kdm.desktop
@@ -949,6 +951,9 @@ chmod 0755 %buildroot/%_sysconfdir/firsttime.d/kdm4
 %_K4dbus_interfaces/*
 
 %changelog
+* Thu Jul 11 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.5-alt3
+- don't change xft settings on kcm load (ALT#15663)
+
 * Wed Jul 03 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.5-alt2
 - drop patch against KDEBUG-311188
 
