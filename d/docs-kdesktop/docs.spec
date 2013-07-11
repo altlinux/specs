@@ -7,7 +7,7 @@
 %define variants docs-office-server docs-backup-server docs-desktop docs-school-master docs-school-junior docs-school-lite docs-school-server docs-kdesktop docs-school-terminal docs-school-newlite docs-centaurus docs-simply-linux docs-lxdesktop docs-lxdesktop-lite
 
 Name: docs-%variant
-Version: 6.0.2
+Version: 7.0.0
 Release: alt1
 
 Summary: %Variant documentation
@@ -42,6 +42,21 @@ ln -s $(relative %_docsinstalldir %_documentationdir) %buildroot%_documentationd
 %_documentationdir
 
 %changelog
+* Wed Jul 10 2013 Alexandr Boltris <alex@altlinux.org> 7.0.0-alt1
+- Add info about support *.docx in app libreOffice
+  (thx Nickolay Rogalskiy)
+- add 11 step to "install-guide" This step is about setting up
+  password for LUKS partition(s) (thx Nickolay Rogalskiy)
+- desktop-software/internet/im: telepathy replaces kopete
+- desktop-software/multimedia/kde: remove Dragonplayer
+- install-guide: added section for RAID, LVM and LUSK setup
+- install-guide: update installation from USB flash
+- support/index.txt: add more Community/Company links
+  (thx Artem Zolochevskiy)
+- whatis-alt: added text about platform (p7)
+- update screenshots
+- spellcheck
+
 * Tue Jun 25 2013 Artem Zolochevskiy <azol@altlinux.ru> 6.0.2-alt1
 - update dvd- usb-burn section
 
