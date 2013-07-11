@@ -1,5 +1,5 @@
 Name: update-kernel
-Version: 0.9.5
+Version: 0.9.6
 Release: alt1
 
 Summary: Update kernel and modules
@@ -34,9 +34,13 @@ install -pDm755 update_kernel_modules_cetus.sh %buildroot%_sbindir/%name
 install -pm755 remove-old-kernels %buildroot%_sbindir/
 
 %files
-%_sbindir/*
+%_sbindir/update-kernel
+%_sbindir/remove-old-kernels
 
 %changelog
+* Thu Jul 11 2013 Vitaly Lipatov <lav@altlinux.ru> 0.9.6-alt1
+- skip install if the latest kernel is already installed (ALT bug #26715)
+
 * Tue Dec 25 2012 Terechkov Evgenii <evg@altlinux.org> 0.9.5-alt1
 - Add --download-only (--dry-run/-n) support (ALT#25300)
 
