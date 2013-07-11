@@ -1,7 +1,7 @@
 
 Name: akonadi
 Version: 1.10.0
-Release: alt1
+Release: alt2
 
 Group: Databases
 Summary: An extensible cross-desktop storage service for PIM
@@ -106,7 +106,6 @@ Obsoletes: akonadi-database3 < %EVR
 Group: System/Libraries
 Summary: %name library
 Requires: %name-common = %EVR
-Requires: %{get_dep libqt4-core}
 %description -n libakonadiprotocolinternals
 %name library
 
@@ -114,7 +113,6 @@ Requires: %{get_dep libqt4-core}
 Group: System/Libraries
 Summary: %name library
 Requires: %name-common = %EVR
-Requires: %{get_dep libqt4-core}
 %description -n libakonadiprivate
 %name library
 
@@ -203,6 +201,9 @@ install -m 0755 %SOURCE10 %buildroot/%_bindir/akonadi_mysql_install_db
 %_libdir/pkgconfig/*
 
 %changelog
+* Thu Jul 11 2013 Sergey V Turchin <zerg at altlinux dot org> 1.10.0-alt2
+- fix requires
+
 * Wed Jul 10 2013 Sergey V Turchin <zerg@altlinux.org> 1.10.0-alt1
 - new version
 
