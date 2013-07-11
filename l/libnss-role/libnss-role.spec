@@ -1,6 +1,6 @@
 Name: libnss-role
-Version: 0.2.7
-Release: alt4
+Version: 0.2.8
+Release: alt2
 
 Summary: NSS API library and admin tools for roles and privilegies
 
@@ -71,6 +71,12 @@ update_chrooted all
 %_includedir/role
 
 %changelog
+* Thu Jul 11 2013 Pavel Shilovsky <piastry@altlinux.org> 0.2.8-alt2
+- Merge git.alt branch
+
+* Mon Jul 01 2013 Pavel Shilovsky <piastry@altlinux.org> 0.2.8-alt1
+- Skip blank lines in the config file
+
 * Sat Nov 19 2011 Evgeny Sinelnikov <sin@altlinux.ru> 0.2.7-alt4
 - Fix devel-file-in-non-devel-package rpmlint violation
 - Add comments to configuration due rpmlint violation
