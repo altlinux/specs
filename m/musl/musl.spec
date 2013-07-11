@@ -8,7 +8,7 @@
 
 Name: musl
 Version: 0.9.11
-Release: alt6
+Release: alt7
 Group: System/Libraries
 Summary: musl libc - new standard library
 License: MIT
@@ -114,6 +114,9 @@ echo "%musl_dir/lib" > %buildroot%_sysconfdir/ld.so.conf.d/%name-%_lib.conf
 
 
 %changelog
+* Thu Jul 11 2013 Led <led@altlinux.ru> 0.9.11-alt7
+- fix invalid library phdr pointers passed to callback from dl_iterate_phdr
+
 * Tue Jul 09 2013 Led <led@altlinux.ru> 0.9.11-alt6
 - updated from upstream's SCM
 
