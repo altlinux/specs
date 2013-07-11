@@ -2,8 +2,8 @@
 
 Summary: A syslog data viewer for the web
 Name: LogAnalyzer
-Version: 3.4.4
-Release: alt1.qa1
+Version: 3.6.3
+Release: alt1
 License: GPLv3+
 Group: Monitoring
 Url: http://loganalyzer.adiscon.com/
@@ -52,6 +52,9 @@ find $RPM_BUILD_ROOT \( -name 'Thumbs.db' -o -name 'Thumbs.db.gz' \) -print -del
 %wwwdir/*
 
 %changelog
+* Thu Jul 11 2013 Alexey Shabalin <shaba@altlinux.ru> 3.6.3-alt1
+- 3.6.3
+
 * Mon Aug 27 2012 Repocop Q. A. Robot <repocop@altlinux.org> 3.4.4-alt1.qa1
 - NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
 - applied repocop fixes:
