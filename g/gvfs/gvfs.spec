@@ -22,7 +22,7 @@
 
 Name: gvfs
 Version: %ver_major.3
-Release: alt3
+Release: alt4
 
 Summary: The GNOME virtual filesystem libraries
 License: %lgpl2plus
@@ -39,7 +39,7 @@ Patch4: gvfs-1.16.2-alt-lfs.patch
 Patch5: gvfs-1.15.4-alt-tmpfiles_dir.patch
 # https://bugzilla.altlinux.org/show_bug.cgi?id=29047
 # https://mail.gnome.org/archives/gvfs-list/2013-May/msg00014.html
-Patch6: gvfs-1.16.1-alt-logind-state.patch
+Patch6: gvfs-1.16.3-alt-logind-state.patch
 
 # from upstream
 Patch10: gvfs-1.16.3-up-afc_new_api.patch
@@ -461,6 +461,9 @@ killall -USR1 gvfsd >&/dev/null || :
 %exclude %_libdir/gio/modules/*.la
 
 %changelog
+* Wed Jul 10 2013 Yuri N. Sedunov <aris@altlinux.org> 1.16.3-alt4
+- sem@: updated alt-logind-state.patch
+
 * Fri Jul 05 2013 Yuri N. Sedunov <aris@altlinux.org> 1.16.3-alt3
 - new backend-mtp subpackage
 
