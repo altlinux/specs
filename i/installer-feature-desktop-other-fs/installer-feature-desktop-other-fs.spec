@@ -1,5 +1,5 @@
 Name: installer-feature-desktop-other-fs
-Version: 0.7.1
+Version: 0.7.2
 Release: alt1
 
 Summary: Mount existing filesystems too
@@ -35,6 +35,11 @@ Conflicts: installer-ltsp-school-stage2
 %_datadir/install2/preinstall.d/*
 
 %changelog
+* Thu Jul 11 2013 Mikhail Efremov <sem@altlinux.org> 0.7.2-alt1
+- Don't run mkdir without operand.
+- Filter out 'swsuspend' filesystem type from fstab too.
+- Fix regexp for the other filesystems detection.
+
 * Fri May 24 2013 Michael Shigorin <mike@altlinux.org> 0.7.1-alt1
 - cope with missing LANG (might be related to #29005)
 
