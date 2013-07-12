@@ -5,7 +5,7 @@
 
 Name: NetworkManager-gnome
 Version: 0.9.8.2
-Release: alt1%git_date
+Release: alt2%git_date
 License: %gpl2plus
 Group: Graphical desktop/GNOME
 Summary: GNOME applications for use with NetworkManager
@@ -153,6 +153,9 @@ fi
 %_datadir/gir-1.0/NMGtk-1.0.gir
 
 %changelog
+* Fri Jul 12 2013 Mikhail Efremov <sem@altlinux.org> 0.9.8.2-alt2
+- Fix interaction with gnome-keyring.
+
 * Fri Jun 14 2013 Mikhail Efremov <sem@altlinux.org> 0.9.8.2-alt1
 - Updated to 0.9.8.2.
 
