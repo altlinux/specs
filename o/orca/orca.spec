@@ -1,5 +1,5 @@
 Name: orca
-Version: 3.9.3
+Version: 3.9.4
 Release: alt1
 Summary: A screen reader that provides access to the GNOME desktop by people with visual impairments
 Summary(ru_RU.UTF-8): Программа экранного доступа для людей с ограничениями по зрению 
@@ -15,7 +15,6 @@ Source3: orca-autostart.desktop
 
 #Patch1: orca-3.2.1-alt-voiceman.patch
 Patch2: orca-3.2.1-alt-punc.patch
-Patch3: reset-family.patch
 
 #%add_python3_req_skip GNOME GNOME__POA
 
@@ -57,7 +56,6 @@ Jaws For Windows компании Freedom Scientific.
 %setup -q
 #%patch1 -p1
 %patch2 -p1
-%patch3 -p2
 
 %build
 %autoreconf
@@ -90,6 +88,11 @@ install -D -m0644 %SOURCE3 %buildroot%_datadir/gdm/greeter/autostart/orca-autost
 %_datadir/gdm/greeter/autostart/orca-autostart.desktop
 
 %changelog
+* Fri Jul 12 2013 Paul Wolneykien <manowar@altlinux.ru> 3.9.4-alt1
+- Remove the upstream applied patch: reset-family.patch.
+- Fresh up to v3.9.4 with the help of cronbuild and update-source-
+  functions.
+
 * Wed Jul 03 2013 Paul Wolneykien <manowar@altlinux.ru> 3.9.3-alt1
 - Fix erroneously downloaded orca-autostart.desktop.
 - Build the package noarch.
