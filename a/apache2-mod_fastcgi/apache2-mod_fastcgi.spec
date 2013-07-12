@@ -1,6 +1,6 @@
 %define program_name mod_fastcgi
 %define program_version	2.4.6
-%define program_release	alt3
+%define program_release	alt4
 
 Name: apache2-%program_name
 Version: %program_version
@@ -12,6 +12,7 @@ Group: System/Servers
 Packager: Andriy Stepanov <stanv@altlinux.ru>
 
 Source0: %program_name-%program_version.tar
+Patch1: alt-eintr.patch
 
 PreReq: apache2 >= %apache2_version-%apache2_release
 
@@ -26,6 +27,7 @@ of server specific APIs.
 
 %prep
 %setup -q -n "%{program_name}-%{version}"
+%patch1 -p1
 
 %build
 %__make top_dir=%apache2_libdir -f Makefile.AP2
@@ -42,6 +44,9 @@ chmod 644 %buildroot%apache2_confdir/mods-available/fastcgi.load
 %doc README
 
 %changelog
+* Fri Jul 12 2013 Andriy Stepanov <stanv@altlinux.ru> 2.4.6-alt4
+- Fix #29159, EINTR
+
 * Thu Oct 20 2011 Michael Bochkaryov <misha@altlinux.ru> 2.4.6-alt3
 - Fix fastcgi.load for x86_64 platforms.
 
