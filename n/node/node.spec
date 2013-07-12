@@ -1,7 +1,7 @@
 %define node_name      node
-%define node_version  0.10.12
+%define node_version  0.10.13
 %define node_release   alt1
-%define npmver 1.2.32
+%define npmver 1.3.2
 
 %def_disable check
 
@@ -16,7 +16,7 @@ Source: %name-%version.tar
 
 BuildRequires: python-devel gcc-c++ openssl-devel zlib-devel libv8-3.15-devel libcares-devel gyp
 BuildRequires: curl openssl
-Provides: nodejs(engine)
+Provides: nodejs(engine) = %version-%release
 Provides: nodejs = %version-%release
 Provides: node.js = %version-%release
 Obsoletes: nodejs < %version-%release
@@ -29,26 +29,18 @@ Node.js is a server-side JavaScript environment that uses an asynchronous
 event-driven model.  Node's goal is to provide an easy way to build scalable
 network programs.
 
-#%package -n rpm-build-%node_name
-#Summary:        RPM helper macros to rebuild Node.js packages
-#Group:          Development/Other
-#License:        GPL
-#BuildArch:      noarch
-#Requires: %node_name-devel = %node_version
+%package devel
+Summary:        Devel package for Node.js
+Group:          Development/Other
+License:        GPL
+BuildArch:      noarch
+Provides:	nodejs-devel = %version-%release
+Requires:	%node_name = %node_version
+Requires:       gcc-c++ openssl-devel zlib-devel libv8-3.15-devel libcares-devel
+Conflicts:      libuv-devel
 
-#%description -n rpm-build-%node_name
-#These helper macros provide possibility to rebuild
-#Node.js packages by some Alt Linux Team Policy compatible way.
-
-#%package devel
-#Summary:        Devel package for Node.js
-#Group:          Development/Other
-#License:        GPL
-#BuildArch:      noarch
-#Requires:	%node_name = %node_version gcc-c++ gyp
-
-#%description devel
-#Node.js header and build tools
+%description devel
+Node.js header and build tools
 
 %package -n npm
 Version: 	%npmver
@@ -93,18 +85,27 @@ echo 'export NODE_PATH="%{_libexecdir}/node_modules"' >%buildroot%_sysconfdir/pr
 echo 'setenv NODE_PATH %{_libexecdir}/node_modules' >%buildroot%_sysconfdir/profile.d/node.csh
 chmod 0755 %buildroot%_sysconfdir/profile.d/*
 
+#install development headers
+mkdir -p %{buildroot}%{_includedir}/node/{uv-private,}
+cp -p src/*.h %{buildroot}%{_includedir}/node
+cp -p deps/uv/include/*.h %{buildroot}%{_includedir}/node
+cp -p deps/uv/include/uv-private/*.h %{buildroot}%{_includedir}/node/uv-private
+
+#node-gyp needs common.gypi too
+mkdir -p %{buildroot}%{_datadir}/node
+cp -p common.gypi %{buildroot}%{_datadir}/node
+
 %files
 %doc AUTHORS ChangeLog LICENSE README.md out/doc
 %_bindir/node
 %dir %_libexecdir/node_modules/
+%dir %_datadir/node
 %_man1dir/*
 %_sysconfdir/profile.d/*
 
-#%files devel
-#%_bindir/node-waf
-#%_includedir/node/
-#%_libexecdir/node/
-
+%files devel
+%_includedir/node
+%_datadir/node/common.gypi
 
 %files -n npm
 %_bindir/npm
@@ -112,6 +113,11 @@ chmod 0755 %buildroot%_sysconfdir/profile.d/*
 %exclude %_libexecdir/node_modules/npm/node_modules/node-gyp/gyp/tools/emacs
 
 %changelog
+* Sat Jul 13 2013 Dmitriy Kulik <lnkvisitor@altlinux.org> 0.10.13-alt1
+- 0.10.13
+- npm 1.3.2
+- added node-devel (ALT #29182)
+
 * Wed Jun 26 2013 Dmitriy Kulik <lnkvisitor@altlinux.org> 0.10.12-alt1
 - 0.10.12
 - npm 1.2.32
