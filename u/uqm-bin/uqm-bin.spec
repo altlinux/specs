@@ -3,15 +3,15 @@
 %define rname uqm
 %define what bin
 Name: %rname-%what
-Version: 0.6.2
-Release: alt3.1.qa1
+Version: 0.7.0
+Release: alt1
 
 Group: Games/Adventure
 Summary: The Ur-Quan Masters (port of the classic space game StarControl 2).
 Url: http://sc2.sourceforge.net
 License: GPLv2+
 
-Requires: %rname-content = 0.6.0
+Requires: %rname-content = %version
 Requires: %rname-common = %version
 Obsoletes: %rname-game
 
@@ -21,10 +21,8 @@ Source10: %rname.16.png
 Source11: %rname.32.png
 Source12: %rname.48.png
 
-BuildPreReq: libGL-devel libmikmod-devel libopenal-devel libSDL-devel
-BuildPreReq: libSDL_image-devel libvorbis-devel zlib-devel
-
-Packager: Andrey Rahmatullin <wrar@altlinux.ru>
+BuildRequires: libGL-devel libmikmod-devel libopenal-devel libSDL-devel
+BuildRequires: libSDL_image-devel libvorbis-devel zlib-devel
 
 %description
 The project started in August 2002, when Toys For Bob <http://toysforbob.com/>
@@ -42,8 +40,6 @@ This package contains binary executable program for this game.
 
 %build
 export CFLAGS="%optflags" LDFLAGS="%optflags"
-
-cd sc2
 ./build.sh %rname <<__EOF__
 1
 1
@@ -55,7 +51,7 @@ cd sc2
 2
 5
 1
-10
+11
 1
 /usr
 4
@@ -67,8 +63,8 @@ __EOF__
 %install
 mkdir -p %buildroot/{%_gamesbindir,%_desktopdir}
 mkdir -p %buildroot/%_gamesdatadir/%rname/content/packages/addons
-install -m 755 sc2/%rname %buildroot/%_gamesbindir
-install -m 644 sc2/content/version %buildroot/%_gamesdatadir/%rname/content/version
+install -m 755 %rname %buildroot/%_gamesbindir
+install -m 644 content/version %buildroot/%_gamesdatadir/%rname/content/version
 
 cat > %buildroot%_desktopdir/%rname.desktop <<__EOF__
 [Desktop Entry]
@@ -99,14 +95,17 @@ install -m 644 %SOURCE12 %buildroot/%_iconsdir/hicolor/48x48/apps/%rname.png
 
 
 %files
-%doc sc2/{AUTHORS,BUGS,COPYING,ChangeLog,README,WhatsNew,uqm.lsm}
-%doc sc2/doc/users/manual* sc2/doc/devel
+%doc {AUTHORS,BUGS,COPYING,ChangeLog,README,WhatsNew,uqm.lsm}
+%doc doc/users/manual* doc/devel
 %_gamesbindir/%rname
 %_gamesdatadir/%rname
 %_desktopdir/*.desktop
 %_iconsdir/hicolor/*/apps/%rname.png
 
 %changelog
+* Fri Jul 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.7.0-alt1
+- updated to 0.7.0 (stable)
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.6.2-alt3.1.qa1
 - NMU: rebuilt for debuginfo.
 
