@@ -21,7 +21,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.4.52
-Release: alt10
+Release: alt11
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -545,7 +545,8 @@ Patch0701: linux-%kernel_branch.20-fix-tools--perf.patch
 Patch0702: linux-%kernel_branch.20-fix-tools-hv.patch
 
 Patch0710: linux-%kernel_branch.49-fix-virt-kvm.patch
-Patch0711: linux-%kernel_branch.25-fix-virt-kvm--kvm-amd.patch
+Patch0711: linux-%kernel_branch.50-fix-virt-kvm--kvm-amd.patch
+Patch0712: linux-%kernel_branch.50-fix-virt-kvm--kvm-intel.patch
 
 
 Patch1001: linux-%kernel_branch.20-feat-arch-arm-mach-omap2--drm.patch
@@ -553,87 +554,90 @@ Patch1001: linux-%kernel_branch.20-feat-arch-arm-mach-omap2--drm.patch
 Patch1011: linux-%kernel_branch-feat-block--bfq-iosched.patch
 Patch1012: linux-%kernel_branch-feat-block--sio-iosched.patch
 
-Patch1021: linux-%kernel_branch.41-feat-drivers-acpi--bbswitch.patch
+Patch1021: linux-%kernel_branch.50-feat-crypto--lz4.patch
 
-Patch1031: linux-%kernel_branch.35-feat-drivers-block--btier.patch
-Patch1032: linux-%kernel_branch.20-feat-drivers-block--cloop.patch
-Patch1033: linux-%kernel_branch.31-feat-drivers-block--rxdsk.patch
-Patch1034: linux-%kernel_branch.25-feat-drivers-block--zram.patch
+Patch1031: linux-%kernel_branch.41-feat-drivers-acpi--bbswitch.patch
 
-Patch1041: linux-%kernel_branch.20-feat-drivers-char--crasher.patch
+Patch1041: linux-%kernel_branch.35-feat-drivers-block--btier.patch
+Patch1042: linux-%kernel_branch.20-feat-drivers-block--cloop.patch
+Patch1043: linux-%kernel_branch.31-feat-drivers-block--rxdsk.patch
+Patch1044: linux-%kernel_branch.25-feat-drivers-block--zram.patch
 
-Patch1051: linux-%kernel_branch.20-feat-drivers-gpu-drm--cirrus.patch
+Patch1051: linux-%kernel_branch.20-feat-drivers-char--crasher.patch
 
-Patch1061: linux-%kernel_branch.20-feat-drivers-hwmon--ipmisensors.patch
+Patch1061: linux-%kernel_branch.20-feat-drivers-gpu-drm--cirrus.patch
 
-Patch1071: linux-%kernel_branch.20-feat-drivers-input-touchscreen--elousb.patch
+Patch1071: linux-%kernel_branch.20-feat-drivers-hwmon--ipmisensors.patch
 
-Patch1081: linux-%kernel_branch.20-feat-drivers-md--dm-raid45.patch
+Patch1081: linux-%kernel_branch.20-feat-drivers-input-touchscreen--elousb.patch
 
-Patch1091: linux-%kernel_branch.20-feat-drivers-media-rc-lirc.patch
+Patch1091: linux-%kernel_branch.20-feat-drivers-md--dm-raid45.patch
 
-Patch1101: linux-%kernel_branch.31-feat-drivers-misc--emlog.patch
-Patch1102: linux-%kernel_branch.20-feat-drivers-misc--rts_pstor.patch
+Patch1101: linux-%kernel_branch.20-feat-drivers-media-rc-lirc.patch
 
-Patch1111: linux-%kernel_branch.27-feat-drivers-net-ethernet-alacritech.patch
-Patch1112: linux-%kernel_branch.27-feat-drivers-net-ethernet-alacritech--slicoss.patch
-Patch1113: linux-%kernel_branch.50-feat-drivers-net-ethernet-atheros--alx.patch
-Patch1114: linux-%kernel_branch.20-feat-drivers-net-wireless-rtl8187se.patch
-Patch1115: linux-%kernel_branch.20-feat-drivers-net-wireless-rtl8192e.patch
-Patch1116: linux-%kernel_branch.20-feat-drivers-net-wireless-rtl8192u.patch
-Patch1117: linux-%kernel_branch.20-feat-drivers-net-wireless-rtl8712.patch
+Patch1111: linux-%kernel_branch.31-feat-drivers-misc--emlog.patch
+Patch1112: linux-%kernel_branch.20-feat-drivers-misc--rts_pstor.patch
 
-Patch1121: linux-%kernel_branch.27-feat-drivers-platform--asus_oled.patch
-Patch1122: linux-%kernel_branch.31-feat-drivers-platform--omnibook.patch
-Patch1123: linux-%kernel_branch.20-feat-drivers-platform--thinkpad_ec.patch
-Patch1124: linux-%kernel_branch.20-feat-drivers-platform--tp_smapi.patch
+Patch1121: linux-%kernel_branch.27-feat-drivers-net-ethernet-alacritech.patch
+Patch1122: linux-%kernel_branch.27-feat-drivers-net-ethernet-alacritech--slicoss.patch
+Patch1123: linux-%kernel_branch.50-feat-drivers-net-ethernet-atheros--alx.patch
+Patch1124: linux-%kernel_branch.20-feat-drivers-net-wireless-rtl8187se.patch
+Patch1125: linux-%kernel_branch.20-feat-drivers-net-wireless-rtl8192e.patch
+Patch1126: linux-%kernel_branch.20-feat-drivers-net-wireless-rtl8192u.patch
+Patch1127: linux-%kernel_branch.20-feat-drivers-net-wireless-rtl8712.patch
 
-Patch1131: linux-%kernel_branch.34-feat-drivers-scsi--vhba.patch
+Patch1131: linux-%kernel_branch.27-feat-drivers-platform--asus_oled.patch
+Patch1132: linux-%kernel_branch.31-feat-drivers-platform--omnibook.patch
+Patch1133: linux-%kernel_branch.20-feat-drivers-platform--thinkpad_ec.patch
+Patch1134: linux-%kernel_branch.20-feat-drivers-platform--tp_smapi.patch
 
-Patch1141: linux-%kernel_branch.35-feat-drivers-usb-storage--rts5139.patch
-Patch1142: linux-%kernel_branch.20-feat-drivers-usb-usbip.patch
+Patch1141: linux-%kernel_branch.34-feat-drivers-scsi--vhba.patch
 
-Patch1151: linux-%kernel_branch.39-feat-drivers-video--bootsplash.patch
-Patch1152: linux-%kernel_branch.25-feat-drivers-video--xgifb.patch
+Patch1151: linux-%kernel_branch.35-feat-drivers-usb-storage--rts5139.patch
+Patch1152: linux-%kernel_branch.20-feat-drivers-usb-usbip.patch
 
-Patch1161: linux-%kernel_branch-feat-firmware-rtl_nic.patch
+Patch1161: linux-%kernel_branch.39-feat-drivers-video--bootsplash.patch
+Patch1162: linux-%kernel_branch.25-feat-drivers-video--xgifb.patch
 
-Patch1171: linux-%kernel_branch.25-feat-fs--lnfs.patch
-Patch1172: linux-%kernel_branch.20-feat-fs--richacl.patch
-Patch1173: linux-%kernel_branch.18-feat-fs--secrm.patch
-Patch1174: linux-%kernel_branch-feat-fs-aufs.patch
-Patch1175: linux-%kernel_branch.20-feat-fs-binfmt_elf--fatelf.patch
-Patch1176: linux-%kernel_branch.20-feat-fs-dazukofs.patch
-Patch1177: linux-%kernel_branch.50-feat-fs-exfat.patch
-Patch1178: linux-%kernel_branch.18-feat-fs-ext2--secrm.patch
-Patch1179: linux-%kernel_branch.18-feat-fs-ext3--secrm.patch
-Patch1180: linux-%kernel_branch.44-feat-fs-ext4--richacl.patch
-Patch1181: linux-%kernel_branch.50-feat-fs-ext4--secrm.patch
-Patch1182: linux-%kernel_branch.20-feat-fs-f2fs.patch
-Patch1183: linux-%kernel_branch.18-feat-fs-fat--secrm.patch
-Patch1184: linux-%kernel_branch.18-feat-fs-jbd--secrm.patch
-Patch1185: linux-%kernel_branch.18-feat-fs-jbd2--secrm.patch
-Patch1186: linux-%kernel_branch.25-feat-fs-overlayfs.patch
-Patch1187: linux-%kernel_branch.20-feat-fs-reiser4.patch
-Patch1188: linux-%kernel_branch.20-feat-fs-squashfs--write.patch
-Patch1189: linux-%kernel_branch.28-feat-fs-tmpfs--root.patch
-Patch1190: linux-%kernel_branch.20-feat-fs-unionfs.patch
+Patch1171: linux-%kernel_branch-feat-firmware-rtl_nic.patch
 
-Patch1201: linux-%kernel_branch.27-feat-kernel-power-tuxonice.patch
-Patch1202: linux-%kernel_branch.27-feat-kernel-power-tuxonice--frontswap.patch
+Patch1181: linux-%kernel_branch.25-feat-fs--lnfs.patch
+Patch1182: linux-%kernel_branch.20-feat-fs--richacl.patch
+Patch1183: linux-%kernel_branch.18-feat-fs--secrm.patch
+Patch1184: linux-%kernel_branch-feat-fs-aufs.patch
+Patch1185: linux-%kernel_branch.20-feat-fs-binfmt_elf--fatelf.patch
+Patch1186: linux-%kernel_branch.20-feat-fs-dazukofs.patch
+Patch1187: linux-%kernel_branch.50-feat-fs-exfat.patch
+Patch1188: linux-%kernel_branch.18-feat-fs-ext2--secrm.patch
+Patch1189: linux-%kernel_branch.18-feat-fs-ext3--secrm.patch
+Patch1190: linux-%kernel_branch.44-feat-fs-ext4--richacl.patch
+Patch1191: linux-%kernel_branch.50-feat-fs-ext4--secrm.patch
+Patch1192: linux-%kernel_branch.20-feat-fs-f2fs.patch
+Patch1193: linux-%kernel_branch.18-feat-fs-fat--secrm.patch
+Patch1194: linux-%kernel_branch.18-feat-fs-jbd--secrm.patch
+Patch1195: linux-%kernel_branch.18-feat-fs-jbd2--secrm.patch
+Patch1196: linux-%kernel_branch.25-feat-fs-overlayfs.patch
+Patch1197: linux-%kernel_branch.20-feat-fs-reiser4.patch
+Patch1198: linux-%kernel_branch.20-feat-fs-squashfs--write.patch
+Patch1199: linux-%kernel_branch.28-feat-fs-tmpfs--root.patch
+Patch1200: linux-%kernel_branch.20-feat-fs-unionfs.patch
 
-Patch1211: linux-%kernel_branch.20-feat-lib--unwind.patch
+Patch1211: linux-%kernel_branch.27-feat-kernel-power-tuxonice.patch
+Patch1212: linux-%kernel_branch.27-feat-kernel-power-tuxonice--frontswap.patch
 
-Patch1221: linux-%kernel_branch.35-feat-mm--frontswap.patch
-Patch1222: linux-%kernel_branch.20-feat-mm--slqb.patch
-Patch1223: linux-%kernel_branch.24-feat-mm--uksm.patch
-Patch1224: linux-%kernel_branch.20-feat-mm--zcache.patch
-Patch1225: linux-%kernel_branch.20-feat-mm--zsmalloc.patch
-Patch1226: linux-%kernel_branch.35-feat-mm--zswap.patch
+Patch1221: linux-%kernel_branch.50-feat-lib--lz4.patch
+Patch1222: linux-%kernel_branch.20-feat-lib--unwind.patch
 
-Patch1231: linux-%kernel_branch.20-feat-net--netatop.patch
-Patch1232: linux-%kernel_branch.27-feat-net-ipv4-netfilter--ipt_NETFLOW.patch
-Patch1233: linux-%kernel_branch.20-feat-net-netfilter--nf_conntrack_slp.patch
+Patch1231: linux-%kernel_branch.35-feat-mm--frontswap.patch
+Patch1232: linux-%kernel_branch.20-feat-mm--slqb.patch
+Patch1233: linux-%kernel_branch.24-feat-mm--uksm.patch
+Patch1234: linux-%kernel_branch.20-feat-mm--zcache.patch
+Patch1235: linux-%kernel_branch.20-feat-mm--zsmalloc.patch
+Patch1236: linux-%kernel_branch.35-feat-mm--zswap.patch
+
+Patch1241: linux-%kernel_branch.20-feat-net--netatop.patch
+Patch1242: linux-%kernel_branch.27-feat-net-ipv4-netfilter--ipt_NETFLOW.patch
+Patch1243: linux-%kernel_branch.20-feat-net-netfilter--nf_conntrack_slp.patch
 
 
 ExclusiveOS: Linux
@@ -1781,6 +1785,7 @@ cd linux-%version
 # fix-virt-kvm*
 %patch0710 -p1
 %patch0711 -p1
+%patch0712 -p1
 
 
 # feat-arch-*
@@ -1793,69 +1798,68 @@ cd linux-%version
 # feat-drivers-acpi--*
 %patch1021 -p1
 
-# feat-drivers-block--*
+# feat-crypto--*
 %patch1031 -p1
-%patch1032 -p1
-%patch1033 -p1
-%patch1034 -p1
 
+# feat-drivers-block--*
 %patch1041 -p1
+%patch1042 -p1
+%patch1043 -p1
+%patch1044 -p1
 
+# feat-drivers-char--*
 %patch1051 -p1
 
+# feat-drivers-gpu-drm--*
 %patch1061 -p1
 
+# feat-drivers-hwmon--*
 %patch1071 -p1
 
+# feat-drivers-input-*
 %patch1081 -p1
 
+# feat-drivers-md--*
 %patch1091 -p1
 
-# feat-drivers-misc--*
+# feat-drivers-media--*
 %patch1101 -p1
-%patch1102 -p1
 
-# feat-drivers-net-*
+# feat-drivers-misc--*
 %patch1111 -p1
 %patch1112 -p1
-%patch1113 -p1
-%patch1114 -p1
-%patch1115 -p1
-%patch1116 -p1
-%patch1117 -p1
 
-# feat-drivers-platform--*
+# feat-drivers-net-*
 %patch1121 -p1
 %patch1122 -p1
 %patch1123 -p1
 %patch1124 -p1
+%patch1125 -p1
+%patch1126 -p1
+%patch1127 -p1
+
+# feat-drivers-platform--*
+%patch1131 -p1
+%patch1132 -p1
+%patch1133 -p1
+%patch1134 -p1
 
 # feat-drivers-scsi--*
-%patch1131 -p1
+%patch1141 -p1
 
 # feat-drivers-usb-*
-%patch1141 -p1
-%patch1142 -p1
-
-# feat-drivers-video--*
 %patch1151 -p1
 %patch1152 -p1
 
-# feat-firmware-*
+# feat-drivers-video--*
 %patch1161 -p1
+%patch1162 -p1
+
+# feat-firmware-*
+%patch1171 -p1
 
 # feat-fs-*
-%{?_with_lnfs:%patch1171 -p1}
-%patch1172 -p1
-%patch1173 -p1
-%patch1174 -p1
-%patch1175 -p1
-%patch1176 -p1
-%patch1177 -p1
-%patch1178 -p1
-%patch1179 -p1
-%patch1180 -p1
-%patch1181 -p1
+%{?_with_lnfs:%patch1181 -p1}
 %patch1182 -p1
 %patch1183 -p1
 %patch1184 -p1
@@ -1865,26 +1869,37 @@ cd linux-%version
 %patch1188 -p1
 %patch1189 -p1
 %patch1190 -p1
+%patch1191 -p1
+%patch1192 -p1
+%patch1193 -p1
+%patch1194 -p1
+%patch1195 -p1
+%patch1196 -p1
+%patch1197 -p1
+%patch1198 -p1
+%patch1199 -p1
+%patch1200 -p1
 
 # feat-kernel-power-*
-%patch1201 -p1
-%patch1202 -p1
+%patch1211 -p1
+%patch1212 -p1
 
 # feat-lib--*
-%patch1211 -p1
-
-# feat-mm--*
 %patch1221 -p1
 %patch1222 -p1
-%patch1223 -p1
-%patch1224 -p1
-%patch1225 -p1
-%patch1226 -p1
 
-# feat-net--*
+# feat-mm--*
 %patch1231 -p1
 %patch1232 -p1
 %patch1233 -p1
+%patch1234 -p1
+%patch1235 -p1
+%patch1236 -p1
+
+# feat-net--*
+%patch1241 -p1
+%patch1242 -p1
+%patch1243 -p1
 
 
 # get rid of unwanted files resulting from patch fuzz
@@ -2787,6 +2802,14 @@ done)
 
 
 %changelog
+* Fri Jul 12 2013 Led <led@altlinux.ru> 3.4.52-alt11
+- updated:
+  + fix-virt-kvm--kvm-amd
+- added:
+  + fix-virt-kvm--kvm-intel
+  + feat-crypto--lz4
+  + feat-lib--lz4
+
 * Wed Jul 10 2013 Led <led@altlinux.ru> 3.4.52-alt10
 - updated:
   + fix-drivers-net-hyperv
