@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-squidmill
-Version: 2.2
+Version: 2.3
 Release: alt1
 
 Packager: Paul Wolneykien <manowar@altlinux.ru>
@@ -16,7 +16,7 @@ Group: System/Configuration/Other
 Requires: alterator >= 4.8-alt1
 Requires: alterator-fbi >= 5.11-alt2
 Requires: squidmill >= 2.4-alt1
-Requires: alterator-service-functions >= 2.0.0
+Requires: alterator-service-functions >= 2.0.2
 
 # Automatically added by buildreq on Wed Apr 08 2009
 BuildRequires: alterator rpm-macros-fillup
@@ -39,6 +39,13 @@ Alterator module for browsing the Squid proxy server statistics
 %_alterator_backend3dir/squidmill
 
 %changelog
+* Fri Jul 12 2013 Paul Wolneykien <manowar@altlinux.org> 2.3-alt1
+- Require alterator-service-functions >= 2.0.2.
+- Do not redirect the query log for the purpose of debug.
+- Write the report to disk. Always return 0 to the message handler.
+- Fix: select unique users (TODO: add the special query to squidmill).
+- Fix/improve the error handling.
+
 * Fri Jun 28 2013 Paul Wolneykien <manowar@altlinux.org> 2.2-alt1
 - Check both the 'enabled' and the 'active' status values of
   the service.
