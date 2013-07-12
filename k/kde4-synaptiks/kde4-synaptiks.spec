@@ -3,18 +3,21 @@
 %define rname synaptiks
 Name: kde4-synaptiks
 Version: 0.8.1
-Release: alt3
+Release: alt4
 
 Group: Graphical desktop/KDE
-Summary: A touchpad management tool for KDE
-Url: http://synaptiks.lunaryorn.de/
+Summary: A touchpad/synaptics management tool for KDE
+Url: http://synaptiks.readthedocs.org/
 #Url: http://kde-apps.org/content/show.php/?content=114270
 License: BSD
 
 Requires: kde4base-workspace-core
+Provides: kde4-synaptics = %EVR
 
 Source: %rname-%version.tar.bz2
-Patch:  %rname-ru-l10n.patch
+Patch1: %rname-ru-l10n.patch
+Patch2: remove-several-features-that-will-no-longer-be-exposed.patch
+Patch3: fix_help.diff
 
 # Automatically added by buildreq on Wed Feb 15 2012 (-bi)
 # optimized out: libqt4-core libqt4-dbus libqt4-network libqt4-xml python-base python-devel python-module-4Suite-XML python-module-BeautifulSoup python-module-Pygments python-module-SQLAlchemy python-module-babel python-module-beaker python-module-cups python-module-dateutil python-module-distribute python-module-docutils python-module-genshi python-module-html5lib python-module-imaging python-module-jinja2 python-module-lxml python-module-mako python-module-mpmath python-module-nose python-module-numpy python-module-protobuf python-module-pyExcelerator python-module-pyglet python-module-pylib python-module-pytz python-module-simplejson python-module-sympy python-module-whoosh python-module-xlwt python-modules python-modules-compiler python-modules-email python-modules-encodings
@@ -32,7 +35,9 @@ Author:
 
 %prep
 %setup -qn %rname-%version
-%patch -p1
+%patch1 -p1
+%patch2 -p1
+%patch3 -p1
 
 %build
 %python_build 
@@ -70,6 +75,9 @@ mv %buildroot/%_sysconfdir/xdg/autostart/* %buildroot/%_K4start/
 %python_sitelibdir/*/*
 
 %changelog
+* Fri Jul 12 2013 Sergey V Turchin <zerg@altlinux.org> 0.8.1-alt4
+- sync patches with SuSE
+
 * Mon May 14 2012 Sergey V Turchin <zerg@altlinux.org> 0.8.1-alt3
 - fix to build
 
