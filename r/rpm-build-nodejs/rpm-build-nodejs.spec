@@ -1,6 +1,6 @@
 %define pkg nodejs
 Name: rpm-build-%pkg
-Version: 0.3
+Version: 0.4
 Release: alt1
 
 Summary: RPM helper scripts for building %pkg packages
@@ -49,9 +49,11 @@ install -D -m755 %pkg.req %buildroot/usr/lib/rpm/%pkg.req
 ln -s %pkg.prov.files %buildroot/usr/lib/rpm/%pkg.req.files
 install -D -m755 nodejs-fixdep  %buildroot%_datadir/%name/%pkg-fixdep
 install -D -m755 nodejs-symlink-deps  %buildroot%_datadir/%name/%pkg-symlink-deps
+install -Dpm0644 multiver_modules %{buildroot}%{_datadir}/node/multiver_modules
 
 %files
 %_datadir/%name
+%{_datadir}/node/multiver_modules
 /usr/lib/rpm/%pkg.prov
 /usr/lib/rpm/%pkg.prov.files
 /usr/lib/rpm/%pkg.req
@@ -61,6 +63,9 @@ install -D -m755 nodejs-symlink-deps  %buildroot%_datadir/%name/%pkg-symlink-dep
 %_rpmmacrosdir/%pkg
 
 %changelog
+* Fri Jul 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.4-alt1
+- sync with nodejs-packaging 3-1
+
 * Tue Jun 25 2013 Igor Vlasenko <viy@altlinux.ru> 0.3-alt1
 - bugfixes
 
