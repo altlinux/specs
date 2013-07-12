@@ -6,7 +6,7 @@
 %define module_name	nvidia
 %define module_version	319.32
 %define module_release	alt2
-%define flavour		led-ws
+%define flavour		el-def
 
 %setup_kernel_module %flavour
 %define module_srcver	%(echo %module_version | tr -d .)
@@ -64,7 +64,7 @@ Packager:       Kernel Maintainer Team <kernel@packages.altlinux.org>
 ExclusiveArch: %karch
 
 BuildRequires(pre): rpm-build-kernel xorg-x11-server
-BuildRequires(pre): kernel-headers-modules-led-ws
+BuildRequires(pre): kernel-headers-modules-el-def
 BuildRequires: rpm-utils
 BuildRequires: kernel-headers-modules-%flavour = %kepoch%kversion-%krelease
 BuildRequires: kernel-source-%module_name-%module_srcver
