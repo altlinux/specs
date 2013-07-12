@@ -5,7 +5,7 @@
 
 %define module_name	nvidia
 %define module_version	319.32
-%define module_release	alt1
+%define module_release	alt2
 %define flavour		ovz-el
 
 %setup_kernel_module %flavour
@@ -88,7 +88,6 @@ Conflicts: 	kernel-modules-%module_name-%kversion-%flavour-%krelease > %version-
 Conflicts: modutils < 2.4.27-alt4
 
 PreReq: kernel-image-%flavour = %kepoch%kversion-%krelease
-Requires: kernel-modules-drm-%flavour = %kepoch%kversion-%krelease
 Requires:       nvidia_glx_%version
 %if "%legacy1" != "%nil"
 Requires:       nvidia_glx_%legacy1
@@ -190,6 +189,9 @@ fi
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Fri Jul 12 2013 Led <led@altlinux.ru> 319.32-alt2..
+- removed requires of kernel-modules-drm-*
 
 * Wed Jun 26 2013 Sergey V Turchin <zerg at altlinux dot org> 319.32-alt1..
 - new release (319.32)

@@ -2,8 +2,8 @@
 %define module_version	13.101
 %define module_release alt2
 
-%define flavour led-ws
-BuildRequires(pre): kernel-headers-modules-led-ws
+%define flavour el-def
+BuildRequires(pre): kernel-headers-modules-el-def
 
 %setup_kernel_module %flavour
 
