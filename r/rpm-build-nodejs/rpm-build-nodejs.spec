@@ -1,6 +1,6 @@
 %define pkg nodejs
 Name: rpm-build-%pkg
-Version: 0.4
+Version: 0.5
 Release: alt1
 
 Summary: RPM helper scripts for building %pkg packages
@@ -43,6 +43,9 @@ cat >> %buildroot/%_rpmmacrosdir/%pkg << 'EOF'
 EOF
 sed -e s,_rpmconfigdir,_rpm_build_nodejsdir,g macros.nodejs >> %buildroot/%_rpmmacrosdir/%pkg
 
+# TMP:
+cat macros.nodejs-tap >> %buildroot/%_rpmmacrosdir/%pkg
+
 install -D -m755 %pkg.prov %buildroot/usr/lib/rpm/%pkg.prov
 install -D -m755 %pkg.prov.files %buildroot/usr/lib/rpm/%pkg.prov.files
 install -D -m755 %pkg.req %buildroot/usr/lib/rpm/%pkg.req
@@ -63,6 +66,9 @@ install -Dpm0644 multiver_modules %{buildroot}%{_datadir}/node/multiver_modules
 %_rpmmacrosdir/%pkg
 
 %changelog
+* Fri Jul 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.5-alt1
+- temporarily added nodejs-tap macros
+
 * Fri Jul 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.4-alt1
 - sync with nodejs-packaging 3-1
 
