@@ -1,5 +1,5 @@
 Name:		boinc
-Version: 7.2.0
+Version: 7.2.4
 Release: alt1
 Packager:	Paul Wolneykien <manowar@altlinux.ru>
 License:	GPLv3+/LGPLv3+
@@ -482,6 +482,10 @@ getent group boincadm >/dev/null || groupadd -r boincadm
 %{_libdir}/libsched.so
 
 %changelog
+* Fri Jul 12 2013 Paul Wolneykien <manowar@altlinux.ru> 7.2.4-alt1
+- Update the libadds patch.
+- Fresh up to v7.2.4 with the help of cronbuild and update-source-functions.
+
 * Thu Jun 27 2013 Paul Wolneykien <manowar@altlinux.ru> 7.2.0-alt1
 - Fresh up to v7.2.0 with the help of cronbuild and update-source-functions.
 
