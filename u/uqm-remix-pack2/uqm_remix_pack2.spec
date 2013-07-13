@@ -1,9 +1,10 @@
 
 %define rname uqm
-%define what remix-pack2
-Name: %rname-%what
-Version: 1.0
-Release: alt4
+%define what remix-disc2
+Name: %rname-remix-pack2
+Serial: 1
+Version: 0.7.0
+Release: alt1
 
 Group: Sound
 Summary: The Ur-Quan Masters Official Remix Add-On. Pack II
@@ -11,10 +12,10 @@ Url: http://sc2.sourceforge.net
 License: May be copied freely as part of %rname
 
 Buildarch: noarch
-Requires: %rname-bin
+Requires: %rname-bin >= 0.7.0
 #Obsoletes: %rname-3domusic
 
-Source0: %rname-%what.zip
+Source0: %rname-%what.uqm
 
 %description
 The official Ur-Quan Masters remix add-on,
@@ -72,6 +73,9 @@ __EOF__
 %_gamesdatadir/%rname/content/packages/*.uqm
 
 %changelog
+* Fri Jul 12 2013 Igor Vlasenko <viy@altlinux.ru> 1:0.7.0-alt1
+- new version for uqm >= 0.7.0
+
 * Sat Sep 13 2008 Andrey Rahmatullin <wrar@altlinux.ru> 1.0-alt4
 - install the pack into the content directory, not as an addon
   (erthad@; closes: #17114)

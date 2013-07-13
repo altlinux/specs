@@ -1,6 +1,6 @@
-
+%define dataversion 0.7.0
 Name: uqm
-Version: 0.6.2
+Version: 0.7.0
 Release: alt1
 
 Group: Games/Adventure
@@ -29,7 +29,8 @@ to standard installation of this game.
 Group: Games/Adventure
 Summary: The Ur-Quan Masters (port of the classic space game StarControl 2).
 Requires: %name-bin = %version
-Requires: %name-voice = 0.6.0
+Requires: %name-voice = %dataversion
+Requires: %name-3domusic = %dataversion
 #
 %description big
 The project started in August 2002, when Toys For Bob <http://toysforbob.com/>
@@ -47,10 +48,12 @@ to maximum installation of this game.
 Group: Games/Adventure
 Summary: The Ur-Quan Masters (port of the classic space game StarControl 2).
 Requires: %name-bin = %version
-Requires: %name-remix-pack1
-Requires: %name-remix-pack2
-Requires: %name-remix-pack3
-Requires: %name-voice = 0.6.0
+Requires: %name-voice = %dataversion
+Requires: %name-3domusic = %dataversion
+Requires: %name-remix-pack1 = %dataversion
+Requires: %name-remix-pack2 = %dataversion
+Requires: %name-remix-pack3 = %dataversion
+Requires: %name-remix-pack4 = %dataversion
 #
 %description maxi
 The project started in August 2002, when Toys For Bob <http://toysforbob.com/>
@@ -79,6 +82,9 @@ to easy uninstall this %name subpackages.
 %files maxi
 
 %changelog
+* Fri Jul 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.7.0-alt1
+- new version
+
 * Thu Apr 05 2007 Andrey Rahmatullin <wrar@altlinux.ru> 0.6.2-alt1
 - 0.6.2
 
