@@ -7,7 +7,7 @@
 
 Name: icecream
 %define lname libicecc
-Version: 1.0.0
+Version: 1.0.1
 Release: alt1
 Summary: Icecream is a distributed compile system for C and C++
 License: GPLv2+ and LGPLv2.1+
@@ -99,7 +99,7 @@ done
 %install
 %makeinstall_std
 ln -sf icecc %buildroot%_bindir/icerun
-install -d -m 0755 %buildroot{%_initddir,{%_cachedir,%_logdir}/%name}
+install -d -m 0755 %buildroot{%_initddir,%_cachedir/%name,%_logdir/{%name,icecc}}
 for f in altlinux/*.init; do
 	install -p -m 0755 $f %buildroot%_initddir/$(basename $f .init)
 done
@@ -133,6 +133,7 @@ install -Dp -m 0644 altlinux/%name.logrotate %buildroot%_logrotatedir/%name
 %config %_sysconfdir/sysconfig/*
 %attr(0775,root,_%name) %dir %_cachedir/%name
 %attr(0775,root,_%name) %dir %_logdir/%name
+%attr(0775,root,_%name) %dir %_logdir/icecc
 
 
 %if_enabled shared
@@ -154,5 +155,8 @@ install -Dp -m 0644 altlinux/%name.logrotate %buildroot%_logrotatedir/%name
 
 
 %changelog
+* Sat Jul 13 2013 Led <led@altlinux.ru> 1.0.1-alt1
+- 1.0.1
+
 * Tue Apr 15 2013 Led <led@altlinux.ru> 1.0.0-alt1
 - initial build
