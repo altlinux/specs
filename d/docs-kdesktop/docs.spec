@@ -8,7 +8,7 @@
 
 Name: docs-%variant
 Version: 7.0.0
-Release: alt1
+Release: alt2
 
 Summary: %Variant documentation
 License: %fdl
@@ -42,6 +42,9 @@ ln -s $(relative %_docsinstalldir %_documentationdir) %buildroot%_documentationd
 %_documentationdir
 
 %changelog
+* Sat Jul 13 2013 Alexandr Boltris <alex@altlinux.org> 7.0.0-alt2
+- Version fix
+
 * Wed Jul 10 2013 Alexandr Boltris <alex@altlinux.org> 7.0.0-alt1
 - Add info about support *.docx in app libreOffice
   (thx Nickolay Rogalskiy)
