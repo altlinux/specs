@@ -1,6 +1,6 @@
 Name: kernel-image-ovz-el
 Version: 2.6.32
-Release: alt98
+Release: alt99
 
 %define kernel_base_version	%version
 %define kernel_extra_version	%nil
@@ -570,6 +570,9 @@ find %buildroot%_docdir/kernel-doc-%base_flavour-%version/DocBook \
 %endif # staging
 
 %changelog
+* Mon Jul 15 2013 Led <led@altlinux.ru> 2.6.32-alt99
+- fs: defer do_filp_open() access checks to may_open()
+
 * Fri Jul 12 2013 Led <led@altlinux.ru> 2.6.32-alt98
 - Update to 042stab078.28
 
