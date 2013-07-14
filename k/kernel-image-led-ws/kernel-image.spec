@@ -20,13 +20,13 @@
 %define flavour %base_flavour-%sub_flavour
 
 Name: kernel-image-%flavour
-Version: 3.4.52
-Release: alt12
+Version: 3.4.53
+Release: alt1
 
 %define kernel_req %nil
 %define kernel_prov %nil
 %define kernel_branch 3.4
-%define kernel_stable_version 52
+%define kernel_stable_version 53
 %define kernel_extra_version .%kernel_stable_version
 #define kernel_extra_version %nil
 
@@ -186,7 +186,7 @@ Patch0026: linux-%kernel_branch.47-fix-arch-x86--microcode.patch
 Patch0027: linux-%kernel_branch.47-fix-arch-x86-cpu.patch
 Patch0028: linux-%kernel_branch.25-fix-arch-x86-cpu--rdrand.patch
 
-Patch0030: linux-%kernel_branch.50-fix-block.patch
+Patch0030: linux-%kernel_branch.53-fix-block.patch
 Patch0031: linux-%kernel_branch.35-fix-block--blk-integrity.patch
 Patch0032: linux-%kernel_branch.20-fix-block-partitions--efi.patch
 
@@ -218,13 +218,11 @@ Patch0085: linux-%kernel_branch.38-fix-drivers-base-regmap.patch
 
 Patch0091: linux-%kernel_branch.34-fix-drivers-block--aoe.patch
 Patch0092: linux-%kernel_branch.25-fix-drivers-block--drbd.patch
-Patch0093: linux-%kernel_branch.50-fix-drivers-block--nbd.patch
+Patch0093: linux-%kernel_branch.53-fix-drivers-block--nbd.patch
 Patch0094: linux-%kernel_branch.20-fix-drivers-block--zram.patch
 
 Patch0101: linux-%kernel_branch.39-fix-drivers-bluetooth--btmrvl.patch
 Patch0102: linux-%kernel_branch.47-fix-drivers-bluetooth--btusb.patch
-
-Patch0111: linux-%kernel_branch.50-fix-drivers-cdrom--cdrom.patch
 
 Patch0121: linux-%kernel_branch.20-fix-drivers-char--lp.patch
 Patch0122: linux-%kernel_branch.25-fix-drivers-char-agp--intel-agp.patch
@@ -422,7 +420,6 @@ Patch0501: linux-%kernel_branch.20-fix-drivers-scsi-device_handler--scsi_dh.patc
 Patch0502: linux-%kernel_branch.39-fix-drivers-scsi-fcoe--fcoe.patch
 Patch0503: linux-%kernel_branch.20-fix-drivers-scsi-ibmvscsi--ibmvscsic.patch
 Patch0504: linux-%kernel_branch.20-fix-drivers-scsi-megaraid--megaraid_mbox.patch
-Patch0505: linux-%kernel_branch.50-fix-drivers-scsi-osd--osd.patch
 
 Patch0511: linux-%kernel_branch.25-fix-drivers-spi--spi.patch
 Patch0512: linux-%kernel_branch.38-fix-drivers-spi--spi-dw.patch
@@ -513,7 +510,7 @@ Patch0653: linux-%kernel_branch.20-fix-mm--zsmalloc.patch
 Patch0661: linux-%kernel_branch.30-fix-net--dns_resolver.patch
 Patch0662: linux-%kernel_branch.39-fix-net-802--fc.patch
 Patch0663: linux-%kernel_branch.31-fix-net-bridge--bridge.patch
-Patch0664: linux-%kernel_branch.50-fix-net-ceph.patch
+Patch0664: linux-%kernel_branch.53-fix-net-ceph.patch
 Patch0665: linux-%kernel_branch.42-fix-net-core.patch
 Patch0666: linux-%kernel_branch.39-fix-net-dcb.patch
 Patch0667: linux-%kernel_branch.35-fix-net-ipv4--xfrm.patch
@@ -1413,7 +1410,6 @@ cd linux-%version
 %patch0102 -p1
 
 # fix-drivers-cdrom--*
-%patch0111 -p1
 
 # fix-drivers-char-*
 %patch0121 -p1
@@ -1646,7 +1642,6 @@ cd linux-%version
 %patch0502 -p1
 %patch0503 -p1
 %patch0504 -p1
-%patch0505 -p1
 
 # fix-drivers-spi--*
 %patch0511 -p1
@@ -2807,6 +2802,16 @@ done)
 
 
 %changelog
+* Sun Jul 14 2013 Led <led@altlinux.ru> 3.4.53-alt1
+- 3.4.53
+- removed:
+  + fix-drivers-cdrom--cdrom
+  + fix-drivers-scsi-osd--osd
+- updated:
+  + fix-block
+  + fix-drivers-block--nbd
+  + fix-net-ceph
+
 * Sat Jul 13 2013 Led <led@altlinux.ru> 3.4.52-alt12
 - added:
   + fix-drivers-cdrom--cdrom (CVE-2013-2164)
