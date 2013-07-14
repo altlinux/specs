@@ -2,7 +2,7 @@
 %define lngg Ukrainian
 
 Name: kde-i18n-%lng
-Version: 3.5.13.1
+Version: 3.5.13.2
 Release: alt1
 
 Group: Graphical desktop/KDE
@@ -56,6 +56,9 @@ BuildRequires: kdelibs-devel xml-utils
 #%lang(%lng) %_K3apps/khangman/data/%lng/
 
 %changelog
+* Sun Jul 14 2013 Roman Savochenko <rom_as@altlinux.ru> 3.5.13.2-alt1
+- Release TDE version 3.5.13.2
+
 * Sun Oct 14 2012 Roman Savochenko <rom_as@altlinux.ru> 3.5.13.1-alt1
 - Release TDE version 3.5.13.1
 
