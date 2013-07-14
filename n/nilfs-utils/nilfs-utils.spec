@@ -7,7 +7,7 @@
 %define bname nilfs
 %define lname lib%bname
 Name: %bname-utils
-Version: 2.1.4
+Version: 2.1.5
 Release: alt1
 Summary: Utilities for managing NILFS v2 filesystems
 License: GPLv2+
@@ -18,7 +18,7 @@ Patch: %name-%version-%release.patch
 Provides: %{bname}2-utils = %version-%release
 %{!?_disable_shared:Requires: %lname = %version-%release}
 
-BuildRequires: libuuid-devel %{?_enable_libmount:libmount-devel} %{?_with_selinux:libselinux-devel}
+BuildRequires: libuuid-devel libblkid-devel %{?_enable_libmount:libmount-devel} %{?_with_selinux:libselinux-devel}
 
 %description
 Utilities to work with NILFS v2 filesystems.
@@ -118,6 +118,9 @@ done
 
 
 %changelog
+* Sun Jul 14 2013 Led <led@altlinux.ru> 2.1.5-alt1
+- 2.1.5
+
 * Thu Feb 14 2013 Led <led@altlinux.ru> 2.1.4-alt1
 - 2.1.4
 - fixed License for libraries
