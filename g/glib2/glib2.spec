@@ -14,7 +14,7 @@
 
 Name: glib2
 Version: %ver_major.3
-Release: alt1
+Release: alt2
 
 Summary: A library of handy utility functions
 License: %lgpl2plus
@@ -41,6 +41,10 @@ Patch: glib-2.35.9-alt-compat-version-script.patch
 # stop spam about deprecated paths in schemas
 Patch1: glib-2.36.1-alt-deprecated_paths-nowarning.patch
 Patch2: glib-2.36-add-xvt.patch
+
+# from upstream
+# https://bugzilla.gnome.org/show_bug.cgi?id=701560
+Patch10: glib-2.36.4-up-05d430065da918051a97e3384c4b2252af47503d.patch
 
 %def_with locales
 %if_with locales
@@ -197,6 +201,8 @@ This package contains documentation for GIO.
 %patch
 %patch1
 %patch2 -p2
+
+%patch10 -p1
 
 %if_with sys_pcre
 rm glib/pcre/*.[ch]
@@ -380,6 +386,9 @@ install -pD -m 755 filetrigger %buildroot%_rpmlibdir/gsettings.filetrigger
 
 
 %changelog
+* Sun Jul 14 2013 Yuri N. Sedunov <aris@altlinux.org> 2.36.3-alt2
+- fixed BGO 701560 from upstream
+
 * Mon Jun 10 2013 Yuri N. Sedunov <aris@altlinux.org> 2.36.3-alt1
 - 2.36.3
 
