@@ -4,10 +4,10 @@
 Name: %rname-remix-pack4
 Serial: 1
 Version: 0.7.0
-Release: alt1
+Release: alt2
 
 Group: Sound
-Summary: The Ur-Quan Masters Official Remix Add-On. Pack III
+Summary: The Ur-Quan Masters Official Remix Add-On. Pack IV
 Url: http://sc2.sourceforge.net
 License: May be copied freely as part of %rname
 
@@ -61,6 +61,9 @@ __EOF__
 %_gamesdatadir/%rname/content/packages/*.uqm
 
 %changelog
+* Sun Jul 14 2013 Igor Vlasenko <viy@altlinux.ru> 1:0.7.0-alt2
+- fixed misprint thanks to icesik@
+
 * Fri Jul 12 2013 Igor Vlasenko <viy@altlinux.ru> 1:0.7.0-alt1
 - initial spec
 - version for uqm >= 0.7.0
