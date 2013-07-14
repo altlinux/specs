@@ -1,6 +1,6 @@
 Name: memtest86+
 Version: 4.20
-Release: alt2.1
+Release: alt3
 
 Summary: Memory test for x86 architecture
 License: GPL
@@ -9,6 +9,8 @@ Group: System/Kernel and hardware
 Url: http://www.memtest.org
 Source: %url/download/%version/%name-%version.tar.gz
 Packager: Michael Shigorin <mike@altlinux.org>
+
+Patch0: memtest86p-4.20-suse-gcc4.7_fix.patch
 
 ExclusiveArch: %ix86 x86_64
 Requires(post,preun): bootloader-utils >= 0.3
@@ -48,6 +50,7 @@ failures that are detected by Memtest86.
 
 %prep
 %setup
+%patch0 -p0
 
 %build
 %ifarch x86_64
@@ -75,6 +78,9 @@ ln -s `relative /sbin/installkernel %_sbindir/installmemtest86+` \
 %doc README* FAQ
 
 %changelog
+* Sun Jul 14 2013 Nikolay A. Fetisov <naf@altlinux.ru> 4.20-alt3
+- Fix false positives on test #7 (Closes: 29048)
+
 * Wed Nov 28 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.20-alt2.1
 - Fixed build
 
