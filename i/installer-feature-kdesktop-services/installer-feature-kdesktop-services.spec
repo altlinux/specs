@@ -1,5 +1,5 @@
 Name: installer-feature-kdesktop-services
-Version: 0.6.1
+Version: 0.6.2
 Release: alt1
 
 Summary: Setup services for start/not start on boot
@@ -26,6 +26,9 @@ install -pm755 *.sh %buildroot%hookdir/
 %hookdir/*
 
 %changelog
+* Mon Jul 15 2013 Sergey V Turchin <zerg@altlinux.org> 0.6.2-alt1
+- disable NetworkManager-wait-online
+
 * Tue Apr 23 2013 Sergey V Turchin <zerg@altlinux.org> 0.6.1-alt1
 - fix setup services
 
