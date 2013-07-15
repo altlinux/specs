@@ -1,7 +1,7 @@
 Name: ipmitool
 Summary: ipmitool - Utility for IPMI control
-Version: 1.8.11
-Release: alt4
+Version: 1.8.12
+Release: alt1
 License: BSD
 URL: http://ipmitool.sourceforge.net/
 Group: System/Kernel and hardware
@@ -52,6 +52,9 @@ install -pD -m755 contrib/bmclanconf %buildroot%_sbindir/
 %_datadir/%name
 
 %changelog
+* Mon Jul 15 2013 Anton Farygin <rider@altlinux.ru> 1.8.12-alt1
+- new version
+
 * Sat Dec 31 2011 Michael Shigorin <mike@altlinux.org> 1.8.11-alt4
 - applied debian patch to fix CVE-2011-4339 (pidfile had too wide
   permissions allowing users to kill arbitrary processes at times)
