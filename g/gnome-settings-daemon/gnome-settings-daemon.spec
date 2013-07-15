@@ -11,7 +11,7 @@
 
 Name: gnome-settings-daemon
 Version: %ver_major.3
-Release: alt1
+Release: alt2
 
 Summary: A program that manages general GNOME settings
 License: GPLv2+
@@ -19,8 +19,8 @@ Group: Graphical desktop/GNOME
 Packager: GNOME Maintainers Team <gnome at packages.altlinux.org>
 
 Url: http://gnome.org
-Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
-#Source: %name-%version.tar
+#Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
+Source: %name-%version.tar
 
 # From configure.ac
 %define glib2_ver 2.35.3
@@ -152,9 +152,9 @@ The %name-tests package provides programms for testing GSD plugins.
 %_libexecdir/gsd-list-wacom
 %_libexecdir/gsd-locate-pointer
 %_libexecdir/gsd-printer
-#%_libexecdir/gnome-fallback-mount-helper
 %_libexecdir/gsd-backlight-helper
 %_libexecdir/gsd-wacom-led-helper
+%_libexecdir/gnome-settings-daemon-localeexec
 %_datadir/%name
 %_iconsdir/hicolor/*/*/*.png
 %_iconsdir/hicolor/*/*/*.svg
@@ -197,6 +197,9 @@ The %name-tests package provides programms for testing GSD plugins.
 
 
 %changelog
+* Sun Jul 14 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.3-alt2
+- updated to 27e5804792 (fixed BGO 703048, 701322, 702047)
+
 * Sat Jun 08 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.3-alt1
 - 3.8.3
 
