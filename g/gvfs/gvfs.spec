@@ -22,7 +22,7 @@
 
 Name: gvfs
 Version: %ver_major.3
-Release: alt4
+Release: alt5
 
 Summary: The GNOME virtual filesystem libraries
 License: %lgpl2plus
@@ -38,8 +38,9 @@ Patch3: gvfs-1.14.1-libgvfsdaemon+headers_install.patch
 Patch4: gvfs-1.16.2-alt-lfs.patch
 Patch5: gvfs-1.15.4-alt-tmpfiles_dir.patch
 # https://bugzilla.altlinux.org/show_bug.cgi?id=29047
+# https://bugzilla.altlinux.org/show_bug.cgi?id=29171
 # https://mail.gnome.org/archives/gvfs-list/2013-May/msg00014.html
-Patch6: gvfs-1.16.3-alt-logind-state.patch
+Patch6: gvfs-1.16.3-alt-1-logind-state.patch
 
 # from upstream
 Patch10: gvfs-1.16.3-up-afc_new_api.patch
@@ -461,6 +462,9 @@ killall -USR1 gvfsd >&/dev/null || :
 %exclude %_libdir/gio/modules/*.la
 
 %changelog
+* Mon Jul 15 2013 Yuri N. Sedunov <aris@altlinux.org> 1.16.3-alt5
+- sem@: new version of the alt-logind-state.patch (ALT #29185)
+
 * Wed Jul 10 2013 Yuri N. Sedunov <aris@altlinux.org> 1.16.3-alt4
 - sem@: updated alt-logind-state.patch
 
