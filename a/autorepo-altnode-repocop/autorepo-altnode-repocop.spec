@@ -2,8 +2,8 @@
 
 #BuildRequires: 
 Name: autorepo-altnode-repocop
-Version: 0.09
-Release: alt2
+Version: 0.10
+Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
 
@@ -13,7 +13,8 @@ License: GPL2+
 #Url: 
 Source: %name-%version.tar
 
-Requires: repocop > 0.58
+BuildRequires: repocop
+Requires: repocop > 0.65
 
 %description
 %summary
@@ -26,7 +27,7 @@ Requires: repocop > 0.58
 %install
 
 mkdir -p $RPM_BUILD_ROOT%_bindir
-cp repocop-* $RPM_BUILD_ROOT%_bindir
+install -m 755 repocop-* $RPM_BUILD_ROOT%_bindir
 
 %files
 %doc daily.conf.*
@@ -34,6 +35,9 @@ cp repocop-* $RPM_BUILD_ROOT%_bindir
 %_bindir/*
 
 %changelog
+* Mon Jul 15 2013 Igor Vlasenko <viy@altlinux.ru> 0.10-alt1
+- added extra statistics reports
+
 * Fri May 10 2013 Igor Vlasenko <viy@altlinux.ru> 0.09-alt2
 - support for archive task on autorepo nodes
 
