@@ -6,7 +6,7 @@
 
 Name: branding-%brand-%theme
 Version: 7.0.0 
-Release: alt4
+Release: alt5
 
 BuildRequires: cpio fonts-ttf-dejavu fonts-ttf-droid
 BuildRequires: design-bootloader-source >= 5.0-alt2
@@ -364,6 +364,9 @@ subst 's/#theme-name=/theme-name=Clearlooks-Phenix/' /etc/lightdm/lightdm-gtk-gr
 %_desktopdir/indexhtml.desktop
 
 %changelog
+* Mon Jul 15 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 7.0.0-alt5
+- images for plymouth have been downscaled 
+
 * Mon Jul 15 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 7.0.0-alt4
 - png file for grub reverted to rgb
 
