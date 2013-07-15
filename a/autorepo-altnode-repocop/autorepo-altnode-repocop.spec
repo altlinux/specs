@@ -3,7 +3,7 @@
 #BuildRequires: 
 Name: autorepo-altnode-repocop
 Version: 0.10
-Release: alt1
+Release: alt2
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
 
@@ -35,6 +35,9 @@ install -m 755 repocop-* $RPM_BUILD_ROOT%_bindir
 %_bindir/*
 
 %changelog
+* Mon Jul 15 2013 Igor Vlasenko <viy@altlinux.ru> 0.10-alt2
+- added altnode support
+
 * Mon Jul 15 2013 Igor Vlasenko <viy@altlinux.ru> 0.10-alt1
 - added extra statistics reports
 
