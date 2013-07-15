@@ -2,7 +2,7 @@
 
 Name: libselinux
 Version: 2.1.13
-Release: alt2
+Release: alt3
 Summary: SELinux library
 License: Public Domain
 Group: System/Libraries
@@ -77,11 +77,13 @@ This package contains SELinux python bindings.
 %makeinstall_std LIBDIR=%buildroot%_libdir SHLIBDIR=%buildroot/%_lib %{?_with_python:install-pywrap}
 install -d -m 0755 %buildroot/var/run/setrans
 
-
-%post
-TELINIT=/sbin/telinit
-[ -x $TELINIT -a -L /proc/1/exe -a -L /proc/1/root ] && $TELINIT u ||:
-
+%check
+# Some vital PAM modules are linked with libselinux and therefore
+# we cannot allow libselinux to be linked with libpthread.
+if ldd -r %buildroot%_libdir/libselinux.so 2>&1 |grep -Fq libpthread; then
+	echo >&2 'ERROR: libselinux pulls in libpthread.'
+	exit 1
+fi
 
 %files
 /%_lib/*.so.*
@@ -116,6 +118,13 @@ TELINIT=/sbin/telinit
 
 
 %changelog
+* Mon Jul 15 2013 Dmitry V. Levin <ldv@altlinux.org> 2.1.13-alt3
+- Reverted commit libselinux-2.1.12-57-g1d40332 because some vital
+  PAM modules are linked with libselinux and therefore we cannot
+  allow libselinux to be linked with libpthread.
+- %%post: removed manual telinit invocation, this is no longer
+  needed because rpm >= 4.0.4-alt100.55 does it automatically.
+
 * Mon Jul 08 2013 Andriy Stepanov <stanv@altlinux.ru> 2.1.13-alt2
 - Add patch from Fedora: upstream bug.
 
