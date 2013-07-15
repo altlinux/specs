@@ -1,5 +1,5 @@
-#define git_date .git20130327
-%define git_date %nil
+%define git_date .git20130711
+#define git_date %nil
 
 %define dbus_version 1.2.12-alt2
 %define libdbus_glib_version 0.76
@@ -15,7 +15,7 @@
 
 Name: NetworkManager
 Version: 0.9.8.2
-Release: alt3%git_date
+Release: alt4%git_date
 License: %gpl2plus
 Group: System/Configuration/Networking
 Summary: Network Link Manager and User Applications
@@ -250,6 +250,12 @@ if [ $1 -eq 0 ]; then
     killall -TERM nm-system-settings >/dev/null 2>&1 ||:
 fi
 
+%triggerpostun -- %name <= 0.9.8.2-alt3
+SYSTEMCTL=systemctl
+if sd_booted && "$SYSTEMCTL" -q is-enabled %name.service; then
+	"$SYSTEMCTL" enable -q %name-dispatcher.service
+fi
+
 %files -f %name.lang
 %doc COPYING NEWS AUTHORS README CONTRIBUTING TODO
 %_bindir/nm-tool
@@ -331,6 +337,11 @@ fi
 %exclude %_libdir/pppd/%ppp_version/*.la
 
 %changelog
+* Mon Jul 15 2013 Mikhail Efremov <sem@altlinux.org> 0.9.8.2-alt4.git20130711
+- Add trigger for NetworkManager-dispatcher.service.
+- Enable/disable NetworkManager-dispatcher.service too.
+- Upstream git snapshot (nm-0-9-8 branch).
+
 * Thu Jul 04 2013 Mikhail Efremov <sem@altlinux.org> 0.9.8.2-alt3
 - Change group name 'nmconnect' to '_nmconnect'.
 
