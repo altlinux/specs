@@ -3,8 +3,8 @@
 %define docdir %_defaultdocdir/%name-%version
 
 Name: freeipmi
-Version: 1.0.10
-Release: alt1.1
+Version: 1.2.8
+Release: alt1
 
 Summary: GNU FreeIPMI - Intelligent Platform Management System
 Group: Monitoring
@@ -15,7 +15,6 @@ PreReq: lib%name = %version-%release
 
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
-Patch1: %name-1.0.10-alt-DSO.patch
 
 # Automatically added by buildreq on Tue Apr 10 2007
 BuildRequires: libgcrypt-devel
@@ -58,6 +57,14 @@ The ipmidetectd daemon regularly ipmipings remote nodes.
 The ipmidetect tool and library will determine detected vs. undetected
 ipmi systems based on the most recent ipmipings received.
 
+%package ipmiseld
+Summary: FreeIPMI SEL syslog logging daemon
+Group: Monitoring
+PreReq: lib%name = %version-%release
+
+%description ipmiseld
+IPMI SEL syslog logging daemon.
+
 %package doc
 Summary: GNU FreeIPMI documentation
 Group: Documentation
@@ -72,7 +79,6 @@ GNU FreeIPMI documentation.
 %setup
 %add_optflags -D_GNU_SOURCE
 %patch -p1
-%patch1 -p2
 
 %build
 %autoreconf
@@ -108,15 +114,24 @@ touch %_localstatedir/%name/ipckey
 %preun bmc-watchdog
 %preun_service bmc-watchdog
 
+%post ipmiseld
+%post_service bmc-watchdog
+
+%preun ipmiseld
+%preun_service bmc-watchdog
+
 %files
 %_sbindir/*
+%exclude %_sbindir/ipmiseld
 %exclude %_sbindir/bmc-watchdog
 %exclude %_sbindir/ipmidetectd
 %_man8dir/*.8*
+%exclude %_man8dir/ipmiseld.8*
 %exclude %_man8dir/bmc-watchdog.8*
 %exclude %_man8dir/*detectd*.8*
 %_man5dir/*.5*
 %exclude %_man5dir/*detectd*.5*
+%exclude %_man5dir/*ipmiseld*.5*
 %config %_sysconfdir/%name/freeipmi.conf
 %config %_sysconfdir/%name/ipmidetect.conf
 %config %_sysconfdir/%name/freeipmi_interpret_sel.conf
@@ -129,7 +144,6 @@ touch %_localstatedir/%name/ipckey
 %config %_sysconfdir/%name/libipmiconsole.conf
 %dir %_localstatedir/%name
 %ghost %_localstatedir/%name/ipckey
-%dir %_logdir/%name
 
 %files -n lib%name-devel
 %_libdir/lib*.so
@@ -138,9 +152,8 @@ touch %_localstatedir/%name/ipckey
 %_man3dir/*
 
 %files bmc-watchdog
-%config %_initdir/bmc-watchdog
 %config(noreplace) %_sysconfdir/sysconfig/bmc-watchdog
-%_sysconfdir/logrotate.d/bmc-watchdog
+%config %_initdir/bmc-watchdog
 %_sbindir/bmc-watchdog
 %_man8dir/bmc-watchdog.8*
 
@@ -151,11 +164,21 @@ touch %_localstatedir/%name/ipckey
 %_man8dir/*detectd*.8*
 %config %_sysconfdir/%name/ipmidetectd.conf
 
+%files ipmiseld
+%_sbindir/ipmiseld
+%config %_initdir/ipmiseld
+%_man5dir/*ipmiseld*.5*
+%_man8dir/ipmiseld*.8*
+%config %_sysconfdir/%name/ipmiseld.conf
+
 %files doc
 %docdir
 %_infodir/%name-faq.info*
 
 %changelog
+* Mon Jul 15 2013 Anton Farygin <rider@altlinux.ru> 1.2.8-alt1
+- new version
+
 * Thu Jun 07 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.10-alt1.1
 - Fixed build
 

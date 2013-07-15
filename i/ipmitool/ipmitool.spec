@@ -1,7 +1,7 @@
 Name: ipmitool
 Summary: ipmitool - Utility for IPMI control
 Version: 1.8.12
-Release: alt1
+Release: alt2
 License: BSD
 URL: http://ipmitool.sourceforge.net/
 Group: System/Kernel and hardware
@@ -52,6 +52,9 @@ install -pD -m755 contrib/bmclanconf %buildroot%_sbindir/
 %_datadir/%name
 
 %changelog
+* Mon Jul 15 2013 Anton Farygin <rider@altlinux.ru> 1.8.12-alt2
+- rebuild with new freeipmi
+
 * Mon Jul 15 2013 Anton Farygin <rider@altlinux.ru> 1.8.12-alt1
 - new version
 
