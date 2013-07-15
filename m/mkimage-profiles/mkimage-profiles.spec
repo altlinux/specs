@@ -1,5 +1,5 @@
 Name: mkimage-profiles
-Version: 1.1.1
+Version: 1.1.2
 Release: alt1
 
 Summary: ALT Linux based distribution metaprofile
@@ -78,6 +78,9 @@ cp -a * %buildroot%mpdir
 %doc %docs/*
 
 %changelog
+* Mon Jul 15 2013 Michael Shigorin <mike@altlinux.org> 1.1.2-alt1
+- control and sound features
+
 * Mon Jul 01 2013 Michael Shigorin <mike@altlinux.org> 1.1.1-alt1
 - cuboxism
 
