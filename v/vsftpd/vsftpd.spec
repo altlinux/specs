@@ -1,6 +1,6 @@
 Name: vsftpd
 Version: 3.0.2
-Release: alt2
+Release: alt3
 
 Summary: File Transfer Protocol (FTP) server
 License: GPLv2
@@ -101,6 +101,10 @@ touch %_logdir/vsftpd.log
 %doc vsftpd.eps.bz2
 
 %changelog
+* Mon Jul 15 2013 Dmitry V. Levin <ldv@altlinux.org> 3.0.2-alt3
+- Enabled fcntl F_SETFL O_RDONLY|O_LARGEFILE in seccomp sandbox
+  (closes: #27752).
+
 * Wed Mar 27 2013 Dmitry V. Levin <ldv@altlinux.org> 3.0.2-alt2
 - Enabled gettimeofday syscall in seccomp sandbox.
 
