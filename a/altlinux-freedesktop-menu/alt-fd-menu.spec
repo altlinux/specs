@@ -3,7 +3,7 @@
 %define gnome3ver 3.90
 
 Name: altlinux-freedesktop-menu
-Version: 0.64
+Version: 0.65
 %if_without backport
 Release: alt1
 %else
@@ -320,6 +320,9 @@ touch /etc/xdg/menus/lxde-applications.menu
 %_datadir/kde4/desktop-directories/altlinux-*.directory
 
 %changelog
+* Mon Jul 15 2013 Igor Vlasenko <viy@altlinux.ru> 0.65-alt1
+- xfce menu cleanup (closes: #28575)
+
 * Thu Apr 18 2013 Igor Vlasenko <viy@altlinux.ru> 0.64-alt1
 - restored gnome3 symlinks
 
