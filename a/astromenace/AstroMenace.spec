@@ -1,5 +1,5 @@
 Name: astromenace
-Version: 1.3.1
+Version: 1.3.2
 Release: alt1
 Summary: Hardcore 3D space shooter with spaceship upgrade possibilities
 Summary(ru_RU.UTF-8): Хардкорный космический 3D шутер с возможностью апгрейда корабля
@@ -111,6 +111,9 @@ install gamedata.vfs %buildroot%_gamesdatadir/%cname/
 %_gamesdatadir/%cname/*
 
 %changelog
+* Tue Jul 16 2013 Fr. Br. George <george@altlinux.ru> 1.3.2-alt1
+- Autobuild version bump to 1.3.2
+
 * Sat Mar 23 2013 Fr. Br. George <george@altlinux.ru> 1.3.1-alt1
 - Autobuild version bump to 1.3.1
 - Drop "open" prefix, so free version is maintained by developer now
