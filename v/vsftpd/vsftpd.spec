@@ -1,6 +1,6 @@
 Name: vsftpd
 Version: 3.0.2
-Release: alt3
+Release: alt4
 
 Summary: File Transfer Protocol (FTP) server
 License: GPLv2
@@ -101,6 +101,9 @@ touch %_logdir/vsftpd.log
 %doc vsftpd.eps.bz2
 
 %changelog
+* Tue Jul 16 2013 Dmitry V. Levin <ldv@altlinux.org> 3.0.2-alt4
+- Cleanup previous seccomp sandbox fixes.
+
 * Mon Jul 15 2013 Dmitry V. Levin <ldv@altlinux.org> 3.0.2-alt3
 - Enabled fcntl F_SETFL O_RDONLY|O_LARGEFILE in seccomp sandbox
   (closes: #27752).
