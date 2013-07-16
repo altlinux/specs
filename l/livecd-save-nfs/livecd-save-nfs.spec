@@ -1,5 +1,5 @@
 Name: livecd-save-nfs
-Version: 0.4
+Version: 0.4.1
 Release: alt1
 
 Summary: tell NetworkManager not touch already UP ifaces
@@ -31,6 +31,9 @@ install -pD -m0644 livecd-save-nfs/livecd-save-nfs.service %buildroot%_unitdir/l
 %_unitdir/livecd-save-nfs.service
 
 %changelog
+* Tue Jul 16 2013 Mikhail Efremov <sem@altlinux.org> 0.4.1-alt1
+- Fix regexp for interface name.
+
 * Tue Apr 30 2013 Mikhail Efremov <sem@altlinux.org> 0.4-alt1
 - Expicitly set DISABLED=no (closes: #28499).
 - Add livecd-save-nfs.service.
