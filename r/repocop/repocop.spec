@@ -1,5 +1,5 @@
 Name: repocop
-Version: 0.66
+Version: 0.67
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -22,6 +22,7 @@ BuildRequires: perl(Data/Array2ArrayMap/Hash/XSTree.pm)
 BuildRequires: perl-RPM perl-DBD-SQLite
 BuildRequires: perl-RPM-Source-Editor
 BuildRequires: perl-File-Lock-ParentLock
+BuildRequires: perl-HTML-Template-Pro
 Requires: perl-RPM perl-DBD-SQLite sqlite3
 
 # obsolete repocop-sqlite interface
@@ -52,6 +53,14 @@ Requires: %name = %version-%release
 %description tools
 %summary
 
+%package report-html
+Group: Development/Other
+Summary: repocop report in HTML form.
+
+%description report-html
+Repocop is a repository unit tests platform.
+This package provides repocop HTML reports.
+
 %prep
 %setup
 
@@ -78,6 +87,9 @@ mkdir -p $RPM_BUILD_ROOT%_datadir/repocop/fixscripts/
 
 install -m755 common/* $RPM_BUILD_ROOT%_datadir/repocop/common/
 
+mkdir -p $RPM_BUILD_ROOT%_datadir/repocop/html/
+install -m644 img/* $RPM_BUILD_ROOT%_datadir/repocop/html/
+
 %files
 #doc README ChangeLog
 %_bindir/repocop-*
@@ -86,6 +98,7 @@ install -m755 common/* $RPM_BUILD_ROOT%_datadir/repocop/common/
 %exclude %_man1dir/repocop-fix*
 %exclude %_bindir/repocop-report-diff
 %exclude %_man1dir/repocop-report-diff.*
+%exclude %_bindir/repocop-report-html
 %exclude %_bindir/repocop-tools-*
 %exclude %_man1dir/repocop-tools-*
 %exclude %perl_vendor_privlib/Test/Repocop/Fixscripts.pm
@@ -110,7 +123,14 @@ install -m755 common/* $RPM_BUILD_ROOT%_datadir/repocop/common/
 %perl_vendor_privlib/Test/Repocop/Fixscripts.pm
 %dir %_datadir/repocop/fixscripts
 
+%files report-html
+%_bindir/repocop-report-html
+%_datadir/repocop/html
+
 %changelog
+* Tue Jul 16 2013 Igor Vlasenko <viy@altlinux.ru> 0.67-alt1
+- added repocop-report-html
+
 * Sun Feb 10 2013 Igor Vlasenko <viy@altlinux.ru> 0.66-alt1
 - added repocop-nmu-tool
 
