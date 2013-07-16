@@ -1,5 +1,5 @@
 Name: kernel-build-tools
-Version: 0.103
+Version: 0.103.1
 Release: alt1
 
 Summary: Utilities to build kernel packages for ALT Linux
@@ -55,6 +55,9 @@ install -Dpm644 kernel-macros \
 %_rpmmacrosdir/kernel
 
 %changelog
+* Tue Jul 16 2013 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.103.1-alt1
+- fix *_kernel_headers macros.
+
 * Thu Jun 20 2013 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.103-alt1
 - kernel-macros:
   + deprecated %%post_kernel_headers and %%postun_kernel_headers.
