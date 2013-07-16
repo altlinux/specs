@@ -1,7 +1,7 @@
 # -*- rpm-spec -*-
 
 # for set release
-%define release_pre alt1
+%define release_pre alt2
 
 # for distr selected
 %def_without M24
@@ -339,7 +339,7 @@ This package includes header files and C programming manuals for nut.
 %endif
 
 %patch103 -p1 -b .quickfix
-#%patch104 -p1 -b .ipmifix
+%patch104 -p1 -b .ipmifix
 %patch105 -p1 -b .dlfix
 %patch106 -p1 -b .pthreadfix
 %patch107 -p1 -b .foreground
@@ -692,6 +692,9 @@ fi
 %_man3dir/*
 
 %changelog
+* Mon Jul 15 2013 Anton Farygin <rider@altlinux.ru> 2.6.5-alt2
+- rebuild with new freeipmi
+
 * Tue Nov 20 2012 Alexey Shabalin <shaba@altlinux.ru> 2.6.5-alt1
 - 2.6.5
 - add fedora patches (fixed nut-scanner, foreground start daemons for systemd)
