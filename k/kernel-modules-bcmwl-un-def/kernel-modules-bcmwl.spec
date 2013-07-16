@@ -1,6 +1,6 @@
 %define module_name	bcmwl
 %define module_version	5.100.82.112
-%define module_release alt4
+%define module_release alt5
 
 %define flavour		un-def
 BuildRequires(pre): rpm-build-kernel
@@ -25,6 +25,7 @@ ExclusiveOS: Linux
 Url: http://www.broadcom.com/support/802.11/linux_sta.php
 Patch1: bcmwl-build-kernel3.2.patch
 Patch2: bcmwl-build-kernel3.4.patch
+Patch3: bcmwl-build-kernel3.10.patch
 BuildRequires: perl sharutils
 BuildRequires(pre): rpm-build-kernel
 BuildRequires: kernel-source-%module_name = %module_version
@@ -50,12 +51,9 @@ rm -rf kernel-source-%module_name-%module_version
 tar -jxvf %kernel_src/kernel-source-%module_name-%module_version.tar.bz2
 
 %setup -D -T -n kernel-source-%module_name-%module_version
-%if "%kversion" >= "3.2"
 %patch1 -p2
-%endif
-%if "%kversion" >= "3.4"
 %patch2 -p1
-%endif
+%patch3 -p1
 
 %build
 . %_usrsrc/linux-%kversion-%flavour/gcc_version.inc
@@ -82,6 +80,9 @@ __EOF__
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Wed Jul 17 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 5.100.82.112-alt5
+- add support for kernel 3.10
 
 * Mon Dec 17 2012 Gleb F-Malinovskiy <glebfm@altlinux.org> 5.100.82.112-alt4
 - new template

@@ -1,5 +1,5 @@
 Name: kernel-source-omnibook
-Version: 20090714 
+Version: 20110911 
 Release: alt1
 
 Summary: Kernel module for some Toshiba and HP laptops
@@ -28,6 +28,9 @@ tar -cjf %kernel_srcdir/%name-%version.tar.bz2 %name-%version
 %attr(0644,root,root) %kernel_src/%name-%version.tar.bz2
 
 %changelog
+* Wed Jul 17 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 20110911-alt1
+- updated from git, kernel 3.10 support added
+
 * Thu Sep 02 2010 Anton V. Boyarshinov <boyarsh@altlinux.ru> 20090714-alt1
 - updated from git 
 
