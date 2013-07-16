@@ -1,6 +1,6 @@
 Name: autorepo-altnode-config
 Version: 0.07
-Release: alt2
+Release: alt3
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
 
@@ -58,6 +58,17 @@ list
 EOF
     chkconfig rsync on
 fi
+if ! grep '^\[altnode\]' /etc/rsyncd.conf; then
+    cat >> /etc/rsyncd.conf <<EOF
+# altnode auto configuration
+[altnode]
+path=/var/ftp/altnode
+use chroot
+read only
+list
+EOF
+    chkconfig rsync on
+fi
 # ftpd
 chkconfig vsftpd on ||:
 if grep 'only_from = 127.0.0.1' /etc/xinetd.conf; then
@@ -87,6 +98,9 @@ fi
 %config %_sysconfdir/monitrc.d/nginx.conf
 
 %changelog
+* Tue Jul 16 2013 Igor Vlasenko <viy@altlinux.ru> 0.07-alt3
+- altnode rsync entry
+
 * Tue Jul 16 2013 Igor Vlasenko <viy@altlinux.ru> 0.07-alt2
 - better nginx support
 
