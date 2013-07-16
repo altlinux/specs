@@ -1,7 +1,7 @@
 %define subscribers_dir /lib/resolvconf
 
 Name: openresolv
-Version: 3.5.5
+Version: 3.5.6
 Release: alt1
 
 Summary: A framework for managing DNS information 
@@ -127,6 +127,9 @@ touch %buildroot%_localstatedir/bind/etc/resolvconf-options.conf
 %endif
 
 %changelog
+* Tue Jul 16 2013 Mikhail Efremov <sem@altlinux.org> 3.5.6-alt1
+- Updated to 3.5.6.
+
 * Mon Jun 17 2013 Mikhail Efremov <sem@altlinux.org> 3.5.5-alt1
 - Updated to 3.5.5.
 
