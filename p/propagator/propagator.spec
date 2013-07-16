@@ -2,7 +2,7 @@
 %def_with splash
 
 Name: propagator
-Version: 20130316
+Version: 20130716
 Release: alt1
 
 Summary: 'Early userspace' set of binaries
@@ -37,6 +37,9 @@ make \
 %_sbindir/propagator
 
 %changelog
+* Tue Jul 16 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 20130716-alt1
+- ext4 support added
+
 * Sat Mar 16 2013 Michael Shigorin <mike@altlinux.org> 20130316-alt1
 - cdrom: probe sda1 before sda (see also #28289)
 
