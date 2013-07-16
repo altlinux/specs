@@ -21,7 +21,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.4.53
-Release: alt1
+Release: alt2
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -418,8 +418,9 @@ Patch0499: linux-%kernel_branch.42-fix-drivers-scsi--sd_mod.patch
 Patch0500: linux-%kernel_branch.29-fix-drivers-scsi--st.patch
 Patch0501: linux-%kernel_branch.20-fix-drivers-scsi-device_handler--scsi_dh.patch
 Patch0502: linux-%kernel_branch.39-fix-drivers-scsi-fcoe--fcoe.patch
-Patch0503: linux-%kernel_branch.20-fix-drivers-scsi-ibmvscsi--ibmvscsic.patch
-Patch0504: linux-%kernel_branch.20-fix-drivers-scsi-megaraid--megaraid_mbox.patch
+Patch0503: linux-%kernel_branch.53-fix-drivers-scsi-ibmvscsi--ibmvfc.patch
+Patch0504: linux-%kernel_branch.20-fix-drivers-scsi-ibmvscsi--ibmvscsic.patch
+Patch0505: linux-%kernel_branch.20-fix-drivers-scsi-megaraid--megaraid_mbox.patch
 
 Patch0511: linux-%kernel_branch.25-fix-drivers-spi--spi.patch
 Patch0512: linux-%kernel_branch.38-fix-drivers-spi--spi-dw.patch
@@ -475,7 +476,7 @@ Patch0589: linux-%kernel_branch.31-fix-fs-proc.patch
 Patch0590: linux-%kernel_branch.28-fix-fs-ramfs.patch
 Patch0591: linux-%kernel_branch.47-fix-fs-reiserfs.patch
 Patch0592: linux-%kernel_branch.35-fix-fs-ubifs.patch
-Patch0593: linux-%kernel_branch.46-fix-fs-xfs.patch
+Patch0593: linux-%kernel_branch.50-fix-fs-xfs.patch
 
 Patch0601: linux-%kernel_branch.50-fix-include-linux.patch
 Patch0602: linux-%kernel_branch.50-fix-include-trace.patch
@@ -1642,6 +1643,7 @@ cd linux-%version
 %patch0502 -p1
 %patch0503 -p1
 %patch0504 -p1
+%patch0505 -p1
 
 # fix-drivers-spi--*
 %patch0511 -p1
@@ -2802,6 +2804,13 @@ done)
 
 
 %changelog
+* Tue Jul 16 2013 Led <led@altlinux.ru> 3.4.53-alt2
+- updated:
+  + fix-fs-xfs
+  + feat-fs-ext4--secrm
+- added:
+  + fix-drivers-scsi-ibmvscsi--ibmvfc
+
 * Sun Jul 14 2013 Led <led@altlinux.ru> 3.4.53-alt1
 - 3.4.53
 - removed:
