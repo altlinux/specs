@@ -2,11 +2,11 @@
 Summary: A library for accessing deltacloud
 Name: libdeltacloud
 Version: 0.9
-Release: alt2_5
+Release: alt2_7
 License: LGPLv2+
 Group: System/Libraries
-URL: http://people.redhat.com/clalance/libdeltacloud
-Source0: http://people.redhat.com/clalance/libdeltacloud/%{version}/%{name}-%{version}.tar.gz
+URL: https://git.fedorahosted.org/git/deltacloud/libdeltacloud.git
+Source0: https://git.fedorahosted.org/git/deltacloud/libdeltacloud.git/%{name}-%{version}.tar.gz
 Patch0: libdeltacloud-configure-ac-update.patch
 BuildRequires: libcurl-devel
 BuildRequires: libxml2-devel
@@ -82,6 +82,9 @@ rm -f $RPM_BUILD_ROOT/%{_lib}/libdeltacloud.a
 %{_libdir}/pkgconfig/libdeltacloud.pc
 
 %changelog
+* Tue Jul 16 2013 Igor Vlasenko <viy@altlinux.ru> 0.9-alt2_7
+- update to new release by fcimport
+
 * Tue Apr 09 2013 Igor Vlasenko <viy@altlinux.ru> 0.9-alt2_5
 - update to new release by fcimport
 
