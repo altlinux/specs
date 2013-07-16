@@ -1,6 +1,12 @@
+%if_enabled kde_mobile
+%def_disable desktop
+%else
+%def_enable desktop
+%endif
+
 Name:    kde4mobile-regular
 Version: 4.10
-Release: alt4
+Release: alt5
 
 Group: Graphical desktop/KDE
 Summary: KDE4 mobile common collection
@@ -31,7 +37,7 @@ Requires: kde4-declarative-plasmoids
 Requires: kde4-plasma-mobile
 Requires: kde4-share-like-connect
 #Requires: kde4-settings-kmobile
-%ifarch %arm
+%if_disabled desktop
 Requires: kde4-startactive
 %endif
 
@@ -73,6 +79,9 @@ KDE Active package to easy select packages during install
 %files
 
 %changelog
+* Tue Jul 16 2013 Sergey V Turchin <zerg@altlinux.org> 4.10-alt5
+- don't require kde4-startactive by default because KDE was build with Desktop profile
+
 * Fri Apr 12 2013 Sergey V Turchin <zerg@altlinux.org> 4.10-alt4
 - fix requires
 
