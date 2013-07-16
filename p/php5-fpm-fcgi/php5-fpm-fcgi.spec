@@ -168,6 +168,9 @@ install -m 0644 %SOURCE5 %buildroot%_unitdir/php5-fpm.service
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Rebuild with php5-%version-%release
 
+* Fri Jul 19 2013 Anton V. Boyarshinov <boyarsh@altlinux.org> 5.4.17.20130704-alt0
+- patches fixed
+
 * Thu Feb 28 2013 Dmitriy Kulik <lnkvisitor@altlinux.org> 5.3.18.20121017-alt1.1
 - Added systemd service (ALT #28145)
 - Logrotate use pidfile
