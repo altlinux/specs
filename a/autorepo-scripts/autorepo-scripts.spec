@@ -2,7 +2,7 @@
 BuildRequires: perl(RPM/Header.pm) perl(Source/Repository/Mass/ALTLinuxBackport.pm) perl-devel perl-ALTLinux-ACL
 # END SourceDeps(oneline)
 Name: autorepo-scripts
-Version: 0.22
+Version: 0.23
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -45,6 +45,9 @@ install -m 755 *.template %buildroot%_datadir/%name/templates/
 %_datadir/%name/templates
 
 %changelog
+* Tue Jul 16 2013 Igor Vlasenko <viy@altlinux.ru> 0.23-alt1
+- more altnode messages
+
 * Mon Jul 15 2013 Igor Vlasenko <viy@altlinux.ru> 0.22-alt1
 - support for altnode monitoring
 
