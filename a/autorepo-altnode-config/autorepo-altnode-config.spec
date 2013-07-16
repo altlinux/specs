@@ -1,6 +1,6 @@
 Name: autorepo-altnode-config
 Version: 0.07
-Release: alt1
+Release: alt2
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
 
@@ -69,9 +69,12 @@ echo 'include /etc/monitrc.d/*.conf' > /etc/monitrc
 service monit restart ||:
 
 %post nginx
-# nginx
+chkconfig nginx on ||:
 service nginx restart ||:
-service monit restart ||:
+
+if [ "$RPM_INSTALL_ARG1" -eq 1 ]; then
+    service monit restart ||:
+fi
 
 %files
 %_sysconfdir/autorepo/apt/apt.conf.*
@@ -84,6 +87,9 @@ service monit restart ||:
 %config %_sysconfdir/monitrc.d/nginx.conf
 
 %changelog
+* Tue Jul 16 2013 Igor Vlasenko <viy@altlinux.ru> 0.07-alt2
+- better nginx support
+
 * Thu Jul 11 2013 Igor Vlasenko <viy@altlinux.ru> 0.07-alt1
 - monit dependency and config files
 
