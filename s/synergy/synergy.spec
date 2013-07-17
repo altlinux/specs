@@ -1,6 +1,6 @@
 Summary:	Mouse and keyboard sharing utility
 Name:		synergy
-Version:	1.4.10
+Version:	1.4.12
 Release:	alt1
 License:	GPL
 Group:		Accessibility
@@ -12,6 +12,7 @@ Packager:	Evgeny Sinelnikov <sin@altlinux.ru>
 
 # Automatically added by buildreq on Fri Sep 28 2007
 BuildRequires: gcc-c++ libXtst-devel
+BuildRequires: libcryptopp-devel
 BuildRequires: rpm-macros-cmake
 BuildRequires: cmake
 
@@ -24,7 +25,7 @@ display.
 
 %prep
 %setup -q
-%patch0 -p0
+%patch0 -p1
 
 %build
 ./configure
@@ -47,6 +48,9 @@ install -D -m0644 doc/synergyc.man %buildroot/%_man1dir/synergyc.1
 %_man1dir/synergyc*
 
 %changelog
+* Wed Jul 17 2013 Evgeny Sinelnikov <sin@altlinux.ru> 1.4.12-alt1
+- Update to last release with encryption support
+
 * Wed Jan 02 2013 Evgeny Sinelnikov <sin@altlinux.ru> 1.4.10-alt1
 - Update to last release
 
