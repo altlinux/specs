@@ -1,21 +1,21 @@
 %define oname	cryptopp
 Name: libcryptopp
-Version: 5.6.0
-Release: alt3.qa3
+Version: 5.6.2
+Release: alt1
 
-# convert 5.6.0 -> 560 format
+# convert 5.6.2 -> 562 format
 %define orig_version	%(echo %version | sed -e "s/\\.//g")
 
 Summary: Cryptopp Library - a free C++ class library of cryptographic schemes
 
-License: GPL
+License: Boost Software License
 Url: http://www.cryptopp.com/
 Group: System/Libraries
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 Source: http://www.cryptopp.com/%oname%orig_version.tar.bz2
-Patch: %oname-5.6.1-autotools.patch
+Patch: %oname-5.6.2-autotools.patch
 
 Provides: libcrypto++ = %version-%release
 Obsoletes: libcrypto++
@@ -111,6 +111,10 @@ EOF
 #%_datadir/cryptopp/
 
 %changelog
+* Wed Jul 17 2013 Evgeny Sinelnikov <sin@altlinux.ru> 5.6.2-alt1
+- Update to last stable release with multiple fixes and SHA-3 implemetation
+- Change license from GPL to Boost Software License 1.0
+
 * Tue Nov 13 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.6.0-alt3.qa3
 - Fixed build with gcc 4.7
 
