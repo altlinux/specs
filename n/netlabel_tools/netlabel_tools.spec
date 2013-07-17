@@ -1,12 +1,13 @@
 Name:     netlabel_tools
 Version:  0.20
-Release:  alt1
+Release:  alt2
 Summary:  Configuration tools for the Linux NetLabel subsystem
 License:  %gpl2only
 Group:    System/Base
 Packager: Andriy Stepanov <stanv@altlinux.ru>
 Source:   %name-%version.tar
 Patch1:   alt-build-netlabelctl-0.20.patch
+Patch2:   alt-s0-mark-flag-0.20.patch
 
 BuildRequires: libnl1-devel doxygen rpm-build-licenses
 
@@ -19,6 +20,7 @@ Kernel's NetLabel configuration.
 %prep
 %setup -n %name-%version
 %patch1 -p2
+%patch2 -p2
 
 %build
 ./configure --enable-systemd --libdir=%_libdir --prefix=%_prefix
@@ -36,5 +38,8 @@ make DESTDIR=%buildroot install
 %_man8dir/netlabelctl.8.gz
 
 %changelog
+* Wed Jul 17 2013 Andriy Stepanov <stanv@altlinux.ru> 0.20-alt2
+- Add mark s0 flag
+
 * Thu Jun 20 2013 Andriy Stepanov <stanv@altlinux.ru> 0.20-alt1
 - Initial build for ALT Linux
