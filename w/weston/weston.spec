@@ -1,6 +1,6 @@
 Name:           weston
 Version:        1.2.0
-Release:        alt1
+Release:        alt2
 Summary:        Reference compositor for Wayland
 Group:          Graphical desktop/Other
 License:        BSD and CC-BY-SA
@@ -39,8 +39,6 @@ BuildRequires:  libpixman-devel
 BuildRequires:  libpoppler-devel
 BuildRequires:  libpoppler-glib-devel
 BuildRequires:  systemd-devel libwebp-devel
-
-Requires: design-graphics
 
 %description
 Weston is the reference wayland compositor that can run on KMS, under X11
@@ -96,10 +94,10 @@ find %buildroot -name \*.la | xargs rm -f
 #useradd -r -g weston-launch -d /dev/null -s /dev/null -n weston-launch >/dev/null 2>&1 ||:
 
 %files
+%dir %_xdgconfigdir/weston
 %config(noreplace) %_xdgconfigdir/weston/weston.ini
 %_bindir/*
 %_libdir/weston
-#_libexecdir/weston
 %_datadir/weston
 %_man1dir/weston*
 %_man5dir/weston*
@@ -111,6 +109,10 @@ find %buildroot -name \*.la | xargs rm -f
 %_pkgconfigdir/weston.pc
 
 %changelog
+* Wed Jul 17 2013 Alexey Gladkov <legion@altlinux.ru> 1.2.0-alt2
+- Add missing directory.
+- Remove unnecessary requires.
+
 * Tue Jul 16 2013 Alexey Gladkov <legion@altlinux.ru> 1.2.0-alt1
 - Version (1.2.0).
 
