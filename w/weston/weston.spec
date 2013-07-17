@@ -1,5 +1,5 @@
 Name:           weston
-Version:        1.0.6
+Version:        1.2.0
 Release:        alt1
 Summary:        Reference compositor for Wayland
 Group:          Graphical desktop/Other
@@ -11,11 +11,14 @@ Packager: Alexey Gladkov <legion@altlinux.ru>
 
 BuildRequires:  autoconf gcc-c++ pkg-config
 BuildRequires:  libcairo-devel
+BuildRequires:  libpango-devel
 BuildRequires:  glib2-devel
 BuildRequires:  libdrm-devel
+BuildRequires:  liblcms2-devel
+BuildRequires:  libcolord-devel
 BuildRequires:  libjpeg-devel
 BuildRequires:  libpng-devel
-BuildRequires:  librsvg-devel
+BuildRequires:  librsvg-devel librsvg-utils
 BuildRequires:  libtool
 BuildRequires:  libudev-devel
 BuildRequires:  libwayland-egl-devel
@@ -37,6 +40,8 @@ BuildRequires:  libpoppler-devel
 BuildRequires:  libpoppler-glib-devel
 BuildRequires:  systemd-devel libwebp-devel
 
+Requires: design-graphics
+
 %description
 Weston is the reference wayland compositor that can run on KMS, under X11
 or under another compositor.
@@ -55,18 +60,34 @@ Header and Library files for doing development with the weston.
 %build
 %autoreconf
 %configure \
-	--libexecdir=%_libexecdir/weston \
+	--libexecdir=%_libdir/weston/clients \
 	--disable-static \
 	--disable-setuid-install \
+	--disable-rpi-compositor \
+	--disable-libunwind \
 	--enable-xwayland \
+	--enable-colord \
 	--enable-clients \
 	--enable-simple-clients \
-	--enable-weston-launch
+	--enable-weston-launch \
+	--enable-x11-compositor \
+	--enable-drm-compositor \
+	--enable-wayland-compositor \
+	--enable-headless-compositor \
+	--enable-fbdev-compositor \
+	--with-cairo-glesv2
 
 %make_build
 
 %install
 %make_install install DESTDIR=%buildroot
+
+mkdir -p -- %buildroot/%_xdgconfigdir/weston
+sed \
+	-e 's,@clientsdir@,%_libdir/weston/clients,g' \
+	rpm/weston.ini > %buildroot/%_xdgconfigdir/weston/weston.ini
+
+chmod +s %buildroot/%_bindir/weston-launch
 
 find %buildroot -name \*.la | xargs rm -f
 
@@ -75,9 +96,10 @@ find %buildroot -name \*.la | xargs rm -f
 #useradd -r -g weston-launch -d /dev/null -s /dev/null -n weston-launch >/dev/null 2>&1 ||:
 
 %files
+%config(noreplace) %_xdgconfigdir/weston/weston.ini
 %_bindir/*
 %_libdir/weston
-%_libexecdir/weston
+#_libexecdir/weston
 %_datadir/weston
 %_man1dir/weston*
 %_man5dir/weston*
@@ -89,6 +111,9 @@ find %buildroot -name \*.la | xargs rm -f
 %_pkgconfigdir/weston.pc
 
 %changelog
+* Tue Jul 16 2013 Alexey Gladkov <legion@altlinux.ru> 1.2.0-alt1
+- Version (1.2.0).
+
 * Tue Apr 02 2013 Alexey Gladkov <legion@altlinux.ru> 1.0.6-alt1
 - Version (1.0.6).
 
