@@ -21,7 +21,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.4.53
-Release: alt2
+Release: alt3
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -2804,6 +2804,10 @@ done)
 
 
 %changelog
+* Wed Jul 17 2013 Led <led@altlinux.ru> 3.4.53-alt3
+- updated:
+  + feat-fs-aufs
+
 * Tue Jul 16 2013 Led <led@altlinux.ru> 3.4.53-alt2
 - updated:
   + fix-fs-xfs
