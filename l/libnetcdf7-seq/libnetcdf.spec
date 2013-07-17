@@ -7,7 +7,7 @@
 
 Name: %sname%sover-seq
 Version: %major.3.0
-Release: alt2
+Release: alt3
 
 Summary: Libraries to use the Unidata network Common Data Form (netCDF)
 
@@ -87,6 +87,7 @@ NetCDF (network Common Data Form) - это ориентированный на �
 Summary: Development tools for the NetCDF library
 Summary(ru_RU.UTF-8): Средства разработки программ на основе библиотеки NetCDF
 Group: Development/C
+Provides: pkgconfig(%oname) = %EVR
 Requires(post,preun): alternatives
 Requires: %name = %version-%release
 Conflicts: %sname-mpi-devel < 4.0.1-alt6
@@ -235,6 +236,9 @@ rm -fR %_includedir/netcdf-3 %_includedir/netcdf \
 %exclude %_man3dir/index.3*
 
 %changelog
+* Wed Jul 17 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.3.0-alt3
+- Added Provides: pkgconfig(netcdf) = %EVR
+
 * Fri Jul 05 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.3.0-alt2
 - Applied repocop patch
 
