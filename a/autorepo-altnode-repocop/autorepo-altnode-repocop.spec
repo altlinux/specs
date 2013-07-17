@@ -3,7 +3,7 @@
 #BuildRequires: 
 Name: autorepo-altnode-repocop
 Version: 0.10
-Release: alt4
+Release: alt5
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
 
@@ -35,6 +35,9 @@ install -m 755 repocop-* $RPM_BUILD_ROOT%_bindir
 %_bindir/*
 
 %changelog
+* Wed Jul 17 2013 Igor Vlasenko <viy@altlinux.ru> 0.10-alt5
+- fixed dependencies
+
 * Tue Jul 16 2013 Igor Vlasenko <viy@altlinux.ru> 0.10-alt4
 - more altnode tags
 
