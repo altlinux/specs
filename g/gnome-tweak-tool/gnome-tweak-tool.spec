@@ -1,7 +1,7 @@
 %define ver_major 3.8
 
 Name: gnome-tweak-tool
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: A tool to customize advanced GNOME 3 options
@@ -62,6 +62,9 @@ Features:
 %doc AUTHORS NEWS README
 
 %changelog
+* Wed Jul 17 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.1-alt1
+- 3.8.1
+
 * Mon Apr 08 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.0-alt1
 - 3.8.0
 
