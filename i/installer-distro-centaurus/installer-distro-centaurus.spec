@@ -1,7 +1,7 @@
 %define distro centaurus
 Name: installer-distro-%distro
 Version: 7.0
-Release: alt1
+Release: alt2
 
 Summary: Installer files for Centaurus distro 
 License: GPL
@@ -67,6 +67,9 @@ cp -a * %buildroot%install2dir/
 %files stage3
 
 %changelog
+* Wed Jul 17 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 7.0-alt2
+- NetworkManager-wait-online disabled by default
+
 * Wed Jul 03 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 7.0-alt1
 - use cups.service instead cups.socket
 
