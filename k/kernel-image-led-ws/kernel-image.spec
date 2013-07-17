@@ -1,4 +1,3 @@
-%define set_enable() %{expand:%%force_enable %{1}} %{expand:%%undefine _disable_%{1}}
 %define set_disable() %{expand:%%force_disable %{1}} %{expand:%%undefine _enable_%{1}}
 %define set_with() %{expand:%%force_with %{1}} %{expand:%%undefine _without_%{1}}
 %define set_without() %{expand:%%force_without %{1}} %{expand:%%undefine _with_%{1}}
@@ -21,7 +20,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.4.53
-Release: alt3
+Release: alt4
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -412,7 +411,7 @@ Patch0493: linux-%kernel_branch.36-fix-drivers-scsi--hv_storvsc.patch
 Patch0494: linux-%kernel_branch.38-fix-drivers-scsi--lpfc.patch
 Patch0495: linux-%kernel_branch.25-fix-drivers-scsi--mpt2sas.patch
 Patch0496: linux-%kernel_branch.25-fix-drivers-scsi--mvsas.patch
-Patch0497: linux-%kernel_branch.20-fix-drivers-scsi--scsi_mod.patch
+Patch0497: linux-%kernel_branch.53-fix-drivers-scsi--scsi_mod.patch
 Patch0498: linux-%kernel_branch.20-fix-drivers-scsi--scsi_netlink.patch
 Patch0499: linux-%kernel_branch.42-fix-drivers-scsi--sd_mod.patch
 Patch0500: linux-%kernel_branch.29-fix-drivers-scsi--st.patch
@@ -459,7 +458,7 @@ Patch0572: linux-%kernel_branch.35-fix-fs-9p.patch
 Patch0573: linux-%kernel_branch.50-fix-fs-autofs4.patch
 Patch0574: linux-%kernel_branch.32-fix-fs-btrfs.patch
 Patch0575: linux-%kernel_branch.38-fix-fs-ceph.patch
-Patch0576: linux-%kernel_branch.30-fix-fs-cifs.patch
+Patch0576: linux-%kernel_branch.53-fix-fs-cifs.patch
 Patch0577: linux-%kernel_branch.35-fix-fs-debugfs.patch
 Patch0578: linux-%kernel_branch.37-fix-fs-ext3.patch
 Patch0579: linux-%kernel_branch.50-fix-fs-ext4.patch
@@ -2804,6 +2803,13 @@ done)
 
 
 %changelog
+* Thu Jul 18 2013 Led <led@altlinux.ru> 3.4.53-alt4
+- updated:
+  + fix-drivers-net-hyperv
+  + fix-drivers-scsi--scsi_mod
+  + fix-firmware-radeon
+  + fix-fs-cifs
+
 * Wed Jul 17 2013 Led <led@altlinux.ru> 3.4.53-alt3
 - updated:
   + feat-fs-aufs
