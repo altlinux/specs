@@ -11,7 +11,7 @@
 
 Name: %oname-%scalar_type
 Version: 1.1
-Release: alt6.svn20110825
+Release: alt7.svn20110825
 %if %scalar_type == real
 Provides: %oname = %version-%release
 Obsoletes: %oname < %version-%release
@@ -227,6 +227,9 @@ popd
 # TODO: build driver_fortran, blopex_hypre
 
 %changelog
+* Wed Jul 10 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1-alt7.svn20110825
+- Rebuilt with new PETSc
+
 * Wed Sep 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1-alt6.svn20110825
 - New snapshot
 

@@ -10,7 +10,7 @@
 
 Name: %oname-%scalar_type
 Version: 3.53.1
-Release: alt10.beta
+Release: alt11
 Summary: A General Purpose, Parallel, Multi-Physics FEM Program (%scalar_type scalars)
 License: GPL v2+
 Group: Sciences/Mathematics
@@ -152,6 +152,9 @@ done
 %endif
 
 %changelog
+* Mon Jul 15 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.53.1-alt11
+- Version 3.53.1
+
 * Tue May 07 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.53.1-alt10.beta
 - Fixed build
 

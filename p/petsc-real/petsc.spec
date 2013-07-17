@@ -24,8 +24,8 @@
 %define topsover %topsomver.0.0
 
 Name: %oname-%scalar_type
-Version: 3.3_p6
-Release: alt3
+Version: 3.4.2
+Release: alt1
 Summary: Portable, Extensible Toolkit for Scientific Computation (%scalar_type scalars)
 License: BSD
 Group: Sciences/Mathematics
@@ -540,7 +540,7 @@ export INSTALL_DIR=%buildroot%prefix
 
 install -d %buildroot%_sysconfdir
 install -d %buildroot%ldir/examples
-install -d %buildroot%_docdir/%oname/include/adic
+#install -d %buildroot%_docdir/%oname/include/adic
 install -d %buildroot%_docdir/%oname/include/finclude
 install -d %buildroot%_docdir/%oname/include/mpiuni
 install -d %buildroot%_docdir/%oname/include/petsc-private
@@ -572,7 +572,8 @@ popd
 
 pushd %buildroot%ldir/include
 mv *.html %buildroot%_docdir/%oname/include/
-for i in adic finclude mpiuni petsc-private sieve; do
+#for i in adic finclude mpiuni petsc-private sieve; do
+for i in finclude mpiuni petsc-private sieve; do
 	mv $i/*.html %buildroot%_docdir/%oname/include/$i/
 done
 #cp $PETSC_DIR/src/dm/mesh/sieve/Filter.hh sieve/
@@ -789,6 +790,9 @@ sed -i 's|\(\-lpetsc\)|-L%ldir/lib \1|' \
 %ldir/sources
 
 %changelog
+* Tue Jul 09 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.4.2-alt1
+- Version 3.4.2
+
 * Thu Jun 27 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.3_p6-alt3
 - Rebuilt with new libhdf5
 
