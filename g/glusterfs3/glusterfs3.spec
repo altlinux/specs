@@ -1,5 +1,5 @@
 %define oname glusterfs
-%define major 3.3
+%define major 3.4
 # if you wish to compile an rpm without rdma support, compile like this...
 # rpmbuild -ta @PACKAGE_NAME@-@PACKAGE_VERSION@.tar.gz --without rdma
 %{?_without_rdma:%global _without_rdma --disable-ibverbs}
@@ -18,7 +18,7 @@
 
 Summary: Cluster File System
 Name: glusterfs3
-Version: %major.1
+Version: %major.0
 Release: alt1
 License: GPLv2/LGPLv3
 Group: System/Base
@@ -45,6 +45,7 @@ Patch0: %name-%version-%release.patch
 
 # Automatically added by buildreq on Mon Nov 19 2012
 BuildRequires: flex glibc-devel-static libibverbs-devel libreadline-devel libssl-devel libxml2-devel python-module-mwlib
+BuildRequires: librdmacm-devel
 
 Conflicts: %oname
 
@@ -279,8 +280,8 @@ install -D -p -m 644 extras/glusterfs.vim \
 %_libdir/glusterfs/%version/xlator/
 %exclude %_libdir/glusterfs/%version/xlator/mount/fuse*
 %_logdir/gluster/*
-# TODO: update man pages and uncomment this section
-#%%_man8dir/*gluster*.8*
+%_man8dir/*gluster*.8*
+%exclude %_man8dir/mount.glusterfs.8*
 %if 0%{!?_without_rdma:1}
 %exclude %_libdir/glusterfs/%version/rpc-transport/rdma*
 %endif
@@ -301,7 +302,7 @@ install -D -p -m 644 extras/glusterfs.vim \
 %files client
 %config(noreplace) %_sysconfdir/logrotate.d/glusterfs-fuse
 %_libdir/glusterfs/%version/xlator/mount/fuse*
-#%_man8dir/mount.glusterfs.8*
+%_man8dir/mount.glusterfs.8*
 /sbin/mount.glusterfs
 /sbin/umount.glusterfs
 %if 0%{?_with_fusermount:1}
@@ -309,7 +310,7 @@ install -D -p -m 644 extras/glusterfs.vim \
 %endif
 
 %files server
-%doc examples/ doc/glusterfs*.vol.sample
+%doc examples/
 %config(noreplace) %_sysconfdir/logrotate.d/glusterd
 %config(noreplace) %_sysconfdir/sysconfig/glusterd
 %config(noreplace) %_sysconfdir/glusterfs
@@ -328,6 +329,7 @@ install -D -p -m 644 extras/glusterfs.vim \
 %_includedir/glusterfs
 %exclude %_includedir/glusterfs/y.tab.h
 %_libdir/*.so
+%_libdir/pkgconfig/glusterfs-api.pc
 
 %post server
 %post_service glusterfsd
@@ -338,6 +340,9 @@ install -D -p -m 644 extras/glusterfs.vim \
 %preun_service glusterd
 
 %changelog
+* Wed Jul 17 2013 Alexei Takaseev <taf@altlinux.org> 3.4.0-alt1
+- 3.4.0
+
 * Wed Jan 23 2013 Alexei Takaseev <taf@altlinux.org> 3.3.1-alt1
 - 3.3.1
 
