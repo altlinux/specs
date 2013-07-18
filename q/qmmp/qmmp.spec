@@ -1,5 +1,5 @@
 %define branch 0.8
-%define svn svn3528
+%define svn svn3555
 
 Version: %branch.0
 Epoch: 1
@@ -25,7 +25,7 @@ BuildRequires: libsamplerate-devel libtag-devel >= 1.6 libvorbis-devel
 BuildRequires: libwavpack-devel libalsa-devel libflac-devel libbs2b-devel >= 3.0
 BuildRequires: libprojectM-devel >= 2.0.1 jackit-devel xorg-xf86miscproto-devel
 BuildRequires: libenca-devel libcddb-devel libmms-devel >= 0.4 libwildmidi-devel >= 0.2.3.4
-BuildRequires: libgme-devel libGLU-devel libsidplayfp-devel
+BuildRequires: libgme-devel libGLU-devel libsidplayfp-devel >= 1.0.3
 
 # disable for 5.1
 BuildRequires: libopusfile-devel
@@ -800,6 +800,12 @@ mkdir -p %buildroot/{%_miconsdir,%_niconsdir,%_liconsdir}
 %files -n %name-full
 
 %changelog
+* Wed Jul 17 2013 Motsyo Gennadi <drool@altlinux.ru> 1:0.8.0-alt2.svn3555
+- 0.8.0 svn3555 version
+
+* Mon Jul 15 2013 Motsyo Gennadi <drool@altlinux.ru> 1:0.8.0-alt2.svn3552
+- 0.8.0 svn3552 version
+
 * Mon Jul 01 2013 Motsyo Gennadi <drool@altlinux.ru> 1:0.8.0-alt2.svn3528
 - 0.8.0 svn3528 version
 
