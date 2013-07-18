@@ -1,7 +1,7 @@
 %define module_name	ipt_netflow
 %define module_version	1.8
 
-%define module_release alt1
+%define module_release alt2
 
 %define flavour		std-def
 BuildRequires(pre): rpm-build-kernel
@@ -45,9 +45,7 @@ This is netfilter/iptables module adding support for NETFLOW target.
 rm -rf %module_name-%{module_version}*
 tar xf %kernel_src/%module_name-%module_version.tar.*
 %setup -D -T -n %module_name-%module_version
-%if "%kversion" >= "3.9.0"
 %patch -p1
-%endif
 
 %build
 ./configure
@@ -64,3 +62,6 @@ install ipt_NETFLOW.ko %buildroot/%module_dir
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Wed Jul 17 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru>  1.8-alt2
+- Build with 3.10 fixed
