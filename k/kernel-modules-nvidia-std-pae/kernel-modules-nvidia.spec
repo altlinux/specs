@@ -5,7 +5,7 @@
 
 %define module_name	nvidia
 %define module_version	319.32
-%define module_release	alt1
+%define module_release	alt2
 %define flavour		std-pae
 
 %setup_kernel_module %flavour
@@ -26,11 +26,7 @@
 %define legacy2 %nil
 %endif
 %define legacy2_src %(echo %legacy2 | tr -d .)
-%nvIF_ver_lt %xorg_ver 1.15
-%define legacy3 173.14.37
-%else
 %define legacy3 %nil
-%endif
 %define legacy3_src %(echo %legacy3 | tr -d .)
 %nvIF_ver_lt %xorg_ver 1.15
 %define legacy4 304.88
@@ -62,6 +58,8 @@ URL:		http://www.nvidia.com
 Packager:       Kernel Maintainer Team <kernel@packages.altlinux.org>
 
 ExclusiveArch: %karch
+
+Patch0: nvidia-fix-build-3.10.patch
 
 BuildRequires(pre): rpm-build-kernel xorg-x11-server
 BuildRequires(pre): kernel-headers-modules-std-pae
@@ -122,6 +120,7 @@ do
     ln -s Makefile.kbuild Makefile
     popd
 done
+%patch0 -p1
 
 
 %build
@@ -190,6 +189,10 @@ fi
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Thu Jul 18 2013 Anton V. Boyarshinov <boyarsh@altlinux.org> 319.32-alt2
+- kernel 3.10 compatibility
+- legacy 173 disabled
 
 * Wed Jun 26 2013 Sergey V Turchin <zerg at altlinux dot org> 319.32-alt1..
 - new release (319.32)

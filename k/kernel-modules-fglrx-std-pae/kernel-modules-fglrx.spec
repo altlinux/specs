@@ -1,6 +1,6 @@
 %define module_name	fglrx
 %define module_version	13.101
-%define module_release alt2
+%define module_release alt3
 
 %define flavour std-pae
 BuildRequires(pre): kernel-headers-modules-std-pae
@@ -16,6 +16,8 @@ Version: %module_version
 Release: %module_release.%kcode.%kbuildrelease
 License: Proprietary
 Group: System/Kernel and hardware
+
+Patch: fglrx-fix-build3.10.patch
 
 Packager: Kernel Maintainer Team <kernel@packages.altlinux.org>
 
@@ -44,7 +46,9 @@ Kernel drivers for AMD/ATI Proprietary Linux Catalyst(tm) software suite.
 rm -rf kernel-source-%module_name-%module_version
 tar -xvf %kernel_src/%ksname-%module_version.tar*
 %setup -D -T -n %ksname-%module_version/2.6.x
-
+pushd ..
+%patch -p1
+popd
 
 %build
 . %_usrsrc/linux-%kversion-%flavour/gcc_version.inc
@@ -62,6 +66,9 @@ install -pD -m 0644 {,%buildroot%module_dir/}%module_name.ko
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Wed Jul 17 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 13.101-alt3
+- build fixed with kernel 3.10
 
 * Fri Jun 21 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 13.101-alt2
 - dependence on fglrx_glx added
