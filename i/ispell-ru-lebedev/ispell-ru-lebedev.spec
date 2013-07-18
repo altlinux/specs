@@ -6,7 +6,7 @@
 
 Name: ispell-ru-lebedev
 Version: 0.99g5
-Release: alt11.qa1
+Release: alt12
 
 Packager: Sergey Kurakin <kurakin@altlinux.org>
 
@@ -75,6 +75,7 @@ BuildArch: noarch
 PreReq: alternatives >= 0.4
 Requires: libhunspell
 Provides: hunspell-ru
+Obsoletes: hunspell-ru
 
 %package -n hunspell-ru-lebedev-ie
 Summary: Russian dictionary for myspell/hunspell, only "ie" spelling allowed
@@ -656,6 +657,8 @@ EOF
 	cat > %buildroot%_altdir/hunspell-ru-lebedev$spelling << EOF
 %myspelldir/ru_RU.dic	%myspelldir/ru_RU-lebedev$spelling.dic	$weight
 %myspelldir/ru_RU.aff	%myspelldir/ru_RU-lebedev$spelling.aff	%myspelldir/ru_RU-lebedev$spelling.dic
+%myspelldir/ru.dic	%myspelldir/ru_RU-lebedev$spelling.dic	%myspelldir/ru_RU-lebedev$spelling.dic
+%myspelldir/ru.aff	%myspelldir/ru_RU-lebedev$spelling.aff	%myspelldir/ru_RU-lebedev$spelling.dic
 EOF
 
 done
@@ -736,6 +739,11 @@ EOF
 
 
 %changelog
+* Thu Jul 18 2013 Sergey Kurakin <kurakin@altlinux.org> 0.99g5-alt12
+- a few more words
+- hunspell-ru-lebedev obsoletes hunspell-ru
+- hunspell: ru-alternative in addition to ru_RU-alternative (closes: #28364)
+
 * Mon Apr 22 2013 Repocop Q. A. Robot <repocop@altlinux.org> 0.99g5-alt11.qa1
 - NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
 - applied repocop fixes:
