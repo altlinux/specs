@@ -1,4 +1,4 @@
-%define		svn 5464
+%define		svn 5543
 
 Name:		smplayer
 Summary:	A great MPlayer front-end (QT4)
@@ -73,6 +73,9 @@ export OPTFLAGS="%optflags"
 %_man1dir/*
 
 %changelog
+* Thu Jul 18 2013 Motsyo Gennadi <drool@altlinux.ru> 0.8.5-alt1.5543
+- svn revision 5543
+
 * Wed Jun 12 2013 Motsyo Gennadi <drool@altlinux.ru> 0.8.5-alt1.5464
 - svn revision 5464
 
