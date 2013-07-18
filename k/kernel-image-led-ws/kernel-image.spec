@@ -20,7 +20,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.4.53
-Release: alt4
+Release: alt5
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -408,7 +408,7 @@ Patch0481: linux-%kernel_branch.25-fix-drivers-rtc--rtc-m41t80.patch
 Patch0491: linux-%kernel_branch.25-fix-drivers-scsi--aha1542.patch
 Patch0492: linux-%kernel_branch.25-fix-drivers-scsi--aic94xx.patch
 Patch0493: linux-%kernel_branch.36-fix-drivers-scsi--hv_storvsc.patch
-Patch0494: linux-%kernel_branch.38-fix-drivers-scsi--lpfc.patch
+Patch0494: linux-%kernel_branch.53-fix-drivers-scsi--lpfc.patch
 Patch0495: linux-%kernel_branch.25-fix-drivers-scsi--mpt2sas.patch
 Patch0496: linux-%kernel_branch.25-fix-drivers-scsi--mvsas.patch
 Patch0497: linux-%kernel_branch.53-fix-drivers-scsi--scsi_mod.patch
@@ -2803,6 +2803,10 @@ done)
 
 
 %changelog
+* Thu Jul 18 2013 Led <led@altlinux.ru> 3.4.53-alt5
+- updated:
+  + fix-drivers-scsi--lpfc
+
 * Thu Jul 18 2013 Led <led@altlinux.ru> 3.4.53-alt4
 - updated:
   + fix-drivers-net-hyperv
