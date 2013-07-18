@@ -2,7 +2,7 @@
 BuildRequires: perl(RPM/Header.pm) perl(Source/Repository/Mass/ALTLinuxBackport.pm) perl-devel perl-ALTLinux-ACL
 # END SourceDeps(oneline)
 Name: autorepo-scripts
-Version: 0.24
+Version: 0.25
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -20,6 +20,27 @@ Requires: perl(Date/Format.pm) qa-robot
 %description
 %summary
 
+%package -n autorepo-altnode-misc
+Summary: autorepo scripts for an axiliary node
+Group: Development/Other
+
+%description -n autorepo-altnode-misc
+%summary
+
+%package -n autorepo-altnode-builder
+Summary: autorepo scripts for a builder node
+Group: Development/Other
+
+%description -n autorepo-altnode-builder
+%summary
+
+%package autoports
+Summary: autorepo scripts for an autoports node
+Group: Development/Other
+
+%description autoports
+%summary
+
 %prep
 %setup
 
@@ -30,7 +51,7 @@ Requires: perl(Date/Format.pm) qa-robot
 %perl_vendor_install
 
 mkdir -p $RPM_BUILD_ROOT%_bindir
-cp autorepo-* $RPM_BUILD_ROOT%_bindir
+cp autoports-* autorepo-* $RPM_BUILD_ROOT%_bindir/
 rm $RPM_BUILD_ROOT%_bindir/*.spec
 rm $RPM_BUILD_ROOT%_bindir/autorepo-config.*
 
@@ -40,11 +61,25 @@ install -m 755 *.template %buildroot%_datadir/%name/templates/
 %files
 %doc autorepo-config.*
 %doc DEPLOY.txt
-%_bindir/*
+%_bindir/autorepo*
 %perl_vendor_privlib/Autorepo*
 %_datadir/%name/templates
+%exclude %_bindir/autorepo-altnode-*
+
+#files autoports
+%_bindir/autoports*
+
+%files -n autorepo-altnode-builder
+%_bindir/autorepo-altnode-builder-statistics
+
+%files -n autorepo-altnode-misc
+%_bindir/autorepo-altnode-misc-statistics-wrapper
 
 %changelog
+* Thu Jul 18 2013 Igor Vlasenko <viy@altlinux.ru> 0.25-alt1
+- autoports support
+- auxiliary-node subpackage
+
 * Wed Jul 17 2013 Igor Vlasenko <viy@altlinux.ru> 0.24-alt1
 - support for auxiliary nodes
 
