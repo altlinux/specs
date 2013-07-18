@@ -2,10 +2,10 @@
 %define mpidir %_libdir/%mpiimpl
 
 %define somver 0
-%define sover %somver.37.25
+%define sover %somver.40.30
 Name: pastix
 %define ldir %_libdir/%name
-Version: 3725
+Version: 4030
 Release: alt1
 Summary: Parallel Sparse matriX package
 License: CeCILL
@@ -41,7 +41,7 @@ This package contains shared libraries of PaStiX.
 Summary: Development files of PaStiX
 Group: Development/C
 Requires: %mpiimpl-devel
-Requires: %name = %version-%release
+#Requires: %name = %version-%release
 Requires: lib%name = %version-%release
 Conflicts: lib%name-devel < %version-%release
 Obsoletes: lib%name-devel < %version-%release
@@ -83,8 +83,9 @@ export OMPI_LDFLAGS="-Wl,--as-needed,-rpath=%mpidir/lib -L%mpidir/lib"
 
 pushd src
 mkdir -p sparse-matrix/obj
-%make_build -f makefile.old expor
-mkdir ../install
+#%make_build -f makefile.old expor
+%make_build
+mkdir -p ../install
 %make $PWD/../install/libpastix.a
 popd
 
@@ -95,7 +96,8 @@ export OMPI_LDFLAGS="-Wl,--as-needed,-rpath=%mpidir/lib -L%mpidir/lib"
 
 TOPDIR=$PWD
 DESTDIR=%buildroot%_libdir
-%make_install -C src -f makefile.old \
+#make_install -C src -f makefile.old \
+%make_install -C src \
 	DESTDIR=$DESTDIR TOPDIR=$TOPDIR MPIDIR=%mpidir install
 install -d %buildroot%_bindir
 install -d %buildroot%_libdir
@@ -104,39 +106,39 @@ install -d %buildroot%ldir/bin
 install -d %buildroot%ldir/include
 install -d %buildroot%_docdir/%name
 
-install -m755 bin/genheader bin/print_options %buildroot%ldir/bin
-ln -s %ldir/bin/genheader %buildroot%_bindir
-ln -s %ldir/bin/print_options %buildroot%_bindir
-install -m644 bin/*.a %buildroot%_libdir
-install -m644 install/*.a %buildroot%_libdir
-install -m644 bin/*.h %buildroot%ldir/include
+#install -m755 bin/genheader bin/print_options %buildroot%ldir/bin
+#ln -s %ldir/bin/genheader %buildroot%_bindir
+#ln -s %ldir/bin/print_options %buildroot%_bindir
+install -m755 install/bin/* %buildroot%ldir/bin
+install -m644 install/lib/*.a %buildroot%_libdir
+install -m644 install/include/* %buildroot%ldir/include
 
-mv %buildroot%_libdir/*.sh %buildroot/%_bindir/
-pushd %buildroot/%_bindir/
-ln -s $(ls *.sh) pastix-conf
-popd
-rm -f %buildroot%_libdir/pastix-conf*
-cp -f %buildroot%_libdir/*real.h %buildroot%_libdir/*real.inc \
-	%buildroot%_libdir/murge.h %buildroot%_libdir/pastix_nompi.h \
-	%buildroot%_includedir/
+#mv %buildroot%_libdir/*.sh %buildroot/%_bindir/
+#pushd %buildroot/%_bindir/
+#ln -s $(ls *.sh) pastix-conf
+#popd
+#rm -f %buildroot%_libdir/pastix-conf*
+#cp -f %buildroot%_libdir/*real.h %buildroot%_libdir/*real.inc \
+#	%buildroot%_libdir/murge.h %buildroot%_libdir/pastix_nompi.h \
+#	%buildroot%_includedir/
 
-pushd %buildroot%_libdir
-rm -f libpastix.a libpastix_murge.a
-SUFFIX=_mpi_smp_nobubble_long_double_real_metis_
-for i in libpastix libpastix_murge; do
-	ln -s $i$SUFFIX.a $i.a
-done
-popd
+#pushd %buildroot%_libdir
+#rm -f libpastix.a libpastix_murge.a
+#SUFFIX=_mpi_smp_nobubble_long_double_real_metis_
+#for i in libpastix libpastix_murge; do
+#	ln -s $i$SUFFIX.a $i.a
+#done
+#popd
 
-mv %buildroot%_libdir/*.h %buildroot%_libdir/*.inc %buildroot%_includedir/
-pushd %buildroot%_includedir
-rm -f csc_utils.h cscd_utils.h murge.inc pastix.h pastix_fortran.h
-SUFFIX=_long_double_real
-for i in csc_utils cscd_utils pastix pastix_fortran; do
-	ln -s $i$SUFFIX.h $i.h
-done
-ln -s murge$SUFFIX.inc murge.inc
-popd
+#mv %buildroot%_libdir/*.h %buildroot%_libdir/*.inc %buildroot%_includedir/
+#pushd %buildroot%_includedir
+#rm -f csc_utils.h cscd_utils.h murge.inc pastix.h pastix_fortran.h
+#SUFFIX=_long_double_real
+#for i in csc_utils cscd_utils pastix pastix_fortran; do
+#	ln -s $i$SUFFIX.h $i.h
+#done
+#ln -s murge$SUFFIX.inc murge.inc
+#popd
 
 cp -fR doc/* %buildroot%_docdir/%name/
 
@@ -147,7 +149,8 @@ simpleShare()
 	if [ "$1" = "common" ]; then
 		FINALIB=
 	elif [ "$1" = "pastixutils" -o "$1" = "pastix" ]; then
-		FINALIB="-lcommon_d $FINLIB"
+		#FINALIB="-lcommon_d $FINLIB"
+		FINALIB="$FINLIB"
 	elif [ "$1$3" = "kass" ]; then
 		FINALIB="-lcommon_d $FINLIB -lkass"
 	else
@@ -166,14 +169,15 @@ simpleShare()
 shareIt() {
 	if [ "$1" = "pastix" -o "$1" = "sopalin3d" -o "$1" = "pastix_murge" ]
 	then
-		FINLIB="-lpthread -L. -lkass"
+		#FINLIB="-lpthread -L. -lkass"
+		FINLIB=
 	elif [ "$1" = "common" ]; then
 		FINLIB=
 	elif [ "$1" = "pastixutils" -o "$1" = "blend3d" -o "$1" = "kass" ]
 	then
 		FINLIB=-lpastix
 	else
-		FINLIB=-lcommon
+		FINLIB=
 	fi
 	ar x lib$1.a
 	rm -f *_s.o *_d.o *_c.o *_z.o
@@ -197,8 +201,9 @@ shareIt() {
 }
 
 pushd %buildroot%_libdir
-for i in common pastixutils symbol %name blend3d order \
-	kass dof fax sopalin3d %name %{name}_murge
+#for i in common pastixutils symbol %name blend3d order \
+#	kass dof fax sopalin3d %name %{name}_murge
+for i in pastix pastix_murge matrix_driver
 do
 	shareIt $i
 done
@@ -211,34 +216,39 @@ done
 
 # fix pastix-conf
 
-pushd %buildroot%_bindir
+pushd %buildroot%ldir/bin
 sed -i 's|^INC.*|INC="-I%_includedir -I%ldir/include"|g' \
 	%name-conf
-sed -i 's|%buildroot||g' *.sh
 popd
 
-%files
-%doc src/Licence_CeCILL_V2-en.txt src/README.txt
-%dir %ldir
-%ldir/bin
-%_bindir/genheader
-%_bindir/print_options
+#files
+#doc src/Licence_CeCILL_V2-en.txt src/README.txt
+#dir %ldir
+#ldir/bin
+#_bindir/genheader
+#_bindir/print_options
 
 %files -n lib%name
+%doc src/Licence_CeCILL_V2-en.txt src/README.txt
+%dir %ldir
 %_libdir/*.so.*
 
 %files -n lib%name-devel
 %ldir/include
-%_includedir/*
-%_bindir/*
-%exclude %_bindir/genheader
-%exclude %_bindir/print_options
+%ldir/bin
+#_includedir/*
+#_bindir/*
+#exclude %_bindir/genheader
+#exclude %_bindir/print_options
 %_libdir/*.so
 
 %files -n lib%name-devel-doc
 %_docdir/%name
 
 %changelog
+* Thu Jul 18 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4030-alt1
+- Version 4030
+
 * Wed Sep 19 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3725-alt1
 - Version 3725
 
