@@ -1,12 +1,12 @@
-%define nm_version 0.9.8.0
-%define nm_applet_version 0.9.8.0
+%define nm_version 0.9.8.2
+%define nm_applet_version 0.9.8.2
 %define git_date %nil
 #define git_date .git20110314
 %define ppp_version 2.4.5
 %define gtkver 3
 
 Name: NetworkManager-pptp
-Version: 0.9.8.0
+Version: 0.9.8.2
 Release: alt1%git_date
 License: %gpl2plus
 Group: System/Configuration/Networking
@@ -92,6 +92,11 @@ fi
 %exclude %_libdir/pppd/%ppp_version/*.la
 
 %changelog
+* Thu Jul 18 2013 Mikhail Efremov <sem@altlinux.org> 0.9.8.2-alt1
+- From upstream git:
+  + Fix path to connection-editor plugin in service file.
+- Updated to 0.9.8.2.
+
 * Thu Feb 21 2013 Mikhail Efremov <sem@altlinux.org> 0.9.8.0-alt1
 - Treat warrnings as errors again.
 - Conditionally enable 'usepeerdns' pppd option (by GalaxyMaster)

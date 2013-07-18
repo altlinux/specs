@@ -1,11 +1,11 @@
-%define nm_version 0.9.8.0
-%define nm_applet_version 0.9.8.0
+%define nm_version 0.9.8.2
+%define nm_applet_version 0.9.8.2
 %define git_date %nil
 #define git_date .git20111101
 %define gtkver 3
 
 Name: NetworkManager-openvpn
-Version: 0.9.8.0
+Version: 0.9.8.2
 Release: alt1%git_date
 License: %gpl2plus
 Group: System/Configuration/Networking
@@ -13,7 +13,7 @@ Summary: NetworkManager VPN plugin for OpenVPN
 Url: http://www.gnome.org/projects/NetworkManager
 # git://git.gnome.org/network-manager-openvpn
 Source0: %name-%version.tar
-#Patch: %name-%version-%release.patch
+Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-build-licenses
 
@@ -45,7 +45,7 @@ NetworkManager panel applet.
 
 %prep
 %setup
-#patch -p1
+%patch -p1
 
 %build
 %autoreconf
@@ -89,6 +89,11 @@ fi
 %exclude %_libdir/NetworkManager/*.la
 
 %changelog
+* Thu Jul 18 2013 Mikhail Efremov <sem@altlinux.org> 0.9.8.2-alt1
+- From upstream git:
+  + Fix path to connection-editor plugin in service file.
+- Updated to 0.9.8.2.
+
 * Thu Feb 21 2013 Mikhail Efremov <sem@altlinux.org> 0.9.8.0-alt1
 - Treat warrnings as errors again.
 - Updated to 0.9.8.0.
