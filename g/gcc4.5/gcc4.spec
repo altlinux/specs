@@ -2,7 +2,7 @@
 
 Name: gcc%gcc_branch
 Version: 4.5.4
-Release: alt1
+Release: alt2
 
 Summary: GNU Compiler Collection
 # libgcc, libgfortran, libmudflap, libgomp, libstdc++ and crtstuff have
@@ -1642,6 +1642,10 @@ EOF
 %endif #with_pdf
 
 %changelog
+* Thu Jul 18 2013 Dmitry V. Levin <ldv@altlinux.org> 4.5.4-alt2
+- libstdc++4.5-devel: backported upstream fix for gcc#25306
+  (closes: #29186).
+
 * Mon Aug 27 2012 Dmitry V. Levin <ldv@altlinux.org> 4.5.4-alt1
 - Merged with gcc-4_5-branch@189152.
 - Define _FORTIFY_SOURCE only for optimization level 2 or higher.
