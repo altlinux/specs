@@ -1,5 +1,5 @@
 Name: gpsman
-Version: 6.4.3
+Version: 6.4.4.1
 Release: alt1
 Summary: A GPS manager
 
@@ -86,6 +86,9 @@ desktop-file-install --vendor="" \
 %attr(0644,root,root) %_datadir/pixmaps/*
 
 %changelog
+* Fri Jul 19 2013 Ilya Mashkin <oddity@altlinux.ru> 6.4.4.1-alt1
+- 6.4.4.1
+
 * Tue May 01 2012 Ilya Mashkin <oddity@altlinux.ru> 6.4.3-alt1
 - 6.4.3
 
