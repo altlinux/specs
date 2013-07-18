@@ -2,8 +2,8 @@
 %define mpidir %_libdir/%mpiimpl
 
 Name: p4est
-Version: 0.3.4
-Release: alt4
+Version: 0.3.4.1
+Release: alt1
 Summary: Parallel AMR on Forests of Octrees
 License: GPLv2+
 Group: Sciences/Mathematics
@@ -111,6 +111,9 @@ chrpath -r %mpidir/lib %buildroot%_bindir/* ||:
 %doc _ex/*
 
 %changelog
+* Thu Jul 18 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.4.1-alt1
+- Version 0.3.4.1
+
 * Sun Aug 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.4-alt4
 - Built with OpenBLAS instead of GotoBLAS2
 
