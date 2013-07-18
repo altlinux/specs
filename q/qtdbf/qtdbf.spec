@@ -1,4 +1,4 @@
-Version:	0.9.4
+Version:	0.9.5
 Name:		qtdbf
 Release:	alt1
 Summary:	A simple DBF viewer and editor
@@ -29,7 +29,6 @@ qmake-qt4 "QMAKE_CFLAGS+=%optflags" "QMAKE_CXXFLAGS+=%optflags" qtDbf.pro
 
 %install
 make INSTALL_ROOT=%buildroot install
-mv %buildroot%_bindir/qtDbf %buildroot%_bindir/qtdbf
 install -Dp -m 0644 %SOURCE1 %buildroot%_desktopdir/%name.desktop
 
 # Icons
@@ -50,6 +49,9 @@ convert -resize 16x16 images/qtdbf.svg %buildroot%_miconsdir/%name.png
 %_datadir/%name
 
 %changelog
+* Thu Jul 18 2013 Motsyo Gennadi <drool@altlinux.ru> 0.9.5-alt1
+- 0.9.5
+
 * Fri Jul 12 2013 Motsyo Gennadi <drool@altlinux.ru> 0.9.4-alt1
 - 0.9.4
 
