@@ -2,7 +2,7 @@
 %define mpidir %_libdir/%mpiimpl
 
 Name: pfft
-Version: 1.0.6
+Version: 1.0.7
 Release: alt1.alpha
 Summary: Parallel FFT based on FFTW
 License: GPLv3+
@@ -73,6 +73,9 @@ export MPIDIR=%mpidir
 %_libdir/*.so
 
 %changelog
+* Fri Jul 19 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.7-alt1.alpha
+- Version 1.0.7-alpha
+
 * Fri Feb 08 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.6-alt1.alpha
 - Version 1.0.6-alpha
 
