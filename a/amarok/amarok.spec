@@ -5,7 +5,7 @@
 
 Name: amarok
 Version: 1.4.10
-Release: alt14.qa1
+Release: alt15
 
 Summary: Amarok is a music player for KDE.
 License: GPL
@@ -44,9 +44,10 @@ Patch23: amarok-1.4.10-fix-autoconf-2.64.patch
 Patch24: amarok-1.4.10-alt-gcc4.5.patch
 Patch25: amarok-alt-malloc.patch
 Patch26: amarok-alt-DSO.patch
+Patch27: amarok-1.4.10-fix-FTBFS-gcc4.7.patch
 
 
-BuildRequires: doxygen gcc4.5-c++ kdebase-devel libSDL-devel libXext-devel libXrender-devel libxml2-devel
+BuildRequires: doxygen gcc-c++ kdebase-devel libSDL-devel libXext-devel libXrender-devel libxml2-devel
 BuildRequires: libXt-devel libavahi-devel libjpeg-devel libpng-devel libruby-devel
 BuildRequires: libtag-devel libtunepimp-devel libusb-devel libvisual0.4-devel qt3-designer ruby xml-utils
 BuildRequires: libxine-devel libmpeg4ip-devel libtunepimp-devel libgpod-devel libsqlite3-devel libmtp-devel
@@ -170,6 +171,7 @@ amarok-mediadevice-daap - плагин для работы с различным
 
 %patch25 -p2
 %patch26
+%patch27 -p1
 
 
 cp -Rp /usr/share/libtool/aclocal/libtool.m4 admin/libtool.m4.in
@@ -276,6 +278,9 @@ rm -fr %buildroot%_K3datadir/apps/%name/scripts/templates
 %_K3datadir/services/amarok_daap-mediadevice.desktop
 
 %changelog
+* Fri Jul 19 2013 Roman Savochenko <rom_as@altlinux.ru> 1.4.10-alt15
+- Build by GCC 4.7 workaround for GCC global variables problem.
+
 * Sun Apr 14 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.4.10-alt14.qa1
 - NMU: rebuilt with libmysqlclient.so.18.
 
