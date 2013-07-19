@@ -4,7 +4,7 @@
 Name: plplot
 %define fmoddir %_libdir/fortran/modules/%name
 Version: 5.9.9
-Release: alt5.svn20121223
+Release: alt5.svn20130315
 Summary: Scientific graphics plotting library, supporting multiple languages
 License: LGPL v2 or later
 Group: Graphics
@@ -389,6 +389,11 @@ install -m755 scripts/plm2gif scripts/plpr \
 rm -fR %buildroot%_docdir/%name \
 	%buildroot%_datadir/%name%version/examples/test_octave_interactive.sh
 
+install -d %buildroot%_man3dir
+mv %buildroot%buildroot%_man3dir/* %buildroot%_man3dir/
+install -d %buildroot%_infodir
+mv %buildroot%buildroot%_infodir/* %buildroot%_infodir/
+
 %files
 %doc AUTHORS COPYING* ChangeLog* Copyright FAQ NEWS PROBLEMS
 %doc README* SERVICE ToDo
@@ -572,6 +577,9 @@ rm -fR %buildroot%_docdir/%name \
 %_pkgconfigdir/plplotd-wxwidgets.pc
 
 %changelog
+* Fri Jul 19 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.9.9-alt5.svn20130315
+- New snapshot
+
 * Tue Mar 19 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.9.9-alt5.svn20121223
 - Built without libgnomeprintui
 
