@@ -1,6 +1,6 @@
 #v9-20-g36ddee6
 Name:		kmod
-Version:	12
+Version:	14
 Release:	alt1
 Summary:	Linux kernel module management utilities
 
@@ -47,7 +47,6 @@ applications that wish to load or unload Linux kernel modules.
 
 %prep
 %setup -q
-%patch0 -p1
 
 %build
 touch libkmod/docs/gtk-doc.make
@@ -117,6 +116,9 @@ ln -s kmod %buildroot/bin/lsmod
 %_libdir/libkmod.so
 
 %changelog
+* Fri Jul 19 2013 Alexey Gladkov <legion@altlinux.ru> 14-alt1
+- Version (14).
+
 * Fri Dec 28 2012 Alexey Gladkov <legion@altlinux.ru> 12-alt1
 - Version (12).
 
