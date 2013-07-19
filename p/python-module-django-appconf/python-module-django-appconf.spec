@@ -2,7 +2,7 @@
 
 Name:		python-module-django-appconf
 Version:	0.6
-Release:	alt1
+Release:	alt2
 Summary:	A helper class for handling configuration defaults of packaged apps gracefully
 
 Group:		Development/Python
@@ -49,5 +49,8 @@ rm -rf html/.{doctrees,buildinfo}
 %{python_sitelibdir}/django_appconf-%{version}-py?.?.egg-info
 
 %changelog
+* Fri Jul 19 2013 Pavel Shilovsky <piastry@altlinux.org> 0.6-alt2
+- Respect Autoimports/Sisyphus version
+
 * Mon Jul 15 2013 Pavel Shilovsky <piastry@altlinux.org> 0.6-alt1
 - Initial release for Sisyphus (based on Fedora)
