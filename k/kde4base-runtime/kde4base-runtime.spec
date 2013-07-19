@@ -10,7 +10,7 @@
 %define bugfix 5
 Name: kde4base-runtime
 Version: %major.%minor.%bugfix
-Release: alt1
+Release: alt2
 %define libname lib%name
 
 Group: Graphical desktop/KDE
@@ -31,6 +31,7 @@ Patch1003: kdebase-runtime-4.6.0-alt-def-notify-volume.patch
 Patch1004: kdebase-runtime-4.10.0-alt-def-trash.patch
 Patch1005: kdebase-runtime-4.8.0-alt-nepomuk-backup-on.patch
 Patch1006: kdebase-runtime-4.9.3-alt-multimedia-player-chooser.patch
+Patch1007: kdebase-runtime-4.10.5-alt-use-kwallet.patch
 
 BuildRequires(pre): kde4pimlibs-devel attica-devel
 BuildRequires: gcc-c++ cmake bzlib-devel liblzma-devel xml-utils
@@ -103,6 +104,7 @@ Menu resources for the original KDE menu.
 %patch1004 -p1
 %patch1005 -p1
 %patch1006 -p1
+%patch1007 -p1
 
 install -m 0644 %SOURCE10 kurifilter-plugins/ikws/searchproviders/yandex.desktop
 install -m 0644 %SOURCE11 kurifilter-plugins/ikws/searchproviders/altbugzilla.desktop
@@ -224,6 +226,9 @@ ln -sf `relative %_kde4_bindir/kde4 %_K4bindir/kde4` %buildroot/%_K4bindir/kde4
 %_K4dbus_interfaces/*
 
 %changelog
+* Fri Jul 19 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.5-alt2
+- offer to use kwallet by default
+
 * Mon Jul 01 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.5-alt1
 - new version
 
