@@ -2,7 +2,7 @@
 %define mpidir %_libdir/%mpiimpl
 
 Name: pnfft
-Version: 1.0.5
+Version: 1.0.6
 Release: alt1.alpha
 Summary: Parallel software library for the calculation of three-dimensional nonequispaced FFTs
 License: GPLv3+
@@ -78,6 +78,9 @@ install -m644 *.pc %buildroot%_pkgconfigdir
 %_pkgconfigdir/*
 
 %changelog
+* Fri Jul 19 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.6-alt1.alpha
+- Version 1.0.6-alpha
+
 * Fri Feb 08 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.5-alt1.alpha
 - Version 1.0.5-alpha
 
