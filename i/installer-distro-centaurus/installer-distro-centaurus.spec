@@ -1,7 +1,7 @@
 %define distro centaurus
 Name: installer-distro-%distro
 Version: 7.0
-Release: alt2
+Release: alt3
 
 Summary: Installer files for Centaurus distro 
 License: GPL
@@ -67,6 +67,9 @@ cp -a * %buildroot%install2dir/
 %files stage3
 
 %changelog
+* Fri Jul 19 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 7.0-alt3
+- removing alterator-luks added
+
 * Wed Jul 17 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 7.0-alt2
 - NetworkManager-wait-online disabled by default
 
