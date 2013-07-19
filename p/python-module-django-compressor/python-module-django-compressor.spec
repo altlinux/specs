@@ -2,7 +2,7 @@
 
 Name:		python-module-django-compressor
 Version:	1.3
-Release:	alt1
+Release:	alt2
 Summary:	Compresses linked and inline JavaScript or CSS into single cached files
 
 Group:		Development/Python
@@ -51,5 +51,8 @@ done
 %{python_sitelibdir}/%{pypi_name}-%{version}-py?.?.egg-info
 
 %changelog
+* Fri Jul 19 2013 Pavel Shilovsky <piastry@altlinux.org> 1.3-alt2
+- Respect Autoimports/Sisyphus version
+
 * Mon Jul 15 2013 Pavel Shilovsky <piastry@altlinux.org> 1.3-alt1
 - Initial release for Sisyphus (based on Fedora)
