@@ -1,8 +1,8 @@
 %def_with python3
 
 Name: py
-Version: 1.4.13
-Release: alt1.hg20130301
+Version: 1.4.16.dev1
+Release: alt1.hg20130716
 Summary: Testing and distributed programming library
 License: MIT
 Group: Development/Tools
@@ -150,6 +150,9 @@ done
 %endif
 
 %changelog
+* Fri Jul 19 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4.16.dev1-alt1.hg20130716
+- Version 1.4.16.dev1
+
 * Tue Apr 02 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4.13-alt1.hg20130301
 - Version 1.4.13
 
