@@ -6,8 +6,8 @@
 %define brand simply
 
 Name: branding-simply-linux
-Version: 7.0.0
-Release: alt6
+Version: 7.0.1
+Release: alt1
 BuildArch: noarch
 
 BuildRequires: cpio gfxboot >= 4 fonts-ttf-dejavu fonts-ttf-droid
@@ -23,7 +23,7 @@ Source: %name-%version.tar
 
 Group: Graphics
 Summary: System/Base
-License: GPL
+License: GPLv2+
 
 %description
 Distro-specific packages with design and texts for Simply Linux distribution.
@@ -35,7 +35,7 @@ Distro-specific packages with design and texts for Simply Linux distribution.
 Group: System/Configuration/Boot and Init
 Summary: Graphical boot logo for grub2, lilo and syslinux
 Summary(ru_RU.UTF-8): Тема для экрана выбора вариантов загрузки (lilo и syslinux) 
-License: GPL
+License: GPLv2+
 
 PreReq: coreutils
 Provides: design-bootloader-system-%theme design-bootloader-livecd-%theme design-bootloader-livecd-%theme design-bootloader-%theme branding-alt-%theme-bootloader
@@ -76,7 +76,7 @@ This package contains graphics for boot process for Simply Linux
 %package alterator
 Summary: Design for alterator for Simply Linux 
 Summary(ru_RU.UTF-8): Тема для "Центра управления системой" и QT для дистрибутива "Просто Линукс"
-License: GPL
+License: GPLv2+
 Group: System/Configuration/Other
 Provides: design-alterator-browser-%theme  branding-alt-%theme-browser-qt branding-altlinux-%theme-browser-qt
 Provides: alterator-icons design-alterator design-alterator-%theme
@@ -124,7 +124,7 @@ This package contains some graphics for Simply Linux design.
 
 Summary: Simply Linux release file
 Summary(ru_RU.UTF-8): Описание дистрибутива "Просто Линукс"
-License: GPL
+License: GPLv2+
 Group: System/Configuration/Other
 Provides: %(for n in %provide_list; do echo -n "$n-release = %version-%release "; done) altlinux-release-%theme  branding-alt-%theme-release
 Obsoletes: %obsolete_list  branding-alt-%theme-release
@@ -215,7 +215,6 @@ Simply Linux index.html welcome page.
 "Просто Линукс" (Simply Linux).
 
 %package menu
-
 Summary: menu for Simply Linux
 License: Distributable
 Group: Graphical desktop/Other
@@ -225,6 +224,15 @@ Requires: altlinux-freedesktop-menu-common
 %description menu
 Menu for Simply Linux
 
+%package system-settings
+Summary: Some system settings for Simply Linux
+License: GPLv2+
+Group: System/Base
+# Really we need lightdm only, but it can pull another greeter.
+Requires: lightdm-gtk-greeter
+
+%description system-settings
+Some system settings for Simply Linux.
 
 %prep
 %setup -q
@@ -314,12 +322,15 @@ install components/indexhtml/images/* %buildroot%_defaultdocdir/indexhtml/images
 #menu
 mkdir -p %buildroot/usr/share/slinux-style/applications
 install menu/applications/* %buildroot/usr/share/slinux-style/applications/
-mkdir -p %buildroot/etc/xdg/menus/applications-merged
-cp menu/50-slinux-menu-style.menu %buildroot/etc/xdg/menus/applications-merged/
 mkdir -p %buildroot/etc/xdg/menus/xfce-applications-merged
 cp menu/50-xfce-applications.menu %buildroot/etc/xdg/menus/xfce-applications-merged/
 mkdir -p %buildroot/usr/share/desktop-directories
 cp menu/altlinux-wine.directory %buildroot/usr/share/desktop-directories/
+
+# system-settings
+mkdir -p %buildroot/%_sysconfdir/polkit-1/rules.d/
+cp -a system-settings/polkit-rules/*.rules %buildroot/%_sysconfdir/polkit-1/rules.d/
+install -Dm644 system-settings/ldm_pam_environment %buildroot%_localstatedir/ldm/.pam_environment
 
 #bootloader
 %pre bootloader
@@ -346,6 +357,13 @@ shell_config_set /etc/sysconfig/grub2 GRUB_COLOR_HIGHLIGHT %grub_high
 
 %post indexhtml
 %_sbindir/indexhtml-update
+
+%post system-settings
+chown _ldm:_ldm %_localstatedir/ldm/.pam_environment
+sed -i '/pam_env\.so/ {
+		/user_readenv/ b
+		s/pam_env\.so/pam_env.so user_readenv=1/ }
+' %_sysconfdir/pam.d/lightdm-greeter
 
 %files bootloader
 %_datadir/gfxboot/%theme
@@ -410,11 +428,26 @@ subst "s/Theme=.*/Theme=%theme/" /etc/plymouth/plymouthd.conf
 
 %files menu
 /usr/share/slinux-style
-/etc/xdg/menus/applications-merged/50-slinux-menu-style.menu
 /etc/xdg/menus/xfce-applications-merged/50-xfce-applications.menu
 /usr/share/desktop-directories/altlinux-wine.directory
 
+%files system-settings
+%config %_sysconfdir/polkit-1/rules.d/*.rules
+%config %_localstatedir/ldm/.pam_environment
+
 %changelog
+* Fri Jul 19 2013 Mikhail Efremov <sem@altlinux.org> 7.0.1-alt1
+- xfce settings: Set ristretto as default images viewer.
+- Replace gnome-mplayer with smplayer.
+- system-settings: Add comment about requires.
+- menu: Use 'xfce-applications-merged' directory only.
+- system-settings Add workaround for 'lightdm cursor' bug.
+- indexhtml: Fix title in the Russian index.html.
+- documentation: Drop space between VERSION and STATUS.
+- Add system-settings subpackage.
+- Allow 'wheel' group memebers to modify NM's systemwide connections.
+- Fix license tag.
+
 * Thu Jul 04 2013 Mikhail Efremov <sem@altlinux.org> 7.0.0-alt6
 - menu: Fix GenericName of winefile.
 
