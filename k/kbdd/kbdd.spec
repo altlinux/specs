@@ -1,6 +1,6 @@
 Name: kbdd
-Version: 0.6
-Release: alt1
+Version: 0.7
+Release: alt1.git.4.g56674ff
 License: GPLv3
 Summary: Simple daemon and library to make per window layout using XKB.
 Group: System/X11
@@ -35,6 +35,9 @@ autoreconf -i
 
 
 %changelog
+* Wed Jul 17 2013 Ildar Mulyukov <ildar@altlinux.ru> 0.7-alt1.git.4.g56674ff
+- new version
+
 * Mon Jun 25 2012 Sergey Alembekov <rt@altlinux.ru> 0.6-alt1
 - initial 
 
