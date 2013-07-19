@@ -323,12 +323,19 @@ chrpath -d %buildroot%_bindir/phpinfo-%_php5_version
 %doc tests run-tests.php 
 
 %changelog
+* Fri Jul  5 2013 Anton V. Boyarshinov <boyarsh@altlinux.org> 5.4.17.20130704-alt1
+- new version
+
 * Sat May 18 2013 2013 Aleksey Avdeev <solo@altlinux.ru> 5.4.15.20130509-alt1
 - new version (5.4.15)
 - remove suhosin patch
 
 * Mon May 13 2013 Anton V. Boyarshinov <boyarsh@altlinux.org> 5.3.25.20130509-alt1
 - new version
+- make changelog branch-unaware
+
+* Tue Apr 16 2013 Anton V. Boyarshinov <boyarsh@altlinux.org> 5.3.24.20130412-alt0.M60P.1
+- new version for p6
 
 * Fri Apr 12 2013 Anton V. Boyarshinov <boyarsh@altlinux.org> 5.3.24.20130412-alt1
 - new version
