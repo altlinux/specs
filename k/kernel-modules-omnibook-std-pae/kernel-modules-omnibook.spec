@@ -1,6 +1,6 @@
 %define module_name	omnibook
-%define module_version  20090714
-%define module_release alt5
+%define module_version  20110911 
+%define module_release alt1
 
 %define flavour		std-pae
 BuildRequires(pre): rpm-build-kernel
@@ -20,12 +20,6 @@ Group: System/Kernel and hardware
 Packager: Kernel Maintainer Team <kernel@packages.altlinux.org>
 
 Patch0: kernel-source-omnibook-0.0-alt.patch
-Patch1: omnibook-2.6.30.patch
-
-%if "%kversion" >= "3.1.1"
-Patch2: omnibook-3.1.1-backlight.patch
-Patch3: omnibook-3.1.1-build.patch
-%endif
 
 ExclusiveOS: Linux
 Url: http://omnibook.sourceforge.net/
@@ -50,10 +44,6 @@ tar -jxf %kernel_src/kernel-source-%module_name-%module_version.tar.bz2
 %setup -D -T -n kernel-source-%module_name-%module_version
 %patch0 -p1
 
-%if "%kversion" >= "3.1.1"
-%patch2 -p1
-%patch3 -p1
-%endif
 
 %build
 %make_build -C %_usrsrc/linux-%kversion-%flavour modules SUBDIRS=`pwd`
@@ -75,6 +65,9 @@ cp -pr misc %buildroot%_docdir/%name-%version-%release
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Wed Jul 17 2013 Anton V. Boyarshinov <boyarsh@altlinux.org> 20110911-alt1
+- build with kernel 3.10 fixed
 
 * Mon Dec 17 2012 Gleb F-Malinovskiy <glebfm@altlinux.org> 20090714-alt5
 - new template

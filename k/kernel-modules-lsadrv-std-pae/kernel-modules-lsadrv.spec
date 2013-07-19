@@ -1,6 +1,6 @@
 %define module_name             lsadrv
 %define module_version          2.0.1
-%define module_release alt2
+%define module_release alt3
 
 %define flavour		std-pae
 BuildRequires(pre): rpm-build-kernel
@@ -22,6 +22,7 @@ Url: http://nixtech.ru/
 Packager: Kernel Maintainer Team <kernel@packages.altlinux.org>
 
 Patch1: ioctl_and_mutex.patch
+Patch2: lsadrv-build-3.10.patch
 
 ExclusiveOS: Linux
 BuildRequires(pre): rpm-build-kernel
@@ -50,6 +51,7 @@ tar -jxvf %kernel_src/kernel-source-%module_name-%module_version.tar.bz2
 %setup -D -T -n kernel-source-%module_name-%module_version
 
 %patch1 -p1
+%patch2
 
 %build
 . %_usrsrc/linux-%kversion-%flavour/gcc_version.inc
@@ -67,6 +69,9 @@ cp -a %kversion-%flavour-%krelease/%module_name.ko %buildroot/%module_dir/
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Wed Jul 17 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 2.0.1-alt3
+- build with kernel 3.10 fixed
 
 * Mon Dec 17 2012 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.0.1-alt2
 - new template
