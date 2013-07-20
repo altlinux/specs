@@ -6,7 +6,7 @@
 
 Name: ispell-ru-lebedev
 Version: 0.99g5
-Release: alt12
+Release: alt12.1
 
 Packager: Sergey Kurakin <kurakin@altlinux.org>
 
@@ -657,8 +657,8 @@ EOF
 	cat > %buildroot%_altdir/hunspell-ru-lebedev$spelling << EOF
 %myspelldir/ru_RU.dic	%myspelldir/ru_RU-lebedev$spelling.dic	$weight
 %myspelldir/ru_RU.aff	%myspelldir/ru_RU-lebedev$spelling.aff	%myspelldir/ru_RU-lebedev$spelling.dic
-%myspelldir/ru.dic	%myspelldir/ru_RU-lebedev$spelling.dic	%myspelldir/ru_RU-lebedev$spelling.dic
-%myspelldir/ru.aff	%myspelldir/ru_RU-lebedev$spelling.aff	%myspelldir/ru_RU-lebedev$spelling.dic
+%myspelldir/ru.dic	%myspelldir/ru_RU.dic	1000
+%myspelldir/ru.aff	%myspelldir/ru_RU.aff	1000
 EOF
 
 done
@@ -739,6 +739,9 @@ EOF
 
 
 %changelog
+* Sat Jul 20 2013 Sergey Kurakin <kurakin@altlinux.org> 0.99g5-alt12.1
+- fix alternatives issue (ALT #28364)
+
 * Thu Jul 18 2013 Sergey Kurakin <kurakin@altlinux.org> 0.99g5-alt12
 - a few more words
 - hunspell-ru-lebedev obsoletes hunspell-ru
