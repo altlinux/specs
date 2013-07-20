@@ -1,17 +1,19 @@
 Name: hedgewars
 Version: 0.9.19.3
-Release: alt1
+Release: alt2
 
 Summary: Game with heavily armed fighting hedgehogs
-License: GPL
+License: GPLv2
 Group: Games/Strategy
 URL: http://www.hedgewars.org/
 
-Packager: Anton Farygin <rider@altlinux.ru>
+Packager: Denis G. Samsonenko <ogion@altlinux.org>
 
 Source0: %name-src-%version.tar.bz2
 Patch0: %name-no-bytestring.patch
 Patch1: %name-compiler-opts.patch
+
+Requires: %name-data = %version
 
 # Automatically added by buildreq on Fri Jul 19 2013
 # optimized out: cmake-modules fontconfig fpc-compiler fpc-units-base fpc-units-db fpc-units-fcl fpc-units-gfx fpc-units-misc fpc-units-net fpc-units-rtl ghc7.6.1 ghc7.6.1-common ghc7.6.1-mtl ghc7.6.1-network ghc7.6.1-parsec ghc7.6.1-primitive ghc7.6.1-text ghc7.6.1-transformers libSDL-devel libXi-devel libavcodec-devel libavutil-devel libffi-devel libgmp-devel libopencore-amrnb0 libopencore-amrwb0 libpng-devel libqt4-core libqt4-devel libqt4-gui libqt4-network libqt4-opengl libqt4-qt3support libqt4-script libqt4-sql-sqlite libqt4-svg libstdc++-devel pkg-config zlib-devel
@@ -40,6 +42,16 @@ typically from contact with explosions, to zero (the damage dealt to the
 attacked hedgehog or hedgehogs after a player's or CPU turn is shown only 
 when all movement on the battlefield has ceased).
 
+
+%package data
+Summary: Resources for %name game
+Group: Games/Strategy
+BuildArch: noarch
+
+%description data
+This package contains all the data files for %name.
+
+
 %prep
 %setup -q -n %name-src-%version
 %patch0 -p1
@@ -53,27 +65,52 @@ PATH="/usr/lib/qt4/bin/:$PATH" %cmake_insource -DWITH_SERVER=1 -DDATA_INSTALL_DI
 %install
 %make_install DESTDIR=%buildroot install
 
+# replace font copies with symlinks to system versions
+rm -f %buildroot%_datadir/%name/Data/Fonts/DejaVuSans-Bold.ttf
+rm -f %buildroot%_datadir/%name/Data/Fonts/wqy-zenhei.ttc
+ln -s ../../../fonts/ttf/dejavu/DejaVuSans-Bold.ttf %buildroot%_datadir/%name/Data/Fonts/DejaVuSans-Bold.ttf
+ln -s ../../../fonts/ttf/wqy-zenhei/wqy-zenhei.ttc  %buildroot%_datadir/%name/Data/Fonts/wqy-zenhei.ttc
+
+# install desktop file and icons
 mkdir -p %buildroot%_datadir/applications/
 
 cat <<EOF >%buildroot%_datadir/applications/%name.desktop
 [Desktop Entry]
 Name=%name
 Comment=Strategy action game
-Exec=hedgewars
+Exec=%name
 Terminal=false
 Type=Application
+Icon=%name
 StartupNotify=true
 Categories=Game;ActionGame;StrategyGame;
 EOF
 
+install -p -D -m 644 misc/%{name}_ico.png %buildroot%_datadir/icons/hicolor/32x32/apps/%name.png
+install -p -D -m 644 misc/%name.png %buildroot%_datadir/icons/hicolor/512x512/apps/%name.png
+
+# install man file
+install -p -D -m 644 man/%name.6 %buildroot%_mandir/man6/%name.6
 
 %files
-%doc README
+%doc README ChangeLog.txt CREDITS
 %_bindir/*
-%_datadir/%name/
-%_datadir/applications/*.desktop
+%_mandir/man6/*
+%_datadir/applications/%name.desktop
+%_datadir/icons/hicolor/32x32/apps/%name.png
+%_datadir/icons/hicolor/512x512/apps/%name.png
+
+%files data
+%_datadir/%name
+
 
 %changelog
+* Sat Jul 20 2013 Denis G. Samsonenko <ogion@altlinux.org> 0.9.19.3-alt2
+- %name-data subpackage
+- font copies replaced with symlinks to system versions (#25350)
+- icon added to desktop file (#22690)
+- man file packaged
+
 * Sat Jul 20 2013 Denis G. Samsonenko <ogion@altlinux.org> 0.9.19.3-alt1
 - new version
 - %name-no-bytestring.patch adapted from Fedora package
