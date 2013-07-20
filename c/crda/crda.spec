@@ -1,6 +1,6 @@
 Summary: Regulatory compliance agent for 802.11 wireless networking
 Name: crda
-Version: 1.1.2
+Version: 1.1.3
 Release: alt1.2013.02.13
 License: ISC
 Group: Networking/Other
@@ -14,7 +14,7 @@ Patch1: %name-%version-alt.patch
 Url: http://www.linuxwireless.org/en/developers/Regulatory/CRDA
 Packager: Evgenii Terechkov <evg@altlinux.org>
 
-BuildRequires: libgcrypt-devel python-module-m2crypto libssl-devel openssl
+BuildRequires: python-module-m2crypto libssl-devel openssl
 BuildRequires: kernel-headers >= 2.6.27
 BuildRequires: libnl-devel >= 1.1
 
@@ -45,13 +45,13 @@ make %{?_smp_mflags} REGDB_PRIVKEY=key.priv.pem REGDB_PUBKEY=key.pub.pem
 # Build CRDA using the new key and regulatory.bin from above
 cd ../crda-%version
 cp ../wireless-regdb/key.pub.pem pubkeys
-make %{?_smp_mflags} REG_BIN=../wireless-regdb/regulatory.bin V=1
+make %{?_smp_mflags} REG_BIN=../wireless-regdb/regulatory.bin V=1 USE_OPENSSL=1
 
 %install
 cd crda-%version
 cp README README.crda
 cp LICENSE LICENSE.crda
-make install DESTDIR=%buildroot PREFIX='' MANDIR=%_mandir
+make install DESTDIR=%buildroot PREFIX='' MANDIR=%_mandir USE_OPENSSL=1
 cd ../wireless-regdb
 cp README README.wireless-regdb
 cp LICENSE LICENSE.wireless-regdb
@@ -59,7 +59,12 @@ make install DESTDIR=%buildroot PREFIX='' MANDIR=%_mandir
 install -D -pm 0755 %SOURCE2 %buildroot/sbin
 install -D -pm 0644 %SOURCE3 %buildroot%_man1dir/setregdomain.1
 
+mkdir -p %buildroot%_sysconfdir/wireless-regdb/pubkeys
+
+rm -f %buildroot/lib/%name/pubkeys/linville.key.pub.pem
+
 %files
+%_sysconfdir/wireless-regdb/pubkeys
 /sbin/%name
 /sbin/regdbdump
 /sbin/setregdomain
@@ -74,6 +79,10 @@ install -D -pm 0644 %SOURCE3 %buildroot%_man1dir/setregdomain.1
 %doc wireless-regdb/README.wireless-regdb wireless-regdb/LICENSE.wireless-regdb
 
 %changelog
+* Sat Jul 20 2013 Terechkov Evgenii <evg@altlinux.org> 1.1.3-alt1.2013.02.13
+- 1.1.3
+- Build with openssl (enable dynamic loading of trusted public keys from /etc/wireless-regdb/pubkeys)
+
 * Sun Feb 17 2013 Terechkov Evgenii <evg@altlinux.org> 1.1.2-alt1.2013.02.13
 - wireless-regdb tag master-2013-02-13
 - Fix build with libnl3
