@@ -1,6 +1,6 @@
 Name: autorepo-altnode-config
-Version: 0.07
-Release: alt3
+Version: 0.08
+Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
 
@@ -98,6 +98,9 @@ fi
 %config %_sysconfdir/monitrc.d/nginx.conf
 
 %changelog
+* Sat Jul 20 2013 Igor Vlasenko <viy@altlinux.ru> 0.08-alt1
+- p7 support
+
 * Tue Jul 16 2013 Igor Vlasenko <viy@altlinux.ru> 0.07-alt3
 - altnode rsync entry
 
