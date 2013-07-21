@@ -13,7 +13,7 @@
 %define nv_version 319
 %define nv_release 32
 %define nv_minor %nil
-%define pkg_rel alt122
+%define pkg_rel alt123
 %define set_gl_nvidia_ver 0.9.0
 
 %define tbver %{nv_version}.%{nv_release}.%{nv_minor}
@@ -168,7 +168,7 @@ ld --shared nvidianull.o -o libnvidianull.so
 mkdir -p %buildroot/usr/lib/nvidia/
 install -m 0644 %SOURCE1 %buildroot/usr/lib/nvidia/
 mkdir -p %buildroot/%_bindir/
-install -m 0644 %SOURCE2 %buildroot/%_bindir/
+install -m 0755 %SOURCE2 %buildroot/%_bindir/
 
 %__install -m 0755 set_gl_nvidia*/nvidia %buildroot/%xdrv_d/nvidia
 #%__ln_s ../../../..%xdrv_d/nvidia %buildroot/%xdrv_d_old/nvidia
@@ -243,6 +243,9 @@ fi
 
 
 %changelog
+* Sun Jul 21 2013 Sergey V Turchin <zerg@altlinux.org> 319.32-alt123
+- fix nvidia-install-driver premissions
+
 * Sat Jul 20 2013 Sergey V Turchin <zerg@altlinux.org> 319.32-alt122
 - simplify driver install command
 
