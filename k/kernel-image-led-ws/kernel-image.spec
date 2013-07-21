@@ -20,7 +20,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.4.53
-Release: alt5
+Release: alt8
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -140,6 +140,7 @@ Release: alt5
 %Extra_modules knem 1.0.90
 #Extra_modules exfat 1.1.3
 #Extra_modules netatop 0.2
+#Extra_modules omnibook 20110911
 
 %define strip_mod_opts --strip-unneeded -R .comment
 
@@ -377,7 +378,7 @@ Patch0416: linux-%kernel_branch.39-fix-drivers-net-wimax-i2400m--i2400m.patch
 
 Patch0421: linux-%kernel_branch.25-fix-drivers-net-wireless--iwlwifi.patch
 Patch0422: linux-%kernel_branch.47-fix-drivers-net-wireless--rtl8187se.patch
-Patch0423: linux-%kernel_branch.20-fix-drivers-net-wireless-brcm80211--brcmsmac.patch
+Patch0423: linux-%kernel_branch.53-fix-drivers-net-wireless-brcm80211--brcmsmac.patch
 Patch0424: linux-%kernel_branch.25-fix-drivers-net-wireless-ipw2x00--libipw.patch
 Patch0425: linux-%kernel_branch.39-fix-drivers-net-wireless-mwifiex--mwifiex.patch
 Patch0426: linux-%kernel_branch.20-fix-drivers-net-wireless-rt2x00--rt2800lib.patch
@@ -517,7 +518,7 @@ Patch0667: linux-%kernel_branch.35-fix-net-ipv4--xfrm.patch
 Patch0668: linux-%kernel_branch.31-fix-net-ipv6.patch
 Patch0669: linux-%kernel_branch.35-fix-net-ipv6--xfrm.patch
 Patch0670: linux-%kernel_branch.39-fix-net-l2tp--l2tp_core.patch
-Patch0671: linux-%kernel_branch.25-fix-net-mac80211.patch
+Patch0671: linux-%kernel_branch.53-fix-net-mac80211.patch
 Patch0672: linux-%kernel_branch.20-fix-net-netfilter--nf_conntrack_ftp.patch
 Patch0673: linux-%kernel_branch.47-fix-net-netfilter--xt_LOG.patch
 Patch0674: linux-%kernel_branch.28-fix-net-rds--rds_rdma.patch
@@ -621,8 +622,9 @@ Patch1198: linux-%kernel_branch.20-feat-fs-squashfs--write.patch
 Patch1199: linux-%kernel_branch.28-feat-fs-tmpfs--root.patch
 Patch1200: linux-%kernel_branch.20-feat-fs-unionfs.patch
 
-Patch1211: linux-%kernel_branch.27-feat-kernel-power-tuxonice.patch
-Patch1212: linux-%kernel_branch.27-feat-kernel-power-tuxonice--frontswap.patch
+Patch1211: linux-%kernel_branch.53-feat-kernel--sched-cfs-boost.patch
+Patch1212: linux-%kernel_branch.27-feat-kernel-power-tuxonice.patch
+Patch1213: linux-%kernel_branch.27-feat-kernel-power-tuxonice--frontswap.patch
 
 Patch1221: linux-%kernel_branch.50-feat-lib--lz4.patch
 Patch1222: linux-%kernel_branch.20-feat-lib--unwind.patch
@@ -1881,9 +1883,10 @@ cd linux-%version
 %patch1199 -p1
 %patch1200 -p1
 
-# feat-kernel-power-*
+# feat-kernel-*
 %patch1211 -p1
 %patch1212 -p1
+%patch1213 -p1
 
 # feat-lib--*
 %patch1221 -p1
@@ -2803,6 +2806,22 @@ done)
 
 
 %changelog
+* Sun Jul 21 2013 Led <led@altlinux.ru> 3.4.53-alt8
+- updated:
+  + fix-drivers-net-wireless-brcm80211--brcmsmac
+  + feat-drivers-block--rxdsk
+  + feat-drivers-platform--omnibook
+
+* Fri Jul 19 2013 Led <led@altlinux.ru> 3.4.53-alt7
+- updated:
+  + feat-drivers-block--cloop
+- added:
+  + feat-kernel--sched-cfs-boost
+
+* Thu Jul 18 2013 Led <led@altlinux.ru> 3.4.53-alt6
+- updated:
+  + fix-net-mac80211
+
 * Thu Jul 18 2013 Led <led@altlinux.ru> 3.4.53-alt5
 - updated:
   + fix-drivers-scsi--lpfc
