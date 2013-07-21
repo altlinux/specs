@@ -1,6 +1,6 @@
 Name: blender
-Version: 2.67b
-Release: alt2
+Version: 2.68
+Release: alt1
 
 Summary: 3D modeling, animation, rendering and post-production
 License: GPL
@@ -82,7 +82,7 @@ Languages support for blender
 %patch10 -p1
 %patch11 -p1
 %patch12 -p1
-%patch13 -p1
+#patch13 -p1
 
 
 #sed -i 's|\(CFLAGS\=\"\)|\1 -g |' release/plugins/bmake
@@ -176,6 +176,12 @@ install -pD -m644 release/datafiles/locale/languages %buildroot%_datadir/%name/l
 
 
 %changelog
+* Sun Jul 21 2013 Andrey Liakhovets <aoliakh@altlinux.org> 2.68-alt1
+- New version
+- *-2.67b-node_efficiency_tools.patch dropped (2.67b-only)
+- 0006-locales_directory_install.patch updated
+- 0011-look_for_droid_ttf_with_fontconfig.patch updated
+
 * Mon Jun 17 2013 Andrey Liakhovets <aoliakh@altlinux.org> 2.67b-alt2
 - Build with boost (+ boost-filesystem, boost-locale)
 - Build with OpenCOLLADA
