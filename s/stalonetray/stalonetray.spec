@@ -1,21 +1,20 @@
 Name: stalonetray
-Version: 0.7.6
-Release: alt1.qa1
+Version: 0.8.1
+Release: alt1
 
 Summary: STand Alone TRAY (notification area) implementation
 License: GPLv2+
 Group: Graphical desktop/Other
 
-Source: http://belnet.dl.sourceforge.net/sourceforge/stalonetray/stalonetray_0.7.6.tar.gz
-Url: http://sourceforge.net/projects/stalonetray
-Packager: Vitaly Kuzetsov <vitty@altlinux.ru>
+Source: %name-%version.tar.gz
+Url: http://stalonetray.sourceforge.net
 
 BuildRequires: libSM-devel libXpm-devel xorg-cf-files
 
 %description
-The stalonetray is a STAnd-aLONE system TRAY (notification area).
-It has minimal build and run-time dependencies: the Xlib only. The XEMBED
-support is planned. Stalonetray runs under virtually any window manager.
+The stalonetray is a STAnd-aLONE system tray(notification area). It has
+minimal build and run-time dependencies: the Xlib only. Beta quality
+XEMBED support. Stalonetray runs under virtually any window manager.
 
 %prep
 %setup
@@ -23,10 +22,12 @@ support is planned. Stalonetray runs under virtually any window manager.
 %build
 %configure
 %make_build
-make check
 
 %install
 %makeinstall_std
+
+%check
+make check
 
 %files
 %doc README
@@ -40,6 +41,9 @@ make check
 %_mandir/man*/*
 
 %changelog
+* Sun Jul 21 2013 Fr. Br. George <george@altlinux.ru> 0.8.1-alt1
+- Autobuild version bump to 0.8.1
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.7.6-alt1.qa1
 - NMU: rebuilt for debuginfo.
 
