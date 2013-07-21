@@ -1,4 +1,4 @@
-%define ver_major 3.6
+%define ver_major 3.8
 
 Name: gnome-dictionary
 Version: %ver_major.0
@@ -91,6 +91,9 @@ Dictionary Library.
 %_datadir/gtk-doc/html/*
 
 %changelog
+* Sun Jul 21 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.0-alt1
+- 3.8.0
+
 * Wed Sep 26 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.0-alt1
 - 3.6.0
 
