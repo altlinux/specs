@@ -2,7 +2,7 @@
 
 
 Name: glpi
-Version: 0.83.8
+Version: 0.83.9.1
 Release: alt1
 
 
@@ -145,6 +145,10 @@ find $RPM_BUILD_ROOT \( -name 'Thumbs.db' -o -name 'Thumbs.db.gz' \) -print -del
 
 
 %changelog
+* Sun Jul 21 2013 Pavel Zilke <zidex at altlinux dot org> 0.83.9.1-alt1
+- Security fixes:
+ + CVE-2013-2225 + CVE-2013-2227 : Security fix ( serialize + filter classname for autoload) (ALT #29189)
+
 * Tue Apr 16 2013 Pavel Zilke <zidex at altlinux dot org> 0.83.8-alt1
 - New version 0.83.8
 
@@ -153,7 +157,6 @@ find $RPM_BUILD_ROOT \( -name 'Thumbs.db' -o -name 'Thumbs.db.gz' \) -print -del
 
 * Wed Oct 17 2012 Pavel Zilke <zidex at altlinux dot org> 0.83.6-alt1
 - New version 0.83.6
-- 
 
 * Thu Aug 16 2012 Pavel Zilke <zidex at altlinux dot org> 0.83.4-alt1
 - New version 0.83.4 
