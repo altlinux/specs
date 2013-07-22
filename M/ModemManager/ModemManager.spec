@@ -9,14 +9,13 @@
 %def_with mbim
 
 Name: ModemManager
-Version: 0.7.991
+Version: 1.0.0
 Release: alt1%git_date
 License: %gpl2plus
 Group: System/Configuration/Networking
 Summary: Mobile broadband modem management service
 Url: http://gitorious.org/projects/modemmanager
 Source: %name-%version.tar
-Source1: %name-launcher
 Patch0: %name-%version-%release.patch
 
 Requires: dbus >= %dbus_version
@@ -108,7 +107,6 @@ make check
 
 %install
 %makeinstall_std
-install -Dm0755 %SOURCE1 %buildroot%_sbindir/%name-launcher
 %find_lang %name
 
 %post
@@ -145,8 +143,6 @@ fi
 %doc %_man8dir/*.*
 
 %exclude %_libdir/ModemManager/*.la
-%exclude %_libdir/pppd/*/mm-test-pppd-plugin.la
-%exclude %_libdir/pppd/*/mm-test-pppd-plugin.so
 
 %files devel
 %_includedir/%name
@@ -167,6 +163,11 @@ fi
 %doc %_datadir/gtk-doc/html/libmm-glib
 
 %changelog
+* Mon Jul 22 2013 Mikhail Efremov <sem@altlinux.org> 1.0.0-alt1
+- tests: Fix DSO linking.
+- Drop ModemManager-launcher script.
+- Updated to 1.0.0.
+
 * Wed Jun 05 2013 Mikhail Efremov <sem@altlinux.org> 0.7.991-alt1
 - Updated to 0.7.991.
 
