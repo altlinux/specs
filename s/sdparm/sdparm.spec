@@ -1,13 +1,13 @@
 Name: sdparm
-Version: 1.07
-Release: alt2
+Version: 1.08
+Release: alt1
 
 Summary: Utility for listing and changing SCSI disk parameters
 License: BSD
 Group: System/Kernel and hardware
 
 Url: http://sg.danny.cz/sg/sdparm.html
-Source0: %name-%version.tgz
+Source0: %{name}-%{version}.tar.xz
 Source1: %url
 Source100: sdparm.watch
 Packager: Michael Shigorin <mike@altlinux.org>
@@ -52,6 +52,9 @@ cp -a %SOURCE1 .
 %doc AUTHORS CREDITS ChangeLog README notes.txt sdparm.html
 
 %changelog
+* Mon Jul 22 2013 Michael Shigorin <mike@altlinux.org> 1.08-alt1
+- new version (watch file uupdate)
+
 * Wed May 09 2012 Michael Shigorin <mike@altlinux.org> 1.07-alt2
 - added watch file
 
