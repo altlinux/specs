@@ -20,7 +20,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.4.53
-Release: alt9
+Release: alt10
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -2806,6 +2806,10 @@ done)
 
 
 %changelog
+* Mon Jul 22 2013 Led <led@altlinux.ru> 3.4.53-alt10
+- updated:
+  + feat-fs-reiser4
+
 * Sun Jul 21 2013 Led <led@altlinux.ru> 3.4.53-alt9
 - updated:
   + feat-drivers-net-ethernet-atheros--alx
