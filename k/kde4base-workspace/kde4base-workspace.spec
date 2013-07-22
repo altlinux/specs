@@ -27,7 +27,7 @@
 %define rname kdebase-workspace
 Name: kde4base-workspace
 Version: %major.%minor.%bugfix
-Release: alt4
+Release: alt5
 
 Group: Graphical desktop/KDE
 Summary: K Desktop Environment - Workspace
@@ -951,6 +951,9 @@ chmod 0755 %buildroot/%_sysconfdir/firsttime.d/kdm4
 %_K4dbus_interfaces/*
 
 %changelog
+* Mon Jul 22 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.5-alt5
+- small increase default panel heignt
+
 * Fri Jul 19 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.5-alt4
 - decrease default panel heignt
 - use root wallpaper for root
