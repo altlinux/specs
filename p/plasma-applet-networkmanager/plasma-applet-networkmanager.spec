@@ -1,7 +1,7 @@
 %define _kde_alternate_placement 1
 
 Name: plasma-applet-networkmanager
-Version: 0.9.0.8
+Version: 0.9.0.9
 Release: alt1
 Serial: 1
 
@@ -80,6 +80,7 @@ fi
 %K4find_lang --output=%name.lang --append networkmanagement_pptpui
 %K4find_lang --output=%name.lang --append networkmanagement_vpncui
 %K4find_lang --output=%name.lang --append knetworkmanager
+%K4find_lang --output=%name.lang --append libknetworkmanager
 %K4find_lang --output=%name.lang --append solidcontrolnm09
 
 
@@ -99,11 +100,14 @@ fi
 %_K4apps/desktoptheme/default/icons/network2.svgz
 %_K4srv/kded/*.desktop
 %_K4srv/*.desktop
-%_K4srv/solidbackends/solid_networkmanager*.desktop
+%_K4srv/solidbackends/solid_*.desktop
 %_K4srvtyp/*.desktop
 
 
 %changelog
+* Mon Jul 22 2013 Sergey V Turchin <zerg@altlinux.org> 1:0.9.0.9-alt1
+- new version
+
 * Mon Apr 08 2013 Sergey V Turchin <zerg@altlinux.org> 1:0.9.0.8-alt1
 - new version
 
