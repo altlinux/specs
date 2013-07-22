@@ -1,8 +1,8 @@
 %def_disable static
 
 Name: vips
-Version: 7.30.7
-Release: alt2
+Version: 7.34.1
+Release: alt1
 %define majorver %(echo %version |cut -d. -f1,2)
 
 Packager: Victor Forsiuk <force@altlinux.org>
@@ -70,16 +70,21 @@ Static libraries for developing statically linked VIPS applications.
 %prep
 %setup
 
+# Avoid setting RPATH to /usr/lib64 on 64-bit builds
+# The DIE_RPATH_DIE trick breaks the build wrt gobject-introspection
+sed -i 's|sys_lib_dlsearch_path_spec="|sys_lib_dlsearch_path_spec="/%{_lib} %{_libdir} |' configure
+
 %build
-%autoreconf
+#autoreconf
 %configure %{subst_enable static}
 %make_build
 
 %install
 %makeinstall_std
-%find_lang vips7
+%find_lang vips%majorver
+find %buildroot \( -name '*.la' -o -name '*.a' \) -exec rm -f {} ';'
 
-%files -f vips7.lang
+%files -f vips%{majorver}.lang
 %_bindir/*
 %_man1dir/*
 %_docdir/vips
@@ -103,12 +108,30 @@ Static libraries for developing statically linked VIPS applications.
 %endif
 
 # TODO:
-# - OpenSlide, linux/videodev.h
+# - OpenSlide, v4l
 # - package python bindings
 
 %changelog
+* Mon Jul 22 2013 Michael Shigorin <mike@altlinux.org> 7.34.1-alt1
+- new version (watch file uupdate)
+- get rid of %%_libdir in RPATH (kludge borrowed from fedora spec)
+- get lost translations back
+
+* Wed May 22 2013 Michael Shigorin <mike@altlinux.org> 7.32.3-alt1
+- new version (watch file uupdate)
+
 * Fri Apr 19 2013 Anton Farygin <rider@altlinux.ru> 7.30.7-alt2
 - Rebuild with new libImageMagick
+
+* Tue Apr 09 2013 Michael Shigorin <mike@altlinux.org> 7.32.2-alt1
+- new version (watch file uupdate)
+
+* Fri Mar 22 2013 Michael Shigorin <mike@altlinux.org> 7.32.1-alt1
+- new version (watch file uupdate)
+- disabled autoreconf
+
+* Thu Feb 28 2013 Michael Shigorin <mike@altlinux.org> 7.30.8-alt1
+- new version (watch file uupdate)
 
 * Wed Feb 20 2013 Michael Shigorin <mike@altlinux.org> 7.30.7-alt1
 - new version (watch file uupdate)
