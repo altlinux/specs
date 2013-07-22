@@ -1,11 +1,11 @@
 %define nm_version 0.9.8.0
 %define nm_applet_version 0.9.8.0
-#define git_date %nil
-%define git_date .git20130405
+%define git_date %nil
+#define git_date .git20130405
 %define gtkver 3
 
 Name: NetworkManager-ssh
-Version: 0.0.3
+Version: 0.9.1
 Release: alt1%git_date
 License: %gpl2plus
 Group: System/Configuration/Networking
@@ -13,7 +13,7 @@ Summary: NetworkManager VPN plugin for SSH
 Url: https://github.com/danfruehauf/NetworkManager-ssh
 # git:git://github.com/danfruehauf/NetworkManager-ssh.git
 Source0: %name-%version.tar
-#Patch: %name-%version-%release.patch
+Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-build-licenses
 
@@ -45,7 +45,7 @@ NetworkManager panel applet.
 
 %prep
 %setup
-#patch -p1
+%patch -p1
 
 %build
 %autoreconf
@@ -86,6 +86,10 @@ fi
 %exclude %_libdir/NetworkManager/*.la
 
 %changelog
+* Mon Jul 22 2013 Mikhail Efremov <sem@altlinux.org> 0.9.1-alt1
+- Updated from upstream git (e5e66fd96141).
+- Updated to 0.9.1.
+
 * Tue Apr 16 2013 Mikhail Efremov <sem@altlinux.org> 0.0.3-alt1.git20130405
 - Initial build.
 
