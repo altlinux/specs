@@ -1,31 +1,25 @@
 Serial: 1
 Group: Graphical desktop/Other
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/update-mime-database libICE-devel libX11-devel libgio-devel pkgconfig(dbus-1) pkgconfig(gio-2.0) pkgconfig(gio-unix-2.0) pkgconfig(glib-2.0) pkgconfig(gmodule-2.0) pkgconfig(gthread-2.0) pkgconfig(gtk+-2.0) pkgconfig(libcanberra-gtk) pkgconfig(libxml-2.0) pkgconfig(pango) pkgconfig(xcursor) pkgconfig(xft) pkgconfig(xi) xorg-kbproto-devel
+BuildRequires: /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/update-mime-database libICE-devel libX11-devel libgio-devel pkgconfig(dbus-1) pkgconfig(dbus-glib-1) pkgconfig(gio-2.0) pkgconfig(gio-unix-2.0) pkgconfig(glib-2.0) pkgconfig(gmodule-2.0) pkgconfig(gthread-2.0) pkgconfig(gtk+-2.0) pkgconfig(libcanberra-gtk) pkgconfig(libxklavier) pkgconfig(libxml-2.0) pkgconfig(pango) pkgconfig(xcursor) pkgconfig(xft) pkgconfig(xi) xorg-kbproto-devel
 # END SourceDeps(oneline)
 %define _libexecdir %_prefix/libexec
 %define fedora 19
 Name:           mate-control-center
 Version:        1.6.0
-Release:        alt1_1
+Release:        alt1_2
 Summary:        MATE Desktop control-center
 License:        LGPLv2+ and GPLv2+
 URL:            http://mate-desktop.org
 Source0:        http://pub.mate-desktop.org/releases/1.6/%{name}-%{version}.tar.xz
 
-BuildRequires: libdbus-glib-devel
 BuildRequires: libdconf-devel
 BuildRequires: desktop-file-utils
-BuildRequires: gsettings-desktop-schemas-devel
 BuildRequires: gtk2-devel
-BuildRequires: icon-naming-utils
 BuildRequires: libcanberra-devel
 BuildRequires: libmatekbd-devel
-BuildRequires: libnotify-devel
 BuildRequires: librsvg-devel
 BuildRequires: libSM-devel
-BuildRequires: libxkbfile-devel
-BuildRequires: libxklavier-devel
 BuildRequires: libXScrnSaver-devel
 BuildRequires: libXxf86misc-devel
 BuildRequires: mate-common
@@ -34,9 +28,9 @@ BuildRequires: mate-doc-utils
 BuildRequires: mate-menus-devel
 BuildRequires: mate-settings-daemon-devel
 BuildRequires: mate-window-manager-devel
-BuildRequires: nss-devel
-BuildRequires: libpolkit-devel
 BuildRequires: libunique-devel
+
+Requires: gsettings-desktop-schemas
 
 
 
@@ -97,6 +91,9 @@ NOCONFIGURE=1 ./autogen.sh
            --disable-update-mimedb   \
            --disable-scrollkeeper
 
+# remove unused-direct-shlib-dependency
+sed -i -e 's! -shared ! -Wl,--as-needed\0!g' libtool
+
 make %{?_smp_mflags} V=1
 
 
@@ -113,6 +110,9 @@ desktop-file-install									\
 
 # delete mime cache
 rm %{buildroot}%{_datadir}/applications/mimeinfo.cache
+
+# remove needless gsettings convert file to avoid slow session start
+rm -f  %{buildroot}%{_datadir}/MateConf/gsettings/mate-control-center.convert
 
 %find_lang %{name}
 
@@ -136,7 +136,6 @@ rm %{buildroot}%{_datadir}/applications/mimeinfo.cache
 %{_datadir}/thumbnailers/mate-font-viewer.thumbnailer
 %{_datadir}/omf/mate-control-center
 %{_datadir}/polkit-1/actions/org.mate.randr.policy
-%{_datadir}/MateConf/gsettings/mate-control-center.convert
 
 %files -n libslab
 %{_libdir}/libslab.so.*
@@ -153,7 +152,11 @@ rm %{buildroot}%{_datadir}/applications/mimeinfo.cache
 %{_libdir}/libslab.so
 %{_libdir}/pkgconfig/libslab.pc
 
+
 %changelog
+* Mon Jul 22 2013 Igor Vlasenko <viy@altlinux.ru> 1:1.6.0-alt1_2
+- new fc release
+
 * Sat Apr 06 2013 Igor Vlasenko <viy@altlinux.ru> 1:1.6.0-alt1_1
 - new fc release
 

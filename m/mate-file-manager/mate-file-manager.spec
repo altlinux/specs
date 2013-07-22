@@ -4,24 +4,25 @@ BuildRequires: /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/gtkdoc
 %define _libexecdir %_prefix/libexec
 Name:       mate-file-manager
 Summary:    File manager for MATE
-Version:    1.6.1
-Release:    alt2_4
+Version:    1.6.2
+Release:    alt1_1
 License:    GPLv2+ and LGPLv2+
 Group:      Graphical desktop/Other
 URL:        http://mate-desktop.org
 Source0:    http://pub.mate-desktop.org/releases/1.6/%{name}-%{version}.tar.xz
 Source1:    caja-autostart.desktop
 
+# upstream patch to fix wrong hicolors directory
+Patch0:     mate-file-manager_fix_privat-icons-dir.patch
+
 Requires:   gamin
 Requires:   filesystem
 Requires:   altlinux-freedesktop-menu-common
 Requires:   gvfs
-Requires:   mate-icon-theme
-Requires:   gsettings-desktop-schemas
+Requires:   icon-theme-hicolor
 
 
 BuildRequires:  mate-desktop-devel
-BuildRequires:  libmate-desktop
 BuildRequires:  pkgconfig(sm)
 BuildRequires:  desktop-file-utils
 BuildRequires:  pkgconfig(libstartup-notification-1.0)
@@ -36,7 +37,6 @@ BuildRequires:  pkgconfig(cairo-gobject)
 BuildRequires:  pkgconfig(libxml-2.0)
 BuildRequires:  pkgconfig(dbus-glib-1)
 BuildRequires:  pkgconfig(pangox)
-BuildRequires:  pkgconfig(gsettings-desktop-schemas)
 
 
 # the main binary links against libcaja-extension.so
@@ -77,17 +77,15 @@ for developing caja extensions.
 
 %prep
 %setup -q
-%patch33 -p1
-%patch35 -p1
-%patch36 -p1
-NOCONFIGURE=1 ./autogen.sh
+%patch0 -p1 -b .privat-icons-dir
+autoreconf -i -f
 %patch34 -p1
+
 %build
 %configure \
         --disable-static \
         --enable-unique \
         --disable-schemas-compile \
-        --with-gnu-ld \
         --with-x \
         --with-gtk=2.0 \
         --disable-update-mimedb
@@ -97,7 +95,7 @@ NOCONFIGURE=1 ./autogen.sh
 # libtool doesn't make this easy, so we do it the hard way
 sed -i -e 's/ -shared / -Wl,-O1,--as-needed\0 /g' libtool
 
-make %{?_smp_mflags}
+make %{?_smp_mflags} V=1
 
 %install
 make install DESTDIR=$RPM_BUILD_ROOT INSTALL="install -p"
@@ -110,13 +108,15 @@ rm -f $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/.icon-theme.cache
 
 mkdir -p $RPM_BUILD_ROOT%{_libdir}/caja/extensions-2.0
 
-desktop-file-install \
-     --dir=$RPM_BUILD_ROOT%{_sysconfdir}/xdg/autostart %{SOURCE1}
+desktop-file-install --dir=$RPM_BUILD_ROOT%{_sysconfdir}/xdg/autostart %{SOURCE1}
 
 desktop-file-install									\
 	--delete-original								\
 	--dir=$RPM_BUILD_ROOT%{_datadir}/applications					\
 $RPM_BUILD_ROOT%{_datadir}/applications/*.desktop
+
+# remove needless gsettings convert file to avoid slow session start
+rm -f  %{buildroot}%{_datadir}/MateConf/gsettings/caja.convert
 
 
 %find_lang caja
@@ -126,16 +126,16 @@ $RPM_BUILD_ROOT%{_datadir}/applications/*.desktop
 %doc AUTHORS COPYING COPYING-DOCS COPYING.LIB NEWS README
 %{_bindir}/*
 %{_datadir}/caja
-%{_libdir}/caja
+%{_libdir}/caja/
 %{_datadir}/pixmaps/caja/
 %{_datadir}/applications/*.desktop
 %{_datadir}/icons/hicolor/*/apps/caja.png
 %{_datadir}/icons/hicolor/scalable/apps/caja.svg
+%{_datadir}/icons/hicolor/*/emblems/emblem-note.png
 %{_datadir}/glib-2.0/schemas/org.mate.*.gschema.xml
 %{_mandir}/man1/*
 %{_libexecdir}/caja-convert-metadata
 %{_datadir}/mime/packages/caja.xml
-%{_datadir}/MateConf/gsettings/caja.convert
 %{_datadir}/dbus-1/services/org.mate.freedesktop.FileManager1.service
 %{_sysconfdir}/xdg/autostart/caja-autostart.desktop
 
@@ -145,13 +145,16 @@ $RPM_BUILD_ROOT%{_datadir}/applications/*.desktop
 
 %files devel
 %doc %{_datadir}/gtk-doc/html/libcaja-extension/
-%{_includedir}/caja
+%{_includedir}/caja/
 %{_libdir}/pkgconfig/*
 %{_libdir}/*.so
 %{_datadir}/gir-1.0/*.gir
 
 
 %changelog
+* Mon Jul 22 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.2-alt1_1
+- new fc release
+
 * Tue Jun 04 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.1-alt2_4
 - new fc release
 

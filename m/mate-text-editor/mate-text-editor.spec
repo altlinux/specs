@@ -1,41 +1,37 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/glib-mkenums /usr/bin/gtkdocize libICE-devel libgio-devel pkgconfig(gio-2.0) pkgconfig(gtk+-2.0) pkgconfig(libsoup-2.4) pkgconfig(libxml-2.0) pkgconfig(x11)
+BuildRequires: /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/glib-mkenums /usr/bin/gtkdocize libICE-devel libgio-devel pkgconfig(gio-2.0) pkgconfig(glib-2.0) pkgconfig(gmodule-2.0) pkgconfig(gthread-2.0) pkgconfig(gtk+-2.0) pkgconfig(libxml-2.0) pkgconfig(x11)
 # END SourceDeps(oneline)
 %add_python_req_skip pluma
 %define _libexecdir %_prefix/libexec
 Summary:  Text editor for the MATE desktop
 Name:     mate-text-editor
 Version:  1.6.0
-Release:  alt1_1
+Release:  alt1_2
 License:  GPLv2+
 Group:    Editors
 URL:      http://mate-desktop.org
-Source0:  http://pub.mate-desktop.org/releases/1.5/%{name}-%{version}.tar.xz
+Source0:  http://pub.mate-desktop.org/releases/1.6/%{name}-%{version}.tar.xz
 
 
 BuildRequires: desktop-file-utils
 BuildRequires: libenchant-devel
-BuildRequires: libgail-devel
-BuildRequires: /usr/bin/autopoint
-BuildRequires: glib2-devel
+BuildRequires: libsoup-devel
 BuildRequires: gtk2-devel
 BuildRequires: libgtksourceview-devel
 BuildRequires: iso-codes-devel
-#BuildRequires: libattr-devel
 BuildRequires: libSM-devel
 BuildRequires: mate-common
 BuildRequires: mate-doc-utils
-BuildRequires: pango-devel
 BuildRequires: python-module-pygobject-devel
 BuildRequires: python-module-pygtk-devel
 BuildRequires: python-module-pygtksourceview-devel
 BuildRequires: python-devel
 BuildRequires: rarian-compat
-BuildRequires: which
 
 Requires: pygtk2
-# the run-command plugin uses zenity
-Requires: zenity
+Requires: mate-desktop
+# the run-command plugin uses mate-dialogs
+Requires: mate-dialogs
 Source44: import.info
 
 %description
@@ -52,7 +48,7 @@ adjusting indentation levels.
 %package devel
 Summary: Support for developing plugins for the mate-text-editor text editor
 Group: Development/C
-Requires: %{name} = %{version}-%{release}
+Requires: %{name}%{?_isa} = %{version}-%{release}
 
 %description devel
 Development files for mate-text-editor
@@ -68,6 +64,7 @@ find ./*/*/* -type f -exec chmod 644 {} \;
 
 %build
 %configure \
+        --disable-static          \
         --disable-scrollkeeper    \
         --enable-gtk-doc-html     \
         --enable-gvfs-metadata    \
@@ -79,16 +76,18 @@ make %{?_smp_mflags} V=1
 %install
 make DESTDIR=%{buildroot} install
 
-desktop-file-install --delete-original             \
-  --remove-category="MATE"                         \
-  --add-category="X-Mate"                          \
-  --dir %{buildroot}%{_datadir}/applications       \
+desktop-file-install                                \
+    --delete-original                               \
+    --dir %{buildroot}%{_datadir}/applications      \
 %{buildroot}%{_datadir}/applications/*.desktop
 
 ## clean up all the static libs for plugins
-/bin/rm -f `find $RPM_BUILD_ROOT%{_libdir}/pluma/plugins -name "*.a"`
-/bin/rm -f `find $RPM_BUILD_ROOT%{_libdir}/pluma/plugins -name "*.la"`
-/bin/rm -f `find $RPM_BUILD_ROOT%{_libdir}/pluma/plugin-loaders -name "*.la"`
+/bin/rm -f `find %{buildroot}%{_libdir}/pluma/plugins -name "*.a"`
+/bin/rm -f `find %{buildroot}%{_libdir}/pluma/plugins -name "*.la"`
+/bin/rm -f `find %{buildroot}%{_libdir}/pluma/plugin-loaders -name "*.la"`
+
+# remove needless gsettings convert file to avoid slow session start
+rm -f  %{buildroot}%{_datadir}/MateConf/gsettings/pluma.convert
 
 
 %find_lang pluma --with-gnome
@@ -105,7 +104,6 @@ desktop-file-install --delete-original             \
 %{_datadir}/glib-2.0/schemas/org.mate.pluma.gschema.xml
 %{_datadir}/glib-2.0/schemas/org.mate.pluma.plugins.filebrowser.gschema.xml
 %{_datadir}/glib-2.0/schemas/org.mate.pluma.plugins.time.gschema.xml
-%{_datadir}/MateConf/gsettings/pluma.convert
 
 %files devel
 %{_includedir}/pluma
@@ -114,6 +112,9 @@ desktop-file-install --delete-original             \
 
 
 %changelog
+* Mon Jul 22 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.0-alt1_2
+- new fc release
+
 * Tue Apr 16 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.0-alt1_1
 - new fc release
 

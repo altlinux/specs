@@ -5,7 +5,7 @@ BuildRequires: /usr/bin/glib-gettextize libgio-devel pkgconfig(dbus-1) pkgconfig
 %define _libexecdir %_prefix/libexec
 Name:           mate-notification-daemon
 Version:        1.6.0
-Release:        alt1_1
+Release:        alt1_2
 Summary:        Notification daemon for MATE Desktop
 License:        GPLv2+
 URL:            http://mate-desktop.org
@@ -13,15 +13,14 @@ Source0:        http://pub.mate-desktop.org/releases/1.5/%{name}-%{version}.tar.
 
 BuildRequires:  libdbus-glib-devel
 BuildRequires:  desktop-file-utils
-BuildRequires:  gsettings-desktop-schemas-devel
-BuildRequires:  icon-naming-utils
 BuildRequires:  libcanberra-devel
 BuildRequires:  libnotify-devel
 BuildRequires:  libmatewnck-devel
 BuildRequires:  mate-common
 BuildRequires:  mate-desktop-devel
 BuildRequires:  mate-doc-utils
-Requires:       libnotify
+
+Provides:       desktop-notification-daemon
 Source44: import.info
 
 %description
@@ -47,6 +46,9 @@ desktop-file-install                               \
         --dir=%{buildroot}%{_datadir}/applications \
 %{buildroot}/%{_datadir}/applications/mate-notification-properties.desktop
 
+# remove needless gsettings convert file to avoid slow session start
+rm -f  %{buildroot}%{_datadir}/MateConf/gsettings/mate-notification-daemon.convert
+
 %find_lang %{name}
 
 %files -f %{name}.lang
@@ -58,11 +60,13 @@ desktop-file-install                               \
 %{_libexecdir}/mate-notification-daemon
 %{_datadir}/icons/hicolor/*/apps/mate-notification-properties.*
 %{_datadir}/glib-2.0/schemas/org.mate.NotificationDaemon.gschema.xml
-%{_datadir}/MateConf/gsettings/mate-notification-daemon.convert
 %{_libdir}/mate-notification-daemon
 
 
 %changelog
+* Mon Jul 22 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.0-alt1_2
+- new fc release
+
 * Tue Apr 09 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.0-alt1_1
 - new fc release
 
