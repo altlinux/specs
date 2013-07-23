@@ -1,26 +1,29 @@
 Group: Archiving/Other
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/glib-mkenums libgio-devel pkgconfig(gio-unix-2.0) pkgconfig(gtk+-2.0) pkgconfig(gtk+-3.0)
+BuildRequires: /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/glib-mkenums libgio-devel pkgconfig(gio-unix-2.0) pkgconfig(glib-2.0) pkgconfig(gthread-2.0) pkgconfig(gtk+-2.0) pkgconfig(gtk+-3.0)
 # END SourceDeps(oneline)
 %define _libexecdir %_prefix/libexec
 %define oldname mate-file-archiver
 Name:           mate-file-archiver
 Version:        1.6.0
-Release:        alt1_1
+Release:        alt1_2
 Summary:        MATE Desktop file archiver
 License:        GPLv2+ and LGPLv2+
 URL:            http://mate-desktop.org
 Source0:        http://pub.mate-desktop.org/releases/1.6/%{name}-%{version}.tar.xz
 
+# upstream patch to fix
+# https://github.com/mate-desktop/mate-file-archiver/issues/19
+# will be removed with next release
+Patch0:         mate-file-archiver_missing_gsettings_schema.patch
+
 BuildRequires:  mate-common
 BuildRequires:  desktop-file-utils
-BuildRequires:  glib2-devel
 BuildRequires:  gtk2-devel
 BuildRequires:  mate-common
 BuildRequires:  mate-doc-utils
 BuildRequires:  mate-file-manager-devel
 BuildRequires:  mate-desktop-devel
-BuildRequires:  gsettings-desktop-schemas-devel
 BuildRequires:  libSM-devel
 BuildRequires:  rarian-compat
 BuildRequires:  librarian-devel
@@ -40,6 +43,7 @@ such as tar or zip files.
 
 %prep
 %setup -n %{name}-%{version} -q
+%patch0 -p1 -b .gsettings_schema
 NOCONFIGURE=1 ./autogen.sh
 %patch33 -p0
 
@@ -64,6 +68,9 @@ desktop-file-install                                \
 
 find %{buildroot} -name "*.la" -exec rm -f {} ';'
 
+# remove needless gsettings convert file to avoid slow session start
+rm -f  %{buildroot}%{_datadir}/MateConf/gsettings/engrampa.convert
+
 %find_lang engrampa
 
 %files -f engrampa.lang
@@ -75,13 +82,15 @@ find %{buildroot} -name "*.la" -exec rm -f {} ';'
 %{_datadir}/applications/engrampa.desktop
 %{_datadir}/icons/hicolor/*/apps/*.png
 %{_datadir}/icons/hicolor/scalable/apps/*.svg
-%{_datadir}/MateConf/gsettings/engrampa.convert
 %{_datadir}/glib-2.0/schemas/org.mate.engrampa.gschema.xml
 %{_libdir}/caja/extensions-2.0/libcaja-engrampa.so
 %{_datadir}/omf/engrampa
 
 
 %changelog
+* Mon Jul 22 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.0-alt1_2
+- new fc release
+
 * Mon Apr 15 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.0-alt1_1
 - new fc release
 

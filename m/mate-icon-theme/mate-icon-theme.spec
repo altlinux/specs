@@ -1,7 +1,7 @@
 Group: Graphical desktop/Other
 %define _libexecdir %_prefix/libexec
 Name:           mate-icon-theme
-Version:        1.6.0
+Version:        1.6.1
 Release:        alt1_1
 Summary:        Icon theme for MATE Desktop
 License:        GPLv2+ and LGPLv2+
@@ -49,6 +49,9 @@ make DESTDIR=%{buildroot} install
 
 
 %changelog
+* Mon Jul 22 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.1-alt1_1
+- new fc release
+
 * Sat Apr 06 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.0-alt1_1
 - new fc release
 
