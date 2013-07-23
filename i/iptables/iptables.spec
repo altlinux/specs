@@ -1,5 +1,5 @@
 Name: iptables
-Version: 1.4.18
+Version: 1.4.19.1
 Release: alt1
 
 Summary: Tools for managing Linux kernel packet filtering capabilities
@@ -12,10 +12,9 @@ Url: http://www.netfilter.org/projects/iptables/
 Source: %name-%version-%release.tar
 
 Requires: lib%name = %version-%release
-# Backwards compatibility for libipq.
-%define lib_suffix %nil
-%{expand:%%define lib_suffix %(test %_lib != lib64 && echo %%nil || echo '()(64bit)')}
-Provides: libipq.so.0.0%lib_suffix
+
+# for nfbpf_compile
+BuildRequires: libpcap-devel
 
 %def_disable static
 
@@ -57,8 +56,7 @@ Conflicts: %name < 1.4.13
 iptables is used to set up, maintain, and inspect the tables of IP
 packet filter rules in the Linux kernel.
 
-This package contains libip4tc, libip6tc, libxtables and libipq
-shared libraries.
+This package contains libip4tc, libip6tc and libxtables shared libraries.
 
 %package -n lib%name-devel
 Summary: iptables development files
@@ -96,7 +94,8 @@ operates with netfilter.
 %autoreconf
 %configure \
 	%{subst_enable static} \
-	--enable-libipq \
+	--enable-bpf-compiler \
+	--disable-libipq \
 	--sbindir=/sbin \
 	--with-xtlibdir=/%_lib/iptables \
 	#
@@ -110,14 +109,13 @@ operates with netfilter.
 ln -snf ../../sbin/xtables-multi %buildroot%_bindir/iptables-xml
 
 mkdir -p %buildroot/%_lib
-# Relocate some shared libraries from %_libdir/ to /%_lib/.
-for f in %buildroot%_libdir/lib{ip?tc,xtables}*.so; do
+# Relocate shared libraries from %_libdir/ to /%_lib/.
+for f in %buildroot%_libdir/lib*.so; do
 	t=`objdump -p "$f" |awk '/SONAME/ {print $2}'`
 	[ -n "$t" ]
 	ln -snf ../../%_lib/"$t" "$f"
 done
-mv %buildroot%_libdir/lib{ip?tc,xtables}*.so.* %buildroot/%_lib/
-ln -s libipq.so.0.0.0 %buildroot%_libdir/libipq.so.0.0
+mv %buildroot%_libdir/lib*.so.* %buildroot/%_lib/
 
 output_format=$(%__cc $CFLAGS $LDFLAGS -shared -xc /dev/null -o/dev/null -Wl,--verbose -v 2>&1 |
 		sed -n -f output-format.sed)
@@ -208,13 +206,11 @@ fi
 
 %files -n lib%name
 /%_lib/lib*.so.*
-%_libdir/lib*.so.*
 
 %files -n lib%name-devel
 %_includedir/*
 %_libdir/lib*.so
 %_pkgconfigdir/*.pc
-%_man3dir/*
 
 %if_enabled static
 %files -n lib%name-devel-static
@@ -222,6 +218,9 @@ fi
 %endif
 
 %changelog
+* Mon Jul 22 2013 Dmitry V. Levin <ldv@altlinux.org> 1.4.19.1-alt1
+- Updated to stable v1.4.19.1-2-gc545933.
+
 * Wed Mar 06 2013 Dmitry V. Levin <ldv@altlinux.org> 1.4.18-alt1
 - Updated to 1.4.18 with additional fixes from Jan Engelhardt.
 - Added systemd service files (closes: #28058, #28059).
