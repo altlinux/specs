@@ -3,7 +3,7 @@
 
 Name: bumblebee
 Version: 3.2.1
-Release: alt1
+Release: alt2
 
 Summary: Bumblebee - support for NVidia Optimus laptops on Linux
 Group: System/Kernel and hardware
@@ -17,7 +17,8 @@ Source1: bumblebeed.in
 Patch: %name-3.1-alt-CONF_GID.patch
 
 Requires: NVIDIA_GLX VirtualGL
-Requires: bbswitch
+# see ALT #29213
+# Requires: bbswitch
 
 BuildRequires: help2man libX11-devel glib2-devel
 BuildRequires: libbsd-devel >= 0.2.0
@@ -28,6 +29,10 @@ providing an elegant and stable means of managing Optimus hybrid
 graphics chipsets. A primary goal of this project is to not only enable
 use of the discrete GPU for rendering, but also to enable smart power
 management of the dGPU when it's not in use.
+
+To enable power management functionality you need to install
+kernel-modules-bbswitch package for your running kernel.
+
 
 %prep
 %setup
@@ -82,6 +87,9 @@ groupadd -r -f %bumblebeed_group
 %exclude %_docdir/bumblebee
 
 %changelog
+* Tue Jul 23 2013 Yuri N. Sedunov <aris@altlinux.org> 3.2.1-alt2
+- removed forbidden dep on bbswitch (ALT #29213)
+
 * Fri Jul 05 2013 Yuri N. Sedunov <aris@altlinux.org> 3.2.1-alt1
 - 3.2.1
 
