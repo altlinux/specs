@@ -5,7 +5,7 @@
 %define sover %somver.10.0
 Name: mumps
 Version: 4.10.0
-Release: alt6
+Release: alt7
 Summary: MUltifrontal Massively Parallel sparse direct Solver
 License: Free
 Group: Sciences/Mathematics
@@ -279,6 +279,9 @@ popd
 %_docdir/lib%name-devel
 
 %changelog
+* Tue Jul 23 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.10.0-alt7
+- Fixed build
+
 * Sun Aug 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.10.0-alt6
 - Built with OpenBLAS instead of GotoBLAS2
 
