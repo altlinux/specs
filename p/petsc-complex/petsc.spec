@@ -25,7 +25,7 @@
 
 Name: %oname-%scalar_type
 Version: 3.4.2
-Release: alt1
+Release: alt2
 Summary: Portable, Extensible Toolkit for Scientific Computation (%scalar_type scalars)
 License: BSD
 Group: Sciences/Mathematics
@@ -507,7 +507,7 @@ CCAS="-lcca_0_8_6_b_1.4.0-cxx -lsidlstub_cxx"
 	--with-ptscotch-lib=[-lesmumps,-lptscotch,-lptscotcherr] \
 	--with-ptscotch-include=%_includedir \
 	--with-pastix=1 \
-	--with-pastix-include=%_includedir \
+	--with-pastix-include=%_libdir/pastix/include \
 	--with-pastix-lib=$PASTIX_LIBS \
 %endif
 %if_with tops
@@ -790,6 +790,9 @@ sed -i 's|\(\-lpetsc\)|-L%ldir/lib \1|' \
 %ldir/sources
 
 %changelog
+* Tue Jul 23 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.4.2-alt2
+- Fixed build
+
 * Tue Jul 09 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.4.2-alt1
 - Version 3.4.2
 
@@ -982,3 +985,4 @@ sed -i 's|\(\-lpetsc\)|-L%ldir/lib \1|' \
 
 * Wed Jun 24 2009 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0.0_p6-alt1
 - Initial build for Sisyphus
+
