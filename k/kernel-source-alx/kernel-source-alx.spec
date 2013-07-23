@@ -1,6 +1,6 @@
 Name: kernel-source-alx
 Version: 20130405
-Release: alt2
+Release: alt3
 
 Summary: alx Ethernet driver
 License: GPL
@@ -33,6 +33,9 @@ tar -cjf %kernel_srcdir/alx-%version.tar.bz2 alx-%version
 %attr(0644,root,root) %kernel_src/alx-%version.tar.bz2
 
 %changelog
+* Tue Jul 23 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 20130405-alt3
+- return support for pre 3.10 kernels
+
 * Tue Jul 16 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 20130405-alt2
 - merge github/hauke/kernel-3.10-fixes
 
