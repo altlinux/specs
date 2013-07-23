@@ -1,6 +1,6 @@
 Name: libgit2
-Version: 0.17.0
-Release: alt1.c497a6
+Version: 0.19.0
+Release: alt1
 
 Summary: linkable library for Git
 License: GPLv2 with linking exception
@@ -41,7 +41,7 @@ sed -i 's/LIB_INSTALL_DIR lib/LIB_INSTALL_DIR lib${LIB_SUFFIX}/' CMakeLists.txt
 %cmake_build
 
 %install
-%cmakeinstall_std 
+%cmakeinstall_std
 
 %files
 %_libdir/%name.so.*
@@ -57,6 +57,9 @@ sed -i 's/LIB_INSTALL_DIR lib/LIB_INSTALL_DIR lib${LIB_SUFFIX}/' CMakeLists.txt
 %_libdir/pkgconfig/%name.pc
 
 %changelog
+* Tue Jul 23 2013 Alexey Shabalin <shaba@altlinux.ru> 0.19.0-alt1
+- 0.19.0
+
 * Sun Oct 21 2012 Vladimir Lettiev <crux@altlinux.ru> 0.17.0-alt1.c497a6
 - git snapshot c497a6
 
