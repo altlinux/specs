@@ -6,14 +6,23 @@
 %def_disable gles2
 %endif
 
+
+%def_enable cairo
+%def_disable profile
+
+%def_enable glib
+%def_enable cogl_pango
+%def_enable gdk_pixbuf
+%def_disable examples_install
+%def_enable gl
 %def_enable wayland_egl
 %def_disable wayland_server
-%def_disable kms_egl_platform
-
+%def_disable kms_egl
+%def_enable xlib_egl
 
 Name: libcogl
 Version: 1.14.0
-Release: alt2
+Release: alt3.git.ba5e54
 Summary: A library for using 3D graphics hardware to draw pretty pictures
 
 Group: System/Libraries
@@ -25,18 +34,31 @@ Patch: %name-%version-%release.patch
 
 Conflicts: libclutter < 1.8.0
 
-BuildRequires: libcairo-devel libcairo-gobject-devel
-BuildRequires: glib2-devel >= 2.32.0
-BuildRequires: gobject-introspection-devel
-BuildRequires: libgdk-pixbuf-devel
-BuildRequires: gtk-doc
-BuildRequires: libXcomposite-devel >= 0.4 libXext-devel libXdamage-devel libX11-devel libXfixes-devel >= 3 libXrandr-devel >= 1.2
-BuildRequires: libGL-devel
-BuildRequires: libpango-devel libpango-gir-devel
-%{?_enable_gles2:BuildRequires: libGLES-devel >= 8.0}
-%{?_enable_wayland_egl:BuildRequires: libwayland-client-devel libwayland-cursor-devel libwayland-egl-devel}
-%{?_enable_wayland_server:BuildRequires: libwayland-server-devel >= 1.0.0}
-%{?_kms_egl_platform:BuildRequires: libdrm-devel libgbm-devel}
+%define glib_ver 2.32.0
+%define pangocairo_ver 1.20
+%define gi_ver 0.9.5
+%define gdk_pixbuf_ver 2.0
+%define uprof_ver 0.3
+%define gtk_doc_ver 1.13
+%define xfixes_ver 3
+%define xcomposite_ver 0.4
+%define xrandr_ver 1.2
+%define cairo_ver 1.10
+%define wayland_ver 1.0.0
+
+%{?_enable_cairo:BuildRequires: pkgconfig(cairo) >= %cairo_ver pkgconfig(cairo-gobject)}
+%{?_enable_profile:BuildRequires: pkgconfig(uprof-0.3) >= %uprof_ver}
+%{?_enable_glib:BuildRequires: pkgconfig(gobject-2.0) pkgconfig(gmodule-no-export-2.0) pkgconfig(glib-2.0)}
+%{?_enable_cogl_pango:BuildRequires: pkgconfig(pangocairo) >= %pangocairo_ver}
+%{?_enable_gdk_pixbuf:BuildRequires: pkgconfig(gdk-pixbuf-2.0) >= %gdk_pixbuf_ver}
+%{?_enable_gles2:BuildRequires: pkgconfig(glesv2)}
+%{?_enable_gl:BuildRequires: pkgconfig(x11) pkgconfig(gl)}
+%{?_enable_wayland_egl:BuildRequires: pkgconfig(wayland-egl) >= %wayland_ver pkgconfig(wayland-client) >= %wayland_ver}
+%{?_enable_kms_egl:BuildRequires: pkgconfig(gbm) pkgconfig(libdrm)}
+%{?_enable_wayland_server:BuildRequires: pkgconfig(wayland-server) >= %wayland_ver}
+%{?_enable_xlib_egl:BuildRequires: pkgconfig(egl) pkgconfig(x11) pkgconfig(xext) pkgconfig(xfixes) >= %xfixes_ver pkgconfig(xdamage) pkgconfig(xcomposite) >= %xcomposite_ver pkgconfig(xrandr) >= %xrandr_ver}
+BuildRequires: gtk-doc >= %gtk_doc_ver
+BuildRequires: gobject-introspection-devel >= %gi_ver  gir(GL) = 1.0 gir(GObject) = 2.0 gir(Pango) = 1.0 gir(PangoCairo) = 1.0
 
 %description
 Cogl is a small open source library for using 3D graphics hardware to draw
@@ -101,12 +123,18 @@ Contains developer documentation for %oname.
 NOCONFIGURE=1 ./autogen.sh
 %configure  \
 	--disable-static \
+	%{subst_enable profile} \
+	%{subst_enable cairo} \
+	%{subst_enable glib} \
+	%{?_enable_cogl_pango:--enable-cogl-pango} \
+	%{?_enable_examples_install:--enable-examples-install} \
 	--enable-gtk-doc \
 	--enable-introspection \
 	%{subst_enable gles2} \
-	%{?_kms_egl_platform:--enable-kms-egl-platform } \
+	%{?_enable_kms_egl:--enable-kms-egl-platform } \
 	%{?_enable_wayland_egl:--enable-wayland-egl-platform} \
-	%{?_enable_wayland_server:--enable-wayland-egl-server}
+	%{?_enable_wayland_server:--enable-wayland-egl-server} \
+	%{?_enable_xlib_egl:--enable-xlib-egl-platform}
 
 %make_build
 
@@ -134,6 +162,9 @@ NOCONFIGURE=1 ./autogen.sh
 %_datadir/gtk-doc/html/*
 
 %changelog
+* Tue Jul 23 2013 Alexey Shabalin <shaba@altlinux.ru> 1.14.0-alt3.git.ba5e54
+- snapshot upstream/cogl-1.14 ba5e5410babf705f53b591579c104181dd752bec
+
 * Tue Apr 23 2013 Yuri N. Sedunov <aris@altlinux.org> 1.14.0-alt2
 - enabled wayland-egl backend
 
