@@ -1,6 +1,6 @@
 %define dist Test-Tester
 Name: perl-%dist
-Version: 0.108
+Version: 0.109
 Release: alt1
 
 Summary: Ease testing test modules built with Test::Builder
@@ -8,7 +8,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/F/FD/FDALY/Test-Tester-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -32,6 +32,9 @@ allows you to test it with the minimum of effort.
 %perl_vendor_privlib/Test
 
 %changelog
+* Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 0.109-alt1
+- automated CPAN update
+
 * Mon Feb 20 2012 Alexey Tourbin <at@altlinux.ru> 0.108-alt1
 - 0.107 -> 0.108
 
