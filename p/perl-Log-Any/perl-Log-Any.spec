@@ -1,5 +1,5 @@
 Name: perl-Log-Any
-Version: 0.14
+Version: 0.15
 Release: alt1
 
 Summary: Log::Any - bringing loggers and listeners together
@@ -9,7 +9,7 @@ Group: Development/Perl
 Url: %CPAN Log-Any
 
 BuildArch: noarch
-Source: http://www.cpan.org/authors/id/J/JS/JSWARTZ/Log-Any-0.14.tar.gz
+Source: http://www.cpan.org/authors/id/J/JS/JSWARTZ/Log-Any-%{version}.tar.gz
 
 # Automatically added by buildreq on Thu Nov 19 2009
 BuildRequires: perl-Module-Install
@@ -41,6 +41,9 @@ The application, in turn, may choose one or more logging mechanisms via Log::Any
 %perl_vendor_privlib/Log/Any*
 
 %changelog
+* Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 0.15-alt1
+- automated CPAN update
+
 * Mon Sep 19 2011 Igor Vlasenko <viy@altlinux.ru> 0.14-alt1
 - automated CPAN update
 
