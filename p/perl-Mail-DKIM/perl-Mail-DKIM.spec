@@ -3,8 +3,8 @@
 %define module Mail-DKIM
 
 Name: perl-%module
-Version: 0.39
-Release: alt2
+Version: 0.40
+Release: alt1
 
 Packager: Victor Forsiuk <force@altlinux.org>
 
@@ -13,7 +13,7 @@ License: Perl
 Group: Development/Perl
 
 URL: %CPAN %module
-Source: http://search.cpan.org/CPAN/authors/id/J/JA/JASLONG/Mail-DKIM-%version.tar.gz
+Source: http://www.cpan.org/authors/id/J/JA/JASLONG/Mail-DKIM-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -39,6 +39,9 @@ verifying standard for Internet mail.
 %exclude %perl_vendor_privlib/Mail/sample*
 
 %changelog
+* Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 0.40-alt1
+- automated CPAN update
+
 * Sun Oct 23 2011 Igor Vlasenko <viy@altlinux.ru> 0.39-alt2
 - fixed build (disabled tests because network is disabled)
 
