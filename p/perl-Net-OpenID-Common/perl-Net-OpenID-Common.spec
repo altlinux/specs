@@ -1,15 +1,15 @@
 %define module Net-OpenID-Common
 
 Name: perl-%module
-Version: 1.14
-Release: alt2
+Version: 1.17
+Release: alt1
 
 Summary: Libraries shared between Net::OpenID::Consumer and Net::OpenID::Server
 License: Perl
 Group: Development/Perl
 
 Url: %CPAN %module
-Source: http://www.cpan.org/modules/by-module/Net/%module-%version.tar.gz
+Source: http://www.cpan.org/authors/id/W/WR/WROG/Net-OpenID-Common-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -32,6 +32,9 @@ Libraries shared between Net::OpenID::Consumer and Net::OpenID::Server.
 %perl_vendor_privlib/Net/OpenID/
 
 %changelog
+* Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 1.17-alt1
+- automated CPAN update
+
 * Fri Apr 12 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1.14-alt2
 - build fixed
 
