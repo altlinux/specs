@@ -14,7 +14,7 @@
 %define _enable_test 1
 
 Name: perl-DBIx-Connector
-Version: 0.52
+Version: 0.53
 Release: alt1
 
 Summary: Fast, safe DBI connection and transaction management
@@ -26,7 +26,7 @@ Url: http://www.cpan.org
 Packager: Eugene Prokopiev <enp@altlinux.ru>
 
 BuildArch: noarch
-Source: %m_distro-%version.tar.gz
+Source: http://www.cpan.org/authors/id/D/DW/DWHEELER/DBIx-Connector-%{version}.tar.gz
 
 BuildRequires: perl-DBI-devel perl-Module-Build perl-Test-Pod-Coverage perl-Test-MockModule
 
@@ -45,6 +45,9 @@ BuildRequires: perl-DBI-devel perl-Module-Build perl-Test-Pod-Coverage perl-Test
 %perl_vendor_privlib/DBIx/*
 
 %changelog
+* Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 0.53-alt1
+- automated CPAN update
+
 * Fri Oct 26 2012 Eugene Prokopiev <enp@altlinux.ru> 0.52-alt1
 - initial build for ALT Linux Sisyphus
 
