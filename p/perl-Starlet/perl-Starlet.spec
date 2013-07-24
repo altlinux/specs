@@ -3,13 +3,13 @@ BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(CPAN.pm) perl(Config.pm) perl(Fcntl.pm) perl(HTTP/Date.pm) perl(HTTP/Request/Common.pm) perl(HTTP/Status.pm) perl(IO/Socket/INET.pm) perl(LWP/UserAgent.pm) perl(List/Util.pm) perl(Plack/HTTPParser.pm) perl(Plack/Loader.pm) perl(Plack/Runner.pm) perl(Plack/TempBuffer.pm) perl(Plack/Test.pm) perl(Plack/Test/Suite.pm) perl(Plack/Util.pm) perl(Socket.pm) perl(Time/HiRes.pm) perl(Try/Tiny.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Starlet
-Version:        0.18
-Release:        alt1_1
+Version:        0.19
+Release:        alt1
 Summary:        Simple, high-performance PSGI/Plack HTTP server
 License:        GPL+ or Artistic
 Group:          Development/Perl
 URL:            http://search.cpan.org/dist/Starlet/
-Source0:        http://www.cpan.org/authors/id/K/KA/KAZUHO/Starlet-%{version}.tar.gz
+Source:        http://www.cpan.org/authors/id/K/KA/KAZUHO/Starlet-%{version}.tar.gz
 BuildArch:      noarch
 
 BuildRequires:  /usr/bin/start_server
@@ -49,6 +49,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 0.19-alt1
+- automated CPAN update
+
 * Mon Mar 25 2013 Igor Vlasenko <viy@altlinux.ru> 0.18-alt1_1
 - update to new release by fcimport
 
