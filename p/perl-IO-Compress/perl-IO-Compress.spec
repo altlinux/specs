@@ -1,6 +1,6 @@
 %define dist IO-Compress
 Name: perl-%dist
-Version: 2.055
+Version: 2.061
 Release: alt1
 
 Summary: Read and write compressed data
@@ -8,7 +8,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/P/PM/PMQS/IO-Compress-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -43,6 +43,9 @@ export TEST_SKIP_VERSION_CHECK=1
 %perl_vendor_privlib/IO
 
 %changelog
+* Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 2.061-alt1
+- automated CPAN update
+
 * Wed Sep 26 2012 Alexey Tourbin <at@altlinux.ru> 2.055-alt1
 - 2.048 -> 2.055
 - packaged /usr/bin/zipdetails, requires Encode
