@@ -1,6 +1,6 @@
 %define dist Mouse
 Name: perl-%dist
-Version: 1.02
+Version: 1.11
 Release: alt1
 
 Summary: Moose minus the antlers
@@ -8,7 +8,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/G/GF/GFUJI/Mouse-%{version}.tar.gz
 
 # XXX syntax check fails
 %define __spec_autodep_custom_pre export MOUSE_PUREPERL=1
@@ -43,6 +43,9 @@ export XSUBPP_NO_STATIC_XS=1
 %perl_vendor_archlib/Test
 
 %changelog
+* Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 1.11-alt1
+- automated CPAN update
+
 * Sat Sep 01 2012 Vladimir Lettiev <crux@altlinux.ru> 1.02-alt1
 - 0.95 -> 1.02
 - built for perl-5.16
