@@ -1,6 +1,6 @@
 %define dist PPIx-Regexp
 Name: perl-PPIx-Regexp
-Version: 0.028
+Version: 0.034
 Release: alt1
 
 Summary: Represent a regular expression of some sort
@@ -8,7 +8,7 @@ License: Perl
 Group: Development/Perl
 
 Url: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/W/WY/WYANT/PPIx-Regexp-%{version}.tar.gz
 
 BuildRequires: perl-Task-Weaken perl-Readonly perl-PPI perl-Module-Build perl-List-MoreUtils perl-Params-Util
 BuildArch: noarch
@@ -32,6 +32,9 @@ parses a Perl script, and navigable in much the same way.
 %doc Changes README 
 
 %changelog
+* Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 0.034-alt1
+- automated CPAN update
+
 * Sun Sep 30 2012 Vladimir Lettiev <crux@altlinux.ru> 0.028-alt1
 - 0.027 -> 0.028
 
