@@ -13,7 +13,7 @@
 
 Name: clutter
 Version: 1.14.4
-Release: alt1
+Release: alt2.git.74f9d8
 Summary: Clutter Core Library
 License: LGPLv2+
 Group: System/Libraries
@@ -21,7 +21,7 @@ Url: http://www.clutter-project.org/
 Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 
 Source: %name-%version.tar
-# Patch: %name-%version-%release.patch
+Patch: %name-%version-%release.patch
 
 %define glib_ver 2.31.19
 %define cogl_ver 1.14.0
@@ -113,7 +113,7 @@ Contains developer documentation for %name.
 
 %prep
 %setup -q
-# %%patch -p1
+%patch -p1
 
 %build
 gtkdocize
@@ -161,6 +161,9 @@ gtkdocize
 
 
 %changelog
+* Tue Jul 23 2013 Alexey Shabalin <shaba@altlinux.ru> 1.14.4-alt2.git.74f9d8
+- snapshot upstream/clutter-1.14 74f9d8a597acf0fd8458e3d6cb0475b8d9a0a6ba
+
 * Wed May 15 2013 Alexey Shabalin <shaba@altlinux.ru> 1.14.4-alt1
 - 1.14.4
 
