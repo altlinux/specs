@@ -14,7 +14,7 @@
 %define _enable_test 1
 
 Name: perl-%m_distro
-Version: 0.16
+Version: 0.18
 Release: alt1
 
 Summary: Manage Multiple Data Sources with Failover and Load Balancing
@@ -26,7 +26,7 @@ Url: http://search.cpan.org/dist/DBD-Multi/
 Packager: Michael Bochkaryov <misha@altlinux.ru>
 
 BuildArch: noarch
-Source: http://www.cpan.org/authors/id/D/DW/DWRIGHT/DBD-Multi-0.16.tar.gz
+Source: http://www.cpan.org/authors/id/D/DW/DWRIGHT/DBD-Multi-%{version}.tar.gz
 
 # Automatically added by buildreq on Mon May 26 2008
 BuildRequires: perl-Class-Accessor perl-DBD-File perl-DBD-SQLite perl-Module-Install perl-Sys-SigAction perl-Test-Exception perl-Test-Pod perl-Test-Pod-Coverage
@@ -53,6 +53,9 @@ The interface is nearly the same as other DBI drivers with one notable exception
 %exclude %perl_vendor_archlib
 
 %changelog
+* Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 0.18-alt1
+- automated CPAN update
+
 * Mon Sep 19 2011 Igor Vlasenko <viy@altlinux.ru> 0.16-alt1
 - automated CPAN update
 
