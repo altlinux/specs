@@ -1,6 +1,6 @@
 %set_verify_elf_method textrel=relaxed
-%define v8_ver 3.17.6.14
-%define rev 202711
+%define v8_ver 3.18.5.9
+%define rev 209842
 
 %def_disable debug
 %def_disable nacl
@@ -12,7 +12,7 @@
 %endif
 
 Name:           chromium
-Version:        27.0.1453.110
+Version:        28.0.1500.71
 Release:        alt1.r%rev
 
 Summary:        An open source web browser developed by Google
@@ -63,8 +63,6 @@ Patch67:        chromium_use_gold.patch
 Patch69:	chromium-alt-krb5-fix-path.patch
 # Set appropriate desktop file name for default browser check
 Patch71:	chromium-21.0.1158.0-set-desktop-file-name.patch
-# Fix build with speech-dispatcher >= 0.8
-Patch73:    chromium-speechd-0.8.patch
 
 # Patches from Debian
 Patch80:	nspr.patch
@@ -215,12 +213,11 @@ to Gnome's Keyring.
 %patch17 -p1
 #%%patch20 -p1
 %patch28 -p2
-%patch32 -p1
+#%%patch32 -p1
 %patch66 -p1
 #%%patch67 -p1
 %patch69 -p2
 %patch71 -p2
-%patch73 -p2
 
 %patch80 -p2
 %patch81 -p1
@@ -280,7 +277,7 @@ pushd src
 	-Duse_system_speex=1 \
 	-Duse_system_sqlite=0 \
 	-Duse_system_v8=1 \
-	-Duse_system_vpx=1 \
+	-Duse_system_vpx=0 \
 	-Duse_system_xdg_utils=0 \
 	-Duse_system_yasm=1 \
 	-Duse_system_zlib=0 \
@@ -320,6 +317,7 @@ pushd src
 	-Dlinux_use_gold_binary=0 \
     -Dlinux_link_libpci=1 \
     -Dlinux_link_libspeechd=1 \
+    -Dlibspeechd_h_prefix=speech-dispatcher/ \
 	-Denable_plugin_installation=0 \
 	-Dlinux_use_tcmalloc=0 \
 	-Duse_pulseaudio=1 \
@@ -446,6 +444,23 @@ printf '%_bindir/%name\t%_libdir/%name/%name-gnome\t15\n' > %buildroot%_altdir/%
 %_altdir/%name-gnome
 
 %changelog
+* Wed Jul 24 2013 Andrey Cherepanov <cas@altlinux.org> 28.0.1500.71-alt1.r209842
+- New version 28.0.1500.71
+- Security fixes:
+  - High CVE-2013-2879: Confusion setting up sign-in and sync.
+  - Medium CVE-2013-2868: Incorrect sync of NPAPI extension component.
+  - Medium CVE-2013-2869: Out-of-bounds read in JPEG2000 handling.
+  - Critical CVE-2013-2870: Use-after-free with network sockets.
+  - Medium CVE-2013-2853: Man-in-the-middle attack against HTTP in SSL.
+  - High CVE-2013-2871: Use-after-free in input handling.
+  - High CVE-2013-2873: Use-after-free in resource loading.
+  - Medium CVE-2013-2875: Out-of-bounds-read in SVG.
+  - Medium CVE-2013-2876: Extensions permissions confusion with interstitials.
+  - Low CVE-2013-2877: Out-of-bounds read in XML parsing.
+  - None: Remove the "viewsource" attribute on iframes.
+  - Medium CVE-2013-2878: Out-of-bounds read in text handling.
+  - High CVE-2013-2880: Various fixes from internal audits, fuzzing and other initiatives
+
 * Wed Jun 05 2013 Andrey Cherepanov <cas@altlinux.org> 27.0.1453.110-alt1.r202711
 - New version 27.0.1453.110
 - Security fixes:

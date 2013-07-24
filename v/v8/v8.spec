@@ -1,18 +1,19 @@
 %define MAJOR_VERSION     3
-%define MINOR_VERSION     17
-%define BUILD_NUMBER      6
-%define PATCH_LEVEL       14
+%define MINOR_VERSION     18
+%define BUILD_NUMBER      5
+%define PATCH_LEVEL       9
 %define soversion %MAJOR_VERSION.%MINOR_VERSION
-Name: v8
+
+Name:    v8
 Version: %MAJOR_VERSION.%MINOR_VERSION.%BUILD_NUMBER.%PATCH_LEVEL
 Release: alt1
 
 Summary: V8 is Google's open source JavaScript engine.
 License: BSD
-Group: System/Libraries
-Url: http://code.google.com/p/v8
+Group:   System/Libraries
+Url:     http://code.google.com/p/v8
 
-Source: %name-%version.tar
+Source:  %name-%version.tar
 BuildPreReq: gcc-c++ gyp
 
 %description
@@ -23,7 +24,7 @@ as specified in ECMA-262, 5rd edition.
 %package -n lib%name
 Summary: Google's JavaScript Engine
 License: BSD
-Group: System/Libraries
+Group:   System/Libraries
 
 %description -n lib%name
 V8 is Google's open source JavaScript engine. V8 is written in C++ and is used
@@ -31,7 +32,7 @@ in Google Chrome, the open source browser from Google. V8 implements ECMAScript
 as specified in ECMA-262, 5rd edition.
 
 %package -n lib%name-devel
-Group: Development/C++
+Group:   Development/C++
 Summary: Development headers and libraries for V8
 Requires: lib%name = %version-%release
 Conflicts: lib%name-devel < 3.15
@@ -43,9 +44,9 @@ Development headers and libraries for V8.
 %prep
 %setup -q
 sed -i 's|build/gyp/gyp|gyp|g' Makefile
-sed -i "s|'-Wno-unused-but-set-variable'||g" SConstruct
+#sed -i "s|'-Wno-unused-but-set-variable'||g" SConstruct
 %ifarch armh
-sed -i '/default.\+softfp/ s,softfp,hard,' SConstruct
+#sed -i '/default.\+softfp/ s,softfp,hard,' SConstruct
 sed -i '/v8_use_arm_eabi_hardfloat%/ s,false,true,' build/common.gypi
 %endif
 #sed -i '/^#define SONAME/s,"","libv8.so.%soversion",' src/version.cc
@@ -71,6 +72,9 @@ install -p -m644 include/*.h %buildroot%_includedir/
 %_libdir/*.so
 
 %changelog
+* Wed Jul 24 2013 Andrey Cherepanov <cas@altlinux.org> 3.18.5.9-alt1
+- New version
+
 * Thu May 30 2013 Andrey Cherepanov <cas@altlinux.org> 3.17.6.14-alt1
 - new version (Closes: #29004)
 
