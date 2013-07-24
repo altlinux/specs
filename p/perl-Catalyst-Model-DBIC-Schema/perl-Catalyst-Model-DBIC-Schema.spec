@@ -1,6 +1,6 @@
 %define dist Catalyst-Model-DBIC-Schema
 Name: perl-%dist
-Version: 0.60
+Version: 0.61
 Release: alt1
 
 Summary: DBIx::Class::Schema Model Class
@@ -8,7 +8,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/R/RK/RKITOVER/Catalyst-Model-DBIC-Schema-%{version}.tar.gz
+Source: http://www.cpan.org/authors/id/I/IL/ILMARI/Catalyst-Model-DBIC-Schema-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -34,6 +34,9 @@ on generating these Models via Helper scripts.
 %perl_vendor_privlib/Catalyst
 
 %changelog
+* Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 0.61-alt1
+- automated CPAN update
+
 * Tue Sep 25 2012 Igor Vlasenko <viy@altlinux.ru> 0.60-alt1
 - automated CPAN update
 
