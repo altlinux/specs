@@ -14,7 +14,7 @@
 %define _enable_test 1
 
 Name: perl-File-Next
-Version: 1.10
+Version: 1.12
 Release: alt1
 
 Summary: File-finding iterator
@@ -58,6 +58,9 @@ rm -rf %buildroot%perl_vendor_man3dir/
 %perl_vendor_privlib/File/Next.pm
 
 %changelog
+* Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 1.12-alt1
+- automated CPAN update
+
 * Wed Oct 03 2012 Igor Vlasenko <viy@altlinux.ru> 1.10-alt1
 - automated CPAN update
 
