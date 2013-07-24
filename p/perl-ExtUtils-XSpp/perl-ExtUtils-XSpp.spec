@@ -14,7 +14,7 @@
 %define _enable_test 1
 
 Name: perl-ExtUtils-XSpp
-Version: 0.1602
+Version: 0.1700
 Release: alt1
 
 Summary: ExtUtils-XSpp - Perl module
@@ -26,7 +26,7 @@ Url: http://www.cpan.org
 Packager: Slava Dubrovskiy <dubrsl@altlinux.org>
 BuildArch: noarch
 
-Source: http://www.cpan.org/authors/id/M/MB/MBARBON/ExtUtils-XSpp-0.1602.tar.gz
+Source: http://www.cpan.org/authors/id/S/SM/SMUELLER/ExtUtils-XSpp-%{version}.tar.gz
 Patch: perl-ExtUtils-XSpp-fix_build.patch
 
 # Automatically added by buildreq on Sat Jan 30 2010
@@ -59,6 +59,9 @@ pre-processor *xsubpp* and the XS++ pre-processor *xspp*.
 %_man1dir/*
 
 %changelog
+* Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 0.1700-alt1
+- automated CPAN update
+
 * Mon Sep 19 2011 Igor Vlasenko <viy@altlinux.ru> 0.1602-alt1
 - automated CPAN update
 
