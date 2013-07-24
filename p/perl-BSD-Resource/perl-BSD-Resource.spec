@@ -1,14 +1,14 @@
 %define dist BSD-Resource
 Name: perl-%dist
-Version: 1.2904
-Release: alt4
+Version: 1.2907
+Release: alt1
 
 Summary: BSD process resource limit and priority functions
 License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/J/JH/JHI/BSD-Resource-%{version}.tar.gz
 
 # Automatically added by buildreq on Fri Oct 07 2011
 BuildRequires: perl-Test-Pod
@@ -32,6 +32,9 @@ limits and priorities.
 %perl_vendor_autolib/BSD
 
 %changelog
+* Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 1.2907-alt1
+- automated CPAN update
+
 * Thu Aug 30 2012 Vladimir Lettiev <crux@altlinux.ru> 1.2904-alt4
 - rebuilt for perl-5.16
 
