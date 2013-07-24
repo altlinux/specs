@@ -4,7 +4,7 @@
 %def_without test
 
 Name: perl-%module
-Version: 2.69
+Version: 2.71
 Release: alt1
 
 Summary: Object interface for AF_INET/AF_INET6 domain sockets
@@ -12,7 +12,7 @@ License: Perl
 Group: Development/Perl
 
 Url: %CPAN %module
-Source: http://search.cpan.org/CPAN/authors/id/S/SH/SHLOMIF/IO-Socket-INET6-%version.tar.gz
+Source: http://www.cpan.org/authors/id/S/SH/SHLOMIF/IO-Socket-INET6-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -37,6 +37,9 @@ interface and inherits all the methods defined by IO::Socket.
 %perl_vendor_privlib/IO
 
 %changelog
+* Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 2.71-alt1
+- automated CPAN update
+
 * Sun Jan 15 2012 Victor Forsiuk <force@altlinux.org> 2.69-alt1
 - 2.69
 
