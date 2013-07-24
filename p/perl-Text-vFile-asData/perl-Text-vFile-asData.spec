@@ -14,7 +14,7 @@
 %define _enable_test 1
 
 Name: perl-Text-vFile-asData
-Version: 0.07
+Version: 0.08
 Release: alt1
 
 Summary: Text-vFile-asData - Perl module
@@ -27,7 +27,7 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 BuildArch: noarch
 
-Source: http://www.cpan.org/authors/id/R/RC/RCLAMP/Text-vFile-asData-0.07.tar.gz
+Source: http://www.cpan.org/authors/id/R/RC/RCLAMP/Text-vFile-asData-%{version}.tar.gz
 
 # Automatically added by buildreq on Sun Jun 22 2008
 BuildRequires: perl-Class-Accessor-Chained perl-Module-Build perl-Test-Pod
@@ -50,6 +50,9 @@ rm -rf %buildroot%perl_vendor_man3dir/
 %perl_vendor_privlib/Text/vFile/*
 
 %changelog
+* Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 0.08-alt1
+- automated CPAN update
+
 * Mon Sep 19 2011 Igor Vlasenko <viy@altlinux.ru> 0.07-alt1
 - automated CPAN update
 
