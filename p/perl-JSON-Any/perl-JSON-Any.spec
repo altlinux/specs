@@ -1,14 +1,14 @@
 %define dist JSON-Any
 Name: perl-%dist
-Version: 1.29
-Release: alt2
+Version: 1.30
+Release: alt1
 
 Summary: Wrapper Class for the various JSON classes
 License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/P/PE/PERIGRIN/JSON-Any-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -35,6 +35,9 @@ installed.
 %perl_vendor_privlib/JSON
 
 %changelog
+* Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 1.30-alt1
+- automated CPAN update
+
 * Tue Nov 15 2011 Alexey Tourbin <at@altlinux.ru> 1.29-alt2
 - rebuilt as plain src.rpm
 
