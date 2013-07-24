@@ -1,6 +1,6 @@
 %define dist Sys-Virt
 Name: perl-%dist
-Version: 0.9.13
+Version: 1.0.5
 Release: alt1
 
 Summary: Represent and manage a libvirt hypervisor connection
@@ -8,7 +8,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/D/DA/DANBERR/Sys-Virt-%{version}.tar.gz
 
 # Automatically added by buildreq on Wed Oct 19 2011
 BuildRequires: libvirt-devel perl-Test-Pod perl-Test-Pod-Coverage perl-XML-XPath
@@ -35,6 +35,9 @@ export NPROCS=1
 %perl_vendor_autolib/Sys
 
 %changelog
+* Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 1.0.5-alt1
+- automated CPAN update
+
 * Sun Sep 02 2012 Vladimir Lettiev <crux@altlinux.ru> 0.9.13-alt1
 - 0.9.5 -> 0.9.13
 - built for perl-5.16
