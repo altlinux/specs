@@ -1,7 +1,7 @@
 %define module GraphViz
 
 Name: perl-%module
-Version: 2.11
+Version: 2.14
 Release: alt1
 
 Summary: Interface to the GraphViz graphing tool
@@ -37,6 +37,9 @@ undirected graphs in a variety of formats (PostScript, PNG, etc.) using the
 %perl_vendor_privlib/Devel/GraphViz*
 
 %changelog
+* Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 2.14-alt1
+- automated CPAN update
+
 * Wed Oct 03 2012 Igor Vlasenko <viy@altlinux.ru> 2.11-alt1
 - automated CPAN update
 
