@@ -1,6 +1,6 @@
 %define dist MLDBM
 Name: perl-%dist
-Version: 2.04
+Version: 2.05
 Release: alt1
 
 Summary: Multi-level hash structure storage for Perl
@@ -8,7 +8,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/C/CH/CHORNY/MLDBM-%{version}.tar.gz
 
 BuildArch: noarch
 Requires: perl(AnyDBM_File.pm)
@@ -34,6 +34,9 @@ hash structures in tied hashes (including DBM files).
 %perl_vendor_privlib/MLDBM*
 
 %changelog
+* Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 2.05-alt1
+- automated CPAN update
+
 * Mon Apr 05 2010 Alexey Tourbin <at@altlinux.ru> 2.04-alt1
 - 2.01 -> 2.04
 - disabled AnyDBM_File.patch
