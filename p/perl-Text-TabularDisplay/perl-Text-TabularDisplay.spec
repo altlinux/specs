@@ -1,7 +1,7 @@
 %define dist Text-TabularDisplay
 
 Name: perl-%dist
-Version: 1.33
+Version: 1.35
 Release: alt1
 
 Summary: Text::TabularDisplay - display text in formatted table output
@@ -35,6 +35,9 @@ mysql text monitor.
 %perl_vendor_privlib/Text
 
 %changelog
+* Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 1.35-alt1
+- automated CPAN update
+
 * Wed Oct 03 2012 Igor Vlasenko <viy@altlinux.ru> 1.33-alt1
 - automated CPAN update
 
