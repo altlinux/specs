@@ -21,15 +21,15 @@
 
 Summary: Perl client interface to SSH
 Name: perl-Net-SSH-Perl
-Version: 1.34
-Release: alt1.1
+Version: 1.35
+Release: alt1
 License: Artistic
 Group: Development/Perl
 URL: http://search.cpan.org/dist/Net-SSH-Perl/
 
 Packager: Mikhail Pokidko <pma@altlinux.ru>
 
-Source: http://www.cpan.org/authors/id/T/TU/TURNSTEP/Net-SSH-Perl-1.34.tar.gz
+Source: http://www.cpan.org/authors/id/S/SC/SCHWIGON/Net-SSH-Perl-%{version}.tar.gz
 
 BuildArch: noarch
 # Automatically added by buildreq on Mon Apr 02 2007
@@ -65,6 +65,9 @@ echo "3" | perl Makefile.PL INSTALLDIRS="vendor" PREFIX="%buildroot%_prefix"
 
 
 %changelog
+* Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 1.35-alt1
+- automated CPAN update
+
 * Mon Nov 22 2010 Igor Vlasenko <viy@altlinux.ru> 1.34-alt1.1
 - repair after perl 5.12 upgrade using girar-nmu
 
