@@ -1,14 +1,14 @@
 %define dist XML-RSS
 Name: perl-%dist
-Version: 1.49
-Release: alt2
+Version: 1.54
+Release: alt1
 
 Summary: Creates and updates RSS files
 License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/S/SH/SHLOMIF/XML-RSS-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -34,6 +34,9 @@ creating, updating, and saving RSS files.
 %perl_vendor_privlib/XML
 
 %changelog
+* Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 1.54-alt1
+- automated CPAN update
+
 * Wed Nov 16 2011 Alexey Tourbin <at@altlinux.ru> 1.49-alt2
 - disabled build dependency on perl-XML-RSS
 
