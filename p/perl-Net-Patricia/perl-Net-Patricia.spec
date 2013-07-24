@@ -1,14 +1,14 @@
 %define module Net-Patricia
 Name: perl-%module
-Version: 1.19
-Release: alt3
+Version: 1.20
+Release: alt1
 
 Summary: Patricia Trie perl module for fast IP address lookups
 License: GPL
 Group: Development/Perl
 
 URL: %CPAN %module
-Source: %module-%version.tar.gz
+Source: http://www.cpan.org/authors/id/G/GR/GRUBER/Net-Patricia-%{version}.tar.gz
 
 # Automatically added by buildreq on Tue Oct 11 2011
 BuildRequires: perl-Net-CIDR-Lite perl-Socket6 perl-devel
@@ -33,6 +33,9 @@ IP subnet, network or routing table lookups.
 %perl_vendor_autolib/Net
 
 %changelog
+* Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 1.20-alt1
+- automated CPAN update
+
 * Sun Sep 02 2012 Vladimir Lettiev <crux@altlinux.ru> 1.19-alt3
 - rebuilt for perl-5.16
 
