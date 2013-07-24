@@ -1,15 +1,15 @@
 %define module Graph
 
 Name: perl-Graph
-Version: 0.94
-Release: alt2.1
+Version: 0.96
+Release: alt1
 
 Summary: Graph - Perl module for dealing with graphs
 License: Perl
 Group: Development/Perl
 
 Url: %CPAN %module
-Source: http://www.cpan.org/authors/id/J/JH/JHI/Graph-%version.tar.gz
+Source: http://www.cpan.org/authors/id/J/JH/JHI/Graph-%{version}.tar.gz
 
 Packager: Michael Bochkaryov <misha@altlinux.ru>
 
@@ -36,6 +36,9 @@ Perl module for dealing with graphs, the abstract data structures.
 %exclude %perl_vendor_archlib
 
 %changelog
+* Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 0.96-alt1
+- automated CPAN update
+
 * Wed Nov 24 2010 Igor Vlasenko <viy@altlinux.ru> 0.94-alt2.1
 - repair after perl 5.12 upgrade using girar-nmu
 
