@@ -1,6 +1,6 @@
 %define dist Perl-OSType
 Name: perl-%dist
-Version: 1.002
+Version: 1.003
 Release: alt1
 
 Summary: Map Perl operating system names to generic types
@@ -8,7 +8,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/D/DA/DAGOLDEN/Perl-OSType-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -41,5 +41,8 @@ Microsoft operating systems are given the type 'Windows' rather than
 %perl_vendor_privlib/Perl
 
 %changelog
+* Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 1.003-alt1
+- automated CPAN update
+
 * Thu Apr 28 2011 Alexey Tourbin <at@altlinux.ru> 1.002-alt1
 - initial revision
