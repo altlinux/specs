@@ -14,8 +14,8 @@
 %define _enable_test 1
 
 Name: perl-Crypt-CBC
-Version: 2.30
-Release: alt1.1
+Version: 2.32
+Release: alt1
 
 Summary: Crypt-CBC - Encrypt Data with Cipher Block Chaining Mode
 
@@ -26,7 +26,7 @@ Url: http://search.cpan.org/~lds/%module-%version/
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 BuildArch: noarch
-Source: http://www.cpan.org/authors/id/L/LD/LDS/Crypt-CBC-2.30.tar.gz
+Source: http://www.cpan.org/authors/id/L/LD/LDS/Crypt-CBC-%{version}.tar.gz
 
 # Automatically added by buildreq on Tue Jun 17 2008
 BuildRequires: perl-Crypt-Blowfish perl-Crypt-Blowfish_PP perl-Crypt-CAST5 perl-Crypt-DES perl-Crypt-IDEA perl-Crypt-Rijndael perl-devel
@@ -62,6 +62,9 @@ operate on a whole data value at once.
 %perl_vendor_privlib/Crypt/
 
 %changelog
+* Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 2.32-alt1
+- automated CPAN update
+
 * Mon Nov 22 2010 Igor Vlasenko <viy@altlinux.ru> 2.30-alt1.1
 - repair after perl 5.12 upgrade using girar-nmu
 
