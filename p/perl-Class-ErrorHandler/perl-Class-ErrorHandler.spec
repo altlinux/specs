@@ -1,14 +1,14 @@
 %define dist Class-ErrorHandler
 Name: perl-%dist
-Version: 0.01
-Release: alt3
+Version: 0.02
+Release: alt1
 
 Summary: Base class for error handling
 License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/T/TO/TOKUHIROM/Class-ErrorHandler-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -35,6 +35,9 @@ to communicate error messages back to the calling program.
 %perl_vendor_privlib/Class
 
 %changelog
+* Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 0.02-alt1
+- automated CPAN update
+
 * Wed Nov 16 2011 Alexey Tourbin <at@altlinux.ru> 0.01-alt3
 - disabled build dependency on perl-Module-Install
 
