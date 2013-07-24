@@ -3,13 +3,13 @@ BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(DateTime/TimeZone.pm) perl(File/Spec/Functions.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-DateTime-Format-Natural
-Version:        1.01
-Release:        alt2_2
+Version:        1.02
+Release:        alt1
 Summary:        Create machine readable date/time with natural parsing logic
 License:        GPL+ or Artistic
 Group:          Development/Perl
 URL:            http://search.cpan.org/dist/DateTime-Format-Natural/
-Source0:        http://www.cpan.org/authors/id/S/SC/SCHUBIGER/DateTime-Format-Natural-%{version}.tar.gz
+Source:        http://www.cpan.org/authors/id/S/SC/SCHUBIGER/DateTime-Format-Natural-%{version}.tar.gz
 BuildArch:      noarch
 BuildRequires:  perl(boolean.pm)
 BuildRequires:  perl(Carp.pm)
@@ -78,6 +78,9 @@ done
 
 
 %changelog
+* Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 1.02-alt1
+- automated CPAN update
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 1.01-alt2_2
 - update to new release by fcimport
 
