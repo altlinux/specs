@@ -1,6 +1,6 @@
 %define dist DateTime-TimeZone
 Name: perl-%dist
-Version: 1.51
+Version: 1.60
 Release: alt1
 
 Summary: Time zone object base class and factory
@@ -65,6 +65,9 @@ sed -i- '/Pod::Man/d' Makefile.PL
 %perl_vendor_privlib/DateTime
 
 %changelog
+* Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 1.60-alt1
+- automated CPAN update
+
 * Tue Oct 23 2012 Igor Vlasenko <viy@altlinux.ru> 1.51-alt1
 - automated CPAN update
 
