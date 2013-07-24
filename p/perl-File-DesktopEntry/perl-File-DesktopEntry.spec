@@ -1,14 +1,14 @@
 %define dist File-DesktopEntry
 Name: perl-%dist
-Version: 0.04
-Release: alt2
+Version: 0.05
+Release: alt1
 
 Summary: Object to handle .desktop files
 License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/M/MI/MICHIELB/File-DesktopEntry-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -35,6 +35,9 @@ these files.
 %perl_vendor_privlib/File
 
 %changelog
+* Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 0.05-alt1
+- automated CPAN update
+
 * Wed Apr 27 2011 Alexey Tourbin <at@altlinux.ru> 0.04-alt2
 - fixed unpackaged directory
 
