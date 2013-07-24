@@ -1,6 +1,6 @@
 %define dist HTTP-Cache-Transparent
 Name: perl-%dist
-Version: 1.0
+Version: 1.1
 Release: alt1
 
 Summary: Cache the result of http get-requests persistently
@@ -8,7 +8,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/M/MA/MATTIASH/HTTP-Cache-Transparent-%{version}.tar.gz
 
 Buildarch: noarch
 
@@ -35,6 +35,9 @@ and is thus persistent between invocations.
 %perl_vendor_privlib/HTTP*
 
 %changelog
+* Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 1.1-alt1
+- automated CPAN update
+
 * Thu Apr 29 2010 Alexey Tourbin <at@altlinux.ru> 1.0-alt1
 - 0.5 -> 1.0
 
