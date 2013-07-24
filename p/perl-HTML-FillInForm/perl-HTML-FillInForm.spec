@@ -11,7 +11,7 @@
 %def_enable test
 
 Name: perl-HTML-FillInForm
-Version: 2.1
+Version: 2.11
 Release: alt1
 
 Summary: %m_name - Populates HTML Forms with data
@@ -23,7 +23,7 @@ Url: http://search.cpan.org/dist/HTML-FillInForm/
 Packager: Michael Bochkaryov <misha@altlinux.ru>
 
 BuildArch: noarch
-Source: http://www.cpan.org/authors/id/T/TJ/TJMATHER/HTML-FillInForm-2.1.tar.gz
+Source: http://www.cpan.org/authors/id/M/MA/MARKSTOS/HTML-FillInForm-%{version}.tar.gz
 
 # Automatically added by buildreq on Mon Jun 16 2008 (-bi)
 BuildRequires: perl-CGI perl-HTML-Parser perl-devel
@@ -48,6 +48,9 @@ parse the HTML and insert the values into the form tags.
 %exclude %perl_vendor_archlib
 
 %changelog
+* Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 2.11-alt1
+- automated CPAN update
+
 * Mon Sep 19 2011 Igor Vlasenko <viy@altlinux.ru> 2.1-alt1
 - automated CPAN update
 
