@@ -1,6 +1,6 @@
 %define dist Test-Pod
 Name: perl-%dist
-Version: 1.45
+Version: 1.48
 Release: alt1
 
 Summary: Check for POD errors in files
@@ -8,7 +8,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/D/DW/DWHEELER/Test-Pod-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -33,6 +33,9 @@ its results in standard Test::Simple fashion.
 %perl_vendor_privlib/Test
 
 %changelog
+* Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 1.48-alt1
+- automated CPAN update
+
 * Mon Nov 14 2011 Alexey Tourbin <at@altlinux.ru> 1.45-alt1
 - 1.44 -> 1.45
 
