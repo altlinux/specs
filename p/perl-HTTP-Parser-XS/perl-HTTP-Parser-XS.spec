@@ -1,14 +1,14 @@
 %define dist HTTP-Parser-XS
 Name: perl-%dist
-Version: 0.14
-Release: alt3
+Version: 0.16
+Release: alt1
 
 Summary: A fast, primitive HTTP request parser
 License: Perl
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/K/KA/KAZUHO/HTTP-Parser-XS-%{version}.tar.gz
 
 # Automatically added by buildreq on Tue Oct 11 2011
 BuildRequires: perl-Module-Install
@@ -34,6 +34,9 @@ server.
 %perl_vendor_autolib/HTTP
 
 %changelog
+* Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 0.16-alt1
+- automated CPAN update
+
 * Sun Sep 02 2012 Vladimir Lettiev <crux@altlinux.ru> 0.14-alt3
 - rebuilt for perl-5.16
 
