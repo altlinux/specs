@@ -3,9 +3,7 @@
 %define popIF_ver_lt() %if "%(rpmvercmp '%2' '%1')" > "0"
 %define popIF_ver_lteq() %if "%(rpmvercmp '%2' '%1')" >= "0"
 
-%def_enable compat
-%if_disabled compat
-%def_enable static
+%def_disable static
 %def_enable cpp
 %def_enable glib
 %def_enable qt4
@@ -14,43 +12,24 @@
 %def_enable utils
 %def_enable xpdfheaders
 %def_enable gir
-%else
-%def_disable static
-%def_disable cpp
-%def_disable glib
-%def_disable qt4
-%def_disable qt3
-%def_enable devel
-%def_disable utils
-%def_enable xpdfheaders
-%def_disable gir
-%endif
 
 %define rname poppler
-%define somajor 36
+%define somajor 37
 %define somajor_cpp 0
 %define somajor_qt 3
 %define somajor_qt4 4
 %define somajor_glib 8
 %define major 0
 %define minor 22
-%define bugfix 3
+%define bugfix 5
 Name: %rname%somajor
 Version: %major.%minor.%bugfix
-Release: alt2
-%if_disabled compat
+Release: alt1
 %define poppler_devel_name lib%rname-devel
 %define poppler_cpp_devel_name lib%rname-cpp-devel
 %define poppler_glib_devel_name lib%rname-glib-devel
 %define poppler_qt_devel_name lib%rname-qt-devel
 %define poppler_qt4_devel_name lib%rname-qt4-devel
-%else
-%define poppler_devel_name lib%rname%somajor-devel
-%define poppler_cpp_devel_name lib%rname%somajor-cpp-devel
-%define poppler_glib_devel_name lib%rname%somajor-glib-devel
-%define poppler_qt_devel_name lib%rname%somajor-qt-devel
-%define poppler_qt4_devel_name lib%rname%somajor-qt4-devel
-%endif
 
 Group: Publishing
 Summary: PDF rendering library
@@ -171,7 +150,7 @@ Group: Development/C
 Provides: lib%name-devel = %version-%release
 Obsoletes: lib%name-devel < %version-%release
 Requires: lib%name = %version-%release
-%if_enabled compat
+%if "%poppler_devel_name" != "lib%rname-devel"
 Conflicts: lib%rname-devel
 %endif
 %description -n %poppler_devel_name
@@ -182,7 +161,7 @@ Summary: Development files for C++ wrapper
 Group: Development/C++
 Requires: lib%rname%somajor_cpp-cpp = %version-%release
 Requires: %poppler_devel_name = %version-%release
-%if_enabled compat
+%if "%poppler_cpp_devel_name" != "lib%rname-cpp-devel"
 Conflicts: lib%rname-cpp-devel
 %endif
 %description -n %poppler_cpp_devel_name
@@ -194,7 +173,7 @@ Summary: Development files for %name-glib
 Group: Development/GNOME and GTK+
 Requires: lib%rname%somajor_glib-glib = %version-%release
 Requires: %poppler_devel_name = %version-%release
-%if_enabled compat
+%if "%poppler_glib_devel_name" != "lib%rname-glib-devel"
 Conflicts: lib%rname-glib-devel
 %endif
 %description -n %poppler_glib_devel_name
@@ -206,7 +185,7 @@ Summary: Development files for %name-qt4
 Group: Development/KDE and QT
 Requires: lib%rname%somajor_qt4-qt4 = %version-%release
 Requires: %poppler_devel_name = %version-%release
-%if_enabled compat
+%if "%poppler_qt4_devel_name" != "lib%rname-qt4-devel"
 Conflicts: lib%rname-qt4-devel
 %endif
 %description -n %poppler_qt4_devel_name
@@ -356,8 +335,8 @@ export QT4DIR=%_qt4dir
 %endif
 
 %changelog
-* Wed Jul 24 2013 Sergey V Turchin <zerg@altlinux.org> 0.22.3-alt2
-- disable all except core library and core devel files
+* Tue Jul 23 2013 Sergey V Turchin <zerg@altlinux.org> 0.22.5-alt1
+- new version
 
 * Tue Apr 23 2013 Sergey V Turchin <zerg@altlinux.org> 0.22.3-alt1
 - new version
