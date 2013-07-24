@@ -1,6 +1,6 @@
 %define dist Parse-Method-Signatures
 Name: perl-%dist
-Version: 1.003014
+Version: 1.003015
 Release: alt1
 
 Summary: Perl6 like method signature parser
@@ -8,7 +8,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/I/IL/ILMARI/Parse-Method-Signatures-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -33,5 +33,8 @@ deemed useful for TryCatch and MooseX::Method::Signatures.
 %perl_vendor_privlib/Parse
 
 %changelog
+* Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 1.003015-alt1
+- automated CPAN update
+
 * Sun Nov 20 2011 Alexey Tourbin <at@altlinux.ru> 1.003014-alt1
 - initial revision
