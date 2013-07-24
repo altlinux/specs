@@ -1,6 +1,6 @@
 %define dist MongoDB
 Name: perl-%dist
-Version: 0.501.1
+Version: 0.701.4
 Release: alt1
 
 Summary: Mongo Driver for Perl
@@ -34,6 +34,9 @@ This is the Perl driver for MongoDB, a document-oriented database.
 %perl_vendor_autolib/MongoDB
 
 %changelog
+* Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 0.701.4-alt1
+- automated CPAN update
+
 * Tue Oct 23 2012 Igor Vlasenko <viy@altlinux.ru> 0.501.1-alt1
 - automated CPAN update
 
