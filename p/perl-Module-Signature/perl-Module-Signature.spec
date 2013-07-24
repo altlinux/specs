@@ -1,7 +1,7 @@
 %define module_name Module-Signature
 
 Name: perl-%module_name
-Version: 0.68
+Version: 0.73
 Release: alt1
 
 Packager: Victor Forsiuk <force@altlinux.org>
@@ -11,7 +11,7 @@ License: CC0 1.0
 Group: Development/Perl
 
 Url: %CPAN %module_name
-Source: http://www.cpan.org/authors/id/F/FL/FLORA/Module-Signature-%{version}.tar.gz
+Source: http://www.cpan.org/authors/id/A/AU/AUDREYT/Module-Signature-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -54,6 +54,9 @@ mv ../.perl.req .
 %_man1dir/*
 
 %changelog
+* Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 0.73-alt1
+- automated CPAN update
+
 * Thu Sep 29 2011 Igor Vlasenko <viy@altlinux.ru> 0.68-alt1
 - automated CPAN update
 
