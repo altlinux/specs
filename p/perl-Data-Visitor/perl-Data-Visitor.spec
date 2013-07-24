@@ -11,7 +11,7 @@
 %def_enable test
 
 Name: perl-Data-Visitor
-Version: 0.28
+Version: 0.30
 Release: alt1
 
 Summary: %m_name - Visitor style traversal of Perl data structures
@@ -46,6 +46,9 @@ This module is a simple visitor implementation for Perl values.
 %exclude %perl_vendor_archlib
 
 %changelog
+* Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 0.30-alt1
+- automated CPAN update
+
 * Wed Sep 26 2012 Igor Vlasenko <viy@altlinux.ru> 0.28-alt1
 - automated CPAN update
 
