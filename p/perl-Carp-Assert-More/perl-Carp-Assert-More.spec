@@ -14,8 +14,8 @@
 %define _enable_test 1
 
 Name: perl-Carp-Assert-More
-Version: 1.12
-Release: alt2.1
+Version: 1.14
+Release: alt1
 
 Summary: Carp-Assert-More - convenience wrappers around Carp::Assert
 
@@ -26,7 +26,7 @@ Url: http://www.cpan.org
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 BuildArch: noarch
-Source: http://www.cpan.org/modules/by-module/Carp/%m_distro-%version.tar.bz2
+Source: http://www.cpan.org/authors/id/P/PE/PETDANCE/Carp-Assert-More-%{version}.tar.gz
 
 # Automatically added by buildreq on Fri Sep 02 2005
 BuildRequires: perl-Carp-Assert perl-Devel-Symdump perl-Pod-Coverage perl-Pod-Escapes perl-Pod-Simple perl-Sub-Uplevel perl-Test-Exception perl-Test-Pod-Coverage perl-devel
@@ -49,6 +49,9 @@ to make the habit of writing assertions even easier.
 %perl_vendor_privlib/Carp/
 
 %changelog
+* Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 1.14-alt1
+- automated CPAN update
+
 * Mon Nov 22 2010 Igor Vlasenko <viy@altlinux.ru> 1.12-alt2.1
 - repair after perl 5.12 upgrade using girar-nmu
 
