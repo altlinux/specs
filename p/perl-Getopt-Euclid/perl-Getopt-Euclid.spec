@@ -1,6 +1,6 @@
 %define dist Getopt-Euclid
 Name: perl-%dist
-Version: 0.3.7
+Version: 0.4.3
 Release: alt1
 
 Summary: Executable Uniform Command-Line Interface Descriptions
@@ -34,6 +34,9 @@ its actual interface always agree.
 %perl_vendor_privlib/Getopt
 
 %changelog
+* Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 0.4.3-alt1
+- automated CPAN update
+
 * Wed Sep 26 2012 Igor Vlasenko <viy@altlinux.ru> 0.3.7-alt1
 - automated CPAN update
 
