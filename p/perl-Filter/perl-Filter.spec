@@ -1,6 +1,6 @@
 %define dist Filter
 Name: perl-%dist
-Version: 1.45
+Version: 1.49
 Release: alt1
 
 Summary: Source Filters
@@ -8,7 +8,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/R/RU/RURBAN/Filter-%{version}.tar.gz
 
 # Automatically added by buildreq on Fri Oct 07 2011
 BuildRequires: perl-devel
@@ -37,6 +37,9 @@ mv t/pod.t t/pod.t.orig
 %perl_vendor_autolib/Filter
 
 %changelog
+* Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 1.49-alt1
+- automated CPAN update
+
 * Thu Aug 23 2012 Vladimir Lettiev <crux@altlinux.ru> 1.45-alt1
 - 1.43 -> 1.45
 
