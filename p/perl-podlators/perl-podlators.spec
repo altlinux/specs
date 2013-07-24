@@ -1,6 +1,6 @@
 %define dist podlators
 Name: perl-%dist
-Version: 2.4.2
+Version: 2.5.1
 Release: alt1
 
 Summary: Convert POD data to various other formats
@@ -8,7 +8,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/R/RR/RRA/podlators-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -41,6 +41,9 @@ export PERL5LIB=$PWD/blib/lib
 %perl_vendor_privlib/Pod*
 
 %changelog
+* Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 2.5.1-alt1
+- automated CPAN update
+
 * Wed Sep 26 2012 Alexey Tourbin <at@altlinux.ru> 2.4.2-alt1
 - 2.4.0 -> 2.4.2
 
