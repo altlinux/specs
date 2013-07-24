@@ -14,7 +14,7 @@
 %define _enable_test 1
 
 Name: perl-Text-Quoted
-Version: 2.06
+Version: 2.08
 Release: alt1
 
 Summary: Text-Quoted - Extract the structure of a quoted mail message
@@ -26,7 +26,7 @@ Url: http://search.cpan.org/~ruz/%m_distro-%version/
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 BuildArch: noarch
-Source: http://www.cpan.org/authors/id/R/RU/RUZ/Text-Quoted-2.06.tar.gz
+Source: http://www.cpan.org/authors/id/T/TS/TSIBLEY/Text-Quoted-%{version}.tar.gz
 
 # Automatically added by buildreq on Mon Jun 06 2005
 BuildRequires: perl-Text-Autoformat perl-Text-Reform perl-devel
@@ -60,6 +60,9 @@ rm -rf %buildroot%perl_vendor_man3dir/
 %perl_vendor_privlib/Text/*
 
 %changelog
+* Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 2.08-alt1
+- automated CPAN update
+
 * Tue Jul 13 2010 Igor Vlasenko <viy@altlinux.ru> 2.06-alt1
 - automated CPAN update
 
