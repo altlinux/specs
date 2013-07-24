@@ -3,13 +3,13 @@ BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(DateTime/Duration.pm) perl(DateTime/Infinite.pm) perl(Params/Validate.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-DateTime-Set
-Version:        0.28
-Release:        alt2_12
+Version:        0.31
+Release:        alt1
 Summary:        Datetime sets and set math
 License:        GPL+ or Artistic
 Group:          Development/Perl
 URL:            http://search.cpan.org/dist/DateTime-Set/
-Source0:        http://www.cpan.org/authors/id/F/FG/FGLOCK/DateTime-Set-%{version}.tar.gz
+Source:        http://www.cpan.org/authors/id/F/FG/FGLOCK/DateTime-Set-%{version}.tar.gz
 BuildArch:      noarch
 BuildRequires:  perl(DateTime.pm)
 # introduces circular dependency
@@ -59,6 +59,9 @@ find $RPM_BUILD_ROOT -depth -type d -exec rmdir {} 2>/dev/null \;
 %{perl_vendor_privlib}/*
 
 %changelog
+* Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 0.31-alt1
+- automated CPAN update
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.28-alt2_12
 - update to new release by fcimport
 
