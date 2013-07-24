@@ -1,6 +1,6 @@
 %define dist XML-Feed
 Name: perl-%dist
-Version: 0.50
+Version: 0.52
 Release: alt1
 
 Summary: XML Syndication Feed Support
@@ -8,7 +8,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/D/DA/DAVECROSS/XML-Feed-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -36,6 +36,9 @@ It also implements feed auto-discovery for finding feeds, given a URI.
 %perl_vendor_privlib/XML
 
 %changelog
+* Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 0.52-alt1
+- automated CPAN update
+
 * Wed Sep 26 2012 Alexey Tourbin <at@altlinux.ru> 0.50-alt1
 - 0.46 -> 0.50
 
