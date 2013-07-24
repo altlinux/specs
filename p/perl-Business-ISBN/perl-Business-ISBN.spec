@@ -1,6 +1,6 @@
 %define dist Business-ISBN
 Name: perl-%dist
-Version: 2.05_03
+Version: 2.06
 Release: alt1
 
 Summary: work with International Standard Book Numbers
@@ -12,7 +12,7 @@ Url: %CPAN %dist
 Packager: Vladimir A. Svyatoshenko <svyt@altlinux.ru>
 
 BuildArch: noarch
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/B/BD/BDFOY/Business-ISBN-%{version}.tar.gz
 
 # Automatically added by buildreq on Mon Jun 11 2007
 BuildRequires: perl-Business-ISBN-Data perl-devel perl-libwww
@@ -33,6 +33,9 @@ None.
 %perl_vendor_privlib/Business*
 
 %changelog
+* Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 2.06-alt1
+- automated CPAN update
+
 * Mon Jan 07 2013 Vladimir Lettiev <crux@altlinux.ru> 2.05_03-alt1
 - 2.05 -> 2.05_03
 
