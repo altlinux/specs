@@ -1,15 +1,15 @@
 %define module Digest-MD4
 
 Name: perl-%module
-Version: 1.5
-Release: alt2
+Version: 1.9
+Release: alt1
 
 Summary: Perl interface to the MD4 Algorithm
 License: Perl
 Group: Development/Perl
 
 Url: %CPAN %module
-Source: http://www.cpan.org/modules/by-module/Digest/Digest-MD4-%version.tar.gz
+Source: http://www.cpan.org/authors/id/M/MI/MIKEM/DigestMD4/Digest-MD4-%{version}.tar.gz
 
 # Automatically added by buildreq on Sat Oct 08 2011
 BuildRequires: libdb4-devel libgdbm-devel perl-devel
@@ -35,6 +35,9 @@ as input a message of arbitrary length and produces as output a 128-bit
 %perl_vendor_autolib/Digest
 
 %changelog
+* Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 1.9-alt1
+- automated CPAN update
+
 * Fri Aug 31 2012 Vladimir Lettiev <crux@altlinux.ru> 1.5-alt2
 - rebuilt for perl-5.16
 
