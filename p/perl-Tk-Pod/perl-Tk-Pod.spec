@@ -1,6 +1,6 @@
 %define dist Tk-Pod
 Name: perl-%dist
-Version: 0.9940
+Version: 0.9941
 Release: alt1
 
 Summary: Perl/Tk Pod browser
@@ -45,6 +45,9 @@ documentation.
 %perl_vendor_privlib/Tk
 
 %changelog
+* Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 0.9941-alt1
+- automated CPAN update
+
 * Mon Sep 24 2012 Igor Vlasenko <viy@altlinux.ru> 0.9940-alt1
 - automated CPAN update
 
