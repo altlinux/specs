@@ -6,8 +6,8 @@
 %define _enable_test 1
 
 Name: perl-%module
-Version: 0.10
-Release: alt2.1
+Version: 0.11
+Release: alt1
 
 Summary: Calculate digests while reading or writing
 
@@ -18,7 +18,7 @@ Url: http://www.cpan.org
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 BuildArch: noarch
-Source: http://search.cpan.org/CPAN/authors/id/C/CL/CLKAO/IO-Digest-%version.tar.bz2
+Source: http://www.cpan.org/authors/id/C/CL/CLKAO/IO-Digest-%{version}.tar.gz
 
 BuildRequires: perl-PerlIO perl-PerlIO-via-dynamic perl-devel
 
@@ -41,6 +41,9 @@ to compute the digests after written a file.
 %perl_vendor_privlib/IO/
 
 %changelog
+* Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 0.11-alt1
+- automated CPAN update
+
 * Mon Nov 22 2010 Igor Vlasenko <viy@altlinux.ru> 0.10-alt2.1
 - repair after perl 5.12 upgrade using girar-nmu
 
