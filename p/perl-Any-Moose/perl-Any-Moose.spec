@@ -1,7 +1,7 @@
 %define module Any-Moose
 
 Name: perl-%module
-Version: 0.18
+Version: 0.21
 Release: alt1
 
 Packager: Victor Forsiuk <force@altlinux.org>
@@ -34,6 +34,9 @@ Any::Moose - use Moose or Mouse modules.
 %perl_vendor_privlib/Any
 
 %changelog
+* Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 0.21-alt1
+- automated CPAN update
+
 * Mon Sep 24 2012 Igor Vlasenko <viy@altlinux.ru> 0.18-alt1
 - automated CPAN update
 
