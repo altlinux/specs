@@ -14,8 +14,8 @@
 %define _disable_test 1
 
 Name: perl-Crypt-DH
-Version: 0.06
-Release: alt2.1
+Version: 0.07
+Release: alt1
 
 Summary: Diffie-Hellman key exchange system
 
@@ -26,7 +26,7 @@ Url: http://www.cpan.org
 Packager: Mikhail Pokidko <pma@altlinux.ru>
 
 BuildArch: noarch
-Source: %m_distro-%version.tar.gz
+Source: http://www.cpan.org/authors/id/M/MI/MITHALDU/Crypt-DH-%{version}.tar.gz
 
 # Automatically added by buildreq on Wed Nov 15 2006
 BuildRequires: perl-devel perl-Math-BigInt
@@ -47,6 +47,9 @@ None.
 %exclude %perl_vendor_archlib
 
 %changelog
+* Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 0.07-alt1
+- automated CPAN update
+
 * Mon Nov 22 2010 Igor Vlasenko <viy@altlinux.ru> 0.06-alt2.1
 - repair after perl 5.12 upgrade using girar-nmu
 
