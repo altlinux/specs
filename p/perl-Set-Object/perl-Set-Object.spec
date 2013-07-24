@@ -1,14 +1,14 @@
 %define dist Set-Object
 Name: perl-%dist
-Version: 1.28
-Release: alt3
+Version: 1.31
+Release: alt1
 
 Summary: Unordered collections (sets) of Perl Objects
 License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/R/RU/RURBAN/Set-Object-%{version}.tar.gz
 
 # Automatically added by buildreq on Fri Oct 07 2011
 BuildRequires: perl-Test-Pod perl-Test-Pod-Coverage
@@ -32,6 +32,9 @@ collection of objects without duplication.
 %perl_vendor_autolib/Set
 
 %changelog
+* Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 1.31-alt1
+- automated CPAN update
+
 * Thu Aug 30 2012 Vladimir Lettiev <crux@altlinux.ru> 1.28-alt3
 - rebuilt for perl-5.16
 
