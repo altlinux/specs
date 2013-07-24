@@ -14,7 +14,7 @@
 %define _enable_test 1
 
 Name: perl-Smart-Comments
-Version: 1.0.4
+Version: 1.000005
 Release: alt1
 
 Summary: Smart-Comments - Perl module
@@ -26,7 +26,7 @@ Url: http://www.cpan.org
 Packager: Igor Vlasenko <viy@altlinux.ru>
 
 BuildArch: noarch
-Source: http://search.cpan.org/CPAN/authors/id/C/CH/CHORNY/%m_distro-%version.tar.gz
+Source: http://www.cpan.org/authors/id/D/DC/DCONWAY/Smart-Comments-%{version}.tar.gz
 
 BuildRequires: perl-devel perl-Filter-Simple perl(Module/Build.pm)
 
@@ -45,6 +45,9 @@ None.
 %perl_vendor_privlib/Smart/*
 
 %changelog
+* Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 1.000005-alt1
+- automated CPAN update
+
 * Fri Nov 18 2011 Igor Vlasenko <viy@altlinux.ru> 1.0.4-alt1
 - initial build for ALT Linux Sisyphus
 
