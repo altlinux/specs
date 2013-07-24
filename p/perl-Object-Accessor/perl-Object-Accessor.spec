@@ -1,6 +1,6 @@
 %define dist Object-Accessor
 Name: perl-%dist
-Version: 0.44
+Version: 0.48
 Release: alt1
 
 Summary: Per object accessors
@@ -33,6 +33,9 @@ opposed to per Class accessors, as, for example, Class::Accessor provides).
 %perl_vendor_privlib/Object
 
 %changelog
+* Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 0.48-alt1
+- automated CPAN update
+
 * Mon Sep 24 2012 Igor Vlasenko <viy@altlinux.ru> 0.44-alt1
 - automated CPAN update
 
