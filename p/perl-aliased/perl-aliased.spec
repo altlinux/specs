@@ -1,6 +1,6 @@
 %define dist aliased
 Name: perl-%dist
-Version: 0.30
+Version: 0.31
 Release: alt1
 
 Summary: Use shorter versions of class names
@@ -8,7 +8,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/O/OV/OVID/aliased-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -35,5 +35,8 @@ name or, if you prefer, you can do so implicitly.
 %perl_vendor_privlib/aliased*
 
 %changelog
+* Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 0.31-alt1
+- automated CPAN update
+
 * Tue Apr 13 2010 Alexey Tourbin <at@altlinux.ru> 0.30-alt1
 - initial revision, for MooseX::Role::WithOverloading
