@@ -1,6 +1,6 @@
 %define dist DBD-XBase
 Name: perl-%dist
-Version: 1.03
+Version: 1.05
 Release: alt1
 
 Summary: XBase driver for DBI interface in Perl
@@ -8,7 +8,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/J/JA/JANPAZ/DBD-XBase-1.03.tar.gz
+Source: http://www.cpan.org/authors/id/J/JA/JANPAZ/DBD-XBase-%{version}.tar.gz
 
 # Automatically added by buildreq on Wed Mar 05 2008
 BuildRequires: perl-DBI perl-DBM perl-devel
@@ -49,6 +49,9 @@ supported by the DBI interface.
 	%_bindir/*
 
 %changelog
+* Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 1.05-alt1
+- automated CPAN update
+
 * Mon Sep 19 2011 Igor Vlasenko <viy@altlinux.ru> 1.03-alt1
 - automated CPAN update
 
