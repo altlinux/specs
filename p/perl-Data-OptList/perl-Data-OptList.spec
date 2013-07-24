@@ -14,7 +14,7 @@
 %define _enable_test 1
 
 Name: perl-Data-OptList
-Version: 0.107
+Version: 0.108
 Release: alt1
 
 Summary: Data-OptList - Perl module
@@ -26,7 +26,7 @@ Url: http://www.cpan.org
 Packager: Mikhail Pokidko <pma@altlinux.org>
 
 BuildArch: noarch
-Source: http://www.cpan.org/authors/id/R/RJ/RJBS/Data-OptList-0.107.tar.gz
+Source: http://www.cpan.org/authors/id/R/RJ/RJBS/Data-OptList-%{version}.tar.gz
 
 # Automatically added by buildreq on Wed Apr 21 2010
 BuildRequires: perl-Module-Install perl-Params-Util perl-Sub-Install
@@ -47,6 +47,9 @@ None.
 %perl_vendor_privlib/Data*
 
 %changelog
+* Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 0.108-alt1
+- automated CPAN update
+
 * Mon Sep 19 2011 Igor Vlasenko <viy@altlinux.ru> 0.107-alt1
 - automated CPAN update
 
