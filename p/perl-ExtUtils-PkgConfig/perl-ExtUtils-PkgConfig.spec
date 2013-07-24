@@ -1,6 +1,6 @@
 %define dist ExtUtils-PkgConfig
 Name: perl-%dist
-Version: 1.13
+Version: 1.14
 Release: alt1
 
 Summary: Perl interface to the pkg-config(1) command-line utility
@@ -36,6 +36,9 @@ the libraries about which pkg-config knows.
 %perl_vendor_privlib/ExtUtils
 
 %changelog
+* Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 1.14-alt1
+- automated CPAN update
+
 * Wed Sep 26 2012 Igor Vlasenko <viy@altlinux.ru> 1.13-alt1
 - automated CPAN update
 
