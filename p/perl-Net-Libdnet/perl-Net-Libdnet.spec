@@ -1,6 +1,6 @@
 %define dist Net-Libdnet
 Name: perl-%dist
-Version: 0.96
+Version: 0.98
 Release: alt1
 
 Summary: Binding for Dug Song's libdnet
@@ -8,7 +8,7 @@ License: BSD
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/G/GO/GOMOR/Net-Libdnet-%{version}.tar.gz
 
 # Automatically added by buildreq on Tue Oct 11 2011
 BuildRequires: libdnet-devel perl-Class-Gomor perl-Test-Pod perl-Test-Pod-Coverage
@@ -36,6 +36,9 @@ the functionality provided by libpcap.
 %perl_vendor_autolib/Net
 
 %changelog
+* Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 0.98-alt1
+- automated CPAN update
+
 * Sun Sep 02 2012 Vladimir Lettiev <crux@altlinux.ru> 0.96-alt1
 - 0.92 -> 0.96
 - built for perl-5.16
