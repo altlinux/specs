@@ -1,6 +1,6 @@
 Name: perl-GD
-Version: 2.46
-Release: alt3
+Version: 2.50
+Release: alt1
 Epoch: 1
 
 Summary: Perl interface to the GD graphics library
@@ -8,7 +8,7 @@ License: Perl
 Group: Development/Perl
 
 URL: %CPAN GD
-Source: http://www.perl.com/CPAN/modules/by-module/GD/GD-%version.tar.gz
+Source: http://www.cpan.org/authors/id/L/LD/LDS/GD-%{version}.tar.gz
 Patch: GD-2.41-Group.pm.patch
 
 Conflicts: perl-GD1
@@ -47,6 +47,9 @@ sed -i- 's/compare(test6(),6);/print "ok 6 # Skip, we change fonts so byte-compa
 %perl_vendor_archlib/qd.pl
 
 %changelog
+* Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 1:2.50-alt1
+- automated CPAN update
+
 * Sat Sep 01 2012 Vladimir Lettiev <crux@altlinux.ru> 1:2.46-alt3
 - rebuilt for perl-5.16
 
