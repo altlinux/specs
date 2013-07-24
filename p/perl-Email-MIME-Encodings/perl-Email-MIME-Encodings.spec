@@ -1,14 +1,14 @@
 %define dist Email-MIME-Encodings
 Name: perl-%dist
-Version: 1.313
-Release: alt2
+Version: 1.314
+Release: alt1
 
 Summary: A unified interface to MIME encoding and decoding
 License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/R/RJ/RJBS/Email-MIME-Encodings-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -34,6 +34,9 @@ header at some text and have the right thing happen.
 %perl_vendor_privlib/Email
 
 %changelog
+* Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 1.314-alt1
+- automated CPAN update
+
 * Wed Oct 05 2011 Alexey Tourbin <at@altlinux.ru> 1.313-alt2
 - rebuilt as plain src.rpm
 
