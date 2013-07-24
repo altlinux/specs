@@ -14,7 +14,7 @@
 %define _enable_test 1
 
 Name: perl-Data-ICal
-Version: 0.18
+Version: 0.21
 Release: alt1
 
 Summary: Generates iCalendar (RFC 2445) calendar files
@@ -27,7 +27,7 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 BuildArch: noarch
 
-Source: http://www.cpan.org/authors/id/T/TS/TSIBLEY/Data-ICal-%{version}.tar.gz
+Source: http://www.cpan.org/authors/id/A/AL/ALEXMV/Data-ICal-%{version}.tar.gz
 
 # Automatically added by buildreq on Sun Jun 22 2008
 BuildRequires: perl-Class-ReturnValue perl-Module-Install perl-Test-LongString perl-Test-NoWarnings perl-Test-Pod perl-Test-Pod-Coverage perl-Test-Warn perl-Text-vFile-asData perl-CPAN
@@ -59,6 +59,9 @@ rm -rf %buildroot%perl_vendor_man3dir/
 %perl_vendor_privlib/Data/*
 
 %changelog
+* Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 0.21-alt1
+- automated CPAN update
+
 * Mon Sep 24 2012 Igor Vlasenko <viy@altlinux.ru> 0.18-alt1
 - automated CPAN update
 
