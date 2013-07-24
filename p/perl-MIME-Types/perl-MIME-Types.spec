@@ -1,6 +1,6 @@
 %define dist MIME-Types
 Name: perl-MIME-Types
-Version: 1.35
+Version: 1.38
 Release: alt1
 
 Summary: Definition of MIME types
@@ -8,7 +8,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/M/MA/MARKOV/MIME-Types-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -40,6 +40,9 @@ by RFCs and vendors, so the list is long but not complete.
 %doc	%perl_vendor_privlib/MIME/*.pod
 
 %changelog
+* Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 1.38-alt1
+- automated CPAN update
+
 * Wed Sep 26 2012 Alexey Tourbin <at@altlinux.ru> 1.35-alt1
 - 1.32 -> 1.35
 
