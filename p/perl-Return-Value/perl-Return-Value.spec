@@ -14,8 +14,8 @@
 %define _enable_test 1
 
 Name: perl-Return-Value
-Version: 1.666001
-Release: alt1.1
+Version: 1.666002
+Release: alt1
 
 Summary: Polymorphic Return Values
 
@@ -26,7 +26,7 @@ Url: http://www.cpan.org
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 BuildArch: noarch
-Source: http://www.cpan.org/authors/id/R/RJ/RJBS/Return-Value-1.666001.tar.gz
+Source: http://www.cpan.org/authors/id/R/RJ/RJBS/Return-Value-%{version}.tar.gz
 
 # Automatically added by buildreq on Mon Dec 11 2006
 BuildRequires: perl-Test-Pod perl-Test-Pod-Coverage
@@ -60,6 +60,9 @@ you're looking for in each contex a return value is used in.
 %perl_vendor_privlib/Return/
 
 %changelog
+* Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 1.666002-alt1
+- automated CPAN update
+
 * Mon Nov 22 2010 Igor Vlasenko <viy@altlinux.ru> 1.666001-alt1.1
 - repair after perl 5.12 upgrade using girar-nmu
 
