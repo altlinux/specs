@@ -1,6 +1,6 @@
 %define dist Module-Load
 Name: perl-%dist
-Version: 0.22
+Version: 0.24
 Release: alt1
 
 Summary: runtime require of both modules and files
@@ -33,6 +33,9 @@ either a file or a module.
 %perl_vendor_privlib/Module
 
 %changelog
+* Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 0.24-alt1
+- automated CPAN update
+
 * Mon Sep 24 2012 Igor Vlasenko <viy@altlinux.ru> 0.22-alt1
 - automated CPAN update
 
