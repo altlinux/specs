@@ -1,6 +1,6 @@
 %define dist Parallel-ForkManager
 Name: perl-%dist
-Version: 0.7.9
+Version: 1.03
 Release: alt1
 
 Summary: A simple parallel processing fork manager
@@ -8,7 +8,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/S/SZ/SZABGAB/Parallel-ForkManager-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -35,6 +35,9 @@ use is a downloader which will be retrieving hundreds/thousands of files.
 %perl_vendor_privlib/Parallel/ForkManager.pm
 
 %changelog
+* Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 1.03-alt1
+- automated CPAN update
+
 * Sat Apr 23 2011 Alexey Tourbin <at@altlinux.ru> 0.7.9-alt1
 - 0.7.5 -> 0.7.9
 
