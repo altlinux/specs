@@ -1,6 +1,6 @@
 %define dist Getopt-Long-Descriptive
 Name: perl-%dist
-Version: 0.092
+Version: 0.093
 Release: alt1
 
 Summary: Getopt::Long, but simpler and more powerful
@@ -34,6 +34,9 @@ think about its huge array of options.
 %perl_vendor_privlib/Getopt
 
 %changelog
+* Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 0.093-alt1
+- automated CPAN update
+
 * Mon Sep 24 2012 Igor Vlasenko <viy@altlinux.ru> 0.092-alt1
 - automated CPAN update
 
