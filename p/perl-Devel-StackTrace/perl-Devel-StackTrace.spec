@@ -1,6 +1,6 @@
 %define module Devel-StackTrace
 Name: perl-%module
-Version: 1.27
+Version: 1.30
 Release: alt1
 Epoch: 1
 
@@ -13,7 +13,7 @@ Url: %CPAN %module
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 BuildArch: noarch
-Source: http://www.cpan.org/authors/id/D/DR/DROLSKY/Devel-StackTrace-1.27.tar.gz
+Source: http://www.cpan.org/authors/id/D/DR/DROLSKY/Devel-StackTrace-%{version}.tar.gz
 
 BuildRequires: perl-devel
 
@@ -33,6 +33,9 @@ BuildRequires: perl-devel
 %perl_vendor_privlib/Devel/StackTrace*
 
 %changelog
+* Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 1:1.30-alt1
+- automated CPAN update
+
 * Mon Sep 19 2011 Igor Vlasenko <viy@altlinux.ru> 1:1.27-alt1
 - automated CPAN update
 
