@@ -5,7 +5,7 @@
 %define _enable_test 1
 
 Name: perl-Test-Inline
-Version: 2.212
+Version: 2.213
 Release: alt1
 
 Summary: Test-Inline - Inlining your tests next to the code being tested
@@ -17,7 +17,7 @@ Url: http://search.cpan.org/~adamk/%m_distro-%version
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 BuildArch: noarch
-Source: http://www.cpan.org/authors/id/A/AD/ADAMK/Test-Inline-2.212.tar.gz
+Source: http://www.cpan.org/authors/id/A/AD/ADAMK/Test-Inline-%{version}.tar.gz
 
 # Automatically added by buildreq on Sat Sep 24 2005
 BuildRequires: perl-Algorithm-Dependency perl-Class-Autouse perl-Config-Tiny perl-File-Find-Rule perl-File-Flat perl-File-Slurp perl-Number-Compare perl-Params-Util perl-Pod-Escapes perl-Pod-Simple perl-Pod-Tests perl-Test-Pod perl-Text-Glob perl-devel perl-prefork
@@ -53,6 +53,9 @@ block.
 %_man1dir/*
 
 %changelog
+* Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 2.213-alt1
+- automated CPAN update
+
 * Mon Sep 19 2011 Igor Vlasenko <viy@altlinux.ru> 2.212-alt1
 - automated CPAN update
 
