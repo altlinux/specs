@@ -1,6 +1,6 @@
 %define dist GStreamer
 Name: perl-%dist
-Version: 0.17
+Version: 0.18
 Release: alt1
 
 Summary: Perl interface to the GStreamer library
@@ -8,7 +8,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/X/XA/XAOC/GStreamer-%{version}.tar.gz
 
 # Automatically added by buildreq on Tue Oct 18 2011
 BuildRequires: gst-plugins-base gstreamer-devel perl-ExtUtils-Depends perl-ExtUtils-PkgConfig perl-Glib-devel perl-podlators
@@ -31,6 +31,9 @@ This module allows you to use the GStreamer library from Perl.
 %perl_vendor_autolib/GStreamer
 
 %changelog
+* Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 0.18-alt1
+- automated CPAN update
+
 * Sun Sep 02 2012 Vladimir Lettiev <crux@altlinux.ru> 0.17-alt1
 - 0.16 -> 0.17
 - built for perl-5.16
