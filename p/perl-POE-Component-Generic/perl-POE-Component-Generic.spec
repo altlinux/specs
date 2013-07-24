@@ -1,6 +1,6 @@
 %define dist POE-Component-Generic
 Name: perl-%dist
-Version: 0.1401
+Version: 0.1403
 Release: alt1
 
 Summary: Generic non-blocking POE interface to any OO-module
@@ -8,7 +8,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/G/GW/GWYN/POE-Component-Generic-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -36,6 +36,9 @@ existing code with minimal effort.
 %perl_vendor_privlib/POE
 
 %changelog
+* Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 0.1403-alt1
+- automated CPAN update
+
 * Sun Nov 20 2011 Alexey Tourbin <at@altlinux.ru> 0.1401-alt1
 - 0.1205 -> 0.1401
 
