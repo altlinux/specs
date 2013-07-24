@@ -1,6 +1,6 @@
 %define dist Term-ANSIColor
 Name: perl-Term-ANSIColor
-Version: 3.02
+Version: 4.02
 Release: alt1
 
 Summary: Color output using ANSI escape sequences
@@ -8,7 +8,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/R/RR/RRA/Term-ANSIColor-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -39,6 +39,9 @@ rm t/pod*.t
 %perl_vendor_privlib/Term
 
 %changelog
+* Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 4.02-alt1
+- automated CPAN update
+
 * Mon Oct 01 2012 Vladimir Lettiev <crux@altlinux.ru> 3.02-alt1
 - 3.01 -> 3.02
 
