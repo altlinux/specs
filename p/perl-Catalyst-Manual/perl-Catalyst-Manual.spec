@@ -1,6 +1,6 @@
 %define dist Catalyst-Manual
 Name: perl-%dist
-Version: 5.9004
+Version: 5.9007
 Release: alt1
 Epoch: 1
 
@@ -9,7 +9,7 @@ License: Artistic and GPL
 Group: Development/Perl
 
 URL: http://search.cpan.org/dist/Catalyst-Manual/
-Source: http://www.cpan.org/authors/id/Z/ZA/ZARQUON/Catalyst-Manual-%{version}.tar.gz
+Source: http://www.cpan.org/authors/id/E/ET/ETHER/Catalyst-Manual-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -36,6 +36,9 @@ Task::Catalyst::Tutorial.
 %perl_vendor_privlib/Catalyst*
 
 %changelog
+* Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 1:5.9007-alt1
+- automated CPAN update
+
 * Mon Sep 24 2012 Igor Vlasenko <viy@altlinux.ru> 1:5.9004-alt1
 - automated CPAN update
 
