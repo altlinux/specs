@@ -1,6 +1,6 @@
 %define dist Params-Check
 Name: perl-%dist
-Version: 0.36
+Version: 0.38
 Release: alt1
 
 Summary: A generic input parsing/checking mechanism.
@@ -34,6 +34,9 @@ system, providing default values and so on.
 %perl_vendor_privlib/Params
 
 %changelog
+* Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 0.38-alt1
+- automated CPAN update
+
 * Mon Sep 24 2012 Igor Vlasenko <viy@altlinux.ru> 0.36-alt1
 - automated CPAN update
 
