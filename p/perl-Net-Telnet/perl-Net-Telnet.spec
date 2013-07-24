@@ -1,14 +1,14 @@
 %define dist Net-Telnet
 Name: perl-Net-Telnet
-Version: 3.03
-Release: alt2.1.1
+Version: 3.04
+Release: alt1
 
 Summary: Script telnetable connections
 License: GPL
 Group: Development/Perl
 
 Url: %CPAN %dist
-Source: %dist-%version.tar.bz2
+Source: http://www.cpan.org/authors/id/J/JR/JROGERS/Net-Telnet-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -39,6 +39,9 @@ stream, such as the prompt from a shell.
 %perl_vendor_privlib/Net*
 
 %changelog
+* Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 3.04-alt1
+- automated CPAN update
+
 * Mon Nov 22 2010 Igor Vlasenko <viy@altlinux.ru> 3.03-alt2.1.1
 - repair after perl 5.12 upgrade using girar-nmu
 
