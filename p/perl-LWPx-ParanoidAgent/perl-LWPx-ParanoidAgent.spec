@@ -14,7 +14,7 @@
 %define _disable_test 1
 
 Name: perl-LWPx-ParanoidAgent
-Version: 1.07
+Version: 1.09
 Release: alt1
 
 Summary: subclass of LWP::UserAgent that protects you from harm
@@ -26,7 +26,7 @@ Url: http://www.annocpan.org/dist/%m_distro
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 BuildArch: noarch
-Source: http://search.cpan.org/CPAN/authors/id/B/BR/BRADFITZ/%m_distro-%version.tar.bz2
+Source: http://www.cpan.org/authors/id/S/SA/SAXJAZMAN/lwp/LWPx-ParanoidAgent-%{version}.tar.gz
 
 # Automatically added by buildreq on Sat Nov 07 2009
 BuildRequires: perl-Net-DNS perl-devel perl-libwww
@@ -67,6 +67,9 @@ rm -rf %buildroot%perl_vendor_man3dir/
 %perl_vendor_privlib/LWPx/
 
 %changelog
+* Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 1.09-alt1
+- automated CPAN update
+
 * Sat Nov 07 2009 Vitaly Lipatov <lav@altlinux.ru> 1.07-alt1
 - new version 1.07 (with rpmrb script)
 
