@@ -1,8 +1,8 @@
 %define module POE-Component-Client-DNS
 
 Name: perl-POE-Component-Client-DNS
-Version: 1.051
-Release: alt2
+Version: 1.053
+Release: alt1
 
 Summary: Non-blocking/concurrent DNS queries using Net::DNS and POE
 
@@ -11,7 +11,7 @@ Group: Development/Perl
 Url: http://www.cpan.org
 
 BuildArch: noarch
-Source: %module-%version.tar.gz
+Source: http://www.cpan.org/authors/id/R/RC/RCAPUTO/POE-Component-Client-DNS-%{version}.tar.gz
 
 # Automatically added by buildreq on Fri Oct 23 2009
 BuildRequires: perl-Net-DNS perl-POE perl-Test-NoWarnings
@@ -34,6 +34,9 @@ while waiting for name servers to respond.
 %perl_vendor_privlib/POE/*
 
 %changelog
+* Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 1.053-alt1
+- automated CPAN update
+
 * Mon Nov 15 2010 Alexey Shabalin <shaba@altlinux.ru> 1.051-alt2
 - drop %%perl_vendor_man3dir
 
