@@ -1,6 +1,6 @@
 %define dist Catalyst-Plugin-Authentication
 Name: perl-%dist
-Version: 0.10021
+Version: 0.10023
 Release: alt1
 
 Summary: Infrastructure plugin for the Catalyst
@@ -35,6 +35,9 @@ the user to do what the system authorises them to do).
 %perl_vendor_privlib/Catalyst
 
 %changelog
+* Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 0.10023-alt1
+- automated CPAN update
+
 * Mon Sep 24 2012 Igor Vlasenko <viy@altlinux.ru> 0.10021-alt1
 - automated CPAN update
 
