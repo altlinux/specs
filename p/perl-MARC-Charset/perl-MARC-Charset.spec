@@ -14,7 +14,7 @@
 %define _enable_test 1
 
 Name: perl-MARC-Charset
-Version: 1.33
+Version: 1.34
 Release: alt1
 
 Summary: convert MARC-8 encoded strings to UTF-8
@@ -50,6 +50,9 @@ allows you to put non-Roman scripts in MARC bibliographic records.
 %perl_vendor_privlib/MARC*
 
 %changelog
+* Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 1.34-alt1
+- automated CPAN update
+
 * Wed Oct 17 2012 Igor Vlasenko <viy@altlinux.ru> 1.33-alt1
 - automated CPAN update
 
