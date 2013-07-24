@@ -1,7 +1,7 @@
 BuildRequires: perl(Module/Build.pm)
 %define dist Statistics-Contingency
 Name: perl-%dist
-Version: 0.08
+Version: 0.09
 Release: alt1
 
 Summary: Calculate precision, recall, F1, accuracy, etc.
@@ -37,6 +37,9 @@ as well.
 %perl_vendor_privlib/Statistics*
 
 %changelog
+* Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 0.09-alt1
+- automated CPAN update
+
 * Sun Sep 25 2011 Igor Vlasenko <viy@altlinux.ru> 0.08-alt1
 - automated CPAN update
 
