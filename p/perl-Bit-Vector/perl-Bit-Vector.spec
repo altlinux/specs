@@ -1,6 +1,6 @@
 %define dist Bit-Vector
 Name: perl-%dist
-Version: 7.2
+Version: 7.3
 Release: alt1
 
 Summary: Efficient bit vector, set of integers and "big int" math library
@@ -8,7 +8,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/S/ST/STBEY/Bit-Vector-%{version}.tar.gz
 
 # Automatically added by buildreq on Fri Oct 07 2011
 BuildRequires: perl-Carp-Clan perl-devel
@@ -47,6 +47,9 @@ overloaded operators for maximum ease of use.
 	%perl_vendor_autolib/Bit/Vector
 
 %changelog
+* Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 7.3-alt1
+- automated CPAN update
+
 * Thu Aug 30 2012 Vladimir Lettiev <crux@altlinux.ru> 7.2-alt1
 - rebuilt for perl-5.16
 
