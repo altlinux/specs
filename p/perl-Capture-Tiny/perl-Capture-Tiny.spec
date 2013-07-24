@@ -1,6 +1,6 @@
 %define dist Capture-Tiny
 Name: perl-Capture-Tiny
-Version: 0.20
+Version: 0.22
 Release: alt1
 
 Summary: Capture::Tiny - Capture STDOUT and STDERR from Perl, XS or external programs
@@ -8,7 +8,7 @@ Group: Development/Perl
 License: Apache 2.0
 
 Url: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/D/DA/DAGOLDEN/Capture-Tiny-%{version}.tar.gz
 
 BuildArch: noarch
 BuildRequires: perl-devel perl-Module-Build perl-Test-Differences
@@ -30,6 +30,9 @@ BuildRequires: perl-devel perl-Module-Build perl-Test-Differences
 %doc Changes Todo LICENSE README 
 
 %changelog
+* Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 0.22-alt1
+- automated CPAN update
+
 * Fri Sep 28 2012 Vladimir Lettiev <crux@altlinux.ru> 0.20-alt1
 - 0.18 -> 0.20
 - built as plain srpm
