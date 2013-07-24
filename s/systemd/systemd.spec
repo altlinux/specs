@@ -8,6 +8,7 @@
 %def_enable quotacheck
 %def_enable randomseed
 %def_enable coredump
+%def_disable smack
 %def_disable gcrypt
 %def_disable qrencode
 %def_enable microhttpd
@@ -24,8 +25,8 @@
 %endif
 
 Name: systemd
-Version: 204
-Release: alt5
+Version: 206
+Release: alt1
 Summary: A System and Session Manager
 Url: http://www.freedesktop.org/wiki/Software/systemd
 Group: System/Configuration/Boot and Init
@@ -49,6 +50,7 @@ Source23: var-lock.mount
 Source24: var-run.mount
 Source27: altlinux-first_time.service
 Source28: systemd-tmpfiles.filetrigger
+Source33: udev.filetrigger
 Source29: tmpfile-systemd-startup-nologin.conf
 Source30: 49-coredump-null.conf
 Source31: 60-raw.rules
@@ -64,7 +66,6 @@ Source45: 75-cd-aliases-generator.rules
 
 Patch1: %name-snapshot.patch
 Patch2: %name-alt-patches.patch
-Patch3: systemd-204-disable-tmp-mount.patch
 
 # bash3 completions
 Source51: hostnamectl-bash3
@@ -85,7 +86,7 @@ BuildRequires: gperf
 BuildRequires: libcap-devel libcap-utils
 BuildRequires: libwrap-devel
 BuildRequires: libpam-devel
-BuildRequires: libacl-devel
+BuildRequires: libacl-devel acl
 BuildRequires: libattr-devel
 BuildRequires: xsltproc
 BuildRequires: docbook-style-xsl docbook-dtds
@@ -95,13 +96,14 @@ BuildRequires: libaudit-devel
 BuildRequires: glib2-devel >= 2.26 libgio-devel
 BuildRequires: gobject-introspection-devel
 BuildRequires: liblzma-devel
-BuildRequires: kmod-devel >= 5
+BuildRequires: libkmod-devel >= 14 kmod
+BuildRequires: kexec-tools
 %{?_with_python:BuildRequires: python-devel python-module-sphinx}
 BuildRequires: quota
 BuildRequires: gtk-doc
 BuildRequires: libblkid-devel >= 2.20
 
-%{?_enable_libcryptsetup:BuildRequires: libcryptsetup-devel}
+%{?_enable_libcryptsetup:BuildRequires: libcryptsetup-devel >= 1.6.0}
 BuildRequires: libgcrypt-devel
 %{?_enable_qrencode:BuildRequires: libqrencode-devel}
 %{?_enable_microhttpd:BuildRequires: libmicrohttpd-devel}
@@ -329,7 +331,7 @@ This package contains python binds for systemd APIs
 Group: System/Configuration/Hardware
 Summary: udev - an userspace implementation of devfs
 License: GPLv2+
-PreReq: shadow-utils dmsetup kmod >= 5 util-linux >= 2.20 losetup >= 2.19.1
+PreReq: shadow-utils dmsetup kmod >= 14 util-linux >= 2.20 losetup >= 2.19.1
 PreReq: udev-rules = %version-%release
 PreReq: udev-hwdb = %version-%release
 PreReq: systemd-utils = %version-%release
@@ -472,13 +474,14 @@ GObject introspection devel data for the GUdev library
 %setup -q
 %patch1 -p1
 %patch2 -p1
-%patch3 -p1
 
 %build
 export QUOTAON="/sbin/quotaon"
 export QUOTACHECK="/sbin/quotacheck"
 export SETCAP="/sbin/setcap"
 export KILL="/bin/kill"
+export KMOD="/bin/kmod"
+export KEXEC="/sbin/kexec"
 export CHKCONFIG="/sbin/chkconfig"
 
 gtkdocize --docdir docs/
@@ -502,6 +505,7 @@ intltoolize --force --automake
 	%{subst_enable quotacheck} \
 	%{subst_enable randomseed} \
 	%{subst_enable coredump} \
+	%{subst_enable smack} \
 	%{subst_enable gcrypt} \
 	%{subst_enable qrencode} \
 	%{subst_enable microhttpd} \
@@ -546,6 +550,7 @@ install -m644 %SOURCE17 %buildroot%_unitdir/altlinux-save-dmesg.service
 ln -s ../altlinux-save-dmesg.service %buildroot%_unitdir/basic.target.wants
 install -m644 %SOURCE27 %buildroot%_unitdir/altlinux-first_time.service
 ln -s ../altlinux-first_time.service %buildroot%_unitdir/basic.target.wants
+ln -s systemd-random-seed.service %buildroot%_unitdir/random.service
 
 # restore bind-mounts /var/run -> run and /var/lock -> /run/lock
 # we don't have those directories symlinked
@@ -554,7 +559,10 @@ install -m644 %SOURCE24 %buildroot%_unitdir/var-run.mount
 ln -s ../var-lock.mount %buildroot%_unitdir/local-fs.target.wants
 ln -s ../var-run.mount %buildroot%_unitdir/local-fs.target.wants
 
-ln -s systemd-random-seed-load.service %buildroot%_unitdir/random.service
+# turn off tmp.mount by default (ALT#29066)
+rm -f %buildroot%_unitdir/tmp.mount
+rm -f %buildroot%_unitdir/local-fs.target.wants/tmp.mount
+
 
 find %buildroot \( -name '*.a' -o -name '*.la' \) -exec rm {} \;
 mkdir -p %buildroot/{sbin,bin}
@@ -685,6 +693,7 @@ install -m644 %SOURCE29 %buildroot/lib/tmpfiles.d/systemd-startup-nologin.conf
 install -m644 %SOURCE30 %buildroot/lib/sysctl.d/49-coredump-null.conf
 # rpm posttrans filetriggers
 install -pD -m755 %SOURCE28 %buildroot%_rpmlibdir/systemd-tmpfiles.filetrigger
+install -pD -m755 %SOURCE33 %buildroot%_rpmlibdir/udev.filetrigger
 
 cat >>%buildroot/lib/sysctl.d/50-default.conf <<EOF
 # Indicates the amount of address space which a user process will be
@@ -882,6 +891,7 @@ update_chrooted all
 /sbin/systemd-tty-ask-password-agent
 /sbin/journalctl
 /sbin/loginctl
+/sbin/machinectl
 
 %dir /lib/systemd
 /lib/systemd/*
@@ -1148,24 +1158,18 @@ update_chrooted all
 /sbin/udevadm
 /sbin/udevd
 /lib/systemd/systemd-udevd
+%_rpmlibdir/udev.filetrigger
 %_man8dir/udevadm*
 %_man8dir/systemd-udevd*
 %_man8dir/udevd*
 %_man7dir/udev*
 
 %files -n udev-extras
-%doc src/udev/keymap/README.keymap.txt
 /lib/udev/accelerometer
-/lib/udev/keymaps
-/lib/udev/findkeyboards
-/lib/udev/keymap
-/lib/udev/keyboard-force-release.sh
 /lib/udev/v4l_id
 /lib/udev/collect
 /lib/udev/rules.d/61-accelerometer.rules
 /lib/udev/rules.d/78-sound-card.rules
-/lib/udev/rules.d/95-keyboard-force-release.rules
-/lib/udev/rules.d/95-keymap.rules
 
 %files -n udev-rules
 %dir %_sysconfdir/udev/rules.d
@@ -1181,8 +1185,6 @@ update_chrooted all
 # extras
 %exclude /lib/udev/rules.d/61-accelerometer.rules
 %exclude /lib/udev/rules.d/78-sound-card.rules
-%exclude /lib/udev/rules.d/95-keyboard-force-release.rules
-%exclude /lib/udev/rules.d/95-keymap.rules
 # systemd
 %exclude /lib/udev/rules.d/70-uaccess.rules
 %exclude /lib/udev/rules.d/71-seat.rules
@@ -1205,6 +1207,13 @@ update_chrooted all
 /lib/udev/write_net_rules
 
 %changelog
+* Wed Jul 24 2013 Alexey Shabalin <shaba@altlinux.ru> 206-alt1
+- 206
+
+* Fri Jul 05 2013 Alexey Shabalin <shaba@altlinux.ru> 205-alt1
+- 205
+- add udev.filetrigger for reload udev rules
+
 * Thu Jun 13 2013 Sergey V Turchin <zerg@altlinux.org> 204-alt5
 - turn off tmp.mount by default (ALT#29066)
 
