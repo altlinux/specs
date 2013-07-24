@@ -14,7 +14,7 @@
 %define _enable_test 1
 
 Name: perl-Text-MicroTemplate
-Version: 0.18
+Version: 0.20
 Release: alt1
 
 Summary: Micro template engine with Perl5 language
@@ -26,7 +26,7 @@ Url: http://www.cpan.org
 Packager: Eugene Prokopiev <enp@altlinux.ru>
 
 BuildArch: noarch
-Source: http://search.cpan.org//CPAN/authors/id/K/KA/KAZUHO/%m_distro-%version.tar.gz
+Source: http://www.cpan.org/authors/id/K/KA/KAZUHO/Text-MicroTemplate-%{version}.tar.gz
 
 # Automatically added by buildreq on Mon Feb 20 2012
 BuildRequires: perl-IO-stringy perl-devel
@@ -46,6 +46,9 @@ None.
 %perl_vendor_privlib/*
 
 %changelog
+* Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 0.20-alt1
+- automated CPAN update
+
 * Mon Feb 20 2012 Eugene Prokopiev <enp@altlinux.ru> 0.18-alt1
 - initial build for ALT Linux Sisyphus
 
