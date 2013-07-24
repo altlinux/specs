@@ -1,6 +1,6 @@
 %define dist Pod-LaTeX
 Name: perl-%dist
-Version: 0.60
+Version: 0.61
 Release: alt1
 
 Summary: Convert Pod data to formatted Latex
@@ -34,6 +34,9 @@ into Latex.  The pod2latex command uses this module for translation.
 %_bindir/pod2latex
 
 %changelog
+* Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 0.61-alt1
+- automated CPAN update
+
 * Tue Sep 25 2012 Igor Vlasenko <viy@altlinux.ru> 0.60-alt1
 - automated CPAN update
 
