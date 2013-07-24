@@ -1,5 +1,5 @@
 Name: perl-Wx
-Version: 0.9914
+Version: 0.9922
 Release: alt1
 
 Summary: wxPerl - Perl bindings for wxWindows
@@ -7,7 +7,7 @@ License: GPL
 Group: System/Libraries
 
 URL: http://wxperl.sourceforge.net/
-Source: Wx-%version.tar.gz
+Source: http://www.cpan.org/authors/id/M/MD/MDOOTSON/Wx-%{version}.tar.gz
 
 # Automatically added by buildreq on Wed Oct 19 2011
 BuildRequires: gcc-c++ libwxGTK-contrib-stc-devel libwxGTK-devel perl-Alien-wxWidgets perl-Encode perl-ExtUtils-CBuilder perl-ExtUtils-XSpp perl-IO-String perl-autodie perl-threads xvfb-run
@@ -66,6 +66,9 @@ xvfb-run -a make test
 %perl_vendor_archlib/Wx/typemap
 
 %changelog
+* Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 0.9922-alt1
+- automated CPAN update
+
 * Thu Oct 04 2012 Vladimir Lettiev <crux@altlinux.ru> 0.9914-alt1
 - 0.9913 -> 0.9914
 
