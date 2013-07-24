@@ -1,6 +1,6 @@
 %define dist Module-Build
 Name: perl-%dist
-Version: 0.4003
+Version: 0.4007
 Release: alt1
 
 Summary: Build and install Perl modules
@@ -8,7 +8,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/L/LE/LEONT/Module-Build-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -46,6 +46,9 @@ bzip2 -k Changes
 	%perl_vendor_privlib/Module/Build/Platform/Unix.pm
 
 %changelog
+* Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 0.4007-alt1
+- automated CPAN update
+
 * Mon Sep 10 2012 Vladimir Lettiev <crux@altlinux.ru> 0.4003-alt1
 - 0.3800 -> 0.4003
 - fixed build with perl-5.16
