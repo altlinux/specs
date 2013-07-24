@@ -14,7 +14,7 @@
 %define _enable_test 1
 
 Name: perl-Net-Amazon
-Version: 0.61
+Version: 0.62
 Release: alt1
 
 Summary: Framework for accessing amazon.com via REST
@@ -247,6 +247,9 @@ rm -rf %buildroot%perl_vendor_man3dir/
 %perl_vendor_privlib/Net/*
 
 %changelog
+* Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 0.62-alt1
+- automated CPAN update
+
 * Thu Sep 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.61-alt1
 - automated CPAN update
 
