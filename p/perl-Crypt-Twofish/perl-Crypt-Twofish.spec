@@ -1,6 +1,6 @@
 %define dist Crypt-Twofish
 Name: perl-%dist
-Version: 2.15
+Version: 2.17
 Release: alt1
 
 Summary: The Twofish Encryption Algorithm
@@ -39,6 +39,9 @@ in new code is strongly discouraged.
 %perl_vendor_autolib/Crypt
 
 %changelog
+* Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 2.17-alt1
+- automated CPAN update
+
 * Mon Sep 24 2012 Igor Vlasenko <viy@altlinux.ru> 2.15-alt1
 - automated CPAN update
 
