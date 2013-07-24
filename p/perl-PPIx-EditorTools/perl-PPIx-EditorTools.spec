@@ -1,6 +1,6 @@
 %define dist PPIx-EditorTools
 Name: perl-PPIx-EditorTools
-Version: 0.17
+Version: 0.18
 Release: alt1
 
 Summary: PPIx::EditorTools - Utility methods and base class for manipulating Perl
@@ -8,7 +8,7 @@ License: Perl
 Group: Development/Perl
 
 Url: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/S/SZ/SZABGAB/PPIx-EditorTools-%{version}.tar.gz
 
 BuildRequires: perl-devel perl-Test-Differences perl-Class-XSAccessor perl-PPI perl-Test-Most perl-Test-Warn perl-Test-Exception perl-Test-Deep perl-Try-Tiny perl-Pod-Parser
 BuildArch: noarch
@@ -30,6 +30,9 @@ BuildArch: noarch
 %doc Changes README
 
 %changelog
+* Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 0.18-alt1
+- automated CPAN update
+
 * Sun Sep 30 2012 Vladimir Lettiev <crux@altlinux.ru> 0.17-alt1
 - 0.15 -> 0.17
 - built as plain srpm
