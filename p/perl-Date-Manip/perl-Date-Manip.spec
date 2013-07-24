@@ -1,6 +1,6 @@
 %define dist Date-Manip
 Name: perl-Date-Manip
-Version: 6.34
+Version: 6.40
 Release: alt1
 
 Summary: Date manipulation routines
@@ -49,6 +49,9 @@ international times are all easily done.
 	%perl_vendor_privlib/Date/Manip/TZ/*.pm
 
 %changelog
+* Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 6.40-alt1
+- automated CPAN update
+
 * Mon Sep 24 2012 Igor Vlasenko <viy@altlinux.ru> 6.34-alt1
 - automated CPAN update
 
