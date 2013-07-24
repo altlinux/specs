@@ -1,14 +1,14 @@
 %define dist TimeDate
 Name: perl-%dist
-Version: 1.20
-Release: alt2
+Version: 2.30
+Release: alt1
 
 Summary: Date and time manipulation routines for Perl
 License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/G/GB/GBARR/TimeDate-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -36,6 +36,9 @@ a more reliable interface to textual representations of points in time.
 %perl_vendor_privlib/Time*
 
 %changelog
+* Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 2.30-alt1
+- automated CPAN update
+
 * Tue Oct 04 2011 Alexey Tourbin <at@altlinux.ru> 1.20-alt2
 - rebuilt as plain src.rpm
 
