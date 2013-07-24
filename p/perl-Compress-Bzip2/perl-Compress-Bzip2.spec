@@ -1,14 +1,14 @@
 %define dist Compress-Bzip2
 Name: perl-%dist
-Version: 2.09
-Release: alt5
+Version: 2.16
+Release: alt1
 
 Summary: Interface to Bzip2 compression library
 License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/R/RU/RURBAN/Compress-Bzip2-%{version}.tar.gz
 
 # Automatically added by buildreq on Fri Oct 07 2011
 BuildRequires: bzlib-devel perl-devel
@@ -33,6 +33,9 @@ export BUILD_BZLIB=0
 %perl_vendor_autolib/Compress
 
 %changelog
+* Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 2.16-alt1
+- automated CPAN update
+
 * Thu Aug 30 2012 Vladimir Lettiev <crux@altlinux.ru> 2.09-alt5
 - rebuilt for perl-5.16
 
