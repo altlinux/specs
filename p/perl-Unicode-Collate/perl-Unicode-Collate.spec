@@ -1,6 +1,6 @@
 %define dist Unicode-Collate
 Name: perl-%dist
-Version: 0.90
+Version: 0.98
 Release: alt1
 
 Summary: Unicode Collation Algorithm
@@ -39,6 +39,9 @@ as described by Unicode Technical Standard #10 (UTS #10).
 %perl_vendor_autolib/Unicode
 
 %changelog
+* Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 0.98-alt1
+- automated CPAN update
+
 * Mon Sep 24 2012 Igor Vlasenko <viy@altlinux.ru> 0.90-alt1
 - automated CPAN update
 
