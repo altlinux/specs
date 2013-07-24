@@ -1,6 +1,6 @@
 %define dist Module-Pluggable
 Name: perl-%dist
-Version: 4.3
+Version: 4.8
 Release: alt1
 
 Summary: Automatically give your module the ability to have plugins
@@ -8,7 +8,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/S/SI/SIMONW/Module-Pluggable-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -34,6 +34,9 @@ for your module.
 %perl_vendor_privlib/Devel
 
 %changelog
+* Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 4.8-alt1
+- automated CPAN update
+
 * Mon Sep 10 2012 Vladimir Lettiev <crux@altlinux.ru> 4.3-alt1
 - 3.9 -> 4.3
 
