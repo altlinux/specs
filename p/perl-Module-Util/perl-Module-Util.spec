@@ -1,6 +1,6 @@
 %define dist Module-Util
 Name: perl-Module-Util
-Version: 1.08
+Version: 1.09
 Release: alt1
 
 Summary: Module::Util - Module name tools and transformations
@@ -8,7 +8,7 @@ License: Perl
 Group: Development/Perl
 
 Url: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/M/MA/MATTLAW/Module-Util-%{version}.tar.gz
 
 BuildRequires: perl-Module-Build perl-podlators
 BuildArch: noarch
@@ -32,6 +32,9 @@ BuildArch: noarch
 %doc Changes README 
 
 %changelog
+* Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 1.09-alt1
+- automated CPAN update
+
 * Sat Sep 29 2012 Vladimir Lettiev <crux@altlinux.ru> 1.08-alt1
 - 1.07 -> 1.08
 - built as plain srpm
