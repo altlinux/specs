@@ -1,6 +1,6 @@
 %define dist Eval-Closure
 Name: perl-%dist
-Version: 0.08
+Version: 0.10
 Release: alt1
 
 Summary: Safely and cleanly create closures via string eval
@@ -8,7 +8,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/D/DO/DOY/Eval-Closure-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -45,6 +45,9 @@ if caching is to work properly).
 %perl_vendor_privlib/Eval
 
 %changelog
+* Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 0.10-alt1
+- automated CPAN update
+
 * Mon Sep 10 2012 Vladimir Lettiev <crux@altlinux.ru> 0.08-alt1
 - 0.06 -> 0.08
 - fixed build with perl-5.16
