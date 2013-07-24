@@ -1,14 +1,14 @@
 %define dist Alien-SDL
 Name: perl-%dist
-Version: 1.438
-Release: alt2
+Version: 1.440
+Release: alt1
 
 Summary: Building, finding and using SDL binaries
 License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/J/JT/JTPALMER/Alien-SDL-%{version}.tar.gz
+Source: http://www.cpan.org/authors/id/F/FR/FROGGS/Alien-SDL-%{version}.tar.gz
 Patch: %name-1.438-alt-norpath.patch
 
 BuildArch: noarch
@@ -37,6 +37,9 @@ from source codes.
 %perl_vendor_privlib/Alien
 
 %changelog
+* Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 1.440-alt1
+- automated CPAN update
+
 * Mon Jan 07 2013 Vladimir Lettiev <crux@altlinux.ru> 1.438-alt2
 - removed rpath option for linker
 
