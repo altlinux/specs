@@ -1,14 +1,14 @@
 %define dist Pod-POM
 Name: perl-%dist
-Version: 0.27
-Release: alt2
+Version: 0.28
+Release: alt1
 
 Summary: Pod Object Model
 License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/A/AN/ANDREWF/Pod-POM-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -41,6 +41,9 @@ generate an output representation in one form or another.
 %perl_vendor_privlib/Pod
 
 %changelog
+* Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 0.28-alt1
+- automated CPAN update
+
 * Tue Nov 15 2011 Alexey Tourbin <at@altlinux.ru> 0.27-alt2
 - rebuilt as plain src.rpm
 
