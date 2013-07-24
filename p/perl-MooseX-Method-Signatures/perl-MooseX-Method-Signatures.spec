@@ -1,6 +1,6 @@
 %define dist MooseX-Method-Signatures
 Name: perl-%dist
-Version: 0.43
+Version: 0.44
 Release: alt1
 
 Summary: Method declarations with type constraints and no source filter
@@ -8,7 +8,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/E/ET/ETHER/MooseX-Method-Signatures-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -33,6 +33,9 @@ methods and validating their arguments against Moose type constraints.
 %perl_vendor_privlib/MooseX
 
 %changelog
+* Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 0.44-alt1
+- automated CPAN update
+
 * Wed Sep 26 2012 Alexey Tourbin <at@altlinux.ru> 0.43-alt1
 - 0.37 -> 0.43
 
