@@ -1,15 +1,15 @@
 %define dist Event
 
 Name: perl-%dist
-Version: 1.20
-Release: alt3
+Version: 1.21
+Release: alt1
 
 Summary: Event loop processing
 License: Perl
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/J/JP/JPRIT/Event-%{version}.tar.gz
 
 # Automatically added by buildreq on Fri Oct 07 2011
 BuildRequires: perl-devel
@@ -35,6 +35,9 @@ order when it is safe for callbacks to execute.
 %perl_vendor_autolib/Event
 
 %changelog
+* Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 1.21-alt1
+- automated CPAN update
+
 * Thu Aug 30 2012 Vladimir Lettiev <crux@altlinux.ru> 1.20-alt3
 - rebuilt for perl-5.16
 
