@@ -1,6 +1,6 @@
 %define dist XML-Writer
 Name: perl-%dist
-Version: 0.615
+Version: 0.623
 Release: alt1
 
 Summary: Simple Perl module for writing XML documents
@@ -37,6 +37,9 @@ there are not duplicate attribute names.
 %perl_vendor_privlib/XML
 
 %changelog
+* Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 0.623-alt1
+- automated CPAN update
+
 * Wed Sep 26 2012 Igor Vlasenko <viy@altlinux.ru> 0.615-alt1
 - automated CPAN update
 
