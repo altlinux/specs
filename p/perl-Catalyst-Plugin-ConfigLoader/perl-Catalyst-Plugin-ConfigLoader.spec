@@ -11,7 +11,7 @@
 %def_enable test
 
 Name: perl-Catalyst-Plugin-ConfigLoader
-Version: 0.30
+Version: 0.32
 Release: alt1
 
 Summary: %m_name - Load config files of various types
@@ -23,7 +23,7 @@ Url: http://search.cpan.org/dist/Catalyst-Plugin-ConfigLoader/
 Packager: Michael Bochkaryov <misha@altlinux.ru>
 
 BuildArch: noarch
-Source: http://www.cpan.org/authors/id/B/BR/BRICAS/Catalyst-Plugin-ConfigLoader-0.30.tar.gz
+Source: http://www.cpan.org/authors/id/B/BO/BOBTFISH/Catalyst-Plugin-ConfigLoader-%{version}.tar.gz
 
 # Automatically added by buildreq on Tue Apr 20 2010 (-bi)
 BuildRequires: perl-Catalyst-Devel perl-Config-Any perl-Data-Visitor perl-Test-Pod perl-Test-Pod-Coverage
@@ -47,6 +47,9 @@ INI and Perl formats.
 %doc README Changes
 
 %changelog
+* Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 0.32-alt1
+- automated CPAN update
+
 * Mon Sep 19 2011 Igor Vlasenko <viy@altlinux.ru> 0.30-alt1
 - automated CPAN update
 
