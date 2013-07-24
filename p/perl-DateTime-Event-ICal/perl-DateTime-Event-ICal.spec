@@ -3,13 +3,13 @@ BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(DateTime/Set.pm) perl(DateTime/Span.pm) perl(DateTime/SpanSet.pm) perl(Params/Validate.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-DateTime-Event-ICal
-Version:        0.10
-Release:        alt2_10
+Version:        0.11
+Release:        alt1
 Summary:        Perl DateTime extension for computing rfc2445 recurrences
 License:        GPL+ or Artistic
 Group:          Development/Perl
 URL:            http://search.cpan.org/dist/DateTime-Event-ICal/
-Source0:        http://www.cpan.org/authors/id/F/FG/FGLOCK/DateTime-Event-ICal-%{version}.tar.gz
+Source:        http://www.cpan.org/authors/id/F/FG/FGLOCK/DateTime-Event-ICal-%{version}.tar.gz
 BuildArch:      noarch
 BuildRequires:  perl(Class/ISA.pm)
 BuildRequires:  perl(DateTime.pm)
@@ -45,6 +45,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 0.11-alt1
+- automated CPAN update
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.10-alt2_10
 - update to new release by fcimport
 
