@@ -1,8 +1,8 @@
 %define module POE-Filter-IRCD
 
 Name: perl-%module
-Version: 2.42
-Release: alt2
+Version: 2.44
+Release: alt1
 
 Summary: A POE-based parser for the IRC protocol
 
@@ -11,7 +11,7 @@ Group: Development/Perl
 Url: http://www.cpan.org
 
 BuildArch: noarch
-Source: http://www.cpan.org/authors/id/B/BI/BINGOS/%module-%version.tar.gz
+Source: http://www.cpan.org/authors/id/B/BI/BINGOS/POE-Filter-IRCD-%{version}.tar.gz
 
 # Automatically added by buildreq on Wed Dec 03 2008
 BuildRequires: perl-POE perl-Test-Pod perl-Test-Pod-Coverage
@@ -35,6 +35,9 @@ A standalone version exists as L<Parse::IRC>.
 %perl_vendor_privlib/POE/Filter/*.pm
 
 %changelog
+* Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 2.44-alt1
+- automated CPAN update
+
 * Mon Nov 15 2010 Alexey Shabalin <shaba@altlinux.ru> 2.42-alt2
 - drop %%perl_vendor_man3dir
 
