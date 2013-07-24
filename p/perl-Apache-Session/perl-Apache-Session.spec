@@ -1,6 +1,6 @@
 %define dist Apache-Session
 Name: perl-%dist
-Version: 1.89
+Version: 1.90
 Release: alt1
 
 Summary: A persistence framework for session data
@@ -8,7 +8,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/C/CH/CHORNY/Apache-Session-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -36,6 +36,9 @@ altogether.
 %perl_vendor_privlib/Apache
 
 %changelog
+* Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 1.90-alt1
+- automated CPAN update
+
 * Mon Oct 03 2011 Alexey Tourbin <at@altlinux.ru> 1.89-alt1
 - 1.80 -> 1.89
 
