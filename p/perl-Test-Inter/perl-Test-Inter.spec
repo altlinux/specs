@@ -1,6 +1,6 @@
 %define dist Test-Inter
 Name: perl-%dist
-Version: 1.03
+Version: 1.05
 Release: alt1
 
 Summary: Framework for more readable interactive test scripts
@@ -8,7 +8,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/S/SB/SBECK/Test-Inter-1.03.tar.gz
+Source: http://www.cpan.org/authors/id/S/SB/SBECK/Test-Inter-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -36,6 +36,9 @@ not a drop-in replacement.
 %doc	%perl_vendor_privlib/Test/Inter.pod
 
 %changelog
+* Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 1.05-alt1
+- automated CPAN update
+
 * Mon Sep 19 2011 Igor Vlasenko <viy@altlinux.ru> 1.03-alt1
 - automated CPAN update
 
