@@ -3,13 +3,13 @@ BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(Moose/Exporter.pm) perl(Scalar/Util.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-MooseX-Aliases
-Version:        0.10
-Release:        alt3_6
+Version:        0.11
+Release:        alt1
 Summary:        Easy aliasing of methods and attributes in Moose
 License:        GPL+ or Artistic
 Group:          Development/Perl
 URL:            http://search.cpan.org/dist/MooseX-Aliases/
-Source0:        http://www.cpan.org/authors/id/D/DO/DOY/MooseX-Aliases-%{version}.tar.gz
+Source:        http://www.cpan.org/authors/id/D/DO/DOY/MooseX-Aliases-%{version}.tar.gz
 BuildArch:      noarch
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
 BuildRequires:  perl(File/Find.pm)
@@ -63,6 +63,9 @@ RELEASE_TESTING=1 make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 0.11-alt1
+- automated CPAN update
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.10-alt3_6
 - update to new release by fcimport
 
