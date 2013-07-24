@@ -1,3 +1,5 @@
+%def_enable snapshot
+
 %define _libexecdir %_prefix/libexec
 %define _name control-center
 %define ver_major 3.8
@@ -9,7 +11,7 @@
 %def_with cheese
 
 Name: gnome-control-center
-Version: %ver_major.3
+Version: %ver_major.4
 Release: alt1
 
 Summary: GNOME Control Center
@@ -19,9 +21,12 @@ Url: http://www.gnome.org
 Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 
 # git archive --format=tar --prefix=gnome-control-center-3.2.2/ --output=gnome-control-center-3.2.2.tar HEAD
-#Source: %name-%version.tar
+%if_enabled snapshot
+Source: %name-%version.tar
+%else
 Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
-Patch: %name-3.7.92-alt-lfs.patch
+%endif
+Patch: %name-3.8.3-alt-lfs.patch
 
 # From configure.ac
 %define gtk_ver 3.5.13
@@ -123,7 +128,11 @@ you'll want to install this package.
 %patch -p1 -b .lfs
 
 %build
+%if_enabled snapshot
+NOCONFIGURE=1 ./autogen.sh
+%else
 %autoreconf
+%endif
 %configure \
     %{subst_enable static} \
     %{subst_with libsocialweb} \
@@ -167,6 +176,13 @@ you'll want to install this package.
 %_datadir/pkgconfig/gnome-keybindings.pc
 
 %changelog
+* Wed Jul 24 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.4-alt1
+- 3.8.4
+
+* Mon Jul 15 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.3-alt2
+- updated to 2a9463c (fixed BGO ##701514, 703607, 703946, 703359, 703189,
+  702093, 702344...)
+
 * Sat Jun 08 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.3-alt1
 - 3.8.3
 
