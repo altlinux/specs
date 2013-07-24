@@ -1,6 +1,6 @@
 %define dist MailTools
 Name: perl-%dist
-Version: 2.11
+Version: 2.12
 Release: alt1
 
 Summary: Perl modules related to mail applications
@@ -8,7 +8,7 @@ License: GPL
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/M/MA/MARKOV/MailTools-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -39,6 +39,9 @@ This is MailTools, a set of perl modules related to mail applications.
 	%perl_vendor_privlib/Mail/Mailer/*.pm
 
 %changelog
+* Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 2.12-alt1
+- automated CPAN update
+
 * Wed Sep 26 2012 Alexey Tourbin <at@altlinux.ru> 2.11-alt1
 - 2.08 -> 2.11
 
