@@ -1,6 +1,6 @@
 %define dist Tie-IxHash
 Name: perl-%dist
-Version: 1.22
+Version: 1.23
 Release: alt1
 
 Packager: Andrey Brindeew <abr@altlinux.ru>
@@ -10,7 +10,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/C/CH/CHORNY/Tie-IxHash-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -39,6 +39,9 @@ can also be performed on the IxHash.
 %perl_vendor_privlib/Tie*
 
 %changelog
+* Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 1.23-alt1
+- automated CPAN update
+
 * Thu Apr 08 2010 Alexey Tourbin <at@altlinux.ru> 1.22-alt1
 - 1.21 -> 1.22
 
