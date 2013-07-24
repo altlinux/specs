@@ -14,7 +14,7 @@
 %define _enable_test 1
 
 Name: perl-IO-Pager
-Version: 0.30
+Version: 0.31
 Release: alt1
 
 Summary: Select a pager, optionally pipe it output if destination is a TTY
@@ -55,6 +55,9 @@ namely
 %perl_vendor_privlib/IO/
 
 %changelog
+* Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 0.31-alt1
+- automated CPAN update
+
 * Wed Sep 26 2012 Igor Vlasenko <viy@altlinux.ru> 0.30-alt1
 - automated CPAN update
 
