@@ -1,8 +1,8 @@
 %define module Spreadsheet-WriteExcel
 
 Name: perl-%module
-Version: 2.37
-Release: alt1.1
+Version: 2.39
+Release: alt1
 
 Packager: Victor Forsiuk <force@altlinux.org>
 
@@ -11,7 +11,7 @@ License: Perl
 Group: Development/Perl
 
 URL: %CPAN %module
-Source: http://search.cpan.org/CPAN/authors/id/J/JM/JMCNAMARA/%module-%version.tar.gz
+Source: http://www.cpan.org/authors/id/J/JM/JMCNAMARA/Spreadsheet-WriteExcel-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -62,6 +62,9 @@ Access as well.
 %doc README Changes examples docs/*
 
 %changelog
+* Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 2.39-alt1
+- automated CPAN update
+
 * Mon Nov 22 2010 Igor Vlasenko <viy@altlinux.ru> 2.37-alt1.1
 - repair after perl 5.12 upgrade using girar-nmu
 
