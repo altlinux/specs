@@ -1,8 +1,8 @@
 %define module_name IP-Country
 
 Name: perl-%module_name
-Version: 2.27
-Release: alt1.1
+Version: 2.28
+Release: alt1
 
 Packager: Victor Forsyuk <force@altlinux.org>
 
@@ -11,7 +11,7 @@ License: Perl
 Group: Development/Perl
 
 URL: %CPAN %module_name
-Source: http://www.cpan.org/modules/by-module/IP/%module_name-%version.tar.gz
+Source: http://www.cpan.org/authors/id/N/NW/NWETTERS/IP-Country-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -50,6 +50,9 @@ find . -name '._*' -size 1 -print0 | xargs -0 grep -lZ 'Mac OS X' -- | xargs -0 
 %perl_vendor_privlib/IP
 
 %changelog
+* Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 2.28-alt1
+- automated CPAN update
+
 * Mon Nov 22 2010 Igor Vlasenko <viy@altlinux.ru> 2.27-alt1.1
 - repair after perl 5.12 upgrade using girar-nmu
 
