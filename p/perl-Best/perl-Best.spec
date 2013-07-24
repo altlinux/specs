@@ -14,7 +14,7 @@
 %define _enable_test 1
 
 Name: perl-Best
-Version: 0.14
+Version: 0.15
 Release: alt1
 
 Summary: Best - Fallbackable module loader
@@ -50,6 +50,9 @@ Best attempts to load modules from a list, stopping at the first successful load
 %doc Changes README
 
 %changelog
+* Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 0.15-alt1
+- automated CPAN update
+
 * Mon Sep 24 2012 Igor Vlasenko <viy@altlinux.ru> 0.14-alt1
 - automated CPAN update
 
