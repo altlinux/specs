@@ -1,6 +1,6 @@
 %define dist File-ChangeNotify
 Name: perl-%dist
-Version: 0.22
+Version: 0.23
 Release: alt1
 
 Summary: Watch for changes to files, cross-platform style
@@ -36,6 +36,9 @@ subclass that will work on your platform.
 %perl_vendor_privlib/File*
 
 %changelog
+* Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 0.23-alt1
+- automated CPAN update
+
 * Mon Sep 24 2012 Igor Vlasenko <viy@altlinux.ru> 0.22-alt1
 - automated CPAN update
 
