@@ -1,6 +1,6 @@
 Name: grub2
 Version: 2.00
-Release: alt13
+Release: alt14
 
 Summary: GRand Unified Bootloader
 License: GPL
@@ -368,6 +368,7 @@ grub-autoupdate || {
 } >&2
 
 %post efi
+modprobe efivars
 grep -q '^GRUB_DISTRIBUTOR=' %_sysconfdir/sysconfig/%name ||
 	echo 'GRUB_DISTRIBUTOR="ALT Linux"' >> %_sysconfdir/sysconfig/%name
 
@@ -381,6 +382,9 @@ grub-efi-autoupdate || {
 } >&2
 
 %changelog
+* Wed Jul 24 2013 Michael Shigorin <mike@altlinux.org> 2.00-alt14
+- efi: try loading efivars.ko just in case, no harm and no use otherwise
+
 * Thu May 23 2013 Michael Shigorin <mike@altlinux.org> 2.00-alt13
 - firsttime: dropped (closes: #28966)
 
