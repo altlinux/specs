@@ -1,14 +1,14 @@
 %define dist Text-Soundex
 Name: perl-%dist
-Version: 3.03
-Release: alt2
+Version: 3.04
+Release: alt1
 
 Summary: Implementation of the Soundex algorithm as described by Knuth
 License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/R/RJ/RJBS/Text-Soundex-%{version}.tar.gz
 
 # Automatically added by buildreq on Fri Oct 07 2011
 BuildRequires: perl-devel
@@ -36,6 +36,9 @@ an upper case letter and the remaining three being digits.
 %perl_vendor_autolib/Text
 
 %changelog
+* Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 3.04-alt1
+- automated CPAN update
+
 * Tue Aug 28 2012 Vladimir Lettiev <crux@altlinux.ru> 3.03-alt2
 - rebuilt for perl-5.16
 
