@@ -14,7 +14,7 @@
 %define _enable_test 1
 
 Name: perl-MARC-Record
-Version: 2.0.3
+Version: 2.0.5
 Release: alt1
 
 Summary: Perl extension for handling MARC records
@@ -26,7 +26,7 @@ Url: http://www.cpan.org
 Packager: Vladimir A. Svyatoshenko <svyt@altlinux.ru>
 
 BuildArch: noarch
-Source: http://www.cpan.org/authors/id/G/GM/GMCHARLT/MARC-Record-2.0.3.tar.gz
+Source: http://www.cpan.org/authors/id/G/GM/GMCHARLT/MARC-Record-%{version}.tar.gz
 
 # Automatically added by buildreq on Fri Jul 04 2008
 BuildRequires: perl-Test-Pod perl-Test-Pod-Coverage
@@ -54,6 +54,9 @@ in MARC::File::*.
 
 
 %changelog
+* Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 2.0.5-alt1
+- automated CPAN update
+
 * Mon Sep 19 2011 Igor Vlasenko <viy@altlinux.ru> 2.0.3-alt1
 - automated CPAN update
 
