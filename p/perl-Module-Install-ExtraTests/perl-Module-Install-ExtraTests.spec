@@ -1,6 +1,6 @@
 %define dist Module-Install-ExtraTests
 Name: perl-%dist
-Version: 0.007
+Version: 0.008
 Release: alt1
 
 Summary: contextual tests that the harness can ignore
@@ -8,7 +8,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/R/RJ/RJBS/Module-Install-ExtraTests-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -41,6 +41,9 @@ only in certain instances:
 %perl_vendor_privlib/Module
 
 %changelog
+* Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 0.008-alt1
+- automated CPAN update
+
 * Fri Nov 11 2011 Alexey Tourbin <at@altlinux.ru> 0.007-alt1
 - 0.006 -> 0.007
 
