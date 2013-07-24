@@ -15,7 +15,7 @@
 %define _enable_test 1
 
 Name: perl-HTML-Mason
-Version: 1.50
+Version: 1.51
 Release: alt1
 
 Summary: HTML-Mason - Perl module
@@ -78,6 +78,9 @@ rm -f %buildroot%_bindir/*
 #perl_vendorlib/Bundle/
 
 %changelog
+* Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 1.51-alt1
+- automated CPAN update
+
 * Wed Sep 26 2012 Igor Vlasenko <viy@altlinux.ru> 1.50-alt1
 - automated CPAN update
 
