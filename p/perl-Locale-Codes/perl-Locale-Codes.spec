@@ -1,6 +1,6 @@
 %define dist Locale-Codes
 Name: perl-%dist
-Version: 3.23
+Version: 3.26
 Release: alt1
 
 Summary: ISO codes for countries, languages, currencies, and scripts
@@ -8,7 +8,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/S/SB/SBECK/Locale-Codes-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -40,6 +40,9 @@ countries, scripts, and currencies & funds.
 %doc	%perl_vendor_privlib/Locale/Codes/*.pod
 
 %changelog
+* Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 3.26-alt1
+- automated CPAN update
+
 * Wed Sep 26 2012 Alexey Tourbin <at@altlinux.ru> 3.23-alt1
 - 3.18 -> 3.23
 
