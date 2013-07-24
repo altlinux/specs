@@ -1,6 +1,6 @@
 %define dist Try-Tiny
 Name: perl-Try-Tiny
-Version: 0.11
+Version: 0.16
 Release: alt1
 
 Summary: Minimal try/catch with proper localization of $@
@@ -8,7 +8,7 @@ License: Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/D/DO/DOY/Try-Tiny-0.11.tar.gz
+Source: http://www.cpan.org/authors/id/D/DO/DOY/Try-Tiny-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -34,6 +34,9 @@ to minimize common mistakes with eval blocks, and NOTHING else.
 %perl_vendor_privlib/Try/Tiny.pm
 
 %changelog
+* Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 0.16-alt1
+- automated CPAN update
+
 * Mon Sep 19 2011 Igor Vlasenko <viy@altlinux.ru> 0.11-alt1
 - automated CPAN update
 
