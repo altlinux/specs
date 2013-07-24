@@ -14,8 +14,8 @@
 %define _enable_test 1
 
 Name: perl-Package-Generator
-Version: 0.103
-Release: alt1.1
+Version: 1.105
+Release: alt1
 
 Summary: Package-Generator - Perl module
 
@@ -26,7 +26,7 @@ Url: http://www.cpan.org
 Packager: Mikhail Pokidko <pma@altlinux.org>
 
 BuildArch: noarch
-Source: http://www.cpan.org/authors/id/R/RJ/RJBS/Package-Generator-0.103.tar.gz
+Source: http://www.cpan.org/authors/id/R/RJ/RJBS/Package-Generator-%{version}.tar.gz
 
 # Automatically added by buildreq on Wed May 14 2008
 BuildRequires: perl-Module-Install perl-Params-Util perl-Test-Pod
@@ -47,6 +47,9 @@ None.
 %exclude %perl_vendor_archlib
 
 %changelog
+* Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 1.105-alt1
+- automated CPAN update
+
 * Mon Nov 22 2010 Igor Vlasenko <viy@altlinux.ru> 0.103-alt1.1
 - repair after perl 5.12 upgrade using girar-nmu
 
