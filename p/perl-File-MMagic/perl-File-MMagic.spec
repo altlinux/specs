@@ -14,7 +14,7 @@
 %define _enable_test 1
 
 Name: perl-File-MMagic
-Version: 1.29
+Version: 1.30
 Release: alt1
 
 Summary: Guess file type from contents
@@ -49,6 +49,9 @@ returns string contains file type with MIME mediatype format.
 %perl_vendor_privlib/File/
 
 %changelog
+* Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 1.30-alt1
+- automated CPAN update
+
 * Mon Sep 24 2012 Igor Vlasenko <viy@altlinux.ru> 1.29-alt1
 - automated CPAN update
 
