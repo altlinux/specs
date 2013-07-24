@@ -1,6 +1,6 @@
 %define dist Perl-Tidy
 Name: perl-%dist
-Version: 20120714
+Version: 20130717
 Release: alt1
 
 Summary: Parses and beautifies perl source
@@ -39,6 +39,9 @@ write scripts in html format.
 %doc CHANGES README BUGS examples docs/tutorial.pod docs/stylekey.pod
 
 %changelog
+* Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 20130717-alt1
+- automated CPAN update
+
 * Thu Sep 27 2012 Igor Vlasenko <viy@altlinux.ru> 20120714-alt1
 - automated CPAN update
 
