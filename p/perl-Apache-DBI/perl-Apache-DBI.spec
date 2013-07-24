@@ -1,7 +1,7 @@
 %define dist Apache-DBI
 
 Name: perl-%dist
-Version: 1.11
+Version: 1.12
 Release: alt1
 
 Summary: Persistent database connections for mod_perl
@@ -9,7 +9,7 @@ License: Perl
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://search.cpan.org/CPAN/authors/id/P/PH/PHRED/%dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/P/PH/PHRED/Apache-DBI-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -44,6 +44,9 @@ Independent Interface (DBI).
 %perl_vendor_privlib/Apache
 
 %changelog
+* Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 1.12-alt1
+- automated CPAN update
+
 * Sun Mar 25 2012 Victor Forsiuk <force@altlinux.org> 1.11-alt1
 - 1.11
 
