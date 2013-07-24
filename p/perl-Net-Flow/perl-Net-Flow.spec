@@ -14,7 +14,7 @@
 %define _enable_test 1
 
 Name: perl-Net-Flow
-Version: 0.04
+Version: 1.002
 Release: alt1
 
 Summary: decode and encode NetFlow/IPFIX datagrams
@@ -26,7 +26,7 @@ Url: http://www.cpan.org
 Packager: Eugene Prokopiev <enp@altlinux.ru>
 
 BuildArch: noarch
-Source: http://search.cpan.org//CPAN/authors/id/A/AK/AKOBA/%m_distro-%version.tar.gz
+Source: http://www.cpan.org/authors/id/A/AC/ACFEREN/Net-Flow-%{version}.tar.gz
 
 # Automatically added by buildreq on Wed Mar 21 2012
 BuildRequires: perl-devel
@@ -46,6 +46,9 @@ The Flow module provides the decoding function for NetFlow version 5,9 and IPFIX
 %perl_vendor_privlib/Net/*
 
 %changelog
+* Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 1.002-alt1
+- automated CPAN update
+
 * Wed Mar 21 2012 Eugene Prokopiev <enp@altlinux.ru> 0.04-alt1
 - initial build for ALT Linux Sisyphus
 
