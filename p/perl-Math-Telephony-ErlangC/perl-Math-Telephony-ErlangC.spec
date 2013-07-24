@@ -14,8 +14,8 @@
 %define _enable_test 1
 
 Name: perl-Math-Telephony-ErlangC
-Version: 1.0.1
-Release: alt1.1
+Version: 1.0.2
+Release: alt1
 
 Summary: Erlang C calculations in Perl
 
@@ -26,7 +26,7 @@ Url: http://search.cpan.org/dist/Math-Telephony-ErlangC/
 Packager: Michael Bochkaryov <misha@altlinux.ru>
 
 BuildArch: noarch
-Source: %m_distro-%version.tar.gz
+Source: http://www.cpan.org/authors/id/P/PO/POLETTIX/Math-Telephony-ErlangC-%{version}.tar.gz
 
 # Automatically added by buildreq on Sat Jun 27 2009 (-bi)
 BuildRequires: perl-Math-Telephony-ErlangB perl-Module-Build perl-Test-Pod perl-Test-Pod-Coverage
@@ -61,6 +61,9 @@ rm -rf %buildroot%perl_vendor_man3dir/
 %doc Changes README eg/average_time.pl
 
 %changelog
+* Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 1.0.2-alt1
+- automated CPAN update
+
 * Thu Sep 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt1.1
 - disabled t/pod.t
 
