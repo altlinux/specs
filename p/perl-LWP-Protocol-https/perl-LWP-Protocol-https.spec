@@ -1,6 +1,6 @@
 %define dist LWP-Protocol-https
 Name: perl-%dist
-Version: 6.03
+Version: 6.04
 Release: alt1
 
 Summary: Provide https support for LWP::UserAgent
@@ -45,6 +45,9 @@ to access sites using HTTP over SSL/TLS.
 %perl_vendor_privlib/LWP
 
 %changelog
+* Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 6.04-alt1
+- automated CPAN update
+
 * Thu Sep 27 2012 Igor Vlasenko <viy@altlinux.ru> 6.03-alt1
 - automated CPAN update
 
