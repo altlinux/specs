@@ -1,6 +1,6 @@
 %define dist Log-Message
 Name: perl-%dist
-Version: 0.04
+Version: 0.08
 Release: alt1
 
 Summary: A generic message logging mechanism
@@ -8,7 +8,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/B/BI/BINGOS/Log-Message-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -36,6 +36,9 @@ even provide your own handlers for dealing with messages.
 %perl_vendor_privlib/Log
 
 %changelog
+* Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 0.08-alt1
+- automated CPAN update
+
 * Wed Apr 27 2011 Alexey Tourbin <at@altlinux.ru> 0.04-alt1
 - 0.02 -> 0.04
 
