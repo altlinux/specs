@@ -1,6 +1,6 @@
 %define dist JSON-XS
 Name: perl-%dist
-Version: 2.33
+Version: 2.34
 Release: alt1
 Epoch: 1
 
@@ -9,7 +9,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/M/ML/MLEHMANN/JSON-XS-%{version}.tar.gz
 
 # Automatically added by buildreq on Fri Oct 07 2011
 BuildRequires: perl-Encode perl-common-sense perl-devel
@@ -35,6 +35,9 @@ primary goal is to be *correct* and its secondary goal is to be
 %perl_vendor_autolib/JSON
 
 %changelog
+* Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 1:2.34-alt1
+- automated CPAN update
+
 * Tue Aug 28 2012 Vladimir Lettiev <crux@altlinux.ru> 1:2.33-alt1
 - 2.32 -> 2.33
 - built for perl-5.16
