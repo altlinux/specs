@@ -1,6 +1,6 @@
 %define dist HTTP-Recorder
 Name: perl-%dist
-Version: 0.06
+Version: 0.07
 Release: alt1
 
 Summary: record interaction with websites
@@ -33,6 +33,9 @@ web sites.
 %perl_vendor_privlib/HTTP*
 
 %changelog
+* Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 0.07-alt1
+- automated CPAN update
+
 * Wed Sep 26 2012 Igor Vlasenko <viy@altlinux.ru> 0.06-alt1
 - automated CPAN update
 
