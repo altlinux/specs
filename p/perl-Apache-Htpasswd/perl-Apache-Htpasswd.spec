@@ -1,15 +1,15 @@
 %define dist Apache-Htpasswd
 
 Name: perl-%dist
-Version: 1.8
-Release: alt2
+Version: 1.9
+Release: alt1
 
 Summary: This module comes with a set of methods to use with htaccess password files.
 License: %perl_license
 Group: Development/Perl
 
 Url: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/K/KM/KMELTZ/Apache-Htpasswd-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -41,6 +41,9 @@ it was written specifically for .htaccess style files.
 %perl_vendor_privlib/Apache/Htpasswd.pm
 
 %changelog
+* Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 1.9-alt1
+- automated CPAN update
+
 * Tue Nov 16 2010 Sergey Y. Afonin <asy@altlinux.ru> 1.8-alt2
 - removed macro %%perl_vendor_man3dir from spec
 - removed Packager from spec
