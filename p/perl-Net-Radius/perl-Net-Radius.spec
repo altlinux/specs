@@ -14,7 +14,7 @@
 %define _enable_test 1
 
 Name: perl-Net-Radius
-Version: 2.000
+Version: 2.103
 Release: alt1
 
 Summary: Net-Radius - Perl module
@@ -26,7 +26,7 @@ Url: http://www.cpan.org
 Packager: Eugene Prokopiev <enp@altlinux.ru>
 
 BuildArch: noarch
-Source: http://search.cpan.org//CPAN/authors/id/L/LU/LUISMUNOZ/%m_distro-2.103.tar.gz
+Source: http://www.cpan.org/authors/id/L/LU/LUISMUNOZ/Net-Radius-%{version}.tar.gz
 
 # Automatically added by buildreq on Mon Dec 17 2012
 # optimized out: perl-Sub-Uplevel perl-Tree-DAG_Node perl-devel
@@ -47,6 +47,9 @@ None.
 %perl_vendor_privlib/Net/*
 
 %changelog
+* Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 2.103-alt1
+- automated CPAN update
+
 * Mon Dec 17 2012 Eugene Prokopiev <enp@altlinux.ru> 2.000-alt1
 - initial build for ALT Linux Sisyphus
 
