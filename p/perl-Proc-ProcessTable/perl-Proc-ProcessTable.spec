@@ -1,6 +1,6 @@
 %define dist Proc-ProcessTable
 Name: perl-%dist
-Version: 0.46
+Version: 0.48
 Release: alt1
 
 Summary: Perl extension to access the unix process table
@@ -8,7 +8,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/J/JS/JSWARTZ/Proc-ProcessTable-%{version}.tar.gz
+Source: http://www.cpan.org/authors/id/J/JW/JWB/Proc-ProcessTable-%{version}.tar.gz
 
 # mount /proc in hasher
 BuildRequires: /proc
@@ -34,6 +34,9 @@ Perl interface to the unix process table.
 %perl_vendor_autolib/Proc
 
 %changelog
+* Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 0.48-alt1
+- automated CPAN update
+
 * Tue Oct 23 2012 Igor Vlasenko <viy@altlinux.ru> 0.46-alt1
 - automated CPAN update
 
