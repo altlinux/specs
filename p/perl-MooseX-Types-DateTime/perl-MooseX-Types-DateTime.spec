@@ -1,6 +1,6 @@
 %define dist MooseX-Types-DateTime
 Name: perl-%dist
-Version: 0.07
+Version: 0.08
 Release: alt1
 
 Summary: DateTime related constraints and coercions for Moose
@@ -8,7 +8,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/I/IL/ILMARI/MooseX-Types-DateTime-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -33,6 +33,9 @@ designed to work with the DateTime suite of objects.
 %perl_vendor_privlib/MooseX
 
 %changelog
+* Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 0.08-alt1
+- automated CPAN update
+
 * Wed Sep 26 2012 Alexey Tourbin <at@altlinux.ru> 0.07-alt1
 - 0.05 -> 0.07
 
