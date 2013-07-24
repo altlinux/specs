@@ -1,7 +1,7 @@
 %define module  Net-Server
 
 Name: perl-%module
-Version: 2.006
+Version: 2.007
 Release: alt1
 
 Summary: Net::Server - Extensible, general Perl server engine
@@ -35,6 +35,9 @@ and intended to be the back end layer of internet protocol servers.
 %perl_vendor_privlib/Net/Server
 
 %changelog
+* Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 2.007-alt1
+- automated CPAN update
+
 * Thu Sep 27 2012 Igor Vlasenko <viy@altlinux.ru> 2.006-alt1
 - automated CPAN update
 
