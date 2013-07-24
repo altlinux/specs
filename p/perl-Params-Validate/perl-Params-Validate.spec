@@ -1,6 +1,6 @@
 %define dist Params-Validate
 Name: perl-%dist
-Version: 1.06
+Version: 1.08
 Release: alt1
 
 Summary: Validate method/function parameters
@@ -8,7 +8,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/D/DR/DROLSKY/Params-Validate-%{version}.tar.gz
 
 BuildRequires: perl-Attribute-Handlers perl-Module-Build perl-Module-Implementation perl-Test-Fatal
 
@@ -37,6 +37,9 @@ and that no unspecified additional parameters were passed in.
 %perl_vendor_archlib/Attribute
 
 %changelog
+* Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 1.08-alt1
+- automated CPAN update
+
 * Mon Aug 27 2012 Vladimir Lettiev <crux@altlinux.ru> 1.06-alt1
 - 1.00 -> 1.06
 - built for perl-5.16
