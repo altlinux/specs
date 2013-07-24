@@ -1,7 +1,7 @@
 %define module Text-CSV
 
 Name: perl-%module
-Version: 1.21
+Version: 1.32
 Release: alt1
 
 Summary: Text::CSV - comma-separated values manipulation routines
@@ -9,7 +9,7 @@ License: Perl
 Group: Development/Perl
 
 Url: %CPAN %module
-Source: http://search.cpan.org/CPAN/authors/id/M/MA/MAKAMAKA/%module-%version.tar.gz
+Source: http://www.cpan.org/authors/id/M/MA/MAKAMAKA/Text-CSV-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -34,6 +34,9 @@ fields into a CSV string and parse a CSV string into fields.
 %perl_vendor_privlib/Text
 
 %changelog
+* Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 1.32-alt1
+- automated CPAN update
+
 * Fri Feb 11 2011 Victor Forsiuk <force@altlinux.org> 1.21-alt1
 - 1.21
 
