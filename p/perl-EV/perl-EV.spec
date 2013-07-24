@@ -1,6 +1,6 @@
 %define dist EV
 Name: perl-%dist
-Version: 4.11
+Version: 4.15
 Release: alt1
 
 Summary: Perl interface to libev, a high performance full-featured event loop
@@ -8,7 +8,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/M/ML/MLEHMANN/EV-%{version}.tar.gz
 
 # Automatically added by buildreq on Mon Oct 10 2011
 BuildRequires: perl-AnyEvent perl-common-sense perl-devel perl-podlators
@@ -37,6 +37,9 @@ detailed information.
 %perl_vendor_autolib/EV
 
 %changelog
+* Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 4.15-alt1
+- automated CPAN update
+
 * Sat Sep 01 2012 Vladimir Lettiev <crux@altlinux.ru> 4.11-alt1
 - 4.03 -> 4.11
 - built for perl-5.16
