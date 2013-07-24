@@ -1,6 +1,6 @@
 %define dist Pod-Coverage
 Name: perl-%dist
-Version: 0.22
+Version: 0.23
 Release: alt1
 
 Summary: Checks if the documentation of a module is comprehensive
@@ -34,6 +34,9 @@ given module is comprehensive.
 %perl_vendor_privlib/Pod
 
 %changelog
+* Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 0.23-alt1
+- automated CPAN update
+
 * Tue Sep 25 2012 Igor Vlasenko <viy@altlinux.ru> 0.22-alt1
 - automated CPAN update
 
