@@ -14,7 +14,7 @@
 %define _enable_test 1
 
 Name: perl-Math-Telephony-ErlangB
-Version: 1.0.1
+Version: 1.0.2
 Release: alt1
 
 Summary: Erlang B calculations from Perl
@@ -60,6 +60,9 @@ rm -rf %buildroot%perl_vendor_man3dir/
 %doc Changes README
 
 %changelog
+* Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 1.0.2-alt1
+- automated CPAN update
+
 * Wed Sep 26 2012 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt1
 - automated CPAN update
 
