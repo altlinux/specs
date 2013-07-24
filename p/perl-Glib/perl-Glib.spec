@@ -1,6 +1,6 @@
 %define dist Glib
 Name: perl-%dist
-Version: 1.262
+Version: 1.301
 Release: alt1
 
 Summary: Perl module for the glib-2.x library
@@ -8,7 +8,7 @@ License: LGPL
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/X/XA/XAOC/Glib-%{version}.tar.gz
 Patch: perl-Glib-1.224-alt-glib_version.patch
 
 # Automatically added by buildreq on Fri Oct 07 2011
@@ -69,6 +69,9 @@ sed -i- '/MAN3PODS/d' Makefile.PL
 	%perl_vendor_archlib/Glib/Install/*
 
 %changelog
+* Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 1.301-alt1
+- automated CPAN update
+
 * Thu Aug 30 2012 Vladimir Lettiev <crux@altlinux.ru> 1.262-alt1
 - 1.242 -> 1.262
 - built for perl-5.16
