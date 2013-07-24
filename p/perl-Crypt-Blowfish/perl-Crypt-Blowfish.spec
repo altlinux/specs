@@ -1,14 +1,14 @@
 %define dist Crypt-Blowfish
 Name: perl-%dist
-Version: 2.12
-Release: alt2
+Version: 2.14
+Release: alt1
 
 Summary: Perl Blowfish encryption module
 License: GPLR Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/D/DP/DPARIS/Crypt-Blowfish-%{version}.tar.gz
 
 # Automatically added by buildreq on Sat Oct 08 2011
 BuildRequires: perl-Crypt-CBC perl-devel
@@ -34,6 +34,9 @@ from this module.
 %perl_vendor_autolib/Crypt
 
 %changelog
+* Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 2.14-alt1
+- automated CPAN update
+
 * Fri Aug 31 2012 Vladimir Lettiev <crux@altlinux.ru> 2.12-alt2
 - rebuilt for perl-5.16
 
