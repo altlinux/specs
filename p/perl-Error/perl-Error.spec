@@ -1,7 +1,7 @@
 %define dist Error
 
 Name: perl-%dist
-Version: 0.17018
+Version: 0.17020
 Release: alt1
 
 Summary: Error - Error/exception handling in an OO-ish way
@@ -13,7 +13,7 @@ Url: %CPAN Error
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 BuildArch: noarch
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/S/SH/SHLOMIF/Error-%{version}.tar.gz
 
 # Automatically added by buildreq on Thu Sep 01 2005
 BuildRequires: perl-devel perl-Module-Build
@@ -41,6 +41,9 @@ user should throw errors from a sub-class of "Error".
 %perl_vendor_privlib/Error*
 
 %changelog
+* Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 0.17020-alt1
+- automated CPAN update
+
 * Mon Sep 10 2012 Vladimir Lettiev <crux@altlinux.ru> 0.17018-alt1
 - 0.17016 -> 0.17018
 - fixed build with perl-5.16
