@@ -1,6 +1,6 @@
 %define dist Net-SSLeay
 Name: perl-%dist
-Version: 1.49
+Version: 1.55
 Release: alt1
 
 Summary: Perl extension for using OpenSSL
@@ -8,7 +8,7 @@ License: BSD-style
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/M/MI/MIKEM/Net-SSLeay-%{version}.tar.gz
 
 # Automatically added by buildreq on Wed Sep 26 2012
 BuildRequires: libssl-devel openssl perl-Test-Exception perl-Test-NoWarnings perl-Test-Pod perl-Test-Warn perl-threads
@@ -34,6 +34,9 @@ so you can write servers or clients for more complicated applications.
 %perl_vendor_autolib/Net
 
 %changelog
+* Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 1.55-alt1
+- automated CPAN update
+
 * Wed Sep 26 2012 Alexey Tourbin <at@altlinux.ru> 1.49-alt1
 - 1.48 -> 1.49
 
