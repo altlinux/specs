@@ -1,6 +1,6 @@
 %define dist Tie-DBI
 Name: perl-%dist
-Version: 1.05
+Version: 1.06
 Release: alt1
 
 Summary: Tie Perl hashes to DBI relational databases
@@ -8,7 +8,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/T/TO/TODDR/Tie-DBI-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -36,6 +36,9 @@ hash operations work, including iteration over keys and values.
 %perl_vendor_privlib/Tie
 
 %changelog
+* Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 1.06-alt1
+- automated CPAN update
+
 * Fri Nov 11 2011 Alexey Tourbin <at@altlinux.ru> 1.05-alt1
 - 1.04 -> 1.05
 
