@@ -3,15 +3,13 @@
 
 Name:          qoauth
 Version:       1.0.1
-Release:       alt2
+Release:       alt3
 
 Group:         Graphical desktop/KDE
 Summary:       Qt-based C++ library for OAuth authorization scheme
 License:       GPL
 URL:           http://www.kde.org
 Packager: Sergey V Turchin <zerg@altlinux.org>
-
-Requires: qca2-ossl
 
 Source0:       %name-%version.tar.bz2
 
@@ -32,6 +30,7 @@ the application developer no more than 4 methods, namely:
 %package -n %libqoauth
 Summary: %name core library
 Group: System/Libraries
+Requires: qca2-ossl
 %description -n %libqoauth
 %name core library.
 
@@ -85,6 +84,9 @@ make check || :
 %_datadir/qt4/mkspecs/features/oauth.prf
 
 %changelog
+* Wed Jul 24 2013 Sergey V Turchin <zerg@altlinux.org> 1.0.1-alt3
+- fix requires
+
 * Wed Feb 01 2012 Sergey V Turchin <zerg@altlinux.org> 1.0.1-alt2
 - rebuilt for debuginfo
 
