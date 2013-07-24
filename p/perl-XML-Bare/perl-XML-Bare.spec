@@ -1,6 +1,6 @@
 %define dist XML-Bare
 Name: perl-%dist
-Version: 0.47
+Version: 0.53
 Release: alt1
 
 Summary: A minimal XML parser / schema checker / pretty-printer using C internally
@@ -8,7 +8,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/C/CO/CODECHILD/XML-Bare-%{version}.tar.gz
 
 # Automatically added by buildreq on Sat Oct 08 2011
 BuildRequires: perl-Test-Pod
@@ -40,6 +40,9 @@ in the module as well.
 %perl_vendor_autolib/XML
 
 %changelog
+* Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 0.53-alt1
+- automated CPAN update
+
 * Sat Sep 01 2012 Vladimir Lettiev <crux@altlinux.ru> 0.47-alt1
 - 0.45 -> 0.47
 - built for perl-5.16
