@@ -1,6 +1,6 @@
 %define dist JSON
 Name: perl-%dist
-Version: 2.53
+Version: 2.59
 Release: alt1
 
 Summary: Parse and convert to JSON (JavaScript Object Notation)
@@ -8,7 +8,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/M/MA/MAKAMAKA/JSON-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -36,6 +36,9 @@ and Perl data structure into each other.
 %perl_vendor_privlib/JSON*
 
 %changelog
+* Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 2.59-alt1
+- automated CPAN update
+
 * Tue Nov 15 2011 Alexey Tourbin <at@altlinux.ru> 2.53-alt1
 - 2.50 -> 2.53
 
