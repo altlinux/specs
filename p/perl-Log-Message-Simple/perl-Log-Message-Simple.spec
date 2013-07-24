@@ -1,6 +1,6 @@
 %define dist Log-Message-Simple
 Name: perl-%dist
-Version: 0.08
+Version: 0.10
 Release: alt1
 
 Summary: Simplified interface to Log::Message
@@ -8,7 +8,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/B/BI/BINGOS/Log-Message-Simple-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -34,6 +34,9 @@ both raw and pretty-printable form).
 %perl_vendor_privlib/Log
 
 %changelog
+* Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 0.10-alt1
+- automated CPAN update
+
 * Wed Apr 27 2011 Alexey Tourbin <at@altlinux.ru> 0.08-alt1
 - 0.06 -> 0.08
 
