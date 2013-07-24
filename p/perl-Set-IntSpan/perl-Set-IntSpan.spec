@@ -4,7 +4,7 @@
 %define m_distro	Set-IntSpan
 %define m_name		Set::IntSpan
 Name: perl-%module
-Version: 1.16
+Version: 1.19
 Release: alt1
 Packager: Gleb Stiblo <ulfr@altlinux.ru>
 
@@ -14,7 +14,7 @@ Group: Development/Perl
 License: GPL
 
 Url: http://search.cpan.org/dist/%module/
-Source: http://www.cpan.org/authors/id/S/SW/SWMCD/Set-IntSpan-1.16.tar.gz
+Source: http://www.cpan.org/authors/id/S/SW/SWMCD/Set-IntSpan-%{version}.tar.gz
 
 BuildRequires: perl-devel
 BuildArch: noarch
@@ -57,6 +57,9 @@ Set::IntSpan - модуль для управления множествами целых чисел. Он оптимизирован д
 %doc README
 
 %changelog
+* Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 1.19-alt1
+- automated CPAN update
+
 * Mon Sep 19 2011 Igor Vlasenko <viy@altlinux.ru> 1.16-alt1
 - automated CPAN update
 
