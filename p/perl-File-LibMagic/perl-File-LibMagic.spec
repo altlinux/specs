@@ -1,14 +1,14 @@
 %define dist File-LibMagic
 Name: perl-File-LibMagic
-Version: 0.96
-Release: alt3
+Version: 0.97
+Release: alt1
 
 Summary: Perl wrapper for libmagic
 License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tgz
+Source: http://www.cpan.org/authors/id/D/DR/DROLSKY/File-LibMagic-%{version}.tar.gz
 
 # Automatically added by buildreq on Fri Oct 07 2011
 BuildRequires: libmagic-devel perl-devel zlib-devel
@@ -32,6 +32,9 @@ the file-4.x package from Christos Zoulas (ftp://ftp.astron.com/pub/file/).
 %perl_vendor_autolib/File
 
 %changelog
+* Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 0.97-alt1
+- automated CPAN update
+
 * Thu Aug 30 2012 Vladimir Lettiev <crux@altlinux.ru> 0.96-alt3
 - rebuilt for perl-5.16
 
