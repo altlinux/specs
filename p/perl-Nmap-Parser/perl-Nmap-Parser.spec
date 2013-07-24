@@ -1,7 +1,7 @@
 %define module_name Nmap-Parser
 
 Name: perl-%module_name
-Version: 1.21
+Version: 1.31
 Release: alt1
 
 Summary: Parse nmap scan data with perl
@@ -10,7 +10,7 @@ Group: Development/Perl
 
 URL: %CPAN %module_name
 # See also: http://code.google.com/p/nmap-parser/
-Source: http://www.cpan.org/modules/by-module/Nmap/%module_name-%version.tar.gz
+Source: http://www.cpan.org/authors/id/A/AP/APERSAUD/Nmap-Parser-%{version}.tar.gz
 
 # Automatically added by buildreq on Sat Aug 13 2011
 BuildRequires: nmap perl-XML-Twig perl-devel
@@ -38,6 +38,9 @@ rm -f ._*
 %perl_vendor_privlib/Nmap/
 
 %changelog
+* Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 1.31-alt1
+- automated CPAN update
+
 * Sat Aug 13 2011 Victor Forsiuk <force@altlinux.org> 1.21-alt1
 - 1.21
 
