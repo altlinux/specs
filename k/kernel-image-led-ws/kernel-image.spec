@@ -20,7 +20,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.4.54
-Release: alt1
+Release: alt2
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -399,7 +399,6 @@ Patch0453: linux-%kernel_branch.39-fix-drivers-power--da9030_battery.patch
 
 Patch0461: linux-%kernel_branch.47-fix-drivers-ptp--ptp_pch.patch
 
-Patch0470: linux-%kernel_branch.38-fix-drivers-regulator.patch
 Patch0471: linux-%kernel_branch.39-fix-drivers-regulator--88pm8607.patch
 Patch0472: linux-%kernel_branch.39-fix-drivers-regulator--ab8500.patch
 Patch0473: linux-%kernel_branch.39-fix-drivers-regulator--regulator.patch
@@ -1620,8 +1619,7 @@ cd linux-%version
 # fix-drivers-ptp--*
 %patch0461 -p1
 
-# fix-drivers-regulator*
-%patch0470 -p1
+# fix-drivers-regulator--*
 %patch0471 -p1
 %patch0472 -p1
 %patch0473 -p1
@@ -2007,6 +2005,7 @@ config_disable \
 	%{?_disable_smp:SMP} \
 	%{?_disable_modversions:MODVERSIONS} \
 	%{?_disable_compat:SYSCTL_SYSCALL ACPI_PROC_EVENT COMPAT_VDSO I2C_COMPAT PROC_PID_CPUSET SYSFS_DEPRECATED USB_DEVICEFS USB_DEVICE_CLASS} \
+	%{?_disable_x32:X86_X32} \
 	%{?_disable_numa:NUMA} \
 	%{?_disable_video:FB VIDEO_OUTPUT_CONTROL BACKLIGHT_LCD_SUPPORT} \
 	%{?_disable_drm:DRM VGA_SWITCHEROO} \
@@ -2066,6 +2065,8 @@ config_disable \
 	%{?_disable_zcache:ZCACHE} \
 	%{?_disable_pci:PCI} \
 	%{?_disable_acpi:ACPI} \
+	%{?_disable_pcsp:SND_PCSP=m} \
+	%{?_disable_nfs_swap:NFS_SWAP} \
 	%{?_disable_hotplug_memory:MEMORY_HOTPLUG} \
 	%{?_disable_math_emu:MATH_EMULATION} \
 	%{?_disable_kallsyms:KALLSYMS} \
@@ -2080,14 +2081,11 @@ config_enable \
 %endif
 	%{?_enable_debug_section_mismatch:DEBUG_SECTION_MISMATCH} \
 	%{?_enable_modversions:MODVERSIONS} \
-	%{?_enable_x32:X86_X32} \
 	%{?_enable_x86_extended_platform:X86_EXTENDED_PLATFORM} \
 	%{?_enable_ext4_for_ext23:EXT4_USE_FOR_EXT23} \
 	%{?_enable_mca:MCA} \
 	%{?_enable_debugfs:DEBUG_FS} \
-	%{?_enable_pcsp:SND_PCSP=m} \
 	%{?_enable_secrm:EXT[234]_SECRM FAT_SECRM} \
-	%{?_enable_nfs_swap:NFS_SWAP} \
 	%{?_enable_kvm_ext:KVM_EXTERNAL} \
 	%{?_enable_lnfs:NFS_V4_SECURITY_LABEL NFSD_V4_SECURITY_LABEL} \
 	%{?_enable_kallsyms:KALLSYMS} \
@@ -2806,6 +2804,13 @@ done)
 
 
 %changelog
+* Wed Jul 24 2013 Led <led@altlinux.ru> 3.4.54-alt2
+- removed:
+  + fix-drivers-regulator
+- updated:
+  + fix-drivers-regulator--regulator
+  + fix-drivers-usb-otg--otg
+
 * Mon Jul 22 2013 Led <led@altlinux.ru> 3.4.54-alt1
 - 3.4.54
 
