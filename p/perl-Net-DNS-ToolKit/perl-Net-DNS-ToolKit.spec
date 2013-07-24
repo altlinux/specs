@@ -4,15 +4,15 @@
 %add_findreq_skiplist */Net/DNS/ToolKit/RR/AFSDB.pm
 
 Name: perl-%module
-Version: 0.45
-Release: alt2
+Version: 0.47
+Release: alt1
 
 Summary: Tools for working with DNS packets
 License: Perl
 Group: Development/Perl
 
 URL: %CPAN %module
-Source: http://search.cpan.org/CPAN/authors/id/M/MI/MIKER/%module-%version.tar.gz
+Source: http://www.cpan.org/authors/id/M/MI/MIKER/Net-DNS-ToolKit-%{version}.tar.gz
 
 # Automatically added by buildreq on Sun Mar 25 2012
 BuildRequires: perl-Net-DNS-Codes perl-NetAddr-IP perl-devel
@@ -38,6 +38,9 @@ NPROCS=1
 %perl_vendor_autolib/Net
 
 %changelog
+* Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 0.47-alt1
+- automated CPAN update
+
 * Sat Sep 01 2012 Vladimir Lettiev <crux@altlinux.ru> 0.45-alt2
 - rebuilt for perl-5.16
 
