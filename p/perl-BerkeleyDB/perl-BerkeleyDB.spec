@@ -1,6 +1,6 @@
 %define dist BerkeleyDB
 Name: perl-%dist
-Version: 0.51
+Version: 0.52
 Release: alt1
 
 Summary: Perl bindings to Berkeley DB version 2.x and greater
@@ -8,7 +8,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/P/PM/PMQS/BerkeleyDB-%{version}.tar.gz
 Patch: perl-BerkeleyDB-0.49-alt-DB_VERSION.patch
 
 # Automatically added by buildreq on Fri Oct 07 2011
@@ -44,6 +44,9 @@ rm -rv t/Test/
 	%perl_vendor_autolib/BerkeleyDB
 
 %changelog
+* Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 0.52-alt1
+- automated CPAN update
+
 * Thu Aug 30 2012 Vladimir Lettiev <crux@altlinux.ru> 0.51-alt1
 - 0.49 -> 0.51
 - built for perl-5.16
