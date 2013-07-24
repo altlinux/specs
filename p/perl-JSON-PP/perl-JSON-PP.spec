@@ -1,6 +1,6 @@
 %define dist JSON-PP
 Name: perl-%dist
-Version: 2.27200
+Version: 2.27202
 Release: alt1
 
 Summary: JSON::XS compatible pure-Perl module
@@ -8,7 +8,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/M/MA/MAKAMAKA/JSON-PP-2.27200.tar.gz
+Source: http://www.cpan.org/authors/id/M/MA/MAKAMAKA/JSON-PP-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -34,6 +34,9 @@ It comes to be a perl core module in Perl 5.14.
 %_bindir/json_pp
 
 %changelog
+* Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 2.27202-alt1
+- automated CPAN update
+
 * Mon Sep 19 2011 Igor Vlasenko <viy@altlinux.ru> 2.27200-alt1
 - automated CPAN update
 
