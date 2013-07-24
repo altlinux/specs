@@ -14,7 +14,7 @@
 %define _enable_test 1
 
 Name: perl-Lingua-Identify
-Version: 0.51
+Version: 0.54
 Release: alt1
 
 Summary: Language identification
@@ -26,7 +26,7 @@ Url: http://www.cpan.org
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 BuildArch: noarch
-Source: http://www.cpan.org/authors/id/A/AM/AMBS/Lingua/Lingua-Identify-%{version}.tar.gz
+Source: http://www.cpan.org/authors/id/A/AM/AMBS/irLingua/Lingua-Identify-%{version}.tar.gz
 
 # Automatically added by buildreq on Tue Jun 17 2008
 BuildRequires: perl-Class-Factory-Util perl-Test-Pod perl-Test-Pod-Coverage perl-Text-Affixes perl-Text-ExtractWords perl-Text-Ngram
@@ -64,6 +64,9 @@ If you're in a hurry, jump to section EXAMPLES, way down below.
 %perl_vendor_privlib/Lingua/
 
 %changelog
+* Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 0.54-alt1
+- automated CPAN update
+
 * Mon Sep 24 2012 Igor Vlasenko <viy@altlinux.ru> 0.51-alt1
 - automated CPAN update
 
