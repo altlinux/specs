@@ -1,6 +1,6 @@
 %define dist Devel-Cover
 Name: perl-%dist
-Version: 0.96
+Version: 1.06
 Release: alt1
 
 Summary: Code coverage metrics for Perl
@@ -46,6 +46,9 @@ echo 'sub Devel::Cover::set_first_init_and_end{}1' >%buildroot/hack.pm
 %exclude /hack.pm
 
 %changelog
+* Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 1.06-alt1
+- automated CPAN update
+
 * Wed Sep 26 2012 Igor Vlasenko <viy@altlinux.ru> 0.96-alt1
 - automated CPAN update
 
