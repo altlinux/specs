@@ -1,6 +1,6 @@
 %define dist ORLite
 Name: perl-ORLite
-Version: 1.97
+Version: 1.98
 Release: alt1
 
 Summary: ORLite - Extremely light weight SQLite-specific ORM
@@ -8,7 +8,7 @@ License: Perl
 Group: Development/Perl
 
 Url: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/A/AD/ADAMK/ORLite-%{version}.tar.gz
 
 BuildRequires: perl-devel perl-Params-Util perl-DBI perl-DBD-SQLite perl-File-Remove perl-Test-Script
 BuildArch: noarch
@@ -30,6 +30,9 @@ BuildArch: noarch
 %doc Changes README 
 
 %changelog
+* Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 1.98-alt1
+- automated CPAN update
+
 * Sat Sep 29 2012 Vladimir Lettiev <crux@altlinux.ru> 1.97-alt1
 - 1.50 -> 1.97
 - built as plain srpm
