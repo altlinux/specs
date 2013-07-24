@@ -1,7 +1,7 @@
 %define module YAML-Syck
 
 Name: perl-%module
-Version: 1.21
+Version: 1.27
 Release: alt1
 
 Summary: Fast, lightweight YAML loader and dumper
@@ -35,6 +35,9 @@ structures to YAML strings, and the other way around.
 %perl_vendor_autolib/YAML
 
 %changelog
+* Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 1.27-alt1
+- automated CPAN update
+
 * Mon Sep 24 2012 Igor Vlasenko <viy@altlinux.ru> 1.21-alt1
 - automated CPAN update
 
