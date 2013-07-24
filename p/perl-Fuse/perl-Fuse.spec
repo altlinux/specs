@@ -1,13 +1,13 @@
 Name: perl-Fuse
-Version: 0.14
-Release: alt2
+Version: 0.15
+Release: alt1
 
 Summary: Write filesystems in Perl using FUSE
 License: GPLv2, LGPLv2.1
 Group: Development/Perl
 
 URL: http://search.cpan.org/dist/Fuse/
-Source: Fuse-%version.tar.gz
+Source: http://www.cpan.org/authors/id/D/DP/DPAVLIN/Fuse-%{version}.tar.gz
 
 # Automatically added by buildreq on Tue Oct 18 2011
 BuildRequires: libfuse-devel perl-Filesys-Statvfs perl-Lchown perl-Unix-Mknod perl-devel
@@ -35,6 +35,9 @@ write filesystems using perl.
 %perl_vendor_autolib/Fuse
 
 %changelog
+* Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 0.15-alt1
+- automated CPAN update
+
 * Sun Sep 02 2012 Vladimir Lettiev <crux@altlinux.ru> 0.14-alt2
 - rebuilt for perl-5.16
 
