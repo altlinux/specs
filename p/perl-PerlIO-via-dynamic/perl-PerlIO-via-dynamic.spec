@@ -1,6 +1,6 @@
 %define dist PerlIO-via-dynamic
 Name: perl-%dist
-Version: 0.13
+Version: 0.14
 Release: alt1
 
 Summary: Dynamic PerlIO layers
@@ -8,7 +8,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/A/AL/ALEXMV/PerlIO-via-dynamic-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -37,6 +37,9 @@ not use this module as via layer directly (ie :via(dynamic)).
 %perl_vendor_privlib/PerlIO
 
 %changelog
+* Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 0.14-alt1
+- automated CPAN update
+
 * Fri Nov 11 2011 Alexey Tourbin <at@altlinux.ru> 0.13-alt1
 - 0.11 -> 0.13
 
