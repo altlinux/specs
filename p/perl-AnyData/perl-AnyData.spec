@@ -1,14 +1,14 @@
 %define dist AnyData
 Name: perl-%dist
-Version: 0.10
-Release: alt2
+Version: 0.11
+Release: alt1
 
 Summary: Easy access to data in many formats
 License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/S/SD/SDOWIDEIT/AnyData-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -37,6 +37,9 @@ files with parseable headers (mp3s, jpgs, pngs, etc).
 %perl_vendor_privlib/AnyData*
 
 %changelog
+* Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 0.11-alt1
+- automated CPAN update
+
 * Mon Oct 03 2011 Alexey Tourbin <at@altlinux.ru> 0.10-alt2
 - rebuilt
 
