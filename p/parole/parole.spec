@@ -1,6 +1,6 @@
 Name: parole
-Version: 0.5.1
-Release: alt2
+Version: 0.5.2
+Release: alt1
 
 # '1' for gstreamer-1.0
 # '0' or undefined for gstreamer-0.10
@@ -32,6 +32,14 @@ BuildRequires: gstreamer-devel gst-plugins-devel
 %endif
 BuildRequires: libdbus-glib-devel libdbus-devel
 BuildRequires: intltool gtk-doc
+
+%if %{?gstreamer1}%{!?gstreamer1:0}
+Requires: gstreamer1.0
+Requires: gst-plugins-base1.0 gst-plugins-good1.0
+%else
+Requires: gstreamer
+Requires: gst-plugins-base gst-plugins-good
+%endif
 
 %description
 Parole is a modern simple media player based on the GStreamer framework
@@ -87,6 +95,12 @@ mkdir m4
 %doc %_datadir/gtk-doc/html/*
 
 %changelog
+* Thu Jul 25 2013 Mikhail Efremov <sem@altlinux.org> 0.5.2-alt1
+- Require gst-plugins-base and gst-plugins-good.
+- Require gstreamer.
+- Enable patch for no gstreamer codec-installer for ALT too.
+- Updated to 0.5.2.
+
 * Tue Jun 11 2013 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.5.1-alt2
 - Build with gstreamer0.10 on %%arm
 
