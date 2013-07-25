@@ -7,7 +7,7 @@
 %define bugfix 5
 Name: kde4-pim-runtime
 Version: %major.%minor.%bugfix
-Release: alt1
+Release: alt2
 
 Group: Graphical desktop/KDE
 Summary: KDE Akonadi resources
@@ -41,7 +41,7 @@ Patch109: kdepim-4.10.0-alt-def-nepomuk.patch
 BuildRequires(pre): kde4libs-devel libassuan-devel
 BuildRequires: akonadi-devel gcc-c++ glib2-devel kde4pimlibs-devel libgpgme-devel
 BuildRequires: soprano soprano-backend-redland xsltproc grantlee-devel libsasl2-devel dblatex
-BuildRequires: libkgapi4-devel qjson-devel kde4-nepomuk-core-devel
+BuildRequires: libkgapi-devel qjson-devel kde4-nepomuk-core-devel
 
 BuildRequires: kde4libs-devel >= %version
 BuildRequires: kde4pimlibs-devel >= %version
@@ -222,6 +222,9 @@ based on kdepim.
 
 
 %changelog
+* Thu Jul 25 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.5-alt2
+- built with new libkgapi
+
 * Thu Jul 04 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.5-alt1
 - new version
 
