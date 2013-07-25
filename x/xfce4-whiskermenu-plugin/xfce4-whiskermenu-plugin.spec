@@ -1,6 +1,6 @@
 Name: xfce4-whiskermenu-plugin
-Version: 1.0.0
-Release: alt2.git20130710
+Version: 1.1.0
+Release: alt1
 
 Summary: Alternate Xfce menu
 License: %gpl2plus
@@ -49,6 +49,9 @@ keeps a list of the last ten applications that you've launched from it.
 %_iconsdir/hicolor/*/apps/*
 
 %changelog
+* Thu Jul 25 2013 Mikhail Efremov <sem@altlinux.org> 1.1.0-alt1
+- Updated to 1.1.0.
+
 * Wed Jul 10 2013 Mikhail Efremov <sem@altlinux.org> 1.0.0-alt2.git20130710
 - xfce4-popup-whiskermenu.in: Fix variables.
 - Upstream git snapshot (master branch).
