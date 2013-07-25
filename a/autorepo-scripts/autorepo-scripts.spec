@@ -2,7 +2,7 @@
 BuildRequires: perl(RPM/Header.pm) perl(Source/Repository/Mass/ALTLinuxBackport.pm) perl-devel perl-ALTLinux-ACL
 # END SourceDeps(oneline)
 Name: autorepo-scripts
-Version: 0.25
+Version: 0.26
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -76,6 +76,9 @@ install -m 755 *.template %buildroot%_datadir/%name/templates/
 %_bindir/autorepo-altnode-misc-statistics-wrapper
 
 %changelog
+* Thu Jul 25 2013 Igor Vlasenko <viy@altlinux.ru> 0.26-alt1
+- generic daily script
+
 * Thu Jul 18 2013 Igor Vlasenko <viy@altlinux.ru> 0.25-alt1
 - autoports support
 - auxiliary-node subpackage
