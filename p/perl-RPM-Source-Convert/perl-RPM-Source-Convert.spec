@@ -5,7 +5,7 @@ BuildRequires: perl(Carp.pm) perl(File/Basename.pm) perl(File/Path.pm) perl(File
 
 Name: perl-%module
 Version: 0.52
-Release: alt3
+Release: alt4
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
 
@@ -43,6 +43,9 @@ Conflicts: perl-RPM-Source-Editor < 0.73
 %perl_vendor_privlib/RPM*
 
 %changelog
+* Thu Jul 25 2013 Igor Vlasenko <viy@altlinux.ru> 0.52-alt4
+- better mageya perl support
+
 * Thu Jul 18 2013 Igor Vlasenko <viy@altlinux.ru> 0.52-alt3
 - A70 support
 
