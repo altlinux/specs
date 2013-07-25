@@ -1,12 +1,12 @@
 %define policy_name altlinux
-%define date 20130619
+%define date 20130725
 %define seconf %_sysconfdir/selinux/config
 %define default_mode permissive
 
 Summary: SELinux %policy_name policy
 Name: selinux-policy-altlinux
 Version: 0.0.2
-Release: alt2
+Release: alt3
 License: %distributable
 Group: System/Base
 Source: %name-%date.tar
@@ -20,8 +20,12 @@ Requires(pre): policycoreutils-newrole
 Requires: policycoreutils-newrole
 Requires: checkpolicy
 Requires: policycoreutils-mcstransd
+Requires: policycoreutils-gui
 Requires: policycoreutils-restorecond
 Requires: libshell
+Requires: m4
+Requires: netlabel_tools
+Requires: setools-console
 
 %define policy_conf %_sysconfdir/selinux/%policy_name
 %define policy_data %_datadir/selinux/%policy_name
@@ -39,6 +43,11 @@ cp -a * %buildroot
 %post
 # Always install new policy
 semodule -n -s %policy_name -b %policy_data/base.pp
+
+# XXX
+mkdir -p /etc/selinux/altlinux/contexts/files
+touch /etc/selinux/altlinux/contexts/files/file_contexts.local
+# XXX
 
 # Always install all modules
 for i in %policy_data/modules/*.pp; do
@@ -127,6 +136,9 @@ fi
 %doc /usr/share/doc/selinux-policy-altlinux/README
 
 %changelog
+* Thu Jul 25 2013 Andriy Stepanov <stanv@altlinux.ru> 0.0.2-alt3
+- Build: 20130725
+
 * Wed Jun 19 2013 Andriy Stepanov <stanv@altlinux.ru> 0.0.2-alt2
 - Post script for modules
 
