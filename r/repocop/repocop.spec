@@ -1,6 +1,6 @@
 Name: repocop
 Version: 0.67
-Release: alt1
+Release: alt2
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
 
@@ -128,6 +128,9 @@ install -m644 img/* $RPM_BUILD_ROOT%_datadir/repocop/html/
 %_datadir/repocop/html
 
 %changelog
+* Thu Jul 25 2013 Igor Vlasenko <viy@altlinux.ru> 0.67-alt2
+- skip empty dirs in diff
+
 * Tue Jul 16 2013 Igor Vlasenko <viy@altlinux.ru> 0.67-alt1
 - added repocop-report-html
 
