@@ -1,5 +1,5 @@
 Name: gnupg
-Version: 1.4.13
+Version: 1.4.14
 Release: alt1
 
 Summary: The GNU Privacy Guard
@@ -136,6 +136,9 @@ rm -rv %buildroot%_datadir/%name
 %endif #enabled ldap
 
 %changelog
+* Thu Jul 25 2013 Dmitry V. Levin <ldv@altlinux.org> 1.4.14-alt1
+- Updated to 1.4.14.
+
 * Tue Jan 01 2013 Dmitry V. Levin <ldv@altlinux.org> 1.4.13-alt1
 - Updated to 1.4.13.
 
