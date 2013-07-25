@@ -1,14 +1,14 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: gcc-c++ libcrystalhd-devel
 # END SourceDeps(oneline)
-%add_optflags %optflags_shared
+BuildRequires(pre): kernel-build-tools
 %global majorminor 1.0
 %global date 20120405
 
 Summary:       Broadcom Crystal HD device interface library
 Name:          libcrystalhd
 Version:       3.10.0
-Release:       alt2
+Release:       alt2_4
 License:       LGPLv2
 Group:         System/Libraries
 URL:           http://www.broadcom.com/support/crystal_hd/
@@ -32,7 +32,6 @@ Patch1:        crystalhd-gst-Port-to-GStreamer-1.0-API.patch
 BuildRequires: autoconf automake libtool
 BuildRequires: gstreamer1.0-devel >= %{majorminor}
 BuildRequires: gst-plugins1.0-devel >= %{majorminor}
-BuildPreReq: kernel-build-tools
 Requires:      firmware-crystalhd
 Source44: import.info
 
@@ -72,12 +71,12 @@ Requires:      gst-plugins-base1.0
 Gstreamer crystalhd decoder plugin
 
 %package -n kernel-source-crystalhd
-Release: alt1
 Summary: Linux crystalhd  Broadcom module sources
 Group: Development/Kernel
 
 %description -n kernel-source-crystalhd
 Crystalhd module sources for Linux kernel.
+
 
 %prep
 %setup -q -n libcrystalhd-%{date}
@@ -120,16 +119,15 @@ cp -p %{SOURCE2} $RPM_BUILD_ROOT/lib/firmware/
 cp -p %{SOURCE3} $RPM_BUILD_ROOT/lib/firmware/
 
 #Install udev rule
-mkdir -p $RPM_BUILD_ROOT%{_sysconfdir}/udev/rules.d
+mkdir -p $RPM_BUILD_ROOT%_udevrulesdir
 install -pm 0644 driver/linux/20-crystalhd.rules \
-  $RPM_BUILD_ROOT%{_sysconfdir}/udev/rules.d
-# sysconf/udev policy - /etc is for user
-mkdir -p %buildroot%_udevrulesdir/
-mv %buildroot%_sysconfdir/udev/rules.d/* %buildroot%_udevrulesdir/
+  $RPM_BUILD_ROOT%_udevrulesdir
 
 mv driver kernel-source-crystalhd-%version
 %__mkdir_p %kernel_srcdir/
 %__tar jcf %kernel_srcdir/kernel-source-crystalhd-%version.tar.bz2 kernel-source-crystalhd-%version/
+
+
 
 %files
 %doc README_07032010 LICENSE
@@ -152,7 +150,12 @@ mv driver kernel-source-crystalhd-%version
 %files -n kernel-source-crystalhd
 /usr/src/kernel/sources/*
 
+
+
 %changelog
+* Thu Jul 25 2013 Igor Vlasenko <viy@altlinux.ru> 3.10.0-alt2_4
+- merged kernel-source-crystalhd into hook
+
 * Fri Jul 05 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 3.10.0-alt2
 - packaging kernel-source-crystalhd added
 
