@@ -1,6 +1,6 @@
 %define dist CPAN-Meta
 Name: perl-%dist
-Version: 2.120921
+Version: 2.131560
 Release: alt1
 
 Summary: The distribution metadata for a CPAN dist
@@ -8,7 +8,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/D/DA/DAGOLDEN/CPAN-Meta-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -40,6 +40,9 @@ interrogating that data.
 %perl_vendor_privlib/CPAN
 
 %changelog
+* Fri Jul 26 2013 Igor Vlasenko <viy@altlinux.ru> 2.131560-alt1
+- automated CPAN update
+
 * Wed Sep 26 2012 Alexey Tourbin <at@altlinux.ru> 2.120921-alt1
 - 2.120351 -> 2.120921
 
