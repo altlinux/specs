@@ -1,14 +1,14 @@
 %define dist Crypt-IDEA
 Name: perl-%dist
-Version: 1.08
-Release: alt4
+Version: 1.10
+Release: alt1
 
 Summary: Perl interface to IDEA block cipher
 License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/D/DP/DPARIS/Crypt-IDEA-%{version}.tar.gz
 
 # Automatically added by buildreq on Sat Oct 08 2011
 BuildRequires: perl-devel
@@ -27,7 +27,7 @@ of the patent-encumbered IDEA cryptography algorithm.
 %perl_vendor_install
 
 # Remove MacOS junk.
-rm %buildroot%perl_vendor_archlib/Crypt/._test.pl
+rm -f %buildroot%perl_vendor_archlib/Crypt/._test.pl
 
 %files
 %doc README changes
@@ -35,6 +35,9 @@ rm %buildroot%perl_vendor_archlib/Crypt/._test.pl
 %perl_vendor_autolib/Crypt
 
 %changelog
+* Fri Jul 26 2013 Igor Vlasenko <viy@altlinux.ru> 1.10-alt1
+- automated CPAN update
+
 * Fri Aug 31 2012 Vladimir Lettiev <crux@altlinux.ru> 1.08-alt4
 - rebuilt for perl-5.16
 
