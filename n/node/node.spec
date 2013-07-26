@@ -1,7 +1,7 @@
 %define node_name      node
-%define node_version  0.10.13
+%define node_version  0.10.15
 %define node_release   alt1
-%define npmver 1.3.2
+%define npmver 1.3.5
 
 %def_disable check
 
@@ -113,6 +113,10 @@ cp -p common.gypi %{buildroot}%{_datadir}/node
 %exclude %_libexecdir/node_modules/npm/node_modules/node-gyp/gyp/tools/emacs
 
 %changelog
+* Fri Jul 26 2013 Dmitriy Kulik <lnkvisitor@altlinux.org> 0.10.15-alt1
+- new version
+- npm 1.3.5
+
 * Sat Jul 13 2013 Dmitriy Kulik <lnkvisitor@altlinux.org> 0.10.13-alt1
 - 0.10.13
 - npm 1.3.2
