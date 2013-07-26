@@ -14,7 +14,7 @@
 %define _disable_test 1
 
 Name: perl-MIME-Charset
-Version: 1.009.2
+Version: 1.010
 Release: alt1
 
 Summary: Charset Informations for MIME
@@ -27,7 +27,7 @@ Packager: Slava Dubrovskiy <dubrsl@altlinux.org>
 
 BuildArch: noarch
 Source: http://www.cpan.org/authors/id/N/NE/NEZUMI/MIME-Charset-%{version}.tar.gz
-BuildRequires: perl-devel
+BuildRequires: perl-devel perl(Encode/Encoding.pm)
 
 %description
 MIME::Charset - Charset Informations for MIME
@@ -44,6 +44,9 @@ MIME::Charset - Charset Informations for MIME
 %perl_vendor_privlib/MIME
 
 %changelog
+* Fri Jul 26 2013 Igor Vlasenko <viy@altlinux.ru> 1.010-alt1
+- automated CPAN update
+
 * Wed Oct 03 2012 Igor Vlasenko <viy@altlinux.ru> 1.009.2-alt1
 - automated CPAN update
 
