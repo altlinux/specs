@@ -1,9 +1,9 @@
 %def_with python3
 
 Name: sympy
-Version: 0.7.2
+Version: 0.7.3
 Epoch: 1
-Release: alt1.git20130210.1
+Release: alt1.git20130725
 Summary: A Python library for symbolic mathematics
 License: New BSD License
 Group: Sciences/Mathematics
@@ -255,6 +255,9 @@ cp -fR doc/_build/html/* %buildroot%_docdir/%name/
 %endif
 
 %changelog
+* Fri Jul 26 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:0.7.3-alt1.git20130725
+- Version 0.7.3
+
 * Fri Mar 22 2013 Aleksey Avdeev <solo@altlinux.ru> 1:0.7.2-alt1.git20130210.1
 - Rebuild with Python-3.3
 
