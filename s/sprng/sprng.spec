@@ -2,8 +2,8 @@
 %define mpidir %_libdir/%mpiimpl
 
 Name: sprng
-Version: 4.0
-Release: alt10
+Version: 4.4
+Release: alt1
 Summary: The Scalable Parallel Random Number Generators Library
 License: GPL v2
 Group: Sciences/Mathematics
@@ -49,8 +49,6 @@ This package contains static development files of SPRNG.
 %package examples
 Summary: Example source codes for SPRNG
 Group: Development/Documentation
-Requires: lib%name-devel = %version-%release
-Requires: %name = %version-%release
 BuildArch: noarch
 
 %description examples
@@ -77,10 +75,10 @@ export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib -L%mpidir/lib"
 
 rm -fR autom4te.cache
 sed -i -e 's/(mpiimpl)/%mpiimpl/' configure.ac
-%add_optflags %optflags_shared
+%add_optflags %optflags_shared -I%mpidir/include
 %autoreconf
 %configure
-%make
+%make MPI_DIR=%mpidir
 
 %install
 source %mpidir/bin/mpivars.sh
@@ -89,15 +87,6 @@ export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib -L%mpidir/lib"
 %makeinstall_std
 
 pushd %buildroot%_bindir
-mv sprng-simple.tmp sprng-simple_mpi.%name
-mv pi-simple.tmp pi-simple_mpi.%name
-mv seedf.tmp seedf_mpi.%name
-mv seedf-simple.tmp seedf-simple_mpi.%name
-mv seed.tmp seed_mpi.%name
-mv seed-simple.tmp seed-simple_mpi.%name
-mv sprngf.tmp sprngf_mpi.%name
-mv sprngf-simple.tmp sprngf-simple_mpi.%name
-mv sprng.tmp sprng_mpi.%name
 mv equidist.tmp equidist.%name
 mv perm.tmp perm.%name
 mv serial.tmp serial.%name
@@ -110,38 +99,26 @@ mv coupon.tmp coupon.%name
 mv runs.tmp runs.%name
 mv random_walk.tmp random_walk.%name
 mv wolff.tmp wolff.%name
+mv wolffind.tmp wolffind.%name
+mv wolfftest.tmp wolfftest.%name
 mv metropolis.tmp metropolis.%name
-mv convert.tmp convert.%name
-mv convertf.tmp convertf.%name
-mv pif-simple.tmp pif-simple.%name
-mv simple-simple.tmp simple-simple.%name
-mv simplef-simple.tmp simplef-simple.%name
-mv spawn.tmp spawn.%name
-mv spawnf.tmp spawnf.%name
-mv subroutinef.tmp subroutinef.%name
 popd
 rm -f %buildroot%_bindir/libsprng.a
 
 install -d %buildroot%_includedir
 install -p -m644 include/*.h %buildroot%_includedir
 
-install -d %buildroot%_datadir/%name/examples/mpisprng
 install -d %buildroot%_datadir/%name/examples/tests/mpitests
-install -p -m644 EXAMPLES/*.F EXAMPLES/*.cpp EXAMPLES/*.h \
-	%buildroot%_datadir/%name/examples
-install -p -m644 EXAMPLES/mpisprng/*.F EXAMPLES/mpisprng/*.cpp \
-	EXAMPLES/mpisprng/*.h \
-	%buildroot%_datadir/%name/examples/mpisprng
+cp -fR EXAMPLES/* \
+	%buildroot%_datadir/%name/examples/
 install -p -m644 TESTS/*.cpp TESTS/*.h \
 	%buildroot%_datadir/%name/examples/tests
 install -p -m644 TESTS/mpitests/*.cpp TESTS/mpitests/*.h \
 	%buildroot%_datadir/%name/examples/tests/mpitests
-install -p -m644 check/*/*.data %buildroot%_datadir/%name
 
 %files
-%doc DOCS/README AUTHORS ChangeLog COPYING
+%doc DOCS/README AUTHORS ChangeLog COPYING NEWS
 %_bindir/*.*
-%_datadir/%name
 %exclude %_datadir/%name/examples
 
 %files -n lib%name-devel
@@ -152,6 +129,9 @@ install -p -m644 check/*/*.data %buildroot%_datadir/%name
 %_datadir/%name/examples
 
 %changelog
+* Fri Jul 26 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.4-alt1
+- Version 4.4
+
 * Mon Jun 25 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0-alt10
 - Rebuilt with OpenMPI 1.6
 
