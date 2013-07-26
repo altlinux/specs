@@ -1,7 +1,7 @@
 # vim:set ft=spec:
 Name: swig
 Epoch: 1
-Version: 2.0.9
+Version: 2.0.10
 Release: alt1
 
 Summary: Simplified Wrapper and Interface Generator (SWIG)
@@ -121,7 +121,7 @@ This package contains SWIG runtime tcl library.
 #patch1 -p1
 #patch4 -p1
 #patch5 -p2
-%patch6 -p2
+#patch6 -p2
 
 %build
 ./autogen.sh
@@ -205,6 +205,9 @@ cp -a Examples Doc %buildroot%docdir/
 #%doc CHANGES.current LICENSE
 
 %changelog
+* Fri Jul 26 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:2.0.10-alt1
+- Version 2.0.10
+
 * Thu Apr 25 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:2.0.9-alt1
 - Version 2.0.9
 
