@@ -1,6 +1,6 @@
 Name: ogre
-Version: 1.8.0
-Release: alt1.3
+Version: 1.8.1
+Release: alt1
 Summary: Object-Oriented Graphics Rendering Engine
 # CC-BY-SA is for devel docs
 License: MIT
@@ -73,7 +73,7 @@ samples.
 %cmake \
 	-DOGRE_LIB_DIRECTORY=%_lib \
 	-DOGRE_INSTALL_SAMPLES=ON \
-	-DOGRE_BUILD_TESTS=ON \
+	-DOGRE_BUILD_TESTS=OFF \
 	-DCMAKE_VERBOSE_MAKEFILE:BOOL=ON \
 	-DCMAKE_C_FLAGS:STRING="%optflags" \
 	-DCMAKE_CXX_FLAGS:STRING="%optflags"
@@ -99,7 +99,7 @@ cp -f samples.cfg $RPM_BUILD_ROOT%_datadir/OGRE/samples.cfg
 %doc AUTHORS BUGS COPYING
 /etc/ld.so.conf.d/*
 %_bindir/Ogre*
-%_bindir/Test_Ogre
+#_bindir/Test_Ogre
 %dir %_datadir/OGRE
 %config(noreplace) %_datadir/OGRE/plugins.cfg
 %config(noreplace) %_datadir/OGRE/quakemap.cfg
@@ -130,6 +130,9 @@ cp -f samples.cfg $RPM_BUILD_ROOT%_datadir/OGRE/samples.cfg
 %_libdir/OGRE/Samples
 
 %changelog
+* Tue Jul 23 2013 Slava Dubrovskiy <dubrsl@altlinux.org> 1.8.1-alt1
+- New version
+
 * Mon Feb 11 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.8.0-alt1.3
 - Rebuilt with Boost 1.53.0
 
