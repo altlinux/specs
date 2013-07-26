@@ -14,7 +14,7 @@
 %define _enable_test 1
 
 Name: perl-Sys-SigAction
-Version: 0.15
+Version: 0.18
 Release: alt1
 
 Summary: Perl extension for Consistent Signal Handling
@@ -53,6 +53,9 @@ will be called when a signal (such as SIGALRM) is delivered.
 %doc README Changes
 
 %changelog
+* Fri Jul 26 2013 Igor Vlasenko <viy@altlinux.ru> 0.18-alt1
+- automated CPAN update
+
 * Thu Sep 22 2011 Igor Vlasenko <viy@altlinux.ru> 0.15-alt1
 - automated CPAN update
 
