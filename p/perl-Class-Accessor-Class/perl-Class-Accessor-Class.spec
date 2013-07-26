@@ -14,8 +14,8 @@
 %define _enable_test 1
 
 Name: perl-Class-Accessor-Class
-Version: 0.501
-Release: alt2.1
+Version: 0.502
+Release: alt1
 
 Summary: simple class variable accessors
 
@@ -26,10 +26,10 @@ Url: http://search.cpan.org/dist/Class-Accessor-Class/
 Packager: Michael Bochkaryov <misha@altlinux.ru>
 
 BuildArch: noarch
-Source: %m_distro-%version.tar.bz2
+Source: http://www.cpan.org/authors/id/R/RJ/RJBS/Class-Accessor-Class-%{version}.tar.gz
 
 # Automatically added by buildreq on Mon Sep 08 2008 (-bi)
-BuildRequires: perl-Class-Accessor perl-Test-Pod perl-Test-Pod-Coverage
+BuildRequires: perl-Class-Accessor perl-Test-Pod perl-Test-Pod-Coverage perl(parent.pm)
 
 %description
 Class::Accessor::Class provides a simple way to create accessor and mutator
@@ -55,6 +55,9 @@ and can use its methods.
 %doc Changes LICENSE README
 
 %changelog
+* Fri Jul 26 2013 Igor Vlasenko <viy@altlinux.ru> 0.502-alt1
+- automated CPAN update
+
 * Mon Nov 22 2010 Igor Vlasenko <viy@altlinux.ru> 0.501-alt2.1
 - repair after perl 5.12 upgrade using girar-nmu
 
