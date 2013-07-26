@@ -1,6 +1,6 @@
 %define		_giconsdir %_iconsdir/hicolor/128x128/apps
 
-Version:	0.9.8
+Version:	0.9.8.1
 Name:		qtdbf
 Release:	alt1
 Summary:	A simple DBF viewer and editor
@@ -34,24 +34,18 @@ dDbase III, IV, FoxPro 2.x, Visual Foxpro файли з memo-полями.
 
 %prep
 %setup -q
+subst 's|other/qtdbf.desktop|misc/qtdbf.desktop|g' %name.pro
 
 %build
 export PATH=$PATH:%_qt4dir/bin
-qmake "QMAKE_CFLAGS+=%optflags" "QMAKE_CXXFLAGS+=%optflags" qtDbf.pro
+qmake "QMAKE_CFLAGS+=%optflags" "QMAKE_CXXFLAGS+=%optflags" %name.pro
 %make_build
 
 %install
 make INSTALL_ROOT=%buildroot install
 
-# Icons
-%__mkdir -p %buildroot/{%_miconsdir,%_niconsdir,%_liconsdir,%_giconsdir}
-convert -resize 48x48 src/images/qtdbf.svg %buildroot%_giconsdir/%name.png
-convert -resize 48x48 src/images/qtdbf.svg %buildroot%_liconsdir/%name.png
-convert -resize 32x32 src/images/qtdbf.svg %buildroot%_niconsdir/%name.png
-convert -resize 16x16 src/images/qtdbf.svg %buildroot%_miconsdir/%name.png
-
 %files
-%doc changelog README.md
+%doc ChangeLog README.md
 %dir %_datadir/%name
 %_bindir/*
 %_desktopdir/*
@@ -60,6 +54,9 @@ convert -resize 16x16 src/images/qtdbf.svg %buildroot%_miconsdir/%name.png
 %_datadir/%name
 
 %changelog
+* Fri Jul 26 2013 Motsyo Gennadi <drool@altlinux.ru> 0.9.8.1-alt1
+- bugfix release
+
 * Fri Jul 26 2013 Motsyo Gennadi <drool@altlinux.ru> 0.9.8-alt1
 - 0.9.8
 
