@@ -1,6 +1,6 @@
 %define dist Mail-Box
 Name: perl-%dist
-Version: 2.106
+Version: 2.108
 Release: alt1
 
 Summary: Manage a mailbox, a folder with messages
@@ -13,7 +13,7 @@ Source: http://www.cpan.org/authors/id/M/MA/MARKOV/Mail-Box-%{version}.tar.gz
 BuildArch: noarch
 
 # Automatically added by buildreq on Sun Jan 23 2011 (-bi)
-BuildRequires: perl-Email-Simple perl-File-FcntlLock perl-File-Remove perl-Font-AFM perl-HTML-Format perl-IO-stringy perl-MIME-Types perl-MIME-tools perl-Mail-IMAPClient perl-Mail-Transport-Dbx perl-Object-Realize-Later perl-Storable perl-Test-Pod perl-Text-Autoformat perl-User-Identity
+BuildRequires: perl-Email-Simple perl-File-FcntlLock perl-File-Remove perl-Font-AFM perl-HTML-Format perl-IO-stringy perl-MIME-Types perl-MIME-tools perl-Mail-IMAPClient perl-Mail-Transport-Dbx perl-Object-Realize-Later perl-Storable perl-Test-Pod perl-Text-Autoformat perl-User-Identity perl(Devel/GlobalDestruction.pm)
 
 %description
 The Mail::Box folder is a modern mail-folder manager.  It is written
@@ -37,6 +37,9 @@ rm %buildroot%perl_vendor_privlib/Mail/Box/Search/SpamAssassin.{pm,pod}
 %perl_vendor_privlib/Mail/
 
 %changelog
+* Fri Jul 26 2013 Igor Vlasenko <viy@altlinux.ru> 2.108-alt1
+- automated CPAN update
+
 * Mon Sep 24 2012 Igor Vlasenko <viy@altlinux.ru> 2.106-alt1
 - automated CPAN update
 
