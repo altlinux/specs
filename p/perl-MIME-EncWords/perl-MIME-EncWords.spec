@@ -14,7 +14,7 @@
 %define _disable_test 1
 
 Name: perl-MIME-EncWords
-Version: 1.012.6
+Version: 1.014
 Release: alt1
 
 Summary: deal with RFC 2047 encoded words (improved)
@@ -76,6 +76,9 @@ non-Latin multibyte characters with any 7 bit sequences):
 %perl_vendor_privlib/MIME/*
 
 %changelog
+* Fri Jul 26 2013 Igor Vlasenko <viy@altlinux.ru> 1.014-alt1
+- automated CPAN update
+
 * Wed Oct 03 2012 Igor Vlasenko <viy@altlinux.ru> 1.012.6-alt1
 - automated CPAN update
 
