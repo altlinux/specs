@@ -3,7 +3,7 @@ BuildRequires: /usr/bin/xmllint cppunit-devel gcc-c++ pkgconfig(atlascpp-0.6) pk
 # END SourceDeps(oneline)
 Name:           ember
 Version:        0.7.0
-Release:        alt1_7
+Release:        alt1_7.1
 Summary:        3D client for WorldForge
 
 Group:          Games/Other
@@ -95,6 +95,9 @@ make check
 %config %{_sysconfdir}/%{name}/*
 
 %changelog
+* Fri Jul 26 2013 Slava Dubrovskiy <dubrsl@altlinux.org> 0.7.0-alt1_7.1
+- rebuild for new ogre
+
 * Sat Jun 01 2013 Igor Vlasenko <viy@altlinux.ru> 0.7.0-alt1_7
 - new fc release
 

@@ -4,7 +4,7 @@ BuildRequires: gcc-c++ libexpat-devel perl(English.pm) zlib-devel
 BuildRequires: boost-python-devel
 Name:           vegastrike
 Version:        0.5.1
-Release:        alt3_10.r1
+Release:        alt3_10.r1.1
 Summary:        3D OpenGL spaceflight simulator
 Group:          Games/Other
 License:        GPLv2+
@@ -110,6 +110,9 @@ desktop-file-install            \
 
 
 %changelog
+* Fri Jul 26 2013 Slava Dubrovskiy <dubrsl@altlinux.org> 0.5.1-alt3_10.r1.1
+- Rebuilt with ogre 1.8.1
+
 * Tue Feb 26 2013 Igor Vlasenko <viy@altlinux.ru> 0.5.1-alt3_10.r1
 - update to new release by fcimport
 
