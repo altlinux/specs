@@ -1,6 +1,6 @@
 Name: nmon
-Version: 14g
-Release: alt0.3
+Version: 14h
+Release: alt1
 
 Summary: IBM nmon - system monitor
 License: BSD-like
@@ -34,10 +34,12 @@ install -d %buildroot%_bindir
 install -pm755 nmon %buildroot%_bindir
 
 %files
-
 %_bindir/*
 
 %changelog
+* Fri Jul 26 2013 Andrey Bergman <vkni@altlinux.org> 14h-alt1
+- Version update.
+
 * Tue May 15 2012 Andrey Bergman <vkni@altlinux.org> 14g-alt0.3
 - Added URL.
 
