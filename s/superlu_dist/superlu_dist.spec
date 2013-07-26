@@ -5,8 +5,8 @@
 %define somver 2
 %define sover %somver.5
 Name: superlu_dist
-Version: 3.1
-Release: alt3
+Version: 3.3
+Release: alt1
 Summary: Solve a sparse linear system A*X=B for distributed memory
 License: BSD-like
 Group: Sciences/Mathematics
@@ -148,7 +148,7 @@ export HOME=$PWD
 export MPIDIR=%mpidir
 export PATH=$PATH:$MPIDIR/bin
 mkdir -p lib
-%make_build lib
+%make lib
 #make_build install example
 %make_build install
 pushd FORTRAN
@@ -230,6 +230,9 @@ find . -type d \( -name 'CVS' -o -name '.svn' -o -name '.git' -o -name '.hg' -o 
 #exclude %_bindir/test*
 
 %changelog
+* Fri Jul 26 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.3-alt1
+- Version 3.3
+
 * Tue Oct 02 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.1-alt3
 - Rebuilt with gcc 4.7
 
