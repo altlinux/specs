@@ -1,6 +1,6 @@
 %define dist CPAN
 Name: perl-%dist
-Version: 1.9800
+Version: 2.00
 Release: alt1
 
 Summary: Download and build Perl modules from CPAN sites
@@ -8,7 +8,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/A/AN/ANDK/CPAN-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -48,6 +48,9 @@ rm t/30shell.t
 	%perl_vendor_privlib/CPAN*
 
 %changelog
+* Fri Jul 26 2013 Igor Vlasenko <viy@altlinux.ru> 2.00-alt1
+- automated CPAN update
+
 * Thu Nov 10 2011 Alexey Tourbin <at@altlinux.ru> 1.9800-alt1
 - 1.9301 -> 1.9800
 
