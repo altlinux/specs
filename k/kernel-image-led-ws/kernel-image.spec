@@ -20,7 +20,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.4.54
-Release: alt2
+Release: alt3
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -259,293 +259,296 @@ Patch0183: linux-%kernel_branch.25-fix-drivers-edac--x38_edac.patch
 Patch0191: linux-%kernel_branch.39-fix-drivers-gpio--gpio-ks8695.patch
 Patch0192: linux-%kernel_branch.39-fix-drivers-gpio--gpio-mcp23s08.patch
 Patch0193: linux-%kernel_branch.39-fix-drivers-gpio--gpio-nomadik.patch
-Patch0194: linux-%kernel_branch.39-fix-drivers-gpio--gpio-tegra.patch
-Patch0195: linux-%kernel_branch.39-fix-drivers-gpio--gpio-timberdale.patch
-Patch0196: linux-%kernel_branch.39-fix-drivers-gpio--gpio-ucb1400.patch
-Patch0197: linux-%kernel_branch.39-fix-drivers-gpio--gpio-wm831x.patch
-Patch0198: linux-%kernel_branch.39-fix-drivers-gpio--gpio-wm8994.patch
-Patch0199: linux-%kernel_branch.39-fix-drivers-gpio--gpiolib.patch
+Patch0194: linux-%kernel_branch.53-fix-drivers-gpio--gpio-sch.patch
+Patch0195: linux-%kernel_branch.39-fix-drivers-gpio--gpio-tegra.patch
+Patch0196: linux-%kernel_branch.39-fix-drivers-gpio--gpio-timberdale.patch
+Patch0197: linux-%kernel_branch.39-fix-drivers-gpio--gpio-ucb1400.patch
+Patch0198: linux-%kernel_branch.39-fix-drivers-gpio--gpio-wm831x.patch
+Patch0199: linux-%kernel_branch.39-fix-drivers-gpio--gpio-wm8994.patch
+Patch0200: linux-%kernel_branch.39-fix-drivers-gpio--gpiolib.patch
 
-Patch0200: linux-%kernel_branch.46-fix-drivers-gpu-drm.patch
-Patch0201: linux-%kernel_branch.50-fix-drivers-gpu-drm--drm.patch
-Patch0202: linux-%kernel_branch.25-fix-drivers-gpu-drm--exynosdrm.patch
-Patch0203: linux-%kernel_branch.25-fix-drivers-gpu-drm--gma500_gfx.patch
-Patch0204: linux-%kernel_branch.50-fix-drivers-gpu-drm--i915.patch
-Patch0205: linux-%kernel_branch.20-fix-drivers-gpu-drm--nouveau.patch
-Patch0206: linux-%kernel_branch.38-fix-drivers-gpu-drm--radeon.patch
-Patch0207: linux-%kernel_branch.45-fix-drivers-gpu-vga--vga_switcheroo.patch
+Patch0210: linux-%kernel_branch.46-fix-drivers-gpu-drm.patch
+Patch0211: linux-%kernel_branch.50-fix-drivers-gpu-drm--drm.patch
+Patch0212: linux-%kernel_branch.25-fix-drivers-gpu-drm--exynosdrm.patch
+Patch0213: linux-%kernel_branch.25-fix-drivers-gpu-drm--gma500_gfx.patch
+Patch0214: linux-%kernel_branch.50-fix-drivers-gpu-drm--i915.patch
+Patch0215: linux-%kernel_branch.20-fix-drivers-gpu-drm--nouveau.patch
+Patch0216: linux-%kernel_branch.38-fix-drivers-gpu-drm--radeon.patch
+Patch0217: linux-%kernel_branch.45-fix-drivers-gpu-vga--vga_switcheroo.patch
 
-Patch0211: linux-%kernel_branch.38-fix-drivers-hid--hid.patch
-Patch0212: linux-%kernel_branch.20-fix-drivers-hid--hid-apple.patch
-Patch0213: linux-%kernel_branch.20-fix-drivers-hid--hid-hyperv.patch
-Patch0214: linux-%kernel_branch.38-fix-drivers-hid--hid-picolcd.patch
-Patch0215: linux-%kernel_branch.38-fix-drivers-hid--hid-wiimote.patch
+Patch0221: linux-%kernel_branch.38-fix-drivers-hid--hid.patch
+Patch0222: linux-%kernel_branch.20-fix-drivers-hid--hid-apple.patch
+Patch0223: linux-%kernel_branch.20-fix-drivers-hid--hid-hyperv.patch
+Patch0224: linux-%kernel_branch.38-fix-drivers-hid--hid-picolcd.patch
+Patch0225: linux-%kernel_branch.38-fix-drivers-hid--hid-wiimote.patch
 
-Patch0221: linux-%kernel_branch.25-fix-drivers-hsi.patch
-Patch0222: linux-%kernel_branch.25-fix-drivers-hsi--hsi.patch
+Patch0231: linux-%kernel_branch.25-fix-drivers-hsi.patch
+Patch0232: linux-%kernel_branch.25-fix-drivers-hsi--hsi.patch
 
-Patch0230: linux-%kernel_branch.20-fix-drivers-hv.patch
-Patch0231: linux-%kernel_branch.20-fix-drivers-hv--hv_utils.patch
-Patch0232: linux-%kernel_branch.20-fix-drivers-hv--hv_vmbus.patch
+Patch0240: linux-%kernel_branch.20-fix-drivers-hv.patch
+Patch0241: linux-%kernel_branch.20-fix-drivers-hv--hv_utils.patch
+Patch0242: linux-%kernel_branch.20-fix-drivers-hv--hv_vmbus.patch
 
-Patch0241: linux-%kernel_branch.25-fix-drivers-hwmon--applesmc.patch
-Patch0242: linux-%kernel_branch.25-fix-drivers-hwmon--asc7621.patch
-Patch0243: linux-%kernel_branch.38-fix-drivers-hwmon--asus_atk0110.patch
-Patch0244: linux-%kernel_branch.42-fix-drivers-hwmon--coretemp.patch
-Patch0245: linux-%kernel_branch.25-fix-drivers-hwmon--fam15h_power.patch
-Patch0246: linux-%kernel_branch.25-fix-drivers-hwmon--i5k_amb.patch
-Patch0247: linux-%kernel_branch.25-fix-drivers-hwmon--k10temp.patch
-Patch0248: linux-%kernel_branch.25-fix-drivers-hwmon--k8temp.patch
-Patch0249: linux-%kernel_branch.25-fix-drivers-hwmon--via-cputemp.patch
+Patch0251: linux-%kernel_branch.25-fix-drivers-hwmon--applesmc.patch
+Patch0252: linux-%kernel_branch.25-fix-drivers-hwmon--asc7621.patch
+Patch0253: linux-%kernel_branch.38-fix-drivers-hwmon--asus_atk0110.patch
+Patch0254: linux-%kernel_branch.42-fix-drivers-hwmon--coretemp.patch
+Patch0255: linux-%kernel_branch.25-fix-drivers-hwmon--fam15h_power.patch
+Patch0256: linux-%kernel_branch.25-fix-drivers-hwmon--i5k_amb.patch
+Patch0257: linux-%kernel_branch.25-fix-drivers-hwmon--k10temp.patch
+Patch0258: linux-%kernel_branch.25-fix-drivers-hwmon--k8temp.patch
+Patch0259: linux-%kernel_branch.25-fix-drivers-hwmon--via-cputemp.patch
 
-Patch0251: linux-%kernel_branch.25-fix-drivers-i2c--i2c-boardinfo.patch
-Patch0252: linux-%kernel_branch.25-fix-drivers-i2c--i2c-pxa.patch
-Patch0253: linux-%kernel_branch.25-fix-drivers-i2c-busses--i2c-intel-mid.patch
+Patch0261: linux-%kernel_branch.25-fix-drivers-i2c--i2c-boardinfo.patch
+Patch0262: linux-%kernel_branch.25-fix-drivers-i2c--i2c-pxa.patch
+Patch0263: linux-%kernel_branch.25-fix-drivers-i2c-busses--i2c-intel-mid.patch
+Patch0264: linux-%kernel_branch.53-fix-drivers-i2c-busses--i2c-isch.patch
 
-Patch0261: linux-%kernel_branch.25-fix-drivers-idle--i7300_idle.patch
-Patch0262: linux-%kernel_branch.32-fix-drivers-idle--intel_idle.patch
+Patch0271: linux-%kernel_branch.25-fix-drivers-idle--i7300_idle.patch
+Patch0272: linux-%kernel_branch.32-fix-drivers-idle--intel_idle.patch
 
-Patch0271: linux-%kernel_branch.25-fix-drivers-infiniband-hw--mlx4.patch
+Patch0281: linux-%kernel_branch.25-fix-drivers-infiniband-hw--mlx4.patch
 
-Patch0280: linux-%kernel_branch.25-fix-drivers-input.patch
-Patch0281: linux-%kernel_branch.20-fix-drivers-input-keyboard--omap4-keypad.patch
-Patch0282: linux-%kernel_branch.20-fix-drivers-input-serio--i8042.patch
+Patch0290: linux-%kernel_branch.25-fix-drivers-input.patch
+Patch0291: linux-%kernel_branch.20-fix-drivers-input-keyboard--omap4-keypad.patch
+Patch0292: linux-%kernel_branch.20-fix-drivers-input-serio--i8042.patch
 
-Patch0291: linux-%kernel_branch.38-fix-drivers-iommu--amd_iommu.patch
-Patch0292: linux-%kernel_branch.38-fix-drivers-iommu--intel-iommu.patch
+Patch0301: linux-%kernel_branch.38-fix-drivers-iommu--amd_iommu.patch
+Patch0302: linux-%kernel_branch.38-fix-drivers-iommu--intel-iommu.patch
 
-Patch0301: linux-%kernel_branch.25-fix-drivers-isdn--sc.patch
-Patch0302: linux-%kernel_branch.25-fix-drivers-isdn-gigaset--gigaset.patch
-Patch0303: linux-%kernel_branch.20-fix-drivers-isdn-mISDN--mISDN_core.patch
+Patch0311: linux-%kernel_branch.25-fix-drivers-isdn--sc.patch
+Patch0312: linux-%kernel_branch.25-fix-drivers-isdn-gigaset--gigaset.patch
+Patch0313: linux-%kernel_branch.20-fix-drivers-isdn-mISDN--mISDN_core.patch
 
-Patch0311: linux-%kernel_branch.34-fix-drivers-leds--led-core.patch
-Patch0312: linux-%kernel_branch.34-fix-drivers-leds--led-triggers.patch
-Patch0313: linux-%kernel_branch.34-fix-drivers-leds--ledtrig-ide-disk.patch
+Patch0321: linux-%kernel_branch.34-fix-drivers-leds--led-core.patch
+Patch0322: linux-%kernel_branch.34-fix-drivers-leds--led-triggers.patch
+Patch0323: linux-%kernel_branch.34-fix-drivers-leds--ledtrig-ide-disk.patch
 
-Patch0321: linux-%kernel_branch.20-fix-drivers-macintosh--adb.patch
-Patch0322: linux-%kernel_branch.20-fix-drivers-macintosh--adbhid.patch
+Patch0331: linux-%kernel_branch.20-fix-drivers-macintosh--adb.patch
+Patch0332: linux-%kernel_branch.20-fix-drivers-macintosh--adbhid.patch
 
-Patch0331: linux-%kernel_branch.20-fix-drivers-md--dm-mod.patch
-Patch0332: linux-%kernel_branch.20-fix-drivers-md--dm-multipath.patch
-Patch0333: linux-%kernel_branch.44-fix-drivers-md--md-mod.patch
+Patch0341: linux-%kernel_branch.20-fix-drivers-md--dm-mod.patch
+Patch0342: linux-%kernel_branch.20-fix-drivers-md--dm-multipath.patch
+Patch0343: linux-%kernel_branch.44-fix-drivers-md--md-mod.patch
 
-Patch0341: linux-%kernel_branch.25-fix-drivers-media-common-tuners--tda18212.patch
-Patch0342: linux-%kernel_branch.25-fix-drivers-media-common-tuners--tda18218.patch
-Patch0343: linux-%kernel_branch.25-fix-drivers-media-dvb-dvb-usb--dvb-usb-mxl111sf.patch
-Patch0344: linux-%kernel_branch.25-fix-drivers-media-dvb-ttpci--budget-av.patch
-Patch0345: linux-%kernel_branch.31-fix-drivers-media-radio--radio-rtrack2.patch
-Patch0346: linux-%kernel_branch.25-fix-drivers-media-rc--lirc_dev.patch
-Patch0347: linux-%kernel_branch.25-fix-drivers-media-rc-lirc.patch
-Patch0348: linux-%kernel_branch.25-fix-drivers-media-rc-lirc--lirc_imon.patch
-Patch0349: linux-%kernel_branch.25-fix-drivers-media-rc-lirc--lirc_sasem.patch
-Patch0350: linux-%kernel_branch.25-fix-drivers-media-rc-lirc--lirc_serial.patch
-Patch0351: linux-%kernel_branch.25-fix-drivers-media-video--uvcvideo.patch
-Patch0352: linux-%kernel_branch.25-fix-drivers-media-video-gspca--pac7302.patch
+Patch0351: linux-%kernel_branch.25-fix-drivers-media-common-tuners--tda18212.patch
+Patch0352: linux-%kernel_branch.25-fix-drivers-media-common-tuners--tda18218.patch
+Patch0353: linux-%kernel_branch.25-fix-drivers-media-dvb-dvb-usb--dvb-usb-mxl111sf.patch
+Patch0354: linux-%kernel_branch.25-fix-drivers-media-dvb-ttpci--budget-av.patch
+Patch0355: linux-%kernel_branch.31-fix-drivers-media-radio--radio-rtrack2.patch
+Patch0356: linux-%kernel_branch.25-fix-drivers-media-rc--lirc_dev.patch
+Patch0357: linux-%kernel_branch.25-fix-drivers-media-rc-lirc.patch
+Patch0358: linux-%kernel_branch.25-fix-drivers-media-rc-lirc--lirc_imon.patch
+Patch0359: linux-%kernel_branch.25-fix-drivers-media-rc-lirc--lirc_sasem.patch
+Patch0360: linux-%kernel_branch.25-fix-drivers-media-rc-lirc--lirc_serial.patch
+Patch0361: linux-%kernel_branch.25-fix-drivers-media-video--uvcvideo.patch
+Patch0362: linux-%kernel_branch.25-fix-drivers-media-video-gspca--pac7302.patch
 
-Patch0361: linux-%kernel_branch.39-fix-drivers-mfd--ab8500-gpadc.patch
-Patch0362: linux-%kernel_branch.39-fix-drivers-mfd--adp5520.patch
-Patch0363: linux-%kernel_branch.25-fix-drivers-mfd--rc5t583.patch
-Patch0364: linux-%kernel_branch.25-fix-drivers-mfd--rc5t583-irq.patch
-Patch0365: linux-%kernel_branch.32-fix-drivers-mfd--twl4030-core.patch
-Patch0366: linux-%kernel_branch.39-fix-drivers-mfd--wm8994.patch
+Patch0371: linux-%kernel_branch.39-fix-drivers-mfd--ab8500-gpadc.patch
+Patch0372: linux-%kernel_branch.39-fix-drivers-mfd--adp5520.patch
+Patch0373: linux-%kernel_branch.53-fix-drivers-mfd--lpc_sch.patch
+Patch0374: linux-%kernel_branch.25-fix-drivers-mfd--rc5t583.patch
+Patch0375: linux-%kernel_branch.25-fix-drivers-mfd--rc5t583-irq.patch
+Patch0376: linux-%kernel_branch.32-fix-drivers-mfd--twl4030-core.patch
+Patch0377: linux-%kernel_branch.39-fix-drivers-mfd--wm8994.patch
 
-Patch0371: linux-%kernel_branch.20-fix-drivers-misc--pti.patch
-Patch0372: linux-%kernel_branch.38-fix-drivers-misc--vmw_balloon.patch
+Patch0381: linux-%kernel_branch.20-fix-drivers-misc--pti.patch
+Patch0382: linux-%kernel_branch.38-fix-drivers-misc--vmw_balloon.patch
 
-Patch0381: linux-%kernel_branch.39-fix-drivers-mmc-core.patch
-Patch0382: linux-%kernel_branch.20-fix-drivers-mmc-host--mmci.patch
-Patch0383: linux-%kernel_branch.39-fix-drivers-mmc-host--sdhci-pci.patch
+Patch0391: linux-%kernel_branch.39-fix-drivers-mmc-core.patch
+Patch0392: linux-%kernel_branch.20-fix-drivers-mmc-host--mmci.patch
+Patch0393: linux-%kernel_branch.39-fix-drivers-mmc-host--sdhci-pci.patch
 
-Patch0391: linux-%kernel_branch.27-fix-drivers-net-ethernet-alacritech--slicoss.patch
-Patch0392: linux-%kernel_branch.25-fix-drivers-net-ethernet-amd--depca.patch
-Patch0393: linux-%kernel_branch.25-fix-drivers-net-ethernet-amd--nmclan_cs.patch
-Patch0394: linux-%kernel_branch.39-fix-drivers-net-ethernet-broadcom--bnx2x.patch
-Patch0395: linux-%kernel_branch.25-fix-drivers-net-ethernet-dec--ewrk3.patch
-Patch0396: linux-%kernel_branch.20-fix-drivers-net-ethernet-dec-tulip--tulip.patch
-Patch0397: linux-%kernel_branch.25-fix-drivers-net-ethernet-fujitsu--at1700.patch
-Patch0398: linux-%kernel_branch.25-fix-drivers-net-ethernet-i825xx--znet.patch
-Patch0399: linux-%kernel_branch.20-fix-drivers-net-ethernet-ibm--ehea.patch
-Patch0400: linux-%kernel_branch.39-fix-drivers-net-ethernet-intel--ixgbe.patch
-Patch0401: linux-%kernel_branch.45-fix-drivers-net-ethernet-qlogic--qlge.patch
-Patch0402: linux-%kernel_branch.25-fix-drivers-net-ethernet-via--via-rhine.patch
+Patch0401: linux-%kernel_branch.27-fix-drivers-net-ethernet-alacritech--slicoss.patch
+Patch0402: linux-%kernel_branch.25-fix-drivers-net-ethernet-amd--depca.patch
+Patch0403: linux-%kernel_branch.25-fix-drivers-net-ethernet-amd--nmclan_cs.patch
+Patch0404: linux-%kernel_branch.39-fix-drivers-net-ethernet-broadcom--bnx2x.patch
+Patch0405: linux-%kernel_branch.25-fix-drivers-net-ethernet-dec--ewrk3.patch
+Patch0406: linux-%kernel_branch.20-fix-drivers-net-ethernet-dec-tulip--tulip.patch
+Patch0407: linux-%kernel_branch.25-fix-drivers-net-ethernet-fujitsu--at1700.patch
+Patch0408: linux-%kernel_branch.25-fix-drivers-net-ethernet-i825xx--znet.patch
+Patch0409: linux-%kernel_branch.20-fix-drivers-net-ethernet-ibm--ehea.patch
+Patch0410: linux-%kernel_branch.39-fix-drivers-net-ethernet-intel--ixgbe.patch
+Patch0411: linux-%kernel_branch.45-fix-drivers-net-ethernet-qlogic--qlge.patch
+Patch0412: linux-%kernel_branch.25-fix-drivers-net-ethernet-via--via-rhine.patch
 
-Patch0411: linux-%kernel_branch.38-fix-drivers-net--bonding.patch
-Patch0412: linux-%kernel_branch.38-fix-drivers-net--sb1000.patch
-Patch0413: linux-%kernel_branch.39-fix-drivers-net-caif--caif_serial.patch
-Patch0414: linux-%kernel_branch.39-fix-drivers-net-caif--cfspi_slave.patch
-Patch0415: linux-%kernel_branch.50-fix-drivers-net-hyperv.patch
-Patch0416: linux-%kernel_branch.39-fix-drivers-net-wimax-i2400m--i2400m.patch
+Patch0421: linux-%kernel_branch.38-fix-drivers-net--bonding.patch
+Patch0422: linux-%kernel_branch.38-fix-drivers-net--sb1000.patch
+Patch0423: linux-%kernel_branch.39-fix-drivers-net-caif--caif_serial.patch
+Patch0424: linux-%kernel_branch.39-fix-drivers-net-caif--cfspi_slave.patch
+Patch0425: linux-%kernel_branch.50-fix-drivers-net-hyperv.patch
+Patch0426: linux-%kernel_branch.39-fix-drivers-net-wimax-i2400m--i2400m.patch
 
-Patch0421: linux-%kernel_branch.25-fix-drivers-net-wireless--iwlwifi.patch
-Patch0422: linux-%kernel_branch.47-fix-drivers-net-wireless--rtl8187se.patch
-Patch0423: linux-%kernel_branch.53-fix-drivers-net-wireless-brcm80211--brcmsmac.patch
-Patch0424: linux-%kernel_branch.25-fix-drivers-net-wireless-ipw2x00--libipw.patch
-Patch0425: linux-%kernel_branch.39-fix-drivers-net-wireless-mwifiex--mwifiex.patch
-Patch0426: linux-%kernel_branch.20-fix-drivers-net-wireless-rt2x00--rt2800lib.patch
-Patch0427: linux-%kernel_branch.39-fix-drivers-net-wireless-wl12xx.patch
+Patch0431: linux-%kernel_branch.25-fix-drivers-net-wireless--iwlwifi.patch
+Patch0432: linux-%kernel_branch.47-fix-drivers-net-wireless--rtl8187se.patch
+Patch0433: linux-%kernel_branch.53-fix-drivers-net-wireless-brcm80211--brcmsmac.patch
+Patch0434: linux-%kernel_branch.25-fix-drivers-net-wireless-ipw2x00--libipw.patch
+Patch0435: linux-%kernel_branch.39-fix-drivers-net-wireless-mwifiex--mwifiex.patch
+Patch0436: linux-%kernel_branch.20-fix-drivers-net-wireless-rt2x00--rt2800lib.patch
+Patch0437: linux-%kernel_branch.39-fix-drivers-net-wireless-wl12xx.patch
 
-Patch0430: linux-%kernel_branch.50-fix-drivers-pci.patch
-Patch0431: linux-%kernel_branch.50-fix-drivers-pci-pcie-aer--aerdriver.patch
+Patch0440: linux-%kernel_branch.50-fix-drivers-pci.patch
+Patch0441: linux-%kernel_branch.50-fix-drivers-pci-pcie-aer--aerdriver.patch
 
-Patch0441: linux-%kernel_branch.27-fix-drivers-platform--asus_oled.patch
-Patch0442: linux-%kernel_branch.20-fix-drivers-platform--hdaps.patch
-Patch0443: linux-%kernel_branch.25-fix-drivers-platform--intel_ips.patch
-Patch0444: linux-%kernel_branch.25-fix-drivers-platform--intel_menlow.patch
-Patch0445: linux-%kernel_branch.25-fix-drivers-platform--intel_oaktrail.patch
+Patch0451: linux-%kernel_branch.27-fix-drivers-platform--asus_oled.patch
+Patch0452: linux-%kernel_branch.20-fix-drivers-platform--hdaps.patch
+Patch0453: linux-%kernel_branch.25-fix-drivers-platform--intel_ips.patch
+Patch0454: linux-%kernel_branch.25-fix-drivers-platform--intel_menlow.patch
+Patch0455: linux-%kernel_branch.25-fix-drivers-platform--intel_oaktrail.patch
 
-Patch0451: linux-%kernel_branch.39-fix-drivers-power--ab8500.patch
-Patch0452: linux-%kernel_branch.39-fix-drivers-power--charger-manager.patch
-Patch0453: linux-%kernel_branch.39-fix-drivers-power--da9030_battery.patch
+Patch0461: linux-%kernel_branch.39-fix-drivers-power--ab8500.patch
+Patch0462: linux-%kernel_branch.39-fix-drivers-power--charger-manager.patch
+Patch0463: linux-%kernel_branch.39-fix-drivers-power--da9030_battery.patch
 
-Patch0461: linux-%kernel_branch.47-fix-drivers-ptp--ptp_pch.patch
+Patch0471: linux-%kernel_branch.47-fix-drivers-ptp--ptp_pch.patch
 
-Patch0471: linux-%kernel_branch.39-fix-drivers-regulator--88pm8607.patch
-Patch0472: linux-%kernel_branch.39-fix-drivers-regulator--ab8500.patch
-Patch0473: linux-%kernel_branch.39-fix-drivers-regulator--regulator.patch
+Patch0481: linux-%kernel_branch.39-fix-drivers-regulator--88pm8607.patch
+Patch0482: linux-%kernel_branch.39-fix-drivers-regulator--ab8500.patch
+Patch0483: linux-%kernel_branch.39-fix-drivers-regulator--regulator.patch
 
-Patch0481: linux-%kernel_branch.25-fix-drivers-rtc--rtc-m41t80.patch
+Patch0491: linux-%kernel_branch.25-fix-drivers-rtc--rtc-m41t80.patch
 
-Patch0491: linux-%kernel_branch.25-fix-drivers-scsi--aha1542.patch
-Patch0492: linux-%kernel_branch.25-fix-drivers-scsi--aic94xx.patch
-Patch0493: linux-%kernel_branch.36-fix-drivers-scsi--hv_storvsc.patch
-Patch0494: linux-%kernel_branch.53-fix-drivers-scsi--lpfc.patch
-Patch0495: linux-%kernel_branch.25-fix-drivers-scsi--mpt2sas.patch
-Patch0496: linux-%kernel_branch.25-fix-drivers-scsi--mvsas.patch
-Patch0497: linux-%kernel_branch.53-fix-drivers-scsi--scsi_mod.patch
-Patch0498: linux-%kernel_branch.20-fix-drivers-scsi--scsi_netlink.patch
-Patch0499: linux-%kernel_branch.42-fix-drivers-scsi--sd_mod.patch
-Patch0500: linux-%kernel_branch.29-fix-drivers-scsi--st.patch
-Patch0501: linux-%kernel_branch.20-fix-drivers-scsi-device_handler--scsi_dh.patch
-Patch0502: linux-%kernel_branch.39-fix-drivers-scsi-fcoe--fcoe.patch
-Patch0503: linux-%kernel_branch.53-fix-drivers-scsi-ibmvscsi--ibmvfc.patch
-Patch0504: linux-%kernel_branch.20-fix-drivers-scsi-ibmvscsi--ibmvscsic.patch
-Patch0505: linux-%kernel_branch.20-fix-drivers-scsi-megaraid--megaraid_mbox.patch
+Patch0501: linux-%kernel_branch.25-fix-drivers-scsi--aha1542.patch
+Patch0502: linux-%kernel_branch.25-fix-drivers-scsi--aic94xx.patch
+Patch0503: linux-%kernel_branch.36-fix-drivers-scsi--hv_storvsc.patch
+Patch0504: linux-%kernel_branch.53-fix-drivers-scsi--lpfc.patch
+Patch0505: linux-%kernel_branch.25-fix-drivers-scsi--mpt2sas.patch
+Patch0506: linux-%kernel_branch.25-fix-drivers-scsi--mvsas.patch
+Patch0507: linux-%kernel_branch.53-fix-drivers-scsi--scsi_mod.patch
+Patch0508: linux-%kernel_branch.20-fix-drivers-scsi--scsi_netlink.patch
+Patch0509: linux-%kernel_branch.42-fix-drivers-scsi--sd_mod.patch
+Patch0510: linux-%kernel_branch.29-fix-drivers-scsi--st.patch
+Patch0511: linux-%kernel_branch.20-fix-drivers-scsi-device_handler--scsi_dh.patch
+Patch0512: linux-%kernel_branch.39-fix-drivers-scsi-fcoe--fcoe.patch
+Patch0513: linux-%kernel_branch.53-fix-drivers-scsi-ibmvscsi--ibmvfc.patch
+Patch0514: linux-%kernel_branch.20-fix-drivers-scsi-ibmvscsi--ibmvscsic.patch
+Patch0515: linux-%kernel_branch.20-fix-drivers-scsi-megaraid--megaraid_mbox.patch
 
-Patch0511: linux-%kernel_branch.25-fix-drivers-spi--spi.patch
-Patch0512: linux-%kernel_branch.38-fix-drivers-spi--spi-dw.patch
+Patch0521: linux-%kernel_branch.25-fix-drivers-spi--spi.patch
+Patch0522: linux-%kernel_branch.38-fix-drivers-spi--spi-dw.patch
 
-Patch0520: linux-%kernel_branch.43-fix-drivers-tty.patch
-Patch0521: linux-%kernel_branch.39-fix-drivers-tty-hvc--hvc_console.patch
-Patch0522: linux-%kernel_branch.38-fix-drivers-tty-serial--ifx6x60.patch
-Patch0523: linux-%kernel_branch.38-fix-drivers-tty-serial--mfd.patch
-Patch0524: linux-%kernel_branch.38-fix-drivers-tty-serial--mrst_max3110.patch
-Patch0525: linux-%kernel_branch.32-fix-drivers-tty-serial--pch_uart.patch
-Patch0526: linux-%kernel_branch.20-fix-drivers-tty-serial-8250--8250.patch
+Patch0530: linux-%kernel_branch.43-fix-drivers-tty.patch
+Patch0531: linux-%kernel_branch.39-fix-drivers-tty-hvc--hvc_console.patch
+Patch0532: linux-%kernel_branch.38-fix-drivers-tty-serial--ifx6x60.patch
+Patch0533: linux-%kernel_branch.38-fix-drivers-tty-serial--mfd.patch
+Patch0534: linux-%kernel_branch.38-fix-drivers-tty-serial--mrst_max3110.patch
+Patch0535: linux-%kernel_branch.32-fix-drivers-tty-serial--pch_uart.patch
+Patch0536: linux-%kernel_branch.20-fix-drivers-tty-serial-8250--8250.patch
 
-Patch0530: linux-%kernel_branch.34-fix-drivers-usb.patch
-Patch0531: linux-%kernel_branch.39-fix-drivers-usb-core.patch
-Patch0532: linux-%kernel_branch.39-fix-drivers-usb-dwc3--dwc3.patch
-Patch0533: linux-%kernel_branch.25-fix-drivers-usb-gadget--g_audio.patch
-Patch0534: linux-%kernel_branch.39-fix-drivers-usb-host--isp116x-hcd.patch
-Patch0535: linux-%kernel_branch.39-fix-drivers-usb-host--uhci-hcd.patch
-Patch0536: linux-%kernel_branch.50-fix-drivers-usb-host--xhci-hcd.patch
-Patch0537: linux-%kernel_branch.39-fix-drivers-usb-musb--musb_hdrc.patch
-Patch0538: linux-%kernel_branch.39-fix-drivers-usb-otg--otg.patch
+Patch0540: linux-%kernel_branch.34-fix-drivers-usb.patch
+Patch0541: linux-%kernel_branch.39-fix-drivers-usb-core.patch
+Patch0542: linux-%kernel_branch.39-fix-drivers-usb-dwc3--dwc3.patch
+Patch0543: linux-%kernel_branch.25-fix-drivers-usb-gadget--g_audio.patch
+Patch0544: linux-%kernel_branch.39-fix-drivers-usb-host--isp116x-hcd.patch
+Patch0545: linux-%kernel_branch.39-fix-drivers-usb-host--uhci-hcd.patch
+Patch0546: linux-%kernel_branch.50-fix-drivers-usb-host--xhci-hcd.patch
+Patch0547: linux-%kernel_branch.39-fix-drivers-usb-musb--musb_hdrc.patch
+Patch0548: linux-%kernel_branch.39-fix-drivers-usb-otg--otg.patch
 
-Patch0541: linux-%kernel_branch.20-fix-drivers-video-aty--radeonfb.patch
-Patch0542: linux-%kernel_branch.20-fix-drivers-video-console--vgacon.patch
-Patch0543: linux-%kernel_branch.20-fix-drivers-video-geode.patch
-Patch0544: linux-%kernel_branch.20-fix-drivers-video-omap2-dss.patch
+Patch0551: linux-%kernel_branch.20-fix-drivers-video-aty--radeonfb.patch
+Patch0552: linux-%kernel_branch.20-fix-drivers-video-console--vgacon.patch
+Patch0553: linux-%kernel_branch.20-fix-drivers-video-geode.patch
+Patch0554: linux-%kernel_branch.20-fix-drivers-video-omap2-dss.patch
 
-Patch0551: linux-%kernel_branch.39-fix-drivers-watchdog--watchdog.patch
+Patch0561: linux-%kernel_branch.39-fix-drivers-watchdog--watchdog.patch
 
-Patch0561: linux-%kernel_branch.25-fix-firmware--vicam.patch
-Patch0562: linux-%kernel_branch-fix-firmware-radeon.patch
+Patch0571: linux-%kernel_branch.25-fix-firmware--vicam.patch
+Patch0572: linux-%kernel_branch-fix-firmware-radeon.patch
 
-Patch0570: linux-%kernel_branch.44-fix-fs.patch
-Patch0571: linux-%kernel_branch.37-fix-fs--block.patch
-Patch0572: linux-%kernel_branch.35-fix-fs-9p.patch
-Patch0573: linux-%kernel_branch.50-fix-fs-autofs4.patch
-Patch0574: linux-%kernel_branch.32-fix-fs-btrfs.patch
-Patch0575: linux-%kernel_branch.38-fix-fs-ceph.patch
-Patch0576: linux-%kernel_branch.53-fix-fs-cifs.patch
-Patch0577: linux-%kernel_branch.35-fix-fs-debugfs.patch
-Patch0578: linux-%kernel_branch.37-fix-fs-ext3.patch
-Patch0579: linux-%kernel_branch.50-fix-fs-ext4.patch
-Patch0580: linux-%kernel_branch.42-fix-fs-fuse.patch
-Patch0581: linux-%kernel_branch.35-fix-fs-gfs2.patch
-Patch0582: linux-%kernel_branch.20-fix-fs-hfs.patch
-Patch0583: linux-%kernel_branch.35-fix-fs-jfs.patch
-Patch0584: linux-%kernel_branch.29-fix-fs-logfs.patch
-Patch0585: linux-%kernel_branch.35-fix-fs-nfs.patch
-Patch0586: linux-%kernel_branch.35-fix-fs-nilfs2.patch
-Patch0587: linux-%kernel_branch.50-fix-fs-notify-fanotify--fanotify_user.patch
-Patch0588: linux-%kernel_branch.50-fix-fs-ocfs2.patch
-Patch0589: linux-%kernel_branch.31-fix-fs-proc.patch
-Patch0590: linux-%kernel_branch.28-fix-fs-ramfs.patch
-Patch0591: linux-%kernel_branch.47-fix-fs-reiserfs.patch
-Patch0592: linux-%kernel_branch.35-fix-fs-ubifs.patch
-Patch0593: linux-%kernel_branch.50-fix-fs-xfs.patch
+Patch0580: linux-%kernel_branch.44-fix-fs.patch
+Patch0581: linux-%kernel_branch.37-fix-fs--block.patch
+Patch0582: linux-%kernel_branch.35-fix-fs-9p.patch
+Patch0583: linux-%kernel_branch.50-fix-fs-autofs4.patch
+Patch0584: linux-%kernel_branch.32-fix-fs-btrfs.patch
+Patch0585: linux-%kernel_branch.38-fix-fs-ceph.patch
+Patch0586: linux-%kernel_branch.53-fix-fs-cifs.patch
+Patch0587: linux-%kernel_branch.35-fix-fs-debugfs.patch
+Patch0588: linux-%kernel_branch.37-fix-fs-ext3.patch
+Patch0589: linux-%kernel_branch.50-fix-fs-ext4.patch
+Patch0590: linux-%kernel_branch.42-fix-fs-fuse.patch
+Patch0591: linux-%kernel_branch.35-fix-fs-gfs2.patch
+Patch0592: linux-%kernel_branch.20-fix-fs-hfs.patch
+Patch0593: linux-%kernel_branch.35-fix-fs-jfs.patch
+Patch0594: linux-%kernel_branch.29-fix-fs-logfs.patch
+Patch0595: linux-%kernel_branch.35-fix-fs-nfs.patch
+Patch0596: linux-%kernel_branch.35-fix-fs-nilfs2.patch
+Patch0597: linux-%kernel_branch.50-fix-fs-notify-fanotify--fanotify_user.patch
+Patch0598: linux-%kernel_branch.50-fix-fs-ocfs2.patch
+Patch0599: linux-%kernel_branch.31-fix-fs-proc.patch
+Patch0600: linux-%kernel_branch.28-fix-fs-ramfs.patch
+Patch0601: linux-%kernel_branch.47-fix-fs-reiserfs.patch
+Patch0602: linux-%kernel_branch.35-fix-fs-ubifs.patch
+Patch0603: linux-%kernel_branch.50-fix-fs-xfs.patch
 
-Patch0601: linux-%kernel_branch.50-fix-include-linux.patch
-Patch0602: linux-%kernel_branch.50-fix-include-trace.patch
+Patch0611: linux-%kernel_branch.50-fix-include-linux.patch
+Patch0612: linux-%kernel_branch.50-fix-include-trace.patch
 
-Patch0610: linux-%kernel_branch.20-fix-init.patch
+Patch0620: linux-%kernel_branch.20-fix-init.patch
 
-Patch0620: linux-%kernel_branch.34-fix-kernel.patch
-Patch0621: linux-%kernel_branch.41-fix-kernel--rcutree.patch
-Patch0622: linux-%kernel_branch.39-fix-kernel-irq.patch
-Patch0623: linux-%kernel_branch.39-fix-kernel-power.patch
+Patch0630: linux-%kernel_branch.34-fix-kernel.patch
+Patch0631: linux-%kernel_branch.41-fix-kernel--rcutree.patch
+Patch0632: linux-%kernel_branch.39-fix-kernel-irq.patch
+Patch0633: linux-%kernel_branch.39-fix-kernel-power.patch
 
-Patch0630: linux-%kernel_branch.25-fix-lib.patch
-Patch0631: linux-%kernel_branch.29-fix-lib--btree.patch
-Patch0632: linux-%kernel_branch.25-fix-lib--crc32.patch
-Patch0633: linux-%kernel_branch.35-fix-lib-lzo.patch
+Patch0640: linux-%kernel_branch.25-fix-lib.patch
+Patch0641: linux-%kernel_branch.29-fix-lib--btree.patch
+Patch0642: linux-%kernel_branch.25-fix-lib--crc32.patch
+Patch0643: linux-%kernel_branch.35-fix-lib-lzo.patch
 
-Patch0640: linux-%kernel_branch.50-fix-mm.patch
-Patch0641: linux-%kernel_branch.35-fix-mm--bounce.patch
-Patch0642: linux-%kernel_branch.39-fix-mm--cleancache.patch
-Patch0643: linux-%kernel_branch.20-fix-mm--compaction.patch
-Patch0644: linux-%kernel_branch.39-fix-mm--memblock.patch
-Patch0645: linux-%kernel_branch.20-fix-mm--memcontrol.patch
-Patch0646: linux-%kernel_branch.20-fix-mm--memory-failure.patch
-Patch0647: linux-%kernel_branch.20-fix-mm--memory_hotplug.patch
-Patch0648: linux-%kernel_branch.43-fix-mm--mmu.patch
-Patch0649: linux-%kernel_branch.35-fix-mm--slab.patch
-Patch0650: linux-%kernel_branch.35-fix-mm--slub.patch
-Patch0651: linux-%kernel_branch.35-fix-mm--swap.patch
-Patch0652: linux-%kernel_branch.20-fix-mm--zcache.patch
-Patch0653: linux-%kernel_branch.20-fix-mm--zsmalloc.patch
+Patch0650: linux-%kernel_branch.50-fix-mm.patch
+Patch0651: linux-%kernel_branch.35-fix-mm--bounce.patch
+Patch0652: linux-%kernel_branch.39-fix-mm--cleancache.patch
+Patch0653: linux-%kernel_branch.20-fix-mm--compaction.patch
+Patch0654: linux-%kernel_branch.39-fix-mm--memblock.patch
+Patch0655: linux-%kernel_branch.20-fix-mm--memcontrol.patch
+Patch0656: linux-%kernel_branch.20-fix-mm--memory-failure.patch
+Patch0657: linux-%kernel_branch.20-fix-mm--memory_hotplug.patch
+Patch0658: linux-%kernel_branch.43-fix-mm--mmu.patch
+Patch0659: linux-%kernel_branch.35-fix-mm--slab.patch
+Patch0660: linux-%kernel_branch.35-fix-mm--slub.patch
+Patch0661: linux-%kernel_branch.35-fix-mm--swap.patch
+Patch0662: linux-%kernel_branch.20-fix-mm--zcache.patch
+Patch0663: linux-%kernel_branch.20-fix-mm--zsmalloc.patch
 
-Patch0661: linux-%kernel_branch.30-fix-net--dns_resolver.patch
-Patch0662: linux-%kernel_branch.39-fix-net-802--fc.patch
-Patch0663: linux-%kernel_branch.31-fix-net-bridge--bridge.patch
-Patch0664: linux-%kernel_branch.53-fix-net-ceph.patch
-Patch0665: linux-%kernel_branch.42-fix-net-core.patch
-Patch0666: linux-%kernel_branch.39-fix-net-dcb.patch
-Patch0667: linux-%kernel_branch.35-fix-net-ipv4--xfrm.patch
-Patch0668: linux-%kernel_branch.31-fix-net-ipv6.patch
-Patch0669: linux-%kernel_branch.35-fix-net-ipv6--xfrm.patch
-Patch0670: linux-%kernel_branch.39-fix-net-l2tp--l2tp_core.patch
-Patch0671: linux-%kernel_branch.53-fix-net-mac80211.patch
-Patch0672: linux-%kernel_branch.20-fix-net-netfilter--nf_conntrack_ftp.patch
-Patch0673: linux-%kernel_branch.47-fix-net-netfilter--xt_LOG.patch
-Patch0674: linux-%kernel_branch.28-fix-net-rds--rds_rdma.patch
-Patch0675: linux-%kernel_branch.49-fix-net-sunrpc.patch
-Patch0676: linux-%kernel_branch.42-fix-net-unix--unix.patch
-Patch0677: linux-%kernel_branch.39-fix-net-wimax.patch
-Patch0678: linux-%kernel_branch.35-fix-net-wireless--cfg80211.patch
+Patch0671: linux-%kernel_branch.30-fix-net--dns_resolver.patch
+Patch0672: linux-%kernel_branch.39-fix-net-802--fc.patch
+Patch0673: linux-%kernel_branch.31-fix-net-bridge--bridge.patch
+Patch0674: linux-%kernel_branch.53-fix-net-ceph.patch
+Patch0675: linux-%kernel_branch.42-fix-net-core.patch
+Patch0676: linux-%kernel_branch.39-fix-net-dcb.patch
+Patch0677: linux-%kernel_branch.35-fix-net-ipv4--xfrm.patch
+Patch0678: linux-%kernel_branch.31-fix-net-ipv6.patch
+Patch0679: linux-%kernel_branch.35-fix-net-ipv6--xfrm.patch
+Patch0680: linux-%kernel_branch.39-fix-net-l2tp--l2tp_core.patch
+Patch0681: linux-%kernel_branch.53-fix-net-mac80211.patch
+Patch0682: linux-%kernel_branch.20-fix-net-netfilter--nf_conntrack_ftp.patch
+Patch0683: linux-%kernel_branch.47-fix-net-netfilter--xt_LOG.patch
+Patch0684: linux-%kernel_branch.28-fix-net-rds--rds_rdma.patch
+Patch0685: linux-%kernel_branch.49-fix-net-sunrpc.patch
+Patch0686: linux-%kernel_branch.42-fix-net-unix--unix.patch
+Patch0687: linux-%kernel_branch.39-fix-net-wimax.patch
+Patch0688: linux-%kernel_branch.35-fix-net-wireless--cfg80211.patch
 
-Patch0681: linux-%kernel_branch.20-fix-scripts--kconfig.patch
+Patch0691: linux-%kernel_branch.20-fix-scripts--kconfig.patch
 
-Patch0691: linux-%kernel_branch.20-fix-security--apparmor.patch
-Patch0692: linux-%kernel_branch.20-fix-security--security.patch
-Patch0693: linux-%kernel_branch.35-fix-security--selinux.patch
+Patch0701: linux-%kernel_branch.20-fix-security--apparmor.patch
+Patch0702: linux-%kernel_branch.20-fix-security--security.patch
+Patch0703: linux-%kernel_branch.35-fix-security--selinux.patch
 
-Patch0701: linux-%kernel_branch.47-fix-sound-pci-hda--snd-hda-codec.patch
-Patch0702: linux-%kernel_branch.47-fix-sound-pci-hda--snd-hda-codec-analog.patch
-Patch0703: linux-%kernel_branch.47-fix-sound-pci-hda--snd-hda-codec-idt.patch
-Patch0704: linux-%kernel_branch.20-fix-sound-pci-hda--snd-hda-codec-realtek.patch
-Patch0705: linux-%kernel_branch.47-fix-sound-pci-hda--snd-hda-intel.patch
-Patch0706: linux-%kernel_branch.20-fix-sound-soc-omap--snd-soc-omap.patch
-Patch0707: linux-%kernel_branch.20-fix-sound-soc-omap--snd-soc-omap-mcbsp.patch
+Patch0711: linux-%kernel_branch.47-fix-sound-pci-hda--snd-hda-codec.patch
+Patch0712: linux-%kernel_branch.47-fix-sound-pci-hda--snd-hda-codec-analog.patch
+Patch0713: linux-%kernel_branch.47-fix-sound-pci-hda--snd-hda-codec-idt.patch
+Patch0714: linux-%kernel_branch.20-fix-sound-pci-hda--snd-hda-codec-realtek.patch
+Patch0715: linux-%kernel_branch.47-fix-sound-pci-hda--snd-hda-intel.patch
+Patch0716: linux-%kernel_branch.20-fix-sound-soc-omap--snd-soc-omap.patch
+Patch0717: linux-%kernel_branch.20-fix-sound-soc-omap--snd-soc-omap-mcbsp.patch
 
-Patch0711: linux-%kernel_branch.20-fix-tools--perf.patch
-Patch0712: linux-%kernel_branch.20-fix-tools-hv.patch
+Patch0721: linux-%kernel_branch.20-fix-tools--perf.patch
+Patch0722: linux-%kernel_branch.20-fix-tools-hv.patch
 
-Patch0720: linux-%kernel_branch.49-fix-virt-kvm.patch
-Patch0721: linux-%kernel_branch.50-fix-virt-kvm--kvm-amd.patch
-Patch0722: linux-%kernel_branch.50-fix-virt-kvm--kvm-intel.patch
+Patch0730: linux-%kernel_branch.49-fix-virt-kvm.patch
+Patch0731: linux-%kernel_branch.50-fix-virt-kvm--kvm-amd.patch
+Patch0732: linux-%kernel_branch.50-fix-virt-kvm--kvm-intel.patch
 
 
 Patch1001: linux-%kernel_branch.20-feat-arch-arm-mach-omap2--drm.patch
@@ -1460,204 +1463,198 @@ cd linux-%version
 %patch0197 -p1
 %patch0198 -p1
 %patch0199 -p1
+%patch0200 -p1
 
 # fix-drivers-gpu-drm*
-%patch0200 -p1
-%patch0201 -p1
-%patch0202 -p1
-%patch0203 -p1
-%patch0204 -p1
-%patch0205 -p1
-%patch0206 -p1
-%patch0207 -p1
-
-# fix-drivers-hid--*
+%patch0210 -p1
 %patch0211 -p1
 %patch0212 -p1
 %patch0213 -p1
 %patch0214 -p1
 %patch0215 -p1
+%patch0216 -p1
+%patch0217 -p1
 
-# fix-drivers-hsi*
+# fix-drivers-hid--*
 %patch0221 -p1
 %patch0222 -p1
+%patch0223 -p1
+%patch0224 -p1
+%patch0225 -p1
 
-# fix-drivers-hv*
-%patch0230 -p1
+# fix-drivers-hsi*
 %patch0231 -p1
 %patch0232 -p1
 
-# fix-drivers-hwmon--*
+# fix-drivers-hv*
+%patch0240 -p1
 %patch0241 -p1
 %patch0242 -p1
-%patch0243 -p1
-%patch0244 -p1
-%patch0245 -p1
-%patch0246 -p1
-%patch0247 -p1
-%patch0248 -p1
-%patch0249 -p1
 
-# fix-drivers-i2c--*
+# fix-drivers-hwmon--*
 %patch0251 -p1
 %patch0252 -p1
 %patch0253 -p1
+%patch0254 -p1
+%patch0255 -p1
+%patch0256 -p1
+%patch0257 -p1
+%patch0258 -p1
+%patch0259 -p1
 
-# fix-drivers-idle--*
+# fix-drivers-i2c--*
 %patch0261 -p1
 %patch0262 -p1
+%patch0263 -p1
+%patch0264 -p1
+
+# fix-drivers-idle--*
+%patch0271 -p1
+%patch0272 -p1
 
 # fix-drivers-infiniband-*
-%patch0271 -p1
+%patch0281 -p1
 
 # fix-drivers-input*
-%patch0280 -p1
-%patch0281 -p1
-%patch0282 -p1
-
-# fix-drivers-iommu--*
+%patch0290 -p1
 %patch0291 -p1
 %patch0292 -p1
 
-# fix-drivers-isdn-*
+# fix-drivers-iommu--*
 %patch0301 -p1
 %patch0302 -p1
-%patch0303 -p1
 
-# fix-drivers-leds--*
+# fix-drivers-isdn-*
 %patch0311 -p1
 %patch0312 -p1
 %patch0313 -p1
 
-# fix-drivers-macintosh--*
+# fix-drivers-leds--*
 %patch0321 -p1
 %patch0322 -p1
+%patch0323 -p1
 
-# fix-drivers-md--*
+# fix-drivers-macintosh--*
 %patch0331 -p1
 %patch0332 -p1
-%patch0333 -p1
 
-# fix-drivers-media-*
+# fix-drivers-md--*
 %patch0341 -p1
 %patch0342 -p1
 %patch0343 -p1
-%patch0344 -p1
-%patch0345 -p1
-%patch0346 -p1
-%patch0347 -p1
-%patch0348 -p1
-%patch0349 -p1
-%patch0350 -p1
+
+# fix-drivers-media-*
 %patch0351 -p1
 %patch0352 -p1
-
-# fix-drivers-mfd--*
+%patch0353 -p1
+%patch0354 -p1
+%patch0355 -p1
+%patch0356 -p1
+%patch0357 -p1
+%patch0358 -p1
+%patch0359 -p1
+%patch0360 -p1
 %patch0361 -p1
 %patch0362 -p1
-%patch0363 -p1
-%patch0364 -p1
-%patch0365 -p1
-%patch0366 -p1
 
-# fix-drivers-misc--*
+# fix-drivers-mfd--*
 %patch0371 -p1
 %patch0372 -p1
+%patch0373 -p1
+%patch0374 -p1
+%patch0375 -p1
+%patch0376 -p1
+%patch0377 -p1
 
-# fix-drivers-mmc-*
+# fix-drivers-misc--*
 %patch0381 -p1
 %patch0382 -p1
-%patch0383 -p1
 
-# fix-drivers-net-ethernet-*
+# fix-drivers-mmc-*
 %patch0391 -p1
 %patch0392 -p1
 %patch0393 -p1
-%patch0394 -p1
-%patch0395 -p1
-%patch0396 -p1
-%patch0397 -p1
-%patch0398 -p1
-%patch0399 -p1
-%patch0400 -p1
+
+# fix-drivers-net-ethernet-*
 %patch0401 -p1
 %patch0402 -p1
-
-# fix-drivers-net-*
+%patch0403 -p1
+%patch0404 -p1
+%patch0405 -p1
+%patch0406 -p1
+%patch0407 -p1
+%patch0408 -p1
+%patch0409 -p1
+%patch0410 -p1
 %patch0411 -p1
 %patch0412 -p1
-%patch0413 -p1
-%patch0414 -p1
-%patch0415 -p1
-%patch0416 -p1
 
-# fix-drivers-net-wireless-*
+# fix-drivers-net-*
 %patch0421 -p1
 %patch0422 -p1
 %patch0423 -p1
 %patch0424 -p1
 %patch0425 -p1
 %patch0426 -p1
-%patch0427 -p1
+
+# fix-drivers-net-wireless-*
+%patch0431 -p1
+%patch0432 -p1
+%patch0433 -p1
+%patch0434 -p1
+%patch0435 -p1
+%patch0436 -p1
+%patch0437 -p1
 
 # fix-drivers-pci*
-%patch0430 -p1
-%patch0431 -p1
+%patch0440 -p1
+%patch0441 -p1
 
 # fix-drivers-platform--*
-%patch0441 -p1
-%patch0442 -p1
-%patch0443 -p1
-%patch0444 -p1
-%patch0445 -p1
-
-# fix-drivers-power--*
 %patch0451 -p1
 %patch0452 -p1
 %patch0453 -p1
+%patch0454 -p1
+%patch0455 -p1
+
+# fix-drivers-power--*
+%patch0461 -p1
+%patch0462 -p1
+%patch0463 -p1
 
 # fix-drivers-ptp--*
-%patch0461 -p1
+%patch0471 -p1
 
 # fix-drivers-regulator--*
-%patch0471 -p1
-%patch0472 -p1
-%patch0473 -p1
+%patch0481 -p1
+%patch0482 -p1
+%patch0483 -p1
 
 # fix-drivers-rtc--*
-%patch0481 -p1
+%patch0491 -p1
 
 # fix-drivers-scsi-*
-%patch0491 -p1
-%patch0492 -p1
-%patch0493 -p1
-%patch0494 -p1
-%patch0495 -p1
-%patch0496 -p1
-%patch0497 -p1
-%patch0498 -p1
-%patch0499 -p1
-%patch0500 -p1
 %patch0501 -p1
 %patch0502 -p1
 %patch0503 -p1
 %patch0504 -p1
 %patch0505 -p1
-
-# fix-drivers-spi--*
+%patch0506 -p1
+%patch0507 -p1
+%patch0508 -p1
+%patch0509 -p1
+%patch0510 -p1
 %patch0511 -p1
 %patch0512 -p1
+%patch0513 -p1
+%patch0514 -p1
+%patch0515 -p1
 
-# fix-drivers-tty*
-%patch0520 -p1
+# fix-drivers-spi--*
 %patch0521 -p1
 %patch0522 -p1
-%patch0523 -p1
-%patch0524 -p1
-%patch0525 -p1
-%patch0526 -p1
 
-# fix-drivers-usb*
+# fix-drivers-tty*
 %patch0530 -p1
 %patch0531 -p1
 %patch0532 -p1
@@ -1665,33 +1662,32 @@ cd linux-%version
 %patch0534 -p1
 %patch0535 -p1
 %patch0536 -p1
-%patch0537 -p1
-%patch0538 -p1
 
-# fix-drivers-video-*
+# fix-drivers-usb*
+%patch0540 -p1
 %patch0541 -p1
 %patch0542 -p1
 %patch0543 -p1
 %patch0544 -p1
+%patch0545 -p1
+%patch0546 -p1
+%patch0547 -p1
+%patch0548 -p1
+
+# fix-drivers-video-*
+%patch0551 -p1
+%patch0552 -p1
+%patch0553 -p1
+%patch0554 -p1
 
 # fix-drivers-watchdog--*
-%patch0551 -p1
+%patch0561 -p1
 
 # fix-firmware-*
-%patch0561 -p1
-%patch0562 -p1
-
-# fix-fs*
-%patch0570 -p1
 %patch0571 -p1
 %patch0572 -p1
-%patch0573 -p1
-%patch0574 -p1
-%patch0575 -p1
-%patch0576 -p1
-%patch0577 -p1
-%patch0578 -p1
-%patch0579 -p1
+
+# fix-fs*
 %patch0580 -p1
 %patch0581 -p1
 %patch0582 -p1
@@ -1706,53 +1702,53 @@ cd linux-%version
 %patch0591 -p1
 %patch0592 -p1
 %patch0593 -p1
-
-# fix-include-*
+%patch0594 -p1
+%patch0595 -p1
+%patch0596 -p1
+%patch0597 -p1
+%patch0598 -p1
+%patch0599 -p1
+%patch0600 -p1
 %patch0601 -p1
 %patch0602 -p1
+%patch0603 -p1
+
+# fix-include-*
+%patch0611 -p1
+%patch0612 -p1
 
 # fix-init
-%patch0610 -p1
+%patch0620 -p1
 
 # fix-kernel*
-%patch0620 -p1
-%patch0621 -p1
-%patch0622 -p1
-%patch0623 -p1
-
-# fix-lib*
 %patch0630 -p1
 %patch0631 -p1
 %patch0632 -p1
 %patch0633 -p1
 
-# fix-mm*
+# fix-lib*
 %patch0640 -p1
 %patch0641 -p1
 %patch0642 -p1
 %patch0643 -p1
-%patch0644 -p1
-%patch0645 -p1
-%patch0646 -p1
-%patch0647 -p1
-%patch0648 -p1
-%patch0649 -p1
+
+# fix-mm*
 %patch0650 -p1
 %patch0651 -p1
 %patch0652 -p1
 %patch0653 -p1
-
-# fix-net-*
+%patch0654 -p1
+%patch0655 -p1
+%patch0656 -p1
+%patch0657 -p1
+%patch0658 -p1
+%patch0659 -p1
+%patch0660 -p1
 %patch0661 -p1
 %patch0662 -p1
 %patch0663 -p1
-%patch0664 -p1
-%patch0665 -p1
-%patch0666 -p1
-%patch0667 -p1
-%patch0668 -p1
-%patch0669 -p1
-%patch0670 -p1
+
+# fix-net-*
 %patch0671 -p1
 %patch0672 -p1
 %patch0673 -p1
@@ -1761,32 +1757,42 @@ cd linux-%version
 %patch0676 -p1
 %patch0677 -p1
 %patch0678 -p1
+%patch0679 -p1
+%patch0680 -p1
+%patch0681 -p1
+%patch0682 -p1
+%patch0683 -p1
+%patch0684 -p1
+%patch0685 -p1
+%patch0686 -p1
+%patch0687 -p1
+%patch0688 -p1
 
 # fix-scripts--*
-%patch0681 -p1
+%patch0691 -p1
 
 # fix-security--*
-%patch0691 -p1
-%patch0692 -p1
-%patch0693 -p1
-
-# fix-sound-*
 %patch0701 -p1
 %patch0702 -p1
 %patch0703 -p1
-%patch0704 -p1
-%patch0705 -p1
-%patch0706 -p1
-%patch0707 -p1
 
-# fix-tools-*
+# fix-sound-*
 %patch0711 -p1
 %patch0712 -p1
+%patch0713 -p1
+%patch0714 -p1
+%patch0715 -p1
+%patch0716 -p1
+%patch0717 -p1
 
-# fix-virt-kvm*
-%patch0720 -p1
+# fix-tools-*
 %patch0721 -p1
 %patch0722 -p1
+
+# fix-virt-kvm*
+%patch0730 -p1
+%patch0731 -p1
+%patch0732 -p1
 
 
 # feat-arch-*
@@ -2804,6 +2810,13 @@ done)
 
 
 %changelog
+* Fri Jul 26 2013 Led <led@altlinux.ru> 3.4.54-alt3
+- added:
+  + fix-drivers-gpio--gpio-sch
+  + fix-drivers-i2c-busses--i2c-isch
+  + fix-drivers-mfd--lpc_sch
+- cleaned up configs
+
 * Wed Jul 24 2013 Led <led@altlinux.ru> 3.4.54-alt2
 - removed:
   + fix-drivers-regulator
