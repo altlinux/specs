@@ -2,10 +2,14 @@
 %define version	1
 %define infinality_release	20130126
 
+%define infinality_user 53-infinality-user.conf
+%define aliases_default_alt 20-aliases-default-alt.conf
+%define aliases_os_alt 41-aliases-os-alt.conf
+
 Summary: Fontconfig configuration meant to be used in conjunction with Freetype patches from http://www.infinality.net.  
 Name: %{name}
 Version: %{version}
-Release: alt4.git%{infinality_release}
+Release: alt5.git%{infinality_release}
 License: GPL
 Group: System/Configuration/Other
 BuildArch: noarch
@@ -17,6 +21,7 @@ Requires: fontconfig
 Source: %name-%version.tar
 Source1: 53-infinality-user.conf
 Source2: 20-aliases-default-alt.conf
+Source3: 41-aliases-os-alt.conf
 
 %description
 A configurable fontconfig configuration meant to be used in conjunction
@@ -40,17 +45,18 @@ mv %confinfdir/README %docdir
 
 #52-infinality.conf overrides user settings so restoring them
 cp %SOURCE1 %confdir/conf.avail
-ln -s ../conf.avail/53-infinality-user.conf %confdir/conf.d/53-infinality-user.conf
+ln -s ../conf.avail/%{infinality_user} %confdir/conf.d/%{infinality_user}
 
 # Create alt style based on infinality that uses free fonts for replacements
 cp %SOURCE2 %confinfdir/conf.src
+cp %SOURCE3 %confinfdir/conf.src
 %define confavaildir %confinfdir/styles.conf.avail
 cp -a %confavaildir/infinality %confavaildir/alt
 pushd %confavaildir/alt
     rm -f 20-aliases-default-inf.conf
     rm -f 41-repl-os-inf.conf
-    ln -s ../../conf.src/41-repl-os-linux.conf 41-repl-os-linux.conf
-    ln -s ../../conf.src/20-aliases-default-alt.conf 20-aliases-default-alt.conf
+    ln -s ../../conf.src/%{aliases_default_alt} %{aliases_default_alt}
+    ln -s ../../conf.src/%{aliases_os_alt} %{aliases_os_alt}
 popd
 rm -f %confinfdir/conf.d
 ln -s styles.conf.avail/alt %confinfdir/conf.d
@@ -65,6 +71,9 @@ ln -s styles.conf.avail/alt %confinfdir/conf.d
 %doc %_docdir/%{name}-%{version}/
 
 %changelog
+* Fri Jul 26 2013 Vladimir Didenko <cow@altlinux.org> 1-alt5.git20130126
+- use aliases instead substitutions in 'alt' style
+
 * Mon Jun 17 2013 Vladimir Didenko <cow@altlinux.org> 1-alt4.git20130126
 - new version
 
