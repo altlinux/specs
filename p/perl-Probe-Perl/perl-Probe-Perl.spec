@@ -14,7 +14,7 @@
 %define _enable_test 1
 
 Name: perl-Probe-Perl
-Version: 0.01
+Version: 0.02
 Release: alt1
 
 Summary: Information about the currently running perl
@@ -51,6 +51,9 @@ rm -rf %buildroot%perl_vendor_man3dir/
 %perl_vendor_privlib/Probe/*
 
 %changelog
+* Fri Jul 26 2013 Igor Vlasenko <viy@altlinux.ru> 0.02-alt1
+- automated CPAN update
+
 * Sun Oct 18 2009 Michael Bochkaryov <misha@altlinux.ru> 0.01-alt1
 - initial build for ALT Linux Sisyphus
 
