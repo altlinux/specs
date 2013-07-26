@@ -14,7 +14,7 @@
 %define _enable_test 1
 
 Name: perl-Sub-Override
-Version: 0.08
+Version: 0.09
 Release: alt1
 
 Summary: Perl extension for easily overriding subroutines
@@ -30,7 +30,7 @@ Source: %m_distro-%version.tar.gz
 
 # Automatically added by buildreq on Thu May 24 2012 (-bb)
 # optimized out: perl-Devel-Symdump perl-Pod-Coverage perl-Pod-Escapes perl-Pod-Parser perl-Pod-Simple perl-Sub-Uplevel perl-devel python-base
-BuildRequires: perl-Test-Exception perl-Test-Pod perl-Test-Pod-Coverage
+BuildRequires: perl-Test-Exception perl-Test-Pod perl-Test-Pod-Coverage perl(Test/Fatal.pm)
 
 %description
 None.
@@ -47,6 +47,9 @@ None.
 %perl_vendor_privlib/Sub/*
 
 %changelog
+* Fri Jul 26 2013 Igor Vlasenko <viy@altlinux.ru> 0.09-alt1
+- automated CPAN update
+
 * Thu May 24 2012 Denis Smirnov <mithraen@altlinux.ru> 0.08-alt1
 - initial build for ALT Linux Sisyphus
 
