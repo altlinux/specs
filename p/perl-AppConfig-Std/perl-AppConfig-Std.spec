@@ -1,14 +1,14 @@
 %define dist AppConfig-Std
 Name: perl-%dist
-Version: 1.07
-Release: alt2
+Version: 1.08
+Release: alt1
 
 Summary: Subclass of AppConfig that provides standard options
 License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/N/NE/NEILB/AppConfig-Std-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -31,10 +31,13 @@ handling global configuration variables.
 %perl_vendor_install
 
 %files
-%doc ChangeLog README
+%doc Changes README
 %perl_vendor_privlib/AppConfig
 
 %changelog
+* Fri Jul 26 2013 Igor Vlasenko <viy@altlinux.ru> 1.08-alt1
+- automated CPAN update
+
 * Tue Apr 26 2011 Alexey Tourbin <at@altlinux.ru> 1.07-alt2
 - fixed unpackaged directory
 
