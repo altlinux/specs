@@ -14,8 +14,8 @@
 %define _enable_test 1
 
 Name: perl-SRU
-Version: 0.99
-Release: alt1.1
+Version: 1.00
+Release: alt1
 
 Summary: Search and Retrieve URL Service
 
@@ -26,7 +26,7 @@ Url: http://www.cpan.org
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 BuildArch: noarch
-Source: http://www.cpan.org/authors/id/B/BR/BRICAS/SRU-0.99.tar.gz
+Source: http://www.cpan.org/authors/id/B/BR/BRICAS/SRU-%{version}.tar.gz
 
 # Automatically added by buildreq on Thu Sep 04 2008
 BuildRequires: perl-CGI-Application perl-CQL-Parser perl-Catalyst-Runtime perl-Module-Install perl-Test-Exception perl-Test-Pod perl-Test-Pod-Coverage perl-XML-Simple
@@ -88,6 +88,9 @@ http://www.ockham.org.
 %perl_vendor_privlib/SRU.pm
 
 %changelog
+* Fri Jul 26 2013 Igor Vlasenko <viy@altlinux.ru> 1.00-alt1
+- automated CPAN update
+
 * Mon Nov 22 2010 Igor Vlasenko <viy@altlinux.ru> 0.99-alt1.1
 - repair after perl 5.12 upgrade using girar-nmu
 
