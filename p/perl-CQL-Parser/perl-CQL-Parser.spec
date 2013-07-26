@@ -14,8 +14,8 @@
 %define _enable_test 1
 
 Name: perl-CQL-Parser
-Version: 1.10
-Release: alt1.1
+Version: 1.12
+Release: alt1
 
 Summary: Common Query Language Parser
 
@@ -26,7 +26,7 @@ Url: http://www.cpan.org
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 BuildArch: noarch
-Source: http://www.cpan.org/authors/id/B/BR/BRICAS/CQL-Parser-1.10.tar.gz
+Source: http://www.cpan.org/authors/id/B/BR/BRICAS/CQL-Parser-%{version}.tar.gz
 #Source: http://www.cpan.org/modules/by-module/CQL/%m_distro-%version.tar.bz2
 
 # Automatically added by buildreq on Fri Jun 13 2008
@@ -69,6 +69,9 @@ documentation for those modules for their respective APIs.
 %perl_vendor_privlib/CQL/
 
 %changelog
+* Fri Jul 26 2013 Igor Vlasenko <viy@altlinux.ru> 1.12-alt1
+- automated CPAN update
+
 * Mon Nov 22 2010 Igor Vlasenko <viy@altlinux.ru> 1.10-alt1.1
 - repair after perl 5.12 upgrade using girar-nmu
 
