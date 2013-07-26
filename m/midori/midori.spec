@@ -1,15 +1,15 @@
 %def_without devel
 
 Name: midori
-Version: 0.5.0
+Version: 0.5.4
 Release: alt1
 
 Summary: is a lightweight web browser
 License: LGPL
 Group: Networking/WWW
-Url: http://www.twotoasts.de/index.php?/pages/midori_summary.html
+Url: http://www.midori-browser.org/
 
-# git://git.xfce.org/apps/midori
+# https://launchpad.net/midori
 Source: %name-%version.tar
 Patch0: %name-%version-%release.patch
 
@@ -75,6 +75,10 @@ Requires: %name = %version-%release
 %endif
 
 %changelog
+* Fri Jul 26 2013 Vladimir Lettiev <crux@altlinux.ru> 0.5.4-alt1
+- 0.5.4
+- updated url and source (project switched from git to bzr)
+
 * Tue Apr 09 2013 Vladimir Lettiev <crux@altlinux.ru> 0.5.0-alt1
 - 0.5.0
 
