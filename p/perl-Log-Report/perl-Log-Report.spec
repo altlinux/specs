@@ -1,6 +1,6 @@
 %define dist Log-Report
 Name: perl-%dist
-Version: 0.99
+Version: 0.993
 Release: alt1
 
 Summary: Report a problem, pluggable handlers and language support
@@ -13,7 +13,7 @@ Source: http://www.cpan.org/authors/id/M/MA/MARKOV/Log-Report-%{version}.tar.gz
 BuildArch: noarch
 
 # Automatically added by buildreq on Wed Apr 27 2011
-BuildRequires: perl-Log-Log4perl perl-PPI perl-Test-Pod
+BuildRequires: perl-Log-Log4perl perl-PPI perl-Test-Pod perl(Devel/GlobalDestruction.pm)
 
 %description
 Handling messages to users can be a hassle, certainly when the same
@@ -44,6 +44,9 @@ module to do only translations or only message dispatching.
 %_bindir/xgettext-perl
 
 %changelog
+* Fri Jul 26 2013 Igor Vlasenko <viy@altlinux.ru> 0.993-alt1
+- automated CPAN update
+
 * Wed Oct 17 2012 Igor Vlasenko <viy@altlinux.ru> 0.99-alt1
 - automated CPAN update
 
