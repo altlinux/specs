@@ -20,7 +20,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.4.54
-Release: alt3
+Release: alt4
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -257,15 +257,18 @@ Patch0182: linux-%kernel_branch.25-fix-drivers-edac--i82975x_edac.patch
 Patch0183: linux-%kernel_branch.25-fix-drivers-edac--x38_edac.patch
 
 Patch0191: linux-%kernel_branch.39-fix-drivers-gpio--gpio-ks8695.patch
-Patch0192: linux-%kernel_branch.39-fix-drivers-gpio--gpio-mcp23s08.patch
-Patch0193: linux-%kernel_branch.39-fix-drivers-gpio--gpio-nomadik.patch
-Patch0194: linux-%kernel_branch.53-fix-drivers-gpio--gpio-sch.patch
-Patch0195: linux-%kernel_branch.39-fix-drivers-gpio--gpio-tegra.patch
-Patch0196: linux-%kernel_branch.39-fix-drivers-gpio--gpio-timberdale.patch
-Patch0197: linux-%kernel_branch.39-fix-drivers-gpio--gpio-ucb1400.patch
-Patch0198: linux-%kernel_branch.39-fix-drivers-gpio--gpio-wm831x.patch
-Patch0199: linux-%kernel_branch.39-fix-drivers-gpio--gpio-wm8994.patch
-Patch0200: linux-%kernel_branch.39-fix-drivers-gpio--gpiolib.patch
+Patch0192: linux-%kernel_branch.53-fix-drivers-gpio--gpio-langwell.patch
+Patch0193: linux-%kernel_branch.39-fix-drivers-gpio--gpio-mcp23s08.patch
+Patch0194: linux-%kernel_branch.53-fix-drivers-gpio--gpio-ml-ioh.patch
+Patch0195: linux-%kernel_branch.39-fix-drivers-gpio--gpio-nomadik.patch
+Patch0196: linux-%kernel_branch.53-fix-drivers-gpio--gpio-sch.patch
+Patch0197: linux-%kernel_branch.53-fix-drivers-gpio--gpio-sodaville.patch
+Patch0198: linux-%kernel_branch.39-fix-drivers-gpio--gpio-tegra.patch
+Patch0199: linux-%kernel_branch.39-fix-drivers-gpio--gpio-timberdale.patch
+Patch0200: linux-%kernel_branch.39-fix-drivers-gpio--gpio-ucb1400.patch
+Patch0201: linux-%kernel_branch.39-fix-drivers-gpio--gpio-wm831x.patch
+Patch0202: linux-%kernel_branch.39-fix-drivers-gpio--gpio-wm8994.patch
+Patch0203: linux-%kernel_branch.39-fix-drivers-gpio--gpiolib.patch
 
 Patch0210: linux-%kernel_branch.46-fix-drivers-gpu-drm.patch
 Patch0211: linux-%kernel_branch.50-fix-drivers-gpu-drm--drm.patch
@@ -301,8 +304,10 @@ Patch0259: linux-%kernel_branch.25-fix-drivers-hwmon--via-cputemp.patch
 
 Patch0261: linux-%kernel_branch.25-fix-drivers-i2c--i2c-boardinfo.patch
 Patch0262: linux-%kernel_branch.25-fix-drivers-i2c--i2c-pxa.patch
-Patch0263: linux-%kernel_branch.25-fix-drivers-i2c-busses--i2c-intel-mid.patch
-Patch0264: linux-%kernel_branch.53-fix-drivers-i2c-busses--i2c-isch.patch
+Patch0263: linux-%kernel_branch.53-fix-drivers-i2c-busses--i2c-amd8111.patch
+Patch0264: linux-%kernel_branch.53-fix-drivers-i2c-busses--i2c-i801.patch
+Patch0265: linux-%kernel_branch.25-fix-drivers-i2c-busses--i2c-intel-mid.patch
+Patch0266: linux-%kernel_branch.53-fix-drivers-i2c-busses--i2c-isch.patch
 
 Patch0271: linux-%kernel_branch.25-fix-drivers-idle--i7300_idle.patch
 Patch0272: linux-%kernel_branch.32-fix-drivers-idle--intel_idle.patch
@@ -346,11 +351,12 @@ Patch0362: linux-%kernel_branch.25-fix-drivers-media-video-gspca--pac7302.patch
 
 Patch0371: linux-%kernel_branch.39-fix-drivers-mfd--ab8500-gpadc.patch
 Patch0372: linux-%kernel_branch.39-fix-drivers-mfd--adp5520.patch
-Patch0373: linux-%kernel_branch.53-fix-drivers-mfd--lpc_sch.patch
-Patch0374: linux-%kernel_branch.25-fix-drivers-mfd--rc5t583.patch
-Patch0375: linux-%kernel_branch.25-fix-drivers-mfd--rc5t583-irq.patch
-Patch0376: linux-%kernel_branch.32-fix-drivers-mfd--twl4030-core.patch
-Patch0377: linux-%kernel_branch.39-fix-drivers-mfd--wm8994.patch
+Patch0373: linux-%kernel_branch.53-fix-drivers-mfd--cs5535-mfd.patch
+Patch0374: linux-%kernel_branch.53-fix-drivers-mfd--lpc_sch.patch
+Patch0375: linux-%kernel_branch.25-fix-drivers-mfd--rc5t583.patch
+Patch0376: linux-%kernel_branch.25-fix-drivers-mfd--rc5t583-irq.patch
+Patch0377: linux-%kernel_branch.32-fix-drivers-mfd--twl4030-core.patch
+Patch0378: linux-%kernel_branch.39-fix-drivers-mfd--wm8994.patch
 
 Patch0381: linux-%kernel_branch.20-fix-drivers-misc--pti.patch
 Patch0382: linux-%kernel_branch.38-fix-drivers-misc--vmw_balloon.patch
@@ -540,8 +546,9 @@ Patch0712: linux-%kernel_branch.47-fix-sound-pci-hda--snd-hda-codec-analog.patch
 Patch0713: linux-%kernel_branch.47-fix-sound-pci-hda--snd-hda-codec-idt.patch
 Patch0714: linux-%kernel_branch.20-fix-sound-pci-hda--snd-hda-codec-realtek.patch
 Patch0715: linux-%kernel_branch.47-fix-sound-pci-hda--snd-hda-intel.patch
-Patch0716: linux-%kernel_branch.20-fix-sound-soc-omap--snd-soc-omap.patch
-Patch0717: linux-%kernel_branch.20-fix-sound-soc-omap--snd-soc-omap-mcbsp.patch
+Patch0716: linux-%kernel_branch.53-fix-sound-pci-oxygen--snd-virtuoso.patch
+Patch0717: linux-%kernel_branch.20-fix-sound-soc-omap--snd-soc-omap.patch
+Patch0718: linux-%kernel_branch.20-fix-sound-soc-omap--snd-soc-omap-mcbsp.patch
 
 Patch0721: linux-%kernel_branch.20-fix-tools--perf.patch
 Patch0722: linux-%kernel_branch.20-fix-tools-hv.patch
@@ -609,7 +616,6 @@ Patch1183: linux-%kernel_branch.18-feat-fs--secrm.patch
 Patch1184: linux-%kernel_branch-feat-fs-aufs.patch
 Patch1185: linux-%kernel_branch.20-feat-fs-binfmt_elf--fatelf.patch
 Patch1186: linux-%kernel_branch.20-feat-fs-dazukofs.patch
-Patch1187: linux-%kernel_branch.50-feat-fs-exfat.patch
 Patch1188: linux-%kernel_branch.18-feat-fs-ext2--secrm.patch
 Patch1189: linux-%kernel_branch.18-feat-fs-ext3--secrm.patch
 Patch1190: linux-%kernel_branch.44-feat-fs-ext4--richacl.patch
@@ -1464,6 +1470,9 @@ cd linux-%version
 %patch0198 -p1
 %patch0199 -p1
 %patch0200 -p1
+%patch0201 -p1
+%patch0202 -p1
+%patch0203 -p1
 
 # fix-drivers-gpu-drm*
 %patch0210 -p1
@@ -1507,6 +1516,8 @@ cd linux-%version
 %patch0262 -p1
 %patch0263 -p1
 %patch0264 -p1
+%patch0265 -p1
+%patch0266 -p1
 
 # fix-drivers-idle--*
 %patch0271 -p1
@@ -1565,6 +1576,7 @@ cd linux-%version
 %patch0375 -p1
 %patch0376 -p1
 %patch0377 -p1
+%patch0378 -p1
 
 # fix-drivers-misc--*
 %patch0381 -p1
@@ -1784,6 +1796,7 @@ cd linux-%version
 %patch0715 -p1
 %patch0716 -p1
 %patch0717 -p1
+%patch0718 -p1
 
 # fix-tools-*
 %patch0721 -p1
@@ -1872,7 +1885,6 @@ cd linux-%version
 %patch1184 -p1
 %patch1185 -p1
 %patch1186 -p1
-%patch1187 -p1
 %patch1188 -p1
 %patch1189 -p1
 %patch1190 -p1
@@ -2810,6 +2822,18 @@ done)
 
 
 %changelog
+* Sat Jul 27 2013 Led <led@altlinux.ru> 3.4.54-alt4
+- removed:
+  + feat-fs-exfat
+- added:
+  + fix-drivers-gpio--gpio-langwell
+  + fix-drivers-gpio--gpio-ml-ioh
+  + fix-drivers-gpio--gpio-sodaville
+  + fix-drivers-i2c-busses--i2c-amd8111
+  + fix-drivers-i2c-busses--i2c-i801
+  + fix-drivers-mfd--cs5535-mfd
+  + fix-sound-pci-oxygen--snd-virtuoso
+
 * Fri Jul 26 2013 Led <led@altlinux.ru> 3.4.54-alt3
 - added:
   + fix-drivers-gpio--gpio-sch
