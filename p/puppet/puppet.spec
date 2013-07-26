@@ -1,7 +1,7 @@
 
 Name:    puppet
 Version: 2.7.21
-Release: alt1
+Release: alt2
 
 Summary: System administration - Automated
 Group:   System/Servers
@@ -140,6 +140,11 @@ rm -rf %buildroot/usr/lib/ruby/site_ruby/puppet/module_tool/skeleton/templates/g
 %attr(1770,root,puppet) %dir %_var/run/puppet
 
 %changelog
+* Fri Jul 26 2013 Andrey Cherepanov <cas@altlinux.org> 2.7.21-alt2
+- Set correct pid file name for services (ALT #29114)
+- Set correct user name _puppet in configuration of puppetmasterd
+
+
 * Fri Jun 07 2013 Andrey Cherepanov <cas@altlinux.org> 2.7.21-alt1
 - New version 2.7.21 (ALT #28695)
 - Use system group `puppet` instead `_puppet` (ALT #28273)
