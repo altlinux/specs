@@ -4,17 +4,17 @@ BuildRequires: perl-devel perl-podlators
 # END SourceDeps(oneline)
 BuildRequires: perl(DBD/SQLite.pm) perl(Hash/Merge/Simple.pm)
 %define upstream_name    Tapper-Schema
-%define upstream_version 4.1.1
+%define upstream_version 4.1.3
 
 Name:       perl-%{upstream_name}
-Version:    %{upstream_version}
-Release:    alt1_1
+Version:    4.1.3
+Release:    alt1
 
 Summary:    Database schemas for Tapper
 License:    GPL+ or Artistic
 Group:      Development/Perl
 Url:        http://search.cpan.org/dist/%{upstream_name}
-Source0:    http://www.cpan.org/modules/by-module/Tapper/%{upstream_name}-%{upstream_version}.tar.gz
+Source:    http://www.cpan.org/authors/id/T/TA/TAPPER/Tapper-Schema-%{version}.tar.gz
 
 BuildRequires: perl(Class/C3.pm)
 BuildRequires: perl(Compress/Bzip2.pm)
@@ -72,6 +72,9 @@ Database schemas for Tapper.
 
 
 %changelog
+* Sat Jul 27 2013 Igor Vlasenko <viy@altlinux.ru> 4.1.3-alt1
+- automated CPAN update
+
 * Mon Dec 10 2012 Igor Vlasenko <viy@altlinux.ru> 4.1.1-alt1_1
 - mageia import by cas@ requiest
 
