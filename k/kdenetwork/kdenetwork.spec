@@ -5,6 +5,7 @@
 
 %define qtdir %_qt3dir
 %define unstable 0
+%define arts 1
 %define etc_kppp_allow 0
 %define jingle 1
 %define cmake 1
@@ -19,7 +20,7 @@
 
 Name: kdenetwork
 Version: 3.5.13.2
-Release: alt2
+Release: alt3
 
 Group: Graphical desktop/KDE
 Summary: KDE - Network Applications
@@ -102,7 +103,6 @@ Patch5036: tde-3.5.13-build-defdir.patch
 Patch5037: tdenetwork-3.5.13-cmake-build.patch
 Patch5038: kdenetwork-3.5.13-jabber-kioslave-IdnLink.patch
 Patch5039: kdenetwork-3.5.13-Kopete-ICQDefServ.patch
-Patch5040: kdenetwork-3.5.13.2-trinityHomeToKDE.patch
 
 # Automatically added by buildreq on Thu Mar 18 2004 (-bi)
 #BuildRequires: XFree86-devel XFree86-libs control fontconfig freetype2 gcc-c++ glib2 gzip-utils kdelibs-devel libarts-devel libjpeg-devel libpam-devel libqt3-devel libssl-devel libstdc++-devel libxml2-devel libxslt-devel qt3-designer wireless-tools zlib-devel
@@ -113,6 +113,9 @@ BuildRequires: glib2 gzip-utils libjpeg-devel libpng-devel libv4l-devel
 BuildRequires: libpam0-devel libqt3-devel libssl-devel libstdc++-devel libxml2-devel
 BuildRequires: libxslt-devel qt3-designer zlib-devel libopenslp libopenslp-devel
 BuildRequires: texinfo libpcre-devel libpam0-devel libssl-devel libXtst-devel
+%if %arts
+BuildRequires: libarts-devel >= 1.5.8 libarts-qtmcop-devel >= 1.5.8
+%endif
 #libqca-devel
 #BuildRequires: libxmms-devel
 BuildRequires: xml-utils wireless-tools-devel libidn-devel libsqlite3-devel
@@ -381,7 +384,6 @@ Simply drag a file or directory to the KPF button to share it.
 %patch5037 -p1
 ###%patch5038 -p1
 %patch5039 -p1
-%patch5040 -p1
 
 #perl -pi -e "s|^X-KDE-StartupNotify.*||" kppp/Kppp.desktop
 #perl -pi -e "s|^X-DCOP-ServiceType.*||" kppp/Kppp.desktop
@@ -436,7 +438,11 @@ then
     -DWITH_SPEEX=ON \
     -DWITH_WEBCAM=ON \
     -DWITH_GSM=ON \
+%if %arts
+    -DWITH_ARTS=ON \
+%else
     -DWITH_ARTS=OFF \
+%endif
     -DWITH_XMMS=OFF \
     -DWITH_SLP=ON \
     -DBUILD_ALL=ON 
@@ -763,8 +769,11 @@ useradd -s /dev/null -r _kdelisa >/dev/null 2>&1 ||:
 %_K3includedir/*
 
 %changelog
+* Sat Jul 27 2013 Roman Savochenko <rom_as@altlinux.ru> 3.5.13.2-alt3
+- ARTS support enable.
+
 * Sat Jul 06 2013 Roman Savochenko <rom_as@altlinux.ru> 3.5.13.2-alt2
-- Backward rename home dir .trinity to .kde.
+ 767 - Backward rename home dir .trinity to .kde.
 
 * Sun Jun 23 2013 Roman Savochenko <rom_as@altlinux.ru> 3.5.13.2-alt1
 - Release TDE version 3.5.13.2
