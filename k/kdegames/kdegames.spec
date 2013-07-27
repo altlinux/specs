@@ -1,7 +1,7 @@
 %undefine __libtoolize
 %define qtdir %_qt3dir
 %define unstable 0
-%define with_arts 0
+%define with_arts 1
 %define _optlevel s
 %define glibc_core_ver %{get_version glibc-core}
 
@@ -12,7 +12,7 @@
 Name: kdegames
 Summary: KDE - Games
 Version: 3.5.13.2
-Release: alt1
+Release: alt2
 
 Group: Graphical desktop/KDE
 Url: http://www.kde.org/
@@ -75,6 +75,9 @@ BuildRequires: fontconfig-devel, libart_lgpl-devel
 BuildRequires: libmad-devel libvorbis-devel xml-utils
 BuildRequires: libacl-devel libattr-devel
 BuildRequires: kdelibs >= %version kdelibs-devel >= %version
+%if %with_arts
+BuildRequires: kdemultimedia-devel >= %version
+%endif
 
 %description
 Games for the K Desktop Environment.
@@ -783,6 +786,9 @@ export PATH=%_bindir:$PATH
 %_K3doc/en/kdegames-%version-apidocs
 
 %changelog
+* Sat Jul 27 2013 Roman Savochenko <rom_as@altlinux.ru> 3.5.13.2-alt2
+- ARTS support enable.
+
 * Sun Jun 23 2013 Roman Savochenko <rom_as@altlinux.ru> 3.5.13.2-alt1
 - Release TDE version 3.5.13.2
 
