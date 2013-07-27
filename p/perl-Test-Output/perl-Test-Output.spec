@@ -1,7 +1,7 @@
 %define module Test-Output
 
 Name: perl-%module
-Version: 1.01
+Version: 1.02
 Release: alt1
 
 Summary: Utilities to test STDOUT and STDERR messages
@@ -9,12 +9,12 @@ License: Perl
 Group: Development/Perl
 
 Url: %CPAN %module
-Source: http://www.cpan.org/modules/by-module/Test/%module-%version.tar.gz
+Source: http://www.cpan.org/authors/id/B/BD/BDFOY/Test-Output-%{version}.tar.gz
 
 BuildArch: noarch
 
 # Automatically added by buildreq on Wed Apr 27 2011
-BuildRequires: perl-Sub-Exporter perl-Test-Pod perl-Test-Pod-Coverage perl-Test-Tester
+BuildRequires: perl-Sub-Exporter perl-Test-Pod perl-Test-Pod-Coverage perl-Test-Tester perl(Capture/Tiny.pm)
 
 %description
 Test::Output provides a simple interface for testing output sent to STDOUT or
@@ -34,6 +34,9 @@ as possible to the tester.
 %perl_vendor_privlib/Test/
 
 %changelog
+* Sat Jul 27 2013 Igor Vlasenko <viy@altlinux.ru> 1.02-alt1
+- automated CPAN update
+
 * Wed Apr 27 2011 Victor Forsiuk <force@altlinux.org> 1.01-alt1
 - 1.01
 
