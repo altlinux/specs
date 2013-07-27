@@ -5,7 +5,7 @@
 %define versioning_hack 1
 %define unstable 0
 %define bad_doc 0
-%define arts 0
+%define arts 1
 %define cmake 1
 
 %define qtdir %_qt3dir
@@ -22,7 +22,7 @@
 %define major 3
 %define minor 5
 %define bugfix 13.2
-%define rel alt1
+%define rel alt2
 Name: kdelibs
 Version: %major.%minor.%bugfix
 Release: %rel
@@ -655,6 +655,9 @@ done
 #%doc %_K3doc/en/%name-*-apidocs
 
 %changelog
+* Sat Jul 27 2013 Roman Savochenko <rom_as@altlinux.ru> 3.5.13.2-alt2
+- ARTS support enable.
+
 * Sun Jun 23 2013 Roman Savochenko <rom_as@altlinux.ru> 3.5.13.2-alt1
 - Release TDE version 3.5.13.2
 
