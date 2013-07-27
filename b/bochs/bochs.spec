@@ -1,5 +1,5 @@
 Name: bochs
-Version: 2.6.1
+Version: 2.6.2
 Release: alt1
 
 Summary: Bochs Project x86 PC Emulator
@@ -73,6 +73,9 @@ EOF
 %_niconsdir/*
 
 %changelog
+* Sat Jul 27 2013 Ilya Mashkin <oddity@altlinux.ru> 2.6.2-alt1
+- 2.6.2
+
 * Sun Apr 21 2013 Ilya Mashkin <oddity@altlinux.ru> 2.6.1-alt1
 - 2.6.1
 
