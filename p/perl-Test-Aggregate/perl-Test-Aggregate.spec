@@ -1,16 +1,16 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(Test/Builder.pm) perl(Test/Builder/Module.pm) perl-devel perl-podlators
+BuildRequires: perl(Test/Builder.pm) perl(Test/Builder/Module.pm) perl-devel perl-podlators perl(Test/Trap.pm)
 # END SourceDeps(oneline)
 Name:       perl-Test-Aggregate
-Version:    0.364
-Release:    alt3_6
+Version:    0.366
+Release:    alt1
 # lib/Test/Aggregate.pm -> GPL+ or Artistic
 # lib/Test/Aggregate/Builder.pm -> GPL+ or Artistic
 License:    GPL+ or Artistic
 Group:      Development/Perl
 Summary:    Aggregate C<*.t> tests to make them run faster
-Source:     http://search.cpan.org/CPAN/authors/id/F/FL/FLORA/Test-Aggregate-%{version}.tar.gz
+Source:     http://www.cpan.org/authors/id/R/RW/RWSTAUNER/Test-Aggregate-%{version}.tar.gz
 Url:        http://search.cpan.org/dist/Test-Aggregate
 BuildArch:  noarch
 
@@ -70,6 +70,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Sat Jul 27 2013 Igor Vlasenko <viy@altlinux.ru> 0.366-alt1
+- automated CPAN update
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.364-alt3_6
 - update to new release by fcimport
 
