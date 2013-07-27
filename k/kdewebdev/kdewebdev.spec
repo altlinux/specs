@@ -14,7 +14,7 @@
 
 Name: kdewebdev
 Version: 3.5.13.2
-Release: alt1
+Release: alt2
 
 Group: Graphical desktop/KDE
 Summary: K Desktop Environment - web development programs
@@ -37,6 +37,7 @@ Patch3: kxsldbg-3.5.0-fix-linking.patch
 Patch4: quanta-3.5.0-fix-linking.patch
 Patch5: quanta-3.5.12-no-la.patch
 Patch6: kdewebdev-3.5.13.2-trinityHomeToKDE.patch
+Patch7: tde-3.5.13-build-defdir-autotool.patch
 
 # security
 # end security
@@ -132,13 +133,14 @@ recommendations.
 
 %prep
 %setup -q
-cp -ar altlinux/admin ./
+##cp -ar altlinux/admin ./
 #%patch1 -p1
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
 %patch6 -p1
+%patch7
 
 mkdir quanta-doc
 for f in altlinux/css altlinux/html altlinux/javascript altlinux/php altlinux/mysql altlinux/mysql5
@@ -155,14 +157,17 @@ do
     grep -q -e 'lib.*SOURCES' $f || continue
     RPATH_LINK_OPTS+=" -Wl,-rpath-link,`dirname $f`/.libs"
 done
-sed -i "s|\(-Wl,--as-needed\)| $RPATH_LINK_OPTS \1|g" admin/acinclude.m4.in
-sed -i -e 's|\$USER_INCLUDES|-I%_includedir/tqtinterface \$USER_INCLUDES|' admin/acinclude.m4.in
+##sed -i "s|\(-Wl,--as-needed\)| $RPATH_LINK_OPTS \1|g" admin/acinclude.m4.in
+##sed -i -e 's|\$USER_INCLUDES|-I%_includedir/tqtinterface \$USER_INCLUDES|' admin/acinclude.m4.in
 
 find ./ -type f -name Makefile.am | \
 while read f
 do
     sed -i -e 's|\(.*_la_LIBADD[[:space:]]*\)=\(.*\)|\1= -lkdeinit_kded -lDCOP \$(LIB_KHTML) \$(LIB_KIO) \$(LIB_KDEUI) \$(LIB_KDECORE) \$(LIB_QT) \2|' $f
 done
+
+cp -Rp /usr/share/libtool/aclocal/libtool.m4 admin/libtool.m4.in
+cp -Rp /usr/share/libtool/config/ltmain.sh admin/ltmain.sh
 make -f admin/Makefile.common cvs ||:
 
 %build
@@ -303,6 +308,9 @@ rm -f %buildroot/%_K3apps/quanta/doc/install.sh
 %_K3xdg_apps/kfilereplace.desktop
 
 %changelog
+* Sat Jul 27 2013 Roman Savochenko <rom_as@altlinux.ru> 3.5.13.2-alt2
+- Switch to build from original autotools "admin".
+
 * Sun Jun 23 2013 Roman Savochenko <rom_as@altlinux.ru> 3.5.13.2-alt1
 - Release TDE version 3.5.13.2
 
