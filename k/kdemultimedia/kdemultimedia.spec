@@ -3,28 +3,30 @@
 %define _keep_libtool_files 1
 
 %define unstable 0
-%define with_kaboodle 0
-%define with_noatun 0
-%define with_xine 0
-%define with_musicbrainz 0
-%define with_arts 0
+%define with_kaboodle 1
+%define with_noatun 1
+%define with_xine 1
+%define with_musicbrainz 1
+%define with_arts 1
 
 %define qtdir %_qt3dir
 #%define timiddir %_datadir/timidity
 
-%add_findpackage_path %_K3bindir
-%add_findprov_lib_path %_libdir/kde3
-%add_findreq_skiplist /usr/share/apps/noatun/skins/*
-%add_findprov_skiplist /usr/share/apps/noatun/skins/*
-%add_verify_elf_skiplist %_libdir/libmpg123.so*
-%add_verify_elf_skiplist %_libdir/libmpeg-0.3.0.so*
+##add_findpackage_path %_K3bindir
+##add_findprov_lib_path %_libdir/kde3
+##add_findreq_skiplist /usr/share/apps/noatun/skins/*
+##add_findprov_skiplist /usr/share/apps/noatun/skins/*
+##add_verify_elf_skiplist %_libdir/libmpg123.so*
+##add_verify_elf_skiplist %_libdir/libmpeg-0.3.0.so*
+##add_verify_elf_skiplist %_libdir/libarts*
+%set_verify_elf_method no
 %if %unstable
 %define _optlevel 0
 %endif
 
 Name: kdemultimedia
 Version: 3.5.13.2
-Release: alt1
+Release: alt2
 
 Group: Graphical desktop/KDE
 Summary: K Desktop Environment - Multimedia
@@ -72,6 +74,7 @@ Patch114: kio_audiocd-3.4.1-alt-flac_config.patch
 Patch115: mpg123_artsplugin-alt-fix-defines.patch
 Patch116: kdemultimedia-3.5.6-alt-desktop-categiries.patch
 Patch117: kscd-3.5.7-alt-digital-defaults.patch
+Patch118: tde-3.5.13-build-defdir-autotool.patch
 
 # Automatically added by buildreq on Mon Apr 12 2004 (-bi)
 #BuildRequires: XFree86-devel XFree86-libs cdparanoia fontconfig freetype2 gcc-c++ gcc-g77 glib2-devel kde-settings kdelibs-devel libalsa-devel libarts-devel libarts-qt-devel libaudiofile-devel libcdparanoia-devel libjpeg-devel liblame-devel libmusicbrainz-devel libogg-devel libpng-devel libqt3-devel libstdc++-devel libtag-devel libtiff-devel libvorbis-devel libxine-devel qt3-designer xml-utils zlib-devel
@@ -181,6 +184,7 @@ Group: Sound
 Requires: %name-arts
 Requires: %{get_dep kdelibs}
 Requires: %name-common = %version-%release
+AutoReq: noperl
 #
 %description noatun
 A KDE media player. Noatun supports playback of Ogg, MP3 (including streaming
@@ -280,7 +284,7 @@ kdemultimedia-libs includes mpeglib.
 
 %prep
 %setup -q
-cp -ar altlinux/admin ./
+##cp -ar altlinux/admin ./
 #sed -i admin/acinclude.m4.in -e "s,/usr/include/tqt,%{_includedir}/tqt,g"
 #__cp "/usr/share/libtool/aclocal/libtool.m4" "admin/libtool.m4.in"
 #__cp "/usr/share/libtool/config/ltmain.sh" "admin/ltmain.sh"
@@ -294,15 +298,16 @@ cp -ar altlinux/admin ./
 %patch108 -p1
 %patch109 -p1
 %patch110 -p1
-%if %with_arts
-%patch111 -p1
-%endif
-%patch112 -p1
+##%if %with_arts
+##%patch111 -p1
+##%endif
+##%patch112 -p1
 #%patch113 -p1
 ###%patch114 -p1
 %patch115 -p1
 %patch116 -p1
 %patch117 -p1
+%patch118
 
 for f in `find -type f -name \*.mcopclass`
 do
@@ -313,32 +318,39 @@ rm -rf altlinux
 sed -i '\|\${kdeinit}_LDFLAGS[[:space:]]=[[:space:]].*-no-undefined|s|-no-undefined|-no-undefined -Wl,--warn-unresolved-symbols|' admin/am_edit
 for f in `find $PWD -type f -name Makefile.am`
 do
-    sed -i -e '\|_la_LDFLAGS.*[[:space:]]-module[[:space:]]|s|-module|-module \$(KDE_PLUGIN)|' $f
+    #sed -i -e '\|_la_LDFLAGS.*[[:space:]]-module[[:space:]]|s|-module|-module \$(KDE_PLUGIN)|' $f
     #sed -i -e '\|_la_LDFLAGS.*[[:space:]]-no-undefined|s|-no-undefined|-no-undefined -Wl,--allow-shlib-undefined|' $f
     grep -q -e 'lib.*SOURCES' $f || continue
     RPATH_LINK_OPTS+=" -Wl,-rpath-link,`dirname $f`/.libs"
 done
-sed -i "s|\(-Wl,--as-needed\)| $RPATH_LINK_OPTS \1|g" admin/acinclude.m4.in
-sed -i -e 's|\$USER_INCLUDES|-I%_includedir/tqtinterface \$USER_INCLUDES|' admin/acinclude.m4.in
-make -f admin/Makefile.common cvs ||:
+##sed -i "s|\(-Wl,--as-needed\)| $RPATH_LINK_OPTS \1|g" admin/acinclude.m4.in
+##sed -i -e 's|\$USER_INCLUDES|-I%_includedir/tqtinterface \$USER_INCLUDES|' admin/acinclude.m4.in
+##make -f admin/Makefile.common cvs ||:
 
-find ./kfile-plugins -type f -name Makefile.am | \
-while read f; do
-    sed -i -e '\|kfile_.*_la_LIBADD[[:space:]][[:space:]]*=|s|\(.*\)|\1 \$(LIB_KDEUI) \$(LIB_KDECORE) \$(LIB_QT)|' $f
-done
+##find ./kfile-plugins -type f -name Makefile.am | \
+##while read f; do
+##    sed -i -e '\|kfile_.*_la_LIBADD[[:space:]][[:space:]]*=|s|\(.*\)|\1 \$(LIB_KDEUI) \$(LIB_KDECORE) \$(LIB_QT)|' $f
+##done
 
-find ./kioslave/audiocd/plugins -type f -name Makefile.am | \
-while read f; do
-    sed -i -e '\|libaudiocd_encoder_.*_la_LIBADD[[:space:]][[:space:]]*=|s|\(.*\)|\1 \$(top_builddir)/libkcddb/libkcddb.la \$(LIB_KDEUI) \$(LIB_KDECORE) \$(LIB_QT)|' $f
-done
+##find ./kioslave/audiocd/plugins -type f -name Makefile.am | \
+##while read f; do
+##    sed -i -e '\|libaudiocd_encoder_.*_la_LIBADD[[:space:]][[:space:]]*=|s|\(.*\)|\1 \$(top_builddir)/libkcddb/libkcddb.la \$(LIB_KDEUI) \$(LIB_KDECORE) \$(LIB_QT)|' $f
+##done
 
 # workaround for libvorbis-devel wrong includes placement
-ln -s /usr/include kfile-plugins/theora/vorbis ||:
-ln -s /usr/include oggvorbis_artsplugin/vorbis ||:
-ln -s /usr/include vorbis ||:
+##ln -s /usr/include kfile-plugins/theora/vorbis ||:
+##ln -s /usr/include oggvorbis_artsplugin/vorbis ||:
+##ln -s /usr/include vorbis ||:
+
+cp -Rp /usr/share/libtool/aclocal/libtool.m4 admin/libtool.m4.in
+cp -Rp /usr/share/libtool/config/ltmain.sh admin/ltmain.sh
+make -f admin/Makefile.common cvs ||:
 
 %build
 %add_optflags %optflags_shared -I%_includedir/speex -I%_includedir/vorbis
+%if %with_arts
+%add_optflags -I%_K3includedir/arts
+%endif
 
 export QTDIR=%qtdir
 export KDEDIR=%_K3prefix
@@ -365,6 +377,7 @@ export DO_NOT_COMPILE
 %endif
     --with-alsa \
 %if %with_arts
+    --with-arts \
     --with-arts-alsa \
 %else
     --without-arts \
@@ -401,9 +414,9 @@ sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' libtool
 
 %if %with_arts
 %make -C oggvorbis_artsplugin
-#%make -C mpg123_artsplugin
+##%make -C mpg123_artsplugin
 %if %with_xine
-#%make -C xine_artsplugin/tools
+##%make -C xine_artsplugin/tools
 %endif
 %endif
 
@@ -418,9 +431,9 @@ export PATH=%_bindir:$PATH
 
 %if %with_arts
 %K3install -C oggvorbis_artsplugin
-#%K3install -C mpg123_artsplugin
+##%K3install -C mpg123_artsplugin
 %if %with_xine
-#%K3install -C xine_artsplugin/tools
+##%K3install -C xine_artsplugin/tools
 %endif
 %endif
 
@@ -430,10 +443,10 @@ sed -i "s|Midi\/|Midi and |" %buildroot/%_K3xdg_apps/kmid.desktop
 install -m 0644 %buildroot/%_K3xdg_apps/kmix.desktop %buildroot/%_K3start/kmix.desktop
 
 # move binary
-mkdir -p %buildroot/%_K3libdir/kconf_update_bin/
-%if %with_noatun
-mv %buildroot/%_K3apps/kconf_update/noatun20update %buildroot/%_K3libdir/kconf_update_bin/
-%endif
+##mkdir -p %buildroot/%_K3libdir/kconf_update_bin/
+##%if %with_noatun
+##mv %buildroot/%_K3apps/kconf_update/noatun20update %buildroot/%_K3libdir/kconf_update_bin/
+##%endif
 
 
 %files
@@ -460,13 +473,14 @@ mv %buildroot/%_K3apps/kconf_update/noatun20update %buildroot/%_K3libdir/kconf_u
 %if %with_noatun
 %exclude %_K3libdir/mcop/artseffects*
 %endif
+%_K3iconsdir/crystalsvg/*/actions/arts*.*
 #%_K3libdir/mcop/akode*
 %_K3libdir/mcop/*PlayObject.mcopclass
-#%_K3libdir/mcop/mpg123*
+%_K3libdir/mcop/mpg123*
 %_K3libdir/mcop/ogg*
 %_K3libdir/mcop/audiofile*
 %_K3libdir/mcop/akodearts.*
-#%_K3libdir/libmpg*.so*
+%_K3libdir/libmpg*.so*
 %_K3libdir/libarts_*.so*
 %_K3libdir/libartscontrol*.so*
 %_K3libdir/libartsbuilder*.so*
@@ -646,6 +660,10 @@ mv %buildroot/%_K3apps/kconf_update/noatun20update %buildroot/%_K3libdir/kconf_u
 %_K3includedir/mpeglib
 
 %changelog
+* Sat Jul 27 2013 Roman Savochenko <rom_as@altlinux.ru> 3.5.13.2-alt2
+- ARTS support enable.
+- Switch to build from original autotools "admin".
+
 * Sun Jun 23 2013 Roman Savochenko <rom_as@altlinux.ru> 3.5.13.2-alt1
 - Release TDE version 3.5.13.2
 
