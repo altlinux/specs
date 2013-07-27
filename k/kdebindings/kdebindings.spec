@@ -13,7 +13,7 @@
 
 Name: kdebindings
 Version: 3.5.13.2
-Release: alt1
+Release: alt2
 
 Summary: bindings to KDE libraries for various programming languages 
 Group: Graphical desktop/KDE
@@ -38,6 +38,7 @@ Patch5: kdebindings-3.5.10-alt-ruby-getopts.patch
 Patch6: kdebindings-3.5.12-alt-ruby-paths.patch
 Patch7: kdebindings-3.5.10-alt-ruby-compile.patch
 Patch8: kdebindings-3.5.13.2-trinityHomeToKDE.patch
+Patch9: tde-3.5.13-build-defdir-autotool.patch
 
 BuildRequires(pre): kdelibs-devel gtk+-devel libgtk+2-devel
 BuildRequires: kdebase-devel libstdc++-devel gcc-c++ libjpeg-devel perl-devel libpng-devel
@@ -196,7 +197,7 @@ Gecko html/browser (the one of mozilla) available as a kpart.
 
 %prep
 %setup -q
-cp -ar altlinux/admin ./
+##cp -ar altlinux/admin ./
 
 %patch1 -p1
 %patch2 -p1
@@ -207,6 +208,7 @@ cp -ar altlinux/admin ./
 #%patch7 -p1
 ##%endif
 %patch8 -p1
+%patch9
 
 sed -i '\|\${kdeinit}_LDFLAGS[[:space:]]=[[:space:]].*-no-undefined|s|-no-undefined|-no-undefined -Wl,--warn-unresolved-symbols|' admin/am_edit
 for f in `find $PWD -type f -name Makefile.am`
@@ -216,8 +218,8 @@ do
     grep -q -e 'lib.*SOURCES' $f || continue
     RPATH_LINK_OPTS+=" -Wl,-rpath-link,`dirname $f`/.libs"
 done
-sed -i "s|\(-Wl,--as-needed\)| $RPATH_LINK_OPTS \1|g" admin/acinclude.m4.in
-sed -i -e 's|\$USER_INCLUDES|-I%_includedir/tqtinterface \$USER_INCLUDES|' admin/acinclude.m4.in
+##sed -i "s|\(-Wl,--as-needed\)| $RPATH_LINK_OPTS \1|g" admin/acinclude.m4.in
+##sed -i -e 's|\$USER_INCLUDES|-I%_includedir/tqtinterface \$USER_INCLUDES|' admin/acinclude.m4.in
 
 find ./ -type f -name Makefile.am | \
 while read f
@@ -389,6 +391,9 @@ cp -pr korundum/rubylib/rbkconfig_compiler/{autoexample.rb,exampleprefs_base.kcf
 
 
 %changelog
+* Sat Jul 27 2013 Roman Savochenko <rom_as@altlinux.ru> 3.5.13.2-alt2
+- Switch to build from original autotools "admin".
+
 * Sun Jun 23 2013 Roman Savochenko <rom_as@altlinux.ru> 3.5.13.2-alt1
 - Release TDE version 3.5.13.2
 
