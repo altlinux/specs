@@ -4,7 +4,7 @@
 
 Name: kde-i18n-%lng
 Version: 3.5.13.2
-Release: alt1
+Release: alt2
 
 Group: Graphical desktop/KDE
 Summary: %lngg language support for KDE
@@ -95,14 +95,14 @@ cat %SOURCE113 >> messages/kdeutils/ark.po
 %lang(%lng) %_K3apps/kanagram/data/%lng/
 
 %changelog
+* Sat Jul 27 2013 Roman Savochenko <rom_as@altlinux.ru> 3.5.13.2-alt2
+- Translation for kdebase update from visual untranslated messages everywhere.
+
 * Sun Jul 14 2013 Roman Savochenko <rom_as@altlinux.ru> 3.5.13.2-alt1
 - Release TDE version 3.5.13.2
 
 * Sun Oct 14 2012 Roman Savochenko <rom_as@altlinux.ru> 3.5.13.1-alt1
 - Release TDE version 3.5.13.1
-
-* Sun Mar 25 2012 Roman Savochenko <rom_as@altlinux.ru> 3.5.13-alt1
-- Build for TDE 3.5.13 release
 
 * Mon Mar 21 2011 Sergey V Turchin <zerg@altlinux.org> 3.5.10-alt4
 - fix build requires
