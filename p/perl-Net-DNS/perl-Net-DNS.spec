@@ -4,7 +4,7 @@
 %define __spec_autodep_custom_pre export PERL5OPT='-I%buildroot%perl_vendor_archlib -MNet::DNS'
 
 Name: perl-%module
-Version: 0.68
+Version: 0.72
 Release: alt1
 
 Packager: Victor Forsiuk <force@altlinux.org>
@@ -15,7 +15,7 @@ Group: Development/Perl
 
 Url: %CPAN %module
 # another URL: http://www.net-dns.org/
-Source: http://search.cpan.org/CPAN/authors/id/O/OL/OLAF/Net-DNS-%version.tar.gz
+Source: http://www.cpan.org/authors/id/N/NL/NLNETLABS/Net-DNS-%{version}.tar.gz
 
 # Automatically added by buildreq on Fri Oct 07 2011
 BuildRequires: perl-Digest-BubbleBabble perl-Digest-HMAC perl-IO-Socket-INET6 perl-Net-IP perl-Test-Pod
@@ -43,10 +43,14 @@ sed -i- '/sock->sockaddr/s/;/ if $sock;/' t/01-resolver.t
 %doc Changes README demo contrib
 %perl_vendor_archlib/Net
 %perl_vendor_autolib/Net
-%exclude %perl_vendor_archlib/Net/DNS/Resolver/Cygwin.pm
-%exclude %perl_vendor_archlib/Net/DNS/Resolver/Win32.pm
+# no more installed
+#exclude %perl_vendor_archlib/Net/DNS/Resolver/Cygwin.pm
+#exclude %perl_vendor_archlib/Net/DNS/Resolver/Win32.pm
 
 %changelog
+* Sat Jul 27 2013 Igor Vlasenko <viy@altlinux.ru> 0.72-alt1
+- automated CPAN update
+
 * Tue Aug 28 2012 Vladimir Lettiev <crux@altlinux.ru> 0.68-alt1
 - 0.68
 - built for perl-5.16
