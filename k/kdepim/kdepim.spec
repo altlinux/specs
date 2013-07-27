@@ -3,6 +3,7 @@
 
 %undefine __libtoolize
 %define unstable 0
+%define arts 1
 %define _optlevel s
 %define	pilot 0
 %define _keep_libtool_files 1
@@ -19,7 +20,7 @@
 
 Name: kdepim
 Version: 3.5.13.2
-Release: alt2
+Release: alt3
 Serial: 1
 
 Group: Graphical desktop/KDE
@@ -58,7 +59,6 @@ Patch111: kdepim-3.5.10-alt-gcc4.4.patch
 Patch112: tde-3.5.13-build-defdir.patch
 Patch113: kdepim-3.5.13-cmake-build.patch
 Patch114: kdepim-3.5.13-kpilot-add.patch
-Patch115: kdepim-3.5.13.2-trinityHomeToKDE.patch
 
 Requires: %name-akregator = %version-%release
 Requires: %name-kaddressbook = %version-%release
@@ -97,8 +97,9 @@ BuildRequires: libmal-devel libpilot-link-devel libpng-devel libqt3-devel
 BuildRequires: xml-utils zlib-devel libstdc++-devel libsasl2-devel
 BuildRequires: libgpgme-devel >= 1.0.0 libgpg-error-devel >= 1.0
 BuildRequires: kdelibs-devel-cxx = %__gcc_version_base
-# hack for apt in hasher
-#BuildRequires: libarts-devel > 1.0.0 libarts-qtmcop-devel > 1.0.0
+%if %arts
+BuildRequires: libarts-devel >= 1.5.8 libarts-qtmcop-devel >= 1.5.8
+%endif
 BuildRequires: kdelibs >= %version kdelibs-devel >= %version
 
 %description
@@ -378,7 +379,6 @@ install -m 0644 %SOURCE1 %SOURCE2 %SOURCE3 kandy/src
 %patch112
 %patch113 -p1
 #%patch114
-%patch115 -p1
 
 %if %cmake
 %else
@@ -417,7 +417,11 @@ if ! [ -f $BD/CMakeCache.txt ]
 then
 %K3cmake \
     -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+%if %arts
+    -DWITH_ARTS=ON \
+%else
     -DWITH_ARTS=OFF \
+%endif
     -DWITH_SASL=ON \
     -DWITH_NEWDISTRLISTS=ON  \
 %if %with_gnokii
@@ -993,6 +997,9 @@ done
 %_K3includedir/index
 
 %changelog
+* Sat Jul 27 2013 Roman Savochenko <rom_as@altlinux.ru> 1:3.5.13.2-alt3
+- ARTS support enable.
+
 * Sat Jul 06 2013 Roman Savochenko <rom_as@altlinux.ru> 1:3.5.13.2-alt2
 - Backward rename home dir .trinity to .kde.
 
