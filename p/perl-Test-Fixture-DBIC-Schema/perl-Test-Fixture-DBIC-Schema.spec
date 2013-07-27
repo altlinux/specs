@@ -4,17 +4,17 @@ BuildRequires: perl(CPAN.pm) perl(Config.pm) perl(DBIx/Class/Schema.pm) perl(Exp
 # END SourceDeps(oneline)
 BuildRequires: perl(DBD/SQLite.pm)
 %define upstream_name    Test-Fixture-DBIC-Schema
-%define upstream_version 0.03
+%define upstream_version 0.04
 
 Name:       perl-%{upstream_name}
-Version:    %{upstream_version}
-Release:    alt1_1
+Version:    0.04
+Release:    alt1
 
 Summary:    Load fixture data to storage
 License:    GPL+ or Artistic
 Group:      Development/Perl
 Url:        http://search.cpan.org/dist/%{upstream_name}
-Source0:    http://www.cpan.org/modules/by-module/Test/%{upstream_name}-%{upstream_version}.tar.gz
+Source:    http://www.cpan.org/authors/id/S/SC/SCHWIGON/fixtures/Test-Fixture-DBIC-Schema-%{version}.tar.gz
 
 BuildRequires: perl(DBIx/Class.pm)
 BuildRequires: perl(ExtUtils/MakeMaker.pm)
@@ -52,6 +52,9 @@ Test::Fixture::DBIC::Schema is fixture data loader for DBIx::Class::Schema.
 
 
 %changelog
+* Sat Jul 27 2013 Igor Vlasenko <viy@altlinux.ru> 0.04-alt1
+- automated CPAN update
+
 * Mon Dec 10 2012 Igor Vlasenko <viy@altlinux.ru> 0.03-alt1_1
 - mageia import by cas@ requiest
 
