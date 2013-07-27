@@ -1,6 +1,6 @@
 %define node_name      node
 %define node_version  0.10.15
-%define node_release   alt2
+%define node_release   alt2.1
 %define npmver 1.3.5
 
 #we need ABI virtual provides where SONAMEs aren't enough/not present so deps
@@ -23,7 +23,7 @@ Source: %name-%version.tar
 Source7: nodejs_native.req.files
 Patch: addon.gypi-alt-linkage-fixes.patch
 
-BuildRequires: python-devel gcc-c++ openssl-devel zlib-devel libv8-%{v8_abi}-devel libcares-devel gyp
+BuildRequires: python-devel gcc-c++ openssl-devel zlib-devel libv8-devel = %{v8_abi} libcares-devel gyp
 BuildRequires: curl openssl
 Provides: nodejs(engine) = %version
 Provides: nodejs = %version-%release
@@ -48,7 +48,7 @@ License:        GPL
 BuildArch:      noarch
 Provides:	nodejs-devel = %version-%release
 Requires:	%node_name = %node_version
-Requires:       gcc-c++ openssl-devel zlib-devel libv8-%{v8_abi}-devel libcares-devel
+Requires:       gcc-c++ openssl-devel zlib-devel libv8-devel = %{v8_abi} libcares-devel
 Conflicts:      libuv-devel
 
 %description devel
@@ -76,8 +76,8 @@ node programs. It manages dependencies and does other cool stuff.
 ./configure --no-ssl2 \
     --prefix=%_prefix \
     --shared-zlib \
-    --openssl-includes=%_includedir \
-    --openssl-use-sys \
+    --shared-openssl \
+    --shared-openssl-includes=%_includedir \
     --shared-v8 \
     --shared-v8-includes=%_includedir
 
@@ -137,6 +137,9 @@ chmod 0755 %buildroot%_rpmlibdir/nodejs_native.req
 %exclude %_libexecdir/node_modules/npm/node_modules/node-gyp/gyp/tools/emacs
 
 %changelog
+* Sat Jul 27 2013 Dmitriy Kulik <lnkvisitor@altlinux.org> 0.10.15-alt2.1
+- libv8 requires
+
 * Sat Jul 27 2013 Dmitriy Kulik <lnkvisitor@altlinux.org> 0.10.15-alt2
 - nodejs(engine) should be = %%version
 - added explicit abi autorequires for binary packages
