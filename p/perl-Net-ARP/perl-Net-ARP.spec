@@ -1,14 +1,14 @@
 %define dist Net-ARP
 Name: perl-%dist
-Version: 1.0.6
-Release: alt3
+Version: 1.0.8
+Release: alt1
 
 Summary: Perl extension for creating ARP packets
 License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tgz
+Source: http://www.cpan.org/authors/id/C/CR/CRAZYDJ/Net-ARP-%{version}.tgz
 
 # from Fedora
 Patch: Net-Arp-1.0.6-tests.patch
@@ -21,7 +21,7 @@ This module is a Perl extension to create and send ARP packets and lookup
 local or remote mac addresses.
 
 %prep
-%setup -n %dist
+%setup -n %dist-%version
 %patch -p1
 
 # need root
@@ -39,6 +39,9 @@ mv t/send_packet.t t/send_packet.t.orig
 %perl_vendor_autolib/Net
 
 %changelog
+* Sat Jul 27 2013 Igor Vlasenko <viy@altlinux.ru> 1.0.8-alt1
+- automated CPAN update
+
 * Sat Sep 01 2012 Vladimir Lettiev <crux@altlinux.ru> 1.0.6-alt3
 - rebuilt for perl-5.16
 
