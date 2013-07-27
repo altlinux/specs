@@ -1,5 +1,6 @@
 %undefine __libtoolize
 %define unstable 0
+%define with_arts 1
 %define _optlevel s
 %def_enable boost
 %define glibc_core_ver %{get_version glibc-core}
@@ -18,7 +19,7 @@
 
 Name: kdeedu
 Version: 3.5.13.2
-Release: alt1
+Release: alt2
 
 Group: Graphical desktop/KDE
 Summary: K Desktop Environment - kdeedu
@@ -72,6 +73,9 @@ BuildRequires: libjpeg-devel liblcms libmng libpng-devel
 BuildRequires: python-devel boost-python-devel
 BuildRequires: libqt3-devel libstdc++-devel zlib-devel libpcre-devel libusb-devel
 BuildRequires: libacl-devel libattr-devel
+%if %with_arts
+BuildRequires: libarts-qtmcop >= 1.5.1 libarts-qtmcop-devel >= 1.5.1
+%endif
 #BuildRequires: ocaml rpm-build-ocaml
 #BuildRequires: kdelibs-devel-cxx = %__gcc_version_base
 BuildRequires: kdelibs >= %version kdelibs-devel >= %version
@@ -381,6 +385,11 @@ export LDFLAGS="-L%buildroot/%_libdir -L%buildroot/%_libdir/kde3 -L%_libdir"
 %else
     --disable-debug \
 %endif
+%if %with_arts
+    --with-arts \
+%else
+    --without-arts \
+%endif
     --enable-final \
     --enable-shared \
     --disable-static \
@@ -401,8 +410,7 @@ export LDFLAGS="-L%buildroot/%_libdir -L%buildroot/%_libdir/kde3 -L%_libdir"
 %ifarch x86_64
     --enable-libsuffix=64 \
 %endif
-    --enable-v4l2 \
-    --without-arts
+    --enable-v4l2
 
 %make_build
 
@@ -649,6 +657,9 @@ chmod a-s %buildroot/%_bindir/*
 %_includedir/libkdeedu/
 
 %changelog
+* Sat Jul 27 2013 Roman Savochenko <rom_as@altlinux.ru> 3.5.13.2-alt2
+- ARTS support enable.
+
 * Sun Jun 23 2013 Roman Savochenko <rom_as@altlinux.ru> 3.5.13.2-alt1
 - Release TDE version 3.5.13.2
 
