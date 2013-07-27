@@ -1,12 +1,13 @@
 %undefine __libtoolize
 %define unstable 0
+%define arts 1
 %define _optlevel s
 %define _keep_libtool_files 1
 
 %define qtdir %_qt3dir
 %def_without knewsticker
 %def_without vim
-%def_without noatun
+%def_with noatun
 %def_without xmms
 %def_without atlantik
 
@@ -15,7 +16,7 @@
 
 Name: kdeaddons
 Version: 3.5.13.2
-Release: alt1
+Release: alt2
 
 Group: Graphical desktop/KDE
 Summary: KDE addons
@@ -29,6 +30,7 @@ Patch101: 3.5.12-alt-fix-linking.patch
 Patch102: 3.5.0-alt-noatun-plugins-fix-linking.patch
 Patch103: 3.5.10-alt-fix-compile.patch
 Patch104: kdeaddons-3.5.13.2-trinityHomeToKDE.patch
+Patch105: tde-3.5.13-build-defdir-autotool.patch
 
 Requires: %name-akregator = %version-%release
 %if_with atlantik
@@ -66,6 +68,9 @@ BuildRequires: libacl-devel libattr-devel
 #BuildRequires: kdelibs-devel-cxx = %__gcc_version_base
 BuildRequires: kdelibs >= %version kdelibs-devel >= %version
 BuildRequires: kdebase-devel >= %version
+%if %arts
+BuildRequires: libarts-devel >= 1.5.8 libarts-qtmcop-devel >= 1.5.8
+%endif
 %if_with xmms
 BuildRequires: libxmms-devel
 %endif
@@ -230,25 +235,25 @@ Plugins extending the functionality of the noatun media player
 
 %prep
 %setup  -q -nkdeaddons-%version
-cp -ar altlinux/admin ./
+##cp -ar altlinux/admin ./
 #
 %patch100 -p1
 %patch101 -p1
 # %patch102 -p1
 # %patch103 -p1
 %patch104 -p1
-
+%patch105
 
 sed -i '\|\${kdeinit}_LDFLAGS[[:space:]]=[[:space:]].*-no-undefined|s|-no-undefined|-no-undefined -Wl,--warn-unresolved-symbols|' admin/am_edit
 for f in `find $PWD -type f -name Makefile.am`
 do
-    sed -i -e '\|_la_LDFLAGS.*[[:space:]]-module[[:space:]]|s|-module|-module \$(KDE_PLUGIN)|' $f
+    #sed -i -e '\|_la_LDFLAGS.*[[:space:]]-module[[:space:]]|s|-module|-module \$(KDE_PLUGIN)|' $f
     #sed -i -e '\|_la_LDFLAGS.*[[:space:]]-no-undefined|s|-no-undefined|-no-undefined -Wl,--allow-shlib-undefined|' $f
     grep -q -e 'lib.*SOURCES' $f || continue
     RPATH_LINK_OPTS+=" -Wl,-rpath-link,`dirname $f`/.libs"
 done
-sed -i "s|\(-Wl,--as-needed\)| $RPATH_LINK_OPTS \1|g" admin/acinclude.m4.in
-sed -i -e 's|\$USER_INCLUDES|-I%_includedir/tqtinterface \$USER_INCLUDES|' admin/acinclude.m4.in
+##sed -i "s|\(-Wl,--as-needed\)| $RPATH_LINK_OPTS \1|g" admin/acinclude.m4.in
+##sed -i -e 's|\$USER_INCLUDES|-I%_includedir/tqtinterface \$USER_INCLUDES|' admin/acinclude.m4.in
 
 find ./ -type f -name Makefile.am | \
 while read f
@@ -272,7 +277,8 @@ do
     sed -i -e 's|\(.*_la_LIBADD[[:space:]]*\)=\(.*\)|\1= \$(LIB_KUTILS) \$(LIB_KPARTS) \2|' $f
 done
 
-
+cp -Rp /usr/share/libtool/aclocal/libtool.m4 admin/libtool.m4.in
+cp -Rp /usr/share/libtool/config/ltmain.sh admin/ltmain.sh
 make -f admin/Makefile.common cvs ||:
 
 %build
@@ -307,6 +313,11 @@ export DO_NOT_COMPILE
     --enable-debug=full \
 %else
     --disable-debug \
+%endif
+%if %arts
+    --with-arts \
+%else
+    --without-arts \
 %endif
     --enable-final
 
@@ -434,7 +445,9 @@ sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' libtool
 %_K3lib/konqsidebar_delicious.*
 %_K3lib/konqsidebar_metabar.*
 %_K3lib/konq_sidebarnews.*
-#%_K3lib/konqsidebar_mediaplayer.*
+%if %arts
+%_K3lib/konqsidebar_mediaplayer.*
+%endif
 %_K3lib/webarchivethumbnail.*
 %_K3apps/domtreeviewer
 %_K3apps/imagerotation/
@@ -501,6 +514,10 @@ sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' libtool
 %endif
 
 %changelog
+* Sat Jul 27 2013 Roman Savochenko <rom_as@altlinux.ru> 3.5.13.2-alt2
+- ARTS support enable.
+- Switch to build from original autotools "admin".
+
 * Sun Jun 23 2013 Roman Savochenko <rom_as@altlinux.ru> 3.5.13.2-alt1
 - Release TDE version 3.5.13.2
 
