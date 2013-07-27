@@ -3,17 +3,17 @@ BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-devel perl-podlators
 # END SourceDeps(oneline)
 %define upstream_name    App-Rad
-%define upstream_version 1.04
+%define upstream_version 1.05
 
 Name:       perl-%{upstream_name}
-Version:    %{upstream_version}
-Release:    alt1_1
+Version:    1.05
+Release:    alt1
 
 Summary:    Extend the App::Rad framework!
 License:    GPL+ or Artistic
 Group:      Development/Perl
 Url:        http://search.cpan.org/dist/%{upstream_name}
-Source0:    http://www.cpan.org/modules/by-module/App/%{upstream_name}-%{upstream_version}.tar.gz
+Source:    http://www.cpan.org/authors/id/G/GA/GARU/App-Rad-%{version}.tar.gz
 
 BuildRequires: perl(Attribute/Handlers.pm)
 BuildRequires: perl(B/Deparse.pm)
@@ -63,6 +63,9 @@ Extending App::Rad - Plugins!
 
 
 %changelog
+* Sat Jul 27 2013 Igor Vlasenko <viy@altlinux.ru> 1.05-alt1
+- automated CPAN update
+
 * Mon Dec 10 2012 Igor Vlasenko <viy@altlinux.ru>  1.04-alt1_1
 - mageia import by cas@ requiest
 
