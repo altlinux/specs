@@ -4,17 +4,17 @@ BuildRequires: perl-devel perl-podlators
 # END SourceDeps(oneline)
 %add_findreq_skiplist /usr/bin/tapper-installer-*.pl
 %define upstream_name    Tapper-Installer
-%define upstream_version 4.1.0
+%define upstream_version 4.1.1
 
 Name:       perl-%{upstream_name}
-Version:    %{upstream_version}
-Release:    alt1_1
+Version:    4.1.1
+Release:    alt1
 
 Summary:    Tapper - Install everything needed for a test
 License:    GPL+ or Artistic
 Group:      Development/Perl
 Url:        http://search.cpan.org/dist/%{upstream_name}
-Source0:    http://www.cpan.org/modules/by-module/Tapper/%{upstream_name}-%{upstream_version}.tar.gz
+Source:    http://www.cpan.org/authors/id/T/TA/TAPPER/Tapper-Installer-%{version}.tar.gz
 
 BuildRequires: perl(Cwd.pm)
 BuildRequires: perl(Daemon/Daemonize.pm)
@@ -90,6 +90,9 @@ popd
 
 
 %changelog
+* Sat Jul 27 2013 Igor Vlasenko <viy@altlinux.ru> 4.1.1-alt1
+- automated CPAN update
+
 * Mon Dec 10 2012 Igor Vlasenko <viy@altlinux.ru> 4.1.0-alt1_1
 - mageia import by cas@ requiest
 
