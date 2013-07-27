@@ -3,17 +3,17 @@ BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-devel perl-podlators
 # END SourceDeps(oneline)
 %define upstream_name    Data-DPath
-%define upstream_version 0.47
+%define upstream_version 0.49
 
 Name:       perl-%{upstream_name}
-Version:    %{upstream_version}
-Release:    alt1_1
+Version:    0.49
+Release:    alt1
 
 Summary:    Magic functions available inside filter conditions
 License:    GPL+ or Artistic
 Group:      Development/Perl
 Url:        http://search.cpan.org/dist/%{upstream_name}
-Source0:    http://www.cpan.org/modules/by-module/Data/%{upstream_name}-%{upstream_version}.tar.gz
+Source:    http://www.cpan.org/authors/id/S/SC/SCHWIGON/Data-DPath-%{version}.tar.gz
 
 BuildRequires: perl(Class/XSAccessor.pm)
 BuildRequires: perl(Class/XSAccessor/Array.pm)
@@ -59,6 +59,9 @@ no description found
 %perl_vendor_privlib/*
 
 %changelog
+* Sat Jul 27 2013 Igor Vlasenko <viy@altlinux.ru> 0.49-alt1
+- automated CPAN update
+
 * Mon Dec 10 2012 Igor Vlasenko <viy@altlinux.ru>  0.47-alt1_1
 - mageia import by cas@ requiest
 
