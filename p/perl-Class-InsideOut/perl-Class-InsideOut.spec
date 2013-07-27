@@ -1,8 +1,8 @@
 %define module Class-InsideOut
 
 Name: perl-%module
-Version: 1.10
-Release: alt2
+Version: 1.13
+Release: alt1
 
 Summary: Class::InsideOut - safe, simple inside-out object construction kit
 
@@ -13,8 +13,7 @@ Url: %CPAN %module
 Packager: Michael Bochkaryov <misha@altlinux.ru>
 
 BuildArch: noarch
-Source: http://search.cpan.org/CPAN/authors/id/D/DA/DAGOLDEN/%module-%version.tar.gz
-Patch0: manual-fix-pm-1.10-alt.patch
+Source: http://www.cpan.org/authors/id/D/DA/DAGOLDEN/Class-InsideOut-%{version}.tar.gz
 
 # Automatically added by buildreq on Wed Jan 14 2009 (-bi)
 BuildRequires: perl-Module-Build perl-Storable perl-threads
@@ -39,7 +38,6 @@ and generating flexible accessors.
 
 %prep
 %setup -q -n %module-%version
-%patch0 -p2
 
 # TODO: fails
 rm -f  t/15_no_weaken_fallback.t
@@ -55,6 +53,9 @@ rm -f  t/15_no_weaken_fallback.t
 %doc README LICENSE Changes Todo 
 
 %changelog
+* Sat Jul 27 2013 Igor Vlasenko <viy@altlinux.ru> 1.13-alt1
+- automated CPAN update
+
 * Tue Nov 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.10-alt2
 - fixed build
 
