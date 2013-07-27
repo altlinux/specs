@@ -1,7 +1,14 @@
 %define node_name      node
 %define node_version  0.10.15
-%define node_release   alt1
+%define node_release   alt2
 %define npmver 1.3.5
+
+#we need ABI virtual provides where SONAMEs aren't enough/not present so deps
+#break when binary compatibility is broken
+%global nodejs_abi 0.10
+# V8 presently breaks ABI at least every x.y release while never bumping SONAME,
+# so we need to be more explicit until spot fixes that
+%global v8_abi 3.15
 
 %def_disable check
 
@@ -13,14 +20,19 @@ Group: Development/Tools
 License: MIT License
 Url: http://nodejs.org/
 Source: %name-%version.tar
+Source7: nodejs_native.req.files
+Patch: addon.gypi-alt-linkage-fixes.patch
 
-BuildRequires: python-devel gcc-c++ openssl-devel zlib-devel libv8-3.15-devel libcares-devel gyp
+BuildRequires: python-devel gcc-c++ openssl-devel zlib-devel libv8-%{v8_abi}-devel libcares-devel gyp
 BuildRequires: curl openssl
-Provides: nodejs(engine) = %version-%release
+Provides: nodejs(engine) = %version
 Provides: nodejs = %version-%release
 Provides: node.js = %version-%release
 Obsoletes: nodejs < %version-%release
 Obsoletes: node.js < %version-%release
+
+Provides: nodejs(abi) = %{nodejs_abi}
+Provides: nodejs(v8-abi) = %{v8_abi}
 
 %add_python_req_skip TestCommon
 
@@ -36,7 +48,7 @@ License:        GPL
 BuildArch:      noarch
 Provides:	nodejs-devel = %version-%release
 Requires:	%node_name = %node_version
-Requires:       gcc-c++ openssl-devel zlib-devel libv8-3.15-devel libcares-devel
+Requires:       gcc-c++ openssl-devel zlib-devel libv8-%{v8_abi}-devel libcares-devel
 Conflicts:      libuv-devel
 
 %description devel
@@ -58,6 +70,7 @@ node programs. It manages dependencies and does other cool stuff.
 
 %prep
 %setup -q
+%patch -p1
 
 %build
 ./configure --no-ssl2 \
@@ -95,6 +108,16 @@ cp -p deps/uv/include/uv-private/*.h %{buildroot}%{_includedir}/node/uv-private
 mkdir -p %{buildroot}%{_datadir}/node
 cp -p common.gypi %{buildroot}%{_datadir}/node
 
+# ensure Requires are added to every native module that match the Provides from
+# the nodejs build in the buildroot
+install -Dpm0755 %{SOURCE7} %buildroot%_rpmlibdir/nodejs_native.req.files
+cat << EOF > %buildroot%_rpmlibdir/nodejs_native.req
+#!/bin/sh
+echo 'nodejs(abi) = %nodejs_abi'
+echo 'nodejs(v8-abi) = %v8_abi'
+EOF
+chmod 0755 %buildroot%_rpmlibdir/nodejs_native.req
+
 %files
 %doc AUTHORS ChangeLog LICENSE README.md out/doc
 %_bindir/node
@@ -106,6 +129,7 @@ cp -p common.gypi %{buildroot}%{_datadir}/node
 %files devel
 %_includedir/node
 %_datadir/node/common.gypi
+%_rpmlibdir/nodejs_native.req*
 
 %files -n npm
 %_bindir/npm
@@ -113,6 +137,12 @@ cp -p common.gypi %{buildroot}%{_datadir}/node
 %exclude %_libexecdir/node_modules/npm/node_modules/node-gyp/gyp/tools/emacs
 
 %changelog
+* Sat Jul 27 2013 Dmitriy Kulik <lnkvisitor@altlinux.org> 0.10.15-alt2
+- nodejs(engine) should be = %%version
+- added explicit abi autorequires for binary packages
+- fix for %ix86 compilation w/o -fPIC
+- explicit linkage with libv8
+
 * Fri Jul 26 2013 Dmitriy Kulik <lnkvisitor@altlinux.org> 0.10.15-alt1
 - new version
 - npm 1.3.5
