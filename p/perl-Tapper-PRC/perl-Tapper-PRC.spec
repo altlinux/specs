@@ -3,17 +3,17 @@ BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(App/Rad.pm) perl(Class/C3.pm) perl(Compress/Bzip2.pm) perl(Daemon/Daemonize.pm) perl(Data/DPath.pm) perl(DateTime.pm) perl(DateTime/Format/Natural.pm) perl(File/ShareDir.pm) perl(File/Slurp.pm) perl(File/Type.pm) perl(Hash/Merge/Simple.pm) perl(IO/Select.pm) perl(IO/Socket.pm) perl(Kwalify.pm) perl(MRO/Compat.pm) perl(Memoize.pm) perl(Net/OpenSSH.pm) perl(Perl6/Junction.pm) perl(Socket.pm) perl(Template.pm) perl(Test/Exception.pm) perl(UNIVERSAL.pm) perl(YAML/XS.pm) perl(parent.pm) perl(subs.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 %define upstream_name    Tapper-PRC
-%define upstream_version 4.1.0
+%define upstream_version 4.1.2
 
 Name:       perl-%{upstream_name}
-Version:    %{upstream_version}
-Release:    alt1_2
+Version:    4.1.2
+Release:    alt1
 
 Summary:    Control running test programs
 License:    GPL+ or Artistic
 Group:      Development/Perl
 Url:        http://search.cpan.org/dist/%{upstream_name}
-Source0:    http://www.cpan.org/modules/by-module/Tapper/%{upstream_name}-%{upstream_version}.tar.gz
+Source:    http://www.cpan.org/authors/id/T/TA/TAPPER/Tapper-PRC-%{version}.tar.gz
 
 BuildRequires: perl(App/Daemon.pm)
 BuildRequires: perl(Cwd.pm)
@@ -75,6 +75,9 @@ Tapper - Program run control for test program automation.
 
 
 %changelog
+* Sat Jul 27 2013 Igor Vlasenko <viy@altlinux.ru> 4.1.2-alt1
+- automated CPAN update
+
 * Mon Dec 10 2012 Igor Vlasenko <viy@altlinux.ru> 4.1.0-alt1_2
 - mageia import by cas@ requiest
 
