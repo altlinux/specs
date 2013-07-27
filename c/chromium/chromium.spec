@@ -1,5 +1,5 @@
 %set_verify_elf_method textrel=relaxed
-%define v8_ver 3.18.5.9
+%define v8_ver 3.18
 %define rev 213514
 
 %def_disable debug
@@ -13,7 +13,7 @@
 
 Name:           chromium
 Version:        28.0.1500.95
-Release:        alt1.r%rev
+Release:        alt2.r%rev
 
 Summary:        An open source web browser developed by Google
 License:        BSD-3-Clause and LGPL-2.1+
@@ -116,7 +116,7 @@ BuildRequires:  libspeex-devel
 BuildRequires:  libsqlite3-devel
 BuildRequires:  libssl-devel
 BuildRequires:  libudev-devel
-BuildRequires:  libv8-devel >= %v8_ver
+BuildRequires:  libv8-devel = %v8_ver
 BuildRequires:  libvpx-devel
 BuildRequires:  libx264-devel
 BuildRequires:  libxslt-devel
@@ -153,7 +153,7 @@ BuildRequires:  wdiff
 BuildRequires:  yasm
 #BuildRequires:  zlib-devel
 
-Requires:       libv8 >= %v8_ver
+#Requires:       libv8 >= %v8_ver
 
 Provides: 		webclient, /usr/bin/xbrowser
 BuildPreReq: 	alternatives >= 0.2.0
@@ -444,6 +444,9 @@ printf '%_bindir/%name\t%_libdir/%name/%name-gnome\t15\n' > %buildroot%_altdir/%
 %_altdir/%name-gnome
 
 %changelog
+* Wed Jul 31 2013 Dmitriy Kulik <lnkvisitor@altlinux.org> 28.0.1500.95-alt2.r213514
+- rebuild with versioned v8
+
 * Wed Jul 31 2013 Andrey Cherepanov <cas@altlinux.org> 28.0.1500.95-alt1.r213514
 - New version 28.0.1500.95
 - Security fixes:

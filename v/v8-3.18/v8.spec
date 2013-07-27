@@ -1,10 +1,11 @@
 %define MAJOR_VERSION     3
 %define MINOR_VERSION     18
 %define BUILD_NUMBER      5
-%define PATCH_LEVEL       9
+%define PATCH_LEVEL       14
 %define soversion %MAJOR_VERSION.%MINOR_VERSION
+%define libname libv8
 
-Name:    v8
+Name:    v8-%MAJOR_VERSION.%MINOR_VERSION
 Version: %MAJOR_VERSION.%MINOR_VERSION.%BUILD_NUMBER.%PATCH_LEVEL
 Release: alt1
 
@@ -16,6 +17,8 @@ Url:     http://code.google.com/p/v8
 Source:  %name-%version.tar
 BuildPreReq: gcc-c++ gyp
 
+Provides: %libname
+
 %description
 V8 is Google's open source JavaScript engine. V8 is written in C++ and is used
 in Google Chrome, the open source browser from Google. V8 implements ECMAScript
@@ -25,6 +28,9 @@ as specified in ECMA-262, 5rd edition.
 Summary: Google's JavaScript Engine
 License: BSD
 Group:   System/Libraries
+Provides: %libname = %version
+Provides: %libname = %MAJOR_VERSION.%MINOR_VERSION
+Obsoletes: %libname = %MAJOR_VERSION.%MINOR_VERSION
 
 %description -n lib%name
 V8 is Google's open source JavaScript engine. V8 is written in C++ and is used
@@ -35,11 +41,12 @@ as specified in ECMA-262, 5rd edition.
 Group:   Development/C++
 Summary: Development headers and libraries for V8
 Requires: lib%name = %version-%release
-Conflicts: lib%name-devel < 3.15
+Provides: %libname-devel = %version
+Provides: %libname-devel = %MAJOR_VERSION.%MINOR_VERSION
+Conflicts: %libname-devel < %MAJOR_VERSION.%MINOR_VERSION
 
 %description -n lib%name-devel
 Development headers and libraries for V8.
-
 
 %prep
 %setup -q
@@ -65,13 +72,17 @@ install -p -m644 include/*.h %buildroot%_includedir/
 %files -n lib%name
 %doc AUTHORS ChangeLog LICENSE LICENSE.*
 %_libdir/*.so.*
-%_bindir/*
 
 %files -n lib%name-devel
 %_includedir/*.h
 %_libdir/*.so
+%_bindir/*
 
 %changelog
+* Sat Jul 27 2013 Dmitriy Kulik <lnkvisitor@altlinux.org> 3.18.5.14-alt1
+- new version
+- versioned package
+
 * Wed Jul 24 2013 Andrey Cherepanov <cas@altlinux.org> 3.18.5.9-alt1
 - New version
 
