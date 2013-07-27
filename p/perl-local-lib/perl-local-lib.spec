@@ -1,6 +1,6 @@
 %define dist local-lib
 Name: perl-%dist
-Version: 1.008010
+Version: 1.008011
 Release: alt1
 
 Summary: Create and use a local lib/ for perl modules with PERL5LIB
@@ -38,6 +38,9 @@ shell configuration file.
 %perl_vendor_privlib/local
 
 %changelog
+* Sat Jul 27 2013 Igor Vlasenko <viy@altlinux.ru> 1.008011-alt1
+- automated CPAN update
+
 * Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 1.008010-alt1
 - automated CPAN update
 
