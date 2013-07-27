@@ -1,8 +1,8 @@
 %def_without static
 
 Name: pstoedit
-Version: 3.61
-Release: alt2
+Version: 3.62
+Release: alt1
 
 Summary: converts Postscript(TM) and PDF files to other vector graphic formats
 Summary(ru_RU.KOI8-R): преобразует файлы Postscript(TM) и PDF в другие векторные форматы
@@ -159,6 +159,9 @@ sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' libtool
 %endif
 
 %changelog
+* Sun Jul 28 2013 Ilya Mashkin <oddity@altlinux.ru> 3.62-alt1
+- 3.62
+
 * Fri Apr 19 2013 Anton Farygin <rider@altlinux.ru> 3.61-alt2
 - Rebuild with new libImageMagick
 
