@@ -17,7 +17,7 @@
 
 Name: kdeadmin
 Version: 3.5.13.2
-Release: alt1
+Release: alt2
 Serial: 1
 
 Group: Graphical desktop/KDE
@@ -37,6 +37,7 @@ Source15: kwuftpd.helper
 Patch1000: kdeadmin-3.1.1-ksysv-alt.patch
 Patch1001: kdeadmin-3.5.13-kpackage-work-locale.patch
 Patch1002: kdeadmin-3.5.13.2-trinityHomeToKDE.patch
+Patch1003: tde-3.5.13-build-defdir-autotool.patch
 
 Requires: %name-kcron = %version-%release
 Requires: %name-kdat = %version-%release
@@ -209,10 +210,11 @@ This tool allows you to manipulate the PAM configuration files for each
 
 %prep
 %setup -q -n %name-%version
-cp -ar altlinux/admin ./
+##cp -ar altlinux/admin ./
 %patch1000 -p1
 %patch1001 -p1
 %patch1002 -p1
+%patch1003
 
 sed -i '\|\${kdeinit}_LDFLAGS[[:space:]]=[[:space:]].*-no-undefined|s|-no-undefined|-no-undefined -Wl,--warn-unresolved-symbols|' admin/am_edit
 for f in `find $PWD -type f -name Makefile.am`
@@ -222,8 +224,8 @@ do
     grep -q -e 'lib.*SOURCES' $f || continue
     RPATH_LINK_OPTS+=" -Wl,-rpath-link,`dirname $f`/.libs"
 done
-sed -i "s|\(-Wl,--as-needed\)| $RPATH_LINK_OPTS \1|g" admin/acinclude.m4.in
-sed -i -e 's|\$USER_INCLUDES|-I%_includedir/tqtinterface \$USER_INCLUDES|' admin/acinclude.m4.in
+##sed -i "s|\(-Wl,--as-needed\)| $RPATH_LINK_OPTS \1|g" admin/acinclude.m4.in
+##sed -i -e 's|\$USER_INCLUDES|-I%_includedir/tqtinterface \$USER_INCLUDES|' admin/acinclude.m4.in
 
 find ./ -type f -name Makefile.am | \
 while read f
@@ -439,6 +441,9 @@ mv %buildroot/%_K3bindir/kwuftpd %buildroot/%_K3sbindir
 %_K3bindir/secpolicy
 
 %changelog
+* Sat Jul 27 2013 Roman Savochenko <rom_as@altlinux.ru> 1:3.5.13.2-alt2
+- Switch to build from original autotools "admin".
+
 * Sun Jun 23 2013 Roman Savochenko <rom_as@altlinux.ru> 1:3.5.13.2-alt1
 - Release TDE version 3.5.13.2
 
