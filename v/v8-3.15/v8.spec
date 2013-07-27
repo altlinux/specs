@@ -5,7 +5,7 @@
 %define soversion %{MAJOR_VERSION}
 Name: v8-%MAJOR_VERSION.%MINOR_VERSION
 Version: %MAJOR_VERSION.%MINOR_VERSION.%BUILD_NUMBER.%PATCH_LEVEL
-Release: alt4
+Release: alt4.1
 
 Summary: V8 is Google's open source JavaScript engine.
 License: BSD
@@ -24,7 +24,7 @@ as specified in ECMA-262, 5rd edition.
 Summary: Google's JavaScript Engine
 License: BSD
 Group: System/Libraries
-Provides: libv8 = %version-%release
+Provides: libv8 = %MAJOR_VERSION.%MINOR_VERSION
 
 %description -n lib%name
 V8 is Google's open source JavaScript engine. V8 is written in C++ and is used
@@ -35,7 +35,7 @@ as specified in ECMA-262, 5rd edition.
 Group: Development/C++
 Summary: Development headers and libraries for V8
 Requires: lib%name = %version-%release
-Provides: libv8-devel = %version-%release
+Provides: libv8-devel = %MAJOR_VERSION.%MINOR_VERSION
 Conflicts: libv8-devel
 
 %description -n lib%name-devel
@@ -65,13 +65,16 @@ install -p -m644 include/*.h %buildroot%_includedir/
 %files -n lib%name
 %doc AUTHORS ChangeLog LICENSE LICENSE.*
 %_libdir/*.so.*
-#%_bindir/*
 
 %files -n lib%name-devel
 %_includedir/*.h
 %_libdir/*.so
+%_bindir/*
 
 %changelog
+* Sat Jul 27 2013 Dmitriy Kulik <lnkvisitor@altlinux.org> 3.15.11.10-alt4.1
+- Provides: libv8 = %MAJOR_VERSION.%MINOR_VERSION
+
 * Sat Mar 30 2013 Dmitriy Kulik <lnkvisitor@altlinux.org> 3.15.11.10-alt4
 - remove conflicts files (Closes : #28766)
 
