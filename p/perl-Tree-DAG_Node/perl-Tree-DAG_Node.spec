@@ -14,8 +14,8 @@
 %define _enable_test 1
 
 Name: perl-Tree-DAG_Node
-Version: 1.06
-Release: alt2.1
+Version: 1.12
+Release: alt1
 
 Summary: (super)class for representing nodes in a tree
 
@@ -26,10 +26,10 @@ Url: http://search.cpan.org/dist/Tree-DAG_Node/
 Packager: Michael Bochkaryov <misha@altlinux.ru>
 
 BuildArch: noarch
-Source: http://search.cpan.org//CPAN/authors/id/C/CO/COGENT/%m_distro-%version.tar.gz
+Source: http://www.cpan.org/authors/id/R/RS/RSAVAGE/Tree-DAG_Node-%{version}.tgz
 
 # Automatically added by buildreq on Wed Sep 17 2008 (-bi)
-BuildRequires: perl-devel
+BuildRequires: perl-devel perl(Module/Build.pm)
 
 %description
 This class encapsulates/makes/manipulates objects that represent nodes
@@ -50,9 +50,12 @@ mother or ancestor, or having a node have two mothers).
 
 %files
 %perl_vendor_privlib/Tree*
-%doc ChangeLog README 
+%doc Changes README 
 
 %changelog
+* Sat Jul 27 2013 Igor Vlasenko <viy@altlinux.ru> 1.12-alt1
+- automated CPAN update
+
 * Mon Nov 22 2010 Igor Vlasenko <viy@altlinux.ru> 1.06-alt2.1
 - repair after perl 5.12 upgrade using girar-nmu
 
