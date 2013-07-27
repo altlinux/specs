@@ -5,17 +5,17 @@ BuildRequires: perl-devel perl-podlators
 %add_findreq_skiplist %perl_vendor_privlib/auto/Tapper/Reports/DPath/Mason/mason_include.pl
 BuildRequires: perl(DBIx/Class/InflateColumn/Object/Enum.pm) perl(Hash/Merge/Simple.pm) perl(DBIx/Class/TimeStamp.pm) perl(DBD/SQLite.pm)
 %define upstream_name    Tapper-Reports-DPath
-%define upstream_version 4.1.0
+%define upstream_version 4.1.1
 
 Name:       perl-%{upstream_name}
-Version:    %{upstream_version}
-Release:    alt1_1
+Version:    4.1.1
+Release:    alt1
 
 Summary:    Extended DPath functionality for Tapper reports
 License:    GPL+ or Artistic
 Group:      Development/Perl
 Url:        http://search.cpan.org/dist/%{upstream_name}
-Source0:    http://www.cpan.org/modules/by-module/Tapper/%{upstream_name}-%{upstream_version}.tar.gz
+Source:    http://www.cpan.org/authors/id/T/TA/TAPPER/Tapper-Reports-DPath-%{version}.tar.gz
 
 BuildRequires: perl(CHI.pm)
 BuildRequires: perl(Class/C3.pm)
@@ -72,6 +72,9 @@ This distributions provides extended DPath functionality for Tapper reports.
 
 
 %changelog
+* Sat Jul 27 2013 Igor Vlasenko <viy@altlinux.ru> 4.1.1-alt1
+- automated CPAN update
+
 * Tue Dec 11 2012 Igor Vlasenko <viy@altlinux.ru> 4.1.0-alt1_1
 - mageia import by cas@ requiest
 
