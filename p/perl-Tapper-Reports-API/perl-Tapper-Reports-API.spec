@@ -4,17 +4,17 @@ BuildRequires: perl(App/Rad.pm) perl(Catalyst/Runtime.pm) perl(Compress/Bzip2.pm
 # END SourceDeps(oneline)
 BuildRequires: perl(DBIx/Class/InflateColumn/Object/Enum.pm) perl(Hash/Merge/Simple.pm) perl(DBIx/Class/TimeStamp.pm) perl(DBD/SQLite.pm)
 %define upstream_name    Tapper-Reports-API
-%define upstream_version 4.1.0
+%define upstream_version 4.1.2
 
 Name:       perl-%{upstream_name}
-Version:    %{upstream_version}
-Release:    alt1_1
+Version:    4.1.2
+Release:    alt1
 
 Summary:    Tapper - Remote network API for result evaluation
 License:    GPL+ or Artistic
 Group:      Development/Perl
 Url:        http://search.cpan.org/dist/%{upstream_name}
-Source0:    http://www.cpan.org/modules/by-module/Tapper/%{upstream_name}-%{upstream_version}.tar.gz
+Source:    http://www.cpan.org/authors/id/T/TA/TAPPER/Tapper-Reports-API-%{version}.tar.gz
 
 BuildRequires: perl(Class/C3.pm)
 BuildRequires: perl(Cwd.pm)
@@ -70,6 +70,9 @@ This package provides Tapper's Remote network API for result evaluation.
 
 
 %changelog
+* Sat Jul 27 2013 Igor Vlasenko <viy@altlinux.ru> 4.1.2-alt1
+- automated CPAN update
+
 * Tue Dec 11 2012 Igor Vlasenko <viy@altlinux.ru> 4.1.0-alt1_1
 - mageia import by cas@ requiest
 
