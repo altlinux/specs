@@ -1,5 +1,6 @@
 %undefine __libtoolize
 %define unstable 0
+%define arts 1
 %define _optlevel s
 %define glibc_core_ver %{get_version glibc-core}
 %define _keep_libtool_files 1
@@ -10,7 +11,7 @@
 
 Name: kdeaccessibility
 Version: 3.5.13.2
-Release: alt1
+Release: alt2
 
 Group: Graphical desktop/KDE
 Summary: K Desktop Environment - accessibility programs
@@ -27,6 +28,8 @@ Requires: %name-kbstate = %version-%release
 
 Source: %name-%version.tar
 Patch0: kdeaccessibility-3.5.13.2-trinityHomeToKDE.patch
+Patch1: kdeaccessibility-3.5.13.2-build-plugin.patch
+Patch2: tde-3.5.13-build-defdir-autotool.patch
 
 # Automatically added by buildreq on Fri Mar 05 2004 (-bi)
 BuildRequires: gcc-c++
@@ -35,6 +38,9 @@ BuildRequires: libstdc++-devel qt3-designer xml-utils zlib-devel
 BuildRequires: kdemultimedia-devel kde-common-devel
 BuildRequires: libacl-devel libattr-devel libalsa-devel
 BuildRequires: libXtst-devel
+%if %arts
+BuildRequires: libarts-devel >= 1.5.8 libarts-qtmcop-devel >= 1.5.8
+%endif
 #BuildRequires: kdelibs-devel-cxx = %__gcc_version_base
 BuildRequires: kdelibs >= %version kdelibs-devel >= %version
 
@@ -119,7 +125,10 @@ Panel applet that shows the state of the modifier keys
 %prep
 %setup -q
 %patch0 -p1
-cp -ar altlinux/admin ./
+%patch1 -p1
+%patch2
+
+##cp -ar altlinux/admin ./
 
 sed -i '\|\${kdeinit}_LDFLAGS[[:space:]]=[[:space:]].*-no-undefined|s|-no-undefined|-no-undefined -Wl,--warn-unresolved-symbols|' admin/am_edit
 for f in `find $PWD -type f -name Makefile.am`
@@ -158,6 +167,11 @@ export LDFLAGS="-L%buildroot/%_libdir -L%buildroot/%_libdir/kde3 -L%_libdir"
     --enable-debug=full \
 %else
     --disable-debug \
+%endif
+%if %arts
+    --with-arts \
+%else
+    --without-arts \
 %endif
     --enable-ksayit-audio-plugins \
     --disable-kttsd-gstreamer \
@@ -208,17 +222,17 @@ export PATH=%_bindir:$PATH
 %files icon-theme-mono
 %_iconsdir/mono/
 
-#%files ksayit
-#%_K3includedir/ksayit_fxplugin.h
-#
-#%_K3bindir/ksayit
-#%_K3lib/libFreeverb_plugin.*
-#%_K3apps/ksayit/
-#%_K3srv/ksayit_libFreeverb.desktop
-#%_K3srvtyp/ksayit_libFreeverb_service.desktop
-#%_kde3_iconsdir/hicolor/*/apps/ksayit.*
-#%_kde3_iconsdir/hicolor/*/apps/ksayit_*.*
-#%_K3xdg_apps/ksayit.desktop
+%files ksayit
+%_K3includedir/ksayit_fxplugin.h
+
+%_K3bindir/ksayit
+%_K3lib/libFreeverb_plugin.*
+%_K3apps/ksayit/
+%_K3srv/ksayit_libFreeverb.desktop
+%_K3srvtyp/ksayit_libFreeverb_service.desktop
+%_kde3_iconsdir/hicolor/*/apps/ksayit.*
+%_kde3_iconsdir/hicolor/*/apps/ksayit_*.*
+%_K3xdg_apps/ksayit.desktop
 
 
 %files ktts
@@ -226,7 +240,7 @@ export PATH=%_bindir:$PATH
 #
 %_K3bindir/kttsd
 %_K3bindir/kttsmgr
-#%_K3libdir/libKTTSD_Lib.so*
+%_K3libdir/libKTTSD_Lib.so*
 %_K3libdir/libkttsd.so*
 %_K3lib/kcm_kttsd.*
 %_K3lib/ktexteditor_kttsd.*
@@ -258,6 +272,10 @@ export PATH=%_bindir:$PATH
 %_K3apps/kicker/applets/kbstateapplet.desktop
 
 %changelog
+* Sat Jul 27 2013 Roman Savochenko <rom_as@altlinux.ru> 3.5.13.2-alt2
+- ARTS support enable.
+- Switch to build from original autotools "admin".
+
 * Sun Jun 23 2013 Roman Savochenko <rom_as@altlinux.ru> 3.5.13.2-alt1
 - Release TDE version 3.5.13.2
 
