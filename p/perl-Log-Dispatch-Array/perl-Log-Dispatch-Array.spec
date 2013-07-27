@@ -14,7 +14,7 @@
 %define _enable_test 1
 
 Name: perl-Log-Dispatch-Array
-Version: 1.001
+Version: 1.002
 Release: alt1
 
 Summary: log events to an array (reference)
@@ -26,10 +26,10 @@ Url: %CPAN %m_distro
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 BuildArch: noarch
-Source: http://search.cpan.org//CPAN/authors/id/R/RJ/RJBS/%m_distro-%version.tar.gz
+Source: http://www.cpan.org/authors/id/R/RJ/RJBS/Log-Dispatch-Array-%{version}.tar.gz
 
 # Automatically added by buildreq on Thu Nov 19 2009
-BuildRequires: perl-Log-Dispatch perl-Module-Install perl-Test-Deep
+BuildRequires: perl-Log-Dispatch perl-Module-Install perl-Test-Deep perl-parent
 
 %description
 This module provides a logging output method for Log::Dispatch.
@@ -50,6 +50,9 @@ rm -rf %buildroot%perl_vendor_man3dir/
 %perl_vendor_privlib/Log/Dispatch/Array.pm
 
 %changelog
+* Sat Jul 27 2013 Igor Vlasenko <viy@altlinux.ru> 1.002-alt1
+- automated CPAN update
+
 * Thu Nov 19 2009 Vitaly Lipatov <lav@altlinux.ru> 1.001-alt1
 - initial build for ALT Linux Sisyphus
 
