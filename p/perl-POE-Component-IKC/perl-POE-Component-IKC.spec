@@ -1,6 +1,6 @@
 %define dist POE-Component-IKC
 Name: perl-%dist
-Version: 0.2302
+Version: 0.2305
 Release: alt1
 
 Summary: Inter-Kernel Communication for POE
@@ -8,12 +8,12 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/G/GW/GWYN/POE-Component-IKC-%{version}.tar.gz
 
 BuildArch: noarch
 
 # Automatically added by buildreq on Sun Nov 20 2011
-BuildRequires: perl-FreezeThaw perl-POE perl-Test-Pod perl-Test-Pod-Coverage
+BuildRequires: perl-FreezeThaw perl-POE perl-Test-Pod perl-Test-Pod-Coverage perl(Devel/Size.pm)
 
 %description
 POE::Component::IKC provides inter-kernel communication functionality
@@ -36,6 +36,9 @@ as a point of reference for discusion of issues involved.
 %perl_vendor_privlib/POE
 
 %changelog
+* Sat Jul 27 2013 Igor Vlasenko <viy@altlinux.ru> 0.2305-alt1
+- automated CPAN update
+
 * Sun Nov 20 2011 Alexey Tourbin <at@altlinux.ru> 0.2302-alt1
 - 0.2200 -> 0.2302
 
