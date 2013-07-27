@@ -9,7 +9,7 @@
 
 Name: kdetoys
 Version: 3.5.13.2
-Release: alt1
+Release: alt2
 
 Group: Graphical desktop/KDE
 Summary: K Desktop Environment - Toys and Amusements
@@ -19,6 +19,7 @@ License: GPL
 Source: kdetoys-%version.tar
 #
 Patch10: kdetoys-3.1.0-kweather_start_hack.patch
+Patch11: tde-3.5.13-build-defdir-autotool.patch
 
 Requires: %name-amor = %version-%release
 Requires: %name-eyes = %version-%release
@@ -160,8 +161,9 @@ on the world globe
 
 %prep
 %setup -q -n kdetoys-%version
-cp -ar altlinux/admin ./
+##cp -ar altlinux/admin ./
 #%patch10 -p1
+%patch11
 
 sed -i '\|\${kdeinit}_LDFLAGS[[:space:]]=[[:space:]].*-no-undefined|s|-no-undefined|-no-undefined -Wl,--warn-unresolved-symbols|' admin/am_edit
 for f in `find $PWD -type f -name Makefile.am`
@@ -171,8 +173,8 @@ do
     grep -q -e 'lib.*SOURCES' $f || continue
     RPATH_LINK_OPTS+=" -Wl,-rpath-link,`dirname $f`/.libs"
 done
-sed -i "s|\(-Wl,--as-needed\)| $RPATH_LINK_OPTS \1|g" admin/acinclude.m4.in
-sed -i -e 's|\$USER_INCLUDES|-I%_includedir/tqtinterface \$USER_INCLUDES|' admin/acinclude.m4.in
+##sed -i "s|\(-Wl,--as-needed\)| $RPATH_LINK_OPTS \1|g" admin/acinclude.m4.in
+##sed -i -e 's|\$USER_INCLUDES|-I%_includedir/tqtinterface \$USER_INCLUDES|' admin/acinclude.m4.in
 
 find ./ -type f -name Makefile.am | \
 while read f
@@ -292,6 +294,9 @@ sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' libtool
 
 
 %changelog
+* Sat Jul 27 2013 Roman Savochenko <rom_as@altlinux.ru> 3.5.13.2-alt2
+- Switch to build from original autotools "admin".
+
 * Sun Jun 23 2013 Roman Savochenko <rom_as@altlinux.ru> 3.5.13.2-alt1
 - Release TDE version 3.5.13.2
 
