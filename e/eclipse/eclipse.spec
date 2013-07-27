@@ -30,7 +30,7 @@ Epoch:  1
 Summary:        An open, extensible IDE
 Name:           eclipse
 Version:        %{eclipse_version}
-Release:        alt5_7jpp7
+Release:        alt6_7jpp7
 License:        EPL
 Group:          Editors
 URL:            http://www.eclipse.org/
@@ -45,6 +45,7 @@ Source7:        http://repo1.maven.org/maven2/org/eclipse/equinox/http/servlet/1
 Source8:        org.eclipse.jdt.core-3.8.0.v_C03.pom
 Patch0:         lucene-3.6-compile.patch
 Patch73:	eclipse-3.7.0-alt-dependencies.patch
+Patch74:	fix-libwebkitgtk-1.11.91-compatibility.patch
 
 BuildRequires:  ant >= 1.8.3
 BuildRequires:  rsync
@@ -223,6 +224,9 @@ developing Eclipse plugins.
 export JAVA_HOME=%{java_home}
 %setup -q -n eclipse-build-%{eb_sha1}
 cp %{SOURCE1} .
+# Add new patches
+%patch74 -p2
+# Apply patches
 ant applyPatches
 %patch0
 pushd build/eclipse-%{eclipse_version}-%{build_id}-src
@@ -716,6 +720,9 @@ touch %buildroot/etc/eclipse.ini
 %{_mavendepmapfragdir}/%{name}-equinox-osgi
 
 %changelog
+* Sat Jul 27 2013 Paul Wolneykien <manowar@altlinux.ru> 1:4.2.0-alt6_7jpp7
+- Fix the WebKitGTK crash in libsoup (patch).
+
 * Fri Apr 19 2013 Igor Vlasenko <viy@altlinux.ru> 1:4.2.0-alt5_7jpp7
 - fixed build
 
