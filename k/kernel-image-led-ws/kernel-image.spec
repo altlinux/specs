@@ -20,7 +20,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.4.54
-Release: alt4
+Release: alt5
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -2822,6 +2822,10 @@ done)
 
 
 %changelog
+* Sat Jul 27 2013 Led <led@altlinux.ru> 3.4.54-alt5
+- enabled:
+  + EXT4_FS_SECURITY
+
 * Sat Jul 27 2013 Led <led@altlinux.ru> 3.4.54-alt4
 - removed:
   + feat-fs-exfat
