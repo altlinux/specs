@@ -3,17 +3,17 @@ BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(Exporter.pm) perl(FindBin.pm) perl(Test.pm) perl(Test/More.pm) perl(overload.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 %define upstream_name    Kwalify
-%define upstream_version 1.21
+%define upstream_version 1.22
 
 Name:       perl-%{upstream_name}
-Version:    %{upstream_version}
-Release:    alt1_1
+Version:    1.22
+Release:    alt1
 
 Summary:    Kwalify schema for data structures
 License:    GPL+ or Artistic
 Group:      Development/Perl
 Url:        http://search.cpan.org/dist/%{upstream_name}
-Source0:    http://www.cpan.org/modules/by-module//%{upstream_name}-%{upstream_version}.tar.gz
+Source:    http://www.cpan.org/authors/id/S/SR/SREZIC/Kwalify-%{version}.tar.gz
 
 BuildRequires: perl(ExtUtils/MakeMaker.pm)
 BuildArch: noarch
@@ -54,6 +54,9 @@ validate($schema_data, $data)
 
 
 %changelog
+* Sat Jul 27 2013 Igor Vlasenko <viy@altlinux.ru> 1.22-alt1
+- automated CPAN update
+
 * Mon Dec 10 2012 Igor Vlasenko <viy@altlinux.ru>  1.21-alt1_1
 - mageia import by cas@ requiest
 
