@@ -1,5 +1,5 @@
 %define name	gentoo
-%define version	0.19.13
+%define version	0.20.1
 %define release	alt1
 
 Summary: gentoo is a Gtk+ file manager for Linux
@@ -9,7 +9,7 @@ Release: %release
 License: GPL
 Group: File tools
 # Automatically added by buildreq on Thu Nov 10 2005
-BuildRequires: glib2-devel libgtk+2-devel
+BuildRequires: glib2-devel libgtk+2-devel libgtk+3-devel
 
 Packager: Ilya Mashkin <oddity@altlinux.ru>
 Url: http://www.obsession.se/gentoo
@@ -79,6 +79,9 @@ bzcat %SOURCE3 > $RPM_BUILD_ROOT/%_liconsdir/%name.xpm
 %_miconsdir/*.xpm
 
 %changelog
+* Sat Jul 27 2013 Ilya Mashkin <oddity@altlinux.ru> 0.20.1-alt1
+- 0.20.1
+
 * Sun Apr 22 2012 Ilya Mashkin <oddity@altlinux.ru> 0.19.13-alt1
 - 0.19.13
 
