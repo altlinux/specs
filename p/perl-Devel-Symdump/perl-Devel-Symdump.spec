@@ -1,14 +1,14 @@
 %define dist Devel-Symdump
 Name: perl-%dist
-Version: 2.08
-Release: alt2
+Version: 2.10
+Release: alt1
 
 Summary: Perl module for inspecting Perl's symbol table
 License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/A/AN/ANDK/Devel-Symdump-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -29,10 +29,13 @@ perl's symbol table and the class hierarchie within a running program.
 %perl_vendor_install
 
 %files
-%doc ChangeLog README
+%doc Changes README
 %perl_vendor_privlib/Devel
 
 %changelog
+* Sat Jul 27 2013 Igor Vlasenko <viy@altlinux.ru> 2.10-alt1
+- automated CPAN update
+
 * Tue Oct 04 2011 Alexey Tourbin <at@altlinux.ru> 2.08-alt2
 - rebuilt
 
