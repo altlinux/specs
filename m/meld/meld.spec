@@ -1,7 +1,7 @@
 %define ver_major 1.7
 
 Name: meld
-Version: %ver_major.3
+Version: %ver_major.4
 Release: alt1
 
 Summary: Meld Diff Viewer
@@ -26,12 +26,12 @@ BuildPreReq: intltool scrollkeeper
 BuildRequires: python-modules-encodings
 
 %description
-Meld is a visual diff and merge tool. It integrates especially well with
-CVS. The diff viewer lets you edit files in place (diffs update
-dynamically), and a middle column shows detailed changes and allows
-merges. The margins show location of changes for easy navigation, and it
-also features a tabbed interface that allows you to open many diffs at
-once.
+Meld is a visual diff and merge tool. It lets you compare two or three
+files, and updates the comparisons while you edit them in-place. You
+can also compare folders, launching comparisons of individual files as
+desired. Last but by no means least, Meld lets you work with your
+current changes in a wide variety of version control systems,
+including Git, Bazaar, Mercurial, Subversion and CVS.
 
 %prep
 %setup
@@ -65,6 +65,9 @@ subst s'|/usr/local|/usr|' INSTALL
 %doc NEWS
 
 %changelog
+* Sun Jul 28 2013 Yuri N. Sedunov <aris@altlinux.org> 1.7.4-alt1
+- 1.7.4
+
 * Tue Jun 04 2013 Yuri N. Sedunov <aris@altlinux.org> 1.7.3-alt1
 - 1.7.3
 
