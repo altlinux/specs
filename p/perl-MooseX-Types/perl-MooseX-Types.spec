@@ -1,7 +1,7 @@
 BuildRequires: perl(Module/Build.pm)
 %define dist MooseX-Types
 Name: perl-%dist
-Version: 0.35
+Version: 0.36
 Release: alt1
 
 Summary: Organise your Moose types in libraries
@@ -9,12 +9,12 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/D/DR/DROLSKY/MooseX-Types-%{version}.tar.gz
+Source: http://www.cpan.org/authors/id/E/ET/ETHER/MooseX-Types-%{version}.tar.gz
 
 BuildArch: noarch
 
 # Automatically added by buildreq on Wed Dec 22 2010
-BuildRequires: perl-Carp-Clan perl-Module-Install perl-Moose perl-Test-Fatal perl-Test-Requires perl-namespace-clean
+BuildRequires: perl-Carp-Clan perl-Module-Install perl-Moose perl-Test-Fatal perl-Test-Requires perl-namespace-clean perl(Test/NoWarnings.pm) perl(Test/CheckDeps.pm)
 
 %description
 The types provided with Moose are by design global. This package helps
@@ -35,6 +35,9 @@ libraries. As a nice side effect, it catches typos at compile-time too.
 %perl_vendor_privlib/MooseX*
 
 %changelog
+* Sat Jul 27 2013 Igor Vlasenko <viy@altlinux.ru> 0.36-alt1
+- automated CPAN update
+
 * Mon Sep 24 2012 Igor Vlasenko <viy@altlinux.ru> 0.35-alt1
 - automated CPAN update
 
