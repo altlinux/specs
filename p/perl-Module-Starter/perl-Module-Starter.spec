@@ -14,7 +14,7 @@
 %define _enable_test 1
 
 Name: perl-Module-Starter
-Version: 1.58
+Version: 1.60
 Release: alt1
 
 Summary: a simple starter kit for any module
@@ -30,7 +30,7 @@ Source: http://www.cpan.org/authors/id/X/XS/XSAWYERX/Module-Starter-%{version}.t
 
 # Automatically added by buildreq on Sat Jan 03 2009
 BuildRequires: perl-Test-Pod perl-Test-Pod-Coverage
-BuildRequires: perl-Pod-Parser perl(Path/Class.pm)
+BuildRequires: perl-Pod-Parser perl(Path/Class.pm) perl(parent.pm)
 
 %description
 This is the core module for Module::Starter.  If you're not looking to extend
@@ -56,6 +56,9 @@ just one method, "create_distro".
 %_man1dir/*
 
 %changelog
+* Sat Jul 27 2013 Igor Vlasenko <viy@altlinux.ru> 1.60-alt1
+- automated CPAN update
+
 * Thu Sep 29 2011 Igor Vlasenko <viy@altlinux.ru> 1.58-alt1
 - automated CPAN update
 
