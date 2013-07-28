@@ -14,8 +14,8 @@
 %define _enable_test 1
 
 Name: perl-Pod-Spell
-Version: 1.01
-Release: alt1.1.1
+Version: 1.05
+Release: alt1
 
 Summary: A formatter for spellchecking Pod
 
@@ -26,11 +26,11 @@ Url: http://search.cpan.org/dist/Pod-Spell/
 Packager: Michael Bochkaryov <misha@altlinux.ru>
 
 BuildArch: noarch
-Source: http://search.cpan.org//CPAN/authors/id/S/SB/SBURKE/%m_distro-%version.tar.gz
+Source: http://www.cpan.org/authors/id/X/XE/XENO/Pod-Spell-%{version}.tar.gz
 
 # Automatically added by buildreq on Wed Apr 09 2008
 BuildRequires: perl-Pod-Escapes perl-devel
-BuildRequires: perl-Pod-Parser
+BuildRequires: perl-Pod-Parser perl(Test/Deep.pm)
 
 %description
 Pod::Spell is a Pod formatter whose output is good for
@@ -68,6 +68,9 @@ and can be supplemented (on a per-document basis) by having
 %exclude %perl_vendor_archlib
 
 %changelog
+* Sat Jul 27 2013 Igor Vlasenko <viy@altlinux.ru> 1.05-alt1
+- automated CPAN update
+
 * Sun Nov 07 2010 Vladimir Lettiev <crux@altlinux.ru> 1.01-alt1.1.1
 - rebuilt with perl 5.12
 
