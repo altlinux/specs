@@ -20,7 +20,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.4.54
-Release: alt5
+Release: alt6
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -132,7 +132,7 @@ Release: alt5
 
 #Extra_modules spl 0.6.1
 %Extra_modules zfs 0.6.1
-%Extra_modules kvm 3.9.8
+%Extra_modules kvm 3.9.10
 #Extra_modules nvidia 319.32
 #Extra_modules fglrx 13.101
 %Extra_modules vboxhost 4.2.16
@@ -355,8 +355,9 @@ Patch0373: linux-%kernel_branch.53-fix-drivers-mfd--cs5535-mfd.patch
 Patch0374: linux-%kernel_branch.53-fix-drivers-mfd--lpc_sch.patch
 Patch0375: linux-%kernel_branch.25-fix-drivers-mfd--rc5t583.patch
 Patch0376: linux-%kernel_branch.25-fix-drivers-mfd--rc5t583-irq.patch
-Patch0377: linux-%kernel_branch.32-fix-drivers-mfd--twl4030-core.patch
-Patch0378: linux-%kernel_branch.39-fix-drivers-mfd--wm8994.patch
+Patch0377: linux-%kernel_branch.53-fix-drivers-mfd--timberdale.patch
+Patch0378: linux-%kernel_branch.32-fix-drivers-mfd--twl4030-core.patch
+Patch0379: linux-%kernel_branch.39-fix-drivers-mfd--wm8994.patch
 
 Patch0381: linux-%kernel_branch.20-fix-drivers-misc--pti.patch
 Patch0382: linux-%kernel_branch.38-fix-drivers-misc--vmw_balloon.patch
@@ -1577,6 +1578,7 @@ cd linux-%version
 %patch0376 -p1
 %patch0377 -p1
 %patch0378 -p1
+%patch0379 -p1
 
 # fix-drivers-misc--*
 %patch0381 -p1
@@ -2114,21 +2116,19 @@ config_enable \
 config_disable CRYPTO_CRC32C
 %endif
 %ifarch i386 i486
-config_enable CRYPTO_TWOFISH=m CRYPTO_SALSA20=m
+config_enable CRYPTO_AES=m CRYPTO_TWOFISH=m CRYPTO_SALSA20=m
 %endif
 
-%ifarch %intel_64 %via_64
+%ifarch %intel_64 %via_64 %via_32
 sed -i '/^CONFIG_USB_UHCI_HCD=/s/=m/=y/' .config
-%else
-%ifarch %amd_64 %amd_32
-config_disable USB_UHCI_HCD SCHED_SMT
+config_disable USB_OHCI_HCD
 %endif
-%ifarch %amd_64
+%ifarch K9 K10 barcelona phenom
 sed -i '/^CONFIG_USB_OHCI_HCD=/s/=m/=y/' .config
-%endif
+config_disable USB_UHCI_HCD
 %endif
 %ifarch %amd_64 %amd_32 %via_64 %via_32
-config_disable SCHED_SMT NET_DMA PCH_DMA MFD_TIMBERDALE
+config_disable SCHED_SMT NET_DMA PCH_DMA
 %endif
 %ifarch %ix86
 config_disable SCHED_MC
@@ -2822,6 +2822,11 @@ done)
 
 
 %changelog
+* Sat Jul 27 2013 Led <led@altlinux.ru> 3.4.54-alt6
+- added:
+  + fix-drivers-mfd--timberdale
+- kvm 3.9.10
+
 * Sat Jul 27 2013 Led <led@altlinux.ru> 3.4.54-alt5
 - enabled:
   + EXT4_FS_SECURITY

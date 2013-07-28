@@ -1,7 +1,7 @@
 %define mname kvm
 Name: kernel-src-%mname
-Version: 3.9.8
-Release: alt2
+Version: 3.9.10
+Release: alt1
 Summary: KVM modules sources for Linux kernel
 Group: Development/Kernel
 BuildArch: noarch
@@ -35,6 +35,9 @@ tar -C .. --transform "s/^$D/%mname-%version/" -cJf %buildroot%kernel_src/%mname
 
 
 %changelog
+* Sat Jul 27 2013 Led <led@altlinux.ru> 3.9.10-alt1
+- 3.9.10
+
 * Sat Jul 06 2013 Led <led@altlinux.ru> 3.9.8-alt2
 - updated summary and description
 
