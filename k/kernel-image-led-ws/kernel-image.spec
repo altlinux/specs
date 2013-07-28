@@ -20,7 +20,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.4.54
-Release: alt6
+Release: alt7
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -190,7 +190,8 @@ Patch0030: linux-%kernel_branch.53-fix-block.patch
 Patch0031: linux-%kernel_branch.35-fix-block--blk-integrity.patch
 Patch0032: linux-%kernel_branch.20-fix-block-partitions--efi.patch
 
-Patch0041: linux-%kernel_branch.35-fix-crypto--cryptomgr.patch
+Patch0041: linux-%kernel_branch.53-fix-crypto--aes_generic.patch
+Patch0042: linux-%kernel_branch.35-fix-crypto--cryptomgr.patch
 
 Patch0050: linux-%kernel_branch.47-fix-drivers-acpi.patch
 Patch0051: linux-%kernel_branch.47-fix-drivers-acpi--container.patch
@@ -1381,6 +1382,7 @@ cd linux-%version
 
 # fix-crypto--*
 %patch0041 -p1
+%patch0042 -p1
 
 # fix-drivers-acpi*
 %patch0050 -p1
@@ -2822,6 +2824,10 @@ done)
 
 
 %changelog
+* Sun Jul 28 2013 Led <led@altlinux.ru> 3.4.54-alt7
+- added:
+  + fix-crypto--aes_generic
+
 * Sat Jul 27 2013 Led <led@altlinux.ru> 3.4.54-alt6
 - added:
   + fix-drivers-mfd--timberdale
