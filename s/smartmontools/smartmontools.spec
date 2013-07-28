@@ -1,10 +1,11 @@
 Name: smartmontools
-Version: 6.1
-Release: alt2
+Version: 6.2
+Release: alt1
 
 Summary: Control and monitor storage systems using S.M.A.R.T.
 License: GPLv2+
 Group: Monitoring
+
 Url: http://smartmontools.sourceforge.net
 
 # http://download.sourceforge.net/smartmontools/smartmontools-%version.tar.gz
@@ -80,6 +81,9 @@ rm %buildroot%docdir/{ChangeLog,COPYING,INSTALL}
 %docdir
 
 %changelog
+* Sun Jul 28 2013 Michael Shigorin <mike@altlinux.org> 6.2-alt1
+- Updated to 6.2.
+
 * Wed Mar 20 2013 Michael Shigorin <mike@altlinux.org> 6.1-alt2
 - Packaged %_sysconfdir/smartd_warning.sh.
 
