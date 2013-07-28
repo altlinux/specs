@@ -14,7 +14,7 @@
 %define _enable_test 1
 
 Name: perl-Dist-CheckConflicts
-Version: 0.02
+Version: 0.09
 Release: alt1
 
 Summary: declare version conflicts for your dist
@@ -26,9 +26,9 @@ Url: http://search.cpan.org/CPAN/authors/id/D/DO/DOY/Dist-CheckConflicts-0.02.ta
 Packager: Igor Vlasenko <viy@altlinux.ru>
 
 BuildArch: noarch
-Source: http://search.cpan.org/CPAN/authors/id/D/DO/DOY/%m_distro-%version.tar.gz
+Source: http://www.cpan.org/authors/id/D/DO/DOY/Dist-CheckConflicts-%{version}.tar.gz
 
-BuildRequires: perl(Test/Fatal.pm) perl(List/MoreUtils.pm) perl(Sub/Exporter.pm)
+BuildRequires: perl(Test/Fatal.pm) perl(List/MoreUtils.pm) perl(Sub/Exporter.pm) perl(Module/Runtime.pm)
 
 %description
 Dist::CheckConflicts declare version conflicts for your dist.
@@ -45,6 +45,9 @@ Dist::CheckConflicts declare version conflicts for your dist.
 %perl_vendor_privlib/Dist/*
 
 %changelog
+* Sat Jul 27 2013 Igor Vlasenko <viy@altlinux.ru> 0.09-alt1
+- automated CPAN update
+
 * Sun Sep 25 2011 Igor Vlasenko <viy@altlinux.ru> 0.02-alt1
 - initial build for ALT Linux Sisyphus
 
