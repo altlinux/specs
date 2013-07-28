@@ -1,6 +1,6 @@
 %define dist Net-Amazon-EC2
 Name: perl-%dist
-Version: 0.21
+Version: 0.23
 Release: alt1
 
 Summary: Perl interface to the Amazon Elastic Compute Cloud (EC2)
@@ -13,7 +13,7 @@ Source: http://www.cpan.org/authors/id/M/MA/MALLEN/Net-Amazon-EC2-%{version}.tar
 BuildArch: noarch
 
 # Automatically added by buildreq on Sat Nov 19 2011
-BuildRequires: perl-Digest-HMAC perl-Moose perl-Params-Validate perl-XML-Simple perl-devel perl-libwww perl(Test/Exception.pm)
+BuildRequires: perl-Digest-HMAC perl-Moose perl-Params-Validate perl-XML-Simple perl-devel perl-libwww perl(Test/Exception.pm) perl(LWP/Protocol/https.pm)
 
 %description
 This module is a Perl interface to Amazon's Elastic Compute Cloud.
@@ -34,6 +34,9 @@ rm -fv lib/Net/Amazon/._EC2.pm
 %perl_vendor_privlib/Net
 
 %changelog
+* Sat Jul 27 2013 Igor Vlasenko <viy@altlinux.ru> 0.23-alt1
+- automated CPAN update
+
 * Tue Oct 23 2012 Igor Vlasenko <viy@altlinux.ru> 0.21-alt1
 - automated CPAN update
 
