@@ -2,16 +2,16 @@
 %define mpidir %_libdir/%mpiimpl
 
 Name: silo
-Version: 4.9
-Release: alt2
+Version: 4.9.1
+Release: alt1
 Summary: A library for reading and writing a wide variety of scientific data
 License: BSD
 Group: Development/Tools
 Url: http://wci.llnl.gov/codes/silo/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-Source: https://wci.llnl.gov/codes/silo/silo-4.9/silo-4.9-bsd.tar.gz
-Source1: https://wci.llnl.gov/codes/silo/silo-4.9/silo-4.9-bsd-smalltest.tar.gz
+Source: https://wci.llnl.gov/codes/silo/silo-4.9.1/silo-4.9.1-bsd.tar.gz
+Source1: https://wci.llnl.gov/codes/silo/silo-4.9.1/silo-4.9.1-bsd-smalltest.tar.gz
 
 Requires: lib%name = %version-%release
 
@@ -205,6 +205,9 @@ touch %buildroot%python_sitelibdir/%name/__init__.py
 %python_sitelibdir/%name
 
 %changelog
+* Mon Jul 29 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.9.1-alt1
+- Version 4.9.1
+
 * Thu Jun 27 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.9-alt2
 - Rebuilt with new libhdf5
 
