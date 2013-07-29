@@ -1,6 +1,6 @@
 Name: supertux2
 Version: 0.3.4
-Release: alt5
+Release: alt6
 
 Summary: Classic 2D jump'n run sidescroller game in a Super Mario style
 License: GPLv3
@@ -9,8 +9,7 @@ URL: http://supertux.lethargik.org/
 
 Packager: Igor Zubkov <icesik@altlinux.org>
 
-#Source0: supertux-%version.tar.bz2
-Source0: supertux.tar.xz
+Source0: supertux-%version.tar.bz2
 
 Source1: supertux-16x16.png
 Source2: supertux-32x32.png
@@ -53,7 +52,7 @@ on the way.
 This is package contains data files for supertux2.
 
 %prep
-%setup -q -n supertux
+%setup -q -n supertux-%version
 %patch0
 
 %build
@@ -99,6 +98,9 @@ rm -rf %buildroot/%_docdir/supertux2/
 %exclude %_datadir/supertux2/sounds/normalize.sh
 
 %changelog
+* Mon Jul 29 2013 Igor Zubkov <icesik@altlinux.org> 0.3.4-alt6
+- 0.3.4 release
+
 * Sun Jul 21 2013 Igor Zubkov <icesik@altlinux.org> 0.3.4-alt5
 - git snapshot from f9e48410db28cb4bd1b91fa46414be660d3f5f8b
 
