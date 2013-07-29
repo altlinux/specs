@@ -20,7 +20,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.4.54
-Release: alt7
+Release: alt8
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -316,8 +316,9 @@ Patch0272: linux-%kernel_branch.32-fix-drivers-idle--intel_idle.patch
 Patch0281: linux-%kernel_branch.25-fix-drivers-infiniband-hw--mlx4.patch
 
 Patch0290: linux-%kernel_branch.25-fix-drivers-input.patch
-Patch0291: linux-%kernel_branch.20-fix-drivers-input-keyboard--omap4-keypad.patch
-Patch0292: linux-%kernel_branch.20-fix-drivers-input-serio--i8042.patch
+Patch0291: linux-%kernel_branch.53-fix-drivers-input-mouse--appletouch.patch
+Patch0292: linux-%kernel_branch.20-fix-drivers-input-keyboard--omap4-keypad.patch
+Patch0293: linux-%kernel_branch.20-fix-drivers-input-serio--i8042.patch
 
 Patch0301: linux-%kernel_branch.38-fix-drivers-iommu--amd_iommu.patch
 Patch0302: linux-%kernel_branch.38-fix-drivers-iommu--intel-iommu.patch
@@ -398,11 +399,12 @@ Patch0437: linux-%kernel_branch.39-fix-drivers-net-wireless-wl12xx.patch
 Patch0440: linux-%kernel_branch.50-fix-drivers-pci.patch
 Patch0441: linux-%kernel_branch.50-fix-drivers-pci-pcie-aer--aerdriver.patch
 
-Patch0451: linux-%kernel_branch.27-fix-drivers-platform--asus_oled.patch
-Patch0452: linux-%kernel_branch.20-fix-drivers-platform--hdaps.patch
-Patch0453: linux-%kernel_branch.25-fix-drivers-platform--intel_ips.patch
-Patch0454: linux-%kernel_branch.25-fix-drivers-platform--intel_menlow.patch
-Patch0455: linux-%kernel_branch.25-fix-drivers-platform--intel_oaktrail.patch
+Patch0451: linux-%kernel_branch.53-fix-drivers-platform--apple-gmux.patch
+Patch0452: linux-%kernel_branch.27-fix-drivers-platform--asus_oled.patch
+Patch0453: linux-%kernel_branch.20-fix-drivers-platform--hdaps.patch
+Patch0454: linux-%kernel_branch.25-fix-drivers-platform--intel_ips.patch
+Patch0455: linux-%kernel_branch.25-fix-drivers-platform--intel_menlow.patch
+Patch0456: linux-%kernel_branch.25-fix-drivers-platform--intel_oaktrail.patch
 
 Patch0461: linux-%kernel_branch.39-fix-drivers-power--ab8500.patch
 Patch0462: linux-%kernel_branch.39-fix-drivers-power--charger-manager.patch
@@ -454,9 +456,10 @@ Patch0547: linux-%kernel_branch.39-fix-drivers-usb-musb--musb_hdrc.patch
 Patch0548: linux-%kernel_branch.39-fix-drivers-usb-otg--otg.patch
 
 Patch0551: linux-%kernel_branch.20-fix-drivers-video-aty--radeonfb.patch
-Patch0552: linux-%kernel_branch.20-fix-drivers-video-console--vgacon.patch
-Patch0553: linux-%kernel_branch.20-fix-drivers-video-geode.patch
-Patch0554: linux-%kernel_branch.20-fix-drivers-video-omap2-dss.patch
+Patch0552: linux-%kernel_branch.53-fix-drivers-video-backlight--apple_bl.patch
+Patch0553: linux-%kernel_branch.20-fix-drivers-video-console--vgacon.patch
+Patch0554: linux-%kernel_branch.20-fix-drivers-video-geode.patch
+Patch0555: linux-%kernel_branch.20-fix-drivers-video-omap2-dss.patch
 
 Patch0561: linux-%kernel_branch.39-fix-drivers-watchdog--watchdog.patch
 
@@ -1533,6 +1536,7 @@ cd linux-%version
 %patch0290 -p1
 %patch0291 -p1
 %patch0292 -p1
+%patch0293 -p1
 
 # fix-drivers-iommu--*
 %patch0301 -p1
@@ -1632,6 +1636,7 @@ cd linux-%version
 %patch0453 -p1
 %patch0454 -p1
 %patch0455 -p1
+%patch0456 -p1
 
 # fix-drivers-power--*
 %patch0461 -p1
@@ -1695,6 +1700,7 @@ cd linux-%version
 %patch0552 -p1
 %patch0553 -p1
 %patch0554 -p1
+%patch0555 -p1
 
 # fix-drivers-watchdog--*
 %patch0561 -p1
@@ -2357,6 +2363,7 @@ gen_rpmmodfile ipmi %buildroot%modules_dir/kernel/drivers/{acpi/acpi_ipmi,char/i
 %{?_enable_irda:gen_rpmmodfile irda %buildroot%modules_dir/kernel/{,drivers/}net/irda}
 %{?_enable_isdn:gen_rpmmodfile isdn %buildroot%modules_dir/kernel/{drivers/isdn,net/bluetooth/cmtp}}
 %{?_enable_usb_gadget:gen_rpmmodlist %buildroot%modules_dir/kernel/drivers/usb/gadget/* | grep -xv '%modules_dir/kernel/drivers/usb/gadget/udc-core.ko' > usb-gadget.rpmmodlist}
+%{?_enable_watchdog:gen_rpmmodlist %buildroot%modules_dir/kernel/drivers/watchdog/* | grep -Ev '^%modules_dir/kernel/drivers/watchdog/(watch|soft)dog.ko$' > watchdog.rpmmodlist}
 %if_enabled video
 gen_rpmmodlist %buildroot%modules_dir/kernel/drivers/video/* | grep -xv '%modules_dir/kernel/drivers/video/uvesafb.ko' | grep -xv '%modules_dir/kernel/drivers/video/sis' | grep -xv '%modules_dir/kernel/drivers/video/backlight' | grep -v '^%modules_dir/kernel/drivers/video/.*sys.*\.ko$' > video.rpmmodlist
 gen_rpmmodlist %buildroot%modules_dir/kernel/drivers/video/backlight/* | grep -xv '%modules_dir/kernel/drivers/video/backlight/lcd.ko' >> video.rpmmodlist
@@ -2498,7 +2505,6 @@ done)
 %exclude %modules_dir/kernel/drivers/net/hyperv
 %exclude %modules_dir/kernel/drivers/scsi/hv_storvsc.ko
 %endif
-%{?_enable_watchdog:%exclude %modules_dir/kernel/drivers/watchdog}
 %if_enabled oprofile
 %exclude %modules_dir/vmlinux
 %exclude %modules_dir/kernel/arch/*/oprofile
@@ -2588,11 +2594,7 @@ done)
 
 %{?_enable_mtd:%kernel_modules_package_files mtd}
 
-
-%if_enabled watchdog
-%files -n kernel-modules-watchdog-%flavour
-%modules_dir/kernel/drivers/watchdog
-%endif
+%{?_enable_watchdog:%kernel_modules_package_files watchdog}
 
 
 %files -n kernel-modules-fs-extra-%flavour
@@ -2824,6 +2826,16 @@ done)
 
 
 %changelog
+* Mon Jul 29 2013 Led <led@altlinux.ru> 3.4.54-alt8
+- updated:
+  + fix-drivers-hid--hid-apple
+- added:
+  + fix-drivers-input-mouse--appletouch
+  + fix-drivers-platform--apple-gmux
+  + fix-drivers-video-backlight--apple_bl
+- moved {watch,soft}dog.ko modules from kernel-modules-watchdog-*
+  to kernel-image-*
+
 * Sun Jul 28 2013 Led <led@altlinux.ru> 3.4.54-alt7
 - added:
   + fix-crypto--aes_generic
