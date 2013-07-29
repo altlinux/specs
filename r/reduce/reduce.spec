@@ -7,7 +7,7 @@
 %define builddir %_arch-alt-linux-gnu-m%bits
 
 Name: reduce
-Version: 20121126
+Version: 20130728
 Release: alt1
 Summary: REDUCE algebra system, Open Source release
 License: BSD / GPL / LGPL
@@ -17,7 +17,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # fragment from .git/config :
 #[svn-remote "svn"]
-#  url = https://reduce-algebra.svn.sourceforge.net/svnroot/reduce-algebra/trunk
+#  url = svn://svn.code.sf.net/p/reduce-algebra/code/trunk
 #  fetch = :refs/remotes/git-svn
 Source: reduce-source-%version.tar.bz2
 Source1: reduce.desktop
@@ -116,7 +116,7 @@ alias strip=echo
 %install
 export TOPDIR=$PWD
 pushd cslbuild/%builddir
-%make DESTDIR=$TOPDIR/built/%name 
+%make DESTDIR=$TOPDIR/built/%name BUILDDIR=$PWD
 popd
 
 %make_build all DESTDIR=$TOPDIR/built/%name
@@ -214,6 +214,9 @@ popd
 %files -n fonts-type1-%name -f %name.files
 
 %changelog
+* Mon Jul 29 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 20130728-alt1
+- New snapshot
+
 * Sun Feb 24 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 20121126-alt1
 - New snapshot
 
