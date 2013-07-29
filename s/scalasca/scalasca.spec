@@ -1,13 +1,13 @@
 %define mpiimpl openmpi
 %define mpidir %_libdir/%mpiimpl
 
-%define over 1.4.2
+%define over 1.4.3
 %define cubever 3.4.2.%over
 %define somver 0
 %define sover %somver.%over
 Name: scalasca
 Version: %over
-Release: alt3
+Release: alt1
 Summary: Scalable performance Analysis of Large-Scale parallel Applications
 License: MIT
 Group: Development/Tools
@@ -510,10 +510,6 @@ sed -i 's|\.a|.so|' %buildroot%_bindir/kinst-pomp
 %_includedir/*
 %exclude %_includedir/szlib
 
-#files -n lib%name-devel-static
-#_libdir/*.a
-#exclude %_libdir/libsz0.*
-
 %files devel-example
 %_libdir/%name-devel/*
 
@@ -538,10 +534,10 @@ sed -i 's|\.a|.so|' %buildroot%_bindir/kinst-pomp
 %files -n libsz0-devel
 %_libdir/libsz0.so
 
-#files -n libsz0-devel-static
-#_libdir/libsz0.a
-
 %changelog
+* Mon Jul 29 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4.3-alt1
+- Version 1.4.3
+
 * Sat Feb 23 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4.2-alt3
 - Rebuilt with openpdt instead of pdtoolkit
 
