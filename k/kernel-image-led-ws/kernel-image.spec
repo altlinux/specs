@@ -19,13 +19,13 @@
 %define flavour %base_flavour-%sub_flavour
 
 Name: kernel-image-%flavour
-Version: 3.4.54
-Release: alt8
+Version: 3.4.55
+Release: alt1
 
 %define kernel_req %nil
 %define kernel_prov %nil
 %define kernel_branch 3.4
-%define kernel_stable_version 54
+%define kernel_stable_version 55
 %define kernel_extra_version .%kernel_stable_version
 #define kernel_extra_version %nil
 
@@ -2826,6 +2826,9 @@ done)
 
 
 %changelog
+* Mon Jul 29 2013 Led <led@altlinux.ru> 3.4.55-alt1
+- 3.4.55
+
 * Mon Jul 29 2013 Led <led@altlinux.ru> 3.4.54-alt8
 - updated:
   + fix-drivers-hid--hid-apple
