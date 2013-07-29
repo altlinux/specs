@@ -7,15 +7,14 @@
 # none/opengl/cairo/clutter
 %define acceleration_backend opengl
 %def_enable introspection
-%def_disable imresize
 %def_enable geolocation
-%def_disable web_audio
+%def_enable web_audio
 %def_disable media_stream
 %def_enable spellcheck
 
 Summary: Web browser engine
 Name: libwebkitgtk2
-Version: 2.0.0
+Version: 2.0.4
 Release: alt1
 License: %bsd %lgpl2plus
 Group: System/Libraries
@@ -40,7 +39,7 @@ BuildRequires: flex >= 2.5.33
 BuildRequires: gperf libjpeg-devel libpng-devel libwebp-devel
 BuildRequires: libxml2-devel >= 2.6
 BuildRequires: libXt-devel
-BuildRequires: libgtk+2-devel >= 2.10
+BuildRequires: libgtk+2-devel >= 2.24.10
 BuildRequires: libgail-devel >= 1.8
 BuildRequires: libenchant-devel >= 0.22
 BuildRequires: libsqlite3-devel >= 3.0
@@ -48,10 +47,10 @@ BuildRequires: libxslt-devel >= 1.1.7
 BuildRequires: gstreamer1.0-devel >= 1.0.3 gst-plugins1.0-devel >= 1.0.3
 BuildRequires: librsvg-devel >= 2.2.0
 BuildRequires: gtk-doc >= 1.10
-BuildRequires: libsoup-devel >= 2.40.0
+BuildRequires: libsoup-devel >= 2.42.0
 BuildRequires: libsecret-devel
-BuildRequires: libpango-devel >= 1.21.0 libcairo-devel >= 1.10 libcairo-gobject-devel
-BuildRequires: fontconfig-devel >= 2.4 libfreetype-devel libharfbuzz-devel
+BuildRequires: libpango-devel >= 1.30.0 libcairo-devel >= 1.10 libcairo-gobject-devel
+BuildRequires: fontconfig-devel >= 2.5 libfreetype-devel libharfbuzz-devel >= 0.9.7
 BuildRequires: libgio-devel >= 2.25.0
 BuildRequires: python-modules-json
 BuildRequires: ruby ruby-stdlibs
@@ -60,7 +59,7 @@ BuildRequires: ruby ruby-stdlibs
 BuildRequires: libGL-devel libXcomposite-devel libXdamage-devel
 %endif
 
-%{?_enable_introspection:BuildPreReq: gobject-introspection-devel >= 0.9.5 libgtk+2-gir-devel libsoup-gir-devel}
+%{?_enable_introspection:BuildPreReq: gobject-introspection-devel >= 1.32.0 libgtk+2-gir-devel libsoup-gir-devel}
 %{?_enable_geolocation:BuildPreReq: libgeoclue-devel}
 %{?_enable_spellcheck:BuildPreReq: libenchant-devel}
 %{?_enable_media_stream:BuildPreReq: farstream0.2-devel}
@@ -230,6 +229,9 @@ mkdir -p Programs/resources
 %install
 %make_install DESTDIR=%buildroot install
 
+#cleanup
+rm -rf %buildroot%_includedir/webkitgtk-1.0/webkit2
+
 %find_lang WebKitGTK-2.0
 
 %check
@@ -280,6 +282,10 @@ xvfb-run make check
 %endif
 
 %changelog
+* Mon Jul 29 2013 Alexey Shabalin <shaba@altlinux.ru> 2.0.4-alt1
+- 2.0.4
+- enable web audio
+
 * Wed Apr 10 2013 Alexey Shabalin <shaba@altlinux.ru> 2.0.0-alt1
 - 2.0.0
 
