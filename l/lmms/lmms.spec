@@ -1,5 +1,5 @@
 Name: lmms
-Version: 0.4.13
+Version: 0.4.14
 Release: alt1
 
 Summary: Linux MultiMedia Studio
@@ -15,7 +15,7 @@ Source6: %name-48x48.png
 
 BuildPreReq: rpm-build-lmms
 # Automatically added by buildreq on Sun Mar 27 2011
-BuildRequires: cmake gcc-c++ libSDL-devel libfluidsynth-devel libpulseaudio-devel libqt4-opengl libqt4-qt3support libqt4-script libqt4-svg libqt4-xml libsamplerate-devel libsndfile-devel libstk-devel libvorbis-devel libwine-devel phonon-devel libfftw3-devel libportaudio2-devel
+BuildRequires: cmake gcc-c++ libSDL-devel libfluidsynth-devel libpulseaudio-devel libqt4-opengl libqt4-qt3support libqt4-script libqt4-svg libqt4-xml libsamplerate-devel libsndfile-devel libstk-devel libvorbis-devel libwine-devel phonon-devel libfftw3-devel libportaudio2-devel libXft-devel libjpeg-devel
 
 #BuildRequires: cmake gcc-c++ libSDL-devel libalsa-devel libpulseaudio-devel libqt4-devel libstk-devel libvorbis-devel
 #BuildRequires: esound-devel fontconfig freetype2 libfftw3-devel libfluidsynth-devel jackit-devel libICE-devel libSDL_sound-devel libX11-devel libogg-devel libsamplerate-devel libsndfile-devel libstdc++-devel xorg-cf-files xorg-devel
@@ -24,6 +24,8 @@ BuildRequires: cmake gcc-c++ libSDL-devel libfluidsynth-devel libpulseaudio-deve
 #TODO: Find or build -lFestival
 
 #Requires: ladspa-caps ladspa-mcp-plugins ladspa-tap-plugins ladspa-swh-plugins ladspa-rev-plugins ladspa-vco-plugins
+
+%add_verify_elf_skiplist %_libdir/%name/*
 
 %description
 LMMS aims to be a free alternative to popular (but commercial and closed-
@@ -101,6 +103,9 @@ EOF
 %_includedir/%name
 
 %changelog
+* Mon Jul 29 2013 Slava Dubrovskiy <dubrsl@altlinux.org> 0.4.14-alt1
+- 0.4.14
+
 * Sat Feb 04 2012 Slava Dubrovskiy <dubrsl@altlinux.org> 0.4.13-alt1
 - 0.4.13
 
