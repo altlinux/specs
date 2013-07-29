@@ -8,7 +8,7 @@
 Name: icecream
 %define lname libicecc
 Version: 1.0.1
-Release: alt1
+Release: alt2
 Summary: Icecream is a distributed compile system for C and C++
 License: GPLv2+ and LGPLv2.1+
 Group: Development/Tools
@@ -155,6 +155,9 @@ install -Dp -m 0644 altlinux/%name.logrotate %buildroot%_logrotatedir/%name
 
 
 %changelog
+* Mon Jul 29 2013 Led <led@altlinux.ru> 1.0.1-alt2
+- handle $HOME not being set
+
 * Sat Jul 13 2013 Led <led@altlinux.ru> 1.0.1-alt1
 - 1.0.1
 
