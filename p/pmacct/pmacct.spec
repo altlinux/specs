@@ -1,6 +1,6 @@
 Name: pmacct
-Version: 0.14.2
-Release: alt2
+Version: 0.14.3
+Release: alt1
 License: GPLv2
 Summary: pcap-based accounting tools
 Group: System/Servers
@@ -633,6 +633,9 @@ __EOF__
 %_altdir/uacct-mongodb
 
 %changelog
+* Mon Jul 29 2013 Slava Dubrovskiy <dubrsl@altlinux.org> 0.14.3-alt1
+- New release
+
 * Sun Mar 10 2013 Slava Dubrovskiy <dubrsl@altlinux.org> 0.14.2-alt2
 - Add support MongoDB
 
