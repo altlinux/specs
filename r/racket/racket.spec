@@ -2,9 +2,9 @@
 %define _disable_ld_no_undefined 1
 %define debug_package %nil
 
-%define sover 5.3.3
+%define sover 5.3.5
 Name: racket
-Version: 5.3.3
+Version: 5.3.5
 Release: alt1
 
 Summary: Racket programming language
@@ -163,6 +163,9 @@ install -pD -m644 drscheme.desktop \
 %_includedir/*
 
 %changelog
+* Tue Jul 30 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.3.5-alt1
+- Version 5.3.5
+
 * Mon Feb 18 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.3.3-alt1
 - Version 5.3.3
 
