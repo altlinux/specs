@@ -20,7 +20,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.4.55
-Release: alt2
+Release: alt3
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -116,7 +116,7 @@ Release: alt2
 %def_disable kvm
 %def_enable hyperv
 %def_disable paravirt_guest
-%def_disable kvm_quest
+%def_disable kvm_guest
 %def_disable nfs_swap
 %def_enable fatelf
 %def_with lnfs
@@ -202,11 +202,10 @@ Patch0055: linux-%kernel_branch.20-fix-drivers-acpi-acpica.patch
 Patch0056: linux-%kernel_branch.50-fix-drivers-acpi-apei--apei.patch
 Patch0057: linux-%kernel_branch.50-fix-drivers-acpi-apei--ghes.patch
 
-Patch0061: linux-%kernel_branch.25-fix-drivers-ata--ata_piix.patch
-Patch0062: linux-%kernel_branch.25-fix-drivers-ata--pata_amd.patch
-Patch0063: linux-%kernel_branch.25-fix-drivers-ata--pata_mpiix.patch
-Patch0064: linux-%kernel_branch.25-fix-drivers-ata--pata_oldpiix.patch
-Patch0065: linux-%kernel_branch.25-fix-drivers-ata--pata_sch.patch
+Patch0061: linux-%kernel_branch.25-fix-drivers-ata--pata_amd.patch
+Patch0062: linux-%kernel_branch.25-fix-drivers-ata--pata_mpiix.patch
+Patch0063: linux-%kernel_branch.25-fix-drivers-ata--pata_oldpiix.patch
+Patch0064: linux-%kernel_branch.25-fix-drivers-ata--pata_sch.patch
 
 Patch0071: linux-%kernel_branch.25-fix-drivers-atm--ambassador.patch
 
@@ -461,7 +460,13 @@ Patch0553: linux-%kernel_branch.20-fix-drivers-video-console--vgacon.patch
 Patch0554: linux-%kernel_branch.20-fix-drivers-video-geode.patch
 Patch0555: linux-%kernel_branch.20-fix-drivers-video-omap2-dss.patch
 
-Patch0561: linux-%kernel_branch.39-fix-drivers-watchdog--watchdog.patch
+Patch0561: linux-%kernel_branch.53-fix-drivers-watchdog--i6300esb.patch
+Patch0562: linux-%kernel_branch.53-fix-drivers-watchdog--iTCO_wdt.patch
+Patch0563: linux-%kernel_branch.53-fix-drivers-watchdog--sbc_epx_c3.patch
+Patch0564: linux-%kernel_branch.53-fix-drivers-watchdog--sc520_wdt.patch
+Patch0565: linux-%kernel_branch.53-fix-drivers-watchdog--sp5100_tco.patch
+Patch0566: linux-%kernel_branch.53-fix-drivers-watchdog--via_wdt.patch
+Patch0567: linux-%kernel_branch.39-fix-drivers-watchdog--watchdog.patch
 
 Patch0571: linux-%kernel_branch.25-fix-firmware--vicam.patch
 Patch0572: linux-%kernel_branch-fix-firmware-radeon.patch
@@ -1402,7 +1407,6 @@ cd linux-%version
 %patch0062 -p1
 %patch0063 -p1
 %patch0064 -p1
-%patch0065 -p1
 
 # fix-drivers-atm--*
 %patch0071 -p1
@@ -1704,6 +1708,12 @@ cd linux-%version
 
 # fix-drivers-watchdog--*
 %patch0561 -p1
+%patch0562 -p1
+%patch0563 -p1
+%patch0564 -p1
+%patch0565 -p1
+%patch0566 -p1
+%patch0567 -p1
 
 # fix-firmware-*
 %patch0571 -p1
@@ -2826,6 +2836,17 @@ done)
 
 
 %changelog
+* Tue Jul 30 2013 Led <led@altlinux.ru> 3.4.55-alt3
+- removed:
+  + fix-drivers-ata--ata_piix
+- added:
+  + fix-drivers-watchdog--i6300esb
+  + fix-drivers-watchdog--iTCO_wdt
+  + fix-drivers-watchdog--sbc_epx_c3
+  + fix-drivers-watchdog--sc520_wdt
+  + fix-drivers-watchdog--sp5100_tco
+  + fix-drivers-watchdog--via_wdt
+
 * Tue Jul 30 2013 Led <led@altlinux.ru> 3.4.55-alt2
 - updated:
   + fix-drivers-usb-host--xhci-hcd
