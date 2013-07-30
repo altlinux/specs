@@ -1,16 +1,18 @@
 Name: liborcus
-Version: 0.3.0
-Release: alt1.qa1
+Version: 0.5.1
+Release: alt1
 Summary: Standalone file import filter library for spreadsheet documents
 
 Group: System/Libraries
 License: MIT
 Url: http://gitorious.org/orcus
-Source: http://kohei.us/files/orcus/src/%{name}_%version.tar.bz2
+Source: %name-%version.tar.bz2
 Patch: liborcus-alt-boost.patch
 
-# Automatically added by buildreq on Mon Feb 04 2013
-# optimized out: boost-devel boost-intrusive-devel gnu-config libstdc++-devel pkg-config
+%define libver 0.6
+
+# Automatically added by buildreq on Thu Jul 25 2013
+# optimized out: boost-devel boost-intrusive-devel libstdc++-devel pkg-config
 BuildRequires: boost-devel-headers boost-interprocess-devel boost-program_options-devel gcc-c++ zlib-devel
 
 %description
@@ -34,13 +36,28 @@ Group: Publishing
 Tools for working with Orcus.
 
 %prep
-%setup -n %{name}_%version
+%setup
 %patch -p1
 
 %build
+
+sed -i 's|liborcus_@ORCUS_API_VERSION@_la_LIBADD = |& ../parser/liborcus-parser-@ORCUS_API_VERSION@.la|' src/liborcus/Makefile.am
+sed -i 's/liborcus_parser_.*_la_LIBADD = /& $(BOOST_SYSTEM_LIB) /' src/parser/Makefile.am
+
+%autoreconf
+
 # TODO spreadsheet-model requires ixion
-%configure --disable-debug --disable-static --disable-werror --with-pic \
-    --disable-spreadsheet-model --without-libzip
+%configure \
+	--disable-debug \
+	--disable-static \
+	--disable-werror \
+	--with-pic \
+	--with-boost \
+	--with-boost-system \
+	\
+	--disable-spreadsheet-model
+	
+
 sed -i \
     -e 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' \
     -e 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' \
@@ -53,17 +70,21 @@ rm -f %buildroot/%_libdir/*.la
 
 %files
 %doc AUTHORS
-%_libdir/%name-0.4.so.*
+%_libdir/%name-*%libver.so.*
 
 %files devel
-%_includedir/%name-0.4
-%_libdir/%name-0.4.so
-%_libdir/pkgconfig/%name-0.4.pc
+%_includedir/%name-%libver
+%_libdir/%name-*%libver.so
+%_libdir/pkgconfig/%name-*%libver.pc
 
 %files tools
-%_bindir/orcus-xml-dump
+%_bindir/orcus-*
 
 %changelog
+* Thu Jul 25 2013 Fr. Br. George <george@altlinux.ru> 0.5.1-alt1
+- Autobuild version bump to 0.5.1
+- Fix underlinkage
+
 * Sun Apr 14 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.3.0-alt1.qa1
 - NMU: rebuilt with libboost_*.so.1.53.0.
 
