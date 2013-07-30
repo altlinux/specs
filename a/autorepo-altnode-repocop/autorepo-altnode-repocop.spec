@@ -2,7 +2,7 @@
 
 #BuildRequires: 
 Name: autorepo-altnode-repocop
-Version: 0.12
+Version: 0.13
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -35,6 +35,9 @@ install -m 755 repocop-* $RPM_BUILD_ROOT%_bindir
 %_bindir/*
 
 %changelog
+* Tue Jul 30 2013 Igor Vlasenko <viy@altlinux.ru> 0.13-alt1
+- more daily.conf
+
 * Fri Jul 26 2013 Igor Vlasenko <viy@altlinux.ru> 0.12-alt1
 - html support
 
