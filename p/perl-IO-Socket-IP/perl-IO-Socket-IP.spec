@@ -1,5 +1,5 @@
 Name: perl-IO-Socket-IP
-Version: 0.17
+Version: 0.22
 Release: alt1
 
 Summary: IO::Socket::IP - A drop-in replacement for IO::Socket::INET supporting both IPv4 and IPv6
@@ -8,6 +8,7 @@ License: Perl
 
 Url: %CPAN IO-Socket-IP
 Source: %name-%version.tar
+Patch: %name-%version-%release.patch
 
 BuildArch: noarch
 BuildRequires: perl-devel perl-Module-Build
@@ -26,10 +27,7 @@ while still falling back to IPv4-only on systems which don't.
 
 %prep
 %setup -q
-# cannot listen on PF_INET6 on buildhost
-mv t/16v6only.t t/16v6only.t.orig
-# no internet connection on buildhost
-mv t/21nonblocking-connect-internet.t t/21nonblocking-connect-internet.t.orig
+%patch -p1
 
 %build
 %perl_vendor_build
@@ -42,5 +40,9 @@ mv t/21nonblocking-connect-internet.t t/21nonblocking-connect-internet.t.orig
 %doc LICENSE Changes README 
 
 %changelog
+* Tue Jul 30 2013 Vladimir Lettiev <crux@altlinux.ru> 0.22-alt1
+- 0.22
+- fixed tests 15io-socket.t, 16v6only.t
+
 * Tue Sep 11 2012 Vladimir Lettiev <crux@altlinux.ru> 0.17-alt1
 - initial build
