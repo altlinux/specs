@@ -1,13 +1,11 @@
 Name:	 xblast
-Version: 2.10.3
-Release: alt3.qa1
 Summary: The X11 bomberman team game
+Version: 2.10.4
+Release: alt1
 License: GPL
 Icon: %{name}_32x32.png
 Group: Games/Arcade
-# actually there's no xblast-2.10.3.tar.gz, but http://xblast.sourceforge.net/arc/xblast-060308.tgz
-# and newest 2.10.4 version is claimed buggy on the game site
-Source0: http://heanet.dl.sourceforge.net/sourceforge/xblast/%name-%version.tar.gz
+Source0: %name-%version.tar.gz
 Source1: %{name}_48x48.png
 Source2: %{name}_32x32.png
 Source3: %{name}_16x16.png
@@ -18,12 +16,12 @@ Packager: Fr. Br. George <george@altlinux.ru>
 # Automatically added by buildreq on Tue Dec 18 2007
 BuildRequires: imake libICE-devel libX11-devel xorg-cf-files libXt-devel
 
-Requires: %name-data
+Requires: %name-data fonts-bitmap-terminus
 
 %description
-XBlast is a multi-player arcade game for X11R5/R6. The game can be played
-with at least two players and up to four players. It was inspired by
-the video/computer game Bomberman(Dynablaster), which was to my
+XBlast is a multi-player arcade game for X11R5/R6. The game can be
+played with at least two players and up to four players. It was inspired
+by the video/computer game Bomberman(Dynablaster), which was to my
 knowledge first programmed for NEC's PC Engine/Turbo Grafx. Other
 (commercial) versions of the original game exist for IBM-PC, Atari ST,
 Amiga, NES, GameBoy and Super NES.
@@ -32,7 +30,10 @@ Amiga, NES, GameBoy and Super NES.
 %setup -q -n %name
 
 %build
-./autogen.sh
+# hack out helvetica fonts
+sed -i 's/".*-helvetica-bold-\(r-.*-[0-9][0-9]*-.*\)-iso8859-.*"/"-*-terminus-bold-\1-iso10646-1"/' x11_config.c
+
+%autoreconf
 %configure --enable-SMPF --enable-sound --enable-admin --bindir=%_gamesbindir --with-otherdatadir=%_gamesdatadir/XBlast-TNT --prefix=/usr
 %make_build
 
@@ -62,6 +63,10 @@ install -D %SOURCE4 %buildroot%_desktopdir/%name.desktop
 %doc README INSTALL ChangeLog AUTHORS NEWS
 
 %changelog
+* Mon Jul 22 2013 Fr. Br. George <george@altlinux.ru> 2.10.4-alt1
+- Version up
+- Hack out helvetica fonts
+
 * Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.10.3-alt3.qa1
 - NMU: rebuilt for debuginfo.
 
