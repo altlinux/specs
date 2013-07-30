@@ -2,8 +2,8 @@
 %def_enable    opengl
 
 Name:		gambas3
-Version:	3.4.1
-Release:	alt3
+Version:	3.4.2
+Release:	alt1
 
 Summary:	IDE based on a basic interpreter with object extensions
 Group:		Development/Tools
@@ -119,7 +119,6 @@ Provides:	%name = %version-%release
 Requires:	tar, gzip, rpm-build, gettext
 Requires:	%name-runtime = %version-%release
 Requires:	%name-devel = %version-%release
-Requires:	%name-gb-args = %version-%release
 Requires:	%name-gb-db = %version-%release
 Requires:	%name-gb-db-form = %version-%release
 Requires:	%name-gb-desktop = %version-%release
@@ -128,6 +127,7 @@ Requires:	%name-gb-form = %version-%release
 Requires:	%name-gb-form-dialog = %version-%release
 Requires:	%name-gb-form-mdi = %version-%release
 Requires:	%name-gb-form-stock = %version-%release
+Requires:	%name-gb-gui = %version-%release
 Requires:	%name-gb-image = %version-%release
 Requires:	%name-gb-image-effect = %version-%release
 Requires:	%name-gb-qt4 = %version-%release
@@ -1258,6 +1258,10 @@ install -m 0644 -p main/mime/application-x-gambas3.xml %buildroot%_xdgmimedir/pa
 %appdir/info/gb.xml.xslt.*
 
 %changelog
+* Tue Jul 30 2013 Andrey Cherepanov <cas@altlinux.org> 3.4.2-alt1
+- New version 3.4.2
+- Add gambas3-gb-gui for gambas3-ide
+
 * Thu Jun 06 2013 Andrey Cherepanov <cas@altlinux.org> 3.4.1-alt3
 - Rebuild with new version of unixODBC
 
