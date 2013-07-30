@@ -4,7 +4,7 @@
 %def_enable introspection
 
 Name: lib%{_name}
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Convenience library for the Yahoo! Place Finder APIs
@@ -12,11 +12,11 @@ License: LGPLv2+
 Group: System/Libraries
 Url: http://www.gnome.org/
 
-Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.bz2
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
 
-BuildPreReq: libjson-glib-devel >= 0.13.1
-BuildRequires: libgio-devel libsoup-gnome-devel
-BuildRequires: intltool gnome-doc-utils
+BuildPreReq: gnome-common libjson-glib-devel >= 0.13.1
+BuildRequires: libgio-devel >= 2.34 libsoup-gnome-devel libGeoIP-devel >= 1.5.0
+BuildRequires: intltool gnome-doc-utils gtk-doc
 %{?_enable_introspection:BuildRequires: libsoup-gnome-gir-devel libjson-glib-gir-devel}
 
 %description
@@ -73,7 +73,8 @@ GObject introspection devel data for the %_name library
 %setup -n %_name-%version
 
 %build
-%configure
+%autoreconf
+%configure --enable-gtk-doc
 %make_build
 
 %install
@@ -82,13 +83,14 @@ GObject introspection devel data for the %_name library
 %find_lang %_name
 
 %files -f %_name.lang
+%_bindir/geoip-update
 %_libdir/*.so.*
 %doc AUTHORS NEWS README
 
 %files devel
-%_includedir/%_name/
+%_includedir/%_name-%api_ver/
 %_libdir/*.so
-%_libdir/pkgconfig/%_name.pc
+%_libdir/pkgconfig/%_name-%api_ver.pc
 
 %files devel-doc
 %_datadir/gtk-doc/html/%_name/
@@ -102,5 +104,8 @@ GObject introspection devel data for the %_name library
 %endif
 
 %changelog
+* Tue Jul 30 2013 Yuri N. Sedunov <aris@altlinux.org> 0.99.1-alt1
+- 0.99.1
+
 * Fri Sep 09 2011 Yuri N. Sedunov <aris@altlinux.org> 0.99.0-alt1
 - first build for Sisyphus
