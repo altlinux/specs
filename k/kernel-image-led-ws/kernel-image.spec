@@ -20,7 +20,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.4.55
-Release: alt1
+Release: alt2
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -451,7 +451,7 @@ Patch0542: linux-%kernel_branch.39-fix-drivers-usb-dwc3--dwc3.patch
 Patch0543: linux-%kernel_branch.25-fix-drivers-usb-gadget--g_audio.patch
 Patch0544: linux-%kernel_branch.39-fix-drivers-usb-host--isp116x-hcd.patch
 Patch0545: linux-%kernel_branch.39-fix-drivers-usb-host--uhci-hcd.patch
-Patch0546: linux-%kernel_branch.50-fix-drivers-usb-host--xhci-hcd.patch
+Patch0546: linux-%kernel_branch.53-fix-drivers-usb-host--xhci-hcd.patch
 Patch0547: linux-%kernel_branch.39-fix-drivers-usb-musb--musb_hdrc.patch
 Patch0548: linux-%kernel_branch.39-fix-drivers-usb-otg--otg.patch
 
@@ -2826,6 +2826,10 @@ done)
 
 
 %changelog
+* Tue Jul 30 2013 Led <led@altlinux.ru> 3.4.55-alt2
+- updated:
+  + fix-drivers-usb-host--xhci-hcd
+
 * Mon Jul 29 2013 Led <led@altlinux.ru> 3.4.55-alt1
 - 3.4.55
 
