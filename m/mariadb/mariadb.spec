@@ -3,8 +3,8 @@
 %define build_bench 1
 
 Name: mariadb
-Version: 5.5.31
-Release: alt2
+Version: 5.5.32
+Release: alt1
 
 Summary: A very fast and reliable SQL database engine
 License: GPLv2 with exceptions
@@ -43,7 +43,7 @@ Patch107: mariadb-5.5-mysql_install_db-quiet.alt.patch
 
 Requires: %name-server = %version-%release %name-client = %version-%release
 
-BuildRequires: gcc-c++ libncursesw-devel libreadline-devel libssl-devel perl-DBI zlib-devel libpam0-devel libevent-devel cmake bison doxygen groff-base groff-ps
+BuildRequires: gcc-c++ libncursesw-devel libreadline-devel libssl-devel perl-DBI zlib-devel libpam0-devel libevent-devel cmake bison doxygen groff-base groff-ps dos2unix
 BuildRequires: libaio-devel  libwrap-devel boost-devel libedit-devel perl-GD perl-threads perl-Memoize
 
 %define soname 18
@@ -221,6 +221,9 @@ perl -pi -e "s|basedir/lib/|basedir/%_lib/|g" mysql-test/mysql-test-run.pl
 # workaround for upstream bug #56342
 rm -f mysql-test/t/ssl_8k_key-master.opt
 
+#fix shebang.req: ERROR: /usr/src/tmp/mariadb-buildroot/usr/share/mysql/sql-bench/innotest1: trailing <CR> in interpreter: #!/usr/bin/perl<CR>
+find sql-bench -type f -name 'innotest*' | xargs dos2unix
+
 %build
 mkdir build
 pushd build
@@ -372,6 +375,7 @@ rm -f %buildroot%_bindir/mysql_embedded
 # this command enables plugins, but needs ini file + configuration in my.cnf before executing
 # and oh yeah, mysql must be stopped... => useless
 rm -f %buildroot%_bindir/mysql_plugin
+rm -f %buildroot%_mandir/man1/mysql_plugin.1*
 rm -f %buildroot%_libdir/mysql/plugin/daemon_example.ini
 
 # remove more useless plugins
@@ -628,6 +632,9 @@ fi
 %_libdir/libmysqld.so
 
 %changelog
+* Tue Jul 30 2013 Slava Dubrovskiy <dubrsl@altlinux.org> 5.5.32-alt1
+- New version
+
 * Tue Jun 11 2013 Slava Dubrovskiy <dubrsl@altlinux.org> 5.5.31-alt2
 - Fixed check for the first start
 
