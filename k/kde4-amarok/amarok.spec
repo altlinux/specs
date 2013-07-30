@@ -1,14 +1,7 @@
-%define mysql_ver %{get_version libmysqlclient-devel}
-%if "%mysql_ver" == "%nil"
-%define mysql_ver %{get_version libMySQL-devel}
-%endif
-%if "%mysql_ver" == "%nil"
-%define mysql_ver 5.0
-%endif
 
 %define rname amarok
 Name: kde4-%rname
-Version: 2.7.0
+Version: 2.7.1
 Release: alt1
 #define beta 20090812
 
@@ -30,7 +23,7 @@ Patch50: amarok-2.4.3-qtscript_not_required.patch
 
 # Automatically added by buildreq on Thu Nov 19 2009 (-bi)
 #BuildRequires: dbus-tools-gui doxygen gcc-c++ git-core glibc-devel-static groff-ps kde4libs-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXdamage-devel libXdmcp-devel libXpm-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libcurl-devel libgcrypt-devel libgio-devel libgpod-devel libgtk+2-common-devel liblastfm-devel libloudmouth-devel libmtp-devel libncursesw-devel libqca2-devel libqt3-devel libtag-devel libtag-extras-devel libxkbfile-devel libxml2-devel qtscriptbindings rpm-build-ruby tetex-latex time xorg-xf86vidmodeproto-devel
-BuildRequires(pre): kde4libs-devel kde4base-runtime-devel libMySQL-devel
+BuildRequires(pre): kde4libs-devel kde4base-runtime-devel libmysqlclient-devel
 BuildRequires: dbus-tools-gui doxygen gcc-c++ glibc-devel groff-ps
 BuildRequires: libtag-devel >= 1.6 libtag-extras-devel >= 1.0
 BuildRequires: libcurl-devel libgcrypt-devel libgio-devel libgpod-devel libgtk+2-common-devel liblastfm-devel
@@ -255,6 +248,9 @@ fi
 
 
 %changelog
+* Tue Jul 30 2013 Sergey V Turchin <zerg@altlinux.org> 2.7.1-alt1
+- new version
+
 * Mon Jan 21 2013 Sergey V Turchin <zerg@altlinux.org> 2.7.0-alt1
 - new version
 
