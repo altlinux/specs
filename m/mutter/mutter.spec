@@ -3,7 +3,7 @@
 %def_enable gtk_doc
 
 Name: mutter
-Version: %ver_major.3
+Version: %ver_major.4
 Release: alt1
 Epoch: 1
 
@@ -154,6 +154,9 @@ DATADIRNAME=share %configure \
 
 
 %changelog
+* Wed Jul 31 2013 Yuri N. Sedunov <aris@altlinux.org> 1:3.8.4-alt1
+- 3.8.4
+
 * Sat Jun 08 2013 Yuri N. Sedunov <aris@altlinux.org> 1:3.8.3-alt1
 - 3.8.3
 
