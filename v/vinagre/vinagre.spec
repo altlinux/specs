@@ -8,7 +8,7 @@
 %def_enable ssh
 
 Name: vinagre
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: VNC client for the GNOME Desktop
@@ -19,6 +19,7 @@ Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 
+Requires: dconf gnome-icon-theme
 %{?_enable_rdp:Requires: rdesktop}
 
 BuildPreReq: rpm-build-gnome gnome-common gnome-icon-theme desktop-file-utils
@@ -84,6 +85,9 @@ rm -rf %buildroot%_datadir/doc
 %doc AUTHORS NEWS README
 
 %changelog
+* Tue Jul 30 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.3-alt1
+- 3.8.3
+
 * Tue May 14 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.2-alt1
 - 3.8.2
 
