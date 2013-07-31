@@ -8,7 +8,7 @@ BuildRequires: chrpath
 %define name libhocr
 %define version 0.10.17
 # Override default upstream location [/usr/share/doc/libhocr]
-%define	hocrdocdir	%{_docdir}/%{name}-%{version}
+%global	hocrdocdir	%{?_pkgdocdir}%{!?_pkgdocdir:%{_docdir}/%{name}-%{version}}
 
 # sitelib for noarch packages, sitearch for others (remove the unneeded one)
 %{!?python_sitelib: %define python_sitelib %(%{__python} -c "from distutils.sysconfig import get_python_lib; print get_python_lib()")}
@@ -16,7 +16,7 @@ BuildRequires: chrpath
 
 Name:		libhocr
 Version:	0.10.17
-Release:	alt2_14
+Release:	alt2_15
 Summary:	A Hebrew optical character recognition library
 
 Group:		System/Libraries
@@ -170,6 +170,9 @@ done
 
 
 %changelog
+* Wed Jul 31 2013 Igor Vlasenko <viy@altlinux.ru> 0.10.17-alt2_15
+- update to new release by fcimport
+
 * Tue Apr 30 2013 Igor Vlasenko <viy@altlinux.ru> 0.10.17-alt2_14
 - update to new release by fcimport
 
