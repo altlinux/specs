@@ -1,6 +1,6 @@
 %define verdata 2005-01-06
 Name:	 xblast-data
-Version: 2.10.3
+Version: 2.10.4
 Release: alt1
 Summary: The X11 bomberman team game (data files)
 License: GPL
@@ -25,6 +25,7 @@ tar xf %SOURCE3
 tar xf %SOURCE4
 
 %build
+mv levels-%verdata/reconstruct*on2.xal levels-%verdata/reconstruction2.xal
 
 %install
 mkdir -p %buildroot/%_gamesdatadir/XBlast-TNT
@@ -38,6 +39,9 @@ cp musics-%verdata/* %buildroot/%_gamesdatadir/XBlast-TNT/sounds/
 %_gamesdatadir/XBlast-TNT/*
 
 %changelog
+* Mon Jul 22 2013 Fr. Br. George <george@altlinux.ru> 2.10.4-alt1
+- Rename ISO8859-1 encoded file
+
 * Tue Dec 18 2007 Fr. Br. George <george@altlinux.ru> 2.10.3-alt1
 - Initial build as separate package from various sources
 
