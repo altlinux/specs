@@ -1,5 +1,5 @@
 Name: pinta
-Version: 1.1
+Version: 1.4
 Release: alt1
 
 Summary: An easy to use drawing and image editing program
@@ -44,7 +44,7 @@ It's goal is to provide a simplified alternative to GIMP for casual users.
 %find_lang %name
 
 %files -f %name.lang
-%doc todo.txt readme.md license-mit.txt license-pdn.txt
+%doc readme.md license-mit.txt license-pdn.txt
 %_bindir/%name
 %_libdir/%name/
 %_desktopdir/%name.desktop
@@ -53,6 +53,9 @@ It's goal is to provide a simplified alternative to GIMP for casual users.
 %_pixmapsdir/%{name}*
 
 %changelog
+* Wed Jul 31 2013 Vitaly Lipatov <lav@altlinux.ru> 1.4-alt1
+- new version 1.4 (with rpmrb script)
+
 * Sat Feb 25 2012 Vitaly Lipatov <lav@altlinux.ru> 1.1-alt1
 - initial build for ALT Linux Sisyphus (thanks, Mandriva!)
 
