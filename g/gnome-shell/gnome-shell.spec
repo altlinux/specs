@@ -4,8 +4,8 @@
 %def_enable gnome_bluetooth
 
 Name: gnome-shell
-Version: %ver_major.3
-Release: alt2
+Version: %ver_major.4
+Release: alt1
 
 Summary: Window management and application launching for GNOME
 Group: Graphical desktop/GNOME
@@ -13,16 +13,16 @@ License: GPLv2+
 Url: https://live.gnome.org/GnomeShell
 Packager: GNOME Maintainers Team <gnome at packages.altlinux.org>
 
-Source: %name-%version.tar
-#Source: http://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+#Source: %name-%version.tar
+Source: http://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 Patch1: %name-3.7.92-alt-gir.patch
-Patch3: %name-3.6.2-alt-invalid_user_shell.patch
-Patch4: %name-3.8.1-bgo697008-input-source-switch.patch
+Patch3: %name-3.8.4-alt-invalid_user_shell.patch
 
 Obsoletes: gnome-shell-extension-per-window-input-source
 
 Requires: %name-data = %version-%release
 Requires: gnome-session >= %ver_major
+Requires: dconf gnome-icon-theme gnome-icon-theme-symbolic
 
 %define clutter_ver 1.13.6
 %define gjs_ver 1.33.2
@@ -126,10 +126,9 @@ GNOME Shell.
 %setup -q
 %patch1 -p1 -b .gir
 %patch3 -b .shells
-#%%patch4 -p1 -b .keyb
 
 %build
-NOCONFIGURE=1 ./autogen.sh
+#NOCONFIGURE=1 ./autogen.sh
 %configure \
 	--enable-gtk-doc \
     --disable-schemas-compile
@@ -182,6 +181,9 @@ rm -f %buildroot%_libdir/%name/*.la
 %_datadir/gtk-doc/html/st/
 
 %changelog
+* Wed Jul 31 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.4-alt1
+- 3.8.4
+
 * Fri Jul 05 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.3-alt2
 - updated to 1020d8a0
 

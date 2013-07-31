@@ -4,7 +4,7 @@
 %def_enable session_selector
 
 Name: gnome-session
-Version: %ver_major.2.1
+Version: %ver_major.4
 Release: alt1
 
 Summary: The gnome session programs for the GNOME GUI desktop environment
@@ -217,6 +217,9 @@ install -pD -m644 %SOURCE1 %buildroot%_iconsdir/gnome.svg
 %endif
 
 %changelog
+* Tue Jul 30 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.4-alt1
+- 3.8.4
+
 * Tue May 14 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.2.1-alt1
 - 3.8.2.1
 - new -selector subpackage
