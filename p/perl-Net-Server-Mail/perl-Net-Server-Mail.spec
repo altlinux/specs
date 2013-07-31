@@ -14,7 +14,7 @@
 %define _enable_test 1
 
 Name: perl-Net-Server-Mail
-Version: 0.18
+Version: 0.20
 Release: alt1
 
 Summary: Class to easily create a mail server
@@ -31,7 +31,7 @@ Source: http://www.cpan.org/authors/id/G/GU/GUIMARD/Net-Server-Mail-%{version}.t
 
 
 # Automatically added by buildreq on Fri Sep 05 2008 (-bi)
-BuildRequires: perl-devel perl-libnet
+BuildRequires: perl-devel perl-libnet perl(IO/Socket/SSL.pm) perl(Test/Most.pm)
 
 %description
 This module is a versatile and extensible implementation of the SMTP
@@ -52,6 +52,9 @@ to your programs.
 %doc Changes README
 
 %changelog
+* Sat Jul 27 2013 Igor Vlasenko <viy@altlinux.ru> 0.20-alt1
+- automated CPAN update
+
 * Mon Sep 24 2012 Igor Vlasenko <viy@altlinux.ru> 0.18-alt1
 - automated CPAN update
 
