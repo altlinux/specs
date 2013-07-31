@@ -3,7 +3,7 @@ BuildRequires: unzip
 # END SourceDeps(oneline)
 Name:           atasm
 Version:        1.07d
-Release:        alt2_5
+Release:        alt2_6
 Summary:        6502 cross-assembler
 
 Group:          Development/Tools
@@ -30,7 +30,7 @@ with lightning speed.
 %build
 pushd src
 make %{?_smp_mflags} CFLAGS="$RPM_OPT_FLAGS -DZLIB_CAPABLE -DUNIX"
-sed -e 's|%%DOCDIR%%|%{_docdir}/%{name}-%{version}|g' %{name}.1.in > %{name}.1
+sed -e 's|%%DOCDIR%%|%{?_pkgdocdir}%{!?_pkgdocdir:%{_docdir}/%{name}-%{version}}|g' %{name}.1.in > %{name}.1
 popd
 
 
@@ -58,6 +58,9 @@ popd
 
 
 %changelog
+* Wed Jul 31 2013 Igor Vlasenko <viy@altlinux.ru> 1.07d-alt2_6
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 1.07d-alt2_5
 - update to new release by fcimport
 
