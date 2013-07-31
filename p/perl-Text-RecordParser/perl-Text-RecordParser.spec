@@ -1,8 +1,8 @@
 %define dist Text-RecordParser
 
 Name: perl-%dist
-Version: 1.5.0
-Release: alt1.1
+Version: 1.6.1
+Release: alt1
 
 Packager: Victor Forsiuk <force@altlinux.org>
 
@@ -11,7 +11,7 @@ License: GPLv2 only
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://search.cpan.org/CPAN/authors/id/K/KC/KCLARK/Text-RecordParser-v%version.tar.gz
+Source: http://www.cpan.org/authors/id/K/KC/KCLARK/Text-RecordParser-v%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -44,6 +44,9 @@ a file however they may be delimited.
 %_man1dir/*
 
 %changelog
+* Wed Jul 31 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.1-alt1
+- automated CPAN update
+
 * Fri Nov 26 2010 Igor Vlasenko <viy@altlinux.ru> 1.5.0-alt1.1
 - repair after perl 5.12 upgrade using girar-nmu
 
