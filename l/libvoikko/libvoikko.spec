@@ -3,10 +3,9 @@ BuildRequires(pre): rpm-build-python
 BuildRequires: gcc-c++
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
-%{!?python_sitelib: %global python_sitelib %(%{__python} -c "from distutils.sysconfig import get_python_lib; print get_python_lib()")}
 Name:           libvoikko
 Version:        3.6
-Release:        alt1_1
+Release:        alt1_3
 Summary:        Voikko is a library for spellcheckers and hyphenators
 
 Group:          System/Libraries
@@ -15,7 +14,7 @@ URL:            http://voikko.sourceforge.net/
 # The usual format of stable release URLs
 Source0:        http://downloads.sourceforge.net/voikko/%{name}-%{version}.tar.gz
 # The usual format of test release URLs
-#Source0:        http://www.puimula.org/htp/testing/%{name}-%{version}rc1.tar.gz
+#Source0:        http://www.puimula.org/htp/testing/%%{name}-%%{version}rc1.tar.gz
 
 BuildRequires:  python-devel
 # Require the Finnish morphology because Finnish is currently the only language
@@ -38,7 +37,7 @@ Hunspell.
 %package        devel
 Summary:        Development files for %{name}
 Group:          Development/C
-Requires:       %{name} = %{version}-%{release}
+Requires:       %{name}%{?_isa} = %{version}-%{release}
 
 %description    devel
 The %{name}-devel package contains libraries and header files for
@@ -47,7 +46,7 @@ developing applications that use %{name}.
 %package -n     voikko-tools
 Summary:        Test tools for %{name}
 Group:          Text tools
-Requires:       %{name} = %{version}-%{release}
+Requires:       %{name}%{?_isa} = %{version}-%{release}
 
 %description -n voikko-tools
 This package contains voikkospell and voikkohyphenate, small command line
@@ -106,7 +105,6 @@ install -pm 0644 python/libvoikko.py $RPM_BUILD_ROOT%{python_sitelibdir_noarch}/
 %{_mandir}/man1/voikkovfstc.1*
 
 %files devel
-%doc
 %{_includedir}/*
 %{_libdir}/*.so
 %{_libdir}/pkgconfig/libvoikko.pc
@@ -115,6 +113,9 @@ install -pm 0644 python/libvoikko.py $RPM_BUILD_ROOT%{python_sitelibdir_noarch}/
 %{python_sitelibdir_noarch}/%{name}.py*
 
 %changelog
+* Wed Jul 31 2013 Igor Vlasenko <viy@altlinux.ru> 3.6-alt1_3
+- update to new release by fcimport
+
 * Tue Apr 16 2013 Igor Vlasenko <viy@altlinux.ru> 3.6-alt1_1
 - update to new release by fcimport
 
