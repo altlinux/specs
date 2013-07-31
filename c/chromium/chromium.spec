@@ -1,6 +1,6 @@
 %set_verify_elf_method textrel=relaxed
 %define v8_ver 3.18.5.9
-%define rev 209842
+%define rev 213514
 
 %def_disable debug
 %def_disable nacl
@@ -12,7 +12,7 @@
 %endif
 
 Name:           chromium
-Version:        28.0.1500.71
+Version:        28.0.1500.95
 Release:        alt1.r%rev
 
 Summary:        An open source web browser developed by Google
@@ -444,6 +444,14 @@ printf '%_bindir/%name\t%_libdir/%name/%name-gnome\t15\n' > %buildroot%_altdir/%
 %_altdir/%name-gnome
 
 %changelog
+* Wed Jul 31 2013 Andrey Cherepanov <cas@altlinux.org> 28.0.1500.95-alt1.r213514
+- New version 28.0.1500.95
+- Security fixes:
+  - Medium CVE-2013-2881: Origin bypass in frame handling.
+  - High CVE-2013-2883: Use-after-free in MutationObserver.
+  - High CVE-2013-2884: Use-after-free in DOM.
+  - High CVE-2013-2885: Use-after-free in input handling.
+
 * Wed Jul 24 2013 Andrey Cherepanov <cas@altlinux.org> 28.0.1500.71-alt1.r209842
 - New version 28.0.1500.71
 - Security fixes:
