@@ -2,19 +2,19 @@
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(Catalyst/Runtime.pm) perl(Data/DPath.pm) perl(DateTime.pm) perl(DateTime/Format/DateParse.pm) perl(File/Find/Rule.pm) perl(File/stat.pm) perl(FindBin.pm) perl(Hash/Merge.pm) perl(Moose/Role.pm) perl(Perl6/Junction.pm) perl(Pod/Usage.pm) perl(Test/WWW/Mechanize/Catalyst.pm) perl(XML/Feed.pm) perl(YAML.pm) perl(common/sense.pm) perl(namespace/autoclean.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
-BuildRequires: perl(DBIx/Class/InflateColumn/Object/Enum.pm) perl(Hash/Merge/Simple.pm) perl(DBIx/Class/TimeStamp.pm) perl(DBD/SQLite.pm)
+BuildRequires: perl(DBIx/Class/InflateColumn/Object/Enum.pm) perl(Hash/Merge/Simple.pm) perl(DBIx/Class/TimeStamp.pm) perl(DBD/SQLite.pm) perl(Tapper/Cmd/Init.pm) perl(Tapper/Base.pm)
 %define upstream_name    Tapper-CLI
-%define upstream_version 4.1.0
+%define upstream_version 4.1.3
 
 Name:       perl-%{upstream_name}
-Version:    %{upstream_version}
-Release:    alt1_1
+Version:    4.1.3
+Release:    alt1
 
 Summary:    Tapper-* command line tools
 License:    BSD
 Group:      Development/Perl
 Url:        http://search.cpan.org/dist/%{upstream_name}
-Source0:    http://www.cpan.org/modules/by-module/Tapper/%{upstream_name}-%{upstream_version}.tar.gz
+Source:    http://www.cpan.org/authors/id/T/TA/TAPPER/Tapper-CLI-%{version}.tar.gz
 
 BuildRequires: perl(App/Cmd.pm)
 BuildRequires: perl(App/Cmd/Command.pm)
@@ -94,6 +94,9 @@ Command line tools for Tapper.
 
 
 %changelog
+* Sat Jul 27 2013 Igor Vlasenko <viy@altlinux.ru> 4.1.3-alt1
+- automated CPAN update
+
 * Tue Dec 11 2012 Igor Vlasenko <viy@altlinux.ru> 4.1.0-alt1_1
 - mageia import by cas@ requiest
 
