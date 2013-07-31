@@ -1,5 +1,5 @@
 Name: usbutils
-Version: 006
+Version: 007
 Release: alt1
 
 Summary: Linux USB utilities
@@ -41,6 +41,9 @@ rm -f %buildroot%_bindir/lsusb.py
 %doc AUTHORS NEWS
 
 %changelog
+* Wed Jul 31 2013 Alexey Shabalin <shaba@altlinux.ru> 007-alt1
+- 007
+
 * Mon May 13 2013 Alexey Shabalin <shaba@altlinux.ru> 006-alt1
 - 006
 
