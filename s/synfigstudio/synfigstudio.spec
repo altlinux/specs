@@ -1,5 +1,5 @@
 Name: synfigstudio
-Version: 0.63.05
+Version: 0.64.0
 Release: alt1
 
 Summary: Synfig studio - animation program
@@ -7,7 +7,7 @@ Group: Office
 License: GPL
 Url: http://synfig.com
 
-Packager: Yuriy Shirokov <yushi@altlinux.org>
+Packager: Andrey Cherepanov <cas@altlinux.org>
 
 #Source: http://prdownloads.sf.net/synfig/%name-%version.tar.gz
 Source: %name-%version.tar
@@ -16,6 +16,7 @@ Source: %name-%version.tar
 BuildPreReq: fonts-ttf-liberation
 BuildRequires: gcc-c++ libgtkmm2-devel
 BuildRequires: libsynfig-devel >= %version
+BuildRequires: intltool
 
 BuildPreReq: libsynfig-devel = %version
 Requires: lib%name = %version-%release
@@ -69,6 +70,9 @@ Header files for Synfig studio.
 %_includedir/synfigapp*/
 
 %changelog
+* Mon Jul 29 2013 Andrey Cherepanov <cas@altlinux.org> 0.64.0-alt1
+- New version
+
 * Mon Feb 11 2013 Andrey Cherepanov <cas@altlinux.org> 0.63.05-alt1
 - New version 0.63.05
 
