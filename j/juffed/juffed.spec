@@ -1,6 +1,6 @@
 Name:		juffed
-Version:	0.8.1
-Release:	alt5.qa2
+Version:	0.10
+Release:	alt1
 License:	GPL
 Packager:	Andrey Cherepanov <cas@altlinux.org>
 Group:		Editors
@@ -11,10 +11,13 @@ Patch0:		move-plugins-to-lib-dir.patch
 
 BuildRequires:	gcc-c++, cmake, libqt4-devel, libqscintilla2-qt4-devel, chrpath
 
+Provides:   %name-plugins = %version-%release
+Obsoletes:  %name-plugins < %version-%release
+
 %package devel
 Summary:	Includes for juffed
 Group:		Development/KDE and QT
-Requires:	%name = %version
+Requires:	%name = %version-%release
 BuildArch:	noarch
 
 %description
@@ -27,7 +30,7 @@ See http://code.google.com/p/juffed-plugins/wiki/JuffEd_Plugins_Tutorial for det
 
 %prep
 %setup -q
-%patch0 -p2
+#%%patch0 -p2
 
 %build
 cmake . -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=release -DCMAKE_CXX_FLAGS:STRING='%optflags'
@@ -43,6 +46,7 @@ mkdir -p %buildroot/%_libdir/%name/plugins
 %doc COPYING ChangeLog README
 %_bindir/%name
 %_libdir/libjuff.*
+%_libdir/libjuffed-engine-qsci.so*
 %dir %_datadir/%name
 %_datadir/%name
 %dir %_libdir/%name/plugins
@@ -54,6 +58,10 @@ mkdir -p %buildroot/%_libdir/%name/plugins
 %_includedir/%name
 
 %changelog
+* Wed Jul 31 2013 Andrey Cherepanov <cas@altlinux.org> 0.10-alt1
+- New version
+- Main package includes juffed-plugins and therefore obsoletes separate package
+
 * Fri Dec 21 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.1-alt5.qa2
 - Rebuilt with new qscintilla2
 
