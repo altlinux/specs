@@ -1,7 +1,7 @@
 Name: hunspell-fo
 Summary: Faroese hunspell dictionaries
-Version: 0.4.1
-Release: alt1_3
+Version: 0.4.2
+Release: alt1_1
 Source: http://fo.speling.org/filer/myspell-fo-%{version}.tar.bz2
 Group: Text tools
 URL: http://fo.speling.org/
@@ -39,6 +39,9 @@ cp -p *.dic *.aff $RPM_BUILD_ROOT/%{_datadir}/myspell
 %{_datadir}/myspell/*
 
 %changelog
+* Wed Jul 31 2013 Igor Vlasenko <viy@altlinux.ru> 0.4.2-alt1_1
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.4.1-alt1_3
 - update to new release by fcimport
 
