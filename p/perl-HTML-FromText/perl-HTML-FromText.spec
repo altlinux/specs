@@ -3,8 +3,8 @@
 %define m_name		HTML::FromText
 #%define m_author_id	TJMATHER
 Name: perl-%module
-Version: 2.05
-Release: alt3.1
+Version: 2.07
+Release: alt1
 
 Summary: A perl module for HTML::FromText
 Group: Development/Perl
@@ -13,8 +13,7 @@ License: Artistic/GPL v1
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 Url: http://search.cpan.org/dist/%m_distro/
-Source: http://search.cpan.org/CPAN/authors/id/C/CW/CWEST/%m_distro-%version.tar.bz2
-Patch: %name.patch
+Source: http://www.cpan.org/authors/id/R/RJ/RJBS/HTML-FromText-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -30,7 +29,6 @@ HTML::FromText converts text to HTML.
 
 %prep
 %setup -q -n %m_distro-%version
-%patch -p1
 
 %build
 %perl_vendor_build INSTALLMAN1DIR=%_man1dir
@@ -45,6 +43,9 @@ HTML::FromText converts text to HTML.
 %_man1dir/*
 
 %changelog
+* Sat Jul 27 2013 Igor Vlasenko <viy@altlinux.ru> 2.07-alt1
+- automated CPAN update
+
 * Mon Nov 22 2010 Igor Vlasenko <viy@altlinux.ru> 2.05-alt3.1
 - repair after perl 5.12 upgrade using girar-nmu
 
