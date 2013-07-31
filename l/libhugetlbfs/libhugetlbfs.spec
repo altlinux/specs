@@ -4,14 +4,14 @@ BuildRequires: perl(FindBin.pm) perl(sigtrap.pm)
 %add_optflags %optflags_shared
 Name: libhugetlbfs
 Version: 2.16
-Release: alt1_1
+Release: alt1_2
 Summary: A library which provides easy access to huge pages of memory
 
 Group: System/Libraries
 License: LGPLv2+
 URL: http://libhugetlbfs.sourceforge.net/
 Source0: http://downloads.sourceforge.net/libhugetlbfs/%{name}-%{version}.tar.gz
-#Patch0: libhugetlbfs-2.13-s390x-build.patch
+Patch0: libhugetlbfs-2.16-s390.patch
 
 BuildRequires: glibc-devel
 BuildRequires: glibc-devel-static
@@ -46,11 +46,11 @@ pool size control. pagesize lists page sizes available on the machine.
 
 %prep
 %setup -q -n %{name}-%{version}
-#%patch0 -p1 -b .s390x-build
+%patch0 -p1 -b .s390
 
 %build
 # Parallel builds are not reliable
-make BUILDTYPE=NATIVEONLY
+CFLAGS="%{optflags}" make BUILDTYPE=NATIVEONLY
 
 %install
 make install PREFIX=%{_prefix} DESTDIR=$RPM_BUILD_ROOT LDSCRIPTDIR=%{ldscriptdir} BUILDTYPE=NATIVEONLY
@@ -104,6 +104,9 @@ rm -fr $RPM_BUILD_ROOT/%{_sbindir}/
 %exclude /usr/lib/perl5/TLBC
 
 %changelog
+* Wed Jul 31 2013 Igor Vlasenko <viy@altlinux.ru> 2.16-alt1_2
+- update to new release by fcimport
+
 * Sat May 04 2013 Igor Vlasenko <viy@altlinux.ru> 2.16-alt1_1
 - update to new release by fcimport
 
