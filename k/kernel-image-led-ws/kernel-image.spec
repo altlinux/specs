@@ -20,7 +20,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.4.55
-Release: alt3
+Release: alt4
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -202,10 +202,11 @@ Patch0055: linux-%kernel_branch.20-fix-drivers-acpi-acpica.patch
 Patch0056: linux-%kernel_branch.50-fix-drivers-acpi-apei--apei.patch
 Patch0057: linux-%kernel_branch.50-fix-drivers-acpi-apei--ghes.patch
 
-Patch0061: linux-%kernel_branch.25-fix-drivers-ata--pata_amd.patch
-Patch0062: linux-%kernel_branch.25-fix-drivers-ata--pata_mpiix.patch
-Patch0063: linux-%kernel_branch.25-fix-drivers-ata--pata_oldpiix.patch
-Patch0064: linux-%kernel_branch.25-fix-drivers-ata--pata_sch.patch
+Patch0061: linux-%kernel_branch.55-fix-drivers-ata--ata_piix.patch
+Patch0062: linux-%kernel_branch.25-fix-drivers-ata--pata_amd.patch
+Patch0063: linux-%kernel_branch.25-fix-drivers-ata--pata_mpiix.patch
+Patch0064: linux-%kernel_branch.25-fix-drivers-ata--pata_oldpiix.patch
+Patch0065: linux-%kernel_branch.25-fix-drivers-ata--pata_sch.patch
 
 Patch0071: linux-%kernel_branch.25-fix-drivers-atm--ambassador.patch
 
@@ -1407,6 +1408,7 @@ cd linux-%version
 %patch0062 -p1
 %patch0063 -p1
 %patch0064 -p1
+%patch0065 -p1
 
 # fix-drivers-atm--*
 %patch0071 -p1
@@ -2836,6 +2838,10 @@ done)
 
 
 %changelog
+* Wed Jul 31 2013 Led <led@altlinux.ru> 3.4.55-alt4
+- added:
+  + fix-drivers-ata--ata_piix
+
 * Tue Jul 30 2013 Led <led@altlinux.ru> 3.4.55-alt3
 - removed:
   + fix-drivers-ata--ata_piix
