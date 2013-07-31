@@ -1,6 +1,7 @@
+BuildRequires: perl(Module/Build/Tiny.pm)
 %define dist Test-CheckDeps
 Name: perl-%dist
-Version: 0.002
+Version: 0.006
 Release: alt1
 
 Summary: Check for presence of dependencies
@@ -8,7 +9,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/L/LE/LEONT/Test-CheckDeps-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -33,5 +34,8 @@ properly.  If requested, it can bail out all testing on error.
 %perl_vendor_privlib/Test
 
 %changelog
+* Wed Jul 31 2013 Igor Vlasenko <viy@altlinux.ru> 0.006-alt1
+- automated CPAN update
+
 * Wed Sep 26 2012 Alexey Tourbin <at@altlinux.ru> 0.002-alt1
 - initial revision
