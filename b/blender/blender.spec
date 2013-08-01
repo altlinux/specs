@@ -1,5 +1,5 @@
 Name: blender
-Version: 2.68
+Version: 2.68a
 Release: alt1
 
 Summary: 3D modeling, animation, rendering and post-production
@@ -176,6 +176,9 @@ install -pD -m644 release/datafiles/locale/languages %buildroot%_datadir/%name/l
 
 
 %changelog
+* Thu Aug 01 2013 Andrey Liakhovets <aoliakh@altlinux.org> 2.68a-alt1
+- New release (bugfix)
+
 * Sun Jul 21 2013 Andrey Liakhovets <aoliakh@altlinux.org> 2.68-alt1
 - New version
 - *-2.67b-node_efficiency_tools.patch dropped (2.67b-only)
