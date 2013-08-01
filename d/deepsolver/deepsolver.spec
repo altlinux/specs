@@ -1,6 +1,6 @@
 
 Name: deepsolver
-Version: 0.3.3
+Version: 0.3.4
 Release: alt1
 
 Packager: Michael Pozhidaev <msp@altlinux.ru>
@@ -81,13 +81,12 @@ repository index data what significantly reduces time.
 
 %install
 make DESTDIR=%buildroot install 
-
+%__mkdir %buildroot%_includedir/%name
+%__mv %buildroot%_includedir/*.h %buildroot%_includedir/%name
 %__rm -f %buildroot%_libdir/lib%name.la
-
 %__install -d -m 755 %buildroot%_sysconfdir/%name
 %__cp -r ./etc/. %buildroot%_sysconfdir/%name
-%__subst s/i586/%_arch/ %buildroot%_sysconfdir/%name/conf.d/sisyphus.repo
-
+%__subst s/i586/%_arch/ %buildroot%_sysconfdir/%name/conf.d/sisyphus.conf
 %__install -d -m 755 %buildroot%_localstatedir/%name
 
 %files
@@ -96,6 +95,8 @@ make DESTDIR=%buildroot install
 %_bindir/ds-install
 %_bindir/ds-remove
 %_bindir/ds-update
+%_bindir/ds-require
+%_bindir/ds-snapshot
 %config(noreplace) %_sysconfdir/%name
 %_localstatedir/%name
 
@@ -104,6 +105,7 @@ make DESTDIR=%buildroot install
 
 %files -n lib%name-devel
 %_libdir/lib%name.so
+%_includedir/%name
 
 %files -n lib%name-devel-static
 %_libdir/lib%name.a
@@ -114,6 +116,11 @@ make DESTDIR=%buildroot install
 %_bindir/ds-provides
 
 %changelog
+* Thu Aug 01 2013 Michael Pozhidaev <msp@altlinux.ru> 0.3.4-alt1
+- New version 0.3.4
+- New utilities: ds-require and ds-snapshot
+- New command line options for ds-install and ds-remove: --files and --urls
+
 * Wed May 15 2013 Michael Pozhidaev <msp@altlinux.ru> 0.3.3-alt1
 - ds-repo, ds-patch and ds-provides utilities now have --quiet(-q) command line option 
 - ds-patch utility gets provides filtering feature 
