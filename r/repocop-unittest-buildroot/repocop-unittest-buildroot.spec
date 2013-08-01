@@ -1,7 +1,7 @@
 %define testname buildroot
 
 Name: repocop-unittest-%testname
-Version: 0.07
+Version: 0.08
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -41,7 +41,7 @@ i=0
 for file in `grep -s -r -l $srcname-buildroot $REPOCOP_PKG_ROOT/`; do
     filename=`echo $file | sed -e "s,$REPOCOP_PKG_ROOT,,g"`
     case $file in
-	*.elc|*.pyc|*/environment.pickle) : exclude them ;;
+	*.elc|*.pyc|*.pyo|*/environment.pickle) : exclude them ;;
 	*)
         [ "$STATUS" = "fail" ] || MESSAGE[i++]="found paths to buildroot: "
     	STATUS=fail
@@ -70,6 +70,9 @@ mkdir -p $RPM_BUILD_ROOT%_datadir/repocop/pkgtests/%testname/
 %_datadir/repocop/pkgtests/%testname
 
 %changelog
+* Thu Aug 01 2013 Igor Vlasenko <viy@altlinux.ru> 0.08-alt1
+- ignore pyo files
+
 * Thu Aug 19 2010 Igor Vlasenko <viy@altlinux.ru> 0.07-alt1
 - more readable output
 
