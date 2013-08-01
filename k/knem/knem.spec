@@ -5,7 +5,7 @@
 %define Name KNEM
 Name: knem
 Summary: High-Performance Intra-Node MPI Communication
-Version: 1.0.90
+Version: 1.1.0
 Release: alt1
 License: BSD
 Group: System/Kernel and hardware
@@ -154,6 +154,9 @@ tar -cJhf %kernel_srcdir/%name-%version.tar.xz %name-%version
 
 
 %changelog
+* Wed Jul 31 2013 Led <led@altlinux.ru> 1.1.0-alt1
+- 1.1.0
+
 * Sat Jul 06 2013 Led <led@altlinux.ru> 1.0.90-alt1
 - 1.0.90
 - updated summary and description of kernel-source-%name

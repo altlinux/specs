@@ -20,7 +20,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.4.55
-Release: alt4
+Release: alt5
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -137,7 +137,7 @@ Release: alt4
 #Extra_modules fglrx 13.101
 %Extra_modules vboxhost 4.2.16
 %Extra_modules vboxguest 4.2.16
-%Extra_modules knem 1.0.90
+%Extra_modules knem 1.1.0
 #Extra_modules exfat 1.1.3
 #Extra_modules netatop 0.2
 #Extra_modules omnibook 20110911
@@ -2838,6 +2838,9 @@ done)
 
 
 %changelog
+* Wed Jul 31 2013 Led <led@altlinux.ru> 3.4.55-alt5
+- knem 1.1.0
+
 * Wed Jul 31 2013 Led <led@altlinux.ru> 3.4.55-alt4
 - added:
   + fix-drivers-ata--ata_piix
