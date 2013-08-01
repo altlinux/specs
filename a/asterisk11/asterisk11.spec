@@ -1,6 +1,6 @@
 Name: asterisk11
 Summary: Open source PBX
-Version: 11.4.0
+Version: 11.5.0
 Release: alt1
 License: GPL
 Group: System/Servers
@@ -33,6 +33,7 @@ BuildPreReq: libportaudio2-devel libavcodec-devel
 BuildPreReq: libSDL_image-devel libSDL-devel libX11-devel libgtk+2-devel
 BuildPreReq: libxml2-devel
 BuildPreReq: binutils-devel
+BuildPreReq: libuuid-devel
 BuildPreReq: libopenr2-devel
 BuildPreReq: libusb-compat-devel
 BuildPreReq: uw-imap-devel
@@ -656,6 +657,8 @@ menuselect/menuselect  \
     --enable res_jabber \
     --enable chan_gtalk \
     --enable chan_jingle \
+    --enable res_rtp_asterisk \
+    --enable res_rtp_multicast \
     --disable chan_h323
 %make_build libdir=%_libdir NOISY_BUILD=yes ||:
 %make_build libdir=%_libdir NOISY_BUILD=yes ||:
@@ -1251,6 +1254,9 @@ ln -sf libasteriskssl11.so.1 %buildroot%_libdir/libasteriskssl11.so
 %_libdir/libasteriskssl11.so.1
 
 %changelog
+* Thu Aug 01 2013 Denis Smirnov <mithraen@altlinux.ru> 11.5.0-alt1
+- new version 11.5.0
+
 * Sun May 19 2013 Denis Smirnov <mithraen@altlinux.ru> 11.4.0-alt1
 - new version 11.4.0
 
