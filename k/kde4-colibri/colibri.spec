@@ -2,7 +2,7 @@
 
 %define rname colibri
 Name: kde4-colibri
-Version: 0.2.2
+Version: 0.3.0
 Release: alt1
 
 Group: Graphical desktop/KDE
@@ -24,6 +24,12 @@ Light notification system for KDE
 
 %prep
 %setup -qn %rname-%version
+mv altlinux/po .
+
+cat >>CMakeLists.txt <<__EOF__
+include(MacroOptionalAddSubdirectory)
+macro_optional_add_subdirectory( po )
+__EOF__
 
 
 %build
@@ -43,5 +49,11 @@ Light notification system for KDE
 
 
 %changelog
+* Thu Aug 01 2013 Sergey V Turchin <zerg@altlinux.org> 0.3.0-alt1
+- new version
+
+* Tue Dec 27 2011 Sergey V Turchin <zerg@altlinux.org> 0.2.2-alt0.M60P.1
+- built for M60P
+
 * Thu Dec 15 2011 Sergey V Turchin <zerg@altlinux.org> 0.2.2-alt1
 - initial build
