@@ -1,6 +1,8 @@
+%define _kde_alternate_placement 1
+
 %define rname colord-kde
 Name: kde4-colord
-Version: 0.2.0
+Version: 0.3.0
 Release: alt1
 
 Group: Graphical desktop/KDE
@@ -32,10 +34,15 @@ KDE support for colord including KDE Daemon module and System Settings module.
 
 %files
 %doc MAINTAINERS TODO
+%_kde4_bindir/colord-kde-icc-importer
+%_kde4_xdg_apps/colordkdeiccimporter.desktop
 %_K4lib/*_colord.so
 %_K4srv/*_colord.desktop
 %_K4srv/kded/*colord.desktop
 
 %changelog
+* Thu Aug 01 2013 Sergey V Turchin <zerg@altlinux.org> 0.3.0-alt1
+- new version
+
 * Wed Nov 28 2012 Sergey V Turchin <zerg@altlinux.org> 0.2.0-alt1
 - initial build
