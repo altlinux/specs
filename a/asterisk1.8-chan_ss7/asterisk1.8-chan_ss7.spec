@@ -1,9 +1,9 @@
-%define ast_version 1.8.22.0
+%define ast_version 1.8.23.0
 
 Name: asterisk1.8-chan_ss7
 Summary: SS7 channel module for Asterisk
 Version: 2.1.0
-Release: alt21
+Release: alt22
 License: GPL
 Group: System/Servers
 Url: http://www.netfors.com/download
@@ -39,6 +39,9 @@ install -D -m 0640 chan_ss7.so %buildroot%modules_dir/chan_ss7.so
 %attr(0440,root,_asterisk) %modules_dir/chan_ss7.so
 
 %changelog
+* Thu Aug 01 2013 Denis Smirnov <mithraen@altlinux.ru> 2.1.0-alt22
+- Asterisk update
+
 * Sun May 19 2013 Denis Smirnov <mithraen@altlinux.ru> 2.1.0-alt21
 - Asterisk update
 
