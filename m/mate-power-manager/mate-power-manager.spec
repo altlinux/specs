@@ -1,16 +1,19 @@
 Group: File tools
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/docbook2man /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/xmlto libgio-devel pkgconfig(dbus-1) pkgconfig(gdk-2.0) pkgconfig(gdk-x11-2.0) pkgconfig(gio-2.0) pkgconfig(gtk+-2.0) pkgconfig(libcanberra-gtk) pkgconfig(libsystemd-daemon) pkgconfig(libsystemd-login) pkgconfig(unique-3.0) pkgconfig(x11) pkgconfig(xext) pkgconfig(xproto) pkgconfig(xrandr) pkgconfig(xrender)
+BuildRequires: /usr/bin/docbook2man /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/xmlto libgio-devel pkgconfig(dbus-1) pkgconfig(gdk-2.0) pkgconfig(gdk-x11-2.0) pkgconfig(gio-2.0) pkgconfig(gio-unix-2.0) pkgconfig(gtk+-2.0) pkgconfig(libcanberra-gtk) pkgconfig(unique-3.0) pkgconfig(x11) pkgconfig(xext) pkgconfig(xproto) pkgconfig(xrandr) pkgconfig(xrender)
 # END SourceDeps(oneline)
 %filter_from_requires /^hal$/d
 %define _libexecdir %_prefix/libexec
+%global _internal_version  2ec6a059c222cc4efb1aa9341b7fad4f5d7631a9
+
 Name:          mate-power-manager
-Version:       1.6.1
+Version:       1.6.2
 Release:       alt1_1
 Summary:       MATE power management service
 License:       GPLv2+
 URL:           http://pub.mate-desktop.org
-Source0:       http://pub.mate-desktop.org/releases/1.5/%{name}-%{version}.tar.xz
+
+Source0:       http://pub.mate-desktop.org/releases/1.6/%{name}-1.6.2.tar.xz
 
 BuildRequires: libcairo-devel
 BuildRequires: libdbus-glib-devel
@@ -25,15 +28,16 @@ BuildRequires: mate-control-center-devel
 BuildRequires: mate-doc-utils
 BuildRequires: mate-keyring-devel
 BuildRequires: mate-panel-devel
+BuildRequires: libGL-devel
 BuildRequires: libpangox-compat-devel
 BuildRequires: popt-devel
 BuildRequires: rarian-compat
-BuildRequires: systemd-devel
 BuildRequires: libunique-devel
 BuildRequires: libupower-devel
 BuildRequires: xmlto
 Source44: import.info
 Patch33: 0001-Treat-challenge-as-yes-when-suspend-ability-determen.patch
+
 
 %description
 MATE Power Manager uses the information and facilities provided by UPower
@@ -42,13 +46,12 @@ displaying icons and handling user callbacks in an interactive MATE session.
 
 %prep
 %setup -q
+%patch33 -p1
 
 %build
 %configure --disable-static --enable-applets \
      --enable-docbook-docs \
      --enable-unique \
-     --with-systemdinhibit \
-     --with-systemdsleep   \
      --with-gtk=2.0 \
      --disable-schemas-compile \
      --disable-scrollkeeper
@@ -57,12 +60,16 @@ make %{?_smp_mflags} V=1
 
 %install
 make DESTDIR=%{buildroot} install
-%find_lang %{name} --all-name
 
 desktop-file-install                               \
      --delete-original                             \
      --dir=%{buildroot}%{_datadir}/applications    \
 %{buildroot}%{_datadir}/applications/*.desktop
+
+# remove needless gsettings convert file to avoid slow session start
+rm -f  %{buildroot}%{_datadir}/MateConf/gsettings/mate-power-manager.convert
+
+%find_lang %{name}
 
 
 %files  -f %{name}.lang
@@ -88,9 +95,12 @@ desktop-file-install                               \
 %{_sysconfdir}/xdg/autostart/mate-power-manager.desktop
 %{_libexecdir}/mate-brightness-applet
 %{_libexecdir}/mate-inhibit-applet
-%{_datadir}/MateConf/gsettings/mate-power-manager.convert
+
 
 %changelog
+* Thu Aug 01 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.2-alt1_1
+- new fc release
+
 * Tue Jun 04 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.1-alt1_1
 - new fc release
 
