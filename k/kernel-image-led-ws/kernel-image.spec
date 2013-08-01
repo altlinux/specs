@@ -20,7 +20,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.4.55
-Release: alt5
+Release: alt6
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -503,9 +503,10 @@ Patch0612: linux-%kernel_branch.50-fix-include-trace.patch
 Patch0620: linux-%kernel_branch.20-fix-init.patch
 
 Patch0630: linux-%kernel_branch.34-fix-kernel.patch
-Patch0631: linux-%kernel_branch.41-fix-kernel--rcutree.patch
-Patch0632: linux-%kernel_branch.39-fix-kernel-irq.patch
-Patch0633: linux-%kernel_branch.39-fix-kernel-power.patch
+Patch0631: linux-%kernel_branch.53-fix-kernel--compat.patch
+Patch0632: linux-%kernel_branch.41-fix-kernel--rcutree.patch
+Patch0633: linux-%kernel_branch.39-fix-kernel-irq.patch
+Patch0634: linux-%kernel_branch.39-fix-kernel-power.patch
 
 Patch0640: linux-%kernel_branch.25-fix-lib.patch
 Patch0641: linux-%kernel_branch.29-fix-lib--btree.patch
@@ -1759,6 +1760,7 @@ cd linux-%version
 %patch0631 -p1
 %patch0632 -p1
 %patch0633 -p1
+%patch0634 -p1
 
 # fix-lib*
 %patch0640 -p1
@@ -2838,6 +2840,10 @@ done)
 
 
 %changelog
+* Thu Aug 01 2013 Led <led@altlinux.ru> 3.4.55-alt6
+- added:
+  + fix-kernel--compat
+
 * Wed Jul 31 2013 Led <led@altlinux.ru> 3.4.55-alt5
 - knem 1.1.0
 
