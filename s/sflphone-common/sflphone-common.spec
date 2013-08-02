@@ -1,8 +1,8 @@
 %define rname sflphone
 
 Name: sflphone-common
-Version: 1.2.2
-Release: alt3
+Version: 1.2.3
+Release: alt1
 
 Group: System/Servers
 Summary: SIP and IAX2 compatible softphone - Core
@@ -75,6 +75,9 @@ popd
 %_mandir/man1/sflphoned.1*
 
 %changelog
+* Fri Aug 02 2013 Sergey V Turchin <zerg@altlinux.org> 1.2.3-alt1
+- new version
+
 * Thu Feb 21 2013 Sergey V Turchin <zerg@altlinux.org> 1.2.2-alt3
 - enable video support
 
