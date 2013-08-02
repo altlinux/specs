@@ -1,6 +1,6 @@
 %define		_giconsdir %_iconsdir/hicolor/128x128/apps
 
-Version:	0.9.10
+Version:	0.9.10.1
 Name:		qtdbf
 Release:	alt1
 Summary:	A simple DBF viewer and editor
@@ -53,6 +53,9 @@ make INSTALL_ROOT=%buildroot install
 %_datadir/%name
 
 %changelog
+* Fri Aug 02 2013 Motsyo Gennadi <drool@altlinux.ru> 0.9.10.1-alt1
+- Bugfix filter for field of types I and N
+
 * Fri Aug 02 2013 Motsyo Gennadi <drool@altlinux.ru> 0.9.10-alt1
 - 0.9.10
 
