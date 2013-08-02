@@ -3,13 +3,13 @@ BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(Exporter.pm) perl(Fcntl.pm) perl(FindBin.pm) perl(Pod/Usage.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-App-Daemon
-Version:        0.18
-Release:        alt2_2
+Version:        0.19
+Release:        alt1
 Summary:        Start an Application as a Daemon
 License:        GPL+ or Artistic
 Group:          Development/Perl
 URL:            http://search.cpan.org/dist/App-Daemon/
-Source0:        http://www.cpan.org/authors/id/M/MS/MSCHILLI/App-Daemon-%{version}.tar.gz
+Source:        http://www.cpan.org/authors/id/M/MS/MSCHILLI/App-Daemon-%{version}.tar.gz
 BuildArch:      noarch
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
 BuildRequires:  perl(File/Pid.pm)
@@ -44,6 +44,9 @@ find $RPM_BUILD_ROOT -type f -name .packlist -exec rm -f {} \;
 %{perl_vendor_privlib}/*
 
 %changelog
+* Fri Aug 02 2013 Igor Vlasenko <viy@altlinux.ru> 0.19-alt1
+- automated CPAN update
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.18-alt2_2
 - update to new release by fcimport
 
