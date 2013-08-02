@@ -1,6 +1,6 @@
 Name: wine-vanilla
 Version: 1.6.0
-Release: alt0.rc4
+Release: alt1
 
 Summary: Wine - environment for running Windows 16/32/64 bit applications
 
@@ -34,7 +34,7 @@ BuildRequires: rpm-build-intro >= 1.0
 BuildRequires: gcc util-linux flex bison
 BuildRequires: fontconfig-devel libfreetype-devel
 BuildRequires: libncurses-devel libncursesw-devel libtinfo-devel
-BuildRequires: libssl-devel zlib-devel libldap-devel libgnutls-devel
+BuildRequires: zlib-devel libldap-devel libgnutls-devel
 BuildRequires: libxslt-devel libxml2-devel
 BuildRequires: libjpeg-devel liblcms-devel libpng-devel libtiff-devel
 BuildRequires: libgphoto2-devel libsane-devel libcups-devel
@@ -220,6 +220,7 @@ rm -rf %buildroot%_mandir/*.UTF-8
 %_bindir/wine-preloader
 %else
 %_bindir/wine64
+%_bindir/wine64-preloader
 %endif
 
 %_bindir/regsvr32
@@ -345,6 +346,10 @@ rm -rf %buildroot%_mandir/*.UTF-8
 %exclude %_libdir/wine/libwinecrt0.a
 
 %changelog
+* Fri Aug 02 2013 Vitaly Lipatov <lav@altlinux.ru> 1.6.0-alt1
+- release 1.6
+- remove libssl-devel requires
+
 * Sun Jun 30 2013 Vitaly Lipatov <lav@altlinux.ru> 1.6.0-alt0.rc4
 - new version 1.6-rc4
 
