@@ -1,6 +1,6 @@
 Name: kernel-image-ovz-el
 Version: 2.6.32
-Release: alt99
+Release: alt100
 
 %define kernel_base_version	%version
 %define kernel_extra_version	%nil
@@ -46,7 +46,7 @@ Packager: Kernel Maintainers Team <kernel@packages.altlinux.org>
 
 Source11: config-x86
 Source12: config-x86_64
-Patch0: patch-042stab078.28-combined
+Patch0: patch-042stab079.4-combined
 Patch1: %name-%version-%release.patch
 
 ExclusiveArch: i586 i686 x86_64
@@ -570,6 +570,9 @@ find %buildroot%_docdir/kernel-doc-%base_flavour-%version/DocBook \
 %endif # staging
 
 %changelog
+* Fri Aug 02 2013 Led <led@altlinux.ru> 2.6.32-alt100
+- Update to 042stab079.4
+
 * Mon Jul 15 2013 Led <led@altlinux.ru> 2.6.32-alt99
 - fs: defer do_filp_open() access checks to may_open()
 
