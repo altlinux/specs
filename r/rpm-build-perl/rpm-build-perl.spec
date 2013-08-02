@@ -1,6 +1,6 @@
 Name: rpm-build-perl
-Version: 0.82
-Release: alt2
+Version: 0.83
+Release: alt1
 
 Summary: RPM helper scripts to calculate Perl dependencies
 License: GPL
@@ -53,6 +53,9 @@ install -pm644 macros.env %buildroot%_rpmmacrosdir/perl5.env
 %config %_rpmmacrosdir/perl5.env
 
 %changelog
+* Wed Jul 31 2013 Igor Vlasenko <viy@altlinux.ru> 0.83-alt1
+- Module::Build::Tiny support
+
 * Fri Mar 08 2013 Dmitry V. Levin <ldv@altlinux.org> 0.82-alt2
 - Relocated rpm macro files to %%_rpmmacrosdir/.
 
