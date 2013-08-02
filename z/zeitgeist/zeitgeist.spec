@@ -1,12 +1,12 @@
 %define major 0.9
 %define api_ver 2.0
-%define _libexecdir %_prefix/libexec
 %define _noarchpkgconfigdir %_datadir/pkgconfig
+%define _libexecdir %_prefix/libexec
 
 %def_enable fts
 
 Name: zeitgeist
-Version: %major.13
+Version: %major.14
 Release: alt1
 
 Summary: Framework providing Desktop activity awareness
@@ -213,6 +213,9 @@ rm -rf %buildroot%_prefix/doc/
 %endif
 
 %changelog
+* Fri Aug 02 2013 Yuri N. Sedunov <aris@altlinux.org> 0.9.14-alt1
+- 0.9.14
+
 * Sun Jun 02 2013 Yuri N. Sedunov <aris@altlinux.org> 0.9.13-alt1
 - 0.9.13
 - enabled FTS support
