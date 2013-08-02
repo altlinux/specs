@@ -1,6 +1,6 @@
 Name: leafpad
 Version: 0.8.18.1
-Release: alt2
+Release: alt3
 
 Summary: GTK+2 based notepad clone
 
@@ -33,6 +33,10 @@ and to be as useful as them.
 
 %install
 %makeinstall_std
+cat <<EOF >>%buildroot%_desktopdir/%name.desktop
+GenericName[ru]=Текстовый редактор
+GenericName=Text editor
+EOF
 
 %find_lang %name
 
@@ -41,9 +45,12 @@ and to be as useful as them.
 %_bindir/%name
 %_pixmapsdir/*
 %_iconsdir/hicolor/*/*/*g
-%_desktopdir/*
+%_desktopdir/%name.desktop
 
 %changelog
+* Fri Aug 02 2013 Vitaly Lipatov <lav@altlinux.ru> 0.8.18.1-alt3
+- fix desktop file (ALT bug #29255)
+
 * Mon Sep 24 2012 Vitaly Lipatov <lav@altlinux.ru> 0.8.18.1-alt2
 - update translation (ALT bug #15020)
 
