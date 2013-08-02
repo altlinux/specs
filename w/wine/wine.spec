@@ -13,7 +13,7 @@
 
 Name: wine
 Version: 1.6.0
-Release: alt0.rc4
+Release: alt1
 Epoch: 1
 
 Summary: Environment for running Windows applications (Etersoft edition)
@@ -31,19 +31,6 @@ Source: ftp://updates.etersoft.ru/pub/Etersoft/Wine-public/%version/sources/tarb
 
 AutoReq: yes, noperl
 
-# Thanks PLD folks for the note:
-# NOTE: wine detects the following SONAMES for dlopen at build time:
-#   libssl (libcrypto inside) (wininet.dll)
-#   libcups (winspool.dll.so, wineps.dll.so)
-#   libcurses/libncurses/libncursesw (wineconsole program)
-#   libfontconfig (gdi32.dll.so)
-#   libfreetype (wineps.dll.so, gdi32.dll.so)
-#   libGL (x11drv.dll.so, ddraw.dll.so)
-#   libjack (winejack.drv.so - explicit dependency in subpackage)
-#   libX11, libXext, libXi, libXrender (x11drv.dll.so)
-# thus requires rebuild after change of any of the above.
-#
-
 #==========================================================================
 
 # General dependencies
@@ -51,11 +38,11 @@ BuildRequires: rpm-build-intro
 BuildRequires: gcc util-linux flex bison
 BuildRequires: fontconfig-devel libfreetype-devel
 BuildRequires: libncurses-devel libncursesw-devel libtinfo-devel
-BuildRequires: libssl-devel zlib-devel libldap-devel libgnutls-devel
+BuildRequires: zlib-devel libldap-devel libgnutls-devel
 BuildRequires: libxslt-devel libxml2-devel
 BuildRequires: libjpeg-devel liblcms-devel libpng-devel libtiff-devel
 BuildRequires: libusb-devel libgphoto2-devel libsane-devel libcups-devel
-BuildRequires: libalsa-devel jackit-devel libieee1284-devel libhal-devel
+BuildRequires: libalsa-devel jackit-devel libieee1284-devel
 BuildRequires: libopenal-devel libGLU-devel
 BuildRequires: libv4l-devel gstreamer-devel gst-plugins-devel libgsm-devel libmpg123-devel
 
@@ -276,6 +263,8 @@ rm -rf %buildroot%_mandir/*.UTF-8
 %_bindir/wine-glibc
 %ifnarch x86_64
 %_bindir/wine-preloader
+%else
+%_bindir/wine64-preloader
 %endif
 
 %_bindir/regsvr32
@@ -434,6 +423,11 @@ rm -rf %buildroot%_mandir/*.UTF-8
 
 
 %changelog
+* Fri Aug 02 2013 Vitaly Lipatov <lav@altlinux.ru> 1:1.6.0-alt1
+- release 1.6
+- update winetricks to 20130707
+- remove libssl-devel, libhal-devel build requires
+
 * Sun Jun 30 2013 Vitaly Lipatov <lav@altlinux.ru> 1:1.6.0-alt0.rc4
 - new build 1.6-rc4
 
