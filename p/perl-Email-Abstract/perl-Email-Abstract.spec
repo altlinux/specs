@@ -1,6 +1,6 @@
 %define dist Email-Abstract
 Name: perl-%dist
-Version: 3.004
+Version: 3.005
 Release: alt1
 
 Summary: unified interface to mail representations
@@ -8,7 +8,7 @@ License: Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/R/RJ/RJBS/Email-Abstract-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -46,6 +46,9 @@ automatically picked up and used.
 %perl_vendor_privlib/Email
 
 %changelog
+* Fri Aug 02 2013 Igor Vlasenko <viy@altlinux.ru> 3.005-alt1
+- automated CPAN update
+
 * Sat Nov 19 2011 Alexey Tourbin <at@altlinux.ru> 3.004-alt1
 - 2.134 -> 3.004
 
