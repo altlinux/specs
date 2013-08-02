@@ -1,6 +1,6 @@
 %define		_giconsdir %_iconsdir/hicolor/128x128/apps
 
-Version:	0.9.8.1
+Version:	0.9.10
 Name:		qtdbf
 Release:	alt1
 Summary:	A simple DBF viewer and editor
@@ -12,7 +12,7 @@ Packager:	Motsyo Gennadi <drool@altlinux.ru>
 Url:		http://www.va-soft.ru/project_8.html
 Source0:	%name-%version.tar.gz
 
-BuildRequires: ImageMagick-tools gcc-c++ libqt4-devel
+BuildRequires: gcc-c++ libqt4-devel
 
 Provides:	qtDbf
 Obsoletes:	qtDbf < 0.9.4
@@ -34,7 +34,6 @@ dDbase III, IV, FoxPro 2.x, Visual Foxpro файли з memo-полями.
 
 %prep
 %setup -q
-subst 's|other/qtdbf.desktop|misc/qtdbf.desktop|g' %name.pro
 
 %build
 export PATH=$PATH:%_qt4dir/bin
@@ -54,6 +53,12 @@ make INSTALL_ROOT=%buildroot install
 %_datadir/%name
 
 %changelog
+* Fri Aug 02 2013 Motsyo Gennadi <drool@altlinux.ru> 0.9.10-alt1
+- 0.9.10
+
+* Mon Jul 29 2013 Motsyo Gennadi <drool@altlinux.ru> 0.9.9-alt1
+- 0.9.9
+
 * Fri Jul 26 2013 Motsyo Gennadi <drool@altlinux.ru> 0.9.8.1-alt1
 - bugfix release
 
