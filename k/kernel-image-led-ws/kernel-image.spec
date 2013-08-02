@@ -20,7 +20,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.4.55
-Release: alt6
+Release: alt7
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -495,7 +495,7 @@ Patch0599: linux-%kernel_branch.31-fix-fs-proc.patch
 Patch0600: linux-%kernel_branch.28-fix-fs-ramfs.patch
 Patch0601: linux-%kernel_branch.47-fix-fs-reiserfs.patch
 Patch0602: linux-%kernel_branch.35-fix-fs-ubifs.patch
-Patch0603: linux-%kernel_branch.50-fix-fs-xfs.patch
+Patch0603: linux-%kernel_branch.53-fix-fs-xfs.patch
 
 Patch0611: linux-%kernel_branch.50-fix-include-linux.patch
 Patch0612: linux-%kernel_branch.50-fix-include-trace.patch
@@ -537,15 +537,16 @@ Patch0676: linux-%kernel_branch.39-fix-net-dcb.patch
 Patch0677: linux-%kernel_branch.35-fix-net-ipv4--xfrm.patch
 Patch0678: linux-%kernel_branch.31-fix-net-ipv6.patch
 Patch0679: linux-%kernel_branch.35-fix-net-ipv6--xfrm.patch
-Patch0680: linux-%kernel_branch.39-fix-net-l2tp--l2tp_core.patch
-Patch0681: linux-%kernel_branch.53-fix-net-mac80211.patch
-Patch0682: linux-%kernel_branch.20-fix-net-netfilter--nf_conntrack_ftp.patch
-Patch0683: linux-%kernel_branch.47-fix-net-netfilter--xt_LOG.patch
-Patch0684: linux-%kernel_branch.28-fix-net-rds--rds_rdma.patch
-Patch0685: linux-%kernel_branch.49-fix-net-sunrpc.patch
-Patch0686: linux-%kernel_branch.42-fix-net-unix--unix.patch
-Patch0687: linux-%kernel_branch.39-fix-net-wimax.patch
-Patch0688: linux-%kernel_branch.35-fix-net-wireless--cfg80211.patch
+Patch0680: linux-%kernel_branch.53-fix-net-key--af_key.patch
+Patch0681: linux-%kernel_branch.39-fix-net-l2tp--l2tp_core.patch
+Patch0682: linux-%kernel_branch.53-fix-net-mac80211.patch
+Patch0683: linux-%kernel_branch.20-fix-net-netfilter--nf_conntrack_ftp.patch
+Patch0684: linux-%kernel_branch.47-fix-net-netfilter--xt_LOG.patch
+Patch0685: linux-%kernel_branch.28-fix-net-rds--rds_rdma.patch
+Patch0686: linux-%kernel_branch.49-fix-net-sunrpc.patch
+Patch0687: linux-%kernel_branch.42-fix-net-unix--unix.patch
+Patch0688: linux-%kernel_branch.39-fix-net-wimax.patch
+Patch0689: linux-%kernel_branch.35-fix-net-wireless--cfg80211.patch
 
 Patch0691: linux-%kernel_branch.20-fix-scripts--kconfig.patch
 
@@ -1803,6 +1804,7 @@ cd linux-%version
 %patch0686 -p1
 %patch0687 -p1
 %patch0688 -p1
+%patch0689 -p1
 
 # fix-scripts--*
 %patch0691 -p1
@@ -2840,6 +2842,12 @@ done)
 
 
 %changelog
+* Fri Aug 02 2013 Led <led@altlinux.ru> 3.4.55-alt7
+- updated:
+  + fix-fs-xfs (CVE-2013-1819)
+- added:
+  + fix-net-key--af_key (CVE-2013-2237)
+
 * Thu Aug 01 2013 Led <led@altlinux.ru> 3.4.55-alt6
 - added:
   + fix-kernel--compat
