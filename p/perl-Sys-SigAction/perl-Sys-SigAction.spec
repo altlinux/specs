@@ -14,7 +14,7 @@
 %define _enable_test 1
 
 Name: perl-Sys-SigAction
-Version: 0.18
+Version: 0.19
 Release: alt1
 
 Summary: Perl extension for Consistent Signal Handling
@@ -26,7 +26,7 @@ Url: http://search.cpan.org/dist/Sys-SigAction/
 Packager: Michael Bochkaryov <misha@altlinux.ru>
 
 BuildArch: noarch
-Source: http://search.cpan.org//CPAN/authors/id/L/LB/LBAXTER/%m_distro-%version.tar.gz
+Source: http://www.cpan.org/authors/id/L/LB/LBAXTER/Sys-SigAction-%{version}.tar.gz
 
 # Automatically added by buildreq on Mon May 26 2008
 BuildRequires: perl-devel
@@ -53,6 +53,9 @@ will be called when a signal (such as SIGALRM) is delivered.
 %doc README Changes
 
 %changelog
+* Fri Aug 02 2013 Igor Vlasenko <viy@altlinux.ru> 0.19-alt1
+- automated CPAN update
+
 * Fri Jul 26 2013 Igor Vlasenko <viy@altlinux.ru> 0.18-alt1
 - automated CPAN update
 
