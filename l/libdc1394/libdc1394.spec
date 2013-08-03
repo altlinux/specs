@@ -1,7 +1,7 @@
 %define abiversion 22
 Name: libdc1394
-Version: 2.1.3
-Release: alt1.2
+Version: 2.2.0
+Release: alt1
 
 Summary: Library for 1394 Digital Camera Specification
 
@@ -67,11 +67,13 @@ isochronous channel packets and test %name basic functionality.
 %prep
 %setup
 
-%patch1 -p2
-%patch2 -p2
+#patch1 -p2
+#patch2 -p2
 
 %build
+%__subst "s|runpath_var=.*|runpath_var=|g" configure
 %configure --disable-static
+%__subst "s|hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=|g" libtool
 %make_build
 
 %install
@@ -87,11 +89,14 @@ isochronous channel packets and test %name basic functionality.
 %_pkgconfigdir/*
 
 %files tools
-%_bindir/dc1394_vloopback
+#%_bindir/dc1394_vloopback
 %_bindir/dc1394_reset_bus
 %_man1dir/*
 
 %changelog
+* Sun Aug 04 2013 Vitaly Lipatov <lav@altlinux.ru> 2.2.0-alt1
+- new version 2.2.0 (with rpmrb script)
+
 * Wed Jun 13 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.1.3-alt1.2
 - Fixed build
 
