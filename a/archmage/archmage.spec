@@ -1,6 +1,6 @@
 Name: archmage
-Version: 0.1.9
-Release: alt1.1.1
+Version: 0.2.4
+Release: alt1
 
 Summary: Extensible reader/decompiler of files in CHM format
 
@@ -10,7 +10,7 @@ Url: http://archmage.sourceforge.net/
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-Source: http://prdownloads.sourceforge.net/archmage/archmage-%version.tar.gz
+Source: http://prdownloads.sourceforge.net/archmage/archmage-%version.tar
 
 BuildArch: noarch
 
@@ -28,13 +28,14 @@ arCHMage - extensible reader/decompiler of files in CHM format
 arCHMage is based on chmlib by Jed Wing and is written on python.
 
 %prep
-%setup -q
+%setup
 
 %build
 %python_build
 
 %install
 %python_install
+# remove apache integration
 rm -f %buildroot%python_sitelibdir/archmod/mod_chm.py*
 
 %files
@@ -42,17 +43,15 @@ rm -f %buildroot%python_sitelibdir/archmod/mod_chm.py*
 %dir %_sysconfdir/archmage/
 %config(noreplace) %_sysconfdir/archmage/arch.conf
 %_bindir/archmage
-%dir %python_sitelibdir/archmod/
-%python_sitelibdir/archmod/CHM.py*
-%python_sitelibdir/archmod/htmltotext.py*
-%python_sitelibdir/archmod/__init__.py*
-# Apache integration
-#%python_sitelibdir/archmod/mod_chm.py*
+%python_sitelibdir/archmod/
 %python_sitelibdir/archmage-*egg-info
 %_datadir/archmage/
 %_man1dir/archmage*
 
 %changelog
+* Sat Aug 03 2013 Vitaly Lipatov <lav@altlinux.ru> 0.2.4-alt1
+- new version 0.2.4 (with rpmrb script)
+
 * Sat Oct 22 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 0.1.9-alt1.1.1
 - Rebuild with Python-2.7
 
