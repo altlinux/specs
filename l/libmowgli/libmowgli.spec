@@ -1,14 +1,12 @@
 Name: libmowgli
-Version: 0.9.50
+Version: 1.0.0
 Release: alt1
 
 Summary: mowgli is a development framework for C (like GLib)
 
 License: see COPYING
 Group: System/Libraries
-#Url: http://sacredspiral.co.uk/~nenolod/mowgli/
-#Url: http://www.atheme-project.org/projects/mowgli.shtml
-#Url: https://launchpad.net/ubuntu/+source/libmowgli
+Url: http://www.atheme.org/project/mowgli
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
@@ -50,6 +48,9 @@ Header files for %name.
 %_includedir/*
 
 %changelog
+* Sun Aug 04 2013 Vitaly Lipatov <lav@altlinux.ru> 1.0.0-alt1
+- new version 1.0.0 (with rpmrb script)
+
 * Mon Apr 18 2011 Vitaly Lipatov <lav@altlinux.ru> 0.9.50-alt1
 - new version 0.9.50 (with rpmrb script)
 
