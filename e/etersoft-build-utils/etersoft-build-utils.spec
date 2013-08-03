@@ -1,7 +1,7 @@
 # NOTE: do not use clean_spec or rpmcs for this spec
 
 Name: etersoft-build-utils
-Version: 2.0.26
+Version: 2.0.27
 Release: alt1
 
 Summary: A set of rpm build utilities from Etersoft
@@ -22,7 +22,7 @@ BuildArchitectures: noarch
 # Buildreqs note: C compiler is required by rpm-build; we do not require C++ here
 BuildRequires: rpm-build-compat >= %altcompat_ver
 
-Requires: eepm >= 1.0
+Requires: eepm >= 1.3.0
 
 Requires: rpm-build
 Requires: rpm-build-compat >= %altcompat_ver
@@ -68,6 +68,12 @@ RECOMMENDED packages: gcc-c++ perl-libwww ccache elinks mutt hasher curl
 %config(noreplace) %_sysconfdir/eterbuild/repos/*
 
 %changelog
+* Sat Aug 03 2013 Vitaly Lipatov <lav@altlinux.ru> 2.0.27-alt1
+- intro ArchLinux x86_64 adoption
+- drop support ALT Linux 2.3, 2.4, 3.0
+- fix pkgrepls
+- improve commands description
+
 * Tue Jun 18 2013 Vitaly Lipatov <lav@altlinux.ru> 2.0.26-alt1
 - rpmbph: use tmpdir for repack src.rpm
 - repl hack: reqs x86_64 and i586 package versions
