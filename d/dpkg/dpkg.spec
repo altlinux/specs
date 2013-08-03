@@ -2,7 +2,7 @@
 
 Summary: Package maintenance system for Debian Linux
 Name: dpkg
-Version: 1.16.4.3
+Version: 1.16.10
 Release: alt1
 License: GPLv2+
 Group: System/Configuration/Packaging
@@ -88,6 +88,9 @@ cat dpkg-dev.lang >> %name.lang
 %perl_vendorlib/Dpkg.pm
 
 %changelog
+* Sat Aug 03 2013 Vitaly Lipatov <lav@altlinux.ru> 1.16.10-alt1
+- new version 1.16.10 (with rpmrb script)
+
 * Tue Jul 24 2012 Fr. Br. George <george@altlinux.ru> 1.16.4.3-alt1
 - Autobuild version bump to 1.16.4.3
 - Remove inactual patch
