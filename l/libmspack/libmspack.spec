@@ -1,6 +1,6 @@
 Name: libmspack
-Version: 0.0.20060920alpha
-Release: alt3.qa1
+Version: 0.4
+Release: alt1
 
 Summary: Compressors and decompressors for Microsoft compression formats
 
@@ -10,7 +10,7 @@ Url: http://www.cabextract.org.uk/libmspack/
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-Source: http://www.cabextract.org.uk/libmspack/%name-%version.tar.bz2
+Source: http://www.cabextract.org.uk/libmspack/%name-%version.tar
 
 BuildRequires: gcc
 
@@ -50,8 +50,12 @@ in development of the %name-based applications.
 %doc doc/*
 %_includedir/mspack.h
 %_libdir/*.so
+%_pkgconfigdir/*.pc
 
 %changelog
+* Sun Aug 04 2013 Vitaly Lipatov <lav@altlinux.ru> 0.4-alt1
+- update to 0.4-alpha
+
 * Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.0.20060920alpha-alt3.qa1
 - NMU: rebuilt for debuginfo.
 
