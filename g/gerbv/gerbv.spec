@@ -1,6 +1,6 @@
 Name: gerbv
-Version: 2.1.0
-Release: alt2.2
+Version: 2.6.0
+Release: alt1
 
 Summary: Gerber file viewer
 
@@ -92,6 +92,9 @@ rm -f %buildroot%_desktopdir/*.cache
 %_datadir/gerbv/example/*
 
 %changelog
+* Sat Aug 03 2013 Vitaly Lipatov <lav@altlinux.ru> 2.6.0-alt1
+- new version 2.6.0 (with rpmrb script)
+
 * Thu Jun 14 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.1.0-alt2.2
 - Fixed build
 
