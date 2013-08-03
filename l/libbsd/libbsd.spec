@@ -1,5 +1,5 @@
 Name: libbsd
-Version: 0.3.0
+Version: 0.6.0
 Release: alt1
 
 Summary: Library providing BSD-compatible functions for portability
@@ -30,33 +30,18 @@ Development files for the libbsd library.
 %prep
 %setup
 
-# fix encoding of flopen.3 man page
-for f in src/flopen.3; do
-  iconv -f iso8859-1 -t utf-8 $f >$f.conv
-  touch -r $f $f.conv
-  mv $f.conv $f
-done
-
 %build
-%make_build CFLAGS="%optflags" \
-     libdir=%_libdir \
-     usrlibdir=%_libdir \
-     exec_prefix=%prefix
+%configure --disable-static
+%make_build
 
 %install
-%makeinstall_std libdir=%_libdir \
-     usrlibdir=%_libdir \
-     exec_prefix=%prefix
+%makeinstall_std
 
 # don't want static library
-rm %buildroot%_libdir/%name.a
+rm %buildroot%_libdir/%name-ctor.a
+
 rm %buildroot%_man3dir/strlcpy*
 rm %buildroot%_man3dir/strlcat*
-
-# Move nlist.h into bsd directory to avoid conflict with elfutils-libelf.
-# Anyone that wants that functionality should really used elfutils-libelf
-# instead.
-mv %buildroot%_includedir/nlist.h %buildroot%_includedir/bsd/
 
 %files
 %doc COPYING README TODO ChangeLog
@@ -65,13 +50,16 @@ mv %buildroot%_includedir/nlist.h %buildroot%_includedir/bsd/
 %files devel
 %_man3dir/*.3.*
 %_man3dir/*.3bsd.*
-%_includedir/*.h
-%_includedir/bsd
+%_includedir/bsd/
 %_libdir/%name.so
 %_pkgconfigdir/%name.pc
+%_pkgconfigdir/%name-ctor.pc
 %_pkgconfigdir/%name-overlay.pc
 
 %changelog
+* Sun Aug 04 2013 Vitaly Lipatov <lav@altlinux.ru> 0.6.0-alt1
+- new version 0.6.0 (with rpmrb script)
+
 * Fri Dec 16 2011 Vitaly Lipatov <lav@altlinux.ru> 0.3.0-alt1
 - initial build for ALT Linux Sisyphus
 
