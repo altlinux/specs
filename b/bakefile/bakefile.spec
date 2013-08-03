@@ -1,5 +1,5 @@
 Name: bakefile
-Version: 0.2.8
+Version: 0.2.9
 Release: alt1
 
 Summary: Native makefiles generator
@@ -10,7 +10,7 @@ Url: http://bakefile.sourceforge.net/
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-Source: http://dl.sourceforge.net/bakefile/bakefile-%version.tar.gz
+Source: http://prdownloads.sourceforge.net/bakefile/%name-%version.tar
 Patch: %name-empy.patch
 
 # Automatically added by buildreq on Sat Mar 07 2009
@@ -51,6 +51,9 @@ touch ChangeLog
 %_man1dir/bakefil*.1*
 
 %changelog
+* Sat Aug 03 2013 Vitaly Lipatov <lav@altlinux.ru> 0.2.9-alt1
+- new version 0.2.9 (with rpmrb script)
+
 * Fri Dec 02 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.8-alt1
 - Version 0.2.8
 
