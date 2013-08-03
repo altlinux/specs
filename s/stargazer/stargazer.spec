@@ -1,7 +1,7 @@
 %define realname stg
 Name: stargazer
 Version: 2.407.cvs20100811
-Release: alt4
+Release: alt5
 License: GPLv2
 Group: System/Servers
 Source0: %realname-%version.src.tgz
@@ -479,6 +479,9 @@ cp projects/stargazer/inst/var/00-base-00.sql %buildroot%_localstatedir/%name/fi
 cp -R mod_store_files/* %buildroot%_localstatedir/%name/
 
 %changelog
+* Sat Aug 03 2013 Motsyo Gennadi <drool@altlinux.ru> 2.407.cvs20100811-alt5
+- cleanup sgauth init-script
+
 * Tue Oct 30 2012 Dmitriy Kulik <lnkvisitor@altlinux.org> 2.407.cvs20100811-alt4
 - Fixed build
   + Without mod_cap_ipq
