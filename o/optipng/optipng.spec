@@ -1,5 +1,5 @@
 Name: optipng
-Version: 0.6.2
+Version: 0.7.4
 Release: alt1
 
 Summary: Optimizer for png files
@@ -10,7 +10,11 @@ License: zlib/libpng
 Group: Graphics
 Url: http://optipng.sourceforge.net/
 
-Source: http://prdownloads.sf.net/%name/%name-%version.tar.bz2
+Source: http://prdownloads.sf.net/%name/%name-%version.tar
+
+# Automatically added by buildreq on Sun Aug 04 2013
+# optimized out: zlib-devel
+BuildRequires: libpng-devel
 
 %description
 The main purpose of OptiPNG is to *optimize* PNG files, i.e. to reduce
@@ -26,14 +30,18 @@ achieve this goal, OptiPNG performs the following tasks:
   the compression parameters that yield the smallest output file.
 
 %prep
-%setup -q
+%setup
 
 %build
-%make -C src -f scripts/gcc.mak
+./configure --prefix=%prefix --mandir=%_mandir \
+	--with-system-libpng --with-system-zlib
+%make_build
 
 %install
-install -D -m755 src/optipng %buildroot%_bindir/%name
-install -D -m644 man/%name.1 %buildroot%_man1dir/%name.1
+%makeinstall_std
+
+%check
+make test
 
 %files
 %doc README.txt LICENSE.txt doc/*
@@ -41,6 +49,10 @@ install -D -m644 man/%name.1 %buildroot%_man1dir/%name.1
 %_man1dir/*
 
 %changelog
+* Sun Aug 04 2013 Vitaly Lipatov <lav@altlinux.ru> 0.7.4-alt1
+- new version 0.7.4 (with rpmrb script)
+- build with system libpng
+
 * Tue Jan 13 2009 Vitaly Lipatov <lav@altlinux.ru> 0.6.2-alt1
 - new version 0.6.2 (with rpmrb script)
 - add man page
