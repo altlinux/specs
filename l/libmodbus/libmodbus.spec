@@ -1,5 +1,5 @@
 Name: libmodbus
-Version: 3.0.1
+Version: 3.1.0
 Release: alt1
 
 Summary: A Modbus library in C, which supports RTU communication over a serial line or a TCP link
@@ -56,8 +56,16 @@ of %name library.
 %_includedir/modbus/modbus-rtu.h
 %_includedir/modbus/modbus-tcp.h
 %_includedir/modbus/modbus-version.h
+%_man3dir/*
+%_man7dir/*
 
 %changelog
+* Sun Aug 04 2013 Vitaly Lipatov <lav@altlinux.ru> 3.1.0-alt1
+- new version 3.1.0 (with rpmrb script)
+
+* Sun Aug 04 2013 Vitaly Lipatov <lav@altlinux.ru> 3.0.3-alt1
+- new version 3.0.3 (with rpmrb script)
+
 * Tue Oct 11 2011 Vitaly Lipatov <lav@altlinux.ru> 3.0.1-alt1
 - new version 3.0.1 (with rpmrb script)
 
