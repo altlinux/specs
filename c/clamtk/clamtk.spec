@@ -1,5 +1,5 @@
 Name: clamtk
-Version: 4.44
+Version: 4.45
 Release: alt1
 
 Summary: Easy to use front-end for ClamAV
@@ -55,6 +55,9 @@ done
 %_man1dir/*
 
 %changelog
+* Sat Aug 03 2013 Vitaly Lipatov <lav@altlinux.ru> 4.45-alt1
+- new version 4.45 (with rpmrb script)
+
 * Mon Mar 25 2013 Vitaly Lipatov <lav@altlinux.ru> 4.44-alt1
 - new version 4.44 (with rpmrb script) (ALT bug #28707)
 
