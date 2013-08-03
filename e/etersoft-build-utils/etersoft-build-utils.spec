@@ -2,7 +2,7 @@
 
 Name: etersoft-build-utils
 Version: 2.0.27
-Release: alt1
+Release: alt2
 
 Summary: A set of rpm build utilities from Etersoft
 
@@ -68,6 +68,9 @@ RECOMMENDED packages: gcc-c++ perl-libwww ccache elinks mutt hasher curl
 %config(noreplace) %_sysconfdir/eterbuild/repos/*
 
 %changelog
+* Sat Aug 03 2013 Vitaly Lipatov <lav@altlinux.ru> 2.0.27-alt2
+- fix internal version
+
 * Sat Aug 03 2013 Vitaly Lipatov <lav@altlinux.ru> 2.0.27-alt1
 - intro ArchLinux x86_64 adoption
 - drop support ALT Linux 2.3, 2.4, 3.0
