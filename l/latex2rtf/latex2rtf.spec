@@ -1,9 +1,9 @@
 Name: latex2rtf
-Version: 1.9.19
-Release: alt1.qa1
+Version: 2.3.3
+Release: alt1
 
 Summary: Convert a LaTeX file to an RTF file
-Summary(ru_RU.KOI8-R): Преобразователь файлов LaTeX в формат RTF
+Summary(ru_RU.UTF8): п÷я─п╣п╬п╠я─п╟п╥п╬п╡п╟я┌п╣п╩я▄ я└п╟п╧п╩п╬п╡ LaTeX п╡ я└п╬я─п╪п╟я┌ RTF
 
 License: LGPL
 Group: Text tools
@@ -11,44 +11,37 @@ Url: http://sourceforge.net/projects/latex2rtf/
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-Source: http://prdownloads.sourceforge.net/%name/%name-%version.tar.bz2
-Patch: %name-link.patch
+Source: http://prdownloads.sourceforge.net/%name/%name-%version.tar
 
 %description
 This package contains the latex2rtf command converts a LaTeX file 
 into RTF text format. The text and much of the formatting 
 information is translated to RTF.
 
-%description -l ru_RU.KOI8-R
-Этот пакет содержит команду latex2rtf, которая преобразует
-файл LaTeX в формат текстового файла RTF. Текст и большая
-часть информации о форматировании переводится в RTF.
+%description -l ru_RU.UTF8
+п╜я┌п╬я┌ п©п╟п╨п╣я┌ я│п╬п╢п╣я─п╤п╦я┌ п╨п╬п╪п╟п╫п╢я┐ latex2rtf, п╨п╬я┌п╬я─п╟я▐ п©я─п╣п╬п╠я─п╟п╥я┐п╣я┌
+я└п╟п╧п╩ LaTeX п╡ я└п╬я─п╪п╟я┌ я┌п╣п╨я│я┌п╬п╡п╬пЁп╬ я└п╟п╧п╩п╟ RTF. п╒п╣п╨я│я┌ п╦ п╠п╬п╩я▄я┬п╟я▐
+я┤п╟я│я┌я▄ п╦п╫я└п╬я─п╪п╟я├п╦п╦ п╬ я└п╬я─п╪п╟я┌п╦я─п╬п╡п╟п╫п╦п╦ п©п╣я─п╣п╡п╬п╢п╦я┌я│я▐ п╡ RTF.
 
 %prep
-%setup -q
-%patch
-%__subst "s|^PREFIX=.*|PREFIX=\$(prefix)|" Makefile
-%__subst "s|^MAN_INSTALL=\$(PREFIX)/man/man1|MAN_INSTALL=\$(PREFIX)/share/man/man1|" Makefile
-%__subst "s|^INFO_INSTALL=\$(PREFIX)/info|INFO_INSTALL=\$(PREFIX)/share/info|" Makefile
-%__subst "s|^SUPPORT_INSTALL=\$(PREFIX)/share/latex2rtf|SUPPORT_INSTALL=\$(PREFIX)/share/doc/latex2rtf-%version|" Makefile
-%__subst "s|^CFG_INSTALL=\$(PREFIX)/share/latex2rtf/cfg|CFG_INSTALL=\$(PREFIX)/share/latex2rtf|" Makefile
-%__subst 's|CFGDIR=\\"\$(CFG_INSTALL)\\"|CFGDIR=\\"/usr/share/latex2rtf\\"|' Makefile
-
-%__subst "s|\$(MKDIR) \$(CFG_INSTALL)|\$(MKDIR) \$(CFG_INSTALL) \$(MKDIR) \$(SUPPORT_INSTALL)|" Makefile
+%setup
 
 %build
-%make_build
+%make_build DESTDIR=%prefix
 
 %install
-%makeinstall
+make install DESTDIR=%buildroot%prefix
 
 %files
+%doc HACKING README
 %_bindir/*
-%_datadir/%name
-%_mandir/man1/*
-%_docdir/%name-%version
+%_datadir/%name/
+%_man1dir/*
 
 %changelog
+* Sun Aug 04 2013 Vitaly Lipatov <lav@altlinux.ru> 2.3.3-alt1
+- new version 2.3.3 (with rpmrb script)
+
 * Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.9.19-alt1.qa1
 - NMU: rebuilt for debuginfo.
 
