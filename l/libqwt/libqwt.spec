@@ -1,6 +1,6 @@
 Name: libqwt
-Version: 5.2.0
-Release: alt7
+Version: 5.2.2
+Release: alt1
 Epoch: 1
 
 Summary: 2D plotting widget extension to the Qt GUI
@@ -11,8 +11,8 @@ Url: http://sourceforge.net/projects/qwt
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-Source: http://prdownloads.sf.net/qwt/qwt-%version.tar.bz2
-Patch: %name-%version.patch
+Source: http://prdownloads.sf.net/qwt/qwt-%version.tar
+Patch: %name-5.2.0.patch
 
 Conflicts: libqwt5_3 = 5.3.0-alt1.svn20090920
 Obsoletes: libqwt5_3 = 5.3.0-alt1.svn20090920
@@ -75,6 +75,9 @@ rm -rf %buildroot/usr/doc
 %_man3dir/*
 
 %changelog
+* Sun Aug 04 2013 Vitaly Lipatov <lav@altlinux.ru> 1:5.2.2-alt1
+- new version 5.2.2 (with rpmrb script)
+
 * Sat Feb 26 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:5.2.0-alt7
 - Rebuilt for debuginfo
 
