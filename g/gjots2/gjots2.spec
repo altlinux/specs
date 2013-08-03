@@ -1,6 +1,6 @@
 Name: gjots2
-Version: 2.3.8
-Release: alt1.1.qa1.1
+Version: 2.3.15
+Release: alt1
 
 Summary: A note jotter. Organise your ideas, notes, facts in a hierarchy
 
@@ -56,18 +56,24 @@ desktop-file-install --dir %buildroot%_desktopdir \
 	--add-category=TextTools \
 	%buildroot%_desktopdir/gjots2.desktop
 
-%files
-# it is still broken
-# -f %name.lang
+%files -f %name.lang
 %_docdir/%name-%version/
 %_bindir/%name
+%_bindir/docbook2gjots
+%_bindir/gjots2docbook
+%_bindir/gjots2html
+%_bindir/gjots2lpr
 %python_sitelibdir/%name/
+%python_sitelibdir/gjots2-*.egg-info
 %_desktopdir/*
 %_pixmapsdir/*
 %_datadir/%name/
 %_man1dir/*
 
 %changelog
+* Sat Aug 03 2013 Vitaly Lipatov <lav@altlinux.ru> 2.3.15-alt1
+- new version 2.3.15 (with rpmrb script)
+
 * Sat Oct 22 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 2.3.8-alt1.1.qa1.1
 - Rebuild with Python-2.7
 
