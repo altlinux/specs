@@ -1,6 +1,6 @@
 Name: cfv
-Version: 1.18.2
-Release: alt1.1.1
+Version: 1.18.3
+Release: alt1
 
 Summary: Test and create .sfv, .csv and md5sum files
 
@@ -10,7 +10,7 @@ Group: File tools
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-Source: http://prdownloads.sourceforge.net/%name/%name-%version.tar.bz2
+Source: http://prdownloads.sourceforge.net/%name/%name-%version.tar
 BuildArch: noarch
 
 BuildPreReq: python >= %__python_version
@@ -29,7 +29,7 @@ These files are commonly used to ensure the correct retrieval or
 storage of data.
 
 %prep
-%setup -q
+%setup
 
 %build
 #echo "Last time I get 'tests finished:  ok: 1699  failed: 18'"
@@ -45,6 +45,9 @@ storage of data.
 %_man1dir/*
 
 %changelog
+* Sat Aug 03 2013 Vitaly Lipatov <lav@altlinux.ru> 1.18.3-alt1
+- new version 1.18.3 (with rpmrb script)
+
 * Tue Oct 25 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 1.18.2-alt1.1.1
 - Rebuild with Python-2.7
 
