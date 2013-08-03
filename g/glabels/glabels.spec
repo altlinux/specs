@@ -1,6 +1,6 @@
 Name: glabels
-Version: 3.0.0
-Release: alt1.1
+Version: 3.0.1
+Release: alt1
 
 Summary: glabels is a GNOME program to create labels and business cards
 Summary(ru_RU.UTF-8): glabels для GNOME - программа создания этикеток и визиток
@@ -17,9 +17,9 @@ Patch: %name-1.93.3-crop.patch
 Patch1: %name-2.2.0-etersoft.patch
 Patch2: %name-3.0.0-build.patch
 
-# Automatically added by buildreq on Fri Jun 03 2011
-# optimized out: fontconfig fontconfig-devel glib2-devel gnome-doc-utils gtk-update-icon-cache libatk-devel libcairo-devel libcairo-gobject libcairo-gobject-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libpango-devel libxml2-devel perl-Encode perl-XML-Parser pkg-config python-base python-module-libxml2 python-modules python-modules-compiler python-modules-encodings time
-BuildRequires: glibc-devel-static gtk-doc intltool libgtk+3-devel librsvg-devel python-module-paste python-module-peak
+# Automatically added by buildreq on Sat Aug 03 2013
+# optimized out: at-spi2-atk fontconfig fontconfig-devel glib2-devel gtk-update-icon-cache libat-spi2-core libatk-devel libcairo-devel libcairo-gobject libcairo-gobject-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libpango-devel libwayland-client libwayland-cursor libwayland-server perl-Encode perl-XML-Parser pkg-config python-base python-module-distribute python-module-libxml2 python-module-zope python-modules python-modules-compiler python-modules-encodings
+BuildRequires: glibc-devel gnome-doc-utils gtk-doc intltool libgtk+3-devel librsvg-devel libxml2-devel python-module-mwlib time
 
 BuildPreReq: intltool libxml2-devel
 
@@ -65,7 +65,7 @@ This package contains headers files for development with glabels library.
 %setup -q
 #%patch0 -p0
 #%patch1
-%patch2 -p2
+#patch2 -p2
 
 %build
 %autoreconf
@@ -104,6 +104,9 @@ ln -s %name-3 %buildroot%_bindir/%name
 %_datadir/gtk-doc/html/lib*/
 
 %changelog
+* Sat Aug 03 2013 Vitaly Lipatov <lav@altlinux.ru> 3.0.1-alt1
+- new version 3.0.1 (with rpmrb script)
+
 * Wed Apr 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0.0-alt1.1
 - Fixed build
 
