@@ -1,5 +1,5 @@
 Name: korinf
-Version: 2.0.2
+Version: 2.0.3
 Release: alt1
 
 Summary: Korinf multidistro build system
@@ -16,8 +16,8 @@ Source: %name-%version.tar
 
 BuildArchitectures: noarch
 
-Requires: eepm >= 1.0
-Requires: etersoft-build-utils >= 2.0.23
+Requires: eepm >= 1.2.4
+Requires: etersoft-build-utils >= 2.0.27
 Requires: alien >= 8.86-alt3
 
 %description
@@ -44,6 +44,16 @@ This package contains Korinf multidistro build system.
 %_datadir/eterbuild/korinf/
 
 %changelog
+* Sat Aug 03 2013 Vitaly Lipatov <lav@altlinux.ru> 2.0.3-alt1
+- separate write alt deps to separate file
+- tools/publish: do not republish packages with the same name (see eterbug #8890)
+- robot/products/wine-etersoft: do not follow links if it changed arch
+- introduce korexec - tool for run any command in distros
+- rearrange lists, add CUR version for ArchLinux and Gentoo
+- distro: add check and install build requires before build
+- rewrite korexec
+- rewrite korlogin with common mount functions
+
 * Thu Feb 21 2013 Vitaly Lipatov <lav@altlinux.ru> 2.0.2-alt1
 - filelist: will output one big package for FreeBSD, ArchLinux, Gentoo, Solaris, Windows
 - big update etc/lists
