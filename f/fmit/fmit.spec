@@ -1,6 +1,6 @@
 Name: fmit
-Version: 0.98.1
-Release: alt1.qa1
+Version: 0.99.2
+Release: alt1
 
 Summary: Free Music Instrument Tuner
 
@@ -12,8 +12,10 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 Source: http://download.gna.org/fmit/%name-%version-Source.tar
 
-# Automatically added by buildreq on Sun Jan 02 2011
-BuildRequires: ccmake gcc-c++ libXScrnSaver-devel libXau-devel libXcomposite-devel libXdmcp-devel libXmu-devel libXpm-devel libXtst-devel libXv-devel libXxf86misc-devel libalsa-devel libfftw3-devel libfreeglut-devel libxkbfile-devel qt3-designer
+# Automatically added by buildreq on Sat Aug 03 2013
+# optimized out: cmake cmake-modules fontconfig libGL-devel libGLU-devel libICE-devel libSM-devel libX11-devel libXau-devel libXcursor-devel libXext-devel libXfixes-devel libXft-devel libXi-devel libXinerama-devel libXmu-devel libXrandr-devel libXrender-devel libXt-devel libXtst-devel libXv-devel libqt4-core libqt4-devel libqt4-gui libqt4-network libqt4-opengl libqt4-qt3support libqt4-script libqt4-sql-sqlite libqt4-svg libstdc++-devel xorg-kbproto-devel xorg-xf86miscproto-devel xorg-xproto-devel
+BuildRequires: ccmake gcc-c++ libXScrnSaver-devel libXcomposite-devel libXdamage-devel libXdmcp-devel libXpm-devel libXres-devel libXxf86misc-devel libXxf86vm-devel libalsa-devel libfftw3-devel libfreeglut-devel libqt3-devel libqt4-sql-interbase libqt4-sql-mysql libqt4-sql-odbc libqt4-sql-postgresql libqt4-sql-sqlite2 libxkbfile-devel phonon-devel qt4-designer
+
 BuildRequires: desktop-file-utils
 
 %description
@@ -50,6 +52,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_desktopdir/%name.desktop
 
 %changelog
+* Sat Aug 03 2013 Vitaly Lipatov <lav@altlinux.ru> 0.99.2-alt1
+- new version 0.99.2 (with rpmrb script)
+
 * Mon May 23 2011 Repocop Q. A. Robot <repocop@altlinux.org> 0.98.1-alt1.qa1
 - NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
 - applied repocop fixes:
