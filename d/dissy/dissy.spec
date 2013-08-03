@@ -1,20 +1,22 @@
 Name: dissy
-Version: 7
-Release: alt1.1.1
+Version: 10
+Release: alt1
 
 Summary: Graphical frontend to objdump
 
 License: GPL
 Group: Development/Other
-Url: http://rtlab.tekproj.bth.se/wiki/index.php/Dissy
+Url: http://code.google.com/p/dissy/
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-Source: http://rtlab.tekproj.bth.se/~ska/%name-%version.tar.bz2
+Source: http://dissy.googlecode.com/files/%name-%version.tar
 BuildArch: noarch
 
 BuildRequires: python-devel
 BuildPreReq: rpm-build-compat >= 1.2
+
+%add_python_req_skip wali
 
 %description
 Dissy is a disassembler (graphical frontend to objdump) for multiple
@@ -23,7 +25,7 @@ and easy searching for addresses and symbols. Dissy is written in Python
 and available under the GNU GPL.
 
 %prep
-%setup -q
+%setup
 %python_build
 
 %install
@@ -36,10 +38,15 @@ rm -rf %buildroot/%_datadir/doc/
 %doc README
 %_bindir/%name
 %python_sitelibdir/%name/
+%python_sitelibdir//dissy-*.egg-info
 %_datadir/%name/
 %_man1dir/*
 
 %changelog
+* Sat Aug 03 2013 Vitaly Lipatov <lav@altlinux.ru> 10-alt1
+- new version 10 (with rpmrb script)
+- fix url, source url
+
 * Sat Oct 22 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 7-alt1.1.1
 - Rebuild with Python-2.7
 
