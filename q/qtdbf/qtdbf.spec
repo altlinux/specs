@@ -1,8 +1,6 @@
-%define		_giconsdir %_iconsdir/hicolor/128x128/apps
-
 Version:	0.9.10.1
 Name:		qtdbf
-Release:	alt1
+Release:	alt2
 Summary:	A simple DBF viewer and editor
 Summary(ru_RU.UTF8): Простой просмотрщик и редактор DBF
 Summary(uk_UA.UTF8): Простий переглядач та редактор DBF
@@ -12,7 +10,8 @@ Packager:	Motsyo Gennadi <drool@altlinux.ru>
 Url:		http://www.va-soft.ru/project_8.html
 Source0:	%name-%version.tar.gz
 
-BuildRequires: gcc-c++ libqt4-devel
+Requires:	libqt4-sql-sqlite
+BuildRequires:	gcc-c++ libqt4-devel
 
 Provides:	qtDbf
 Obsoletes:	qtDbf < 0.9.4
@@ -53,6 +52,9 @@ make INSTALL_ROOT=%buildroot install
 %_datadir/%name
 
 %changelog
+* Sat Aug 03 2013 Motsyo Gennadi <drool@altlinux.ru> 0.9.10.1-alt2
+- add requires for libqt4-sql-sqlite (alt bug #29261)
+
 * Fri Aug 02 2013 Motsyo Gennadi <drool@altlinux.ru> 0.9.10.1-alt1
 - Bugfix filter for field of types I and N
 
