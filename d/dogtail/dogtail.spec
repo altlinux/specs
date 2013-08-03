@@ -1,6 +1,6 @@
 Name: dogtail
-Version: 0.7.0
-Release: alt2.1
+Version: 0.8.2
+Release: alt1
 
 Summary: GUI test tool and automation framework
 
@@ -10,7 +10,7 @@ Url: https://fedorahosted.org/dogtail/
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-Source: http://people.redhat.com/zcerza/dogtail/releases/dogtail-%version.tar
+Source: https://fedorahosted.org/released/dogtail/dogtail-%version.tar
 
 BuildArch: noarch
 # Automatically added by buildreq on Sat May 21 2011
@@ -20,8 +20,6 @@ BuildRequires: python-module-paste python-module-peak
 BuildRequires: desktop-file-utils
 
 %py_requires gconf
-
-Requires: xinit
 
 # Hack for build
 %add_python_req_skip Accessibility
@@ -56,6 +54,9 @@ find examples -type f -exec chmod 0644 \{\} \;
 %_iconsdir/hicolor/scalable/*
 
 %changelog
+* Sat Aug 03 2013 Vitaly Lipatov <lav@altlinux.ru> 0.8.2-alt1
+- new version 0.8.2 (with rpmrb script)
+
 * Sat Oct 22 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 0.7.0-alt2.1
 - Rebuild with Python-2.7
 
