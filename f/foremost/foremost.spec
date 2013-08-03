@@ -1,6 +1,6 @@
 Name: foremost
-Version: 1.5.4
-Release: alt1.qa1
+Version: 1.5.7
+Release: alt1
 
 Summary: Recover files by "carving" them from a raw disk
 
@@ -10,7 +10,7 @@ Url: http://foremost.sourceforge.net/
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-Source: http://foremost.sourceforge.net/pkg/%name-%version.tar.bz2
+Source: http://foremost.sourceforge.net/pkg/%name-%version.tar
 Patch0: %name-sysconfdir.patch
 
 %description
@@ -25,8 +25,8 @@ file format allowing for a more reliable and faster recovery.
 See use case in russian: http://mydebianblog.blogspot.com/2007/01/1-foremost.html
 
 %prep
-%setup -q
-%patch0 -p1
+%setup
+%patch0 -p2
 
 %build
 %make_build \
@@ -51,6 +51,9 @@ install -d %buildroot{%_bindir,%_man1dir,%_sysconfdir}
 %config(noreplace) %_sysconfdir/%name.conf
 
 %changelog
+* Sat Aug 03 2013 Vitaly Lipatov <lav@altlinux.ru> 1.5.7-alt1
+- new version 1.5.7 (with rpmrb script)
+
 * Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.5.4-alt1.qa1
 - NMU: rebuilt for debuginfo.
 
