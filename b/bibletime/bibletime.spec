@@ -1,6 +1,6 @@
 Name: bibletime
-Version: 2.7.2
-Release: alt2.1
+Version: 2.9.1
+Release: alt1
 
 Summary: BibleTime is a Bible study application based on Qt
 Summary(ru_RU.UTF-8): BibleTime - простое в использовании средство для изучения Библии
@@ -12,7 +12,7 @@ Group: Text tools
 Packager: Artem Zolochevskiy <azol@altlinux.ru>
 
 Source: http://prdownloads.sourceforge.net/%name/%name-%version.tar
-Patch: %name-%version-%release.patch
+#Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-build-licenses
 # Automatically added by buildreq on Tue Aug 03 2010
@@ -30,7 +30,7 @@ BibleTime is a frontend for the SWORD Bible Framework.
 
 %prep
 %setup
-%patch -p1
+#patch -p1
 # currently breaks build
 subst 's/-Werror //' CMakeLists.txt
 
@@ -55,6 +55,9 @@ rm -f %buildroot%_iconsdir/%name.svg
 %_iconsdir/hicolor/scalable/apps/%name.svg
 
 %changelog
+* Sat Aug 03 2013 Vitaly Lipatov <lav@altlinux.ru> 2.9.1-alt1
+- new version 2.9.1 (with rpmrb script)
+
 * Tue Nov 13 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.7.2-alt2.1
 - Fixed build with gcc 4.7
 
