@@ -1,6 +1,6 @@
 Name: asymptote
-Version: 1.91
-Release: alt1.3
+Version: 2.23
+Release: alt1
 
 Summary: Descriptive vector graphics language
 
@@ -35,8 +35,8 @@ Documentation and examples for %name.
 
 %prep
 %setup
-%patch0 -p2
-%patch1 -p2
+#patch0 -p2
+#patch1 -p2
 # some incompatibilities?
 %__subst "s|@printindex cp||g" doc/%name.texi
 gzip ChangeLog
@@ -65,6 +65,9 @@ gzip ChangeLog
 %_infodir/%name/*.info*
 
 %changelog
+* Sat Aug 03 2013 Vitaly Lipatov <lav@altlinux.ru> 2.23-alt1
+- new version 2.23 (with rpmrb script)
+
 * Wed Nov 14 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.91-alt1.3
 - Fixed build with glibc 2.16
 
