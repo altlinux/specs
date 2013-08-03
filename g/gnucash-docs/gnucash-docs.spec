@@ -1,6 +1,6 @@
 Name: gnucash-docs
-Version: 2.2.0
-Release: alt1.qa1
+Version: 2.4.2
+Release: alt1
 
 Summary: Documentation for the Gnucash
 
@@ -17,7 +17,7 @@ Requires: yelp
 Requires(post): scrollkeeper
 Requires(postun): scrollkeeper
 
-Source: http://www.gnucash.org/pub/gnucash/sources/stable/%name-%version.tar.bz2
+Source: http://prdownloads.sourceforge.net/gnucash/gnucash-docs/%version/%name-%version.tar
 
 # Automatically added by buildreq on Thu Dec 28 2006
 BuildRequires: scrollkeeper xsltproc
@@ -31,7 +31,7 @@ double-entry accounting principles to ensure balanced books.
 This is the documentation module for GnuCash.
 
 %prep
-%setup -q
+%setup
 
 %build
 %configure
@@ -46,6 +46,9 @@ This is the documentation module for GnuCash.
 %_datadir/omf/gnucash-docs/
 
 %changelog
+* Sun Aug 04 2013 Vitaly Lipatov <lav@altlinux.ru> 2.4.2-alt1
+- new version 2.4.2 (with rpmrb script)
+
 * Tue Nov 24 2009 Repocop Q. A. Robot <repocop@altlinux.org> 2.2.0-alt1.qa1
 - NMU (by repocop): the following fixes applied:
   * obsolete-call-in-post-scrollkeeper-update for gnucash-docs
