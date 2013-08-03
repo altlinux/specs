@@ -2,7 +2,7 @@
 %define rel %nil
 %define oname audacious
 Name: audacious-plugins
-Version: 3.3.4
+Version: 3.4
 Release: alt1
 
 Summary: Plugins for Audacious
@@ -42,9 +42,7 @@ BuildRequires: gcc-c++ libSDL-devel libXcomposite-devel libaudacious-devel libbi
 
 BuildRequires: lib%oname-devel = %version
 
-# wait for altbug #20165
-# libsidplay2-devel
-BuildRequires: libglade-devel libprojectM-devel >= 1.1
+BuildRequires: libglade-devel libprojectM-devel >= 1.1 libsidplayfp-devel
 
 %description
 Base plugins for Audacious.
@@ -88,6 +86,9 @@ This package contains the base I/O plugins:
 %_libdir/%oname/*
 
 %changelog
+* Sat Aug 03 2013 Vitaly Lipatov <lav@altlinux.ru> 3.4-alt1
+- new version 3.4 (with rpmrb script)
+
 * Sun Jun 02 2013 Andrey Cherepanov <cas@altlinux.org> 3.3.4-alt1
 - new version 3.3.4
 
