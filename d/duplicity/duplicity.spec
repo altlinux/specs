@@ -1,6 +1,6 @@
 Name: duplicity
-Version: 0.6.17
-Release: alt1.1
+Version: 0.6.21
+Release: alt1
 
 Summary: Untrusted/encrypted backup using rsync algorithm
 
@@ -8,7 +8,7 @@ Group: Archiving/Backup
 Url: http://www.nongnu.org/duplicity/
 License: GPL
 
-Source: %name-%version.tar
+Source: http://savannah.nongnu.org/download/duplicity/%name-%version.tar
 
 # Automatically added by buildreq on Sat Nov 03 2007
 BuildRequires: librsync-devel python-devel python-modules-compiler
@@ -45,6 +45,9 @@ hard links.
 %python_sitelibdir/duplicity-*.egg-info
 
 %changelog
+* Sat Aug 03 2013 Vitaly Lipatov <lav@altlinux.ru> 0.6.21-alt1
+- new version 0.6.21 (with rpmrb script)
+
 * Mon Apr 16 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 0.6.17-alt1.1
 - Rebuild to remove redundant libpython2.7 dependency
 
