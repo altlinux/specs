@@ -1,8 +1,8 @@
 %define pear_name HTML_Template_PHPLIB
 
 Name: pear-HTML_Template_PHPLIB
-Version: 1.3.3
-Release: alt3
+Version: 1.4.0
+Release: alt1
 
 Summary: preg_* based template system
 
@@ -12,7 +12,7 @@ Url: http://pear.php.net/package/HTML_Template_PHPLIB
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-Source: http://pear.php.net/get/HTML_Template_PHPLIB-%version.tar.bz2
+Source: http://pear.php.net/get/HTML_Template_PHPLIB-%version.tar
 
 BuildArchitectures: noarch
 
@@ -42,12 +42,16 @@ well as some speed improvements.
 
 %files
 %doc LICENSE CHANGELOG
-%pear_dir/HTML
-%pear_testdir/HTML_Template_PHPLIB/tests
+%_bindir/*
+%pear_dir/HTML/
+%pear_testdir/HTML_Template_PHPLIB/tests/
 %pear_docdir/%pear_name/
 %pear_xmldir/%pear_name.xml
 
 %changelog
+* Sun Aug 04 2013 Vitaly Lipatov <lav@altlinux.ru> 1.4.0-alt1
+- new version 1.4.0 (with rpmrb script)
+
 * Fri Jun 20 2008 Vitaly Lipatov <lav@altlinux.ru> 1.3.3-alt3
 - autorebuild for correct requires(pre) (see bug #16086)
 
