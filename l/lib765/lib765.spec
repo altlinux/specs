@@ -1,6 +1,6 @@
 Name: lib765
-Version: 0.4.1
-Release: alt2.qa2
+Version: 0.4.2
+Release: alt1
 
 Summary: Library to emulate the uPD765a floppy controller (aka Intel 8272)
 Group: System/Libraries
@@ -9,7 +9,7 @@ Url: http://www.seasip.demon.co.uk/Unix/LibDsk/#765
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-Source: http://www.seasip.demon.co.uk/Unix/LibDsk/%name-%version.tar.bz2
+Source: http://www.seasip.demon.co.uk/Unix/LibDsk/%name-%version.tar
 
 # Automatically added by buildreq on Mon Sep 29 2003
 BuildRequires: libdsk-devel
@@ -59,6 +59,9 @@ programs that use the %name library.
 %_libdir/*.so
 
 %changelog
+* Sun Aug 04 2013 Vitaly Lipatov <lav@altlinux.ru> 0.4.2-alt1
+- new version 0.4.2 (with rpmrb script)
+
 * Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.4.1-alt2.qa2
 - NMU: rebuilt for debuginfo.
 
