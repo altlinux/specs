@@ -1,6 +1,6 @@
 Name: gputils
-Version: 0.13.7
-Release: alt1.qa1
+Version: 1.2.0
+Release: alt1
 
 Summary: Development utilities for Microchip (TM) PIC (TM) microcontrollers
 
@@ -10,7 +10,7 @@ Url: http://gputils.sourceforge.net
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-Source: http://prdownloads.sf.net/gputils/%name-%version.tar.bz2
+Source: http://prdownloads.sf.net/gputils/%name-%version.tar
 
 # Automatically added by buildreq on Mon Jan 17 2005
 BuildRequires: flex hostinfo
@@ -25,7 +25,7 @@ the features available with Microchip's tools.  See the documentation for
 an up-to-date list of what gputils can do.
 
 %prep
-%setup -q
+%setup
 
 %build
 %configure
@@ -42,6 +42,9 @@ an up-to-date list of what gputils can do.
 %doc AUTHORS ChangeLog NEWS README doc/gputils.pdf doc/gputils.ps
 
 %changelog
+* Sun Aug 04 2013 Vitaly Lipatov <lav@altlinux.ru> 1.2.0-alt1
+- new version 1.2.0 (with rpmrb script)
+
 * Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.13.7-alt1.qa1
 - NMU: rebuilt for debuginfo.
 
