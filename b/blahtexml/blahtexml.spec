@@ -1,6 +1,6 @@
 Name: blahtexml
-Version: 0.6
-Release: alt1.1
+Version: 0.9
+Release: alt1
 
 Summary: TeX / MathML converter
 
@@ -11,10 +11,10 @@ Url: http://gva.noekeon.org/blahtexml/
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 Source: http://gva.noekeon.org/blahtexml/blahtexml-%version-src.tar
-Patch: blahtexml-0.6-alt-glibc-2.16.patch
+Patch: blahtexml-0.9-alt-unistd.patch
 
 # Automatically added by buildreq on Mon Feb 08 2010
-BuildRequires: gcc-c++ libxerces-c28-devel
+BuildRequires: gcc-c++ libxerces-c-devel
 
 %description
 Blahtex is a program written in C++, which converts an equation given in a
@@ -37,10 +37,13 @@ file into MathML.
 install -p -D -m0755 blahtexml %buildroot%_bindir/blahtexml
 
 %files
-%doc README GNU-GPL example1.xml example2.xml example3.xml
+%doc README Documentation/example?.xml
 %_bindir/blahtexml
 
 %changelog
+* Sat Aug 03 2013 Vitaly Lipatov <lav@altlinux.ru> 0.9-alt1
+- new version 0.9 (with rpmrb script)
+
 * Mon Dec 03 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6-alt1.1
 - Fixed build with glibc 2.16
 
