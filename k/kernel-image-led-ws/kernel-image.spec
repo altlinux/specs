@@ -20,7 +20,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.4.55
-Release: alt8
+Release: alt10
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -104,7 +104,7 @@ Release: alt8
 %def_disable crasher
 %def_disable logo
 %def_enable zcache
-%def_disable taskstats
+%def_enable taskstats
 %def_enable security
 %def_enable audit
 %def_enable selinux
@@ -276,14 +276,14 @@ Patch0211: linux-%kernel_branch.39-fix-drivers-gpio--gpio-wm831x.patch
 Patch0212: linux-%kernel_branch.39-fix-drivers-gpio--gpio-wm8994.patch
 Patch0213: linux-%kernel_branch.39-fix-drivers-gpio--gpiolib.patch
 
-Patch0220: linux-%kernel_branch.46-fix-drivers-gpu-drm.patch
 Patch0221: linux-%kernel_branch.50-fix-drivers-gpu-drm--drm.patch
 Patch0222: linux-%kernel_branch.25-fix-drivers-gpu-drm--exynosdrm.patch
 Patch0223: linux-%kernel_branch.25-fix-drivers-gpu-drm--gma500_gfx.patch
 Patch0224: linux-%kernel_branch.50-fix-drivers-gpu-drm--i915.patch
 Patch0225: linux-%kernel_branch.20-fix-drivers-gpu-drm--nouveau.patch
 Patch0226: linux-%kernel_branch.38-fix-drivers-gpu-drm--radeon.patch
-Patch0227: linux-%kernel_branch.45-fix-drivers-gpu-vga--vga_switcheroo.patch
+Patch0227: linux-%kernel_branch.53-fix-drivers-gpu-drm--ttm.patch
+Patch0228: linux-%kernel_branch.45-fix-drivers-gpu-vga--vga_switcheroo.patch
 
 Patch0231: linux-%kernel_branch.38-fix-drivers-hid--hid.patch
 Patch0232: linux-%kernel_branch.20-fix-drivers-hid--hid-apple.patch
@@ -612,10 +612,12 @@ Patch1112: linux-%kernel_branch.20-feat-drivers-misc--rts_pstor.patch
 Patch1121: linux-%kernel_branch.27-feat-drivers-net-ethernet-alacritech.patch
 Patch1122: linux-%kernel_branch.27-feat-drivers-net-ethernet-alacritech--slicoss.patch
 Patch1123: linux-%kernel_branch.50-feat-drivers-net-ethernet-atheros--alx.patch
-Patch1124: linux-%kernel_branch.20-feat-drivers-net-wireless-rtl8187se.patch
-Patch1125: linux-%kernel_branch.20-feat-drivers-net-wireless-rtl8192e.patch
-Patch1126: linux-%kernel_branch.20-feat-drivers-net-wireless-rtl8192u.patch
-Patch1127: linux-%kernel_branch.20-feat-drivers-net-wireless-rtl8712.patch
+Patch1124: linux-%kernel_branch.53-feat-drivers-net-wireless--vt6655.patch
+Patch1125: linux-%kernel_branch.53-feat-drivers-net-wireless--vt6656.patch
+Patch1126: linux-%kernel_branch.20-feat-drivers-net-wireless-rtl8187se.patch
+Patch1127: linux-%kernel_branch.20-feat-drivers-net-wireless-rtl8192e.patch
+Patch1128: linux-%kernel_branch.20-feat-drivers-net-wireless-rtl8192u.patch
+Patch1129: linux-%kernel_branch.20-feat-drivers-net-wireless-rtl8712.patch
 
 Patch1131: linux-%kernel_branch.27-feat-drivers-platform--asus_oled.patch
 Patch1132: linux-%kernel_branch.31-feat-drivers-platform--omnibook.patch
@@ -1509,8 +1511,7 @@ cd linux-%version
 %patch0212 -p1
 %patch0213 -p1
 
-# fix-drivers-gpu-drm*
-%patch0220 -p1
+# fix-drivers-gpu-drm--*
 %patch0221 -p1
 %patch0222 -p1
 %patch0223 -p1
@@ -1518,6 +1519,7 @@ cd linux-%version
 %patch0225 -p1
 %patch0226 -p1
 %patch0227 -p1
+%patch0228 -p1
 
 # fix-drivers-hid--*
 %patch0231 -p1
@@ -1908,6 +1910,8 @@ cd linux-%version
 %patch1125 -p1
 %patch1126 -p1
 %patch1127 -p1
+%patch1128 -p1
+%patch1129 -p1
 
 # feat-drivers-platform--*
 %patch1131 -p1
@@ -2122,7 +2126,7 @@ config_disable \
 	%{?_disable_wireless:WLAN WIRELESS CFG80211 WIMAX} \
 	%{?_disable_isdn:ISDN} \
 	%{?_disable_telephony:PHONE} \
-	%{?_disable_taskstats:TASK\.*} \
+	%{?_disable_taskstats:TASKSTATS} \
 	%{?_disable_security:SECURITY} \
 	%{?_disable_audit:AUDIT} \
 	%{?_disable_selinux:SECURITY_SELINUX} \
@@ -2875,6 +2879,20 @@ done)
 
 
 %changelog
+* Sat Aug 03 2013 Led <led@altlinux.ru> 3.4.55-alt10
+- removed:
+  + fix-drivers-gpu-drm
+- updated:
+  + fix-drivers-gpu-drm--drm
+- added:
+  + fix-drivers-gpu-drm--ttm
+
+* Sat Aug 03 2013 Led <led@altlinux.ru> 3.4.55-alt9
+- added:
+  + feat-drivers-net-wireless--vt6655
+  + feat-drivers-net-wireless--vt6656
+- enabled taskstats
+
 * Sat Aug 03 2013 Led <led@altlinux.ru> 3.4.55-alt8
 - added:
   + fix-drivers-firewire--firewire-core
