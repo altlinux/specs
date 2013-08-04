@@ -1,8 +1,8 @@
 %define pear_name HTTP
 
 Name: pear-HTTP
-Version: 1.4.0
-Release: alt3
+Version: 1.4.1
+Release: alt1
 
 Summary: Miscellaneous HTTP utilities
 
@@ -12,7 +12,7 @@ Url: http://pear.php.net/package/HTTP
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-Source: http://pear.php.net/get/HTTP-%version.tar.bz2
+Source: http://pear.php.net/get/HTTP-%version.tar
 
 BuildArchitectures: noarch
 
@@ -45,9 +45,13 @@ language negotiation or HTTP redirection.
 %files
 %doc LICENSE CHANGELOG
 %pear_dir/HTTP.php
+%pear_testdir/HTTP/
 %pear_xmldir/%pear_name.xml
 
 %changelog
+* Sun Aug 04 2013 Vitaly Lipatov <lav@altlinux.ru> 1.4.1-alt1
+- new version 1.4.1 (with rpmrb script)
+
 * Fri Jun 20 2008 Vitaly Lipatov <lav@altlinux.ru> 1.4.0-alt3
 - autorebuild for correct requires(pre) (see bug #16086)
 
