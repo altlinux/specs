@@ -1,6 +1,6 @@
 Name: python-module-bibtex
-Version: 1.2.4
-Release: alt3.3.1.1
+Version: 1.2.5
+Release: alt1
 
 Summary: Python extension to parse BibTeX files
 
@@ -9,8 +9,8 @@ Group: Development/Python
 Url: http://www.pybliographer.org/
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
-Source: http://downloads.sf.net/pybliographer/python-bibtex-%version.tar.bz2
-Patch: %name-%version-fix-test.patch
+Source: http://downloads.sf.net/pybliographer/python-bibtex-%version.tar
+Patch: %name-1.2.4-fix-test.patch
 
 %setup_python_module bibtex
 
@@ -28,7 +28,7 @@ This module contains two extensions needed for pybliographer:
  - a simple binding to GNU Recode
 
 %prep
-%setup -q -n python-bibtex-%version
+%setup -n python-bibtex-%version
 %patch -p1
 
 %build
@@ -46,6 +46,9 @@ This module contains two extensions needed for pybliographer:
 %python_sitelibdir/*.egg-info
 
 %changelog
+* Sun Aug 04 2013 Vitaly Lipatov <lav@altlinux.ru> 1.2.5-alt1
+- new version 1.2.5 (with rpmrb script)
+
 * Thu Apr 12 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 1.2.4-alt3.3.1.1
 - Rebuild to remove redundant libpython2.7 dependency
 
