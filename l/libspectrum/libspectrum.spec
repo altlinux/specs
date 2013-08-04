@@ -1,6 +1,6 @@
 Name: libspectrum
-Version: 1.0.0
-Release: alt2
+Version: 1.1.1
+Release: alt1
 
 Summary: ZX Spectrum emulation shared library
 
@@ -10,7 +10,7 @@ License: GPL
 Group: Emulators
 Url: http://fuse-emulator.sourceforge.net/libspectrum.php
 
-Source: http://dl.sf.net/fuse-emulator/%name-%version.tar
+Source: http://prdownloads.sf.net/fuse-emulator/%name-%version.tar
 
 # manually removed: gcc-g77 hostinfo 
 # Automatically added by buildreq on Sun Feb 06 2005
@@ -54,6 +54,9 @@ This package contains header files for %name.
 %_includedir/%name.h
 
 %changelog
+* Sun Aug 04 2013 Vitaly Lipatov <lav@altlinux.ru> 1.1.1-alt1
+- new version 1.1.1 (with rpmrb script)
+
 * Sat Dec 29 2012 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt2
 - NMU: new version 1.0.0
 - release alt2 to resolve accidental conflict with autoimports
