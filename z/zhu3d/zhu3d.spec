@@ -1,6 +1,6 @@
 Name: zhu3d
-Version: 4.2.2
-Release: alt1.1
+Version: 4.2.6
+Release: alt1
 
 Summary: OpenGL-based equation viewer and solver
 
@@ -10,9 +10,8 @@ Url: http://kde-apps.org/content/show.php?content=43071
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-Source: http://prdownloads.sourceforge.net/sourceforge/zhu3d/%name-%version.tar.bz2
+Source: http://prdownloads.sourceforge.net/sourceforge/zhu3d/%name-%version.tar
 Source1: %name.desktop
-Patch0: %name-3.3.0-path.patch
 Patch1: %name-debug-and-link.patch
 
 %define zdir %buildroot%_datadir/%name/
@@ -33,8 +32,7 @@ translating as well as filed lightning or surface properties.
 Special effects are transparency, textures, fog and motion blur.
 
 %prep
-%setup -q
-#%patch0 -p1
+%setup
 %patch1 -p2
 
 %build
@@ -78,6 +76,10 @@ rm -f %zdir/work/.directory
 %lang(zh) %_datadir/%name/system/languages/%{name}_zh.qm
 
 %changelog
+* Sun Aug 04 2013 Vitaly Lipatov <lav@altlinux.ru> 4.2.6-alt1
+- new version 4.2.6 (with rpmrb script)
+- update spec
+
 * Thu Feb 02 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.2.2-alt1.1
 - Fixed build
 
