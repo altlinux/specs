@@ -1,5 +1,5 @@
 Name: mkinitrd
-Version: 3.0.20
+Version: 3.0.21
 Release: alt1
 Epoch: 1
 Summary: Creates an initial ramdisk image for preloading modules
@@ -70,6 +70,10 @@ install -p -m 0644 scripts/* %buildroot/lib/mkinitrd/initramfs-base/scripts/
 
 
 %changelog
+* Sun Aug 04 2013 Led <led@altlinux.ru> 1:3.0.21-alt1
+- 3.0.21:
+  + init.sh: fixed udev rule for root fs
+
 * Fri Jul 05 2013 Led <led@altlinux.ru> 1:3.0.20-alt1
 - 3.0.20:
   + mkinitrd.sh: clean up FIRMWARE_DIRS
