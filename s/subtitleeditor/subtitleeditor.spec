@@ -1,7 +1,7 @@
-%define major 0.37
+%define major 0.40
 Name: subtitleeditor
-Version: %major.1
-Release: alt1.1
+Version: %major.0
+Release: alt1
 
 Summary: Subtitle editor for GNOME
 
@@ -57,6 +57,9 @@ rm -f %buildroot%_iconsdir/hicolor/24x24/apps/subtitleeditor.png
 %_niconsdir/*
 
 %changelog
+* Sun Aug 04 2013 Vitaly Lipatov <lav@altlinux.ru> 0.40.0-alt1
+- new version 0.40.0 (with rpmrb script)
+
 * Wed Apr 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.37.1-alt1.1
 - Fixed build with new glib2
 
