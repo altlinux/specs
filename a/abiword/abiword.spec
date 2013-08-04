@@ -4,7 +4,7 @@
 
 Name: abiword
 Version: 2.8.6
-Release: alt1.5
+Release: alt1.6
 
 Summary: Lean and fast full-featured word processor
 Group: Office
@@ -35,7 +35,7 @@ BuildPreReq: libpng-devel
 BuildRequires: bzlib-devel gcc-c++ libaiksaurus-gtk-devel libenchant-devel libfribidi-devel
 BuildRequires: libots-devel libreadline-devel libgtkmathview-devel librsvg-devel libwmf-devel
 BuildRequires: liblink-grammar-devel >= 4.2.1 libxslt-devel
-BuildRequires: libwpd-devel libwpg-devel perl-HTML-Tree t1lib-devel
+BuildRequires: libwpd9-devel libwpg-devel perl-HTML-Tree t1lib-devel
 BuildRequires: libwv-devel boost-devel libdbus-glib-devel libtidy-devel libwmf-devel
 %if_enabled gnome
 #BuildRequires: libgnomeoffice-devel libgsf-gnome-devel libglade-devel
@@ -138,6 +138,9 @@ install -D %SOURCE1 %buildroot%_desktopdir/
 #TODO: apply %%lang tags to localized files /usr/share/abiword-2.8/strings/*.strings (5 Mb)
 
 %changelog
+* Sun Aug 04 2013 Vitaly Lipatov <lav@altlinux.ru> 2.8.6-alt1.6
+- rebuild with new libwpg
+
 * Thu Nov 29 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.8.6-alt1.5
 - Completed linking for plugins (ALT #28142)
 
