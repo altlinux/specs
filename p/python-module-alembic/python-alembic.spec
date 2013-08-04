@@ -2,8 +2,8 @@
 %global modname alembic
 
 Name: python-module-alembic
-Version: 0.4.2
-Release: alt2
+Version: 0.5.0
+Release: alt1
 
 Summary: Database migration tool for SQLAlchemy
 
@@ -65,6 +65,9 @@ install -m 0644 alembic.1 %buildroot%_man1dir/alembic.1
 %_man1dir/alembic.1*
 
 %changelog
+* Sun Aug 04 2013 Vitaly Lipatov <lav@altlinux.ru> 0.5.0-alt1
+- new version 0.5.0 (with rpmrb script)
+
 * Mon Apr 08 2013 Vitaly Lipatov <lav@altlinux.ru> 0.4.2-alt2
 - initial build for ALT Linux Sisyphus
 
