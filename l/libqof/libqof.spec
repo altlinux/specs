@@ -1,5 +1,5 @@
 Name: libqof
-Version: 0.8.4
+Version: 0.8.7
 Release: alt1
 
 Summary: QOF - Query Object Framework
@@ -10,7 +10,7 @@ Url: http://qof.alioth.debian.org/
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-Source: http://alioth.debian.org/frs/download.php/3029/qof-%version.tar
+Source: http://alioth.debian.org/frs/download.php/file/3908/qof-%version.tar
 
 # Automatically added by buildreq on Sat Jan 21 2012
 # optimized out: libgpg-error libstdc++-devel pkg-config tzdata
@@ -68,6 +68,9 @@ make -C lib/libsql libqofsql.la
 %_pkgconfigdir/*
 
 %changelog
+* Sun Aug 04 2013 Vitaly Lipatov <lav@altlinux.ru> 0.8.7-alt1
+- new version 0.8.7 (with rpmrb script)
+
 * Sat Jan 21 2012 Vitaly Lipatov <lav@altlinux.ru> 0.8.4-alt1
 - new version 0.8.4 (with rpmrb script)
 
