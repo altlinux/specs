@@ -1,7 +1,7 @@
 %define bname busybox
 Name: %bname-source
 Version: 1.21.1
-Release: alt7
+Release: alt8
 Summary: Sources of %bname
 License: GPLv2
 Group: Development/Other
@@ -53,6 +53,9 @@ tar -chJf %buildroot%_usrsrc/%bname-%version.tar.xz .
 
 
 %changelog
+* Sun Aug 04 2013 Led <led@altlinux.ru> 1.21.1-alt8
+- volume_id: add f2fs detection
+
 * Thu Aug 01 2013 Led <led@altlinux.ru> 1.21.1-alt7
 - upstream fixes:
   + awk: Fix handling of functions with empty body
