@@ -1,7 +1,7 @@
 %define pear_name Auth
 
 Name: pear-Auth
-Version: 1.6.1
+Version: 1.6.4
 Release: alt1
 
 Summary: Creating an authentication system
@@ -12,7 +12,7 @@ Url: http://pear.php.net/package/Auth
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-Source: http://pear.php.net/get/Auth-%version.tar.bz2
+Source: http://pear.php.net/get/Auth-%version.tar
 
 BuildArchitectures: noarch
 
@@ -58,13 +58,17 @@ the login data:
 
 %files
 %doc LICENSE CHANGELOG
-%pear_dir/Auth
+%pear_dir/Auth/
+%pear_dir/data/Auth/
 %pear_testdir/Auth/
 %pear_dir/Auth.php
 %pear_docdir/%pear_name/
 %pear_xmldir/%pear_name.xml
 
 %changelog
+* Sun Aug 04 2013 Vitaly Lipatov <lav@altlinux.ru> 1.6.4-alt1
+- new version 1.6.4 (with rpmrb script)
+
 * Fri Jun 20 2008 Vitaly Lipatov <lav@altlinux.ru> 1.6.1-alt1
 - new version 1.6.1 (with rpmrb script)
 
