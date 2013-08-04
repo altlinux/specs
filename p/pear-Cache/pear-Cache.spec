@@ -1,8 +1,8 @@
 %define pear_name Cache
 
 Name: pear-Cache
-Version: 1.5.4
-Release: alt3
+Version: 1.5.6
+Release: alt1
 
 Summary: Framework for caching of arbitrary data
 
@@ -49,6 +49,9 @@ between applications.
 %pear_xmldir/%pear_name.xml
 
 %changelog
+* Sun Aug 04 2013 Vitaly Lipatov <lav@altlinux.ru> 1.5.6-alt1
+- new version 1.5.6 (with rpmrb script)
+
 * Fri Jun 20 2008 Vitaly Lipatov <lav@altlinux.ru> 1.5.4-alt3
 - autorebuild for correct requires(pre) (see bug #16086)
 
