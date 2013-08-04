@@ -1,7 +1,7 @@
 %define oname SimpleParse
 Name: python-module-simpleparse
-Version: 2.1.0a1
-Release: alt2.1.1.1
+Version: 2.1.1a2
+Release: alt1
 
 Summary: A Parser Generator for Python (w/mxTextTools derivative)
 
@@ -11,8 +11,10 @@ Url: http://simpleparse.sourceforge.net/
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-Source: http://downloads.sourceforge.net/simpleparse/%oname-%version.tar.gz
+Source: http://prdownloads.sourceforge.net/simpleparse/simpleparse/%version/%oname-%version.tar
 Patch0: %name-2.1.0a1-alt-python2.6.patch
+
+BuildRequires: python-module-distribute
 
 %setup_python_module %oname
 
@@ -27,7 +29,7 @@ largely deterministic grammars.
 
 %prep
 %setup -n %oname-%version
-%patch0 -p1
+#patch0 -p1
 
 %build
 %python_build
@@ -41,6 +43,9 @@ largely deterministic grammars.
 %python_sitelibdir/*.egg-info
 
 %changelog
+* Sun Aug 04 2013 Vitaly Lipatov <lav@altlinux.ru> 2.1.1a2-alt1
+- new version 2.1.1a2 (with rpmrb script)
+
 * Mon Apr 16 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 2.1.0a1-alt2.1.1.1
 - Rebuild to remove redundant libpython2.7 dependency
 
