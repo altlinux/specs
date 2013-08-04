@@ -1,8 +1,8 @@
 %define pear_name DB
 
 Name: pear-DB
-Version: 1.7.13
-Release: alt3
+Version: 1.7.14
+Release: alt1
 
 Summary: Database Abstraction Layer
 
@@ -12,7 +12,7 @@ Url: http://pear.php.net/package/DB
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-Source: http://pear.php.net/get/DB-%version.tar.bz2
+Source: http://pear.php.net/get/DB-%version.tar
 
 BuildArchitectures: noarch
 
@@ -80,6 +80,9 @@ DB is compatible with both PHP 4 and PHP 5.
 %pear_xmldir/%pear_name.xml
 
 %changelog
+* Sun Aug 04 2013 Vitaly Lipatov <lav@altlinux.ru> 1.7.14-alt1
+- new version 1.7.14 (with rpmrb script)
+
 * Fri Jun 20 2008 Vitaly Lipatov <lav@altlinux.ru> 1.7.13-alt3
 - autorebuild for correct requires(pre) (see bug #16086)
 
