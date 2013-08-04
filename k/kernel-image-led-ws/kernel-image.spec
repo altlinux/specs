@@ -19,13 +19,13 @@
 %define flavour %base_flavour-%sub_flavour
 
 Name: kernel-image-%flavour
-Version: 3.4.55
-Release: alt10
+Version: 3.4.56
+Release: alt1
 
 %define kernel_req %nil
 %define kernel_prov %nil
 %define kernel_branch 3.4
-%define kernel_stable_version 55
+%define kernel_stable_version 56
 %define kernel_extra_version .%kernel_stable_version
 #define kernel_extra_version %nil
 
@@ -202,7 +202,7 @@ Patch0055: linux-%kernel_branch.20-fix-drivers-acpi-acpica.patch
 Patch0056: linux-%kernel_branch.50-fix-drivers-acpi-apei--apei.patch
 Patch0057: linux-%kernel_branch.50-fix-drivers-acpi-apei--ghes.patch
 
-Patch0061: linux-%kernel_branch.55-fix-drivers-ata--ata_piix.patch
+Patch0061: linux-%kernel_branch.56-fix-drivers-ata--ata_piix.patch
 Patch0062: linux-%kernel_branch.25-fix-drivers-ata--pata_amd.patch
 Patch0063: linux-%kernel_branch.25-fix-drivers-ata--pata_mpiix.patch
 Patch0064: linux-%kernel_branch.25-fix-drivers-ata--pata_oldpiix.patch
@@ -456,7 +456,7 @@ Patch0552: linux-%kernel_branch.39-fix-drivers-usb-dwc3--dwc3.patch
 Patch0553: linux-%kernel_branch.25-fix-drivers-usb-gadget--g_audio.patch
 Patch0554: linux-%kernel_branch.39-fix-drivers-usb-host--isp116x-hcd.patch
 Patch0555: linux-%kernel_branch.39-fix-drivers-usb-host--uhci-hcd.patch
-Patch0556: linux-%kernel_branch.53-fix-drivers-usb-host--xhci-hcd.patch
+Patch0556: linux-%kernel_branch.56-fix-drivers-usb-host--xhci-hcd.patch
 Patch0557: linux-%kernel_branch.39-fix-drivers-usb-musb--musb_hdrc.patch
 Patch0558: linux-%kernel_branch.39-fix-drivers-usb-otg--otg.patch
 
@@ -2879,6 +2879,12 @@ done)
 
 
 %changelog
+* Sun Aug 04 2013 Led <led@altlinux.ru> 3.4.56-alt1
+- 3.4.56
+- updated:
+  + fix-drivers-ata--ata_piix
+  + fix-drivers-usb-host--xhci-hcd
+
 * Sat Aug 03 2013 Led <led@altlinux.ru> 3.4.55-alt10
 - removed:
   + fix-drivers-gpu-drm
