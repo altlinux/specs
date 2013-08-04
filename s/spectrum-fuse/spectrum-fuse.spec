@@ -1,6 +1,6 @@
 %define oname fuse
 Name: spectrum-fuse
-Version: 1.0.0.1a
+Version: 1.1.1
 Release: alt1
 
 Summary: The Free Unix Spectrum Emulator
@@ -11,7 +11,7 @@ Url: http://fuse-emulator.sourceforge.net/
 
 Packager: ZX Spectrum Development Team <spectrum@packages.altlinux.org>
 
-Source: http://dl.sf.net/fuse-emulator/%oname-%version.tar
+Source: http://prdownloads.sf.net/fuse-emulator/%oname-%version.tar
 Source1: %name.png
 Source2: %name.desktop
 Source3: README.z88sdk
@@ -61,6 +61,9 @@ install -pm0644 %{SOURCE3} .
 
 
 %changelog
+* Sun Aug 04 2013 Vitaly Lipatov <lav@altlinux.ru> 1.1.1-alt1
+- new version 1.1.1 (with rpmrb script)
+
 * Sat Dec 29 2012 Igor Vlasenko <viy@altlinux.ru> 1.0.0.1a-alt1
 - new version
 - added fuse-emulator-zlib.patch and README.z88sdk from Fedora
