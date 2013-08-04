@@ -1,6 +1,6 @@
 Name: pychecker
-Version: 0.8.18
-Release: alt3.1.1
+Version: 0.8.19
+Release: alt1
 
 Summary: Tool for finding bugs in Python source code
 
@@ -10,7 +10,7 @@ Url: http://pychecker.sourceforge.net/
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-Source: http://prdownloads.sf.net/pychecker/%name-%version.tar.bz2
+Source: http://prdownloads.sf.net/pychecker/%name-%version.tar
 # Debian manpage
 Patch: %name-0.8.10-add-manpage.patch
 
@@ -41,20 +41,19 @@ echo -e '#!/bin/sh
 /usr/bin/env python %python_sitelibdir/pychecker/checker.pyc "$@"
 ' > %buildroot%_bindir/%name
 
-# pychecker2
-mkdir -p %buildroot%python_sitelibdir/pychecker2
-install -m 0644 pychecker2/*.py %buildroot%python_sitelibdir/pychecker2/
 install -D %name.1 %buildroot%_man1dir/%name.1
 
 %files
-%doc README CHANGELOG MAINTAINERS KNOWN_BUGS TODO pycheckrc pychecker2/NOTES.txt
+%doc README MAINTAINERS KNOWN_BUGS TODO pycheckrc
 %attr(755,root,root) %_bindir/%name
 %_man1dir/%name.*
 %python_sitelibdir/%name/
 %python_sitelibdir/*.egg-info
-%python_sitelibdir/pychecker2/
 
 %changelog
+* Sun Aug 04 2013 Vitaly Lipatov <lav@altlinux.ru> 0.8.19-alt1
+- new version 0.8.19 (with rpmrb script)
+
 * Sat Oct 22 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 0.8.18-alt3.1.1
 - Rebuild with Python-2.7
 
