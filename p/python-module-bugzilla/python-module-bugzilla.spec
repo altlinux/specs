@@ -2,8 +2,8 @@
 
 
 Name: python-module-bugzilla
-Version: 0.5.1
-Release: alt1.1
+Version: 0.9.0
+Release: alt1
 
 Summary: A python library.. for bugzilla!
 
@@ -13,6 +13,7 @@ Url: https://fedorahosted.org/python-bugzilla/
 
 BuildArch: noarch
 
+# Source-url: https://fedorahosted.org/releases/p/y/python-bugzilla/python-bugzilla-0.9.0.tar.gz
 Source: %name-%version.tar
 
 # Automatically added by buildreq on Wed Jan 13 2010
@@ -49,6 +50,9 @@ ad-hoc bugzilla jiggery-pokery.
 %python_sitelibdir/python_bugzilla*.egg-info
 
 %changelog
+* Sun Aug 04 2013 Vitaly Lipatov <lav@altlinux.ru> 0.9.0-alt1
+- new version 0.9.0 (with rpmrb script)
+
 * Mon Oct 24 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 0.5.1-alt1.1
 - Rebuild with Python-2.7
 
