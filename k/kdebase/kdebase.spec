@@ -7,6 +7,7 @@
 %define with_kdm 1
 %define with_hal 1
 %define with_smb 1
+%define arts 1
 
 %add_findpackage_path %_K3bindir
 %add_findprov_lib_path %_K3lib
@@ -34,7 +35,7 @@
 %define bugfix 13.2
 Name: kdebase
 Version: %major.%minor.%bugfix
-Release: alt1
+Release: alt2
 %define reqver %major.%minor
 
 Summary: Trinity Desktop Environment - Core files
@@ -226,6 +227,8 @@ Patch1079: kdm-3.5.13-noPAMuse.patch
 Patch1080: kdm-3.5.13-SAK_disable_CtrlAltDel-FullCPUusage_SAK_Std.patch
 Patch1081: kdebase-3.5.13-alt-mediamanager-crash.patch
 Patch1082: tdebase-3.5.13-work-defdir.patch
+Patch1083: kdm-3.5.13-KsplashBlack.patch
+Patch1084: kdebase-3.5.13.2-desktop-translate.patch
 
 # Sergey A. Sukiyazov <corwin@micom.don.ru>
 Patch2000: kdebase-3.5.0-man_recode.patch
@@ -254,6 +257,9 @@ BuildRequires: libtiff-devel libtinfo-devel libutempter-devel
 BuildRequires: pkg-config qt3-designer qt3-doc xinitrc
 %if %with_smb
 BuildRequires: libsmbclient-devel
+%endif
+%if %arts
+BuildRequires: libarts-devel >= 1.5.8 libarts-qtmcop-devel >= 1.5.8
 %endif
 BuildRequires: xml-utils zlib-devel glibc-utils glibc-devel
 BuildRequires: flex libalternatives-devel libsasl2-devel libsensors3-devel
@@ -640,6 +646,8 @@ Menu resources for the original KDE menu.
 ###%patch1080
 %patch1081
 %patch1082 -p1
+%patch1083 -p1
+%patch1084 -p1
 
 # Sergey A. Sukiyazov <corwin@micom.don.ru>
 ###%patch2000 -p1
@@ -705,7 +713,11 @@ then
     -DWITH_SHADOW=OFF \
     -DWITH_XDMCP=ON \
     -DWITH_XINERAMA=ON \
+%if %arts
+    -DWITH_ARTS=ON \
+%else
     -DWITH_ARTS=OFF \
+%endif
     -DWITH_I8K=ON \
 %if %with_smb
     -DWITH_SAMBA=ON \
@@ -1143,6 +1155,8 @@ fi
 %_K3srv/ar.protocol
 %_K3srv/bzip.protocol
 %_K3srv/bzip2.protocol
+%_K3srv/lzma.protocol
+%_K3srv/xz.protocol
 %_K3srv/cgi.protocol
 %_K3srv/cursorthumbnail.desktop
 %_K3srv/djvuthumbnail.desktop
@@ -1197,6 +1211,7 @@ fi
 %attr(2711,root,chkpwd) %_K3bindir/kcheckpass
 %attr(2711,root,nobody) %_K3bindir/kdesud
 %_K3bindir/drkonqi
+%_K3bindir/crashtest
 %_K3bindir/kcminit
 %_K3bindir/kdcop
 %_K3bindir/kdebugdialog
@@ -1230,6 +1245,9 @@ fi
 %_K3lib/kcminit.so*
 %_K3lib/kded_khotkeys.so*
 %_K3lib/khotkeys.so*
+%if %arts
+%_K3lib/khotkeys_arts.so
+%endif
 %_K3lib/kxkb.so*
 #
 %_K3xdg_apps/keyboard.desktop
@@ -1267,6 +1285,7 @@ fi
 %_K3apps/kconf_update/kaccel.upd
 %_K3apps/kconf_update/kcmdisplayrc.upd
 %_K3apps/kconf_update/socks.upd
+%_K3apps/usb.ids
 #
 %_K3i18n/*
 %if %with_smb
@@ -1324,6 +1343,7 @@ fi
 %_K3bindir/khc_beagle_*.pl
 %_K3bindir/mailsettings
 %_K3bindir/startkde
+%_K3bindir/migratekde3
 %_K3bindir/kwin_rules_dialog
 %_K3bindir/kapplymousetheme
 #%_K3bindir/kio_system_documenthelper
@@ -1527,6 +1547,7 @@ fi
 %_K3apps/konsole/
 %_K3apps/konqueror/servicemenus/kdesktopSetAsBackground.desktop
 %_K3apps/konqueror/servicemenus/konsolehere.desktop
+%_K3apps/konqueror/servicemenus/edit-as-root.desktop
 %_K3apps/kpersonalizer/
 %_K3apps/ksmserver/
 %_K3apps/ksplash/
@@ -1643,6 +1664,9 @@ fi
 %_K3lib/konq_sidebartree_bookmarks.so*
 %_K3lib/konq_sidebartree_dirtree.so*
 %_K3lib/konq_sidebartree_history.so*
+%if %arts
+%_K3lib/konq_sound.so*
+%endif
 %_K3lib/konqsidebar_tree.so*
 %_K3lib/konqsidebar_web.so*
 %_K3lib/konqueror.so*
@@ -1948,6 +1972,10 @@ test ! -L %x11confdir/kdm && rm -rf %x11confdir/kdm ||:
 
 
 %changelog
+* Sun Jul 21 2013 Roman Savochenko <rom_as@altlinux.ru> 3.5.13.2-alt2
+- Black screen after KDM login fix.
+- ARTS support enable.
+
 * Sun Jun 23 2013 Roman Savochenko <rom_as@altlinux.ru> 3.5.13.2-alt1
 - Release TDE version 3.5.13.2
 
