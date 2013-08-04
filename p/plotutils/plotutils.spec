@@ -1,12 +1,13 @@
 # do not use rpmrb (multiple Version entries here)
 
-%define LIBPLOT_VERSION 4.3
-%define LIBXMI_VERSION 1.3
+# FIXME: Version: will replacing with package version
+%define LIBPLOT_VERSION 4.4
+%define LIBXMI_VERSION 1.4
 %define fname tek
 
 Name: plotutils
-Version: 2.5.1
-Release: alt3.qa4
+Version: 2.6
+Release: alt1
 
 Summary: GNU Plotutils -- plotting utilities
 
@@ -16,14 +17,15 @@ License: GPLv3
 Group: Graphics
 Url: http://www.gnu.org/software/plotutils/plotutils.html
 
-Source: ftp://ftp.gnu.org/gnu/plotutils/plotutils-%version.tar.gz
+Source: ftp://ftp.gnu.org/gnu/plotutils/plotutils-%version.tar
 Patch: %name-info.patch
 Patch1: %name-c++.patch
 Patch2: %name-2.5.1-alt-autoreconf.patch
 Patch3: %name-2.5.1-alt-libpng15.patch
 
-# Automatically added by buildreq on Tue Dec 02 2008
-BuildRequires: flex gcc-c++ imake libXaw-devel libXext-devel libpng-devel rpm-build-java rpm-build-mono xorg-cf-files xorg-sdk
+# Automatically added by buildreq on Sun Aug 04 2013
+# optimized out: gnu-config libICE-devel libSM-devel libX11-devel libXmu-devel libXt-devel libstdc++-devel xorg-xextproto-devel xorg-xproto-devel zlib-devel
+BuildRequires: flex gcc-c++ glibc-devel imake libXaw-devel libXext-devel libpng-devel xorg-cf-files
 
 BuildPreReq: rpm-build-fonts gcc-fortran
 
@@ -143,7 +145,7 @@ gzip -9nf *.pcf || :
 %_datadir/tek2plot
 
 %files -n libplot -f fonts/pcf/%fname.files
-%doc doc/{demo-page,*.doc,*.txt,*.bib}
+%doc doc/{*.txt,*.bib}
 %doc libplot/{DEDICATION,HUMOR,README*,VERSION}
 %_libdir/libplot.so.*
 %_datadir/libplot/
@@ -171,6 +173,9 @@ gzip -9nf *.pcf || :
 %_includedir/xmi.h
 
 %changelog
+* Sun Aug 04 2013 Vitaly Lipatov <lav@altlinux.ru> 2.6-alt1
+- new version 2.6 (with rpmrb script)
+
 * Tue Jan 29 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.5.1-alt3.qa4
 - Fixed build
 
