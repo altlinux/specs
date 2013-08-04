@@ -1,6 +1,6 @@
 Name: xneur
-Version: 0.15.0
-Release: alt1.1
+Version: 0.16.0
+Release: alt1
 
 Summary: X Neural Switcher
 
@@ -8,7 +8,7 @@ License: GPL
 Group: Office
 Url: http://xneur.ru/
 
-Source: %name-%version.tar.bz2
+Source: http://dists.xneur.ru/release-%version/tgz/%name-%version.tar
 Patch0: %name-0.15.0-alt-libX11.patch
 
 # Automatically added by buildreq on Sun May 22 2011
@@ -82,6 +82,9 @@ rm -f %buildroot%_libdir/%name/*.so %buildroot%_libdir/%name/*.la
 %_pkgconfigdir/*.pc
 
 %changelog
+* Sun Aug 04 2013 Vitaly Lipatov <lav@altlinux.ru> 0.16.0-alt1
+- new version 0.16.0 (with rpmrb script)
+
 * Thu Apr 05 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.15.0-alt1.1
 - Fixed build with new libX11
 
