@@ -1,7 +1,7 @@
 %define pear_name Pager
 
 Name: pear-Pager
-Version: 2.4.6
+Version: 2.4.8
 Release: alt1
 
 Summary: Data paging class
@@ -12,7 +12,7 @@ Url: http://pear.php.net/package/Pager
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-Source: http://pear.php.net/get/Pager-%version.tar.bz2
+Source: http://pear.php.net/get/Pager-%version.tar
 
 BuildArchitectures: noarch
 
@@ -51,6 +51,9 @@ Two operating modes available: "Jumping" and "Sliding" window style.
 %pear_xmldir/%pear_name.xml
 
 %changelog
+* Sun Aug 04 2013 Vitaly Lipatov <lav@altlinux.ru> 2.4.8-alt1
+- new version 2.4.8 (with rpmrb script)
+
 * Fri Jun 20 2008 Vitaly Lipatov <lav@altlinux.ru> 2.4.6-alt1
 - new version 2.4.6 (with rpmrb script)
 
