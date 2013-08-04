@@ -1,7 +1,7 @@
 Name: pydb
-Version: 1.25
+Version: 1.26
 
-Release: alt1.1.1
+Release: alt1
 
 Summary: pydb is an expanded version of the Python debugger
 
@@ -12,7 +12,7 @@ Group: Development/Python
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 #Source: http://dl.sf.net/bashdb/%name-%version.tar.bz2
-Source: http://prdownloads.sourceforge.net/sourceforge/bashdb/%name-%version.tar.bz2
+Source: http://prdownloads.sourceforge.net/sourceforge/bashdb/%name-%version.tar
 #Patch: %name.patch
 
 # Automatically added by buildreq on Sun Jul 30 2006
@@ -46,6 +46,9 @@ ln -sf ../../%python_sitelibdir/%name/%name.py %buildroot/%_bindir/%name
 %_man1dir/*
 
 %changelog
+* Sun Aug 04 2013 Vitaly Lipatov <lav@altlinux.ru> 1.26-alt1
+- new version 1.26 (with rpmrb script)
+
 * Sat Oct 22 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 1.25-alt1.1.1
 - Rebuild with Python-2.7
 
