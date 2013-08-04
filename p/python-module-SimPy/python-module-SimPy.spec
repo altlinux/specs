@@ -1,7 +1,8 @@
 %define oname SimPy
-Name: python-module-%oname
-Version: 1.8
-Release: alt2.1
+%define major 2.3
+Name: python-module-SimPy
+Version: %major.1
+Release: alt1
 
 Summary: SimPy simulation package
 
@@ -10,14 +11,15 @@ Group: Development/Python
 Url: http://simpy.sourceforge.net/
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
-Source: http://ftputil.sschwarzer.net/trac/attachment/wiki/Download/%oname-%version.tar.bz2
+Source: http://sourceforge.net/projects/simpy/files/simpy/SimPy-%major/%oname-%version.tar
 
 BuildArch: noarch
 
 %setup_python_module %oname
 
-# Automatically added by buildreq on Sun Oct 28 2007
-BuildRequires: python-devel python-modules-compiler
+# Automatically added by buildreq on Sun Aug 04 2013
+# optimized out: python-base python-devel python-module-distribute python-module-zope python-modules python-modules-compiler python-modules-email
+BuildRequires: python-module-mwlib
 
 %description
 SimPy is a process-based discrete-event simulation language
@@ -38,15 +40,14 @@ Simulation model developers are encouraged to share their
 SimPy modeling techniques with the SimPy community. Please
 post a message to the simpy-Users mailing list,
 
-
 %prep
-%setup -q -n %oname-%version
+%setup -n %oname-%version
 
 %build
-%__python setup.py build
+%python_build
 
 %install
-%__python setup.py install --root %buildroot
+%python_install
 
 %files
 %doc SimPyDocs SimPyModels
@@ -54,6 +55,10 @@ post a message to the simpy-Users mailing list,
 %python_sitelibdir/*
 
 %changelog
+* Sun Aug 04 2013 Vitaly Lipatov <lav@altlinux.ru> 2.3.1-alt1
+- new version 2.3.1 (with rpmrb script)
+- cleanup spec
+
 * Wed Oct 26 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 1.8-alt2.1
 - Rebuild with Python-2.7
 
