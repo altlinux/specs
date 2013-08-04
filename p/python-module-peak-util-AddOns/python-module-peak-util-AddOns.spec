@@ -1,7 +1,7 @@
 %define oname AddOns
 Name: python-module-peak-util-%oname
-Version: 0.6
-Release: alt2.1
+Version: 0.7
+Release: alt1
 
 Summary: Dynamically extend other objects with AddOns (formerly ObjectRoles)
 
@@ -49,6 +49,9 @@ reusable and separately-testable components.  The AddOns package
 %python_sitelibdir/%{oname}*.pth
 
 %changelog
+* Sun Aug 04 2013 Vitaly Lipatov <lav@altlinux.ru> 0.7-alt1
+- new version 0.7 (with rpmrb script)
+
 * Thu Oct 20 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 0.6-alt2.1
 - Rebuild with Python-2.7
 
