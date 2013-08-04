@@ -1,16 +1,16 @@
-%define version 0.6
-%define release alt1
+Name: python-module-netifaces
+Version: 0.8
+Release: alt1
+
 %setup_python_module netifaces
 
 Summary: Portable network interface information
-Name: python-module-netifaces
-Version: 0.6
-Release: %release.1
 
-Source: %modulename-%version.tar.gz
 License: MIT License
 Group: Development/Python
 Url: http://alastairs-place.net/netifaces
+
+Source: http://alastairs-place.net/projects/netifaces/netifaces-%version.tar
 
 BuildRequires: python-devel python-module-setuptools
 
@@ -42,6 +42,9 @@ data provided by the socket options is normally less complete.
 %python_sitelibdir/%modulename.so
 
 %changelog
+* Sun Aug 04 2013 Vitaly Lipatov <lav@altlinux.ru> 0.8-alt1
+- new version 0.8 (with rpmrb script)
+
 * Thu Apr 12 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 0.6-alt1.1
 - Rebuild to remove redundant libpython2.7 dependency
 
