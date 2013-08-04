@@ -1,6 +1,6 @@
 Name: scribus
 Version: 1.4.1
-Release: alt4.1
+Release: alt5
 Epoch: 1
 
 Summary: DeskTop Publishing application written in Qt
@@ -8,10 +8,12 @@ Summary: DeskTop Publishing application written in Qt
 Group: Publishing
 License: GPLv2+
 Url: http://www.scribus.net/
+
 Packager: Paul Wolneykien <manowar@altlinux.ru>
 
-Source: http://downloads.sourceforge.net/%name/%name-%version.tar.bz2
+Source: http://downloads.sourceforge.net/%name/%name-%version.tar
 Source1: CMakeCache.txt
+
 Patch0: %name-%version-%release.patch.gz
 Patch1: %name-1.3.5-system-hyphen.patch
 #Patch2: scribus-1.3.5.1-localization-alt.patch
@@ -163,6 +165,9 @@ popd
 %_docdir/%name/en
 
 %changelog
+* Sun Aug 04 2013 Vitaly Lipatov <lav@altlinux.ru> 1:1.4.1-alt5
+- rebuild with new libpodofo 0.9.1
+
 * Wed Sep 26 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:1.4.1-alt4.1
 - Rebuilt with libpng15
 
