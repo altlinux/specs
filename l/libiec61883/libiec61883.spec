@@ -1,14 +1,8 @@
-%define svnrel r68
-%undefine svnrel
 %def_disable static
 
 Name: libiec61883
-Version: 1.1.0
-%ifdef svnrel
-Release: alt0.svn.r68
-%else
-Release: alt1.qa2
-%endif
+Version: 1.2.0
+Release: alt1
 
 Summary: Streaming library for IEEE1394
 
@@ -16,11 +10,8 @@ License: LGPL
 Group: System/Libraries
 Url: http://www.linux1394.org/
 
-%ifdef svnrel
-Source: %name-%svnrel.tar
-%else
-Source: http://dl.sourceforge.net/libraw1394/%name-%version.tar.gz
-%endif
+#Source: http://prdownloads.sourceforge.net/libraw1394/%name-%version.tar
+Source: https://www.kernel.org/pub/linux/libs/ieee1394/libiec61883-%version.tar
 
 # Automatically added by buildreq on Mon Feb 13 2006
 BuildRequires: gcc-c++ libraw1394-devel pkg-config
@@ -54,23 +45,15 @@ Requires: libraw1394-devel >= 1.2.0
 libiec61883 devel package.
 
 %prep
-%ifdef svnrel
-%setup -q -n %name-%svnrel
-%else
-%setup -q
-%endif
+%setup
 
 %build
-%ifdef svnrel
-%__autoreconf
-%endif
 %configure %{subst_enable static}
 sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' libtool
 %make_build
 
 %install
-%make_install install \
-	DESTDIR=%buildroot
+%makeinstall_std
 
 %files
 %_bindir/*
@@ -85,6 +68,10 @@ sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' libtool
 %doc examples
 
 %changelog
+* Sun Aug 04 2013 Vitaly Lipatov <lav@altlinux.ru> 1.2.0-alt1
+- new version 1.2.0 (with rpmrb script)
+- cleanup spec
+
 * Sat Feb 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.0-alt1.qa2
 - Removed bad RPATH
 
