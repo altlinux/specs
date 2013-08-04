@@ -1,7 +1,7 @@
 %define oname cpptest
 Name: libcpptest
-Version: 1.1.0
-Release: alt1.qa1
+Version: 1.1.1
+Release: alt1
 
 Summary: CppTest is a unit testing framework for handling automated tests in C++
 
@@ -50,6 +50,9 @@ Header files for libspiff.
 %_pkgconfigdir/*
 
 %changelog
+* Sun Aug 04 2013 Vitaly Lipatov <lav@altlinux.ru> 1.1.1-alt1
+- new version 1.1.1 (with rpmrb script)
+
 * Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.1.0-alt1.qa1
 - NMU: rebuilt for debuginfo.
 
