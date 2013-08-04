@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 3.2.0
-Release: alt1.1
+Version: 4.0.1
+Release: alt1
 
 Summary: RDFLib is a Python library for working with RDF
 
@@ -14,7 +14,9 @@ Url: http://rdflib.net/
 
 %setup_python_module %oname
 
-Source: http://rdflib.net/%oname-%version.tar.bz2
+# Source-url: https://github.com/RDFLib/rdflib/archive/4.0.1.tar.gz
+Source: %oname-%version.tar
+
 BuildArch: noarch
 
 %add_python_req_skip FOPLRelationalModel RDF
@@ -83,6 +85,9 @@ popd
 %endif
 
 %changelog
+* Sun Aug 04 2013 Vitaly Lipatov <lav@altlinux.ru> 4.0.1-alt1
+- new version 4.0.1 (with rpmrb script)
+
 * Fri Mar 22 2013 Aleksey Avdeev <solo@altlinux.ru> 3.2.0-alt1.1
 - Rebuild with Python-3.3
 
