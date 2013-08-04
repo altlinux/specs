@@ -1,6 +1,6 @@
 %define oname TaskCoach
 Name: taskcoach
-Version: 1.3.18
+Version: 1.3.23
 Release: alt1
 
 Summary: Your friendly task manager
@@ -64,6 +64,9 @@ rm -rf %buildroot%python_sitelibdir/buildlib/
 %python_sitelibdir/*.egg-info
 
 %changelog
+* Sun Aug 04 2013 Vitaly Lipatov <lav@altlinux.ru> 1.3.23-alt1
+- new version 1.3.23 (with rpmrb script)
+
 * Fri Sep 21 2012 Vitaly Lipatov <lav@altlinux.ru> 1.3.18-alt1
 - new version 1.3.18 (with rpmrb script)
 
