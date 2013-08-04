@@ -1,6 +1,6 @@
 Name: rssh
-Version: 2.3.2
-Release: alt0.1.qa1
+Version: 2.3.4
+Release: alt1
 
 Summary: Restricted shell for scp or sftp
 
@@ -10,7 +10,7 @@ Url: http://www.pizzashack.org/rssh/
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-Source: http://dl.sf.net/rssh/%name-%version.tar.bz2
+Source: http://prdownloads.sf.net/rssh/%name-%version.tar
 
 # Automatically added by buildreq on Tue Dec 20 2005
 BuildRequires: openssh-clients cvs openssh-server rsync
@@ -21,11 +21,11 @@ administrator to restrict a user's access to a system via scp or sftp, or
 both.
 
 %prep
-%setup -q
+%setup
 
 %build
 %configure
-%make
+%make_build
 
 %install
 %makeinstall
@@ -40,6 +40,9 @@ both.
 
 
 %changelog
+* Sun Aug 04 2013 Vitaly Lipatov <lav@altlinux.ru> 2.3.4-alt1
+- new version 2.3.4 (with rpmrb script)
+
 * Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.3.2-alt0.1.qa1
 - NMU: rebuilt for debuginfo.
 
