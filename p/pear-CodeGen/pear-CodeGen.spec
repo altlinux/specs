@@ -1,7 +1,7 @@
 %define pear_name CodeGen
 
 Name: pear-CodeGen
-Version: 1.0.5
+Version: 1.0.7
 Release: alt1
 
 Summary: Tool to create Code generaters that operate on XML descriptions
@@ -12,7 +12,7 @@ Url: http://pear.php.net/package/CodeGen
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-Source: http://pear.php.net/get/CodeGen-%version.tar.bz2
+Source: http://pear.php.net/get/CodeGen-%version.tar
 
 BuildArchitectures: noarch
 
@@ -47,6 +47,9 @@ This is an 'abstract' package, it provides the base
 %pear_xmldir/%pear_name.xml
 
 %changelog
+* Sun Aug 04 2013 Vitaly Lipatov <lav@altlinux.ru> 1.0.7-alt1
+- new version 1.0.7 (with rpmrb script)
+
 * Fri Jun 20 2008 Vitaly Lipatov <lav@altlinux.ru> 1.0.5-alt1
 - new version 1.0.5 (with rpmrb script)
 
