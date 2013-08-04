@@ -1,7 +1,7 @@
 %define oname mechanize
 Name: python-module-%oname
-Version: 0.1.11
-Release: alt1.1
+Version: 0.2.5
+Release: alt1
 
 Summary: Stateful programmatic web browsing
 
@@ -13,7 +13,7 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 %setup_python_module %oname
 
-Source: http://wwwsearch.sourceforge.net/mechanize/src/%oname-%version.tar.bz2
+Source: http://wwwsearch.sourceforge.net/mechanize/src/%oname-%version.tar
 
 BuildArch: noarch
 
@@ -36,10 +36,13 @@ after Andy Lester's Perl module WWW::Mechanize.
 %python_install
 
 %files
-%doc COPYING.txt ChangeLog.txt GeneralFAQ.html README.html doc.html examples/
+%doc docs/ examples/
 %python_sitelibdir/*
 
 %changelog
+* Sun Aug 04 2013 Vitaly Lipatov <lav@altlinux.ru> 0.2.5-alt1
+- new version 0.2.5 (with rpmrb script)
+
 * Mon Oct 24 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 0.1.11-alt1.1
 - Rebuild with Python-2.7
 
