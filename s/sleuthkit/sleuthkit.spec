@@ -1,5 +1,5 @@
 Name: sleuthkit
-Version: 4.0.0
+Version: 4.1.0
 Release: alt1
 
 Summary: The Sleuth Kit
@@ -10,12 +10,13 @@ Url: http://www.sleuthkit.org/sleuthkit/
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-Source: http://prdownloads.sourceforge.net/sleuthkit/%name-%version.tar.gz
+Source: http://prdownloads.sourceforge.net/sleuthkit/%name-%version.tar
 Source1: mac-robber-1.02.tar.bz2
 Patch: sleuthkit-unbundle.diff
 
-# Automatically added by buildreq on Fri Nov 07 2008
-BuildRequires: gcc-c++ libaff-devel libewf-devel
+# Automatically added by buildreq on Sun Aug 04 2013
+# optimized out: bouncycastle bouncycastle-mail cppunit ecj gcc-java gnu-config libgcj4.7-jar libstdc++-devel python3-base zlib-devel
+BuildRequires: bouncycastle-tsp cppunit-devel gcc-c++ glibc-devel libaff-devel libewf-devel gcc-java
 
 %description
 The Sleuth Kit (previously known as TASK) is a collection of UNIX-based command
@@ -79,6 +80,9 @@ install -m755 mac-robber %buildroot%_bindir/
 %_bindir/blkcat
 #_bindir/disk_sreset
 #_bindir/disk_stat
+%_bindir/fcat
+%_bindir/fiwalk
+%_bindir/jpeg_extract
 %_bindir/blkls
 %_bindir/blkstat
 %_bindir/ffind
@@ -129,16 +133,19 @@ install -m755 mac-robber %buildroot%_bindir/
 %_man1dir/sigfind.1*
 %_man1dir/sorter.1*
 %_man1dir/tsk_*
-%_datadir/tsk3/
+%_datadir/tsk/
 
 %files -n libtsk
 %_libdir/*.so.*
 
 %files -n libtsk-devel
 %_libdir/*.so
-%_includedir/tsk3/
+%_includedir/tsk/
 
 %changelog
+* Sun Aug 04 2013 Vitaly Lipatov <lav@altlinux.ru> 4.1.0-alt1
+- new version 4.1.0 (with rpmrb script)
+
 * Wed Nov 07 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.0-alt1
 - Version 4.0.0
 
