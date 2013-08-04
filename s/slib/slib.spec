@@ -1,8 +1,8 @@
 # http://bugzilla.gnome.org/show_bug.cgi?id=347922
 # guile -c "(use-modules (ice-9 slib)) (require 'printf)"
 Name: slib
-Version: 3a4
-Release: alt2
+Version: 3b4
+Release: alt1
 
 Summary: platform independent library for scheme
 License: distributable, see individual files for copyright
@@ -17,7 +17,7 @@ BuildArch: noarch
 Url: http://www-swiss.ai.mit.edu/~jaffer/SLIB.html
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-Source: http://swiss.csail.mit.edu/ftpdir/scm/%name%version.tar.bz2
+Source: http://groups.csail.mit.edu/mac/ftpdir/scm/%name-%version.tar
 
 # for 3a4, update with new version (made manually due automatic build overhead)
 Source1: slibcat
@@ -120,6 +120,9 @@ install -m644 %SOURCE1 %buildroot%_datadir/guile/site/slibcat
 #%ghost %_libdir/plt2/slibcat
 
 %changelog
+* Sun Aug 04 2013 Vitaly Lipatov <lav@altlinux.ru> 3b4-alt1
+- new version 3b4 (with rpmrb script)
+
 * Sat Jun 13 2009 Vitaly Lipatov <lav@altlinux.ru> 3a4-alt2
 - remove post/postun sections (ALT#20365)
 
