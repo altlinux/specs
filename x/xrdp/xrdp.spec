@@ -5,7 +5,7 @@
 # TODO: send patches to upstream
 
 Name: xrdp
-Version: 0.4.2
+Version: 0.6.0
 Release: alt1
 
 Summary: An open source remote desktop protocol (RDP) server
@@ -21,7 +21,8 @@ Packager: Lunar Child <luch@altlinux.org>
 %add_findprov_lib_path %_libdir/%name
 %endif
 
-Source: http://prdownloads.sourceforge.net/%name/%name-%version.tar
+# Source-url: http://prdownloads.sourceforge.net/%name/%version/%name-v%version.tar
+Source: %name-%version.tar
 Source1: %name-init-gen
 Source2: %name-init-alt
 
@@ -44,7 +45,7 @@ Microsoft's own terminal server / remote
 desktop clients.
 
 %prep
-%setup -q
+%setup
 %patch0
 %patch1
 %patch2
@@ -104,6 +105,9 @@ install -D -m755 %name-init %buildroot%_initrddir/%name
 
 
 %changelog
+* Sun Aug 04 2013 Vitaly Lipatov <lav@altlinux.ru> 0.6.0-alt1
+- new version 0.6.0 (with rpmrb script)
+
 * Thu Aug 18 2011 Denis Baranov <baraka@altlinux.ru> 0.4.2-alt1
 - new version (0.4.2) with rpmbs script
 
