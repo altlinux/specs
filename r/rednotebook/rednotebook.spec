@@ -1,6 +1,6 @@
 Name: rednotebook
-Version: 1.2.0
-Release: alt1.1
+Version: 1.7.2
+Release: alt1
 
 Summary: A desktop diary
 
@@ -19,8 +19,7 @@ BuildArch: noarch
 
 Requires: python-module-yaml
 
-# FIXME: Segfaults with pywebkit installed
-#Requires: python-module-pywebkitgtk
+Requires: python-module-pywebkitgtk
 
 %add_python_req_skip daywidgets
 
@@ -41,18 +40,20 @@ and does so in style.
 
 %install
 %python_install
-#%buildroot/%_desktopdir/%name.desktop
+%find_lang %name
 
-%files
-%doc AUTHORS CHANGELOG LICENSE README
+%files -f %name.lang
+%doc AUTHORS CHANGELOG README
 %_bindir/%name
 %_desktopdir/%name.desktop
-%_pixmapsdir/%name.png
-%_liconsdir/%name.png
+%_iconsdir/hicolor/scalable/apps/rednotebook.svg
 %python_sitelibdir/%name/
 %python_sitelibdir/%{name}*.egg-info
 
 %changelog
+* Sun Aug 04 2013 Vitaly Lipatov <lav@altlinux.ru> 1.7.2-alt1
+- new version 1.7.2 (with rpmrb script)
+
 * Sat Oct 22 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 1.2.0-alt1.1
 - Rebuild with Python-2.7
 
