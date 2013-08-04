@@ -1,7 +1,7 @@
 %define oname fonttools
 Name: python-module-%oname
-Version: 2.3
-Release: alt1.1
+Version: 2.4
+Release: alt1
 
 Summary: Converts OpenType and TrueType fonts to and from XML
 
@@ -49,6 +49,9 @@ rm Lib/fontTools/ttLib/test/ttBrowser.py
 %_man1dir/*
 
 %changelog
+* Sun Aug 04 2013 Vitaly Lipatov <lav@altlinux.ru> 2.4-alt1
+- new version 2.4 (with rpmrb script)
+
 * Thu Apr 12 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 2.3-alt1.1
 - Rebuild to remove redundant libpython2.7 dependency
 
