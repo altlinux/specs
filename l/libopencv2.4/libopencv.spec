@@ -31,7 +31,7 @@
 Name: lib%bname%sover
 Version: 2.4.9
 %define trunk 20130204
-Release: alt3.git%trunk
+Release: alt4.git%trunk
 Summary:  Intel(R) Open Source Computer Vision Library
 License: Distributable
 Group: System/Libraries
@@ -293,6 +293,9 @@ sed -i \
 %_datadir/*/samples
 
 %changelog
+* Sun Aug 04 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.4.9-alt4.git20130204
+- Fixed pkg-config file (ALT #29231)
+
 * Tue Feb 05 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.4.9-alt3.git20130204
 - New snapshot
 
