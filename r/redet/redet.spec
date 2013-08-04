@@ -1,5 +1,5 @@
 Name: redet
-Version: 8.23
+Version: 8.26
 Release: alt1
 
 Summary: redet - regular expression development and execution tool
@@ -11,7 +11,9 @@ Url: http://www.billposer.org/Software/redet.html
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 BuildArch: noarch
-Source: http://www.billposer.org/Software/Downloads/%name-%version.tar.bz2
+Source: http://www.billposer.org/Software/Downloads/%name-%version.tar
+
+Requires: tcl-iwidgets
 
 %description
 Redet allows the user to construct regular expressions and test them
@@ -38,6 +40,9 @@ install -m644 -D redet.1 %buildroot/%_man1dir/redet.1
 
 
 %changelog
+* Sun Aug 04 2013 Vitaly Lipatov <lav@altlinux.ru> 8.26-alt1
+- new version 8.26 (with rpmrb script)
+
 * Sat Nov 03 2007 Vitaly Lipatov <lav@altlinux.ru> 8.23-alt1
 - new version 8.23 (with rpmrb script)
 - cleanup spec, fix Source URL
