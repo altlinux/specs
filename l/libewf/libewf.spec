@@ -1,14 +1,15 @@
 Name: libewf
-Version: 20120813
+Version: 20130416
 Release: alt1
 
 Summary: Library and tools to support the Expert Witness Compression Format
 
-Url: http://sourceforge.net/projects/libewf/
+Url: http://code.google.com/p/libewf
 Group: System/Libraries
 License: BSD
 
-Source: %name-%version.tar.gz
+# Source-url: https://googledrive.com/host/0B3fBvzttpiiSMTdoaVExWWNsRjg/libewf-20130416.tar.gz
+Source: %name-%version.tar
 
 # Automatically added by buildreq on Thu Jan 10 2008
 BuildRequires: gcc-c++ libssl-devel libuuid-devel zlib-devel
@@ -45,7 +46,7 @@ EnCase 1 to 5, linen and FTK Imager.
 This package contains python bindings for libewf.
 
 %prep
-%setup -q
+%setup
 
 %build
 %autoreconf
@@ -77,6 +78,9 @@ This package contains python bindings for libewf.
 %python_sitelibdir/*.so
 
 %changelog
+* Sun Aug 04 2013 Vitaly Lipatov <lav@altlinux.ru> 20130416-alt1
+- new version 20130416 (with rpmrb script)
+
 * Thu Aug 30 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 20120813-alt1
 - Version 20120813
 
