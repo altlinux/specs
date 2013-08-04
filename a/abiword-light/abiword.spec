@@ -4,8 +4,8 @@
 
 Name: abiword-light
 Summary: Lean and fast full-featured word processor
-Version: 2.8.4
-Release: alt1.3
+Version: 2.8.6
+Release: alt1
 Group: Office
 License: GPL
 Url: http://www.abisource.com/
@@ -20,10 +20,12 @@ Source8: abiword-16.png.bz2
 Source10: abiword.keys
 Source11: abiword.mime
 
-Patch: abiword-2.8.1-headers.patch
+Patch: abiword-2.8.6-headers.patch
 Patch1: abiword-2.8.4-alt-glib2.patch
-Patch2: abiword-2.8.4-alt-gcc4.6.patch
-Patch3: abiword-2.8.4-alt-libpng15.patch
+Patch2: abiword-2.8.6-alt-gcc4.6.patch
+Patch3: abiword-2.8.6-alt-libpng15.patch
+Patch4: abiword-2.8.6-alt-link-plugins.patch
+
 
 #AutoReq: yes, noshell
 Obsoletes: abisuite, abisuite-koi8, abisuite-cp1251, abisuite-iso8859-8
@@ -33,7 +35,7 @@ BuildPreReq: libpng-devel
 BuildRequires: bzlib-devel gcc-c++ libaiksaurus-gtk-devel libenchant-devel libfribidi-devel
 BuildRequires: libots-devel libreadline-devel libgtkmathview-devel librsvg-devel libwmf-devel
 BuildRequires: liblink-grammar-devel >= 4.2.1
-BuildRequires: libwpd-devel libwpg-devel perl-HTML-Tree t1lib-devel
+BuildRequires: libwpd9-devel libwpg-devel perl-HTML-Tree t1lib-devel
 BuildRequires: libwv-devel boost-devel libdbus-glib-devel libtidy-devel
 
 %if_enabled gnome
@@ -84,6 +86,7 @@ Headers and pkgconfig support for  Abiword plugin building.
 %patch1 -p2
 %patch2 -p2
 %patch3 -p2
+%patch4 -p2
 
 %build
 
@@ -144,6 +147,10 @@ install -D %SOURCE1 %buildroot%_desktopdir/
 #TODO: apply %%lang tags to localized files /usr/share/abiword-2.8/strings/*.strings (5 Mb)
 
 %changelog
+* Sun Aug 04 2013 Vitaly Lipatov <lav@altlinux.ru> 2.8.6-alt1
+- new version 2.8.6 (with rpmrb script)
+- rebuild with libwpg
+
 * Thu Oct 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.8.4-alt1.3
 - Rebuilt with libpng15
 

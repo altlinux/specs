@@ -1,7 +1,7 @@
+%define major 0.2
 Name: libwpg
-Version: 0.1.3
-Release: alt2.qa3
-Packager: Vitaly Lipatov <lav@altlinux.ru>
+Version: %major.2
+Release: alt1
 
 Summary: Library for importing and converting Corel WordPerfect(tm) Graphics images
 
@@ -9,16 +9,19 @@ Group: System/Libraries
 License: LGPL
 Url: http://libwpg.sf.net/
 
-Source: http://prdownloads.sf.net/libwpg/%name-%version.tar.bz2
+Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-# Automatically added by buildreq on Sat Nov 03 2007
-BuildRequires: doxygen gcc-c++ libwpd-devel
+Source: http://prdownloads.sf.net/libwpg/%name-%version.tar
+
+# Automatically added by buildreq on Sat Jan 21 2012
+# optimized out: libstdc++-devel pkg-config
+BuildRequires: doxygen gcc-c++ glibc-devel libwpd9-devel
 
 %description
 libwpg is a library for reading and converting WPG images
 
 %package tools
-Requires: libwpg
+Requires: %name = %version-%release
 Summary: Tools to convert WPG images into other formats
 Group: Office
 
@@ -27,8 +30,8 @@ Tools to convert WPG images into other formats.
 Currently supported: raw svg
 
 %package devel
-Requires: libwpg
-Requires: libwpd-devel >= 0.8.0
+Requires: %name = %version-%release
+Requires: libwpd9-devel >= 0.9.0
 Summary: Files for developing with libwpg
 Group: Development/C
 
@@ -36,7 +39,7 @@ Group: Development/C
 Includes and definitions for developing with libwpg.
 
 %package docs
-Requires: libwpg
+Requires: %name = %version-%release
 BuildRequires: doxygen
 Summary: Documentation of libwpg API
 Group: Documentation
@@ -50,7 +53,7 @@ Documentation of libwpg API for developing with libwpg
 
 %build
 sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' configure
-%configure
+%configure --disable-static
 
 %make_build
 
@@ -62,7 +65,7 @@ rm -rf %buildroot%_libdir/libwpg*.la
 
 %files
 %_libdir/libwpg*.so.*
-%doc ChangeLog README COPYING AUTHORS
+%doc ChangeLog README AUTHORS
 
 %files tools
 %_bindir/wpg2*
@@ -70,12 +73,15 @@ rm -rf %buildroot%_libdir/libwpg*.la
 %files devel
 %_libdir/libwpg*.so
 %_pkgconfigdir/libwpg*.pc
-%_includedir/libwpg-0.1/
+%_includedir/libwpg-%major/
 
 %files docs
 %doc %_docdir/%name/
 
 %changelog
+* Sun Aug 04 2013 Vitaly Lipatov <lav@altlinux.ru> 0.2.2-alt1
+- new version 0.2.2 (with rpmrb script)
+
 * Tue Apr 23 2013 Repocop Q. A. Robot <repocop@altlinux.org> 0.1.3-alt2.qa3
 - NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
 - applied repocop fixes:
