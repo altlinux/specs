@@ -1,6 +1,6 @@
 Name: python-module-GeoIP
-Version: 1.2.3
-Release: alt1.2.1.1
+Version: 1.2.8
+Release: alt1
 
 Summary: Python language bindings for GeoIP
 
@@ -12,7 +12,7 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 %setup_python_module GeoIP
 
-Source: http://www.maxmind.com/download/geoip/api/python/GeoIP-Python-%version.tar.bz2
+Source: http://www.maxmind.com/download/geoip/api/python/GeoIP-Python-%version.tar
 
 BuildPreReq: rpm-build-compat >= 1.2
 
@@ -36,6 +36,9 @@ BuildRequires: libGeoIP-devel python-devel GeoIP-Lite-Country
 %python_sitelibdir/*
 
 %changelog
+* Sun Aug 04 2013 Vitaly Lipatov <lav@altlinux.ru> 1.2.8-alt1
+- new version 1.2.8 (with rpmrb script)
+
 * Thu Apr 12 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 1.2.3-alt1.2.1.1
 - Rebuild to remove redundant libpython2.7 dependency
 
