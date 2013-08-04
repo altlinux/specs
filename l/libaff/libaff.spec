@@ -1,7 +1,5 @@
-%define oname afflib
-
 Name: libaff
-Version: 3.6.8
+Version: 3.7.2
 Release: alt1
 
 Summary: A set of programs for creating and manipulating AFF files
@@ -12,10 +10,8 @@ Url: http://www.afflib.org/
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-Source: http://www.afflib.org/downloads/%oname-%version.tar
-Patch0: afflib-shared.diff
-Patch1: afflib-no_win32.diff
-Patch2: %name-fix-build.patch
+# Source-url: https://github.com/simsong/AFFLIBv3/archive/%version.tar
+Source: %name-%version.tar
 
 # Automatically added by buildreq on Wed Mar 30 2011
 BuildRequires: gcc-c++ glibc-devel libcurl-devel libexpat-devel libfuse-devel libncurses-devel libreadline-devel libssl-devel zlib-devel
@@ -43,7 +39,7 @@ Source and Proprietary software.
 This package contains the header files.
 
 %prep
-%setup -n %oname-%version
+%setup
 #%patch0 -p1
 #%patch1 -p0
 #%patch2
@@ -97,6 +93,9 @@ mkdir -p m4
 %_pkgconfigdir/*.pc
 
 %changelog
+* Sun Aug 04 2013 Vitaly Lipatov <lav@altlinux.ru> 3.7.2-alt1
+- new version 3.7.2 (with rpmrb script)
+
 * Wed Mar 30 2011 Vitaly Lipatov <lav@altlinux.ru> 3.6.8-alt1
 - new version (3.6.8) import in git
 
