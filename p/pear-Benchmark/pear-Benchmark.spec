@@ -1,7 +1,7 @@
 %define pear_name Benchmark
 
 Name: pear-Benchmark
-Version: 1.2.8
+Version: 1.2.9
 Release: alt1
 
 Summary: Framework to benchmark PHP scripts or function calls
@@ -40,10 +40,14 @@ Framework to benchmark PHP scripts or function calls.
 %files
 %doc LICENSE CHANGELOG
 %pear_dir/Benchmark/
+%pear_dir/data/Benchmark/
 %pear_docdir/%pear_name/
 %pear_xmldir/%pear_name.xml
 
 %changelog
+* Sun Aug 04 2013 Vitaly Lipatov <lav@altlinux.ru> 1.2.9-alt1
+- new version 1.2.9 (with rpmrb script)
+
 * Fri Dec 17 2010 Vitaly Lipatov <lav@altlinux.ru> 1.2.8-alt1
 - new version 1.2.8 (with rpmrb script)
 
