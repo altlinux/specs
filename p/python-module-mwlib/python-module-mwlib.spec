@@ -1,17 +1,18 @@
 %define modulename mwlib
 
 Name: python-module-mwlib
-Version: 0.12.16
-Release: alt2.1.1
+Version: 0.15.10
+Release: alt1
 
 Summary: MediaWiki conversion library for Python
 
 Group: Development/Python
 License: BSD
-Url: http://code.pediapress.com/
+Url: http://pypi.python.org/pypi/%modulename
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
+# Source-url: https://pypi.python.org/packages/source/m/mwlib/mwlib-%version.zip
 Source: %name-%version.tar
 
 BuildPreReq: rpm-build-python
@@ -78,6 +79,9 @@ install -m 0640 -- mwserve.logrotate %buildroot%_sysconfdir/logrotate.d/mwserve
 
 
 %changelog
+* Sun Aug 04 2013 Vitaly Lipatov <lav@altlinux.ru> 0.15.10-alt1
+- new version 0.15.10 (with rpmrb script)
+
 * Thu Apr 12 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 0.12.16-alt2.1.1
 - Rebuild to remove redundant libpython2.7 dependency
 
