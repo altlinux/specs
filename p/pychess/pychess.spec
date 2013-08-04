@@ -1,8 +1,8 @@
 %define prever %nil
 
 Name: pychess
-Version: 0.10
-Release: alt1.1
+Version: 0.10.1
+Release: alt1
 
 Summary: Chess game for GNOME
 
@@ -66,6 +66,9 @@ chmod +x %buildroot%python_sitelibdir/%name/Players/PyChess.py
 %_man1dir/*
 
 %changelog
+* Sun Aug 04 2013 Vitaly Lipatov <lav@altlinux.ru> 0.10.1-alt1
+- new version 0.10.1 (with rpmrb script)
+
 * Sat Oct 22 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 0.10-alt1.1
 - Rebuild with Python-2.7
 
