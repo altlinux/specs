@@ -1,4 +1,4 @@
-%define svn_revision 390803
+%define svn_revision 396164
 Name: asterisk12
 Summary: Open source PBX
 Version: 12
@@ -66,7 +66,6 @@ BuildPreReq: libunixODBC-devel libltdl-devel
 BuildPreReq: liblua5-devel
 BuildPreReq: postgresql-devel libpq-devel
 BuildPreReq: librpm-devel libnet-snmp-devel libwrap-devel perl-devel
-%define svn_revision 390803
 %add_verify_elf_skiplist %_libdir/libasteriskssl12.so.1
 %def_with debug
 %def_enable debug
@@ -747,7 +746,6 @@ ln -sf libasteriskssl12.so.1 %buildroot%_libdir/libasteriskssl12.so
 %astmodule format_g723
 %astmodule app_amd
 %astmodule app_queue
-%astmodule chan_agent
 %astmodule codec_ulaw
 %astmodule codec_a_mu
 %astmodule codec_alaw
@@ -827,17 +825,6 @@ ln -sf libasteriskssl12.so.1 %buildroot%_libdir/libasteriskssl12.so
 %astmodule res_sorcery_memory
 %astsample sorcery
 %astsample test_sorcery
-%astmodule res_stasis
-%astmodule res_stasis_http
-%astmodule res_stasis_http_asterisk
-%astmodule res_stasis_http_bridges
-%astmodule res_stasis_http_channels
-%astmodule res_stasis_http_endpoints
-%astmodule res_stasis_http_events
-%astmodule res_stasis_http_playback
-%astmodule res_stasis_http_recordings
-%astmodule res_stasis_http_sounds
-%astsample stasis_http
 %astmodule res_statsd
 %astsample statsd
 /var/lib/asterisk/rest-api/*.json
@@ -974,20 +961,7 @@ ln -sf libasteriskssl12.so.1 %buildroot%_libdir/libasteriskssl12.so
 %_docdir/%name-%version/CODING-GUIDELINES
 %exclude %_sbindir/astdb2bdb
 %exclude %_sbindir/astdb2sqlite3
-%astmodule app_stasis
 %astmodule res_sorcery_astdb
-%astmodule res_stasis_websocket
-%astsample stasis_core
-%astmodule res_stasis_answer
-%astmodule res_stasis_json_asterisk
-%astmodule res_stasis_json_bridges
-%astmodule res_stasis_json_channels
-%astmodule res_stasis_json_endpoints
-%astmodule res_stasis_json_events
-%astmodule res_stasis_json_playback
-%astmodule res_stasis_json_recordings
-%astmodule res_stasis_json_sounds
-%astmodule res_stasis_playback
 %astmodule app_bridgewait
 %astmodule bridge_builtin_interval_features
 %astmodule bridge_holding
@@ -1281,6 +1255,30 @@ ln -sf libasteriskssl12.so.1 %buildroot%_libdir/libasteriskssl12.so
 %_libdir/libasteriskssl12.so.1
 
 %changelog
+* Sun Aug 04 2013 Denis Smirnov <mithraen@altlinux.ru> 12-alt0.396164
+- update from svn revision 396164
+
+* Fri Jul 26 2013 Denis Smirnov <mithraen@altlinux.ru> 12-alt0.395492
+- update from svn revision 395492
+
+* Sat Jul 20 2013 Denis Smirnov <mithraen@altlinux.ru> 12-alt0.394821
+- update from svn revision 394821
+
+* Sun Jul 07 2013 Denis Smirnov <mithraen@altlinux.ru> 12-alt0.393775
+- update from svn revision 393775
+
+* Mon Jun 24 2013 Denis Smirnov <mithraen@altlinux.ru> 12-alt0.392725
+- update from svn revision 392725
+
+* Sun Jun 16 2013 Denis Smirnov <mithraen@altlinux.ru> 12-alt0.391941
+- update from svn revision 391941
+
+* Thu Jun 13 2013 Denis Smirnov <mithraen@altlinux.ru> 12-alt0.391595
+- update from svn revision 391595
+
+* Mon Jun 10 2013 Denis Smirnov <mithraen@altlinux.ru> 12-alt0.391198
+- update from svn revision 391198
+
 * Fri Jun 07 2013 Cronbuild Service <cronbuild@altlinux.org> 12-alt0.390803
 - update from svn revision 390803
 
