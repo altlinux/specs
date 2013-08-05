@@ -1,7 +1,7 @@
 %add_optflags %optflags_shared
 Name:           libhbaapi
 Version:        2.2.9
-Release:        alt1_2
+Release:        alt1_3
 Summary:        SNIA HBAAPI library
 Group:          System/Libraries
 License:        SNIA
@@ -19,7 +19,7 @@ Fibre Channel Host Bus Adapters.
 %package        devel
 Summary:        Development files for %{name}
 Group:          Development/C
-Requires:       %{name} = %{version}-%{release}
+Requires:       %{name}%{?_isa} = %{version}-%{release}
 
 %description    devel
 The %{name}-devel package contains libraries and header files for
@@ -49,6 +49,9 @@ find %{buildroot} -name '*.la' -exec rm -f {} ';'
 %{_libdir}/pkgconfig/*.pc
 
 %changelog
+* Mon Aug 05 2013 Igor Vlasenko <viy@altlinux.ru> 2.2.9-alt1_3
+- update to new release by fcimport
+
 * Tue Jul 16 2013 Igor Vlasenko <viy@altlinux.ru> 2.2.9-alt1_2
 - update to new release by fcimport
 
