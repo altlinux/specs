@@ -4,7 +4,7 @@ BuildRequires: perl(CPAN.pm) perl(Config.pm) perl(Fcntl.pm) perl(File/Spec/Funct
 # END SourceDeps(oneline)
 Name:           perl-Perl-MinimumVersion
 Version:        1.32
-Release:        alt1_2
+Release:        alt1_3
 Summary:        Find a minimum required version of perl for Perl code
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -53,6 +53,11 @@ find $RPM_BUILD_ROOT -type f -name .packlist -exec rm -f {} ';'
 find $RPM_BUILD_ROOT -type d -depth -exec rmdir {} 2>/dev/null ';'
 chmod -R u+w $RPM_BUILD_ROOT/*
 
+%check
+%if !%{defined perl_bootstrap}
+make test
+%endif
+
 %files
 %doc Changes LICENSE
 %{_bindir}/*
@@ -60,6 +65,9 @@ chmod -R u+w $RPM_BUILD_ROOT/*
 %{_mandir}/man1/*
 
 %changelog
+* Mon Aug 05 2013 Igor Vlasenko <viy@altlinux.ru> 1.32-alt1_3
+- update to new release by fcimport
+
 * Mon Feb 25 2013 Igor Vlasenko <viy@altlinux.ru> 1.32-alt1_2
 - fc update
 
