@@ -16,7 +16,7 @@ BuildRequires: perl-devel perl-podlators
 
 Name:           perl-DateTime-Format-MySQL
 Version:        0.04        
-Release:        alt2_18
+Release:        alt2_19
 Summary:        Parse and format MySQL dates and times 
 
 Group:          Development/Perl
@@ -62,6 +62,7 @@ make pure_install PERL_INSTALL_ROOT=%{buildroot}
 find %{buildroot} -type f -name .packlist -exec rm -f {} ';'
 find %{buildroot} -type d -depth -exec rmdir {} 2>/dev/null ';'
 
+# %{_fixperms} %{buildroot}/*
 
 
 %check
@@ -74,6 +75,9 @@ make test
 
 
 %changelog
+* Mon Aug 05 2013 Igor Vlasenko <viy@altlinux.ru> 0.04-alt2_19
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.04-alt2_18
 - update to new release by fcimport
 
