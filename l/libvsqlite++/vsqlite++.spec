@@ -1,10 +1,11 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: gcc-c++
 # END SourceDeps(oneline)
+%add_optflags %optflags_shared
 %define oldname vsqlite++
 Name:        libvsqlite++
 Version:    0.3.11
-Release:    alt1_2
+Release:    alt1_3
 Summary:    Well designed C++ sqlite 3.x wrapper library
 
 Group:      Development/C
@@ -19,6 +20,7 @@ BuildRequires:  libtool
 BuildRequires:  doxygen
 BuildRequires:  graphviz
 Source44: import.info
+Provides: vsqlite++ = %{version}-%{release}
 
 %description
 VSQLite++ is a C++ wrapper for sqlite3 using the C++ standard library and boost.
@@ -27,7 +29,8 @@ VSQLite++ is designed to be easy to use and focuses on simplicity.
 %package devel
 Summary:        Development files for %{oldname}
 Group:          Development/C
-Requires:       %{name} = %{version}-%{release}
+Requires:       libvsqlite++ = %{version}-%{release}
+Provides: vsqlite++-devel = %{version}-%{release}
 
 %description devel
 This package contains development files for %{oldname}.
@@ -36,6 +39,7 @@ This package contains development files for %{oldname}.
 BuildArch:      noarch
 Summary:        Development documentation for %{oldname}
 Group:          Development/C
+Provides: vsqlite++-doc = %{version}-%{release}
 
 %description doc
 This package contains development documentation files for %{oldname}.
@@ -77,6 +81,9 @@ make DESTDIR=%{buildroot} install
 %{_libdir}/libvsqlitepp.so.*
 
 %changelog
+* Mon Aug 05 2013 Igor Vlasenko <viy@altlinux.ru> 0.3.11-alt1_3
+- update to new release by fcimport
+
 * Sat Jun 01 2013 Igor Vlasenko <viy@altlinux.ru> 0.3.11-alt1_2
 - new version
 
