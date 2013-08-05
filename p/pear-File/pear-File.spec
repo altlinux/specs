@@ -1,8 +1,8 @@
 %define pear_name File
 
 Name: pear-File
-Version: 1.3.0
-Release: alt4
+Version: 1.4.1
+Release: alt1
 
 Summary: Common file and directory routines, also CSV handling
 
@@ -12,12 +12,14 @@ Url: http://pear.php.net/package/%pear_name
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-Source: http://pear.php.net/get/%pear_name-%version.tar.bz2
+Source: http://pear.php.net/get/%pear_name-%version.tar
 
 BuildArchitectures: noarch
 
 Requires: pear-core
 BuildRequires: pear-core rpm-build-pear
+
+Requires: pear-File_CSV pear-File_Util
 
 %description
 Provides easy access to read/write to files along with
@@ -40,12 +42,15 @@ Also provides interface for handling CSV files.
 
 %files
 %doc LICENSE CHANGELOG
-%pear_dir/File/
+#pear_dir/File/
 %pear_testdir/File/
 %pear_dir/File.php
 %pear_xmldir/%pear_name.xml
 
 %changelog
+* Sun Aug 04 2013 Vitaly Lipatov <lav@altlinux.ru> 1.4.1-alt1
+- new version 1.4.1 (with rpmrb script)
+
 * Fri Jun 20 2008 Vitaly Lipatov <lav@altlinux.ru> 1.3.0-alt4
 - autorebuild for correct requires(pre) (see bug #16086)
 
