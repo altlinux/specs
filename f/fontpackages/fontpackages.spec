@@ -8,7 +8,7 @@ BuildRequires: perl(Font/TTF/Font.pm) perl(Unicode/UCD.pm)
 
 Name:    fontpackages
 Version: 1.44
-Release: alt4_7
+Release: alt4_8
 Summary: Common directory and macro definitions used by font packages
 
 Group:     System/Configuration/Other
@@ -55,7 +55,7 @@ Group: System/Configuration/Other
 Summary: Tools used to check fonts and font packages
 
 Requires: fontconfig fontforge
-Requires: curl make mutt
+Requires: curl make mutt1.5
 Requires: yum-utils
 
 # repo-font-audit script need to run fedoradev-pkgowners command
@@ -126,6 +126,9 @@ rm -rf %buildroot%{spectemplatedir}
 %{ftcgtemplatedir}/*txt
 
 %changelog
+* Mon Aug 05 2013 Igor Vlasenko <viy@altlinux.ru> 1.44-alt4_8
+- update to new release by fcimport
+
 * Tue Mar 12 2013 Igor Vlasenko <viy@altlinux.ru> 1.44-alt4_7
 - update to new release by fcimport
 
