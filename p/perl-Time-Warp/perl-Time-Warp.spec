@@ -1,9 +1,10 @@
 # BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(Test.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:       perl-Time-Warp 
 Version:    0.5 
-Release:    alt4_12
+Release:    alt4_13
 # Warp.pm -> GPL+ or Artistic
 License:    GPL+ or Artistic 
 Group:      Development/Perl
@@ -16,7 +17,7 @@ BuildRequires: perl(ExtUtils/MakeMaker.pm)
 # don't "provide" private Perl libs
 #global _use_internal_dependency_generator 0
 #global __deploop() while read FILE; do /usr/lib/rpm/rpmdeps -%{1} ${FILE}; done | /bin/sort -u
-#global __find_provides /bin/sh -c "%{__grep} -v '%_docdir' | %{__grep} -v '%{perl_vendorarch}/.*\\.so$' | %{__deploop P}"
+#global __find_provides /bin/sh -c "%{__grep} -v '%_docdir' | %{__grep} -v '%{perl_vendor_archlib}/.*\\.so$' | %{__deploop P}"
 #global __find_requires /bin/sh -c "%{__grep} -v '%_docdir' | %{__deploop R}"
 Source44: import.info
 
@@ -42,16 +43,20 @@ find %{buildroot} -type f -name .packlist -exec rm -f {} ';'
 find %{buildroot} -type f -name '*.bs' -a -size 0 -exec rm -f {} ';'
 find %{buildroot} -depth -type d -exec rmdir {} 2>/dev/null ';'
 
+# %{_fixperms} %{buildroot}/*
 
 %check
 make test
 
 %files
 %doc README 
-%{perl_vendorarch}/*
-%exclude %dir %{perl_vendorarch}/auto
+%{perl_vendor_archlib}/*
+%exclude %dir %{perl_vendor_archlib}/auto
 
 %changelog
+* Mon Aug 05 2013 Igor Vlasenko <viy@altlinux.ru> 0.5-alt4_13
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.5-alt4_12
 - update to new release by fcimport
 
