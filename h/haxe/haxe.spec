@@ -1,6 +1,6 @@
 Name: haxe
 Version: 3.0.0
-Release: alt0.1
+Release: alt1
 
 Summary: Haxe is an open source programming language
 
@@ -8,7 +8,7 @@ License: GPLv2
 Group: Development/Other
 Url: http://haxe.org
 
-# https://github.com/haxe-mirrors/haxe.git
+# https://github.com/HaxeFoundation/haxe.git
 Source: %name-%version.tar
 
 # Automatically added by buildreq on Fri Mar 29 2013
@@ -58,6 +58,9 @@ install -D std/tools/haxedoc/haxedoc.sh %buildroot%_bindir/haxedoc
 %haxelib/
 
 %changelog
+* Mon Aug 05 2013 Vitaly Lipatov <lav@altlinux.ru> 3.0.0-alt1
+- merge with tag v3-00, real 3.0.0 version
+
 * Fri Mar 29 2013 Vitaly Lipatov <lav@altlinux.ru> 3.0.0-alt0.1
 - Initial build for ALTLinux Sisyphus
 
