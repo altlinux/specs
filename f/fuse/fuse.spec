@@ -1,6 +1,6 @@
 Name: fuse
-Version: 2.9.2
-Release: alt2
+Version: 2.9.3
+Release: alt1
 
 Summary: a tool for creating virtual filesystems
 License: GPL
@@ -112,6 +112,9 @@ mv %buildroot%_sysconfdir/udev/rules.d/* %buildroot%_udevrulesdir/
 %_pkgconfigdir/*.pc
 
 %changelog
+* Mon Aug 05 2013 Denis Smirnov <mithraen@altlinux.ru> 2.9.3-alt1
+- 2.9.3
+
 * Wed Apr 24 2013 Denis Smirnov <mithraen@altlinux.ru> 2.9.2-alt2
 - repocop fixes
 
