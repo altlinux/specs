@@ -20,7 +20,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.4.56
-Release: alt1
+Release: alt2
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -818,7 +818,7 @@ BuildRequires: patch >= 2.6.1-alt1
 
 %{?_enable_htmldocs:BuildRequires: xmlto transfig ghostscript}
 %{?_enable_man:BuildRequires: xmlto}
-%{?_with_perf:BuildRequires: binutils-devel libelf-devel asciidoc elfutils-devel >= 0.138 pkgconfig(gtk+-2.0)}
+%{?_with_perf:BuildRequires: binutils-devel libelf-devel asciidoc elfutils-devel >= 0.138 pkgconfig(gtk+-2.0) libnewt-devel python-dev}
 
 Requires: bootloader-utils >= 0.4.21
 Requires: module-init-tools >= 3.1
@@ -2879,6 +2879,11 @@ done)
 
 
 %changelog
+* Mon Aug 05 2013 Led <led@altlinux.ru> 3.4.56-alt2
+- updated:
+  + fix-tools--perf
+- updated BuildRequires for perf
+
 * Sun Aug 04 2013 Led <led@altlinux.ru> 3.4.56-alt1
 - 3.4.56
 - updated:
