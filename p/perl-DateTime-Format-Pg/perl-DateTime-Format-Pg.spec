@@ -4,7 +4,7 @@ BuildRequires: perl(CPAN.pm) perl(Config.pm) perl(ExtUtils/MakeMaker.pm) perl(Fc
 # END SourceDeps(oneline)
 Name:           perl-DateTime-Format-Pg
 Version:        0.16008
-Release:        alt1_2
+Release:        alt1_3
 Summary:        Parse and format PostgreSQL dates and times
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -59,6 +59,7 @@ make pure_install PERL_INSTALL_ROOT=%{buildroot}
 find %{buildroot} -type f -name .packlist -exec rm -f {} \;
 find %{buildroot} -depth -type d -exec rmdir {} 2>/dev/null \;
 
+# %{_fixperms} %{buildroot}/*
 
 %check
 make test
@@ -68,6 +69,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon Aug 05 2013 Igor Vlasenko <viy@altlinux.ru> 0.16008-alt1_3
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.16008-alt1_2
 - update to new release by fcimport
 
