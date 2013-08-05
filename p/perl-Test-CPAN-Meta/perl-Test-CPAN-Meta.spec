@@ -4,7 +4,7 @@ BuildRequires: perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Test-CPAN-Meta
 Version:        0.23
-Release:        alt1_1
+Release:        alt1_2
 Summary:        Validation of the META.yml file in a CPAN distribution
 License:        Artistic 2.0
 Group:          Development/Perl
@@ -51,6 +51,9 @@ make test AUTOMATED_TESTING=1
 %{perl_vendor_privlib}/Test/
 
 %changelog
+* Mon Aug 05 2013 Igor Vlasenko <viy@altlinux.ru> 0.23-alt1_2
+- update to new release by fcimport
+
 * Tue Apr 09 2013 Igor Vlasenko <viy@altlinux.ru> 0.23-alt1_1
 - update to new release by fcimport
 
