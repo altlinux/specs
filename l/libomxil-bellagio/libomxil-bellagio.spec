@@ -1,9 +1,10 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/doxygen gcc-c++
+BuildRequires: /usr/bin/doxygen gcc-c++ libomxil-bellagio-devel
 # END SourceDeps(oneline)
+%add_optflags %optflags_shared
 Name:           libomxil-bellagio
 Version:        0.9.3
-Release:        alt1_7
+Release:        alt1_8
 Summary:        OpenMAX Integration Layer
 
 Group:          System/Libraries
@@ -18,9 +19,10 @@ Patch2:         libomxil-bellagio-0.9.3-nodoc.patch
 Patch3:         http://git.buildroot.net/buildroot/plain/package/multimedia/bellagio/bellagio-0.9.3-dynamicloader-linking.patch
 Patch4:         http://git.buildroot.net/buildroot/plain/package/multimedia/bellagio/bellagio-0.9.3-parallel-build.patch
 Patch5:         http://git.buildroot.net/buildroot/plain/package/multimedia/bellagio/bellagio-0.9.3-segfault-on-removeFromWaitResource.patch
+Patch6:         omxil_version.patch
 BuildRequires:  doxygen
+BuildRequires:  libtool
 Source44: import.info
-#BuildRequires:  libtool
 
 
 %description
@@ -59,13 +61,11 @@ The %{name}-test package contains binaries for testing %{name}.
 %patch3 -p1 -b .dynl
 %patch4 -p1 -b .pb
 %patch5 -p1 -b .sf
-#Avoid the use of autoreconf
-sed -i -e "s|^docdir.*|docdir=%{_datadir}/doc/%{name}-%{version}|" Makefile.in
-touch -r config.h.in Makefile.am Makefile.in
+%patch6 -p0 -b .orig
+autoreconf -vif
 
 %build
-%configure --disable-static \
-  --docdir=%{_datadir}/doc/%{name}-%{version}
+%configure --disable-static
 
 # remove rpath from libtool
 sed -i.rpath 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' libtool
@@ -118,6 +118,9 @@ rm -rf $RPM_BUILD_ROOT%{_datadir}/doc/%{name}
 
 
 %changelog
+* Mon Aug 05 2013 Igor Vlasenko <viy@altlinux.ru> 0.9.3-alt1_8
+- update to new release by fcimport
+
 * Fri Apr 26 2013 Igor Vlasenko <viy@altlinux.ru> 0.9.3-alt1_7
 - initial fc import
 
