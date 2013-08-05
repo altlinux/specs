@@ -1,9 +1,9 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/glib-gettextize libcanberra-gtk2-devel pkgconfig(gtk+-2.0)
+BuildRequires: /usr/bin/glib-gettextize pkgconfig(gtk+-2.0)
 # END SourceDeps(oneline)
 Name:           gweled
 Version:        0.9.1
-Release:        alt2_7.20130725bzr91
+Release:        alt2_8.20130730git819bed
 
 Summary:        Swapping gem game
 
@@ -11,7 +11,9 @@ Group:          Games/Other
 License:        GPLv2+
 URL:            http://launchpad.net/gweled
 #Source0:        http://launchpad.net/gweled/trunk/0.9/+download/gweled-%{version}.tar.gz
-Source0:	gweled-91.tar.gz
+#Fork using sdl_mixer rather than libcanberra or mikmod
+#https://github.com/Marisa-Chan/gweled-sdl_mixer.git
+Source0:	gweled-sdl_mixer-819bed.tar.gz
 #Patch0:         %{name}-Makefile.patch
 #Patch1:         %{name}-Sample_Free.patch
 #Patch2:         %{name}-ppc.diff
@@ -25,7 +27,7 @@ BuildRequires:  librsvg-devel >= 2.0.0
 BuildRequires:  libcroco-devel >= 0.3.0
 BuildRequires:  desktop-file-utils
 BuildRequires:	intltool libtool
-BuildRequires:	libcanberra-devel
+BuildRequires:	libSDL_mixer-devel
 Source44: import.info
 
 %description
@@ -36,7 +38,7 @@ ends when there are no possible moves left.
 
 
 %prep
-%setup -qn gweled-91
+%setup -qn gweled-sdl_mixer-819bed
 #%patch0  -p0 -b .patch0
 #%patch1  -p0 -b .patch1
 # the next two were extracted from the debian package; I asked upstream to 
@@ -84,6 +86,9 @@ desktop-file-install --delete-original \
 %{_datadir}/sounds/%{name}/
 
 %changelog
+* Mon Aug 05 2013 Igor Vlasenko <viy@altlinux.ru> 0.9.1-alt2_8.20130730git819bed
+- update to new release by fcimport
+
 * Wed Jul 31 2013 Igor Vlasenko <viy@altlinux.ru> 0.9.1-alt2_7.20130725bzr91
 - update to new release by fcimport
 
