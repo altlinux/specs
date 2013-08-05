@@ -4,7 +4,7 @@ BuildRequires: perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-HTML-Tiny
 Version:        1.05
-Release:        alt2_13
+Release:        alt2_14
 Summary:        Lightweight, dependency free HTML/XML generation
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -13,8 +13,8 @@ Source0:        http://www.cpan.org/authors/id/A/AN/ANDYA/HTML-Tiny-%{version}.t
 BuildArch:      noarch
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
 BuildRequires:  perl(Test/More.pm)
-
 Source44: import.info
+
 
 %description
 HTML::Tiny is a simple, dependency free module for generating HTML (and
@@ -35,6 +35,7 @@ make pure_install PERL_INSTALL_ROOT=$RPM_BUILD_ROOT
 find $RPM_BUILD_ROOT -type f -name .packlist -exec rm -f {} \;
 find $RPM_BUILD_ROOT -depth -type d -exec rmdir {} 2>/dev/null \;
 
+# %{_fixperms} $RPM_BUILD_ROOT/*
 
 %check
 make test
@@ -44,6 +45,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon Aug 05 2013 Igor Vlasenko <viy@altlinux.ru> 1.05-alt2_14
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 1.05-alt2_13
 - update to new release by fcimport
 
