@@ -20,7 +20,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.4.56
-Release: alt2
+Release: alt3
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -132,7 +132,7 @@ Release: alt2
 
 #Extra_modules spl 0.6.1
 %Extra_modules zfs 0.6.1
-%Extra_modules kvm 3.9.10
+%Extra_modules kvm 3.10.1
 #Extra_modules nvidia 319.32
 #Extra_modules fglrx 13.101
 %Extra_modules vboxhost 4.2.16
@@ -2879,6 +2879,9 @@ done)
 
 
 %changelog
+* Mon Aug 05 2013 Led <led@altlinux.ru> 3.4.56-alt3
+- kvm 3.10.1
+
 * Mon Aug 05 2013 Led <led@altlinux.ru> 3.4.56-alt2
 - updated:
   + fix-tools--perf
