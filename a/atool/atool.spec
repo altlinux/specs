@@ -3,7 +3,7 @@ BuildRequires: /usr/bin/perl perl(Encode.pm)
 # END SourceDeps(oneline)
 Name:		atool
 Version:	0.39.0
-Release:	alt1_2
+Release:	alt1_3
 Summary:	A perl script for managing file archives of various types
 
 Group:		Archiving/Other
@@ -52,6 +52,9 @@ make install DESTDIR=$RPM_BUILD_ROOT
 %{_mandir}/man1/*
 
 %changelog
+* Mon Aug 05 2013 Igor Vlasenko <viy@altlinux.ru> 0.39.0-alt1_3
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.39.0-alt1_2
 - update to new release by fcimport
 
