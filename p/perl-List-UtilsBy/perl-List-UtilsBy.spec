@@ -1,10 +1,10 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(Exporter.pm) perl(File/stat.pm) perl(Scalar/Util.pm) perl-devel perl-podlators
+BuildRequires: perl(Exporter.pm) perl(File/stat.pm) perl(Scalar/Util.pm) perl-Module-Build perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-List-UtilsBy
 Version:        0.09
-Release:        alt2_4
+Release:        alt2_5
 Summary:        Higher-order list utility functions
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -16,8 +16,8 @@ BuildRequires:  perl(Test/More.pm)
 
 # for improved testing
 BuildRequires:  perl(Test/Pod.pm)
-
 Source44: import.info
+
 
 %description
 This module provides a number of list utility functions, all of which take
@@ -39,6 +39,7 @@ returned by the extra function, when given each value.
 ./Build install destdir=$RPM_BUILD_ROOT create_packlist=0
 find $RPM_BUILD_ROOT -depth -type d -exec rmdir {} 2>/dev/null \;
 
+# %{_fixperms} $RPM_BUILD_ROOT/*
 
 %check
 ./Build test
@@ -48,6 +49,9 @@ find $RPM_BUILD_ROOT -depth -type d -exec rmdir {} 2>/dev/null \;
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon Aug 05 2013 Igor Vlasenko <viy@altlinux.ru> 0.09-alt2_5
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.09-alt2_4
 - update to new release by fcimport
 
