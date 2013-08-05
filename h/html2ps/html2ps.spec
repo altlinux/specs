@@ -2,7 +2,7 @@
 %define my_subversion b7
 Name:           html2ps
 Version:        1.0
-Release:        alt2_0.13.%{my_subversion}
+Release:        alt2_0.14.%{my_subversion}
 Summary:        HTML to PostScript converter
 
 Group:          Publishing
@@ -102,6 +102,9 @@ desktop-file-install \
 %{_datadir}/applications/*xhtml2ps.desktop
 
 %changelog
+* Mon Aug 05 2013 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_0.14.b7
+- update to new release by fcimport
+
 * Tue Apr 30 2013 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_0.13.b7
 - update to new release by fcimport
 
