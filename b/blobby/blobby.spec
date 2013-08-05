@@ -6,7 +6,7 @@ BuildRequires: gcc-c++ unzip
 
 Name:           blobby
 Version:        1.0
-Release:        alt2_0.4.%{prerel}
+Release:        alt2_0.5.%{prerel}
 Summary:        Volley-ball game
 Group:          Games/Other
 License:        GPLv2+
@@ -48,6 +48,9 @@ desktop-file-install --dir $RPM_BUILD_ROOT%{_datadir}/applications %{SOURCE1}
 %{_datadir}/applications/*.desktop
 
 %changelog
+* Mon Aug 05 2013 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_0.5.rc3
+- update to new release by fcimport
+
 * Fri Feb 15 2013 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_0.4.rc3
 - update to new release by fcimport
 
