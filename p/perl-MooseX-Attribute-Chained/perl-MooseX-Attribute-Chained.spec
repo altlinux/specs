@@ -1,10 +1,10 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(Moose/Meta/Method/Accessor.pm) perl(Moose/Role.pm) perl(Moose/Util.pm) perl(Scalar/Util.pm) perl-devel perl-podlators
+BuildRequires: perl(Moose/Meta/Method/Accessor.pm) perl(Moose/Role.pm) perl(Moose/Util.pm) perl(Scalar/Util.pm) perl-Module-Build perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-MooseX-Attribute-Chained
 Version:        1.0.1
-Release:        alt3_4
+Release:        alt3_5
 Summary:        Attribute that returns the instance to allow for chaining
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -50,6 +50,7 @@ chaining on accessors by returning $self on write/set operations.
 ./Build install destdir=%{buildroot} create_packlist=0
 find %{buildroot} -depth -type d -exec rmdir {} 2>/dev/null \;
 
+# %{_fixperms} %{buildroot}/*
 
 %check
 ./Build test
@@ -59,6 +60,9 @@ find %{buildroot} -depth -type d -exec rmdir {} 2>/dev/null \;
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon Aug 05 2013 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt3_5
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt3_4
 - update to new release by fcimport
 
