@@ -1,10 +1,10 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(DateTime/Span.pm) perl-devel perl-podlators
+BuildRequires: perl(DateTime/Span.pm) perl-Module-Build perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-DateTime-Format-ICal
 Version:        0.09
-Release:        alt2_13
+Release:        alt2_14
 Summary:        Parse and format iCal datetime and duration strings
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -40,6 +40,7 @@ appropriate objects.
 ./Build install destdir=$RPM_BUILD_ROOT create_packlist=0
 find $RPM_BUILD_ROOT -depth -type d -exec rmdir {} 2>/dev/null \;
 
+# %{_fixperms} $RPM_BUILD_ROOT/*
 
 %check
 ./Build test
@@ -49,6 +50,9 @@ find $RPM_BUILD_ROOT -depth -type d -exec rmdir {} 2>/dev/null \;
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon Aug 05 2013 Igor Vlasenko <viy@altlinux.ru> 0.09-alt2_14
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.09-alt2_13
 - update to new release by fcimport
 
