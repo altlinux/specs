@@ -1,10 +1,11 @@
 # BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(CPAN.pm) perl(Config.pm) perl(Fcntl.pm) perl(blib.pm) perl(overload.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 BuildRequires: perl-Filter
 Name:           perl-YAML-LibYAML
 Version:        0.41
-Release:        alt1_1
+Release:        alt1_2
 Summary:        Perl YAML Serialization using XS and libyaml
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -69,10 +70,13 @@ make test
 
 %files
 %doc Changes README
-%{perl_vendorarch}/auto/YAML/
-%{perl_vendorarch}/YAML/
+%{perl_vendor_archlib}/auto/YAML/
+%{perl_vendor_archlib}/YAML/
 
 %changelog
+* Mon Aug 05 2013 Igor Vlasenko <viy@altlinux.ru> 0.41-alt1_2
+- update to new release by fcimport
+
 * Mon Mar 18 2013 Igor Vlasenko <viy@altlinux.ru> 0.41-alt1_1
 - update to new release by fcimport
 
