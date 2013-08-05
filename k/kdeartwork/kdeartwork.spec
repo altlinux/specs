@@ -1,6 +1,7 @@
 %undefine __libtoolize
 %define qtdir %_qt3dir
 %define unstable 0
+%define arts 1
 %define _optlevel s
 %define _keep_libtool_files 1
 %define cmake 1
@@ -11,7 +12,7 @@
 
 Name: kdeartwork
 Version: 3.5.13.2
-Release: alt1
+Release: alt2
 
 Group: Graphical desktop/KDE
 Summary: KDE Artwork (empty package)
@@ -65,6 +66,9 @@ BuildRequires: libart_lgpl-devel libexpat
 BuildRequires: libjpeg-devel liblcms libmng libpng-devel libqt3-devel
 BuildRequires: libstdc++-devel zlib-devel
 BuildRequires: libacl-devel libattr-devel
+%if %arts
+BuildRequires: libarts-devel >= 1.5.8 libarts-qtmcop-devel >= 1.5.8
+%endif
 #BuildRequires: kdelibs-devel-cxx = %__gcc_version_base
 BuildRequires: kdelibs >= %version kdelibs-devel >= %version
 %if %with_xscreensaver
@@ -482,6 +486,10 @@ export PATH=$QTDIR/bin:$KDEDIR/bin:$PATH
 export LD_LIBRARY_PATH=$QTDIR/%_lib:$KDEDIR/%_lib:$LD_LIBRARY_PATH
 export LDFLAGS="-L%buildroot/%_libdir -L%buildroot/%_libdir/kde3 -L/%_qt3dir/lib -L%_libdir -L/%_lib"
 
+##%if %arts
+##%add_optflags -I%_includedir/arts
+##%endif
+
 #export LD_LIBRARY_PATH=$QTDIR/%_lib:$KDEDIR/%_lib:$LD_LIBRARY_PATH
 #export LDFLAGS="-L%buildroot/%_libdir -L%buildroot/%_libdir/kde3 -L%_libdir"
 
@@ -495,7 +503,11 @@ then
     -DWITH_XSCREENSAVER=ON \
     -DWITH_LIBART=ON \
     -DWITH_OPENGL=ON \
+%if %arts
+    -DWITH_ARTS=ON \
+%else
     -DWITH_ARTS=OFF \
+%endif
     -DBUILD_ALL=ON
 fi
 %K3make
@@ -662,6 +674,7 @@ done
 %files xscreensaver
 %_K3bindir/kxsconfig
 %_K3bindir/kxsrun
+%_K3bindir/xscreensaver-getimage*
 %_K3applnk/System/ScreenSavers/*.desktop
 %exclude %_K3applnk/System/ScreenSavers/K*.desktop
 %endif
@@ -670,6 +683,9 @@ done
 %_K3apps/kworldclock/maps/*
 
 %changelog
+* Sat Jul 27 2013 Roman Savochenko <rom_as@altlinux.ru> 3.5.13.2-alt2
+- ARTS support enable.
+
 * Sun Jun 23 2013 Roman Savochenko <rom_as@altlinux.ru> 3.5.13.2-alt1
 - Release TDE version 3.5.13.2
 
