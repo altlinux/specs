@@ -1,9 +1,10 @@
 # BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(DynaLoader.pm) perl(Encode.pm) perl(Exporter.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-String-Similarity
 Version:        1.04
-Release:        alt3_8
+Release:        alt3_9
 Summary:        Calculates the similarity of two strings
 License:        GPLv2+
 Group:          Development/Perl
@@ -41,10 +42,13 @@ make test
 
 %files
 %doc Changes COPYING README
-%{perl_vendorarch}/auto/*
-%{perl_vendorarch}/String*
+%{perl_vendor_archlib}/auto/*
+%{perl_vendor_archlib}/String*
 
 %changelog
+* Mon Aug 05 2013 Igor Vlasenko <viy@altlinux.ru> 1.04-alt3_9
+- update to new release by fcimport
+
 * Tue Mar 19 2013 Igor Vlasenko <viy@altlinux.ru> 1.04-alt3_8
 - build for Sisyphus
 
