@@ -4,7 +4,7 @@ BuildRequires: perl(Exporter.pm) perl(Time/Local.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Test-MockTime
 Version:        0.12
-Release:        alt3_11
+Release:        alt3_12
 Summary:        Replaces actual time with simulated time
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -45,6 +45,7 @@ make pure_install PERL_INSTALL_ROOT=$RPM_BUILD_ROOT
 find $RPM_BUILD_ROOT -type f -name .packlist -exec rm -f {} \;
 find $RPM_BUILD_ROOT -depth -type d -exec rmdir {} 2>/dev/null \;
 
+# %{_fixperms} $RPM_BUILD_ROOT/*
 
 %check
 make test
@@ -54,6 +55,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon Aug 05 2013 Igor Vlasenko <viy@altlinux.ru> 0.12-alt3_12
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.12-alt3_11
 - update to new release by fcimport
 
