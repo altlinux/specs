@@ -4,7 +4,7 @@ BuildRequires: perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Term-Size-Any
 Version:        0.002
-Release:        alt2_11
+Release:        alt2_12
 Summary:        Retrieve terminal size
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -41,6 +41,7 @@ make pure_install DESTDIR=$RPM_BUILD_ROOT
 
 find $RPM_BUILD_ROOT -type f -name .packlist -exec rm -f {} \;
 
+# %{_fixperms} $RPM_BUILD_ROOT/*
 
 %check
 make test
@@ -50,6 +51,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon Aug 05 2013 Igor Vlasenko <viy@altlinux.ru> 0.002-alt2_12
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.002-alt2_11
 - update to new release by fcimport
 
