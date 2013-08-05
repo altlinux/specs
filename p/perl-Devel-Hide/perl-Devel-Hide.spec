@@ -4,7 +4,7 @@ BuildRequires: perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Devel-Hide
 Version:        0.0009
-Release:        alt1_1
+Release:        alt1_2
 Summary:        Forces the unavailability of specified Perl modules (for testing)
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -34,6 +34,7 @@ make pure_install PERL_INSTALL_ROOT=$RPM_BUILD_ROOT
 
 find $RPM_BUILD_ROOT -type f -name .packlist -exec rm -f {} \;
 
+# %{_fixperms} $RPM_BUILD_ROOT/*
 
 %check
 make test
@@ -43,6 +44,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon Aug 05 2013 Igor Vlasenko <viy@altlinux.ru> 0.0009-alt1_2
+- update to new release by fcimport
+
 * Wed Feb 06 2013 Igor Vlasenko <viy@altlinux.ru> 0.0009-alt1_1
 - update to new release by fcimport
 
