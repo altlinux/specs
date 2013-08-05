@@ -4,7 +4,7 @@ BuildRequires: perl(Config/General.pm) perl(Exporter.pm) perl(File/Spec/Function
 # END SourceDeps(oneline)
 Name:           acheck
 Version:        0.5.1
-Release:        alt2_9
+Release:        alt2_10
 Summary:        Check common localisation mistakes
 
 Group:          Text tools
@@ -12,6 +12,7 @@ License:        GPLv2+
 URL:            http://packages.debian.org/etch/%{name}
 Source0:        http://ftp.de.debian.org/debian/pool/main/a/acheck/%{name}_%{version}.tar.gz
 Patch0:         acheck-0.5.1-man.patch
+Patch1:         acheck-0.5.1-Declare-documentation-encoding.patch
 BuildRequires:  gettext
 BuildRequires:  /usr/bin/pod2man
 BuildArch:      noarch
@@ -29,6 +30,7 @@ checks.
 %prep
 %setup -q -n acheck-%{version}
 %patch0 -p1
+%patch1 -p1
 
 %build
 #Empty build
@@ -79,6 +81,9 @@ install -p -m 644 po/sv.mo $RPM_BUILD_ROOT/%{_datadir}/locale/sv/LC_MESSAGES/%{n
 %{_datadir}/locale/sv/LC_MESSAGES/%{name}.mo
 
 %changelog
+* Mon Aug 05 2013 Igor Vlasenko <viy@altlinux.ru> 0.5.1-alt2_10
+- update to new release by fcimport
+
 * Tue Mar 05 2013 Igor Vlasenko <viy@altlinux.ru> 0.5.1-alt2_9
 - update to new release by fcimport
 
