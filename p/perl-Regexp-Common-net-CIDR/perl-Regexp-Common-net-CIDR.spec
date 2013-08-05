@@ -4,7 +4,7 @@ BuildRequires: perl(CPAN.pm) perl(Config.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Regexp-Common-net-CIDR
 Version:        0.02
-Release:        alt1_7
+Release:        alt1_8
 Summary:        Provide patterns for CIDR blocks
 License:        GPLv2
 Group:          Development/Perl
@@ -39,6 +39,7 @@ make pure_install PERL_INSTALL_ROOT=$RPM_BUILD_ROOT
 find $RPM_BUILD_ROOT -type f -name .packlist -exec rm -f {} \;
 find $RPM_BUILD_ROOT -depth -type d -exec rmdir {} 2>/dev/null \;
 
+# %{_fixperms} $RPM_BUILD_ROOT/*
 
 %check
 make test
@@ -48,6 +49,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon Aug 05 2013 Igor Vlasenko <viy@altlinux.ru> 0.02-alt1_8
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.02-alt1_7
 - update to new release by fcimport
 
