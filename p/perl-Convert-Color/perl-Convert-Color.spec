@@ -1,10 +1,10 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(List/Util.pm) perl-devel perl-podlators
+BuildRequires: perl(Convert/Color/HueChromaBased.pm) perl(List/Util.pm) perl-Module-Build perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Convert-Color
 Version:        0.09
-Release:        alt1_1
+Release:        alt1_2
 Summary:        Color space conversions and named lookups
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -21,8 +21,8 @@ BuildRequires:  perl(Test/More.pm)
 # For improved testing
 BuildRequires:  perl(Test/Pod.pm)
 BuildRequires:  xorg-rgb
-
 Source44: import.info
+
 
 %description
 This module provides conversions between commonly used ways to express
@@ -51,6 +51,9 @@ find $RPM_BUILD_ROOT -depth -type d -exec rmdir {} 2>/dev/null \;
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon Aug 05 2013 Igor Vlasenko <viy@altlinux.ru> 0.09-alt1_2
+- update to new release by fcimport
+
 * Tue May 21 2013 Igor Vlasenko <viy@altlinux.ru> 0.09-alt1_1
 - update to new release by fcimport
 
