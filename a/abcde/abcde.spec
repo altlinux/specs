@@ -1,10 +1,10 @@
 Group: Sound
 # BEGIN SourceDeps(oneline):
-BuildRequires: perl(Digest/SHA.pm) perl(encoding.pm)
+BuildRequires: perl(Digest/SHA.pm) perl(WebService/MusicBrainz/Artist.pm) perl(WebService/MusicBrainz/Release.pm) perl(WebService/MusicBrainz/Response/Track.pm) perl(WebService/MusicBrainz/Response/TrackList.pm) perl(encoding.pm)
 # END SourceDeps(oneline)
 Name:           abcde
 Version:        2.5.4
-Release:        alt1_2
+Release:        alt1_3
 Summary:        A Better CD Encoder
 
 # Public domain after 2010-01-01, see comments in abcde and cddb-tool
@@ -12,6 +12,9 @@ License:        Public Domain
 URL:            http://code.google.com/p/abcde/
 Source0:        http://abcde.googlecode.com/files/%{name}-%{version}.tar.gz
 Patch0:         %{name}-2.4.0-config.patch
+# http://code.google.com/p/abcde/source/detail?r=379
+# http://code.google.com/p/abcde/issues/detail?id=99
+Patch1:         %{name}-2.5.4-eyed3_07-991163.patch
 
 BuildArch:      noarch
 Requires:       cd-discid
@@ -21,6 +24,7 @@ Requires:       icedax
 Requires:       vorbis-tools
 Requires:       wget
 Requires:       which
+Conflicts:      python-module-eyeD3 < 0.7.0
 Source44: import.info
 AutoReq: yes,noshell
 
@@ -33,6 +37,7 @@ tags them, all in one go.
 %prep
 %setup -q
 %patch0 -p1
+%patch1 -p1
 mv examples/cue2discid .
 
 
@@ -57,6 +62,9 @@ rm $RPM_BUILD_ROOT%{_bindir}/abcde-musicbrainz-tool # optional, some deps N/A
 
 
 %changelog
+* Mon Aug 05 2013 Igor Vlasenko <viy@altlinux.ru> 2.5.4-alt1_3
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 2.5.4-alt1_2
 - update to new release by fcimport
 
