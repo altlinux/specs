@@ -1,10 +1,10 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(File/Spec/Functions.pm) perl(Scalar/Util.pm) perl(overload.pm) perl-devel perl-podlators
+BuildRequires: perl(File/Spec/Functions.pm) perl(Scalar/Util.pm) perl(overload.pm) perl-Module-Build perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Math-MatrixReal
 Version:        2.09
-Release:        alt2_5
+Release:        alt2_6
 Summary:        Manipulate matrix of reals
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -46,6 +46,7 @@ does what you would like it to do.
 %install
 ./Build install destdir=%{buildroot} create_packlist=0
 find %{buildroot} -depth -type d -exec rmdir {} 2>/dev/null \;
+# %{_fixperms} %{buildroot}/*
 
 %check
 ./Build test
@@ -55,6 +56,9 @@ find %{buildroot} -depth -type d -exec rmdir {} 2>/dev/null \;
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon Aug 05 2013 Igor Vlasenko <viy@altlinux.ru> 2.09-alt2_6
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 2.09-alt2_5
 - update to new release by fcimport
 
