@@ -4,7 +4,7 @@ BuildRequires: gcc-c++
 BuildRequires: boost-program_options-devel
 Name:		bastet
 Version:	0.43
-Release:	alt4_19
+Release:	alt4_20
 Summary:	An evil falling bricks game
 
 Group:		Games/Other
@@ -15,7 +15,7 @@ Source1:	%{name}.desktop
 # self-made icon
 Source2:	%{name}.png
 
-BuildRequires:	boost-devel boost-filesystem-devel boost-wave-devel boost-graph-parallel-devel boost-math-devel boost-mpi-devel boost-program_options-devel boost-signals-devel boost-intrusive-devel boost-asio-devel ncurses-devel desktop-file-utils
+BuildRequires: boost-devel boost-filesystem-devel boost-wave-devel boost-graph-parallel-devel boost-math-devel boost-mpi-devel boost-program_options-devel boost-signals-devel boost-intrusive-devel boost-asio-devel ncurses-devel desktop-file-utils
 Source44: import.info
 
 
@@ -75,6 +75,9 @@ mkdir -p %{buildroot}%{_mandir}/man6/
 
 
 %changelog
+* Mon Aug 05 2013 Igor Vlasenko <viy@altlinux.ru> 0.43-alt4_20
+- update to new release by fcimport
+
 * Mon Feb 11 2013 Igor Vlasenko <viy@altlinux.ru> 0.43-alt4_19
 - update to new release by fcimport
 
