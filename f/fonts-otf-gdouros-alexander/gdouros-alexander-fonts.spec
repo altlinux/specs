@@ -7,7 +7,7 @@ BuildRequires: unzip
 
 Name:           fonts-otf-gdouros-alexander
 Version:        3.01
-Release:        alt3_6
+Release:        alt3_7
 Summary:        A Greek typeface inspired by Alexander Wilson
 
 Group:          System/Fonts/True type
@@ -40,6 +40,7 @@ Forms, Stylistic Alternates, Ligatures).
 It was created by George Douros.
 %prep
 %setup -n %{oldname}-%{version} -q -c
+install -pm 644 %{SOURCE2} .
 
 %build
 
@@ -57,9 +58,6 @@ install -m 0644 -p %{SOURCE1} \
         %{buildroot}%{_fontconfig_templatedir}/%{fontconf}
 ln -s %{_fontconfig_templatedir}/%{fontconf} \
       %{buildroot}%{_fontconfig_confdir}/%{fontconf}
-
-install -m 0755 -d %{buildroot}%{_docdir}/%{oldname}-%{version}
-install -m 0644 -p %{SOURCE2} %{buildroot}%{_docdir}/%{oldname}-%{version}
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
 for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
@@ -100,12 +98,13 @@ fi
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}
 %{_fontbasedir}/*/%{_fontstem}/Alexander.otf
 
-%doc %{_docdir}/%{oldname}-%{version}/Samples.pdf
-# hack; explicitly added docdir if not owned
-%doc %dir %{_docdir}/%{oldname}-%{version}
+%doc Samples.pdf
 
 
 %changelog
+* Mon Aug 05 2013 Igor Vlasenko <viy@altlinux.ru> 3.01-alt3_7
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 3.01-alt3_6
 - update to new release by fcimport
 
