@@ -3,8 +3,8 @@ BuildRequires: /usr/bin/doxygen /usr/bin/pkg-config /usr/bin/splint gcc-c++ pkgc
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
 Name:           libqb
-Version:        0.14.4
-Release:        alt2_2
+Version:        0.16.0
+Release:        alt1_1
 Summary:        An IPC library for high performance servers
 
 Group:          System/Libraries
@@ -24,9 +24,8 @@ Initially these are IPC and poll.
 %prep
 %setup -q
 
-# work-around for broken epoll in rawhide/f17
 %build
-%configure --disable-static ac_cv_func_epoll_create1=no ac_cv_func_epoll_create=no
+%configure --disable-static
 make %{?_smp_mflags}
 
 %install
@@ -57,6 +56,9 @@ developing applications that use %{name}.
 %{_mandir}/man8/qb-blackbox.8*
 
 %changelog
+* Mon Aug 05 2013 Igor Vlasenko <viy@altlinux.ru> 0.16.0-alt1_1
+- update to new release by fcimport
+
 * Tue Apr 09 2013 Igor Vlasenko <viy@altlinux.ru> 0.14.4-alt2_2
 - update to new release by fcimport
 
