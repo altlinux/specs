@@ -5,7 +5,7 @@ BuildRequires: perl(CPAN.pm) perl(Catalyst.pm) perl(Catalyst/Controller/HTML/For
 BuildRequires: perl(Encode/JP.pm)
 Name:           perl-HTML-FormFu
 Version:        0.09010
-Release:        alt2_2
+Release:        alt2_3
 Summary:        HTML Form Creation, Rendering and Validation Framework
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -112,6 +112,7 @@ find $RPM_BUILD_ROOT -depth -type d -exec rmdir {} 2>/dev/null \;
 
 rm -rf $RPM_BUILD_ROOT/blib
 
+# %{_fixperms} $RPM_BUILD_ROOT/*
 
 %check
 make test
@@ -123,6 +124,9 @@ make test
 %{_mandir}/man1/*
 
 %changelog
+* Mon Aug 05 2013 Igor Vlasenko <viy@altlinux.ru> 0.09010-alt2_3
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.09010-alt2_2
 - update to new release by fcimport
 
