@@ -4,7 +4,7 @@ BuildRequires: perl(Encode.pm) perl(LWP/UserAgent.pm) perl(Test.pm) perl-devel p
 # END SourceDeps(oneline)
 Name:           perl-HTML-Form
 Version:        6.03
-Release:        alt1_4
+Release:        alt1_5
 Summary:        Class that represents an HTML form element
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -44,6 +44,7 @@ make pure_install PERL_INSTALL_ROOT=$RPM_BUILD_ROOT
 find $RPM_BUILD_ROOT -type f -name .packlist -exec rm -f {} \;
 find $RPM_BUILD_ROOT -depth -type d -exec rmdir {} 2>/dev/null \;
 
+# %{_fixperms} $RPM_BUILD_ROOT/*
 
 %check
 make test
@@ -53,6 +54,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon Aug 05 2013 Igor Vlasenko <viy@altlinux.ru> 6.03-alt1_5
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 6.03-alt1_4
 - update to new release by fcimport
 
