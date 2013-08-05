@@ -4,7 +4,7 @@ BuildRequires: perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-DateTime-Format-DB2
 Version:        0.05
-Release:        alt2_13
+Release:        alt2_14
 Summary:        Parse and format DB2 dates and times
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -37,6 +37,7 @@ make %{?_smp_mflags}
 make pure_install PERL_INSTALL_ROOT=%{buildroot}
 find %{buildroot} -type f -name .packlist -exec rm -f {} \;
 find %{buildroot} -depth -type d -exec rmdir {} 2>/dev/null \;
+# %{_fixperms} %{buildroot}/*
 
 %check
 make test
@@ -46,6 +47,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon Aug 05 2013 Igor Vlasenko <viy@altlinux.ru> 0.05-alt2_14
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.05-alt2_13
 - update to new release by fcimport
 
