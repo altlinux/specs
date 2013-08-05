@@ -4,7 +4,7 @@ BuildRequires: perl(Fcntl.pm) perl(File/Spec/Functions.pm) perl-devel perl-podla
 # END SourceDeps(oneline)
 Name:       perl-Log-Trace 
 Version:    1.070 
-Release:    alt2_12
+Release:    alt2_13
 # lib/Log/Trace.pm -> GPLv2+ 
 License:    GPLv2+
 Group:      Development/Perl
@@ -43,6 +43,7 @@ make pure_install PERL_INSTALL_ROOT=%{buildroot}
 find %{buildroot} -type f -name .packlist -exec rm -f {} ';'
 find %{buildroot} -depth -type d -exec rmdir {} 2>/dev/null ';'
 
+# %{_fixperms} %{buildroot}/*
 
 %check
 make test
@@ -52,6 +53,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon Aug 05 2013 Igor Vlasenko <viy@altlinux.ru> 1.070-alt2_13
+- update to new release by fcimport
+
 * Sun Feb 24 2013 Igor Vlasenko <viy@altlinux.ru> 1.070-alt2_12
 - converted for ALT Linux by srpmconvert tools
 
