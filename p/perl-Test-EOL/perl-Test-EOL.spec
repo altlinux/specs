@@ -4,7 +4,7 @@ BuildRequires: perl(CPAN.pm) perl(Config.pm) perl(FindBin.pm) perl-devel perl-po
 # END SourceDeps(oneline)
 Name:		perl-Test-EOL
 Version:	1.5
-Release:	alt2_2
+Release:	alt2_3
 Summary:	Check the correct line endings in your project
 Group:		Development/Perl
 License:	GPL+ or Artistic
@@ -38,6 +38,7 @@ make %{?_smp_mflags}
 %install
 make pure_install DESTDIR=%{buildroot}
 find %{buildroot} -type f -name .packlist -exec rm -f {} \;
+# %{_fixperms} %{buildroot}
 
 %check
 make test RELEASE_TESTING=1
@@ -47,6 +48,9 @@ make test RELEASE_TESTING=1
 %{perl_vendor_privlib}/Test/
 
 %changelog
+* Mon Aug 05 2013 Igor Vlasenko <viy@altlinux.ru> 1.5-alt2_3
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 1.5-alt2_2
 - update to new release by fcimport
 
