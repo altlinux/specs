@@ -1,6 +1,8 @@
+%define v8abi 3.18
+
 Name: perl-JavaScript-V8
 Version: 0.070
-Release: alt3
+Release: alt4
 
 Summary: JavaScript::V8 - Perl interface to the V8 JavaScript engine
 License: Perl
@@ -10,7 +12,7 @@ Url: %CPAN JavaScript-V8
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-BuildRequires: perl-devel gcc-c++ perl-ExtUtils-XSpp libv8-devel
+BuildRequires: perl-devel gcc-c++ perl-ExtUtils-XSpp libv8-devel = %{v8abi}
 
 %description
 %summary
@@ -31,6 +33,9 @@ BuildRequires: perl-devel gcc-c++ perl-ExtUtils-XSpp libv8-devel
 %doc Changes README
 
 %changelog
+* Mon Aug 05 2013 Dmitriy Kulik <lnkvisitor@altlinux.org> 0.070-alt4
+- Rebuild with versioned v8
+
 * Fri Jul 26 2013 Andrey Cherepanov <cas@altlinux.org> 0.070-alt3
 - Rebuild with v8-3.18.5.9
 
