@@ -4,7 +4,7 @@ BuildRequires: perl(File/Spec/Functions.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-File-Pid
 Version:        1.01
-Release:        alt3_11
+Release:        alt3_12
 Summary:        Pid File Manipulation
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -36,6 +36,7 @@ make pure_install PERL_INSTALL_ROOT=$RPM_BUILD_ROOT
 find $RPM_BUILD_ROOT -type f -name .packlist -exec rm -f {} \;
 find $RPM_BUILD_ROOT -depth -type d -exec rmdir {} 2>/dev/null \;
 
+# %{_fixperms} $RPM_BUILD_ROOT/*
 
 %check
 make test
@@ -45,6 +46,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon Aug 05 2013 Igor Vlasenko <viy@altlinux.ru> 1.01-alt3_12
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 1.01-alt3_11
 - update to new release by fcimport
 
