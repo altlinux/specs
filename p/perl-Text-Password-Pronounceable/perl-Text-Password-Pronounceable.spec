@@ -4,7 +4,7 @@ BuildRequires: perl(CPAN.pm) perl(Config.pm) perl(Fcntl.pm) perl-devel perl-podl
 # END SourceDeps(oneline)
 Name:       perl-Text-Password-Pronounceable 
 Version:    0.30
-Release:    alt1_4
+Release:    alt1_5
 # lib/Text/Password/Pronounceable.pm -> GPL+ or Artistic
 License:    GPL+ or Artistic 
 Group:      Development/Perl
@@ -32,6 +32,7 @@ make %{?_smp_mflags}
 make pure_install PERL_INSTALL_ROOT=%{buildroot}
 find %{buildroot} -type f -name .packlist -exec rm -f {} ';'
 find %{buildroot} -depth -type d -exec rmdir {} 2>/dev/null ';'
+# %{_fixperms} %{buildroot}/*
 
 %check
 make test
@@ -41,6 +42,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon Aug 05 2013 Igor Vlasenko <viy@altlinux.ru> 0.30-alt1_5
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.30-alt1_4
 - update to new release by fcimport
 
