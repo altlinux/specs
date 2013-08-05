@@ -5,7 +5,7 @@ BuildRequires: perl(Config.pm) perl(IPC/Open2.pm) perl(Module/Build.pm) perl-Mod
 Summary:	A tiny replacement for Module::Build
 Name:		perl-Module-Build-Tiny
 Version:	0.025
-Release:	alt1_1
+Release:	alt1_2
 License:	GPL+ or Artistic
 Group:		Development/Perl
 URL:		https://github.com/Leont/module-build-tiny
@@ -55,6 +55,7 @@ Whereas Module::Build has over 6,700 lines of code; this module has less than
 
 %prep
 %setup -q -n Module-Build-Tiny-%{version}
+rm t/simple.t
 
 %build
 perl Build.PL --install_path bindoc=%_man1dir --installdirs=vendor
@@ -64,7 +65,6 @@ perl Build.PL --install_path bindoc=%_man1dir --installdirs=vendor
 ./Build install --destdir=%{buildroot} --create_packlist=0
 
 %check
-rm t/simple.t
 RELEASE_TESTING=1 ./Build test
 
 %files
@@ -72,6 +72,9 @@ RELEASE_TESTING=1 ./Build test
 %{perl_vendor_privlib}/Module/
 
 %changelog
+* Mon Aug 05 2013 Igor Vlasenko <viy@altlinux.ru> 0.025-alt1_2
+- update to new release by fcimport
+
 * Mon Jul 29 2013 Igor Vlasenko <viy@altlinux.ru> 0.025-alt1_1
 - converted for ALT Linux by srpmconvert tools
 
