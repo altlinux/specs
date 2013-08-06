@@ -6,14 +6,14 @@ BuildRequires: perl-devel perl-podlators
 %define upstream_version 1.05
 
 Name:       perl-%{upstream_name}
-Version:    1.05
-Release:    alt1
+Version:    %{upstream_version}
+Release:    alt1_1
 
 Summary:    Extend the App::Rad framework!
 License:    GPL+ or Artistic
 Group:      Development/Perl
 Url:        http://search.cpan.org/dist/%{upstream_name}
-Source:    http://www.cpan.org/authors/id/G/GA/GARU/App-Rad-%{version}.tar.gz
+Source0:    http://www.cpan.org/modules/by-module/App/%{upstream_name}-%{upstream_version}.tar.gz
 
 BuildRequires: perl(Attribute/Handlers.pm)
 BuildRequires: perl(B/Deparse.pm)
@@ -23,7 +23,7 @@ BuildRequires: perl(File/Temp.pm)
 BuildRequires: perl(FindBin.pm)
 BuildRequires: perl(Getopt/Long.pm)
 BuildRequires: perl(Test/More.pm)
-BuildArch: noarch
+BuildArch:  noarch
 Source44: import.info
 
 %description
@@ -45,7 +45,7 @@ Extending App::Rad - Plugins!
 %setup -q -n %{upstream_name}-%{upstream_version}
 
 %build
-%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
+%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
 
 %make
 
@@ -56,13 +56,13 @@ Extending App::Rad - Plugins!
 %makeinstall_std
 
 %files
-%doc Changes META.yml README
+%doc Changes META.json META.yml  README
 %perl_vendor_privlib/*
 
-
-
-
 %changelog
+* Tue Aug 06 2013 Igor Vlasenko <viy@altlinux.ru> 1.05-alt1_1
+- update by mgaimport
+
 * Sat Jul 27 2013 Igor Vlasenko <viy@altlinux.ru> 1.05-alt1
 - automated CPAN update
 
