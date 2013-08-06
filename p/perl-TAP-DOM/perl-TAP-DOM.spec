@@ -8,7 +8,7 @@ BuildRequires: perl(CPAN.pm) perl(Config.pm) perl(TAP/Parser.pm) perl(TAP/Parser
 
 Name:       perl-%{upstream_name}
 Version:    %{upstream_version}
-Release:    alt1_1
+Release:    alt1_2
 
 Summary:    Accessors for TAP::DOM summary part
 License:    GPL+ or Artistic
@@ -41,7 +41,7 @@ change, so your data tools can, well, rely on it.
 %setup -q -n %{upstream_name}-%{upstream_version}
 
 %build
-%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
+%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
 
 %make
 
@@ -59,6 +59,9 @@ change, so your data tools can, well, rely on it.
 
 
 %changelog
+* Tue Aug 06 2013 Igor Vlasenko <viy@altlinux.ru> 0.10-alt1_2
+- update by mgaimport
+
 * Mon Dec 10 2012 Igor Vlasenko <viy@altlinux.ru> 0.10-alt1_1
 - mageia import by cas@ requiest
 
