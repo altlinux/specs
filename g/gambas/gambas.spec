@@ -6,7 +6,7 @@
 
 Name:    gambas
 Version: 2.24.0
-Release: alt4
+Release: alt5
 
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
@@ -96,8 +96,8 @@ Requires: %name-gb-pcre = %version-%release
 Requires: %name-gb-pdf = %version-%release
 Requires: %name-gb-qt = %version-%release
 Requires: %name-gb-qt-ext = %version-%release
-Requires: %name-gb-qt-kde = %version-%release
-Requires: %name-gb-qt-kde-html = %version-%release
+#Requires: %name-gb-qt-kde = %version-%release
+#Requires: %name-gb-qt-kde-html = %version-%release
 Requires: %name-gb-qt-opengl = %version-%release
 Requires: %name-gb-report = %version-%release
 Requires: %name-gb-sdl = %version-%release
@@ -807,6 +807,10 @@ install -pD -m644 gambas.desktop %buildroot%_desktopdir/gambas2.desktop
 %_datadir/gambas2/info/gb.xml.xslt.list
 
 %changelog
+* Tue Aug 06 2013 Andrey Cherepanov <cas@altlinux.org> 2.24.0-alt5
+- Remove gb-kde and gb-kde-html modules from gambas-ide
+- Translate desktop file into Russian
+
 * Thu Jun 06 2013 Andrey Cherepanov <cas@altlinux.org> 2.24.0-alt4
 - Rebuild with new version of unixODBC
 
