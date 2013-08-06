@@ -6,17 +6,17 @@ BuildRequires: perl(Exporter.pm) perl(FindBin.pm) perl(Test.pm) perl(Test/More.p
 %define upstream_version 1.22
 
 Name:       perl-%{upstream_name}
-Version:    1.22
-Release:    alt1
+Version:    %{upstream_version}
+Release:    alt1_1
 
 Summary:    Kwalify schema for data structures
 License:    GPL+ or Artistic
 Group:      Development/Perl
 Url:        http://search.cpan.org/dist/%{upstream_name}
-Source:    http://www.cpan.org/authors/id/S/SR/SREZIC/Kwalify-%{version}.tar.gz
+Source0:    http://www.cpan.org/modules/by-module//%{upstream_name}-%{upstream_version}.tar.gz
 
 BuildRequires: perl(ExtUtils/MakeMaker.pm)
-BuildArch: noarch
+BuildArch:  noarch
 Source44: import.info
 
 %description
@@ -35,7 +35,7 @@ validate($schema_data, $data)
 %setup -q -n %{upstream_name}-%{upstream_version}
 
 %build
-%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
+%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
 
 %make
 
@@ -46,14 +46,15 @@ validate($schema_data, $data)
 %makeinstall_std
 
 %files
-%doc Changes README META.yml
+%doc Changes META.json META.yml  README
 %perl_vendor_privlib/*
 /usr/bin/pkwalify
-/usr/share/man/man1/pkwalify.1.*
-
-
+/usr/share/man/man1/pkwalify.1*
 
 %changelog
+* Tue Aug 06 2013 Igor Vlasenko <viy@altlinux.ru> 1.22-alt1_1
+- update by mgaimport
+
 * Sat Jul 27 2013 Igor Vlasenko <viy@altlinux.ru> 1.22-alt1
 - automated CPAN update
 
