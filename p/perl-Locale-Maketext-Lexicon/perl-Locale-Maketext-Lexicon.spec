@@ -6,7 +6,7 @@
 %define _disable_test 1
 
 Name: perl-Locale-Maketext-Lexicon
-Version: 0.91
+Version: 0.96
 Release: alt1
 
 Summary: Locale::Maketext::Lexicon - Use other catalog formats in Maketext
@@ -18,10 +18,10 @@ Url: %CPAN %m_distro
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 BuildArch: noarch
-Source: http://search.cpan.org/CPAN/authors/id/D/DR/DRTECH/%m_distro-%version.tar
+Source: http://www.cpan.org/authors/id/D/DR/DRTECH/Locale-Maketext-Lexicon-%{version}.tar.gz
 
 # Automatically added by buildreq on Sun Jan 02 2011 (-bi)
-BuildRequires: perl-Locale-Maketext perl-Module-Install perl-PPI perl-Template perl-YAML
+BuildRequires: perl-Locale-Maketext perl-Module-Install perl-PPI perl-Template perl-YAML perl(Text/Haml.pm)
 
 %description
 This module provides lexicon-handling modules to read from
@@ -46,6 +46,9 @@ for extracting translatable strings from source files.
 %perl_vendor_privlib/Locale/
 
 %changelog
+* Tue Aug 06 2013 Igor Vlasenko <viy@altlinux.ru> 0.96-alt1
+- automated CPAN update
+
 * Thu Sep 22 2011 Igor Vlasenko <viy@altlinux.ru> 0.91-alt1
 - automated CPAN update
 
