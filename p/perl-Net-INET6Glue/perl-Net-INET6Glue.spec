@@ -14,7 +14,7 @@
 %define _enable_test 1
 
 Name: perl-Net-INET6Glue
-Version: 0.5
+Version: 0.6
 Release: alt1
 
 Summary: Make common modules IPv6 ready by hotpatching
@@ -26,7 +26,7 @@ Url: http://www.cpan.org
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 BuildArch: noarch
-Source: http://search.cpan.org//CPAN/authors/id/S/SU/SULLR/%m_distro-%version.tar
+Source: http://www.cpan.org/authors/id/S/SU/SULLR/Net-INET6Glue-%{version}.tar.gz
 
 # Automatically added by buildreq on Fri Jun 01 2012
 # optimized out: perl-Socket6
@@ -72,6 +72,9 @@ deal with FTP over IPv6. Also loads the Net::INET6Glue::INET_is_INET6 manpage.
 %perl_vendor_privlib/Net/*
 
 %changelog
+* Tue Aug 06 2013 Igor Vlasenko <viy@altlinux.ru> 0.6-alt1
+- automated CPAN update
+
 * Fri Jun 01 2012 Vitaly Lipatov <lav@altlinux.ru> 0.5-alt1
 - initial build for ALT Linux Sisyphus
 
