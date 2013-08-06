@@ -1,13 +1,13 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(AutoLoader.pm) perl(Class/Accessor/Fast.pm) perl(Module/Build.pm) perl(overload.pm) perl-devel perl-podlators
+BuildRequires: perl(Class/Accessor/Fast.pm) perl(Module/Build.pm) perl(overload.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 %define upstream_name    Devel-Backtrace
 %define upstream_version 0.12
 
 Name:       perl-%{upstream_name}
 Version:    %{upstream_version}
-Release:    alt1_1
+Release:    alt1_2
 
 Summary:    Object-oriented backtrace
 License:    GPL+ or Artistic
@@ -32,7 +32,7 @@ all trace points.
 %setup -q -n %{upstream_name}-%{upstream_version}
 
 %build
-%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
+%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
 %make
 
 %check
@@ -46,6 +46,9 @@ make test
 %perl_vendor_privlib/*
 
 %changelog
+* Tue Aug 06 2013 Igor Vlasenko <viy@altlinux.ru> 0.12-alt1_2
+- update by mgaimport
+
 * Mon Dec 10 2012 Igor Vlasenko <viy@altlinux.ru>  0.12-alt1_1
 - mageia import by cas@ requiest
 
