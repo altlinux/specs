@@ -1,7 +1,7 @@
 %define bname busybox
 Name: %bname-source
 Version: 1.21.1
-Release: alt9
+Release: alt10
 Summary: Sources of %bname
 License: GPLv2
 Group: Development/Other
@@ -53,6 +53,9 @@ tar -chJf %buildroot%_usrsrc/%bname-%version.tar.xz .
 
 
 %changelog
+* Wed Aug 07 2013 Led <led@altlinux.ru> 1.21.1-alt10
+- upstream updates
+
 * Sun Aug 04 2013 Led <led@altlinux.ru> 1.21.1-alt9
 - config: add FEATURE_VOLUMEID_F2FS
 
