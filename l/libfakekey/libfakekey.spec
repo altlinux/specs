@@ -2,13 +2,13 @@
 BuildRequires: /usr/bin/doxygen gcc-c++ libICE-devel libSM-devel
 # END SourceDeps(oneline)
 %define major     0
-%define raw_name  fakekey
-%define libname   lib%{raw_name}0
-%define develname lib%{raw_name}-devel
+%define oname     fakekey
+%define libname   lib%{oname}%{major}
+%define develname %{oname}-devel
 
 Name:           libfakekey
 Version:        0.1
-Release:        alt5_3.5.2
+Release:        alt5_5
 Summary:        Converting characters to X key-presses
 
 Group:          System/Libraries
@@ -24,23 +24,23 @@ Patch33: libfakekey-0.1-alt-link-fix.patch
 libfakekey is a simple library for converting UTF-8 characters into
 'fake' X key-presses.
 
-%package        -n %libname
+%package -n %{libname}
 Summary:        Converting characters to X key-presses
 Group:          System/Libraries
 
-%description    -n %libname
+%description -n %{libname}
 libfakekey is a simple library for converting UTF-8 characters into
 'fake' X key-presses.
 
-%package        -n %develname
+%package -n %{develname}
 Summary:        Development files for %{name}
 Group:          Development/C
-Requires:       %libname = %{?serial:%serial:}%{version}-%{release}
+Requires:       %{libname} = %{version}-%{release}
 Provides: fakekey-devel = %version-%release
 
-%description    -n %develname
-The %%{name}-devel package contains libraries and header files for
-developing applications that use %%{name}.
+%description -n %{develname}
+The %{name}-devel package contains libraries and header files for
+developing applications that use %{name}.
 
 
 %prep
@@ -49,27 +49,27 @@ developing applications that use %%{name}.
 
 %build
 %configure --disable-static
-%make
+%make LIBS+=-lX11
 
 %install
 %makeinstall_std
-rm -f $RPM_BUILD_ROOT%{_libdir}/libfakekey.la
 
-%files -n %libname
-%doc COPYING
+#we don't want these
+find %{buildroot} -name "*.la" -delete
+
+%files -n %{libname}
 %{_libdir}/libfakekey.so.%{major}*
 
-
-%files -n %develname
-%{_includedir}/fakekey/
+%files -n %{develname}
+%{_includedir}/fakekey/ 
 %{_libdir}/libfakekey.so
 %{_libdir}/pkgconfig/libfakekey.pc
 
 
-
-
-
 %changelog
+* Tue Aug 06 2013 Igor Vlasenko <viy@altlinux.ru> 0.1-alt5_5
+- update by mgaimport
+
 * Sat Jan 26 2013 Igor Vlasenko <viy@altlinux.ru> 0.1-alt5_3.5.2
 - applied repocop patches
 
