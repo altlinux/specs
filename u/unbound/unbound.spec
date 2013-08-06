@@ -1,5 +1,5 @@
 Name: unbound
-Version: 1.4.19
+Version: 1.4.20
 Release: alt1
 License: BSD
 Url: http://unbound.net/
@@ -91,6 +91,7 @@ rm -f ldns-src.tar.gz
 
 %configure \
 	    --with-conf-file=%_chrootdir/unbound.conf \
+            --with-pidfile=/run/%name/%name.pid \
 	    --with-username=_%name \
 	    --with-libevent \
 	    --with-pthreads \
@@ -100,7 +101,6 @@ rm -f ldns-src.tar.gz
             --enable-sha2
 %make
 
-sed -i '/do-ip6/a	do-ip6: no' doc/example.conf
 subst 's|# auto-trust-anchor-file:|auto-trust-anchor-file:|g' doc/example.conf
 
 %install
@@ -111,8 +111,21 @@ install -d 0755 %buildroot%_sysconfdir/cron.monthly
 install -m 0755 %name.init %buildroot%_initdir/unbound
 install -p -m 0755 unbound-monthly.cron  %buildroot%_sysconfdir/cron.monthly/unbound-anchor
 install -p -m 0644 icannbundle.pem %buildroot%_localstatedir/%name/icannbundle.pem
-# add symbolic link from /etc/unbound.conf -> /var/unbound/unbound.conf
-ln -s %_localstatedir/unbound/unbound.conf %buildroot%_sysconfdir/unbound.conf
+# add symbolic link from /etc/unbound/unbound.conf -> /var/lib/unbound/unbound.conf
+ln -s ..%_chrootdir %buildroot%_sysconfdir/%name
+
+#systemd services
+install -D -p -m 0644 unbound.service %buildroot%_unitdir/unbound.service
+install -D -p -m 0644 unbound-keygen.service %buildroot%_unitdir/unbound-keygen.service
+
+# Install tmpfiles.d config
+install -D -m 0644 tmpfiles-unbound.conf %buildroot%_tmpfilesdir/unbound.conf
+
+# Install directories for easier config file drop in
+mkdir -p %buildroot%_chrootdir/{keys.d,conf.d,local.d}
+install -p example.com.key %buildroot%_chrootdir/keys.d/
+install -p example.com.conf %buildroot%_chrootdir/conf.d/
+install -p block-example.com.conf %buildroot%_chrootdir/local.d/
 
 %if %with_python
 rm %buildroot%python_sitelibdir/*.la
@@ -130,16 +143,24 @@ rm %buildroot%python_sitelibdir/*.la
 
 %preun
 %preun_service %name
-
 %files
 %doc doc/README doc/CREDITS doc/LICENSE doc/FEATURES
 %_initdir/%name
-%config(noreplace) %_localstatedir/%name/unbound.conf
-%_sysconfdir/unbound.conf
+%_unitdir/*
+%_tmpfilesdir/*
+%config(noreplace) %_chrootdir/unbound.conf
+%attr(0755,root,_%name) %dir %_chrootdir/keys.d
+%attr(0755,root,_%name) %dir %_chrootdir/conf.d
+%attr(0755,root,_%name) %dir %_chrootdir/local.d
+%attr(0664,root,_%name) %config(noreplace) %_chrootdir/keys.d/*.key
+%attr(0664,root,_%name) %config(noreplace) %_chrootdir/conf.d/*.conf
+%attr(0664,root,_%name) %config(noreplace) %_chrootdir/local.d/*.conf
+%_sysconfdir/%name
 %_sbindir/*
 %_man1dir/*
 %_man5dir/*
 %_man8dir/*
+
 
 %exclude %_sbindir/unbound-anchor
 %exclude %_sbindir/unbound-control
@@ -149,7 +170,6 @@ rm %buildroot%python_sitelibdir/*.la
 %files control
 %_sbindir/unbound-control
 %_man8dir/unbound-control*
-
 
 %files -n lib%name
 %attr(1775,root,_%name) %dir %_localstatedir/%name
@@ -174,6 +194,12 @@ rm %buildroot%python_sitelibdir/*.la
 %endif
 
 %changelog
+* Mon Aug 05 2013 Slava Dubrovskiy <dubrsl@altlinux.org> 1.4.20-alt1
+- 1.4.20
+- Add support for systemd. Fixed (ALT #26351) in case if started by systemd
+- Add addon folders %_chrootdir/{keys.d,conf.d,local.d}
+- Move link /etc/unbound.conf to /etc/unbound/unbound.conf
+
 * Sat Feb 09 2013 Slava Dubrovskiy <dubrsl@altlinux.org> 1.4.19-alt1
 - 1.4.19
 - Move %_sbindir/unbound-anchor to lib%name subpackage
@@ -274,7 +300,7 @@ rm %buildroot%python_sitelibdir/*.la
 - Automated rebuild due to libcrypto.so.6 -> libcrypto.so.7 soname change.
 
 * Thu Aug 07 2008 Slava Dubrovskiy <dubrsl@altlinux.ru> 1.0.1-alt1
-- This version features bugfixes, a couple of fixes for looking up corner cases 
+- This version features bugfixes, a couple of fixes for looking up corner cases
   (badly operated domains), and a cleanup of code for config file reading.
 
 * Fri May 30 2008 Slava Dubrovskiy <dubrsl@altlinux.ru> 1.0.0-alt2
