@@ -19,7 +19,7 @@ Name: %{bname}_glx
 %define ksname %bname
 Epoch: 1
 Version: 13.20.5
-Release: alt1
+Release: alt2
 %define EVR %{?epoch:%epoch:}%version-%release
 Summary: ATI/AMD Proprietary Linux Display Driver
 Group: System/Kernel and hardware
@@ -97,7 +97,7 @@ Group: Development/Kernel
 %{?epoch:Provides: kernel-source-%bname = %version-%release}
 Provides: kernel-source-%bname-%version = %version-%release
 %if "%ksname" == "%bname"
-Provides: kernel-src-%bname-%version = %version-%release
+Provides: kernel-src-%bname = %version-%release
 %endif
 
 %description -n kernel-source-%bname
@@ -266,6 +266,9 @@ chrpath -d %buildroot{%_bindir/amdcccle,%_sbindir/amdnotifyui}
 
 
 %changelog
+* Wed Aug 07 2013 Led <led@altlinux.ru> 1:13.20.5-alt2
+- fixed Provides
+
 * Tue Aug 06 2013 Led <led@altlinux.ru> 1:13.20.5-alt1
 - 13.20.5 (Catalyst 13.8 beta1)
 - cleaned up %%files
