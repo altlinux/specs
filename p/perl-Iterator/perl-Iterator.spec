@@ -7,7 +7,7 @@ BuildRequires: perl(Test/More.pm) perl-devel perl-podlators
 
 Name:       perl-%{upstream_name}
 Version:    %{upstream_version}
-Release:    alt1_1
+Release:    alt1_2
 
 Summary:    A general-purpose iterator class
 License:    GPL+ or Artistic
@@ -44,7 +44,7 @@ reading the entire file into an array of lines before operating on it.
 %setup -q -n %{upstream_name}-%{upstream_version}
 
 %build
-%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
+%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
 
 %make
 
@@ -62,6 +62,9 @@ reading the entire file into an array of lines before operating on it.
 
 
 %changelog
+* Tue Aug 06 2013 Igor Vlasenko <viy@altlinux.ru> 0.03-alt1_2
+- update by mgaimport
+
 * Mon Dec 10 2012 Igor Vlasenko <viy@altlinux.ru>  0.03-alt1_1
 - mageia import by cas@ requiest
 
