@@ -3,7 +3,7 @@
 # -*- coding: utf-8 -*-
 Name: calibre
 Version: 0.9.42
-Release: alt1
+Release: alt2
 
 Summary: A e-book library management application
 Summary(ru_RU.UTF8): Программа для работы с личной электронной библиотекой
@@ -22,6 +22,8 @@ Patch: calibre-no-update.patch
 Patch1: calibre-0.8.55-alt-no-macmenu.patch
 
 Requires: fonts-ttf-liberation
+
+Requires: python-module-netifaces
 
 %add_python_req_skip win32serviceutil win32service win32event win32con win32com win32api pythoncom usbobserver
 
@@ -107,6 +109,10 @@ install -m 755 %SOURCE1 %buildroot%_bindir/calibre-mount-helper
 %_datadir/%name/
 
 %changelog
+* Tue Aug 06 2013 Vitaly Lipatov <lav@altlinux.ru> 0.9.42-alt2
+- add python-module-netifaces require
+- fix warning fix update_checker attribute
+
 * Sun Aug 04 2013 Vitaly Lipatov <lav@altlinux.ru> 0.9.42-alt1
 - new version 0.9.42 (with rpmrb script)
 
