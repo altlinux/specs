@@ -7,7 +7,7 @@ BuildRequires: perl(Exporter.pm) perl(Test/More.pm) perl-devel perl-podlators
 
 Name:       perl-%{upstream_name}
 Version:    %{upstream_version}
-Release:    alt1_1
+Release:    alt1_2
 
 Summary:    Essential utilities for the Iterator class
 License:    GPL+ or Artistic
@@ -35,7 +35,7 @@ the the Iterator manpage documentation.
 %setup -q -n %{upstream_name}-%{upstream_version}
 
 %build
-%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
+%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
 
 %make
 
@@ -53,6 +53,9 @@ the the Iterator manpage documentation.
 
 
 %changelog
+* Tue Aug 06 2013 Igor Vlasenko <viy@altlinux.ru> 0.02-alt1_2
+- update by mgaimport
+
 * Mon Dec 10 2012 Igor Vlasenko <viy@altlinux.ru>  0.02-alt1_1
 - mageia import by cas@ requiest
 
