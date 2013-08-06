@@ -1,4 +1,4 @@
-%define svn svn5577
+%define svn svn5693
 
 Name: handbrake
 Version: 0.9.9
@@ -9,7 +9,8 @@ Packager: Motsyo Gennadi <drool@altlinux.ru>
 Source0: %name-%svn.tar.bz2
 
 Source101: http://download.handbrake.fr/handbrake/contrib/a52dec-0.7.4.tar.gz
-Source102: http://download.handbrake.fr/handbrake/contrib/faac-1.28.tar.gz
+# #Source102: http://download.handbrake.fr/handbrake/contrib/faac-1.28.tar.gz
+Source102: http://download.handbrake.fr/handbrake/contrib/fdk-aac-v0.1.1-6-gbae4553.tar.bz2
 Source103: http://download.handbrake.fr/handbrake/contrib/faad2-2.7.tar.gz
 Source104: http://download.handbrake.fr/handbrake/contrib/libav-v9.6.tar.bz2
 Source105: http://download.handbrake.fr/handbrake/contrib/fontconfig-2.8.0.tar.gz
@@ -24,15 +25,17 @@ Source113: http://download.handbrake.fr/handbrake/contrib/libxml2-2.7.7.tar.gz
 Source114: http://download.handbrake.fr/handbrake/contrib/m4-1.4.16.tar.bz2
 Source115: http://download.handbrake.fr/handbrake/contrib/mp4v2-trunk-r355.tar.bz2
 Source116: http://download.handbrake.fr/handbrake/contrib/mpeg2dec-0.5.1.tar.gz
-Source117: http://download.handbrake.fr/handbrake/contrib/x264-r2273-b3065e6.tar.gz
+Source117: http://download.handbrake.fr/handbrake/contrib/x264-r2345-f0c1c53.tar.gz
 Source118: http://download.handbrake.fr/handbrake/contrib/yasm-1.2.0.tar.gz
 
 Source151: handbrake-ffmpeg_fix_missing_return_in_nonvoid_function.patch
 Source152: handbrake-svn5042-fix_libbluray_implicit_declaration_of_function_strdup.patch
 
+Patch200: handbrake-svn5693-fdk_aac-autoreconf.patch
+
 Url: http://handbrake.fr/
 Group: Video
-License: GPLv2
+License: GPLv2+
 
 # Automatically added by buildreq on Sun Nov 04 2012 (-bi)
 # optimized out: elfutils fontconfig fontconfig-devel glib2-devel gstreamer-devel gtk-update-icon-cache libX11-devel libatk-devel libcairo-devel libdbus-devel libdbus-glib libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgst-plugins libgtk+2-devel libncurses-devel libogg-devel libpango-devel libsoup-devel libstdc++-devel libtinfo-devel libxml2-devel perl-XML-Parser pkg-config python-base python-modules python-modules-compiler python-modules-encodings shared-mime-info xorg-xproto-devel
@@ -66,6 +69,7 @@ This package contains a GTK+ graphical user interface for Handbrake.
 %prep
 # #%setup -n HandBrake-%version
 %setup -n %name-svn
+%patch200 -p1
 
 # Copy 3rd party dependencies into expected locations:
 %__mkdir download
@@ -84,7 +88,7 @@ export CXXFLAGS="%optflags"
 # #%__cp "%{S:151}" contrib/ffmpeg/A99-fix-missing-return-in-nonvoid-function.patch
 %__cp "%{S:152}" contrib/libbluray/A99-fix_libbluray_implicit_declaration_of_function_strdup.patch
 
-./configure --prefix="%buildroot%prefix"
+./configure --prefix="%buildroot%prefix" --force
 pushd build
 %make_build
 popd build
@@ -98,11 +102,13 @@ popd #build
 
 %__rm "%buildroot%_datadir/icons"/*/*.cache
 
+%find_lang --with-gnome ghb
+
 %files cli
 %doc AUTHORS COPYING CREDITS NEWS THANKS
 %_bindir/HandBrakeCLI
 
-%files gtk
+%files gtk -f ghb.lang
 %doc AUTHORS COPYING CREDITS NEWS THANKS
 %_bindir/HandBrakeGUI
 %_bindir/ghb
@@ -110,6 +116,12 @@ popd #build
 %_datadir/icons/*/*/apps/hb-icon.png
 
 %changelog
+* Tue Aug 06 2013 Motsyo Gennadi <drool@altlinux.ru> 0.9.9-alt1.svn5693
+- build svn5693
+
+* Tue Aug 06 2013 Motsyo Gennadi <drool@altlinux.ru> 0.9.9-alt1.svn5690
+- build svn5690
+
 * Fri Jun 14 2013 Motsyo Gennadi <drool@altlinux.ru> 0.9.9-alt1.svn5577
 - build svn5577
 
