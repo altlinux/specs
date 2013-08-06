@@ -4,7 +4,7 @@ BuildRequires: perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Term-Size-Perl
 Version:        0.029
-Release:        alt3_12
+Release:        alt3_13
 Summary:        Perl extension for retrieving terminal size (Perl version)
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -15,12 +15,12 @@ BuildRequires:  perl(ExtUtils/MakeMaker.pm)
 BuildRequires:  perl(Test/More.pm)
 BuildRequires:  perl(Test/Pod.pm)
 BuildRequires:  perl(Test/Pod/Coverage.pm)
-BuildArch: noarch
 
 # although the resulting rpm appears to be noarch, the build is arch-dependent
 # and produces different code for ppc and x86
 %global  debug_package %nil
 Source44: import.info
+BuildArch: noarch
 
 %description
 Yet another implementation of Term::Size. Now in pure Perl, with the
@@ -50,6 +50,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Tue Aug 06 2013 Igor Vlasenko <viy@altlinux.ru> 0.029-alt3_13
+- fc import
+
 * Mon Mar 04 2013 Igor Vlasenko <viy@altlinux.ru> 0.029-alt3_12
 - update to new release by fcimport
 
