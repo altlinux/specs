@@ -6,14 +6,14 @@ BuildRequires: perl-devel perl-podlators
 %define upstream_version 0.49
 
 Name:       perl-%{upstream_name}
-Version:    0.49
-Release:    alt1
+Version:    %{upstream_version}
+Release:    alt1_2
 
 Summary:    Magic functions available inside filter conditions
 License:    GPL+ or Artistic
 Group:      Development/Perl
 Url:        http://search.cpan.org/dist/%{upstream_name}
-Source:    http://www.cpan.org/authors/id/S/SC/SCHWIGON/Data-DPath-%{version}.tar.gz
+Source0:    http://www.cpan.org/modules/by-module/Data/%{upstream_name}-%{upstream_version}.tar.gz
 
 BuildRequires: perl(Class/XSAccessor.pm)
 BuildRequires: perl(Class/XSAccessor/Array.pm)
@@ -44,7 +44,7 @@ no description found
 %setup -q -n %{upstream_name}-%{upstream_version}
 
 %build
-%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
+%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
 
 %make
 
@@ -55,10 +55,13 @@ no description found
 %makeinstall_std
 
 %files
-%doc Changes LICENSE META.json META.yml README
+%doc Changes LICENSE META.json META.yml  README
 %perl_vendor_privlib/*
 
 %changelog
+* Tue Aug 06 2013 Igor Vlasenko <viy@altlinux.ru> 0.49-alt1_2
+- update by mgaimport
+
 * Sat Jul 27 2013 Igor Vlasenko <viy@altlinux.ru> 0.49-alt1
 - automated CPAN update
 
