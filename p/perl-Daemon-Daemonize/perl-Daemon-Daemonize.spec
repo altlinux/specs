@@ -1,6 +1,6 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(Sub/Exporter/Util.pm) perl(Test/Deep.pm) perl(Test/Differences.pm) perl(Test/Exception.pm) perl(Test/More.pm) perl(Test/Warn.pm) perl-devel perl-podlators
+BuildRequires: perl(Sub/Exporter/Util.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 BuildRequires: /proc
 %define upstream_name    Daemon-Daemonize
@@ -8,7 +8,7 @@ BuildRequires: /proc
 
 Name:       perl-%{upstream_name}
 Version:    %{upstream_version}
-Release:    alt1_1
+Release:    alt1_2
 
 Summary:    An easy-to-use daemon(izing) toolkit
 License:    GPL+ or Artistic
@@ -41,7 +41,7 @@ A note about the 'close' option
 %setup -q -n %{upstream_name}-%{upstream_version}
 
 %build
-%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
+%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
 
 %make
 
@@ -59,6 +59,9 @@ A note about the 'close' option
 
 
 %changelog
+* Tue Aug 06 2013 Igor Vlasenko <viy@altlinux.ru> 0.0052-alt1_2
+- update by mgaimport
+
 * Mon Dec 10 2012 Igor Vlasenko <viy@altlinux.ru>  0.0052-alt1_1
 - mageia import by cas@ requiest
 
