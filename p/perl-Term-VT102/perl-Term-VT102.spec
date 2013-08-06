@@ -8,7 +8,7 @@ BuildRequires: perl(IO/Pty.pm)
 
 Name:       perl-%{upstream_name}
 Version:    %{upstream_version}
-Release:    alt1_1
+Release:    alt1_2
 
 Summary:	Term::VT102 - a class to emulate a DEC VT102 terminal
 License:	GPL+ or Artistic
@@ -36,7 +36,7 @@ written on the screen by querying the class appropriately.
 %setup -q -n %{upstream_name}-%{upstream_version}
 
 %build
-%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
+%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
 %make
 
 %check
@@ -53,6 +53,9 @@ make test
 %{perl_vendor_privlib}/Term/VT102/examples/*
 
 %changelog
+* Tue Aug 06 2013 Igor Vlasenko <viy@altlinux.ru> 0.91-alt1_2
+- update by mgaimport
+
 * Mon Dec 10 2012 Igor Vlasenko <viy@altlinux.ru> 0.91-alt1_1
 - mageia import by cas@ requiest
 
