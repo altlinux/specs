@@ -7,7 +7,7 @@ BuildRequires: perl(CPAN.pm) perl(Config.pm) perl(overload.pm) perl-devel perl-p
 
 Name:       perl-%{upstream_name}
 Version:    %{upstream_version}
-Release:    alt1_2
+Release:    alt1_3
 
 Summary:    Perl Enum Replacement
 License:    GPL+ or Artistic
@@ -31,7 +31,7 @@ Implements enums in Perl in a robust manner.
 %setup -q -n %{upstream_name}-%{upstream_version}
 
 %build
-%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
+%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
 
 %make
 
@@ -49,6 +49,9 @@ Implements enums in Perl in a robust manner.
 
 
 %changelog
+* Tue Aug 06 2013 Igor Vlasenko <viy@altlinux.ru> 0.072-alt1_3
+- update by mgaimport
+
 * Mon Dec 10 2012 Igor Vlasenko <viy@altlinux.ru>  0.072-alt1_2
 - mageia import by cas@ requiest
 
