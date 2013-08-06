@@ -7,7 +7,7 @@ BuildRequires: perl(Test/More.pm) perl-devel perl-podlators
 
 Name:       perl-%{upstream_name}
 Version:    %{upstream_version}
-Release:    alt1_2
+Release:    alt1_3
 
 Summary:    Automated OS testing, also virtualized
 License:    GPL+ or Artistic
@@ -31,7 +31,7 @@ testing infrastructure, extending it with automation and advanced querying.
 %setup -q -n %{upstream_name}-%{upstream_version}
 
 %build
-%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
+%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
 
 %make
 
@@ -47,6 +47,9 @@ testing infrastructure, extending it with automation and advanced querying.
 
 
 %changelog
+* Tue Aug 06 2013 Igor Vlasenko <viy@altlinux.ru> 4.1-alt1_3
+- update by mgaimport
+
 * Mon Dec 10 2012 Igor Vlasenko <viy@altlinux.ru>  4.1-alt1_2
 - mageia import by cas@ requiest
 
