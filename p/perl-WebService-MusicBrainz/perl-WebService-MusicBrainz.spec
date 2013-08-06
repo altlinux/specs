@@ -7,7 +7,7 @@ BuildRequires: perl(Module/Build.pm) perl(URI/Escape.pm) perl-devel perl-podlato
 
 Name:       perl-%{upstream_name}
 Version:    %{upstream_version}
-Release:    alt2_1
+Release:    alt2_2
 
 Summary:    No summary found
 License:    GPL+ or Artistic
@@ -53,6 +53,9 @@ web service objects;
 
 
 %changelog
+* Tue Aug 06 2013 Igor Vlasenko <viy@altlinux.ru> 0.93-alt2_2
+- build for Sisyphus
+
 * Mon Aug 05 2013 Igor Vlasenko <viy@altlinux.ru> 0.93-alt2_1
 - build for Sisyphus
 
