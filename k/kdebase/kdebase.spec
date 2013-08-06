@@ -35,7 +35,7 @@
 %define bugfix 13.2
 Name: kdebase
 Version: %major.%minor.%bugfix
-Release: alt2
+Release: alt3
 %define reqver %major.%minor
 
 Summary: Trinity Desktop Environment - Core files
@@ -1972,6 +1972,9 @@ test ! -L %x11confdir/kdm && rm -rf %x11confdir/kdm ||:
 
 
 %changelog
+* Tue Aug 06 2013 Roman Savochenko <rom_as@altlinux.ru> 3.5.13.2-alt3
+- Disable "X11GlobalComm" into kcmartsrc by not building now the module into ARTS.
+
 * Sun Jul 21 2013 Roman Savochenko <rom_as@altlinux.ru> 3.5.13.2-alt2
 - Black screen after KDM login fix.
 - ARTS support enable.
