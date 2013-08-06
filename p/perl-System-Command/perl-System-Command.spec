@@ -1,5 +1,5 @@
 Name: perl-System-Command
-Version: 1.07
+Version: 1.103
 Release: alt1
 
 Summary: System::Command - Object for running system commands
@@ -27,9 +27,12 @@ BuildArch: noarch
 
 %files
 %perl_vendor_privlib/System/Command*
-%doc Changes README 
+%doc Changes README
 
 %changelog
+* Tue Aug 06 2013 Vladimir Lettiev <crux@altlinux.ru> 1.103-alt1
+- 1.103
+
 * Fri Sep 28 2012 Vladimir Lettiev <crux@altlinux.ru> 1.07-alt1
 - 1.0.4 -> 1.0.7
 
