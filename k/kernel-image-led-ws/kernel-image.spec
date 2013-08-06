@@ -20,7 +20,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.4.56
-Release: alt4
+Release: alt5
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -498,7 +498,7 @@ Patch0607: linux-%kernel_branch.50-fix-fs-notify-fanotify--fanotify_user.patch
 Patch0608: linux-%kernel_branch.50-fix-fs-ocfs2.patch
 Patch0609: linux-%kernel_branch.31-fix-fs-proc.patch
 Patch0610: linux-%kernel_branch.28-fix-fs-ramfs.patch
-Patch0611: linux-%kernel_branch.47-fix-fs-reiserfs.patch
+Patch0611: linux-%kernel_branch.53-fix-fs-reiserfs.patch
 Patch0612: linux-%kernel_branch.35-fix-fs-ubifs.patch
 Patch0613: linux-%kernel_branch.53-fix-fs-xfs.patch
 
@@ -2879,6 +2879,10 @@ done)
 
 
 %changelog
+* Tue Aug 06 2013 Led <led@altlinux.ru> 3.4.56-alt5
+- updated:
+  + fix-fs-reiserfs
+
 * Tue Aug 06 2013 Led <led@altlinux.ru> 3.4.56-alt4
 - updated:
   + fix-drivers-acpi
