@@ -20,7 +20,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.4.56
-Release: alt3
+Release: alt4
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -193,7 +193,7 @@ Patch0032: linux-%kernel_branch.20-fix-block-partitions--efi.patch
 Patch0041: linux-%kernel_branch.53-fix-crypto--aes_generic.patch
 Patch0042: linux-%kernel_branch.35-fix-crypto--cryptomgr.patch
 
-Patch0050: linux-%kernel_branch.47-fix-drivers-acpi.patch
+Patch0050: linux-%kernel_branch.53-fix-drivers-acpi.patch
 Patch0051: linux-%kernel_branch.47-fix-drivers-acpi--container.patch
 Patch0052: linux-%kernel_branch.20-fix-drivers-acpi--ec_sys.patch
 Patch0053: linux-%kernel_branch.47-fix-drivers-acpi--pci_slot.patch
@@ -2879,6 +2879,10 @@ done)
 
 
 %changelog
+* Tue Aug 06 2013 Led <led@altlinux.ru> 3.4.56-alt4
+- updated:
+  + fix-drivers-acpi
+
 * Mon Aug 05 2013 Led <led@altlinux.ru> 3.4.56-alt3
 - kvm 3.10.1
 
