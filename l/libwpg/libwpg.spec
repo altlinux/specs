@@ -1,7 +1,7 @@
 %define major 0.2
 Name: libwpg
 Version: %major.2
-Release: alt1
+Release: alt2
 
 Summary: Library for importing and converting Corel WordPerfect(tm) Graphics images
 
@@ -12,6 +12,9 @@ Url: http://libwpg.sf.net/
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 Source: http://prdownloads.sf.net/libwpg/%name-%version.tar
+
+Provides: libwpg2 = %version-%release
+Obsoletes: libwpg2
 
 # Automatically added by buildreq on Sat Jan 21 2012
 # optimized out: libstdc++-devel pkg-config
@@ -79,6 +82,9 @@ rm -rf %buildroot%_libdir/libwpg*.la
 %doc %_docdir/%name/
 
 %changelog
+* Tue Aug 06 2013 Vitaly Lipatov <lav@altlinux.ru> 0.2.2-alt2
+- add provides/obsoletes for libwpg2
+
 * Sun Aug 04 2013 Vitaly Lipatov <lav@altlinux.ru> 0.2.2-alt1
 - new version 0.2.2 (with rpmrb script)
 
