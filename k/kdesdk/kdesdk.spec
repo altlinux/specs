@@ -6,6 +6,7 @@
 %define with_kmtrace 1
 %define with_kunittest 1
 %define unstable 0
+%define cmake 1
 %add_findpackage_path %_K3bindir
 %add_findprov_lib_path %_K3lib
 %add_findreq_skiplist %_K3bindir/kunittest_debughelper
@@ -13,7 +14,7 @@
 
 Name: kdesdk
 Version: 3.5.13.2
-Release: alt1
+Release: alt2
 Packager: Sergey V Turchin <zerg at altlinux dot org>
 
 Group: Development/KDE and QT
@@ -43,12 +44,14 @@ Patch11: kdesdk-3.5.12-fix-linking.patch
 Patch12: kdesdk-3.5.0-svn_libs.patch
 Patch13: kdesdk-3.5.6-alt-find-libapr.patch
 Patch14: kdesdk-3.5.13.2-trinityHomeToKDE.patch
+Patch15: tde-3.5.13-build-defdir.patch
+Patch16: kdesdk-3.5.13-fix-POD.patch
 
 # Automatically added by buildreq on Thu Mar 18 2004 (-bi)
 #BuildRequires: XFree86-devel XFree86-libs cvs flex fontconfig freetype2 gcc-c++ kde-settings kdelibs-devel less libarts-devel libdb4.2-devel libiberty-devel libjpeg-devel libpng-devel libqt3-devel libstdc++-devel perl-DBM python qt3-designer termutils xml-utils zlib-devel
 
 
-BuildRequires(pre): kdelibs-devel
+BuildRequires(pre): cmake kdelibs-devel
 BuildRequires: cvs gcc-c++
 BuildRequires: libxml2-devel libxslt-devel
 BuildRequires: libiberty-devel libjpeg-devel libpng-devel libqt3-devel libstdc++-devel
@@ -234,13 +237,17 @@ Misc utils for KDE development
 
 %prep
 %setup -q -n kdesdk-%version
-cp -ar altlinux/admin ./
+#cp -ar altlinux/admin ./
 #
 %patch11 -p1
 %patch12 -p1
-###%patch13 -p1
+%patch13 -p1
 %patch14 -p1
+%patch15
+%patch16 -p1
 
+%if %cmake
+%else
 sed -i '\|\${kdeinit}_LDFLAGS[[:space:]]=[[:space:]].*-no-undefined|s|-no-undefined|-no-undefined -Wl,--warn-unresolved-symbols|' admin/am_edit
 for f in `find $PWD -type f -name Makefile.am`
 do
@@ -261,7 +268,7 @@ done
 cp -Rp /usr/share/libtool/aclocal/libtool.m4 admin/libtool.m4.in
 cp -Rp /usr/share/libtool/config/ltmain.sh admin/ltmain.sh
 make -f admin/Makefile.common cvs ||:
-
+%endif
 
 %build
 rm -rf %buildroot
@@ -272,6 +279,25 @@ export PATH=$QTDIR/bin:$KDEDIR/bin:$PATH
 
 export LD_LIBRARY_PATH=$QTDIR/%_lib:$KDEDIR/%_lib:$LD_LIBRARY_PATH
 export LDFLAGS="-L%buildroot/%_libdir -L%buildroot/%_Klibdir -L%_libdir"
+
+%if %cmake
+BD=%_builddir/%name-%version/BUILD
+
+if ! [ -f $BD/CMakeCache.txt ]
+then
+%K3cmake \
+    -DICON_INSTALL_DIR=%_kde3_iconsdir \
+    -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+    -DCMAKE_VERBOSE_MAKEFILE="ON" \
+    -DBUILD_ALL="ON" \
+    -DWITH_DBSEARCHENGINE="ON" \
+    -DWITH_KCAL="ON"
+fi
+%K3make
+
+%else
+# else if cmake
+
 %K3configure  \
     --disable-gcc-hidden-visibility \
 %if %unstable
@@ -284,6 +310,9 @@ export LDFLAGS="-L%buildroot/%_libdir -L%buildroot/%_Klibdir -L%_libdir"
 
 sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' libtool
 %make_build
+
+%endif
+# end if cmake
 
 %install
 %if %unstable
@@ -564,6 +593,9 @@ mv %buildroot/%_K3bindir/svn-clean %buildroot/%_K3bindir/svnclean
 %_K3bindir/zonetab2pot.*
 
 %changelog
+* Fri Aug 02 2013 Roman Savochenko <rom_as@altlinux.ru> 3.5.13.2-alt2
+- Allow and switch to build by cmake.
+
 * Sun Jun 23 2013 Roman Savochenko <rom_as@altlinux.ru> 3.5.13.2-alt1
 - Release TDE version 3.5.13.2
 
