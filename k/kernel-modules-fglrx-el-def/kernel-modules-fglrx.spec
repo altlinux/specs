@@ -1,6 +1,6 @@
 %define module_name	fglrx
-%define module_version	13.101
-%define module_release alt2
+%define module_version	13.20.5
+%define module_release alt1
 
 %define flavour el-def
 BuildRequires(pre): kernel-headers-modules-el-def
@@ -11,9 +11,11 @@ BuildRequires(pre): kernel-headers-modules-el-def
 
 Summary: AMD/ATI Proprietary Linux Display Driver
 Name: kernel-modules-%module_name-%flavour
-%define ksname kernel-source-%module_name
+%define ksname %module_name
 Version: %module_version
 Release: %module_release.%kcode.%kbuildrelease
+Epoch: 1
+%define EVR %{?epoch:%epoch:}%version-%release
 License: Proprietary
 Group: System/Kernel and hardware
 
@@ -26,11 +28,16 @@ BuildRequires: kernel-headers-modules-%flavour = %kepoch%kversion-%krelease
 BuildRequires: kernel-headers-%flavour = %kversion-%krelease
 BuildRequires: kernel-source-%module_name = %module_version
 
-Provides: kernel-modules-%module_name-%kversion-%flavour-%krelease = %version-%release
-Conflicts: kernel-modules-%module_name-%kversion-%flavour-%krelease < %version-%release
-Conflicts: kernel-modules-%module_name-%kversion-%flavour-%krelease > %version-%release
+Provides: kernel-modules-%module_name-%kversion-%flavour-%krelease = %EVR
+%{?epoch:Provides: kernel-modules-%module_name-%kversion-%flavour-%krelease = %version-%release}
+Conflicts: kernel-modules-%module_name-%kversion-%flavour-%krelease < %EVR
+Conflicts: kernel-modules-%module_name-%kversion-%flavour-%krelease > %EVR
+
+%{?epoch:Provides: %name = %version-%release}
 
 PreReq: kernel-image-%flavour = %kepoch%kversion-%krelease
+
+Requires: fglrx_glx
 
 ExclusiveArch: %karch
 
@@ -39,18 +46,17 @@ Kernel drivers for AMD/ATI Proprietary Linux Catalyst(tm) software suite.
 
 
 %prep
-rm -rf kernel-source-%module_name-%module_version
-tar -xvf %kernel_src/%ksname-%module_version.tar*
-%setup -D -T -n %ksname-%module_version/2.6.x
+%setup -cT
+tar -xf %kernel_src/%ksname-%module_version.tar*
 
 
 %build
 . %_usrsrc/linux-%kversion-%flavour/gcc_version.inc
-%make_build V=1 KDIR=%_usrsrc/linux-%kversion-%flavour CFLAGS_MODULE="-DCOMPAT_ALLOC_USER_SPACE=arch_compat_alloc_user_space -DMODULE"
+%make_build -C %ksname-%module_version/2.6.x V=1 KDIR=%_usrsrc/linux-%kversion-%flavour CFLAGS_MODULE="-DCOMPAT_ALLOC_USER_SPACE=arch_compat_alloc_user_space -DMODULE"
 
 
 %install
-install -pD -m 0644 {,%buildroot%module_dir/}%module_name.ko
+install -pD -m 0644 {%ksname-%module_version/2.6.x,%buildroot%module_dir}/%module_name.ko
 
 
 %files
@@ -58,11 +64,19 @@ install -pD -m 0644 {,%buildroot%module_dir/}%module_name.ko
 
 
 %changelog
-* %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
+* %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %EVR
 - Build for kernel-image-%flavour-%kversion-%krelease.
 
-* Fri Jul 12 2013 Led <led@altlinux.ru> 13.101-alt2
-- fixed build for EL-based kernels
+* Tue Aug 06 2013 Led <led@altlinux.ru> 1:13.20.5-alt1
+- 13.20.5
+
+* Wed Jul 17 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 13.101-alt3
+- build fixed with kernel 3.10
+
+* Fri Jun 21 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 13.101-alt2
+- dependence on fglrx_glx added
+- merged Led's 13.101-alt2:
+  + fixed build for EL-based kernels
 
 * Fri Jun 07 2013 Led <led@altlinux.ru> 13.101-alt1
 - 13.101
