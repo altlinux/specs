@@ -1,4 +1,4 @@
-%define		svn 5543
+%define		svn 5629
 
 Name:		smplayer
 Summary:	A great MPlayer front-end (QT4)
@@ -12,6 +12,7 @@ Release:	alt1.%svn
 Packager:	Alexey Morsov <swi@altlinux.ru>
 Source0:	http://downloads.sourceforge.net/smplayer/%name-%version.tar.bz2
 Patch0:		smplayer-paths-fix-alt.patch
+Patch1:		smplayer-0.8.5-disable_update.patch
 
 Requires:	mplayer
 BuildRequires:	gcc-c++ libqt4-devel >= 4.2
@@ -49,6 +50,7 @@ SMPlayer розробено на інструментарії Qt і є муль�
 %prep
 %setup -q
 %patch0 -p1
+%patch1 -p1
 sed -i 's|DOC_PATH=$(PREFIX)/share/doc/packages/smplayer|DOC_PATH=%_docdir/%name-%version|g' Makefile
 
 #hack for qt4.5rc
@@ -73,6 +75,10 @@ export OPTFLAGS="%optflags"
 %_man1dir/*
 
 %changelog
+* Wed Aug 07 2013 Motsyo Gennadi <drool@altlinux.ru> 0.8.5-alt1.5629
+- svn revision 5629
+- disable UpdateChecker by default (alt bug #29204)
+
 * Thu Jul 18 2013 Motsyo Gennadi <drool@altlinux.ru> 0.8.5-alt1.5543
 - svn revision 5543
 
