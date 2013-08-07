@@ -1,19 +1,17 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/msgfmt /usr/bin/msgmerge /usr/bin/xgettext
 # END SourceDeps(oneline)
-%define name 	matchbox-panel
-%define version 0.9.3
-%define release %mkrel 4
-
+BuildRequires: desktop-file-utils
 Summary: 	Panel for the Matchbox Desktop
-Name: 		%name
-Version: 	%version
-Release: 	alt1_4
+Name: 		matchbox-panel
+Version: 	0.9.3
+Release: 	alt1_7
 Url: 		http://matchbox-project.org/
 License: 	GPLv2+
 Group: 		Graphical desktop/Other
-Source: 	http://matchbox-project.org/sources/%name/0.9/%name-%version.tar.bz2
-
+Source0: 	http://matchbox-project.org/sources/%name/0.9/%name-%version.tar.bz2
+Patch0:		matchbox-panel-0.9.3-linking.patch
+Patch1:		matchbox-panel-0.9.3-automake-1.13.patch
 BuildRequires:	libmatchbox-devel libapm-devel libstartup-notification-devel libwireless-devel
 Source44: import.info
 Patch33: matchbox-panel-0.9.3-alt-xvt.patch
@@ -27,14 +25,34 @@ This package contains the panel from Matchbox.
 
 %prep
 %setup -q
+#%%apply_patches
+%patch0 -p1
+%patch1 -p1
+
+#fix desktop files
+sed -i -e 's,\(Icon=.*\)\.png,\1,g' applets/dotdesktop/*.desktop
 %patch33 -p1
 
 %build
-%configure --enable-nls --enable-dnotify --enable-startup-notification
+autoreconf -vfi
+%configure \
+	--enable-nls \
+	--enable-dnotify \
+	--enable-startup-notification
 %make
 
 %install
-%makeinstall
+%makeinstall_std
+
+desktop-file-install \
+	--vendor="" \
+	--set-key="Type" \
+	--set-value="Application" \
+	--remove-category="MB" \
+	--remove-category="Panel" \
+	--dir=%{buildroot}%{_datadir}/applications/ \
+		%{buildroot}%{_datadir}/applications/*.desktop
+
 %find_lang %name
 
 %files -f %name.lang
@@ -48,6 +66,9 @@ This package contains the panel from Matchbox.
 
 
 %changelog
+* Wed Aug 07 2013 Igor Vlasenko <viy@altlinux.ru> 0.9.3-alt1_7
+- update by mgaimport
+
 * Thu Nov 08 2012 Igor Vlasenko <viy@altlinux.ru> 0.9.3-alt1_4
 - mageia import
 
