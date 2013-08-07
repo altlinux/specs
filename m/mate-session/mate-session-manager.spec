@@ -1,36 +1,39 @@
 Group: Graphical desktop/MATE
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/xmlto /usr/bin/xsltproc libICE-devel libXau-devel libXext-devel libgio-devel libwrap-devel pkgconfig(gio-2.0) pkgconfig(glib-2.0) pkgconfig(gtk+-2.0) pkgconfig(gtk+-3.0) pkgconfig(ice) pkgconfig(libsystemd-daemon) pkgconfig(libsystemd-login) pkgconfig(xau) pkgconfig(xext) pkgconfig(xrender) pkgconfig(xtst) xorg-xtrans-devel
+BuildRequires: /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/xmlto /usr/bin/xsltproc libICE-devel libXau-devel libXext-devel libgio-devel libwrap-devel pkgconfig(gio-2.0) pkgconfig(glib-2.0) pkgconfig(gtk+-2.0) pkgconfig(gtk+-3.0) pkgconfig(ice) pkgconfig(libsystemd-login) pkgconfig(xau) pkgconfig(xext) pkgconfig(xrender)
 # END SourceDeps(oneline)
 BuildRequires(pre): browser-plugins-npapi-devel
 %define _libexecdir %_prefix/libexec
 %define oldname mate-session-manager
+%define fedora 19
 Name:           mate-session
-Version:        1.6.0
-Release:        alt2_3
+Version:        1.6.1
+Release:        alt1_1
 Summary:        MATE Desktop session manager
 License:        GPLv2+
 URL:            http://mate-desktop.org
 Source0:        http://pub.mate-desktop.org/releases/1.6/%{oldname}-%{version}.tar.xz
 
-#Patch from upstream to fix race condition that launches multiple caja windows on first login
-Patch0:         x-caja.patch
-
 BuildRequires:  libdbus-glib-devel
 BuildRequires:  desktop-file-utils
-BuildRequires:  gsettings-desktop-schemas-devel
 BuildRequires:  gtk2-devel
-BuildRequires:  icon-naming-utils
 BuildRequires:  libSM-devel
 BuildRequires:  mate-common
-BuildRequires:  mate-icon-theme
-BuildRequires:  mate-polkit-devel
 BuildRequires:  pango-devel
-BuildRequires:  libpangox-compat-devel
-BuildRequires:  libpolkit-devel
 BuildRequires:  libupower-devel
 BuildRequires:  systemd-devel
 BuildRequires:  xmlto
+BuildRequires:  libXtst-devel
+BuildRequires:  xorg-xtrans-devel
+BuildRequires:  tcp_wrappers-devel
+
+# Needed for mate-settings-daemon
+Requires: mate-control-center
+# we need an authentication agent in the session
+Requires: mate-polkit
+# and we want good defaults
+Requires: polkit
+Requires: icon-theme-hicolor
 Source44: import.info
 Patch33: mate-session-manager-cflags.patch
 Provides: mate-session-manager = %version-%release
@@ -45,17 +48,15 @@ full-featured user session.
 
 %prep
 %setup -n %{oldname}-%{version} -q
-%patch0 -p1
 %patch33 -p1
  
 %build
-NOCONFIGURE=1 ./autogen.sh
 %configure --disable-static \
            --enable-ipv6 \
            --with-gtk=2.0 \
            --with-default-wm=marco \
-           --enable-docbook-docs \
            --with-systemd \
+           --docdir=%{_datadir}/doc/%{name}-%{version} \
            --with-x
 
 make %{?_smp_mflags} V=1
@@ -67,6 +68,10 @@ desktop-file-install                               \
         --delete-original                          \
         --dir=%{buildroot}%{_datadir}/applications \
 %{buildroot}%{_datadir}/applications/mate-session-properties.desktop
+
+# remove needless gsettings convert file
+rm -f  %{buildroot}%{_datadir}/MateConf/gsettings/mate-session.convert
+
 %find_lang %{oldname}
 
 cat <<__START_MATE__ >startmate
@@ -120,13 +125,11 @@ install -pD -m644 %SOURCE45 %buildroot%_iconsdir/hicolor/64x64/apps/mate.png
 %{_bindir}/mate-session-save
 %{_bindir}/mate-wm
 %{_datadir}/applications/mate-session-properties.desktop
-%{_datadir}/mate-session
+%{_datadir}/mate-session-manager
 %{_datadir}/icons/hicolor/*/apps/*.png
 %{_datadir}/icons/hicolor/scalable/apps/mate-session-properties.svg
 %{_datadir}/glib-2.0/schemas/org.mate.session.gschema.xml
 %{_datadir}/xsessions/mate.desktop
-%{_datadir}/doc/mate-session
-%{_datadir}/MateConf/gsettings/mate-session.convert
 
 %_bindir/*
 %_iconsdir/hicolor/64x64/apps/mate.png
@@ -135,7 +138,11 @@ install -pD -m644 %SOURCE45 %buildroot%_iconsdir/hicolor/64x64/apps/mate.png
 #exclude %_bindir/mate-wm
 
 
+
 %changelog
+* Wed Aug 07 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.1-alt1_1
+- new fc release
+
 * Tue Jun 04 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.0-alt2_3
 - new fc release
 
