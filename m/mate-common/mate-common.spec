@@ -3,7 +3,7 @@ Group: Development/Tools
 Name:           mate-common
 Summary:        mate common build files
 Version:        1.6.1
-Release:        alt1_1
+Release:        alt1_2
 License:	GPLv3+
 URL:		http://mate-desktop.org
 Source0:	http://pub.mate-desktop.org/releases/1.5/mate-common-%{version}.tar.xz
@@ -36,6 +36,9 @@ make install DESTDIR=%{buildroot}
 %{_mandir}/man1/*
 
 %changelog
+* Wed Aug 07 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.1-alt1_2
+- new fc release
+
 * Mon Jul 22 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.1-alt1_1
 - new fc release
 

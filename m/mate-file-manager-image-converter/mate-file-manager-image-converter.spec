@@ -5,7 +5,7 @@ BuildRequires: /usr/bin/glib-gettextize /usr/bin/pkg-config pkgconfig(gio-2.0) p
 %define _libexecdir %_prefix/libexec
 Name:           mate-file-manager-image-converter
 Version:        1.6.0
-Release:        alt1_1
+Release:        alt1_2
 Summary:        MATE file manager image converter
 License:        GPLv2+
 URL:            http://www.mate-desktop.org
@@ -45,6 +45,9 @@ find %{buildroot} -name '*.a' -exec rm -rf {} ';'
 %{_datadir}/caja-image-converter
 
 %changelog
+* Wed Aug 07 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.0-alt1_2
+- new fc release
+
 * Tue Apr 09 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.0-alt1_1
 - new fc release
 

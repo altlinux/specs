@@ -4,7 +4,7 @@ BuildRequires: /usr/bin/glib-gettextize gcc-c++ libgio-devel pkgconfig(giomm-2.4
 # END SourceDeps(oneline)
 %define _libexecdir %_prefix/libexec
 Name:           mate-system-monitor
-Version:        1.6.0
+Version:        1.6.1
 Release:        alt1_1
 Summary:        Process and resource monitor
 
@@ -15,19 +15,16 @@ Source0:        http://pub.mate-desktop.org/releases/1.6/%{name}-%{version}.tar.
 BuildRequires: libgtop2-devel
 BuildRequires: desktop-file-utils
 BuildRequires: libmatewnck-devel
-BuildRequires: pango-devel
 BuildRequires: gtk2-devel
 BuildRequires: libgtkmm2-devel
-BuildRequires: libstartup-notification-devel
 BuildRequires: rarian-compat
-BuildRequires: libselinux-devel
 BuildRequires: mate-icon-theme-devel
-BuildRequires: pcre-devel
 BuildRequires: librsvg-devel
 BuildRequires: libxml2-devel
 BuildRequires: mate-doc-utils
 BuildRequires: mate-common
 BuildRequires: libdbus-glib-devel
+BuildRequires: hardlink
 
 Requires: mate-desktop
 Source44: import.info
@@ -40,12 +37,12 @@ such as CPU and memory.
 
 %prep
 %setup -q
-NOCONFIGURE=1 ./autogen.sh
 
 %build
 %configure \
         --disable-static \
-        --disable-scrollkeeper 
+        --disable-scrollkeeper \
+        --disable-schemas-compile 
 
 make %{?_smp_mflags} V=1
 
@@ -57,7 +54,13 @@ desktop-file-install --delete-original             \
   --dir $RPM_BUILD_ROOT%{_datadir}/applications    \
   $RPM_BUILD_ROOT%{_datadir}/applications/mate-system-monitor.desktop
 
-%find_lang %{name} --with-gnome
+# save space by linking identical images in translated docs
+hardlink -c -v $RPM_BUILD_ROOT%{_datadir}/mate/help/%{name}
+
+# remove needless gsettings convert file
+rm -f  $RPM_BUILD_ROOT%{_datadir}/MateConf/gsettings/mate-system-monitor.convert
+
+%find_lang %{name}
 
 %files -f %{name}.lang
 %doc AUTHORS NEWS COPYING README
@@ -66,10 +69,14 @@ desktop-file-install --delete-original             \
 %{_datadir}/pixmaps/mate-system-monitor
 %{_datadir}/glib-2.0/schemas/org.mate.system-monitor.*.xml
 %{_datadir}/mate/help/mate-system-monitor/
-%{_datadir}/MateConf/gsettings/mate-system-monitor.convert
+%{_mandir}/man1/*
+%{_datadir}/omf/mate-system-monitor/
 
 
 %changelog
+* Wed Aug 07 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.1-alt1_1
+- new fc release
+
 * Tue Apr 09 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.0-alt1_1
 - new fc release
 

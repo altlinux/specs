@@ -5,7 +5,7 @@ BuildRequires: /usr/bin/glib-gettextize /usr/bin/gtk-update-icon-cache /usr/bin/
 %define _libexecdir %_prefix/libexec
 Name:           mate-bluetooth
 Version:        1.6.0
-Release:        alt1_3
+Release:        alt1_5
 Summary:        MATE Desktop bluetooth applet
 License:        GPLv2+
 URL:            http://www.mate-desktop.org
@@ -29,11 +29,10 @@ BuildRequires:  rarian-compat
 BuildRequires:  libunique-devel
 
 Requires:  %{name}-libs%{?_isa} = %{version}-%{release}
-Requires:  mate-file-manager-sendto
 Requires:  gvfs-backend-obexftp
 Requires:  bluez
 Requires:  obexd
-Requires:  mate-notification-daemon
+Requires:  desktop-notification-daemon
 
 Provides:  dbus-bluez-pin-helper
 Source44: import.info
@@ -45,7 +44,7 @@ MATE Desktop bluetooth applet
 Group: System/Libraries
 Summary:        Shared libraries for mate-bluetooth
 License:        LGPLv2+
-Requires:       %{name} = %{version}-%{release}
+Requires:       %{name}%{?_isa} = %{version}-%{release}
 
 %description libs
 development files for mate-bluetooth
@@ -125,7 +124,7 @@ desktop-file-install                               \
 %{_libdir}/libmate-bluetooth.so.8.0.0
 %{_libdir}/girepository-1.0/MateBluetooth-1.0.typelib
 %{_libdir}/mate-bluetooth/plugins/libgbtgeoclue.so
-%{_libdir}/caja-sendto/plugins/libnstbluetooth.so
+%{_libdir}/caja-sendto/plugins/
 
 %files devel
 %{_includedir}/mate-bluetooth
@@ -134,6 +133,9 @@ desktop-file-install                               \
 %{_datadir}/gir-1.0/MateBluetooth-1.0.gir
 
 %changelog
+* Wed Aug 07 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.0-alt1_5
+- new fc release
+
 * Mon Jul 22 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.0-alt1_3
 - new fc release
 

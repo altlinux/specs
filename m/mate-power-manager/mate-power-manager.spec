@@ -8,7 +8,7 @@ BuildRequires: /usr/bin/docbook2man /usr/bin/glib-genmarshal /usr/bin/glib-gette
 
 Name:          mate-power-manager
 Version:       1.6.2
-Release:       alt1_1
+Release:       alt1_2
 Summary:       MATE power management service
 License:       GPLv2+
 URL:           http://pub.mate-desktop.org
@@ -98,6 +98,9 @@ rm -f  %{buildroot}%{_datadir}/MateConf/gsettings/mate-power-manager.convert
 
 
 %changelog
+* Wed Aug 07 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.2-alt1_2
+- new fc release
+
 * Thu Aug 01 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.2-alt1_1
 - new fc release
 

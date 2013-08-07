@@ -5,7 +5,7 @@ BuildRequires: /usr/bin/glib-gettextize libgio-devel pkgconfig(gio-2.0) pkgconfi
 %define _libexecdir %_prefix/libexec
 Name:           mate-netspeed
 Version:        1.6.0
-Release:        alt1_1
+Release:        alt1_2
 Summary:        MATE netspeed
 License:        GPLv2+
 URL:            http://www.mate-desktop.org
@@ -56,6 +56,9 @@ find %{buildroot} -name '*.a' -exec rm -rf {} ';'
 %{_datadir}/mate-panel/ui/netspeed-menu.xml
 
 %changelog
+* Wed Aug 07 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.0-alt1_2
+- new fc release
+
 * Sat Apr 06 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.0-alt1_1
 - new fc release
 

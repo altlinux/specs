@@ -5,7 +5,7 @@ BuildRequires: /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/pkg-co
 Summary: Mate user file sharing
 Name:    mate-user-share
 Version: 1.6.0
-Release: alt2_3
+Release: alt2_4
 License: GPLv2+
 Group:   System/Libraries
 URL:     http://mate-desktop.org
@@ -83,6 +83,9 @@ desktop-file-validate ${RPM_BUILD_ROOT}/%{_sysconfdir}/xdg/autostart/mate-user-s
 
 
 %changelog
+* Wed Aug 07 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.0-alt2_4
+- new fc release
+
 * Tue Jun 04 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.0-alt2_3
 - new fc release
 

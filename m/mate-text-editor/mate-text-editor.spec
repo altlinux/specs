@@ -6,7 +6,7 @@ BuildRequires: /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/glib-m
 Summary:  Text editor for the MATE desktop
 Name:     mate-text-editor
 Version:  1.6.0
-Release:  alt1_2
+Release:  alt1_3
 License:  GPLv2+
 Group:    Editors
 URL:      http://mate-desktop.org
@@ -112,6 +112,9 @@ rm -f  %{buildroot}%{_datadir}/MateConf/gsettings/pluma.convert
 
 
 %changelog
+* Wed Aug 07 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.0-alt1_3
+- new fc release
+
 * Mon Jul 22 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.0-alt1_2
 - new fc release
 

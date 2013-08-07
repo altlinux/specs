@@ -1,35 +1,34 @@
 Group: System/Servers
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/glib-genmarshal /usr/bin/glib-gettextize gcc-c++ libICE-devel libgio-devel pkgconfig(dbus-1) pkgconfig(fontconfig) pkgconfig(gio-2.0) pkgconfig(gio-unix-2.0) pkgconfig(glib-2.0) pkgconfig(gmodule-2.0) pkgconfig(gthread-2.0) pkgconfig(gtk+-2.0) pkgconfig(libcanberra-gtk) pkgconfig(libpulse) pkgconfig(libpulse-mainloop-glib) pkgconfig(nss) pkgconfig(polkit-gobject-1)
+BuildRequires: /usr/bin/glib-genmarshal /usr/bin/glib-gettextize gcc-c++ libICE-devel libgio-devel pkgconfig(dbus-1) pkgconfig(fontconfig) pkgconfig(gio-2.0) pkgconfig(gio-unix-2.0) pkgconfig(glib-2.0) pkgconfig(gmodule-2.0) pkgconfig(gthread-2.0) pkgconfig(gtk+-2.0) pkgconfig(libcanberra-gtk) pkgconfig(libpulse) pkgconfig(libpulse-mainloop-glib) pkgconfig(libxklavier) pkgconfig(nss) pkgconfig(polkit-gobject-1)
 # END SourceDeps(oneline)
 BuildRequires: libXext-devel
 %define _libexecdir %_prefix/libexec
 Name:           mate-settings-daemon
-Version:        1.6.0
-Release:        alt1_1
+Version:        1.6.1
+Release:        alt1_3
 Summary:        MATE Desktop settings daemon
 License:        GPLv2+
 URL:            http://mate-desktop.org
 Source0:        http://pub.mate-desktop.org/releases/1.6/%{name}-%{version}.tar.xz
 Requires:       mate-icon-theme
+Requires:       libmatekbd%{?_isa} >= 0:1.6.1-1
 
-BuildRequires:  libclutter-gst2.0-devel
 BuildRequires:  libdconf-devel
 BuildRequires:  libdbus-glib-devel
 BuildRequires:  gtk2-devel
-BuildRequires:  gsettings-desktop-schemas-devel
 BuildRequires:  gstreamer-devel
 BuildRequires:  gst-plugins-devel
-BuildRequires:  icon-naming-utils
+BuildRequires:  libXxf86misc-devel
 BuildRequires:  libSM-devel
 BuildRequires:  libmatekbd-devel
 BuildRequires:  libnotify-devel
-BuildRequires:  libxklavier-devel
 BuildRequires:  mate-common
 BuildRequires:  mate-doc-utils
 BuildRequires:  mate-desktop-devel
 BuildRequires:  mate-polkit-devel
 BuildRequires:  nss-devel
+BuildRequires:  desktop-file-utils
 Source44: import.info
 Requires: dconf
 
@@ -50,8 +49,6 @@ under it.
 
 %prep
 %setup -q
-NOCONFIGURE=1 ./autogen.sh
-
 
 %build
 %configure                             \
@@ -71,6 +68,11 @@ make DESTDIR=%{buildroot} install
 find %{buildroot} -name '*.la' -exec rm -rf {} ';'
 find %{buildroot} -name '*.a' -exec rm -rf {} ';'
 
+# remove needless gsettings convert file to avoid slow session start
+rm -f %{buildroot}%{_datadir}/MateConf/gsettings/mate-settings-daemon.convert
+
+desktop-file-validate %{buildroot}%{_sysconfdir}/xdg/autostart/mate-settings-daemon.desktop
+
 %find_lang %{name}
 
 
@@ -88,13 +90,15 @@ find %{buildroot} -name '*.a' -exec rm -rf {} ';'
 %{_datadir}/mate-settings-daemon
 %{_datadir}/glib-2.0/schemas/org.mate.*.xml
 %{_datadir}/polkit-1/actions/org.mate.settingsdaemon.datetimemechanism.policy
-%{_datadir}/MateConf/gsettings/mate-settings-daemon.convert
 
 %files devel
 %{_includedir}/mate-settings-daemon
 %{_libdir}/pkgconfig/mate-settings-daemon.pc
 
 %changelog
+* Wed Aug 07 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.1-alt1_3
+- new fc release
+
 * Sat Apr 06 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.0-alt1_1
 - new fc release
 

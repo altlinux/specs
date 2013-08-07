@@ -2,7 +2,7 @@
 
 Name: mate
 Version: %ver_major.0
-Release: alt2
+Release: alt3
 
 Summary: MATE Desktop installers
 License: %gpl2plus
@@ -141,6 +141,12 @@ Requires: mate-applets
 
 # Utilities
 Requires: mate-utils >= %ver_major
+Requires: mate-system-log >= %ver_major
+Requires: mate-screenshot >= %ver_major
+Requires: mate-dictionary >= %ver_major
+Requires: mate-search-tool >= %ver_major
+Requires: mate-disk-usage-analyzer >= %ver_major
+
 #Requires: mate-conf-editor
 Requires: dconf-editor >= 0.10
 
@@ -378,6 +384,10 @@ itself).
 #%files a11y
 
 %changelog
+* Wed Aug 07 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.0-alt3
+- added new subpackages of mate-utils: mate-system-log mate-screenshot
+  mate-dictionary mate-search-tool mate-disk-usage-analyzer
+
 * Fri Apr 12 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1.6.0-alt2
 - gst-plugins-good added to mate-default
 

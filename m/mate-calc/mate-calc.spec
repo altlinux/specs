@@ -5,7 +5,7 @@ BuildRequires: libgio-devel pkgconfig(gio-2.0) pkgconfig(glib-2.0) pkgconfig(gmo
 %define _libexecdir %_prefix/libexec
 Name:		mate-calc
 Version:	1.6.0
-Release:	alt1_1
+Release:	alt1_2
 Summary:	MATE Desktop calculator
 License:	GPLv2+
 URL:		http://mate-desktop.org
@@ -57,6 +57,9 @@ desktop-file-install									\
 %{_datadir}/mate-calc
 
 %changelog
+* Wed Aug 07 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.0-alt1_2
+- new fc release
+
 * Sat Apr 06 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.0-alt1_1
 - new fc release
 

@@ -5,17 +5,17 @@ BuildRequires: /usr/bin/gdk-pixbuf-csource /usr/bin/glib-gettextize /usr/bin/mat
 BuildRequires: libcanberra-gtk2-devel
 %define _libexecdir %_prefix/libexec
 Name:           mate-window-manager
-Version:        1.6.1
-Release:        alt1_1
+Version:        1.6.2
+Release:        alt1_4
 Summary:        MATE Desktop window manager
 License:        LGPLv2+ and GPLv2+
 URL:            http://mate-desktop.org
 Source0:        http://pub.mate-desktop.org/releases/1.6/%{name}-%{version}.tar.xz
 
 BuildRequires: desktop-file-utils
-BuildRequires: gsettings-desktop-schemas-devel
 BuildRequires: gtk2-devel
 BuildRequires: libcanberra-devel
+BuildRequires: libgtop2-devel
 BuildRequires: libSM-devel
 BuildRequireS: libsoup-devel
 BuildRequires: libXdamage-devel
@@ -27,7 +27,8 @@ BuildRequires: librarian-devel
 BuildRequires: libstartup-notification-devel
 
 # http://bugzilla.redhat.com/873342
-Provides: firstboot(windowmanager) = mate-window-manager
+# https://bugzilla.redhat.com/962009
+Provides: firstboot(windowmanager) = marco
 Source44: import.info
 # http://bugzilla.gnome.org/show_bug.cgi?id=558723
 Patch33: stop-spamming-xsession-errors.patch
@@ -67,9 +68,9 @@ Internal library for MATE Window Manager.
 %patch35 -p1
 %patch36 -p1
 %patch37 -p1
-NOCONFIGURE=1 ./autogen.sh
 
 %build
+%autoreconf -fisv
 %configure --disable-static           \
            --disable-scrollkeeper     \
            --disable-schemas-compile  \
@@ -89,6 +90,9 @@ desktop-file-install                                \
         --dir=%{buildroot}%{_datadir}/applications  \
 %{buildroot}%{_datadir}/applications/marco.desktop
 
+# remove needless gsettings convert file to avoid slow session start
+rm -f  %{buildroot}%{_datadir}/MateConf/gsettings/marco.convert
+
 %find_lang marco
 
 
@@ -107,12 +111,11 @@ desktop-file-install                                \
 %{_datadir}/themes/Splint
 %{_datadir}/themes/WinMe
 %{_datadir}/themes/eOS
-%{_datadir}/marco
+%{_datadir}/mate-window-manager
 %{_datadir}/mate-control-center/keybindings/50-marco*.xml
 %{_datadir}/mate/help/creating-marco-themes/C/creating-marco-themes.xml
 %{_datadir}/mate/wm-properties
 %{_datadir}/glib-2.0/schemas/org.mate.marco.gschema.xml
-%{_datadir}/MateConf/gsettings/marco.convert
 %{_libdir}/libmarco-private.so.0*
 %{_mandir}/man1/*
 # moved to lib
@@ -133,6 +136,9 @@ desktop-file-install                                \
 
 
 %changelog
+* Wed Aug 07 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.2-alt1_4
+- new fc release
+
 * Thu Apr 11 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.1-alt1_1
 - new fc release
 

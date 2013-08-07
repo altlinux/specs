@@ -5,7 +5,7 @@ BuildRequires: /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/gtkdoc
 Name:       mate-file-manager
 Summary:    File manager for MATE
 Version:    1.6.2
-Release:    alt1_1
+Release:    alt1_2
 License:    GPLv2+ and LGPLv2+
 Group:      Graphical desktop/Other
 URL:        http://mate-desktop.org
@@ -46,7 +46,6 @@ Source44: import.info
 Patch33: mate-file-manager-1.2.2-alt-fix-linkage.patch
 Patch34: nautilus-2.22.1-umountfstab.patch
 Patch35: mate-file-manager-1.5.5-alt-desktop-labels-po-ru.patch
-Patch36: 0001-Fix-radio-buttons-and-GSettings-in-preferences-windo.patch
 
 %description
 Caja (mate-file-manager) is the file manager and graphical shell
@@ -78,6 +77,8 @@ for developing caja extensions.
 %prep
 %setup -q
 %patch0 -p1 -b .privat-icons-dir
+%patch33 -p1
+%patch35 -p1
 autoreconf -i -f
 %patch34 -p1
 
@@ -152,6 +153,9 @@ rm -f  %{buildroot}%{_datadir}/MateConf/gsettings/caja.convert
 
 
 %changelog
+* Wed Aug 07 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.2-alt1_2
+- new fc release
+
 * Mon Jul 22 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.2-alt1_1
 - new fc release
 
