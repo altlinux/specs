@@ -14,7 +14,7 @@
 %define _enable_test 1
 
 Name: perl-Algorithm-CheckDigits
-Version: 1.2.0
+Version: 1.3.0
 Release: alt1
 
 Summary: Perl extension to generate and test check digits
@@ -64,6 +64,9 @@ or
 %perl_vendor_privlib/Algorithm*
 
 %changelog
+* Wed Aug 07 2013 Igor Vlasenko <viy@altlinux.ru> 1.3.0-alt1
+- automated CPAN update
+
 * Wed Oct 17 2012 Igor Vlasenko <viy@altlinux.ru> 1.2.0-alt1
 - automated CPAN update
 
