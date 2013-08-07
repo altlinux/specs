@@ -6,7 +6,7 @@ BuildRequires: /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/update
 %define _libexecdir %_prefix/libexec
 Name:           mate-control-center
 Version:        1.6.1
-Release:        alt1_1
+Release:        alt1_2
 Summary:        MATE Desktop control-center
 License:        LGPLv2+ and GPLv2+
 URL:            http://mate-desktop.org
@@ -30,6 +30,8 @@ BuildRequires: mate-window-manager-devel
 BuildRequires: libunique-devel
 
 Requires: gsettings-desktop-schemas
+Requires: icon-theme-hicolor
+Provides: %{name}-filesystem%{?_isa} = %{version}-%{release}
 
 
 Source44: import.info
@@ -40,6 +42,17 @@ Patch34: gnome-control-center-2.28.0-passwd.patch
 %description 
 MATE Control Center configures system settings such as themes, keyboards shortcuts, etc.
 
+%package filesystem
+Group: Graphical desktop/Other
+Summary: MATE Control Center directories
+# NOTE: this is an "inverse dep" subpackage. It gets pulled in
+# NOTE: by the main package an MUST not depend on the main package
+
+%description filesystem
+The MATE control-center provides a number of extension points
+for applications. This package contains directories where applications
+can install configuration files that are picked up by the control-center
+utilities.
 
 %package devel
 Group: Development/C
@@ -120,7 +133,7 @@ rm -f  %{buildroot}%{_datadir}/MateConf/gsettings/mate-control-center.convert
 %{_datadir}/icons/hicolor/*/apps/*.png
 %{_datadir}/icons/hicolor/scalable/apps/mate-*.svg
 %{_datadir}/glib-2.0/schemas/org.mate.*.xml
-%{_datadir}/mate-control-center
+%{_datadir}/mate-control-center/*
 %{_datadir}/mate/cursor-fonts/*.pcf
 %{_datadir}/mate/help/mate-control-center
 %{_datadir}/mime/packages/mate-theme-package.xml
@@ -130,6 +143,9 @@ rm -f  %{buildroot}%{_datadir}/MateConf/gsettings/mate-control-center.convert
 %{_mandir}/man1/mate-about-me.1*
 %{_mandir}/man1/mate-appearance-properties.1*
 %{_mandir}/man1/mate-default-applications-properties.1*
+# %%files filesystem
+%dir %{_datadir}/mate-control-center
+%dir %{_datadir}/mate-control-center/keybindings
 
 %files -n libslab
 %{_libdir}/libslab.so.*
@@ -148,6 +164,9 @@ rm -f  %{buildroot}%{_datadir}/MateConf/gsettings/mate-control-center.convert
 
 
 %changelog
+* Wed Aug 07 2013 Igor Vlasenko <viy@altlinux.ru> 1:1.6.1-alt1_2
+- new fc release
+
 * Thu Aug 01 2013 Igor Vlasenko <viy@altlinux.ru> 1:1.6.1-alt1_1
 - new fc release
 
