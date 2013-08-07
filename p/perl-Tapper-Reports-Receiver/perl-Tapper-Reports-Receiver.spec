@@ -2,19 +2,19 @@
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-devel perl-podlators
 # END SourceDeps(oneline)
-BuildRequires: perl(DBIx/Class/InflateColumn/Object/Enum.pm) perl(Hash/Merge/Simple.pm) perl(DBIx/Class/TimeStamp.pm) perl(DBD/SQLite.pm)
+BuildRequires: perl(DBIx/Class/InflateColumn/Object/Enum.pm) perl(Hash/Merge/Simple.pm) perl(DBIx/Class/TimeStamp.pm) perl(DBD/SQLite.pm) perl(DateTime/Format/SQLite.pm)
 %define upstream_name    Tapper-Reports-Receiver
 %define upstream_version 4.1.3
 
 Name:       perl-%{upstream_name}
-Version:    4.1.3
-Release:    alt1
+Version:    %{upstream_version}
+Release:    alt1_1
 
 Summary:    Receive test reports
 License:    GPL+ or Artistic
 Group:      Development/Perl
 Url:        http://search.cpan.org/dist/%{upstream_name}
-Source:    http://www.cpan.org/authors/id/T/TA/TAPPER/Tapper-Reports-Receiver-%{version}.tar.gz
+Source0:    http://www.cpan.org/modules/by-module/Tapper/%{upstream_name}-%{upstream_version}.tar.gz
 
 BuildRequires: perl(AnyEvent.pm)
 BuildRequires: perl(AnyEvent/Handle.pm)
@@ -24,8 +24,8 @@ BuildRequires: perl(Data/DPath.pm)
 BuildRequires: perl(Data/Dumper.pm)
 BuildRequires: perl(DateTime/Format/Mail.pm)
 BuildRequires: perl(DateTime/Format/Natural.pm)
-BuildRequires: perl(DateTime/Format/SQLite.pm)
 BuildRequires: perl(Devel/Backtrace.pm)
+BuildRequires: perl(ExtUtils/MakeMaker.pm)
 BuildRequires: perl(File/MimeInfo/Magic.pm)
 BuildRequires: perl(File/Slurp.pm)
 BuildRequires: perl(HTTP/Daemon.pm)
@@ -55,7 +55,7 @@ BuildRequires: perl(Try/Tiny.pm)
 BuildRequires: perl(YAML/Syck.pm)
 BuildRequires: perl(strict.pm)
 BuildRequires: perl(warnings.pm)
-BuildArch: noarch
+BuildArch:  noarch
 Source44: import.info
 
 %description
@@ -65,27 +65,28 @@ Tapper Distribution for Recevining Test Reports.
 %setup -q -n %{upstream_name}-%{upstream_version}
 
 %build
-%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
+%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
 
 %make
 
 %check
-#make test
+%make test
 
 %install
 %makeinstall_std
 
 %files
-%doc META.json META.yml Changes LICENSE README SPEC
+%doc Changes LICENSE META.json META.yml  README SPEC
 %perl_vendor_privlib/*
 /usr/bin/tapper-reports-receiver
 /usr/bin/tapper-reports-receiver-daemon
-/usr/share/man/man1/tapper-reports-receiver-daemon.1.*
-/usr/share/man/man1/tapper-reports-receiver.1.*
-
-
+/usr/share/man/man1/tapper-reports-receiver-daemon.1*
+/usr/share/man/man1/tapper-reports-receiver.1*
 
 %changelog
+* Wed Aug 07 2013 Igor Vlasenko <viy@altlinux.ru> 4.1.3-alt1_1
+- update by mgaimport
+
 * Sat Jul 27 2013 Igor Vlasenko <viy@altlinux.ru> 4.1.3-alt1
 - automated CPAN update
 
