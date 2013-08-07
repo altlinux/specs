@@ -1,8 +1,8 @@
 %define origname mysql++
 
 Name: lib%origname
-Version: 3.1.0
-Release: alt3
+Version: 3.2.0
+Release: alt1
 
 Summary: C++ API for MySQL
 License: LGPL
@@ -122,6 +122,9 @@ export LDFLAGS="$LDFLAGS -Wl,--no-as-needed"
 # TODO: have a closer look at fedora spec
 
 %changelog
+* Wed Aug 07 2013 Michael Shigorin <mike@altlinux.org> 3.2.0-alt1
+- new version (watch file uupdate)
+
 * Sun Apr 07 2013 Michael Shigorin <mike@altlinux.org> 3.1.0-alt3
 - rebuilt against libmysqlclient18
 
