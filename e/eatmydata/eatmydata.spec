@@ -1,14 +1,17 @@
+%define oname libeatmydata
+
 Summary: A small wrapper to disable fsync and related functions
-Name: libeatmydata
-Version: 28
-Release: alt2
+Name: eatmydata
+Version: 82
+Release: alt1
 Group: File tools
 License: GPLv3
 Url: https://launchpad.net/libeatmydata
-Source: https://launchpad.net/libeatmydata/trunk/release-28/+download/libeatmydata-28.tar.gz
-Source1: eatmydata
-Source2: eatmydata.sh.in
+Source: https://launchpad.net/libeatmydata/trunk/release-%version/+download/libeatmydata-%version.tar.gz
+
 Source3: eatmydata.1
+
+Patch0: libeatmydata-82-alt-fix-packaging.patch
 
 # Automatically added by buildreq on Fri May 25 2012
 # optimized out: python-base python-modules
@@ -17,6 +20,9 @@ BuildRequires: python-modules-compiler python-modules-email
 # buildreq works only on %%build stage
 BuildRequires: strace
 
+Provides: %oname = %version-%release
+Obsoletes: %oname < %version-%release
+
 %description
 EatMyData is LD_PRELOAD library that disables all forms of writing data
 safely to disk. fsync() becomes a NO-OP, O_SYNC is removed etc. The idea
@@ -24,36 +30,36 @@ is to use in testing to get faster test runs where real durability is
 not required.
 
 %prep
-%setup
+%setup -n %oname-%version
+%patch0 -p2
 
 %build
 %autoreconf
 %configure
 %make
 
-sed -e 's,@LIBDIR@,%{_libdir},g' < %SOURCE2 > eatmydata.sh
-
 %install
 make install DESTDIR=%buildroot
 
-mkdir -p %buildroot{%_bindir,%_datadir/%name,%_man1dir}
+mkdir -p %buildroot%_man1dir
 
-cp %SOURCE1 %buildroot%_bindir/
-cp eatmydata.sh %buildroot%_datadir/%name/
 cp %SOURCE3 %buildroot%_man1dir/
 
 %check
 make check
 
 %files
-%doc AUTHORS README COPYING
+%doc AUTHORS README COPYING ChangeLog
 %_bindir/eatmydata
-%dir %_datadir/%name
-%_datadir/%name/eatmydata.sh
+%dir %_datadir/%oname
+%_datadir/%oname/eatmydata.sh
 %_man1dir/eatmydata.1*
 %_libdir/*.so*
 
 %changelog
+* Wed Jul 31 2013 Gleb F-Malinovskiy <glebfm@altlinux.org> 82-alt1
+- new version (ALT#29248)
+
 * Fri May 25 2012 Gleb F-Malinovskiy <glebfm@altlinux.org> 28-alt2
 - move library to %%_libdir
 - fix debian script
