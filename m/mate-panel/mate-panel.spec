@@ -4,14 +4,18 @@ BuildRequires: /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/gtkdoc
 # END SourceDeps(oneline)
 %define _libexecdir %_prefix/libexec
 Name:           mate-panel
-Version:        1.6.0
+Version:        1.6.1
 Release:        alt1_2
 Summary:        MATE Desktop panel applets
 #libs are LGPLv2+ applications GPLv2+
 License:        GPLv2+
 URL:            http://mate-desktop.org
-Source0:        http://pub.mate-desktop.org/releases/1.5/%{name}-%{version}.tar.xz
+Source0:        http://pub.mate-desktop.org/releases/1.6/%{name}-%{version}.tar.xz
 Source1:        panel-default-layout.dist
+
+# upstream patch
+# http://git.mate-desktop.org/mate-panel/commit/?h=issue-111
+Patch0:         mate-panel_reset_fix.patch
 
 Requires:       %{name}-libs%{?_isa} = %{version}-%{release}
 # needed as nothing else requires it
@@ -24,7 +28,6 @@ BuildRequires:  libdbus-glib-devel
 BuildRequires:  libdconf-devel
 BuildRequires:  desktop-file-utils
 BuildRequires:  gobject-introspection-devel
-BuildRequires:  gsettings-desktop-schemas-devel
 BuildRequires:  gtk2-devel
 BuildRequires:  icon-naming-utils
 BuildRequires:  libcanberra-devel
@@ -68,10 +71,12 @@ Development files for mate-panel
 
 %prep
 %setup -q
+%patch0 -p1 -b .reset
 
 
 %build
-NOCONFIGURE=1 ./autogen.sh
+autoreconf -fisv
+
 #libexecdir needed for gnome conflicts
 %configure --disable-scrollkeeper                 \
            --disable-static                       \
@@ -95,8 +100,10 @@ desktop-file-install \
 
 install -D -m 0644 %SOURCE1 $RPM_BUILD_ROOT%{_datadir}/mate-panel/panel-default-layout.dist
 
+# remove needless gsettings convert file to avoid slow session start
+rm -f  %{buildroot}%{_datadir}/MateConf/gsettings/mate-panel.convert
+
 %find_lang %{name}
-rm %{buildroot}%{_libexecdir}/mate-panel/mate-panel-add
 
 
 %files -f %{name}.lang
@@ -115,8 +122,6 @@ rm %{buildroot}%{_libexecdir}/mate-panel/mate-panel-add
 %{_datadir}/mate/help/mate-applet-clock/
 %{_datadir}/mate/help/mate-applet-fish/
 %{_datadir}/mate-panel/
-%{_datadir}/mate-panelrc
-%{_datadir}/MateConf/gsettings/mate-panel.convert
 %{_datadir}/dbus-1/services/org.mate.panel.applet.ClockAppletFactory.service
 %{_datadir}/dbus-1/services/org.mate.panel.applet.FishAppletFactory.service
 %{_datadir}/dbus-1/services/org.mate.panel.applet.NotificationAreaAppletFactory.service
@@ -135,6 +140,9 @@ rm %{buildroot}%{_libexecdir}/mate-panel/mate-panel-add
 
 
 %changelog
+* Thu Aug 01 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.1-alt1_2
+- new fc release
+
 * Tue Jun 04 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.0-alt1_2
 - new fc release
 

@@ -5,17 +5,15 @@ BuildRequires: /usr/bin/glib-gettextize /usr/bin/gtkdocize libgio-devel pkgconfi
 %define _libexecdir %_prefix/libexec
 Name:           mate-file-manager-sendto
 Version:        1.6.0
-Release:        alt1_1
+Release:        alt1_2
 Summary:        MATE file manager send to
 License:        GPLv2+
 URL:            http://www.mate-desktop.org
-Source0:        http://pub.mate-desktop.org/releases/1.5/%{name}-%{version}.tar.xz
+Source0:        http://pub.mate-desktop.org/releases/1.6/%{name}-%{version}.tar.xz
 
 BuildRequires:  mate-common
 BuildRequires:  mate-doc-utils
-BuildRequires:  mate-panel-devel
 BuildRequires:  mate-file-manager-devel
-BuildRequires:  mate-file-manager-extensions
 BuildRequires:  libgupnp-devel
 BuildRequires:  pidgin-devel
 BuildRequires:  gajim
@@ -47,19 +45,21 @@ make %{?_smp_mflags} V=1
 
 %install
 make DESTDIR=%{buildroot} install
-%find_lang %{name} --all-name
+
 find %{buildroot} -name '*.la' -exec rm -rf {} ';'
 find %{buildroot} -name '*.a' -exec rm -rf {} ';'
 
+# remove needless gsettings convert file
+rm -f  %{buildroot}%{_datadir}/MateConf/gsettings/caja-sendto-convert
 
-%files -f %{name}.lang
+%find_lang caja-sendto
+
+
+%files -f caja-sendto.lang
 %doc AUTHORS COPYING README
-%{_mandir}/man1/caja-sendto.1*
 %{_bindir}/caja-sendto
-%{_datadir}/MateConf/gsettings/caja-sendto-convert
-%{_datadir}/caja-sendto/ui/caja-sendto.ui
-%{_datadir}/glib-2.0/schemas/org.mate.Caja.Sendto.gschema.xml
-%{_datadir}/gtk-doc/html/caja-sendto
+%dir %{_libdir}/caja-sendto
+%dir %{_libdir}/caja-sendto/plugins
 %{_libdir}/caja-sendto/plugins/libnstburn.so
 %{_libdir}/caja-sendto/plugins/libnstemailclient.so
 %{_libdir}/caja-sendto/plugins/libnstgajim.so
@@ -67,12 +67,20 @@ find %{buildroot} -name '*.a' -exec rm -rf {} ';'
 %{_libdir}/caja-sendto/plugins/libnstremovable_devices.so
 %{_libdir}/caja-sendto/plugins/libnstupnp.so
 %{_libdir}/caja/extensions-2.0/libcaja-sendto.so
+%{_datadir}/caja-sendto/ui/caja-sendto.ui
+%{_datadir}/glib-2.0/schemas/org.mate.Caja.Sendto.gschema.xml
+%{_datadir}/gtk-doc/html/caja-sendto
+%{_mandir}/man1/caja-sendto.1.*
 
 %files devel
+%dir %{_includedir}/caja-sendto
 %{_includedir}/caja-sendto/caja-sendto-plugin.h
 %{_libdir}/pkgconfig/caja-sendto.pc
 
 %changelog
+* Thu Aug 01 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.0-alt1_2
+- new fc release
+
 * Mon Apr 15 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.0-alt1_1
 - new fc release
 

@@ -4,10 +4,9 @@ Group: Graphical desktop/Other
 BuildRequires: /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/update-mime-database libICE-devel libX11-devel libgio-devel pkgconfig(dbus-1) pkgconfig(dbus-glib-1) pkgconfig(gio-2.0) pkgconfig(gio-unix-2.0) pkgconfig(glib-2.0) pkgconfig(gmodule-2.0) pkgconfig(gthread-2.0) pkgconfig(gtk+-2.0) pkgconfig(libcanberra-gtk) pkgconfig(libxklavier) pkgconfig(libxml-2.0) pkgconfig(pango) pkgconfig(xcursor) pkgconfig(xft) pkgconfig(xi) xorg-kbproto-devel
 # END SourceDeps(oneline)
 %define _libexecdir %_prefix/libexec
-%define fedora 19
 Name:           mate-control-center
-Version:        1.6.0
-Release:        alt1_2
+Version:        1.6.1
+Release:        alt1_1
 Summary:        MATE Desktop control-center
 License:        LGPLv2+ and GPLv2+
 URL:            http://mate-desktop.org
@@ -33,14 +32,6 @@ BuildRequires: libunique-devel
 Requires: gsettings-desktop-schemas
 
 
-
-# sample code block for handling distributions which cant provide
-# pkgconfig() capabilities - according to Dan: %%{?fedora} < 17
-%if 0%{?fedora} < 17
-# BuildRequires: foobar-devel
-%else
-# BuildRequires: pkgconfig(foobar)
-%endif
 Source44: import.info
 Patch33: gnome-control-center-2.22.1-alt-background-location.patch
 Patch34: gnome-control-center-2.28.0-passwd.patch
@@ -85,7 +76,7 @@ MATE Control Center configures system settings such as themes, keyboards shortcu
 %patch34 -p1
 
 %build
-NOCONFIGURE=1 ./autogen.sh
+autoreconf -fisv
 %configure --disable-static          \
            --disable-schemas-compile \
            --disable-update-mimedb   \
@@ -136,6 +127,9 @@ rm -f  %{buildroot}%{_datadir}/MateConf/gsettings/mate-control-center.convert
 %{_datadir}/thumbnailers/mate-font-viewer.thumbnailer
 %{_datadir}/omf/mate-control-center
 %{_datadir}/polkit-1/actions/org.mate.randr.policy
+%{_mandir}/man1/mate-about-me.1*
+%{_mandir}/man1/mate-appearance-properties.1*
+%{_mandir}/man1/mate-default-applications-properties.1*
 
 %files -n libslab
 %{_libdir}/libslab.so.*
@@ -144,8 +138,8 @@ rm -f  %{buildroot}%{_datadir}/MateConf/gsettings/mate-control-center.convert
 %{_includedir}/mate-window-settings-2.0
 %{_libdir}/pkgconfig/mate-window-settings-2.0.pc
 %{_libdir}/libmate-window-settings.so
-%{_datadir}/pkgconfig/mate-default-applications.pc
-%{_datadir}/pkgconfig/mate-keybindings.pc
+%{_libdir}/pkgconfig/mate-default-applications.pc
+%{_libdir}/pkgconfig/mate-keybindings.pc
 
 %files -n libslab-devel
 %{_includedir}/libslab
@@ -154,6 +148,9 @@ rm -f  %{buildroot}%{_datadir}/MateConf/gsettings/mate-control-center.convert
 
 
 %changelog
+* Thu Aug 01 2013 Igor Vlasenko <viy@altlinux.ru> 1:1.6.1-alt1_1
+- new fc release
+
 * Mon Jul 22 2013 Igor Vlasenko <viy@altlinux.ru> 1:1.6.0-alt1_2
 - new fc release
 

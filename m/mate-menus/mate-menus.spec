@@ -7,15 +7,22 @@ Requires: altlinux-freedesktop-menu-mate
 %define _libexecdir %_prefix/libexec
 Name:           mate-menus
 Version:        1.6.0
-Release:        alt1_1
+Release:        alt1_4
 Summary:        Displays menus for MATE Desktop
 License:        GPLv2+ and LGPLv2+
 URL:            http://mate-desktop.org
 Source0:        http://pub.mate-desktop.org/releases/1.6/%{name}-%{version}.tar.xz
+Source1: 		mate-preferences-categories.menu
+
+# patch in upstream
+# https://github.com/mate-desktop/mate-menus/commit/e5734e2b6017c36fca8ab2403ed6cabfa7ef0d23
+Patch0:         mate-menus_preferences-menu.patch
 
 BuildRequires:  gobject-introspection-devel
 BuildRequires:  mate-common
 BuildRequires:  python-devel
+
+Requires:		libmate-menus = %{version}-%{release}
 
 # we don't want to provide private python extension libs
 %{echo 
@@ -38,6 +45,14 @@ Requires:	%{name}%{?_isa} = %{version}-%{release}
 %description -n libmate-menus
 Shared libraries for mate-menus
 
+%package preferences-category-menu
+Group: System/Libraries
+Summary: Categories for the preferences menu
+Requires:	libmate-menus = %{version}-%{release}
+
+%description preferences-category-menu
+Categories for the preferences menu
+
 %package devel
 Group: Development/C
 Summary: Development files for mate-menus
@@ -48,6 +63,12 @@ Development files for mate-menus
 
 %prep
 %setup -q
+%patch0 -p1 -b .preferences
+
+# fedora specific
+# fix for usage of multimedia-menus package
+sed -i -e '/<!-- End Other -->/ a\  <MergeFile>applications-merged/multimedia-categories.menu</MergeFile>' layout/mate-applications.menu
+
 NOCONFIGURE=1 ./autogen.sh
 %patch33 -p0
 %patch34 -p1
@@ -64,14 +85,15 @@ make %{?_smp_mflags} V=1
 
 %install
 make install DESTDIR=%{buildroot}
+install -p -m 0644 %{SOURCE1} %{buildroot}%{_sysconfdir}/xdg/menus
 find %{buildroot} -name '*.la' -exec rm -f {} ';'
 find %{buildroot} -name '*.a' -exec rm -f {} ';'
 %find_lang %{name}
 
 %files -f %{name}.lang
 %doc AUTHORS COPYING README
-#%{_sysconfdir}/xdg/menus/mate-applications.menu
-#%{_sysconfdir}/xdg/menus/mate-settings.menu
+#%config %{_sysconfdir}/xdg/menus/mate-applications.menu
+#%config %{_sysconfdir}/xdg/menus/mate-settings.menu
 %{_datadir}/mate-menus
 %{_datadir}/mate/desktop-directories
 
@@ -89,6 +111,9 @@ find %{buildroot} -name '*.a' -exec rm -f {} ';'
 
 
 %changelog
+* Thu Aug 01 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.0-alt1_4
+- new fc release
+
 * Sat Apr 06 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.0-alt1_1
 - new fc release
 

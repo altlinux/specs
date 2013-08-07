@@ -4,10 +4,9 @@ BuildRequires: /usr/bin/dbus-binding-tool /usr/bin/glib-genmarshal /usr/bin/glib
 # END SourceDeps(oneline)
 %define _libexecdir %_prefix/libexec
 Name:          mate-image-viewer
-Version:       1.6.0
+Version:       1.6.1
 Release:       alt1_1
 Summary:       Eye of MATE image viewer
-
 License:       GPLv2+ and LGPLv2+ 
 URL:           http://mate-desktop.org
 Source0:       http://pub.mate-desktop.org/releases/1.6/%{name}-%{version}.tar.xz
@@ -57,17 +56,13 @@ functionality to eog.
 
 %prep
 %setup -q
-#%patch0 -p1
-NOCONFIGURE=1 ./autogen.sh
-
 
 %build
 %configure \
    --disable-scrollkeeper \
-   --disable-schemas-install 
+   --disable-schemas-compile
            
-make V=1 %{?_smp_mflags}
-
+make %{?_smp_mflags} V=1
 
 %install
 make install DESTDIR=$RPM_BUILD_ROOT
@@ -99,22 +94,31 @@ for f in $helpdir/C/figures/*.png; do
 done
 
 
+%post
+/bin/touch --no-create %{_datadir}/mate-image-viewer/icons/hicolor >&/dev/null || :
+
 %files -f eom.lang
 %doc AUTHORS COPYING NEWS README
+%{_mandir}/man1/*
 %{_bindir}/eom
 %{_libdir}/eom/plugins
 %{_datadir}/applications/eom.desktop
-%{_datadir}/eom
+#%{_datadir}/eom
 %{_datadir}/mate/help/eom
 %{_datadir}/icons/hicolor/*/apps/eom.*
 %{_datadir}/glib-2.0/schemas/org.mate.eom.gschema.xml
 %{_datadir}/MateConf/gsettings/eom.convert
+%{_datadir}/gtk-doc/html/eom
+%{_datadir}/mate-image-viewer
 
 %files devel
 %{_libdir}/pkgconfig/eom.pc
 %{_includedir}/eom-2.20
 
 %changelog
+* Thu Aug 01 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.1-alt1_1
+- new fc release
+
 * Sat Apr 06 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.0-alt1_1
 - new fc release
 

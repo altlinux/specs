@@ -1,12 +1,12 @@
 Group: System/Libraries
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/glib-gettextize /usr/bin/gtkdocize libgio-devel pkgconfig(gdk-pixbuf-2.0) pkgconfig(gio-2.0) pkgconfig(glib-2.0) pkgconfig(gtk+-2.0) pkgconfig(gtk+-3.0) pkgconfig(unique-3.0) pkgconfig(x11) pkgconfig(xrandr)
+BuildRequires: /usr/bin/glib-gettextize /usr/bin/gtkdocize libgio-devel pkgconfig(gdk-pixbuf-2.0) pkgconfig(gio-2.0) pkgconfig(glib-2.0) pkgconfig(gtk+-2.0) pkgconfig(unique-3.0) pkgconfig(x11) pkgconfig(xrandr)
 # END SourceDeps(oneline)
 %define _libexecdir %_prefix/libexec
 Summary:        Shared code for mate-panel, mate-session, mate-file-manager, etc
 Name:           mate-desktop
 Version:        1.6.1
-Release:        alt1_6
+Release:        alt1_10
 URL:            http://mate-desktop.org
 Source0:        http://pub.mate-desktop.org/releases/1.6/%{name}-%{version}.tar.xz
 # fix fedora backgrounds and
@@ -23,6 +23,7 @@ License:        GPLv2+ and LGPLv2+ and MIT
 BuildRequires:  desktop-file-utils
 BuildRequires:  gsettings-desktop-schemas-devel
 BuildRequires:  gtk2-devel
+BuildRequires:  libgtk+3-devel
 BuildRequires:  gtk-doc
 BuildRequires:  mate-common
 BuildRequires:  mate-doc-utils
@@ -45,8 +46,10 @@ Obsoletes: mate-conf-devel
 Obsoletes: mate-conf-editor
 Obsoletes: mate-conf-gtk
 Obsoletes: mate-mime-data
+Obsoletes: mate-mime-data-devel
 Obsoletes: mate-vfs
-Obsoletes: libmatenotify
+Obsoletes: mate-vfs-devel
+Obsoletes: mate-vfs-smb
 Requires: libnotify
 Requires: mate-panel
 Source44: import.info
@@ -82,6 +85,8 @@ libmatedesktop.
 %patch0 -p1 -b .guncat
 cp %SOURCE2 mate-about/gnu-cat.gif
 cp %SOURCE3 mate-about/gnu-cat_navideno_v3.png
+%patch33 -p1
+%patch34 -p1
 autoreconf -i -f
 
 %build
@@ -92,7 +97,6 @@ autoreconf -i -f
      --with-x                                              \
      --disable-static                                      \
      --enable-unique                                       \
-     --enable-gtk-doc                                      \
      --with-pnp-ids-path="%{_datadir}/hwdatabase/pnp.ids"      \
      --with-omf-dir=%{_datadir}/omf/mate-desktop           \
      --enable-gnucat
@@ -111,9 +115,10 @@ desktop-file-install                                         \
         --dir=%{buildroot}%{_datadir}/applications           \
 %{buildroot}%{_datadir}/applications/mate-about.desktop
 
-#install -D -m 0644 %SOURCE1 %{buildroot}%{_sysconfdir}/xdg/autostart/user-dirs-update-mate.desktop
+install -D -m 0644 %SOURCE1 %{buildroot}%{_datadir}/glib-2.0/schemas/mate-fedora.gschema.override
 
-install -D -m 0644 %SOURCE1 $RPM_BUILD_ROOT%{_datadir}/glib-2.0/schemas/mate-fedora.gschema.override
+# remove needless gsettings convert file to avoid slow session start
+rm -f  %{buildroot}%{_datadir}/MateConf/gsettings/mate-desktop.convert
 
 %find_lang %{name}
 
@@ -123,7 +128,6 @@ mkdir -p %buildroot%{_datadir}/mate-about
 %files -f %{name}.lang
 %doc AUTHORS COPYING COPYING.LIB NEWS README
 %{_bindir}/mate-about
-#%{_sysconfdir}/xdg/autostart/user-dirs-update-mate.desktop
 %{_datadir}/applications/mate-about.desktop
 %{_datadir}/mate
 %{_datadir}/omf/mate-desktop
@@ -131,7 +135,6 @@ mkdir -p %buildroot%{_datadir}/mate-about
 %{_datadir}/glib-2.0/schemas/org.mate.*.gschema.xml
 %{_datadir}/glib-2.0/schemas/mate-fedora.gschema.override
 %{_mandir}/man1/*
-%{_datadir}/MateConf/gsettings
 %doc %{_datadir}/gtk-doc/html/mate-desktop
 %{_datadir}/pixmaps/gnu-cat.gif
 %{_datadir}/pixmaps/gnu-cat_navideno_v3.png
@@ -146,6 +149,9 @@ mkdir -p %buildroot%{_datadir}/mate-about
 
 
 %changelog
+* Thu Aug 01 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.1-alt1_10
+- new fc release
+
 * Tue Jun 04 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.1-alt1_6
 - new fc release
 
