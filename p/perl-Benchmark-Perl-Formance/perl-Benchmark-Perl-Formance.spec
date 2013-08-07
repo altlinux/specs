@@ -7,7 +7,7 @@ BuildRequires: perl(Benchmark.pm) perl(Clone.pm) perl(Config.pm) perl(Exporter.p
 
 Name:       perl-%{upstream_name}
 Version:    %{upstream_version}
-Release:    alt1_2
+Release:    alt1_3
 
 Summary:    Benchmark Suite for Perl
 License:    GPL+ or Artistic
@@ -35,7 +35,7 @@ of Perl, modified compile parameter, or another set of dependent libraries.
 %setup -q -n %{upstream_name}-%{upstream_version}
 
 %build
-%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
+%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
 
 %make
 
@@ -49,11 +49,14 @@ of Perl, modified compile parameter, or another set of dependent libraries.
 %doc META.json META.yml LICENSE Changes README
 %perl_vendor_privlib/*
 /usr/bin/benchmark-perlformance
-/usr/share/man/man1/benchmark-perlformance.1.*
+/usr/share/man/man1/benchmark-perlformance.1*
 
 
 
 %changelog
+* Wed Aug 07 2013 Igor Vlasenko <viy@altlinux.ru> 0.33-alt1_3
+- update by mgaimport
+
 * Mon Dec 10 2012 Igor Vlasenko <viy@altlinux.ru>  0.33-alt1_2
 - mageia import by cas@ requiest
 
