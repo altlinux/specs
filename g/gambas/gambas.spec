@@ -6,7 +6,7 @@
 
 Name:    gambas
 Version: 2.24.0
-Release: alt5
+Release: alt6
 
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
@@ -477,9 +477,10 @@ grep -rl '@QT.\+LDFLAGS@' gb.qt/ |xargs sed -i 's/@QT.\+LDFLAGS@//g'
 %make_build
 
 %install
-%make DESTDIR=%buildroot libdir=%_libdir install
+%makeinstall_std libdir=%_libdir
 install -pD -m644 app/src/gambas2/img/16/gambas.png %buildroot%_miconsdir/gambas.png
 install -pD -m644 app/src/gambas2/img/32/gambas.png %buildroot%_niconsdir/gambas.png
+install -pD -m644 app/desktop/gambas2.png %buildroot%_niconsdir/gambas2.png
 install -pD -m644 gambas.desktop %buildroot%_desktopdir/gambas2.desktop
 %set_compress_method skip
 
@@ -528,6 +529,7 @@ install -pD -m644 gambas.desktop %buildroot%_desktopdir/gambas2.desktop
 %_datadir/gambas2/help
 %_miconsdir/gambas.png
 %_niconsdir/gambas.png
+%_niconsdir/gambas2.png
 %_desktopdir/gambas2.desktop
 
 %files examples
@@ -807,6 +809,9 @@ install -pD -m644 gambas.desktop %buildroot%_desktopdir/gambas2.desktop
 %_datadir/gambas2/info/gb.xml.xslt.list
 
 %changelog
+* Wed Aug 07 2013 Andrey Cherepanov <cas@altlinux.org> 2.24.0-alt6
+- Install correct icon for desktop file
+
 * Tue Aug 06 2013 Andrey Cherepanov <cas@altlinux.org> 2.24.0-alt5
 - Remove gb-kde and gb-kde-html modules from gambas-ide
 - Translate desktop file into Russian
