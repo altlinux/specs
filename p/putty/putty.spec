@@ -1,6 +1,6 @@
 Name: putty
-Version: 0.62
-Release: alt1.1
+Version: 0.63
+Release: alt1
 
 Summary: Free SSH, Telnet and Rlogin client
 License: MIT
@@ -55,6 +55,10 @@ install -pD -m644 %SOURCE3 %buildroot%_desktopdir/%name.desktop
 %_liconsdir/*.png
 
 %changelog
+* Wed Aug 07 2013 Michael Shigorin <mike@altlinux.org> 0.63-alt1
+- security fixes for vulnerabilities exploitable by custom sshd, see
+  http://www.chiark.greenend.org.uk/~sgtatham/putty/changes.html
+
 * Thu Apr 05 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.62-alt1.1
 - Fixed build with new glib2
 
