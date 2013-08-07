@@ -7,7 +7,7 @@ BuildRequires: perl-devel perl-podlators
 
 Name:       perl-%{upstream_name}
 Version:    %{upstream_version}
-Release:    alt1_1
+Release:    alt1_2
 
 Summary:    Require that we are running on a particular OS
 License:    GPL+ or Artistic
@@ -43,7 +43,7 @@ Linux, Solaris, AIX etc.
 %setup -q -n %{upstream_name}-%{upstream_version}
 
 %build
-%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
+%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
 
 %make
 
@@ -61,6 +61,9 @@ Linux, Solaris, AIX etc.
 
 
 %changelog
+* Wed Aug 07 2013 Igor Vlasenko <viy@altlinux.ru> 4.1.4-alt1_2
+- update by mgaimport
+
 * Mon Dec 10 2012 Igor Vlasenko <viy@altlinux.ru>  4.1.4-alt1_1
 - mageia import by cas@ requiest
 
