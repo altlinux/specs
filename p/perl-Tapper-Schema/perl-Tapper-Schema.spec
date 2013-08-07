@@ -7,16 +7,17 @@ BuildRequires: perl(DBD/SQLite.pm) perl(Hash/Merge/Simple.pm)
 %define upstream_version 4.1.3
 
 Name:       perl-%{upstream_name}
-Version:    4.1.3
-Release:    alt1
+Version:    %{upstream_version}
+Release:    alt1_1
 
 Summary:    Database schemas for Tapper
 License:    GPL+ or Artistic
 Group:      Development/Perl
 Url:        http://search.cpan.org/dist/%{upstream_name}
-Source:    http://www.cpan.org/authors/id/T/TA/TAPPER/Tapper-Schema-%{version}.tar.gz
+Source0:    http://www.cpan.org/modules/by-module/Tapper/%{upstream_name}-%{upstream_version}.tar.gz
 
 BuildRequires: perl(Class/C3.pm)
+BuildRequires: perl(Class/XSAccessor.pm)
 BuildRequires: perl(Compress/Bzip2.pm)
 BuildRequires: perl(DBIx/Class.pm)
 BuildRequires: perl(DBIx/Class/Core.pm)
@@ -30,6 +31,7 @@ BuildRequires: perl(DateTime.pm)
 BuildRequires: perl(DateTime/Format/MySQL.pm)
 BuildRequires: perl(DateTime/Format/Pg.pm)
 BuildRequires: perl(DateTime/Format/SQLite.pm)
+BuildRequires: perl(ExtUtils/MakeMaker.pm)
 BuildRequires: perl(MRO/Compat.pm)
 BuildRequires: perl(SQL/Translator.pm)
 BuildRequires: perl(Scalar/Util.pm)
@@ -44,7 +46,7 @@ BuildRequires: perl(common/sense.pm)
 BuildRequires: perl(parent.pm)
 BuildRequires: perl(strict.pm)
 BuildRequires: perl(warnings.pm)
-BuildArch: noarch
+BuildArch:  noarch
 Source44: import.info
 
 %description
@@ -54,7 +56,7 @@ Database schemas for Tapper.
 %setup -q -n %{upstream_name}-%{upstream_version}
 
 %build
-%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
+%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
 
 %make
 
@@ -65,13 +67,14 @@ Database schemas for Tapper.
 %makeinstall_std
 
 %files
-%doc META.json META.yml Changes LICENSE README
+%doc Changes LICENSE META.json META.yml  README
 %perl_vendor_privlib/*
 
 
-
-
 %changelog
+* Wed Aug 07 2013 Igor Vlasenko <viy@altlinux.ru> 4.1.3-alt1_1
+- update by mgaimport
+
 * Sat Jul 27 2013 Igor Vlasenko <viy@altlinux.ru> 4.1.3-alt1
 - automated CPAN update
 
