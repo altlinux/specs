@@ -1,7 +1,7 @@
 # -*- rpm-spec -*-
 %define module_name	bcmwl
-%define module_version  5.100.82.112
-%define real_version	5.100.82.112
+%define module_version  6.30.223.30
+%define real_version	6.30.223.30
 
 #### MODULE SOURCES ####
 Name: kernel-source-%module_name
@@ -18,6 +18,7 @@ Source0: %name-%real_version.tar
 
 ExclusiveArch: i586 x86_64
 BuildPreReq: kernel-build-tools
+BuildArch: noarch
 
 %description
 %module_name module sources for Linux kernel. 
@@ -27,11 +28,6 @@ BuildPreReq: kernel-build-tools
 %setup -c -q
 #__mv %module_name-%real_version %name-%version
 
-pushd %name-%version
-mv %_target_cpu/* .
-rm -rf i586 x86_64
-popd
-
 %install
 %__mkdir_p %kernel_srcdir
 %__tar jcf %kernel_srcdir/%name-%version.tar.bz2 %name-%version/
@@ -40,6 +36,9 @@ popd
 %attr(0644,root,root) %kernel_src/%name-%version.tar.bz2
 
 %changelog
+* Wed Aug 07 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 6.30.223.30-alt1
+- 6.30.223.30
+
 * Thu Jan 12 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 5.100.82.112-alt1
 - 5.100.82.112
 

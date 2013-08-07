@@ -1,6 +1,6 @@
 %define module_name	bcmwl
-%define module_version	5.100.82.112
-%define module_release alt5
+%define module_version	6.30.223.30
+%define module_release alt1
 
 %define flavour		std-def
 BuildRequires(pre): rpm-build-kernel
@@ -23,9 +23,7 @@ Packager: Kernel Maintainer Team <kernel@packages.altlinux.org>
 
 ExclusiveOS: Linux
 Url: http://www.broadcom.com/support/802.11/linux_sta.php
-Patch1: bcmwl-build-kernel3.2.patch
-Patch2: bcmwl-build-kernel3.4.patch
-Patch3: bcmwl-build-kernel3.10.patch
+Patch1: bcmwl-build-kernel3.10.patch
 BuildRequires: perl sharutils
 BuildRequires(pre): rpm-build-kernel
 BuildRequires: kernel-source-%module_name = %module_version
@@ -51,17 +49,25 @@ rm -rf kernel-source-%module_name-%module_version
 tar -jxvf %kernel_src/kernel-source-%module_name-%module_version.tar.bz2
 
 %setup -D -T -n kernel-source-%module_name-%module_version
-%patch1 -p2
-%patch2 -p1
-%patch3 -p1
+pushd bcmwl
+%patch1 -p1
+popd
 
 %build
+cd bcmwl
+mkdir lib
+if [ "$(arch)" = "x86_64" ] ; then
+   cp src/lib/wlc_hybrid.o_shipped_x86_64 lib/wlc_hybrid.o_shipped
+else
+   cp src/lib/wlc_hybrid.o_shipped_i386 lib/wlc_hybrid.o_shipped
+fi
 . %_usrsrc/linux-%kversion-%flavour/gcc_version.inc
 make -C %_usrsrc/linux-%kversion-%flavour SUBDIRS=`pwd` modules
 
 %install
 mkdir -p $RPM_BUILD_ROOT%module_dir/
 
+cd bcmwl
 . %_usrsrc/linux-%kversion-%flavour/gcc_version.inc
 make -C %_usrsrc/linux-%kversion-%flavour INSTALL_MOD_PATH=%buildroot INSTALL_MOD_DIR=net SUBDIRS=`pwd`  modules_install
 
@@ -80,6 +86,9 @@ __EOF__
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Wed Aug  7 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 6.30.223.30-alt1
+- new version
 
 * Wed Jul 17 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 5.100.82.112-alt5
 - add support for kernel 3.10
