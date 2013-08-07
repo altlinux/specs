@@ -2,19 +2,19 @@
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-devel perl-podlators
 # END SourceDeps(oneline)
-BuildRequires: perl(DBIx/Class/InflateColumn/Object/Enum.pm) perl(Hash/Merge/Simple.pm) perl(DBIx/Class/TimeStamp.pm) perl(DBD/SQLite.pm) perl(HTML/Mason/Interp.pm) perl(Catalyst/Action/RenderView.pm) perl(Locale/Maketext.pm)
+BuildRequires: perl(DBIx/Class/InflateColumn/Object/Enum.pm) perl(Hash/Merge/Simple.pm) perl(DBIx/Class/TimeStamp.pm) perl(DBD/SQLite.pm) perl(HTML/Mason/Interp.pm) perl(Catalyst/Action/RenderView.pm) perl(Locale/Maketext.pm) perl(Tapper/Base.pm)
 %define upstream_name    Tapper-Reports-Web
 %define upstream_version 4.1.2
 
 Name:       perl-%{upstream_name}
-Version:    4.1.2
-Release:    alt1
+Version:    %{upstream_version}
+Release:    alt1_2
 
 Summary:    Tapper frontend web application based on Catalyst
 License:    GPL+ or Artistic
 Group:      Development/Perl
 Url:        http://search.cpan.org/dist/%{upstream_name}
-Source:    http://www.cpan.org/authors/id/T/TA/TAPPER/Tapper-Reports-Web-%{version}.tar.gz
+Source0:    http://www.cpan.org/modules/by-module/Tapper/%{upstream_name}-%{upstream_version}.tar.gz
 
 BuildRequires: perl(Catalyst.pm)
 BuildRequires: perl(Catalyst/Controller.pm)
@@ -37,6 +37,7 @@ BuildRequires: perl(DateTime/Format/Natural.pm)
 BuildRequires: perl(DateTime/Format/Strptime.pm)
 BuildRequires: perl(DateTime/Format/SQLite.pm)
 BuildRequires: perl(DateTime/Format/W3CDTF.pm)
+BuildRequires: perl(ExtUtils/MakeMaker.pm)
 BuildRequires: perl(FCGI.pm)
 BuildRequires: perl(File/Basename.pm)
 BuildRequires: perl(File/Copy/Recursive.pm)
@@ -56,6 +57,7 @@ BuildRequires: perl(Moose/Role.pm)
 BuildRequires: perl(Perl6/Junction.pm)
 BuildRequires: perl(Pod/Usage.pm)
 BuildRequires: perl(Set/Intersection.pm)
+BuildRequires: perl(TAP/Formatter/HTML.pm)
 BuildRequires: perl(Tapper/Cmd/Precondition.pm)
 BuildRequires: perl(Tapper/Cmd/Testplan.pm)
 BuildRequires: perl(Tapper/Cmd/Testrun.pm)
@@ -77,7 +79,7 @@ BuildRequires: perl(namespace/autoclean.pm)
 BuildRequires: perl(parent.pm)
 BuildRequires: perl(strict.pm)
 BuildRequires: perl(warnings.pm)
-BuildArch: noarch
+BuildArch:  noarch
 Source44: import.info
 
 %description
@@ -87,7 +89,7 @@ Tapper frontend web application based on Catalyst.
 %setup -q -n %{upstream_name}-%{upstream_version}
 
 %build
-%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
+%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
 
 %make
 
@@ -98,7 +100,7 @@ Tapper frontend web application based on Catalyst.
 %makeinstall_std
 
 %files
-%doc META.json META.yml Changes LICENSE README
+%doc Changes LICENSE META.json META.yml  README
 %perl_vendor_privlib/*
 /usr/bin/tapper_reports_web_cgi.pl
 /usr/bin/tapper_reports_web_create.pl
@@ -107,17 +109,19 @@ Tapper frontend web application based on Catalyst.
 /usr/bin/tapper_reports_web_fastcgi_public.pl
 /usr/bin/tapper_reports_web_server.pl
 /usr/bin/tapper_reports_web_test.pl
-/usr/share/man/man1/tapper_reports_web_cgi.pl.1.*
-/usr/share/man/man1/tapper_reports_web_create.pl.1.*
-/usr/share/man/man1/tapper_reports_web_fastcgi.pl.1.*
-/usr/share/man/man1/tapper_reports_web_fastcgi_live.pl.1.*
-/usr/share/man/man1/tapper_reports_web_fastcgi_public.pl.1.*
-/usr/share/man/man1/tapper_reports_web_server.pl.1.*
-/usr/share/man/man1/tapper_reports_web_test.pl.1.*
-
+/usr/share/man/man1/tapper_reports_web_cgi.pl.1*
+/usr/share/man/man1/tapper_reports_web_create.pl.1*
+/usr/share/man/man1/tapper_reports_web_fastcgi.pl.1*
+/usr/share/man/man1/tapper_reports_web_fastcgi_live.pl.1*
+/usr/share/man/man1/tapper_reports_web_fastcgi_public.pl.1*
+/usr/share/man/man1/tapper_reports_web_server.pl.1*
+/usr/share/man/man1/tapper_reports_web_test.pl.1*
 
 
 %changelog
+* Wed Aug 07 2013 Igor Vlasenko <viy@altlinux.ru> 4.1.2-alt1_2
+- update by mgaimport
+
 * Sat Jul 27 2013 Igor Vlasenko <viy@altlinux.ru> 4.1.2-alt1
 - automated CPAN update
 
