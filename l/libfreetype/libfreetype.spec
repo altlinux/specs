@@ -1,6 +1,6 @@
 Name: libfreetype
 Version: 2.4.12
-Release: alt1
+Release: alt2
 
 Summary: A free and portable font rendering engine
 License: FTL or GPLv2+
@@ -11,6 +11,7 @@ Packager: Valery Inozemtsev <shrek@altlinux.ru>
 Source0: http://download.savannah.gnu.org/releases/freetype/freetype-%version.tar.bz2
 Source2: http://download.savannah.gnu.org/releases/freetype/freetype-doc-%version.tar.bz2
 Source1: http://download.savannah.gnu.org/releases/freetype/ft2demos-%version.tar.bz2
+Source3: ftconfig.h
 
 Patch5: freetype-2.4.10-osh.patch
 
@@ -22,6 +23,7 @@ Patch4: ft2demos-2.4.12-alt-drop-ftgrid.patch
 Patch11: freetype-2.4.10-rh-enable-subpixel-rendering.patch
 Patch12: freetype-2.4.10-rh-enable-valid.patch
 Patch13: ft2demos-2.4.10-rh-more-demos.patch
+Patch14: freetype-2.4.12-rh-pkgconfig.patch
 
 Patch21: ft2demos-2.4.10-deb-fixes.patch
 
@@ -93,6 +95,7 @@ ln -s ft2demos-%version ft2demos
 %patch11 -p1
 %patch12 -p1
 %patch13 -p0
+%patch14 -p1
 
 %patch21 -p0
 
@@ -116,22 +119,8 @@ done
 wordsize=$(echo -e '#include <bits/wordsize.h>\n__WORDSIZE' | cpp -P | sed '/^$/d')
 [ "$wordsize" -ge 32 ]
 mv %buildroot%_includedir/freetype2/freetype/config/ftconfig{,-$wordsize}.h
-cat >%buildroot%_includedir/freetype2/freetype/config/ftconfig.h << EOF
-#ifndef __FTCONFIG_H__MULTILIB
-#define __FTCONFIG_H__MULTILIB
-
-#include <bits/wordsize.h>
-
-#if __WORDSIZE == 32
-# include <freetype/config/ftconfig-32.h>
-#elif __WORDSIZE == 64
-# include <freetype/config/ftconfig-64.h>
-#else
-# error "unexpected value for __WORDSIZE macro"
-#endif
-
-#endif
-EOF
+install -pm644 %_sourcedir/ftconfig.h \
+	%buildroot%_includedir/freetype2/freetype/config/ftconfig.h
 
 %define docdir %_docdir/%name-%version
 %define develdocdir %_docdir/%name-devel-%version
@@ -167,6 +156,9 @@ mv %buildroot%develdocdir/{FTL.TXT,LICENSE.TXT,CHANGES.bz2} %buildroot%docdir/
 %_bindir/ft*
 
 %changelog
+* Wed Aug 07 2013 Dmitry V. Levin <ldv@altlinux.org> 2.4.12-alt2
+- Backported fixes from FC.
+
 * Mon May 13 2013 Valery Inozemtsev <shrek@altlinux.ru> 2.4.12-alt1
 - 2.4.12
 
