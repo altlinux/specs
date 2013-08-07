@@ -4,17 +4,17 @@ BuildRequires: /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/xmlto 
 # END SourceDeps(oneline)
 BuildRequires: libsystemd-login-devel
 %define _libexecdir %_prefix/libexec
+%define fedora 19
 Name:           mate-screensaver
-Version:        1.6.0
-Release:        alt2_1
+Version:        1.6.1
+Release:        alt1_2
 Summary:        MATE Screensaver
 License:        GPLv2+ and LGPLv2+
 URL:            http://pub.mate-desktop.org
 Source0:        http://pub.mate-desktop.org/releases/1.6/%{name}-%{version}.tar.xz
+
 Requires:       altlinux-freedesktop-menu-common
 Requires:       mate-keyring-pam
-Requires:       mate-backgrounds
-Requires:       mate-power-manager
 
 BuildRequires:  gtk2-devel
 BuildRequires:  libdbus-glib-devel
@@ -39,7 +39,6 @@ BuildRequires:  systemd-devel
 Buildrequires:  xmlto
 Source44: import.info
 Patch33: gnome-screensaver-2.28.0-alt-pam.patch
-Patch34: mate-screensaver-2.28.0-user_activity.patch
 Source45: unix2_chkpwd.c
 
 %description
@@ -59,22 +58,20 @@ Development files for mate-screensaver
 %prep
 %setup -q
 %patch33 -p1
-%patch34 -p1
-
 
 %build
-NOCONFIGURE=1 ./autogen.sh
 %configure \
             --with-x \
             --with-mit-ext \
             --with-xf86gamma-ext \
-            --with-libgl \
             --with-shadow \
             --with-console-kit \
             --enable-docbook-docs \
             --enable-authentication-scheme=helper \
            --with-passwd-helper=%_libexecdir/%name/%name-chkpwd-helper \
-	   --enable-locking
+	   --enable-locking \
+            --with-systemd \
+            
 
 make %{?_smp_mflags} V=1
 gcc -o %name-chkpwd-helper $RPM_OPT_FLAGS %SOURCE45 -lpam
@@ -92,7 +89,18 @@ desktop-file-install                                          \
    --dir %{buildroot}%{_datadir}/applications/screensavers    \
 %{buildroot}%{_datadir}/applications/screensavers/*.desktop
 
-%find_lang %{name} --with-gnome
+# remove needless gsetting convert file
+rm -f %{buildroot}%{_datadir}/MateConf/gsettings/org.mate.screensaver.gschema.migrate
+
+# move doc dir for > f19
+%if 0%{?fedora} > 19
+mkdir -p %{buildroot}%{_datadir}/doc/%{name}
+mv -f %{buildroot}%{_datadir}/doc/%{name}-%{version}/spec/mate-screensaver.html %{buildroot}%{_datadir}/doc/%{name}/mate-screensaver.html
+%else
+mv -f %{buildroot}%{_datadir}/doc/%{name}-%{version}/spec/mate-screensaver.html %{buildroot}%{_datadir}/doc/%{name}-%{version}/mate-screensaver.html
+%endif
+
+%find_lang %{name}
 install -m 755 %name-chkpwd-helper %buildroot%_libexecdir/%name/
 
 %files -f %{name}.lang
@@ -109,7 +117,6 @@ install -m 755 %name-chkpwd-helper %buildroot%_libexecdir/%name/
 %{_datadir}/backgrounds/cosmos/
 %{_datadir}/pixmaps/mate-logo-white.svg
 %{_datadir}/desktop-directories/mate-screensaver.directory
-%{_datadir}/MateConf/gsettings/org.mate.screensaver.gschema.migrate
 %{_datadir}/glib-2.0/schemas/org.mate.screensaver.gschema.xml
 %{_datadir}/mate-background-properties/cosmos.xml
 %{_datadir}/dbus-1/services/org.mate.ScreenSaver.service
@@ -121,6 +128,9 @@ install -m 755 %name-chkpwd-helper %buildroot%_libexecdir/%name/
 
 
 %changelog
+* Wed Aug 07 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.1-alt1_2
+- new fc release
+
 * Tue Apr 16 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.0-alt2_1
 - new fc release
 
