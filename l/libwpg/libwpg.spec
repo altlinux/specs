@@ -1,7 +1,7 @@
 %define major 0.2
 Name: libwpg
 Version: %major.2
-Release: alt2
+Release: alt3
 
 Summary: Library for importing and converting Corel WordPerfect(tm) Graphics images
 
@@ -37,6 +37,8 @@ Requires: %name = %version-%release
 Requires: libwpd9-devel >= 0.9.0
 Summary: Files for developing with libwpg
 Group: Development/C
+Provides: libwpg2-devel = %version-%release
+Obsoletes: libwpg2-devel
 
 %description devel
 Includes and definitions for developing with libwpg.
@@ -82,6 +84,9 @@ rm -rf %buildroot%_libdir/libwpg*.la
 %doc %_docdir/%name/
 
 %changelog
+* Wed Aug 07 2013 Vitaly Lipatov <lav@altlinux.ru> 0.2.2-alt3
+- add provides/obsoletes for libwpg2-devel
+
 * Tue Aug 06 2013 Vitaly Lipatov <lav@altlinux.ru> 0.2.2-alt2
 - add provides/obsoletes for libwpg2
 
