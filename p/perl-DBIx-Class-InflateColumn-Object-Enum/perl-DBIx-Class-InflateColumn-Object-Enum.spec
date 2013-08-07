@@ -7,7 +7,7 @@ BuildRequires: perl(CPAN.pm) perl(Config.pm) perl(DBIx/Class.pm) perl-devel perl
 
 Name:       perl-%{upstream_name}
 Version:    %{upstream_version}
-Release:    alt1_1
+Release:    alt1_2
 
 Summary:    Allows a DBIx::Class user to define a Object::Enum column
 License:    GPL+ or Artistic
@@ -30,7 +30,7 @@ no description found
 %setup -q -n %{upstream_name}-%{upstream_version}
 
 %build
-%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
+%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
 
 %make
 
@@ -48,6 +48,9 @@ no description found
 
 
 %changelog
+* Wed Aug 07 2013 Igor Vlasenko <viy@altlinux.ru> 0.04-alt1_2
+- update by mgaimport
+
 * Mon Dec 10 2012 Igor Vlasenko <viy@altlinux.ru>  0.04-alt1_1
 - mageia import by cas@ requiest
 
