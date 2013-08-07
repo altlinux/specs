@@ -7,7 +7,7 @@ BuildRequires: perl(AutoLoader.pm) perl-podlators
 
 Name:       perl-%{upstream_name}
 Version:    %{upstream_version}
-Release:    alt1_2
+Release:    alt1_4
 
 Summary:    Perl interface to the personality(2) Linux system call
 License:    GPL+ or Artistic
@@ -35,7 +35,7 @@ program.
 %setup -q -n %{upstream_name}-%{upstream_version}
 
 %build
-%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
+%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
 
 %make
 
@@ -47,12 +47,16 @@ program.
 
 %files
 %doc ChangeLog README META.yml
-%perl_vendor_archlib/*
+%perl_vendor_archlib/L*
+%perl_vendor_archlib/auto/L*
 
 
 
 
 %changelog
+* Wed Aug 07 2013 Igor Vlasenko <viy@altlinux.ru> 0.01-alt1_4
+- update by mgaimport
+
 * Mon Dec 10 2012 Igor Vlasenko <viy@altlinux.ru>  0.01-alt1_2
 - mageia import by cas@ requiest
 
