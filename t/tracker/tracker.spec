@@ -20,6 +20,7 @@
 %def_enable libgsf
 %def_enable libjpeg
 %def_enable libtiff
+%def_enable libpng
 %def_enable libvorbis
 %def_enable libflac
 %def_enable exempi
@@ -30,7 +31,15 @@
 %def_disable qt
 %def_enable libgif
 %def_enable libcue
+%def_enable abiword
+%def_enable dvi
+%def_enable mp3
+%def_enable ps
+%def_enable text
+%def_enable icon
+%def_enable artwork
 %def_enable libosinfo
+
 
 # Unicode support library? (libunistring|libicu)
 %define unicode_support libicu
@@ -38,8 +47,8 @@
 %define _libexecdir %_prefix/libexec
 
 Name: tracker
-Version: %ver_major.1
-Release: alt4
+Version: %ver_major.2
+Release: alt1
 
 Summary: Tracker is a powerfull desktop-oriented search tool and indexer
 License: GPLv2+
@@ -82,6 +91,7 @@ Requires: lib%name = %version-%release
 %define gupnp_dlna_ver 0.9.4
 %define sqlite3_ver 3.7.9
 %define libosinfo_ver 0.0.2
+%define libpng_ver 0.89
 
 BuildPreReq: gcc-c++ gnome-common rpm-build-gnome gtk-doc docbook-utils
 BuildPreReq: glibc-devel
@@ -96,7 +106,7 @@ BuildPreReq: libgtk+3-devel >= %gtk_ver
 %{?_enable_upower:BuildPreReq: libupower-devel >= %upower_ver}
 %{?_enable_network_manager:BuildPreReq: NetworkManager-glib-devel >= %nm_ver}
 %{?_enable_libxml2:BuildPreReq: libxml2-devel >= %libxml2_ver}
-BuildPreReq: libpng-devel >= 1.2
+%{?_enable_libpng:BuildPreReq: libpng-devel >= %libpng_ver}
 BuildPreReq: libuuid-devel
 BuildPreReq: libenca-devel >= 1.9
 BuildPreReq: vala >= 0.12.0
@@ -162,7 +172,6 @@ This package contains shred Tracker libraries for applications.
 %package -n lib%name-gir
 Summary: GObject introspection data for the Tracker library
 Group: System/Libraries
-Requires: %name = %version-%release
 Requires: lib%name = %version-%release
 
 %description -n lib%name-gir
@@ -255,10 +264,18 @@ NOCONFIGURE=1 ./autogen.sh
 	%{subst_enable libjpeg} \
 	%{subst_enable libtiff} \
 	%{subst_enable libgif} \
+	%{subst_enable libpng} \
 	%{subst_enable libvorbis} \
 	%{subst_enable libflac} \
 	%{subst_enable exempi} \
 	%{subst_enable libcue} \
+	%{subst_enable abiword} \
+	%{subst_enable dvi} \
+	%{subst_enable mp3} \
+	%{subst_enable ps} \
+	%{subst_enable text} \
+	%{subst_enable icon} \
+	%{subst_enable artwork} \
 	%{subst_enable libosinfo} \
 	%{?_enable_gtk_doc:--enable-gtk-doc}
 
@@ -363,6 +380,9 @@ find %{buildroot} -type f -name "*.la" -exec rm -f {} ';'
 %endif
 
 %changelog
+* Wed Aug 07 2013 Alexey Shabalin <shaba@altlinux.ru> 0.16.2-alt1
+- 0.16.2
+
 * Tue May 28 2013 Alexey Shabalin <shaba@altlinux.ru> 0.16.1-alt4
 - move libtracker-common.so.0 and libtracker-data.so.0 to libtracker too
 
