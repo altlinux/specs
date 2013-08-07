@@ -7,20 +7,21 @@ BuildRequires: perl(DBIx/Class/InflateColumn/Object/Enum.pm) perl(Hash/Merge/Sim
 %define upstream_version 4.1.2
 
 Name:       perl-%{upstream_name}
-Version:    4.1.2
-Release:    alt1
+Version:    %{upstream_version}
+Release:    alt1_2
 
 Summary:    Tapper - Context sensitive connected DBIC schema
 License:    GPL+ or Artistic
 Group:      Development/Perl
 Url:        http://search.cpan.org/dist/%{upstream_name}
-Source:    http://www.cpan.org/authors/id/T/TA/TAPPER/Tapper-Model-%{version}.tar.gz
+Source0:    http://www.cpan.org/modules/by-module/Tapper/%{upstream_name}-%{upstream_version}.tar.gz
 
 BuildRequires: perl(Carp.pm)
 BuildRequires: perl(Class/C3.pm)
 BuildRequires: perl(Data/DPath.pm)
 BuildRequires: perl(Data/Dumper.pm)
 BuildRequires: perl(Exporter.pm)
+BuildRequires: perl(ExtUtils/MakeMaker.pm)
 BuildRequires: perl(MRO/Compat.pm)
 BuildRequires: perl(Memoize.pm)
 BuildRequires: perl(Tapper/Config.pm)
@@ -31,18 +32,17 @@ BuildRequires: perl(Test/More.pm)
 BuildRequires: perl(parent.pm)
 BuildRequires: perl(strict.pm)
 BuildRequires: perl(warnings.pm)
-BuildArch: noarch
+BuildArch:  noarch
 Source44: import.info
 
 %description
 Context sensitive and connected DBIC schema for Tapper.
 
-
 %prep
 %setup -q -n %{upstream_name}-%{upstream_version}
 
 %build
-%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
+%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
 
 %make
 
@@ -53,13 +53,13 @@ Context sensitive and connected DBIC schema for Tapper.
 %makeinstall_std
 
 %files
-%doc META.json META.yml Changes LICENSE README
+%doc Changes LICENSE META.json META.yml  README
 %perl_vendor_privlib/*
 
-
-
-
 %changelog
+* Wed Aug 07 2013 Igor Vlasenko <viy@altlinux.ru> 4.1.2-alt1_2
+- update by mgaimport
+
 * Sat Jul 27 2013 Igor Vlasenko <viy@altlinux.ru> 4.1.2-alt1
 - automated CPAN update
 
