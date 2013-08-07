@@ -1,0 +1,59 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-perl
+BuildRequires: perl(Archive/Zip.pm) perl(CPAN.pm) perl(Config.pm) perl(LWP/Simple.pm) perl(subs.pm) perl-devel perl-podlators
+# END SourceDeps(oneline)
+%define upstream_name    Alien-SeleniumRC
+%define upstream_version 2.93
+
+Name:       perl-%{upstream_name}
+Version:    %{upstream_version}
+Release:    alt1_1
+
+Summary:    Packaging up SeleniumRC java server
+License:    GPL+ or Artistic
+Group:      Development/Perl
+Url:        http://search.cpan.org/dist/%{upstream_name}
+Source0:    http://www.cpan.org/modules/by-module/Alien/%{upstream_name}-%{upstream_version}.tar.gz
+
+BuildRequires: perl(ExtUtils/MakeMaker.pm)
+BuildRequires: perl(Test/More.pm)
+BuildArch:  noarch
+Source44: import.info
+
+%description
+The Selenium RC home page is at the http://openqa.org/selenium-rc manpage
+
+Selenium Remote Control is a test tool that allows you to write automated
+web application UI tests in any programming language against any HTTP
+website using any mainstream JavaScript-enabled browser.
+
+Selenium Remote Control provides a Selenium Server, which can automatically
+start/stop/control any supported browser. It works by using Selenium Core,
+a pure-HTML+JS library that performs automated tasks in JavaScript.
+
+%prep
+%setup -q -n %{upstream_name}-%{upstream_version}
+
+%build
+%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
+
+%{make}
+
+%check
+%{make} test
+
+%install
+%makeinstall_std
+
+%files
+%doc Changes  README SIGNATURE
+%perl_vendor_privlib/*
+/usr/bin/selenium-rc
+
+%changelog
+* Wed Aug 07 2013 Igor Vlasenko <viy@altlinux.ru> 2.93-alt1_1
+- build for Sisyphus
+
+* Thu Jul 25 2013 Igor Vlasenko <viy@altlinux.ru> 2.92-alt1_1
+- converted for ALT Linux by srpmconvert tools
+
