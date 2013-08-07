@@ -7,7 +7,7 @@ BuildRequires: perl(Exporter.pm) perl(Scalar/Util.pm) perl(Term/ANSIColor.pm) pe
 
 Name:       perl-%{upstream_name}
 Version:    %{upstream_version}
-Release:    alt1_1
+Release:    alt1_2
 
 Summary:    Mark up ANSI sequences as HTML
 License:    GPL+ or Artistic
@@ -38,7 +38,7 @@ that you no longer import any functions by doing:
 %setup -q -n %{upstream_name}-%{upstream_version}
 
 %build
-%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
+%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
 
 %make
 
@@ -52,11 +52,14 @@ that you no longer import any functions by doing:
 %doc Changes META.yml
 %perl_vendor_privlib/*
 /usr/bin/ansi2html
-/usr/share/man/man1/ansi2html.1.*
+/usr/share/man/man1/ansi2html.1*
 
 
 
 %changelog
+* Wed Aug 07 2013 Igor Vlasenko <viy@altlinux.ru> 2.03-alt1_2
+- update by mgaimport
+
 * Mon Dec 10 2012 Igor Vlasenko <viy@altlinux.ru> 2.03-alt1_1
 - mageia import by cas@ requiest
 
