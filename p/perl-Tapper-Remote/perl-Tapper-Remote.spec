@@ -1,20 +1,21 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(App/Daemon.pm) perl(Class/C3.pm) perl(Compress/Bzip2.pm) perl(DateTime.pm) perl(DateTime/Format/Natural.pm) perl(English.pm) perl(File/ShareDir.pm) perl(File/Slurp.pm) perl(File/Type.pm) perl(Hash/Merge/Simple.pm) perl(IO/Handle.pm) perl(IO/Select.pm) perl(IO/Socket.pm) perl(IPC/Open3.pm) perl(MRO/Compat.pm) perl(Memoize.pm) perl(Net/OpenSSH.pm) perl(Perl6/Junction.pm) perl(Template.pm) perl(Test/Deep.pm) perl(Test/Exception.pm) perl(Try/Tiny.pm) perl(UNIVERSAL.pm) perl(YAML.pm) perl(YAML/XS.pm) perl(common/sense.pm) perl(parent.pm) perl(subs.pm) perl-devel perl-podlators
+BuildRequires: perl-devel perl-podlators
 # END SourceDeps(oneline)
 %define upstream_name    Tapper-Remote
 %define upstream_version 4.1.1
 
 Name:       perl-%{upstream_name}
-Version:    4.1.1
-Release:    alt1
+Version:    %{upstream_version}
+Release:    alt1_2
 
 Summary:    Tapper - Common functionality for remote automation libs
 License:    GPL+ or Artistic
 Group:      Development/Perl
 Url:        http://search.cpan.org/dist/%{upstream_name}
-Source:    http://www.cpan.org/authors/id/T/TA/TAPPER/Tapper-Remote-%{version}.tar.gz
+Source0:    http://www.cpan.org/modules/by-module/Tapper/%{upstream_name}-%{upstream_version}.tar.gz
 
+BuildRequires: perl(ExtUtils/MakeMaker.pm)
 BuildRequires: perl(File/Temp.pm)
 BuildRequires: perl(Getopt/Long.pm)
 BuildRequires: perl(IO/Socket/INET.pm)
@@ -32,7 +33,7 @@ BuildRequires: perl(URI/Escape.pm)
 BuildRequires: perl(YAML/Syck.pm)
 BuildRequires: perl(strict.pm)
 BuildRequires: perl(warnings.pm)
-BuildArch: noarch
+BuildArch:  noarch
 Source44: import.info
 
 %description
@@ -45,7 +46,7 @@ project.
 %setup -q -n %{upstream_name}-%{upstream_version}
 
 %build
-%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
+%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
 
 %make
 
@@ -56,13 +57,13 @@ project.
 %makeinstall_std
 
 %files
-%doc META.json META.yml Changes LICENSE README
+%doc Changes LICENSE META.json META.yml  README
 %perl_vendor_privlib/*
 
-
-
-
 %changelog
+* Wed Aug 07 2013 Igor Vlasenko <viy@altlinux.ru> 4.1.1-alt1_2
+- update by mgaimport
+
 * Sat Jul 27 2013 Igor Vlasenko <viy@altlinux.ru> 4.1.1-alt1
 - automated CPAN update
 
