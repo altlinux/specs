@@ -7,18 +7,19 @@ BuildRequires: perl-devel perl-podlators
 %define upstream_version 4.1.1
 
 Name:       perl-%{upstream_name}
-Version:    4.1.1
-Release:    alt1
+Version:    %{upstream_version}
+Release:    alt1_2
 
 Summary:    Tapper - Install everything needed for a test
 License:    GPL+ or Artistic
 Group:      Development/Perl
 Url:        http://search.cpan.org/dist/%{upstream_name}
-Source:    http://www.cpan.org/authors/id/T/TA/TAPPER/Tapper-Installer-%{version}.tar.gz
+Source0:    http://www.cpan.org/modules/by-module/Tapper/%{upstream_name}-%{upstream_version}.tar.gz
 
 BuildRequires: perl(Cwd.pm)
 BuildRequires: perl(Daemon/Daemonize.pm)
 BuildRequires: perl(Data/Dumper.pm)
+BuildRequires: perl(ExtUtils/MakeMaker.pm)
 BuildRequires: perl(File/Basename.pm)
 BuildRequires: perl(File/Path.pm)
 BuildRequires: perl(File/ShareDir.pm)
@@ -45,7 +46,7 @@ BuildRequires: perl(common/sense.pm)
 BuildRequires: perl(strict.pm)
 BuildRequires: perl(subs.pm)
 BuildRequires: perl(warnings.pm)
-BuildArch: noarch
+BuildArch:  noarch
 
 %define _requires_exceptions /sbin/runscript
 Source44: import.info
@@ -63,7 +64,7 @@ Linux, Solaris, AIX etc.
 %setup -q -n %{upstream_name}-%{upstream_version}
 
 %build
-%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
+%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
 
 %make
 
@@ -80,16 +81,17 @@ popd
 
 
 %files
-%doc META.json META.yml Changes LICENSE README
+%doc Changes LICENSE META.json META.yml  README
 %perl_vendor_privlib/*
 /usr/bin/tapper-installer-client.pl
 /usr/bin/tapper-installer-simnow.pl
-/usr/share/man/man1/tapper-installer-client.pl.1.*
-/usr/share/man/man1/tapper-installer-simnow.pl.1.*
-
-
+/usr/share/man/man1/tapper-installer-client.pl.1*
+/usr/share/man/man1/tapper-installer-simnow.pl.1*
 
 %changelog
+* Wed Aug 07 2013 Igor Vlasenko <viy@altlinux.ru> 4.1.1-alt1_2
+- update by mgaimport
+
 * Sat Jul 27 2013 Igor Vlasenko <viy@altlinux.ru> 4.1.1-alt1
 - automated CPAN update
 
