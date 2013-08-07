@@ -1,6 +1,6 @@
 %define dist Data-Alias
 Name: perl-%dist
-Version: 1.16
+Version: 1.17
 Release: alt1
 
 Summary: Comprehensive set of aliasing operations
@@ -8,7 +8,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/Z/ZE/ZEFRAM/Data-Alias-%{version}.tar.gz
 
 # Automatically added by buildreq on Fri Oct 07 2011
 BuildRequires: perl-Filter perl-Module-Install perl-Test-Pod
@@ -34,6 +34,9 @@ when compared to using references.
 %perl_vendor_autolib/Data
 
 %changelog
+* Wed Aug 07 2013 Igor Vlasenko <viy@altlinux.ru> 1.17-alt1
+- automated CPAN update
+
 * Thu Aug 30 2012 Vladimir Lettiev <crux@altlinux.ru> 1.16-alt1
 - 1.15 -> 1.16
 - rebuilt for perl-5.14
