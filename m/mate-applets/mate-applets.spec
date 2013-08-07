@@ -1,27 +1,28 @@
 Group: Graphical desktop/MATE
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-python
-BuildRequires: /usr/bin/gdk-pixbuf-csource /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/jw /usr/bin/xsltproc libICE-devel libSM-devel libX11-devel libapm-devel libcpufreq-devel libgio-devel pkgconfig(NetworkManager) pkgconfig(dbus-1) pkgconfig(gio-2.0) pkgconfig(gio-unix-2.0) pkgconfig(glib-2.0) pkgconfig(gobject-2.0) pkgconfig(gtk+-2.0) pkgconfig(libgtop-2.0) pkgconfig(mate-settings-daemon) pkgconfig(mucharmap-2) python-devel python-module-pygobject-devel xorg-kbproto-devel
+BuildRequires: /usr/bin/gdk-pixbuf-csource /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/jw /usr/bin/xsltproc libX11-devel libapm-devel libgio-devel pkgconfig(NetworkManager) pkgconfig(dbus-1) pkgconfig(dbus-glib-1) pkgconfig(gio-2.0) pkgconfig(gio-unix-2.0) pkgconfig(glib-2.0) pkgconfig(gobject-2.0) pkgconfig(gtk+-2.0) pkgconfig(libgtop-2.0) pkgconfig(mate-settings-daemon) python-devel python-module-pygobject-devel xorg-kbproto-devel
 # END SourceDeps(oneline)
 BuildRequires: xvfb-run
 %define _libexecdir %_prefix/libexec
 %define fedora 19
 Name:           mate-applets
 Version:        1.6.1
-Release:        alt1_1
+Release:        alt1_5
 Summary:        MATE Desktop panel applets
 License:        GPLv2+ and LGPLv2+
 URL:            http://mate-desktop.org
 Source0:        http://pub.mate-desktop.org/releases/1.6/%{name}-%{version}.tar.xz
 
-BuildRequires: libdbus-glib-devel
-BuildRequires: libgucharmap-devel
+#Add patch to fix cpufreq compilation (Thanks Wolfgang)
+Patch0:  cpufreq.patch
+
+BuildRequires: mate-character-map-devel
 BuildRequires: libgtop2-devel
 BuildRequires: libmatekeyring-devel
 BuildRequires: libnotify-devel
 BuildRequires: libmateweather-devel
 BuildRequires: libmatewnck-devel
-BuildRequires: libnotify-devel
 #NetworkManager-gtk-devel is renamed libnm-gtk-devel on F18
 %if 0%{?fedora} < 18
 BuildRequires: NetworkManager-gtk-devel
@@ -29,6 +30,8 @@ BuildRequires: NetworkManager-gtk-devel
 BuildRequires: libnm-gtk-devel
 %endif
 BuildRequires: libxml2-devel
+BuildRequires: libICE-devel
+BuildRequires: libSM-devel
 BuildRequires: mate-common
 BuildRequires: mate-control-center-devel
 BuildRequires: mate-desktop-devel
@@ -45,16 +48,24 @@ BuildRequires: rarian-compat
 BuildRequires: librarian-devel
 BuildRequires: libstartup-notification-devel
 Buildrequires: libupower-devel
+%ifnarch s390 s390x sparc64
+BuildRequires: libcpufreq-devel
+%endif
+
+Requires: icon-theme-hicolor
 Source44: import.info
 Patch33: mate-applets-1.5.1-alt-geyes_schema.patch
 Patch34: gnome-applets-2.6.0-alt-install_makefile.patch
 Patch35: gnome-applets-2.9.90-alt-modemlights.patch
 Source45: 01-cpufreq.pkla
+
+
 %description
 MATE Desktop panel applets
 
 %prep
 %setup -q
+%patch0 -p1 -b .cpufreq
 NOCONFIGURE=1 ./autogen.sh
 %patch33 -p1
 %patch34 -p1
@@ -65,13 +76,11 @@ NOCONFIGURE=1 ./autogen.sh
 %configure   \
     --disable-schemas-compile                \
     --disable-scrollkeeper                   \
+	--disable-static                         \
     --with-x                                 \
     --enable-polkit                          \
     --enable-networkmanager                  \
     --enable-ipv6                            \
-    --disable-cpufreq                        \
-    --enable-frequency-selector              \
-    --enable-suid                            \
     --disable-timer-applet                   \
     --libexecdir=%{_libexecdir}/mate-applets 
 
@@ -80,6 +89,10 @@ xvfb-run -a make %{?_smp_mflags} V=1
 %install
 make DESTDIR=%{buildroot} install
 %find_lang %{name} --all-name
+
+# remove of gsettings,convert file, no need for this in fedora
+# because MATE starts with gsettings in fedora.
+rm -f %{buildroot}%{_datadir}/MateConf/gsettings/stickynotes-applet.convert
 
 #make python script executable
 #http://forums.fedoraforum.org/showthread.php?t=284962
@@ -90,13 +103,13 @@ install -pD -m 644 %{SOURCE45} %buildroot%_sysconfdir/polkit-1/localauthority/50
 %files -f %{name}.lang
 %doc AUTHORS COPYING README
 %{_bindir}/mate-invest-chart
+%{_bindir}/mate-cpufreq-selector
 %{python_sitelibdir_noarch}/mate_invest
-%{_datadir}/dbus-1/services/org.mate.panel.applet.InvestAppletFactory.service
-%{_datadir}/icons/hicolor/scalable/apps/mate-invest-applet.svg
-%{_datadir}/mate/help/mate-invest-applet
-%{_datadir}/omf/mate-invest-applet
+%{_libexecdir}/mate-applets
+%config(noreplace) %{_sysconfdir}/sound/events/mate-battstat_applet.soundlist
+%config(noreplace) %{_sysconfdir}/dbus-1/system.d/org.mate.CPUFreqSelector.conf
 %{_datadir}/mate-applets
-%{_sysconfdir}/sound/events/mate-battstat_applet.soundlist
+%{_datadir}/mate-panel/applets
 %{_datadir}/dbus-1/services/org.mate.panel.applet.AccessxStatusAppletFactory.service
 %{_datadir}/dbus-1/services/org.mate.panel.applet.BattstatAppletFactory.service
 %{_datadir}/dbus-1/services/org.mate.panel.applet.CharpickerAppletFactory.service
@@ -104,13 +117,23 @@ install -pD -m 644 %{SOURCE45} %buildroot%_sysconfdir/polkit-1/localauthority/50
 %{_datadir}/dbus-1/services/org.mate.panel.applet.GeyesAppletFactory.service
 %{_datadir}/dbus-1/services/org.mate.panel.applet.StickyNotesAppletFactory.service
 %{_datadir}/dbus-1/services/org.mate.panel.applet.TrashAppletFactory.service
+%{_datadir}/dbus-1/services/org.mate.panel.applet.InvestAppletFactory.service
+%{_datadir}/dbus-1/services/org.mate.panel.applet.MateWeatherAppletFactory.service
+%{_datadir}/dbus-1/services/org.mate.panel.applet.MultiLoadAppletFactory.service
+%{_datadir}/dbus-1/services/org.mate.panel.applet.CPUFreqAppletFactory.service
+%{_datadir}/dbus-1/system-services/org.mate.CPUFreqSelector.service
 %{_datadir}/glib-2.0/schemas/org.mate.panel.applet.battstat.gschema.xml
 %{_datadir}/glib-2.0/schemas/org.mate.panel.applet.charpick.gschema.xml
 %{_datadir}/glib-2.0/schemas/org.mate.panel.applet.geyes.gschema.xml
+%{_datadir}/glib-2.0/schemas/org.mate.panel.applet.multiload.gschema.xml
 %{_datadir}/glib-2.0/schemas/org.mate.stickynotes.gschema.xml
+%{_datadir}/glib-2.0/schemas/org.mate.panel.applet.cpufreq.gschema.xml
+%{_datadir}/polkit-1/actions/org.mate.cpufreqselector.policy
 %{_datadir}/icons/hicolor/*x*/apps/*.png
 %{_datadir}/icons/hicolor/scalable/apps/mate-eyes-applet.svg
 %{_datadir}/icons/hicolor/scalable/apps/mate-sticky-notes-applet.svg
+%{_datadir}/icons/hicolor/scalable/apps/mate-invest-applet.svg
+%{_datadir}/icons/hicolor/scalable/apps/mate-cpu-frequency-applet.svg
 %{_datadir}/icons/mate/48x48/apps/ax-applet.png
 %{_datadir}/mate-2.0/ui/accessx-status-applet-menu.xml
 %{_datadir}/mate-2.0/ui/battstat-applet-menu.xml
@@ -119,7 +142,9 @@ install -pD -m 644 %{SOURCE45} %buildroot%_sysconfdir/polkit-1/localauthority/50
 %{_datadir}/mate-2.0/ui/geyes-applet-menu.xml
 %{_datadir}/mate-2.0/ui/stickynotes-applet-menu.xml
 %{_datadir}/mate-2.0/ui/trashapplet-menu.xml
-%{_datadir}/mate-panel/applets
+%{_datadir}/mate-2.0/ui/mateweather-applet-menu.xml
+%{_datadir}/mate-2.0/ui/multiload-applet-menu.xml
+%{_datadir}/mate-2.0/ui/cpufreq-applet-menu.xml
 %{_datadir}/mate/help/mate-accessx-status
 %{_datadir}/mate/help/mate-battstat
 %{_datadir}/mate/help/mate-char-palette
@@ -128,6 +153,10 @@ install -pD -m 644 %{SOURCE45} %buildroot%_sysconfdir/polkit-1/localauthority/50
 %{_datadir}/mate/help/mate-stickynotes_applet
 %{_datadir}/mate/help/mate-trashapplet
 %{_datadir}/mate/help/mateweather
+%{_datadir}/mate/help/mate-multiload
+%{_datadir}/mate/help/mate-invest-applet
+%{_datadir}/mate/help/mate-cpufreq-applet
+%{_datadir}/omf/mate-invest-applet
 %{_datadir}/omf/mate-accessx-status
 %{_datadir}/omf/mate-battstat
 %{_datadir}/omf/mate-char-palette
@@ -137,19 +166,17 @@ install -pD -m 644 %{SOURCE45} %buildroot%_sysconfdir/polkit-1/localauthority/50
 %{_datadir}/omf/mate-trashapplet
 %{_datadir}/omf/mateweather
 %{_datadir}/omf/mate-multiload
+%{_datadir}/omf/mate-cpufreq-applet
 %{_datadir}/pixmaps/mate-accessx-status-applet
 %{_datadir}/pixmaps/mate-stickynotes
-%{_datadir}/MateConf/gsettings/stickynotes-applet.convert
-%{_libexecdir}/mate-applets
-%{_datadir}/dbus-1/services/org.mate.panel.applet.MateWeatherAppletFactory.service
-%{_datadir}/dbus-1/services/org.mate.panel.applet.MultiLoadAppletFactory.service
-%{_datadir}/glib-2.0/schemas/org.mate.panel.applet.multiload.gschema.xml
-%{_datadir}/mate-2.0/ui/mateweather-applet-menu.xml
-%{_datadir}/mate-2.0/ui/multiload-applet-menu.xml
-%{_datadir}/mate/help/mate-multiload
+%{_datadir}/pixmaps/mate-cpufreq-applet
 %_sysconfdir/polkit-1/localauthority/50-local.d/01-cpufreq.pkla
 
+
 %changelog
+* Wed Aug 07 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.1-alt1_5
+- new fc release
+
 * Mon Apr 15 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.1-alt1_1
 - new fc release
 
