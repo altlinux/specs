@@ -8,14 +8,14 @@ BuildRequires: perl(DBIx/Class/InflateColumn/Object/Enum.pm) perl(Hash/Merge/Sim
 %define upstream_version 4.1.1
 
 Name:       perl-%{upstream_name}
-Version:    4.1.1
-Release:    alt1
+Version:    %{upstream_version}
+Release:    alt1_2
 
 Summary:    Extended DPath functionality for Tapper reports
 License:    GPL+ or Artistic
 Group:      Development/Perl
 Url:        http://search.cpan.org/dist/%{upstream_name}
-Source:    http://www.cpan.org/authors/id/T/TA/TAPPER/Tapper-Reports-DPath-%{version}.tar.gz
+Source0:    http://www.cpan.org/modules/by-module/Tapper/%{upstream_name}-%{upstream_version}.tar.gz
 
 BuildRequires: perl(CHI.pm)
 BuildRequires: perl(Class/C3.pm)
@@ -26,6 +26,7 @@ BuildRequires: perl(Data/Dumper.pm)
 BuildRequires: perl(Data/Structure/Util.pm)
 BuildRequires: perl(DateTime.pm)
 BuildRequires: perl(DateTime/Format/SQLite.pm)
+BuildRequires: perl(ExtUtils/MakeMaker.pm)
 BuildRequires: perl(File/ShareDir.pm)
 BuildRequires: perl(HTML/Mason.pm)
 BuildRequires: perl(JSON.pm)
@@ -44,7 +45,7 @@ BuildRequires: perl(Text/Balanced.pm)
 BuildRequires: perl(YAML/XS.pm)
 BuildRequires: perl(strict.pm)
 BuildRequires: perl(warnings.pm)
-BuildArch: noarch
+BuildArch:  noarch
 Source44: import.info
 
 %description
@@ -54,7 +55,7 @@ This distributions provides extended DPath functionality for Tapper reports.
 %setup -q -n %{upstream_name}-%{upstream_version}
 
 %build
-%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
+%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
 
 %make
 
@@ -65,13 +66,14 @@ This distributions provides extended DPath functionality for Tapper reports.
 %makeinstall_std
 
 %files
-%doc META.json META.yml Changes LICENSE README
+%doc Changes LICENSE META.json META.yml  README
 %perl_vendor_privlib/*
 
 
-
-
 %changelog
+* Wed Aug 07 2013 Igor Vlasenko <viy@altlinux.ru> 4.1.1-alt1_2
+- update by mgaimport
+
 * Sat Jul 27 2013 Igor Vlasenko <viy@altlinux.ru> 4.1.1-alt1
 - automated CPAN update
 
