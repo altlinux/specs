@@ -1,5 +1,5 @@
 Name:		libyui-ncurses
-Version:	2.44.0
+Version:	2.44.1
 Release:	alt1
 License:	%lgpl21only or %lgpl3only
 Source:		libyui-ncurses-%{version}.tar
@@ -56,7 +56,6 @@ Requires:	boost-devel
 Requires:	libyui-devel >= 3.0.4
 Requires:	ncurses-devel
 Requires:       libncursesw-devel
-Requires:       fonts-ttf-core
 
 Summary:	Libyui-ncurses header files
 
@@ -65,8 +64,23 @@ This package contains the character based (ncurses) user interface
 component for libYUI.
 
 This can be used independently of YaST for generic (C++) applications.
-This package has very few dependencies and provides the documentation
-(HTML & PDF).
+This package has very few dependencies.
+
+
+%package doc
+
+Group:		Documentation
+
+Requires:       libyui-ncurses5 = %{version}
+Requires:       fonts-ttf-core
+
+Summary:        Libyui-ncurses documentation
+
+%description doc
+This package contains the character based (ncurses) user interface
+component for libYUI.
+
+This package provides the documentation. (HTML & PDF)
 
 
 %prep
@@ -87,6 +101,7 @@ cd build
 cmake .. \
 	-DPREFIX=%{_prefix} \
 	-DDOC_DIR=%{_docdir} \
+	-DINSTALL_DOCS=ON \
 	-DLIB_DIR=%{_lib} \
 	-DCMAKE_BUILD_TYPE=RELEASE
 
@@ -110,16 +125,23 @@ fdupes -s %buildroot/%_docdir/libyui-ncurses5
 
 %files devel
 %defattr(-,root,root)
-%dir %{_docdir}/libyui-ncurses5
 %{_libdir}/yui/lib*.so
 %{_prefix}/include/yui
 %{_libdir}/pkgconfig/libyui-ncurses.pc
 %{_libdir}/cmake/libyui-ncurses
 %{_datadir}/libyui
+
+%files doc
 %doc %{_docdir}/libyui-ncurses5
 %exclude %{_docdir}/libyui-ncurses5/COPYING*
 
 %changelog
+* Thu Aug 8 2013 Andrey Kolotov <qwest@altlinux.ru> 2.44.1-alt1
+- new upstream version
+- fix documentation bug in spec
+- added package libyui-ncurses-doc
+- package devel without documentation
+
 * Mon Jul 29 2013 Andrey Kolotov <qwest@altlinux.ru> 2.44.0-alt1
 - package devel with documentation
 - uses curses5.9, must be changed to curses6
