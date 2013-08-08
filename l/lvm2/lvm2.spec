@@ -1,5 +1,5 @@
-%define lvm2version 2.02.98
-%define dmversion 1.02.77
+%define lvm2version 2.02.99
+%define dmversion 1.02.78
 
 %def_disable cluster
 %def_enable selinux
@@ -232,9 +232,9 @@ chmod -R u+rwX %buildroot
 %{?_enable_static:install -pm755 lvm.static %buildroot/sbin/}
 
 mkdir -p %buildroot/%_lib
-mkdir -p %buildroot/etc/lvm/{archive,backup}
+mkdir -p %buildroot%_sysconfdir/lvm/{archive,backup}
 mkdir -p %buildroot/var/lock/lvm
-install -m700 /dev/null %buildroot/etc/lvm/.cache
+install -m700 /dev/null %buildroot%_sysconfdir/lvm/.cache
 
 ### device-mapper part
 
@@ -310,7 +310,8 @@ install -m 0755 %SOURCE5 %buildroot%_initdir/blk-availability
 %if_enabled cluster
 %exclude %_mandir/man8/clvm*
 %endif
-%config(noreplace) /etc/lvm/lvm.conf
+%config(noreplace) %_sysconfdir/lvm/lvm.conf
+%_sysconfdir/lvm/profile/default.profile
 %_initdir/lvm2-monitor
 %_unitdir/lvm2-monitor.service
 %_initdir/blk-availability
@@ -323,12 +324,13 @@ install -m 0755 %SOURCE5 %buildroot%_initdir/blk-availability
 %endif
 /lib/systemd/system-generators/lvm2-activation-generator
 /lib/tmpfiles.d/%name.conf
-%dir /etc/lvm/
+%dir %_sysconfdir/lvm
+%dir %_sysconfdir/lvm/profile
 %defattr(600,root,root,700)
-/etc/lvm/backup/
-/etc/lvm/archive/
-/var/lock/lvm/
-%ghost %verify(not md5 size mtime) %config(missingok,noreplace) /etc/lvm/.cache
+%dir %_sysconfdir/lvm/backup/
+%dir %_sysconfdir/lvm/archive/
+/var/lock/lvm
+%ghost %verify(not md5 size mtime) %config(missingok,noreplace) %_sysconfdir/lvm/.cache
 
 %if_enabled static
 %files static
@@ -397,6 +399,9 @@ install -m 0755 %SOURCE5 %buildroot%_initdir/blk-availability
 %_pkgconfigdir/devmapper-event.pc
 
 %changelog
+* Mon Jul 29 2013 Alexey Shabalin <shaba@altlinux.ru> 2.02.99-alt1
+- 2.02.99
+
 * Mon Nov 19 2012 Alexey Shabalin <shaba@altlinux.ru> 2.02.98-alt1
 - git snapshot 7a34db0c
 - build with lvmetad support
