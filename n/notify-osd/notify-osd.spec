@@ -16,7 +16,7 @@
 
 Name: notify-osd
 Version: 0.9.30
-Release: alt1
+Release: alt2
 
 Summary: Streamlined Desktop Notifications
 License: GPLv3+
@@ -41,8 +41,10 @@ BuildRequires: pkgconfig(gtk+-2.0) >= 2.14
 BuildRequires: pkgconfig(libnotify) >= 0.4.5
 BuildRequires: pkgconfig(dbus-glib-1) >= 0.76
 
-# both packages provide {_datadir}/dbus-1/services/org.freedesktop.Notifications.service
+# these provide %%_datadir/dbus-1/services/org.freedesktop.Notifications.service
 Conflicts: notification-daemon xfce4-notifyd
+
+Provides: desktop-notification-daemon
 
 %description
 This notification service is an alternative to the notification-daemon
@@ -73,6 +75,9 @@ discouraging the use of actions and timeouts.
 # https://api.opensuse.org/public/source/openSUSE:Factory/notify-osd/notify-osd.spec?rev=7c5fe51a51d63d4581743444b54df419
 
 %changelog
+* Thu Aug 08 2013 Michael Shigorin <mike@altlinux.org> 0.9.30-alt2
+- added Provides: desktop-notification-daemon as proposed by viy@
+
 * Wed Oct 12 2011 Michael Shigorin <mike@altlinux.org> 0.9.30-alt1
 - rollback to 0.9.30 (gtk+3-3.2.0 not yet moved to Sisyphus)
 - picked up a patch from opensuse 0.9.30-1 package
