@@ -1,8 +1,10 @@
 Name:		libyui
-Version:	3.0.9
+Version:	3.0.10
 Release:	alt1
 License:	%lgpl21only or %lgpl3only
 Source:		libyui-%{version}.tar
+Patch0:		libyui-devel-3.0.10-alt-cmake.patch
+
 Group:		System/Libraries
 Packager:	Andrey Kolotov <qwest@altlinux.ru>
 
@@ -54,7 +56,6 @@ Requires:	libyui5 = %{version}
 Requires:	glibc-devel
 Requires:	libstdc++-devel
 Requires:	boost-devel
-Requires:	fonts-ttf-core
 
 Summary:	Libyui header files
 
@@ -67,12 +68,30 @@ Originally developed for YaST, it can now be used independently of
 YaST for generic (C++) applications. This package has very few
 dependencies.
 
-This can be used independently of YaST for generic (C++) applications.
-This package has very few dependencies and provides the documentation
-(HTML & PDF).
+
+%package doc
+
+Group:		Documentation
+
+Requires:       libyui5 = %{version}
+Requires:       fonts-ttf-core
+
+Summary:        Libyui documentation
+
+%description doc
+This is the user interface engine that provides the abstraction from
+graphical user interfaces (Qt, Gtk) and text based user interfaces
+(ncurses).
+
+Originally developed for YaST, it can now be used independently of
+YaST for generic (C++) applications. This package has very few
+dependencies.
+
+This package provides the documentation. (HTML & PDF)
 
 %prep
 %setup -q -n libyui-%{version}
+%patch0 -p1
 
 
 %build
@@ -89,6 +108,7 @@ cmake .. \
 	-DPREFIX=%{_prefix} \
 	-DDOC_DIR=%{_docdir} \
 	-DLIB_DIR=%{_lib} \
+	-DINSTALL_DOCS=ON \
 	-DCMAKE_BUILD_TYPE=RELEASE
 
 make docs
@@ -119,10 +139,22 @@ fdupes -s %buildroot/%_docdir/libyui5
 %{_libdir}/pkgconfig/libyui.pc
 %{_libdir}/cmake/libyui
 %{_datadir}/libyui/buildtools
+%doc %{_docdir}/libyui5/examples
+
+%files doc
+%dir %{_docdir}/libyui5
 %doc %{_docdir}/libyui5
 %exclude %{_docdir}/libyui5/COPYING*
+%exclude %{_docdir}/libyui5/examples
 
 %changelog
+* Wed Aug 07 2013 Andrey Kolotov <qwest@altlinux.ru> 3.0.10-alt1
+- new upstream version
+- added patch for build libyui-qt
+- fix documentation bug in spec
+- added package libyui-doc
+- package devel without documentation
+
 * Fri Jul 26 2013 Andrey Kolotov <qwest@altlinux.ru> 3.0.9-alt1
 - package devel with documentation
 - release for AltLinux
