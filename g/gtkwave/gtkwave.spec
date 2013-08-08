@@ -1,5 +1,5 @@
 Name: gtkwave
-Version: 3.3.47
+Version: 3.3.48
 Release: alt1
 Summary: %name
 License: GPL
@@ -12,9 +12,9 @@ Url: http://gtkwave.sourceforge.net/
 Source: %name-%version.tar
 Source100: %name.watch
 
-# Automatically added by buildreq on Wed Apr 04 2012 (-bb)
-# optimized out: elfutils fontconfig fontconfig-devel glib2-devel libX11-devel libatk-devel libcairo-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libpango-devel libwayland-client libwayland-server pkg-config python-base rpm-build-tcl shared-mime-info tcl tcl-devel xorg-xproto-devel zlib-devel
-BuildRequires: bzlib-devel desktop-file-utils flex gperf libgtk+2-devel liblzma-devel tk-devel
+# Automatically added by buildreq on Thu Aug 08 2013 (-bb)
+# optimized out: elfutils fontconfig fontconfig-devel glib2-devel gnu-config libX11-devel libatk-devel libcairo-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libpango-devel libstdc++-devel libwayland-client libwayland-server pkg-config python-base rpm-build-tcl shared-mime-info tcl tcl-devel xorg-xproto-devel zlib-devel
+BuildRequires: bzlib-devel desktop-file-utils flex gcc-c++ gperf libgtk+2-devel liblzma-devel tk-devel
 
 %description
 %summary
@@ -43,6 +43,9 @@ BuildRequires: bzlib-devel desktop-file-utils flex gperf libgtk+2-devel liblzma-
 %_datadir/mime/packages/*.xml
 
 %changelog
+* Thu Aug 08 2013 Denis Smirnov <mithraen@altlinux.ru> 3.3.48-alt1
+- new version 3.3.48
+
 * Tue Jun 11 2013 Cronbuild Service <cronbuild@altlinux.org> 3.3.47-alt1
 - new version 3.3.47
 
