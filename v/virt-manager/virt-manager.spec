@@ -9,7 +9,7 @@
 
 Name: virt-manager
 Version: 0.10.0
-Release: alt1
+Release: alt2
 Summary: Virtual Machine Manager
 
 Group: Emulators
@@ -19,6 +19,7 @@ BuildArch: noarch
 
 # git://git.fedorahosted.org/virt-manager.git
 Source: %name-%version.tar
+Patch: %name-%version-%release.patch
 
 Requires: virt-manager-common = %version-%release
 Requires: virt-install = %version-%release
@@ -72,6 +73,7 @@ machine).
 
 %prep
 %setup
+%patch -p1
 
 %build
 python setup.py configure \
@@ -125,6 +127,9 @@ python setup.py install --root=%buildroot
 %_man5dir/virt-image.5*
 
 %changelog
+* Thu Aug 08 2013 Alexey Shabalin <shaba@altlinux.ru> 0.10.0-alt2
+- add ALT Linux support
+
 * Thu Jul 04 2013 Alexey Shabalin <shaba@altlinux.ru> 0.10.0-alt1
 - 0.10.0
 - add subpackages virt-install and virt-manager-common
