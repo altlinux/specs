@@ -95,7 +95,7 @@
 %def_with sasl
 
 Name: libvirt
-Version: 1.1.0
+Version: 1.1.1
 Release: alt1
 Summary: Library providing a simple API virtualization
 License: LGPLv2+
@@ -898,10 +898,13 @@ fi
 %files -n python-module-%name
 %python_sitelibdir/libvirt*
 %doc python/tests/*.py
-%doc python/TODO
 %doc examples/python
 
 %changelog
+* Thu Aug 08 2013 Alexey Shabalin <shaba@altlinux.ru> 1.1.1-alt1
+- 1.1.1
+- fixed CVE-2013-2230, CVE-2013-4153, CVE-2013-4154
+
 * Wed Jul 03 2013 Alexey Shabalin <shaba@altlinux.ru> 1.1.0-alt1
 - v1.1.0-maint branch
 - add vbox subpackages
