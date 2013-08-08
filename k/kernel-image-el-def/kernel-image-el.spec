@@ -7,7 +7,7 @@
 
 Name: kernel-image-%flavour
 Version: 2.6.32
-Release: alt9
+Release: alt10
 %define erelease 358.14.1.el6
 
 %define kernel_req %nil
@@ -30,8 +30,8 @@ Release: alt9
 %def_enable man
 %def_disable debug
 %def_disable crypto_signature
-%def_without perf
 %def_with firmware
+%def_without perf
 
 %def_enable debug_section_mismatch
 
@@ -276,9 +276,13 @@ GCC_VERSION="$(%__cc --version | head -1 | cut -d' ' -f3 | cut -d. -f1-2)"
 %endif
 echo -n "export GCC_VERSION=$GCC_VERSION" > gcc_version.inc
 
-sed -i -e 's/CC.*$(CROSS_COMPILE)gcc/CC\t\t:= '"gcc-$GCC_VERSION/g" Makefile
+sed -i 's/CC.*$(CROSS_COMPILE)gcc/CC\t\t:= '"gcc-$GCC_VERSION/g" Makefile
 
-%{?_with_src:find . -type f -not -empty -not -name '*.orig' -not -name '*~' -not -name '.git*' > ../kernel-src-%flavour.list}
+%if_with src
+cd ..
+find linux-%kversion-%erelease -type f -or -type l -not -name '*.orig' -not -name '*~' -not -name '.git*' > kernel-src-%flavour.list
+cd -
+%endif
 
 install -m644 %SOURCE1 %SOURCE2 .
 
@@ -462,14 +466,17 @@ install -m 0644 Documentation/DocBook/man/* %buildroot%kmandir/
 %endif
 %endif
 
+cd -
+
 %if_with src
 install -d -m 0755 %kernel_srcdir
 t="%__nprocs"
 [ $t -gt 1 ] && XZ="pxz -T$t" || XZ="xz"
-tar --transform='s,^,kernel-src-%flavour-%kversion-%krelease/,' \
+tar	--transform='s/^\(linux-%kversion\)-%erelease/\1-%flavour-%krelease/' \
 	--owner=root --group=root --mode=u+w,go-w,go+rX \
-	-T ../kernel-src-%flavour.list -cf - | \
-	$XZ -8e > %kernel_srcdir/kernel-src-%flavour-%kversion-%krelease.tar.xz
+	-T kernel-src-%flavour.list \
+	-cf - | \
+	$XZ -8e > %kernel_srcdir/linux-%kversion-%flavour-%krelease.tar.xz
 %endif
 
 
@@ -502,7 +509,7 @@ tar --transform='s,^,kernel-src-%flavour-%kversion-%krelease/,' \
 %files -n perf
 %doc %_docdir/perf-%version
 %_bindir/*
-%exclude %_libexecdir
+%_libexecdir
 %_man1dir/*
 %endif
 
@@ -541,6 +548,11 @@ tar --transform='s,^,kernel-src-%flavour-%kversion-%krelease/,' \
 
 
 %changelog
+* Thu Aug 08 2013 Led <led@altlinux.ru> 2.6.32-alt10
+- fixed tarball creation of kernel-src
+- updated:
+  + feat-drivers-gpu-drm--gma500
+
 * Wed Jul 17 2013 Led <led@altlinux.ru> 2.6.32-alt9
 - 2.6.32-358.14.1.el6:
   + CVE-2012-6548
