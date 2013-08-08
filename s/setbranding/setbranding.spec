@@ -1,0 +1,36 @@
+Name:     setbranding
+Version:  1.0.1
+Release:  alt1
+
+Summary:  Script for manipulation ALT Linux branding packages
+License:  GPLv3+
+Group:    System/Configuration/Packaging
+URL: 	  http://altlinux.org/setbranding
+Packager: Andrey Cherepanov <cas@altlinux.org> 
+BuildArch: noarch
+
+Source:   setbranding
+
+Requires:  apt make-initrd grub2-common
+
+%description
+Script for manipulation ALT Linux branding (distribution design profile)
+packages. You can show installed branding packages and switch to other
+branding.
+
+%install
+install -Dm755 %SOURCE0 %buildroot%_bindir/%name
+
+%files
+%_bindir/%name
+
+%changelog
+* Thu Aug 08 2013 Andrey Cherepanov <cas@altlinux.org> 1.0.1-alt1
+- Set full path to programs
+- Check root privileges on branding change
+- Show usage information
+- Update grub on branding change
+
+* Wed Aug 07 2013 Andrey Cherepanov <cas@altlinux.org> 1.0.0-alt1
+- Initial build in Sisyphus
+
