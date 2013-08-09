@@ -1,6 +1,6 @@
 Name: cinnamon
 Version: 1.8.7
-Release: alt1
+Release: alt2
 
 Summary: Window management and application launching for GNOME
 License: GPLv2+
@@ -31,6 +31,8 @@ Patch: %name-%version-%release.patch
 %define polkit_ver 0.100
 %define folks_ver 0.5.2
 %define bt_ver 3.0.0
+
+Provides: desktop-notification-daemon
 
 Requires: upower
 Requires: polkit >= %polkit_ver
@@ -246,6 +248,9 @@ _WM_
 %doc NEWS README
 
 %changelog
+* Thu Aug 8 2013 Vladimir Didenko <cow@altlinux.org> 1.8.7-alt2
+- provide desktop-notification-daemon
+
 * Tue Jun 4 2013 Vladimir Didenko <cow@altlinux.org> 1.8.7-alt1
 - 1.8.7
 - remove gnome-shell.desktop before start
