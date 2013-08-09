@@ -1,12 +1,23 @@
 %define formats rom
-%define qemuroms rtl8139 e1000_82540 virtio-net pcnet32 ne2k_isa ns8390 eepro100
+# PCI IDs (vendor,product) of the ROMS we want for QEMU
+#
+# 8086:100e -> pxe-e1000.rom intel
+# 8086:1209 -> pxe-eepro100.rom eepro100
+# 1050:0940 -> pxe-ne2k_pci.rom ns8390
+# 1022:2000 -> pxe-pcnet.rom pcnet32
+# 10ec:8139 -> pxe-rtl8139.rom rtl8139
+# 1af4:1000 -> pxe-virtio.rom virtio-net
+
+# %define qemuroms intel(was e1000) eepro100 ns8390 pcnet32 rtl8139 virtio-net
+%define qemuroms 8086100e 80861209 10500940 10222000 10ec8139 1af41000
+%define hash 55201e2
 
 Name: ipxe
 Version: 1.0.0
-Release: alt2.git174df77
+Release: alt3.git%{hash}
 
 Summary: PXE boot firmware
-License: GPLv2+
+License: GPLv2 and BSD
 Group: Networking/Other
 Url: http://ipxe.org/
 #Vcs-Git: git://git.ipxe.org/ipxe.git
@@ -18,7 +29,8 @@ Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
 Requires: ipxe-bootimgs
-BuildRequires: mkisofs mtools syslinux
+BuildRequires: mkisofs mtools syslinux binutils-devel edk2-tools
+BuildRequires: binutils-x86_64-linux-gnu gcc-x86_64-linux-gnu
 
 %description
 iPXE is the leading open source network boot firmware.
@@ -82,20 +94,49 @@ This package contains the iPXE ROMs for devices emulated by QEMU, in
 %patch -p1
 
 %build
-make -C src V=1 NO_WERROR=1 all allbaseroms bin/ipxe.pxe
+mkdir .git
+touch .git/index
+export ISOLINUX_BIN=/usr/lib/syslinux/isolinux.bin
+
+cd src 
+# ath9k drivers are too big for an Option ROM
+rm -rf drivers/net/ath/ath9k
+
+make all allroms \
+	V=1 NO_WERROR=1 \
+	ISOLINUX_BIN=${ISOLINUX_BIN} \
+	GITVERSION=%hash
+
+
+# build roms with efi support for qemu
+mkdir bin-combined
+for rom in %qemuroms; do
+  make NO_WERROR=1 V=1 GITVERSION=%hash CROSS_COMPILE=x86_64-linux-gnu- bin/${rom}.rom
+  make NO_WERROR=1 V=1 GITVERSION=%hash CROSS_COMPILE=x86_64-linux-gnu- bin-i386-efi/${rom}.efidrv
+  make NO_WERROR=1 V=1 GITVERSION=%hash CROSS_COMPILE=x86_64-linux-gnu- bin-x86_64-efi/${rom}.efidrv
+  vid="0x${rom%%????}"
+  did="0x${rom#????}"
+  EfiRom -f "$vid" -i "$did" --pci23 \
+         -b  bin/${rom}.rom \
+         -ec bin-i386-efi/${rom}.efidrv \
+         -ec bin-x86_64-efi/${rom}.efidrv \
+         -o  bin-combined/${rom}.rom
+  EfiRom -d  bin-combined/${rom}.rom
+done
 
 %install
-mkdir -p %buildroot%_libexecdir/%name
+mkdir -p %buildroot%_datadir/%name
+mkdir -p %buildroot%_datadir/%name.efi
 
 pushd src/bin/
 
-install -pm0644 ipxe.{dsk,iso,usb,lkrn,pxe} undionly.kpxe %buildroot%_libexecdir/%name
+install -pm0644 ipxe.{dsk,iso,usb,lkrn,pxe} undionly.kpxe %buildroot%_datadir/%name
 
 for fmt in %formats; do
  for img in *.${fmt}; do
       if [ -e $img ]; then
-   cp -a $img %buildroot%_libexecdir/%name/
-   echo %_libexecdir/%name/$img >> ../../${fmt}.list
+   cp -a $img %buildroot%_datadir/%name/
+   echo %_datadir/%name/$img >> ../../${fmt}.list
   fi
  done
 done
@@ -106,21 +147,36 @@ popd
 for fmt in rom ; do
  for rom in %qemuroms ; do
   sed -i -e "/\/${rom}.${fmt}/d" ${fmt}.list
-  echo %_libexecdir/%name/${rom}.${fmt} >> qemu.${fmt}.list
+  echo %_datadir/%name/${rom}.${fmt} >> qemu.${fmt}.list
  done
 done
+for rom in %qemuroms; do
+  cp src/bin-combined/${rom}.rom %buildroot/%_datadir/%name.efi/
+  echo %_datadir/%name.efi/${rom}.rom >> qemu.${fmt}.list
+done
+
+pxe_link() {
+  ln -r -s %buildroot%_datadir/%name/$1.rom %buildroot%_datadir/%name/pxe-$2.rom
+  ln -r -s %buildroot%_datadir/%name.efi/$1.rom %buildroot%_datadir/%name.efi/efi-$2.rom
+}
+
+pxe_link 8086100e e1000
+pxe_link 80861209 eepro100
+pxe_link 10500940 ne2k_pci
+pxe_link 10222000 pcnet
+pxe_link 10ec8139 rtl8139
+pxe_link 1af41000 virtio
 
 %files
 %doc README
 
 %files bootimgs
-%dir %_libexecdir/%name
-%_libexecdir/%name/ipxe.iso
-%_libexecdir/%name/ipxe.usb
-%_libexecdir/%name/ipxe.dsk
-%_libexecdir/%name/ipxe.lkrn
-%_libexecdir/%name/ipxe.pxe
-%_libexecdir/%name/undionly.kpxe
+%_datadir/%name/ipxe.iso
+%_datadir/%name/ipxe.usb
+%_datadir/%name/ipxe.dsk
+%_datadir/%name/ipxe.lkrn
+%_datadir/%name/ipxe.pxe
+%_datadir/%name/undionly.kpxe
 %doc COPYING COPYRIGHTS
 
 %files roms -f rom.list
@@ -128,8 +184,17 @@ done
 
 %files roms-qemu -f qemu.rom.list
 %doc COPYING COPYRIGHTS
+%dir %_datadir/%name
+%_datadir/%name/pxe-*.rom
+%dir %_datadir/%name.efi
+%_datadir/%name.efi/efi-*.rom
 
 %changelog
+* Fri Aug 09 2013 Alexey Shabalin <shaba@altlinux.ru> 1.0.0-alt3.git55201e2
+- upstream git snapshot 55201e2d0e60003edfd7e2c7c4c592136b000f44
+- build UEFI drivers for QEMU
+- move roms from _libexecdir to _datadir
+
 * Fri Aug 12 2011 Alexey Shabalin <shaba@altlinux.ru> 1.0.0-alt2.git174df77
 - add Provides Obsoletes for gpxe
 
