@@ -1,13 +1,12 @@
 
 Summary: A library for managing OS information for virtualization
 Name: libosinfo
-Version: 0.2.6
+Version: 0.2.7
 Release: alt1
 License: LGPLv2+
 Group: System/Libraries
 
 Source: %name-%version.tar
-Patch: %name-%version-%release.patch
 Patch2: %name-%version-altlinux.patch
 
 Url: https://fedorahosted.org/libosinfo/
@@ -74,7 +73,6 @@ Contains developer documentation for %name.
 
 %prep
 %setup
-%patch -p1
 %patch2 -p1
 
 %build
@@ -133,6 +131,9 @@ rm -f %buildroot%_libdir/*.{a,la}
 %_datadir/gtk-doc/html/*
 
 %changelog
+* Fri Aug 09 2013 Alexey Shabalin <shaba@altlinux.ru> 0.2.7-alt1
+- 0.2.7
+
 * Thu Mar 21 2013 Alexey Shabalin <shaba@altlinux.ru> 0.2.6-alt1
 - 0.2.6
 
