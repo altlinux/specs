@@ -1,12 +1,14 @@
 # vim: set ft=spec: -*- rpm-spec -*-
 
+# check runs 'bzr selftest' that requires network to success
+# export share_network=1 before gear-hsh
 %def_without check
 
 # %%branch_switch set %%branch_release use
 #%%define branch_switch Mxx
 
 Name: bzr
-Version: 2.5.1
+Version: 2.6.0
 Release: %branch_release alt1
 
 Summary: Bazaar is a decentralized revision control system
@@ -19,7 +21,7 @@ Packager: Anatoly Kitaykin <cetus@altlinux.ru>
 Source: %name-%version.tar
 
 Patch0: bzr-2.5.0-alt-ssl-cert-path.patch
-Patch1: bzr-2.5.1-alt-pyftbdlib-version.patch
+Patch1: bzr-2.5.1-alt-pyftpdlib-version.patch
 
 %add_python_req_skip launchpadlib
 %add_python_req_skip lazr
@@ -34,6 +36,8 @@ BuildRequires: python-module-Pyrex python-modules-compiler python-modules-email 
 
 %{?!__buildreqs:%{?!_without_check:%{?!_without_test:%{?!_disable_check:%{?!_disable_test:BuildRequires: python-module-docutils}}}}}
 %{?!__buildreqs:%{?!_without_check:%{?!_without_test:%{?!_disable_check:%{?!_disable_test:BuildRequires: python-module-paramiko}}}}}
+%{?!__buildreqs:%{?!_without_check:%{?!_without_test:%{?!_disable_check:%{?!_disable_test:BuildRequires: python-module-testtools}}}}}
+%{?!__buildreqs:%{?!_without_check:%{?!_without_test:%{?!_disable_check:%{?!_disable_test:BuildRequires: python-module-python-subunit-tests}}}}}
 
 %description
 Bazaar is a distributed version control system that Just Works. While
@@ -49,6 +53,7 @@ Summary: Tools for testing Bazaar
 Group: Development/Other
 
 Requires: %name = %version-%release
+Provides: bzr-selftest = %version-%release
 
 %description -n python-module-bzrlib-tests
 This package contain tools and test suites for testing Bazaar.
@@ -107,6 +112,9 @@ mv %buildroot%_datadir/share/locale %buildroot%_datadir
 %bzr_docdir/contrib
 
 %changelog
+* Fri Aug 09 2013 Anatoly Kitaykin <cetus@altlinux.org> 2.6.0-alt1
+- 2.6.0 release with typo fixes up to 2013-08-04
+
 * Tue Oct 02 2012 Anatoly Kitaykin <cetus@altlinux.org> 2.5.1-alt1
 - 2.5.1 release
 
