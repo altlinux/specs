@@ -20,7 +20,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.4.56
-Release: alt6
+Release: alt7
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -278,7 +278,7 @@ Patch0213: linux-%kernel_branch.39-fix-drivers-gpio--gpiolib.patch
 
 Patch0221: linux-%kernel_branch.50-fix-drivers-gpu-drm--drm.patch
 Patch0222: linux-%kernel_branch.25-fix-drivers-gpu-drm--exynosdrm.patch
-Patch0223: linux-%kernel_branch.25-fix-drivers-gpu-drm--gma500_gfx.patch
+Patch0223: linux-%kernel_branch.50-fix-drivers-gpu-drm--gma500_gfx.patch
 Patch0224: linux-%kernel_branch.50-fix-drivers-gpu-drm--i915.patch
 Patch0225: linux-%kernel_branch.20-fix-drivers-gpu-drm--nouveau.patch
 Patch0226: linux-%kernel_branch.38-fix-drivers-gpu-drm--radeon.patch
@@ -2891,6 +2891,11 @@ done)
 
 
 %changelog
+* Thu Aug 08 2013 Led <led@altlinux.ru> 3.4.56-alt7
+- updated:
+  + fix-drivers-gpu-drm--i915
+  + fix-drivers-gpu-drm--gma500_gfx
+
 * Thu Aug 08 2013 Led <led@altlinux.ru> 3.4.56-alt6
 - added:
   + fix-drivers-usb-usbip
