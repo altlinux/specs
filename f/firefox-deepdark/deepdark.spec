@@ -1,11 +1,11 @@
 BuildRequires(pre): rpm-build-firefox
 
 %define rname	deepdark
-%define cid	\{a49e71d0-0598-11e0-81e0-0800200c9a66\}
+%define cid	\{77d2ed30-4cd2-11e0-b8af-0800200c9a66\}
 %define ciddir 	%firefox_noarch_extensionsdir/%cid
 
 Name:		%firefox_name-%rname
-Version:	5.4
+Version:	7.3.1
 Release:	alt1
 Summary:	Dark theme for Firefox
 
@@ -33,6 +33,9 @@ cp -fR * %buildroot/%ciddir
 %ciddir
 
 %changelog
+* Sat Aug 10 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 7.3.1-alt1
+- Version 7.3.1
+
 * Mon Dec 17 2012 Andrey Cherepanov <cas@altlinux.org> 5.4-alt1
 - New version 5.4
 
