@@ -1,40 +1,45 @@
 Name: genext2fs
 Version: 1.4.1
-Release: alt1.qa1
-
+Release: alt2
 Summary: genext2fs creates a virtual ext2 file system in a single file
-Copyright: GPL
+License: GPL
 Group: File tools
-
-URL: http://genext2fs.sourceforge.net/
-Source: http://dl.sourceforge.net/genext2fs/genext2fs-%version.tar.gz
+URL: http://%name.sourceforge.net/
+Source: %name-%version.tar
+Patch: %name-%version-%release.patch
 
 %description
-genext2fs generates an ext2 filesystem as a normal (non-root) user. It does
-not require you to mount the image file to copy files on it, nor does it
-require that you become the superuser to make device nodes.
+genext2fs generates an ext2 filesystem as a normal (non-root) user. It does not
+require you to mount the image file to copy files on it, nor does it require that
+you become the superuser to make device nodes.
 
-Warning! genext2fs has been designed for embedded systems. As such, it will
-generate a filesystem for single-user usage: all files/directories/etc...
-will belong to UID/GID 0
 
 %prep
 %setup -q
+%patch -p1
+
 
 %build
-CC=gcc \
+./autogen.sh
 %configure
-%make
+%make_build
+
 
 %install
-%make_install install DESTDIR=%buildroot
+%makeinstall_std
+
 
 %files
-%doc device_table.txt
+%doc AUTHORS README TODO device_table.txt
 %_bindir/*
 %_man8dir/*
 
+
 %changelog
+* Sat Aug 10 2013 Led <led@altlinux.ru> 1.4.1-alt2
+- cleaned up spec
+- updates and fixes of upstream's SCM
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.4.1-alt1.qa1
 - NMU: rebuilt for debuginfo.
 
