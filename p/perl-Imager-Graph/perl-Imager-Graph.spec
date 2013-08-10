@@ -4,7 +4,7 @@
 
 Name: perl-Imager-Graph
 Version: 0.10
-Release: alt1
+Release: alt2
 
 Summary: producing Graphs using the Imager library
 
@@ -16,6 +16,7 @@ URL: http://search.cpan.org/~tonyc/Imager-Graph/
 Packager: Nikolay A. Fetisov <naf@altlinux.ru>
 
 Source: %real_name-%version.tar
+Patch0: %name-0.10-alt-pod_fix.patch
 
 BuildArch: noarch
 
@@ -35,6 +36,7 @@ is provided.
 
 %prep
 %setup -q -n %real_name-%version
+%patch0
 
 %build
 %perl_vendor_build
@@ -48,6 +50,9 @@ is provided.
 %perl_vendor_privlib/Imager/Graph*
 
 %changelog
+* Sat Aug 10 2013 Nikolay A. Fetisov <naf@altlinux.ru> 0.10-alt2
+- Fix POD formating
+
 * Thu Oct 18 2012 Nikolay A. Fetisov <naf@altlinux.ru> 0.10-alt1
 - New version
 
