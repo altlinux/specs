@@ -1,24 +1,21 @@
 Name: e2fsimage
 Version: 0.2.2
-Release: alt2.qa1
+Release: alt3
 Summary: Create and populate an ext2 filesystem image as non-root user
-License: %bsdstyle
-Group: System/Kernel and hardware
+License: BSD-style
+Group: File tools
 URL: http://sourceforge.net/projects/%name
-Source0: %name-%version.tar
+Source: %name-%version.tar
 Patch: %name-%version-%release.patch
-Packager: Led <led@altlinux.org>
-
-BuildRequires(pre): rpm-build-licenses
 
 # Automatically added by buildreq on Thu Feb 21 2008
 BuildRequires: libe2fs-devel
 
 %description
-%name creates an ext2 filesystem image by recursively copying the
-files from the existing directory structure rootdir to the image-file.
-Supported filetypes are: regular files, directorys, hard-links,
-soft-links, block special devices, character special devices and fifos.
+%name creates an ext2 filesystem image by recursively copying the files from
+the existing directory structure rootdir to the image-file.
+Supported filetypes are: regular files, directorys, hard-links, soft-links, block
+special devices, character special devices and fifos.
 
 
 %prep
@@ -27,15 +24,13 @@ soft-links, block special devices, character special devices and fifos.
 
 
 %build
-export prefix=%_prefix CFLAGS="%optflags"
+export prefix=%_prefix CFLAGS="%optflags" CC=%__cc mandir=%_mandir
 ./configure
 %make_build
 
 
 %install
-install -d -m 0755 %buildroot{%_bindir,%_man1dir}
-install -m 0755 src/%name %buildroot%_bindir/
-gzip -dc man/%name.1.gz > %buildroot%_man1dir/%name.1
+%makeinstall_std
 
 
 %files
@@ -45,6 +40,12 @@ gzip -dc man/%name.1.gz > %buildroot%_man1dir/%name.1
 
 
 %changelog
+* Sat Aug 10 2013 Led <led@altlinux.ru> 0.2.2-alt3
+- fixed build warnings
+- fixed makefiles
+- fixed Group
+- cleaned up spec
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.2.2-alt2.qa1
 - NMU: rebuilt for debuginfo.
 
