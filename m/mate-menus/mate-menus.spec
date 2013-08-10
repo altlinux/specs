@@ -7,7 +7,7 @@ Requires: altlinux-freedesktop-menu-mate
 %define _libexecdir %_prefix/libexec
 Name:           mate-menus
 Version:        1.6.0
-Release:        alt1_4
+Release:        alt1_5
 Summary:        Displays menus for MATE Desktop
 License:        GPLv2+ and LGPLv2+
 URL:            http://mate-desktop.org
@@ -111,6 +111,9 @@ find %{buildroot} -name '*.a' -exec rm -f {} ';'
 
 
 %changelog
+* Wed Aug 07 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.0-alt1_5
+- new fc release
+
 * Thu Aug 01 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.0-alt1_4
 - new fc release
 
