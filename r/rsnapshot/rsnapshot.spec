@@ -1,6 +1,6 @@
 Name:    rsnapshot
 Version: 1.3.1
-Release: alt2
+Release: alt3
 
 Summary: local and remote filesystem snapshot utility
 
@@ -16,6 +16,7 @@ Source1: %name.logrotate
 Source2: %name.cron
 
 Patch0:  %name-1.3.1-alt-conf_file.patch
+Patch1:  %name-1.3.1-alt-pod_fix.patch
 
 BuildRequires(pre): rpm-build-licenses
 
@@ -38,6 +39,7 @@ without the root user getting involved.
 %prep
 %setup
 %patch0
+%patch1
 
 mv -f -- COPYING COPYING.orig
 ln -s -- $(relative %_licensedir/GPL-2 %_docdir/%name/COPYING) COPYING
@@ -140,6 +142,9 @@ exit 0
 %_man1dir/rsnapshot*
 
 %changelog
+* Sat Aug 10 2013 Nikolay A. Fetisov <naf@altlinux.ru> 1.3.1-alt3
+- fix POD syntax
+
 * Sun Nov 28 2010 Nikolay A. Fetisov <naf@altlinux.ru> 1.3.1-alt2
 - fix build with Perl 5.12
 
