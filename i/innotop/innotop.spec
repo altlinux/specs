@@ -1,8 +1,8 @@
 ## SPEC file for innotop
 
 Name: innotop
-Version: 1.9.0
-Release: alt2
+Version: 1.9.1
+Release: alt1
 
 Summary: a 'top' clone for MySQL with special attention paid to InnoDB
 
@@ -61,6 +61,9 @@ install -m 644 %name.1 %buildroot%_man1dir/%name.1
 %_man1dir/%name.*
 
 %changelog
+* Sat Aug 10 2013 Nikolay A. Fetisov <naf@altlinux.ru> 1.9.1-alt1
+- New version
+
 * Mon Oct 22 2012 Nikolay A. Fetisov <naf@altlinux.ru> 1.9.0-alt2
 - Add missing requires on DBD::mysql
 
