@@ -4,7 +4,7 @@ BuildRequires: /usr/bin/glib-gettextize pkgconfig(glib-2.0)
 %define _libexecdir %_prefix/libexec
 Name:				mate-file-manager-share
 Version:			1.6.0
-Release:			alt1_3
+Release:			alt1_4
 Summary:			Easy sharing folder via Samba (CIFS protocol)
 Group:				File tools
 License:			GPLv2+
@@ -55,6 +55,9 @@ cp %{SOURCE2} $RPM_BUILD_ROOT/%{_sysconfdir}/samba/
 
 
 %changelog
+* Wed Aug 07 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.0-alt1_4
+- new fc release
+
 * Tue May 07 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.0-alt1_3
 - new fc release
 

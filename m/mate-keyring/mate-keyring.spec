@@ -6,7 +6,7 @@ BuildRequires: /usr/bin/asn1Parser /usr/bin/gcov /usr/bin/genhtml /usr/bin/glib-
 Summary:        Framework for managing passwords and other secrets
 Name:           mate-keyring
 Version:        1.6.0
-Release:        alt1_2
+Release:        alt1_3
 License:        GPLv2+ and LGPLv2+
 URL:            http://mate-desktop.org
 Source0:        http://pub.mate-desktop.org/releases/1.5/%{name}-%{version}.tar.xz
@@ -130,6 +130,9 @@ find %{buildroot} -name '*.la' -exec rm -fv {} ';'
 %{_libdir}/pkgconfig/mate-gcr-0.pc
 
 %changelog
+* Wed Aug 07 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.0-alt1_3
+- new fc release
+
 * Mon Apr 15 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.0-alt1_2
 - new fc release
 

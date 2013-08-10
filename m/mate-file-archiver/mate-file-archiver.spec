@@ -6,7 +6,7 @@ BuildRequires: /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/glib-m
 %define oldname mate-file-archiver
 Name:           mate-file-archiver
 Version:        1.6.0
-Release:        alt1_2
+Release:        alt1_3
 Summary:        MATE Desktop file archiver
 License:        GPLv2+ and LGPLv2+
 URL:            http://mate-desktop.org
@@ -88,6 +88,9 @@ rm -f  %{buildroot}%{_datadir}/MateConf/gsettings/engrampa.convert
 
 
 %changelog
+* Wed Aug 07 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.0-alt1_3
+- new fc release
+
 * Mon Jul 22 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.0-alt1_2
 - new fc release
 

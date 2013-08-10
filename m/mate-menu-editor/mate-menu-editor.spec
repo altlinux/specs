@@ -6,7 +6,7 @@ BuildRequires: /usr/bin/glib-gettextize
 %define _libexecdir %_prefix/libexec
 Name:           mate-menu-editor
 Version:        1.6.0
-Release:        alt1_1
+Release:        alt1_2
 Summary:        MATE Desktop menu editor
 License:        LGPLv2+
 URL:            http://mate-desktop.org
@@ -55,6 +55,9 @@ desktop-file-install                                  \
 %{python_sitelibdir_noarch}/Mozo
 
 %changelog
+* Wed Aug 07 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.0-alt1_2
+- new fc release
+
 * Mon Apr 15 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.0-alt1_1
 - new fc release
 

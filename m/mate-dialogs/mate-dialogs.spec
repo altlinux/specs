@@ -5,7 +5,7 @@ BuildRequires: /usr/bin/glib-gettextize /usr/bin/perl pkgconfig(glib-2.0) pkgcon
 %define _libexecdir %_prefix/libexec
 Name:           mate-dialogs
 Version:        1.6.0
-Release:        alt1_1
+Release:        alt1_2
 Summary:        Displays dialog boxes from shell scripts
 License:        LGPLv2+ and GPLv2+
 URL:            http://mate-desktop.org
@@ -51,6 +51,9 @@ make install DESTDIR=%{buildroot}
 %exclude %_bindir/gdialog
 
 %changelog
+* Wed Aug 07 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.0-alt1_2
+- new fc release
+
 * Sat Apr 06 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.0-alt1_1
 - new fc release
 

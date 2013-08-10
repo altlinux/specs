@@ -5,7 +5,7 @@ BuildRequires: /usr/bin/glib-gettextize libICE-devel libSM-devel libgio-devel pk
 %define _libexecdir %_prefix/libexec
 Name:           libmatekbd
 Version:        1.6.1
-Release:        alt1_1
+Release:        alt1_2
 Summary:        Libraries for mate kbd
 License:        LGPLv2+
 URL:            http://mate-desktop.org
@@ -33,6 +33,7 @@ Development libraries for libmatekbd
 
 %prep
 %setup -q
+
 
 %build
 autoreconf -fisv
@@ -67,6 +68,9 @@ find %{buildroot} -name '*.la' -exec rm -fv {} ';'
 %{_libdir}/libmatekbd.so
 
 %changelog
+* Wed Aug 07 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.1-alt1_2
+- new fc release
+
 * Thu Aug 01 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.1-alt1_1
 - new fc release
 

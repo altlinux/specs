@@ -7,7 +7,7 @@ BuildRequires: libXext-devel
 %define _libexecdir %_prefix/libexec
 Name:           mate-sensors-applet
 Version:        1.6.0
-Release:        alt1_3
+Release:        alt1_4
 Summary:        MATE panel applet for hardware sensors
 Group:          Graphical desktop/MATE
 License:        GPLv2+
@@ -93,6 +93,9 @@ find $RPM_BUILD_ROOT -name "*.la" -exec rm -rf {} ';'
 
 
 %changelog
+* Wed Aug 07 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.0-alt1_4
+- new fc release
+
 * Thu Jul 25 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.0-alt1_3
 - new fc release
 

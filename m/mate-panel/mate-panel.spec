@@ -5,7 +5,7 @@ BuildRequires: /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/gtkdoc
 %define _libexecdir %_prefix/libexec
 Name:           mate-panel
 Version:        1.6.1
-Release:        alt1_2
+Release:        alt1_3
 Summary:        MATE Desktop panel applets
 #libs are LGPLv2+ applications GPLv2+
 License:        GPLv2+
@@ -140,6 +140,9 @@ rm -f  %{buildroot}%{_datadir}/MateConf/gsettings/mate-panel.convert
 
 
 %changelog
+* Wed Aug 07 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.1-alt1_3
+- new fc release
+
 * Thu Aug 01 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.1-alt1_2
 - new fc release
 

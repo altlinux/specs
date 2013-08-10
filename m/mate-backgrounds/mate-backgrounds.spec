@@ -5,7 +5,7 @@ BuildRequires: /usr/bin/glib-gettextize
 %define _libexecdir %_prefix/libexec
 Name:		mate-backgrounds
 Version:	1.6.0
-Release:	alt1_1
+Release:	alt1_2
 Summary:	MATE Desktop backgrounds
 License:	GPLv2+
 URL:		http://mate-desktop.org
@@ -38,6 +38,9 @@ make install DESTDIR=%{buildroot}
 %{_datadir}/backgrounds/mate
 
 %changelog
+* Wed Aug 07 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.0-alt1_2
+- new fc release
+
 * Sat Apr 06 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.0-alt1_1
 - new fc release
 

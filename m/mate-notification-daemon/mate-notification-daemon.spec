@@ -5,7 +5,7 @@ BuildRequires: /usr/bin/glib-gettextize libgio-devel pkgconfig(dbus-1) pkgconfig
 %define _libexecdir %_prefix/libexec
 Name:           mate-notification-daemon
 Version:        1.6.0
-Release:        alt1_2
+Release:        alt1_3
 Summary:        Notification daemon for MATE Desktop
 License:        GPLv2+
 URL:            http://mate-desktop.org
@@ -64,6 +64,9 @@ rm -f  %{buildroot}%{_datadir}/MateConf/gsettings/mate-notification-daemon.conve
 
 
 %changelog
+* Wed Aug 07 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.0-alt1_3
+- new fc release
+
 * Mon Jul 22 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.0-alt1_2
 - new fc release
 
