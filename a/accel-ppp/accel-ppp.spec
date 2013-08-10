@@ -1,6 +1,6 @@
 Name: accel-ppp
 Version: 1.7.3
-Release: alt4
+Release: alt5
 Summary: High performance PPTP/L2TP/PPPoE server
 Group: System/Servers
 
@@ -85,6 +85,10 @@ echo "0" > %buildroot%_runtimedir/accel-ppp/seq
 %preun_service %name
 
 %changelog
+* Sat Aug 10 2013 Alexei Takaseev <taf@altlinux.org> 1.7.3-alt5
+- auth_chap: fixed incorrect check for received buffer size
+- triton: Fix race upon termination
+
 * Thu Jul 04 2013 Alexei Takaseev <taf@altlinux.org> 1.7.3-alt4
 - update to git:b77ca8764985ebae18d769cdf115e2242bbac98d
 
