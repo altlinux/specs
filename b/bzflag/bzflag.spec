@@ -5,11 +5,11 @@
 %def_disable menufile
 
 Name: bzflag
-Version: 2.4.0
-Release: alt1.1
+Version: 2.4.2
+Release: alt1
 
 Summary: A multiplayer 3D tank battle game
-License: GPL
+License: LGPLv2.1
 Group: Games/Arcade
 Packager: Motsyo Gennadi <drool@altlinux.ru>
 
@@ -155,6 +155,9 @@ mkdir -p %buildroot/var/run/%name
 %_initdir/bzfs
 
 %changelog
+* Sat Aug 10 2013 Motsyo Gennadi <drool@altlinux.ru> 2.4.2-alt1
+- 2.4.2
+
 * Wed Mar 28 2012 Motsyo Gennadi <drool@altlinux.ru> 2.4.0-alt1.1
 - updated build requires
 
