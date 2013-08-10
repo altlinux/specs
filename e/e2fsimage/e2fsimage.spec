@@ -1,12 +1,13 @@
 Name: e2fsimage
 Version: 0.2.2
-Release: alt3
+Release: alt4
 Summary: Create and populate an ext2 filesystem image as non-root user
 License: BSD-style
 Group: File tools
 URL: http://sourceforge.net/projects/%name
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
+Requires: e2fsprogs
 
 # Automatically added by buildreq on Thu Feb 21 2008
 BuildRequires: libe2fs-devel
@@ -40,6 +41,9 @@ export prefix=%_prefix CFLAGS="%optflags" CC=%__cc mandir=%_mandir
 
 
 %changelog
+* Sat Aug 10 2013 Led <led@altlinux.ru> 0.2.2-alt4
+- added requires of e2fsprogs
+
 * Sat Aug 10 2013 Led <led@altlinux.ru> 0.2.2-alt3
 - fixed build warnings
 - fixed makefiles
