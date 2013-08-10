@@ -1,7 +1,7 @@
 ##nQ SPEC file for Perl module autobox
 
 Name: perl-autobox
-Version: 2.77
+Version: 2.79
 Release: alt1
 
 Summary: Perl interface to call methods on native types
@@ -53,6 +53,9 @@ can be overridden or countermanded in a nested scope.
 %perl_vendor_autolib/autobox*
 
 %changelog
+* Sat Aug 10 2013 Nikolay A. Fetisov <naf@altlinux.ru> 2.79-alt1
+- New version
+
 * Fri Jan 04 2013 Nikolay A. Fetisov <naf@altlinux.ru> 2.77-alt1
 - New version
 
