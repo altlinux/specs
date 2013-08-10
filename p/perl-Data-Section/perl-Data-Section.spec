@@ -1,7 +1,7 @@
 ## SPEC file for Perl module Data::Section
 
 Name: perl-Data-Section
-Version: 0.101621
+Version: 0.101622
 Release: alt1
 
 Summary: Perl module to read multiple hunks of data out of DATA section
@@ -44,6 +44,9 @@ probably has other uses.
 %perl_vendor_privlib/Data/Section*
 
 %changelog
+* Sat Aug 10 2013 Nikolay A. Fetisov <naf@altlinux.ru> 0.101622-alt1
+- New version
+
 * Sat Jan 28 2012 Nikolay A. Fetisov <naf@altlinux.ru> 0.101621-alt1
 - Initial build for ALT Linux Sisyphus
 
