@@ -1,7 +1,7 @@
 # SPEC file for dosage package
 
 Name:    dosage
-Version: 2.3
+Version: 2.5
 Release: alt1
 
 Summary: a commandline webcomic downloader and archiver
@@ -48,6 +48,12 @@ webcomic's site layout makes this impossible).
 %python_sitelibdir/_Dosage*
 
 %changelog
+* Sat Aug 10 2013 Nikolay A. Fetisov <naf@altlinux.ru> 2.5-alt1
+- New version 2.5
+
+* Sat Jun 29 2013 Nikolay A. Fetisov <naf@altlinux.ru> 2.4-alt1
+- New version 2.4
+
 * Sun Jun 09 2013 Nikolay A. Fetisov <naf@altlinux.ru> 2.3-alt1
 - New version 2.3
 
