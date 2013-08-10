@@ -2,7 +2,7 @@
 ## Used in SVK
 
 Name: perl-Text-Table
-Version: 1.126
+Version: 1.127
 Release: alt1
 
 Summary: organize data in tables
@@ -63,6 +63,9 @@ Text::Table  позволяет  создавать  и  поддерживат�
 %perl_vendor_privlib/Text/Table*
 
 %changelog
+* Sat Aug 10 2013 Nikolay A. Fetisov <naf@altlinux.ru> 1.127-alt1
+- New version
+
 * Thu Oct 18 2012 Nikolay A. Fetisov <naf@altlinux.ru> 1.126-alt1
 - New version 1.126
 
