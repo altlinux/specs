@@ -2,10 +2,11 @@
 %define kdedir %_K3prefix
 
 %def_disable final
+%define cmake 0
 
 Name: amarok
 Version: 1.4.10
-Release: alt15
+Release: alt16
 
 Summary: Amarok is a music player for KDE.
 License: GPL
@@ -44,10 +45,9 @@ Patch23: amarok-1.4.10-fix-autoconf-2.64.patch
 Patch24: amarok-1.4.10-alt-gcc4.5.patch
 Patch25: amarok-alt-malloc.patch
 Patch26: amarok-alt-DSO.patch
-Patch27: amarok-1.4.10-fix-FTBFS-gcc4.7.patch
+Patch27: tde-3.5.13-build-defdir-autotool.patch
 
-
-BuildRequires: doxygen gcc-c++ kdebase-devel libSDL-devel libXext-devel libXrender-devel libxml2-devel
+BuildRequires: cmake doxygen gcc-c++ kdebase-devel libSDL-devel libXext-devel libXrender-devel libxml2-devel
 BuildRequires: libXt-devel libavahi-devel libjpeg-devel libpng-devel libruby-devel
 BuildRequires: libtag-devel libtunepimp-devel libusb-devel libvisual0.4-devel qt3-designer ruby xml-utils
 BuildRequires: libxine-devel libmpeg4ip-devel libtunepimp-devel libgpod-devel libsqlite3-devel libmtp-devel
@@ -143,7 +143,7 @@ amarok-mediadevice-daap - плагин для работы с различным
 %prep
 %setup -q
 
-%patch1 -p2
+##%patch1 -p2
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
@@ -152,31 +152,33 @@ amarok-mediadevice-daap - плагин для работы с различным
 %patch7 -p1
 %patch8 -p1
 %patch9 -p1
-%patch10 -p0
+##%patch10 -p0
 %patch11 -p1
 %patch12 -p2
-%patch13 -p2
+##%patch13 -p2
 
-%patch14 -p1
-%patch15 -p1
-%patch16 -p1
-%patch17 -p1
-%patch18 -p1
-%patch19 -p1
+##%patch14 -p1
+##%patch15 -p1
+##%patch16 -p1
+##%patch17 -p1
+##%patch18 -p1
+##%patch19 -p1
 %patch20 -p1
-%patch22 -p1
+##%patch22 -p1
 
 %patch23 -p1
-%patch24 -p2
+##%patch24 -p2
 
 %patch25 -p2
 %patch26
-%patch27 -p1
+%patch27
 
-
+%if %cmake
+%else
 cp -Rp /usr/share/libtool/aclocal/libtool.m4 admin/libtool.m4.in
 cp -Rp /usr/share/libtool/config/ltmain.sh admin/ltmain.sh
 %make -f admin/Makefile.common svn
+%endif
 
 %build
 rm -rf %buildroot
@@ -185,7 +187,29 @@ export KDEDIR=%kdedir
 
 export PATH=$QTDIR/bin:$KDEDIR/bin:$PATH
 
-export CPPFLAGS="$CPPFLAGS -I/usr/include/mpeg4 -I%_includedir/tqtinterface"
+%if %cmake
+BD=%_builddir/%name-%version/BUILD
+
+if ! [ -f $BD/CMakeCache.txt ]
+then
+%K3cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+    -DAUTODETECT_QT_DIRS="ON" \
+    -DCMAKE_VERBOSE_MAKEFILE="ON" \
+    -DBUILD_ALL="ON" \
+    -DWITH_XINE="ON" \
+    -DWITH_IPOD="ON" \
+    -DWITH_MTP="ON" \
+    -DWITH_DAAP="ON" \
+    -DWITH_MP4V2="ON" \
+    -DCMAKE_SKIP_RPATH="OFF" \
+    -DWITH_GCC_VISIBILITY="ON"
+fi
+%K3make
+
+%else
+# else if cmake
+
+##export CPPFLAGS="$CPPFLAGS -I/usr/include/mpeg4 -I%_includedir/tqtinterface"
 
 %K3configure \
 	%{subst_enable final} \
@@ -205,6 +229,9 @@ export CPPFLAGS="$CPPFLAGS -I/usr/include/mpeg4 -I%_includedir/tqtinterface"
 	--enable-mysql
 
 %make_build
+
+%endif
+# end if cmake
 
 %install
 %K3install
@@ -278,6 +305,12 @@ rm -fr %buildroot%_K3datadir/apps/%name/scripts/templates
 %_K3datadir/services/amarok_daap-mediadevice.desktop
 
 %changelog
+* Fri Aug 09 2013 Roman Savochenko <rom_as@altlinux.ru> 1.4.10-alt16
+- Update to current 3.5.13-sru branch by release TDE 3.5.13.2.
+- Add support for build from cmake.
+- Switch to build by original "admin".
+- Removed previuos path and disabled more other which already included to official tree.
+
 * Fri Jul 19 2013 Roman Savochenko <rom_as@altlinux.ru> 1.4.10-alt15
 - Build by GCC 4.7 workaround for GCC global variables problem.
 
