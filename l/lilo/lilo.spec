@@ -1,13 +1,13 @@
 Name: lilo
-Version: 22.7.3
-Release: alt8
+Version: 22.8
+Release: alt1
 Summary: The boot loader for Linux and other operating systems
 License: MIT
 Group: System/Kernel and hardware
 Url: http://%name.alioth.debian.org
 Source0: %url/ftp/archiv/%name-%version.tar
 Source1: keytab-lilo.c
-Patch1: lilo-22.7.3-owl-makefile.patch
+Patch1: lilo-22.8-owl-makefile.patch
 Patch2: lilo-22.7.3-alt-owl-fixes.patch
 Patch3: lilo-22.7.1-owl-tmp.patch
 Patch4: lilo-22.7-deb-owl-man.patch
@@ -17,13 +17,12 @@ Patch12: lilo-22.7.3-alt-constants.patch
 Patch13: lilo-22.7.1-alt-defaults.patch
 Patch14: lilo-22.7.3-alt-lba32_linear.patch
 Patch15: lilo-22.7.1-alt-mkrescue.patch
-Patch16: lilo-22.7.1-alt-root-uuid.patch
-Patch17: lilo-22.7.3-alt-blkid.patch
+Patch17: lilo-22.8-alt-blkid.patch
 Patch18: lilo-22.7.3-alt-raid_index.patch
-Patch19: lilo-22.7.3-alt-devmapper.patch
-Patch20: lilo-22.7.3-alt-md-devmapper.patch
-Patch21: lilo-22.7-suse-gfx.patch
-Patch22: lilo-22.7.3-alt-format.patch
+Patch19: lilo-22.8-alt-devmapper.patch
+Patch20: lilo-22.8-alt-md-devmapper.patch
+Patch21: lilo-22.8-suse-gfx.patch
+Patch22: lilo-22.8-alt-format.patch
 ExclusiveArch: %ix86 x86_64
 
 # Automatically added by buildreq on Tue Nov 24 2009
@@ -64,7 +63,6 @@ This package contains extra documentation for LILO.
 %patch13 -p1
 %patch14 -p1
 %patch15 -p1
-%patch16 -p1
 %patch17 -p1
 %patch18 -p1
 %patch19 -p1
@@ -77,7 +75,7 @@ sed -i 's/\(keytab-lilo\)\.pl/\1/g' Makefile doc/user.tex
 
 
 %build
-%make_build OPT="%optflags" all docs
+%make_build OPT="%optflags -Wno-strict-aliasing" all docs
 %__cc %optflags -o keytab-lilo %SOURCE1
 gzip -9c CHANGES > CHANGES.gz
 
@@ -117,6 +115,18 @@ fi
 
 
 %changelog
+* Sun Aug 11 2013 Led <led@altlinux.ru> 22.8-alt1
+- 22.8
+- removed:
+  + lilo-22.7.1-alt-root-uuid.patch
+- updated:
+  + lilo-22.8-owl-makefile.patch
+  + lilo-22.8-alt-blkid.patch
+  + lilo-22.8-alt-devmapper.patch
+  + lilo-22.7.3-alt-md-devmapper.patch
+  + lilo-22.8-suse-gfx.patch
+  + lilo-22.8-alt-format.patch
+
 * Sun Nov 04 2012 Led <led@altlinux.ru> 22.7.3-alt8
 - Enlarge maximum number of sectors for kernel setup code
   (lilo-22.7.3-enlarge-max-number-of-setupsecs.patch) (ALT#27143)
