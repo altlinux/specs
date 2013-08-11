@@ -1,7 +1,7 @@
 %define Name BTIER
 Name: btier
 %define module_name %name
-Version: 1.0.2
+Version: 1.1.0
 %define rel %nil
 Release: alt1
 Summary: %Name - a blockdevice that provides automated tiered storage
@@ -75,7 +75,7 @@ install -m 0644 man/*.1 %buildroot%_man1dir/
 install -m 0644 tools/{show_*,writetest.c} %buildroot%_docdir/%name-%version/examples/
 install -m 0644 tools/fio/* %buildroot%_docdir/%name-%version/examples/fio/
 install -m 0644 TODO Documentation/* tools/contributed/{EXAMPLE,README}* %buildroot%_docdir/%name-%version/
-gzip -9c Changelog > %buildroot%_docdir/%name-%version/Changelog.gz
+gzip -9c ChangeLog > %buildroot%_docdir/%name-%version/ChangeLog.gz
 
 tar --transform='s,^.*/,/%module_name-%version/,' -cJf %kernel_srcdir/%module_name-%version.tar.xz kernel/%name/*
 
@@ -94,6 +94,9 @@ tar --transform='s,^.*/,/%module_name-%version/,' -cJf %kernel_srcdir/%module_na
 
 
 %changelog
+* Sun Aug 11 2013 Led <led@altlinux.ru> 1.1.0-alt1
+- 1.1.0
+
 * Sun Jun 09 2013 Led <led@altlinux.ru> 1.0.2-alt1
 - 1.0.2
 
