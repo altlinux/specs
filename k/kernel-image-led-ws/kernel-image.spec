@@ -20,7 +20,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.4.56
-Release: alt7
+Release: alt8
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -138,7 +138,7 @@ Release: alt7
 %Extra_modules vboxhost 4.2.16
 %Extra_modules vboxguest 4.2.16
 %Extra_modules knem 1.1.0
-#Extra_modules exfat 1.1.3
+#Extra_modules exfat 1.1.5
 #Extra_modules netatop 0.2
 #Extra_modules omnibook 20110911
 
@@ -2891,6 +2891,11 @@ done)
 
 
 %changelog
+* Sun Aug 11 2013 Led <led@altlinux.ru> 3.4.56-alt8
+- updated:
+  + feat-drivers-block--btier
+- rebuilt with updated knem, spl and zfs
+
 * Thu Aug 08 2013 Led <led@altlinux.ru> 3.4.56-alt7
 - updated:
   + fix-drivers-gpu-drm--i915
