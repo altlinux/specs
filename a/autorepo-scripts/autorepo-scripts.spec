@@ -2,7 +2,7 @@
 BuildRequires: perl(RPM/Header.pm) perl(Source/Repository/Mass/ALTLinuxBackport.pm) perl-devel perl-ALTLinux-ACL
 # END SourceDeps(oneline)
 Name: autorepo-scripts
-Version: 0.27
+Version: 0.28
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -30,6 +30,7 @@ Group: Development/Other
 %package -n autorepo-altnode-builder
 Summary: autorepo scripts for a builder node
 Group: Development/Other
+Requires: %name = %version-%release
 
 %description -n autorepo-altnode-builder
 %summary
@@ -76,6 +77,9 @@ install -m 755 *.template %buildroot%_datadir/%name/templates/
 %_bindir/autorepo-altnode-misc-statistics-wrapper
 
 %changelog
+* Sun Aug 11 2013 Igor Vlasenko <viy@altlinux.ru> 0.28-alt1
+- autopurge in managed mode
+
 * Fri Jul 26 2013 Igor Vlasenko <viy@altlinux.ru> 0.27-alt1
 - better autoports purge
 
