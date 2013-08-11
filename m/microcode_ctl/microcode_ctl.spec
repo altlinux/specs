@@ -1,11 +1,11 @@
 Name: microcode_ctl
-Version: 2.0
-Release: alt0.2
+Version: 2.1
+Release: alt0.1
 Epoch: 1
 
 Packager: L.A. Kostis <lakostis@altlinux.org>
 
-Summary: Tool to update x86/x86-64 CPU microcode
+Summary: Tool to update x86/x86-64 Intel CPU microcode
 License: GPLv2+
 Group: System/Kernel and hardware
 
@@ -32,17 +32,6 @@ BuildArch: noarch
 The microcode data file for Linux contains the latest microcode
 definitions for all Intel processors.
 
-%package -n firmware-amd-ucode
-Summary: Microcode patches for AMD processors
-License: ADVANCED MICRO DEVICES INC SOFTWARE LICENSE AGREEMENT
-Group: System/Kernel and hardware
-Obsoletes: firmware-amd-ucode <= 20120910-alt1
-BuildArch: noarch
-
-%description -n firmware-amd-ucode
-This package provides latest microcode patches for AMD processor
-families >= 0x10.
-
 %prep
 %setup -q
 
@@ -51,8 +40,6 @@ families >= 0x10.
 
 %install
 make DESTDIR=%{buildroot} PREFIX=%{_prefix} INSDIR=/usr/sbin install clean
-rm -f *amd*.tar
-cp -a %buildroot/usr/share/doc/microcode_ctl/*amd* .
 
 %files
 %_sbindir/intel-microcode2ucode
@@ -62,12 +49,11 @@ cp -a %buildroot/usr/share/doc/microcode_ctl/*amd* .
 %dir /lib/firmware/intel-ucode
 /lib/firmware/intel-ucode/*
 
-%files -n firmware-amd-ucode
-%dir /lib/firmware/amd-ucode
-/lib/firmware/amd-ucode/*
-%doc *amd*
-
 %changelog
+* Mon Aug 12 2013 L.A. Kostis <lakostis@altlinux.ru> 1:2.1-alt0.1
+- 2.1.
+- remove amd-ucode (now part of linux-firmware).
+
 * Mon Apr 08 2013 L.A. Kostis <lakostis@altlinux.ru> 1:2.0-alt0.2
 - Get rid of versioning mess.
 
