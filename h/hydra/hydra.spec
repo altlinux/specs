@@ -1,11 +1,11 @@
 Name: hydra
-Version: 7.4.2
+Version: 7.5
 Release: alt1
 
 Summary: A very fast network logon cracker which support many different services
 Summary(ru_RU.KOI8-R): Очень быстрый сетевой взломщик с поддержкой множства сервисов
 Group: Networking/Other
-License: GPLv3
+License: AGPLv3
 Url: http://thc.org/thc-hydra/
 Packager: Ilya Mashkin <oddity@altlinux.ru>
 
@@ -87,7 +87,7 @@ PW-Inspector считывает пароли и отображает соответствующие требованиям
 
 
 %files
-%doc CHANGES README
+%doc CHANGES README LICENSE
 
 %files common
 %_bindir/%name
@@ -101,6 +101,10 @@ PW-Inspector считывает пароли и отображает соответствующие требованиям
 %_bindir/pw-inspector
 
 %changelog
+* Sun Aug 11 2013 Ilya Mashkin <oddity@altlinux.ru> 7.5-alt1
+- 7.5
+- Moved the license from GPLv3 to AGPLv3 (see LICENSE file)
+
 * Sun Jan 20 2013 Ilya Mashkin <oddity@altlinux.ru> 7.4.2-alt1
 - 7.4.2
 
