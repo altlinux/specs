@@ -2,7 +2,7 @@
 
 Name: mate
 Version: %ver_major.0
-Release: alt3
+Release: alt4
 
 Summary: MATE Desktop installers
 License: %gpl2plus
@@ -203,7 +203,7 @@ Requires: mate-backgrounds
 Requires: mate-document-viewer-caja
 Requires: mate-document-viewer-djvu
 Requires: mate-document-viewer-pixbuf
-Requires: mate-document-viewer-impress
+#Requires: mate-document-viewer-impress
 Requires: mate-document-viewer-xps
 Requires: mate-document-viewer-dvi
 
@@ -384,6 +384,9 @@ itself).
 #%files a11y
 
 %changelog
+* Sun Aug 11 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.0-alt4
+- mate-document-viewer-impress dropped upstream
+
 * Wed Aug 07 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.0-alt3
 - added new subpackages of mate-utils: mate-system-log mate-screenshot
   mate-dictionary mate-search-tool mate-disk-usage-analyzer
