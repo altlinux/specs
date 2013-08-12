@@ -7,7 +7,7 @@ BuildRequires: unzip
 
 Name:           fonts-otf-gdouros-symbola
 Version:        6.13
-Release:        alt1_3
+Release:        alt1_4
 Summary:        A symbol font
 
 Group:          System/Fonts/True type
@@ -106,6 +106,9 @@ fi
 
 
 %changelog
+* Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 6.13-alt1_4
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 6.13-alt1_3
 - update to new release by fcimport
 
