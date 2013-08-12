@@ -4,7 +4,7 @@ BuildRequires: perl(DateTime/LeapSecond.pm) perl-Module-Build perl-devel perl-po
 # END SourceDeps(oneline)
 Name:           perl-DateTime-Format-Epoch
 Version:        0.13
-Release:        alt2_6
+Release:        alt2_7
 Summary:        Convert DateTimes to/from epoch seconds
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -53,6 +53,9 @@ find %{buildroot} -depth -type d -exec rmdir {} 2>/dev/null \;
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.13-alt2_7
+- update to new release by fcimport
+
 * Mon Aug 05 2013 Igor Vlasenko <viy@altlinux.ru> 0.13-alt2_6
 - update to new release by fcimport
 
