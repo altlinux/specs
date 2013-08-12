@@ -8,7 +8,7 @@ BuildRequires: perl(Font/TTF/Font.pm) perl(Unicode/UCD.pm)
 
 Name:    fontpackages
 Version: 1.44
-Release: alt4_8
+Release: alt4_9
 Summary: Common directory and macro definitions used by font packages
 
 Group:     System/Configuration/Other
@@ -126,6 +126,9 @@ rm -rf %buildroot%{spectemplatedir}
 %{ftcgtemplatedir}/*txt
 
 %changelog
+* Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 1.44-alt4_9
+- update to new release by fcimport
+
 * Mon Aug 05 2013 Igor Vlasenko <viy@altlinux.ru> 1.44-alt4_8
 - update to new release by fcimport
 
