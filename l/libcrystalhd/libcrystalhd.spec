@@ -2,13 +2,14 @@
 BuildRequires: gcc-c++ libcrystalhd-devel
 # END SourceDeps(oneline)
 BuildRequires(pre): kernel-build-tools
+%add_optflags %optflags_shared
 %global majorminor 1.0
 %global date 20120405
 
 Summary:       Broadcom Crystal HD device interface library
 Name:          libcrystalhd
 Version:       3.10.0
-Release:       alt2_4
+Release:       alt2_5
 License:       LGPLv2
 Group:         System/Libraries
 URL:           http://www.broadcom.com/support/crystal_hd/
@@ -153,6 +154,9 @@ mv driver kernel-source-crystalhd-%version
 
 
 %changelog
+* Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 3.10.0-alt2_5
+- update to new release by fcimport
+
 * Thu Jul 25 2013 Igor Vlasenko <viy@altlinux.ru> 3.10.0-alt2_4
 - merged kernel-source-crystalhd into hook
 
