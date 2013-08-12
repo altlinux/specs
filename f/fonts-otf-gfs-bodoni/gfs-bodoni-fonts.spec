@@ -9,7 +9,7 @@ BuildRequires: unzip
 
 Name:    fonts-otf-gfs-bodoni
 Version: 20070415
-Release: alt3_15
+Release: alt3_16
 Summary: GFS Bodoni fonts
 
 Group:     System/Fonts/True type
@@ -103,6 +103,9 @@ fi
 
 
 %changelog
+* Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 20070415-alt3_16
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 20070415-alt3_15
 - update to new release by fcimport
 
