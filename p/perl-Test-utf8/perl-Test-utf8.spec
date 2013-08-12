@@ -4,7 +4,7 @@ BuildRequires: perl(CPAN.pm) perl(Config.pm) perl(Encode.pm) perl(Exporter.pm) p
 # END SourceDeps(oneline)
 Name:           perl-Test-utf8
 Version:        1.00
-Release:        alt3_5
+Release:        alt3_6
 Summary:        Handy utf8 tests
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -45,6 +45,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 1.00-alt3_6
+- update to new release by fcimport
+
 * Mon Aug 05 2013 Igor Vlasenko <viy@altlinux.ru> 1.00-alt3_5
 - update to new release by fcimport
 
