@@ -8,7 +8,7 @@ BuildRequires: python unzip
 
 Name:		fonts-ttf-cf-bonveno
 Version:	1.1
-Release:	alt3_13
+Release:	alt3_14
 Summary:	A fun font by Barry Schwartz
 
 Group:		System/Fonts/True type
@@ -109,6 +109,9 @@ fi
 %dir %{_fontbasedir}/*/%{_fontstem}/
 
 %changelog
+* Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 1.1-alt3_14
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 1.1-alt3_13
 - update to new release by fcimport
 
