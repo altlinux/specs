@@ -4,7 +4,7 @@ BuildRequires: gcc-c++
 # END SourceDeps(oneline)
 Name:           plee-the-bear
 Version:        0.6.0
-Release:        alt4_12
+Release:        alt4_13
 Summary:        2D platform game
 Group:          Games/Other
 # Code and artwork respectively
@@ -98,6 +98,9 @@ done
 
 
 %changelog
+* Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.6.0-alt4_13
+- update to new release by fcimport
+
 * Mon Aug 05 2013 Igor Vlasenko <viy@altlinux.ru> 0.6.0-alt4_12
 - update to new release by fcimport
 
