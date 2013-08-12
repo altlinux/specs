@@ -1,6 +1,6 @@
 Name:           fluid-soundfont
 Version:        3.1
-Release:        alt1_10
+Release:        alt1_11
 Summary:        Pro-quality GM/GS soundfont
 Group:          Sound
 License:        MIT
@@ -153,6 +153,9 @@ install -p -m 644 FluidR3.cfg $RPM_BUILD_ROOT%{_sysconfdir}/timidity.cfg
 
 
 %changelog
+* Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 3.1-alt1_11
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 3.1-alt1_10
 - update to new release by fcimport
 
