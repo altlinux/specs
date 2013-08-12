@@ -9,7 +9,7 @@ BuildRequires: unzip
 
 Name:    fonts-otf-gfs-didot
 Version: 20070616
-Release: alt3_16
+Release: alt3_17
 Summary: GFS Didot fonts
 
 Group:     System/Fonts/True type
@@ -102,6 +102,9 @@ fi
 
 
 %changelog
+* Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 20070616-alt3_17
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 20070616-alt3_16
 - update to new release by fcimport
 
