@@ -1,7 +1,7 @@
 BuildRequires: libkmahjongg4-common
 Name:        mj
 Version:     1.12
-Release:     alt4_4
+Release:     alt4_5
 Summary:     Mah-Jong program with network option
 Summary(sv): Mah-Jong-program med nätmöjlighet
 
@@ -127,6 +127,9 @@ fi
 
 
 %changelog
+* Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 1.12-alt4_5
+- update to new release by fcimport
+
 * Mon Feb 18 2013 Igor Vlasenko <viy@altlinux.ru> 1.12-alt4_4
 - fc update
 
