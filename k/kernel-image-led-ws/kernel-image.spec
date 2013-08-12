@@ -19,13 +19,13 @@
 %define flavour %base_flavour-%sub_flavour
 
 Name: kernel-image-%flavour
-Version: 3.4.56
-Release: alt9
+Version: 3.4.57
+Release: alt1
 
 %define kernel_req %nil
 %define kernel_prov %nil
 %define kernel_branch 3.4
-%define kernel_stable_version 56
+%define kernel_stable_version 57
 %define kernel_extra_version .%kernel_stable_version
 #define kernel_extra_version %nil
 
@@ -135,7 +135,7 @@ Release: alt9
 %Extra_modules zfs 0.6.1
 %Extra_modules kvm 3.10.1
 #Extra_modules nvidia 319.32
-#Extra_modules fglrx 13.20.5
+%Extra_modules fglrx 13.20.5
 %Extra_modules vboxhost 4.2.16
 %Extra_modules vboxguest 4.2.16
 %Extra_modules knem 1.1.0
@@ -498,13 +498,12 @@ Patch0614: linux-%kernel_branch.35-fix-fs-jfs.patch
 Patch0615: linux-%kernel_branch.29-fix-fs-logfs.patch
 Patch0616: linux-%kernel_branch.35-fix-fs-nfs.patch
 Patch0617: linux-%kernel_branch.35-fix-fs-nilfs2.patch
-Patch0618: linux-%kernel_branch.50-fix-fs-notify-fanotify--fanotify_user.patch
-Patch0619: linux-%kernel_branch.50-fix-fs-ocfs2.patch
-Patch0620: linux-%kernel_branch.31-fix-fs-proc.patch
-Patch0621: linux-%kernel_branch.28-fix-fs-ramfs.patch
-Patch0622: linux-%kernel_branch.53-fix-fs-reiserfs.patch
-Patch0623: linux-%kernel_branch.35-fix-fs-ubifs.patch
-Patch0624: linux-%kernel_branch.53-fix-fs-xfs.patch
+Patch0618: linux-%kernel_branch.50-fix-fs-ocfs2.patch
+Patch0619: linux-%kernel_branch.31-fix-fs-proc.patch
+Patch0620: linux-%kernel_branch.28-fix-fs-ramfs.patch
+Patch0621: linux-%kernel_branch.53-fix-fs-reiserfs.patch
+Patch0622: linux-%kernel_branch.35-fix-fs-ubifs.patch
+Patch0623: linux-%kernel_branch.53-fix-fs-xfs.patch
 
 Patch0631: linux-%kernel_branch.50-fix-include-linux.patch
 Patch0632: linux-%kernel_branch.50-fix-include-trace.patch
@@ -1777,7 +1776,6 @@ cd linux-%version
 %patch0621 -p1
 %patch0622 -p1
 %patch0623 -p1
-%patch0624 -p1
 
 # fix-include-*
 %patch0631 -p1
@@ -2892,6 +2890,13 @@ done)
 
 
 %changelog
+* Mon Aug 12 2013 Led <led@altlinux.ru> 3.4.57-alt1
+- 3.4.57
+- removed:
+  + fix-fs-notify-fanotify--fanotify_user
+- added external modules:
+  + fglrx
+
 * Mon Aug 12 2013 Led <led@altlinux.ru> 3.4.56-alt9
 - updated:
   + fix-fs-ext4
