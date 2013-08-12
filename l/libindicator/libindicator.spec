@@ -2,9 +2,10 @@
 BuildRequires: /usr/bin/glib-genmarshal /usr/bin/glib-mkenums pkgconfig(gio-unix-2.0) pkgconfig(gmodule-2.0) pkgconfig(gtk+-2.0)
 # END SourceDeps(oneline)
 BuildRequires: chrpath
+%add_optflags %optflags_shared
 Name:		libindicator
 Version:	12.10.1
-Release:	alt1_1
+Release:	alt1_2
 Summary:	Shared functions for Ayatana indicators
 
 Group:		System/Libraries
@@ -166,6 +167,9 @@ done
 %{_libexecdir}/indicator-loader3
 
 %changelog
+* Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 12.10.1-alt1_2
+- update to new release by fcimport
+
 * Sat Jun 01 2013 Igor Vlasenko <viy@altlinux.ru> 12.10.1-alt1_1
 - new fc release
 
