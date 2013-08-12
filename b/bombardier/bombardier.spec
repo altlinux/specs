@@ -1,6 +1,6 @@
 Name: bombardier
 Version:  0.8.2.2
-Release:  alt2_14
+Release:  alt2_15
 Summary: The GNU Bombing utility
 
 Group: Games/Other
@@ -58,6 +58,9 @@ install -p -m 644 %{SOURCE2} \
 
 
 %changelog
+* Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.8.2.2-alt2_15
+- update to new release by fcimport
+
 * Thu Feb 14 2013 Igor Vlasenko <viy@altlinux.ru> 0.8.2.2-alt2_14
 - update to new release by fcimport
 
