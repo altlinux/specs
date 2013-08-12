@@ -4,7 +4,7 @@ BuildRequires: perl(CPAN.pm) perl(Cache/FileCache.pm) perl(Catalyst.pm) perl(Cat
 # END SourceDeps(oneline)
 Name:           perl-Catalyst-Plugin-Session-Store-File
 Version:        0.18
-Release:        alt2_11
+Release:        alt2_13
 Summary:        File storage backend for session data
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -46,6 +46,7 @@ make pure_install PERL_INSTALL_ROOT=$RPM_BUILD_ROOT
 find $RPM_BUILD_ROOT -type f -name .packlist -exec rm -f {} \;
 find $RPM_BUILD_ROOT -depth -type d -exec rmdir {} 2>/dev/null \;
 
+# %{_fixperms} $RPM_BUILD_ROOT/*
 
 %check
 TEST_POD=1 make test
@@ -55,6 +56,9 @@ TEST_POD=1 make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.18-alt2_13
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.18-alt2_11
 - update to new release by fcimport
 
