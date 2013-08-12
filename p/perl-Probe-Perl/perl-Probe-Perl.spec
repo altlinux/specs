@@ -14,7 +14,7 @@
 %define _enable_test 1
 
 Name: perl-Probe-Perl
-Version: 0.02
+Version: 0.03
 Release: alt1
 
 Summary: Information about the currently running perl
@@ -26,7 +26,7 @@ Url: %CPAN %m_distro
 Packager: Michael Bochkaryov <misha@altlinux.ru>
 
 BuildArch: noarch
-Source: %m_distro-%version.tar.gz
+Source: http://www.cpan.org/authors/id/K/KW/KWILLIAMS/Probe-Perl-%{version}.tar.gz
 
 # Automatically added by buildreq on Sun Oct 18 2009 (-bi)
 BuildRequires: perl-Module-Build
@@ -51,6 +51,9 @@ rm -rf %buildroot%perl_vendor_man3dir/
 %perl_vendor_privlib/Probe/*
 
 %changelog
+* Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.03-alt1
+- automated CPAN update
+
 * Fri Jul 26 2013 Igor Vlasenko <viy@altlinux.ru> 0.02-alt1
 - automated CPAN update
 
