@@ -2,10 +2,10 @@
 BuildRequires: gcc-c++ libICE-devel libSM-devel libX11-devel libXext-devel libXt-devel
 # END SourceDeps(oneline)
 Summary(ru_RU.KOI8-R): Tgif - пакет 2-мерной графики
-%define fedora 18
+%define fedora 19
 Name:		tgif
 Version:	4.2.5
-Release:	alt2_4
+Release:	alt2_5
 Summary:	2-D drawing tool
 Group:		Graphics
 
@@ -17,13 +17,13 @@ Patch10:	tgif-textcursor-a-urasim.patch
 # Check below later
 Patch101:	tgif-QPL-4.1.45-size-debug.patch
 
-BuildRequires:	xorg-cf-files gccmakedep imake
+BuildRequires: xorg-cf-files gccmakedep imake
 BuildRequires:	desktop-file-utils
 BuildRequires:	gettext
 BuildRequires:	libXmu-devel
 BuildRequires:	libidn-devel
 BuildRequires:	zlib-devel
-Requires:	ghostscript-utils ghostscript
+Requires: ghostscript-utils ghostscript
 Requires:	netpbm
 Requires:	fonts-bitmap-75dpi
 Requires:	fonts-bitmap-75dpi
@@ -167,6 +167,9 @@ desktop-file-install \
 %{_datadir}/applications/*%{name}.desktop
 
 %changelog
+* Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 4.2.5-alt2_5
+- update to new release by fcimport
+
 * Mon Feb 11 2013 Igor Vlasenko <viy@altlinux.ru> 4.2.5-alt2_4
 - update to new release by fcimport
 
