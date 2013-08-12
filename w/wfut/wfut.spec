@@ -1,6 +1,6 @@
 Name:           wfut
 Version:        1.1.0
-Release:        alt2_13
+Release:        alt2_14
 Summary:        Software updater tool for WorldForge applications
 
 Group:          Development/C
@@ -55,6 +55,9 @@ install -p %{SOURCE2} $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/48x48/apps/
 
 
 %changelog
+* Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 1.1.0-alt2_14
+- update to new release by fcimport
+
 * Mon Feb 11 2013 Igor Vlasenko <viy@altlinux.ru> 1.1.0-alt2_13
 - update to new release by fcimport
 
