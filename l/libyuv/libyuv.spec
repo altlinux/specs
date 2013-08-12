@@ -1,6 +1,7 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: gcc-c++
 # END SourceDeps(oneline)
+%add_optflags %optflags_shared
 %ifarch %{arm}
 %global with_neon --enable-neon
 %endif
@@ -9,7 +10,7 @@ BuildRequires: gcc-c++
 Name:		libyuv
 Summary:	YUV conversion and scaling functionality library
 Version:	0
-Release:	alt1_0.19.20121221svn522
+Release:	alt1_0.20.20121221svn522
 License:	BSD
 Group:		Development/C
 Url:		http://code.google.com/p/libyuv/
@@ -80,6 +81,9 @@ make check
 
 
 %changelog
+* Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 0-alt1_0.20.20121221svn522
+- update to new release by fcimport
+
 * Thu Apr 25 2013 Igor Vlasenko <viy@altlinux.ru> 0-alt1_0.19.20121221svn522
 - initial fc import
 
