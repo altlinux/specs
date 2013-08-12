@@ -6,7 +6,7 @@ BuildRequires: /usr/bin/python-config
 
 Name: btparser
 Version: 0.26
-Release: alt1_1
+Release: alt1_2
 Summary: Parser and analyzer for backtraces produced by GDB
 Group: Development/C
 License: GPLv2+
@@ -96,6 +96,9 @@ make check
 %{python_sitelibdir}/%{name}/*
 
 %changelog
+* Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.26-alt1_2
+- update to new release by fcimport
+
 * Tue May 21 2013 Igor Vlasenko <viy@altlinux.ru> 0.26-alt1_1
 - update to new release by fcimport
 
