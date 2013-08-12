@@ -4,7 +4,7 @@ BuildRequires: unzip
 Name: hunspell-sv
 Summary: Swedish hunspell dictionaries
 Version: 2.10
-Release: alt1_2
+Release: alt1_3
 Source: http://dsso.googlecode.com/files/sv-%{version}.zip
 Group: Text tools
 URL: http://dsso.se/
@@ -32,6 +32,9 @@ cp -p *.dic *.aff $RPM_BUILD_ROOT/%{_datadir}/myspell
 %{_datadir}/myspell/*
 
 %changelog
+* Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 2.10-alt1_3
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 2.10-alt1_2
 - update to new release by fcimport
 
