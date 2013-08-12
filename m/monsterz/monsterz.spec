@@ -1,6 +1,6 @@
 Name:           monsterz
 Version:        0.7.1
-Release:        alt2_10
+Release:        alt2_11
 Summary:        Puzzle game, similar to Bejeweled or Zookeeper
 Group:          Games/Other
 License:        WTFPL
@@ -83,6 +83,9 @@ install -pm0644 graphics/icon.png %{buildroot}%{_datadir}/icons/hicolor/64x64/ap
 
 
 %changelog
+* Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.7.1-alt2_11
+- update to new release by fcimport
+
 * Thu Feb 14 2013 Igor Vlasenko <viy@altlinux.ru> 0.7.1-alt2_10
 - update to new release by fcimport
 
