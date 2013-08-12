@@ -6,7 +6,7 @@ Summary: Faeroese dictionaries for Aspell
 Name: aspell-%{lang}
 #Epoch: 51
 Version: 0.2.16
-Release: alt2_14
+Release: alt2_15
 License: GPLv2
 Group: Text tools
 URL: http://aspell.net/
@@ -36,6 +36,9 @@ make install  DESTDIR=$RPM_BUILD_ROOT
 %{_datadir}/aspell/*
 
 %changelog
+* Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 1:0.2.16-alt2_15
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 1:0.2.16-alt2_14
 - update to new release by fcimport
 
