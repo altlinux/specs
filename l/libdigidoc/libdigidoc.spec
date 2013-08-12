@@ -5,7 +5,7 @@ BuildRequires: gcc-c++
 %add_optflags %optflags_shared
 Name:           libdigidoc
 Version:        2.7.0
-Release:        alt2_5
+Release:        alt2_6
 Summary:        Library for handling digitally signed documents
 
 Group:          System/Libraries
@@ -65,6 +65,9 @@ make install DESTDIR=$RPM_BUILD_ROOT -C %{_target_platform}
 %{_libdir}/*.so
 
 %changelog
+* Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 2.7.0-alt2_6
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 2.7.0-alt2_5
 - update to new release by fcimport
 
