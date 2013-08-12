@@ -3,7 +3,7 @@ BuildRequires: unzip
 # END SourceDeps(oneline)
 Name:		naturette
 Version:	1.3
-Release:	alt4_8
+Release:	alt4_9
 Summary:	An AGI adventure game
 
 Group:		Games/Other
@@ -70,6 +70,9 @@ install -p -m 0644 %{SOURCE3} %{buildroot}%{_datadir}/icons/hicolor/32x32/apps/%
 %{_bindir}/naturette-wrapper.sh
 
 %changelog
+* Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 1.3-alt4_9
+- update to new release by fcimport
+
 * Thu Feb 14 2013 Igor Vlasenko <viy@altlinux.ru> 1.3-alt4_8
 - update to new release by fcimport
 
