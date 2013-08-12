@@ -9,7 +9,7 @@ BuildRequires: unzip
 
 Name:    fonts-otf-gfs-didot-classic
 Version: 20080702
-Release: alt3_11
+Release: alt3_12
 Summary: GFS Didot Classic Greek font
 
 Group:     System/Fonts/True type
@@ -114,6 +114,9 @@ fi
 
 
 %changelog
+* Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 20080702-alt3_12
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 20080702-alt3_11
 - update to new release by fcimport
 
