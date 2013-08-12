@@ -5,7 +5,7 @@ Name: hyphen-da
 Summary: Danish hyphenation rules
 %define upstreamid 20070903
 Version: 0.%{upstreamid}
-Release: alt1_7
+Release: alt1_8
 Source: http://ftp.services.openoffice.org/pub/OpenOffice.org/contrib/dictionaries/hyph_da_DK.zip
 Group: Text tools
 URL: http://wiki.services.openoffice.org/wiki/Dictionaries
@@ -32,6 +32,9 @@ cp -p hyph_da_DK.dic $RPM_BUILD_ROOT/%{_datadir}/hyphen
 %{_datadir}/hyphen/*
 
 %changelog
+* Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.20070903-alt1_8
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.20070903-alt1_7
 - update to new release by fcimport
 
