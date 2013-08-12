@@ -3,7 +3,7 @@ BuildRequires: /usr/bin/xml2-config
 # END SourceDeps(oneline)
 Name:           kanatest
 Version:        0.4.8
-Release:        alt2_10
+Release:        alt2_11
 Summary:        Hiragana and Katakana drill tool
 
 Group:          Games/Other
@@ -59,6 +59,9 @@ make install DESTDIR=$RPM_BUILD_ROOT
 
 
 %changelog
+* Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.4.8-alt2_11
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.4.8-alt2_10
 - update to new release by fcimport
 
