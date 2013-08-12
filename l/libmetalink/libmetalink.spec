@@ -4,7 +4,7 @@ BuildRequires: libexpat-devel libxml2-devel
 %add_optflags %optflags_shared
 Name:		libmetalink
 Version:	0.1.2
-Release:	alt1_3
+Release:	alt1_4
 Summary:	Metalink library written in C
 Group:		System/Libraries
 License:	MIT
@@ -58,6 +58,9 @@ find $RPM_BUILD_ROOT -name *.la -exec rm {} \;
 
 
 %changelog
+* Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.1.2-alt1_4
+- update to new release by fcimport
+
 * Fri Jun 21 2013 Igor Vlasenko <viy@altlinux.ru> 0.1.2-alt1_3
 - update to new release by fcimport
 
