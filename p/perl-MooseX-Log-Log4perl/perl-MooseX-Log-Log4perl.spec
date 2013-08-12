@@ -4,7 +4,7 @@ BuildRequires: perl(Benchmark.pm) perl(CPAN.pm) perl(Config.pm) perl(Fcntl.pm) p
 # END SourceDeps(oneline)
 Name:       perl-MooseX-Log-Log4perl
 Version:    0.46
-Release:    alt2_2
+Release:    alt2_4
 # see lib/MooseX/Log/Log4perl.pm
 License:    GPL+ or Artistic
 Group:      Development/Perl
@@ -49,6 +49,7 @@ make %{?_smp_mflags}
 make pure_install PERL_INSTALL_ROOT=%{buildroot}
 find %{buildroot} -type f -name .packlist -exec rm -f {} ';'
 
+# %{_fixperms} %{buildroot}/*
 
 %check
 make test
@@ -58,6 +59,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.46-alt2_4
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.46-alt2_2
 - update to new release by fcimport
 
