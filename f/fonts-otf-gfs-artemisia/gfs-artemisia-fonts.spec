@@ -9,7 +9,7 @@ BuildRequires: unzip
 
 Name:    fonts-otf-gfs-artemisia
 Version: 20070415
-Release: alt3_16
+Release: alt3_17
 Summary: GFS Artemisia fonts
 
 Group:     System/Fonts/True type
@@ -106,6 +106,9 @@ fi
 
 
 %changelog
+* Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 20070415-alt3_17
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 20070415-alt3_16
 - update to new release by fcimport
 
