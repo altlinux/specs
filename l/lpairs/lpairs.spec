@@ -1,7 +1,7 @@
 Name:		lpairs
 Summary:	Classical memory game with cards
 Version:	1.0.4
-Release:	alt3_11
+Release:	alt3_12
 License:	GPLv2+ and CC-BY-SA and Freely redistributable without restriction
 Group: 		Games/Other
 URL:		http://lgames.sourceforge.net/index.php?project=LPairs
@@ -56,6 +56,9 @@ desktop-file-install --dir %{buildroot}%{_datadir}/applications \
 %{_datadir}/pixmaps/%{name}.png
 
 %changelog
+* Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 1.0.4-alt3_12
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 1.0.4-alt3_11
 - update to new release by fcimport
 
