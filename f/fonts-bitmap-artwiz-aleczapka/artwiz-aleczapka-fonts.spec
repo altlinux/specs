@@ -11,7 +11,7 @@ software and support an extended character set. \
 
 Name:		fonts-bitmap-artwiz-aleczapka
 Version:	1.3
-Release:	alt2_14
+Release:	alt2_15
 Summary:	Very small futuristic font family
 Group:		System/Fonts/True type
 License:	GPLv2
@@ -293,13 +293,13 @@ and Swedish.
 %{_fontbasedir}/*/%{_fontstem}/snap*.pcf
 
 %prep
-%setup -q -c %{oldname}-%{version} -a1 -a2
+%setup -n %{oldname}-%{version} -q -c %{oldname}-%{version} -a1 -a2
 %patch0 -p0
 %patch1 -p1 -b .fix-makepcf
 
 %build
 for lang in de en se; do
-    pushd %{_builddir}/%{name}-%{version}/artwiz-aleczapka-$lang-sources-%{version}
+    pushd %{_builddir}/%{oldname}-%{version}/artwiz-aleczapka-$lang-sources-%{version}
     sh makepcf.sh
     popd
 done
@@ -380,6 +380,9 @@ fi
 %dir %{_fontbasedir}/*/%{_fontstem}
 
 %changelog
+* Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 1.3-alt2_15
+- update to new release by fcimport
+
 * Tue Apr 16 2013 Igor Vlasenko <viy@altlinux.ru> 1.3-alt2_14
 - update to new release by fcimport
 
