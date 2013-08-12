@@ -4,7 +4,7 @@ BuildRequires: perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Devel-LexAlias
 Version:        0.05
-Release:        alt1_2
+Release:        alt1_3
 Summary:        Alias lexical variables
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -48,6 +48,9 @@ make test
 %{perl_vendor_archlib}/Devel*
 
 %changelog
+* Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.05-alt1_3
+- update to new release by fcimport
+
 * Tue Aug 06 2013 Igor Vlasenko <viy@altlinux.ru> 0.05-alt1_2
 - Sisyphus build
 
