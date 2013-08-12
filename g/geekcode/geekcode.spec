@@ -1,6 +1,6 @@
 Name:           geekcode
 Version:        1.7.3
-Release:        alt2_11
+Release:        alt2_12
 Summary:        Geek Code generator
 Summary(pl):    Generator Geek Code
 Group:          Games/Other
@@ -38,6 +38,9 @@ install -m 755 geekcode %{buildroot}%{_bindir}
 %{_bindir}/%{name}
 
 %changelog
+* Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 1.7.3-alt2_12
+- update to new release by fcimport
+
 * Sun Feb 24 2013 Igor Vlasenko <viy@altlinux.ru> 1.7.3-alt2_11
 - update to new release by fcimport
 
