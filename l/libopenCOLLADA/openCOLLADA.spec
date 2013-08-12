@@ -22,7 +22,7 @@ Group: System/Libraries
 
 Name:           libopenCOLLADA
 Version:        0
-Release:        alt1_15.git%{shortcommit}
+Release:        alt1_16.git%{shortcommit}
 License:        MIT
 Summary:        Collada 3D import and export libraries
 Url:            https://collada.org/mediawiki/index.php/OpenCOLLADA
@@ -169,6 +169,9 @@ cp -a Externals/MathMLSolver/include/* %{buildroot}%{_includedir}/MathMLSolver/
 
 
 %changelog
+* Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 0-alt1_16.git9665d16
+- update to new release by fcimport
+
 * Mon May 13 2013 Igor Vlasenko <viy@altlinux.ru> 0-alt1_15.git9665d16
 - update to new release by fcimport
 
