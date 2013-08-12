@@ -20,7 +20,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.4.56
-Release: alt8
+Release: alt9
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -99,7 +99,8 @@ Release: alt8
 %def_disable pcsp
 %def_enable video
 %def_enable guest
-%def_enable ext4_for_ext23
+%def_disable ext4_for_ext2
+%def_enable ext4_for_ext3
 %def_enable bootsplash
 %def_disable crasher
 %def_disable logo
@@ -489,7 +490,7 @@ Patch0606: linux-%kernel_branch.53-fix-fs-cifs.patch
 Patch0607: linux-%kernel_branch.35-fix-fs-debugfs.patch
 Patch0608: linux-%kernel_branch.53-fix-fs-ext2.patch
 Patch0609: linux-%kernel_branch.37-fix-fs-ext3.patch
-Patch0610: linux-%kernel_branch.50-fix-fs-ext4.patch
+Patch0610: linux-%kernel_branch.53-fix-fs-ext4.patch
 Patch0611: linux-%kernel_branch.42-fix-fs-fuse.patch
 Patch0612: linux-%kernel_branch.35-fix-fs-gfs2.patch
 Patch0613: linux-%kernel_branch.20-fix-fs-hfs.patch
@@ -2163,7 +2164,7 @@ config_disable \
 	%{?_disable_kallsyms:KALLSYMS} \
 	%{?_disable_oprofile:PROFILING OPROFILE} \
 	%{?_disable_fatelf:BINFMT_FATELF} \
-	%{?_enable_ext4_for_ext23:EXT[23]_FS}
+	%{?_enable_ext4_for_ext2:EXT2_FS} %{?_enable_ext4_for_ext3:EXT3_FS}
 
 config_enable \
 %ifarch i386 i486 i586 i686
@@ -2173,7 +2174,7 @@ config_enable \
 	%{?_enable_debug_section_mismatch:DEBUG_SECTION_MISMATCH} \
 	%{?_enable_modversions:MODVERSIONS} \
 	%{?_enable_x86_extended_platform:X86_EXTENDED_PLATFORM} \
-	%{?_enable_ext4_for_ext23:EXT4_USE_FOR_EXT23} \
+	%{?_enable_ext4_for_ext2:EXT4_USE_FOR_EXT2} %{?_enable_ext4_for_ext3:EXT4_USE_FOR_EXT3} \
 	%{?_enable_mca:MCA} \
 	%{?_enable_debugfs:DEBUG_FS} \
 	%{?_enable_secrm:EXT[234]_SECRM FAT_SECRM} \
@@ -2891,6 +2892,14 @@ done)
 
 
 %changelog
+* Mon Aug 12 2013 Led <led@altlinux.ru> 3.4.56-alt9
+- updated:
+  + fix-fs-ext4
+  + feat-fs-aufs
+- removed ext4_for_ext23
+- disaled ext4_for_ext2
+- enabled ext4_for_ext3
+
 * Sun Aug 11 2013 Led <led@altlinux.ru> 3.4.56-alt8
 - updated:
   + feat-drivers-block--btier
