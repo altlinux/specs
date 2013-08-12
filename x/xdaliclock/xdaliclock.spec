@@ -1,7 +1,7 @@
 Summary: A clock for the X Window System
 Name: xdaliclock
 Version: 2.25
-Release: alt3_8
+Release: alt3_9
 Group: Graphics
 License: BSD
 URL: http://www.jwz.org/xdaliclock/
@@ -54,6 +54,9 @@ desktop-file-install  \
 %{_datadir}/applications/*
 
 %changelog
+* Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 2.25-alt3_9
+- update to new release by fcimport
+
 * Wed Mar 13 2013 Igor Vlasenko <viy@altlinux.ru> 2.25-alt3_8
 - fixed build
 
