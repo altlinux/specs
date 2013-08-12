@@ -3,13 +3,14 @@ Serial: 1
 BuildRequires(pre): rpm-macros-fedora-compat
 BuildRequires: gcc-c++ python-devel
 # END SourceDeps(oneline)
+%define fedora 19
 %global buildno 17
 %global buildid build%{buildno}
 %global build_id build-%{buildno}
 
 Name:           widelands
 Version:        0
-Release:        alt5_0.35.%{buildid}
+Release:        alt5_0.38.%{buildid}
 Summary:        Open source realtime-strategy game
 
 Group:          Games/Strategy
@@ -29,7 +30,7 @@ BuildRequires: libSDL_mixer-devel >= 1.2.6
 BuildRequires: libSDL_net-devel
 BuildRequires: SDL_sound-devel
 BuildRequires: libSDL_ttf-devel >= 2.0.0
-BuildRequires: boost-devel boost-filesystem-devel boost-wave-devel boost-graph-parallel-devel boost-math-devel boost-mpi-devel boost-program_options-devel boost-signals-devel boost-intrusive-devel boost-asio-devel >= 1.47.0
+BuildRequires: boost-devel boost-filesystem-devel boost-wave-devel boost-graph-parallel-devel boost-math-devel boost-mpi-devel boost-program_options-devel boost-signals-devel boost-intrusive-devel boost-asio-devel
 BuildRequires: boost-devel-static >= 1.47.0
 BuildRequires: ctest cmake
 BuildRequires: ctags
@@ -40,8 +41,12 @@ BuildRequires: libglew-devel
 BuildRequires: libjpeg-devel
 BuildRequires: libpng-devel
 BuildRequires: libtiffxx-devel libtiff-devel
-BuildRequires: liblua5-devel
 BuildRequires: optipng
+%if 0%{?fedora} >= 20
+BuildRequires: compat-lua-devel
+%else
+BuildRequires: liblua5-devel
+%endif
 Requires:      fonts-otf-drehatlas-widelands
 Requires:      fonts-ttf-gnu-freefont-serif
 Requires:      fonts-ttf-gnu-freefont-sans
@@ -64,7 +69,9 @@ perhaps will have a thought, what Widelands is all about.
 %build
 mkdir -p build/compile
 pushd build/compile
+# We need to set CMAKE_INCLUDE_PATH to /usr for FindLua51.cmake
 %{fedora_cmake} \
+    -DCMAKE_INCLUDE_PATH=%{_prefix} \
     -DWL_INSTALL_PREFIX=%{_prefix} \
     -DWL_INSTALL_BINDIR=%{_bindir} \
     -DWL_INSTALL_DATADIR=share/%{name} \
@@ -140,6 +147,9 @@ EOF
 
 
 %changelog
+* Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 1:0-alt5_0.38.build17
+- update to new release by fcimport
+
 * Mon Feb 11 2013 Igor Vlasenko <viy@altlinux.ru> 1:0-alt5_0.35.build17
 - update to new release by fcimport
 
