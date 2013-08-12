@@ -4,7 +4,7 @@ BuildRequires: /usr/bin/pkg-config gcc-c++
 %add_optflags %optflags_shared
 Name:           libpolyxmass
 Version:        0.9.1
-Release:        alt3_10
+Release:        alt3_11
 Summary:        Polymer chemistry-related functionalities
 
 Group:          System/Libraries
@@ -72,6 +72,9 @@ find ${RPM_BUILD_ROOT} -type f -name "*.la" -exec rm -f {} ';'
 %{_libdir}/pkgconfig/libpolyxmass.pc
 
 %changelog
+* Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.9.1-alt3_11
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.9.1-alt3_10
 - update to new release by fcimport
 
