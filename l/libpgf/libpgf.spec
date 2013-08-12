@@ -4,7 +4,7 @@ BuildRequires: /usr/bin/dot /usr/bin/doxygen gcc-c++
 %add_optflags %optflags_shared
 Name:           libpgf
 Version:        6.12.24
-Release:        alt1_4
+Release:        alt1_5
 Summary:        PGF (Progressive Graphics File) library
 
 Group:          System/Libraries
@@ -63,6 +63,9 @@ find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 
 
 %changelog
+* Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 6.12.24-alt1_5
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 6.12.24-alt1_4
 - update to new release by fcimport
 
