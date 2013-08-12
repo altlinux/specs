@@ -6,7 +6,7 @@ BuildRequires: gcc-c++
 %add_optflags %optflags_shared
 Name:           libifp
 Version:        1.0.0.2
-Release:        alt2_14
+Release:        alt2_15
 Summary:        A general-purpose library-driver for iRiver's iFP portable audio players
 
 Group:          System/Base
@@ -73,6 +73,9 @@ done
 %{_mandir}/man3/*
 
 %changelog
+* Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 1.0.0.2-alt2_15
+- update to new release by fcimport
+
 * Tue Apr 30 2013 Igor Vlasenko <viy@altlinux.ru> 1.0.0.2-alt2_14
 - update to new release by fcimport
 
