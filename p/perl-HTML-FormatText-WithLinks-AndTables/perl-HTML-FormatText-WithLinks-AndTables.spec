@@ -4,7 +4,7 @@ BuildRequires: perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-HTML-FormatText-WithLinks-AndTables
 Version:        0.02
-Release:        alt2_3
+Release:        alt2_5
 Summary:        Converts HTML to Text with tables in tact
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -59,6 +59,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.02-alt2_5
+- update to new release by fcimport
+
 * Tue Mar 19 2013 Igor Vlasenko <viy@altlinux.ru> 0.02-alt2_3
 - build for Sisyphus
 
