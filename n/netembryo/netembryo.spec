@@ -7,7 +7,7 @@ BuildRequires: /usr/bin/gawk pkgconfig(glib-2.0)
 Summary: Network abstraction library
 Name: netembryo
 Version: 0.1.1
-Release: alt2_4%{?git:.%{rev}git}
+Release: alt2_5%{?git:.%{rev}git}
 License: LGPLv2+
 Group: Development/C
 %if %{?git:1}0
@@ -63,6 +63,9 @@ documentation needed to develop application with netembryo.
 %{_libdir}/pkgconfig/libnetembryo*.pc
 
 %changelog
+* Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.1.1-alt2_5
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.1.1-alt2_4
 - update to new release by fcimport
 
