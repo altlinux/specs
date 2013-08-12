@@ -4,7 +4,7 @@ BuildRequires: perl(Convert/Color/HueChromaBased.pm) perl(List/Util.pm) perl-Mod
 # END SourceDeps(oneline)
 Name:           perl-Convert-Color
 Version:        0.09
-Release:        alt1_2
+Release:        alt1_3
 Summary:        Color space conversions and named lookups
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -51,6 +51,9 @@ find $RPM_BUILD_ROOT -depth -type d -exec rmdir {} 2>/dev/null \;
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.09-alt1_3
+- update to new release by fcimport
+
 * Mon Aug 05 2013 Igor Vlasenko <viy@altlinux.ru> 0.09-alt1_2
 - update to new release by fcimport
 
