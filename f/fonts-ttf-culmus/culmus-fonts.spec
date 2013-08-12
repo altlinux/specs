@@ -9,7 +9,7 @@ Hebrew from the Culmus project.
 
 Name:           fonts-ttf-culmus
 Version:        0.130
-Release:        alt1_2
+Release:        alt1_3
 Summary:        Fonts for Hebrew from Culmus project
 
 Group:          System/Fonts/True type
@@ -417,6 +417,9 @@ fi
 
 
 %changelog
+* Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.130-alt1_3
+- update to new release by fcimport
+
 * Fri Jun 21 2013 Igor Vlasenko <viy@altlinux.ru> 0.130-alt1_2
 - update to new release by fcimport
 
