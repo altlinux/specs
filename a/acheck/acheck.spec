@@ -4,7 +4,7 @@ BuildRequires: perl(Config/General.pm) perl(Exporter.pm) perl(File/Spec/Function
 # END SourceDeps(oneline)
 Name:           acheck
 Version:        0.5.1
-Release:        alt2_10
+Release:        alt2_11
 Summary:        Check common localisation mistakes
 
 Group:          Text tools
@@ -81,6 +81,9 @@ install -p -m 644 po/sv.mo $RPM_BUILD_ROOT/%{_datadir}/locale/sv/LC_MESSAGES/%{n
 %{_datadir}/locale/sv/LC_MESSAGES/%{name}.mo
 
 %changelog
+* Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.5.1-alt2_11
+- update to new release by fcimport
+
 * Mon Aug 05 2013 Igor Vlasenko <viy@altlinux.ru> 0.5.1-alt2_10
 - update to new release by fcimport
 
