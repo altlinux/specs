@@ -3,7 +3,7 @@ BuildRequires: gcc-c++
 # END SourceDeps(oneline)
 Name:           slashem
 Version:        0.0.8
-Release:        alt2_0.11.E0F1
+Release:        alt2_0.13.E0F1
 Summary:        Super Lotsa Added Stuff Hack - Extended Magic
 
 Group:          Games/Other
@@ -26,11 +26,13 @@ BuildRequires:  libSDL-devel libGL-devel libpng-devel zlib-devel
 Requires:       bzip2
 # for X11 core fonts
 
+%{!?_pkgdocdir: %global _pkgdocdir %{_docdir}/%{name}-%{version}}
+
 %global fa_var      /var/games/%{name}
 %global fa_save     /var/games/%{name}/save
 %global fa_share    %{_datadir}/games/%{name}
 %global fa_unshare  %{_libdir}/games/%{name}
-%global fa_doc      %{_defaultdocdir}/%{name}-%{version}
+%global fa_doc      %{_pkgdocdir}
 Source44: import.info
 
 %description
@@ -151,6 +153,9 @@ desktop-file-install \
 
 
 %changelog
+* Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.0.8-alt2_0.13.E0F1
+- update to new release by fcimport
+
 * Mon Mar 25 2013 Igor Vlasenko <viy@altlinux.ru> 0.0.8-alt2_0.11.E0F1
 - update to new release by fcimport
 
