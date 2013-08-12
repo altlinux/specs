@@ -1,6 +1,6 @@
 %define dist Data-Dump-Streamer
 Name: perl-%dist
-Version: 2.34
+Version: 2.36
 Release: alt1
 
 Summary: Accurately serialize a data structure as Perl code
@@ -8,7 +8,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/Y/YV/YVES/Data-Dump-Streamer-%{version}.tar.gz
 
 # Automatically added by buildreq on Tue Oct 11 2011
 BuildRequires: perl-Algorithm-Diff perl-B-Utils perl-IO-Compress perl-Module-Build perl-PadWalker perl-Text-Balanced
@@ -35,6 +35,9 @@ output correctly.
 %perl_vendor_autolib/Data
 
 %changelog
+* Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 2.36-alt1
+- automated CPAN update
+
 * Sun Sep 02 2012 Vladimir Lettiev <crux@altlinux.ru> 2.34-alt1
 - 2.32 -> 2.34
 - built for perl-5.16
