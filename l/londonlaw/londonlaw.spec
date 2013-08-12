@@ -6,7 +6,7 @@ BuildRequires(pre): rpm-build-python
 
 Name:           londonlaw
 Version:        0.2.1
-Release:        alt2_15
+Release:        alt2_16
 Summary:        Online multiplayer version of a well known detective boardgame
 License:        GPLv2
 Group:          Games/Other
@@ -77,6 +77,9 @@ desktop-file-install \
 
 
 %changelog
+* Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.2.1-alt2_16
+- update to new release by fcimport
+
 * Mon Mar 18 2013 Igor Vlasenko <viy@altlinux.ru> 0.2.1-alt2_15
 - update to new release by fcimport
 
