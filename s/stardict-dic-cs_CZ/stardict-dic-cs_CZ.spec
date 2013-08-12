@@ -2,7 +2,7 @@
 Name: stardict-dic-cs_CZ
 Summary: Czech dictionaries for StarDict
 Version: 20110801
-Release: alt2_4
+Release: alt2_5
 Group: Text tools
 License: GFDL
 
@@ -34,6 +34,9 @@ install -m 0644 -p  %{dicname}-%{version}/en* ${RPM_BUILD_ROOT}%{_datadir}/stard
 
 
 %changelog
+* Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 20110801-alt2_5
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 20110801-alt2_4
 - update to new release by fcimport
 
