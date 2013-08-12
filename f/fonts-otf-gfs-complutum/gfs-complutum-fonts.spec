@@ -9,7 +9,7 @@ BuildRequires: unzip
 
 Name:    fonts-otf-gfs-complutum
 Version: 20070413
-Release: alt3_17
+Release: alt3_18
 Summary: GFS Complutum Greek font
 
 Group:     System/Fonts/True type
@@ -125,6 +125,9 @@ fi
 
 
 %changelog
+* Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 20070413-alt3_18
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 20070413-alt3_17
 - update to new release by fcimport
 
