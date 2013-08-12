@@ -4,7 +4,7 @@ BuildRequires: perl(File/Spec/Functions.pm) perl(Scalar/Util.pm) perl(overload.p
 # END SourceDeps(oneline)
 Name:           perl-Math-MatrixReal
 Version:        2.09
-Release:        alt2_6
+Release:        alt2_7
 Summary:        Manipulate matrix of reals
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -56,6 +56,9 @@ find %{buildroot} -depth -type d -exec rmdir {} 2>/dev/null \;
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 2.09-alt2_7
+- update to new release by fcimport
+
 * Mon Aug 05 2013 Igor Vlasenko <viy@altlinux.ru> 2.09-alt2_6
 - update to new release by fcimport
 
