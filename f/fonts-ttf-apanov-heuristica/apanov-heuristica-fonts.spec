@@ -10,7 +10,7 @@
 
 Name:    fonts-ttf-apanov-heuristica
 Version: 0.2.2
-Release: alt3_6
+Release: alt3_7
 Epoch:   1
 Summary: A serif latin & cyrillic font
 
@@ -103,6 +103,9 @@ fi
 
 
 %changelog
+* Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 1:0.2.2-alt3_7
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 1:0.2.2-alt3_6
 - update to new release by fcimport
 
