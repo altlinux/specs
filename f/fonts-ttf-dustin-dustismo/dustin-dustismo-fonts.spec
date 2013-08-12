@@ -10,7 +10,7 @@ serif and sans-serif versions. The fonts cover all European Latin characters.
 
 Name:          fonts-ttf-dustin-dustismo
 Version:       20030318
-Release:       alt3_9
+Release:       alt3_10
 Summary:       General purpose sans-serif font with bold, italic and bold-italic variations
 
 Group:         System/Fonts/True type
@@ -138,6 +138,9 @@ fi
 %dir %{_fontbasedir}/*/%{_fontstem}
 
 %changelog
+* Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 20030318-alt3_10
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 20030318-alt3_9
 - update to new release by fcimport
 
