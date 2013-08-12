@@ -4,7 +4,7 @@ BuildRequires: gcc-c++
 %add_optflags %optflags_shared
 Name:		libgtextutils
 Version:	0.6
-Release:	alt2_9
+Release:	alt2_10
 Summary:	Assaf Gordon text utilities    
 
 Group:		System/Libraries
@@ -55,6 +55,9 @@ find %{buildroot} -name '*.la' -exec rm -f {} ';'
 %{_libdir}/pkgconfig/gtextutils.pc
 
 %changelog
+* Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.6-alt2_10
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.6-alt2_9
 - update to new release by fcimport
 
