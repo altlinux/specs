@@ -4,7 +4,7 @@ BuildRequires: perl(File/Slurp.pm) perl(List/AllUtils.pm) perl(Modern/Perl.pm) p
 # END SourceDeps(oneline)
 Name: z88dk
 Version: 1.10.1
-Release: alt1_2
+Release: alt1_3
 Summary: A Z80 cross compiler
 License: Artistic clarified
 URL: http://www.z88dk.org/
@@ -74,6 +74,9 @@ cp -p netman/man3z/* %{buildroot}%{_mandir}/man3z
 %{_mandir}/man3z/
 
 %changelog
+* Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 1.10.1-alt1_3
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 1.10.1-alt1_2
 - update to new release by fcimport
 
