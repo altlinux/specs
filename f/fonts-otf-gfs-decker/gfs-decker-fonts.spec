@@ -9,7 +9,7 @@ BuildRequires: unzip
 
 Name:    fonts-otf-gfs-decker
 Version: 20090618
-Release: alt3_7
+Release: alt3_8
 Summary: A 19th century Greek typeface
 
 Group:     System/Fonts/True type
@@ -115,6 +115,9 @@ fi
 
 
 %changelog
+* Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 20090618-alt3_8
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 20090618-alt3_7
 - update to new release by fcimport
 
