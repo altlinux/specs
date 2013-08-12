@@ -1,6 +1,6 @@
 Name:           raidem-music
 Version:        1.0
-Release:        alt2_8
+Release:        alt2_9
 Summary:        Background music for the game raidem
 Group:          Games/Other
 License:        CC-BY
@@ -45,6 +45,9 @@ install -p -m 644 %{SOURCE3} $RPM_BUILD_ROOT%{_datadir}/raidem/music/level3
 
 
 %changelog
+* Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_9
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_8
 - update to new release by fcimport
 
