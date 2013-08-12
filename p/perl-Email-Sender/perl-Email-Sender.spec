@@ -4,7 +4,7 @@ BuildRequires: perl(Errno.pm) perl(Fcntl.pm) perl(IO/File.pm) perl(IO/Handle.pm)
 # END SourceDeps(oneline)
 Name:           perl-Email-Sender
 Version:        0.120002
-Release:        alt2_2
+Release:        alt2_4
 Summary:        A library for sending email
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -65,6 +65,7 @@ make pure_install DESTDIR=$RPM_BUILD_ROOT
 
 find $RPM_BUILD_ROOT -type f -name .packlist -exec rm -f {} \;
 
+# %{_fixperms} $RPM_BUILD_ROOT/*
 
 %check
 RELEASE_TESTING=1 make test
@@ -74,6 +75,9 @@ RELEASE_TESTING=1 make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.120002-alt2_4
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.120002-alt2_2
 - update to new release by fcimport
 
