@@ -2,7 +2,7 @@
 BuildRequires: perl(RPM/Header.pm) perl(Source/Repository/Mass/ALTLinuxBackport.pm) perl-devel perl-ALTLinux-ACL
 # END SourceDeps(oneline)
 Name: autorepo-scripts
-Version: 0.28
+Version: 0.29
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -62,6 +62,7 @@ install -m 755 *.template %buildroot%_datadir/%name/templates/
 %files
 %doc autorepo-config.*
 %doc DEPLOY.txt
+%doc rsync-local
 %_bindir/autorepo*
 %perl_vendor_privlib/Autorepo*
 %_datadir/%name/templates
@@ -77,6 +78,9 @@ install -m 755 *.template %buildroot%_datadir/%name/templates/
 %_bindir/autorepo-altnode-misc-statistics-wrapper
 
 %changelog
+* Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.29-alt1
+- bugfixes
+
 * Sun Aug 11 2013 Igor Vlasenko <viy@altlinux.ru> 0.28-alt1
 - autopurge in managed mode
 
