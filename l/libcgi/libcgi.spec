@@ -14,7 +14,7 @@
 
 Name:           libcgi
 Version:        1.0
-Release:        alt3_14
+Release:        alt3_15
 Summary:        CGI easy as C
 
 Group:          System/Libraries
@@ -124,6 +124,9 @@ fi
 
 
 %changelog
+* Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 1.0-alt3_15
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 1.0-alt3_14
 - update to new release by fcimport
 
