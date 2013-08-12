@@ -1,6 +1,6 @@
 Name: enum
 Version: 1.1
-Release: alt1_3
+Release: alt1_4
 Summary: Seq- and jot-like enumerator
 
 Group:   File tools
@@ -38,6 +38,9 @@ make check
 
 
 %changelog
+* Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 1.1-alt1_4
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 1.1-alt1_3
 - update to new release by fcimport
 
