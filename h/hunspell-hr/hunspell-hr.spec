@@ -5,7 +5,7 @@ Name: hunspell-hr
 Summary: Croatian hunspell dictionaries
 %define upstreamid 20040608
 Version: 0.%{upstreamid}
-Release: alt2_9
+Release: alt2_10
 #Epoch: 1
 Source: http://cvs.linux.hr/spell/myspell/hr_HR.zip
 Group: Text tools
@@ -48,6 +48,9 @@ cp -p hyph_hr.dic $RPM_BUILD_ROOT/%{_datadir}/hyphen/hyph_hr_HR.dic
 %{_datadir}/hyphen/*
 
 %changelog
+* Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.20040608-alt2_10
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.20040608-alt2_9
 - update to new release by fcimport
 
