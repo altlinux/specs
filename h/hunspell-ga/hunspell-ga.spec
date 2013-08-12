@@ -1,7 +1,7 @@
 Name: hunspell-ga
 Summary: Irish hunspell dictionaries
 Version: 4.6
-Release: alt1_4
+Release: alt1_7
 Source0: http://gaelspell.googlecode.com/files/ispell-gaeilge-%{version}.tar.gz
 Source1: myspell-header
 Source2: hunspell-header
@@ -9,6 +9,7 @@ Group: Text tools
 URL: http://borel.slu.edu/ispell/index.html
 License: GPLv2+
 BuildArch: noarch
+BuildRequires: libhunspell-devel hunspell-utils
 Patch1: ispell-gaeilge-4.2-buildhunspell.patch
 
 Requires: hunspell
@@ -25,7 +26,9 @@ Irish hunspell dictionaries.
 make
 cat %{SOURCE1} %{SOURCE2} > header
 export LANG=en_IE.UTF-8
-ispellaff2myspell gaeilge.aff --myheader header | sed -e "s/\"\"/0/g" | sed -e "s/\"//g" > ga_IE.aff
+iconv -f utf-8 -t iso-8859-1 < gaeilge.aff > gaeilge.aff.iso-8859-1
+ispellaff2myspell gaeilge.aff.iso-8859-1 --myheader header | sed -e "s/\"\"/0/g" | sed -e "s/\"//g" > ga_IE.aff
+
 %install
 mkdir -p $RPM_BUILD_ROOT/%{_datadir}/myspell
 cp -p ga_IE.dic ga_IE.aff $RPM_BUILD_ROOT/%{_datadir}/myspell
@@ -35,6 +38,9 @@ cp -p ga_IE.dic ga_IE.aff $RPM_BUILD_ROOT/%{_datadir}/myspell
 %{_datadir}/myspell/*
 
 %changelog
+* Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 4.6-alt1_7
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 4.6-alt1_4
 - update to new release by fcimport
 
