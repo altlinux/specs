@@ -1,10 +1,11 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: gcc-c++ pkgconfig(sigc++-2.0)
+BuildRequires: gcc-c++ pkgconfig(net6-1.3) pkgconfig(sigc++-2.0)
 # END SourceDeps(oneline)
+%add_optflags %optflags_shared
 %define oldname obby
 Name:           libobby
 Version:        0.4.8
-Release:        alt1_5
+Release:        alt1_6
 Summary:        A library which provides synced document buffers
 
 Group:          Development/C
@@ -14,6 +15,7 @@ Source0:        http://releases.0x539.de/obby/%{oldname}-%{version}.tar.gz
 
 BuildRequires:  net6-devel libgmp-devel libgmp_cxx-devel gettext-devel libavahi-devel
 Source44: import.info
+Provides: obby = %{version}-%{release}
 
 %description
 libobby is a library which provides synced document buffers. It supports
@@ -24,7 +26,8 @@ Unix-like platforms.
 %package devel
 Summary:        Development libraries for obby
 Group:          Development/C
-Requires:       %{name} = %{version}-%{release}
+Requires:       libobby = %{version}-%{release}
+Provides: obby-devel = %{version}-%{release}
 
 %description devel
 libobby is a library which provides synced document buffers. This package
@@ -57,6 +60,9 @@ rm $RPM_BUILD_ROOT%{_libdir}/*.la
 
 
 %changelog
+* Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.4.8-alt1_6
+- update to new release by fcimport
+
 * Thu May 02 2013 Igor Vlasenko <viy@altlinux.ru> 0.4.8-alt1_5
 - initial fc import
 
