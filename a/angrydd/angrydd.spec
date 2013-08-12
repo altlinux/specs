@@ -1,6 +1,6 @@
 Name:           angrydd
 Version:        1.0.1
-Release:        alt5_10
+Release:        alt5_11
 Summary:        Falling blocks game
 
 Group:          Games/Other
@@ -12,7 +12,7 @@ Source3:        %{name}.desktop
 BuildArch:      noarch
 
 BuildRequires:  desktop-file-utils
-Requires:       python-module-pygame icon-theme-hicolor gtk2
+Requires:       icon-theme-hicolor gtk2
 Source44: import.info
 
 %description
@@ -58,6 +58,9 @@ desktop-file-install                    \
 
 
 %changelog
+* Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt5_11
+- update to new release by fcimport
+
 * Mon Feb 11 2013 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt5_10
 - update to new release by fcimport
 
