@@ -3,7 +3,7 @@ BuildRequires: unzip
 # END SourceDeps(oneline)
 Name:           alphabet-soup
 Version:        1.1
-Release:        alt2_11
+Release:        alt2_12
 Summary:        Guide your worm through the soup to spell words
 Group:          Games/Other
 License:        Crystal Stacker
@@ -50,6 +50,9 @@ install -p -m 644 %{SOURCE2} \
 %{_datadir}/icons/hicolor/48x48/apps/%{name}.png
 
 %changelog
+* Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 1.1-alt2_12
+- update to new release by fcimport
+
 * Mon Feb 11 2013 Igor Vlasenko <viy@altlinux.ru> 1.1-alt2_11
 - update to new release by fcimport
 
