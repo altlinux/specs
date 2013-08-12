@@ -5,7 +5,7 @@ BuildRequires: perl(CPAN.pm) perl(Catalyst.pm) perl(Catalyst/Action.pm) perl(Con
 BuildRequires: perl(Locale/Maketext.pm)
 Name:           perl-Catalyst-Controller-HTML-FormFu
 Version:        0.09004
-Release:        alt2_2
+Release:        alt2_4
 Summary:        HTML::FormFu controller for Catalyst
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -52,6 +52,7 @@ make pure_install PERL_INSTALL_ROOT=$RPM_BUILD_ROOT
 find $RPM_BUILD_ROOT -type f -name .packlist -exec rm -f {} \;
 find $RPM_BUILD_ROOT -depth -type d -exec rmdir {} 2>/dev/null \;
 
+# %{_fixperms} $RPM_BUILD_ROOT/*
 
 %check
 make test
@@ -61,6 +62,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.09004-alt2_4
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.09004-alt2_2
 - update to new release by fcimport
 
