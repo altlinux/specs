@@ -6,7 +6,7 @@ BuildRequires: gcc-c++ python-devel
 %define oldname ompl
 Name:           libompl
 Version:        0.12.2
-Release:        alt1_2
+Release:        alt1_3
 Summary:        The Open Motion Planning Library
 
 Group:          System/Libraries
@@ -93,6 +93,9 @@ rm -rf %{buildroot}%{_bindir}
 %{_datadir}/cmake/Modules/FindOMPL.cmake
 
 %changelog
+* Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.12.2-alt1_3
+- update to new release by fcimport
+
 * Mon Aug 05 2013 Igor Vlasenko <viy@altlinux.ru> 0.12.2-alt1_2
 - update to new release by fcimport
 
