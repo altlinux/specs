@@ -1,16 +1,16 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: gcc-c++ libsysfs-devel
+BuildRequires: libsysfs-devel
 # END SourceDeps(oneline)
+%add_optflags %optflags_shared
 Name: libcxgb4
-Version: 1.2.0
-Release: alt1_3
+Version: 1.3.1
+Release: alt1_1
 Summary: Chelsio T4 iWARP HCA Userspace Driver
 Group: System/Libraries
 License: GPLv2 or BSD
 Url: http://www.openfabrics.org/
 Source: http://www.openfabrics.org/downloads/cxgb4/%{name}-%{version}.tar.gz
 Source1: libcxgb4-modprobe.conf
-Patch0:  libcxgb4-1.1.0-type.patch
 BuildRequires: libibverbs-devel >= 1.1.3 libtool
 Obsoletes: %{name}-devel
 ExcludeArch: s390 s390x
@@ -29,7 +29,6 @@ Static version of libcxgb4 that may be linked directly to an application.
 
 %prep
 %setup -q
-%patch0 -p1
 
 %build
 %configure
@@ -51,6 +50,9 @@ rm -f $RPM_BUILD_ROOT%{_libdir}/*.la
 %{_libdir}/*.a
 
 %changelog
+* Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 1.3.1-alt1_1
+- update to new release by fcimport
+
 * Tue Apr 30 2013 Igor Vlasenko <viy@altlinux.ru> 1.2.0-alt1_3
 - initial fc import
 
