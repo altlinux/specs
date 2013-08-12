@@ -7,7 +7,7 @@ BuildRequires: /usr/bin/doxygen libncurses-devel
 
 Name:		libnjb
 Version:	2.2.7
-Release:	alt3_4.qa1
+Release:	alt3_5
 Summary:	A software library for talking to the Creative Nomad Jukeboxes and Dell DJs
 URL:		http://libnjb.sourceforge.net/
 
@@ -59,8 +59,8 @@ make %{?_smp_mflags}
 # Remove libtool archive remnant
 rm -f $RPM_BUILD_ROOT%{_libdir}/libnjb.la
 # Install udev rules file.
-mkdir -p $RPM_BUILD_ROOT%_udevrulesdir
-install -p -m 644 libnjb.rules $RPM_BUILD_ROOT%_udevrulesdir/60-libnjb.rules
+mkdir -p $RPM_BUILD_ROOT%{_sysconfdir}/udev/rules.d
+install -p -m 644 libnjb.rules $RPM_BUILD_ROOT%{_sysconfdir}/udev/rules.d/60-libnjb.rules
 # Copy documentation to a good place
 install -p -m 644 AUTHORS ChangeLog ChangeLog-old FAQ \
 INSTALL LICENSE HACKING $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}
@@ -78,7 +78,7 @@ touch -r configure.ac \
 
 %files
 %{_libdir}/*.so.*
-%config(noreplace) %_udevrulesdir/*
+%config(noreplace) %{_sysconfdir}/udev/rules.d/*
 %files examples
 %{_bindir}/*
 
@@ -93,6 +93,9 @@ touch -r configure.ac \
 
 
 %changelog
+* Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 2.2.7-alt3_5
+- update to new release by fcimport
+
 * Tue Apr 23 2013 Repocop Q. A. Robot <repocop@altlinux.org> 2.2.7-alt3_4.qa1
 - NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
 - applied repocop fixes:
