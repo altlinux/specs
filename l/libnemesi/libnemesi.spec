@@ -4,7 +4,7 @@
 Summary: RTSP/RTP client library
 Name: libnemesi
 Version: 0.7.0
-Release: alt3_0.4.%{?git}git
+Release: alt3_0.5.%{?git}git
 License: LGPLv2+
 Group: Development/C
 %if %{?git:1}0
@@ -98,6 +98,9 @@ sed -i 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' libtool
 %{_bindir}/nemesi_loop_stream
 
 %changelog
+* Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.7.0-alt3_0.5.20110215git
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.7.0-alt3_0.4.20110215git
 - update to new release by fcimport
 
