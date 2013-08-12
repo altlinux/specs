@@ -8,7 +8,7 @@ BuildRequires: unzip
 
 Name:		fonts-otf-drehatlas-xaporho
 Version:	1.0.3.3
-Release:	alt3_7
+Release:	alt3_9
 Summary:	A Latin typeface that is sharp and angular
 Group:		System/Fonts/True type
 License:	OFL
@@ -34,8 +34,6 @@ mv LICENSE.new LICENSE
 %build
 
 %install
-rm -fr %{buildroot}
-
 cd drehatlas-fonts-%{metapkgver}/Xaporho-%{version}
 
 install -m 0755 -d %{buildroot}%{_fontdir}
@@ -91,6 +89,9 @@ fi
 %doc drehatlas-fonts-%{metapkgver}/Xaporho-%{version}/LICENSE drehatlas-fonts-%{metapkgver}/Xaporho-%{version}/FONTLOG
 
 %changelog
+* Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 1.0.3.3-alt3_9
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 1.0.3.3-alt3_7
 - update to new release by fcimport
 
