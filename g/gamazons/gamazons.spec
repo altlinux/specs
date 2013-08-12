@@ -3,7 +3,7 @@ BuildRequires: /usr/bin/glib-gettextize
 # END SourceDeps(oneline)
 Name:           gamazons
 Version:        0.83
-Release:        alt4_11
+Release:        alt4_12
 Summary:        GNOME Amazons
 
 Group:          Games/Other
@@ -60,6 +60,9 @@ desktop-file-install \
 
 
 %changelog
+* Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.83-alt4_12
+- update to new release by fcimport
+
 * Tue Apr 09 2013 Igor Vlasenko <viy@altlinux.ru> 0.83-alt4_11
 - update to new release by fcimport
 
