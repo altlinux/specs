@@ -8,7 +8,7 @@ BuildRequires: perl(IO/Socket.pm) perl(Time/HiRes.pm)
 
 Name:           cave9
 Version:        0.4
-Release:        alt3_6
+Release:        alt3_7
 Summary:        3d game of cave exploration
 
 Group:          Games/Other
@@ -117,6 +117,9 @@ fi
 %{_datadir}/applications/cave9.desktop
 
 %changelog
+* Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.4-alt3_7
+- update to new release by fcimport
+
 * Mon Feb 18 2013 Igor Vlasenko <viy@altlinux.ru> 0.4-alt3_6
 - update to new release by fcimport
 
