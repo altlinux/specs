@@ -5,7 +5,7 @@ Name: hunspell-mk
 Summary: Macedonian hunspell dictionaries
 %define upstreamid 20051126
 Version: 0.%{upstreamid}
-Release: alt2_7
+Release: alt2_8
 Source: http://mk.openoffice.org/files/documents/215/3053/mk_MK.zip
 Group: Text tools
 URL: http://mk.openoffice.org
@@ -35,6 +35,9 @@ cp -p *.dic *.aff $RPM_BUILD_ROOT/%{_datadir}/myspell
 %{_datadir}/myspell/*
 
 %changelog
+* Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.20051126-alt2_8
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.20051126-alt2_7
 - update to new release by fcimport
 
