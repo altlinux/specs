@@ -6,7 +6,7 @@ BuildRequires: gcc-c++
 %define oldname cminpack
 Name:           libcminpack
 Version:        1.3.0
-Release:        alt1_3
+Release:        alt1_4
 Summary:        Solver for nonlinear equations and nonlinear least squares problems
 
 Group:          Development/C
@@ -63,6 +63,9 @@ make -C build install DESTDIR=%{buildroot}
 
 
 %changelog
+* Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 1.3.0-alt1_4
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 1.3.0-alt1_3
 - update to new release by fcimport
 
