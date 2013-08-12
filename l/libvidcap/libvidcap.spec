@@ -1,9 +1,10 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/pkg-config gcc-c++
 # END SourceDeps(oneline)
+%add_optflags %optflags_shared
 Name:		libvidcap
 Version:	0.2.1
-Release:	alt1_9
+Release:	alt1_10
 Summary:	Cross-platform video capture library
 Group:		System/Libraries
 License:	LGPLv2+
@@ -46,6 +47,9 @@ find %{buildroot} -name '*.la' -exec rm -f {} ';'
 %{_includedir}/vidcap/
 
 %changelog
+* Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.2.1-alt1_10
+- update to new release by fcimport
+
 * Mon Feb 25 2013 Igor Vlasenko <viy@altlinux.ru> 0.2.1-alt1_9
 - fc update
 
