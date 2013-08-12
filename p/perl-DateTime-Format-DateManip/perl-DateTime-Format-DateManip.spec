@@ -4,7 +4,7 @@ BuildRequires: perl(DateTime/Duration.pm) perl-Module-Build perl-devel perl-podl
 # END SourceDeps(oneline)
 Name:           perl-DateTime-Format-DateManip
 Version:        0.04
-Release:        alt2_14
+Release:        alt2_15
 Summary:        Convert Date::Manip to DateTime and vice versa
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -50,6 +50,9 @@ find %{buildroot} -depth -type d -exec rmdir {} 2>/dev/null \;
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.04-alt2_15
+- update to new release by fcimport
+
 * Mon Aug 05 2013 Igor Vlasenko <viy@altlinux.ru> 0.04-alt2_14
 - update to new release by fcimport
 
