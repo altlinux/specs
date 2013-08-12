@@ -9,7 +9,7 @@ Name: beesu
 Version: 2.7
 # Don't ever decrease this version (unless all beesu, nbm, and gbp update) or the subpackages will go backwards.
 # It is easier to do this than to track a separate release field.
-Release: alt2_11
+Release: alt2_12
 Summary: Graphical wrapper for su
 URL: http://www.honeybeenet.altervista.org
 Group: System/Base
@@ -159,6 +159,9 @@ EOF
 %{_libexecdir}/nemo-beesu-manager/
 
 %changelog
+* Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 2.7-alt2_12
+- update to new release by fcimport
+
 * Mon Jul 08 2013 Igor Vlasenko <viy@altlinux.ru> 2.7-alt2_11
 - update to new release by fcimport
 
