@@ -3,7 +3,7 @@ BuildRequires: unzip
 # END SourceDeps(oneline)
 Name:		biniax
 Version:	1.2
-Release:	alt3_13
+Release:	alt3_14
 Summary:	A unique arcade logic game
 
 Group:		Games/Other
@@ -81,6 +81,9 @@ install -p -m 0644 %{SOURCE2} \
 %{_datadir}/icons/hicolor/*/apps/%{name}.png
 
 %changelog
+* Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 1.2-alt3_14
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 1.2-alt3_13
 - update to new release by fcimport
 
