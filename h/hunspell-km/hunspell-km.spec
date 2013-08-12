@@ -4,7 +4,7 @@ BuildRequires: unzip
 Name: hunspell-km
 Summary: Khmer hunspell dictionaries
 Version: 1.1
-Release: alt2_6
+Release: alt2_7
 Source: http://extensions.services.openoffice.org/files/2250/0/SBBIC-spellingchecker-OOo.1.1.oxt
 Group: Text tools
 URL: http://www.sbbic.org/
@@ -31,6 +31,9 @@ cp -p dictionaries/km_KH.* $RPM_BUILD_ROOT/%{_datadir}/myspell/
 %{_datadir}/myspell/*
 
 %changelog
+* Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 1.1-alt2_7
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 1.1-alt2_6
 - update to new release by fcimport
 
