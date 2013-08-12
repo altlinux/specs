@@ -4,7 +4,7 @@ BuildRequires: perl(IPC/Open2.pm)
 # END SourceDeps(oneline)
 Name:           colordiff
 Version:        1.0.13
-Release:        alt1_3
+Release:        alt1_4
 Summary:        Color terminal highlighter for diff files
 
 License:        GPLv2+
@@ -56,6 +56,9 @@ make install DESTDIR=$RPM_BUILD_ROOT INSTALL_DIR=%{_bindir} \
 
 
 %changelog
+* Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 1.0.13-alt1_4
+- update to new release by fcimport
+
 * Mon Aug 05 2013 Igor Vlasenko <viy@altlinux.ru> 1.0.13-alt1_3
 - update to new release by fcimport
 
