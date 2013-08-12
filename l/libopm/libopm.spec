@@ -5,7 +5,7 @@ BuildRequires: perl(IO/Select.pm) perl-devel perl-podlators
 Summary:        Blitzed open proxy monitor library
 Name:           libopm
 Version:        0.1
-Release:        alt3_13.20050731cvs
+Release:        alt3_14.20050731cvs
 License:        GPLv2+
 Group:          System/Libraries
 URL:            http://wiki.blitzed.org/BOPM
@@ -58,6 +58,9 @@ rm -f $RPM_BUILD_ROOT%{_libdir}/*.la
 %{_libdir}/%{name}.so
 
 %changelog
+* Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.1-alt3_14.20050731cvs
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.1-alt3_13.20050731cvs
 - update to new release by fcimport
 
