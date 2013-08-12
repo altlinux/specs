@@ -5,7 +5,7 @@ Group: Development/C
 %add_optflags %optflags_shared
 Name:           libtpcmisc
 Version:        1.4.8
-Release:        alt2_7
+Release:        alt2_8
 Summary:        Miscellaneous PET functions
 
 License:        LGPLv2+
@@ -91,6 +91,9 @@ popd
 %{_libdir}/%{name}.a
 
 %changelog
+* Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 1.4.8-alt2_8
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 1.4.8-alt2_7
 - update to new release by fcimport
 
