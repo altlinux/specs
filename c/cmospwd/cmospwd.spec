@@ -1,6 +1,6 @@
 Name:           cmospwd
 Version:        5.0
-Release:        alt2_5
+Release:        alt2_6
 Summary:        BIOS password cracker utility
 
 Group:          System/Base
@@ -62,6 +62,9 @@ install -D -m 755 src/%{name} $RPM_BUILD_ROOT%{_sbindir}/%{name}
 
 
 %changelog
+* Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 5.0-alt2_6
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 5.0-alt2_5
 - update to new release by fcimport
 
