@@ -17,7 +17,7 @@ BuildRequires: unzip
 
 Name:           fonts-ttf-darkgarden
 Version:	1.1
-Release:        alt3_15
+Release:        alt3_16
 Summary:	Dark Garden is a decorative outline font of unusual shape
 
 Group:          System/Fonts/True type
@@ -110,6 +110,9 @@ fi
 
 
 %changelog
+* Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 1.1-alt3_16
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 1.1-alt3_15
 - update to new release by fcimport
 
