@@ -1,11 +1,12 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: gcc-c++
 # END SourceDeps(oneline)
+%add_optflags %optflags_shared
 %define oldname rtaudio
 Summary:        Real-time Audio I/O Library
 Name:           librtaudio
 Version:        4.0.11
-Release:        alt1_4
+Release:        alt1_5
 License:        MIT
 Group:          System/Libraries
 URL:            http://www.music.mcgill.ca/~gary/rtaudio/
@@ -20,6 +21,7 @@ BuildRequires:  libalsa-devel
 BuildRequires:  libjack-devel
 BuildRequires:  libpulseaudio-devel
 Source44: import.info
+Provides: rtaudio = %{version}-%{release}
 
 
 %description
@@ -41,7 +43,8 @@ designed with the following objectives:
 %package devel
 Summary:        Real-time Audio I/O Library
 Group:          System/Libraries
-Requires:       %{name}%{?_isa} = %{version}-%{release}
+Requires:       librtaudio = %{version}-%{release}
+Provides: rtaudio-devel = %{version}-%{release}
 
 %description devel
 RtAudio is a set of C++ classes that provide a common API for realtime audio
@@ -100,6 +103,9 @@ ln -s %{_libdir}/lib%{oldname}.so.%{version} %{buildroot}%{_libdir}/lib%{oldname
 %{_libdir}/lib%{oldname}.so
 
 %changelog
+* Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 4.0.11-alt1_5
+- update to new release by fcimport
+
 * Mon Feb 25 2013 Igor Vlasenko <viy@altlinux.ru> 4.0.11-alt1_4
 - fc update
 
