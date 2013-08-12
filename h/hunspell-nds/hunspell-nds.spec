@@ -4,7 +4,7 @@ BuildRequires: unzip
 Name: hunspell-nds
 Summary: Lowlands Saxon hunspell dictionaries
 Version: 0.1
-Release: alt2_7
+Release: alt2_8
 Source: http://downloads.sourceforge.net/aspell-nds/hunspell-nds-0.1.zip
 Group: Text tools
 URL: http://aspell-nds.sourceforge.net/
@@ -39,6 +39,9 @@ popd
 %{_datadir}/myspell/*
 
 %changelog
+* Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.1-alt2_8
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.1-alt2_7
 - update to new release by fcimport
 
