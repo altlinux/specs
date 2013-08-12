@@ -2,7 +2,7 @@
 Summary: An interpreter for AGI games
 Name: nagi
 Version: 2.06
-Release: alt2_12
+Release: alt2_13
 Group: Games/Other
 License: MIT
 URL: http://www.agidev.com/projects/nagi/
@@ -54,6 +54,9 @@ install -Dp -m644 src/nagi.1 %{buildroot}%{_mandir}/man1
 %{_mandir}/man1/nagi.1*
 
 %changelog
+* Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 2.06-alt2_13
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 2.06-alt2_12
 - update to new release by fcimport
 
