@@ -3,7 +3,7 @@ BuildRequires: unzip
 # END SourceDeps(oneline)
 Name:		dgae
 Version:	1.1
-Release:	alt4_10
+Release:	alt4_11
 Summary:	DG, a short AGI adventure game
 
 Group:		Games/Other
@@ -59,6 +59,9 @@ install -p -m 0644 %{SOURCE3} %{buildroot}%{_datadir}/icons/hicolor/32x32/apps/%
 %{_bindir}/dgae-wrapper.sh
 
 %changelog
+* Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 1.1-alt4_11
+- update to new release by fcimport
+
 * Sun Feb 24 2013 Igor Vlasenko <viy@altlinux.ru> 1.1-alt4_10
 - update to new release by fcimport
 
