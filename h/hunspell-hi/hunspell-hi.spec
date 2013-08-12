@@ -1,7 +1,7 @@
 Name: hunspell-hi
 Summary: Hindi hunspell dictionaries
 Version: 20050726
-Release: alt2_11
+Release: alt2_12
 Source: http://hunspell.sourceforge.net/hi-demo.tar.gz
 Group: Text tools
 URL: http://hunspell.sourceforge.net
@@ -32,6 +32,9 @@ cp -p hi/*.dic hi/*.aff $RPM_BUILD_ROOT/%{_datadir}/myspell
 %{_datadir}/myspell/*
 
 %changelog
+* Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 20050726-alt2_12
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 20050726-alt2_11
 - update to new release by fcimport
 
