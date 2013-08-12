@@ -2,6 +2,7 @@
 BuildRequires: gcc-c++
 # END SourceDeps(oneline)
 BuildRequires: chrpath
+%add_optflags %optflags_shared
 %define oldname gtkglextmm
 %define gtkglext_major 1.0
 %define gtkglextmm_major 1.2
@@ -10,7 +11,7 @@ BuildRequires: chrpath
 Summary: C++ wrapper for GtkGlExt
 Name: libgtkglextmm
 Version: 1.2.0
-Release: alt2_18
+Release: alt2_19
 License: LGPLv2+
 Group: System/Libraries
 URL: http://projects.gnome.org/gtkglext/
@@ -24,6 +25,7 @@ Patch3: fix_ftbfs_gtk_2_37.patch
 BuildRequires: gtkglext-devel >= %{gtkglext_major}
 BuildRequires: libgtkmm2-devel >= %{gtkmm_major}
 Source44: import.info
+Provides: gtkglextmm = %{version}-%{release}
 Patch33: gtkglextmm-1.2.0-fix-deprecated.patch
 
 
@@ -34,7 +36,8 @@ gtkglextmm is a C++ wrapper for GtkGlExt, an OpenGL extension to GTK+.
 Summary: Development tools for gtkglextmm
 Group: Development/C
 
-Requires: %{name} = %{version}
+Requires: libgtkglextmm = %{version}
+Provides: gtkglextmm-devel = %{version}-%{release}
 
 %description devel
 The gtkglextmm-devel package contains the header files, static libraries,
@@ -86,6 +89,9 @@ done
 %doc %{_datadir}/doc/%{oldname}-%{gtkglextmm_major}/html/
 
 %changelog
+* Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 1.2.0-alt2_19
+- update to new release by fcimport
+
 * Sun May 26 2013 Igor Vlasenko <viy@altlinux.ru> 1.2.0-alt2_18
 - new fc release
 
