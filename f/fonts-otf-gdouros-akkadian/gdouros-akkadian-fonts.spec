@@ -7,7 +7,7 @@ BuildRequires: unzip
 
 Name:           fonts-otf-gdouros-akkadian
 Version:        2.52
-Release:        alt3_5
+Release:        alt3_6
 Summary:        A font for Sumero-Akkadian cuneiform
 
 Group:          System/Fonts/True type
@@ -91,6 +91,9 @@ fi
 
 
 %changelog
+* Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 2.52-alt3_6
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 2.52-alt3_5
 - update to new release by fcimport
 
