@@ -4,7 +4,7 @@ Summary: Spanish dictionaries for Aspell
 Name: aspell-%{lang}
 #Epoch: 50
 Version: 1.11
-Release: alt2_5
+Release: alt2_6
 License: GPLv2
 Group: Text tools
 URL: http://aspell.net/
@@ -36,6 +36,9 @@ make install DESTDIR=$RPM_BUILD_ROOT
 %{_datadir}/aspell/*
 
 %changelog
+* Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 1.11-alt2_6
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 1.11-alt2_5
 - update to new release by fcimport
 
