@@ -1,10 +1,10 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: gcc-c++ perl(Archive/Tar.pm) perl(Archive/Zip.pm)
 # END SourceDeps(oneline)
-%define fedora 18
+%define fedora 19
 Name:           magicmaze
 Version:        1.0.2
-Release:        alt2_10
+Release:        alt2_11
 Summary:        Board game featuring a maze which the players change each turn
 Group:          Games/Other
 License:        zlib and Redistributable, no modification permitted
@@ -78,6 +78,9 @@ install -p -m 644 %{name}.png \
 
 
 %changelog
+* Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 1.0.2-alt2_11
+- update to new release by fcimport
+
 * Mon Feb 18 2013 Igor Vlasenko <viy@altlinux.ru> 1.0.2-alt2_10
 - fc update
 
