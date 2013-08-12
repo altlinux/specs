@@ -1,11 +1,10 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-fedora-compat
 BuildRequires: gcc-c++ libqt4-devel
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
 Name:           libQGLViewer
 Version:        2.3.9
-Release:        alt2_6
+Release:        alt2_8
 Summary:        Qt based OpenGL generic 3D viewer library
 
 Group:          System/Libraries
@@ -83,10 +82,13 @@ done
 %patch33 -p2
 
 %build
+
+%{!?_pkgdocdir: %global _pkgdocdir %{_docdir}/%{name}-%{version}}
+
 cd QGLViewer
 qmake-qt4 \
           LIB_DIR=%{_libdir} \
-          DOC_DIR=%{_defaultdocdir}/%{name}-%{version} \
+          DOC_DIR=%{_pkgdocdir} \
           INCLUDE_DIR=%{_includedir} \
           TARGET_x=%{name}.so.%{version}
 # The TARGET_x variable gives the SONAME. However, qmake behavior is not
@@ -119,13 +121,16 @@ make -e INSTALL_ROOT=$RPM_BUILD_ROOT install
 %files devel
 %{_includedir}/QGLViewer/
 %{_libdir}/libQGLViewer.so
-%{_qt4_plugindir}/designer/libqglviewerplugin.so
+%{_libdir}/qt4/plugins/designer/libqglviewerplugin.so
 
 %files doc
 %doc doc
 %doc examples
 
 %changelog
+* Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 2.3.9-alt2_8
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 2.3.9-alt2_6
 - update to new release by fcimport
 
