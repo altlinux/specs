@@ -2,6 +2,7 @@
 BuildRequires(pre): rpm-build-python
 BuildRequires: gcc-c++
 # END SourceDeps(oneline)
+%add_optflags %optflags_shared
 %{echo 
 
 
@@ -9,7 +10,7 @@ BuildRequires: gcc-c++
 
 Name:           libkdtree++
 Version:        0.7.0
-Release:        alt1_5
+Release:        alt1_6
 Summary:        C++ template container implementation of kd-tree sorting
 URL:            http://libkdtree.alioth.debian.org/
 License:        Artistic 2.0
@@ -119,6 +120,9 @@ install -pm 0644 python-bindings/kdtree.py %{buildroot}%{python_sitelibdir_noarc
 %doc examples/test*.cpp
 
 %changelog
+* Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.7.0-alt1_6
+- update to new release by fcimport
+
 * Thu Apr 25 2013 Igor Vlasenko <viy@altlinux.ru> 0.7.0-alt1_5
 - initial fc import
 
