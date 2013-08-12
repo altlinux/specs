@@ -1,6 +1,6 @@
 Name: dhcpcd
 Epoch: 1
-Version: 6.0.3
+Version: 6.0.5
 Release: alt1
 
 Summary: DHCP Client
@@ -67,6 +67,11 @@ fi
 /lib/%name/%name-run-hooks
 
 %changelog
+* Mon Aug 12 2013 Mikhail Efremov <sem@altlinux.org> 1:6.0.5-alt1
+- hostname hook: Fix exit status.
+- Actually validate the search list (from upstream git).
+- Updated to 6.0.5.
+
 * Mon Jul 22 2013 Mikhail Efremov <sem@altlinux.org> 1:6.0.3-alt1
 - Updated to 6.0.3.
 
