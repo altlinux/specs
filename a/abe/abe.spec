@@ -3,7 +3,7 @@ BuildRequires: gcc-c++ libICE-devel libSM-devel
 # END SourceDeps(oneline)
 Name:           abe
 Version:        1.1
-Release:        alt5_18
+Release:        alt5_19
 
 Summary:        Scrolling, platform-jumping, ancient pyramid exploring game
 Group:          Games/Other
@@ -80,6 +80,9 @@ desktop-file-install --dir $RPM_BUILD_ROOT/%{_datadir}/applications/ %{name}.des
 %{_datadir}/pixmaps/%{name}.png
 
 %changelog
+* Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 1.1-alt5_19
+- update to new release by fcimport
+
 * Tue Apr 02 2013 Igor Vlasenko <viy@altlinux.ru> 1.1-alt5_18
 - update to new release by fcimport
 
