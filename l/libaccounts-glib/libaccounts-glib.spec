@@ -1,9 +1,10 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/gtkdocize /usr/bin/xmllint /usr/bin/xsltproc docbook-dtds pkgconfig(gio-2.0) pkgconfig(gio-unix-2.0) pkgconfig(glib-2.0) pkgconfig(gobject-2.0) python-devel
 # END SourceDeps(oneline)
+%add_optflags %optflags_shared
 Name:		libaccounts-glib
 Version:	1.8
-Release:	alt1_1
+Release:	alt1_2
 Group:		System/Libraries
 Summary:	Accounts framework for Linux and POSIX based platforms
 License:	LGPLv2
@@ -93,6 +94,9 @@ rm -rf %{buildroot}%{_datadir}/libaccounts-glib0-test
 %doc %{_datadir}/gtk-doc/html/libaccounts-glib/
 
 %changelog
+* Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 1.8-alt1_2
+- update to new release by fcimport
+
 * Sat Jun 01 2013 Igor Vlasenko <viy@altlinux.ru> 1.8-alt1_1
 - new fc release
 
