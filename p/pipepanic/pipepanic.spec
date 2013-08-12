@@ -1,7 +1,7 @@
 %define fedora 19
 Name: pipepanic
 Version: 0.1.3
-Release: alt4_13
+Release: alt4_14
 Summary: A pipe connecting game
 
 Group: Games/Other
@@ -97,6 +97,9 @@ desktop-file-install \
 
 
 %changelog
+* Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.1.3-alt4_14
+- update to new release by fcimport
+
 * Wed Feb 20 2013 Igor Vlasenko <viy@altlinux.ru> 0.1.3-alt4_13
 - update to new release by fcimport
 
