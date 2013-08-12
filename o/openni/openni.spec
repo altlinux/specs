@@ -6,7 +6,7 @@ BuildRequires: python-modules-xml python-devel
 
 Name:           openni
 Version:        1.3.2.1
-Release:        alt1_7%{?gitrev}
+Release:        alt1_8%{?gitrev}
 Summary:        Library for human-machine Natural Interaction
 
 Group:          System/Libraries
@@ -188,6 +188,9 @@ fi
 
 
 %changelog
+* Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 1.3.2.1-alt1_8
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 1.3.2.1-alt1_7
 - update to new release by fcimport
 
