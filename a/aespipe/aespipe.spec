@@ -4,7 +4,7 @@ BuildRequires: /usr/bin/md5sum
 Summary:        AES-based encryption tool for tar/cpio and loop-aes images
 Name:           aespipe
 Version:        2.4c
-Release:        alt2_3
+Release:        alt2_5
 License:        GPLv2+
 Group:          File tools
 URL:            http://loop-aes.sourceforge.net/
@@ -44,19 +44,19 @@ kernel module.
 %{__make} tests
 
 %install
-%{__mkdir} -p %{buildroot}%{_defaultdocdir}/%{name}-%{version}/examples
-%{__cp} -p ChangeLog README %{buildroot}%{_defaultdocdir}/%{name}-%{version}
-%{__install} -Dp -m0644 bz2aespipe %{buildroot}%{_defaultdocdir}/%{name}-%{version}/examples
+%{__install} -Dp -m0644 bz2aespipe examples/bz2aespipe
 %{__install} -Dp -m0644 aespipe.1 %{buildroot}%{_mandir}/man1/aespipe.1
 %{__install} -Dp -m0755 aespipe %{buildroot}%{_bindir}/aespipe
 
 %files
-%dir %{_defaultdocdir}/%{name}-%{version}
-%{_defaultdocdir}/%{name}-%{version}/*
+%doc ChangeLog README examples
 %{_mandir}/man1/*
 %{_bindir}/aespipe
 
 %changelog
+* Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 2.4c-alt2_5
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 2.4c-alt2_3
 - update to new release by fcimport
 
