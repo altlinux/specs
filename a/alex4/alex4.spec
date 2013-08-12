@@ -3,7 +3,7 @@ BuildRequires: unzip
 # END SourceDeps(oneline)
 Name:           alex4
 Version:        1.0
-Release:        alt2_14
+Release:        alt2_15
 Summary:        Alex the Allegator 4 - Platform game
 Group:          Games/Other
 License:        GPL+
@@ -67,6 +67,9 @@ install -p -m 644 %{SOURCE2} \
 
 
 %changelog
+* Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_15
+- update to new release by fcimport
+
 * Mon Feb 11 2013 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_14
 - update to new release by fcimport
 
