@@ -6,7 +6,7 @@ BuildRequires: /usr/bin/gtkdocize gcc-c++ pkgconfig(gtk+-2.0)
 Summary: A collection of GTK+ widgets useful for audio applications
 Name:          libphat
 Version:       0.4.1
-Release:       alt1_10
+Release:       alt1_11
 License:       GPLv2+
 Group:         System/Libraries
 URL:           http://phat.berlios.de/
@@ -74,6 +74,9 @@ rm %{buildroot}%{_libdir}/libphat.*a
 %{_datadir}/gtk-doc/html/%{oldname}
 
 %changelog
+* Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.4.1-alt1_11
+- update to new release by fcimport
+
 * Sun Apr 28 2013 Igor Vlasenko <viy@altlinux.ru> 0.4.1-alt1_10
 - initial fc import
 
