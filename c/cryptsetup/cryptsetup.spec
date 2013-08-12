@@ -4,7 +4,7 @@
 %define _root_sbindir /sbin
 
 Name: cryptsetup
-Version: 1.6.1
+Version: 1.6.2
 Release: alt1
 
 Summary: utility to setup a encrypted disks with LUKS support
@@ -216,6 +216,9 @@ install -Dpm 755 debian/askpass %buildroot/lib/%name/askpass
 %exclude %python_sitelibdir/*.la
 
 %changelog
+* Mon Aug 12 2013 Alexey Shabalin <shaba@altlinux.ru> 1.6.2-alt1
+- 1.6.2
+
 * Mon Apr 29 2013 Alexey Shabalin <shaba@altlinux.ru> 1.6.1-alt1
 - 1.6.1
 - add packages python-module-cryptsetup, veritysetup, reencrypt
