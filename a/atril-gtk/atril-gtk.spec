@@ -6,8 +6,8 @@
 %def_disable introspection
 
 Name:           %_name-gtk
-Version:        1.6.0
-Release:        alt2
+Version:        1.6.1
+Release:        alt1
 Summary:        Document viewer
 
 License:        GPLv2+ and GFDL
@@ -53,7 +53,7 @@ Conflicts: mate-document-viewer
 %description
 Atril is simple multi-page document viewer. It can display and print
 Portable Document Format (PDF), PostScript (PS) and Encapsulated
-PostScript (EPS) files. When supported by the document format, evince
+PostScript (EPS) files. When supported by the document format, atril
 allows searching for text, copying text to the clipboard, hypertext
 navigation, table-of-contents bookmarks and editing of forms.
 
@@ -89,7 +89,7 @@ Requires: %name = %{version}-%{release}
 Conflicts: mate-document-viewer-devel
 
 %description dvi
-This package contains a backend to let evince display dvi files.
+This package contains a backend to let atril display dvi files.
 
 
 %package djvu
@@ -99,7 +99,7 @@ Requires: %name = %{version}-%{release}
 Conflicts: mate-document-viewer-djvu
 
 %description djvu
-This package contains a backend to let evince display djvu files.
+This package contains a backend to let atril display djvu files.
 
 %package pixbuf
 Summary: Atril backend for graphics files
@@ -108,7 +108,7 @@ Requires: %name = %{version}-%{release}
 Conflicts: mate-document-viewer-pixbuf
 
 %description pixbuf
-This package contains a backend to let evince display graphics files.
+This package contains a backend to let atril display graphics files.
 
 %package xps
 Summary: Atril backend for xps files
@@ -117,16 +117,7 @@ Requires: %name = %{version}-%{release}
 Conflicts: mate-document-viewer-xps
 
 %description xps
-This package contains a backend to let evince display xps files.
-
-%package impress
-Summary: Atril backend for impress files
-Group: Publishing
-Requires: %name = %{version}-%{release}
-Conflicts: mate-document-viewer-impress
-
-%description impress
-This package contains a backend to let evince display impress files.
+This package contains a backend to let atril display xps files.
 
 %prep
 %setup
@@ -144,7 +135,6 @@ NOCONFIGURE=1 ./autogen.sh
 	--enable-t1lib=yes \
 	--enable-pixbuf=yes \
 	--enable-xps=yes \
-	--enable-impress=yes \
 	--with-gtk=2.0 \
 	%{subst_enable introspection} \
 	--without-keyring \
@@ -170,10 +160,10 @@ rm -f %buildroot%{_datadir}/icons/hicolor/icon-theme.cache
 
 %files -f %_name.lang
 %{_bindir}/*
-%{_datadir}/%_name/
+%{_datadir}/mate-document-viewer/
 %_desktopdir/%_name.desktop
 %{_datadir}/icons/hicolor/*/apps/atril.*
-%{_mandir}/man1/atril.1.*
+%{_mandir}/man1/atril*.1.*
 %{_libexecdir}/atril-convert-metadata
 %{_libexecdir}/atrild
 %{_datadir}/dbus-1/services/org.mate.atril.Daemon.service
@@ -181,7 +171,7 @@ rm -f %buildroot%{_datadir}/icons/hicolor/icon-theme.cache
 %{_datadir}/MateConf/gsettings/atril.convert
 %{_datadir}/thumbnailers/atril.thumbnailer
 %{_datadir}/mate/help/atril/
-%_defaultdocdir/mate/atril/
+#%_defaultdocdir/mate/atril/
 %{_datadir}/omf/atril/
 
 %files -n lib%name
@@ -228,15 +218,15 @@ rm -f %buildroot%{_datadir}/icons/hicolor/icon-theme.cache
 %{_libdir}/atril/3/backends/libxpsdocument.so*
 %{_libdir}/atril/3/backends/xpsdocument.atril-backend
 
-%files impress
-%{_libdir}/atril/3/backends/libimpressdocument.so*
-%{_libdir}/atril/3/backends/impressdocument.atril-backend
-
 %files pixbuf
 %{_libdir}/atril/3/backends/libpixbufdocument.so*
 %{_libdir}/atril/3/backends/pixbufdocument.atril-backend
 
 %changelog
+* Mon Aug 12 2013 Mikhail Efremov <sem@altlinux.org> 1.6.1-alt1
+- Fix descriptions.
+- Updated to 1.6.1.
+
 * Tue May 28 2013 Mikhail Efremov <sem@altlinux.org> 1.6.0-alt2
 - Fix path to the documentation page.
 - Drop lockdown functionality.
