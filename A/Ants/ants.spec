@@ -5,7 +5,7 @@ BuildRequires: liballegro-devel
 %define oldname ants
 Name:           Ants
 Version:        1.4
-Release:        alt2_12
+Release:        alt2_13
 Summary:        Guide the insects safely home before they drop of the cliff
 Group:          Games/Other
 License:        Public Domain
@@ -36,8 +36,8 @@ Requires:       Ants = %{version}-%{release}
 
 %description    level-editor
 This package contains a level editor for ants, notice that you must run this
-at root, or change the owner of the files under %%{_datadir}/%{oldname}, as the
-level editor edits the files directly under %%{_datadir}/%{oldname} .
+at root, or change the owner of the files under %{_datadir}/%{oldname}, as the
+level editor edits the files directly under %{_datadir}/%{oldname} .
 
 %prep
 %setup -n %{oldname}-%{version} -q
@@ -75,6 +75,9 @@ install -p -m 644 %{SOURCE3} \
 %{_datadir}/applications/%{oldname}-level-editor.desktop
 
 %changelog
+* Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 1.4-alt2_13
+- update to new release by fcimport
+
 * Mon Feb 11 2013 Igor Vlasenko <viy@altlinux.ru> 1.4-alt2_12
 - update to new release by fcimport
 
