@@ -4,7 +4,7 @@ BuildRequires: unzip
 Name: hunspell-ca
 Summary: Catalan hunspell dictionaries
 Version: 2.3
-Release: alt1_3
+Release: alt1_4
 Source: http://www.softcatala.org/diccionaris/actualitzacions/OOo/catalan.oxt
 Group: Text tools
 URL: http://www.softcatala.org/wiki/Projectes/Corrector_ortogràfic
@@ -42,6 +42,9 @@ popd
 %{_datadir}/myspell/*
 
 %changelog
+* Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 2.3-alt1_4
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 2.3-alt1_3
 - update to new release by fcimport
 
