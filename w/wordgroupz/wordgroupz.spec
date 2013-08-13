@@ -10,7 +10,7 @@ BuildRequires(pre): rpm-build-python
 Summary: A vocabulary building application
 Name: wordgroupz
 Version: 0.3.1
-Release: alt1_7
+Release: alt1_8
 Source0: http://rtnpro.fedorapeople.org/wordgroupz/wordgroupz-%{version}.tar.gz
 License: GPLv3
 Group: Text tools
@@ -43,6 +43,9 @@ desktop-file-install --dir=${RPM_BUILD_ROOT}%{_datadir}/applications %{name}.des
 %{python_sitelibdir_noarch}/*.egg-info
 
 %changelog
+* Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.3.1-alt1_8
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.3.1-alt1_7
 - update to new release by fcimport
 
