@@ -1,7 +1,7 @@
 Name:     stardict-xmllittre
 Summary:  Authoritative 19th century French dictionary
 Version:  1.0
-Release:  alt1_6
+Release:  alt1_7
 Group:    File tools
 License:  GPLv3
 URL: http://francois.gannaz.free.fr/Littre/horsligne.php
@@ -37,6 +37,9 @@ iconv -f iso8859-1 -t utf-8 README.western > README
 
 
 %changelog
+* Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 1.0-alt1_7
+- update to new release by fcimport
+
 * Fri Apr 26 2013 Igor Vlasenko <viy@altlinux.ru> 1.0-alt1_6
 - initial fc import
 
