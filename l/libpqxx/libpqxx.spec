@@ -1,11 +1,12 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/dot /usr/bin/doxygen /usr/bin/pkg-config /usr/bin/xmlto boost-devel-headers gcc-c++ libpq5.4-devel
 # END SourceDeps(oneline)
+%add_optflags %optflags_shared
 
 Name:           libpqxx
 Epoch:          1
 Version:        3.2
-Release:        alt1_0.4
+Release:        alt1_0.5
 Summary:        C++ client API for PostgreSQL
 
 Group:          System/Libraries
@@ -70,6 +71,9 @@ rm -f $RPM_BUILD_ROOT%{_libdir}/lib*.la
 
 
 %changelog
+* Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 1:3.2-alt1_0.5
+- update to new release by fcimport
+
 * Fri Apr 26 2013 Igor Vlasenko <viy@altlinux.ru> 1:3.2-alt1_0.4
 - initial fc import
 
