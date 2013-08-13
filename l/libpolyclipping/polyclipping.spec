@@ -12,7 +12,7 @@ BuildRequires: gcc-c++ unzip
 
 Name:           libpolyclipping
 Version:        5.1.6
-Release:        alt1_2
+Release:        alt1_3
 Summary:        Polygon clipping library
 
 Group:          System/Libraries
@@ -92,6 +92,9 @@ popd
 %{_libdir}/lib%{oldname}.so
 
 %changelog
+* Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 5.1.6-alt1_3
+- update to new release by fcimport
+
 * Mon Jul 08 2013 Igor Vlasenko <viy@altlinux.ru> 5.1.6-alt1_2
 - update to new release by fcimport
 
