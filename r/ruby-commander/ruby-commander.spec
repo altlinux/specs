@@ -2,8 +2,8 @@
 
 Summary: The complete solution for Ruby command-line executable
 Name: ruby-%orig_name
-Version: 4.1.2
-Release: alt1.1
+Version: 4.1.5
+Release: alt1
 Group: Development/Ruby
 License: MIT
 URL: http://visionmedia.github.com/commander
@@ -37,6 +37,9 @@ The complete solution for Ruby command-line executable
 
 
 %changelog
+* Tue Aug 13 2013 Evgeny Sinelnikov <sin@altlinux.ru> 4.1.5-alt1
+- Update to new release
+
 * Fri Nov 30 2012 Led <led@altlinux.ru> 4.1.2-alt1.1
 - Rebuilt with ruby-1.9.3-alt1
 
