@@ -7,7 +7,7 @@ BuildRequires: gcc-c++
 Summary: Collection of text-based games
 Name: bsd-games
 Version: 2.17
-Release: alt2_40
+Release: alt2_41
 License: BSD and BSD with advertising
 Group: Games/Other
 URL: ftp://metalab.unc.edu/pub/Linux/games/
@@ -192,6 +192,9 @@ exit 0
 %doc AUTHORS COPYING ChangeLog ChangeLog.0 THANKS YEAR2000 README.hunt trek/USD.doc/trek.me
 
 %changelog
+* Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 2.17-alt2_41
+- update to new release by fcimport
+
 * Fri May 31 2013 Igor Vlasenko <viy@altlinux.ru> 2.17-alt2_40
 - update to new release by fcimport
 
