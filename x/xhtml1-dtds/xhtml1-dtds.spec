@@ -3,7 +3,7 @@ BuildRequires: xml-utils
 
 Name:           xhtml1-dtds
 Version:        1.0
-Release:        alt1_%{date}.9
+Release:        alt1_%{date}.10
 Summary:        XHTML 1.0 document type definitions
 
 Group:          Text tools
@@ -114,6 +114,9 @@ cd - >/dev/null
 
 
 %changelog
+* Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 1.0-alt1_20020801.10
+- update to new release by fcimport
+
 * Tue May 07 2013 Igor Vlasenko <viy@altlinux.ru> 1.0-alt1_20020801.9
 - initial fc import
 
