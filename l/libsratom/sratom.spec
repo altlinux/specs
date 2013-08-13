@@ -7,7 +7,7 @@ BuildRequires: waf
 
 Name:       libsratom
 Version:    0.4.2
-Release:    alt1_4
+Release:    alt1_5
 Summary:    A C library for serializing LV2 plugins
 
 Group:      System/Libraries
@@ -84,6 +84,9 @@ chmod +x %{buildroot}%{_libdir}/lib%{oldname}-0.so.*
 %{_mandir}/man3/*
 
 %changelog
+* Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.4.2-alt1_5
+- update to new release by fcimport
+
 * Sun May 26 2013 Igor Vlasenko <viy@altlinux.ru> 0.4.2-alt1_4
 - update to new release by fcimport
 
