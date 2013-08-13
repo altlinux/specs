@@ -4,7 +4,7 @@ BuildRequires: libexpat-devel
 %add_optflags %optflags_shared
 Name:           libisds
 Version:        0.7
-Release:        alt1_3
+Release:        alt1_4
 Summary:        Library for accessing the Czech Data Boxes
 Group:          System/Libraries
 License:        LGPLv3
@@ -71,6 +71,9 @@ rm -rf client/.deps
 %doc client specification
 
 %changelog
+* Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.7-alt1_4
+- update to new release by fcimport
+
 * Tue Apr 02 2013 Igor Vlasenko <viy@altlinux.ru> 0.7-alt1_3
 - update to new release by fcimport
 
