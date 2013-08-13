@@ -1,11 +1,12 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: waf
 # END SourceDeps(oneline)
+%add_optflags %optflags_shared
 %define oldname slv2
 Name:			libslv2
 Summary:		LV2 host library
 Version:		0.6.6
-Release:		alt4_12
+Release:		alt4_13
 License:		GPLv2+
 Group:			System/Libraries
 Source0:		http://download.drobilla.net/%{oldname}-%{version}.tar.bz2
@@ -21,6 +22,7 @@ BuildRequires:		libjack-devel
 Obsoletes:		%{oldname}-examples < 0.6
 Provides:		%{oldname}-examples = %{version}-%{release}
 Source44: import.info
+Provides: slv2 = %{version}-%{release}
 
 %description
 SLV2 is a library to make the use of LV2 plugins as simple as possible for 
@@ -33,7 +35,8 @@ libraries, avoiding the associated risks).
 %package devel
 Summary:	Development libraries and headers for %{oldname}
 Group:		Development/C
-Requires:	%{name}%{?_isa} = %{version}-%{release}
+Requires:	libslv2 = %{version}-%{release}
+Provides: slv2-devel = %{version}-%{release}
 
 %description devel
 SLV2 is a library to make the use of LV2 plugins as simple as possible for
@@ -88,6 +91,9 @@ chmod +x %{buildroot}%{_libdir}/lib%{oldname}.so*
 %{_mandir}/man3/%{oldname}*
 
 %changelog
+* Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.6.6-alt4_13
+- update to new release by fcimport
+
 * Sat Apr 13 2013 Igor Vlasenko <viy@altlinux.ru> 0.6.6-alt4_12
 - fixed build && accepted for maintainance
 
