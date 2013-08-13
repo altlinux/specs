@@ -6,7 +6,7 @@ Group: Development/C
 %define oldname rtmidi
 Name:       librtmidi
 Version:    1.0.15
-Release:    alt1_5.1
+Release:    alt1_7
 Summary:    Library for realtime MIDI input/output (ALSA support)
 # Request to send in changes is considered optional.
 License:    MIT
@@ -67,6 +67,7 @@ This package contains the RtMidi library compiled for Jack support.
 %prep
 %setup -n %{oldname}-%{version} -q
 %patch0 -p1 -b .shared
+# cp -f /usr/lib/rpm/config.{guess,sub} config/
 autoconf -f
 # fix end of line
 dos2unix doc/release.txt doc/doxygen/tutorial.txt
@@ -74,12 +75,12 @@ sed -i -e 's,$(LIBS) $(SOURCE),$(SOURCE) $(LIBS),' Makefile*
 
 %build
 # First pass, jack.
-%configure --docdir=%{_docdir}/%{oldname}-devel-%{version} --with-jack
+%configure --docdir=%{_docdir}/%{oldname}-devel --with-jack
 make
 mv Makefile Makefile-jack
 
 # Second pass, alsa
-%configure --docdir=%{_docdir}/%{oldname}-devel-%{version}
+%configure --docdir=%{_docdir}/%{oldname}-devel
 make
 
 %install
@@ -90,14 +91,14 @@ make -f Makefile-jack install DESTDIR=%{buildroot}
 make install DESTDIR=%{buildroot}
 
 # Include the readme in non-devel packages
-rm -f %{buildroot}%{_docdir}/%{oldname}-devel-%{version}/readme
+rm -f %{buildroot}%{_docdir}/%{oldname}-devel/readme
 
 %files
 %doc readme
 %{_libdir}/lib%{oldname}.so.*
 
 %files devel
-%{_docdir}/%{oldname}-devel-%{version}/
+%{_docdir}/%{oldname}-devel/
 %{_includedir}/RtMidi.h
 %{_includedir}/RtError.h
 %{_libdir}/lib%{oldname}.so
@@ -110,6 +111,9 @@ rm -f %{buildroot}%{_docdir}/%{oldname}-devel-%{version}/readme
 %{_libdir}/lib%{oldname}-jack.so.*
 
 %changelog
+* Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 1.0.15-alt1_7
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 1.0.15-alt1_5.1
 - update to new release by fcimport
 
