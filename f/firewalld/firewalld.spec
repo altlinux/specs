@@ -1,5 +1,5 @@
 Name: firewalld
-Version: 0.3.3
+Version: 0.3.4
 Release: alt1
 
 Summary: A firewall daemon with D-BUS interface providing a dynamic firewall
@@ -10,12 +10,12 @@ URL: http://fedorahosted.org/firewalld
 # git://git.fedorahosted.org/firewalld.git
 Source: %name-%version.tar
 Source1: %name.init
-#Patch: %name-%version-%release.patch
+Patch: %name-%version-%release.patch
 
 BuildArch: noarch
 
-BuildRequires(pre): rpm-build-licenses
-BuildRequires: intltool glib2-devel python-devel libgio-devel
+BuildRequires(pre): rpm-build-licenses rpm-build-xdg
+BuildRequires: intltool xsltproc docbook-style-xsl docbook-dtds glib2-devel python-devel libgio-devel
 
 Requires: python-module-slip-dbus iptables ebtables iptables-ipv6
 
@@ -35,10 +35,10 @@ also the firewall settings.
 
 %prep
 %setup
-#patch -p1
+%patch -p1
 
 # create po/POTFILES.in
-for i in $(cat po/POTFILES.in.in); do echo $i>>po/POTFILES.in; done
+#for i in $(cat po/POTFILES.in.in); do echo $i>>po/POTFILES.in; done
 
 # create po/LINGUAS
 ls po/*.po | sed -e 's/.po//' | sed -e 's/po\///' > po/LINGUAS
@@ -81,12 +81,17 @@ install -pDm755 %SOURCE1 %buildroot%_initdir/%name
 %files -n firewall-applet
 %_bindir/firewall-applet
 %_desktopdir/firewall-*.desktop
+%_xdgconfigdir/autostart/firewall-applet.desktop
 %_iconsdir/hicolor/*/apps/firewall-*.*
 %_datadir/glib-2.0/schemas/org.fedoraproject.FirewallApplet.gschema.xml
 %_bindir/firewall-config
 %_datadir/firewalld/
 
 %changelog
+* Tue Aug 13 2013 Mikhail Efremov <sem@altlinux.org> 0.3.4-alt1
+- Use autoconf-2.68.
+- Updated to 0.3.4.
+
 * Mon Jun 17 2013 Mikhail Efremov <sem@altlinux.org> 0.3.3-alt1
 - Updated to 0.3.3.
 
