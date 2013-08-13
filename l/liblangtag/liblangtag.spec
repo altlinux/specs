@@ -4,11 +4,11 @@ BuildRequires: /usr/bin/gtkdocize gobject-introspection-devel pkgconfig(check) p
 %add_optflags %optflags_shared
 Name: liblangtag
 Version: 0.5.1
-Release: alt1_1
+Release: alt1_3
 Summary: An interface library to access tags for identifying languages
 
 Group: System/Libraries
-License: LGPLv3+
+License: (LGPLv3+ or MPLv2.0) and UCD
 URL: http://tagoh.bitbucket.org/liblangtag/
 Source0: https://bitbucket.org/tagoh/%{name}/downloads/%{name}-%{version}.tar.bz2
 
@@ -90,6 +90,9 @@ rm -f %{buildroot}/%{_libdir}/*.la %{buildroot}/%{_libdir}/%{name}/*.la
 
 
 %changelog
+* Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.5.1-alt1_3
+- update to new release by fcimport
+
 * Sat May 04 2013 Igor Vlasenko <viy@altlinux.ru> 0.5.1-alt1_1
 - update to new release by fcimport
 
