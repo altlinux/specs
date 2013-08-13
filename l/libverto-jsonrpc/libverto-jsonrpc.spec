@@ -1,7 +1,8 @@
 Group: Other
+%add_optflags %optflags_shared
 Name:           libverto-jsonrpc
 Version:        0.1.0
-Release:        alt1_7
+Release:        alt1_8
 Summary:        JSON-RPC support for libverto
 
 License:        MIT
@@ -46,6 +47,9 @@ find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 %{_libdir}/pkgconfig/%{name}.pc
 
 %changelog
+* Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.1.0-alt1_8
+- update to new release by fcimport
+
 * Fri Apr 26 2013 Igor Vlasenko <viy@altlinux.ru> 0.1.0-alt1_7
 - initial fc import
 
