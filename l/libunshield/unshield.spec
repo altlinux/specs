@@ -1,7 +1,8 @@
+%add_optflags %optflags_shared
 %define oldname unshield
 Name:           libunshield
 Version:        0.6
-Release:        alt3_6
+Release:        alt3_7
 Summary:        Install InstallShield applications on a Pocket PC
 
 Group:          Communications
@@ -12,6 +13,7 @@ Source0:        http://dl.sf.net/synce/unshield-0.6.tar.gz
 BuildRequires:  zlib-devel
 BuildRequires:  libtool
 Source44: import.info
+Provides: unshield = %{version}-%{release}
 
 %description
 To install a Pocket PC application remotely, an installable
@@ -28,6 +30,7 @@ users of other operating systems, such as Linux or FreeBSD.
 Group:          Development/C
 Summary:        Files needed for software development with %{oldname}
 Requires:       libunshield = %{version}-%{release}
+Provides: unshield-devel = %{version}-%{release}
 
 %description devel
 The %{oldname}-devel package contains the files needed for development with
@@ -58,6 +61,9 @@ rm -f $RPM_BUILD_ROOT%{_libdir}/libunshield.{,l}a
 %{_libdir}/pkgconfig/libunshield.pc
 
 %changelog
+* Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.6-alt3_7
+- update to new release by fcimport
+
 * Wed Mar 20 2013 Igor Vlasenko <viy@altlinux.ru> 0.6-alt3_6
 - restored in Sisyphus as fc import
 
