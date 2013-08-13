@@ -1,5 +1,5 @@
 Name: netxms
-Version: 1.2.7
+Version: 1.2.8
 Release: alt1
 
 Summary: Open source network monitoring system
@@ -183,6 +183,9 @@ mkdir -p %buildroot/%_localstatedir/%name/agent
 %files agent
 %_bindir/nxagentd
 %_initdir/nxagentd
+%_libdir/libappagent.so
+%_libdir/libappagent.so.1
+%_libdir/libappagent.so.1.0.0
 %_libdir/libnsm_ecs.so
 %_libdir/libnsm_linux.so
 %_libdir/libnsm_logwatch.so
@@ -222,6 +225,9 @@ mkdir -p %buildroot/%_localstatedir/%name/agent
 %_libdir/%name/dbdrv/odbc.ddr
 
 %changelog
+* Tue Aug 13 2013 Eugene Prokopiev <enp@altlinux.ru> 1.2.8-alt1
+- new version
+
 * Fri Jun 14 2013 Eugene Prokopiev <enp@altlinux.ru> 1.2.7-alt1
 - new version
 
