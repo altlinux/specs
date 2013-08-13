@@ -14,7 +14,7 @@ Group: Other
 
 Name:		lib%{_short_name}
 Version:	%{_ver_major}.%{_ver_minor}.%{_ver_release}
-Release:	alt1_10
+Release:	alt1_11
 Summary:	Network communication library for image-guided therapy
 
 License:	BSD
@@ -145,6 +145,9 @@ make test -C %{_target_platform}
 
 
 %changelog
+* Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 1.9.7-alt1_11
+- update to new release by fcimport
+
 * Tue Apr 30 2013 Igor Vlasenko <viy@altlinux.ru> 1.9.7-alt1_10
 - update to new release by fcimport
 
