@@ -3,7 +3,7 @@ BuildRequires: unzip
 # END SourceDeps(oneline)
 Name:           beneath-a-steel-sky
 Version:        1.3
-Release:        alt4_5
+Release:        alt4_6
 Summary:        Beneath a Steel Sky - Adventure Game
 Group:          Games/Other
 # For further discussion on distribution rights see:
@@ -52,6 +52,9 @@ desktop-file-install --dir $RPM_BUILD_ROOT%{_datadir}/applications %{SOURCE1}
 %{_datadir}/applications/%{name}.desktop
 
 %changelog
+* Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 1.3-alt4_6
+- update to new release by fcimport
+
 * Fri Feb 15 2013 Igor Vlasenko <viy@altlinux.ru> 1.3-alt4_5
 - update to new release by fcimport
 
