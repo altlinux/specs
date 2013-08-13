@@ -5,7 +5,7 @@ BuildRequires: unzip
 %define oldname AllegroOGG
 Name:           libAllegroOGG
 Version:        1.0.3
-Release:        alt2_11
+Release:        alt2_12
 Summary:        Ogg library for use with the Allegro game library
 Group:          System/Libraries
 License:        BSD
@@ -69,6 +69,9 @@ install -m 644 include/* $RPM_BUILD_ROOT%{_includedir}/%{oldname}
 
 
 %changelog
+* Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 1.0.3-alt2_12
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 1.0.3-alt2_11
 - update to new release by fcimport
 
