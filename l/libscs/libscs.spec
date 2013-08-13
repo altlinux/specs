@@ -5,7 +5,7 @@ BuildRequires: gcc-c++
 %define fedora 19
 Name:           libscs
 Version:        1.4.1
-Release:        alt3_7.2
+Release:        alt3_8.2
 Summary:        Software Carry-Save Multiple-Precision Library
 
 Group:          System/Libraries
@@ -96,6 +96,9 @@ find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 
 
 %changelog
+* Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 1.4.1-alt3_8.2
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 1.4.1-alt3_7.2
 - update to new release by fcimport
 
