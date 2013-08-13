@@ -12,7 +12,7 @@ BuildRequires: zlib-devel
 Summary:        Library of Assorted Spiffy Things
 Name:           libast
 Version:        0.7.1
-Release:        alt5_0.13.%{cvs}cvs
+Release:        alt5_0.14.%{cvs}cvs
 Group:          System/Libraries
 License:        BSD
 URL:            http://www.eterm.org/
@@ -89,6 +89,9 @@ mv %buildroot%_includedir/libast/types-%{_arch}.h %buildroot%_includedir/libast/
 %exclude %{_libdir}/*.a
 
 %changelog
+* Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.7.1-alt5_0.14.20080502cvs
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.7.1-alt5_0.13.20080502cvs
 - update to new release by fcimport
 
