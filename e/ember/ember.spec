@@ -3,7 +3,7 @@ BuildRequires: /usr/bin/xmllint cppunit-devel gcc-c++ pkgconfig(atlascpp-0.6) pk
 # END SourceDeps(oneline)
 Name:           ember
 Version:        0.7.0
-Release:        alt1_7.1
+Release:        alt1_10
 Summary:        3D client for WorldForge
 
 Group:          Games/Other
@@ -14,7 +14,7 @@ Patch1:         ember-0.6.3-fix_implicit_dso.patch
 Patch3:         ember-start.patch
 Patch4:         ember-0.7.0-boost_shared_array.patch
 Patch5:		ember-0.7.0-lua-5.2.patch
-Patch33: 	ember-0.7.0-alt-linkage.patch
+Patch6:		ember-doc-nover.patch
 
 BuildRequires:  libSDL-devel tinyxml-devel libdevil-devel cegui-devel libogre-devel
 BuildRequires:  liblua5-devel tolua++-devel libopenal-devel libalut-devel
@@ -30,6 +30,7 @@ Requires:       %{name}-media >= 0.7.0 %{name}-media < 0.7.1
 
 Obsoletes:      sear < 0.6.4-0.16
 Source44: import.info
+Patch33: ember-0.7.0-alt-linkage.patch
 
 %description
 Ember is a client for MMORPGs using the WorldForge system.
@@ -42,10 +43,11 @@ It uses the Ogre 3D engine with CEGUI.
 %patch3 -p0 -b .start
 %patch4 -p1 -b .boost_shared_array
 %patch5 -p1 -b .lua-52
-%patch33 -p1
+%patch6 -p0 -b .doc-nover
 
 # Encoding fix
 iconv -f iso-8859-1 -t utf-8 AUTHORS > AUTHORS.conv && mv -f AUTHORS.conv AUTHORS
+%patch33 -p1
 
 
 %build
@@ -95,6 +97,9 @@ make check
 %config %{_sysconfdir}/%{name}/*
 
 %changelog
+* Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.7.0-alt1_10
+- update to new release by fcimport
+
 * Fri Jul 26 2013 Slava Dubrovskiy <dubrsl@altlinux.org> 0.7.0-alt1_7.1
 - rebuild for new ogre
 
