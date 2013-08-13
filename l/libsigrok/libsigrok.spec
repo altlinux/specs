@@ -1,10 +1,10 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: pkgconfig(check)
+BuildRequires: pkgconfig(check) pkgconfig(libudev)
 # END SourceDeps(oneline)
 Group: Other
 %add_optflags %optflags_shared
 Name:           libsigrok
-Version:        0.2.0
+Version:        0.2.1
 Release:        alt1_1
 Summary:        Basic hardware access drivers for logic analyzers
 # Combined GPLv3+ and GPLv2+ and BSD
@@ -73,7 +73,7 @@ find %{buildroot} -name '*.la' -exec rm -f {} ';'
 
 
 %files
-%doc README NEWS COPYING
+%doc README README.devices NEWS COPYING
 %{_libdir}/libsigrok.so.1*
 /lib/udev/rules.d/60_libsigrok.rules
 
@@ -86,6 +86,9 @@ find %{buildroot} -name '*.la' -exec rm -f {} ';'
 %doc doxy/html-api/
 
 %changelog
+* Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.2.1-alt1_1
+- update to new release by fcimport
+
 * Mon May 13 2013 Igor Vlasenko <viy@altlinux.ru> 0.2.0-alt1_1
 - update to new release by fcimport
 
