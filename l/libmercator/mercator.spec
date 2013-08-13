@@ -5,7 +5,7 @@ BuildRequires: gcc-c++ pkgconfig(wfmath-1.0)
 %define oldname mercator
 Name:           libmercator
 Version:        0.3.2
-Release:        alt1_2
+Release:        alt1_3
 Summary:        Terrain library for WorldForge client/server
 
 Group:          Development/C++
@@ -74,6 +74,9 @@ make %{?_smp_mflags} check
 
 
 %changelog
+* Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.3.2-alt1_3
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.3.2-alt1_2
 - update to new release by fcimport
 
