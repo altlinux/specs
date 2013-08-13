@@ -5,7 +5,7 @@ BuildRequires: gcc-c++ libqt4-devel pkgconfig(glib-2.0) pkgconfig(gobject-2.0)
 %add_optflags %optflags_shared
 Name:		libaccounts-qt
 Version:	1.6
-Release:	alt1_2
+Release:	alt1_3
 Summary:	Accounts framework Qt bindings
 Group:		System/Libraries
 License:	LGPLv2
@@ -63,6 +63,9 @@ mv %{buildroot}%{_docdir}/accounts-qt %{buildroot}%{_docdir}/libaccounts-qt
 %{_docdir}/libaccounts-qt
 
 %changelog
+* Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 1.6-alt1_3
+- update to new release by fcimport
+
 * Tue Jun 04 2013 Igor Vlasenko <viy@altlinux.ru> 1.6-alt1_2
 - update to new release by fcimport
 
