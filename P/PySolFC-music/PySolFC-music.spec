@@ -5,7 +5,7 @@
 
 Name:           PySolFC-music
 Version:        4.40
-Release:        alt2_10
+Release:        alt2_11
 Summary:        Music for PySolFC
 
 Group:          Games/Other
@@ -36,6 +36,9 @@ cp -a data/music/* $RPM_BUILD_ROOT%{_datadir}/PySolFC/music
 %{_datadir}/PySolFC/music/*
 
 %changelog
+* Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 4.40-alt2_11
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 4.40-alt2_10
 - update to new release by fcimport
 
