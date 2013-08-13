@@ -4,7 +4,7 @@ BuildRequires: gcc-c++
 %add_optflags %optflags_shared
 Name:       libecap
 Version:    0.2.0
-Release:    alt2_5
+Release:    alt2_6
 Summary:    Squid interface for embedded adaptation modules
 License:    BSD
 Group:      Development/C
@@ -60,6 +60,9 @@ rm -f %{buildroot}%{_libdir}/libecap.la
 %{_includedir}/libecap
 
 %changelog
+* Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.2.0-alt2_6
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.2.0-alt2_5
 - update to new release by fcimport
 
