@@ -4,7 +4,7 @@ BuildRequires: gcc-c++ libGL-devel libSDL-devel zlib-devel
 %define fedora 19
 Name:           CriticalMass
 Version:        1.5
-Release:        alt2_9
+Release:        alt2_10
 Summary:        SDL/OpenGL space shoot'em up game also known as critter
 Group:          Games/Other
 License:        GPLv2+
@@ -75,6 +75,9 @@ install -p -m 644 critter.png \
 %{_datadir}/icons/hicolor/256x256/apps/critter.png
 
 %changelog
+* Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 1.5-alt2_10
+- update to new release by fcimport
+
 * Mon May 13 2013 Igor Vlasenko <viy@altlinux.ru> 1.5-alt2_9
 - update to new release by fcimport
 
