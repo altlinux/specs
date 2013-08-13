@@ -1,7 +1,7 @@
 %add_optflags %optflags_shared
 Name:           libitl
 Version:        0.7.0 
-Release:        alt3_6
+Release:        alt3_7
 Summary:        Libraries for The Islamic Tools and Libraries Project
 
 Group:          System/Libraries
@@ -64,6 +64,9 @@ find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 
 
 %changelog
+* Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.7.0-alt3_7
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.7.0-alt3_6
 - update to new release by fcimport
 
