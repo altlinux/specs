@@ -4,7 +4,7 @@ BuildRequires: gcc-c++ libgmp-devel
 %add_optflags %optflags_shared
 Name:           libfplll
 Version:        4.0.4
-Release:        alt1_1
+Release:        alt1_2
 Summary:        LLL-reduces euclidean lattices
 Group:          System/Libraries
 License:        LGPLv2+
@@ -87,6 +87,9 @@ make check
 
 
 %changelog
+* Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 4.0.4-alt1_2
+- update to new release by fcimport
+
 * Tue Jun 04 2013 Igor Vlasenko <viy@altlinux.ru> 4.0.4-alt1_1
 - update to new release by fcimport
 
