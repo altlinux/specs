@@ -10,7 +10,7 @@ BuildRequires: gcc-c++
 
 Name:           libvtemm
 Version:        0.25.0
-Release:        alt4_5.qa1
+Release:        alt4_6
 
 Summary:        C++ interface for VTE (a GTK2 terminal emulator widget)
 
@@ -42,7 +42,6 @@ developing libvtemm applications.
 Summary:        Documentation for %{name}, includes full API docs
 Group:          Documentation
 Requires:       libgtkmm2-doc
-BuildArch: noarch
 
 %description    docs
 This package contains the full API documentation for %{name}.
@@ -79,6 +78,9 @@ find %{buildroot} -type f -name "*.la" -exec rm -f {} ';'
 %doc %{_datadir}/devhelp/
 
 %changelog
+* Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.25.0-alt4_6
+- update to new release by fcimport
+
 * Mon Apr 22 2013 Repocop Q. A. Robot <repocop@altlinux.org> 0.25.0-alt4_5.qa1
 - NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
 - applied repocop fixes:
