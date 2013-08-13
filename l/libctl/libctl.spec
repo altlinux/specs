@@ -5,7 +5,7 @@ BuildRequires: chrpath
 %add_optflags %optflags_shared
 Name:           libctl
 Version:        3.2.1
-Release:        alt1_1
+Release:        alt1_2
 Summary:        Guile-based support for flexible control files
 
 Group:          System/Libraries
@@ -60,6 +60,9 @@ done
 %{_datadir}/libctl
 
 %changelog
+* Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 3.2.1-alt1_2
+- update to new release by fcimport
+
 * Sun Feb 24 2013 Igor Vlasenko <viy@altlinux.ru> 3.2.1-alt1_1
 - update to new release by fcimport
 
