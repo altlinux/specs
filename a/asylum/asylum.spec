@@ -1,7 +1,7 @@
 BuildRequires: gcc-c++
 Name:           asylum
 Version:        0.3.2
-Release:        alt1_5
+Release:        alt1_6
 Summary:        Game involving shooting anything that moves & collecting others
 Group:          Games/Other
 # For detailed licensing, see the README
@@ -81,6 +81,9 @@ desktop-file-install --dir %{buildroot}%{_datadir}/applications %{name}.desktop
 
 
 %changelog
+* Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.3.2-alt1_6
+- update to new release by fcimport
+
 * Fri Feb 15 2013 Igor Vlasenko <viy@altlinux.ru> 0.3.2-alt1_5
 - update to new release by fcimport
 
