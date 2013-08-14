@@ -3,12 +3,12 @@ BuildRequires(pre): rpm-macros-fedora-compat
 BuildRequires: gcc-c++ perl(Encode.pm) perl(Module/Build.pm) perl(Test/More.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           graphite2
-Version:        1.2.0
+Version:        1.2.2
 Release:        alt1_4
 Summary:        Font rendering capabilities for complex non-Roman writing systems
 Group:          Development/Tools
 
-License:        LGPLv2+ and (Netscape or GPLv2 or LGPLv2)
+License:        (LGPLv2+ or GPLv2+ or MPL) and (Netscape or GPLv2+ or LGPLv2+)
 URL:            http://sourceforge.net/projects/silgraphite/
 Source0:        http://downloads.sourceforge.net/silgraphite/graphite2-%{version}.tgz
 Patch0:         graphite-arm-nodefaultlibs.patch
@@ -17,8 +17,7 @@ Patch1:         graphite2-1.2.0-cmakepath.patch
 BuildRequires: ctest cmake
 BuildRequires:  libfreetype-devel
 BuildRequires:  doxygen asciidoc
-BuildRequires:  texlive-latex-extra
-BuildRequires:  texlive-fonts-recommended
+BuildRequires:  texlive-fonts-recommended texlive-latex-recommended texlive-publishers texlive-latex-extra texlive-latex-extra
 
 Obsoletes:      silgraphite < 2.3.1-5
 Source44: import.info
@@ -62,7 +61,8 @@ rm -f $RPM_BUILD_ROOT/%{_libdir}/*.la
 %files
 %doc LICENSE COPYING ChangeLog
 %{_bindir}/gr2fonttest
-%{_libdir}/libgraphite2.so.3*
+%{_libdir}/libgraphite2.so.3.0.1
+%{_libdir}/libgraphite2.so.3
 
 %files devel
 #%doc doc/manual.html
@@ -71,10 +71,12 @@ rm -f $RPM_BUILD_ROOT/%{_libdir}/*.la
 %{_libdir}/%{name}/graphite2.cmake
 %{_includedir}/%{name}
 %{_libdir}/libgraphite2.so
-%{_libdir}/libgraphite2.so.3
 %{_libdir}/pkgconfig/graphite2.pc
 
 %changelog
+* Wed Aug 14 2013 Igor Vlasenko <viy@altlinux.ru> 1.2.2-alt1_4
+- fix in devel thanks to a.shabalin@
+
 * Sat Apr 13 2013 Igor Vlasenko <viy@altlinux.ru> 1.2.0-alt1_4
 - required by harfbuzz
 

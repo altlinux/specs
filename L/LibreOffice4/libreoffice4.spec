@@ -9,7 +9,7 @@ Version: 4.1
 %define lodir %_libdir/%name
 %define uname libreoffice4
 %define conffile %_sysconfdir/sysconfig/%uname
-Release: alt1
+Release: alt2
 Summary: LibreOffice Productivity Suite
 License: LGPL
 Group: Office
@@ -35,6 +35,7 @@ Source10:	libreoffice-ext_sources.%uversion.tar
 Source100:	forky.c
 
 Patch1:	alt-001-MOZILLA_CERTIFICATE_FOLDER.patch
+Patch2: libreoffice-4-alt-drop-gnome-open.patch
 
 # FC patches
 Patch201:	0001-Related-rhbz-968892-discard-impossible-languages-for.patch
@@ -60,9 +61,13 @@ Patch303: openoffice.org-3.1.1.ooo105784.vcl.sniffscriptforsubs.patch
 
 # Automatically added by buildreq on Wed Mar 06 2013
 # optimized out: ant boost-devel boost-devel-headers boost-interprocess-devel boost-intrusive-devel bzlib-devel cppunit fontconfig fontconfig-devel fonts-ttf-java-1.6.0-sun glib2-devel gstreamer-devel icu-utils java java-devel jpackage-utils junit kde4libs libGL-devel libGLU-devel libICE-devel libSM-devel libX11-devel libXext-devel libXinerama-devel libXrandr-devel libXrender-devel libXt-devel libatk-devel libcairo-devel libcom_err-devel libcurl-devel libdbus-devel libdbus-glib libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgdk-pixbuf-xlib libgio-devel libgmp-devel libgpg-error libgst-plugins libkrb5-devel libncurses-devel libnspr-devel libpango-devel libpcre-devel libpng-devel libpoppler-devel libpq-devel libqt4-core libqt4-devel libqt4-gui libssl-devel libstdc++-devel libsystemd-daemon libtinfo-devel libunixODBC-devel libwayland-client libwayland-server libwpd9-devel libxml2-devel perl-Compress-Raw-Zlib pkg-config poppler-data python-base tzdata tzdata-java xerces-j2 xml-common xml-commons-jaxp-1.3-apis xml-utils xorg-kbproto-devel xorg-randrproto-devel xorg-renderproto-devel xorg-xextproto-devel xorg-xproto-devel xsltproc xz zlib-devel
-BuildRequires: ant-testutil cppunit-devel flex fonts-ttf-liberation gcc-c++ gperf gst-plugins-devel imake junit4 kde4libs-devel libGConf-devel libcups-devel libdb4-devel libdbus-glib-devel libexpat-devel libgtk+2-devel libhunspell-devel libicu-devel libjpeg-devel libldap-devel liblpsolve-devel libmpfr-devel libmysqlclient-devel libmythes-devel libncursesw-devel libneon-devel libnss-devel liborcus-devel libpoppler-cpp-devel libreadline-devel libvigra-devel libwpg2-devel libwps-devel libxslt-devel perl-Archive-Zip postgresql-devel unzip xorg-cf-files zenity zip
+BuildRequires: ant-testutil cppunit-devel flex fonts-ttf-liberation gcc-c++ gperf gst-plugins1.0-devel imake junit4 kde4libs-devel libGConf-devel libcups-devel libdb4-devel libdbus-glib-devel libexpat-devel libgtk+2-devel libhunspell-devel libicu-devel libjpeg-devel libldap-devel liblpsolve-devel libmpfr-devel libmysqlclient-devel libmythes-devel libncursesw-devel libneon-devel libnss-devel liborcus-devel libpoppler-cpp-devel libreadline-devel libvigra-devel libwpg-devel libwps-devel libodfgen-devel libcdr-devel libmspub-devel libmwaw-devel libvisio-devel libcmis-devel libxslt-devel perl-Archive-Zip postgresql-devel unzip xorg-cf-files zenity zip
 
-BuildRequires: libbluez-devel libhyphen-devel libclucene-core-devel libgtk+3-devel python3-devel liblcms2-devel libraptor-devel libredland-devel
+BuildRequires: libbluez-devel libhyphen-devel libclucene-core-devel libgtk+3-devel python3-devel liblcms2-devel libraptor-devel libredland-devel libsane-devel
+BuildRequires: xulrunner-devel
+BuildRequires: graphite2-devel
+BuildRequires: libexttextcat-devel
+BuildRequires: tomcat-servlet-3.0-api sac pentaho-libxml flute pentaho-reporting-flow-engine liblayout libloader libformula librepository libserializer libbase apache-commons-codec apache-commons-lang apache-commons-httpclient apache-commons-logging bsh rhino
 
 # 4.1
 BuildRequires: libharfbuzz-devel liblangtag-devel
@@ -99,6 +104,7 @@ Summary: Renamed binaries, icons and desktop files for %name
 Group: Office
 Provides: %uname = %version-%release
 Conflicts: %name-integrated
+Requires: %name-common = %version-%release
 %description standalone
 Wrapper scripts, icons and desktop files for running renamed version if %name
 as lo4write, lo4draw etc.
@@ -108,6 +114,7 @@ Summary: Binaries, icons and desktop files for %name
 Group: Office
 Provides: %uname = %version-%release
 Conflicts: %name-standalone
+Requires: %name-common = %version-%release
 %description integrated
 Wrapper scripts, icons and desktop files for running %name
 
@@ -115,6 +122,7 @@ Wrapper scripts, icons and desktop files for running %name
 Summary: GNOME Extensions for %name
 Group:  Office
 Requires: %uname = %version-%release
+Requires: %name-common = %version-%release
 %description gnome
 GNOME extensions for %name
 
@@ -122,6 +130,7 @@ GNOME extensions for %name
 Summary: KDE4 Extensions for %name
 Group:  Office
 Requires: %uname = %version-%release
+Requires: %name-common = %version-%release
 %description kde4
 KDE4 extensions for %name
 
@@ -167,6 +176,7 @@ echo Direct build
 %endif
 %setup -q -n libreoffice-%uversion -a10 -b1 -b2 -b3
 %patch1 -p0
+%patch2 -p1
 
 # FC (## -- unsuccsessful but seems meningful)
 %patch201 -p1
@@ -244,66 +254,37 @@ test -r %conffile && . %conffile ||:
         --without-fonts \
         --without-myspell-dicts \
         --without-ppds \
-	--with-system-altlinuxhyph \
-        --with-system-boost \
-        --with-system-cairo \
-	--with-system-clucene \
-        --with-system-cppunit \
-        --with-system-curl \
-        --with-system-dicts \
-        --with-system-expat \
-	--with-system-harfbuzz \
-        --with-system-hunspell \
-        --with-system-icu \
-        --with-system-jpeg \
-	--with-system-lcms2 \
-	--with-system-liblangtag \
-	--with-system-libpng \
-        --with-system-libwpd \
-        --with-system-libwpg \
-        --with-system-libwps \
-        --with-system-libxml \
-        --with-system-lpsolve \
-        --with-system-mythes \
-        --with-system-neon \
-        --with-system-nss \
-        --with-system-odbc \
-	--with-system-openldap \
-        --with-system-openssl \
-        --with-system-orcus \
-        --with-system-poppler \
-        --with-system-postgresql \
-	--with-system-redland \
-	--with-system-vigra \
-        --with-system-zlib \
+        --with-system-libs \
+        --without-system-mdds \
 	\
         --with-external-dict-dir=%_datadir/myspell \
         --with-external-hyph-dir=%_datadir/hyphen \
         --with-external-thes-dir=%_datadir/mythes \
         --with-lang="en-US %with_lang" \
         --with-external-tar=`pwd`/ext_sources \
-        \
+	\
 	--with-parallelism \
 	\
 	--enable-kde4 \
 	\
 	--enable-hardlink-deliver \
-  	\
-  --enable-ext-diagram \
-  --enable-ext-google-docs \
-  --enable-ext-nlpsolver \
-  --enable-ext-numbertext \
-  --enable-ext-typo \
-  --enable-ext-validator \
-  --enable-ext-watch-window \
-  --enable-ext-wiki-publisher \
-  --enable-ext-ct2n \
-  --enable-ext-barcode \
-  --with-system-bluez \
+	\
+	--enable-ext-diagram \
+	--enable-ext-google-docs \
+	--enable-ext-nlpsolver \
+	--enable-ext-numbertext \
+	--enable-ext-typo \
+	--enable-ext-validator \
+	--enable-ext-watch-window \
+	--enable-ext-wiki-publisher \
+	--with-servlet-api-jar=/usr/share/java/tomcat-servlet-api.jar \
+	--enable-ext-ct2n \
+	--enable-ext-barcode \
   \
-  \
-  --enable-gtk3 \
-  --disable-fetch-external \
+	--enable-gtk3 \
+	--enable-gstreamer \
+	--disable-gstreamer-0-10 \
+	--disable-fetch-external
 
 
 # Make forky
@@ -344,16 +325,15 @@ done
 (
 cd %buildroot
 find .%lodir/program/gnome*
-find .%lodir/program/gconfbe1.uno.so
-find .%lodir/program/libvclplug_gtk*.so
+find .%lodir/program/*gconf*
+find .%lodir/program/*gtk*.so
 find .%lodir/share/registry/gnome.xcd
 ) | sed 's/^[.]//' > files.gnome
 
 # Create kde plugin list
 (
 cd %buildroot
-find .%lodir/program/kde4*
-find .%lodir/program/libvclplug_kde4*
+find .%lodir/program/*kde*
 ) | sed 's/^[.]//' > files.kde4
 
 # Generate base filelist by removing files from  separated packages
@@ -447,6 +427,15 @@ install -D libreoffice.config %buildroot%conffile
 %langpack -l kk -n Kazakh
 
 %changelog
+* Tue Aug 13 2013 Alexey Shabalin <shaba@altlinux.ru> 4.1-alt2
+- fixed gnome file list
+- fixed kde file list
+- drop use gnome-open in gnome-open-url.sh
+- build with gstreamer-1.0
+- build with system libraries (libodfgen,libcdr,libmspub,libmwaw,libvisio,libcmis,libexttextcat)
+- build with system jar files
+- changed configure options --with-system-* to --with-system-libs
+
 * Tue Jul 30 2013 Fr. Br. George <george@altlinux.ru> 4.1-alt1
 - Version up to 4.1.0.4
 - Renew FC patchset (previous ones are pushed to upstream)
