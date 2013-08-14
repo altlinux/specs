@@ -1,6 +1,6 @@
 Name: slingshot
 Version:  0.8.1p
-Release:  alt4_9
+Release:  alt4_10
 Summary: A Newtonian strategy game
 
 Group: Games/Other
@@ -61,6 +61,9 @@ install -p -m 644 slingshot/data/slingshot.png \
 %{_datadir}/icons/hicolor/64x64/apps/slingshot.png
 
 %changelog
+* Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.8.1p-alt4_10
+- update to new release by fcimport
+
 * Thu Feb 14 2013 Igor Vlasenko <viy@altlinux.ru> 0.8.1p-alt4_9
 - update to new release by fcimport
 
