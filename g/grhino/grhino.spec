@@ -3,7 +3,7 @@ BuildRequires: /usr/bin/pkg-config gcc-c++
 # END SourceDeps(oneline)
 Name:           grhino
 Version:        0.16.0
-Release:        alt3_14
+Release:        alt3_15
 Summary:        Reversi game for GNOME, supporting the Go/Game Text Protocol
 
 Group:          Games/Other
@@ -76,6 +76,9 @@ mkdir -p $RPM_BUILD_ROOT%{_datadir}/pixmaps
 
 
 %changelog
+* Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.16.0-alt3_15
+- update to new release by fcimport
+
 * Mon Apr 15 2013 Igor Vlasenko <viy@altlinux.ru> 0.16.0-alt3_14
 - update to new release by fcimport
 
