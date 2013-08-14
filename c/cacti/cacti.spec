@@ -1,5 +1,5 @@
 Name: cacti
-Version: 0.8.8a
+Version: 0.8.8b
 Release: alt1
 
 %define cactidir %_datadir/%name
@@ -234,6 +234,9 @@ fi
 %cactidir/docs
 
 %changelog
+* Wed Aug 14 2013 Alexey Shabalin <shaba@altlinux.ru> 0.8.8b-alt1
+- 0.8.8b
+
 * Wed May 02 2012 Alexey Shabalin <shaba@altlinux.ru> 0.8.8a-alt1
 - 0.8.8a
 
