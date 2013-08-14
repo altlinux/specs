@@ -4,7 +4,7 @@ BuildRequires: unzip
 %define fedora 19
 Name:           shippy
 Version:        1.3.3.7
-Release:        alt2_15
+Release:        alt2_16
 Summary:        Space invaders / Galaxians like game with powerups
 Group:          Games/Other
 License:        GPL+
@@ -114,6 +114,9 @@ install -p -m 644 %{SOURCE1} \
 
 
 %changelog
+* Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 1.3.3.7-alt2_16
+- update to new release by fcimport
+
 * Tue Feb 26 2013 Igor Vlasenko <viy@altlinux.ru> 1.3.3.7-alt2_15
 - update to new release by fcimport
 
