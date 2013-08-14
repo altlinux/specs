@@ -1,44 +1,47 @@
 Name: libnetfilter_log
-Version: 0.0.15
-Release: alt1.1.qa1
+Version: 1.0.1
+Release: alt1
 Serial: 1
 
 Summary: libnfnetlink receive to-be-logged packets from the kernel nfnetlink_log subsystem
 Url: http://netfilter.org/projects/libnetfilter_log/
-Packager: Avramenko Andrew <liks@altlinux.ru>
 License: %gpl2plus
 Group: System/Libraries
+#git://git.netfilter.org/libnetfilter_log
 Source: %name-%version.tar
-Requires: libnfnetlink >= 0.0.40
+Patch: %name-%version-%release.patch
 
-BuildRequires: gcc-c++ libnfnetlink-devel >= 0.0.40 rpm-build-licenses
+BuildRequires(pre): rpm-build-licenses
+BuildRequires: libnfnetlink-devel >= 0.0.40
 
 %description
-libnetfilter_log is a userspace library providing interface to packets that have been
-logged by the kernel packet filter. It is is part of a system that deprecates the old
-syslog/dmesg based packet logging.
+libnetfilter_log is a userspace library providing interface to packets
+that have been logged by the kernel packet filter. It is is part of
+a system that deprecates the old syslog/dmesg based packet logging.
 
 %package devel
 Summary: Development part of libnetfilter_log.
 Group: Development/C
 Requires: %name = %{?epoch:%epoch:}%version-%release
 
-%description devel 
+%description devel
 Development part of libnetfilter_log.
 
 %prep
 %setup
+%patch -p1
 
 %build
-#./autogen.sh
-%configure --disable-static
-sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' libtool
+# Use nfnetlink_log.h from glibc-kernheaders
+KERNEL_DIR=%_includedir/linux-default/ ./autogen.sh distrib
+%configure \
+	--disable-static
 %make_build
 
 %install
-mkdir -p %buildroot%_libdir/%name
-mkdir -p %buildroot%_includedir/%name
-make install DESTDIR=%buildroot
+#mkdir -p %buildroot%_libdir/%name
+#mkdir -p %buildroot%_includedir/%name
+%makeinstall_std
 
 %files
 %_libdir/*.so.*
@@ -50,6 +53,10 @@ make install DESTDIR=%buildroot
 %_libdir/pkgconfig/*
 
 %changelog
+* Wed Aug 14 2013 Mikhail Efremov <sem@altlinux.org> 1:1.0.1-alt1
+- autogen.sh: Use mktemp instead of tempfile.
+- Updated to 1.0.1.
+
 * Thu Aug 23 2012 Repocop Q. A. Robot <repocop@altlinux.org> 1:0.0.15-alt1.1.qa1
 - NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
 - applied repocop fixes:
