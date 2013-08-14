@@ -1,6 +1,6 @@
 Summary:        Netscape Network Security Services(NSS)
 Name:           nss
-Version:        3.14.3
+Version:        3.15.1
 Release:       	alt1
 License:        MPL/GPL/LGPL
 Group:          System/Libraries
@@ -29,8 +29,8 @@ Patch10:	nss-enable-pem.patch
 Patch20:	0001-sync-up-with-upstream-softokn-changes.patch
 
 BuildRequires:	chrpath zlib-devel libsqlite3-devel
-BuildRequires:	libnspr-devel >= 4.9.6-alt1
-Requires:	libnspr       >= 4.9.6-alt1
+BuildRequires:	libnspr-devel >= 4.10.0-alt1
+Requires:	libnspr       >= 4.10.0-alt1
 
 %description
 Network Security Services (NSS) is a set of libraries designed
@@ -110,7 +110,7 @@ Netscape Network Security Services Utilities
 #patch4 -p0
 %patch5 -p0
 
-%patch10 -p1
+%patch10 -p0
 
 %patch20 -p1
 
@@ -133,26 +133,26 @@ export USE_64=1
 %endif
 
 # additional CA certificates
-cat %SOURCE3 >> mozilla/security/nss/lib/ckfw/builtins/certdata.txt
+cat %SOURCE3 >> nss/lib/ckfw/builtins/certdata.txt
 
-make -C mozilla/security/coreconf
-make -C mozilla/security/coreconf platform 2>/dev/null |grep '^Linux' >destdir
-make -C mozilla/security/dbm
-make -C mozilla/security/nss
+make -C nss/coreconf
+make -C nss/coreconf platform 2>/dev/null |grep '^Linux' >destdir
+make -C nss/lib/dbm
+make -C nss
 
 %install
-%__mkdir_p %buildroot{%_bindir,%_libdir/pkgconfig,%_includedir}
+mkdir -p %buildroot{%_bindir,%_libdir/pkgconfig,%_includedir}
 
 # Get some variables
 DESTDIR="$(head -1 destdir)"
 NSPR_VERSION="$(nspr-config --version)"
-nss_h="mozilla/security/nss/lib/nss/nss.h"
+nss_h="nss/lib/nss/nss.h"
 NSS_VMAJOR="$(sed -ne 's,^#define[[:space:]]\+NSS_VMAJOR[[:space:]]\+,,p' "$nss_h")"
 NSS_VMINOR="$(sed -ne 's,^#define[[:space:]]\+NSS_VMINOR[[:space:]]\+,,p' "$nss_h")"
 NSS_VPATCH="$(sed -ne 's,^#define[[:space:]]\+NSS_VPATCH[[:space:]]\+,,p' "$nss_h")"
 
 # Install NSS libraries 
-cd mozilla/dist
+cd dist
 cp -aL "$DESTDIR"/bin/* %buildroot%_bindir
 cp -aL "$DESTDIR"/lib/* %buildroot%_libdir
 
@@ -183,7 +183,7 @@ chmod 755 %buildroot/%_bindir/nss-config
 # Add real RPATH
 find "%buildroot%_bindir" "%buildroot%_libdir" -type f | 
 while read f; do
-  %__file "$f" | grep -qs ELF || continue
+  file "$f" | grep -qs ELF || continue
   if chrpath -l "$f" | fgrep -qs "RPATH="; then
     chrpath -d "$f"
   fi
@@ -245,6 +245,9 @@ install -p -m644 %SOURCE6 %buildroot/%_sysconfdir/pki/nssdb/pkcs11.txt
 %_libdir/*.a
 
 %changelog
+* Fri Aug 09 2013 Alexey Gladkov <legion@altlinux.ru> 3.15.1-alt1
+- New version (3.15.1).
+
 * Wed Apr 10 2013 Alexey Gladkov <legion@altlinux.ru> 3.14.3-alt1
 - New version (3.14.3).
 
