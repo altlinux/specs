@@ -4,7 +4,7 @@ BuildRequires: perl(CPAN.pm) perl(Catalyst/Log.pm) perl(Catalyst/View.pm) perl(C
 # END SourceDeps(oneline)
 Name:           perl-Catalyst-View-Mason
 Version:        0.18
-Release:        alt2_11
+Release:        alt2_12
 Summary:        Mason View Class
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -44,6 +44,7 @@ make pure_install PERL_INSTALL_ROOT=$RPM_BUILD_ROOT
 find $RPM_BUILD_ROOT -type f -name .packlist -exec rm -f {} \;
 find $RPM_BUILD_ROOT -depth -type d -exec rmdir {} 2>/dev/null \;
 
+# %{_fixperms} $RPM_BUILD_ROOT/*
 
 %check
 make test
@@ -53,6 +54,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.18-alt2_12
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.18-alt2_11
 - update to new release by fcimport
 
