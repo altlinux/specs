@@ -1,0 +1,83 @@
+
+Name: libmspub
+Version: 0.0.6
+Release: alt1
+Summary: A library providing ability to interpret and import Microsoft Publisher files
+Group: System/Libraries
+License: GPLv2+ or LGPLv2+ or MPLv1.1
+Url: http://www.freedesktop.org/wiki/Software/libmspub
+Source: %name-%version.tar
+
+BuildRequires: gcc-c++
+BuildRequires: pkgconfig(libwpg-0.2)
+BuildRequires: pkgconfig(libwpd-0.9) pkgconfig(libwpd-stream-0.9)
+BuildRequires: pkgconfig(lcms2)
+BuildRequires: pkgconfig(zlib)
+BuildRequires: pkgconfig(icu-i18n)
+
+BuildRequires: boost-devel
+BuildRequires: doxygen
+
+%description
+Libmspub is library providing ability to interpret and import Microsoft
+Publisher content into various applications. You can find it being used
+in libreoffice.
+
+%package devel
+Summary: Development files for %name
+Group: Development/C++
+Requires: %name = %version-%release
+
+%description devel
+The %name-devel package contains libraries and header files for
+developing applications that use %name.
+
+%package doc
+Summary: Documentation of %name API
+Group: Documentation
+BuildArch: noarch
+
+%description doc
+The %name-doc package contains documentation files for %name.
+
+%package tools
+Summary: Tools to transform Microsoft Publisher files into other formats
+Group: Publishing
+Requires: %name = %version-%release
+
+%description tools
+Tools to transform Microsoft Publisher files into other formats.
+Currently supported: XHTML, raw.
+
+%prep
+%setup
+
+%build
+mkdir -p m4
+%autoreconf
+%configure --disable-static --disable-werror
+%make_build
+
+%install
+%make_install install DESTDIR=%buildroot
+
+%files
+%doc AUTHORS COPYING.*
+%_libdir/*.so.*
+
+%files devel
+%_includedir/*
+%_libdir/*.so
+%_pkgconfigdir/*.pc
+
+%files doc
+%doc COPYING.*
+%dir %_docdir/%name
+%_docdir/%name/html
+
+%files tools
+%_bindir/*
+
+%changelog
+* Tue Aug 13 2013 Alexey Shabalin <shaba@altlinux.ru> 0.0.6-alt1
+- initial build
