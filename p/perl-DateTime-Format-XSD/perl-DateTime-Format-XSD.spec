@@ -4,7 +4,7 @@ BuildRequires: perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-DateTime-Format-XSD
 Version:        0.2
-Release:        alt2_6
+Release:        alt2_7
 Summary:        Format DateTime according to xsd:dateTime
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -51,6 +51,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.2-alt2_7
+- update to new release by fcimport
+
 * Mon Aug 05 2013 Igor Vlasenko <viy@altlinux.ru> 0.2-alt2_6
 - update to new release by fcimport
 
