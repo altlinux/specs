@@ -4,7 +4,7 @@ BuildRequires: perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:		perl-Test-MinimumVersion
 Version:	0.101080
-Release:	alt2_11
+Release:	alt2_12
 Summary:	Check whether your code requires a newer perl
 License:	GPL+ or Artistic
 Group:		Development/Perl
@@ -54,6 +54,9 @@ make test RELEASE_TESTING=1
 %{perl_vendor_privlib}/Test
 
 %changelog
+* Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.101080-alt2_12
+- update to new release by fcimport
+
 * Mon Aug 05 2013 Igor Vlasenko <viy@altlinux.ru> 0.101080-alt2_11
 - update to new release by fcimport
 
