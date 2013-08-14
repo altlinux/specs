@@ -1,7 +1,7 @@
-%define fedora 18
+%define fedora 19
 Name:           mirrormagic
 Version:        2.0.2
-Release:        alt5_12
+Release:        alt5_13
 Summary:        Puzzle game where you steer a beam of light using mirrors
 Group:          Games/Other
 License:        GPL+
@@ -71,6 +71,9 @@ install -p -m 644 %{SOURCE2} \
 
 
 %changelog
+* Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 2.0.2-alt5_13
+- update to new release by fcimport
+
 * Mon Feb 18 2013 Igor Vlasenko <viy@altlinux.ru> 2.0.2-alt5_12
 - fc update
 
