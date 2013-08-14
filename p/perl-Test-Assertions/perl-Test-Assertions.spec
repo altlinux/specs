@@ -4,7 +4,7 @@ BuildRequires: perl(File/Spec/Functions.pm) perl(Test/More.pm) perl-devel perl-p
 # END SourceDeps(oneline)
 Name:           perl-Test-Assertions
 Version:        1.054
-Release:        alt2_13
+Release:        alt2_14
 Summary:        Simple set of building blocks for both unit and runtime testing
 License:        GPLv2
 Group:          Development/Perl
@@ -50,6 +50,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 1.054-alt2_14
+- update to new release by fcimport
+
 * Mon Aug 05 2013 Igor Vlasenko <viy@altlinux.ru> 1.054-alt2_13
 - update to new release by fcimport
 
