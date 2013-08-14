@@ -5,7 +5,7 @@ BuildRequires: waf
 
 Name:           lv2
 Version:        1.4.0
-Release:        alt1_1
+Release:        alt1_2
 Summary:        Audio Plugin Standard
 Group:          System/Libraries
 
@@ -93,6 +93,9 @@ mv %{buildroot}%{_docdir}/%name/* %{buildroot}%{_docdir}/%{name}-%{version}
 %doc %dir %{_docdir}/%{name}-%{version}
 
 %changelog
+* Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 1.4.0-alt1_2
+- update to new release by fcimport
+
 * Sun May 26 2013 Igor Vlasenko <viy@altlinux.ru> 1.4.0-alt1_1
 - update to new release by fcimport
 
