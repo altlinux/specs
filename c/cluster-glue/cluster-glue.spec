@@ -1,7 +1,7 @@
 Name: cluster-glue
 Summary: Reusable cluster components
 Version: 1.0.11
-Release: alt1
+Release: alt2
 License: GPLv2+ and LGPLv2+
 Url: http://www.linux-ha.org/wiki/Cluster_Glue
 Group: System/Base
@@ -10,6 +10,8 @@ Patch: %name-%version-alt.patch
 
 Obsoletes: heartbeat < 2.1.4
 Conflicts: heartbeat < 2.1.4
+
+Requires: resource-agents
 
 # Automatically added by buildreq on Fri Mar 29 2013
 # optimized out: libgpg-error libnet-snmp30 libssl-devel libwrap-devel net-snmp-config perl-Encode perl-Locale-gettext perl-podlators pkg-config python-base python-modules xml-common
@@ -37,7 +39,6 @@ standards, and an interface to common STONITH devices.
 License: GPLv2+ and LGPLv2+
 Summary: Non-blocking log service
 Group: System/Servers
-Requires: %name = %version-%release
 
 %description logd
 Non-blocking log service
@@ -46,7 +47,6 @@ Non-blocking log service
 License: GPLv2+ and LGPLv2+
 Summary: A mechanism for node fencing
 Group: System/Servers
-Requires: %name = %version-%release
 
 %description stonith
 In case a node is considered "dead" by the cluster as a whole, STONITH ("Shoot The Other Node In The Head") forcefully removes
@@ -64,7 +64,7 @@ such as Pacemaker.
 %package -n lib%name-devel
 Summary: Headers and libraries for writing cluster managers
 Group: Development/C++
-Requires: lib%name = %version-%release %name = %version-%release %name-stonith = %version-%release
+Requires: lib%name = %version-%release %name = %version-%release
 Obsoletes: libheartbeat-devel
 
 %description -n lib%name-devel
@@ -83,7 +83,6 @@ export docdir=%glue_docdir
     --with-daemon-user=%uname \
     --localstatedir=%_var \
     --libdir=%_libdir \
-    --with-initdir=%_initdir \
     --docdir=%glue_docdir
 
 %build
@@ -93,6 +92,7 @@ export docdir=%glue_docdir
 %makeinstall_std docdir=%glue_docdir
 
 install -pD logd/logd.cf %buildroot%_sysconfdir/logd.cf
+install -pD hb_report/utillib.sh %buildroot%_datadir/%name/utillib.sh
 
 ## tree fix up
 # Dont package static libs
@@ -137,7 +137,7 @@ exit 0
 
 %files logd
 %config(noreplace) %_sysconfdir/logd.cf
-%_initdir/*
+%_sysconfdir/init.d/*
 %_libdir/heartbeat/ha_logd
 
 %files stonith
@@ -170,6 +170,9 @@ exit 0
 %doc AUTHORS COPYING COPYING.LIB
 
 %changelog
+* Wed Aug 14 2013 Slava Dubrovskiy <dubrsl@altlinux.org> 1.0.11-alt2
+- Add patched %_datadir/%name/utillib.sh for cibsecret
+
 * Thu Mar 28 2013 Slava Dubrovskiy <dubrsl@altlinux.org> 1.0.11-alt1
 - Build for ALT
 
