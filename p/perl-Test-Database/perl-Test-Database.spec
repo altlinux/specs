@@ -4,7 +4,7 @@ BuildRequires: perl(DBD/DBM.pm) perl-Module-Build perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Test-Database
 Version:        1.11
-Release:        alt3_7
+Release:        alt3_8
 Summary:        Database handles ready for testing
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -65,6 +65,9 @@ find $RPM_BUILD_ROOT -depth -type d -exec rmdir {} 2>/dev/null \;
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 1.11-alt3_8
+- update to new release by fcimport
+
 * Mon Aug 05 2013 Igor Vlasenko <viy@altlinux.ru> 1.11-alt3_7
 - update to new release by fcimport
 
