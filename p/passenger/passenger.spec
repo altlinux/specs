@@ -8,7 +8,7 @@
 %define module_package_name apache2-mod_%module_name
 
 Name: passenger
-Version: 3.0.19
+Version: 4.0.10
 Release: alt1
 
 Summary: Easy and robust deployment Ruby on Rails applications on Apache and Nginx webservers
@@ -21,6 +21,7 @@ Source: %module_name-%version.tar
 Source1: %module_name.load
 Source2: %module_name.conf
 Source3: %module_name.start
+Source4: locations.ini
 
 Patch: %module_name-%version-%release.patch
 
@@ -34,7 +35,7 @@ BuildRequires: apache2-devel gcc-c++ libcrypto7 libcurl-devel libruby-devel ruby
 BuildPreReq: ruby-rake apache2-httpd-worker zlib-devel
 BuildPreReq: apache2-devel libapr1-devel libaprutil1-devel libssl-devel
 
-Requires: ruby-rails ruby-test-spec ruby-mime-types >= 1.15 sqlite3-ruby
+Requires: ruby-rails ruby-test-spec ruby-mime-types >= 1.15
 Requires(pre): apache2 >= %apache2_version-%apache2_release
 
 Conflicts: ruby1.8-passenger
@@ -65,7 +66,7 @@ Phusion Passenger™ известный как mod_rails или mod_rack
 Summary: Easy and robust deployment Ruby on Rails applications on Apache webserver
 Summary(ru_RU.UTF-8): Простой и ясный мост между приложениями на Рельсах и сервером Апач
 Group: System/Servers
-Requires: ruby-rails ruby-test-spec ruby-mime-types >= 1.15 sqlite3-ruby apache2-httpd-worker passenger = %version
+Requires: ruby-rails ruby-test-spec ruby-mime-types >= 1.15 apache2-httpd-worker passenger = %version
 Provides: %real_name = %version
 
 %description -n %module_package_name
@@ -88,37 +89,58 @@ mkdir -p %buildroot%_bindir/ %buildroot%_man1dir/ %buildroot%_man8dir/
 cp -rp bin/* %buildroot%_bindir/
 cp -rp man/*.1 %buildroot%_man1dir/
 cp -rp man/*.8 %buildroot%_man8dir/
-mkdir -p %buildroot%_libdir/%orig_name
-cp -rp agents %buildroot%_libdir/%orig_name/
-mkdir -p %buildroot%_datadir/%orig_name
+mkdir -p %buildroot%_libdir/%name
+cp -rp buildout/agents %buildroot%_libdir/%name/
+rm -f %buildroot%_libdir/%name/agents/*.o
+cp -rp buildout/common %buildroot%_libdir/%name/
+rm -rf %buildroot%_libdir/%name/common/libboost_oxt
+rm -rf %buildroot%_libdir/%name/common/libpassenger_common
+mkdir -p %buildroot%_datadir/%name
 cp -rp $(find -name passenger_native_support.so) %buildroot%ruby_sitearchdir/
-cp -rp helper-scripts %buildroot%_datadir/%orig_name/
+cp -rp helper-scripts %buildroot%_datadir/%name/
 
 #extconf.rb
-mkdir -p %buildroot%_datadir/%orig_name/source/ext/ruby
-cp -rp ext/ruby/extconf.rb %buildroot%_datadir/%orig_name/source/ext/ruby/
+mkdir -p %buildroot%_datadir/%name/source/ext/ruby
+cp -rp ext/ruby/extconf.rb %buildroot%_datadir/%name/source/ext/ruby/
+
+#resources
+mkdir -p %buildroot%_datadir/%name
+cp -rp resources/* %buildroot%_datadir/%name/
+
+#doc
+mkdir -p %buildroot%_defaultdocdir/%name
+cp -rp doc/* %buildroot%_defaultdocdir/%name/
 
 #mod_passenger
-install -p -D -m 755 -- ext/apache2/%real_name.so %buildroot%apache2_libexecdir/%real_name.so
+install -p -D -m 755 -- buildout/apache2/%real_name.so %buildroot%apache2_libexecdir/%real_name.so
 install -d -m 755 -- %buildroot%apache2_mods_available
 install -d -m 755 -- %buildroot%apache2_mods_start
 install -p -m 644 -- %SOURCE1 %buildroot%apache2_mods_available/%module_name.load
 install -p -m 644 -- %SOURCE2 %buildroot%apache2_mods_available/%module_name.conf
 install -p -m 644 -- %SOURCE3 %buildroot%apache2_mods_start/100-%module_name.conf
+install -p -m 644 -- %SOURCE4 %buildroot%ruby_sitearchdir/%ruby_name/locations.ini
 sed 's,@a_libexecdir@,%apache2_libexecdir,g' \
     -i %buildroot%apache2_mods_available/%module_name.load
-sed -e 's,@passenger_path@,%ruby_sitearchdir/%ruby_name,g' -e 's,@ruby_exec@,%__ruby,g' \
+sed -e 's,@passenger_path@,%ruby_sitearchdir/%ruby_name/locations.ini,g' -e 's,@ruby_exec@,%__ruby,g' \
     -i %buildroot%apache2_mods_available/%module_name.conf
+sed -e 's,@rubylibdir@,%ruby_sitearchdir,g' \
+    -e 's,@a_libexecdir@,%apache2_libexecdir,g' \
+    -e 's,@bindir@,%_bindir,g' \
+    -e 's,@libdir@,%_libdir,g' \
+    -e 's,@datadir@,%_datadir,g' \
+    -e 's,@name@,%name,g' \
+    -i %buildroot%ruby_sitearchdir/%ruby_name/locations.ini
 
 %files
-%doc README LICENSE NEWS INSTALL DEVELOPERS.TXT
+%doc README.md LICENSE NEWS INSTALL.md CONTRIBUTORS
 %_bindir/*
 %_mandir/man?/*
 %ruby_sitearchdir/*
-%dir %_libdir/%orig_name
-%dir %_datadir/%orig_name
-%_libdir/%orig_name/*
-%_datadir/%orig_name/*
+%dir %_libdir/%name
+%dir %_datadir/%name
+%_libdir/%name/*
+%_datadir/%name/*
+%_defaultdocdir/%name
 
 %post -n %module_package_name
 # Reconfigure Apache2:
@@ -167,6 +189,15 @@ fi
 %apache2_libexecdir/%real_name.so
 
 %changelog
+* Wed Aug 14 2013 Evgeny Sinelnikov <sin@altlinux.ru> 4.0.10-alt1
+- Update to new 4.0.x release
+- Rename library and data directories from phusion-passenger to passenger
+- Install locations.ini for packaged directories to file:
+  RUBY_SITEARCHDIR/phusion_passenger/locations.ini
+
+* Tue Aug 13 2013 Evgeny Sinelnikov <sin@altlinux.ru> 3.0.21-alt1
+- Update to last 3.0.x release
+
 * Thu Apr 18 2013 Evgeny Sinelnikov <sin@altlinux.ru> 3.0.19-alt1
 - Update to release
 
