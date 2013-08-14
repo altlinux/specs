@@ -13,7 +13,7 @@
 
 Summary:	XUL Runner
 Name:		xulrunner
-Version:	22.0
+Version:	23.0
 Release:	alt1
 
 License:	MPL/GPL/LGPL
@@ -29,6 +29,8 @@ Source4:	xpi-mimeinfo.xml
 
 Patch0:		xulrunner-no-version.patch
 #Patch2:	xulrunner-noarch-extensions.patch
+
+Patch10:	rhbz-966424.patch
 
 Patch100:	mozilla-192-path.patch
 #Patch101:	mozilla-pkgconfig.patch
@@ -79,9 +81,10 @@ BuildRequires: python-modules-sqlite3
 BuildRequires: python-modules-json
 
 # Mozilla requires
-BuildRequires: libnspr-devel       >= 4.9.6-alt1
-BuildRequires: libnss-devel        >= 3.14.3-alt1
-BuildRequires: libnss-devel-static >= 3.14.3-alt1
+BuildRequires: libnspr-devel >= 4.10.0-alt1
+BuildRequires: libnss-devel  >= 3.15.1-alt1
+
+BuildRequires: libnss-devel-static
 
 BuildRequires: autoconf_2.13
 %set_autoconf_version 2.13
@@ -142,7 +145,9 @@ tar -xf %SOURCE1
 #patch1 -p1
 #patch2 -p1
 
-%patch100 -p1
+%patch10 -p1
+
+%patch100 -p2
 #patch101 -p1
 #patch104 -p1
 
@@ -353,6 +358,23 @@ ln -sf $(relative "%xulr_prefix/libmozalloc.so" "%xulr_develdir/sdk/lib/libmozal
 %_datadir/rpm-build-mozilla/mozilla-sh-functions
 
 %changelog
+* Thu Aug 08 2013 Alexey Gladkov <legion@altlinux.ru> 23.0-alt1
+- New release (23.0).
+- Fixed:
+  + MFSA 2013-75 Local Java applets may read contents of local file system
+  + MFSA 2013-74 Firefox full and stub installer DLL hijacking
+  + MFSA 2013-73 Same-origin bypass with web workers and XMLHttpRequest
+  + MFSA 2013-72 Wrong principal used for validating URI for some Javascript components
+  + MFSA 2013-71 Further Privilege escalation through Mozilla Updater
+  + MFSA 2013-70 Bypass of XrayWrappers using XBL Scopes
+  + MFSA 2013-69 CRMF requests allow for code execution and XSS attacks
+  + MFSA 2013-68 Document URI misrepresentation and masquerading
+  + MFSA 2013-67 Crash during WAV audio file decoding
+  + MFSA 2013-66 Buffer overflow in Mozilla Maintenance Service and Mozilla Updater
+  + MFSA 2013-65 Buffer underflow when generating CRMF requests
+  + MFSA 2013-64 Use after free mutating DOM during SetBody
+  + MFSA 2013-63 Miscellaneous memory safety hazards (rv:23.0 / rv:17.0.8)
+
 * Thu Jun 20 2013 Alexey Gladkov <legion@altlinux.ru> 22.0-alt1
 - New release (22.0).
 - Fixed:

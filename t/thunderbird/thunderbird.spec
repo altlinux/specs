@@ -3,7 +3,7 @@
 
 Summary:	Thunderbird is Mozilla's e-mail client
 Name:		thunderbird
-Version:	17.0.7
+Version:	17.0.8
 Release:	alt1
 License:	MPL/GPL
 Group:		Networking/Mail
@@ -30,6 +30,8 @@ Patch15:	thunderbird-with-system-mozldap.patch
 #Patch16:	bug296453-fix-mfb-teardown-2.patch
 #Patch17:	bug296453-folder-binding-bugfixes-2.patch
 #Patch28:	thunderbird-use-mozsqlite.patch
+
+Patch30:	thunderbird-17-armh.patch
 
 BuildRequires(pre): mozilla-common-devel
 BuildRequires(pre): rpm-build-mozilla.org
@@ -190,6 +192,7 @@ tar -xf %SOURCE2
 %patch7 -p1
 %patch9 -p1
 %patch15 -p1 -b .mozldap
+%patch30 -p1 -b .armh
 
 #echo %version > mail/config/version.txt
 
@@ -239,7 +242,7 @@ export MOZILLA_SRCDIR="$srcdir/mozilla"
 MOZ_SMP_FLAGS=-j1
 # On x86 architectures, Mozilla can build up to 4 jobs at once in parallel,
 # however builds tend to fail on other arches when building in parallel.
-%ifarch %ix86 x86_64
+%ifarch %ix86 x86_64 armh
 [ "%__nprocs" -ge 2 ] && MOZ_SMP_FLAGS=-j2
 [ "%__nprocs" -ge 4 ] && MOZ_SMP_FLAGS=-j4
 %endif
@@ -363,7 +366,7 @@ rm -rf -- \
 	#
 
 #ver=%version
-ver=22.0
+ver=23.0
 sed -i \
 	-e "s,^\\(MaxVersion\\)=.*,\\1=${ver%%.*}.*,g" \
 	%buildroot/%tbird_prefix/application.ini
@@ -493,6 +496,18 @@ rm -f -- %buildroot/%lightning_ciddir/application.ini
 %_sysconfdir/rpm/macros.d/%name
 
 %changelog
+* Tue Aug 13 2013 Alexey Gladkov <legion@altlinux.ru> 17.0.8-alt1
+- New version (17.0.8).
+- Fixed:
+  + MFSA 2013-75 Local Java applets may read contents of local file system
+  + MFSA 2013-73 Same-origin bypass with web workers and XMLHttpRequest
+  + MFSA 2013-72 Wrong principal used for validating URI for some Javascript components
+  + MFSA 2013-71 Further Privilege escalation through Mozilla Updater
+  + MFSA 2013-69 CRMF requests allow for code execution and XSS attacks
+  + MFSA 2013-68 Document URI misrepresentation and masquerading
+  + MFSA 2013-66 Buffer overflow in Mozilla Maintenance Service and Mozilla Updater
+  + MFSA 2013-63 Miscellaneous memory safety hazards (rv:23.0 / rv:17.0.8)
+
 * Sun Jun 30 2013 Alexey Gladkov <legion@altlinux.ru> 17.0.7-alt1
 - New version (17.0.7).
 - Fixed:

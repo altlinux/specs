@@ -8,7 +8,7 @@ Summary:              The Mozilla Firefox project is a redesign of Mozilla's bro
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox
-Version:        22.0
+Version:        23.0
 Release:        alt1
 License:        MPL/GPL/LGPL
 Group:          Networking/WWW
@@ -252,6 +252,23 @@ done
 %_rpmmacrosdir/firefox
 
 %changelog
+* Mon Aug 12 2013 Alexey Gladkov <legion@altlinux.ru> 23.0-alt1
+- New release (23.0).
+- Fixed:
+  + MFSA 2013-75 Local Java applets may read contents of local file system
+  + MFSA 2013-74 Firefox full and stub installer DLL hijacking
+  + MFSA 2013-73 Same-origin bypass with web workers and XMLHttpRequest
+  + MFSA 2013-72 Wrong principal used for validating URI for some Javascript components
+  + MFSA 2013-71 Further Privilege escalation through Mozilla Updater
+  + MFSA 2013-70 Bypass of XrayWrappers using XBL Scopes
+  + MFSA 2013-69 CRMF requests allow for code execution and XSS attacks
+  + MFSA 2013-68 Document URI misrepresentation and masquerading
+  + MFSA 2013-67 Crash during WAV audio file decoding
+  + MFSA 2013-66 Buffer overflow in Mozilla Maintenance Service and Mozilla Updater
+  + MFSA 2013-65 Buffer underflow when generating CRMF requests
+  + MFSA 2013-64 Use after free mutating DOM during SetBody
+  + MFSA 2013-63 Miscellaneous memory safety hazards (rv:23.0 / rv:17.0.8)
+
 * Wed Jun 26 2013 Alexey Gladkov <legion@altlinux.ru> 22.0-alt1
 - New release (22.0).
 - Fixed:

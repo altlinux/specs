@@ -1,6 +1,6 @@
 Summary:	Netscape Portable Runtime (NSPR)
 Name:		nspr
-Version:	4.9.6
+Version:	4.10.0
 Release:	alt1
 Epoch:		1
 License:	MPL/GPL/LGPL
@@ -50,10 +50,10 @@ NSPR development kit (static libs)
 
 sed -i \
 	-e 's@AC_CONFIG_AUX_DIR(\${srcdir}/build/autoconf)@AC_CONFIG_AUX_DIR(build/autoconf)@' \
-	mozilla/nsprpub/configure.in
+	nspr/configure.in
 
 %build
-cd mozilla/nsprpub
+cd nspr
 %add_optflags %optflags_shared
 %configure \
 	--includedir=%_includedir/%name \
@@ -70,7 +70,7 @@ cd mozilla/nsprpub
 %make_build
 
 %install
-cd mozilla/nsprpub
+cd nspr
 %makeinstall install export \
 	  includedir=%buildroot/%_includedir/%name
 
@@ -107,6 +107,9 @@ sed -e "s,@libdir@,%_libdir,g" \
 %_libdir/*.a
 
 %changelog
+* Fri Aug 09 2013 Alexey Gladkov <legion@altlinux.ru> 1:4.10.0-alt1
+- New stable release 4.10.
+
 * Wed Apr 10 2013 Alexey Gladkov <legion@altlinux.ru> 1:4.9.6-alt1
 - New stable release 4.9.6.
 
