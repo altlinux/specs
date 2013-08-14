@@ -1,6 +1,6 @@
 Name:           overgod
 Version:        1.0
-Release:        alt2_17
+Release:        alt2_18
 Summary:        Another arcade-style shoot-em-up
 Group:          Games/Other
 License:        GPLv2+
@@ -59,6 +59,9 @@ install -p -m 644 %{SOURCE2} \
 
 
 %changelog
+* Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_18
+- update to new release by fcimport
+
 * Tue May 07 2013 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_17
 - update to new release by fcimport
 
