@@ -3,7 +3,7 @@ BuildRequires: /usr/bin/scrollkeeper-config pkgconfig(gthread-2.0) pkgconfig(gtk
 # END SourceDeps(oneline)
 Name:           quarry
 Version:        0.2.0
-Release:        alt5_11
+Release:        alt5_12
 Summary:        A multi-purpose board game GUI
 
 Group:          Games/Other
@@ -60,6 +60,9 @@ desktop-file-install \
 
 
 %changelog
+* Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.2.0-alt5_12
+- update to new release by fcimport
+
 * Thu Feb 14 2013 Igor Vlasenko <viy@altlinux.ru> 0.2.0-alt5_11
 - update to new release by fcimport
 
