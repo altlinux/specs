@@ -7,7 +7,7 @@ BuildRequires: perl-devel perl-podlators
 
 Name:		perl-ExtUtils-Config
 Version:	0.007
-Release:	alt1_5
+Release:	alt1_6
 Summary:	A wrapper for perl's configuration
 Group:		Development/Perl
 License:	GPL+ or Artistic
@@ -62,6 +62,9 @@ make test RELEASE_TESTING=1
 %{perl_vendor_privlib}/ExtUtils/
 
 %changelog
+* Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.007-alt1_6
+- update to new release by fcimport
+
 * Mon Aug 05 2013 Igor Vlasenko <viy@altlinux.ru> 0.007-alt1_5
 - update to new release by fcimport
 
