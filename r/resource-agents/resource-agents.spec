@@ -1,7 +1,7 @@
 Name: resource-agents
 Summary: Open Source HA Reusable Cluster Resource Scripts
 Version: 3.9.5
-Release: alt1
+Release: alt2
 License: GPLv2+ and LGPLv2+
 Url: https://github.com/ClusterLabs/resource-agents
 Group: System/Base
@@ -179,7 +179,8 @@ See 'ldirectord -h' and linux-ha/doc/ldirectord for more information.
 %build
 %autoreconf
 %configure	\
-		--with-version=%version
+		--with-version=%version \
+		--localstatedir=%_var
 
 %make_build
 
@@ -360,5 +361,8 @@ mkdir -p %buildroot%_var/run/resource-agents
 %_mandir/man8/ldirectord.8*
 
 %changelog
+* Wed Aug 14 2013 Slava Dubrovskiy <dubrsl@altlinux.org> 3.9.5-alt2
+- Set correct /var
+
 * Tue Mar 26 2013 Slava Dubrovskiy <dubrsl@altlinux.org> 3.9.5-alt1
 - Build for ALT
