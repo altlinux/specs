@@ -26,6 +26,7 @@
 %def_without java
 %def_with vnc
 %def_with vde
+%def_with python
 
 %ifarch %ix86
 %define vbox_platform linux.x86
@@ -52,10 +53,11 @@
 %set_verify_elf_method textrel=relaxed
 %add_findprov_lib_path %vboxdir
 
+%define gcc_version 4.7
 
 Name: virtualbox
-Version: 4.2.12
-Release: alt2
+Version: 4.2.16
+Release: alt1
 
 Summary: VM VirtualBox OSE - Virtual Machine for x86 hardware
 License: GPL
@@ -68,7 +70,7 @@ Packager: Evgeny Sinelnikov <sin@altlinux.ru>
 
 Source: %distarchive.tar
 
-Source1:	%name.control
+Source1:	%name.control.in
 Source2:	%name.init
 Source3:	%name-addition.rules
 Source4:	%name.rules
@@ -91,11 +93,11 @@ Source99:	%vboxdbg.in
 
 Patch0:		%name-%version-%release.patch
 
-BuildPreReq: dev86 iasl gcc4.3-c++ libstdc++4.3-devel-static
+BuildPreReq: dev86 iasl gcc-c++ libstdc++%gcc_version-devel-static
 BuildPreReq: libIDL-devel libSDL-devel libpng-devel
 BuildPreReq: libXcursor-devel libXext-devel
 BuildPreReq: xsltproc
-BuildPreReq: kernel-build-tools python-dev
+BuildPreReq: rpm-build-kernel
 BuildPreReq: libpulseaudio-devel
 BuildRequires: libdevmapper-devel
 BuildRequires: libxml2-devel libxslt-devel
@@ -109,6 +111,9 @@ BuildRequires(pre): xorg-sdk
 BuildPreReq: yasm kBuild >= 0.1.999
 %if_with webservice
 BuildRequires: libgsoap-devel-static
+%endif
+%if_with python
+BuildRequires: python-dev
 %endif
 BuildRequires: libpam-devel
 %if_with manual
@@ -159,6 +164,15 @@ Requires: %name = %version-%release
 %description webservice
 This packages contains VirtualBox web service API daemon.
 It allows to control virtual machines via web interface.
+
+%package -n python-module-vboxapi
+Summary: VirtualBox python API
+Group: Development/Python
+Requires: %name = %version-%release
+
+%description -n python-module-vboxapi
+This packages contains VirtualBox python module 'vboxapi'.
+It allows to control virtual machines via python scripts.
 
 %package -n %modname
 Summary: Sources for VirtualBox module
@@ -260,6 +274,7 @@ This package contains VirtualBox User Manual.
 %package sdk
 Summary: VirtualBox SDK
 Group: Development/Other
+Requires: python-module-vboxapi = %version-%release
 
 %description sdk
 This package contains VirtualBox SDK.
@@ -271,11 +286,14 @@ This package contains VirtualBox SDK.
 cp %SOURCE15 %SOURCE16 src/VBox/Frontends/VirtualBox/images
 
 %build
-export GCC_VERSION=4.3
+export GCC_VERSION=%gcc_version
 ./configure --ose \
     --disable-kmods \
 %if_with webservice
     --enable-webservice \
+%endif
+%if_without python
+    --disable-python \
 %endif
 %if_without java
     --disable-java \
@@ -317,8 +335,7 @@ echo "LIBVNCSERVER_VERSION_NR    := %libvncserver_version" >> LocalConfig.kmk
 echo "VBOX_USE_SYSTEM_XORG_HEADERS := 1" >> LocalConfig.kmk
 
 source env.sh
-[ -n "$NPROCS" ] || NPROCS=%__nprocs
-kmk -j$NPROCS VBOXDIR=%vboxdir
+kmk -j1 VBOXDIR=%vboxdir
 
 %if_enabled debug
 sed 's|@VBOX_BUILD_DIR@|%vboxdir|g' %SOURCE99 >%vboxdbg_file
@@ -332,22 +349,22 @@ false
 %endif
 
 source env.sh
-[ -n "$NPROCS" ] || NPROCS=%__nprocs
-kmk -j$NPROCS VBOXDIR=%vboxdir
+kmk -j1 VBOXDIR=%vboxdir
 
-mkdir -p %buildroot{%_bindir,%_sbindir,%vboxdir/ExtensionPacks,%vboxdatadir,%kernel_src,%_initrddir,%_sysconfdir/udev/rules.d}
+mkdir -p %buildroot{%_bindir,%_sbindir,%vboxdir/ExtensionPacks,%vboxdatadir,%kernel_src,%_initrddir,%_udevrulesdir}
 
 # install common
 install -Dp %SOURCE1 %buildroot%_controldir/%name
+sed -i -e 's|@udevrulesdir@|%_udevrulesdir|g' %buildroot%_controldir/%name
 install -Dp %SOURCE2 %buildroot%_initdir/%name
 install -Dp -m644 %SOURCE4 \
-	%buildroot%_sysconfdir/udev/rules.d/90-%name.rules
+	%buildroot%_udevrulesdir/90-%name.rules
 
 %if_with additions
 # install additions from src
 install -Dp %SOURCE7 %buildroot%_initdir/vboxadd
 install -Dp %SOURCE8 %buildroot%_initdir/vboxadd-service
-install -Dp -m644 %SOURCE3 %buildroot%_sysconfdir/udev/rules.d/60-vboxadd.rules
+install -Dp -m644 %SOURCE3 %buildroot%_udevrulesdir/60-vboxadd.rules
 
 #install -d %buildroot%_sysconfdir/hal/fdi/policy
 #install -m644 src/VBox/Additions/linux/installer/90-vboxguest.fdi %buildroot%_sysconfdir/hal/fdi/policy/90-vboxguest.fdi
@@ -387,6 +404,12 @@ cp -a \
     vboxwebsrv \
 %endif
     %buildroot%vboxdir
+
+%if_with python
+cd sdk/installer >/dev/null
+  VBOX_INSTALL_PATH=%vboxdir VBOX_VERSION=%version python vboxapisetup.py install --install-lib=%python_sitelibdir --root=%buildroot
+cd -
+%endif
 
 cp -a \
     VBoxCreateUSBNode.sh \
@@ -572,6 +595,7 @@ mountpoint -q /dev || {
 %attr(4710,root,vboxusers) %vboxdir/VirtualBox
 %exclude %vboxdir/sdk
 %exclude %vboxdir/xpidl
+%exclude %vboxdir/VBoxPython*.so
 %vboxdatadir/nls
 %_niconsdir/*.png
 %_miconsdir/*.png
@@ -612,7 +636,7 @@ mountpoint -q /dev || {
 %_initrddir/vboxadd-service
 %config(noreplace) %_sysconfdir/sysconfig/vboxadd-service
 #_sysconfdir/hal/fdi/policy/90-vboxguest.fdi
-%config %_sysconfdir/udev/rules.d/60-vboxadd.rules
+%config %_udevrulesdir/60-vboxadd.rules
 %_sbindir/vboxadd-service
 %_bindir/VBoxControl
 %_bindir/VBoxService
@@ -636,10 +660,17 @@ mountpoint -q /dev || {
 %_bindir/vboxwebsrv
 %endif
 
+%if_with python
+%files -n python-module-vboxapi
+%vboxdir/VBoxPython*.so
+%python_sitelibdir/*
+%vboxdir/sdk/bindings/xpcom/python/xpcom
+%endif
+
 %files common
 %_initdir/%name
 %_controldir/%name
-%config %_sysconfdir/udev/rules.d/90-%name.rules
+%config %_udevrulesdir/90-%name.rules
 %dir %vboxdatadir
 %vboxdatadir/VBoxCreateUSBNode.sh
 
@@ -650,8 +681,19 @@ mountpoint -q /dev || {
 %_bindir/xpidl
 %vboxdir/xpidl
 %vboxdir/sdk
+%if_with python
+%exclude %vboxdir/sdk/bindings/xpcom/python/xpcom
+%endif
 
 %changelog
+* Wed Aug 14 2013 Evgeny Sinelnikov <sin@altlinux.ru> 4.2.16-alt1
+- Update to new release of stable branch 4.2
+- Build for Sisyphus with gcc-4.7
+
+* Sun Jun 30 2013 Evgeny Sinelnikov <sin@altlinux.ru> 4.2.14-alt1
+- Update to last release of stable branch 4.2
+- Add python-module-vboxapi separate VirtualBox SDK subpackage
+
 * Tue Apr 30 2013 Evgeny Sinelnikov <sin@altlinux.ru> 4.2.12-alt2
 - Fix rpath for VBoxOGL.so and VBoxOGL*spu.so (Closes: 27340)
 
