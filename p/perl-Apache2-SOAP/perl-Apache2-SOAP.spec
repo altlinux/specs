@@ -6,7 +6,7 @@ BuildRequires: perl(Exporter.pm) perl(SOAP/Lite.pm) perl(SOAP/Transport/HTTP.pm)
 
 Name:      perl-Apache2-SOAP
 Version:   0.73
-Release:   alt1_14
+Release:   alt1_15
 Summary:   A replacement for Apache::SOAP designed to work with mod_perl 2
 
 Group:     Development/Perl
@@ -66,6 +66,9 @@ chmod -R u+rwX,go+rX,go-w %{buildroot}/*
 
 
 %changelog
+* Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.73-alt1_15
+- update to new release by fcimport
+
 * Mon Aug 05 2013 Igor Vlasenko <viy@altlinux.ru> 0.73-alt1_14
 - update to new release by fcimport
 
