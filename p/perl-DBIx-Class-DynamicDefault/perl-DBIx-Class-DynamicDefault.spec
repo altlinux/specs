@@ -4,7 +4,7 @@ BuildRequires: perl(CPAN.pm) perl(Config.pm) perl(Fcntl.pm) perl(FindBin.pm) per
 # END SourceDeps(oneline)
 Name:       perl-DBIx-Class-DynamicDefault 
 Version:    0.04
-Release:    alt2_4
+Release:    alt2_5
 # lib/DBIx/Class/DynamicDefault.pm -> GPL+ or Artistic
 License:    GPL+ or Artistic 
 Group:      Development/Perl
@@ -39,6 +39,7 @@ make %{?_smp_mflags}
 make pure_install DESTDIR=%{buildroot}
 find %{buildroot} -type f -name .packlist -exec rm -f {} ';'
 
+# %{_fixperms} %{buildroot}/*
 
 %check
 make test
@@ -48,6 +49,9 @@ make test
 %{perl_vendor_privlib}/DBIx/Class/*
 
 %changelog
+* Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.04-alt2_5
+- update to new release by fcimport
+
 * Sun Feb 24 2013 Igor Vlasenko <viy@altlinux.ru> 0.04-alt2_4
 - update to new release by fcimport
 
