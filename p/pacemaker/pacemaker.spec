@@ -1,7 +1,7 @@
 Name: pacemaker
 Summary: Scalable High-Availability cluster resource manager
 Version: 1.1.10
-Release: alt2
+Release: alt3
 License: GPLv2+ and LGPLv2+
 Url: http://www.clusterlabs.org
 Group: System/Servers
@@ -14,8 +14,9 @@ BuildRequires: libqb-devel > 0.11.0 libgnutls-devel libltdl-devel libgio-devel
 BuildRequires: libncurses-devel libssl-devel libselinux-devel docbook-style-xsl
 BuildRequires: bison flex help2man
 BuildRequires: libesmtp-devel libsensors3-devel libnet-snmp-devel
+#libopenipmi-devel libservicelog-devel
 BuildRequires: libcorosync2-devel libcluster-glue-devel
-#BuildRequires: publican inkscape asciidoc
+BuildRequires: publican inkscape asciidoc
 
 %define gname haclient
 %define uname hacluster
@@ -38,6 +39,7 @@ Available rpmbuild rebuild options:
 License: GPLv2+ and LGPLv2+
 Summary: Command line tools for controlling Pacemaker clusters
 Group: System/Servers
+Requires: perl-DateTime-Format-DateParse
 
 %description cli
 Pacemaker is an advanced, scalable High-Availability cluster resource
@@ -136,9 +138,10 @@ subst 's|/usr/bin/help2man|/usr/bin/help2man --no-discard-stderr|g' tools/Makefi
 %install
 %makeinstall_std
 
-mkdir -p %buildroot%_sysconfdir/sysconfig
 mkdir -p %buildroot%_var/lib/pacemaker/cores
-install -m 644 mcp/pacemaker.sysconfig %buildroot%_sysconfdir/sysconfig/pacemaker
+install -D -m 644 mcp/pacemaker.sysconfig %buildroot%_sysconfdir/sysconfig/pacemaker
+install -D -m 755 pacemaker.init %buildroot%_initdir/pacemaker
+
 
 # Scripts that should be executable
 chmod a+x %buildroot%_datadir/pacemaker/tests/cts/CTSlab.py
@@ -299,6 +302,9 @@ getent passwd %uname >/dev/null || useradd -r -g %gname -s /sbin/nologin -c "clu
 %doc COPYING.LIB AUTHORS
 
 %changelog
+* Thu Aug 15 2013 Slava Dubrovskiy <dubrsl@altlinux.org> 1.1.10-alt3
+- Fix initscript
+
 * Mon Aug 12 2013 Slava Dubrovskiy <dubrsl@altlinux.org> 1.1.10-alt2
 - New version
 
