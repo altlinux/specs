@@ -1,6 +1,6 @@
 %define item vtun
 
-%define release_pre alt4
+%define release_pre alt1
 
 # for distr selected
 %def_without M40
@@ -22,6 +22,9 @@
 %if_with M60P
 %define distr_switch M60P
 %endif
+%if_with M70P
+%define distr_switch M70P
+%endif
 
 # %%release_num and %%release_distr set
 %if "%distr_switch" == ""
@@ -34,7 +37,7 @@
 %define package_release %{release_pre}%{release_distr}
 
 Name: vtund
-Version: 3.0.2
+Version: 3.0.3
 Release: %package_release
 
 Summary: Virtual tunnel over TCP/IP networks.
@@ -55,12 +58,6 @@ Patch2: vtun-3.0.2-free_host.patch
 
 Provides: vtund
 
-#%set_autoconf_version 2.5
-#%set_automake_version 1.7
-
-#BuildPreReq: autoconf_2.5 automake_1.7
-
-
 # Automatically added by buildreq on Fri May 28 2004
 BuildRequires: flex liblzo2-devel libssl-devel zlib-devel
 
@@ -77,30 +74,27 @@ not require modification to any kernel parts.
 
 %prep
 
-%setup -q -n %item-%version
-%patch1 -p1
+%setup -n %item-%version
+#%%patch1 -p1
 #%%patch2 -p1
-%__aclocal
-%__autoconf
-%configure  --prefix=%_usr                  \
-	    --sysconfdir=%_sysconfdir       \
-	    --localstatedir=%_localstatedir
+aclocal
+autoconf
+%configure
 
 %build
 %make_build
 
 %install
-%__install -d %buildroot{%_sbindir,%_libdir/%name,%_man8dir,%_man5dir,%_initdir,%_sysconfdir/sysconfig/%name}
-%__install -pm640 vtund.conf   %buildroot%_sysconfdir
-%__install -pm755 %SOURCE1     %buildroot%_initdir/vtund
-%__install -pm640 %SOURCE2     %buildroot%_sysconfdir/sysconfig/vtund_server
-%__install -pm640 %SOURCE3     %buildroot%_sysconfdir/sysconfig/%name/backup
-%__install -pm755 %SOURCE4     %buildroot%_libdir/%name/bug4231.sh
-%__install -pm644 %SOURCE5     .
-%__install -pm755 vtund        %buildroot%_sbindir
-%__install -pm644 vtund.conf.5 %buildroot%_man5dir
-%__install -pm644 vtund.8      %buildroot%_man8dir
-
+install -d %buildroot{%_sbindir,%_libdir/%name,%_man8dir,%_man5dir,%_initdir,%_sysconfdir/sysconfig/%name}
+install -pm640 vtund.conf   %buildroot%_sysconfdir
+install -pm755 %SOURCE1     %buildroot%_initdir/vtund
+install -pm640 %SOURCE2     %buildroot%_sysconfdir/sysconfig/vtund_server
+install -pm640 %SOURCE3     %buildroot%_sysconfdir/sysconfig/%name/backup
+install -pm755 %SOURCE4     %buildroot%_libdir/%name/bug4231.sh
+install -pm644 %SOURCE5     .
+install -pm755 vtund        %buildroot%_sbindir
+install -pm644 vtund.conf.5 %buildroot%_man5dir
+install -pm644 vtund.8      %buildroot%_man8dir
 
 #post
 #post_service %name
@@ -122,8 +116,15 @@ not require modification to any kernel parts.
 
 
 %changelog
+* Thu Aug 15 2013 Michael Shigorin <mike@altlinux.org> 3.0.3-alt1
+- NMU:
+  + Release 3.0.3
+    - dropped vtun-3.0.2-legacy_encrypt.patch (rfe1685781 merged upstream)
+  + added --with M70P support
+  + minor spec cleanup (closes: #8595)
+
 * Thu Sep  1 2011 Yura Kalinichenko <yuk@altlinux.org> 3.0.2-alt4
-- vtun-3.0.2-free_host.patch cutted from vtun-3.0.2-legacy_encrypt.patch 
+- vtun-3.0.2-free_host.patch cutted from vtun-3.0.2-legacy_encrypt.patch
   and not use while.
   TODO: right memory free
 
