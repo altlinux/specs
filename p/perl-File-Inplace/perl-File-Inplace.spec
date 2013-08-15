@@ -4,7 +4,7 @@ BuildRequires: perl(IO/File.pm) perl(IO/Handle.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-File-Inplace
 Version:        0.20
-Release:        alt2_8
+Release:        alt2_9
 Summary:        Perl module for in-place editing of files
 License:        (GPL+ or Artistic)
 Group:          Development/Perl
@@ -49,6 +49,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.20-alt2_9
+- update to new release by fcimport
+
 * Mon Aug 05 2013 Igor Vlasenko <viy@altlinux.ru> 0.20-alt2_8
 - update to new release by fcimport
 
