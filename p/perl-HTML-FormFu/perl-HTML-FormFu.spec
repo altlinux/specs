@@ -5,7 +5,7 @@ BuildRequires: perl(CPAN.pm) perl(Catalyst.pm) perl(Catalyst/Controller/HTML/For
 BuildRequires: perl(Encode/JP.pm)
 Name:           perl-HTML-FormFu
 Version:        0.09010
-Release:        alt2_3
+Release:        alt2_4
 Summary:        HTML Form Creation, Rendering and Validation Framework
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -77,6 +77,7 @@ Requires:       perl(DateTime.pm) >= 0.38
 Requires:       perl(DateTime/Format/Builder.pm) >= 0.80
 Requires:       perl(HTML/TokeParser/Simple.pm) >= 3.14
 Requires:       perl(HTTP/Headers.pm) >= 1.64
+Requires:       perl(Locale/Maketext.pm)
 Requires:       perl(MooseX/Attribute/Chained.pm) >= 1.0.1
 Requires:       perl(Template.pm)
 Requires:       perl(YAML/XS.pm) >= 0.32
@@ -124,6 +125,9 @@ make test
 %{_mandir}/man1/*
 
 %changelog
+* Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.09010-alt2_4
+- update to new release by fcimport
+
 * Mon Aug 05 2013 Igor Vlasenko <viy@altlinux.ru> 0.09010-alt2_3
 - update to new release by fcimport
 
