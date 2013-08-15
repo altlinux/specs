@@ -19,13 +19,13 @@
 %define flavour %base_flavour-%sub_flavour
 
 Name: kernel-image-%flavour
-Version: 3.4.57
-Release: alt2
+Version: 3.4.58
+Release: alt1
 
 %define kernel_req %nil
 %define kernel_prov %nil
 %define kernel_branch 3.4
-%define kernel_stable_version 57
+%define kernel_stable_version 58
 %define kernel_extra_version .%kernel_stable_version
 #define kernel_extra_version %nil
 
@@ -295,9 +295,9 @@ Patch0235: linux-%kernel_branch.38-fix-drivers-hid--hid-wiimote.patch
 Patch0241: linux-%kernel_branch.25-fix-drivers-hsi.patch
 Patch0242: linux-%kernel_branch.25-fix-drivers-hsi--hsi.patch
 
-Patch0250: linux-%kernel_branch.20-fix-drivers-hv.patch
-Patch0251: linux-%kernel_branch.20-fix-drivers-hv--hv_utils.patch
-Patch0252: linux-%kernel_branch.20-fix-drivers-hv--hv_vmbus.patch
+Patch0250: linux-%kernel_branch.53-fix-drivers-hv.patch
+Patch0251: linux-%kernel_branch.53-fix-drivers-hv--hv_utils.patch
+Patch0252: linux-%kernel_branch.53-fix-drivers-hv--hv_vmbus.patch
 
 Patch0261: linux-%kernel_branch.25-fix-drivers-hwmon--applesmc.patch
 Patch0262: linux-%kernel_branch.25-fix-drivers-hwmon--asc7621.patch
@@ -2890,6 +2890,13 @@ done)
 
 
 %changelog
+* Thu Aug 15 2013 Led <led@altlinux.ru> 3.4.58-alt1
+- 3.4.58
+- updated:
+  + fix-drivers-hv
+  + fix-drivers-hv--hv_utils
+  + fix-drivers-hv--hv_vmbus
+
 * Thu Aug 15 2013 Led <led@altlinux.ru> 3.4.57-alt2
 - updated:
   + feat-fs-aufs
