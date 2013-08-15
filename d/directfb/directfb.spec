@@ -2,10 +2,10 @@
 
 Name: directfb
 Version: 1.1.0
-Release: alt4.1.qa1
+Release: alt4.1.qa2
 
 Summary: %realname - drivers and binaries
-License: GPL
+License: LGPL
 Group: System/Libraries
 Url: http://www.directfb.org
 
@@ -125,6 +125,9 @@ find \
 %files -n lib%name-devel-static -f %name-static.files
 
 %changelog
+* Thu Aug 15 2013 Michael Shigorin <mike@altlinux.org> 1.1.0-alt4.1.qa2
+- NMU: fixed License: (closes: #6703)
+
 * Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.1.0-alt4.1.qa1
 - NMU: rebuilt for updated dependencies.
 
