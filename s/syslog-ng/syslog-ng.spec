@@ -1,6 +1,17 @@
+#!TODO
+# systemd support (trivial)
+# chroot support
+# improve modules packaging (add config examples)
+
+%def_enable	geoip
+%def_enable	smtp
+%def_enable	json
+%def_disable	amqp
+%def_enable	mongodb
+
 Name: syslog-ng
-Version: 3.0.10
-Release: alt1
+Version: 3.4.3
+Release: alt1.git20130813
 
 Summary: syslog-ng daemon
 Group: System/Kernel and hardware
@@ -12,51 +23,175 @@ Conflicts: klogd < 1.4.1-alt7
 
 Packager: Sergey Alembekov <rt@altlinux.ru>
 
-Source: http://www.balabit.com/downloads/syslog-ng/3.0/src/%name-%version.tar
-Source1: %name.init
-Source2: %name.conf
-Source3: %name.sysconfig
+Source: http://www.balabit.com/downloads/files/syslog-ng/sources/3.4.1/source/%{name}_%{version}.tar.gz
+Patch1: %name-%version-%release.patch
 
-Patch1: %name-2.0.7-alt-defpath.patch
+# Automatically added by buildreq on Fri Apr 19 2013 (-bi)
+# optimized out: elfutils libcom_err-devel libkrb5-devel pkg-config python-base python-modules
+# base config:
+# + SSL/TLS
+# + PCRE
+# + SQL
+BuildRequires: flex glib2-devel libcap-devel libdbi-devel libeventlog-devel >= 0.2.12-alt0.3.4.1 libnet2-devel libpcre-devel libpopt-devel libssl-devel libuuid-devel libwrap-devel libivykis-devel xsltproc docbook-style-xsl
 
-# Automatically added by buildreq on Tue Mar 27 2007 (-bi)
-BuildRequires: flex glib2-devel libeventlog-devel libnet2-devel libssl-devel libwrap-devel
+%if_enabled geoip
+BuildRequires: libGeoIP-devel
+%endif
+%if_enabled json
+BuildRequires: libjson-devel
+%endif
+%if_enabled smtp
+BuildRequires: libesmtp-devel
+%endif
+%if_enabled amqp
+BuildRequires: librabbitmq-c-devel
+%endif
+%if_enabled mongodb
+BuildRequires: libmongo-client-devel
+%endif
+
 
 %description
-An enhanced syslog daemon.
+syslog-ng, as the name shows, is a syslogd replacement, but with new
+functionality for the new generation. The original syslogd allows
+messages only to be sorted based on priority/facility pairs; syslog-ng
+adds the possibility to filter based on message contents using regular
+expressions. The new configuration scheme is intuitive and powerful.
+Forwarding logs over TCP and remembering all forwarding hops makes it
+ideal for firewalled environments.
+
+%package libdbi
+Summary: libdbi support for %{name}
+Group: System/Libraries
+
+%description libdbi
+This module supports a large number of database systems via libdbi.
+
+%if_enabled geoip
+%package geoip
+Summary: GeoIP support for %{name}
+Group: System/Libraries
+
+%description geoip
+This module provides a function to get GeoIP info from an IPv4 address.
+%endif
+
+%if_enabled smtp
+%package smtp
+Summary: SMTP destination support for %{name}
+Group: System/Libraries
+
+%description smtp
+This module provides SMTP destination support for %{name}.
+%endif
+
+%if_enabled json
+%package json
+Summary: JSON support for %{name}
+Group: System/Libraries
+
+%description json
+This module provides JSON parsing & formatting support for %{name}.
+%endif
+
+%if_enabled amqp
+%package amqp
+Summary: AMQP support for %{name}
+Group: System/Libraries
+
+%description amqp
+This module provides AMQP destination support for %{name}.
+%endif
+
+%if_enabled mongodb
+%package mongodb
+Summary: mongodb support for %{name}
+Group: System/Libraries
+
+%description mongodb
+This module supports the mongodb database via libmongo-client.
+%endif
+
+%package devel
+Summary: Development files for %name
+Group: Development/C
+Requires: %name = %version-%release libeventlog-devel libivykis-devel
+
+%description devel
+The %name-devel package contains libraries and header files for
+developing applications that use %name.
+
 
 %prep
-%setup -q
-#patch1 -p1
+%setup -q -n %{name}_%{version}
+%patch1 -p1
+%if_enabled amqp
+pushd modules/afamqp/rabbitmq-c
+tar -xf ../../../altlinux/rabbitmq-c-v0.3.0-80-gc9f6312.tar.gz
+autoreconf -i
+popd
+%endif
+
+# fix perl path
+%{__sed} -i 's|^#!/usr/local/bin/perl|#!%{__perl}|' contrib/relogger.pl
 
 %build
-./autogen.sh
+skip_submodules=1 ./autogen.sh
 %configure \
  --sbindir=/sbin \
+ --sysconfdir=%_sysconfdir/%name \
+ --localstatedir=/var/lib/syslog-ng \
+ --datadir=%_datadir/%name \
+ --mandir=%_mandir \
+ --with-ivykis=system \
+ --with-pidfile-dir=/var/run \
+ --with-module-dir=%_libdir/%name \
+ --enable-ipv6 \
  --enable-dynamic-linking \
  --enable-tcp-wrapper \
  --enable-spoof-source \
- --sysconfdir=/etc \
- --with-pidfile-dir=/var/run \
- --localstatedir=/var/lib/syslog-ng
+ --with-embedded-crypto \
+ %{subst_enable geoip} \
+ %{subst_enable smtp} \
+ %{subst_enable json} \
+ %{subst_enable amqp} \
+%if_enabled mongodb
+ %{subst_enable mongodb} \
+ --with-libmongo-client=system
+%endif
 
-%make_build
+# fixed libraries path in RPATH
+sed -i 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' libtool
+sed -i 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' libtool
+
+%make_build XSL_STYLESHEET=/usr/share/xml/docbook/xsl-stylesheets/manpages/docbook.xsl
 
 %install
 mkdir -p %buildroot%_initdir
-make DESTDIR=$RPM_BUILD_ROOT sbindir=/sbin sysconfdir=%_sysconfdir \
+make DESTDIR=%buildroot sbindir=/sbin sysconfdir=%_sysconfdir/%name \
   mandir=%_mandir prefix=%prefix install
 
-install -m755 -D -p %SOURCE1 $RPM_BUILD_ROOT%_initdir/%name
-install -m640 -D -p %SOURCE2 $RPM_BUILD_ROOT%_sysconfdir/%name.conf
-install -m640 -D -p %SOURCE3 $RPM_BUILD_ROOT%_sysconfdir/sysconfig/%name
+install -m755 -D -p altlinux/%name.init %buildroot%_initdir/%name
+install -m640 -D -p altlinux/%name.conf %buildroot%_sysconfdir/%name/%name.conf
+install -m640 -D -p altlinux/%name.sysconfig %buildroot%_sysconfdir/sysconfig/%name
 
-%__mkdir_p $RPM_BUILD_ROOT%_localstatedir/%name
+install -m644 -p config.h %buildroot%_includedir/%name
+
+mkdir -p %buildroot%_localstatedir/%name
+mkdir -p %buildroot%_sysconfdir/%name/conf.d 
+
+find %buildroot -name "*.la" -exec rm -f {} +
 
 %post
 %post_service %name
 if [ $1 = 1 ]; then
     [ -x /sbin/syslogd ] && /sbin/chkconfig --level 2345 syslogd off ||:
+fi
+
+%triggerpostun -- %name <= 3.0.10-alt1
+if [ -f %_sysconfdir/%name.conf.rpmsave ]; then
+	echo "legacy configuration detected, new config moved to %_sysconfdir/%name"
+	echo "please review and apply local changes from %_sysconfdir/%name.conf.rpmsave config!"
 fi
 
 %preun
@@ -66,20 +201,110 @@ if [ $1 = 0 ]; then
 fi
 
 %files
-%doc AUTHORS ChangeLog README NEWS
-#%doc doc/reference/syslog-ng.txt
-%doc doc/examples/*
-%doc contrib/syslog2ng contrib/syslog-ng.vim contrib/relogger.pl contrib/syslog-ng.conf.doc
-%config(noreplace) %_sysconfdir/%name.conf
+%doc AUTHORS NEWS COPYING
+%doc doc/security/*.txt
+%doc contrib/{syslog2ng,syslog-ng.vim,relogger.pl,syslog-ng.conf.doc}
+
+%dir %_sysconfdir/%name
+%dir %_sysconfdir/%name/patterndb.d
+%dir %_sysconfdir/%name/conf.d
+%config(noreplace) %_sysconfdir/%name/%name.conf
+%config(noreplace) %_sysconfdir/%name/scl.conf
 %config(noreplace) %_sysconfdir/sysconfig/%name
 %_initdir/syslog-ng*
-/sbin/syslog-ng*
+
+/sbin/syslog-ng
+/sbin/syslog-ng-ctl
 %_bindir/loggen
+%_bindir/pdbtool
+%_bindir/update-patterndb
+
+%dir %_libdir/%name
+# basic plugin set
+%_libdir/%name/libaffile.so
+%_libdir/%name/libafprog.so
+%_libdir/%name/libafsocket-notls.so
+%_libdir/%name/libafsocket-tls.so
+%_libdir/%name/libafsocket.so
+%_libdir/%name/libafuser.so
+%_libdir/%name/libbasicfuncs.so
+%_libdir/%name/libconfgen.so
+%_libdir/%name/libcryptofuncs.so
+%_libdir/%name/libcsvparser.so
+%_libdir/%name/libdbparser.so
+%_libdir/%name/libsyslogformat.so
+%_libdir/%name/libsystem-source.so
+%_libdir/lib%name-%version.so
+
+%dir %_datadir/%name
+%dir %_datadir/%name/include
+%dir %_datadir/%name/xsd
+%_datadir/%name/include/*
+%_datadir/%name/xsd/*
+
+%_man1dir/*
 %_man5dir/*
 %_man8dir/*
+
 %dir %_localstatedir/%name
 
+%files libdbi
+%_libdir/%name/libafsql.so
+
+%if_enabled geoip
+%files geoip
+%_libdir/%name/libtfgeoip.so
+%endif
+
+%if_enabled smtp
+%files smtp
+%_libdir/%name/libafsmtp.so
+%endif
+
+%if_enabled json
+%files json
+%_libdir/%name/libjson-plugin.so
+%endif
+
+%if_enabled amqp
+%files amqp
+%_libdir/%name/libafamqp.so
+%endif
+
+%if_enabled mongodb
+%files mongodb
+%_libdir/%name/libafmongodb.so
+%endif
+
+%files devel
+%dir %_includedir/%name
+%_includedir/%name/*.h
+%dir %_datadir/%name/tools
+%_datadir/%name/tools/*
+
+%_libdir/lib%name.so
+%_libdir/pkgconfig/%name.pc
+
 %changelog
+* Thu Aug 15 2013 L.A. Kostis <lakostis@altlinux.ru> 3.4.3-alt1.git20130813
+- Updated to v3.0.10-1507-g64d670f GIT.
+
+* Sun Jun 02 2013 L.A. Kostis <lakostis@altlinux.ru> 3.4.1-alt1.git20130528
+- packaging changes (see TODO for full list):
+  + .conf: sync config file with RedHat/upstream changes.
+  + .spec: notify about configuration changes.
+  + .spec: enhance doc section.
+  + .spec: split plugins to separate packages.
+  + .spec: fix rpath issue..
+  + .spec: fix module_dir.
+
+* Tue May 28 2013 L.A. Kostis <lakostis@altlinux.ru> 3.4.1-alt0.git20130528
+- Prepare for first build.
+- Use GIT 20130528 snapshot.
+
+* Mon Apr 15 2013 Sergey Y. Afonin <asy@altlinux.ru> 3.4.1-alt0
+- 3.4.1 (some parts of 3.4.1-1.fc19 spec used)
+
 * Mon Jan 31 2011 Sergey Alembekov <rt@altlinux.ru> 3.0.10-alt1
 - 3.0.10
 
