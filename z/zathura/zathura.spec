@@ -1,7 +1,7 @@
 %define gtk_ver 2
 
 Name: zathura
-Version: 0.2.3
+Version: 0.2.4
 Release: alt1
 
 Summary: A lightweight document viewer
@@ -59,6 +59,9 @@ mkdir -p %buildroot%_libdir/zathura
 %_libdir/pkgconfig/*.pc
 
 %changelog
+* Fri Aug 16 2013 Mikhail Efremov <sem@altlinux.org> 0.2.4-alt1
+- Updated to 0.2.4.
+
 * Mon May 13 2013 Mikhail Efremov <sem@altlinux.org> 0.2.3-alt1
 - Fix build with current libmagic.
 - Package LICENSE.
