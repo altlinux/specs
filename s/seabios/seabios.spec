@@ -1,13 +1,14 @@
 Name: seabios
-Version: 1.7.3
-Release: alt2
+Version: 1.7.3.1
+Release: alt1
 Summary: Open-source legacy BIOS implementation
 
 Group: Emulators
 BuildArch: noarch
 License: LGPLv3
-Url: http://www.coreboot.org/SeaBIOS
+Url: http://www.seabios.org
 
+# git://git.seabios.org/seabios.git
 Source: %name-%version.tar
 
 Source10: config.vga.cirrus
@@ -17,6 +18,7 @@ Source13: config.vga.stdvga
 Source14: config.vga.vmware
 
 BuildRequires: python-base python-modules iasl
+Conflicts: qemu-common < 1.6.0-alt1
 
 %description
 SeaBIOS is an open-source legacy BIOS implementation which can be used as
@@ -80,6 +82,9 @@ ln -r -s %buildroot%_datadir/seavgabios/vgabios-isavga.bin %buildroot%_datadir/s
 %_datadir/seavgabios/vgabios*.bin
 
 %changelog
+* Fri Aug 16 2013 Alexey Shabalin <shaba@altlinux.ru> 1.7.3.1-alt1
+- 1.7.3.1
+
 * Fri Aug 09 2013 Alexey Shabalin <shaba@altlinux.ru> 1.7.3-alt2
 - move seabios binary to _datadir
 
