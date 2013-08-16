@@ -5,7 +5,7 @@
 
 Name: rabbitmq-server
 Version: 2.8.7
-Release: alt2
+Release: alt3
 License: MPLv1.1
 BuildArch: noarch
 Group: System/Servers
@@ -109,6 +109,9 @@ mkdir -p %buildroot/%_erlanglibdir/%name/priv
 %_datadir/%name
 
 %changelog
+* Fri Aug 16 2013 Pavel Shilovsky <piastry@altlinux.org> 2.8.7-alt3
+- Fix sysvinit script
+
 * Wed Mar 06 2013 Pavel Shilovsky <piastry@altlinux.org> 2.8.7-alt2
 - Change configuration file name
 - Return sysvinit support
