@@ -6,7 +6,7 @@
 %define packagetype lang
 %define packagename de
 %define packagversion 2.0.0
-%define packagedate 201308071246
+%define packagedate 201308101212
 %define moodlebranch 2.0
 %define moodlepackagename %moodle_name%moodlebranch
 %define langname German
@@ -57,6 +57,10 @@ cp -rp * %buildroot%moodle_langdir/
 %moodle_langdir/*
 
 %changelog
+* Fri Aug 16 2013 Cronbuild Service <cronbuild@altlinux.org> 2.0.0.201308101212-alt1
+- repocop cronbuild 20130816. At your service.
+- de.zip build 2013-08-10 12:12 UTC
+
 * Fri Aug 09 2013 Cronbuild Service <cronbuild@altlinux.org> 2.0.0.201308071246-alt1
 - repocop cronbuild 20130809. At your service.
 - de.zip build 2013-08-07 12:46 UTC
