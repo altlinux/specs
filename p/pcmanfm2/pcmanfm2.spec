@@ -1,6 +1,6 @@
 Summary: PCMan File Manager
 Name: pcmanfm2
-Version: 1.1.0
+Version: 1.1.2
 Release: alt1
 License: GPL
 Group: File tools
@@ -11,11 +11,10 @@ Source: %name-%version.tar.gz
 Conflicts: pcmanfm < 0.9
 
 BuildRequires: libgtk+2-devel >= 2.18.0
-BuildRequires: intltool
-
-BuildRequires: libfm-devel >= 1.0.2
-
+BuildRequires: libfm-devel >= 1.1.2
 BuildRequires: libgio-devel
+
+BuildRequires: libdbus-glib-devel libstartup-notification-devel libgamin-devel intltool libmenu-cache-devel menu-cache
 
 %description
 Features:
@@ -37,10 +36,8 @@ Features:
 %setup
 
 %build
-# unpack git version with builtin script
-./autogen.sh
-%configure \
-    --enable-largefile
+%autoreconf
+%configure --enable-largefile
 
 %make
 
@@ -58,6 +55,9 @@ ln -s pcmanfm pcmanfm2
 %_mandir/man1/*
 
 %changelog
+* Fri Aug 16 2013 Mykola Grechukh <gns@altlinux.ru> 1.1.2-alt1
+- new version (1.1.2)
+
 * Tue Nov 06 2012 Radik Usupov <radik@altlinux.org> 1.1.0-alt1
 - new version (1.1.0)
 
