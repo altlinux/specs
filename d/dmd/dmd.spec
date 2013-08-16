@@ -5,8 +5,8 @@
 %endif
 
 Name: dmd
-Version: 2.061
-Release: alt2
+Version: 2.063.2
+Release: alt1
 Summary: The D Programming Language
 Group: Development/Other
 License: GPL
@@ -30,6 +30,27 @@ originated as a re-engineering of C++, but even though it is mainly influenced
 by that language, it is not a variant of C++. D has redesigned some C++ features 
 and has been influenced by concepts used in other programming languages, such as 
 Java, Python, Ruby, C#, and Eiffel.
+
+#%package -n libphobos2
+#Summary: Phobos is the standard runtime library that comes with the D language compiler.
+#Group: System/Libraries
+
+#%description -n libphobos2
+#Phobos is the standard runtime library that comes with the D language compiler.
+
+#%package -n libphobos2-devel
+#Summary: Phobos is the standard runtime library that comes with the D language compiler.
+#Group: Development/Other
+
+#%description -n libphobos2-devel
+#Phobos is the standard runtime library that comes with the D language compiler.
+
+#%package -n libphobos2-devel-static
+#Summary: Phobos is the standard runtime library that comes with the D language compiler.
+#Group: Development/Other
+
+#%description -n libphobos2-devel-static
+#Phobos is the standard runtime library that comes with the D language compiler.
 
 %prep
 %setup -q
@@ -56,8 +77,9 @@ cd ../phobos
 
 
 cd ../tools
-../dmd/src/dmd -c -O -w -d -fPIC -m%MODEL -property -release -I../druntime/import -I../phobos rdmd.d
-gcc rdmd.o -o rdmd -m%MODEL -L../druntime/lib -L../phobos/out -ldruntime -lphobos2 -lpthread -lm -lrt
+%make_build -f posix.mak DMD=../dmd/src/dmd MODEL=%MODEL ROOT=out PIC=1 DFLAGS='-I../druntime/import -I../phobos -L-L../phobos/out'
+#../dmd/src/dmd -c -O -w -d -fPIC -m%MODEL -property -release -I../druntime/import -I../phobos rdmd.d
+#gcc rdmd.o -o rdmd -m%MODEL -L../druntime/lib -L../phobos/out -ldruntime -lphobos2 -lpthread -lm -lrt
 #../dmd/src/dmd -c -O -w -d -m%MODEL -property -release -I../druntime/import -I../phobos catdoc.d
 #gcc catdoc.o -o catdoc -m%MODEL -L../phobos/out -lphobos2 -lpthread -lm -lrt
 
@@ -79,6 +101,7 @@ cp druntime/lib/libdruntime.a %buildroot%_libdir/
 
 #phobos
 cp phobos/out/libphobos2.a %buildroot%_libdir/
+#cp phobos/out/libphobos2.so* %buildroot%_libdir/
 cp -r phobos/std %buildroot%_includedir/d/
 
 cp phobos/etc/c/*.d %buildroot%_includedir/d/etc/c/
@@ -98,11 +121,22 @@ cp -r dmd/docs/man/man1 %buildroot%_mandir/
 %_includedir/d/core
 %_includedir/d/*.di
 %_libdir/libdruntime.a
+
+#%files -n libphobos2
+#%_libdir/libphobos2.so.*
+
+#%files -n libphobos2-devel
+#%_libdir/libphobos2.so
 %_includedir/d/std
 %_includedir/d/etc
-%_libdir/libphobos*
+
+#%files -n libphobos2-devel-static
+%_libdir/libphobos2.a
 
 %changelog
+* Fri Aug 16 2013 Dmitriy Kulik <lnkvisitor@altlinux.org> 2.063.2-alt1
+- new bersion
+
 * Sat Feb 02 2013 Dmitriy Kulik <lnkvisitor@altlinux.org> 2.061-alt2
 - Rebuild with -fPIC
 
