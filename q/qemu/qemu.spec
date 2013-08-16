@@ -52,6 +52,7 @@
 %def_enable gtk
 %def_enable tpm
 %def_enable libssh2
+%def_enable rdma
 
 %define audio_drv_list %{?_enable_oss:oss} %{?_enable_alsa:alsa} %{?_enable_sdl:sdl} %{?_enable_esound:esd} %{?_enable_pulseaudio:pa}
 
@@ -65,6 +66,7 @@
 %global target_list_user %nil
 
 %if_with alpha
+%global target_list_system %target_list_system alpha-softmmu
 %global target_list_user %target_list_user alpha-linux-user
 %endif
 
@@ -123,6 +125,7 @@
 %endif
 
 %if_with unicore32
+%global target_list_system %target_list_system unicore32-softmmu
 %global target_list_user %target_list_user unicore32-linux-user
 %endif
 
@@ -138,7 +141,7 @@
 # }}}
 
 Name: qemu
-Version: 1.5.2
+Version: 1.6.0
 Release: alt1
 
 Summary: QEMU CPU Emulator
@@ -164,7 +167,7 @@ Patch0: qemu-alt.patch
 BuildRequires: glibc-devel-static zlib-devel-static glib2-devel-static
 BuildRequires: texinfo perl-podlators libattr-devel libcap-devel libcap-ng-devel
 BuildRequires: zlib-devel libcurl-devel libpci-devel glibc-kernheaders
-BuildRequires: ipxe-roms-qemu vgabios seabios libfdt-devel
+BuildRequires: ipxe-roms-qemu >= 1.0.0-alt3.git55201e2 seavgabios seabios >= 1.7.3-alt2 libfdt-devel
 BuildRequires: libpixman-devel >= 0.18.4
 %{?_enable_sdl:BuildRequires: libSDL-devel libX11-devel }
 %{?_enable_curses:BuildRequires: libncurses-devel}
@@ -185,11 +188,12 @@ BuildRequires: libpixman-devel >= 0.18.4
 %{?_enable_glx:BuildRequires: libGL-devel libX11-devel}
 %{?_enable_guest_agent:BuildRequires: glib2-devel python-base}
 %{?_enable_libiscsi:BuildRequires: libiscsi-devel >= 1.7.0}
-%{?_enable_seccomp:BuildRequires: libseccomp-devel >= 1.0.0}
+%{?_enable_seccomp:BuildRequires: libseccomp-devel >= 2.1.0}
 %{?_enable_glusterfs:BuildRequires: glusterfs3-devel}
 %{?_enable_gtk:BuildRequires: libgtk+3-devel >= 3.0.0 libvte3-devel >= 0.32.0}
 %{?_enable_libssh2:BuildRequires: libssh2-devel >= 1.2.8}
 %{?_enable_libusb:BuildRequires: libusb-devel >= 1.0.13}
+%{?_enable_rdma:BuildRequires: librdmacm-devel libibverbs-devel}
 
 %description
 QEMU is a fast processor emulator using dynamic translation to achieve
@@ -214,9 +218,9 @@ Group: Emulators
 BuildArch: noarch
 Requires(pre): control >= 0.7.2
 Requires(pre): shadow-utils sysvinit-utils
-Requires: vgabios
-Requires: seabios
-Requires: ipxe-roms-qemu
+Requires: seavgabios
+Requires: seabios >= 1.7.3-alt2
+Requires: ipxe-roms-qemu >= 1.0.0-alt3.git55201e2
 Requires: %name-img = %version-%release
 
 %description common
@@ -347,7 +351,6 @@ export CFLAGS="%optflags"
 	--disable-sparse \
 	--disable-strip \
 	--disable-system \
-	--enable-nptl \
 	--enable-guest-base \
 	--disable-attr \
 	--disable-smartcard-nss \
@@ -355,6 +358,7 @@ export CFLAGS="%optflags"
 	--disable-linux-aio \
 	--disable-linux-aio \
 	--disable-libusb \
+	--disable-rdma \
 	--disable-libiscsi \
 	--disable-libssh2 \
 	--disable-gtk
@@ -408,7 +412,6 @@ sed -i '/cpu_model =/ s,arm926,any,' linux-user/main.c
 	--enable-curl \
 	--enable-fdt \
 	--enable-kvm \
-	--enable-nptl \
 	--with-system-pixman \
 	%{?_enable_vhost_net:--enable-vhost-net} \
 	%{?_enable_vhost_scsi:--enable-vhost-scsi } \
@@ -418,6 +421,7 @@ sed -i '/cpu_model =/ s,arm926,any,' linux-user/main.c
 	%{subst_enable glx} \
 	%{subst_enable libiscsi} \
 	%{subst_enable libssh2} \
+	%{subst_enable rdma} \
 	%{?_disable_guest_agent:--disable-guest-agent} \
 	%{subst_enable tools} \
 	--enable-guest-base \
@@ -463,8 +467,11 @@ install -D -p -m 0644 qemu.sasl %buildroot%_sysconfdir/sasl2/%name.conf
 
 #rm -f %buildroot%_datadir/*/openbios*
 rm -f %buildroot%_datadir/%name/pxe*rom
+rm -f %buildroot%_datadir/%name/efi*rom
 rm -f %buildroot%_datadir/%name/vgabios*bin
 rm -f %buildroot%_datadir/%name/bios.bin
+rm -f %buildroot%_datadir/%name/acpi-dsdt.aml
+rm -f %buildroot%_datadir/%name/q35-acpi-dsdt.aml
 #rm -f %buildroot%_datadir/%name/petalogix-s3adsp1800.dtb
 #rm -f %buildroot%_datadir/%name/video.x
 #rm -f %buildroot%_datadir/%name/bamboo.dtb
@@ -473,24 +480,18 @@ rm -f %buildroot%_datadir/%name/bios.bin
 # the pxe ipxe images will be symlinks to the images on
 # /usr/share/ipxe, as QEMU doesn't know how to look
 # for other paths, yet.
-pxe_link() {
-  ln -s ../../../usr/lib/ipxe/$2.rom %buildroot%_datadir/%name/pxe-$1.rom
-}
 
-pxe_link rtl8139 rtl8139
-pxe_link e1000 e1000_82540
-pxe_link virtio virtio-net
-pxe_link pcnet pcnet32
-pxe_link ne2k_isa ne2k_isa
-pxe_link ne2k_pci ns8390
-pxe_link eepro100 eepro100
+for rom in e1000 eepro100 ne2k_pci pcnet rtl8139 virtio ; do
+  ln -r -s %buildroot%_datadir/ipxe/pxe-${rom}.rom %buildroot%_datadir/%name/pxe-${rom}.rom
+  ln -r -s %buildroot%_datadir/ipxe.efi/efi-${rom}.rom %buildroot%_datadir/%name/efi-${rom}.rom
+done
 
-ln -s ../vgabios/VGABIOS-lgpl-latest.bin  %buildroot%_datadir/%name/vgabios.bin
-ln -s ../vgabios/VGABIOS-lgpl-latest.cirrus.bin %buildroot%_datadir/%name/vgabios-cirrus.bin
-ln -s ../vgabios/VGABIOS-lgpl-latest.qxl.bin %buildroot%_datadir/%name/vgabios-qxl.bin
-ln -s ../vgabios/VGABIOS-lgpl-latest.stdvga.bin %buildroot%_datadir/%name/vgabios-stdvga.bin
-ln -s ../vgabios/VGABIOS-lgpl-latest.vmware.bin %buildroot%_datadir/%name/vgabios-vmware.bin
-ln -s ../../../usr/lib/seabios/bios.bin %buildroot%_datadir/%name/bios.bin
+for bios in vgabios vgabios-cirrus vgabios-qxl vgabios-stdvga vgabios-vmware ; do
+  ln -r -s %buildroot%_datadir/seavgabios/${bios}.bin %buildroot%_datadir/%name/${bios}.bin
+done
+
+ln -r -s %buildroot%_datadir/seabios/bios.bin %buildroot%_datadir/%name/bios.bin
+ln -r -s %buildroot%_datadir/seabios/{acpi-dsdt,q35-acpi-dsdt}.aml %buildroot%_datadir/%name/
 
 %check
 %make V=1 check
@@ -584,6 +585,13 @@ fi
 %_bindir/vscclient
 
 %changelog
+* Fri Aug 16 2013 Alexey Shabalin <shaba@altlinux.ru> 1.6.0-alt1
+- 1.6.0
+- build with rdma support
+
+* Fri Aug 09 2013 Alexey Shabalin <shaba@altlinux.ru> 1.5.2-alt2
+- switch from vgabios to seavgabios
+
 * Mon Jul 29 2013 Alexey Shabalin <shaba@altlinux.ru> 1.5.2-alt1
 - 1.5.2
 - fixed CVE-2013-2231

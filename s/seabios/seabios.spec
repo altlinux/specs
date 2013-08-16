@@ -1,6 +1,6 @@
 Name: seabios
 Version: 1.7.3
-Release: alt1
+Release: alt2
 Summary: Open-source legacy BIOS implementation
 
 Group: Emulators
@@ -61,24 +61,28 @@ for config in %SOURCE10 %SOURCE11 %SOURCE12 %SOURCE13 %SOURCE14; do
 done
 
 %install
-mkdir -p %buildroot%_libexecdir/%name
-install -m 0644 binaries/bios.bin %buildroot%_libexecdir/%name/
-install -m 0644 binaries/*dsdt.aml %buildroot%_libexecdir/%name/
+mkdir -p %buildroot%_datadir/%name
+install -m 0644 binaries/bios.bin %buildroot%_datadir/%name/
+install -m 0644 binaries/*dsdt.aml %buildroot%_datadir/%name/
 
 mkdir -p %buildroot%_datadir/seavgabios
 install -m 0644 binaries/vgabios*.bin %buildroot%_datadir/seavgabios
+ln -r -s %buildroot%_datadir/seavgabios/vgabios-isavga.bin %buildroot%_datadir/seavgabios/vgabios.bin
 
 %files
 %doc COPYING COPYING.LESSER README TODO
-%dir %_libexecdir/%name
-%_libexecdir/%name/bios.bin
-%_libexecdir/%name/*dsdt.aml
+%dir %_datadir/%name
+%_datadir/%name/bios.bin
+%_datadir/%name/*dsdt.aml
 
 %files -n seavgabios
 %dir %_datadir/seavgabios
 %_datadir/seavgabios/vgabios*.bin
 
 %changelog
+* Fri Aug 09 2013 Alexey Shabalin <shaba@altlinux.ru> 1.7.3-alt2
+- move seabios binary to _datadir
+
 * Thu Aug 08 2013 Alexey Shabalin <shaba@altlinux.ru> 1.7.3-alt1
 - 1.7.3
 
