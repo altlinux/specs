@@ -1,5 +1,5 @@
 Name: make-initrd
-Version: 0.8.5
+Version: 0.8.6
 Release: alt1
 
 Summary: Creates an initramfs image
@@ -168,6 +168,10 @@ fi
 %_datadir/%name/features/mdadm
 
 %changelog
+* Sun Aug 18 2013 Alexey Gladkov <legion@altlinux.ru> 0.8.6-alt1
+- initrd:
+  + Do not remove udev database.
+
 * Wed May 29 2013 Alexey Gladkov <legion@altlinux.ru> 0.8.5-alt1
 - initrd:
   + Fix runtime message.
