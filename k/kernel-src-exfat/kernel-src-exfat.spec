@@ -1,7 +1,7 @@
 %define mname exfat
 Name: kernel-src-%mname
 Version: 1.1.5
-Release: alt1
+Release: alt2
 Summary: Linux read/write kernel driver for the exFAT file system
 Group: Development/Kernel
 BuildArch: noarch
@@ -33,6 +33,9 @@ tar -C .. -cJf %buildroot%kernel_src/%mname-%version.tar.xz %mname-%version
 
 
 %changelog
+* Sat Aug 17 2013 Led <led@altlinux.ru> 1.1.5-alt2
+- upstream updates and fixes
+
 * Sun Aug 11 2013 Led <led@altlinux.ru> 1.1.5-alt1
 - 1.1.5
 

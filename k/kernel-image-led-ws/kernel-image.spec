@@ -20,7 +20,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.4.58
-Release: alt1
+Release: alt2
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -139,7 +139,7 @@ Release: alt1
 %Extra_modules vboxhost 4.2.16
 %Extra_modules vboxguest 4.2.16
 %Extra_modules knem 1.1.0
-#Extra_modules exfat 1.1.5
+%Extra_modules exfat 1.1.5
 #Extra_modules netatop 0.2
 #Extra_modules omnibook 20110911
 
@@ -2890,6 +2890,12 @@ done)
 
 
 %changelog
+* Sat Aug 17 2013 Led <led@altlinux.ru> 3.4.58-alt2
+- updated:
+  + fix-drivers-gpu-drm--gma500_gfx
+- added external modules:
+  + exfat
+
 * Thu Aug 15 2013 Led <led@altlinux.ru> 3.4.58-alt1
 - 3.4.58
 - updated:
