@@ -1,6 +1,6 @@
 Name: mithraen-build-utils
 Summary: Simple utilites that simplify development to me
-Version: 0.1.17
+Version: 0.1.18
 Release: alt1
 License: GPL
 Group: Development/Other
@@ -28,11 +28,17 @@ Requires: specgen
 %setup
 %build
 %install
-mkdir -p %buildroot%_bindir
-install -m755 * %buildroot/%_bindir/
+mkdir -p %buildroot%_bindir %buildroot%_datadir/%name
+install -m755 bin/* %buildroot/%_bindir/
+install -m644 share/* %buildroot%_datadir/%name
 %files
 %_bindir/*
+%_datadir/%name
 %changelog
+* Sun Aug 18 2013 Denis Smirnov <mithraen@altlinux.ru> 0.1.18-alt1
+- add utilites for asterisk update
+- add specgen-update
+
 * Sun Apr 21 2013 Denis Smirnov <mithraen@altlinux.ru> 0.1.17-alt1
 - build-daemon: oneshot mode
 
