@@ -1,5 +1,5 @@
 Name: flashrom
-Version: 0.9.6.1
+Version: 0.9.7
 Release: alt1
 
 Summary: Universal flash programming utility
@@ -13,7 +13,7 @@ Source: %name-%version.tar.bz2
 Source100: %name.watch
 
 BuildRequires(pre): rpm-build-licenses
-BuildRequires: libpci-devel zlib-devel
+BuildRequires: libftdi-devel libpci-devel zlib-devel
 
 %description
 flashrom is a tool for identifying, reading, writing,
@@ -52,6 +52,10 @@ install -dm755 %buildroot%_sbindir
 %_man8dir/*
 
 %changelog
+* Sat Aug 17 2013 Michael Shigorin <mike@altlinux.org> 0.9.7-alt1
+- new version (watch file uupdate)
+- added FTDI support
+
 * Thu Aug 23 2012 Michael Shigorin <mike@altlinux.org> 0.9.6.1-alt1
 - new version (watch file uupdate)
 
