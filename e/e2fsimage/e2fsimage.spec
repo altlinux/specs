@@ -1,6 +1,6 @@
 Name: e2fsimage
 Version: 0.2.2
-Release: alt5
+Release: alt6
 Summary: Create and populate an ext2 filesystem image as non-root user
 License: BSD-style
 Group: File tools
@@ -41,6 +41,9 @@ export prefix=%_prefix CFLAGS="%optflags" CC=%__cc mandir=%_mandir
 
 
 %changelog
+* Fri Aug 16 2013 Led <led@altlinux.ru> 0.2.2-alt6
+- added '-S' key for skip unaccessible items
+
 * Sat Aug 10 2013 Led <led@altlinux.ru> 0.2.2-alt5
 - symlink.c: add null byte to buf after readlink(2)
 
