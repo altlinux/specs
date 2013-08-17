@@ -1,4 +1,4 @@
-%define		svn 5629
+%define		svn 5641
 
 Name:		smplayer
 Summary:	A great MPlayer front-end (QT4)
@@ -7,7 +7,7 @@ Summary(uk_UA.UTF8): Потужний інтерфейс для MPlayer (QT4)
 License:	GPLv2
 Group:		Video
 Url:		http://smplayer.sourceforge.net
-Version:	0.8.5
+Version:	0.8.6
 Release:	alt1.%svn
 Packager:	Alexey Morsov <swi@altlinux.ru>
 Source0:	http://downloads.sourceforge.net/smplayer/%name-%version.tar.bz2
@@ -75,6 +75,10 @@ export OPTFLAGS="%optflags"
 %_man1dir/*
 
 %changelog
+* Sat Aug 17 2013 Motsyo Gennadi <drool@altlinux.ru> 0.8.6-alt1.5641
+- 0.8.6
+- svn 5641
+
 * Wed Aug 07 2013 Motsyo Gennadi <drool@altlinux.ru> 0.8.5-alt1.5629
 - svn revision 5629
 - disable UpdateChecker by default (alt bug #29204)
