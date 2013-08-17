@@ -1,7 +1,7 @@
 %define node_name      node
-%define node_version  0.10.15
-%define node_release   alt2.1
-%define npmver 1.3.5
+%define node_version  0.10.16
+%define node_release   alt1
+%define npmver 1.3.8
 
 #we need ABI virtual provides where SONAMEs aren't enough/not present so deps
 #break when binary compatibility is broken
@@ -23,7 +23,7 @@ Source: %name-%version.tar
 Source7: nodejs_native.req.files
 Patch: addon.gypi-alt-linkage-fixes.patch
 
-BuildRequires: python-devel gcc-c++ openssl-devel zlib-devel libv8-devel = %{v8_abi} libcares-devel gyp
+BuildRequires: python-devel gcc-c++ openssl-devel zlib-devel libv8-3.15-devel libcares-devel gyp
 BuildRequires: curl openssl
 Provides: nodejs(engine) = %version
 Provides: nodejs = %version-%release
@@ -35,6 +35,7 @@ Provides: nodejs(abi) = %{nodejs_abi}
 Provides: nodejs(v8-abi) = %{v8_abi}
 
 %add_python_req_skip TestCommon
+%add_findreq_skiplist %{_datadir}/node/sources/*
 
 %description
 Node.js is a server-side JavaScript environment that uses an asynchronous
@@ -94,8 +95,8 @@ ln -s ../marked/bin/marked ./tools/doc/node_modules/.bin/marked
 %install
 %makeinstall_std
 install -d %buildroot%_sysconfdir/profile.d
-echo 'export NODE_PATH="%{_libexecdir}/node_modules"' >%buildroot%_sysconfdir/profile.d/node.sh
-echo 'setenv NODE_PATH %{_libexecdir}/node_modules' >%buildroot%_sysconfdir/profile.d/node.csh
+echo 'export NODE_PATH="%{_libexecdir}/node_modules;%{_libexecdir}/node_altmodules"' >%buildroot%_sysconfdir/profile.d/node.sh
+echo 'setenv NODE_PATH %{_libexecdir}/node_modules;%{_libexecdir}/node_altmodules' >%buildroot%_sysconfdir/profile.d/node.csh
 chmod 0755 %buildroot%_sysconfdir/profile.d/*
 
 #install development headers
@@ -107,6 +108,7 @@ cp -p deps/uv/include/uv-private/*.h %{buildroot}%{_includedir}/node/uv-private
 #node-gyp needs common.gypi too
 mkdir -p %{buildroot}%{_datadir}/node
 cp -p common.gypi %{buildroot}%{_datadir}/node
+#tar -xf %{SOURCE0} --directory=%{buildroot}%{_datadir}/node/sources
 
 # ensure Requires are added to every native module that match the Provides from
 # the nodejs build in the buildroot
@@ -130,6 +132,7 @@ chmod 0755 %buildroot%_rpmlibdir/nodejs_native.req
 %_includedir/node
 %_datadir/node/common.gypi
 %_rpmlibdir/nodejs_native.req*
+#%_datadir/node/sources
 
 %files -n npm
 %_bindir/npm
@@ -137,6 +140,10 @@ chmod 0755 %buildroot%_rpmlibdir/nodejs_native.req
 %exclude %_libexecdir/node_modules/npm/node_modules/node-gyp/gyp/tools/emacs
 
 %changelog
+* Sat Aug 17 2013 Dmitriy Kulik <lnkvisitor@altlinux.org> 0.10.16-alt1
+- new version
+- npm 1.3.8
+
 * Sat Jul 27 2013 Dmitriy Kulik <lnkvisitor@altlinux.org> 0.10.15-alt2.1
 - libv8 requires
 
