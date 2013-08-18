@@ -8,7 +8,7 @@
 
 Name: musl
 Version: 0.9.12
-Release: alt9
+Release: alt10
 Group: System/Libraries
 Summary: musl libc - new standard library
 License: MIT
@@ -44,6 +44,7 @@ Development files and headers for %name.
 %prep
 %setup -q
 %patch -p1
+[ -x tools/install.sh ] || chmod a+x tools/install.sh
 sed -i '/--hash-style=both/d' configure
 sed -i 's/\(-soname=\)libc\.so/\1%soname/' Makefile
 sed -i 's/libc\.so/%libname/' Makefile
@@ -68,14 +69,15 @@ sed -i 's|"/lib\(:/usr/local/lib:\)/usr/lib"|"/%_lib\1%_libdir"|' src/ldso/dynli
 
 
 %install
-%makeinstall_std
+# Used custom INSTALL - install.sh
+%__make DESTDIR=%buildroot install
 rm -rf %buildroot%musl_dir/include/linux
 for d in linux asm asm-generic; do
 	ln -sf %_includedir/$d %buildroot%musl_dir/include/
 done
 
 install -d -m 0755 %buildroot%_docdir/%name-%version
-install -m 0644 README WHATSNEW %buildroot%_docdir/%name-%version/
+install -p -m 0644 README WHATSNEW %buildroot%_docdir/%name-%version/
 
 %if "%libc_dir" != "%musl_dir/lib"
 mv %buildroot%musl_dir/lib/%libname %buildroot/%_lib/
@@ -114,6 +116,9 @@ echo "%musl_dir/lib" > %buildroot%_sysconfdir/ld.so.conf.d/%name-%_lib.conf
 
 
 %changelog
+* Sun Aug 18 2013 Led <led@altlinux.ru> 0.9.12-alt10
+- updated from upstream's SCM
+
 * Wed Aug 14 2013 Led <led@altlinux.ru> 0.9.12-alt9
 - updated from upstream's SCM
 
