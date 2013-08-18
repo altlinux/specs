@@ -20,7 +20,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.4.58
-Release: alt2
+Release: alt3
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -377,7 +377,7 @@ Patch0403: linux-%kernel_branch.39-fix-drivers-mmc-host--sdhci-pci.patch
 Patch0411: linux-%kernel_branch.27-fix-drivers-net-ethernet-alacritech--slicoss.patch
 Patch0412: linux-%kernel_branch.25-fix-drivers-net-ethernet-amd--depca.patch
 Patch0413: linux-%kernel_branch.25-fix-drivers-net-ethernet-amd--nmclan_cs.patch
-Patch0414: linux-%kernel_branch.39-fix-drivers-net-ethernet-broadcom--bnx2x.patch
+Patch0414: linux-%kernel_branch.53-fix-drivers-net-ethernet-broadcom--bnx2x.patch
 Patch0415: linux-%kernel_branch.25-fix-drivers-net-ethernet-dec--ewrk3.patch
 Patch0416: linux-%kernel_branch.20-fix-drivers-net-ethernet-dec-tulip--tulip.patch
 Patch0417: linux-%kernel_branch.25-fix-drivers-net-ethernet-fujitsu--at1700.patch
@@ -2890,6 +2890,10 @@ done)
 
 
 %changelog
+* Sun Aug 18 2013 Led <led@altlinux.ru> 3.4.58-alt3
+- updated:
+  + fix-drivers-net-ethernet-broadcom--bnx2x
+
 * Sat Aug 17 2013 Led <led@altlinux.ru> 3.4.58-alt2
 - updated:
   + fix-drivers-gpu-drm--gma500_gfx
