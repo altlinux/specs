@@ -6,7 +6,7 @@
 %define nau_api_ver 3.0
 
 Name: file-roller
-Version: %ver_major.3
+Version: %ver_major.4
 Release: alt1
 
 Summary: An archive manager for GNOME
@@ -29,6 +29,7 @@ Patch2: %name-3.7.91-alt-tar.lzo_mime_type.patch
 
 Requires: tar gzip bzip2 ncompress lzop binutils arj lha unrar zip unzip p7zip lzma-utils
 # Requires: cdrecord # for .iso support
+Requires: dconf gnome-icon-theme
 
 BuildPreReq: rpm-build-gnome rpm-build-licenses
 # From configure.in
@@ -129,6 +130,9 @@ rm -f data/%name.desktop{,.in}
 %exclude %_libdir/nautilus/extensions-%nau_api_ver/*.la
 
 %changelog
+* Tue Aug 20 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.4-alt1
+- 3.8.4
+
 * Tue Jul 02 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.3-alt1
 - 3.8.3
 
