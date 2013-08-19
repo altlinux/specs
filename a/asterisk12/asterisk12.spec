@@ -1,4 +1,4 @@
-%define svn_revision 396558
+%define svn_revision 396920
 Name: asterisk12
 Summary: Open source PBX
 Version: 12
@@ -66,7 +66,6 @@ BuildPreReq: libunixODBC-devel libltdl-devel
 BuildPreReq: liblua5-devel
 BuildPreReq: postgresql-devel libpq-devel
 BuildPreReq: librpm-devel libnet-snmp-devel libwrap-devel perl-devel
-%define svn_revision 396558
 %add_verify_elf_skiplist %_libdir/libasteriskssl12.so.1
 %def_with debug
 %def_enable debug
@@ -374,6 +373,7 @@ Requires: pbx-utils-all
 %description complete
 This virtual package requires all Asterisk subpackages
 
+%if_with corosync
 %package corosync
 Summary: Device state and MWI clustering
 Group: %group
@@ -381,6 +381,7 @@ Requires: %name = %version-%release
 
 %description corosync
 Device state and MWI clustering
+%endif
 
 %package crypto
 Summary: OpenSSL support for Asterisk (crypto)
@@ -653,6 +654,9 @@ menuselect/menuselect  \
     --enable chan_misdn \
     --enable res_jabber \
     --enable chan_gtalk \
+%if_with corosync
+    --enable res_corosync \
+%endif
     --disable chan_h323
 %make_build libdir=%_libdir NOISY_BUILD=yes ||:
 %make_build libdir=%_libdir NOISY_BUILD=yes ||:
@@ -1080,9 +1084,11 @@ ln -sf libasteriskssl12.so.1 %buildroot%_libdir/libasteriskssl12.so
 
 %files complete
 
+%if_with corosync
 %files corosync
 %astmodule res_corosync
 %astsample res_corosync
+%endif
 
 %files crypto
 %_sbindir/astgenkey
@@ -1256,6 +1262,12 @@ ln -sf libasteriskssl12.so.1 %buildroot%_libdir/libasteriskssl12.so
 %_libdir/libasteriskssl12.so.1
 
 %changelog
+* Mon Aug 19 2013 Denis Smirnov <mithraen@altlinux.ru> 12-alt0.396920
+- update from svn revision 396920
+
+* Sun Aug 18 2013 Denis Smirnov <mithraen@altlinux.ru> 12-alt0.396907
+- update from svn revision 396907
+
 * Tue Aug 13 2013 Cronbuild Service <cronbuild@altlinux.org> 12-alt0.396558
 - update from svn revision 396558
 
