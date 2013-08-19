@@ -1,8 +1,8 @@
 %define module DistroMap
 
 Name: perl-%module
-Version: 0.19
-Release: alt4
+Version: 0.20
+Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
 
@@ -35,6 +35,9 @@ BuildRequires: perl-devel perl(Pod/Usage.pm)
 %_bindir/distrodb*
 
 %changelog
+* Mon Aug 19 2013 Igor Vlasenko <viy@altlinux.ru> 0.20-alt1
+- basic pld support
+
 * Tue Jul 16 2013 Igor Vlasenko <viy@altlinux.ru> 0.19-alt4
 - updated distrodb-*
 
