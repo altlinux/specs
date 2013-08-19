@@ -2,7 +2,7 @@
 
 
 Name: glpi
-Version: 0.83.9.1
+Version: 0.84
 Release: alt1
 
 
@@ -54,7 +54,7 @@ Apache 2.x web-server configuration for %name
 %package php5
 Summary: PHP5 dependencies for %name
 Group: Networking/Other
-Requires: %name = %version-%release, php5-mysql, php5-ldap, php5-imap, php5-mbstring
+Requires: %name = %version-%release, php5-mysql, php5-ldap, php5-imap
 %description php5
 PHP5 dependencies for %name
 
@@ -63,7 +63,6 @@ PHP5 dependencies for %name
 %setup
 %setup -T -D -a 1
 
-%patch -p0
 
 %build
 
@@ -78,7 +77,6 @@ cp -rp * %buildroot%installdir/
 
 # install fonts
 cp -rf %buildroot%installdir/fonts/ %buildroot%installdir/lib/ezpdf/
-mv -f %buildroot%installdir/lib/ezpdf/fonts/php_Helvetica.font %buildroot%installdir/lib/ezpdf/fonts/php_Helvetica.afm
 rm -rf %buildroot%installdir/fonts/
 
 #install README.ALT
@@ -116,7 +114,9 @@ find $RPM_BUILD_ROOT \( -name 'Thumbs.db' -o -name 'Thumbs.db.gz' \) -print -del
 %dir %attr(2770,root,%webserver_group) %installdir/files
 %attr(2770,root,%webserver_group) %installdir/files/*
 %installdir/ajax
+%installdir/config
 %installdir/css
+%installdir/files
 %installdir/front
 %installdir/inc
 %installdir/install
@@ -145,6 +145,9 @@ find $RPM_BUILD_ROOT \( -name 'Thumbs.db' -o -name 'Thumbs.db.gz' \) -print -del
 
 
 %changelog
+* Sat Aug 17 2013 Pavel Zilke <zidex at altlinux dot org> 0.84-alt1
+- New version 0.84
+
 * Sun Jul 21 2013 Pavel Zilke <zidex at altlinux dot org> 0.83.9.1-alt1
 - Security fixes:
  + CVE-2013-2225 + CVE-2013-2227 : Security fix ( serialize + filter classname for autoload) (ALT #29189)
