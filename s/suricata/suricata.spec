@@ -1,6 +1,6 @@
 Summary: Suricata is a multi-threaded intrusion detection/prevention engine
 Name: suricata
-Version: 1.4
+Version: 1.4.5
 Release: alt1
 License: GPL
 Group: System/Base
@@ -10,9 +10,11 @@ Source1: %name
 
 Packager: Slava Dubrovskiy <dubrsl@altlinux.ru>
 
-BuildRequires: libpcre-devel libnet-devel libyaml-devel libpcap-devel libnfnetlink-devel libnetlink-devel libnetfilter_queue-devel glibc-devel libcap-ng-devel zlib-devel
-BuildRequires: libprelude-devel libgnutls-devel libtasn1-devel libgcrypt-devel libgpg-error-devel libmagic-devel libnss-devel libnspr-devel libjansson-devel libluajit-devel
+BuildRequires: libpcre-devel libnet-devel libyaml-devel libpcap-devel libnfnetlink-devel libnetlink-devel libnetfilter_queue-devel glibc-devel libcap-ng-devel zlib-devel python-module-distribute
+BuildRequires: libprelude-devel libgnutls-devel libtasn1-devel libgcrypt-devel libgpg-error-devel libmagic-devel libnss-devel libnspr-devel libjansson-devel libluajit-devel libGeoIP-devel
 # libpfring-devel
+
+Requires: python-module-suricata
 
 %description
 Suricata is a multi-threaded intrusion detection/prevention engine
@@ -29,6 +31,13 @@ Group: Development/C
 %description -n libhtp-devel
 Development headers for LibHTP
 
+%package -n python-module-suricata
+Summary: python module for interacting with unix socket
+Group: Development/Python
+BuildArch: noarch
+%description -n python-module-suricata
+Python module for interacting with unix socket
+
 %prep
 %setup -q
 
@@ -44,7 +53,8 @@ libtoolize -c -f -i
 	--with-libnspr-includes=%_includedir/nspr \
 	--with-libnss-includes=%_includedir/nss \
 	--enable-luajit \
-	--enable-pcre-jit
+	--enable-pcre-jit \
+	--enable-geoip
 #	--enable-pfring \
 #	--enable-cuda \
 #	--enable-dag \
@@ -60,6 +70,7 @@ mkdir -p %buildroot%_sysconfdir/logrotate.d
 mkdir -p %buildroot%_sysconfdir/sysconfig
 mkdir -p %buildroot%_initrddir
 mkdir -p %buildroot/var/log/%name
+mkdir -p %buildroot%_runtimedir/suricata
 
 #Config
 cp reference.config classification.config suricata.yaml threshold.config %buildroot%_sysconfdir/%name/
@@ -125,6 +136,7 @@ EOF
 %config(noreplace) %_sysconfdir/sysconfig/%name
 %config %_sysconfdir/logrotate.d/*
 %dir %attr(3770,_%name,root) /var/log/%name
+%dir %attr(3770,_%name,root) %_runtimedir/suricata
 
 %files -n libhtp
 %_libdir/*.so.*
@@ -134,7 +146,18 @@ EOF
 %_libdir/pkgconfig/htp.pc
 %_libdir/*.so
 
+%files -n python-module-suricata
+%python_sitelibdir_noarch/suricatasc*
+
 %changelog
+* Mon Aug 19 2013 Slava Dubrovskiy <dubrsl@altlinux.org> 1.4.5-alt1
+- New version
+- Add support GeoIP
+- Add subpackage python-module-suricata
+
+* Mon Aug 19 2013 Slava Dubrovskiy <dubrsl@altlinux.org> 1.4.4-alt1
+- New version
+
 * Thu Dec 13 2012 Slava Dubrovskiy <dubrsl@altlinux.org> 1.4-alt1
 - New version
 
