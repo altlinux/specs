@@ -5,7 +5,7 @@ BuildRequires: /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/gtkdoc
 Name:       mate-file-manager
 Summary:    File manager for MATE
 Version:    1.6.2
-Release:    alt1_2
+Release:    alt1_3
 License:    GPLv2+ and LGPLv2+
 Group:      Graphical desktop/Other
 URL:        http://mate-desktop.org
@@ -14,13 +14,6 @@ Source1:    caja-autostart.desktop
 
 # upstream patch to fix wrong hicolors directory
 Patch0:     mate-file-manager_fix_privat-icons-dir.patch
-
-Requires:   gamin
-Requires:   filesystem
-Requires:   altlinux-freedesktop-menu-common
-Requires:   gvfs
-Requires:   icon-theme-hicolor
-
 
 BuildRequires:  mate-desktop-devel
 BuildRequires:  pkgconfig(sm)
@@ -38,10 +31,15 @@ BuildRequires:  pkgconfig(libxml-2.0)
 BuildRequires:  pkgconfig(dbus-glib-1)
 BuildRequires:  pkgconfig(pangox)
 
-
+Requires:   gamin
+Requires:   filesystem
+Requires:   altlinux-freedesktop-menu-common
+Requires:   gvfs
 # the main binary links against libcaja-extension.so
 # don't depend on soname, rather on exact version
 Requires:       %{name}-extensions%{?_isa} = %{version}-%{release}
+# needed for using mate-text-editor as stanalone in another DE
+Requires:       %{name}-schemas%{?_isa} = %{version}-%{release}
 Source44: import.info
 Patch33: mate-file-manager-1.2.2-alt-fix-linkage.patch
 Patch34: nautilus-2.22.1-umountfstab.patch
@@ -63,6 +61,15 @@ Requires: %{name}%{?_isa} = %{version}-%{release}
 
 %description extensions
 This package provides the libraries used by caja extensions.
+
+# needed for using mate-text-editor as stanalone in another DE
+%package schemas
+Summary:  Mate-file-manager schemas
+License:  LGPLv2+
+Group:    Development/C
+
+%description schemas
+This package provides the gsettings schemas for caja.
 
 %package devel
 Summary:  Support for developing mate-file-manager extensions
@@ -123,7 +130,7 @@ rm -f  %{buildroot}%{_datadir}/MateConf/gsettings/caja.convert
 %find_lang caja
 
 
-%files  -f caja.lang
+%files
 %doc AUTHORS COPYING COPYING-DOCS COPYING.LIB NEWS README
 %{_bindir}/*
 %{_datadir}/caja
@@ -133,7 +140,6 @@ rm -f  %{buildroot}%{_datadir}/MateConf/gsettings/caja.convert
 %{_datadir}/icons/hicolor/*/apps/caja.png
 %{_datadir}/icons/hicolor/scalable/apps/caja.svg
 %{_datadir}/icons/hicolor/*/emblems/emblem-note.png
-%{_datadir}/glib-2.0/schemas/org.mate.*.gschema.xml
 %{_mandir}/man1/*
 %{_libexecdir}/caja-convert-metadata
 %{_datadir}/mime/packages/caja.xml
@@ -144,6 +150,9 @@ rm -f  %{buildroot}%{_datadir}/MateConf/gsettings/caja.convert
 %{_libdir}/libcaja-extension.so.*
 %{_libdir}/girepository-1.0/*.typelib
 
+%files schemas -f caja.lang
+%{_datadir}/glib-2.0/schemas/org.mate.*.gschema.xml
+
 %files devel
 %doc %{_datadir}/gtk-doc/html/libcaja-extension/
 %{_includedir}/caja/
@@ -153,6 +162,9 @@ rm -f  %{buildroot}%{_datadir}/MateConf/gsettings/caja.convert
 
 
 %changelog
+* Mon Aug 19 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.2-alt1_3
+- new fc release
+
 * Wed Aug 07 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.2-alt1_2
 - new fc release
 

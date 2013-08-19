@@ -6,7 +6,7 @@ BuildRequires: /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/glib-m
 Summary:  Text editor for the MATE desktop
 Name:     mate-text-editor
 Version:  1.6.0
-Release:  alt1_3
+Release:  alt1_5
 License:  GPLv2+
 Group:    Editors
 URL:      http://mate-desktop.org
@@ -29,7 +29,10 @@ BuildRequires: python-devel
 BuildRequires: rarian-compat
 
 Requires: pygtk2
-Requires: mate-desktop
+# needed to get a gsettings schema, #959607
+Requires: libmate-desktop
+# needed to get a gsettings schema, #959607
+Requires: mate-file-manager-schemas
 # the run-command plugin uses mate-dialogs
 Requires: mate-dialogs
 Source44: import.info
@@ -90,12 +93,13 @@ desktop-file-install                                \
 rm -f  %{buildroot}%{_datadir}/MateConf/gsettings/pluma.convert
 
 
-%find_lang pluma --with-gnome
+%find_lang pluma
 %files  -f pluma.lang
 %doc README COPYING AUTHORS
 %{_datadir}/pluma
 %{_datadir}/mate/help/pluma
 %{_datadir}/applications/pluma.desktop
+%{_datadir}/omf/pluma
 %{_mandir}/man1/*
 %{_libdir}/pluma
 %{_libexecdir}/pluma
@@ -112,6 +116,9 @@ rm -f  %{buildroot}%{_datadir}/MateConf/gsettings/pluma.convert
 
 
 %changelog
+* Mon Aug 19 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.0-alt1_5
+- new fc release
+
 * Wed Aug 07 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.0-alt1_3
 - new fc release
 

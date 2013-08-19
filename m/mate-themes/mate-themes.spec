@@ -3,11 +3,11 @@ Group: Graphical desktop/Other
 BuildRequires: /usr/bin/glib-gettextize pkgconfig(gtk+-2.0)
 # END SourceDeps(oneline)
 %define _libexecdir %_prefix/libexec
-%global _internal_version  15baae1
+%global _internal_version  3fc43dd
 
 Name:           mate-themes
 Version:        1.6.2
-Release:        alt1_0.1.git15baae1
+Release:        alt1_0.2.git%{_internal_version}
 Summary:        MATE Desktop themes
 License:        GPLv2+
 URL:            http://mate-desktop.org
@@ -15,7 +15,7 @@ URL:            http://mate-desktop.org
 # To generate tarball
 # wget http://git.mate-desktop.org/mate-themes/snapshot/%%{name}-{_internal_version}.tar.xz -O %%{name}-%%{version}.git%%{_internal_version}.tar.xz
 
-Source0:       http://raveit65.fedorapeople.org/Mate/git-uptream/%{name}-%{version}.git%{_internal_version}.tar.xz
+Source0:       http://raveit65.fedorapeople.org/Mate/git-upstream/%{name}-%{version}.git%{_internal_version}.tar.xz
 
 BuildRequires:  icon-naming-utils
 BuildRequires:  mate-common
@@ -112,6 +112,9 @@ fi
 
 
 %changelog
+* Mon Aug 19 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.2-alt1_0.2.git3fc43dd
+- new fc release
+
 * Wed Aug 07 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.2-alt1_0.1.git15baae1
 - new fc release
 

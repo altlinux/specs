@@ -5,7 +5,7 @@ BuildRequires: /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/glib-m
 %define _libexecdir %_prefix/libexec
 Name:           mate-utils
 Version:        1.6.0
-Release:        alt1_6
+Release:        alt1_7
 Summary:        MATE utility programs
 
 License:        GPLv2+ and LGPLv2+
@@ -32,6 +32,8 @@ BuildRequires:  libGL-devel
 BuildRequires:  popt-devel
 BuildRequires:  rarian-compat
 BuildRequires:  consolehelper
+
+Requires: libmate-desktop
 Source44: import.info
 Obsoletes: Obsoletes: mate-utils-libs < 1.5.0-alt2_1
 Conflicts: mate-utils-libs < 1.5.0-alt2_1
@@ -81,6 +83,8 @@ needed to develop programs using the libraries contained in mate-dictionary.
 %package -n mate-search-tool
 Group: File tools
 Summary: A file searching tool for MATE Desktop
+Requires: libmate-desktop
+
 %description -n mate-search-tool
 An application to search for files on your computer.
 
@@ -264,6 +268,9 @@ cat mate-search-tool.lang >> %{name}.lang
 
 
 %changelog
+* Mon Aug 19 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.0-alt1_7
+- new fc release
+
 * Wed Aug 07 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.0-alt1_6
 - new fc release
 

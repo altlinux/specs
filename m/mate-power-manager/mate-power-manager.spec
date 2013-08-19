@@ -8,12 +8,17 @@ BuildRequires: /usr/bin/docbook2man /usr/bin/glib-genmarshal /usr/bin/glib-gette
 
 Name:          mate-power-manager
 Version:       1.6.2
-Release:       alt1_2
+Release:       alt1_3
 Summary:       MATE power management service
 License:       GPLv2+
 URL:           http://pub.mate-desktop.org
 
 Source0:       http://pub.mate-desktop.org/releases/1.6/%{name}-1.6.2.tar.xz
+
+# upstream patch
+# http://git.mate-desktop.org/mate-power-manager/commit/?id=753b747
+# fix systemd-login1 support for gpm_manager_blank_screen
+Patch0:        mate-power-manager_fix-display-to-sleep-when-inactive.patch
 
 BuildRequires: libcairo-devel
 BuildRequires: libdbus-glib-devel
@@ -46,6 +51,7 @@ displaying icons and handling user callbacks in an interactive MATE session.
 
 %prep
 %setup -q
+%patch0 -p1 -b .display-to-sleep
 %patch33 -p1
 
 %build
@@ -98,6 +104,9 @@ rm -f  %{buildroot}%{_datadir}/MateConf/gsettings/mate-power-manager.convert
 
 
 %changelog
+* Mon Aug 19 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.2-alt1_3
+- new fc release
+
 * Wed Aug 07 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.2-alt1_2
 - new fc release
 

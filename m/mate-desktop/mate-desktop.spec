@@ -1,12 +1,12 @@
 Group: System/Libraries
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/glib-gettextize /usr/bin/gtkdocize libgio-devel pkgconfig(gdk-pixbuf-2.0) pkgconfig(gio-2.0) pkgconfig(glib-2.0) pkgconfig(gtk+-2.0) pkgconfig(unique-3.0) pkgconfig(x11) pkgconfig(xrandr)
+BuildRequires: /usr/bin/glib-gettextize /usr/bin/gtkdocize libgio-devel pkgconfig(gdk-pixbuf-2.0) pkgconfig(gio-2.0) pkgconfig(glib-2.0) pkgconfig(gtk+-2.0) pkgconfig(gtk+-3.0) pkgconfig(unique-3.0) pkgconfig(x11) pkgconfig(xrandr)
 # END SourceDeps(oneline)
 %define _libexecdir %_prefix/libexec
 Summary:        Shared code for mate-panel, mate-session, mate-file-manager, etc
 Name:           mate-desktop
 Version:        1.6.1
-Release:        alt1_10
+Release:        alt1_11
 URL:            http://mate-desktop.org
 Source0:        http://pub.mate-desktop.org/releases/1.6/%{name}-%{version}.tar.xz
 # fix fedora backgrounds and
@@ -21,13 +21,8 @@ Patch0:         mate-desktop_enable_gnucat.patch
 License:        GPLv2+ and LGPLv2+ and MIT
 
 BuildRequires:  desktop-file-utils
-BuildRequires:  gsettings-desktop-schemas-devel
-BuildRequires:  gtk2-devel
-BuildRequires:  libgtk+3-devel
-BuildRequires:  gtk-doc
 BuildRequires:  mate-common
 BuildRequires:  mate-doc-utils
-BuildRequires:  libpangox-compat-devel
 BuildRequires:  libstartup-notification-devel
 BuildRequires:  libunique-devel
 
@@ -35,6 +30,9 @@ Requires: lib%{name} = %{version}-%{release}
 Requires: altlinux-freedesktop-menu-common
 Requires: pygtk2
 Requires: xdg-user-dirs-gtk
+Requires: mate-control-center-filesystem
+Requires: mate-panel
+
 Obsoletes: mate-desktop < %{version}-%{release}
 Obsoletes: libmate 
 Obsoletes: libmatecanvas 
@@ -50,11 +48,10 @@ Obsoletes: mate-mime-data-devel
 Obsoletes: mate-vfs
 Obsoletes: mate-vfs-devel
 Obsoletes: mate-vfs-smb
-Requires: libnotify
-Requires: mate-panel
 Source44: import.info
 Patch33: mate-desktop-1.5.0-alt-settings.patch
 Patch34: mate-desktop-1.5.5-alt-default_background_path.patch
+
 
 %description
 The mate-desktop package contains an internal library
@@ -125,22 +122,22 @@ rm -f  %{buildroot}%{_datadir}/MateConf/gsettings/mate-desktop.convert
 mkdir -p %buildroot%{_datadir}/mate-about
 
 
-%files -f %{name}.lang
+%files
 %doc AUTHORS COPYING COPYING.LIB NEWS README
 %{_bindir}/mate-about
 %{_datadir}/applications/mate-about.desktop
 %{_datadir}/mate
 %{_datadir}/omf/mate-desktop
 %{_datadir}/mate-about
-%{_datadir}/glib-2.0/schemas/org.mate.*.gschema.xml
 %{_datadir}/glib-2.0/schemas/mate-fedora.gschema.override
 %{_mandir}/man1/*
 %doc %{_datadir}/gtk-doc/html/mate-desktop
 %{_datadir}/pixmaps/gnu-cat.gif
 %{_datadir}/pixmaps/gnu-cat_navideno_v3.png
 
-%files -n libmate-desktop
+%files -n libmate-desktop -f %{name}.lang
 %{_libdir}/libmate-desktop-2.so.*
+%{_datadir}/glib-2.0/schemas/org.mate.*.gschema.xml
 
 %files devel
 %{_libdir}/libmate-desktop-2.so
@@ -149,6 +146,9 @@ mkdir -p %buildroot%{_datadir}/mate-about
 
 
 %changelog
+* Mon Aug 19 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.1-alt1_11
+- new fc release
+
 * Thu Aug 01 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.1-alt1_10
 - new fc release
 
