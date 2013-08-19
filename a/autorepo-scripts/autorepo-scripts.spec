@@ -3,7 +3,7 @@ BuildRequires: perl(RPM/Header.pm) perl(Source/Repository/Mass/ALTLinuxBackport.
 # END SourceDeps(oneline)
 Name: autorepo-scripts
 Version: 0.30
-Release: alt1
+Release: alt2
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
 
@@ -78,6 +78,9 @@ install -m 755 *.template %buildroot%_datadir/%name/templates/
 %_bindir/autorepo-altnode-misc-statistics-wrapper
 
 %changelog
+* Mon Aug 19 2013 Igor Vlasenko <viy@altlinux.ru> 0.30-alt2
+- pld support
+
 * Fri Aug 16 2013 Igor Vlasenko <viy@altlinux.ru> 0.30-alt1
 - merge support
 
