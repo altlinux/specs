@@ -1,5 +1,5 @@
 Name: alterator-kdc
-Version: 0.4
+Version: 0.5
 Release: alt1
 
 BuildArch: noarch
@@ -31,6 +31,9 @@ find etc usr |cpio -pmd %buildroot
 %_libexecdir/alterator/hooks/trust.d/*
 
 %changelog
+* Tue Aug 20 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.5-alt1
+- +requires_preauth added while creating principals
+
 * Mon Nov 12 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.4-alt1
 - master key cipher changed from des-cbc-crc (OMG!)
   to aes256-cts-hmac-sha1-96
