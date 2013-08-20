@@ -7,7 +7,7 @@
 %def_disable debug
 
 Name: %{_name}3
-Version: %ver_major.5
+Version: %ver_major.7
 Release: alt1
 
 Summary: libwnck is a Window Navigator Construction Kit
@@ -26,7 +26,7 @@ BuildPreReq: gnome-common
 BuildPreReq: libstartup-notification-devel >= 0.4
 BuildPreReq: libX11-devel libXres-devel libXext-devel libXt-devel libXi-devel
 BuildPreReq: libgtk+3-devel >= 3.4.0
-BuildPreReq: glib2-devel >= 2.28.0
+BuildPreReq: glib2-devel >= 2.32.0
 BuildPreReq: gtk-doc >= 1.9
 %{?_enable_introspection:BuildPreReq: gobject-introspection-devel libgtk+3-gir-devel}
 
@@ -132,6 +132,9 @@ libraries and objects.
 %endif
 
 %changelog
+* Tue Aug 20 2013 Yuri N. Sedunov <aris@altlinux.org> 3.4.7-alt1
+- 3.4.7
+
 * Sun Feb 17 2013 Yuri N. Sedunov <aris@altlinux.org> 3.4.5-alt1
 - 3.4.5
 
