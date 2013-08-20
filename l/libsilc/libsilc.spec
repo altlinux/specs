@@ -1,11 +1,10 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/nasm /usr/bin/yasm gcc-c++ libncurses-devel libsilc-devel libtinfo-devel
 # END SourceDeps(oneline)
-%add_optflags %optflags_shared
 Summary: SILC Client Library
 Name:    libsilc
 Version: 1.1.10
-Release: alt3_8.qa1
+Release: alt3_10
 License: GPLv2 or BSD
 Group:   System/Libraries
 URL:     http://www.silcnet.org/
@@ -15,6 +14,8 @@ Patch1:  silc-toolkit-1.1.5-docinst.patch
 Patch2:  silc-toolkit-1.1.10-libs.patch
 BuildRequires: libidn-devel
 BuildRequires: libtool autoconf automake
+
+%{!?_pkgdocdir: %global _pkgdocdir %{_docdir}/%{name}-%{version}}
 Source44: import.info
 
 %description
@@ -35,7 +36,6 @@ SILC clients.
 %package doc
 Summary: Development documentation for %{name}
 Group:   Documentation
-BuildArch: noarch
 
 %description doc
 The SILC Toolkit documentation in HTML format. Useful for writing new SILC
@@ -47,22 +47,12 @@ applications.
 %patch1 -p1 -b .docinst
 %patch2 -p1 -b .libs
 
-# filter out libsilc module SONAME Provides (#245323)
-cat << \EOF > %{name}-prov
-#!/bin/sh
-sed -e '\,/silc/modules/,d' |\
-%{__find_provides} $*
-EOF
-
-%define _use_internal_dependency_generator 0
-%define __find_provides %{_builddir}/silc-toolkit-%{version}/%{name}-prov
-chmod +x %{__find_provides}
 
 %build
 autoreconf -f -i
 %configure --libdir=%{_libdir} --enable-shared --without-libtoolfix \
            --includedir=%{_includedir}/silc --with-simdir=%{_libdir}/silc/modules \
-           --docdir=%{_docdir}/%{name}-%{version} CFLAGS="$RPM_OPT_FLAGS"
+           --docdir="%{_pkgdocdir}" CFLAGS="$RPM_OPT_FLAGS"
 
 # WARNING! smp flags cause bad binaries!
 make
@@ -76,7 +66,7 @@ chmod 0755 ${RPM_BUILD_ROOT}%{_libdir}/lib* ${RPM_BUILD_ROOT}%{_libdir}/silc/mod
 
 # move doc files that would be deleted by rpm
 mkdir docinst
-mv $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}/{toolkit,tutorial} docinst/
+mv $RPM_BUILD_ROOT%{_pkgdocdir}/{toolkit,tutorial} docinst/
 # fix encoding of zlib.html
 mv docinst/toolkit/zlib.html docinst/toolkit/zlib.html.orig
 iconv -f iso-8859-15 -t utf8 -o docinst/toolkit/zlib.html docinst/toolkit/zlib.html.orig
@@ -123,6 +113,9 @@ iconv -f iso-8859-15 -t utf8 -o CREDITS CREDITS.orig
 
 
 %changelog
+* Tue Aug 20 2013 Igor Vlasenko <viy@altlinux.ru> 1.1.10-alt3_10
+- fc update
+
 * Mon Apr 22 2013 Repocop Q. A. Robot <repocop@altlinux.org> 1.1.10-alt3_8.qa1
 - NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
 - applied repocop fixes:
