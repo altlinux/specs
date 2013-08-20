@@ -2,7 +2,7 @@
 %define _hooksdir %_sysconfdir/hooks/hostname.d
 
 Name:    ldap-user-tools
-Version: 0.8.4
+Version: 0.9.0
 Release: alt1
 
 Summary: Utilities to work with LDAP users
@@ -48,6 +48,10 @@ install -pm755 -d %buildroot/%_sysconfdir/alterator/openldap
 %dir %_sysconfdir/alterator/openldap
 
 %changelog
+* Tue Aug 20 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.9.0-alt1
+- actual kerberos.schema
+- acl rules make kdc able to store last{Susessfull/Failed}LoginTime
+
 * Tue Jun 18 2013 Andrey Cherepanov <cas@altlinux.org> 0.8.4-alt1
 - Fix username check regexp for workstation
 - Fix missing workstation list in ldap-getent
