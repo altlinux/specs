@@ -2,9 +2,9 @@
 
 Name: libgranite
 Version: 0.2.2
-Release: alt1
+Release: alt2
 
-Summary: extension of GTK+ libraries
+Summary: Extension of GTK+ libraries
 Group: System/Libraries
 License: GPLv3+
 Url: https://launchpad.net/granite
@@ -15,7 +15,7 @@ Packager: Igor Zubkov <icesik@altlinux.org>
 
 # Automatically added by buildreq on Sun Aug 11 2013 (-bi)
 # optimized out: at-spi2-atk cmake cmake-modules dconf elfutils fontconfig fontconfig-devel glib-networking glib2-devel gobject-introspection gobject-introspection-devel libat-spi2-core libatk-devel libatk-gir libatk-gir-devel libcairo-devel libcairo-gobject libcairo-gobject-devel libgdk-pixbuf libgdk-pixbuf-devel libgdk-pixbuf-gir libgdk-pixbuf-gir-devel libgee-gir libgio-devel libgtk+3-gir libpango-devel libpango-gir libpango-gir-devel libwayland-client libwayland-cursor libwayland-server pkg-config python-base python-module-distribute python-modules python-modules-compiler python-modules-encodings python-modules-xml rpm-build-gir rpm-build-vala xml-utils
-BuildRequires:  ctest gvfs libGConf libfreetype-devel libgee-devel libgee-gir-devel libgtk+3-devel libgtk+3-gir-devel python-module-zope vala
+BuildRequires: ctest gvfs libGConf libfreetype-devel libgee-devel libgee-gir-devel libgtk+3-devel libgtk+3-gir-devel python-module-zope vala
 
 %description
 Granite is an extension of GTK+. Among other things, it provides the
@@ -25,7 +25,7 @@ search bars, and more found in elementary apps.
 This package contains the shared library.
 
 %package devel
-Summary: extension of GTK+ libraries (development files)
+Summary: Extension of GTK+ libraries (development files)
 Group: Development/GNOME and GTK+
 
 Requires: %name = %version-%release
@@ -35,7 +35,7 @@ Granite is an extension of GTK+. Among other things, it provides the
 commonly-used widgets such as modeswitchers, welcome screens, AppMenus,
 search bars, and more found in elementary apps.
 
-This package contains the static library and header files.
+This package contains header files.
 
 %package vala
 Summary: Vala language bindings for the granite library
@@ -44,10 +44,10 @@ BuildArch: noarch
 Requires: %name = %version-%release
 
 %description vala
-This package provides Vala language bindings for the granite library
+This package provides Vala language bindings for the granite library.
 
 %package -n granite-demo
-Summary: extension of GTK+ libraries (demo binary)
+Summary: Extension of GTK+ libraries (demo binary)
 Group: Development/GNOME and GTK+
 
 Requires: %name = %version-%release
@@ -65,10 +65,10 @@ Group: System/Libraries
 Requires: %name = %version-%release
 
 %description gir
-GObject introspection data for the granite library
+GObject introspection data for the granite library.
 
 %package gir-devel
-Summary: GObject introspection devel data for the granite library
+Summary: GObject introspection devel data for the granite library.
 Group: System/Libraries
 BuildArch: noarch
 Requires: %name-gir = %version-%release
@@ -105,11 +105,7 @@ mv %buildroot/usr/lib/* %buildroot%_libdir/
 
 %files -n granite-demo
 %_bindir/*
-%_datadir/icons/hicolor/16x16/actions/application-menu.svg
-%_datadir/icons/hicolor/22x22/actions/application-menu.svg
-%_datadir/icons/hicolor/24x24/actions/application-menu.svg
-%_datadir/icons/hicolor/32x32/actions/application-menu.svg
-%_datadir/icons/hicolor/48x48/actions/application-menu.svg
+%_datadir/icons/hicolor/*/actions/application-menu.svg
 %_datadir/icons/hicolor/scalable/actions/application-menu-symbolic.svg
 
 %files gir
@@ -123,6 +119,9 @@ mv %buildroot/usr/lib/* %buildroot%_libdir/
 %_datadir/vala/vapi/granite.vapi
 
 %changelog
+* Tue Aug 20 2013 Igor Zubkov <icesik@altlinux.org> 0.2.2-alt2
+- Fix summaries and descriptions
+
 * Sun Aug 11 2013 Igor Zubkov <icesik@altlinux.org> 0.2.2-alt1
 - 0.1.0 -> 0.2.2
 
