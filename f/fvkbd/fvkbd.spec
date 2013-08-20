@@ -1,5 +1,5 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/glib-gettextize pkgconfig(glib-2.0) pkgconfig(gobject-2.0) pkgconfig(gtk+-2.0)
+BuildRequires: /usr/bin/glib-gettextize pkgconfig(glib-2.0) pkgconfig(gobject-2.0) pkgconfig(gtk+-2.0) pkgconfig(libfakekey)
 # END SourceDeps(oneline)
 # %name or %version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name fvkbd
@@ -12,7 +12,7 @@ BuildRequires: /usr/bin/glib-gettextize pkgconfig(glib-2.0) pkgconfig(gobject-2.
 
 Name:          fvkbd
 Version:       0.2.2
-Release:       alt3_7.qa1
+Release:       alt3_8
 Summary:       Free Virtual Keyboard
 
 Group:         System/Libraries
@@ -70,9 +70,6 @@ desktop-file-validate %{buildroot}/%{_datadir}/applications/fvkbd-gtk.desktop
 find %{buildroot} -name '*.la' -exec rm -f {} ';'
 
 %find_lang %{name}
-desktop-file-install --dir %buildroot%_desktopdir \
-	--add-category=Accessibility \
-	%buildroot%_desktopdir/fvkbd-gtk.desktop
 
 %files -f %{name}.lang
 %doc COPYING AUTHORS
@@ -88,6 +85,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %{_libdir}/libfvkbd-gtk-0.2.so
 
 %changelog
+* Tue Aug 20 2013 Igor Vlasenko <viy@altlinux.ru> 0.2.2-alt3_8
+- update to new release by fcimport
+
 * Mon Apr 22 2013 Repocop Q. A. Robot <repocop@altlinux.org> 0.2.2-alt3_7.qa1
 - NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
 - applied repocop fixes:
