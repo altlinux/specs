@@ -1,6 +1,6 @@
-Version:	0.9.10.1
+Version:	0.9.10.2
 Name:		qtdbf
-Release:	alt2
+Release:	alt1
 Summary:	A simple DBF viewer and editor
 Summary(ru_RU.UTF8): Простой просмотрщик и редактор DBF
 Summary(uk_UA.UTF8): Простий переглядач та редактор DBF
@@ -52,6 +52,9 @@ make INSTALL_ROOT=%buildroot install
 %_datadir/%name
 
 %changelog
+* Tue Aug 20 2013 Motsyo Gennadi <drool@altlinux.ru> 0.9.10.2-alt1
+- Bugfix release
+
 * Sat Aug 03 2013 Motsyo Gennadi <drool@altlinux.ru> 0.9.10.1-alt2
 - add requires for libqt4-sql-sqlite (alt bug #29261)
 
