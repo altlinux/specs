@@ -9,7 +9,7 @@
 %def_disable check
 
 Name: gnumeric
-Version: %ver_major.4
+Version: %ver_major.5
 Release: alt1
 
 Summary: A full-featured spreadsheet for GNOME
@@ -33,7 +33,7 @@ Provides: python%__python_version(Gnumeric)
 %define gsf_ver 1.14.27
 %define gda_ver 4.0
 %define desktop_file_utils_ver 0.10
-%define goffice_ver 0.10.3
+%define goffice_ver 0.10.5
 
 PreReq: scrollkeeper >= %scrollkeeper_ver
 Requires(post,postun): desktop-file-utils >= %desktop_file_utils_ver
@@ -179,6 +179,9 @@ gnome-doc-prepare --copy --force
 %_pkgconfigdir/*
 
 %changelog
+* Tue Aug 20 2013 Yuri N. Sedunov <aris@altlinux.org> 1.12.5-alt1
+- 1.12.5
+
 * Mon Jul 15 2013 Yuri N. Sedunov <aris@altlinux.org> 1.12.4-alt1
 - 1.12.4
 
