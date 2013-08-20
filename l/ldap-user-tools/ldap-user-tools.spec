@@ -3,7 +3,7 @@
 
 Name:    ldap-user-tools
 Version: 0.9.0
-Release: alt1
+Release: alt2
 
 Summary: Utilities to work with LDAP users
 Group:   Development/Other
@@ -48,6 +48,9 @@ install -pm755 -d %buildroot/%_sysconfdir/alterator/openldap
 %dir %_sysconfdir/alterator/openldap
 
 %changelog
+* Tue Aug 20 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.9.0-alt2
+- +requires_preauth added to addprinc call
+
 * Tue Aug 20 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.9.0-alt1
 - actual kerberos.schema
 - acl rules make kdc able to store last{Susessfull/Failed}LoginTime
