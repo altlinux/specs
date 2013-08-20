@@ -1,8 +1,8 @@
 Name: kernel-image-un-def
-Release: alt1.1
+Release: alt1
 epoch:1 
 %define kernel_base_version	3.10
-%define kernel_sublevel	.7
+%define kernel_sublevel	.8
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 # Numeric extra version scheme developed by Alexander Bokovoy:
@@ -547,6 +547,9 @@ find %buildroot%_docdir/kernel-doc-%base_flavour-%version/DocBook \
 %exclude %modules_dir/kernel/drivers/staging/media/lirc/
 
 %changelog
+* Tue Aug 20 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.10.8-alt1
+- 3.10.8
+
 * Fri Aug 16 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.10.7-alt1.1
 - bpp hack from Ulf Winkelvos in hope to fix #29219
 - memory sanitizing patch added
