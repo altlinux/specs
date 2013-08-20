@@ -1,6 +1,8 @@
+%define git_date .git20130814
+
 Name: xfce4-whiskermenu-plugin
 Version: 1.1.0
-Release: alt1
+Release: alt1%git_date
 
 Summary: Alternate Xfce menu
 License: %gpl2plus
@@ -49,6 +51,9 @@ keeps a list of the last ten applications that you've launched from it.
 %_iconsdir/hicolor/*/apps/*
 
 %changelog
+* Tue Aug 20 2013 Mikhail Efremov <sem@altlinux.org> 1.1.0-alt1.git20130814
+- Upstream git snapshot (master branch).
+
 * Thu Jul 25 2013 Mikhail Efremov <sem@altlinux.org> 1.1.0-alt1
 - Updated to 1.1.0.
 
