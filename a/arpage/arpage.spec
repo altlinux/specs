@@ -1,9 +1,14 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/glib-gettextize gcc-c++ pkgconfig(gthread-2.0)
 # END SourceDeps(oneline)
+# %name or %version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+%define name arpage
+%define version 0.3.3
+%{!?_pkgdocdir: %global _pkgdocdir %{_docdir}/%{name}-%{version}}
+
 Name:		arpage
 Version:	0.3.3
-Release:	alt2_11
+Release:	alt2_13
 Summary:	A JACK MIDI arpeggiator
 
 Group:		Sound
@@ -26,6 +31,7 @@ A GTK application that runs up to 4 arpeggiators on incoming MIDI
 data, synchronized to JACK.
 
 %prep
+
 %setup -q
 
 #fix compilation with gcc 4.6
@@ -44,7 +50,7 @@ make %{?_smp_mflags}
 
 
 %install
-make install DESTDIR=%{buildroot} arpagedocdir=%{_defaultdocdir}/%{name}-%{version}
+make install DESTDIR=%{buildroot} arpagedocdir=%{_pkgdocdir}
 
 desktop-file-install --dir=%{buildroot}/%{_datadir}/applications %{SOURCE1}
 
@@ -54,7 +60,7 @@ install -m 644 %{_builddir}/%{name}-%{version}/src/arpage.png %{buildroot}%{_dat
 
 
 %files
-%doc COPYING ChangeLog AUTHORS README
+%doc COPYING ChangeLog AUTHORS README INSTALL NEWS
 %{_bindir}/%{name}
 %{_bindir}/zonage
 %{_datadir}/%{name}/ui/
@@ -62,6 +68,9 @@ install -m 644 %{_builddir}/%{name}-%{version}/src/arpage.png %{buildroot}%{_dat
 %{_datadir}/icons/hicolor/32x32/apps/%{name}.png
 
 %changelog
+* Tue Aug 20 2013 Igor Vlasenko <viy@altlinux.ru> 0.3.3-alt2_13
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.3.3-alt2_11
 - update to new release by fcimport
 
