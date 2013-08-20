@@ -5,14 +5,13 @@ BuildRequires: /usr/bin/glib-gettextize /usr/bin/gtkdocize glib2-devel libgio-de
 # END SourceDeps(oneline)
 %define _libexecdir %_prefix/libexec
 Name:          libmateweather
-Version:       1.6.1
-Release:       alt1_2
+Version:       1.6.2
+Release:       alt1_1
 Summary:       Libraries to allow MATE Desktop to display weather information
 License:       GPLv2+
 URL:           http://mate-desktop.org
 Source0:       http://pub.mate-desktop.org/releases/1.6/%{name}-%{version}.tar.xz
 
-BuildRequires: gsettings-desktop-schemas-devel
 BuildRequires: gtk2-devel
 BuildRequires: libsoup-devel
 BuildRequires: mate-common
@@ -38,10 +37,10 @@ Development files for libmateweather
 %prep
 %setup -q
 %patch33 -p1
-NOCONFIGURE=1 ./autogen.sh
 
 
 %build
+autoreconf -fisv
 %configure --disable-static       \
            --with-gnu-ld          \
            --enable-python        \
@@ -55,9 +54,9 @@ make install DESTDIR=%{buildroot}
 find %{buildroot} -name '*.la' -exec rm -fv {} ';'
 find %{buildroot} -name '*.a' -exec rm -fv {} ';'
 
-
 %find_lang %{name} %{name}-locations
 cat libmateweather-locations.lang >> %{name}.lang
+
 
 %files -f %{name}.lang
 %doc AUTHORS COPYING README
@@ -75,6 +74,9 @@ cat libmateweather-locations.lang >> %{name}.lang
 
 
 %changelog
+* Mon Aug 19 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.2-alt1_1
+- new fc release
+
 * Wed Aug 07 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.1-alt1_2
 - new fc release
 
