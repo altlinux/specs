@@ -1,8 +1,8 @@
 Name: netwalk
 Version: 0.4.10
-Release: alt5
+Release: alt6
 
-Summary: NetWalk is a puzzle game where the object is to connect every terminal to the main server
+Summary: Puzzle game where the object is to connect every terminal to the main server
 URL: https://github.com/blynn/netwalk
 License: GPLv3+
 Group: Games/Puzzles
@@ -23,7 +23,8 @@ Requires: fonts-ttf-vera
 BuildRequires:  libSDL_ttf-devel libfreetype-devel
 
 %description
-NetWalk is a puzzle game where the object is to connect every terminal to the main server
+NetWalk is a puzzle game where the object is to connect every terminal to the
+main server.
 
 In this version, not only must every terminal be connected, but every piece of
 cable must also be connected to the main server somehow.
@@ -68,6 +69,9 @@ EOF
 %_liconsdir/*.png
 
 %changelog
+* Tue Aug 20 2013 Igor Zubkov <icesik@altlinux.org> 0.4.10-alt6
+- Fix summary and description
+
 * Mon Apr 01 2013 Igor Zubkov <icesik@altlinux.org> 0.4.10-alt5
 - Don't pack copyright file
 - Update Url
