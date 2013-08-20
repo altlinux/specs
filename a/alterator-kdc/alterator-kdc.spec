@@ -1,6 +1,6 @@
 Name: alterator-kdc
 Version: 0.5
-Release: alt1
+Release: alt2
 
 BuildArch: noarch
 
@@ -31,6 +31,9 @@ find etc usr |cpio -pmd %buildroot
 %_libexecdir/alterator/hooks/trust.d/*
 
 %changelog
+* Tue Aug 20 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.5-alt2
+- revert to 0.4-alt1
+
 * Tue Aug 20 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.5-alt1
 - +requires_preauth added while creating principals
 
