@@ -4,7 +4,7 @@ BuildRequires: perl(CPAN.pm) perl(Config.pm) perl(Fcntl.pm) perl(File/Spec/Funct
 # END SourceDeps(oneline)
 Name:           perl-Perl-MinimumVersion
 Version:        1.32
-Release:        alt1_4
+Release:        alt1_5
 Summary:        Find a minimum required version of perl for Perl code
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -65,6 +65,9 @@ make test
 %{_mandir}/man1/*
 
 %changelog
+* Tue Aug 20 2013 Igor Vlasenko <viy@altlinux.ru> 1.32-alt1_5
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 1.32-alt1_4
 - update to new release by fcimport
 
