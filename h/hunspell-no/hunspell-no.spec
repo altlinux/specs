@@ -4,12 +4,14 @@ BuildRequires: unzip
 Name: hunspell-no
 Summary: Norwegian hunspell dictionaries
 Version: 2.1
-Release: alt1_3
+Release: alt1_4
 Source: https://alioth.debian.org/frs/download.php/3764/no_NO-pack2-2.1.zip
 Group: Text tools
 URL: http://spell-norwegian.alioth.debian.org
 License: GPL+
 BuildArch: noarch
+
+Patch1:  rhbz959989.badsfxrules.patch
 Source44: import.info
 
 %description
@@ -65,14 +67,15 @@ Nynorsk thesaurus.
 
 %prep
 %setup -q -c
-
-%build
 unzip -q nb_NO.zip
 unzip -q nn_NO.zip
 unzip -q hyph_nb_NO.zip
 unzip -q hyph_nn_NO.zip
 unzip -q th_nb_NO_v2.zip
 unzip -q th_nn_NO_v2.zip
+%patch1 -p0 -b .rhbz959989
+
+%build
 for i in README_nb_NO.txt README_nn_NO.txt README_hyph_nb_NO.txt \
   README_hyph_nn_NO.txt README_th_nb_NO_v2.txt README_th_nn_NO_v2.txt; do
   if ! iconv -f utf-8 -t utf-8 -o /dev/null $i > /dev/null 2>&1; then
@@ -118,6 +121,9 @@ cp -p th_nb_NO_v2.dat th_nb_NO_v2.idx th_nn_NO_v2.dat th_nn_NO_v2.idx $RPM_BUILD
 %{_datadir}/mythes/th_nn_NO_v2.*
 
 %changelog
+* Tue Aug 20 2013 Igor Vlasenko <viy@altlinux.ru> 2.1-alt1_4
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 2.1-alt1_3
 - update to new release by fcimport
 
