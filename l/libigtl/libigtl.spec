@@ -14,7 +14,7 @@ Group: Other
 
 Name:		lib%{_short_name}
 Version:	%{_ver_major}.%{_ver_minor}.%{_ver_release}
-Release:	alt1_11
+Release:	alt1_12
 Summary:	Network communication library for image-guided therapy
 
 License:	BSD
@@ -111,25 +111,23 @@ make %{?_smp_mflags} -C %{_target_platform}
 find %{buildroot} -name '*.la' -exec rm -f {} ';'
 
 # Install documentation
-mkdir -p %{buildroot}%{_docdir}/%{name}-%{version}
-cp LICENSE.txt %{buildroot}%{_docdir}/%{name}-%{version}/
-cp README %{buildroot}%{_docdir}/%{name}-%{version}/
+mkdir -p %{buildroot}%{_docdir}/%{name}
+cp LICENSE.txt %{buildroot}%{_docdir}/%{name}/
+cp README %{buildroot}%{_docdir}/%{name}/
 
 pushd %{_target_platform}
-cp Documents/Papers/InsightJournal2008/OpenIGTLinkIJ2008.pdf %{buildroot}%{_docdir}/%{name}-%{version}/
-cp -r Documents/Doxygen/html %{buildroot}%{_docdir}/%{name}-%{version}/
+cp Documents/Papers/InsightJournal2008/OpenIGTLinkIJ2008.pdf %{buildroot}%{_docdir}/%{name}/
+cp -r Documents/Doxygen/html %{buildroot}%{_docdir}/%{name}/
 popd
 
 %check
 make test -C %{_target_platform}
 
 %files
-%dir %{_docdir}/%{name}-%{version}
-%{_docdir}/%{name}-%{version}/LICENSE.txt
-%{_docdir}/%{name}-%{version}/README
+%dir %{_docdir}/%{name}
+%{_docdir}/%{name}/LICENSE.txt
+%{_docdir}/%{name}/README
 %{_libdir}/*.so.*
-# hack; explicitly added docdir if not owned
-%doc %dir %{_docdir}/%{name}-%{version}
 
 %files devel
 %dir %{_includedir}/%{_short_name}/
@@ -138,13 +136,14 @@ make test -C %{_target_platform}
 %{_libdir}/cmake/%{_full_cap_name}/
 
 %files doc
-%{_docdir}/%{name}-%{version}/OpenIGTLinkIJ2008.pdf
-%{_docdir}/%{name}-%{version}/html/
-# hack; explicitly added docdir if not owned
-%doc %dir %{_docdir}/%{name}-%{version}
+%{_docdir}/%{name}/OpenIGTLinkIJ2008.pdf
+%{_docdir}/%{name}/html/
 
 
 %changelog
+* Tue Aug 20 2013 Igor Vlasenko <viy@altlinux.ru> 1.9.7-alt1_12
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 1.9.7-alt1_11
 - update to new release by fcimport
 
