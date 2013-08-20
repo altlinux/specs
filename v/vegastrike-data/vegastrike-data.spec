@@ -3,18 +3,19 @@
 %filter_from_requires /^python2...Briefing.$/d
 %define _unpackaged_files_terminate_build 1
 %add_python_req_skip Base
+%define fedora 19
 Name:           vegastrike-data
 Version:        0.5.1
-Release:        alt2_3.r1
+Release:        alt2_6.r1
 Summary:        Data files for Vega Strike
 Group:          Games/Other
 License:        GPLv2+
 URL:            http://vegastrike.sourceforge.net/
-#Source0:        %{name}-%{version}.tar.bz2
 Source0:        http://downloads.sourceforge.net/vegastrike/vegastrike-data-0.5.1.r1.tar.bz2
 Source1:        http://downloads.sourceforge.net/vegastrike/vegastrike-extra-0.5.1.r1.tar.bz2
 # Remove Falik's songs from playlists (no longer needed, kept for reference)
 Patch0:         vegastrike-data-0.5.0-playlists.patch
+BuildRequires:  python-devel
 BuildArch:      noarch
 Requires:       vegastrike >= %{version}
 Source44: import.info
@@ -22,6 +23,7 @@ Source44: import.info
 %description
 Data files for Vega Strike, a GPL 3D OpenGL Action RPG space sim that allows
 a player to trade and bounty hunt.
+
 
 %package -n vegastrike-extra
 Summary:        Extra textures for Vega Strike
@@ -31,6 +33,7 @@ Requires:       vegastrike-data >= %{version}
 %description -n vegastrike-extra
 Extra texture files for Vega Strike. These files are *not* essential to
 play Vega Strike.
+
 
 %prep
 %setup -q -b1 -n vegastrike-extra-%{version}.r1
@@ -74,6 +77,7 @@ grep '\.py"$' data.files | sed -e 's;\.py"$;.pyo";' > data.pyo
 grep '\.py"$' extra.files | sed -e 's;\.py"$;.pyc";' > extra.pyc
 grep '\.py"$' extra.files | sed -e 's;\.py"$;.pyo";' > extra.pyo
 
+
 %build
 # nothing to build data only
 
@@ -92,29 +96,31 @@ ln -s ../doc/%{name}-%{version} \
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/128x128/apps
 install -p -m 644 vegastrike.xpm \
   $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/128x128/apps
-# multiple -f flags in %files: merging -f extra.pyc into -f extra.files
-#cat extra.pyc >> extra.files
-# multiple -f flags in %files: merging -f extra.pyo into -f extra.files
-#cat extra.pyo >> extra.files
 # multiple -f flags in %files: merging -f data.dirs into -f data.files
 cat data.dirs >> data.files
 # multiple -f flags in %files: merging -f data.pyc into -f data.files
 #cat data.pyc >> data.files
 # multiple -f flags in %files: merging -f data.pyo into -f data.files
 #cat data.pyo >> data.files
-# multiple -f flags in %files: merging -f data.dirs into -f data.files
-cat data.dirs >> data.files
+# multiple -f flags in %files: merging -f extra.pyc into -f extra.files
+#cat extra.pyc >> extra.files
+# multiple -f flags in %files: merging -f extra.pyo into -f extra.files
+#cat extra.pyo >> extra.files
 
+
+%files -f data.files   
+%doc vega-license.txt documentation/*
+%dir %{_datadir}/vegastrike
+%{_datadir}/vegastrike/documentation
+%{_datadir}/icons/hicolor/128x128/apps/vegastrike.xpm
 
 %files -n vegastrike-extra -f extra.files  
 
-%files -f data.files 
-%{_datadir}/vegastrike/documentation
-%doc vega-license.txt documentation/*
-%{_datadir}/icons/hicolor/128x128/apps/vegastrike.xpm
-
 
 %changelog
+* Tue Aug 20 2013 Igor Vlasenko <viy@altlinux.ru> 0.5.1-alt2_6.r1
+- update to new release by fcimport
+
 * Sun Feb 24 2013 Igor Vlasenko <viy@altlinux.ru> 0.5.1-alt2_3.r1
 - update to new release by fcimport
 
