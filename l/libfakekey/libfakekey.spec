@@ -4,11 +4,11 @@ BuildRequires: /usr/bin/doxygen gcc-c++ libICE-devel libSM-devel
 %define major     0
 %define oname     fakekey
 %define libname   lib%{oname}%{major}
-%define develname %{oname}-devel
+%define develname lib%{oname}-devel
 
 Name:           libfakekey
 Version:        0.1
-Release:        alt5_5
+Release:        alt6_5
 Summary:        Converting characters to X key-presses
 
 Group:          System/Libraries
@@ -67,6 +67,9 @@ find %{buildroot} -name "*.la" -delete
 
 
 %changelog
+* Tue Aug 20 2013 Igor Vlasenko <viy@altlinux.ru> 0.1-alt6_5
+- fixed devel name
+
 * Tue Aug 06 2013 Igor Vlasenko <viy@altlinux.ru> 0.1-alt5_5
 - update by mgaimport
 
