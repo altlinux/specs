@@ -1,6 +1,6 @@
 Name:		boswars-addons
 Version:	2.6
-Release:	alt2_8
+Release:	alt2_9
 Summary:	Addon maps for Bos Wars real-time strategy game
 
 Group:		Games/Other
@@ -42,6 +42,9 @@ cp -a * $RPM_BUILD_ROOT%{_datadir}/boswars/maps
 
 
 %changelog
+* Tue Aug 20 2013 Igor Vlasenko <viy@altlinux.ru> 2.6-alt2_9
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 2.6-alt2_8
 - update to new release by fcimport
 
