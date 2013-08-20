@@ -1,8 +1,8 @@
 Name: xNBTscan
 Version: 1.0
-Release: alt3
+Release: alt4
 
-Summary: xNBTscan is a graphical interface to NBTscan written in GTK+ 2.0
+Summary: Graphical interface to NBTscan written in GTK+ 2.0
 License: GPLv2+
 Group: Networking/Other
 
@@ -46,6 +46,9 @@ install -m755 -pD xnbtscan %buildroot%_bindir/xnbtscan
 %_bindir/xnbtscan
 
 %changelog
+* Tue Aug 20 2013 Igor Zubkov <icesik@altlinux.org> 1.0-alt4
+- Fix summary
+
 * Tue Oct 02 2012 Igor Zubkov <icesik@altlinux.org> 1.0-alt3
 - rebuilt for debuginfo
 
