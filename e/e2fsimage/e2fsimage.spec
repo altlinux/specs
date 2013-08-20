@@ -1,6 +1,6 @@
 Name: e2fsimage
 Version: 0.2.2
-Release: alt9
+Release: alt10
 Summary: Create and populate an ext2 filesystem image as non-root user
 License: BSD-style
 Group: File tools
@@ -41,6 +41,9 @@ export prefix=%_prefix CFLAGS="%optflags" CC=%__cc mandir=%_mandir
 
 
 %changelog
+* Wed Aug 21 2013 Led <led@altlinux.ru> 0.2.2-alt10
+- fixed checking access
+
 * Tue Aug 20 2013 Led <led@altlinux.ru> 0.2.2-alt9
 - added '-e' key for exlude pattern
 
