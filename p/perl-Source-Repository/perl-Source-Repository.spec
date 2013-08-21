@@ -1,8 +1,8 @@
 %define module Source-Repository
 
 Name: perl-%module
-Version: 0.11
-Release: alt4
+Version: 0.12
+Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
 
@@ -13,10 +13,8 @@ Source: http://www.cpan.org/modules/by-module/RPM/%module-%version.tar
 Url: http://search.cpan.org/dist/%module
 
 # Automatically added by buildreq on Wed Nov 06 2002
-BuildRequires: perl-devel perl-RPM-Source-Editor perl-RPM perl-DistroMap perl-String-ShellQuote perl-RPM-Source-Convert
-Requires: perl-RPM-Source-Editor > 0.801
-# for ALTLinux Backport; TODO: use separate module?
-Requires: perl-RPM-Source-Convert > 0.47
+BuildRequires: perl-devel perl-RPM-Source-Editor perl-RPM perl-DistroMap perl-String-ShellQuote perl-RPM-Source-Convert perl-Source-Package perl-RPM-Source-BundleImport
+Requires: perl-RPM-Source-Editor > 0.810
 Conflicts: perl-RPM-Source-Convert < 0.48
 
 %description
@@ -38,6 +36,9 @@ Conflicts: perl-RPM-Source-Convert < 0.48
 %perl_vendor_privlib/Source*
 
 %changelog
+* Wed Aug 21 2013 Igor Vlasenko <viy@altlinux.ru> 0.12-alt1
+- new API; development release
+
 * Mon Aug 19 2013 Igor Vlasenko <viy@altlinux.ru> 0.11-alt4
 - PLD support
 

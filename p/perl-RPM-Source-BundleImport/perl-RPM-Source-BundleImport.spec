@@ -1,0 +1,38 @@
+%define module RPM-Source-BundleImport
+
+Name: perl-%module
+Version: 0.001
+Release: alt1
+BuildArch: noarch
+Packager: Igor Yu. Vlasenko <viy@altlinux.org>
+
+Summary: %module - Perl extension for converting SRPM and spec files
+Group: Development/Perl
+License: GPL or Artistic
+Source: http://www.cpan.org/modules/by-module/RPM/%module-%version.tar.gz
+Url: http://search.cpan.org/dist/%module
+
+# Automatically added by buildreq on Wed Nov 06 2002
+BuildRequires: perl-devel perl-RPM-Source-Editor perl-Source-Package
+Requires: perl-RPM-Source-Editor > 0.810
+
+%description
+%summary
+
+%prep
+%setup -q -n %module-%version
+
+%build
+%perl_vendor_build
+
+%install
+%perl_vendor_install
+
+%files
+#doc Changes
+#doc README
+%perl_vendor_privlib/RPM*
+
+%changelog
+* Wed Aug 21 2013 Igor Vlasenko <viy@altlinux.ru> 0.001-alt1
+- initial release

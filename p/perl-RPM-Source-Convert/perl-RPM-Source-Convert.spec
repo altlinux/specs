@@ -1,11 +1,11 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: perl(Carp.pm) perl(File/Basename.pm) perl(File/Path.pm) perl(File/Spec.pm) perl(File/Temp.pm) perl(Getopt/Long.pm) perl(Source/Repository/Mass.pm) perl(Source/Repository/Mass/Transform/Embedded.pm) perl(Source/Repository/Mass/Transform/PassThrough.pm) perl(Source/Repository/Matcher.pm) perl(Source/Repository/Matcher/DistroMap.pm)
+BuildRequires: perl(Carp.pm) perl(File/Basename.pm) perl(File/Path.pm) perl(File/Spec.pm) perl(File/Temp.pm) perl(Getopt/Long.pm)
 # END SourceDeps(oneline)
 %define module RPM-Source-Convert
 
 Name: perl-%module
-Version: 0.52
-Release: alt7
+Version: 0.53
+Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
 
@@ -17,7 +17,7 @@ Url: http://search.cpan.org/dist/%module
 
 # Automatically added by buildreq on Wed Nov 06 2002
 BuildRequires: perl-devel perl-RPM-Source-Editor perl-RPM perl-DistroMap
-Requires: perl-RPM-Source-Editor > 0.800
+Requires: perl-RPM-Source-Editor > 0.810
 
 # for srpmbackport 
 Requires: distromap-altlinux-sisyphus-altlinux-branch
@@ -43,6 +43,9 @@ Conflicts: perl-RPM-Source-Editor < 0.73
 %perl_vendor_privlib/RPM*
 
 %changelog
+* Wed Aug 21 2013 Igor Vlasenko <viy@altlinux.ru> 0.53-alt1
+- support for the new API
+
 * Mon Aug 19 2013 Igor Vlasenko <viy@altlinux.ru> 0.52-alt7
 - initial PLD support
 
