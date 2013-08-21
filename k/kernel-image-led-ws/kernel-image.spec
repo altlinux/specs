@@ -19,13 +19,13 @@
 %define flavour %base_flavour-%sub_flavour
 
 Name: kernel-image-%flavour
-Version: 3.4.58
-Release: alt3
+Version: 3.4.59
+Release: alt1
 
 %define kernel_req %nil
 %define kernel_prov %nil
 %define kernel_branch 3.4
-%define kernel_stable_version 58
+%define kernel_stable_version 59
 %define kernel_extra_version .%kernel_stable_version
 #define kernel_extra_version %nil
 
@@ -99,6 +99,7 @@ Release: alt3
 %def_disable pcsp
 %def_enable video
 %def_enable guest
+%def_enable simple_ext2
 %def_disable ext4_for_ext2
 %def_enable ext4_for_ext3
 %def_enable bootsplash
@@ -2162,6 +2163,7 @@ config_disable \
 	%{?_disable_kallsyms:KALLSYMS} \
 	%{?_disable_oprofile:PROFILING OPROFILE} \
 	%{?_disable_fatelf:BINFMT_FATELF} \
+	%{?_enable_simple_ext2:EXT2_FS_XATTR EXT2_FS_POSIX_ACL EXT2_FS_SECURITY} \
 	%{?_enable_ext4_for_ext2:EXT2_FS} %{?_enable_ext4_for_ext3:EXT3_FS}
 
 config_enable \
@@ -2890,6 +2892,12 @@ done)
 
 
 %changelog
+* Wed Aug 21 2013 Led <led@altlinux.ru> 3.4.59-alt1
+- 3.4.59
+- updated:
+  + feat-fs-aufs
+- enabled simple_ext2 (disable XATTR, POSIX_ACL and SECURITY)
+
 * Sun Aug 18 2013 Led <led@altlinux.ru> 3.4.58-alt3
 - updated:
   + fix-drivers-net-ethernet-broadcom--bnx2x
