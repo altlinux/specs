@@ -2,11 +2,13 @@
 %define _libexecdir %_prefix/libexec
 
 %def_enable trust_module
+# the hash implementation -- freebl or internal
+%define hash_impl freebl
 %define trust_paths %_datadir/ca-certificates/ca-bundle.crt
 #%%define trust_paths %_sysconfdir/pki/ca-trust/source:%_datadir/pki/ca-trust-source
 
 Name: lib%_name
-Version: 0.18.3
+Version: 0.18.5
 Release: alt1
 
 Summary: Library for loading and sharing PKCS#11 modules
@@ -22,6 +24,9 @@ Requires: ca-certificates
 Requires: pkcs11-trust-module = %version-%release
 
 BuildRequires: libtasn1-devel
+%if %hash_impl == freebl
+BuildRequires: libnss-devel
+%endif
 
 %description
 %_name provides a way to load and enumerate PKCS#11 modules, as well
@@ -75,8 +80,9 @@ This package contains development documentation for %_name library.
 	%{subst_enable trust_module} \
 %if_enabled trust_module
 	--with-libtasn1 \
-	--with-trust-paths=%trust_paths
+	--with-trust-paths=%trust_paths \
 %endif
+	--with-hash-impl=%hash_impl \
 
 %make_build
 
@@ -125,6 +131,9 @@ EOF
 %_datadir/gtk-doc/html/%_name
 
 %changelog
+* Wed Aug 21 2013 Yuri N. Sedunov <aris@altlinux.org> 0.18.5-alt1
+- 0.18.5
+
 * Sat Jun 08 2013 Yuri N. Sedunov <aris@altlinux.org> 0.18.3-alt1
 - 0.18.3
 
