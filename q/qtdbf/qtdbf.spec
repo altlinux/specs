@@ -1,4 +1,4 @@
-Version:	0.9.10.2
+Version:	0.9.10.3
 Name:		qtdbf
 Release:	alt1
 Summary:	A simple DBF viewer and editor
@@ -52,6 +52,9 @@ make INSTALL_ROOT=%buildroot install
 %_datadir/%name
 
 %changelog
+* Wed Aug 21 2013 Motsyo Gennadi <drool@altlinux.ru> 0.9.10.3-alt1
+- Ukrainian translation
+
 * Tue Aug 20 2013 Motsyo Gennadi <drool@altlinux.ru> 0.9.10.2-alt1
 - Bugfix release
 
