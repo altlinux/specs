@@ -2,7 +2,7 @@
 
 Name: libgranite
 Version: 0.2.2
-Release: alt2
+Release: alt3
 
 Summary: Extension of GTK+ libraries
 Group: System/Libraries
@@ -13,9 +13,13 @@ Source0: %origname-%version.tar.gz
 
 Packager: Igor Zubkov <icesik@altlinux.org>
 
-# Automatically added by buildreq on Sun Aug 11 2013 (-bi)
-# optimized out: at-spi2-atk cmake cmake-modules dconf elfutils fontconfig fontconfig-devel glib-networking glib2-devel gobject-introspection gobject-introspection-devel libat-spi2-core libatk-devel libatk-gir libatk-gir-devel libcairo-devel libcairo-gobject libcairo-gobject-devel libgdk-pixbuf libgdk-pixbuf-devel libgdk-pixbuf-gir libgdk-pixbuf-gir-devel libgee-gir libgio-devel libgtk+3-gir libpango-devel libpango-gir libpango-gir-devel libwayland-client libwayland-cursor libwayland-server pkg-config python-base python-module-distribute python-modules python-modules-compiler python-modules-encodings python-modules-xml rpm-build-gir rpm-build-vala xml-utils
-BuildRequires: ctest gvfs libGConf libfreetype-devel libgee-devel libgee-gir-devel libgtk+3-devel libgtk+3-gir-devel python-module-zope vala
+# buildreq fail
+BuildRequires: cmake rpm-build-gir vala libgtk+3-devel libgee-devel libpixman-devel
+BuildRequires: gobject-introspection-devel libXdmcp-devel libXdamage-devel libXxf86vm-devel
+BuildRequires: libharfbuzz-devel libpng-devel libXinerama-devel libXi-devel libXrandr-devel
+BuildRequires: libXcursor-devel libXcomposite-devel libxkbcommon-devel
+BuildRequires: libwayland-cursor-devel at-spi2-atk-devel libgtk+3-gir-devel
+BuildRequires: libgee-gir-devel
 
 %description
 Granite is an extension of GTK+. Among other things, it provides the
@@ -119,6 +123,9 @@ mv %buildroot/usr/lib/* %buildroot%_libdir/
 %_datadir/vala/vapi/granite.vapi
 
 %changelog
+* Thu Aug 22 2013 Igor Zubkov <icesik@altlinux.org> 0.2.2-alt3
+- Cleanup build requires
+
 * Tue Aug 20 2013 Igor Zubkov <icesik@altlinux.org> 0.2.2-alt2
 - Fix summaries and descriptions
 
