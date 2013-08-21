@@ -5,7 +5,7 @@
 
 Name: rabbitmq-server
 Version: 2.8.7
-Release: alt3
+Release: alt4
 License: MPLv1.1
 BuildArch: noarch
 Group: System/Servers
@@ -109,6 +109,9 @@ mkdir -p %buildroot/%_erlanglibdir/%name/priv
 %_datadir/%name
 
 %changelog
+* Wed Aug 21 2013 Pavel Shilovsky <piastry@altlinux.org> 2.8.7-alt4
+- Fix spacing in the sysvinit script
+
 * Fri Aug 16 2013 Pavel Shilovsky <piastry@altlinux.org> 2.8.7-alt3
 - Fix sysvinit script
 
