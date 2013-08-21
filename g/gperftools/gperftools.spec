@@ -1,6 +1,6 @@
 Name: gperftools
-Version: 2.0
-Release: alt2
+Version: 2.1
+Release: alt1
 
 Provides: google-perftools
 
@@ -70,6 +70,9 @@ sed -i '\@^[ 	]*//@d' src/google/malloc_hook_c.h
 %_pkgconfigdir/*.pc
 
 %changelog
+* Wed Aug 21 2013 Fr. Br. George <george@altlinux.ru> 2.1-alt1
+- Autobuild version bump to 2.1
+
 * Thu Jun 27 2013 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.0-alt2
 - rebuilt with recent libunwind
 
