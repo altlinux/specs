@@ -1,6 +1,6 @@
 Name: livecd-setauth
 Version: 0.7
-Release: alt1
+Release: alt2
 
 Summary: Setup krb5 and cifs homes in livecd
 License: GPL
@@ -22,13 +22,18 @@ Setup krb5 auth and cifs homes if there is 'krb5' in /proc/cmdline
 %install
 mkdir -p %buildroot%_initdir/
 install -pD -m0755 livecd-setauth/livecd-setauth %buildroot%_initdir/livecd-setauth 
+install -pD -m0644 livecd-setauth/livecd-setauth.service %buildroot%_unitdir/livecd-setauth.service
 
 
 %files 
 %_initdir/livecd-setauth
+%_unitdir/livecd-setauth.service
 
 
 %changelog
+* Wed Aug 21 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.7-alt2
+- systemd support
+
 * Wed Aug 21 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.7-alt1
 - lightdm support
 
