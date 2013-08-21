@@ -1,3 +1,4 @@
+%define cmakeprefix -2.8.10
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-fedora-compat
 BuildRequires: gcc-c++ perl(Env.pm)
@@ -6,7 +7,7 @@ BuildRequires: gcc4.6-c++
 %define fedora 16
 Name:		Equalizer
 Version:	1.2.1
-Release:	alt1.2
+Release:	alt2
 Summary:	Middleware to create and deploy parallel OpenGL-based applications
 
 Group:		Development/C
@@ -14,7 +15,7 @@ License:	LGPLv2+
 URL:		http://www.equalizergraphics.com/
 Source0:	http://www.equalizergraphics.com/downloads/%{name}-%{version}.tar.gz
 
-BuildRequires:	ctest cmake bison flex
+BuildRequires:	ctest%cmakeprefix cmake%cmakeprefix bison flex
 BuildRequires:  boost-devel boost-filesystem-devel boost-wave-devel boost-graph-parallel-devel boost-math-devel boost-mpi-devel boost-program_options-devel boost-signals-devel boost-intrusive-devel boost-asio-devel libglew-devel
 BuildRequires:  libX11-devel libGL-devel
 BuildRequires:  libOpenSceneGraph-devel >= 2.9.8
@@ -165,6 +166,11 @@ fi
 %{_includedir}/vmmlib
 
 %changelog
+* Wed Aug 21 2013 Igor Vlasenko <viy@altlinux.ru> 1.2.1-alt2
+- temporarily fixed build using compat cmake-2.8.10:
+  broken PurpleAddLibrary.cmake use keyword LINK_LIBRARIES as option,
+  not compatible with cmake > 2.8.10 and a lot to patch.
+
 * Mon Feb 11 2013 Igor Vlasenko <viy@altlinux.ru> 1.2.1-alt1.2
 - Rebuilt with Boost 1.53.0
 
