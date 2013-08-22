@@ -1,13 +1,13 @@
 Name: xorg-cf-files
-Version: 1.0.4
-Release: alt2
+Version: 1.0.5
+Release: alt1
 Summary: config files for Xorg build
 License: MIT/X11
 Group: Development/C
 Url: http://xorg.freedesktop.org
 Source: %name-%version.tar.bz2
 
-BuildRequires: xorg-util-macros xorg-font-utils 
+BuildRequires: xorg-util-macros xorg-font-utils
 
 %description
 Config files for Xorg build
@@ -84,6 +84,9 @@ done
 %_libdir/%name/*
 
 %changelog
+* Thu Aug 22 2013 Fr. Br. George <george@altlinux.ru> 1.0.5-alt1
+- Autobuild version bump to 1.0.5
+
 * Tue May 10 2011 Fr. Br. George <george@altlinux.ru> 1.0.4-alt2
 - This package is NOT noarch
 
