@@ -25,7 +25,7 @@
   --enable-toolbar
 
 Name: xterm
-Version: 293
+Version: 296
 Release: alt1
 
 Summary: A standard terminal emulator for the X Window System
@@ -168,6 +168,9 @@ EOF
 %attr(2711,root,utempter) %_bindir/XTerm
 
 %changelog
+* Thu Aug 22 2013 Fr. Br. George <george@altlinux.ru> 296-alt1
+- Autobuild version bump to 296
+
 * Mon Jun 10 2013 Fr. Br. George <george@altlinux.ru> 293-alt1
 - Autobuild version bump to 293
 
