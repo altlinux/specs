@@ -1,5 +1,5 @@
 Name: mupdf
-Version: 1.1
+Version: 1.3
 Release: alt1
 Summary: A lightweight PDF viewer and toolkit
 Group: Office
@@ -8,12 +8,11 @@ Url: http://mupdf.com/
 Source0: http://mupdf.com/download/%name-%version-source.tar.gz
 Source1: %name.desktop
 Patch0: %name-upstream.patch
-#BuildRequires: openjpeg-devel jbig2dec-devel desktop-file-utils
-#BuildRequires: libjpeg-devel freetype-devel libXext-devel
 
-# Automatically added by buildreq on Wed May 29 2013
+
+# Automatically added by buildreq on Thu Aug 22 2013
 # optimized out: libX11-devel pkg-config xorg-xextproto-devel xorg-xproto-devel
-BuildRequires: libXext-devel libfreetype-devel libjbig2dec-devel libjpeg-devel libopenjpeg-devel zlib-devel
+BuildRequires: libXext-devel libfreetype-devel libjbig2dec-devel libjpeg-devel libssl-devel zlib-devel
 
 %description
 MuPDF is a lightweight PDF viewer and toolkit written in portable C.
@@ -42,42 +41,41 @@ applications that use mupdf and static libraries
 
 %prep
 %setup -n %name-%version-source
-%patch0 -p1
+#patch0 -p1
+
+# TODO rebuild with new openjpeg
+#BuildRequires: openjpeg-devel
+rm -rf thirdparty/[^o]*
+sed -i 's/-lopenjpeg //' platform/debian/mupdf.pc
 
 %build
 %make_build
 
 %install
-make DESTDIR=%buildroot install prefix=%buildroot/usr libdir=%buildroot%_libdir
+# TODO deal with platform/debian/mupdf.install / iconsdirs
+%makeinstall
 install -D %SOURCE1 %buildroot%_desktopdir/%name.desktop
-install -D -m644 debian/%name.xpm %buildroot/%_datadir/pixmaps/%name.xpm
-## filename conflict with poppler
-### mv %buildroot%_bindir/pdfinfo %buildroot%_bindir/pdfinfo-mupdf
-## fix strange permissons
-chmod 0644 %buildroot/%_includedir/*.h
-chmod 0644 %buildroot%_libdir/*.a
-find %buildroot/%_mandir -type f -exec chmod 0644 {} \;
+install -D -m644 platform/debian/%name.xpm %buildroot/%_datadir/pixmaps/%name.xpm
+install -D platform/debian/mupdf.pc %buildroot%_pkgconfigdir/mupdf.pc
 
 %files
-%doc COPYING README
-%_bindir/mupdf
-%_bindir/mudraw
-%_bindir/mubusy
-%_datadir/applications/mupdf.desktop
-%_mandir/man1/mudraw.1.gz
-%_mandir/man1/mubusy.1.gz
-%_mandir/man1/mupdf.1.gz
+%doc %_defaultdocdir/%name
+%_bindir/*
+%_desktopdir/mupdf.desktop
+%_mandir/man1/*
 %_datadir/pixmaps/mupdf.xpm
 
 %files devel
-%_includedir/fitz.h
-%_includedir/memento.h
-%_includedir/mucbz.h
-%_includedir/mupdf.h
-%_includedir/muxps.h
-%_libdir/libfitz.a
+%_pkgconfigdir/*
+%_includedir/%name
+%_libdir/lib*.a
 
 %changelog
+* Thu Aug 22 2013 Fr. Br. George <george@altlinux.ru> 1.3-alt1
+- Autobuild version bump to 1.3
+- Fix build
+- Keep builtin static openjpeg-2.0 until it arrives in distro
+
 * Wed May 29 2013 Fr. Br. George <george@altlinux.ru> 1.1-alt1
 - Initial build from FC
 
