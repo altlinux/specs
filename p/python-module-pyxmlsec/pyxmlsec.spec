@@ -1,12 +1,12 @@
-Name:		python-module-pyxmlsec
-Version:	0.3.0
-Release:	alt1
+Name: python-module-pyxmlsec
+Version: 0.3.1
+Release: alt1
 %setup_python_module pyxmlsec
-License:	GPLv2	
-Group:		Development/Python
-Summary:	Python bindings for the XML Security library (XMLSec)
-Source:		pyxmlsec-%version.tar.gz
-URL:		http://pyxmlsec.labs.libre-entreprise.org/
+License: GPLv2
+Group: Development/Python
+Summary: Python bindings for the XML Security library (XMLSec)
+Source: pyxmlsec-%version.tar.gz
+Url: http://pyxmlsec.labs.libre-entreprise.org/
 
 # Automatically added by buildreq on Fri Jun 08 2012
 # optimized out: alternatives libgnutls-devel libltdl7-devel libnspr-devel libnss-devel libssl-devel libxml2-devel libxmlsec1-devel libxmlsec1-gcrypt libxmlsec1-gcrypt-devel libxmlsec1-gnutls libxmlsec1-nss libxmlsec1-openssl libxslt-devel pkg-config python-base python-modules python-modules-compiler python-modules-email
@@ -51,6 +51,9 @@ rm %buildroot%python_sitelibdir/xmlsecmod.so
 %_altdir/*
 
 %changelog
+* Thu Aug 22 2013 Fr. Br. George <george@altlinux.ru> 0.3.1-alt1
+- Autobuild version bump to 0.3.1
+
 * Fri Jun 08 2012 Fr. Br. George <george@altlinux.ru> 0.3.0-alt1
 - Initial bulid from scratch
 
