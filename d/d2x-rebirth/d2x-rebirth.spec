@@ -1,6 +1,6 @@
 Summary: The port of Descent 2 for Linux
 Name: d2x-rebirth
-Version: 0.57.3
+Version: 0.58.1
 Release: alt1
 License: GPL
 Group: Games/Arcade
@@ -163,6 +163,9 @@ install -m 644 %name-gl.desktop %buildroot%_desktopdir
 %_desktopdir/%name-gl.desktop
 
 %changelog
+* Thu Aug 22 2013 Fr. Br. George <george@altlinux.ru> 0.58.1-alt1
+- Autobuild version bump to 0.58.1
+
 * Fri Jun 08 2012 Fr. Br. George <george@altlinux.ru> 0.57.3-alt1
 - Autobuild version bump to 0.57.3
 
