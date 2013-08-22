@@ -1,6 +1,6 @@
 Summary: Exploring Conway's Game of Life and other cellular automata
 Name: golly
-Version: 2.4
+Version: 2.5
 Release: alt1
 
 License: GPL
@@ -9,14 +9,12 @@ Source: %name-%version-src.tar.gz
 Source1: %name.sh
 Source2: %name.desktop
 Group: Education
-Packager: Fr. Br. George <george@altlinux.ru>
 
 # TODO: split binary and data
 %add_python_req_skip glife golly
 
 Patch: %name-2.1-opensave-alt.patch
-Patch1: %name-1.3-perl_syntax-alt.patch
-Patch3: %name-gcc43.patch
+Patch1: %name-2.5-perl_syntax-alt.patch
 
 # Automatically added by buildreq on Tue Sep 28 2010
 BuildRequires: ImageMagick-tools gcc-c++ libwxGTK-devel perl-devel python-devel zlib-devel
@@ -51,24 +49,26 @@ Game of Life and other cellular automata.
 %prep
 %setup -n %name-%version-src
 #patch -p1
-%patch1 -p0
-#patch3 -p1
-#find . -name ".??*" | xargs rm
-sed -i 's/NEEDED +libperl\[/NEEDED +libperl[-/' configure
+%patch1 -p1
+sed -i 's/NEEDED +libperl\[/NEEDED +libperl[-/' gui-wx/configure/configure
 
 %build
-#autoreconf
-#sed -i 's/libperl\[0/libperl[-0/g' configure
+cd gui-wx
 sed -i '/#include <EXTERN.h>/a\
 #define PERL_GLOBAL_STRUCT
 ' wxperl.cpp
+cd configure
 %configure --with-perl-shlib=%_libdir/perl5/CORE/libperl.so
 
 %make_build
-for N in 16 32 48; do convert appicon$N.ico $N.png; done
+
+cd ..
+for N in 16 32 48; do convert icons/appicon$N.ico $N.png; done
 
 %install
+cd gui-wx/configure
 %makeinstall
+cd ..
 for N in 16 32 48; do
   install -D $N.png %buildroot%_iconsdir/hicolor/${N}x$N/apps/%name.png
 done
@@ -77,7 +77,7 @@ install -D %SOURCE2 %buildroot%_desktopdir/%name.desktop
 
 %files
 %exclude %_datadir/doc/%name
-%doc README TODO
+%doc docs/*
 %_bindir/*
 %_datadir/%name
 %_miconsdir/%name.png
@@ -86,6 +86,10 @@ install -D %SOURCE2 %buildroot%_desktopdir/%name.desktop
 %_desktopdir/*
 
 %changelog
+* Thu Aug 22 2013 Fr. Br. George <george@altlinux.ru> 2.5-alt1
+- Autobuild version bump to 2.5
+- Fix build
+
 * Sun Jul 22 2012 Fr. Br. George <george@altlinux.ru> 2.4-alt1
 - Autobuild version bump to 2.4
 
