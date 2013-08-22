@@ -1,5 +1,5 @@
 Name: xfd
-Version: 1.1.1
+Version: 1.1.2
 Release: alt1
 Summary: Display all the characters in an X font
 Group: System/X11
@@ -39,6 +39,9 @@ shown in increasing order from left to right, top to bottom.
 %_man1dir/*
 
 %changelog
+* Thu Aug 22 2013 Fr. Br. George <george@altlinux.ru> 1.1.2-alt1
+- Autobuild version bump to 1.1.2
+
 * Wed Feb 22 2012 Fr. Br. George <george@altlinux.ru> 1.1.1-alt1
 - Autobuild version bump to 1.1.1
 
