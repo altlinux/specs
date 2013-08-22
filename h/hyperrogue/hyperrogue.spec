@@ -1,15 +1,15 @@
-Name:		hyperrogue
-Version:	37
-Release:	alt1
-Source:		%name-%version.zip
-URL:		http://www.roguetemple.com/z/hyper.php
-License:	GPLv2
-Group:		Games/Adventure
-Summary:	Roguelike in non-euclidian world
+Name: hyperrogue
+Version: 38
+Release: alt1
+Source: %name-%version.zip
+Url: http://www.roguetemple.com/z/hyper.php
+License: GPLv2
+Group: Games/Adventure
+Summary: Roguelike in non-euclidian world
 
-BuildPreReq:	rpm-macros-fonts
+BuildPreReq: rpm-macros-fonts
 
-Requires:	fonts-ttf-vera
+Requires: fonts-ttf-vera
 
 # Automatically added by buildreq on Thu Jul 11 2013
 # optimized out: fontconfig libSDL-devel libstdc++-devel
@@ -73,6 +73,9 @@ install -D %name.desktop %buildroot%_desktopdir/%name.desktop
 %_desktopdir/%name.desktop
 
 %changelog
+* Thu Aug 22 2013 Fr. Br. George <george@altlinux.ru> 38-alt1
+- Autobuild version bump to 38
+
 * Thu Jul 11 2013 Fr. Br. George <george@altlinux.ru> 37-alt1
 - Initial build for ALT
 
