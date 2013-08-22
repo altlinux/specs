@@ -2,7 +2,7 @@
 %def_with splash
 
 Name: propagator
-Version: 20130716
+Version: 20130821
 Release: alt1
 
 Summary: 'Early userspace' set of binaries
@@ -37,6 +37,9 @@ make \
 %_sbindir/propagator
 
 %changelog
+* Wed Aug 21 2013 Fr. Br. George <george@altlinux.ru> 20130821-alt1
+- switch back to nfsmount (mount.nfs fails on NFSv3)
+
 * Tue Jul 16 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 20130716-alt1
 - ext4 support added
 
