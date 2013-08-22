@@ -1,5 +1,5 @@
 Name: xload
-Version: 1.1.1
+Version: 1.1.2
 Release: alt1
 Summary: System load average display for X
 Group: System/X11
@@ -39,6 +39,9 @@ load average.
 %_mandir/man1/xload.1.gz
 
 %changelog
+* Thu Aug 22 2013 Fr. Br. George <george@altlinux.ru> 1.1.2-alt1
+- Autobuild version bump to 1.1.2
+
 * Tue Apr 17 2012 Fr. Br. George <george@altlinux.ru> 1.1.1-alt1
 - Autobuild version bump to 1.1.1
 
