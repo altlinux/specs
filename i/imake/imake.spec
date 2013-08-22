@@ -1,6 +1,6 @@
 Name: imake
-Version: 1.0.5
-Release: alt2
+Version: 1.0.6
+Release: alt1
 
 Summary: C preprocessor interface to the make utility
 License: MIT/X11
@@ -44,6 +44,9 @@ descriptions of the various items to be built.
 %_man1dir/*
 
 %changelog
+* Thu Aug 22 2013 Fr. Br. George <george@altlinux.ru> 1.0.6-alt1
+- Autobuild version bump to 1.0.6
+
 * Mon Mar 11 2013 Fr. Br. George <george@altlinux.ru> 1.0.5-alt2
 - Rebuild with new buildreq
 
