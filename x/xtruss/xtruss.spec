@@ -1,5 +1,5 @@
 Name: xtruss
-Version: 9854
+Version: 9879
 Release: alt1
 Summary: Trace X protocol exchanges, in the manner of strace
 License: MIT/X11
@@ -34,6 +34,9 @@ halibut --man=%name.1 %name.but
 %_man1dir/*
 
 %changelog
+* Thu Aug 22 2013 Fr. Br. George <george@altlinux.ru> 9879-alt1
+- Autobuild version bump to 9879
+
 * Mon Jun 10 2013 Fr. Br. George <george@altlinux.ru> 9854-alt1
 - Autobuild version bump to 9854
 
