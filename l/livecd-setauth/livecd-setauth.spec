@@ -1,6 +1,6 @@
 Name: livecd-setauth
 Version: 0.7
-Release: alt2
+Release: alt3
 
 Summary: Setup krb5 and cifs homes in livecd
 License: GPL
@@ -31,6 +31,9 @@ install -pD -m0644 livecd-setauth/livecd-setauth.service %buildroot%_unitdir/liv
 
 
 %changelog
+* Thu Aug 22 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.7-alt3
+- start before dm in systemd
+
 * Wed Aug 21 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.7-alt2
 - systemd support
 
