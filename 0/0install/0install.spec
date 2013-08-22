@@ -1,10 +1,10 @@
 Name: 0install
-Version: 2.2
+Version: 2.3.3
 Release: alt1
 Summary: Decentralised cross-distribution software installation system
 Group: System/Configuration/Packaging
 Source: %name-%version.tar.bz2
-Patch: 0install-2.2-man1dir.patch
+Patch: 0install-2.3-man1dir.patch
 Url: http://0install.net/
 License: LGPLv2
 BuildArch: noarch
@@ -59,7 +59,7 @@ Bash completion for %name
 
 %prep
 %setup
-%patch -p1
+%patch
 
 %build
 %python_build
@@ -85,6 +85,11 @@ Bash completion for %name
 %_datadir/bash-completion/completions/0install
 
 %changelog
+* Thu Aug 22 2013 Fr. Br. George <george@altlinux.ru> 2.3.3-alt1
+- Autobuild version bump to 2.3.3
+- Drop newly introduced ocaml bindings
+- Fix patch
+
 * Mon Jun 10 2013 Fr. Br. George <george@altlinux.ru> 2.2-alt1
 - Autobuild version bump to 2.2
 - Fix patch
