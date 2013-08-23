@@ -6,7 +6,7 @@
 %define packagetype lang
 %define packagename hu
 %define packagversion 2.4.0
-%define packagedate 201308090658
+%define packagedate 201308211011
 %define moodlebranch 2.4
 %define moodlepackagename %moodle_name%moodlebranch
 %define langname Hungarian
@@ -57,6 +57,10 @@ cp -rp * %buildroot%moodle_langdir/
 %moodle_langdir/*
 
 %changelog
+* Fri Aug 23 2013 Cronbuild Service <cronbuild@altlinux.org> 2.4.0.201308211011-alt1
+- repocop cronbuild 20130823. At your service.
+- hu.zip build 2013-08-21 10:11 UTC
+
 * Fri Aug 09 2013 Cronbuild Service <cronbuild@altlinux.org> 2.4.0.201308090658-alt1
 - repocop cronbuild 20130809. At your service.
 - hu.zip build 2013-08-09 06:58 UTC
