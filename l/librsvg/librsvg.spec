@@ -1,5 +1,5 @@
 %define bname librsvg
-%define ver_major 2.36
+%define ver_major 2.39
 %define api_ver 2.0
 %define gtk_api_ver 2.0
 %define gtk3_api_ver 3.0
@@ -12,7 +12,7 @@
 %def_enable vala
 
 Name: %bname
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1
 
 Summary: An SVG library based on libart
@@ -30,7 +30,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%bname/%ver_major/%bname-%version.
 %define gtk3_ver 3.0.0
 %define libxml2_ver 2.7.0
 %define cairo_ver 1.2.0
-%define pango_ver 1.10.0
+%define pango_ver 1.32.6
 %define libgsf_ver 1.6.0
 %define croco_ver 0.6.7
 %define vala_ver 0.17.1.26
@@ -192,6 +192,9 @@ GObject introspection devel data for the %name library
 %{?_enable_pixbuf_loader:%exclude %_libdir/gdk-pixbuf-%gtk_api_ver/*/loaders/*.la}
 
 %changelog
+* Fri Aug 23 2013 Yuri N. Sedunov <aris@altlinux.org> 2.39.0-alt1
+- 2.39.0
+
 * Tue Oct 16 2012 Yuri N. Sedunov <aris@altlinux.org> 2.36.4-alt1
 - 2.36.4
 
