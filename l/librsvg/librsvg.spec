@@ -1,5 +1,5 @@
 %define bname librsvg
-%define ver_major 2.39
+%define ver_major 2.36
 %define api_ver 2.0
 %define gtk_api_ver 2.0
 %define gtk3_api_ver 3.0
@@ -12,8 +12,9 @@
 %def_enable vala
 
 Name: %bname
-Version: %ver_major.0
-Release: alt1
+Version: %ver_major.4
+Release: alt2
+Epoch: 1
 
 Summary: An SVG library based on libart
 License: LGPLv2+
@@ -59,7 +60,7 @@ An SVG library based on libart.
 %package devel
 Summary: Libraries and include files for developing with librsvg
 Group: Development/C
-Requires: %bname = %version-%release
+Requires: %bname = %EVR
 
 %description devel
 This package provides the necessary development libraries and include
@@ -69,7 +70,7 @@ files to allow you to develop with librsvg.
 Summary: Development documentation for %bname
 Group: Development/Documentation
 BuildArch: noarch
-Conflicts: %bname < %version-%release
+Conflicts: %bname < %EVR
 
 %description devel-doc
 %bname is a SVG library based on libart.
@@ -78,7 +79,7 @@ This package contains development documentation for %bname
 %package devel-static
 Summary: Static libraries for developing with librsvg
 Group: Development/C
-Requires: %name-devel = %version-%release
+Requires: %name-devel = %EVR
 
 %description devel-static
 This package provides the necessary static libraries files to allow you
@@ -87,7 +88,7 @@ to build static software with librsvg.
 %package utils
 Summary: Utilities to manipulate SVG files
 Group: Graphics
-Requires: %bname = %version-%release
+Requires: %bname = %EVR
 
 %description utils
 This package contains small utilities to manipulate SVG files found in
@@ -96,7 +97,7 @@ This package contains small utilities to manipulate SVG files found in
 %package utils-gtk3
 Summary: Utility to view SVG files
 Group: Graphics
-Requires: %bname = %version-%release
+Requires: %bname = %EVR
 
 %description utils-gtk3
 This package provides simple GTK+3 based SVG viewer.
@@ -104,7 +105,7 @@ This package provides simple GTK+3 based SVG viewer.
 %package -n libgtk-engine-svg
 Summary: A GTK+ engine for graphical themes that use SVG images.
 Group: Graphical desktop/GNOME
-Requires: %bname = %version-%release
+Requires: %bname = %EVR
 
 %description -n libgtk-engine-svg
 This package contains a GTK+2 engine that renders graphical themes with SVG
@@ -113,7 +114,7 @@ images in them.
 %package gir
 Summary: GObject introspection data for the %name library
 Group: System/Libraries
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description gir
 GObject introspection data for the %name library
@@ -122,8 +123,8 @@ GObject introspection data for the %name library
 Summary: GObject introspection devel data for the %name library
 Group: Development/Other
 BuildArch: noarch
-Requires: %name-gir = %version-%release
-Requires: %name-devel = %version-%release
+Requires: %name-gir = %EVR
+Requires: %name-devel = %EVR
 
 %description gir-devel
 GObject introspection devel data for the %name library
@@ -192,6 +193,9 @@ GObject introspection devel data for the %name library
 %{?_enable_pixbuf_loader:%exclude %_libdir/gdk-pixbuf-%gtk_api_ver/*/loaders/*.la}
 
 %changelog
+* Fri Aug 23 2013 Yuri N. Sedunov <aris@altlinux.org> 1:2.36.4-alt2
+- back to 2.36.4
+
 * Fri Aug 23 2013 Yuri N. Sedunov <aris@altlinux.org> 2.39.0-alt1
 - 2.39.0
 
