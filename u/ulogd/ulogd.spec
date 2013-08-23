@@ -1,6 +1,8 @@
 Name: ulogd
-Version: 1.24
-Release: alt16
+Version: 2.0.2
+Release: alt1
+
+%def_disable nfacct
 
 Summary: ulogd - The userspace logging daemon for netfilter
 Url: http://www.netfilter.org/projects/ulogd/
@@ -13,9 +15,17 @@ Source2: %name.logrotate
 Source3: %name.service
 Patch0: %name-%version-%release.patch
 
+# From Debian
+Patch1: ulogd-2.0.2-debian-write-pidfile.patch
+Patch2: ulogd-2.0.2-debian-improve-pid-file-handling.patch
+
 BuildRequires(pre): rpm-build-licenses
-# Automatically added by buildreq on Tue Mar 20 2007
-BuildRequires: libpcap-devel zlib-devel libMySQL-devel postgresql-devel libsqlite3-devel
+BuildRequires: libpcap-devel zlib-devel libMySQL-devel postgresql-devel libsqlite3-devel libdbi-devel
+BuildRequires: libnfnetlink-devel libmnl-devel libnetfilter_log-devel libnetfilter_conntrack-devel
+%{?_enable_nfacct:BuildRequires: libnetfilter_acct-devel}
+
+# For documentation
+BuildRequires: linuxdoc-tools OpenSP
 
 %description
 Ulogd is an universal logging daemon for the ULOG target of netfilter, the
@@ -27,7 +37,6 @@ easy-to-use plugin interface to add new protocols and new output targets.
 Summary: MySQL output plugin for ulogd
 Group: System/Servers
 Requires: %name = %version-%release
-Requires: zlib
 
 %description mysql
 ulogd-mysql is a MySQL output plugin for ulogd. It enables logging of
@@ -51,18 +60,32 @@ Requires: %name = %version-%release
 ulogd-sqlite3 is a SQLite output plugin for ulogd. It enables logging of
 firewall information into a SQLite v.3 database.
 
+%package dbi
+Summary: Libdbi framework output plugin for %name
+Group: System/Servers
+Requires: %name = %version-%release
+
+%description dbi
+%name-dbi is a libdbi output plugin for %name. It enables logging of
+firewall information through a libdbi interface.
+
 %prep
 %setup
 %patch0 -p1
 
+%patch1 -p1
+%patch2 -p1
+
 %build
 #export CFLAGS="$RPM_OPT_FLAGS -fPIC"
+%autoreconf
 %configure \
-	--with-mysql=/usr/lib/mysql \
-	--with-pgsql=/usr/lib/pgsql \
-	--with-sqlite3 \
-	--with-sqlite3-log-ip-as-string
+	--disable-static \
+	--with-dbi-lib=%_libdir \
+	%{subst_enable nfacct}
+
 make DESTDIR=%buildroot
+make -C doc
 #rm -f ulogd
 #export LDFALGS="-pie"
 #make ulogd
@@ -72,7 +95,7 @@ mkdir -p %buildroot/%_logdir/%name
 mkdir -p %buildroot/%_sysconfdir
 mkdir -p %buildroot/%_libdir/%name
 mkdir -p %buildroot/%_sbindir
-make install DESTDIR=%buildroot
+%makeinstall_std
 
 mkdir -p %buildroot/%_sysconfdir/rc.d/init.d
 install %SOURCE1 %buildroot/%_sysconfdir/rc.d/init.d/%name
@@ -83,16 +106,18 @@ mkdir -p %buildroot/%_sysconfdir/logrotate.d
 install %SOURCE2 %buildroot/%_sysconfdir/logrotate.d/%name
 
 mkdir -p %buildroot/%_datadir/%name
-install doc/mysql.table %buildroot/%_datadir/%name/
-install doc/mysql.table.ipaddr-as-string %buildroot/%_datadir/%name/
-install doc/pgsql.table %buildroot/%_datadir/%name/
+install doc/*.sql %buildroot/%_datadir/%name/
 install doc/sqlite3.table %buildroot/%_datadir/ulogd/
 mkdir -p %buildroot/%_localstatedir/ulogd/
 
 mkdir -p %buildroot/%_man8dir
 install %name.8 %buildroot/%_man8dir/%name.8
 
-rm -rf %buildroot/%_includedir/libipulog
+install -Dm0640 %name.conf %buildroot%_sysconfdir/%name.conf
+
+%if_disabled nfacct
+sed -i -r 's;^(plugin="%_libdir/ulogd/ulogd_inpflow_NFACCT\.so");#\1;' %buildroot%_sysconfdir/%name.conf
+%endif
 
 %pre
 %_sbindir/groupadd -r -f %name >/dev/null 2>&1
@@ -110,29 +135,46 @@ rm -rf %buildroot/%_includedir/libipulog
 %dir %_libdir/%name
 %attr(1770,root,ulogd) %_logdir/%name
 %_libdir/%name/*.so
-%exclude %_libdir/%name/ulogd_MYSQL.so
-%exclude %_libdir/%name/ulogd_PGSQL.so
-%exclude %_libdir/%name/ulogd_SQLITE3.so
 %doc COPYING AUTHORS README
-%doc doc/%name.txt doc/%name.a4.ps doc/%name.html
+%doc doc/%name.txt doc/%name.html
 %_man8dir/*
 %attr(1770,root,ulogd) %_localstatedir/%name/
 %dir %_datadir/%name/
+%exclude  %_libdir/%name/*.la
+%exclude %_libdir/%name/ulogd_output_MYSQL.so
+%exclude %_libdir/%name/ulogd_output_PGSQL.so
+%exclude %_libdir/%name/ulogd_output_SQLITE3.so
+%exclude %_libdir/%name/ulogd_output_DBI.so
 
 %files mysql
-%_libdir/%name/ulogd_MYSQL.so
-%_datadir/%name/mysql.table
-%_datadir/%name/mysql.table.ipaddr-as-string
+%_libdir/%name/ulogd_output_MYSQL.so
+%_datadir/%name/mysql-*.sql
 
 %files pgsql
-%_libdir/%name/ulogd_PGSQL.so
-%_datadir/%name/pgsql.table
+%_libdir/%name/ulogd_output_PGSQL.so
+%_datadir/%name/pgsql-*.sql
 
 %files sqlite3
-%_libdir/%name/ulogd_SQLITE3.so
+%_libdir/%name/ulogd_output_SQLITE3.so
 %_datadir/%name/sqlite3.table
 
+%files dbi
+%_libdir/%name/ulogd_output_DBI.so
+
 %changelog
+* Thu Aug 22 2013 Mikhail Efremov <sem@altlinux.org> 2.0.2-alt1
+- Update ulogd.logrotate.
+- Run ulogd from user "ulogd".
+- init script: Use --pidfile option for ulogd.
+- Patches from Debian:
+    + Implement PID file writing
+    + Improve pid file handling
+    + Run nice() before giving up root with setuid().
+    + Enable NFLOG => LOGEMU stack by default.
+- Change logfiles and databases paths.
+- Don't build documentation in PS format.
+- Updated to 2.0.2.
+
 * Tue Mar 12 2013 Mikhail Efremov <sem@altlinux.org> 1.24-alt16
 - Fix plugins packaging.
 - Added systemd service file (closes: #28096).
@@ -171,7 +213,7 @@ rm -rf %buildroot/%_includedir/libipulog
 
 * Mon Nov  5 2007 Avramenko Andrew <liks@altlinux.ru> 1.24-alt6
 - now you can run ulogd under specified user (default: ulogd)
-- add ulogd.8 manpage 
+- add ulogd.8 manpage
 - small changes in the logrotate script
 - removed libipulog-devel-static
 
