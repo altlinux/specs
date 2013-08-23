@@ -1,5 +1,5 @@
 Name: xwd
-Version: 1.0.5
+Version: 1.0.6
 Release: alt1
 
 Summary: dump an image of an X window
@@ -9,7 +9,7 @@ Group: System/X11
 Url: http://xorg.freedesktop.org
 Source: %name-%version.tar.bz2
 
-BuildRequires: libX11-devel libXmu-devel pkg-config xorg-proto-devel xorg-util-macros
+BuildRequires: libX11-devel libXmu-devel pkg-config xorg-proto-devel xorg-util-macros libxkbfile-devel
 
 %description
 Xwd is an X Window System window dumping utility.  Xwd allows  X  users
@@ -37,6 +37,9 @@ the dump is completed.
 %_man1dir/*
 
 %changelog
+* Fri Aug 23 2013 Fr. Br. George <george@altlinux.ru> 1.0.6-alt1
+- Autobuild version bump to 1.0.6
+
 * Wed Mar 21 2012 Fr. Br. George <george@altlinux.ru> 1.0.5-alt1
 - Autobuild version bump to 1.0.5
 
