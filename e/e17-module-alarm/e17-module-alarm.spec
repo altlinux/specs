@@ -2,7 +2,7 @@
 
 Name: e17-module-%_name
 Version: 0.1.0
-Release: alt4
+Release: alt5
 
 Summary: %_name module for the Enlightenment desktop
 License: BSD
@@ -38,6 +38,9 @@ BuildRequires: edje embryo_cc
 %doc AUTHORS ChangeLog COPYING* NEWS README
 
 %changelog
+* Fri Aug 23 2013 Yuri N. Sedunov <aris@altlinux.org> 0.1.0-alt5
+- rebuilt for e17-0.17.4
+
 * Thu May 16 2013 Yuri N. Sedunov <aris@altlinux.org> 0.1.0-alt4
 - rebuilt for e17-0.17.3
 

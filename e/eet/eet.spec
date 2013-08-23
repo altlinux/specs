@@ -2,7 +2,7 @@
 %def_disable static
 
 Name: eet
-Version: 1.7.7
+Version: 1.7.8
 %ifdef beta
 Release: alt1.%beta
 %else
@@ -16,7 +16,7 @@ URL: http://www.enlightenment.org/
 
 Source: http://download.enlightenment.org/releases/%name-%version.tar.bz2
 
-BuildRequires: libeina-devel >= 1.7.7 libjpeg-devel libgnutls-devel libgcrypt-devel zlib-devel
+BuildRequires: libeina-devel >= 1.7.8 libjpeg-devel libgnutls-devel libgcrypt-devel zlib-devel
 %{?_enable_static:BuildPreReq: glibc-devel-static}
 %{?_enable_tests:BuildRequires: libcheck-devel}
 BuildRequires: doxygen
@@ -118,6 +118,9 @@ Utils for operate with Eet data
 %_bindir/*
 
 %changelog
+* Fri Aug 23 2013 Yuri N. Sedunov <aris@altlinux.org> 1.7.8-alt1
+- 1.7.8
+
 * Wed May 15 2013 Yuri N. Sedunov <aris@altlinux.org> 1.7.7-alt1
 - 1.7.7
 

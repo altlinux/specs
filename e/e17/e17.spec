@@ -10,7 +10,7 @@
 # TODO: pam CoreFoundation
 
 Name: e17
-Version: 0.17.3
+Version: 0.17.4
 
 %ifdef cvs_date
 Release: %rel.%cvs_date
@@ -52,7 +52,6 @@ Provides: e17-default
 Requires: terminology
 Requires: evas_generic_loaders dbus-tools-gui edbus eeze
 Requires: empower
-Requires: pm-utils
 # for menu
 Requires: gnome-icon-theme
 Requires: wm-common-freedesktop
@@ -111,6 +110,7 @@ to use Enlightenment as windowmanager in GNOME 2 session
 %patch11 -p1
 
 %build
+gettextize -f
 %autoreconf
 export CFLAGS="$CFLAGS `pkg-config --cflags dbus-1` -g -ggdb3"
 %configure \
@@ -193,6 +193,10 @@ cp %SOURCE11 %buildroot%_sysconfdir/enlightenment/sysactions.conf
 %_datadir/gnome/wm-properties/*.desktop
 
 %changelog
+* Fri Aug 23 2013 Yuri N. Sedunov <aris@altlinux.org> 1:0.17.4-alt1
+- 0.17.4
+- sysactions.conf: 's/halt/poweroff/'
+
 * Thu May 16 2013 Yuri N. Sedunov <aris@altlinux.org> 1:0.17.3-alt1
 - 0.17.3
 
