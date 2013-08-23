@@ -1,5 +1,5 @@
 Name: tatham-puzzles
-Version: 9861
+Version: 9976
 Release: alt1
 License: MIT
 Group: Games/Puzzles
@@ -35,11 +35,14 @@ Stand-alone solvers for some of the %name puzzles.
 %description -l ru_RU.UTF-8 -n %name-solvers
 Набор "решалок" к некоторым головоломкам из %name.
 
+# TODO separate puzzles/js into another package
+# TODO separate docs
+# TODO add help links and/or text into launcher
+# TODO separate all the desktop files into mandatory package in the sake of launcher
+
 %prep
 %setup -n puzzles-r%version -a2
-
 ./mkfiles.pl
-sed -f %SOURCE1 < Makefile > Makefile.linux
 
 sed '/^IN=/s@.*@IN="%_defaultdocdir/%name-%version/index.html"@
 /^GBD=/s@.*@GBD="%_gamesbindir"@' < %SOURCE3 > %name
@@ -61,7 +64,9 @@ chmod +x mkicons
 cp %SOURCE4 .
 
 %build
-%make_build -f Makefile.linux
+%autoreconf
+%configure --bindir=%_gamesbindir
+%make_build
 
 xvfb-run ./mkicons
 sh %SOURCE3 desktop
@@ -79,7 +84,8 @@ END-INFO-DIR-ENTRY\
 
 %install
 mkdir -p %buildroot/%_gamesbindir %buildroot%_desktopdir %buildroot%_miconsdir %buildroot%_liconsdir %buildroot%_niconsdir %buildroot%_pixmapsdir/%name %buildroot%_infodir
-%makeinstall -f Makefile.linux
+%makeinstall bindir=%buildroot/%_gamesbindir
+#-f Makefile.linux
 install -m755 *solver %buildroot/%_gamesbindir/
 install -m 755 %name %buildroot/%_gamesbindir/
 install *.desktop %buildroot%_desktopdir/
@@ -105,6 +111,10 @@ install *.info* %buildroot%_infodir/
 %_infodir/*%{name}*
 
 %changelog
+* Fri Aug 23 2013 Fr. Br. George <george@altlinux.ru> 9976-alt1
+- Autobuild version bump to 9976
+- Fix build
+
 * Mon Jun 10 2013 Fr. Br. George <george@altlinux.ru> 9861-alt1
 - Autobuild version bump to 9861
 
