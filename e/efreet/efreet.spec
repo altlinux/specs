@@ -1,7 +1,7 @@
 %def_disable static
 
 Name: efreet
-Version: 1.7.7
+Version: 1.7.8
 %ifdef beta
 Release: alt1.%beta
 %else
@@ -15,7 +15,7 @@ Url: http://www.enlightenment.org/pages/efreet.html
 
 Source:  http://download.enlightenment.org/releases/%name-%version.tar.bz2
 
-BuildRequires: libecore-devel >= 1.7.7 libeina-devel >= 1.7.7 libeet-devel >= 1.7.7
+BuildRequires: libecore-devel >= 1.7.8 libeina-devel >= 1.7.8 libeet-devel >= 1.7.8
 BuildRequires: doxygen
 
 %package -n lib%name
@@ -77,6 +77,9 @@ Efreet development files
 %_includedir/efreet-1
 
 %changelog
+* Fri Aug 23 2013 Yuri N. Sedunov <aris@altlinux.org> 1.7.8-alt1
+- 1.7.8
+
 * Wed May 15 2013 Yuri N. Sedunov <aris@altlinux.org> 1.7.7-alt1
 - 1.7.7
 
