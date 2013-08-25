@@ -1,5 +1,5 @@
 Name: darktable
-Version: 1.1.2
+Version: 1.2.2
 Release: alt1
 
 Summary: Darktable is a virtual lighttable and darkroom for photographer
@@ -7,7 +7,7 @@ License: GPLv3
 Group: Graphics
 
 Url: http://darktable.sourceforge.net/
-Source: http://downloads.sourceforge.net/darktable/darktable-%version.tar.gz
+Source: http://downloads.sourceforge.net/darktable/darktable-%version.tar.xz
 Patch: %name-1.1.2-alt-lfs.patch
 
 # For gconf_schemasdir definition:
@@ -21,6 +21,7 @@ BuildRequires: libgomp-devel libgphoto2-devel libgtk+2-devel libjpeg-devel liblc
 BuildRequires: libpng-devel librsvg-devel libsqlite3-devel libtiff-devel libxkbfile-devel lsb-release openexr-devel perl-Pod-Parser
 BuildRequires: libjson-glib-devel libsoup-devel xsltproc
 BuildRequires: libcolord-gtk-devel
+BuildRequires: libGraphicsMagick-c++-devel libopenjpeg-devel
 
 %description
 darktable is a virtual light table and darkroom for photographers. It manages
@@ -66,6 +67,10 @@ install -pD -m644 data/pixmaps/48x48/darktable.png %buildroot%_liconsdir/darktab
 %exclude /usr/share/doc/darktable/
 
 %changelog
+* Sun Aug 25 2013 Yuri N. Sedunov <aris@altlinux.org> 1.2.2-alt1
+- 1.2.2
+- GraphicsMagick, libopenjpeg support
+
 * Thu Jan 24 2013 Yuri N. Sedunov <aris@altlinux.org> 1.1.2-alt1
 - 1.1.2
 
