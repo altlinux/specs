@@ -1,4 +1,5 @@
 %def_with	lightning
+%def_without system_mozldap
 
 %define sm_prefix	%_libdir/%name
 %define sm_datadir	%_datadir/%name
@@ -12,7 +13,7 @@
 %define sm_develdir               %sm_prefix-devel
 
 Name: seamonkey
-Version: 2.17.1
+Version: 2.20
 Release: alt1
 Epoch:   1
 Summary: Web browser and mail reader
@@ -37,9 +38,10 @@ Patch1:		seamonkey-2.2-alt-machOS-fix.patch
 Patch2:		seamonkey-2.0.14-alt-fix-plugin-path.patch
 Patch3:		xulrunner-noarch-extensions.patch
 #Patch4:		thunderbird-asm-directive.patch
+%if_with system_mozldap
 Patch5:		thunderbird-with-system-mozldap.patch
+%endif
 Patch6:		seamonkey-2.13.2-alt-fix-build.patch
-Patch7:		seamonkey-disable-cairo.patch
 
 PreReq:		urw-fonts
 
@@ -65,7 +67,9 @@ BuildRequires(pre): rpm-macros-alternatives
 BuildRequires(pre): browser-plugins-npapi-devel
 
 # Automatically added by buildreq on Sun Jul 16 2006
+%if_with system_mozldap
 BuildPreReq: mozldap-devel
+%endif
 BuildRequires: gcc-c++ libdnet-devel libgtk+2-devel libIDL-devel wget libarchive-devel lbzip2 libpixman-devel
 BuildRequires: libjpeg-devel libpng-devel libXinerama-devel libXext-devel
 BuildRequires: libXp-devel libXt-devel makedepend net-tools unzip libalsa-devel yasm libwireless-devel
@@ -141,9 +145,10 @@ tar -xf %SOURCE6 -C mailnews/extensions/
 %patch2 -p1
 %patch3 -p1
 #%patch4 -p1
+%if_with system_mozldap
 %patch5 -p1 -b .mozldap
+%endif
 %patch6 -p2
-%patch7 -p1
 
 ### Copying .mozconfig to build directory
 cp -f %SOURCE7 .mozconfig
@@ -171,10 +176,11 @@ export CFLAGS="$CFLAGS -DHAVE_USR_LIB64_DIR=1"
 
 export PREFIX="%_prefix"
 export LIBDIR="%_libdir"
+export SHELL="/bin/bash"
 export srcdir="$PWD"
 export MOZILLA_SRCDIR="$srcdir/mozilla"
 
-%__autoconf
+autoconf
 
 # On x86 architectures, Mozilla can build up to 4 jobs at once in parallel,
 # however builds tend to fail on other arches when building in parallel.
@@ -398,6 +404,26 @@ printf '%_bindir/xbrowser\t%_bindir/%name\t100\n' > %buildroot%_altdir/%name
 %_sysconfdir/rpm/macros.d/%name
 
 %changelog
+* Thu Aug 08 2013 Andrey Cherepanov <cas@altlinux.org> 1:2.20-alt1
+- New version 2.20
+- Security fixes:
+  - MFSA 2013-75 Local Java applets may read contents of local file system
+  - MFSA 2013-73 Same-origin bypass with web workers and XMLHttpRequest
+  - MFSA 2013-72 Wrong principal used for validating URI for some Javascript components
+  - MFSA 2013-70 Bypass of XrayWrappers using XBL Scopes
+  - MFSA 2013-69 CRMF requests allow for code execution and XSS attacks
+  - MFSA 2013-68 Document URI misrepresentation and masquerading
+  - MFSA 2013-67 Crash during WAV audio file decoding
+  - MFSA 2013-65 Buffer underflow when generating CRMF requests
+  - MFSA 2013-64 Use after free mutating DOM during SetBody
+  - MFSA 2013-63 Miscellaneous memory safety hazards
+- Drop deprecated seamonkey-disable-cairo.patch
+
+* Thu Jul 25 2013 Andrey Cherepanov <cas@altlinux.org> 1:2.19-alt1
+- New version 2.19
+- Set SHELL environment variable explicitly
+- Update Enigmail to 1.5.2
+
 * Tue May 28 2013 Andrey Cherepanov <cas@altlinux.org> 1:2.17.1-alt1
 - New version 2.17.1
 - Security fixes:
