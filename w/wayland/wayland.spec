@@ -3,7 +3,7 @@
 %def_disable doc
 
 Name: wayland
-Version: 1.2.0
+Version: 1.2.1
 Release: alt1
 
 Summary: Wayland protocol libraries
@@ -106,7 +106,6 @@ This package provides development files for Wayland cursor helper library.
 #mkdir -p %buildroot%_docdir/%name-devel/
 #mv %buildroot%_docdir/%name/* %buildroot%_docdir/%name-devel/
 
-
 %files devel
 #%doc %_docdir/%name-devel
 %_bindir/%name-scanner
@@ -143,6 +142,9 @@ This package provides development files for Wayland cursor helper library.
 %_pkgconfigdir/%name-cursor.pc
 
 %changelog
+* Sun Aug 25 2013 Yuri N. Sedunov <aris@altlinux.org> 1.2.1-alt1
+- 1.2.1
+
 * Sun Jul 14 2013 Yuri N. Sedunov <aris@altlinux.org> 1.2.0-alt1
 - 1.2.0
 
