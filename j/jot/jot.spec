@@ -1,7 +1,7 @@
 Name: jot
-Version: 1.43
+Version: 9.2
 Release: alt1
-Source: jot-1.43.tar
+Source: jot-9.2.tar
 Patch: %name-urandom.patch
 Url: http://www.freebsd.org/cgi/cvsweb.cgi/src/usr.bin/jot
 Summary: jot is a simple tool that prints random or sequential data
@@ -35,6 +35,10 @@ install %name.1 %buildroot%_man1dir/
 %_man1dir/%name.*
 
 %changelog
+* Thu Aug 22 2013 Fr. Br. George <george@altlinux.ru> 9.2-alt1
+- Autobuild version bump to 9.2
+- Switch to RELENG regular update
+
 * Thu Dec 13 2012 Fr. Br. George <george@altlinux.ru> 1.43-alt1
 - Autobuild version bump to 1.43 (no code changed, just version up)
 - Recode spec from koi8-r to utf8
