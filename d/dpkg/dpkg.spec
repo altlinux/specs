@@ -2,17 +2,17 @@
 
 Summary: Package maintenance system for Debian Linux
 Name: dpkg
-Version: 1.16.10
+Version: 1.17.1
 Release: alt1
 License: GPLv2+
 Group: System/Configuration/Packaging
 Url: http://packages.debian.org/unstable/base/dpkg.html
-Source0: ftp://ftp.debian.org/debian/pool/main/d/dpkg/%{name}_%version.tar.bz2
+Source0: ftp://ftp.debian.org/debian/pool/main/d/dpkg/%{name}_%version.tar.xz
 
 # Automatically added by buildreq on Mon Dec 13 2010
 BuildRequires: dpkg perl-podlators po4a zlib-devel
 
-BuildRequires: perl-Storable perl-TimeDate perl-File-FcntlLock
+BuildRequires: perl-Storable perl-TimeDate perl-File-FcntlLock perl-parent
 ## BuildRequires: gettext-devel
 ## Provides: usineagaz = 0.1-0.beta1mdk
 
@@ -78,6 +78,7 @@ cat dpkg-dev.lang >> %name.lang
 %lang(fr) %_mandir/fr/man?/*
 %lang(hu) %_mandir/hu/man?/*
 %lang(es) %_mandir/es/man?/*
+%lang(it) %_mandir/it/man?/*
 %_includedir/dpkg/*
 %_man3dir/*
 %_libdir/libdpkg.a
@@ -88,6 +89,10 @@ cat dpkg-dev.lang >> %name.lang
 %perl_vendorlib/Dpkg.pm
 
 %changelog
+* Wed Aug 21 2013 Fr. Br. George <george@altlinux.ru> 1.17.1-alt1
+- Autobuild version bump to 1.17.1
+- Use .xz instead of .bz2 archive
+
 * Sat Aug 03 2013 Vitaly Lipatov <lav@altlinux.ru> 1.16.10-alt1
 - new version 1.16.10 (with rpmrb script)
 
