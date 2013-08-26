@@ -1,7 +1,7 @@
 Summary: Visual brick construction tool for kids
 Summary (ru_RU.UTF-8): Детский конструктор, использующий блоки с шипами
 Name: leocad
-Version: 0.79.3
+Version: 0.80
 Release: alt1
 
 License: GPL
@@ -14,10 +14,12 @@ Source1: %name.desktop
 
 Patch1: %name-longint.patch
 Patch2: %name-gcc44.patch
-Patch3: %name-0.79.3-alt-DSO.patch
 
-BuildRequires: gcc-c++ libgtk+2-devel libjpeg-devel unzip libpng-devel libGL-devel
-BuildRequires: desktop-file-utils, ImageMagick
+# Automatically added by buildreq on Mon Aug 26 2013
+# optimized out: fontconfig libGL-devel libqt4-core libqt4-devel libqt4-gui libqt4-network libqt4-opengl libstdc++-devel zlib-devel
+BuildRequires: gcc-c++ phonon-devel
+
+BuildPreReq: rpm-build-xdg
 
 Requires: %name-data > 3000
 
@@ -39,35 +41,36 @@ LEGO, которые не спонсируют и не курируют LeoCAD, 
 %prep
 %setup -n %name
 %patch2 -p1
-%patch3 -p2
 
 %build
-%make PREFIX=/usr
+#make PREFIX=/usr
+%qmake_qt4
+%make_build
 
 %install
-%makeinstall DESTDIR=%buildroot
+%makeinstall INSTALL_ROOT=%buildroot
 
 for f in tools/icon/icon*.png; do
   size=${f##icon}; size=${size##.png}
   install -D $f %buildroot%_iconsdir/hicolor/${size}x$size/apps/%name.png
 done
 install -D tools/icon/icon.svg %buildroot%_iconsdir/hicolor/scalable/apps/%name.svg
-
-desktop-file-install \
-   --dir %buildroot%_desktopdir \
-   --vendor="" \
-   %SOURCE1
+install -D %SOURCE1 %buildroot%_desktopdir/%name.desktop
+install -D docs/leocad.1 %buildroot%_man1dir/leocad.1
 
 %files
+%doc %_defaultdocdir/%name
 %_bindir/*
 %_iconsdir/*/*/*/*
 %_man1dir/%name.*
 %_desktopdir/%name.desktop
 %_xdgmimedir/packages/*
-%_datadir/%name
-%_pixmapsdir/*
 
 %changelog
+* Mon Aug 26 2013 Fr. Br. George <george@altlinux.ru> 0.80-alt1
+- Autobuild version bump to 0.80
+- Fix build (upstream switched to Qt)
+
 * Mon Mar 25 2013 Fr. Br. George <george@altlinux.ru> 0.79.3-alt1
 - Autobuild version bump to 0.79.3
 - Fix build
