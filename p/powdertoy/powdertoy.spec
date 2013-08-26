@@ -1,14 +1,15 @@
 Name: powdertoy
-Version: 270
+Version: 88.1.272
 Release: alt1
 Summary: Classic 'falling sand' physics sandbox game
 Group: Games/Educational
+Epoch: 1
 License: GPL
 Url: http://powdertoy.co.uk/
 #Patch: %name-%version-%release.patch
 # GitHub https://github.com/FacialTurd/The-Powder-Toy/tags
-Source: build%version.tar.gz
-Patch: powdertoy-263-alt-xinit.patch
+Source: v%version.tar.gz
+Patch: powdertoy-88.1.272-alt-xinit.patch
 Obsoletes: powder
 
 # Automatically added by buildreq on Wed Apr 03 2013
@@ -21,7 +22,7 @@ physics sandbox game, it simulates air pressure and velocity as well as
 heat!
 
 %prep
-%setup -n The-Powder-Toy-build%version
+%setup -n The-Powder-Toy-%version
 %patch -p0
 cat > %name.sh <<@@@
 #!/bin/sh
@@ -65,7 +66,7 @@ install -D build/powder*-legacy %buildroot%_gamesbindir/%name.bin
 install -m755 %name.sh %buildroot%_gamesbindir/%name
 install -D %name.desktop %buildroot%_desktopdir/%name.desktop
 for N in powder-*.png; do
-	install -D $N %buildroot%_iconsdir/hicolor/$(basename ${$##*-} .png)/apps/%nameodone.png
+	install -D $N %buildroot%_iconsdir/hicolor/$(basename ${$##*-} .png)/apps/%name.png
 done
 
 %files
@@ -75,6 +76,14 @@ done
 %_iconsdir/hicolor/*/apps/*
 
 %changelog
+* Mon Aug 26 2013 Fr. Br. George <george@altlinux.ru> 1:88.1.272-alt1
+- Autobuild version bump to 88.1.272
+- Switch to versioning scheme (introducing Epoch)
+- Fix install typo
+
+* Thu Aug 22 2013 Fr. Br. George <george@altlinux.ru> 271-alt1
+- Autobuild version bump to 271
+
 * Mon May 20 2013 Fr. Br. George <george@altlinux.ru> 270-alt1
 - Autobuild version bump to 270
 
