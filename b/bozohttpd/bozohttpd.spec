@@ -1,11 +1,11 @@
 Name: bozohttpd
-Version: 20111118
-Release: alt2
+Version: 20130711
+Release: alt1
 Group: System/Servers
 Summary: Tiny http 1.1 server
 License: BSD
 Source: %name-%version.tar.bz2
-Patch: bozohttpd-20100920-gnu_source.patch
+Patch: bozohttpd-20130711-gnu_source.patch
 Patch1: bozohttpd-20100920-small.patch
 Url: http://www.eterna.com.au/bozohttpd/
 
@@ -26,14 +26,6 @@ the bozotic HTTP server
 bozohttpd is a small and secure http version 1.1 server. its main
 feature is the lack of features, reducing the code size and improving
 verifiability.
-
-please note that a bozohttpd versions 20090522 to 20100512, inclusive,
-have a serious wrong code generation interaction with GCC that has been
-fixed in the 20100617 release. additionally, all bozohttpd verisons
-prior to 20100920 have a flaw in the virtual hosting support, enabling
-access to files outside of the virtual root, that fixed in the 20100920
-release. any one using these versions should upgrade to the 20100920
-release, or newer.
 
 it supports CGI/1.1, HTTP/1.1, HTTP/1.0, HTTP/0.9, ~user translations,
 virtual hosting support, as well as multiple IP-based servers on
@@ -119,6 +111,10 @@ cd testsuite
 %_libdir/*.a
 
 %changelog
+* Thu Aug 22 2013 Fr. Br. George <george@altlinux.ru> 20130711-alt1
+- Autobuild version bump to 20130711
+- Fix build
+
 * Thu May 24 2012 Fr. Br. George <george@altlinux.ru> 20111118-alt2
 - DSO list completion
 
