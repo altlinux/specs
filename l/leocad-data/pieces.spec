@@ -2,7 +2,7 @@
 Summary: Data files for %progname: bricks, textures and font
 Summary(ru_RU.UTF-8): Файлы для %progname: описание блоков, текстуры и шрифт
 Name: leocad-data
-Version: 7114
+Version: 7439
 Release: alt1
 
 License: Distributable
@@ -32,6 +32,9 @@ for N in *; do install $N %buildroot%_datadir/%progname/; done
 %_datadir/%progname/*
 
 %changelog
+* Thu Aug 22 2013 Fr. Br. George <george@altlinux.ru> 7439-alt1
+- Autobuild version bump to 7439
+
 * Mon Mar 25 2013 Fr. Br. George <george@altlinux.ru> 7114-alt1
 - Autobuild version bump to 7114
 
