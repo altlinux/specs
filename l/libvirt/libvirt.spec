@@ -96,7 +96,7 @@
 
 Name: libvirt
 Version: 1.1.1
-Release: alt1
+Release: alt2
 Summary: Library providing a simple API virtualization
 License: LGPLv2+
 Group: System/Libraries
@@ -901,6 +901,9 @@ fi
 %doc examples/python
 
 %changelog
+* Mon Aug 26 2013 Alexey Shabalin <shaba@altlinux.ru> 1.1.1-alt2
+- snapshot of v1.1.1-maint branch (fixed CVE-2013-4239)
+
 * Thu Aug 08 2013 Alexey Shabalin <shaba@altlinux.ru> 1.1.1-alt1
 - 1.1.1
 - fixed CVE-2013-2230, CVE-2013-4153, CVE-2013-4154
