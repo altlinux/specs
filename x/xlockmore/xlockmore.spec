@@ -1,5 +1,5 @@
 Name: xlockmore
-Version: 5.42
+Version: 5.43
 Release: alt1
 
 Summary: An X terminal locking program
@@ -94,6 +94,9 @@ chmod 755 %buildroot%_bindir/*
 %exclude %_mandir/xlock.1*
 
 %changelog
+* Thu Aug 22 2013 Fr. Br. George <george@altlinux.ru> 5.43-alt1
+- Autobuild version bump to 5.43
+
 * Mon Apr 01 2013 Fr. Br. George <george@altlinux.ru> 5.42-alt1
 - Autobuild version bump to 5.42
 - Fix patch
