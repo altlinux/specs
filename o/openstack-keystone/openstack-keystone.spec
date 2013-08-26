@@ -3,15 +3,16 @@
 #
 Name:		openstack-keystone
 Version:	2012.2.0.6
-Release:	alt3
+Release:	alt4
 Summary:	OpenStack Identity Service
 
 Group:		System/Servers
 License:	ASL 2.0
 URL:		http://keystone.openstack.org/
-Source0:	%{name}-%{version}.tar.gz
+Source0:	%{name}-%{version}.tar
 Source1:	%{name}.logrotate
 Source2:	%{name}.service
+Source3:	%{name}.init
 Source5:	%{name}-sample-data
 
 #
@@ -26,15 +27,11 @@ BuildArch:	noarch
 BuildRequires:	python-devel
 BuildRequires:	python-module-sphinx >= 1.0
 BuildRequires:	python-module-iniparse
-BuildRequires:	systemd-units
 
 Requires:	python-module-keystone = %{version}-%{release}
 Requires:	python-module-keystoneclient
 
-Requires(post):		systemd-units
-Requires(preun):	systemd-units
-Requires(postun):	systemd-units
-Requires(pre):		shadow-utils
+Requires(pre):	shadow-utils
 
 %description
 Keystone is a Python implementation of the OpenStack
@@ -106,11 +103,10 @@ find keystone -name \*.py -exec sed -i '/\/usr\/bin\/env python/d' {} \;
 
 %build
 cp etc/keystone.conf.sample etc/keystone.conf
-
-%{__python} setup.py build
+%python_build
 
 %install
-%{__python} setup.py install --skip-build --root %{buildroot}
+%python_install
 
 # Delete tests
 rm -fr %{buildroot}%{python_sitelibdir}/tests
@@ -123,6 +119,7 @@ install -p -D -m 640 etc/default_catalog.templates %{buildroot}%{_sysconfdir}/ke
 install -p -D -m 640 etc/policy.json %{buildroot}%{_sysconfdir}/keystone/policy.json
 install -p -D -m 644 %{SOURCE1} %{buildroot}%{_sysconfdir}/logrotate.d/%{name}
 install -p -D -m 644 %{SOURCE2} %{buildroot}%{_unitdir}/%{name}.service
+install -p -D -m 755 %{SOURCE3} %{buildroot}%{_initdir}/%{name}
 # Install sample data script.
 install -p -D -m 755 tools/sample_data.sh %{buildroot}%{_datadir}/%{name}/sample_data.sh
 install -p -D -m 755 %{SOURCE5} %{buildroot}%{_bindir}/openstack-keystone-sample-data
@@ -147,6 +144,7 @@ popd
 rm -fr doc/build/html/.doctrees doc/build/html/.buildinfo
 
 %pre
+# FIXME:
 # 163:163 for keystone (openstack-keystone) - rhbz#752842
 getent group keystone >/dev/null || groupadd -r --gid 163 keystone
 getent passwd keystone >/dev/null || \
@@ -186,6 +184,7 @@ fi
 %{_bindir}/%{name}-sample-data
 %{_datadir}/%{name}
 %{_unitdir}/%{name}.service
+%{_initdir}/%{name}
 %dir %{_sysconfdir}/keystone
 %config(noreplace) %attr(-, root, keystone) %{_sysconfdir}/keystone/keystone.conf
 %config(noreplace) %attr(-, root, keystone) %{_sysconfdir}/keystone/logging.conf
@@ -196,14 +195,12 @@ fi
 %dir %attr(-, keystone, keystone) %{_logdir}/keystone
 
 %files -n python-module-keystone
-%defattr(-,root,root,-)
 %doc LICENSE
 %{python_sitelibdir}/keystone
 %exclude %{python_sitelibdir}/keystone/middleware/auth_token.py*
 %{python_sitelibdir}/keystone-*.egg-info
 
 %files -n python-module-keystone-auth-token
-%defattr(-,root,root,-)
 %doc LICENSE
 %dir %{python_sitelibdir}/keystone
 %ghost %{python_sitelibdir}/keystone/__init__.py
@@ -215,6 +212,12 @@ fi
 %doc LICENSE doc/build/html
 
 %changelog
+* Mon Aug 26 2013 Vitaly Lipatov <lav@altlinux.ru> 2012.2.0.6-alt4
+- cleanup spec
+
+* Sat Mar 30 2013 Pavel Shilovsky <piastry@altlinux.org> 2012.2.0.6-alt3.1
+- Add SysVinit support
+
 * Wed Mar 06 2013 Pavel Shilovsky <piastry@altlinux.org> 2012.2.0.6-alt3
 - Use post/preun_service scripts in spec
 
