@@ -1,13 +1,14 @@
 Name: lostsky
-Version: 0.8.0
+Version: 0.9.0
 Release: alt1
 %setup_python_module %name
 Summary: Turn based strategy RPG with gameplay similar to Fire Emblem
 BuildArch: noarch
 License: BSD
 Group: Games/Strategy
-Source: lost-sky-project-public-0.8.0.tar
+Source: lost-sky-project-public-0.9.0.tar
 Url: https://bitbucket.org/featheredmelody/lost-sky-project-public
+
 # Automatically added by buildreq on Tue Aug 23 2011
 # optimized out: python-base
 BuildRequires: fonts-ttf-dejavu fonts-ttf-vera
@@ -31,25 +32,16 @@ Python module for %name, %summary
 
 %prep
 %setup -n lost-sky-project-public-%version
-pwd
-ls
 cd "Story of a Lost Sky"
 cat > %name.sh <<@@@
 #!/bin/sh -e
-test -d "\$HOME/.%name" || {
-rm -rf "\$HOME/.%name" &&
-mkdir -p "\$HOME/.%name" &&
-ln -s %_gamesdatadir/%name/[^d]* "\$HOME/.%name"/ &&
-mkdir -p "\$HOME/.%name/data" &&
-ln -s %_gamesdatadir/%name/data/* "\$HOME/.%name/data"/
-}
-cd "\$HOME/.%name"
+cd "%_gamesdatadir/%name"
 python srpg.py
 @@@
 
 %build
 cd "Story of a Lost Sky"
-# use system fints instead of local ones
+# use system fonts instead of local ones
 for f in *.ttf; do
   ls %_ttffontsdir/*/$f && ln -sf %_fontsdir/ttf/*/$f $f
 done
@@ -73,6 +65,10 @@ ln -s prerendered_spells %buildroot%_gamesdatadir/%name/images/anim/prerendered_
 %python_sitelibdir_noarch/%name
 
 %changelog
+* Thu Aug 22 2013 Fr. Br. George <george@altlinux.ru> 0.9.0-alt1
+- Autobuild version bump to 0.9.0
+- Drop ~/.lostsky usage: game use ~/.local and ~/.config now
+
 * Mon Feb 18 2013 Fr. Br. George <george@altlinux.ru> 0.8.0-alt1
 - Autobuild version bump to 0.8.0
 
