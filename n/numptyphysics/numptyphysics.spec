@@ -1,22 +1,17 @@
 Name: numptyphysics
-Version: 0.3.146
-Release: alt1.1
+Version: 0.3.159
+Release: alt1
 Summary: A crayon-drawing based physics puzzle game
 
 Group: Games/Puzzles
 License: GPLv3+
 Url: http://numptyphysics.garage.maemo.org/
-# svn co -r81 https://garage.maemo.org/svn/numptyphysics/trunk numptyphysics
-# tar czf numptyphysics.tar.gz numptyphysics --exclude .svn
+# see .gear/autobuild.update
 Source0: %name-%version.tar
 Source1: numptyphysics.desktop
 Source10: %name-levels-%version.tar
-Patch0: numptyphysics-0.3-gcc43.patch
-Patch1: numptyphysics-nonvoid.patch
-Patch2: numptyphysics-setAttribute.patch
-Patch3: numptyphysics-nospot.patch
-Patch4: numptyphysics-0.3.146-alt-glibc-2.16.patch
-Packager: Fr. Br. George <george@altlinux.ru>
+
+Patch0:         numptyphysics-0.4-gcc47.patch
 
 Requires: %name-levels
 
@@ -25,8 +20,8 @@ BuildRequires: gcc-c++ libSDL-devel libSDL_image-devel libSDL_ttf-devel libX11-d
 
 %description
 Harness gravity with your crayon and set about creating blocks, ramps,
-levers, pulleys and whatever else you fancy to get the little red thing to
-the little yellow thing.
+levers, pulleys and whatever else you fancy to get the little red thing
+to the little yellow thing.
 
 %package levels
 Summary: Level set for numptyphysics
@@ -37,46 +32,26 @@ BuildArch: noarch
 %description levels
 Game levels for numptyphysics, including "NP-complete" level set.
 
-%package full
-Summary: A crayon-drawing based physics puzzle game
-License: GPLv3+
-Group: Games/Puzzles
-BuildArch: noarch
-
-%description full
-Harness gravity with your crayon and set about creating blocks, ramps,
-levers, pulleys and whatever else you fancy to get the little red thing to
-the little yellow thing.
-
-This meta-package also contains full additional level set.
-
 %prep
-%setup -q
-%patch0 -p1 -b .gcc43
-%patch1 -b .nonvoid
-%patch2 -p1 -b .setAttribute
-%patch3 -p1 -b .nospot
-%patch4 -p2
+%setup
+%patch0 -p1
 
 %build
-# Note the ARCH variable doesn't denote real arch. It's just used to hit a
-# conditional that we're not compiling with mingw
 %autoreconf
 %configure
-%make 
+%make
 
 %install
 %make DESTDIR=%buildroot install
 install -D data/icon48/%name.png %buildroot%_liconsdir/%name.png
+# they put png here and use unusual sizes
 rm -rf %buildroot%_iconsdir/hicolor/scalable
 mv %buildroot%_iconsdir/hicolor/26x26 %buildroot%_iconsdir/hicolor/24x24
 
 # Additional levels
 tar xf %SOURCE10 -C %buildroot%_datadir/numptyphysics
-# siminz/L02_bridge\ Gaps\ tut.nph is buggy
-rm "%buildroot%_datadir/numptyphysics/levels/siminz/L02_bridge Gaps tut.nph"
-# Probably will be usable in next version
-rm %buildroot%_datadir/numptyphysics/levels/*/*npz
+#rm "%buildroot%_datadir/numptyphysics/levels/siminz/L02_bridge Gaps tut.nph"
+#rm %buildroot%_datadir/numptyphysics/levels/*/*npz
 
 %files
 %_bindir/numptyphysics
@@ -92,9 +67,12 @@ rm %buildroot%_datadir/numptyphysics/levels/*/*npz
 %files levels
 %_datadir/numptyphysics/levels/*
 
-%files full
-
 %changelog
+* Thu Aug 22 2013 Fr. Br. George <george@altlinux.ru> 0.3.159-alt1
+- Autobuild version bump to 0.3.159
+- Drop all patches except gcc one
+- Drop "full" package (it was actually empty)
+
 * Tue Nov 13 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.146-alt1.1
 - Fixed build with glibc 2.16
 
