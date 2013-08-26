@@ -1,5 +1,5 @@
 Name: pentobi
-Version: 6.0
+Version: 7.1
 Release: alt1
 License: GPLv3
 Summary: A computer program that plays the board game Blokus
@@ -43,6 +43,9 @@ mkdir -p %buildroot%_sysconfdir
 %_man6dir/*
 
 %changelog
+* Thu Aug 22 2013 Fr. Br. George <george@altlinux.ru> 7.1-alt1
+- Autobuild version bump to 7.1
+
 * Mon Apr 01 2013 Fr. Br. George <george@altlinux.ru> 6.0-alt1
 - Autobuild version bump to 6.0
 - Remove gconf bindings
