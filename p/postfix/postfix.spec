@@ -1,5 +1,5 @@
 Name: postfix
-Version: 2.9.5
+Version: 2.10.1
 Release: alt1
 Epoch: 1
 
@@ -159,6 +159,8 @@ This package provides documentation for Postfix in html format.
 find -type f -print0 |
 	xargs -r0 grep -FZl @libdir@ -- |
 	xargs -r0 sed -i 's,@libdir@,%_libdir,g' --
+
+chmod +x src/bounce/annotate.sh
 
 %if_with tls
 rm -rf src/*-tls
@@ -674,6 +676,14 @@ ln -snf %name/aliases %_sysconfdir/aliases
 %endif #with tls
 
 %changelog
+* Thu Aug 22 2013 Fr. Br. George <george@altlinux.ru> 1:2.10.1-alt1
+- Autobuild version bump to 2.10.1
+- Bugfix release
+
+* Mon Apr 22 2013 Fr. Br. George <george@altlinux.ru> 1:2.10.0-alt1
+- Version up
+- Use upstream "postconf -x" instead of "postconf -E"
+
 * Thu Dec 13 2012 Fr. Br. George <george@altlinux.ru> 1:2.9.5-alt1
 - Autobuild version bump to 2.9.5
 - Bugfix release
