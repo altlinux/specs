@@ -25,7 +25,7 @@
 %endif
 
 Name: samba
-Version: 4.0.8
+Version: 4.0.9
 Release: alt1
 Group: System/Servers
 Summary: The Samba4 CIFS and AD client and server suite
@@ -38,14 +38,12 @@ Source: %name-%version.tar
 Source1: samba.log
 Source2: samba.xinetd
 Source3: swat.desktop
-Source4: samba.sysconfig
 Source5: smb.init
 Source6: samba.pamd
 Source8: winbind.init
 Source9: smb.conf.default
 Source10: nmb.init
 Source11: pam_winbind.conf
-Source12: samba.conf.tmp
 
 Source200: README.dc
 Source201: README.downgrade
@@ -482,7 +480,7 @@ mkdir -p %buildroot%_pkgconfigdir
 mkdir -p %buildroot%_initdir
 mkdir -p %buildroot%_unitdir
 mkdir -p %buildroot%_sysconfdir/{pam.d,logrotate.d,security,sysconfig,xinetd.d}
-
+mkdir -p %buildroot/lib/tmpfiles.d
 
 # Install other stuff
 install -m644 %SOURCE1 %buildroot%_sysconfdir/logrotate.d/samba
@@ -495,8 +493,6 @@ install -m644 examples/LDAP/samba.schema %buildroot%_sysconfdir/openldap/schema/
 install -m644 %SOURCE2 %buildroot%_sysconfdir/xinetd.d/swat
 install -m755 packaging/printing/smbprint %buildroot%_bindir/smbprint
 
-mkdir -p %buildroot/lib/tmpfiles.d/
-install -m644 %SOURCE12 %buildroot/lib/tmpfiles.d/samba.conf
 
 install -m644 packaging/systemd/samba.sysconfig %buildroot%_sysconfdir/sysconfig/samba
 install -m644 packaging/RHEL/setup/smbusers %buildroot%_sysconfdir/samba/smbusers
@@ -513,10 +509,10 @@ install -m 644 %SOURCE200 %buildroot%_defaultdocdir/%name/README.dc
 install -m 644 %SOURCE200 %buildroot%_defaultdocdir/%name/README.dc-libs
 %endif
 
-for i in nmb smb winbind ; do
-    cat packaging/systemd/$i.service | sed -e 's@Type=forking@Type=forking\nEnvironment=KRB5CCNAME=/run/samba/krb5cc_samba@g' >tmp$i.service
-    install -m 0644 tmp$i.service %buildroot%_unitdir/$i.service
-done
+install -m644 packaging/systemd/nmb.service %buildroot%_unitdir/nmb.service
+install -m644 packaging/systemd/smb.service %buildroot%_unitdir/smb.service
+install -m644 packaging/systemd/winbind.service %buildroot%_unitdir/winbind.service
+install -m644 packaging/systemd/samba.conf.tmp %buildroot/lib/tmpfiles.d/samba.conf
 
 # NetworkManager online/offline script
 install -d -m 0755 %buildroot%_sysconfdir/NetworkManager/dispatcher.d/
@@ -616,6 +612,7 @@ TDB_NO_FSYNC=1 %make_build test
 %_bindir/smbprint
 %_bindir/smbspool
 %_bindir/smbta-util
+%_bindir/smbtar
 %_bindir/smbtree
 %{cups_serverbin}/backend/smb
 %_libdir/samba/libldb-cmdline.so
@@ -1059,6 +1056,10 @@ TDB_NO_FSYNC=1 %make_build test
 %_man8dir/pam_winbind.8*
 
 %changelog
+* Mon Aug 26 2013 Alexey Shabalin <shaba@altlinux.ru> 4.0.9-alt1
+- 4.0.9
+- add -D options for default forking type start of services to sysV init and systemd
+
 * Wed Aug 07 2013 Alexey Shabalin <shaba@altlinux.ru> 4.0.8-alt1
 - 4.0.8
 - fixed CVE-2013-4124
