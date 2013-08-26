@@ -1,6 +1,6 @@
 Name: geary
 Version: 0.3.1
-Release: alt2
+Release: alt3
 
 Summary: Email client
 License: LGPLv2.1+
@@ -13,9 +13,26 @@ Patch0: geary-0.3.1-alt-desktop-file.patch
 
 Packager: Igor Zubkov <icesik@altlinux.org>
 
-# Automatically added by buildreq on Fri Mar 29 2013
-# optimized out: at-spi2-atk cmake cmake-modules fontconfig fontconfig-devel glib2-devel gobject-introspection-devel libat-spi2-core libatk-devel libatk-gir-devel libcairo-devel libcairo-gobject libcairo-gobject-devel libdbus-glib libgdk-pixbuf libgdk-pixbuf-devel libgdk-pixbuf-gir-devel libgio-devel libgnome-keyring libgpg-error libgst-plugins1.0 libgtk+3-devel libjavascriptcoregtk3-devel libpango-devel libpango-gir-devel libsoup-devel libwayland-client libwayland-server perl-Encode pkg-config xz
-BuildRequires: ctest intltool libcanberra-devel libcanberra-vala libfreetype-devel libgee-devel libgmime-devel libgnome-keyring-devel libgtk+3-gir-devel libjavascriptcoregtk3-gir-devel libnotify-devel libsoup-gir-devel libsqlite3-devel libunique3-devel libwebkitgtk3-devel vala
+BuildRequires: cmake intltool vala glib2-devel libgio-devel
+BuildRequires: libgtk+3-devel libgee-devel libunique3-devel
+BuildRequires: libnotify-devel libcanberra-devel libsqlite3-devel
+BuildRequires: libgmime-devel libgnome-keyring-devel
+BuildRequires: libwebkitgtk3-devel libpixman-devel libXdmcp-devel
+BuildRequires: libXdamage-devel libXxf86vm-devel libharfbuzz-devel
+BuildRequires: libpng-devel libXinerama-devel libXi-devel
+BuildRequires: libXrandr-devel libXcursor-devel libXcomposite-devel
+BuildRequires: libxkbcommon-devel libwayland-cursor-devel
+BuildRequires: at-spi2-atk-devel libxml2-devel libcanberra-vala
+BuildRequires: gobject-introspection-devel libatk-gir-devel
+BuildRequires: libgtk+3-gir-devel libgdk-pixbuf-gir-devel
+BuildRequires: libjavascriptcoregtk3-gir-devel libpango-gir-devel
+BuildRequires: libsoup-gir-devel 
+
+# TODO:
+# -- Unity indicate support: OFF
+# -- Unity messaging menu support: OFF
+# -- Unity launcher support: OFF
+# -- Reference tracking: OFF
 
 %description
 Geary is an email client built for the GNOME desktop environment.  It
@@ -49,6 +66,9 @@ Geary's development.
 %_iconsdir/*/*/apps/*
 
 %changelog
+* Mon Aug 26 2013 Igor Zubkov <icesik@altlinux.org> 0.3.1-alt3
+- Cleanup build requires
+
 * Sat Jun 22 2013 Igor Zubkov <icesik@altlinux.org> 0.3.1-alt2
 - Fix desktop file
 
