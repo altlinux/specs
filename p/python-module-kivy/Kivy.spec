@@ -1,11 +1,12 @@
 Name: python-module-kivy
-Version: 1.6.0
+Version: 1.7.2
 Release: alt1
 Summary: Open source library for rapid development of applications
 License: LGPLv3
+Group: Development/Python
 Url: http://kivy.org
 Source: Kivy-%version.tar.gz
-Group: Development/Python
+Patch: Kivy-1.7.2-colorpicker_doc.patch
 
 %setup_python_module kivy
 %add_python_req_skip AppKit
@@ -14,25 +15,26 @@ Group: Development/Python
 
 # Automatically added by buildreq on Mon Jan 16 2012
 # optimized out: python-base python-devel python-module-BeautifulSoup python-module-Pygments python-module-SQLAlchemy python-module-distribute python-module-docutils python-module-genshi python-module-html5lib python-module-jinja2 python-module-jinja2-tests python-module-lxml python-module-protobuf python-module-simplejson python-module-whoosh python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-logging python-modules-multiprocessing python-modules-unittest
-BuildRequires: libGL-devel python-module-Cython python-module-Pyrex python-module-distutils-extra python-module-sphinx python-modules-json time
+BuildRequires: libGL-devel python-module-Cython0.18 python-module-Pyrex python-module-distutils-extra python-module-sphinx python-modules-json time
 
 %description
 Kivy - Open source library for rapid development of applications
 that make use of innovative user interfaces, such as multi-touch apps.
 
-%package examples
+%package devel
 Group: Development/Python
-Summary: Example files for Kyvy, %summary
+Summary: Development environment for Kivy, %summary
 BuildArch: noarch
 
-%description examples
-Example files for Kyvy, %summary
+%description devel
+Example files, documentation and packaging tool for Kivy, %summary
 
 %prep
 %setup -n Kivy-%version
 rm -rf kivy/tools/packaging/osx
-# XXX WTF
-sed -i '/glGetIntegerv(GL_VIEWPORT/s/[&]self/self/' kivy/graphics/fbo.pyx
+%patch -p0
+sleep 1
+find . -name \*.pyx | xargs touch
 
 %build
 %add_optflags -fno-strict-aliasing
@@ -41,19 +43,28 @@ cd doc &&
 export PYTHONPATH=`ls -d ../build/lib*` &&
 python autobuild.py &&
 export PYTHONPATH=$PYTHONPATH:../kivy/tools/highlight/pygments &&
-make html &&
+make html
 
 %install
 %python_install
 
 %files
-%doc doc/README PKG-INFO doc/build/html
+%doc doc/README PKG-INFO
 %python_sitelibdir/kivy
 
-%files examples
+%files devel
+%doc doc/build/html
 %_datadir/kivy-examples
+%_bindir/*
 
 %changelog
+* Thu Aug 22 2013 Fr. Br. George <george@altlinux.ru> 1.7.2-alt1
+- Autobuild version bump to 1.7.2
+- Move examples and docs to the newly introduced devel package
+
+* Mon Jun 10 2013 Fr. Br. George <george@altlinux.ru> 1.7.1-alt1
+- Autobuild version bump to 1.7.1
+
 * Sun Mar 31 2013 Fr. Br. George <george@altlinux.ru> 1.6.0-alt1
 - Autobuild version bump to 1.6.0
 
