@@ -4,26 +4,28 @@
 
 Name:		scsitarget-utils
 Version:	1.0.30
-Release:	alt4
+Release:	alt5
+
 Summary:	The SCSI target daemon and utility programs
 
 Group:		System/Configuration/Hardware
 License:	GPLv2
 URL:		http://stgt.sourceforge.net/
-Source0:	%{name}-%{version}.tar.gz
+
+Source0:	%name-%version.tar
 Source1:	tgtd.service
 Source2:	sysconfig.tgtd
 Source3:	targets.conf
 Source4:	sample.conf
 Source5:	tgtd.conf
-Patch0:		%{name}-redhatify-docs.patch
-Patch1:		%{name}-remove-xsltproc-check.patch
-Patch2:		%{name}-include-dirs.patch
+Source6:	tgtd.init
+Patch0:		%name-redhatify-docs.patch
+Patch1:		%name-remove-xsltproc-check.patch
+Patch2:		%name-include-dirs.patch
 
 BuildRequires:	pkgconfig
 BuildRequires:	libxslt
 BuildRequires:	docbook-style-xsl
-BuildRequires:	systemd-units
 BuildRequires:	xsltproc
 BuildRequires:	perl-Config-General
 %if 0%{?with_rdma}
@@ -34,46 +36,47 @@ Requires:	librdmacm
 %endif
 Requires:	lsof
 Requires:	sg3_utils
-Requires(post):	systemd-units
+
 
 %description
 The SCSI target package contains the daemon and tools to setup a SCSI
 targets. Currently, software iSCSI targets are supported.
 
 %prep
-%setup -q
+%setup
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
 
 %build
-%{__sed} -i -e 's|-g -O2 -Wall|%{optflags}|' Makefile
-%{__make} %{?_smp_mflags} %{?with_rdma:ISCSI_RDMA=1} libdir=%{_libdir}/tgt
+%__subst 's|-g -O2 -Wall|%optflags|' Makefile
+%make_build %{?with_rdma:ISCSI_RDMA=1} libdir=%_libdir/tgt
 
 %install
-%{__rm} -rf %{buildroot}
-%{__install} -d %{buildroot}%{_sbindir}
-%{__install} -d %{buildroot}%{_mandir}/man5
-%{__install} -d %{buildroot}%{_mandir}/man8
-%{__install} -d %{buildroot}%{_unitdir}
-%{__install} -d %{buildroot}%{_sysconfdir}/tgt
-%{__install} -d %{buildroot}%{_sysconfdir}/tgt/conf.d
-%{__install} -d %{buildroot}%{_sysconfdir}/sysconfig
+install -d %buildroot%_sbindir
+install -d %buildroot%_man5dir
+install -d %buildroot%_man8dir
+install -d %buildroot%_unitdir
+install -d %buildroot%_initdir
+install -d %buildroot%_sysconfdir/tgt
+install -d %buildroot%_sysconfdir/tgt/conf.d
+install -d %buildroot%_sysconfdir/sysconfig
 
-%{__install} -p -m 0755 scripts/tgt-setup-lun %{buildroot}%{_sbindir}
-%{__install} -p -m 0755 %{SOURCE1} %{buildroot}%{_unitdir}
-%{__install} -p -m 0755 scripts/tgt-admin %{buildroot}/%{_sbindir}/tgt-admin
-%{__install} -p -m 0644 doc/manpages/targets.conf.5 %{buildroot}/%{_mandir}/man5
-%{__install} -p -m 0644 doc/manpages/tgtadm.8 %{buildroot}/%{_mandir}/man8
-%{__install} -p -m 0644 doc/manpages/tgt-admin.8 %{buildroot}/%{_mandir}/man8
-%{__install} -p -m 0644 doc/manpages/tgt-setup-lun.8 %{buildroot}/%{_mandir}/man8
-%{__install} -p -m 0600 %{SOURCE2} %{buildroot}%{_sysconfdir}/sysconfig/tgtd
-%{__install} -p -m 0600 %{SOURCE3} %{buildroot}%{_sysconfdir}/tgt
-%{__install} -p -m 0600 %{SOURCE4} %{buildroot}%{_sysconfdir}/tgt/conf.d
-%{__install} -p -m 0600 %{SOURCE5} %{buildroot}%{_sysconfdir}/tgt
+install -p -m 0755 scripts/tgt-setup-lun %buildroot%_sbindir
+install -p -m 0755 %SOURCE1 %buildroot%_unitdir
+install -p -m 0755 scripts/tgt-admin %buildroot/%_sbindir/tgt-admin
+install -p -m 0644 doc/manpages/targets.conf.5 %buildroot/%_man5dir
+install -p -m 0644 doc/manpages/tgtadm.8 %buildroot/%_man8dir
+install -p -m 0644 doc/manpages/tgt-admin.8 %buildroot/%_man8dir
+install -p -m 0644 doc/manpages/tgt-setup-lun.8 %buildroot/%_man8dir
+install -p -m 0600 %SOURCE2 %buildroot%_sysconfdir/sysconfig/tgtd
+install -p -m 0600 %SOURCE3 %buildroot%_sysconfdir/tgt
+install -p -m 0600 %SOURCE4 %buildroot%_sysconfdir/tgt/conf.d
+install -p -m 0600 %SOURCE5 %buildroot%_sysconfdir/tgt
+install -p -m 0755 %SOURCE6 %buildroot%_initdir/tgtd
 
 pushd usr
-%{__make} install %{?with_rdma:ISCSI_RDMA=1} DESTDIR=%{buildroot} sbindir=%{_sbindir} libdir=%{_libdir}/tgt
+%makeinstall_std %{?with_rdma:ISCSI_RDMA=1} sbindir=%_sbindir libdir=%_libdir/tgt
 
 %post
 %post_service tgtd
@@ -82,24 +85,30 @@ pushd usr
 %preun_service tgtd
 
 %files
-%defattr(-, root, root, -)
 %doc README doc/README.iscsi doc/README.iser doc/README.lu_configuration doc/README.mmc doc/README.ssc
-%{_sbindir}/tgtd
-%{_sbindir}/tgtadm
-%{_sbindir}/tgt-setup-lun
-%{_sbindir}/tgt-admin
-%{_sbindir}/tgtimg
-%{_mandir}/man5/*
-%{_mandir}/man8/*
-%{_unitdir}/tgtd.service
+%_sbindir/tgtd
+%_sbindir/tgtadm
+%_sbindir/tgt-setup-lun
+%_sbindir/tgt-admin
+%_sbindir/tgtimg
+%_man5dir/*
+%_man8dir/*
+%_unitdir/tgtd.service
+%_initdir/tgtd
 %dir %_sysconfdir/tgt
 %dir %_sysconfdir/tgt/conf.d
-%attr(0600,root,root) %config(noreplace) %{_sysconfdir}/sysconfig/tgtd
-%attr(0600,root,root) %config(noreplace) %{_sysconfdir}/tgt/targets.conf
-%attr(0600,root,root) %config(noreplace) %{_sysconfdir}/tgt/tgtd.conf
-%attr(0600,root,root) %config(noreplace) %{_sysconfdir}/tgt/conf.d/sample.conf
+%attr(0600,root,root) %config(noreplace) %_sysconfdir/sysconfig/tgtd
+%attr(0600,root,root) %config(noreplace) %_sysconfdir/tgt/targets.conf
+%attr(0600,root,root) %config(noreplace) %_sysconfdir/tgt/tgtd.conf
+%attr(0600,root,root) %config(noreplace) %_sysconfdir/tgt/conf.d/sample.conf
 
 %changelog
+* Mon Aug 26 2013 Vitaly Lipatov <lav@altlinux.ru> 1.0.30-alt5
+- cleanup spec
+
+* Sat Mar 30 2013 Pavel Shilovsky <piastry@altlinux.org> 1.0.30-alt4.1
+- Add SysVinit support
+
 * Wed Mar 06 2013 Pavel Shilovsky <piastry@altlinux.org> 1.0.30-alt4
 - Fix unowned files
 
