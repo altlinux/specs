@@ -1,6 +1,6 @@
 Name: xfwp
-Version: 1.0.2
-Release: alt4
+Version: 1.0.3
+Release: alt1
 
 Summary: X firewall proxy
 License: MIT/X11
@@ -46,6 +46,9 @@ local X servers.
 %_man1dir/*
 
 %changelog
+* Thu Aug 22 2013 Fr. Br. George <george@altlinux.ru> 1.0.3-alt1
+- Autobuild version bump to 1.0.3
+
 * Tue Mar 12 2013 Fr. Br. George <george@altlinux.ru> 1.0.2-alt4
 - Rebuild with new buildreq
 
