@@ -1,6 +1,7 @@
 Name:		lessjs
 Version:	1.3.1
-Release:	alt1
+Release:	alt2
+
 Summary:	Less.js The dynamic stylesheet language
 
 # cssmin.js is licensed under BSD license
@@ -9,7 +10,10 @@ License:	ASL 2.0 and BSD
 
 Group:		Development/Tools
 URL:		http://lesscss.org
-Source0:	%{name}-%{version}.tar.gz
+
+BuildArch:	noarch
+
+Source0:	%name-%version.tar
 
 # Disable YUI compression because lessjs otherwise
 # would be carrying a bundled copy of cssmin.js
@@ -24,7 +28,6 @@ Patch0003:	0003-substitute-paths-to-use-usr-share-instead-of-usr-lib.patch
 # Remove pre-built files from the dist/ directory
 Patch0004:	0004-Remove-pre-builds.patch
 
-BuildArch:	noarch
 BuildRequires:	node
 Requires:	node
 
@@ -34,7 +37,7 @@ operations and functions. LESS runs on both the client-side (Chrome,
 Safari, Firefox) and server-side, with Node.js and Rhino.
 
 %prep
-%setup -q -n %{name}-%{version}
+%setup
 
 %patch0001 -p1
 %patch0002 -p1
@@ -48,16 +51,19 @@ Safari, Firefox) and server-side, with Node.js and Rhino.
 make %{?_smp_mflags} test
 
 %install
-mkdir -p %{buildroot}%{_bindir}
-install bin/lessc %{buildroot}%{_bindir}
-mkdir -p %{buildroot}%{_datadir}/less
-cp -rp lib/less %{buildroot}%{_datadir}
+mkdir -p %buildroot%_bindir/
+install bin/lessc %buildroot%_bindir/
+mkdir -p %buildroot%_datadir/less/
+cp -rp lib/less %buildroot%_datadir/
 
 %files
 %doc LICENSE README.md
-%{_bindir}/lessc
-%{_datadir}/less
+%_bindir/lessc
+%_datadir/less/
 
 %changelog
+* Mon Aug 26 2013 Vitaly Lipatov <lav@altlinux.ru> 1.3.1-alt2
+- cleanup spec
+
 * Mon Jul 15 2013 Pavel Shilovsky <piastry@altlinux.org> 1.3.1-alt1
 - Initial release for Sisyphus (based on Fedora)
