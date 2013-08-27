@@ -1,6 +1,6 @@
 %define dist Module-Metadata
 Name: perl-%dist
-Version: 1.000014
+Version: 1.000016
 Release: alt1
 
 Summary: Gather package and POD information from perl module files
@@ -8,7 +8,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/B/BO/BOBTFISH/Module-Metadata-%{version}.tar.gz
+Source: http://www.cpan.org/authors/id/E/ET/ETHER/Module-Metadata-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -33,6 +33,9 @@ without executing unsafe code.
 %perl_vendor_privlib/Module
 
 %changelog
+* Tue Aug 27 2013 Igor Vlasenko <viy@altlinux.ru> 1.000016-alt1
+- automated CPAN update
+
 * Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 1.000014-alt1
 - automated CPAN update
 
