@@ -1,16 +1,15 @@
 %define dist SOAP-Lite
 Name: perl-%dist
-Version: 0.715
-Release: alt3
+Version: 1.0
+Release: alt1
 
 Summary: Perl's Web Services Toolkit
 License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/M/MK/MKUTTER/SOAP-Lite-%{version}.tar.gz
+Source: http://www.cpan.org/authors/id/P/PH/PHRED/SOAP-Lite-%{version}.tar.gz
 Patch0: perl-SOAP-Lite-0.715-IO-modules.patch
-Patch1: perl-SOAP-Lite-0.715-fix-rt78692.patch
 
 BuildArch: noarch
 
@@ -18,7 +17,7 @@ BuildArch: noarch
 Requires: perl-XML-Parser
 
 # Automatically added by buildreq on Tue Oct 25 2011
-BuildRequires: apache-mod_perl-base perl-Class-Inspector perl-Crypt-SSLeay perl-DIME-Tools perl-HTTP-Daemon perl-IO-Socket-SSL perl-MIME-Lite perl-MIME-tools perl-Task-Weaken perl-Test-Differences perl-Test-MockObject perl-UNIVERSAL-require perl-XML-Parser
+BuildRequires: apache-mod_perl-base perl-Class-Inspector perl-Crypt-SSLeay perl-DIME-Tools perl-HTTP-Daemon perl-IO-Socket-SSL perl-MIME-Lite perl-MIME-tools perl-Task-Weaken perl-Test-Differences perl-Test-MockObject perl-UNIVERSAL-require perl-XML-Parser perl(XMLRPC/Lite.pm)
 
 %description
 SOAP::Lite is a collection of Perl modules which provides a simple and
@@ -29,7 +28,6 @@ on client and server side.
 %setup -q -n %dist-%version
 sed -i '1s@^#!.*/bin/env perl@#!/usr/bin/perl@' bin/*.pl
 %patch0 -p1 -b .IO
-%patch1 -p2
 
 %build
 %perl_vendor_build
@@ -49,14 +47,18 @@ sed -i '1s@^#!.*/bin/env perl@#!/usr/bin/perl@' bin/*.pl
 %files
 %doc Changes README examples
 %_bindir/*.pl
-%perl_vendor_privlib/Apache
-%perl_vendor_privlib/IO
+%perl_vendor_privlib/Apache/SOAP.pm
+#perl_vendor_privlib/IO
 %perl_vendor_privlib/SOAP
-%perl_vendor_privlib/UDDI
-%perl_vendor_privlib/XML
-%perl_vendor_privlib/XMLRPC
+#perl_vendor_privlib/UDDI
+#perl_vendor_privlib/XML
+#perl_vendor_privlib/XMLRPC
 
 %changelog
+* Tue Aug 27 2013 Igor Vlasenko <viy@altlinux.ru> 1.0-alt1
+- manual CPAN update
+- staff moved to perl-IO-SessionData perl-XMLRPC-Lite
+
 * Sat Oct 13 2012 Vladimir Lettiev <crux@altlinux.ru> 0.715-alt3
 - Fixed bug rt#78692 (Closes: #27833)
 
