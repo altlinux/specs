@@ -1,6 +1,6 @@
 Name: makeself
-Version: 2.1.5
-Release: alt2
+Version: 2.2.0
+Release: alt1
 
 Summary: It's a small shell script that generates a self-extractable archive from a directory
 Summary(ru_RU.UTF-8): Скрипт для создания самораспаковывающихся архивов
@@ -13,7 +13,8 @@ Packager: Ilya Mashkin <oddity@altlinux.ru>
 
 BuildArch: noarch
 
-Source: http://www.megastep.org/makeself/%name-%version.tar
+# Source-url: https://github.com/megastep/makeself/archive/release-%version.tar.gz
+Source: %name-%version.tar
 
 %description
 Makeself.sh is a small shell script that generates
@@ -33,12 +34,15 @@ install -D -m0755 makeself-header.sh %buildroot%_bindir/makeself-header.sh
 install -D -m0644 makeself.1 %buildroot%_man1dir/makeself.1
 
 %files
-%doc README TODO makeself.lsm
+%doc README.md makeself.lsm
 %_bindir/makeself.sh
 %_bindir/makeself-header.sh
 %_man1dir/*
 
 %changelog
+* Tue Aug 27 2013 Vitaly Lipatov <lav@altlinux.ru> 2.2.0-alt1
+- new version 2.2.0 (with rpmrb script)
+
 * Mon Jan 21 2013 Vitaly Lipatov <lav@altlinux.ru> 2.1.5-alt2
 - cleanup spec
 - pack man page and makeself.lsm (ALT bug #9206)
