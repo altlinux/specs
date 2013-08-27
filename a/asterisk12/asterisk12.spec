@@ -1,4 +1,4 @@
-%define svn_revision 397483.1
+%define svn_revision 397483.2
 Name: asterisk12
 Summary: Open source PBX
 Version: 12
@@ -66,7 +66,7 @@ BuildPreReq: libunixODBC-devel libltdl-devel
 BuildPreReq: liblua5-devel
 BuildPreReq: postgresql-devel libpq-devel
 BuildPreReq: librpm-devel libnet-snmp-devel libwrap-devel perl-devel
-%define svn_revision 397483.1
+%define svn_revision 397483.2
 %add_verify_elf_skiplist %_libdir/libasteriskssl12.so.1
 %def_with debug
 %def_enable debug
@@ -104,7 +104,7 @@ Requires: asterisk-files-all
 Requires: asterisk-initscript
 Requires(pre): asterisk-initscript
 Requires: asterisk-base-configs
-Requires(pre): asterisk-base >= 0.6-alt1
+Requires(pre): asterisk-base >= 0.67-alt1
 Requires(pre): coreutils
 Requires: pbx-streamplayer
 Requires: pbx-stereorize
@@ -696,8 +696,6 @@ mkdir -p %buildroot%_includedir/asterisk-%version
 mv %buildroot%_includedir/asterisk   %buildroot%_includedir/asterisk-%version/asterisk
 mv %buildroot%_includedir/asterisk.h %buildroot%_includedir/asterisk-%version/asterisk.h
 mkdir -p %buildroot/usr/share/asterisk/documentation/12
-mkdir -p %buildroot/var/lib/asterisk/documentation/
-ln -s ../../../../usr/share/asterisk/documentation/12 %buildroot/var/lib/asterisk/documentation
 mv %buildroot/var/lib/asterisk/documentation/*.xml %buildroot/usr/share/asterisk/documentation/12/
 mv %buildroot/var/lib/asterisk/documentation/*.dtd %buildroot/usr/share/asterisk/documentation/12/
 ln -sf libasteriskssl12.so.1 %buildroot%_libdir/libasteriskssl12.so
@@ -711,7 +709,6 @@ ln -sf libasteriskssl12.so.1 %buildroot%_libdir/libasteriskssl12.so
 %files
 %_altdir/asterisk-%version
 %dir /usr/share/asterisk/documentation/12
-/var/lib/asterisk/documentation/12
 /usr/share/asterisk/documentation/12/appdocsxml.dtd
 /usr/share/asterisk/documentation/12/core-en_US.xml
 %exclude /var/lib/asterisk/images/asterisk-intro.jpg
@@ -1272,6 +1269,9 @@ ln -sf libasteriskssl12.so.1 %buildroot%_libdir/libasteriskssl12.so
 %_libdir/libasteriskssl12.so.1
 
 %changelog
+* Tue Aug 27 2013 Denis Smirnov <mithraen@altlinux.ru> 12-alt0.397483.2
+- compatibility with asterisk-base 0.67
+
 * Fri Aug 23 2013 Denis Smirnov <mithraen@altlinux.ru> 12-alt0.397483.1
 - add statis and ARI modules
 
