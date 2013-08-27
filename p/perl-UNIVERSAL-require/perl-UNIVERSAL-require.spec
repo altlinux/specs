@@ -14,7 +14,7 @@
 %define _enable_test 1
 
 Name: perl-UNIVERSAL-require
-Version: 0.13
+Version: 0.14
 Release: alt1
 
 Summary: require() modules from a variable
@@ -26,7 +26,7 @@ Url: http://www.cpan.org
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 BuildArch: noarch
-Source: http://www.cpan.org/authors/id/M/MS/MSCHWERN/UNIVERSAL-require-0.13.tar.gz
+Source: http://www.cpan.org/authors/id/N/NE/NEILB/UNIVERSAL-require-%{version}.tar.gz
 
 # Automatically added by buildreq on Wed Nov 22 2006
 BuildRequires: perl-devel
@@ -61,6 +61,9 @@ rm -rf %buildroot%perl_vendor_man3dir/
 %perl_vendor_privlib/UNIVERSAL/*
 
 %changelog
+* Tue Aug 27 2013 Igor Vlasenko <viy@altlinux.ru> 0.14-alt1
+- automated CPAN update
+
 * Tue Jul 13 2010 Igor Vlasenko <viy@altlinux.ru> 0.13-alt1
 - automated CPAN update
 
