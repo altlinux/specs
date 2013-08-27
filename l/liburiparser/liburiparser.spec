@@ -1,7 +1,7 @@
 %define oname uriparser
 Name: liburiparser
-Version: 0.7.5
-Release: alt1.qa2
+Version: 0.7.8
+Release: alt1
 
 Summary: A strictly RFC 3986 compliant URI parsing library
 
@@ -50,6 +50,9 @@ Header files for uriparser.
 %_pkgconfigdir/*
 
 %changelog
+* Tue Aug 27 2013 Vitaly Lipatov <lav@altlinux.ru> 0.7.8-alt1
+- new version 0.7.8 (with rpmrb script)
+
 * Sun Apr 14 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.7.5-alt1.qa2
 - NMU: rebuilt for debuginfo.
 
