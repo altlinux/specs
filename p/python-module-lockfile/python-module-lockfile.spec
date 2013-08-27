@@ -1,8 +1,8 @@
 %define oname lockfile
 
 Name: python-module-%oname
-Version: 0.8
-Release: alt1.1
+Version: 0.9.1
+Release: alt1
 
 Summary: A platform-independent file locking module
 
@@ -12,7 +12,7 @@ Url: http://pypi.python.org/pypi/%oname
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-Source: http://smontanaro.dyndns.org/python/%oname-%version.tar
+Source: https://pypi.python.org/packages/source/l/lockfile/lockfile-%version.tar
 
 BuildArch: noarch
 
@@ -37,10 +37,13 @@ Windows) system calls.
 
 %files
 %doc ACKS LICENSE README RELEASE-NOTES doc/
-%python_sitelibdir/%oname.py*
+%python_sitelibdir/%oname/
 %python_sitelibdir/%oname-%version-*.egg-info
 
 %changelog
+* Tue Aug 27 2013 Vitaly Lipatov <lav@altlinux.ru> 0.9.1-alt1
+- new version 0.9.1 (with rpmrb script)
+
 * Thu Oct 20 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 0.8-alt1.1
 - Rebuild with Python-2.7
 
