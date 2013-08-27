@@ -1,5 +1,5 @@
 Name: rpmorphan
-Version: 1.11
+Version: 1.12
 Release: alt1
 
 Summary: Find orphaned RPM packages
@@ -42,13 +42,16 @@ rm -f %buildroot%_logdir/*
 
 %files
 %doc Authors Changelog COPYING NEWS Readme rpmorphan.lsm Todo
+%_sysconfdir/rpmorphanrc
 %_bindir/rpmorphan*
-%_bindir/rpmorphan-lib.pl
+%_bindir/grpmorphan
 %_bindir/rpmusage*
+%_bindir/rpmextra*
 %_bindir/rpmdep*
 %_bindir/rpmduplicates*
 %_man1dir/rpmorphan.1*
 %_man1dir/rpmusage.1*
+%_man1dir/rpmextra.1*
 %_man1dir/rpmdep.1*
 %_man1dir/rpmduplicates.1*
 %_logrotatedir/%name
@@ -57,6 +60,9 @@ rm -f %buildroot%_logdir/*
 %_var/lib/rpmorphan/keep
 
 %changelog
+* Tue Aug 27 2013 Vitaly Lipatov <lav@altlinux.ru> 1.12-alt1
+- new version 1.12 (with rpmrb script)
+
 * Sun Aug 04 2013 Vitaly Lipatov <lav@altlinux.ru> 1.11-alt1
 - new version 1.11 (with rpmrb script)
 
