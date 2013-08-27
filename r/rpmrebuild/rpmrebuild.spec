@@ -1,11 +1,12 @@
 Name: rpmrebuild
 Version: 2.10
-Release: alt1
+Release: alt2
 License: GPLv2+
 Group: Development/Other
 Summary: A tool to build rpm file from rpm database
 Source: %name-%version.tar.gz
 Patch: rpmrebuild-2.9-alt-tmpdir.patch
+Patch1: rpmrebuild-2.10-alt-toonewtags.patch
 Url: http://rpmrebuild.sourceforge.net/
 BuildArch: noarch
 
@@ -30,6 +31,7 @@ Rpmrebuild plugin for automatically un-prelinking package content.
 %prep
 %setup -c %name-%version
 %patch -p2
+%patch1 -p2
 
 %build
 %make
@@ -55,6 +57,9 @@ Rpmrebuild plugin for automatically un-prelinking package content.
 %_mandir/*/*/un_prelink.plug*
 %prefix/lib/%name/plugins/un_prelink*
 %changelog
+* Tue Aug 27 2013 Fr. Br. George <george@altlinux.ru> 2.10-alt2
+- Revert ALT-unsupported tags check
+
 * Thu Aug 22 2013 Fr. Br. George <george@altlinux.ru> 2.10-alt1
 - Autobuild version bump to 2.10
 
