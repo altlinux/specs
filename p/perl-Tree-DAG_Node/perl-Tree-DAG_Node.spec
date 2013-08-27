@@ -14,7 +14,7 @@
 %define _enable_test 1
 
 Name: perl-Tree-DAG_Node
-Version: 1.12
+Version: 1.13
 Release: alt1
 
 Summary: (super)class for representing nodes in a tree
@@ -53,6 +53,9 @@ mother or ancestor, or having a node have two mothers).
 %doc Changes README 
 
 %changelog
+* Tue Aug 27 2013 Igor Vlasenko <viy@altlinux.ru> 1.13-alt1
+- automated CPAN update
+
 * Sat Jul 27 2013 Igor Vlasenko <viy@altlinux.ru> 1.12-alt1
 - automated CPAN update
 
