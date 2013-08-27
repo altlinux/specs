@@ -14,7 +14,7 @@
 %define _disable_test 1
 
 Name: perl-Email-Reply
-Version: 1.202
+Version: 1.203
 Release: alt1
 
 Summary: Reply to a Message
@@ -26,7 +26,7 @@ Url: http://www.cpan.org
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 BuildArch: noarch
-Source: http://search.cpan.org/CPAN/authors/id/R/RJ/RJBS/%m_distro-%version.tar.bz2
+Source: http://www.cpan.org/authors/id/R/RJ/RJBS/Email-Reply-%{version}.tar.gz
 
 # Automatically added by buildreq on Sat Nov 29 2008
 BuildRequires: perl-Email-Abstract perl-Email-MIME-Creator perl-Encode perl-devel rpm-build-java rpm-build-mono rpm-build-seamonkey xorg-sdk
@@ -49,6 +49,9 @@ rm -rf %buildroot%perl_vendor_man3dir/
 %perl_vendor_privlib/Email/
 
 %changelog
+* Tue Aug 27 2013 Igor Vlasenko <viy@altlinux.ru> 1.203-alt1
+- automated CPAN update
+
 * Sat Nov 29 2008 Vitaly Lipatov <lav@altlinux.ru> 1.202-alt1
 - new version 1.202 (with rpmrb script)
 - update buildreqs, remove man pages
