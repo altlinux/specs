@@ -14,7 +14,7 @@
 %define _enable_test 1
 
 Name: perl-Lingua-Identify
-Version: 0.55
+Version: 0.56
 Release: alt1
 
 Summary: Language identification
@@ -64,6 +64,9 @@ If you're in a hurry, jump to section EXAMPLES, way down below.
 %perl_vendor_privlib/Lingua/
 
 %changelog
+* Tue Aug 27 2013 Igor Vlasenko <viy@altlinux.ru> 0.56-alt1
+- automated CPAN update
+
 * Fri Jul 26 2013 Igor Vlasenko <viy@altlinux.ru> 0.55-alt1
 - automated CPAN update
 
