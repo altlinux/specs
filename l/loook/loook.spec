@@ -1,6 +1,6 @@
 Name: loook
-Version: 0.6.4
-Release: alt0.1.2.1
+Version: 0.6.7
+Release: alt1
 
 Summary: Loook searches for text strings in OpenOffice.org files
 
@@ -47,6 +47,9 @@ EOF
 %python_sitelibdir/%name.py
 
 %changelog
+* Tue Aug 27 2013 Vitaly Lipatov <lav@altlinux.ru> 0.6.7-alt1
+- new version 0.6.7 (with rpmrb script)
+
 * Tue Oct 25 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 0.6.4-alt0.1.2.1
 - Rebuild with Python-2.7
 
