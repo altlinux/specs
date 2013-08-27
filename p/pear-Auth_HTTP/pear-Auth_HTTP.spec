@@ -1,8 +1,8 @@
 %define pear_name Auth_HTTP
 
 Name: pear-Auth_HTTP
-Version: 2.1.6
-Release: alt3
+Version: 2.1.8
+Release: alt1
 
 Summary: HTTP authentication
 
@@ -12,7 +12,7 @@ Url: http://pear.php.net/package/Auth_HTTP
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-Source: http://pear.php.net/get/Auth_HTTP-%version.tar.bz2
+Source: http://pear.php.net/get/Auth_HTTP-%version.tar
 
 BuildArchitectures: noarch
 
@@ -43,11 +43,16 @@ realm-based .htaccess authentication.
 
 %files
 %doc LICENSE CHANGELOG
-%pear_testdir/Auth_HTTP/
-%pear_dir/Auth
+#pear_testdir/Auth_HTTP/
+%pear_dir/Auth/
 %pear_xmldir/%pear_name.xml
+%pear_docdir/%pear_name/
+%pear_datadir/%pear_name/
 
 %changelog
+* Tue Aug 27 2013 Vitaly Lipatov <lav@altlinux.ru> 2.1.8-alt1
+- new version 2.1.8 (with rpmrb script)
+
 * Fri Jun 20 2008 Vitaly Lipatov <lav@altlinux.ru> 2.1.6-alt3
 - autorebuild for correct requires(pre) (see bug #16086)
 
