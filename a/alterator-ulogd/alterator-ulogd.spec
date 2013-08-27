@@ -1,5 +1,5 @@
 Name: alterator-ulogd
-Version: 2.0.0
+Version: 2.0.1
 Release: alt1
 
 Summary: alterator module for network traffic statistics
@@ -24,8 +24,10 @@ BuildPreReq: alterator >= 3.5-alt2
 # Automatically added by buildreq on Mon Jul 11 2005 (-bi)
 BuildRequires: alterator
 
+%define old_sqlite3db %_localstatedir/ulogd/sqlite3.db
 %define sqlite3db %_localstatedir/ulogd/alterator_sqlite3.db
 %define ulogd_conf %_sysconfdir/ulogd.conf
+%define init_db %_libexecdir/%name/init-db.sh
 
 %description
 Iptables traffic statistics alterator module
@@ -42,32 +44,49 @@ install -D -m644 ulogd.scheme %buildroot/%_datadir/%name/ulogd.scheme
 
 %post
 if [ $1 -eq 1 ]; then
-    /usr/bin/sqlite3 -batch %sqlite3db <%_datadir/%name/ulogd.scheme >/dev/null ||:
-    chown ulogd:ulogd %sqlite3db ||:
-    sed -i -r -e 's;^#(plugin=".+/ulogd_output_SQLITE3.so");\1;' \
-	    -e 's;^#(plugin=".+/ulogd_inppkt_ULOG.so);\1;'  \
-	    -e 's;^(stack=log1:NFLOG,.+,emu1:LOGEMU);#\1;'  \
-		%ulogd_conf
-    sed -i -r "/^\[ct1\]/i # stack for alterator-ulogd \\
-stack=ulog1:ULOG,base1:BASE,ip2str1:IP2STR,alterator_sqlite3:SQLITE3 \\
-    " %ulogd_conf
-    cat >>%_sysconfdir/ulogd.conf <<EOF
-
-[alterator_sqlite3]
-table="ulog"
-db="%sqlite3db"
-buffer=200
-EOF
-/etc/init.d/ulogd condreload >/dev/null 2>&1 ||:
+	%init_db %ulogd_conf %sqlite3db ||:
+	. /usr/bin/alterator-service-functions
+	service_control ulogd condreload ||:
 fi
+
+# Migrate old configuration and change sqlite3 database
+%triggerpostun -- %name < 2.0.1-alt1
+if [ ! -f %sqlite3db ]; then
+	. /usr/bin/alterator-service-functions
+	need_restart=
+	if service_control ulogd is-active; then
+		need_restart=1
+		service_control ulogd stop ||:
+	fi
+	[ -f %ulogd_conf.rpmnew ] &&
+	ulogd_conf_file=%ulogd_conf.rpmnew ||
+	ulogd_conf_file=%ulogd_conf
+	tmp_conf="$(mktemp /tmp/ulogd.conf.XXXXXX)"
+	cp "$ulogd_conf_file" "$tmp_conf"
+	if [ -f %old_sqlite3db ]; then
+		cp -a %old_sqlite3db %sqlite3db &&
+		sqlite3 %sqlite3db 'DROP TABLE ulog;'
+	fi
+	%init_db "$tmp_conf" %sqlite3db &&
+	mv -b --suffix=.bak "$tmp_conf" %ulogd_conf &&
+	chmod 0640 %ulogd_conf &&
+	rm -f %old_sqlite3db
+	[ -n "$need_restart" ] && service_control ulogd start ||:
+fi	
 
 %files
 %_alterator_backend3dir/*
+%_libexecdir/%name/
 %_datadir/alterator/applications/*
 %_datadir/alterator/ui/*/
 %_datadir/%name
 
 %changelog
+* Tue Aug 27 2013 Mikhail Efremov <sem@altlinux.org> 2.0.1-alt1
+- Migrate old configuration and change sqlite3 database.
+- Use init-db.sh in %%post.
+- Add init-db.sh script.
+
 * Fri Aug 23 2013 Mikhail Efremov <sem@altlinux.org> 2.0.0-alt1
 - Updated for ulogd-2.x.
 - Use alterator-service-functions.
