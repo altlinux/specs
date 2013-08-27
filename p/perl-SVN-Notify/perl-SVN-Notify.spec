@@ -1,6 +1,6 @@
 %define dist SVN-Notify
 Name: perl-%dist
-Version: 2.83
+Version: 2.84
 Release: alt1
 
 Summary: Perl module for Subversion activity notification
@@ -8,7 +8,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/D/DW/DWHEELER/SVN-Notify-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -38,6 +38,9 @@ export SENDMAIL=/usr/sbin/sendmail
 %perl_vendor_privlib/SVN
 
 %changelog
+* Tue Aug 27 2013 Igor Vlasenko <viy@altlinux.ru> 2.84-alt1
+- automated CPAN update
+
 * Wed Nov 16 2011 Alexey Tourbin <at@altlinux.ru> 2.83-alt1
 - 2.81 -> 2.83
 
