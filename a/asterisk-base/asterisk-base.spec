@@ -1,6 +1,6 @@
 Name: asterisk-base
 Summary: User and groups for asterisk-related packages
-Version: 0.66
+Version: 0.67
 Release: alt1
 License: GPL
 Group: System/Servers
@@ -11,6 +11,8 @@ Source: %name-%version.tar.gz
 Packager: Denis Smirnov <mithraen@altlinux.ru>
 Conflicts: asterisk1.4 < 1.4.21.2
 Conflicts: asterisk1.6 < 1.6.0-alt6.beta9
+Conflicts: asterisk11 <= 11.5.0-alt1
+Conflicts: asterisk12 <= 12-alt0.397483.1
 Conflicts: asterisk-sounds-en <= 1.4.12-alt1
 Conflicts: asterisk-sounds-extra-en <= 1.4.5-alt3
 Conflicts: asterisk-sounds-es <= 1.4.6-alt2
@@ -126,9 +128,10 @@ mkdir -p %buildroot/var/spool/asterisk
 mkdir -p %buildroot/usr/share/asterisk/firmware
 mkdir -p %buildroot/usr/share/asterisk/images
 mkdir -p %buildroot/usr/share/asterisk/keys
-mkdir -p %buildroot/var/lib/asterisk/documentation
+mkdir -p %buildroot/var/lib/asterisk/
 mkdir -p %buildroot/usr/share/asterisk/documentation
 mkdir -p %buildroot/var/lib/asterisk/licenses
+ln -s ../../../usr/share/asterisk/documentation %buildroot/var/lib/asterisk/documentation
 for s in asterisk-images/*; do
     install -m644 -D "$s" %buildroot%_datadir/asterisk/images/$s
 done
@@ -146,6 +149,16 @@ install -D -m775 asterisk.filetrigger %buildroot/usr/lib/rpm/asterisk.filetrigge
 install -D -m775 asterisk-base/select-asterisk %buildroot/usr/sbin/select-asterisk
 mkdir -p %buildroot%_sysconfdir/modprobe.d
 echo "options wct4xxp t1e1override=0xff" > %buildroot%_sysconfdir/modprobe.d/dahdi.conf
+
+%pre
+[ -L /var/lib/asterisk/documentation ] && exit 0
+[ -d /var/lib/asterisk/documentation ] || exit 0
+for s in /var/lib/asterisk/documentation/*; do
+    if [ -L "$s" ]; then
+        unlink "$s"
+    fi
+    rmdir /var/lib/asterisk/documentation
+done
 
 %post -n asterisk-user
 %_sbindir/groupadd -r -f _asterisk
@@ -173,7 +186,7 @@ echo "options wct4xxp t1e1override=0xff" > %buildroot%_sysconfdir/modprobe.d/dah
 %dir %attr(0750,_asterisk,pbxadmin) %_datadir/asterisk/firmware
 %dir %attr(0750,_asterisk,pbxadmin) %_datadir/asterisk/images
 %dir %attr(0750,_asterisk,pbxadmin) %_datadir/asterisk/keys
-%dir %attr(0755,root,root) /var/lib/asterisk/documentation
+/var/lib/asterisk/documentation
 %dir %attr(0755,root,root) /usr/share/asterisk/documentation
 %attr(0755,root,root) /usr/lib/rpm/asterisk.filetrigger
 %_sbindir/select-asterisk
@@ -208,6 +221,9 @@ echo "options wct4xxp t1e1override=0xff" > %buildroot%_sysconfdir/modprobe.d/dah
 %_sysconfdir/modprobe.d/dahdi.conf
 
 %changelog
+* Tue Aug 27 2013 Denis Smirnov <mithraen@altlinux.ru> 0.67-alt1
+- /var/lib/asterisk/documentation symlink to /usr/share/asterisk/documentation
+
 * Wed Apr 24 2013 Denis Smirnov <mithraen@altlinux.ru> 0.66-alt1
 - repocop fixes
 
