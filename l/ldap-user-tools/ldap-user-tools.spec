@@ -2,8 +2,8 @@
 %define _hooksdir %_sysconfdir/hooks/hostname.d
 
 Name:    ldap-user-tools
-Version: 0.9.0
-Release: alt2
+Version: 0.9.1
+Release: alt1
 
 Summary: Utilities to work with LDAP users
 Group:   Development/Other
@@ -48,6 +48,9 @@ install -pm755 -d %buildroot/%_sysconfdir/alterator/openldap
 %dir %_sysconfdir/alterator/openldap
 
 %changelog
+* Tue Aug 27 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.9.1-alt1
+- misstemplation of slapd-template.conf fixed
+
 * Tue Aug 20 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.9.0-alt2
 - +requires_preauth added to addprinc call
 
