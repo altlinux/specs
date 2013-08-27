@@ -1,13 +1,13 @@
 %define PName Asana-Math
-Name:		fonts-otf-asana-math
-Version:	000.926
-Release:	alt1
-License:	OFL
-Group:		System/Fonts/True type
-Summary:	OpenType MATH-enabled Asana font
-URL:		http://www.ctan.org/tex-archive/fonts/Asana-Math/
-Source:		ftp://indian.cse.msu.edu/pub/mirrors/CTAN/fonts/%PName.zip
-BuildArch:	noarch
+Name: fonts-otf-asana-math
+Version: 000.949
+Release: alt1
+License: OFL
+Group: System/Fonts/True type
+Summary: OpenType MATH-enabled Asana font
+Url: http://www.ctan.org/tex-archive/fonts/Asana-Math/
+Source: Asana-Math.zip
+BuildArch: noarch
 
 # Automatically added by buildreq on Thu Jun 03 2010
 BuildRequires: unzip
@@ -24,8 +24,8 @@ them back to me. Last but certainly least, I used the pxfonts as
 a basis for the design of most glyphs.
 
 %package -n fonts-ttf-asana-math
-Summary:	TrueType ATH-enabled Asana font
-Group:		System/Fonts/True type
+Summary: TrueType ATH-enabled Asana font
+Group: System/Fonts/True type
 
 %description -n fonts-ttf-asana-math
 The Asana-Math OpenType font includes almost all mathematical symbols
@@ -42,12 +42,11 @@ a basis for the design of most glyphs.
 %setup -n %PName
 
 %build
-
 %install
 install -D %PName.otf %buildroot%_datadir/fonts/otf/%PName/%PName.otf
 install -D %PName.otf %buildroot%_datadir/fonts/ttf/%PName/%PName.ttf
 ( cd %buildroot%_datadir/fonts/%PName
-mkfontscale 
+mkfontscale
 mkfontdir )
 
 mkdir -p %buildroot%_sysconfdir/X11/fontpath.d
@@ -64,11 +63,15 @@ ln -s ../../..%_datadir/fonts/ttf/%PName %buildroot%_sysconfdir/X11/fontpath.d/t
 %_datadir/fonts/otf/%PName
 
 %files -n fonts-ttf-asana-math
-%doc README.1ST
+%doc README FontLog.txt
 %_sysconfdir/X11/fontpath.d/ttf-%PName:pri=50
 %_datadir/fonts/ttf/%PName
 
 %changelog
+* Wed Aug 28 2013 Fr. Br. George <george@altlinux.ru> 000.949-alt1
+- Autobuild version bump to 000.949
+- Fix docs
+
 * Fri Jun 04 2010 Fr. Br. George <george@altlinux.ru> 000.926-alt1
 - Initial build from scratch
 
