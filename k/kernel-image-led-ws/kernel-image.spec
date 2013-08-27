@@ -20,7 +20,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.4.59
-Release: alt1
+Release: alt2
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -132,8 +132,8 @@ Release: alt1
 
 #define allocator SLAB
 
-#Extra_modules spl 0.6.1
-%Extra_modules zfs 0.6.1
+#Extra_modules spl 0.6.2
+%Extra_modules zfs 0.6.2
 %Extra_modules kvm 3.10.1
 #Extra_modules nvidia 319.32
 %Extra_modules fglrx 13.20.5
@@ -2415,10 +2415,10 @@ gen_rpmmodfile() {
 }
 gen_rpmmodfile scsi-base \
 %if "%sub_flavour" == "guest"
-	%buildroot%modules_dir/kernel/drivers/scsi/{{,lib}iscsi*,scsi_transport_iscsi.ko} \
+	%buildroot%modules_dir/kernel/drivers/scsi/{virtio*,{,lib}iscsi*,scsi_transport_iscsi.ko} \
 %endif
 	%buildroot%modules_dir/kernel/drivers/scsi/{{*_mod,scsi_{tgt,transport_srp},vhba}.ko,osd,device_handler{,/scsi_dh.ko}}
-gen_rpmmodlist %buildroot%modules_dir/kernel/drivers/{message/fusion,scsi{,/device_handler}/*,target} | grep -Fxv -f scsi-base.rpmmodlist > scsi.rpmmodlist
+gen_rpmmodlist %buildroot%modules_dir/kernel/drivers/{message/fusion,scsi{,/device_handler}/*,target} | grep -Fxv -f scsi-base.rpmmodlist | grep -v '^%modules_dir/kernel/drivers/scsi/virtio.*' > scsi.rpmmodlist
 mv scsi-base.rpmmodlist scsi-base.rpmmodlist~
 gen_rpmmodfile infiniband %buildroot%modules_dir/kernel/{drivers/{infiniband,scsi/scsi_transport_srp.ko},net/{9p/9pnet_rdma.ko,rds,sunrpc/xprtrdma}}
 gen_rpmmodfile ipmi %buildroot%modules_dir/kernel/drivers/{acpi/acpi_ipmi,char/ipmi,{acpi/acpi_ipmi,hwmon/i{bm,pmi}*}.ko}
@@ -2446,7 +2446,7 @@ for i in %{?_enable_joystick:joystick} %{?_enable_tablet:tablet} %{?_enable_touc
 	gen_rpmmodfile $i %buildroot%modules_dir/kernel/drivers/input/$i
 done
 %if "%sub_flavour" != "guest"
-%{?_enable_guest:gen_rpmmodfile guest %buildroot%modules_dir/kernel/{drivers/{virtio,{char{,/hw_random},net,block}/virtio*%{?_enable_drm:,gpu/drm/{cirrus,vmwgfx}},misc/vmw_balloon.ko},net/9p/*_virtio.ko}}
+%{?_enable_guest:gen_rpmmodfile guest %buildroot%modules_dir/kernel/{drivers/{virtio,{char{,/hw_random},net,block,scsi}/virtio*%{?_enable_drm:,gpu/drm/{cirrus,vmwgfx}},misc/vmw_balloon.ko},net/9p/*_virtio.ko}}
 %{?_enable_drm:grep -F -f drm.rpmmodlist guest.rpmmodlist | sed 's/^/%%exclude &/' >> drm.rpmmodlist}
 %endif
 sed 's/^/%%exclude &/' *.rpmmodlist > exclude-drivers.rpmmodlist
@@ -2892,6 +2892,10 @@ done)
 
 
 %changelog
+* Tue Aug 27 2013 Led <led@altlinux.ru> 3.4.59-alt2
+- moved virtio_scsi.ko to kernel-modules-guest-* subpackage
+- zfs 0.6.2
+
 * Wed Aug 21 2013 Led <led@altlinux.ru> 3.4.59-alt1
 - 3.4.59
 - updated:
