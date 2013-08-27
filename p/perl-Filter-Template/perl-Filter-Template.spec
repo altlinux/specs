@@ -14,8 +14,8 @@
 %define _enable_test 1
 
 Name: perl-Filter-Template
-Version: 1.040
-Release: alt1.1
+Version: 1.043
+Release: alt1
 
 Summary: Source filter for inline code templating
 
@@ -26,7 +26,7 @@ Url: http://search.cpan.org/dist/Filter-Template/
 Packager: Michael Bochkaryov <misha@altlinux.ru>
 
 BuildArch: noarch
-Source: http://www.cpan.org/authors/id/R/RC/RCAPUTO/Filter-Template-1.040.tar.gz
+Source: http://www.cpan.org/authors/id/R/RC/RCAPUTO/Filter-Template-%{version}.tar.gz
 
 # Automatically added by buildreq on Tue Jul 29 2008 (-bi)
 BuildRequires: perl-Filter perl-devel
@@ -52,6 +52,9 @@ maintain and use.  Choose your trade-offs wisely.
 %doc CHANGES 
 
 %changelog
+* Tue Aug 27 2013 Igor Vlasenko <viy@altlinux.ru> 1.043-alt1
+- automated CPAN update
+
 * Mon Nov 22 2010 Igor Vlasenko <viy@altlinux.ru> 1.040-alt1.1
 - repair after perl 5.12 upgrade using girar-nmu
 
