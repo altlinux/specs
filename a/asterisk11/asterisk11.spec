@@ -1,7 +1,7 @@
 Name: asterisk11
 Summary: Open source PBX
 Version: 11.5.0
-Release: alt1
+Release: alt2
 License: GPL
 Group: System/Servers
 BuildRequires: dahdi-linux-headers flex gcc-c++ graphviz libSDL_image-devel libalsa-devel libavcodec-devel libbluez-devel libcap-devel libcurl-devel libfreetds-devel libgsm-devel libgtk+2-devel libical-devel libiksemel-devel libilbc-devel libjack-devel libkeyutils-devel libltdl7-devel liblua5-devel libmISDN-devel libmysqlclient-devel libncurses-devel libneon-devel libnet-snmp-devel libnewt-devel libopenr2-devel libpopt-devel libportaudio2-devel libpri-devel libpw1.11-devel libradiusclient-ng-devel libresample-devel libsasl2-devel libspandsp6-devel libspeex-devel libsqlite-devel libsqlite3-devel libsrtp libss7-devel libtonezone-dahdi-devel libunixODBC-devel libusb-compat-devel libvorbis-devel libvpb-devel libxml2-devel ncompress openssl postgresql-devel rpm-build-gir texlive-base-bin wget zlib-devel
@@ -101,7 +101,7 @@ Requires: asterisk-files-all
 Requires: asterisk-initscript
 Requires(pre): asterisk-initscript
 Requires: asterisk-base-configs
-Requires(pre): asterisk-base >= 0.6-alt1
+Requires(pre): asterisk-base >= 0.67-alt1
 Requires(pre): coreutils
 Requires: pbx-streamplayer
 Requires: pbx-stereorize
@@ -697,8 +697,6 @@ mkdir -p %buildroot%_includedir/asterisk-%version
 mv %buildroot%_includedir/asterisk   %buildroot%_includedir/asterisk-%version/asterisk
 mv %buildroot%_includedir/asterisk.h %buildroot%_includedir/asterisk-%version/asterisk.h
 mkdir -p %buildroot/usr/share/asterisk/documentation/11
-mkdir -p %buildroot/var/lib/asterisk/documentation/
-ln -s ../../../../usr/share/asterisk/documentation/11 %buildroot/var/lib/asterisk/documentation
 mv %buildroot/var/lib/asterisk/documentation/*.xml %buildroot/usr/share/asterisk/documentation/11/
 mv %buildroot/var/lib/asterisk/documentation/*.dtd %buildroot/usr/share/asterisk/documentation/11/
 ln -sf libasteriskssl11.so.1 %buildroot%_libdir/libasteriskssl11.so
@@ -712,7 +710,6 @@ ln -sf libasteriskssl11.so.1 %buildroot%_libdir/libasteriskssl11.so
 %files
 %_altdir/asterisk-%version
 %dir /usr/share/asterisk/documentation/11
-/var/lib/asterisk/documentation/11
 /usr/share/asterisk/documentation/11/appdocsxml.dtd
 /usr/share/asterisk/documentation/11/core-en_US.xml
 %exclude /var/lib/asterisk/images/asterisk-intro.jpg
@@ -1254,6 +1251,9 @@ ln -sf libasteriskssl11.so.1 %buildroot%_libdir/libasteriskssl11.so
 %_libdir/libasteriskssl11.so.1
 
 %changelog
+* Tue Aug 27 2013 Denis Smirnov <mithraen@altlinux.ru> 11.5.0-alt2
+- compatibility with asterisk-base 0.67
+
 * Thu Aug 01 2013 Denis Smirnov <mithraen@altlinux.ru> 11.5.0-alt1
 - new version 11.5.0
 
