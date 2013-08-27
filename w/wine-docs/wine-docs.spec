@@ -1,9 +1,9 @@
 Name: wine-docs
-Version: 1.0
+Version: 1.6
 Release: alt1
 
-Summary: WINE documentation
-Summary(ru_RU.KOI8-R): Документация к WINE
+Summary: Documentation for Wine
+Summary(ru_RU.UTF8): п■п╬п╨я┐п╪п╣п╫я┌п╟я├п╦я▐ п©п╬ WINE
 
 License: LGPL
 Group: Documentation
@@ -13,7 +13,8 @@ BuildArch: noarch
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-Source: http://ibiblio.org/pub/linux/system/emulators/wine/%name-%version.tar.bz2
+Source: ftp://ftp.winehq.org/pub/wine/source/%version/%name-%version.tar
+
 Provides: wine-doc
 Obsoletes: wine-doc
 
@@ -23,10 +24,11 @@ BuildRequires: OpenSP docbook-dtds docbook-style-dsssl openjade sgml-common
 BuildRequires: docbook-utils
 
 %description
-WINE documentation
+This package is Wine's documentation repository. It consists of 
+various guides and their translations.
 
 %prep
-%setup -q
+%setup
 # remove fr language support
 %__subst "s|fr||" Makefile.in
 
@@ -38,6 +40,9 @@ WINE documentation
 %doc en/*.html
 
 %changelog
+* Sun Aug 04 2013 Vitaly Lipatov <lav@altlinux.ru> 1.6-alt1
+- new version 1.6 (with rpmrb script)
+
 * Thu Dec 11 2008 Vitaly Lipatov <lav@altlinux.ru> 1.0-alt1
 - new version 1.0 (with rpmrb script)
 
