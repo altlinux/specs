@@ -1,6 +1,6 @@
 %define oname cpptest
 Name: libcpptest
-Version: 1.1.1
+Version: 1.1.2
 Release: alt1
 
 Summary: CppTest is a unit testing framework for handling automated tests in C++
@@ -11,7 +11,7 @@ Url: http://cpptest.sourceforge.net/
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-Source: http://prdownloads.sourceforge.net/%oname/%oname-%version.tar.bz2
+Source: http://prdownloads.sourceforge.net/%oname/%oname-%version.tar
 
 # Automatically added by buildreq on Sat Mar 07 2009
 BuildRequires: gcc-c++
@@ -50,6 +50,9 @@ Header files for libspiff.
 %_pkgconfigdir/*
 
 %changelog
+* Tue Aug 27 2013 Vitaly Lipatov <lav@altlinux.ru> 1.1.2-alt1
+- new version 1.1.2 (with rpmrb script)
+
 * Sun Aug 04 2013 Vitaly Lipatov <lav@altlinux.ru> 1.1.1-alt1
 - new version 1.1.1 (with rpmrb script)
 
