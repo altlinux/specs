@@ -1,7 +1,7 @@
 %define modulename mwlib
 
 Name: python-module-mwlib
-Version: 0.15.10
+Version: 0.15.11
 Release: alt1
 
 Summary: MediaWiki conversion library for Python
@@ -79,6 +79,9 @@ install -m 0640 -- mwserve.logrotate %buildroot%_sysconfdir/logrotate.d/mwserve
 
 
 %changelog
+* Tue Aug 27 2013 Vitaly Lipatov <lav@altlinux.ru> 0.15.11-alt1
+- new version 0.15.11 (with rpmrb script)
+
 * Sun Aug 04 2013 Vitaly Lipatov <lav@altlinux.ru> 0.15.10-alt1
 - new version 0.15.10 (with rpmrb script)
 
