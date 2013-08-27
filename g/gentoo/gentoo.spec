@@ -1,5 +1,5 @@
 %define name	gentoo
-%define version	0.20.1
+%define version	0.20.3
 %define release	alt1
 
 Summary: gentoo is a Gtk+ file manager for Linux
@@ -79,6 +79,9 @@ bzcat %SOURCE3 > $RPM_BUILD_ROOT/%_liconsdir/%name.xpm
 %_miconsdir/*.xpm
 
 %changelog
+* Tue Aug 27 2013 Ilya Mashkin <oddity@altlinux.ru> 0.20.3-alt1
+- 0.20.3
+
 * Sat Jul 27 2013 Ilya Mashkin <oddity@altlinux.ru> 0.20.1-alt1
 - 0.20.1
 
