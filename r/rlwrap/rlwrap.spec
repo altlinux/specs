@@ -1,26 +1,26 @@
 Name: rlwrap
-Version: 0.30
-Release: alt1.qa1
+Version: 0.37
+Release: alt1
 Serial: 1
 
 Summary: Line editor - readline wrapper
 License: GCL
 Group: Editors
-URL: http://utopia.knoware.nl/~hlub/uck/rlwrap
-Packager: Ilya Mashkin <oddity@altlinux.ru>
+Url: http://utopia.knoware.nl/~hlub/uck/rlwrap
 
 Source0: %name-%version.tar.gz
 Source1: rlwrap_cmucl_completions
 
 BuildRequires: libreadline-devel libncurses-devel
+%add_perl_lib_path %_datadir/%name/filters
 
 %description
 rlwrap is a 'readline wrapper', a small utility that uses the GNU
 readline library to allow the editing of keyboard input for any
-command. 
+command.
 
 %prep
-%setup -q
+%setup
 
 %build
 %configure
@@ -31,15 +31,20 @@ command.
 
 # Extra complition tables
 #   cmucl & sbcl
-install -D -m644 %SOURCE1 %buildroot/%_datadir/%name/lisp
-install -D -m644 %SOURCE1 %buildroot/%_datadir/%name/sbcl
+install -D -m644 %SOURCE1 %buildroot/%_datadir/%name/completions/lisp
+install -D -m644 %SOURCE1 %buildroot/%_datadir/%name/completions/sbcl
 
 %files
 %_bindir/*
-%_man1dir/r*
+%_man1dir/*
+%_man3dir/*
 %_datadir/%name
 
 %changelog
+* Tue Aug 20 2013 Fr. Br. George <george@altlinux.ru> 1:0.37-alt1
+- Autobuild version bump to 0.37
+- Introducing perl filters
+
 * Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1:0.30-alt1.qa1
 - NMU: rebuilt for debuginfo.
 
