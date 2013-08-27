@@ -4,12 +4,12 @@ BuildRequires: perl(Config.pm) perl(IPC/Open2.pm) perl(Module/Build.pm) perl-Mod
 # END SourceDeps(oneline)
 Summary:	A tiny replacement for Module::Build
 Name:		perl-Module-Build-Tiny
-Version:	0.025
-Release:	alt1_2
+Version:	0.026
+Release:	alt1
 License:	GPL+ or Artistic
 Group:		Development/Perl
 URL:		https://github.com/Leont/module-build-tiny
-Source0:	http://cpan.metacpan.org/authors/id/L/LE/LEONT/Module-Build-Tiny-%{version}.tar.gz
+Source:	http://www.cpan.org/authors/id/L/LE/LEONT/Module-Build-Tiny-%{version}.tar.gz
 BuildArch:	noarch
 # Module
 BuildRequires:	perl(CPAN/Meta.pm)
@@ -72,6 +72,9 @@ RELEASE_TESTING=1 ./Build test
 %{perl_vendor_privlib}/Module/
 
 %changelog
+* Tue Aug 27 2013 Igor Vlasenko <viy@altlinux.ru> 0.026-alt1
+- automated CPAN update
+
 * Mon Aug 05 2013 Igor Vlasenko <viy@altlinux.ru> 0.025-alt1_2
 - update to new release by fcimport
 
