@@ -1,6 +1,6 @@
 Name: lcdtest
-Version: 1.08
-Release: alt1.qa2
+Version: 1.18
+Release: alt1
 
 Summary: The LCD screen quality testing utility
 
@@ -10,13 +10,14 @@ Url: http://www.brouhaha.com/~eric/software/lcdtest/
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-Source: http://www.brouhaha.com/~eric/software/lcdtest/download/%name-%version.tar.bz2
+Source: http://www.brouhaha.com/~eric/software/lcdtest/download/%name-%version.tar
 Source1: %name.desktop
 Patch: lcdtest-1.02-alt-man-double_content_fix.patch
 
 # manually removed: esound bk cvs ghostscript-utils rcs tetex-latex
 # Automatically added by buildreq on Thu Sep 20 2007
-BuildRequires: flex gcc-c++ libSDL-devel libSDL_image-devel scons swig
+BuildRequires: flex gcc-c++ libSDL-devel libSDL_image-devel libSDL_ttf-devel  scons swig
+
 
 BuildRequires: netpbm
 
@@ -31,11 +32,11 @@ when using analog inputs, and for finding pixels that are stuck on
 or off. lctest uses the SDL library, and is known to work on Linux
 and Windows.
 
-%description -l ru_RU.KOI8-R
-lcdtest отображает различные паттерны, позволяющие судить о
-качестве изображения на жидкокристаллическом мониторе и наличии таких
-дефектов, как "битые пикселы". lcdtest использует библиотеку SDL, она
-тестировалась в Linux и Windows.
+%description -l ru_RU.UTF-8
+lcdtest п╬я┌п╬п╠я─п╟п╤п╟п╣я┌ я─п╟п╥п╩п╦я┤п╫я▀п╣ п©п╟я┌я┌п╣я─п╫я▀, п©п╬п╥п╡п╬п╩я▐я▌я┴п╦п╣ я│я┐п╢п╦я┌я▄ п╬
+п╨п╟я┤п╣я│я┌п╡п╣ п╦п╥п╬п╠я─п╟п╤п╣п╫п╦я▐ п╫п╟ п╤п╦п╢п╨п╬п╨я─п╦я│я┌п╟п╩п╩п╦я┤п╣я│п╨п╬п╪ п╪п╬п╫п╦я┌п╬я─п╣ п╦ п╫п╟п╩п╦я┤п╦п╦ я┌п╟п╨п╦я┘
+п╢п╣я└п╣п╨я┌п╬п╡, п╨п╟п╨ "п╠п╦я┌я▀п╣ п©п╦п╨я│п╣п╩я▀". lcdtest п╦я│п©п╬п╩я▄п╥я┐п╣я┌ п╠п╦п╠п╩п╦п╬я┌п╣п╨я┐ SDL, п╬п╫п╟
+я┌п╣я│я┌п╦я─п╬п╡п╟п╩п╟я│я▄ п╡ Linux п╦ Windows.
 
 %prep
 %setup -q
@@ -45,7 +46,7 @@ lcdtest отображает различные паттерны, позволяющие судить о
 scons
 
 %install
-scons install destdir=%buildroot bindir=%_bindir mandir=%_man1dir
+scons install --prefix=%buildroot%prefix
 install -pD -m644 %SOURCE1 %buildroot%_desktopdir/%name.desktop
 desktop-file-install --dir %buildroot%_desktopdir \
 	--remove-category=Utility \
@@ -59,9 +60,13 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %doc README
 %_bindir/%name
 %_man1dir/%name.1.*
+%_iconsdir/hicolor/scalable/apps/lcdtest.svg
 %_desktopdir/%name.desktop
 
 %changelog
+* Tue Aug 27 2013 Vitaly Lipatov <lav@altlinux.ru> 1.18-alt1
+- new version 1.18 (with rpmrb script)
+
 * Mon May 23 2011 Repocop Q. A. Robot <repocop@altlinux.org> 1.08-alt1.qa2
 - NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
 - applied repocop fixes:
