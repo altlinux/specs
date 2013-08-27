@@ -14,7 +14,7 @@
 %define _enable_test 1
 
 Name: perl-Perl6-Junction
-Version: 1.50000
+Version: 1.60000
 Release: alt1
 
 Summary: Perl6 style Junction operators in Perl5
@@ -59,6 +59,9 @@ must also use a regex object, such as "qr/\d/", not a plain regex such as
 %exclude %perl_vendor_archlib
 
 %changelog
+* Tue Aug 27 2013 Igor Vlasenko <viy@altlinux.ru> 1.60000-alt1
+- automated CPAN update
+
 * Mon Sep 24 2012 Igor Vlasenko <viy@altlinux.ru> 1.50000-alt1
 - automated CPAN update
 
