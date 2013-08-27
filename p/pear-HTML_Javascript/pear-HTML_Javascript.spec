@@ -1,8 +1,8 @@
 %define pear_name HTML_Javascript
 
 Name: pear-HTML_Javascript
-Version: 1.1.1
-Release: alt3
+Version: 1.1.2
+Release: alt1
 
 Summary: Provides an interface for creating simple JS scripts
 
@@ -48,6 +48,9 @@ Allow output data to a file, to the standart output(print), or return
 %pear_xmldir/%pear_name.xml
 
 %changelog
+* Tue Aug 27 2013 Vitaly Lipatov <lav@altlinux.ru> 1.1.2-alt1
+- new version 1.1.2 (with rpmrb script)
+
 * Fri Jun 20 2008 Vitaly Lipatov <lav@altlinux.ru> 1.1.1-alt3
 - autorebuild for correct requires(pre) (see bug #16086)
 
