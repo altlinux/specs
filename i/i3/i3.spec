@@ -1,6 +1,6 @@
 Name: i3
-Version: 4.5.1
-Release: alt2
+Version: 4.6
+Release: alt1
 
 Summary: I3 window manager
 License: BSD-like
@@ -119,6 +119,9 @@ install -pm644 -D %SOURCE1 %buildroot%docdir/
 %_includedir/*
 
 %changelog
+* Tue Aug 27 2013 Andrey Bergman <vkni@altlinux.org> 4.6-alt1
+- Version update
+
 * Fri Apr 12 2013 Andrey Bergman <vkni@altlinux.org> 4.5.1-alt2
 - Added dmenu to Requires
 
