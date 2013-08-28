@@ -1,10 +1,11 @@
 %define oname llvm
 
 %def_without python3
+%def_with clang
 
 Name: python-module-%oname
-Version: 0.11
-Release: alt2.git20130302
+Version: 0.11.3
+Release: alt1.git20130826
 Summary: Python Bindings for LLVM
 License: BSD
 Group: Development/Python
@@ -14,6 +15,9 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 
 BuildPreReq: llvm-devel python-devel gcc-c++ libffi-devel
+%if_with clang
+BuildRequires: clang
+%endif
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python-tools-2to3 libnumpy-py3-devel
@@ -49,7 +53,11 @@ cp -a . ../python3
 #sed -i 's|.*numpy\-py3.*||' llvm/_core.c
 
 %build
-%add_optflags -fno-strict-aliasing -fno-rtti
+%add_optflags -fno-strict-aliasing
+%if_with clang
+CC=clang; export CC;
+CXX=clang++; export CXX;
+%endif
 %python_build_debug
 %if_with python3
 pushd ../python3
@@ -68,6 +76,9 @@ pushd ../python3
 popd
 %endif
 
+%check
+python -c 'import sys; sys.path.insert(0, "%buildroot%python_sitelibdir"); import llvm; llvm.test();'
+
 %files
 %doc CHANGELOG README.rst
 %python_sitelibdir/*
@@ -80,6 +91,11 @@ popd
 %endif
 
 %changelog
+* Wed Aug 13 2013 Ivan Ovcherenko <asdus@altlinux.org> 0.11.3-alt1.git20130826
+- Version 0.11.3
+- Build with CLang 3.3 and over LLVM 3.3
+- Removed -fno-rtti in compiler flags
+
 * Tue Mar 12 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.11-alt2.git20130302
 - Added -fno-rtti in compiler flags
 

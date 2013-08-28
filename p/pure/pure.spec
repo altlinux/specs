@@ -1,6 +1,6 @@
 Name: pure
 Version: 0.57
-Release: alt1
+Release: alt2
 
 Summary: A term-rewriting functional programming language
 License: GPLv3+
@@ -8,6 +8,9 @@ Group: Development/Functional
 Url: http://purelang.bitbucket.org
 # https://bitbucket.org/purelang/pure-lang/downloads/%name-%version.tar.gz
 Source: %name-%version.tar
+# FC patches
+Patch100:	pure-0.57-libedit-history.patch
+Patch101:	pure-0.57-llvm-3.3.patch
 
 #Requires: pure-doc
 #Requires:		web_browser
@@ -73,6 +76,8 @@ This package contains examples for programming in pure.
 
 %prep
 %setup -n %name-%version
+%patch100 -p1
+%patch101 -p2
 
 %build
 %configure
@@ -107,6 +112,9 @@ make check
 %doc examples
 
 %changelog
+* Wed Aug 28 2013 Fr. Br. George <george@altlinux.ru> 0.57-alt2
+- Intruduce FC patches for llvm 3.3
+
 * Thu Feb 28 2013 Dmitry V. Levin <ldv@altlinux.org> 0.57-alt1
 - Updated to 0.57.
 
