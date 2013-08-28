@@ -1,6 +1,6 @@
 Name: xdg-utils
 Version: 1.1.0
-Release: alt7
+Release: alt8
 
 Summary: A set of command line tools that assist applications with a variety of desktop integration tasks
 License: MIT
@@ -13,6 +13,7 @@ Patch1: xdg-open-opera.patch
 Patch2: xdg-su-added-lxde-and-gksu-support.patch
 Patch3: detect-mate.patch
 Patch4: mate-screensaver.patch
+Patch5: xdg-open-generic-mimeapps.patch
 
 BuildArch: noarch
 
@@ -54,6 +55,7 @@ http://portland.freedesktop.org/wiki/TestSuite
 %patch2 -p2
 %patch3 -p2
 %patch4 -p2
+%patch5 -p1
 
 %build
 %autoreconf
@@ -78,6 +80,9 @@ http://portland.freedesktop.org/wiki/TestSuite
 %doc ChangeLog README LICENSE RELEASE_NOTES TODO
 
 %changelog
+* Wed Aug 28 2013 Fr. Br. George <george@altlinux.ru> 1.1.0-alt8
+- Add support for "first wins" mimeapps.list query
+
 * Fri Nov 30 2012 Paul Wolneykien <manowar@altlinux.ru> 1.1.0-alt7
 - Explicitly rebuild the scripts target.
 - Build with w3m: need for proper *.in -> * conversion.
