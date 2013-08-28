@@ -1,7 +1,7 @@
 Name: libfm
 Summary: core part of pcmanfm
-Version: 1.1.0
-Release: alt2
+Version: 1.1.2
+Release: alt0.2
 License: GPL
 Group: File tools
 Url: http://pcmanfm.sourceforge.net/
@@ -39,10 +39,10 @@ This package contains files needed to statically link to libfm
 
 %prep
 %setup
+sed -ri '/AM_INIT_AUTOMAKE/s,-Werror,\0 -Wno-portability,' configure.ac
+%autoreconf
 
 %build
-# unpack git version with builtin script
-./autogen.sh
 %configure \
     --enable-largefile \
     --enable-udisks \
@@ -79,6 +79,9 @@ rm -f %buildroot%_pkgconfigdir/libfm-gtk3.pc
 %_libdir/*.a
 
 %changelog
+* Fri Aug 16 2013 Mykola Grechukh <gns@altlinux.ru> 1.1.2-alt0.2
+- new version (1.1.2)
+
 * Wed Jan 23 2013 Mykola Grechukh <gns@altlinux.ru> 1.1.0-alt2
 - updated udisks2 buildreq
 
