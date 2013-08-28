@@ -7,7 +7,7 @@
 
 Name: opengtl
 Version: 0.9.18
-Release: alt1
+Release: alt2
 
 Group: System/Libraries
 Summary: Open Graphics Transformation Languages
@@ -18,10 +18,10 @@ License: LGPLv2+
 Provides: OpenGTL = %version-%release
 
 Source: http://www.opengtl.org/download/OpenGTL-%version.tar.bz2
-Patch1: opengtl-0.9.18-alt-find-llvm.patch
 Patch2: opengtl-0.9.10-alt-extensions-dir.patch
 Patch3: opengtl-0.9.15-alt-fix-linking.patch
 Patch4: opengtl-0.9.18-alt-pkgconfig.patch
+Patch5: opengtl-0.9.18-alt-llvm-3.3.patch
 
 # Automatically added by buildreq on Thu Jan 20 2011 (-bb)
 #BuildRequires: ImageMagick-tools cmake gcc-c++ ghostscript-utils latex2html libpng-devel llvm-devel rpm-build-ruby tetex-latex-listings zlib-devel-static
@@ -55,10 +55,10 @@ based on OpenGTL.
 
 %prep
 %setup -q -n OpenGTL-%version
-%patch1 -p1
 #%patch2 -p1
 %patch3 -p1
 %patch4 -p1
+%patch5 -p2
 
 
 %build
@@ -86,6 +86,10 @@ based on OpenGTL.
 %_libdir/pkgconfig/*.pc
 
 %changelog
+* Wed Aug 28 2013 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.9.18-alt2
+- fixed build with llvm 3.3
+- drop old llvm patch
+
 * Tue Feb 26 2013 Sergey V Turchin <zerg@altlinux.org> 0.9.18-alt1
 - new version
 

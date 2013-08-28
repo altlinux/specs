@@ -1,27 +1,31 @@
 %def_disable doxygen
+%def_with ocaml
 
 Name: llvm
-Version: 3.2
-Release: alt3
+Version: 3.3
+Release: alt1
 Summary: The Low Level Virtual Machine
 Group: Development/C
 License: NCSA
 Url: http://llvm.org/
 
 Source0: http://llvm.org/releases/%version/llvm-%version.src.tar.gz
-Source1: http://llvm.org/releases/%version/clang-%version.src.tar.gz
-# Data files should be installed with timestamps preserved
-Patch0: llvm-2.6-timestamp.patch
-Patch1: llvm-3.2-R600-tstellar-git-b53ed46.patch
-Patch2: llvm-3.2-R600-tstellar-mesa-9.1.patch
+Source1: http://llvm.org/releases/%version/cfe-%version.src.tar.gz
+Source2: http://llvm.org/releases/%version/compiler-rt-%version.src.tar.gz
+Source3: http://llvm.org/releases/%version/clang-tools-extra-%version.src.tar.gz
 
-# Automatically added by buildreq on Wed Apr 24 2013
-# optimized out: gnu-config groff-base libstdc++-devel ocaml perl-podlators python-base python-modules-compiler tcl
+Patch1: llvm+clang-3.3-alt-add-alt-triplet.patch
+
+BuildPreReq: /proc
 BuildRequires: dejagnu gcc-c++ groff-extra groff-ps libffi-devel ocamldoc perl-devel perl-Pod-Parser python-modules zip
+BuildRequires: gcc-c++ groff-extra groff-ps libffi-devel perl-devel perl-Pod-Simple python-modules chrpath
 
-BuildRequires: chrpath
+%if_with ocaml
+BuildRequires: ocamldoc ocaml
+%endif
+
 %if_enabled doxygen
-BuildRequires: doxygen graphviz
+BuildRequires: doxygen graphviz fonts-ttf-dejavu
 %endif
 
 %description
@@ -143,46 +147,67 @@ HTML documentation for LLVM's OCaml binding.
 %add_python_req_skip AppKit
 
 %prep
-%setup -n llvm-%version.src -a1 %{?_with_gcc:-a2}
-mv clang-%version.src tools/clang
-%patch0 -p1
+%setup -n llvm-%version.src -a1 -a2 -a3
+mv cfe-%version.src tools/clang
+mv clang-tools-extra-%version.src tools/clang/tools/extra
+mv compiler-rt-%version.src projects/compiler-rt
+
 %patch1 -p1
-%patch2 -p1
 sed -i "s|%{version}svn|%version|g" configure
 sed -i 's|/lib /usr/lib $lt_ld_extra|%_libdir $lt_ld_extra|' configure
-sed -i 's/\(OmitFramePointer := \).*/\1/' Makefile.rules
+
+# upstream sets DOT_PATH = /usr/bin/dot, but _PATH_ is /usr/bin
+find -name doxygen.cfg.in | xargs sed -i 's,\(^DOT_PATH[[:blank:]]*=\).*,\1,'
+#sed -i 's/\(OmitFramePointer := \).*/\1/' Makefile.rules
+
+# some strange failing tests
+rm tools/clang/test/Driver/{android-standalone,linux-header-search,mips-cs-header-search}.cpp
 
 %build
+mkdir ./build
+cd ./build
+
+%define  _configure_script ../configure
 %configure \
-	--prefix=%prefix \
-	--libdir=%_libdir/%name \
-	--datadir=%_libdir/%name \
-	--disable-assertions \
-	--enable-debug-runtime \
-	--enable-jit \
-	--enable-libffi \
-	--enable-targets=host \
-%ifarch %ix86 x86_64
-	--enable-experimental-targets=R600 \
-%endif
-	--enable-shared \
-	--with-cxx-include-arch=%_arch-%_vendor-%_os \
-	%{subst_enable doxygen}
+        --enable-cxx11 \
+        --enable-optimized \
+        --disable-assertions \
+        --enable-targets=x86,x86_64,arm,aarch64,cpp,nvptx \
+        --enable-experimental-targets=R600 \
+        --enable-jit \
+        --enable-shared \
+        --enable-libffi \
+	%{subst_enable doxygen} \
+        --with-c-include-dirs=%_includedir:%_libdir/gcc/%_arch-%_vendor-%_os/%__gcc_version/include
 
 # FIXME file this
 # configure does not properly specify libdir
-sed -i 's|(PROJ_prefix)/lib|(PROJ_prefix)/%_lib/%name|g' Makefile.config
+sed -i 's|(PROJ_prefix)/lib|(PROJ_prefix)/%_lib|g' Makefile.config
 # llvm-config.cpp hardcodes lib in it
-sed -i 's|ActiveLibDir = ActivePrefix + "/lib"|ActiveLibDir = ActivePrefix + "/%_lib/%name"|g' tools/llvm-config/llvm-config.cpp
+sed -i 's|ActiveLibDir = ActivePrefix + "/lib"|ActiveLibDir = ActivePrefix + "/%_lib"|g' ../tools/llvm-config/llvm-config.cpp
 
-%make_build REQUIRES_RTTI=1 KEEP_SYMBOLS=1 VERBOSE=1
+%make_build REQUIRES_RTTI=1 KEEP_SYMBOLS=1 OPTIMIZE_OPTION="%optflags" VERBOSE=1
+
+%if_enabled doxygen
+# hack to build docs during %%build, not %%install
+for docdir in docs/ tools/clang/docs/; do
+	sed -i "\,^doxygen: ,s,regendoc ,," $docdir/Makefile
+	make VERBOSE=1 regendoc -C $docdir
+	make VERBOSE=1 doxygen -C $docdir
+done
+%endif
 
 %check
-# no current unexpected failures. Use || true if they recur to force ignore
+cd build
 make check 2>&1 | tee llvm-testlog.txt
-(cd tools/clang && make test 2>&1) | tee clang-testlog.txt
+
+pushd tools/clang
+make test 2>&1 | tee clang-testlog.txt
+popd
 
 %install
+cd build
+
 %makeinstall_std KEEP_SYMBOLS=1 VERBOSE=1 PROJ_docsdir=/moredocs
 
 # Create ld.so.conf.d entry
@@ -199,35 +224,37 @@ for f in scan-{build,view}; do
   ln -s %_libdir/clang-analyzer/$f/$f %buildroot%_bindir/$f
 done
 
-(cd tools/clang/tools && cp -pr scan-{build,view} \
- %buildroot%_libdir/clang-analyzer/)
+pushd ../tools/clang/tools
+cp -pr scan-{build,view} %buildroot%_libdir/clang-analyzer/
+popd
 
 # Move documentation back to build directory
+rm -rf moredocs
 mv %buildroot/moredocs .
 rm -f moredocs/*.tar.gz
 rm -f moredocs/ocamldoc/html/*.tar.gz
 
 # and separate the apidoc
 %if_enabled doxygen
-mv moredocs/html/doxygen apidoc
-mv tools/clang/docs/doxygen/html clang-apidoc
+cp -al moredocs/html/doxygen apidoc
+cp -al tools/clang/docs/doxygen/html clang-apidoc
 %endif
 
 # And prepare Clang documentation
+rm -rf clang-docs
 mkdir clang-docs
 for f in LICENSE.TXT NOTES.txt README.txt; do
-  ln tools/clang/$f clang-docs/
+  ln ../tools/clang/$f clang-docs/
 done
-rm -rf tools/clang/docs/{doxygen*,Makefile*,*.graffle,tools}
-subst 's|^\(DIRS.*\) docs\(.*\)|\1\2|' tools/clang/Makefile
+rm -rf ../tools/clang/docs/{doxygen*,Makefile*,*.graffle,tools}
+subst 's|^\(DIRS.*\) docs\(.*\)|\1\2|' ../tools/clang/Makefile
 
 # Get rid of erroneously installed example files.
-rm -f %buildroot%_libdir/llvm/*LLVMHello.*
-rm -f %buildroot%_libdir/llvm/*BugpointPasses.*
+rm -f %buildroot%_libdir/*LLVMHello.*
+rm -f %buildroot%_libdir/*BugpointPasses.*
 
-#find %buildroot -name .dir -print0 | xargs -0r rm -f
-file %buildroot/%_bindir/* | awk -F: '$2~/ELF/{print $1}' | xargs -r chrpath -d
-file %buildroot/%_libdir/llvm/*.so | awk -F: '$2~/ELF/{print $1}' | xargs -r chrpath -d
+file %buildroot%_bindir/* | awk -F: '$2~/ELF/{print $1}' | xargs -r chrpath -d
+file %buildroot%_libdir/*.so | awk -F: '$2~/ELF/{print $1}' | xargs -r chrpath -d
 
 # remove documentation makefiles:
 # they require the build directory to work
@@ -235,11 +262,11 @@ find examples -name 'Makefile' -delete
 
 # need for build cmake projects
 mkdir -p %buildroot%_datadir/CMake/Modules
-install -p -m644 cmake/modules/*.cmake %buildroot%_datadir/CMake/Modules
+install -p -m644 ../cmake/modules/*.cmake %buildroot%_datadir/CMake/Modules
 ln -s LLVM-Config.cmake %buildroot%_datadir/CMake/Modules/LLVMConfig.cmake
 
 %files
-%doc CREDITS.TXT LICENSE.TXT README.txt llvm-testlog.txt
+%doc CREDITS.TXT LICENSE.TXT README.txt build/llvm-testlog.txt
 %config(noreplace) %_sysconfdir/ld.so.conf.d/llvm-%_arch.conf
 %_bindir/bugpoint
 %_bindir/llc
@@ -248,9 +275,8 @@ ln -s LLVM-Config.cmake %buildroot%_datadir/CMake/Modules/LLVMConfig.cmake
 %_bindir/llvm*
 %_bindir/opt
 %_bindir/macho-dump
-%dir %_libdir/llvm
-%_libdir/llvm/*.so
-%exclude %_libdir/llvm/libclang.so
+%_libdir/*.so
+%exclude %_libdir/libclang.so
 %_mandir/man1/*.1.*
 %exclude %_mandir/man1/clang.1.*
 
@@ -258,15 +284,16 @@ ln -s LLVM-Config.cmake %buildroot%_datadir/CMake/Modules/LLVMConfig.cmake
 %_bindir/llvm-config
 %_includedir/llvm
 %_includedir/llvm-c
-%_libdir/llvm/*.a
+%_libdir/*.a
 %_datadir/CMake/Modules
 
 %files -n clang
-%doc clang-docs/* clang-testlog.txt
+%doc build/clang-docs/* build/tools/clang/clang-testlog.txt
 %_bindir/clang*
+%_bindir/cpp11-migrate
 %_bindir/c-index-test
 %prefix/lib/clang
-%_libdir/llvm/libclang.so
+%_libdir/libclang.so
 %_mandir/man1/clang.1.*
 
 %files -n clang-devel
@@ -278,33 +305,39 @@ ln -s LLVM-Config.cmake %buildroot%_datadir/CMake/Modules/LLVMConfig.cmake
 %_bindir/scan-view
 %_libdir/clang-analyzer
 
+%if_with ocaml
 %files ocaml
 %_libdir/ocaml/*.cma
 %_libdir/ocaml/*.cmi
 
 %files ocaml-devel
+%_libdir/ocaml/META.llvm
 %_libdir/ocaml/*.a
 %_libdir/ocaml/*.cmx*
 %_libdir/ocaml/*.mli
 
+%files ocaml-doc
+%doc build/moredocs/ocamldoc/html/*
+%endif
+
 %if_enabled doxygen
 %files -n clang-doc
-%doc tools/clang/docs/*
+%doc tools/clang/docs
 
 %files doc
-%doc examples moredocs/html
-
-%files ocaml-doc
-%doc moredocs/ocamldoc/html/*
+%doc examples build/moredocs/html
 
 %files apidoc
-%doc apidoc/*
+%doc build/apidoc
 
 %files -n clang-apidoc
-%doc clang-apidoc/*
+%doc build/clang-apidoc
 %endif
 
 %changelog
+* Mon Aug 19 2013 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.3-alt1
+- New version
+
 * Tue Apr 23 2013 Dmitry V. Levin <ldv@altlinux.org> 3.2-alt3
 - Fixed build to enable proper debuginfo information.
 

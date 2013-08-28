@@ -3,7 +3,7 @@
 
 Name:		gambas3
 Version:	3.4.2
-Release:	alt1
+Release:	alt2
 
 Summary:	IDE based on a basic interpreter with object extensions
 Group:		Development/Tools
@@ -73,6 +73,7 @@ Patch2:		%name-2.99.1-noliconv.patch
 # Use libv4l1
 Patch4:		%name-3.3.4-use-libv4l1.patch
 Patch5:     %name-3.4.1-remove-undefined-symbols.patch
+Patch6:     %name-3.4.2-llvm-3.3.patch
 
 %description
 Gambas3 is a free development environment based on a Basic interpreter
@@ -776,6 +777,7 @@ This component allows you to use xml-xslt.
 %patch2 -p1
 %patch4 -p2
 %patch5 -p2
+%patch6 -p1
 
 # We used to patch these out, but this is simpler.
 for i in `find . |grep acinclude.m4`; do
@@ -1258,6 +1260,9 @@ install -m 0644 -p main/mime/application-x-gambas3.xml %buildroot%_xdgmimedir/pa
 %appdir/info/gb.xml.xslt.*
 
 %changelog
+* Wed Aug 28 2013 Andrey Cherepanov <cas@altlinux.org> 3.4.2-alt2
+- Rebuild with llvm-3.3
+
 * Tue Jul 30 2013 Andrey Cherepanov <cas@altlinux.org> 3.4.2-alt1
 - New version 3.4.2
 - Add gambas3-gb-gui for gambas3-ide
