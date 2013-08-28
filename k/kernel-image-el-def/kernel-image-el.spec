@@ -7,8 +7,8 @@
 
 Name: kernel-image-%flavour
 Version: 2.6.32
-Release: alt10
-%define erelease 358.14.1.el6
+Release: alt11
+%define erelease 358.18.1.el6
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -548,6 +548,14 @@ tar	--transform='s/^\(linux-%kversion\)-%erelease/\1-%flavour-%krelease/' \
 
 
 %changelog
+* Wed Aug 28 2013 Led <led@altlinux.ru> 2.6.32-alt11
+- 2.6.32-358.18.1.el6:
+  + CVE-2012-6544
+  + CVE-2013-2146
+  + CVE-2013-2206
+  + CVE-2013-2224
+  + CVE-2013-2237
+
 * Thu Aug 08 2013 Led <led@altlinux.ru> 2.6.32-alt10
 - fixed tarball creation of kernel-src
 - updated:
@@ -566,7 +574,7 @@ tar	--transform='s/^\(linux-%kversion\)-%erelease/\1-%flavour-%krelease/' \
   + CVE-2013-3224
   + CVE-2013-3225
   + CVE-2013-3301
-- added radeo firmwares
+- added radeon firmwares
 
 * Tue Jul 02 2013 Led <led@altlinux.ru> 2.6.32-alt8
 - fixed freeing RCU-protected IP-options (CVE-2013-2224)
