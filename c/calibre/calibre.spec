@@ -2,8 +2,8 @@
 
 # -*- coding: utf-8 -*-
 Name: calibre
-Version: 0.9.42
-Release: alt2
+Version: 1.0.0
+Release: alt1
 
 Summary: A e-book library management application
 Summary(ru_RU.UTF8): Программа для работы с личной электронной библиотекой
@@ -14,12 +14,14 @@ Url: http://calibre-ebook.com/
 
 Packager: Damir Shayhutdinov <damir@altlinux.ru>
 
-# Source-url: http://status.calibre-ebook.com/dist/src
+# #Source-url: http://status.calibre-ebook.com/dist/src
+# Source-url: http://download.calibre-ebook.com/%version/calibre-%version.tar.xz
 Source: %name-%version.tar
 Source1: calibre-mount-helper
 
 Patch: calibre-no-update.patch
 Patch1: calibre-0.8.55-alt-no-macmenu.patch
+Patch2: calibre-qt4-4.8.5-private-headers.patch
 
 Requires: fonts-ttf-liberation
 
@@ -34,9 +36,9 @@ BuildRequires: /proc
 BuildRequires: gcc-c++ libX11-devel libXext-devel libjpeg-devel libusb-devel libsqlite3-devel
 
 BuildRequires: python-modules-json python-modules-compiler python-modules-curses python-modules-encodings
-BuildRequires: python-module-sip-devel
+BuildRequires: python-module-sip-devel python-module-apsw
 
-# Note: checked with http://calibre-ebook.com/download_linux 04.08.2013
+# Note: checked with http://calibre-ebook.com/download_linux 28.08.2013
 BuildRequires: python-module-imaging >= 1.1.6
 BuildRequires: libqt4-devel >= 4.8.0
 BuildRequires: python-module-PyQt4-devel >= 4.9.6
@@ -79,6 +81,7 @@ TXT, PDF, LRS и FB2.
 # don't check for new upstream version
 %patch -p1
 %patch1 -p1
+%patch2 -p2
 
 %build
 %python_build
@@ -109,12 +112,18 @@ install -m 755 %SOURCE1 %buildroot%_bindir/calibre-mount-helper
 %_datadir/%name/
 
 %changelog
+* Wed Aug 28 2013 Vitaly Lipatov <lav@altlinux.ru> 1.0.0-alt1
+- new version 1.0.0 (with rpmrb script)
+
 * Tue Aug 06 2013 Vitaly Lipatov <lav@altlinux.ru> 0.9.42-alt2
 - add python-module-netifaces require
 - fix warning fix update_checker attribute
 
 * Sun Aug 04 2013 Vitaly Lipatov <lav@altlinux.ru> 0.9.42-alt1
-- new version 0.9.42 (with rpmrb script)
+- new version 0.9.42 (with rpmrb script) (ALT bug #29056)
+- rebuild with libpodofo 0.9.1
+- partially added private qt4 4.8.5 headers
+- add no-update patch from Fedora
 
 * Thu Apr 18 2013 Anton Farygin <rider@altlinux.ru> 0.8.55-alt1.4
 - rebuild with new ImageMagick
@@ -130,12 +139,6 @@ install -m 755 %SOURCE1 %buildroot%_bindir/calibre-mount-helper
 
 * Tue Jun 19 2012 Anton Farygin <rider@altlinux.ru> 0.8.55-alt1
 - Updated to 0.8.55 release
-=======
-- new version 0.9.42 (with rpmrb script) (ALT bug #29056)
-- rebuild with libpodofo 0.9.1
-- partially added private qt4 4.8.5 headers
-- add no-update patch from Fedora
->>>>>>> add some private headers from qt4-4.8.5
 
 * Wed Jun 13 2012 Vitaly Lipatov <lav@altlinux.ru> 0.8.41-alt3
 - rebuild with libpodofo
