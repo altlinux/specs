@@ -3,16 +3,18 @@
 #
 Name:		openstack-glance
 Version:	2012.2.0.4
-Release:	alt2
+Release:	alt3
 Summary:	OpenStack Image Service
 
 Group:		System/Servers
 License:	ASL 2.0
 URL:		http://glance.openstack.org
-Source0:	%name-%version.tar.gz
+Source0:	%name-%version.tar
 Source1:	%name-api.service
 Source2:	%name-registry.service
 Source3:	%name.logrotate
+Source4:	%name-api.init
+Source5:	%name-registry.init
 
 #
 # patches_base=folsom-3
@@ -26,9 +28,6 @@ BuildRequires:	python-devel
 BuildRequires:	python-module-distribute
 BuildRequires:	intltool
 
-Requires(post):		systemd-units
-Requires(preun):	systemd-units
-Requires(postun):	systemd-units
 Requires(pre):	shadow-utils
 Requires:	python-module-glance = %version-%release
 Requires:	python-module-glanceclient
@@ -83,7 +82,6 @@ Group:		Documentation
 
 Requires:	%name = %version-%release
 
-BuildRequires:	systemd-units
 BuildRequires:	python-module-sphinx
 BuildRequires:	graphviz
 
@@ -114,10 +112,10 @@ sed -i '/\/usr\/bin\/env python/d' glance/common/config.py glance/common/crypt.p
 echo %{version} > glance/versioninfo
 
 %build
-%{__python} setup.py build
+%python_build
 
 %install
-%{__python} setup.py install -O1 --skip-build --root %{buildroot}
+%python_install
 
 # Delete tests
 rm -fr %{buildroot}%{python_sitelibdir}/tests
@@ -157,9 +155,13 @@ install -p -D -m 640 etc/glance-scrubber.conf %{buildroot}%{_sysconfdir}/glance/
 install -p -D -m 640 etc/policy.json %{buildroot}%{_sysconfdir}/glance/policy.json
 install -p -D -m 640 etc/schema-image.json %{buildroot}%{_sysconfdir}/glance/schema-image.json
 
-# Initscripts
+# Unitfiles
 install -p -D -m 644 %{SOURCE1} %{buildroot}%{_unitdir}/openstack-glance-api.service
 install -p -D -m 644 %{SOURCE2} %{buildroot}%{_unitdir}/openstack-glance-registry.service
+
+# Initscripts
+install -p -D -m 755 %{SOURCE4} %{buildroot}%{_initdir}/openstack-glance-api
+install -p -D -m 755 %{SOURCE5} %{buildroot}%{_initdir}/openstack-glance-registry
 
 # Logrotate config
 install -p -D -m 644 %{SOURCE3} %{buildroot}%{_sysconfdir}/logrotate.d/openstack-glance
@@ -200,6 +202,8 @@ exit 0
 
 %{_unitdir}/%name-api.service
 %{_unitdir}/%name-registry.service
+%{_initdir}/%name-api
+%{_initdir}/%name-registry
 %{_mandir}/man1/glance*.1.gz
 %dir %{_sysconfdir}/glance
 %config(noreplace) %attr(-, root, glance) %{_sysconfdir}/glance/glance-api.conf
@@ -225,6 +229,12 @@ exit 0
 %doc doc/build/html
 
 %changelog
+* Wed Aug 28 2013 Pavel Shilovsky <piastry@altlinux.org> 2012.2.0.4-alt3
+- Cleanup spec
+
+* Sat Mar 30 2013 Pavel Shilovsky <piastry@altlinux.org> 2012.2.0.4-alt2.1
+- Add SysVinit support
+
 * Wed Mar 06 2013 Pavel Shilovsky <piastry@altlinux.org> 2012.2.0.4-alt2
 - Use post/preun_service scripts in spec
 
