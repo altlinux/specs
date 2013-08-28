@@ -1,7 +1,7 @@
 %define dist Device-SerialPort
 Name: perl-%dist
 Version: 1.04
-Release: alt3
+Release: alt4
 
 Summary: Linux/POSIX emulation of Win32::SerialPort functions
 License: GPL or Artistic
@@ -34,6 +34,9 @@ identical to the one provided by the Win32::SerialPort module.
 %perl_vendor_autolib/Device
 
 %changelog
+* Wed Aug 28 2013 Vladimir Lettiev <crux@altlinux.ru> 1.04-alt4
+- built for perl 5.18
+
 * Fri Aug 31 2012 Vladimir Lettiev <crux@altlinux.ru> 1.04-alt3
 - rebuilt for perl-5.16
 

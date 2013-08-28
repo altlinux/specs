@@ -1,7 +1,7 @@
 %define dist Devel-DProf
 Name: perl-%dist
 Version: 20110802.00
-Release: alt2
+Release: alt3
 
 Summary: A DEPRECATED Perl code profiler
 License: GPL or Artistic
@@ -46,6 +46,9 @@ showing subroutine relationships.
 %perl_vendor_autolib/Devel
 
 %changelog
+* Thu Aug 29 2013 Vladimir Lettiev <crux@altlinux.ru> 20110802.00-alt3
+- built for perl 5.18
+
 * Sun Sep 02 2012 Vladimir Lettiev <crux@altlinux.ru> 20110802.00-alt2
 - rebuilt for perl-5.16
 - fixed build

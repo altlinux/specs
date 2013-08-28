@@ -1,7 +1,7 @@
 %define dist Text-ExtractWords
 Name: perl-%dist
 Version: 0.08
-Release: alt3
+Release: alt4
 
 Summary: Perl extension for extract words from strings
 License: GPL or Artistic
@@ -32,6 +32,9 @@ to identify spam.  But it can be used for another purpose.
 %perl_vendor_autolib/Text
 
 %changelog
+* Wed Aug 28 2013 Vladimir Lettiev <crux@altlinux.ru> 0.08-alt4
+- built for perl 5.18
+
 * Fri Aug 31 2012 Vladimir Lettiev <crux@altlinux.ru> 0.08-alt3
 - rebuilt for perl-5.16
 

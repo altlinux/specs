@@ -15,7 +15,7 @@
 
 Name: perl-Pg-PQ
 Version: 0.09
-Release: alt1
+Release: alt2
 
 Summary: Perl wrapper for PostgreSQL libpq
 
@@ -58,6 +58,9 @@ even the Coro manpage.
 %perl_vendor_autolib/Pg/*
 
 %changelog
+* Mon Sep 02 2013 Vladimir Lettiev <crux@altlinux.ru> 0.09-alt2
+- built for perl 5.18
+
 * Sun Nov 04 2012 Denis Smirnov <mithraen@altlinux.ru> 0.09-alt1
 - initial build for ALT Linux Sisyphus
 

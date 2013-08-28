@@ -8,7 +8,7 @@
 
 Name: graphviz
 Version: 2.28.0
-Release: alt4
+Release: alt5
 
 Summary: Graphs visualization tools
 License: Common Public License 1.0
@@ -301,6 +301,9 @@ rm -f %buildroot%gvlibdir/libgvplugin_*.la
 # - enable/fix/test language bindings
 
 %changelog
+* Fri Aug 30 2013 Vladimir Lettiev <crux@altlinux.ru> 2.28.0-alt5
+- built for perl 5.18
+
 * Tue Sep 04 2012 Vladimir Lettiev <crux@altlinux.ru> 2.28.0-alt4
 - rebuilt for perl-5.16
 

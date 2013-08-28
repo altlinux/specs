@@ -1,7 +1,7 @@
 %define dist Audio-PortAudio
 Name: perl-%dist
 Version: 0.03
-Release: alt2
+Release: alt3
 
 Summary: Perl portable interface for audio IO using libportaudio
 License: GPL
@@ -38,6 +38,9 @@ input & output on a variety of different platforms.
 %perl_vendor_autolib/Audio
 
 %changelog
+* Wed Aug 28 2013 Vladimir Lettiev <crux@altlinux.ru> 0.03-alt3
+- built for perl 5.18
+
 * Fri Aug 31 2012 Vladimir Lettiev <crux@altlinux.ru> 0.03-alt2
 - rebuilt for perl-5.16
 

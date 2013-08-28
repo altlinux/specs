@@ -2,7 +2,7 @@
 
 Name: perl-%module
 Version: 1.1
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Packager: Victor Forsiuk <force@altlinux.org>
@@ -37,6 +37,9 @@ without using a single syscall.
 %perl_vendor_autolib/Async
 
 %changelog
+* Wed Aug 28 2013 Vladimir Lettiev <crux@altlinux.ru> 1:1.1-alt2
+- built for perl 5.18
+
 * Fri Aug 31 2012 Vladimir Lettiev <crux@altlinux.ru> 1:1.1-alt1
 - 1.05 -> 1.1
 - built for perl-5.16

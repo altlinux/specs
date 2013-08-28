@@ -1,6 +1,6 @@
 Name: perl-Fuse
 Version: 0.15
-Release: alt1
+Release: alt2
 
 Summary: Write filesystems in Perl using FUSE
 License: GPLv2, LGPLv2.1
@@ -35,6 +35,9 @@ write filesystems using perl.
 %perl_vendor_autolib/Fuse
 
 %changelog
+* Thu Aug 29 2013 Vladimir Lettiev <crux@altlinux.ru> 0.15-alt2
+- built for perl 5.18
+
 * Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 0.15-alt1
 - automated CPAN update
 

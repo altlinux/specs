@@ -1,7 +1,7 @@
 %define dist HTML-CTPP2
 Name: perl-%dist
 Version: 2.6.7
-Release: alt3
+Release: alt4
 
 Summary: Perl interface for CTPP2 library
 License: GPL or Artistic
@@ -39,6 +39,9 @@ export CTPP2_LIB=%_libdir
 %perl_vendor_autolib/HTML
 
 %changelog
+* Thu Aug 29 2013 Vladimir Lettiev <crux@altlinux.ru> 2.6.7-alt4
+- built for perl 5.18
+
 * Sun Sep 02 2012 Vladimir Lettiev <crux@altlinux.ru> 2.6.7-alt3
 - rebuilt for perl-5.16
 

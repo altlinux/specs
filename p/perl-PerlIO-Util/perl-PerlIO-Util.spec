@@ -1,7 +1,7 @@
 %define dist PerlIO-Util
 Name: perl-%dist
 Version: 0.72
-Release: alt3
+Release: alt4
 
 Summary: A selection of general PerlIO utilities
 License: Artistic
@@ -35,6 +35,9 @@ methods.
 %perl_vendor_autolib/PerlIO
 
 %changelog
+* Wed Aug 28 2013 Vladimir Lettiev <crux@altlinux.ru> 0.72-alt4
+- built for perl 5.18
+
 * Fri Aug 31 2012 Vladimir Lettiev <crux@altlinux.ru> 0.72-alt3
 - rebuilt for perl-5.16
 - fixed test t/06_tee.t

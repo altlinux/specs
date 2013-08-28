@@ -1,7 +1,7 @@
 %define dist Class-MethodMaker
 Name: perl-%dist
 Version: 2.18
-Release: alt3
+Release: alt4
 
 Summary: Easy building of Perl Classes
 License: GPL or Artistic
@@ -32,6 +32,9 @@ accessor methods for your objects that perform standard tasks.
 %perl_vendor_autolib/Class
 
 %changelog
+* Tue Aug 27 2013 Vladimir Lettiev <crux@altlinux.ru> 2.18-alt4
+- built for perl 5.18
+
 * Wed Aug 29 2012 Vladimir Lettiev <crux@altlinux.ru> 2.18-alt3
 - rebuilt for perl-5.16
 

@@ -1,7 +1,7 @@
 %define dist X11-GUITest
 Name: perl-%dist
 Version: 0.27
-Release: alt1
+Release: alt2
 
 Summary: Collection of functions for X11 GUI testing/interaction
 License: GPL
@@ -38,6 +38,9 @@ sed -i- '/CCFLAGS/d' Makefile.PL
 %perl_vendor_autolib/X11
 
 %changelog
+* Wed Aug 28 2013 Vladimir Lettiev <crux@altlinux.ru> 0.27-alt2
+- built for perl 5.18
+
 * Sat Jul 27 2013 Igor Vlasenko <viy@altlinux.ru> 0.27-alt1
 - automated CPAN update
 

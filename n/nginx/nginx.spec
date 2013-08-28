@@ -13,7 +13,7 @@
 
 Name: nginx
 Version: 1.4.2
-Release: alt1
+Release: alt2
 
 Summary: Fast HTTP server
 License: BSD
@@ -254,6 +254,9 @@ sed -i 's/\(types_hash_bucket_size[[:space:]]*\)[[:space:]]32[[:space:]]*;[[:spa
 %preun_service %name
 
 %changelog
+* Thu Aug 29 2013 Vladimir Lettiev <crux@altlinux.ru> 1.4.2-alt2
+- built for perl 5.18
+
 * Tue Aug 13 2013 Denis Smirnov <mithraen@altlinux.ru> 1.4.2-alt1
 - 1.4.2
 

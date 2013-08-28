@@ -1,7 +1,7 @@
 %define dist Unicode-Collate
 Name: perl-%dist
 Version: 0.98
-Release: alt1
+Release: alt2
 
 Summary: Unicode Collation Algorithm
 License: GPL or Artistic
@@ -39,6 +39,9 @@ as described by Unicode Technical Standard #10 (UTS #10).
 %perl_vendor_autolib/Unicode
 
 %changelog
+* Wed Aug 28 2013 Vladimir Lettiev <crux@altlinux.ru> 0.98-alt2
+- built for perl 5.18
+
 * Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 0.98-alt1
 - automated CPAN update
 

@@ -1,6 +1,6 @@
 %define dist Template-Toolkit
 Name: perl-Template
-Version: 2.24
+Version: 2.25
 Release: alt1
 
 Summary: Perl Template Toolkit
@@ -62,6 +62,9 @@ LaTeX, and so on.
 	%_man1dir/ttree.*
 
 %changelog
+* Wed Aug 28 2013 Vladimir Lettiev <crux@altlinux.ru> 2.25-alt1
+- 2.24 -> 2.25
+
 * Sat Sep 01 2012 Vladimir Lettiev <crux@altlinux.ru> 2.24-alt1
 - 2.22 -> 2.24
 - built for perl-5.16

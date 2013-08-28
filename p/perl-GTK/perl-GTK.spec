@@ -1,7 +1,7 @@
 %define dist Gtk-Perl
 Name: perl-GTK
 Version: 0.7009
-Release: alt6
+Release: alt7
 
 Summary: Perl module for the GTK+ 1.2 library
 License: GPL or Artistic
@@ -17,6 +17,7 @@ Patch3: perl-GTK-0.7008-mdk-GdkPixbuf-memleak.patch
 Patch4: perl-GTK-0.7009-alt-gendoc-no-parent.patch
 Patch5: perl-GTK-0.7009-alt-pkgconfig.patch
 Patch6: perl-GTK-0.7009-alt-typemap.patch
+Patch7: perl-GTK-0.7009-alt-perl518.patch
 
 # Automatically added by buildreq on Fri Oct 07 2011
 BuildRequires: gtk+-devel perl-XML-Parser perl-XML-Writer perl-devel
@@ -35,6 +36,7 @@ graphical user interfaces for the X Window System.
 %patch4 -p1
 %patch5 -p2
 %patch6 -p2
+%patch7 -p2
 
 # disable build dependency on perl-podlators
 sed -i- '/MAN3PODS/,/}/s/^/#/' Gtk/Makefile.PL
@@ -68,6 +70,10 @@ rm -r %buildroot%perl_vendor_archlib/Gtk/Install
 	%perl_vendor_autolib/Gtk
 
 %changelog
+* Tue Aug 27 2013 Vladimir Lettiev <crux@altlinux.ru> 0.7009-alt7
+- built for perl 5.18
+- fixed build with perl 5.18 (SvUPGRADE is no longer an expression)
+
 * Wed Aug 29 2012 Vladimir Lettiev <crux@altlinux.ru> 0.7009-alt6
 - rebuilt for perl-5.16
 - fixed build with new ExtUtils::ParseXS

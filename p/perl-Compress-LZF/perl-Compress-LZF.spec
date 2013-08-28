@@ -1,7 +1,8 @@
 %define dist Compress-LZF
 Name: perl-%dist
-Version: 3.43
-Release: alt2
+Version: 3.7
+Release: alt1
+Epoch: 1
 
 Summary: Extremely light-weight Lempel-Ziv-Free compression
 License: GPL or Artistic
@@ -40,6 +41,9 @@ patents.
 %perl_vendor_autolib/Compress
 
 %changelog
+* Tue Aug 27 2013 Vladimir Lettiev <crux@altlinux.ru> 1:3.7-alt1
+- 3.43 -> 3.7
+
 * Tue Aug 28 2012 Vladimir Lettiev <crux@altlinux.ru> 3.43-alt2
 - rebuilt for perl-5.16
 

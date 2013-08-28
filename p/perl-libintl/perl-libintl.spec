@@ -1,7 +1,7 @@
 %define dist libintl-perl
 Name: perl-libintl
-Version: 1.20
-Release: alt2
+Version: 1.23
+Release: alt1
 
 Summary: High-Level Interface to Uniforum Message Translation
 License: LGPL or Artistic
@@ -9,7 +9,6 @@ Group: Development/Perl
 
 URL: %CPAN %dist
 Source: %dist-%version.tar.gz
-Patch: perl-libintl-1.20-alt-locale_dir.patch
 
 # avoid rpmdb bloat
 %add_findprov_skiplist */Locale/RecodeData/*
@@ -23,7 +22,6 @@ to Perl message translation.
 
 %prep
 %setup -q -n %dist-%version
-%patch -p1
 
 # disable linking with -lintl -liconv
 sed -i- '/LIBS/d' gettext_xs/Makefile.PL
@@ -46,6 +44,10 @@ sed -i- '/LIBS/d' gettext_xs/Makefile.PL
 	%perl_vendor_autolib/Locale
 
 %changelog
+* Wed Aug 28 2013 Vladimir Lettiev <crux@altlinux.ru> 1.23-alt1
+- 1.20 -> 1.23
+- search path patch merged upstream
+
 * Fri Aug 31 2012 Vladimir Lettiev <crux@altlinux.ru> 1.20-alt2
 - rebuilt for perl-5.16
 

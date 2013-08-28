@@ -1,7 +1,7 @@
 %define dist Filter
 Name: perl-%dist
 Version: 1.49
-Release: alt1
+Release: alt2
 
 Summary: Source Filters
 License: GPL or Artistic
@@ -37,6 +37,9 @@ mv t/pod.t t/pod.t.orig
 %perl_vendor_autolib/Filter
 
 %changelog
+* Wed Aug 21 2013 Vladimir Lettiev <crux@altlinux.ru> 1.49-alt2
+- built for perl 5.18
+
 * Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 1.49-alt1
 - automated CPAN update
 

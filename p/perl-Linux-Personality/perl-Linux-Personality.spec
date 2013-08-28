@@ -7,7 +7,7 @@ BuildRequires: perl(AutoLoader.pm) perl-podlators
 
 Name:       perl-%{upstream_name}
 Version:    %{upstream_version}
-Release:    alt1_4
+Release: alt2
 
 Summary:    Perl interface to the personality(2) Linux system call
 License:    GPL+ or Artistic
@@ -54,6 +54,9 @@ program.
 
 
 %changelog
+* Mon Sep 02 2013 Vladimir Lettiev <crux@altlinux.ru> 0.01-alt2
+- built for perl 5.18
+
 * Wed Aug 07 2013 Igor Vlasenko <viy@altlinux.ru> 0.01-alt1_4
 - update by mgaimport
 

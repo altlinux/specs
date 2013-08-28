@@ -13,7 +13,7 @@
 
 Name: kdebindings
 Version: 3.5.13.2
-Release: alt2
+Release: alt3
 
 Summary: bindings to KDE libraries for various programming languages 
 Group: Graphical desktop/KDE
@@ -391,6 +391,9 @@ cp -pr korundum/rubylib/rbkconfig_compiler/{autoexample.rb,exampleprefs_base.kcf
 
 
 %changelog
+* Fri Aug 30 2013 Vladimir Lettiev <crux@altlinux.ru> 3.5.13.2-alt3
+- built for perl 5.18
+
 * Sat Jul 27 2013 Roman Savochenko <rom_as@altlinux.ru> 3.5.13.2-alt2
 - Switch to build from original autotools "admin".
 

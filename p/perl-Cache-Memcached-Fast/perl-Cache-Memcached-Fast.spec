@@ -2,7 +2,7 @@
 
 Name: perl-Cache-Memcached-Fast
 Version: 0.21
-Release: alt1
+Release: alt2
 
 Summary: Perl client for memcached
 
@@ -51,6 +51,9 @@ documentation for full details).
 %perl_vendor_archlib/Cache
 
 %changelog
+* Wed Aug 28 2013 Vladimir Lettiev <crux@altlinux.ru> 0.21-alt2
+- built for perl 5.18
+
 * Sun Apr 14 2013 Nikolay A. Fetisov <naf@altlinux.ru> 0.21-alt1
 - New version 0.21
 

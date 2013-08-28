@@ -1,5 +1,5 @@
 Name: perl-Module-Install-XSUtil
-Version: 0.43
+Version: 0.44
 Release: alt1
 
 Summary: Module::Install::XSUtil - utility functions for XS modules
@@ -33,6 +33,9 @@ sed -i "/author_tests/d" Makefile.PL
 %doc Changes README 
 
 %changelog
+* Thu Aug 29 2013 Vladimir Lettiev <crux@altlinux.ru> 0.44-alt1
+- 0.43 -> 0.44
+
 * Sat Sep 29 2012 Vladimir Lettiev <crux@altlinux.ru> 0.43-alt1
 - 0.42 -> 0.43
 - sources cloned from upstream git

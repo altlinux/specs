@@ -1,7 +1,7 @@
 %define dist File-FcntlLock
 Name: perl-%dist
 Version: 0.14
-Release: alt1
+Release: alt2
 
 Summary: File locking with fcntl(2)
 License: GPL or Artistic
@@ -34,6 +34,9 @@ on which Perls flock() function is based.
 %perl_vendor_autolib/File
 
 %changelog
+* Wed Aug 28 2013 Vladimir Lettiev <crux@altlinux.ru> 0.14-alt2
+- built for perl 5.18
+
 * Thu Aug 30 2012 Vladimir Lettiev <crux@altlinux.ru> 0.14-alt1
 - 0.12 -> 0.14
 - rebuilt for perl-5.16

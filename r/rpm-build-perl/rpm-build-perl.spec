@@ -1,8 +1,8 @@
-%def_with bootstrap
+%def_without bootstrap
 
 Name: rpm-build-perl
 Version: 0.84
-Release: alt1
+Release: alt2
 
 Summary: RPM helper scripts to calculate Perl dependencies
 License: GPL
@@ -75,6 +75,9 @@ install -pm644 macros.env %buildroot%_rpmmacrosdir/perl5.env
 %config %_rpmmacrosdir/perl5.env
 
 %changelog
+* Wed Aug 21 2013 Vladimir Lettiev <crux@altlinux.ru> 0.84-alt2
+- unbootstrap
+
 * Tue Aug 20 2013 Vladimir Lettiev <crux@altlinux.ru> 0.84-alt1
 - Patch for B::Walker from #RT85411 (for perl > 5.17.5)
 - implemented bootstrap to build noarch rpm-build-perl when perl API changed

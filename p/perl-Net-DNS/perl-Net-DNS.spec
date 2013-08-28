@@ -5,7 +5,7 @@
 
 Name: perl-%module
 Version: 0.72
-Release: alt1
+Release: alt2
 
 Packager: Victor Forsiuk <force@altlinux.org>
 
@@ -48,6 +48,9 @@ sed -i- '/sock->sockaddr/s/;/ if $sock;/' t/01-resolver.t
 #exclude %perl_vendor_archlib/Net/DNS/Resolver/Win32.pm
 
 %changelog
+* Tue Aug 27 2013 Vladimir Lettiev <crux@altlinux.ru> 0.72-alt2
+- built for perl 5.18
+
 * Sat Jul 27 2013 Igor Vlasenko <viy@altlinux.ru> 0.72-alt1
 - automated CPAN update
 

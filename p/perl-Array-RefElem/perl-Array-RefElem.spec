@@ -1,7 +1,7 @@
 %define dist Array-RefElem
 Name: perl-%dist
 Version: 1.00
-Release: alt4
+Release: alt5
 
 Summary: Set up array elements as aliases
 License: GPL or Artistic
@@ -37,6 +37,9 @@ functions are available:
 %perl_vendor_autolib/Array
 
 %changelog
+* Wed Aug 28 2013 Vladimir Lettiev <crux@altlinux.ru> 1.00-alt5
+- built for perl 5.18
+
 * Thu Aug 30 2012 Vladimir Lettiev <crux@altlinux.ru> 1.00-alt4
 - rebuilt for perl-5.16
 

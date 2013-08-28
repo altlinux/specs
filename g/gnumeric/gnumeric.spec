@@ -10,7 +10,7 @@
 
 Name: gnumeric
 Version: %ver_major.7
-Release: alt1
+Release: alt2
 
 Summary: A full-featured spreadsheet for GNOME
 License: GPLv2+ GPLv3+
@@ -179,6 +179,9 @@ gnome-doc-prepare --copy --force
 %_pkgconfigdir/*
 
 %changelog
+* Mon Sep 02 2013 Vladimir Lettiev <crux@altlinux.ru> 1.12.7-alt2
+- built for perl 5.18
+
 * Sun Sep 01 2013 Yuri N. Sedunov <aris@altlinux.org> 1.12.7-alt1
 - 1.12.7
 

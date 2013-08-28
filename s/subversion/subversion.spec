@@ -63,7 +63,7 @@
 
 Name: subversion
 Version: 1.7.8
-Release: alt1
+Release: alt2
 
 Summary: A version control system
 Group: Development/Other
@@ -736,6 +736,9 @@ fi
 %endif
 
 %changelog
+* Thu Aug 29 2013 Vladimir Lettiev <crux@altlinux.ru> 1.7.8-alt2
+- built for perl 5.18
+
 * Wed Feb 27 2013 Andrey Cherepanov <cas@altlinux.org> 1.7.8-alt1
 - New version 1.7.8
 - Disable svn-push and emacs support

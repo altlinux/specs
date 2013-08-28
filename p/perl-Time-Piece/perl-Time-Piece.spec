@@ -1,6 +1,6 @@
 %define dist Time-Piece
 Name: perl-%dist
-Version: 1.21
+Version: 1.22
 Release: alt1
 
 Summary: Object Oriented time objects
@@ -38,6 +38,9 @@ http://www.xray.mpe.mpg.de/mailing-lists/perl5-porters/2000-01/msg00241.html
 %perl_vendor_autolib/Time
 
 %changelog
+* Wed Aug 28 2013 Vladimir Lettiev <crux@altlinux.ru> 1.22-alt1
+- 1.21 -> 1.22
+
 * Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 1.21-alt1
 - automated CPAN update
 

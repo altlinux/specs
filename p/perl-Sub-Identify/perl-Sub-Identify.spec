@@ -1,7 +1,7 @@
 %define dist Sub-Identify
 Name: perl-%dist
 Version: 0.04
-Release: alt2
+Release: alt3
 
 Summary: Retrieve names of code references
 License: GPL or Artistic
@@ -32,6 +32,9 @@ For this, it uses perl's introspection mechanism, provided by the B module.
 %perl_vendor_autolib/Sub
 
 %changelog
+* Wed Aug 28 2013 Vladimir Lettiev <crux@altlinux.ru> 0.04-alt3
+- built for perl 5.18
+
 * Thu Aug 30 2012 Vladimir Lettiev <crux@altlinux.ru> 0.04-alt2
 - rebuilt for perl-5.16
 

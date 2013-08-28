@@ -1,7 +1,7 @@
 %define dist DBD-Pg
 Name: perl-%dist
 Version: 2.19.3
-Release: alt1
+Release: alt2
 
 Summary: PostgreSQL database driver for the DBI module
 License: GPL or Artistic
@@ -39,6 +39,9 @@ rm %buildroot%perl_vendor_archlib/Bundle/DBD/Pg.pm
 %perl_vendor_autolib/DBD
 
 %changelog
+* Tue Aug 27 2013 Vladimir Lettiev <crux@altlinux.ru> 2.19.3-alt2
+- built for perl 5.18
+
 * Thu Aug 30 2012 Vladimir Lettiev <crux@altlinux.ru> 2.19.3-alt1
 - 2.18.1 -> 2.19.3
 - built for perl-5.16

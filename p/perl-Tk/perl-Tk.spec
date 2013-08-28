@@ -1,6 +1,6 @@
 %define dist Tk
 Name: perl-%dist
-Version: 804.030
+Version: 804.031
 Release: alt1
 
 Summary: Perl modules providing the Tk graphics library
@@ -118,6 +118,10 @@ xvfb-run -a make test
 	%perl_vendor_archlib/Tk/demos/widtrib/
 
 %changelog
+* Wed Aug 28 2013 Vladimir Lettiev <crux@altlinux.ru> 804.031-alt1
+- 804.030 -> 804.031
+- Fixed build of Tk::PNG (patch from RT#86988)
+
 * Fri Aug 31 2012 Vladimir Lettiev <crux@altlinux.ru> 804.030-alt1
 - 804.029_500 -> 804.030
 - built for perl-5.16

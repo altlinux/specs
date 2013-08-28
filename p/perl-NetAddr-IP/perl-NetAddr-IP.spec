@@ -2,7 +2,7 @@
 
 Name: perl-%module
 Version: 4.069
-Release: alt1
+Release: alt2
 
 Summary: Manages IP addresses and subnets
 License: Artistic
@@ -38,6 +38,9 @@ Manages IPv4 and IPv6 addresses and subnets.
 %perl_vendor_autolib/NetAddr
 
 %changelog
+* Thu Aug 29 2013 Vladimir Lettiev <crux@altlinux.ru> 4.069-alt2
+- built for perl 5.18
+
 * Sat Jul 27 2013 Igor Vlasenko <viy@altlinux.ru> 4.069-alt1
 - automated CPAN update
 

@@ -13,7 +13,7 @@
 
 Name: %prog_name%postgresql_major.%postgresql_minor
 Version: %postgresql_major.%postgresql_minor.%postgresql_subminor
-Release: alt%postgresql_altrel
+Release: alt3
 
 %define PGSQL pgsql
 %define ROOT %_localstatedir/%PGSQL-root
@@ -689,6 +689,9 @@ fi
 %_libdir/%PGSQL/plpython2.so
 
 %changelog
+* Fri Aug 30 2013 Vladimir Lettiev <crux@altlinux.ru> 9.0.13-alt3
+- built for perl 5.18
+
 * Fri Apr 05 2013 Alexei Takaseev <taf@altlinux.org> 9.0.13-alt2
 - 9.0.13.
 

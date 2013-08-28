@@ -1,7 +1,7 @@
 %define dist PerlIO-gzip
 Name: perl-%dist
 Version: 0.18
-Release: alt3
+Release: alt4
 
 Summary: A layer for the PerlIO system to transparently gzip/gunzip files
 License: GPL or Artistic
@@ -33,6 +33,9 @@ decompression are implemented, but not together.
 %perl_vendor_autolib/PerlIO
 
 %changelog
+* Wed Aug 28 2013 Vladimir Lettiev <crux@altlinux.ru> 0.18-alt4
+- built for perl 5.18
+
 * Thu Aug 30 2012 Vladimir Lettiev <crux@altlinux.ru> 0.18-alt3
 - rebuilt for perl-5.16
 

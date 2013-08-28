@@ -1,7 +1,7 @@
 %define dist IO-Tty
 Name: perl-%dist
 Version: 1.10
-Release: alt3
+Release: alt4
 
 Summary: interface to pseudo tty's
 License: GPL or Artistic
@@ -38,6 +38,9 @@ IO::Tty and IO::Pty provide an interface to pseudo tty's
 %perl_vendor_autolib/IO
 
 %changelog
+* Tue Aug 27 2013 Vladimir Lettiev <crux@altlinux.ru> 1.10-alt4
+- built for perl 5.18
+
 * Wed Aug 29 2012 Vladimir Lettiev <crux@altlinux.ru> 1.10-alt3
 - built for perl-5.16
 

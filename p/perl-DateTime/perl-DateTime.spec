@@ -1,7 +1,7 @@
 %define dist DateTime
 Name: perl-%dist
 Version: 1.03
-Release: alt1
+Release: alt2
 
 Summary: DateTime base objects
 License: GPL or Artistic
@@ -37,6 +37,9 @@ http://datetime.perl.org/faq.html.
 %perl_vendor_autolib/DateTime*
 
 %changelog
+* Sun Aug 25 2013 Vladimir Lettiev <crux@altlinux.ru> 1.03-alt2
+- built for perl 5.18
+
 * Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 1.03-alt1
 - automated CPAN update
 

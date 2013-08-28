@@ -1,7 +1,7 @@
 %define dist Tk-TableMatrix
 Name: perl-%dist
 Version: 1.23
-Release: alt3
+Release: alt4
 
 Summary: The Tk::TableMatrix Widget
 License: GPL or Artistic
@@ -46,6 +46,9 @@ for displaying data in a table (or spreadsheet) format.
 %perl_vendor_archlib/Tk/pTk
 
 %changelog
+* Wed Aug 28 2013 Vladimir Lettiev <crux@altlinux.ru> 1.23-alt4
+- built for perl 5.18
+
 * Sat Sep 01 2012 Vladimir Lettiev <crux@altlinux.ru> 1.23-alt3
 - rebuilt for perl-5.16
 

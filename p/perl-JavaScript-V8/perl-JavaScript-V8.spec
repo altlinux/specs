@@ -2,7 +2,7 @@
 
 Name: perl-JavaScript-V8
 Version: 0.070
-Release: alt4
+Release: alt5
 
 Summary: JavaScript::V8 - Perl interface to the V8 JavaScript engine
 License: Perl
@@ -33,6 +33,9 @@ BuildRequires: perl-devel gcc-c++ perl-ExtUtils-XSpp libv8-devel = %{v8abi}
 %doc Changes README
 
 %changelog
+* Fri Aug 30 2013 Vladimir Lettiev <crux@altlinux.ru> 0.070-alt5
+- built for perl 5.18
+
 * Mon Aug 05 2013 Dmitriy Kulik <lnkvisitor@altlinux.org> 0.070-alt4
 - Rebuild with versioned v8
 

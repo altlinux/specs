@@ -1,6 +1,6 @@
 %define dist Quota
 Name: perl-%dist
-Version: 1.6.7
+Version: 1.7.0
 Release: alt1
 
 Summary: Perl interface to file system quotas
@@ -39,6 +39,9 @@ sed -i- 's/Linux 2/Linux/' Makefile.PL
 %perl_vendor_autolib/Quota
 
 %changelog
+* Wed Aug 28 2013 Vladimir Lettiev <crux@altlinux.ru> 1.7.0-alt1
+- 1.6.7 -> 1.7.0
+
 * Sat Sep 01 2012 Vladimir Lettiev <crux@altlinux.ru> 1.6.7-alt1
 - 1.6.6 -> 1.6.7
 - built for perl-5.16

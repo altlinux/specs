@@ -1,6 +1,6 @@
 Name: kvirc
 Version: 4.0.4
-Release: alt2.1
+Release: alt3
 
 Summary: KDE Enhanced Visual IRC Client
 License: GPLv2+
@@ -112,6 +112,9 @@ This package contains data files for %name.
 %endif
 
 %changelog
+* Fri Aug 30 2013 Vladimir Lettiev <crux@altlinux.ru> 4.0.4-alt3
+- built for perl 5.18
+
 * Wed Dec 05 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.4-alt2.1
 - Fixed build with gcc 4.7
 

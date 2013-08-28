@@ -1,7 +1,7 @@
 %define dist Crypt-SSLeay
 Name: perl-%dist
 Version: 0.64
-Release: alt1
+Release: alt2
 
 Summary: OpenSSL glue that provides LWP https support
 License: GPL
@@ -37,6 +37,9 @@ mv t/02-live.t t/02-live.t.orig
 %perl_vendor_autolib/Crypt
 
 %changelog
+* Tue Aug 27 2013 Vladimir Lettiev <crux@altlinux.ru> 0.64-alt2
+- built for perl 5.18
+
 * Thu Aug 30 2012 Vladimir Lettiev <crux@altlinux.ru> 0.64-alt1
 - 0.58 -> 0.64
 - built for perl-5.16

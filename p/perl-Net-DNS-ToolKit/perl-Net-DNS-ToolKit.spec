@@ -5,7 +5,7 @@
 
 Name: perl-%module
 Version: 0.47
-Release: alt1
+Release: alt2
 
 Summary: Tools for working with DNS packets
 License: Perl
@@ -38,6 +38,9 @@ NPROCS=1
 %perl_vendor_autolib/Net
 
 %changelog
+* Thu Aug 29 2013 Vladimir Lettiev <crux@altlinux.ru> 0.47-alt2
+- built for perl 5.18
+
 * Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 0.47-alt1
 - automated CPAN update
 

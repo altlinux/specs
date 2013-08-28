@@ -1,7 +1,7 @@
 Summary: High-performance and highly configurable free RADIUS server
 Name: freeradius
 Version: 2.2.0
-Release: alt3
+Release: alt4
 License: GPLv2+ and LGPLv2+
 Group: System/Servers
 Url: http://www.freeradius.org/
@@ -454,6 +454,9 @@ fi
 %_libdir/freeradius/rlm_sql_unixodbc-%version.so
 
 %changelog
+* Thu Aug 29 2013 Vladimir Lettiev <crux@altlinux.ru> 2.2.0-alt4
+- built for perl 5.18
+
 * Fri Nov 09 2012 Vladimir Lettiev <crux@altlinux.ru> 2.2.0-alt3
 - preserve files /etc/raddb/sites-available/* (Closes: #29750)
 

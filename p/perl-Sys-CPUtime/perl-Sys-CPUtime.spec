@@ -7,7 +7,7 @@
 
 Name: perl-%module
 Version: 0.10
-Release: alt3
+Release: alt4
 
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
 
@@ -44,6 +44,9 @@ to create persistent daemons on a hosting with CPU time limits.
 %perl_vendor_autolib/Sys
 
 %changelog
+* Thu Aug 29 2013 Vladimir Lettiev <crux@altlinux.ru> 0.10-alt4
+- built for perl 5.18
+
 * Sun Sep 02 2012 Vladimir Lettiev <crux@altlinux.ru> 0.10-alt3
 - rebuilt for perl-5.16
 

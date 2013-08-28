@@ -1,5 +1,5 @@
 Name: perl
-Version: 5.16.3
+Version: 5.18.1
 Release: alt1
 Epoch: 1
 
@@ -262,7 +262,6 @@ rm %buildroot%privlib/Tie/File.pm
 rm %buildroot%privlib/Tie/RefHash.pm
 rm -r %buildroot{%archlib,%autolib}/Time/Piece* %buildroot%archlib/Time/Seconds.pm
 rm -r %buildroot{%privlib,%archlib,%autolib}/Unicode/Collate*
-rm %buildroot%privlib/Version/Requirements.pm
 
 rm %buildroot%_bindir/zipdetails
 rm %buildroot%privlib/perlfaq.pm
@@ -390,8 +389,6 @@ EOF
 	%privlib/unicore/lib/Perl/Print.pl
 	%privlib/unicore/lib/Perl/SpacePer.pl
 	%privlib/unicore/lib/Perl/Word.pl
-%dir	%privlib/unicore/lib/Space
-	%privlib/unicore/lib/Space/Y.pl
 %dir	%privlib/unicore/lib/Upper
 	%privlib/unicore/lib/Upper/Y.pl
 # modules
@@ -401,6 +398,8 @@ EOF
 	%archlib/Config_git.pl
 %dir	%privlib/Config
 	%privlib/Config/Extensions.pm
+%dir	%privlib/Config/Perl
+	%privlib/Config/Perl/V.pm
 %dir	%privlib/Class
 	%privlib/Class/Struct.pm
 	%archlib/Cwd.pm
@@ -426,7 +425,6 @@ EOF
 	%privlib/File/Basename.pm
 	%privlib/File/Compare.pm
 	%privlib/File/Copy.pm
-	%privlib/File/DosGlob.pm
 	%privlib/File/Find.pm
 	%privlib/File/Path.pm
 	%privlib/File/stat.pm
@@ -434,8 +432,10 @@ EOF
 	%privlib/FileHandle.pm
 %dir	%archlib/File
 	%archlib/File/Glob.pm
+	%archlib/File/DosGlob.pm
 %dir	%autolib/File
 	%autolib/File/Glob
+	%autolib/File/DosGlob
 	%archlib/File/Spec*
 	%privlib/FindBin.pm
 %dir	%privlib/Getopt
@@ -664,7 +664,6 @@ EOF
 %exclude %privlib/unicore/lib/Perl/Print.pl
 %exclude %privlib/unicore/lib/Perl/SpacePer.pl
 %exclude %privlib/unicore/lib/Perl/Word.pl
-%exclude %privlib/unicore/lib/Space/Y.pl
 %exclude %privlib/unicore/lib/Upper/Y.pl
 	%privlib/unicore/To/
 %exclude %privlib/unicore/To/Digit.pl
@@ -681,7 +680,6 @@ EOF
 	%privlib/unicore/Decomposition.pl
 # required for Unicode::UCD
 	%privlib/unicore/Blocks.txt
-	%privlib/unicore/CaseFolding.txt
 	%privlib/unicore/SpecialCasing.txt
 # not required
 	%privlib/unicore/NamedSequences.txt
@@ -708,6 +706,12 @@ EOF
 	%autolib/Unicode/Normalize
 
 %changelog
+* Tue Aug 20 2013 Vladimir Lettiev <crux@altlinux.ru> 1:5.18.1-alt1
+- 5.16.3 -> 5.18.1
+- Version::Requirements removed from core
+- File::DosGlob moved to archlib
+- Updated Text::Tabs to 2013.0523
+
 * Tue Mar 12 2013 Vladimir Lettiev <crux@altlinux.ru> 1:5.16.3-alt1
 - 5.16.2 -> 5.16.3
 - Fixed CVE-2013-1667: memory exhaustion with arbitrary hash keys

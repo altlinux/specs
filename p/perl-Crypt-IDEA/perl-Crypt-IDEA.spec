@@ -1,7 +1,7 @@
 %define dist Crypt-IDEA
 Name: perl-%dist
 Version: 1.10
-Release: alt1
+Release: alt2
 
 Summary: Perl interface to IDEA block cipher
 License: GPL or Artistic
@@ -35,6 +35,9 @@ rm -f %buildroot%perl_vendor_archlib/Crypt/._test.pl
 %perl_vendor_autolib/Crypt
 
 %changelog
+* Wed Aug 28 2013 Vladimir Lettiev <crux@altlinux.ru> 1.10-alt2
+- built for perl 5.18
+
 * Fri Jul 26 2013 Igor Vlasenko <viy@altlinux.ru> 1.10-alt1
 - automated CPAN update
 

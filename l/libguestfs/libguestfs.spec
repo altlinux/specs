@@ -16,7 +16,7 @@
 Summary: Tools for accessing and modifying virtual machine disk images
 Name: libguestfs
 Version: 1.23.19
-Release: alt1
+Release: alt2
 License: LGPLv2+
 Group: System/Libraries
 Url: http://libguestfs.org/
@@ -515,6 +515,9 @@ rm -rf %buildroot%_mandir/ja/man{1,3}/
 %endif
 
 %changelog
+* Tue Sep 03 2013 Vladimir Lettiev <crux@altlinux.ru> 1.23.19-alt2
+- built for perl 5.18
+
 * Fri Aug 30 2013 Alexey Shabalin <shaba@altlinux.ru> 1.23.19-alt1
 - 1.23.19
 

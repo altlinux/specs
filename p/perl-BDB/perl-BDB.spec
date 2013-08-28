@@ -1,7 +1,7 @@
 %define dist BDB
 Name: perl-%dist
 Version: 1.9
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: Asynchronous Berkeley DB access
@@ -35,6 +35,9 @@ faithful).
 %perl_vendor_autolib/BDB
 
 %changelog
+* Wed Aug 28 2013 Vladimir Lettiev <crux@altlinux.ru> 1:1.9-alt2
+- built for perl 5.18
+
 * Thu Aug 30 2012 Vladimir Lettiev <crux@altlinux.ru> 1:1.9-alt1
 - 1,89 -> 1.9
 - built for perl-5.16
