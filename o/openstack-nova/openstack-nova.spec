@@ -1,12 +1,12 @@
 Name:		openstack-nova
 Version:	2012.2.0.7
-Release:	alt3
+Release:	alt4
 Summary:	OpenStack Compute (nova)
 
 Group:		System/Servers
 License:	ASL 2.0
 URL:		http://openstack.org/projects/compute/
-Source0:	%{name}-%{version}.tar.gz
+Source0:	%{name}-%{version}.tar
 Source1:	nova.conf
 Source6:	nova.logrotate
 
@@ -337,10 +337,10 @@ find nova -name \*.py -exec sed -i '/\/usr\/bin\/env python/{d;q}' {} +
 sed -i '/setuptools_git/d' setup.py
 
 %build
-%{__python} setup.py build
+%python_build
 
 %install
-%{__python} setup.py install -O1 --skip-build --root %{buildroot}
+%python_install
 
 # docs generation requires everything to be installed first
 export PYTHONPATH="$( pwd ):$PYTHONPATH"
@@ -443,6 +443,7 @@ rm -fr %{buildroot}%{python_sitelibdir}/run_tests.*
 rm -f %{buildroot}%{_bindir}/nova-combined
 rm -f %{buildroot}/usr/share/doc/nova/README*
 
+# FIXME
 # TODO. On F18 branch of novnc package, move the openstack-nova-novncproxy
 # subpackage to the openstack-nova-console subpackage here, and have
 # it provide openstack-nova-novncproxy
@@ -624,7 +625,6 @@ exit 0
 %{_initdir}/openstack-nova-xvpvncproxy
 
 %files -n python-module-nova
-%defattr(-,root,root,-)
 %doc LICENSE
 %{python_sitelibdir}/nova
 %{python_sitelibdir}/nova-*.egg-info
@@ -633,6 +633,9 @@ exit 0
 %doc LICENSE doc/build/html
 
 %changelog
+* Wed Aug 28 2013 Pavel Shilovsky <piastry@altlinux.org> 2012.2.0.7-alt4
+- Cleanup spec
+
 * Fri Aug 16 2013 Pavel Shilovsky <piastry@altlinux.org> 2012.2.0.7-alt3
 - Fix sysvinit scripts
 
