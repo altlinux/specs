@@ -20,7 +20,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.4.59
-Release: alt2
+Release: alt3
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -136,7 +136,7 @@ Release: alt2
 %Extra_modules zfs 0.6.2
 %Extra_modules kvm 3.10.1
 #Extra_modules nvidia 319.32
-%Extra_modules fglrx 13.20.5
+%Extra_modules fglrx 13.20.11
 %Extra_modules vboxhost 4.2.16
 %Extra_modules vboxguest 4.2.16
 %Extra_modules knem 1.1.0
@@ -2892,6 +2892,11 @@ done)
 
 
 %changelog
+* Wed Aug 28 2013 Led <led@altlinux.ru> 3.4.59-alt3
+- updated:
+  + feat-drivers-block--btier
+- fglrx 13.20.11
+
 * Tue Aug 27 2013 Led <led@altlinux.ru> 3.4.59-alt2
 - moved virtio_scsi.ko to kernel-modules-guest-* subpackage
 - zfs 0.6.2
