@@ -3,7 +3,7 @@
 Name: asterisk1.8-app_konference
 Summary: Conference module for Asterisk
 Version: 1.5
-Release: alt30
+Release: alt31
 License: GPL
 Group: System/Servers
 Url: http://sourceforge.net/projects/appkonference
@@ -48,6 +48,9 @@ mkdir -p %buildroot%modules_dir
 %attr(0440,root,_asterisk) %modules_dir/app_konference.so
 
 %changelog
+* Thu Aug 29 2013 Denis Smirnov <mithraen@altlinux.ru> 1.5-alt31
+- fix repocop warning about incorrect TMP use
+
 * Thu Aug 01 2013 Denis Smirnov <mithraen@altlinux.ru> 1.5-alt30
 - Asterisk update
 
