@@ -1,6 +1,6 @@
 Name:		openstack-nova
 Version:	2012.2.0.7
-Release:	alt2
+Release:	alt3
 Summary:	OpenStack Compute (nova)
 
 Group:		System/Servers
@@ -22,9 +22,22 @@ Source19:	%{name}-console.service
 Source20:	%{name}-consoleauth.service
 Source25:	%{name}-metadata-api.service
 
-Source21:	nova-polkit.pkla
+Source101:	%{name}-api.init
+Source111:	%{name}-cert.init
+Source121:	%{name}-compute.init
+Source131:	%{name}-network.init
+Source141:	%{name}-objectstore.init
+Source151:	%{name}-scheduler.init
+Source161:	%{name}-volume.init
+Source181:	%{name}-xvpvncproxy.init
+Source191:	%{name}-console.init
+Source201:	%{name}-consoleauth.init
+Source251:	%{name}-metadata-api.init
+
+Source21:	nova-polkit.rules
 Source22:	nova-ifc-template
 Source24:	nova-sudoers
+Source26:	init-functions.sh
 
 #
 # patches_base=folsom-3
@@ -63,9 +76,6 @@ Group:		System/Servers
 Requires:	python-module-nova = %{version}-%{release}
 Requires:	polkit
 
-Requires(post):		systemd-units
-Requires(preun):	systemd-units
-Requires(postun):	systemd-units
 Requires(pre):		shadow-utils
 
 %description common
@@ -296,7 +306,6 @@ Group:		Documentation
 
 Requires:	%{name} = %{version}-%{release}
 
-BuildRequires:	systemd-units
 BuildRequires:	graphviz
 
 # Required to build module documents
@@ -390,6 +399,22 @@ install -p -D -m 755 %{SOURCE19} %{buildroot}%{_unitdir}/openstack-nova-console.
 install -p -D -m 755 %{SOURCE20} %{buildroot}%{_unitdir}/openstack-nova-consoleauth.service
 install -p -D -m 755 %{SOURCE25} %{buildroot}%{_unitdir}/openstack-nova-metadata-api.service
 
+# Install init scripts
+install -p -D -m 755 %{SOURCE101} %{buildroot}%{_initdir}/openstack-nova-api
+install -p -D -m 755 %{SOURCE111} %{buildroot}%{_initdir}/openstack-nova-cert
+install -p -D -m 755 %{SOURCE121} %{buildroot}%{_initdir}/openstack-nova-compute
+install -p -D -m 755 %{SOURCE131} %{buildroot}%{_initdir}/openstack-nova-network
+install -p -D -m 755 %{SOURCE141} %{buildroot}%{_initdir}/openstack-nova-objectstore
+install -p -D -m 755 %{SOURCE151} %{buildroot}%{_initdir}/openstack-nova-scheduler
+install -p -D -m 755 %{SOURCE161} %{buildroot}%{_initdir}/openstack-nova-volume
+install -p -D -m 755 %{SOURCE181} %{buildroot}%{_initdir}/openstack-nova-xvpvncproxy
+install -p -D -m 755 %{SOURCE191} %{buildroot}%{_initdir}/openstack-nova-console
+install -p -D -m 755 %{SOURCE201} %{buildroot}%{_initdir}/openstack-nova-consoleauth
+install -p -D -m 755 %{SOURCE251} %{buildroot}%{_initdir}/openstack-nova-metadata-api
+
+# Install init-funstions.sh
+install -p -D -m 644 %{SOURCE26} %{buildroot}%{_datadir}/nova/init-functions.sh
+
 # Install sudoers
 install -p -D -m 400 %{SOURCE24} %{buildroot}%{_sysconfdir}/sudoers.d/nova
 
@@ -408,8 +433,8 @@ install -p -D -m 644 %{SOURCE22} %{buildroot}%{_datadir}/nova/interfaces.templat
 mkdir -p %{buildroot}%{_datadir}/nova/rootwrap/
 install -p -D -m 644 etc/nova/rootwrap.d/* %{buildroot}%{_datadir}/nova/rootwrap/
 
-install -d -m 755 %{buildroot}%{_sysconfdir}/polkit-1/localauthority/50-local.d
-install -p -D -m 644 %{SOURCE21} %{buildroot}%{_sysconfdir}/polkit-1/localauthority/50-local.d/50-nova.pkla
+# Install policy-kit rules to allow nova user to manage libvirt
+install -p -D -m 644 %{SOURCE21} %{buildroot}%{_sysconfdir}/polkit-1/rules.d/50-libvirt-nova.rules
 
 # Remove unneeded in production stuff
 rm -f %{buildroot}%{_bindir}/nova-debug
@@ -505,7 +530,7 @@ exit 0
 %config(noreplace) %attr(-, root, nova) %{_sysconfdir}/nova/policy.json
 %config(noreplace) %{_sysconfdir}/logrotate.d/%{name}
 %config(noreplace) %{_sysconfdir}/sudoers.d/nova
-%config(noreplace) %{_sysconfdir}/polkit-1/localauthority/50-local.d/50-nova.pkla
+%config(noreplace) %{_sysconfdir}/polkit-1/rules.d/50-libvirt-nova.rules
 
 %dir %attr(0755, nova, root) %{_logdir}/nova
 %dir %attr(0755, nova, root) %{_runtimedir}/nova
@@ -520,6 +545,7 @@ exit 0
 %dir %{_datadir}/nova/rootwrap
 %{_datadir}/nova/interfaces.template
 %{_datadir}/nova/client.ovpn.template
+%{_datadir}/nova/init-functions.sh
 
 %{_mandir}/man1/nova*.1.gz
 
@@ -535,27 +561,32 @@ exit 0
 %files compute
 %{_bindir}/nova-compute
 %{_unitdir}/%{name}-compute.service
+%{_initdir}/openstack-nova-compute
 %{_datadir}/nova/rootwrap/compute.filters
 
 %files network
 %{_bindir}/nova-network
 %{_bindir}/nova-dhcpbridge
 %{_unitdir}/%{name}-network.service
+%{_initdir}/openstack-nova-network
 %{_datadir}/nova/rootwrap/network.filters
 
 %files volume
 %{_bindir}/nova-volume
 %{_bindir}/nova-volume-usage-audit
 %{_unitdir}/%{name}-volume.service
+%{_initdir}/openstack-nova-volume
 %{_datadir}/nova/rootwrap/volume.filters
 
 %files scheduler
 %{_bindir}/nova-scheduler
 %{_unitdir}/%{name}-scheduler.service
+%{_initdir}/openstack-nova-scheduler
 
 %files cert
 %{_bindir}/nova-cert
 %{_unitdir}/%{name}-cert.service
+%{_initdir}/openstack-nova-cert
 %defattr(-, nova, nova, -)
 %dir %{_sharedstatedir}/nova/CA/
 %dir %{_sharedstatedir}/nova/CA/certs
@@ -576,17 +607,21 @@ exit 0
 %files api
 %{_bindir}/nova-api*
 %{_unitdir}/%{name}-*api.service
+%{_initdir}/openstack-nova-*api
 %{_datadir}/nova/rootwrap/api-metadata.filters
 
 %files objectstore
 %{_bindir}/nova-objectstore
 %{_unitdir}/%{name}-objectstore.service
+%{_initdir}/openstack-nova-objectstore
 
 %files console
 %{_bindir}/nova-console*
 %{_bindir}/nova-xvpvncproxy
 %{_unitdir}/%{name}-console*.service
 %{_unitdir}/%{name}-xvpvncproxy.service
+%{_initdir}/openstack-nova-console*
+%{_initdir}/openstack-nova-xvpvncproxy
 
 %files -n python-module-nova
 %defattr(-,root,root,-)
@@ -598,6 +633,12 @@ exit 0
 %doc LICENSE doc/build/html
 
 %changelog
+* Fri Aug 16 2013 Pavel Shilovsky <piastry@altlinux.org> 2012.2.0.7-alt3
+- Fix sysvinit scripts
+
+* Sat Mar 30 2013 Pavel Shilovsky <piastry@altlinux.org> 2012.2.0.7-alt2.1
+- Add SysVinit support
+
 * Wed Mar 06 2013 Pavel Shilovsky <piastry@altlinux.org> 2012.2.0.7-alt2
 - Use post/preun_service scripts in spec
 
