@@ -9,7 +9,7 @@
 %def_disable check
 
 Name: gnumeric
-Version: %ver_major.5
+Version: %ver_major.6
 Release: alt1
 
 Summary: A full-featured spreadsheet for GNOME
@@ -179,6 +179,9 @@ gnome-doc-prepare --copy --force
 %_pkgconfigdir/*
 
 %changelog
+* Wed Aug 28 2013 Yuri N. Sedunov <aris@altlinux.org> 1.12.6-alt1
+- 1.12.6
+
 * Tue Aug 20 2013 Yuri N. Sedunov <aris@altlinux.org> 1.12.5-alt1
 - 1.12.5
 
