@@ -2,7 +2,7 @@
 %def_enable goa
 
 Name: libgdata
-Version: 0.13.3
+Version: 0.14.0
 Release: alt1
 
 Summary: Library for the GData protocol
@@ -92,6 +92,9 @@ GObject introspection devel data for the GData library.
 %_girdir/*.gir
 
 %changelog
+* Thu Aug 29 2013 Yuri N. Sedunov <aris@altlinux.org> 0.14.0-alt1
+- 0.14.0
+
 * Tue Feb 26 2013 Yuri N. Sedunov <aris@altlinux.org> 0.13.3-alt1
 - 0.13.3
 
