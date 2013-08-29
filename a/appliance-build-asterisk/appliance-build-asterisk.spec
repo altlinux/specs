@@ -3,7 +3,7 @@ Name: appliance-build-asterisk
 Summary: Packages required for build Asterisk
 BuildArch: noarch
 Version: 4.0.2
-Release: alt2
+Release: alt3
 License: GPL
 Group: System/Base
 
@@ -25,7 +25,7 @@ Requires: libalsa-devel
 Requires: libavcodec-devel
 Requires: libbluez-devel
 Requires: libcap-devel
-Requires: libcorosync-devel
+Requires: libcorosync2-devel
 Requires: libcurl-devel
 Requires: libdb1-devel
 Requires: libexpat-devel
@@ -101,6 +101,9 @@ Requires: zlib-devel
 %files
 
 %changelog
+* Thu Aug 29 2013 Denis Smirnov <mithraen@altlinux.ru> 4.0.2-alt3
+- libcorosync-devel -> libcorosync2-devel
+
 * Sun Jun 16 2013 Denis Smirnov <mithraen@altlinux.ru> 4.0.2-alt2
 - add Url tag
 
