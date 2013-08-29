@@ -4,7 +4,7 @@
 
 Name: Mesa
 Version: 9.1.6
-Release: alt1
+Release: alt2
 Epoch: 4
 License: MIT
 Summary: OpenGL compatible 3D graphics library
@@ -16,7 +16,7 @@ Packager: Valery Inozemtsev <shrek@altlinux.ru>
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-BuildRequires: llvm-devel = 3.2
+BuildRequires: llvm-devel >= 3.2
 BuildRequires: gcc-c++ indent flex libXdamage-devel libXext-devel libXft-devel libXmu-devel libXi-devel libXrender-devel libXxf86vm-devel
 BuildRequires: libdrm-devel libexpat-devel xorg-glproto-devel xorg-dri2proto-devel python-modules libselinux-devel libxcb-devel libSM-devel
 BuildRequires: python-module-libxml2 libudev-devel libXdmcp-devel libwayland-client-devel libwayland-server-devel libffi-devel
@@ -344,6 +344,9 @@ ln -sf ../..%_sysconfdir/X11/%_lib/libGLESv2.so.2 %_libdir/
 %_bindir/glxgears
 
 %changelog
+* Thu Aug 29 2013 Valery Inozemtsev <shrek@altlinux.ru> 4:9.1.6-alt2
+- rebuild with llvm 3.3
+
 * Sun Aug 04 2013 Valery Inozemtsev <shrek@altlinux.ru> 4:9.1.6-alt1
 - 9.1.6
 
