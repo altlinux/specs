@@ -9,7 +9,7 @@
 Summary: Fontconfig configuration meant to be used in conjunction with Freetype patches from http://www.infinality.net.  
 Name: %{name}
 Version: %{version}
-Release: alt5.git%{infinality_release}
+Release: alt6.git%{infinality_release}
 License: GPL
 Group: System/Configuration/Other
 BuildArch: noarch
@@ -19,9 +19,8 @@ Provides: fontconfig-infinality
 Requires: fontconfig
 
 Source: %name-%version.tar
-Source1: 53-infinality-user.conf
-Source2: 20-aliases-default-alt.conf
-Source3: 41-aliases-os-alt.conf
+Source1: 20-aliases-default-alt.conf
+Source2: 41-aliases-os-alt.conf
 
 %description
 A configurable fontconfig configuration meant to be used in conjunction
@@ -43,13 +42,9 @@ mv %confinfdir/CHANGELOG.pre_git %docdir
 mv %confinfdir/LICENSE %docdir
 mv %confinfdir/README %docdir
 
-#52-infinality.conf overrides user settings so restoring them
-cp %SOURCE1 %confdir/conf.avail
-ln -s ../conf.avail/%{infinality_user} %confdir/conf.d/%{infinality_user}
-
 # Create alt style based on infinality that uses free fonts for replacements
+cp %SOURCE1 %confinfdir/conf.src
 cp %SOURCE2 %confinfdir/conf.src
-cp %SOURCE3 %confinfdir/conf.src
 %define confavaildir %confinfdir/styles.conf.avail
 cp -a %confavaildir/infinality %confavaildir/alt
 pushd %confavaildir/alt
@@ -64,13 +59,14 @@ ln -s styles.conf.avail/alt %confinfdir/conf.d
 %files
 %defattr(-,root,root)
 %config %{_sysconfdir}/fonts/infinality
-%config %{_sysconfdir}/fonts/conf.avail/52-infinality.conf
-%config %{_sysconfdir}/fonts/conf.avail/53-infinality-user.conf
-%config %{_sysconfdir}/fonts/conf.d/52-infinality.conf
-%config %{_sysconfdir}/fonts/conf.d/53-infinality-user.conf
+%config %{_sysconfdir}/fonts/conf.avail/50-infinality.conf
+%config %{_sysconfdir}/fonts/conf.d/50-infinality.conf
 %doc %_docdir/%{name}-%{version}/
 
 %changelog
+* Wed Aug 28 2013 Vladimir Didenko <cow@altlinux.org> 1-alt6.git20130126
+- fix user settings overriding
+
 * Fri Jul 26 2013 Vladimir Didenko <cow@altlinux.org> 1-alt5.git20130126
 - use aliases instead substitutions in 'alt' style
 
