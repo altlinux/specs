@@ -1,6 +1,6 @@
 Name: xfce4-power-manager
 Version: 1.2.0
-Release: alt5
+Release: alt6
 Summary: Power management for the Xfce desktop environment
 Summary (ru_RU.UTF8): Утилита расширенного управления питанием для Xfce
 
@@ -67,6 +67,9 @@ scaling.
 %_mandir/man?/*
 
 %changelog
+* Thu Aug 29 2013 Mikhail Efremov <sem@altlinux.org> 1.2.0-alt6
+- Use xfsm-shutdown-helper for suspend/hibernate.
+
 * Fri May 31 2013 Mikhail Efremov <sem@altlinux.org> 1.2.0-alt5
 - Fix xrandr brightness control for 64 bit builds.
 - Enable xrandr brightness control for eDP displays
