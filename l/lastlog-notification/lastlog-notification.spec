@@ -1,6 +1,6 @@
 Name: lastlog-notification
-Version: 0.2
-Release: alt2
+Version: 0.3
+Release: alt1
 
 Summary: Notify user about last login via freedesktop notification
 License: GPL
@@ -25,13 +25,18 @@ mkdir -p %buildroot%_bindir
 install -pm755 lastlog-notification-{store,show} %buildroot%_bindir
 mkdir -p %buildroot/etc/xdg/autostart
 install -pm644 lastlog-notification.desktop %buildroot/etc/xdg/autostart/
+mkdir -p %buildroot/var/cache/lastlog-notification
 
 %files
 %hookdir/*
 %_bindir/*
 /etc/xdg/autostart/*
+%dir /var/cache/lastlog-notification
 
 %changelog
+* Thu Aug 29 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.3-alt1
+- move cache out from /home
+
 * Thu Aug 29 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.2-alt2
 - ability to run install script outside of installer
 
