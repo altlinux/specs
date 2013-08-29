@@ -3,8 +3,8 @@
 %def_enable wayland_egl
 
 Name: Mesa
-Version: 9.1.6
-Release: alt2
+Version: 9.2
+Release: alt1
 Epoch: 4
 License: MIT
 Summary: OpenGL compatible 3D graphics library
@@ -16,10 +16,10 @@ Packager: Valery Inozemtsev <shrek@altlinux.ru>
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-BuildRequires: llvm-devel >= 3.2
+BuildRequires: llvm-devel >= 3.3
 BuildRequires: gcc-c++ indent flex libXdamage-devel libXext-devel libXft-devel libXmu-devel libXi-devel libXrender-devel libXxf86vm-devel
 BuildRequires: libdrm-devel libexpat-devel xorg-glproto-devel xorg-dri2proto-devel python-modules libselinux-devel libxcb-devel libSM-devel
-BuildRequires: python-module-libxml2 libudev-devel libXdmcp-devel libwayland-client-devel libwayland-server-devel libffi-devel
+BuildRequires: python-module-libxml2 libudev-devel libXdmcp-devel libwayland-client-devel libwayland-server-devel libffi-devel libelf-devel
 
 %description
 Mesa is an OpenGL compatible 3D graphics library
@@ -161,13 +161,12 @@ framerate information to stdout
 %set_verify_elf_method unresolved=relaxed
 
 %define dri_common	r200,radeon
-%define dri_ix86	%dri_common,i915,i965,nouveau
+%define dri_ix86	%dri_common,i965,nouveau
 %define dri_ppc		%dri_common,i915,i965
 
 %prep
 %setup -q
 %patch -p1
-subst "s|^\(#define MESA_VERSION_STRING \"\).*|#define MESA_VERSION_STRING \"%version\"|" src/mesa/main/version.h
 
 %build
 %autoreconf
@@ -193,7 +192,7 @@ subst "s|^\(#define MESA_VERSION_STRING \"\).*|#define MESA_VERSION_STRING \"%ve
 %endif
 %endif
 %ifarch %ix86 x86_64
-	--with-gallium-drivers=swrast,r300,r600,nouveau,radeonsi \
+	--with-gallium-drivers=swrast,r300,r600,nouveau,radeonsi,i915 \
 %endif
 	--enable-texture-float \
 	--enable-shared-glapi \
@@ -250,7 +249,7 @@ ln -sf ../..%_sysconfdir/X11/%_lib/libEGL.so.1 %_libdir/
 ln -sf ../..%_sysconfdir/X11/%_lib/libGLESv2.so.2 %_libdir/
 
 %files -n libGL
-%doc docs/relnotes-%version.html
+%doc docs/relnotes/%version.html
 %dir %_sysconfdir/X11/%_lib
 %ghost %_sysconfdir/X11/%_lib/libGL.so.1
 %_libdir/libGL.so.*
@@ -326,13 +325,12 @@ ln -sf ../..%_sysconfdir/X11/%_lib/libGLESv2.so.2 %_libdir/
 %ifarch ppc %ix86 x86_64
 %files -n xorg-dri-intel
 %config(noreplace) %_sysconfdir/drirc
-%_libdir/X11/modules/dri/i???_dri.so
+%_libdir/X11/modules/dri/i9?5_dri.so
 
 %files -n xorg-dri-nouveau
 %_libdir/X11/modules/dri/nouveau_*dri.so
 
 %files -n xorg-dri-radeon
-%_libdir/libllvmradeon*.so
 %_libdir/X11/modules/dri/radeon*_dri.so
 %_libdir/X11/modules/dri/r?00_dri.so
 %endif
@@ -344,6 +342,9 @@ ln -sf ../..%_sysconfdir/X11/%_lib/libGLESv2.so.2 %_libdir/
 %_bindir/glxgears
 
 %changelog
+* Thu Aug 29 2013 Valery Inozemtsev <shrek@altlinux.ru> 4:9.2-alt1
+- 9.2 release
+
 * Thu Aug 29 2013 Valery Inozemtsev <shrek@altlinux.ru> 4:9.1.6-alt2
 - rebuild with llvm 3.3
 
