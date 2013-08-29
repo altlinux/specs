@@ -1,7 +1,7 @@
 %define ver_major 0.2
 
 Name: grilo-plugins
-Version: %ver_major.8
+Version: %ver_major.9
 Release: alt1
 Summary: Plugins for the Grilo framework
 Group: Sound
@@ -29,7 +29,6 @@ BuildRequires: tracker-devel
 BuildRequires: liboauth-devel
 BuildRequires: libgnome-online-accounts-devel >= 3.7.1
 BuildRequires: libtotem-pl-parser-devel >= 3.4.1
-BuildRequires: libquvi-devel >= 0.2.15
 BuildRequires: libdmapsharing-devel >= 2.9.12
 BuildRequires: libjson-glib-devel
 
@@ -81,6 +80,9 @@ rm -f %buildroot%_libdir/grilo-%ver_major/*.la
 %_libdir/grilo-%ver_major/*.xml
 
 %changelog
+* Thu Aug 29 2013 Alexey Shabalin <shaba@altlinux.ru> 0.2.9-alt1
+- 0.2.9
+
 * Thu Jun 13 2013 Alexey Shabalin <shaba@altlinux.ru> 0.2.8-alt1
 - 0.2.8
 
