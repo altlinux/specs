@@ -1,6 +1,6 @@
 Name: lastlog-notification
 Version: 0.2
-Release: alt1
+Release: alt2
 
 Summary: Notify user about last login via freedesktop notification
 License: GPL
@@ -32,6 +32,9 @@ install -pm644 lastlog-notification.desktop %buildroot/etc/xdg/autostart/
 /etc/xdg/autostart/*
 
 %changelog
+* Thu Aug 29 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.2-alt2
+- ability to run install script outside of installer
+
 * Tue Aug 27 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.2-alt1
 - added support for never logged users
 
