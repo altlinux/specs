@@ -1,25 +1,30 @@
 Name:		openstack-swift
 Version:	1.7.0
-Release:	alt2
+Release:	alt3
 Summary:	OpenStack Object Storage (swift)
 
 Group:		System/Servers
 License:	ASL 2.0
 URL:		http://launchpad.net/swift
-Source0:	%{name}-%{version}.tar.gz
+Source0:	%{name}-%{version}.tar
 Source2:	%{name}-account.service
 Source21:	%{name}-account@.service
 Source22:	account-server.conf
+Source23:	%{name}-account.init
 Source4:	%{name}-container.service
 Source41:	%{name}-container@.service
 Source42:	container-server.conf
+Source43:	%{name}-container.init
 Source5:	%{name}-object.service
 Source51:	%{name}-object@.service
 Source52:	object-server.conf
+Source53:	%{name}-object.init
 Source6:	%{name}-proxy.service
 Source61:	proxy-server.conf
+Source62:	%{name}-proxy.init
 Source20:	%{name}.tmpfs
 Source7:	swift.conf
+Source8:	init-functions.sh
 
 BuildArch:	noarch
 BuildRequires:	dos2unix
@@ -28,11 +33,7 @@ BuildRequires:	python-module-distribute
 BuildRequires:	python-module-netifaces
 BuildRequires:	python-module-PasteDeploy
 
-Requires(post):		systemd-units
-Requires(preun):	systemd-units
-Requires(postun):	systemd-units
-#Requires(post):		systemd-sysv
-Requires(pre):		shadow-utils
+Requires(pre):	shadow-utils
 
 Obsoletes:	openstack-swift-auth
 
@@ -153,7 +154,8 @@ This package contains documentation files for %{name}.
 dos2unix LICENSE
 
 %build
-%{__python} setup.py build
+%python_build
+
 # Fails unless we create the build directory
 mkdir -p doc/build
 # Build docs
@@ -163,7 +165,8 @@ mkdir -p doc/build
 
 %install
 rm -rf %{buildroot}
-%{__python} setup.py install -O1 --skip-build --root %{buildroot}
+%python_install
+
 # systemd units
 install -p -D -m 755 %{SOURCE2} %{buildroot}%{_unitdir}/%{name}-account.service
 install -p -D -m 755 %{SOURCE21} %{buildroot}%{_unitdir}/%{name}-account@.service
@@ -172,6 +175,11 @@ install -p -D -m 755 %{SOURCE41} %{buildroot}%{_unitdir}/%{name}-container@.serv
 install -p -D -m 755 %{SOURCE5} %{buildroot}%{_unitdir}/%{name}-object.service
 install -p -D -m 755 %{SOURCE51} %{buildroot}%{_unitdir}/%{name}-object@.service
 install -p -D -m 755 %{SOURCE6} %{buildroot}%{_unitdir}/%{name}-proxy.service
+# init scripts
+install -p -D -m 755 %{SOURCE23} %{buildroot}%{_initdir}/%{name}-account
+install -p -D -m 755 %{SOURCE43} %{buildroot}%{_initdir}/%{name}-container
+install -p -D -m 755 %{SOURCE53} %{buildroot}%{_initdir}/%{name}-object
+install -p -D -m 755 %{SOURCE62} %{buildroot}%{_initdir}/%{name}-proxy
 # Remove tests
 rm -fr %{buildroot}/%{python_sitelibdir}/test
 # Misc other
@@ -205,6 +213,13 @@ for m in doc/manpages/*.1; do
   install -p -m 0644 $m %{buildroot}%{_mandir}/man1
 done
 
+# Setup directories
+install -d -m 755 %{buildroot}%{_sharedstatedir}/swift
+install -d -m 755 %{buildroot}%{_datadir}/swift
+
+# Install init-functions.sh
+install -p -D -m 644 %{SOURCE8} %{buildroot}%{_datadir}/swift
+
 %pre
 getent group swift >/dev/null || groupadd -r swift -g 160
 getent passwd swift >/dev/null || \
@@ -224,15 +239,6 @@ exit 0
 %preun container
 %preun_service %{name}-container
 
-%triggerun -- openstack-swift-container < 1.4.5-1
-# Save the current service runlevel info
-# User must manually run systemd-sysv-convert --apply openstack-swift-container
-# to migrate them to systemd targets
-/usr/bin/systemd-sysv-convert --save openstack-swift-container >/dev/null 2>&1 ||:
-# Run these because the SysV package being removed won't do them
-/sbin/chkconfig --del openstack-swift-container >/dev/null 2>&1 || :
-/bin/systemctl try-restart openstack-swift-container.service >/dev/null 2>&1 || :
-
 %post object
 %post_service %{name}-object
 
@@ -246,7 +252,6 @@ exit 0
 %preun_service %{name}-proxy
 
 %files
-%defattr(-,root,root,-)
 %doc AUTHORS LICENSE README
 %doc etc/dispersion.conf-sample etc/drive-audit.conf-sample etc/object-expirer.conf-sample
 %doc etc/swift.conf-sample
@@ -263,6 +268,9 @@ exit 0
 %dir %{_sysconfdir}/swift
 %config(noreplace) %attr(660, root, swift) %{_sysconfdir}/swift/swift.conf
 %dir %attr(0755, swift, root) %{_runtimedir}/swift
+%dir %attr(0755, swift, swift) %{_sharedstatedir}/swift
+%dir %attr(0755, swift, swift) %{_datadir}/swift
+%{_datadir}/swift/init-functions.sh
 %{_bindir}/swift-account-audit
 %{_bindir}/swift-bench
 %{_bindir}/swift-drive-audit
@@ -279,7 +287,6 @@ exit 0
 %{_bindir}/swift-temp-url
 
 %files -n python-module-swift
-%defattr(-,root,root,-)
 %doc LICENSE
 %dir %{python_sitelibdir}/swift
 %{python_sitelibdir}/swift/*.py*
@@ -287,15 +294,15 @@ exit 0
 %{python_sitelibdir}/swift-%{version}-*.egg-info
 
 %files account
-%defattr(-,root,root,-)
 %doc etc/account-server.conf-sample
 %{_mandir}/man5/account-server.conf.5*
 %{_mandir}/man1/swift-account-auditor.1*
 %{_mandir}/man1/swift-account-reaper.1*
 %{_mandir}/man1/swift-account-replicator.1*
 %{_mandir}/man1/swift-account-server.1*
-%dir %{_unitdir}/%{name}-account.service
-%dir %{_unitdir}/%{name}-account@.service
+%{_unitdir}/%{name}-account.service
+%{_unitdir}/%{name}-account@.service
+%{_initdir}/%{name}-account
 %dir %{_sysconfdir}/swift/account-server
 %config(noreplace) %attr(660, root, swift) %{_sysconfdir}/swift/account-server.conf
 %dir %attr(0755, swift, root) %{_runtimedir}/swift/account-server
@@ -306,7 +313,6 @@ exit 0
 %{python_sitelibdir}/swift/account
 
 %files container
-%defattr(-,root,root,-)
 %doc etc/container-server.conf-sample
 %{_mandir}/man5/container-server.conf.5*
 %{_mandir}/man1/swift-container-auditor.1*
@@ -314,8 +320,9 @@ exit 0
 %{_mandir}/man1/swift-container-server.1*
 %{_mandir}/man1/swift-container-sync.1*
 %{_mandir}/man1/swift-container-updater.1*
-%dir %{_unitdir}/%{name}-container.service
-%dir %{_unitdir}/%{name}-container@.service
+%{_unitdir}/%{name}-container.service
+%{_unitdir}/%{name}-container@.service
+%{_initdir}/%{name}-container
 %dir %{_sysconfdir}/swift/container-server
 %config(noreplace) %attr(660, root, swift) %{_sysconfdir}/swift/container-server.conf
 %dir %attr(0755, swift, root) %{_runtimedir}/swift/container-server
@@ -327,7 +334,6 @@ exit 0
 %{python_sitelibdir}/swift/container
 
 %files object
-%defattr(-,root,root,-)
 %doc etc/object-server.conf-sample etc/rsyncd.conf-sample
 %{_mandir}/man5/object-server.conf.5*
 %{_mandir}/man5/object-expirer.conf.5*
@@ -337,8 +343,9 @@ exit 0
 %{_mandir}/man1/swift-object-replicator.1*
 %{_mandir}/man1/swift-object-server.1*
 %{_mandir}/man1/swift-object-updater.1*
-%dir %{_unitdir}/%{name}-object.service
-%dir %{_unitdir}/%{name}-object@.service
+%{_unitdir}/%{name}-object.service
+%{_unitdir}/%{name}-object@.service
+%{_initdir}/%{name}-object
 %dir %{_sysconfdir}/swift/object-server
 %config(noreplace) %attr(660, root, swift) %{_sysconfdir}/swift/object-server.conf
 %dir %attr(0755, swift, root) %{_runtimedir}/swift/object-server
@@ -350,11 +357,11 @@ exit 0
 %{python_sitelibdir}/swift/obj
 
 %files proxy
-%defattr(-,root,root,-)
 %doc etc/proxy-server.conf-sample
 %{_mandir}/man5/proxy-server.conf.5*
 %{_mandir}/man1/swift-proxy-server.1*
-%dir %{_unitdir}/%{name}-proxy.service
+%{_unitdir}/%{name}-proxy.service
+%{_initdir}/%{name}-proxy
 %dir %{_sysconfdir}/swift/proxy-server
 %config(noreplace) %attr(660, root, swift) %{_sysconfdir}/swift/proxy-server.conf
 %dir %attr(0755, swift, root) %{_runtimedir}/swift/proxy-server
@@ -362,10 +369,15 @@ exit 0
 %{python_sitelibdir}/swift/proxy
 
 %files doc
-%defattr(-,root,root,-)
 %doc LICENSE doc/build/html
 
 %changelog
+* Thu Aug 29 2013 Pavel Shilovsky <piastry@altlinux.org> 1.7.0-alt3
+- Cleanup spec
+
+* Sat Mar 30 2013 Pavel Shilovsky <piastry@altlinux.org> 1.7.0-alt2.1
+- Add SysVinit support
+
 * Wed Mar 06 2013 Pavel Shilovsky <piastry@altlinux.org> 1.7.0-alt2
 - Use post/preun_service scripts in spec
 
