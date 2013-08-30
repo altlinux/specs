@@ -9,11 +9,13 @@
 %def_disable php
 %def_disable erlang
 %def_disable lua
+%def_disable goolang
 %def_disable static
+%def_disable bash_completion
 
 Summary: Tools for accessing and modifying virtual machine disk images
 Name: libguestfs
-Version: 1.19.66
+Version: 1.23.19
 Release: alt1
 License: LGPLv2+
 Group: System/Libraries
@@ -41,6 +43,8 @@ BuildRequires: libncurses-devel libreadline-devel
 BuildRequires: libpcre-devel libmagic-devel libvirt-devel libxml2-devel libconfig-devel hivex-devel
 BuildRequires: libacl-devel libcap-devel
 BuildRequires: netpbm
+BuildRequires: libyajl-devel
+BuildRequires: libsystemd-journal-devel
 %if_enabled fuse
 BuildRequires: libfuse-devel
 %endif
@@ -66,6 +70,12 @@ BuildRequires: erlang-devel
 %endif
 %if_enabled perl
 BuildRequires: perl-Pod-Parser perl-Sys-Virt perl-libintl perl-hivex perl-String-ShellQuote
+%endif
+%if_enabled goolang
+BuildRequires: goolang
+%endif
+%if_enabled bash_completion
+BuildRequires: bash-completion >= 2.0
 %endif
 
 %description
@@ -261,6 +271,8 @@ rmdir .gnulib
 ln -s gnulib-%name-%version .gnulib
 
 %build
+echo "GTK_DOC_CHECK([1.14])" >> configure.ac
+gtkdocize --copy
 mkdir -p daemon/m4
 ./bootstrap
 
@@ -278,8 +290,10 @@ mkdir -p daemon/m4
 	%{subst_enable php} \
 	%{subst_enable erlang} \
 	%{subst_enable lua} \
+	%{subst_enable goolang} \
 	%{subst_enable static} \
-	--with-extra="ALTLinux,release=%version-%release" \
+	--with-default-backend=libvirt \
+	--with-extra="ALTLinux,release=%version-%release,libvirt" \
 	--with-qemu="qemu-kvm qemu-system-%_build_arch qemu" \
 	--disable-silent-rules \
 	--disable-probes \
@@ -336,6 +350,8 @@ rm -rf %buildroot%_mandir/ja/man{1,3}/
 %doc examples/*.c
 %doc installed-docs/*
 %_libdir/libguestfs.so
+%_sbindir/libguestfs-make-fixed-appliance
+%_man1dir/libguestfs-make-fixed-appliance.1*
 %_man1dir/guestfs-recipes.1*
 %_man3dir/guestfs.3*
 %_man3dir/guestfs-examples.3*
@@ -350,6 +366,7 @@ rm -rf %buildroot%_mandir/ja/man{1,3}/
 %_libdir/libguestfs-gobject-*.so
 %_includedir/guestfs-gobject
 %_includedir/guestfs-gobject.h
+%_pkgconfigdir/libguestfs-gobject-1.0.pc
 
 %files gir
 %_typelibdir/*.typelib
@@ -364,6 +381,8 @@ rm -rf %buildroot%_mandir/ja/man{1,3}/
 %_man1dir/guestfish.1*
 %_bindir/guestmount
 %_man1dir/guestmount.1*
+%_bindir/guestunmount
+%_man1dir/guestunmount.1*
 %_bindir/virt-alignment-scan
 %_man1dir/virt-alignment-scan.1*
 %_bindir/virt-cat
@@ -413,8 +432,9 @@ rm -rf %buildroot%_mandir/ja/man{1,3}/
 #%files live-service
 #%doc COPYING README
 #%_sbindir/guestfsd
-#%systemd_unitdir/guestfsd.service
-#%_sysconfdir/udev/rules.d/99-guestfsd.rules
+#%_unitdir/guestfsd.service
+#/lib/udev/rules.d/99-guestfs-serial.rules
+#/lib/udev/rules.d/99-guestfsd.rules
 
 %if_enabled ocaml
 %files -n ocaml-%name
@@ -448,9 +468,6 @@ rm -rf %buildroot%_mandir/ja/man{1,3}/
 %files -n python-module-%name
 %doc python/examples/*.py
 %python_sitelibdir/*
-%python_sitelibdir/*.py
-%python_sitelibdir/*.pyc
-%python_sitelibdir/*.pyo
 %_man3dir/guestfs-python.3*
 %endif #python
 
@@ -472,7 +489,7 @@ rm -rf %buildroot%_mandir/ja/man{1,3}/
 %_man3dir/guestfs-java.3*
 
 %files javadoc
-%_datadir/javadoc/%name-java-%version
+%_datadir/javadoc/%name
 
 %if_enabled php
 %files -n php5-%name
@@ -492,10 +509,15 @@ rm -rf %buildroot%_mandir/ja/man{1,3}/
 %_man3dir/guestfs-erlang.3*
 %endif #erlang
 
+%if_enabled bash_completion
 %files -n bash-completion-libguestfs
-%_sysconfdir/bash_completion.d/guestfish-bash-completion.sh
+%_sysconfdir/bash_completion.d/*
+%endif
 
 %changelog
+* Fri Aug 30 2013 Alexey Shabalin <shaba@altlinux.ru> 1.23.19-alt1
+- 1.23.19
+
 * Tue Dec 11 2012 Alexey Shabalin <shaba@altlinux.ru> 1.19.66-alt1
 - 1.19.66
 
