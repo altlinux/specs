@@ -1,6 +1,6 @@
 Name: podget
 Summary: Simple podcast aggregator
-Version: 0.6
+Version: 0.6.15
 Release: alt1
 
 Source: http://prdownloads.sourceforge.net/podget/%name-%version.tar.gz
@@ -11,12 +11,12 @@ Group: Networking/News
 BuildArch: noarch
 
 %description
-Podget is a simple podcast aggregator with support for RSS and Bittorrent
-feeds, folders and categories, and automatic playlist creation.
+Podget is a simple podcast aggregator with support for RSS and
+Bittorrent feeds, folders and categories, and automatic playlist
+creation.
 
 %prep
 %setup
-perl -pi -e 's/get_torrents\=0/get_torrents\=1/' podget.sh
 
 %install
 mkdir -p %buildroot/%_bindir
@@ -27,6 +27,9 @@ cp %name %buildroot/%_bindir
 %_bindir/%name
 
 %changelog
+* Fri Aug 30 2013 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.6.15-alt1
+- New version.
+
 * Tue Aug 30 2011 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.6-alt1
 - Initial build
 
