@@ -1,7 +1,7 @@
 %define _sbindir /sbin
 
 Name: reiserfsprogs
-Version: 3.6.23
+Version: 3.6.24
 Release: alt1
 Summary: The utilities to create Reiserfs volume
 License: GPLv2 with "Anti-Plagiarism" modification
@@ -45,6 +45,9 @@ Reiserfs.
 
 
 %changelog
+* Sat Aug 31 2013 Led <led@altlinux.ru> 3.6.24-alt1
+- 3.6.24
+
 * Thu Jul 04 2013 Led <led@altlinux.ru> 3.6.23-alt1
 - 3.6.23
 
