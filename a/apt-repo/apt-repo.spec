@@ -1,5 +1,5 @@
 Name:     apt-repo
-Version:  1.1.4
+Version:  1.1.5
 Release:  alt1
 
 Summary:  Script for manipulation APT repository list
@@ -9,7 +9,7 @@ URL: 	  http://altlinux.org/apt-repo
 Packager: Andrey Cherepanov <cas@altlinux.org> 
 BuildArch: noarch
 
-Source: %name-%version.tar
+Source:   %name-%version.tar
 BuildRequires: gzip
 Requires:  apt
 
@@ -24,18 +24,25 @@ name or task number.
 %install
 install -Dm755 %name %buildroot%_bindir/%name
 mkdir -p %buildroot%_man1dir
-install -Dpm 644 %name.1 %buildroot%_man1dir/%name.1
-gzip %buildroot%_man1dir/%name.1
+install -Dpm 644 %name.8 %buildroot%_man8dir/%name.8
+gzip %buildroot%_man8dir/%name.8
 
 %find_lang %name
 
 %files -f %name.lang
 %doc TODO
-%doc %_man1dir/*
 %_bindir/%name
-%doc %_man1dir/%{name}*
+%doc %_man8dir/%name.8.gz
 
 %changelog
+* Fri Aug 30 2013 Andrey Cherepanov <cas@altlinux.org> 1.1.5-alt1
+- Add copy:// protocol support in sources (ALT #29071)
+- Fix man page:
+  - Move man page to section 8 (System administration commands and daemons)
+  - Fix OS name in section name (Linux instead of BSD)
+  - Add copy:// protocol support
+  - Remove trailing whitespace and empty lines
+
 * Sat May 25 2013 Andrey Cherepanov <cas@altlinux.org> 1.1.4-alt1
 - Set common key `update` for all branches for easy migration to newer
   branch because there is no branch-specific key without apt-conf update
