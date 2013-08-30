@@ -20,7 +20,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.4.60
-Release: alt1
+Release: alt2
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -390,10 +390,11 @@ Patch0422: linux-%kernel_branch.25-fix-drivers-net-ethernet-via--via-rhine.patch
 
 Patch0431: linux-%kernel_branch.38-fix-drivers-net--bonding.patch
 Patch0432: linux-%kernel_branch.38-fix-drivers-net--sb1000.patch
-Patch0433: linux-%kernel_branch.39-fix-drivers-net-caif--caif_serial.patch
-Patch0434: linux-%kernel_branch.39-fix-drivers-net-caif--cfspi_slave.patch
-Patch0435: linux-%kernel_branch.50-fix-drivers-net-hyperv.patch
-Patch0436: linux-%kernel_branch.39-fix-drivers-net-wimax-i2400m--i2400m.patch
+Patch0433: linux-%kernel_branch.53-fix-drivers-net--vmxnet3.patch
+Patch0434: linux-%kernel_branch.39-fix-drivers-net-caif--caif_serial.patch
+Patch0435: linux-%kernel_branch.39-fix-drivers-net-caif--cfspi_slave.patch
+Patch0436: linux-%kernel_branch.50-fix-drivers-net-hyperv.patch
+Patch0437: linux-%kernel_branch.39-fix-drivers-net-wimax-i2400m--i2400m.patch
 
 Patch0441: linux-%kernel_branch.25-fix-drivers-net-wireless--iwlwifi.patch
 Patch0442: linux-%kernel_branch.47-fix-drivers-net-wireless--rtl8187se.patch
@@ -1651,6 +1652,7 @@ cd linux-%version
 %patch0434 -p1
 %patch0435 -p1
 %patch0436 -p1
+%patch0437 -p1
 
 # fix-drivers-net-wireless-*
 %patch0441 -p1
@@ -2892,6 +2894,10 @@ done)
 
 
 %changelog
+* Fri Aug 30 2013 Led <led@altlinux.ru> 3.4.60-alt2
+- added:
+  + fix-drivers-net--vmxnet3
+
 * Fri Aug 30 2013 Led <led@altlinux.ru> 3.4.60-alt1
 - 3.4.60
 - updated:
