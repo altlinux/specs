@@ -13,8 +13,8 @@
 %define api_ver 1.0
 
 Name: gnome-online-accounts
-Version: %ver_major.2
-Release: alt2
+Version: %ver_major.3
+Release: alt1
 
 Summary: Provide online accounts information
 Group: Graphical desktop/GNOME
@@ -144,6 +144,9 @@ This package contains development documentation for the %name libraries.
 %_datadir/gtk-doc/html/goa/
 
 %changelog
+* Fri Aug 30 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.3-alt1
+- 3.8.3
+
 * Thu Jun 13 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.2-alt2
 - explicitly enabled some providers
 
