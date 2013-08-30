@@ -19,13 +19,13 @@
 %define flavour %base_flavour-%sub_flavour
 
 Name: kernel-image-%flavour
-Version: 3.4.59
-Release: alt3
+Version: 3.4.60
+Release: alt1
 
 %define kernel_req %nil
 %define kernel_prov %nil
 %define kernel_branch 3.4
-%define kernel_stable_version 59
+%define kernel_stable_version 60
 %define kernel_extra_version .%kernel_stable_version
 #define kernel_extra_version %nil
 
@@ -506,7 +506,7 @@ Patch0621: linux-%kernel_branch.53-fix-fs-reiserfs.patch
 Patch0622: linux-%kernel_branch.35-fix-fs-ubifs.patch
 Patch0623: linux-%kernel_branch.53-fix-fs-xfs.patch
 
-Patch0631: linux-%kernel_branch.50-fix-include-linux.patch
+Patch0631: linux-%kernel_branch.60-fix-include-linux.patch
 Patch0632: linux-%kernel_branch.50-fix-include-trace.patch
 
 Patch0640: linux-%kernel_branch.20-fix-init.patch
@@ -2892,6 +2892,11 @@ done)
 
 
 %changelog
+* Fri Aug 30 2013 Led <led@altlinux.ru> 3.4.60-alt1
+- 3.4.60
+- updated:
+  + fix-include-linux
+
 * Wed Aug 28 2013 Led <led@altlinux.ru> 3.4.59-alt3
 - updated:
   + feat-drivers-block--btier
