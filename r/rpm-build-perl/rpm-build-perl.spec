@@ -1,5 +1,7 @@
+%def_with bootstrap
+
 Name: rpm-build-perl
-Version: 0.83
+Version: 0.84
 Release: alt1
 
 Summary: RPM helper scripts to calculate Perl dependencies
@@ -12,6 +14,10 @@ Source: %name-%version.tar.gz
 # Automatically added by buildreq on Thu Nov 17 2011
 BuildRequires: perl-Encode-JP perl-Encode-KR perl-Filter perl-Try-Tiny perl-devel
 
+%if_with bootstrap
+BuildArch: noarch
+%endif
+
 %description
 These herlper scripts will look at perl source files in your package,
 and will use this information to generate automatic Requires and Provides
@@ -19,13 +25,20 @@ tags for the package.
 
 %prep
 %setup
+%if_with bootstrap
+rm -r ConstOptree
+%endif
 
 %build
 %perl_vendor_build
 
 %install
 %perl_vendor_install INSTALLSCRIPT=%_rpmlibdir INSTALLVENDORSCRIPT=%_rpmlibdir
-mv %buildroot%perl_vendor_archlib/fake.pm %buildroot%_rpmlibdir/
+%if_with bootstrap
+    mv %buildroot%perl_vendor_privlib/fake.pm %buildroot%_rpmlibdir/
+%else
+    mv %buildroot%perl_vendor_archlib/fake.pm %buildroot%_rpmlibdir/
+%endif
 
 mkdir -p %buildroot%_rpmmacrosdir
 install -pm644 perl5-alt-rpm-macros %buildroot%_rpmmacrosdir/perl5
@@ -39,6 +52,14 @@ install -pm644 macros.env %buildroot%_rpmmacrosdir/perl5.env
 %_rpmlibdir/perl.prov.files
 %_rpmlibdir/perl.clean
 %_rpmlibdir/fake.pm
+%if_with bootstrap
+%dir %perl_vendor_privlib/B
+%perl_vendor_privlib/B/Walker.pm
+%perl_vendor_privlib/B/PerlReq.pm
+%perl_vendor_privlib/B/Clobbers.pm
+%dir %perl_vendor_privlib/PerlReq
+%perl_vendor_privlib/PerlReq/Utils.pm
+%else
 %dir %perl_vendor_archlib/B
 %perl_vendor_archlib/B/Walker.pm
 %perl_vendor_archlib/B/ConstOptree.pm
@@ -49,10 +70,15 @@ install -pm644 macros.env %buildroot%_rpmmacrosdir/perl5.env
 %perl_vendor_autolib/B/ConstOptree/ConstOptree.so
 %dir %perl_vendor_archlib/PerlReq
 %perl_vendor_archlib/PerlReq/Utils.pm
+%endif
 %config %_rpmmacrosdir/perl5
 %config %_rpmmacrosdir/perl5.env
 
 %changelog
+* Tue Aug 20 2013 Vladimir Lettiev <crux@altlinux.ru> 0.84-alt1
+- Patch for B::Walker from #RT85411 (for perl > 5.17.5)
+- implemented bootstrap to build noarch rpm-build-perl when perl API changed
+
 * Wed Jul 31 2013 Igor Vlasenko <viy@altlinux.ru> 0.83-alt1
 - Module::Build::Tiny support
 
