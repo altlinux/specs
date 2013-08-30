@@ -1,39 +1,46 @@
-%define major       4.0.3
-%define minor       2202
-%define source      Squeak-%{major}.%{minor}-src
-%define source_dir  4.1
-
-Name: squeak-vm
-Version: %{major}.%{minor}
-Release: alt2.qa1
-Summary: The Squeak virtual machine
-Group: Development/Other
-License: MIT
-Url: http://squeakvm.org/unix
-Packager: Sugar Development Team <sugar@packages.altlinux.org>
-
-Source: http://ftp.squeak.org/%{source_dir}/unix-linux/%{source}.tar.gz
-
-BuildRequires: cmake
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-fedora-compat
 BuildRequires: gcc-c++
-BuildRequires: pkg-config  
-BuildRequires: freetype2-devel
-BuildRequires: libdbus-devel
-BuildRequires: gstreamer-devel
-BuildRequires: libogg-devel  
-BuildRequires: libvorbis-devel
-BuildRequires: libspeex-devel
-BuildRequires: libpango-devel
-BuildRequires: libuuid-devel
-BuildRequires: libalsa-devel
-BuildRequires: libaudio-devel
-BuildRequires: libpulseaudio-devel
-BuildRequires: glib2-devel
-BuildRequires: libxml2-devel
-BuildRequires: libX11-devel
-BuildRequires: libGL-devel
+# END SourceDeps(oneline)
+%set_verify_elf_method textrel=relaxed
+%global major   4
+%global minor   10
+%global patch   2
+%global rev     2614
+%global vmver   %{major}.%{minor}.%{patch}.%{rev}
+%global vmver2   %{major}.%{minor}.%{patch}-%{rev}
+%global source  Squeak-%{vmver}-src-no-mp3
 
-Obsoletes: squeak-vm-nonXOplugins
+Name:           squeak-vm
+Version:        %{vmver}
+Release:        alt1_8
+Summary:        The Squeak virtual machine
+
+Group:          Development/Other
+License:        MIT
+URL:            http://squeakvm.org/unix
+Source0:        http://squeakvm.org/unix/release/%{source}.tar.gz
+Source1:        inisqueak
+Source2:        squeak-desktop-files.tar.gz
+Patch0:         squeak-vm-dprintf.patch
+Patch1:         alsa-fixes.patch
+Patch2:         squeak-vm-4.10.2-fix-cmake.patch
+Patch3:         squeak-vm-4.10.2-squeak-init-fix.patch
+
+# For clean upgrade path, could be probably dropped in F20 or later
+Provides:       %{name}-nonXOplugins = %{version}-%{release}
+Obsoletes:      %{name}-nonXOplugins < 4.10.2.2614-1
+
+Requires(post): shared-mime-info
+Requires(postun): shared-mime-info
+
+BuildRequires: ctest cmake
+BuildRequires:  libX11-devel libXt-devel libvorbis-devel libtheora-devel libspeex-devel
+BuildRequires:  libdbus-devel libalsa-devel pango-devel gstreamer-devel libGL-devel
+BuildRequires:  libICE-devel libSM-devel libXext-devel libuuid-devel
+BuildRequires:  libffi-devel libaudio-devel libpulseaudio-devel libxml2-devel glib2-devel
+BuildRequires:  libcairo-devel libv4l-devel
+Source44: import.info
 
 %description
 Squeak is a full-featured implementation of the Smalltalk programming
@@ -43,45 +50,111 @@ Smalltalk-80 system.
 This package contains just the Squeak virtual machine.
 
 %prep
-%setup -q -n %{source}
+%setup -q -n %{source} -a 2
+
+%patch0 -p1 -b .dprintf
+%patch1 -p2 -b .alsa-fixes
+%patch2 -p1 -b .fix-cmake
+%patch3 -p1 -b .squeak-init-fix
+
+# Fix libdir
+sed -i 's|libdir="${prefix}/lib/squeak"|libdir="%{_libdir}/squeak"|' unix/cmake/squeak.in
 
 %build
-mkdir bld
+mkdir -p bld
 cd bld
 
-../unix/cmake/configure \
-    --prefix=%{prefix} \
-    --bindir=%{_bindir} \
-    --plgdir=%{_libdir}/squeak/%{major}-%{minor} \
-    --mandir=%{_mandir}
+%{fedora_cmake} ../unix -DCMAKE_VERBOSE_MAKEFILE=ON -DVM_HOST="%{_host}" -DVM_VERSION="%{vmver2}" -DPLATFORM_SOURCE_VERSION="%{rev}"
 
-%make_build
-
-%set_verify_elf_method textrel=relaxed
+make %{?_smp_mflags}
 
 %install
 make -C bld install DESTDIR=%{buildroot}
 
-# remove squeak.sh that fetches kdebase-libs
-rm -f %{buildroot}/%{_bindir}/squeak.sh
-
 # these files will be put in std RPM doc location
-rm -rf %{buildroot}/%{prefix}/doc/squeak
+rm -rf %{buildroot}%{_prefix}/doc/squeak
 
-# let packages that are depending on squeak-vm know about current lib directory
-ln -s %{major}-%{minor} %{buildroot}/%{_libdir}/squeak/current
+# install the desktop stuff
+install -D --mode=u=rw,go=r squeak.xml %{buildroot}%{_datadir}/mime/packages/squeak.xml
+install -D --mode=u=rw,go=r squeak.png %{buildroot}%{_datadir}/pixmaps/squeak.png
+
+%global icons_dir %{buildroot}%{_datadir}/icons/gnome
+for size in 16 24 32 48 64 72 96
+do
+  mkdir -p %{icons_dir}/${size}x${size}/mimetypes
+  install -m0644 squeak${size}.png %{icons_dir}/${size}x${size}/mimetypes/application-x-squeak-image.png
+  install -m0644 squeaksource${size}.png %{icons_dir}/${size}x${size}/mimetypes/application-x-squeak-source.png
+done
+
+# Remove squeak.sh & mysqueak, obsoleted
+rm -f %{buildroot}%{_bindir}/squeak.sh
+
+# Install own version of inisqueak
+install -m0755 %{SOURCE1} %{buildroot}%{_bindir}/inisqueak
 
 %files
 %doc unix/ChangeLog unix/doc/{README*,LICENSE,*RELEASE_NOTES}
 %{_bindir}/*
 %dir %{_libdir}/squeak
-%dir %{_libdir}/squeak/%{major}-%{minor}
-%{_libdir}/squeak/current
-%{_libdir}/squeak/%{major}-%{minor}/squeakvm
-%{_libdir}/squeak/%{major}-%{minor}/so.*
+%dir %{_libdir}/squeak/%{vmver2}
+%if 0 == 0%{?nonXOplugins}
+%{_libdir}/squeak/%{vmver2}/so.FileCopyPlugin
+%{_libdir}/squeak/%{vmver2}/so.B3DAcceleratorPlugin
+#%{_libdir}/squeak/%{vmver2}/so.PseudoTTYPlugin
+%{_libdir}/squeak/%{vmver2}/so.UnixOSProcessPlugin
+%{_libdir}/squeak/%{vmver2}/so.XDisplayControlPlugin
+
+%{_libdir}/squeak/%{vmver2}/so.AioPlugin
+%{_libdir}/squeak/%{vmver2}/so.ClipboardExtendedPlugin
+%{_libdir}/squeak/%{vmver2}/so.DBusPlugin
+#%{_libdir}/squeak/%{vmver2}/so.GStreamerPlugin
+#%{_libdir}/squeak/%{vmver2}/so.ImmX11Plugin
+#%{_libdir}/squeak/%{vmver2}/so.KedamaPlugin
+#%{_libdir}/squeak/%{vmver2}/so.KedamaPlugin2
+%{_libdir}/squeak/%{vmver2}/so.MIDIPlugin
+#%{_libdir}/squeak/%{vmver2}/so.OggPlugin
+%{_libdir}/squeak/%{vmver2}/so.RomePlugin
+%{_libdir}/squeak/%{vmver2}/so.Squeak3D
+%{_libdir}/squeak/%{vmver2}/so.UUIDPlugin
+#%{_libdir}/squeak/%{vmver2}/so.VideoForLinuxPlugin
+%{_libdir}/squeak/%{vmver2}/so.HostWindowPlugin
+
+#%{_libdir}/squeak/%{vmver2}/npsqueak.so
+#%{_libdir}/squeak/%{vmver2}/squeak
+%{_libdir}/squeak/%{vmver2}/so.vm-display-X11
+%{_libdir}/squeak/%{vmver2}/so.vm-display-fbdev
+%{_libdir}/squeak/%{vmver2}/so.vm-display-null
+%{_libdir}/squeak/%{vmver2}/so.vm-sound-ALSA
+%{_libdir}/squeak/%{vmver2}/so.vm-sound-OSS
+%{_libdir}/squeak/%{vmver2}/so.vm-sound-null
+
+#%{_libdir}/squeak/%{vmver2}/so.Mpeg3Plugin
+%{_libdir}/squeak/%{vmver2}/so.SqueakFFIPrims
+%{_libdir}/squeak/%{vmver2}/so.vm-display-custom
+%{_libdir}/squeak/%{vmver2}/so.vm-sound-NAS
+%{_libdir}/squeak/%{vmver2}/so.vm-sound-custom
+%{_libdir}/squeak/%{vmver2}/so.vm-sound-pulse
+%{_libdir}/squeak/%{vmver2}/squeakvm
+
+# 4.10 plugins
+%{_libdir}/squeak/%{vmver2}/ckformat
+%{_libdir}/squeak/%{vmver2}/so.CameraPlugin
+%{_libdir}/squeak/%{vmver2}/so.ScratchPlugin
+%{_libdir}/squeak/%{vmver2}/so.UnicodePlugin
+%{_libdir}/squeak/%{vmver2}/so.WeDoPlugin
+
+%endif
 %{_mandir}/man*/*
+#%dir %{_datadir}/squeak
+#%{_datadir}/squeak/*
+%{_datadir}/pixmaps/*
+%{_datadir}/mime/packages/*
+%{_datadir}/icons/gnome/*/mimetypes/*.png
 
 %changelog
+* Fri Aug 30 2013 Igor Vlasenko <viy@altlinux.ru> 4.10.2.2614-alt1_8
+- Sisyphus build
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 4.0.3.2202-alt2.qa1
 - NMU: rebuilt for debuginfo.
 
