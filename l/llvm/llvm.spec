@@ -1,9 +1,11 @@
 %def_disable doxygen
 %def_with ocaml
 
+%define gccbootstrap 0
+
 Name: llvm
 Version: 3.3
-Release: alt1
+Release: alt2
 Summary: The Low Level Virtual Machine
 Group: Development/C
 License: NCSA
@@ -17,8 +19,16 @@ Source3: http://llvm.org/releases/%version/clang-tools-extra-%version.src.tar.gz
 Patch1: llvm+clang-3.3-alt-add-alt-triplet.patch
 
 BuildPreReq: /proc
-BuildRequires: dejagnu gcc-c++ groff-extra groff-ps libffi-devel ocamldoc perl-devel perl-Pod-Parser python-modules zip
-BuildRequires: gcc-c++ groff-extra groff-ps libffi-devel perl-devel perl-Pod-Simple python-modules chrpath
+
+%if %gccbootstrap
+BuildRequires: gcc-c++
+%else
+BuildRequires: clang
+%endif
+
+# Automatically added by buildreq on Thu Aug 29 2013 (-ba)
+# optimized out: elfutils gnu-config groff-base libstdc++-devel llvm ocaml ocaml-runtime perl-Encode perl-Pod-Escapes perl-Pod-Simple perl-Term-ANSIColor perl-podlators python-base python-modules rpm-build-ocaml tcl
+BuildRequires: chrpath dejagnu libstdc++-devel groff-extra groff-ps libffi-devel perl-Pod-Parser perl-devel python-modules-compiler python-modules-unittest zip
 
 %if_with ocaml
 BuildRequires: ocamldoc ocaml
@@ -44,6 +54,15 @@ Requires: %name = %version-%release
 This package contains library and header files needed to develop new
 native programs that use the LLVM infrastructure.
 
+%package devel-static
+Summary: Static libraries for LLVM
+Group: Development/C
+Requires: %name-devel = %version-%release
+
+%description devel-static
+This package contains static libraries needed to develop new
+native programs that use the LLVM infrastructure.
+
 %package doc
 Summary: Documentation for LLVM
 Group: Documentation
@@ -57,6 +76,7 @@ Documentation for the LLVM compiler infrastructure.
 Summary: A C language family frontend for LLVM
 License: NCSA
 Group: Development/C
+Requires: gcc = %__gcc_version
 
 %description -n clang
 clang: noun
@@ -156,7 +176,7 @@ mv compiler-rt-%version.src projects/compiler-rt
 sed -i "s|%{version}svn|%version|g" configure
 sed -i 's|/lib /usr/lib $lt_ld_extra|%_libdir $lt_ld_extra|' configure
 
-# upstream sets DOT_PATH = /usr/bin/dot, but _PATH_ is /usr/bin
+# build sets DOT_PATH = /usr/bin/dot, but _PATH_ is /usr/bin
 find -name doxygen.cfg.in | xargs sed -i 's,\(^DOT_PATH[[:blank:]]*=\).*,\1,'
 #sed -i 's/\(OmitFramePointer := \).*/\1/' Makefile.rules
 
@@ -164,8 +184,14 @@ find -name doxygen.cfg.in | xargs sed -i 's,\(^DOT_PATH[[:blank:]]*=\).*,\1,'
 rm tools/clang/test/Driver/{android-standalone,linux-header-search,mips-cs-header-search}.cpp
 
 %build
-mkdir ./build
-cd ./build
+mkdir build
+cd build
+
+%if %gccbootstrap == 0
+CC=clang
+CXX=clang++
+export CC CXX
+%endif
 
 %define  _configure_script ../configure
 %configure \
@@ -209,12 +235,6 @@ popd
 cd build
 
 %makeinstall_std KEEP_SYMBOLS=1 VERBOSE=1 PROJ_docsdir=/moredocs
-
-# Create ld.so.conf.d entry
-mkdir -p %buildroot%_sysconfdir/ld.so.conf.d
-cat >> %buildroot%_sysconfdir/ld.so.conf.d/llvm-%_arch.conf << EOF
-%_libdir/llvm
-EOF
 
 # Static analyzer not installed by default:
 # http://clang-analyzer.llvm.org/installation#OtherPlatforms
@@ -267,7 +287,6 @@ ln -s LLVM-Config.cmake %buildroot%_datadir/CMake/Modules/LLVMConfig.cmake
 
 %files
 %doc CREDITS.TXT LICENSE.TXT README.txt build/llvm-testlog.txt
-%config(noreplace) %_sysconfdir/ld.so.conf.d/llvm-%_arch.conf
 %_bindir/bugpoint
 %_bindir/llc
 %_bindir/lli
@@ -284,8 +303,10 @@ ln -s LLVM-Config.cmake %buildroot%_datadir/CMake/Modules/LLVMConfig.cmake
 %_bindir/llvm-config
 %_includedir/llvm
 %_includedir/llvm-c
-%_libdir/*.a
 %_datadir/CMake/Modules
+
+%files devel-static
+%_libdir/*.a
 
 %files -n clang
 %doc build/clang-docs/* build/tools/clang/clang-testlog.txt
@@ -335,6 +356,13 @@ ln -s LLVM-Config.cmake %buildroot%_datadir/CMake/Modules/LLVMConfig.cmake
 %endif
 
 %changelog
+* Fri Aug 30 2013 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.3-alt2
+- build with clang
+- clang: add versioned R: gcc
+- llvm:
+ + drop ld.so.conf file
+ + package static libraries in devel-static subpackage
+
 * Mon Aug 19 2013 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.3-alt1
 - New version
 
