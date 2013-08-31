@@ -1,6 +1,6 @@
 Name: partclone
 Version: 0.2.58
-Release: alt2
+Release: alt3
 
 Summary: File System Clone Utilities
 License: GPLv2+
@@ -58,6 +58,9 @@ subst 's/ fail-mbr//g' Makefile.in Makefile.am
 %_man8dir/*
 
 %changelog
+* Sat Aug 31 2013 Led <led@altlinux.ru> 0.2.58-alt3
+- rebuild with libreiser4 1.0.8 (libreiser4-1.0.so.8)
+
 * Fri Apr 12 2013 Andrey Cherepanov <cas@altlinux.org> 0.2.58-alt2
 - Enable XFS support
 

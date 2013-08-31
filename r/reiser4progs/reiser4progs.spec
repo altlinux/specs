@@ -1,22 +1,21 @@
 %def_enable minimal
 
 Name: reiser4progs
-Version: 1.0.7
-Release: alt2.1
-
+Version: 1.0.8
+Release: alt1
 Summary: Utilities for reiser4 filesystems
 License: GPLv2
 Group: System/Kernel and hardware
-
-URL: http://www.kernel.org/pub/linux/utils/fs/reiser4/
-Source0: http://www.kernel.org/pub/linux/utils/fs/reiser4/reiser4progs/reiser4progs-%version.tar.bz2
+URL: http://reiser4.sourceforge.net/
+Source: %name-%version.tar
+Patch: %name-1.0.7-format.patch
 
 # Automatically added by buildreq on Wed Mar 17 2010
-BuildRequires: glibc-devel-static libaal-minimal-devel libncurses-devel libreadline-devel libuuid-devel
-# One of rare cases when glibc-devel-static really needed for build :)
+BuildRequires: libaal-devel-static libaal-minimal-devel libncurses-devel libreadline-devel libuuid-devel
 
 %description
 Utilities for manipulating reiser4 filesystems.
+
 
 %package -n libreiser4
 Summary: Libraries for use by reiser4 tools
@@ -25,21 +24,24 @@ Group: Development/C
 %description -n libreiser4
 Libraries for use by reiser4 tools.
 
+
 %package -n libreiser4-devel
-Summary: Development libraries and headers for developing reiser4 tools.
+Summary: Development libraries and headers for developing reiser4 tools
 Group: Development/C
 Requires: libreiser4 = %version-%release, libaal-devel
 
 %description -n libreiser4-devel
 Development libraries and headers for developing reiser4 tools.
 
+
 %package -n libreiser4-devel-static
-Summary: Static libraries for developing reiser4 tools.
+Summary: Static libraries for developing reiser4 tools
 Group: Development/C
 Requires: libreiser4-devel = %version-%release
 
 %description -n libreiser4-devel-static
 Static libraries for developing reiser4 tools.
+
 
 %package -n libreiser4-minimal
 Summary: Minimal utilities for reiser4 filesystem
@@ -49,27 +51,35 @@ Requires: libaal-minimal, libreiser4 = %version-%release
 %description -n libreiser4-minimal
 Development libraries and headers for developing minimal reiser4 tools.
 
+
 %package -n libreiser4-minimal-devel
-Summary: Development libraries and headers for developing minimal reiser4 tools.
+Summary: Development libraries and headers for developing minimal reiser4 tools
 Group: Development/C
 Requires: libreiser4-minimal = %version-%release, libaal-minimal-devel, libreiser4-devel = %version-%release
 
 %description -n libreiser4-minimal-devel
 Development libraries and headers for developing minimal reiser4 tools.
 
+
 %package -n libreiser4-minimal-devel-static
-Summary: Static libraries for developing minimal reiser4 tools.
+Summary: Static libraries for developing minimal reiser4 tools
 Group: Development/C
 Requires: libreiser4-minimal-devel = %version-%release, libaal-minimal-devel, libreiser4-devel = %version-%release
 
 %description -n libreiser4-minimal-devel-static
 Static libraries for developing minimal reiser4 tools.
 
+
 %prep
-%setup -n %name-%version
+%setup
+%patch -p1
+sed -i -r '/^[[:blank:]]+\.\/run-ldconfig/d' Makefile.{am,in}
+
 
 %build
-%configure --with-readline \
+%configure \
+	--sbindir=/sbin \
+	--libdir=/%_lib \
 %if_enabled minimal
 	--enable-libminimal \
 	--disable-fnv1-hash \
@@ -80,43 +90,39 @@ Static libraries for developing minimal reiser4 tools.
 	--disable-special \
 	--disable-dot_o_fibre \
 	--disable-ext_3_fibre \
-	--disable-lexic_fibre
+	--disable-lexic_fibre \
 %endif
+	--with-readline
 
 # Hackish way to fix underlinking in 1.0.7:
 subst 's@LDFLAGS =@LDFLAGS = ../libmisc/.libs/libmisc.a -luuid@' libreiser4/Makefile
-sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' libtool
 
 # We need these to be built before build in libreiser4 directory:
-make -C libaux
-make -C libmisc
+for d in lib{aux,misc}; do
+	%make_build -C $d
+done
 %make_build
 
+
 %install
-mkdir -p %buildroot/{%_lib,sbin}
+install -d -m 0755 %buildroot/%_libdir
 %makeinstall_std
-# Relocate shared libraries from %_libdir/ to /%_lib/.
-for f in %buildroot%_libdir/*.so; do
-        v="%buildroot%_libdir/$(readlink -n "$f")"
-        t=`objdump -p "$v" |awk '/SONAME/ {print $2}'`
-        [ -n "$t" ]
-        ln -s -nf ../../%_lib/"$t" "$f"
+for f in %buildroot/%_lib/*.so; do
+	v=$(objdump -p "$f" | sed -n '/^[[:blank:]]*SONAME[[:blank:]]/s/^.*[[:blank:]]\(lib.*$\)/\1/p')
+	[ -n "$v" ] && ln -sf /%_lib/"$v" "$f"
 done
-mv %buildroot%_libdir/*.so.* %buildroot/%_lib/
-mv %buildroot%_sbindir/*reiser4 %buildroot/sbin/
-ln -sf make_reiser4 %buildroot/sbin/mkfs.reiser4
+mv %buildroot{/%_lib/*.{so,a},%_libdir/}
+
 
 %files
-/sbin/debugfs.reiser4
-/sbin/fsck.reiser4
-/sbin/make_reiser4
-/sbin/measurefs.reiser4
-/sbin/mkfs.reiser4
+/sbin/*
 %_man8dir/*
+
 
 %files -n libreiser4
 /%_lib/libreiser4-1.0.so.*
 /%_lib/librepair-1.0.so.*
+
 
 %files -n libreiser4-devel
 %_includedir/reiser4
@@ -125,20 +131,33 @@ ln -sf make_reiser4 %buildroot/sbin/mkfs.reiser4
 %_libdir/libreiser4.so
 %_libdir/librepair.so
 
+
 %files -n libreiser4-devel-static
 %_libdir/libreiser4.a
 %_libdir/librepair*.a
 
+
 %if_enabled minimal
 %files -n libreiser4-minimal
 /%_lib/libreiser4-minimal-1.0.so.*
+
+
 %files -n libreiser4-minimal-devel
 %_libdir/libreiser4-minimal.so
+
+
 %files -n libreiser4-minimal-devel-static
 %_libdir/libreiser4-minimal.*a
 %endif
 
+
 %changelog
+* Sat Aug 31 2013 Led <led@altlinux.ru> 1.0.8-alt1
+- 1.0.8
+- fixed format string using
+- cleaned up spec
+- fixed URL
+
 * Tue Feb 07 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.7-alt2.1
 - Removed bad RPATH
 
