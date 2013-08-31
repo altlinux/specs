@@ -1,101 +1,147 @@
-%def_enable minimal
+%def_enable shared
+%def_enable static
+%def_enable Werror
+%def_disable debug
+%def_enable libminimal
+%def_disable memory_manager
+%def_enable largefile
 
-Name: libaal
+%define bname aal
+Name: lib%bname
 Version: 1.0.5
-Release: alt3.1.qa1
-
-Packager: Victor Forsiuk <force@altlinux.org>
-
+Release: alt4
 Summary: Abstraction library for ReiserFS utilities
 License: GPLv2
-Group: System/Kernel and hardware
-
-URL: http://www.kernel.org/pub/linux/utils/fs/reiser4/
-Source0: http://www.kernel.org/pub/linux/utils/fs/reiser4/libaal/libaal-%version.tar.bz2
-
-# c++ not needed for compilation but configure insist on its presence :)
-# Automatically added by buildreq on Tue Mar 16 2010
-BuildRequires: gcc-c++
+Group: System/Libraries
+URL: http://reiser4.sourceforge.net/
+Source: %name-%version.tar
+Patch: %name-%version-alt.patch
 
 %description
 This is a library that provides application abstraction mechanism.
 It include device abstraction, libc independence code, etc.
 
+
 %package devel
-Summary: Headers and static libraries for developing with libaal.
+Summary: Headers and libraries for developing with %name
 Group: Development/C
-Requires: libaal = %version-%release
+Requires: %name%{?_disable_shared:-devel-static} = %version-%release
 
 %description devel
-This package includes the headers and static libraries for developing
-with the libaal library.
+This package includes headers and libraries for developing with the
+%name library.
 
-%if_enabled minimal
+
+%package devel-static
+Summary: Static libraries for developing with %name
+Group: Development/C
+Requires: %name-devel = %version-%release
+
+%description devel-static
+This package includes static libraries for developing with the %name
+library.
+
+
+%if_enabled libminimal
+%if_enabled shared
 %package minimal
 Summary: Minimal abstraction library for ReiserFS utilities
-Group: System/Kernel and hardware
+Group: System/Libraries
 
 %description minimal
-This is a minimal library that provides application abstraction mechanism.
-It include device abstraction, libc independence code, etc.
+This is a minimal library that provides application abstraction
+mechanism. It include device abstraction, libc independence code, etc.
+%endif
+
 
 %package minimal-devel
-Summary: Headers and static libraries for developing with libaal.
+Summary: Headers and libraries for developing with %name-minimal
 Group: Development/C
-Requires: libaal-minimal = %version-%release libaal-devel = %version-%release
+Requires: %name-minimal = %version-%release
+Requires: %name-devel = %version-%release
+Provides: %name-minimal-devel-static = %version-%release
 
 %description minimal-devel
-This package includes the headers and static libraries for developing
-with the minimal libaal library.
+This package includes the headers and libraries for developing with the
+%name-minimal library.
 %endif
+
 
 %prep
 %setup
+%patch -p1
+sed -i -r '/^[[:blank:]]+\.\/run-ldconfig/d' Makefile.am
+
 
 %build
-%configure --libdir=/%_lib \
-%if_enabled minimal
-	--enable-libminimal
-%else
-	--disable-libminimal --disable-memory-manager
-%endif
+%autoreconf
+%configure \
+	--libdir=/%_lib \
+	%{subst_enable shared} \
+	%{subst_enable static} \
+	%{subst_enable debug} \
+	%{subst_enable Werror} \
+	%{subst_enable largefile} \
+	%{subst_enable libminimal} \
+	%{subst_enable_to memory_manager memory-manager}
 
 %make_build
+
 
 %install
 %makeinstall_std
 
-# Static libraries and library symlinks not needed to be in %_lib/
-# Relocate them to %_libdir/.
-install -d %buildroot%_libdir
+# Static libraries and library symlinks not needed to be in %_lib/, relocate them to %_libdir/
+install -d  -m 0755 %buildroot{%_libdir,%_docdir/%name-%version}
 for f in %buildroot/%_lib/*.so; do
-        v="$(readlink -n "$f")"
-        ln -sf ../../%_lib/"$v" "$f"
+	ln -sf /%_lib/$(readlink -n "$f") "$f"
 done
-mv %buildroot/%_lib/*.a %buildroot%_libdir/
-mv %buildroot/%_lib/*.so %buildroot%_libdir/
+mv %buildroot/%_lib/*.{a,so} %buildroot%_libdir/
 
+install -m 0644 AUTHORS COPYING CREDITS ChangeLog THANKS %buildroot%_docdir/%name-%version/
+
+
+%if_enabled shared
 %files
-# COPYING contains information other than GPL text, so it should be packaged
-%doc COPYING
-/%_lib/libaal-1.0.so*
-
-%files devel
-%_libdir/libaal.so*
-%_libdir/libaal.*a
-%_includedir/aal
-%_datadir/aclocal/libaal.m4
-
-%if_enabled minimal
-%files minimal
-/%_lib/libaal-minimal.so.*
-
-%files minimal-devel
-%_libdir/libaal-minimal.so
-%_libdir/libaal-minimal.*a
+%doc %_docdir/%name-%version
+/%_lib/%name-1.0.so.*
 %endif
 
+
+%files devel
+%{?_disable_shared:%doc %_docdir/%name-%version}
+%{?_enable_shared:%_libdir/%name.so}
+%_includedir/%bname
+%_datadir/aclocal/*
+
+
+%if_enabled static
+%files devel-static
+%_libdir/%name.a
+%endif
+
+
+%if_enabled libminimal
+%if_enabled shared
+%files minimal
+/%_lib/%name-minimal.so.*
+%endif
+
+
+%files minimal-devel
+%_libdir/%name-minimal.*
+%endif
+
+
 %changelog
+* Sat Aug 31 2013 Led <led@altlinux.ru> 1.0.5-alt4
+- cleaned up code
+- cleaned up spec
+- cleaned up BuildRequires
+- fixed Group
+- fixed URL
+- added docs
+
 * Sun Apr 14 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.0.5-alt3.1.qa1
 - NMU: rebuilt for debuginfo.
 
