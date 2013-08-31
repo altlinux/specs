@@ -1,8 +1,8 @@
 Name: paexec
-Version: 0.18.0
-Release: alt1
+Version: 0.19.1
+Release: alt2
 
-Summary: Distribute performing the given tasks across several CPUs or machines in a network
+Summary: paexec distributes tasks over network or CPUs
 License: MIT
 Group: Networking/Other
 
@@ -11,15 +11,18 @@ Source: %name-%version.tar.gz
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 BuildRequires: %_bindir/pod2man %_bindir/pod2html
-BuildRequires: pkgsrc-mk-files bmake groff-base libmaa-devel
-BuildRequires: mk-configure runawk
+BuildRequires: pkgsrc-mk-files bmake groff-base
+BuildRequires: mk-configure >= 0.24.0
+BuildRequires: runawk
+
+Requires: runawk
 
 %description
 Small program that processes a list of tasks in parallel
 on different CPUs, computers in a network or whatever else.
 
 %package examples
-Summary: Examples for PAEXEC
+Summary: Examples for paexec
 Group: Documentation
 BuildArch: noarch
 Requires: %name = %version-%release
@@ -54,7 +57,7 @@ export DESTDIR=%buildroot
 mkcmake install
 
 %files
-%doc doc/*
+%doc doc/NEWS doc/README doc/COPYRIGHT doc/TODO presentation/paexec.pdf
 %_bindir/*
 %_man1dir/*
 
@@ -65,6 +68,12 @@ mkcmake install
 # - investigate and re-enable tests
 
 %changelog
+* Sat Aug 31 2013 Michael Shigorin <mike@altlinux.org> 0.19.1-alt2
+- rebuilt for Sisyphus (thanks upstream; closes: #29308)
+
+* Sat Aug 31 2013 Aleksey Cheusov <vle@gmx.net> 0.19.1-alt1
+- 0.19.1
+
 * Sun Mar 10 2013 Michael Shigorin <mike@altlinux.org> 0.18.0-alt1
 - 0.18.0
 
