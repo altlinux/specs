@@ -1,4 +1,4 @@
-%define svn_revision 397886
+%define svn_revision 397886.1
 Name: asterisk12
 Summary: Open source PBX
 Version: 12
@@ -55,7 +55,7 @@ BuildPreReq: dahdi-linux-headers
 BuildPreReq: libpri-devel
 BuildRequires: libmISDN-devel
 BuildPreReq: libspeex-devel
-BuildRequires: libcorosync-devel
+BuildRequires: libcorosync2-devel
 BuildRequires: libcurl-devel
 BuildPreReq: libspandsp6-devel
 BuildRequires: libexpat-devel
@@ -66,7 +66,7 @@ BuildPreReq: libunixODBC-devel libltdl-devel
 BuildPreReq: liblua5-devel
 BuildPreReq: postgresql-devel libpq-devel
 BuildPreReq: librpm-devel libnet-snmp-devel libwrap-devel perl-devel
-%define svn_revision 397886
+%define svn_revision 397886.1
 %add_verify_elf_skiplist %_libdir/libasteriskssl12.so.1
 %def_with debug
 %def_enable debug
@@ -712,6 +712,7 @@ ln -sf libasteriskssl12.so.1 %buildroot%_libdir/libasteriskssl12.so
 %dir /usr/share/asterisk/documentation/12
 /usr/share/asterisk/documentation/12/appdocsxml.dtd
 /usr/share/asterisk/documentation/12/core-en_US.xml
+/usr/share/asterisk/documentation/12/snapshots.xslt
 %exclude /var/lib/asterisk/images/asterisk-intro.jpg
 %exclude /var/lib/asterisk/images/kpad2.jpg
 %exclude %_docdir/%name-%version/core-en_US.xml
@@ -981,6 +982,11 @@ ln -sf libasteriskssl12.so.1 %buildroot%_libdir/libasteriskssl12.so
 %astmodule bridge_native_rtp
 %astmodule res_parking
 %astsample res_parking
+%astmodule res_format_attr_opus
+%if_without corosync
+%exclude %astsample res_corosync
+%endif
+%_docdir/%name-%version/snapshots.xslt
 
 %files -n aelparse12
 %_sbindir/aelparse-%version
@@ -1270,6 +1276,9 @@ ln -sf libasteriskssl12.so.1 %buildroot%_libdir/libasteriskssl12.so
 %_libdir/libasteriskssl12.so.1
 
 %changelog
+* Sat Aug 31 2013 Denis Smirnov <mithraen@altlinux.ru> 12-alt0.397886.1
+- add res_format_attr_opus
+
 * Thu Aug 29 2013 Denis Smirnov <mithraen@altlinux.ru> 12-alt0.397886
 - update from svn revision 397886
 - add snapshots.xslt
