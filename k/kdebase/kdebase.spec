@@ -35,7 +35,7 @@
 %define bugfix 13.2
 Name: kdebase
 Version: %major.%minor.%bugfix
-Release: alt4
+Release: alt5
 %define reqver %major.%minor
 
 Summary: Trinity Desktop Environment - Core files
@@ -80,6 +80,7 @@ Source4000: kdebase-3.0-mailsettings.cc
 
 # ALT
 Source5002: kdebase-3.0-kscreensaver.pamd
+Source5003: polkit-gnome-authentication-agent-1-tde.desktop
 
 ###             ###
 ### Patch party ###
@@ -229,6 +230,7 @@ Patch1081: kdebase-3.5.13-alt-mediamanager-crash.patch
 Patch1082: tdebase-3.5.13-work-defdir.patch
 Patch1083: kdm-3.5.13-KsplashBlack.patch
 Patch1084: kdebase-3.5.13.2-desktop-translate.patch
+Patch1085: kdebase-3.5.13.2-kicker-systemtray-gtk3-size.patch
 
 # Sergey A. Sukiyazov <corwin@micom.don.ru>
 Patch2000: kdebase-3.5.0-man_recode.patch
@@ -648,6 +650,7 @@ Menu resources for the original KDE menu.
 %patch1082 -p1
 %patch1083 -p1
 %patch1084 -p1
+%patch1085 -p1
 
 # Sergey A. Sukiyazov <corwin@micom.don.ru>
 ###%patch2000 -p1
@@ -661,6 +664,7 @@ Menu resources for the original KDE menu.
 
 # add missing icons for package_games_kids
 install -m 0644 %SOURCE5 %SOURCE6 %SOURCE7 pics/crystalsvg/
+
 
 # remove to regenerate
 rm -f kioslave/nfs/*_xdr.c
@@ -799,6 +803,7 @@ install -m 0644 %SOURCE13 %buildroot/%_sysconfdir/pam.d/kde-np
 # Install kscreensaver pam configuration file
 install -m 0644 %SOURCE5002 %buildroot/%_sysconfdir/pam.d/kscreensaver
 
+
 # Install ksysguardd initscript
 install -d -m 0755 %buildroot/%_sysconfdir/rc.d/init.d/
 install -m 0755 %SOURCE2 %buildroot/%_sysconfdir/rc.d/init.d/ksysguardd
@@ -811,6 +816,7 @@ install -m644 %SOURCE2001 %buildroot/%_K3apps/konqueror/servicemenus/convertpdft
 install -m644 %SOURCE2002 %buildroot/%_K3apps/konqueror/servicemenus/convertpstopdf.desktop
 # Autostart menu
 install -m644 %SOURCE2003 %buildroot/%_K3xdg_apps/Autostart.desktop
+
 
 # Add chksession support
 install -d -m 0755 %buildroot/%x11confdir/wmsession.d/
@@ -1024,6 +1030,8 @@ cp -ar altlinux/set/* %buildroot/%_Kconfig
 install -dm 0755 %buildroot/%_K3cfg
 cp -ar altlinux/kcfg/* %buildroot/%_K3cfg
 
+install -Dm0644 %SOURCE5003 %buildroot/%_xdgconfigdir/autostart/polkit-gnome-authentication-agent-1-tde.desktop
+
 %post kdm
 if [ -d %_localstatedir/kdm/faces -a -f %_datadir/design/current/faces/default.png -a ! -e %_localstatedir/kdm/faces/.default.face.icon ]
 then
@@ -1045,6 +1053,7 @@ fi
 %config(noreplace) %_sysconfdir/pam.d/kde-np
 %config %_sysconfdir/ksysguarddrc
 %config %_K3conf/*
+%config(noreplace) %_xdgconfigdir/autostart/*.desktop
 %_datadir/kde/*bookmarks*
 %_bindir/kde3
 %_bindir/trinity
@@ -1972,6 +1981,12 @@ test ! -L %x11confdir/kdm && rm -rf %x11confdir/kdm ||:
 
 
 %changelog
+* Sat Aug 31 2013 Roman Savochenko <rom_as@altlinux.ru> 3.5.13.2-alt5
+- Kicker:systemtray: icon resize event force send on embeding,
+  mostly for GTK3 applications prevent the icon default size 4x4.
+- polkit-gnome-authentication-agent-1-tde.desktop is added to /etc/xdg/autostart
+  for polkit-gnome-authentication-agent-1 start for nm-applet auth allow.
+
 * Fri Aug 09 2013 Roman Savochenko <rom_as@altlinux.ru> 3.5.13.2-alt4
 - Default kcmartsrc is fixed for correct to initial play options by artsd.
 
