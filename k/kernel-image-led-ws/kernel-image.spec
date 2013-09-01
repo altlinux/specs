@@ -20,7 +20,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.4.60
-Release: alt2
+Release: alt3
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -2894,6 +2894,10 @@ done)
 
 
 %changelog
+* Sun Sep 01 2013 Led <led@altlinux.ru> 3.4.60-alt3
+- updated:
+  + feat-net--netatop
+
 * Fri Aug 30 2013 Led <led@altlinux.ru> 3.4.60-alt2
 - added:
   + fix-drivers-net--vmxnet3
