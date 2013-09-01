@@ -10,7 +10,7 @@
 %def_enable libgnomekbd
 
 Name: ibus
-Version: 1.5.2
+Version: 1.5.3
 Release: alt1
 
 Summary: Intelligent Input Bus for Linux OS
@@ -20,7 +20,7 @@ Url: http://code.google.com/p/%name/
 
 Source: http://%name.googlecode.com/files/%name-%version.tar.gz
 Source1: ibus-xinput
-Patch: ibus-1.5.2-up.patch
+
 # fedora's patches
 Patch1: ibus-810211-no-switch-by-no-trigger.patch
 Patch2: ibus-541492-xkb.patch
@@ -42,7 +42,7 @@ BuildRequires: python-modules-compiler
 BuildRequires: rpm-build-python
 BuildPreReq: libgtk+2-devel
 BuildPreReq: libgtk+3-devel
-BuildRequires: libdbus-glib-devel
+BuildRequires: libdbus-devel
 BuildRequires: python-module-dbus-devel
 BuildRequires: desktop-file-utils
 BuildRequires: gtk-doc
@@ -52,6 +52,7 @@ BuildRequires: iso-codes-devel
 BuildRequires: gobject-introspection-devel
 BuildRequires: gnome-icon-theme-symbolic
 BuildRequires: libXi-devel
+BuildRequires: libnotify-devel
 %{?_enable_python:BuildRequires: rpm-build-python python-module-pygobject-devel}
 %{?_enable_gconf:BuildRequires: libGConf-devel}
 # required if autoreconf used
@@ -141,7 +142,6 @@ This package contains IBus im module for python.
 
 %prep
 %setup
-%patch -p1 -b .up
 %patch1 -p1 -b .noswitch
 
 %if_enabled xkb
@@ -177,13 +177,10 @@ rm -f data/dconf/00-upstream-settings
 # install xinput config file
 install -pm 644 -D %SOURCE1 %buildroot%_xinputconf
 
-# install .desktop files
-mkdir -p %buildroot%_sysconfdir/xdg/autostart/
-install -m 644 bus/ibus.desktop %buildroot%_sysconfdir/xdg/autostart/
-
 %find_lang %{name}10
 
 %check
+# FAIL: test-stress
 #%%make check
 
 %if_enabled gconf
@@ -206,9 +203,7 @@ fi
 %_iconsdir/hicolor/*/apps/*
 %_libexecdir/ibus-ui-gtk3
 %_libexecdir/ibus-x11
-#%{?_enable_xkb:%_libexecdir/ibus-xkb}
 %_libexecdir/%name-engine-simple
-%_sysconfdir/xdg/autostart/ibus.desktop
 
 %if_enabled gconf
 %_libexecdir/ibus-gconf
@@ -225,6 +220,9 @@ fi
 %endif
 
 %config %_xinputconf
+%_man1dir/%name-daemon.1.*
+%_man1dir/%name-setup.1.*
+%_man1dir/%name.1.*
 %doc AUTHORS README
 
 %exclude %_datadir/bash-completion/completions/ibus.bash
@@ -261,6 +259,10 @@ fi
 %_datadir/gtk-doc/html/*
 
 %changelog
+* Mon Sep 02 2013 Yuri N. Sedunov <aris@altlinux.org> 1.5.3-alt1
+- 1.5.3
+- updated fc patchset
+
 * Sun May 12 2013 Yuri N. Sedunov <aris@altlinux.org> 1.5.2-alt1
 - 1.5.2
 - updated fc patchset
