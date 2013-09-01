@@ -2,8 +2,8 @@
 %define rname lcms2
 
 Name: lib%rname
-Version: 2.2
-Release: alt1.2
+Version: 2.5
+Release: alt1
 
 Summary: Little cms color engine, version 2
 License: %mit
@@ -13,7 +13,7 @@ Url: http://www.littlecms.com
 Packager: Yuriy Al. Shirokov <yushi@altlinux.org>
 
 Source: %rname-%version.tar
-Patch: liblcms2-2.2-alt-DSO.patch
+Patch: %rname-2.5-alt-link.patch
 
 BuildRequires(pre): rpm-build-licenses
 # Automatically added by buildreq on Sat Nov 06 2010
@@ -63,30 +63,30 @@ This package contains various %name-based utilities
 
 %prep
 %setup -n %rname-%version
-%patch -p2
-find . -type f -exec chmod -x {} ';'
-chmod a+x ./configure
-%autoreconf
+%patch
 
 %build
-%configure %{subst_enable static}
+%autoreconf
+%configure \
+	%{subst_enable static} \
+	--program-suffix=2
 %make_build
 
 %install
 %makeinstall_std
 
 %files
-%doc AUTHORS NEWS README* COPYING
 %_libdir/*.so.*
+%doc AUTHORS README* COPYING
 
 %files -n lcms2-utils
 %_bindir/*
 %_man1dir/*
 
 %files devel
+%_includedir/*
 %_libdir/*.so
 %_libdir/pkgconfig/*
-%_includedir/*
 
 %if_enabled static
 %files devel-static
@@ -94,6 +94,12 @@ chmod a+x ./configure
 %endif
 
 %changelog
+* Sun Sep 01 2013 Yuri N. Sedunov <aris@altlinux.org> 2.5-alt1
+- 2.5 release
+
+* Tue Jun 04 2013 Yuri N. Sedunov <aris@altlinux.org> 2.5rc1-alt0.1
+- 2.5rc1
+
 * Thu Oct 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.2-alt1.2
 - Rebuilt with libtiff5
 
