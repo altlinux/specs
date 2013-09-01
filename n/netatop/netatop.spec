@@ -1,5 +1,5 @@
 Name: netatop
-Version: 0.2
+Version: 0.3
 Release: alt1
 Summary: Daemon fo gather statistics about the TCP and UDP packets
 License: GPLv2
@@ -80,6 +80,9 @@ tar --transform='s,^module,%name-%version,' -cJhf %kernel_srcdir/%name-%version.
 
 
 %changelog
+* Sun Sep 01 2013 Led <led@altlinux.ru> 0.3-alt1
+- 0.3
+
 * Wed Apr 17 2013 Led <led@altlinux.ru> 0.2-alt1
 - 0.2
 
