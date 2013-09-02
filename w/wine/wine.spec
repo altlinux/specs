@@ -12,7 +12,7 @@
 %define debug %nil
 
 Name: wine
-Version: 1.6.0
+Version: 1.7.0
 Release: alt1
 Epoch: 1
 
@@ -423,6 +423,9 @@ rm -rf %buildroot%_mandir/*.UTF-8
 
 
 %changelog
+* Mon Sep 02 2013 Vitaly Lipatov <lav@altlinux.ru> 1:1.7.0-alt1
+- release 1.7.0
+
 * Fri Aug 02 2013 Vitaly Lipatov <lav@altlinux.ru> 1:1.6.0-alt1
 - release 1.6
 - update winetricks to 20130707
