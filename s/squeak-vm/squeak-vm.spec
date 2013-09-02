@@ -13,7 +13,7 @@ BuildRequires: gcc-c++
 
 Name:           squeak-vm
 Version:        %{vmver}
-Release:        alt1_8
+Release:        alt2_8
 Summary:        The Squeak virtual machine
 
 Group:          Development/Other
@@ -91,6 +91,7 @@ rm -f %{buildroot}%{_bindir}/squeak.sh
 
 # Install own version of inisqueak
 install -m0755 %{SOURCE1} %{buildroot}%{_bindir}/inisqueak
+ln -s %{vmver2} %buildroot%_libdir/squeak/current
 
 %files
 %doc unix/ChangeLog unix/doc/{README*,LICENSE,*RELEASE_NOTES}
@@ -150,8 +151,12 @@ install -m0755 %{SOURCE1} %{buildroot}%{_bindir}/inisqueak
 %{_datadir}/pixmaps/*
 %{_datadir}/mime/packages/*
 %{_datadir}/icons/gnome/*/mimetypes/*.png
+%_libdir/squeak/current
 
 %changelog
+* Mon Sep 02 2013 Igor Vlasenko <viy@altlinux.ru> 4.10.2.2614-alt2_8
+- added symlink _libdir/squeak/current
+
 * Fri Aug 30 2013 Igor Vlasenko <viy@altlinux.ru> 4.10.2.2614-alt1_8
 - Sisyphus build
 
