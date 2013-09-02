@@ -1,12 +1,12 @@
 Name: gcovr
 Version: 2.4
-Release: alt1
+Release: alt2
 
 Summary: Manages the compilation of coverage information from gcov
 License: BSD
 Group: Development/Tools
 
-Url: https://software.sandia.gov/svn/public/fast/gcovr
+Url: https://pypi.python.org/pypi/gcovr
 
 Packager: Igor Zubkov <icesik@altlinux.org>
 
@@ -38,6 +38,9 @@ the lcov utility, which runs gcov and generates an HTML output.
 %python_sitelibdir/*.egg-info/
 
 %changelog
+* Mon Sep 02 2013 Igor Zubkov <icesik@altlinux.org> 2.4-alt2
+- Update Url
+
 * Wed Aug 28 2013 Igor Zubkov <icesik@altlinux.org> 2.4-alt1
 - build for Sisyphus
 
