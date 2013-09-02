@@ -13,7 +13,7 @@
 %define nv_version 173
 %define nv_release 14
 %define nv_minor 37
-%define pkg_rel alt66
+%define pkg_rel alt67
 %def_enable kernelsource
 
 %define tbver %{nv_version}.%{nv_release}.%{nv_minor}
@@ -74,6 +74,9 @@ Source202: ftp://download.nvidia.com/XFree86/Linux-x86_64/%tbver/NVIDIA-Linux-x8
 
 Source2: nvidia.xinf
 Source100: nvidia_create_xinf
+
+Patch1: fix-build-with-linux-3.10.patch
+Patch2: fix-build-with-linux-3.11.patch
 
 BuildRequires: kernel-build-tools libsysfs-devel
 ExclusiveArch: %ix86 x86_64
@@ -184,6 +187,8 @@ cd %tbname-%tbver-%tbsuffix
 
 pushd usr/src/nv/
 rm -rf precompiled
+%patch1 -p1
+%patch2 -p1
 popd
 
 
@@ -403,6 +408,9 @@ fi
 %endif
 
 %changelog
+* Mon Sep 02 2013 Sergey V Turchin <zerg@altlinux.org> 173.14.37-alt67
+- add Ubuntu patches against 3.10 and 3.11 kernels
+
 * Mon Mar 11 2013 Sergey V Turchin <zerg@altlinux.org> 173.14.37-alt66
 - new release 173.14.37
 
