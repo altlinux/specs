@@ -1,7 +1,7 @@
 %define MAJOR_VERSION     3
 %define MINOR_VERSION     20
-%define BUILD_NUMBER      11
-%define PATCH_LEVEL       2
+%define BUILD_NUMBER      17
+%define PATCH_LEVEL       4
 %define soversion %MAJOR_VERSION.%MINOR_VERSION
 %define libname libv8
 
@@ -80,6 +80,12 @@ install -p -m644 include/*.h %buildroot%_includedir/
 %_bindir/*
 
 %changelog
+* Mon Sep 02 2013 Dmitriy Kulik <lnkvisitor@altlinux.org> 3.20.17.4-alt1
+- new version
+
+* Tue Aug 06 2013 Dmitriy Kulik <lnkvisitor@altlinux.org> 3.20.12.1-alt1
+- new version
+
 * Thu Aug 01 2013 Dmitriy Kulik <lnkvisitor@altlinux.org> 3.20.11.2-alt1
 - new version
 
