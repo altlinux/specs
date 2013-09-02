@@ -2,8 +2,8 @@
 BuildRequires: perl(RPM/Header.pm) perl(Source/Repository/Mass/ALTLinuxBackport.pm) perl-devel perl-ALTLinux-ACL
 # END SourceDeps(oneline)
 Name: autorepo-scripts
-Version: 0.30
-Release: alt3
+Version: 0.31
+Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
 
@@ -78,6 +78,9 @@ install -m 755 *.template %buildroot%_datadir/%name/templates/
 %_bindir/autorepo-altnode-misc-statistics-wrapper
 
 %changelog
+* Mon Sep 02 2013 Igor Vlasenko <viy@altlinux.ru> 0.31-alt1
+- local build support 
+
 * Sat Aug 31 2013 Igor Vlasenko <viy@altlinux.ru> 0.30-alt3
 - cpanbuilder support
 
