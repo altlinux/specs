@@ -4,7 +4,7 @@
 %def_disable static
 
 Name: %_name%api_ver
-Version: %ver_major.7
+Version: %ver_major.8
 Release: alt1
 
 Summary: a collection library providing GObject-based interfaces
@@ -111,6 +111,9 @@ echo "See changes in the GIT tree" > ChangeLog
 %endif
 
 %changelog
+* Tue Sep 03 2013 Yuri N. Sedunov <aris@altlinux.org> 0.8.8-alt1
+- 0.8.8
+
 * Sat Jul 13 2013 Yuri N. Sedunov <aris@altlinux.org> 0.8.7-alt1
 - 0.8.7
 
