@@ -5,7 +5,7 @@
 
 Name: gnustep-%oname
 Version: 1.7.0
-Release: alt4.git20130424
+Release: alt5.git20130424
 Summary: GNUstep Objective-C Runtime
 License: BSD
 Group: Development/Objective-C
@@ -102,9 +102,9 @@ cmake \
 	-DCMAKE_C_FLAGS:STRING="%optflags" \
 	-DCMAKE_CXX_FLAGS:STRING="%optflags" \
 	-DCMAKE_ASM_FLAGS:STRING="%optflags" \
-	-DCMAKE_ASM_COMPILER:FILEPATH='%_bindir/gcc' \
-	-DCMAKE_C_COMPILER:FILEPATH='%_bindir/gcc' \
-	-DCMAKE_CXX_COMPILER:FILEPATH='%_bindir/g++' \
+	-DCMAKE_ASM_COMPILER:FILEPATH='%_bindir/clang' \
+	-DCMAKE_C_COMPILER:FILEPATH='%_bindir/clang' \
+	-DCMAKE_CXX_COMPILER:FILEPATH='%_bindir/clang++' \
 	-DLLVM_DIR:PATH='%_datadir/CMake/Modules' \
 	-DCMAKE_STRIP:FILEPATH='/bin/echo' \
 	-DCPACK_STRIP_FILES:BOOL=OFF \
@@ -164,6 +164,14 @@ install -p -m644 class.h visibility.h method_list.h \
 %_libdir/libGNUObjCRuntime.so
 
 %changelog
+* Mon Sep  02 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.7.0-alt5.git20130424
+- fix build with llvm 3.3
+- build with clang (thnx glebfm@)
+
+* Thu Aug 29 2013 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.7.0-alt5.git20130424
+- fix build with llvm 3.3
+- build with clang
+
 * Thu Jun 06 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.7.0-alt4.git20130424
 - New snapshot
 
