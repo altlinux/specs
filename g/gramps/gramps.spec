@@ -1,5 +1,5 @@
 Name: gramps
-Version: 3.3.1
+Version: 3.4.5
 Release: alt1
 
 Summary: Genealogical Research and Analysis Management Programming System
@@ -81,6 +81,9 @@ install -D -m644 %buildroot%_datadir/gramps/images/gramps.png %buildroot%_licons
 %_datadir/icons/gnome/*/mimetypes/*
 
 %changelog
+* Mon Sep 02 2013 Vitaly Lipatov <lav@altlinux.ru> 3.4.5-alt1
+- new version 3.4.5 (with rpmrb script)
+
 * Mon Apr 09 2012 Vitaly Lipatov <lav@altlinux.ru> 3.3.1-alt1
 - new version 3.3.1 (with rpmrb script) (ALT bug #27180)
 
