@@ -1,7 +1,7 @@
 %define docdir %_docdir/%name
 
 Name: libvdpau
-Version: 0.6
+Version: 0.7
 Release: alt1
 Epoch: 1
 Group: System/Libraries
@@ -10,11 +10,15 @@ Url: http://cgit.freedesktop.org/~aplattner/libvdpau
 License: Nvidia Free
 
 Source: %name-%version.tar
-Patch: %name-%version-%release.patch
 
-Buildrequires: libX11-devel libXext-devel gcc-c++ doxygen graphviz tetex-core xorg-dri2proto-devel
 Provides: libvdpau1 = %version-%release
 Obsoletes: libvdpau1
+
+# Automatically added by buildreq on Wed Jan 15 2014 (-bi)
+# optimized out: elfutils fontconfig fonts-type1-urw ghostscript-common libX11-devel libstdc++-devel libwayland-client libwayland-server pkg-config python-base ruby ruby-stdlibs tex-common texlive-base texlive-base-bin texlive-common texlive-latex-base xorg-xproto-devel
+#BuildRequires: doxygen fonts-ttf-google-droid-kufi fonts-ttf-google-droid-sans fonts-ttf-google-droid-serif gcc-c++ ghostscript-classic glibc-devel-static graphviz libXext-devel rpm-build-ruby xorg-dri2proto-devel
+BuildRequires: doxygen gcc-c++ ghostscript-classic glibc-devel graphviz libXext-devel xorg-dri2proto-devel
+BuildRequires: /usr/bin/pdftex
 
 %description
 This package contains the libvdpau wrapper library and the
@@ -46,7 +50,6 @@ Documentation for VDPAU library
 
 %prep
 %setup
-%patch -p1
 
 %build
 %autoreconf
@@ -73,6 +76,9 @@ Documentation for VDPAU library
 %docdir/html
 
 %changelog
+* Mon Sep 02 2013 Sergey V Turchin <zerg@altlinux.org> 1:0.7-alt1
+- new version
+
 * Mon Jul 22 2013 Sergey V Turchin <zerg@altlinux.org> 1:0.6-alt1
 - new version
 
