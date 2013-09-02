@@ -6,7 +6,7 @@
 %define dname transmission-daemon
 
 Name: transmission
-Version: 2.80
+Version: 2.82
 Release: alt1
 
 Group: Networking/File transfer
@@ -269,6 +269,9 @@ fi
 %dir %_logdir/%dname
 
 %changelog
+* Mon Sep 02 2013 Anton Farygin <rider@altlinux.ru> 2.82-alt1
+- new version
+
 * Mon Jul 15 2013 Anton Farygin <rider@altlinux.ru> 2.80-alt1
 - new version
 - removed unsupported "Custom icon" feathure from QT frontend
