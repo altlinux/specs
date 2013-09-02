@@ -1,47 +1,48 @@
 Name: afuse
-Summary: An automounter implemented with FUSE
-Version: 0.2
+Version: 0.4.1
 Release: alt1
-License: GPLv2+
+Summary: Automounting file system implemented in user-space
+License: GPLv2
 Group: System/Kernel and hardware
-Packager: Mykola Grechukh <gns@altlinux.ru>
-
-Source: http://downloads.sourceforge.net/afuse/%name-%version.tar.gz
-Url: http://afuse.sourceforge.net/
+URL: https://github.com/pcarrier/%name
+Source: %name-%version.tar
 
 BuildRequires: libfuse-devel
-# fix CVE-2008-2232
-Patch: afuse-template-tokenize.patch
 
 %description
-Afuse is an automounting file system implemented in user-space using FUSE.
-Afuse currently implements the most basic functionality that can be expected
-by an automounter; that is it manages a directory of virtual directories. If
-one of these virtual directories is accessed and is not already automounted,
-afuse will attempt to mount a filesystem onto that directory. If the mount
-succeeds the requested access proceeds as normal, otherwise it will fail
-with an error.
+%name is an automounting file system implemented in user-space using FUSE.
+The advantage of using %name over traditional automounters is %name runs entirely
+in user-space by individual users. Thus it can take advantage of the invoking
+users environment, for example allowing access to an ssh-agent for password-less
+sshfs mounts, or allowing access to a graphical environment to get user input to
+complete a mount such as asking for a password.
+
 
 %prep
-%setup
-%patch0 -p1 -b .CVS-2008-2232
+%setup -q
+
 
 %build
+%autoreconf
 %configure
 %make_build
 
-%install
 
+%install
 %makeinstall_std
 
 
-
-
 %files
-%doc AUTHORS ChangeLog COPYING README
-%_bindir/afuse
+%doc AUTHORS HACKING NEWS README
+%_bindir/*
+
 
 %changelog
+* Mon Sep 02 2013 Led <led@altlinux.ru> 0.4.1-alt1
+- 0.4.1
+- fixed License
+- updated URL
+
 * Wed May 25 2011 Mykola Grechukh <gns@altlinux.ru> 0.2-alt1
 - initial build for ALT Linux Sisyphus
 
