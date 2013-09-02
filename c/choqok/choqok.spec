@@ -4,8 +4,8 @@
 %define libtwitterapihelper libtwitterapihelper%libtwitterapihelper_major
 
 Name: choqok
-Version: 1.3
-Release: alt2
+Version: 1.4
+Release: alt1
 
 Group: Office
 Summary: KDE Micro-Blogging Client
@@ -100,6 +100,12 @@ based on %name.
 
 
 %changelog
+* Mon Sep 02 2013 Sergey V Turchin <zerg@altlinux.org> 1.4-alt1
+- new version
+
+* Thu Aug 02 2012 Sergey V Turchin <zerg@altlinux.org> 1.3-alt1.M60P.1
+- built for M60P
+
 * Fri Jul 27 2012 Sergey V Turchin <zerg@altlinux.org> 1.3-alt2
 - rebuilt with new attica
 
