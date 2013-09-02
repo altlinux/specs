@@ -1,6 +1,6 @@
 Name: samsung-tools
-Version: 2.1
-Release: alt4
+Version: 2.2
+Release: alt1
 
 Summary: Tools for Samsung netbooks
 License: GPLv3+
@@ -8,11 +8,15 @@ Group: System/Configuration/Hardware
 URL: https://launchpad.net/samsung-tools
 Source0: https://launchpad.net/samsung-tools/trunk/2.1/+download/%name-%version.tar.gz
 
+Patch0: samsung-tools-2.2-alt-systemd-path.patch
+
+BuildArch: noarch
+
 # Automatically added by buildreq on Tue May 08 2012 (-bb)
 # optimized out: python-base
 BuildRequires: dbus-tools python-module-distribute rpm-build-gir
 
-Requires: xbindkeys rfkill vbetool
+Requires: xbindkeys rfkill vbetool pm-utils
 
 %description
 'Samsung Tools' is the successor of 'Samsung Scripts' provided by the 'Linux
@@ -26,6 +30,7 @@ available).
 
 %prep
 %setup -q
+%patch0 -p1
 
 %build
 
@@ -35,17 +40,27 @@ available).
 %find_lang %name
 
 %files -f %name.lang
-%doc debian/README.Debian debian/changelog debian/upstart
-%_bindir/*
+%doc README TODO debian/changelog debian/upstart
+%_unitdir/samsung-tools.service
 %_sysconfdir/%name
 %_sysconfdir/dbus-1
-%_sysconfdir/pm/
 %_sysconfdir/xdg/autostart/*.desktop
+%_bindir/*
+%_libexecdir/pm-utils/power.d/samsung-tools_devices-power-management
+%_libexecdir/pm-utils/power.d/samsung-tools_usb-autosuspend
+%_libexecdir/pm-utils/power.d/samsung-tools_vm-writeback-time
+%_libexecdir/pm-utils/sleep.d/20_samsung-tools
 %_datadir/applications/%name-preferences.desktop
 %_datadir/dbus-1/*/*
-%_prefix/lib/%name
+%_datadir/%name
 
 %changelog
+* Mon Sep 02 2013 Igor Zubkov <icesik@altlinux.org> 2.2-alt1
+- 2.1 -> 2.2
+- Add pm-utils to package requires
+- Add systemd service file
+- Change BuildArch to noarch
+
 * Fri May 11 2012 Igor Zubkov <icesik@altlinux.org> 2.1-alt4
 - Add vbetool to package requires
 
