@@ -5,10 +5,11 @@
 
 %def_disable compat
 
-%if_enabled compat
+%if_disabled compat
 %def_enable static
 %def_enable cpp
 %def_enable glib
+%def_disable qt5
 %def_enable qt4
 %def_disable qt3
 %def_enable devel
@@ -19,6 +20,7 @@
 %def_disable static
 %def_disable cpp
 %def_disable glib
+%def_disable qt5
 %def_disable qt4
 %def_disable qt3
 %def_disable devel
@@ -28,17 +30,18 @@
 %endif
 
 %define rname poppler
-%define somajor 37
+%define somajor 43
 %define somajor_cpp 0
 %define somajor_qt 3
 %define somajor_qt4 4
+%define somajor_qt5 1
 %define somajor_glib 8
 %define major 0
-%define minor 22
-%define bugfix 5
+%define minor 24
+%define bugfix 1
 Name: %rname%somajor
 Version: %major.%minor.%bugfix
-Release: alt2
+Release: alt1
 
 %if_disabled compat
 %define poppler_devel_name lib%rname-devel
@@ -46,12 +49,14 @@ Release: alt2
 %define poppler_glib_devel_name lib%rname-glib-devel
 %define poppler_qt_devel_name lib%rname-qt-devel
 %define poppler_qt4_devel_name lib%rname-qt4-devel
+%define poppler_qt5_devel_name lib%rname-qt5-devel
 %else
 %define poppler_devel_name lib%rname%somajor-devel
 %define poppler_cpp_devel_name lib%rname%somajor-cpp-devel
 %define poppler_glib_devel_name lib%rname%somajor-glib-devel
 %define poppler_qt_devel_name lib%rname%somajor-qt-devel
 %define poppler_qt4_devel_name lib%rname%somajor-qt4-devel
+%define poppler_qt5_devel_name lib%rname%somajor-qt5-devel
 %endif
 
 Group: Publishing
@@ -68,8 +73,11 @@ Patch10: poppler-0.12.1-objstream.patch
 #BuildRequires: gcc-c++ glib-networking glibc-devel-static gtk-doc gvfs imake libXt-devel libcurl-devel libgtk+2-devel libgtk+2-gir-devel libjpeg-devel liblcms-devel libopenjpeg-devel libqt3-devel libqt4-devel libqt4-gui libqt4-xml libxml2-devel python-modules-compiler python-modules-encodings time xorg-cf-files
 
 BuildRequires(pre): rpm-utils
+%if_enabled qt5
+BuildRequires: qt5-base-devel
+%endif
 %if_enabled qt4
-BuildRequires(pre): libqt4-devel
+BuildRequires: libqt4-devel
 %endif
 %if_enabled glib
 BuildRequires: glib2-devel
@@ -137,8 +145,15 @@ base to the world, we hope that over time these applications will
 adopt poppler.  After all, we only need one application to use poppler
 to break even.
 
+%package -n lib%rname%somajor_qt5-qt5
+Summary: Qt5 frontend library for %rname
+Group: System/Libraries
+Requires: lib%name = %version-%release
+%description -n lib%rname%somajor_qt5-qt5
+Qt5 frontend library for %rname
+
 %package -n lib%rname%somajor_qt4-qt4
-Summary: Qt4 frontend library for %name
+Summary: Qt4 frontend library for %rname
 Group: System/Libraries
 Requires: lib%name = %version-%release
 %popIF_ver_gteq "%major.%minor" "0.10"
@@ -150,14 +165,14 @@ Obsoletes: libpoppler4-qt4 < %version-%release
 %endif
 %endif
 %description -n lib%rname%somajor_qt4-qt4
-Qt4 frontend library for %name
+Qt4 frontend library for %rname
 
 %package -n lib%rname%somajor_glib-glib
-Summary: Glib frontend library for %name
+Summary: Glib frontend library for %rname
 Group: System/Libraries
 Requires: lib%name = %version-%release
 %description -n lib%rname%somajor_glib-glib
-Glib frontend library for %name
+Glib frontend library for %rname
 
 %package -n lib%rname%somajor_cpp-cpp
 Summary: Pure C++ wrapper for poppler
@@ -168,7 +183,7 @@ Pure C++ wrapper for poppler
 
 
 %package -n %poppler_devel_name
-Summary: Development files for %name
+Summary: Development files for %rname
 Group: Development/C
 Provides: lib%name-devel = %version-%release
 Obsoletes: lib%name-devel < %version-%release
@@ -192,7 +207,7 @@ Libraries, include files, etc you can use to develop
 poppler applications with pure C++
 
 %package -n %poppler_glib_devel_name
-Summary: Development files for %name-glib
+Summary: Development files for %rname-glib
 Group: Development/GNOME and GTK+
 Requires: lib%rname%somajor_glib-glib = %version-%release
 Requires: %poppler_devel_name = %version-%release
@@ -203,8 +218,20 @@ Conflicts: lib%rname-glib-devel
 Libraries, include files, etc you can use to develop
 poppler applications with Glib/Gtk+
 
+%package -n %poppler_qt5_devel_name
+Summary: Development files for %rname-qt5
+Group: Development/KDE and QT
+Requires: lib%rname%somajor_qt5-qt5 = %version-%release
+Requires: %poppler_devel_name = %version-%release
+%if_enabled compat
+Conflicts: lib%rname-qt5-devel
+%endif
+%description -n %poppler_qt5_devel_name
+Libraries, include files, etc you can use to develop
+poppler applications with Qt5
+
 %package -n %poppler_qt4_devel_name
-Summary: Development files for %name-qt4
+Summary: Development files for %rname-qt4
 Group: Development/KDE and QT
 Requires: lib%rname%somajor_qt4-qt4 = %version-%release
 Requires: %poppler_devel_name = %version-%release
@@ -232,7 +259,7 @@ Requires: %poppler_glib_devel_name = %version-%release
 GObject introspection devel data for the Poppler library
 
 %package -n %{poppler_devel_name}-static
-Summary: Static libraries for libpoppler
+Summary: Static libraries for lib%rname
 Group: Development/Other
 Provides: lib%name-devel-static = %version-%release
 Obsoletes: lib%name-devel-static < %version-%release
@@ -253,7 +280,9 @@ chmod a-x goo/GooTimer.h
 #autoconf --force
 
 %build
+%if_enabled qt4
 export QT4DIR=%_qt4dir
+%endif
 %configure \
     --disable-rpath \
     %{subst_enable static} \
@@ -272,6 +301,11 @@ export QT4DIR=%_qt4dir
 %endif
 %if_disabled qt4
     --disable-poppler-qt4 \
+%endif
+%if_enabled qt5
+    --disable-poppler-qt5 \
+%else
+    --disable-poppler-qt5 \
 %endif
     --enable-compile-warnings=yes
 #    --disable-abiword-output \
@@ -326,6 +360,18 @@ export QT4DIR=%_qt4dir
 %endif
 %endif
 
+%if_enabled qt5
+%files -n lib%rname%somajor_qt5-qt5
+%_libdir/libpoppler-qt5.so.%somajor_qt5
+%_libdir/libpoppler-qt5.so.%somajor_qt5.*
+%if_enabled devel
+%files -n %poppler_qt5_devel_name
+%_includedir/poppler/qt5/
+%_libdir/libpoppler-qt5.so
+%_pkgconfigdir/poppler-qt5.pc
+%endif
+%endif
+
 %if_enabled cpp
 %files -n lib%rname%somajor_cpp-cpp
 %_libdir/libpoppler-cpp.so.%somajor_cpp
@@ -358,8 +404,8 @@ export QT4DIR=%_qt4dir
 %endif
 
 %changelog
-* Tue Sep 03 2013 Sergey V Turchin <zerg@altlinux.org> 0.22.5-alt2
-- built compat package
+* Tue Sep 03 2013 Sergey V Turchin <zerg@altlinux.org> 0.24.1-alt1
+- new version
 
 * Tue Jul 23 2013 Sergey V Turchin <zerg@altlinux.org> 0.22.5-alt1
 - new version
