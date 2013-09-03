@@ -6,7 +6,7 @@
 %define rpm_ver %{get_SVR rpm}
 
 Name: kde-common-devel
-Version: 4.10.1
+Version: 4.11.0
 Release: alt1
 
 Group: Development/KDE and QT
@@ -48,6 +48,9 @@ install -D -m 0644 %SOURCE11 %buildroot/%_rpmmacrosdir/%name
 %_rpmmacrosdir/%name
 
 %changelog
+* Tue Sep 03 2013 Sergey V Turchin <zerg@altlinux.org> 4.11.0-alt1
+- new version
+
 * Tue Mar 19 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.1-alt1
 - don't use own find_lang because rpm find_lang was fixed
 
