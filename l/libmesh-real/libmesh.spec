@@ -8,7 +8,7 @@ Name: %oname-%scalar_type
 Version: 0.9.2
 %define blibdir %_builddir/%name-%version/lib/%_arch-alt-linux-gnu_opt
 %define clibdir %_builddir/%name-%version/contrib/lib/%_arch-alt-linux-gnu_opt
-Release: alt1.rc1.git20130711
+Release: alt2.rc1.git20130711
 Summary: Numerical simulation of partial differential equations
 License: LGPL v2.1
 Group: Sciences/Mathematics
@@ -457,6 +457,9 @@ popd
 %endif
 
 %changelog
+* Tue Sep 03 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.2-alt2.rc1.git20130711
+- Rebuilt with Trilinos 11.4.1
+
 * Mon Jul 15 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.2-alt1.rc1.git20130711
 - Version 0.9.2-rc1
 
