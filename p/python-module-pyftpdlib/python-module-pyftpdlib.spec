@@ -1,8 +1,8 @@
 %define modulename pyftpdlib
 
 Name: python-module-%modulename
-Version: 0.5.1
-Release: %branch_release alt1.1.1
+Version: 1.2.0
+Release: %branch_release alt1
 
 %setup_python_module %modulename
 
@@ -42,11 +42,17 @@ language.
 %python_install
 
 %files
-%doc CREDITS HISTORY INSTALL LICENSE README demo/ doc/ test/
+%doc CREDITS HISTORY INSTALL LICENSE README demo/ test/
 %python_sitelibdir/%modulename/
 %python_sitelibdir/*.egg-info
 
 %changelog
+* Tue Sep 03 2013 Anatoly Kitaykin <cetus@altlinux.org> 1.2.0-alt1
+- Release 1.2.0
+
+* Tue Oct 30 2012 Anatoly Kitaykin <cetus@altlinux.org> 0.7.0-alt1
+- Release 0.7.0
+
 * Mon Nov 14 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 0.5.1-alt1.1.1
 - Rebuild with Python-2.7
 
