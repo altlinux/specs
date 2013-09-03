@@ -1,10 +1,9 @@
 %set_verify_elf_method relaxed
 %define kernel_flavour ovz-el
 %add_findreq_skiplist %_sysconfdir/*
-
 Name: wanpipe
 Summary: %name
-Version: 7.0.3
+Version: 7.0.5
 Release: alt1
 License: GPL
 Group: System/Kernel and hardware
@@ -157,6 +156,9 @@ rm -f %buildroot/etc/wanpipe/util/wan_aftup/*.o
 %files docs
 
 %changelog
+* Tue Sep 03 2013 Denis Smirnov <mithraen@altlinux.ru> 7.0.5-alt1
+- 7.0.5
+
 * Sat Jun 01 2013 Denis Smirnov <mithraen@altlinux.ru> 7.0.3-alt1
 - 7.0.3
 
