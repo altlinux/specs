@@ -1,6 +1,6 @@
 %set_verify_elf_method textrel=relaxed
-%define v8_ver 3.18
-%define rev 213514
+%define v8_ver 3.19
+%define rev 220622
 
 %def_disable debug
 %def_disable nacl
@@ -12,8 +12,8 @@
 %endif
 
 Name:           chromium
-Version:        28.0.1500.95
-Release:        alt2.r%rev
+Version:        29.0.1547.65
+Release:        alt1.r%rev
 
 Summary:        An open source web browser developed by Google
 License:        BSD-3-Clause and LGPL-2.1+
@@ -53,8 +53,6 @@ Patch32:        chromium-7.0.542.0-system-libvpx.patch
 Patch62:        chromium-norpath.patch
 # PATCH-FIX-OPENSUSE patches in the system v8 library
 Patch63:        chromium-23.0.1271.64-system-gyp-v8.patch
-# PATCH-FIX-UPSTREAM Add more charset aliases
-Patch64:        chromium-more-codec-aliases.patch
 # PATCH-FIX-OPENSUSE Compile the sandbox with -fPIE settings
 Patch66:        chromium-sandbox-pie.patch
 # PATCH-FIX-OPENSUSE Compile with the standard gold linker
@@ -70,7 +68,6 @@ Patch81:	nss.patch
 Patch82:	expat.patch
 Patch84:	ffmpeg_arm.patch
 Patch85:	fix-manpage.patch
-Patch86:	webkit-version.patch
 Patch87:	cups1.5.patch
 Patch88:	arm-no-float-abi.patch
 Patch90:	gcc4.7.patch
@@ -206,7 +203,6 @@ to Gnome's Keyring.
 
 #%%patch62 -p1
 %patch63 -p2
-%patch64
 %patch8 -p2
 %patch13 -p2
 %patch14 -p2
@@ -224,7 +220,6 @@ to Gnome's Keyring.
 %patch82 -p1
 #%%patch84 -p1
 %patch85 -p1
-%patch86 -p1
 %patch87 -p1
 %patch88 -p1
 %patch90 -p1
@@ -444,6 +439,24 @@ printf '%_bindir/%name\t%_libdir/%name/%name-gnome\t15\n' > %buildroot%_altdir/%
 %_altdir/%name-gnome
 
 %changelog
+* Tue Sep 03 2013 Andrey Cherepanov <cas@altlinux.org> 29.0.1547.65-alt1.r220622
+- New version 29.0.1547.62
+- Security fixes:
+  - High CVE-2013-2900: Incomplete path sanitization in file handling.
+  - Low CVE-2013-2905: Information leak via overly broad permissions on
+    shared memory files.
+  - High CVE-2013-2901: Integer overflow in ANGLE.
+  - High CVE-2013-2902: Use after free in XSLT.
+  - High CVE-2013-2903: Use after free in media element.
+  - High CVE-2013-2904: Use after free in document parsing.
+- Improved Omnibox suggestions based on the recency of sites you have
+  visited
+- Ability to reset your profile back to its original state
+- Many new apps and extensions APIs
+- Lots of stability and performance improvements
+- Fix an issue with printing from Google Docs applications
+- Fix an issue with Sync
+
 * Wed Jul 31 2013 Dmitriy Kulik <lnkvisitor@altlinux.org> 28.0.1500.95-alt2.r213514
 - rebuild with versioned v8
 
