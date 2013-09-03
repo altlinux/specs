@@ -10,7 +10,7 @@ BuildRequires: jpackage-compat
 
 Name:           automaton
 Version:        %{upver}r%{uprel}
-Release:        alt1_4jpp7
+Release:        alt1_5jpp7
 Summary:        A Java finite state automata/regular expression library
 
 Group:          Development/Java
@@ -66,6 +66,9 @@ mv doc $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Tue Sep 03 2013 Igor Vlasenko <viy@altlinux.ru> 1.11r8-alt1_5jpp7
+- update to new release by jppimport
+
 * Tue Apr 16 2013 Igor Vlasenko <viy@altlinux.ru> 1.11r8-alt1_4jpp7
 - update to new release by jppimport
 
