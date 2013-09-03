@@ -8,7 +8,7 @@ Name:           colossus
 %global         revdate    20120314
 Version:        0.13.2
 %global         branch     0.13.x
-Release:        alt1_4jpp7
+Release:        alt1_5jpp7
 Summary:        Allows people to play Titan against each other or AIs
 
 Group:          Games/Other
@@ -81,7 +81,7 @@ build.timestamp=%{revdate}
 username=rpmbuild
 EOF
 
-ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  jar
+ant jar
 
 # The supplied build.xml adds a classpath to the manifest that needs to
 # be removed.
@@ -106,9 +106,9 @@ cat <<EOF > fixup.xml
 </project>
 EOF
 
-ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  -f fixup.xml
+ant -f fixup.xml
 
-ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  -lib %{_javadir}/jdom.jar javadoc
+ant -lib %{_javadir}/jdom.jar javadoc
 
 # Allow for simple command to run colossus
 echo -e "#!/bin/sh\njava -cp %{_javadir}/jdom.jar:%{_javadir}/colossus.jar net.sf.colossus.appmain.Start" > %{name}
@@ -153,6 +153,9 @@ touch --no-create %{_datadir}/pixmaps || :
 %{_javadocdir}/%{name}
 
 %changelog
+* Tue Sep 03 2013 Igor Vlasenko <viy@altlinux.ru> 0.13.2-alt1_5jpp7
+- update to new release by jppimport
+
 * Tue Mar 19 2013 Igor Vlasenko <viy@altlinux.ru> 0.13.2-alt1_4jpp7
 - fc update
 
