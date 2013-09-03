@@ -1,7 +1,7 @@
 
 Name: ebook-tools
-Version: 0.2.1
-Release: alt3
+Version: 0.2.2
+Release: alt1
 
 Group: Publishing
 Summary: Tools for accessing and converting various ebook file formats
@@ -10,6 +10,7 @@ License: MIT
 
 Source0: %name-%version.tar
 Patch1: ebook-tools-0.2.1-fix-lib.patch
+Patch2: ebook-tools-0.2.2-fix-version.patch
 
 # Automatically added by buildreq on Mon Aug 31 2009 (-bi)
 #BuildRequires: cmake doxygen gcc-c++ ghostscript-utils graphviz latex2html libxml2-devel libzip-devel xml-utils
@@ -36,7 +37,8 @@ based on %name
 
 %prep
 %setup -q
-%patch1 -p1
+#%patch1 -p1
+%patch2 -p1
 
 
 %build
@@ -64,6 +66,9 @@ based on %name
 %_libdir/lib*.so
 
 %changelog
+* Tue Sep 03 2013 Sergey V Turchin <zerg@altlinux.org> 0.2.2-alt1
+- new version
+
 * Wed Apr 20 2011 Sergey V Turchin <zerg@altlinux.org> 0.2.1-alt3
 - fix to build
 
