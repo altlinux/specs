@@ -1,10 +1,12 @@
 %define webappdir %webserver_webappsdir/mediawiki
-%define major 1.20
+%define major 1.21
+
+Name: mediawiki
+Version: %major.1
+Release: alt1
 
 Summary: A wiki engine, typical installation (with Apache2, MySQL and TeX support) 
-Name: mediawiki
-Version: %major.4
-Release: alt2
+
 License: %gpl2plus
 Group: Networking/WWW
 Url: http://www.mediawiki.org/
@@ -13,7 +15,7 @@ Packager: Aleksey Avdeev <solo@altlinux.ru>
 
 BuildArch: noarch
 
-Source0: http://download.wikimedia.org/mediawiki/%major/%name-%version.tar.gz
+Source0: http://download.wikimedia.org/mediawiki/%major/%name-%version.tar
 Source1: mediawiki-apache2-alt-configs.tar
 Source2: README.ALT-ru_RU.UTF-8
 Source3: install_php_config.sh
@@ -21,6 +23,8 @@ Source4: mediawiki.ini
 Source5: README.UPGRADE.ALT-ru_RU.UTF-8
 Source6: AdminSettings.sample
 Source7: 99-read-user-configs.php
+
+Patch: %name-%major-alt.patch
 
 BuildRequires(pre): rpm-macros-apache2
 BuildRequires(pre): rpm-build-licenses
@@ -56,11 +60,25 @@ PreReq: webserver-common
 Requires: php-engine >= 5
 Requires: diffutils
 
+# since 1.20
 Provides: mediawiki-extensions-ParserFunctions
-Provides: mediawiki-extensions-ConfirmEdit
-
 Obsoletes: mediawiki-extensions-ParserFunctions
+
+Provides: mediawiki-extensions-ConfirmEdit
 Obsoletes: mediawiki-extensions-ConfirmEdit
+
+Provides: mediawiki-extensions-SearchSuggest
+Obsoletes: mediawiki-extensions-SearchSuggest
+
+# since 1.21
+Provides: mediawiki-extensions-Cite
+Obsoletes: mediawiki-extensions-Cite
+
+Provides: mediawiki-extensions-ImageMap
+Obsoletes: mediawiki-extensions-ImageMap
+
+Provides: mediawiki-extensions-Poem
+Obsoletes: mediawiki-extensions-Poem
 
 Conflicts: mediawiki-extensions-FCKEditor
 
@@ -119,8 +137,7 @@ Requires: %name-common = %version-%release
 
 %prep
 %setup
-
-%build
+%patch -p2
 
 %install
 mkdir -p %buildroot%_mediawikidir
@@ -131,7 +148,10 @@ cp -r * %buildroot%_mediawikidir/
 rm -rf %buildroot%_mediawikidir/maintenance/dev/
 rm -rf %buildroot%_mediawikidir/tests/
 rm -rf %buildroot%_mediawikidir/{*.php5,*.phtml}
-rm -rf %buildroot%_mediawikidir/{COPYING,CREDITS,FAQ,HISTORY,README,RELEASE-NOTES-*,UPGRADE}
+rm -rf %buildroot%_mediawikidir/{COPYING,CREDITS,FAQ,HISTORY,README*,RELEASE-NOTES-*,UPGRADE}
+
+# do not use follow bundled extension:
+rm -rf %buildroot%_mediawikidir/extensions/SyntaxHighlight_GeSHi/
 
 mkdir -p %buildroot%_mediawikidir/config/
 
@@ -153,7 +173,7 @@ find %buildroot -name .svnignore -print0 | xargs -r0 rm
 find %buildroot -name \*.commoncode -print0 | xargs -r0 rm
 
 # fix permissions
-chmod +x %buildroot%_mediawikidir/bin/*
+#chmod +x %buildroot%_mediawikidir/bin/*
 find %buildroot%_mediawikidir -name \*.pl -print0 | xargs -r0 chmod +x
 
 
@@ -197,7 +217,7 @@ EOF
 
 
 %pre -n %name-common
-if [ -L %_mediawikidir/config ]; then 
+if [ -L %_mediawikidir/config ]; then
 	rm -f %_mediawikidir/config
 fi
 if [ -d %_datadir/%name/images -a ! -L %_datadir/%name/images ]; then
@@ -258,6 +278,12 @@ exit 0
 
 
 %changelog
+* Tue Sep 03 2013 Vitaly Lipatov <lav@altlinux.ru> 1.21.1-alt1
+- new version 1.21.1 (with rpmrb script)
+- move intree changes to the patch file
+- add provides/obsoletes for follow bundled extensions:
+  Cite, ImageMap, Poem
+
 * Sat Apr 27 2013 Vitaly Lipatov <lav@altlinux.ru> 1.20.4-alt2
 - update README.UPGRADE.ALT
 - use macros from rpm-build-mediawiki
