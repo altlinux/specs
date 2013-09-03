@@ -1,6 +1,6 @@
 Name: ocrad
-Version: 0.20
-Release: alt1.qa1
+Version: 0.22
+Release: alt1
 
 Summary: Ocrad is an OCR program based on a feature extraction method
 License: GPL
@@ -10,13 +10,13 @@ Url: http://www.gnu.org/software/ocrad/ocrad.html
 
 Packager: Ilya Mashkin <oddity@altlinux.ru>
 
-Source0: %name-%version.tar.gz
+Source0: %name-%version.tar.lz
 
 # from Debian
 Patch0: ocrad_0.17-3.diff.gz
 Patch1: ocrad-0.17-gcc43.patch
 # Automatically added by buildreq on Sat Nov 15 2008
-BuildRequires: gcc-c++
+BuildRequires: gcc-c++ lzip
 
 %description
 GNU Ocrad is an OCR (Optical Character Recognition) program based on a
@@ -39,12 +39,15 @@ make install-man DESTDIR=%buildroot
 
 
 %files
-%doc AUTHORS ChangeLog INSTALL NEWS README TODO
+%doc AUTHORS ChangeLog INSTALL NEWS README
 %_bindir/*
 %_infodir/*
 %_man1dir/*
 
 %changelog
+* Wed Sep 04 2013 Ilya Mashkin <oddity@altlinux.ru> 0.22-alt1
+- 0.22
+
 * Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.20-alt1.qa1
 - NMU: rebuilt for debuginfo.
 
