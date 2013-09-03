@@ -7,14 +7,14 @@ BuildRequires: jpackage-compat
 %global		_newname Vuze
 
 Name:		azureus
-Version:	4.9.0.0
-Release:	alt1_1jpp7
+Version:	5.0.0.0
+Release:	alt1_2jpp7
 Summary:	A BitTorrent Client
 Group:		Networking/WWW
 License:	GPLv2+
 URL:		http://azureus.sourceforge.net
 
-Source0:	http://downloads.sourceforge.net/azureus/%{_newname}_4900_source.zip
+Source0:	http://downloads.sourceforge.net/azureus/%{_newname}_5000_source.zip
 
 Source1:	azureus.script
 Source2:	Azureus.desktop
@@ -23,33 +23,21 @@ Source3:	azureus.applications
 #ant build script from Azureus-4.3.0.6
 Source4:	build.xml
 
-Patch2:		azureus-cache-size.patch
-Patch3:		azureus-remove-manifest-classpath.patch
-Patch9:		azureus-no-shared-plugins.patch
-Patch12:	azureus-no-updates-PluginInitializer.patch
-Patch13:	azureus-no-updates-PluginInterfaceImpl.patch
-Patch14:	azureus-no-update-manager-AzureusCoreImpl.patch
-Patch15:	azureus-no-update-manager-CorePatchChecker.patch
-Patch16:	azureus-no-update-manager-CoreUpdateChecker.patch
-Patch19:	azureus-no-update-manager-PluginUpdatePlugin.patch
-Patch20:	azureus-no-update-manager-SWTUpdateChecker.patch
-Patch22:	azureus-no-update-manager-UpdateMonitor.patch
-Patch27:	azureus-SecureMessageServiceClientHelper-bcprov.patch
-Patch28:	azureus-configuration.patch
+Patch0:		azureus-cache-size.patch
+Patch1:		azureus-remove-manifest-classpath.patch
+Patch2:		azureus-no-shared-plugins.patch
+Patch3:	azureus-SecureMessageServiceClientHelper-bcprov.patch
 
-#Patch50:	azureus-4.0.0.4-boo-windows.diff
-Patch51:	azureus-4.0.0.4-boo-osx.diff
-Patch53:	azureus-4.0.0.4-boo-updating-w32.diff
-Patch54:	azureus-4.0.0.4-screw-win32utils.diff
+Patch4:	azureus-4.0.0.4-boo-osx.diff
+Patch5:	azureus-4.0.0.4-boo-updating-w32.diff
 
-#Patch56:	azureus-4.0.0.4-silly-java-tricks-are-for-kids.diff
-Patch57:	azureus-4.0.0.4-stupid-invalid-characters.diff
+Patch6:	azureus-4.0.0.4-stupid-invalid-characters.diff
 
-Patch58:	azureus-4.2.0.4-java5.patch
+Patch7:	azureus-4.2.0.4-java5.patch
 
-Patch59:	azureus-4.8.1.2-fix-compile.patch
+Patch8:	azureus-4.8.1.2-fix-compile.patch
 
-Patch60:	azureus-4.8.1.2-no-bundled-apache-commons.patch
+Patch9:	azureus-4.8.1.2-no-bundled-apache-commons.patch
 
 BuildRequires:	ant jpackage-utils >= 1.5 xml-commons-apis
 BuildRequires:	apache-commons-cli log4j
@@ -80,26 +68,26 @@ advanced users.
 
 cp %{SOURCE4} .
 
-%patch2 -p0 -b .cache-size
-%patch3 -p1 -b .remove-manifest-classpath
-%patch9 -p1 -b .no-shared-plugins
+%patch0 -p0 -b .cache-size
+%patch1 -p1 -b .remove-manifest-classpath
+%patch2 -p1 -b .no-shared-plugins
 
-%patch27 -p1 -b .nobcprov
+%patch3 -p1 -b .nobcprov
 
 
 rm org/gudy/azureus2/ui/swt/osx/CarbonUIEnhancer.java
 rm org/gudy/azureus2/ui/swt/osx/Start.java
 rm org/gudy/azureus2/ui/swt/win32/Win32UIEnhancer.java
-%patch51 -p1 -b .boo-osx
-%patch53 -p1 -b .boo-updating-w32
+%patch4 -p1 -b .boo-osx
+%patch5 -p1 -b .boo-updating-w32
 
-%patch57  -p1 -b stupid-invalid-characters
+%patch6  -p1 -b stupid-invalid-characters
 
-%patch58 -p1 -b .java5
+%patch7 -p1 -b .java5
 
-%patch59 -p1 -b .fix-compile
+%patch8 -p1 -b .fix-compile
 
-%patch60 -p1 -b .no-bundled-apache-commons
+%patch9 -p1 -b .no-bundled-apache-commons
 
 #hacks to org.eclipse.swt.widgets.Tree2 don't compile.
 rm -fR org/eclipse
@@ -125,41 +113,11 @@ fi
 
 ant jar
 
-#mkdir -p plugins/azplugins
-#pushd plugins
-#pushd azplugins
-#unzip -q %{SOURCE5}
-#rm -f *.jar `find ./ -name \*class`
-#find ./ -name \*java | xargs javac -cp %{_libdir}/eclipse/swt.jar:../..:.
-#find ./ -name \*java | xargs rm
-#jar cvf azplugins_2.1.6.jar .
-#popd
-#popd
-
-#unzip -q %{SOURCE6}
-#pushd plugins
-#pushd bdcc
-#unzip *.jar
-#rm -f *.jar `find ./ -name \*class`
-#find ./ -name \*java | xargs javac -cp %{_libdir}/eclipse/swt.jar:../..:.
-#find ./ -name \*java | xargs rm
-#jar cvf bdcc_2.2.2.jar .
-#popd
-#popd
-
 %install
 install -dm 755 $RPM_BUILD_ROOT%{_datadir}/azureus/plugins
 install -pm 644 dist/Azureus2.jar $RPM_BUILD_ROOT%{_datadir}/azureus/Azureus2.jar
 # TODO: fix launcher to be multilib-safe
 install -p -D -m 0755 %{SOURCE1} $RPM_BUILD_ROOT%{_bindir}/azureus
-
-#install -dm 755 $RPM_BUILD_ROOT%{_datadir}/azureus/plugins/azplugins
-#install -pm 644 plugins/azplugins/azplugins_2.1.6.jar $RPM_BUILD_ROOT%{_datadir}/azureus/plugins/azplugins/azplugins_2.1.6.jar
-#install -pm 644 plugins/azplugins/plugin.properties $RPM_BUILD_ROOT%{_datadir}/azureus/plugins/azplugins/plugin.properties
-
-#install -dm 755 $RPM_BUILD_ROOT%{_datadir}/azureus/plugins/bdcc
-#install -pm 644 plugins/bdcc/bdcc_2.2.2.jar $RPM_BUILD_ROOT%{_datadir}/azureus/plugins/bdcc/bdcc_2.2.2.jar
-#install -pm 644 plugins/bdcc/plugin.properties $RPM_BUILD_ROOT%{_datadir}/azureus/plugins/bdcc/plugin.properties
 
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/pixmaps
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/16x16/apps
@@ -197,6 +155,9 @@ touch %{_datadir}/icons/hicolor
 %{_datadir}/azureus
 
 %changelog
+* Tue Sep 03 2013 Igor Vlasenko <viy@altlinux.ru> 5.0.0.0-alt1_2jpp7
+- update to new release by jppimport
+
 * Tue Apr 16 2013 Igor Vlasenko <viy@altlinux.ru> 4.9.0.0-alt1_1jpp7
 - update to new release by jppimport
 
