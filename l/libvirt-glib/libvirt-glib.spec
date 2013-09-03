@@ -1,7 +1,7 @@
 %def_without python
 
 Name: libvirt-glib
-Version: 0.1.6
+Version: 0.1.7
 Release: alt1
 Summary: libvirt glib integration for events
 Group: System/Libraries
@@ -14,6 +14,7 @@ Source: %name-%version.tar
 %define glib_ver 2.22.0
 %define libxml2_ver 2.0.0
 
+BuildRequires: intltool
 BuildRequires: libvirt-devel >= %libvirt_ver
 BuildRequires: glib2-devel >= %glib_ver libgio-devel
 BuildRequires: libxml2-devel >= %libxml2_ver
@@ -143,6 +144,9 @@ libvirt and the glib event loop
 %setup -q
 
 %build
+touch ChangeLog AUTHORS
+mkdir -p build-aux
+intltoolize --force
 %autoreconf
 %configure \
 	--disable-static \
@@ -157,7 +161,7 @@ libvirt and the glib event loop
 %make_install DESTDIR=%buildroot install
 
 %files
-%doc README COPYING AUTHORS ChangeLog NEWS
+%doc README COPYING NEWS
 %_libdir/libvirt-glib-*.so.*
 
 %files gir
@@ -216,6 +220,9 @@ libvirt and the glib event loop
 %endif
 
 %changelog
+* Tue Sep 03 2013 Alexey Shabalin <shaba@altlinux.ru> 0.1.7-alt1
+- 0.1.7
+
 * Thu Mar 21 2013 Alexey Shabalin <shaba@altlinux.ru> 0.1.6-alt1
 - 0.1.6
 
