@@ -1,35 +1,40 @@
 Name: xfce4-cpufreq-plugin
-Version: 1.0.0
-Release: alt3
+Version: 1.1.0
+Release: alt1
 
-Summary: Show CPU freqency and governours plugin for the XFce panel
+Summary: Show CPU freqency and governours plugin for the Xfce panel
 License: %gpl2plus
 Group: Graphical desktop/XFce
 Url: http://goodies.xfce.org/projects/panel-plugins/%name
 Packager: XFCE Team <xfce@packages.altlinux.org>
 Source: %name-%version.tar
+Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-build-licenses
 
 BuildPreReq: rpm-build-xfce4 xfce4-dev-tools
-BuildPreReq: libxfce4panel-devel libxfcegui4-devel libxfce4util-devel
+BuildPreReq: libxfce4panel-devel libxfce4ui-devel libxfce4util-devel
 
-BuildRequires: fontconfig libX11-devel libgtk+2-devel libstartup-notification perl-XML-Parser
+BuildRequires: fontconfig libX11-devel libgtk+2-devel perl-XML-Parser
 
-Requires: xfce4-panel >= 4.8
+Requires: xfce4-panel >= 4.10
 
 %description
-xfce4-cpufreq-plugin is a Plugin for the Xfce Panel, which
-shows CPU Informations
+xfce4-cpufreq-plugin shows the current CPU frequency and governor in the
+panel, and the frequencies and governors and more information for all
+CPUs in a separate overview. Note that at the moment, it does not permit
+to change any of these CPU settings.
 
 %prep
 %setup
+%patch -p1
+
+# Don't use git tag in version.
+%xfce4_drop_gitvtag cpufreq_version_tag configure.ac.in
+
+mkdir m4
 
 %build
-# Fix desktop file path for xfce4-panel >= 4.8
-sed -i 's|^desktopdir = \$(datadir)/xfce4/panel-plugins|desktopdir = \$(datadir)/xfce4/panel/plugins|' \
-   panel-plugin/Makefile.am
-
 %xfce4reconf
 %configure
 %make_build
@@ -39,14 +44,21 @@ sed -i 's|^desktopdir = \$(datadir)/xfce4/panel-plugins|desktopdir = \$(datadir)
 %find_lang %name
 
 %files -f %name.lang
-%doc README ChangeLog AUTHORS
+%doc README AUTHORS
 %_liconsdir/*.png
 %_miconsdir/*.png
-%_iconsdir/hicolor/22x22/apps/*.png
-%_libexecdir/xfce4/panel-plugins/*
+%_iconsdir/hicolor/*/apps/*.png
+%_libdir/xfce4/panel/plugins/*.so
 %_datadir/xfce4/panel/plugins/*.desktop
 
+%exclude %_libdir/xfce4/panel/plugins/*.la
+
 %changelog
+* Tue Sep 03 2013 Mikhail Efremov <sem@altlinux.org> 1.1.0-alt1
+- Updated description.
+- Fix typo in panel-plugin/Makefile.am (from upstream).
+- Updated to 1.1.0.
+
 * Mon Apr 16 2012 Mikhail Efremov <sem@altlinux.org> 1.0.0-alt3
 - Rebuild against libxfce4util.so.6 (libxfce4util-4.9).
 
