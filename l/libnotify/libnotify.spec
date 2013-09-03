@@ -2,7 +2,7 @@
 %def_enable introspection
 
 Name: libnotify
-Version: %ver_major.5
+Version: %ver_major.6
 Release: alt1
 Summary: Desktop notification library
 License: LGPLv2.1+
@@ -120,6 +120,9 @@ mkdir -p m4
 %endif
 
 %changelog
+* Tue Sep 03 2013 Alexey Shabalin <shaba@altlinux.ru> 0.7.6-alt1
+- 0.7.6
+
 * Fri Apr 06 2012 Alexey Shabalin <shaba@altlinux.ru> 0.7.5-alt1
 - 0.7.5
 
