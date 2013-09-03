@@ -5,15 +5,15 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:		arduino
 Epoch:		1
-Version:	1.0.1
-Release:	alt2_4jpp7.qa1
+Version:	1.0.5
+Release:	alt1_4jpp7
 Summary:	An IDE for Arduino-compatible electronics prototyping platforms
 Group:		Development/Java
 License:	GPLv2+ and LGPLv2+ and CC-BY-SA
 URL:		http://www.arduino.cc/
 
 # There are lots of binaries in the "source" tarball.  Remove them with:
-# curl -L http://arduino.googlecode.com/files/arduino-0022-src.tar.gz | tar -xzvf - && rm -r arduino-0022/build/linux/dist/tools/* && find arduino-0022 \( -type d \( -name macosx -o -name windows \) -o -type f \( -iname '*.jar' -or -iname '*.tgz' -or -iname '*.so' \) \) -print0 | xargs -0 rm -rf && tar -cJf arduino-0022.tar.bz2 arduino-0022
+# version=1.0.5; curl -L http://arduino.googlecode.com/files/arduino-$version-src.tar.gz | tar -xzf - && rm -r arduino-$version/build/linux/dist/tools/* && rm -r arduino-$version/hardware/arduino/firmwares/wifishield && find arduino-$version \( -type d \( -name macosx -o -name windows \) -o -type f \( -iname '*.jar' -or -iname '*.tgz' -or -iname '*.tar.gz' -or -iname '*.so' \) \) -print0 | xargs -0 rm -rf && tar -cJf arduino-$version.tar.xz arduino-$version
 # See also http://code.google.com/p/arduino/issues/detail?id=193
 Source0:	%{name}-%{version}.tar.xz
 
@@ -30,9 +30,8 @@ Patch4:		arduino-icons-etc.patch
 
 Patch6:		arduino-add-to-groups.patch
 
-# define __AVR_LIBC_DEPRECATED_ENABLE__ (bug 891556)
-# temporary; this has been fixed in newer upstreams
-Patch8:     arduino-bug891556.patch
+# Required for Koji's ARM build hosts:
+Patch8:		arduino-build-platform.patch
 
 BuildRequires:	jpackage-utils ant ant-apache-regexp desktop-file-utils ecj jna rxtx git
 Requires:	%{name}-core = %{epoch}:%{version}-%{release} %{name}-doc = %{epoch}:%{version}-%{release}
@@ -91,7 +90,7 @@ chmod a+rx build/linux/%{name}-add-groups
 %patch0
 %patch3 -p1
 %patch7 -p1
-%patch8 -p1
+%patch8 -p0
 
 echo -e "\n# By default, don't notify the user of a new upstream version." \
         "\n# https://bugzilla.redhat.com/show_bug.cgi?id=773519" \
@@ -109,9 +108,9 @@ build-jar-repository -p -s app/lib/ ecj jna RXTXcomm
 
 %build
 cd core/methods
-ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 
+ant
 cd ..
-ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 
+ant
 cd ../build
 echo %{version} | ant dist
 tar -xf linux/%{name}-%{version}-linux.tgz
@@ -128,9 +127,10 @@ cp -a hardware lib libraries examples $RPM_BUILD_ROOT/%{_datadir}/%{name}/
 rm $RPM_BUILD_ROOT/%{_datadir}/%{name}/lib/*.jar
 rm -r $RPM_BUILD_ROOT/%{_datadir}/%{name}/hardware/tools
 
-mkdir -p $RPM_BUILD_ROOT/%{_defaultdocdir}/%{name}-%{version}
-cp -a reference $RPM_BUILD_ROOT/%{_defaultdocdir}/%{name}-%{version}/
-ln -s %{_defaultdocdir}/%{name}-%{version}/reference $RPM_BUILD_ROOT/%{_datadir}/%{name}/reference
+%{!?_pkgdocdir: %global _pkgdocdir %{_docdir}/%{name}-%{version}}
+mkdir -p $RPM_BUILD_ROOT/%{_pkgdocdir}
+cp -a ../../license.txt ../../readme.txt ../../todo.txt reference $RPM_BUILD_ROOT/%{_pkgdocdir}/
+ln -s %{_pkgdocdir}/reference $RPM_BUILD_ROOT/%{_datadir}/%{name}/reference
 
 # Requested upstream in http://github.com/arduino/Arduino/pull/4:
 find $RPM_BUILD_ROOT -type f -iname *.jpg -or -iname *.java -or -iname *.pde -or -iname *.h -or -iname *.cpp -or -iname *.c -or -iname *.txt -or -iname makefile -or -iname key*.txt -or -iname pref*.txt | xargs chmod -x;
@@ -173,12 +173,6 @@ else
    exit 2
 fi
 
-# It is the file in the package whose name matches the format emacs or vim uses 
-# for backup and autosave files. It may have been installed by  accident.
-find $RPM_BUILD_ROOT \( -name '.*.swp' -o -name '#*#' -o -name '*~' \) -print -delete
-# failsafe cleanup if the file is declared as %%doc
-find . \( -name '.*.swp' -o -name '#*#' -o -name '*~' \) -print -delete
-
 
 
 %files
@@ -195,7 +189,9 @@ find . \( -name '.*.swp' -o -name '#*#' -o -name '*~' \) -print -delete
 
 
 %files -n %{name}-core
-%doc license.txt readme.txt todo.txt
+%{_pkgdocdir}/license.txt
+%{_pkgdocdir}/readme.txt 
+%{_pkgdocdir}/todo.txt
 %dir %{_sysconfdir}/%{name}
 %config(noreplace) %{_sysconfdir}/%{name}/boards.txt
 %config(noreplace) %{_sysconfdir}/%{name}/programmers.txt
@@ -209,10 +205,13 @@ find . \( -name '.*.swp' -o -name '#*#' -o -name '*~' \) -print -delete
 
 
 %files -n %{name}-doc
-%{_defaultdocdir}/%{name}-%{version}/
+%{_pkgdocdir}/
 
 
 %changelog
+* Tue Sep 03 2013 Igor Vlasenko <viy@altlinux.ru> 1:1.0.5-alt1_4jpp7
+- update to new release by jppimport
+
 * Mon Apr 22 2013 Repocop Q. A. Robot <repocop@altlinux.org> 1:1.0.1-alt2_4jpp7.qa1
 - NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
 - applied repocop fixes:
