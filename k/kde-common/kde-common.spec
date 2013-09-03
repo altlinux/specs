@@ -1,11 +1,11 @@
 
 %define major 4
-%define minor 10
+%define minor 11
 %define bugfix 0
 
 Name: kde-common
 Version: %major.%minor.%bugfix
-Release: alt2
+Release: alt1
 
 Summary: The basic directory layout for KDE
 License: Public Domain
@@ -226,6 +226,9 @@ ln -s `relative %_libdir %_K4datadir/lib` %buildroot/%_K4datadir/lib
 
 
 %changelog
+* Tue Sep 03 2013 Sergey V Turchin <zerg@altlinux.org> 4.11.0-alt1
+- new version
+
 * Mon Feb 25 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.0-alt2
 - add env directory for KDE4
 
