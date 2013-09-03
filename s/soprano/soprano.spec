@@ -1,9 +1,8 @@
 %define beta %nil
-%def_disable clucene
 
 Summary: Qt wrapper API to different RDF storage solutions
 Name: soprano
-Version: 2.9.1
+Version: 2.9.3
 Release: alt1
 
 Group: Text tools
@@ -23,10 +22,8 @@ Patch5: soprano-2.7.6-alt-use-aio.patch
 BuildRequires(pre): libqt4-devel >= 4.4
 BuildRequires: cmake doxygen gcc-c++ glibc-devel graphviz
 BuildRequires: libXScrnSaver-devel libXcomposite-devel libXdamage-devel libXdmcp-devel libXpm-devel libXtst-devel libXxf86vm-devel libxkbfile-devel
+#BuildRequires: libclucene-core-devel
 BuildRequires: libiodbc-devel libredland-devel phonon-devel
-%if_enabled clucene
-BuildRequires: libclucene-core-devel
-%endif
 BuildRequires: cmake gcc-c++ doxygen graphviz libredland-devel libiodbc-devel
 BuildRequires: raptor2-devel rasqal-devel kde-common-devel
 
@@ -92,13 +89,8 @@ Development files for the lib%name
 %build
 %add_optflags -DNDEBUG -DQT_NO_DEBUG_OUTPUT
 %Kcmake \
-    -DSOPRANO_DISABLE_SESAME2_BACKEND:BOOL=ON \
-    %if_enabled clucene
-    -DSOPRANO_DISABLE_CLUCENE_INDEX=OFF \
-    %else
-    -DSOPRANO_DISABLE_CLUCENE_INDEX=ON \
-    %endif
-    -DSOPRANO_BUILD_API_DOCS:BOOL=ON
+    -DSOPRANO_BUILD_API_DOCS:BOOL=ON \
+    -DSOPRANO_DISABLE_SESAME2_BACKEND:BOOL=ON
 %Kmake
 
 
@@ -149,7 +141,7 @@ Development files for the lib%name
 %_datadir/dbus-1/interfaces/*
 
 %changelog
-* Wed May 08 2013 Sergey V Turchin <zerg at altlinux dot org> 2.9.1-alt1
+* Tue Sep 03 2013 Sergey V Turchin <zerg@altlinux.org> 2.9.3-alt1
 - new version
 
 * Thu Jan 10 2013 Sergey V Turchin <zerg@altlinux.org> 2.9.0-alt1
