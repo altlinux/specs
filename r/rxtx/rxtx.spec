@@ -4,7 +4,7 @@ BuildRequires: gcc-c++
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
-%define fedora 18
+%define fedora 19
 # %name or %version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name rxtx
 %define version 2.2
@@ -14,7 +14,7 @@ BuildRequires: jpackage-compat
 
 %global upver	2.2
 %global uprel	20100211
-%global rel	0.6
+%global rel	0.7
 
 #global jni	%{_jnidir}
 %global jni	%{_libdir}/%{name}
@@ -22,7 +22,7 @@ BuildRequires: jpackage-compat
 Summary:	Parallel communication for the Java Development Toolkit
 Name:		rxtx
 Version:	%{upver}
-Release:	alt2_0.6.20100211.2jpp7
+Release:	alt2_0.7.20100211.1jpp7
 License:	LGPLv2+
 Group:		System/Libraries
 URL:		http://rxtx.qbang.org/
@@ -36,6 +36,7 @@ Patch1:		rxtx-2.2-loadlibrary.patch
 Patch2:		rxtx-2.2-no-io.h.patch
 Patch3:		rxtx-2.2-fhs_lock.patch
 Patch4:		rxtx-2.2-lock.patch
+Patch5:		rxtx-aarch64.patch
 #BuildRequires:	java-devel >= 1:1.6.0
 BuildRequires:	jpackage-utils
 BuildRequires:  libtool automake
@@ -59,13 +60,14 @@ sed -e 's|@JNIPATH@|%{jni}|' %{PATCH1} | patch -s -b --suffix .p1 -p1
 %patch3 -p1
 %if 0%{?fedora} > 13 || 0%{?rhel} > 6
 %patch4 -p1
+%patch5 -p1
 %endif
 # remove prebuild binaries
 find . -name '*.jar' -exec rm {} \;
 find . -name '*.hqx' -exec rm {} \;
 
 %build
-#export JAVA_HOME=%{java_home}
+export JAVA_HOME=%{java_home}
 %configure
 # parallel make fails with make %%{?_smp_mflags}
 make
@@ -84,6 +86,9 @@ find %{buildroot} -name '*.la' -exec rm {} \;
 %{jni}
 
 %changelog
+* Tue Sep 03 2013 Igor Vlasenko <viy@altlinux.ru> 2.2-alt2_0.7.20100211.1jpp7
+- update to new release by jppimport
+
 * Sun Dec 02 2012 Igor Vlasenko <viy@altlinux.ru> 2.2-alt2_0.6.20100211.2jpp7
 - use /var/lock/serial
 
