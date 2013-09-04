@@ -9,11 +9,11 @@ BuildRequires: gcc-c++
 %global rev     2614
 %global vmver   %{major}.%{minor}.%{patch}.%{rev}
 %global vmver2   %{major}.%{minor}.%{patch}-%{rev}
-%global source  Squeak-%{vmver}-src-no-mp3
+%global source  Squeak-%{vmver}-src
 
 Name:           squeak-vm
 Version:        %{vmver}
-Release:        alt2_8
+Release:        alt3_8
 Summary:        The Squeak virtual machine
 
 Group:          Development/Other
@@ -28,8 +28,6 @@ Patch2:         squeak-vm-4.10.2-fix-cmake.patch
 Patch3:         squeak-vm-4.10.2-squeak-init-fix.patch
 
 # For clean upgrade path, could be probably dropped in F20 or later
-Provides:       %{name}-nonXOplugins = %{version}-%{release}
-Obsoletes:      %{name}-nonXOplugins < 4.10.2.2614-1
 
 Requires(post): shared-mime-info
 Requires(postun): shared-mime-info
@@ -91,7 +89,19 @@ rm -f %{buildroot}%{_bindir}/squeak.sh
 
 # Install own version of inisqueak
 install -m0755 %{SOURCE1} %{buildroot}%{_bindir}/inisqueak
-ln -s %{vmver2} %buildroot%_libdir/squeak/current
+#ln -s %{vmver2} %buildroot%_libdir/squeak/current
+mkdir -p %buildroot/usr/lib/rpm/
+cat > %buildroot/usr/lib/rpm/squeak-vm.req << 'EOF'
+#!/bin/sh -efu
+echo squeak-vm = %{version}
+'EOF'
+cat > %buildroot/usr/lib/rpm/squeak-vm.req.files << 'EOF'
+#!/bin/sh -efu
+while IFS=$'\t' read -r f t; do
+	[ -z "${f##${RPM_BUILD_ROOT-}%_libdir/squeak/%{vmver2}/so.*}" ] && echo "$f" ||:
+done
+'EOF'
+chmod 755 %buildroot/usr/lib/rpm/squeak-vm.req*
 
 %files
 %doc unix/ChangeLog unix/doc/{README*,LICENSE,*RELEASE_NOTES}
@@ -151,9 +161,13 @@ ln -s %{vmver2} %buildroot%_libdir/squeak/current
 %{_datadir}/pixmaps/*
 %{_datadir}/mime/packages/*
 %{_datadir}/icons/gnome/*/mimetypes/*.png
-%_libdir/squeak/current
+%_libdir/squeak/%{vmver2}/so.Mpeg3Plugin
+/usr/lib/rpm/squeak-vm.req*
 
 %changelog
+* Wed Sep 04 2013 Igor Vlasenko <viy@altlinux.ru> 4.10.2.2614-alt3_8
+- build with mp3 support; dropped symlink _libdir/squeak/current
+
 * Mon Sep 02 2013 Igor Vlasenko <viy@altlinux.ru> 4.10.2.2614-alt2_8
 - added symlink _libdir/squeak/current
 
