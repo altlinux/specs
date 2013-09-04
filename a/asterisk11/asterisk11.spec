@@ -1,7 +1,7 @@
 Name: asterisk11
 Summary: Open source PBX
 Version: 11.5.1
-Release: alt1
+Release: alt2
 License: GPL
 Group: System/Servers
 BuildRequires: dahdi-linux-headers flex gcc-c++ graphviz libSDL_image-devel libalsa-devel libavcodec-devel libbluez-devel libcap-devel libcurl-devel libfreetds-devel libgsm-devel libgtk+2-devel libical-devel libiksemel-devel libilbc-devel libjack-devel libkeyutils-devel libltdl7-devel liblua5-devel libmISDN-devel libmysqlclient-devel libncurses-devel libneon-devel libnet-snmp-devel libnewt-devel libopenr2-devel libpopt-devel libportaudio2-devel libpri-devel libpw1.11-devel libradiusclient-ng-devel libresample-devel libsasl2-devel libspandsp6-devel libspeex-devel libsqlite-devel libsqlite3-devel libsrtp libss7-devel libtonezone-dahdi-devel libunixODBC-devel libusb-compat-devel libvorbis-devel libvpb-devel libxml2-devel ncompress openssl postgresql-devel rpm-build-gir texlive-base-bin wget zlib-devel
@@ -70,6 +70,7 @@ BuildPreReq: librpm-devel libnet-snmp-devel libwrap-devel perl-devel
 %def_enable debug
 %def_without		hoard
 %def_without 		addons
+%def_with 		corosync
 %def_with			snmp
 %def_with			speex
 %def_with			curl
@@ -320,7 +321,9 @@ Requires: %name-ael = %version-%release
 Requires: %name-fax = %version-%release
 Requires: %name-app_voicemail = %version-%release
 Requires: %name-calendar = %version-%release
+%if_with corosync
 Requires: %name-corosync = %version-%release
+%endif
 Requires: %name-cdr_radius = %version-%release
 Requires: %name-chan_iax2 = %version-%release
 Requires: %name-jabber = %version-%release
@@ -373,6 +376,7 @@ Requires: pbx-utils-all
 %description complete
 This virtual package requires all Asterisk subpackages
 
+%if_with corosync
 %package corosync
 Summary: Device state and MWI clustering
 Group: %group
@@ -380,6 +384,7 @@ Requires: %name = %version-%release
 
 %description corosync
 Device state and MWI clustering
+%endif
 
 %package crypto
 Summary: OpenSSL support for Asterisk (crypto)
@@ -1071,9 +1076,11 @@ ln -sf libasteriskssl11.so.1 %buildroot%_libdir/libasteriskssl11.so
 
 %files complete
 
+%if_with corosync
 %files corosync
 %astmodule res_corosync
 %astsample res_corosync
+%endif
 
 %files crypto
 %_sbindir/astgenkey
@@ -1251,6 +1258,9 @@ ln -sf libasteriskssl11.so.1 %buildroot%_libdir/libasteriskssl11.so
 %_libdir/libasteriskssl11.so.1
 
 %changelog
+* Wed Sep 04 2013 Denis Smirnov <mithraen@altlinux.ru> 11.5.1-alt2
+- use if_with for corosync module
+
 * Sun Sep 01 2013 Denis Smirnov <mithraen@altlinux.ru> 11.5.1-alt1
 - new version 11.5.1
 
