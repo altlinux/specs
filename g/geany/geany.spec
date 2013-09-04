@@ -3,7 +3,7 @@
 
 Name: geany
 Version: 1.23.1
-Release: alt1
+Release: alt2
 
 Summary: A fast and lightweight IDE using GTK2
 License: GPLv2
@@ -49,6 +49,40 @@ use Geany.
 %prep
 %setup
 
+# hack out space in file name
+sed -i '/"untitled"/,/^$/s/\([^a-z]\) \([^a-z]\)/\1_\2/g' po/ru.po
+
+# Add some hello world examples
+# C++
+cat > data/templates/files/hello_world.cpp <<@@@
+{fileheader}
+
+#include <iostream>
+
+int main(int argc, char **argv)
+{
+	std::cout << "Hello world!\n";
+	return 0;
+}
+@@@
+
+# Basic
+cat > data/templates/files/hello_world.bas <<@@@
+{fileheader}
+PRINT "Hello World!"
+SLEEP
+@@@
+
+# Pascal
+cat > data/templates/files/hello_world.pas <<@@@
+{fileheader}
+
+program Hello;
+begin
+  writeln ('Hello, world!');
+end.
+@@@
+
 %build
 %configure --docdir=%_defaultdocdir/%name-%version
 %make_build --silent --no-print-directory
@@ -77,6 +111,9 @@ bzip2 %buildroot%_defaultdocdir/%name-%version/ChangeLog
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Wed Sep 04 2013 Fr. Br. George <george@altlinux.ru> 1.23.1-alt2
+- Add helloworlds and fix space in filemane (Closes: #29297)
+
 * Mon May 20 2013 Fr. Br. George <george@altlinux.ru> 1.23.1-alt1
 - Autobuild version bump to 1.23.1
 
