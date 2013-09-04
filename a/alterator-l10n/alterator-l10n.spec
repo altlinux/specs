@@ -1,6 +1,6 @@
 Name: alterator-l10n
 Version: 2.9
-Release: alt64
+Release: alt65
 
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
@@ -110,6 +110,9 @@ make check
 %lang(kk) %_datadir/locale/kk/LC_MESSAGES/*.mo
 
 %changelog
+* Mon Aug 12 2013 Andrey Cherepanov <cas@altlinux.org> 2.9-alt65
+- Update alterator-pkg Russian translation
+
 * Mon Jun 17 2013 Sergey V Turchin <zerg at altlinux dot org> 2.9-alt64
 - update x11 russian translation
 
