@@ -1,4 +1,4 @@
-%define svn_revision 398224
+%define svn_revision 398224.1
 Name: asterisk12
 Summary: Open source PBX
 Version: 12
@@ -66,22 +66,23 @@ BuildPreReq: libunixODBC-devel libltdl-devel
 BuildPreReq: liblua5-devel
 BuildPreReq: postgresql-devel libpq-devel
 BuildPreReq: librpm-devel libnet-snmp-devel libwrap-devel perl-devel
-%define svn_revision 398224
+%define svn_revision 398224.1
 %add_verify_elf_skiplist %_libdir/libasteriskssl12.so.1
 %def_with debug
 %def_enable debug
-%def_without		hoard
-%def_without 		addons
-%def_with			snmp
-%def_with			speex
-%def_with			curl
-%def_with			postgresql
-%def_with			misdn
-%def_with			odbc
-%def_with			ss7
-%def_with			ldap
-%def_with   			jack
-%def_with			dahdi
+%def_without hoard
+%def_without addons
+%def_without corosync
+%def_with    snmp
+%def_with    speex
+%def_with    curl
+%def_with    postgresql
+%def_with    misdn
+%def_with    odbc
+%def_with    ss7
+%def_with    ldap
+%def_with    jack
+%def_with    dahdi
 %if_with ss7
 %endif
 %if_with hoard
@@ -1276,6 +1277,9 @@ ln -sf libasteriskssl12.so.1 %buildroot%_libdir/libasteriskssl12.so
 %_libdir/libasteriskssl12.so.1
 
 %changelog
+* Wed Sep 04 2013 Denis Smirnov <mithraen@altlinux.ru> 12-alt0.398224.1
+- build without corosync module
+
 * Tue Sep 03 2013 Cronbuild Service <cronbuild@altlinux.org> 12-alt0.398224
 - update from svn revision 398224
 
