@@ -1,7 +1,7 @@
 %define dist forks
 Name: perl-%dist
 Version: 0.34
-Release: alt3
+Release: alt4
 
 Summary: Drop-in replacement for Perl threads using fork()
 License: GPL or Artistic
@@ -32,6 +32,9 @@ same syntax as the threads.pm module (it even takes over its namespace).
 %perl_vendor_archlib/threads
 
 %changelog
+* Wed Aug 28 2013 Vladimir Lettiev <crux@altlinux.ru> 0.34-alt4
+- built for perl 5.18
+
 * Sat Sep 01 2012 Vladimir Lettiev <crux@altlinux.ru> 0.34-alt3
 - rebuilt for perl-5.16
 

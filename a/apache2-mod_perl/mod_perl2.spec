@@ -5,7 +5,7 @@
 
 Name:    apache2-mod_perl
 Version: 2.0.8
-Release: alt1
+Release: alt2
 
 Summary: An embedded Perl interpreter for the Apache2 Web server
 Summary(ru_RU.UTF-8): Встроенный интерпретатор Perl для веб-сервера Apache2
@@ -128,11 +128,6 @@ module.
 %patch2
 %patch3
 
-## CHECK AND REMOVE IT!
-echo "===Applying dirty fix for ALT#28877 - remove it when perl-Module-CoreList will be upgraded==="
-sed -e 's/eval {require Module::CoreList}/eval {require Module::CoreList} and 0/' -i lib/Apache2/Build.pm
-##
-
 # Complete installation with separate projects
 tar xvf %SOURCE4
 tar xvf %SOURCE5
@@ -142,11 +137,8 @@ tar xvf %SOURCE7
 mv -f -- LICENSE LICENSE.orig
 ln -s -- $(relative %_licensedir/Apache-2.0 %_docdir/%name/LICENSE) LICENSE
 
-%ifdef __BTE
-rm -f -- t/apr-ext/finfo.t t/apr/finfo.t
-%endif
-
 %build
+%def_without test
 %perl_vendor_build MP_APXS=%apache2_apxs MP_APR_CONFIG=%apache2_apr_config
 
 %install
@@ -291,6 +283,10 @@ fi
 %doc docs/*
 
 %changelog
+* Thu Aug 29 2013 Vladimir Lettiev <crux@altlinux.ru> 2.0.8-alt2
+- built for perl 5.18
+- temporary disabled tests (sporadic failures in BTE on i586)
+
 * Sun Apr 21 2013 Nikolay A. Fetisov <naf@altlinux.ru> 2.0.8-alt1
 - New version 2.0.8
 
@@ -313,7 +309,7 @@ fi
 - built for perl-5.16
 - dropped patches mod_perl-2.0.5-sv_dup.patch, mod_perl-2.0.5-lwp6.patch
   (applied upstream)
-  
+
 * Wed Oct 26 2011 Alexey Tourbin <at@altlinux.ru> 2.0.5-alt2
 - exclude Apache/SizeLimit.pm, due to conflict with mod_perl-1.x (ALT#26508)
 

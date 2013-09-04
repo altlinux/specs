@@ -1,7 +1,7 @@
 %define dist Net-Pcap
 Name: perl-%dist
-Version: 0.16
-Release: alt3
+Version: 0.17
+Release: alt1
 
 Summary: Interface to pcap(3) LBL packet capture library
 License: GPL or Artistic
@@ -9,6 +9,7 @@ Group: Development/Perl
 
 URL: %CPAN %dist
 Source: %dist-%version.tar.gz
+Patch1: %name-0.17-cflags.patch
 
 # Automatically added by buildreq on Sat Oct 08 2011
 BuildRequires: libpcap-devel perl-Test-Exception perl-Test-Pod perl-podlators
@@ -24,9 +25,7 @@ security monitoring, network debugging, etc."
 
 %prep
 %setup -q -n %dist-%version
-
-# do not override default CCFLAGS
-sed -i- '/CCFLAGS/d' Makefile.PL
+%patch1 -p2
 
 %build
 %perl_vendor_build INSTALLMAN1DIR=%_man1dir
@@ -42,6 +41,9 @@ sed -i- '/CCFLAGS/d' Makefile.PL
 %perl_vendor_autolib/Net
 
 %changelog
+* Wed Aug 28 2013 Vladimir Lettiev <crux@altlinux.ru> 0.17-alt1
+- 0.16 -> 0.17
+
 * Sat Sep 01 2012 Vladimir Lettiev <crux@altlinux.ru> 0.16-alt3
 - rebuilt for perl-5.16
 

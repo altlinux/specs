@@ -1,7 +1,7 @@
 %define dist Date-Pcalc
 Name: perl-%dist
 Version: 6.1
-Release: alt3
+Release: alt4
 
 Summary: Gregorian calendar date calculations
 License: GPL or Artistic
@@ -39,6 +39,9 @@ to some extent, ISO 8601 (where applicable).
 %perl_vendor_autolib/Date
 
 %changelog
+* Tue Aug 27 2013 Vladimir Lettiev <crux@altlinux.ru> 6.1-alt4
+- built for perl 5.18
+
 * Thu Aug 30 2012 Vladimir Lettiev <crux@altlinux.ru> 6.1-alt3
 - rebuilt for perl-5.16
 - fixed build

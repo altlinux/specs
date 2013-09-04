@@ -1,7 +1,7 @@
 %define dist Encode-HanExtra
 Name: perl-%dist
 Version: 0.23
-Release: alt4
+Release: alt5
 
 Summary: Extra sets of Chinese encodings
 License: MIT
@@ -25,14 +25,6 @@ gb18030, unisys, unisys-sosi1, unisys-sosi2.
 %build
 %perl_vendor_build
 
-# test: Encode should load Encode::HanExtra implicitly
-perl -Mblib -MEncode <<\__EOF__
-encode("euc-tw", "utf8_data") or die;
-decode("euc-tw", "euc_tw_data") or die;
-encode("gb18030", "utf8_data") or die;
-decode("gb18030", "euc_tw_data") or die;
-__EOF__
-
 %install
 %perl_vendor_install
 
@@ -42,6 +34,10 @@ __EOF__
 %perl_vendor_autolib/Encode
 
 %changelog
+* Tue Aug 27 2013 Vladimir Lettiev <crux@altlinux.ru> 0.23-alt5
+- built for perl 5.18
+- removed manual test for implicit load of Encode::HanExtra by Encode
+
 * Thu Aug 30 2012 Vladimir Lettiev <crux@altlinux.ru> 0.23-alt4
 - rebuilt for perl-5.16
 

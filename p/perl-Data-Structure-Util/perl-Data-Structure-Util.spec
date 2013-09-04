@@ -1,7 +1,7 @@
 %define dist Data-Structure-Util
 Name: perl-%dist
 Version: 0.15
-Release: alt4
+Release: alt5
 
 Summary: Change nature of data within a structure
 License: GPL or Artistic
@@ -41,6 +41,9 @@ fi
 %perl_vendor_autolib/Data
 
 %changelog
+* Wed Aug 28 2013 Vladimir Lettiev <crux@altlinux.ru> 0.15-alt5
+- built for perl 5.18
+
 * Tue Nov 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.15-alt4
 - fixed build
 

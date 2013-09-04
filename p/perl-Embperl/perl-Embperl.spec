@@ -1,7 +1,7 @@
 %define dist Embperl
 Name: perl-%dist
 Version: 2.4.0
-Release: alt3
+Release: alt4
 
 Summary: Building dynamic Websites with Perl
 License: GPL
@@ -57,6 +57,9 @@ rm %buildroot%perl_vendor_autolib/Embperl/Embperl.bs
 %perl_vendor_autolib/Embperl
 
 %changelog
+* Thu Aug 29 2013 Vladimir Lettiev <crux@altlinux.ru> 2.4.0-alt4
+- built for perl 5.18
+
 * Sun Sep 02 2012 Vladimir Lettiev <crux@altlinux.ru> 2.4.0-alt3
 - rebuilt for perl-5.16
 

@@ -2,7 +2,7 @@
 
 Name: perl-%module
 Version: 0.28
-Release: alt3
+Release: alt4
 
 Summary: RSA encoding and decoding, using the openSSL libraries
 License: Perl
@@ -37,6 +37,9 @@ decryption, signatures and signature verification.
 %perl_vendor_autolib/Crypt
 
 %changelog
+* Wed Aug 28 2013 Vladimir Lettiev <crux@altlinux.ru> 0.28-alt4
+- built for perl 5.18
+
 * Sat Sep 01 2012 Vladimir Lettiev <crux@altlinux.ru> 0.28-alt3
 - rebuilt for perl-5.16
 

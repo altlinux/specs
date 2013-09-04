@@ -1,7 +1,7 @@
 %define dist Clone
 Name: perl-%dist
 Version: 0.34
-Release: alt1
+Release: alt2
 
 Summary: Recursively copy Perl datatypes
 License: GPL or Artistic
@@ -32,6 +32,9 @@ including tied variables and objects.
 %perl_vendor_autolib/Clone*
 
 %changelog
+* Tue Aug 27 2013 Vladimir Lettiev <crux@altlinux.ru> 0.34-alt2
+- built for perl 5.18
+
 * Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 0.34-alt1
 - automated CPAN update
 

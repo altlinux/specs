@@ -2,7 +2,7 @@
 
 Name: perl-%module
 Version: 0.11
-Release: alt3
+Release: alt4
 
 Packager: Victor Forsiuk <force@altlinux.org>
 
@@ -35,6 +35,9 @@ host name, then uses (perl) gethostbyname to extract the real hostname.
 %perl_vendor_autolib/Sys
 
 %changelog
+* Wed Aug 28 2013 Vladimir Lettiev <crux@altlinux.ru> 0.11-alt4
+- built for perl 5.18
+
 * Sat Sep 01 2012 Vladimir Lettiev <crux@altlinux.ru> 0.11-alt3
 - rebuilt for perl-5.16
 

@@ -2,7 +2,7 @@
 
 Name: perl-Coro
 Version: 6.31
-Release: alt1
+Release: alt2
 
 Summary: cooperative multitasking Perl module
 
@@ -53,6 +53,9 @@ export CORO_INTERFACE=u
 %perl_vendor_autolib/Coro
 
 %changelog
+* Thu Aug 29 2013 Vladimir Lettiev <crux@altlinux.ru> 6.31-alt2
+- built for perl 5.18
+
 * Tue Jun 11 2013 Nikolay A. Fetisov <naf@altlinux.ru> 6.31-alt1
 - New version
 

@@ -1,6 +1,6 @@
 Name: perl-Mozilla-LDAP
 Version: 1.5.2
-Release: alt2
+Release: alt3
 
 Summary: LDAP Perl module that wraps the Mozilla C SDK
 License: MPL 1.1/GPL 2.0/LGPL 2.1
@@ -42,6 +42,9 @@ export LDAPPKGNAME=mozldap
 %perl_vendor_autolib/Mozilla
 
 %changelog
+* Thu Aug 29 2013 Vladimir Lettiev <crux@altlinux.ru> 1.5.2-alt3
+- built for perl 5.18
+
 * Sun Sep 02 2012 Vladimir Lettiev <crux@altlinux.ru> 1.5.2-alt2
 - rebuilt for perl-5.16
 

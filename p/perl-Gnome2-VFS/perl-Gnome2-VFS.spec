@@ -2,7 +2,7 @@
 
 Name: perl-%dist
 Version: 1.081
-Release: alt2
+Release: alt3
 
 Packager: Victor Forsyuk <force@altlinux.org>
 
@@ -65,6 +65,9 @@ for developers (overview of internals and internal API reference).
 %doc	%perl_vendor_archlib/Gnome2/VFS/Resolve
 
 %changelog
+* Wed Aug 28 2013 Vladimir Lettiev <crux@altlinux.ru> 1.081-alt3
+- built for perl 5.18
+
 * Sat Sep 01 2012 Vladimir Lettiev <crux@altlinux.ru> 1.081-alt2
 - rebuilt for perl-5.16
 

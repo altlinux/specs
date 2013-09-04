@@ -1,7 +1,7 @@
 %define dist Math-BigInt-FastCalc
 Name: perl-%dist
 Version: 0.30
-Release: alt4
+Release: alt5
 
 Summary: XS implementation of arbitrary size integer math
 License: GPL or Artistic
@@ -32,6 +32,9 @@ some of the Calc functions in XS.
 %perl_vendor_autolib/Math
 
 %changelog
+* Thu Aug 22 2013 Vladimir Lettiev <crux@altlinux.ru> 0.30-alt5
+- built for perl 5.18
+
 * Mon Aug 27 2012 Vladimir Lettiev <crux@altlinux.ru> 0.30-alt4
 - rebuilt for perl-5.16
 

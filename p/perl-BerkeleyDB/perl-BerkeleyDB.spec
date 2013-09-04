@@ -1,6 +1,6 @@
 %define dist BerkeleyDB
 Name: perl-%dist
-Version: 0.52
+Version: 0.53
 Release: alt1
 
 Summary: Perl bindings to Berkeley DB version 2.x and greater
@@ -44,6 +44,9 @@ rm -rv t/Test/
 	%perl_vendor_autolib/BerkeleyDB
 
 %changelog
+* Tue Aug 27 2013 Vladimir Lettiev <crux@altlinux.ru> 0.53-alt1
+- 0.52 -> 0.53
+
 * Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 0.52-alt1
 - automated CPAN update
 

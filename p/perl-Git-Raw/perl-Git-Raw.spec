@@ -1,6 +1,6 @@
 Name: perl-Git-Raw
 Version: 0.24
-Release: alt1.git.5224e
+Release: alt2
 
 Summary: Perl bindings to the Git linkable library (libgit2)
 Group: Development/Perl
@@ -31,6 +31,9 @@ BuildRequires: libgit2-devel perl-base perl-Capture-Tiny perl-devel perl-File-Sl
 %doc Changes TODO
 
 %changelog
+* Mon Sep 02 2013 Vladimir Lettiev <crux@altlinux.ru> 0.24-alt2
+- built for perl 5.18
+
 * Tue Jul 23 2013 Alexey Shabalin <shaba@altlinux.ru> 0.24-alt1.git.5224e
 - upstream snapshot 5224e5487c7e19f55ac2c0d50ccb6425715ed8f8
 

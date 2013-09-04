@@ -2,7 +2,7 @@
 
 Name: perl-%dist
 Version: 1.05
-Release: alt2
+Release: alt3
 
 Packager: Victor Forsyuk <force@altlinux.org>
 
@@ -34,6 +34,9 @@ scalar variables.
 %perl_vendor_autolib/Readonly
 
 %changelog
+* Wed Aug 28 2013 Vladimir Lettiev <crux@altlinux.ru> 1.05-alt3
+- built for perl 5.18
+
 * Fri Aug 31 2012 Vladimir Lettiev <crux@altlinux.ru> 1.05-alt2
 - rebuilt for perl-5.16
 

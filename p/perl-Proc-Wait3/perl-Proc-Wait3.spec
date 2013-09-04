@@ -1,7 +1,7 @@
 %define dist Proc-Wait3
 Name: perl-%dist
 Version: 0.04
-Release: alt3
+Release: alt4
 
 Summary: Perl wrapper around the wait3(1) system call
 License: Perl
@@ -33,6 +33,9 @@ usage of the child.
 %perl_vendor_autolib/Proc
 
 %changelog
+* Thu Aug 29 2013 Vladimir Lettiev <crux@altlinux.ru> 0.04-alt4
+- built for perl 5.18
+
 * Sun Sep 02 2012 Vladimir Lettiev <crux@altlinux.ru> 0.04-alt3
 - rebuilt for perl-5.16
 

@@ -1,6 +1,6 @@
 Name: opendchub
 Version: 0.8.2
-Release: alt2
+Release: alt3
 
 Summary: Direct Connect Hub
 
@@ -49,6 +49,9 @@ Opendchub is a hub of direct connect file sharing network.
 #%dir %attr(750,opendchub,opendchub) %_sysconfdir/opendchub
 
 %changelog
+* Fri Aug 30 2013 Vladimir Lettiev <crux@altlinux.ru> 0.8.2-alt3
+- built for perl 5.18
+
 * Tue Sep 04 2012 Vladimir Lettiev <crux@altlinux.ru> 0.8.2-alt2
 - rebuilt for perl-5.16
 

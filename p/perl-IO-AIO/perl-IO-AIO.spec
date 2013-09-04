@@ -1,7 +1,7 @@
 %define dist IO-AIO
 Name: perl-%dist
 Version: 4.18
-Release: alt1
+Release: alt2
 
 Summary: Asynchronous Input/Output
 License: GPL or Artistic
@@ -42,6 +42,9 @@ concurrently.
 %perl_vendor_archlib/IO
 
 %changelog
+* Wed Aug 28 2013 Vladimir Lettiev <crux@altlinux.ru> 4.18-alt2
+- built for perl 5.18
+
 * Wed Oct 17 2012 Igor Vlasenko <viy@altlinux.ru> 4.18-alt1
 - automated CPAN update
 

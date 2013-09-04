@@ -1,11 +1,11 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(CPAN.pm) perl(Config.pm) perl(Fcntl.pm) perl(blib.pm) perl(overload.pm) perl-devel perl-podlators
+BuildRequires: perl(CPAN.pm) perl(Config.pm) perl(Fcntl.pm) perl(blib.pm) perl(overload.pm) perl-devel perl-podlators perl-unicore
 # END SourceDeps(oneline)
 BuildRequires: perl-Filter
 Name:           perl-YAML-LibYAML
 Version:        0.41
-Release:        alt1_3
+Release: alt2
 Summary:        Perl YAML Serialization using XS and libyaml
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -55,6 +55,8 @@ bound to Python and was later bound to Ruby.
 # Fix format string vulnerabilities (CVE-2012-1152, CPAN RT#46507)
 %patch0 -p1
 
+# Disable failed test (
+
 %build
 perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor OPTIMIZE="%{optflags}"
 make %{?_smp_mflags}
@@ -74,6 +76,9 @@ make test
 %{perl_vendor_archlib}/YAML/
 
 %changelog
+* Mon Sep 02 2013 Vladimir Lettiev <crux@altlinux.ru> 0.41-alt2
+- built for perl 5.18
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.41-alt1_3
 - update to new release by fcimport
 

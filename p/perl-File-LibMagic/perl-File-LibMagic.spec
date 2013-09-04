@@ -1,6 +1,6 @@
 %define dist File-LibMagic
 Name: perl-File-LibMagic
-Version: 0.97
+Version: 0.99
 Release: alt1
 
 Summary: Perl wrapper for libmagic
@@ -32,6 +32,9 @@ the file-4.x package from Christos Zoulas (ftp://ftp.astron.com/pub/file/).
 %perl_vendor_autolib/File
 
 %changelog
+* Wed Aug 28 2013 Vladimir Lettiev <crux@altlinux.ru> 0.99-alt1
+- 0.97 -> 0.99
+
 * Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 0.97-alt1
 - automated CPAN update
 

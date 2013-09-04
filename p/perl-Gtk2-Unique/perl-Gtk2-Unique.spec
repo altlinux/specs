@@ -2,7 +2,7 @@
 
 Name: perl-%dist
 Version: 0.05
-Release: alt2
+Release: alt3
 
 Summary: Use single instance applications
 License: Perl
@@ -42,6 +42,9 @@ xvfb-run -a make test
 	%perl_vendor_archlib/Gtk2/Unique/Install
 
 %changelog
+* Wed Aug 28 2013 Vladimir Lettiev <crux@altlinux.ru> 0.05-alt3
+- built for perl 5.18
+
 * Sat Sep 01 2012 Vladimir Lettiev <crux@altlinux.ru> 0.05-alt2
 - rebuilt for perl-5.16
 

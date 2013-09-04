@@ -1,7 +1,7 @@
 %define dist qa-rpmelfsym
 Name: perl-%dist
 Version: 0.12
-Release: alt2
+Release: alt3
 
 Summary: Faster rpmelfsym(1) and bad_elf_symbols implementation
 License: GPLv2+
@@ -37,6 +37,9 @@ rm %buildroot%perl_vendor_archlib/qa/*.pl
 %perl_vendor_autolib/qa*
 
 %changelog
+* Wed Aug 28 2013 Vladimir Lettiev <crux@altlinux.ru> 0.12-alt3
+- built for perl 5.18
+
 * Wed Nov 21 2012 Dmitry V. Levin <ldv@altlinux.org> 0.12-alt2
 - Added binutils to package requirements.
 

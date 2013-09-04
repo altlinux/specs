@@ -7,7 +7,7 @@
 
 Name: %_name%abiversion
 Version: 5.7.2
-Release: alt2
+Release: alt3
 
 Summary: Tools and servers for the SNMP protocol
 License: BSD-like
@@ -567,6 +567,9 @@ echo "===== start test ====="
 %python_sitelibdir/netsnmp*
 
 %changelog
+* Thu Aug 29 2013 Vladimir Lettiev <crux@altlinux.ru> 5.7.2-alt3
+- built for perl 5.18
+
 * Wed Feb 20 2013 Slava Dubrovskiy <dubrsl@altlinux.org> 5.7.2-alt2
 - Rebuild with new libnl
 

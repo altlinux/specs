@@ -1,6 +1,6 @@
 Name: perl-Math-FFT
 Version: 1.28
-Release: alt1
+Release: alt2
 
 Summary: Perl extension for Fast Fourier Transforms
 Group: Development/Perl
@@ -29,6 +29,9 @@ BuildRequires: perl-devel
 %doc Changes README
 
 %changelog
+* Mon Sep 02 2013 Vladimir Lettiev <crux@altlinux.ru> 1.28-alt2
+- built for perl 5.18
+
 * Sun Nov 04 2012 Vladimir Lettiev <crux@altlinux.ru> 1.28-alt1
 - initial build for ALTLinux
 

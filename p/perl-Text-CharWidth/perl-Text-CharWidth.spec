@@ -1,7 +1,7 @@
 %define dist Text-CharWidth
 Name: perl-%dist
 Version: 0.04
-Release: alt3
+Release: alt4
 
 Summary: Get number of occupied columns of a string on terminal
 License: GPL or Artistic
@@ -46,6 +46,9 @@ Vietnamese.
 %perl_vendor_autolib/Text
 
 %changelog
+* Wed Aug 28 2013 Vladimir Lettiev <crux@altlinux.ru> 0.04-alt4
+- built for perl 5.18
+
 * Fri Aug 31 2012 Vladimir Lettiev <crux@altlinux.ru> 0.04-alt3
 - rebuilt for perl-5.16
 

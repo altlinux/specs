@@ -7,7 +7,7 @@
 
 Name: perl-%module
 Version: 0.13
-Release: alt3
+Release: alt4
 
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
 
@@ -50,6 +50,9 @@ cp -a sdblib %buildroot%_includedir/mapsdb
 %_includedir/mapsdb
 
 %changelog
+* Thu Aug 29 2013 Vladimir Lettiev <crux@altlinux.ru> 0.13-alt4
+- built for perl 5.18
+
 * Sun Sep 02 2012 Vladimir Lettiev <crux@altlinux.ru> 0.13-alt3
 - rebuilt for perl-5.16
 

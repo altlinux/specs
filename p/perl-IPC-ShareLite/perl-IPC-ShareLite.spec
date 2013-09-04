@@ -1,7 +1,7 @@
 %define dist IPC-ShareLite
 Name: perl-%dist
 Version: 0.17
-Release: alt3
+Release: alt4
 
 Summary: Light-weight interface to shared memory
 License: GPL or Artistic
@@ -39,6 +39,9 @@ use this module.
 %perl_vendor_autolib/IPC
 
 %changelog
+* Wed Aug 28 2013 Vladimir Lettiev <crux@altlinux.ru> 0.17-alt4
+- built for perl 5.18
+
 * Fri Apr 12 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.17-alt3
 - build hackarounded
 

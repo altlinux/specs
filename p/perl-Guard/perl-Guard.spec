@@ -2,7 +2,7 @@
 
 Name: perl-%module
 Version: 1.022
-Release: alt3
+Release: alt4
 
 Summary: Safe cleanup blocks for Perl
 License: Perl
@@ -33,6 +33,9 @@ object) that "guards" a resource, ensuring that it is cleaned up when expected.
 %perl_vendor_autolib/Guard
 
 %changelog
+* Wed Aug 28 2013 Vladimir Lettiev <crux@altlinux.ru> 1.022-alt4
+- built for perl 5.18
+
 * Sat Sep 01 2012 Vladimir Lettiev <crux@altlinux.ru> 1.022-alt3
 - rebuilt for perl-5.16
 

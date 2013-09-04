@@ -1,7 +1,7 @@
 %define dist Linux-Inotify2
 Name: perl-%dist
 Version: 1.22
-Release: alt3
+Release: alt4
 
 Summary: Scalable directory/file change notification
 License: GPL or Artistic
@@ -35,6 +35,9 @@ sed -i- 's/watch->cancel,/watch->cancel || 1,/' t/01_inotify.t
 %perl_vendor_autolib/Linux
 
 %changelog
+* Wed Aug 28 2013 Vladimir Lettiev <crux@altlinux.ru> 1.22-alt4
+- built for perl 5.18
+
 * Thu Aug 30 2012 Vladimir Lettiev <crux@altlinux.ru> 1.22-alt3
 - rebuilt for perl-5.16
 

@@ -2,7 +2,7 @@
 
 Name: perl-%module
 Version: 0.00010
-Release: alt2
+Release: alt3
 
 Summary: Crypt::DH Using GMP Directly
 License: Perl
@@ -31,6 +31,9 @@ Crypt::DH::GMP is a (somewhat) portable replacement to Crypt::DH, implemented mo
 %perl_vendor_archlib/Crypt/
 
 %changelog
+* Fri Aug 30 2013 Vladimir Lettiev <crux@altlinux.ru> 0.00010-alt3
+- built for perl 5.18
+
 * Tue Sep 04 2012 Vladimir Lettiev <crux@altlinux.ru> 0.00010-alt2
 - rebuilt for perl-5.16
 

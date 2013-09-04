@@ -2,7 +2,7 @@
 
 Name: owfs
 Version: 2.8p8
-Release: alt3
+Release: alt4
 
 Summary: 1-Wire Virtual File System
 License: GPL
@@ -310,6 +310,9 @@ chrpath -d %buildroot%perl_vendor_archlib/auto/OW/OW.so
 %python_sitelibdir/*
 
 %changelog
+* Fri Aug 30 2013 Vladimir Lettiev <crux@altlinux.ru> 2.8p8-alt4
+- built for perl 5.18
+
 * Tue Sep 04 2012 Vladimir Lettiev <crux@altlinux.ru> 2.8p8-alt3
 - rebuilt for perl-5.16
 

@@ -1,7 +1,7 @@
 %define dist Crypt-Twofish
 Name: perl-%dist
 Version: 2.17
-Release: alt1
+Release: alt2
 
 Summary: The Twofish Encryption Algorithm
 License: GPL or Artistic
@@ -39,6 +39,9 @@ in new code is strongly discouraged.
 %perl_vendor_autolib/Crypt
 
 %changelog
+* Wed Aug 28 2013 Vladimir Lettiev <crux@altlinux.ru> 2.17-alt2
+- built for perl 5.18
+
 * Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 2.17-alt1
 - automated CPAN update
 

@@ -1,7 +1,7 @@
 %define dist Curses
 Name: perl-%dist
 Version: 1.28
-Release: alt3
+Release: alt4
 
 Summary: Terminal screen handling and optimization
 License: GPL or Artistic
@@ -40,6 +40,9 @@ perl -Mblib -MCurses -e1
 %perl_vendor_autolib/Curses*
 
 %changelog
+* Tue Aug 27 2013 Vladimir Lettiev <crux@altlinux.ru> 1.28-alt4
+- built for perl 5.18
+
 * Thu Aug 30 2012 Vladimir Lettiev <crux@altlinux.ru> 1.28-alt3
 - rebuilt for perl-5.16
 

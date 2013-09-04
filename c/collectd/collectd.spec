@@ -30,7 +30,7 @@
 
 Name: collectd
 Version: 5.2.1
-Release: alt3
+Release: alt4
 
 Summary: (Multi-)System statistics collection
 License: GPL
@@ -813,6 +813,9 @@ service %name condrestart ||:
 # - macroize repetitive sections
 
 %changelog
+* Thu Aug 29 2013 Vladimir Lettiev <crux@altlinux.ru> 5.2.1-alt4
+- built for perl 5.18
+
 * Wed Mar 13 2013 Michael Shigorin <mike@altlinux.org> 5.2.1-alt3
 - fixed mysql deps
 

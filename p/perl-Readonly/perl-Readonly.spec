@@ -2,7 +2,7 @@
 
 Name: perl-%dist
 Version: 1.03
-Release: alt3
+Release: alt4
 
 Summary: Readonly - facility for creating read-only scalars, arrays, hashes
 License: Perl
@@ -13,9 +13,9 @@ Source: http://www.cpan.org/modules/by-module/Readonly/%dist-%version.tar.gz
 
 BuildArch: noarch
 
-Requires: perl-Readonly-XS
+#Requires: perl-Readonly-XS
 
-BuildRequires: perl-devel perl-Readonly-XS
+BuildRequires: perl-devel
 
 %description
 This is a facility for creating non-modifiable variables. This is useful
@@ -39,6 +39,10 @@ mv %buildroot%perl_vendor_privlib/benchmark.pl .
 %perl_vendor_privlib/Readonly.pm
 
 %changelog
+* Wed Aug 28 2013 Vladimir Lettiev <crux@altlinux.ru> 1.03-alt4
+- built for perl 5.18
+- bootstrap: disabled dependency on perl-Readonly-XS
+
 * Sun Sep 09 2012 Vladimir Lettiev <crux@altlinux.ru> 1.03-alt3
 - enabled dependency on perl-Readonly-XS
 

@@ -1,6 +1,6 @@
 Name: libpreludedb
 Version: 1.0.0
-Release: alt2.qa1
+Release: alt3
 Summary: Provide the framework for easy access to the Prelude database
 Group: System/Libraries
 License: GPLv2
@@ -187,6 +187,9 @@ chmod 660 %_var/lib/preludedb/idmef-db.sqlite &> /dev/null ||:
 %_datadir/%name/classic/pgsql*
 
 %changelog
+* Fri Aug 30 2013 Vladimir Lettiev <crux@altlinux.ru> 1.0.0-alt3
+- built for perl 5.18
+
 * Sun Apr 14 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.0.0-alt2.qa1
 - NMU: rebuilt with libmysqlclient.so.18.
 

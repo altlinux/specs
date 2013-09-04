@@ -1,7 +1,7 @@
 %define dist Net-IDN-Encode
 Name: perl-%dist
-Version: 2.003
-Release: alt2
+Version: 2.004
+Release: alt1
 
 Summary: Encoding and decoding of Internationalized Domain Names
 License: GPL or Artistic
@@ -37,6 +37,9 @@ Net::IDN::Punycode - ASCII-compatible encoding of Unicode (Punycode, RFC 3492)
 %perl_vendor_archlib/Net
 
 %changelog
+* Wed Aug 28 2013 Vladimir Lettiev <crux@altlinux.ru> 2.004-alt1
+- 2.003 -> 2.004
+
 * Wed Sep 26 2012 Alexey Tourbin <at@altlinux.ru> 2.003-alt2
 - added dependency on perl-unicore
 

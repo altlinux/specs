@@ -1,7 +1,7 @@
 %define dist Cairo
 Name: perl-%dist
 Version: 1.103
-Release: alt1
+Release: alt2
 
 Summary: Perl interface to the cairo vector graphics library
 License: LGPL
@@ -48,6 +48,9 @@ Cairo produces identical output on all those targets.
 %perl_vendor_archlib/Cairo/Install
 
 %changelog
+* Tue Aug 27 2013 Vladimir Lettiev <crux@altlinux.ru> 1.103-alt2
+- built for perl 5.18
+
 * Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 1.103-alt1
 - automated CPAN update
 

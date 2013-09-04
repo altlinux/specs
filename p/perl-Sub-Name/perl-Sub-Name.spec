@@ -1,7 +1,7 @@
 %define dist Sub-Name
 Name: perl-%dist
 Version: 0.05
-Release: alt4
+Release: alt5
 Epoch: 1
 
 Summary: (re)name a sub
@@ -33,6 +33,9 @@ Assigns a new name to referenced sub.
 %perl_vendor_autolib/Sub
 
 %changelog
+* Tue Aug 27 2013 Vladimir Lettiev <crux@altlinux.ru> 1:0.05-alt5
+- built for perl 5.18
+
 * Tue Aug 28 2012 Vladimir Lettiev <crux@altlinux.ru> 1:0.05-alt4
 - rebuilt for perl-5.16
 

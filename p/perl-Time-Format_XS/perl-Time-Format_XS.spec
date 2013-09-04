@@ -1,7 +1,7 @@
 %define dist Time-Format_XS
 Name: perl-%dist
 Version: 1.03
-Release: alt2
+Release: alt3
 
 Summary: Companion module for Time::Format, to speed up time formatting
 License: GPL or Artistic
@@ -9,6 +9,7 @@ Group: Development/Perl
 
 URL: %CPAN %dist
 Source: %dist-%version.tar.gz
+Patch1: %name-%version-perl518.patch
 
 # Automatically added by buildreq on Sat Oct 08 2011
 BuildRequires: perl-DateTime perl-devel
@@ -19,6 +20,7 @@ of the time_format function written in C, so it is much faster.
 
 %prep
 %setup -q -n %dist-%version
+%patch1 -p2
 
 %build
 %perl_vendor_build
@@ -32,6 +34,10 @@ of the time_format function written in C, so it is much faster.
 %perl_vendor_archlib/Time
 
 %changelog
+* Wed Aug 28 2013 Vladimir Lettiev <crux@altlinux.ru> 1.03-alt3
+- built for perl 5.18
+- fixed tests
+
 * Sat Sep 01 2012 Vladimir Lettiev <crux@altlinux.ru> 1.03-alt2
 - rebuilt for perl-5.16
 

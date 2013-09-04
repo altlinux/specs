@@ -1,7 +1,7 @@
 %define dist Net-SSLeay
 Name: perl-%dist
 Version: 1.55
-Release: alt1
+Release: alt2
 
 Summary: Perl extension for using OpenSSL
 License: BSD-style
@@ -34,6 +34,9 @@ so you can write servers or clients for more complicated applications.
 %perl_vendor_autolib/Net
 
 %changelog
+* Thu Aug 22 2013 Vladimir Lettiev <crux@altlinux.ru> 1.55-alt2
+- built for perl 5.18
+
 * Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 1.55-alt1
 - automated CPAN update
 

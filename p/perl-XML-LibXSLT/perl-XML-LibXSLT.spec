@@ -1,7 +1,7 @@
 %define dist XML-LibXSLT
 Name: perl-%dist
 Version: 1.81
-Release: alt1
+Release: alt2
 
 Summary: Perl interface to the Gnome libxslt library
 License: GPL or Artistic
@@ -36,6 +36,9 @@ sed -i- '/Config{libs}/d' Makefile.PL
 %perl_vendor_autolib/XML
 
 %changelog
+* Thu Aug 29 2013 Vladimir Lettiev <crux@altlinux.ru> 1.81-alt2
+- built for perl 5.18
+
 * Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 1.81-alt1
 - automated CPAN update
 

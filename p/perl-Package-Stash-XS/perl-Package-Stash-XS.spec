@@ -1,7 +1,7 @@
 %define dist Package-Stash-XS
 Name: perl-%dist
 Version: 0.28
-Release: alt1
+Release: alt2
 
 Summary: Faster and more correct implementation of the Package::Stash API
 License: GPL or Artistic
@@ -33,6 +33,9 @@ installed, and should be preferred in all environments with a compiler.
 %perl_vendor_autolib/Package*
 
 %changelog
+* Sun Aug 25 2013 Vladimir Lettiev <crux@altlinux.ru> 0.28-alt2
+- built for perl 5.18
+
 * Sat Jul 27 2013 Igor Vlasenko <viy@altlinux.ru> 0.28-alt1
 - automated CPAN update
 

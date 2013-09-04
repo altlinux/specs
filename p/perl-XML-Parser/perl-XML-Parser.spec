@@ -1,7 +1,7 @@
 %define dist XML-Parser
 Name: perl-%dist
 Version: 2.41
-Release: alt3
+Release: alt4
 
 Summary: Perl module for parsing XML files
 License: GPL or Artistic
@@ -40,6 +40,9 @@ find blib/lib/XML/Parser/Encodings -type f -not -name '*.enc' -print -delete
 %perl_vendor_autolib/XML
 
 %changelog
+* Thu Aug 22 2013 Vladimir Lettiev <crux@altlinux.ru> 2.41-alt4
+- built for perl 5.18
+
 * Mon Aug 27 2012 Vladimir Lettiev <crux@altlinux.ru> 2.41-alt3
 - rebuilt for perl-5.16
 

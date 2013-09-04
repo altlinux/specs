@@ -1,6 +1,6 @@
 %define dist Devel-NYTProf
 Name: perl-%dist
-Version: 4.09
+Version: 5.05
 Release: alt1
 
 Summary: Powerful fast feature-rich perl source code profiler
@@ -11,7 +11,7 @@ URL: %CPAN %dist
 Source: %dist-%version.tar.gz
 
 # Automatically added by buildreq on Tue Oct 11 2011
-BuildRequires: perl-JSON-Any perl-Moose perl-Test-Pod perl-Test-Pod-Coverage zlib-devel
+BuildRequires: perl-JSON-Any perl-Moose perl-Test-Pod perl-Test-Pod-Coverage zlib-devel perl-Test-Differences
 
 %description
 Devel::NYTProf is a powerful feature-rich perl source code profiler.
@@ -32,13 +32,17 @@ rm -rv %buildroot%perl_vendor_archlib/Devel/auto
 %add_findreq_skiplist */Devel/NYTProf/Apache.pm
 
 %files
-%doc Changes README
+%doc Changes README.md
 %_bindir/nytprof*
+%_bindir/flamegraph.pl
 %_man1dir/nytpro*.1*
 %perl_vendor_archlib/Devel
 %perl_vendor_autolib/Devel
 
 %changelog
+* Thu Aug 29 2013 Vladimir Lettiev <crux@altlinux.ru> 5.05-alt1
+- 4.09 -> 5.05
+
 * Fri Sep 28 2012 Vladimir Lettiev <crux@altlinux.ru> 4.09-alt1
 - 4.08 -> 4.09
 

@@ -1,7 +1,7 @@
 %define dist Crypt-DES
 Name: perl-Crypt-DES
 Version: 2.07
-Release: alt1
+Release: alt2
 
 Summary: Perl DES encryption module
 License: BSD
@@ -31,6 +31,9 @@ Crypt::DES - an XS-based DES implimentation for Perl.
 %perl_vendor_autolib/Crypt
 
 %changelog
+* Wed Aug 28 2013 Vladimir Lettiev <crux@altlinux.ru> 2.07-alt2
+- built for perl 5.18
+
 * Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 2.07-alt1
 - automated CPAN update
 

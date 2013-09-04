@@ -1,7 +1,7 @@
 %define dist Net-ARP
 Name: perl-%dist
 Version: 1.0.8
-Release: alt1
+Release: alt2
 
 Summary: Perl extension for creating ARP packets
 License: GPL or Artistic
@@ -39,6 +39,9 @@ mv t/send_packet.t t/send_packet.t.orig
 %perl_vendor_autolib/Net
 
 %changelog
+* Wed Aug 28 2013 Vladimir Lettiev <crux@altlinux.ru> 1.0.8-alt2
+- built for perl 5.18
+
 * Sat Jul 27 2013 Igor Vlasenko <viy@altlinux.ru> 1.0.8-alt1
 - automated CPAN update
 

@@ -2,7 +2,7 @@
 
 Name: perl-%module
 Version: 0.06
-Release: alt2
+Release: alt3
 
 Packager: Victor Forsyuk <force@altlinux.org>
 
@@ -40,6 +40,9 @@ Perl interface to the GooCanvas.
 	%perl_vendor_archlib/Goo/Canvas/Install
 
 %changelog
+* Wed Aug 28 2013 Vladimir Lettiev <crux@altlinux.ru> 0.06-alt3
+- built for perl 5.18
+
 * Sat Sep 01 2012 Vladimir Lettiev <crux@altlinux.ru> 0.06-alt2
 - rebuilt for perl-5.16
 
