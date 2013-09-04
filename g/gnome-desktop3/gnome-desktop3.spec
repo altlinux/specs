@@ -9,8 +9,8 @@
 %def_enable introspection
 
 Name: %{_name}3
-Version: %ver_major.3
-Release: alt2
+Version: %ver_major.4
+Release: alt1
 
 Summary: Library with common API for various GNOME 3 modules
 License: %gpl2plus, %fdl
@@ -159,6 +159,9 @@ GObject introspection devel data for the %_name library
 
 
 %changelog
+* Wed Sep 04 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.4-alt1
+- 3.8.4
+
 * Sun Jun 09 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.3-alt2
 - fixed pnp.ids path
 
