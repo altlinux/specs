@@ -1,15 +1,15 @@
-# 4.1.0.4
+# 4.1.1.2
 %define with_forky yes
 
 Name: LibreOffice4
 Version: 4.1
-%define urelease 0.4
+%define urelease 1.2
 %define uversion %version.%urelease
 %define oopfx lo4
 %define lodir %_libdir/%name
 %define uname libreoffice4
 %define conffile %_sysconfdir/sysconfig/%uname
-Release: alt2
+Release: alt3
 Summary: LibreOffice Productivity Suite
 License: LGPL
 Group: Office
@@ -36,28 +36,26 @@ Source100:	forky.c
 
 Patch1:	alt-001-MOZILLA_CERTIFICATE_FOLDER.patch
 Patch2: libreoffice-4-alt-drop-gnome-open.patch
+Patch3: alt-002-tmpdir.patch
 
 # FC patches
 Patch201:	0001-Related-rhbz-968892-discard-impossible-languages-for.patch
 Patch202:	0002-Related-rhbz-968892-discard-impossible-languages-for.patch
-Patch203:	0001-Require-icu-4.6-or-later-with-system-icu.patch
 Patch204:	0001-Resolves-fdo-48835-application-menu-for-LibreOffice.patch
 Patch205:	0001-Resolves-rhbz-968892-force-render-full-grapheme-with.patch
-Patch206:	0001-Resolves-rhbz-989686-Fix-crash-with-ooo120774-1.doc.patch
-Patch207:	0001-Use-inconditionally-the-libwpd-0.9.5-path.patch
-Patch208:	0001-WaE-assuming-signed-overflow-does-not-occur-when-ass.patch
 Patch209:	0001-do-not-build-LibreOffice_Test.patch
-Patch210:	0001-move-static-bitmap-into-a-svapp-member.patch
-Patch211:	0001-resolved-fdo-67094-handle-text-s-in-text-p-and-text-.patch
-Patch212:	0001-rhbz-980387-fix-filter-selection-from-file-ext.patch
-Patch213:	0001-sanitize-system-clucene-includes.patch
 Patch214:	0001-temporarily-disable-failing-test.patch
+Patch215:	0001-Always-try-to-mount-in-gio-Content-getGFileInfo.patch
+Patch216:	0001-Resolves-rhbz-993963-NULL-m_pWindow-on-firefox-delet.patch
+Patch217:	0001-Resolves-rhbz-998046-store-last-size-position-of-the.patch
+Patch218:	0001-rhbz-1000150-Do-not-call-exit-upon-XIOError.patch
+#patch213 -p1
+#patch213 -p1
 
 # Long-term FC patches
 Patch300: openoffice.org-2.0.2.rh188467.printingdefaults.patch
 Patch301: openoffice.org-3.0.0.ooo88341.sc.verticalboxes.patch
 Patch302: openoffice.org-3.1.0.ooo101274.opening-a-directory.patch
-Patch303: openoffice.org-3.1.1.ooo105784.vcl.sniffscriptforsubs.patch
 
 # Automatically added by buildreq on Wed Mar 06 2013
 # optimized out: ant boost-devel boost-devel-headers boost-interprocess-devel boost-intrusive-devel bzlib-devel cppunit fontconfig fontconfig-devel fonts-ttf-java-1.6.0-sun glib2-devel gstreamer-devel icu-utils java java-devel jpackage-utils junit kde4libs libGL-devel libGLU-devel libICE-devel libSM-devel libX11-devel libXext-devel libXinerama-devel libXrandr-devel libXrender-devel libXt-devel libatk-devel libcairo-devel libcom_err-devel libcurl-devel libdbus-devel libdbus-glib libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgdk-pixbuf-xlib libgio-devel libgmp-devel libgpg-error libgst-plugins libkrb5-devel libncurses-devel libnspr-devel libpango-devel libpcre-devel libpng-devel libpoppler-devel libpq-devel libqt4-core libqt4-devel libqt4-gui libssl-devel libstdc++-devel libsystemd-daemon libtinfo-devel libunixODBC-devel libwayland-client libwayland-server libwpd9-devel libxml2-devel perl-Compress-Raw-Zlib pkg-config poppler-data python-base tzdata tzdata-java xerces-j2 xml-common xml-commons-jaxp-1.3-apis xml-utils xorg-kbproto-devel xorg-randrproto-devel xorg-renderproto-devel xorg-xextproto-devel xorg-xproto-devel xsltproc xz zlib-devel
@@ -177,35 +175,25 @@ echo Direct build
 %setup -q -n libreoffice-%uversion -a10 -b1 -b2 -b3
 %patch1 -p0
 %patch2 -p1
+%patch3 -p2
 
-# FC (## -- unsuccsessful but seems meningful)
+# FC (## -- unsuccsessful but seems meaningful)
 %patch201 -p1
 %patch202 -p1
-#patch203 -p1
 %patch204 -p1
 %patch205 -p1
-%patch206 -p1
-%patch207 -p1
-%patch208 -p1
 %patch209 -p1
-%patch210 -p1
-%patch211 -p1
-%patch212 -p1
-%patch213 -p1
 %patch214 -p1
+%patch215 -p1
+%patch216 -p1
+%patch217 -p1
+%patch218 -p1
 
 %patch300 -p1
 %patch301 -p1
 %patch302 -p1
-#patch303 -p1
 
 rm -fr %name-tnslations/git-hooks
-
-# Hack build ditrectory a little
-##ln -s %SOURCE0 ext_sources/
-##ln -s %SOURCE1 ext_sources/
-##ln -s %SOURCE2 ext_sources/
-##ln -s %SOURCE3 ext_sources/
 
 install -D %SOURCE100 forky.c
 
@@ -427,6 +415,11 @@ install -D libreoffice.config %buildroot%conffile
 %langpack -l kk -n Kazakh
 
 %changelog
+* Wed Sep 04 2013 Fr. Br. George <george@altlinux.ru> 4.1-alt3
+- Version up to 4.1.1.2
+- Refresh FC patchset
+- Un-hardcode /tmp usage (Closes: 29267)
+
 * Tue Aug 13 2013 Alexey Shabalin <shaba@altlinux.ru> 4.1-alt2
 - fixed gnome file list
 - fixed kde file list
