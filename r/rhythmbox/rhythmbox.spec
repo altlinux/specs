@@ -1,17 +1,17 @@
-%define ver_major 2.99
+%define ver_major 3.0
 %define rev %nil
 %define gst_api_ver 1.0
 
 %def_without hal
 %def_with gudev
-%def_without webkit
-%def_disable daap
+%def_with webkit
+%def_enable daap
 %def_enable visualizer
 %def_enable grilo
 %def_disable gtk_doc
 
 Name: rhythmbox
-Version: %ver_major.1
+Version: %ver_major
 Release: alt1%rev
 
 Summary: Music Management Application
@@ -22,7 +22,9 @@ Url: http://www.gnome.org/projects/rhythmbox/
 %define pkgdocdir %_docdir/%name-%version
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
-#ource: %name-%version.tar
+#Source: %name-%version.tar
+
+Patch: %name-3.0-alt-zeitgeist_plugin_python3_syntax.patch
 
 %define dbus_ver 0.35
 %define glib_ver 2.32.0
@@ -35,6 +37,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 %define udev_ver 143
 %define gpod_ver 0.8
 %define mx_ver 1.0.1
+%define secret_ver 0.14
 
 Requires: lib%name = %version-%release
 
@@ -44,6 +47,11 @@ Requires: gst-plugins-base%gst_api_ver
 Requires: gst-plugins-good%gst_api_ver
 
 %define _libexecdir %_libdir/%name
+# use python3
+AutoReqProv: nopython
+%define __python %nil
+%add_python3_compile_include %_libexecdir
+BuildRequires: rpm-build-python3 python3-module-pygobject3-devel
 
 BuildRequires(Pre): browser-plugins-npapi-devel
 
@@ -62,7 +70,7 @@ BuildRequires: gstreamer%gst_api_ver-utils >= %gst_ver
 BuildRequires: gst-plugins%gst_api_ver-devel >= %gst_ver
 BuildRequires: libgpod-devel >= %gpod_ver
 BuildRequires: libmtp-devel >= %mtp_ver
-BuildRequires: libICE-devel libSM-devel libsecret-devel
+BuildRequires: libICE-devel libSM-devel libsecret-devel >= %secret_ver
 BuildRequires: iso-codes-devel libcheck-devel
 BuildRequires: liblirc-devel libnotify-devel >= 0.7.3
 BuildRequires: libjson-glib-devel libpng-devel
@@ -74,15 +82,14 @@ BuildRequires: libdmapsharing-devel
 %{?_enable_visualizer:BuildRequires: libclutter-gtk3-devel libclutter-gst2.0-devel libmx-devel >= %mx_ver}
 %{?_with_hal:BuildRequires: libhal-devel}
 %{?_with_gudev:BuildRequires: libgudev-devel}
-BuildRequires: python-module-pygobject3-devel
 BuildRequires: libgtk+3-gir-devel libgstreamer%gst_api_ver-gir-devel gst-plugins%gst_api_ver-gir-devel
 
 Provides: %name-plugins-audiocd
 Provides: %name-plugins-generic-player
 
 # python bindings are linked into rhythmbox statically
-Provides: python%__python_version(rb)
-Provides: python%__python_version(rhythmdb)
+Provides: python%__python3_version(rb)
+Provides: python%__python3_version(rhythmdb)
 
 %description
 Rhythmbox is an integrated music management application, supporting
@@ -320,6 +327,7 @@ This virtual package installs all Rhythmbox plugins
 
 %prep
 %setup -n %name-%version
+%patch
 
 %build
 %autoreconf
@@ -471,6 +479,12 @@ ln -s %_licensedir/GPL-2 %buildroot%pkgdocdir/COPYING
 %exclude %_libdir/%name/sample-plugins/
 
 %changelog
+* Wed Sep 04 2013 Yuri N. Sedunov <aris@altlinux.org> 3.0-alt1
+- 3.0
+- used python3 for plugins
+- enabled daap plugin again
+- webkit support enabled to show html
+
 * Sat Apr 13 2013 Yuri N. Sedunov <aris@altlinux.org> 2.99.1-alt1
 - 2.99.1
 
