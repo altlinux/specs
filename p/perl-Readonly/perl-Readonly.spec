@@ -1,8 +1,9 @@
 %define dist Readonly
+%def_without bootstrap
 
 Name: perl-%dist
 Version: 1.03
-Release: alt4
+Release: alt5
 
 Summary: Readonly - facility for creating read-only scalars, arrays, hashes
 License: Perl
@@ -13,7 +14,10 @@ Source: http://www.cpan.org/modules/by-module/Readonly/%dist-%version.tar.gz
 
 BuildArch: noarch
 
-#Requires: perl-Readonly-XS
+%if_without bootstrap
+Requires: perl-Readonly-XS
+BuildRequires: perl-Readonly-XS
+%endif
 
 BuildRequires: perl-devel
 
@@ -39,6 +43,9 @@ mv %buildroot%perl_vendor_privlib/benchmark.pl .
 %perl_vendor_privlib/Readonly.pm
 
 %changelog
+* Thu Sep 05 2013 Vladimir Lettiev <crux@altlinux.ru> 1.03-alt5
+- enabled dependency on perl-Readonly-XS
+
 * Wed Aug 28 2013 Vladimir Lettiev <crux@altlinux.ru> 1.03-alt4
 - built for perl 5.18
 - bootstrap: disabled dependency on perl-Readonly-XS
