@@ -1,6 +1,6 @@
 Name: xfburn
 Version: 0.5.0
-Release: alt1.git20130508
+Release: alt1.git20130825
 
 Summary: CD-R/CD-RW disc writing application
 Url: http://www.xfce.org/projects/xfburn/ 
@@ -52,6 +52,10 @@ Xfburn is a simple CD burning tool based on libburn/libisofs.
 /usr/share/man/man1/*
 
 %changelog
+* Thu Sep 05 2013 Mikhail Efremov <sem@altlinux.org> 0.5.0-alt1.git20130825
+- Add GenericName to the desktop file (closes: #29235).
+- Updated translations (from upstream git).
+
 * Wed May 08 2013 Mikhail Efremov <sem@altlinux.org> 0.5.0-alt1.git20130508
 - Drop obsoleted patches.
 - Upstream git snapshot.
