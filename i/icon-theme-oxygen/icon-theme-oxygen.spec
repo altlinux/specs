@@ -1,7 +1,7 @@
 %define theme oxygen
 
 Name: icon-theme-%theme
-Version: 4.10.3
+Version: 4.11.1
 Release: alt1
 
 Summary: A set of Icons for KDE
@@ -17,7 +17,7 @@ Conflicts: kde4libs < 4.2.60
 
 Source: %theme-icons-%version.tar
 Source10: exclude.txt
-Patch1: oxygen-icons-4.8.1-alt-toolbar-default-size.patch
+Patch1: oxygen-icons-4.11.1-alt-defaults.patch
 
 BuildRequires: cmake gcc-c++ kde-common-devel
 BuildRequires: icon-naming-utils
@@ -87,6 +87,10 @@ done < %SOURCE10
 %_iconsdir/%theme/???x???
 
 %changelog
+* Thu Sep 05 2013 Sergey V Turchin <zerg@altlinux.org> 4.11.1-alt1
+- new version
+- set small icons size to 22 by default
+
 * Tue May 14 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.3-alt1
 - new version
 
