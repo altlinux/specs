@@ -1,5 +1,5 @@
 Name: phpMyAdmin
-Version: 3.5.8
+Version: 4.0.5
 Release: alt1
 
 Summary: phpMyAdmin - web-based MySQL administration
@@ -51,7 +51,7 @@ Group: System/Servers
 Requires: %name = %version-%release
 Requires: apache-mod_php5
 Requires: apache-base
-Requires: php5-mysql
+Requires: php5-mysqli
 Requires: php5-mcrypt
 Requires: php5-mbstring
 Requires: php5-gd2
@@ -82,7 +82,7 @@ Group: System/Servers
 Requires: %name = %version-%release
 Requires: apache2-mod_php5 >= 5.2.0
 Requires: apache2-base
-Requires: php5-mysql
+Requires: php5-mysqli
 Requires: php5-mcrypt
 Requires: php5-mbstring
 Requires: php5-gd2
@@ -112,6 +112,9 @@ Install this package if you need phpMyAdmin for apache 2.0 and php5.
 %install
 mkdir -p %buildroot%webserver_webappsdir
 cp -r ../%name-%version %buildroot%webserver_webappsdir/%name
+
+# remove doc sources
+rm -rf %buildroot%webserver_webappsdir/%name/doc/{_ext,doctrees,Makefile,make.bat,conf.py,*.rst}
 
 #install -m755 -d %buildroot%webserver_webappsdir/%name/{lang,js{/mooRainbow{/images,},},themes,libraries{/auth,},css}
 #install -m644 *.php *.html *.css favicon.ico %buildroot%webserver_webappsdir/%name/
@@ -171,7 +174,7 @@ replace *SECRET* `pwgen -0s1` -- %webserver_webappsdir/%name/config.inc.php
 #%_initdir/httpd2 condreload
 
 %files
-%doc phpMyAdmin-README.ALT Documentation.* docs.css README* ChangeLog
+%doc phpMyAdmin-README.ALT README* ChangeLog
 %dir %webserver_webappsdir/%name/
 %webserver_webappsdir/%name/*
 %config(noreplace) %webserver_webappsdir/%name/.htaccess
@@ -189,6 +192,11 @@ replace *SECRET* `pwgen -0s1` -- %webserver_webappsdir/%name/config.inc.php
 %attr(755,root,root) %_controldir/%name-apache2
 
 %changelog
+* Thu Sep 05 2013 Vitaly Lipatov <lav@altlinux.ru> 4.0.5-alt1
+- new version 4.0.5 (with rpmrb script)
+- require php5-mysqli
+- drop doc source from binary package (was require python sphinx)
+
 * Wed Apr 10 2013 Vitaly Lipatov <lav@altlinux.ru> 3.5.8-alt1
 - new version 3.5.8 (with rpmrb script)
 - cleanup spec, mark conf files as config
