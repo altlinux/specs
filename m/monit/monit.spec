@@ -4,7 +4,7 @@
 %def_with pam
 
 Name: monit
-Version: 5.5.1
+Version: 5.6
 Release: alt1
 
 Summary: Process monitor and restart utility
@@ -20,7 +20,6 @@ Source4: %name.cnf
 Source5: README.Certificate-Creation
 Source6: monitrc.d.tar.gz
 Source100: monit.watch
-Patch: monit-5.3-pkgconfig-configure.patch
 Packager: Michael Shigorin <mike@altlinux.org>
 
 PreReq: openssl
@@ -85,7 +84,6 @@ Directory for monit configuration files
 
 %prep
 %setup -n %name-%version%beta
-%patch -p1
 
 %build
 sh bootstrap
@@ -157,6 +155,10 @@ fi
 # - each "check file" += "every 48 cycles"
 
 %changelog
+* Wed Sep 04 2013 Michael Shigorin <mike@altlinux.org> 5.6-alt1
+- new version (watch file uupdate)
+- dropped libssl detection patch, hooray!
+
 * Wed Jun 05 2013 Michael Shigorin <mike@altlinux.org> 5.5.1-alt1
 - new version (watch file uupdate)
 
