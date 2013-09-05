@@ -1,7 +1,8 @@
 %define dist DateTime-TimeZone
+%def_without bootstrap
 Name: perl-%dist
 Version: 1.60
-Release: alt2
+Release: alt3
 
 Summary: Time zone object base class and factory
 License: GPL or Artistic
@@ -26,8 +27,12 @@ BuildArch: noarch
 # bootstrap: disable circular dependencies on DateTime
 %add_findreq_skiplist */DateTime/TimeZone/*
 
+%if_with bootstrap
 # bootstrap: some dependencies have to be re-added manually
 Requires: perl-Class-Load perl-Class-Singleton perl-Params-Validate perl-parent
+%else
+BuildRequires: perl-DateTime
+%endif
 
 BuildRequires: perl-Class-Load perl-Class-Singleton perl-Test-Output perl-Params-Validate perl-parent
 
@@ -51,8 +56,10 @@ http://www.twinsun.com/tz/tz-link.htm.
 # avoid build dependency on perl-podlators
 sed -i- '/Pod::Man/d' Makefile.PL
 
+%if_with bootstrap
 # bootstrap: avoid build dependency on DateTime
 sed -i- 's/eval "use DateTime/eval "die/' t/check_datetime_version.pl
+%endif
 
 %build
 %perl_vendor_build
@@ -65,6 +72,9 @@ sed -i- 's/eval "use DateTime/eval "die/' t/check_datetime_version.pl
 %perl_vendor_privlib/DateTime
 
 %changelog
+* Thu Sep 05 2013 Vladimir Lettiev <crux@altlinux.ru> 1.60-alt3
+- re-enabled dependency on perl-DateTime
+
 * Sun Aug 25 2013 Vladimir Lettiev <crux@altlinux.ru> 1.60-alt2
 - bootstrap for perl-5.18
 
