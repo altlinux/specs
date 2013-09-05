@@ -3,7 +3,7 @@
 Summary: SELinux policy core utilities
 Name: policycoreutils
 Version: 2.1.14
-Release: alt3
+Release: alt4
 License: GPLv2
 Group: System/Base
 Url: http://userspace.selinuxproject.org
@@ -287,6 +287,9 @@ cp -r mcstrans/share/* %buildroot%_datadir/mcstrans/
 
 
 %changelog
+* Thu Jul 11 2013 Timur Aitov <timonbl4@altlinux.org> 2.1.14-alt4
+- fix mcstrans.service
+
 * Wed Jul 10 2013 Andriy Stepanov <stanv@altlinux.ru> 2.1.14-alt3
 - Rebuild with new setools
 
