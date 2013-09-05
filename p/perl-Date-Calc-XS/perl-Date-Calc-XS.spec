@@ -1,7 +1,8 @@
 %define dist Date-Calc-XS
+%def_without bootstrap
 Name: perl-%dist
 Version: 6.3
-Release: alt3
+Release: alt4
 
 Summary: XS wrapper and C library plug-in for Date::Calc
 License: GPL or Artistic
@@ -12,8 +13,12 @@ Source: %dist-%version.tar.gz
 
 BuildRequires: perl-devel perl-Carp-Clan perl-Bit-Vector
 
+%if_with bootstrap
 # bootstrap: disable build dependency on Date::Calc
 %def_disable test
+%else
+BuildRequires: perl-Date-Calc
+%endif
 
 %description
 This package provides all sorts of date calculations based on the Gregorian
@@ -40,6 +45,9 @@ calendar (the one used in all western countries today).
 	%perl_vendor_autolib/Date/Calc/XS/XS.so
 
 %changelog
+* Thu Sep 05 2013 Vladimir Lettiev <crux@altlinux.ru> 6.3-alt4
+- re-enabled build dependency on perl-Date-Calc
+
 * Tue Aug 27 2013 Vladimir Lettiev <crux@altlinux.ru> 6.3-alt3
 - built for perl 5.18
 - disabled build dependency on perl-Date-Calc, for bootstrap
