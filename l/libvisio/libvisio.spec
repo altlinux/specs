@@ -1,13 +1,13 @@
 
 Name: libvisio
-Version: 0.0.30
+Version: 0.0.31
 Release: alt1
 Summary: A library providing ability to interpret and import visio diagrams
 
 Group: System/Libraries
 License: GPLv2+ or LGPLv2+ or MPLv1.1
 Url: http://www.freedesktop.org/wiki/Software/libvisio
-Source: %name-%version.tar
+Source: %name-%version.tar.gz
 
 BuildRequires: gcc-c++
 BuildRequires: pkgconfig(libwpg-0.2)
@@ -81,5 +81,9 @@ mkdir -p m4
 %_bindir/*
 
 %changelog
+* Thu Sep 05 2013 Fr. Br. George <george@altlinux.ru> 0.0.31-alt1
+- Autobuild version bump to 0.0.31
+- Build scheme changed
+
 * Tue Aug 13 2013 Alexey Shabalin <shaba@altlinux.ru> 0.0.30-alt1
 - initial build
