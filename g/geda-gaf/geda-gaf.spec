@@ -5,8 +5,8 @@
 %define major 1.6
 
 Name: geda-gaf
-Version: %major.1
-Release: alt2
+Version: %major.2
+Release: alt1
 Epoch: 2
 
 Summary: Design Automation toolkit for electronic design
@@ -272,6 +272,9 @@ rm -f %buildroot/%_datadir/mime/version
 %_man1dir/grenum.1.*
 
 %changelog
+* Thu Sep 05 2013 Vitaly Lipatov <lav@altlinux.ru> 2:1.6.2-alt1
+- new version 1.6.2 (with rpmrb script)
+
 * Sat May 05 2012 Vitaly Lipatov <lav@altlinux.ru> 2:1.6.1-alt2
 - fix direct glib headers using
 
