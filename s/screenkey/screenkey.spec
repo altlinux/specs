@@ -1,8 +1,7 @@
 BuildRequires(pre): rpm-build-python
 
-
 Name: screenkey
-Version: 0.2
+Version: 0.3
 Release: alt1
 Summary: A screen-cast tool to show your keys and based on key-mon project
 
@@ -21,6 +20,8 @@ the key-mon project.
 
 %prep
 %setup
+sed -i 's/^Categories=.*/Categories=AudioVideo;Video;Recorder;/' data/screenkey.desktop
+sed -i '/^Version=/d' data/screenkey.desktop
 
 %build
 %python_build
@@ -38,5 +39,8 @@ find build/lib* -name '*.py' -exec sed -i "1{/^#!/d}" {} \; && \
 %exclude %python_sitelibdir_noarch/*.egg-info
 
 %changelog
+* Thu Sep 05 2013 Denis Smirnov <mithraen@altlinux.ru> 0.3-alt1
+- %name.desktop fixes
+
 * Wed Sep 04 2013 Denis Smirnov <mithraen@altlinux.ru> 0.2-alt1
 - initial build for ALT Linux Sisyphus
