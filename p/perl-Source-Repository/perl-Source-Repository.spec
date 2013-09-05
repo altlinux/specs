@@ -1,8 +1,8 @@
 %define module Source-Repository
 
 Name: perl-%module
-Version: 0.12
-Release: alt2
+Version: 0.13
+Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
 
@@ -36,6 +36,9 @@ Conflicts: perl-RPM-Source-Convert < 0.48
 %perl_vendor_privlib/Source*
 
 %changelog
+* Thu Sep 05 2013 Igor Vlasenko <viy@altlinux.ru> 0.13-alt1
+- development release
+
 * Fri Aug 30 2013 Igor Vlasenko <viy@altlinux.ru> 0.12-alt2
 - development release
 
