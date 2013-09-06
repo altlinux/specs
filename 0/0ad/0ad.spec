@@ -1,6 +1,6 @@
 Name: 0ad
 Epoch: 1
-Version: 0.0.13.alpha
+Version: 0.0.14.alpha
 Release: alt1
 
 Group: Games/Strategy
@@ -74,6 +74,9 @@ install -Dm 0755 build/resources/0ad.sh %buildroot%_bindir/0ad
 %dir %_libdir/%name
 
 %changelog
+* Fri Sep 06 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:0.0.14.alpha-alt1
+- 0.0.14
+
 * Wed Apr 03 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:0.0.13.alpha-alt1
 - 0.0.13
 
