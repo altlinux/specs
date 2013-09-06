@@ -2,7 +2,7 @@
 %define cvs_date zero
 %undefine cvs_date
 %define snapshot 2012-10-12
-%define rel alt1
+%define rel alt1.1
 
 %def_disable static
 %def_with pam_helper
@@ -193,6 +193,9 @@ cp %SOURCE11 %buildroot%_sysconfdir/enlightenment/sysactions.conf
 %_datadir/gnome/wm-properties/*.desktop
 
 %changelog
+* Fri Sep 06 2013 Yuri N. Sedunov <aris@altlinux.org> 1:0.17.4-alt1.1
+- sysactions.conf: don't use systemctl for poweroff and reboot
+
 * Fri Aug 23 2013 Yuri N. Sedunov <aris@altlinux.org> 1:0.17.4-alt1
 - 0.17.4
 - sysactions.conf: 's/halt/poweroff/'
