@@ -1,17 +1,18 @@
 %define theme spt
-%define Theme Spt
-%define codename separator
+%define Theme SPT
+%define codename %nil
 %define brand altlinux
 %define Brand ALT Linux
 
-
 Name: branding-%brand-%theme
-Version: 6.0.1
-Release: alt3
-BuildArch: noarch
+Version: 7.0.0
+Release: alt1
 
-BuildRequires: cpio gfxboot >= 4 fonts-ttf-dejavu fonts-ttf-droid
+BuildRequires: cpio fonts-ttf-dejavu fonts-ttf-droid
 BuildRequires: design-bootloader-source >= 5.0-alt2
+%ifnarch %arm
+BuildRequires: cpio gfxboot >= 4 
+%endif
 
 BuildRequires(pre): libqt4-core 
 BuildRequires: libalternatives-devel
@@ -19,9 +20,12 @@ BuildRequires: libqt4-devel
 
 BuildRequires: ImageMagick fontconfig bc libGConf-devel
 
-%define status %nil
 %define status_en %nil
-%define variants altlinux-office-desktop altlinux-office-server altlinux-lite altlinux-workbench school-master altlinux-desktop altlinux-gnome-desktop
+%define status %nil
+%define ProductName_ru Альт Линукс 7.0 СПТ
+
+# All existing branding without this branding
+%define variants altlinux-backup-server altlinux-desktop altlinux-gnome-desktop altlinux-kdesktop altlinux-lite altlinux-lxdesktop altlinux-office-desktop altlinux-office-server altlinux-school-server altlinux-sisyphus altlinux-spt altlinux-tablet altlinux-workbench informika-schoolmaster ivk-chainmail lxde-desktop lxde-school-lite Platform6-server-light school-junior school-lite school-master school-server school-teacher school-terminal simply-linux sisyphus-server-light 
 
 Packager: Anton V. Boyarshinov <boyarsh at altlinux dot org>
 
@@ -34,6 +38,7 @@ License: GPL
 %description
 Distro-specific packages with design and texts
 
+
 %package bootloader
 Group: System/Configuration/Boot and Init
 Summary: Graphical boot logo for grub2, lilo and syslinux
@@ -45,13 +50,14 @@ Provides: design-bootloader-system-%theme design-bootloader-livecd-%theme design
 Obsoletes: design-bootloader-system-%theme design-bootloader-livecd-%theme design-bootloader-livecd-%theme design-bootloader-%theme branding-alt-%theme-bootloader
 Conflicts: %(for n in %variants ; do [ "$n" = %brand-%theme ] || echo -n "branding-$n-bootloader ";done )
 
-%define grub_normal white/black
-%define grub_high black/white
+%define grub_normal white/light-blue
+%define grub_high black/light-gray
 
 %description bootloader
 Here you find the graphical boot logo. Suitable for both lilo and syslinux.
 
 %package bootsplash
+BuildArch: noarch
 Summary: Theme for splash animations during bootup
 License: Distributable
 Group:  System/Configuration/Boot and Init
@@ -65,6 +71,7 @@ This package contains graphics for boot process, displayed via Plymouth
 
 
 %package alterator
+BuildArch: noarch
 Summary: Design for alterator for %Brand %Theme 
 License: GPL
 Group: System/Configuration/Other
@@ -77,9 +84,10 @@ Obsoletes: design-alterator-server design-alterator-desktop design-altertor-brow
 PreReq(post,preun): alternatives >= 0.2 alterator
 
 %description alterator
-Design for QT and web alterator for %Brand %Theme 
+Design for QT and web alterator for %Brand %Theme
 
 %package graphics
+BuildArch: noarch
 Summary: design for ALT
 License: Different licenses
 Group: Graphics
@@ -98,10 +106,12 @@ This package contains some graphics for ALT design.
 %define provide_list altlinux fedora redhat system altlinux
 %define obsolete_list altlinux-release fedora-release redhat-release
 %define conflicts_list altlinux-release-sisyphus altlinux-release-4.0 altlinux-release-junior altlinux-release-master altlinux-release-server altlinux-release-terminal altlinux-release-small_business
+
 %package release
+BuildArch: noarch
 
 Summary: %distribution %Theme release file
-Copyright: GPL
+License: GPL
 Group: System/Configuration/Other
 Provides: %(for n in %provide_list; do echo -n "$n-release = %version-%release "; done) altlinux-release-%theme  branding-alt-%theme-release
 Obsoletes: %obsolete_list  branding-alt-%theme-release
@@ -112,6 +122,7 @@ Conflicts: %(for n in %variants ; do [ "$n" = %brand-%theme ] || echo -n "brandi
 %distribution %version %Theme release file.
 
 %package notes
+BuildArch: noarch
 Provides: alt-license-theme = %version alt-notes-%theme
 Obsoletes: alt-license-%theme alt-notes-%theme
 Summary: Distribution license and release notes
@@ -124,7 +135,7 @@ Conflicts: %(for n in %variants ; do [ "$n" = %brand-%theme ] || echo -n "brandi
 Distribution license and release notes
 
 %package kde4-settings
-
+BuildArch: noarch
 Summary: KDE4 settings for %Brand %version %Theme
 License: Distributable
 Group: Graphical desktop/KDE
@@ -136,34 +147,35 @@ KDE4 settings for %Brand %version %Theme
 
 %package fvwm-settings
 
+BuildArch: noarch
 Summary: FVWM2 settings for %Brand %version %Theme
 License: Distributable
 Group: Graphical desktop/FVWM based
-Requires: altlinux-menus
+Requires: altlinux-freedesktop-menu-gnomish-menu
 Conflicts: %(for n in %variants ; do [ "$n" = %brand-%theme ] || echo -n "branding-$n-fvwm-settings ";done )
 
 %description fvwm-settings
 FVWM2 settings for %Brand %version %Theme
 
-%package gnome-settings
+%package mate-settings
 
-Summary: GNOME settings for %Brand %version %Theme
+BuildArch: noarch
+Summary: MATE settings for %Brand %version %Theme
 License: Distributable
-Group: Graphical desktop/GNOME
-Requires: altlinux-freedesktop-menu-gnomish-menu
-Requires: gtk2-theme-mist
-Provides: gnome-theme-%brand-%theme = %version-%release
-Provides: metacity-theme-%brand-%theme = %version-%release
-Provides: metacity-theme
-#Provides: gnome-menus
+Group:   Graphical desktop/GNOME
+Requires: gksu
+Requires: dconf
+Requires: gtk3-theme-clearlooks-phenix
 Conflicts: %(for n in %variants ; do [ "$n" = %brand-%theme ] || echo -n "branding-$n-gnome-settings ";done )
+PreReq(post): lightdm-gtk-greeter
+PreReq(post): libgio
 
-%description gnome-settings
-GNOME settings for %Brand %version %Theme
-
+%description mate-settings
+MATE settings for %Brand %version %Theme
 
 %package slideshow
 
+BuildArch: noarch
 Summary: Slideshow for %Brand %version %Theme installer
 License: Distributable
 Group: System/Configuration/Other 
@@ -174,6 +186,7 @@ Slideshow for %Brand %version %Theme installer
 
 %package indexhtml
 
+BuildArch: noarch
 Summary: %name -- ALT Linux html welcome page
 License: distributable
 Group: System/Base
@@ -197,10 +210,15 @@ ALT Linux index.html welcome page.
 %prep
 %setup -n branding
 
+%ifnarch %arm
+%define x86 boot
+%else
+%define x86 %nil
+%endif
 
 %build
 autoconf
-THEME=%theme NAME='%Theme' BRAND_FNAME='%Brand' BRAND='%brand' STATUS_EN=%status_en STATUS=%status VERSION=%version ./configure 
+THEME=%theme NAME='%Theme' BRAND_FNAME='%Brand' BRAND='%brand' STATUS_EN=%status_en STATUS=%status VERSION=%version PRODUCT_NAME_RU='%ProductName_ru' CODENAME='%codename' X86='%x86' ./configure 
 make
 
 %install
@@ -229,6 +247,7 @@ echo "%distribution %version %Theme %status_en (%codename)" >%buildroot%_sysconf
 for n in fedora redhat system; do
 	ln -s altlinux-release %buildroot%_sysconfdir/$n-release
 done
+install -m 0644 components/systemd/os-release %buildroot%_sysconfdir/os-release
 
 #notes
 pushd notes
@@ -239,35 +258,23 @@ popd
 pushd kde4-settings
 mkdir -p %buildroot%_sysconfdir/skel/.kde4
 cp -a kde4/* %buildroot%_sysconfdir/skel/.kde4/
-mkdir -p %buildroot%_sysconfdir/kde4/xdg/menus/applications-merged/
-install -m 644 menu/*menu %buildroot%_sysconfdir/kde4/xdg/menus/applications-merged/
-mkdir -p %buildroot/usr/share/desktop-directories/
-install -m 644 menu/*directory %buildroot/usr/share/desktop-directories/
 popd
+
 
 #fwvm-settings
 mkdir -p %buildroot/etc/skel
 install -m 644 fvwm-settings/.fvwm2rc %buildroot/etc/skel/
 
-#gnome-settings
-%define XdgThemeName %Brand %Theme
-pushd gnome-settings
-mkdir -p '%buildroot/%_datadir/themes/%XdgThemeName'
-mkdir -p '%buildroot/%_datadir/themes/%XdgThemeName/gtk-2.0'
-install -m 644 gtkrc '%buildroot/%_datadir/themes/%XdgThemeName/gtk-2.0'
-mkdir -p '%buildroot/%_datadir/themes/%XdgThemeName/metacity-1'
-install -m 644 metacity-theme-1.xml '%buildroot/%_datadir/themes/%XdgThemeName/metacity-1/'
-install -m 644 index.theme '%buildroot/%_datadir/themes/%XdgThemeName/'
-mkdir -p '%buildroot/etc/gnome/xdg/menus/applications-merged/'
-install -m 644 applications.menu '%buildroot/etc/gnome/xdg/menus/applications-merged/'
-mkdir -p '%buildroot/etc/xdg/menus/'
-install -m 644 settings.menu '%buildroot/etc/xdg/menus/'
-cp -a skel/.gconf  '%buildroot/etc/skel/'
+#mate-settings
+pushd mate-settings
+install -m 644 -D 50_mate-background.gschema.override '%buildroot%_datadir/glib-2.0/schemas/50_mate-background.gschema.override'
+install -m 644 -D 60_mate-theme.gschema.override '%buildroot%_datadir/glib-2.0/schemas/60_mate-theme.gschema.override'
+install -m 644 -D Trolltech.conf '%buildroot%_sysconfdir/skel/.config/Trolltech.conf'
 popd
 
 #slideshow
 mkdir -p %buildroot/usr/share/install2/slideshow
-#install slideshow/*  %buildroot/usr/share/install2/slideshow/
+install slideshow/*  %buildroot/usr/share/install2/slideshow/
 
 #bootloader
 %pre bootloader
@@ -282,6 +289,7 @@ cd boot/splash/%theme/
 echo $lang > lang
 [ "$lang" = "C" ] || echo lang | cpio -o --append -F message
 . shell-config
+shell_config_set /etc/sysconfig/grub2 GRUB_THEME /boot/grub/themes/%theme/theme.txt
 shell_config_set /etc/sysconfig/grub2 GRUB_COLOR_NORMAL %grub_normal
 shell_config_set /etc/sysconfig/grub2 GRUB_COLOR_HIGHLIGHT %grub_high
 
@@ -294,9 +302,12 @@ shell_config_set /etc/sysconfig/grub2 GRUB_COLOR_HIGHLIGHT %grub_high
 %post indexhtml
 %_sbindir/indexhtml-update
 
+%ifnarch %arm
 %files bootloader
 %_datadir/gfxboot/%theme
 /boot/splash/%theme
+/boot/grub/themes/%theme
+%endif
 
 #bootsplash
 %post bootsplash
@@ -305,10 +316,9 @@ subst "s/Theme=.*/Theme=%theme/" /etc/plymouth/plymouthd.conf
       subst "s|GRUB_WALLPAPER=.*|GRUB_WALLPAPER=/usr/share/plymouth/themes/%theme/grub.jpg|" \
              /etc/sysconfig/grub2 ||:
 
-%post gnome-settings
-%gconf2_set string /desktop/gnome/interface/font_name Sans 11
-%gconf2_set string /desktop/gnome/interface/monospace_font_name Monospace 10
-
+%post mate-settings
+subst 's/#theme-name=/theme-name=Clearlooks-Phenix/' /etc/lightdm/lightdm-gtk-greeter.conf ||:
+/usr/bin/glib-compile-schemas /usr/share/glib-2.0/schemas
 
 %files alterator
 %config %_altdir/*.rcc
@@ -331,17 +341,13 @@ subst "s/Theme=.*/Theme=%theme/" /etc/plymouth/plymouthd.conf
 
 %files kde4-settings
 %_sysconfdir/skel/.kde4
-%_sysconfdir/kde4/xdg/menus/applications-merged/*
-/usr/share/desktop-directories/*
 
 %files fvwm-settings
 %_sysconfdir/skel/.fvwm2rc
 
-%files gnome-settings
-%_datadir/themes/*
-#/etc/gnome/xdg/menus/applications-merged/
-#/etc/xdg/menus/*
-/etc/skel/.gconf
+%files mate-settings
+%_datadir/glib-2.0/schemas/*.gschema.override
+%_sysconfdir/skel/.config/Trolltech.conf
 
 %files slideshow
 /usr/share/install2/slideshow
@@ -354,44 +360,245 @@ subst "s/Theme=.*/Theme=%theme/" /etc/plymouth/plymouthd.conf
 %indexhtmldir/documentation
 %indexhtmldir/index-*.html
 %indexhtmldir/index.css
-%indexhtmldir/img
+%indexhtmldir/images
 %_desktopdir/indexhtml.desktop
 
 %changelog
-* Thu Apr 04 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 6.0.1-alt3
+* Fri Sep 06 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 7.0.0-alt1
+- spt7 version
+
+* Wed Jul 24 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 7.0.1-alt2
+- VERSION_ID in os-release fixed
+
+* Wed Jul 17 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 7.0.1-alt1
+- version change
+
+* Mon Jul 15 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 7.0.0-alt5
+- images for plymouth have been downscaled 
+
+* Mon Jul 15 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 7.0.0-alt4
+- png file for grub reverted to rgb
+
+* Wed Jul 10 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 7.0.0-alt3
+- png files converted to use indexed colors
+
+* Thu Jul 04 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 7.0.0-alt2
+- os-release fixed
+
+* Tue Jun 18 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 7.0.0-alt1
+- release version
+
+* Tue Jun 11 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 6.9.9-alt6
+- slideshow added
+
+* Thu Jun 06 2013 Andrey Cherepanov <cas@altlinux.org> 6.9.9-alt5
+- Fix window close icon size
+
+* Fri May 31 2013 Andrey Cherepanov <cas@altlinux.org> 6.9.9-alt4
+- Set correct size for typical graphical buttons
+- Set appropriate indent for small hint of fields
+
+* Tue Apr 30 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 6.9.9-alt3
+- wallpaper from Ark Desktop added
+
+* Fri Apr 26 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 6.9.9-alt2
+- codename changed to Pholus
+
+* Fri Apr 26 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 6.9.9-alt1
+- set beta state
+
+* Tue Apr 23 2013 Andrey Cherepanov <cas@altlinux.org> 6.9.0-alt23
+- Disable white color for step title in LiveCD installer
+
+* Thu Apr 11 2013 Andrey Cherepanov <cas@altlinux.org> 6.9.0-alt22
+- Set different qss style file for LiveCD
+- Colorize bootloader bottom bar
+- Really use overrided settings in Mate
+- Set 'mate' icon theme in Mate
+- Set 'Clearlooks-Phenix' window manager theme in Mate
+
+* Wed Apr 10 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 6.9.0-alt21
+- lightdm theme setup added to mate-settings
+- setting GTK+ QT style added to mate-settings
+
+* Tue Apr 09 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 6.9.0-alt20
+- gnome2 settings removed
+
+* Thu Apr 04 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 6.9.0-alt19
 - kde3 settings removed
 
-* Fri Apr 13 2012 Mikhail Efremov <sem@altlinux.org> 6.0.1-alt2
-- Adapt indexhtml to use from httpd2.
+* Fri Mar 22 2013 Andrey Cherepanov <cas@altlinux.org> 6.9.0-alt18
+- Cleanup MATE settings
+- Expand GRUB menu
+- Set gtk3-theme-clearlooks-phenix as default GTK+2/3 theme
 
-* Wed Apr 11 2012 Mikhail Efremov <sem@altlinux.org> 6.0.1-alt1
-- bootsplash: Use proper wallpaper.
+* Tue Feb 26 2013 Andrey Cherepanov <cas@altlinux.org> 6.9.0-alt17
+- Fix Name in os-release
 
-* Mon Sep 26 2011 Anton V. Boyarshinov <boyarsh@altlinux.ru> 6.0.0-alt7
-- fvwm settimgs added
+* Fri Dec 28 2012 Andrey Cherepanov <cas@altlinux.org> 6.9.0-alt16
+- Set correct URL to indexhtml
 
-* Mon May 23 2011 Anton V. Boyarshinov <boyarsh@altlinux.ru> 6.0.0-alt6
+* Fri Dec 28 2012 Andrey Cherepanov <cas@altlinux.org> 6.9.0-alt15
+- Really set Unicode black circle for password character
+- Remove white artifacts around QLineEdit on blue wallpaper
+
+* Wed Dec 12 2012 Andrey Cherepanov <cas@altlinux.org> 6.9.0-alt14
+- Create mate-settings subpackage
+- Set light-blue background for GRUB console
+
+* Wed Dec 05 2012 Andrey Cherepanov <cas@altlinux.org> 6.9.0-alt13
+- Small fixes in Alterator stylesheet
+
+* Tue Dec 04 2012 Andrey Cherepanov <cas@altlinux.org> 6.9.0-alt12
+- Set grayed table borders and header selection in Alterator web-interface
+- Use only existed fonts in grub2
+- Make indexhtml more narrow
+
+* Mon Dec 03 2012 Andrey Cherepanov <cas@altlinux.org> 6.9.0-alt11
+- Set Misc Fixed in grub2 console font
+- Add os-release for systemd compatibility
+- Fix small typo in style name for English version of indexhtml
+
+* Fri Nov 30 2012 Andrey Cherepanov <cas@altlinux.org> 6.9.0-alt10
+- Set default wallpaper in Mate
+- Fix section border in subdialogs
+- Remove obsoleted slideshow and some files
+- Set non-wide grub wallpaper
+- Set correct Russian product name from spec
+- Add links to useful resources
+- Fix grub console background
+
+* Thu Nov 29 2012 Andrey Cherepanov <cas@altlinux.org> 6.9.0-alt9
+- Set compatible stylesheet for alterator-browser-qt
+- Set correct background for Mate
+- More contrast colors for gfxboot
+- Fix grub colors
+- Set Plymouth wallpapers with logotypes
+
+* Mon Nov 26 2012 Andrey Cherepanov <cas@altlinux.org> 6.9.0-alt8
+- Set favicon for Alterator
+
+* Mon Nov 26 2012 Andrey Cherepanov <cas@altlinux.org> 6.9.0-alt7
+- Set official Centaurus 7.0 wallpapers
+- Remove obsoleted group icons
+- Set new icons of Platform 7 for acc
+- Draw allerator-browser-qt background from top left corner
+- Draw title as 100% white and other labels in 80% white
+- Replace all steps icons by transparent icon
+
+* Tue Nov 20 2012 Andrey Cherepanov <cas@altlinux.org> 6.9.0-alt6
+- Set TraditionalOk theme for Mate
+- Grow section width, set attention box as block
+
+* Thu Nov 15 2012 Andrey Cherepanov <cas@altlinux.org> 6.9.0-alt5
+- Fix grub2 console font
+- Fix attribute name for meta http-equiv
+- Adapt indexhtml to use from httpd2
+- Add gksu for apt-indicator in GNOME
+- Modernize appearance of Alterator web interface
+
+* Tue Nov 13 2012 Andrey Cherepanov <cas@altlinux.org> 6.9.0-alt4
+- Set wallpapers for Centaurus 7.0
+- Set product logo for Centaurus 7.0
+- Fix search entry background
+- Don't overwrite specific product-logo.png
+
+* Fri Nov 09 2012 Andrey Cherepanov <cas@altlinux.org> 6.9.0-alt3
+- New design of indexhtml
+- Set fill list of available variant
+
+* Tue Sep 11 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 6.9.0-alt2
+- installer background resizing removed
+- status set
+
+* Fri Sep 07 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 6.9.0-alt1
+- full-size installer background
+
+* Fri Sep 30 2011 Anton V. Boyarshinov <boyarsh@altlinux.ru> 6.0.0-alt18
+- theme-livecd.qrc for livecd
+
+* Mon Sep 19 2011 Andrey Cherepanov <cas@altlinux.org> 6.0.0-alt17
+- New design of indexhtml
+
+* Fri Sep 09 2011 Anton V. Boyarshinov <boyarsh@altlinux.ru> 6.0.0-alt16
+- gtk theme fix from mex3@
+
+* Tue Aug 23 2011 Anton V. Boyarshinov <boyarsh@altlinux.ru> 6.0.0-alt15
+- tooltip color in browser-qt really fixed
+
+* Mon Aug 22 2011 Anton V. Boyarshinov <boyarsh@altlinux.ru> 6.0.0-alt14
+- indexhtml design and links fixed
+- tooltip color in browser-qt fixed
+
+* Wed Aug 10 2011 Anton V. Boyarshinov <boyarsh@altlinux.ru> 6.0.0-alt13
+- yet another slide added
+
+* Fri Jul 01 2011 Anton V. Boyarshinov <boyarsh@altlinux.ru> 6.0.0-alt12.1
+- rebuild with design-bootloader-source 6.0
+
+* Wed Jun 15 2011 Anton V. Boyarshinov <boyarsh@altlinux.ru> 6.0.0-alt12
+- Style=Cleanlooks in alterator
+
+* Fri Jun 10 2011 Anton V. Boyarshinov <boyarsh@altlinux.ru> 6.0.0-alt11
+- images with p6 logo
+
+* Mon Jun 06 2011 Anton V. Boyarshinov <boyarsh@altlinux.ru> 6.0.0-alt10
+- automatic 800x600 for virtualbox
+
+* Thu May 26 2011 Anton V. Boyarshinov <boyarsh@altlinux.ru> 6.0.0-alt9
+- setup default gnome panel
+- .gconf deleted from etcskel
+
+* Mon May 23 2011 Anton V. Boyarshinov <boyarsh@altlinux.ru> 6.0.0-alt8
 - dependence on altlinux-menus dropped
 
-* Thu Apr 28 2011 Anton V. Boyarshinov <boyarsh@altlinux.ru> 6.0.0-alt5
-- bootsplash->plymouth
-- OO.o desktop files names changed
+* Sat May 07 2011 Anton V. Boyarshinov <boyarsh@altlinux.ru> 6.0.0-alt7
+- beta status deleted
+- rebuild with design-bootloader-source 5.9-alt4
 
+* Wed Apr 27 2011 Anton V. Boyarshinov <boyarsh@altlinux.ru> 6.0.0-alt6
+- settings menu translation fixed
 
-* Fri Oct 29 2010 Anton V. Boyarshinov <boyarsh@altlinux.ru> 6.0.0-alt4
-- better logo
+* Tue Apr 26 2011 Anton V. Boyarshinov <boyarsh@altlinux.ru> 6.0.0-alt5
+- arm buildabulity
+- gnome menus customization
 
-* Fri Oct 22 2010 Anton V. Boyarshinov <boyarsh@altlinux.ru> 6.0.0-alt3
-- logo fixed
+* Mon Feb 21 2011 Anton V. Boyarshinov <boyarsh@altlinux.ru> 6.0.0-alt4
+- indexhtml colors changed (mex3)
 
-* Thu Oct 21 2010 Anton V. Boyarshinov <boyarsh@altlinux.ru> 6.0.0-alt2
-- grub setup
-- beta removed
-- texts fixed
-- slideshow removed
+* Thu Feb 10 2011 Anton V. Boyarshinov <boyarsh@altlinux.ru> 6.0.0-alt3
+- fixed logo in web interface
+- boot colors changed
 
-* Wed Sep 15 2010 Anton V. Boyarshinov <boyarsh@altlinux.ru> 6.0.0-alt1
-- branding spt
+* Thu Feb 03 2011 Anton V. Boyarshinov <boyarsh@altlinux.ru> 6.0.0-alt2
+- install menu position changed
+- web design from mex3@
+
+* Fri Jan 28 2011 Anton V. Boyarshinov <boyarsh@altlinux.ru> 6.0.0-alt1
+- production slideshow
+- installer wallpaper changed
+- grub theme
+
+* Wed Dec 15 2010 Anton V. Boyarshinov <boyarsh@altlinux.ru> 5.9.9-alt11
+- fvwm settings added
+
+* Thu Nov 18 2010 Anton V. Boyarshinov <boyarsh@altlinux.ru> 5.9.9-alt10
+- gfxboot colors changed
+
+* Tue Nov 16 2010 Anton V. Boyarshinov <boyarsh@altlinux.ru> 5.9.9-alt9
+- plymouth: scaling for non 4:3 or 16:9 resolutions fixed
+
+* Sat Nov 13 2010 Anton V. Boyarshinov <boyarsh@altlinux.ru> 5.9.9-alt8
+- typo in plymouth script fixed
+
+* Fri Nov 12 2010 Anton V. Boyarshinov <boyarsh@altlinux.ru> 5.9.9-alt7
+- migration from bootsplash to plymouth
+
+* Fri Oct 22 2010 Anton V. Boyarshinov <boyarsh@altlinux.ru> 5.9.9-alt6
+- menu bar size fixed
+
+* Wed Sep 15 2010 Anton V. Boyarshinov <boyarsh@altlinux.ru> 5.9.9-alt5
+- setup grub colors added
 
 * Tue Aug 31 2010 Anton V. Boyarshinov <boyarsh@altlinux.ru> 5.9.9-alt4
 - status changed to beta
@@ -412,6 +619,8 @@ subst "s/Theme=.*/Theme=%theme/" /etc/plymouth/plymouthd.conf
 * Thu Mar 04 2010 Anton V. Boyarshinov <boyarsh@altlinux.ru> 5.9.9-alt1
 - Centaurus branding
 
+* Wed Mar 03 2010 Anton V. Boyarshinov <boyarsh@altlinux.ru> 5.0.1-alt1
+- OO.o desktop files names changed
 
 * Mon Oct 26 2009 Andrey Cherepanov <cas@altlinux.org> 5.0.0-alt22
 - provide design-graphics and gnome-session-splash to avoid wrong 
