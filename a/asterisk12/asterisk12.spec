@@ -1,4 +1,4 @@
-%define svn_revision 398224.1
+%define svn_revision 398615
 Name: asterisk12
 Summary: Open source PBX
 Version: 12
@@ -66,7 +66,7 @@ BuildPreReq: libunixODBC-devel libltdl-devel
 BuildPreReq: liblua5-devel
 BuildPreReq: postgresql-devel libpq-devel
 BuildPreReq: librpm-devel libnet-snmp-devel libwrap-devel perl-devel
-%define svn_revision 398224.1
+%define svn_revision 398615
 %add_verify_elf_skiplist %_libdir/libasteriskssl12.so.1
 %def_with debug
 %def_enable debug
@@ -1277,6 +1277,9 @@ ln -sf libasteriskssl12.so.1 %buildroot%_libdir/libasteriskssl12.so
 %_libdir/libasteriskssl12.so.1
 
 %changelog
+* Fri Sep 06 2013 Cronbuild Service <cronbuild@altlinux.org> 12-alt0.398615
+- update from svn revision 398615
+
 * Wed Sep 04 2013 Denis Smirnov <mithraen@altlinux.ru> 12-alt0.398224.1
 - build without corosync module
 
