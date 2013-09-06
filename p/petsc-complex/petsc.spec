@@ -25,7 +25,7 @@
 
 Name: %oname-%scalar_type
 Version: 3.4.2
-Release: alt2
+Release: alt3
 Summary: Portable, Extensible Toolkit for Scientific Computation (%scalar_type scalars)
 License: BSD
 Group: Sciences/Mathematics
@@ -790,6 +790,9 @@ sed -i 's|\(\-lpetsc\)|-L%ldir/lib \1|' \
 %ldir/sources
 
 %changelog
+* Tue Sep 03 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.4.2-alt3
+- Rebuilt with Trilinos 11.4.1
+
 * Tue Jul 23 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.4.2-alt2
 - Fixed build
 
@@ -985,4 +988,3 @@ sed -i 's|\(\-lpetsc\)|-L%ldir/lib \1|' \
 
 * Wed Jun 24 2009 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0.0_p6-alt1
 - Initial build for Sisyphus
-

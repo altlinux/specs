@@ -6,7 +6,7 @@
 %define ldir %_libdir/petsc-%scalar_type
 Name: %oname-%scalar_type
 Version: 1.2.0
-Release: alt3.git20130710
+Release: alt4.git20130710
 Epoch: 1
 Summary: C++/Python library for solving differential equations
 License: LGPL v3+
@@ -353,6 +353,9 @@ sed -i 's|debug optimized||' %buildroot%_pkgconfigdir/%name.pc
 %ldir/python/%{oname}_utils
 
 %changelog
+* Thu Sep 05 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:1.2.0-alt4.git20130710
+- Rebuilt with Trilinos 11.4.1
+
 * Thu Jul 11 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:1.2.0-alt3.git20130710
 - New snapshot
 
@@ -589,3 +592,4 @@ sed -i 's|debug optimized||' %buildroot%_pkgconfigdir/%name.pc
 
 * Tue Jul 14 2009 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.2-alt1
 - Initial build for Sisyphus
+
