@@ -1,6 +1,6 @@
 
 Name: cfitsio
-Version: 3.280
+Version: 3.350
 Release: alt1
 %define sversion %(echo %version | tr -d .)
 
@@ -11,8 +11,13 @@ Summary: Library for accessing files in FITS format for C and Fortran
 Url: http://heasarc.gsfc.nasa.gov/docs/software/fitsio/
 
 Source: ftp://heasarc.gsfc.nasa.gov/software/fitsio/c/%name-%version.tar.gz
-Patch0: cfitsio-3.280-autotools.patch
-Patch1: cfitsio-3.280-alt-pkgconfig.patch
+# SuSE
+Patch1: implicit-pointer-decl.patch
+Patch2: no-return-in-nonvoid-function.patch
+# ALT
+Patch10: cfitsio-3.350-autotools.patch
+Patch11: cfitsio-3.350-alt-pkgconfig.patch
+
 
 BuildRequires: flex gcc-c++ gcc-fortran glibc-devel
 
@@ -79,12 +84,14 @@ the cfits library.
 
 %prep
 %setup -q
-%patch0 -p0
 %patch1 -p0
+%patch2 -p0
+%patch10 -p0
+%patch11 -p0
 %autoreconf
 
 %build
-%configure --disable-static --enable-shared
+%configure --disable-static --enable-shared --enable-reentrant
 %make_build
 
 %install
@@ -108,6 +115,9 @@ install -d %buildroot/{%_libdir,%_includedir}
 #%_libdir/*.a
 
 %changelog
+* Mon Oct 07 2013 Sergey V Turchin <zerg@altlinux.org> 3.350-alt1
+- new version
+
 * Wed Oct 19 2011 Sergey V Turchin <zerg@altlinux.org> 3.280-alt1
 - new version
 
