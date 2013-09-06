@@ -1,7 +1,7 @@
 %define _name libqmi
 
 Name: %_name-glib
-Version: 1.4.0
+Version: 1.6.0
 Release: alt1
 
 Summary: QMI modem protocol helper library
@@ -17,7 +17,7 @@ BuildRequires(pre): rpm-build-licenses
 
 BuildRequires: glib2-devel libgio-devel
 BuildRequires: python-modules-json
-BuildRequires: gtk-doc
+BuildRequires: gtk-doc help2man
 
 %description
 QMI modem protocol helper library
@@ -63,6 +63,9 @@ touch README ChangeLog
 	--with-tests
 %make_build
 
+# Fix qmicli name in the man page
+sed -i 's;lt\\-qmicli;qmicli;' docs/man/qmicli.1
+
 %install
 %makeinstall_std
 
@@ -74,6 +77,7 @@ make check
 
 %files utils
 %_bindir/*
+%_man1dir/qmicli.1.*
 
 %files devel
 %_includedir/*
@@ -85,6 +89,10 @@ make check
 
 
 %changelog
+* Fri Sep 06 2013 Mikhail Efremov <sem@altlinux.org> 1.6.0-alt1
+- Build and package manpage for qmicli.
+- Updated to 1.6.0.
+
 * Fri Jun 14 2013 Mikhail Efremov <sem@altlinux.org> 1.4.0-alt1
 - Updated to 1.4.0.
 

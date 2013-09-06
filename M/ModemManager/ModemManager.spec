@@ -10,7 +10,7 @@
 
 Name: ModemManager
 Version: 1.0.0
-Release: alt1%git_date
+Release: alt2%git_date
 License: %gpl2plus
 Group: System/Configuration/Networking
 Summary: Mobile broadband modem management service
@@ -163,6 +163,9 @@ fi
 %doc %_datadir/gtk-doc/html/libmm-glib
 
 %changelog
+* Fri Sep 06 2013 Mikhail Efremov <sem@altlinux.org> 1.0.0-alt2
+- Rebuild with libqmi-glib-1.6.0.
+
 * Mon Jul 22 2013 Mikhail Efremov <sem@altlinux.org> 1.0.0-alt1
 - tests: Fix DSO linking.
 - Drop ModemManager-launcher script.
