@@ -2,15 +2,13 @@
 
 %define rname declarative-plasmoids
 Name: kde4-declarative-plasmoids
-Version: 4.10
+Version: 4.10.5
 Release: alt1
 
 Group: Graphical desktop/KDE
 Summary: KDE declarative plasmoids
 License: GPLv2+ / LGPLv2
 Url: http://kde.org/
-
-BuildArch: noarch
 
 Source: %rname-%version.tar
 
@@ -39,12 +37,17 @@ KDE declarative plasmoids
 
 
 %files -f %rname.lang
+%_K4lib/plasma_applet_*.so
 %_kde4_xdg_apps/*
 %_kde4_iconsdir/hicolor/*/apps/active-news.*
 %_K4apps/plasma/plasmoids/*
+%_K4apps/plasma/packages/*/
 %_K4srv/*
 
 %changelog
+* Wed Sep 11 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.5-alt1
+- new version
+
 * Tue Oct 16 2012 Sergey V Turchin <zerg@altlinux.org> 4.10-alt1
 - new version
 

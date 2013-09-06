@@ -5,8 +5,8 @@
 %define rname okular
 Name: kde4-okular
 %define major 4
-%define minor 10
-%define bugfix 5
+%define minor 11
+%define bugfix 1
 Version: %major.%minor.%bugfix
 Release: alt1
 
@@ -96,6 +96,7 @@ Development files for %name
 %_K4lib/okularpart.so
 %_K4apps/okular
 %_K4cfg/okular*.kcfg
+%_K4cfg/pdfsettings.kcfg
 %_K4cfg/gssettings.kcfg
 %_K4conf_update/okular.upd
 %_K4srv/libokularGenerator_*
@@ -113,6 +114,7 @@ Development files for %name
 %_K4bindir/active-documentviewer
 %_K4lib/imports/org/kde/okular/
 %_K4xdg_apps/active-documentviewer.desktop
+%_K4xdg_apps/active-documentviewer_*.desktop
 %_K4apps/plasma/packages/org.kde.active.documentviewer/
 
 %files -n libokularcore4
@@ -125,6 +127,9 @@ Development files for %name
 
 
 %changelog
+* Thu Sep 05 2013 Sergey V Turchin <zerg@altlinux.org> 4.11.1-alt1
+- new version
+
 * Thu Jul 04 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.5-alt1
 - new version
 

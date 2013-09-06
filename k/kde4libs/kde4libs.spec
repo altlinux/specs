@@ -12,8 +12,8 @@
 %add_findreq_skiplist %_K4apps/cmake/modules*.py
 
 %define major 4
-%define minor 10
-%define bugfix 5
+%define minor 11
+%define bugfix 1
 %define rname kdelibs
 Name: kde4libs
 Version: %major.%minor.%bugfix
@@ -116,6 +116,7 @@ Patch1034: kdelibs-4.10.0-alt-find-samba.patch
 Patch1035: kdelibs-4.10.2-alt-flags.patch
 Patch1036: kdelibs-4.10.2-alt-add-protocol-all.patch
 Patch1037: kdelibs-4.10.4-alt-def-plasma-theme-bg.patch
+Patch1038: kdelibs-4.10.5-alt-run-with-context.patch
 
 Patch3000: kdelibs-4.4.92-alt-alternate-kconf_update_bin-path.patch
 
@@ -123,7 +124,7 @@ Patch3000: kdelibs-4.4.92-alt-alternate-kconf_update_bin-path.patch
 
 BuildRequires(pre): kde-common-devel libqt4-devel libsoprano-devel libstrigi-devel attica-devel
 BuildRequires: soprano-backend-redland soprano-backend-virtuoso soprano
-BuildRequires: bzlib-devel cmake libalsa-devel
+BuildRequires: bzlib-devel cmake libalsa-devel libselinux-devel
 %if_enabled hupnp
 BuildRequires: herqq-devel
 %endif
@@ -214,6 +215,7 @@ applications for KDE 4.
 %patch1035 -p1
 %patch1036 -p1
 %patch1037 -p1
+%patch1038 -p1
 
 %patch3000 -p1
 
@@ -336,6 +338,9 @@ ln -sf `relative %buildroot/%_kde4_bindir/kde4-config %buildroot/%_K4bindir/kde4
 %_K4includedir/*
 
 %changelog
+* Tue Sep 03 2013 Sergey V Turchin <zerg@altlinux.org> 4.11.1-alt1
+- new version
+
 * Mon Jul 01 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.5-alt1
 - new version
 

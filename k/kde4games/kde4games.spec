@@ -5,8 +5,8 @@
 %define rname kdegames
 Name: kde4games
 %define major 4
-%define minor 10
-%define bugfix 2
+%define minor 11
+%define bugfix 1
 Version: %major.%minor.%bugfix
 Release: alt1
 
@@ -103,7 +103,8 @@ Patch2: kde4games-4.10.1-alt-fix-compile.patch
 # Automatically added by buildreq on Mon Oct 20 2008 (-bi)
 #BuildRequires: gcc-c++ ggz-client-libs kde4base-runtime-devel kde4libs-devel kdelibs-devel libXScrnSaver-devel libXcomposite-devel libXft-devel libXpm-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libxkbfile-devel nvidia_glx_177.80 rpm-build-ruby xorg-xf86vidmodeproto-devel
 BuildRequires(pre): kde4libs-devel
-BuildRequires: gcc-c++ libggz-devel ggz-client-libs-devel kde4base-runtime-devel
+BuildRequires: gcc-c++ kde4base-runtime-devel
+#BuildRequires: libggz-devel ggz-client-libs-devel
 BuildRequires: libqca2-devel libsqlite3-devel libopenal-devel libsndfile-devel
 BuildRequires: python-module-PyQt4 python-module-kde4 rpm-build-python
 BuildRequires: libkmahjongg4-devel libkdegames4-devel
@@ -1210,6 +1211,12 @@ done
 %_K4includedir/*
 
 %changelog
+* Tue Sep 10 2013 Sergey V Turchin <zerg@altlinux.org> 4.11.1-alt1
+- new version
+
+* Tue May 14 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.3-alt1
+- new version
+
 * Tue Apr 09 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.2-alt1
 - new version
 

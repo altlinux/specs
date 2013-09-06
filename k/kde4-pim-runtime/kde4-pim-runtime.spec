@@ -3,11 +3,11 @@
 
 %define rname kdepim-runtime
 %define major 4
-%define minor 10
-%define bugfix 5
+%define minor 11
+%define bugfix 1
 Name: kde4-pim-runtime
 Version: %major.%minor.%bugfix
-Release: alt2
+Release: alt1
 
 Group: Graphical desktop/KDE
 Summary: KDE Akonadi resources
@@ -34,14 +34,14 @@ Patch105: kdepim-4.7.3-alt-migrate-pop3-passwords.patch
 Patch106: kdepim-4.7.3-alt-ignore-empty-accounts.patch
 Patch107: kdepim-4.10.2-alt-maildir-checks.patch
 Patch108: kdepim-4.7.4-alt-mixedmaildir-show-error.patch
-Patch109: kdepim-4.10.0-alt-def-nepomuk.patch
+Patch109: kdepim-4.11.1-alt-def-nepomuk.patch
 
 # Automatically added by buildreq on Tue Feb 09 2010
 #BuildRequires: akonadi-devel gcc-c++ glib2-devel kde4pimlibs-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXext-devel libXft-devel libXi-devel libXinerama-devel libXpm-devel libXrandr-devel libXt-devel libXtst-devel libXv-devel libassuan-devel libgpgme-devel libindicate-qt-devel libxkbfile-devel soprano soprano-backend-redland xorg-xf86vidmodeproto-devel xsltproc
 BuildRequires(pre): kde4libs-devel libassuan-devel
 BuildRequires: akonadi-devel gcc-c++ glib2-devel kde4pimlibs-devel libgpgme-devel
 BuildRequires: soprano soprano-backend-redland xsltproc grantlee-devel libsasl2-devel dblatex
-BuildRequires: libkgapi-devel qjson-devel kde4-nepomuk-core-devel
+BuildRequires: libkgapi-devel qjson-devel kde4-nepomuk-core-devel libkfbapi-devel
 
 BuildRequires: kde4libs-devel >= %version
 BuildRequires: kde4pimlibs-devel >= %version
@@ -151,6 +151,7 @@ based on kdepim.
 %_K4xdg_mime/accountwizard-mime.xml
 %_K4xdg_mime/kdepim-mime.xml
 %_K4iconsdir/hicolor/*/*/*
+%_K4xdg_mime/x-vnd.akonadi.socialnotification.xml
 %_datadir/ontology/kde/aneo.*
 
 %files
@@ -189,6 +190,7 @@ based on kdepim.
 %_K4conf/kmail-migratorrc
 %_K4conf/kres-migratorrc
 %_K4conf/accountwizard.knsrc
+%_K4conf_update/*
 %_K4start/kaddressbookmigrator.desktop
 %_K4xdg_apps/accountwizard.desktop
 %_K4xdg_apps/akonaditray.desktop
@@ -222,6 +224,9 @@ based on kdepim.
 
 
 %changelog
+* Thu Sep 05 2013 Sergey V Turchin <zerg@altlinux.org> 4.11.1-alt1
+- new version
+
 * Thu Jul 25 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.5-alt2
 - built with new libkgapi
 

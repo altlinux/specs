@@ -3,8 +3,8 @@
 
 %define rname plasma-active-maliit
 Name: kde4-plasma-active-maliit
-Version: 0.1
-Release: alt2
+Version: 0.2
+Release: alt1
 
 Group: Graphical desktop/KDE
 Summary: Virtual Keyboard for plasma-active
@@ -40,6 +40,9 @@ qmake-qt4 PREFIX=%prefix BINDIR=%_bindir LIBDIR=%_libdir INCLUDEDIR=%_includedir
 %_datadir/maliit
 
 %changelog
+* Wed Sep 11 2013 Sergey V Turchin <zerg@altlinux.org> 0.2-alt1
+- new version
+
 * Fri Jan 18 2013 Sergey V Turchin <zerg@altlinux.org> 0.1-alt2
 - rebuilt with new maliit
 

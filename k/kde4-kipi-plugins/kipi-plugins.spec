@@ -11,8 +11,8 @@
 %define rname kipi-plugins
 Name: kde4-%rname
 %define beta %nil
-Version: 3.2.0
-Release: alt2
+Version: 3.4.0
+Release: alt1
 
 Group: Graphics
 Summary: KDE image Interface Plugins
@@ -87,7 +87,7 @@ KDE 4 library.
 %patch1 -p1
 mv %rname-po-%version po
 mv %rname-doc-%version doc
-install -m 0644 %SOURCE10 cmake/modules
+#install -m 0644 %SOURCE10 cmake/modules
 install -m 0644 %SOURCE11 cmake/modules
 install -m 0644 %SOURCE12 cmake/modules
 
@@ -142,7 +142,7 @@ done
 %_K4apps/kipiplugin_*/
 %_K4apps/gpssync/
 %_K4apps/photolayoutseditor/
-%_K4cfg/PLEConfigSkeleton.kcfgc
+%_K4cfg/photolayoutseditor.kcfg
 %_K4srv/kipiplugin_*
 #%_K4srv/photolayoutseditor*plugin_*.desktop
 %_K4srvtyp/photolayoutseditor*plugin.desktop
@@ -174,6 +174,9 @@ done
 %_K4libdir/libkipiplugins.so.%libsover.*
 
 %changelog
+* Tue Sep 10 2013 Sergey V Turchin <zerg@altlinux.org> 3.4.0-alt1
+- new version
+
 * Thu May 30 2013 Sergey V Turchin <zerg@altlinux.org> 3.2.0-alt2
 - fix to build with new ImageMagick
 

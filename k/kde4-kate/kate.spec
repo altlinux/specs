@@ -1,7 +1,10 @@
 
 %add_findpackage_path %_kde4_bindir
 %add_findreq_skiplist %_K4apps/kate/plugins/pate/kate/__init__.py
-
+%add_findreq_skiplist %_K4apps/kate/plugins/pate/kate/__init__.py
+%add_findreq_skiplist %_K4apps/kate/pate/*_utils/*/*.py
+%add_findreq_skiplist %_K4apps/kate/pate/*_utils/*.py
+%add_findreq_skiplist %_K4apps/kate/pate/python_autocomplete/*.py
 
 %ifarch %arm
 %def_disable desktop
@@ -11,8 +14,8 @@
 
 %define rname kate
 %define major 4
-%define minor 10
-%define bugfix 5
+%define minor 11
+%define bugfix 1
 Name: kde4-kate
 Version: %major.%minor.%bugfix
 Release: alt1
@@ -28,7 +31,6 @@ Provides: kde4sdk-kate = %version-%release
 Obsoletes: kde4sdk-kate < %version-%release
 
 Source: %rname-%version.tar
-Patch1: kate-4.8.2-alt-fix-compile.patch
 
 # Automatically added by buildreq on Fri Sep 16 2011 (-bi)
 # optimized out: automoc cmake cmake-modules desktop-file-utils docbook-dtds docbook-style-xsl elfutils fontconfig fontconfig-devel glibc-devel-static kde4libs libICE-devel libSM-devel libX11-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXext-devel libXfixes-devel libXft-devel libXi-devel libXinerama-devel libXpm-devel libXrandr-devel libXrender-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel libdbus-devel libdbusmenu-qt2 libfreetype-devel libgpg-error libpng-devel libqt4-core libqt4-dbus libqt4-declarative libqt4-devel libqt4-gui libqt4-network libqt4-opengl libqt4-qt3support libqt4-script libqt4-sql libqt4-svg libqt4-test libqt4-uitools libqt4-webkit libqt4-xml libqt4-xmlpatterns libsoprano-devel libssl-devel libstdc++-devel libxkbfile-devel phonon-devel pkg-config python-base rpm-build-gir ruby shared-mime-info xml-common xml-utils xorg-kbproto-devel xorg-xf86miscproto-devel xorg-xproto-devel zlib-devel
@@ -101,7 +103,6 @@ applications for %rname.
 
 %prep
 %setup -q -n %rname-%version
-%patch1 -p1
 
 
 %build
@@ -159,7 +160,7 @@ kde4_add_text_mimes %buildroot%_K4xdg_apps/kwrite.desktop
 %_K4srv/katepart.desktop
 %_K4srv/ktexteditor_*.desktop
 %_K4iconsdir/hicolor/*/apps/ktexteditorautobrace.*
-%_K4iconsdir/oxygen/*/actions/debug.*
+%_K4iconsdir/hicolor/*/actions/debug-*.png
 
 %files
 %if_enabled desktop
@@ -176,46 +177,20 @@ kde4_add_text_mimes %buildroot%_K4xdg_apps/kwrite.desktop
 %_K4conf/katesyntaxhighlightingrc
 %_K4conf/ktexteditor_codesnippets_core.knsrc
 %_K4libdir/libkdeinit4_kate.so
-%_K4lib/kateprojectplugin.so
-%_K4lib/katesnippetsplugin.so
-%_K4lib/katetabifyplugin.so
-%_K4lib/katexmltoolsplugin.so
-%_K4lib/katefilebrowserplugin.so
-%_K4lib/katekonsoleplugin.so
-%_K4lib/katemailfilesplugin.so
-%_K4lib/kateopenheaderplugin.so
-%_K4lib/katesymbolviewerplugin.so
-%_K4lib/katetabbarextensionplugin.so
-%_K4lib/katetextfilterplugin.so
+%_K4lib/kate*plugin.so
 %_K4lib/plasma_applet_katesession.so
-%_K4lib/katebacktracebrowserplugin.so
-%_K4lib/katebuildplugin.so
-%_K4lib/katectagsplugin.so
 %_K4lib/kate_kttsd.so
-%_K4lib/katexmlcheckplugin.so
-%_K4lib/katefiletreeplugin.so
 %_K4lib/kategdbplugin.so
 %_K4lib/katesqlplugin.so
-%_K4lib/katesearchplugin.so
-%_K4srv/kateprojectplugin.desktop
-%_K4srv/katesnippetsplugin.desktop
-%_K4srv/katefilebrowserplugin.desktop
-%_K4srv/katekonsoleplugin.desktop
-%_K4srv/katemailfilesplugin.desktop
+%_K4srv/kate*plugin.desktop
 %_K4srv/kateopenheader.desktop
 %_K4srv/katesymbolviewer.desktop
 %_K4srv/katetabbarextension.desktop
 %_K4srv/katetextfilter.desktop
-%_K4srv/katebacktracebrowserplugin.desktop
-%_K4srv/katebuildplugin.desktop
-%_K4srv/katectagsplugin.desktop
 %_K4srv/plasma-applet-katesession.desktop
 %_K4srv/kate_kttsd.desktop
 %_K4srv/katexmlcheck.desktop
-%_K4srv/katetabifyplugin.desktop
 %_K4srv/katexmltools.desktop
-%_K4srv/katefiletreeplugin.desktop
-%_K4srv/kategdbplugin.desktop
 %_K4srv/katesql.desktop
 %_K4srv/katesearch.desktop
 %_K4srvtyp/kateplugin.desktop
@@ -223,7 +198,6 @@ kde4_add_text_mimes %buildroot%_K4xdg_apps/kwrite.desktop
 %_K4doc/*/kate
 %_K4iconsdir/hicolor/*/apps/kate.*
 # pate plugin
-%_K4lib/pateplugin.so
 %python_sitelibdir/PyKate4/
 %_K4srv/pate.desktop
 
@@ -245,6 +219,9 @@ kde4_add_text_mimes %buildroot%_K4xdg_apps/kwrite.desktop
 %_K4link/lib*.so
 
 %changelog
+* Mon Sep 09 2013 Sergey V Turchin <zerg@altlinux.org> 4.11.1-alt1
+- new version
+
 * Fri Jul 05 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.5-alt1
 - new version
 

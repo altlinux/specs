@@ -10,8 +10,8 @@
 %define rname kdeplasma-addons
 Name: kde4plasma-addons
 %define major 4
-%define minor 10
-%define bugfix 5
+%define minor 11
+%define bugfix 1
 Version: %major.%minor.%bugfix
 Release: alt1
 
@@ -101,6 +101,7 @@ Requires: plasma-runner-kopete = %version-%release
 Requires: plasma-runner-charrunner = %version-%release
 Requires: plasma-runner-datetime = %version-%release
 Requires: plasma-runner-youtube = %version-%release
+Requires: plasma-runner-translator = %version-%release
 Requires: plasma-wallpaper-mandelbrot = %version-%release
 %if_enabled desktop
 Requires: plasma-wallpaper-marble = %version-%release
@@ -748,6 +749,13 @@ Requires: %name-common = %version-%release
 %description -n plasma-runner-youtube
 Plasma runner 
 
+%package -n plasma-runner-translator
+Summary: Plasma runner 
+Group: Graphical desktop/KDE
+Requires: %name-common = %version-%release
+%description -n plasma-runner-translator
+Plasma runner 
+
 %package -n plasma-applet-plasmaboard
 Summary: A plasmaboard plasma applet
 Group: Graphical desktop/KDE
@@ -934,6 +942,9 @@ mkdir -p %buildroot/%_K4apps/kdeplasma-addons/
 %_K4lib/krunner_youtube.so
 %_K4srv/plasma-runner-youtube.desktop
 
+%files -n plasma-runner-translator
+%_K4lib/krunner_translator.so
+%_K4srv/plasma-runner-translator.desktop
 
 %files -n plasma-dataengine-kimpanel
 %_K4lib/plasma_engine_kimpanel.so
@@ -1003,6 +1014,7 @@ mkdir -p %buildroot/%_K4apps/kdeplasma-addons/
 %_K4srv/epodprovider.desktop
 %_K4srv/flickrprovider.desktop
 %_K4srv/oseiprovider.desktop
+%_K4srv/natgeoprovider.desktop
 %_K4srv/wcpotdprovider.desktop
 %_K4srvtyp/plasma_potdprovider.desktop
 
@@ -1307,6 +1319,9 @@ mkdir -p %buildroot/%_K4apps/kdeplasma-addons/
 %_K4link/*.so
 
 %changelog
+* Wed Sep 04 2013 Sergey V Turchin <zerg@altlinux.org> 4.11.1-alt1
+- new version
+
 * Fri Jul 05 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.5-alt1
 - new version
 

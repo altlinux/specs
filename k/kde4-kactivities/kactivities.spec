@@ -5,8 +5,8 @@
 %define rname kactivities
 Name: kde4-kactivities
 %define major 4
-%define minor 10
-%define bugfix 5
+%define minor 11
+%define bugfix 1
 Version: %major.%minor.%bugfix
 Release: alt1
 
@@ -92,7 +92,7 @@ done
 %_K4lib/imports/org/kde/activities/models/
 %_K4srv/activitymanager-plugin-*.desktop
 %_K4srv/kactivitymanagerd.desktop
-%_K4apps/plasma/packages/org.kde.ActivityManager.UiHandler/
+#%_K4apps/plasma/packages/org.kde.ActivityManager.UiHandler/
 %_K4apps/activitymanager/
 #%_K4srv/kded/activitymanager.desktop
 %_K4srv/activities.protocol
@@ -117,6 +117,9 @@ done
 %_K4link/*.so
 
 %changelog
+* Tue Sep 03 2013 Sergey V Turchin <zerg@altlinux.org> 4.11.1-alt1
+- new version
+
 * Mon Jul 01 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.5-alt1
 - new version
 

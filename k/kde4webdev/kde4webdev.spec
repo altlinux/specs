@@ -7,7 +7,7 @@
 %define rname kdewebdev
 Name: kde4webdev
 %define major 4
-%define minor 9
+%define minor 11
 %define bugfix 1
 Version: %major.%minor.%bugfix
 Release: alt1
@@ -252,6 +252,12 @@ based on %name.
 %_K4link/*.so
 
 %changelog
+* Tue Sep 10 2013 Sergey V Turchin <zerg@altlinux.org> 4.11.1-alt1
+- new version
+
+* Thu Dec 20 2012 Sergey V Turchin <zerg@altlinux.org> 4.10.0-alt0.1
+- new beta version
+
 * Fri Oct 05 2012 Sergey V Turchin <zerg@altlinux.org> 4.9.1-alt1
 - new version
 

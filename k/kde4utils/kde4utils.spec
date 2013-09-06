@@ -6,8 +6,8 @@
 %define rname kdeutils
 Name: kde4utils
 %define major 4
-%define minor 10
-%define bugfix 5
+%define minor 11
+%define bugfix 1
 Version: %major.%minor.%bugfix
 Release: alt1
 
@@ -57,7 +57,7 @@ BuildRequires(pre): kde4base-workspace-devel kde4pimlibs-devel
 BuildRequires: kde4base-devel
 BuildRequires: gcc-c++ libnet-snmp-devel libgmp-devel bzlib-devel libldap-devel
 BuildRequires: libqimageblitz-devel libzip-devel libarchive-devel
-BuildRequires: libenca-devel liblirc-devel libqca2-devel liblzma-devel qjson-devel
+BuildRequires: liblirc-devel libqca2-devel liblzma-devel qjson-devel
 %ifarch %ix86
 #BuildRequires: libtpctl-devel
 %endif
@@ -489,6 +489,9 @@ done
 
 
 %changelog
+* Tue Sep 10 2013 Sergey V Turchin <zerg@altlinux.org> 4.11.1-alt1
+- new version
+
 * Fri Jul 05 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.5-alt1
 - new version
 

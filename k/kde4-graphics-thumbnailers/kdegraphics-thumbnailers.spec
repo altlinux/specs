@@ -2,8 +2,8 @@
 
 %define rname kdegraphics-thumbnailers
 Name: kde4-graphics-thumbnailers
-Version: 4.10.0
-Release: alt0.1
+Version: 4.11.1
+Release: alt1
 
 Group: Graphics
 Summary: Thumbnailers for various graphics types
@@ -18,7 +18,7 @@ Source: %rname-%version.tar
 # Automatically added by buildreq on Tue Sep 13 2011 (-bi)
 # optimized out: automoc cmake cmake-modules elfutils fontconfig fontconfig-devel glibc-devel-static kde4libs kde4libs-devel libICE-devel libSM-devel libX11-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXext-devel libXfixes-devel libXft-devel libXi-devel libXinerama-devel libXpm-devel libXrandr-devel libXrender-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel libdbus-devel libdbusmenu-qt2 libfreetype-devel libpng-devel libqt4-core libqt4-dbus libqt4-devel libqt4-gui libqt4-network libqt4-svg libqt4-xml libssl-devel libstdc++-devel libxkbfile-devel phonon-devel pkg-config python-base ruby xorg-kbproto-devel xorg-xf86miscproto-devel xorg-xproto-devel zlib-devel
 #BuildRequires: gcc-c++ glib2-devel libkdcraw4-devel libkexiv24-devel libqt3-devel rpm-build-ruby zlib-devel-static
-BuildRequires: gcc-c++ glib2-devel libkdcraw4-devel libkexiv24-devel libqt3-devel zlib-devel kde-common-devel kde4libs-devel
+BuildRequires: gcc-c++ glib2-devel libkdcraw4-devel libkexiv24-devel libqt4-devel zlib-devel kde-common-devel kde4libs-devel
 
 %description
 Thumbnailers for various graphics types
@@ -60,6 +60,9 @@ KDE 4 core library.
 
 
 %changelog
+* Thu Sep 05 2013 Sergey V Turchin <zerg@altlinux.org> 4.11.1-alt1
+- new version
+
 * Thu Dec 13 2012 Sergey V Turchin <zerg@altlinux.org> 4.10.0-alt0.1
 - new beta version
 

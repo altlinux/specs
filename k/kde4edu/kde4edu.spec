@@ -7,8 +7,8 @@
 %define rname kdeedu
 Name: kde4edu
 %define major 4
-%define minor 10
-%define bugfix 5
+%define minor 11
+%define bugfix 1
 Version: %major.%minor.%bugfix
 Release: alt1
 Packager: Sergey V Turchin <zerg at altlinux dot org>
@@ -51,7 +51,7 @@ Requires: %name-rocs = %version-%release
 Source: ftp://ftp.kde.org/pub/kde/stable/%version/src/%rname-%version.tar
 Patch1: kdeedu-4.8.0-alt-marble-install.patch
 Patch2: kdeedu-4.3.90-alt-kturtle-default-language.patch
-Patch3: kdeedu-4.10.0-alt-fix-compile.patch
+Patch3: kdeedu-4.11.1-alt-fix-compile.patch
 
 # Automatically added by buildreq on Thu Oct 16 2008 (-bi)
 #BuildRequires: boost-python-devel eigen facile gcc-c++ getfemxx indilib-devel kde4base-runtime-devel kde4base-workspace-devel libXScrnSaver-devel libXcomposite-devel libXft-devel libXpm-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libbfd-devel libcfitsio-devel libcln-devel libgmp-devel libgsl-devel libjpeg-devel libncurses-devel libnova-devel libopenbabel-devel libpth-devel libqalculate-devel libreadline-devel libusb-devel libxkbfile-devel libxslt-devel nvidia_glx_177.80 openbabel python-modules-encodings rpm-build-ruby subversion xorg-xf86vidmodeproto-devel xsltproc
@@ -62,7 +62,7 @@ BuildRequires: libpth-devel libqalculate-devel libreadline-devel libusb-devel
 BuildRequires: ocaml xplanet attica-devel libspectre-devel libgps-devel qt4-mobility-devel
 BuildRequires: libxslt-devel xsltproc libopenbabel-devel >= 2.2 openbabel avogadro-devel libglew-devel
 BuildRequires: libkdeedu4-devel kde4-analitza-devel pkgconfig(chemical-mime-data)
-BuildRequires: libshape-devel
+BuildRequires: libshape-devel qextserialport-devel libquazip-devel grantlee-devel
 BuildRequires: kde4base-workspace-devel >= %version
 BuildRequires: kde4base-runtime-devel >= %version
 
@@ -594,15 +594,14 @@ Files needed to build applications based on %name.
 %patch2 -p1
 %patch3 -p1
 
+%if 0
 echo "cmake_minimum_required(VERSION 2.8)" > CMakeLists.txt
-
 ls -d1 lib* | \
 while read d
 do
     [ -d "$d" ] || continue
     echo "add_subdirectory($d)" >> CMakeLists.txt
 done
-
 ls -d1 * | \
 while read d
 do
@@ -610,30 +609,42 @@ do
     [ -d "$d" ] || continue
     echo "add_subdirectory($d)" >> CMakeLists.txt
 done
-
 #find ./ -type f -name CMakeLists.txt | \
 #while read f
 #do
 #    sed -i 's|^ADD_DEFINITIONS.*QT_DEFINITIONS.*$|ADD_DEFINITIONS(${QT_DEFINITIONS})\nADD_DEFINITIONS(-fexceptions -UQT_NO_EXCEPTIONS)|' $f
 #done
-
+%endif
 
 %build
 export CFLAGS="${optflags} -DOCAMLIB=%_libdir/ocaml"
 export CPPFLAGS="${optflags} -DOCAMLIB=%_libdir/ocaml "
-%K4cmake \
-    -DKDE4_BUILD_TESTS:BOOL=OFF \
-    -DNOVA_INCLUDE_DIR=%_includedir/libnova \
-    -DNOVA_LIBRARIES="-lnova" \
-    -DINDI_INCLUDE_DIR=%_includedir/libindi \
-    -DNOVA_FUNCTION_COMPILE:BOOL=true \
-    -DQALCULATE_CFLAGS:STRING="`pkg-config libqalculate --cflags| sed 's|@CLN_CPPFLAGS@||g'`" \
-    -DQALCULATE_LIBRARIES:STRING="`pkg-config libqalculate --libs`"
-%K4make
+ls -d1 * | \
+while read d
+do
+    [ -d "$d" ] || continue
+    pushd $d
+    %K4build \
+	-DKDE4_BUILD_TESTS:BOOL=OFF \
+	-DNOVA_INCLUDE_DIR=%_includedir/libnova \
+	-DNOVA_LIBRARIES="-lnova" \
+	-DINDI_INCLUDE_DIR=%_includedir/libindi \
+	-DNOVA_FUNCTION_COMPILE:BOOL=true \
+	-DQALCULATE_CFLAGS:STRING="`pkg-config libqalculate --cflags| sed 's|@CLN_CPPFLAGS@||g'`" \
+	-DQALCULATE_LIBRARIES:STRING="`pkg-config libqalculate --libs`"
+    popd
+done
 
 
 %install
-%K4install
+ls -d1 * | \
+while read d
+do
+    [ -d "$d" ] || continue
+    pushd $d
+    %K4install
+    popd
+done
 mkdir -p %buildroot/%_K4apps/step/objinfo/l10n
 
 
@@ -645,7 +656,7 @@ mkdir -p %buildroot/%_K4apps/step/objinfo/l10n
 %else
 %_K4iconsdir/hicolor/*/mimetypes/application-x-k*.*
 %endif
-%_K4xdg_mime/geo.xml
+%_xdgmimedir/packages/geo.xml
 
 %files -n libcompoundviewer4
 %_K4libdir/libcompoundviewer.so.*
@@ -1002,6 +1013,7 @@ mkdir -p %buildroot/%_K4apps/step/objinfo/l10n
 %_kde4_xdg_apps/marble*.desktop
 %else
 %_K4bindir/marble
+%_K4bindir/marble-qt
 %_K4bindir/tilecreator
 %_K4bindir/routing-instructions
 %_K4bindir/marble-touch
@@ -1038,6 +1050,7 @@ mkdir -p %buildroot/%_K4apps/step/objinfo/l10n
 %_K4apps/rocs_rootedtree/
 %_K4conf/rocs.knsrc
 %_K4cfg/rocs.kcfg
+%_K4iconsdir/hicolor/*/apps/rocs.*
 %_K4srv/rocs_*.desktop
 %_K4srvtyp/Rocs*Plugin.desktop
 %_K4doc/*/rocs
@@ -1054,9 +1067,9 @@ mkdir -p %buildroot/%_K4apps/step/objinfo/l10n
 %files devel
 %_includedir/khangman/
 %_includedir/kanagram/
-%_includedir/libkiten/
-%_includedir/marble/
-%_includedir/rocs/
+#%_includedir/libkiten/
+#%_includedir/marble/
+#%_includedir/rocs/
 %_K4link/*.so
 %_K4includedir/*
 %_K4apps/cmake/modules/*
@@ -1064,6 +1077,9 @@ mkdir -p %buildroot/%_K4apps/step/objinfo/l10n
 %_K4dbus_interfaces/*
 
 %changelog
+* Fri Sep 06 2013 Sergey V Turchin <zerg@altlinux.org> 4.11.1-alt1
+- new version
+
 * Fri Jul 05 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.5-alt1
 - new version
 

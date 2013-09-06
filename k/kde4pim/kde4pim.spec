@@ -15,8 +15,8 @@
 
 %define rname kdepim
 %define major 4
-%define minor 10
-%define bugfix 5
+%define minor 11
+%define bugfix 1
 Name: kde4pim
 Version: %major.%minor.%bugfix
 Release: alt1
@@ -63,7 +63,7 @@ Source: ftp://ftp.kde.org/pub/kde/stable/%version/src/%rname-%version.tar
 # Upstream
 # ALT
 Patch101: kdepim-4.0.80-alt-kmail-acctlocal-lock.patch
-Patch102: kdepim-4.10.2-alt-nepomuk-warning.patch
+Patch102: kdepim-4.11.1-alt-nepomuk-warning.patch
 Patch103: kdepim-4.7.1-alt-force-7bit-cte.patch
 Patch104: kdepim-4.7.2-alt-migration.patch
 
@@ -1031,6 +1031,34 @@ Requires: %name-common = %version-%release
 %description -n libpimcommon4
 %name library
 
+%package  -n libcomposereditorng4
+Summary: %name library
+Group: System/Libraries
+Requires: %name-common = %version-%release
+%description -n libcomposereditorng4
+%name library
+
+%package  -n libgrammar4
+Summary: %name library
+Group: System/Libraries
+Requires: %name-common = %version-%release
+%description -n libgrammar4
+%name library
+
+%package  -n libpimactivity4
+Summary: %name library
+Group: System/Libraries
+Requires: %name-common = %version-%release
+%description -n libpimactivity4
+%name library
+
+%package  -n libsendlater4
+Summary: %name library
+Group: System/Libraries
+Requires: %name-common = %version-%release
+%description -n libsendlater4
+%name library
+
 %package devel
 Summary: Devel stuff for %name
 Group: Development/KDE and QT
@@ -1073,27 +1101,36 @@ based on kdepim.
 %_K4bindir/kabcclient
 %_K4bindir/konsolekalendar
 %_K4bindir/pimsettingexporter
-%_K4libdir/strigi/*
+%_K4lib/kcm_pimactivity.so
+%_K4lib//plugins/grantlee/
+#%_K4libdir/strigi/*
+%_K4apps/composereditor/
+%_K4apps/pimsettingexporter/
+%_K4conf/messageviewer_header_themes.knsrc
 %_K4xdg_apps/konsolekalendar.desktop
-#%_K4apps/konsolekalendar/
 %_K4iconsdir/locolor/*/*/*
 %_K4iconsdir/hicolor/*/*/*
 %_K4iconsdir/oxygen/*/*/*
 %_K4srv/kontact/
-#%_man1dir/kabcclient.*
-%_K4doc/*/konsolekalendar
-%_K4doc/*/kabcclient
+%_K4srv/kcmpimactivity.desktop
+%_K4doc/en/konsolekalendar
+%_K4doc/en/kabcclient
+%_K4doc/en/pimsettingexporter/
 #  runtime
 %_K4dbus_system/org.kde.kalarmrtcwake.conf
 %_K4exec/kalarm_helper
 %_K4dbus_sys_services/org.kde.kalarmrtcwake.service
 %_datadir/polkit-1/actions/org.kde.kalarmrtcwake.policy
+#
+%_K4bindir/headerthemeeditor
+%_K4xdg_apps/headerthemeeditor.desktop
+%_K4apps/headerthemeeditor/
+%_K4doc/en/headerthemeeditor/
 #  mobile
 %dir %_K4lib/imports/
 %dir %_K4lib/imports/org
 %_K4lib/imports/org/kde
 %_K4apps/mobileui/
-%_K4apps/pimsettingexporter/
 
 %files kaddressbook-mobile
 %_K4bindir/kaddressbook-mobile
@@ -1175,15 +1212,15 @@ based on kdepim.
 %_K4libdir/libkontactprivate.so.*
 
 %files akonadi
-%_K4bindir/akonadi_*
+%_K4bindir/akonadi_*_agent
 %_K4bindir/akonadiconsole
 %_datadir/akonadi/
 %_K4apps/akonadiconsole/
-%_K4apps/akonadi_archivemail_agent/
-%_K4apps/akonadi_mailfilter_agent/
+%_K4apps/akonadi_*_agent/
 %_K4xdg_apps/akonadiconsole.desktop
 %_K4conf_update/mailfilteragent.upd
 %_K4conf_update/migrate-kmail-filters.pl
+%_K4doc/en/akonadi_*_agent/
 
 %files -n libkdepim4
 %_K4libdir/libkdepim.so.*
@@ -1353,9 +1390,11 @@ based on kdepim.
 #
 %_K4bindir/kmailcvt
 %_K4apps/kmailcvt/
+%_K4doc/en/kmailcvt/
 #
 %_K4bindir/importwizard
 %_K4xdg_apps/importwizard.desktop
+%_K4doc/en/importwizard/
 
 %files kmail-common
 %_K4lib/messageviewer_bodypartformatter_application_mstnef.so
@@ -1575,17 +1614,28 @@ based on kdepim.
 %_K4libdir/libtemplateparser.so.*
 %files -n libpimcommon4
 %_K4libdir/libpimcommon.so.*
+%files -n libcomposereditorng4
+%_K4libdir/libcomposereditorng.so.*
+%files -n libgrammar4
+%_K4libdir/libgrammar.so.*
+%files -n libpimactivity4
+%_K4libdir/libpimactivity.so.*
+%files -n libsendlater4
+%_K4libdir/libsendlater.so.*
 
 %files devel
 %_K4link/*.so
 #%_K4includedir/*
 #%_K4apps/cmake/modules/*
 %_K4apps/kdepimwidgets
-%_K4lib/plugins/designer/kdepimwidgets.so
+%_K4lib/plugins/designer/*.so
 %_K4dbus_interfaces/*
 
 
 %changelog
+* Thu Sep 05 2013 Sergey V Turchin <zerg@altlinux.org> 4.11.1-alt1
+- new version
+
 * Thu Jul 04 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.5-alt1
 - new version
 

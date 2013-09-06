@@ -2,7 +2,7 @@
 %define rname kde-artwork-active
 
 Name: kde4-artwork-active
-Version: 0.3
+Version: 0.4
 Release: alt1
 
 Group: Sound
@@ -46,6 +46,9 @@ KDE mobile artwork
 %_K4wall/*.jpg
 
 %changelog
+* Wed Sep 11 2013 Sergey V Turchin <zerg@altlinux.org> 0.4-alt1
+- new version
+
 * Tue Oct 16 2012 Sergey V Turchin <zerg@altlinux.org> 0.3-alt1
 - new version
 

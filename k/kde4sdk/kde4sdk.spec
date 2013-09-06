@@ -2,13 +2,14 @@
 %add_findpackage_path %_K4bindir
 %add_findreq_skiplist %_K4apps/lokalize/scripts/*.py
 %add_findreq_skiplist %_K4bindir/kdedoc
+%add_findreq_skiplist %_K4bindir/package_crystalsvg
 %def_enable antlr
 
 %define rname kdesdk
 Name: kde4sdk
 %define major 4
-%define minor 10
-%define bugfix 5
+%define minor 11
+%define bugfix 1
 Version: %major.%minor.%bugfix
 Release: alt1
 
@@ -334,7 +335,7 @@ mv %buildroot/%_K4bindir/svn-clean %buildroot/%_K4bindir/svnclean
 %_K4apps/kio_perldoc/
 %_K4apps/kpartloader/
 %_K4srv/perldoc.protocol
-%_K4iconsdir/locolor/*/actions/*.*
+#%_K4iconsdir/locolor/*/actions/*.*
 %_K4iconsdir/hicolor/*/actions/*.*
 %_K4iconsdir/hicolor/*/mimetypes/application-x-uml.*
 
@@ -419,6 +420,7 @@ mv %buildroot/%_K4bindir/svn-clean %buildroot/%_K4bindir/svnclean
 %files scripts
 %_K4bindir/adddebug
 %_K4bindir/build-progress.sh
+%_K4bindir/draw_lib_dependencies
 %_K4bindir/cheatmake
 %_K4bindir/colorsvn
 %_K4bindir/create_cvsignore
@@ -607,6 +609,9 @@ mv %buildroot/%_K4bindir/svn-clean %buildroot/%_K4bindir/svnclean
 
 
 %changelog
+* Mon Sep 09 2013 Sergey V Turchin <zerg@altlinux.org> 4.11.1-alt1
+- new version
+
 * Fri Jul 05 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.5-alt1
 - new version
 

@@ -4,7 +4,7 @@
 %define rname kdetoys
 Name: kde4toys
 %define major 4
-%define minor 10
+%define minor 11
 %define bugfix 1
 Version: %major.%minor.%bugfix
 Release: alt1
@@ -144,6 +144,9 @@ done
 %_K4dbus_interfaces/*
 
 %changelog
+* Tue Sep 10 2013 Sergey V Turchin <zerg@altlinux.org> 4.11.1-alt1
+- new version
+
 * Thu Mar 07 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.1-alt1
 - new version
 

@@ -2,8 +2,8 @@
 
 %define rname pykde4
 Name: kde4-python
-Version: 4.10.0
-Release: alt0.2
+Version: 4.11.1
+Release: alt1
 
 Group: Development/KDE and QT
 Summary: Python bindings for KDE4
@@ -15,6 +15,7 @@ Source: %rname-%version.tar
 Patch10: make_pykde4_respect_sip_flags.diff
 # ALT
 Patch100: pykde4-4.8.0-alt-mobile.patch
+Patch101: pykde4-4.10.1-alt-sip-install-dir.patch
 
 # Automatically added by buildreq on Thu Sep 15 2011 (-bi)
 # optimized out: automoc cmake cmake-modules elfutils fontconfig fontconfig-devel glibc-devel-static kde4libs kde4libs-devel kde4pimlibs libGL-devel libGLU-devel libICE-devel libSM-devel libX11-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXext-devel libXfixes-devel libXft-devel libXi-devel libXinerama-devel libXpm-devel libXrandr-devel libXrender-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel libdbus-devel libdbusmenu-qt2 libfreetype-devel libpng-devel libqt4-core libqt4-dbus libqt4-declarative libqt4-devel libqt4-gui libqt4-network libqt4-opengl libqt4-script libqt4-sql libqt4-svg libqt4-uitools libqt4-webkit libqt4-xml libqt4-xmlpatterns libsoprano-devel libssl-devel libstdc++-devel libxkbfile-devel phonon-devel pkg-config python-base python-devel python-module-PyQt4 python-module-sip python-modules rpm-build-gir ruby shared-desktop-ontologies-devel soprano-backend-redland soprano-backend-virtuoso xorg-kbproto-devel xorg-xf86miscproto-devel xorg-xproto-devel zlib-devel
@@ -53,6 +54,7 @@ Python bindings for KDE4
 %ifarch %arm
 %patch100 -p1
 %endif
+%patch101 -p1
 
 %build
 %K4cmake
@@ -77,6 +79,9 @@ Python bindings for KDE4
 
 
 %changelog
+* Mon Sep 09 2013 Sergey V Turchin <zerg@altlinux.org> 4.11.1-alt1
+- new version
+
 * Tue Jan 15 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.0-alt0.2
 - update from 4.10 branch
 
