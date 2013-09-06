@@ -5,7 +5,7 @@
 
 %define module_name	nvidia
 %define module_version	319.32
-%define module_release	alt2
+%define module_release	alt3
 %define flavour		led-ws
 
 %setup_kernel_module %flavour
@@ -27,7 +27,11 @@
 %endif
 %define legacy2_src %(echo %legacy2 | tr -d .)
 %nvIF_ver_lt %xorg_ver 1.15
+%nvIF_ver_gteq %kversion 3.10
 %define legacy3 173.14.37
+%else
+%define legacy3 %nil
+%endif
 %else
 %define legacy3 %nil
 %endif
@@ -189,6 +193,9 @@ fi
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Sat Sep 07 2013 Led <led@altlinux.ru> 319.32-alt3
+- don't build stolidly broken legacy3 for kernels < 3.10
 
 * Fri Jul 12 2013 Led <led@altlinux.ru> 319.32-alt2..
 - removed requires of kernel-modules-drm-*

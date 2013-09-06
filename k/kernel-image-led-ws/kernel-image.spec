@@ -20,7 +20,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.4.60
-Release: alt4
+Release: alt5
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -2894,6 +2894,13 @@ done)
 
 
 %changelog
+* Fri Sep 06 2013 Led <led@altlinux.ru> 3.4.60-alt5
+- updated:
+  + fix-drivers-hv
+  + fix-drivers-hv--hv_util
+  + fix-drivers-hv--hv_vmbus
+  + feat-drivers-block--rxdsk
+
 * Mon Sep 02 2013 Led <led@altlinux.ru> 3.4.60-alt4
 - updated:
   + feat-fs-aufs
