@@ -13,8 +13,8 @@ BuildRequires: jpackage-compat
 %global cachedir %{_var}/cache/%{name}
 %global libdir %{_var}/lib/%{name}
 %global rundir %{_var}/run/%{name}
-%global homedir %{_datadir}/%{name}
-%global bindir %{homedir}/bin
+%global apphomedir %{_datadir}/%{name}
+%global bindir %{apphomedir}/bin
 %global logdir %{_var}/log/%{name}
 %global confdir %{_sysconfdir}/%{name}
 
@@ -28,7 +28,7 @@ BuildRequires: jpackage-compat
 
 Name:             jboss-as
 Version:          7.1.1
-Release:          alt2_6jpp7
+Release:          alt3_6jpp7
 Summary:          JBoss Application Server
 Group:            System/Servers
 License:          LGPLv2 and ASL 2.0
@@ -394,7 +394,7 @@ mvn-rpmbuild -Dmaven.local.depmap.file=%{S:33} \
 
 install -d -m 755 $RPM_BUILD_ROOT%{_javadir}/%{name}
 install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-install -d -m 755 $RPM_BUILD_ROOT%{homedir}
+install -d -m 755 $RPM_BUILD_ROOT%{apphomedir}
 install -d -m 755 $RPM_BUILD_ROOT%{confdir}
 install -d -m 755 $RPM_BUILD_ROOT%{rundir}
 install -d -m 770 $RPM_BUILD_ROOT%{cachedir}/auth
@@ -403,7 +403,7 @@ install -d -m 755 $RPM_BUILD_ROOT%{_unitdir}
 install -d -m 755 $RPM_BUILD_ROOT%{_bindir}
 
 for mode in standalone domain; do
-  install -d -m 755 $RPM_BUILD_ROOT%{homedir}/${mode}
+  install -d -m 755 $RPM_BUILD_ROOT%{apphomedir}/${mode}
   install -d -m 775 $RPM_BUILD_ROOT%{libdir}/${mode}/data
   install -d -m 755 $RPM_BUILD_ROOT%{cachedir}/${mode}
   install -d -m 775 $RPM_BUILD_ROOT%{logdir}/${mode}
@@ -527,12 +527,12 @@ pushd build/target/jboss-as-%{namedversion}
   # TMP - investigate
   rm -rf bin/client
 
-  mv copyright.txt README.txt LICENSE.txt welcome-content docs bin appclient modules $RPM_BUILD_ROOT%{homedir}
+  mv copyright.txt README.txt LICENSE.txt welcome-content docs bin appclient modules $RPM_BUILD_ROOT%{apphomedir}
 popd
 
 chmod 775 $RPM_BUILD_ROOT%{libdir}/standalone/deployments
 
-pushd $RPM_BUILD_ROOT%{homedir}
+pushd $RPM_BUILD_ROOT%{apphomedir}
 
   # Standalone
   ln -s %{confdir}/standalone standalone/configuration
@@ -785,7 +785,7 @@ popd
 %pre
 getent group %{name} >/dev/null || groupadd -r %{name}
 getent passwd %{name} >/dev/null || \
-    useradd -c "JBoss AS" -u %{jbuid} -g %{name} -s /bin/nologin -r -d %{homedir} %{name}
+    useradd -c "JBoss AS" -u %{jbuid} -g %{name} -s /bin/nologin -r -d %{apphomedir} %{name}
 exit 0
 
 %post
@@ -797,11 +797,11 @@ else
   libdir="/usr/lib"
 fi
 
-pushd %{homedir}/modules/org/hornetq/main/lib/linux-${arch} > /dev/null
+pushd %{apphomedir}/modules/org/hornetq/main/lib/linux-${arch} > /dev/null
   ln -sf ${libdir}/libHornetQAIO.so.0 libHornetQAIO.so
 popd > /dev/null
 
-pushd %{homedir}/modules/org/jboss/as/web/main/lib/linux-${arch} > /dev/null
+pushd %{apphomedir}/modules/org/jboss/as/web/main/lib/linux-${arch} > /dev/null
   ln -sf ${libdir}/libjbnative-1.so.0 libtcnative-1.so
   ln -sf ${libdir}/libapr-1.so.0 libapr-1.so
   ln -sf ${libdir}/libcrypto.so libcrypto.so
@@ -811,22 +811,22 @@ popd > /dev/null
 %preun
 arch=`uname -m`
 
-rm -rf %{homedir}/modules/org/jboss/as/web/main/lib/linux-${arch}/*
-rm -rf %{homedir}/modules/org/hornetq/main/lib/linux-${arch}/*
+rm -rf %{apphomedir}/modules/org/jboss/as/web/main/lib/linux-${arch}/*
+rm -rf %{apphomedir}/modules/org/hornetq/main/lib/linux-${arch}/*
 
 %files
-%{homedir}/appclient
+%{apphomedir}/appclient
 %dir %{bindir}
 %{bindir}/*.conf
 %{bindir}/*.sh
 %{bindir}/*.xml
 %{_bindir}/*
-%{homedir}/auth
-%{homedir}/domain
-%{homedir}/standalone
-%{homedir}/modules
-%{homedir}/welcome-content
-%{homedir}/jboss-modules.jar
+%{apphomedir}/auth
+%{apphomedir}/domain
+%{apphomedir}/standalone
+%{apphomedir}/modules
+%{apphomedir}/welcome-content
+%{apphomedir}/jboss-modules.jar
 %attr(-,root,jboss-as) %{libdir}/standalone
 %attr(-,root,jboss-as) %{libdir}/domain
 %attr(0775,root,jboss-as) %dir %{rundir}
@@ -843,10 +843,10 @@ rm -rf %{homedir}/modules/org/hornetq/main/lib/linux-${arch}/*
 %attr(0664,jboss-as,jboss-as) %config(noreplace) %{confdir}/domain/*.xml
 %config(noreplace) %{confdir}/%{name}.conf
 %{_unitdir}/%{name}.service
-%doc %{homedir}/docs
-%doc %{homedir}/copyright.txt
-%doc %{homedir}/LICENSE.txt
-%doc %{homedir}/README.txt
+%doc %{apphomedir}/docs
+%doc %{apphomedir}/copyright.txt
+%doc %{apphomedir}/LICENSE.txt
+%doc %{apphomedir}/README.txt
 %doc README.md
 %{_mavenpomdir}/*
 %{_mavendepmapfragdir}/*
@@ -854,9 +854,12 @@ rm -rf %{homedir}/modules/org/hornetq/main/lib/linux-${arch}/*
 
 %files javadoc
 %{_javadocdir}/%{name}
-%doc %{homedir}/LICENSE.txt
+%doc %{apphomedir}/LICENSE.txt
 
 %changelog
+* Fri Sep 06 2013 Igor Vlasenko <viy@altlinux.ru> 7.1.1-alt3_6jpp7
+- bugfix (closes: 29317)
+
 * Fri Mar 22 2013 Igor Vlasenko <viy@altlinux.ru> 7.1.1-alt2_6jpp7
 - fixed build
 
