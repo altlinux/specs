@@ -2,11 +2,11 @@
 %define m_distro po4a
 %define m_name %module
 %define m_author_id unknown
-%define _disable_test 1
+%define _disable_test 0
 
 Name: po4a
-Version: 0.33.3
-Release: alt2.1
+Version: 0.45
+Release: alt1
 
 Summary: Tools for helping translation of documentation
 
@@ -18,15 +18,23 @@ Url: http://po4a.alioth.debian.org/
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 BuildArch: noarch
-Source: http://alioth.debian.org/frs/download.php/2379/%m_distro-%version.tar.bz2
 
-# manually removed: po4a
-# Automatically added by buildreq on Sat Apr 12 2008 (-bi)
-BuildRequires: man perl-Locale-gettext perl-Module-Build perl-SGMLSpm perl-Term-ReadKey perl-Text-WrapI18N
+# Note! change this magic number before upgrade
+Source: http://alioth.debian.org/frs/download.php/file/3942/%m_distro-%version.tar
+
+# Automatically added by buildreq on Sat Sep 07 2013
+# optimized out: docbook-dtds libgpg-error perl-CPAN-Meta perl-CPAN-Meta-Requirements perl-CPAN-Meta-YAML perl-Encode perl-JSON-PP perl-Module-Metadata perl-Parse-CPAN-Meta perl-Perl-OSType perl-Pod-Escapes perl-Pod-Parser perl-Pod-Simple perl-Text-CharWidth perl-devel perl-podlators python3-base xml-common
+BuildRequires: docbook-style-xsl perl-HTML-Parser perl-Locale-gettext perl-Module-Build perl-SGMLSpm perl-Term-ReadKey perl-Text-WrapI18N xsltproc
 
 # automatically added during perl 5.8 -> 5.12 upgrade.
 # perl-podlators is required for pod2man conversion.
 BuildRequires: perl-podlators
+
+BuildRequires:  perl-Module-Build >= 0.40
+BuildRequires:  perl-SGMLSpm >= 1.03ii
+
+# recommended: Unicode::GCString
+
 
 %description
 The po4a (po for anything) project goal is to ease translations (and
@@ -43,10 +51,15 @@ sub-modules:
  - LaTeX: generic TeX or LaTeX format
 
 %prep
-%setup -q -n %m_distro-%version
+%setup -n %m_distro-%version
 
 %build
 %perl_vendor_build --install_path bindoc=%_man1dir
+
+%check
+# requires texlive, which is too heavy for the package
+rm t/24-tex.t
+./Build test
 
 %install
 %perl_vendor_install
@@ -59,10 +72,16 @@ rm -rf %buildroot%perl_vendor_privlib/i386-linux/
 %_bindir/*
 # Locale already created in perl-Locale-gettext
 %perl_vendor_privlib/Locale/Po4a/
-%_man1dir/*
+#%_man1dir/*
 #%_man7dir/*
 
 %changelog
+* Sat Sep 07 2013 Vitaly Lipatov <lav@altlinux.ru> 0.45-alt1
+- new version 0.45 (with rpmrb script)
+
+* Sun Aug 04 2013 Vitaly Lipatov <lav@altlinux.ru> 0.44-alt1
+- new version 0.44 (with rpmrb script)
+
 * Fri Nov 26 2010 Igor Vlasenko <viy@altlinux.ru> 0.33.3-alt2.1
 - repair after perl 5.12 upgrade using girar-nmu
 
