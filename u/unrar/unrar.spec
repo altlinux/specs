@@ -1,5 +1,5 @@
 Name: unrar
-Version: 4.2.1
+Version: 5.0.11
 Release: alt1
 
 Summary: RAR unarchiver
@@ -7,7 +7,7 @@ License: Freely distributable
 Group: Archiving/Compression
 
 Url: http://www.rarlab.com
-Source: %url/rar/unrarsrc-%version.tar.gz
+Source: %{name}src-%version.tar.gz
 
 # Automatically added by buildreq on Mon Feb 07 2011
 BuildRequires: gcc-c++
@@ -21,7 +21,7 @@ with the RAR archiver, version 1.50 and above.
 %setup -n unrar
 
 %build
-%make -f makefile.unix CXXFLAGS="%optflags"
+%make_build STRIP=touch
 
 %install
 install -pD -m755 unrar %buildroot%_bindir/unrar
@@ -31,6 +31,9 @@ install -pD -m755 unrar %buildroot%_bindir/unrar
 %doc *.txt
 
 %changelog
+* Sun Sep 08 2013 Fr. Br. George <george@altlinux.ru> 5.0.11-alt1
+- Autobuild version bump to 5.0.11
+
 * Tue May 15 2012 Victor Forsiuk <force@altlinux.org> 4.2.1-alt1
 - 4.2.1
 
