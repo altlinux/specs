@@ -1,8 +1,8 @@
 Name: sendmail
 
-%define tarbolversion 8.14.6
+%define tarbolversion 8.14.7
 
-Version: 8.14.6
+Version: 8.14.7
 Release: alt1
 
 Packager: Sergey Y. Afonin <asy@altlinux.ru>
@@ -32,11 +32,10 @@ Source16: %name-milters_watchdog
 
 Source20: %name-access.main
 Source21: %name-access.dynamic
-Source22: %name-access.helo
-Source23: %name-access.spam
-Source24: %name-access.virus
-Source25: %name-access.other
-Source26: %name-access.sendmail.org
+Source22: %name-access.spam
+Source23: %name-access.virus
+Source24: %name-access.other
+Source25: %name-access.sendmail.org
 
 # Cyrus-imap integration
 Source30: %name-README.cyrus-imap
@@ -59,13 +58,16 @@ Patch4: %name-8.12.2-aliasesDoS.patch
 Patch5: %name-8.11.1-up-limit.patch
 Patch6: %name-8.11.0-m4path.patch
 
+# experimental
+Patch7: %name-8.14.4-BODY_7BIT_IGNORED-srvrsmtp.c.patch
+
 # Cyrus-imap integration
 Patch10: %name-mrs-8.12.11.patch
 
 Patch50: %name-contrib-expn.pl-tempfile.patch
 
 #errata
-Patch100: %name-8.14.6.milter.EHLOmacros.patch
+#Patch100:
 
 %add_findreq_skiplist */include/*
 
@@ -189,13 +191,14 @@ them that you are currently not reading your mail.
 %patch4 -p1
 %patch5 -p1
 %patch6 -p1
+%patch7 -p1
 
 %patch10 -p1
 
 %patch50 -p1
 
 #errata
-%patch100 -p1
+#patch100 -p1
 
 %__sed -e 's|@@PATH@@|\.\.|' < %SOURCE6 > cf/cf/altlinux.mc
 %__sed -e 's|@@PATH@@|\.\.|' < %SOURCE11> cf/cf/submit.mc
@@ -323,11 +326,10 @@ echo "# apache, mailman, majordomo, uucp, are good candidates" ) \
 %__mkdir_p $RPM_BUILD_ROOT/%_sysconfdir/mail/access.d
 %__sed -e 's|@@NAMEDOCVERSION@@|%name-doc-%version|' < %SOURCE20 > $RPM_BUILD_ROOT%_sysconfdir/mail/access.main
 %__cp %SOURCE21 $RPM_BUILD_ROOT%_sysconfdir/mail/access.d.shared/dynamic.access
-%__sed -e 's|@@NAMEDOCVERSION@@|%name-doc-%version|' < %SOURCE22 > $RPM_BUILD_ROOT%_sysconfdir/mail/access.d.shared/helo.access
-%__cp %SOURCE23 $RPM_BUILD_ROOT%_sysconfdir/mail/access.d.shared/spam.access
-%__cp %SOURCE24 $RPM_BUILD_ROOT%_sysconfdir/mail/access.d.shared/virus.access
-%__cp %SOURCE25 $RPM_BUILD_ROOT%_sysconfdir/mail/access.d/other.access
-%__cp %SOURCE26 $RPM_BUILD_ROOT%_sysconfdir/mail/access.d/sendmail.org.access
+%__cp %SOURCE22 $RPM_BUILD_ROOT%_sysconfdir/mail/access.d.shared/spam.access
+%__cp %SOURCE23 $RPM_BUILD_ROOT%_sysconfdir/mail/access.d.shared/virus.access
+%__cp %SOURCE24 $RPM_BUILD_ROOT%_sysconfdir/mail/access.d/other.access
+%__cp %SOURCE25 $RPM_BUILD_ROOT%_sysconfdir/mail/access.d/sendmail.org.access
 
 for map in virtusertable access domaintable mailertable; do
     touch $RPM_BUILD_ROOT%_sysconfdir/mail/${map}
@@ -493,6 +495,15 @@ EOF
 %doc docs/LICENSE
 
 %changelog
+* Fri Sep 06 2013 Sergey Y. Afonin <asy@altlinux.ru> 8.14.7-alt1
+- New version (built with -D_FFR_REJECT_NUL_BYTE)
+- added patch for ignore BODY=7BIT in smtp "mail from" command
+
+* Sat Apr 13 2013 Sergey Y. Afonin <asy@altlinux.ru> 8.14.6-alt2
+- cleanups:
+  - access.d.shared/helo.access removed (a part of Corvax hacks,
+    see changelog for 8.14.2-alt2)
+
 * Sat Apr 13 2013 Sergey Y. Afonin <asy@altlinux.ru> 8.14.6-alt1
 - New version (with errata 2013-01-18: 8.14.6.milter.EHLOmacros)
 
