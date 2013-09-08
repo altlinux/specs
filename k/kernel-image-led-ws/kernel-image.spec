@@ -19,13 +19,13 @@
 %define flavour %base_flavour-%sub_flavour
 
 Name: kernel-image-%flavour
-Version: 3.4.60
-Release: alt5
+Version: 3.4.61
+Release: alt1
 
 %define kernel_req %nil
 %define kernel_prov %nil
 %define kernel_branch 3.4
-%define kernel_stable_version 60
+%define kernel_stable_version 61
 %define kernel_extra_version .%kernel_stable_version
 #define kernel_extra_version %nil
 
@@ -2894,6 +2894,9 @@ done)
 
 
 %changelog
+* Sun Sep 08 2013 Led <led@altlinux.ru> 3.4.61-alt1
+- 3.4.61
+
 * Fri Sep 06 2013 Led <led@altlinux.ru> 3.4.60-alt5
 - updated:
   + fix-drivers-hv
