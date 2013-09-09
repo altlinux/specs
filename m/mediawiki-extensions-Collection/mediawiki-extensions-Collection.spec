@@ -1,12 +1,9 @@
 %define oname Collection
-%define major 1.15
-#%define dversion MW%major
-%define dversion trunk
-%define revision r62858
+%define major 1.21
 
 Name: mediawiki-extensions-%oname
-Version: %major.%revision
-Release: alt2
+Version: %major.6bbedcf
+Release: alt1
 
 BuildArch: noarch
 
@@ -19,12 +16,12 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 License: GPL
 
 BuildPreReq: rpm-build-mediawiki >= 0.2
-Requires: mediawiki-common >= 1.15.1-alt4
+Requires: mediawiki-common >= 1.21.1-alt1
 
 Requires: php5-curl
 
 # It is new feature etersoft-build-utils since 1.7.6: supports commented real url
-# Source-url: http://upload.wikimedia.org/ext-dist/%oname-%dversion-%revision.tar.gz
+# Source-url: https://codeload.github.com/wikimedia/mediawiki-extensions-Collection/legacy.tar.gz/REL1_21
 Source: %oname-%version.tar
 
 %description
@@ -45,6 +42,9 @@ This extension allows a user to organize personal selections of pages in a colle
 %files -f %oname.files
 
 %changelog
+* Mon Sep 09 2013 Vitaly Lipatov <lav@altlinux.ru> 1.21.6bbedcf-alt1
+- new version 1.21.6bbedcf (with rpmrb script)
+
 * Tue Jul 13 2010 Vitaly Lipatov <lav@altlinux.ru> 1.15.r62858-alt2
 - add php5-curl requires (ALT bug #23749)
 
