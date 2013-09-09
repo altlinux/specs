@@ -3,11 +3,11 @@
 %add_findprov_skiplist /usr/include/google/protobuf/message.h
 
 %def_with java
-%define soversion 7
+%define soversion 8
 
 Name: protobuf
-Version: 2.4.1
-Release: alt2
+Version: 2.5.0
+Release: alt1
 Summary: Protocol Buffers - Google's data interchange format
 License: Apache License 2.0
 Group: System/Libraries
@@ -16,7 +16,6 @@ Packager: Mikhail A Pokidko <pma@altlinux.ru>
 
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
-Patch2: protobuf-2.4.1-java-fixes.patch
 
 Obsoletes: libprotobuf <= 2.0.0-alt1
 
@@ -87,6 +86,8 @@ Summary: Python module files for %name
 Group: Development/Python
 Requires: lib%{name}%{soversion} = %version-%release
 BuildArch: noarch
+# ?
+%py_provides google
 
 %description -n python-module-%name
 Python bindings for protocol buffers
@@ -131,11 +132,6 @@ rm -rf java/src/test
 
 # without gtest
 rm -rf gtest
-
-%if_with java
-%patch2 -p1 -b .java-fixes
-rm -rf java/src/test
-%endif
 
 %build
 iconv -f iso8859-1 -t utf-8 CONTRIBUTORS.txt > CONTRIBUTORS.txt.utf8
@@ -214,6 +210,9 @@ install -pm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
 %endif
 
 %changelog
+* Fri Sep 06 2013 Alexey Shabalin <shaba@altlinux.ru> 2.5.0-alt1
+- 2.5.0
+
 * Sun Sep 09 2012 Igor Vlasenko <viy@altlinux.ru> 2.4.1-alt2
 - added protobuf-java subpackage (required for maven dependencies)
 

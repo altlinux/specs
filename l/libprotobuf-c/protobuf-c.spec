@@ -2,7 +2,7 @@
 
 Name: lib%_name
 Version: 0.15
-Release: alt1
+Release: alt2
 Summary: C bindings for Google's Protocol Buffers
 
 Group: System/Libraries
@@ -55,5 +55,8 @@ This package contains protobuf-c headers and libraries.
 %_pkgconfigdir/libprotobuf-c.pc
 
 %changelog
+* Mon Sep 09 2013 Alexey Shabalin <shaba@altlinux.ru> 0.15-alt2
+- rebuilt for protobuf-2.5.0
+
 * Thu Apr 26 2012 Alexey Shabalin <shaba@altlinux.ru> 0.15-alt1
 - initial build for ALT Linux Sisyphus
