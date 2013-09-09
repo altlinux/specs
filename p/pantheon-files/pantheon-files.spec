@@ -1,5 +1,7 @@
+# TODO: build with unity
+
 Name: pantheon-files
-Version: 0.1.3
+Version: 0.1.4
 Release: alt1
 
 Summary: The file manager of the Pantheon desktop
@@ -88,6 +90,9 @@ mv %buildroot/usr/lib/* %buildroot%_libdir/
 %_datadir/vala/vapi/marlincore.vapi
 
 %changelog
+* Mon Sep 09 2013 Igor Zubkov <icesik@altlinux.org> 0.1.4-alt1
+- 0.1.3 -> 0.1.4
+
 * Sat Aug 24 2013 Igor Zubkov <icesik@altlinux.org> 0.1.3-alt1
 - build for Sisyphus
 
