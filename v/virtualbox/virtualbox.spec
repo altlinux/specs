@@ -57,7 +57,7 @@
 
 Name: virtualbox
 Version: 4.2.16
-Release: alt2
+Release: alt3
 
 Summary: VM VirtualBox OSE - Virtual Machine for x86 hardware
 License: GPL
@@ -92,6 +92,7 @@ Source99:	%vboxdbg.in
 %endif
 
 Patch0:		%name-%version-%release.patch
+Patch1:	virtualbox-addition-3.11.patch
 
 BuildPreReq: dev86 iasl gcc%gcc_version-c++ libstdc++%gcc_version-devel-static
 BuildPreReq: libIDL-devel libSDL-devel libpng-devel
@@ -282,6 +283,7 @@ This package contains VirtualBox SDK.
 %prep
 %setup -q -n %distarchive
 %patch -p1
+%patch1 -p2
 
 cp %SOURCE15 %SOURCE16 src/VBox/Frontends/VirtualBox/images
 
@@ -687,6 +689,9 @@ mountpoint -q /dev || {
 %endif
 
 %changelog
+* Mon Sep 09 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 4.2.16-alt3
+- fix virtualbox-addition for build with kernel 3.11
+
 * Mon Sep 09 2013 Fr. Br. George <george@altlinux.ru> 4.2.16-alt2
 - Switch back to GCC 4.5 (Closes: #29344)
 
