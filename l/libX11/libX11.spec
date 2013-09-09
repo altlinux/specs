@@ -1,5 +1,5 @@
 Name: libX11
-Version: 1.6.1
+Version: 1.6.2
 Release: alt1
 Epoch: 3
 Summary: X11 Library
@@ -89,6 +89,9 @@ rm -f %buildroot%_libdir/X11/locale/common/*.la
 %_datadir/X11/locale
 
 %changelog
+* Mon Sep 09 2013 Valery Inozemtsev <shrek@altlinux.ru> 3:1.6.2-alt1
+- 1.6.2
+
 * Tue Jul 30 2013 Valery Inozemtsev <shrek@altlinux.ru> 3:1.6.1-alt1
 - 1.6.1
 
