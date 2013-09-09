@@ -1,4 +1,4 @@
-Version: 2.4.2
+Version: 2.7.1
 Release: alt1
 Name: mercurial
 %setup_python_module %name
@@ -20,6 +20,7 @@ Provides: hg = %version-%release
 #%add_python_req_skip win32api pywintypes win32com win32con win32file win32process win32gui winerror msvcrt
 %add_findreq_skiplist %python_sitelibdir/hgext/*
 %add_findreq_skiplist %python_sitelibdir/mercurial/win*
+%add_findreq_skiplist %python_sitelibdir/mercurial/scmwin*
 %add_findreq_skiplist %python_sitelibdir/mercurial/httpclient/tests/*
 %add_findreq_skiplist %python_sitelibdir/mercurial/py3kcompat.py
 
@@ -130,6 +131,9 @@ install -m 644 contrib/mergetools.hgrc %buildroot/%_sysconfdir/%name/hgrc.d/merg
 %python_sitelibdir/hgext/*
 
 %changelog
+* Mon Sep 09 2013 Alexey Shabalin <shaba@altlinux.ru> 2.7.1-alt1
+- 2.7.1
+
 * Tue Jan 08 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.4.2-alt1
 - Version 2.4.2 (ALT #27599)
 
