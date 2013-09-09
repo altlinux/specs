@@ -20,7 +20,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.4.61
-Release: alt1
+Release: alt2
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -90,7 +90,6 @@ Release: alt1
 %def_enable spi
 %def_enable mtd
 %def_disable rapidio
-%def_disable ezx_pcap
 %def_enable mmc
 %def_enable media
 %def_enable sound
@@ -2132,7 +2131,6 @@ config_disable \
 	%{?_disable_regulator:REGULATOR} \
 	%{?_disable_mtd:MTD} \
 	%{?_disable_rapidio:RAPIDIO} \
-	%{?_disable_ezx_pcap:EZX_PCAP} \
 	%{?_disable_media:MEDIA_SUPPORT} \
 	%{?_disable_mmc:MMC} \
 	%{?_disable_wireless:WLAN WIRELESS CFG80211 WIMAX} \
@@ -2894,6 +2892,10 @@ done)
 
 
 %changelog
+* Mon Sep 09 2013 Led <led@altlinux.ru> 3.4.61-alt2
+- updated:
+  + feat-fs-aufs
+
 * Sun Sep 08 2013 Led <led@altlinux.ru> 3.4.61-alt1
 - 3.4.61
 
