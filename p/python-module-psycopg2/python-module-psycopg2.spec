@@ -1,8 +1,8 @@
 %define oname psycopg2
 %def_with python3
 
-Version: 2.4.5
-Release: alt2.git20120328
+Version: 2.5.1
+Release: alt1
 %setup_python_module %oname
 
 Summary: psycopg2 is a PostgreSQL database adapter for Python
@@ -45,13 +45,6 @@ Requires: python3-module-%oname = %version-%release
 
 %description -n python3-module-%oname-tests
 Tests for the psycopg2 python 3 PostgreSQL database adapter.
-
-%package -n python3-module-psycopg2da
-Summary: PostgreSQL Database Adapter for Zope 3
-Group: Development/Python3
-
-%description -n python3-module-psycopg2da
-PostgreSQL Database Adapter for Zope 3
 %endif
 
 %package tests
@@ -71,51 +64,21 @@ BuildArch: noarch
 Documenation and example files for the psycopg2 python PostgreSQL
 database adapter.
 
-%package -n python-module-psycopg2da
-Summary: PostgreSQL Database Adapter for Zope 3
-Group: Development/Python
-
-%description -n python-module-psycopg2da
-PostgreSQL Database Adapter for Zope 3
-
 %prep
 %setup
 
 echo "include_dirs=.:/usr/include/pgsql" >> setup.cfg
 
-%if_with python3
-rm -rf ../python3
-cp -a . ../python3
-%endif
-
 %build
 %add_optflags -fno-strict-aliasing
-%python_build_debug
-%if_with python3
-pushd ../python3
-find -type f -name '*.py' -exec 2to3 -w -n '{}' +
+%python_build
 %python3_build
-popd
-%endif
 
 %install
-mkdir -p %buildroot/%python_sitelibdir/psycopg2da/
 %python_install --optimize=2 --record=INSTALLED_FILES
-%if_with python3
-pushd ../python3
-mkdir -p %buildroot/%python3_sitelibdir/psycopg2da/
 %python3_install
 sed -i 's|_psycopg|%oname._psycopg|' \
 	%buildroot%python3_sitelibdir/%oname/psycopg1.py
-install -m644 psycopg2da/__init__.py %buildroot/%python3_sitelibdir/psycopg2da/
-install -m644 psycopg2da/adapter.py %buildroot/%python3_sitelibdir/psycopg2da/
-install -m644 psycopg2da/*.zcml %buildroot/%python3_sitelibdir/psycopg2da/
-popd
-%endif
-
-install -m644 psycopg2da/__init__.py %buildroot/%python_sitelibdir/psycopg2da/
-install -m644 psycopg2da/adapter.py %buildroot/%python_sitelibdir/psycopg2da/
-install -m644 psycopg2da/*.zcml %buildroot/%python_sitelibdir/psycopg2da/
 
 %files -f INSTALLED_FILES
 %dir %python_sitelibdir/psycopg2
@@ -127,24 +90,21 @@ install -m644 psycopg2da/*.zcml %buildroot/%python_sitelibdir/psycopg2da/
 %files doc
 %doc AUTHORS INSTALL README doc examples
 
-%files -n python-module-psycopg2da
-%dir %python_sitelibdir/psycopg2da
-%python_sitelibdir/psycopg2da/*
-
 %if_with python3
 %files -n python3-module-%oname
 %python3_sitelibdir/*
-%exclude %python3_sitelibdir/psycopg2da
 %exclude %python3_sitelibdir/*/tests
 
 %files -n python3-module-%oname-tests
 %python3_sitelibdir/*/tests
-
-%files -n python3-module-psycopg2da
-%python3_sitelibdir/psycopg2da
 %endif
 
 %changelog
+* Mon Sep 09 2013 Alexey Shabalin <shaba@altlinux.ru> 2.5.1-alt1
+- 2.5.1
+- Dropped Zope adapter from source repository. ZPsycopgDA now has its own
+  project at <http://github.com/psycopg/ZPsycopgDA>.
+
 * Mon Apr 15 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.4.5-alt2.git20120328
 - Use 'find... -exec...' instead of 'for ... $(find...'
 
