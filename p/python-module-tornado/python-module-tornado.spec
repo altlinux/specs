@@ -3,7 +3,7 @@
 %def_with python3
 
 Name: python-module-%module_name
-Version: 2.4.1
+Version: 3.1.1
 Release: alt1
 Summary: Scalable, non-blocking web server and tools
 
@@ -52,6 +52,9 @@ ideal for real-time web services.
 
 %prep
 %setup
+# remove shebang from files
+sed -i.orig -e '/^#!\//, 1d' *py tornado/*.py tornado/*/*.py
+
 %if_with python3
 rm -rf ../python3
 cp -a . ../python3
@@ -92,6 +95,9 @@ popd
 %endif
 
 %changelog
+* Mon Sep 09 2013 Alexey Shabalin <shaba@altlinux.ru> 3.1.1-alt1
+- 3.1.1
+
 * Sat Mar 02 2013 Aleksey Avdeev <solo@altlinux.ru> 2.4.1-alt1
 - 2.4.1
 
