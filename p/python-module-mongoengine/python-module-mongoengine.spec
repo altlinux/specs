@@ -1,7 +1,7 @@
 %define module_name mongoengine
 
 Name: python-module-%module_name
-Version: 0.6.2
+Version: 0.8.4
 Release: alt1
 Summary: A Python Document-Object Mapper for working with MongoDB
 
@@ -32,6 +32,9 @@ rm -rf %buildroot%python_sitelibdir/tests
 %exclude %python_sitelibdir/*.egg-*
 
 %changelog
+* Mon Sep 09 2013 Alexey Shabalin <shaba@altlinux.ru> 0.8.4-alt1
+- 0.8.4
+
 * Thu Jun 21 2012 Alexey Shabalin <shaba@altlinux.ru> 0.6.2-alt1
 - 0.6.2
 
