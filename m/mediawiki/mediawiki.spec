@@ -2,8 +2,8 @@
 %define major 1.21
 
 Name: mediawiki
-Version: %major.1
-Release: alt1
+Version: %major.2
+Release: alt2
 
 Summary: A wiki engine, typical installation (with Apache2, MySQL and TeX support) 
 
@@ -34,7 +34,7 @@ BuildPreReq: rpm-build-mediawiki >= 0.3
 
 Requires: %name-common = %version-%release
 Requires: %name-apache2 %name-mysql
-Requires: php5-apc ImageMagick
+Requires: php5-apc php5-dom ImageMagick
 
 %description
 MediaWiki is the software used for Wikipedia and the other Wikimedia
@@ -79,6 +79,9 @@ Obsoletes: mediawiki-extensions-ImageMap
 
 Provides: mediawiki-extensions-Poem
 Obsoletes: mediawiki-extensions-Poem
+
+Provides: mediawiki-extensions-PdfHandler
+Obsoletes: mediawiki-extensions-PdfHandler
 
 Conflicts: mediawiki-extensions-FCKEditor
 
@@ -278,6 +281,14 @@ exit 0
 
 
 %changelog
+* Wed Sep 11 2013 Vitaly Lipatov <lav@altlinux.ru> 1.21.2-alt2
+- drop phpinfo from blacklist (ALT bug #29329)
+- add provides/obsoletes for the bundled extension PdfHandler
+
+* Fri Sep 06 2013 Vitaly Lipatov <lav@altlinux.ru> 1.21.2-alt1
+- new version 1.21.2 (with rpmrb script)
+- add php5-dom requires (ALT bug #29328)
+
 * Tue Sep 03 2013 Vitaly Lipatov <lav@altlinux.ru> 1.21.1-alt1
 - new version 1.21.1 (with rpmrb script)
 - move intree changes to the patch file
