@@ -3,8 +3,8 @@
 
 %define oname Alps
 Name: Coin%oname
-Version: 1.4.2
-Release: alt1.svn20120517
+Version: 1.4.4
+Release: alt1.svn20130628
 Summary: Framework for implementing parallel graph search algorithms
 License: CPL v1.0
 Group: Sciences/Mathematics
@@ -149,6 +149,9 @@ done
 %doc %oname/examples/*
 
 %changelog
+* Tue Sep 10 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4.4-alt1.svn20130628
+- Version 1.4.4
+
 * Wed Sep 05 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4.2-alt1.svn20120517
 - Version 1.4.2
 
