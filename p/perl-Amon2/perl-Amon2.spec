@@ -1,5 +1,5 @@
 Name: perl-Amon2
-Version: 3.53
+Version: 4.01
 Release: alt1
 Summary: Amon2 - lightweight web application framework
 
@@ -26,9 +26,12 @@ BuildRequires: perl-Module-Install perl-Module-Install-Repository perl-Module-In
 %files
 %_bindir/amon2-setup.pl
 %perl_vendor_privlib/Amon2*
-%doc TODO Changes 
+%doc TODO Changes
 
 %changelog
+* Tue Sep 10 2013 Vladimir Lettiev <crux@altlinux.ru> 4.01-alt1
+- 3.53 -> 4.01
+
 * Fri Sep 28 2012 Vladimir Lettiev <crux@altlinux.ru> 3.53-alt1
 - 3.35 -> 3.53
 - new builddeps: perl-AnyEvent perl-Protocol-WebSocket
