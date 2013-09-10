@@ -3,8 +3,8 @@
 
 %define oname Blis
 Name: Coin%oname
-Version: 0.93.2
-Release: alt2.svn20120517
+Version: 1.0.0
+Release: alt1.svn20130628
 Summary: BiCePS Linear Integer Solver
 License: CPL v1.0
 Group: Sciences/Mathematics
@@ -125,6 +125,9 @@ done
 %doc %oname/examples/*
 
 %changelog
+* Tue Sep 10 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.0-alt1.svn20130628
+- Version 1.0.0
+
 * Wed Sep 05 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.93.2-alt2.svn20120517
 - New snapshot
 
