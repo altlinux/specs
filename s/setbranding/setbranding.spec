@@ -1,5 +1,5 @@
 Name:     setbranding
-Version:  1.0.1
+Version:  1.1.0
 Release:  alt1
 
 Summary:  Script for manipulation ALT Linux branding packages
@@ -25,6 +25,9 @@ install -Dm755 %SOURCE0 %buildroot%_bindir/%name
 %_bindir/%name
 
 %changelog
+* Tue Sep 10 2013 Andrey Cherepanov <cas@altlinux.org> 1.1.0-alt1
+- Add -l option for display list of all available brandings
+
 * Thu Aug 08 2013 Andrey Cherepanov <cas@altlinux.org> 1.0.1-alt1
 - Set full path to programs
 - Check root privileges on branding change
