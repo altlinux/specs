@@ -3,8 +3,8 @@
 
 %define oname Bonmin
 Name: Coin%oname
-Version: 1.6.0
-Release: alt1.svn20121203
+Version: 1.7.1
+Release: alt1.svn20130727
 Summary: Basic Open-source Nonlinear Mixed INteger programming
 License: CPL v1.0
 Group: Sciences/Mathematics
@@ -21,7 +21,7 @@ BuildPreReq: CoinNetlib-devel libCoinOsi-devel libCoinUtils-devel
 BuildPreReq: CoinSample-devel libCoinCbc-devel libCoinCgl-devel
 BuildPreReq: libCoinClp-devel libipopt-devel libCoinDyLP-devel
 BuildPreReq: libCoinVol-devel libCoinSYMPHONY-devel libCoinBcp-devel
-BuildPreReq: libCoinCouenne-devel
+#BuildPreReq: libCoinCouenne-devel
 
 %description
 BONMIN (Basic Open-source Nonlinear Mixed INteger programming) is an
@@ -119,9 +119,12 @@ rm -fR %buildroot%_docdir/coin
 %_pkgconfigdir/*
 
 %files -n lib%name-devel-doc
-%doc %oname/doc/*.pdf %oname/examples doxydoc/Doc/html
+%doc %oname/examples doxydoc/Doc/html
 
 %changelog
+* Tue Sep 10 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.7.1-alt1.svn20130727
+- Version 1.7.1
+
 * Tue Feb 12 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.6.0-alt1.svn20121203
 - New snapshot
 

@@ -4,8 +4,8 @@
 %define sover 0.0.0
 %define oname Couenne
 Name: Coin%oname
-Version: 0.4.3
-Release: alt1.svn20130207
+Version: 0.4.4
+Release: alt1.svn20130811
 Summary: Convex Over and Under ENvelopes for Nonlinear Estimation
 License: CPL v1.0
 Group: Sciences/Mathematics
@@ -121,6 +121,9 @@ rm -fR %buildroot%_docdir/coin
 %doc %oname/doc/*.pdf
 
 %changelog
+* Tue Sep 10 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.4-alt1.svn20130811
+- Version 0.4.4
+
 * Tue Feb 12 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.3-alt1.svn20130207
 - New snapshot
 
