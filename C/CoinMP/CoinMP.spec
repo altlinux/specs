@@ -2,8 +2,8 @@
 %define mpidir %_libdir/%mpiimpl
 
 Name: CoinMP
-Version: 1.6.0
-Release: alt2.svn20120128
+Version: 1.7.0
+Release: alt1.svn20130803
 Summary: C-API library that supports most of the functionality of CLP, CBC, and CGL projects
 License: CPL v1.0
 Group: Sciences/Mathematics
@@ -112,6 +112,9 @@ rm -fR %buildroot%_docdir/coin
 #_bindir/*
 
 %changelog
+* Wed Sep 11 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.7.0-alt1.svn20130803
+- Version 1.7.0
+
 * Mon Jul 09 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.6.0-alt2.svn20120128
 - Rebuilt with OpenMPI 1.6
 
