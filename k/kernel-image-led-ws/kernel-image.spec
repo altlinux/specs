@@ -20,7 +20,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.4.61
-Release: alt2
+Release: alt3
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -136,8 +136,8 @@ Release: alt2
 %Extra_modules kvm 3.10.1
 #Extra_modules nvidia 319.32
 %Extra_modules fglrx 13.20.11
-%Extra_modules vboxhost 4.2.16
-%Extra_modules vboxguest 4.2.16
+%Extra_modules vboxhost 4.2.18
+%Extra_modules vboxguest 4.2.18
 %Extra_modules knem 1.1.0
 %Extra_modules exfat 1.1.5
 #Extra_modules netatop 0.2
@@ -204,10 +204,11 @@ Patch0056: linux-%kernel_branch.50-fix-drivers-acpi-apei--apei.patch
 Patch0057: linux-%kernel_branch.50-fix-drivers-acpi-apei--ghes.patch
 
 Patch0061: linux-%kernel_branch.56-fix-drivers-ata--ata_piix.patch
-Patch0062: linux-%kernel_branch.25-fix-drivers-ata--pata_amd.patch
-Patch0063: linux-%kernel_branch.25-fix-drivers-ata--pata_mpiix.patch
-Patch0064: linux-%kernel_branch.25-fix-drivers-ata--pata_oldpiix.patch
-Patch0065: linux-%kernel_branch.25-fix-drivers-ata--pata_sch.patch
+Patch0062: linux-%kernel_branch.53-fix-drivers-ata--libata.patch
+Patch0063: linux-%kernel_branch.25-fix-drivers-ata--pata_amd.patch
+Patch0064: linux-%kernel_branch.25-fix-drivers-ata--pata_mpiix.patch
+Patch0065: linux-%kernel_branch.25-fix-drivers-ata--pata_oldpiix.patch
+Patch0066: linux-%kernel_branch.25-fix-drivers-ata--pata_sch.patch
 
 Patch0071: linux-%kernel_branch.25-fix-drivers-atm--ambassador.patch
 
@@ -1432,6 +1433,7 @@ cd linux-%version
 %patch0063 -p1
 %patch0064 -p1
 %patch0065 -p1
+%patch0066 -p1
 
 # fix-drivers-atm--*
 %patch0071 -p1
@@ -2892,6 +2894,14 @@ done)
 
 
 %changelog
+* Tue Sep 10 2013 Led <led@altlinux.ru> 3.4.61-alt3
+- added:
+  + fix-drivers-ata--libata
+- vboxguest 4.2.18
+- vboxhost 4.2.18
+- GPIO_GENERIC=m (x86)
+- enabled USB_DUMMY_HCD (x86_64)
+
 * Mon Sep 09 2013 Led <led@altlinux.ru> 3.4.61-alt2
 - updated:
   + feat-fs-aufs
