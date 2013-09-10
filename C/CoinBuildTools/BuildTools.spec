@@ -1,8 +1,8 @@
 %define oname BuildTools
 Name: Coin%oname
 Epoch: 1
-Version: 0.7.3
-Release: alt1.svn20120811
+Version: 0.7.7
+Release: alt1.svn20121202
 Summary: CoinHelp (BuildTools) project
 License: Public domain
 Group: Development/Tools
@@ -53,6 +53,9 @@ ln -s ../%oname/ltmain.sh %buildroot%_datadir/libtool
 %_datadir/config.site
 
 %changelog
+* Tue Sep 10 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:0.7.7-alt1.svn20121202
+- Version 0.7.7
+
 * Tue Feb 12 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:0.7.3-alt1.svn20120811
 - Back to version 0.7.3
 

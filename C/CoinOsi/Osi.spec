@@ -3,8 +3,8 @@
 
 %define oname Osi
 Name: Coin%oname
-Version: 0.105.7
-Release: alt1.svn20130205
+Version: 0.106.1
+Release: alt1.svn20130830
 Summary: Coin Open Solver Interface
 License: CPL v1.0
 Group: Sciences/Mathematics
@@ -169,6 +169,9 @@ done
 #_bindir/*
 
 %changelog
+* Tue Sep 10 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.106.1-alt1.svn20130830
+- Version 0.106.1
+
 * Tue Feb 12 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.105.7-alt1.svn20130205
 - Version 0.105.7
 
