@@ -1,7 +1,7 @@
 %define oname MultiCategorySearch
 
 Name: mediawiki-extensions-%oname
-Version: 1.62
+Version: 1.65
 Release: alt1
 
 Summary: The MediaWiki extension lists pages included in several specified categories at once
@@ -16,7 +16,7 @@ BuildArch: noarch
 
 BuildPreReq: rpm-build-mediawiki >= 0.3
 
-Requires: mediawiki-common >= 1.16
+Requires: mediawiki-common >= 1.21
 
 #Requires: mediawiki-extensions-StubManager
 
@@ -40,6 +40,9 @@ so you can easily change it at any time.
 %files -f %oname.files
 
 %changelog
+* Tue Sep 10 2013 Vitaly Lipatov <lav@altlinux.ru> 1.65-alt1
+- new version 1.65 (with rpmrb script)
+
 * Thu May 10 2012 Vitaly Lipatov <lav@altlinux.ru> 1.62-alt1
 - initial build for ALT Linux Sisyphus
 
