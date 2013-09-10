@@ -1,5 +1,5 @@
 Name: perl-Router-Simple
-Version: 0.09
+Version: 0.14
 Release: alt1
 Summary: Router::Simple perl module
 
@@ -9,7 +9,7 @@ Url: %CPAN Router-Simple
 
 BuildArch: noarch
 Source: %name-%version.tar
-BuildRequires: perl-devel perl-base perl-Class-Accessor perl-parent perl-Module-Install perl-Module-Install-AuthorTests perl-Perl-Critic perl-Test-Perl-Critic perl-Module-Pluggable
+BuildRequires: perl-devel perl-base perl-Class-Accessor perl-parent perl-Module-Install perl-Module-Install-AuthorTests perl-Perl-Critic perl-Test-Perl-Critic perl-Module-Pluggable perl-Class-Accessor-Lite
 
 %description
 %summary
@@ -28,5 +28,8 @@ BuildRequires: perl-devel perl-base perl-Class-Accessor perl-parent perl-Module-
 %doc Changes 
 
 %changelog
+* Tue Sep 10 2013 Vladimir Lettiev <crux@altlinux.ru> 0.14-alt1
+- 0.09 -> 0.14
+
 * Thu Jul 28 2011 Vladimir Lettiev <crux@altlinux.ru> 0.09-alt1
 - initial build
