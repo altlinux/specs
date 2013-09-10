@@ -1,6 +1,6 @@
 Name: elementary-os
 Version: 1
-Release: alt1
+Release: alt2
 
 Summary: Elementary OS
 Group: Graphical desktop/Other
@@ -10,6 +10,9 @@ Url: http://elementaryos.org/
 Packager: Igor Zubkov <icesik@altlinux.org>
 
 BuildArch: noarch
+
+# watchdog
+Requires: cerbere
 
 # icons
 Requires: elementary-icon-theme
@@ -37,6 +40,9 @@ Elementary OS.
 %files
 
 %changelog
+* Tue Sep 10 2013 Igor Zubkov <icesik@altlinux.org> 1-alt2
+- Add cerbere to requires
+
 * Tue Sep 10 2013 Igor Zubkov <icesik@altlinux.org> 1-alt1
 - build for Sisyphus
 
