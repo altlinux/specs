@@ -1,7 +1,7 @@
 %define somver 2
-%define sover %somver.3.13
+%define sover %somver.3.14
 Name: qd
-Version: 2.3.13
+Version: 2.3.14
 Release: alt1
 Summary: C++/Fortran-90 double-double and quad-double package
 License: BSD
@@ -155,6 +155,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_docdir/%name
 
 %changelog
+* Tue Sep 10 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.3.14-alt1
+- Version 2.3.14
+
 * Mon Sep 10 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.3.13-alt1
 - Version 2.3.13
 
