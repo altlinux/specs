@@ -1,7 +1,7 @@
 %def_without devel
 
 Name: midori
-Version: 0.5.4
+Version: 0.5.5
 Release: alt1
 
 Summary: is a lightweight web browser
@@ -17,7 +17,7 @@ BuildPreReq: rpm-build-gnome gnome-common
 
 BuildRequires: libgio-devel libgtk+2-devel libgtksourceview2-devel libwebkitgtk2-devel libxml2-devel
 BuildRequires: libunique-devel intltool librsvg-utils python-modules-logging libsqlite3-devel
-BuildRequires: libsoup-devel libidn-devel python-module-docutils libnotify-devel
+BuildRequires: libsoup-gnome-devel libidn-devel python-module-docutils libnotify-devel
 BuildRequires: libXScrnSaver-devel vala libzeitgeist-devel
 
 %description
@@ -75,6 +75,9 @@ Requires: %name = %version-%release
 %endif
 
 %changelog
+* Tue Sep 10 2013 Vladimir Lettiev <crux@altlinux.ru> 0.5.5-alt1
+- 0.5.5 (Closes: #29301)
+
 * Fri Jul 26 2013 Vladimir Lettiev <crux@altlinux.ru> 0.5.4-alt1
 - 0.5.4
 - updated url and source (project switched from git to bzr)
