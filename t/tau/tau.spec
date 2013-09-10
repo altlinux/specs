@@ -3,7 +3,7 @@
 
 Name: tau
 Version: 2.22.2
-Release: alt1
+Release: alt2
 Summary: TAU Portable Profiling Package
 License: BSD-like
 Group: Development/Tools
@@ -27,8 +27,9 @@ BuildPreReq: java-devel-default libgmp-devel gcc-c++ gcc-fortran
 BuildPreReq: openpdt libopenpdt-devel libpapi-devel chrpath
 BuildPreReq: jflex postgresql-devel libscalasca-devel binutils-devel
 BuildPreReq: libgomp-devel libotf-devel zlib-devel google-gson
-BuildPreReq: libstdc++-devel libsz0-devel python-devel mysql-connector-java
+BuildPreReq: libstdc++-devel python-devel mysql-connector-java
 BuildPreReq: jfreechart jcommon swing-layout postgresql-jdbc xerces-j2 junit
+BuildPreReq: libcube-devel opari2-devel
 
 %description
 TAU is a program and performance analysis tool framework being developed for
@@ -83,7 +84,7 @@ Summary: Development files of TAU Portable Profiling Package
 Group: Development/Other
 Requires: lib%name = %version-%release
 Requires: lib%name-common = %version-%release
-Requires: libscalasca-devel libpapi-devel libgomp-devel libsz0-devel
+Requires: libscalasca-devel libpapi-devel libgomp-devel
 Requires: openpdt
 Conflicts: pdtoolkit
 Requires: libopenpdt-devel
@@ -194,14 +195,14 @@ pushd utils
 install -m755 tau2profile %buildroot%_bindir
 popd
 
-pushd utils/elgconverter
-%make_build includedir=%_includedir libdir=%_libdir TOPDIR=$TOPDIR
-install -m755 tau2elg %buildroot%_bindir
-popd
+#pushd utils/elgconverter
+#%make_build includedir=%_includedir libdir=%_libdir TOPDIR=$TOPDIR
+#install -m755 tau2elg %buildroot%_bindir
+#popd
 
-pushd %buildroot%_bindir
-mv opari tau_opari
-popd
+#pushd %buildroot%_bindir
+#mv opari tau_opari
+#popd
 
 %ifarch x86_64
 install -d %buildroot%_libdir
@@ -226,11 +227,11 @@ mv %buildroot%_libdir/Makefile* %buildroot%_datadir/%name/
 %ifarch x86_64
 export OBJECT_MODE=64
 %endif
-sed -i \
-	-e 's/^\(CONFIG_CC\).*/\1=kinst-pomp gcc/' \
-	-e 's/^\(CONFIG_CXX\).*/\1=kinst-pomp g++/' \
-	-e 's/^\(TAU_F90\ *\=\).*\(gfortran.*\)/\1 kinst-pomp \2/' \
-	include/Makefile
+#sed -i \
+#	-e 's/^\(CONFIG_CC\).*/\1=kinst-pomp gcc/' \
+#	-e 's/^\(CONFIG_CXX\).*/\1=kinst-pomp g++/' \
+#	-e 's/^\(TAU_F90\ *\=\).*\(gfortran.*\)/\1 kinst-pomp \2/' \
+#	include/Makefile
 pushd src/Profile
 %make clean
 sed -i -e '278s|\$(TAU_DISABLE)||' Makefile
@@ -310,7 +311,7 @@ rm -f %buildroot%_libdir/*/*.so %buildroot%_bindir/tau_ebs2otf.pl \
 %files
 %doc README COPYRIGHT LICENSE CREDITS
 %_bindir/*
-%exclude %_bindir/tau_opari
+%exclude %_bindir/opari
 %exclude %_bindir/tau_reduce
 #exclude %_bindir/tau_ompcheck
 %exclude %_bindir/tau_wrap
@@ -349,7 +350,7 @@ rm -f %buildroot%_libdir/*/*.so %buildroot%_bindir/tau_ebs2otf.pl \
 %_libdir/wrappers
 
 %files -n lib%name-common
-%_bindir/tau_opari
+%_bindir/opari
 %_bindir/tau_reduce
 #_bindir/tau_ompcheck
 %_bindir/tau_wrap
@@ -394,6 +395,9 @@ rm -f %buildroot%_libdir/*/*.so %buildroot%_bindir/tau_ebs2otf.pl \
 %exclude %_javadir/jargs.jar
 
 %changelog
+* Tue Sep 10 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.22.2-alt2
+- Rebuilt with new scalasca
+
 * Mon Jun 03 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.22.2-alt1
 - Version 2.22.2
 

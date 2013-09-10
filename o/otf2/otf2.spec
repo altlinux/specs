@@ -5,8 +5,8 @@ License: BSD
 Group: Development/Tools
 Summary: Open Trace Format 2 (OTF2)
 Version: 1.2
-Release: alt1
-Url: https://silc.zih.tu-dresden.de/otf2-current/
+Release: alt2
+Url: http://www.vi-hps.org/projects/score-p/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: http://www.vi-hps.org/upload/packages/otf2/otf2-1.2.tar.gz
@@ -94,6 +94,7 @@ popd
 %files
 %doc AUTHORS ChangeLog COPYING README
 %_bindir/*
+%exclude %_bindir/%name-config
 %dir %_datadir/%name
 %_datadir/%name/python
 
@@ -101,6 +102,7 @@ popd
 %_libdir/*.so.*
 
 %files -n lib%name-devel
+%_bindir/%name-config
 %_includedir/*
 %_libdir/*.so
 
@@ -108,6 +110,9 @@ popd
 %_docdir/%name
 
 %changelog
+* Thu Sep 05 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2-alt2
+- Moved %name-config into lib%name-devel
+
 * Mon Sep 02 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2-alt1
 - Initial build for Sisyphus
 
