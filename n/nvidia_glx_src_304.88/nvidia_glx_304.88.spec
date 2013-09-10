@@ -15,9 +15,9 @@
 %define nv_version 304
 %define nv_release 88
 %define nv_minor %nil
-%define pkg_rel alt110
+%define pkg_rel alt111
 %def_disable common
-%def_enable kernelsource
+%def_disable kernelsource
 
 %define tbver %{nv_version}.%{nv_release}.%{nv_minor}
 %if "%nv_minor" == "%nil"
@@ -361,6 +361,9 @@ fi
 %endif
 
 %changelog
+* Tue Sep 10 2013 Sergey V Turchin <zerg@altlinux.org> 304.88-alt111
+- don't package kernel module sources
+
 * Wed Apr 03 2013 Sergey V Turchin <zerg@altlinux.org> 304.88-alt110
 - new version
 
