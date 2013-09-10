@@ -1,5 +1,5 @@
 Name:		libev4
-Version:	4.11
+Version:	4.15
 Release:	alt1
 Summary:	libev - an event notification library
 License:	BSD or GPL v2+
@@ -71,6 +71,9 @@ popd
 %_libdir/libev.a
 
 %changelog
+* Tue Sep 10 2013 Denis Smirnov <mithraen@altlinux.ru> 4.15-alt1
+- 4.15
+
 * Sat Oct 13 2012 Denis Smirnov <mithraen@altlinux.ru> 4.11-alt1
 - 4.11
 
