@@ -1,8 +1,8 @@
 # vim: set ft=spec: -*- rpm-spec -*-
 
 Name: ragel
-Version: 6.6
-Release: alt1.1
+Version: 6.8
+Release: alt1
 
 Summary: Ragel State Machine Compiler
 Group: Development/Other
@@ -67,6 +67,9 @@ EOF
 %vim_ftdetect_dir/ragel.vim
 
 %changelog
+* Tue Sep 10 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 6.8-alt1
+- Version 6.8
+
 * Tue Dec 11 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 6.6-alt1.1
 - Fixed build with gcc 4.7
 
