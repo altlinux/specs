@@ -20,7 +20,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.4.61
-Release: alt3
+Release: alt4
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -2894,6 +2894,10 @@ done)
 
 
 %changelog
+* Wed Sep 11 2013 Led <led@altlinux.ru> 3.4.61-alt4
+- updated:
+  + fix-fs-cifs
+
 * Tue Sep 10 2013 Led <led@altlinux.ru> 3.4.61-alt3
 - added:
   + fix-drivers-ata--libata
