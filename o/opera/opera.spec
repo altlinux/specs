@@ -3,7 +3,7 @@
 
 Name:		opera
 Version:	%softver.%buildver
-Release:	alt1
+Release:	alt1.1
 Packager:	Motsyo Gennadi <drool@altlinux.ru>
 Summary:	A fast and secure web browser and Internet suite
 Group:		Networking/WWW
@@ -13,10 +13,7 @@ Url:		http://www.opera.com/
 Source0:	%name-%softver-%buildver.i386.linux.tar.bz2
 Source10:	%name-%softver-%buildver.x86_64.linux.tar.bz2
 Source1:	%name
-Source2:	%name-widget-manager
-Source3:	%name-browser.desktop
-Source4:	%name-widget-installer.desktop
-Source5:	%name-widget-manager.desktop
+Source2:	%name-browser.desktop
 
 %define		opera64 %name-%softver-%buildver.x86_64.linux
 
@@ -75,9 +72,8 @@ tar -xf %SOURCE10
 
 %install
 install -Dp -m 0755 %SOURCE1 %buildroot%_bindir/%name
-install -Dp -m 0755 %SOURCE2 %buildroot%_bindir/%name-widget-manager
 mkdir -p %buildroot{%_desktopdir,%_docdir}
-cp -a %SOURCE3 %SOURCE4 %SOURCE5 %buildroot%_desktopdir/
+cp -a %SOURCE2 %buildroot%_desktopdir/
 cp -a share/doc/opera %buildroot%_docdir
 %ifarch %ix86
 cp -a -f lib %buildroot%_libdir
@@ -119,6 +115,9 @@ rm -rf %buildroot%_libdir/opera/opera_autoupdatechecker
 %_libdir/opera/lib%{name}kde4.so
 
 %changelog
+* Thu Sep 12 2013 Motsyo Gennadi <drool@altlinux.ru> 12.16.1860-alt1.1
+- build without widgets manager (alt bug #29352)
+
 * Fri Jul 05 2013 Motsyo Gennadi <drool@altlinux.ru> 12.16.1860-alt1
 - 12.16 released
 
