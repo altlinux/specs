@@ -2,19 +2,21 @@
 %define mpidir %_libdir/%mpiimpl
 
 Name: ipopt
-Version: 3.10.3
-Release: alt1.svn20130103
+Version: 3.11.3
+Release: alt1.svn20130906
 Summary: Large-Scale Nonlinear Optimization Solver (Interior Point OPTimizer)
 License: CPL 1.0
 Group: Sciences/Mathematics
 Url: http://www.coin-or.org/projects/Ipopt.xml
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
+# https://projects.coin-or.org/svn/Ipopt/trunk
 Source: Ipopt-%version.tar.gz
 
 BuildPreReq: liblapack-devel libparmetis-devel libmumps-devel
 BuildPreReq: gcc-fortran gcc-c++ %mpiimpl-devel libscotch-devel
 BuildPreReq: libblacs-devel libscalapack-devel CoinBuildTools
+BuildPreReq: doxygen graphviz latex2html
 
 %description
 Ipopt (Interior Point OPTimizer, pronounced I-P-Opt) is a software
@@ -116,6 +118,15 @@ sed -i '1a\echo=echo' libtool
 %make_build TOPDIR=$PWD
 #popd
 
+# very long
+#pushd Ipopt/doc
+#./makehtml.sh
+#popd
+
+pushd doxydoc
+doxygen doxygen.conf
+popd
+
 %install
 source %mpidir/bin/mpivars.sh
 export OMPI_LDFLAGS="-Wl,--as-needed -Wl,-rpath,%mpidir/lib -L%mpidir/lib"
@@ -142,7 +153,8 @@ popd
 install -d %buildroot%_docdir/coin
 mv %buildroot%_datadir/coin/doc/Ipopt %buildroot%_docdir/coin/
 
-cp -fR Ipopt/tutorial Ipopt/doc/documentation.pdf Ipopt/examples \
+#cp -fR Ipopt/tutorial Ipopt/doc/documentation Ipopt/examples \
+cp -fR Ipopt/tutorial Ipopt/examples doxydoc/doxydoc/html \
 	%buildroot%_docdir/coin/Ipopt/
 #popd
 
@@ -171,6 +183,9 @@ rm -fR %buildroot%_datadir/coin/doc
 %_docdir/coin/Ipopt/examples
 
 %changelog
+* Wed Sep 11 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.11.3-alt1.svn20130906
+- Version 3.11.3
+
 * Tue Feb 05 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.10.3-alt1.svn20130103
 - Version 3.10.3
 
