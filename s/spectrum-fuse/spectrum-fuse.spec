@@ -1,7 +1,7 @@
 %define oname fuse
 Name: spectrum-fuse
 Version: 1.1.1
-Release: alt1
+Release: alt2
 
 Summary: The Free Unix Spectrum Emulator
 
@@ -26,7 +26,16 @@ Provides: fuse-emulator = %version
 # Automatically added by buildreq on Sun Jul 29 2007
 BuildRequires: flex gcc-c++ glibc-devel imake lib765-devel libdsk-devel libgcrypt-devel libgtk+2-devel libICE-devel libjsw-devel libspectrum-devel libxml2-devel xorg-cf-files
 
-BuildRequires: libspectrum-devel >= 0.3.0
+# Optional:
+# libgcrypt: the ability to digitally sign RZX files (note that Fuse requires version 1.1.42 or later).
+# libpng: the ability to save screenshots.
+# libxml2: the ability to load and save Fuse's current configuration.
+# libjsw: allow joystick input to be used (not required for joystick emulation).
+# zlib: support for compressed RZX files.
+# libbzip2: support for certain compressed files.
+# libaudiofile: support for loading from .wav files.
+
+BuildRequires: libspectrum-devel >= 1.1.1
 
 %description
 Fuse is a Sinclair ZX Spectrum emulator. It supports several models
@@ -61,6 +70,9 @@ install -pm0644 %{SOURCE3} .
 
 
 %changelog
+* Wed Sep 11 2013 Vitaly Lipatov <lav@altlinux.ru> 1.1.1-alt2
+- update buildreqs
+
 * Sun Aug 04 2013 Vitaly Lipatov <lav@altlinux.ru> 1.1.1-alt1
 - new version 1.1.1 (with rpmrb script)
 
