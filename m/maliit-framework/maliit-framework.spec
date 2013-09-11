@@ -4,7 +4,7 @@
 %define libsover 0
 Name: maliit-framework
 Version: 0.94.2
-Release: alt3
+Release: alt4
 %define libmaliit libmaliit%libver-%libsover
 %define libmaliit_glib libmaliit-glib%libver-%libsover
 %define xinputconfdir %_sysconfdir/X11/xinit/xinput.d
@@ -16,6 +16,7 @@ License: LGPLv2
 
 Source0: %name-%version.tar
 Source1: maliit.conf
+Patch1: maliit-framework-focusworkaround.diff
 
 # Automatically added by buildreq on Thu Oct 18 2012 (-bi)
 # optimized out: at-spi2-atk docbook-dtds docbook-style-xsl elfutils fontconfig fontconfig-devel glib-networking glib2-devel gobject-introspection libX11-devel libXext-devel libXfixes-devel libat-spi2-core libatk-devel libcairo-devel libcairo-gobject libcairo-gobject-devel libdbus-devel libdbus-glib libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgpg-error libpango-devel libqt4-core libqt4-dbus libqt4-declarative libqt4-devel libqt4-gui libqt4-network libqt4-script libqt4-sql libqt4-svg libqt4-test libqt4-xml libqt4-xmlpatterns libstdc++-devel libwayland-client libwayland-server pkg-config python-base python-module-distribute python-modules python-modules-compiler python-modules-email python-modules-encodings python-modules-xml rpm-build-gir ruby xml-common xml-utils xorg-compositeproto-devel xorg-damageproto-devel xorg-fixesproto-devel xorg-kbproto-devel xorg-xextproto-devel xorg-xproto-devel xsltproc
@@ -141,6 +142,7 @@ Requires: %name = %version-%release
 
 %prep
 %setup -n %name-%version
+%patch1 -p1
 
 %build
 %qmake_qt4 -r \
@@ -273,6 +275,9 @@ install -m 0644 README LICENSE.LGPL NEWS %buildroot/%_defaultdocdir/maliit-frame
 %_libdir/gtk-3.0/3.0.0/immodules/libim-maliit.so*
 
 %changelog
+* Wed Sep 11 2013 Sergey V Turchin <zerg@altlinux.org> 0.94.2-alt4
+- add focus workaround from Plasma Active developers
+
 * Mon Apr 08 2013 Sergey V Turchin <zerg@altlinux.org> 0.94.2-alt3
 - rebuilt with new rpm-build-python3
 
