@@ -2,7 +2,7 @@
 
 %define rname libksane
 Name: libksane4
-Version: 4.10.1
+Version: 4.11.1
 Release: alt1
 
 Group: System/Libraries
@@ -54,6 +54,9 @@ Development files for %name
 
 
 %changelog
+* Thu Sep 05 2013 Sergey V Turchin <zerg@altlinux.org> 4.11.1-alt1
+- new version
+
 * Tue Mar 05 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.1-alt1
 - new version
 

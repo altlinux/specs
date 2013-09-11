@@ -2,8 +2,8 @@
 
 %define rname libkipi
 Name: libkipi4
-Version: 4.10.0
-Release: alt0.2
+Version: 4.11.1
+Release: alt1
 
 Group: System/Libraries
 Summary: Interface to use kipi-plugins
@@ -45,7 +45,7 @@ Development files for %name
 
 
 %files
-%doc README AUTHORS NEWS README TODO
+%doc AUTHORS README TODO
 %_K4libdir/libkipi.so.*
 %_K4iconsdir/hicolor/*/apps/kipi.*
 %_K4apps/kipi/
@@ -62,6 +62,9 @@ Development files for %name
 
 
 %changelog
+* Thu Sep 05 2013 Sergey V Turchin <zerg@altlinux.org> 4.11.1-alt1
+- new version
+
 * Wed Jan 30 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.0-alt0.2
 - update from 4.10 branch
 

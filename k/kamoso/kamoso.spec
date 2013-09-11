@@ -1,11 +1,12 @@
 Name:           kamoso
 Version:        2.0.2
-Release:        alt7
-Summary:        Application for taking pictures and videos from a webcam
+Release:        alt8
 
 Group:          Video
-License:        GPLv2+
+Summary:        Application for taking pictures and videos from a webcam
 URL:            https://projects.kde.org/projects/extragear/multimedia/kamoso/
+License:        GPLv2+
+
 Source0:        ftp://ftp.kde.org/pub/kde/stable/kamoso/%{version}/src/%{name}-%{version}.tar.bz2
 # FC
 Patch1: kamoso-2.0.2-libkipi-4.8.80.patch
@@ -48,6 +49,9 @@ Kamoso is an application to take pictures and videos out of your webcam.
 %_iconsdir/hicolor/*/actions/youtube.*
 
 %changelog
+* Tue Sep 10 2013 Sergey V Turchin <zerg@altlinux.org> 2.0.2-alt8
+- built with new libkipi
+
 * Thu Dec 13 2012 Sergey V Turchin <zerg@altlinux.org> 2.0.2-alt7
 - built with new libkipi
 

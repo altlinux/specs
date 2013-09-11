@@ -1,5 +1,5 @@
 Name: shared-desktop-ontologies
-Version: 0.10.0
+Version: 0.11.0
 Release: alt1
 Serial: 1
 
@@ -56,6 +56,9 @@ based on %name.
 %_datadir/cmake/SharedDesktopOntologies
 
 %changelog
+* Tue Sep 03 2013 Sergey V Turchin <zerg@altlinux.org> 1:0.11.0-alt1
+- new version
+
 * Tue Sep 25 2012 Sergey V Turchin <zerg@altlinux.org> 1:0.10.0-alt1
 - new version
 

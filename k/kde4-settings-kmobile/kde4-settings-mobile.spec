@@ -7,11 +7,11 @@
 %define thisconfdir %kdeconfdir/%theme
 
 %define major 0
-%define minor 3
+%define minor 4
 %define bugfix 0
 Name: kde4-settings-%theme
 Version: %major.%minor.%bugfix
-Release: alt9
+Release: alt1
 
 Group: Graphical desktop/KDE
 Summary: %Theme - specific KDE settings
@@ -23,7 +23,7 @@ BuildArch: noarch
 PreReq(post,preun): alternatives >= 0.2
 Requires: kde-common >= 4
 
-Source: plasma-contour-config-%version.tar
+Source: plasma-mobile-config-%version.tar
 Source1: kmobile-settings-%version.tar
 
 BuildRequires: cmake gcc-c++ kde-common-devel qmergeinifiles rpm-macros-alternatives
@@ -33,7 +33,7 @@ BuildRequires: cmake gcc-c++ kde-common-devel qmergeinifiles rpm-macros-alternat
 
 
 %prep
-%setup -qn plasma-contour-config-%version -a1
+%setup -qn plasma-mobile-config-%version -a1
 mv kmobile-settings-* kmobile-settings
 
 %build
@@ -55,7 +55,7 @@ done
 rm -rf profile.d/*
 install -m 0755 kmobile-settings/profile.d/startkde profile.d/
 %ifarch x86_64
-echo -e "\n" >> profile.d/startkde
+#echo -e "\n" >> profile.d/startkde
 %endif
 
 
@@ -88,6 +88,9 @@ install -m 0755 profile.d/startkde %buildroot/%thisconfdir/
 %config %thisconfdir
 
 %changelog
+* Wed Sep 11 2013 Sergey V Turchin <zerg@altlinux.org> 0.4.0-alt1
+- new version
+
 * Thu Apr 18 2013 Sergey V Turchin <zerg@altlinux.org> 0.3.0-alt9
 - fix setup keyboard on generic locales
 

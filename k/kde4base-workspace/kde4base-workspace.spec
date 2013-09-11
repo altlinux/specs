@@ -22,12 +22,12 @@
 
 
 %define major 4
-%define minor 10
-%define bugfix 5
+%define minor 11
+%define bugfix 1
 %define rname kdebase-workspace
 Name: kde4base-workspace
 Version: %major.%minor.%bugfix
-Release: alt5
+Release: alt1
 
 Group: Graphical desktop/KDE
 Summary: K Desktop Environment - Workspace
@@ -54,14 +54,13 @@ Patch20: kdebase-workspace-4.6.80-krdb.patch
 Patch21: kde-workspace-4.8.80-battery-plasmoid-showremainingtime.patch
 Patch22: kde-workspace-4.9.90-plasma_konsole.patch
 Patch23: kde-workspace-4.7.80-no_HAL.patch
-Patch24: kdebase-workspace-4.5.90-no_HAL2.patch
+Patch24: kdebase-workspace-4.11.1-no_HAL2.patch
 Patch25: kde-workspace-4.9.1-solid_krunner_disable.patch
-Patch26: kde-workspace-4.10.2-systemd-displaymanager.patch
 # Ubuntu
 Patch850: kubuntu_11_fix_root_only_kcms.diff
 Patch851: kubuntu_always_show_kickoff_subtext.diff
 # ALT
-Patch1000: kdebase-workspace-4.10.0-alt-startkde.patch
+Patch1000: kdebase-workspace-4.11.1-alt-startkde.patch
 Patch1001: kdebase-workspace-4.6.0-alt-kdm-confdir.patch
 Patch1002: kdebase-workspace-4.6.3-alt-kdm-cmd-poweroff.patch
 Patch1003: kdebase-workspace-4.10.0-alt-kdm-defaults.patch
@@ -78,8 +77,8 @@ Patch1013: kdebase-workspace-4.7.3-alt-devicenotifier-remote-shares.patch
 Patch1014: kdebase-workspace-4.7.1-alt-kdm-kcm-defaults.patch
 Patch1015: kdebase-workspace-4.7.1-alt-gtkrc-custom.patch
 Patch1016: kdebase-workspace-4.10.5-alt-def-plasma.patch
-Patch1017: kdebase-workspace-4.3.0-alt-ksysguardrc.patch
-Patch1018: kdebase-workspace-4.9.3-alt-def-kwin.patch
+Patch1017: kdebase-workspace-4.11.1-alt-ksysguardrc.patch
+Patch1018: kdebase-workspace-4.11.1-alt-def-kwin.patch
 Patch1019: kdebase-workspace-4.8.0-alt-def-fonts.patch
 Patch1020: kdebase-workspace-4.4.92-alt-kdm-guistyle.patch
 Patch1021: kdebase-workspace-4.4.92-alt-kdm-color-scheme.patch
@@ -102,14 +101,14 @@ Patch1037: kdebase-workspace-4.6.4-alt-hide-printer-config.patch
 Patch1038: kdebase-workspace-4.8.5-alt-session-exclude.patch
 Patch1039: kdebase-workspace-4.8.4-alt-digitalclock-compactdate.patch
 Patch1040: kdebase-workspace-4.7.4-alt-kxkb-indicator-uppercase.patch
-Patch1041: kdebase-workspace-4.10.0-alt-def-gllegacy.patch
+Patch1041: kdebase-workspace-4.11.1-alt-def-gllegacy.patch
 Patch1042: kdebase-workspace-4.8.5-alt-netbook-def-menu-groups.patch
 Patch1043: kdebase-workspace-4.8.5-alt-def-plasma-netbook.patch
 Patch1044: kdebase-workspace-4.8.5-alt-workspaceoptions.patch
 Patch1045: kdebase-workspace-4.10.0-alt-def-plasma-desktop-immutability.patch
 Patch1046: kdebase-workspace-4.10.0-alt-pager-refresh-layout.patch
 Patch1047: kdebase-workspace-4.10.0-alt-def-oxygen-widgets.patch
-Patch1048: kdebase-workspace-4.10.0-alt-def-oxygen-kwin.patch
+Patch1048: kdebase-workspace-4.11.1-alt-def-oxygen-kwin.patch
 Patch1049: kdebase-workspace-4.10.4-alt-mobile-netbook.patch
 Patch1050: kdebase-workspace-4.10.4-alt-mobile-kwin-buildopts.patch
 Patch1051: kdebase-workspace-4.10.4-alt-kcm_fonts_dont_change_on_load.patch
@@ -125,11 +124,11 @@ BuildRequires: libConsoleKit-devel
 BuildRequires: google-gadgets-devel
 %endif
 BuildRequires: bzlib-devel gcc-c++ libXft-devel libGLES-devel
-BuildRequires: libxcb-devel libxcbutil-image-devel libxcb-render-util-devel
+BuildRequires: libxcb-devel libxcbutil-image-devel libxcb-render-util-devel libxcbutil-keysyms-devel
 BuildRequires: libbluez-devel libkrb5-devel libpam-devel libaudit-devel
 BuildRequires: libqimageblitz-devel libraw1394-devel libsensors3-devel libgps-devel
 BuildRequires: libstrigi-devel libusb-compat-devel xml-utils
-BuildRequires: libalternatives-devel libqedje-devel libeet-devel libqzion-devel
+BuildRequires: libalternatives-devel libudev-devel
 BuildRequires: polkit-qt-1-devel libpolkit-devel libdbusmenu-qt-devel
 BuildRequires: soprano soprano-backend-redland libsoprano-devel
 BuildRequires: libqalculate-devel libjpeg-devel prison-devel qjson-devel
@@ -137,8 +136,7 @@ BuildRequires: kde4pimlibs-devel akonadi-devel libraw1394-devel libpci-devel
 BuildRequires: python-module-PyQt4 python-module-sip python-devel
 BuildRequires: kde4-kactivities-devel kde4-nepomuk-core-devel
 BuildRequires: python-module-sip python-devel
-#BuildRequires: libdbus-devel
-#BuildRequires: glib2-devel
+#BuildRequires: libwayland-client-devel libwayland-server-devel libwayland-egl-devel
 BuildRequires: kde4libs-devel >= %version
 
 %description
@@ -513,9 +511,6 @@ rm -rf plasma/generic/scriptengines/google_gadgets
 %patch23 -p1
 %patch24 -p1
 %patch25 -p1
-%if_enabled systemd
-%patch26 -p1
-%endif
 #
 %patch850 -p1
 %patch851 -p1
@@ -851,7 +846,8 @@ chmod 0755 %buildroot/%_sysconfdir/firsttime.d/kdm4
 
 %if_enabled desktop
 %files cursors
-%_K4iconsdir/Oxygen_*
+%_K4iconsdir/Oxygen_*/
+%_kde4_iconsdir/KDE_Classic/
 
 %files wallpapers
 %_K4wall/*
@@ -866,10 +862,6 @@ chmod 0755 %buildroot/%_sysconfdir/firsttime.d/kdm4
 %_K4libdir/libpowerdevilcore.so.*
 %files -n libpowerdevilui4
 %_K4libdir/libpowerdevilui.so.*
-%files -n libsolidcontrolifaces4
-%_K4libdir/libsolidcontrolifaces.so.*
-%files -n libsolidcontrol4
-%_K4libdir/libsolidcontrol.so.*
 %files -n libweather4_ion
 %_K4libdir/libweather_ion.so.*
 %files -n libkdecorations4
@@ -924,8 +916,6 @@ chmod 0755 %buildroot/%_sysconfdir/firsttime.d/kdm4
 %if_enabled desktop
 %files -n libkwinglutils4
 %_K4libdir/libkwinglutils.so.*
-%files -n libkwinnvidiahack4
-%_K4libdir/libkwinnvidiahack.so.*
 %files -n libkwinglesutils4
 %_K4libdir/libkwinglesutils.so.*
 %files -n libkwineffects4
@@ -933,8 +923,6 @@ chmod 0755 %buildroot/%_sysconfdir/firsttime.d/kdm4
 %else
 %files -n libkwinactiveglutils4
 %_K4libdir/libkwinactiveglutils.so.*
-%files -n libkwinactivenvidiahack4
-%_K4libdir/libkwinactivenvidiahack.so.*
 %files -n libkwinactiveglesutils4
 %_K4libdir/libkwinactiveglesutils.so.*
 %files -n libkwinactiveeffects4
@@ -951,6 +939,9 @@ chmod 0755 %buildroot/%_sysconfdir/firsttime.d/kdm4
 %_K4dbus_interfaces/*
 
 %changelog
+* Wed Sep 04 2013 Sergey V Turchin <zerg@altlinux.org> 4.11.1-alt1
+- new version
+
 * Mon Jul 22 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.5-alt5
 - small increase default panel heignt
 

@@ -2,7 +2,7 @@
 
 %define rname share-like-connect
 Name: kde4-share-like-connect
-Version: 0.3
+Version: 0.4
 Release: alt1
 
 Group: Graphical desktop/KDE
@@ -54,12 +54,9 @@ sed -i 's|^\(include.*KDE4Defaults.*\)|\1\ninclude(SopranoAddOntology)|' CMakeLi
 %K4install
 
 %files
-%_K4lib/imports/org/kde/plasma/slccomponents/
+#%_K4lib/imports/org/kde/plasma/slccomponents/
 %_K4lib/plasma_dataengine_sharelikeconnect.so
-%_K4lib/sharelikeconnect_provider_activities.so
-%_K4lib/sharelikeconnect_provider_bookmarks.so
-%_K4lib/sharelikeconnect_provider_rating.so
-%_K4lib/sharelikeconnect_provider_sendbyemail.so
+%_K4lib/sharelikeconnect_provider_*.so
 
 %_K4apps/plasma/plasmoids/
 %_K4apps/plasma/services/*
@@ -71,9 +68,12 @@ sed -i 's|^\(include.*KDE4Defaults.*\)|\1\ninclude(SopranoAddOntology)|' CMakeLi
 %_K4libdir/libsharelikeconnect.so
 
 %files devel
-%_K4includedir/activecontentservice
+#%_K4includedir/activecontentservice
 
 %changelog
+* Wed Sep 11 2013 Sergey V Turchin <zerg@altlinux.org> 0.4-alt1
+- new version
+
 * Wed Oct 17 2012 Sergey V Turchin <zerg@altlinux.org> 0.3-alt1
 - new version
 

@@ -4,8 +4,8 @@
 %define rname kdeaccessibility
 Name: kde4accessibility
 %define major 4
-%define minor 10
-%define bugfix 3
+%define minor 11
+%define bugfix 1
 Version: %major.%minor.%bugfix
 Release: alt1
 
@@ -194,7 +194,7 @@ done
 %_K4lib/kcm_kttsd.so
 %_kde4_xdg_apps/jovieapp.desktop
 %_K4apps/jovie
-%_K4apps/kttsd
+#%_K4apps/kttsd
 %_K4srv/jovie_talkerchooserplugin.desktop
 %_K4srv/jovie.desktop
 %_K4srv/jovie_stringreplacerplugin.desktop
@@ -211,6 +211,9 @@ done
 #%_K4link/*.so
 
 %changelog
+* Tue Sep 10 2013 Sergey V Turchin <zerg@altlinux.org> 4.11.1-alt1
+- new version
+
 * Tue May 14 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.3-alt1
 - new version
 

@@ -21,8 +21,8 @@
 
 %define rname kdenetwork
 %define major 4
-%define minor 10
-%define bugfix 5
+%define minor 11
+%define bugfix 1
 Name: kde4network
 Version: %major.%minor.%bugfix
 Release: alt1
@@ -47,7 +47,6 @@ Requires: %name-krfb = %version-%release
 
 Source: ftp://ftp.kde.org/pub/kde/stable/%version/src/%rname-%version.tar
 # FC
-Patch1: kdenetwork-4.7.97-fix-for-g++47.patch
 # ALT
 Patch11: kdenetwork-4.7.1-alt-kget-newtransfer-dialog-size.patch
 Patch12: kdenetwork-4.1.96-alt-find-decibel.patch
@@ -72,16 +71,19 @@ BuildRequires: libortp-devel >= 0.13
 BuildRequires: libspeex-devel libalsa-devel libssl-devel
 BuildRequires: libmediastreamer-devel
 BuildRequires: libmediastreamer-ilbc
+BuildRequires: libsrtp
+BuildRequires: libfreerdp-devel xfreerdp
 BuildRequires: libsqlite3-devel libidn-devel boost-devel libopenslp-devel libjasper-devel
 BuildRequires: libqimageblitz-devel libxml2-devel libxslt-devel libmms-devel
 BuildRequires: libjpeg-devel libavahi-qt4-devel bzlib-devel libldap-devel
-BuildRequires: libotr-devel libmeanwhile-devel libgadu-devel libv4l-devel libmsn-devel
+BuildRequires: libotr-devel libmeanwhile-devel libv4l-devel libmsn-devel
+BuildRequires: libgadu-devel libgnutls-devel libtasn1-devel
 BuildRequires: rpm-macros-browser-plugins
 BuildRequires: libktorrent-devel libtelepathy-qt4-devel
 BuildRequires: kde4libs-devel >= %version kde4pimlibs-devel >= %version
 BuildRequires: kde4base-workspace-devel >= %version kde4base-devel >= %version
 BuildRequires: shared-desktop-ontologies-devel soprano-backend-redland soprano-backend-virtuoso soprano
-BuildRequires: kde4-nepomuk-core-devel
+BuildRequires: kde4-nepomuk-core kde4-nepomuk-core-devel kde4-nepomuk-widgets-devel
 
 %description
 Networking applications for the K Desktop Environment.
@@ -185,6 +187,7 @@ Requires: %name-core = %version-%release
 Summary: %name krdc
 Group: Networking/Remote access
 Requires: %name-core = %version-%release
+Requires: xfreerdp
 %description krdc
 %name krdc.
 
@@ -214,7 +217,6 @@ based on %name.
 
 %prep
 %setup -q -n %rname-%version
-%patch1 -p1
 %patch11 -p1
 #%patch12 -p1
 %patch13 -p1
@@ -232,15 +234,14 @@ based on %name.
 %patch24 -p1
 %endif
 
+
+%build
 ls -d1 * | \
 while read d
 do
-    [ "$d" != "altlinux" ] || continue
     [ -d "$d" ] || continue
-    echo "add_subdirectory($d)" >> CMakeLists.txt
-done
-
-%build
+    [ "$d" != "altlinux" ] || continue
+    pushd $d
 %K4cmake \
     -DKDE4_ENABLE_FPIE:BOOL=ON \
     -DWITH_irc:BOOL=%{?_enable_kopete_irc:ON}%{!?_enable_kopete_irc:OFF} \
@@ -251,9 +252,19 @@ done
     -DENABLE_EMBEDDED_TORRENT_SUPPORT=false
 #    -DKDE4_ENABLE_FINAL:BOOL=ON \
 %K4make
+    popd
+done
 
 %install
+ls -d1 * | \
+while read d
+do
+    [ -d "$d" ] || continue
+    [ "$d" != "altlinux" ] || continue
+    pushd $d
 %K4install
+    popd
+done
 
 find %buildroot/%_K4datadir/bin -type f | \
 %ifdef _kde_alternate_placement
@@ -294,7 +305,7 @@ chmod 0755 %buildroot/etc/control.d/facilities/kppp-kde4
 %files
 %files common
 %dir %_K4srv/kconfiguredialog/
-%_K4snd/KDE-Im-Phone-Ring.wav
+#%_K4snd/KDE-Im-Phone-Ring.wav
 
 %files core
 %_K4iconsdir/oxygen/*/*/*.*
@@ -375,6 +386,7 @@ chmod 0755 %buildroot/etc/control.d/facilities/kppp-kde4
 %_K4cfg/nowlisteningconfig.kcfg
 %_K4cfg/webpresenceconfig.kcfg
 %_K4cfg/translatorconfig.kcfg
+%_K4cfg/history2config.kcfg
 %_K4srv/aim.protocol
 %_K4srv/chatwindow.desktop
 %_K4srv/emailwindow.desktop
@@ -479,6 +491,9 @@ chmod 0755 %buildroot/etc/control.d/facilities/kppp-kde4
 %_K4dbus_interfaces/*
 
 %changelog
+* Fri Sep 06 2013 Sergey V Turchin <zerg@altlinux.org> 4.11.1-alt1
+- new version
+
 * Fri Jul 05 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.5-alt1
 - new version
 

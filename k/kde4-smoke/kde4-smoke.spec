@@ -2,7 +2,7 @@
 
 %define rname smokekde
 Name: kde4-smoke
-Version: 4.10.1
+Version: 4.11.1
 Release: alt1
 
 Group: Development/KDE and QT
@@ -13,7 +13,6 @@ License: LGPLv2+
 #Conflicts: kde4bindings < %version
 
 Source: %rname-%version.tar
-Source1: FindOkular.cmake
 Source2: FindAkonadi.cmake
 Patch1: smokekde-4.7.1-alt-find-okular.patch
 
@@ -313,7 +312,6 @@ Qt generic bindings library.
 %setup -qn %rname-%version
 %patch1 -p1
 mkdir -p cmake/modules/
-cp -ar %SOURCE1 cmake/modules/
 cp -ar %SOURCE2 cmake/modules/
 
 
@@ -364,8 +362,8 @@ NPROCS=1 %K4make
 %_libdir/libsmokenepomuk.so.*
 %files -n libsmokenepomukquery4
 %_libdir/libsmokenepomukquery.so.*
-%files -n libsmokeokular4
-%_libdir/libsmokeokular.so.*
+#%files -n libsmokeokular4
+#%_libdir/libsmokeokular.so.*
 %files -n libsmokeplasma4
 %_libdir/libsmokeplasma.so.*
 %files -n libsmokesolid4
@@ -379,6 +377,9 @@ NPROCS=1 %K4make
 
 
 %changelog
+* Mon Sep 09 2013 Sergey V Turchin <zerg@altlinux.org> 4.11.1-alt1
+- new version
+
 * Tue Mar 05 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.1-alt1
 - new version
 

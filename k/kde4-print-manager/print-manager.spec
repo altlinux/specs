@@ -2,7 +2,7 @@
 
 %define rname print-manager
 Name: kde4-print-manager
-Version: 4.10.4
+Version: 4.11.1
 Release: alt1
 
 Group: System/Configuration/Printing
@@ -78,25 +78,29 @@ sed -i 's|^X-KDE-Library=.*||' %buildroot/%_K4xdg_apps/kcm_printer_manager.deskt
 %_K4libdir/libkcupslib.so
 
 %files
-%_K4exec/add-printer
+%_K4bindir/kde-add-printer
+%_K4bindir/kde-print-queue
 %_K4exec/configure-printer
-%_K4exec/print-queue
 %_K4lib/kcm_printer_manager.so
 %_K4lib/kded_printmanager.so
-%_K4lib/plasma_engine_printers.so
-%_K4lib/plasma_engine_printjobs.so
+%_K4lib/imports/org/kde/printmanager
 %_K4xdg_apps/kcm_printer_manager.desktop
-%_K4apps/plasma/plasmoids/printmanager/
-%_K4apps/plasma/services/org.kde.printers.operations
-%_K4apps/plasma/services/org.kde.printjobs.operations
 %_K4apps/printmanager/
+%_K4apps/plasma/plasmoids/org.kde.printmanager/
 %_K4apps/plasma-desktop/*/01-altlinux-print-manager.js
 %_K4srv/kcm_printer_manager.desktop
 %_K4srv/kded/printmanager.desktop
 %_K4srv/plasma-*-print*.desktop
 %_K4dbus_services/org.kde.*Print*.service
 
+#%files devel
+#%K4lib/plugins/designer/printmanagerwidget.so
+
+
 %changelog
+* Tue Sep 10 2013 Sergey V Turchin <zerg@altlinux.org> 4.11.1-alt1
+- new version
+
 * Wed Jun 05 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.4-alt1
 - new version
 

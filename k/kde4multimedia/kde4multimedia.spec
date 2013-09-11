@@ -4,8 +4,8 @@
 %define rname kdemultimedia
 Name: kde4multimedia
 %define major 4
-%define minor 10
-%define bugfix 3
+%define minor 11
+%define bugfix 1
 Version: %major.%minor.%bugfix
 Release: alt1
 
@@ -28,12 +28,6 @@ Source02: ffmpegthumbs-%version.tar
 Source03: kmix-%version.tar
 Source04: kscd-%version.tar
 Source05: audiocd-kio-%version.tar
-Source100: CMakeLists.txt
-Source101: ConfigureChecks.cmake
-Source102: config.h.cmake
-Source103: FindMusicBrainz3.cmake
-Source104: FindCdparanoia.cmake
-Source105: FindTunePimp.cmake
 
 # ALT
 #
@@ -47,8 +41,8 @@ BuildRequires: libsamplerate-devel libtag-devel libfreebob-devel
 BuildRequires: libjpeg-devel bzlib-devel libpulseaudio-devel glib2-devel libxine-devel
 #BuildRequires: libcdda-devel
 BuildRequires: libalsa-devel
-#BuildRequires: libcanberra-devel
-BuildRequires: libavcodec-devel libavformat-devel libavutil-devel libswscale-devel
+BuildRequires: libcanberra-devel
+BuildRequires: libavcodec-devel libavformat-devel libavutil-devel libavdevice-devel libswscale-devel libpostproc-devel
 #BuildRequires: libgstreamer-plugins-base-devel
 BuildRequires: kde4base-workspace-devel >= %version
 BuildRequires: libkcompactdisc4-devel libkcddb4-devel
@@ -165,30 +159,34 @@ do
     [ "$d" == "$newdirname" ] || mv $d $newdirname
 done
 
-mkdir -p cmake/modules/
-
-install -m 0644 %SOURCE100 ./
-install -m 0644 %SOURCE101 ./
-install -m 0644 %SOURCE102 ./
-install -m 0644 %SOURCE103 cmake/modules/
-install -m 0644 %SOURCE104 cmake/modules/
-install -m 0644 %SOURCE105 cmake/modules/
-#ls -d1 * | \
-#while read d
-#do
-#    [ "$d" == "${d#lib}" ] || continue
-#    [ -d "$d" ] || continue
-#    echo "add_subdirectory($d)" >> CMakeLists.txt
-#done
+ls -d1 * | \
+while read d
+do
+    [ "$d" == "${d#lib}" ] || continue
+    [ -d "$d" ] || continue
+    echo "add_subdirectory($d)" >> CMakeLists.txt
+done
 
 
 %build
+ls -d1 * | \
+while read d ; do
+[ -d "$d" ] || continue
+pushd $d
 %K4build \
     -DKDE4_ENABLE_FPIE:BOOL=ON
+popd
+done
+
 
 %install
+ls -d1 * | \
+while read d ; do
+[ -d "$d" ] || continue
+pushd $d
 %K4install
-
+popd
+done
 
 
 %files
@@ -269,6 +267,9 @@ install -m 0644 %SOURCE105 cmake/modules/
 %_K4dbus_interfaces/*.xml
 
 %changelog
+* Fri Sep 06 2013 Sergey V Turchin <zerg@altlinux.org> 4.11.1-alt1
+- new version
+
 * Tue May 14 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.3-alt1
 - new version
 

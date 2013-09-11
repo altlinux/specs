@@ -6,11 +6,11 @@
 
 %define rname kdebase-runtime
 %define major 4
-%define minor 10
-%define bugfix 5
+%define minor 11
+%define bugfix 1
 Name: kde4base-runtime
 Version: %major.%minor.%bugfix
-Release: alt2
+Release: alt1
 %define libname lib%name
 
 Group: Graphical desktop/KDE
@@ -40,8 +40,8 @@ BuildRequires: libqt4-devel libsmbclient-devel NetworkManager-glib-devel
 BuildRequires: soprano soprano-backend-redland soprano-backend-virtuoso libsoprano-devel libstrigi-devel
 BuildRequires: kde4-nepomuk-core-devel kde4-kactivities-devel
 BuildRequires: libungif-devel libxine-devel libxkbfile-devel openexr-devel
-#BuildRequires: libcanberra-devel
-BuildRequires: libpulseaudio-devel libopenslp-devel libqca2-devel
+BuildRequires: libcanberra-devel glib2-devel libpulseaudio-devel
+BuildRequires: libopenslp-devel libqca2-devel
 #BuildRequires: libqzeitgeist-devel
 %{?_enable_ntrack:BuildRequires: libntrack-qt4-devel}
 BuildRequires: libexiv2-devel exiv2 libssh-devel phonon-devel
@@ -176,7 +176,7 @@ ln -sf `relative %_kde4_bindir/kde4 %_K4bindir/kde4` %buildroot/%_K4bindir/kde4
 %_K4lib/*.so*
 %_K4lib/platformimports/touch/org/kde/*
 %_K4lib/imports/org/kde/*
-%_K4start/nepomukcontroller.desktop
+#%_K4start/nepomukcontroller.desktop
 %_K4apps/desktoptheme/
 %_K4apps/kglobalaccel
 %_K4apps/khelpcenter/
@@ -226,6 +226,9 @@ ln -sf `relative %_kde4_bindir/kde4 %_K4bindir/kde4` %buildroot/%_K4bindir/kde4
 %_K4dbus_interfaces/*
 
 %changelog
+* Wed Sep 04 2013 Sergey V Turchin <zerg@altlinux.org> 4.11.1-alt1
+- new version
+
 * Fri Jul 19 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.5-alt2
 - offer to use kwallet by default
 

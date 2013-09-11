@@ -3,8 +3,8 @@
 
 %define rname startactive
 Name: kde4-startactive
-Version: 0.3
-Release: alt4
+Version: 0.4
+Release: alt1
 
 Group: Graphical desktop/KDE
 Summary: KDE mobile environment startup
@@ -12,8 +12,8 @@ License: GPLv2+
 Url: http://kde.org/
 
 Source: %rname-%version.tar
-Patch1: startactive-0.3-env.patch
-Patch2: startactive-0.3-startactive.patch
+Patch1: startactive-0.4-env.patch
+Patch2: startactive-0.4-startactive.patch
 Patch3: startactive-0.2-config.patch
 Patch4: alt-startactive-modules.patch
 
@@ -76,6 +76,9 @@ __EOF__
 %_K4apps/startactive/
 
 %changelog
+* Wed Sep 11 2013 Sergey V Turchin <zerg@altlinux.org> 0.4-alt1
+- new version
+
 * Tue Jun 25 2013 Sergey V Turchin <zerg@altlinux.org> 0.3-alt4
 - allow to start custom modules
 

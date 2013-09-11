@@ -3,8 +3,8 @@
 %define rname nepomuk-core
 Name: kde4-nepomuk-core
 %define major  4
-%define minor  10
-%define bugfix 5
+%define minor  11
+%define bugfix 1
 Version: %major.%minor.%bugfix
 Release: alt1
 %define sover %major
@@ -29,8 +29,8 @@ Patch3: nepomuk-core-4.9.1-alt-ontology-dir.patch
 #BuildRequires: doxygen gcc-c++ glib2-devel graphviz kde4libs-devel libicu libqt3-devel python-module-distribute rpm-build-ruby soprano zlib-devel-static
 BuildRequires: gcc-c++ glib2-devel kde4libs-devel
 #BuildRequires: doxygen graphviz
-BuildRequires: soprano-backend-redland soprano-backend-virtuoso soprano
-BuildRequires: libtag-devel libpoppler-qt4-devel libexiv2-devel
+BuildRequires: soprano-backend-redland soprano-backend-virtuoso soprano shared-desktop-ontologies-devel
+BuildRequires: libtag-devel libpoppler-qt4-devel libexiv2-devel ebook-tools-devel
 BuildRequires: libavcodec-devel libavformat-devel libavdevice-devel libavutil-devel
 BuildRequires: libswscale-devel libpostproc-devel
 BuildRequires: kde-common-devel
@@ -53,6 +53,13 @@ Group: System/Libraries
 Summary: %name library
 Requires: %name-common >= %version-%release
 %description -n libnepomukextractor4
+%name library
+
+%package -n libnepomukcleaner4
+Group: System/Libraries
+Summary: %name library
+Requires: %name-common >= %version-%release
+%description -n libnepomukcleaner4
 %name library
 
 %package -n libnepomukcore4
@@ -95,8 +102,10 @@ do
     sed -i 's|Path=.*/share/ontology/\(.*\.trig\)|Path=%_datadir/ontology/\1|' "$f"
 done
 
+
 %files
 %_kde4_bindir/nepomuk*
+%_K4exec/kde_nepomuk_filewatch_raiselimit
 %_K4libdir/libkdeinit4_nepomukserver.so
 %_K4libdir/libnepomukcommon.so
 %_K4lib/nepomuk*.so
@@ -107,6 +116,9 @@ done
 %_K4start/nepomukserver.desktop
 %_K4srv/nepomuk*.desktop
 %_K4srvtyp/nepomuk*.desktop
+%_K4dbus_system/org.kde.nepomuk.filewatch.conf
+%_K4dbus_sys_services/org.kde.nepomuk.filewatch.service
+%_datadir/polkit-1/actions/org.kde.nepomuk.filewatch.policy
 
 %files common
 %dir %_datadir/ontology/kde/
@@ -114,6 +126,9 @@ done
 
 %files -n libnepomukextractor4
 %_K4libdir/libnepomukextractor.so
+
+%files -n libnepomukcleaner4
+%_K4libdir/libnepomukcleaner.so.*
 
 %files -n libnepomukcore4
 %_K4libdir/libnepomukcore.so.*
@@ -126,6 +141,9 @@ done
 %_K4link/*.so
 
 %changelog
+* Tue Sep 03 2013 Sergey V Turchin <zerg@altlinux.org> 4.11.1-alt1
+- new version
+
 * Mon Jul 01 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.5-alt1
 - new version
 
