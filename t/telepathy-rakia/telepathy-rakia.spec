@@ -1,8 +1,8 @@
 %define _name rakia
 
 Name: telepathy-%_name
-Version: 0.7.4
-Release: alt2
+Version: 0.7.5
+Release: alt1
 
 Summary: SIP connection manager for the Telepathy framework
 License: LGPL v2.1+
@@ -10,12 +10,11 @@ Group: Networking/Instant messaging
 Url: http://sourceforge.net/projects/tp-sofiasip
 
 Source: http://telepathy.freedesktop.org/releases/%name/%name-%version.tar.gz
-Patch: %name-0.7.4-alt-link.patch
 
 Obsoletes: telepathy-sofiasip
 Provides: telepathy-sofiasip = %version-%release
 
-BuildRequires: libdbus-devel libdbus-glib-devel libsofia-sip-glib-devel >= 1.12.11 libgio-devel
+BuildRequires: libdbus-devel libdbus-glib-devel libsofia-sip-glib-devel >= 1.12.11 libgio-devel >= 2.30
 BuildRequires: libtelepathy-glib-devel >= 0.17.7 xsltproc
 # for check:
 BuildRequires: python-module-twisted-words python-module-twisted-core-gui dbus-tools-gui python-module-dbus
@@ -37,7 +36,6 @@ This package provides development files and documentation for telepathy-%name
 
 %prep
 %setup -q
-%patch -b .link
 
 %build
 %autoreconf
@@ -61,6 +59,9 @@ This package provides development files and documentation for telepathy-%name
 %_man8dir/%name.*
 
 %changelog
+* Wed Sep 11 2013 Yuri N. Sedunov <aris@altlinux.org> 0.7.5-alt1
+- 0.7.5
+
 * Mon May 21 2012 Yuri N. Sedunov <aris@altlinux.org> 0.7.4-alt2
 - fixed build
 
