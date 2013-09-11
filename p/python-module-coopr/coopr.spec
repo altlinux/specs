@@ -1,7 +1,7 @@
 %define oname coopr
 Name: python-module-%oname
-Version: 3.3
-Release: alt2.svn20130213
+Version: 3.4
+Release: alt1.svn20130911
 Summary: COmmon Optimization Python Repository 
 License: BSD
 Group: Development/Python
@@ -799,6 +799,9 @@ mv %buildroot%_bindir/OSSolverService \
 %python_sitelibdir/%oname/dae/test*
 
 %changelog
+* Wed Sep 11 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.4-alt1.svn20130911
+- 3.4
+
 * Fri Feb 15 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.3-alt2.svn20130213
 - Added requirement on %name-dae for %name-tests
 
