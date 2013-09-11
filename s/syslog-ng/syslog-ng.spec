@@ -11,7 +11,7 @@
 
 Name: syslog-ng
 Version: 3.4.3
-Release: alt1.git20130813
+Release: alt2.git20130813
 
 Summary: syslog-ng daemon
 Group: System/Kernel and hardware
@@ -286,6 +286,9 @@ fi
 %_libdir/pkgconfig/%name.pc
 
 %changelog
+* Wed Sep 11 2013 Sergey Y. Afonin <asy@altlinux.ru> 3.4.3-alt2.git20130813
+- changed default permissions (ALT #29312)
+
 * Thu Aug 15 2013 L.A. Kostis <lakostis@altlinux.ru> 3.4.3-alt1.git20130813
 - Updated to v3.0.10-1507-g64d670f GIT.
 
