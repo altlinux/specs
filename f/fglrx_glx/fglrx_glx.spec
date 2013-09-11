@@ -19,7 +19,7 @@ Name: %{bname}_glx
 %define ksname %bname
 Epoch: 1
 Version: 13.20.11
-Release: alt1
+Release: alt2
 %define EVR %{?epoch:%epoch:}%version-%release
 Summary: ATI/AMD Proprietary Linux Display Driver
 Group: System/Kernel and hardware
@@ -34,6 +34,7 @@ Source11: atieventsd.init
 Source12: aticonfig.1
 Source13: %{bname}_create.xinf
 Source14: xinf2fdi
+Patch1: %bname-13.20.11-kernel.patch
 %{?epoch:Provides: %{bname}_glx = %version-%release}
 Provides: %bname = %EVR
 %{?epoch:Provides: %bname = %version-%release}
@@ -107,6 +108,7 @@ ATI/AMD %bname (Radeon video card driver) module sources for Linux kernel.
 %prep
 %setup -T -c
 sh %SOURCE0 --extract .
+%patch1 -p1
 sed -i '1s|/bash$|/sh|' %archdir/usr/%_lib/%bname/*
 for d in {common,%archdir}/lib/modules/%bname/build_mod; do
 	find $d -type f -exec chmod 644 \{} \;
@@ -266,6 +268,9 @@ chrpath -d %buildroot{%_bindir/amdcccle,%_sbindir/amdnotifyui}
 
 
 %changelog
+* Wed Sep 11 2013 Led <led@altlinux.ru> 1:13.20.11-alt2
+- kernel module: fixed permission of /proc/ati
+
 * Wed Aug 28 2013 Led <led@altlinux.ru> 1:13.20.11-alt1
 - 13.20.11 (Catalyst 13.8 beta2)
 
