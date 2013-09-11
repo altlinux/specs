@@ -1,6 +1,6 @@
 Name: elementary-os
 Version: 1
-Release: alt2
+Release: alt3
 
 Summary: Elementary OS
 Group: Graphical desktop/Other
@@ -14,8 +14,13 @@ BuildArch: noarch
 # watchdog
 Requires: cerbere
 
+Requires: contractor
+
 # icons
 Requires: elementary-icon-theme
+
+# IM
+Requires: empathy
 
 # email client
 Requires: geary
@@ -32,6 +37,9 @@ Requires: pantheon-terminal
 # text editor
 Requires: scratch-text-editor
 
+# for images
+Requires: shotwell
+
 %description
 Elementary OS.
 
@@ -40,6 +48,11 @@ Elementary OS.
 %files
 
 %changelog
+* Thu Sep 12 2013 Igor Zubkov <icesik@altlinux.org> 1-alt3
+- Add contractor to requires
+- Add empathy to requires
+- Add shotwell to requires
+
 * Tue Sep 10 2013 Igor Zubkov <icesik@altlinux.org> 1-alt2
 - Add cerbere to requires
 
