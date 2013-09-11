@@ -4,7 +4,7 @@
 %define oname Bonmin
 Name: Coin%oname
 Version: 1.7.1
-Release: alt1.svn20130727
+Release: alt2.svn20130727
 Summary: Basic Open-source Nonlinear Mixed INteger programming
 License: CPL v1.0
 Group: Sciences/Mathematics
@@ -122,6 +122,9 @@ rm -fR %buildroot%_docdir/coin
 %doc %oname/examples doxydoc/Doc/html
 
 %changelog
+* Wed Sep 11 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.7.1-alt2.svn20130727
+- Rebuilt with new ipopt
+
 * Tue Sep 10 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.7.1-alt1.svn20130727
 - Version 1.7.1
 
