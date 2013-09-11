@@ -1,6 +1,6 @@
 Name: dar
-Version: 2.3.11
-Release: alt1.1
+Version: 2.4.10
+Release: alt1
 
 Summary: DAR - Disk ARchive tool
 
@@ -11,16 +11,16 @@ Url: http://dar.linux.free.fr/
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 Source: http://prdownloads.sf.net/%name/%name-%version.tar
-Patch: %name-2.3.8-gcc43.patch
+Patch: %name-2.4.2.patch
 
 Requires: lib%name = %version-%release
 
 # manually removed: glibc-devel-static
-# Automatically added by buildreq on Fri May 13 2011
-# optimized out: groff-base libgfortran-devel libstdc++-devel
-BuildRequires: bzlib-devel doxygen gcc-c++ gcc-fortran glibc-devel-static libattr-devel libe2fs-devel libssl-devel man zlib-devel
+# Automatically added by buildreq on Wed Sep 11 2013
+# optimized out: groff-base libgpg-error libgpg-error-devel libstdc++-devel python3-base xz
+BuildRequires: bzlib-devel doxygen gcc-c++ libattr-devel libe2fs-devel libgcrypt-devel liblzo2-devel zlib-devel
 
-BuildRequires: perl-devel
+BuildRequires: perl-devel groff-base man
 
 %description
 dar is a shell command, that makes backup of a directory tree and files.
@@ -51,10 +51,13 @@ This package contains documentation files for %name.
 
 %prep
 %setup
-%patch
+%patch -p2
+# for autopoint
+#__subst "s|AM_GNU_GETTEXT_VERSION|AM_GNU_GETTEXT_VERSION(0.18.2)|g" configure.ac
 
 %build
-%configure --disable-static --disable-upx --enable-examples
+#autoreconf #for disable rpath
+%configure --disable-static --disable-upx --enable-examples --disable-rpath
 sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' libtool
 %make_build
 
@@ -63,6 +66,7 @@ sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' libtool
 %find_lang %name
 
 %files -f %name.lang
+%config(noreplace) %_sysconfdir/darrc
 %_bindir/*
 %_man1dir/*
 
@@ -81,6 +85,10 @@ sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' libtool
 #%_libdir/*.a
 
 %changelog
+* Wed Sep 11 2013 Vitaly Lipatov <lav@altlinux.ru> 2.4.10-alt1
+- new version 2.4.10 (with rpmrb script)
+- update buildreqs
+
 * Thu Feb 02 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.3.11-alt1.1
 - Removed bad RPATH
 
