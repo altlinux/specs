@@ -2,7 +2,7 @@
 %define sover 0
 Name: Coin%oname
 Version: 1.2.1
-Release: alt2.hg20121128
+Release: alt2.hg20130811
 Summary: Library for Efficient Modeling and Optimization in Networks
 License: Boost Software License, Version 1.0
 Group: Sciences/Mathematics
@@ -120,6 +120,9 @@ popd
 %doc demo/*.cc demo/*.lgf demo/Makefile
 
 %changelog
+* Wed Sep 11 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.1-alt2.hg20130811
+- New snapshot
+
 * Tue Feb 12 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.1-alt2.hg20121128
 - New snapshot
 
