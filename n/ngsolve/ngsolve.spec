@@ -3,7 +3,7 @@
 
 Name: ngsolve
 Version: 5.1
-Release: alt1.svn20130203
+Release: alt2
 Summary: NGSolve Finite Element Library
 License: GPL or LGPL
 Group: Sciences/Mathematics
@@ -15,7 +15,7 @@ Source: %name-%version.tar
 BuildPreReq: %mpiimpl-devel libnetgen-devel tcl-devel libscalapack-devel
 BuildPreReq: libmumps-devel liblapack-devel libsuperlu-devel chrpath
 BuildPreReq: libscotch-devel libparmetis-devel
-BuildPreReq: doxygen texlive-latex-recommended
+#BuildPreReq: doxygen texlive-latex-recommended
 
 %description
 NGSolve is a general purpose Finite Element Library on top of Netgen.
@@ -90,25 +90,25 @@ export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib -L%mpidir/lib"
 	--enable-mumps \
 	--with-netgen=%prefix \
 	--with-lapack="-llapack -lopenblas" \
-	-with-superlu=-I%_includedir \
+	--with-superlu=-I%_includedir \
 	CXX=mpic++
+%make_build -C ngstd libngstd.la
+%make_build -C basiclinalg libngbla.la
+%make_build -C fem libngfem.la
+%make_build -C linalg libngla.la
+%make_build -C parallel libparallel.la
+%make_build -C multigrid libngmg.la
+%make_build -C comp libngcomp.la
 %make_build
-%make -C linalg clean
-%make LIBPARALLEL=$PWD/parallel/libparallel.la \
-	LIBNGSOLVE=$PWD/solve/libngsolve.la LIBNGCOMP=$PWD/comp/libngcomp.la
-%make -C comp clean
-%make LIBPARALLEL=$PWD/parallel/libparallel.la \
-	LIBNGSOLVE=$PWD/solve/libngsolve.la \
-	LIBNGLA=$PWD/linalg/libngla.la
-%make -C multigrid clean
-%make LIBPARALLEL=$PWD/parallel/libparallel.la \
-	LIBNGSOLVE=$PWD/solve/libngsolve.la LIBNGCOMP=$PWD/comp/libngcomp.la \
-	LIBNGLA=$PWD/linalg/libngla.la
+%make_build -C linalg clean
+%make -C linalg LIBNGCOMP=$PWD/comp/libngcomp.la
+%make_build -C multigrid clean
+%make -C multigrid LIBNGLA=$PWD/linalg/libngla.la
 
-doxygen
-pushd doc
-latex -output-format=pdf ngsolve.tex
-popd
+#doxygen
+#pushd doc
+#latex -output-format=pdf ngsolve.tex
+#popd
 
 %install
 source %mpidir/bin/mpivars.sh
@@ -130,12 +130,13 @@ mv %buildroot%_includedir/*.h* %buildroot%_includedir/%name/
 #	chrpath -r %mpidir/lib $i
 #done
 
-pushd programming_demos
-rm -f demo_bla demo_comp demo_fem demo_std *.o
-popd
+#pushd programming_demos
+#rm -f demo_bla demo_comp demo_fem demo_std *.o
+#popd
 
 %files
 %_bindir/ngsolve.tcl
+%_datadir/%name
 
 %files -n lib%name
 %_libdir/*.so
@@ -144,15 +145,18 @@ popd
 %_includedir/*
 
 %files demos
-%doc programming_demos/*
+#doc programming_demos/*
 %_bindir/*
 %exclude %_bindir/ngsolve.tcl
 
-%files docs
-%doc doxy/html doc/*.pdf doc/quickstart/*.pdf
-%doc %_datadir/%name
+#files docs
+#doc doxy/html doc/*.pdf doc/quickstart/*.pdf
+#doc %_datadir/%name
 
 %changelog
+* Thu Sep 12 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.1-alt2
+- 5.1 released
+
 * Wed Feb 06 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.1-alt1.svn20130203
 - Version 5.1
 
