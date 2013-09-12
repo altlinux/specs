@@ -1,14 +1,15 @@
+%define _unpackaged_files_terminate_build 1
 %define dist MRO-Define
 Name: perl-%dist
-Version: 0.01
-Release: alt5
+Version: 0.02
+Release: alt1
 
 Summary: Define your own method resolution order
 License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/F/FL/FLORA/MRO-Define-%{version}.tar.gz
 
 # Automatically added by buildreq on Wed Nov 16 2011
 BuildRequires: perl-Variable-Magic perl-devel
@@ -39,6 +40,9 @@ addition to those perl already has.
 %perl_vendor_autolib/MRO
 
 %changelog
+* Thu Sep 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.02-alt1
+- automated CPAN update
+
 * Wed Aug 28 2013 Vladimir Lettiev <crux@altlinux.ru> 0.01-alt5
 - built for perl 5.18
 
