@@ -1,6 +1,7 @@
+%define _unpackaged_files_terminate_build 1
 %define dist String-ToIdentifier-EN
 Name: perl-%dist
-Version: 0.10
+Version: 0.11
 Release: alt1
 
 Summary: Convert Strings to English Program Identifiers
@@ -36,6 +37,9 @@ string can be easily inferred by a human just by reading the identifier.
 %perl_vendor_privlib/String
 
 %changelog
+* Thu Sep 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.11-alt1
+- automated CPAN update
+
 * Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 0.10-alt1
 - automated CPAN update
 
