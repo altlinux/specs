@@ -1,9 +1,10 @@
+%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(Test/Builder.pm) perl(Test/Builder/Module.pm) perl-devel perl-podlators perl(Test/Trap.pm)
 # END SourceDeps(oneline)
 Name:       perl-Test-Aggregate
-Version:    0.369
+Version:    0.370
 Release:    alt1
 # lib/Test/Aggregate.pm -> GPL+ or Artistic
 # lib/Test/Aggregate/Builder.pm -> GPL+ or Artistic
@@ -70,6 +71,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Thu Sep 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.370-alt1
+- automated CPAN update
+
 * Tue Aug 27 2013 Igor Vlasenko <viy@altlinux.ru> 0.369-alt1
 - automated CPAN update
 
