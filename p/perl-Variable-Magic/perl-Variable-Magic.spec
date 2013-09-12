@@ -1,7 +1,8 @@
+%define _unpackaged_files_terminate_build 1
 %define dist Variable-Magic
 Name: perl-%dist
-Version: 0.52
-Release: alt2
+Version: 0.53
+Release: alt1
 
 Summary: Associate user-defined magic to variables from Perl
 License: GPL or Artistic
@@ -35,6 +36,9 @@ a single line of XS.
 %perl_vendor_autolib/Variable
 
 %changelog
+* Thu Sep 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.53-alt1
+- automated CPAN update
+
 * Tue Aug 27 2013 Vladimir Lettiev <crux@altlinux.ru> 0.52-alt2
 - built for perl 5.18
 
