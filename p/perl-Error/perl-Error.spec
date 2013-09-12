@@ -1,7 +1,8 @@
+%define _unpackaged_files_terminate_build 1
 %define dist Error
 
 Name: perl-%dist
-Version: 0.17020
+Version: 0.17021
 Release: alt1
 
 Summary: Error - Error/exception handling in an OO-ish way
@@ -41,6 +42,9 @@ user should throw errors from a sub-class of "Error".
 %perl_vendor_privlib/Error*
 
 %changelog
+* Thu Sep 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.17021-alt1
+- automated CPAN update
+
 * Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 0.17020-alt1
 - automated CPAN update
 
