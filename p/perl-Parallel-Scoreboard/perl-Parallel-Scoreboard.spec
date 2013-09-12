@@ -1,15 +1,16 @@
+%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(CPAN.pm) perl(Config.pm) perl(Errno.pm) perl(Exporter.pm) perl(Fcntl.pm) perl(IO/Handle.pm) perl(IO/Seekable.pm) perl(overload.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Parallel-Scoreboard
-Version:        0.03
-Release:        alt3_10
+Version:        0.04
+Release:        alt1
 Summary:        Scoreboard for monitoring status of many processes
 License:        GPL+ or Artistic
 Group:          Development/Perl
 URL:            http://search.cpan.org/dist/Parallel-Scoreboard/
-Source0:        http://www.cpan.org/authors/id/K/KA/KAZUHO/Parallel-Scoreboard-%{version}.tar.gz
+Source:        http://www.cpan.org/authors/id/K/KA/KAZUHO/Parallel-Scoreboard-%{version}.tar.gz
 BuildArch:      noarch
 BuildRequires:  perl(Class/Accessor/Lite.pm)
 BuildRequires:  perl(HTML/Entities.pm)
@@ -62,6 +63,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Thu Sep 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.04-alt1
+- automated CPAN update
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.03-alt3_10
 - update to new release by fcimport
 
