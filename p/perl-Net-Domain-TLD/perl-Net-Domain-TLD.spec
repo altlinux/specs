@@ -1,7 +1,8 @@
+%define _unpackaged_files_terminate_build 1
 %define dist Net-Domain-TLD
 
 Name: perl-%dist
-Version: 1.69
+Version: 1.70
 Release: alt1
 
 Summary: Gives ability to retrieve currently available TLD
@@ -9,7 +10,7 @@ License: Perl
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://search.cpan.org/CPAN/authors/id/A/AL/ALEXP/%dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/A/AL/ALEXP/Net-Domain-TLD-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -33,6 +34,9 @@ top level domain names including new ICANN additions and ccTLDs
 %perl_vendor_privlib/Net/Domain
 
 %changelog
+* Thu Sep 12 2013 Igor Vlasenko <viy@altlinux.ru> 1.70-alt1
+- automated CPAN update
+
 * Wed Apr 20 2011 Victor Forsiuk <force@altlinux.org> 1.69-alt1
 - 1.69
 
