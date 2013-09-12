@@ -53,11 +53,11 @@
 %set_verify_elf_method textrel=relaxed
 %add_findprov_lib_path %vboxdir
 
-%define gcc_version 4.7
+%define gcc_version 4.5
 
 Name: virtualbox
 Version: 4.2.16
-Release: alt1
+Release: alt2
 
 Summary: VM VirtualBox OSE - Virtual Machine for x86 hardware
 License: GPL
@@ -93,7 +93,7 @@ Source99:	%vboxdbg.in
 
 Patch0:		%name-%version-%release.patch
 
-BuildPreReq: dev86 iasl gcc-c++ libstdc++%gcc_version-devel-static
+BuildPreReq: dev86 iasl gcc%gcc_version-c++ libstdc++%gcc_version-devel-static
 BuildPreReq: libIDL-devel libSDL-devel libpng-devel
 BuildPreReq: libXcursor-devel libXext-devel
 BuildPreReq: xsltproc
@@ -349,7 +349,8 @@ false
 %endif
 
 source env.sh
-kmk -j1 VBOXDIR=%vboxdir
+kmk -j$NPROCS VBOXDIR=%vboxdir
+#kmk VBOXDIR=%vboxdir
 
 mkdir -p %buildroot{%_bindir,%_sbindir,%vboxdir/ExtensionPacks,%vboxdatadir,%kernel_src,%_initrddir,%_udevrulesdir}
 
@@ -686,6 +687,9 @@ mountpoint -q /dev || {
 %endif
 
 %changelog
+* Mon Sep 09 2013 Fr. Br. George <george@altlinux.ru> 4.2.16-alt2
+- Switch back to GCC 4.5 (Closes: #29344)
+
 * Wed Aug 14 2013 Evgeny Sinelnikov <sin@altlinux.ru> 4.2.16-alt1
 - Update to new release of stable branch 4.2
 - Build for Sisyphus with gcc-4.7
