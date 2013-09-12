@@ -1,6 +1,7 @@
+%define _unpackaged_files_terminate_build 1
 %define dist List-Compare
 Name: perl-%dist
-Version: 0.37
+Version: 0.38
 Release: alt1
 
 Summary: Compare elements of two or more lists
@@ -8,7 +9,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/J/JK/JKEENAN/List-Compare-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -34,6 +35,9 @@ two lists at a time.
 %perl_vendor_privlib/List*
 
 %changelog
+* Thu Sep 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.38-alt1
+- automated CPAN update
+
 * Wed Apr 28 2010 Alexey Tourbin <at@altlinux.ru> 0.37-alt1
 - 0.32 -> 0.37
 
