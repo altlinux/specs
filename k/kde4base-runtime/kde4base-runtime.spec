@@ -10,7 +10,7 @@
 %define bugfix 1
 Name: kde4base-runtime
 Version: %major.%minor.%bugfix
-Release: alt1
+Release: alt2
 %define libname lib%name
 
 Group: Graphical desktop/KDE
@@ -226,6 +226,9 @@ ln -sf `relative %_kde4_bindir/kde4 %_K4bindir/kde4` %buildroot/%_K4bindir/kde4
 %_K4dbus_interfaces/*
 
 %changelog
+* Thu Sep 12 2013 Sergey V Turchin <zerg@altlinux.org> 4.11.1-alt2
+- fix taskbar applet needs doubleclicking
+
 * Wed Sep 04 2013 Sergey V Turchin <zerg@altlinux.org> 4.11.1-alt1
 - new version
 
