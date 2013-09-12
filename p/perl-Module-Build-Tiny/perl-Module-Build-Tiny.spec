@@ -1,10 +1,11 @@
+%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(Config.pm) perl(IPC/Open2.pm) perl(Module/Build.pm) perl-Module-Build perl-devel perl-podlators
 # END SourceDeps(oneline)
 Summary:	A tiny replacement for Module::Build
 Name:		perl-Module-Build-Tiny
-Version:	0.026
+Version:	0.027
 Release:	alt1
 License:	GPL+ or Artistic
 Group:		Development/Perl
@@ -72,6 +73,9 @@ RELEASE_TESTING=1 ./Build test
 %{perl_vendor_privlib}/Module/
 
 %changelog
+* Thu Sep 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.027-alt1
+- automated CPAN update
+
 * Tue Aug 27 2013 Igor Vlasenko <viy@altlinux.ru> 0.026-alt1
 - automated CPAN update
 
