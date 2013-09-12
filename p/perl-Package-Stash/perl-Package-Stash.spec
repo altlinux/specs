@@ -1,6 +1,7 @@
+%define _unpackaged_files_terminate_build 1
 %define dist Package-Stash
 Name: perl-%dist
-Version: 0.35
+Version: 0.36
 Release: alt1
 
 Summary: Routines for manipulating stashes
@@ -43,6 +44,9 @@ sed -i- '/^check_conflicts/s/^/#/' Makefile.PL
 %perl_vendor_privlib/Package
 
 %changelog
+* Thu Sep 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.36-alt1
+- automated CPAN update
+
 * Sat Jul 27 2013 Igor Vlasenko <viy@altlinux.ru> 0.35-alt1
 - automated CPAN update
 
