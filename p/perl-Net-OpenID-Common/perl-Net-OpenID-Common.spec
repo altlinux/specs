@@ -1,7 +1,8 @@
+%define _unpackaged_files_terminate_build 1
 %define module Net-OpenID-Common
 
 Name: perl-%module
-Version: 1.17
+Version: 1.18
 Release: alt1
 
 Summary: Libraries shared between Net::OpenID::Consumer and Net::OpenID::Server
@@ -32,6 +33,9 @@ Libraries shared between Net::OpenID::Consumer and Net::OpenID::Server.
 %perl_vendor_privlib/Net/OpenID/
 
 %changelog
+* Thu Sep 12 2013 Igor Vlasenko <viy@altlinux.ru> 1.18-alt1
+- automated CPAN update
+
 * Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 1.17-alt1
 - automated CPAN update
 
