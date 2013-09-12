@@ -3,12 +3,16 @@
 %define rname declarative-plasmoids
 Name: kde4-declarative-plasmoids
 Version: 4.10.5
-Release: alt1
+Release: alt2
 
 Group: Graphical desktop/KDE
 Summary: KDE declarative plasmoids
 License: GPLv2+ / LGPLv2
 Url: http://kde.org/
+
+BuildArch: noarch
+
+Requires: plasma-applet-rssnow
 
 Source: %rname-%version.tar
 
@@ -35,16 +39,21 @@ KDE declarative plasmoids
 %K4install
 %K4find_lang --with-kde %rname
 
+find %buildroot -type d -name \*rssnow\* | while read d; do rm -rf $d; done
+find %buildroot -type f -name \*rssnow\* | while read f; do rm -f $f; done
 
 %files -f %rname.lang
-%_K4lib/plasma_applet_*.so
+#%_K4lib/plasma_applet_*.so
 %_kde4_xdg_apps/*
 %_kde4_iconsdir/hicolor/*/apps/active-news.*
 %_K4apps/plasma/plasmoids/*
-%_K4apps/plasma/packages/*/
+#%_K4apps/plasma/packages/*/
 %_K4srv/*
 
 %changelog
+* Thu Sep 12 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.5-alt2
+- fix conflict with plasma-applet-rssnow
+
 * Wed Sep 11 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.5-alt1
 - new version
 
