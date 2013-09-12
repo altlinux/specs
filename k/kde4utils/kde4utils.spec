@@ -9,7 +9,7 @@ Name: kde4utils
 %define minor 11
 %define bugfix 1
 Version: %major.%minor.%bugfix
-Release: alt1
+Release: alt2
 
 Group: Graphical desktop/KDE
 Summary: K Desktop Environment
@@ -56,7 +56,7 @@ Patch7: kdeutils-4.7.1-alt-fix-compile.patch
 BuildRequires(pre): kde4base-workspace-devel kde4pimlibs-devel
 BuildRequires: kde4base-devel
 BuildRequires: gcc-c++ libnet-snmp-devel libgmp-devel bzlib-devel libldap-devel
-BuildRequires: libqimageblitz-devel libzip-devel libarchive-devel
+BuildRequires: libqimageblitz-devel libzip-devel libarchive-devel python-devel
 BuildRequires: liblirc-devel libqca2-devel liblzma-devel qjson-devel
 %ifarch %ix86
 #BuildRequires: libtpctl-devel
@@ -489,6 +489,9 @@ done
 
 
 %changelog
+* Thu Sep 12 2013 Sergey V Turchin <zerg@altlinux.org> 4.11.1-alt2
+- fix build requires
+
 * Tue Sep 10 2013 Sergey V Turchin <zerg@altlinux.org> 4.11.1-alt1
 - new version
 
