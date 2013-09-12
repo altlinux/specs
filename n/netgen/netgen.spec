@@ -2,14 +2,15 @@
 %define mpidir %_libdir/%mpiimpl
 
 Name: netgen
-Version: 5.1
-Release: alt1.svn20130203
+Version: 5.2
+Release: alt1.svn20130902
 Summary: Automatic 3d tetrahedral mesh generator
 License: LGPL
 Group: Graphics
 Url: http://www.hpfem.jku.at/netgen/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
+# svn://svn.code.sf.net/p/netgen-mesher/code/netgen
 Source: %name-%version.tar
 Source1: demoapp.tar
 Source2: dropsexport.tar
@@ -183,6 +184,12 @@ done
 %doc demoapp
 
 %changelog
+* Thu Sep 12 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.2-alt1.svn20130902
+- Version 5.2
+
+* Fri Jul 05 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.1-alt1.svn20130527
+- New snapshot
+
 * Wed Feb 06 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.1-alt1.svn20130203
 - Version 5.1
 
