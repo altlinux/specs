@@ -17,7 +17,7 @@
 %define rname kdelibs
 Name: kde4libs
 Version: %major.%minor.%bugfix
-Release: alt1
+Release: alt2
 
 %define conflictver %major.%minor-alt0.0.1
 %define conflictver_kdevelop 3.4.1-alt0.0.1
@@ -232,6 +232,7 @@ export XDG_DATA_DIRS=%_K4datadir:%_datadir
 #define _K4buildtype Debug
 #    -DKDE4_ENABLE_FINAL:BOOL=ON \
 %K4cmake \
+    -DKDE4_BUILD_TESTS=OFF \
     -DKDE4_ENABLE_FPIE:BOOL=ON \
 %if_enabled desktop
     -DKDE_PLATFORM_PROFILE="Desktop" \
@@ -338,6 +339,9 @@ ln -sf `relative %buildroot/%_kde4_bindir/kde4-config %buildroot/%_K4bindir/kde4
 %_K4includedir/*
 
 %changelog
+* Thu Sep 12 2013 Sergey V Turchin <zerg@altlinux.org> 4.11.1-alt2
+- fix kwallet freeze
+
 * Tue Sep 03 2013 Sergey V Turchin <zerg@altlinux.org> 4.11.1-alt1
 - new version
 
