@@ -1,7 +1,7 @@
 BuildRequires: desktop-file-utils
 Name: hugin
-Version: 2012.0.0
-Release: alt2.4
+Version: 2013.0.0
+Release: alt1.rc2
 
 Group: Graphics
 Summary: hugin - Goal: an easy to use cross-platform GUI for Panorama Tools.
@@ -74,6 +74,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 /usr/share/icons/hicolor/32x32/apps/hugin.png
 
 %changelog
+* Wed Sep 11 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 2013.0.0-alt1.rc2
+- 2013.0.0 rc2
+
 * Fri Mar 22 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 2012.0.0-alt2.4
 - build fixed
 
