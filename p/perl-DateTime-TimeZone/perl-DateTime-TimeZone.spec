@@ -2,7 +2,7 @@
 %def_without bootstrap
 Name: perl-%dist
 Version: 1.60
-Release: alt3
+Release: alt4
 
 Summary: Time zone object base class and factory
 License: GPL or Artistic
@@ -24,10 +24,9 @@ BuildArch: noarch
 %add_findprov_skiplist */DateTime/TimeZone/Indian/*
 %add_findprov_skiplist */DateTime/TimeZone/Pacific/*
 
+%if_with bootstrap
 # bootstrap: disable circular dependencies on DateTime
 %add_findreq_skiplist */DateTime/TimeZone/*
-
-%if_with bootstrap
 # bootstrap: some dependencies have to be re-added manually
 Requires: perl-Class-Load perl-Class-Singleton perl-Params-Validate perl-parent
 %else
@@ -72,6 +71,9 @@ sed -i- 's/eval "use DateTime/eval "die/' t/check_datetime_version.pl
 %perl_vendor_privlib/DateTime
 
 %changelog
+* Thu Sep 12 2013 Vladimir Lettiev <crux@altlinux.ru> 1.60-alt4
+- fixed failed unbootsrap
+
 * Thu Sep 05 2013 Vladimir Lettiev <crux@altlinux.ru> 1.60-alt3
 - re-enabled dependency on perl-DateTime
 
