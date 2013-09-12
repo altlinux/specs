@@ -2,7 +2,7 @@
 
 Name: wdm
 Version: 1.28
-Release: alt12.2
+Release: alt12.3
 
 Summary: WINGs Display Manager
 License: GPL
@@ -114,6 +114,9 @@ EOF
 %doc AUTHORS ChangeLog INSTALL NEWS README README.pam TODO
 
 %changelog
+* Thu Sep 12 2013 Andrey Bergman <vkni@altlinux.org> 1.28-alt12.3
+- Updated release for rebuild.
+
 * Tue Jan 29 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.28-alt12.2
 - Set requestPort to 0
 - Set Russian as default language (thnx kostyalamer@)

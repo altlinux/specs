@@ -3,7 +3,7 @@
 %define wmdatadir /usr/share/WindowMaker
 
 %define WINGs_SOVER 2
-%define WUtil_SOVER 2
+%define WUtil_SOVER 3
 %define wraster_SOVER 3
 
 %def_disable debug
@@ -11,8 +11,8 @@
 %define frame_border   navy
 
 Name: WindowMaker
-Version: 0.95.4
-Release: alt5
+Version: 0.95.5
+Release: alt1
 Packager: %packager
 
 Summary: A window manager for the X Window System
@@ -23,10 +23,8 @@ URL: http://www.windowmaker.info/
 Source0: %name-%version.tar
 Source1: altlinux.tar
 
-Patch0: delete_pl.patch
-Patch1: wmgenmenu.patch
-Patch2: WindowMaker-0.95.0-configure.ac.patch
-Patch3: WindowMaker-alt-Makefile.patch
+Patch0: wmgenmenu.patch
+Patch1: WindowMaker-alt-Makefile.patch
 
 Requires: xvt, wmsetbg = %version-%release, libWINGs = %version-%release, cpp
 Requires: fonts-bitmap-cyr_rfx-iso10646-0400, xlockmore
@@ -162,10 +160,8 @@ Utility for root window image setting
 %prep
 %setup -n %name-%version
 %setup -a 1 
-#%%patch0 -p1
+%patch0 -p1
 %patch1 -p1
-%patch2 -p1
-%patch3 -p1
 
 sed -i 's,/usr/lib/GNUstep,%gnustepdir,g' \
 	altlinux/etc/X11/WindowMaker/WMWindowAttributes
@@ -308,6 +304,9 @@ rm -rf %buildroot%_mandir/cs
 %_bindir/wmsetbg
 
 %changelog
+* Thu Sep 12 2013 Andrey Bergman <vkni@altlinux.org> 0.95.5-alt1
+- Update to a new version. Removed unnecessary patches.
+
 * Tue Mar 05 2013 Michael Shigorin <mike@altlinux.org> 0.95.4-alt5
 - Adjusted font specification to cope with UTF-8 (closes: #28592).
 - Updated wallpaper image path to branding.git one (closes: #28624).
