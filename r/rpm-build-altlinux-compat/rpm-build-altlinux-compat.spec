@@ -1,7 +1,7 @@
 # NOTE: do not use clean_spec or rpmcs for this spec
 
 Name: rpm-build-altlinux-compat
-Version: 1.7.25
+Version: 1.7.30
 Release: alt1
 
 Summary: ALT Linux compatibility and extensions in rpm build
@@ -25,6 +25,8 @@ BuildArchitectures: noarch
 %endif
 BuildPreReq: altlinux-release
 %else
+# Provide includes macros
+Provides: rpm-build-python rpm-build-perl rpm-macros-ttf rpm-build-licenses rpm-macros-cmake
 # FreeBSD
 %if %_vendor == "portbld" || %_vendor == "any"
 %define _rpmmacrosdir %_etcrpm
@@ -108,6 +110,25 @@ Command rpmbph from etersoft-build-utils will do it automatically.
 %endif
 
 %changelog
+* Thu Sep 12 2013 Vitaly Lipatov <lav@altlinux.ru> 1.7.30-alt1
+- add sudoersdir macro for old ALT Linux distros
+- other fixes for _sudoersdir
+
+* Fri Jul 12 2013 Vitaly Lipatov <lav@altlinux.ru> 1.7.29-alt1
+- add _unitdir for old RHEL, Mandriva, SUSE distros
+
+* Fri Jun 28 2013 Vitaly Lipatov <lav@altlinux.ru> 1.7.28-alt1
+- add unitdir macro for systemd dir for deb systems, archlinux and slackware
+
+* Wed Mar 20 2013 Vitaly Lipatov <lav@altlinux.ru> 1.7.27-alt1
+- import macros from rpm-macros-qt*
+- add qmake_qt4 macro (Mandriva like)
+
+* Thu Feb 28 2013 Vitaly Lipatov <lav@altlinux.ru> 1.7.26-alt1
+- python: disable ext. requires
+- update python files
+- add provides for included rpm-build-*
+
 * Mon Feb 18 2013 Vitaly Lipatov <lav@altlinux.ru> 1.7.25-alt1
 - intro macro _cupslibdir for /usr/lib/cups
 - intro macro _sudoersdir for /etc/sudoers.d
