@@ -1,6 +1,7 @@
+%define _unpackaged_files_terminate_build 1
 %define dist Log-Report
 Name: perl-%dist
-Version: 0.993
+Version: 0.996
 Release: alt1
 
 Summary: Report a problem, pluggable handlers and language support
@@ -44,6 +45,9 @@ module to do only translations or only message dispatching.
 %_bindir/xgettext-perl
 
 %changelog
+* Thu Sep 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.996-alt1
+- automated CPAN update
+
 * Fri Jul 26 2013 Igor Vlasenko <viy@altlinux.ru> 0.993-alt1
 - automated CPAN update
 
