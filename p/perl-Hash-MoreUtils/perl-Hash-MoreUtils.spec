@@ -1,3 +1,4 @@
+%define _unpackaged_files_terminate_build 1
 BuildRequires: perl(Module/Build.pm)
 #
 #   - Hash::MoreUtils -
@@ -15,7 +16,7 @@ BuildRequires: perl(Module/Build.pm)
 %define _enable_test 1
 
 Name: perl-Hash-MoreUtils
-Version: 0.02
+Version: 0.03
 Release: alt1
 
 Summary: Provide the stuff missing in Hash::Util
@@ -50,6 +51,9 @@ rm -rf %buildroot%perl_vendor_man3dir/
 %perl_vendor_privlib/Hash/*
 
 %changelog
+* Thu Sep 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.03-alt1
+- automated CPAN update
+
 * Sun Sep 25 2011 Igor Vlasenko <viy@altlinux.ru> 0.02-alt1
 - automated CPAN update
 
