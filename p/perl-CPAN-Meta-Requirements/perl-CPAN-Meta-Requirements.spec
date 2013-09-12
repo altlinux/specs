@@ -1,6 +1,7 @@
+%define _unpackaged_files_terminate_build 1
 %define dist CPAN-Meta-Requirements
 Name: perl-%dist
-Version: 2.122
+Version: 2.123
 Release: alt1
 
 Summary: a set of version requirements for a CPAN dist
@@ -8,7 +9,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/D/DA/DAGOLDEN/CPAN-Meta-Requirements-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -38,5 +39,8 @@ them to the simplest representation.
 %perl_vendor_privlib/CPAN
 
 %changelog
+* Thu Sep 12 2013 Igor Vlasenko <viy@altlinux.ru> 2.123-alt1
+- automated CPAN update
+
 * Wed Sep 26 2012 Alexey Tourbin <at@altlinux.ru> 2.122-alt1
 - initial revision
