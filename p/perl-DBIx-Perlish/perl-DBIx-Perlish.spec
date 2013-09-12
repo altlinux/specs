@@ -1,6 +1,7 @@
+%define _unpackaged_files_terminate_build 1
 %define dist DBIx-Perlish
 Name: perl-%dist
-Version: 0.59
+Version: 0.60
 Release: alt1
 
 Summary: a perlish interface to SQL databases
@@ -12,7 +13,7 @@ Url: %CPAN %dist
 Packager: Michael Bochkaryov <misha@altlinux.ru>
 
 BuildArch: noarch
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/G/GR/GRUBER/DBIx-Perlish-%{version}.tar.gz
 
 # Automatically added by buildreq on Tue Sep 09 2008 (-bi)
 BuildRequires: perl-DBD-SQLite perl-Module-Install perl-PadWalker perl-Test-Pod perl-Test-Pod-Coverage
@@ -52,6 +53,9 @@ transactions. All this is outside the scope of this module.
 %doc Changes README
 
 %changelog
+* Thu Sep 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.60-alt1
+- automated CPAN update
+
 * Mon Sep 10 2012 Vladimir Lettiev <crux@altlinux.ru> 0.59-alt1
 - 0.56 -> 0.59
 
