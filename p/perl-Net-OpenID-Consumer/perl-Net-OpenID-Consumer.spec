@@ -1,7 +1,8 @@
+%define _unpackaged_files_terminate_build 1
 %define module Net-OpenID-Consumer
 
 Name: perl-%module
-Version: 1.14
+Version: 1.15
 Release: alt1
 
 Summary: Library for consumers of OpenID identities
@@ -33,6 +34,9 @@ system based on proving you own a URL, which is then your identity.
 %perl_vendor_privlib/Net/OpenID/
 
 %changelog
+* Thu Sep 12 2013 Igor Vlasenko <viy@altlinux.ru> 1.15-alt1
+- automated CPAN update
+
 * Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 1.14-alt1
 - automated CPAN update
 
