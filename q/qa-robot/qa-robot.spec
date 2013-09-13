@@ -1,5 +1,5 @@
 Name: qa-robot
-Version: 0.3.4
+Version: 0.3.5
 Release: alt1
 
 Summary: Simple notification system
@@ -34,6 +34,11 @@ and (possibly) updated entries.  See qa-robot(1) for details.
 %_man1dir/*.*
 
 %changelog
+* Fri Sep 13 2013 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.3.5-alt1
+- packages: canonicalize rpms directory and %%packager.
+- buildlog_deps: trim very long lines
+- unmets: add -l option to add APT::Cache-Limit to apt.conf
+
 * Wed Feb 27 2013 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.3.4-alt1
 - unmets: add -a option to work with unnative arches.
 
