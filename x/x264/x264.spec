@@ -1,6 +1,6 @@
 Name: x264
-Version: 120
-Release: alt0.1
+Version: 136
+Release: alt1
 
 Summary: CLI H.264 encoder
 License: GPL
@@ -85,6 +85,9 @@ install -pm0755 tools/{countquant_%name.pl,xyuv} %buildroot%_bindir
 %_bindir/countquant_%name.pl
 
 %changelog
+* Sun Sep 08 2013 Sergey Bolshakov <sbolshakov@altlinux.ru> 136-alt1
+- updated to 136
+
 * Sun Jan 29 2012 Sergey Bolshakov <sbolshakov@altlinux.ru> 120-alt0.1
 - updated from git.f33c8cb
 

@@ -1,14 +1,13 @@
 Name: yasm
-Version: 1.1.0
-Release: alt1.qa1
+Version: 1.2.0
+Release: alt1
 
 Summary: Rewrite of the NASM assembler under the "new" BSD License
 License: BSD
 Group: Development/Other
+Url: http://www.tortall.net/projects/yasm/
 
-URL: http://www.tortall.net/projects/yasm/
-Packager: Pavlov Konstantin <thresh@altlinux.ru>
-Source: yasm-%version.tar.gz
+Source: yasm-%version.tar
 
 %description 
 Yasm is a complete rewrite of the NASM assembler under the "new" BSD License
@@ -29,7 +28,7 @@ Development libraries for YASM.
 This package contains static development files for YASM.
 
 %prep
-%setup -q
+%setup
 
 %build
 %autoreconf
@@ -56,6 +55,9 @@ ln -s ytasm %buildroot%_bindir/tasm
 %_libdir/*.a
 
 %changelog
+* Sun Sep 08 2013 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.2.0-alt1
+- 1.2.0 release
+
 * Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.1.0-alt1.qa1
 - NMU: rebuilt for debuginfo.
 

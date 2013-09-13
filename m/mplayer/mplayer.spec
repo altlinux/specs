@@ -305,7 +305,7 @@
 
 Name: %lname
 Version: 1.1.1
-Release: alt8
+Release: alt9
 %ifdef svnrev
 %define pkgver svn-r%svnrev
 %else
@@ -1155,6 +1155,9 @@ install -pD -m 0644 {etc/%lname,%buildroot%_desktopdir/%gname}.desktop
 
 
 %changelog
+* Thu Sep 12 2013 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.1.1-alt9
+- rebuilt with recent libx264
+
 * Tue Jun 04 2013 Led <led@altlinux.ru> 1.1.1-alt8
 - added empty skin (named '0') without control panel
 
