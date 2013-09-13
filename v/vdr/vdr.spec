@@ -1,6 +1,6 @@
 Name: vdr
-Version: 2.0.2
-Release: alt2
+Version: 2.0.3
+Release: alt1
 
 Summary: Digital satellite receiver box with advanced features
 License: GPL
@@ -68,11 +68,6 @@ Requires: vdr = %version-%release
 
 %package plugin-remotetimers
 Summary: VDR remote timers plugin
-Group: Video
-Requires: vdr = %version-%release
-
-%package plugin-softdevice
-Summary: VDR ffmpeg plugin
 Group: Video
 Requires: vdr = %version-%release
 
@@ -161,9 +156,6 @@ Remote OSD plugin for the Video Disk Recorder (VDR).
 %description plugin-remotetimers
 VDR timers manipulations across VDR instances
 
-%description plugin-softdevice
-Softdevice plugin for the Video Disk Recorder (VDR).
-
 %description plugin-softhddevice
 HD-capable (VDPAU) softdevice plugin for the Video Disk Recorder (VDR).
 
@@ -235,7 +227,6 @@ sed -e 's,^#PREFIX.\+$,PREFIX = %prefix,' \
 sed -i 's,^IMAGELIB.\+$,IMAGELIB = graphicsmagick,' PLUGINS/src/text2skin/Makefile
 
 %build
-(cd PLUGINS/src/softdevice && sh configure)
 (cd PLUGINS/src/xineliboutput && sh configure)
 make
 
@@ -280,9 +271,6 @@ cp -p PLUGINS/src/remoteosd/README %buildroot%docdir/remoteosd
 
 mkdir -p %buildroot%docdir/remotetimers
 cp -p PLUGINS/src/remotetimers/README %buildroot%docdir/remotetimers
-
-mkdir -p %buildroot%docdir/softdevice %buildroot%confdir/plugins/softdevice
-cp -p PLUGINS/src/softdevice/README %buildroot%docdir/softdevice
 
 mkdir -p %buildroot%docdir/softhddevice %buildroot%confdir/plugins/softhddevice
 cp -p PLUGINS/src/softhddevice/README.txt %buildroot%docdir/softhddevice/README
@@ -336,7 +324,6 @@ mkdir -p %buildroot%_runtimedir/vdr %buildroot%_cachedir/vdr
 %find_lang --output=femon.lang vdr-femon
 %find_lang --output=iptv.lang vdr-iptv
 %find_lang --output=pvrinput.lang vdr-pvrinput
-%find_lang --output=softdevice.lang vdr-softdevice
 %find_lang --output=softhddevice.lang vdr-softhddevice
 %find_lang --output=streamdev.lang --append vdr-streamdev-server vdr-streamdev-client
 %find_lang --output=text2skin.lang vdr-text2skin
@@ -476,14 +463,6 @@ mkdir -p %buildroot%_runtimedir/vdr %buildroot%_cachedir/vdr
 %docdir/remotetimers
 %plugindir/libvdr-remotetimers.so.%version
 
-%files plugin-softdevice -f softdevice.lang
-%docdir/softdevice
-%dir %attr(0770,root,_vdr) %confdir/plugins/softdevice
-%plugindir/libvdr-softdevice.so.%version
-%plugindir/libsoftdevice-fb.so.%version
-%plugindir/libsoftdevice-shm.so.%version
-%plugindir/libsoftdevice-xv.so.%version
-
 %files plugin-softhddevice -f softhddevice.lang
 %docdir/softhddevice
 %dir %attr(0770,root,_vdr) %confdir/plugins/softhddevice
@@ -562,6 +541,9 @@ mkdir -p %buildroot%_runtimedir/vdr %buildroot%_cachedir/vdr
 %_libdir/xine/plugins/*/xineplug_inp_xvdr.so
 
 %changelog
+* Fri Sep 13 2013 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.0.3-alt1
+- 2.0.3 released
+
 * Fri May 24 2013 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.0.2-alt2
 - epgsync plugin added
 - remotetimers plugin added
