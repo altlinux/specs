@@ -1,6 +1,6 @@
 Name: fontconfig
-Version: 2.10.93
-Release: alt2
+Version: 2.10.95
+Release: alt1
 
 Summary: Font configuration and customization library and utilities
 Group: System/Configuration/Other
@@ -9,7 +9,11 @@ Url: http://fontconfig.org/
 Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
 Source: %name-%version.tar
-Patch: %name-%version-%release.patch
+Source1: fontconfig-firsttime
+Source2: fontconfig.filetrigger
+Patch1: alt-symbols-map.patch
+Patch2: alt-config.patch
+Patch3: alt-fc-conf.patch
 
 Provides: lib%name = %version
 Obsoletes: lib%name < %version
@@ -32,10 +36,12 @@ documentation required for development of fontconfig-based software.
 
 %prep
 %setup -q
-%patch -p1
+%patch1 -p1
+%patch2 -p1
+%patch3 -p1
+%autoreconf
 
 %build
-%autoreconf
 %configure \
 	--disable-static \
 	--with-baseconfigdir=%_sysconfdir/fonts \
@@ -50,8 +56,8 @@ documentation required for development of fontconfig-based software.
 install -pm644 AUTHORS README %buildroot%docdir/
 
 > %buildroot%_sysconfdir/fonts/local.conf
-install -Dp -m755 fontconfig-firsttime %buildroot%_sysconfdir/firsttime.d/%name
-install -Dp -m755 %name.filetrigger %buildroot%_rpmlibdir/%name.filetrigger
+install -Dp -m755 %SOURCE1 %buildroot%_sysconfdir/firsttime.d/%name
+install -Dp -m755 %SOURCE2 %buildroot%_rpmlibdir/%name.filetrigger
 
 for f in $(ls %buildroot%_datadir/%name/conf.avail/1*.conf | sed -ne 's|\(.*/\)\(.*conf\)|\2|p'); do
 	ln -sf ../../../%_datadir/%name/conf.avail/$f %buildroot%_sysconfdir/fonts/conf.d/$f
@@ -108,6 +114,9 @@ find -L %_sysconfdir/fonts/conf.d -type l -delete
 %docdir/%name-devel*
 
 %changelog
+* Fri Sep 13 2013 Sergey V Turchin <zerg@altlinux.org> 2.10.95-alt1
+- 2.11 RC5
+
 * Thu Jun 20 2013 Sergey V Turchin <zerg@altlinux.org> 2.10.93-alt2
 - update own configs according upstream config changes
 
