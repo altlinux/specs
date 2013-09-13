@@ -1,5 +1,5 @@
 Name: opencascade
-Version: 6.5.4
+Version: 6.6.0
 Release: alt1
 Summary: Development platform for 3D modeling and numerical simulation
 License: BSD-like
@@ -149,7 +149,7 @@ popd
 #chmod +x %buildroot%_bindir/DRAWEXE
 
 mv %buildroot%prefix/*.sh %buildroot%_bindir/
-chmod +x %buildroot%_bindir/custom.sh
+#chmod +x %buildroot%_bindir/custom.sh
 
 %files
 %doc LICENSE
@@ -168,6 +168,9 @@ chmod +x %buildroot%_bindir/custom.sh
 %_datadir/%name/src
 
 %changelog
+* Fri Sep 13 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 6.6.0-alt1
+- Version 6.6.0
+
 * Thu Feb 07 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 6.5.4-alt1
 - Version 6.5.4
 
