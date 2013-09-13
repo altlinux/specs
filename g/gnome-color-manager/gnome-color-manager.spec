@@ -4,7 +4,7 @@
 %def_disable check
 
 Name: gnome-color-manager
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: Color profile manager for the GNOME desktop
@@ -22,7 +22,7 @@ BuildPreReq: rpm-build-licenses
 
 # From configure.in
 %define gio_ver 2.31.10
-%define clutter_ver 1.9.11
+%define clutter_ver 1.12
 %define gtk_ver 3.0
 %define vte_ver 0.27.2
 %define notify_ver 0.7.3
@@ -111,6 +111,9 @@ ln -sf %_licensedir/GPL-2 COPYING
 %doc README NEWS AUTHORS
 
 %changelog
+* Fri Sep 13 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.3-alt1
+- 3.8.3
+
 * Mon May 13 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.2-alt1
 - 3.8.2
 
