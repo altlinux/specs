@@ -4,7 +4,7 @@
 %define nvIF_ver_lteq() %if "%(rpmvercmp '%2' '%1')" >= "0"
 
 %define module_name	nvidia
-%define module_version	319.32
+%define module_version	319.49
 %define module_release	alt1
 %define flavour		hpc-skif
 
@@ -27,20 +27,22 @@
 %endif
 %define legacy2_src %(echo %legacy2 | tr -d .)
 %nvIF_ver_lt %xorg_ver 1.15
+%nvIF_ver_gteq %kversion 3.10
 %define legacy3 173.14.37
+%else
+%define legacy3 %nil
+%endif
 %else
 %define legacy3 %nil
 %endif
 %define legacy3_src %(echo %legacy3 | tr -d .)
 %nvIF_ver_lt %xorg_ver 1.15
-%define legacy4 304.88
+%define legacy4 304.108
 %else
 %define legacy4 %nil
 %endif
 %define legacy4_src %(echo %legacy4 | tr -d .)
 %define mod_ver_list %version %legacy1 %legacy2 %legacy3 %legacy4
-
-%define upstream_module_name	NVIDIA_kernel
 
 %define module_dir /lib/modules/%kversion-%flavour-%krelease/nVidia
 %define module_local_dir /lib/modules/nvidia
@@ -88,7 +90,6 @@ Conflicts: 	kernel-modules-%module_name-%kversion-%flavour-%krelease > %version-
 Conflicts: modutils < 2.4.27-alt4
 
 PreReq: kernel-image-%flavour = %kepoch%kversion-%krelease
-Requires: kernel-modules-drm-%flavour = %kepoch%kversion-%krelease
 Requires:       nvidia_glx_%version
 %if "%legacy1" != "%nil"
 Requires:       nvidia_glx_%legacy1
@@ -102,7 +103,6 @@ Requires:       nvidia_glx_%legacy3
 %if "%legacy4" != "%nil"
 Requires:       nvidia_glx_%legacy4
 %endif
-Provides:       NVIDIA_kernel = %version
 
 %description
 nVidia video card drivers that provide 3d and 2d graphics support for XFree86
@@ -190,6 +190,15 @@ fi
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Wed Sep 11 2013 Led <led@altlinux.ru> 319.49-alt1
+- new releases (319.49 and 304.108)
+
+* Sat Sep 07 2013 Led <led@altlinux.ru> 319.32-alt3
+- don't build stolidly broken legacy3 for kernels < 3.10
+
+* Fri Jul 12 2013 Led <led@altlinux.ru> 319.32-alt2..
+- removed requires of kernel-modules-drm-*
 
 * Wed Jun 26 2013 Sergey V Turchin <zerg at altlinux dot org> 319.32-alt1..
 - new release (319.32)
