@@ -1,13 +1,13 @@
 Name: elementary-icon-theme
-Version: 3.1
+Version: 3.2
 Release: alt1
 
 Summary: simple and appealing Tango-styled icon theme
 Group: Graphical desktop/Other
 License: GPLv3+
-Url: http://www.elementaryos.org/
+Url: https://launchpad.net/elementaryicons
 
-Source0: elementaryicons%version.tar.gz
+Source0: elementaryicons.tar.xz
 
 Packager: Igor Zubkov <icesik@altlinux.org>
 
@@ -28,7 +28,7 @@ These icons are the inspiration behind Ubuntu's default Humanity icon
 theme.
 
 %prep
-%setup -q -n elementaryicons%version
+%setup -q -n elementaryicons
 
 %build
 
@@ -44,6 +44,9 @@ cp -pr * %buildroot%_datadir/icons/elementary/
 %exclude %_datadir/icons/elementary/COPYING
 
 %changelog
+* Fri Sep 13 2013 Igor Zubkov <icesik@altlinux.org> 3.2-alt1
+- 3.1 -> 3.2 (bzr -r1136)
+
 * Mon Sep 09 2013 Igor Zubkov <icesik@altlinux.org> 3.1-alt1
 - build for Sisyphus
 
