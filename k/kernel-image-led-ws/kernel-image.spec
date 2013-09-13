@@ -20,7 +20,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.4.61
-Release: alt4
+Release: alt5
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -518,7 +518,7 @@ Patch0652: linux-%kernel_branch.41-fix-kernel--rcutree.patch
 Patch0653: linux-%kernel_branch.39-fix-kernel-irq.patch
 Patch0654: linux-%kernel_branch.39-fix-kernel-power.patch
 
-Patch0660: linux-%kernel_branch.25-fix-lib.patch
+Patch0660: linux-%kernel_branch.53-fix-lib.patch
 Patch0661: linux-%kernel_branch.29-fix-lib--btree.patch
 Patch0662: linux-%kernel_branch.25-fix-lib--crc32.patch
 Patch0663: linux-%kernel_branch.35-fix-lib-lzo.patch
@@ -2894,6 +2894,10 @@ done)
 
 
 %changelog
+* Sat Sep 14 2013 Led <led@altlinux.ru> 3.4.61-alt5
+- updated:
+  + fix-lib
+
 * Wed Sep 11 2013 Led <led@altlinux.ru> 3.4.61-alt4
 - updated:
   + fix-fs-cifs
