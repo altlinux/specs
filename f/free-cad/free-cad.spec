@@ -2,8 +2,8 @@
 %define ldir %_libdir/%oname
 
 Name: free-cad
-Version: 0.12.2237
-Release: alt3.git20130123
+Version: 0.13.0
+Release: alt1.git20130912
 Epoch: 1
 Summary: OpenSource 3D CAD modeller
 License: GPL / LGPL
@@ -27,6 +27,7 @@ BuildPreReq: libopencascade-devel libgts-devel libGL-devel libGLU-devel
 BuildPreReq: libode-devel eigen2 phonon-devel libann-devel qt4-assistant
 BuildPreReq: doxygen graphviz texlive-extra-utils libqt4-help eigen3
 BuildPreReq: python-module-pivy libnumpy-devel libqt4-assistant-devel
+BuildPreReq: boost-interprocess-devel
 %py_requires pivy
 %py_provides Fem FreeCAD FreeCADGui Mesh Part MeshPart Drawing ImportGui
 %py_provides PartGui Sketcher TestSketcherApp Robot RobotGui SketcherGui
@@ -81,7 +82,7 @@ This package contains FreeCAD plugin for Qt4 Designer.
 %package docs
 Summary: Documentation for FreeCAD
 Group: Documentation
-BuildArch: noarch
+#BuildArch: noarch
 
 %description docs
 FreeCAD will be a general purpose 3D CAD modeler. FreeCAD is aimed directly at
@@ -257,7 +258,7 @@ fi
 %exclude %_bindir/freecad-thumbnailer
 #exclude %ldir/bin/freecad-thumbnailer
 %_desktopdir/*
-%exclude %_desktopdir/fcstd-thumbnailer.desktop
+#exclude %_desktopdir/fcstd-thumbnailer.desktop
 %_niconsdir/*
 %_man1dir/*
 %exclude %_man1dir/freecad-thumbnailer.1*
@@ -269,24 +270,28 @@ fi
 %files thumbnailer
 %_bindir/freecad-thumbnailer
 #ldir/bin/freecad-thumbnailer
-%_desktopdir/fcstd-thumbnailer.desktop
+#_desktopdir/fcstd-thumbnailer.desktop
 %_man1dir/freecad-thumbnailer.1*
 
 %files -n lib%name
 %_libdir/*.so.*
 %ldir/lib
 
-%files -n lib%name-devel
-%_libdir/*.so
-%ldir/include
+#files -n lib%name-devel
+#_libdir/*.so
+#ldir/include
 
-#files docs
+%files docs
 #_docdir/%name
+%ldir/doc
 
 %files qt4-designer-plugin
 %_libexecdir/qt4/plugins/designer/*
 
 %changelog
+* Fri Sep 13 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:0.13.0-alt1.git20130912
+- Version 0.13.0
+
 * Sun Feb 10 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:0.12.2237-alt3.git20130123
 - Rebuilt with Boost 1.53.0
 
