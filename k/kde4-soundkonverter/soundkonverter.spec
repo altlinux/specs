@@ -5,7 +5,7 @@
 %define rname soundKonverter
 %define tname soundkonverter
 Name: kde4-soundkonverter
-Version: 2.0.2
+Version: 2.0.4
 Release: alt1
 
 Summary: A frontend to various audio converters
@@ -74,6 +74,9 @@ done
 %_K4srvtyp/%{tname}_*.desktop
 
 %changelog
+* Thu Sep 12 2013 Sergey V Turchin <zerg@altlinux.org> 2.0.4-alt1
+- new version
+
 * Mon May 20 2013 Sergey V Turchin <zerg@altlinux.org> 2.0.2-alt1
 - new version
 
