@@ -2,12 +2,13 @@
 %define _name net-snmp
 %def_disable mibs
 %def_with mysql
+%def_with systemd
 # XXX tests fail
 %def_without test
 
 Name: %_name%abiversion
 Version: 5.7.2
-Release: alt3
+Release: alt4
 
 Summary: Tools and servers for the SNMP protocol
 License: BSD-like
@@ -21,8 +22,12 @@ Source1: %_name.init
 Source2: %_name.conf
 Source3: %_name.logrotate
 Source4: snmptrapd.init
+Source9: net-snmp-tmpfs.conf
+Source10: snmpd.service
+Source11: snmptrapd.service
 
 Patch: %name-%version-%release.patch
+Patch6: net-snmp-5.7.2-systemd.patch
 
 %define persistentdir %_localstatedir/%_name
 
@@ -32,6 +37,7 @@ BuildPreReq: librpm-devel >= 4.0.4 libssl-devel
 BuildRequires: libnl-devel librpm-devel libsensors3-devel libwrap-devel pdksh perl-devel python-module-setuptools perl-Tk perl-Term-ReadLine-Gnu perl-libnet perl-XML-Simple
 %{?_enable_static:BuildPreReq: glibc-devel-static}
 %{?_with_mysql:BuildRequires: libmysqlclient-devel}
+%{?_with_systemd:BuildRequires: systemd-devel}
 BuildRequires: perl-podlators chrpath
 
 %package -n %_name-common
@@ -293,6 +299,7 @@ for run-time access to parsed MIB data.
 %prep
 %setup
 %patch -p1
+%patch6 -p0
 
 %__subst "s|LIB_LD_LIBS)|LIB_LD_LIBS) \$\{ADD_HELPER\}|g" agent/Makefile.in
 #Fix for compile with lmsensors_v3
@@ -334,7 +341,8 @@ export LIBS='-lcrypto -lwrap'
 	--with-perl-modules="INSTALLDIRS=vendor" \
 	--enable-embedded-perl \
 	--with-python-modules \
-	%{subst_with mysql}
+	%{subst_with mysql} \
+	%{subst_with systemd}
 
 NPROCS=1
 %make_build
@@ -354,6 +362,12 @@ install -p -m755 -D %SOURCE1 %buildroot%_initdir/snmpd
 install -p -m640 -D %SOURCE2 %buildroot%_sysconfdir/snmp/snmpd.conf
 install -p -m644 -D %SOURCE3 %buildroot%_sysconfdir/logrotate.d/snmpd
 install -p -m755 -D %SOURCE4 %buildroot%_initdir/snmptrapd
+
+# systemd stuff
+install -m 755 -d %buildroot%_sysconfdir/tmpfiles.d/
+install -m 644 %SOURCE9 %buildroot%_sysconfdir/tmpfiles.d/net-snmp.conf
+install -m 755 -d %buildroot%_unitdir
+install -m 644 %SOURCE10 %SOURCE11 %buildroot%_unitdir/
 
 # perl loadable objects contain $RPM_BUILD_DIR-dependent RPATH
 #hrpath -d `find %buildroot%perl_vendor_autolib -type f -name '*.so'`
@@ -416,7 +430,9 @@ echo "===== start test ====="
 %_man1dir/net-snmp-config.*
 
 %files -n %_name-snmpd
+%config(noreplace) %_sysconfdir/tmpfiles.d/net-snmp.conf
 %config(noreplace) %_initdir/snmpd
+%config(noreplace) %_unitdir/snmpd.service
 %config(noreplace) %_sysconfdir/sysconfig/snmpd
 %config(noreplace) %_sysconfdir/logrotate.d/snmpd
 %config(noreplace) %attr(0640,snmp,root) %_sysconfdir/snmp/snmpd.conf
@@ -432,6 +448,7 @@ echo "===== start test ====="
 
 %files -n %_name-snmptrapd
 %config(noreplace) %_initdir/snmptrapd
+%config(noreplace) %_unitdir/snmptrapd.service
 %_sbindir/snmptrapd
 %_man5dir/snmptrapd.conf.*
 %_man8dir/snmptrapd.*
@@ -565,8 +582,14 @@ echo "===== start test ====="
 
 %files -n python-module-netsnmp
 %python_sitelibdir/netsnmp*
+%doc python/README
 
 %changelog
+* Mon Sep 09 2013 Slava Dubrovskiy <dubrsl@altlinux.org> 5.7.2-alt4
+- Update patches from V5-7-patches branch
+- Fix (ALT #29319) - add README to python-module-netsnmp
+- Add support for systemd - net-snmp-5.7.2-systemd.patch
+
 * Thu Aug 29 2013 Vladimir Lettiev <crux@altlinux.ru> 5.7.2-alt3
 - built for perl 5.18
 
