@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define _libexecdir %_prefix/libexec
 %define _name control-center
@@ -11,7 +11,7 @@
 %def_with cheese
 
 Name: gnome-control-center
-Version: %ver_major.4
+Version: %ver_major.5
 Release: alt1
 
 Summary: GNOME Control Center
@@ -176,6 +176,9 @@ NOCONFIGURE=1 ./autogen.sh
 %_datadir/pkgconfig/gnome-keybindings.pc
 
 %changelog
+* Fri Sep 13 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.5-alt1
+- 3.8.5
+
 * Wed Jul 24 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.4-alt1
 - 3.8.4
 
