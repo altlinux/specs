@@ -1,6 +1,6 @@
 Name: elementary-os
 Version: 1
-Release: alt3
+Release: alt4
 
 Summary: Elementary OS
 Group: Graphical desktop/Other
@@ -28,6 +28,9 @@ Requires: geary
 # web browser
 Requires: midori
 
+# music player
+Requires: noise
+
 # file manager
 Requires: pantheon-files
 
@@ -48,6 +51,9 @@ Elementary OS.
 %files
 
 %changelog
+* Fri Sep 13 2013 Igor Zubkov <icesik@altlinux.org> 1-alt4
+- Add noise to requires
+
 * Thu Sep 12 2013 Igor Zubkov <icesik@altlinux.org> 1-alt3
 - Add contractor to requires
 - Add empathy to requires
