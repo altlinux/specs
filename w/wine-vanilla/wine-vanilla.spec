@@ -1,5 +1,5 @@
 Name: wine-vanilla
-Version: 1.6.0
+Version: 1.7.2
 Release: alt1
 
 Summary: Wine - environment for running Windows 16/32/64 bit applications
@@ -346,6 +346,9 @@ rm -rf %buildroot%_mandir/*.UTF-8
 %exclude %_libdir/wine/libwinecrt0.a
 
 %changelog
+* Sat Sep 14 2013 Vitaly Lipatov <lav@altlinux.ru> 1.7.2-alt1
+- new version 1.7.2
+
 * Fri Aug 02 2013 Vitaly Lipatov <lav@altlinux.ru> 1.6.0-alt1
 - release 1.6
 - remove libssl-devel requires
