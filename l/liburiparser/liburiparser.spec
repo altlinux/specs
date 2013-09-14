@@ -1,6 +1,6 @@
 %define oname uriparser
 Name: liburiparser
-Version: 0.7.8
+Version: 0.7.9
 Release: alt1
 
 Summary: A strictly RFC 3986 compliant URI parsing library
@@ -11,7 +11,7 @@ Url: http://uriparser.sourceforge.net/
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-Source: http://prdownloads.sourceforge.net/uriparser/%oname-%version.tar.bz2
+Source: http://prdownloads.sourceforge.net/uriparser/%oname-%version.tar
 
 # Automatically added by buildreq on Sat Mar 07 2009
 BuildRequires: gcc-c++ libcpptest-devel
@@ -29,11 +29,9 @@ Requires: %name = %version-%release
 Header files for uriparser.
 
 %prep
-%setup -q -n %oname-%version
+%setup -n %oname-%version
 
 %build
-# reconf failed with AM_PROG_CC_C_
-#%__autoreconf
 %configure --disable-static --disable-doc
 %make_build
 
@@ -50,6 +48,9 @@ Header files for uriparser.
 %_pkgconfigdir/*
 
 %changelog
+* Sat Sep 14 2013 Vitaly Lipatov <lav@altlinux.ru> 0.7.9-alt1
+- new version 0.7.9 (with rpmrb script)
+
 * Tue Aug 27 2013 Vitaly Lipatov <lav@altlinux.ru> 0.7.8-alt1
 - new version 0.7.8 (with rpmrb script)
 
