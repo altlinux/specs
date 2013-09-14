@@ -1,6 +1,6 @@
 Name: gcovr
-Version: 2.4
-Release: alt2
+Version: 3.0
+Release: alt1
 
 Summary: Manages the compilation of coverage information from gcov
 License: BSD
@@ -10,6 +10,7 @@ Url: https://pypi.python.org/pypi/gcovr
 
 Packager: Igor Zubkov <icesik@altlinux.org>
 
+# https://pypi.python.org/packages/source/g/gcovr/gcovr-3.0.tar.gz#md5=a800afbd4e512e26e5cd01b77adb45b4
 Source0: %name-%version.tar.gz
 
 BuildArch: noarch
@@ -33,11 +34,15 @@ the lcov utility, which runs gcov and generates an HTML output.
 %python_install
 
 %files
+%doc README.txt
 %_bindir/gcovr
 %python_sitelibdir/%name/
 %python_sitelibdir/*.egg-info/
 
 %changelog
+* Sat Sep 14 2013 Igor Zubkov <icesik@altlinux.org> 3.0-alt1
+- 2.4 -> 3.0
+
 * Mon Sep 02 2013 Igor Zubkov <icesik@altlinux.org> 2.4-alt2
 - Update Url
 
