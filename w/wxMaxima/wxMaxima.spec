@@ -1,6 +1,6 @@
 Name: wxMaxima
-Version: 12.09.0
-Release: alt1.1
+Version: 13.04.1
+Release: alt1
 
 Summary: GUI for the computer algebra system Maxima
 License: GPL
@@ -68,6 +68,9 @@ install -D -m644 %SOURCE4 %buildroot%_desktopdir/%name.desktop
 
 
 %changelog
+* Sat Sep 14 2013 Ilya Mashkin <oddity@altlinux.ru> 13.04.1-alt1
+- 13.04.1
+
 * Fri Mar 22 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 12.09.0-alt1.1
 - Rebuilt (ALT #28734)
 
