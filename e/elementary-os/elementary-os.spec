@@ -1,6 +1,6 @@
 Name: elementary-os
 Version: 1
-Release: alt4
+Release: alt5
 
 Summary: Elementary OS
 Group: Graphical desktop/Other
@@ -34,6 +34,9 @@ Requires: noise
 # file manager
 Requires: pantheon-files
 
+# dropbox integration for pantheon-files
+Requires: pantheon-files-plugin-dropbox
+
 # terminal
 Requires: pantheon-terminal
 
@@ -51,6 +54,9 @@ Elementary OS.
 %files
 
 %changelog
+* Sun Sep 15 2013 Igor Zubkov <icesik@altlinux.org> 1-alt5
+- Add pantheon-files-plugin-dropbox to requires
+
 * Fri Sep 13 2013 Igor Zubkov <icesik@altlinux.org> 1-alt4
 - Add noise to requires
 
