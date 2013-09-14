@@ -8,11 +8,14 @@ BuildRequires(pre): browser-plugins-npapi-devel
 %define fedora 19
 Name:           mate-session
 Version:        1.6.1
-Release:        alt1_1
+Release:        alt1_3
 Summary:        MATE Desktop session manager
 License:        GPLv2+
 URL:            http://mate-desktop.org
 Source0:        http://pub.mate-desktop.org/releases/1.6/%{oldname}-%{version}.tar.xz
+
+# add systemd-login1 suspend/hibernate love (upstreamable)
+Patch1: mate-session-manager-1.6.1-login1.patch
 
 BuildRequires:  libdbus-glib-devel
 BuildRequires:  desktop-file-utils
@@ -48,6 +51,8 @@ full-featured user session.
 
 %prep
 %setup -n %{oldname}-%{version} -q
+
+%patch1 -p1 -b .login1
 %patch33 -p1
  
 %build
@@ -140,6 +145,9 @@ install -pD -m644 %SOURCE45 %buildroot%_iconsdir/hicolor/64x64/apps/mate.png
 
 
 %changelog
+* Sat Sep 14 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.1-alt1_3
+- new fc release
+
 * Wed Aug 07 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.1-alt1_1
 - new fc release
 
