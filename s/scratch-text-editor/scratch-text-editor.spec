@@ -1,7 +1,7 @@
 %global upstreamname scratch
 
 Name: scratch-text-editor
-Version: 2.0
+Version: 2.0.1
 Release: alt1
 
 Summary: The text editor that works
@@ -14,17 +14,16 @@ Packager: Igor Zubkov <icesik@altlinux.org>
 
 Source0: %upstreamname-%version.tar.gz
 
-Patch0: scratch-drop-spell-plugin.patch
-
-# buildreq fail
-BuildRequires: libpng-devel cmake gcc-c++ vala libwebkitgtk3-devel libvte3-devel
-BuildRequires: libpixman-devel gobject-introspection-devel libGConf-devel
-BuildRequires: libXdmcp-devel libxml2-devel libXdamage-devel libXxf86vm-devel
-BuildRequires: libharfbuzz-devel libXinerama-devel libXi-devel libXrender-devel
-BuildRequires: libXrandr-devel libXcursor-devel libXcomposite-devel
-BuildRequires: libxkbcommon-devel libwayland-cursor-devel at-spi2-atk-devel
-BuildRequires: libpeas-devel libgtksourceview3-devel libgee-devel libzeitgeist-devel
-BuildRequires: libgranite-devel libgail3-devel libdbus-devel libgranite-vala
+BuildRequires: libpng-devel cmake gcc-c++ vala libwebkitgtk3-devel
+BuildRequires: libvte3-devel libpixman-devel gobject-introspection-devel
+BuildRequires: libGConf-devel libXdmcp-devel libxml2-devel libXdamage-devel
+BuildRequires: libXxf86vm-devel libharfbuzz-devel libXinerama-devel libXi-devel
+BuildRequires: libXrender-devel libXrandr-devel libXcursor-devel
+BuildRequires: libXcomposite-devel libxkbcommon-devel libwayland-cursor-devel
+BuildRequires: at-spi2-atk-devel libpeas-devel libgtksourceview3-devel
+BuildRequires: libgee-devel libzeitgeist-devel libgranite-devel libgail3-devel
+BuildRequires: libdbus-devel libgranite-vala libvala-devel libexpat-devel
+BuildRequires: libgtkspell3-devel
 
 %description
 Scratch is the text editor that works for you. It auto-saves your files,
@@ -76,7 +75,6 @@ This package provides Vala language bindings for the scratch text editor.
 
 %prep
 %setup -q -n %upstreamname
-%patch0 -p1
 
 %build
 %cmake_insource
@@ -99,6 +97,7 @@ mv %buildroot/usr/lib/* %buildroot%_libdir/
 %_datadir/applications/scratch-text-editor.desktop
 %_datadir/glib-2.0/schemas/org.pantheon.scratch.gschema.xml
 %_datadir/glib-2.0/schemas/org.pantheon.scratch.plugins.folder-manager.gschema.xml
+%_datadir/glib-2.0/schemas/org.pantheon.scratch.plugins.file-manager.gschema.xml
 %_datadir/scratch/scratch-ui.xml
 %_datadir/scratch/scripts/chardetect.py
 
@@ -113,6 +112,9 @@ mv %buildroot/usr/lib/* %buildroot%_libdir/
 %_datadir/vala/vapi/scratchcore.vapi
 
 %changelog
+* Sat Sep 14 2013 Igor Zubkov <icesik@altlinux.org> 2.0.1-alt1
+- 2.0 -> 2.0.1
+
 * Thu Aug 15 2013 Igor Zubkov <icesik@altlinux.org> 2.0-alt1
 - build for Sisyphus
 
