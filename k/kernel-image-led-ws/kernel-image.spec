@@ -19,13 +19,13 @@
 %define flavour %base_flavour-%sub_flavour
 
 Name: kernel-image-%flavour
-Version: 3.4.61
-Release: alt5
+Version: 3.4.62
+Release: alt1
 
 %define kernel_req %nil
 %define kernel_prov %nil
 %define kernel_branch 3.4
-%define kernel_stable_version 61
+%define kernel_stable_version 62
 %define kernel_extra_version .%kernel_stable_version
 #define kernel_extra_version %nil
 
@@ -580,7 +580,7 @@ Patch0751: linux-%kernel_branch.20-fix-tools--perf.patch
 Patch0752: linux-%kernel_branch.20-fix-tools-hv.patch
 Patch0753: linux-%kernel_branch.53-fix-tools-firewire--nosy-dump.patch
 
-Patch0760: linux-%kernel_branch.49-fix-virt-kvm.patch
+Patch0760: linux-%kernel_branch.62-fix-virt-kvm.patch
 Patch0761: linux-%kernel_branch.50-fix-virt-kvm--kvm-amd.patch
 Patch0762: linux-%kernel_branch.50-fix-virt-kvm--kvm-intel.patch
 
@@ -2894,6 +2894,11 @@ done)
 
 
 %changelog
+* Sat Sep 14 2013 Led <led@altlinux.ru> 3.4.62-alt1
+- 3.4.62
+- updated:
+  + fix-virt-kvm
+
 * Sat Sep 14 2013 Led <led@altlinux.ru> 3.4.61-alt5
 - updated:
   + fix-lib
