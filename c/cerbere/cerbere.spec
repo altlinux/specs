@@ -1,6 +1,6 @@
 Name: cerbere
 Version: 0.2
-Release: alt1
+Release: alt2.revno42
 
 Summary: service to relaunch Pantheon apps
 Group: Graphical desktop/Other
@@ -12,12 +12,6 @@ Source0: %name-%version.tar.gz
 Packager: Igor Zubkov <icesik@altlinux.org>
 
 BuildRequires: cmake vala glib2-devel libgio-devel libgee-devel gcc-c++
-
-#Build-Depends: cmake,
-#               debhelper (>= 7.0.50~),
-#               libgee-dev (>= 0.5.3),
-#               libglib2.0-dev (>= 2.28),
-#               valac-0.16 | valac (>= 0.16)
 
 %description
 Cerbere is a sort of watchdog designed for Pantheon. It monitors a predefined
@@ -42,6 +36,9 @@ they crash or are killed by another process.
 %_datadir/glib-2.0/schemas/org.pantheon.cerbere.gschema.xml
 
 %changelog
+* Sat Sep 14 2013 Igor Zubkov <icesik@altlinux.org> 0.2-alt2.revno42
+- 0.2 revno 42
+
 * Tue Sep 10 2013 Igor Zubkov <icesik@altlinux.org> 0.2-alt1
 - build for Sisyphus
 
