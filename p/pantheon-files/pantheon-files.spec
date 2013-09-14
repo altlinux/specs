@@ -2,7 +2,7 @@
 
 Name: pantheon-files
 Version: 0.1.4
-Release: alt1
+Release: alt2
 
 Summary: The file manager of the Pantheon desktop
 License: GPLv3
@@ -10,6 +10,8 @@ Group: File tools
 Url: https://launchpad.net/pantheon-files
 
 Source0: %name-%version.tgz
+
+Patch0: pantheon-files-0.1.4-alt-fix-pkgconfig-file.patch
 
 Packager: Igor Zubkov <icesik@altlinux.org>
 
@@ -50,6 +52,7 @@ This package provides Vala language bindings for the pantheon-files.
 
 %prep
 %setup -q
+%patch0 -p1
 
 %build
 %cmake_insource
@@ -90,6 +93,9 @@ mv %buildroot/usr/lib/* %buildroot%_libdir/
 %_datadir/vala/vapi/marlincore.vapi
 
 %changelog
+* Sat Sep 14 2013 Igor Zubkov <icesik@altlinux.org> 0.1.4-alt2
+- Fix pkgconfig file
+
 * Mon Sep 09 2013 Igor Zubkov <icesik@altlinux.org> 0.1.4-alt1
 - 0.1.3 -> 0.1.4
 
