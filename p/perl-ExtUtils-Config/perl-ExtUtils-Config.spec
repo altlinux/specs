@@ -7,7 +7,7 @@ BuildRequires: perl-devel perl-podlators
 
 Name:		perl-ExtUtils-Config
 Version:	0.007
-Release:	alt1_6
+Release:	alt1_7
 Summary:	A wrapper for perl's configuration
 Group:		Development/Perl
 License:	GPL+ or Artistic
@@ -25,12 +25,16 @@ BuildRequires:	perl(File/Find.pm)
 BuildRequires:	perl(File/Temp.pm)
 BuildRequires:	perl(Test/More.pm)
 # Release Tests
+# perl-Pod-Coverage-TrustPod -> perl-Pod-Eventual -> perl-Mixin-Linewise ->
+#   perl-YAML-Tiny -> perl-Module-Build-Tiny -> perl-ExtUtils-Config
+%if 0%{!?perl_bootstrap:1}
 BuildRequires:	perl(Pod/Coverage/TrustPod.pm)
+BuildRequires:	perl(Test/Pod.pm)
+BuildRequires:	perl(Test/Pod/Coverage.pm)
+%endif
 # Avoid Test::Kwalitee as it tries to verify the module's signature, which will fail
 # if we have to patch Makefile.PL, tests etc. for old distribution support
 BuildConflicts:	perl(Test::Kwalitee)
-BuildRequires:	perl(Test/Pod.pm)
-BuildRequires:	perl(Test/Pod/Coverage.pm)
 Source44: import.info
 # Runtime
 
@@ -62,6 +66,9 @@ make test RELEASE_TESTING=1
 %{perl_vendor_privlib}/ExtUtils/
 
 %changelog
+* Sun Sep 15 2013 Igor Vlasenko <viy@altlinux.ru> 0.007-alt1_7
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.007-alt1_6
 - update to new release by fcimport
 
