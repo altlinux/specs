@@ -1,6 +1,6 @@
 Name: stk
-Version: 4.4.1
-Release: alt1.1.qa2
+Version: 4.4.4
+Release: alt1
 License: GPL
 Group: Sound
 Summary: C++ classes for audio digital signal processing
@@ -13,7 +13,7 @@ Requires: lib%name = %version-%release
 
 # Automatically added by buildreq on Thu Nov 22 2007
 BuildRequires: gcc-c++ jackit-devel libalsa-devel util-linux-ng
-BuildRequires: desktop-file-utils
+BuildRequires: desktop-file-utils symlinks
 
 %description
 The Synthesis ToolKit in C++ (STK) is a set of open source audio signal
@@ -30,7 +30,6 @@ currently runs with "realtime" support (audio and MIDI) on SGI (Irix),
 Linux, Macintosh OS X, and Windows computer platforms. Generic,
 non-realtime support has been tested under NeXTStep, Sun, and other
 platforms and should work with any standard C++ compiler.
-
 
 %package -n lib%name
 Summary: C++ classes for audio digital signal processing
@@ -77,70 +76,95 @@ toolkit. The documentation is developer oriented and covers all
 you need to know if you want to develop an STK application.
 
 %prep
-%setup -q
+%setup
 %patch -p1
 
 sed -i "s|/usr/lib|%_libdir|g" src/Makefile.in
+sed -i 's:../../rawwaves/:/usr/share/stk/rawwaves/:g' projects/demo/demo.cpp
 
 %build
+%autoreconf
 %configure --with-alsa \
-	--with-oss \
 	--with-jack \
 	RAWWAVE_PATH=%_datadir/stk/rawwaves/
-				       
 
 %make
 
 %install
+mkdir -p \
+  %buildroot%_includedir/stk \
+  %buildroot%_libdir \
+  %buildroot%_bindir \
+  %buildroot%_datadir/stk/rawwaves \
+  %buildroot%_datadir/stk/demo \
+  %buildroot%_datadir/stk/examples \
+  %buildroot%_datadir/stk/effects \
+  %buildroot%_datadir/stk/ragamatic \
+  %buildroot%_datadir/stk/eguitar
 
-%make -C src DESTDIR=%buildroot install
+cp -p include/* %buildroot%_includedir/stk
+cp -pd src/libstk.* %buildroot%_libdir
+cp -p rawwaves/*.raw %buildroot%_datadir/stk/rawwaves
 
-# there is no install target, so just install by hand
-mkdir -p %buildroot%_bindir
-mkdir -p %buildroot%_man1dir
-mkdir -p %buildroot%_includedir/stk
-mkdir -p %buildroot%_datadir/stk/
-mkdir -p %buildroot%_datadir/stk/rawwaves
+cp -pr projects/demo/tcl %buildroot%_datadir/stk/demo
+cp -pr projects/demo/scores %buildroot%_datadir/stk/demo
+cp -p projects/demo/demo %buildroot%_bindir/stk-demo
+#cp -p projects/demo/Md2Skini %buildroot%_bindir/Md2Skini
+for f in Banded Drums Modal Physical Shakers StkDemo Voice ; do
+  chmod +x projects/demo/$f
+  sed -e 's,\./demo,%_bindir/stk-demo,' -e '1i#! /bin/sh' \
+    -i projects/demo/$f
+  cp -p projects/demo/$f %buildroot%_datadir/stk/demo
+done
 
-install -m 755 projects/demo/demo %buildroot%_bindir/stk-demo
-install -m 755  STKDemo %buildroot%_bindir/STKDemo
-install -m 644 rawwaves/*.raw %buildroot%_datadir/stk/rawwaves
-cp -fR projects/demo/tcl %buildroot%_datadir/stk/
-cp -fR stk-demo.1 %buildroot%_man1dir/
+cp -pr projects/examples/midifiles %buildroot%_datadir/stk/examples
+cp -pr projects/examples/rawwaves %buildroot%_datadir/stk/examples
+cp -pr projects/examples/scores %buildroot%_datadir/stk/examples
+for f in sine sineosc foursine audioprobe midiprobe duplex play \
+    record inetIn inetOut rtsine crtsine bethree controlbee \
+    threebees playsmf grains ; do
+  cp -p projects/examples/$f %buildroot%_bindir/stk-$f
+  # absolute links, will be shortened later
+  ln -s %buildroot%_bindir/stk-$f %buildroot%_datadir/stk/examples/$f
+done
 
-# menu
-mkdir -p %buildroot%_desktopdir
-cat << EOF > %buildroot%_desktopdir/%name.desktop
-[Desktop Entry]
-Name=STK (Demo)
-GenericName=Synthesis ToolKit
-Comment=Synthesis ToolKit
-TryExec=STKDemo
-Exec=STKDemo
-Terminal=false
-StartupNotify=true
-Type=Application
-Categories=AudioVideo,Sequencer;
-EOF
-desktop-file-install --dir %buildroot%_desktopdir \
-	--remove-category=AudioVideo,Sequencer \
-	--add-category=AudioVideo \
-	--add-category=Sequencer \
-	--add-category=Audio \
-	%buildroot%_desktopdir/stk.desktop
+cp -pr projects/effects/tcl %buildroot%_datadir/stk/effects
+cp -p projects/effects/effects %buildroot%_bindir/stk-effects
+sed -e 's,\./effects,%_bindir/stk-effects,' -e '1i#! /bin/sh' \
+  -i projects/effects/StkEffects
+cp -p projects/effects/StkEffects %buildroot%_datadir/stk/effects
 
+cp -pr projects/ragamatic/tcl %buildroot%_datadir/stk/ragamatic
+cp -pr projects/ragamatic/rawwaves %buildroot%_datadir/stk/ragamatic
+cp -p projects/ragamatic/ragamat %buildroot%_bindir/stk-ragamat
+sed -e 's,\./ragamat,%_bindir/stk-ragamat,' -e '1i#! /bin/sh' \
+  -i projects/ragamatic/Raga
+cp -p projects/ragamatic/Raga %buildroot%_datadir/stk/ragamatic
+
+cp -pr projects/eguitar/tcl %buildroot%_datadir/stk/eguitar
+cp -pr projects/eguitar/scores %buildroot%_datadir/stk/eguitar
+cp -p projects/eguitar/eguitar %buildroot%_bindir/stk-eguitar
+sed -e 's,\./eguitar,%_bindir/stk-eguitar,' -e '1i#! /bin/sh' \
+  -i projects/eguitar/ElectricGuitar
+cp -p projects/eguitar/ElectricGuitar %buildroot%_datadir/stk/eguitar
+
+# fix symlinks
+symlinks -crv %buildroot
+
+# fix encoding
+iconv -f iso-8859-1 -t utf-8 doc/doxygen/index.txt \
+  -o doc/doxygen/index.txt.tmp
+mv doc/doxygen/index.txt.tmp doc/doxygen/index.txt
 
 %files
 %_bindir/*
 %_datadir/stk/*
-%_man1dir/*
-%_desktopdir/*
 
 %exclude %_datadir/stk/rawwaves
 
 %files -n lib%name
 %dir %_datadir/stk
-%doc README 
+%doc README
 %_libdir/*.so.*
 %_datadir/stk/rawwaves
 
@@ -155,6 +179,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %doc doc/html doc/*.txt
 
 %changelog
+* Sat Sep 14 2013 Slava Dubrovskiy <dubrsl@altlinux.org> 4.4.4-alt1
+- New version (ALT#28756)
+
 * Tue Apr 23 2013 Repocop Q. A. Robot <repocop@altlinux.org> 4.4.1-alt1.1.qa2
 - NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
 - applied repocop fixes:

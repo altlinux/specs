@@ -1,5 +1,5 @@
 Name: lmms
-Version: 0.4.14
+Version: 0.4.15
 Release: alt1
 
 Summary: Linux MultiMedia Studio
@@ -103,6 +103,9 @@ EOF
 %_includedir/%name
 
 %changelog
+* Sun Sep 15 2013 Slava Dubrovskiy <dubrsl@altlinux.org> 0.4.15-alt1
+- 0.4.15
+
 * Mon Jul 29 2013 Slava Dubrovskiy <dubrsl@altlinux.org> 0.4.14-alt1
 - 0.4.14
 
