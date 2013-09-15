@@ -1,7 +1,8 @@
+%define _unpackaged_files_terminate_build 1
 %define dist libwww-perl
 Name: perl-libwww
-Version: 6.04
-Release: alt2
+Version: 6.05
+Release: alt1
 
 Summary: WWW client/server library for Perl (aka LWP)
 License: GPL or Artistic
@@ -71,6 +72,9 @@ ln -snf lwp-request.1 %buildroot%_man1dir/POST.1
 %doc	%perl_vendor_privlib/lwp*.pod
 
 %changelog
+* Sun Sep 15 2013 Igor Vlasenko <viy@altlinux.ru> 6.05-alt1
+- new version
+
 * Thu Jan 31 2013 Nikolay A. Fetisov <naf@altlinux.ru> 6.04-alt2
 - fix build - updating BuildRequires
 
