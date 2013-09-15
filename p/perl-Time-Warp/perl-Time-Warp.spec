@@ -1,10 +1,10 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(Test.pm) perl-devel perl-podlators
+BuildRequires: perl(DynaLoader.pm) perl(Exporter.pm) perl(Test.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:       perl-Time-Warp 
 Version:    0.5 
-Release: alt5
+Release:    alt5_14
 # Warp.pm -> GPL+ or Artistic
 License:    GPL+ or Artistic 
 Group:      Development/Perl
@@ -54,6 +54,9 @@ make test
 %exclude %dir %{perl_vendor_archlib}/auto
 
 %changelog
+* Sun Sep 15 2013 Igor Vlasenko <viy@altlinux.ru> 0.5-alt5_14
+- update to new release by fcimport
+
 * Mon Sep 02 2013 Vladimir Lettiev <crux@altlinux.ru> 0.5-alt5
 - built for perl 5.18
 
