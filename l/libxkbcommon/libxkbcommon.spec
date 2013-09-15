@@ -2,8 +2,8 @@
 #global gitdate  20120917
 
 Name:           libxkbcommon
-Version:        0.3.0
-Release:        alt1_2%{?gitdate:.%{gitdate}}
+Version:        0.3.1
+Release:        alt1_1
 Summary:        X.Org X11 XKB parsing library
 License:        MIT
 Group:          System/Libraries
@@ -59,6 +59,9 @@ find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 %{_libdir}/pkgconfig/xkbcommon.pc
 
 %changelog
+* Sun Sep 15 2013 Igor Vlasenko <viy@altlinux.ru> 0.3.1-alt1_1
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.3.0-alt1_2
 - update to new release by fcimport
 
