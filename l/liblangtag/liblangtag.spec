@@ -3,8 +3,8 @@ BuildRequires: /usr/bin/gtkdocize gobject-introspection-devel pkgconfig(check) p
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
 Name: liblangtag
-Version: 0.5.1
-Release: alt1_3
+Version: 0.5.2
+Release: alt1_1
 Summary: An interface library to access tags for identifying languages
 
 Group: System/Libraries
@@ -90,6 +90,9 @@ rm -f %{buildroot}/%{_libdir}/*.la %{buildroot}/%{_libdir}/%{name}/*.la
 
 
 %changelog
+* Sun Sep 15 2013 Igor Vlasenko <viy@altlinux.ru> 0.5.2-alt1_1
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.5.1-alt1_3
 - update to new release by fcimport
 
