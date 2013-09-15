@@ -10,7 +10,7 @@ BuildRequires: perl-devel perl-podlators
 
 Name:		perl-ExtUtils-Helpers
 Version:	0.021
-Release:	alt2_3
+Release:	alt2_4
 Summary:	Various portability utilities for module builders
 Group:		Development/Perl
 License:	GPL+ or Artistic
@@ -36,9 +36,13 @@ BuildRequires:	perl(File/Find.pm)
 BuildRequires:	perl(File/Temp.pm)
 BuildRequires:	perl(Test/More.pm)
 # Release Tests
+# perl-Pod-Coverage-TrustPod -> perl-Pod-Eventual -> perl-Mixin-Linewise ->
+#   perl-YAML-Tiny -> perl-Module-Build-Tiny -> perl-ExtUtils-Helpers
+%if 0%{!?perl_bootstrap:1}
 BuildRequires:	perl(Pod/Coverage/TrustPod.pm)
 BuildRequires:	perl(Test/Pod.pm)
 BuildRequires:	perl(Test/Pod/Coverage.pm)
+%endif
 Source44: import.info
 # Runtime
 
@@ -76,6 +80,9 @@ make test AUTHOR_TESTING=1 RELEASE_TESTING=1
 %{perl_vendor_privlib}/ExtUtils/
 
 %changelog
+* Sun Sep 15 2013 Igor Vlasenko <viy@altlinux.ru> 0.021-alt2_4
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.021-alt2_3
 - update to new release by fcimport
 
