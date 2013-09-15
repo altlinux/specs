@@ -10,7 +10,7 @@ Name:           libUnihan
 %define         libUnihan_ver_major 0
 %define         libUnihan_ver_minor 5
 Version:        %{libUnihan_ver_major}.%{libUnihan_ver_minor}.3
-Release:        alt4_9.qa1
+Release:        alt4_11
 Group:          System/Libraries
 License:        LGPLv2+
 Summary:        C library for Unihan character database in fifth normal form 
@@ -21,8 +21,9 @@ BuildRequires:  glib2-devel libsqlite3-devel ctest cmake
 
 URL:            http://sourceforge.net/projects/libunihan
 Source0:        http://downloads.sourceforge.net/libunihan/%{name}-%{version}-Source.tar.gz
-Source44: import.info
 
+%{!?_pkgdocdir: %global _pkgdocdir %{_docdir}/%{name}-%{version}}
+Source44: import.info
 
 %description
 libUnihan provides a C library for Unihan character database in fifth
@@ -45,7 +46,6 @@ Group:      Documentation
 License:        LGPLv2+
 BuildRequires:  doxygen
 Requires:       %{name} = %{version}-%{release}
-BuildArch: noarch
 
 %description doc
 The libUnihan C API documents in Doxygen style.
@@ -53,6 +53,11 @@ The libUnihan C API documents in Doxygen style.
 
 %prep
 %setup -q -n %{name}-%{version}-Source
+# HACK: Replace hard-coded docdir in CMakeList.txt
+sed -i \
+  -e "s|\${docdir}/\${DB_PRJ_NAME}|%{_pkgdocdir}|" \
+  -e "s|\${docdir}/\${PROJECT_NAME}-\${PRJ_VER}|%{_pkgdocdir}|" \
+  CMakeLists.txt
 
 %build
 %{fedora_cmake} .
@@ -83,6 +88,9 @@ make install DESTDIR=$RPM_BUILD_ROOT
 %doc doc/html
 
 %changelog
+* Sun Sep 15 2013 Igor Vlasenko <viy@altlinux.ru> 0.5.3-alt4_11
+- update to new release by fcimport
+
 * Mon Apr 22 2013 Repocop Q. A. Robot <repocop@altlinux.org> 0.5.3-alt4_9.qa1
 - NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
 - applied repocop fixes:
