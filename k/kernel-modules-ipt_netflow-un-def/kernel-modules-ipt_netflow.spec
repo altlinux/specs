@@ -1,7 +1,7 @@
 %define module_name	ipt_netflow
 %define module_version	1.8
 
-%define module_release alt2
+%define module_release alt3
 
 %define flavour		un-def
 BuildRequires(pre): rpm-build-kernel
@@ -21,6 +21,7 @@ Group: System/Kernel and hardware
 Packager: Kernel Maintainer Team <kernel@packages.altlinux.org>
 
 Patch0: ipt_netflow-3.9.patch
+Patch1: ipt_netflow-3.11.patch
 
 ExclusiveOS: Linux
 Url: http://sourceforge.net/projects/ipt-netflow/
@@ -46,6 +47,9 @@ rm -rf %module_name-%{module_version}*
 tar xf %kernel_src/%module_name-%module_version.tar.*
 %setup -D -T -n %module_name-%module_version
 %patch -p1
+%if "%kversion" >= "3.11.0"
+%patch1 -p0
+%endif
 
 %build
 ./configure
@@ -62,6 +66,9 @@ install ipt_NETFLOW.ko %buildroot/%module_dir
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Fri Sep  6 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru>  1.8-alt3
+- Build with 3.11 fixed
 
 * Wed Jul 17 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru>  1.8-alt2
 - Build with 3.10 fixed
