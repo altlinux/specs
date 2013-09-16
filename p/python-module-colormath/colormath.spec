@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.0.8
-Release: alt2.git20121128.1
+Release: alt2.git20130430
 Summary: Python module that abstracts common color math operations
 License: GPLv3
 Group: Development/Python
@@ -69,6 +69,9 @@ popd
 %endif
 
 %changelog
+* Mon Sep 16 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.8-alt2.git20130430
+- New snapshot
+
 * Fri Mar 22 2013 Aleksey Avdeev <solo@altlinux.ru> 1.0.8-alt2.git20121128.1
 - Rebuild with Python-3.3
 
