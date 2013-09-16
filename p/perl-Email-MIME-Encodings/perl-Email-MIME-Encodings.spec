@@ -1,6 +1,7 @@
+%define _unpackaged_files_terminate_build 1
 %define dist Email-MIME-Encodings
 Name: perl-%dist
-Version: 1.314
+Version: 1.315
 Release: alt1
 
 Summary: A unified interface to MIME encoding and decoding
@@ -13,7 +14,7 @@ Source: http://www.cpan.org/authors/id/R/RJ/RJBS/Email-MIME-Encodings-%{version}
 BuildArch: noarch
 
 # Automatically added by buildreq on Wed Oct 05 2011
-BuildRequires: perl-Test-Pod
+BuildRequires: perl-Test-Pod perl(Capture/Tiny.pm)
 
 %description
 This module simply wraps MIME::Base64 and MIME::QuotedPrint
@@ -34,6 +35,9 @@ header at some text and have the right thing happen.
 %perl_vendor_privlib/Email
 
 %changelog
+* Mon Sep 16 2013 Igor Vlasenko <viy@altlinux.ru> 1.315-alt1
+- automated CPAN update
+
 * Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 1.314-alt1
 - automated CPAN update
 
