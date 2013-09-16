@@ -4,8 +4,8 @@
 %define nvIF_ver_lteq() %if "%(rpmvercmp '%2' '%1')" >= "0"
 
 %define module_name	nvidia
-%define module_version	319.32
-%define module_release	alt2
+%define module_version	319.49
+%define module_release	alt1
 %define flavour		un-def
 
 %setup_kernel_module %flavour
@@ -26,10 +26,14 @@
 %define legacy2 %nil
 %endif
 %define legacy2_src %(echo %legacy2 | tr -d .)
+%nvIF_ver_lt %xorg_ver 1.15
+%define legacy3 173.14.37
+%else
 %define legacy3 %nil
+%endif
 %define legacy3_src %(echo %legacy3 | tr -d .)
 %nvIF_ver_lt %xorg_ver 1.15
-%define legacy4 304.88
+%define legacy4 304.108
 %else
 %define legacy4 %nil
 %endif
@@ -58,8 +62,6 @@ URL:		http://www.nvidia.com
 Packager:       Kernel Maintainer Team <kernel@packages.altlinux.org>
 
 ExclusiveArch: %karch
-
-Patch0: nvidia-fix-build-3.10.patch
 
 BuildRequires(pre): rpm-build-kernel xorg-x11-server
 BuildRequires(pre): kernel-headers-modules-un-def
@@ -100,7 +102,6 @@ Requires:       nvidia_glx_%legacy3
 %if "%legacy4" != "%nil"
 Requires:       nvidia_glx_%legacy4
 %endif
-Provides:       NVIDIA_kernel = %version
 
 %description
 nVidia video card drivers that provide 3d and 2d graphics support for XFree86
@@ -120,7 +121,6 @@ do
     ln -s Makefile.kbuild Makefile
     popd
 done
-%patch0 -p1
 
 
 %build
@@ -190,9 +190,8 @@ fi
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
 
-* Thu Jul 18 2013 Anton V. Boyarshinov <boyarsh@altlinux.org> 319.32-alt2
-- kernel 3.10 compatibility
-- legacy 173 disabled
+* Mon Sep 02 2013 Sergey V Turchin <zerg at altlinux dot org> 319.49-alt1..
+- new releases (319.49 and 304.108)
 
 * Wed Jun 26 2013 Sergey V Turchin <zerg at altlinux dot org> 319.32-alt1..
 - new release (319.32)
