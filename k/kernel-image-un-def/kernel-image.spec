@@ -2,7 +2,7 @@ Name: kernel-image-un-def
 Release: alt1
 epoch:1 
 %define kernel_base_version	3.11
-%define kernel_sublevel	.0
+%define kernel_sublevel	.1
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 # Numeric extra version scheme developed by Alexander Bokovoy:
@@ -547,6 +547,9 @@ find %buildroot%_docdir/kernel-doc-%base_flavour-%version/DocBook \
 %exclude %modules_dir/kernel/drivers/staging/media/lirc/
 
 %changelog
+* Sun Sep 15 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.11.1-alt1
+- 3.11.1
+
 * Fri Sep 13 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.11.0-alt1
 - 3.11
 
