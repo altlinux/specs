@@ -1,6 +1,7 @@
+%define _unpackaged_files_terminate_build 1
 %define dist ExtUtils-CBuilder
 Name: perl-%dist
-Version: 0.280205
+Version: 0.280212
 Release: alt1
 
 Summary: Compile and link C code for Perl modules
@@ -8,7 +9,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/D/DA/DAGOLDEN/ExtUtils-CBuilder-%{version}.tar.gz
+Source: http://www.cpan.org/authors/id/A/AM/AMBS/ExtUtils/ExtUtils-CBuilder-%{version}.tar.gz
 
 Patch0: ExtUtils-CBuilder-0.280202-alt-unix.patch
 Patch1: ExtUtils-CBuilder-0.280202-alt-link.patch
@@ -45,8 +46,21 @@ been a much more ambitious goal!
 	%perl_vendor_privlib/ExtUtils/CBuilder/Base.pm
 %dir	%perl_vendor_privlib/ExtUtils/CBuilder/Platform
 	%perl_vendor_privlib/ExtUtils/CBuilder/Platform/Unix.pm
+%exclude %perl_vendor_privlib/ExtUtils/CBuilder/Platform/VMS.pm
+%exclude %perl_vendor_privlib/ExtUtils/CBuilder/Platform/Windows.pm
+%exclude %perl_vendor_privlib/ExtUtils/CBuilder/Platform/Windows/BCC.pm
+%exclude %perl_vendor_privlib/ExtUtils/CBuilder/Platform/Windows/GCC.pm
+%exclude %perl_vendor_privlib/ExtUtils/CBuilder/Platform/Windows/MSVC.pm
+%exclude %perl_vendor_privlib/ExtUtils/CBuilder/Platform/aix.pm
+%exclude %perl_vendor_privlib/ExtUtils/CBuilder/Platform/cygwin.pm
+%exclude %perl_vendor_privlib/ExtUtils/CBuilder/Platform/darwin.pm
+%exclude %perl_vendor_privlib/ExtUtils/CBuilder/Platform/dec_osf.pm
+%exclude %perl_vendor_privlib/ExtUtils/CBuilder/Platform/os2.pm
 
 %changelog
+* Mon Sep 16 2013 Igor Vlasenko <viy@altlinux.ru> 0.280212-alt1
+- automated CPAN update
+
 * Wed Sep 26 2012 Igor Vlasenko <viy@altlinux.ru> 0.280205-alt1
 - automated CPAN update
 
