@@ -1,7 +1,7 @@
 %define oname Missing
 Name: python-module-%oname
-Version: 2.13.1
-Release: alt1.1.1
+Version: 3.0
+Release: alt1
 Summary: Special Missing objects used in Zope2
 License: ZPLv2.1
 Group: Development/Python
@@ -39,7 +39,7 @@ This package contains tests for Special Missing objects used in Zope2.
 %python_install
 
 %files
-%doc *.txt
+%doc *.txt *.rst
 %python_sitelibdir/*
 %exclude %python_sitelibdir/*/tests.*
 
@@ -47,6 +47,9 @@ This package contains tests for Special Missing objects used in Zope2.
 %python_sitelibdir/*/tests.*
 
 %changelog
+* Mon Sep 16 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0-alt1
+- Version 3.0
+
 * Thu Apr 12 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 2.13.1-alt1.1.1
 - Rebuild to remove redundant libpython2.7 dependency
 
