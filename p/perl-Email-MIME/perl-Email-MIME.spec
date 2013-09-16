@@ -1,6 +1,7 @@
+%define _unpackaged_files_terminate_build 1
 %define dist Email-MIME
 Name: perl-%dist
-Version: 1.922
+Version: 1.924
 Release: alt1
 
 Summary: Easy MIME message parsing
@@ -16,7 +17,7 @@ Provides: perl-Email-MIME-Modifier = 1.499 perl-Email-MIME-Creator = 1.499
 Obsoletes: perl-Email-MIME-Modifier < 1.499 perl-Email-MIME-Creator < 1.499
 
 # Automatically added by buildreq on Sat Dec 18 2010
-BuildRequires: perl-Email-MIME-ContentType perl-Email-MIME-Encodings perl-Email-MessageID perl-Email-Simple perl-MIME-Types perl-Test-Pod perl-Test-Pod-Coverage perl(parent.pm)
+BuildRequires: perl-Email-MIME-ContentType perl-Email-MIME-Encodings perl-Email-MessageID perl-Email-Simple perl-MIME-Types perl-Test-Pod perl-Test-Pod-Coverage perl(parent.pm) perl(Capture/Tiny.pm)
 
 %description
 This is an extension of the Email::Simple module, to handle MIME
@@ -38,6 +39,9 @@ the message. Headers are decoded from MIME encoding.
 %perl_vendor_privlib/Email*
 
 %changelog
+* Mon Sep 16 2013 Igor Vlasenko <viy@altlinux.ru> 1.924-alt1
+- automated CPAN update
+
 * Sat Jul 27 2013 Igor Vlasenko <viy@altlinux.ru> 1.922-alt1
 - automated CPAN update
 
