@@ -1,5 +1,5 @@
 Name: perl-Dancer
-Version: 1.3110
+Version: 1.3118
 Release: alt1
 Summary: lightweight yet powerful web application framework
 
@@ -8,7 +8,7 @@ License: Perl
 Url: %CPAN Dancer
 
 BuildArch: noarch
-# Cloned from git://github.com/sukria/Dancer.git
+# Cloned from https://github.com/PerlDancer/Dancer.git
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
@@ -38,6 +38,9 @@ to scale to much more complex applications.
 %doc TODO LICENSE CHANGES README
 
 %changelog
+* Mon Sep 16 2013 Vladimir Lettiev <crux@altlinux.ru> 1.3118-alt1
+- New version 1.3118
+
 * Tue Oct 09 2012 Vladimir Lettiev <crux@altlinux.ru> 1.3110-alt1
 - New bugfix release 1.3110
 
