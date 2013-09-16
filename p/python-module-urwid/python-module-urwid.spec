@@ -1,23 +1,20 @@
 %define rname urwid
 Name: python-module-urwid
-Version: 0.9.9
-Release: alt1.1.1.1
+Version: 1.1.1
+Release: alt1
 
 Summary: Urwid is a console user interface library for Python.
-#Summary(ru_RU.UTF8): Urwid - библиотека для написания консольных интерфейсов на Python
 License: LGPL
 Group: Development/Python
 Url: http://excess.org/urwid
 
-Packager: Alexey Morsov <swi@altlinux.ru>
-Source: %name-%version.tar
+Source: %rname-%version.tar
 
 Buildrequires: python-modules-curses python-module-setuptools
-Requires: python-modules-curses
 
 %description
-Urwid is a console user interface library for Python. Urwid is released 
-under the GNU Lesser General Public License and it includes many features 
+Urwid is a console user interface library for Python. Urwid is released
+under the GNU Lesser General Public License and it includes many features
 useful for text console application developers:
 
  * Fluid interface resizing (xterm window resizing / fbset on Linux console)
@@ -31,12 +28,10 @@ useful for text console application developers:
  * Flexible edit box for editing many different types of text
  * Buttons, check boxes and radio boxes
  * Customizable layout for all widgets
- * Easy interface for creating HTML screen shots 
-
-#description -l ru_RU.UTF8
+ * Easy interface for creating HTML screen shots
 
 %prep
-%setup
+%setup -n %rname-%version
 
 %build
 %add_optflags -fno-strict-aliasing
@@ -45,12 +40,14 @@ useful for text console application developers:
 %install
 %python_build_install --optimize=2 --record=INSTALLED_FILES
 
-
 %files -f INSTALLED_FILES
 %python_sitelibdir/%rname/
 %python_sitelibdir/%rname-%version-py*.egg-info/
 
 %changelog
+* Mon Sep 16 2013 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.1.1-alt1
+- New version
+
 * Thu Apr 12 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 0.9.9-alt1.1.1.1
 - Rebuild to remove redundant libpython2.7 dependency
 
