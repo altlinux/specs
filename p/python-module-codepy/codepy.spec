@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 2013.1
-Release: alt1.git20130314
+Version: 2013.1.2
+Release: alt1.git20130718
 Summary: C metaprogramming toolkit for Python
 License: MIT
 Group: Development/Python
@@ -109,7 +109,7 @@ cp -fR doc/build/pickle \
 	%buildroot%python_sitelibdir/%oname/
 
 %files
-%doc doc/build/html/*
+%doc *.rst doc/build/html
 %python_sitelibdir/*
 %exclude %python_sitelibdir/%oname/pickle
 #_includedir/%oname
@@ -119,11 +119,15 @@ cp -fR doc/build/pickle \
 
 %if_with python3
 %files -n python3-module-%oname
+%doc *.rst
 %python3_sitelibdir/*
 #_includedir/%oname-py3
 %endif
 
 %changelog
+* Mon Sep 16 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2013.1.2-alt1.git20130718
+- Version 2013.1.2
+
 * Mon Apr 15 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2013.1-alt1.git20130314
 - Version 2013.1
 
