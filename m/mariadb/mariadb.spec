@@ -4,7 +4,7 @@
 
 Name: mariadb
 Version: 5.5.32
-Release: alt1
+Release: alt2
 
 Summary: A very fast and reliable SQL database engine
 License: GPLv2 with exceptions
@@ -85,7 +85,7 @@ mariadb-obsolete package:
 %package server
 Summary: A very fast and reliable MariaDB database server
 Group: System/Servers
-Requires: lib%name = %version-%release
+Requires: lib%name = %version-%release %name-client = %version-%release
 Provides: mysql-server = %version-%release
 Conflicts: MySQL-server
 
@@ -632,6 +632,9 @@ fi
 %_libdir/libmysqld.so
 
 %changelog
+* Mon Sep 16 2013 Slava Dubrovskiy <dubrsl@altlinux.org> 5.5.32-alt2
+- Fix ALT#29209
+
 * Tue Jul 30 2013 Slava Dubrovskiy <dubrsl@altlinux.org> 5.5.32-alt1
 - New version
 
