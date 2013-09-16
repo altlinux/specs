@@ -4,8 +4,8 @@ BuildRequires: perl(Carp.pm) perl(File/Basename.pm) perl(File/Path.pm) perl(File
 %define module RPM-Source-Convert
 
 Name: perl-%module
-Version: 0.53
-Release: alt2
+Version: 0.54
+Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
 
@@ -17,7 +17,7 @@ Url: http://search.cpan.org/dist/%module
 
 # Automatically added by buildreq on Wed Nov 06 2002
 BuildRequires: perl-devel perl-RPM-Source-Editor perl-RPM perl-DistroMap
-Requires: perl-RPM-Source-Editor > 0.810
+Requires: perl-RPM-Source-Editor > 0.817
 
 # for srpmbackport 
 Requires: distromap-altlinux-sisyphus-altlinux-branch
@@ -43,6 +43,9 @@ Conflicts: perl-RPM-Source-Editor < 0.73
 %perl_vendor_privlib/RPM*
 
 %changelog
+* Mon Sep 16 2013 Igor Vlasenko <viy@altlinux.ru> 0.54-alt1
+- development release
+
 * Mon Sep 09 2013 Igor Vlasenko <viy@altlinux.ru> 0.53-alt2
 - bugfix release
 
