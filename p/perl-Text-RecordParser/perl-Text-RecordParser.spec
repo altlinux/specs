@@ -1,7 +1,8 @@
+%define _unpackaged_files_terminate_build 1
 %define dist Text-RecordParser
 
 Name: perl-%dist
-Version: 1.6.1
+Version: 1.6.3
 Release: alt1
 
 Packager: Victor Forsiuk <force@altlinux.org>
@@ -16,7 +17,7 @@ Source: http://www.cpan.org/authors/id/K/KC/KCLARK/Text-RecordParser-v%{version}
 BuildArch: noarch
 
 # Automatically added by buildreq on Mon Oct 11 2010
-BuildRequires: fonts-type1-urw perl-Class-Accessor perl-GraphViz perl-IO-stringy perl-List-MoreUtils perl-Module-Build perl-Readonly perl-Test-Exception perl-Test-Pod perl-Test-Pod-Coverage perl-Text-TabularDisplay
+BuildRequires: fonts-type1-urw perl-Class-Accessor perl-GraphViz perl-IO-stringy perl-List-MoreUtils perl-Module-Build perl-Readonly perl-Test-Exception perl-Test-Pod perl-Test-Pod-Coverage perl-Text-TabularDisplay perl(Pod/Readme.pm) perl(Pod/Markdown.pm) perl(Text/Autoformat.pm)
 
 # automatically added during perl 5.8 -> 5.12 upgrade.
 # perl-podlators is required for pod2man conversion.
@@ -44,6 +45,9 @@ a file however they may be delimited.
 %_man1dir/*
 
 %changelog
+* Mon Sep 16 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.3-alt1
+- automated CPAN update
+
 * Wed Jul 31 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.1-alt1
 - automated CPAN update
 
