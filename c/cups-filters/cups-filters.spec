@@ -2,8 +2,8 @@
 %define _cups_serverbin %_libexecdir/cups
 Summary: OpenPrinting CUPS filters and backends
 Name: cups-filters
-Version: 1.0.31
-Release: alt4.2
+Version: 1.0.38
+Release: alt1
 
 # For a breakdown of the licensing, see COPYING file
 # GPLv2:   filters: commandto*, imagetoraster, pdftops, rasterto*,
@@ -128,6 +128,8 @@ popd
 install -D -m 755 scripting/php/.libs/cups.so %buildroot/%php5_extdir/cups.so
 install -D -m 644 scripting/php/php-cups.ini %buildroot/%php5_extconf/%php5_extension/config
 install -D -m 644 scripting/php/php-cups-params.sh %buildroot/%php5_extconf/%php5_extension/params
+mkdir -p %buildroot/%_unitdir/
+install -m 644 utils/cups-browsed.service %buildroot/%_unitdir/
 
 %post -n php5-cups
 %php5_extension_postin
@@ -138,6 +140,7 @@ install -D -m 644 scripting/php/php-cups-params.sh %buildroot/%php5_extconf/%php
 %files
 %doc README AUTHORS NEWS
 %config(noreplace) %_sysconfdir/fonts/conf.d/99pdftoopvp.conf
+%config(noreplace) %_sysconfdir/cups/cups-browsed.conf
 %attr(0755,root,root) %_cups_serverbin/filter/*
 %attr(0755,root,root) %_cups_serverbin/backend/parallel
 %_datadir/cups/banners
@@ -147,6 +150,10 @@ install -D -m 644 scripting/php/php-cups-params.sh %buildroot/%php5_extconf/%php
 %_datadir/cups/mime/cupsfilters.types
 %_datadir/cups/mime/cupsfilters.convs
 %_datadir/ppd/cupsfilters
+/usr/bin/ttfread
+/usr/sbin/cups-browsed
+/usr/share/man/man*/*
+%_unitdir/*
 
 %files -n cups-backend-serial
 %_prefix/lib/cups/backend/serial
@@ -170,6 +177,10 @@ install -D -m 644 scripting/php/php-cups-params.sh %buildroot/%php5_extconf/%php
 %_libdir/libfontembed.so
 
 %changelog
+* Mon Sep 16 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1.0.38-alt1
+- update to 1.0.38
+- cups-browsed packaged
+
 * Fri Jul 19 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1.0.31-alt4.2
 - Rebuild with php5-5.4.17.20130704
 
