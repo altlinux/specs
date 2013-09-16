@@ -1,23 +1,24 @@
 Name: perl-Debug-Client
-Version: 0.20
+Version: 0.29
 Release: alt1
-Summary: Debug::Client - client for the standard perl debugger
 
+Summary: debugger client side code for Padre, The Perl IDE.
 Group: Development/Perl
-License: Perl
+License: perl
+
 Url: %CPAN Debug-Client
+Source: %name-%version.tar
+Patch: %name-%version-%release.patch
 
 BuildArch: noarch
-Source: %name-%version.tar
-BuildRequires: perl-devel perl-pod perl-Test-Deep perl-Term-ReadLine-Gnu perl-File-HomeDir perl-PadWalker perl-Test-Class
+BuildRequires: perl(PadWalker.pm) perl(Test/Requires.pm) perl(Test/CheckDeps.pm) perl(Test/Deep.pm) perl(parent.pm) perl(Test/Class.pm) perl(File/HomeDir.pm) perl-devel perl(IO/Socket/IP.pm) perl(Term/ReadLine/Gnu.pm)
 
 %description
 %summary
 
 %prep
 %setup -q
-# fixing test failure
-sed -i 's/Term::ReadLine::Perl/Term::ReadLine::Gnu/' t/01-Debug-Client.t
+%patch -p1
 
 %build
 %perl_vendor_build
@@ -27,9 +28,12 @@ sed -i 's/Term::ReadLine::Perl/Term::ReadLine::Gnu/' t/01-Debug-Client.t
 
 %files
 %perl_vendor_privlib/Debug/Client*
-%doc Changes
+%doc Changes README
 
 %changelog
+* Mon Sep 16 2013 Vladimir Lettiev <crux@altlinux.ru> 0.29-alt1
+- New version 0.29
+
 * Tue Apr 10 2012 Vladimir Lettiev <crux@altlinux.ru> 0.20-alt1
 - New version 0.20
 
