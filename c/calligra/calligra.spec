@@ -9,7 +9,7 @@
 %def_enable GTL
 
 Name: calligra
-Version: 2.7.2
+Version: 2.7.3
 Release: alt1
 Epoch: 0
 %define libname lib%name
@@ -48,7 +48,8 @@ BuildRequires: attica-devel boost-devel eigen2 gcc-c++ glib2-devel rpm-build-pyt
 BuildRequires: kde4-okular-devel kde4edu-devel kde4pimlibs-devel libkdcraw4-devel kde-common-devel kde4base-workspace-devel
 BuildRequires: libexiv2-devel libfftw3-devel libfreetds-devel libglew-devel libgsl-devel libicu-devel libjpeg-devel libopenjpeg-devel libtiff-devel pstoedit
 BuildRequires: liblcms2-devel libmysqlclient-devel libopenjpeg-devel libpoppler-qt4-devel
-BuildRequires: libqca2-devel libsqlite3-devel sqlite3 libxbase-devel openexr-devel postgresql-devel libvisio-devel
+BuildRequires: libqca2-devel libsqlite3-devel sqlite3 libxbase-devel openexr-devel postgresql-devel
+BuildRequires: libvisio-devel libwpg-devel libwpd9-devel libwps-devel
 BuildRequires: soprano-backend-redland soprano-backend-virtuoso soprano kde4-nepomuk-core-devel
 %if_enabled GTL
 BuildRequires: pkgconfig(GTLCore) >= 0.9.16
@@ -616,6 +617,7 @@ cp -ar %SOURCE1 cmake/modules/
 %_K4lib/exporthtml.so
 %_K4lib/wpdimport.so
 %_K4lib/wpgimport.so
+%_K4lib/wpsimport.so
 %_K4srv/words_*_import.desktop
 %_K4srv/words_*_thumbnail.desktop
 %_K4srv/words_*_export.desktop
@@ -639,6 +641,9 @@ cp -ar %SOURCE1 cmake/modules/
 %_K4libdir/lib*.so.*
 
 %changelog
+* Mon Sep 16 2013 Sergey V Turchin <zerg@altlinux.org> 0:2.7.3-alt1
+- new version
+
 * Wed Sep 11 2013 Sergey V Turchin <zerg@altlinux.org> 0:2.7.2-alt1
 - new version
 
