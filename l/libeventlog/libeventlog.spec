@@ -2,8 +2,8 @@
 %def_disable static
 
 Name: lib%real_name
-Version: 0.2.12
-Release: alt0.3.4.1
+Version: 0.2.13
+Release: alt1
 
 Summary: The EventLog library implements a set of functions for handle event records.
 License: distributable
@@ -12,7 +12,7 @@ Url: http://www.balabit.com/network-security/syslog-ng/
 
 Packager: Dmitry Lebkov <dlebkov@altlinux.ru>
 
-Source: http://www.balabit.com/downloads/files/syslog-ng/sources/3.4.1/source/%{real_name}_0.2.12+20120504+1700.tar.gz
+Source: http://www.balabit.com/downloads/files/syslog-ng/sources/3.4.3/source/%{real_name}_%{version}.tar.gz
 
 %description
 The EventLog library implements a set of functions to construct, format and
@@ -40,7 +40,7 @@ This package contains static library required to build
 statically linked %name-based software.
 
 %prep
-%setup -q -n %{real_name}_0.2.12+20120504+1700
+%setup -q -n %{real_name}_%{version}
 
 %build
 %configure %{subst_enable static}
@@ -73,6 +73,9 @@ done
 %endif
 
 %changelog
+* Mon Sep 16 2013 Sergey Y. Afonin <asy@altlinux.ru> 0.2.13-alt1
+- 0.2.13 (syslog-ng 3.4.3 supplementary sources)
+
 * Tue May 28 2013 L.A. Kostis <lakostis@altlinux.ru> 0.2.12-alt0.3.4.1
 - Update version to 0.2.12+20120504+1700.
 - Special build from syslog-ng 3.4.1 supplementary sources.
