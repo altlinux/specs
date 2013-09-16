@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname.core
-Version: 2.11
-Release: alt2.git20130114
+Version: 2.12
+Release: alt1.git20130817
 Summary: Chameleon Template Compiler
 License: BSD
 Group: Development/Python
@@ -131,6 +131,9 @@ cp -fR _build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Mon Sep 16 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.12-alt1.git20130817
+- Version 2.12
+
 * Mon Apr 15 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.11-alt2.git20130114
 - Use 'find... -exec...' instead of 'for ... $(find...'
 
