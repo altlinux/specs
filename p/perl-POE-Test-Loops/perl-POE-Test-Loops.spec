@@ -1,4 +1,5 @@
 %define _unpackaged_files_terminate_build 1
+%define _unpackaged_files_terminate_build 1
 %define module POE-Test-Loops
 %define m_distro POE-Test-Loops
 %define m_name POE::Test::Loops
@@ -8,7 +9,7 @@
 %add_findreq_skiplist */POE/Test/Loops/wheel_curses.pm 
 
 Name: perl-POE-Test-Loops
-Version: 1.352
+Version: 1.353
 Release: alt1
 
 Summary: POE::Loop test suite
@@ -53,6 +54,9 @@ also documents the POE::Test::Loops system in more detail.
 %doc CHANGES README
 
 %changelog
+* Mon Sep 16 2013 Igor Vlasenko <viy@altlinux.ru> 1.353-alt1
+- automated CPAN update
+
 * Thu Sep 12 2013 Igor Vlasenko <viy@altlinux.ru> 1.352-alt1
 - automated CPAN update
 
