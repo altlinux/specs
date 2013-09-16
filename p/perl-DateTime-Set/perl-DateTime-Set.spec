@@ -1,9 +1,10 @@
+%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(DateTime/Duration.pm) perl(DateTime/Infinite.pm) perl(Params/Validate.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-DateTime-Set
-Version:        0.31
+Version:        0.32
 Release:        alt1
 Summary:        Datetime sets and set math
 License:        GPL+ or Artistic
@@ -59,6 +60,9 @@ find $RPM_BUILD_ROOT -depth -type d -exec rmdir {} 2>/dev/null \;
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon Sep 16 2013 Igor Vlasenko <viy@altlinux.ru> 0.32-alt1
+- automated CPAN update
+
 * Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 0.31-alt1
 - automated CPAN update
 
