@@ -1,8 +1,9 @@
+%define _unpackaged_files_terminate_build 1
 %define module_name Email-Folder
 
 Name: perl-%module_name
-Version: 0.855
-Release: alt1.1
+Version: 0.857
+Release: alt1
 
 Packager: Victor Forsiuk <force@altlinux.org>
 
@@ -11,12 +12,12 @@ License: Perl
 Group: Development/Perl
 
 Url: %CPAN %module_name
-Source: http://search.cpan.org/CPAN/authors/id/R/RJ/RJBS/Email-Folder-%version.tar.gz
+Source: http://www.cpan.org/authors/id/R/RJ/RJBS/Email-Folder-%{version}.tar.gz
 
 BuildArch: noarch
 
 # Automatically added by buildreq on Thu Feb 18 2010
-BuildRequires: perl-Email-FolderType perl-Email-Simple perl-devel
+BuildRequires: perl-Email-FolderType perl-Email-Simple perl-devel perl-parent perl(Capture/Tiny.pm)
 
 %description
 Read all the messages from a folder as Email::Simple objects.
@@ -34,6 +35,9 @@ Read all the messages from a folder as Email::Simple objects.
 %perl_vendor_privlib/Email
 
 %changelog
+* Mon Sep 16 2013 Igor Vlasenko <viy@altlinux.ru> 0.857-alt1
+- automated CPAN update
+
 * Mon Nov 22 2010 Igor Vlasenko <viy@altlinux.ru> 0.855-alt1.1
 - repair after perl 5.12 upgrade using girar-nmu
 
