@@ -1,9 +1,10 @@
 %define nm_version 0.9.8
 %define nm_applet_version 0.9.8
+%define nm_applet_name NetworkManager-applet-gtk
 %define gtkver 3
 
 Name: NetworkManager-openconnect
-Version: 0.9.8.0
+Version: 0.9.8.4
 Release: alt1
 License: %gpl2plus
 Group: System/Configuration/Networking
@@ -33,17 +34,20 @@ BuildRequires: libxml2-devel
 This package contains software for integrating the openconnect VPN software
 with NetworkManager and the GNOME desktop
 
-%package gnome
+%package gtk
 License: %gpl2plus
-Summary: GNOME applications for %name
+Summary: Applications for use %name with %nm_applet_name
 Group: Graphical desktop/GNOME
 Requires: shared-mime-info >= 0.16
 Requires: GConf2
-Requires: NetworkManager-gnome >= %version
+Requires: %nm_applet_name >= %version
 Requires: NetworkManager-openconnect = %version-%release
 
-%description gnome
-This package contains GNOME applications for use with
+Obsoletes: %name-gnome < 0.9.8.4
+Provides: %name-gnome = %version-%release
+
+%description gtk
+This package contains applications for use with
 NetworkManager panel applet.
 
 %prep
@@ -64,13 +68,6 @@ NetworkManager panel applet.
 %makeinstall_std
 %find_lang %name
 
-%post
-if /sbin/service messagebus status &>/dev/null; then
- dbus-send --system --type=method_call --dest=org.freedesktop.DBus / org.freedesktop.DBus.ReloadConfig &>/dev/null ||:
-else
- echo "NetworkManager-openconnect requires running messagebus service." >&2
-fi
-
 %files
 %doc AUTHORS ChangeLog COPYING
 %config(noreplace) %_sysconfdir/dbus-1/system.d/nm-openconnect-service.conf
@@ -78,7 +75,7 @@ fi
 %_libexecdir/NetworkManager/nm-openconnect-service
 %_libexecdir/NetworkManager/nm-openconnect-service-openconnect-helper
 
-%files gnome -f %name.lang
+%files gtk -f %name.lang
 %_libdir/NetworkManager/lib*.so*
 %_libexecdir/NetworkManager/nm-openconnect-auth-dialog
 %_datadir/gnome-vpn-properties/openconnect
@@ -86,6 +83,11 @@ fi
 %exclude %_libdir/NetworkManager/lib*.la
 
 %changelog
+* Mon Sep 16 2013 Mikhail Efremov <sem@altlinux.org> 0.9.8.4-alt1
+- Don't reload DBUS configuration during install.
+- Rename 'gnome' subpackage to 'gtk'.
+- 0.9.8.4
+
 * Tue Feb 26 2013 Alexey Shabalin <shaba@altlinux.ru> 0.9.8.0-alt1
 - 0.9.8.0
 

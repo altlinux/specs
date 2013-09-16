@@ -1,11 +1,12 @@
 %define nm_version 0.9.8.2
 %define nm_applet_version 0.9.8.2
+%define nm_applet_name NetworkManager-applet-gtk
 %define git_date %nil
 #define git_date .git20110510
 %define gtkver 3
 
 Name: NetworkManager-vpnc
-Version: 0.9.8.2
+Version: 0.9.8.6
 Release: alt1%git_date
 License: %gpl2plus
 Group: System/Configuration/Networking
@@ -32,17 +33,20 @@ Requires: vpnc             >= 0.4
 This package contains software for integrating the vpnc VPN software
 with NetworkManager and the GNOME desktop
 
-%package gnome
+%package gtk
 License: %gpl2plus
-Summary: GNOME applications for %name
+Summary: Applications for use %name with %nm_applet_name
 Group: Graphical desktop/GNOME
 Requires: shared-mime-info >= 0.16
 Requires: gnome-keyring
-Requires: NetworkManager-gnome >= %nm_applet_version
+Requires: %nm_applet_name >= %nm_applet_version
 Requires: NetworkManager-vpnc = %version-%release
 
-%description gnome
-This package contains GNOME applications for use with
+Obsoletes: %name-gnome < 0.9.8.6
+Provides: %name-gnome = %version-%release
+
+%description gtk
+This package contains applications for use with
 NetworkManager panel applet.
 
 %prep
@@ -66,13 +70,6 @@ NetworkManager panel applet.
 %check
 make check
 
-%post
-if /sbin/service messagebus status &>/dev/null; then
-dbus-send --system --type=method_call --dest=org.freedesktop.DBus / org.freedesktop.DBus.ReloadConfig &>/dev/null ||:
-else
-echo "WARNING: %name requires running messagebus service." >&2
-fi
-
 %files
 %doc AUTHORS
 %config(noreplace) %_sysconfdir/dbus-1/system.d/nm-vpnc-service.conf
@@ -80,7 +77,7 @@ fi
 %_libexecdir/NetworkManager/nm-vpnc-service
 %_libexecdir/NetworkManager/nm-vpnc-service-vpnc-helper
 
-%files gnome -f %name.lang
+%files gtk -f %name.lang
 %_libdir/NetworkManager/lib*.so*
 %_libexecdir/NetworkManager/nm-vpnc-auth-dialog
 %_datadir/gnome-vpn-properties/*
@@ -93,6 +90,11 @@ fi
 %exclude %_libdir/NetworkManager/*.la
 
 %changelog
+* Mon Sep 16 2013 Mikhail Efremov <sem@altlinux.org> 0.9.8.6-alt1
+- Don't reload DBUS configuration during install.
+- Rename 'gnome' subpackage to 'gtk'.
+- Updated to 0.9.8.6.
+
 * Thu Jul 18 2013 Mikhail Efremov <sem@altlinux.org> 0.9.8.2-alt1
 - From upstream git:
   + Fix path to connection-editor plugin in service file.

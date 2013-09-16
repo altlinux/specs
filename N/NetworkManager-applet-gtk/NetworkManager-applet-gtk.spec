@@ -3,12 +3,12 @@
 %define git_date %nil
 %define gtkver 3
 
-Name: NetworkManager-gnome
-Version: 0.9.8.2
-Release: alt2%git_date
+Name: NetworkManager-applet-gtk
+Version: 0.9.8.4
+Release: alt1%git_date
 License: %gpl2plus
 Group: Graphical desktop/GNOME
-Summary: GNOME applications for use with NetworkManager
+Summary: Panel applet for use with NetworkManager
 Url: http://www.gnome.org/projects/NetworkManager/
 # Upstream: git://git.gnome.org/network-manager-applet
 Source: nm-applet-%version.tar
@@ -42,6 +42,9 @@ Requires: dbus-tools-gui
 Requires: mobile-broadband-provider-info
 Requires: polkit-gnome
 Requires: iso-codes
+
+Obsoletes: NetworkManager-gnome < 0.9.8.4
+Provides: NetworkManager-gnome = %version-%release
 
 %description
 This package contains GNOME utilities and applications for use with
@@ -114,13 +117,6 @@ mkdir -p %buildroot/%_datadir/gnome-vpn-properties
 %check
 make check
 
-%post
-if /sbin/service messagebus status &>/dev/null; then
-dbus-send --system --type=method_call --dest=org.freedesktop.DBus / org.freedesktop.DBus.ReloadConfig &>/dev/null ||:
-else
-echo "WARNING: nm-applet requires running messagebus service." >&2
-fi
-
 %files -f nm-applet.lang
 %_bindir/*
 %_datadir/nm-applet
@@ -153,6 +149,11 @@ fi
 %_datadir/gir-1.0/NMGtk-1.0.gir
 
 %changelog
+* Mon Sep 16 2013 Mikhail Efremov <sem@altlinux.org> 0.9.8.4-alt1
+- Don't reload DBUS configuration during install.
+- Rename to NetworkManager-applet-gtk.
+- Updated to 0.9.8.4.
+
 * Fri Jul 12 2013 Mikhail Efremov <sem@altlinux.org> 0.9.8.2-alt2
 - Fix interaction with gnome-keyring.
 

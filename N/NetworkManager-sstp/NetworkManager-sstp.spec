@@ -1,11 +1,12 @@
 %define nm_version 0.9.4.0
 %define nm_applet_version 0.9.4.0
+%define nm_applet_name NetworkManager-applet-gtk
 %define ppp_version 2.4.5
 %define gtkver 3
 
 Name: NetworkManager-sstp
-Version: 0.9.4.0
-Release: alt2.1
+Version: 0.9.8.0
+Release: alt1
 License: %gpl2plus
 Group: System/Configuration/Networking
 Summary:  NetworkManager VPN plugin for SSTP
@@ -31,16 +32,19 @@ BuildRequires: intltool gettext
 This package contains software for integrating the sstp VPN software
 with NetworkManager and the GNOME desktop
 
-%package gnome
+%package gtk
 License: %gpl2plus
-Summary: GNOME applications for %name
+Summary: Applications for use %name with %nm_applet_name
 Group: Graphical desktop/GNOME
 Requires: shared-mime-info >= 0.16
 Requires: gnome-keyring
-Requires: NetworkManager-gnome >= %nm_applet_version
+Requires: %nm_applet_name >= %nm_applet_version
 Requires: NetworkManager-sstp = %version-%release
 
-%description gnome
+Obsoletes: %name-gnome < 0.9.8.0
+Provides: %name-gnome = %version-%release
+
+%description gtk
 This package contains GNOME applications for use with
 NetworkManager panel applet.
 
@@ -65,13 +69,6 @@ rm -f m4/{intltool,libtool,lt~obsolete,ltoptions,ltsugar,ltversion}.m4
 %makeinstall_std
 %find_lang %name
 
-%post
-if /sbin/service messagebus status &>/dev/null; then
- dbus-send --system --type=method_call --dest=org.freedesktop.DBus / org.freedesktop.DBus.ReloadConfig &>/dev/null ||:
-else
- echo "WARNING: %name requires running messagebus service." >&2
-fi
-
 %files
 %doc AUTHORS ChangeLog COPYING
 %config(noreplace) %_sysconfdir/dbus-1/system.d/nm-sstp-service.conf
@@ -81,7 +78,7 @@ fi
 
 %exclude %_libdir/pppd/%ppp_version/*.la
 
-%files gnome -f %name.lang
+%files gtk -f %name.lang
 %_libdir/NetworkManager/lib*.so*
 %_libexecdir/NetworkManager/nm-sstp-auth-dialog
 %_datadir/gnome-vpn-properties/sstp
@@ -89,6 +86,11 @@ fi
 %exclude %_libdir/NetworkManager/lib*.la
 
 %changelog
+* Mon Sep 16 2013 Mikhail Efremov <sem@altlinux.org> 0.9.8.0-alt1
+- Don't reload DBUS configuration during install.
+- Rename 'gnome' subpackage to 'gtk'.
+- Updated to 0.9.8.
+
 * Tue Apr 16 2013 Andrey Cherepanov <cas@altlinux.org> 0.9.4.0-alt2.1
 - Replace deprecated GtkTable by GtkGrid
 
