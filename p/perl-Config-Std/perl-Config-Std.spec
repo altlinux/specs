@@ -3,7 +3,7 @@
 %define real_name Config-Std
 
 Name: perl-Config-Std
-Version: 0.900
+Version: 0.901
 Release: alt1
 
 Summary: Perl module for work with configuration files
@@ -49,6 +49,9 @@ updated.
 %perl_vendor_privlib/Config/Std*
 
 %changelog
+* Mon Sep 16 2013 Vladimir Lettiev <crux@altlinux.ru> 0.901-alt1
+- New version 0.901
+
 * Tue Jun 21 2011 Nikolay A. Fetisov <naf@altlinux.ru> 0.900-alt1
 - New version 0.900
 
