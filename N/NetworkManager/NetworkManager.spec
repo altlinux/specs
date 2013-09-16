@@ -1,5 +1,5 @@
-%define git_date .git20130711
-#define git_date %nil
+#define git_date .git20130711
+%define git_date %nil
 
 %define dbus_version 1.2.12-alt2
 %define libdbus_glib_version 0.76
@@ -14,8 +14,8 @@
 %def_enable introspection
 
 Name: NetworkManager
-Version: 0.9.8.2
-Release: alt4%git_date
+Version: 0.9.8.4
+Release: alt1%git_date
 License: %gpl2plus
 Group: System/Configuration/Networking
 Summary: Network Link Manager and User Applications
@@ -337,6 +337,10 @@ fi
 %exclude %_libdir/pppd/%ppp_version/*.la
 
 %changelog
+* Mon Sep 16 2013 Mikhail Efremov <sem@altlinux.org> 0.9.8.4-alt1
+- etcnet-alt: Add AP mode support for wpa_supplicant.
+- Updated to 0.9.8.4.
+
 * Mon Jul 15 2013 Mikhail Efremov <sem@altlinux.org> 0.9.8.2-alt4.git20130711
 - Add trigger for NetworkManager-dispatcher.service.
 - Enable/disable NetworkManager-dispatcher.service too.
