@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.5
-Release: alt1
+Release: alt2
 Summary: Python library for the snappy compression library from Google
 License: BSD
 Group: Development/Python
@@ -45,6 +45,7 @@ cp -a . ../python3
 %if_with python3
 pushd ../python3
 find -type f -name '*.py' -exec 2to3 -w '{}' +
+sed -i 's|#!/usr/bin/env python|#!/usr/bin/python3|' snappy.py
 %python3_build_debug
 popd
 %endif
@@ -69,6 +70,9 @@ popd
 %endif
 
 %changelog
+* Mon Sep 16 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5-alt2
+- Fixed source for Python3
+
 * Mon Sep 16 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5-alt1
 - Initial build for Sisyphus
 
