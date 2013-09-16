@@ -2,7 +2,7 @@
 %define lngg Spanish
 
 Name: calligra-l10n-%lng
-Version: 2.7.2
+Version: 2.7.3
 Release: alt1
 %define beta %nil
 
@@ -53,6 +53,9 @@ done
 #%lang(%lng) %_K4apps/calligra/autocorrect/%{lng}*.xml
 
 %changelog
+* Mon Sep 16 2013 Sergey V Turchin <zerg@altlinux.org> 2.7.3-alt1
+- new version
+
 * Wed Sep 11 2013 Sergey V Turchin <zerg@altlinux.org> 2.7.2-alt1
 - new version
 
