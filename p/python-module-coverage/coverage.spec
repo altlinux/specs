@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 3.6.1
-Release: alt2.a0.hg20130202
+Release: alt2.a1.hg20130915
 Summary: A tool for measuring code coverage of Python programs
 License: BSD
 Group: Development/Python
@@ -130,6 +130,9 @@ cp -fR doc/_build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Mon Sep 16 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.6.1-alt2.a1.hg20130915
+- Version 3.6.1a1
+
 * Sun Feb 17 2013 Aleksey Avdeev <solo@altlinux.ru> 3.6.1-alt2.a0.hg20130202
 - Fix build with Python3-3.3.x
 
