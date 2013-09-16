@@ -1,4 +1,5 @@
 %define _unpackaged_files_terminate_build 1
+%define _unpackaged_files_terminate_build 1
 BuildRequires: perl(Module/Build.pm)
 #
 #   - Cache -
@@ -16,7 +17,7 @@ BuildRequires: perl(Module/Build.pm)
 %define _disable_test 1
 
 Name: perl-Cache
-Version: 2.05
+Version: 2.06
 Release: alt1
 
 Summary: Cache - the Cache interface
@@ -60,6 +61,9 @@ in different manners (such as as files on a filesystem, or in memory).
 %perl_vendor_privlib/Cache.pm
 
 %changelog
+* Mon Sep 16 2013 Igor Vlasenko <viy@altlinux.ru> 2.06-alt1
+- automated CPAN update
+
 * Thu Sep 12 2013 Igor Vlasenko <viy@altlinux.ru> 2.05-alt1
 - automated CPAN update
 
