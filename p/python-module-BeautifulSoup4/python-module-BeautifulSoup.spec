@@ -6,8 +6,8 @@
 
 %define oname BeautifulSoup4
 Name: python-module-%oname
-Version: 4.1.3
-Release: alt2
+Version: 4.3.1
+Release: alt1
 
 Summary: HTML/XML parser for quick-turnaround applications like screen-scraping
 
@@ -93,6 +93,7 @@ popd
 %endif
 
 %check
+export LC_ALL=en_US.UTF-8
 python -m unittest discover -s bs4
 
 %files
@@ -114,6 +115,9 @@ python -m unittest discover -s bs4
 %endif
 
 %changelog
+* Mon Sep 16 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.3.1-alt1
+- Version 4.3.1
+
 * Mon Apr 15 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.1.3-alt2
 - Use 'find... -exec...' instead of 'for ... $(find...'
 
