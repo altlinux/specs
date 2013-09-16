@@ -1,6 +1,8 @@
+%define _unpackaged_files_terminate_build 1
+BuildRequires: perl(Module/Build/Tiny.pm)
 %define dist MooseX-Getopt
 Name: perl-%dist
-Version: 0.56
+Version: 0.58
 Release: alt1
 
 Summary: A Moose role for processing command line options
@@ -13,7 +15,7 @@ Source: http://www.cpan.org/authors/id/E/ET/ETHER/MooseX-Getopt-%{version}.tar.g
 BuildArch: noarch
 
 # Automatically added by buildreq on Wed Oct 26 2011
-BuildRequires: perl-Getopt-Long-Descriptive perl-MooseX-Role-Parameterized perl-Test-Deep perl-Test-Fatal perl-Test-Requires perl-Test-Warn perl-Test-Trap perl(Test/CheckDeps.pm) perl(Test/NoWarnings.pm) perl(Path/Tiny.pm) perl(Config/Any/YAML.pm)
+BuildRequires: perl-Getopt-Long-Descriptive perl-MooseX-Role-Parameterized perl-Test-Deep perl-Test-Fatal perl-Test-Requires perl-Test-Warn perl-Test-Trap perl(Test/CheckDeps.pm) perl(Test/NoWarnings.pm) perl(Path/Tiny.pm) perl(Config/Any/YAML.pm) perl(Test/Fatal.pm) perl(Test/Warnings.pm)
 
 %description
 This is a role which provides an alternate constructor for creating
@@ -33,6 +35,9 @@ objects using parameters passed in from the command line.
 %perl_vendor_privlib/MooseX
 
 %changelog
+* Mon Sep 16 2013 Igor Vlasenko <viy@altlinux.ru> 0.58-alt1
+- automated CPAN update
+
 * Thu Sep 05 2013 Igor Vlasenko <viy@altlinux.ru> 0.56-alt1
 - automated CPAN update
 
