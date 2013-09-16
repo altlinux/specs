@@ -2,7 +2,7 @@
 
 Name: libgranite
 Version: 0.2.2
-Release: alt4
+Release: alt5
 
 Summary: Extension of GTK+ libraries
 Group: System/Libraries
@@ -64,7 +64,7 @@ search bars, and more found in elementary apps.
 This package contains a small demo application to show Granite Widgets.
 
 %package gir
-Summary: GObject introspection data for the garnite library
+Summary: GObject introspection data for the granite library
 Group: System/Libraries
 Requires: %name = %version-%release
 
@@ -122,6 +122,9 @@ mv %buildroot/usr/lib/* %buildroot%_libdir/
 %_datadir/vala/vapi/granite.vapi
 
 %changelog
+* Mon Sep 16 2013 Igor Zubkov <icesik@altlinux.org> 0.2.2-alt5
+- Fix typo in spec file
+
 * Mon Sep 16 2013 Igor Zubkov <icesik@altlinux.org> 0.2.2-alt4
 - Cleanup spec file
 - Update build requires
