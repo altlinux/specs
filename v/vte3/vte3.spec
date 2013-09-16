@@ -2,7 +2,7 @@
 %define ver_major 0.34
 
 Name: %{_name}3
-Version: %ver_major.7
+Version: %ver_major.8
 Release: alt1
 
 %def_enable pty_helper
@@ -133,18 +133,15 @@ GObject introspection devel data for the %name library
 %make_build
 
 %install
-%make_install DESTDIR=%buildroot install
+%makeinstall_std
 
-%__install -d -m755 %buildroot%pkgdocdir
-%__install -p -m644 AUTHORS MAINTAINERS NEWS README %buildroot%pkgdocdir/
-%__ln_s %_licensedir/LGPL-2 %buildroot%pkgdocdir/COPYING
+install -d -m755 %buildroot%pkgdocdir
+install -p -m644 AUTHORS MAINTAINERS NEWS README %buildroot%pkgdocdir/
+ln -s %_licensedir/LGPL-2 %buildroot%pkgdocdir/COPYING
 
-%__install -p -m644 doc/utmpwtmp.txt doc/boxes.txt \
-    %buildroot%pkgdocdir/
-%__install -p -m644 src/iso2022.txt \
-    %buildroot%pkgdocdir/
-%__install -p -m644 doc/openi18n/*.txt \
-    %buildroot%pkgdocdir/
+install -p -m644 doc/utmpwtmp.txt doc/boxes.txt %buildroot%pkgdocdir/
+install -p -m644 src/iso2022.txt %buildroot%pkgdocdir/
+install -p -m644 doc/openi18n/*.txt %buildroot%pkgdocdir/
 
 # Remove unpackaged files
 find %buildroot -type f -name '*.la' -delete
@@ -200,6 +197,9 @@ find %buildroot -type f -name '*.la' -delete
 %endif
 
 %changelog
+* Tue Sep 17 2013 Yuri N. Sedunov <aris@altlinux.org> 0.34.8-alt1
+- 0.34.8
+
 * Sun Jul 07 2013 Yuri N. Sedunov <aris@altlinux.org> 0.34.7-alt1
 - 0.34.7
 
