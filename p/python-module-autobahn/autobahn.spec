@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.5.14
-Release: alt2.git20130210
+Version: 0.6.2
+Release: alt1.git20130826
 Summary: WebSocket & WAMP for Python/Twisted
 License: Apache License 2.0
 Group: Development/Python
@@ -120,6 +120,9 @@ popd
 %endif
 
 %changelog
+* Mon Sep 16 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.2-alt1.git20130826
+- Version 0.6.2
+
 * Mon Apr 15 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.14-alt2.git20130210
 - Use 'find... -exec...' instead of 'for ... $(find...'
 
