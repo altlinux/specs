@@ -1,7 +1,7 @@
 %define oname Acquisition
 Name: python-module-%oname
 Version: 4.0
-Release: alt1.a1
+Release: alt2
 Summary: Zope implements acquisition with "Extension Class" mix-in classes
 License: ZPLv2.1
 Group: Development/Python
@@ -47,6 +47,9 @@ This package contains tests for Acquisition.
 %python_sitelibdir/*/tests.*
 
 %changelog
+* Mon Sep 16 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0-alt2
+- Version 4.0
+
 * Fri Sep 21 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0-alt1.a1
 - Version 4.0a1
 
