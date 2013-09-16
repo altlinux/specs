@@ -1,6 +1,6 @@
 Name: cerbere
 Version: 0.2
-Release: alt3.revno42
+Release: alt4.revno42
 
 Summary: service to relaunch Pantheon apps
 Group: Graphical desktop/Other
@@ -8,6 +8,8 @@ License: GPLv2+
 Url: https://launchpad.net/cerbere
 
 Source0: %name-%version.tar.gz
+
+Patch0: cerbere-0.2-alt-fix-desktop-file.patch
 
 Packager: Igor Zubkov <icesik@altlinux.org>
 
@@ -21,6 +23,7 @@ they crash or are killed by another process.
 
 %prep
 %setup -q
+%patch0 -p1
 
 %build
 %cmake_insource
@@ -36,6 +39,9 @@ they crash or are killed by another process.
 %_datadir/glib-2.0/schemas/org.pantheon.cerbere.gschema.xml
 
 %changelog
+* Mon Sep 16 2013 Igor Zubkov <icesik@altlinux.org> 0.2-alt4.revno42
+- Fix desktop file
+
 * Mon Sep 16 2013 Igor Zubkov <icesik@altlinux.org> 0.2-alt3.revno42
 - Make build verbose
 
