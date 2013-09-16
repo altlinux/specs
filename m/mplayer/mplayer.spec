@@ -9,6 +9,7 @@
 %define prerel %nil
 #define svnrev 32772
 %define lname mplayer
+%define gname g%lname
 %define Name MPlayer
 %define subrel %nil
 
@@ -305,7 +306,7 @@
 
 Name: %lname
 Version: 1.1.1
-Release: alt9
+Release: alt10
 %ifdef svnrev
 %define pkgver svn-r%svnrev
 %else
@@ -338,6 +339,17 @@ Source5: %lname.conf.in
 Patch0: %name-%version-%release.patch
 Patch1: %name-%version-nls.patch
 Patch2: %name-%version-vaapi.patch
+
+%if_enabled gui
+Provides: %name-gui = %version-%release
+Obsoletes: %name-gui
+Provides: %gname = %version-%release
+Obsoletes: %Name-skin-default
+%if %name != %Name
+Provides: %Name-gui = %version-%release
+Obsoletes: %Name-gui
+%endif
+%endif
 
 BuildRequires: %awk libncurses-devel libslang-devel zlib-devel
 BuildRequires: cpp >= 3.3 gcc >= 3.3 gcc-c++ >= 3.3
@@ -452,8 +464,6 @@ including some low-level card-specific drivers (for Matrox, Nvidia, 3Dfx and
 Radeon, Mach64, Permedia3), hardware AC3 decoding and few hardware MPEG decoding
 boards such as DVB and DXR3/Hollywood+.
 It also supports video grabbing from V4L devices.
-This package provides only console version of the %Name. Install %name-gui
-*instead* if you need a nice skinnable GUI player.
 
 %description -l ru_RU.CP1251
 %Name - это видеопроигрыватель, который поддерживает широкий спектр форматов
@@ -468,9 +478,6 @@ This package provides only console version of the %Name. Install %name-gui
 декодирования AC3, а также нескольких плат, аппаратно декодирующих MPEG, таких
 как DVB и DXR3/Hollywood+.
 Кроме этого, %Name способен захватывать сигнал с устройств V4L.
-Этот пакет содержит только консольную версию %Name. Вам следует устанавливать
-пакет %name-gui *вместо* данного пакета, если Вам требуется видеопроигрыватель с
-хорошим настраиваемым GUI (графическим интерфейсом пользователя).
 
 
 %if_enabled mencoder
@@ -496,59 +503,10 @@ Requires: mencoder
 %endif
 Requires: %name
 
+
 %description tools
 Nice scripts and code that makes using %Name and MEncoder easier, for example
 scripts for DVD track encoding in three pass mode or creating SVCDs from a movie.
-%endif
-
-
-%if_enabled gui
-%package gui
-%define gname g%lname
-Summary:  %Name (GUI version)
-Summary(uk_UA.CP1251): Медіаплейер (GUI вариант)
-Summary(ru_RU.CP1251): Медиаплейер (GUI вариант)
-Group: Video
-BuildArch: noarch
-Requires: %name >= 1.0
-Provides: %gname = %version-%release
-Obsoletes: %Name-skin-default
-%if %name != %Name
-Provides: %Name-gui = %version-%release
-Obsoletes: %Name-gui
-%endif
-
-%description gui
-%Name is a movie and animation player that supports a wide range of file
-formats, including AVI, MPEG, and Quicktime. It has many MMX/SSE/3DNow! etc.
-optimized native audio and video codecs, but allows using XAnim's and
-RealPlayer's binary codec plugins, and Win32 codec DLLs. It has basic VCD/DVD
-playback functionality, including DVD subtitles, but supports many text-based
-subtitle formats too.
-For video and audio output, nearly every existing interface is supported
-including some low-level card-specific drivers (for Matrox, Nvidia, 3Dfx and
-Radeon, Mach64, Permedia3), hardware AC3 decoding and few hardware MPEG decoding
-boards such as DVB and DXR3/Hollywood+.
-It also supports video grabbing from V4L devices.
-This package provides GUI version of the %Name.
-A console-only version with trimmed down dependencies is also available as
-%name.
-
-%description gui -l ru_RU.CP1251
-%Name - это видеопроигрыватель, который поддерживает широкий спектр форматов
-файлов, в том числе AVI, MPEG и Quicktime. В него включено множество аудио- и
-видеокодеков, оптимизированных для MMX, SSE, 3DNow! и.т.п. Кроме этого, имеется
-возможность использования внешних кодеков: XAnim, RealPlayer и Win32. Реализованы
-основные функции для проигрывания VCD/DVD, включая субтитры DVD, а также
-множества других текстовых форматов субтитров.
-Поддерживаются практически все способы вывода изображения и звука в
-юниксоподобных системах. Имеются низкоуровневые специализированные драйвера для
-некоторых видеокарт: Matrox, Nvidia, 3Dfx, Radeon, Mach64, Permedia3, аппаратного
-декодирования AC3, а также нескольких плат, аппаратно декодирующих MPEG, таких
-как DVB и DXR3/Hollywood+.
-Кроме этого, %Name способен захватывать сигнал с устройств V4L.
-Этот пакет содержит версию %Name c GUI (графическим интерфейсом).
-Также имеется %name - консольная версия пакета с меньшим числом зависимостей.
 %endif
 
 
@@ -1037,6 +995,13 @@ install -pD -m 0644 {etc/%lname,%buildroot%_desktopdir/%gname}.desktop
 %_datadir/%name/font
 %endif
 %endif
+%if_enabled gui
+%_bindir/%gname
+%_desktopdir/%gname.desktop
+#%%_datadir/pixmaps/*
+%_iconsdir/hicolor/*/apps/*
+%_datadir/%name/skins
+%endif
 
 
 %if_enabled mencoder
@@ -1061,18 +1026,6 @@ install -pD -m 0644 {etc/%lname,%buildroot%_desktopdir/%gname}.desktop
 %endif
 
 
-%if_enabled gui
-%files gui
-%_bindir/%gname
-%_desktopdir/%gname.desktop
-#%%_datadir/pixmaps/*
-%_iconsdir/hicolor/*/apps/*
-%_datadir/%name/skins
-%endif
-%endif
-
-
-%if_with htmldocs
 %files docs
 
 
@@ -1155,6 +1108,9 @@ install -pD -m 0644 {etc/%lname,%buildroot%_desktopdir/%gname}.desktop
 
 
 %changelog
+* Mon Sep 16 2013 Led <led@altlinux.ru> 1.1.1-alt10
+- remove gmplayer subpackage
+
 * Thu Sep 12 2013 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.1.1-alt9
 - rebuilt with recent libx264
 
