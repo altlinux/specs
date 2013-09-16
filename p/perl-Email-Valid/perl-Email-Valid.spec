@@ -1,6 +1,7 @@
+%define _unpackaged_files_terminate_build 1
 %define dist Email-Valid
 Name: perl-%dist
-Version: 0.190
+Version: 1.192
 Release: alt1
 
 Summary: Check validity of Internet email addresses 
@@ -14,7 +15,7 @@ Patch: perl-Email-Valid-0.182-alt-req.patch
 BuildArch: noarch
 
 # Automatically added by buildreq on Wed Oct 05 2011
-BuildRequires: perl-MailTools perl-Net-DNS perl-Net-Domain-TLD perl-Test-Pod perl-Test-Pod-Coverage
+BuildRequires: perl-MailTools perl-Net-DNS perl-Net-Domain-TLD perl-Test-Pod perl-Test-Pod-Coverage perl(Capture/Tiny.pm)
 
 %description
 This module determines whether an email address is well-formed,
@@ -35,6 +36,9 @@ and optionally, whether a mail host exists for the domain.
 %perl_vendor_privlib/Email
 
 %changelog
+* Mon Sep 16 2013 Igor Vlasenko <viy@altlinux.ru> 1.192-alt1
+- automated CPAN update
+
 * Wed Sep 26 2012 Igor Vlasenko <viy@altlinux.ru> 0.190-alt1
 - automated CPAN update
 
