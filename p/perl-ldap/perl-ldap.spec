@@ -1,6 +1,6 @@
-
+Serial: 1
 Name: perl-ldap
-Version: 0.4001
+Version: 0.57
 Release: alt1
 
 Summary: %name - A Client interface to LDAP servers
@@ -55,6 +55,9 @@ mv contrib/tklkup contrib/tklkup.pl
 %_bindir/*
 
 %changelog
+* Mon Sep 16 2013 Igor Vlasenko <viy@altlinux.ru> 1:0.57-alt1
+- new version
+
 * Mon Nov 15 2010 Alexey Shabalin <shaba@altlinux.ru> 0.4001-alt1
 - 0.4001
 - drop %%perl_vendor_man3dir
