@@ -1,6 +1,7 @@
+%define _unpackaged_files_terminate_build 1
 %define dist POE
 Name: perl-%dist
-Version: 1.354
+Version: 1.356
 Release: alt1
 
 Summary: Portable multitasking and networking framework for any event loop
@@ -13,7 +14,7 @@ Source: http://www.cpan.org/authors/id/R/RC/RCAPUTO/POE-%{version}.tar.gz
 BuildArch: noarch
 
 # Automatically added by buildreq on Sun Nov 20 2011
-BuildRequires: perl-Curses perl-IO-Stty perl-IO-Tty perl-Term-Cap perl-Term-ReadKey perl-devel perl-libwww
+BuildRequires: perl-Curses perl-IO-Stty perl-IO-Tty perl-Term-Cap perl-Term-ReadKey perl-devel perl-libwww perl(IO/Pipely.pm)
 
 %description
 POE is a framework for cooperative, event driven multitasking and
@@ -47,6 +48,9 @@ portability.
 %perl_vendor_privlib/POE*
 
 %changelog
+* Mon Sep 16 2013 Igor Vlasenko <viy@altlinux.ru> 1.356-alt1
+- automated CPAN update
+
 * Mon Sep 24 2012 Igor Vlasenko <viy@altlinux.ru> 1.354-alt1
 - automated CPAN update
 
