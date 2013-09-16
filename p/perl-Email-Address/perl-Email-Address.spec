@@ -1,6 +1,7 @@
+%define _unpackaged_files_terminate_build 1
 %define dist Email-Address
 Name: perl-%dist
-Version: 1.898
+Version: 1.900
 Release: alt1
 
 Summary: RFC 2822 Address Parsing
@@ -13,7 +14,7 @@ Source: http://www.cpan.org/authors/id/R/RJ/RJBS/Email-Address-%{version}.tar.gz
 BuildArch: noarch
 
 # Automatically added by buildreq on Sat Dec 18 2010
-BuildRequires: perl-Test-Pod perl-Test-Pod-Coverage
+BuildRequires: perl-Test-Pod perl-Test-Pod-Coverage perl(Capture/Tiny.pm)
 
 %description
 This class implements a complete RFC 2822 parser that locates email
@@ -35,6 +36,9 @@ of this software is to be correct, and very very fast.
 %perl_vendor_privlib/Email*
 
 %changelog
+* Mon Sep 16 2013 Igor Vlasenko <viy@altlinux.ru> 1.900-alt1
+- automated CPAN update
+
 * Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 1.898-alt1
 - automated CPAN update
 
