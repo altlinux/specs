@@ -1,6 +1,6 @@
 Name: cerbere
 Version: 0.2
-Release: alt2.revno42
+Release: alt3.revno42
 
 Summary: service to relaunch Pantheon apps
 Group: Graphical desktop/Other
@@ -24,7 +24,7 @@ they crash or are killed by another process.
 
 %build
 %cmake_insource
-%make_build
+%make_build VERBOSE=1
 
 %install
 %make_install DESTDIR=%buildroot install
@@ -36,6 +36,9 @@ they crash or are killed by another process.
 %_datadir/glib-2.0/schemas/org.pantheon.cerbere.gschema.xml
 
 %changelog
+* Mon Sep 16 2013 Igor Zubkov <icesik@altlinux.org> 0.2-alt3.revno42
+- Make build verbose
+
 * Sat Sep 14 2013 Igor Zubkov <icesik@altlinux.org> 0.2-alt2.revno42
 - 0.2 revno 42
 
