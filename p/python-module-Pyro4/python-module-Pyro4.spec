@@ -3,13 +3,13 @@
 %def_with python3
 
 Name:           python-module-%oname
-Version:        4.17
-Release:        alt1.1
+Version:        4.22
+Release:        alt1
 Summary:        Python Remote Objects
 Group:          Development/Python
 License:        LGPLv2+
-URL:            http://www.xs4all.nl/~irmen/pyro4/
-Source:         http://www.xs4all.nl/~irmen/pyro4/download/Pyro4-%version.tar.gz
+URL:            https://pypi.python.org/pypi/Pyro4/
+Source:         Pyro4-%version.tar.gz
 BuildArch:      noarch
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
@@ -190,6 +190,9 @@ cp -fR build/sphinx/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Mon Sep 16 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.22-alt1
+- Version 4.22
+
 * Fri Mar 22 2013 Aleksey Avdeev <solo@altlinux.ru> 4.17-alt1.1
 - Rebuild with Python-3.3
 
