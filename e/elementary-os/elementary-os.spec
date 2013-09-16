@@ -1,6 +1,6 @@
 Name: elementary-os
 Version: 1
-Release: alt5
+Release: alt6
 
 Summary: Elementary OS
 Group: Graphical desktop/Other
@@ -46,6 +46,9 @@ Requires: scratch-text-editor
 # for images
 Requires: shotwell
 
+# top panel
+Requires: wingpanel
+
 %description
 Elementary OS.
 
@@ -54,6 +57,9 @@ Elementary OS.
 %files
 
 %changelog
+* Mon Sep 16 2013 Igor Zubkov <icesik@altlinux.org> 1-alt6
+- Add wingpanel to requires
+
 * Sun Sep 15 2013 Igor Zubkov <icesik@altlinux.org> 1-alt5
 - Add pantheon-files-plugin-dropbox to requires
 
