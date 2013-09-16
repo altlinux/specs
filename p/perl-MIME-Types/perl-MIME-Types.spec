@@ -1,6 +1,7 @@
+%define _unpackaged_files_terminate_build 1
 %define dist MIME-Types
 Name: perl-MIME-Types
-Version: 1.38
+Version: 2.04
 Release: alt1
 
 Summary: Definition of MIME types
@@ -13,7 +14,7 @@ Source: http://www.cpan.org/authors/id/M/MA/MARKOV/MIME-Types-%{version}.tar.gz
 BuildArch: noarch
 
 # Automatically added by buildreq on Wed Sep 26 2012
-BuildRequires: perl-devel
+BuildRequires: perl-devel perl-Encode
 
 %description
 MIME types are used in MIME compliant lines, for instance as part
@@ -37,9 +38,13 @@ by RFCs and vendors, so the list is long but not complete.
 %doc	ChangeLog README
 %dir	%perl_vendor_privlib/MIME
 	%perl_vendor_privlib/MIME/*.pm
+	%perl_vendor_privlib/MIME/*.db
 %doc	%perl_vendor_privlib/MIME/*.pod
 
 %changelog
+* Mon Sep 16 2013 Igor Vlasenko <viy@altlinux.ru> 2.04-alt1
+- automated CPAN update
+
 * Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 1.38-alt1
 - automated CPAN update
 
