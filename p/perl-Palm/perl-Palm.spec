@@ -1,16 +1,19 @@
-Name: perl-p5-Palm
-Version: 1.012
-Release: alt1.1
+Name: perl-Palm
+Version: 1.013
+Release: alt1
 
 Summary: A set of modules for manupulating PalmOS databases
-Summary(ru_RU.KOI8-R): Набор модулей для работы с базами данных PalmOS
+Summary(ru_RU.UTF-8): п²п╟п╠п╬я─ п╪п╬п╢я┐п╩п╣п╧ п╢п╩я▐ я─п╟п╠п╬я┌я▀ я│ п╠п╟п╥п╟п╪п╦ п╢п╟п╫п╫я▀я┘ PalmOS
 Group: Development/Perl
 License: Artistic
 
-URL: http://search.cpan.org/dist/p5-Palm/
-Source: http://www.cpan.org/authors/id/B/BD/BDFOY/p5-Palm-1.012.tar.gz
+URL: http://search.cpan.org/dist/Palm/
+Source: http://www.cpan.org/authors/id/B/BD/BDFOY/Palm-%version.tar.gz
 
 BuildArch: noarch
+
+Provides: perl-p5-Palm = %version
+Obsoletes: perl-p5-Palm < 1.013
 
 # Automatically added by buildreq on Wed May 14 2003
 BuildRequires: perl-devel
@@ -24,12 +27,12 @@ This is a set of Perl 5 modules for reading, manipulating, and writing
 the .pdb and .prc database files used by PalmOS devices such as
 the PalmPilot and its successors.
 
-%description -l ru_RU.KOI8-R
-Набор модулей для Perl 5 для чтения, изменения и записи .pdb и .prc баз,
-используемых устройствами на основе PalmOS - Palm Pilot и ему подобных.
+%description -l ru_RU.UTF-8
+п²п╟п╠п╬я─ п╪п╬п╢я┐п╩п╣п╧ п╢п╩я▐ Perl 5 п╢п╩я▐ я┤я┌п╣п╫п╦я▐, п╦п╥п╪п╣п╫п╣п╫п╦я▐ п╦ п╥п╟п©п╦я│п╦ .pdb п╦ .prc п╠п╟п╥,
+п╦я│п©п╬п╩я▄п╥я┐п╣п╪я▀я┘ я┐я│я┌я─п╬п╧я│я┌п╡п╟п╪п╦ п╫п╟ п╬я│п╫п╬п╡п╣ PalmOS - Palm Pilot п╦ п╣п╪я┐ п©п╬п╢п╬п╠п╫я▀я┘.
 
 %prep
-%setup -q -n p5-Palm-%version
+%setup -q -n Palm-%version
 
 %build
 %perl_vendor_build INSTALLMAN1DIR=%_man1dir
@@ -42,11 +45,15 @@ the PalmPilot and its successors.
 %files
 /usr/bin/pdbdump
 %doc Changes FAQ README TODO examples
-%perl_vendor_privlib/Palm/*
+%perl_vendor_privlib/Palm*
 %_man1dir/*
 /usr/bin/*
 
 %changelog
+* Mon Sep 16 2013 Igor Vlasenko <viy@altlinux.ru> 1.013-alt1
+- renamed to perl-Palm: following upstream
+- new version
+
 * Mon Nov 22 2010 Igor Vlasenko <viy@altlinux.ru> 1.012-alt1.1
 - repair after perl 5.12 upgrade using girar-nmu
 
