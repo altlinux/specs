@@ -1,6 +1,7 @@
+%define _unpackaged_files_terminate_build 1
 %define dist Email-Abstract
 Name: perl-%dist
-Version: 3.005
+Version: 3.006
 Release: alt1
 
 Summary: unified interface to mail representations
@@ -13,7 +14,7 @@ Source: http://www.cpan.org/authors/id/R/RJ/RJBS/Email-Abstract-%{version}.tar.g
 BuildArch: noarch
 
 # Automatically added by buildreq on Sat Nov 19 2011
-BuildRequires: perl-Email-MIME perl-MRO-Compat perl-Mail-Box perl-Module-Pluggable perl-devel
+BuildRequires: perl-Email-MIME perl-MRO-Compat perl-Mail-Box perl-Module-Pluggable perl-devel perl(Capture/Tiny.pm) perl(Test/Pod.pm)
 
 %description
 "Email::Abstract" provides module writers with the ability to write
@@ -46,6 +47,9 @@ automatically picked up and used.
 %perl_vendor_privlib/Email
 
 %changelog
+* Mon Sep 16 2013 Igor Vlasenko <viy@altlinux.ru> 3.006-alt1
+- automated CPAN update
+
 * Fri Aug 02 2013 Igor Vlasenko <viy@altlinux.ru> 3.005-alt1
 - automated CPAN update
 
