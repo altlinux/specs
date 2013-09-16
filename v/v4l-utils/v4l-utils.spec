@@ -1,5 +1,5 @@
 Name: v4l-utils
-Version: 0.9.5
+Version: 1.0.0
 Release: alt1
 
 Summary: Collection of video4linux support libraries and utilities
@@ -60,7 +60,7 @@ developing applications that use libv4l.
 
 %build
 %autoreconf
-%configure --disable-static
+%configure --enable-libdvbv5 --disable-static
 %make_build
 
 %install
@@ -81,7 +81,7 @@ developing applications that use libv4l.
 %_man1dir/ir-keytable.1*
 
 %files -n libv4l
-%doc COPYING.LIB ChangeLog README.lib TODO
+%doc COPYING.libv4l ChangeLog README.libv4l TODO
 %_libdir/libv4l*.so.*
 %_libdir/libdvbv5.so.*
 %_libdir/libv4l
@@ -95,6 +95,9 @@ developing applications that use libv4l.
 %_pkgconfigdir/*.pc
 
 %changelog
+* Mon Sep 16 2013 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.0.0-alt1
+- 1.0.0 released
+
 * Wed May 01 2013 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.9.5-alt1
 - 0.9.5 released
 
