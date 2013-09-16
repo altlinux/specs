@@ -1,6 +1,6 @@
 %define dist SQL-Statement
 Name: perl-%dist
-Version: 1.33
+Version: 1.405
 Release: alt1
 
 Summary: SQL parsing and processing engine
@@ -13,7 +13,7 @@ Source: %dist-%version.tar.gz
 BuildArch: noarch
 
 # Automatically added by buildreq on Sun Feb 13 2011
-BuildRequires: perl-Clone perl-DBD-CSV perl-DBD-DBM perl-DBD-SQLite perl-Params-Util perl-Test-Pod perl-Test-Pod-Coverage perl-Text-Soundex
+BuildRequires: perl-Clone perl-DBD-CSV perl-DBD-DBM perl-DBD-SQLite perl-Params-Util perl-Test-Pod perl-Test-Pod-Coverage perl-Text-Soundex perl-Math-BigInt perl-Math-Complex
 
 %description
 The SQL::Statement module implements a pure Perl SQL parsing and execution
@@ -41,6 +41,9 @@ perl -pi -e 's/ = CheckConflicts/ = 0 && CheckConflicts/' Makefile.PL
 %perl_vendor_privlib/SQL
 
 %changelog
+* Mon Sep 16 2013 Vladimir Lettiev <crux@altlinux.ru> 1.405-alt1
+- 1.33 -> 1.405
+
 * Sun Feb 13 2011 Alexey Tourbin <at@altlinux.ru> 1.33-alt1
 - 1.27 -> 1.33
 
