@@ -1,6 +1,8 @@
+%define _unpackaged_files_terminate_build 1
+BuildRequires: perl(Module/Build/Tiny.pm)
 %define dist MooseX-Types-Common
 Name: perl-%dist
-Version: 0.001008
+Version: 0.001009
 Release: alt1
 
 Summary: A library of commonly used type constraints
@@ -13,7 +15,7 @@ Source: http://www.cpan.org/authors/id/E/ET/ETHER/MooseX-Types-Common-%{version}
 BuildArch: noarch
 
 # Automatically added by buildreq on Wed Apr 14 2010
-BuildRequires: perl-Class-C3-XS perl-Module-Install perl-MooseX-Types perl-Test-Exception perl(Test/Fatal.pm)
+BuildRequires: perl-Class-C3-XS perl-Module-Install perl-MooseX-Types perl-Test-Exception perl(Test/Fatal.pm) perl(Test/CheckDeps.pm) perl(Test/Warnings.pm) perl(Test/Deep.pm)
 
 %description
 A set of commonly-used type constraints that do not ship with Moose by default.
@@ -32,6 +34,9 @@ A set of commonly-used type constraints that do not ship with Moose by default.
 %perl_vendor_privlib/MooseX*
 
 %changelog
+* Mon Sep 16 2013 Igor Vlasenko <viy@altlinux.ru> 0.001009-alt1
+- automated CPAN update
+
 * Wed Sep 26 2012 Igor Vlasenko <viy@altlinux.ru> 0.001008-alt1
 - automated CPAN update
 
