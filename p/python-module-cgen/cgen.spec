@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 2012.1
-Release: alt2
+Version: 2013.1.2
+Release: alt1
 Summary: C/C++ source generation from an AST
 License: MIT
 Group: Development/Python
@@ -102,6 +102,9 @@ cp -fR doc/build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Mon Sep 16 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2013.1.2-alt1
+- Version 2013.1.2
+
 * Mon Apr 15 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2012.1-alt2
 - Use 'find... -exec...' instead of 'for ... $(find...'
 
