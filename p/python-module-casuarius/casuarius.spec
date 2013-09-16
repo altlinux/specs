@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.0
-Release: alt2.git20120608.1
+Version: 1.1
+Release: alt1.git20130328
 Summary: Cython bindings for the Cassowary Constraint Solving Toolkit
 License: LGPLv2.1+
 Group: Development/Python
@@ -81,6 +81,9 @@ popd
 %endif
 
 %changelog
+* Mon Sep 16 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1-alt1.git20130328
+- Version 1.1
+
 * Tue Mar 26 2013 Aleksey Avdeev <solo@altlinux.ru> 1.0-alt2.git20120608.1
 - Rebuild with Python-3.3
 
