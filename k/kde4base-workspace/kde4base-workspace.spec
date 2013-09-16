@@ -27,7 +27,7 @@
 %define rname kdebase-workspace
 Name: kde4base-workspace
 Version: %major.%minor.%bugfix
-Release: alt1
+Release: alt2
 
 Group: Graphical desktop/KDE
 Summary: K Desktop Environment - Workspace
@@ -112,6 +112,7 @@ Patch1048: kdebase-workspace-4.11.1-alt-def-oxygen-kwin.patch
 Patch1049: kdebase-workspace-4.10.4-alt-mobile-netbook.patch
 Patch1050: kdebase-workspace-4.10.4-alt-mobile-kwin-buildopts.patch
 Patch1051: kdebase-workspace-4.10.4-alt-kcm_fonts_dont_change_on_load.patch
+Patch1052: kdebase-workspace-4.11.1-alt-disable-kcm-randr.patch
 
 BuildRequires(pre): kde4libs-devel rpm-build-python
 BuildRequires(pre): NetworkManager-devel
@@ -191,6 +192,7 @@ Requires: kde4base-runtime >= %version
 Requires: kde4-icon-theme-oxygen kde4-kactivities kde4-nepomuk-core
 Requires: /usr/bin/qdbus dbus-tools-gui
 Requires: qalculate-common
+Requires: kde4-kscreen
 %if_enabled google
 #Requires: google-gadgets-qt
 %endif
@@ -567,6 +569,7 @@ rm -rf plasma/generic/scriptengines/google_gadgets
 %patch1049 -p1
 %patch1050 -p1
 %patch1051 -p1
+%patch1052 -p1
 
 grep -q X-KDE-RootOnly kdm/kcm/kdm.desktop \
     || echo "X-KDE-RootOnly=true" >>kdm/kcm/kdm.desktop
@@ -939,6 +942,9 @@ chmod 0755 %buildroot/%_sysconfdir/firsttime.d/kdm4
 %_K4dbus_interfaces/*
 
 %changelog
+* Mon Sep 16 2013 Sergey V Turchin <zerg@altlinux.org> 4.11.1-alt2
+- use kscreen instead of krandr
+
 * Wed Sep 04 2013 Sergey V Turchin <zerg@altlinux.org> 4.11.1-alt1
 - new version
 
