@@ -2,7 +2,7 @@
 
 Name: libgranite
 Version: 0.2.2
-Release: alt3
+Release: alt4
 
 Summary: Extension of GTK+ libraries
 Group: System/Libraries
@@ -13,13 +13,13 @@ Source0: %origname-%version.tar.gz
 
 Packager: Igor Zubkov <icesik@altlinux.org>
 
-# buildreq fail
-BuildRequires: cmake rpm-build-gir vala libgtk+3-devel libgee-devel libpixman-devel
-BuildRequires: gobject-introspection-devel libXdmcp-devel libXdamage-devel libXxf86vm-devel
-BuildRequires: libharfbuzz-devel libpng-devel libXinerama-devel libXi-devel libXrandr-devel
-BuildRequires: libXcursor-devel libXcomposite-devel libxkbcommon-devel
-BuildRequires: libwayland-cursor-devel at-spi2-atk-devel libgtk+3-gir-devel
-BuildRequires: libgee-gir-devel
+BuildRequires: cmake rpm-build-gir vala libgtk+3-devel libgee-devel
+BuildRequires: libpixman-devel gobject-introspection-devel libXdmcp-devel
+BuildRequires: libXdamage-devel libXxf86vm-devel libharfbuzz-devel libpng-devel
+BuildRequires: libXinerama-devel libXi-devel libXrandr-devel libXcursor-devel
+BuildRequires: libXcomposite-devel libxkbcommon-devel libwayland-cursor-devel
+BuildRequires: at-spi2-atk-devel libgtk+3-gir-devel libgee-gir-devel
+BuildRequires: libexpat-devel
 
 %description
 Granite is an extension of GTK+. Among other things, it provides the
@@ -98,7 +98,7 @@ mv %buildroot/usr/lib/* %buildroot%_libdir/
 %find_lang %origname
 
 %files -f %origname.lang
-%doc AUTHORS INSTALL
+%doc AUTHORS INSTALL README
 %_libdir/*.so.*
 
 %files devel
@@ -109,8 +109,7 @@ mv %buildroot/usr/lib/* %buildroot%_libdir/
 
 %files -n granite-demo
 %_bindir/*
-%_datadir/icons/hicolor/*/actions/application-menu.svg
-%_datadir/icons/hicolor/scalable/actions/application-menu-symbolic.svg
+%_datadir/icons/hicolor/*/*/*.svg
 
 %files gir
 %_typelibdir/Granite-1.0.typelib
@@ -123,6 +122,10 @@ mv %buildroot/usr/lib/* %buildroot%_libdir/
 %_datadir/vala/vapi/granite.vapi
 
 %changelog
+* Mon Sep 16 2013 Igor Zubkov <icesik@altlinux.org> 0.2.2-alt4
+- Cleanup spec file
+- Update build requires
+
 * Thu Aug 22 2013 Igor Zubkov <icesik@altlinux.org> 0.2.2-alt3
 - Cleanup build requires
 
