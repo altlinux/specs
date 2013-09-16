@@ -1,6 +1,6 @@
 %define dist ph
 Name: perl-%dist
-Version: 0.10
+Version: 0.11
 Release: alt1
 
 Summary: Perl *.ph files
@@ -20,6 +20,7 @@ This package provides the following Perl header files.
 	syscall.ph	sys/syscall.ph
 	syslog.ph	sys/syslog.ph
 	socket.ph	sys/socket.ph
+	sys/resource.ph
 
 %prep
 %setup -q -n %dist-%version
@@ -36,5 +37,8 @@ This package provides the following Perl header files.
 %perl_vendor_archlib/sys/*.ph
 
 %changelog
+* Mon Sep 16 2013 Vladimir Lettiev <crux@altlinux.ru> 0.11-alt1
+- added sys/resource.ph perl header
+
 * Sun Sep 19 2010 Alexey Tourbin <at@altlinux.ru> 0.10-alt1
 - separate package
