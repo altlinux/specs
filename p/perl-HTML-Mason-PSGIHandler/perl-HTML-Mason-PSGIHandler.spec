@@ -1,15 +1,16 @@
+%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(FindBin.pm) perl(HTML/Mason/CGIHandler.pm) perl(HTML/Mason/Exceptions.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-HTML-Mason-PSGIHandler
-Version:        0.52
-Release:        alt1_9
+Version:        0.53
+Release:        alt1
 Summary:        PSGI handler for HTML::Mason
 License:        GPL+ or Artistic
 Group:          Development/Perl
 URL:            http://search.cpan.org/dist/HTML-Mason-PSGIHandler/
-Source0:        http://www.cpan.org/authors/id/A/AB/ABH/HTML-Mason-PSGIHandler-%{version}.tar.gz
+Source:        http://www.cpan.org/authors/id/R/RU/RUZ/HTML-Mason-PSGIHandler-%{version}.tar.gz
 BuildArch:      noarch
 BuildRequires:  perl(CGI/PSGI.pm)
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
@@ -47,6 +48,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon Sep 16 2013 Igor Vlasenko <viy@altlinux.ru> 0.53-alt1
+- automated CPAN update
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.52-alt1_9
 - update to new release by fcimport
 
