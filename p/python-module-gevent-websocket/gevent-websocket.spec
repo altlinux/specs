@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.3.6
-Release: alt2.hg20120723
+Version: 0.4.0
+Release: alt1.alpha0.hg20130417
 Summary: Websocket handler for the gevent pywsgi server, a Python network library
 License: BSD
 Group: Development/Python
@@ -76,6 +76,9 @@ popd
 %endif
 
 %changelog
+* Tue Sep 17 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.0-alt1.alpha0.hg20130417
+- Version 0.4.0-alpha0
+
 * Mon Apr 15 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.6-alt2.hg20120723
 - Use 'find... -exec...' instead of 'for ... $(find...'
 
