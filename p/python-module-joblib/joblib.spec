@@ -3,7 +3,7 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.7.0d
+Version: 0.7.1
 Release: alt1
 Summary: Lightweight pipelining: using Python functions as pipeline jobs
 License: BSD
@@ -112,7 +112,7 @@ popd
 %endif
 
 %files
-%doc PKG-INFO
+%doc PKG-INFO *.rst
 %python_sitelibdir/*
 %exclude %python_sitelibdir/%oname/test*
 
@@ -121,7 +121,7 @@ popd
 
 %if_with python3
 %files -n python3-module-%oname
-%doc PKG-INFO
+%doc PKG-INFO *.rst
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/%oname/test*
 %exclude %python3_sitelibdir/%oname/__pycache__/test*
@@ -132,6 +132,9 @@ popd
 %endif
 
 %changelog
+* Tue Sep 17 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7.1-alt1
+- Version 0.7.1
+
 * Mon Apr 01 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7.0d-alt1
 - Version 0.7.0d
 
