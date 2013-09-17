@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 1.3.3
-Release: alt2.hg20120819
+Release: alt2.hg20130713
 Epoch: 1
 
 Summary: Core of Hachoir framework: parse and edit binary files
@@ -20,11 +20,11 @@ BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python
 BuildPreReq: python-devel python-module-docutils
-BuildPreReq: python-module-distribute python-module-PyQt4
+BuildPreReq: python-module-setuptools python-module-PyQt4
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-docutils
-BuildPreReq: python3-module-distribute python-tools-2to3
+BuildPreReq: python3-module-setuptools python-tools-2to3
 BuildPreReq: python3-module-PyQt4
 %endif
 
@@ -436,6 +436,9 @@ popd
 %endif
 
 %changelog
+* Tue Sep 17 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:1.3.3-alt2.hg20130713
+- New snapshot
+
 * Thu Feb 14 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:1.3.3-alt2.hg20120819
 - New snapshot
 
