@@ -1,6 +1,6 @@
 %define oname infrae.testbrowser
 Name: python-module-%oname
-Version: 2.0.1
+Version: 2.0.2
 Release: alt1
 Summary: Sane functionnal test browser for WSGI applications
 License: BSD
@@ -71,6 +71,9 @@ install -p -m644 src/infrae/__init__.py \
 %python_sitelibdir/infrae/__init__.*
 
 %changelog
+* Tue Sep 17 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.2-alt1
+- Version 2.0.2
+
 * Fri Feb 15 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.1-alt1
 - Version 2.0.1
 
