@@ -1,13 +1,14 @@
 Name: cvsweb
 Version: 3.0.6
-Release: alt1
+Release: alt2
 Summary: Web interface for CVS repositories
 
 License: BSD
 Group: System/Servers
 Url: http://www.freebsd.org/projects/cvsweb.html
 Source: http://people.freebsd.org/~scop/cvsweb/cvsweb-%version.tar.gz
-Patch: cvsweb-fedora-config.patch
+Patch1: cvsweb-fedora-config.patch
+Patch2: cvsweb-perl5.18.patch
 Requires: rcs
 BuildArch: noarch
 
@@ -24,7 +25,8 @@ version of CVSweb.
 
 %prep
 %setup -q
-%patch -p1
+%patch1 -p1
+%patch2 -p2
 
 %build
 
@@ -52,6 +54,9 @@ install -pD -m644 icons/minigraph.png $RPM_BUILD_ROOT/var/www/icons/small/minigr
 %_datadir/enscript/
 
 %changelog
+* Tue Sep 17 2013 Vladimir Lettiev <crux@altlinux.ru> 3.0.6-alt2
+- fixed build with perl 5.18
+
 * Mon Sep 26 2005 Victor Forsyuk <force@altlinux.ru> 3.0.6-alt1
 - 3.0.6.
 
