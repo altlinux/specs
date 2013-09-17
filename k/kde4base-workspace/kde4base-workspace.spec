@@ -27,7 +27,7 @@
 %define rname kdebase-workspace
 Name: kde4base-workspace
 Version: %major.%minor.%bugfix
-Release: alt2
+Release: alt3
 
 Group: Graphical desktop/KDE
 Summary: K Desktop Environment - Workspace
@@ -113,6 +113,7 @@ Patch1049: kdebase-workspace-4.10.4-alt-mobile-netbook.patch
 Patch1050: kdebase-workspace-4.10.4-alt-mobile-kwin-buildopts.patch
 Patch1051: kdebase-workspace-4.10.4-alt-kcm_fonts_dont_change_on_load.patch
 Patch1052: kdebase-workspace-4.11.1-alt-disable-kcm-randr.patch
+Patch1053: kdebase-workspace-4.11.1-alt-oxygen-decoration-color-selinux.patch
 
 BuildRequires(pre): kde4libs-devel rpm-build-python
 BuildRequires(pre): NetworkManager-devel
@@ -136,7 +137,7 @@ BuildRequires: libqalculate-devel libjpeg-devel prison-devel qjson-devel
 BuildRequires: kde4pimlibs-devel akonadi-devel libraw1394-devel libpci-devel
 BuildRequires: python-module-PyQt4 python-module-sip python-devel
 BuildRequires: kde4-kactivities-devel kde4-nepomuk-core-devel
-BuildRequires: python-module-sip python-devel
+BuildRequires: python-module-sip python-devel libselinux-devel
 #BuildRequires: libwayland-client-devel libwayland-server-devel libwayland-egl-devel
 BuildRequires: kde4libs-devel >= %version
 
@@ -570,6 +571,7 @@ rm -rf plasma/generic/scriptengines/google_gadgets
 %patch1050 -p1
 %patch1051 -p1
 %patch1052 -p1
+%patch1053 -p1
 
 grep -q X-KDE-RootOnly kdm/kcm/kdm.desktop \
     || echo "X-KDE-RootOnly=true" >>kdm/kcm/kdm.desktop
@@ -942,6 +944,9 @@ chmod 0755 %buildroot/%_sysconfdir/firsttime.d/kdm4
 %_K4dbus_interfaces/*
 
 %changelog
+* Tue Sep 17 2013 Sergey V Turchin <zerg@altlinux.org> 4.11.1-alt3
+- change window border color according selinux context
+
 * Mon Sep 16 2013 Sergey V Turchin <zerg@altlinux.org> 4.11.1-alt2
 - use kscreen instead of krandr
 
