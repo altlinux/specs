@@ -4,18 +4,20 @@
 %define targt linux-x86-32
 %endif
 Name: avbin
-Version: 8
-Release: alt1.svn20090206.5
+Version: 11
+Release: alt1.git20130630
 Summary: Thin wrapper around FFmpeg
 
 Group: Video
 License: GPL/LGPL
-URL: http://code.google.com/p/avbin/
-# http://avbin.googlecode.com/svn/trunk
+URL: http://avbin.github.io/AVbin/Home/Home.html
+# git://github.com/AVbin/AVbin.git
 Source: %name-%version.tar.gz
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-BuildPreReq: libavcodec-devel libavformat-devel libavutil-devel libswscale-devel doxygen
+BuildPreReq: libavcodec-devel libavformat-devel libavutil-devel
+BuildPreReq: libswscale-devel doxygen yasm makeself bzlib-devel
+BuildPreReq: zlib-devel
 
 %description
 AVbin is a thin wrapper around FFmpeg, providing binary compatibility
@@ -89,7 +91,7 @@ This package contains example for AVbin.
 ln -s lib%name.so.%version dist/%targt/lib%name.so
 
 pushd example
-%make this LIBDIR=$PWD/../dist/%targt
+%make LIBDIR=$PWD/../dist/%targt
 popd
 
 doxygen
@@ -105,14 +107,14 @@ install -p -m644 include/* %buildroot%_includedir
 
 install -d %buildroot%_docdir/lib%name-devel
 install -d %buildroot%_man3dir
-install -m644 doc/html/* %buildroot%_docdir/lib%name-devel
+cp -fR doc/html/* %buildroot%_docdir/lib%name-devel
 install -m644 doc/man/man3/* %buildroot%_man3dir
 
 install -d %buildroot%_bindir
 install -m755 example/avbin_dump %buildroot%_bindir
 
 %files -n lib%name
-%doc COPYING* CHANGELOG
+%doc COPYING* CHANGELOG README
 %_libdir/*.so.*
 
 %files -n lib%name-devel
@@ -128,6 +130,9 @@ install -m755 example/avbin_dump %buildroot%_bindir
 %_bindir/*
 
 %changelog
+* Tue Sep 17 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 11-alt1.git20130630
+- Version 11
+
 * Tue Jan 31 2012 Sergey Bolshakov <sbolshakov@altlinux.ru> 8-alt1.svn20090206.5
 - artificial deps on ffmpeg removed
 
