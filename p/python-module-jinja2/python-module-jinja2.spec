@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 2.7
-Release: alt1.git20120916
+Version: 2.8
+Release: alt1.git20130807
 
 Summary: The new and improved version of a small but fast template engine
 License: BSD
@@ -22,7 +22,7 @@ BuildArch: noarch
 BuildPreReq: python-devel python-module-setuptools
 # for docs
 BuildPreReq: python-module-sphinx python-module-Pygments
-BuildPreReq: python-module-jinja2-tests
+BuildPreReq: python-module-jinja2-tests python-module-markupsafe
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-distribute
@@ -163,6 +163,9 @@ make test
 %endif
 
 %changelog
+* Tue Sep 17 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.8-alt1.git20130807
+- Version 2.8
+
 * Wed Mar 27 2013 Aleksey Avdeev <solo@altlinux.ru> 2.7-alt1.git20120916
 - New snapshot
 
