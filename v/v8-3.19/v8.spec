@@ -1,7 +1,7 @@
 %define MAJOR_VERSION     3
 %define MINOR_VERSION     19
 %define BUILD_NUMBER      18
-%define PATCH_LEVEL       21
+%define PATCH_LEVEL       24
 %define soversion %MAJOR_VERSION.%MINOR_VERSION
 %define libname libv8
 
@@ -80,6 +80,9 @@ install -p -m644 include/*.h %buildroot%_includedir/
 %_bindir/*
 
 %changelog
+* Tue Sep 17 2013 Dmitriy Kulik <lnkvisitor@altlinux.org> 3.19.18.24-alt1
+- new version
+
 * Mon Sep 02 2013 Dmitriy Kulik <lnkvisitor@altlinux.org> 3.19.18.21-alt1
 - new version
 
