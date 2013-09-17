@@ -1,19 +1,20 @@
+%define _unpackaged_files_terminate_build 1
 %define dist Email-Date-Format
 Name: perl-%dist
-Version: 1.002
-Release: alt2
+Version: 1.004
+Release: alt1
 
 Summary: Produce RFC 2822 date strings
 License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/R/RJ/RJBS/Email-Date-Format-%{version}.tar.gz
 
 BuildArch: noarch
 
 # Automatically added by buildreq on Tue Oct 04 2011
-BuildRequires: perl-Test-Pod
+BuildRequires: perl-Test-Pod perl(Capture/Tiny.pm)
 
 %description
 This module provides a simple means for generating an RFC 2822 compliant
@@ -34,6 +35,9 @@ they use a four digit year, which is not allowed in RFC 822.)
 %perl_vendor_privlib/Email
 
 %changelog
+* Mon Sep 16 2013 Igor Vlasenko <viy@altlinux.ru> 1.004-alt1
+- automated CPAN update
+
 * Tue Oct 04 2011 Alexey Tourbin <at@altlinux.ru> 1.002-alt2
 - rebuilt
 
