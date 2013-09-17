@@ -1,7 +1,7 @@
 %define oname guppy
 Name: python-module-%oname
 Version: 0.1.10
-Release: alt1.svn20110524
+Release: alt1.svn20130425
 Summary: Guppy-PE -- A Python Programming Environment
 License: MIT
 Group: Development/Python
@@ -11,6 +11,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Patch1: python-guppy-0001-Work-with-big-endian-archs.patch
 Patch2: python-guppy-0002-Preliminary-changes-to-cope-with-Python-version-2.7-.patch
 
+# svn://svn.code.sf.net/p/guppy-pe/code/trunk
 Source: %name-%version.tar
 
 BuildPreReq: python-devel python-module-distribute
@@ -58,6 +59,9 @@ This package contains tests for guppy.
 %python_sitelibdir/*/*/test*
 
 %changelog
+* Tue Sep 17 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.10-alt1.svn20130425
+- New snapshot
+
 * Tue Jun 05 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.10-alt1.svn20110524
 - Version 0.1.10
 
