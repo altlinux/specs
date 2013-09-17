@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.1.5
-Release: alt4.1
+Version: 1.1.6
+Release: alt1
 Summary: Python Software for Convex Optimization
 License: GPL v3 or higher/GPL v2 of higher
 Group: Development/Python
@@ -119,7 +119,6 @@ cp -a . ../python3
 %prepare_sphinx doc/source
 
 %build
-pushd src
 %ifarch x86_64
 sed -i 's|@64@|64|g' setup.py
 %else
@@ -127,10 +126,9 @@ sed -i 's|@64@||g' setup.py
 %endif
 %add_optflags -fno-strict-aliasing
 %python_build_debug
-popd
 
 %if_with python3
-pushd ../python3/src
+pushd ../python3
 %ifarch x86_64
 sed -i 's|@64@|64|g' setup.py
 %else
@@ -145,14 +143,12 @@ popd
 
 %install
 %if_with python3
-pushd ../python3/src
+pushd ../python3
 %python3_install
 popd
 %endif
 
-pushd src
 %python_install
-popd
 
 install -d %buildroot%_docdir/%name
 cp -fR doc/build/html examples %buildroot%_docdir/%name/
@@ -161,7 +157,7 @@ install -d %buildroot%python_sitelibdir/%oname
 cp -fR doc/build/pickle %buildroot%python_sitelibdir/%oname/
 
 %files
-%doc LICENSE
+%doc LICENSE README.md
 %python_sitelibdir/*
 %exclude %python_sitelibdir/%oname/pickle
 
@@ -179,11 +175,14 @@ cp -fR doc/build/pickle %buildroot%python_sitelibdir/%oname/
 
 %if_with python3
 %files -n python3-module-%oname
-%doc LICENSE
+%doc LICENSE README.md
 %python3_sitelibdir/*
 %endif
 
 %changelog
+* Tue Sep 17 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.6-alt1
+- Version 1.1.6
+
 * Fri Mar 22 2013 Aleksey Avdeev <solo@altlinux.ru> 1.1.5-alt4.1
 - Rebuild with Python-3.3
 
