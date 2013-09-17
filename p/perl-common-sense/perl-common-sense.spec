@@ -1,7 +1,8 @@
+%define _unpackaged_files_terminate_build 1
 %define module common-sense
 
 Name: perl-%module
-Version: 3.6
+Version: 3.72
 Release: alt1
 
 Summary: "Common sense" Perl defaults
@@ -11,7 +12,7 @@ Group: Development/Perl
 Url: %CPAN %module
 Source: http://www.cpan.org/authors/id/M/ML/MLEHMANN/common-sense-%{version}.tar.gz
 
-BuildArch: noarch
+#BuildArch: noarch
 
 # Automatically added by buildreq on Thu Apr 08 2010
 BuildRequires: perl-devel
@@ -34,9 +35,12 @@ typical (or not so typical - use your common sense) specimens of Perl coders:
 %perl_vendor_install
 
 %files
-%perl_vendor_privlib/common
+%perl_vendor_archlib/common
 
 %changelog
+* Mon Sep 16 2013 Igor Vlasenko <viy@altlinux.ru> 3.72-alt1
+- automated CPAN update
+
 * Wed Oct 03 2012 Igor Vlasenko <viy@altlinux.ru> 3.6-alt1
 - automated CPAN update
 
