@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.16
-Release: alt2
+Version: 1.0
+Release: alt1.a3
 Summary: Flexible static resources for web applications
 License: BSD
 Group: Development/Python
@@ -108,12 +108,15 @@ popd
 %install
 export LC_ALL=en_US.UTF-8
 
-%python_install
 %if_with python3
 pushd ../python3
 %python3_install
 popd
 %endif
+mv %buildroot%_bindir/fanstatic-compile \
+	%buildroot%_bindir/fanstatic-compile3
+
+%python_install
 
 export PYTHONPATH=%buildroot%python_sitelibdir
 %make -C doc html
@@ -123,6 +126,7 @@ cp -fR doc/_build/pickle %buildroot%python_sitelibdir/fanstatic/
 
 %files
 %doc *.txt
+%_bindir/fanstatic-compile
 %python_sitelibdir/*
 #exclude %python_sitelibdir/*/test*
 %exclude %python_sitelibdir/*/pickle
@@ -139,6 +143,7 @@ cp -fR doc/_build/pickle %buildroot%python_sitelibdir/fanstatic/
 %if_with python3
 %files -n python3-module-%oname
 %doc *.txt
+%_bindir/fanstatic-compile3
 %python3_sitelibdir/*
 #exclude %python3_sitelibdir/*/test*
 
@@ -147,6 +152,9 @@ cp -fR doc/_build/pickle %buildroot%python_sitelibdir/fanstatic/
 %endif
 
 %changelog
+* Tue Sep 17 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0-alt1.a3
+- Version 1.0a3
+
 * Mon Apr 15 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.16-alt2
 - Use 'find... -exec...' instead of 'for ... $(find...'
 
