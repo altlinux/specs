@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.3.6
-Release: alt2.git20130201
+Release: alt2.git20130915
 Summary: SocketIO server based on the Gevent pywsgi server, a Python network library
 License: BSD
 Group: Development/Python
@@ -15,11 +15,11 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-distribute
+BuildPreReq: python-devel python-module-setuptools-tests
 BuildPreReq: python-module-sphinx-devel python-module-versiontools
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-distribute
+BuildRequires: python3-devel python3-module-setuptools-tests
 BuildPreReq: python3-module-versiontools python-tools-2to3
 %endif
 
@@ -112,6 +112,9 @@ cp -fR docs/build/pickle %buildroot%python_sitelibdir/socketio/
 %endif
 
 %changelog
+* Tue Sep 17 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.6-alt2.git20130915
+- New snapshot
+
 * Mon Apr 15 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.6-alt2.git20130201
 - Use 'find... -exec...' instead of 'for ... $(find...'
 
