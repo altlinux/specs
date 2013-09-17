@@ -1,5 +1,5 @@
 Name: pulseaudio
-Version: 3.0
+Version: 4.0
 Release: alt1
 
 Summary: PulseAudio is a networked sound server
@@ -11,7 +11,7 @@ Source: %name-%version-%release.tar
 
 BuildRequires: gcc-c++
 BuildRequires: doxygen intltool jackit-devel libalsa-devel libasyncns-devel
-BuildRequires: libavahi-devel libbluez-devel
+BuildRequires: libavahi-devel libbluez-devel libwebrtc-devel
 BuildRequires: libcap-devel libdbus-devel libgdbm-devel libudev-devel
 BuildRequires: liblirc-devel libltdl7-devel libsamplerate-devel
 BuildRequires: libsndfile-devel libspeex-devel libssl-devel libwrap-devel
@@ -207,9 +207,9 @@ This package contains doxygen documentation for pulseaudio.
 touch config.rpath
 
 %build
+%remove_optflags -mfpu=vfpv3-d16
 %autoreconf
 %configure \
-    --enable-neon-opt=no \
     --localstatedir=/var \
     --with-access-group=audio \
     --enable-per-user-esound-socket \
@@ -224,12 +224,13 @@ install -pm0644 -D pulseaudio.sysconfig %buildroot%_sysconfdir/sysconfig/pulseau
 install -pm0755 -D pulseaudio.init %buildroot%_initdir/pulseaudio
 ln -s esdcompat %buildroot%_bindir/esd
 mkdir -p %buildroot%_localstatedir/pulse %buildroot%_runtimedir/pulse
-
+mv %buildroot%_sysconfdir/bash_completion.d/pulseaudio-bash-completion.sh \
+   %buildroot%_sysconfdir/bash_completion.d/pulse
 find %buildroot%_libdir -name \*.la -delete
 
 %find_lang %name
 
-%define pulselibdir %_libdir/pulse-3.0
+%define pulselibdir %_libdir/pulse-4.0
 %define pulsemoduledir %pulselibdir/modules
 
 %pre system
@@ -240,6 +241,7 @@ find %buildroot%_libdir -name \*.la -delete
 %files
 
 %files daemon
+%_sysconfdir/bash_completion.d/pulse
 %_sysconfdir/xdg/autostart/pulseaudio.desktop
 %_sysconfdir/xdg/autostart/pulseaudio-kde.desktop
 
@@ -258,7 +260,7 @@ find %buildroot%_libdir -name \*.la -delete
 
 %_datadir/pulseaudio
 
-%_libdir/libpulsecore-3.0.so
+%_libdir/libpulsecore-4.0.so
 
 %dir %pulselibdir
 %dir %pulsemoduledir
@@ -349,7 +351,7 @@ find %buildroot%_libdir -name \*.la -delete
 %_libdir/libpulse-mainloop-glib.so.*
 
 %dir %_libdir/pulseaudio
-%_libdir/pulseaudio/libpulsecommon-3.0.so
+%_libdir/pulseaudio/libpulsecommon-4.0.so
 %_man5dir/pulse-client.conf.5*
 
 %files -n lib%name-devel
@@ -358,12 +360,15 @@ find %buildroot%_libdir -name \*.la -delete
 %_includedir/pulse
 %_pkgconfigdir/*.pc
 %_datadir/vala/vapi/*
-%exclude %_libdir/libpulsecore-3.0.so
+%exclude %_libdir/libpulsecore-4.0.so
 
 %files -n lib%name-devel-doc
 %doc doxygen/html
 
 %changelog
+* Tue Sep 17 2013 Sergey Bolshakov <sbolshakov@altlinux.ru> 4.0-alt1
+- 4.0 released
+
 * Wed Dec 26 2012 Sergey Bolshakov <sbolshakov@altlinux.ru> 3.0-alt1
 - 3.0 released
 
