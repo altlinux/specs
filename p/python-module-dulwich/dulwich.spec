@@ -1,6 +1,6 @@
 %define oname dulwich
 Name: python-module-%oname
-Version: 0.8.7
+Version: 0.9.0
 Release: alt1
 Summary: Python Git Library
 License: GPLv2+
@@ -56,6 +56,9 @@ This package contains tests for dulwich.
 %python_sitelibdir/*/tests
 
 %changelog
+* Tue Sep 17 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.0-alt1
+- Version 0.9.0
+
 * Wed Feb 13 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.7-alt1
 - Version 0.8.7
 
