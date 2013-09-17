@@ -1,15 +1,17 @@
+%def_enable snapshot
+
 %define ver_base 3.2
 %define ver_major 3.2
 %define gst_api_ver 1.0
 %def_enable debug
 %def_enable exiv2
-# brasero-3 not supported
 %def_enable libbrasero
 %def_enable web_albums
+%def_enable libchamplain
 
 Name: gthumb
 Version: %ver_major.3
-Release: alt1
+Release: alt2
 
 Summary: An image file viewer and browser for GNOME
 Summary(ru_RU.UTF-8): Просмотрщик изображений и фотоальбом для GNOME
@@ -18,7 +20,11 @@ License: GPL
 Group: Graphics
 Url: http://gthumb.sourceforge.net/
 
+%if_enabled snapshot
+Source: %name-%version.tar
+%else
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+%endif
 
 # From configure.in
 %define glib_ver 2.32.0
@@ -50,6 +56,7 @@ BuildRequires: gsettings-desktop-schemas-devel libwebp-devel >= %webp_ver libjso
 BuildRequires: libwebkit2gtk-devel >= %webkit_ver libchamplain-devel >= %champlain_ver
 %{?_enable_libbrasero:BuildRequires: libbrasero-devel >= %brasero_ver}
 %{?_enable_web_albums:BuildRequires: bison flex}
+%{?_enabled_libchamplain:BuildRequires: libchamplain-devel}
 
 %if_enabled exiv2
 BuildPreReq: libexiv2-devel >= %exiv2_ver gcc-c++
@@ -93,7 +100,7 @@ Requires: %name = %version-%release
 This package contains headers needed to build extensions for gThumb.
 
 %prep
-%setup -q
+%setup
 
 %build
 %autoreconf
@@ -103,6 +110,7 @@ This package contains headers needed to build extensions for gThumb.
     %{subst_enable exiv2} \
     %{subst_enable debug} \
     %{subst_enable libbrasero} \
+    %{subst_enable libchamplain} \
     --disable-static \
     --disable-schemas-compile \
     --enable-libopenraw \
@@ -158,6 +166,10 @@ This package contains headers needed to build extensions for gThumb.
 %_libdir/pkgconfig/*
 
 %changelog
+* Tue Sep 17 2013 Yuri N. Sedunov <aris@altlinux.org> 3.2.3-alt2
+- updated to 3.2_56dd7c4 (fixed BGO ##706697, 706343, 705877)
+- enabled map support via libchamplain
+
 * Wed Jul 10 2013 Yuri N. Sedunov <aris@altlinux.org> 3.2.3-alt1
 - 3.2.3
 
