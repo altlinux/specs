@@ -6,7 +6,7 @@
 %def_enable gtk_doc
 
 Name: %_name
-Version: %ver_major.4
+Version: %ver_major.5
 Release: alt1
 
 Summary: Map view library for Clutter
@@ -159,7 +159,7 @@ gtkdocize --copy
 
 #%if_enabled gtk_doc
 %files devel-doc
-%_datadir/gtk-doc/html/%_name
+%_datadir/gtk-doc/html/%_name-%ver_major
 #%endif
 
 %files gtk3
@@ -175,7 +175,7 @@ gtkdocize --copy
 
 #%if_enabled gtk_doc
 %files gtk3-devel-doc
-%_datadir/gtk-doc/html/%_name-gtk/
+%_datadir/gtk-doc/html/%_name-gtk-%ver_major/
 #%endif
 
 %if_enabled introspection
@@ -198,6 +198,9 @@ gtkdocize --copy
 %endif
 
 %changelog
+* Tue Sep 17 2013 Yuri N. Sedunov <aris@altlinux.org> 0.12.5-alt1
+- 0.12.5
+
 * Thu May 16 2013 Yuri N. Sedunov <aris@altlinux.org> 0.12.4-alt1
 - 0.12.4
 
