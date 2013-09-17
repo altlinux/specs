@@ -3,7 +3,7 @@
 Summary: OpenPrinting CUPS filters and backends
 Name: cups-filters
 Version: 1.0.38
-Release: alt1
+Release: alt2
 
 # For a breakdown of the licensing, see COPYING file
 # GPLv2:   filters: commandto*, imagetoraster, pdftops, rasterto*,
@@ -142,6 +142,8 @@ install -m 644 utils/cups-browsed.service %buildroot/%_unitdir/
 %config(noreplace) %_sysconfdir/fonts/conf.d/99pdftoopvp.conf
 %config(noreplace) %_sysconfdir/cups/cups-browsed.conf
 %attr(0755,root,root) %_cups_serverbin/filter/*
+%exclude %_cups_serverbin/filter/gstopxl
+%exclude %_cups_serverbin/filter/gstoraster
 %attr(0755,root,root) %_cups_serverbin/backend/parallel
 %_datadir/cups/banners
 %_datadir/cups/charsets
@@ -177,6 +179,9 @@ install -m 644 utils/cups-browsed.service %buildroot/%_unitdir/
 %_libdir/libfontembed.so
 
 %changelog
+* Tue Sep 17 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1.0.38-alt2
+- conflict with ghostscript-cups resolved
+
 * Mon Sep 16 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1.0.38-alt1
 - update to 1.0.38
 - cups-browsed packaged
