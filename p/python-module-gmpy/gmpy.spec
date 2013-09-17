@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.16
-Release: alt1.1
+Version: 1.17
+Release: alt1
 Summary: General MultiPrecision arithmetic for Python
 License: LGPL
 Group: Development/Python
@@ -91,6 +91,9 @@ rm -f test/*.pyc
 %endif
 
 %changelog
+* Tue Sep 17 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.17-alt1
+- Version 1.17
+
 * Tue Mar 26 2013 Aleksey Avdeev <solo@altlinux.ru> 1.16-alt1.1
 - Rebuild with Python-3.3
 
