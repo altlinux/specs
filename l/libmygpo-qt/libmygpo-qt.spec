@@ -1,6 +1,6 @@
 
 Name: libmygpo-qt
-Version: 1.0.6
+Version: 1.0.7
 Release: alt1
 %define sover 1
 %define libname %name%sover
@@ -11,7 +11,6 @@ Url: http://wiki.gpodder.org/wiki/Libmygpo-qt
 License: LGPLv2.1+
 
 Source: %name-%version.tar
-Patch1: alt-fix-pkgconfig.patch
 
 # Automatically added by buildreq on Wed Dec 21 2011 (-bi)
 # optimized out: cmake-modules elfutils libqt4-core libqt4-devel libqt4-gui libqt4-network libqt4-opengl libqt4-qt3support libqt4-script libqt4-sql-sqlite libqt4-svg libqt4-test libstdc++-devel openssh-common pkg-config
@@ -49,7 +48,6 @@ v1.0 wraps nearly every Request from the gpodder.net API except:
 
 %prep
 %setup -q
-%patch1 -p1
 
 %build
 libsuffix=
@@ -74,6 +72,9 @@ libsuffix="64"
 
 
 %changelog
+* Tue Sep 17 2013 Sergey V Turchin <zerg@altlinux.org> 1.0.7-alt1
+- new version
+
 * Tue Jan 22 2013 Sergey V Turchin <zerg@altlinux.org> 1.0.6-alt1
 - new version
 
