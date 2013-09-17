@@ -6,7 +6,7 @@ BuildRequires(pre): rpm-build-python
 Name: python-module-%oname
 Version: 2.2.0
 %define cflags %optflags %optflags_shared -I%_builddir/%name-%version/src/gist
-Release: alt1.git20121210
+Release: alt1.git20130422
 Summary: Scientific graphics (plotting) library
 License: Free for non-commercial using
 Group: Development/Python
@@ -119,6 +119,9 @@ mv %buildroot%_includedir/config.h \
 %_docdir/%name
 
 %changelog
+* Tue Sep 17 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.2.0-alt1.git20130422
+- New snapshot
+
 * Thu Feb 14 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.2.0-alt1.git20121210
 - Version 2.2.0
 
