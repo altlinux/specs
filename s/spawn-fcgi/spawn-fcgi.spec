@@ -2,18 +2,18 @@
 %define spawn_fcgi_group _spawn_fcgi
 
 Name: spawn-fcgi
-Version: 1.6.2
-Release: alt3.qa1
+Version: 1.6.3
+Release: alt1
 
 Summary: spawn FastCGI applications
 License: BSD
 Group: System/Servers
 
-# git svn init --stdlayout --prefix=svn/ svn://svn.lighttpd.net/spawn-fcgi
+# git remote add upstream git://git.lighttpd.net/spawn-fcgi
 Url: http://redmine.lighttpd.net/projects/spawn-fcgi/wiki
-Packager: Vladimir V. Kamarzin <vvk@altlinux.org>
 
 Source0: %name-%version.tar
+Patch0: %name-%version-%release.patch
 
 %description
   spawn-fcgi is used to spawn FastCGI applications
@@ -27,6 +27,7 @@ Source0: %name-%version.tar
 
 %prep
 %setup
+%patch0 -p1
 %autoreconf
 
 %build
@@ -59,6 +60,9 @@ install -pDm644 altlinux/spawn-fcgi.sysconfig %buildroot%_sysconfdir/sysconfig/s
 %dir %attr(1770,root,%spawn_fcgi_group) %_var/run/spawn-fcgi
 
 %changelog
+* Tue Sep 17 2013 Anton Farygin <rider@altlinux.ru> 1.6.3-alt1
+- new version
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.6.2-alt3.qa1
 - NMU: rebuilt for debuginfo.
 
