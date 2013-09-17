@@ -1,6 +1,8 @@
+%define _unpackaged_files_terminate_build 1
+BuildRequires: perl(Module/Build/Tiny.pm)
 %define dist YAML-Tiny
 Name: perl-%dist
-Version: 1.51
+Version: 1.54
 Release: alt1
 
 Summary: Read/Write YAML files with as little code as possible
@@ -8,12 +10,12 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/A/AD/ADAMK/YAML-Tiny-%{version}.tar.gz
+Source: http://www.cpan.org/authors/id/E/ET/ETHER/YAML-Tiny-%{version}.tar.gz
 
 BuildArch: noarch
 
 # Automatically added by buildreq on Sat Dec 18 2010
-BuildRequires: perl-YAML perl-YAML-Syck perl-devel
+BuildRequires: perl-YAML perl-YAML-Syck perl-devel perl(Capture/Tiny.pm) perl(Test/CheckDeps.pm)
 
 %description
 YAML::Tiny is a perl class for reading and writing YAML-style files,
@@ -34,6 +36,9 @@ memory overhead.
 %perl_vendor_privlib/YAML*
 
 %changelog
+* Mon Sep 16 2013 Igor Vlasenko <viy@altlinux.ru> 1.54-alt1
+- automated CPAN update
+
 * Wed Sep 26 2012 Igor Vlasenko <viy@altlinux.ru> 1.51-alt1
 - automated CPAN update
 
