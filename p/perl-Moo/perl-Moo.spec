@@ -1,5 +1,5 @@
 Name: perl-Moo
-Version: 1.002000
+Version: 1.003001
 Release: alt1
 
 Summary: Moo - Minimalist Object Orientation (with Moose compatiblity)
@@ -11,7 +11,7 @@ Url: %CPAN Moo
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-BuildRequires: perl-MRO-Compat perl-devel perl-Class-Method-Modifiers perl-strictures perl-Test-Fatal perl-Text-Balanced perl-Filter-Simple perl-Module-Runtime perl-Role-Tiny perl-Devel-GlobalDestruction
+BuildRequires: perl-Dist-CheckConflicts perl-MRO-Compat perl-devel perl-Class-Method-Modifiers perl-strictures perl-Test-Fatal perl-Text-Balanced perl-Filter-Simple perl-Module-Runtime perl-Role-Tiny perl-Devel-GlobalDestruction
 BuildArch: noarch
 
 %description
@@ -28,6 +28,7 @@ BuildArch: noarch
 %perl_vendor_install
 
 %files
+%exclude %_bindir/moo-outdated
 %perl_vendor_privlib/Moo*
 %perl_vendor_privlib/Method/Generate/*
 %perl_vendor_privlib/Method/Inliner.pm
@@ -36,6 +37,9 @@ BuildArch: noarch
 %doc Changes
 
 %changelog
+* Tue Sep 17 2013 Vladimir Lettiev <crux@altlinux.ru> 1.003001-alt1
+- 1.002000 -> 1.003001
+
 * Thu Jun 13 2013 Vladimir Lettiev <crux@altlinux.ru> 1.002000-alt1
 - 1.002000
 
