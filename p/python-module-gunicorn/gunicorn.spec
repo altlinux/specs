@@ -1,7 +1,7 @@
 %define oname gunicorn
 Name: python-module-%oname
-Version: 0.17.2
-Release: alt1.git20130210
+Version: 18.0
+Release: alt1.git20130831
 Summary: WSGI HTTP Server for UNIX
 License: Mit
 Group: Development/Python
@@ -78,6 +78,9 @@ cp -fR docs/build/pickle %buildroot%python_sitelibdir/%oname/
 %python_sitelibdir/*/pickle
 
 %changelog
+* Tue Sep 17 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 18.0-alt1.git20130831
+- Version 18.0
+
 * Thu Feb 14 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.17.2-alt1.git20130210
 - Version 0.17.2
 - Added pickles
