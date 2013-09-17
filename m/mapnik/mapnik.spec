@@ -1,6 +1,9 @@
+
+%define  _make_bin scons
+
 Name: mapnik
-Version: 2.0.1
-Release: alt3.3.qa1
+Version: 2.2.0
+Release: alt1
 Summary: Free Toolkit for developing mapping applications
 Group: Engineering
 License: LGPLv2+
@@ -14,11 +17,12 @@ BuildRequires: postgresql-devel
 BuildRequires: libgdal-devel libproj-devel libagg-devel
 BuildRequires: scons desktop-file-utils gcc-c++
 BuildRequires: libltdl-devel qt4-devel
-BuildRequires: libxml2-devel libicu-devel
+BuildRequires: libxml2-devel libicu-devel libcurl-devel
 BuildRequires: boost-devel  boost-filesystem-devel boost-program_options-devel boost-python-devel boost-interprocess-devel
 BuildRequires: libsqlite3-devel
 BuildRequires: libtiff-devel libjpeg-devel libpng-devel
 BuildRequires: libcairomm-devel python-module-pycairo-devel libfreetype-devel
+BuildRequires: libgoogle-sparsehash libpolyclipping-devel
 
 %description
 Mapnik is a Free Toolkit for developing mapping applications.
@@ -113,19 +117,25 @@ spatial visualization library
 
 %patch -p1
 
+# get rid of local boost amd agg
+rm -rf boost deps
+
 %build
-scons \
+# fix build flags
+sed -i -e "s|-O\%s |-O\%s $RPM_OPT_FLAGS |g" SConstruct
+
+%_make_bin configure \
+	DESTDIR=%buildroot \
 	PREFIX=%prefix \
+	LIBDIR_SCHEMA=%_lib \
 	LIB_DIR_NAME=%name \
-	MAPNIK_LIB_BASE=%_libdir \
-	MAPNIK_LIB_DIR=%_libdir/%name \
-	MAPNIK_INPUT_PLUGINS=%_libdir/%name/input \
+	SVG2PNG=True \
 	THREADING=multi \
 	XMLPARSER=libxml2 \
-	GDAL_INCLUDES=%_includedir/gdal \
-	INTERNAL_LIBAGG=False \
-	SYSTEM_FONTS=%_datadir/ttf/dejavu \
-	BOOST_SYSTEM_REQUIRED=True
+	SYSTEM_FONTS=%_datadir/fonts \
+	INPUT_PLUGINS=csv,gdal,ogr,osm,postgis,raster,shape,sqlite
+
+%make_build
 
 # build mapnik viewer app
 pushd demo/viewer
@@ -136,25 +146,18 @@ make
 popd
 
 %install
-scons install \
-	DESTDIR=%buildroot \
-	PREFIX=%prefix \
-	LIB_DIR_NAME=%name \
-	MAPNIK_LIB_BASE=%_libdir \
-	MAPNIK_LIB_DIR=%_libdir/%name \
-	MAPNIK_INPUT_PLUGINS=%_libdir/%name/input \
-	THREADING=multi \
-	XMLPARSER=libxml2 \
-	GDAL_INCLUDES=%_includedir/gdal \
-	INTERNAL_LIBAGG=False \
-	SYSTEM_FONTS=%_datadir/ttf/dejavu \
-	BOOST_SYSTEM_REQUIRED=True
+%_make_bin install
 
 # replace paths.py
 install -p -m 644 %SOURCE2 %buildroot%python_sitelibdir/%name/paths.py
 
 # get rid of fonts use external instead
 rm -rf %buildroot%_libdir/%name/fonts
+
+# install more utils
+mkdir -p %buildroot%_bindir
+install -p -m 755 demo/viewer/viewer %buildroot%_bindir/
+install -p -m 755 utils/stats/mapdef_stats.py %buildroot%_bindir/
 
 # install pkgconfig file
 cat > %name.pc <<EOF
@@ -164,7 +167,7 @@ includedir=%_includedir
 
 Name: mapnik
 Description: Free Toolkit for developing mapping applications
-Version: 2.0.1
+Version: %version
 Requires: libagg
 Libs: -lmapnik
 Cflags: -I\${includedir}/%name
@@ -174,14 +177,14 @@ mkdir -p %buildroot%_pkgconfigdir
 install -p -m 644 %name.pc %buildroot%_pkgconfigdir/%name.pc
 
 %files -n lib%name
-%doc AUTHORS.md COPYING README.md INSTALL.md CHANGELOG
+%doc AUTHORS.md COPYING README.md CHANGELOG.md
 %dir %_libdir/%name
 %dir %_libdir/%name/input
-%_bindir/mapnik-config
 %_libdir/%name/input/*.input
 %_libdir/lib%name.so.*
 
 %files -n lib%name-devel
+%_bindir/mapnik-config
 %doc docs/
 %dir %_includedir/%name
 %_includedir/%name/*
@@ -190,9 +193,12 @@ install -p -m 644 %name.pc %buildroot%_pkgconfigdir/%name.pc
 
 %files -n python-module-%name
 %python_sitelibdir/*
+%_bindir/mapdef_stats.py
 
 %files utils
 %_bindir/shapeindex
+%_bindir/svg2png
+%_bindir/viewer
 %_bindir/mapnik-speed-check
 %_bindir/upgrade_map_xml.py
 
@@ -202,6 +208,9 @@ install -p -m 644 %name.pc %buildroot%_pkgconfigdir/%name.pc
 %doc demo/python demo/test
 
 %changelog
+* Tue Sep 17 2013 Alexey Shabalin <shaba@altlinux.ru> 2.2.0-alt1
+- 2.2.0
+
 * Sun Apr 14 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.0.1-alt3.3.qa1
 - NMU: rebuilt with libboost_*.so.1.53.0.
 
