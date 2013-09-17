@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.4.0
-Release: alt1.git20121205.1
+Version: 0.4.1
+Release: alt1.git20130902
 Summary: Lightweight in-process concurrent programming
 License: MIT
 Group: Development/Python
@@ -120,6 +120,9 @@ popd
 %endif
 
 %changelog
+* Tue Sep 17 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.1-alt1.git20130902
+- Version 0.4.1
+
 * Sun Mar 24 2013 Aleksey Avdeev <solo@altlinux.ru> 0.4.0-alt1.git20121205.1
 - Rebuild with Python-3.3
 
