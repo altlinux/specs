@@ -1,7 +1,7 @@
 
 %define rname kid3
 Name: kde4-%rname
-Version: 2.1
+Version: 2.3
 Release: alt1
 
 Group: Sound
@@ -78,6 +78,12 @@ Authors: Urs Fleisch
 %_K4apps/%rname/
 
 %changelog
+* Tue Sep 17 2013 Sergey V Turchin <zerg@altlinux.org> 2.3-alt1
+- new version
+
+* Mon May 21 2012 Sergey V Turchin <zerg@altlinux.org> 2.1-alt0.M60P.1
+- build for M60P
+
 * Mon May 21 2012 Sergey V Turchin <zerg@altlinux.org> 2.1-alt1
 - new version
 
