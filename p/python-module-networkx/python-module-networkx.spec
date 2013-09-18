@@ -4,8 +4,8 @@
 %def_with python3
 
 Name:           python-module-%oname
-Version:        1.8
-Release:        alt3.git20130303
+Version:        1.9
+Release:        alt1.git20130915
 Summary:        Creates and Manipulates Graphs and Networks
 Group:          Development/Python
 License:        LGPLv2+
@@ -196,6 +196,9 @@ cp -fR doc/build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Wed Sep 18 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.9-alt1.git20130915
+- Version 1.9
+
 * Mon Apr 15 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.8-alt3.git20130303
 - Use 'find... -exec...' instead of 'for ... $(find...'
 
