@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.4.2
-Release: alt2.1
+Version: 0.5
+Release: alt1
 Summary: Highly flexible, no magic input validation library
 License: MIT
 Group: Development/Python
@@ -84,27 +84,26 @@ popd
 %doc *.txt docs/html
 %python_sitelibdir/*
 %exclude %python_sitelibdir/*/test*
-%exclude %python_sitelibdir/*/*/test*
 
 %files tests
 %python_sitelibdir/*/test*
-%python_sitelibdir/*/*/test*
 
 %if_with python3
 %files -n python3-module-%oname
 %doc *.txt docs/html
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*/test*
-%exclude %python3_sitelibdir/*/*/test*
-%exclude %python3_sitelibdir/*/*/__pycache__/testcase*
+%exclude %python3_sitelibdir/*/__pycache__/test*
 
 %files -n python3-module-%oname-tests
 %python3_sitelibdir/*/test*
-%python3_sitelibdir/*/*/test*
-%python3_sitelibdir/*/*/__pycache__/testcase*
+%python3_sitelibdir/*/__pycache__/test*
 %endif
 
 %changelog
+* Wed Sep 18 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5-alt1
+- Version 0.5
+
 * Fri Mar 22 2013 Aleksey Avdeev <solo@altlinux.ru> 0.4.2-alt2.1
 - Rebuild with Python-3.3
 
