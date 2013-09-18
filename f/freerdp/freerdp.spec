@@ -1,6 +1,6 @@
 Name: freerdp
-Version: 1.0.1
-Release: alt2
+Version: 1.0.2
+Release: alt1
 License: Apache License 2.0
 Group: Networking/Remote access
 Summary: Remote Desktop Protocol functionality
@@ -101,6 +101,7 @@ sync, disk/printer redirection, etc.
 
 %files -n xfreerdp
 %_bindir/xfreerdp
+%_datadir/freerdp/keymaps
 %_mandir/*/*
 
 %files -n dfreerdp
@@ -121,6 +122,10 @@ sync, disk/printer redirection, etc.
 %_libdir/pkgconfig/*
 
 %changelog
+* Wed Sep 18 2013 Andrey Cherepanov <cas@altlinux.org> 1.0.2-alt1
+- New verson (ALT #28716)
+- Pack freerdp keymaps
+
 * Thu Mar 22 2012 Slava Dubrovskiy <dubrsl@altlinux.org> 1.0.1-alt2
 - Build git fd465f551c34b1ae415f76be4aefeb0fef770de7
 
