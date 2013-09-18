@@ -1,6 +1,6 @@
 %define oname nss
 Name: python-module-%oname
-Version: 0.13
+Version: 0.14.0
 Release: alt1
 Summary: Python binding for NSS
 License: MPL 1.1/GPL 2.0/LGPL 2.1
@@ -33,6 +33,9 @@ FIPS-140 certified.
 %python_sitelibdir/*
 
 %changelog
+* Wed Sep 18 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.14.0-alt1
+- Version 0.14.0
+
 * Tue Apr 02 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.13-alt1
 - Version 0.13
 
