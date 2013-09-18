@@ -1,5 +1,5 @@
 Name: livecd-setlocale
-Version: 0.2.0
+Version: 0.3.1
 Release: alt2
 
 Summary: Automatically set locale from /proc/cmdline
@@ -31,6 +31,16 @@ install -pDm644 {livecd-setlocale,%buildroot%_unitdir}/livecd-setlocale.service
 %_unitdir/livecd-setlocale.service
 
 %changelog
+* Wed Sep 18 2013 Michael Shigorin <mike@altlinux.org> 0.3.1-alt2
+- (closes: #28991)
+
+* Tue Sep 17 2013 Michael Shigorin <mike@altlinux.org> 0.3.1-alt1
+- rough localectl support
+
+* Mon Sep 16 2013 Michael Shigorin <mike@altlinux.org> 0.3.0-alt1
+- fixed service file dependencies
+- added rudimentary gnome3 support (lacks XKB variants though)
+
 * Wed Apr 17 2013 Mikhail Efremov <sem@altlinux.org> 0.2.0-alt2
 - Use preun_service.
 
