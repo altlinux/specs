@@ -1,6 +1,7 @@
+%define _unpackaged_files_terminate_build 1
 %define dist Getopt-Long-Descriptive
 Name: perl-%dist
-Version: 0.093
+Version: 0.094
 Release: alt1
 
 Summary: Getopt::Long, but simpler and more powerful
@@ -13,7 +14,7 @@ Source: http://www.cpan.org/authors/id/R/RJ/RJBS/Getopt-Long-Descriptive-%{versi
 BuildArch: noarch
 
 # Automatically added by buildreq on Tue Oct 25 2011
-BuildRequires: perl-Params-Validate perl-Sub-Exporter perl-devel
+BuildRequires: perl-Params-Validate perl-Sub-Exporter perl-devel perl(Capture/Tiny.pm)
 
 %description
 Getopt::Long::Descriptive is yet another Getopt library.  It's built atop
@@ -34,6 +35,9 @@ think about its huge array of options.
 %perl_vendor_privlib/Getopt
 
 %changelog
+* Mon Sep 16 2013 Igor Vlasenko <viy@altlinux.ru> 0.094-alt1
+- automated CPAN update
+
 * Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 0.093-alt1
 - automated CPAN update
 
