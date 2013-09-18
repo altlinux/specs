@@ -1,7 +1,7 @@
 %define oname pandas
 
 Name: python-module-%oname
-Version: 0.10.1
+Version: 0.12.0
 Release: alt1
 
 Summary: Python Data Analysis Library
@@ -67,6 +67,7 @@ pushd doc
 popd
 
 %files
+%doc README.rst RELEASE.md
 %python_sitelibdir/*
 %exclude %python_sitelibdir/*/tests
 %exclude %python_sitelibdir/*/*/test*
@@ -80,6 +81,9 @@ popd
 %doc examples
 
 %changelog
+* Wed Sep 18 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.12.0-alt1
+- Version 0.12.0
+
 * Wed Apr 03 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.10.1-alt1
 - Initial build for Sisyphus
 
