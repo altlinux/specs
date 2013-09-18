@@ -1,5 +1,5 @@
 Name: darktable
-Version: 1.2.2
+Version: 1.2.3
 Release: alt1
 
 Summary: Darktable is a virtual lighttable and darkroom for photographer
@@ -13,9 +13,9 @@ Patch: %name-1.1.2-alt-lfs.patch
 # For gconf_schemasdir definition:
 BuildPreReq: rpm-build-gnome
 
-BuildRequires: cmake gcc-c++ libSDL-devel libXScrnSaver-devel libXcomposite-devel libXcursor-devel
+BuildRequires: cmake gcc-c++ intltool libSDL-devel libXScrnSaver-devel libXcomposite-devel libXcursor-devel
 BuildRequires: libXdamage-devel libXdmcp-devel libXinerama-devel libXpm-devel libXrandr-devel
-BuildRequires: libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel 
+BuildRequires: libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel
 BuildRequires: libdbus-glib-devel libexiv2-devel libflickcurl-devel libgnome-keyring-devel
 BuildRequires: libgomp-devel libgphoto2-devel libgtk+2-devel libjpeg-devel liblcms2-devel liblensfun-devel
 BuildRequires: libpng-devel librsvg-devel libsqlite3-devel libtiff-devel libxkbfile-devel lsb-release openexr-devel perl-Pod-Parser
@@ -64,9 +64,13 @@ install -pD -m644 data/pixmaps/48x48/darktable.png %buildroot%_liconsdir/darktab
 %_iconsdir/hicolor/*/apps/*
 #%gconf_schemasdir/*
 %_man1dir/*
+%_datadir/appdata/%name.appdata.xml
 %exclude /usr/share/doc/darktable/
 
 %changelog
+* Wed Sep 18 2013 Yuri N. Sedunov <aris@altlinux.org> 1.2.3-alt1
+- 1.2.3, fixed (ALT #29371)
+
 * Sun Aug 25 2013 Yuri N. Sedunov <aris@altlinux.org> 1.2.2-alt1
 - 1.2.2
 - GraphicsMagick, libopenjpeg support
