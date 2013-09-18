@@ -1,24 +1,25 @@
-%define m_distro Eval-Context
 Name: perl-Eval-Context
 Version: 0.09.11
-Release: alt1
-Summary: Eval::Context perl module
+Release: alt2
 
-Packager: Vladimir Lettiev <crux@altlinux.ru>
+Summary: Evalute perl code in context wrapper
 
 Group: Development/Perl
-License: Perl
-Url: http://search.cpan.org/~nkh/Eval-Context/
+License: perl
+
+Url: %CPAN Eval-Context
+Source: %name-%version.tar
+Patch: %name-%version-%release.patch
 
 BuildArch: noarch
-Source: %m_distro-%version.tar
-BuildRequires: perl-Term-Size perl-Test-Output perl-Directory-Scratch-Structured perl-Test-Block perl-Test-Exception perl-Module-Build perl-Test-NoWarnings perl-Test-Warn perl-Text-Diff perl-Data-Compare perl-Data-TreeDumper
+BuildRequires: perl(Term/Size.pm) perl(Test/Block.pm) perl(Sub/Exporter.pm) perl(Test/NoWarnings.pm) perl(Data/TreeDumper.pm) perl(Package/Generator.pm) perl(Module/Build.pm) perl(Test/Output.pm) perl(File/Slurp.pm) perl(Test/Exception.pm) perl(Readonly.pm) perl(Text/Diff.pm) perl(Directory/Scratch/Structured.pm) perl(Test/Warn.pm) perl(Data/Compare.pm) perl(Sub/Install.pm)
 
 %description
 %summary
 
 %prep
-%setup -q -n %m_distro-%version
+%setup -q
+%patch -p1
 
 %build
 %perl_vendor_build
@@ -28,8 +29,12 @@ BuildRequires: perl-Term-Size perl-Test-Output perl-Directory-Scratch-Structured
 
 %files
 %perl_vendor_privlib/Eval/Context*
-%doc Changes README 
+%doc Changes README
 
 %changelog
+* Wed Sep 18 2013 Vladimir Lettiev <crux@altlinux.ru> 0.09.11-alt2
+- fixed failed test with perl 5.18
+
 * Tue Aug 24 2010 Vladimir Lettiev <crux@altlinux.ru> 0.09.11-alt1
 - initial build
+
