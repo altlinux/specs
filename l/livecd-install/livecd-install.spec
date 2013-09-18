@@ -1,5 +1,5 @@
 Name: livecd-install
-Version: 0.8.8
+Version: 0.8.9
 Release: alt1
 
 Summary: Permanently install Live system
@@ -60,6 +60,9 @@ install -m 0755 zdg-user-dirs-install.sh %buildroot%_x11sysconfdir/profile.d/
 %_x11sysconfdir/profile.d/*
 
 %changelog
+* Wed Sep 18 2013 Michael Shigorin <mike@altlinux.org> 0.8.9-alt1
+- Handle dconf and localectl configuration (see #28991).
+
 * Fri Jun 07 2013 Michael Shigorin <mike@altlinux.org> 0.8.8-alt1
 - Add Ukrainian translation to desktop file.
 
