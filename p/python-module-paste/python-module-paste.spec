@@ -4,7 +4,7 @@
 
 Name: python-module-%modulename
 Version: 1.7.5.1
-Release: alt2.hg20130207
+Release: alt2.hg20130410
 
 Summary: Tools for using a Web Server Gateway Interface stack
 License: MIT
@@ -94,6 +94,9 @@ popd
 %endif
 
 %changelog
+* Wed Sep 18 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.7.5.1-alt2.hg20130410
+- New snapshot
+
 * Mon Apr 15 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.7.5.1-alt2.hg20130207
 - Use 'find... -exec...' instead of 'for ... $(find...'
 
