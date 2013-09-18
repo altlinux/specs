@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.0.4
-Release: alt2
+Version: 0.0.5
+Release: alt1
 Summary: ASN.1 modules for Python
 License: BSD
 Group: Development/Python
@@ -76,6 +76,9 @@ popd
 %endif
 
 %changelog
+* Wed Sep 18 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.5-alt1
+- Version 0.0.5
+
 * Tue Apr 02 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.4-alt2
 - Version 0.0.4
 
