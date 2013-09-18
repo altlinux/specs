@@ -1,6 +1,6 @@
 %define oname pyramid_mailer
 Name: python-module-%oname
-Version: 0.11
+Version: 0.13
 Release: alt1
 Summary: Sendmail package for Pyramid
 License: BSD
@@ -49,6 +49,9 @@ This package contains tests for pyramid_mailer.
 %python_sitelibdir/*/test*
 
 %changelog
+* Wed Sep 18 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.13-alt1
+- Version 0.13
+
 * Tue Apr 02 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.11-alt1
 - Version 0.11
 
