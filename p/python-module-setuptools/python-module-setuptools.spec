@@ -5,7 +5,7 @@
 Name: python-module-%modulename
 Epoch: 1
 Version: 1.1.5
-Release: alt1
+Release: alt2
 
 Summary: Python Distutils Enhancements
 License: PSF/ZPL
@@ -20,7 +20,7 @@ BuildArch: noarch
 BuildRequires(pre): rpm-build-python
 BuildPreReq: python-devel
 
-Provides: python-module-distribute = %version-%release
+Provides: python-module-distribute = %epoch:%version-%release
 
 %if_with python3
 BuildRequires(pre): rpm-build-python3
@@ -35,7 +35,7 @@ especially ones that have dependencies on other packages.
 %package tests
 Summary: Tests for Setuptools
 Group: Development/Python
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description tests
 Setuptools is a collection of enhancements to the Python distutils
@@ -47,7 +47,7 @@ This package contains tests for Setuptools.
 %package docs
 Summary: Documentation for Setuptools
 Group: Development/Documentation
-Provides: python-module-distribute-docs = %version-%release
+Provides: python-module-distribute-docs = %epoch:%version-%release
 
 %description docs
 Distribute is intended to replace Setuptools as the standard method for
@@ -59,7 +59,7 @@ This package contains documentation for Distribute.
 %package -n python3-module-%modulename
 Summary: Python Distutils Enhancements
 Group: Development/Python3
-Provides: python3-module-distribute = %version-%release
+Provides: python3-module-distribute = %epoch:%version-%release
 
 %description -n python3-module-%modulename
 Setuptools is a collection of enhancements to the Python distutils
@@ -69,7 +69,7 @@ especially ones that have dependencies on other packages.
 %package  -n python3-module-%modulename-tests
 Summary: Tests for Setuptools
 Group: Development/Python3
-Requires: python3-module-%modulename = %version-%release
+Requires: python3-module-%modulename = %EVR
 
 %description  -n python3-module-%modulename-tests
 Setuptools is a collection of enhancements to the Python distutils
@@ -147,6 +147,9 @@ ln -s easy_install-%_python3_version %buildroot%_bindir/easy_install3
 %endif
 
 %changelog
+* Wed Sep 18 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:1.1.5-alt2
+- Fixed dependencies
+
 * Tue Sep 17 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:1.1.5-alt1
 - Version 1.1.5
 
