@@ -8,7 +8,7 @@
 %def_enable hw
 
 Name: %_name%api_ver
-Version: 2.0.6
+Version: 2.0.8
 Release: alt1
 
 Summary: Library integrating clutter with GStreamer
@@ -111,6 +111,9 @@ that use Clutter-Gst libraries.
 %endif
 
 %changelog
+* Wed Sep 18 2013 Yuri N. Sedunov <aris@altlinux.org> 2.0.8-alt1
+- 2.0.8
+
 * Tue Jul 23 2013 Yuri N. Sedunov <aris@altlinux.org> 2.0.6-alt1
 - 2.0.6
 - enabled support for hardware accelerated decoders
