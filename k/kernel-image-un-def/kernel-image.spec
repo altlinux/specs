@@ -1,5 +1,5 @@
 Name: kernel-image-un-def
-Release: alt1
+Release: alt2
 epoch:1 
 %define kernel_base_version	3.11
 %define kernel_sublevel	.1
@@ -547,6 +547,10 @@ find %buildroot%_docdir/kernel-doc-%base_flavour-%version/DocBook \
 %exclude %modules_dir/kernel/drivers/staging/media/lirc/
 
 %changelog
+* Wed Sep 18 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.11.1-alt2
+- CONFIG_DEBUG_ATOMIC_SLEEP disabled
+- aufs fixed
+
 * Sun Sep 15 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.11.1-alt1
 - 3.11.1
 
