@@ -1,7 +1,7 @@
 %define oname oauth2client
 
 Name: python-module-%oname
-Version: 1.1
+Version: 1.2
 Release: alt1
 
 Summary: OAuth 2.0 client library
@@ -35,6 +35,9 @@ The oauth2client is a client library for OAuth 2.0.
 %python_sitelibdir/*
 
 %changelog
+* Wed Sep 18 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2-alt1
+- Version 1.2
+
 * Wed Apr 03 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1-alt1
 - Initial build for Sisyphus
 
