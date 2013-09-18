@@ -1,7 +1,7 @@
 %define oname numexpr
 Name:           python-module-%oname
-Version:        2.0.2
-Release:        alt1.hg20121113
+Version:        2.3
+Release:        alt1.hg20130908
 Epoch: 1
 Summary:        Fast numerical array expression evaluator for Python and NumPy
 Group:          Development/Python
@@ -70,6 +70,9 @@ This package contains tests for numexpr.
 %python_sitelibdir/%oname/tests
 
 %changelog
+* Wed Sep 18 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:2.3-alt1.hg20130908
+- Version 2.3
+
 * Tue Apr 02 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:2.0.2-alt1.hg20121113
 - New snapshot
 
