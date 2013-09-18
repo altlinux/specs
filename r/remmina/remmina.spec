@@ -1,6 +1,6 @@
 Name: remmina
 Version: 1.0.0
-Release: alt2
+Release: alt3
 Summary: Remote Desktop Client
 
 Group: Networking/Remote access
@@ -90,6 +90,9 @@ subst "s|@VERSION@|%version|g" %buildroot%_pkgconfigdir/%name.pc
 %_pkgconfigdir/*
 
 %changelog
+* Wed Sep 18 2013 Andrey Cherepanov <cas@altlinux.org> 1.0.0-alt3
+- Revert "FreeRDP moved from kbd to locale" (see https://github.com/FreeRDP/Remmina/pull/31)
+
 * Thu Mar 22 2012 Slava Dubrovskiy <dubrsl@altlinux.org> 1.0.0-alt2
 - build from git ffba771dcd70e37635e9c8ff3a905273c933294a (ALT #27099)
 
