@@ -2,14 +2,14 @@ Group: Development/Tools
 %define _libexecdir %_prefix/libexec
 Name:           mate-common
 Summary:        mate common build files
-Version:        1.6.1
-Release:        alt1_2
-License:	GPLv3+
-URL:		http://mate-desktop.org
-Source0:	http://pub.mate-desktop.org/releases/1.5/mate-common-%{version}.tar.xz
-BuildArch: noarch
-BuildRequires:	automake autoconf
-Requires: automake autoconf gettext intltool libtool gtk-doc
+Version:        1.6.2
+Release:        alt1_1
+License:        GPLv3+
+URL:            http://mate-desktop.org
+Source0:        http://pub.mate-desktop.org/releases/1.6/mate-common-%{version}.tar.xz
+BuildArch:      noarch
+BuildRequires:  automake autoconf
+Requires:       automake autoconf gettext intltool libtool gtk-doc
 Source44: import.info
 Patch33: mate-common-1.3.0-alt-fix-libtool-not-found.patch
 
@@ -26,7 +26,7 @@ make %{?_smp_mflags} V=1
 
 
 %install
-make install DESTDIR=%{buildroot}
+%{makeinstall_std}
 
 
 %files
@@ -36,6 +36,9 @@ make install DESTDIR=%{buildroot}
 %{_mandir}/man1/*
 
 %changelog
+* Sat Sep 14 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.2-alt1_1
+- new fc release
+
 * Wed Aug 07 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.1-alt1_2
 - new fc release
 
