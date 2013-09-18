@@ -1,6 +1,7 @@
+%define _unpackaged_files_terminate_build 1
 %define dist Email-Simple
 Name: perl-%dist
-Version: 2.201
+Version: 2.202
 Release: alt1
 
 Summary: Simple parsing of RFC2822 message format and headers
@@ -20,7 +21,7 @@ Obsoletes: perl-Email-Simple-Creator < 1.429
 BuildArch: noarch
 
 # Automatically added by buildreq on Wed Oct 05 2011
-BuildRequires: perl-Email-Date-Format perl-Test-Pod
+BuildRequires: perl-Email-Date-Format perl-Test-Pod perl(Capture/Tiny.pm)
 
 %description
 Email::Simple is the first deliverable of the "Perl Email Project",
@@ -46,6 +47,9 @@ sed -i- '/^if .* require Email::MIME/,/^}/s/^/#/' Makefile.PL
 %perl_vendor_privlib/Email
 
 %changelog
+* Mon Sep 16 2013 Igor Vlasenko <viy@altlinux.ru> 2.202-alt1
+- automated CPAN update
+
 * Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 2.201-alt1
 - automated CPAN update
 
