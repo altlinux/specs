@@ -1,6 +1,6 @@
 Name: livecd-setlocale
-Version: 0.3.1
-Release: alt2
+Version: 0.3.2
+Release: alt1
 
 Summary: Automatically set locale from /proc/cmdline
 License: GPL
@@ -31,6 +31,9 @@ install -pDm644 {livecd-setlocale,%buildroot%_unitdir}/livecd-setlocale.service
 %_unitdir/livecd-setlocale.service
 
 %changelog
+* Wed Sep 18 2013 Michael Shigorin <mike@altlinux.org> 0.3.2-alt1
+- regexp thinko fix
+
 * Wed Sep 18 2013 Michael Shigorin <mike@altlinux.org> 0.3.1-alt2
 - (closes: #28991)
 
