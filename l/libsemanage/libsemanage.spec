@@ -3,7 +3,7 @@
 
 Name: libsemanage
 Version: 2.1.10
-Release: alt1
+Release: alt2
 Summary: Library, which provides an interface for SELinux management
 Group: System/Libraries
 License: LGPLv2.1+
@@ -106,6 +106,9 @@ ln -sf /%_lib/libsemanage.so.1 %buildroot/%_libdir/libsemanage.so
 
 
 %changelog
+* Wed Sep 18 2013 Andriy Stepanov <stanv@altlinux.ru> 2.1.10-alt2
+- pam_mktemp workaround
+
 * Thu Jun 27 2013 Andriy Stepanov <stanv@altlinux.ru> 2.1.10-alt1
 - New version
 
