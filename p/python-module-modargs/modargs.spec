@@ -1,7 +1,7 @@
 %define modulename modargs
 
 Name: python-module-%modulename
-Version: 1.6
+Version: 1.7
 Release: alt1
 
 Summary: Simple command line argument parsing library
@@ -34,6 +34,9 @@ arguments from functions in a module.
 %python_sitelibdir/*
 
 %changelog
+* Wed Sep 18 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.7-alt1
+- Version 1.7
+
 * Mon Apr 01 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.6-alt1
 - Initial build for Sisyphus
 
