@@ -1,8 +1,8 @@
 %define oname numba
 
 Name: python-module-%oname
-Version: 0.8
-Release: alt1.git20130304
+Version: 0.11
+Release: alt1.git20130917
 Summary: NumPy aware dynamic compiler for Python
 License: BSD-like
 Group: Development/Python
@@ -69,6 +69,9 @@ This package contains documentation for numba.
 %doc docs/*.pdf docs/*.txt docs/ams_presentation/*.pdf
 
 %changelog
+* Wed Sep 18 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.11-alt1.git20130917
+- Version 0.11
+
 * Wed Mar 06 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8-alt1.git20130304
 - Initial build for Sisyphus
 
