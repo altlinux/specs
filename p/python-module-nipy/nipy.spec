@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.4.0
-Release: alt1.git20130205
+Release: alt1.git20130903
 Summary: The neuroimaging in python (NIPY) project
 License: MIT
 Group: Development/Python
@@ -62,7 +62,7 @@ This package contains tests for NIPY.
 %package docs
 Summary: Documentation for neuroimaging in python (NIPY) project
 Group: Development/Documentation
-BuildArch: noarch
+#BuildArch: noarch
 
 %description docs
 The neuroimaging in python (NIPY) project is an environment for the
@@ -125,6 +125,9 @@ cp -fR examples %buildroot%python_sitelibdir/%oname/
 cp -fR doc/build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
+# bad syntax
+rm -f %buildroot%python_sitelibdir/nipy/examples/ds105/parallel_run.py
+
 %files
 %doc AUTHOR Changelog LICENSE README* THANKS
 %_bindir/*
@@ -164,6 +167,9 @@ cp -fR doc/build/pickle %buildroot%python_sitelibdir/%oname/
 #python_sitelibdir/*/*/*/*/*/tests
 
 %changelog
+* Wed Sep 18 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.0-alt1.git20130903
+- New snapshot
+
 * Tue Apr 02 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.0-alt1.git20130205
 - Version 0.4.0
 
