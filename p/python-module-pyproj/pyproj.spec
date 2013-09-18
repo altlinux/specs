@@ -1,7 +1,7 @@
 %define oname pyproj
 Name: python-module-%oname
-Version: 1.9.3
-Release: alt1.svn20130125
+Version: 1.9.4
+Release: alt1.svn20130619
 Summary: Pyrex generated python interface to PROJ.4 library
 License: MIT
 Group: Graphics
@@ -53,6 +53,7 @@ PROJ.4 library.
 %setup
 
 %build
+%add_optflags -fno-strict-aliasing
 %python_build_debug
 
 %install
@@ -74,6 +75,9 @@ chmod +x %buildroot%python_sitelibdir/%oname/data/test*
 %python_sitelibdir/%oname/data/test*
 
 %changelog
+* Wed Sep 18 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.9.4-alt1.svn20130619
+- Version 1.9.4
+
 * Tue Apr 02 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.9.3-alt1.svn20130125
 - Version 1.9.3
 
