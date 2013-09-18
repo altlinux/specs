@@ -5,8 +5,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.3
-Release: alt2.hg20130325
+Version: 1.3.1
+Release: alt1.hg20130904
 Summary: MPI bindings for Python
 License: Public
 Group: Development/Python
@@ -158,6 +158,9 @@ cp -fR docs/source %buildroot%_docdir/%name/
 %endif
 
 %changelog
+* Wed Sep 18 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.1-alt1.hg20130904
+- Version 1.3.1
+
 * Mon Apr 01 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3-alt2.hg20130325
 - New snapshot
 
