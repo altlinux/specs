@@ -1,13 +1,13 @@
 %define oname mdp
 Name: python-module-%oname
-Version: 3.3
-Release: alt1.git20111024
+Version: 3.4
+Release: alt1.git20130903
 Summary: Modular toolkit for Data Processing
 
 Group: Development/Python
 License: LGPL v2
 URL: http://mdp-toolkit.sourceforge.net/
-# git://mdp-toolkit.git.sourceforge.net/gitroot/mdp-toolkit/mdp-toolkit
+# git://github.com/mdp-toolkit/mdp-toolkit
 Source: %oname-%version.tar.gz
 Source1: MDP-tutorial.pdf
 BuildArch: noarch
@@ -145,6 +145,9 @@ install -p -m644 %SOURCE1 .
 #python_sitelibdir/binet/test
 
 %changelog
+* Wed Sep 18 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.4-alt1.git20130903
+- Version 3.4
+
 * Fri Dec 09 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.3-alt1.git20111024
 - Version 3.3
 
