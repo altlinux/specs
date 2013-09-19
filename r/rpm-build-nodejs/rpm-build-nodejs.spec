@@ -1,6 +1,6 @@
 %define pkg nodejs
 Name: rpm-build-%pkg
-Version: 0.5
+Version: 0.6
 Release: alt1
 
 Summary: RPM helper scripts for building %pkg packages
@@ -13,6 +13,7 @@ Source: %name-%version.tar
 Patch: macros.nodejs-alt.patch
 
 BuildArch: noarch
+Provides: nodejs-packaging = %version
 
 %description
 RPM helper scripts and build environment
@@ -66,6 +67,9 @@ install -Dpm0644 multiver_modules %{buildroot}%{_datadir}/node/multiver_modules
 %_rpmmacrosdir/%pkg
 
 %changelog
+* Thu Sep 19 2013 Igor Vlasenko <viy@altlinux.ru> 0.6-alt1
+- provides nodejs-packaging
+
 * Fri Jul 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.5-alt1
 - temporarily added nodejs-tap macros
 
