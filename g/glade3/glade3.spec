@@ -2,10 +2,10 @@
 %def_disable gnome
 
 Name: glade3
-Version: %ver_major.3
+Version: %ver_major.4
 Release: alt1
 
-Summary: GTK+2/GNOME2 widget builder
+Summary: GTK+2%{?_enable_gnome:/GNOME2} widget builder
 Group: Development/GNOME and GTK+
 License: %gpl2plus, %lgpl2plus
 Url: http://glade.gnome.org/
@@ -109,6 +109,9 @@ cat %name.lang glade.lang > lang
 %exclude %_libdir/glade3/modules/*.la
 
 %changelog
+* Thu Sep 19 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.4-alt1
+- 3.8.4
+
 * Tue Dec 04 2012 Yuri N. Sedunov <aris@altlinux.org> 3.8.3-alt1
 - 3.8.3
 - disabled GNOME2 support
