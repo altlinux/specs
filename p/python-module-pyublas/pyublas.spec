@@ -1,7 +1,7 @@
 %define oname pyublas
 Name: python-module-%oname
 Version: 2013.1
-Release: alt1.git20130314
+Release: alt1.git20130718
 Summary: Seamless Numpy-UBlas interoperability
 License: BSD
 Group: Development/Python
@@ -90,6 +90,9 @@ rm -fR %_includedir/pyublas
 %python_sitelibdir/%oname/pickle
 
 %changelog
+* Thu Sep 19 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2013.1-alt1.git20130718
+- New snapshot
+
 * Tue Apr 02 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2013.1-alt1.git20130314
 - Version 2013.1
 
