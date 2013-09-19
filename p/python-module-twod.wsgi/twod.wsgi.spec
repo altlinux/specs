@@ -1,7 +1,7 @@
 %define oname twod.wsgi
 Name: python-module-%oname
-Version: 1.0.1
-Release: alt1.1
+Version: 2.0
+Release: alt1.b1
 Summary: Enhanced WSGI support for Django applications
 License: BSD
 Group: Development/Python
@@ -64,15 +64,18 @@ touch %buildroot%python_sitelibdir/twod/__init__.py
 %python_sitelibdir/*
 %exclude %python_sitelibdir/*.pth
 %exclude %python_sitelibdir/twod/__init__.py*
-%exclude %python_sitelibdir/*test*
+#exclude %python_sitelibdir/*test*
 
-%files tests
-%python_sitelibdir/*test*
+#files tests
+#python_sitelibdir/*test*
 
 %files -n python-module-twod
-%python_sitelibdir/twod/__init__.py
+%python_sitelibdir/twod/__init__.py*
 
 %changelog
+* Thu Sep 19 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0-alt1.b1
+- Version 2.0b1
+
 * Thu Oct 20 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 1.0.1-alt1.1
 - Rebuild with Python-2.7
 
