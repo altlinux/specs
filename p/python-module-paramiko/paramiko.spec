@@ -1,4 +1,4 @@
-%define	version	1.7.6
+%define	version	1.11.0
 %define release alt1
 %define source_version %version
 %define source_name  paramiko
@@ -8,7 +8,7 @@ Summary: SSH2 protocol for python
 Packager: Andriy Stepanov <stanv@altlinux.ru>
 Name: %packagename
 Version: %version
-Release: %release.1
+Release: %release
 Source: %modulename-%version.tar.gz
 License: GPL
 Group: Development/Python
@@ -41,18 +41,20 @@ package contain API documentation and examples for python-%modulename module.
 %python_build
 
 %install
-CFLAGS="%optflags" python setup.py \
-	install --optimize=2 \
-		--root=%buildroot \
-		--record=INSTALLED_FILES
+%python_install --install-lib %python_sitelibdir
 
-%files -f INSTALLED_FILES
-%doc PKG-INFO README LICENSE
+%files
+%python_sitelibdir/%source_name
+%python_sitelibdir/*.egg-info
+%doc README LICENSE
 
 %files doc
-%doc docs demos
+%doc demos
 
 %changelog
+* Fri Aug 09 2013 Anatoly Kitaykin <cetus@altlinux.org> 1.11.0-alt1
+- Version 1.11.0 (ALT #29340)
+
 * Thu Oct 20 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 1.7.6-alt1.1
 - Rebuild with Python-2.7
 
