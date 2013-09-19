@@ -1,5 +1,5 @@
 Name: whdd
-Version: 1.1
+Version: 2.1
 Release: alt1
 
 Summary: Diagnostic and recovery tool for block devices
@@ -32,9 +32,12 @@ WHDD - инструмент для диагностики и восстанов�
 %find_lang %name
 
 %files -f %name.lang
-%attr(4711, root, root) %_sbindir/whdd-c*
+%attr(4711, root, root) %_sbindir/whdd*
 
 %changelog
+* Thu Sep 19 2013 Slava Dubrovskiy <dubrsl@altlinux.org> 2.1-alt1
+- New version
+
 * Mon Nov 26 2012 Pavel Isopenko <pauli@altlinux.org> 1.1-alt1
 - Initial build for Sisyphus
 - Add ncursesw to target_link_libraries()
