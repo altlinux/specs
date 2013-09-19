@@ -1,7 +1,7 @@
 %define oname uritemplate
 
 Name: python-module-%oname
-Version: 0.5.2
+Version: 0.6
 Release: alt1
 
 Summary: Python implementation of RFC6570, URI Template
@@ -35,6 +35,9 @@ templates up to and including Level 4 in that specification.
 %python_sitelibdir/*
 
 %changelog
+* Thu Sep 19 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6-alt1
+- Version 0.6
+
 * Wed Apr 03 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.2-alt1
 - Initial build for Sisyphus
 
