@@ -1,11 +1,11 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(Config.pm) perl(IPC/Open2.pm) perl(Module/Build.pm) perl(blib.pm) perl-Module-Build perl-devel perl-podlators
+BuildRequires: perl(Config.pm) perl(IPC/Open2.pm) perl(blib.pm) perl-Module-Build perl-devel perl-podlators
 # END SourceDeps(oneline)
 Summary:	A tiny replacement for Module::Build
 Name:		perl-Module-Build-Tiny
 Version:	0.027
-Release:	alt1_1
+Release:	alt2_1
 License:	GPL+ or Artistic
 Group:		Development/Perl
 URL:		https://github.com/Leont/module-build-tiny
@@ -43,6 +43,7 @@ Requires:	perl(ExtUtils/ParseXS.pm)
 Requires:	perl(Pod/Man.pm)
 Requires:	perl(TAP/Harness.pm) >= 3.0
 Source44: import.info
+Patch33: Module-Build-Tiny-0.027-alt-bindoc-support.patch
 
 %description
 Many Perl distributions use a Build.PL file instead of a Makefile.PL file to
@@ -55,6 +56,7 @@ Whereas Module::Build has over 6,700 lines of code; this module has less than
 
 %prep
 %setup -q -n Module-Build-Tiny-%{version}
+%patch33 -p1
 rm t/simple.t
 
 %build
@@ -72,6 +74,9 @@ RELEASE_TESTING=1 ./Build test
 %{perl_vendor_privlib}/Module/
 
 %changelog
+* Thu Sep 19 2013 Igor Vlasenko <viy@altlinux.ru> 0.027-alt2_1
+- man1 support patch
+
 * Sun Sep 15 2013 Igor Vlasenko <viy@altlinux.ru> 0.027-alt1_1
 - update to new release by fcimport
 
