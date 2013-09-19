@@ -3,15 +3,15 @@
 %def_enable docs
 
 Name: python-module-%oname
-Version: 1.2
-Release: alt3.svn20110511
+Version: 1.3
+Release: alt1.git20030305
 Summary: Fast sparse matrix library for Python
 License: MIT
 Group: Development/Python
 Url: http://pysparse.sourceforge.net/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-# https://pysparse.svn.sourceforge.net/svnroot/pysparse/trunk
+# git://pysparse.git.sourceforge.net/gitroot/pysparse/pysparse
 Source: %oname-%version.tar.gz
 
 BuildRequires(pre): rpm-build-python rpm-macros-sphinx
@@ -126,6 +126,9 @@ install -p -m644 %oname/include/* \
 %python_sitelibdir/%oname/test
 
 %changelog
+* Thu Sep 19 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3-alt1.git20030305
+- Version 1.3
+
 * Sun Aug 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2-alt3.svn20110511
 - Built with OpenBLAS instead of GotoBLAS2
 
