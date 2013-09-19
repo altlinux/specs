@@ -1,29 +1,40 @@
 Group: System/Libraries
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-python
 BuildRequires: /usr/bin/glib-gettextize /usr/bin/gtkdocize glib2-devel libgio-devel pkgconfig(gio-2.0) pkgconfig(gtk+-2.0) pkgconfig(libsoup-gnome-2.4) pkgconfig(libxml-2.0) python-devel
 # END SourceDeps(oneline)
+# for --enable-python
+BuildRequires: python-module-pygobject-devel
+BuildRequires: python-module-gudev
+BuildRequires: python-module-pygtk-devel
+
 %define _libexecdir %_prefix/libexec
 Name:          libmateweather
 Version:       1.6.2
-Release:       alt1_1
+Release:       alt1_3
 Summary:       Libraries to allow MATE Desktop to display weather information
-License:       GPLv2+
+License:       GPLv2+ and LGPLv2+
 URL:           http://mate-desktop.org
 Source0:       http://pub.mate-desktop.org/releases/1.6/%{name}-%{version}.tar.xz
 
 BuildRequires: gtk2-devel
 BuildRequires: libsoup-devel
 BuildRequires: mate-common
-BuildRequires: python-module-pygobject-devel
-BuildRequires: python-module-gudev
-BuildRequires: python-module-pygtk-devel
+
+Requires:      %{name}-data = %{version}-%{release}
 Source44: import.info
 Patch33: libmateweather-gettext-not-xml.patch
 
 %description
 Libraries to allow MATE Desktop to display weather information
 
+%package data
+Group: System/Libraries
+Summary: Data files for the libmateweather
+BuildArch: noarch
+Requires: %{name} = %{version}-%{release}
+
+%description data
+This package contains shared data needed for libmateweather.
 
 %package devel
 Group: Development/C
@@ -41,15 +52,18 @@ Development files for libmateweather
 
 %build
 autoreconf -fisv
-%configure --disable-static       \
+%configure --enable-python --disable-static       \
+           --disable-schemas-compile \
            --with-gnu-ld          \
-           --enable-python        \
-           --enable-gtk-doc-html  
+           --enable-gtk-doc-html
+
+# fix unused-direct-shlib-dependency
+sed -i -e 's/ -shared / -Wl,-O1,--as-needed\0 /g' libtool 
 
 make %{?_smp_mflags} V=1
 
 %install
-make install DESTDIR=%{buildroot}
+%{makeinstall_std}
 
 find %{buildroot} -name '*.la' -exec rm -fv {} ';'
 find %{buildroot} -name '*.a' -exec rm -fv {} ';'
@@ -58,22 +72,26 @@ find %{buildroot} -name '*.a' -exec rm -fv {} ';'
 cat libmateweather-locations.lang >> %{name}.lang
 
 
-%files -f %{name}.lang
+%files
 %doc AUTHORS COPYING README
-%{_datadir}/libmateweather
-%{_datadir}/icons/mate/*/status/*
 %{_datadir}/glib-2.0/schemas/org.mate.weather.gschema.xml
-%{python_sitelibdir}/mateweather/
 %{_libdir}/libmateweather.so.1*
 
+%files data -f %{name}.lang
+%{_datadir}/icons/mate/*/status/*
+%{_datadir}/libmateweather/
+
 %files devel
-%doc %{_datadir}/gtk-doc/html/libmateweather
+%doc %{_datadir}/gtk-doc/html/libmateweather/
 %{_libdir}/libmateweather.so
-%{_includedir}/libmateweather
+%{_includedir}/libmateweather/
 %{_libdir}/pkgconfig/mateweather.pc
 
 
 %changelog
+* Thu Sep 19 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.2-alt1_3
+- new fc release
+
 * Mon Aug 19 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.2-alt1_1
 - new fc release
 
