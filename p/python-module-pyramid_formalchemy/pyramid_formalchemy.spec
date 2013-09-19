@@ -1,6 +1,6 @@
 %define oname pyramid_formalchemy
 Name: python-module-%oname
-Version: 0.4.3
+Version: 0.4.4
 Release: alt1
 Summary: FormAlchemy plugins and helpers for Pyramid
 License: Free
@@ -33,6 +33,9 @@ Pyramid.
 %python_sitelibdir/*
 
 %changelog
+* Thu Sep 19 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.4-alt1
+- Version 0.4.4
+
 * Tue Apr 02 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.3-alt1
 - Version 0.4.3
 
