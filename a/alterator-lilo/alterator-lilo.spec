@@ -1,6 +1,6 @@
 Name: alterator-lilo
-Version: 1.8.2
-Release: alt3
+Version: 1.9
+Release: alt1
 
 Summary: alterator module for lilo setup
 License: GPL
@@ -38,6 +38,11 @@ alterator module for lilo setup
 %_datadir/%name
 
 %changelog
+* Thu Sep 19 2013 Michael Shigorin <mike@altlinux.org> 1.9-alt1
+- dropped evms kludges for good, these aren't needed anymore
+  with installer-scripts-remount-stage2 (and spoiled UEFI case
+  even if proper support means elilo); see also #28181
+
 * Thu Feb 21 2013 Roman Savochenko <rom_as@altlinux.ru> 1.8.2-alt3
 - "udevadm trigger" into backend3 script call disable for prevent Video-XOrg
   crash for mostly ATI Radeon and old NVidia.
