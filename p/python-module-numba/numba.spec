@@ -2,7 +2,7 @@
 
 Name: python-module-%oname
 Version: 0.11
-Release: alt1.git20130917
+Release: alt2.git20130917
 Summary: NumPy aware dynamic compiler for Python
 License: BSD-like
 Group: Development/Python
@@ -56,19 +56,24 @@ This package contains documentation for numba.
 %doc AUTHORS CHANGE_LOG LICENSE README.md
 %_bindir/*
 %python_sitelibdir/*
-%exclude %python_sitelibdir/*/tests
+%exclude %python_sitelibdir/*/test*
 %exclude %python_sitelibdir/*/*/tests
+%exclude %python_sitelibdir/*/*/*/test*
 
 %if 0
 %files tests
-%python_sitelibdir/*/tests
+%python_sitelibdir/*/test*
 %python_sitelibdir/*/*/tests
+%python_sitelibdir/*/*/*/test*
 %endif
 
 %files docs
 %doc docs/*.pdf docs/*.txt docs/ams_presentation/*.pdf
 
 %changelog
+* Thu Sep 19 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.11-alt2.git20130917
+- Excluded tests
+
 * Wed Sep 18 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.11-alt1.git20130917
 - Version 0.11
 
