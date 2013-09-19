@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.0.10
-Release: alt2
+Version: 0.0.15
+Release: alt1
 Summary: Python implementation of subunit test streaming protocol
 License: Apache or BSD
 Group: Development/Python
@@ -137,6 +137,9 @@ popd
 %endif
 
 %changelog
+* Thu Sep 19 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.15-alt1
+- Version 0.0.15
+
 * Mon Apr 15 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.10-alt2
 - Use 'find... -exec...' instead of 'for ... $(find...'
 
