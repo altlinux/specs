@@ -1,14 +1,14 @@
 %define oname routes
 Name: python-module-%oname
-Version: 1.12.3
-Release: alt1.hg20100605.1
+Version: 1.13
+Release: alt1.git20030523
 Summary: Routing Recognition and Generation Tools
 License: BSD
 Group: Development/Python
 Url: http://routes.groovie.org/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-# hg clone http://bitbucket.org/bbangert/routes/
+# git://github.com/bbangert/routes
 Source: %oname-%version.tar.gz
 BuildArch: noarch
 
@@ -63,6 +63,9 @@ cp -fR docs/_build/html/* %buildroot%_docdir/%name/
 %_docdir/%name
 
 %changelog
+* Thu Sep 19 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.13-alt1.git20030523
+- Version 1.13
+
 * Mon Oct 24 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 1.12.3-alt1.hg20100605.1
 - Rebuild with Python-2.7
 
