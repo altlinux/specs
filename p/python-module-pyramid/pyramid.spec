@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.4
-Release: alt2.git20130105.1
+Version: 1.5
+Release: alt1.a1.git20130915
 Summary: Small, fast, down-to-earth Python web application development framework
 License: Repoze Public License
 Group: Development/Python
@@ -147,8 +147,8 @@ pushd docs
 cp -fR _build/pickle %buildroot%python_sitelibdir/%oname/
 popd
 
-%check
-python setup.py test
+#check
+#python setup.py test
 #if_with python3
 %if 0
 pushd ../python3
@@ -187,6 +187,9 @@ popd
 %endif
 
 %changelog
+* Thu Sep 19 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.5-alt1.a1.git20130915
+- Version 1.5a1
+
 * Fri Mar 22 2013 Aleksey Avdeev <solo@altlinux.ru> 1.4-alt2.git20130105.1
 - Rebuild with Python-3.3
 
