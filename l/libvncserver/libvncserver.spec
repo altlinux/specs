@@ -8,13 +8,15 @@
 Name: libvncserver
 %define libname %name
 Version: 0.9.9
-Release: alt2
+Release: alt3
 
 Group: System/Libraries
 Summary: An easy API to write one's own VNC server
 Url: http://sourceforge.net/projects/libvncserver/
 License: GPLv2
 Packager: Sergey V Turchin <zerg@altlinux.org>
+
+Requires: %libvncserver %libvncclient
 
 Source: http://downloads.sourceforge.net/libvncserver/%tname-%version.tar.gz
 # FC
@@ -76,6 +78,9 @@ into a versatile and performant while still easy to use program.
 %package -n %libvncserver
 Summary: %name server library
 Group: System/Libraries
+%if "%vncserver_sover" == "0"
+Conflicts: libvncserver < %EVR
+%endif
 %description -n %libvncserver
 %name server library
 
@@ -83,8 +88,7 @@ Group: System/Libraries
 Summary: %name client library
 Group: System/Libraries
 %if "%vncserver_sover" == "0"
-Provides: libvncserver = %EVR
-Obsoletes: libvncserver < %EVR
+Conflicts: libvncserver < %EVR
 %endif
 %description -n %libvncclient
 %name client library
@@ -119,6 +123,9 @@ sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' libtool
 %install
 %make DESTDIR=%buildroot install
 
+
+%files
+
 %files -n %libvncserver
 %doc AUTHORS ChangeLog INSTALL NEWS README TODO
 %_libdir/libvncserver.so.%vncserver_sover
@@ -141,6 +148,9 @@ sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' libtool
 
 
 %changelog
+* Thu Sep 19 2013 Sergey V Turchin <zerg@altlinux.org> 0.9.9-alt3
+- fix depends (ALT#29374)
+
 * Wed Sep 18 2013 Sergey V Turchin <zerg@altlinux.org> 0.9.9-alt2
 - split libraries
 
