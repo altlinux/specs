@@ -1,7 +1,7 @@
 %define oname zest.releaser
 
 Name: python-module-%oname
-Version: 3.44
+Version: 3.46
 Release: alt1
 
 Summary: Software releasing made easy and repeatable
@@ -70,6 +70,9 @@ touch %buildroot%python_sitelibdir/zest/__init__.py
 %python_sitelibdir/zest/__init__.py*
 
 %changelog
+* Thu Sep 19 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.46-alt1
+- Version 3.46
+
 * Wed Apr 03 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.44-alt1
 - Initial build for Sisyphus
 
