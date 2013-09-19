@@ -2,7 +2,7 @@
 
 %define prefx python-module-twisted
 Name: %prefx-core
-Version: 13.0.0
+Version: 13.1.0
 Release: alt1
 %setup_python_module twisted-core
 Summary: An asynchronous networking framework written in Python
@@ -502,6 +502,9 @@ touch %buildroot%python_sitelibdir/twisted/trial/__init__.py
 %exclude %python_sitelibdir/twisted/pair/test
 
 %changelog
+* Thu Sep 19 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 13.1.0-alt1
+- Version 13.1.0
+
 * Thu Apr 04 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 13.0.0-alt1
 - Version 13.0.0
 
