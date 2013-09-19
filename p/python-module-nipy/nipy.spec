@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.4.0
-Release: alt1.git20130903
+Release: alt2.git20130903
 Summary: The neuroimaging in python (NIPY) project
 License: MIT
 Group: Development/Python
@@ -136,7 +136,7 @@ rm -f %buildroot%python_sitelibdir/nipy/examples/ds105/parallel_run.py
 %exclude %python_sitelibdir/%oname/pickle
 %endif
 %exclude %python_sitelibdir/*/examples
-%exclude %python_sitelibdir/*/testing
+%exclude %python_sitelibdir/*/test*
 %exclude %python_sitelibdir/*/*/tests
 %exclude %python_sitelibdir/*/*/*/tests
 %exclude %python_sitelibdir/*/*/*/testing
@@ -159,7 +159,7 @@ rm -f %buildroot%python_sitelibdir/nipy/examples/ds105/parallel_run.py
 
 %files tests
 %python_sitelibdir/*/*/*/test
-%python_sitelibdir/*/testing
+%python_sitelibdir/*/test*
 %python_sitelibdir/*/*/tests
 %python_sitelibdir/*/*/*/tests
 %python_sitelibdir/*/*/*/testing
@@ -167,6 +167,9 @@ rm -f %buildroot%python_sitelibdir/nipy/examples/ds105/parallel_run.py
 #python_sitelibdir/*/*/*/*/*/tests
 
 %changelog
+* Thu Sep 19 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.0-alt2.git20130903
+- Moved all tests into tests subpackage
+
 * Wed Sep 18 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.0-alt1.git20130903
 - New snapshot
 
