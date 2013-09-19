@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 4.0.0
-Release: alt2.a1
+Release: alt3
 Summary: Daemon process control library and tools for Unix-based systems
 License: ZPL
 Group: Development/Python
@@ -119,6 +119,9 @@ mv %buildroot%_bindir/zdaemon %buildroot%_bindir/zdaemon3
 %endif
 
 %changelog
+* Thu Sep 19 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.0-alt3
+- Version 4.0.0
+
 * Mon Apr 15 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.0-alt2.a1
 - Use 'find... -exec...' instead of 'for ... $(find...'
 
