@@ -2,11 +2,9 @@
 # $Id: dialog,v 1.5 2003/09/05 10:17:48 grigory Exp $
 
 Name: dialog
-Version: 1.1
-Release: alt6.1
-%define snapshot 20110302
-
-Packager: Stanislav Ievlev <inger@altlinux.org>
+Version: 1.2
+Release: alt1
+%define snapshot 20130902
 
 Summary: A utility for creating TTY dialog boxes
 License: LGPL
@@ -14,7 +12,8 @@ Group: Development/Other
 
 Url: http://invisible-island.net/dialog/
 Source: ftp://invisible-island.net/dialog/%name-%version.tar
-Patch0: %name-link.patch
+Patch1: dialog-incdir.patch
+Patch2: dialog-multilib.patch
 Provides: cdialog lib%name-devel
 Obsoletes: cdialog
 
@@ -56,7 +55,8 @@ Static dialog library.
 
 %prep
 %setup
-%patch0 -p1
+%patch1 -p1 -b .incdir
+%patch2 -p1 -b .multilib
 
 %build
 %configure \
@@ -68,12 +68,12 @@ Static dialog library.
 
 %install
 %makeinstall_std install-full
-find samples -type f -print0 |xargs -r0 chmod a-x
+#find samples -type f -print0 |xargs -r0 chmod a-x
 
 %find_lang %name
 
 %files -f %name.lang
-%doc README samples
+%doc CHANGES COPYING README samples
 %_bindir/dialog
 %_man1dir/dialog.*
 
@@ -90,6 +90,9 @@ find samples -type f -print0 |xargs -r0 chmod a-x
 %_libdir/*.a
 
 %changelog
+* Thu Sep 19 2013 Slava Dubrovskiy <dubrsl@altlinux.org> 1.2-alt1
+- new version
+
 * Thu Feb 02 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1-alt6.1
 - Removed bad RPATH
 
