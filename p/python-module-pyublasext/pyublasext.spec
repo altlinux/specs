@@ -1,7 +1,7 @@
 %define oname pyublasext
 Name: python-module-%oname
 Version: 0.92.4
-Release: alt6.git20130314
+Release: alt6.git20130722
 Summary: Added functionality for PyUblas
 License: BSD
 Group: Development/Python
@@ -66,6 +66,9 @@ This package contains development files of PyUblasExt.
 %_includedir/*
 
 %changelog
+* Thu Sep 19 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.92.4-alt6.git20130722
+- New snapshot
+
 * Tue Apr 02 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.92.4-alt6.git20130314
 - New snapshot
 
