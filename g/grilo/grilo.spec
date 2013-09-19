@@ -1,7 +1,7 @@
 %define ver_major 0.2
 
 Name: grilo
-Version: %ver_major.6
+Version: %ver_major.7
 Release: alt1
 Summary: Content discovery framework
 Group: Sound
@@ -137,6 +137,9 @@ rm -f %buildroot%_bindir/grilo-simple-playlist
 %_gtk_docdir/*
 
 %changelog
+* Thu Sep 19 2013 Alexey Shabalin <shaba@altlinux.ru> 0.2.7-alt1
+- 0.2.7
+
 * Thu May 16 2013 Alexey Shabalin <shaba@altlinux.ru> 0.2.6-alt1
 - 0.2.6
 
