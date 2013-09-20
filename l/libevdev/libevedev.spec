@@ -2,7 +2,7 @@
 
 Name: libevdev
 Version: 0.4
-Release: alt1
+Release: alt1.1
 
 Summary: kernel evdev device wrapper library
 Group: System/Libraries
@@ -30,7 +30,9 @@ that are needed to write applications that use %name.
 
 %build
 %autoreconf
-%configure --disable-static
+%configure --disable-static \
+	--disable-gcov
+
 %make_build
 
 %install
@@ -49,6 +51,9 @@ that are needed to write applications that use %name.
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Fri Sep 20 2013 Yuri N. Sedunov <aris@altlinux.org> 0.4-alt1.1
+- disable coverage testing
+
 * Fri Sep 20 2013 Yuri N. Sedunov <aris@altlinux.org> 0.4-alt1
 - first build for Sisyphus
 
