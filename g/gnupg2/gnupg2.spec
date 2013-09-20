@@ -1,5 +1,5 @@
 Name: gnupg2
-Version: 2.0.20
+Version: 2.0.21
 Release: alt1
 
 Group: Text tools
@@ -103,6 +103,9 @@ install -pm644 AUTHORS NEWS THANKS %buildroot%docdir/
 %docdir
 
 %changelog
+* Fri Sep 20 2013 Dmitry V. Levin <ldv@altlinux.org> 2.0.21-alt1
+- Updated to 2.0.21.
+
 * Tue Jun 25 2013 Dmitry V. Levin <ldv@altlinux.org> 2.0.20-alt1
 - Updated to 2.0.20.
 
