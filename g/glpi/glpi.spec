@@ -2,7 +2,7 @@
 
 
 Name: glpi
-Version: 0.84.1
+Version: 0.84.2
 Release: alt1
 
 
@@ -145,6 +145,10 @@ find $RPM_BUILD_ROOT \( -name 'Thumbs.db' -o -name 'Thumbs.db.gz' \) -print -del
 
 
 %changelog
+* Fri Sep 20 2013 Pavel Zilke <zidex at altlinux dot org> 0.84.2-alt1
+- Security fixes:
+ + CVE-2013-5696 : SQL Injection, PHP Code Execution, CSRF 
+
 * Tue Sep 10 2013 Pavel Zilke <zidex at altlinux dot org> 0.84.1-alt1
 - New version 0.84.1
 
