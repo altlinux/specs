@@ -1,7 +1,7 @@
 %define oname pyramid_restler
 Name: python-module-%oname
 Version: 0.1a4
-Release: alt1
+Release: alt2
 Summary: RESTful views for Pyramid
 License: MIT
 Group: Development/Python
@@ -49,11 +49,15 @@ This package contains tests for pyramid_restler.
 %doc *.txt examples
 %python_sitelibdir/*
 %exclude %python_sitelibdir/*/tests.*
+%exclude %python_sitelibdir/examples
 
 %files tests
 %python_sitelibdir/*/tests.*
 
 %changelog
+* Fri Sep 20 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1a4-alt2
+- Removed %python_sitelibdir/examples from main package
+
 * Thu Sep 19 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1a4-alt1
 - Version 0.1a4
 
