@@ -1,6 +1,6 @@
 Name: dhcpcd
 Epoch: 1
-Version: 6.0.5
+Version: 6.1.0
 Release: alt1
 
 Summary: DHCP Client
@@ -9,7 +9,6 @@ Group: System/Servers
 
 URL: http://roy.marples.name/projects/%name
 Source: %name-%version.tar
-Source2: 70-vendor-encap
 Patch0: %name-%version-%release.patch
 AutoReq: yes, noshell
 
@@ -41,12 +40,12 @@ which it is running. It also tries to renew the lease time according to RFC2131.
         --servicecmd='/sbin/service "$1" >/dev/null 2>&1' \
         --with-hook=ntp.conf \
         --enable-ipv4 \
-        --enable-ipv6
+        --enable-ipv6 \
+        --without-udev
 %make_build
 
 %install
 %makeinstall_std BINMODE=0755
-install -m 0644 %SOURCE2 %buildroot/lib/%name/%name-hooks/
 
 %triggerpostun -- %name < 1:5.0.0
 if grep -qs '^[[:blank:]]*clientid' %_sysconfdir/%name.conf; then
@@ -67,6 +66,11 @@ fi
 /lib/%name/%name-run-hooks
 
 %changelog
+* Fri Sep 20 2013 Mikhail Efremov <sem@altlinux.org> 1:6.1.0-alt1
+- Disable 'persistent' option by default.
+- Don't package 70-vendor-encap hook.
+- Updated to 6.1.0.
+
 * Mon Aug 12 2013 Mikhail Efremov <sem@altlinux.org> 1:6.0.5-alt1
 - hostname hook: Fix exit status.
 - Actually validate the search list (from upstream git).
