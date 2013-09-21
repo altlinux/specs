@@ -6,7 +6,7 @@
 %def_enable introspection
 
 Name: lib%_name
-Version: %ver_major.0
+Version: %ver_major.2
 Release: alt1
 
 Summary: Library for JavaScript Object Notation format
@@ -89,6 +89,9 @@ GObject introspection devel data for the JSON-GLib library
 %endif
 
 %changelog
+* Sat Sep 21 2013 Yuri N. Sedunov <aris@altlinux.org> 0.16.2-alt1
+- 0.16.2
+
 * Tue Apr 16 2013 Yuri N. Sedunov <aris@altlinux.org> 0.16.0-alt1
 - 0.16.0
 
