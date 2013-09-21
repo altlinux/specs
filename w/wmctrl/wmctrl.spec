@@ -1,46 +1,52 @@
-# vim:set ft=spec: -*- rpm-spec -*- 
 Name: wmctrl
 Version: 1.07
-Release: alt4.qa1
+Release: alt5
 
-Summary: Tool to interact with an EWMH/NetWM compatible X Window Manager.
-Summary(ru_RU.KOI8-R): Утилита для взаимодействия с оконными менеджерами, соответствующими стандартам EWMH/NetWM
-License: GPL
-Group: System/XFree86
-Url: http://sweb.cz/tripie/utils/wmctrl/
-Packager: Gleb Stiblo <ulfr@altlinux.ru>
+Summary: Tool to interact with an EWMH/NetWM compatible X Window Manager
+Summary(ru_RU.UTF-8): пёя┌п╦п╩п╦я┌п╟ п╢п╩я▐ п╡п╥п╟п╦п╪п╬п╢п╣п╧я│я┌п╡п╦я▐ я│ п╬п╨п╬п╫п╫я▀п╪п╦ п╪п╣п╫п╣п╢п╤п╣я─п╟п╪п╦, я│п╬п╬я┌п╡п╣я┌я│я┌п╡я┐я▌я┴п╦п╪п╦ я│я┌п╟п╫п╢п╟я─я┌п╟п╪ EWMH/NetWM
+License: GPLv2
+Group: System/X11
+Url: http://tomas.styblo.name/wmctrl/
 
-Source: %name-%version.tar.gz
+Packager: Igor Zubkov <icesik@altlinux.org>
 
-# Automatically added by buildreq on Thu Sep 04 2008
+Source0: %name-%version.tar.gz
+
+Patch0: 01_64-bit-data.patch
+Patch1: 02_manpage-fixes.patch
+
+# Automatically added by buildreq on Sat Sep 21 2013
 BuildRequires: glib2-devel imake libXmu-devel xorg-cf-files
-
-#BuildRequires: XFree86-devel glib2-devel
 
 %description
 A command line tool to interact with an EWMH/NetWM compatible
 X Window Manager.
 
-%description -l ru_RU.KOI8-R
-Утилита коммандной строки для взаимодействия с оконными менеджерами,
-соответствующими стандартам EWMH/NetWM
-
+%description -l ru_RU.UTF-8
+пёя┌п╦п╩п╦я┌п╟ п╨п╬п╪п╪п╟п╫п╢п╫п╬п╧ я│я┌я─п╬п╨п╦ п╢п╩я▐ п╡п╥п╟п╦п╪п╬п╢п╣п╧я│я┌п╡п╦я▐ я│ п╬п╨п╬п╫п╫я▀п╪п╦ п╪п╣п╫п╣п╢п╤п╣я─п╟п╪п╦,
+я│п╬п╬я┌п╡п╣я┌я│я┌п╡я┐я▌я┴п╦п╪п╦ я│я┌п╟п╫п╢п╟я─я┌п╟п╪ EWMH/NetWM.
 
 %prep
 %setup -q
 
 %build
-%configure 
+%configure
 %make_build
 
 %install
-install -p -m755 -D %name %buildroot/%_x11bindir/%name
+%make_install DESTDIR=%buildroot install
 
 %files
-%_x11bindir/*
-%doc README AUTHORS ChangeLog COPYING 
+%doc AUTHORS ChangeLog README
+%_bindir/*
+%_man1dir/*
 
 %changelog
+* Sat Sep 21 2013 Igor Zubkov <icesik@altlinux.org> 1.07-alt5
+- Sync with wmctrl_1.07-7.debian
+- Update Url
+- Add man page
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.07-alt4.qa1
 - NMU: rebuilt for debuginfo.
 
@@ -54,7 +60,7 @@ install -p -m755 -D %name %buildroot/%_x11bindir/%name
 - fixed typo in summary (#8654)
 
 * Sat May 14 2005 Gleb Stiblo <ulfR@altlinux.ru> 1.07-alt1
-- fixed a formatting bug that made the window list 
+- fixed a formatting bug that made the window list
   unintelligible for desktop_ids == -1 or desktop_ids > 9
 
 * Thu Jan 06 2005 Gleb Stiblo <ulfR@altlinux.ru> 1.06-alt1
