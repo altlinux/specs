@@ -1,5 +1,5 @@
 Name: libmirage
-Version: 2.1.0
+Version: 2.1.1
 Release: alt1
 
 Summary: A CD-ROM image access library
@@ -9,7 +9,7 @@ Group: System/Libraries
 URL: http://cdemu.sourceforge.net
 Packager: Nazarov Denis <nenderus@altlinux.org>
 
-Source0: %name-%version.tar.bz2
+Source0: http://downloads.sourceforge.net/cdemu/%name-%version.tar.bz2
 
 BuildRequires: bzlib-devel cmake glib-networking gobject-introspection-devel gtk-doc glibc-core libGConf liblzma-devel libsamplerate-devel libsndfile-devel time zlib-devel
 
@@ -75,6 +75,9 @@ find %buildroot%_libdir -name *.la -or -name \*.a | xargs rm -f
 %doc %_datadir/gtk-doc/html/%name
 
 %changelog
+* Sat Sep 21 2013 Nazarov Denis <nenderus@altlinux.org> 2.1.1-alt1
+- Version 2.1.1
+
 * Sun Jun 09 2013 Nazarov Denis <nenderus@altlinux.org> 2.1.0-alt1
 - Version 2.1.0
 
