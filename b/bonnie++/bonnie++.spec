@@ -1,5 +1,5 @@
 Name: bonnie++
-Version: 1.03e
+Version: 1.97.1
 Release: alt1
 
 Summary: A program for benchmarking hard drives and filesystems
@@ -7,7 +7,8 @@ License: GPL v2
 Group: Monitoring
 
 Url: http://www.coker.com.au/bonnie++/
-Source: %name-%version.tgz
+Source: %name-1.97.tgz
+Source100: bonnie++.watch
 Packager: Michael Shigorin <mike@altlinux.org>
 
 # Automatically added by buildreq on Fri Apr 23 2004
@@ -42,6 +43,9 @@ ln -s ../sbin/%name %buildroot/%_bindir/
 %doc copyright.txt credits.txt readme.html
 
 %changelog
+* Sat Sep 21 2013 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.97.1-alt1
+- New version (watch file uupdate).
+
 * Tue Apr 07 2009 Michael Shigorin <mike@altlinux.org> 1.03e-alt1
 - 1.03e: added direct io support
 
