@@ -1,5 +1,5 @@
 Name: acl
-Version: 2.2.51
+Version: 2.2.52
 Release: alt1
 
 Summary: ACL manipulation utilities
@@ -106,6 +106,9 @@ fi
 %endif
 
 %changelog
+* Sat Sep 21 2013 Dmitry V. Levin <ldv@altlinux.org> 2.2.52-alt1
+- Updated to v2.2.52-7-gc3ce1b7.
+
 * Tue Sep 20 2011 Dmitry V. Levin <ldv@altlinux.org> 2.2.51-alt1
 - Updated to v2.2.51-1-g3d80b8f.
 
