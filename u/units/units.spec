@@ -1,5 +1,5 @@
 Name: units
-Version: 2.01
+Version: 2.02
 Release: alt1
 
 Summary: A utility for converting amounts from one unit to another
@@ -27,6 +27,7 @@ rm parse.tab.c *.info*
 
 %install
 %makeinstall_std
+ln -s units.1 %buildroot%_man1dir/units_cur.1
 
 %check
 %make_build -k check
@@ -39,6 +40,9 @@ rm parse.tab.c *.info*
 %doc NEWS README
 
 %changelog
+* Sat Sep 21 2013 Dmitry V. Levin <ldv@altlinux.org> 2.02-alt1
+- Updated to 2.02.
+
 * Tue Apr 16 2013 Dmitry V. Levin <ldv@altlinux.org> 2.01-alt1
 - Updated to 2.01.
 - Enabled test suite.
