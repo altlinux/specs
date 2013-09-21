@@ -1,5 +1,5 @@
 Name: e2fsprogs
-Version: 1.42.7
+Version: 1.42.8
 Release: alt1
 
 Summary: The filesystem utilities for the ext2/ext3 filesystems
@@ -282,6 +282,10 @@ chmod -R a+rX,go-w %buildroot%_mandir
 ! fgrep -rl %buildroot %buildroot
 
 %check
+rm -r tests/r_64bit_big_expand tests/r_ext4_big_expand
+%ifarch %ix86
+rm -r tests/r_1024_small_bg
+%endif
 export PATH=/sbin:/usr/sbin:/bin:/usr/bin
 %make_build -k check V=1 && exit ||:
 mv tests/m_no_opt/expect.1{,.tmpfs}
@@ -387,6 +391,9 @@ mv tests/m_no_opt/expect.1{.ext2,}
 %endif # libuuid
 
 %changelog
+* Sat Sep 21 2013 Dmitry V. Levin <ldv@altlinux.org> 1.42.8-alt1
+- Updated to v1.42.8.
+
 * Fri Mar 08 2013 Dmitry V. Levin <ldv@altlinux.org> 1.42.7-alt1
 - Updated to v1.42.7.
 
