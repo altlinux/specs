@@ -1,5 +1,5 @@
 Name: cdemu-daemon
-Version: 2.1.0
+Version: 2.1.1
 Release: alt1
 
 Summary: CDEmu daemon
@@ -9,11 +9,11 @@ Group: System/Servers
 URL: http://cdemu.sourceforge.net
 Packager: Nazarov Denis <nenderus@altlinux.org>
 
-Source0: %name-%version.tar.bz2 
+Source0: http://downloads.sourceforge.net/cdemu/%name-%version.tar.bz2 
 
 BuildRequires: cmake
 BuildRequires: libao-devel >= 0.8.0
-BuildRequires: libmirage-devel >= 2.1.0
+BuildRequires: libmirage-devel >= 2.1.1
 
 %description
 This is CDEmu daemon, the userspace daemon part of the userspace-cdemu suite, a 
@@ -60,6 +60,9 @@ popd
 %_datadir/dbus-1/services/*.service
 
 %changelog
+* Sat Sep 21 2013 Nazarov Denis <nenderus@altlinux.org> 2.1.1-alt1
+- Version 2.1.1
+
 * Sun Jun 09 2013 Nazarov Denis <nenderus@altlinux.org> 2.1.0-alt1
 - Version 2.1.0
 
