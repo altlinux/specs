@@ -1,5 +1,5 @@
 Name: python-module-webpy
-Version: 0.36
+Version: 0.37
 Release: alt1
 Summary: A simple web framework for Python
 Group: Development/Python
@@ -42,6 +42,9 @@ purpose with absolutely no restrictions.
 %python_sitelibdir/web.py-%version-py%_python_version.egg-info
 
 %changelog
+* Sat Sep 21 2013 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.37-alt1
+- New version
+
 * Wed Oct 26 2011 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.36-alt1
 - 0.36
 
