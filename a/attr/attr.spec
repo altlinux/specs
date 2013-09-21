@@ -1,6 +1,6 @@
 Name: attr
-Version: 2.4.46
-Release: alt2
+Version: 2.4.47
+Release: alt1
 
 Summary: Utilities for managing filesystem extended attributes
 License: GPLv2+
@@ -106,6 +106,9 @@ fi
 %endif
 
 %changelog
+* Sat Sep 21 2013 Dmitry V. Levin <ldv@altlinux.org> 2.4.47-alt1
+- Updated to v2.4.47-4-gda8435b.
+
 * Sun Apr 01 2012 Dmitry V. Levin <ldv@altlinux.org> 2.4.46-alt2
 - attr_copy_{fd,file}: handle empty xattr lists efficiently.
 
