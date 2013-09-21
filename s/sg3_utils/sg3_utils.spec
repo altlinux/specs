@@ -1,5 +1,5 @@
 Name: sg3_utils
-Version: 1.35
+Version: 1.36
 Release: alt1
 
 Summary: Utilities for devices that use SCSI command sets
@@ -67,6 +67,9 @@ sed -i s/2:0:0/1:0:0/ lib/Makefile.*
 %_libdir/*.so
 
 %changelog
+* Sat Sep 21 2013 Dmitry V. Levin <ldv@altlinux.org> 1.36-alt1
+- Updated to 1.36.
+
 * Mon Apr 08 2013 Dmitry V. Levin <ldv@altlinux.org> 1.35-alt1
 - Updated to 1.35.
 
