@@ -1,6 +1,6 @@
 Name: mediatomb
 Version: 0.12.1
-Release: alt9
+Release: alt10
 
 Summary: UPnP AV Mediaserver for Linux
 Group: System/Servers
@@ -70,6 +70,9 @@ install -pD -m0644 %SOURCE3 %buildroot%systemd_unitdir/mediatomb.service
 %attr(3770,root,_mediatomb) %dir %_localstatedir/%name
 
 %changelog
+* Sat Sep 21 2013 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.12.1-alt10
+- rebuilt with recent libav
+
 * Sun Apr 07 2013 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.12.1-alt9
 - use libmysqlclient-devel
 
