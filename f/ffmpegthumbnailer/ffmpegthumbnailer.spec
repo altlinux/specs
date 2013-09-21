@@ -1,7 +1,7 @@
 Name: ffmpegthumbnailer
 Summary: Lightweight video thumbnailer that can be used by file managers
 Version: 2.0.8
-Release: alt1
+Release: alt2
 
 License: GPLv2
 Group: Graphics
@@ -69,6 +69,9 @@ developers to generate thumbnails in their projects
 %_pkgconfigdir/*.pc
 
 %changelog
+* Sat Sep 21 2013 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.0.8-alt2
+- rebuilt with libav9
+
 * Thu Mar 21 2013 Sergey V Turchin <zerg@altlinux.org> 2.0.8-alt1
 - new version
 
