@@ -1,5 +1,5 @@
 Name: tzdata
-Version: 2013d
+Version: 2013e
 Release: alt1
 
 Summary: Timezone data
@@ -53,8 +53,10 @@ gij -jar %_datadir/java/javazic.jar -V %version -d zoneinfo/javazi \
 
 %install
 make install TOPDIR=%buildroot/usr/local TZDIR=%buildroot%_datadir/zoneinfo
-mv %buildroot%_datadir/zoneinfo{-,/}posix
 mv %buildroot%_datadir/zoneinfo{-leaps,/right}
+rm %buildroot%_datadir/zoneinfo-posix
+mkdir %buildroot%_datadir/zoneinfo/posix
+cp -al %buildroot%_datadir/zoneinfo/[A-Z]* %buildroot%_datadir/zoneinfo/posix/
 rm %buildroot%_datadir/zoneinfo/localtime
 rm -r %buildroot/usr/local
 
@@ -83,6 +85,9 @@ make -k check_tables
 %endif #with java
 
 %changelog
+* Sat Sep 21 2013 Dmitry V. Levin <ldv@altlinux.org> 2013e-alt1
+- Updated to 2013e.
+
 * Mon Jul 08 2013 Dmitry V. Levin <ldv@altlinux.org> 2013d-alt1
 - Updated to 2013d.
 
