@@ -1,7 +1,7 @@
 Name: john
-Version: 1.7.9.7
+Version: 1.8.0.2
 Release: alt1
-%define charsets_version 20051216
+%define charsets_version 20130529
 
 Summary: John the Ripper password cracker
 License: GPL
@@ -82,11 +82,11 @@ make linux-x86-any CFLAGS="%cflags -fopenmp -DOMP_FALLBACK=1 -DOMP_FALLBACK_BINA
 mv_john omp-%_target_cpu
 eval CPU_FALLBACK="$CPU_FALLBACK"
 OMP_FALLBACK='"john-mmx"'
-make linux-x86-mmx CFLAGS="%cflags -fopenmp -mmmx" CFLAGS_MAIN="%cflags -fopenmp -DCPU_FALLBACK=1 -DCPU_FALLBACK_BINARY='$CPU_FALLBACK' -DOMP_FALLBACK=1 -DOMP_FALLBACK_BINARY='$OMP_FALLBACK'" OMPFLAGS='-fopenmp -mmmx'
+make linux-x86-mmx CFLAGS="%cflags -fopenmp -mmmx" CFLAGS_MAIN="%cflags -fopenmp -DCPU_FALLBACK=1 -DCPU_FALLBACK_BINARY='$CPU_FALLBACK' -DOMP_FALLBACK=1 -DOMP_FALLBACK_BINARY='$OMP_FALLBACK' -DHAVE_CRYPT" OMPFLAGS='-fopenmp -mmmx'
 mv_john omp-mmx
 eval CPU_FALLBACK="$CPU_FALLBACK"
 OMP_FALLBACK='"john-sse2"'
-make linux-x86-sse2 CFLAGS="%cflags -fopenmp -msse2" CFLAGS_MAIN="%cflags -fopenmp -DCPU_FALLBACK=1 -DCPU_FALLBACK_BINARY='$CPU_FALLBACK' -DOMP_FALLBACK=1 -DOMP_FALLBACK_BINARY='$OMP_FALLBACK'" OMPFLAGS='-fopenmp -msse2'
+make linux-x86-sse2 CFLAGS="%cflags -fopenmp -msse2" CFLAGS_MAIN="%cflags -fopenmp -DCPU_FALLBACK=1 -DCPU_FALLBACK_BINARY='$CPU_FALLBACK' -DOMP_FALLBACK=1 -DOMP_FALLBACK_BINARY='$OMP_FALLBACK' -DHAVE_CRYPT" OMPFLAGS='-fopenmp -msse2'
 %if_enabled avx
 mv_john omp-sse2
 OMP_FALLBACK='\"john-avx\"'
@@ -142,7 +142,7 @@ install -pm644 run/password.lst \
 	john-charsets-%charsets_version/*.chr \
 	%buildroot%_datadir/john/
 ln -r -s %buildroot/etc/john/john.conf %buildroot%_datadir/john/
-install -pm644 run/{mailer,relbench} doc/
+install -pm644 run/{mailer,makechr,relbench} doc/
 
 %files
 %doc doc/*
@@ -154,6 +154,9 @@ install -pm644 run/{mailer,relbench} doc/
 %_datadir/john/
 
 %changelog
+* Sun Sep 22 2013 Dmitry V. Levin <ldv@altlinux.org> 1.8.0.2-alt1
+- Synced with 1.8.0.2-owl1.
+
 * Thu Apr 18 2013 Dmitry V. Levin <ldv@altlinux.org> 1.7.9.7-alt1
 - Synced with 1.7.9.7-owl1.
 
