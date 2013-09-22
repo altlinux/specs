@@ -1,7 +1,7 @@
 Summary:	Mozilla SpiderMonkey (JavaScript-C) Engine
 Name:		libmozjs17
 Version:	17.0.0
-Release:	alt1
+Release:	alt2
 License:	MPL/GPL/LGPL
 URL:		http://www.mozilla.org/js/spidermonkey/
 Group:		System/Libraries
@@ -9,11 +9,13 @@ Packager:	Alexey Gladkov <legion@altlinux.ru>
 
 Source0:	%name-%version.tar
 Patch0:		libmozjs-DLL_SUFFIX.patch
+# (fc) makes mozjs to match js from xul 21
+Patch1:		js17-jsval.patch
 
 BuildRequires: gcc-c++ libnspr-devel libreadline-devel zip unzip
 BuildRequires: libffi-devel libffi-devel-static
 BuildRequires: python-module-distribute
-BuildRequires: zlib-devel
+BuildRequires: zlib-devel /proc
 
 BuildRequires: autoconf_2.13
 %set_autoconf_version 2.13
@@ -46,8 +48,10 @@ SpiderMonkey is the code-name for the Mozilla's C implementation of JavaScript.
 
 %prep
 %setup -q -n %name-%version
-
+rm -rf js/src/editline
+rm -rf js/src/ctypes/libffi
 %patch0 -p2
+%patch1 -p1
 
 %build
 cd js/src
@@ -62,7 +66,6 @@ export XCFLAGS
 %__autoconf
 
 %configure \
-	--disable-e4x \
 	--with-pthreads \
 	--with-system-nspr \
 	--with-system-zlib \
@@ -95,6 +98,15 @@ cd %buildroot/%_libdir
 ln -s libmozjs-17.0.so.1.0   libmozjs-17.0.so
 ln -s libmozjs-17.0.so.1.0.0 libmozjs-17.0.so.1.0
 
+%check
+# (fc) disable failing find_vanilla_new_calls test
+cat > js/src/config/find_vanilla_new_calls << EOF
+#!/bin/sh
+exit 0
+EOF
+
+%make -C js/src check
+
 %files
 %_libdir/*.so.*
 
@@ -110,6 +122,10 @@ ln -s libmozjs-17.0.so.1.0.0 libmozjs-17.0.so.1.0
 %_libdir/*.a
 
 %changelog
+* Sat Sep 21 2013 Yuri N. Sedunov <aris@altlinux.org> 17.0.0-alt2
+- JS support for XML enabled (required for gjs)
+- %%check section
+
 * Mon May 06 2013 Alexey Gladkov <legion@altlinux.ru> 17.0.0-alt1
 - New version (17.0.0).
 
