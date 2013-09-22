@@ -1,6 +1,6 @@
 Name: kernel-image-ovz-el
 Version: 2.6.32
-Release: alt102
+Release: alt103
 
 %define kernel_base_version	%version
 %define kernel_extra_version	%nil
@@ -570,6 +570,9 @@ find %buildroot%_docdir/kernel-doc-%base_flavour-%version/DocBook \
 %endif # staging
 
 %changelog
+* Sun Sep 22 2013 Led <led@altlinux.ru> 2.6.32-alt103
+- Update to 042stab081.3
+
 * Thu Aug 29 2013 Led <led@altlinux.ru> 2.6.32-alt102
 - Update to 042stab079.6
 
