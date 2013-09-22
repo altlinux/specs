@@ -1,6 +1,6 @@
 Name: blender
 Version: 2.68a
-Release: alt1
+Release: alt2
 
 Summary: 3D modeling, animation, rendering and post-production
 License: GPL
@@ -15,7 +15,6 @@ Source3: %name-win.desktop
 Patch2: %name-2.47-alt-usertempdir.patch
 Patch3: %name-2.49b-alt-ld.patch
 Patch4: %name-2.49b-alt-qhull.patch
-Patch5: %name-2.62-alt-libav.patch
 Patch6: %name-2.66-alt-libav.patch
 Patch7: 0004-install_in_usr_lib.patch
 Patch8: 0006-locales_directory_install.patch
@@ -23,7 +22,6 @@ Patch9: 0009-do_not_use_version_number_in_the_system_path.patch
 Patch10: 0011-look_for_droid_ttf_with_fontconfig.patch
 Patch11: %name-2.66-alt-pcre.patch
 Patch12: %name-2.67a-rna.patch
-Patch13: %name-2.67b-node_efficiency_tools.patch
 
 BuildRequires(pre): rpm-build-python3
 
@@ -41,9 +39,9 @@ Provides: python%_python3_version(bpy)
 Provides: python%_python3_version(BPyMesh)
 Provides: python%_python3_version(bmesh)
 
-# Automatically added by buildreq on Thu May 09 2013
+# Automatically added by buildreq on Sun Sep 22 2013
 # optimized out: boost-devel cmake cmake-modules fontconfig ilmbase-devel libGL-devel libGLU-devel libX11-devel libXau-devel libXext-devel libXfixes-devel libavcodec-devel libavutil-devel libdc1394-22 libfreetype-devel libopencore-amrnb0 libopencore-amrwb0 libraw1394-11 libstdc++-devel pkg-config python3 python3-base xorg-inputproto-devel xorg-kbproto-devel xorg-xproto-devel zlib-devel
-BuildRequires: boost-devel-headers boost-filesystem-devel boost-locale-devel ctest fontconfig-devel gcc-c++ libSDL-devel libXi-devel libavdevice-devel libavformat-devel libfftw3-devel libglew-devel libjack-devel libjpeg-devel libopenCOLLADA-devel libopenal-devel libopenjpeg-devel libpcre-devel libpng-devel libsndfile-devel libswscale-devel libtiff-devel libxml2-devel openexr-devel python3-dev python3-module-distribute tinyxml-devel
+BuildRequires: boost-devel-headers boost-filesystem-devel boost-locale-devel ctest fontconfig-devel gcc-c++ libSDL-devel libXi-devel libavdevice-devel libavformat-devel libfftw3-devel libglew-devel libjack-devel libjpeg-devel libopenCOLLADA-devel libopenal-devel libopenjpeg-devel libpcre-devel libpng-devel libsndfile-devel libswscale-devel libtiff-devel libxml2-devel openexr-devel python3-dev tinyxml-devel
 
 %description
 Fully integrated creation suite, offering a broad range of essential
@@ -74,7 +72,6 @@ Languages support for blender
 #patch2 -p1
 #patch3 -p2
 #patch4 -p2
-#patch5 -p2
 %patch6 -p1
 %patch7 -p1
 %patch8 -p1
@@ -82,7 +79,6 @@ Languages support for blender
 %patch10 -p1
 %patch11 -p1
 %patch12 -p1
-#patch13 -p1
 
 
 #sed -i 's|\(CFLAGS\=\"\)|\1 -g |' release/plugins/bmake
@@ -176,6 +172,14 @@ install -pD -m644 release/datafiles/locale/languages %buildroot%_datadir/%name/l
 
 
 %changelog
+* Sun Sep 22 2013 Andrey Liakhovets <aoliakh@altlinux.org> 2.68a-alt2
+- COLLADA upstream fixes, to make blender work with OpenCOLLADA-828b603
+  (blender bug #36325 fixed: "Collada Import: Vertex-Groups missing")
+- clean spec from some unneeded patches
+- *-2.66-alt-libav.patch updated  (it also matches with P7 libav*, but:
+  blender-for-P7 now requires separate build, due to av_update_cur_dts)
+- specsubst used to build for Sisyphus and P7
+
 * Thu Aug 01 2013 Andrey Liakhovets <aoliakh@altlinux.org> 2.68a-alt1
 - New release (bugfix)
 
