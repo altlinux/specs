@@ -1,6 +1,9 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-fedora-compat
-BuildRequires: gcc-c++
+# Automatically added by buildreq on Wed Aug 21 2013
+# optimized out: cmake cmake-modules libstdc++-devel pkg-config
+BuildRequires: ctest dos2unix gcc-c++ libpcre-devel libxml2-devel
+
 # END SourceDeps(oneline)
 Group: System/Libraries
 %add_optflags %optflags_shared
@@ -10,24 +13,19 @@ Group: System/Libraries
 # and the soversion will be incremented.
 %global sover 0.1
 
-%global commit 9665d1614b027ffd7815dc745c4fab4d69eb3321
+%global commit 828b60384552b83e55d2af7055f07d2c40b4d3f4
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
 %global upname OpenCOLLADA
-
-# Needs cmake 2.8 so use alternative package on EL.
-%if 0%{?el6}
-%global cmake %cmake28
-%endif
 
 
 Name:           libopenCOLLADA
 Version:        0
-Release:        alt1_16.git%{shortcommit}
+Release:        alt2.git%{shortcommit}
 License:        MIT
 Summary:        Collada 3D import and export libraries
 Url:            https://collada.org/mediawiki/index.php/OpenCOLLADA
 
-Source0:        https://github.com/KhronosGroup/OpenCOLLADA/archive/%{commit}/%{upname}-%{shortcommit}.tar.gz
+Source0:        https://github.com/KhronosGroup/OpenCOLLADA/archive/%{commit}/%{upname}-%{shortcommit}.tar
 Source1:        Changelog
 
 Patch0:         openCOLLADA-svn863-cmake.patch
@@ -37,18 +35,12 @@ Patch3:         openCOLLADA-svn871-memcpy.patch
 Patch4:         openCOLLADA-non-existant_includes.patch
 Patch5:         openCOLLADA-svn876-no_var_tracking_assigenments.patch
 
-BuildRequires:  dos2unix
-BuildRequires:  libfftw3-devel
-BuildRequires:  pcre-devel
-%if 0%{?el6}
-BuildRequires:  cmake28
-%else
-BuildRequires: ctest cmake
-%endif
-BuildRequires:  zlib-devel
-BuildRequires:  libxml2-devel
+#?BuildRequires:  libfftw3-devel
+#?BuildRequires:  zlib-devel
 Source44: import.info
 Provides: openCOLLADA = %{version}-%{release}
+
+Conflicts: blender <= 2.68a-alt1
 
 %description 
 COLLADA is a royalty-free XML schema that enables digital asset
@@ -99,8 +91,8 @@ XML validator for COLLADA files, based on the COLLADASaxFrameworkLoader.
 %setup -q -n %{upname}-%{commit}
 %patch0 -p1 -b .cmake
 %patch1 -p1 -b .libs
-%patch2 -p1 -b .smp
-%patch4 -p1 -b .includes
+#patch2 -p1 -b .smp
+#patch4 -p1 -b .includes
 %patch5 -p1 -b .no_var_trk
 
 # Remove unused bundled libraries
@@ -163,12 +155,23 @@ cp -a Externals/MathMLSolver/include/* %{buildroot}%{_includedir}/MathMLSolver/
 %files devel
 %{_libdir}/*.so
 %{_includedir}/*
+%{_libdir}/cmake/OpenCOLLADA/*.cmake
 
 %files utils
 %{_bindir}/*
 
 
 %changelog
+* Wed Aug 21 2013 Andrey Liakhovets <aoliakh@altlinux.org> 0-alt2.git828b603
+- blender bug #36325 fixed: "Collada Import: Vertex-Groups missing"
+- devel: *.cmake files packaged
+- conflict with blender <= 2.68a-alt1 added
+- updated patches: cmake, libs
+- dropped patches (fixed in upstream): smp_build, non-existant_includes
+- removed:
+ - BuildRequires: zlib-devel, libfftw3-devel (by buildreq)
+ - fedora el6 test for cmake28
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 0-alt1_16.git9665d16
 - update to new release by fcimport
 
