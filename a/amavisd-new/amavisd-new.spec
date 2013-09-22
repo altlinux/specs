@@ -1,6 +1,6 @@
 Name: amavisd-new
 Version: 2.6.6
-Release: alt2
+Release: alt3
 Serial: 1
 
 Summary: A Mail Virus Scanner
@@ -19,31 +19,23 @@ Source8: %name.cron
 Source10: amavisd-av-control
 Source11: amavisd-spam-control
 Source12: amavisd-new.tmpfiles.conf
+Patch: amavisd-perl5.18.patch
+Patch1: amavisd-skipsomedeps.patch
 
 BuildArch: noarch
 Provides: amavisd
 
-AutoReq: yes, noperl
-
 Requires: file
 Requires: perl-Archive-Zip >= 1.14
 Requires: perl-BerkeleyDB 
-Requires: perl-Compress-Zlib >= 1.35
 Requires: perl-Convert-UUlib
 Requires: perl-Convert-TNEF
 Requires: perl-IO-stringy
 Requires: perl-IO-Zlib
 Requires: perl-MailTools
-Requires: perl-MIME-tools >= 1:5.417
-Requires: perl-Net-Server >= 0.91
-Requires: perl-Unix-Syslog
 Requires: perl-Mail-DKIM >= 0.31
 
-BuildRequires: perl-BerkeleyDB
-#BuildRequires: perl-BerkeleyDB perl-Compress-Zlib perl-Convert-BinHex perl-IO-stringy 
-#BuildRequires: perl-MIME-tools perl-MailTools perl-Net-Server perl-TimeDate perl-Unix-Syslog
-#BuildRequires: perl-IO-Zlib perl-Unicode-Map perl-Unicode-String
-#BuildRequires: perl-Mail-DKIM
+BuildRequires: perl-BerkeleyDB perl-IO-stringy perl-Unix-Syslog perl-Compress-Zlib perl-MIME-tools perl-Net-Server
 
 %description
 Amavisd-new is a high-performance interface between mailer (MTA) and 
@@ -205,6 +197,8 @@ All subpackages Amavisd-new.
 
 %prep
 %setup -q
+%patch -p2
+%patch1 -p2
 
 %install
 mkdir -p \
@@ -298,6 +292,10 @@ install -m 644 %SOURCE12 %buildroot%_sysconfdir/tmpfiles.d/amavisd.conf
 %files complete
 
 %changelog
+* Sun Sep 22 2013 Vladimir Lettiev <crux@altlinux.ru> 1:2.6.6-alt3
+- fixed amavisd-new with Perl 5.18
+- enable auto requires
+
 * Wed Oct 05 2011 Alexey Shabalin <shaba@altlinux.ru> 1:2.6.6-alt2
 - fix perm for config dir
 
