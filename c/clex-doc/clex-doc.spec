@@ -1,18 +1,15 @@
 %define bname clex
 %define Name CLEX
 Name: %bname-doc
-Version: 4.2
+Version: 4.6.6
 Release: alt1
 Summary: HTML documentation for %Name file manager
-License: %gpl2plus
+License: GPLv2+
 Group: Documentation
 URL: http://www.%bname.sk
 Source: %url/download/%bname-html-help-%version.tar
 Provides: %bname-html-help = %version-%release
 BuildArch: noarch
-Packager: Led <led@altlinux.ru>
-
-BuildRequires(pre): rpm-build-licenses
 
 %description
 %Name (pronounced KLEKS) is a file manager with a full-screen user
@@ -38,6 +35,12 @@ install -m 0644 *.{css,html,png} %buildroot%_docdir/%bname-%version/html/
 
 
 %changelog
+* Sun Sep 22 2013 Led <led@altlinux.ru> 4.6.6-alt1
+- 4.6.6
+
+* Tue Apr 07 2009 Led <led@altlinux.ru> 4.4-alt1
+- 4.4
+
 * Sun Mar 15 2009 Led <led@altlinux.ru> 4.2-alt1
 - 4.2
 
