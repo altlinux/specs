@@ -3,14 +3,12 @@
 %def_without python3
 
 Name: python-module-%oname
-Version: 3.2.4
+Version: 3.2.6
 Release: alt1
 
 Summary: eGenix.com mx Base Distribution
 License: eGenix.com Public License Agreement
 Group: Development/Python
-
-Packager: Python Development Team <python@packages.altlinux.org>
 
 Source: %name-%version.tar
 
@@ -114,6 +112,9 @@ rm -f %buildroot/%python3_sitelibdir/mx/{BeeBase/showBeeDict.py,Misc/FileLock.py
 %endif
 
 %changelog
+* Mon Sep 23 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.2.6-alt1
+- Version 3.2.6
+
 * Fri Jun 22 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.2.4-alt1
 - Version 3.2.4
 
