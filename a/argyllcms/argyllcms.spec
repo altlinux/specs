@@ -1,7 +1,7 @@
 %define _name hargyllcms
 
 Name: argyllcms
-Version: 1.5.1
+Version: 1.6.0
 Release: alt1
 
 Summary: ICC compatible color management system
@@ -73,6 +73,9 @@ This package contains the Argyll color management system documentation.
 %exclude %_datadir/doc
 
 %changelog
+* Mon Sep 23 2013 Yuri N. Sedunov <aris@altlinux.org> 1.6.0-alt1
+- 1.6.0
+
 * Mon Jul 01 2013 Yuri N. Sedunov <aris@altlinux.org> 1.5.1-alt1
 - 1.5.1
 
