@@ -1,9 +1,8 @@
 
 %define rname amarok
 Name: kde4-%rname
-Version: 2.7.1
-Release: alt1
-#define beta 20090812
+Version: 2.8.0
+Release: alt2
 
 Summary: Amarok is a music player for KDE.
 License: GPLv2
@@ -14,23 +13,32 @@ Requires: qtscriptbindings libqt4-sql-sqlite
 Requires: kde4multimedia-audiocd
 Conflicts: amarok <= 1.4.10-alt10
 
-Source0: ftp://ftp.kde.org/pub/kde/stable/amarok/%version/src/%rname-%version%{?beta:.%beta}.tar
-Source1: mysql.tar
-Patch1: amarok-2.7.0-alt-mysql.patch
-# RH
-Patch50: amarok-2.4.3-qtscript_not_required.patch
-
+Source0: ftp://ftp.kde.org/pub/kde/stable/amarok/%version/src/%rname-%version.tar
+# upstream
+Patch1: 0001-Don-t-add-the-analyzer-applet-when-Phonon-doesn-t-su.patch
+Patch2: 0002-Don-t-allow-adding-Analyzer-applet-when-not-supporte.patch
+#
+Patch4: 0004-Fix-reading-Album-Artist-Compilation-Disc-Number-in-.patch
+Patch5: 0005-Sync-playlist-search-config-instantly.patch
+Patch6: 0006-Don-t-suppress-html-tag-like-characters.patch
+Patch7: 0007-Fix-performance-issue-with-large-podcast-feeds.patch
+# SuSE
+Patch21: flac_mimetype_bnc671581.diff
+# ALT
+Patch100: amarok-2.8.0-alt-fix-compile.patch
 
 # Automatically added by buildreq on Thu Nov 19 2009 (-bi)
 #BuildRequires: dbus-tools-gui doxygen gcc-c++ git-core glibc-devel-static groff-ps kde4libs-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXdamage-devel libXdmcp-devel libXpm-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libcurl-devel libgcrypt-devel libgio-devel libgpod-devel libgtk+2-common-devel liblastfm-devel libloudmouth-devel libmtp-devel libncursesw-devel libqca2-devel libqt3-devel libtag-devel libtag-extras-devel libxkbfile-devel libxml2-devel qtscriptbindings rpm-build-ruby tetex-latex time xorg-xf86vidmodeproto-devel
-BuildRequires(pre): kde4libs-devel kde4base-runtime-devel libmysqlclient-devel
+BuildRequires(pre): kde4libs-devel kde4base-runtime-devel
+BuildRequires: libmariadb-devel libmariadbembedded-devel
 BuildRequires: dbus-tools-gui doxygen gcc-c++ glibc-devel groff-ps
 BuildRequires: libtag-devel >= 1.6 libtag-extras-devel >= 1.0
 BuildRequires: libcurl-devel libgcrypt-devel libgio-devel libgpod-devel libgtk+2-common-devel liblastfm-devel
 BuildRequires: libloudmouth-devel libmtp-devel libncursesw-devel libssl-devel libqca2-devel libxml2-devel
 BuildRequires: qtscriptbindings rpm-build-ruby libofa-devel libgdk-pixbuf-devel glib2-devel
-BuildRequires: libtunepimp-devel libusb-devel libvisual0.4-devel libSDL-devel
-BuildRequires: qjson-devel libavformat-devel libavcodec-devel libmygpo-qt-devel
+BuildRequires: libtunepimp-devel libusb-devel libSDL-devel
+BuildRequires: qjson-devel libmygpo-qt-devel
+BuildRequires: libavformat-devel libavcodec-devel libavutil-devel
 BuildRequires: soprano soprano-backend-redland libsoprano-devel kde4-nepomuk-core-devel
 BuildRequires: /proc
 
@@ -94,62 +102,23 @@ amarok-mediadevice-daap is a plugin for interoperability
 with various devices that uses Media Transfer Protocol (MTP)
 
 %prep
-%setup -q -n %rname-%version%{?beta:.%beta} -a 1
+%setup -q -n %rname-%version
 %patch1 -p1
-%patch50 -p1
-pushd mysql
-%autoreconf
-popd
+%patch2 -p1
+#
+%patch4 -p1
+%patch5 -p1
+%patch6 -p1
+%patch7 -p1
+%patch21 -p1
+%patch100 -p1
 
 %build
-%if 1
-if ! [ -f %_builddir/%rname-%version%{?beta:.%beta}/mysql-installed/exclude/lib/mysql/libmysqld.a \
-    -a -f %_builddir/%rname-%version%{?beta:.%beta}/mysql-installed/exclude/lib/mysql/libmysqlclient.a ]
-then
-pushd mysql
-CFLAGS="%optflags %optflags_shared" CXXFLAGS="%optflags %optflags_shared" LDFLAGS="-L%_libdir" \
-%configure \
-    --prefix=/exclude \
-    --bindir=/exclude/bin \
-    --libdir=/exclude/lib \
-    --datadir=%_K4apps/amarok \
-    --without-server \
-    --with-embedded-server \
-    --without-docs \
-    --without-man \
-    --without-bench \
-    --without-ssl \
-    --without-extra-tools \
-    --without-libwrap \
-    --disable-shared \
-    --enable-static \
-    --with-plugins=none \
-    --with-plugin-myisam
-#    --with-charset=utf8 \
-#    --with-collation=utf8_general_ci \
-
-%make_build
-%make install DESTDIR=%_builddir/%rname-%version%{?beta:.%beta}/mysql-installed
-popd
-fi
-%endif
-#MYSQL_LIBRARIES=`%_builddir/%rname-%version%{?beta:.%beta}/mysql-installed/exclude/bin/mysql_config --libs`
-#MYSQL_EMBEDDED_CFLAGS=`%_builddir/%rname-%version%{?beta:.%beta}/mysql-installed/exclude/bin/mysql_config --cflags`
-#MYSQL_EMBEDDED_LIBRARIES=`%_builddir/%rname-%version%{?beta:.%beta}/mysql-installed/exclude/bin/mysql_config --libmysqld-libs`
-#    -DMYSQL_EMBEDDED_LIBRARIES:FILEPATH=%_builddir/%rname-%version%{?beta:.%beta}/mysql-installed/exclude/lib/mysql/libmysqld.a \
-#    -DMYSQL_LIBRARIES:FILEPATH=%_builddir/%rname-%version%{?beta:.%beta}/mysql-installed/exclude/lib/mysql/libmysqlclient.a
-#    -DMYSQL_FOUND:BOOL=TRUE \
-#    -DMYSQL_EMBEDDED_FOUND:BOOL=TRUE \
 %K4cmake \
-    -DMYSQLCONFIG_EXECUTABLE=%_builddir/%rname-%version%{?beta:.%beta}/mysql-installed/exclude/bin/mysql_config \
-    -DMYSQL_INCLUDE_DIR:PATH=%_builddir/%rname-%version%{?beta:.%beta}/mysql-installed/%_includedir/mysql \
     -DKDE4_BUILD_TESTS:BOOL=OFF
 %K4make
 
 %install
-pushd mysql
-%make install DESTDIR=%buildroot
-popd
 %K4install
 if [ -d %buildroot/%_K4datadir/bin ]; then
     mkdir -p %buildroot/%_kde4_bindir/
@@ -166,11 +135,7 @@ fi
 %K4find_lang --with-kde --append --output=%rname.lang amarokpkg
 
 
-
 %files -f %rname.lang
-%exclude /exclude
-%exclude %_includedir/mysql
-%exclude %_K4apps/%rname/mysql/mysql*.server
 %doc AUTHORS ChangeLog README
 %ifdef _kde_alternate_placement
 %_kde4_bindir/amarok
@@ -181,6 +146,7 @@ fi
 %_kde4_bindir/amzdownloader
 %_kde4_xdg_apps/amarok.desktop
 %_kde4_xdg_apps/amarok_containers.desktop
+%_kde4_xdg_apps/amzdownloader.desktop
 %_kde4_iconsdir/hicolor/*/apps/amarok.*
 %else
 %_K4bindir/amarok
@@ -191,14 +157,15 @@ fi
 %_K4bindir/amzdownloader
 %_K4xdg_apps/amarok.desktop
 %_K4xdg_apps/amarok_containers.desktop
+%_K4xdg_apps/amzdownloader.desktop
 %_K4iconsdir/hicolor/*/apps/amarok.*
 %endif
-%_K4apps/%rname/
-%_K4conf_update/amarok*
+#
 %_K4libdir/libamarokcore.so.*
 %_K4libdir/libamaroklib.so.*
 %_K4libdir/libamarokpud.so.*
 %_K4libdir/libamarokocsclient.so.*
+%_K4libdir/libamarokshared.so.*
 %_K4libdir/libamarok-sqlcollection.so.*
 %_K4libdir/libamarok-transcoding.so.*
 %_K4libdir/libampache_account_login.so
@@ -210,12 +177,10 @@ fi
 %_K4lib/amarok_data_engine_*.so
 %_K4lib/amarok_service_*.so
 %_K4lib/kcm_amarok_service_*.so
-%_K4lib/amarok_appletscript_simple_javascript.so
-%_K4lib/amarok_runnerscript_javascript.so
 #
+%_K4apps/%rname/
 %_K4apps/desktoptheme/default/widgets/amarok-*.svg
-#%_K4apps/desktoptheme/Amarok-Mockup/
-%_K4apps/solid/actions/amarok-play-audiocd.desktop
+%_K4apps/solid/actions/amarok-*.desktop
 #
 %_K4srv/ServiceMenus/amarok_append.desktop
 %_K4srv/amarok.protocol
@@ -225,8 +190,6 @@ fi
 %_K4srv/amarok-context-applet-*.desktop
 %_K4srv/amarok-data-engine-*.desktop
 %_K4srv/amarok_service_*.desktop
-%_K4srv/amarok-scriptengine-applet-simple-javascript.desktop
-%_K4srv/amarok-scriptengine-runner-javascript.desktop
 %_K4srv/amaroklastfm.protocol
 %_K4srvtyp/amarok_codecinstall.desktop
 %_K4srvtyp/amarok_context_applet.desktop
@@ -236,18 +199,20 @@ fi
 %_K4dbus_interfaces/org.freedesktop.MediaPlayer.*.xml
 %_K4dbus_interfaces/org.kde.amarok.*.xml
 #
+%_K4conf_update/amarok*
 %_K4cfg/amarok*
 %_K4conf/amarok*
-#
-#%_K4lib/amarok_device_massstorage.so
-#%_K4srv/amarok_device_massstorage.desktop
-#%_K4lib/amarok_device_nfs.so
-#%_K4srv/amarok_device_nfs.desktop
-#%_K4lib/amarok_device_smb.so
-#%_K4srv/amarok_device_smb.desktop
+%_K4xdg_mime/amzdownloader.xml
 
 
 %changelog
+* Mon Sep 23 2013 Sergey V Turchin <zerg@altlinux.org> 2.8.0-alt2
+- sync patches with SuSE
+
+* Tue Sep 17 2013 Sergey V Turchin <zerg@altlinux.org> 2.8.0-alt1
+- new version
+- built with external libmysqld
+
 * Tue Jul 30 2013 Sergey V Turchin <zerg@altlinux.org> 2.7.1-alt1
 - new version
 
