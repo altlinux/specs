@@ -1,6 +1,6 @@
 Name: blender
 Version: 2.68a
-Release: alt2
+Release: alt3
 
 Summary: 3D modeling, animation, rendering and post-production
 License: GPL
@@ -38,6 +38,8 @@ Provides: python%_python3_version(Blender)
 Provides: python%_python3_version(bpy)
 Provides: python%_python3_version(BPyMesh)
 Provides: python%_python3_version(bmesh)
+
+Conflicts: libopenCOLLADA <= 0-alt1_16.git9665d16
 
 # Automatically added by buildreq on Sun Sep 22 2013
 # optimized out: boost-devel cmake cmake-modules fontconfig ilmbase-devel libGL-devel libGLU-devel libX11-devel libXau-devel libXext-devel libXfixes-devel libavcodec-devel libavutil-devel libdc1394-22 libfreetype-devel libopencore-amrnb0 libopencore-amrwb0 libraw1394-11 libstdc++-devel pkg-config python3 python3-base xorg-inputproto-devel xorg-kbproto-devel xorg-xproto-devel zlib-devel
@@ -172,6 +174,9 @@ install -pD -m644 release/datafiles/locale/languages %buildroot%_datadir/%name/l
 
 
 %changelog
+* Mon Sep 23 2013 Andrey Liakhovets <aoliakh@altlinux.org> 2.68a-alt3
+- lost conflict with libopenCOLLADA <= 0-alt1_16.git9665d16 added
+
 * Sun Sep 22 2013 Andrey Liakhovets <aoliakh@altlinux.org> 2.68a-alt2
 - COLLADA upstream fixes, to make blender work with OpenCOLLADA-828b603
   (blender bug #36325 fixed: "Collada Import: Vertex-Groups missing")
