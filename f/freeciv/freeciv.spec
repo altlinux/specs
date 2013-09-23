@@ -1,5 +1,5 @@
 Name: freeciv
-Version: 2.3.4
+Version: 2.4.0
 Release: alt1
 
 Summary: Turn-based strategy game inspired by the history of human civilization
@@ -19,7 +19,7 @@ Requires: %name-server = %version-%release
 
 # Automatically added by buildreq on Tue Aug 09 2011 (-bi)
 # optimized out: elfutils fontconfig fontconfig-devel glib2-devel libX11-devel libatk-devel libcairo-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libpango-devel libstdc++-devel pkg-config xorg-xproto-devel
-BuildRequires: bzlib-devel gcc-c++ hardlink libgtk+2-devel liblua5-devel libreadline-devel zlib-devel
+BuildRequires: bzlib-devel gcc-c++ hardlink libcurl-devel libgtk+2-devel liblua5-devel liblzma-devel libreadline-devel zlib-devel
 
 %package common
 Summary: The Freeciv multi-player strategy game common files
@@ -126,24 +126,21 @@ This package contains the Freeciv client data files.
 %prep
 %setup -n %srcname
 %patch -p1
-rm -r dependencies/lua-5.1
 
 %build
 rm *.m4
 %autoreconf
 
-%configure --enable-shared --disable-static --enable-server --enable-client=gtk2 --disable-silent-rules
+%configure \
+	--enable-shared \
+	--disable-static \
+	--enable-server \
+	--enable-client=gtk2 \
+	--enable-sys-lua \
+	--disable-silent-rules
 %make_build MSUBDIRS=
 
 %install
-rln()
-{
-	local target=$1 && shift
-	local source=$1 && shift
-	target=`relative "$target" "$source"`
-	ln -s -nf "$target" "%buildroot$source"
-}
-
 %makeinstall_std MSUBDIRS=
 rm %buildroot%_libdir/libfreeciv.so
 
@@ -152,9 +149,9 @@ install -pD -m755 %_sourcedir/freeciv-wrapper \
 sed -i 's,@LIBEXECDIR@,%_libexecdir,g' \
 	%buildroot%_libexecdir/%name/wrapper
 mv %buildroot%_bindir/freeciv-server %buildroot%_libexecdir/%name/
-rln %_libexecdir/%name/wrapper %_bindir/freeciv-server
+ln -rs %buildroot%_libexecdir/%name/wrapper %buildroot%_bindir/freeciv-server
 
-rm %buildroot%_man6dir/freeciv-{gtk2,sdl,xaw}.6
+rm %buildroot%_man6dir/freeciv-{gtk2,gtk3,manual,qt,sdl,xaw}.6
 ln -s freeciv-client.6 %buildroot%_man6dir/freeciv-gtk2.6
 
 # docs.
@@ -180,6 +177,7 @@ hardlink -cv %buildroot
 %_libdir/libfreeciv.*
 
 %files server
+%config /etc/freeciv/database.lua
 %_bindir/freeciv-server
 %dir %_libexecdir/%name
 %_libexecdir/%name/freeciv-server
@@ -188,12 +186,13 @@ hardlink -cv %buildroot
 %_desktopdir/%name-server.desktop
 %_iconsdir/hicolor/*/apps/%name-server.png
 %_man6dir/freeciv-server.*
+%_datadir/%name/cimpletoon*
 %_datadir/%name/civ*
 %_datadir/%name/default*
 %_datadir/%name/experimental*
 %_datadir/%name/multiplayer*
 %_datadir/%name/nation
-%_datadir/%name/scenario
+%_datadir/%name/scenarios
 
 %files client
 %_bindir/freeciv-gtk2
@@ -223,6 +222,9 @@ hardlink -cv %buildroot
 %_datadir/%name/wonders*
 
 %changelog
+* Sun Sep 22 2013 Dmitry V. Levin <ldv@altlinux.org> 2.4.0-alt1
+- Updated to 2.4.0 release.
+
 * Sat Feb 16 2013 Dmitry V. Levin <ldv@altlinux.org> 2.3.4-alt1
 - Updated to 2.3.4 release.
 
