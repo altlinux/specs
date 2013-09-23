@@ -2,10 +2,11 @@
 %def_with python3
 
 Summary: Docutils -- Python Documentation Utilities
-Version: 0.11
-Release: alt2.svn20130117
+Version: 0.12
+Release: alt1.svn20130917
 %setup_python_module %oname
 Name: %packagename
+# http://svn.code.sf.net/p/docutils/code/trunk/docutils/
 Source0: %modulename-%version.tar.gz
 License: public domain, Python, BSD, GPL (see COPYING.txt)
 Group: Development/Python
@@ -119,6 +120,9 @@ popd
 %endif
 
 %changelog
+* Mon Sep 23 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.12-alt1.svn20130917
+- Version 0.12
+
 * Mon Apr 15 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.11-alt2.svn20130117
 - Use 'find... -exec...' instead of 'for ... $(find...'
 
