@@ -1,7 +1,7 @@
 %define oname pyparsing
 
 Name: python-module-%oname
-Version: 1.5.7
+Version: 2.0.1
 Release: alt1
 
 Summary: Python parsing module
@@ -9,7 +9,6 @@ Summary: Python parsing module
 License: MIT License
 Group: Development/Python
 URL: http://pyparsing.sourceforge.net/
-Packager: Python Development Team <python at packages.altlinux.org>
 
 BuildArch: noarch
 
@@ -38,6 +37,9 @@ that client code uses to construct the grammar directly in Python code.
 %python_sitelibdir/*
 
 %changelog
+* Mon Sep 23 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.1-alt1
+- Version 2.0.1
+
 * Tue Feb 19 2013 Aleksey Avdeev <solo@altlinux.ru> 1.5.7-alt1
 - Version 1.5.7
 - Removed module for Python 3
