@@ -1,6 +1,6 @@
 Name: fontconfig
 Version: 2.10.95
-Release: alt1
+Release: alt2
 
 Summary: Font configuration and customization library and utilities
 Group: System/Configuration/Other
@@ -14,6 +14,7 @@ Source2: fontconfig.filetrigger
 Patch1: alt-symbols-map.patch
 Patch2: alt-config.patch
 Patch3: alt-fc-conf.patch
+Patch4: alt-disable-postscript-aliases.patch
 
 Provides: lib%name = %version
 Obsoletes: lib%name < %version
@@ -114,6 +115,9 @@ find -L %_sysconfdir/fonts/conf.d -type l -delete
 %docdir/%name-devel*
 
 %changelog
+* Mon Sep 23 2013 Sergey V Turchin <zerg@altlinux.org> 2.10.95-alt2
+- disable PostScript aliases by default (ALT#26768)
+
 * Fri Sep 13 2013 Sergey V Turchin <zerg@altlinux.org> 2.10.95-alt1
 - 2.11 RC5
 
