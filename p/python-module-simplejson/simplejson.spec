@@ -1,7 +1,7 @@
 %define shortname simplejson
 
 Name: python-module-simplejson
-Version: 2.5.0
+Version: 3.3.0
 Release: alt1
 
 Summary: Simplejson is a simple, fast, extensible JSON encoder/decoder for Python
@@ -9,8 +9,6 @@ License: MIT/X Consortium
 Group: Development/Python
 
 Url: http://undefined.org/python/#simplejson
-
-Packager: Python Development Team <python@packages.altlinux.org>
 
 Source0: %shortname-%version.tar
 
@@ -58,6 +56,9 @@ python setup.py check
 %doc docs/*
 
 %changelog
+* Mon Sep 23 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.3.0-alt1
+- Version 3.3.0
+
 * Mon Apr 09 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.5.0-alt1
 - Version 2.5.0
 
