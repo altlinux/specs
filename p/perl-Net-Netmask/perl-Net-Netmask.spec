@@ -1,7 +1,8 @@
+%define _unpackaged_files_terminate_build 1
 %define module Net-Netmask
 
 Name: perl-%module
-Version: 1.9016
+Version: 1.9017
 Release: alt1
 
 Summary: Perl module for manipulation and lookup of IP network blocks
@@ -9,7 +10,7 @@ License: Perl
 Group: Development/Perl
 
 URL: %CPAN %module
-Source: http://www.cpan.org/modules/by-module/Net/%module-%version.tar.gz
+Source: http://www.cpan.org/authors/id/M/MU/MUIR/modules/Net-Netmask-%{version}.tar.gz
 BuildArch: noarch
 
 # Automatically added by buildreq on Sun Apr 10 2011
@@ -38,6 +39,9 @@ list of IP addresses. There is a function for sorting by text IP address.
 %perl_vendor_privlib/Net/*
 
 %changelog
+* Mon Sep 23 2013 Igor Vlasenko <viy@altlinux.ru> 1.9017-alt1
+- automated CPAN update
+
 * Sun Apr 10 2011 Victor Forsiuk <force@altlinux.org> 1.9016-alt1
 - 1.9016
 
