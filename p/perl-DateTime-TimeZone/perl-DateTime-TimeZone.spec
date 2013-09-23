@@ -1,8 +1,9 @@
+%define _unpackaged_files_terminate_build 1
 %define dist DateTime-TimeZone
 %def_without bootstrap
 Name: perl-%dist
-Version: 1.60
-Release: alt4
+Version: 1.61
+Release: alt1
 
 Summary: Time zone object base class and factory
 License: GPL or Artistic
@@ -71,6 +72,9 @@ sed -i- 's/eval "use DateTime/eval "die/' t/check_datetime_version.pl
 %perl_vendor_privlib/DateTime
 
 %changelog
+* Mon Sep 23 2013 Igor Vlasenko <viy@altlinux.ru> 1.61-alt1
+- automated CPAN update
+
 * Thu Sep 12 2013 Vladimir Lettiev <crux@altlinux.ru> 1.60-alt4
 - fixed failed unbootsrap
 
