@@ -1,7 +1,9 @@
-%define ver_major 2.36
+%define ver_major 2.38
+%define _libexecdir %_prefix/libexec
+%def_enable installed_tests
 
 Name: glib-networking
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: Networking support for GIO
@@ -26,7 +28,15 @@ This package contains modules that extend the networking support in GIO.
 In particular, it contains a libproxy-based GProxyResolver implementation
 and a gnutls-based GTlsConnection implementation.
 
-%define _libexecdir %_prefix/libexec
+%package tests
+Summary: Tests for the %name package
+Group: Development/Other
+Requires: %name = %version-%release
+
+%description tests
+This package provides tests programs that can be used to verify
+the functionality of the installed %name package.
+
 
 %prep
 %setup -q
@@ -35,6 +45,7 @@ and a gnutls-based GTlsConnection implementation.
 %configure \
 	--disable-static \
 	--with-libproxy \
+	%{?_enable_installed_tests:--enable-installed-tests} \
 	--with-ca-certificates=%_datadir/ca-certificates/ca-bundle.crt
 
 %make_build
@@ -57,7 +68,16 @@ and a gnutls-based GTlsConnection implementation.
 
 %exclude %_libdir/gio/modules/*.la
 
+%if_enabled installed_tests
+%files tests
+%_libexecdir/installed-tests/%name/
+%_datadir/installed-tests/%name/
+%endif
+
 %changelog
+* Tue Sep 24 2013 Yuri N. Sedunov <aris@altlinux.org> 2.38.0-alt1
+- 2.38.0
+
 * Tue May 14 2013 Yuri N. Sedunov <aris@altlinux.org> 2.36.2-alt1
 - 2.36.2
 

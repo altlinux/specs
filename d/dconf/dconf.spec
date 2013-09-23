@@ -1,12 +1,12 @@
-%def_enable snapshot
+%def_disable snapshot
 
-%define ver_major 0.16
+%define ver_major 0.18
 %def_disable introspection
 %def_enable gtk_doc
 
 Name: dconf
 Version: %ver_major.0
-Release: alt2
+Release: alt1
 
 Summary: A simple configuration system
 Group: System/Servers
@@ -179,6 +179,12 @@ install -pD -m755 {%_sourcedir,%buildroot%_rpmlibdir}/update-dconf-database.file
 %exclude %_datadir/bash-completion/completions/dconf
 
 %changelog
+* Tue Sep 24 2013 Yuri N. Sedunov <aris@altlinux.org> 0.18.0-alt1
+- 0.18.0
+
+* Tue Jul 16 2013 Yuri N. Sedunov <aris@altlinux.org> 0.16.1-alt1
+- 0.16.1
+
 * Thu Jul 04 2013 Yuri N. Sedunov <aris@altlinux.org> 0.16.0-alt2
 - updated to 4171008
 

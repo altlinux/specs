@@ -6,7 +6,7 @@
 
 Name: nautilus-sendto
 Version: %ver_major.1
-Release: alt2
+Release: alt3
 
 Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 
@@ -186,6 +186,9 @@ find %buildroot%_libdir -name \*.la -delete
 %endif
 
 %changelog
+* Fri Sep 27 2013 Yuri N. Sedunov <aris@altlinux.org> 3.6.1-alt3
+- rebuilt against e-d-s-3.10 libraries
+
 * Wed Mar 20 2013 Yuri N. Sedunov <aris@altlinux.org> 3.6.1-alt2
 - rebuilt against e-d-s-3.8 libraries
 

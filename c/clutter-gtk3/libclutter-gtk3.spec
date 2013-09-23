@@ -5,7 +5,7 @@
 
 Name: %{_name}3
 Version: %ver_major.4
-Release: alt1
+Release: alt2
 
 Summary: Library integrating clutter with GTK+3
 License: LGPL v2+
@@ -102,6 +102,9 @@ touch AUTHORS
 %endif
 
 %changelog
+* Mon Aug 26 2013 Yuri N. Sedunov <aris@altlinux.org> 1.4.4-alt2
+- rebuilt against libcogl.so.15
+
 * Tue Mar 19 2013 Yuri N. Sedunov <aris@altlinux.org> 1.4.4-alt1
 - 1.4.4
 

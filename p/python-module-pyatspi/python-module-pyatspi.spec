@@ -1,5 +1,5 @@
 %define _name pyatspi
-%define ver_major 2.8
+%define ver_major 2.10
 
 Name: python-module-%_name
 Version: %ver_major.0
@@ -14,8 +14,8 @@ Source: ftp://ftp.gnome.org/pub/sources/%name/%ver_major/%_name-%version.tar.xz
 
 BuildArch: noarch
 
-BuildRequires: python-devel python-module-pygobject3-devel >= 3.8.0
-BuildRequires: rpm-build-python3 python3-devel python3-module-pygobject3-devel >= 3.8.0
+BuildRequires: python-devel python-module-pygobject3-devel >= 3.9.90
+BuildRequires: rpm-build-python3 python3-devel python3-module-pygobject3-devel >= 3.9.90
 BuildRequires: libX11-devel libICE-devel libSM-devel
 
 %description
@@ -84,6 +84,9 @@ popd
 %doc AUTHORS README NEWS
 
 %changelog
+* Tue Sep 24 2013 Yuri N. Sedunov <aris@altlinux.org> 2.10.0-alt1
+- 2.10.0
+
 * Tue Mar 26 2013 Yuri N. Sedunov <aris@altlinux.org> 2.8.0-alt1
 - 2.8.0
 

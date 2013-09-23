@@ -1,5 +1,5 @@
 %define _name nautilus2
-%define ver_major 3.8
+%define ver_major 3.10
 %define api_ver 3.0
 
 %def_enable exempi
@@ -9,7 +9,7 @@
 %def_enable selinux
 
 Name: nautilus
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: Nautilus is a network user environment
@@ -39,7 +39,7 @@ Provides: gnome-volume-manager
 %define glib_ver 2.35.3
 %define desktop_ver 3.3.3
 %define pango_ver 1.28.3
-%define gtk_ver 3.5.5
+%define gtk_ver 3.9.11
 %define libxml2_ver 2.4.7
 %define exif_ver 0.5.12
 %define exempi_ver 2.1.0
@@ -218,6 +218,9 @@ ln -sf %_licensedir/LGPL-2 COPYING
 
 
 %changelog
+* Tue Sep 24 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.0-alt1
+- 3.10.0
+
 * Sat Jun 22 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.2-alt1
 - 3.8.2
 

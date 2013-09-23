@@ -1,7 +1,7 @@
-%define ver_major 3.8
+%define ver_major 3.10
 
 Name: gnome-tweak-tool
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: A tool to customize advanced GNOME 3 options
@@ -16,7 +16,7 @@ Patch: gnome-tweak-tool-3.8.0-alt-desktop.patch
 BuildArch: noarch
 Requires: gnome-shell >= %ver_major
 
-BuildRequires: GConf gnome-common intltool libgio-devel
+BuildRequires: GConf gnome-common intltool libgio-devel libgtk+3-devel >= 3.9.10
 BuildRequires: gsettings-desktop-schemas-devel >= 3.4.0
 BuildRequires: python-module-pygobject3-devel >= 3.2.1
 
@@ -59,9 +59,13 @@ Features:
 %_datadir/applications/%name.desktop
 %_datadir/%name
 %_iconsdir/hicolor/*/*/*.png
+%_datadir/appdata/%name.appdata.xml
 %doc AUTHORS NEWS README
 
 %changelog
+* Tue Sep 24 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.0-alt1
+- 3.10.0
+
 * Wed Jul 17 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.1-alt1
 - 3.8.1
 

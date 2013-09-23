@@ -1,9 +1,11 @@
+%define _unpackaged_files_terminate_build 1
+
 %define _name baobab
-%define ver_major 3.8
+%define ver_major 3.10
 %set_typelibdir %_libdir/%_name/girepository-1.0
 
 Name: gnome-disk-usage
-Version: %ver_major.2
+Version: %ver_major
 Release: alt1
 
 Summary: The GNOME disk usage analyser.
@@ -15,10 +17,11 @@ Source: %gnome_ftp/%name/%ver_major/%_name-%version.tar.xz
 
 Provides: baobab = %version-%release
 
-%define gtk_ver 3.7.10
+%define gtk_ver 3.9.11
+%define vala_ver 0.21.1
 BuildPreReq: libgtk+3-devel >= %gtk_ver
 BuildRequires: rpm-build-gnome intltool yelp-tools itstool xmllint
-BuildRequires: vala-tools gobject-introspection-devel libgtk+3-gir-devel
+BuildRequires: vala-tools >= %vala_ver gobject-introspection-devel libgtk+3-gir-devel
 
 %description
 Baobab is a graphical tool to analyse disk usage in local and remote
@@ -50,8 +53,12 @@ popd
 %_iconsdir/HighContrast/*x*/apps/baobab.png
 %_man1dir/%_name.1.*
 %config %_datadir/glib-2.0/schemas/org.gnome.%_name.gschema.xml
+%_datadir/appdata/%_name.appdata.xml
 
 %changelog
+* Mon Sep 23 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10-alt1
+- 3.10.0
+
 * Mon May 13 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.2-alt1
 - 3.8.2
 

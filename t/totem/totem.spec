@@ -1,5 +1,5 @@
-%define ver_major 3.8
-%define parser_ver 3.4.4
+%define ver_major 3.10
+%define parser_ver 3.9.5
 %define gst_api_ver 1.0
 %define gst_ver 0.11.99
 %define gst_plugins_ver 0.11.93
@@ -34,8 +34,8 @@
 %endif
 
 Name: totem
-Version: %ver_major.2
-Release: alt2
+Version: %ver_major.0
+Release: alt1
 
 Summary: Movie player for GNOME 3
 Group: Video
@@ -87,7 +87,7 @@ BuildRequires: libdbus-devel libdbus-glib-devel libgdata-devel gsettings-desktop
 %{?_enable_tracker:BuildRequires: tracker-devel}
 %{?_enable_nautilus:BuildRequires: libnautilus-devel}
 %{?_enable_grilo:BuildRequires: libgrilo-devel}
-%{?_enable_zeitgeist:BuildRequires: libzeitgeist-devel}
+%{?_enable_zeitgeist:BuildRequires: libzeitgeist2.0-devel}
 %{?_enable_introspection:BuildRequires: libtotem-pl-parser-gir-devel libgtk+3-gir-devel}
 
 BuildRequires: desktop-file-utils libSM-devel
@@ -319,6 +319,7 @@ find %buildroot%_libdir -name \*.la -delete
 %config %_datadir/glib-2.0/schemas/org.gnome.totem.gschema.xml
 %config %_datadir/glib-2.0/schemas/org.gnome.totem.enums.xml
 %_datadir/GConf/gsettings/totem.convert
+#%_datadir/appdata/%name.appdata.xml
 %doc AUTHORS NEWS README TODO
 
 %files -n lib%name
@@ -354,6 +355,7 @@ find %buildroot%_libdir -name \*.la -delete
 %_libdir/%name/plugins/apple-trailers/
 %_libdir/%name/plugins/autoload-subtitles/
 %_libdir/%name/plugins/recent/
+%_libdir/%name/plugins/vimeo/
 %config %_datadir/glib-2.0/schemas/org.gnome.totem.plugins.opensubtitles.gschema.xml
 %config %_datadir/glib-2.0/schemas/org.gnome.totem.plugins.pythonconsole.gschema.xml
 %_datadir/GConf/gsettings/opensubtitles.convert
@@ -415,6 +417,12 @@ find %buildroot%_libdir -name \*.la -delete
 %_datadir/gtk-doc/html/*
 
 %changelog
+* Mon Sep 23 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.0-alt1
+- 3.10.0
+
+* Wed Sep 18 2013 Yuri N. Sedunov <aris@altlinux.org> 3.9.92-alt1
+- 3.9.92
+
 * Thu Jul 04 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.2-alt2
 - added lost dependencies
 

@@ -2,11 +2,11 @@
 
 %define _name robots
 %define __name gnome-%_name
-%define ver_major 3.8
+%define ver_major 3.10
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-games-%_name
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: Gnome version of robots game for BSD games collection
@@ -63,9 +63,12 @@ systems.
 %_man6dir/%__name.*
 %config %_datadir/glib-2.0/schemas/org.gnome.%_name.gschema.xml
 %config(noreplace) %attr(0664,games,games) %_localstatedir/games/%__name.*
-
+%_datadir/appdata/%__name.appdata.xml
 
 %changelog
+* Tue Sep 24 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.0-alt1
+- 3.10.0
+
 * Tue Apr 16 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.1-alt1
 - 3.8.1
 

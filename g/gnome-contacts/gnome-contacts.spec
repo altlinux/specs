@@ -1,10 +1,10 @@
-%define ver_major 3.8
+%define ver_major 3.10
 %define _libexecdir %_prefix/libexec
 %define gst_api_ver 1.0
 %def_with cheese
 
 Name: gnome-contacts
-Version: %ver_major.3
+Version: %ver_major
 Release: alt1
 
 Summary: Contacts manager for GNOME
@@ -14,11 +14,11 @@ Url: https://live.gnome.org/ThreePointOne/Features/Contacts
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 
-%define glib_ver 2.31.10
-%define gtk_ver 3.4.0
+%define glib_ver 2.37.6
+%define gtk_ver 3.9.11
 %define vala_ver 0.17.2
 %define tp_glib_ver 0.17.5
-%define folks_ver 0.7.3
+%define folks_ver 0.9.5
 %define eds_ver 3.5.3
 %define cheese_ver 3.5.90
 
@@ -51,9 +51,13 @@ BuildRequires: gobject-introspection-devel vala-tools libgtk+3-gir-devel intltoo
 %_datadir/glib-2.0/schemas/org.gnome.Contacts.enums.xml
 %_datadir/dbus-1/services/org.gnome.Contacts.SearchProvider.service
 %_datadir/gnome-shell/search-providers/gnome-contacts-search-provider.ini
+%_datadir/appdata/%name.appdata.xml
 %doc AUTHORS README NEWS
 
 %changelog
+* Mon Sep 23 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10-alt1
+- 3.10.0
+
 * Tue Jul 16 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.3-alt1
 - 3.8.3
 

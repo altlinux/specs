@@ -1,11 +1,11 @@
 %define oldname eog2
-%define ver_major 3.8
+%define ver_major 3.10
 %define api_ver 3.0
 %def_enable color_management
 %def_enable introspection
 
 Name: eog
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: Eye Of Gnome
@@ -25,7 +25,7 @@ BuildPreReq: rpm-build-gnome rpm-build-licenses
 # From configure.in
 BuildRequires: gnome-common intltool yelp-tools
 BuildRequires: gtk-doc
-BuildPreReq: libgtk+3-devel >= 3.5.4
+BuildPreReq: libgtk+3-devel >= 3.7.8
 BuildPreReq: libgio-devel >= 2.31.0
 BuildPreReq: libgnome-desktop3-devel >= 2.91.91
 BuildPreReq: gnome-icon-theme >= 2.19.1
@@ -134,6 +134,9 @@ GObject introspection devel data for the Eye of GNOME
 %exclude %_libdir/%name/plugins/*.la
 
 %changelog
+* Tue Sep 24 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.0-alt1
+- 3.10.0
+
 * Tue May 14 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.2-alt1
 - 3.8.2
 

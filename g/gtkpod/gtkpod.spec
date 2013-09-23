@@ -1,6 +1,6 @@
 Name: gtkpod
-Version: 2.1.2
-Release: alt4
+Version: 2.1.4
+Release: alt1
 Summary: A GUI for Apple's iPod using GTK2
 License: GPL
 Group: Sound
@@ -13,17 +13,17 @@ Requires: lib%name = %version-%release
 BuildRequires: flex mount intltool desktop-file-utils zlib-devel gcc-c++
 BuildRequires: libgdk-pixbuf-devel
 BuildRequires: libgtk+3-devel >= 3.0.8
-BuildRequires: glib2-devel >= 2.28.5
+BuildRequires: glib2-devel >= 2.31
 BuildRequires: libglade-devel >= 2.4.0
 BuildRequires: libgpod-devel >= 0.7.0
 BuildRequires: anjuta-devel >= 2.91.0
 BuildRequires: libgdl3-devel >= 3.0.0
-BuildRequires: libgio-devel >= 2.28.5
+BuildRequires: libgio-devel >= 2.31
 BuildRequires: libxml2-devel >= 2.7.7
 BuildRequires: libid3tag-devel >= 0.15
 BuildRequires: libcurl-devel >= 7.10.0
 BuildRequires: libwebkitgtk3-devel >= 1.3
-BuildRequires: libclutter-gtk3-devel >= 1.0
+BuildRequires: libclutter-gtk3-devel >= 1.2
 BuildRequires: gstreamer-devel >= 0.10.25 gst-plugins-devel  >= 0.10.25
 BuildRequires: libflac-devel  libvorbis-devel faad
 BuildRequires: glibc-kernheaders glibc-devel
@@ -100,6 +100,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %exclude %_libdir/%name/*.la
 
 %changelog
+* Thu Sep 26 2013 Alexey Shabalin <shaba@altlinux.ru> 2.1.4-alt1
+- 2.1.4
+
 * Tue Mar 26 2013 Alexey Shabalin <shaba@altlinux.ru> 2.1.2-alt4
 - upstream snapshot 665fe093cb053559deef0a9bc6c8d41e7ad6ca08
 

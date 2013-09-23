@@ -1,7 +1,7 @@
-%define ver_major 3.7
+%define ver_major 3.10
 
 Name: alacarte
-Version: %ver_major.90
+Version: %ver_major.0
 Release: alt1
 
 Summary: Menu editor for GNOME
@@ -14,10 +14,15 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 Source1: %name-icons.tar.bz2
 BuildArch: noarch
 
+# use python3
+#AutoReqProv: nopython
+#%define __python %nil
+
 %define menus_ver 3.5.3
 
 BuildPreReq: intltool >= 0.40
 BuildPreReq: libgnome-menus-devel >= %menus_ver
+#BuildRequires: rpm-build-python3 python3-module-pygobject3-devel
 BuildRequires: python-module-pygobject3-devel
 
 %description
@@ -34,7 +39,7 @@ Just click and type to edit, add, and delete any menu entry.
 %make_build
 
 %install
-%make_install install DESTDIR=%buildroot
+%makeinstall_std
 
 %find_lang --with-gnome %name
 
@@ -47,6 +52,9 @@ Just click and type to edit, add, and delete any menu entry.
 %doc README AUTHORS NEWS
 
 %changelog
+* Tue Sep 24 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.0-alt1
+- 3.10.0
+
 * Thu Feb 28 2013 Yuri N. Sedunov <aris@altlinux.org> 3.7.90-alt1
 - 3.7.90
 

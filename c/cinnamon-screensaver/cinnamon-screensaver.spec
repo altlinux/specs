@@ -8,7 +8,7 @@
 
 Name: cinnamon-screensaver
 Version: %ver_major.0
-Release: alt1
+Release: alt3.1
 
 Summary: Cinnamon Screensaver
 License: GPLv2+
@@ -27,7 +27,7 @@ Patch: %name-%version-%release.patch
 %define dbus_ver 0.30
 %define glib_ver 2.28.0
 %define gtk_ver 3.0.2
-%define desktop_ver 3.1.91
+%define desktop_ver 1.9.0
 %define libgnomekbd_ver 2.91.91
 %define systemd_ver 37
 
@@ -38,13 +38,15 @@ BuildPreReq: intltool >= 0.35
 BuildPreReq: libdbus-glib-devel >= %dbus_ver libdbus-devel >= %dbus_ver
 BuildPreReq: libgio-devel >= %glib_ver
 BuildPreReq: libgtk+3-devel >= %gtk_ver
-BuildPreReq: libgnome-desktop3-devel >= %desktop_ver
+BuildPreReq: libcinnamon-desktop-devel >= %desktop_ver
 BuildPreReq: libgnomekbd-devel >= %libgnomekbd_ver
 BuildRequires: libpam-devel gsettings-desktop-schemas-devel
 BuildRequires: xorg-proto-devel libXxf86vm-devel libSM-devel
 BuildRequires:libXScrnSaver-devel libXext-devel libXtst-devel xorg-xf86vidmodeproto-devel
 %{?_enable_docbook:Requires: xmlto}
 %{?_with_systemd:BuildRequires: systemd-devel >= %systemd_ver libsystemd-login-devel libsystemd-daemon-devel}
+
+Requires: %name-translations
 
 %description
 cinnamon-screensaver is a screen saver and locker that aims to have
@@ -57,6 +59,7 @@ simple, sane, secure defaults and be well integrated with the Cinnamon desktop.
 
 %build
 %autoreconf
+%add_optflags -D_GNU_SOURCE
 %configure  \
 	%{subst_enable static} \
 	--disable-schemas-compile \
@@ -72,9 +75,7 @@ simple, sane, secure defaults and be well integrated with the Cinnamon desktop.
 %install
 %makeinstall_std
 
-%find_lang %name
-
-%files -f %name.lang
+%files 
 %exclude %_bindir/gnome-screensaver
 %exclude %_bindir/gnome-screensaver-command
 %_bindir/*
@@ -88,6 +89,15 @@ simple, sane, secure defaults and be well integrated with the Cinnamon desktop.
 %doc AUTHORS NEWS README
 
 %changelog
+* Fri Sep 27 2013 Yuri N. Sedunov <aris@altlinux.org> 1.8.0-alt3.1
+- fixed build
+
+* Wed Sep 25 2013 Yuri N. Sedunov <aris@altlinux.org> 1.8.0-alt3
+- rebuild for GNOME-3.10
+
+* Thu Aug 29 2013 Vladimir Didenko <cow@altlinux.org> 1.8.0-alt2
+- git20130829
+
 * Mon May 6 2013 Vladimir Didenko <cow@altlinux.org> 1.8.0-alt1
 - 1.8.0
 

@@ -2,11 +2,11 @@
 
 %define _name mahjongg
 %define __name gnome-%_name
-%define ver_major 3.8
+%define ver_major 3.10
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-games-%_name
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: Classic Chinese Tile Game
@@ -50,10 +50,14 @@ version of the classic Eastern tile game, Mahjongg.
 %_iconsdir/HighContrast/*x*/apps/%__name.png
 %_man6dir/%__name.*
 %config %_datadir/glib-2.0/schemas/org.gnome.%__name.gschema.xml
+%_datadir/appdata/%__name.appdata.xml
 #%config(noreplace) %attr(0664,games,games) %_localstatedir/games/%_name.*
 
 
 %changelog
+* Mon Sep 23 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.0-alt1
+- 3.10.0
+
 * Tue Sep 17 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.1-alt1
 - 3.8.1
 

@@ -2,7 +2,7 @@
 
 %define _name nibbles
 %define __name gnome-%_name
-%define ver_major 3.8
+%define ver_major 3.10
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-games-%_name
@@ -12,7 +12,7 @@ Release: alt1
 Summary: A cute little game that has no short description
 Group: Games/Boards
 License: GPLv3+
-Url: http://live.gnome.org/GnomeGames/
+Url: https://wiki.gnome.org/Nibbles
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%__name/%ver_major/%__name-%version.tar.xz
 
@@ -22,10 +22,11 @@ Provides:  gnome-games-gnibbles = %version-%release
 
 %define glib_ver 2.32.0
 %define gtk_ver 3.4.0
+%define clutter_ver 1.14.4
 
 BuildRequires: gnome-common
 BuildRequires: intltool yelp-tools libgio-devel >= %glib_ver libgtk+3-devel >= %gtk_ver librsvg-devel
-BuildRequires: libcanberra-gtk3-devel libclutter-gtk3-devel
+BuildRequires: libcanberra-gtk3-devel libclutter-devel >= %clutter_ver libclutter-gtk3-devel
 
 %description
 Gnibbles is a game where the user controls a snake. The snake moves
@@ -61,9 +62,12 @@ it.
 %_man6dir/%__name.*
 %config %_datadir/glib-2.0/schemas/org.gnome.%_name.gschema.xml
 %config(noreplace) %attr(0664,games,games) %_localstatedir/games/%__name.*
-
+%_datadir/appdata/%__name.appdata.xml
 
 %changelog
+* Mon Sep 23 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.0-alt1
+- 3.10.0
+
 * Wed Mar 27 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.0-alt1
 - 3.8.0
 

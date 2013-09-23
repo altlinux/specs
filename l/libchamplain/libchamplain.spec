@@ -7,7 +7,7 @@
 
 Name: %_name
 Version: %ver_major.5
-Release: alt1
+Release: alt2
 
 Summary: Map view library for Clutter
 License: LGPLv2+
@@ -159,7 +159,7 @@ gtkdocize --copy
 
 #%if_enabled gtk_doc
 %files devel-doc
-%_datadir/gtk-doc/html/%_name-%ver_major
+%_datadir/gtk-doc/html/%_name-%ver_major/
 #%endif
 
 %files gtk3
@@ -198,6 +198,9 @@ gtkdocize --copy
 %endif
 
 %changelog
+* Tue Sep 17 2013 Yuri N. Sedunov <aris@altlinux.org> 0.12.5-alt2
+- rebuilt against libcogl.so.15
+
 * Tue Sep 17 2013 Yuri N. Sedunov <aris@altlinux.org> 0.12.5-alt1
 - 0.12.5
 

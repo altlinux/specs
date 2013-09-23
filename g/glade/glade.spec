@@ -1,4 +1,6 @@
-%define ver_major 3.15
+%define _unpackaged_files_terminate_build 1
+
+%define ver_major 3.16
 %define api_ver 2.0
 
 Name: glade
@@ -18,7 +20,7 @@ Requires: libgladeui%api_ver = %version-%release
 BuildPreReq: rpm-build-licenses rpm-build-gnome
 # From configure.ac
 BuildPreReq: intltool >= 0.50
-BuildPreReq: libgtk+3-devel >= 3.6.0
+BuildPreReq: libgtk+3-devel >= 3.9.11
 BuildRequires: gnome-common gtk-doc yelp-tools
 BuildRequires: libxml2-devel
 BuildRequires: python-module-pygobject3-devel
@@ -93,9 +95,12 @@ GObject introspection devel data for the GladeUI library.
 %find_lang --with-gnome %name
 
 %files -f %name.lang
-%_bindir/*
+%_bindir/%name
+%_bindir/%name-previewer
 %_desktopdir/*
 %_iconsdir/hicolor/*/apps/*.png
+%_man1dir/glade-previewer.1.*
+%_man1dir/glade.1.*
 %doc AUTHORS COPYING NEWS README TODO
 
 %files -n libgladeui%api_ver
@@ -108,6 +113,7 @@ GObject introspection devel data for the GladeUI library.
 %_datadir/%name/catalogs/*.xml
 %_datadir/%name/catalogs/glade-catalog.dtd
 %_datadir/%name/pixmaps
+%_datadir/appdata/%name.appdata.xml
 
 %exclude %_libdir/%name/modules/*.la
 
@@ -126,6 +132,12 @@ GObject introspection devel data for the GladeUI library.
 %_girdir/Gladeui-2.0.gir
 
 %changelog
+* Wed Sep 25 2013 Yuri N. Sedunov <aris@altlinux.org> 3.16.0-alt1
+- 3.16.0
+
+* Mon Apr 22 2013 Yuri N. Sedunov <aris@altlinux.org> 3.15.1-alt1
+- 3.15.1
+
 * Thu Mar 07 2013 Yuri N. Sedunov <aris@altlinux.org> 3.15.0-alt1
 - 3.15.0
 

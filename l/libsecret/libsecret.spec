@@ -1,4 +1,4 @@
-%define ver_major 0.15
+%define ver_major 0.16
 %define api_ver 1
 
 %def_disable static
@@ -8,7 +8,7 @@
 
 Name: libsecret
 Version: %ver_major
-Release: alt2
+Release: alt1
 
 Summary: A client library for the Secret Service DBus API
 Group: System/Libraries
@@ -130,6 +130,9 @@ xvfb-run %make check
 
 
 %changelog
+* Mon Aug 26 2013 Yuri N. Sedunov <aris@altlinux.org> 0.16-alt1
+- 0.16
+
 * Fri Apr 12 2013 Yuri N. Sedunov <aris@altlinux.org> 0.15-alt2
 - added vala bindigs to -devel subpackage  (ALT #28841)
 

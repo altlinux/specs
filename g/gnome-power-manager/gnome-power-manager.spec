@@ -1,7 +1,7 @@
-%define ver_major 3.8
+%define ver_major 3.10
 
 Name: gnome-power-manager
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: GNOME Power management tools
@@ -65,11 +65,16 @@ ln -sf %_licensedir/GPL-2 COPYING
 %_iconsdir/HighContrast/*/*/*.png
 %config %_datadir/glib-2.0/schemas/org.gnome.power-manager.gschema.xml
 %_man1dir/*.1.gz
+%_datadir/appdata/gnome-power-statistics.appdata.xml
+
 %doc --no-dereference COPYING
 %doc README NEWS AUTHORS
 
 
 %changelog
+* Tue Sep 24 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.0-alt1
+- 3.10.0
+
 * Mon May 13 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.2-alt1
 - 3.8.2
 

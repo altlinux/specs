@@ -1,4 +1,4 @@
-%define ver_major 3.8
+%define ver_major 3.10
 %def_disable packagekit
 %def_disable magic
 %def_enable libarchive
@@ -6,7 +6,7 @@
 %define nau_api_ver 3.0
 
 Name: file-roller
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1
 
 Summary: An archive manager for GNOME
@@ -18,11 +18,11 @@ Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 Patch: %name-2.28.2-alt-7z.patch
 Patch1: %name-3.3.90-alt-zip_command.patch
-Patch2: %name-3.7.91-alt-tar.lzo_mime_type.patch
+Patch2: %name-3.9.90-alt-tar.lzo_mime_type.patch
 
 # From configure.in
 %define glib_ver 2.29.14
-%define gtk_ver 3.6.0
+%define gtk_ver 3.9.3
 %define nautilus_ver 2.91.91
 %define libarchive_ver 3.0.0
 %define desktop_file_utils_ver 0.8
@@ -130,6 +130,9 @@ rm -f data/%name.desktop{,.in}
 %exclude %_libdir/nautilus/extensions-%nau_api_ver/*.la
 
 %changelog
+* Mon Sep 23 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.0-alt1
+- 3.10.0
+
 * Tue Aug 20 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.4-alt1
 - 3.8.4
 

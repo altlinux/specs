@@ -2,7 +2,7 @@
 
 %define _libexecdir %_prefix/libexec
 %define _name control-center
-%define ver_major 3.8
+%define ver_major 3.10
 %define api_ver 2.0
 
 %def_disable debug
@@ -11,7 +11,7 @@
 %def_with cheese
 
 Name: gnome-control-center
-Version: %ver_major.5
+Version: %ver_major.0
 Release: alt1
 
 Summary: GNOME Control Center
@@ -33,20 +33,19 @@ Patch: %name-3.8.3-alt-lfs.patch
 %define glib_ver 2.35.1
 %define desktop_ver 3.5.91
 %define fontconfig_ver 1.0.0
-%define xft_ver 2.1.2
-%define libmetacity_ver 2.30.0
-%define gsds_ver 3.7.91
+%define gsds_ver 3.9.90
 %define nm_ver 0.9.1.90
 %define gnome_menus_ver 3.7.90
 %define goa_ver 3.7.91
 %define acc_ver 0.6.30
-%define sett_daemon_ver 3.8.3
-%define cheese_ver 3.5.92
-%define bt_ver 3.5.92
+%define sett_daemon_ver 3.9.5
+%define cheese_ver 3.9.5
+%define bt_ver 3.9.3
 %define systemd_ver 40
 %define wacom_ver 0.7
-%define ibus_ver 1.4.99
-%define colord_ver 0.1.29
+%define ibus_ver 1.5.2
+%define colord_ver 1.0
+%define pwq_ver 1.2.2
 
 Requires: %name-data = %version-%release
 
@@ -63,7 +62,6 @@ BuildPreReq: rpm-build-gnome >= 0.9
 # From configure.in
 BuildPreReq: intltool >= 0.50 gnome-common desktop-file-utils gnome-doc-utils gtk-doc xsltproc
 BuildPreReq: fontconfig-devel >= %fontconfig_ver
-BuildPreReq: libXft-devel >= %xft_ver
 BuildPreReq: libgtk+3-devel >= %gtk_ver
 BuildPreReq: glib2-devel >= %glib_ver
 BuildPreReq: libgnome-desktop3-devel >= %desktop_ver
@@ -71,6 +69,7 @@ BuildPreReq: gsettings-desktop-schemas-devel >= %gsds_ver
 BuildPreReq: gnome-settings-daemon-devel >= %sett_daemon_ver
 BuildPreReq: libcolord-devel >= %colord_ver
 BuildPreReq: libcolord-gtk-devel
+BuildPreReq: libsoup-devel
 BuildPreReq: libgnome-menus-devel >= %gnome_menus_ver
 BuildPreReq: libibus-devel >= %ibus_ver libxkbfile-devel
 BuildRequires: libupower-devel libpolkit1-devel
@@ -78,7 +77,7 @@ BuildRequires: libgio-devel librsvg-devel libxml2-devel libcanberra-gtk3-devel
 BuildRequires: libX11-devel libXext-devel libSM-devel libXScrnSaver-devel libXt-devel
 BuildRequires: libXft-devel libXi-devel libXrandr-devel libXrender-devel libXcursor-devel libXcomposite-devel
 BuildRequires: libgtop-devel libcups-devel libpulseaudio-devel iso-codes-devel
-BuildRequires: libpwquality-devel libkrb5-devel libsmbclient-devel
+BuildRequires: libpwquality-devel >= %pwq_ver  libkrb5-devel libsmbclient-devel
 BuildRequires: gobject-introspection-devel libgtk+3-gir-devel
 # for test-endianess
 BuildRequires: glibc-i18ndata
@@ -167,6 +166,7 @@ NOCONFIGURE=1 ./autogen.sh
 %_datadir/polkit-1/rules.d/gnome-control-center.rules
 %_datadir/polkit-1/actions/org.gnome.controlcenter.remote-login-helper.policy
 %_datadir/dbus-1/services/org.gnome.ControlCenter.SearchProvider.service
+%_datadir/dbus-1/services/org.gnome.ControlCenter.service
 %_datadir/gnome-shell/search-providers/gnome-control-center-search-provider.ini
 %_man1dir/%name.1.*
 %_datadir/bash-completion/completions/gnome-control-center
@@ -176,6 +176,9 @@ NOCONFIGURE=1 ./autogen.sh
 %_datadir/pkgconfig/gnome-keybindings.pc
 
 %changelog
+* Tue Sep 24 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.0-alt1
+- 3.10.0
+
 * Fri Sep 13 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.5-alt1
 - 3.8.5
 

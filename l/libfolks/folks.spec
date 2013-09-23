@@ -1,17 +1,14 @@
-# Ahtung! While g-ir-generate fails on Folks-0.6.typelib
-#%%add_findreq_skiplist %_typelibdir/*
-
 %define _name folks
 %define ver_major 0.9
 %define api_ver 0.6
 %def_disable static
 %def_enable introspection
 %def_enable vala
-%def_enable libsocialweb
+%def_disable libsocialweb
 %def_enable tracker
 
 Name: lib%_name
-Version: %ver_major.1
+Version: %ver_major.5
 Release: alt1
 
 Summary: GObject contact aggregation library
@@ -20,22 +17,21 @@ License: LGPLv2+
 Url: http://telepathy.freedesktop.org/wiki/Folks
 
 Source: http://download.gnome.org/sources/%_name/%ver_major/%_name-%version.tar.xz
-# git archive --format=tar --prefix=folks-0.6.0/ --output=folks-0.6.0.tar HEAD
 #Source: %_name-%version.tar
 
 %define glib_ver 2.26.0
 %define tp_glib_ver 0.19.0
 %define vala_ver 0.15.1
-%define eds_ver 3.7.90
+%define eds_ver 3.9.1
 %define tracker_ver 0.15.2
 %define gee_ver 0.8.4
-%define zeitgeist_ver 0.3.14
+%define zeitgeist_ver 0.9.14
 
 BuildRequires: gnome-common intltool libgio-devel >= %glib_ver libdbus-glib-devel
 BuildRequires: libtelepathy-glib-devel >= %tp_glib_ver libgee0.8-devel >= %gee_ver
 BuildRequires: evolution-data-server-devel >= %eds_ver
-BuildRequires: libzeitgeist-devel >= %zeitgeist_ver vala-tools
-%{?_enable_tracker:BuildRequires: tracker-devel >= %tracker_ver}
+BuildRequires: libzeitgeist2.0-devel >= %zeitgeist_ver vala-tools
+%{?_enable_tracker:BuildRequires: tracker-devel >= %tracker_ver libtracker-gir-devel}
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel libgee-gir-devel libtelepathy-glib-gir-devel evolution-data-server-gir-devel libgee0.8-gir-devel}
 %{?_enable_vala:BuildRequires: vala >= %vala_ver vala-tools >= %vala_ver libtelepathy-glib-vala evolution-data-server-vala}
 %{?_enable_libsocialweb:BuildRequires: libsocialweb-devel libsocialweb-gir-devel %{?_enable_vala:libsocialweb-vala}}
@@ -91,12 +87,14 @@ This package provides vala language bindings for %_name library
 
 %build
 %autoreconf
+export PKG_CONFIG_PATH="%_builddir/%_name-%version/%_name"
 %configure \
 	%{subst_enable static} \
 	%{subst_enable vala} \
 	%{?_enable_eds:--enable-eds-backend} \
 	%{?_enable_tracker:--enable-tracker-backend} \
-	%{?_enable_libsocialweb:--enable-libsocialweb-backend=yes}
+	%{?_enable_libsocialweb:--enable-libsocialweb-backend=yes} \
+	--disable-fatal-warnings
 
 %make_build
 
@@ -125,9 +123,15 @@ This package provides vala language bindings for %_name library
 %if_enabled introspection
 %files gir
 %_typelibdir/Folks-%api_ver.typelib
+%_typelibdir/FolksEds-%api_ver.typelib
+%_typelibdir/FolksTelepathy-%api_ver.typelib
+%_typelibdir/FolksTracker-%api_ver.typelib
 
 %files gir-devel
 %_girdir/Folks-%api_ver.gir
+%_girdir/FolksEds-%api_ver.gir
+%_girdir/FolksTelepathy-%api_ver.gir
+%_girdir/FolksTracker-%api_ver.gir
 %endif
 
 %if_enabled vala
@@ -135,16 +139,21 @@ This package provides vala language bindings for %_name library
 %_vapidir/folks.deps
 %_vapidir/folks-eds.deps
 %_vapidir/folks-eds.vapi
-%_vapidir/folks-libsocialweb.deps
-%_vapidir/folks-libsocialweb.vapi
 %_vapidir/folks-telepathy.deps
 %_vapidir/folks-telepathy.vapi
 %_vapidir/folks-tracker.deps
 %_vapidir/folks-tracker.vapi
 %_vapidir/folks.vapi
+%if_enabled libsocialweb
+%_vapidir/folks-libsocialweb.deps
+%_vapidir/folks-libsocialweb.vapi
+%endif
 %endif
 
 %changelog
+* Tue Aug 27 2013 Yuri N. Sedunov <aris@altlinux.org> 0.9.5-alt1
+- 0.9.5
+
 * Sat Feb 23 2013 Yuri N. Sedunov <aris@altlinux.org> 0.9.1-alt1
 - 0.9.1
 

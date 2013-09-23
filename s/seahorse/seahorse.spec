@@ -1,5 +1,5 @@
 %define _unpackaged_files_terminate_build 1
-%define ver_major 3.8
+%define ver_major 3.10
 
 %def_disable debug
 %def_enable ldap
@@ -14,7 +14,7 @@
 %endif
 
 Name: seahorse
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: A password and encryption key manager
@@ -39,6 +39,7 @@ BuildPreReq: libgtk+3-devel >= 3.4.0
 BuildPreReq: gnupg2-gpg
 BuildPreReq: libgpgme-devel >= 1.0.0
 BuildPreReq: libgpg-error-devel
+BuildRequires: vala-tools
 %{?_enable_ldap:BuildPreReq: libldap-devel}
 %{?_enable_hkp:BuildPreReq: libsoup-devel >= 2.4}
 %{?_enable_gnome_keyring:BuildPreReq: libsecret-devel >= 0.5}
@@ -89,6 +90,8 @@ export GNUPG=/usr/bin/gpg2
 %_iconsdir/hicolor/*/apps/%{name}*.*
 %_desktopdir/*.desktop
 %_man1dir/*
+%_datadir/dbus-1/services/org.gnome.seahorse.Application.service
+%_datadir/gnome-shell/search-providers/seahorse-search-provider.ini
 %config %_datadir/glib-2.0/schemas/org.gnome.seahorse.gschema.xml
 %config %_datadir/glib-2.0/schemas/org.gnome.seahorse.manager.gschema.xml
 %config %_datadir/glib-2.0/schemas/org.gnome.seahorse.window.gschema.xml
@@ -97,6 +100,9 @@ export GNUPG=/usr/bin/gpg2
 %doc AUTHORS NEWS README THANKS TODO HACKING
 
 %changelog
+* Tue Sep 24 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.0-alt1
+- 3.10.0
+
 * Tue May 14 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.2-alt1
 - 3.8.2
 

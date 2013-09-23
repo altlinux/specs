@@ -4,13 +4,13 @@
 %def_disable debug
 %def_disable static
 %def_with libsocialweb
-%def_with cheese
+%def_enable cheese
 %def_enable systemd
 %def_enable ibus
 
 Name: cinnamon-control-center
 Version: %ver_major.2
-Release: alt1
+Release: alt6
 
 Summary: Cinnamon Control Center
 License: GPLv2+
@@ -23,7 +23,7 @@ Patch: %name-%version-%release.patch
 # From configure.ac
 %define gtk_ver 3.5.13
 %define glib_ver 2.31.0
-%define desktop_ver 3.5.91
+%define desktop_ver 1.9.0
 #%define clutter_ver 1.11.3
 %define fontconfig_ver 1.0.0
 %define xft_ver 2.1.2
@@ -33,18 +33,18 @@ Patch: %name-%version-%release.patch
 %define nm_ver 0.9.1.90
 %define gnome_menus_ver 3.5.5
 %define goa_ver 3.5.90
-%define sett_daemon_ver 3.6.3
+%define sett_daemon_ver 0.0.1
 %define cheese_ver 3.5.92
 %define bt_ver 3.5.92
 %define systemd_ver 40
-%define wacom_ver 0.6
 %define ibus_ver 1.4.99
 
 Requires: %name-data = %version-%release
+Requires: %name-translations
 
 # For /usr/share/gnome
 Requires: gnome-filesystem
-Requires: gnome-settings-daemon >= %sett_daemon_ver
+Requires: cinnamon-settings-daemon 
 # for graphical passwd changing apps
 Requires: accountsservice
 #Requires: userpasswd
@@ -58,10 +58,9 @@ BuildPreReq: fontconfig-devel >= %fontconfig_ver
 BuildPreReq: libXft-devel >= %xft_ver
 BuildPreReq: libgtk+3-devel >= %gtk_ver
 BuildPreReq: glib2-devel >= %glib_ver
-BuildPreReq: libgnome-desktop3-devel >= %desktop_ver
-BuildPreReq: gsettings-desktop-schemas-devel >= %gsds_ver
+BuildPreReq: libcinnamon-desktop-devel >= %desktop_ver
 BuildPreReq: libnotify-devel >= %notify_ver
-BuildPreReq: gnome-settings-daemon-devel >= %sett_daemon_ver
+BuildPreReq: cinnamon-settings-daemon-devel >= %sett_daemon_ver
 BuildPreReq: libgnome-menus-devel >= %gnome_menus_ver
 %{?_with_cheese:BuildPreReq: libcheese-devel >= %cheese_ver}
 BuildRequires: libxkbfile-devel
@@ -79,7 +78,6 @@ BuildRequires: glibc-i18ndata
 BuildRequires: libnm-gtk-devel >= %nm_ver
 BuildRequires: libgnome-online-accounts-devel >= %goa_ver colord-devel
 BuildRequires: libgnome-bluetooth-devel >= %bt_ver
-BuildRequires: libwacom-devel >= %wacom_ver
 BuildRequires: libclutter-gtk3-devel
 %{?_with_libsocialweb:BuildRequires: libsocialweb-devel}
 %{?_enable_systemd:BuildRequires: systemd-devel >= %systemd_ver libsystemd-login-devel}
@@ -117,7 +115,6 @@ you'll want to install this package.
 %patch0 -p1
 
 %build
-#NOCONFIGURE=1 ./autogen.sh
 %autoreconf
 %configure \
 	%{subst_enable debug} \
@@ -133,45 +130,34 @@ you'll want to install this package.
 %install
 %make_install DESTDIR=%buildroot install
 
-%find_lang --with-gnome --output=%name.lang %name-%api_ver %name-%api_ver-timezones %name
-
 
 %files
 #cinnamon-control-center binary doesn't work at x64 so temporary disable it. 
 %exclude %_bindir/*
 %dir %_libdir/%{name}-1/panels
-%_libdir/%{name}-1/panels/libbluetooth.so
 %_libdir/%{name}-1/panels/libcolor.so
 %_libdir/%{name}-1/panels/libdisplay.so
 %_libdir/%{name}-1/panels/libnetwork.so
 %_libdir/%{name}-1/panels/libpower.so
-# region panel doesn't work correctly with Gnome-3.8 so temporary disable it. 
+# region panel is not usable with keyboard patch for c-s-d. So g-c-c should be used until issue fixed. 
 %exclude %_libdir/%{name}-1/panels/libregion.so
 %_libdir/%{name}-1/panels/libscreen.so
 %_libdir/%{name}-1/panels/libsoundnua.so
 %_libdir/%{name}-1/panels/libuniversal-access.so
-%_libdir/%{name}-1/panels/libuser-accounts.so
+#%_libdir/%{name}-1/panels/libuser-accounts.so
 %_libdir/*.so.*
 
 %exclude %_libdir/%{name}-1/panels/*.la
 
-%files data -f %name.lang
+%files data 
 %dir %_datadir/%name
 %_datadir/%name/ui
-# need to move to ui subdir
-%_datadir/%name/bluetooth.ui
-%_datadir/%name/pixmaps
-%dir %_datadir/%name/sounds
-%_datadir/%name/sounds/cinnamon-sounds-default.xml
 %_datadir/%name/icons/
 %_desktopdir/*.desktop
 %_sysconfdir/xdg/menus/cinnamoncc.menu
 %_datadir/desktop-directories/*
 %_sysconfdir/xdg/autostart/cinnamon-sound-applet.desktop
-%_datadir/pixmaps/cinnamon/faces/
 %_iconsdir/hicolor/*/*/*
-%_datadir/sounds/cinnamon/default/alerts/*.ogg
-%_datadir/polkit-1/actions/org.cinnamon.controlcenter.user-accounts.policy
 %_datadir/polkit-1/rules.d/cinnamon-control-center.rules
 %doc AUTHORS NEWS README
 
@@ -183,6 +169,23 @@ you'll want to install this package.
 
 
 %changelog
+* Wed Sep 25 2013 Yuri N. Sedunov <aris@altlinux.org> 1.8.2-alt6
+- rebuild for GNOME-3.10
+
+* Tue Sep 17 2013 Vladimir Didenko <cow@altlinux.org> 1.8.2-alt5
+- 1.8.2-51-gfb6a941
+- reenable cheese
+- disable region panel. g-c-c should be used instead
+
+* Fri Sep 6 2013 Vladimir Didenko <cow@altlinux.org> 1.8.2-alt4
+- temporary disable cheese
+
+* Thu Aug 29 2013 Vladimir Didenko <cow@altlinux.org> 1.8.2-alt3
+- 1.8.2-33-g0cdd9c6
+
+* Mon Aug 5 2013 Vladimir Didenko <cow@altlinux.org> 1.8.2-alt2
+- 1.8.2-23-g7d365d0
+
 * Sat May 25 2013 Vladimir Didenko <cow@altlinux.org> 1.8.2-alt1
 - 1.8.2
 

@@ -1,7 +1,8 @@
 %define _name gtk+
-%define ver_major 3.8
+%define ver_major 3.10
 %define api_ver 3.0
 %define binary_ver 3.0.0
+%define _libexecdir %_prefix/libexec
 
 %def_enable xkb
 %def_disable static
@@ -13,10 +14,10 @@
 %def_enable wayland
 # broadway (HTML5) gdk backend
 %def_enable broadway
-
+%def_enable installed_tests
 
 Name: libgtk+3
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1
 
 Summary: The GIMP ToolKit (GTK+)
@@ -29,11 +30,11 @@ Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 Source: %gnome_ftp/%_name/%ver_major/%_name-%version.tar.xz
 Patch: gtk+-2.16.5-alt-stop-spam.patch
 
-%define glib_ver 2.35.3
+%define glib_ver 2.37.7
 %define cairo_ver 1.10
 %define pango_ver 1.32.4
-%define atk_ver 2.5.91
-%define atspi_atk_ver 2.5.91
+%define atk_ver 2.7.5
+%define atspi_ver 2.8.1
 %define pixbuf_ver 2.27.1
 %define fontconfig_ver 2.2.1-alt2
 %define gtk_doc_ver 1.6
@@ -50,7 +51,7 @@ BuildPreReq: libcairo-devel >= %cairo_ver
 BuildPreReq: libcairo-gobject-devel >= %cairo_ver
 BuildPreReq: libpango-devel >= %pango_ver
 BuildPreReq: libatk-devel >= %atk_ver
-BuildPreReq: at-spi2-atk-devel >= %atk_ver
+BuildPreReq: at-spi2-atk-devel >= %atspi_ver
 BuildPreReq: libgdk-pixbuf-devel >= %pixbuf_ver
 BuildPreReq: fontconfig-devel >= %fontconfig_ver
 BuildPreReq: gtk-doc >= %gtk_doc_ver
@@ -183,6 +184,15 @@ those GUIs.
 
 This package contains development documentation for GAIL.
 
+%package tests
+Summary: Tests for the GTK+3 packages
+Group: Development/Other
+Requires: %name = %version-%release
+
+%description tests
+This package provides tests programs that can be used to verify
+the functionality of the installed GTK+3 packages.
+
 
 %define fulllibpath %_libdir/gtk-%api_ver/%binary_ver
 
@@ -208,7 +218,8 @@ export LDLIBS="$LDLIBS $(freetype-config --libs)"
     --enable-gtk2-dependency \
     %{subst_enable colord} \
     %{?_enable_wayland:--enable-wayland-backend} \
-    %{?_enable_broadway:--enable-broadway-backend}
+    %{?_enable_broadway:--enable-broadway-backend} \
+    %{?_enable_installed_tests:--enable-installed-tests}
 
 %make_build
 
@@ -333,6 +344,7 @@ cp examples/*.c examples/Makefile* %buildroot/%_docdir/%name-devel-%version/exam
 %_bindir/gtk3-demo-application
 %_bindir/gtk3-widget-factory
 %_datadir/glib-2.0/schemas/org.gtk.Demo.gschema.xml
+%config %_datadir/glib-2.0/schemas/org.gtk.exampleapp.gschema.xml
 
 %files devel-doc
 %_datadir/gtk-doc/html/*
@@ -369,9 +381,19 @@ cp examples/*.c examples/Makefile* %buildroot/%_docdir/%name-devel-%version/exam
 %_girdir/*
 %endif
 
+%if_enabled installed_tests
+%files tests
+%_libexecdir/gtk+/installed-tests/
+%_datadir/installed-tests/gtk+/
+%endif
+
 %exclude %fulllibpath/*/*.la
 
 %changelog
+* Mon Sep 23 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.0-alt1
+- 3.10.0
+- optional -tests subpackage
+
 * Fri Aug 30 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.4-alt1
 - 3.8.4
 

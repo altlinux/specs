@@ -1,10 +1,13 @@
 %def_disable snapshot
 
-%define ver_major 2.36
+%define ver_major 2.38
 %define pcre_ver 8.11
+%define _libexecdir %_prefix/libexec
 %def_without sys_pcre
 %def_enable selinux
 %def_disable fam
+%def_disable systemtap
+%def_disable installed_tests
 
 %if_enabled snapshot
 %def_enable gtk_doc
@@ -13,8 +16,8 @@
 %endif
 
 Name: glib2
-Version: %ver_major.3
-Release: alt2
+Version: %ver_major.0
+Release: alt1
 
 Summary: A library of handy utility functions
 License: %lgpl2plus
@@ -41,10 +44,6 @@ Patch: glib-2.35.9-alt-compat-version-script.patch
 # stop spam about deprecated paths in schemas
 Patch1: glib-2.36.1-alt-deprecated_paths-nowarning.patch
 Patch2: glib-2.36-add-xvt.patch
-
-# from upstream
-# https://bugzilla.gnome.org/show_bug.cgi?id=701560
-Patch10: glib-2.36.4-up-05d430065da918051a97e3384c4b2252af47503d.patch
 
 %def_with locales
 %if_with locales
@@ -78,6 +77,7 @@ BuildRequires: rpm-build-python python-devel
 #BuildRequires: rpm-build-python3 python3-devel
 %{?_enable_selinux:BuildRequires: libselinux-devel}
 %{?_enable_fam:BuildRequires: libgamin-devel}
+%{?_enable_systemtap:BuildRequires: libsystemtap-sdt-devel}
 
 # for check
 BuildRequires: /proc dbus-tools-gui desktop-file-utils
@@ -191,6 +191,15 @@ FTP, SFTP etc.).
 
 This package contains documentation for GIO.
 
+%package tests
+Summary: Tests for the glib2/libgio packages
+Group: Development/Other
+Requires: libgio = %version-%release
+
+%description tests
+This package provides tests programs that can be used to verify
+the functionality of the installed glib2/libgio packages.
+
 %if 0
 %package gdb
 %description gdb
@@ -201,8 +210,6 @@ This package contains documentation for GIO.
 %patch
 %patch1
 %patch2 -p2
-
-%patch10 -p1
 
 %if_with sys_pcre
 rm glib/pcre/*.[ch]
@@ -232,7 +239,9 @@ NOCONFIGURE=1 ./autogen.sh
     %{?_enable_gtk_doc:--enable-gtk-doc} \
     --enable-included-printf=no \
     %{?_with_sys_pcre:--with-pcre=system} \
-    %{subst_enable fam}
+    %{subst_enable fam} \
+    %{subst_enable systemtap} \
+    %{?_enable_installed_tests:--enable-installed-tests}
 
 %make_build
 
@@ -384,8 +393,20 @@ install -pD -m 755 filetrigger %buildroot%_rpmlibdir/gsettings.filetrigger
 %exclude %_datadir/gdb/auto-load/%_libdir/libgobject-2.0.so.0.*-gdb.py
 %exclude %_datadir/glib-2.0/gdb/
 
+%if_enabled installed_tests
+%files tests
+%_libexecdir/installed-tests/glib/
+%exclude %_libexecdir/installed-tests/glib/*.a
+%exclude %_libexecdir/installed-tests/glib/*.la
+%_datadir/installed-tests/glib/
+%endif
 
 %changelog
+* Tue Sep 24 2013 Yuri N. Sedunov <aris@altlinux.org> 2.38.0-alt1
+- 2.38.0
+- optional systemtap support
+- new optional -test subpackage
+
 * Sun Jul 14 2013 Yuri N. Sedunov <aris@altlinux.org> 2.36.3-alt2
 - fixed BGO 701560 from upstream
 

@@ -8,12 +8,12 @@
 
 Name: gnome-screensaver
 Version: %ver_major.1
-Release: alt4
+Release: alt5
 
 Summary: GNOME Screensaver
 License: GPLv2+
 Group: Graphical desktop/GNOME
-Url: http://live.gnome.org/GnomeScreensaver
+Url: https://live.gnome.org/GnomeScreensaver
 Packager: GNOME Maintainers Team <gnome at packages.altlinux.org>
 
 Provides: screen-saver-engine
@@ -63,6 +63,7 @@ simple, sane, secure defaults and be well integrated with the desktop.
 
 %build
 %autoreconf
+%add_optflags -D_GNU_SOURCE
 %configure  \
 	%{subst_enable static} \
 	--disable-schemas-compile \
@@ -89,6 +90,9 @@ simple, sane, secure defaults and be well integrated with the desktop.
 %doc AUTHORS NEWS README
 
 %changelog
+* Sat Sep 14 2013 Yuri N. Sedunov <aris@altlinux.org> 3.6.1-alt5
+- rebuilt against libgnome-desktop-3.so.8
+
 * Wed Mar 13 2013 Yuri N. Sedunov <aris@altlinux.org> 3.6.1-alt4
 - rebuilt against libgnome-desktop-3.so.7
 

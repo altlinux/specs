@@ -1,19 +1,22 @@
-%define ver_major 3.8
+%def_disable snapshot
+
+%define ver_major 3.10
 %define _libexecdir %_prefix/libexec
 %def_enable kerberos
 %def_enable owncloud
 %def_enable exchange
 %def_enable facebook
 %def_enable google
-%def_disable flickr
+%def_enable flickr
 %def_enable imap_smtp
 %def_enable windows_live
+%def_enable telepathy
 
 %def_enable gtk_doc
 %define api_ver 1.0
 
 Name: gnome-online-accounts
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 
 Summary: Provide online accounts information
@@ -21,7 +24,11 @@ Group: Graphical desktop/GNOME
 License: LGPLv2+
 Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 
+%if_enabled snapshot
+Source: %name-%version.tar
+%else
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+%endif
 
 Requires: lib%name = %version-%release
 
@@ -30,16 +37,18 @@ Requires: lib%name = %version-%release
 %define oauth_ver 0.9.5
 %define rest_ver 0.7.12
 %define soup_ver 2.41
+%define webkit_ver 2.1.90.1
 
 BuildPreReq: glib2-devel >= %glib_ver
 BuildPreReq: liboauth-devel >= %oauth_ver
 BuildPreReq: librest-devel >= %rest_ver
 BuildPreReq: libsoup-devel >= %soup_ver
+BuildPreReq: libgtk+3-devel >= %gtk_ver
+BuildPreReq: libwebkitgtk3-devel >= %webkit_ver
+BuildRequires: libtelepathy-glib-devel
 BuildRequires: gnome-common intltool gtk-doc
-BuildRequires: libgtk+3-devel >= %gtk_ver libwebkitgtk3-devel libjson-glib-devel
-BuildRequires: libgnome-keyring-devel libnotify-devel libsecret-devel
-BuildRequires: libkrb5-devel gcr-libs-devel
-BuildRequires: gobject-introspection-devel
+BuildRequires: libjson-glib-devel libgnome-keyring-devel libnotify-devel libsecret-devel
+BuildRequires: libkrb5-devel gcr-libs-devel gobject-introspection-devel
 
 %description
 gnome-online-accounts provides interfaces so applications and
@@ -89,10 +98,14 @@ BuildArch: noarch
 This package contains development documentation for the %name libraries.
 
 %prep
-%setup -q
+%setup
 
 %build
+%if_enabled snapshot
+NOCONFIGURE=1 ./autogen.sh
+%else
 %autoreconf
+%endif
 %configure --disable-static \
 	--enable-facebook \
 	%{subst_enable kerberos} \
@@ -102,6 +115,7 @@ This package contains development documentation for the %name libraries.
 	%{subst_enable facebook} \
 	%{subst_enable google} \
 	%{subst_enable flickr} \
+	%{subst_enable telepathy} \
 	%{?_enable_windows_live:--enable-windows-live} \
 	%{?_enable_gtk_doc:--enable-gtk-doc}
 
@@ -110,7 +124,7 @@ This package contains development documentation for the %name libraries.
 %install
 %make DESTDIR=%buildroot install
 
-%find_lang %name
+%find_lang --output=%name.lang %name %{?_enable_telepathy:%name-tpaw}
 
 %files -f %name.lang
 %_libexecdir/goa-daemon
@@ -119,6 +133,11 @@ This package contains development documentation for the %name libraries.
 %_datadir/icons/hicolor/*/*/*.png
 %_man8dir/goa-daemon.*
 %doc NEWS
+
+%if_enabled telepathy
+#%_datadir/glib-2.0/schemas/org.gnome.telepathy-account-widgets.gschema.xml
+%_iconsdir/hicolor/scalable/apps/im-*.svg
+%endif
 
 %files -n lib%name
 %_libdir/libgoa-%api_ver.so.*
@@ -144,6 +163,9 @@ This package contains development documentation for the %name libraries.
 %_datadir/gtk-doc/html/goa/
 
 %changelog
+* Tue Sep 24 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.0-alt1
+- 3.10.0
+
 * Fri Aug 30 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.3-alt1
 - 3.8.3
 

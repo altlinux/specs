@@ -1,4 +1,4 @@
-%define ver_major 3.8
+%define ver_major 3.10
 
 Name: gnome-font-viewer
 Version: %ver_major.0
@@ -12,7 +12,7 @@ Url: http://www.gnome.org
 Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 
 %define glib_ver 2.35.1
-%define gtk_ver 3.5.10
+%define gtk_ver 3.9.11
 
 BuildPreReq: libgio-devel >= %glib_ver libgtk+3-devel >= %gtk_ver
 BuildRequires: libfreetype-devel libgnome-desktop3-devel
@@ -43,6 +43,9 @@ GNOME Font Viewer is a simple application to preview fonts.
 %doc NEWS
 
 %changelog
+* Tue Sep 24 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.0-alt1
+- 3.10.0
+
 * Mon Mar 25 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.0-alt1
 - 3.8.0
 

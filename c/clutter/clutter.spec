@@ -12,19 +12,19 @@
 %def_disable wayland_compositor
 
 Name: clutter
-Version: 1.14.4
-Release: alt2.git.74f9d8
+Version: 1.16.0
+Release: alt1
 Summary: Clutter Core Library
 License: LGPLv2+
 Group: System/Libraries
 Url: http://www.clutter-project.org/
 Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 
-Source: %name-%version.tar
-Patch: %name-%version-%release.patch
+Source: %name-%version.tar.xz
+#Patch: %name-%version-%release.patch
 
 %define glib_ver 2.31.19
-%define cogl_ver 1.14.0
+%define cogl_ver 1.15.10
 %define json_glib_ver 0.12.0
 %define atk_ver 2.5.3
 %define cairo_ver 1.10
@@ -46,7 +46,7 @@ BuildRequires: gobject-introspection-devel  gir(GL) = 1.0 gir(GObject) = 2.0 gir
 %{?_enable_gdk_backend:BuildRequires: pkgconfig(gdk-3.0) >= %gdk_ver gir(Gdk) = 3.0}
 
 %{?_enable_tslib_input:BuildRequires: pkgconfig(tslib-1.0)}
-%{?_enable_evdev_input:BuildRequires: pkgconfig(gudev-1.0) pkgconfig(xkbcommon)}
+%{?_enable_evdev_input:BuildRequires: pkgconfig(gudev-1.0) pkgconfig(xkbcommon) pkgconfig(libevdev)}
 %{?_enable_xinput:BuildRequires: pkgconfig(xi)}
 %{?_enable_gdk_pixbuf:BuildRequires: pkgconfig(gdk-pixbuf-2.0)}
 
@@ -113,7 +113,7 @@ Contains developer documentation for %name.
 
 %prep
 %setup -q
-%patch -p1
+#%%patch -p1
 
 %build
 gtkdocize
@@ -161,6 +161,9 @@ gtkdocize
 
 
 %changelog
+* Tue Sep 24 2013 Yuri N. Sedunov <aris@altlinux.org> 1.16.0-alt1
+- 1.16.0
+
 * Tue Jul 23 2013 Alexey Shabalin <shaba@altlinux.ru> 1.14.4-alt2.git.74f9d8
 - snapshot upstream/clutter-1.14 74f9d8a597acf0fd8458e3d6cb0475b8d9a0a6ba
 

@@ -1,11 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 
 %define _name swell-foop
-%define ver_major 3.8
+%define ver_major 3.10
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-games-%_name
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: The "Same Game" puzzle
@@ -46,10 +46,14 @@ area in as few moves as possible.
 %_datadir/%_name/
 %_iconsdir/hicolor/*x*/apps/%_name.png
 %_iconsdir/hicolor/scalable/apps/%_name.svg
+%_iconsdir/HighContrast/*x*/apps/%_name.png
 %config %_datadir/glib-2.0/schemas/org.gnome.%_name.gschema.xml
-#%config(noreplace) %attr(0664,games,games) %_localstatedir/games/%_name.*
+%_datadir/appdata/%_name.appdata.xml
 
 %changelog
+* Mon Sep 23 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.0-alt1
+- 3.10.0
+
 * Tue Aug 20 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.2-alt1
 - 3.8.2
 

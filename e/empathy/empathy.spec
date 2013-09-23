@@ -1,4 +1,4 @@
-%define ver_major 3.8
+%define ver_major 3.10
 %def_disable static
 %def_enable sendto
 %def_enable map
@@ -6,14 +6,15 @@
 %if_enabled goa
 %define mcp_dir %(pkg-config --variable=plugindir mission-control-plugins)
 %endif
-%def_disable geocode
+%def_enable geocode
+%def_enable location
 %def_enable gudev
 %def_with cheese
 %define gst_api_ver 1.0
 %def_enable gst_1
 
 Name: empathy
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1
 
 Summary: Instant Messaging Client for GNOME
@@ -27,11 +28,9 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 Conflicts: telepathy-haze-aim
 Obsoletes: libempathy libempathy-gtk python-module-empathy
 
-Requires: %name-data = %version-%release
-
 %define intltool_ver 0.35.0
-%define glib_ver 2.33.3
-%define gtk_ver 3.5.1
+%define glib_ver 2.37.6
+%define gtk_ver 3.9.4
 %define clutter_ver 1.1.2
 %define clutter_gst_ver 1.9.92
 %define tp_glib_ver 0.19.9
@@ -46,17 +45,19 @@ Requires: %name-data = %version-%release
 %define notify_ver 0.7.3
 %define canberra_ver 0.26
 %define webkit_ver 1.3.13
-%define geoclue_ver 0.12
+%define geoclue2_ver 1.99.3
 %define gcr_ver 3.3.90
 %define champlain_ver 0.12.0
 %define gnutls_ver 2.8.5
-%define folks_ver 0.9.1
+%define folks_ver 0.9.5
 %define nst_ver 2.91.6
 %define nm_ver 0.8.995
 %define goa_ver 3.6.2
 %define secret_ver 0.5
 %define farstream_ver 0.2
-%define geocode_ver 0.99.1
+%define geocode_ver 0.99.3
+
+Requires: %name-data = %version-%release
 
 Requires: telepathy-gabble >= %tp_gabble_ver
 Requires: telepathy-salut >= %tp_salut_ver
@@ -64,6 +65,7 @@ Requires: telepathy-haze >= %tp_haze_ver
 Requires: libtelepathy-mission-control >= %mission_control_ver
 Requires: telepathy-logger >= %tp_logger_ver
 Requires: farstream0.2 >= %farstream_ver
+%{?_enable_location:Requires: geoclue2 >= %geoclue2_ver}
 
 BuildPreReq: intltool >= %intltool_ver gnome-common itstool
 BuildPreReq: libgio-devel >= %glib_ver
@@ -77,19 +79,19 @@ BuildPreReq: libcheck-devel >= %check_ver
 BuildPreReq: iso-codes-devel >= %iso_codes_ver
 BuildPreReq: libnotify-devel >= %notify_ver
 BuildPreReq: libcanberra-gtk3-devel >= %canberra_ver
-BuildPreReq: libgeoclue-devel >= %geoclue_ver
 BuildPreReq: libwebkitgtk3-devel >= %webkit_ver
 BuildPreReq: libsecret-devel >= %secret_ver
 BuildPreReq: gcr-libs-devel >= %gcr_ver
 BuildPreReq: libtelepathy-logger-devel >= %tp_logger_ver
 BuildPreReq: libgnutls-devel >= %gnutls_ver
-BuildRequires: libgee0.8-devel
+BuildRequires: libgee0.8-devel gobject-introspection-devel libgtk+3-gir-devel
 # for gnome-control-center-3.0.x
 # BuildPreReq: gnome-control-center-devel
 BuildPreReq: NetworkManager-glib-devel >= %nm_ver libtelepathy-farstream-devel >= %farstream_ver
 %{?_enable_sendto:BuildRequires: nautilus-sendto-devel >= %nst_ver}
 %{?_enable_map:BuildPreReq: libchamplain-devel >= %champlain_ver  libchamplain-gtk3-devel >= %champlain_ver}
 %{?_enable_goa:BuildRequires: libgnome-online-accounts-devel >= %goa_ver libtelepathy-mission-control-devel}
+%{?_enable_location:BuildPreReq: geoclue2-devel >= %geoclue2_ver}
 %{?_enable_geocode:BuildRequires: libgeocode-glib-devel >= %geocode_ver}
 %{?_enable_gudev:BuildRequires: libgudev-devel}
 %{?_with_cheese:BuildRequires: libcheese-devel}
@@ -129,12 +131,13 @@ This application provides integration between nautilus and Empathy.
 rm -f data/%name.desktop
 
 %build
-#NOCONFIGURE=1 ./autogen.sh
+NOCONFIGURE=1 ./autogen.sh
 %configure \
 	--disable-schemas-compile \
 	%{subst_enable static} \
 	%{?_enable_goa:--enable-goa=yes} \
 	%{?_enable_geocode:--enable-geocode=yes} \
+	%{?_enable_location:--enable-location=yes} \
 	%{?_enable_gudev:--enable-gudev=yes} \
 	%{subst_with cheese} \
 	%{?_enable_sendto:--enable-nautilus-sendto=yes} \
@@ -147,7 +150,7 @@ rm -f data/%name.desktop
 %install
 %make_install DESTDIR=%buildroot install
 
-%find_lang --with-gnome %name
+%find_lang --with-gnome --output=%name.lang %name %name-tpaw
 
 %check
 # empathy-parser-test failed
@@ -178,7 +181,7 @@ rm -f data/%name.desktop
 %_datadir/dbus-1/services/org.freedesktop.Telepathy.Client.Empathy.FileTransfer.service
 %dir %_datadir/%name
 %_datadir/%name/*.ui
-%_datadir/%name/*.dtd
+#%_datadir/%name/*.dtd
 %_datadir/%name/irc-networks.xml
 %_datadir/%name/Template.html
 %_datadir/%name/%name.css
@@ -204,6 +207,9 @@ rm -f data/%name.desktop
 
 
 %changelog
+* Tue Sep 24 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.0-alt1
+- 3.10.0
+
 * Mon Sep 09 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.4-alt1
 - 3.8.4
 

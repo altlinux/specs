@@ -1,7 +1,7 @@
-%define ver_major 3.8
+%define ver_major 3.10
 
 Name: evolution-mapi
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1
 Group: Networking/Mail
 Summary: Evolution extension for MS Exchange 2007 servers
@@ -11,12 +11,12 @@ Url: http://www.gnome.org/projects/evolution-mapi/
 Source: http://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar
 Patch: %name-%version-%release.patch
 
-%define ver_base 3.8
+%define ver_base 3.10
 %define evo_ver_base %ver_base
 
-%define evolution_ver 3.8.0
+%define evolution_ver 3.10.0
 # from configure.in.
-%define eds_ver 3.8.0
+%define eds_ver 3.10.0
 %define libmapi_version 2.0
 
 Requires: evolution >= %evolution_ver
@@ -100,6 +100,12 @@ find %buildroot%_libdir -name '*.la' -exec rm {} \;
 %_pkgconfigdir/*.pc
 
 %changelog
+* Thu Sep 26 2013 Alexey Shabalin <shaba@altlinux.ru> 3.10.0-alt1
+- 3.10.0
+
+* Tue Sep 03 2013 Alexey Shabalin <shaba@altlinux.ru> 3.9.90-alt1
+- 3.9.90
+
 * Wed Jul 24 2013 Alexey Shabalin <shaba@altlinux.ru> 3.8.4-alt1
 - 3.8.4
 

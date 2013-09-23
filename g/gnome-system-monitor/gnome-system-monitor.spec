@@ -1,10 +1,13 @@
-%define ver_major 3.8
+%define _unpackaged_files_terminate_build 1
+
+%define ver_major 3.10
 %def_enable systemd
+%def_enable wnck
 
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-system-monitor
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: Simple process monitor
@@ -16,8 +19,8 @@ Packager: GNOME Maintainers Team <gnome at packages.altlinux.org>
 Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 
 # From configure.in
-%define glib_ver 2.28.0
-%define gtk_ver 3.5.12
+%define glib_ver 2.37.3
+%define gtk_ver 3.9.5
 %define glibmm_ver 2.28.0
 %define libgtkmm3_ver 3.0.0
 %define libwnck_ver 3.0.0
@@ -36,7 +39,6 @@ BuildPreReq: libgio-devel >= %glib_ver
 BuildPreReq: libglibmm-devel >= %glibmm_ver
 BuildPreReq: libgtk+3-devel >= %gtk_ver
 BuildPreReq: libgtkmm3-devel >= %libgtkmm3_ver
-BuildPreReq: libwnck3-devel >= %libwnck_ver
 BuildPreReq: libgtop-devel >= %libgtop_ver
 BuildPreReq: gnome-icon-theme >= %gnome_icon_theme_ver
 BuildPreReq: libxml2-devel >= %libxml_ver
@@ -44,6 +46,7 @@ BuildPreReq: librsvg-devel >= %rsvg_ver
 BuildPreReq: gnome-doc-utils gnome-common
 BuildRequires: yelp-tools
 BuildRequires: gcc-c++
+%{?_enable_wnck:BuildPreReq: libwnck3-devel >= %libwnck_ver}
 %{?_enable_systemd:BuildRequires: systemd-devel libsystemd-login-devel libsystemd-daemon-devel}
 
 %description
@@ -56,7 +59,8 @@ Gnome-system-monitor is a simple process and system monitor.
 %autoreconf
 %configure \
     --disable-schemas-compile \
-    %{subst_enable systemd}
+    %{subst_enable systemd} \
+    %{subst_enable wnck}
 
 %make_build
 
@@ -70,15 +74,17 @@ Gnome-system-monitor is a simple process and system monitor.
 %dir %_libexecdir/%name
 %_libexecdir/%name/gsm-kill
 %_libexecdir/%name/gsm-renice
-%_pixmapsdir/%name/
 %_desktopdir/*
-%_datadir/%name/
 %_datadir/polkit-1/actions/org.gnome.%name.policy
 %config %_datadir/glib-2.0/schemas/org.gnome.%name.gschema.xml
 %config %_datadir/glib-2.0/schemas/org.gnome.gnome-system-monitor.enums.xml
+%_datadir/appdata/%name.appdata.xml
 
 
 %changelog
+* Tue Sep 24 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.0-alt1
+- 3.10.0
+
 * Mon May 13 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.2-alt1
 - 3.8.2
 

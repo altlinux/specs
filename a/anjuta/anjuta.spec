@@ -1,10 +1,12 @@
-%define ver_major 3.8
+%define ver_major 3.10
 %def_enable glade
 %def_enable vala
 %def_enable gtk_doc
+%def_enable plugin_terminal
+%def_enable plugin_devhelp
 
 Name: anjuta
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1
 Summary: GNOME IDE for C and C++
 Group: Development/GNOME and GTK+
@@ -23,14 +25,14 @@ Source: %name-%version.tar
 BuildRequires: dconf flex gcc-c++ autogen gnome-common gtk-doc intltool yelp-tools itstool
 BuildRequires: gobject-introspection-devel >= 0.6.7
 BuildRequires: libgjs-devel
-BuildRequires: glib2-devel >= 2.32.0 libgio-devel
-BuildRequires: libgtk+3-devel >= 3.4.0 libgtk+3-gir-devel
+BuildRequires: glib2-devel >= 2.34.0 libgio-devel
+BuildRequires: libgtk+3-devel >= 3.6.0 libgtk+3-gir-devel
 BuildRequires: libgdk-pixbuf-devel >= 2.0.0 libgdk-pixbuf-gir-devel
 BuildRequires: libxml2-devel >= 2.4.23
 BuildRequires: libwebkit2gtk-devel
-BuildRequires: libgdl3-devel >= 3.5.5
-BuildRequires: libvte3-devel >= 0.27.6
-BuildRequires: libdevhelp-devel >= 3.7.4
+BuildRequires: libgdl3-devel >= 3.5.5 libgdl3-gir-devel
+%{?_enable_plugin_terminal:BuildRequires: libvte3-devel >= 0.27.6}
+%{?_enable_plugin_devhelp:BuildRequires: libdevhelp-devel >= 3.7.4}
 %{?_enable_glade:BuildRequires: libgladeui2.0-devel >= 3.12.0}
 BuildRequires: libgtksourceview3-devel >= 3.0.0
 %{?_enable_vala:BuildRequires: libvala-devel vala}
@@ -114,7 +116,6 @@ NOCONFIGURE=1 ./autogen.sh
     --disable-schemas-compile \
     %{subst_enable vala} \
     --disable-packagekit \
-    --enable-plugin-devhelp \
 %if_enabled glade
     --enable-plugin-glade \
     --enable-glade-catalog \
@@ -122,6 +123,8 @@ NOCONFIGURE=1 ./autogen.sh
     --disable-plugin-glade \
 %endif
     --disable-plugin-subversion \
+    %{?_enable_plugin_terminal:--enable-plugin-terminal} \
+    %{?_enable_plugin_devhelp:--enable-plugin-devhelp} \
     %{?_enable_gtk_doc:--enable-gtk-doc}
     
 %make_build
@@ -176,7 +179,7 @@ NOCONFIGURE=1 ./autogen.sh
 %schemasdir/org.gnome.anjuta*gschema.xml
 %exclude %schemasdir/org.gnome.anjuta.cvs.gschema.xml
 
-%_iconsdir/hicolor/*/apps/anjuta.*
+%_iconsdir/*/*/apps/anjuta.*
 %_iconsdir/gnome/*/*/*
 %anjuta_pixmapsdir/
 %exclude %anjuta_pixmapsdir/*cvs*
@@ -220,6 +223,12 @@ NOCONFIGURE=1 ./autogen.sh
 %exclude %anjuta_pixmapsdir/*devhelp*
 
 %changelog
+* Tue Sep 24 2013 Alexey Shabalin <shaba@altlinux.ru> 3.10.0-alt1
+- 3.10.0
+
+* Tue Sep 03 2013 Alexey Shabalin <shaba@altlinux.ru> 3.9.91-alt1
+- 3.9.91
+
 * Wed Jun 05 2013 Alexey Shabalin <shaba@altlinux.ru> 3.8.4-alt1
 - 3.8.4
 

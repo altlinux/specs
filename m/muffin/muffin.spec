@@ -2,7 +2,7 @@
 
 Name: muffin
 Version: 1.8.2
-Release: alt1
+Release: alt4
 
 Summary: Window and compositing manager based on Clutter
 License: GPLv2+
@@ -12,7 +12,7 @@ Url: https://github.com/linuxmint/muffin
 # To generate tarball
 # wget https://github.com/linuxmint/muffin/tarball/1.0.2 -O muffin-1.0.2.tar.gz
 Source: %name-%version.tar
-Patch: %name-%version-%release.patch
+#Patch: %name-%version-%release.patch
 
 Requires: lib%name = %version-%release
 Requires(post,preun): GConf
@@ -25,8 +25,9 @@ BuildRequires: GConf libGConf-devel libcanberra-gtk3-devel libstartup-notificati
 BuildRequires: libXrandr-devel libXcursor-devel libXcomposite-devel
 BuildRequires: libXinerama-devel libXext-devel libSM-devel
 BuildRequires: gtk-doc gnome-common intltool gnome-doc-utils
-BuildRequires: gsettings-desktop-schemas-gir-devel zenity
+BuildRequires: zenity
 BuildRequires: gobject-introspection-devel libclutter-gir-devel libgtk+3-gir-devel
+BuildRequires: libcinnamon-desktop-devel libcinnamon-desktop-gir-devel
 
 
 %description
@@ -89,7 +90,7 @@ GObject introspection devel data for the Muffin library
 
 %prep
 %setup -n %name-%version
-%patch -p1
+#%patch -p1
 
 %build
 %autoreconf
@@ -109,11 +110,9 @@ GObject introspection devel data for the Muffin library
 %_bindir/muffin
 %_bindir/muffin-message
 %_desktopdir/*.desktop
-%_datadir/gnome/wm-properties/muffin-wm.desktop
 %_datadir/muffin
 %_datadir//GConf/gsettings/muffin-schemas.convert
 %_datadir/glib-2.0/schemas/org.cinnamon.muffin.gschema.xml
-%_datadir/gnome-control-center/keybindings/50-muffin-windows.xml
 %doc README AUTHORS NEWS HACKING doc/theme-format.txt
 
 %files utils
@@ -141,6 +140,15 @@ GObject introspection devel data for the Muffin library
 
 
 %changelog
+* Wed Sep 25 2013 Yuri N. Sedunov <aris@altlinux.org> 1.8.2-alt4
+- rebuild for GNOME-3.10
+
+* Thu Aug 29 2013 Vladimir Didenko <cow@altlinux.org> 1.8.2-alt3
+- v1.8.2-58-gc13a698
+
+* Mon Aug 5 2013 Vladimir Didenko <cow@altlinux.org> 1.8.2-alt2
+- 1.8.2-51-gd05c4c6
+
 * Tue May 21 2013 Vladimir Didenko <cow@altlinux.org> 1.8.2-alt1
 - 1.8.2
 
