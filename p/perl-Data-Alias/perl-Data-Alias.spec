@@ -1,7 +1,8 @@
+%define _unpackaged_files_terminate_build 1
 %define dist Data-Alias
 Name: perl-%dist
-Version: 1.17
-Release: alt2
+Version: 1.18
+Release: alt1
 
 Summary: Comprehensive set of aliasing operations
 License: GPL or Artistic
@@ -34,6 +35,9 @@ when compared to using references.
 %perl_vendor_autolib/Data
 
 %changelog
+* Mon Sep 23 2013 Igor Vlasenko <viy@altlinux.ru> 1.18-alt1
+- automated CPAN update
+
 * Tue Aug 27 2013 Vladimir Lettiev <crux@altlinux.ru> 1.17-alt2
 - built for perl 5.18
 
