@@ -3,7 +3,7 @@ Name: sendmail
 %define tarbolversion 8.14.7
 
 Version: 8.14.7
-Release: alt1
+Release: alt2
 
 Packager: Sergey Y. Afonin <asy@altlinux.ru>
 
@@ -495,6 +495,9 @@ EOF
 %doc docs/LICENSE
 
 %changelog
+* Thu Sep 12 2013 Sergey Y. Afonin <asy@altlinux.ru> 8.14.7-alt2
+- rebuilt with cyrus-sasl 2.1.26
+
 * Fri Sep 06 2013 Sergey Y. Afonin <asy@altlinux.ru> 8.14.7-alt1
 - New version (built with -D_FFR_REJECT_NUL_BYTE)
 - added patch for ignore BODY=7BIT in smtp "mail from" command

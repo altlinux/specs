@@ -1,6 +1,6 @@
 Name: libetpan
 Version: 1.1
-Release: alt1
+Release: alt1.1
 
 Summary: This mail library  provide a portable, efficient middleware for different kinds of mail access.
 License: %bsdstyle
@@ -68,6 +68,9 @@ program which use lib%name.
 %_libdir/%name.so
 
 %changelog
+* Tue Sep 17 2013 Sergey Y. Afonin <asy@altlinux.ru> 1.1-alt1.1
+- NMU: rebuilt with cyrus-sasl 2.1.26
+
 * Mon Jul 02 2012 Mikhail Efremov <sem@altlinux.org> 1.1-alt1
 - Fix License.
 - Updated to 1.1.

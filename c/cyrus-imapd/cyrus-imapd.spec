@@ -8,8 +8,8 @@
 %define _cyrusconf %_confdir/prefork.conf
 
 Name: cyrus-imapd
-Version: 2.4.12
-Release: alt3
+Version: 2.4.17
+Release: alt1
 
 Summary: A high-performance mail store with IMAP and POP3 support
 License: CMU License
@@ -389,6 +389,9 @@ done
 %dir %_datadir/%name
 
 %changelog
+* Thu Sep 12 2013 Sergey Y. Afonin <asy@altlinux.ru> 2.4.17-alt1
+- 2.4.17 (git 20130904 of "cyrus-imapd-2.4" branch )
+
 * Thu Aug 29 2013 Vladimir Lettiev <crux@altlinux.ru> 2.4.12-alt3
 - built for perl 5.18
 
