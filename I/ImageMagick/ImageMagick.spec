@@ -9,7 +9,7 @@
 %def_enable x
 Name: ImageMagick
 Version: %dversion.%drelease
-Release: alt2
+Release: alt3
 
 Summary: An X application for displaying and manipulating images
 License: OpenSource
@@ -85,6 +85,9 @@ necessary to develop applications.
 Summary: Libraries and modules for access to %name from perl
 Group: Development/Perl
 Requires: lib%name = %version-%release
+# perl.prov can't get version from inheritance yet
+# so we need to add it manually for versioned dependencies.
+Provides: perl(Image/Magick.pm) = %mversion.860
 
 %description -n perl-Magick
 This is the %name perl support package.  It includes perl modules
@@ -219,6 +222,11 @@ mv %buildroot%_docdir/%name-6 %buildroot%_docdir/%name-%dversion
 %endif
 
 %changelog
+* Mon Sep 23 2013 Igor Vlasenko <viy@altlinux.ru> 6.8.6.1-alt3
+- NMU: added versioned perl provides to fix unmets like
+  +Package perl-Project-Gantt version 1.03-alt1 has an unmet dep:
+  + Depends: perl(Image/Magick.pm) (>= 6.0.001)
+
 * Thu Aug 29 2013 Vladimir Lettiev <crux@altlinux.ru> 6.8.6.1-alt2
 - built for perl 5.18
 
