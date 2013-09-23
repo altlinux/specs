@@ -1,7 +1,7 @@
 %define oname repoze.profile
 Name: python-module-%oname
 Version: 2.0
-Release: alt1.b1.git20130130
+Release: alt1.b1.git20130408
 Summary: WSGI middleware: aggreggate profile data across requests
 License: BSD
 Group: Development/Python
@@ -48,7 +48,7 @@ mv %buildroot%python_sitelibdir_noarch/* \
 %endif
 
 %files
-%doc *.txt docs/*.rst
+%doc *.txt *.rst docs/*.rst
 %python_sitelibdir/*
 %exclude %python_sitelibdir/*.pth
 %exclude %python_sitelibdir/*/*/tests.*
@@ -57,6 +57,9 @@ mv %buildroot%python_sitelibdir_noarch/* \
 %python_sitelibdir/*/*/tests.*
 
 %changelog
+* Mon Sep 23 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0-alt1.b1.git20130408
+- New snapshot
+
 * Thu Apr 04 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0-alt1.b1.git20130130
 - Version 2.0b1
 
