@@ -3,7 +3,7 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 2012j
+Version: 2013d
 Release: alt1
 
 %setup_python_module %oname
@@ -14,8 +14,6 @@ License: MIT
 Group: Development/Python
 BuildArch: noarch
 Url: http://pytz.sourceforge.net
-
-Packager: Python Development Team <python@packages.altlinux.org>
 
 %if_with python3
 BuildRequires(pre): rpm-build-python3
@@ -121,6 +119,9 @@ popd
 %endif
 
 %changelog
+* Mon Sep 23 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2013d-alt1
+- Version 2013d
+
 * Thu Feb 21 2013 Aleksey Avdeev <solo@altlinux.ru> 2012j-alt1
 - Version 2012j
 
