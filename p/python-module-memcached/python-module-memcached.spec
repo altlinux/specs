@@ -1,14 +1,13 @@
 %define modulename python-memcached
 
 Name: python-module-memcached
-Version: 1.45
-Release: alt1.1
+Version: 1.53
+Release: alt1
 
 Summary: A Python module for memcached daemon
 Group: Development/Python
 License: GPL
 Url: ftp://ftp.tummy.com/pub/python-memcached/
-Packager: Python Development Team <python at packages.altlinux.org>
 
 %setup_python_module %modulename
 
@@ -37,9 +36,12 @@ export CFLAGS="%optflags"
 
 %files
 %python_sitelibdir/*
-%doc README PKG-INFO ChangeLog *.html
+%doc README* PKG-INFO ChangeLog *.html
 
 %changelog
+* Mon Sep 23 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.53-alt1
+- Version 1.53
+
 * Thu Oct 20 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 1.45-alt1.1
 - Rebuild with Python-2.7
 
