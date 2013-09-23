@@ -1,7 +1,7 @@
 
 Name: akonadi
 Version: 1.10.2
-Release: alt1
+Release: alt2
 
 Group: Databases
 Summary: An extensible cross-desktop storage service for PIM
@@ -94,7 +94,7 @@ Group: Databases
 Summary: %name mysql database
 BuildArch: noarch
 Requires: %name-common = %EVR
-Requires: libqt4-sql-mysql MySQL-server  MySQL-client
+Requires: libqt4-sql-mysql mysql-server mysql-client
 Provides: %name-database = %EVR
 Provides: %name-database-mysql = %EVR
 Provides: akonadi-database3 = %EVR
@@ -201,6 +201,9 @@ install -m 0755 %SOURCE10 %buildroot/%_bindir/akonadi_mysql_install_db
 %_libdir/pkgconfig/*
 
 %changelog
+* Mon Sep 23 2013 Sergey V Turchin <zerg@altlinux.org> 1.10.2-alt2
+- fix requires to mysql-server and mysql-client
+
 * Mon Jul 29 2013 Sergey V Turchin <zerg@altlinux.org> 1.10.2-alt1
 - new version
 
