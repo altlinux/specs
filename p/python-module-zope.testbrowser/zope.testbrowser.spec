@@ -1,6 +1,6 @@
 %define oname zope.testbrowser
 Name: python-module-%oname
-Version: 4.0.2
+Version: 4.0.3
 Release: alt1
 Summary: Programmable browser for functional black-box tests
 License: ZPLv2.1
@@ -34,11 +34,14 @@ mv %buildroot%python_sitelibdir_noarch/* \
 %endif
 
 %files
-%doc *.txt
+%doc *.rst
 %python_sitelibdir/*
 %exclude %python_sitelibdir/*.pth
 
 %changelog
+* Tue Sep 24 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.3-alt1
+- Version 4.0.3
+
 * Wed Dec 28 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.2-alt1
 - Version 4.0.2
 
