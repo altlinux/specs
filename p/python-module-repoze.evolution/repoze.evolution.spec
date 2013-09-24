@@ -1,7 +1,7 @@
 %define oname repoze.evolution
 Name: python-module-%oname
-Version: 0.3
-Release: alt2.1
+Version: 0.6
+Release: alt1
 Summary: Version-number-controlled evolution for database changes
 License: BSD
 Group: Development/Python
@@ -69,6 +69,9 @@ mv %buildroot%python_sitelibdir_noarch/* \
 %python_sitelibdir/*/*/tests
 
 %changelog
+* Tue Sep 24 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6-alt1
+- Version 0.6
+
 * Thu Oct 20 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 0.3-alt2.1
 - Rebuild with Python-2.7
 
