@@ -1,20 +1,20 @@
+BuildRequires: perl-podlators
 %define dist Convert-BinHex
 Name: perl-%dist
-Version: 1.119 
-Release: alt2
+Version: 1.123
+Release: alt1
 
 Summary: Extract data from Macintosh BinHex files
 License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
-Patch: perl-Convert-BinHex-1.119-alt-Checker-ISA.patch
+Source: http://www.cpan.org/authors/id/S/ST/STEPHEN/Convert-BinHex-%{version}.tar.gz
 
 BuildArch: noarch
 
 # Automatically added by buildreq on Tue Oct 04 2011
-BuildRequires: perl-devel
+BuildRequires: perl-devel perl(autodie.pm) perl(Test/Most.pm)
 
 %description
 BinHex is a format used by Macintosh for transporting Mac files safely
@@ -22,12 +22,20 @@ through electronic mail, as short-lined, 7-bit, semi-compressed data
 streams.  This module provides a means of converting those data streams
 back into into binary data.
 
+%package scripts
+Summary: %name scripts
+Group: Development/Perl
+Requires: %{?epoch:%epoch:}%name = %version-%release
+
+%description scripts
+scripts for %name
+
+
 %prep
 %setup -q -n %dist-%version
-%patch0 -p1
 
 %build
-%perl_vendor_build
+%perl_vendor_build INSTALLMAN1DIR=%_man1dir
 
 %install
 %perl_vendor_install
@@ -36,7 +44,15 @@ back into into binary data.
 %doc README
 %perl_vendor_privlib/Convert
 
+%files scripts
+%_bindir/*
+%_man1dir/*
+
+
 %changelog
+* Tue Sep 24 2013 Igor Vlasenko <viy@altlinux.ru> 1.123-alt1
+- automated CPAN update
+
 * Tue Oct 04 2011 Alexey Tourbin <at@altlinux.ru> 1.119-alt2
 - rebuilt
 
