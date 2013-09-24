@@ -15,7 +15,7 @@
 
 Name: NetworkManager
 Version: 0.9.8.4
-Release: alt1%git_date
+Release: alt2%git_date
 License: %gpl2plus
 Group: System/Configuration/Networking
 Summary: Network Link Manager and User Applications
@@ -24,7 +24,6 @@ Url: http://www.gnome.org/projects/NetworkManager/
 Source: %name-%version.tar
 Source1: %name.conf
 Source2: 50-ntpd
-Source3: 70-vendor-encap
 Source4: 10-netfs
 Source5: 20-hostname
 Source6: NetworkManager.sysconfig
@@ -202,7 +201,6 @@ touch %buildroot/%_var/lib/NetworkManager/timestamps
 touch %buildroot/%_var/lib/NetworkManager/NetworkManager.state
 install -m 0644 %SOURCE1 %buildroot%_sysconfdir/NetworkManager/
 install -m 0755 %SOURCE2 %buildroot%_sysconfdir/NetworkManager/dispatcher.d
-install -m 0755 %SOURCE3 %buildroot%_sysconfdir/NetworkManager/dispatcher.d
 install -m 0755 %SOURCE4 %buildroot%_sysconfdir/NetworkManager/dispatcher.d
 install -m 0755 %SOURCE5 %buildroot%_sysconfdir/NetworkManager/dispatcher.d
 install -m 0755 %SOURCE7 %buildroot%_sysconfdir/NetworkManager/dispatcher.d
@@ -224,24 +222,19 @@ make check
 rm -rf %_var/lib/NetworkManager/timestamps/ ||:
 
 %post
-if /sbin/service messagebus status &>/dev/null; then
-	dbus-send --system --type=method_call --dest=org.freedesktop.DBus / org.freedesktop.DBus.ReloadConfig &>/dev/null ||:
-	#post_service %name
-	SYSTEMCTL=systemctl
-	if sd_booted && "$SYSTEMCTL" --version >/dev/null 2>&1; then
-		"$SYSTEMCTL" daemon-reload ||:
-		if [ "$1" -eq 1 ]; then
-			"$SYSTEMCTL" -q preset NetworkManager.service ||:
-		fi
-	else
-		if [ "$1" -eq 1 ]; then
-			/sbin/chkconfig --add NetworkManager ||:
-		else
-			/sbin/chkconfig NetworkManager resetpriorities ||:
-		fi
+#post_service %name
+SYSTEMCTL=systemctl
+if sd_booted && "$SYSTEMCTL" --version >/dev/null 2>&1; then
+	"$SYSTEMCTL" daemon-reload ||:
+	if [ "$1" -eq 1 ]; then
+		"$SYSTEMCTL" -q preset NetworkManager.service ||:
 	fi
 else
-	echo "WARNING: NetworkManager requires running messagebus service." >&2
+	if [ "$1" -eq 1 ]; then
+		/sbin/chkconfig --add NetworkManager ||:
+	else
+		/sbin/chkconfig NetworkManager resetpriorities ||:
+	fi
 fi
 
 %preun
@@ -337,6 +330,14 @@ fi
 %exclude %_libdir/pppd/%ppp_version/*.la
 
 %changelog
+* Tue Sep 24 2013 Mikhail Efremov <sem@altlinux.org> 0.9.8.4-alt2
+- Patches from upstream git:
+  + updated Japanese (ja) translation.
+  + do not call functions with connection==NULL.
+- Don't remove addresses already assigned to the interface.
+- Don't package 70-vendor-encap hook.
+- Don't reload DBUS configuration during install.
+
 * Mon Sep 16 2013 Mikhail Efremov <sem@altlinux.org> 0.9.8.4-alt1
 - etcnet-alt: Add AP mode support for wpa_supplicant.
 - Updated to 0.9.8.4.
