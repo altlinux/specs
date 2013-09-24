@@ -8,7 +8,7 @@
 Name: libvncserver
 %define libname %name
 Version: 0.9.9
-Release: alt3
+Release: alt4
 
 Group: System/Libraries
 Summary: An easy API to write one's own VNC server
@@ -122,7 +122,7 @@ sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' libtool
 
 %install
 %make DESTDIR=%buildroot install
-
+ln -s linuxvnc %buildroot/%_bindir/LinuxVNC
 
 %files
 
@@ -145,9 +145,13 @@ sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' libtool
 %files -n linuxvnc
 %doc AUTHORS ChangeLog INSTALL NEWS README TODO
 %_bindir/linuxvnc
+%_bindir/LinuxVNC
 
 
 %changelog
+* Tue Sep 24 2013 Sergey V Turchin <zerg@altlinux.org> 0.9.9-alt4
+- add compatibility symlink to linuxvnc
+
 * Thu Sep 19 2013 Sergey V Turchin <zerg@altlinux.org> 0.9.9-alt3
 - fix depends (ALT#29374)
 
