@@ -1,7 +1,7 @@
 %define oname z3c.ptcompat
 Name: python-module-%oname
-Version: 1.0
-Release: alt1.bzr20111010
+Version: 2.0.0
+Release: alt1.a2.git20130707
 Summary: Compatibility-layer for Zope Page Template engines
 License: ZPLv2.1
 Group: Development/Python
@@ -67,6 +67,9 @@ mv %buildroot%python_sitelibdir_noarch/* \
 %python_sitelibdir/*/*/test*
 
 %changelog
+* Tue Sep 24 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.0-alt1.a2.git20130707
+- Version 2.0.0a2
+
 * Wed Dec 28 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0-alt1.bzr20111010
 - Version 1.0
 
