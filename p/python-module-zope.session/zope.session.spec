@@ -1,7 +1,7 @@
 %define oname zope.session
 Name: python-module-%oname
 Version: 4.0.0
-Release: alt1.a1
+Release: alt1.a2
 Summary: Client identification and sessions for Zope
 License: ZPLv2.1
 Group: Development/Python
@@ -57,6 +57,9 @@ mv %buildroot%python_sitelibdir_noarch/* \
 %python_sitelibdir/*/*/tests.*
 
 %changelog
+* Tue Sep 24 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.0-alt1.a2
+- Version 4.0.0a2
+
 * Wed Apr 10 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.0-alt1.a1
 - Version 4.0.0a1
 
