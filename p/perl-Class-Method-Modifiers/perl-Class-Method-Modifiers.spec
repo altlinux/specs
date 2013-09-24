@@ -1,6 +1,6 @@
 %define dist Class-Method-Modifiers
 Name: perl-Class-Method-Modifiers
-Version: 2.04
+Version: 2.07
 Release: alt1
 
 Summary: provides Moose-like method modifiers
@@ -10,9 +10,9 @@ Group: Development/Perl
 Url: %CPAN %dist
 
 BuildArch: noarch
-Source: %dist-%version.tar
+Source: http://www.cpan.org/authors/id/E/ET/ETHER/Class-Method-Modifiers-%{version}.tar.gz
 
-BuildRequires: perl-Pod-Escapes perl-Test-Fatal
+BuildRequires: perl-Pod-Escapes perl-Test-Fatal perl-Module-Build-Tiny perl(Test/CheckDeps.pm)
 
 %description
 Method modifiers are a convenient feature from the CLOS (Common Lisp Object
@@ -58,6 +58,9 @@ distribution.
 %perl_vendor_privlib/Class/Method/Modifiers.pm
 
 %changelog
+* Tue Sep 24 2013 Igor Vlasenko <viy@altlinux.ru> 2.07-alt1
+- automated CPAN update
+
 * Thu Jun 13 2013 Vladimir Lettiev <crux@altlinux.ru> 2.04-alt1
 - 1.09 -> 2.04
 
