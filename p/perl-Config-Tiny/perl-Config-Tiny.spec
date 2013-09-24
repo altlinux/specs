@@ -1,6 +1,6 @@
 %define dist Config-Tiny
 Name: perl-%dist
-Version: 2.14
+Version: 2.19
 Release: alt1
 
 Summary: Read/Write .ini style files with as little code as possible
@@ -8,12 +8,12 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/R/RS/RSAVAGE/Config-Tiny-%{version}.tgz
 
 BuildArch: noarch
 
 # Automatically added by buildreq on Tue Apr 26 2011
-BuildRequires: perl-devel
+BuildRequires: perl-devel perl(Module/Build.pm)
 
 %description
 Config::Tiny is a perl class to read and write .ini style configuration
@@ -36,6 +36,9 @@ intended to provide an ultralight alternative to the standard modules.
 %perl_vendor_privlib/Config
 
 %changelog
+* Tue Sep 24 2013 Igor Vlasenko <viy@altlinux.ru> 2.19-alt1
+- automated CPAN update
+
 * Tue Apr 26 2011 Alexey Tourbin <at@altlinux.ru> 2.14-alt1
 - 2.12 -> 2.14
 
