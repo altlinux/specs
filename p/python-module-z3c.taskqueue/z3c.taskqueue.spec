@@ -1,6 +1,6 @@
 %define oname z3c.taskqueue
 Name: python-module-%oname
-Version: 0.2.0
+Version: 0.2.1
 Release: alt1
 Summary: Task queue service
 License: ZPLv2.1
@@ -46,7 +46,7 @@ mv %buildroot%python_sitelibdir_noarch/* \
 %endif
 
 %files
-%doc *.txt docs/*
+%doc *.txt *.rst docs/*
 %python_sitelibdir/*
 %exclude %python_sitelibdir/*.pth
 %exclude %python_sitelibdir/*/*/test*
@@ -55,6 +55,9 @@ mv %buildroot%python_sitelibdir_noarch/* \
 %python_sitelibdir/*/*/test*
 
 %changelog
+* Tue Sep 24 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.1-alt1
+- Version 0.2.1
+
 * Mon Apr 08 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.0-alt1
 - Version 0.2.0
 
