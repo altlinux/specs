@@ -5,11 +5,11 @@
 %def_enable gtk_doc
 %def_enable introspection
 # experimental support for hardware accelerated decoders
-%def_enable hw
+%def_disable hw
 
 Name: %_name%api_ver
 Version: 2.0.8
-Release: alt1
+Release: alt2
 
 Summary: Library integrating clutter with GStreamer
 License: LGPL v2+
@@ -111,6 +111,10 @@ that use Clutter-Gst libraries.
 %endif
 
 %changelog
+* Wed Sep 25 2013 Yuri N. Sedunov <aris@altlinux.org> 2.0.8-alt2
+- disabled experimental support for hardware accelerated decoders
+  (not ready for GStreamer-1.2)
+
 * Wed Sep 18 2013 Yuri N. Sedunov <aris@altlinux.org> 2.0.8-alt1
 - 2.0.8
 

@@ -1,10 +1,10 @@
-%define ver_major 1.0
+%define ver_major 1.2
 %define gst_api_ver 1.0
 %define _gst_libdir %_libdir/gstreamer-%gst_api_ver
 %def_with system_libav
 
 Name: gst-libav
-Version: %ver_major.10
+Version: %ver_major.0
 Release: alt1
 
 Summary: GStreamer (%gst_api_ver API) streaming media framework plug-in using FFmpeg
@@ -14,7 +14,8 @@ Url: http://gstreamer.freedesktop.org/
 
 Source: http://gstreamer.freedesktop.org/src/%name/%name-%version.tar.xz
 
-BuildRequires: gst-plugins%gst_api_ver-devel libavformat-devel liborc-devel libswscale-devel zlib-devel bzlib-devel gtk-doc
+BuildRequires: gst-plugins%gst_api_ver-devel libavformat-devel >= 9.9
+BuildRequires: liborc-devel libswscale-devel zlib-devel bzlib-devel gtk-doc
 %{?_without_system_libav:BuildRequires: glibc-devel-static libSDL-devel libXvMC-devel liblzo2-devel libvdpau-devel orc nasm}
 
 %description
@@ -51,6 +52,9 @@ well as very fast colorspace conversion elements.
 %exclude %_gst_libdir/*.la
 
 %changelog
+* Tue Sep 24 2013 Yuri N. Sedunov <aris@altlinux.org> 1.2.0-alt1
+- 1.2.0
+
 * Fri Aug 30 2013 Yuri N. Sedunov <aris@altlinux.org> 1.0.10-alt1
 - 1.0.10
 

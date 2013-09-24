@@ -1,5 +1,5 @@
 %define _name gst-plugins
-%define ver_major 1.0
+%define ver_major 1.2
 %define api_ver 1.0
 
 %define _gst_libdir %_libdir/gstreamer-%api_ver
@@ -8,7 +8,7 @@
 %def_disable gtk_doc
 
 Name: %_name-base%api_ver
-Version: %ver_major.10
+Version: %ver_major.0
 Release: alt1
 
 Summary: An essential set of GStreamer plugins
@@ -25,9 +25,10 @@ Provides: gstreamer%api_ver(audio-hardware-source) = %version
 Source: http://download.gnome.org/sources/%_name-base/%ver_major/%_name-base-%version.tar.xz
 Patch: gst-plugins-base-0.11.94-alt-intltool.patch
 
+BuildRequires: orc >= 0.4.18 liborc-test-devel
 BuildRequires: gstreamer%api_ver-devel libgstreamer%api_ver-gir-devel gtk-doc intltool libSM-devel
 BuildRequires: libXext-devel libXv-devel libalsa-devel libgtk+3-devel libvisual0.4-devel iso-codes-devel
-BuildRequires: libcdparanoia-devel liboil-devel libtheora-devel libvorbis-devel orc liborc-test-devel
+BuildRequires: libcdparanoia-devel liboil-devel libtheora-devel libvorbis-devel
 BuildRequires: python-module-PyXML python-modules-encodings gobject-introspection-devel
 
 %description
@@ -119,6 +120,7 @@ GObject introspection devel data for the GStreamer library
 %dir %_gst_libdir
 
 %files -n lib%_name%api_ver-gir
+%_typelibdir/GstAllocators-1.0.typelib
 %_typelibdir/GstApp-%api_ver.typelib
 %_typelibdir/GstAudio-%api_ver.typelib
 %_typelibdir/GstFft-%api_ver.typelib
@@ -141,6 +143,7 @@ GObject introspection devel data for the GStreamer library
 %_gtk_docdir/%_name-base-*-%api_ver
 
 %files -n %_name%api_ver-gir-devel
+%_girdir/GstAllocators-1.0.gir
 %_girdir/GstApp-%api_ver.gir
 %_girdir/GstAudio-%api_ver.gir
 %_girdir/GstFft-%api_ver.gir
@@ -152,7 +155,11 @@ GObject introspection devel data for the GStreamer library
 %_girdir/GstTag-%api_ver.gir
 %_girdir/GstVideo-%api_ver.gir
 
+
 %changelog
+* Tue Sep 24 2013 Yuri N. Sedunov <aris@altlinux.org> 1.2.0-alt1
+- 1.2.0
+
 * Fri Aug 30 2013 Yuri N. Sedunov <aris@altlinux.org> 1.0.10-alt1
 - 1.0.10
 
