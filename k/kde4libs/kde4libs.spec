@@ -17,7 +17,7 @@
 %define rname kdelibs
 Name: kde4libs
 Version: %major.%minor.%bugfix
-Release: alt2
+Release: alt3
 
 %define conflictver %major.%minor-alt0.0.1
 %define conflictver_kdevelop 3.4.1-alt0.0.1
@@ -339,6 +339,9 @@ ln -sf `relative %buildroot/%_kde4_bindir/kde4-config %buildroot/%_K4bindir/kde4
 %_K4includedir/*
 
 %changelog
+* Tue Sep 24 2013 Sergey V Turchin <zerg@altlinux.org> 4.11.1-alt3
+- update alt-run-with-context patch
+
 * Thu Sep 12 2013 Sergey V Turchin <zerg@altlinux.org> 4.11.1-alt2
 - fix kwallet freeze
 
