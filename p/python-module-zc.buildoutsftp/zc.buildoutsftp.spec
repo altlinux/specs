@@ -1,6 +1,6 @@
 %define oname zc.buildoutsftp
 Name: python-module-%oname
-Version: 0.9.0
+Version: 0.11.0
 Release: alt1
 Summary: Specialized zc.buildout plugin to add sftp support
 License: ZPLv2.1
@@ -54,6 +54,9 @@ mv %buildroot%python_sitelibdir_noarch/* \
 %python_sitelibdir/*/*/tests.*
 
 %changelog
+* Tue Sep 24 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.11.0-alt1
+- Version 0.11.0
+
 * Mon Apr 08 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.0-alt1
 - Version 0.9.0
 
