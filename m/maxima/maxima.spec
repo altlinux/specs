@@ -22,8 +22,8 @@
 %define CVS_BUILD	0
 
 Name: maxima
-Version: 5.31.0
-%define maxima_version 5.31.0
+Version: 5.31.1
+%define maxima_version 5.31.1
 Release: alt1
 Summary: Maxima Computer Algebra System
 License: GPL
@@ -538,6 +538,9 @@ cd %maxima_dir
 
 
 %changelog
+* Tue Sep 24 2013 Ilya Mashkin <oddity@altlinux.ru> 5.31.1-alt1
+- 5.31.1
+
 * Wed Sep 04 2013 Ilya Mashkin <oddity@altlinux.ru> 5.31.0-alt1
 - 5.31.0
 
