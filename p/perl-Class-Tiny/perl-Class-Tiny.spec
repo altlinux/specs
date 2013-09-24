@@ -1,13 +1,13 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: perl(Exporter.pm) perl(ExtUtils/MakeMaker.pm) perl(File/Spec/Functions.pm) perl(IO/Handle.pm) perl(IPC/Open3.pm) perl(List/Util.pm) perl(Test/More.pm) perl(base.pm) perl(subs.pm)
+BuildRequires: perl(Exporter.pm) perl(ExtUtils/MakeMaker.pm) perl(File/Spec/Functions.pm) perl(IO/Handle.pm) perl(IPC/Open3.pm) perl(List/Util.pm) perl(Test/FailWarnings.pm) perl(Test/More.pm) perl(base.pm) perl(subs.pm)
 # END SourceDeps(oneline)
-%define module_version 0.008
+%define module_version 0.010
 %define module_name Class-Tiny
 %define _unpackaged_files_terminate_build 1
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.008
+Version: 0.010
 Release: alt1
 Summary: Minimalist class construction
 Group: Development/Perl
@@ -30,10 +30,13 @@ BuildArch: noarch
 %perl_vendor_install
 
 %files
-%doc LICENSE Changes README
+%doc LICENSE README Changes
 %perl_vendor_privlib/C*
 
 %changelog
+* Tue Sep 24 2013 Igor Vlasenko <viy@altlinux.ru> 0.010-alt1
+- regenerated from template by package builder
+
 * Tue Sep 17 2013 Igor Vlasenko <viy@altlinux.ru> 0.008-alt1
 - initial import by package builder
 
