@@ -7,7 +7,7 @@ BuildRequires: jpackage-compat
 %define fedora 19
 Name:           jss
 Version:        4.2.6
-Release:        alt4_29jpp7
+Release:        alt4_31jpp7
 Summary:        Java Security Services (JSS)
 
 Group:          System/Libraries
@@ -48,6 +48,7 @@ Patch19:        jss-HSM-manufacturerID.patch
 Patch20:        jss-ECC-Phase2KeyArchivalRecovery.patch
 Patch21:        jss-undo-JCA-deprecations.patch
 Patch22:        jss-undo-BadPaddingException-deprecation.patch
+Patch23:        jss-fixed-build-issue-on-F17-or-newer.patch
 Source44: import.info
 Patch33: jss-link-alt.patch
 
@@ -90,6 +91,7 @@ This package contains the API documentation for JSS.
 %patch20 -p1
 %patch21 -p1
 %patch22 -p1
+%patch23 -p1
 %patch33 -p1
 
 %build
@@ -138,7 +140,7 @@ sed -i -e 's;LINUX3_1;LINUX3_6;' mozilla/security/coreconf/Linux3.6.mk
 
 
 # 3.0(t6), 3.5(SIS) kernels support
-for i in 0 3 4 5 6 7 8 9; do
+for i in 0 3 4 5 6 7 8 9 10; do
 cp -p mozilla/security/coreconf/Linux3.1.mk mozilla/security/coreconf/Linux3.$i.mk
 sed -i -e 's;LINUX3_1;LINUX3_'$i';' mozilla/security/coreconf/Linux3.$i.mk
 done
@@ -198,6 +200,9 @@ ln -s %_libdir/java/jss4.jar %buildroot%_javadir/jss4.jar
 
 
 %changelog
+* Tue Sep 24 2013 Igor Vlasenko <viy@altlinux.ru> 4.2.6-alt4_31jpp7
+- new version (closes: 29317)
+
 * Sat Jun 01 2013 Igor Vlasenko <viy@altlinux.ru> 4.2.6-alt4_29jpp7
 - new release
 
