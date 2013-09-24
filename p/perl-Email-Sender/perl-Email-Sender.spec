@@ -3,13 +3,13 @@ BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(Errno.pm) perl(Fcntl.pm) perl(IO/File.pm) perl(IO/Handle.pm) perl(Scalar/Util.pm) perl(Sys/Hostname.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Email-Sender
-Version:        0.120002
-Release:        alt2_4
+Version:        1.300006
+Release:        alt1
 Summary:        A library for sending email
 License:        GPL+ or Artistic
 Group:          Development/Perl
 URL:            http://search.cpan.org/dist/Email-Sender/
-Source0:        http://www.cpan.org/authors/id/R/RJ/RJBS/Email-Sender-%{version}.tar.gz
+Source:        http://www.cpan.org/authors/id/R/RJ/RJBS/Email-Sender-%{version}.tar.gz
 BuildArch:      noarch
 BuildRequires:  perl(Capture/Tiny.pm)
 BuildRequires:  perl(Config.pm)
@@ -42,7 +42,7 @@ Requires:       perl(Email/Abstract.pm) >= 3
 Requires:       perl(Net/SMTP/SSL.pm)
 Requires:       perl(Throwable/Error.pm) >= 0.100.090
 
-
+Patch: Email-Sender-1.300006-alt-fix.patch
 Source44: import.info
 
 %description
@@ -52,9 +52,10 @@ suitable for serious use, for a variety of reasons.
 
 %prep
 %setup -q -n Email-Sender-%{version}
-
+#sed -i -e 's,^"220 OK";,1;,' lib/Email/Sender/Simple.pm
+%patch -p1
 # pod coverage test fails
-rm -f t/release-pod-coverage.t
+#rm -f t/release-pod-coverage.t
 
 %build
 %{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
@@ -75,6 +76,9 @@ RELEASE_TESTING=1 make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Tue Sep 24 2013 Igor Vlasenko <viy@altlinux.ru> 1.300006-alt1
+- automated CPAN update
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.120002-alt2_4
 - update to new release by fcimport
 
