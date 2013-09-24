@@ -1,6 +1,6 @@
 %define oname zc.zodbwsgi
 Name: python-module-%oname
-Version: 0.3.0
+Version: 1.0.0
 Release: alt1
 Summary: WSGI Middleware for Managing ZODB Database Conections
 License: ZPLv2.1
@@ -74,6 +74,9 @@ mv %buildroot%python_sitelibdir_noarch/* \
 %python_sitelibdir/*/*/tests.*
 
 %changelog
+* Tue Sep 24 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.0-alt1
+- Version 1.0.0
+
 * Mon Apr 08 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.0-alt1
 - Version 0.3.0
 
