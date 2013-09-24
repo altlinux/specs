@@ -11,8 +11,8 @@
 %def_enable test
 
 Name: perl-Tree-Simple-VisitorFactory
-Version: 0.10
-Release: alt2.1
+Version: 0.11
+Release: alt1
 
 Summary: %m_name - A factory object for dispensing Visitor objects
 
@@ -23,10 +23,10 @@ Url: http://search.cpan.org/dist/Tree-Simple-VisitorFactory/
 Packager: Michael Bochkaryov <misha@altlinux.ru>
 
 BuildArch: noarch
-Source: http://search.cpan.org//CPAN/authors/id/S/ST/STEVAN/%m_distro-%version.tar.gz
+Source: http://www.cpan.org/authors/id/R/RS/RSAVAGE/Tree-Simple-VisitorFactory-%{version}.tgz
 
 # Automatically added by buildreq on Sat Sep 06 2008 (-bi)
-BuildRequires: perl-Test-Exception perl-Test-Pod perl-Test-Pod-Coverage perl-Tree-Simple
+BuildRequires: perl-Test-Exception perl-Test-Pod perl-Test-Pod-Coverage perl-Tree-Simple perl(Module/Build.pm)
 
 %description
 This object is really just a factory for dispensing
@@ -48,6 +48,9 @@ convienient way to avoid having to type thier long class names.
 %doc Changes README
 
 %changelog
+* Tue Sep 24 2013 Igor Vlasenko <viy@altlinux.ru> 0.11-alt1
+- automated CPAN update
+
 * Mon Nov 22 2010 Igor Vlasenko <viy@altlinux.ru> 0.10-alt2.1
 - repair after perl 5.12 upgrade using girar-nmu
 
