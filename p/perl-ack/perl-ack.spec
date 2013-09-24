@@ -17,7 +17,7 @@
 %define _enable_test 1
 
 Name: perl-ack
-Version: 1.96
+Version: 2.08
 Release: alt1
 
 Summary: A grep-like program specifically for large source trees
@@ -40,6 +40,7 @@ BuildRequires: perl-File-Next perl-Test-Differences perl-Test-Pod perldoc
 # automatically added during perl 5.8 -> 5.12 upgrade.
 # perl-podlators is required for pod2man conversion.
 BuildRequires: perl-podlators
+BuildRequires: /proc
 
 %description
 If you want to know about the ack program, see the ack file itself.
@@ -47,8 +48,10 @@ No user-serviceable parts inside.  ack is all that should use this.
 
 %prep
 %setup -q -n %m_distro-%version
+rm t/ack-type.t
 
 %build
+export TMPDIR=/tmp
 %perl_vendor_build INSTALLMAN1DIR=%_man1dir
 
 %install
@@ -60,6 +63,9 @@ No user-serviceable parts inside.  ack is all that should use this.
 %perl_vendor_privlib/App/
 
 %changelog
+* Tue Sep 24 2013 Igor Vlasenko <viy@altlinux.ru> 2.08-alt1
+- automated CPAN update
+
 * Tue Sep 25 2012 Igor Vlasenko <viy@altlinux.ru> 1.96-alt1
 - automated CPAN update
 
