@@ -1,6 +1,6 @@
 Name: xfwm4
-Version: 4.10.1
-Release: alt1.git20130426
+Version: 4.11.0
+Release: alt1
 
 Summary: Window manager for XFce
 Summary (ru_RU.UTF8): Менеджер окон для окружения рабочего стола Xfce
@@ -11,6 +11,7 @@ Packager: XFCE Team <xfce@packages.altlinux.org>
 
 # Upstream: git://git.xfce.org/xfce/xfwm4
 Source: %name-%version.tar
+Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-build-licenses
 
@@ -20,7 +21,7 @@ BuildPreReq: libxfce4ui-devel libxfconf-devel
 BuildPreReq: libexo-devel
 
 BuildRequires: gnome-doc-utils xml-utils xsltproc
-BuildRequires: intltool libSM-devel libXcomposite-devel libXdamage-devel libXext-devel libXrandr-devel libglade-devel
+BuildRequires: intltool libSM-devel libXcomposite-devel libXdamage-devel libXext-devel libXrandr-devel libglade-devel libdrm-devel
 BuildRequires: libstartup-notification-devel libwnck-devel xorg-cf-files
 
 %description
@@ -33,6 +34,7 @@ Xfce. Совместим с окружениями рабочего стола G
 
 %prep
 %setup
+%patch -p1
 
 %build
 # Don't use git tag in version.
@@ -66,6 +68,10 @@ Xfce. Совместим с окружениями рабочего стола G
 %_libdir/xfce4/*
 
 %changelog
+* Tue Sep 24 2013 Mikhail Efremov <sem@altlinux.org> 4.11.0-alt1
+- Don't include stropts.h.
+- Updated to 4.11.0.
+
 * Mon May 06 2013 Mikhail Efremov <sem@altlinux.org> 4.10.1-alt1.git20130426
 - Bump version (this snapshot is newer then %name-4.10.1 release).
 - Upstream git snapshot.
