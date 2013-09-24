@@ -1,7 +1,7 @@
 %define oname repoze.retry
 Name: python-module-%oname
-Version: 1.2
-Release: alt1.git20120712
+Version: 1.3
+Release: alt1.git20130604
 Summary: WSGI middleware: retries requests after optimistic concurrency conflict errors
 License: BSD
 Group: Development/Python
@@ -60,6 +60,9 @@ mv %buildroot%python_sitelibdir_noarch/* \
 %python_sitelibdir/*/*/tests.*
 
 %changelog
+* Tue Sep 24 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3-alt1.git20130604
+- Version 1.3
+
 * Thu Apr 04 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2-alt1.git20120712
 - Version 1.2
 
