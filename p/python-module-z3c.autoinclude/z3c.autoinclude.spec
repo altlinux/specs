@@ -1,7 +1,7 @@
 %define oname z3c.autoinclude
 Name: python-module-%oname
-Version: 0.3.4
-Release: alt2.1
+Version: 0.3.5
+Release: alt1
 Summary: Automatically include ZCML
 License: ZPL
 Group: Development/Python
@@ -67,7 +67,7 @@ mv %buildroot%python_sitelibdir_noarch/* \
 %endif
 
 %files
-%doc *.txt
+%doc *.rst
 %python_sitelibdir/*
 %exclude %python_sitelibdir/*.pth
 %exclude %python_sitelibdir/*/*/tests
@@ -77,6 +77,9 @@ mv %buildroot%python_sitelibdir_noarch/* \
 %python_sitelibdir/*/*/tests
 
 %changelog
+* Tue Sep 24 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.5-alt1
+- Version 0.3.5
+
 * Thu Oct 20 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 0.3.4-alt2.1
 - Rebuild with Python-2.7
 
