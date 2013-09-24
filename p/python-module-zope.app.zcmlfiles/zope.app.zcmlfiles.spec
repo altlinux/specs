@@ -1,6 +1,6 @@
 %define oname zope.app.zcmlfiles
 Name: python-module-%oname
-Version: 3.7.1
+Version: 3.8.0
 Release: alt1
 Summary: Zope application server ZCML files
 License: ZPLv2.1
@@ -64,6 +64,9 @@ mv %buildroot%python_sitelibdir_noarch/* \
 %python_sitelibdir/*/*/*/tests.*
 
 %changelog
+* Tue Sep 24 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.8.0-alt1
+- Version 3.8.0
+
 * Wed Dec 28 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.7.1-alt1
 - Version 3.7.1
 
