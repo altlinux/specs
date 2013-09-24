@@ -20,7 +20,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.10.12
-Release: alt11
+Release: alt12
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -1812,6 +1812,12 @@ done)
 
 
 %changelog
+* Tue Sep 24 2013 Led <led@altlinux.ru> 3.10.12-alt12
+- updated:
+  + feat-fs-reiser4
+- added:
+  + fix-sound-pci-hda--snd-hda-codec-hdmi
+
 * Sat Sep 21 2013 Led <led@altlinux.ru> 3.10.12-alt11
 - updated:
   + feat-fs-aufs
