@@ -1,6 +1,6 @@
 %define dist Test-Fatal
 Name: perl-%dist
-Version: 0.010
+Version: 0.013
 Release: alt1
 
 Summary: Simple helpers for testing code with exceptions
@@ -34,6 +34,9 @@ with about the same amount of typing.
 %perl_vendor_privlib/Test*
 
 %changelog
+* Tue Sep 24 2013 Igor Vlasenko <viy@altlinux.ru> 0.013-alt1
+- automated CPAN update
+
 * Mon Sep 24 2012 Igor Vlasenko <viy@altlinux.ru> 0.010-alt1
 - automated CPAN update
 
