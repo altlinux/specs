@@ -1,13 +1,13 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: perl(Class/Tiny.pm) perl(Data/Dump.pm) perl(FindBin.pm) perl(IO/Handle.pm) perl(IPC/Open3.pm) perl(Module/Build.pm) perl(Module/Runtime.pm) perl(Scalar/Util.pm) perl(Sub/Exporter.pm) perl(Test/More.pm) perl(YAML/Dumper.pm) perl(YAML/Loader.pm) perl(parent.pm) perl(Path/Tiny.pm) perl(Test/Fatal.pm)
+BuildRequires: perl(Carp.pm) perl(Class/Tiny.pm) perl(Data/Dump.pm) perl(FindBin.pm) perl(IO/Handle.pm) perl(IPC/Open3.pm) perl(Module/Build.pm) perl(Module/Runtime.pm) perl(Path/FindDev.pm) perl(Path/Tiny.pm) perl(Scalar/Util.pm) perl(Sub/Exporter.pm) perl(Test/Fatal.pm) perl(Test/More.pm) perl(YAML/Dumper.pm) perl(YAML/Loader.pm) perl(parent.pm)
 # END SourceDeps(oneline)
-%define module_version 0.3.0
+%define module_version 0.3.2
 %define module_name Path-IsDev
 %define _unpackaged_files_terminate_build 1
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.3.0
+Version: 0.3.2
 Release: alt1
 Summary: Determine if a given Path resembles a development source tree
 Group: Development/Perl
@@ -34,6 +34,9 @@ BuildArch: noarch
 %perl_vendor_privlib/P*
 
 %changelog
+* Tue Sep 24 2013 Igor Vlasenko <viy@altlinux.ru> 0.3.2-alt1
+- regenerated from template by package builder
+
 * Tue Sep 17 2013 Igor Vlasenko <viy@altlinux.ru> 0.3.0-alt1
 - initial import by package builder
 
