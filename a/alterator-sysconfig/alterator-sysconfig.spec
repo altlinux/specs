@@ -1,8 +1,8 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-sysconfig
-Version: 1.2.1
-Release: alt3
+Version: 1.2.2
+Release: alt1
 
 %add_findreq_skiplist %_datadir/install2/preinstall.d/*
 
@@ -50,6 +50,9 @@ alterator module for basic system settings
 %_datadir/install2/preinstall.d/*
 
 %changelog
+* Tue Sep 24 2013 Michael Shigorin <mike@altlinux.org> 1.2.2-alt1
+- added Kazah XKB setup, thanks Baurzhan Muftakhidinov (see #28991)
+
 * Tue Feb 14 2012 Andrey Cherepanov <cas@altlinux.org> 1.2.1-alt3
 - Hack for correct fallback language for tt_RU (thanks sem@) (closes: #26931)
 
