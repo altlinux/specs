@@ -1,7 +1,7 @@
 %define oname repoze.catalog
 Name: python-module-%oname
 Version: 0.8.2
-Release: alt1.git20130219
+Release: alt1.git20130426
 Summary: Python indexing and searching framework, useful outside Zope ecosystem
 License: BSD
 Group: Development/Python
@@ -100,6 +100,9 @@ mv %buildroot%python_sitelibdir_noarch/* \
 #doc docs/.build/html/*
 
 %changelog
+* Tue Sep 24 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.2-alt1.git20130426
+- New snapshot
+
 * Thu Apr 04 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.2-alt1.git20130219
 - Version 0.8.2
 
