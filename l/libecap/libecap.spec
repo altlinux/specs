@@ -4,12 +4,13 @@ BuildRequires: gcc-c++
 %add_optflags %optflags_shared
 Name:       libecap
 Version:    0.2.0
-Release:    alt2_6
+Release:    alt2_7
 Summary:    Squid interface for embedded adaptation modules
 License:    BSD
 Group:      Development/C
 URL:        http://www.e-cap.org/
 Source0:    http://www.measurement-factory.com/tmp/ecap/%{name}-%{version}.tar.gz
+Source1:    autoconf.h
 Source44: import.info
 
 %description
@@ -50,6 +51,11 @@ make install DESTDIR=%{buildroot}
 rm -f %{buildroot}%{_libdir}/libecap.a
 rm -f %{buildroot}%{_libdir}/libecap.la
 
+# Rename libecap/common/autoconf.h to libecap/common/autoconf-<arch>.h to avoid file conflicts on
+# multilib systems and install autoconf.h wrapper
+mv %{buildroot}%{_includedir}/%{name}/common/autoconf.h %{buildroot}%{_includedir}/%{name}/common/autoconf-%{_arch}.h
+install -m644 %{SOURCE1} %{buildroot}%{_includedir}/%{name}/common/autoconf.h
+
 %files
 %doc LICENSE CREDITS NOTICE README
 %{_libdir}/libecap.so.*
@@ -60,6 +66,9 @@ rm -f %{buildroot}%{_libdir}/libecap.la
 %{_includedir}/libecap
 
 %changelog
+* Tue Sep 24 2013 Igor Vlasenko <viy@altlinux.ru> 0.2.0-alt2_7
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.2.0-alt2_6
 - update to new release by fcimport
 
