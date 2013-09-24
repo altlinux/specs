@@ -15,7 +15,7 @@
 
 Name: perl-Regexp-Assemble
 Version: 0.35
-Release: alt1
+Release: alt2
 
 Summary: Assemble multiple Regular Expressions into a single RE
 
@@ -63,6 +63,7 @@ http://cpan.uwinnipeg.ca/htdocs/Regexp-Assemble/README.html.
 
 %prep
 %setup -n %m_distro-%version
+sed -i -e 's,^=item \([1-8]\)$,=item NUMBER is \1,' Assemble.pm
 %build
 %perl_vendor_build
 
@@ -73,6 +74,9 @@ http://cpan.uwinnipeg.ca/htdocs/Regexp-Assemble/README.html.
 %perl_vendor_privlib/Regexp/*
 
 %changelog
+* Tue Sep 24 2013 Igor Vlasenko <viy@altlinux.ru> 0.35-alt2
+- fixed pod
+
 * Wed May 30 2012 Igor Vlasenko <viy@altlinux.ru> 0.35-alt1
 - initial build for ALT Linux Sisyphus
 
