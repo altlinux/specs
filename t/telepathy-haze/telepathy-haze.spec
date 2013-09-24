@@ -1,5 +1,5 @@
 Name: telepathy-haze
-Version: 0.7.0
+Version: 0.7.1
 Release: alt1
 
 Summary: a connection manager built around libpurple
@@ -41,6 +41,9 @@ work acceptably, and others will probably work too.
 %_datadir/dbus-1/services/org.freedesktop.Telepathy.ConnectionManager.haze.service
 
 %changelog
+* Tue Sep 24 2013 Yuri N. Sedunov <aris@altlinux.org> 0.7.1-alt1
+- 0.7.1
+
 * Thu Feb 28 2013 Yuri N. Sedunov <aris@altlinux.org> 0.7.0-alt1
 - 0.7.0
 
