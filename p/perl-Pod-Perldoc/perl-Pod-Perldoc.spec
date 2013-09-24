@@ -1,6 +1,6 @@
 %define dist Pod-Perldoc
 Name: perl-%dist
-Version: 3.17
+Version: 3.20
 Release: alt1
 
 Summary: perldoc is program for reading Pod documentation
@@ -8,7 +8,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/M/MA/MALLEN/Pod-Perldoc-%{version}.tar.gz
 
 # Pod::Perldoc frontends require additional modules
 %add_findreq_skiplist */Pod/Perldoc/ToTk.pm
@@ -49,9 +49,12 @@ sed -i- 's/require Tk;/die;/' t/load.t
 	%_bindir/perldoc
 	%perl_vendor_privlib/Pod
 # XXX perl-pod has pod/perldoc.pod
-%doc	%perl_vendor_privlib/perldoc.pod
+#%doc	%perl_vendor_privlib/perldoc.pod
 
 %changelog
+* Tue Sep 24 2013 Igor Vlasenko <viy@altlinux.ru> 3.20-alt1
+- automated CPAN update
+
 * Tue Sep 25 2012 Alexey Tourbin <at@altlinux.ru> 3.17-alt1
 - 3.15 -> 3.17
 - renamed perldoc packages to perl-Pod-Perldoc
