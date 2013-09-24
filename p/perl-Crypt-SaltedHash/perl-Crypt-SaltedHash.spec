@@ -11,8 +11,8 @@
 %def_enable test
 
 Name: perl-Crypt-SaltedHash
-Version: 0.05
-Release: alt2.1
+Version: 0.09
+Release: alt1
 
 Summary: %m_name - Perl interface to functions that assist in working with salted hashes
 
@@ -23,10 +23,10 @@ Url: http://search.cpan.org/dist/Crypt-SaltedHash/
 Packager: Michael Bochkaryov <misha@altlinux.ru>
 
 BuildArch: noarch
-Source: %m_distro-%version.tar.gz
+Source: http://www.cpan.org/authors/id/G/GS/GSHANK/Crypt-SaltedHash-%{version}.tar.gz
 
 # Automatically added by buildreq on Tue Sep 09 2008 (-bi)
-BuildRequires: perl-Module-Build perl-Test-Pod perl-Test-Pod-Coverage perl-version
+BuildRequires: perl-Module-Build perl-Test-Pod perl-Test-Pod-Coverage perl-version perl(Test/Fatal.pm) perl(Digest/SHA.pm)
 
 %description
 The Crypt::SaltedHash module provides an object oriented
@@ -49,6 +49,9 @@ agorithms.
 %doc Changes README
 
 %changelog
+* Tue Sep 24 2013 Igor Vlasenko <viy@altlinux.ru> 0.09-alt1
+- automated CPAN update
+
 * Mon Nov 22 2010 Igor Vlasenko <viy@altlinux.ru> 0.05-alt2.1
 - repair after perl 5.12 upgrade using girar-nmu
 
