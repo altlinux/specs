@@ -1,62 +1,65 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-fedora-compat
-BuildRequires: /usr/bin/col /usr/bin/dvipdf /usr/bin/dvips /usr/bin/emacs /usr/bin/emacsclient /usr/bin/gconftool-2 /usr/bin/gdb /usr/bin/groff /usr/bin/gvim /usr/bin/gzip /usr/bin/ldd /usr/bin/md5sum /usr/bin/perl /usr/bin/pkg-config /usr/bin/valgrind bzlib-devel gcc-c++ gcc-fortran glib2-devel libX11-devel libao-devel libdbus-devel libfuse-devel libgcrypt-devel libgmp-devel libncurses-devel libreadline-devel libxml2-devel pkgconfig(gconf-2.0) pkgconfig(gdk-pixbuf-xlib-2.0) pkgconfig(glib-2.0) pkgconfig(gtk+-2.0) pkgconfig(libglade-2.0) pkgconfig(x11) python-devel unzip zlib-devel
-# END SourceDeps(oneline)
-# Name of the project is avl, despite Debian using libavl, because they cannot
-# do otherwise.
+Group: System/Libraries
 Name:           avl
-Version:        0.3.5
-Release:        alt2_2
-Summary:        AVL tree manipulation library
+Version:        3.32
+Release:        alt1_4
+Summary:        Aerodynamic and flight-dynamic analysis of rigid aircrafts
 
-Group:          System/Libraries
-License:        LGPLv2+
-URL:            http://git.fruit.je/avl
-# Upstream development is API-incompatible per discussion with its author,
-# he suggested using Debian orig.tar.gz
-Source0:        http://ftp.debian.org/debian/pool/main/liba/libavl/libavl_0.3.5.orig.tar.gz
-Patch0:         avl-0.3.5-build.patch
+# Plotlib is LGPLv2+, the rest is GPLv2+
+License:        GPLv2+ and LGPLv2+
+URL:            http://web.mit.edu/drela/Public/web/avl/
+Source0:        http://web.mit.edu/drela/Public/web/avl/avl%{version}.tgz
+# The package does not ship a license file
+Source1:        LICENSE.GPL
+Source2:        LICENSE.LGPL
+# Makefile variables and flags
+Patch0:         avl3.32-makefile.patch
+
+BuildRequires:  gcc-fortran libX11-devel
+Requires:       fonts-bitmap-misc
+
+# There was a previous, now orphaned package called avl in the repos
+Conflicts: avl < 3.32-1
 Source44: import.info
 
+
 %description
-This library consists of a set of functions to manipulate AVL trees. AVL
-trees are very efficient balanced binary trees, similar to red-black
-trees. The functions in this library can handle any kind of payload and
-search key type.
+AVL is a program for the aerodynamic and flight-dynamic analysis of rigid aircraft
+of arbitrary configuration. It employs an extended vortex lattice model for
+the lifting surfaces, together with a slender-body model for fuselages and nacelles.
+General nonlinear flight states can be specified. The flight dynamic analysis
+combines a full linearization of the aerodynamic model about any flight state,
+together with specified mass properties. 
 
-%package        devel
-Summary:        Development files for %{name}
-Group:          Development/C
-Requires:       %{name} = %{version}-%{release}
-
-%description    devel
-The %{name}-devel package contains libraries and header files for
-developing applications that use %{name}.
 
 %prep
-%setup -q
-%patch0 -p1 -b .build
+%setup -q -n Avl
+%patch0 -p2
+cp %{SOURCE1} .
+cp %{SOURCE2} .
+
 
 %build
+export FFLAGS="%{optflags}"
 export CFLAGS="%{optflags}"
-make -f GNUmakefile %{?_smp_mflags}  libdir=%{_libdir}
+
+make %{?_smp_mflags} -C plotlib
+make %{?_smp_mflags} -C eispack
+make %{?_smp_mflags} -C bin
 
 
 %install
-make install DESTDIR=$RPM_BUILD_ROOT prefix=%{_prefix} libdir=%{_libdir}
-find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
-find $RPM_BUILD_ROOT%{_libdir} -type f -exec chmod +x '{}' \;
+%makeinstall_std -C bin BINDIR=%{_bindir}
+
 
 %files
-%doc README COPYING
-%{_libdir}/*.so.*
-
-%files devel
-%{_includedir}/*
-%{_libdir}/*.so
+%doc LICENSE.GPL LICENSE.LGPL version_notes.txt avl_doc.txt session1.txt session2.txt
+%{_bindir}/avl
 
 
 %changelog
+* Tue Sep 24 2013 Igor Vlasenko <viy@altlinux.ru> 3.32-alt1_4
+- update to new release by fcimport
+
 * Mon Apr 15 2013 Igor Vlasenko <viy@altlinux.ru> 0.3.5-alt2_2
 - fixed build
 
