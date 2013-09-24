@@ -1,16 +1,15 @@
 %define module_name Log-Agent
 
 Name: perl-%module_name
-Version: 0.307
-Release: alt3
+Version: 1.000
+Release: alt1
 
 Summary: %module_name module for perl
 License: Artistic
 Group: Development/Perl
 
 Url: %CPAN %module_name
-Source: http://www.cpan.org/modules/by-module/Log/%module_name-%version.tar.gz
-Patch: %name-%version-fix_tests_with_new_carp.patch
+Source: http://www.cpan.org/authors/id/M/MR/MROGASKI/Log-Agent-%{version}.tar.gz
 
 # Automatically added by buildreq on Fri May 21 2010 (-bi)
 BuildRequires: perl-MailTools perl-devel sendmail-common
@@ -25,7 +24,6 @@ choice, one may use logwarn() for instance to emit a warning.
 
 %prep
 %setup -n %module_name-%version
-%patch -p2
 
 %build
 %perl_vendor_build
@@ -38,6 +36,9 @@ choice, one may use logwarn() for instance to emit a warning.
 %perl_vendor_privlib/auto/Log*
 
 %changelog
+* Tue Sep 24 2013 Igor Vlasenko <viy@altlinux.ru> 1.000-alt1
+- automated CPAN update
+
 * Tue Sep 11 2012 Vladimir Lettiev <crux@altlinux.ru> 0.307-alt3
 - fixed build with perl-5.16
 
