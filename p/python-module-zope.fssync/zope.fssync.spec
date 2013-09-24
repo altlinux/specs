@@ -1,6 +1,6 @@
 %define oname zope.fssync
 Name: python-module-%oname
-Version: 3.6.0
+Version: 3.6.1
 Release: alt1
 Summary: Filesystem synchronization utility for Zope 3
 License: ZPLv2.1
@@ -57,6 +57,9 @@ mv %buildroot%python_sitelibdir_noarch/* \
 %python_sitelibdir/*/*/tests
 
 %changelog
+* Tue Sep 24 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.6.1-alt1
+- Version 3.6.1
+
 * Tue Apr 09 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.6.0-alt1
 - Version 3.6.0
 
