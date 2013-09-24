@@ -3,13 +3,13 @@ BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(Module/Build.pm) perl-Module-Build perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Test-Portability-Files
-Version:        0.05
-Release:        alt2_20
+Version:        0.06
+Release:        alt1
 Summary:        Check file names portability
 License:        GPL+ or Artistic
 Group:          Development/Perl
 URL:            http://search.cpan.org/dist/Test-Portability-Files/
-Source0:        http://www.cpan.org/authors/id/S/SA/SAPER/Test-Portability-Files-%{version}.tar.gz
+Source:        http://www.cpan.org/authors/id/A/AB/ABRAXXA/Test-Portability-Files-%{version}.tar.gz
 BuildArch:      noarch
 BuildRequires:  perl(Exporter.pm)
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
@@ -53,10 +53,13 @@ find $RPM_BUILD_ROOT -depth -type d -exec rmdir {} 2>/dev/null \;
 make test
 
 %files
-%doc Changes LICENSE LICENSE.Artistic LICENSE.GPL README
+%doc Changes LICENSE README
 %{perl_vendor_privlib}/*
 
 %changelog
+* Tue Sep 24 2013 Igor Vlasenko <viy@altlinux.ru> 0.06-alt1
+- automated CPAN update
+
 * Tue Sep 17 2013 Igor Vlasenko <viy@altlinux.ru> 0.05-alt2_20
 - Sisyphus build; switch to fc import
 
