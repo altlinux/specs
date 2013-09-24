@@ -1,6 +1,6 @@
 %define oname z3locales
 Name: python-module-%oname
-Version: 0.4
+Version: 0.4.1
 Release: alt1
 Summary: Display localized dates in Zope 2 using Zope 3 components
 License: ZPLv2.1
@@ -48,6 +48,9 @@ This package contains tests for z3locales.
 %python_sitelibdir/*/tests.*
 
 %changelog
+* Tue Sep 24 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.1-alt1
+- Version 0.4.1
+
 * Mon Apr 08 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4-alt1
 - Version 0.4
 
