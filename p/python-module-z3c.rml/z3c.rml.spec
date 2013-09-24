@@ -1,6 +1,6 @@
 %define oname z3c.rml
 Name: python-module-%oname
-Version: 2.1.0
+Version: 2.3.0
 Release: alt1
 Summary: An alternative implementation of RML
 License: ZPLv2.1
@@ -66,6 +66,9 @@ mv %buildroot%python_sitelibdir_noarch/* \
 %python_sitelibdir/*/*/tests
 
 %changelog
+* Tue Sep 24 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.3.0-alt1
+- Version 2.3.0
+
 * Mon Apr 08 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.1.0-alt1
 - Version 2.1.0
 
