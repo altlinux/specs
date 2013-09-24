@@ -1,22 +1,22 @@
-%define version 1.5.2
+%define version 2.2.1
 #define subver b20
-%define release alt4
+%define release alt1
 %define oname zc.buildout
 %setup_python_module %oname
 
 Summary: The Buildout project provides support for creating Python applications.
 Name: python-module-%oname
+URL: https://pypi.python.org/pypi/zc.buildout/2.2.1
 Version: %version
 %ifdef subver
-Release: %release.%subver.1
+Release: %release.%subver
 Source0: zc.buildout-%version%subver.tar
 %else
-Release: %release.1
+Release: %release
 Source0: zc.buildout-%version.tar
 %endif
 License: ZPL
 Group: Development/Python
-Packager: Python Development Team <python@packages.altlinux.org>
 
 BuildRequires: %py_dependencies setuptools
 
@@ -73,6 +73,9 @@ mv %buildroot%python_sitelibdir_noarch/* \
 %python_sitelibdir/*/*/test*
 
 %changelog
+* Tue Sep 24 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.2.1-alt1
+- Version 2.2.1
+
 * Mon Oct 24 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 1.5.2-alt4.1
 - Rebuild with Python-2.7
 
