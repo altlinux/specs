@@ -1,7 +1,7 @@
 %define oname z3c.form
 Name: python-module-%oname
-Version: 3.0.0
-Release: alt1.a2
+Version: 3.0.3
+Release: alt1
 Summary: An advanced form and widget framework for Zope 3
 License: ZPLv2.1
 Group: Development/Python
@@ -63,6 +63,9 @@ mv %buildroot%python_sitelibdir_noarch/* \
 %python_sitelibdir/*/*/test*
 
 %changelog
+* Tue Sep 24 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0.3-alt1
+- Version 3.0.3
+
 * Thu Apr 04 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0.0-alt1.a2
 - Version 3.0.0a2
 
