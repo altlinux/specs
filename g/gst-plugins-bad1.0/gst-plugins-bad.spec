@@ -1,6 +1,6 @@
 %define _name gst-plugins
 %define api_ver 1.0
-%define ver_major 1.0
+%define ver_major 1.2
 
 %define _gst_libdir %_libdir/gstreamer-%api_ver
 %define _gtk_docdir %_datadir/gtk-doc/html
@@ -8,7 +8,7 @@
 %def_enable gtk_doc
 
 Name: %_name-bad%api_ver
-Version: %ver_major.10
+Version: %ver_major.0
 Release: alt1
 
 Summary: A set of GStreamer plugins that need more quality
@@ -30,7 +30,8 @@ BuildRequires: libmpcdec-devel libneon-devel liboil-devel libsoundtouch-devel li
 BuildRequires: libtimidity-devel libxvid-devel python-module-PyXML python-modules-email python-modules-encodings
 BuildRequires: timidity-instruments libcelt-devel libdc1394-devel libkate-devel libtiger-devel
 BuildRequires: libvpx-devel librtmp-devel liborc-devel orc libofa-devel libmusicbrainz-devel libass-devel
-BuildRequires: libzbar-devel libwayland-client-devel
+BuildRequires: libzbar-devel libwayland-client-devel libwebp-devel libopenjpeg-devel libbluez-devel
+BuildRequires: libfluidsynth-devel
 
 %description
 GStreamer Bad Plug-ins is a set of plug-ins that aren't up to par
@@ -99,6 +100,9 @@ This package contains documentation for GStreamer Bad Plug-ins.
 %endif
 
 %changelog
+* Tue Sep 24 2013 Yuri N. Sedunov <aris@altlinux.org> 1.2.0-alt1
+- 1.2.0
+
 * Fri Aug 30 2013 Yuri N. Sedunov <aris@altlinux.org> 1.0.10-alt1
 - 1.0.10
 

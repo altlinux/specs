@@ -1,6 +1,7 @@
 Name: orc
-Version: 0.4.16
-Release: alt2
+Version: 0.4.18
+Release: alt1
+
 Summary: The Oil Runtime Compiler
 Group: Development/Other
 License: BSD
@@ -127,6 +128,9 @@ This package contains documentation for Orc.
 %_datadir/gtk-doc/html/orc
 
 %changelog
+* Wed Sep 25 2013 Yuri N. Sedunov <aris@altlinux.org> 0.4.18-alt1
+- 0.4.18
+
 * Wed Oct 26 2011 Paul Wolneykien <manowar@altlinux.ru> 0.4.16-alt2
 - Add glib-2.0 to the set of build requisites.
 
