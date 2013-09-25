@@ -1,7 +1,7 @@
 %define oname pydicom
 Name: python-module-%oname
 Version: 0.9.8
-Release: alt1
+Release: alt2
 Summary: Pure python package for DICOM medical file reading and writing
 License: MIT
 Group: Development/Python
@@ -68,6 +68,9 @@ This package contains examples for pydicom.
 %python_sitelibdir/dicom/examples
 
 %changelog
+* Wed Sep 25 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.8-alt2
+- Fixed build
+
 * Tue Apr 02 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.8-alt1
 - Version 0.9.8
 
