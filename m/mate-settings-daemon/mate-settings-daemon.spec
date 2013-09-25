@@ -1,30 +1,36 @@
 Group: System/Servers
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/glib-genmarshal /usr/bin/glib-gettextize gcc-c++ libICE-devel libgio-devel pkgconfig(dbus-1) pkgconfig(fontconfig) pkgconfig(gio-2.0) pkgconfig(gio-unix-2.0) pkgconfig(glib-2.0) pkgconfig(gmodule-2.0) pkgconfig(gthread-2.0) pkgconfig(gtk+-2.0) pkgconfig(libcanberra-gtk) pkgconfig(libpulse) pkgconfig(libpulse-mainloop-glib) pkgconfig(libxklavier) pkgconfig(nss) pkgconfig(polkit-gobject-1)
+BuildRequires: /usr/bin/glib-genmarshal /usr/bin/glib-gettextize gcc-c++ libICE-devel libgio-devel pkgconfig(dbus-1) pkgconfig(fontconfig) pkgconfig(gio-2.0) pkgconfig(gio-unix-2.0) pkgconfig(glib-2.0) pkgconfig(gmodule-2.0) pkgconfig(gstreamer-0.10) pkgconfig(gstreamer-plugins-base-0.10) pkgconfig(gthread-2.0) pkgconfig(gtk+-2.0) pkgconfig(libcanberra-gtk) pkgconfig(libxklavier) pkgconfig(nss) pkgconfig(polkit-gobject-1)
 # END SourceDeps(oneline)
-BuildRequires: libXext-devel
+BuildRequires: libXext-devel libXi-devel
 %define _libexecdir %_prefix/libexec
+%global _internal_version  d2d3aa7
+
 Name:           mate-settings-daemon
-Version:        1.6.1
-Release:        alt1_3
+Version:        1.6.2
+Release:        alt1_0.1.gitd2d3aa7
 Summary:        MATE Desktop settings daemon
 License:        GPLv2+
 URL:            http://mate-desktop.org
-Source0:        http://pub.mate-desktop.org/releases/1.6/%{name}-%{version}.tar.xz
-Requires:       mate-icon-theme
+
+#Source0:        http://pub.mate-desktop.org/releases/1.6/%{name}-%{version}.tar.xz
+
+# To generate tarball
+# wget http://git.mate-desktop.org/%%{name}/snapshot/%%{name}-{_internal_version}.tar.xz -O %%{name}-%%{version}.git%%{_internal_version}.tar.xz
+Source0: http://raveit65.fedorapeople.org/Mate/git-upstream/%{name}-%{version}.git%{_internal_version}.tar.xz
+
 Requires:       libmatekbd%{?_isa} >= 0:1.6.1-1
 
 BuildRequires:  libdconf-devel
 BuildRequires:  libdbus-glib-devel
 BuildRequires:  gtk2-devel
-BuildRequires:  gstreamer-devel
-BuildRequires:  gst-plugins-devel
+BuildRequires:  libpulseaudio-devel
+BuildRequires:  libcanberra-devel
 BuildRequires:  libXxf86misc-devel
 BuildRequires:  libSM-devel
 BuildRequires:  libmatekbd-devel
 BuildRequires:  libnotify-devel
 BuildRequires:  mate-common
-BuildRequires:  mate-doc-utils
 BuildRequires:  mate-desktop-devel
 BuildRequires:  mate-polkit-devel
 BuildRequires:  nss-devel
@@ -48,7 +54,8 @@ various parameters of a MATE session and the applications that run
 under it.
 
 %prep
-%setup -q
+%setup -q -n %{name}-%{_internal_version}
+NOCONFIGURE=1 ./autogen.sh
 
 %build
 %configure                             \
@@ -66,9 +73,8 @@ make %{?_smp_mflags} V=1
 make DESTDIR=%{buildroot} install
 
 find %{buildroot} -name '*.la' -exec rm -rf {} ';'
-find %{buildroot} -name '*.a' -exec rm -rf {} ';'
 
-# remove needless gsettings convert file to avoid slow session start
+# remove needless gsettings convert file
 rm -f %{buildroot}%{_datadir}/MateConf/gsettings/mate-settings-daemon.convert
 
 desktop-file-validate %{buildroot}%{_sysconfdir}/xdg/autostart/mate-settings-daemon.desktop
@@ -79,7 +85,7 @@ desktop-file-validate %{buildroot}%{_sysconfdir}/xdg/autostart/mate-settings-dae
 %files -f %{name}.lang
 %doc AUTHORS COPYING README
 %config %{_sysconfdir}/dbus-1/system.d/org.mate.SettingsDaemon.DateTimeMechanism.conf
-%config %{_sysconfdir}/xdg/autostart/mate-settings-daemon.desktop
+%{_sysconfdir}/xdg/autostart/mate-settings-daemon.desktop
 %{_libdir}/mate-settings-daemon
 %{_libexecdir}/mate-settings-daemon
 %{_libexecdir}/msd-datetime-mechanism
@@ -96,6 +102,9 @@ desktop-file-validate %{buildroot}%{_sysconfdir}/xdg/autostart/mate-settings-dae
 %{_libdir}/pkgconfig/mate-settings-daemon.pc
 
 %changelog
+* Wed Sep 25 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.2-alt1_0.1.gitd2d3aa7
+- new fc release
+
 * Wed Aug 07 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.1-alt1_3
 - new fc release
 
