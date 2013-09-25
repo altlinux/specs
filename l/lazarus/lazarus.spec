@@ -1,7 +1,7 @@
 %define cfg %_builddir/%name-%version/
 
 Name:       lazarus
-Version:    1.0.10
+Version:    1.0.12
 Release:    alt1
 Epoch:      1
 
@@ -176,6 +176,9 @@ echo -e "begin\nend." > %buildroot$LAZARUSDIR/compilertest.pas
 %dir %_datadir/fpcsrc/packages/fcl-base
 
 %changelog
+* Wed Sep 25 2013 Andrey Cherepanov <cas@altlinux.org> 1:1.0.12-alt1
+- New version 1.0.12
+
 * Mon Jun 24 2013 Andrey Cherepanov <cas@altlinux.org> 1:1.0.10-alt1
 - New version 1.0.10
 
