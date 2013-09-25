@@ -1,5 +1,5 @@
 Name: installer
-Version: 1.8.18
+Version: 1.8.19
 Release: alt1
 
 Summary: Installer common parts
@@ -105,6 +105,9 @@ This package contains common installer stage3 files and dependencies.
 %_datadir/install2/preinstall.d/30-setup-network.sh
 
 %changelog
+* Wed Sep 25 2013 Michael Shigorin <mike@altlinux.org> 1.8.19-alt1
+- Fix initinstall scripts (the noise was annoying enough already).
+
 * Thu Mar 28 2013 Mikhail Efremov <sem@altlinux.org> 1.8.18-alt1
 - Fix firsttime flag-file path.
 - Use xorg-drv-video virtual package again.
