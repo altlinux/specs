@@ -1,6 +1,6 @@
 Name: xfce4-session
 Version: 4.10.0
-Release: alt7.git20130719
+Release: alt8.git20130719
 
 Summary: Session manager for XFce desktop environment
 Summary (ru): Менеджер сессий для окружения рабочего стола Xfce
@@ -122,6 +122,9 @@ install -Dm0644 %SOURCE2 %buildroot%_sysconfdir/xdg/autostart/polkit-gnome-authe
 %_libdir/xfce4/session/balou*
 
 %changelog
+* Wed Sep 25 2013 Mikhail Efremov <sem@altlinux.org> 4.10.0-alt8.git20130719
+- Ensure that logind can shutdown/reboot/sleep method (closes: #29224).
+
 * Tue Jul 23 2013 Mikhail Efremov <sem@altlinux.org> 4.10.0-alt7.git20130719
 - Avoid automatic dependence on ConsoleKit.
 - Improve gpg and ssh agents handling code.
