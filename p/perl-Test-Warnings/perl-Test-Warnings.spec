@@ -3,13 +3,13 @@ BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(Test/NoWarnings.pm) perl-Module-Build perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:		perl-Test-Warnings
-Version:	0.009
-Release:	alt2_1
+Version:	0.010
+Release:	alt1
 Summary:	Test for warnings and the lack of them
 License:	GPL+ or Artistic
 Group:		Development/Perl
 URL:		http://search.cpan.org/dist/Test-Warnings
-Source0:	http://search.cpan.org/CPAN/authors/id/E/ET/ETHER/Test-Warnings-%{version}.tar.gz
+Source:	http://www.cpan.org/authors/id/E/ET/ETHER/Test-Warnings-%{version}.tar.gz
 BuildArch:	noarch
 # Build
 BuildRequires:	perl(Module/Build/Tiny.pm)
@@ -72,6 +72,9 @@ perl Build.PL --install_path bindoc=%_man1dir --installdirs=vendor
 %{perl_vendor_privlib}/Test/
 
 %changelog
+* Wed Sep 25 2013 Igor Vlasenko <viy@altlinux.ru> 0.010-alt1
+- automated CPAN update
+
 * Wed Sep 18 2013 Igor Vlasenko <viy@altlinux.ru> 0.009-alt2_1
 - Sisyphus build
 
