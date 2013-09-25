@@ -4,8 +4,8 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-wizardface
-Version: 2.0
-Release: alt3
+Version: 2.0.1
+Release: alt1
 
 Packager: Stanislav Ievlev <inger@altlinux.org>
 
@@ -93,6 +93,9 @@ EOF
 %_bindir/*
 
 %changelog
+* Wed Sep 25 2013 Michael Shigorin <mike@altlinux.org> 2.0.1-alt1
+- hide extra line output by initscript (errorlevel is enough)
+
 * Tue Feb 12 2013 Mikhail Efremov <sem@altlinux.org> 2.0-alt3
 - Fix removal passwords from wizard.log.
 
