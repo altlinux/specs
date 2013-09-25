@@ -1,15 +1,15 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/dot /usr/bin/doxygen /usr/bin/pkg-config /usr/bin/xmlto boost-devel-headers gcc-c++ libpq5.4-devel
 # END SourceDeps(oneline)
+Group: System/Libraries
 %add_optflags %optflags_shared
 
 Name:           libpqxx
+Summary:        C++ client API for PostgreSQL
 Epoch:          1
 Version:        3.2
-Release:        alt1_0.5
-Summary:        C++ client API for PostgreSQL
+Release:        alt1_0.6
 
-Group:          System/Libraries
 License:        BSD
 URL:            http://pqxx.org/
 Source0:        http://pqxx.org/download/software/libpqxx/libpqxx-%{version}.tar.gz
@@ -26,10 +26,17 @@ C++ client API for PostgreSQL. The standard front-end (in the sense of
 Supersedes older libpq++ interface.
 
 %package devel
+Group: Development/C
 Summary:        Development tools for %{name} 
-Group:          Development/C
 Requires:       %{name}%{?_isa} = %{epoch}:%{version}-%{release}
 %description devel
+%{summary}.
+
+%package doc
+Group: System/Libraries
+Summary: Developer documentation for %{name}
+BuildArch: noarch
+%description doc
 %{summary}.
 
 
@@ -49,14 +56,15 @@ make %{?_smp_mflags}
 
 
 %install
-make install DESTDIR=$RPM_BUILD_ROOT
+make install DESTDIR=%{buildroot}
 
-rm -f $RPM_BUILD_ROOT%{_libdir}/lib*.la
+rm -fv %{buildroot}%{_libdir}/lib*.la
 
 
 %check 
-# not enabled, by default, takes awhile.
-%{?_with_check:make check}
+# FIXME: most/all fail, need already-running postgresql instance?
+make %{?_smp_mflags} check ||:
+
 
 %files
 %doc AUTHORS ChangeLog COPYING NEWS README VERSION
@@ -69,8 +77,14 @@ rm -f $RPM_BUILD_ROOT%{_libdir}/lib*.la
 %{_libdir}/libpqxx.so
 %{_libdir}/pkgconfig/libpqxx.pc
 
+%files doc
+%doc doc/html/*
+
 
 %changelog
+* Tue Sep 24 2013 Igor Vlasenko <viy@altlinux.ru> 1:3.2-alt1_0.6
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 1:3.2-alt1_0.5
 - update to new release by fcimport
 
