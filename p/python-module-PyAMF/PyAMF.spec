@@ -1,7 +1,7 @@
 %define oname PyAMF
 Name: python-module-%oname
 Version: 0.6.1
-Release: alt1.1.1
+Release: alt2
 Summary: AMF support for Python
 License: MIT
 Group: Development/Python
@@ -10,7 +10,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
 
-BuildPreReq: python-devel python-module-distribute
+BuildPreReq: python-devel python-module-setuptools-tests
 
 Requires: python-module-django
 
@@ -83,6 +83,9 @@ This package contains documentation for PyAMF.
 %doc doc/*
 
 %changelog
+* Wed Sep 25 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.1-alt2
+- Fixed build
+
 * Thu Apr 12 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 0.6.1-alt1.1.1
 - Rebuild to remove redundant libpython2.7 dependency
 
