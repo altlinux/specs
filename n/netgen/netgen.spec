@@ -3,7 +3,7 @@
 
 Name: netgen
 Version: 5.2
-Release: alt1.svn20130902
+Release: alt2.svn20130902
 Summary: Automatic 3d tetrahedral mesh generator
 License: LGPL
 Group: Graphics
@@ -184,6 +184,9 @@ done
 %doc demoapp
 
 %changelog
+* Wed Sep 25 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.2-alt2.svn20130902
+- Fixed build
+
 * Thu Sep 12 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.2-alt1.svn20130902
 - Version 5.2
 
