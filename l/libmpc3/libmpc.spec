@@ -1,9 +1,9 @@
-Name: libmpc
-Version: 0.9
-Release: alt2
+Name: libmpc3
+Version: 1.0.1
+Release: alt1
 
-Summary: Complex floating-point library with high precision and exact rounding
-License: LGPLv2.1+
+Summary: C library for multiple precision complex arithmetic
+License: LGPLv3+, GFDL
 Group: System/Libraries
 Url: http://multiprecision.org/
 
@@ -12,18 +12,20 @@ Source: mpc-%version.tar
 
 BuildRequires: libgmp-devel libmpfr-devel
 
+Provides: libmpc = %version-%release
+
 %description
-The MPC library is a C library for the arithmetic of complex numbers
+The GNU MPC library is a C library for the arithmetic of complex numbers
 with arbitrarily high precision and correct rounding of the result.
 It is built upon and follows the same principles as MPFR.
 
-%package devel
-Summary: Header files for MPC library
+%package -n libmpc-devel
+Summary: Header files for the GNU MPC library
 Group: Development/C
 Requires: %name = %version-%release
 
-%description devel
-Header files for MPC library.
+%description -n libmpc-devel
+Header files for the GNU MPC library.
 
 %prep
 %setup -n mpc-%version
@@ -45,12 +47,15 @@ export EGREP=egrep
 %doc AUTHORS NEWS README
 %_libdir/libmpc.so.*
 
-%files devel
+%files -n libmpc-devel
 %_libdir/libmpc.so
 %_includedir/mpc.h
 %_infodir/mpc.info*
 
 %changelog
+* Wed Sep 25 2013 Dmitry V. Levin <ldv@altlinux.org> 1.0.1-alt1
+- Updated to 1.0.1 (closes: #29363).
+
 * Thu Jun 07 2012 Dmitry V. Levin <ldv@altlinux.org> 0.9-alt2
 - Rebuilt with libgmp10 and libmpfr4 (closes: #27416).
 
