@@ -9,12 +9,11 @@
 
 Name: python-module-%oname
 Version: 0.14.8
-Release: alt1
+Release: alt1.1
 Summary: ISO country, subdivision, language, currency and script definitions
 License: LGPLv2.1
 Group: Development/Python
 Url: http://pypi.python.org/pypi/pycountry
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # hg clone https://bitbucket.org/gocept/pycountry
 Source: %name-%version.tar
@@ -22,12 +21,12 @@ Patch10: %name-%version-alt-python3.patch
 
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-distribute
+BuildPreReq: python-devel python-module-setuptools-tests
 
 %if_with python3
 BuildPreReq: rpm-build-python3
 BuildPreReq: python3-devel
-BuildPreReq: python3-module-distribute
+BuildPreReq: python3-module-setuptools-tests
 %endif
 
 %description
@@ -114,6 +113,9 @@ popd
 %endif
 
 %changelog
+* Wed Sep 25 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.14.8-alt1.1
+- Fixed build
+
 * Fri Mar 15 2013 Aleksey Avdeev <solo@altlinux.ru> 0.14.8-alt1
 - Version 0.14.8
 - Add %%name-tests subpackage
