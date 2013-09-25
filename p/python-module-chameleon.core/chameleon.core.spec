@@ -4,7 +4,7 @@
 
 Name: python-module-%oname.core
 Version: 2.12
-Release: alt1.git20130817
+Release: alt2.git20130817
 Summary: Chameleon Template Compiler
 License: BSD
 Group: Development/Python
@@ -15,11 +15,11 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-distribute
+BuildPreReq: python-devel python-module-setuptools-tests
 BuildPreReq: python-module-sphinx-devel
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-distribute
+BuildRequires: python3-devel python3-module-setuptools-tests
 BuildPreReq: python-tools-2to3
 %endif
 
@@ -131,6 +131,9 @@ cp -fR _build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Wed Sep 25 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.12-alt2.git20130817
+- Fixed build
+
 * Mon Sep 16 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.12-alt1.git20130817
 - Version 2.12
 
