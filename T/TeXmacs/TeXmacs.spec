@@ -1,5 +1,5 @@
 Name: TeXmacs
-Version: 1.0.7.19
+Version: 1.0.7.20
 Release: alt1
 
 Summary: A WYSIWYG mathematical text editor
@@ -58,7 +58,7 @@ a technical drawing editor and a presentation mode.
 #patch2 -p1
 
 %patch5 -p1
-%patch7 -p1
+#patch7 -p1
 #patch8 -p1
 sed -i "s|LDPATH = \@CONFIG_BPATH\@|LDPATH =|" src/makefile.in
 sed -i "s|5\.14\.\*|5.15.*|" plugins/maxima/bin/tm_maxima
@@ -69,9 +69,9 @@ sed -i "s|5\.14\.\*|5.15.*|" plugins/maxima/bin/tm_maxima
 #set_autoconf_version 2.5
 #autoconf
 
-#CC="gcc"`echo "%optflags" | %__sed -e "s:%optflags_default::"`
+#CC="gcc"`echo "%optflags" | sed -e "s:%optflags_default::"`
 #export CC
-#CXX="g++"`echo "%optflags" | %__sed -e "s:%optflags_default::"`
+#CXX="g++"`echo "%optflags" | sed -e "s:%optflags_default::"`
 #export CXX
 sed -i 's|\-static||g' configure
 sed -i 's|\-O3|-g -O3|g' configure
@@ -142,6 +142,12 @@ install -D -m644 %SOURCE4 %buildroot%_desktopdir/%name.desktop
 
 
 %changelog
+* Thu Sep 26 2013 Ilya Mashkin <oddity@altlinux.ru> 1.0.7.20-alt1
+- 1.0.7.20
+
+* Fri Jun 21 2013 Ilya Mashkin <oddity@altlinux.ru> 1.0.7.19-alt0.M60T.1
+- build for t6
+
 * Tue Apr 23 2013 Ilya Mashkin <oddity@altlinux.ru> 1.0.7.19-alt1
 - 1.0.7.19
 
