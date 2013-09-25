@@ -9,7 +9,7 @@
 
 Name: python-module-%oname
 Version: %major.0
-Release: alt2.git20130611
+Release: alt3.git20130611
 
 Summary: Matlab(TM) style python plotting package
 
@@ -44,9 +44,10 @@ BuildPreReq: python-module-pyparsing
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel libnumpy-py3-devel python-tools-2to3
+BuildPreReq: python3-module-setuptools
 BuildPreReq: python3-module-scipy-devel python3-module-markupsafe
 BuildPreReq: python3-module-pytz python3-module-dateutil
-BuildPreReq:  python3-module-PySide
+BuildPreReq: python3-module-PySide
 BuildPreReq: python3-module-pycairo python3-module-pygobject3-devel
 BuildPreReq: python3-module-pyparsing python3-modules-tkinter
 %endif
@@ -602,6 +603,9 @@ rm -fR %_docdir/%name/pdf
 %endif
 
 %changelog
+* Wed Sep 25 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4.0-alt3.git20130611
+- Fixed build
+
 * Sun Jun 16 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4.0-alt2.git20130611
 - Added compat for main package
 - Set default backend: GTK3Cairo
