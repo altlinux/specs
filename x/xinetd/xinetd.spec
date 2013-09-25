@@ -1,6 +1,6 @@
 Name: xinetd
-Version: 2.3.14
-Release: alt4
+Version: 2.3.15
+Release: alt1
 
 Summary: xinetd is a powerful replacement for inetd
 Group: System/Base
@@ -28,24 +28,24 @@ Source17: echo-udp.xinetd
 Source18: time-tcp.xinetd
 Source19: time-udp.xinetd
 
-Patch1: xinetd-2.3.14-cvs-20051128.patch
-Patch2: xinetd-2.3.14-owl-bad_port_check.patch
-Patch3: xinetd-2.3.14-up-warnings.patch
+Patch1: xinetd-2.3.15-owl-bad_port_check.patch
+Patch2: xinetd-2.3.15-owl-fixes.patch
+Patch3: xinetd-2.3.15-owl-man.patch
 
-Patch11: xinetd-2.3.14-owl-fixes.patch
-Patch12: xinetd-2.3.14-owl-man.patch
-Patch13: xinetd-2.3.12-alt-skipfiles.patch
-Patch14: xinetd-2.3.14-alt-remlock.patch
-Patch15: xinetd-2.3.12-alt-configure-nsl.patch
-Patch16: xinetd-2.3.13-alt-pidfile.patch
-Patch17: xinetd-2.3.12-alt-record.patch
-Patch18: xinetd-2.3.13-alt-parse_inet_addresses.patch
+Patch11: xinetd-2.3.12-alt-skipfiles.patch
+Patch12: xinetd-2.3.15-alt-remlock.patch
+Patch13: xinetd-2.3.12-alt-configure-nsl.patch
+Patch14: xinetd-2.3.13-alt-pidfile.patch
+Patch15: xinetd-2.3.12-alt-record.patch
+Patch16: xinetd-2.3.13-alt-parse_inet_addresses.patch
 
-Patch21: xinetd-2.3.12-rh-tcp_rpc.patch
-Patch22: xinetd-2.3.14-rh-man.patch
-Patch23: xinetd-2.3.14-rh-pie.patch
-Patch24: xinetd-2.3.14-rh-ssize_t.patch
-Patch25: xinetd-2.3.14-rh-readable-debuginfo.patch
+Patch21: xinetd-2.3.14-rh-man.patch
+Patch22: xinetd-2.3.15-rh-pie.patch
+Patch23: xinetd-2.3.14-rh-ident-bind.patch
+Patch24: xinetd-2.3.14-rh-readable-debuginfo.patch
+Patch25: xinetd-2.3.14-rh-ident-ipv6confusion.patch
+Patch26: xinetd-2.3.14-rh-signal-log-hang.patch
+Patch27: xinetd-2.3.15-rh-context-exepath.patch
 
 Provides: %_sysconfdir/%name.d
 
@@ -76,23 +76,26 @@ This package contains development libraries and header files
 required for building xinetd-aware applications.
 
 %prep
-%setup -q
-%patch1 -p0
+%setup
+%patch1 -p1
 %patch2 -p1
 %patch3 -p1
+
 %patch11 -p1
 %patch12 -p1
 %patch13 -p1
 %patch14 -p1
 %patch15 -p1
 %patch16 -p1
-%patch17 -p1
-%patch18 -p1
+
 %patch21 -p1
 %patch22 -p1
 %patch23 -p1
 %patch24 -p1
 %patch25 -p1
+%patch26 -p1
+%patch27 -p1
+
 install -p -m644 %_sourcedir/{faq.html,xinetd-tutorial.html} .
 find -type f -name \*.orig -delete
 
@@ -119,7 +122,7 @@ mkdir -p %buildroot{%_libdir/%name,%_includedir/%name,%_mandir/man{3,5,8}}
 
 install -pD -m755 %_sourcedir/xinetd.init %buildroot%_initdir/%name
 install -pD -m640 %_sourcedir/xinetd.conf %buildroot%_sysconfdir/%name.conf
-install -pD -m644 %_sourcedir/xinetd.sysconf %buildroot%_sysconfdir/sysconfig/%name
+install -pD -m640 %_sourcedir/xinetd.sysconf %buildroot%_sysconfdir/sysconfig/%name
 install -pD -m755 %_sourcedir/convert.pl %buildroot%_sbindir/inetdconvert
 install -pD -m640 %_sourcedir/%name.logrotate %buildroot%_sysconfdir/logrotate.d/%name
 for i in chargen daytime discard echo time; do
@@ -169,6 +172,10 @@ rm %buildroot%_mandir/*.3
 %doc README.*
 
 %changelog
+* Tue Sep 24 2013 Dmitry V. Levin <ldv@altlinux.org> 2.3.15-alt1
+- Updated to 2.3.15.
+- Packaged xinetd.service (closes: #27392, #28101).
+
 * Mon Feb 07 2011 Dmitry V. Levin <ldv@altlinux.org> 2.3.14-alt4
 - Packaged /var/log/xinetd/xinetd.log and its logrotate script.
 - init.d/xinetd: Pass --pidfile option to stop_daemon.
