@@ -5,7 +5,7 @@
 Name: python-module-%oname
 Epoch: 1
 Version: 1.2.1
-Release: alt1.git20130317
+Release: alt1.git20130317.1
 
 Summary: A unittest-based testing framework for python that makes writing and running tests easier
 
@@ -23,6 +23,9 @@ Source: %name-%version.tar
 Patch1: nose-1.1.2-alt-syntax-error-patch_py.patch
 
 BuildRequires: python-module-setuptools python-module-coverage
+%if_with python3
+BuildPreReq: python3-module-setuptools-tests
+%endif
 
 %description
 nose provides an alternate test discovery and running process for
@@ -100,6 +103,9 @@ popd
 %endif
 
 %changelog
+* Wed Sep 25 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:1.2.1-alt1.git20130317.1
+- Fixed build
+
 * Sun Mar 17 2013 Aleksey Avdeev <solo@altlinux.ru> 1:1.2.1-alt1.git20130317
 - new version 1.2.1 (git describe: release_1.2.1-112-g846382d)
 
