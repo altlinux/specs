@@ -25,8 +25,8 @@
 %endif
 
 Name: systemd
-Version: 206
-Release: alt1
+Version: 207
+Release: alt1.git.a0f70805
 Summary: A System and Session Manager
 Url: http://www.freedesktop.org/wiki/Software/systemd
 Group: System/Configuration/Boot and Init
@@ -578,6 +578,7 @@ ln -s ../sbin/systemctl %buildroot/sbin/runlevel
 ln -r -s %buildroot/lib/systemd/systemd-{binfmt,modules-load,sysctl} %buildroot/sbin/
 ln -r -s %buildroot/sbin/systemctl %buildroot/bin/
 
+
 rm -rf %buildroot%_docdir/systemd
 
 # add defaults services
@@ -619,7 +620,11 @@ rm -f %buildroot%_sysconfdir/systemd/system/default.target
 # create modules.conf as a symlink to /etc/modules
 mkdir -p %buildroot/lib/modules-load.d
 mkdir -p %buildroot%_sysconfdir/modules-load.d
-ln -s ../modules %buildroot%_sysconfdir/modules-load.d/modules.conf
+ln -r -s %buildroot%_sysconfdir/modules %buildroot%_sysconfdir/modules-load.d/modules.conf
+
+# create /etc/sysctl.d/99-sysctl.conf as a symlink to /etc/sysctl.conf
+mkdir -p %buildroot%_sysconfdir/sysctl.d
+ln -r -s %buildroot%_sysconfdir/sysctl.conf %buildroot%_sysconfdir/sysctl.d/99-sysctl.conf
 
 # Make sure the NTP units dir exists
 mkdir -p %buildroot/lib/systemd/ntp-units.d
@@ -631,6 +636,8 @@ mkdir -p %buildroot%_localstatedir/lib/systemd/catalog
 mkdir -p %buildroot%_localstatedir/log/journal
 touch %buildroot%_localstatedir/lib/systemd/catalog/database
 touch %buildroot%_sysconfdir/udev/hwdb.bin
+mkdir -p %buildroot%_localstatedir/lib/systemd/random-seed
+mkdir -p %buildroot%_localstatedir/lib/systemd/backlight
 
 # Add completion for bash3
 mkdir -p %buildroot%_sysconfdir/bash_completion.d
@@ -645,9 +652,6 @@ install -m644 %SOURCE56 %buildroot%_sysconfdir/bash_completion.d/systemd-analyze
 install -m644 %SOURCE57 %buildroot%_sysconfdir/bash_completion.d/systemd-coredumpctl
 install -m644 %SOURCE58 %buildroot%_sysconfdir/bash_completion.d/timedatectl
 install -m644 %SOURCE59 %buildroot%_sysconfdir/bash_completion.d/udevadm
-
-# Add completion for zsh
-install -D shell-completion/systemd-zsh-completion.zsh %buildroot%_datadir/zsh/Completion/Unix/_systemd
 
 # Make sure the ghost-ing below works
 touch %buildroot%_sysconfdir/systemd/system/runlevel2.target
@@ -867,6 +871,7 @@ update_chrooted all
 
 %config(noreplace) %_sysconfdir/dbus-1/system.d/*.conf
 %config(noreplace) %_sysconfdir/systemd/*.conf
+%config %_sysconfdir/pam.d/systemd-user
 %ghost %config(noreplace) %_sysconfdir/hostname
 %ghost %config(noreplace) %_sysconfdir/vconsole.conf
 %ghost %config(noreplace) %_sysconfdir/locale.conf
@@ -934,6 +939,7 @@ update_chrooted all
 %dir %_localstatedir/lib/systemd
 %dir %_localstatedir/lib/systemd/catalog
 %ghost %_localstatedir/lib/systemd/catalog/database
+%dir %_localstatedir/lib/systemd/random-seed
 %dir %_localstatedir/lib/systemd/coredump
 # %%_docdir/systemd
 %doc DISTRO_PORTING LICENSE.LGPL2.1 README NEWS TODO
@@ -957,6 +963,7 @@ update_chrooted all
 %exclude /lib/systemd/systemd-binfmt
 %exclude /lib/systemd/systemd-modules-load
 %exclude /lib/systemd/systemd-sysctl
+%exclude /lib/systemd/systemd-backlight
 %exclude %_unitdir/systemd-tmpfiles-clean.service
 %exclude %_unitdir/systemd-tmpfiles-setup.service
 %exclude %_unitdir/sysinit.target.wants/systemd-tmpfiles-setup.service
@@ -966,6 +973,7 @@ update_chrooted all
 %exclude %_unitdir/sysinit.target.wants/systemd-modules-load.service
 %exclude %_unitdir/systemd-sysctl.service
 %exclude %_unitdir/sysinit.target.wants/systemd-sysctl.service
+%exclude %_unitdir/systemd-backlight@.service
 %exclude %_man5dir/tmpfiles.*
 %exclude %_man8dir/systemd-tmpfiles.*
 %exclude %_man5dir/binfmt.*
@@ -974,6 +982,7 @@ update_chrooted all
 %exclude %_man8dir/systemd-modules-load.*
 %exclude %_man5dir/sysctl.*
 %exclude %_man8dir/systemd-sysctl.*
+%exclude %_man8dir/systemd-backlight*
 
 # may be need adapt for ALTLinux?
 %exclude /usr/lib/kernel
@@ -1072,12 +1081,18 @@ update_chrooted all
 
 /lib/systemd/systemd-sysctl
 /sbin/systemd-sysctl
+%_sysconfdir/sysctl.d/99-sysctl.conf
 %_unitdir/systemd-sysctl.service
 %_unitdir/sysinit.target.wants/systemd-sysctl.service
 /lib/sysctl.d/50-default.conf
 /lib/sysctl.d/49-coredump-null.conf
 %_man5dir/sysctl.*
 %_man8dir/systemd-sysctl.*
+
+/lib/systemd/systemd-backlight
+%_unitdir/systemd-backlight@.service
+%_man8dir/systemd-backlight*
+%dir %_localstatedir/lib/systemd/backlight
 
 %files analyze
 %_bindir/systemd-analyze
@@ -1102,7 +1117,7 @@ update_chrooted all
 %exclude %_sysconfdir/bash_completion.d/udevadm
 
 %files -n zsh-completion-%name
-%_datadir/zsh/Completion/Unix/_systemd
+%_datadir/zsh/site-functions/*
 
 %if_with python
 %files -n python-module-%name
@@ -1207,6 +1222,9 @@ update_chrooted all
 /lib/udev/write_net_rules
 
 %changelog
+* Mon Sep 23 2013 Alexey Shabalin <shaba@altlinux.ru> 207-alt1.git.a0f70805
+- upstream git snapshot a0f708053ba42c8289caed1107f498bbf332e204
+
 * Wed Jul 24 2013 Alexey Shabalin <shaba@altlinux.ru> 206-alt1
 - 206
 
