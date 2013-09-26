@@ -5,12 +5,12 @@
 # This file and all modifications and additions to the pristine
 # package are under the same license as the package itself.
 
-%define apiver 3.0.1
-%define osgbranch 3.0
+%define apiver 3.2.0
+%define osgbranch 3.2
 
 Name: OpenSceneGraph
-Version: 3.0.1
-Release: alt2.1
+Version: 3.2.0
+Release: alt1
 
 Summary: High performance real-time graphics toolkit
 License: OSGPL (wxWidgets, clarified LGPL)
@@ -26,6 +26,8 @@ Packager: Michael Shigorin <mike@altlinux.org>
 BuildRequires: cmake doxygen gcc-c++ gnuplot graphviz libInventor-devel libSDL-devel libXScrnSaver-devel libXcomposite-devel libXdmcp-devel libXpm-devel libXtst-devel libXxf86misc-devel libfreeglut-devel libgif-devel libgtkglext-devel libopenal-devel libpoppler-glib-devel librsvg-devel libwxGTK-devel libxkbfile-devel libxml2-devel phonon-devel unzip wget
 
 #BuildRequires: libpixman-devel
+BuildRequires: libtiff-devel
+Requires: lib%name = %version-%release
 
 %description
 The OpenSceneGraph is an OpenSource, cross platform graphics
@@ -71,7 +73,6 @@ popd
 Summary: Development files for OpenSceneGraph
 Group: System/Libraries
 Requires: libOpenThreads = %version-%release
-Provides: %name = %version-%release
 
 %description -n lib%name
 Runtime libraries files for OpenSceneGraph
@@ -225,7 +226,7 @@ Sample applications for OpenSceneGraph
 %_bindir/osgfadetext
 %_bindir/osgforest
 %_bindir/osgfxbrowser
-%_bindir/osggeodemo
+#_bindir/osggeodemo
 %_bindir/osggeometry
 %_bindir/osghangglide
 %_bindir/osghud
@@ -287,6 +288,17 @@ Sample applications for OpenSceneGraph
 %_bindir/osgphotoalbum
 %_bindir/osgsimulation
 
+%_bindir/osgatomiccounter
+%_bindir/osgcomputeshaders
+%_bindir/osgframerenderer
+%_bindir/osgkeystone
+%_bindir/osgmultiplemovies
+%_bindir/osgmultitouch
+%_bindir/osgoscdevice
+%_bindir/osgsimplegl3
+%_bindir/osgsimpleshaders
+%_bindir/osgtessellationshaders
+
 %_datadir/OpenSceneGraph
 
 # libOpenThreads
@@ -322,6 +334,11 @@ Development files for OpenThreads
 %_includedir/OpenThreads
 
 %changelog
+* Thu Sep 26 2013 Michael Shigorin <mike@altlinux.org> 3.2.0-alt1
+- 3.2.0
+- fixed inter-subpackage deps
+- built with libtiff
+
 * Thu Sep 27 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0.1-alt2.1
 - Rebuilt with libpng15
 
