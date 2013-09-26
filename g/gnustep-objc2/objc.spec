@@ -5,7 +5,7 @@
 
 Name: gnustep-%oname
 Version: 1.7.0
-Release: alt5.git20130424
+Release: alt6.git20130424
 Summary: GNUstep Objective-C Runtime
 License: BSD
 Group: Development/Objective-C
@@ -19,7 +19,7 @@ Patch: gnustep-objc2-1.6.1-alt-i586.patch
 
 BuildRequires(pre): rpm-macros-make
 BuildPreReq: gnustep-make-devel gcc-objc gcc-c++ libstdc++-devel
-BuildPreReq: cmake llvm-devel clang-devel
+BuildPreReq: cmake llvm-devel-static clang-devel
 
 %description
 The GNUstep Objective-C runtime is designed as a drop-in replacement for
@@ -164,6 +164,9 @@ install -p -m644 class.h visibility.h method_list.h \
 %_libdir/libGNUObjCRuntime.so
 
 %changelog
+* Thu Sep 26 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.7.0-alt6.git20130424
+- Fixed build
+
 * Mon Sep  02 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.7.0-alt5.git20130424
 - fix build with llvm 3.3
 - build with clang (thnx glebfm@)
