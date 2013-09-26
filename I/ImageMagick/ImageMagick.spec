@@ -1,6 +1,6 @@
 %define mversion	6
 %define dversion	%mversion.8.6
-%define drelease	1
+%define drelease	10
 %define qlev		Q16
 %define mgkdir		ImageMagick
 %define soname		4
@@ -9,7 +9,7 @@
 %def_enable x
 Name: ImageMagick
 Version: %dversion.%drelease
-Release: alt3
+Release: alt1
 
 Summary: An X application for displaying and manipulating images
 License: OpenSource
@@ -222,6 +222,9 @@ mv %buildroot%_docdir/%name-6 %buildroot%_docdir/%name-%dversion
 %endif
 
 %changelog
+* Thu Sep 26 2013 Anton Farygin <rider@altlinux.ru> 6.8.6.10-alt1
+- new version
+
 * Mon Sep 23 2013 Igor Vlasenko <viy@altlinux.ru> 6.8.6.1-alt3
 - NMU: added versioned perl provides to fix unmets like
   +Package perl-Project-Gantt version 1.03-alt1 has an unmet dep:
