@@ -1,6 +1,6 @@
 Name: FlightGear
-Version: 2.10.0
-Release: alt2.1
+Version: 2.12.0
+Release: alt1
 
 Summary: open-source flight simulator
 License: GPL
@@ -54,8 +54,8 @@ http://www.4p8.com/eric.brasseur/flight_simulator_tutorial.html
 
 %prep
 %setup
-%patch3 -p1
-%patch4 -p1
+#patch3 -p1
+#patch4 -p1
 %patch5 -p2
 
 sed -i 's/\r//' docs-mini/AptNavFAQ.FlightGear.html
@@ -102,6 +102,11 @@ rm -rf %buildroot%_datadir/locale
 %_desktopdir/%name.desktop
 
 %changelog
+* Thu Sep 26 2013 Michael Shigorin <mike@altlinux.org> 2.12.0-alt1
+- 2.12.0
+- patch3 partially applied upstream
+- patch4 applied upstream
+
 * Wed Jun 26 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.10.0-alt2.1
 - Rebuilt with new libfltk
 

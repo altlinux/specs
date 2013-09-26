@@ -1,5 +1,5 @@
 Name: SimGear
-Version: 2.10.0
+Version: 2.12.0
 Release: alt1
 
 Summary: Simulator Construction Tools
@@ -57,6 +57,9 @@ This package contains header files for SimGear.
 %_includedir/simgear
 
 %changelog
+* Thu Sep 26 2013 Michael Shigorin <mike@altlinux.org> 2.12.0-alt1
+- 2.12.0
+
 * Mon Feb 18 2013 Michael Shigorin <mike@altlinux.org> 2.10.0-alt1
 - 2.10
 - added svn client support to fetch scenery
