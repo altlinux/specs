@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 2.0.0
-Release: alt2.b1.1
+Version: 2.0.2
+Release: alt1
 Summary: GMP/MPIR, MPFR, and MPC interface
 License: LGPL
 Group: Development/Python
@@ -15,6 +15,7 @@ Source: %oname-%version.tar
 
 BuildRequires(pre): rpm-build-python
 BuildPreReq: python-devel libgmp-devel libmpfr-devel libmpc-devel
+BuildPreReq: python-module-sphinx-devel
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
@@ -51,6 +52,18 @@ and more.
 
 This package contains documentation and tests for GMPY.
 
+%package pickles
+Summary: Pickles for GMPY
+Group: Development/Python
+
+%description pickles
+A C-coded Python extension module that wraps the GMP library to provide
+to Python code fast multiprecision arithmetic (integer, rational, and
+float), random number generation, advanced number-theoretical functions,
+and more.
+
+This package contains pickles for GMPY.
+
 %prep
 %setup
 %if_with python3
@@ -58,13 +71,20 @@ rm -rf ../python3
 cp -a . ../python3
 %endif
 
+%prepare_sphinx .
+ln -s ../objects.inv docs/
+
 %build
+%add_optflags -fno-strict-aliasing
 %python_build_debug
 %if_with python3
 pushd ../python3
 %python3_build_debug
 popd
 %endif
+
+%make -C docs pickle
+%make -C docs html
 
 %install
 %python_install
@@ -73,6 +93,9 @@ pushd ../python3
 %python3_install
 popd
 %endif
+
+install -d %buildroot%python_sitelibdir/%oname
+cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
 
 %check
 export PYTHONPATH=%buildroot%python_sitelibdir
@@ -85,19 +108,26 @@ popd
 %endif
 
 %files
-%doc changes.txt README doc/* docs/_build/html/_sources/*
+%doc README
 %python_sitelibdir/*
+%exclude %python_sitelibdir/*/pickle
+
+%files pickles
+%python_sitelibdir/*/pickle
 
 %files docs
-%doc doc test
+%doc docs/_build/html test*
 
 %if_with python3
 %files -n python3-module-%oname
-%doc changes.txt README doc/* docs/_build/html/_sources/*
+%doc README
 %python3_sitelibdir/*
 %endif
 
 %changelog
+* Thu Sep 26 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.2-alt1
+- Version 2.0.2
+
 * Tue Mar 26 2013 Aleksey Avdeev <solo@altlinux.ru> 2.0.0-alt2.b1.1
 - Rebuild with Python-3.3
 
