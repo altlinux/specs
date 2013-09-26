@@ -1,23 +1,12 @@
 
 %add_findpackage_path %_kde4_bindir
 
-%ifdef _kde_alternate_placement
-%add_findreq_skiplist %_kde4_bindir/kopete_*.sh
-%add_findreq_skiplist %_kde4_bindir/winpopup-*.sh
-%else
-%add_findreq_skiplist %_K4bindir/kopete_*.sh
-%add_findreq_skiplist %_K4bindir/winpopup-*.sh
-%endif
-%add_findreq_skiplist %_K4apps/kopete_skype/call_*
-
 %if_enabled kde_desktop
 %def_disable desktop
 %else
 %def_enable desktop
 %endif
 %def_disable knewsticker
-%def_enable kopete_irc
-%def_disable kopete_googletalk
 
 %define rname kdenetwork
 %define major 4
@@ -25,7 +14,7 @@
 %define bugfix 1
 Name: kde4network
 Version: %major.%minor.%bugfix
-Release: alt1
+Release: alt2
 
 Packager: Sergey V Turchin <zerg at altlinux dot org>
 
@@ -34,16 +23,16 @@ Summary: K Desktop Environment - Network Applications
 License: GPL
 Url: http://www.kde.org
 
-Requires: %name-filesharing = %version-%release
-Requires: %name-kdnssd = %version-%release
+Requires: %name-filesharing
+Requires: %name-kdnssd
 %if_enabled knewsticker
-Requires: %name-knewsticker = %version-%release
+Requires: %name-knewsticker
 %endif
-Requires: %name-kget = %version-%release
-Requires: %name-kopete = %version-%release
-Requires: %name-kppp = %version-%release
-Requires: %name-krdc = %version-%release
-Requires: %name-krfb = %version-%release
+Requires: %name-kget
+Requires: kde4-kopete
+Requires: %name-kppp
+Requires: %name-krdc
+Requires: %name-krfb
 
 Source: ftp://ftp.kde.org/pub/kde/stable/%version/src/%rname-%version.tar
 # FC
@@ -61,7 +50,6 @@ Patch20: kdenetwork-4.5.0-alt-kget-disable-bt.patch
 Patch21: kdenetwork-4.7.1-alt-fix-compile.patch
 Patch22: kdenetwork-4.5.1-alt-kppp-fix-statglg-close.patch
 Patch23: kdenetwork-4.10.2-alt-samba-sharing.patch
-Patch24: kdenetwork-4.8.3-alt-mobile.patch
 
 BuildRequires(pre): kde4libs-devel
 BuildRequires: gcc-c++ libqca2-devel libgmp-devel
@@ -89,7 +77,6 @@ BuildRequires: kde4-nepomuk-core kde4-nepomuk-core-devel kde4-nepomuk-widgets-de
 Networking applications for the K Desktop Environment.
 
 - kppp: Dual-up tool
-- kopete: instant messenger client
 %if_enabled knewsticker
 - knewsticker: RDF newsticker applet
 %endif
@@ -142,32 +129,12 @@ Requires: %name-core = %version-%release
 %description kget
 %name kget.
 
-%package kopete
-Summary: Instant Messaging client
-Group: Networking/Instant messaging
-Requires: kde4base-runtime-core
-Requires: %name-core = %version-%release
-Requires: qca2-ossl
-%if_enabled kopete_googletalk
-Requires: libmediastreamer-ilbc
-%endif
-%description kopete
-Kopete is an Instant Messaging client
-designed to be modular and plugin based.
-
 %package -n libkget4
 Summary: %name library
 Group: System/Libraries
 Requires: %name-common = %version-%release
 %description -n libkget4
 %name library
-
-%package -n libkopete4
-Summary: %name libraries
-Group: System/Libraries
-Requires: %name-common = %version-%release
-%description -n libkopete4
-%name libraries
 
 %package -n libkrdccore4
 Summary: %name libraries
@@ -208,7 +175,7 @@ Requires: %name-core = %version-%release
 %package devel
 Summary: Devel stuff for %name
 Group: Development/KDE and QT
-Requires: kde4libs-devel
+Requires: kde4libs-devel kde4-kopete-devel
 Requires: %name-common = %version-%release
 %description devel
 This package contains header files needed if you wish to build applications
@@ -230,9 +197,6 @@ based on %name.
 %patch21 -p1
 %patch22 -p1
 %patch23 -p0
-%if_disabled desktop
-%patch24 -p1
-%endif
 
 
 %build
@@ -244,10 +208,7 @@ do
     pushd $d
 %K4cmake \
     -DKDE4_ENABLE_FPIE:BOOL=ON \
-    -DWITH_irc:BOOL=%{?_enable_kopete_irc:ON}%{!?_enable_kopete_irc:OFF} \
-    -DWITH_msn:BOOL=ON \
     -DMOZPLUGIN_INSTALL_DIR:PATH=%browser_plugins_path \
-    -DWITH_GOOGLETALK:BOOL=%{?_enable_kopete_googletalk:ON}%{!?_enable_kopete_googletalk:OFF} \
     -DSAMBA_PACKAGE_NAME=\\\"samba\\\" \
     -DENABLE_EMBEDDED_TORRENT_SUPPORT=false
 #    -DKDE4_ENABLE_FINAL:BOOL=ON \
@@ -304,11 +265,11 @@ chmod 0755 %buildroot/etc/control.d/facilities/kppp-kde4
 
 %files
 %files common
-%dir %_K4srv/kconfiguredialog/
+#%dir %_K4srv/kconfiguredialog/
 #%_K4snd/KDE-Im-Phone-Ring.wav
 
 %files core
-%_K4iconsdir/oxygen/*/*/*.*
+#%_K4iconsdir/oxygen/*/*/*.*
 %_K4iconsdir/hicolor/*/*/*.*
 
 %files filesharing
@@ -358,81 +319,8 @@ chmod 0755 %buildroot/etc/control.d/facilities/kppp-kde4
 %_datadir/ontology/kde/kget_*.*
 %_K4doc/*/kget
 
-%files kopete
-%doc kopete/AUTHORS kopete/IDENTITY_REFACTORY kopete/README kopete/TODO
-%if_enabled kopete_googletalk
-%_K4bindir/googletalk-call
-%endif
-#%_K4bindir/skype-action-handler
-%_K4bindir/kopete
-%_K4bindir/kopete_latexconvert.sh
-%_K4bindir/winpopup-install
-%_K4bindir/winpopup-send
-%_K4libdir/libqgroupwise.so
-%_K4lib/libchattexteditpart.so
-%_K4lib/kcm_kopete_*
-%_K4lib/kopete_*
-%_K4plug/accessible/chatwindowaccessiblewidgetfactory.so
-%browser_plugins_path/skypebuttons.so
-%_K4conf_update/kopete-*
-%_K4xdg_apps/kopete.desktop
-%_K4conf/kopeterc
-%_K4cfg/historyconfig.kcfg
-%_K4cfg/kopete_otr.kcfg
-%_K4cfg/kopeteappearancesettings.kcfg
-%_K4cfg/kopetebehaviorsettings.kcfg
-%_K4cfg/kopetestatussettings.kcfg
-%_K4cfg/latexconfig.kcfg
-%_K4cfg/nowlisteningconfig.kcfg
-%_K4cfg/webpresenceconfig.kcfg
-%_K4cfg/translatorconfig.kcfg
-%_K4cfg/history2config.kcfg
-%_K4srv/aim.protocol
-%_K4srv/chatwindow.desktop
-%_K4srv/emailwindow.desktop
-%_K4srv/kconfiguredialog/kopete_*
-%_K4srv/kopete_*
-%_K4srv/callto.protocol
-%_K4srv/skype.protocol
-%_K4srv/tel.protocol
-%_K4srv/xmpp.protocol
-%if_enabled kopete_irc
-%_K4srv/irc.protocol
-%endif
-%_K4srvtyp/kopete*
-%_K4snd/Kopete_Event.ogg
-%_K4snd/Kopete_Received.ogg
-%_K4snd/Kopete_Sent.ogg
-%_K4snd/Kopete_User_is_Online.ogg
-%_K4apps/kopete/
-%_K4apps/kopete_*/
-%_K4apps/kopeterichtexteditpart/
-%_K4cfg/urlpicpreview.kcfg
-%_K4doc/*/kopete
-
 %files -n libkget4
 %_K4libdir/libkgetcore.so.*
-
-%files -n libkopete4
-#%_K4libdir/libgadu_kopete.so.*
-%if_enabled kopete_irc
-%_K4libdir/libkirc.so.*
-%_K4libdir/libkirc_client.so.*
-%endif
-%_K4libdir/libkyahoo.so.*
-%_K4libdir/libkopete_videodevice.so.*
-%_K4libdir/libkopeteaddaccountwizard.so.*
-%_K4libdir/libkopete.so.*
-%_K4libdir/libkopeteprivacy.so.*
-%_K4libdir/libkopetechatwindow_shared.so.*
-#%_K4libdir/libiris_kopete.so.*
-%_K4libdir/libkopete_oscar.so.*
-%_K4libdir/libkopete_otr_shared.so.*
-#%_K4libdir/libkopete_msn_shared.so.*
-%_K4libdir/liboscar.so.*
-%_K4libdir/libkopeteidentity.so.*
-%_K4libdir/libkopetestatusmenu.so.*
-%_K4libdir/libkopetecontactlist.so.*
 
 %files kppp
 %doc kppp/AUTHORS kppp/README
@@ -491,6 +379,9 @@ chmod 0755 %buildroot/etc/control.d/facilities/kppp-kde4
 %_K4dbus_interfaces/*
 
 %changelog
+* Thu Sep 26 2013 Sergey V Turchin <zerg@altlinux.org> 4.11.1-alt2
+- split kopete to separate package
+
 * Fri Sep 06 2013 Sergey V Turchin <zerg@altlinux.org> 4.11.1-alt1
 - new version
 
