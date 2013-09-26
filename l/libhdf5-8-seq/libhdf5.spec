@@ -9,7 +9,7 @@
 %define priority 30
 Name: lib%oname-%sover-seq
 Version: 1.8.11
-Release: alt1
+Release: alt2
 
 Summary: Hierarchical Data Format 5 library
 
@@ -125,6 +125,13 @@ mv %buildroot%hdfdir/lib/lib%oname.settings \
 install -d %buildroot%_docdir
 mv %buildroot%_datadir/hdf5_examples %buildroot%_docdir/
 
+install -d %buildroot%_includedir
+pushd %buildroot%hdfdir/include
+for i in $(ls); do
+	ln -s %hdfdir/include/$i %buildroot%_includedir/$i
+done
+popd
+
 # alternatives
 
 install -d %buildroot%_altdir
@@ -175,6 +182,7 @@ echo "%_pkgconfigdir/%oname.pc %_pkgconfigdir/%oname-seq.pc %priority" >> \
 %files -n lib%oname-devel
 %hdfdir/lib/lib*.so
 %hdfdir/include/*
+%_includedir/*
 %_pkgconfigdir/*
 %_altdir/%name-devel.alternatives
 
@@ -186,6 +194,9 @@ echo "%_pkgconfigdir/%oname.pc %_pkgconfigdir/%oname-seq.pc %priority" >> \
 %_docdir/hdf5_examples
 
 %changelog
+* Thu Sep 26 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.8.11-alt2
+- Added links to headers into %_includedir
+
 * Wed Jun 26 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.8.11-alt1
 - Version 1.8.11
 
