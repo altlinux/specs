@@ -15,17 +15,22 @@
 %global extra_modules %extra_modules %1=%2
 
 %define base_flavour led
+%define default_sub_flavour ws
+%if "xws" == "x"
+%define sub_flavour %default_sub_flavour
+%else
 %define sub_flavour ws
+%endif
 %define flavour %base_flavour-%sub_flavour
 
 Name: kernel-image-%flavour
-Version: 3.10.12
-Release: alt12
+Version: 3.10.13
+Release: alt1
 
 %define kernel_req %nil
 %define kernel_prov %nil
 %define kernel_branch 3.10
-%define kernel_stable_version 12
+%define kernel_stable_version 13
 %define kernel_extra_version .%kernel_stable_version
 #define kernel_extra_version %nil
 
@@ -127,6 +132,7 @@ Release: alt12
 %def_enable oprofile
 %def_enable secrm
 %def_with firmware
+%def_with tools
 %def_with perf
 %def_with lkvm
 
@@ -220,15 +226,28 @@ ExcludeArch: i386
 
 %{?_disable_alsa:%set_disable pcsp}
 
-%if_disabled video
-%set_disable bootsplash
-%endif
+%{?_disable_video:%set_disable bootsplash}
 
 %{?_disable_hypervisor_guest:%set_disable hyperv}
 
 %{?_enable_debug:%set_enable debugfs}
 
 %{!?allocator:#define allocator SLAB}
+
+%if "%sub_flavour" != "%default_sub_flavour"
+%set_without tools
+%endif
+
+%if_without tools
+%set_without perf
+%set_without lkvm
+%endif
+
+%if "%sub_flavour" == "vs"
+%def_enable vserver
+%else
+%def_disable vserver
+%endif
 
 %ifarch %x86_64
 %define kernel_base_cpu	GENERIC_CPU
@@ -332,13 +351,19 @@ AutoProv: no, %kernel_prov
 AutoReq: no, %kernel_req
 
 %description
-This package contains the Linux kernel that is used to boot and run
-your system.
-Most hardware drivers for this kernel are built as modules.  Some of
-these drivers are built separately from the kernel; they are available
-in separate packages (kernel-modules-*-%flavour).
-The "ws" flavour of kernel packages is kernel for using on
-workstations.
+This package contains the Linux kernel that is used to boot and run your system.
+Most hardware drivers for this kernel are built as modules. Some of these drivers
+are built separately from the kernel; they are available in separate packages
+(kernel-modules-*-%flavour).
+%if "%sub_flavour" == "ws"
+The "ws" flavour of kernel packages is kernels for using on workstations.
+%endif
+%if "%sub_flavour" == "vs"
+The "vs" flavour of kernel packages is VServer kernels http://linux-vserver.org.
+It allows to run multiple virtual units at once. Those units are sufficiently
+isolated to guarantee the required security, but utilize available resources
+efficiently, as they run on the same kernel.
+%endif
 
 %define kernel_modules_package_add_provides() \
 Provides: kernel-modules-%{1}-%flavour = %version-%release \
@@ -1812,6 +1837,25 @@ done)
 
 
 %changelog
+* Fri Sep 26 2013 Led <led@altlinux.ru> 3.10.13-alt1
+- 3.10.13
+- removed:
+  + fix-virt-kvm--kvm-book3s_64
+- added:
+  + fix-drivers-net--tun (CVE-2013-4343)
+  + fix-net-sctp--sctp (CVE-2013-4350)
+- fixed description
+
+* Thu Sep 26 2013 Led <led@altlinux.ru> 3.10.12-alt13
+- updated:
+  + fix-fs
+  + fix-fs-cifs
+  + feat-fs-aufs
+  + feat-fs-ext2--secrm
+- added:
+  + fix-drivers-crypto--sahara
+  + feat-kernel-vserver
+
 * Tue Sep 24 2013 Led <led@altlinux.ru> 3.10.12-alt12
 - updated:
   + feat-fs-reiser4
