@@ -1,36 +1,32 @@
 %define _unpackaged_files_terminate_build 1
-%def_without scons
+%def_with build_using_scons
+%def_with install_using_scons
+%def_without install_using_manual
+%def_without install_using_cmake
+# remnants of configure, drop them later
 %def_enable nls
 %def_enable rpath
 %def_disable debug
-%def_disable profile
 %def_disable tests
 %def_disable static
 %def_enable python
-%def_enable python_install
-%def_disable lite
-%def_disable tinygui
-%def_disable smallgui
 %def_enable optipng
-%def_disable lowmem
 %def_enable game
 %def_enable server
-%def_enable compaign_server
 %def_enable editor
 %def_enable tools
-%def_disable dummy_locales
 %def_enable display_revision
-%def_disable raw_sockets
 %def_enable bandwidth_monitor
-%def_enable desktop_entry
 %def_enable sdltest
-%def_with fribidi
-%def_with x
 #----------------------------------------------------------------------
 %define subst_enable_to() %{expand:%%{?_enable_%{1}:--enable-%{2}}} %{expand:%%{?_disable_%{1}:--disable-%{2}}}
 
+%define _pseudouser_user     _wesnothd
+%define _pseudouser_group    _wesnothd
+%define _pseudouser_home     %_var/run/wesnothd
+
 Name: wesnoth
-Version: 1.10.5
+Version: 1.10.7
 Release: alt1
 Group: Games/Strategy
 Summary: 2D fantasy turn-based strategy
@@ -38,24 +34,24 @@ Summary(ru_RU.UTF-8): двухмерная пошаговая стратегия
 License: %gpl2plus
 Url: http://www.%name.org
 Source0: %name-%version.tar
-Source1: %name.init
+Source1: %{name}d.init
+Source2: %{name}d.service
+Source3: %{name}.sysconfig
 
 Requires: %name-data = %version-%release
-Packager: Vitaly Kuznetsov <vitty@altlinux.ru>
 
 BuildRequires(pre): rpm-build-licenses
 
-BuildRequires: ImageMagick-tools asciidoc boost-devel fribidi gcc-c++ hd2u imake libICE-devel libSDL-devel libSDL_image-devel libSDL_mixer-devel libSDL_net-devel libSDL_ttf-devel libfribidi-devel libpango-devel po4a subversion xorg-cf-files xsltproc liblua5-devel libpng-devel cmake boost-program_options-devel libdbus-devel boost-asio-devel libpixman-devel libXdmcp-devel
-%if_with scons
-BuildRequires: scons desktop-file-utils
+BuildRequires: ImageMagick-tools asciidoc boost-devel desktop-file-utils fribidi gcc-c++ hd2u imake libICE-devel libSDL-devel libSDL_image-devel libSDL_mixer-devel libSDL_net-devel libSDL_ttf-devel libfreetype-devel libfribidi-devel libpango-devel libpng-devel po4a subversion xorg-cf-files xsltproc liblua5-devel libpng-devel cmake boost-program_options-devel libdbus-devel boost-asio-devel libpixman-devel libXdmcp-devel
+%if_with build_using_scons
+BuildRequires: scons
 %endif
 
 BuildRequires: fonts-ttf-dejavu fonts-ttf-sazanami-gothic fonts-ttf-wqy-zenhei
+BuildRequires: python-devel
 %{?_enable_tools:BuildRequires: perl(Tie/File.pm)}
 %{?_enable_optipng:BuildRequires: optipng}
-%{?_enable_python:BuildRequires: python-devel}
 %{?_enable_display_revision:BuildRequires: subversion}
-%{?_with_fribidi:BuildRequires: fribidi libfribidi-devel}
 
 Requires: python-module-%name = %version-%release
 
@@ -184,11 +180,24 @@ This package contains python interface to Battle for Wesnoth.
 
 %build
 %define _optlevel 3
+# note for 1.10.5 - outdated.
 # evil, evil... configure does not work, cmake does not build translations,
 # scons does not build schema_validator
-%if_with scons
-scons all prefix=/usr
+# note for 1.10.7 - upstream really moved to scons.
+# scons now works. cmake is outdated and does not build campaignd.
+%if_with build_using_scons
+scons all prefix=%{_prefix} \
+          bindir=%{_bindir} \
+          libdir=%{_libdir} \
+          python_site_packages_dir=%{python_sitelibdir_noarch}/%{name} \
+          extra_flags_release="%optflags" \
+          %{?_smp_mflags}
+
+	  # let it be default - translations - for now, for cmake install compatibility
+	  #localedirname=locale \
 scons schema_generator
+#no more built in scons
+#scons schema_validator
 %else
 export PYTHON_PREFIX=/usr
 export PYTHON_VERSION=%__python_version
@@ -198,29 +207,16 @@ export PYTHON_VERSION=%__python_version
 #    %{subst_enable nls} \
 #    %{subst_enable rpath} \
 #    %{subst_enable debug} \
-#    %{subst_enable profile} \
 #    %{subst_enable tests} \
 #    %{subst_enable static} \
 #    %{subst_enable python} \
-#    %{subst_enable_to python_install python-install} \
-#    %{subst_enable lite} \
-#    %{subst_enable tinygui} \
-#    %{subst_enable smallgui} \
 #    %{subst_enable optipng} \
-#    %{subst_enable lowmem} \
 #    %{subst_enable game} \
 #    %{subst_enable server} \
-#    %{subst_enable_to compaign_server compaign-server} \
 #    %{subst_enable editor} \
 #    %{subst_enable tools} \
-#    %{subst_enable_to dummy_locales dummy-locales} \
 #    %{subst_enable_to display_revision display-revision} \
-#    %{subst_enable_to raw_sockets raw-sockets} \
-#    %{subst_enable_to bandwidth_monitor bandwidth-monitor} \
-#    %{subst_enable_to desktop_entry desktop-entry} \
 #    %{subst_enable sdltest} \
-#    %{subst_with fribidi} \
-#    %{subst_with x}
 
 cmake . \
 	-DCMAKE_INSTALL_PREFIX=%buildroot%_prefix \
@@ -244,17 +240,42 @@ done
 bzip2 --keep --best --force changelog
 
 %install
-%if_with scons
-mkdir -p %buildroot%{_bindir}
-mkdir -p %buildroot%{_sbindir}
+
+%if_with install_using_cmake
+# cmake install
+%make_install \
+    DESTDIR=%buildroot \
+    docdir=%_docdir/%name-%version \
+    appentrydir=%_desktopdir \
+    install
+%else
+
+%if_with install_using_scons
+# scons install
+scons install install-pytools destdir=$RPM_BUILD_ROOT
+rm %buildroot%{_datadir}/icons/wesnoth-icon.png
+rm %buildroot%_desktopdir/wesnoth.desktop
+rm -rf %buildroot/%python_sitelibdir_noarch/wesnoth
+install -m 755 schema_generator %buildroot%_bindir/
+%endif
+
+%if_with install_using_manual
+# manual install
+mkdir -p %buildroot%_bindir
+mkdir -p %buildroot%_sbindir
 for i in cutter exploder wesnoth; do
-        cp -p $i %buildroot%{_bindir}/
+        cp -p $i %buildroot%_bindir/
 done
-cp wesnothd %buildroot%{_sbindir}/
+cp wesnothd %buildroot%_sbindir/
+cp campaignd %buildroot%_sbindir/
 mkdir -p %buildroot%{_datadir}/wesnoth
 for i in data fonts icons images sounds translations l10n-track; do
         cp -pr $i %buildroot%{_datadir}/wesnoth/
 done
+%endif
+
+#if with install_using_manual || with install_using_scons
+# emulate cmake install
 desktop-file-install --dir %buildroot%_desktopdir \
                      --mode="0644" \
                      --remove-key="Version" \
@@ -264,20 +285,14 @@ cp icons/%{name}-icon.png %buildroot%{_datadir}/pixmaps
 cp icons/%{name}_editor-icon.png %buildroot%{_datadir}/pixmaps
 mkdir -p %buildroot%_docdir/
 cp -a doc/manual %buildroot%_docdir/%name
-
-%else
-
-%make_install \
-    DESTDIR=%buildroot \
-    docdir=%_docdir/%name-%version \
-    appentrydir=%_desktopdir \
-    install
+%endif
 
 install -d -m 0755 %buildroot%_sbindir
-mv %buildroot{%_bindir,%_sbindir}/%{name}d
+[ -e %buildroot%_bindir/%{name}d ] && mv %buildroot{%_bindir,%_sbindir}/%{name}d
+[ -e %buildroot%_bindir/campaignd ] && mv %buildroot{%_bindir,%_sbindir}/campaignd
+
 %if_enabled tests
 mv %buildroot%_bindir/{,%name-}test
-%endif
 %endif
 
 mkdir -p %buildroot/%python_sitelibdir_noarch
@@ -305,7 +320,10 @@ for s in 96 72 48 36 32 24 22 16; do
     install -D -m 0644 {icons/%name-$s,%buildroot%_iconsdir/hicolor/${s}x$s/apps/%name}.png
     install -D -m 0644 {icons/%name-$s,%buildroot%_iconsdir/hicolor/${s}x$s/apps/%{name}_editor}.png
 done
-install -D -m 0755 %SOURCE1 %buildroot%_initdir/%{name}d
+install -D -m 755 %SOURCE1 %buildroot%_initdir/%{name}d
+install -D -m 644 %SOURCE2 %buildroot%_unitdir/wesnothd.service
+install -D -m 644 %SOURCE3 %buildroot%_sysconfdir/sysconfig/wesnoth
+
 
 %find_lang --with-man %name
 %find_lang --with-man %{name}d
@@ -344,6 +362,11 @@ sed -i 's/wesnoth_editor-icon/wesnoth_editor/' %buildroot%_desktopdir/%{name}_ed
 %endif
 
 %if_enabled server
+%pre server
+/usr/sbin/groupadd -r -f %_pseudouser_group ||:
+/usr/sbin/useradd -g %_pseudouser_group -c 'Wesnoth server' \
+        -d %_pseudouser_home -s /dev/null -r %_pseudouser_user >/dev/null 2>&1 ||:
+
 %preun server
 %preun_service %{name}d
 
@@ -398,7 +421,7 @@ sed -i 's/wesnoth_editor-icon/wesnoth_editor/' %buildroot%_desktopdir/%{name}_ed
 %_bindir/cutter
 %_bindir/exploder
 %_bindir/schema_generator
-%if_with scons
+%if_with build_using_scons
 %else
 %_bindir/schema_validator
 %endif
@@ -411,8 +434,11 @@ sed -i 's/wesnoth_editor-icon/wesnoth_editor/' %buildroot%_desktopdir/%{name}_ed
 
 %if_enabled server
 %files server -f %{name}d.lang
-%_sbindir/*
-%_initdir/*
+%_sbindir/%{name}d
+%_sbindir/campaignd
+%_initdir/%{name}d
+%_unitdir/%{name}d.service
+%config(noreplace) %_sysconfdir/sysconfig/wesnoth
 %_man6dir/%{name}d.6*
 %endif
 
@@ -424,6 +450,12 @@ sed -i 's/wesnoth_editor-icon/wesnoth_editor/' %buildroot%_desktopdir/%{name}_ed
 %endif
 
 %changelog
+* Wed Sep 25 2013 Igor Vlasenko <viy@altlinux.ru> 1.10.7-alt1
+- new version
+- use scons for build
+- native systemd support
+- wesnothd is now run under _wesnothd pseudo user.
+
 * Fri Mar 15 2013 Igor Vlasenko <viy@altlinux.ru> 1.10.5-alt1
 - update to 1.10.5
 - linked sazanami fonts
