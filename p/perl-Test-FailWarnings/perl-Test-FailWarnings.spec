@@ -1,16 +1,17 @@
+%define _unpackaged_files_terminate_build 1
 Group: Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(IO/Handle.pm) perl(IPC/Open3.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Test-FailWarnings
-Version:        0.007
-Release:        alt1_1
+Version:        0.008
+Release:        alt1
 Summary:        Add test failures if warnings are caught
 License:        ASL 2.0 
 
 URL:            http://search.cpan.org/dist/Test-FailWarnings/
-Source0:        http://www.cpan.org/authors/id/D/DA/DAGOLDEN/Test-FailWarnings-%{version}.tar.gz
+Source:        http://www.cpan.org/authors/id/D/DA/DAGOLDEN/Test-FailWarnings-%{version}.tar.gz
 
 BuildArch:      noarch
 BuildRequires:  perl
@@ -60,6 +61,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Fri Sep 27 2013 Igor Vlasenko <viy@altlinux.ru> 0.008-alt1
+- automated CPAN update
+
 * Fri Sep 06 2013 Igor Vlasenko <viy@altlinux.ru> 0.007-alt1_1
 - Sisyphus build
 
