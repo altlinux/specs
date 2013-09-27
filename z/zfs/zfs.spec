@@ -5,7 +5,7 @@
 Name: zfs
 %define lname lib%name
 Version: 0.6.2
-Release: alt3
+Release: alt4
 Summary: ZFS on Linux
 License: GPLv2+
 Group: System/Kernel and hardware
@@ -166,6 +166,9 @@ install -pD -m 0644 {,%kernel_srcdir/}%name-%version.tar.xz
 
 
 %changelog
+* Fri Sep 27 2013 Led <led@altlinux.ru> 0.6.2-alt4
+- upstream updates and fixes
+
 * Sat Sep 14 2013 Led <led@altlinux.ru> 0.6.2-alt3
 - upstream fixes
 
