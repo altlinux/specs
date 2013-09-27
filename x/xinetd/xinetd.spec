@@ -1,6 +1,6 @@
 Name: xinetd
 Version: 2.3.15
-Release: alt1
+Release: alt2
 
 Summary: xinetd is a powerful replacement for inetd
 Group: System/Base
@@ -11,11 +11,12 @@ Url: http://www.xinetd.org/
 Source: xinetd-%version.tar
 Source1: xinetd.init
 Source2: xinetd.conf
-Source3: xinetd.sysconf
-Source4: xinetd.logrotate
-Source5: convert.pl
-Source6: faq.html
-Source7: xinetd-tutorial.html
+Source3: xinetd.service
+Source4: xinetd.sysconf
+Source5: xinetd.logrotate
+Source6: convert.pl
+Source7: faq.html
+Source8: xinetd-tutorial.html
 
 Source10: chargen-tcp.xinetd
 Source11: chargen-udp.xinetd
@@ -121,6 +122,7 @@ done
 mkdir -p %buildroot{%_libdir/%name,%_includedir/%name,%_mandir/man{3,5,8}}
 
 install -pD -m755 %_sourcedir/xinetd.init %buildroot%_initdir/%name
+install -pD -m755 %_sourcedir/xinetd.service %buildroot%_unitdir/%name
 install -pD -m640 %_sourcedir/xinetd.conf %buildroot%_sysconfdir/%name.conf
 install -pD -m640 %_sourcedir/xinetd.sysconf %buildroot%_sysconfdir/sysconfig/%name
 install -pD -m755 %_sourcedir/convert.pl %buildroot%_sbindir/inetdconvert
@@ -153,6 +155,7 @@ rm %buildroot%_mandir/*.3
 %preun_service %name
 
 %files
+%_unitdir/%name
 %config %_initdir/%name
 %config(noreplace) %_sysconfdir/logrotate.d/*
 %config(noreplace) %_sysconfdir/sysconfig/%name
@@ -172,9 +175,11 @@ rm %buildroot%_mandir/*.3
 %doc README.*
 
 %changelog
+* Fri Sep 27 2013 Dmitry V. Levin <ldv@altlinux.org> 2.3.15-alt2
+- Packaged xinetd.service (closes: #27392, #28101).
+
 * Tue Sep 24 2013 Dmitry V. Levin <ldv@altlinux.org> 2.3.15-alt1
 - Updated to 2.3.15.
-- Packaged xinetd.service (closes: #27392, #28101).
 
 * Mon Feb 07 2011 Dmitry V. Levin <ldv@altlinux.org> 2.3.14-alt4
 - Packaged /var/log/xinetd/xinetd.log and its logrotate script.
