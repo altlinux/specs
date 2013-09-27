@@ -1,4 +1,4 @@
-%define ver_major 3.8
+%define ver_major 3.10
 
 Name: gnome3
 Version: %ver_major.0
@@ -83,7 +83,7 @@ Requires: yelp >= %ver_major
 # GNOME Utilities
 Requires: gnome-search-tool >= 3.6.0
 Requires: gnome-system-monitor >= %ver_major
-Requires: gucharmap >= %ver_major
+Requires: gucharmap >= 3.9.90
 Requires: gnome-calculator >= %ver_major
 
 # Applications
@@ -103,9 +103,6 @@ Requires: gnome-icon-theme-symbolic >= %ver_major
 Requires: gnome-themes-standard >= %ver_major
 Requires: libgtk3-engine-adwaita
 Requires: libgtk2-engine-adwaita
-
-## Screensaver
-Requires: gnome-screensaver
 
 # And, of course, the documentation
 Requires: gnome-user-docs >= %ver_major
@@ -174,17 +171,21 @@ Requires: gedit-plugins >= %gedit_plugins_ver
 ## Stock multimedia applications
 Requires: gnome-media >= %media_ver
 ## Default music player
+Requires: gnome-music >= %ver_major
+## Extneded music player
 Requires: rhythmbox
 ## Default media player
 Requires: totem
 ## Stock GNOME games
 #Requires: gnome-games >= 3.4.0
 Requires: gnome-games >= %ver_major
+## Default photo viewer
+Requires: gnome-photos >= %ver_major
 ## Default image viewer
 Requires: eog >= %ver_major
 Requires: eog-plugins >= %ver_major
 ## Default CD/DVD burning interface
-Requires: brasero >= %ver_major
+Requires: brasero >= 3.8
 ## Clipboard manager
 Requires: parcellite
 # Documents manager
@@ -197,6 +198,8 @@ Requires: alacarte
 Requires: gnome-weather >= %ver_major
 # Clock application
 Requires: gnome-clocks >= %ver_major
+# Maps application
+Requires: gnome-maps >= %ver_major
 
 # Look & Feel
 ## All default themes
@@ -236,15 +239,8 @@ Requires: %name-default = %version-%release
 # Sound & graphics & video
 ## All Rhythmbox plugins
 #Requires: rhythmbox-plugins
-## module player
-#Requires: modplugplay
-## Applications for taking pictures
-# GTK UVC video viewer
-#Requires: guvcview
-## FM-tuner
-#Requires: gnomeradio
 ## CD-ripper
-#Requires: grip
+Requires: goobox
 ## Image viewer, browser and simple editor
 Requires: gthumb
 ## Non-linear DV editor
@@ -274,10 +270,6 @@ Requires: freenx
 # Disks management
 Requires: gparted
 Requires: consolehelper
-
-# Look & Feel
-## 3D screensavers
-#Requires: gnome-screensaver-modules-xscreensaver-gl
 
 %description full
 This virtual package installs full GNOME Desktop except components from
@@ -373,6 +365,10 @@ itself).
 #%files a11y
 
 %changelog
+* Fri Sep 27 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.0-alt1
+- removed gnome-screensaver
+- added gnome-music, gnome-maps, gnome-photos to -default
+
 * Thu Apr 25 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.0-alt1
 - Obsoletes/Provides gnome-default
 
