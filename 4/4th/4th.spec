@@ -1,16 +1,22 @@
 %def_enable shared
 %def_enable static
 %def_disable debug
+#--------------------------------------------------------------------------------
+%if "%__cc" == "klcc"
+%{?_enable_shared:%def_enable kshared}
+%set_disable shared
+%set_enable static
+%endif
 
 %define Name 4tH
 Name: 4th
 %define lname lib%name
-Version: 3.62.0
-Release: alt2
+Version: 3.62.1
+Release: alt1
 Summary: Basic framework for creating application specific scripting languages
 Summary(uk_UA.CP1251): Базова оболонка для створення специфічних для програм мов сценаріїв
 Summary(ru_RU.CP1251): Базовая оболочка для создания специфических для программ языков сценариев
-License: LGPLv3+
+License: GPLv3+
 Group: Development/Other
 URL: http://hansoft.come.to/
 Source0: https://%name.googlecode.com/files/%name-%version-unix.tar
@@ -23,6 +29,9 @@ BuildRequires: tcc >= 0.9.23-alt3
 %endif
 %if "%__cc" == "musl-gcc"
 BuildRequires: musl-devel
+%endif
+%if "%__cc" == "klcc"
+BuildRequires: klcc >= 2.0.2-alt3
 %endif
 
 %description
@@ -275,12 +284,11 @@ install -m 0644 %SOURCE1 sources/Makefile.ALT
 %if "%__cc" == "gcc"
 %add_optflags -DUSEGCCGOTO
 %endif
+%{?_enable_kshared:%global optflags -shared %optflags}
 %make_build -C sources -f Makefile.ALT \
 	BINARIES=%_bindir LIBRARIES=%_libdir INCLUDES=%_includedir \
 	%{?_enable_shared:SHARED=1} %{?_enable_static:STATIC=1} \
 	CFLAGS="%optflags" %{?__cc:CC=%__cc} all
-
-sed 's/\r$//' documentation/%{Name}manual.txt > documentation/manual.txt
 
 
 %install
@@ -309,7 +317,8 @@ for d in bench demo; do
 	install -p -m 0644 %name/$d/* %buildroot%_docdir/%name-%version/examples/$d/
 done
 install -p -m 0644 documentation/euro.txt %buildroot%_docdir/%name-%version/examples/
-install -p -m 0644 README documentation/manual.txt %buildroot%_docdir/%name-%version/
+install -p -m 0644 README %buildroot%_docdir/%name-%version/
+install -p -m 0644 {documentation/%{Name},%buildroot%_docdir/%name-%version/}manual.txt
 
 # menu
 install -d %buildroot%_desktopdir
@@ -368,6 +377,15 @@ __MENU__
 
 
 %changelog
+* Fri Sep 27 2013 Led <led@altlinux.ru> 3.62.1-alt1
+- 3.62.1
+
+* Wed Dec 26 2012 Led <led@altlinux.ru> 3.62.0-alt3
+- added build with klcc support
+- fixed License
+- cleaned up spec
+- fixed Makefile.ALT
+
 * Wed Dec 26 2012 Led <led@altlinux.ru> 3.62.0-alt2
 - Makefile.ALT: updated lib version
 
