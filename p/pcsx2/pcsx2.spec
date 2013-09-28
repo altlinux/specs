@@ -4,7 +4,7 @@
 
 Name: pcsx2
 Version: 1.0.0
-Release: alt1
+Release: alt2
 
 Summary: Playstation 2 console emulator
 License: GPLv3
@@ -12,6 +12,7 @@ Group: Emulators
 
 Url: http://pcsx2.net/
 Packager: Nazarov Denis <nenderus@altlinux.org>
+
 ExclusiveArch: %ix86
 
 Source0: https://pcsx2.googlecode.com/files/%name-%version-r%revision-sources.tar.bz2
@@ -313,11 +314,15 @@ cmake .. \
 	-DCMAKE_INSTALL_PREFIX:PATH=%prefix \
 	-DCMAKE_C_FLAGS:STRING='%optflags' \
 	-DCMAKE_CXX_FLAGS:STRING='%optflags' \
-	-DPACKAGE_MODE:BOOL=TRUE \
 	-DCMAKE_BUILD_TYPE:STRING=Release \
 	-DPLUGIN_DIR:PATH=%_libdir/%name \
 	-DGLSL_SHADER_DIR:PATH=%_gamesdatadir/%name \
 	-DGAMEINDEX_DIR:PATH=%_datadir/%name \
+	-DPACKAGE_MODE:BOOL=TRUE \
+	-DCMAKE_BUILD_STRIP:BOOL=TRUE \
+	-DCMAKE_BUILD_PO:BOOL=TRUE \
+	-DREBUILD_SHADER:BOOL=TRUE \
+	-DBUILD_REPLAY_LOADERS:BOOL=TRUE \
 	-DXDG_STD:BOOL=TRUE \
 	-Wno-dev
 
@@ -332,10 +337,13 @@ popd
 %files
 %doc bin/docs/PCSX2_FAQ_%version.pdf bin/docs/PCSX2_Readme_%version.pdf
 %_bindir/%{name}*
+%dir %_libdir/%name
 %_libdir/%name/ps2hw.dat
 %_desktopdir/%name.desktop
+%dir %_gamesdatadir/%name
 %_gamesdatadir/%name/*.glsl
-%_man1dir/%{name}*
+%_man1dir/%name.1.gz
+%dir %_datadir/%name
 %_datadir/%name/GameIndex.dbf
 %_pixmapsdir/%name.xpm
 
@@ -439,5 +447,9 @@ popd
 %_datadir/locale/zh_TW/LC_MESSAGES/%{name}*.mo
 
 %changelog
+* Sat Sep 28 2013 Nazarov Denis <nenderus@altlinux.org> 1.0.0-alt2
+- Fix post-install unowned files
+- Rebuild the ps2hw.dat file
+
 * Fri Sep 27 2013 Nazarov Denis <nenderus@altlinux.org> 1.0.0-alt1
 - Initial build for ALT Linux
