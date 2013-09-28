@@ -2,7 +2,7 @@
 
 Name: python-module-%module_name
 Version: 0.5.0
-Release: alt1
+Release: alt2
 Group: System/Base
 License: GPLv2
 Summary: Experimental Python bindings to the RabbitMQ C-library librabbitmq
@@ -30,5 +30,8 @@ Experimental Python bindings to the RabbitMQ C-library librabbitmq
 %python_sitelibdir/_pyrabbitmq*
 
 %changelog
+* Sat Sep 28 2013 Slava Dubrovskiy <dubrsl@altlinux.org> 0.5.0-alt2
+- rebuild for new librabbitmq
+
 * Fri May 04 2012 Slava Dubrovskiy <dubrsl@altlinux.org> 0.5.0-alt1
 - build for ALT
