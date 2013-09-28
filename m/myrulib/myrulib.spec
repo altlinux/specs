@@ -1,5 +1,6 @@
+# TODO: use external wxsqlite3 (from altautoimports)
 Name: myrulib
-Version: 0.29.12
+Version: 0.29.16
 Release: alt1
 
 Summary: Tool for maintaining fb2 files collection
@@ -16,6 +17,9 @@ Group: Office
 # optimized out: fontconfig gnu-config libgdk-pixbuf libstdc++-devel libsystemd-daemon libwayland-client libwayland-server pkg-config
 BuildRequires: bzlib-devel gcc-c++ libexpat-devel libsqlite3-devel libwxGTK-devel libxml2-devel
 
+#BuildRequires: libsqlite3-devel >= 3.7.17
+BuildRequires: libwxsqlite3-devel >= 3.0.3
+
 BuildRequires: bakefile
 
 %description
@@ -26,7 +30,7 @@ export and so on.
 %setup
 
 %build
-%configure --with-expat
+%configure --with-expat --without-wxsqlite
 %make_build CFLAGS="%optflags" CXXFLAGS="%optflags"
 
 %install
@@ -46,6 +50,16 @@ install sources/MyRuLib/desktop/home-64x64.png %buildroot%_iconsdir/hicolor/64x6
 %_iconsdir/hicolor/64x64/apps/myrulib.png
 
 %changelog
+* Sat Sep 28 2013 Vitaly Lipatov <lav@altlinux.ru> 0.29.16-alt1
+- version 0.29.16
+- fiw MSW database creation error
+- fix FbExportDlg error
+- update CREngine
+- patch for CREngine
+- change info.plist
+- set default toolbar icon size
+- fix settings dialog error
+
 * Mon Mar 11 2013 Vitaly Lipatov <lav@altlinux.ru> 0.29.12-alt1
 - version 0.29.12
 - fix procedure: replace author
