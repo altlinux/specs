@@ -1,7 +1,7 @@
 Summary: Tool to manage your infrastructure
 Name: salt
-Version: 0.11.1
-Release: alt2
+Version: 0.17.0
+Release: alt1
 Url: http://saltstack.org
 Source0: %name-%version.tar
 License: apache-2.0
@@ -11,7 +11,7 @@ BuildRequires: python-module-setuptools perl-podlators python-module-nose libzer
 
 BuildArch: noarch
 
-%add_python_req_skip win32api win32event win32service win32serviceutil winerror
+%add_python_req_skip win32api win32event win32service win32serviceutil winerror pythoncom
 
 %description
 Salt is a distributed remote execution system used to execute commands and
@@ -37,6 +37,7 @@ servers. It handles them quickly and through a simple yet manageable interface.
 %package master
 Summary: Management component for salt, a parallel remote execution system
 Group: System/Configuration/Other
+Requires: python-module-salt = %version-%release
 
 %description master
 The Salt master is the central server to which all minions connect.
@@ -44,6 +45,7 @@ The Salt master is the central server to which all minions connect.
 %package minion
 Summary: Client component for salt, a parallel remote execution system
 Group: System/Configuration/Other
+Requires: python-module-salt = %version-%release
 
 %description minion
 Salt minion is queried and controlled from the master.
@@ -81,6 +83,7 @@ install -D -m 0644 pkg/altlinux/master.logrotate %buildroot%_sysconfdir/logrotat
 install -D -m 0644 pkg/altlinux/minion.logrotate %buildroot%_sysconfdir/logrotate.d/salt-minion
 
 #check
+#__python setup.py test --runtests-opts=-u
 
 %post master
 %post_service salt-master
@@ -122,6 +125,7 @@ install -D -m 0644 pkg/altlinux/minion.logrotate %buildroot%_sysconfdir/logrotat
 %_bindir/salt-cp
 %_bindir/salt-key
 %_bindir/salt-run
+%_bindir/salt-ssh
 
 %_man1dir/salt-master.1.*
 %_man1dir/salt.1.*
@@ -129,6 +133,7 @@ install -D -m 0644 pkg/altlinux/minion.logrotate %buildroot%_sysconfdir/logrotat
 %_man1dir/salt-key.1.*
 %_man1dir/salt-run.1.*
 %_man1dir/salt-syndic.1.*
+%_man1dir/salt-ssh.1.*
 
 
 %files minion
@@ -147,6 +152,13 @@ install -D -m 0644 pkg/altlinux/minion.logrotate %buildroot%_sysconfdir/logrotat
 %_man1dir/salt-minion.1.*
 
 %changelog
+* Sat Sep 28 2013 Slava Dubrovskiy <dubrsl@altlinux.org> 0.17.0-alt1
+- New version
+
+* Wed Jan 02 2013 Slava Dubrovskiy <dubrsl@altlinux.org> 0.11.1-alt3
+- Update spec
+- Fix init scripts
+
 * Mon Dec 24 2012 Slava Dubrovskiy <dubrsl@altlinux.org> 0.11.1-alt2
 - New version
 
