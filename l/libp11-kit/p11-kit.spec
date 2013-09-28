@@ -8,7 +8,7 @@
 #%%define trust_paths %_sysconfdir/pki/ca-trust/source:%_datadir/pki/ca-trust-source
 
 Name: lib%_name
-Version: 0.18.5
+Version: 0.20.0
 Release: alt1
 
 Summary: Library for loading and sharing PKCS#11 modules
@@ -18,12 +18,12 @@ Url: http://p11-glue.freedesktop.org/p11-kit.html
 
 Source: http://p11-glue.freedesktop.org/releases/%_name-%version.tar.gz
 Source1: p11-kit-extract-trust
-Patch: %name-0.16.3-alt-lfs.patch
+Patch: %name-0.19.3-alt-lfs.patch
 
 Requires: ca-certificates
 Requires: pkcs11-trust-module = %version-%release
 
-BuildRequires: libtasn1-devel
+BuildRequires: libtasn1-devel libffi-devel
 %if %hash_impl == freebl
 BuildRequires: libnss-devel
 %endif
@@ -74,9 +74,12 @@ This package contains development documentation for %_name library.
 %setup -n %_name-%version
 %patch
 
+subst 's/ serial-tests//' configure.ac
+
 %build
 %autoreconf
 %configure --disable-static \
+	--enable-debug=no \
 	%{subst_enable trust_module} \
 %if_enabled trust_module
 	--with-libtasn1 \
@@ -102,6 +105,7 @@ EOF
 
 %files
 %_bindir/%_name
+%_bindir/trust
 %_libdir/lib%_name.so.*
 %_libdir/%_name-proxy.so
 %dir %_libdir/%_name
@@ -118,6 +122,7 @@ EOF
 %_libdir/pkcs11/%_name-trust.so
 %_datadir/%_name/modules/%_name-trust.module
 %_libdir/%_name/p11-kit-extract-trust
+%_libdir/%_name/trust-extract-compat
 #%_altdir/%name
 %exclude %_libdir/pkcs11/p11-kit-trust.la
 %endif
@@ -131,6 +136,9 @@ EOF
 %_datadir/gtk-doc/html/%_name
 
 %changelog
+* Wed Sep 11 2013 Yuri N. Sedunov <aris@altlinux.org> 0.20.0-alt1
+- 0.20.0
+
 * Wed Aug 21 2013 Yuri N. Sedunov <aris@altlinux.org> 0.18.5-alt1
 - 0.18.5
 

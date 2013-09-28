@@ -1,10 +1,10 @@
-%define ver_major 3.8
+%define ver_major 3.10
 %define _libexecdir %_prefix/libexec
 
 %def_with nautilus
 
 Name: gnome-terminal
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1
 
 Summary: GNOME Terminal
@@ -14,8 +14,8 @@ Url: http://www.gnome.org
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 
-%define glib_ver 2.28.0
-%define gtk_ver 3.0.1
+%define glib_ver 2.34
+%define gtk_ver 3.9.9
 %define vte_ver 0.34.7
 
 Provides: xvt
@@ -93,6 +93,15 @@ EOF
 %endif
 
 %changelog
+* Tue Sep 24 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.0-alt1
+- 3.10.0
+
+* Tue Sep 17 2013 Yuri N. Sedunov <aris@altlinux.org> 3.9.92-alt1
+- 3.9.92
+
+* Thu Aug 29 2013 Yuri N. Sedunov <aris@altlinux.org> 3.9.90-alt1
+- 3.9.90
+
 * Sun Jul 07 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.4-alt1
 - 3.8.4
 

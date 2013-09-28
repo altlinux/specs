@@ -1,9 +1,9 @@
-%define ver_major 3.8
+%define ver_major 3.10
 %define api_ver 1.0
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-documents
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1
 
 Summary: A document manager application for GNOME
@@ -14,14 +14,15 @@ Url: https://live.gnome.org/Design/Apps/Documents
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 
 Requires: %name-data = %version-%release
+Requires: gnome-online-miners
 
 %define pkglibdir %_libdir/%name
 %define pkgdatadir %_datadir/%name
 %set_typelibdir %pkglibdir
 %set_girdir %pkgdatadir
 
-%define glib_ver 2.31.6
-%define gtk_ver 3.5.5
+%define glib_ver 2.37.0
+%define gtk_ver 3.9.11
 %define evince_ver 3.7.4
 %define tracker_ver 0.15.2
 %define goa_ver 3.2.0
@@ -102,8 +103,6 @@ GObject introspection devel data for the %name library.
 %dir %pkglibdir
 %pkglibdir/*.so
 %exclude %pkglibdir/*.la
-%_libexecdir/gd-tracker-gdata-miner
-%_libexecdir/gd-tracker-zpj-miner
 %_man1dir/%name.1.*
 %doc README AUTHORS NEWS TODO
 
@@ -111,28 +110,23 @@ GObject introspection devel data for the %name library.
 %dir %pkglibdir/girepository-1.0
 %pkglibdir/girepository-1.0/Gd-%api_ver.typelib
 %pkglibdir/girepository-1.0/GdPrivate-1.0.typelib
-%pkglibdir/girepository-1.0/Egg-1.0.typelib
-
-%if 0
-%files gir-devel
-%dir %pkgdatadir/gir-1.0
-%pkgdatadir/gir-1.0/Gd-%api_ver.gir
-%endif
 
 %files data -f %name.lang
 %pkgdatadir/
 %exclude %pkgdatadir/gir-1.0
 %_datadir/applications/%name.desktop
-%_datadir/dbus-1/services/org.gnome.Documents.GDataMiner.service
 %_datadir/dbus-1/services/org.gnome.Documents.SearchProvider.service
-%_datadir/dbus-1/services/org.gnome.Documents.ZpjMiner.service
 %_datadir/glib-2.0/schemas/org.gnome.Documents.enums.xml
 %_datadir/glib-2.0/schemas/org.gnome.documents.gschema.xml
 %_datadir/gnome-shell/search-providers/gnome-documents-search-provider.ini
 %_iconsdir/hicolor/*/apps/%name.png
+%_datadir/appdata/%name.appdata.xml
 
 
 %changelog
+* Tue Sep 24 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.0-alt1
+- 3.10.0
+
 * Fri Aug 30 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.4-alt1
 - 3.8.4
 

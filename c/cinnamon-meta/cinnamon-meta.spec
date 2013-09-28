@@ -1,4 +1,4 @@
-%define ver_major 1.8
+%define ver_major 1.9
 
 Name: cinnamon-meta
 Version: %ver_major.0
@@ -25,7 +25,7 @@ Group: Graphical desktop/GNOME
 
 # Cinnamon Desktop Core
 Requires: cinnamon >= %ver_major
-Requires: gnome-session >= 3.4
+Requires: cinnamon-session
 # Window manager
 Requires: muffin >= 1.0.5
 
@@ -45,6 +45,8 @@ Requires: pulseaudio-daemon alsa-plugins-pulse
 Requires: nemo
 # Control Center
 Requires: cinnamon-control-center
+# We still need gnome-control-center to configure keyboard layouts
+Requires: gnome-control-center
 # Default terminal
 Requires: gnome-terminal 
 # Screensaver
@@ -99,9 +101,6 @@ Requires: gedit-plugins
 Requires: gnome-utils 
 Requires: gconf-editor >= 3.0
 Requires: dconf-editor >= 0.10
-# Cinnamon control center is not fully functional yet so
-# we still need gnome-control-center
-Requires: gnome-control-center
 Requires: gcalctool
 
 # Default music player
@@ -127,6 +126,12 @@ of default applications.
 %files -n cinnamon-regular
 
 %changelog
+* Wed Sep 25 2013 Yuri N. Sedunov <aris@altlinux.org> 1.9.0-alt2
+- rebuild for GNOME-3.10
+
+* Tue Sep 17 2013 Vladimir Didenko <cow@altlinux.org> 1.9.0-alt1
+- 1.9.0
+
 * Tue May 28 2013 Vladimir Didenko <cow@altlinux.org> 1.8.0-alt2
 - replace gdm by lightdm
 

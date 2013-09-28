@@ -1,5 +1,5 @@
-%define ver_major 3.8
-%define ver_base 3.8
+%define ver_major 3.10
+%define ver_base 3.10
 %define ver_lib 1.2
 
 %def_disable debug
@@ -17,7 +17,7 @@
 %def_enable vala
 
 Name: evolution-data-server
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1
 
 Summary: Evolution Data Server
@@ -33,14 +33,14 @@ Patch1: %name-1.4.2.1-debug-lock.patch
 # from configure.in
 %define glib_ver 2.34.0
 %define gtk3_ver 3.2.0
-%define libsoup_ver 2.33.90
+%define libsoup_ver 2.40.3
 %define gcr_ver 3.4
 %define secret_ver 0.5
 %define sqlite_ver 3.5
-%define gweather_ver 2.91.6
+%define gweather_ver 3.5.0
 %define ical_ver 0.43
 %define gdata_ver 0.10
-%define goa_ver 3.7.90
+%define goa_ver 3.8.0
 %define vala_ver 0.13.1
 
 BuildPreReq: gcc-c++ rpm-build-gnome rpm-build-licenses intltool
@@ -254,6 +254,9 @@ rm -f %buildroot%_libdir/%name-%ver_lib/*/*.la
 
 
 %changelog
+* Sat Sep 21 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.0-alt1
+- 3.10.0
+
 * Tue Jul 23 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.4-alt1
 - 3.8.4
 

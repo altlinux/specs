@@ -1,8 +1,8 @@
-%define ver_major 3.8
+%define ver_major 3.10
 
 Name: vino
-Version: %ver_major.1
-Release: alt2
+Version: %ver_major.0
+Release: alt1
 
 Summary: A remote desktop system for GNOME
 License: GPL
@@ -11,7 +11,6 @@ Group: Networking/Remote access
 Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 
 Source: ftp://ftp.gnome.org/pub/sources/gnome/%name/%ver_major/%name-%version.tar.xz
-Patch: vino-3.8.1-fc-allocation.patch
 
 BuildRequires: intltool gnome-common desktop-file-utils NetworkManager-devel
 BuildRequires: libgio-devel libgtk+3-devel libsoup-devel libdbus-devel
@@ -26,7 +25,6 @@ connect to a running GNOME session using VNC.
 
 %prep
 %setup -q
-%patch -p1
 
 %build
 export LDFLAGS="$LDFLAGS -lgcrypt"
@@ -43,10 +41,6 @@ export LDFLAGS="$LDFLAGS -lgcrypt"
 %files -f %name.lang
 %_bindir/*
 %_libexecdir/vino-server
-%dir %_datadir/vino
-%_datadir/vino/*.ui
-%_datadir/vino/webservices
-%_datadir/applications/*.desktop
 %_sysconfdir/xdg/autostart/vino-server.desktop
 %_datadir/dbus-1/services/org.freedesktop.Telepathy.Client.Vino.service
 %_datadir/telepathy/clients/Vino.client
@@ -55,6 +49,9 @@ export LDFLAGS="$LDFLAGS -lgcrypt"
 %doc AUTHORS NEWS README docs/TODO docs/remote-desktop.txt docs/debugging.txt
 
 %changelog
+* Mon Sep 23 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.0-alt1
+- 3.10.0
+
 * Tue Jun 11 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.1-alt2
 - fixed crash (fc patch)
 

@@ -4,7 +4,7 @@
 
 Name: lib%_name
 Version: %ver_major.1
-Release: alt0.1
+Release: alt0.2
 
 Summary: A library for using real 3D models within a Clutter scene
 Group: System/Libraries
@@ -94,6 +94,9 @@ export CFLAGS="$CFLAGS `pkg-config --cflags gdk-pixbuf-2.0`"
 %_datadir/gtk-doc/html/*
 
 %changelog
+* Fri Sep 13 2013 Yuri N. Sedunov <aris@altlinux.org> 0.2.1-alt0.2
+- rebuild against libcogl.so.15
+
 * Mon Apr 15 2013 Yuri N. Sedunov <aris@altlinux.org> 0.2.1-alt0.1
 - 0.2.1 snapshot
 

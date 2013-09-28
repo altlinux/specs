@@ -1,4 +1,4 @@
-%define ver_major 3.8
+%define ver_major 3.10
 %define api_ver 3.0
 %define gst_api_ver 1.0
 %def_disable static
@@ -6,7 +6,7 @@
 %def_enable introspection
 
 Name: cheese
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 
 Summary: Cheese is a Photobooth-inspired application for taking pictures and videos
@@ -153,6 +153,9 @@ GObject introspection devel data for the Cheese library.
 %endif
 
 %changelog
+* Mon Sep 23 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.0-alt1
+- 3.10.0
+
 * Sat Jul 20 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.3-alt1
 - 3.8.3
 

@@ -1,4 +1,4 @@
-%define ver_major 3.8
+%define ver_major 3.10
 %define api_ver 3.0
 %def_disable static
 %def_enable smartcard
@@ -10,7 +10,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-settings-daemon
-Version: %ver_major.5
+Version: %ver_major.0
 Release: alt1
 
 Summary: A program that manages general GNOME settings
@@ -26,7 +26,7 @@ Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 %define glib2_ver 2.35.3
 %define gtk_ver 3.7.8
 %define gio_ver 2.29.14
-%define gnome_desktop_ver 3.5.3
+%define gnome_desktop_ver 3.9.0
 %define notify_ver 0.7.3
 %define pulse_ver 0.9.15
 %define gsds_ver 3.3.0
@@ -36,11 +36,16 @@ Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 %define systemd_ver 40
 %define wacom_ver 0.7
 %define ibus_ver 1.4.99
+%define geocode_ver 0.99.3
+%define geoclue_ver 1.99.3
+%define gweather_ver 3.9.5
 
 Requires: dconf >= %dconf_ver
 Requires: colord >= %colord_ver
 Requires: system-config-printer
 Requires: system-config-printer-udev
+Requires: rfkill
+Requires: geoclue2 >= %geoclue_ver
 %{?_enable_ibus:Requires:ibus >= %ibus_ver}
 
 # From configure.ac
@@ -62,6 +67,8 @@ BuildRequires: libXrandr-devel xorg-inputproto-devel libICE-devel libSM-devel
 BuildRequires: libupower-devel >= %upower_ver
 BuildRequires: libcolord-devel >= %colord_ver liblcms2-devel librsvg-devel
 BuildRequires: libwacom-devel >= %wacom_ver xorg-drv-wacom-devel libXtst-devel
+BuildRequires: libgweather-devel >= %gweather_ver libgeocode-glib-devel >= %geocode_ver geoclue2-devel >= %geoclue_ver
+
 # for check
 %{?_enable_check:BuildRequires: /proc xvfb-run gnome-color-manager}
 
@@ -115,14 +122,17 @@ The %name-tests package provides programms for testing GSD plugins.
 %_libdir/%name-%api_ver/clipboard.gnome-settings-plugin
 %_libdir/%name-%api_ver/color.gnome-settings-plugin
 %_libdir/%name-%api_ver/cursor.gnome-settings-plugin
+%_libdir/%name-%api_ver/datetime.gnome-settings-plugin
 %_libdir/%name-%api_ver/housekeeping.gnome-settings-plugin
 %_libdir/%name-%api_ver/keyboard.gnome-settings-plugin
 %_libdir/%name-%api_ver/liba11y-keyboard.so
 %_libdir/%name-%api_ver/liba11y-settings.so
-%_libdir/%name-%api_ver/libgsd.so
 %_libdir/%name-%api_ver/libclipboard.so
 %_libdir/%name-%api_ver/libcolor.so
 %_libdir/%name-%api_ver/libcursor.so
+%_libdir/%name-%api_ver/libdatetime.so
+%_libdir/%name-%api_ver/libgsd.so
+%_libdir/%name-%api_ver/libgsdwacom.so
 %_libdir/%name-%api_ver/libhousekeeping.so
 %_libdir/%name-%api_ver/libkeyboard.so
 %_libdir/%name-%api_ver/libmedia-keys.so
@@ -130,36 +140,38 @@ The %name-tests package provides programms for testing GSD plugins.
 %_libdir/%name-%api_ver/liborientation.so
 %_libdir/%name-%api_ver/libpower.so
 %_libdir/%name-%api_ver/libprint-notifications.so
+%_libdir/%name-%api_ver/libremote-display.so
+%_libdir/%name-%api_ver/librfkill.so
 %_libdir/%name-%api_ver/libscreensaver-proxy.so
-#%_libdir/%name-%api_ver/libsmartcard.so
+%_libdir/%name-%api_ver/libsmartcard.so
 %_libdir/%name-%api_ver/libsound.so
-%_libdir/%name-%api_ver/libgsdwacom.so
 %_libdir/%name-%api_ver/libxrandr.so
 %_libdir/%name-%api_ver/libxsettings.so
-%_libdir/%name-%api_ver/libremote-display.so
 %_libdir/%name-%api_ver/media-keys.gnome-settings-plugin
 %_libdir/%name-%api_ver/mouse.gnome-settings-plugin
 %_libdir/%name-%api_ver/orientation.gnome-settings-plugin
 %_libdir/%name-%api_ver/power.gnome-settings-plugin
 %_libdir/%name-%api_ver/print-notifications.gnome-settings-plugin
+%_libdir/%name-%api_ver/remote-display.gnome-settings-plugin
+%_libdir/%name-%api_ver/rfkill.gnome-settings-plugin
 %_libdir/%name-%api_ver/screensaver-proxy.gnome-settings-plugin
+%_libdir/%name-%api_ver/smartcard.gnome-settings-plugin
 %_libdir/%name-%api_ver/sound.gnome-settings-plugin
 %_libdir/%name-%api_ver/wacom.gnome-settings-plugin
 %_libdir/%name-%api_ver/xrandr.gnome-settings-plugin
 %_libdir/%name-%api_ver/xsettings.gnome-settings-plugin
-%_libdir/%name-%api_ver/remote-display.gnome-settings-plugin
 %_libexecdir/%name
+%_libexecdir/gnome-settings-daemon-localeexec
+%_libexecdir/gsd-backlight-helper
 %_libexecdir/gsd-list-wacom
 %_libexecdir/gsd-locate-pointer
 %_libexecdir/gsd-printer
-%_libexecdir/gsd-backlight-helper
 %_libexecdir/gsd-wacom-led-helper
-%_libexecdir/gnome-settings-daemon-localeexec
+%_libexecdir/gsd-wacom-oled-helper
 %_datadir/%name
 %_iconsdir/hicolor/*/*/*.png
 %_iconsdir/hicolor/*/*/*.svg
 %_sysconfdir/xdg/autostart/%name.desktop
-#%_sysconfdir/xdg/autostart/gnome-fallback-mount-helper.desktop
 %config %_datadir/glib-2.0/schemas/*
 %_datadir/GConf/gsettings/%name.convert
 %_man1dir/%{name}*
@@ -171,7 +183,6 @@ The %name-tests package provides programms for testing GSD plugins.
 %exclude %_libdir/%name-%api_ver/*.la
 %exclude %_datadir/%name-%api_ver/input-device-example.sh
 
-
 %files devel
 %_includedir/*
 %_pkgconfigdir/*
@@ -180,6 +191,7 @@ The %name-tests package provides programms for testing GSD plugins.
 %_libexecdir/gsd-test-a11y-keyboard
 %_libexecdir/gsd-test-a11y-settings
 %_libexecdir/gsd-test-cursor
+%_libexecdir/gsd-test-datetime
 %_libexecdir/gsd-test-housekeeping
 %_libexecdir/gsd-test-input-helper
 %_libexecdir/gsd-test-keyboard
@@ -188,7 +200,9 @@ The %name-tests package provides programms for testing GSD plugins.
 %_libexecdir/gsd-test-orientation
 %_libexecdir/gsd-test-print-notifications
 %_libexecdir/gsd-test-remote-display
+%_libexecdir/gsd-test-rfkill
 %_libexecdir/gsd-test-screensaver-proxy
+%_libexecdir/gsd-test-smartcard
 %_libexecdir/gsd-test-sound
 %_libexecdir/gsd-test-wacom
 %_libexecdir/gsd-test-wacom-osd
@@ -197,6 +211,9 @@ The %name-tests package provides programms for testing GSD plugins.
 
 
 %changelog
+* Tue Sep 24 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.0-alt1
+- 3.10.0
+
 * Fri Sep 06 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.5-alt1
 - 3.8.5
 

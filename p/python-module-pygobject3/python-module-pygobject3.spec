@@ -1,11 +1,11 @@
 %define _name pygobject
-%define major 3.8
+%define major 3.10
 %define api_ver 3.0
 %define gtk_api_ver 2.0
 %def_disable devel_doc
 
 Name: python-module-%{_name}3
-Version: %major.3
+Version: %major.0
 Release: alt1
 
 Summary: Python bindings for GObject
@@ -27,8 +27,8 @@ Source: http://ftp.gnome.org/pub/GNOME/sources/%_name/%major/%_name-%version.tar
 
 %add_typelib_req_skiplist typelib(Foo)
 
-%define glib_ver 2.35.3
-%define gi_ver 1.35.3
+%define glib_ver 2.35.9
+%define gi_ver 1.35.9
 
 BuildRequires: gnome-common
 BuildPreReq: glib2-devel >= %glib_ver libgio-devel libffi-devel
@@ -205,6 +205,9 @@ popd
 %endif
 
 %changelog
+* Mon Sep 23 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.0-alt1
+- 3.10.0
+
 * Fri Jul 05 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.3-alt1
 - 3.8.3
 

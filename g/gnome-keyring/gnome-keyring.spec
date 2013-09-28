@@ -1,4 +1,4 @@
-%define ver_major 3.8
+%define ver_major 3.10
 %def_disable static
 %def_disable gtk_doc
 %def_disable debug
@@ -7,7 +7,7 @@
 %def_enable selinux
 
 Name: gnome-keyring
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: %name is a password keeper for GNOME
@@ -29,7 +29,7 @@ Patch: gnome-keyring-3.6.3-alt-lfs.patch
 Requires: libp11-kit >= %p11kit_ver
 
 # From configure.in
-BuildPreReq: gnome-common glib2-devel >= %glib_ver libgio-devel
+BuildPreReq: gnome-common libgio-devel >= %glib_ver
 BuildPreReq: intltool >= 0.35.0 gtk-doc
 BuildPreReq: libdbus-devel >= %dbus_ver
 BuildPreReq: libgcrypt-devel >= %gcrypt_ver
@@ -77,7 +77,6 @@ and start the keyring daemon.
 %make_build
 
 %check
-#ERROR:test-transaction.c:278:test_remove_file_abort: assertion failed (n_data == 3): (0 == 3)
 #xvfb-run %make check
 
 %install
@@ -109,6 +108,9 @@ and start the keyring daemon.
 %exclude /%_lib/security/*.la
 
 %changelog
+* Mon Sep 23 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.0-alt1
+- 3.10.0
+
 * Sun May 05 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.2-alt1
 - 3.8.2
 

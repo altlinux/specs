@@ -1,11 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 
 %define _name quadrapassel
-%define ver_major 3.8
+%define ver_major 3.10
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-games-%_name
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: A tetris clone
@@ -46,12 +46,15 @@ GNOME version of the popular russian game Tetris.
 %_iconsdir/hicolor/*x*/apps/%_name.png
 %_iconsdir/hicolor/scalable/apps/%_name.svg
 %_iconsdir/HighContrast/*x*/apps/%_name.png
-
 %_man6dir/%_name.*
 %config %_datadir/glib-2.0/schemas/org.gnome.%_name.gschema.xml
-#%config(noreplace) %attr(0664,root,games) %_localstatedir/games/%_name.*
+%_datadir/appdata/%_name.appdata.xml
+
 
 %changelog
+* Sat Sep 21 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.0-alt1
+- 3.10.0
+
 * Sun Jul 28 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.2-alt1
 - 3.8.2
 

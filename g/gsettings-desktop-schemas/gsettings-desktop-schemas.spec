@@ -1,8 +1,10 @@
-%define ver_major 3.8
+%define _unpackaged_files_terminate_build 1
+
+%define ver_major 3.10
 %def_enable introspection
 
 Name: gsettings-desktop-schemas
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: A collection of GSettings schemas
@@ -63,6 +65,7 @@ GObject introspection devel data for %name.
 
 %prep
 %setup -q
+[ ! -d m4 ] && mkdir m4
 
 %build
 %autoreconf
@@ -79,11 +82,13 @@ GObject introspection devel data for %name.
 %files
 
 %files data -f %name.lang
+%_datadir/glib-2.0/schemas/org.gnome.desktop.a11y.gschema.xml
 %_datadir/glib-2.0/schemas/org.gnome.desktop.a11y.applications.gschema.xml
 %_datadir/glib-2.0/schemas/org.gnome.desktop.a11y.keyboard.gschema.xml
 %_datadir/glib-2.0/schemas/org.gnome.desktop.a11y.magnifier.gschema.xml
 %_datadir/glib-2.0/schemas/org.gnome.desktop.a11y.mouse.gschema.xml
 %_datadir/glib-2.0/schemas/org.gnome.desktop.background.gschema.xml
+%_datadir/glib-2.0/schemas/org.gnome.desktop.datetime.gschema.xml
 %_datadir/glib-2.0/schemas/org.gnome.desktop.default-applications.gschema.xml
 %_datadir/glib-2.0/schemas/org.gnome.desktop.enums.xml
 %_datadir/glib-2.0/schemas/org.gnome.desktop.input-sources.gschema.xml
@@ -120,6 +125,9 @@ GObject introspection devel data for %name.
 %endif
 
 %changelog
+* Mon Sep 23 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.0-alt1
+- 3.10.0
+
 * Tue May 14 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.2-alt1
 - 3.8.2
 

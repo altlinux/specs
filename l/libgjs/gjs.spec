@@ -1,6 +1,11 @@
-%define ver_major 1.36
+%def_disable snapshot
+%define _libexecdir %prefix/libexec
+
+%define ver_major 1.38
 %define _name gjs
 %define api_ver 1.0
+
+%def_disable installed_tests
 
 Name: lib%_name
 Version: %ver_major.1
@@ -15,17 +20,21 @@ Group: System/Libraries
 License: MIT and (MPLv1.1 or GPLv2+ or LGPLv2+)
 Url: https://live.gnome.org/Gjs/
 
+%if_enabled snapshot
+Source: %_name-%version.tar
+%else
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
+%endif
 
-%define glib_ver 2.36.0
-%define gi_ver 1.36.0
+%define glib_ver 2.38.0
+%define gi_ver 1.38.0
 
-BuildRequires: gnome-common gcc-c++ libmozjs-devel >= 1.8.5 libcairo-devel
-BuildRequires: glib2-devel >= %glib_ver gobject-introspection-devel >= %gi_ver
-BuildRequires: libdbus-glib-devel libreadline-devel libcairo-gobject-devel
+BuildRequires: gnome-common gcc-c++ libffi-devel libmozjs17-devel libcairo-devel
+BuildRequires: libgio-devel >= %glib_ver gobject-introspection-devel >= %gi_ver
+BuildRequires: libreadline-devel libcairo-gobject-devel
 
 # for check
-BuildRequires: /proc dbus-tools-gui
+BuildRequires: /proc dbus-tools dbus-tools-gui
 
 %description
 Gjs allows using GNOME libraries from Javascript. It's based on the
@@ -40,6 +49,15 @@ Requires: %name = %version-%release
 %description devel
 Files for development with %name.
 
+%package tests
+Summary: Tests for the glib2/libgio packages
+Group: Development/Other
+Requires: libgio = %version-%release
+
+%description tests
+This package provides tests programs that can be used to verify
+the functionality of the installed glib2/libgio packages.
+
 %set_typelibdir %_libdir/%_name/girepository-1.0
 
 %prep
@@ -48,7 +66,8 @@ Files for development with %name.
 %build
 %autoreconf
 %configure \
-    --disable-static
+    --disable-static \
+    %{?_enable_installed_tests:--enable-installed-tests}
 
 %make_build
 
@@ -56,7 +75,8 @@ Files for development with %name.
 %make DESTDIR=%buildroot install
 
 %check
-%make check
+# check failed if installed-tests disabled
+#%make check
 
 %files
 %_bindir/%_name
@@ -73,10 +93,25 @@ Files for development with %name.
 %_libdir/%name.so
 %_libdir/pkgconfig/%_name-%api_ver.pc
 %_libdir/pkgconfig/%_name-internals-%api_ver.pc
-
 %doc examples/*
 
+
+%if_enabled installed_tests
+%files tests
+%_libdir/%_name/libgimarshallingtests.so
+%_libdir/%_name/libregress.so
+%_libdir/%_name/libwarnlib.so
+%_libexecdir/%_name/installed-tests/
+%_datadir/installed-tests/%_name/
+
+%exclude %_libdir/%_name/*.la
+%endif
+
+
 %changelog
+* Tue Sep 24 2013 Yuri N. Sedunov <aris@altlinux.org> 1.38.1-alt1
+- 1.38.1
+
 * Mon Apr 22 2013 Yuri N. Sedunov <aris@altlinux.org> 1.36.1-alt1
 - 1.36.1
 

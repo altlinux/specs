@@ -2,11 +2,11 @@
 
 %define _name chess
 %define __name gnome-%_name
-%define ver_major 3.8
+%define ver_major 3.10
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-games-%_name
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1
 
 Summary: A chess game for GNOME
@@ -26,7 +26,7 @@ Provides:  gnome-games-glchess = %version-%release
 
 BuildRequires: gnome-common
 BuildRequires: intltool yelp-tools libgio-devel >= %glib_ver libgtk+3-devel >= %gtk_ver librsvg-devel
-BuildRequires: libsqlite3-devel libGL-devel libGLU-devel vala-tools >= %vala_ver
+BuildRequires: libGL-devel libGLU-devel vala-tools >= %vala_ver
 
 %description
 A chess game which supports several chess engines, with 2D and optionally
@@ -56,8 +56,13 @@ A chess game which supports several chess engines, with 2D and optionally
 %_iconsdir/hicolor/scalable/apps/%__name.svg
 %_man6dir/%__name.*
 %config %_datadir/glib-2.0/schemas/org.gnome.%__name.gschema.xml
+%config(noreplace) %_sysconfdir/chess-engines.conf
+%_datadir/appdata/%__name.appdata.xml
 
 %changelog
+* Mon Sep 23 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.0-alt1
+- 3.10.0
+
 * Tue Aug 20 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.4-alt1
 - 3.8.4
 

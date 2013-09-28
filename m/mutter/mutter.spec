@@ -1,9 +1,9 @@
-%define ver_major 3.8
+%define ver_major 3.10
 %def_enable privatelib
 %def_enable gtk_doc
 
 Name: mutter
-Version: %ver_major.4
+Version: %ver_major.0.1
 Release: alt1
 Epoch: 1
 
@@ -29,11 +29,12 @@ BuildRequires: libcairo-devel >= 1.10.0
 BuildRequires: gsettings-desktop-schemas-devel >= 3.7.3
 BuildRequires: libXcomposite-devel libXfixes-devel libXrender-devel libXdamage-devel libXi-devel >= 1.6.0
 BuildRequires: libXcursor-devel libX11-devel libXinerama-devel libXext-devel libXrandr-devel libSM-devel libICE-devel
-BuildRequires: libclutter-devel >= 1.14.3 libcogl-devel >= 1.13.3
+BuildRequires: libclutter-devel >= 1.14.3 libcogl-devel >= 1.15.8
 BuildRequires: libgdk-pixbuf-devel
 BuildRequires: gtk-doc
 BuildRequires: libstartup-notification-devel zenity libcanberra-gtk3-devel
 BuildRequires: libclutter-gir-devel libpango-gir-devel libgtk+3-gir-devel gsettings-desktop-schemas-gir-devel
+BuildRequires: libgnome-desktop3-devel libupower-devel
 
 %set_typelibdir %_libdir/%name
 %set_girdir %_libdir/%name
@@ -120,7 +121,6 @@ DATADIRNAME=share %configure \
 %dir %_libdir/%name
 %dir %_libdir/%name/plugins
 %_libdir/%name/plugins/*.so
-%_datadir/%name
 %_desktopdir/%name.desktop
 %_man1dir/*
 
@@ -154,6 +154,9 @@ DATADIRNAME=share %configure \
 
 
 %changelog
+* Tue Sep 24 2013 Yuri N. Sedunov <aris@altlinux.org> 1:3.10.0.1-alt1
+- 3.10.0.1
+
 * Wed Jul 31 2013 Yuri N. Sedunov <aris@altlinux.org> 1:3.8.4-alt1
 - 3.8.4
 

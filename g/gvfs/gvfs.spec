@@ -1,4 +1,4 @@
-%define ver_major 1.16
+%define ver_major 1.18
 %def_enable http
 %def_enable avahi
 %def_enable cdda
@@ -21,8 +21,8 @@
 %def_disable gtk_doc
 
 Name: gvfs
-Version: %ver_major.3
-Release: alt5
+Version: %ver_major.0
+Release: alt1
 
 Summary: The GNOME virtual filesystem libraries
 License: %lgpl2plus
@@ -41,9 +41,6 @@ Patch5: gvfs-1.15.4-alt-tmpfiles_dir.patch
 # https://bugzilla.altlinux.org/show_bug.cgi?id=29171
 # https://mail.gnome.org/archives/gvfs-list/2013-May/msg00014.html
 Patch6: gvfs-1.16.3-alt-1-logind-state.patch
-
-# from upstream
-Patch10: gvfs-1.16.3-up-afc_new_api.patch
 
 %{?_enable_gdu:Obsoletes: gnome-mount <= 0.8}
 %{?_enable_gdu:Obsoletes: gnome-mount-nautilus-properties <= 0.8}
@@ -260,11 +257,10 @@ Bash completion for gvfs.
 %setup
 %patch -p1
 %patch1 -p1 -b .archive-integration
-%patch3 -p1 -b .headers-install
+#%%patch3 -p1 -b .headers-install
 %patch4 -p1 -b .lfs
 %patch5 -b .tmpfiles
 %patch6 -p2 -b .logind-state
-%patch10 -p1
 
 [ ! -d m4 ] && mkdir m4
 
@@ -379,7 +375,7 @@ killall -USR1 gvfsd >&/dev/null || :
 %files devel
 %_includedir/*
 %_libdir/*.so
-%_pkgconfigdir/*.pc
+#%_pkgconfigdir/*.pc
 #%%_datadir/gtk-doc/html/*
 
 %files -n fuse-gvfs
@@ -462,6 +458,10 @@ killall -USR1 gvfsd >&/dev/null || :
 %exclude %_libdir/gio/modules/*.la
 
 %changelog
+* Tue Sep 24 2013 Yuri N. Sedunov <aris@altlinux.org> 1.18.0-alt1
+- 1.18.0
+- disabled broken libgvfsdaemon+headers_install.patch
+
 * Mon Jul 15 2013 Yuri N. Sedunov <aris@altlinux.org> 1.16.3-alt5
 - sem@: new version of the alt-logind-state.patch (ALT #29185)
 

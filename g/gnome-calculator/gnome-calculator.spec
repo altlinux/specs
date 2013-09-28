@@ -1,8 +1,8 @@
-%define ver_major 3.8
+%define ver_major 3.10
 %def_without newtranslations
 
 Name: gnome-calculator
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: GTK+3 based desktop calculator
@@ -56,14 +56,16 @@ install -pD -m644 data/%name.1 %buildroot%_man1dir/%name.1
 
 %files -f %name.lang
 %_bindir/*
-%dir %_datadir/%name
-%_datadir/%name/*.ui
 %_desktopdir/*
 %_man1dir/*
 %config %_datadir/glib-2.0/schemas/org.gnome.calculator.gschema.xml
+%_datadir/appdata/%name.appdata.xml
 %doc NEWS
 
 %changelog
+* Wed Sep 25 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.0-alt1
+- 3.10.0
+
 * Tue May 14 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.2-alt1
 - 3.8.2
 

@@ -11,7 +11,7 @@
 
 Name: gthumb
 Version: %ver_major.3
-Release: alt2
+Release: alt3
 
 Summary: An image file viewer and browser for GNOME
 Summary(ru_RU.UTF-8): Просмотрщик изображений и фотоальбом для GNOME
@@ -166,6 +166,9 @@ This package contains headers needed to build extensions for gThumb.
 %_libdir/pkgconfig/*
 
 %changelog
+* Tue Sep 17 2013 Yuri N. Sedunov <aris@altlinux.org> 3.2.3-alt3
+- rebuilt for people/gnome/3.10
+
 * Tue Sep 17 2013 Yuri N. Sedunov <aris@altlinux.org> 3.2.3-alt2
 - updated to 3.2_56dd7c4 (fixed BGO ##706697, 706343, 705877)
 - enabled map support via libchamplain

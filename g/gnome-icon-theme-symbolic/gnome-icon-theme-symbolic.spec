@@ -1,7 +1,7 @@
-%define ver_major 3.8
+%define ver_major 3.10
 
 Name: gnome-icon-theme-symbolic
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 
 Summary: Additional set of icons for GNOME desktop
@@ -54,6 +54,9 @@ the regular name.
 %doc AUTHORS README NEWS COPYING
 
 %changelog
+* Tue Sep 24 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.0-alt1
+- 3.10.0
+
 * Sat Jun 22 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.3-alt1
 - 3.8.3
 

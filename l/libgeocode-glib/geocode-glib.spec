@@ -1,10 +1,10 @@
 %define _name geocode-glib
-%define ver_major 0.99
+%define ver_major 3.10
 %define api_ver 1.0
 %def_enable introspection
 
 Name: lib%{_name}
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: Convenience library for the Yahoo! Place Finder APIs
@@ -14,8 +14,8 @@ Url: http://www.gnome.org/
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
 
-BuildPreReq: gnome-common libjson-glib-devel >= 0.13.1
-BuildRequires: libgio-devel >= 2.34 libsoup-gnome-devel libGeoIP-devel >= 1.5.0
+BuildPreReq: gnome-common libjson-glib-devel >= 0.16.2
+BuildRequires: libgio-devel >= 2.34 libsoup-gnome-devel
 BuildRequires: intltool gnome-doc-utils gtk-doc
 %{?_enable_introspection:BuildRequires: libsoup-gnome-gir-devel libjson-glib-gir-devel}
 
@@ -83,7 +83,6 @@ GObject introspection devel data for the %_name library
 %find_lang %_name
 
 %files -f %_name.lang
-%_bindir/geoip-update
 %_libdir/*.so.*
 %doc AUTHORS NEWS README
 
@@ -93,7 +92,7 @@ GObject introspection devel data for the %_name library
 %_libdir/pkgconfig/%_name-%api_ver.pc
 
 %files devel-doc
-%_datadir/gtk-doc/html/%_name/
+%_datadir/gtk-doc/html/%_name-%api_ver/
 
 %if_enabled introspection
 %files gir
@@ -104,6 +103,9 @@ GObject introspection devel data for the %_name library
 %endif
 
 %changelog
+* Mon Sep 23 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.0-alt1
+- 3.10.0
+
 * Tue Jul 30 2013 Yuri N. Sedunov <aris@altlinux.org> 0.99.1-alt1
 - 0.99.1
 

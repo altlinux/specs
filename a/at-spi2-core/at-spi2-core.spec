@@ -1,4 +1,4 @@
-%define ver_major 2.8
+%define ver_major 2.10
 %define api_ver 2.0
 %define _libexecdir %_prefix/libexec
 %def_enable introspection
@@ -124,6 +124,9 @@ This package contains documentation for developing applications that use
 %_datadir/gtk-doc/html/libatspi
 
 %changelog
+* Tue Sep 24 2013 Yuri N. Sedunov <aris@altlinux.org> 2.10.0-alt1
+- 2.10.0
+
 * Tue Mar 26 2013 Yuri N. Sedunov <aris@altlinux.org> 2.8.0-alt1
 - 2.8.0
 

@@ -2,12 +2,12 @@
 
 %define _name tetravex
 %define __name gnome-%_name
-%define ver_major 3.8
+%define ver_major 3.10
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-games-%_name
 Version: %ver_major.0
-Release: alt2
+Release: alt1
 
 Summary: A game based on Tetravex
 Group: Games/Boards
@@ -53,10 +53,13 @@ times are stored in a system-wide scoreboard.
 %_iconsdir/HighContrast/*x*/apps/*.png
 %_man6dir/%__name.*
 %config %_datadir/glib-2.0/schemas/org.gnome.%_name.gschema.xml
-#%config(noreplace) %attr(0664,games,games) %_localstatedir/games/%_name.*
+%_datadir/appdata/%__name.appdata.xml
 
 
 %changelog
+* Mon Sep 23 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.0-alt1
+- 3.10.0
+
 * Tue Apr 09 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.0-alt2
 - no more sgid on /usr/bin/gnome-tetrevex (ALT #28820)
 

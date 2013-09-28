@@ -1,4 +1,3 @@
-%define _name nemo
 %define ver_major 1.8
 %define api_ver 3.0
 
@@ -9,8 +8,8 @@
 %def_enable selinux
 
 Name: nemo
-Version: %ver_major.3
-Release: alt1
+Version: %ver_major.5
+Release: alt4
 
 Summary: default file manager for Cinnamon
 License: GPLv2+
@@ -21,9 +20,9 @@ Source: %name-%version.tar
 
 Patch: %name-%version-%release.patch
 
-Provides: %_name = %version-%release
-Obsoletes: gnome-volume-manager
-Provides: gnome-volume-manager
+Provides: %name = %version-%release
+
+Requires: %name-translations
 
 %define pkgconfig_ver 0.8
 %define icon_theme_ver 2.10.0
@@ -31,7 +30,7 @@ Provides: gnome-volume-manager
 
 # From configure.in
 %define glib_ver 2.31.9
-%define desktop_ver 3.3.3
+%define desktop_ver 1.9.0
 %define pango_ver 1.28.3
 %define gtk_ver 3.3.18
 %define libxml2_ver 2.4.7
@@ -57,10 +56,9 @@ BuildPreReq: xvfb-run dbus-tools-gui /proc
 # From configure.in
 BuildPreReq: glib2-devel >= %glib_ver
 BuildPreReq: libgio-devel >= %glib_ver
-BuildPreReq: libgnome-desktop3-devel >= %desktop_ver
+BuildPreReq: libcinnamon-desktop-devel >= %desktop_ver
 BuildPreReq: libpango-devel >= %pango_ver
 BuildPreReq: libgtk+3-devel >= %gtk_ver
-BuildPreReq: gsettings-desktop-schemas-devel
 BuildPreReq: libgail3-devel
 BuildPreReq: libxml2-devel >= %libxml2_ver
 BuildPreReq: intltool >= 0.40.1
@@ -135,6 +133,7 @@ rm -f data/*.desktop
 subst 's@\.\/@xvfb-run -a ./@' eel/check-eel src/check-nemo
 
 %build
+sed -i -e 's@DISABLE_DEPRECATED_CFLAGS="-DG_DISABLE_DEPRECATED -DGTK_DISABLE_DEPRECATED -DGDK_DISABLE_DEPRECATED -DGDK_PIXBUF_DISABLE_DEPRECATED"@@g' configure.in
 %autoreconf
 %configure \
     --disable-update-mimedb \
@@ -161,9 +160,8 @@ bzip2 -9fk NEWS
 # The license
 ln -sf %_licensedir/LGPL-2 COPYING
 
-%find_lang %name
 
-%files -f %name.lang
+%files
 %_bindir/*
 %_libexecdir/nemo-convert-metadata
 %dir %_libdir/%name-%api_ver
@@ -176,13 +174,14 @@ ln -sf %_licensedir/LGPL-2 COPYING
 %_iconsdir/hicolor/*/apps/*.svg
 %_iconsdir/hicolor/*/actions/*.svg
 %_iconsdir/hicolor/*/actions/*.png
+%_iconsdir/hicolor/*/status/*.svg
 %_datadir/dbus-1/services/org.Nemo.service
 %_datadir/dbus-1/services/org.freedesktop.NemoFileManager1.service
 %_datadir/gtksourceview-2.0/language-specs/nemo_action.lang
 %_datadir/gtksourceview-3.0/language-specs/nemo_action.lang
+%_datadir/polkit-1/actions/org.nemo.root.policy
 # gsettings schemas
 %config %_datadir/glib-2.0/schemas/org.nemo.gschema.xml
-%_datadir/GConf/gsettings/nemo.convert
 # docs
 %doc --no-dereference COPYING
 %doc AUTHORS NEWS.bz2 README THANKS
@@ -210,6 +209,27 @@ ln -sf %_licensedir/LGPL-2 COPYING
 
 
 %changelog
+* Wed Sep 25 2013 Yuri N. Sedunov <aris@altlinux.org> 1.8.5-alt4
+- rebuild for GNOME-3.10
+
+* Mon Sep 16 2013 Vladimir Didenko <cow@altlinux.org> 1.8.5-alt3
+- git20130915
+
+* Fri Sep 6 2013 Vladimir Didenko <cow@altlinux.org> 1.8.5-alt2
+- supress gtk DEPRECATED to build with gtk-3.9
+
+* Wed Aug 12 2013 Vladimir Didenko <cow@altlinux.org> 1.8.5-alt1
+- 1.8.5-68-g60bbdec
+
+* Wed Aug 12 2013 Vladimir Didenko <cow@altlinux.org> 1.8.4-alt3
+- updated translations
+
+* Mon Aug 12 2013 Vladimir Didenko <cow@altlinux.org> 1.8.4-alt2
+- dropped background manager patch
+
+* Wed Aug 7 2013 Vladimir Didenko <cow@altlinux.org> 1.8.4-alt1
+- 1.8.4-12-gd9c3464
+
 * Wed Jun 5 2013 Vladimir Didenko <cow@altlinux.org> 1.8.3-alt1
 - 1.8.3
 

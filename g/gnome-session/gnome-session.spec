@@ -1,10 +1,10 @@
-%define ver_major 3.8
+%define ver_major 3.10
 %define _libexecdir %_prefix/libexec
 %def_enable systemd
 %def_enable session_selector
 
 Name: gnome-session
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1
 
 Summary: The gnome session programs for the GNOME GUI desktop environment
@@ -36,8 +36,8 @@ PreReq: xinitrc libcanberra-gnome libcanberra-gtk3
 Requires: altlinux-freedesktop-menu-gnome3
 Requires: dbus-tools-gui
 Requires: gnome-filesystem
-Requires: gnome-settings-daemon >= 3.0.0
-Requires: upower polkit-gnome gcr
+Requires: gnome-settings-daemon >= 3.9.92
+Requires: upower gcr
 Requires: xdg-user-dirs
 
 Requires: icon-theme-hicolor gnome-icon-theme-symbolic gnome-themes-standard
@@ -74,6 +74,15 @@ Requires: %name = %EVR
 
 %description selector
 This package permits to choose a saved GNOME session.
+
+%package wayland
+Summary: A Wayland session for the GNOME
+Group: Graphical desktop/GNOME
+Requires: %name = %EVR
+#Requries: gnome-shell-wayland
+
+%description wayland
+This package permits to log into GNOME using Wayland.
 
 %prep
 %setup -q
@@ -185,7 +194,7 @@ install -pD -m644 %SOURCE1 %buildroot%_iconsdir/gnome.svg
 %_libexecdir/gnome-session-failed
 %_desktopdir/*.desktop
 %dir %_datadir/%name
-%_datadir/%name/gsm-inhibit-dialog.ui
+#%_datadir/%name/gsm-inhibit-dialog.ui
 %_datadir/%name/session-properties.ui
 %_datadir/%name/hardware-compatibility
 %_datadir/%name/startgnome-common
@@ -216,7 +225,14 @@ install -pD -m644 %SOURCE1 %buildroot%_iconsdir/gnome.svg
 %exclude %_datadir/xsessions/gnome-custom-session.desktop
 %endif
 
+%files wayland
+%_datadir/wayland-sessions/gnome-wayland.desktop
+%_datadir/%name/sessions/gnome-wayland.session
+
 %changelog
+* Tue Sep 24 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.0-alt1
+- 3.10.0
+
 * Tue Jul 30 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.4-alt1
 - 3.8.4
 

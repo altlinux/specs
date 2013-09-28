@@ -1,4 +1,4 @@
-%define ver_major 3.6
+%define ver_major 3.10
 
 Name: gnome-common
 Version: %ver_major.0
@@ -11,7 +11,6 @@ Url: http://www.gnome.org/
 Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 
 Source: %name-%version.tar.xz
-Patch: %name-2.24.0-alt-no-libtool-check.patch
 
 BuildArch: noarch
 
@@ -21,7 +20,6 @@ needed to run GNOME.
 
 %prep
 %setup
-%patch -p1
 
 %build
 %autoreconf
@@ -42,6 +40,10 @@ cp doc-build/README README.doc
 %doc README* ChangeLog doc/usage.txt
 
 %changelog
+* Mon Sep 23 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.0-alt1
+- 3.10.0
+- removed obsolete alt-no-libtool-check.patch
+
 * Tue Oct 16 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.0-alt1
 - 3.6.0
 

@@ -1,13 +1,17 @@
 %define _name gdk-pixbuf
 %define api_ver 2.0
 %define binary_ver 2.10.0
-%define ver_major 2.28
+%define ver_major 2.30
+%define _libexecdir %_prefix/libexec
+
 %def_disable gtk_doc
 %def_enable introspection
 %def_with x11
+%def_without libjasper
+%def_enable installed_tests
 
 Name: lib%_name
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: An image loading and rendering library for Gdk
@@ -21,7 +25,7 @@ Source1: %_name.map
 Source2: %_name.lds
 Source3: gdk-pixbuf-loaders.filetrigger
 
-%define glib_ver 2.34.0
+%define glib_ver 2.37.2
 %define gi_ver 0.9.5
 
 Requires: %name-locales = %version
@@ -32,6 +36,7 @@ Obsoletes: %name-loaders <= %version
 BuildPreReq: glib2-devel >= %glib_ver
 BuildRequires: docbook-utils gtk-doc libjpeg-devel libpng-devel libtiff-devel
 %{?_with_x11:BuildRequires: libX11-devel}
+%{?_with_libjasper:BuildRequires: libjasper-devel}
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel >= %gi_ver}
 
 %description
@@ -105,6 +110,16 @@ Requires: %name-devel = %version-%release
 %description gir-devel
 GObject introspection devel data for the GdkPixBuf library
 
+%package tests
+Summary: Tests for the GdkPixBuf library
+Group: Development/Other
+Requires: %name = %version-%release
+
+%description tests
+This package provides tests programs that can be used to verify
+the functionality of the installed GdkPixBuf library.
+
+
 %prep
 %setup -q -n %_name-%version
 install -p -m644 %_sourcedir/%_name.map %_name/compat.map
@@ -114,14 +129,16 @@ install -p -m644 %_sourcedir/%_name.lds %_name/compat.lds
 %configure \
 	%{?_enable_gtk_doc:--enable-gtk-doc} \
 	%{subst_enable introspection} \
-	%{?_with_x11:--with-x11}
+	%{subst_with x11} \
+	%{subst_with libjasper} \
+	%{?_enable_installed_tests:--enable-installed-tests}
 
 %make_build LIBTOOL_EXPORT_OPTIONS=-Wl,--version-script=compat.map,compat.lds
 
 %check
 # due to version script
 echo : >>%_name/abicheck.sh
-%make check
+#%make check
 
 %install
 %make DESTDIR=%buildroot install
@@ -189,7 +206,17 @@ touch %buildroot%_libdir/%_name-%api_ver/%binary_ver/loaders.cache
 %_datadir/gir-1.0/*
 %endif
 
+%if_enabled installed_tests
+%files tests
+%_libexecdir/installed-tests/%_name/
+%_datadir/installed-tests/%_name/
+%endif
+
+
 %changelog
+* Mon Sep 23 2013 Yuri N. Sedunov <aris@altlinux.org> 2.30.0-alt1
+- 2.30.0
+
 * Sat Jun 08 2013 Yuri N. Sedunov <aris@altlinux.org> 2.28.2-alt1
 - 2.28.2
 

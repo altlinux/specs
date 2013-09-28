@@ -1,4 +1,4 @@
-%define ver_major 3.8
+%define ver_major 3.10
 %define api_ver 1.0
 
 %define _libexecdir %_prefix/libexec
@@ -17,17 +17,14 @@
 %def_with xdmcp
 %def_with tcp_wrappers
 %def_with selinux
-%def_without consolekit
 %def_with systemd
 %def_with libaudit
 %def_with plymouth
 %def_without xevie
 %def_disable split_authentication
-# https://git.gnome.org/browse/gdm/commit/?id=acc931c762b5510103a7f49cf3074c1228700cb8
-%def_disable fallback_greeter
 
 Name: gdm
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1
 
 Summary: The GNOME Display Manager
@@ -75,8 +72,7 @@ Obsoletes: %name-user-switch-applet
 
 PreReq: %_rpmlibdir/update-dconf-database.filetrigger
 Requires: %name-libs = %version-%release
-%{?_with_consolekit:Requires: ConsoleKit-x11}
-%{?_disable_fallback_greeter:Requires: gnome-shell}
+Requires: gnome-shell
 Requires: coreutils consolehelper zenity xinitrc iso-codes lsb-release shadow-utils
 
 BuildPreReq: desktop-file-utils gnome-common rpm-build-gnome
@@ -88,7 +84,6 @@ BuildPreReq: libgtk+3-devel >= %gtk_ver
 BuildPreReq: libpango-devel >= %pango_ver
 BuildPreReq: libupower-devel >= %upower_ver
 BuildPreReq: libaccountsservice-devel >= %accountsservice_ver
-%{?_with_consolekit:BuildPreReq: libConsoleKit-devel}
 %{?_with_systemd:BuildRequires: systemd-devel libsystemd-login-devel libsystemd-daemon-devel libsystemd-journal-devel}
 %{?_with_selinux:BuildPreReq: libselinux-devel libattr-devel}
 %{?_with_libaudit:BuildPreReq: libaudit-devel}
@@ -331,11 +326,6 @@ xvfb-run %make check
 %_datadir/gnome-session/sessions/gdm-shell.session
 %exclude %_datadir/gdm/greeter/autostart/orca-autostart.desktop
 
-# fallback greeter
-%_datadir/gdm/gdm-greeter-login-window.ui
-%_datadir/gdm/simple-greeter/
-%_datadir/gnome-session/sessions/gdm-fallback.session
-
 %if_enabled split_authentication
 #%_libdir/gdm/simple-greeter/extensions/libpassword.so
 %dir %_datadir/gdm/simple-greeter/extensions/password
@@ -344,17 +334,13 @@ xvfb-run %make check
 
 %files help -f %name-help.lang
 
-
 %files libs
 %_libdir/libgdm.so.*
-%_libdir/libgdmsimplegreeter.so.*
 
 %files libs-devel
 %_includedir/gdm/
 %_libdir/libgdm.so
-%_libdir/libgdmsimplegreeter.so
 %_libdir/pkgconfig/gdm.pc
-%_libdir/pkgconfig/gdmsimplegreeter.pc
 
 %files libs-gir
 %_typelibdir/Gdm-%api_ver.typelib
@@ -380,6 +366,10 @@ xvfb-run %make check
 %endif
 
 %changelog
+* Tue Sep 24 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.0-alt1
+- 3.10.0
+- removed ConsoleKit support
+
 * Tue Jul 30 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.4-alt1
 - 3.8.4
 

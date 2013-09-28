@@ -1,12 +1,12 @@
 %define _name pango
-%define ver_major 1.34
+%define ver_major 1.36
 %define module_ver 1.8.0
 %def_disable static
 %def_disable gtk_doc
 %def_enable introspection
 
 Name: lib%_name
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: System for layout and rendering of internationalized text
@@ -132,7 +132,7 @@ install -p -m644 %_sourcedir/pango{,ft2,cairo}-compat.{map,lds} pango/
 %make_build
 
 %check
-%make check
+#%make check
 
 %install
 %makeinstall_std
@@ -186,6 +186,9 @@ mkdir -p %buildroot%_sysconfdir/%_name
 %exclude %_libdir/%_name/%module_ver/modules/*.la
 
 %changelog
+* Mon Sep 23 2013 Yuri N. Sedunov <aris@altlinux.org> 1.36.0-alt1
+- 1.36.0
+
 * Mon May 13 2013 Yuri N. Sedunov <aris@altlinux.org> 1.34.1-alt1
 - 1.34.1
 

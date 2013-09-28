@@ -1,4 +1,6 @@
-%define ver_major 3.8
+%define _unpackaged_files_terminate_build 1
+
+%define ver_major 3.10
 %define api_ver 0.0
 %def_disable static
 %def_enable introspection
@@ -125,6 +127,9 @@ xvfb-run %make check
 %endif
 
 %changelog
+* Mon Sep 23 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.0-alt1
+- 3.10.0
+
 * Mon Mar 25 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.0-alt1
 - 3.8.0
 

@@ -1,5 +1,5 @@
 %define _libexecdir %_prefix/libexec
-%define ver_major 3.8
+%define ver_major 3.10
 %define api_ver 3
 %define so_ver 4
 
@@ -7,24 +7,28 @@
 %def_enable introspection
 
 Name: evince
-Version: %ver_major.2
-Release: alt2.1
+Version: %ver_major.0
+Release: alt1
 
 Summary: A document viewer
 Group: Office
 License: GPL
 Url: http://www.gnome.org/projects/evince/
 
-#Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
-Source: %name-%version.tar
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+#Source: %name-%version.tar
 
 Requires: lib%name = %version-%release
 Requires: gnome-icon-theme gnome-icon-theme-symbolic
+Requires: gvfs-backend-recent-files
 Requires: dconf
 
+%define poppler_ver 0.24.0
+
+BuildPreReq: libpoppler-glib-devel >= %poppler_ver
 BuildRequires: gcc-c++ gnome-common gtk-doc gnome-icon-theme intltool libdbus-glib-devel
 BuildRequires: yelp-tools itstool
-BuildRequires: libdjvu-devel libgnome-keyring-devel libnautilus-devel libpoppler-glib-devel libspectre-devel libtiff-devel
+BuildRequires: libdjvu-devel libgnome-keyring-devel libnautilus-devel  libspectre-devel libtiff-devel
 BuildRequires: libxml2-devel libkpathsea-devel libgail3-devel gsettings-desktop-schemas-devel zlib-devel libsecret-devel
 BuildRequires: libarchive-devel
 %{?_enable_xps:BuildRequires: libgxps-devel}
@@ -164,6 +168,12 @@ subst '/NoDisplay/d' %buildroot%_desktopdir/%name.desktop
 %exclude %_libdir/nautilus/extensions-3.0/libevince-properties-page.la
 
 %changelog
+* Tue Sep 24 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.0-alt1
+- 3.10.0
+
+* Tue Jul 09 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.3-alt1
+- 3.8.3
+
 * Thu Jul 04 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.2-alt2.1
 - added dependendence for icons to work without gnome-shell installed
 

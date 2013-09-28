@@ -2,7 +2,7 @@
 
 Name: grilo-plugins
 Version: %ver_major.9
-Release: alt1
+Release: alt2
 Summary: Plugins for the Grilo framework
 Group: Sound
 License: LGPLv2+
@@ -80,6 +80,9 @@ rm -f %buildroot%_libdir/grilo-%ver_major/*.la
 %_libdir/grilo-%ver_major/*.xml
 
 %changelog
+* Thu Sep 26 2013 Yuri N. Sedunov <aris@altlinux.org> 0.2.9-alt2
+- rebuild against libtotem-plparser.so.18
+
 * Thu Aug 29 2013 Alexey Shabalin <shaba@altlinux.ru> 0.2.9-alt1
 - 0.2.9
 

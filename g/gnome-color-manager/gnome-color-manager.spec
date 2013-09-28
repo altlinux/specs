@@ -1,10 +1,12 @@
-%define ver_major 3.8
+%define _unpackaged_files_terminate_build 1
+
+%define ver_major 3.10
 %def_enable clutter
 # tests require colord running and g-c-m installed
 %def_disable check
 
 Name: gnome-color-manager
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 
 Summary: Color profile manager for the GNOME desktop
@@ -107,10 +109,14 @@ ln -sf %_licensedir/GPL-2 COPYING
 %_iconsdir/hicolor/*x*/mimetypes/*.png
 %_iconsdir/hicolor/scalable/mimetypes/*.svg
 %_man1dir/*
+%_datadir/appdata/gcm-viewer.appdata.xml
 %doc --no-dereference COPYING
 %doc README NEWS AUTHORS
 
 %changelog
+* Tue Sep 24 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.0-alt1
+- 3.10.0
+
 * Fri Sep 13 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.3-alt1
 - 3.8.3
 

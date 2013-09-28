@@ -9,7 +9,7 @@ Version: 4.1
 %define lodir %_libdir/%name
 %define uname libreoffice4
 %define conffile %_sysconfdir/sysconfig/%uname
-Release: alt3
+Release: alt4
 Summary: LibreOffice Productivity Suite
 License: LGPL
 Group: Office
@@ -415,6 +415,9 @@ install -D libreoffice.config %buildroot%conffile
 %langpack -l kk -n Kazakh
 
 %changelog
+* Fri Sep 27 2013 Yuri N. Sedunov <aris@altlinux.org> 4.1-alt4
+- rebuild against libharfbuzz-icu
+
 * Wed Sep 04 2013 Fr. Br. George <george@altlinux.ru> 4.1-alt3
 - Version up to 4.1.1.2
 - Refresh FC patchset

@@ -9,10 +9,11 @@
 %def_enable visualizer
 %def_enable grilo
 %def_disable gtk_doc
+%def_disable zeitgeist
 
 Name: rhythmbox
 Version: %ver_major
-Release: alt1%rev
+Release: alt2%rev
 
 Summary: Music Management Application
 License: GPL
@@ -45,12 +46,20 @@ Requires: gstreamer%gst_api_ver >= %gst_ver
 Requires: libgst-plugins%gst_api_ver >= %gst_ver
 Requires: gst-plugins-base%gst_api_ver
 Requires: gst-plugins-good%gst_api_ver
+Requires: gnome-icon-theme
+Requires: gnome-icon-theme-symbolic
+
+Provides: %name-plugins-audiocd
+Provides: %name-plugins-generic-player
 
 %define _libexecdir %_libdir/%name
 # use python3
 AutoReqProv: nopython
 %define __python %nil
 %add_python3_compile_include %_libexecdir
+# python bindings are linked into rhythmbox statically
+Provides: python%__python3_version(rb)
+Provides: python%__python3_version(rhythmdb)
 BuildRequires: rpm-build-python3 python3-module-pygobject3-devel
 
 BuildRequires(Pre): browser-plugins-npapi-devel
@@ -84,12 +93,6 @@ BuildRequires: libdmapsharing-devel
 %{?_with_gudev:BuildRequires: libgudev-devel}
 BuildRequires: libgtk+3-gir-devel libgstreamer%gst_api_ver-gir-devel gst-plugins%gst_api_ver-gir-devel
 
-Provides: %name-plugins-audiocd
-Provides: %name-plugins-generic-player
-
-# python bindings are linked into rhythmbox statically
-Provides: python%__python3_version(rb)
-Provides: python%__python3_version(rhythmdb)
 
 %description
 Rhythmbox is an integrated music management application, supporting
@@ -276,6 +279,7 @@ Summary: Python plugins for Rhythmbox
 Group: Sound
 Requires: %name = %version-%release
 Requires: lib%name-gir = %version-%release
+%{?_enable_zeitgeist:Requires: zeitgeist}
 
 %package -n lib%name-gir
 Summary: GObject introspection data for the Gedit
@@ -349,7 +353,7 @@ export MOZILLA_PLUGINDIR=%browser_plugins_path
 %make_build
 
 %install
-%make DESTDIR=%buildroot install
+%makeinstall_std
 
 install -d -m755 %buildroot%pkgdocdir
 install -p -m644 AUTHORS DOCUMENTERS MAINTAINERS ChangeLog README* NEWS THANKS %buildroot%pkgdocdir/
@@ -464,7 +468,7 @@ ln -s %_licensedir/GPL-2 %buildroot%pkgdocdir/COPYING
 %{?_with_webkit:%_libdir/%name/plugins/context/}
 %_libdir/%name/plugins/replaygain/
 %_libdir/%name/plugins/sendto/
-%_libdir/%name/plugins/rbzeitgeist/
+%{?_enable_zeitgeist:%_libdir/%name/plugins/rbzeitgeist/}
 
 %exclude %_libdir/%name/plugins/*/*.la
 %exclude %browser_plugins_path/*.la
@@ -479,6 +483,10 @@ ln -s %_licensedir/GPL-2 %buildroot%pkgdocdir/COPYING
 %exclude %_libdir/%name/sample-plugins/
 
 %changelog
+* Wed Sep 18 2013 Yuri N. Sedunov <aris@altlinux.org> 3.0-alt2
+- rebuild against libtotem-plparser.so.18
+- disabled obsolete zeitgeist plugin
+
 * Wed Sep 04 2013 Yuri N. Sedunov <aris@altlinux.org> 3.0-alt1
 - 3.0
 - used python3 for plugins

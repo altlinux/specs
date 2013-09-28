@@ -1,5 +1,5 @@
 %define _name seahorse
-%define ver_major 3.8
+%define ver_major 3.10
 %def_enable libnotify
 
 Name: %_name-nautilus
@@ -54,6 +54,9 @@ export GNUPG=/usr/bin/gpg2
 %exclude %nautilus_extdir/*.la
 
 %changelog
+* Tue Sep 24 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.0-alt1
+- 3.10.0
+
 * Mon Mar 25 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.0-alt1
 - 3.8.0
 

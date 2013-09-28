@@ -1,4 +1,4 @@
-%define ver_major 3.8
+%define ver_major 3.10
 %define _name mousetweaks
 
 Name: gnome-%_name
@@ -12,6 +12,8 @@ Url: https://live.gnome.org/Mousetweaks/Home
 Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 
 Source: %gnome_ftp/%name/%ver_major/%_name-%version.tar.xz
+
+Requires: dconf gnome-icon-theme
 
 BuildPreReq: rpm-build-gnome rpm-build-licenses
 
@@ -71,6 +73,9 @@ gnome-panel.
 %doc AUTHORS ChangeLog NEWS README
 
 %changelog
+* Tue Sep 24 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.0-alt1
+- 3.10.0
+
 * Tue Mar 26 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.0-alt1
 - 3.8.0
 

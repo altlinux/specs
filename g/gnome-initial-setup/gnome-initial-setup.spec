@@ -1,10 +1,10 @@
-%define ver_major 0.12
+%define ver_major 3.10
 %define gst_api_ver 1.0
 %define _libexecdir %_prefix/libexec
 %define _localstatedir %_var
 
 Name: gnome-initial-setup
-Version: %ver_major
+Version: %ver_major.0
 Release: alt1
 
 Summary: Bootstrapping your OS
@@ -18,7 +18,7 @@ Requires: dconf gdm
 
 %global nm_ver 0.9
 %global glib_ver 2.29.4
-%global gtk_ver 3.7.11
+%global gtk_ver 3.9.11
 
 BuildRequires: intltool
 BuildRequires: libgio-devel >= %glib_ver
@@ -62,7 +62,6 @@ useradd -rM -d %_localstatedir/lib/%name -s /sbin/nologin %name &>/dev/null || :
 %files -f %name.lang
 %_libexecdir/%name
 %_libexecdir/%name-copy-worker
-%_libexecdir/%name-player
 %_libexecdir/gnome-welcome-tour
 %_sysconfdir/xdg/autostart/gnome-welcome-tour.desktop
 %_sysconfdir/xdg/autostart/%name-copy-worker.desktop
@@ -77,6 +76,9 @@ useradd -rM -d %_localstatedir/lib/%name -s /sbin/nologin %name &>/dev/null || :
 %doc README NEWS
 
 %changelog
+* Tue Sep 24 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.0-alt1
+- 3.10.0
+
 * Tue Jul 02 2013 Yuri N. Sedunov <aris@altlinux.org> 0.12-alt1
 - 0.12
 

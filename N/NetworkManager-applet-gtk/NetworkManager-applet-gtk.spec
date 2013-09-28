@@ -5,7 +5,7 @@
 
 Name: NetworkManager-applet-gtk
 Version: 0.9.8.4
-Release: alt1%git_date
+Release: alt3%git_date
 License: %gpl2plus
 Group: Graphical desktop/GNOME
 Summary: Panel applet for use with NetworkManager
@@ -149,6 +149,14 @@ make check
 %_datadir/gir-1.0/NMGtk-1.0.gir
 
 %changelog
+* Thu Sep 26 2013 Mikhail Efremov <sem@altlinux.org> 0.9.8.4-alt3
+- Updated from upstream git:
+  + Updtated translations.
+  + nma-bt-device: fix creation of BT settings when creating connection.
+
+* Tue Sep 17 2013 Mikhail Efremov <sem@altlinux.org> 0.9.8.4-alt2
+- Rebuild with libgnome-bluetooth-3.9.
+
 * Mon Sep 16 2013 Mikhail Efremov <sem@altlinux.org> 0.9.8.4-alt1
 - Don't reload DBUS configuration during install.
 - Rename to NetworkManager-applet-gtk.

@@ -1,8 +1,8 @@
-%define ver_major 3.8
+%define ver_major 3.10
 %define gtk_api_ver 2.0
 
 Name: gnome-icon-theme
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 
 Summary: A set of icons for GNOME 2 desktop
@@ -80,6 +80,9 @@ fi
 %doc AUTHORS README TODO
 
 %changelog
+* Tue Sep 24 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.0-alt1
+- 3.10.0
+
 * Wed Jul 31 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.3-alt1
 - 3.8.3
 

@@ -1,5 +1,5 @@
-%define ver_major 3.8
-%define ver_base 3.8
+%define ver_major 3.10
+%define ver_base 3.10
 %define gst_api_ver 1.0
 
 %def_disable static
@@ -9,7 +9,6 @@
 %def_with krb5
 %def_disable map
 %def_disable image_inline
-%def_enable goa
 
 # %define plugins experimental
 %define plugins all
@@ -18,7 +17,7 @@
 %define strict_build_settings 1
 
 Name: evolution
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1
 
 Summary: Integrated GNOME mail client, calendar and address book
@@ -45,7 +44,7 @@ Provides: camel
 %define glib_ver 2.30.0
 %define gtk_ver 3.2
 %define clutter_gtk_ver 0.91.8
-%define eds_ver 3.8.4
+%define eds_ver 3.9.92
 %define gnome_icon_ver 3.0.0
 %define gnome_desktop_ver 2.91.6
 %define gtkhtml_ver 4.5.2
@@ -55,7 +54,6 @@ Provides: camel
 %define ical_ver 0.43
 %define gdata_ver 0.10.0
 %define champlain_ver 0.12
-%define goa_ver 3.1.1
 %define pst_ver 0.6.54
 %define webkit_ver 1.10.0
 %define geocode_ver 0.99.0
@@ -82,7 +80,6 @@ BuildPreReq: libgdata-devel >= %gdata_ver
 BuildPreReq: libpst-devel >= %pst_ver
 BuildPreReq: libwebkitgtk3-devel >= %webkit_ver
 BuildPreReq: libclutter-gtk3-devel >= %clutter_gtk_ver
-%{?_enable_goa:BuildPreReq: libgnome-online-accounts-devel >= %goa_ver}
 %{?_enable_map:BuildPreReq: libchamplain-gtk3-devel >= %champlain_ver libgeoclue-devel libgeocode-glib-devel >= %geocode_ver}
 %{?_enable_image_inline:BuildRequires: libgtkimageview-devel}
 
@@ -247,7 +244,6 @@ export KILL_PROCESS_CMD=%_bindir/killall
 %endif
     --disable-schemas-compile \
     %{?_enable_map:--enable-contact-maps} \
-    %{subst_enable goa} \
     %{?_disable_image_inline:--disable-image-inline}
 
 %make_build
@@ -263,14 +259,6 @@ export KILL_PROCESS_CMD=%_bindir/killall
 # remove non-packaged files
 %__rm -f %buildroot%_libdir/%name/%ver_base/*.la
 %__rm -f %buildroot%_libdir/%name/%ver_base/*/*.la
-
-# temporarily fix for other applications that requires thease libraries
-for f in %buildroot%_libdir/%name/%ver_base/{libeshell*,libeutil*}; do
-%__ln_s %name/%ver_base/`basename $f` %buildroot%_libdir/`basename $f`
-done
-
-# remove scrollkeeper files 
-rm -rf %buildroot%_localstatedir/scrollkeeper
 
 %find_lang --with-gnome --output=%name.lang %name %name-%ver_base
 
@@ -309,10 +297,10 @@ rm -rf %buildroot%_localstatedir/scrollkeeper
 %_datadir/glib-2.0/schemas/org.gnome.evolution.shell.gschema.xml
 %_datadir/GConf/gsettings/evolution.convert
 %_iconsdir/hicolor/*/*/*
+%_datadir/appdata/%name.appdata.xml
 
 %files devel
 %_includedir/*
-%_libdir/*.so
 %_libdir/pkgconfig/*
 
 %files devel-doc
@@ -327,6 +315,9 @@ rm -rf %buildroot%_localstatedir/scrollkeeper
 %_datadir/glib-2.0/schemas/org.gnome.evolution.spamassassin.gschema.xml
 
 %changelog
+* Sat Sep 21 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.0-alt1
+- 3.10.0
+
 * Tue Jul 23 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.4-alt1
 - 3.8.4
 

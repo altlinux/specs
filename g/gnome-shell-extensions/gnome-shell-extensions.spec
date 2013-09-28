@@ -1,9 +1,9 @@
-%define ver_major 3.8
+%define ver_major 3.10
 %define domain gcampax.github.com
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-shell-extensions
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1
 
 Summary: GNOME Shell Extensions
@@ -16,7 +16,7 @@ BuildArch: noarch
 
 Source: http://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 
-Requires: gnome-shell >= 3.8.3
+Requires: gnome-shell >= 3.9.91
 
 BuildRequires: gnome-common intltool libgnome-desktop3-devel libgtop-devel
 
@@ -90,13 +90,6 @@ __EOF__
 %_datadir/gnome-shell/extensions/alternate-tab@gnome-shell-extensions.%domain/convenience.js
 %_datadir/gnome-shell/extensions/alternate-tab@gnome-shell-extensions.%domain/prefs.js
 
-# alternative status menu
-%dir %_datadir/gnome-shell/extensions/alternative-status-menu@gnome-shell-extensions.%domain
-%_datadir/gnome-shell/extensions/alternative-status-menu@gnome-shell-extensions.%domain/extension.js
-%_datadir/gnome-shell/extensions/alternative-status-menu@gnome-shell-extensions.%domain/metadata.json
-%_datadir/gnome-shell/extensions/alternative-status-menu@gnome-shell-extensions.%domain/stylesheet.css
-%_datadir/gnome-shell/extensions/alternative-status-menu@gnome-shell-extensions.%domain/convenience.js
-%_datadir/glib-2.0/schemas/org.gnome.shell.extensions.alternative-status-menu.gschema.xml
 
 # windowsNavigator
 %dir %_datadir/gnome-shell/extensions/windowsNavigator@gnome-shell-extensions.%domain
@@ -129,12 +122,6 @@ __EOF__
 %_datadir/gnome-shell/extensions/drive-menu@gnome-shell-extensions.%domain/stylesheet.css
 %_datadir/gnome-shell/extensions/drive-menu@gnome-shell-extensions.%domain/convenience.js
 
-# xrandr-indicator
-%dir %_datadir/gnome-shell/extensions/xrandr-indicator@gnome-shell-extensions.%domain
-%_datadir/gnome-shell/extensions/xrandr-indicator@gnome-shell-extensions.%domain/extension.js
-%_datadir/gnome-shell/extensions/xrandr-indicator@gnome-shell-extensions.%domain/metadata.json
-%_datadir/gnome-shell/extensions/xrandr-indicator@gnome-shell-extensions.%domain/stylesheet.css
-%_datadir/gnome-shell/extensions/xrandr-indicator@gnome-shell-extensions.%domain/convenience.js
 
 # apps-menu
 %dir %_datadir/gnome-shell/extensions/apps-menu@gnome-shell-extensions.%domain
@@ -198,8 +185,19 @@ __EOF__
 %exclude %_datadir/gnome-shell/extensions/example@gnome-shell-extensions.%domain/
 %exclude %_datadir/glib-2.0/schemas/org.gnome.shell.extensions.example.gschema.xml
 
+%if 0
+# xrandr-indicator incompatible with the new DisplayConfig mutter API
+%dir %_datadir/gnome-shell/extensions/xrandr-indicator@gnome-shell-extensions.%domain
+%_datadir/gnome-shell/extensions/xrandr-indicator@gnome-shell-extensions.%domain/extension.js
+%_datadir/gnome-shell/extensions/xrandr-indicator@gnome-shell-extensions.%domain/metadata.json
+%_datadir/gnome-shell/extensions/xrandr-indicator@gnome-shell-extensions.%domain/stylesheet.css
+%_datadir/gnome-shell/extensions/xrandr-indicator@gnome-shell-extensions.%domain/convenience.js
+%endif
 
 %changelog
+* Tue Sep 24 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.0-alt1
+- 3.10.0
+
 * Wed Sep 11 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.4-alt1
 - 3.8.4
 

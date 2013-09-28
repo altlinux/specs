@@ -1,6 +1,6 @@
 Name: cinnamon
-Version: 1.8.7
-Release: alt2
+Version: 1.9.1
+Release: alt5
 
 Summary: Window management and application launching for GNOME
 License: GPLv2+
@@ -10,12 +10,7 @@ Url: http://cinnamon.linuxmint.com
 # To generate tarball
 # wget https://github.com/linuxmint/Cinnamon/tarball/1.6.4 -O cinnamon-1.6.4.tar.gz
 Source0: %name-%version.tar
-Source1: %name.desktop
-Source2: %name.session
-Source3: %name-menu.png
-Source4: %{name}2d.session
-Source5: start%{name}
-Source6: start%{name}2d
+Source1: %name-menu.png
 
 Patch: %name-%version-%release.patch
 
@@ -25,7 +20,7 @@ Patch: %name-%version-%release.patch
 %define muffin_ver 1.7.3
 %define eds_ver 2.91.6
 %define json_glib_ver 0.13.2
-%define gjs_ver 1.29.18
+%define cjs_ver 0.0.1
 %define tp_glib_ver 0.15.5
 %define tp_logger_ver 0.2.4
 %define polkit_ver 0.100
@@ -37,7 +32,7 @@ Provides: desktop-notification-daemon
 Requires: upower
 Requires: polkit >= %polkit_ver
 # needed for session files
-Requires: gnome-session
+Requires: cinnamon-session
 Requires(post,preun):  GConf
 # needed for on-screen keyboard
 Requires: caribou
@@ -45,7 +40,7 @@ Requires: cinnamon-freedesktop-menu
 Requires: %name-data = %version-%release
 Requires: muffin >= %muffin_ver
 Requires: libmuffin-gir >= %muffin_ver
-Requires: cinnamon-media-keys-helper
+Requires: %name-translations
 
 # needed for settings (python.req ignores /usr/share/cinnamon-settings/cinnamon-settings.py)
 Requires: python-module-dbus
@@ -56,19 +51,18 @@ Requires: python-module-lxml
 BuildPreReq: rpm-build-gir >= 0.7.1-alt6
 BuildPreReq: libclutter-devel >= %clutter_ver
 BuildPreReq: libgtk+3-devel >= %gtk_ver
-BuildPreReq: libgjs-devel >= %gjs_ver
+BuildPreReq: libcjs-devel >= %cjs_ver
 BuildPreReq: libjson-glib-devel >= %json_glib_ver
 BuildPreReq: evolution-data-server-devel >= %eds_ver
 BuildPreReq: libgnome-bluetooth-devel >= %bt_ver
 #BuildPreReq: libtelepathy-glib-devel >= %tp_glib_ver
 #BuildPreReq: libtelepathy-logger-devel >= %tp_logger_ver
 #BuildPreReq: libfolks-devel >= %folks_ver
-BuildRequires: libgnome-desktop3-devel libgnome-keyring-devel libgnome-menus-devel libstartup-notification-devel
+BuildRequires: libcinnamon-desktop-devel libgnome-keyring-devel libgnome-menus-devel libstartup-notification-devel
 BuildRequires: libpolkit-devel libupower-devel libgudev-devel libsoup-devel NetworkManager-glib-devel
 BuildRequires: libcanberra-gtk3-devel libcroco-devel GConf libGConf-devel
 BuildRequires: gobject-introspection >= %gi_ver libupower-gir-devel libgudev-gir-devel libsoup-gir-devel libfolks-gir-devel
 BuildRequires: libtelepathy-glib-gir-devel libtelepathy-logger-gir-devel libgnome-menus-gir-devel NetworkManager-glib-gir-devel
-BuildRequires: gsettings-desktop-schemas-devel gsettings-desktop-schemas-gir-devel
 
 # for barriers
 BuildRequires: libXfixes-devel >= 5.0
@@ -123,6 +117,16 @@ mv files/usr/lib/cinnamon-menu-editor files/usr/share
 mv files/usr/lib/cinnamon-screensaver-lock-dialog files/usr/share
 sed -i -e 's@/usr/lib@/usr/share@g' files/usr/bin/cinnamon-screensaver-lock-dialog \
   files/usr/share/cinnamon-screensaver-lock-dialog/cinnamon-screensaver-lock-dialog.py
+# make changes for cinnamon-desktop-editor move to /usr/share
+mv files/usr/lib/cinnamon-desktop-editor files/usr/share
+sed -i -e 's@/usr/lib@/usr/share@g' files/usr/bin/cinnamon-desktop-editor \
+  files/usr/share/cinnamon-desktop-editor/cinnamon-desktop-editor.py
+# make changes for cinnamon-json-makepot move to /usr/share
+mv files/usr/lib/cinnamon-json-makepot files/usr/share
+sed -i -e 's@/usr/lib@/usr/share@g' files/usr/bin/cinnamon-json-makepot \
+  files/usr/share/cinnamon-json-makepot/cinnamon-json-makepot.py
+# make changes for cinnamon-settings-users move to /usr/share
+mv files/usr/lib/cinnamon-settings-users files/usr/share
 # make changes for cinnamon-looking-glass move to /usr/share
 mv files/usr/lib/cinnamon-looking-glass files/usr/share
 sed -i -e 's@/usr/lib@/usr/share@g' files/usr/bin/cinnamon-looking-glass \
@@ -131,14 +135,12 @@ sed -i -e 's@/usr/lib@/usr/share@g' files/usr/bin/cinnamon-looking-glass \
 sed -i -e 's@/usr/lib@/usr/share@g' files/usr/bin/cinnamon-menu-editor 
 # replace menu image
 rm -f data/theme/menu.png
-cp %SOURCE3 data/theme/menu.png
+cp %SOURCE1 data/theme/menu.png
 # remove and replace the session files as they don't work with alt linux (can't be bothered to patch it)
-rm -f files/usr/bin/gnome-session-cinnamon  \
- files/usr/share/xsessions/cinnamon.desktop \
- files/usr/share/gnome-session/sessions/cinnamon2d.session \
- files/usr/share/gnome-session/sessions/cinnamon.session 
-cp %SOURCE2 files/usr/share/gnome-session/sessions/
-cp %SOURCE4 files/usr/share/gnome-session/sessions/
+rm -f files/usr/share/xsessions/cinnamon.desktop \
+ files/usr/share/cinnamon-session/sessions/cinnamon2d.session \
+ files/usr/share/cinnamon-session/sessions/cinnamon.session 
+
 
 # files replaced with alt linux files
 rm -f files/usr/share/desktop-directories/cinnamon-*.directory \
@@ -171,8 +173,8 @@ rm -rf $RPM_BUILD_ROOT/%_libdir/cinnamon/libcinnamon.la
 #TODO: restore cinnamon-menu-editor
 rm -rf $RPM_BUILD_ROOT/%_bindir/cinnamon-menu-editor
 
-# firefox plugin
-mv -f $RPM_BUILD_ROOT/%_libdir/mozilla/* $RPM_BUILD_ROOT/%_libdir/browser-plugins
+rm -f $RPM_BUILD_ROOT/%_datadir/man/man1/gnome-session-cinnamon.1
+rm -f $RPM_BUILD_ROOT/%_datadir/man/man1/gnome-session-cinnamon2d.1
 
 desktop-file-validate $RPM_BUILD_ROOT%_datadir/applications/cinnamon.desktop
 desktop-file-validate $RPM_BUILD_ROOT%_datadir/applications/cinnamon2d.desktop
@@ -186,68 +188,56 @@ desktop-file-install                                 \
  --dir=$RPM_BUILD_ROOT%_datadir/applications       \
  $RPM_BUILD_ROOT%_datadir/applications/cinnamon-settings.desktop
 
-install -pD -m755 %SOURCE5 %buildroot%_bindir/start%name
-install -pD -m755 %SOURCE6 %buildroot%_bindir/start%{name}2d
-
-mkdir -p %buildroot%_x11sysconfdir/wmsession.d
-cat > %buildroot%_x11sysconfdir/wmsession.d/02Cinnamon << _WM_
-NAME=Cinnamon
-ICON=
-DESC=This session logs you into Cinnamon
-EXEC=/usr/bin/start%name
-SCRIPT:
-exec /usr/bin/start%name
-_WM_
-
-cat > %buildroot%_x11sysconfdir/wmsession.d/02Cinnamon2D << _WM_
-NAME=Cinnamon2D
-ICON=
-DESC=This session logs you into Cinnamon2D
-EXEC=/usr/bin/start%{name}2d
-SCRIPT:
-exec /usr/bin/start%{name}2d
-_WM_
-
-%find_lang %name
 
 %files
 %exclude %_bindir/%{name}-launcher
-%exclude %_bindir/%{name}3d
 %_bindir/*
 %exclude %_sysconfdir/xdg/menus/cinnamon-applications-merged
 %_libdir/cinnamon/
 %dir %_libexecdir/cinnamon/
 %_libexecdir/cinnamon/cinnamon-hotplug-sniffer
 %_libexecdir/cinnamon/cinnamon-perf-helper
-%_libdir/browser-plugins/libcinnamon*.so
 
-%exclude %_libdir/browser-plugins/libcinnamon*.la
-
-%files data -f %name.lang
+%files data
 %_datadir/glib-2.0/schemas/*.xml
 %_datadir/applications/cinnamon.desktop
 %_datadir/applications/cinnamon2d.desktop
 %_datadir/applications/cinnamon-settings.desktop
 %_datadir/applications/cinnamon-add-panel-launcher.desktop
 %_datadir/applications/cinnamon-menu-editor.desktop
-%_sysconfdir/xdg/autostart/cinnamon-screensaver.desktop
-%_sysconfdir/xdg/autostart/cinnamon2d-screensaver.desktop
-%_x11sysconfdir/wmsession.d/02Cinnamon
-%_x11sysconfdir/wmsession.d/02Cinnamon2D
-%_datadir/gnome-session/sessions/cinnamon.session
-%_datadir/gnome-session/sessions/cinnamon2d.session
+%_datadir/applications/cinnamon-settings-users.desktop
+#%_sysconfdir/xdg/autostart/cinnamon-screensaver.desktop
+#%_sysconfdir/xdg/autostart/cinnamon2d-screensaver.desktop
 %_datadir/xsessions/cinnamon2d.desktop
 %_datadir/cinnamon/
 %_datadir/cinnamon-menu-editor/
 %_datadir/cinnamon-settings/
 %_datadir/cinnamon-looking-glass/ 
-%_datadir/cinnamon-screensaver-lock-dialog
+%_datadir/cinnamon-screensaver-lock-dialog/
+%_datadir/cinnamon-settings-users/
+%_datadir/cinnamon-desktop-editor/
+%_datadir/cinnamon-json-makepot/
 
 %_datadir/dbus-1/services/org.Cinnamon.HotplugSniffer.service
 %_mandir/man1/*.1.*
 %doc NEWS README
 
 %changelog
+* Wed Sep 25 2013 Yuri N. Sedunov <aris@altlinux.org> 1.9.1-alt5
+- rebuild for GNOME-3.10
+
+* Mon Sep 16 2013 Vladimir Didenko <cow@altlinux.org> 1.9.1-alt4
+- 1.9.1-193-g98ccb1e
+
+* Thu Aug 29 2013 Vladimir Didenko <cow@altlinux.org> 1.9.1-alt3
+- 1.9.1-181-gd7955c3
+
+* Mon Aug 12 2013 Vladimir Didenko <cow@altlinux.org> 1.9.1-alt2
+- Drop background manager patch
+
+* Mon Aug 8 2013 Vladimir Didenko <cow@altlinux.org> 1.9.1-alt1
+- 1.9.1-110-g124cc05
+
 * Thu Aug 8 2013 Vladimir Didenko <cow@altlinux.org> 1.8.7-alt2
 - provide desktop-notification-daemon
 

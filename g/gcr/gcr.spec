@@ -1,9 +1,9 @@
 %define _libexecdir %_prefix/libexec
-%define ver_major 3.8
+%define ver_major 3.10
 %def_enable introspection
 
 Name: gcr
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: A GNOME crypto viewer and prompter
@@ -18,12 +18,13 @@ Requires: libtasn1-utils
 Conflicts: gnome-keyring < 3.3.0
 
 %define glib_ver 2.32.0
-%define p11kit_ver 0.18.1
+%define p11kit_ver 0.19.0
 
 BuildRequires: gnome-common gtk-doc intltool glib2-devel >= %glib_ver
 BuildRequires: libp11-kit-devel >= %p11kit_ver libgtk+3-devel
 BuildRequires: libgcrypt-devel libtasn1-devel libtasn1-utils libtasn1-utils gnupg2-gpg
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel libgtk+3-gir-devel}
+BuildRequires: libvala-devel vala-tools
 
 # for check
 BuildRequires: /proc xvfb-run dbus-tools-gui
@@ -78,6 +79,15 @@ Requires: %name-libs-devel = %version-%release
 %description libs-gir-devel
 GObject introspection devel data for the GCR libraries.
 
+%package libs-vala
+Summary: Vala language bindings for the GCR libraries
+Group: Development/Other
+BuildArch: noarch
+Requires: %name-libs = %version-%release
+
+%description libs-vala
+This package provides Vala language bindings for the GCR libraries.
+
 %package libs-devel-doc
 Summary: Development documentation for GCR libraries
 Group: Development/Documentation
@@ -102,13 +112,6 @@ This package contains development documentation for GCR libraries.
 %find_lang %name
 
 %check
-#  /gcr/subject-public-key/dsa/private-key-attributes:                  secure memory pool is not locked while in FIPS mode
-#  fatal error in libgcrypt, file misc.c, line 84, function _gcry_fatal_error: out of core in secure memory
-#  
-#  Fatal error: <12>Feb 19 08:48:33 lt-test-subject-public-key: Libgcrypt notice: state transition Power-On => Fatal-Error
-#  out of core in secure memory
-#  
-
 #xvfb-run %make check
 
 %files -f %name.lang
@@ -161,7 +164,19 @@ This package contains development documentation for GCR libraries.
 %_girdir/GcrUi-3.gir
 %endif
 
+%files libs-vala
+%_vapidir/gck-1.deps
+%_vapidir/gck-1.vapi
+%_vapidir/gcr-3.deps
+%_vapidir/gcr-3.vapi
+%_vapidir/gcr-ui-3.deps
+%_vapidir/gcr-ui-3.vapi
+
+
 %changelog
+* Mon Sep 23 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.0-alt1
+- 3.10.0
+
 * Sun May 05 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.2-alt1
 - 3.8.2
 

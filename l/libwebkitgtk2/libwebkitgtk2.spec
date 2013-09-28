@@ -12,14 +12,17 @@
 %def_disable media_stream
 %def_enable spellcheck
 
-Summary: Web browser engine
 Name: libwebkitgtk2
-Version: 2.0.4
+Version: 2.1.92
 Release: alt1
+
+Summary: Web browser engine
 License: %bsd %lgpl2plus
 Group: System/Libraries
 Url: http://www.webkitgtk.org/
-Source: %oname-%version.tar
+
+Source: webkitgtk-%version.tar.xz
+Patch: webkitgtk-2.1.92-alt-gtk2_compatibility.patch
 
 Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 
@@ -30,6 +33,8 @@ Provides: libwebkit-gtk = %version-%release
 Provides: libwebkit = %version-%release
 Obsoletes: libwebkit-gtk < %version
 Obsoletes: libwebkit < %version
+Obsoletes: %name-webinspector
+Provides: %name-webinspector = %EVR
 
 BuildPreReq: rpm-build-licenses
 
@@ -130,19 +135,6 @@ Obsoletes: libwebkit-jsc < %version
 jsc is a shell for JavaScriptCore, WebKit's JavaScript engine. It
 allows you to interact with the JavaScript engine directly.
 
-%package webinspector
-Summary: Data files for WebKit GTK+'s Web Inspector
-Group: Development/GNOME and GTK+
-BuildArch: noarch
-Provides: libwebkit-webinspector = %version-%release
-Obsoletes: libwebkit-webinspector < %version
-
-%description webinspector
-WebKit GTK+ has a feature called the Web Inspector, which allows
-detailed analysis of any given page's page source, live DOM hierarchy
-and resources. This package contains the data files necessary for Web
-Inspector to work.
-
 %package gir
 Summary: GObject introspection data for the WebkitGTK library
 Group: System/Libraries
@@ -188,7 +180,8 @@ Requires: libjavascriptcoregtk2-devel = %version-%release
 GObject introspection devel data for the JavaScriptCore library
 
 %prep
-%setup -q -n %oname-%version
+%setup -q -n webkitgtk-%version
+%patch
 # fix build translations
 %__subst 's|^all-local:|all-local: stamp-po|' GNUmakefile.am
 rm -f Source/autotools/{compile,config.guess,config.sub,depcomp,install-sh,ltmain.sh,missing,libtool.m4,ltoptions.m4,ltsugar.m4,ltversion.m4,lt~obsolete.m4,gsettings.m4,gtk-doc.m4}
@@ -221,6 +214,7 @@ mkdir -p DerivedSources/webkit
 mkdir -p DerivedSources/ANGLE
 mkdir -p DerivedSources/WebKit2/webkit2gtk/webkit2
 mkdir -p DerivedSources/InjectedBundle
+mkdir -p DerivedSources/Platform
 mkdir -p DerivedSources/webkitdom
 mkdir -p Programs/resources
 
@@ -264,9 +258,6 @@ xvfb-run make check
 %files jsc
 %_bindir/jsc*
 
-%files webinspector
-%_datadir/webkitgtk-1.0/webinspector
-
 %if_enabled introspection
 %files gir
 %_typelibdir/WebKit-1.0.typelib
@@ -275,13 +266,17 @@ xvfb-run make check
 %_girdir/WebKit-1.0.gir
 
 %files -n libjavascriptcoregtk2-gir
-%_typelibdir/JSCore-1.0.typelib
+%_typelibdir/JavaScriptCore-1.0.typelib
 
 %files -n libjavascriptcoregtk2-gir-devel
-%_girdir/JSCore-1.0.gir
+%_girdir/JavaScriptCore-1.0.gir
 %endif
 
 %changelog
+* Thu Sep 19 2013 Yuri N. Sedunov <aris@altlinux.org> 2.1.92-alt1
+- 2.1.92
+- no more separate -webinspector subpackage
+
 * Mon Jul 29 2013 Alexey Shabalin <shaba@altlinux.ru> 2.0.4-alt1
 - 2.0.4
 - enable web audio

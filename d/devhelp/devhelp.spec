@@ -1,7 +1,7 @@
-%define ver_major 3.8
+%define ver_major 3.10
 
 Name: devhelp
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: Developer's help program
@@ -13,10 +13,9 @@ Group: Development/Other
 Url: http://www.gnome.org
 #VCS: git:git://git.gnome.org/devhelp
 Source: %name-%version.tar
-Source2: libgd.tar
 
 # From configure.in
-%define gtk_ver 3.5.6
+%define gtk_ver 3.9.8
 
 Requires: lib%name = %version-%release
 
@@ -26,9 +25,9 @@ BuildPreReq: gtk-doc
 
 # From configure.in
 BuildPreReq: intltool >= 0.40.0
-BuildPreReq: libgio-devel >= 2.32
+BuildPreReq: libgio-devel >= 2.37.3
 BuildPreReq: libgtk+3-devel >= %gtk_ver
-BuildPreReq: libwebkitgtk3-devel libwebkit2gtk-devel >= 1.10.0
+BuildPreReq: libwebkitgtk3-devel libwebkit2gtk-devel >= 2.0.0
 BuildPreReq: zlib-devel
 BuildPreReq: gettext-tools
 
@@ -85,7 +84,6 @@ This plugin for GEdit enables using DevHelp from inside the editor.
 
 %prep
 %setup -q
-tar -xf %SOURCE2 -C libgd
 
 %build
 NOCONFIGURE=1 ./autogen.sh
@@ -125,6 +123,12 @@ mkdir -p %buildroot%_devhelpdir/{specs,books}
 %gedit_pluginsdir/*
 
 %changelog
+* Tue Sep 24 2013 Alexey Shabalin <shaba@altlinux.ru> 3.10.0-alt1
+- 3.10.0
+
+* Tue Sep 03 2013 Alexey Shabalin <shaba@altlinux.ru> 3.9.91-alt1
+- 3.9.91
+
 * Wed May 15 2013 Alexey Shabalin <shaba@altlinux.ru> 3.8.2-alt1
 - 3.8.2
 

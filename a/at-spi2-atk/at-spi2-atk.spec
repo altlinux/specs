@@ -1,10 +1,10 @@
-%define ver_major 2.8
+%define ver_major 2.10
 %define api_ver 2.0
 %define _libexecdir %_prefix/libexec
 %def_enable introspection
 
 Name: at-spi2-atk
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: A GTK+ module that bridges ATK to D-Bus at-spi
@@ -14,8 +14,8 @@ Url: http://www.linuxfoundation.org/en/AT-SPI_on_D-Bus
 
 Source: ftp://ftp.gnome.org/pub/sources/%name/%ver_major/%name-%version.tar.xz
 
-%define core_ver 2.8.0
-%define atk_ver 2.5.91
+%define core_ver 2.9.90
+%define atk_ver 2.6.0
 
 Requires: at-spi2-core >= %core_ver
 
@@ -73,6 +73,9 @@ This package provides development files for atk-bridge library.
 %_pkgconfigdir/atk-bridge-%api_ver.pc
 
 %changelog
+* Tue Sep 24 2013 Yuri N. Sedunov <aris@altlinux.org> 2.10.0-alt1
+- 2.10.0
+
 * Wed Apr 17 2013 Yuri N. Sedunov <aris@altlinux.org> 2.8.1-alt1
 - 2.8.1
 

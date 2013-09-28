@@ -1,9 +1,11 @@
-%define ver_major 3.8
+%define _unpackaged_files_terminate_build 1
+
+%define ver_major 3.10
 %def_disable debug
 %def_disable lzma
 
 Name: yelp
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: Lightweight help browser for GNOME
@@ -14,7 +16,7 @@ Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 
 Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 
-# From configure.in
+# From configure.ac
 %define gio_ver 2.28.5
 %define gtk_ver 3.0.5
 %define xslt_ver 1.1.4
@@ -24,6 +26,7 @@ Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 
 Requires: lib%name = %version-%release
 Requires: yelp-xsl >= %yelpxsl_ver
+Requires: dconf gnome-icon-theme
 
 BuildPreReq: rpm-build-licenses rpm-build-gnome gnome-common intltool >= %intltool_ver itstool gtk-doc
 BuildPreReq: libgio-devel >= %gio_ver
@@ -116,6 +119,9 @@ Yelp.
 %_datadir/gtk-doc/html/*
 
 %changelog
+* Mon Sep 23 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.0-alt1
+- 3.10.0
+
 * Tue May 14 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.1-alt1
 - 3.8.1
 

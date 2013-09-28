@@ -1,10 +1,10 @@
 %define _libexecdir %_prefix/libexec
-%define ver_major 3.8
+%define ver_major 3.10
 %define gst_api_ver 1.0
 %def_enable gnome_bluetooth
 
 Name: gnome-shell
-Version: %ver_major.4
+Version: %ver_major.0.1
 Release: alt1
 
 Summary: Window management and application launching for GNOME
@@ -17,18 +17,16 @@ Packager: GNOME Maintainers Team <gnome at packages.altlinux.org>
 Source: http://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 Patch1: %name-3.7.92-alt-gir.patch
 Patch3: %name-3.8.4-alt-invalid_user_shell.patch
+Patch4: gnome-shell-3.9.92-alt-makefile.patch
 
 Obsoletes: gnome-shell-extension-per-window-input-source
 
-Requires: %name-data = %version-%release
-Requires: gnome-session >= %ver_major
-Requires: dconf gnome-icon-theme gnome-icon-theme-symbolic
 
 %define clutter_ver 1.13.6
 %define gjs_ver 1.33.2
-%define mutter_ver 3.8.3
-%define gtk_ver 3.5.9
-%define gio_ver 2.31.6
+%define mutter_ver 3.9.91
+%define gtk_ver 3.7.9
+%define gio_ver 2.37.0
 %define gstreamer_ver 0.11.92
 %define eds_ver 3.5.3
 %define telepathy_ver 0.17.5
@@ -41,15 +39,16 @@ Requires: dconf gnome-icon-theme gnome-icon-theme-symbolic
 %define gcr_ver 3.3.90
 %define atspi_ver 2.5.91
 %define menus_ver 3.5.3
-%define desktop_ver 3.5.1
+%define desktop_ver 3.7.90
 %define json_glib_ver 0.13.2
-%define nm_ver 0.9.6
+%define nm_ver 0.9.8
 %define caribou_ver 0.4.8
 
+Requires: %name-data = %version-%release
 Requires: mutter-gnome >= %mutter_ver
-Requires: ca-certificates
-Requires: at-spi2-atk
-Requires: caribou
+Requires: gnome-session >= %ver_major
+Requires: dconf gnome-icon-theme gnome-icon-theme-symbolic
+Requires: at-spi2-atk ca-certificates polkit caribou
 
 BuildRequires: gnome-common intltool gtk-doc
 BuildRequires: python-devel
@@ -126,9 +125,10 @@ GNOME Shell.
 %setup -q
 %patch1 -p1 -b .gir
 %patch3 -b .shells
+%patch4
 
 %build
-#NOCONFIGURE=1 ./autogen.sh
+NOCONFIGURE=1 ./autogen.sh
 %configure \
 	--enable-gtk-doc \
     --disable-schemas-compile
@@ -153,6 +153,8 @@ rm -f %buildroot%_libdir/%name/*.la
 %dir %_libdir/%name
 %_libdir/%name/libgnome-shell.so
 %_libdir/%name/libgnome-shell-js.so
+%_libdir/%name/libgnome-shell-menu.so
+%_libdir/%name/libgnome-shell-menu.so
 %_libdir/%name/*.typelib
 # browser plugin
 %browser_plugins_path/libgnome-shell-browser-plugin.so
@@ -170,7 +172,6 @@ rm -f %buildroot%_libdir/%name/*.la
 %_datadir/dbus-1/interfaces/org.gnome.ShellSearchProvider2.xml
 %_datadir/dbus-1/interfaces/org.gnome.Shell.Screencast.xml
 %_datadir/GConf/gsettings/gnome-shell-overrides.convert
-%_datadir/gnome-control-center/keybindings/50-gnome-shell-screenshot.xml
 %_datadir/gnome-control-center/keybindings/50-gnome-shell-system.xml
 %config %_datadir/glib-2.0/schemas/org.gnome.shell.gschema.xml
 %_man1dir/*
@@ -181,6 +182,9 @@ rm -f %buildroot%_libdir/%name/*.la
 %_datadir/gtk-doc/html/st/
 
 %changelog
+* Tue Sep 24 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.0.1-alt1
+- 3.10.0.1
+
 * Wed Jul 31 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.4-alt1
 - 3.8.4
 

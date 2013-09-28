@@ -1,5 +1,5 @@
 %define _name atk
-%define ver_major 2.8
+%define ver_major 2.10
 %def_disable static
 %def_disable gtk_doc
 %def_enable introspection
@@ -98,7 +98,7 @@ GObject introspection data for the Atk library
 
 %package gir-devel
 Summary: GObject introspection devel data for the Atk library
-Group: System/Libraries
+Group: Development/Other
 BuildArch: noarch
 Requires: %name-gir = %version-%release
 
@@ -152,6 +152,9 @@ install -p -m644 %_sourcedir/atk-compat.lds atk/compat.lds
 %endif
 
 %changelog
+* Mon Sep 23 2013 Yuri N. Sedunov <aris@altlinux.org> 2.10.0-alt1
+- 2.10.0
+
 * Tue Mar 26 2013 Yuri N. Sedunov <aris@altlinux.org> 2.8.0-alt1
 - 2.8.0
 

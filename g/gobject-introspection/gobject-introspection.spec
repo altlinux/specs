@@ -1,4 +1,5 @@
-%define ver_major 1.36
+%def_disable snapshot
+%define ver_major 1.38
 
 Name: gobject-introspection
 Version: %ver_major.0
@@ -12,17 +13,20 @@ URL: https://live.gnome.org/GObjectIntrospection
 Provides: gir-repository = %version-%release
 Obsoletes: gir-repository
 
+%if_enabled snapshot
+Source: %name-%version.tar
+%else
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+%endif
 
-BuildPreReq: libgio-devel >= 2.36.0
+BuildPreReq: libgio-devel >= 2.37.6
 BuildRequires: flex gtk-doc libcairo-devel libcairo-gobject-devel libffi-devel libgio-devel
 BuildRequires: python-devel python-modules-ctypes python-modules-compiler rpm-build-gir
 
 %description
-GObject Introspection can scan C header and source files in order to
-generate introspection "typelib" files.  It also provides an API to examine
-typelib files, useful for creating language bindings among other
-things.
+GObject introspection provides tools and libraries to help manage its
+common metadata format for representing GObject-based C APIs, designed
+for bindings, documentation tools and API verification.
 
 %package devel
 Summary: Libraries and headers for gobject-introspection
@@ -32,7 +36,11 @@ Provides: gir-repository-devel = %version-%release
 Obsoletes: gir-repository-devel
 
 %description devel
-Libraries and headers for gobject-introspection
+GObject introspection provides tools and libraries to help manage its
+common metadata format for representing GObject-based C APIs, designed
+for bindings, documentation tools and API verification.
+
+This package provides libraries and headers for gobject-introspection.
 
 %package devel-doc
 Summary: Documentation for gobject-introspection
@@ -41,10 +49,15 @@ BuildArch: noarch
 Conflicts: %name < %version
 
 %description devel-doc
-This package provides development documentation for gobject-introspection
+GObject introspection provides tools and libraries to help manage its
+common metadata format for representing GObject-based C APIs, designed
+for bindings, documentation tools and API verification.
+
+This package provides development documentation for
+gobject-introspection.
 
 %prep
-%setup -q
+%setup
 
 %build
 %autoreconf
@@ -81,6 +94,9 @@ find %buildroot%_libdir -name \*.la -delete
 %_datadir/gtk-doc/html/*
 
 %changelog
+* Tue Sep 24 2013 Yuri N. Sedunov <aris@altlinux.org> 1.38.0-alt1
+- 1.38.0
+
 * Tue Mar 26 2013 Yuri N. Sedunov <aris@altlinux.org> 1.36.0-alt1
 - 1.36.0
 

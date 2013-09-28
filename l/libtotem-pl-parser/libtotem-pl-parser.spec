@@ -1,24 +1,29 @@
-%define pkgname totem-pl-parser
-%define ver_major 3.4
+%define _name totem-pl-parser
+%define ver_major 3.10
 %def_enable gtk_doc
 %def_enable introspection
 
-Name: lib%pkgname
-Version: %ver_major.5
+Name: lib%_name
+Version: %ver_major.0
 Release: alt1
 
 Summary: Shared libraries of the Totem media player play list parser
 Group: System/Libraries
 License: GPL
-URL: http://www.hadess.net/%pkgname.php3
+URL: http://www.hadess.net/%_name.php3
 
-#Source: %pkgname-%version.tar
-Source: ftp://ftp.gnome.org/pub/gnome/sources/%pkgname/%ver_major/%pkgname-%version.tar.xz
+#Source: %_name-%version.tar
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
 
-BuildPreReq: glib2-devel >= 2.33.10 libgio-devel >= 2.24.0
-BuildRequires: gnome-common gtk-doc intltool perl-XML-Parser libgmime-devel
-BuildRequires: libxml2-devel libsoup-gnome-devel libarchive-devel
-BuildRequires: libgcrypt-devel libquvi-devel >= 0.2.15
+%define glib_ver 2.34
+%define soup_ver 2.43
+%define quvi_ver 0.9.1
+%define archive_ver 3.0
+
+BuildPreReq: libgio-devel >= %glib_ver libquvi0.9-devel >= %quvi_ver
+BuildPreReq: libarchive-devel >= %archive_ver libsoup-gnome-devel >= %soup_ver
+BuildRequires: gnome-common gtk-doc intltool libgmime-devel
+BuildRequires: libxml2-devel libgcrypt-devel
 %{?_enable_introspection:BuildPreReq: gobject-introspection-devel >= 0.9.5}
 
 %description
@@ -65,7 +70,7 @@ GObject introspection devel data for the Totem playlist parser library
 %define _libexecdir %_libdir/%name
 
 %prep
-%setup -n %pkgname-%version
+%setup -n %_name-%version
 [ ! -d m4 ] && mkdir m4
 
 %build
@@ -80,11 +85,13 @@ GObject introspection devel data for the Totem playlist parser library
 %install
 %makeinstall
 
-%find_lang --with-gnome --output=%name.lang %pkgname %pkgname-2.0
+%find_lang --with-gnome --output=%name.lang %_name %_name-2.0
 
 %files -f %name.lang
 %doc AUTHORS NEWS README
 %_libdir/*.so.*
+%dir %_libdir/%name
+%_libdir/%name/%_name-videosite
 
 %files -n %name-devel
 %_includedir/*
@@ -103,6 +110,9 @@ GObject introspection devel data for the Totem playlist parser library
 %endif
 
 %changelog
+* Mon Sep 23 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.0-alt1
+- 3.10.0
+
 * Tue May 14 2013 Yuri N. Sedunov <aris@altlinux.org> 3.4.5-alt1
 - 3.4.5
 

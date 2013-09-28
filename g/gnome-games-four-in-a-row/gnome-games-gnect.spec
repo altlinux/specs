@@ -1,11 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 
 %define _name four-in-a-row
-%define ver_major 3.8
+%define ver_major 3.10
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-games-%_name
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: Four in a row game
@@ -54,8 +54,12 @@ line can be horizontal, vertical or diagonal.
 %_iconsdir/HighContrast/*x*/apps/%_name.png
 %_man6dir/%_name.*
 %config %_datadir/glib-2.0/schemas/org.gnome.%_name.gschema.xml
+%_datadir/appdata/%_name.appdata.xml
 
 %changelog
+* Tue Sep 24 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.0-alt1
+- 3.10.0
+
 * Tue Apr 16 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.1-alt1
 - 3.8.1
 

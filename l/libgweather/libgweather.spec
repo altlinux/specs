@@ -1,10 +1,11 @@
-%define ver_major 3.8
+%define ver_major 3.10
 %define api_ver 3.0
 %def_disable static
 %def_enable introspection
+%def_enable vala
 
 Name: libgweather
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 Summary: A library for weather information
 
@@ -19,6 +20,7 @@ Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 %define intltool_ver 0.40.0
 %define soup_ver 2.34
 %define gir_ver 0.9.5
+%define vala_ver 0.21.1
 
 Requires: %name-data = %version-%release
 
@@ -30,6 +32,7 @@ BuildPreReq: xsltproc
 BuildPreReq: rpm-build-gnome gtk-doc
 BuildRequires: libxml2-devel perl-XML-Parser xml-utils gzip
 %{?_enable_introspection:BuildPreReq: gobject-introspection-devel >= %gir_ver libgtk+3-gir-devel}
+%{?_enable_vala:BuildPreReq: vala-tools >= %vala_ver}
 
 %description
 libgweather is a library to access weather information from online
@@ -86,32 +89,30 @@ Requires: %name-gir = %version-%release
 %description gir-devel
 GObject introspection devel data for the %name library
 
+%package vala
+Summary: Vala language bindings for the %name library
+Group: Development/Other
+BuildArch: noarch
+Requires: %name-devel = %version-%release
+
+%description vala
+This package provides Vala language bindings for the %name library.
+
+
 %prep
-%setup -q
+%setup
 
 %build
 %configure \
     %{subst_enable static} \
-    --enable-locations-compression
-
+    %{subst_enable vala}
 %make_build
-
-#cd po
-#make %name.pot
-#for p in *.po; do
-#  msgmerge -U $p %name.pot
-#done
-#make
-#cd ..
 
 %install
 %make_install DESTDIR=%buildroot install
 
 %find_lang --output=%name.lang %name-%api_ver
-
-# do the %%lang tag for the localized xml files
-find %buildroot -name Locations.*.xml.gz | sed 's:'"%buildroot"'::
-s:\(.*\)/Locations\.\([^.]*\)\.xml.gz:%lang(\2) \1/Locations.\2.xml.gz:' > %name-data.lang
+%find_lang --output=%name-locations.lang %name-locations
 
 %check
 %make check
@@ -122,9 +123,9 @@ s:\(.*\)/Locations\.\([^.]*\)\.xml.gz:%lang(\2) \1/Locations.\2.xml.gz:' > %name
 %_datadir/glib-2.0/schemas/org.gnome.GWeather.gschema.xml
 %doc AUTHORS NEWS README
 
-%files data -f %name-data.lang
+%files data -f %name-locations.lang
 %dir %_datadir/libgweather
-%_datadir/libgweather/Locations.xml.gz
+%_datadir/libgweather/Locations.xml
 %_datadir/libgweather/locations.dtd
 %_iconsdir/gnome/*/*/*
 
@@ -138,13 +139,23 @@ s:\(.*\)/Locations\.\([^.]*\)\.xml.gz:%lang(\2) \1/Locations.\2.xml.gz:' > %name
 
 %if_enabled introspection
 %files gir
-%_libdir/girepository-1.0/GWeather-3.0.typelib
+%_typelibdir/GWeather-%api_ver.typelib
 
 %files gir-devel
-%_datadir/gir-1.0/GWeather-3.0.gir
+%_girdir/GWeather-%api_ver.gir
 %endif
 
+%if_enabled vala
+%files vala
+%_vapidir/gweather-%api_ver.vapi
+%endif
+
+
 %changelog
+* Tue Sep 24 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.0-alt1
+- 3.10.0
+- optional -vala subpackage
+
 * Tue May 14 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.2-alt1
 - 3.8.2
 
