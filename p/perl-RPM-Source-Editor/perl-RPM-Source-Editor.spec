@@ -2,7 +2,7 @@
 %def_without hashertarbuild
 
 Name: perl-%module
-Version: 0.821
+Version: 0.822
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -77,6 +77,9 @@ install -Dm644 stdheaders.txt %buildroot%_datadir/srpmtools/data/stdheaders.txt
 %_man1dir/hashertarbuild*
 
 %changelog
+* Sat Sep 28 2013 Igor Vlasenko <viy@altlinux.ru> 0.822-alt1
+- bugfix release
+
 * Mon Sep 23 2013 Igor Vlasenko <viy@altlinux.ru> 0.821-alt1
 - bugfix release
 
@@ -142,123 +145,3 @@ install -Dm644 stdheaders.txt %buildroot%_datadir/srpmtools/data/stdheaders.txt
 
 * Sun Feb 10 2013 Igor Vlasenko <viy@altlinux.ru> 0.800-alt1
 - development release
-
-* Thu Feb 07 2013 Igor Vlasenko <viy@altlinux.ru> 0.799-alt1
-- development release
-
-* Fri Feb 01 2013 Igor Vlasenko <viy@altlinux.ru> 0.798-alt1
-- bugfix release
-
-* Thu Jan 24 2013 Igor Vlasenko <viy@altlinux.ru> 0.797-alt1
-- bugfix release
-
-* Fri Jan 11 2013 Igor Vlasenko <viy@altlinux.ru> 0.796-alt1
-- use distrodb format 5
-
-* Wed Jan 09 2013 Igor Vlasenko <viy@altlinux.ru> 0.795-alt1
-- stable development release
-
-* Wed Dec 26 2012 Igor Vlasenko <viy@altlinux.ru> 0.794-alt1
-- map_body improved
-
-* Tue Dec 25 2012 Igor Vlasenko <viy@altlinux.ru> 0.793-alt1
-- stable development release
-
-* Thu Dec 13 2012 Igor Vlasenko <viy@altlinux.ru> 0.792-alt1
-- bugfix release
-
-* Sat Dec 08 2012 Igor Vlasenko <viy@altlinux.ru> 0.791-alt1
-- bugfix release
-
-* Wed Nov 28 2012 Igor Vlasenko <viy@altlinux.ru> 0.790-alt1
-- new Transformation API
-
-* Sat Oct 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.788-alt1
-- stable release before action-based refactoring
-
-* Tue Sep 04 2012 Igor Vlasenko <viy@altlinux.ru> 0.787-alt1
-- auto serial/epoch adjustment in requires:
-
-* Wed Aug 22 2012 Igor Vlasenko <viy@altlinux.ru> 0.786-alt1
-- added spec_apply_patch option
-
-* Mon Aug 20 2012 Igor Vlasenko <viy@altlinux.ru> 0.785-alt1
-- new version
-
-* Mon Jun 11 2012 Igor Vlasenko <viy@altlinux.ru> 0.784-alt1
-- new version
-
-* Sun May 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.783-alt1
-- new version
-
-* Tue May 22 2012 Igor Vlasenko <viy@altlinux.ru> 0.782-alt1
-- new version
-
-* Mon May 21 2012 Igor Vlasenko <viy@altlinux.ru> 0.781-alt1
-- new version
-
-* Wed May 16 2012 Igor Vlasenko <viy@altlinux.ru> 0.780-alt3
-- bugfix release
-
-* Tue May 15 2012 Igor Vlasenko <viy@altlinux.ru> 0.780-alt2
-- bugfix release
-
-* Tue May 15 2012 Igor Vlasenko <viy@altlinux.ru> 0.780-alt1
-- initial perl support
-
-* Wed May 09 2012 Igor Vlasenko <viy@altlinux.ru> 0.779-alt1
-- new version
-
-* Mon May 07 2012 Igor Vlasenko <viy@altlinux.ru> 0.778-alt2
-- bugfix release
-
-* Fri May 04 2012 Igor Vlasenko <viy@altlinux.ru> 0.778-alt1
-- SourceAnalyzer: support for gir build deps
-
-* Tue Apr 24 2012 Igor Vlasenko <viy@altlinux.ru> 0.777-alt8
-- bugfix release
-
-* Thu Apr 05 2012 Igor Vlasenko <viy@altlinux.ru> 0.777-alt7
-- bugfix release
-
-* Fri Mar 02 2012 Igor Vlasenko <viy@altlinux.ru> 0.777-alt6
-- bugfix release
-
-* Wed Feb 22 2012 Igor Vlasenko <viy@altlinux.ru> 0.777-alt5
-- bugfix release
-
-* Mon Jan 30 2012 Igor Vlasenko <viy@altlinux.ru> 0.777-alt4
-- bugfix release
-
-* Fri Jan 13 2012 Igor Vlasenko <viy@altlinux.ru> 0.777-alt3
-- bugfix release
-
-* Thu Jan 12 2012 Igor Vlasenko <viy@altlinux.ru> 0.777-alt2
-- bugfix release
-
-* Mon Dec 26 2011 Igor Vlasenko <viy@altlinux.ru> 0.777-alt1
-- new version
-
-* Sun Dec 25 2011 Igor Vlasenko <viy@altlinux.ru> 0.776-alt1
-- new version
-
-* Sat Dec 24 2011 Igor Vlasenko <viy@altlinux.ru> 0.775-alt1
-- bugfix release
-
-* Fri Dec 23 2011 Igor Vlasenko <viy@altlinux.ru> 0.774-alt3
-- bugfix release
-
-* Thu Dec 22 2011 Igor Vlasenko <viy@altlinux.ru> 0.774-alt2
-- bugfix release
-
-* Thu Dec 22 2011 Igor Vlasenko <viy@altlinux.ru> 0.774-alt1
-- new version
-
-* Mon Dec 19 2011 Igor Vlasenko <viy@altlinux.ru> 0.773-alt1
-- new version
-
-* Thu Dec 15 2011 Igor Vlasenko <viy@altlinux.ru> 0.772-alt1
-- bugfix release
-
-* Thu Dec 15 2011 Igor Vlasenko <viy@altlinux.ru> 0.771-alt1
-- bugfix release
