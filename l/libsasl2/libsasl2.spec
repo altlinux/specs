@@ -3,33 +3,34 @@
 # Use "--disable ldap" for build without LDAP support
 %def_enable ldap
 
-%define gitdate 20130830
-%define abiversion 3
+%define srcname cyrus-sasl
+%define cvsdate 20090508
 
-Name: cyrus-sasl2
-Version: 2.1.26
-Release: alt2.git.%gitdate
+Name: libsasl2
+Version: 2.1.24
+Release: alt9
 
-Summary: SASL2 is the Simple Authentication and Security Layer
+Summary: libsasl2.so.2 compatibility package
 License: Freely Distributable
-Group: System/Libraries
+Group: System/Legacy libraries
 
-URL: http://www.cyrusimap.org/
+# git-cvsimport -v -r git-cvs -i -k -d :pserver:anoncvs@cvs.andrew.cmu.edu:/cvs sasl
+URL: http://asg.web.cmu.edu/sasl/index.html
 Packager: Vladimir V Kamarzin <vvk@altlinux.ru>
 
-Source0: %name-%version.tar
+Source0: cyrus-sasl2-%version.tar
 Source1: sasldb2
 Source2: saslpasswd.conf
 Source3: saslauthd.conf
 Source4: saslauthd.init
 Source5: saslauthd.sysconfig
 # It's a converted server-plugin-flow.fig to JPEG
-Source7: %name-alt-server-plugin-flow.jpg
+Source7: cyrus-sasl2-alt-server-plugin-flow.jpg
 Source8: README.ALT
 
-Requires: libsasl2-%abiversion = %version-%release
-
 BuildRequires: libcom_err-devel libdb4-devel libkrb5-devel libpam-devel groff-base autoconf automake openssl-devel
+
+Requires: shadow-utils
 
 %if_enabled sql
 BuildRequires: libMySQL-devel postgresql-devel
@@ -40,45 +41,19 @@ BuildRequires: libldap-devel
 %endif
 
 %description
-SASL is the Simple Authentication and Security Layer,
-a method for adding authentication support to connection-based protocols.
-To use SASL, a protocol includes a command for identifying and authenticating
-a user to a server and for optionally negotiating protection of subsequent
-protocol interactions. If its use is negotiated, a security layer is inserted
-between the protocol and the connection.
+libsasl2.so.2 compatibility package.
 
-%package -n libsasl2-%abiversion
-Summary: Librairies for SASL a the Simple Authentication and Security Layer
-Group: System/Libraries
-Requires: shadow-utils
-Provides: libsasl2 = %version-%release
-Conflicts: libsasl2 < 2.1.24-alt8
-
-%description -n libsasl2-%abiversion
-SASL is the Simple Authentication and Security Layer,
-a method for adding authentication support to connection-based protocols.
-To use SASL, a protocol includes a command for identifying and authenticating
-a user to a server and for optionally negotiating protection of subsequent
-protocol interactions. If its use is negotiated, a security layer is inserted
-between the protocol and the connection.
-
-%package -n libsasl2-devel
-Summary: Librairies for SASL a the Simple Authentication and Security Layer
-Group: Development/C
-Requires: libsasl2-%abiversion = %version-%release
-
-%description -n libsasl2-devel
-SASL is the Simple Authentication and Security Layer,
-a method for adding authentication support to connection-based protocols.
-To use SASL, a protocol includes a command for identifying and authenticating
-a user to a server and for optionally negotiating protection of subsequent
-protocol interactions. If its use is negotiated, a security layer is inserted
-between the protocol and the connection.
+SASL is the Simple Authentication and Security Layer, a method for
+adding authentication support to connection-based protocols. To use
+SASL, a protocol includes a command for identifying and authenticating
+a user to a server and for optionally negotiating protection of
+subsequent protocol interactions. If its use is negotiated, a security
+layer is inserted between the protocol and the connection.
 
 %package -n libsasl2-plugin-gssapi
 Summary: SASL2 KERBEROS_V5 mechanism plugin
 Group: System/Libraries
-Requires: libsasl2-%abiversion = %version-%release
+Requires: libsasl2 = %version-%release
 Requires: libkrb5 >= 1.3.1-alt3
 
 %description -n libsasl2-plugin-gssapi
@@ -90,7 +65,7 @@ This OPTIONS is EXPERIMENTAL!
 %package -n libsasl2-plugin-sql
 Summary: SASL2 MySQL and PostgreSQL mechanism plugin
 Group: System/Libraries
-Requires: libsasl2-%abiversion = %version-%release
+Requires: libsasl2 = %version-%release
 Obsoletes: libsasl2-plugin-mysql
 Obsoletes: libsasl2-plugin-pgsql
 
@@ -99,16 +74,8 @@ Obsoletes: libsasl2-plugin-pgsql
 This plugin implements the SASL2 MySQL and PgSQL AUXPROP mechanism.
 %endif
 
-%package docs
-Summary: SASL2 docs
-Group: System/Libraries
-BuildArch: noarch
-
-%description docs
-This package contains documentations for SASL2
-
 %prep
-%setup
+%setup -q -n cyrus-sasl2-%version
 
 %build
 
@@ -131,7 +98,7 @@ automake -a -c -f
 popd
 
 %add_optflags %optflags_shared
-#version_script="$(readlink -ev libsasl2.map)"
+version_script="$(readlink -ev libsasl2.map)"
 #add_optflags -Wl,--version-script=$version_script
 
 %configure	--enable-shared \
@@ -166,10 +133,7 @@ popd
 		--enable-otp
 
 sed -i 's,/usr/local/lib,%_libdir,g' saslauthd/Makefile
-
-# fixed libraries path in RPATH
 sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' libtool
-
 %make_build
 
 pushd saslauthd
@@ -185,8 +149,15 @@ mkdir -p %buildroot{%_bindir,%_libdir}
 
 install -m 755 saslauthd/testsaslauthd %buildroot%_bindir
 
+pushd %buildroot/%_lib
+    for n in `ls -1 *.a`
+    do
+	mv $n %buildroot/%_libdir
+    done
+popd
+
 pushd %buildroot/%_libdir
-    ln -s -nf ../../%_lib/libsasl2.so.3 libsasl2.so
+    ln -s -nf ../../%_lib/libsasl2.so.2 libsasl2.so
 popd
 
 mkdir -p %buildroot%_sysconfdir
@@ -200,17 +171,17 @@ cp saslauthd/saslauthd.mdoc %buildroot%_mandir/man8/saslauthd.8
 cp utils/.libs/dbconverter-2 %buildroot%_sbindir
 rm -fr %buildroot%_mandir/cat8
 
-mkdir -p %buildroot%_docdir/%name-%version
-mkdir -p %buildroot%_docdir/%name-%version/HTML
-mkdir -p %buildroot%_docdir/%name-%version/RFC
-install -p -m 0644 doc/*.html* %buildroot%_docdir/%name-%version/HTML
-install -p -m 0644 doc/rfc*.txt %buildroot%_docdir/%name-%version/RFC
-install -p -m 0644 doc/draft*.txt %buildroot%_docdir/%name-%version/RFC
-install -p -m 0644 %SOURCE7 %buildroot%_docdir/%name-%version/HTML/server-plugin-flow.jpg
-mkdir -p %buildroot%_docdir/%name-%version/saslauthd
-install -p -m 0644 saslauthd/{README,INSTALL,LDAP_SASLAUTHD,NEWS,COPYING,ChangeLog,AUTHORS} %buildroot%_docdir/%name-%version/saslauthd
+mkdir -p %buildroot%_docdir/cyrus-sasl2-%version
+mkdir -p %buildroot%_docdir/cyrus-sasl2-%version/HTML
+mkdir -p %buildroot%_docdir/cyrus-sasl2-%version/RFC
+install -p -m 0644 doc/*.html* %buildroot%_docdir/cyrus-sasl2-%version/HTML
+install -p -m 0644 doc/rfc*.txt %buildroot%_docdir/cyrus-sasl2-%version/RFC
+install -p -m 0644 doc/draft*.txt %buildroot%_docdir/cyrus-sasl2-%version/RFC
+install -p -m 0644 %SOURCE7 %buildroot%_docdir/cyrus-sasl2-%version/HTML/server-plugin-flow.jpg
+mkdir -p %buildroot%_docdir/cyrus-sasl2-%version/saslauthd
+install -p -m 0644 saslauthd/{README,INSTALL,LDAP_SASLAUTHD,NEWS,COPYING,ChangeLog,AUTHORS} %buildroot%_docdir/cyrus-sasl2-%version/saslauthd
 
-install -p -m 0644 {%SOURCE8,COPYING,AUTHORS,INSTALL,NEWS,README,ChangeLog,doc/TODO} %buildroot%_docdir/%name-%version
+install -p -m 0644 {%SOURCE8,COPYING,AUTHORS,INSTALL,NEWS,README,ChangeLog,doc/TODO} %buildroot%_docdir/cyrus-sasl2-%version
 
 mkdir -p %buildroot%_initdir
 mkdir -p %buildroot%_sysconfdir/sysconfig
@@ -224,76 +195,23 @@ install -m0600 %SOURCE3 %buildroot%_sysconfdir/sasl2
 install -m0755 %SOURCE4 %buildroot%_initdir/saslauthd
 install -m0600 %SOURCE5 %buildroot%_sysconfdir/sysconfig/saslauthd
 
-mkdir -p %buildroot%_pkgconfigdir
-mv -f %buildroot/%_lib/pkgconfig/libsasl2.pc %buildroot%_pkgconfigdir/libsasl2.pc
-
-rm -f %buildroot%_libdir/sasl2/*.la
-
-%post
-%post_service saslauthd
-%preun
-%preun_service saslauthd
-
-%pre -n libsasl2-%abiversion
+%pre
 %_sbindir/groupadd -rf sasl ||:
 
 %files
-%config(noreplace) %attr(0640,root,root) %_sysconfdir/sasl2/saslpasswd.conf
-%config(noreplace) %attr(0640,root,root) %_sysconfdir/sasl2/saslauthd.conf
-%config(noreplace) %attr(0600,root,root) %_sysconfdir/sysconfig/saslauthd
-%attr(0755,root,root) %_initdir/saslauthd
-%_bindir/*
-%_sbindir/*
-%_man8dir/*
-#%%_libdir/sasl2/*.conf
-%attr(0711,root,root) %dir %_var/run/saslauthd
-
-%files -n libsasl2-%abiversion
-%config(noreplace) %attr(0640,root,sasl) %_sysconfdir/sasl2/sasldb2
-%dir %_sysconfdir/sasl2
-%dir %_libdir/sasl2
 /%_lib/*.so.*
-%_libdir/sasl2/libanonymous.so*
-%_libdir/sasl2/libcrammd5.so*
-%_libdir/sasl2/libdigestmd5.so*
-%_libdir/sasl2/liblogin.so*
-%_libdir/sasl2/libntlm.so*
-%_libdir/sasl2/libotp.so*
-%_libdir/sasl2/libplain.so*
-%_libdir/sasl2/libsasldb.so*
-%_libdir/sasl2/libsrp.so*
-%_libdir/sasl2/libscram.so*
+%_libdir/sasl2/libsasldb.so.*
 
 %doc COPYING AUTHORS INSTALL NEWS README ChangeLog doc/TODO
 
-%files -n libsasl2-devel
-%dir %_includedir/sasl
-%dir %_libdir/sasl2
-%_includedir/sasl/*
-%_mandir/man3/*
-%_libdir/*.so
-/%_lib/*.so
-%_pkgconfigdir/*
-
-%files docs
-%doc %_docdir/%name-%version
-
-%files -n libsasl2-plugin-gssapi
-%_libdir/sasl2/libgssapiv2.so*
-
-%if_enabled sql
-%files -n libsasl2-plugin-sql
-%_libdir/sasl2/libsql.so*
-%endif
-
 %changelog
-* Wed Sep 25 2013 Sergey Y. Afonin <asy@altlinux.ru> 2.1.26-alt2.git.20130830
-- Renamed libsasl2 for according SharedLibs Policy.
+* Fri Sep 27 2013 Sergey Y. Afonin <asy@altlinux.ru> 2.1.24-alt9
+- Bumped release for possibility of backport
 
-* Fri Sep 13 2013 Sergey Y. Afonin <asy@altlinux.ru> 2.1.26-alt1.git.20130830
-- 2.1.26 (20130830 git snapshot; cmulocal from cyrus-sasl-2.1.26.tar.gz)
-- Removed conflicts with libsasl-devel (sasl 1.x is absent very long time)
-- Do not use version script introduced in 2.1.24-alt1.cvs.20090508 (soname is 3.0.0 now)
+* Wed Sep 25 2013 Sergey Y. Afonin <asy@altlinux.ru> 2.1.24-alt8
+- Name changed to libsasl2: libsasl2.so.2 compatibility package.
+- Removed all packages except the libsasl2 binary package, removed
+  all plugins except libsasldb.so.* (is needed for tcl-sasl).
 
 * Sun Apr 14 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.1.24-alt7.cvs.20090508
 - NMU: rebuilt with libmysqlclient.so.18.

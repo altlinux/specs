@@ -7,7 +7,7 @@
 %define branch 1.5
 Name: %oname%branch
 Version: 1.5.21
-Release: alt2.qa1
+Release: alt2.qa1.1
 Serial: 3
 
 %def_without dotlock
@@ -153,6 +153,9 @@ EOF
 %docdir
 
 %changelog
+* Tue Sep 24 2013 Sergey Y. Afonin <asy@altlinux.ru> 3:1.5.21-alt2.qa1.1
+- NMU: rebuilt with cyrus-sasl 2.1.26
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 3:1.5.21-alt2.qa1
 - NMU: rebuilt for debuginfo.
 

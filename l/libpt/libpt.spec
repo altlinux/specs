@@ -2,7 +2,7 @@
 
 Name: libpt
 Version: 2.10.10
-Release: alt1
+Release: alt1.1
 Summary: Portable Tools Libary
 License: MPL
 Group: System/Libraries
@@ -98,6 +98,9 @@ cd ..
 %_libdir/%oname-%version/devices/videoinput/*_pwplugin.so
 
 %changelog
+* Tue Sep 17 2013 Sergey Y. Afonin <asy@altlinux.ru> 2.10.10-alt1.1
+- NMU: rebuilt with cyrus-sasl 2.1.26
+
 * Mon Feb 25 2013 Alexey Shabalin <shaba@altlinux.ru> 2.10.10-alt1
 - 2.10.10
 

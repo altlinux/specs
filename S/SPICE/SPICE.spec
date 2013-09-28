@@ -1,6 +1,6 @@
 Name: SPICE
 Version: 0.12.4
-Release: alt1
+Release: alt1.1
 Summary: Implements the SPICE protocol
 Group: Graphical desktop/Other
 License: LGPLv2+
@@ -105,6 +105,9 @@ rm -f %buildroot%_libdir/libspice-server.la
 %_pkgconfigdir/spice-server.pc
 
 %changelog
+* Tue Sep 17 2013 Sergey Y. Afonin <asy@altlinux.ru> 0.12.4-alt1.1
+- NMU: rebuilt with cyrus-sasl 2.1.26
+
 * Mon Jul 29 2013 Alexey Shabalin <shaba@altlinux.ru> 0.12.4-alt1
 - 0.12.4
 

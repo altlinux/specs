@@ -12,7 +12,7 @@
 
 Name: libspice-gtk
 Version: 0.20
-Release: alt1
+Release: alt1.1
 Summary: A GTK widget for SPICE clients
 
 Group: System/Libraries
@@ -339,6 +339,9 @@ cd ..
 %endif
 
 %changelog
+* Tue Sep 17 2013 Sergey Y. Afonin <asy@altlinux.ru> 0.20-alt1.1
+- NMU: rebuilt with cyrus-sasl 2.1.26
+
 * Thu Jul 04 2013 Alexey Shabalin <shaba@altlinux.ru> 0.20-alt1
 - 0.20
 
