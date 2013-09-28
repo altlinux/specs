@@ -1,5 +1,5 @@
 Name: xz
-Version: 5.0.4
+Version: 5.0.5
 Release: alt1
 
 Summary: LZMA/XZ compression programs
@@ -128,6 +128,9 @@ make -k check
 %_libdir/liblzma.a
 
 %changelog
+* Sun Sep 29 2013 Dmitry V. Levin <ldv@altlinux.org> 5.0.5-alt1
+- Updated to 5.0.5 (closes: #29406).
+
 * Fri Jul 20 2012 Alexey Tourbin <at@altlinux.ru> 5.0.4-alt1
 - 5.0.3 -> 5.0.4
 
