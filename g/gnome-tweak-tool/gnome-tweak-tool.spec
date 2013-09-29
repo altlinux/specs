@@ -1,8 +1,10 @@
+%def_enable snapshot
+
 %define ver_major 3.10
 
 Name: gnome-tweak-tool
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: A tool to customize advanced GNOME 3 options
 Group: Graphical desktop/GNOME
@@ -10,7 +12,11 @@ License: GPLv3
 Url: https://live.gnome.org/GnomeTweakTool
 Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 
+%if_enabled snapshot
+Source: %name-%version.tar
+%else
 Source: %name-%version.tar.xz
+%endif
 Patch: gnome-tweak-tool-3.8.0-alt-desktop.patch
 
 BuildArch: noarch
@@ -44,7 +50,7 @@ Features:
 %patch -b .desktop
 
 %build
-#NOCONFIGURE=1 ./autogen.sh
+%{?_enable_snapshot:NOCONFIGURE=1 ./autogen.sh}
 %configure --disable-schemas-compile
 %make_build
 
@@ -63,6 +69,9 @@ Features:
 %doc AUTHORS NEWS README
 
 %changelog
+* Sun Sep 29 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.0-alt2
+- updated to 3.10_a8f0982 (fixed BGO #708900)
+
 * Tue Sep 24 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.0-alt1
 - 3.10.0
 
