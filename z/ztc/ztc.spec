@@ -2,7 +2,7 @@
 
 Name: ztc
 Version: 12.02.1
-Release: alt2
+Release: alt3
 
 Summary: a collection of templates for zabbix monitoring system
 License: GPLv3
@@ -235,6 +235,9 @@ Requires: zabbix-agent-sudo
 %config(noreplace) %_sysconfdir/zabbix/zabbix_agentd.conf.d/ovz.conf
 
 %changelog
+* Sun Sep 29 2013 Terechkov Evgenii <evg@altlinux.org> 12.02.1-alt3
+- ALT#29221
+
 * Thu Jan 24 2013 Terechkov Evgenii <evg@altlinux.org> 12.02.1-alt2
 - Strict dependencies to python-module-ztc (ALT#28457)
 
