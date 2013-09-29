@@ -11,7 +11,7 @@
 %define rctag %nil
 
 Name: clamav
-Version: 0.97.8
+Version: 0.98
 Release: alt1
 
 Packager: Victor Forsiuk <force@altlinux.org>
@@ -45,8 +45,8 @@ Source21: virusstat-perIP-PrevHour
 Source22: virusstat-total
 Source23: virusstat.cron.example
 
-Patch1: clamav-0.96-config.patch
-Patch2: freshclam-0.96.1-config.patch
+Patch1: clamav-config.patch
+Patch2: freshclam-config.patch
 
 Patch20: clamav-0.97.2-libs.private.patch
 
@@ -123,7 +123,7 @@ database automatically. It uses the freshclam(1) utility for this task.
 %prep
 %setup %{?snap: -n clamav-devel-%snap} %{?rctag: -n clamav-%{version}%{rctag}}
 %patch1 -p1
-%patch2 -p2
+%patch2 -p1
 
 %patch20 -p1
 
@@ -161,8 +161,8 @@ install -m644 %_sourcedir/virusstat* .
 %install
 %makeinstall_std
 
-# fix config
-subst 's|@@CLAMAVCONFDIR@@|%clamconfdir|' %buildroot%clamconfdir/freshclam.conf
+mv %buildroot%clamconfdir/clamd.conf.sample %buildroot%clamconfdir/clamd.conf
+mv %buildroot%clamconfdir/freshclam.conf.sample %buildroot%clamconfdir/freshclam.conf
 
 %{!?_with_milter:rm -f %buildroot%_man1dir/clamav-milter*}
 
@@ -302,6 +302,9 @@ subst s/^[0-9]*/$RNDM/ %_sysconfdir/cron.d/freshclam
 %endif
 
 %changelog
+* Sun Sep 29 2013 Sergey Y. Afonin <asy@altlinux.ru> 0.98-alt1
+- 0.98
+
 * Thu Apr 25 2013 Sergey Y. Afonin <asy@altlinux.ru> 0.97.8-alt1
 - 0.97.8 (Security update)
 
