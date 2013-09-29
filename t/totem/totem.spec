@@ -1,3 +1,5 @@
+%def_enable snapshot
+
 %define ver_major 3.10
 %define parser_ver 3.9.5
 %define gst_api_ver 1.0
@@ -35,7 +37,7 @@
 
 Name: totem
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: Movie player for GNOME 3
 Group: Video
@@ -59,8 +61,11 @@ Requires: gst-plugins-ugly%gst_api_ver
 Requires: gst-libav
 Requires: iso-codes
 
-#Source: %name-%version.tar
+%if_enabled snapshot
+Source: %name-%version.tar
+%else
 Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
+%endif
 Source1: totem-bin-backend-ondemand.sh
 
 BuildPreReq: rpm-build-gnome gnome-common gtk-doc
@@ -88,7 +93,7 @@ BuildRequires: libdbus-devel libdbus-glib-devel libgdata-devel gsettings-desktop
 %{?_enable_nautilus:BuildRequires: libnautilus-devel}
 %{?_enable_grilo:BuildRequires: libgrilo-devel}
 %{?_enable_zeitgeist:BuildRequires: libzeitgeist2.0-devel}
-%{?_enable_introspection:BuildRequires: libtotem-pl-parser-gir-devel libgtk+3-gir-devel}
+%{?_enable_introspection:BuildRequires: libtotem-pl-parser-gir-devel libgtk+3-gir-devel libclutter-gtk3-gir-devel libpeas-gir-devel}
 
 BuildRequires: desktop-file-utils libSM-devel
 BuildRequires: db2latex-xsl yelp-tools gcc-c++
@@ -295,7 +300,8 @@ export BROWSER_PLUGIN_DIR=%browser_plugins_path
 	%{?_enable_cone_plugin:--enable-cone-plugin} \
 %endif
 	%{?_enable_nautilus:--enable-nautilus=yes} \
-	--disable-static
+	--disable-static \
+	%{?_enable_snapshot:--enable-gtk-doc}
 
 %make_build
 
@@ -417,6 +423,9 @@ find %buildroot%_libdir -name \*.la -delete
 %_datadir/gtk-doc/html/*
 
 %changelog
+* Sun Sep 29 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.0-alt2
+- updated to 3.10.0_b252133
+
 * Mon Sep 23 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.0-alt1
 - 3.10.0
 
