@@ -8,10 +8,11 @@
 %def_enable libbrasero
 %def_enable web_albums
 %def_enable libchamplain
+%def_disable libopenraw
 
 Name: gthumb
 Version: %ver_major.3
-Release: alt3
+Release: alt4
 
 Summary: An image file viewer and browser for GNOME
 Summary(ru_RU.UTF-8): Просмотрщик изображений и фотоальбом для GNOME
@@ -48,12 +49,13 @@ BuildPreReq: glib2-devel >= %glib_ver
 BuildPreReq: libgtk+3-devel >= %gtk_ver
 BuildPreReq: libclutter-devel libclutter-gtk3-devel >= %clutter_gtk_ver
 BuildPreReq: gstreamer%gst_api_ver-devel >= %gst_ver gst-plugins%gst_api_ver-devel >= %gst_ver
-BuildPreReq: libopenraw-gnome-devel >= %openraw_ver
+
 BuildRequires: libjpeg-devel libpng-devel libtiff-devel zlib-devel
 BuildRequires: libsoup-gnome-devel >= %soup_ver libsecret-devel
 BuildRequires: librsvg-devel intltool perl-XML-Parser gnome-common yelp-tools
 BuildRequires: gsettings-desktop-schemas-devel libwebp-devel >= %webp_ver libjson-glib-devel
 BuildRequires: libwebkit2gtk-devel >= %webkit_ver libchamplain-devel >= %champlain_ver
+%{?_enable_libopenraw:BuildPreReq: libopenraw-gnome-devel >= %openraw_ver}
 %{?_enable_libbrasero:BuildRequires: libbrasero-devel >= %brasero_ver}
 %{?_enable_web_albums:BuildRequires: bison flex}
 %{?_enabled_libchamplain:BuildRequires: libchamplain-devel}
@@ -111,6 +113,7 @@ This package contains headers needed to build extensions for gThumb.
     %{subst_enable debug} \
     %{subst_enable libbrasero} \
     %{subst_enable libchamplain} \
+    %{subst_enable libopenraw} \
     --disable-static \
     --disable-schemas-compile \
     --enable-libopenraw \
@@ -166,6 +169,9 @@ This package contains headers needed to build extensions for gThumb.
 %_libdir/pkgconfig/*
 
 %changelog
+* Sun Sep 29 2013 Yuri N. Sedunov <aris@altlinux.org> 3.2.3-alt4
+- updated to 3.2_f80e3ba (fixed BGO #708800)
+
 * Tue Sep 17 2013 Yuri N. Sedunov <aris@altlinux.org> 3.2.3-alt3
 - rebuilt for people/gnome/3.10
 
