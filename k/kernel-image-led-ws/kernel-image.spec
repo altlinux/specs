@@ -25,7 +25,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.10.13
-Release: alt2
+Release: alt4
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -707,17 +707,6 @@ These are KVM modules for your Linux system.
 %endif
 
 
-%if_enabled hyperv
-%package -n kernel-modules-hyperv-%flavour
-Summary: Microsoft Hyper-V client drivers modules
-%kernel_modules_package_std_body hyperv
-
-%description -n kernel-modules-hyperv-%flavour
-Microsoft Hyper-V client drivers modules.
-Install this package to run Linux as a Hyper-V client operating system.
-%endif
-
-
 %if_enabled oprofile
 %package -n kernel-modules-oprofile-%flavour
 Summary: OProfile system profiling module
@@ -1381,7 +1370,7 @@ for i in %{?_enable_joystick:joystick} %{?_enable_tablet:tablet} %{?_enable_touc
 	gen_rpmmodfile $i %buildroot%modules_dir/kernel/drivers/input/$i
 done
 %if "%sub_flavour" != "guest"
-%{?_enable_guest:gen_rpmmodfile guest %buildroot%modules_dir/kernel/{drivers/{virtio/virtio_{balloon,mmio,pci}.ko,{char{,/hw_random},net,block,scsi}/virtio*%{?_enable_drm:,gpu/drm/{cirrus,qxl,vmwgfx}}%{?_enable_hypervisor_guest:,misc/vmw_balloon.ko},platform/x86/pvpanic.ko},net/{9p/*_virtio.ko,vmw*}}}
+%{?_enable_guest:gen_rpmmodfile guest %buildroot%modules_dir/kernel/{drivers/{virtio/virtio_{balloon,mmio,pci}.ko,{char{,/hw_random},net,block,scsi}/virtio*%{?_enable_drm:,gpu/drm/{cirrus,qxl,vmwgfx}}%{?_enable_hypervisor_guest:,misc/vmw_balloon.ko}%{?_enable_hyperv:,hv,input/serio/hyperv-*,hid/hid-hyperv.ko,net/hyperv,scsi/hv_storvsc.ko},platform/x86/pvpanic.ko},net/{9p/*_virtio.ko,vmw*}}}
 %{?_enable_drm:grep -F -f drm.rpmmodlist guest.rpmmodlist | sed 's/^/%%exclude &/' >> drm.rpmmodlist}
 %endif
 sed 's/^/%%exclude &/' *.rpmmodlist > exclude-drivers.rpmmodlist
@@ -1457,8 +1446,6 @@ sed 's/^/%%exclude &/' *.rpmmodlist > exclude-drivers.rpmmodlist
 
 %{?_enable_kvm:%kernel_modules_package_post kvm}
 
-%{?_enable_hyperv:%kernel_modules_package_post hyperv}
-
 %{?_enable_oprofile:%kernel_modules_package_post oprofile}
 
 %ifdef extra_mods
@@ -1501,12 +1488,6 @@ done)
 %exclude %modules_dir/kernel/drivers/usb/misc/emi*
 %endif
 %{?_enable_kvm:%exclude %modules_dir/kernel/arch/*/kvm}
-%if_enabled hyperv
-%exclude %modules_dir/kernel/drivers/hv
-%exclude %modules_dir/kernel/drivers/hid/hid-hyperv.ko
-%exclude %modules_dir/kernel/drivers/net/hyperv
-%exclude %modules_dir/kernel/drivers/scsi/hv_storvsc.ko
-%endif
 %if_enabled oprofile
 %exclude %modules_dir/vmlinux
 %exclude %modules_dir/kernel/arch/*/oprofile
@@ -1697,15 +1678,6 @@ done)
 %endif
 
 
-%if_enabled hyperv
-%files -n kernel-modules-hyperv-%flavour
-%modules_dir/kernel/drivers/hv
-%modules_dir/kernel/drivers/hid/hid-hyperv.ko
-%modules_dir/kernel/drivers/net/hyperv
-%modules_dir/kernel/drivers/scsi/hv_storvsc.ko
-%endif
-
-
 %files -n kernel-headers-%flavour
 %kheaders_dir
 
@@ -1837,6 +1809,18 @@ done)
 
 
 %changelog
+* Sat Sep 27 2013 Led <led@altlinux.ru> 3.10.13-alt4
+- updated:
+  + fix-arch-x86-cpu--mshyperv
+- disabled SPI_BUTTERFLY
+
+* Sat Sep 27 2013 Led <led@altlinux.ru> 3.10.13-alt3
+- added:
+  + fix-arch-x86-cpu--mshyperv
+  + feat-drivers-input-serio--hyperv-keyboard
+- moved content of kernel-modules-hyperv-* to kernel-modules-guest-* subpackage
+- removed kernel-modules-hyperv-* subpackage
+
 * Fri Sep 26 2013 Led <led@altlinux.ru> 3.10.13-alt2
 - updated:
   + fix-drivers-gpio--gpio-ucb1400
