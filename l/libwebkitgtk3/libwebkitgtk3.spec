@@ -17,7 +17,7 @@
 %def_enable webkit2
 
 Name: libwebkitgtk3
-Version: 2.1.92
+Version: 2.2.0
 Release: alt1
 
 Summary: Web browser engine
@@ -27,7 +27,7 @@ License: %bsd %lgpl2plus
 Url: http://www.webkitgtk.org/
 
 Source: %_name-%version.tar.xz
-#Source1: webkit_symbols.filter
+#Source1: webkit-2.2-symbols.filter
 
 Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 
@@ -323,6 +323,9 @@ mkdir -p Programs/resources
 %endif
 
 %changelog
+* Fri Sep 27 2013 Yuri N. Sedunov <aris@altlinux.org> 2.2.0-alt1
+- 2.2.0
+
 * Thu Sep 19 2013 Yuri N. Sedunov <aris@altlinux.org> 2.1.92-alt1
 - 2.1.92
 - no more separate -webinspector subpackage

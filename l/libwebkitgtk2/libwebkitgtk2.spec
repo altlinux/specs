@@ -13,7 +13,7 @@
 %def_enable spellcheck
 
 Name: libwebkitgtk2
-Version: 2.1.92
+Version: 2.2.0
 Release: alt1
 
 Summary: Web browser engine
@@ -273,6 +273,9 @@ xvfb-run make check
 %endif
 
 %changelog
+* Fri Sep 27 2013 Yuri N. Sedunov <aris@altlinux.org> 2.2.0-alt1
+- 2.2.0
+
 * Thu Sep 19 2013 Yuri N. Sedunov <aris@altlinux.org> 2.1.92-alt1
 - 2.1.92
 - no more separate -webinspector subpackage

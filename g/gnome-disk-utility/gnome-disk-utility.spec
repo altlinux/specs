@@ -1,7 +1,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-disk-utility
-Version: 3.8.2
+Version: 3.10.0
 Release: alt1
 
 Summary: Disk management application
@@ -15,13 +15,14 @@ Requires: udisks2 cryptsetup
 Source: %name-%version.tar.xz
 Patch: %name-3.8.0-alt-lfs.patch
 
-%define udisks_ver 2.1.0
+%define udisks_ver 2.1.1
 %define glib_ver 2.31.0
 %define gtk_ver 3.5.8
 %define secret_ver 0.7
 %define pwquality_ver 1.0.0
 %define gsd_ver 3.6
 %define dvdread_ver 4.2.0
+%define lzma_ver 5.0.5
 
 BuildRequires: gnome-common intltool xsltproc
 BuildPreReq: libudisks2-devel >= %udisks_ver
@@ -31,6 +32,7 @@ BuildPreReq: libsecret-devel >= %secret_ver
 BuildPreReq: libpwquality-devel >= %pwquality_ver
 BuildPreReq: gnome-settings-daemon-devel >= %gsd_ver
 BuildPreReq: libdvdread-devel >= %dvdread_ver
+BuildPreReq: liblzma-devel >= %lzma_ver
 BuildRequires: libnotify-devel libcanberra-gtk3-devel
 BuildRequires: systemd-devel libsystemd-login-devel
 BuildRequires: xsltproc docbook-style-xsl
@@ -60,6 +62,7 @@ RAID, SMART monitoring, etc
 %_bindir/gnome-disks
 %_desktopdir/gnome-disk-image-mounter.desktop
 %_desktopdir/gnome-disks.desktop
+%_desktopdir/gnome-disk-image-writer.desktop
 %_datadir/%name/
 %_datadir/glib-2.0/schemas/org.gnome.Disks.gschema.xml
 %_iconsdir/hicolor/*/apps/*
@@ -72,7 +75,11 @@ RAID, SMART monitoring, etc
 
 %exclude %_libdir/gnome-settings-daemon-3.0/libgdu-sd.la
 
+
 %changelog
+* Sun Sep 29 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.0-alt1
+- 3.10.0
+
 * Fri May 31 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.2-alt1
 - 3.8.2
 
