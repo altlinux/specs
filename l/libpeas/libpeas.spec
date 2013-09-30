@@ -1,4 +1,4 @@
-%define ver_major 1.8
+%define ver_major 1.9
 %define api_ver 1.0
 %define gtk_api_ver 3.0
 
@@ -8,7 +8,7 @@
 %def_enable gtk_doc
 
 Name: libpeas
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: A gobject-based plugins engine
@@ -31,7 +31,7 @@ BuildRequires: python3-devel python3-module-pygobject3-devel >= 3.1.1
 
 # for Javascript support
 %{?_enable_js:BuildRequires: libseed-devel >= 3.2.0}
-%{?_enable_gjs:BuildRequires: libgjs-devel >= 1.31.11}
+%{?_enable_gjs:BuildRequires: libgjs-devel >= 1.37.1}
 %{?_enable_vala:BuildRequires: vala-tools >= 0.14}
 
 %description
@@ -181,6 +181,9 @@ This package contains %name demonstration programs
 
 
 %changelog
+* Mon Sep 30 2013 Yuri N. Sedunov <aris@altlinux.org> 1.9.0-alt1
+- 1.9.0
+
 * Sat Jun 22 2013 Yuri N. Sedunov <aris@altlinux.org> 1.8.1-alt1
 - 1.8.1
 
