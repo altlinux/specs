@@ -1,10 +1,10 @@
 %define build_debug 0
-%define build_test 0
+%define build_test 1
 %define build_bench 1
 
 Name: mariadb
-Version: 5.5.32
-Release: alt2
+Version: 5.5.33a
+Release: alt1
 
 Summary: A very fast and reliable SQL database engine
 License: GPLv2 with exceptions
@@ -13,7 +13,6 @@ Group: Databases
 Url: http://mariadb.org/
 Source0: %name-%version.tar
 Source2: mysqld.sysconfig
-Source3: my.cnf
 Source4: libmysql.version
 Source5: mysqld.init
 Source6: mysqld_wrapper
@@ -23,6 +22,11 @@ Source11: mysqld.service
 
 Source12: mysqld-prepare-db-dir
 Source13: mysqld-wait-ready
+
+Source15: client.cnf
+Source16: server.cnf
+Source17: mysql-clients.cnf
+
 
 # the following patches are rediffed from the mysql-5.5 src.rpm to mariadb-5.5
 # fedora patches
@@ -43,8 +47,8 @@ Patch107: mariadb-5.5-mysql_install_db-quiet.alt.patch
 
 Requires: %name-server = %version-%release %name-client = %version-%release
 
-BuildRequires: gcc-c++ libncursesw-devel libreadline-devel libssl-devel perl-DBI zlib-devel libpam0-devel libevent-devel cmake bison doxygen groff-base groff-ps dos2unix
-BuildRequires: libaio-devel  libwrap-devel boost-devel libedit-devel perl-GD perl-threads perl-Memoize
+BuildRequires: gcc-c++ libncursesw-devel libreadline-devel libssl-devel perl-DBI zlib-devel libpam0-devel libevent-devel cmake ctest bison doxygen groff-base groff-ps dos2unix xsltproc
+BuildRequires: libaio-devel libjemalloc-devel libwrap-devel boost-devel libedit-devel perl-GD perl-threads perl-Memoize perl-devel
 
 %define soname 18
 
@@ -93,6 +97,16 @@ Conflicts: MySQL-server
 Core mysqld server. For a full MariaDB database server, install
 package 'mariadb'.
 
+%ifarch x86_64
+%package engine-tokudb
+Summary: MariaDB tokudb storage engines
+Group: System/Servers
+Requires: %name-server = %version-%release
+
+%description engine-tokudb
+MariaDB tokudb storage engine.
+%endif
+
 %package engine-extra
 Summary: MariaDB extra storage engines
 Group: System/Servers
@@ -114,12 +128,20 @@ are provided in case you need the vanilla mysql storage engines.
 %package client
 Summary: Client
 Group: Databases
-Requires: lib%name = %version-%release
+Requires: lib%name = %version-%release %name-common = %version-%release
 Provides: mysql-client = %version-%release
 Conflicts: MySQL-client
 
 %description client
 This package contains the standard MariaDB clients.
+
+%package common
+Summary: Common files used in client and servers
+Group: Databases
+BuildArch: noarch
+
+%description common
+This package contains the common files for MariaDB client and servers.
 
 %if %build_bench
 %package bench
@@ -162,6 +184,7 @@ to develop MariaDB/MySQL client applications.
 %package -n libmariadbembedded
 Summary: MariaDB as an embeddable library
 Group: System/Libraries
+Requires: %name-common = %version-%release
 
 %description -n libmariadbembedded
 MariaDB is a multi-user, multi-threaded SQL database server. This
@@ -199,13 +222,6 @@ version.
 %patch106 -p1
 %patch107 -p0
 
-mkdir -p ALT
-cp %SOURCE2 ALT/mysqld.sysconfig
-cp %SOURCE3 ALT/my.cnf
-
-# lib64 fix
-perl -pi -e "s|/usr/lib/|%_libdir/|g" ALT/my.cnf
-
 # antiborker
 perl -pi -e "s|\@bindir\@|%_bindir|g" support-files/* scripts/*
 perl -pi -e "s|\@sbindir\@|%_sbindir|g" support-files/* scripts/*
@@ -232,14 +248,14 @@ pushd build
 	-DFEATURE_SET="community" \
 	-DINSTALL_LAYOUT=RPM \
 	-DCMAKE_VERBOSE_MAKEFILE=ON \
-	-DCMAKE_SKIP_RPATH:BOOL=ON \
+	-DCMAKE_SKIP_INSTALL_RPATH:BOOL=ON \
 	-DCMAKE_C_FLAGS:STRING='%optflags' \
 	-DCMAKE_CXX_FLAGS:STRING='%optflags' \
 	-DCMAKE_INSTALL_PREFIX=%prefix \
 	-DCMAKE_BUILD_TYPE=RelWithDebInfo \
 	-DMYSQL_DATADIR=/var/lib/mysql \
 	-DINSTALL_SBINDIR=sbin \
-	-DSYSCONFDIR=%_sysconfdir \
+	-DINSTALL_SYSCONFDIR=%_sysconfdir \
 	-DINSTALL_PLUGINDIR=%_lib/mysql/plugin \
 	-DINSTALL_MANDIR=share/man \
 	-DINSTALL_SHAREDIR=share/mysql \
@@ -254,6 +270,7 @@ pushd build
 	-DMYSQL_UNIX_ADDR=/var/lib/mysql/mysql.sock \
 	-DWITH_READLINE=ON \
 	-DWITH_LIBWRAP=ON \
+	-DWITH_JEMALLOC=system \
 	-DWITH_SSL=system \
 	-DWITH_ZLIB=system \
 	-DWITH_PIC=ON \
@@ -286,7 +303,7 @@ export DONT_GPRINTIFY=1
 %makeinstall_std -C build
 
 # RPM install style leftovers
-rm -rf %buildroot%_sysconfdir/{init.d/mysql,my.cnf.d/}
+rm -rf %buildroot%_sysconfdir/init.d/mysql
 rm -rf %buildroot{%_libdir/libmysqld.a,%_defaultdocdir/*}
 
 mkdir -p %buildroot%_var/run/mysqld
@@ -299,8 +316,14 @@ install -Dm 755 %SOURCE6 %buildroot%_sbindir/mysqld_wrapper
 install -Dm 755 %SOURCE7 %buildroot%_sbindir/safe_mysqld
 
 # install configuration files
-install -Dm0644 ALT/mysqld.sysconfig %buildroot%_sysconfdir/sysconfig/mysqld
-install -m0644 ALT/my.cnf %buildroot%_sysconfdir/my.cnf
+install -Dm0644 %SOURCE2 %buildroot%_sysconfdir/sysconfig/mysqld
+install -m0644 support-files/rpm/my.cnf %buildroot%_sysconfdir/my.cnf
+install -m0644 %SOURCE15 %buildroot%_sysconfdir/my.cnf.d/client.cnf
+install -m0644 %SOURCE16 %buildroot%_sysconfdir/my.cnf.d/server.cnf
+install -m0644 %SOURCE17 %buildroot%_sysconfdir/my.cnf.d/mysql-clients.cnf
+%ifarch x86_64
+install -m0644 storage/tokudb/tokudb.cnf %buildroot%_sysconfdir/my.cnf.d/tokudb.cnf
+%endif
 
 install -Dm 0644 %SOURCE10 %buildroot%_tmpfilesdir/mysql.conf
 install -Dm 644 %SOURCE11 %buildroot%_unitdir/mysqld.service
@@ -384,6 +407,7 @@ rm -f %buildroot%_libdir/mysql/plugin/daemon_example.ini
 
 # house cleaning
 rm -rf %buildroot%_datadir/info
+rm -rf %buildroot%_datadir/mysql/solaris
 rm -f %buildroot%_bindir/client_test
 rm -f %buildroot%_bindir/make_win_binary_distribution
 rm -f %buildroot%_bindir/make_win_src_distribution
@@ -412,23 +436,9 @@ rm -f %buildroot%prefix/README
 ################################################################################
 # run the tests
 %if %build_test
-# disable failing tests
-echo "rpl_trigger : Unstable test case" >> mysql-test/t/disabled.def
-echo "type_enum : Unstable test case" >> mysql-test/t/disabled.def
-echo "windows : For MS Windows only" >> mysql-test/t/disabled.def
-pushd build/mysql-test
-export LANG=C
-export LC_ALL=C
-export LANGUAGE=C
-    perl ./mysql-test-run.pl \
-    --mtr-build-thread="$((${RANDOM} % 100))" \
-    --skip-ndb \
-    --timer \
-    --retry=0 \
-    --ssl \
-    --mysqld=--binlog-format=mixed \
-    --testcase-timeout=60 \
-    --suite-timeout=120 || false
+%check
+pushd build
+    ctest -VV
 popd
 %endif
 
@@ -442,12 +452,12 @@ fi
 /usr/sbin/useradd -r -g mysql -d /var/lib/mysql -s /dev/null -c "MariaDB server" -n mysql >/dev/null 2>&1 ||:
 
 # enable plugins
-if [ -f %_sysconfdir/my.cnf ]; then
-    perl -pi -e "s|^#plugin-load|plugin-load|g" %_sysconfdir/my.cnf
-    perl -pi -e "s|^#federated|federated|g" %_sysconfdir/my.cnf
-    # switch to federatedx provider
-    perl -pi -e "s|;ha_federated\.so$|;ha_federatedx\.so|g" %_sysconfdir/my.cnf
-fi
+#if [ -f %_sysconfdir/my.cnf ]; then
+#    perl -pi -e "s|^#plugin-load|plugin-load|g" %_sysconfdir/my.cnf
+#    perl -pi -e "s|^#federated|federated|g" %_sysconfdir/my.cnf
+#    # switch to federatedx provider
+#    perl -pi -e "s|;ha_federated\.so$|;ha_federatedx\.so|g" %_sysconfdir/my.cnf
+#fi
 
 %post server
 %post_service mysqld
@@ -471,12 +481,12 @@ fi
 %_sysconfdir/logrotate.d/mysql
 %config(noreplace) %_sysconfdir/sysconfig/mysqld
 %config(noreplace) %_sysconfdir/my.cnf
+%config(noreplace) %_sysconfdir/my.cnf.d/server.cnf
 %_unitdir/mysqld.service
 %dir %_libexecdir/%name
 %_libexecdir/%name/*
 
 %_libdir/mysql/plugin
-%_datadir/mysql
 
 %_sbindir/*
 
@@ -540,11 +550,25 @@ fi
 %_mandir/man8/mysqld.8*
 %_mandir/man8/mysqlmanager.8*
 
-%exclude %_datadir/mysql/sql-bench
-%exclude %_datadir/mysql/mysql-test
 %exclude %_libdir/mysql/plugin/ha_innodb.so
 %exclude %_libdir/mysql/plugin/ha_oqgraph.so
 %exclude %_libdir/mysql/plugin/ha_sphinx.so
+%ifarch x86_64
+%exclude %_libdir/mysql/plugin/ha_tokudb.so
+%endif
+
+%files common
+%_datadir/mysql
+%exclude %_datadir/mysql/sql-bench
+%exclude %_datadir/mysql/mysql-test
+
+%ifarch x86_64
+%files engine-tokudb
+%config(noreplace) %_sysconfdir/my.cnf.d/tokudb.cnf
+%doc storage/tokudb/README*
+%_bindir/tokuftdump
+%_libdir/mysql/plugin/ha_tokudb.so
+%endif
 
 %files engine-obsolete
 %_libdir/mysql/plugin/ha_innodb.so
@@ -554,7 +578,9 @@ fi
 %_libdir/mysql/plugin/ha_sphinx.so
 
 %files client
-#config(noreplace) %_sysconfdir/mysqlaccess.conf
+%dir %_sysconfdir/my.cnf.d
+%config(noreplace) %_sysconfdir/my.cnf.d/client.cnf
+%config(noreplace) %_sysconfdir/my.cnf.d/mysql-clients.cnf
 %_bindir/msql2mysql
 %_bindir/mysql
 %_bindir/mysqlaccess
@@ -632,8 +658,15 @@ fi
 %_libdir/libmysqld.so
 
 %changelog
+* Mon Sep 23 2013 Slava Dubrovskiy <dubrsl@altlinux.org> 5.5.33a-alt1
+- New version
+- Fix (ALT#29388) - allocated errmsg files to common subpackage
+- Add /etc/my.cnf.d
+- Add new subpackage %name-engine-tokudb
+- Enable tests
+
 * Mon Sep 16 2013 Slava Dubrovskiy <dubrsl@altlinux.org> 5.5.32-alt2
-- Fix ALT#29209
+- Fix (ALT#29209)
 
 * Tue Jul 30 2013 Slava Dubrovskiy <dubrsl@altlinux.org> 5.5.32-alt1
 - New version
