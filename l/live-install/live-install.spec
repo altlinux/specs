@@ -1,5 +1,5 @@
 Name: live-install
-Version: 20130619
+Version: 20130930
 Release: alt1
 Summary: Copy altlinux live to fixed disk
 Group: System/Configuration/Other
@@ -28,6 +28,9 @@ mkdir -p %buildroot/%_datadir/%name/scripts.d
 %dir %_datadir/%name/scripts.d
 
 %changelog
+* Mon Sep 30 2013 Eugene Prokopiev <enp@altlinux.ru> 20130930-alt1
+- fix removing live packages again
+
 * Wed Jun 19 2013 Eugene Prokopiev <enp@altlinux.ru> 20130619-alt1
 - add option to rename default user
 
