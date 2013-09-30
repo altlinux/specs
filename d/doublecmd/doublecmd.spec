@@ -1,17 +1,16 @@
 Name:		doublecmd
 Summary:	Twin-panel (commander-style) file manager (GTK2)
-Version:	0.5.4
-Release:	alt2
+Version:	0.5.7
+Release:	alt0.rev.5310
 Url:		http://doublecmd.sourceforge.net
 
 Packager:	Motsyo Gennadi <drool@altlinux.ru>
 
 Source0:	%name-%version.tar
-Patch1:     %name-0.5.4-fix-build.patch
 License:	GPLv2
 Group:		File tools
 
-BuildRequires: fpc >= 2.4.0 fpc-src glib2-devel libgtk+2-devel lazarus >= 0.9.29
+BuildRequires: fpc >= 2.6.2 fpc-src glib2-devel libgtk+2-devel lazarus >= 1.0.10
 BuildRequires: libncurses-devel
 BuildRequires: libdbus-devel
 BuildRequires: bzlib-devel
@@ -20,7 +19,7 @@ BuildRequires: xorg-proto-devel
 BuildRequires: xorg-xtrans-devel
 
 Provides: doublecmd
-Obsoletes: doublecmd < 0.4.6 doublecmd-qt
+Conflicts: doublecmd-qt
 
 %description
 Double Commander is a cross platform open source file manager with two panels side by side.
@@ -28,7 +27,6 @@ It is inspired by Total Commander and features some new ideas.
 
 %prep
 %setup
-%patch1 -p2
 
 %build
 ./build.sh beta gtk2
@@ -48,6 +46,9 @@ install/linux/install.sh --install-prefix=%buildroot
 %_desktopdir/%name.desktop
 
 %changelog
+* Sat Sep 28 2013 Motsyo Gennadi <drool@altlinux.ru> 0.5.7-alt0.rev.5310
+- build for Sisyphus (thank for src.rpm to Anatoly Chernov)
+
 * Tue Mar 26 2013 Andrey Cherepanov <cas@altlinux.org> 0.5.4-alt2
 - Fix build by commented out unused assignment
 
