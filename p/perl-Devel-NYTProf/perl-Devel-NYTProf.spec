@@ -1,6 +1,7 @@
+%define _unpackaged_files_terminate_build 1
 %define dist Devel-NYTProf
 Name: perl-%dist
-Version: 5.05
+Version: 5.06
 Release: alt1
 
 Summary: Powerful fast feature-rich perl source code profiler
@@ -8,7 +9,7 @@ License: Perl
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/T/TI/TIMB/Devel-NYTProf-%{version}.tar.gz
 
 # Automatically added by buildreq on Tue Oct 11 2011
 BuildRequires: perl-JSON-Any perl-Moose perl-Test-Pod perl-Test-Pod-Coverage zlib-devel perl-Test-Differences
@@ -25,7 +26,6 @@ Devel::NYTProf is a powerful feature-rich perl source code profiler.
 %install
 %perl_vendor_install
 
-rm %buildroot%perl_vendor_archlib/Devel/benchmark.pl
 rm -rv %buildroot%perl_vendor_archlib/Devel/auto
 
 # disable dependency on Apache
@@ -40,6 +40,9 @@ rm -rv %buildroot%perl_vendor_archlib/Devel/auto
 %perl_vendor_autolib/Devel
 
 %changelog
+* Mon Sep 30 2013 Igor Vlasenko <viy@altlinux.ru> 5.06-alt1
+- automated CPAN update
+
 * Thu Aug 29 2013 Vladimir Lettiev <crux@altlinux.ru> 5.05-alt1
 - 4.09 -> 5.05
 
