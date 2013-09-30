@@ -1,6 +1,7 @@
+%define _unpackaged_files_terminate_build 1
 %define dist autodie
 Name: perl-%dist
-Version: 2.20
+Version: 2.22
 Release: alt1
 
 Summary: Replace functions with ones that succeed or die with lexical scope
@@ -8,7 +9,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/P/PJ/PJF/autodie-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -34,6 +35,9 @@ of 'Fatal'.
 %perl_vendor_privlib/autodie*
 
 %changelog
+* Mon Sep 30 2013 Igor Vlasenko <viy@altlinux.ru> 2.22-alt1
+- automated CPAN update
+
 * Fri Sep 06 2013 Vladimir Lettiev <crux@altlinux.ru> 2.20-alt1
 - 2.12 -> 2.20
 - Encode required for t/utf8_open.t
