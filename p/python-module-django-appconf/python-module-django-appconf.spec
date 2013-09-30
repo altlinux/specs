@@ -2,7 +2,7 @@
 
 Name:		python-module-django-appconf
 Version:	0.6
-Release:	alt3
+Release:	alt4
 
 Summary:	A helper class for handling configuration defaults of packaged apps gracefully
 
@@ -40,15 +40,15 @@ rm -rf html/.{doctrees,buildinfo}
 %install
 %python_install
 
-%check
-%__python setup.py test
-
 %files
 %doc html README.rst LICENSE
 %python_sitelibdir/appconf
 %python_sitelibdir/django_appconf-%version-py?.?.egg-info
 
 %changelog
+* Mon Sep 30 2013 Pavel Shilovsky <piastry@altlinux.org> 0.6-alt4
+- Fix build
+
 * Mon Aug 26 2013 Vitaly Lipatov <lav@altlinux.ru> 0.6-alt3
 - cleanup spec, drop direct install requires
 
