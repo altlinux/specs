@@ -4,12 +4,12 @@ BuildRequires: perl(Config.pm) perl(IPC/Open2.pm) perl(blib.pm) perl-Module-Buil
 # END SourceDeps(oneline)
 Summary:	A tiny replacement for Module::Build
 Name:		perl-Module-Build-Tiny
-Version:	0.027
-Release:	alt2_1
+Version:	0.028
+Release:	alt1
 License:	GPL+ or Artistic
 Group:		Development/Perl
 URL:		https://github.com/Leont/module-build-tiny
-Source0:	http://cpan.metacpan.org/authors/id/L/LE/LEONT/Module-Build-Tiny-%{version}.tar.gz
+Source:	http://www.cpan.org/authors/id/L/LE/LEONT/Module-Build-Tiny-%{version}.tar.gz
 BuildArch:	noarch
 # Module
 BuildRequires:	perl(CPAN/Meta.pm)
@@ -43,7 +43,6 @@ Requires:	perl(ExtUtils/ParseXS.pm)
 Requires:	perl(Pod/Man.pm)
 Requires:	perl(TAP/Harness.pm) >= 3.0
 Source44: import.info
-Patch33: Module-Build-Tiny-0.027-alt-bindoc-support.patch
 
 %description
 Many Perl distributions use a Build.PL file instead of a Makefile.PL file to
@@ -56,7 +55,6 @@ Whereas Module::Build has over 6,700 lines of code; this module has less than
 
 %prep
 %setup -q -n Module-Build-Tiny-%{version}
-%patch33 -p1
 rm t/simple.t
 
 %build
@@ -74,6 +72,9 @@ RELEASE_TESTING=1 ./Build test
 %{perl_vendor_privlib}/Module/
 
 %changelog
+* Mon Sep 30 2013 Igor Vlasenko <viy@altlinux.ru> 0.028-alt1
+- automated CPAN update
+
 * Thu Sep 19 2013 Igor Vlasenko <viy@altlinux.ru> 0.027-alt2_1
 - man1 support patch
 
