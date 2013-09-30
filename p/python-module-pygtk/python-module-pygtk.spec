@@ -1,10 +1,11 @@
+%def_enable snapshot
 %def_enable numpy
 %def_disable docs
 
 %define major 2.24
 Name: python-module-pygtk
 Version: %major.0
-Release: alt5
+Release: alt6
 
 Summary: Python bindings for the GTK+ widget set
 
@@ -13,7 +14,11 @@ License: LGPL
 Url: http://www.pygtk.org/
 Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 
+%if_enabled snapshot
+Source: pygtk-%version.tar
+%else
 Source: http://ftp.gnome.org/pub/GNOME/sources/pygtk/%major/pygtk-%version.tar.bz2
+%endif
 Patch: pygtk-2.14.0-alt-configure.patch
 
 %setup_python_module pygtk
@@ -101,10 +106,12 @@ This package contains PyGTK doc
 %__subst "s|@PYTHON@|%_bindir/env python|g" pygtk-codegen-2.0.in examples/pygtk-demo/pygtk-demo.in
 
 %build
-NOCONFIGURE=1 gnome-autogen.sh
+#NOCONFIGURE=1 gnome-autogen.sh
+%autoreconf -I m4
 %configure --disable-static \
 	%{subst_enable numpy} \
-	%{subst_enable docs}
+	%{subst_enable docs} \
+	%{?_enable_snapshot:--enable-docs}
 
 %make_build
 
@@ -142,6 +149,10 @@ test -f %buildroot%python_sitelibdir/gtk-2.0/gobject.so && exit 1
 %_datadir/gtk-doc/html/pygtk/
 
 %changelog
+* Mon Sep 30 2013 Yuri N. Sedunov <aris@altlinux.org> 2.24.0-alt6
+- update to c524124 (fixed BGO #660216)
+- fixed build
+
 * Tue Oct 09 2012 Yuri N. Sedunov <aris@altlinux.org> 2.24.0-alt5
 - fixed %%install
 
