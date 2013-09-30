@@ -25,7 +25,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.10.13
-Release: alt4
+Release: alt5
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -1111,11 +1111,15 @@ config_enable CRYPTO_AES=m CRYPTO_TWOFISH=m CRYPTO_SALSA20=m
 %endif
 
 %ifarch %intel_64 %via_64 %via_32
+%if "%sub_flavour" == "ws"
 sed -i '/^CONFIG_USB_UHCI_HCD=/s/=m/=y/' .config
+%endif
 config_disable USB_OHCI_HCD
 %endif
 %ifarch K9 K10 barcelona phenom
+%if "%sub_flavour" == "ws"
 sed -i '/^CONFIG_USB_OHCI_HCD=/s/=m/=y/' .config
+%endif
 config_disable USB_UHCI_HCD
 %endif
 %ifarch %amd_64 %amd_32 %via_64 %via_32
@@ -1809,25 +1813,34 @@ done)
 
 
 %changelog
-* Sat Sep 27 2013 Led <led@altlinux.ru> 3.10.13-alt4
+* Mon Sep 30 2013 Led <led@altlinux.ru> 3.10.13-alt5
+- added:
+  + fix-crypto-asymmetric_keys--x509_key_parser
+  + fix-net-ipv6
+  + fix-net-netfilter
+- config (vs):
+  + ACPI_BUTTON=m
+  + USB=m
+
+* Sat Sep 28 2013 Led <led@altlinux.ru> 3.10.13-alt4
 - updated:
   + fix-arch-x86-cpu--mshyperv
 - disabled SPI_BUTTERFLY
 
-* Sat Sep 27 2013 Led <led@altlinux.ru> 3.10.13-alt3
+* Sat Sep 28 2013 Led <led@altlinux.ru> 3.10.13-alt3
 - added:
   + fix-arch-x86-cpu--mshyperv
   + feat-drivers-input-serio--hyperv-keyboard
 - moved content of kernel-modules-hyperv-* to kernel-modules-guest-* subpackage
 - removed kernel-modules-hyperv-* subpackage
 
-* Fri Sep 26 2013 Led <led@altlinux.ru> 3.10.13-alt2
+* Fri Sep 27 2013 Led <led@altlinux.ru> 3.10.13-alt2
 - updated:
   + fix-drivers-gpio--gpio-ucb1400
 - added:
   + fix-sound-pci-hda--snd-hda-codec-cirrus
 
-* Fri Sep 26 2013 Led <led@altlinux.ru> 3.10.13-alt1
+* Fri Sep 27 2013 Led <led@altlinux.ru> 3.10.13-alt1
 - 3.10.13
 - removed:
   + fix-virt-kvm--kvm-book3s_64
