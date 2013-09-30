@@ -1,17 +1,25 @@
 Name: freerdp
 Version: 1.0.2
-Release: alt1
-License: Apache License 2.0
+Release: alt2
+
 Group: Networking/Remote access
 Summary: Remote Desktop Protocol functionality
-Packager: Slava Dubrovskiy <dubrsl@altlinux.ru>
+License: Apache License 2.0
 Url: http://freerdp.sourceforge.net/
+Packager: Slava Dubrovskiy <dubrsl@altlinux.ru>
+
+Requires: xfreerdp = %version-%release %name-plugins-standard = %version-%release
+
 Source: http://downloads.sourceforge.net/%name/%name-%version.tar
-Patch: %name-%version-%release.patch
+# SuSE
+Patch1: freerdp_branch-1.0.x_fix-kpdivide-issue831.patch
+Patch2: freerdp-fix-FindPCSC-macro.patch
+Patch3: freerdp-handle-null-device-name.patch
+# ALT
+Patch100: freerdp-1.0.2-alt-fix-compile.patch
 
 BuildRequires: cmake ctest xmlto openssl-devel libX11-devel libXcursor-devel libXdamage-devel libXext-devel libXv-devel libXinerama-devel libxkbfile-devel cups-devel zlib-devel libalsa-devel libdirectfb-devel libICE-devel libao-devel libsamplerate-devel libpcsclite-devel libpulseaudio-devel libavcodec-devel CUnit-devel
 
-Requires: xfreerdp = %version-%release %name-plugins-standard = %version-%release
 
 %description
 freerdp implements Remote Desktop Protocol (RDP), used in a number of Microsoft
@@ -23,7 +31,7 @@ This is metapackage.
 %package -n xfreerdp
 Summary: Remote Desktop Protocol client
 Group: Networking/Remote access
-
+#Requires: %name-plugins-standard
 %description -n xfreerdp
 xfreerdp is a client for Remote Desktop Protocol (RDP), used in a number of
 Microsoft products.
@@ -71,7 +79,10 @@ sync, disk/printer redirection, etc.
 
 %prep
 %setup -q
-%patch -p1
+%patch1 -p1
+%patch2 -p1
+%patch3 -p1
+%patch100 -p1
 
 %build
 %cmake	-DWITH_ALSA=ON \
@@ -88,9 +99,17 @@ sync, disk/printer redirection, etc.
 	-DWITH_XV=ON \
 	-DWITH_DIRECTFB=ON \
 	-DWITH_XDAMAGE=ON \
+%ifarch x86_64
 	-DWITH_SSE2=ON \
-	-DWITH_SSE2_TARGET=ON \
+%else
+	-DWITH_SSE2=OFF \
+%endif
 	-DWITH_SERVER=OFF
+%ifarch armh
+	-DARM_FP_ABI=hard \
+	-DWITH_NEON=OFF \
+%endif
+	#
 
 %make_build -C BUILD
 
@@ -122,6 +141,10 @@ sync, disk/printer redirection, etc.
 %_libdir/pkgconfig/*
 
 %changelog
+* Mon Sep 30 2013 Sergey V Turchin <zerg@altlinux.org> 1.0.2-alt2
+- separate patches
+- fix compile flags
+
 * Wed Sep 18 2013 Andrey Cherepanov <cas@altlinux.org> 1.0.2-alt1
 - New verson (ALT #28716)
 - Pack freerdp keymaps
