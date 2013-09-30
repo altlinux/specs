@@ -1,5 +1,5 @@
 Name: make-initrd-propagator
-Version: 0.20
+Version: 0.21
 Release: alt1
 
 Summary: Put propagator into make-initrd generated image
@@ -37,6 +37,10 @@ mkdir -p %buildroot%_datadir/make-initrd/features/propagator/data/image
 %_datadir/make-initrd/features/propagator
 
 %changelog
+* Mon Sep 30 2013 Fr. Br. George <george@altlinux.ru> 0.21-alt1
+- Fix non-posix invalid redirection
+- Show mounted overlays and mount status
+
 * Thu Apr 11 2013 Michael Shigorin <mike@altlinux.org> 0.20-alt1
 - fixed a typo, thanks Andrey Liakhovets
 
