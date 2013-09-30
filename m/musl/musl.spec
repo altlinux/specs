@@ -8,7 +8,7 @@
 
 Name: musl
 Version: 0.9.14
-Release: alt3
+Release: alt5
 Group: System/Libraries
 Summary: musl libc - new standard library
 License: MIT
@@ -72,7 +72,7 @@ sed -i 's|"/lib\(:/usr/local/lib:\)/usr/lib"|"/%_lib\1%_libdir"|' src/ldso/dynli
 # Used custom INSTALL - install.sh
 %__make DESTDIR=%buildroot install
 rm -rf %buildroot%musl_dir/include/linux
-for d in linux asm asm-generic; do
+for d in linux asm asm-generic mtd; do
 	ln -sf %_includedir/$d %buildroot%musl_dir/include/
 done
 
@@ -116,6 +116,12 @@ echo "%musl_dir/lib" > %buildroot%_sysconfdir/ld.so.conf.d/%name-%_lib.conf
 
 
 %changelog
+* Mon Sep 30 2013 Led <led@altlinux.ru> 0.9.14-alt5
+- added symlink to kernel mtd uncludes
+
+* Sun Sep 29 2013 Led <led@altlinux.ru> 0.9.14-alt4
+- added GNU qsort_r(3)
+
 * Sun Sep 29 2013 Led <led@altlinux.ru> 0.9.14-alt3
 - fixes from upstream's SCM
 
