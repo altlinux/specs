@@ -8,7 +8,7 @@
 
 Name: libsasl2
 Version: 2.1.24
-Release: alt9
+Release: alt10
 
 Summary: libsasl2.so.2 compatibility package
 License: Freely Distributable
@@ -31,6 +31,8 @@ Source8: README.ALT
 BuildRequires: libcom_err-devel libdb4-devel libkrb5-devel libpam-devel groff-base autoconf automake openssl-devel
 
 Requires: shadow-utils
+
+Requires: libsasl2-3
 
 %if_enabled sql
 BuildRequires: libMySQL-devel postgresql-devel
@@ -205,6 +207,9 @@ install -m0600 %SOURCE5 %buildroot%_sysconfdir/sysconfig/saslauthd
 %doc COPYING AUTHORS INSTALL NEWS README ChangeLog doc/TODO
 
 %changelog
+* Mon Sep 30 2013 Sergey Y. Afonin <asy@altlinux.ru> 2.1.24-alt10
+- Added requires libsasl2-3 (ALT #29409)
+
 * Fri Sep 27 2013 Sergey Y. Afonin <asy@altlinux.ru> 2.1.24-alt9
 - Bumped release for possibility of backport
 
