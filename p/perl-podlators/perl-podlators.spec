@@ -1,6 +1,7 @@
+%define _unpackaged_files_terminate_build 1
 %define dist podlators
 Name: perl-%dist
-Version: 2.5.1
+Version: 2.5.2
 Release: alt1
 
 Summary: Convert POD data to various other formats
@@ -41,6 +42,9 @@ export PERL5LIB=$PWD/blib/lib
 %perl_vendor_privlib/Pod*
 
 %changelog
+* Mon Sep 30 2013 Igor Vlasenko <viy@altlinux.ru> 2.5.2-alt1
+- automated CPAN update
+
 * Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 2.5.1-alt1
 - automated CPAN update
 
