@@ -1,6 +1,6 @@
 Name:		python-module-warlock
 Version:	0.4.0
-Release:	alt1
+Release:	alt2
 Summary:	Python object model built on top of JSON schema
 
 Group:		Development/Python
@@ -11,9 +11,10 @@ BuildArch:	noarch
 
 BuildRequires:	python-devel
 BuildRequires:	python-module-distribute
+BuildRequires:	python-module-nose
+BuildRequires:	python-module-jsonschema
 
 Requires:	python-module-jsonschema
-BuildRequires:	python-module-jsonschema
 
 %description
 Build self-validating python objects using JSON schemas
@@ -24,13 +25,13 @@ Build self-validating python objects using JSON schemas
 rm -rf warlock.egg-info
 
 %build
-%{__python} setup.py build
+%python_build
 
 %check
-%{__python} setup.py test
+nosetests
 
 %install
-%{__python} setup.py install --skip-build --root %{buildroot}
+%python_install
 
 %files
 %doc README.md LICENSE
@@ -38,5 +39,8 @@ rm -rf warlock.egg-info
 %{python_sitelibdir}/warlock-%{version}-py?.?.egg-info
 
 %changelog
+* Mon Sep 30 2013 Pavel Shilovsky <piastry@altlinux.org> 0.4.0-alt2
+- Fix check section in spec
+
 * Mon Sep 17 2012 Pavel Shilovsky <piastry@altlinux.org> 0.4.0-alt1
 - Initial release for Sisyphus (based on Fedora)
