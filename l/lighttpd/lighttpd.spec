@@ -13,8 +13,8 @@
 %define svnrev 2849
 
 Name: lighttpd
-Version: 1.4.32
-Release: alt4
+Version: 1.4.33
+Release: alt1
 
 Packager: Alexei Takaseev <taf@altlinux.ru>
 
@@ -200,6 +200,9 @@ gpasswd -a %lighttpd_user %webserver_group
 %_libdir/%name/*rrdtool.so
 
 %changelog
+* Mon Sep 30 2013 Alexei Takaseev <taf@altlinux.org> 1.4.33-alt1
+- 1.4.33
+
 * Wed Apr 03 2013 Alexei Takaseev <taf@altlinux.org> 1.4.32-alt4
 - change buildreq 'libMySQL-devel' to 'libmysqlclient-devel'
 
