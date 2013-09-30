@@ -1,7 +1,7 @@
 %def_enable updatedb
 
 Name: shared-mime-info
-Version: 1.1
+Version: 1.2
 Release: alt1
 
 Summary: Shared MIME-Info Specification
@@ -99,6 +99,9 @@ multipart,text,video,XMLnamespaces}
 %exclude %_datadir/locale
 
 %changelog
+* Tue Oct 01 2013 Yuri N. Sedunov <aris@altlinux.org> 1.2-alt1
+- 1.2
+
 * Sat Mar 09 2013 Yuri N. Sedunov <aris@altlinux.org> 1.1-alt1
 - 1.1
 
