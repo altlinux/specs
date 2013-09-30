@@ -1,24 +1,25 @@
-%define ver_major 3.2
+%define ver_major 3.8
 %def_enable gtk_doc
 %define webkit_api_ver 3.0
 %define _name seed-gtk3
+%def_enable xorg_module
 
 Name: seed
-Version: %ver_major.0
-Release: alt1.1
+Version: %ver_major.2
+Release: alt0.2
 
 Summary: GObject JavaScriptCore bridge
 License: LGPLv3+/GPLv3+
 Group: Development/Other
 Url: http://live.gnome.org/Seed
 
-# git archive --format=tar --prefix=%name-%version/ --output=%name-%version.tar HEAD
-Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+Source: %name-%version.tar
+#Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 
 Provides: %_bindir/%name
-
 Requires: lib%name = %version-%release
 
+BuildRequires: gtk-doc intltool gnome-common
 BuildRequires: libffi-devel
 BuildRequires: gobject-introspection-devel >= 0.10.2
 BuildRequires: gnome-js-common
@@ -30,12 +31,10 @@ BuildRequires: libsqlite3-devel
 BuildRequires: libdbus-glib-devel
 BuildRequires: libmpfr-devel
 BuildRequires: libxml2-devel
-BuildRequires: gtk-doc
-BuildRequires: intltool
-BuildRequires: gnome-common
+%{?_enable_xorg_module:BuildRequires: libXScrnSaver-devel}
 
 # for tests
-# BuildRequires: libgtk+3-gir
+BuildRequires: /proc xvfb-run libgtk+3-gir
 
 %description
 Seed is a library and interpreter, dynamically bridging (through
@@ -94,9 +93,6 @@ This package provides development documentation for Seed
 
 %prep
 %setup -q
-# install documentation in proper location
-find doc -name "Makefile*" -print0|xargs -r0 subst 's@\$(datadir)/doc/seed@%pkgdocdir@' --
-
 # since 2.29.91 m4 directory not used
 subst '/ACLOCAL_AMFLAGS = -I m4/d' Makefile.am
 
@@ -108,14 +104,15 @@ rm -f seed.pc
 %configure \
 	--disable-static \
 	%{?_enable_gtk_doc:--enable-gtk-doc} \
-	--with-webkit=%webkit_api_ver
+	--with-webkit=%webkit_api_ver \
+	%{?_enable_xorg_module:--enable-xorg-module}
 
 %make_build
 
 %install
 %make DESTDIR=%buildroot install
 
-#%check
+%check
 #%make check
 
 %files
@@ -142,6 +139,7 @@ rm -f seed.pc
 %_libdir/%_name/libseed_readline.so
 %_libdir/%_name/libseed_sandbox.so
 %_libdir/%_name/libseed_sqlite.so
+%{?_enable_xorg_module:%_libdir/%_name/libseed_xorg.so}
 %exclude %_libdir/%_name/*.la
 
 %files -n lib%name-devel
@@ -152,7 +150,15 @@ rm -f seed.pc
 %files -n lib%name-devel-doc
 %_datadir/gtk-doc/html/%name
 
+%exclude %_datadir/doc/%name/
+
 %changelog
+* Mon Sep 30 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.2-alt0.2
+- 3.8.2 smapshot (24c5968)
+
+* Tue Apr 16 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.1-alt1
+- 3.8.1
+
 * Sat Sep 01 2012 Dmitry V. Levin <ldv@altlinux.org> 3.2.0-alt1.1
 - Rebuilt with libgmp.so.10.
 
