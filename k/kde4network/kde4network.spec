@@ -14,7 +14,7 @@
 %define bugfix 1
 Name: kde4network
 Version: %major.%minor.%bugfix
-Release: alt2
+Release: alt3
 
 Packager: Sergey V Turchin <zerg at altlinux dot org>
 
@@ -154,7 +154,7 @@ Requires: %name-core = %version-%release
 Summary: %name krdc
 Group: Networking/Remote access
 Requires: %name-core = %version-%release
-Requires: xfreerdp
+Requires: xfreerdp freerdp-plugins-standard
 %description krdc
 %name krdc.
 
@@ -379,6 +379,9 @@ chmod 0755 %buildroot/etc/control.d/facilities/kppp-kde4
 %_K4dbus_interfaces/*
 
 %changelog
+* Mon Sep 30 2013 Sergey V Turchin <zerg@altlinux.org> 4.11.1-alt3
+- fix requires
+
 * Thu Sep 26 2013 Sergey V Turchin <zerg@altlinux.org> 4.11.1-alt2
 - split kopete to separate package
 
