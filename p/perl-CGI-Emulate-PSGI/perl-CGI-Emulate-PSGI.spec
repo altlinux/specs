@@ -1,14 +1,15 @@
 Name: perl-CGI-Emulate-PSGI
-Version: 0.14
+Version: 0.15
 Release: alt1
-Summary: CGI::Emulate::PSGI - PSGI adapter for CGI
 
+Summary: CGI::Emulate::PSGI - PSGI adapter for CGI
 Group: Development/Perl
 License: Perl
+
 Url: %CPAN CGI-Emulate-PSGI
+Source: %name-%version.tar
 
 BuildArch: noarch
-Source: %name-%version.tar
 BuildRequires: perl-devel perl-libwww perl-CGI
 
 %description
@@ -22,7 +23,7 @@ translates it to the format expected for the PSGI standard using
 CGI::Parse::PSGI module
 
 %prep
-%setup -q -n %name-%version
+%setup -q
 
 %build
 %perl_vendor_build
@@ -33,9 +34,12 @@ CGI::Parse::PSGI module
 %files
 %perl_vendor_privlib/CGI/Emulate/PSGI.pm
 %perl_vendor_privlib/CGI/Parse/PSGI.pm
-%doc Changes README 
+%doc Changes README
 
 %changelog
+* Mon Sep 30 2013 Vladimir Lettiev <crux@altlinux.ru> 0.15-alt1
+- New version 0.15
+
 * Mon Dec 05 2011 Vladimir Lettiev <crux@altlinux.ru> 0.14-alt1
 - New version 0.14
 
