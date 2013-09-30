@@ -26,7 +26,7 @@
 
 Name: systemd
 Version: 207
-Release: alt1.git.a0f70805
+Release: alt2.git.a0f70805
 Summary: A System and Session Manager
 Url: http://www.freedesktop.org/wiki/Software/systemd
 Group: System/Configuration/Boot and Init
@@ -636,7 +636,7 @@ mkdir -p %buildroot%_localstatedir/lib/systemd/catalog
 mkdir -p %buildroot%_localstatedir/log/journal
 touch %buildroot%_localstatedir/lib/systemd/catalog/database
 touch %buildroot%_sysconfdir/udev/hwdb.bin
-mkdir -p %buildroot%_localstatedir/lib/systemd/random-seed
+touch %buildroot%_localstatedir/lib/systemd/random-seed
 mkdir -p %buildroot%_localstatedir/lib/systemd/backlight
 
 # Add completion for bash3
@@ -939,7 +939,7 @@ update_chrooted all
 %dir %_localstatedir/lib/systemd
 %dir %_localstatedir/lib/systemd/catalog
 %ghost %_localstatedir/lib/systemd/catalog/database
-%dir %_localstatedir/lib/systemd/random-seed
+%ghost %_localstatedir/lib/systemd/random-seed
 %dir %_localstatedir/lib/systemd/coredump
 # %%_docdir/systemd
 %doc DISTRO_PORTING LICENSE.LGPL2.1 README NEWS TODO
@@ -1222,6 +1222,11 @@ update_chrooted all
 /lib/udev/write_net_rules
 
 %changelog
+* Mon Sep 30 2013 Alexey Shabalin <shaba@altlinux.ru> 207-alt2.git.a0f70805
+- fixed mount /usr (ALT#29407)
+- default kernel.sysrq = 1 (ALT#29366)
+- fixed error about /var/lib/systemd/random-seed
+
 * Mon Sep 23 2013 Alexey Shabalin <shaba@altlinux.ru> 207-alt1.git.a0f70805
 - upstream git snapshot a0f708053ba42c8289caed1107f498bbf332e204
 
