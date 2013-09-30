@@ -1,7 +1,7 @@
 %define dist Mouse
 Name: perl-%dist
-Version: 1.11
-Release: alt2
+Version: 1.12
+Release: alt1
 
 Summary: Moose minus the antlers
 License: GPL or Artistic
@@ -43,6 +43,9 @@ export XSUBPP_NO_STATIC_XS=1
 %perl_vendor_archlib/Test
 
 %changelog
+* Mon Sep 30 2013 Igor Vlasenko <viy@altlinux.ru> 1.12-alt1
+- automated CPAN update
+
 * Wed Aug 28 2013 Vladimir Lettiev <crux@altlinux.ru> 1.11-alt2
 - built for perl 5.18
 
