@@ -1,6 +1,6 @@
-Name: installer-distro-junior
-Version: 6.0 
-Release: alt2
+Name:    installer-distro-junior
+Version: 7.0
+Release: alt1
 
 Summary: Installer common files
 License: GPL
@@ -29,7 +29,9 @@ Requires: alterator-license
 Requires: alterator-datetime openntpd
 Requires: alterator-vm
 Requires: alterator-pkg
+Requires: alterator-luks
 Requires: x-cursor-theme-jimmac
+Requires: bc
 #features
 Requires: installer-feature-local-clock
 Requires: installer-feature-autohostname-stage2
@@ -41,6 +43,7 @@ Requires: installer-feature-set-tz
 Requires: installer-feature-runlevel5-stage2
 Requires: installer-feature-xdg-user-dirs
 Requires: installer-feature-services
+Requires: volumes-profile-lite
 
 Provides: installer-lite-stage2
 Provides: installer-simply-linux-stage2
@@ -61,14 +64,14 @@ Requires: alterator-grub
 Requires: alterator-users
 Requires: alterator-root
 Requires: alterator-net-eth dhcpcd
-Requires: alterator-net-general
+Requires: alterator-luks
 #Requires: alterator-x11
 Requires: installer-feature-nfs-client-stage3
 Requires: installer-feature-setup-network-stage3
 Requires: installer-feature-online-repo
 Requires: installer-feature-bell-off-stage3
-Requires: installer-feature-cpufreq-stage3
-Requires: installer-feature-hdd-pm-disable-stage3
+Requires: installer-feature-symlinks-from-sbin
+Requires: installer-feature-efi-stage3
 
 Provides: installer-lite-stage3
 Provides: installer-simply-linux-stage3
@@ -93,12 +96,18 @@ Installer stage3
 %_datadir/install2/*.d/*
 %_datadir/install2/steps/*
 %_datadir/install2/alterator-menu
-%_datadir/install2/services*
+%_datadir/install2/systemd-enabled
+%_datadir/install2/systemd-disabled
 
 %files stage3
 %_datadir/alterator/ui/simply-linux
 
 %changelog
+* Tue Oct 01 2013 Andrey Cherepanov <cas@altlinux.org> 7.0-alt1
+- Prepare for Seven platform by merging with installer-distro-simply-linux
+- Use external package volumes-profile-lite for autopartition
+- Enable sshd by default
+
 * Wed May 16 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 6.0-alt2
 - ignore errors in 30-default-dhcp
 
