@@ -48,7 +48,7 @@
 
 Name: tracker
 Version: %ver_major.2
-Release: alt1
+Release: alt2
 
 Summary: Tracker is a powerfull desktop-oriented search tool and indexer
 License: GPLv2+
@@ -380,6 +380,9 @@ find %{buildroot} -type f -name "*.la" -exec rm -f {} ';'
 %endif
 
 %changelog
+* Tue Oct 01 2013 Alexey Shabalin <shaba@altlinux.ru> 0.16.2-alt2
+- upstream snapshot of branch tracker-0.16
+
 * Wed Aug 07 2013 Alexey Shabalin <shaba@altlinux.ru> 0.16.2-alt1
 - 0.16.2
 
