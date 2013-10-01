@@ -4,7 +4,7 @@
 
 Name: mariadb
 Version: 5.5.33a
-Release: alt1
+Release: alt2
 
 Summary: A very fast and reliable SQL database engine
 License: GPLv2 with exceptions
@@ -139,6 +139,8 @@ This package contains the standard MariaDB clients.
 Summary: Common files used in client and servers
 Group: Databases
 BuildArch: noarch
+Conflicts: MySQL-server
+Obsoletes: %name-server < 5.5.33a
 
 %description common
 This package contains the common files for MariaDB client and servers.
@@ -658,6 +660,9 @@ fi
 %_libdir/libmysqld.so
 
 %changelog
+* Tue Oct 01 2013 Slava Dubrovskiy <dubrsl@altlinux.org> 5.5.33a-alt2
+- Fix (ALT#29415)
+
 * Mon Sep 23 2013 Slava Dubrovskiy <dubrsl@altlinux.org> 5.5.33a-alt1
 - New version
 - Fix (ALT#29388) - allocated errmsg files to common subpackage
