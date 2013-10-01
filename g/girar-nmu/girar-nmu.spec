@@ -1,6 +1,6 @@
 Name: girar-nmu
-Version: 1.14
-Release: alt3
+Version: 1.15
+Release: alt1
 
 Summary: git.alt client utilities for NMU automation
 License: GPL
@@ -12,8 +12,8 @@ Url: http://www.altlinux.org/Git.alt/girar-nmu
 Source: %name-%version.tar
 
 BuildPreReq: gear, help2man
-BuildRequires: perl-RPM perl-RPM-Source-Editor perl(Pod/Usage.pm) /usr/bin/pod2man
-Requires: perl-RPM-Source-Editor >= 0.789
+BuildRequires: perl-RPM perl-RPM-Source-Editor perl-RPM-Source-Convert perl(Pod/Usage.pm) /usr/bin/pod2man
+Requires: perl-RPM-Source-Editor >= 0.800
 
 %description
 This package contains client utilities for git.alt
@@ -44,6 +44,9 @@ install -m 644 girar-*.1 %buildroot%_man1dir/
 %_man1dir/*
 
 %changelog
+* Tue Oct 01 2013 Igor Vlasenko <viy@altlinux.ru> 1.15-alt1
+- new utility girar-backport-prepare
+
 * Mon May 13 2013 Igor Vlasenko <viy@altlinux.ru> 1.14-alt3
 - bugfix release
 
