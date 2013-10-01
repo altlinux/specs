@@ -26,7 +26,7 @@
 
 Name: systemd
 Version: 207
-Release: alt2.git.a0f70805
+Release: alt3.git.a0f70805
 Summary: A System and Session Manager
 Url: http://www.freedesktop.org/wiki/Software/systemd
 Group: System/Configuration/Boot and Init
@@ -797,8 +797,8 @@ if [ $1 -eq 1 ] ; then
         /bin/ln -sf "$target" %_sysconfdir/systemd/system/default.target 2>&1 || :
 
         # Enable the services we install by default
-        /sbin/systemctl enable \
-                getty@.service \
+        /sbin/systemctl preset \
+                getty@tty1.service \
                 remote-fs.target \
                 systemd-readahead-replay.service \
                 systemd-readahead-collect.service >/dev/null 2>&1 || :
@@ -1222,6 +1222,9 @@ update_chrooted all
 /lib/udev/write_net_rules
 
 %changelog
+* Tue Oct 01 2013 Alexey Shabalin <shaba@altlinux.ru> 207-alt3.git.a0f70805
+- fixed post install (ALT#29411)
+
 * Mon Sep 30 2013 Alexey Shabalin <shaba@altlinux.ru> 207-alt2.git.a0f70805
 - fixed mount /usr (ALT#29407)
 - default kernel.sysrq = 1 (ALT#29366)
