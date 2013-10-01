@@ -7,7 +7,7 @@
 
 Name:    v8-%MAJOR_VERSION.%MINOR_VERSION
 Version: %MAJOR_VERSION.%MINOR_VERSION.%BUILD_NUMBER.%PATCH_LEVEL
-Release: alt1
+Release: alt1.1
 
 Summary: V8 is Google's open source JavaScript engine.
 License: BSD
@@ -53,14 +53,16 @@ Development headers and libraries for V8.
 %setup -q
 sed -i 's|build/gyp/gyp|gyp|g' Makefile
 #sed -i "s|'-Wno-unused-but-set-variable'||g" SConstruct
-%ifarch armh
-#sed -i '/default.\+softfp/ s,softfp,hard,' SConstruct
-sed -i '/v8_use_arm_eabi_hardfloat%/ s,false,true,' build/common.gypi
-%endif
-#sed -i '/^#define SONAME/s,"","libv8.so.%soversion",' src/version.cc
 
 %build
-%make_build native mode=release library=shared snapshot=on soname_version=%{soversion} 
+%make_build native \
+    mode=release \
+    library=shared \
+    snapshot=on \
+    soname_version=%{soversion} \
+%ifarch armh
+    armfloatabi=hard
+%endif
 
 
 %install
@@ -80,6 +82,9 @@ install -p -m644 include/*.h %buildroot%_includedir/
 %_bindir/*
 
 %changelog
+* Tue Oct 01 2013 Dmitriy Kulik <lnkvisitor@altlinux.org> 3.20.17.9-alt1.1
+- fix arm build (sbolshakov@altlinux.ru)
+
 * Sun Sep 29 2013 Dmitriy Kulik <lnkvisitor@altlinux.org> 3.20.17.9-alt1
 - new version
 
