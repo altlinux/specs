@@ -24,13 +24,13 @@
 %define flavour %base_flavour-%sub_flavour
 
 Name: kernel-image-%flavour
-Version: 3.10.13
-Release: alt5
+Version: 3.10.14
+Release: alt1
 
 %define kernel_req %nil
 %define kernel_prov %nil
 %define kernel_branch 3.10
-%define kernel_stable_version 13
+%define kernel_stable_version 14
 %define kernel_extra_version .%kernel_stable_version
 #define kernel_extra_version %nil
 
@@ -1813,6 +1813,13 @@ done)
 
 
 %changelog
+* Tue Oct 01 2013 Led <led@altlinux.ru> 3.10.14-alt1
+- 3.10.14
+- removed:
+  + fix-drivers-watchdog--i6300esb
+- config (vs):
+  disabled FONT_SUN12x22
+
 * Mon Sep 30 2013 Led <led@altlinux.ru> 3.10.13-alt5
 - added:
   + fix-crypto-asymmetric_keys--x509_key_parser
