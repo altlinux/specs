@@ -95,8 +95,8 @@
 %def_with sasl
 
 Name: libvirt
-Version: 1.1.1
-Release: alt2
+Version: 1.1.3
+Release: alt1
 Summary: Library providing a simple API virtualization
 License: LGPLv2+
 Group: System/Libraries
@@ -510,6 +510,8 @@ of recent versions of Linux (and other OSes).
 sed -i '/^\(git\|rsync\)[[:space:]]/d' bootstrap.conf
 # disable virnetsockettest test
 sed -i 's/virnetsockettest //' tests/Makefile.am
+# disable vircgrouptest test
+sed -i 's/vircgrouptest //' tests/Makefile.am
 
 %build
 ./bootstrap --no-git --gnulib-srcdir=gnulib-%name-%version
@@ -699,6 +701,12 @@ fi
 %_datadir/libvirt/cpu_map.xml
 %_datadir/libvirt/libvirtLogo.png
 
+%if_with lxc
+%config(noreplace) %_sysconfdir/libvirt/virt-login-shell.conf
+%_bindir/virt-login-shell
+%_man1dir/virt-login-shell.*
+%endif
+
 %if_with sasl
 %config(noreplace) %_sysconfdir/sasl2/libvirt.conf
 %endif
@@ -729,12 +737,16 @@ fi
 %config(noreplace) %_sysconfdir/libvirt/qemu-lockd.conf
 %_initdir/virtlockd
 %config(noreplace) %_sysconfdir/sysconfig/virtlockd
+%config(noreplace) %_sysconfdir/libvirt/virtlockd.conf
 %_unitdir/virtlockd.service
 %_unitdir/virtlockd.socket
 %_libdir/%name/lock-driver/lockd.so
 %_sbindir/virtlockd
 %_datadir/augeas/lenses/libvirt_lockd.aug
+%_datadir/augeas/lenses/virtlockd.aug
 %_datadir/augeas/lenses/tests/test_libvirt_lockd.aug
+%_datadir/augeas/lenses/tests/test_virtlockd.aug
+%_man8dir/virtlockd.*
 
 %if_with storage_disk
 %_libexecdir/libvirt_parthelper
@@ -897,10 +909,17 @@ fi
 
 %files -n python-module-%name
 %python_sitelibdir/libvirt*
-%doc python/tests/*.py
 %doc examples/python
 
 %changelog
+* Tue Oct 01 2013 Alexey Shabalin <shaba@altlinux.ru> 1.1.3-alt1
+- 1.1.3
+- fixed CVE-2013-4297, CVE-2013-4311, CVE-2013-4296
+
+* Tue Sep 03 2013 Alexey Shabalin <shaba@altlinux.ru> 1.1.2-alt1
+- 1.1.2
+- fixed CVE-2013-4291, CVE-2013-4292, CVE-2013-5651
+
 * Mon Aug 26 2013 Alexey Shabalin <shaba@altlinux.ru> 1.1.1-alt2
 - snapshot of v1.1.1-maint branch (fixed CVE-2013-4239)
 
