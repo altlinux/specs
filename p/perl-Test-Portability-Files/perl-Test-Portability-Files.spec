@@ -1,62 +1,68 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(Module/Build.pm) perl-Module-Build perl-devel perl-podlators
+BuildRequires: perl(English.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
+# We need to patch the test suite if we have an old version of Test::More
+%global old_test_more %(perl -MTest::More -e 'print (($Test::More::VERSION < 0.88) ? 1 : 0);' 2>/dev/null || echo 0)
+
 Name:           perl-Test-Portability-Files
 Version:        0.06
-Release:        alt1
+Release:        alt1_1
 Summary:        Check file names portability
 License:        GPL+ or Artistic
 Group:          Development/Perl
 URL:            http://search.cpan.org/dist/Test-Portability-Files/
-Source:        http://www.cpan.org/authors/id/A/AB/ABRAXXA/Test-Portability-Files-%{version}.tar.gz
+Source0:        http://www.cpan.org/authors/id/A/AB/ABRAXXA/Test-Portability-Files-%{version}.tar.gz
+Patch1:         Test-Portability-Files-0.06-old-Test::More.patch
 BuildArch:      noarch
-BuildRequires:  perl(Exporter.pm)
+# Build
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
+# Runtime
+BuildRequires:  perl(Exporter.pm)
 BuildRequires:  perl(ExtUtils/Manifest.pm)
 BuildRequires:  perl(File/Spec.pm)
-#BuildRequires:  perl(Module::Build)
-BuildRequires:  perl(Test.pm)
+BuildRequires:  perl(strict.pm)
+BuildRequires:  perl(warnings.pm)
+# Test Suite
+BuildRequires:  perl(File/Temp.pm)
 BuildRequires:  perl(Test/Builder.pm)
 BuildRequires:  perl(Test/More.pm)
-BuildRequires:  perl(Test/Pod.pm)
-BuildRequires:  perl(Test/Pod/Coverage.pm)
 Source44: import.info
 
 %description
 This module is used to check the portability across operating systems of
 the names of the files present in the distribution of a module. The tests
-use the advices given in "Files and Filesystems" in perlport. The author of
+use the advice given in "Files and Filesystems" in perlport. The author of
 a distribution can select which tests to execute.
 
 %prep
 %setup -q -n Test-Portability-Files-%{version}
 
+# We need to patch the test suite if we have an old version of Test::More
+%if %{old_test_more}
+%patch1
+%endif
+
 %build
-#%{__perl} Build.PL --install_path bindoc=%_man1dir installdirs=vendor
-%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
-#./Build
+perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
 make
 
 %install
-
-#./Build install destdir=$RPM_BUILD_ROOT create_packlist=0
-make install PERL_INSTALL_ROOT=$RPM_BUILD_ROOT
-
+make pure_install DESTDIR=$RPM_BUILD_ROOT
 find $RPM_BUILD_ROOT -type f -name .packlist -exec rm -f {} \;
-find $RPM_BUILD_ROOT -depth -type d -exec rmdir {} 2>/dev/null \;
-
-# %{_fixperms} $RPM_BUILD_ROOT/*
+# %{_fixperms} $RPM_BUILD_ROOT
 
 %check
-#./Build test
 make test
 
 %files
 %doc Changes LICENSE README
-%{perl_vendor_privlib}/*
+%{perl_vendor_privlib}/Test/
 
 %changelog
+* Tue Oct 01 2013 Igor Vlasenko <viy@altlinux.ru> 0.06-alt1_1
+- update to new release by fcimport
+
 * Tue Sep 24 2013 Igor Vlasenko <viy@altlinux.ru> 0.06-alt1
 - automated CPAN update
 
