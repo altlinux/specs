@@ -5,7 +5,7 @@
 %define req_std_burning cdrkit cdrdao dvd+rw-tools
 %define req_std_kde kde4libs >= %{get_version kde4libs}
 %define req_std_common alterator-control
-%define req_multimedia sox-base transcode vcdimager >= 0.7 normalize lame flac mpc
+%define req_multimedia sox-play transcode vcdimager >= 0.7 normalize lame flac mpc
 
 %define req_mini %req_std_burning %req_std_kde %req_std_common
 %define req_all %req_mini %req_multimedia
@@ -13,7 +13,7 @@
 %define rname k3b
 Name: kde4-%rname
 Version: 2.0.2
-Release: alt6
+Release: alt7
 
 Group: Archiving/Cd burning
 Summary: The CD Kreator (Complete set)
@@ -26,7 +26,10 @@ Requires: %req_all
 Conflicts: k3b-mini < 1.0.5-alt7
 
 Source0: %rname-%version.tar
-Patch1: k3b-2.0.2-libav07.patch
+# Debian
+Patch1: Fixed_compilation_with_new_FFMPEG.patch
+Patch2: Fix-K3B-to-build-with-recent-FFMPEG-versions.patch
+Patch3: ffmpeg-more.diff
 # FC
 # ALT
 Patch101: k3b-1.92-alt-check-cdrecord-ver.patch
@@ -109,6 +112,8 @@ KDE 4 library.
 %prep
 %setup -q -n %rname-%version
 %patch1 -p1
+%patch2 -p1
+%patch3 -p1
 #
 %patch101 -p1
 %patch102 -p1
@@ -127,6 +132,7 @@ KDE 4 library.
 %K4install
 
 %K4find_lang --with-kde %rname
+%K4find_lang --append --output=%rname.lang libk3b
 %K4find_lang --append --output=%rname.lang libk3bdevice
 %K4find_lang --append --output=%rname.lang kio_videodvd
 
@@ -157,6 +163,9 @@ KDE 4 library.
 %_K4includedir/*.h
 
 %changelog
+* Tue Oct 01 2013 Sergey V Turchin <zerg@altlinux.org> 2.0.2-alt7
+- sync patches with Debian to fix compile with new libav
+
 * Wed May 23 2012 Sergey V Turchin <zerg@altlinux.org> 2.0.2-alt6
 - fix requires
 
