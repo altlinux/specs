@@ -13,7 +13,7 @@
 
 Name: lib%bname
 Version: 1.1.21
-Release: alt6
+Release: alt7
 Summary: Free libraries for play video and audio
 Summary(ru_RU.UTF-8): Библиотеки для воспроизведения видео и аудио информации
 License: GPLv2+
@@ -47,6 +47,8 @@ Patch108: xine-lib-various-noncrippled.diff
 # FC
 Patch201: xine-lib-1.1.1-deepbind-939.patch
 Patch202: xine-lib-1.1.4-optflags.patch
+# Debian
+Patch300: fix-libav9-ftbfs.patch
 
 # Automatically added by buildreq on Wed Apr 20 2011 (-bi)
 # optimized out: aalib elfutils fontconfig fonts-type1-urw ghostscript-classic glib2-devel gnome-vfs libGConf-devel libGL-devel libGLU-devel libX11-devel libXext-devel libXv-devel libavahi-glib libavcore-devel libavutil-devel libdbus-glib libdvdread-devel libgpg-error libogg-devel libopencore-amrnb0 libopencore-amrwb0 libxcb-devel pkg-config python-base ruby samba-winbind-clients xorg-videoproto-devel xorg-xextproto-devel xorg-xproto-devel xz
@@ -149,6 +151,8 @@ samba input plugin for %bname.
 %patch108 -p0
 %patch201 -p1
 %patch202 -p1
+#
+%patch300 -p1
 
 %if_enabled build_ffmpeg_ext
 mv src/libffmpeg/libavcodec/dvdata.h src/libffmpeg/libavcodec/dvdata.h~
@@ -253,6 +257,12 @@ SAMBA_CFLAGS=`pkg-config --cflags smbclient`
 %_libdir/%bname/plugins/%plugin_version/%{bname}plug_inp_smb.so
 
 %changelog
+* Tue Oct 01 2013 Sergey V Turchin <zerg@altlinux.org> 1.1.21-alt7
+- fix to build with new libav
+
+* Mon Mar 25 2013 Sergey V Turchin <zerg@altlinux.org> 1.1.21-alt5.M60P.1
+- built for M60P
+
 * Mon Mar 11 2013 Sergey V Turchin <zerg@altlinux.org> 1.1.21-alt6
 - update from 1.1 branch
 
