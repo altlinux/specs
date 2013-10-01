@@ -6,7 +6,7 @@
 
 Name: dhcp
 Version: 4.2.5
-Release: alt2
+Release: alt3
 Epoch: 1
 
 Summary: Dynamic Host Configuration Protocol (DHCP) distribution
@@ -557,6 +557,9 @@ fi
 # }}}
 
 %changelog
+* Wed Oct 02 2013 Fr. Br. George <george@altlinux.ru> 1:4.2.5-alt3
+- Rebuild with bind-9.9.4
+
 * Thu Jun 13 2013 Fr. Br. George <george@altlinux.ru> 1:4.2.5-alt2
 - Update to ftp://ftp.isc.org/isc/dhcp/4.2.5-P1/dhcp-4.2.5-P1.tar.gz
 - Rebuild with bind-9.9.3
