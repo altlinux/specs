@@ -1,6 +1,6 @@
 Name: cdemu-client
 Version: 2.1.1
-Release: alt1
+Release: alt2
 
 Summary: A simple command-line client to control CDEmu daemon
 License: GPLv2+
@@ -44,9 +44,9 @@ popd
 
 %install
 %make -C %_target_platform DESTDIR=%buildroot install
-%find_lang %name
+%find_lang cdemu
 
-%files -f %name.lang
+%files -f cdemu.lang
 %defattr(-,root,root)
 %doc AUTHORS ChangeLog COPYING NEWS README
 %_bindir/cdemu
@@ -54,14 +54,11 @@ popd
 %_mandir/man1/*
 %dir %_sysconfdir/bash_completion.d
 %_sysconfdir/bash_completion.d/%name
-%_datadir/locale/de/LC_MESSAGES/cdemu.mo
-%_datadir/locale/fr/LC_MESSAGES/cdemu.mo
-%_datadir/locale/no/LC_MESSAGES/cdemu.mo
-%_datadir/locale/pl/LC_MESSAGES/cdemu.mo
-%_datadir/locale/sl/LC_MESSAGES/cdemu.mo
-%_datadir/locale/sv/LC_MESSAGES/cdemu.mo
 
 %changelog
+* Tue Oct 01 2013 Nazarov Denis <nenderus@altlinux.org> 2.1.1-alt2
+- Use find-lang for language files
+
 * Sat Sep 21 2013 Nazarov Denis <nenderus@altlinux.org> 2.1.1-alt1
 - Version 2.1.1
 
