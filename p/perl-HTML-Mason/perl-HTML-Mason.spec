@@ -1,3 +1,4 @@
+%define _unpackaged_files_terminate_build 1
 # TODO: build with perl-CHI
 #
 #   - HTML::Mason -
@@ -16,7 +17,7 @@
 
 Name: perl-HTML-Mason
 Version: 1.51
-Release: alt1
+Release: alt2
 
 Summary: HTML-Mason - Perl module
 
@@ -50,6 +51,9 @@ BuildRequires: perl-Cache-Cache perl-HTML-Mason perl-Log-Agent perl-Module-Build
 #Requires: perl(warnings.pm)
 #Requires: perl-base >= 1:5.6.0
 
+# it is created on fly using internal voodoo masonry
+Provides: perl(HTML/Mason/Request/CGI.pm)
+
 %description
 Mason is a tool for building, serving and managing large web sites. Its
 features make it an ideal backend for high load sites serving dynamic
@@ -78,6 +82,9 @@ rm -f %buildroot%_bindir/*
 #perl_vendorlib/Bundle/
 
 %changelog
+* Tue Oct 01 2013 Igor Vlasenko <viy@altlinux.ru> 1.51-alt2
+- added provides perl(HTML/Mason/Request/CGI.pm)
+
 * Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 1.51-alt1
 - automated CPAN update
 
