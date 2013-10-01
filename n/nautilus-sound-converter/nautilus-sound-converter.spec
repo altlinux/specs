@@ -1,6 +1,6 @@
 Name: nautilus-sound-converter
-Version: 3.0.2
-Release: alt1
+Version: 3.0.3
+Release: alt0.1
 Summary: Nautilus extension to convert audio files
 
 Group: Graphical desktop/GNOME
@@ -11,16 +11,14 @@ Source: %name-%version.tar
 
 BuildPreReq: rpm-build-licenses rpm-build-gnome gnome-common
 BuildRequires: intltool >= 0.40.6
-BuildRequires: GConf libGConf-devel
 BuildRequires: libnautilus-devel >= 3.0.0
 BuildRequires: libgio-devel >= 2.28.0
 BuildRequires: libgtk+3-devel >= 3.0.0
-BuildRequires: libgnome-media-profiles-devel >= 2.11.91
-BuildRequires: gstreamer-devel >= 0.10.20
+BuildRequires: gstreamer1.0-devel >= 0.11.92 gst-plugins1.0-devel
 
 
 # The bare minimum plugins needed.
-Requires: gst-plugins-good gst-plugins-base
+Requires: gst-plugins-good1.0 gst-plugins-base1.0
 
 %description
 Adds a "Convert Sound File..." menu item to the context menu
@@ -32,31 +30,26 @@ format you wish to convert the selected files to.
 
 %build
 NOCONFIGURE=1 ./autogen.sh
-%configure --disable-static --disable-schemas-install
+%configure --disable-static --enable-compile-warnings=no --enable-cxx-warnings=no
 %make_build
 
 %install
 %makeinstall_std
 %find_lang %name
 
-%post
-%gconf2_install %name
-
-%preun
-if [ $1 = 0 ]; then
-%gconf2_uninstall %name
-fi
-
-
 %files -f %name.lang
 %doc COPYING README NEWS
 %nautilus_extdir/*.so
 %_datadir/%name/
-%_sysconfdir/gconf/schemas/%name.schemas
+%_datadir/glib-2.0/schemas/*.xml
+%_datadir/GConf/gsettings/*.convert
 
 %exclude %nautilus_extdir/*.la
 
 %changelog
+* Tue Oct 01 2013 Alexey Shabalin <shaba@altlinux.ru> 3.0.3-alt0.1
+- upstream snapshot of branch gst-1-0
+
 * Mon Aug 06 2012 Alexey Shabalin <shaba@altlinux.ru> 3.0.2-alt1
 - 3.0.2
 
