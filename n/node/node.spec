@@ -1,7 +1,7 @@
 %define node_name      node
-%define node_version  0.10.16
+%define node_version  0.10.20
 %define node_release   alt1
-%define npmver 1.3.8
+%define npmver 1.3.11
 
 #we need ABI virtual provides where SONAMEs aren't enough/not present so deps
 #break when binary compatibility is broken
@@ -62,8 +62,7 @@ Summary:	A package manager for node
 License:	MIT License
 Requires:	node
 BuildArch:	noarch
-#Requires:	%node_name-devel = %node_version-%node_release
-Requires:	%node_name = %node_version-%node_release
+Requires:	nodejs(abi) = %{nodejs_abi}
 
 %description -n npm
 npm is a package manager for node. You can use it to install and publish your
@@ -140,6 +139,13 @@ chmod 0755 %buildroot%_rpmlibdir/nodejs_native.req
 %exclude %_libexecdir/node_modules/npm/node_modules/node-gyp/gyp/tools/emacs
 
 %changelog
+* Wed Oct 02 2013 Dmitriy Kulik <lnkvisitor@altlinux.org> 0.10.20-alt1
+- new version
+- npm 1.3.8
+
+* Sun Sep 15 2013 Dmitriy Kulik <lnkvisitor@altlinux.org> 0.10.18-alt1
+- new version
+
 * Sat Aug 17 2013 Dmitriy Kulik <lnkvisitor@altlinux.org> 0.10.16-alt1
 - new version
 - npm 1.3.8
