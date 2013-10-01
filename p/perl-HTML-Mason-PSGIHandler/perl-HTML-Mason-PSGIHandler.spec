@@ -1,16 +1,15 @@
-%define _unpackaged_files_terminate_build 1
+Group: Development/Perl
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(FindBin.pm) perl(HTML/Mason/CGIHandler.pm) perl(HTML/Mason/Exceptions.pm) perl-devel perl-podlators
+BuildRequires: perl(FindBin.pm) perl(HTML/Mason/CGIHandler.pm) perl(HTML/Mason/Exceptions.pm) perl(HTML/Mason/Request/CGI.pm) perl(IO/Handle.pm) perl(IPC/Open3.pm) perl(base.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-HTML-Mason-PSGIHandler
 Version:        0.53
-Release:        alt1
+Release:        alt1_1
 Summary:        PSGI handler for HTML::Mason
 License:        GPL+ or Artistic
-Group:          Development/Perl
 URL:            http://search.cpan.org/dist/HTML-Mason-PSGIHandler/
-Source:        http://www.cpan.org/authors/id/R/RU/RUZ/HTML-Mason-PSGIHandler-%{version}.tar.gz
+Source0:        http://www.cpan.org/authors/id/R/RU/RUZ/HTML-Mason-PSGIHandler-%{version}.tar.gz
 BuildArch:      noarch
 BuildRequires:  perl(CGI/PSGI.pm)
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
@@ -32,7 +31,6 @@ web servers that support PSGI.
 make %{?_smp_mflags}
 
 %install
-
 make pure_install PERL_INSTALL_ROOT=$RPM_BUILD_ROOT
 
 find $RPM_BUILD_ROOT -type f -name .packlist -exec rm -f {} \;
@@ -48,6 +46,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Tue Oct 01 2013 Igor Vlasenko <viy@altlinux.ru> 0.53-alt1_1
+- update to new release by fcimport
+
 * Mon Sep 16 2013 Igor Vlasenko <viy@altlinux.ru> 0.53-alt1
 - automated CPAN update
 
