@@ -13,11 +13,11 @@
 
 %define major 4
 %define minor 11
-%define bugfix 1
+%define bugfix 2
 %define rname kdelibs
 Name: kde4libs
 Version: %major.%minor.%bugfix
-Release: alt3
+Release: alt1
 
 %define conflictver %major.%minor-alt0.0.1
 %define conflictver_kdevelop 3.4.1-alt0.0.1
@@ -112,7 +112,7 @@ Patch1030: kdelibs-4.9.1-alt-platform-profile.patch
 Patch1031: kdelibs-4.8.5-alt-add-desktop-translations.patch
 Patch1032: kdelibs-4.9.1-alt-policy-dir.patch
 Patch1033: kdelibs-4.9.1-alt-cmake-spaces.patch
-Patch1034: kdelibs-4.10.0-alt-find-samba.patch
+Patch1034: alt-revert-9027e0620d1f6bb06cbeb00db1072047ccb8ff13.patch
 Patch1035: kdelibs-4.10.2-alt-flags.patch
 Patch1036: kdelibs-4.10.2-alt-add-protocol-all.patch
 Patch1037: kdelibs-4.10.4-alt-def-plasma-theme-bg.patch
@@ -339,6 +339,9 @@ ln -sf `relative %buildroot/%_kde4_bindir/kde4-config %buildroot/%_K4bindir/kde4
 %_K4includedir/*
 
 %changelog
+* Mon Sep 30 2013 Sergey V Turchin <zerg@altlinux.org> 4.11.2-alt1
+- new version
+
 * Tue Sep 24 2013 Sergey V Turchin <zerg@altlinux.org> 4.11.1-alt3
 - update alt-run-with-context patch
 
