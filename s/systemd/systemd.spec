@@ -25,8 +25,8 @@
 %endif
 
 Name: systemd
-Version: 207
-Release: alt3.git.a0f70805
+Version: 208
+Release: alt1
 Summary: A System and Session Manager
 Url: http://www.freedesktop.org/wiki/Software/systemd
 Group: System/Configuration/Boot and Init
@@ -1222,6 +1222,9 @@ update_chrooted all
 /lib/udev/write_net_rules
 
 %changelog
+* Wed Oct 02 2013 Alexey Shabalin <shaba@altlinux.ru> 208-alt1
+- 208
+
 * Tue Oct 01 2013 Alexey Shabalin <shaba@altlinux.ru> 207-alt3.git.a0f70805
 - fixed post install (ALT#29411)
 
