@@ -1,8 +1,8 @@
 %set_verify_elf_method unresolved=strict
 
 Name: gnustep-Zipper
-Version: 1.4
-Release: alt2
+Version: 1.5
+Release: alt1
 Summary: Tool for inspecting the contents of a compressed archive
 License: GPLv2+
 Group: Graphical desktop/GNUstep
@@ -51,6 +51,9 @@ install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
 %_menudir/*
 
 %changelog
+* Wed Oct 02 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.5-alt1
+- Version 1.5
+
 * Thu Feb 28 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4-alt2
 - Added menu file (thnx kostyalamer@)
 
