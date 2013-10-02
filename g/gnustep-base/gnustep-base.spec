@@ -1,8 +1,8 @@
 %set_verify_elf_method unresolved=strict
 
 Name: gnustep-base
-Version: 1.24.4
-Release: alt2.git20130501
+Version: 1.24.5
+Release: alt1.git20130910
 Epoch: 1
 
 Summary: GNUstep Base library package
@@ -65,7 +65,6 @@ done
 %build
 %undefine __libtoolize
 
-%remove_optflags -O2
 %{expand:%%add_optflags %(pkg-config --cflags libffi) -D__GNUSTEP_RUNTIME__}
 export CPPFLAGS="%optflags"
 export CC=gcc
@@ -148,6 +147,9 @@ rm -f /etc/services.orig
 %_includedir/gnustep
  
 %changelog
+* Wed Oct 02 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:1.24.5-alt1.git20130910
+- Version 1.24.5
+
 * Sun May 26 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:1.24.4-alt2.git20130501
 - New snapshot
 
