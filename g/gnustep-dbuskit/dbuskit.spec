@@ -2,7 +2,7 @@
 
 Name: gnustep-dbuskit
 Version: 0.3.2
-Release: alt5.git20121111
+Release: alt5.git20130710
 Summary: GNUstep interface to the DBUS data transport mechanism
 License: LGPLv2.1+
 Group: Development/Objective-C
@@ -149,6 +149,9 @@ popd
 %_docdir/GNUstep
 
 %changelog
+* Wed Oct 02 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.2-alt5.git20130710
+- New snapshot
+
 * Mon Mar 04 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.2-alt5.git20121111
 - Moved headers into lib%name-devel
 
