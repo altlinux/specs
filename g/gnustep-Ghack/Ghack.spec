@@ -1,14 +1,15 @@
 %set_verify_elf_method unresolved=strict
 
 Name: gnustep-Ghack
-Version: 0.1.8
-Release: alt2
+Version: 0.2
+Release: alt1.git20130613
 Summary: Graphical nethack
 License: GPLv2
 Group: Graphical desktop/GNUstep
 Url: http://www.gnustep.org/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
+# https://github.com/v-zor/ninjacode.git
 Source: %name-%version.tar
 Source1: %name.menu
 
@@ -41,6 +42,9 @@ install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
 %_menudir/*
 
 %changelog
+* Wed Oct 02 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2-alt1.git20130613
+- Version 0.2
+
 * Sat Mar 02 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.8-alt2
 - Added menu file (thnx kostyalamer@)
 
