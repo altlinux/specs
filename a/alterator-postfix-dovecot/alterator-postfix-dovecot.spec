@@ -3,7 +3,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-postfix-dovecot
-Version: 0.5
+Version: 0.7.1
 Release: alt1
 
 Summary: Alterator module for Postfix/Dovecot setup
@@ -14,6 +14,8 @@ Source:%name-%version.tar
 
 Requires: alterator >= 4.7-alt1 alterator-sh-functions >= 0.6-alt5
 Requires: alterator-l10n >= 2.9-alt1
+Requires: dovecot >= 2.0.0
+Requires: alterator-service-functions >= 2.0.0
 #Conflicts: alterator-fbi < 5.17-alt3
 Conflicts: alterator-lookout < 1.6-alt3
 
@@ -24,13 +26,6 @@ BuildArch: noarch
 
 # Automatically added by buildreq on Mon Jul 11 2005 (-bi)
 BuildRequires: alterator
-
-%package -n installer-feature-mail-init-stage3
-Summary: Postfix/Dovecot module setup
-Group: System/Configuration/Other
-
-%description -n installer-feature-mail-init-stage3
-%summary
 
 %description
 Alterator module for Postfix/Dovecot setup
@@ -45,30 +40,44 @@ Alterator module for Postfix/Dovecot setup
 %makeinstall
 %find_lang %name
 
-mkdir -p %buildroot%_datadir/install2/postinstall.d/
-cat << EOF > %buildroot%_datadir/install2/postinstall.d/81-postfix-dovecot.sh
-#!/bin/sh -efu
-
-a= . install2-init-functions
-
-exec_chroot alterator-cmdline /postfix-dovecot action init
-exec_chroot chkconfig postfix on
-exec_chroot chkconfig dovecot on
-exec
-EOF
-chmod 755 %buildroot%_datadir/install2/postinstall.d/81-postfix-dovecot.sh
+%post
+if [ "$1" -eq 1 ]; then
+	%_libexecdir/alterator/hooks/net-domain.d/20-postfix-dovecot
+	%_sysconfdir/hooks/hostname.d/22-postfix
+	%_sysconfdir/hooks/hostname.d/23-dovecot
+fi
 
 %files -f %name.lang
+%_bindir/%name-functions
 %_datadir/alterator/applications/*
 %_datadir/alterator/ui/*
 %_alterator_backend3dir/*
 %_datadir/%name
+%_libexecdir/alterator/hooks/net-domain.d/*
 %_sysconfdir/hooks/hostname.d/*
-
-%files -n installer-feature-mail-init-stage3
-%_datadir/install2/postinstall.d/*
+%_sysconfdir/control.d/facilities/*
 
 %changelog
+* Wed Oct 02 2013 Mikhail Efremov <sem@altlinux.org> 0.7.1-alt1
+- hook-net-domain: Fix regexp.
+- hook-net-domain: Silence grep output.
+- Don't use 'vmail' user for root mail delivery.
+
+* Wed Sep 18 2013 Mikhail Efremov <sem@altlinux.org> 0.7.0-alt1
+- Requre ALT domain for work.
+- Don't initialize configuration without domain (closes: #29349).
+- Use alterator-service-functions.
+- final version 0.6 (by Andrey Kolotov).
+- drop installer-feature-mail-init-stage3 (by Andrey Kolotov).
+
+* Fri Jul 26 2013 Andrey Kolotov <qwest@altlinux.ru> 0.6-alt1
+- works with Dovecot 2.x.x through alterator.conf
+- remove option smtpd_tls_auth_only, default yes
+- SMTP on/off through control postfix server/local
+- added SMTP submission on/off through control postfix-submission
+- added requires for auth users through dovecot-ldap
+- autocreate new user vmail
+
 * Tue Sep 04 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.5-alt1
 - make it work if changing kerberos status without domain name change
 
