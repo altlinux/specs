@@ -2,7 +2,7 @@
 
 Name: gnustep-MPDCon
 Version: 1.4
-Release: alt2
+Release: alt3
 Summary: A GNUstep MPD client
 License: GPLv2
 Group: Graphical desktop/GNUstep
@@ -53,6 +53,9 @@ install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
 %_menudir/*
 
 %changelog
+* Thu Oct 03 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4-alt3
+- Rebuilt with new gnustep-sqlclient
+
 * Fri Mar 01 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4-alt2
 - Added menu file (thnx kostyalamer@)
 

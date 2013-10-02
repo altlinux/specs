@@ -1,6 +1,6 @@
 Name: gnustep-performance
-Version: 0.3.2
-Release: alt2.git20130304
+Version: 0.4.0
+Release: alt1.git20130821
 Summary: The GNUstep Performance library
 License: LGPLv3+
 Group: Graphical desktop/GNUstep
@@ -75,6 +75,9 @@ sed -i 's|objc/|objc2|g' $(find ./ -type f)
 %_docdir/GNUstep
 
 %changelog
+* Wed Oct 02 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.0-alt1.git20130821
+- Version 0.4.0
+
 * Tue Mar 05 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.2-alt2.git20130304
 - New snapshot
 
