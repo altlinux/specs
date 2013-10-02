@@ -1,6 +1,6 @@
 Name: gnustep-gworkspace
 Version: 0.9.2
-Release: alt3.git20130304
+Release: alt3.git20130911
 Summary: The GNUstep Workspace Manager of which the most visible part is the filebrowser
 License: GPLv2+
 Group: Graphical desktop/GNUstep
@@ -144,6 +144,9 @@ sed -i 's,@PATH@,%_libdir/GNUstep/Applications/GWorkspace.app,' %buildroot%_bind
 %doc Documentation/*
 
 %changelog
+* Wed Oct 02 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.2-alt3.git20130911
+- New snapshot
+
 * Wed Mar 06 2013 Michael Shigorin <mike@altlinux.org> 0.9.2-alt3.git20130304
 - NMU: added a shell wrapper to start filemanager by default (thx aen@)
 
