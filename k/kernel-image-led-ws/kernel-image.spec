@@ -25,7 +25,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.10.14
-Release: alt1
+Release: alt2
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -1813,6 +1813,10 @@ done)
 
 
 %changelog
+* Wed Oct 02 2013 Led <led@altlinux.ru> 3.10.14-alt2
+- updated:
+  + fix-drivers-hv--hv_utils
+
 * Tue Oct 01 2013 Led <led@altlinux.ru> 3.10.14-alt1
 - 3.10.14
 - removed:
