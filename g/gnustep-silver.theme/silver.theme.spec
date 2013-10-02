@@ -1,7 +1,7 @@
 %set_verify_elf_method unresolved=strict
 
 Name: gnustep-silver.theme
-Version: 2.5
+Version: 3.0
 Release: alt1
 Summary: Silver theme for GNUstep
 License: GPLv3
@@ -38,6 +38,9 @@ people who want use GNUstep apps in desktops like Gnome, KDE, ...
 %_libdir/GNUstep
 
 %changelog
+* Wed Oct 02 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0-alt1
+- Version 3.0
+
 * Tue Feb 26 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.5-alt1
 - Initial build for Sisyphus
 
