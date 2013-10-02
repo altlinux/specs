@@ -1,8 +1,8 @@
 %set_verify_elf_method unresolved=strict
 
 Name: gnustep-themes-Nesedah
-Version: r7355
-Release: alt1.svn20111116
+Version: r9169
+Release: alt1.svn20131001
 Summary: GNUstep's Nesedah theme
 License: Free
 Group: Graphical desktop/GNUstep
@@ -38,6 +38,9 @@ Nesedah theme for GNUstep.
 %_libdir/GNUstep
 
 %changelog
+* Wed Oct 02 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> r9169-alt1.svn20131001
+- Version r9169
+
 * Tue Feb 26 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> r7355-alt1.svn20111116
 - Initial build for Sisyphus
 
