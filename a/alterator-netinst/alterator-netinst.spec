@@ -1,5 +1,5 @@
 Name: alterator-netinst
-Version: 1.8.9
+Version: 1.9.0
 Release: alt1
 
 Source:%name-%version.tar
@@ -40,6 +40,9 @@ alterator module for network installations management
 %_bindir/alterator-netinst
 
 %changelog
+* Wed Oct 02 2013 Fr. Br. George <george@altlinux.ru> 1.9.0-alt1
+- Implement pxelinux.cfg/default label selection
+
 * Fri Nov 09 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1.8.9-alt1
 - workaround for mount bug: udf mages are not supported now
 
