@@ -1,6 +1,6 @@
 Name: gmp
-Version: 5.1.2
-Release: alt2
+Version: 5.1.3
+Release: alt1
 
 Summary: GNU MP arbitrary precision arithmetic library
 License: LGPLv3+
@@ -266,6 +266,9 @@ install -pm644 gmp-mparam.h rand/randmt.h %buildroot%_includedir/
 %endif #cxx
 
 %changelog
+* Wed Oct 02 2013 Dmitry V. Levin <ldv@altlinux.org> 5.1.3-alt1
+- Updated to 5.1.3.
+
 * Mon Jul 08 2013 Dmitry V. Levin <ldv@altlinux.org> 5.1.2-alt2
 - libgmp10 shouldn't formally obsolete older libgmp (closes: #29152).
 
