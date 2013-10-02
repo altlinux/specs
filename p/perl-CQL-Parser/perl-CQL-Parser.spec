@@ -14,7 +14,7 @@
 %define _enable_test 1
 
 Name: perl-CQL-Parser
-Version: 1.12
+Version: 1.13
 Release: alt1
 
 Summary: Common Query Language Parser
@@ -69,6 +69,9 @@ documentation for those modules for their respective APIs.
 %perl_vendor_privlib/CQL/
 
 %changelog
+* Wed Oct 02 2013 Igor Vlasenko <viy@altlinux.ru> 1.13-alt1
+- automated CPAN update
+
 * Fri Jul 26 2013 Igor Vlasenko <viy@altlinux.ru> 1.12-alt1
 - automated CPAN update
 
