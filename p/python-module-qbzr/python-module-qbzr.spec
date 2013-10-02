@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 Name: python-module-qbzr
-Version: 0.23.0
+Version: 0.23.1
 Release: alt1
 
 %setup_python_module qbzr
@@ -15,6 +15,7 @@ Packager: Anatoly Kitaikin <cetus@altlinux.org>
 Source: %modulename-%version.tar
 
 BuildPreReq: rpm-build-licenses
+Provides: qbzr
 
 %description
 The purpose of this plugin is to provide a graphical user
@@ -29,6 +30,15 @@ prefix.  See home page for more details.
 
 This module is built for python %__python_version
 
+%package -n python-module-qbzr-tests
+Summary: Qbzr plugin tests
+Group: Development/Other
+
+Requires: %name = %version-%release
+
+%description -n python-module-qbzr-tests
+This package contain tools and test suites for testing qbzr plugin.
+
 %prep
 %setup -n %modulename-%version
 
@@ -39,11 +49,20 @@ This module is built for python %__python_version
 %python_install --install-lib %python_sitelibdir
 
 %files
-%python_sitelibdir/bzrlib/plugins/qbzr
+%python_sitelibdir/bzrlib/plugins/%modulename
+%exclude %python_sitelibdir/bzrlib/plugins/%modulename/lib/tests
 %python_sitelibdir/*.egg-info
 %doc AUTHORS.txt NEWS.txt README.txt
 
+%files -n python-module-qbzr-tests
+%dir %python_sitelibdir/bzrlib/plugins/%modulename/lib
+%python_sitelibdir/bzrlib/plugins/%modulename/lib/tests
+
 %changelog
+* Wed Oct 02 2013 Anatoly Kitaykin <cetus@altlinux.org> 0.23.1-alt1
+- release 0.23.1
+- separate package for qbzr tests
+
 * Sun Oct 07 2012 Anatoly Kitaikin <cetus@altlinux.org> 0.23.0-alt1
 - release 0.23.0
 
