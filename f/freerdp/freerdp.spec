@@ -1,6 +1,9 @@
+
+%def_disable mod_ffmpeg
+
 Name: freerdp
 Version: 1.0.2
-Release: alt2
+Release: alt3
 
 Group: Networking/Remote access
 Summary: Remote Desktop Protocol functionality
@@ -18,8 +21,10 @@ Patch3: freerdp-handle-null-device-name.patch
 # ALT
 Patch100: freerdp-1.0.2-alt-fix-compile.patch
 
-BuildRequires: cmake ctest xmlto openssl-devel libX11-devel libXcursor-devel libXdamage-devel libXext-devel libXv-devel libXinerama-devel libxkbfile-devel cups-devel zlib-devel libalsa-devel libdirectfb-devel libICE-devel libao-devel libsamplerate-devel libpcsclite-devel libpulseaudio-devel libavcodec-devel CUnit-devel
-
+BuildRequires: cmake ctest xmlto openssl-devel libX11-devel libXcursor-devel libXdamage-devel libXext-devel libXv-devel libXinerama-devel libxkbfile-devel cups-devel zlib-devel libalsa-devel libdirectfb-devel libICE-devel libao-devel libsamplerate-devel libpcsclite-devel libpulseaudio-devel CUnit-devel
+%if_enabled mod_ffmpeg
+libavcodec-devel libavutil-devel
+%endif
 
 %description
 freerdp implements Remote Desktop Protocol (RDP), used in a number of Microsoft
@@ -90,7 +95,11 @@ sync, disk/printer redirection, etc.
 	-DWITH_PCSC=ON \
 	-DWITH_CUNIT=ON \
 	-DWITH_CUPS=ON \
+%if_enabled mod_ffmpeg
 	-DWITH_FFMPEG=ON \
+%else
+	-DWITH_FFMPEG=OFF \
+%endif
 	-DWITH_X11=ON \
 	-DWITH_XKBFILE=ON \
 	-DWITH_XINERAMA=ON \
@@ -141,6 +150,9 @@ sync, disk/printer redirection, etc.
 %_libdir/pkgconfig/*
 
 %changelog
+* Wed Oct 02 2013 Sergey V Turchin <zerg@altlinux.org> 1.0.2-alt3
+- don't build ffmpeg module (ALT#29416)
+
 * Mon Sep 30 2013 Sergey V Turchin <zerg@altlinux.org> 1.0.2-alt2
 - separate patches
 - fix compile flags
