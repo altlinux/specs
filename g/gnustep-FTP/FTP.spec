@@ -1,8 +1,8 @@
 %set_verify_elf_method unresolved=strict
 
 Name: gnustep-FTP
-Version: 0.3
-Release: alt2
+Version: 0.4
+Release: alt1
 Summary: FTP is a compact and handy application for file transfers using the FTP protocol
 License: GPLv2
 Group: Graphical desktop/GNUstep
@@ -39,12 +39,15 @@ described in the RFC: active, passive and default (rarely used).
 install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
 
 %files
-%doc README
+%doc README ChangeLog
 %_bindir/*
 %_libdir/GNUstep
 %_menudir/*
 
 %changelog
+* Wed Oct 02 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4-alt1
+- Version 0.4
+
 * Thu Feb 28 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3-alt2
 - Added menu files (thnx kostyalamer@)
 
