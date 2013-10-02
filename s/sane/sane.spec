@@ -2,8 +2,8 @@
 %define oname %name-backends
 
 Name: sane
-Version: 1.0.23
-Release: alt2
+Version: 1.0.24
+Release: alt1
 
 Summary: This package contains the SANE docs and utils
 Summary(ru_RU.UTF-8): Документация и утилиты для SANE
@@ -14,7 +14,8 @@ Url: http://www.sane-project.org/
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-Source: ftp://ftp.sane-project.org/pub/sane/%oname-%version/%oname-%version.tar
+#Source: ftp://ftp.sane-project.org/pub/sane/%oname-%version/%oname-%version.tar
+Source: https://alioth.debian.org/frs/download.php/file/3958/%oname-%version.tar
 #Source1: %name-%version.ru.po
 Source2: %name.xinetd
 
@@ -254,6 +255,9 @@ rm -f %buildroot%_libdir/%name/*.a
 %endif
 
 %changelog
+* Wed Oct 02 2013 Vitaly Lipatov <lav@altlinux.ru> 1.0.24-alt1
+- new version 1.0.24 (with rpmrb script) (ALT bug #29418)
+
 * Thu Sep 13 2012 Vitaly Lipatov <lav@altlinux.ru> 1.0.23-alt2
 - add missed pkgconfig (ALT bug #27727)
 
