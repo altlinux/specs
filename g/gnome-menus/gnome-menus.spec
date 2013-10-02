@@ -1,10 +1,10 @@
-%define ver_major 3.8
+%define ver_major 3.10
 %define api_ver 3.0
 %def_enable introspection
 
 Name: gnome-menus
 Version: %ver_major.0
-Release: alt2
+Release: alt1
 
 Summary: GNOME desktop menu
 License: GPLv2+
@@ -131,6 +131,9 @@ GObject introspection devel data for the GNOME Desktop Menu Library
 
 
 %changelog
+* Wed Oct 02 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.0-alt1
+- 3.10.0
+
 * Thu Apr 11 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.0-alt2
 - removed symlink gnome-applications.menu->gnome3-applications.menu
   provided by new altlinux-freedesktop-menu-gnome
