@@ -2,7 +2,7 @@
 
 Name: gnustep-corebase
 Version: 0.2
-Release: alt1.git20130121
+Release: alt1.git20130814
 Summary: Open implementation of CoreFoundation
 License: LGPLv2+, GPLv3+
 Group: Graphical desktop/GNUstep
@@ -93,6 +93,9 @@ done
 %_libdir/*.so
 
 %changelog
+* Wed Oct 02 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2-alt1.git20130814
+- New snapshot
+
 * Wed Jan 30 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2-alt1.git20130121
 - New snapshot
 
