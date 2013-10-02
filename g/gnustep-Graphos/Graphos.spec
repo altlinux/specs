@@ -1,8 +1,8 @@
 %set_verify_elf_method unresolved=strict
 
 Name: gnustep-Graphos
-Version: 0.3
-Release: alt2
+Version: 0.4
+Release: alt1
 Summary: Vector editor for GNUstep
 License: GPL
 Group: Graphical desktop/GNUstep
@@ -49,6 +49,9 @@ install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
 %_menudir/*
 
 %changelog
+* Wed Oct 02 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4-alt1
+- Version 0.4
+
 * Thu Feb 28 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3-alt2
 - Added menu file (thnx kostyalamer@)
 
