@@ -2,7 +2,7 @@
 BuildRequires: perl(Module/Build/Tiny.pm)
 %define dist MooseX-Method-Signatures
 Name: perl-%dist
-Version: 0.45
+Version: 0.46
 Release: alt1
 
 Summary: Method declarations with type constraints and no source filter
@@ -35,6 +35,9 @@ methods and validating their arguments against Moose type constraints.
 %perl_vendor_privlib/MooseX
 
 %changelog
+* Wed Oct 02 2013 Igor Vlasenko <viy@altlinux.ru> 0.46-alt1
+- automated CPAN update
+
 * Mon Sep 16 2013 Igor Vlasenko <viy@altlinux.ru> 0.45-alt1
 - automated CPAN update
 
