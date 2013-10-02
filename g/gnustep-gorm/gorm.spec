@@ -1,8 +1,8 @@
 %set_verify_elf_method unresolved=strict
 
 Name: gnustep-gorm
-Version: 1.2.18
-Release: alt3.git20130225
+Version: 1.2.20
+Release: alt1.svn20130703
 Summary: The GNUstep Interface Builder
 License: GPLv3+
 Group: Graphical desktop/GNUstep
@@ -130,6 +130,9 @@ gzip ChangeLog
 %_infodir/*
 
 %changelog
+* Wed Oct 02 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.20-alt1.svn20130703
+- Version 1.2.20
+
 * Tue Mar 05 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.18-alt3.git20130225
 - New snapshot
 
