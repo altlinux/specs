@@ -23,11 +23,11 @@
 
 %define major 4
 %define minor 11
-%define bugfix 1
+%define bugfix 2
 %define rname kdebase-workspace
 Name: kde4base-workspace
 Version: %major.%minor.%bugfix
-Release: alt3
+Release: alt1
 
 Group: Graphical desktop/KDE
 Summary: K Desktop Environment - Workspace
@@ -76,7 +76,7 @@ Patch1012: kdebase-workspace-4.2.2-alt-kdm-greet.patch
 Patch1013: kdebase-workspace-4.7.3-alt-devicenotifier-remote-shares.patch
 Patch1014: kdebase-workspace-4.7.1-alt-kdm-kcm-defaults.patch
 Patch1015: kdebase-workspace-4.7.1-alt-gtkrc-custom.patch
-Patch1016: kdebase-workspace-4.10.5-alt-def-plasma.patch
+Patch1016: kdebase-workspace-4.11.2-alt-def-plasma.patch
 Patch1017: kdebase-workspace-4.11.1-alt-ksysguardrc.patch
 Patch1018: kdebase-workspace-4.11.1-alt-def-kwin.patch
 Patch1019: kdebase-workspace-4.8.0-alt-def-fonts.patch
@@ -944,6 +944,9 @@ chmod 0755 %buildroot/%_sysconfdir/firsttime.d/kdm4
 %_K4dbus_interfaces/*
 
 %changelog
+* Wed Oct 02 2013 Sergey V Turchin <zerg@altlinux.org> 4.11.2-alt1
+- new version
+
 * Tue Sep 17 2013 Sergey V Turchin <zerg@altlinux.org> 4.11.1-alt3
 - change window border color according selinux context
 
