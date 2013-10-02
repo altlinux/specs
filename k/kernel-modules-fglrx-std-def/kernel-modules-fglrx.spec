@@ -1,6 +1,6 @@
 %define module_name	fglrx
 %define module_version	13.20.11
-%define module_release alt2
+%define module_release alt3
 
 %define flavour std-def
 BuildRequires(pre): kernel-headers-modules-std-def
@@ -26,7 +26,8 @@ Url: http://ati.amd.com/support/drivers/linux/linux-radeonhdd.html
 BuildRequires(pre): rpm-build-kernel
 BuildRequires: kernel-headers-modules-%flavour = %kepoch%kversion-%krelease
 BuildRequires: kernel-headers-%flavour = %kversion-%krelease
-BuildRequires: kernel-source-%module_name = %module_version
+#BuildRequires: kernel-source-%module_name = %module_version
+BuildRequires: kernel-source-%module_name >= 1:%module_version-alt3
 
 Provides: kernel-modules-%module_name-%kversion-%flavour-%krelease = %EVR
 %{?epoch:Provides: kernel-modules-%module_name-%kversion-%flavour-%krelease = %version-%release}
@@ -66,6 +67,9 @@ install -pD -m 0644 {%ksname-%module_version/2.6.x,%buildroot%module_dir}/%modul
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %EVR
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Wed Oct 02 2013 Led <led@altlinux.ru> 1:13.20.11-alt3
+- Catalyst 13.10 beta2
 
 * Thu Sep 12 2013 Led <led@altlinux.ru> 1:13.20.11-alt2
 - rebuild with fixed sources
