@@ -3,7 +3,7 @@
 
 Name: freerdp
 Version: 1.0.2
-Release: alt3
+Release: alt4
 
 Group: Networking/Remote access
 Summary: Remote Desktop Protocol functionality
@@ -113,7 +113,7 @@ sync, disk/printer redirection, etc.
 %else
 	-DWITH_SSE2=OFF \
 %endif
-	-DWITH_SERVER=OFF
+	-DWITH_SERVER=OFF \
 %ifarch armh
 	-DARM_FP_ABI=hard \
 	-DWITH_NEON=OFF \
@@ -150,6 +150,9 @@ sync, disk/printer redirection, etc.
 %_libdir/pkgconfig/*
 
 %changelog
+* Wed Oct 02 2013 Sergey V Turchin <zerg@altlinux.org> 1.0.2-alt4
+- fix typo for compile on arm
+
 * Wed Oct 02 2013 Sergey V Turchin <zerg@altlinux.org> 1.0.2-alt3
 - don't build ffmpeg module (ALT#29416)
 
