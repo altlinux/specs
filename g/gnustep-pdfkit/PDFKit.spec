@@ -1,6 +1,6 @@
 Name: gnustep-pdfkit
-Version: 0.9.2
-Release: alt3
+Version: 0.9.3
+Release: alt1
 Summary: A Framework for accessing and rendering PDF content
 License: GPLv2 only
 Group: File tools
@@ -105,6 +105,9 @@ popd
 %_libdir/GNUstep/Frameworks/PDFKit.framework/Headers
 
 %changelog
+* Wed Oct 02 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.3-alt1
+- Version 0.9.3
+
 * Mon Dec 31 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.2-alt3
 - Don't required devel packages for runtime packages
 
