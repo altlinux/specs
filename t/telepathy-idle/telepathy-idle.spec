@@ -1,5 +1,5 @@
 Name: telepathy-idle
-Version: 0.1.17
+Version: 0.2.0
 Release: alt1
 
 Summary: A full-featured IRC connection manager
@@ -11,7 +11,7 @@ Source: http://telepathy.freedesktop.org/releases/telepathy-idle/%name-%version.
 
 # Automatically added by buildreq on Wed Aug 26 2009
 BuildRequires: libgio-devel >= 2.32.0
-BuildRequires: libtelepathy-glib-devel >= 0.21
+BuildRequires: libtelepathy-glib-devel >= 0.22.0
 BuildRequires: libdbus-glib-devel libssl-devel
 BuildRequires: python-module-twisted-words python-module-xmpp xsltproc
 
@@ -36,6 +36,9 @@ A full-featured IRC connection manager for telepathy.
 %doc AUTHORS NEWS
 
 %changelog
+* Thu Oct 03 2013 Yuri N. Sedunov <aris@altlinux.org> 0.2.0-alt1
+- 0.2.0
+
 * Tue Sep 24 2013 Yuri N. Sedunov <aris@altlinux.org> 0.1.17-alt1
 - 0.1.17
 

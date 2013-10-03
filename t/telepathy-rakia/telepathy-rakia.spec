@@ -1,7 +1,7 @@
 %define _name rakia
 
 Name: telepathy-%_name
-Version: 0.7.5
+Version: 0.8.0
 Release: alt1
 
 Summary: SIP connection manager for the Telepathy framework
@@ -59,6 +59,9 @@ This package provides development files and documentation for telepathy-%name
 %_man8dir/%name.*
 
 %changelog
+* Thu Oct 03 2013 Yuri N. Sedunov <aris@altlinux.org> 0.8.0-alt1
+- 0.8.0
+
 * Wed Sep 11 2013 Yuri N. Sedunov <aris@altlinux.org> 0.7.5-alt1
 - 0.7.5
 
