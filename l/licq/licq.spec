@@ -11,22 +11,30 @@
 %define cvs 0
 %define no_some_docs 1
 
-%define with_email 1
-%define with_console 0
-%define with_auto_reply 1
-%define with_rms 1
+#UI plugins
 %define with_qt4 1
 %define with_kde4 1
+# removed some time ago (near version 1.4)
 %define with_gtk 0
+# removed in 1.8.0
+%define with_console 0
+
+#protocol plugins
+%define with_msn 1
+%define with_jabber 1
+%define with_icq 1
+
+#other plugins
+%define with_email 1
+%define with_auto_reply 1
+%define with_rms 1
 %define with_osd 1
 %define with_aosd 1
 %define with_gpg 1
-%define with_msn 1
-%define with_jabber 1
 
 # name-version-release
 %define rname licq
-%define ver 1.7.1
+%define ver 1.8
 %define rlz alt2
 
 Name: %rname
@@ -34,11 +42,14 @@ Version: %ver
 Release: %rlz
 
 BuildRequires(pre): kde4libs-devel
+BuildRequires(pre): graphviz
+
 BuildRequires: freetype2-devel gcc-c++ chrpath
 BuildRequires: libart_lgpl-devel libexpat-devel libjpeg-devel
 BuildRequires: liblcms-devel libmng-devel kde-common-devel
 BuildRequires: libncurses-devel libssl-devel libstdc++-devel libtinfo-devel
 BuildRequires: rpm-utils boost-devel doxygen libgloox-devel
+BuildRequires: libpixman-devel libharfbuzz-devel
 %if %with_console
 BuildRequires: libcdk-devel
 %endif
@@ -90,8 +101,9 @@ Patch22: licq-1.3.6-alt-qt4-yes-stl.patch
 
 Patch200: licq-1.2.7-remove-pidfile.patch
 
-# Errata
-Patch500: licq-1.7.1-icq-utf8.patch
+#Errata
+Patch500: 07de72fedd7f57e77228d6ef9df4f3d002741a31.patch
+Patch501: 4de245241686732a7b78f056da2ac6de81abeb56.patch
 
 #package licq
 Group: Networking/Instant messaging
@@ -428,6 +440,10 @@ This version of licq has SSL support for those plugins that support it.
 
 %setup -q -n %name
 
+#Errata
+%patch500 -p2
+%patch501 -p2
+
 pushd plugins
 %if %with_gtk
     tar xfj %SOURCE5
@@ -438,8 +454,6 @@ popd
 install -m 644 %SOURCE9 share/utilities/tracepath.utility
 
 %patch2 -p1
-
-%patch500 -p2
 
 %if %with_osd
 pushd plugins/osd*
@@ -629,6 +643,12 @@ popd
 %doc plugins/aosd*/README
 %endif
 
+%if %with_icq
+## icq plugin
+%files icq
+%_libdir/licq/protocol_icq.*
+%endif
+
 %if %with_msn
 ## msn plugin
 %files msn
@@ -685,6 +705,14 @@ popd
 
 ########################################################
 %changelog
+* Wed Oct 02 2013 Sergey Y. Afonin <asy@altlinux.ru> 1.8-alt2
+- added two upstream's patches:
+   avoids confusion if multiple owners have the same alias
+   remove slashes from user id in filenames
+
+* Mon Sep 30 2013 Sergey Y. Afonin <asy@altlinux.ru> 1.8-alt1
+- new version (icq is separate protocol plugin since this version)
+
 * Mon Mar 11 2013 Sergey Y. Afonin <asy@altlinux.ru> 1.7.1-alt2
 - fixed conversion for non-UTF8 messages
   http://github.com/licq-im/licq/issues/28
