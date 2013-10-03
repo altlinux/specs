@@ -1,6 +1,6 @@
 Name: aperiot
 Version: 0.2.1
-Release: alt1
+Release: alt2
 
 %setup_python_module %name
 
@@ -34,6 +34,7 @@ Python module for %name, %summary
 
 %prep
 %setup
+sed -i '/use_setuptools/d' setup.py
 
 %build
 %python_build
@@ -50,6 +51,9 @@ export PYTHONPATH=build/lib
 %python_sitelibdir/aperiot*
 
 %changelog
+* Thu Oct 03 2013 Fr. Br. George <george@altlinux.ru> 0.2.1-alt2
+- Fix build
+
 * Sun Jul 22 2012 Fr. Br. George <george@altlinux.ru> 0.2.1-alt1
 - Autobuild version bump to 0.2.1
 
