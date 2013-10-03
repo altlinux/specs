@@ -9,7 +9,7 @@
 
 Name: bzr
 Version: 2.6.0
-Release: %branch_release alt1
+Release: %branch_release alt2
 
 Summary: Bazaar is a decentralized revision control system
 License: %gpl2plus
@@ -88,23 +88,39 @@ install -m0644 BRANCH.TODO INSTALL NEWS README TODO %buildroot%bzr_docdir
 cp -a doc contrib %buildroot%bzr_docdir
 # Hack! Need a subst in setup.py
 mv %buildroot%_datadir/share/locale %buildroot%_datadir
+%find_lang %name
 
 %check
 %make_build check
 
-%files
+%files -f %name.lang
 %_bindir/bzr
 %_man1dir/bzr.*
 %python_sitelibdir/*
 %exclude %python_sitelibdir/bzrlib/tests
+%exclude %python_sitelibdir/bzrlib/plugins/*/tests
+%exclude %python_sitelibdir/bzrlib/util/tests
 %bzr_docdir
 %exclude %bzr_docdir/doc
 %exclude %bzr_docdir/contrib
-%_datadir/locale/*/LC_MESSAGES/bzr.mo
+#%%_datadir/locale/*/LC_MESSAGES/bzr.mo
 
 %files -n python-module-bzrlib-tests
 %dir %python_sitelibdir/bzrlib
+%dir %python_sitelibdir/bzrlib/plugins
+%dir %python_sitelibdir/bzrlib/plugins/bash_completion
+%dir %python_sitelibdir/bzrlib/plugins/changelog_merge
+%dir %python_sitelibdir/bzrlib/plugins/grep
+%dir %python_sitelibdir/bzrlib/plugins/launchpad
+%dir %python_sitelibdir/bzrlib/plugins/netrc_credential_store
+%dir %python_sitelibdir/bzrlib/plugins/news_merge
+%dir %python_sitelibdir/bzrlib/plugins/po_merge
+%dir %python_sitelibdir/bzrlib/plugins/weave_fmt
+%dir %python_sitelibdir/bzrlib/util
 %python_sitelibdir/bzrlib/tests
+%python_sitelibdir/bzrlib/plugins/*/tests
+%python_sitelibdir/bzrlib/util/tests
+# bash_completion changelog_merge grep launchpad netrc_credential_store news_merge po_merge weave_fmt
 
 %files doc
 %dir %bzr_docdir
@@ -112,6 +128,10 @@ mv %buildroot%_datadir/share/locale %buildroot%_datadir
 %bzr_docdir/contrib
 
 %changelog
+* Thu Oct 03 2013 Anatoly Kitaykin <cetus@altlinux.org> 2.6.0-alt2
+- plugins and util tests also moved into bzrlib-tests
+- find_langs policy applied
+
 * Fri Aug 09 2013 Anatoly Kitaykin <cetus@altlinux.org> 2.6.0-alt1
 - 2.6.0 release with typo fixes up to 2013-08-04
 
