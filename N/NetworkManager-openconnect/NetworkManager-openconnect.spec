@@ -5,7 +5,7 @@
 
 Name: NetworkManager-openconnect
 Version: 0.9.8.4
-Release: alt1
+Release: alt2
 License: %gpl2plus
 Group: System/Configuration/Networking
 Summary: NetworkManager VPN integration for openconnect
@@ -83,6 +83,9 @@ NetworkManager panel applet.
 %exclude %_libdir/NetworkManager/lib*.la
 
 %changelog
+* Thu Oct 03 2013 Mikhail Efremov <sem@altlinux.org> 0.9.8.4-alt2
+- Fix build: Avoid deprecation warnings.
+
 * Mon Sep 16 2013 Mikhail Efremov <sem@altlinux.org> 0.9.8.4-alt1
 - Don't reload DBUS configuration during install.
 - Rename 'gnome' subpackage to 'gtk'.
