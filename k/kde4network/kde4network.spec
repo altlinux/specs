@@ -11,10 +11,10 @@
 %define rname kdenetwork
 %define major 4
 %define minor 11
-%define bugfix 1
+%define bugfix 2
 Name: kde4network
 Version: %major.%minor.%bugfix
-Release: alt3
+Release: alt1
 
 Packager: Sergey V Turchin <zerg at altlinux dot org>
 
@@ -379,6 +379,9 @@ chmod 0755 %buildroot/etc/control.d/facilities/kppp-kde4
 %_K4dbus_interfaces/*
 
 %changelog
+* Thu Oct 03 2013 Sergey V Turchin <zerg@altlinux.org> 4.11.2-alt1
+- new version
+
 * Mon Sep 30 2013 Sergey V Turchin <zerg@altlinux.org> 4.11.1-alt3
 - fix requires
 
