@@ -1,11 +1,11 @@
 %def_disable poll
 %def_enable epoll
-%def_enable ecap
+%def_disable ecap
 %def_enable esi
 
 Name: squid
 Version: 3.2.13
-Release: alt4
+Release: alt5
 %define langpack_ver 20121005
 Summary: The Squid proxy caching server
 License: GPLv2
@@ -29,6 +29,8 @@ Obsoletes: %name-server
 Provides: %name-cachemgr = %version-%release
 Obsoletes: %name-cachemgr
 Conflicts: %name-conf-host2cat < 1.01-alt5
+Provides: %name-conf-default = %version-%release
+Obsoletes: %name-conf-default
 
 # epoll is enabled by default, so disable it if plain poll is enabled
 %{?_enable_poll:%force_disable epoll}
@@ -286,6 +288,10 @@ chown -R %name:%name %_spooldir/%name >/dev/null 2>&1 ||:
 
 
 %changelog
+* Fri Oct 04 2013 Led <led@altlinux.ru> 3.2.13-alt5
+- provide/obsolete squid-conf-default (ALT#29426)
+- disabled ecap (through broken libecap-devel package)
+
 * Fri Aug 16 2013 Led <led@altlinux.ru> 3.2.13-alt4
 - squid.init: made SQUID_EXTRA_SHUTDOWN_TIMEOUT configurable
 
