@@ -1,6 +1,6 @@
 Name: gnustep-pdfkit
 Version: 0.9.3
-Release: alt1
+Release: alt2
 Summary: A Framework for accessing and rendering PDF content
 License: GPLv2 only
 Group: File tools
@@ -89,6 +89,12 @@ for i in libPDFKit.so.*.*; do
 done
 popd
 
+# It is the file in the package whose name matches the format emacs or vim uses 
+# for backup and autosave files. It may have been installed by  accident.
+find $RPM_BUILD_ROOT \( -name '.*.swp' -o -name '#*#' -o -name '*~' \) -print -delete
+# failsafe cleanup if the file is declared as %%doc
+find . \( -name '.*.swp' -o -name '#*#' -o -name '*~' \) -print -delete
+
 %files
 %doc Documentation/*
 %_libdir/GNUstep
@@ -105,6 +111,9 @@ popd
 %_libdir/GNUstep/Frameworks/PDFKit.framework/Headers
 
 %changelog
+* Thu Oct 03 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.3-alt2
+- Applied repocop patch
+
 * Wed Oct 02 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.3-alt1
 - Version 0.9.3
 
