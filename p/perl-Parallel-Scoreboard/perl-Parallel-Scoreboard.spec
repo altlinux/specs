@@ -1,18 +1,18 @@
-%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(CPAN.pm) perl(Config.pm) perl(Errno.pm) perl(Exporter.pm) perl(Fcntl.pm) perl(IO/Handle.pm) perl(IO/Seekable.pm) perl(overload.pm) perl-devel perl-podlators
+BuildRequires: perl(CPAN.pm) perl(Carp.pm) perl(Carp/Heavy.pm) perl(Config.pm) perl(Cwd.pm) perl(Data/Dumper.pm) perl(Errno.pm) perl(Exporter.pm) perl(ExtUtils/MM_Unix.pm) perl(ExtUtils/Manifest.pm) perl(Fcntl.pm) perl(File/Basename.pm) perl(File/Find.pm) perl(File/Path.pm) perl(FileHandle.pm) perl(IO/Handle.pm) perl(IO/Seekable.pm) perl(LWP/Simple.pm) perl(MIME/Base64.pm) perl(Module/Build.pm) perl(Net/FTP.pm) perl(POSIX.pm) perl(Parse/CPAN/Meta.pm) perl(PerlIO.pm) perl(Pod/Text.pm) perl(Socket.pm) perl(Test/Deep.pm) perl(Text/Diff.pm) perl(YAML.pm) perl(YAML/Tiny.pm) perl(base.pm) perl(inc/Module/Install.pm) perl(overload.pm) perl(threads/shared.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Parallel-Scoreboard
 Version:        0.04
-Release:        alt1
+Release:        alt1_1
 Summary:        Scoreboard for monitoring status of many processes
 License:        GPL+ or Artistic
 Group:          Development/Perl
 URL:            http://search.cpan.org/dist/Parallel-Scoreboard/
-Source:        http://www.cpan.org/authors/id/K/KA/KAZUHO/Parallel-Scoreboard-%{version}.tar.gz
+Source0:        http://www.cpan.org/authors/id/K/KA/KAZUHO/Parallel-Scoreboard-%{version}.tar.gz
 BuildArch:      noarch
 BuildRequires:  perl(Class/Accessor/Lite.pm)
+BuildRequires:  perl(Filter/Util/Call.pm)
 BuildRequires:  perl(HTML/Entities.pm)
 BuildRequires:  perl(JSON.pm)
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
@@ -26,7 +26,7 @@ Requires:       perl(Class/Accessor/Lite.pm) >= 0.05
 # Filter out unversioned R: perl(Class::Accessor::Lite)
 
 Source44: import.info
-%filter_from_requires /^^perl\\(Class::Accessor::Lite\\)/d
+%filter_from_requires /^perl\\(Class.Accessor.Lite.pm\\)/d
 
 %description
 Parallel::Scoreboard is a pure-perl implementation of a process scoreboard.
@@ -63,6 +63,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Thu Oct 03 2013 Igor Vlasenko <viy@altlinux.ru> 0.04-alt1_1
+- update
+
 * Thu Sep 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.04-alt1
 - automated CPAN update
 
