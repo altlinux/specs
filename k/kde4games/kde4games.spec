@@ -6,7 +6,7 @@
 Name: kde4games
 %define major 4
 %define minor 11
-%define bugfix 1
+%define bugfix 2
 Version: %major.%minor.%bugfix
 Release: alt1
 
@@ -1211,6 +1211,9 @@ done
 %_K4includedir/*
 
 %changelog
+* Thu Oct 03 2013 Sergey V Turchin <zerg@altlinux.org> 4.11.2-alt1
+- new version
+
 * Tue Sep 10 2013 Sergey V Turchin <zerg@altlinux.org> 4.11.1-alt1
 - new version
 
