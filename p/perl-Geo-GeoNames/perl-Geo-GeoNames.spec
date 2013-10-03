@@ -1,7 +1,8 @@
+%define _unpackaged_files_terminate_build 1
 %define module Geo-GeoNames
 
 Name: perl-%module
-Version: 0.11
+Version: 1.01
 Release: alt1
 
 Packager: Victor Forsyuk <force@altlinux.org>
@@ -16,7 +17,7 @@ Source: http://www.cpan.org/authors/id/B/BD/BDFOY/Geo-GeoNames-%{version}.tar.gz
 BuildArch: noarch
 
 # Automatically added by buildreq on Thu Jul 03 2008
-BuildRequires: perl-JSON perl-XML-Simple perl-devel perl-libwww
+BuildRequires: perl-JSON perl-XML-Simple perl-devel perl-libwww perl(Mojo/UserAgent.pm)
 
 %description
 Provides a perl interface to the webservices found at http://ws.geonames.org.
@@ -42,6 +43,9 @@ is found, a list of locations will be returned.
 %perl_vendor_privlib/Geo
 
 %changelog
+* Thu Oct 03 2013 Igor Vlasenko <viy@altlinux.ru> 1.01-alt1
+- automated CPAN update
+
 * Wed Oct 03 2012 Igor Vlasenko <viy@altlinux.ru> 0.11-alt1
 - automated CPAN update
 
