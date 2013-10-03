@@ -8,7 +8,7 @@
 
 Name: musl
 Version: 0.9.14
-Release: alt5
+Release: alt6
 Group: System/Libraries
 Summary: musl libc - new standard library
 License: MIT
@@ -116,8 +116,11 @@ echo "%musl_dir/lib" > %buildroot%_sysconfdir/ld.so.conf.d/%name-%_lib.conf
 
 
 %changelog
+* Thu Oct 03 2013 Led <led@altlinux.ru> 0.9.14-alt6
+- fixes from upstream's SCM
+
 * Mon Sep 30 2013 Led <led@altlinux.ru> 0.9.14-alt5
-- added symlink to kernel mtd uncludes
+- added symlink to kernel mtd includes
 
 * Sun Sep 29 2013 Led <led@altlinux.ru> 0.9.14-alt4
 - added GNU qsort_r(3)
