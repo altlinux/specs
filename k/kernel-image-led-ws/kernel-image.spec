@@ -25,7 +25,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.10.14
-Release: alt2
+Release: alt3
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -1755,7 +1755,7 @@ done)
 %if_with perf
 %files -n perf
 %doc %_docdir/perf-%version
-%_sysconfdir/bash_completion.d/*
+%_sysconfdir/bash_completion.d
 %_bindir/perf
 %_libexecdir/perf
 %_man1dir/*
@@ -1813,6 +1813,12 @@ done)
 
 
 %changelog
+* Thu Oct 03 2013 Led <led@altlinux.ru> 3.10.14-alt3
+- updated:
+  + feat-net-ipv4-netfilter--ipt_NETFLOW
+- config (x86_64):
+  + I6300ESB_WDT=m
+
 * Wed Oct 02 2013 Led <led@altlinux.ru> 3.10.14-alt2
 - updated:
   + fix-drivers-hv--hv_utils
