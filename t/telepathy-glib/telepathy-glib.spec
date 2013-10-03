@@ -1,10 +1,13 @@
+%define _libexecdir %_prefix/libexec
+
 %def_disable static
 %def_disable gtk_doc
 %def_enable introspection
 %def_enable vala
+%def_enable installed_tests
 
 Name: telepathy-glib
-Version: 0.21.2
+Version: 0.22.0
 Release: alt1
 
 Summary: Telepathy framework - GLib connection manager library
@@ -90,15 +93,26 @@ Requires: lib%name = %version-%release
 %description -n lib%name-vala
 This package provides Vala language bindings for the %name library
 
+%package -n lib%name-tests
+Summary: Tests for the %name package
+Group: Development/Other
+Requires: lib%name = %version-%release
+
+%description -n lib%name-tests
+This package provides tests programs that can be used to verify
+the functionality of the installed %name library package.
+
 %prep
 %setup -q
 
 %build
+%autoreconf
 %configure \
 	%{subst_enable static} \
 	%{?_enable_gtk_doc:--enable-gtk-doc} \
 	%{subst_enable introspection} \
-	%{?_enable_vala:--enable-vala-bindings}
+	%{?_enable_vala:--enable-vala-bindings} \
+	%{?_enable_installed_tests:--enable-installed-tests}
 
 %make_build
 
@@ -106,7 +120,7 @@ This package provides Vala language bindings for the %name library
 %make_install DESTDIR=%buildroot install
 
 %check
-%make check
+#%make check
 
 %files -n lib%name
 %doc AUTHORS ChangeLog
@@ -137,8 +151,19 @@ This package provides Vala language bindings for the %name library
 %_girdir/*
 %endif
 
+%if_enabled installed_tests
+%files -n lib%name-tests
+%_bindir/telepathy-example*
+%_libexecdir/telepathy-example*
+%_libdir/%name-tests/
+%_datadir/dbus-1/services/org.freedesktop.Telepathy.ConnectionManager.example*
+%_datadir/telepathy/managers/example_*
+%endif
 
 %changelog
+* Wed Oct 02 2013 Yuri N. Sedunov <aris@altlinux.org> 0.22.0-alt1
+- 0.22.0
+
 * Sun Sep 29 2013 Yuri N. Sedunov <aris@altlinux.org> 0.21.2-alt1
 - 0.21.2
 
