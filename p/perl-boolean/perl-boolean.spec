@@ -14,7 +14,7 @@
 %define _enable_test 1
 
 Name: perl-boolean
-Version: 0.28
+Version: 0.30
 Release: alt1
 
 Summary: Boolean support for Perl
@@ -26,7 +26,7 @@ Url: http://www.cpan.org
 Packager: Denis Smirnov <mithraen@altlinux.ru>
 
 BuildArch: noarch
-Source: http://search.cpan.org//CPAN/authors/id/I/IN/INGY/%m_distro-%version.tar.gz
+Source: http://www.cpan.org/authors/id/I/IN/INGY/boolean-%{version}.tar.gz
 
 # Automatically added by buildreq on Sat Jan 01 2011 (-bb)
 BuildRequires: perl-Pod-Escapes perl-devel
@@ -61,6 +61,9 @@ objects: `true' and `false'.
 %perl_vendor_privlib/boolean.pm
 
 %changelog
+* Fri Oct 04 2013 Igor Vlasenko <viy@altlinux.ru> 0.30-alt1
+- automated CPAN update
+
 * Thu Sep 22 2011 Igor Vlasenko <viy@altlinux.ru> 0.28-alt1
 - automated CPAN update
 
