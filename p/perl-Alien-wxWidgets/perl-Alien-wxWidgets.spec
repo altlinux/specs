@@ -1,7 +1,7 @@
 %define dist Alien-wxWidgets
 
 Name: perl-%dist
-Version: 0.60
+Version: 0.64
 Release: alt1
 
 Summary: Alien-wxWidgets - building, finding and using wxWidgets binaries
@@ -11,7 +11,7 @@ Group: Development/Perl
 Url: http://www.cpan.org
 
 Packager: Slava Dubrovskiy <dubrsl@altlinux.org>
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/M/MD/MDOOTSON/Alien-wxWidgets-%{version}.tar.gz
 
 BuildRequires: gcc-c++ perl-Module-Build perl-Test-Pod perl-Test-Pod-Coverage wxGTK-devel wxGTK-contrib-stc-devel perl-autodie perl-Module-Pluggable
 
@@ -35,6 +35,9 @@ build and install a private copy of wxWidgets as part of the build process
 %perl_vendor_archlib/Alien/wxWidgets*
 
 %changelog
+* Fri Oct 04 2013 Igor Vlasenko <viy@altlinux.ru> 0.64-alt1
+- automated CPAN update
+
 * Tue Sep 11 2012 Vladimir Lettiev <crux@altlinux.ru> 0.60-alt1
 - 0.52 -> 0.60
 
