@@ -14,7 +14,7 @@
 %define _enable_test 1
 
 Name: perl-Amazon-SQS-Simple
-Version: 1.06
+Version: 2.03
 Release: alt1
 
 Summary: OO API for accessing the Amazon Simple Queue
@@ -26,7 +26,7 @@ Url: http://www.cpan.org
 Packager: Denis Smirnov <mithraen@altlinux.ru>
 
 BuildArch: noarch
-Source: http://search.cpan.org//CPAN/authors/id/S/SW/SWHITAKER/%m_distro-%version.tar.gz
+Source: http://www.cpan.org/authors/id/P/PE/PENFOLD/Amazon-SQS-Simple-%{version}.tar.gz
 
 # Automatically added by buildreq on Sat Sep 04 2010
 BuildRequires: perl-Digest-HMAC perl-XML-Simple perl-devel perl-libwww
@@ -69,6 +69,9 @@ rm -rf %buildroot%perl_vendor_man3dir/
 %perl_vendor_privlib/Amazon/*
 
 %changelog
+* Fri Oct 04 2013 Igor Vlasenko <viy@altlinux.ru> 2.03-alt1
+- automated CPAN update
+
 * Sat Sep 04 2010 Denis Smirnov <mithraen@altlinux.ru> 1.06-alt1
 - initial build for ALT Linux Sisyphus
 
