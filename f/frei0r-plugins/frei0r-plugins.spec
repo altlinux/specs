@@ -1,10 +1,10 @@
 %define bname frei0r
 %define major_ver 1
-%define minor_ver 3
+%define minor_ver 4
 
 Name: %bname-plugins
 Version: %major_ver.%minor_ver
-Release: alt3
+Release: alt1
 Summary: Frei0r - a minimalistic plugin API for video effects
 License: %lgpl2plus
 Group: Video
@@ -86,6 +86,9 @@ Face detect plugin for %name
 %_libdir/%bname-%major_ver/facebl0r.so
 
 %changelog
+* Fri Oct 04 2013 Alexey Shabalin <shaba@altlinux.ru> 1.4-alt1
+- 1.4
+
 * Tue Oct 02 2012 Alexey Shabalin <shaba@altlinux.ru> 1.3-alt3
 - rebuild with new libopencv
 
