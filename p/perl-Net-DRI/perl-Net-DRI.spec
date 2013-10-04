@@ -3,7 +3,7 @@
 
 Name: perl-%module
 Version: 0.96
-Release: alt1.1
+Release: alt2
 
 Packager: Victor Forsiuk <force@altlinux.org>
 
@@ -19,7 +19,7 @@ Source: http://www.dotandco.com/services/software/Net-DRI/Net-DRI-%version.tar.g
 BuildArch: noarch
 
 # Automatically added by buildreq on Thu Apr 08 2010
-BuildRequires: perl-Class-Accessor-Chained perl-DateTime-Format-ISO8601 perl-Email-Valid perl-IO-Compress-Zlib perl-IO-Socket-SSL perl-Log-Agent perl-SOAP-Lite perl-SOAP-WSDL perl-Sub-Name perl-Term-ReadLine-Gnu perl-UNIVERSAL-require perl-XML-LibXML
+BuildRequires: perl-Class-Accessor-Chained perl-DateTime-Format-ISO8601 perl-Email-Valid perl-IO-Compress-Zlib perl-IO-Socket-SSL perl-Log-Agent perl-SOAP-Lite perl-SOAP-WSDL perl-Sub-Name perl-Term-ReadLine-Gnu perl-UNIVERSAL-require perl-XML-LibXML perl(XMLRPC/Lite.pm)
 
 %description
 DRI stands for Domain Registration Interface and aims to be, for domain name
@@ -42,6 +42,9 @@ resellers. It can be used by anonyone to do whois or DAS queries.
 %perl_vendor_privlib/Net
 
 %changelog
+* Fri Oct 04 2013 Igor Vlasenko <viy@altlinux.ru> 0.96-alt2
+- fixed build
+
 * Mon Nov 22 2010 Igor Vlasenko <viy@altlinux.ru> 0.96-alt1.1
 - repair after perl 5.12 upgrade using girar-nmu
 
