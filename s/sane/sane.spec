@@ -3,7 +3,7 @@
 
 Name: sane
 Version: 1.0.24
-Release: alt1
+Release: alt2
 
 Summary: This package contains the SANE docs and utils
 Summary(ru_RU.UTF-8): Документация и утилиты для SANE
@@ -19,22 +19,14 @@ Source: https://alioth.debian.org/frs/download.php/file/3958/%oname-%version.tar
 #Source1: %name-%version.ru.po
 Source2: %name.xinetd
 
-Source9: http://heanet.dl.sourceforge.net/sourceforge/hp44x0backend/sane_hp_rts88xx-0.18.tar.bz2
-
 Patch3: sane-1.0.19-hp-psc.patch
 Patch4: sane-backends-1.0.18-epson-1270.patch
-Patch6: sane-backends-1.0.19-udev-rules.patch
-Patch7: sane-1.0.20-mkinstalldirs.patch
 
 # Fedora patches
 Patch109: sane-backends-1.0.18-glibc-2.7.patch
-#Patch116: sane-backends-1.0.20-autoreconf.patch.bz2
 
 # Mandriva patches
 Patch201: sane-backends-1.0.18-plustek-s12.patch
-
-# Debian patches
-Patch301: sane-backends-1.0.22-canon-4410.patch
 
 # FIXME: check module linking without provides
 #add_findprov_lib_path %_libdir/%name
@@ -48,12 +40,13 @@ Requires: udev
 BuildRequires: glibc-devel libcups-devel libgphoto2-devel libieee1284-devel libjpeg-devel libtiff-devel libusb-devel libv4l-devel
 
 BuildPreReq: libusb-devel
+BuildPreReq: rpm-build-intro
 
 %package -n %name-server
 Summary: SANE as network server
 Group: System/Libraries
 License: LGPL
-Requires: lib%name
+Requires: lib%name = %version-%release
 
 %package -n lib%name
 Summary: SANE shared libraries
@@ -145,17 +138,12 @@ This package contains SANE static libraries.
 %setup -n %oname-%version
 %patch3
 %patch4
-#patch7
 
 # Fedora patches
 %patch109 -p1 -b .glibc-2.7
-#%patch116 -p1 -b .autoreconf
 
 # Mandriva patches
 %patch201 -p1 -b .plusteks12
-
-# Debian patches
-#patch301 -p1 -b .canon4410
 
 # Comment out entry for the "geniusvp2" backend in
 # %_sysconfdir/sane.d/dll.conf as it makes SANE hanging on some systems when
@@ -187,10 +175,10 @@ rm -f backend/dll.conf
 %__subst "s|/path/to/your/firmware|%_libdir/hotplug/firmware|" %buildroot%_sysconfdir/sane.d/*.conf
 
 # install udev rules
-#sh tools/udev/convert-usermap.sh tools/hotplug/libsane.usermap
 install -D -m0644 tools/udev/libsane.rules %buildroot%_sysconfdir/udev/rules.d/25-libsane.rules
+# follow fix drops GROUP! (alt bug #29425)
 #remove ownership setup (was conflict with other services) see altbug #21808
-sed 's/,[[:space:]]\+GROUP=\"[^"]\+\"[[:space:]]*//' -i %buildroot%_sysconfdir/udev/rules.d/25-libsane.rules
+#sed 's/,[[:space:]]\+GROUP=\"[^"]\+\"[[:space:]]*//' -i %buildroot%_sysconfdir/udev/rules.d/25-libsane.rules
 
 install -D %SOURCE2 -m0644 %buildroot%_sysconfdir/xinetd.d/%name
 mkdir -p %buildroot%_lockdir/%name/
@@ -205,7 +193,10 @@ rm -f %buildroot%_libdir/%name/*.a
 %endif
 
 %pre -n lib%name
-%_sbindir/groupadd -r -f scanner || :
+%groupadd -f scanner || :
+
+%pre -n %name-server
+%useradd -d /var/empty -s /dev/null -G scanner _saned || :
 
 %files
 %_docdir/%name-*
@@ -255,6 +246,11 @@ rm -f %buildroot%_libdir/%name/*.a
 %endif
 
 %changelog
+* Fri Oct 04 2013 Vitaly Lipatov <lav@altlinux.ru> 1.0.24-alt2
+- return GROUP=scanner (ALT bug #29425)
+- remove obsoleted patches
+- add user _saned and run saned under _saned:scanner
+
 * Wed Oct 02 2013 Vitaly Lipatov <lav@altlinux.ru> 1.0.24-alt1
 - new version 1.0.24 (with rpmrb script) (ALT bug #29418)
 
