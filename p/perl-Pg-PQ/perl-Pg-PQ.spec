@@ -14,8 +14,8 @@
 %define _enable_test 1
 
 Name: perl-Pg-PQ
-Version: 0.09
-Release: alt2
+Version: 0.13
+Release: alt1
 
 Summary: Perl wrapper for PostgreSQL libpq
 
@@ -25,7 +25,7 @@ Url: http://www.cpan.org
 
 Packager: Denis Smirnov <mithraen@altlinux.ru>
 
-Source: http://search.cpan.org//CPAN/authors/id/S/SA/SALVA/%m_distro-%version.tar.gz
+Source: http://www.cpan.org/authors/id/S/SA/SALVA/Pg-PQ-%{version}.tar.gz
 
 # Automatically added by buildreq on Sun Nov 04 2012
 # optimized out: libpq-devel
@@ -58,6 +58,9 @@ even the Coro manpage.
 %perl_vendor_autolib/Pg/*
 
 %changelog
+* Fri Oct 04 2013 Igor Vlasenko <viy@altlinux.ru> 0.13-alt1
+- automated CPAN update
+
 * Mon Sep 02 2013 Vladimir Lettiev <crux@altlinux.ru> 0.09-alt2
 - built for perl 5.18
 
