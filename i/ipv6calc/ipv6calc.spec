@@ -1,5 +1,5 @@
 Name: ipv6calc
-Version: 0.93.1
+Version: 0.94.1
 Release: alt1
 
 Summary: IPv6 address format change and calculation utility
@@ -69,6 +69,9 @@ cd -
 %docdir/
 
 %changelog
+* Fri Oct 04 2013 Dmitry V. Levin <ldv@altlinux.org> 0.94.1-alt1
+- Updated to 0.94.1.
+
 * Fri Apr 27 2012 Dmitry V. Levin <ldv@altlinux.org> 0.93.1-alt1
 - Updated to 0.93.1.
 
