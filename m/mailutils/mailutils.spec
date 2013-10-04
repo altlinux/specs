@@ -4,10 +4,10 @@
 
 Name: mailutils
 
-%define baseversion 2.99.96
+%define baseversion 2.99.98
 
 %if %snapshot
-%define snapshotdate 20120513
+%define snapshotdate 20130822
 Version: %baseversion
 Release: alt0.%snapshotdate.1
 %define srcdir %name-%snapshotdate
@@ -303,6 +303,7 @@ rm -f $RPM_BUILD_ROOT%python_sitelibdir/mailutils/c_api.la
 %_libdir/mailutils/numaddr.so
 %_libdir/mailutils/spamd.so
 %_libdir/mailutils/timestamp.so
+%_libdir/mailutils/editheader.so
 
 %_libdir/libmailutils.so.*
 
@@ -332,6 +333,7 @@ rm -f $RPM_BUILD_ROOT%python_sitelibdir/mailutils/c_api.la
 %_libdir/mailutils/numaddr.*a
 %_libdir/mailutils/spamd.*a
 %_libdir/mailutils/timestamp.*a
+%_libdir/mailutils/editheader.*a
 
 %files doc
 %doc AUTHORS COPYING* NEWS README README-alpha THANKS TODO ChangeLog.gz
@@ -391,6 +393,9 @@ rm -f $RPM_BUILD_ROOT%python_sitelibdir/mailutils/c_api.la
 %endif
 
 %changelog
+* Thu Sep 05 2013 Sergey Y. Afonin <asy@altlinux.ru> 2.99.98-alt0.20130822.1
+- New version
+
 * Mon May 14 2012 Sergey Y. Afonin <asy@altlinux.ru> 2.99.96-alt0.20120513.1
 - new snapshot
 
