@@ -4,7 +4,7 @@
 
 Name: python-module-django-%modulename
 Version: 0.7
-Release: alt3
+Release: alt3.1
 
 %setup_python_module %modulename
 
@@ -25,7 +25,7 @@ Requires: python-module-django-classy-tags >= 0.3.1
 
 BuildPreReq: rpm-build-licenses
 BuildPreReq: Django >= 1.2.7
-BuildPreReq: python2.7(django.test)
+BuildPreReq: python-module-django-tests
 BuildPreReq: python-module-django-dbbackend-sqlite3 >= 1.2.7
 BuildPreReq: python-module-django-classy-tags >= 0.3.1
 BuildPreReq: python-module-setupdocs
@@ -64,6 +64,9 @@ python runtests.py
 %python_sitelibdir/*.egg-info
 
 %changelog
+* Fri Oct 04 2013 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.7-alt3.1
+- Fix build requires.
+
 * Tue Apr 02 2013 Aleksey Avdeev <solo@altlinux.ru> 0.7-alt3
 - Fix build requires
 

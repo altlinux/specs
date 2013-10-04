@@ -4,7 +4,7 @@
 
 Name: python-module-django-rest-framework
 Version: 2.2.1
-Release: alt1
+Release: alt1.1
 
 %setup_python_module %modulename
 
@@ -25,7 +25,7 @@ Requires: Django >= 1.3
 BuildPreReq: rpm-build-licenses
 BuildPreReq: %py_dependencies setuptools
 BuildPreReq: Django >= 1.3
-BuildPreReq: %py_dependencies django.test.utils
+BuildPreReq: python-module-django-tests
 BuildPreReq: python-module-django-dbbackend-sqlite3
 # for docs
 BuildPreReq: %py_dependencies markdown
@@ -71,5 +71,8 @@ This package contains tests for Django REST framework.
 %python_sitelibdir/%modulename/runtests
 
 %changelog
+* Fri Oct 04 2013 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.2.1-alt1.1
+- Fixed build requires.
+
 * Thu Feb 28 2013 Aleksey Avdeev <solo@altlinux.ru> 2.2.1-alt1
 - Initial build for ALT Linux Sisyphus
