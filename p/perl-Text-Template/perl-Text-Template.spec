@@ -1,15 +1,15 @@
 %define module Text-Template
 
 Name: perl-Text-Template
-Version: 1.45
-Release: alt1.1
+Version: 1.46
+Release: alt1
 
 Packager: Denis Smirnov <mithraen@altlinux.ru>
 
 Summary: Expand template text with embedded Perl
 Group: Development/Perl
 License: GPL or Artistic
-Source: http://www.cpan.org/modules/by-module/Text/%module-%version.tar.gz
+Source: http://www.cpan.org/authors/id/M/MJ/MJD/Text-Template-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -43,6 +43,9 @@ ages functional separation.
 %perl_vendor_privlib/Text*
 
 %changelog
+* Fri Oct 04 2013 Igor Vlasenko <viy@altlinux.ru> 1.46-alt1
+- automated CPAN update
+
 * Mon Nov 22 2010 Igor Vlasenko <viy@altlinux.ru> 1.45-alt1.1
 - repair after perl 5.12 upgrade using girar-nmu
 
