@@ -15,7 +15,7 @@
 
 Name: perl-Event-Notify
 Version: 0.00004
-Release: alt1.1.1
+Release: alt2
 
 Summary: Simple Observer/Notifier
 
@@ -23,10 +23,9 @@ License: Artistic
 Group: Development/Perl
 Url: http://search.cpan.org/dist/Event-Notify/
 
-Packager: Michael Bochkaryov <misha@altlinux.ru>
-
 BuildArch: noarch
 Source: http://search.cpan.org//CPAN/authors/id/D/DM/DMAKI/%m_distro-%version.tar.gz
+Patch: Event-Notify-0.00004-perl-5.18-qw-syntax.patch
 
 # Automatically added by buildreq on Sat Jul 12 2008
 BuildRequires: perl-Module-Install perl-Test-MockObject
@@ -39,6 +38,7 @@ in a class that doesn't necessarily want to be a subclass of a notifier.
 
 %prep
 %setup -q -n %m_distro-%version
+%patch -p1
 %build
 %perl_vendor_build
 
@@ -51,6 +51,9 @@ in a class that doesn't necessarily want to be a subclass of a notifier.
 %exclude %perl_vendor_archlib
 
 %changelog
+* Fri Oct 04 2013 Igor Vlasenko <viy@altlinux.ru> 0.00004-alt2
+- fixed build
+
 * Mon Nov 22 2010 Igor Vlasenko <viy@altlinux.ru> 0.00004-alt1.1.1
 - repair after perl 5.12 upgrade using girar-nmu
 
