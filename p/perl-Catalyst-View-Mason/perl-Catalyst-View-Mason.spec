@@ -1,10 +1,10 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(CPAN.pm) perl(Catalyst/Log.pm) perl(Catalyst/View.pm) perl(Config.pm) perl(File/Spec/Functions.pm) perl(FindBin.pm) perl(Scalar/Util.pm) perl-devel perl-podlators
+BuildRequires: perl(CPAN.pm) perl(Catalyst/Log.pm) perl(Catalyst/View.pm) perl(Config.pm) perl(Cwd.pm) perl(ExtUtils/Command.pm) perl(ExtUtils/MM_Unix.pm) perl(ExtUtils/Manifest.pm) perl(File/Basename.pm) perl(File/Find.pm) perl(File/Spec.pm) perl(File/Spec/Functions.pm) perl(FileHandle.pm) perl(FindBin.pm) perl(JSON.pm) perl(LWP/Simple.pm) perl(Module/Build.pm) perl(Net/FTP.pm) perl(Parse/CPAN/Meta.pm) perl(Scalar/Util.pm) perl(Socket.pm) perl(YAML/Tiny.pm) perl(base.pm) perl(inc/Module/Install.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Catalyst-View-Mason
 Version:        0.18
-Release:        alt2_12
+Release:        alt3_12
 Summary:        Mason View Class
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -32,6 +32,8 @@ Catalyst::View::Mason comes to the rescue.
 
 %prep
 %setup -q -n Catalyst-View-Mason-%{version}
+# use deprecated Catalyst
+rm t/match.t t/action.t
 
 %build
 %{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
@@ -54,6 +56,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Fri Oct 04 2013 Igor Vlasenko <viy@altlinux.ru> 0.18-alt3_12
+- fixed build
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.18-alt2_12
 - update to new release by fcimport
 
