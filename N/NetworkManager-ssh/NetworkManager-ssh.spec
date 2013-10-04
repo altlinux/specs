@@ -7,7 +7,7 @@
 
 Name: NetworkManager-ssh
 Version: 0.9.1
-Release: alt2%git_date
+Release: alt3%git_date
 License: %gpl2plus
 Group: System/Configuration/Networking
 Summary: NetworkManager VPN plugin for SSH
@@ -83,6 +83,9 @@ make check
 %exclude %_libdir/NetworkManager/*.la
 
 %changelog
+* Thu Oct 03 2013 Mikhail Efremov <sem@altlinux.org> 0.9.1-alt3
+- Fix build: Avoid deprecation warnings.
+
 * Mon Sep 16 2013 Mikhail Efremov <sem@altlinux.org> 0.9.1-alt2
 - Don't reload DBUS configuration during install.
 - Rename 'gnome' subpackage to 'gtk'.
