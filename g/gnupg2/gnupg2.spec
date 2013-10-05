@@ -1,5 +1,5 @@
 Name: gnupg2
-Version: 2.0.21
+Version: 2.0.22
 Release: alt1
 
 Group: Text tools
@@ -103,6 +103,9 @@ install -pm644 AUTHORS NEWS THANKS %buildroot%docdir/
 %docdir
 
 %changelog
+* Sat Oct 05 2013 Dmitry V. Levin <ldv@altlinux.org> 2.0.22-alt1
+- Updated to 2.0.22 (fixes CVE-2013-4402).
+
 * Fri Sep 20 2013 Dmitry V. Levin <ldv@altlinux.org> 2.0.21-alt1
 - Updated to 2.0.21.
 
