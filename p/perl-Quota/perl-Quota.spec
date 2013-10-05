@@ -1,6 +1,6 @@
 %define dist Quota
 Name: perl-%dist
-Version: 1.7.0
+Version: 1.7.1
 Release: alt1
 
 Summary: Perl interface to file system quotas
@@ -8,7 +8,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URl: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/T/TO/TOMZO/Quota-%{version}.tar.gz
 
 # Automatically added by buildreq on Sun Oct 09 2011
 BuildRequires: perl-devel
@@ -39,6 +39,9 @@ sed -i- 's/Linux 2/Linux/' Makefile.PL
 %perl_vendor_autolib/Quota
 
 %changelog
+* Sat Oct 05 2013 Igor Vlasenko <viy@altlinux.ru> 1.7.1-alt1
+- automated CPAN update
+
 * Wed Aug 28 2013 Vladimir Lettiev <crux@altlinux.ru> 1.7.0-alt1
 - 1.6.7 -> 1.7.0
 
