@@ -8,8 +8,8 @@
 
 %define rname kross-interpreters
 Name: kde4-kross-interpreters
-Version: 4.10.0
-Release: alt0.1
+Version: 4.11.1
+Release: alt1
 
 Group: Development/KDE and QT
 Summary: Kross interpreters
@@ -108,6 +108,9 @@ Ruby plugin for the Kross architecture in KDE.
 
 
 %changelog
+* Mon Sep 09 2013 Sergey V Turchin <zerg@altlinux.org> 4.11.1-alt1
+- new version
+
 * Tue Dec 18 2012 Sergey V Turchin <zerg@altlinux.org> 4.10.0-alt0.1
 - new beta version
 
