@@ -24,13 +24,13 @@
 %define flavour %base_flavour-%sub_flavour
 
 Name: kernel-image-%flavour
-Version: 3.10.14
-Release: alt4
+Version: 3.10.15
+Release: alt1
 
 %define kernel_req %nil
 %define kernel_prov %nil
 %define kernel_branch 3.10
-%define kernel_stable_version 14
+%define kernel_stable_version 15
 %define kernel_extra_version .%kernel_stable_version
 #define kernel_extra_version %nil
 
@@ -1813,6 +1813,12 @@ done)
 
 
 %changelog
+* Sun Oct 06 2013 Led <led@altlinux.ru> 3.10.15-alt1
+- 3.10.15
+- removed:
+  + fix-drivers-md--dm-raid
+- enabled INTEL_MEI_ME
+
 * Fri Oct 04 2013 Led <led@altlinux.ru> 3.10.14-alt4
 - updated:
   + fix-drivers-net-ethernet-broadcom--bnx2x
