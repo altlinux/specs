@@ -25,7 +25,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.10.14
-Release: alt3
+Release: alt4
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -1813,6 +1813,12 @@ done)
 
 
 %changelog
+* Fri Oct 04 2013 Led <led@altlinux.ru> 3.10.14-alt4
+- updated:
+  + fix-drivers-net-ethernet-broadcom--bnx2x
+- added:
+  + fix-drivers-usb-host--xhci-hcd
+
 * Thu Oct 03 2013 Led <led@altlinux.ru> 3.10.14-alt3
 - updated:
   + feat-net-ipv4-netfilter--ipt_NETFLOW
