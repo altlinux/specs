@@ -1,5 +1,5 @@
 Name: nginx-etersoft
-Version: 0.2.4
+Version: 0.2.5
 Release: alt1
 
 Summary: Additional Nginx templates and functions
@@ -54,9 +54,16 @@ install -m644 www/* %buildroot%webserver_htdocsdir/maintenance/
 %config(noreplace) %_sysconfdir/nginx/httpconf-available.d/*
 %_sysconfdir/nginx/examples/
 %_datadir/%name/
-%webserver_htdocsdir/maintenance/
+%dir %webserver_htdocsdir/maintenance/
+%config(noreplace) %webserver_htdocsdir/maintenance/*
 
 %changelog
+* Sun Oct 06 2013 Vitaly Lipatov <lav@altlinux.ru> 0.2.5-alt1
+- rename config, add techalias
+- rewrite the rewrite checking code
+- create_nginx: add support for mediawiki engine
+- static-fallback: add support for yandex auth file
+
 * Sat Aug 03 2013 Vitaly Lipatov <lav@altlinux.ru> 0.2.4-alt1
 - improve stop-injection.conf
 - stop-crack: catch /edit requests
