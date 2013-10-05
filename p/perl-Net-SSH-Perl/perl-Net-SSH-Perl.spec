@@ -21,7 +21,7 @@
 
 Summary: Perl client interface to SSH
 Name: perl-Net-SSH-Perl
-Version: 1.35
+Version: 1.36
 Release: alt1
 License: Artistic
 Group: Development/Perl
@@ -65,6 +65,9 @@ echo "3" | perl Makefile.PL INSTALLDIRS="vendor" PREFIX="%buildroot%_prefix"
 
 
 %changelog
+* Sat Oct 05 2013 Igor Vlasenko <viy@altlinux.ru> 1.36-alt1
+- automated CPAN update
+
 * Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 1.35-alt1
 - automated CPAN update
 
