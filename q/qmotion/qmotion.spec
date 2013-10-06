@@ -1,13 +1,13 @@
 Name: qmotion
-Version: 2.3
-Release: alt3
+Version: 3.0
+Release: alt1
 
 Summary: Detect motion with your webcam.
 Group: Development/Tools
 License: GPLv2+
 Url: http://slist.lilotux.net/linux/%{name}/index_en.html
 
-Source: %name-%version.tar
+Source0: %{name}-%{version}.tgz
 Source1: %name.watch
 
 BuildRequires: gcc-c++ libqt4-devel >= 4.3 pkgconfig(opencv)
@@ -66,6 +66,9 @@ EOF
 %_iconsdir/hicolor/??x??/apps/%name.png
 
 %changelog
+* Mon Sep 16 2013 Igor Vlasenko <viy@altlinux.ru> 3.0-alt1
+- new version (watch file uupdate)
+
 * Tue Sep 25 2012 Igor Vlasenko <viy@altlinux.ru> 2.3-alt3
 - rebuild with new libopencv
 
