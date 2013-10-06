@@ -15,9 +15,9 @@
 %define nv_version 319
 %define nv_release 49
 %define nv_minor %nil
-%define pkg_rel alt116
+%define pkg_rel alt117
 %def_disable common
-%def_enable kernelsource
+%def_disable kernelsource
 
 %define tbver %{nv_version}.%{nv_release}.%{nv_minor}
 %if "%nv_minor" == "%nil"
@@ -360,6 +360,9 @@ fi
 %endif
 
 %changelog
+* Sun Oct 06 2013 Sergey V Turchin <zerg@altlinux.org> 319.49-alt117
+- don't package kernel module sources
+
 * Wed Sep 11 2013 Sergey V Turchin <zerg@altlinux.org> 319.49-alt116
 - add patch from Ubuntu against 3.11 kernel
 
