@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist File-MimeInfo
 Name: perl-%dist
-Version: 0.18
+Version: 0.19
 Release: alt1
 
 Summary: Determine file type
@@ -34,11 +34,15 @@ work-alike.
 
 %files
 %doc Changes README
-%_bindir/mime*
-%_man1dir/mime*
+#%_bindir/mime*
+#%_man1dir/mime*
 %perl_vendor_privlib/File
 
 %changelog
+* Sun Oct 06 2013 Igor Vlasenko <viy@altlinux.ru> 0.19-alt1
+- automated CPAN update
+- script installation is disabled by author.
+
 * Thu Sep 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.18-alt1
 - automated CPAN update
 
