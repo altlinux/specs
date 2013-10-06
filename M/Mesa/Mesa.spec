@@ -3,7 +3,7 @@
 %def_enable wayland_egl
 
 Name: Mesa
-Version: 9.2
+Version: 9.2.1
 Release: alt1
 Epoch: 4
 License: MIT
@@ -16,7 +16,7 @@ Packager: Valery Inozemtsev <shrek@altlinux.ru>
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-BuildRequires: llvm-devel >= 3.3
+BuildRequires: llvm-devel >= 3.3 llvm-devel-static >= 3.3
 BuildRequires: gcc-c++ indent flex libXdamage-devel libXext-devel libXft-devel libXmu-devel libXi-devel libXrender-devel libXxf86vm-devel
 BuildRequires: libdrm-devel libexpat-devel xorg-glproto-devel xorg-dri2proto-devel python-modules libselinux-devel libxcb-devel libSM-devel
 BuildRequires: python-module-libxml2 libudev-devel libXdmcp-devel libwayland-client-devel libwayland-server-devel libffi-devel libelf-devel
@@ -342,6 +342,12 @@ ln -sf ../..%_sysconfdir/X11/%_lib/libGLESv2.so.2 %_libdir/
 %_bindir/glxgears
 
 %changelog
+* Sun Oct 06 2013 Valery Inozemtsev <shrek@altlinux.ru> 4:9.2.1-alt1
+- 9.2.1 release
+
+* Sat Sep 28 2013 Valery Inozemtsev <shrek@altlinux.ru> 4:9.2-alt1.1
+- updated to 9.2 git.4babf9b
+
 * Thu Aug 29 2013 Valery Inozemtsev <shrek@altlinux.ru> 4:9.2-alt1
 - 9.2 release
 
