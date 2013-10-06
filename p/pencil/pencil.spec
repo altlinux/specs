@@ -2,7 +2,7 @@
 #
 
 Name:     pencil
-Version:  2.0.4
+Version:  2.0.5
 Release:  alt1
 
 Summary: GUI prototyping tool
@@ -61,5 +61,8 @@ cp -a ./%_datadir/%name %buildroot%_datadir/
 %_desktopdir/%name.desktop
 
 %changelog
+* Sun Oct 06 2013 Nikolay A. Fetisov <naf@altlinux.ru> 2.0.5-alt1
+- New version
+
 * Sun May 19 2013 Nikolay A. Fetisov <naf@altlinux.ru> 2.0.4-alt1
 - Initial build for ALT Linux Sisyphus
