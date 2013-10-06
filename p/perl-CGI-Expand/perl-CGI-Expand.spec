@@ -3,7 +3,7 @@
 %define real_name  CGI-Expand
 
 Name: perl-CGI-Expand
-Version: 2.03
+Version: 2.04
 Release: alt1
 
 Summary: converts a CGI query into structured data
@@ -41,6 +41,9 @@ using a dotted name convention similar to TT2.
 %perl_vendor_privlib/CGI*
 
 %changelog
+* Sun Oct 06 2013 Nikolay A. Fetisov <naf@altlinux.ru> 2.04-alt1
+- New version
+
 * Tue Jun 21 2011 Nikolay A. Fetisov <naf@altlinux.ru> 2.03-alt1
 - New version
 
