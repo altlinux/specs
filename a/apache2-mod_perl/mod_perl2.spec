@@ -5,7 +5,7 @@
 
 Name:    apache2-mod_perl
 Version: 2.0.8
-Release: alt2
+Release: alt3
 
 Summary: An embedded Perl interpreter for the Apache2 Web server
 Summary(ru_RU.UTF-8): Встроенный интерпретатор Perl для веб-сервера Apache2
@@ -137,8 +137,17 @@ tar xvf %SOURCE7
 mv -f -- LICENSE LICENSE.orig
 ln -s -- $(relative %_licensedir/Apache-2.0 %_docdir/%name/LICENSE) LICENSE
 
+# Hardcode module versions to make perl.prov happy (ALT#29362)
+VERSION=`grep 'our $VERSION = "' lib/mod_perl2.pm | sed -e 's#[^"]*"##' -e 's#".*##'`
+sed -e "s#VERSION = do { require mod_perl2; \$mod_perl2::VERSION }#VERSION = \"$VERSION\"#" -i xs/ModPerl/Const/Const.pm
+sed -e "s#VERSION = do { require mod_perl2; \$mod_perl2::VERSION }#VERSION = \"$VERSION\"#" -i xs/Apache2/Const/Const.pm
+
+
+%ifdef __BTE
+rm -f -- t/apr-ext/finfo.t t/apr/finfo.t
+%endif
+
 %build
-%def_without test
 %perl_vendor_build MP_APXS=%apache2_apxs MP_APR_CONFIG=%apache2_apr_config
 
 %install
@@ -159,46 +168,6 @@ install -p -m 644 -- xs/tables/current/Apache2/ConstantsTable.pm %buildroot%perl
 install -p -m 644 -- xs/tables/current/Apache2/FunctionTable.pm  %buildroot%perl_vendor_archlib/Apache2/FunctionTable.pm
 install -p -m 644 -- xs/tables/current/Apache2/StructureTable.pm %buildroot%perl_vendor_archlib/Apache2/StructureTable.pm
 install -p -m 644 -- xs/tables/current/ModPerl/FunctionTable.pm  %buildroot%perl_vendor_archlib/ModPerl/FunctionTable.pm
-
-%post
-# Reconfigure Apache2:
-%apache2_sbindir/a2chkconfig ||:
-
-if [ -e %apache2_mods_enabled/%module_name.load ]; then
-    CONF_OK=0
-    %apache2_sbindir/apachectl2 configtest && CONF_OK=1 ||:
-    if [ "$CONF_OK" = "1" ]; then
-        %post_apache2_rpmhttpdrestartfile
-    else
-        echo "Some errors detected in Apache2 configuration!"
-        echo "To use %real_name check configuration and start %apache2_dname service."
-        echo
-    fi
-else
-    echo "Apache2 %real_name module had been installed, but does't enabled."
-    echo "Check %apache2_mods_start directory for files with '%module_name=no' lines."
-    echo
-fi
-
-%preun
-if [ "$1" = "0" ] ; then # last uninstall
-    [ -e %apache2_mods_enabled/%module_name.load ] && %apache2_sbindir/a2dismod %module_name 2>&1 >/dev/null ||:
-fi
-
-%postun
-# Reconfigure Apache2:
-%apache2_sbindir/a2chkconfig ||:
-if [ "$1" = "0" ] ; then # last uninstall
-    CONF_OK=0
-    %apache2_sbindir/apachectl2 configtest && CONF_OK=1 ||:
-    if [ "$CONF_OK" = "1" ]; then
-        %post_apache2_rpmhttpdrestartfile
-    else
-        echo "Some errors detected in Apache2 configuration!"
-        echo "To complete %real_name uninstalling check configuration and restart %apache2_dname service."
-        echo
-    fi
-fi
 
 %files
 %doc Changes README
@@ -283,6 +252,10 @@ fi
 %doc docs/*
 
 %changelog
+* Sun Oct 06 2013 Nikolay A. Fetisov <naf@altlinux.ru> 2.0.8-alt3
+- Hardcode modules versions to make perl.prov happy (Closes: #29362)
+- Switch to use httpd2.filetrigger
+
 * Thu Aug 29 2013 Vladimir Lettiev <crux@altlinux.ru> 2.0.8-alt2
 - built for perl 5.18
 - temporary disabled tests (sporadic failures in BTE on i586)
