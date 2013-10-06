@@ -1,7 +1,7 @@
 # SPEC file for the RightToClick Firefox extension
 
 %define rname	righttoclick
-%define version	2.9.4
+%define version	2.9.5
 %define release	alt1
 %define cid	\{cd617375-6743-4ee8-bac4-fbf10f35729e\}
 %define ciddir	%firefox_noarch_extensionsdir/%cid
@@ -55,5 +55,8 @@ fi
 %ciddir
 
 %changelog
+* Sun Oct 06 2013 Nikolay A. Fetisov <naf@altlinux.ru> 2.9.5-alt1
+- New version
+
 * Tue Jun 11 2013 Nikolay A. Fetisov <naf@altlinux.ru> 2.9.4-alt1
 - Initial build for ALT Linux Sisyphus
