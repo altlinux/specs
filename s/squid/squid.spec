@@ -1,11 +1,11 @@
 %def_disable poll
 %def_enable epoll
-%def_disable ecap
+%def_enable ecap
 %def_enable esi
 
 Name: squid
 Version: 3.2.13
-Release: alt5
+Release: alt6
 %define langpack_ver 20121005
 Summary: The Squid proxy caching server
 License: GPLv2
@@ -43,7 +43,7 @@ BuildRequires: gcc-c++ libcap-devel libdb4-devel libldap-devel libltdl-devel
 BuildRequires: libpam-devel libsasl2-devel libssl-devel perl-Pod-Parser
 BuildRequires: w3c-libwww-devel cppunit-devel
 BuildRequires: libkrb5-devel
-%{?_enable_ecap:BuildRequires: libecap-devel >= 0.2.0}
+%{?_enable_ecap:BuildRequires: libecap-devel >= 0.2.0-alt3}
 %{?_enable_esi:BuildRequires: libxml2-devel libexpat-devel}
 # Used by smb_auth.pl,pop3.pl and squid_db_auth, required on find-requires stage:
 BuildRequires: perl-Authen-Smb perl-libnet perl-DBI
@@ -244,7 +244,7 @@ chown -R %name:%name %_spooldir/%name >/dev/null 2>&1 ||:
 %config %_sysconfdir/logrotate.d/%name
 %dir %_datadir/%name
 %_datadir/%name/*
-%_datadir/snmp/mibs
+%_datadir/snmp
 %_sbindir/*
 %_man8dir/squid.*
 %_man1dir/*
@@ -288,6 +288,9 @@ chown -R %name:%name %_spooldir/%name >/dev/null 2>&1 ||:
 
 
 %changelog
+* Sun Oct 06 2013 Led <led@altlinux.ru> 3.2.13-alt6
+- enabled ecap (through fixed libecap-devel package)
+
 * Fri Oct 04 2013 Led <led@altlinux.ru> 3.2.13-alt5
 - provide/obsolete squid-conf-default (ALT#29426)
 - disabled ecap (through broken libecap-devel package)
