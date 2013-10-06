@@ -1,7 +1,7 @@
 ## SPEC file for Perl module Role-Identifiable
 
 Name: perl-Role-Identifiable
-Version: 0.005
+Version: 0.006
 Release: alt1
 
 Summary: Perl module to provide a thing with an ident attribute
@@ -19,9 +19,9 @@ Source: %real_name-%version.tar
 AutoReqProv: perl, yes
 BuildRequires(pre): rpm-build-licenses perl-devel
 
-# Automatically added by buildreq on Sat Jan 28 2012
-# optimized out: perl-Class-Load perl-Data-OptList perl-Devel-GlobalDestruction perl-Eval-Closure perl-List-MoreUtils perl-MRO-Compat perl-Module-Runtime perl-Package-DeprecationManager perl-Package-Stash perl-Package-Stash-XS perl-Params-Classify perl-Params-Util perl-Sub-Exporter perl-Sub-Install perl-Sub-Name perl-Try-Tiny perl-parent
-BuildRequires: perl-Moose perl-devel
+# Automatically added by buildreq on Sun Oct 06 2013
+# optimized out: perl-B-Hooks-EndOfScope perl-Class-Load perl-Data-OptList perl-Devel-GlobalDestruction perl-Eval-Closure perl-List-MoreUtils perl-MRO-Compat perl-Module-Implementation perl-Module-Runtime perl-Moose perl-Package-DeprecationManager perl-Package-Stash perl-Package-Stash-XS perl-Params-Util perl-Pod-Escapes perl-Pod-Simple perl-Sub-Exporter perl-Sub-Exporter-Progressive perl-Sub-Install perl-Sub-Name perl-Try-Tiny perl-devel perl-namespace-clean
+BuildRequires: perl-Capture-Tiny perl-Devel-PartialDump perl-Test-Pod perl-Variable-Magic perl-Moose
 
 %description
 Perl module Role-Identifiable provides a thing with an ident
@@ -44,6 +44,9 @@ exceptions.
 %perl_vendor_privlib/Role/Identifiable*
 
 %changelog
+* Sun Oct 06 2013 Nikolay A. Fetisov <naf@altlinux.ru> 0.006-alt1
+- New version (ATTENTION: not quite backward compatible)
+
 * Sat Jan 28 2012 Nikolay A. Fetisov <naf@altlinux.ru> 0.005-alt1
 - Initial build for ALT Linux Sisyphus
 
