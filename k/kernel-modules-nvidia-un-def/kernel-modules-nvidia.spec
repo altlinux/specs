@@ -4,7 +4,7 @@
 %define nvIF_ver_lteq() %if "%(rpmvercmp '%2' '%1')" >= "0"
 
 %define module_name	nvidia
-%define module_version	319.49
+%define module_version	319.60
 %define module_release	alt1
 %define flavour		un-def
 
@@ -39,8 +39,6 @@
 %endif
 %define legacy4_src %(echo %legacy4 | tr -d .)
 %define mod_ver_list %version %legacy1 %legacy2 %legacy3 %legacy4
-
-%define upstream_module_name	NVIDIA_kernel
 
 %define module_dir /lib/modules/%kversion-%flavour-%krelease/nVidia
 %define module_local_dir /lib/modules/nvidia
@@ -189,6 +187,9 @@ fi
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Fri Oct 04 2013 Sergey V Turchin <zerg at altlinux dot org> 319.60-alt1..
+- new release (319.60)
 
 * Mon Sep 02 2013 Sergey V Turchin <zerg at altlinux dot org> 319.49-alt1..
 - new releases (319.49 and 304.108)
