@@ -1,71 +1,119 @@
-# BEGIN SourceDeps(oneline):
+%def_enable shared
+%def_enable static
+
+%define bname ecap
+Name: lib%bname
+Version: 0.2.0
+Release: alt3
+Summary: libecap library implements eCAP API in C++
+License: BSD
+Group: System/Legacy libraries
+URL: http://www.e-cap.org/
+Source: http://www.measurement-factory.com/tmp/%bname/%name-%version.tar
+Provides: %{name}2 = %version-%release
+
 BuildRequires: gcc-c++
-# END SourceDeps(oneline)
-%add_optflags %optflags_shared
-Name:       libecap
-Version:    0.2.0
-Release:    alt2_7
-Summary:    Squid interface for embedded adaptation modules
-License:    BSD
-Group:      Development/C
-URL:        http://www.e-cap.org/
-Source0:    http://www.measurement-factory.com/tmp/ecap/%{name}-%{version}.tar.gz
-Source1:    autoconf.h
-Source44: import.info
 
 %description
-eCAP is a software interface that allows a network application, such as an 
-HTTP proxy or an ICAP server, to outsource content analysis and adaptation to 
-a loadable module. For each applicable protocol message being processed, an 
-eCAP-enabled host application supplies the message details to the adaptation 
-module and gets back an adapted message, a "not interested" response, or a 
-"block this message now!" instruction. These exchanges often include message 
-bodies.
+eCAP is a software interface that allows a network application, such as an HTTP
+proxy or an ICAP server, to outsource content analysis and adaptation to a
+loadable module. For each applicable protocol message being processed, an
+eCAP-enabled host application supplies the message details to the adaptation
+module and gets back an adapted message, a "not interested" response, or a "block
+this message now!" instruction. These exchanges often include message bodies.
+The adaptation module can also exchange meta-information with the host
+application to supply additional details such as configuration options, a reason
+behind the decision to ignore a message, or a detected virus name.
 
-The adaptation module can also exchange meta-information with the host 
-application to supply additional details such as configuration options, a 
-reason behind the decision to ignore a message, or a detected virus name.
-
-If you are familiar with the ICAP protocol (RFC 3507), then you may think of 
-eCAP as an "embedded ICAP", where network interactions with an ICAP server are 
-replaced with function calls to an adaptation module.
 
 %package devel
-Summary:    Libraries and header files for the libecap library
-Group:      Development/C
-Requires:   %{name} = %{version}-%{release}
+Summary: Libraries and header files for the libecap library
+Group: Development/C++
+Provides: %name-devel = %version-%release
+Requires: %name%{?_disable_shared:-devel-static} = %version-%release
+Conflicts: %{name}0-devel
 
 %description devel
-This package provides the libraries, include files, and other
-resources needed for developing libecap applications.
+eCAP is a software interface that allows a network application, such as an HTTP
+proxy or an ICAP server, to outsource content analysis and adaptation to a
+loadable module. For each applicable protocol message being processed, an
+eCAP-enabled host application supplies the message details to the adaptation
+module and gets back an adapted message, a "not interested" response, or a "block
+this message now!" instruction. These exchanges often include message bodies.
+The adaptation module can also exchange meta-information with the host
+application to supply additional details such as configuration options, a reason
+behind the decision to ignore a message, or a detected virus name.
+
+This package provides the library, include files, and other resources needed for
+developing %name applications.
+
+
+%if_enabled static
+%package devel-static
+Summary: Libraries and header files for the libecap library
+Group: Development/C++
+Provides: %name-devel-static = %version-%release
+Requires: %name-devel = %version-%release
+Conflicts: %{name}0-devel-static
+
+%description devel-static
+eCAP is a software interface that allows a network application, such as an HTTP
+proxy or an ICAP server, to outsource content analysis and adaptation to a
+loadable module. For each applicable protocol message being processed, an
+eCAP-enabled host application supplies the message details to the adaptation
+module and gets back an adapted message, a "not interested" response, or a "block
+this message now!" instruction. These exchanges often include message bodies.
+The adaptation module can also exchange meta-information with the host
+application to supply additional details such as configuration options, a reason
+behind the decision to ignore a message, or a detected virus name.
+
+This package provides the static %name library needed for developing static
+%name applications.
+%endif
+
 
 %prep
 %setup -q
 
 %build
-%configure
-make %{?_smp_mflags}
+%configure %{subst_enable shared} %{subst_enable static}
+%make_build
+
 
 %install
-make install DESTDIR=%{buildroot}
-rm -f %{buildroot}%{_libdir}/libecap.a
-rm -f %{buildroot}%{_libdir}/libecap.la
+%makeinstall_std
+install -d -m 0755 %buildroot%_docdir/%name-%version
+install -p -m 0644 LICENSE CREDITS NOTICE README %buildroot%_docdir/%name-%version/
 
-# Rename libecap/common/autoconf.h to libecap/common/autoconf-<arch>.h to avoid file conflicts on
-# multilib systems and install autoconf.h wrapper
-mv %{buildroot}%{_includedir}/%{name}/common/autoconf.h %{buildroot}%{_includedir}/%{name}/common/autoconf-%{_arch}.h
-install -m644 %{SOURCE1} %{buildroot}%{_includedir}/%{name}/common/autoconf.h
 
+%if_enabled shared
 %files
-%doc LICENSE CREDITS NOTICE README
-%{_libdir}/libecap.so.*
+%doc %_docdir/%name-%version
+%_libdir/*.so.*
+%endif
+
 
 %files devel
-%{_libdir}/libecap.so
-%{_libdir}/pkgconfig/libecap.pc
-%{_includedir}/libecap
+%_pkgconfigdir/*
+%if_disabled shared
+%doc %_docdir/%name-%version
+%else
+%_libdir/*.so
+%endif
+%_includedir/*
+
+
+%if_enabled static
+%files devel-static
+%_libdir/*.a
+%endif
+
 
 %changelog
+* Sun Oct 06 2013 Led <led@altlinux.ru> 0.2.0-alt3
+- dropped wry fcimport'ed crap
+- added subpackage with static library
+
 * Tue Sep 24 2013 Igor Vlasenko <viy@altlinux.ru> 0.2.0-alt2_7
 - update to new release by fcimport
 
@@ -86,4 +134,3 @@ install -m644 %{SOURCE1} %{buildroot}%{_includedir}/%{name}/common/autoconf.h
 
 * Sat Dec 17 2011 Igor Vlasenko <viy@altlinux.ru> 0.2.0-alt1_2
 - initial import by fcimport
-
