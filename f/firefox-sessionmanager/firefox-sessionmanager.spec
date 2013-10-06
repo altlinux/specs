@@ -1,7 +1,7 @@
 # SPEC file for Session Manager extension
 
 %define rname	sessionmanager
-%define version 0.8.0.7
+%define version 0.8.0.8
 %define release alt1
 %define cid 	\{1280606b-2510-4fe0-97ef-9b5a22eafe30\}
 %define ciddir  %firefox_noarch_extensionsdir/%cid
@@ -20,7 +20,7 @@ BuildArch:	noarch
 
 Packager:       Nikolay A. Fetisov <naf@altlinux.ru>
 
-Source0:	session_manager-%version-fx+sm.xpi
+Source0:	session_manager-%version-sm+fx.xpi
 
 BuildRequires(pre):     rpm-build-firefox rpm-build-licenses
 BuildRequires:  unzip
@@ -59,6 +59,9 @@ fi
 %ciddir
 
 %changelog
+* Sun Oct 06 2013 Nikolay A. Fetisov <naf@altlinux.ru> 0.8.0.8-alt1
+- New version 0.8.0.8
+
 * Tue Jun 11 2013 Nikolay A. Fetisov <naf@altlinux.ru> 0.8.0.7-alt1
 - New version 0.8.0.7
 
