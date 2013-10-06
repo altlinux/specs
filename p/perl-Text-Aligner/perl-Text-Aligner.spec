@@ -2,7 +2,7 @@
 ## Used in SVK
 
 Name: perl-Text-Aligner
-Version: 0.07
+Version: 0.08
 Release: alt1
 
 Summary: align output with given style
@@ -48,6 +48,9 @@ alignment styles.
 %perl_vendor_privlib/Text/Aligner*
 
 %changelog
+* Sun Oct 06 2013 Nikolay A. Fetisov <naf@altlinux.ru> 0.08-alt1
+- New version
+
 * Sun Nov 28 2010 Nikolay A. Fetisov <naf@altlinux.ru> 0.07-alt1
 - New version
 
