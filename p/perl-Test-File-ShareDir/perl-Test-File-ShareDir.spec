@@ -1,7 +1,7 @@
 ## SPEC file for Perl module Test::File::ShareDir
 
 Name: perl-Test-File-ShareDir
-Version: 0.3.1
+Version: 0.3.3
 Release: alt1
 
 Summary: Create a Fake ShareDir for your modules for testing
@@ -19,9 +19,9 @@ Source: %real_name-%version.tar
 
 BuildRequires(pre): rpm-build-licenses perl-devel
 
-# Automatically added by buildreq on Sun Nov 04 2012
-# optimized out: perl-CPAN-Meta perl-CPAN-Meta-Requirements perl-CPAN-Meta-YAML perl-Class-Inspector perl-Encode perl-IPC-Run3 perl-JSON-PP perl-Module-Metadata perl-Parse-CPAN-Meta perl-Perl-OSType perl-Pod-Escapes perl-Pod-Simple perl-Probe-Perl perl-Try-Tiny perl-devel perl-podlators
-BuildRequires: perl-File-Copy-Recursive perl-File-ShareDir perl-HTML-Parser perl-Module-Build perl-Path-Class perl-Test-Fatal perl-Test-Script
+# Automatically added by buildreq on Sun Oct 06 2013
+# optimized out: perl-CPAN-Meta perl-CPAN-Meta-Requirements perl-CPAN-Meta-YAML perl-Class-Inspector perl-Data-OptList perl-Devel-Symdump perl-Encode perl-IO-String perl-IPC-Run3 perl-JSON-PP perl-Mixin-Linewise perl-Module-Metadata perl-Params-Util perl-Parse-CPAN-Meta perl-Perl-OSType perl-Pod-Coverage perl-Pod-Escapes perl-Pod-Eventual perl-Pod-Parser perl-Pod-Simple perl-Probe-Perl perl-Sub-Exporter perl-Sub-Install perl-Try-Tiny perl-devel perl-podlators
+BuildRequires: perl-File-Copy-Recursive perl-File-ShareDir perl-HTML-Parser perl-Module-Build perl-Path-Tiny perl-Pod-Coverage-TrustPod perl-Sub-Name perl-Test-CPAN-Meta perl-Test-Fatal perl-Test-Pod perl-Test-Pod-Coverage perl-Test-Script ruby ruby-stdlibs
 
 %description
 Test::File::ShareDir is a Perl module to create a Fake ShareDir
@@ -42,6 +42,9 @@ for your modules for testing.
 
 
 %changelog
+* Sun Oct 06 2013 Nikolay A. Fetisov <naf@altlinux.ru> 0.3.3-alt1
+- New version
+
 * Sun Nov 04 2012 Nikolay A. Fetisov <naf@altlinux.ru> 0.3.1-alt1
 - Initial build for ALT Linux Sisyphus
 
