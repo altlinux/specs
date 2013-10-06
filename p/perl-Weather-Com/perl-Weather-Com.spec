@@ -1,11 +1,8 @@
 ## SPEC file for Perl module Weather::Com
 
-%define version    0.5.5
-%define release    alt1
-
 Name: perl-Weather-Com
-Version: %version
-Release: alt1.1
+Version: 2.0.0
+Release: alt1
 
 Summary: Perl module for accessing weather information
 Summary(ru_RU.UTF-8): модуль Perl для получения информации о погоде
@@ -24,8 +21,10 @@ BuildArch: noarch
 
 AutoReqProv: perl, yes
 BuildPreReq: perl-devel rpm-build-licenses
-BuildRequires: perl-Time-Format, perl-Time-Format_XS, perl-Test-MockObject
-BuildRequires: perl-Locale-Maketext, perl-libwww, perl-XML-Simple
+# Automatically added by buildreq on Sun Oct 06 2013
+# optimized out: perl-Encode perl-HTTP-Date perl-HTTP-Message perl-I18N-LangTags perl-Time-Format_XS perl-URI perl-XML-LibXML perl-XML-SAX perl-XML-SAX-Base perl-devel
+BuildRequires: perl-Locale-Maketext perl-Test-MockObject perl-Time-Format perl-XML-Simple perl-libwww
+BuildRequires: perl-Time-Format_XS
 
 %description
 Weather::Com  is a Perl module enabling the programmer to access weather
@@ -75,6 +74,9 @@ Weather Channel' logos, etc..
 
 
 %changelog
+* Sun Oct 06 2013 Nikolay A. Fetisov <naf@altlinux.ru> 2.0.0-alt1
+- New version
+
 * Mon Nov 22 2010 Igor Vlasenko <viy@altlinux.ru> 0.5.5-alt1.1
 - repair after perl 5.12 upgrade using girar-nmu
 
