@@ -1,15 +1,15 @@
 %define module_name Mail-POP3Client
 
 Name: perl-%module_name
-Version: 2.18
-Release: alt1.1
+Version: 2.19
+Release: alt1
 
 Summary: %module_name module for perl
 License: Perl
 Group: Development/Perl
 
 Url: %CPAN %module_name
-Source: http://www.cpan.org/modules/by-module/Mail/%module_name-%version.tar.gz
+Source: http://www.cpan.org/authors/id/S/SD/SDOWD/Mail-POP3Client-%{version}.tar.gz
 
 # Automatically added by buildreq on Tue Mar 04 2008
 BuildRequires: perl-devel
@@ -33,6 +33,9 @@ mail readers, or whatever.
 %perl_vendor_privlib/Mail/
 
 %changelog
+* Sun Oct 06 2013 Igor Vlasenko <viy@altlinux.ru> 2.19-alt1
+- automated CPAN update
+
 * Wed Nov 24 2010 Igor Vlasenko <viy@altlinux.ru> 2.18-alt1.1
 - repair after perl 5.12 upgrade using girar-nmu
 
