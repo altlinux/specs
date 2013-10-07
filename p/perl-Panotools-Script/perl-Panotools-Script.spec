@@ -1,6 +1,6 @@
 %define dist Panotools-Script
 Name: perl-%dist
-Version: 0.26
+Version: 0.28
 Release: alt1
 
 Summary: Panorama Tools scripting
@@ -10,7 +10,8 @@ Packager: Dmitry Derjavin <dd@altlinux.org>
 Requires: zenity
 
 URL: %CPAN %dist
-Source: %dist-%version.tar
+Source: http://www.cpan.org/authors/id/B/BP/BPOSTLE/Panotools-Script-%{version}.tar.gz
+Patch: Panotools-Script-0.28-perl-syntax.patch
 
 BuildArch: noarch
 
@@ -22,6 +23,7 @@ hugin script files. http://hugin.sourceforge.net/
 
 %prep
 %setup -q -n %dist-%version
+%patch -p1
 
 %build
 %perl_vendor_build INSTALLMAN1DIR=%_man1dir
@@ -39,6 +41,9 @@ hugin script files. http://hugin.sourceforge.net/
 #%perl_vendor_autolib/Panotools
 
 %changelog
+* Mon Oct 07 2013 Igor Vlasenko <viy@altlinux.ru> 0.28-alt1
+- automated CPAN update
+
 * Thu Sep 22 2011 Igor Vlasenko <viy@altlinux.ru> 0.26-alt1
 - automated CPAN update
 
