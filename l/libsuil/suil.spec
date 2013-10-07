@@ -5,7 +5,7 @@ BuildRequires: gcc-c++ waf
 %define oldname suil
 %global maj 0
 Name:       libsuil
-Version:    0.6.14
+Version:    0.6.16
 Release:    alt1_1
 Summary:    A lightweight C library for loading and wrapping LV2 plugin UIs
 
@@ -88,6 +88,9 @@ chmod +x %{buildroot}%{_libdir}/lib%{oldname}-0.so.*
 %{_mandir}/man3/%{oldname}.3*
 
 %changelog
+* Mon Oct 07 2013 Igor Vlasenko <viy@altlinux.ru> 0.6.16-alt1_1
+- update to new release by fcimport
+
 * Sun Sep 15 2013 Igor Vlasenko <viy@altlinux.ru> 0.6.14-alt1_1
 - update to new release by fcimport
 
