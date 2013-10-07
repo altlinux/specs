@@ -1,15 +1,15 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(Config.pm) perl(IPC/Open2.pm) perl(blib.pm) perl-Module-Build perl-devel perl-podlators
+BuildRequires: perl(Config.pm) perl-Module-Build perl-devel perl-podlators
 # END SourceDeps(oneline)
 Summary:	A tiny replacement for Module::Build
 Name:		perl-Module-Build-Tiny
 Version:	0.028
-Release:	alt1
+Release:	alt1_1
 License:	GPL+ or Artistic
 Group:		Development/Perl
 URL:		https://github.com/Leont/module-build-tiny
-Source:	http://www.cpan.org/authors/id/L/LE/LEONT/Module-Build-Tiny-%{version}.tar.gz
+Source0:	http://cpan.metacpan.org/authors/id/L/LE/LEONT/Module-Build-Tiny-%{version}.tar.gz
 BuildArch:	noarch
 # Module
 BuildRequires:	perl(CPAN/Meta.pm)
@@ -27,6 +27,7 @@ BuildRequires:	perl(JSON/PP.pm)
 BuildRequires:	perl(Pod/Man.pm)
 BuildRequires:	perl(TAP/Harness.pm)
 # Test
+BuildRequires:	perl(blib.pm)
 BuildRequires:	perl(Carp.pm)
 BuildRequires:	perl(Cwd.pm)
 BuildRequires:	perl(Data/Dumper.pm)
@@ -34,6 +35,9 @@ BuildRequires:	perl(File/ShareDir.pm)
 BuildRequires:	perl(File/Spec.pm)
 BuildRequires:	perl(File/Temp.pm)
 BuildRequires:	perl(IO/File.pm)
+BuildRequires:	perl(IO/Handle.pm)
+BuildRequires:	perl(IPC/Open2.pm)
+BuildRequires:	perl(IPC/Open3.pm)
 BuildRequires:	perl(Test/More.pm)
 BuildRequires:	perl(Test/Pod.pm)
 BuildRequires:	perl(XSLoader.pm)
@@ -65,13 +69,16 @@ perl Build.PL --install_path bindoc=%_man1dir --installdirs=vendor
 ./Build install --destdir=%{buildroot} --create_packlist=0
 
 %check
-RELEASE_TESTING=1 ./Build test
+AUTHOR_TESTING=1 RELEASE_TESTING=1 ./Build test
 
 %files
 %doc Changes LICENSE README Todo
 %{perl_vendor_privlib}/Module/
 
 %changelog
+* Mon Oct 07 2013 Igor Vlasenko <viy@altlinux.ru> 0.028-alt1_1
+- update to new release by fcimport
+
 * Mon Sep 30 2013 Igor Vlasenko <viy@altlinux.ru> 0.028-alt1
 - automated CPAN update
 
