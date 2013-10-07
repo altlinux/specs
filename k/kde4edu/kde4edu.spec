@@ -8,9 +8,10 @@
 Name: kde4edu
 %define major 4
 %define minor 11
-%define bugfix 1
+%define bugfix 2
 Version: %major.%minor.%bugfix
 Release: alt1
+
 Packager: Sergey V Turchin <zerg at altlinux dot org>
 
 Group: Graphical desktop/KDE
@@ -1077,6 +1078,12 @@ mkdir -p %buildroot/%_K4apps/step/objinfo/l10n
 %_K4dbus_interfaces/*
 
 %changelog
+* Mon Oct 07 2013 Sergey V Turchin <zerg@altlinux.org> 4.11.2-alt1
+- new version
+
+* Fri Oct 04 2013 Sergey V Turchin <zerg@altlinux.org> 4.11.1-alt0.M70P.1
+- built for M70P
+
 * Fri Sep 06 2013 Sergey V Turchin <zerg@altlinux.org> 4.11.1-alt1
 - new version
 

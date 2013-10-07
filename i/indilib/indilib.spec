@@ -1,8 +1,11 @@
 %define shortname indi
 
+%add_verify_elf_skiplist %_libdir/libindidriver.so.*
+%add_verify_elf_skiplist %_libdir/libindimain.so.*
+
 Name: indilib
-Version: 0.9.1
-Release: alt2
+Version: 0.9.6
+Release: alt1
 
 Group: Development/C
 Summary: Library to control astronomical devices
@@ -14,7 +17,9 @@ Conflicts: kde4edu-kstars < 4.1.60
 Conflicts: kdeedu-kstars <= 3.5.10-alt2
 
 Source: http://nchc.dl.sourceforge.net/sourceforge/indi/lib%{shortname}_%version.tar.gz
-Patch1: 0.7.2-alt-fix-linking.patch
+# SuSE
+Patch1: no-return-in-nonvoid-function.patch
+Patch2: udev_rules_dir_configurable.patch
 
 # Automatically added by buildreq on Wed Oct 05 2011 (-bi)
 # optimized out: cmake-modules elfutils libstdc++-devel pkg-config zlib-devel
@@ -59,12 +64,13 @@ range of Astronomical devices (telescopes, focusers, CCDs..etc).
 
 %prep
 %setup -q -n lib%{shortname}_%version
-#%patch1 -p1
-sed -i 's|lib\${LIB_POSTFIX}|lib\${LIB_SUFFIX}|' CMakeLists.txt
+%patch1 -p1
+%patch2 -p0
 
 %build
-%Kcmake
-%Kmake
+%Kbuild \
+    -DUDEVRULES_INSTALL_DIR=%_udevrulesdir \
+    #
 
 %install
 %Kinstall
@@ -74,6 +80,7 @@ sed -i 's|lib\${LIB_POSTFIX}|lib\${LIB_SUFFIX}|' CMakeLists.txt
 %doc ChangeLog NEWS README TODO
 %_bindir/*
 %_datadir/%shortname
+%_udevrulesdir/*.rules
 
 %files -n lib%shortname
 %doc ChangeLog NEWS README TODO
@@ -91,6 +98,12 @@ sed -i 's|lib\${LIB_POSTFIX}|lib\${LIB_SUFFIX}|' CMakeLists.txt
 %_pkgconfigdir/libindi.pc
 
 %changelog
+* Fri Sep 06 2013 Sergey V Turchin <zerg@altlinux.org> 0.9.6-alt1
+- new version
+
+* Fri Jul 27 2012 Sergey V Turchin <zerg@altlinux.org> 0.9.1-alt1.M60P.1
+- new version
+
 * Tue Jul 24 2012 Sergey V Turchin <zerg@altlinux.org> 0.9.1-alt2
 - rebuilt whith new libnova
 
