@@ -8,7 +8,7 @@
 
 Name: nagios-plugins
 Version: 1.4.15
-Release: alt1.1
+Release: alt1.2
 
 Summary: Host/service/network monitoring plug-ins for Nagios(R)
 Summary(ru_RU.UTF-8): Модули мониторинга (plug-ins) хостов/сервисов/сети для Nagios(R)
@@ -187,7 +187,7 @@ are not installed on all systems.
 #patch2 -p1 -b .p2
 %patch3 -p1 -b .p3
 %patch4 -p1 -b .p4
-%patch5 -p2
+%patch5 -p2 -b .p5
 
 %patch101 -p1 -b .p101
 %patch102 -p1 -b .p102
@@ -201,6 +201,7 @@ are not installed on all systems.
 %build
 # configure searches some root only commands
 PATH=$PATH:/usr/sbin
+export ac_cv_path_PATH_TO_FPING=/usr/sbin/fping
 %configure \
 	--libexecdir=%nagios_plugdir \
 	--with-cgiurl=/nagios/cgi-bin \
@@ -215,7 +216,9 @@ PATH=$PATH:/usr/sbin
 	--with-ping-command='/bin/ping -n -U -w %%d -c %%d %%s' \
 	--with-proc-loadavg='/proc/loadavg' \
 	--with-proc-meminfo='/proc/meminfo' \
-	--disable-rpath
+	--disable-rpath \
+	#
+
 %make_build
 
 %install
@@ -369,6 +372,9 @@ install -pm644 %SOURCE2 %buildroot%_docdir/%name-%version/README.ALT.UTF-8
 %_docdir/%name-extra-%version/*
 
 %changelog
+* Mon Oct 07 2013 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.4.15-alt1.2
+- Fixed build with fping >= 3.4-alt2.
+
 * Fri Dec 07 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4.15-alt1.1
 - Fixed build with glibc 2.16
 
