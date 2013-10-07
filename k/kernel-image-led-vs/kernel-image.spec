@@ -25,7 +25,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.10.15
-Release: alt1
+Release: alt2
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -1813,6 +1813,10 @@ done)
 
 
 %changelog
+* Mon Oct 07 2013 Led <led@altlinux.ru> 3.10.15-alt2
+- updated:
+  + feat-drivers-video--bootsplash
+
 * Sun Oct 06 2013 Led <led@altlinux.ru> 3.10.15-alt1
 - 3.10.15
 - removed:
