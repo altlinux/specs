@@ -1,5 +1,5 @@
 %define abiversion 52
-%define main_version 0.%abiversion.15
+%define main_version 0.%abiversion.16
 %define _name newt
 
 Name: %_name%abiversion
@@ -126,6 +126,9 @@ docbook2html -u tutorial.sgml
 %_libdir/*.*a
 
 %changelog
+* Mon Oct 07 2013 Slava Dubrovskiy <dubrsl@altlinux.org> 0.52.16-alt1
+- 0.52.16
+
 * Sun Apr 28 2013 Slava Dubrovskiy <dubrsl@altlinux.org> 0.52.15-alt1
 - 0.52.15
 
