@@ -10,7 +10,7 @@
 %define _tor_root %_localstatedir/%name
 
 Name: tor
-Version: 0.2.1.30
+Version: 0.2.3.25
 Release: alt1
 
 Summary: Anonymizing overlay network for TCP (The onion router)
@@ -57,7 +57,6 @@ sed -i 's:^#DataDirectory.*:DataDirectory %_var/cache/%name:' src/config/torrc.s
 %build
 %configure
 %make_build
-%make -C doc/design-paper tor-design.pdf
 
 # Perform unit test
 %make check
@@ -120,7 +119,7 @@ fi
 %_initdir/%name
 %dir %_datadir/%name
 %_datadir/%name/geoip
-%doc README AUTHORS LICENSE ChangeLog INSTALL doc/{HACKING,TODO} doc/spec/README-spec doc/design-paper/tor-design.pdf contrib/torify contrib/tor-tsocks.conf
+%doc README LICENSE ChangeLog INSTALL doc/{HACKING,TODO} doc/spec/README-spec contrib/torify contrib/tor-tsocks.conf
 
 %defattr(640,root,%toruser,2710)
 %_tor_root
@@ -132,6 +131,9 @@ fi
 %_var/cache/%name
 
 %changelog
+* Mon Oct 07 2013 Anton Farygin <rider@altlinux.ru> 0.2.3.25-alt1
+- new version
+
 * Fri Jun 24 2011 Dmitry V. Levin <ldv@altlinux.org> 0.2.1.30-alt1
 - Blindly updated 0.2.1.30 (fixes numerous bugs including CVE-2011-0427).
 - Updated build dependencies.
