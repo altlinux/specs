@@ -6,9 +6,9 @@ Name: mailfromd
 %define baseversion 7.99.92
 
 %if %snapshot
-%define snapshotdate 20120321
+%define snapshotdate 20130730
 Version: %baseversion
-Release: alt0.%snapshotdate.3
+Release: alt0.%snapshotdate.1
 %define srcdir %name-%baseversion-%snapshotdate
 %else
 Version: %baseversion
@@ -47,23 +47,32 @@ Source32: mailfromd-shared.wl
 
 Source50: mailfromd-clamav_only.mf
 
+
+# "not_found" placed to the cache when the MX is not responding
+# too. SMTP reply 5xx must not be returned at this case. This
+# behavior discovered in 7.99.92 (git 2012-03-21).
+# This patch is attempt to disable caching mf_timeout status.
+Patch1: mailfromd-savsrv.c-not_cache_mf_timeout.diff
+
 #Errata
 #Patch100:
 
-# Automatically added by buildreq on Wed Feb 08 2012
-# optimized out: emacs-X11 emacs-base emacs-cedet-speedbar emacs-common fontconfig libX11-locales libgdk-pixbuf libgpg-error libtinfo-devel mailutils pkg-config
+# Automatically added by buildreq on Mon Oct 07 2013
+# optimized out: emacs-X11 emacs-base emacs-cedet-speedbar emacs-common fontconfig libX11-locales libgdk-pixbuf libgpg-error libp11-kit libtinfo-devel mailutils pkg-config
 BuildRequires: emacs-X11 flex libdb4-devel libdspam-devel libgcrypt-devel libgdbm-devel libgnutls-devel libldap-devel libncurses-devel libpam-devel libreadline-devel libtokyocabinet-devel
 
 BuildRequires: rpm-build-licenses
 BuildRequires: libmailutils-devel >= 2.99.96-alt0.20120325
+BuildRequires: mailutils
 
 %description
-Milter-filter for Sendmail v8, MeTA1 and Postfix (since 2.3; please look
-documentation of Postfix for checking some limitations).
-It provide many verifications at different stages of reception of the messages,
-including smtp callback checking, gray listing, regexp checking, ClamAV and
-SpamAssassin lookup and other. Nominally it is replacement for verify_sender,
-milter-regex, clamav-milter, milter-greylist ang other.
+Milter-filter for Sendmail v8, MeTA1 and Postfix (since 2.3; please
+look documentation of Postfix for checking some limitations).
+
+It provide many verifications at different stages of reception of the
+messages, including smtp callback checking, gray listing, regexp checking,
+ClamAV and SpamAssassin lookup and other. Nominally it is replacement for
+verify_sender, milter-regex, clamav-milter, milter-greylist ang other.
 
 %package cfg_full
 Summary: Full featured configuration of mailfromd.
@@ -74,8 +83,7 @@ Group: System/Servers
 BuildArch: noarch
 
 %description cfg_full
-Full featured configuration of mailfromd (can be used with Sendmail since 8.14
-and with Postfix since 2.5).
+Full featured configuration of mailfromd (can be used with Sendmail since 8.14)
 
 %package cfg_clamav
 Summary: clamav-milter replacement configuration.
@@ -124,6 +132,8 @@ National Language files for mailfromd (Polish and Ukrainian)
 
 %setup -q -n %srcdir
 
+%patch1 -p1
+
 #Errata
 #patch100 -p1
 
@@ -136,7 +146,7 @@ gzip ChangeLog
 #libtoolize --ltdl --copy --force
 
 export LIBS="-lresolv"
-%configure --sysconfdir=%_sysconfdir/mailfromd --with-berkeley-db
+%configure --sysconfdir=%_sysconfdir/mailfromd --with-berkeley-db --enable-ipv6
 # --enable-syslog-async
 
 # NO SMP BUILD
@@ -285,6 +295,13 @@ rm -f %_localstatedir/mailfromd-clamav/*.db &>/dev/null ||:
 %files locales -f mailfromd.lang
 
 %changelog
+* Mon Oct 07 2013 Sergey Y. Afonin <asy@altlinux.ru> 7.99.92-alt0.20130730.1
+- new snapshot
+- disabled cacheing result "mf_timeout"
+  (mailfromd-savsrv.c-not_cache_mf_timeout.diff)
+- changes in mailfromd.mf:
+  - removed temporary workaround for cache behavior with "not_found" value
+
 * Wed Jun 13 2012 Sergey Y. Afonin <asy@altlinux.ru> 7.99.92-alt0.20120321.3
 - fixed compacting of databases
 - changes in mailfromd.mf:
