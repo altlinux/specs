@@ -1,6 +1,6 @@
-Version:	0.9.11
+Version:	1.0.0
 Name:		qtdbf
-Release:	alt2
+Release:	alt1
 Summary:	A simple DBF viewer and editor
 Summary(ru_RU.UTF8): Простой просмотрщик и редактор DBF
 Summary(uk_UA.UTF8): Простий переглядач та редактор DBF
@@ -52,6 +52,9 @@ make INSTALL_ROOT=%buildroot install
 %_datadir/%name
 
 %changelog
+* Mon Oct 07 2013 Motsyo Gennadi <drool@altlinux.ru> 1.0.0-alt1
+- 1.0.0
+
 * Thu Aug 29 2013 Motsyo Gennadi <drool@altlinux.ru> 0.9.11-alt2
 - fix
 
