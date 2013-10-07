@@ -15,7 +15,7 @@
 %define nv_version 319
 %define nv_release 60
 %define nv_minor %nil
-%define pkg_rel alt117
+%define pkg_rel alt118
 %def_enable kernelsource
 
 %define tbver %{nv_version}.%{nv_release}.%{nv_minor}
@@ -80,6 +80,8 @@ Source202: ftp://download.nvidia.com/XFree86/Linux-x86_64/%tbver/NVIDIA-Linux-x8
 
 Source2: nvidia.xinf
 Source100: nvidia_create_xinf
+
+Patch1: buildfix_kernel_3.11.patch
 
 BuildRequires: kernel-build-tools rpm-macros-alternatives
 ExclusiveArch: %ix86 x86_64
@@ -187,6 +189,7 @@ cd %tbname-%tbver%dirsuffix
 
 pushd kernel/
 rm -rf precompiled
+%patch1 -p1
 popd
 
 
@@ -313,6 +316,9 @@ fi
 %endif
 
 %changelog
+* Mon Oct 07 2013 Sergey V Turchin <zerg@altlinux.org> 319.60-alt118
+- add patch from Ubuntu against 3.11 kernel
+
 * Thu Oct 03 2013 Sergey V Turchin <zerg@altlinux.org> 319.60-alt117
 - new version
 
