@@ -1,7 +1,7 @@
 Summary: A collection of unix tools
 Name: moreutils
 Version: 0.50
-Release: alt1
+Release: alt2
 License: GPLv2+
 Group: Other
 Source0: %{name}-%version.tar
@@ -32,6 +32,8 @@ unix was young. Currently it consists of these tools:
  - vipe: insert a text editor into a pipe
  - zrun: automatically uncompress arguments to command
 
+NB: due to package conflicts, some utils packed with moreutils_ prefix
+
 %prep
 %setup
 
@@ -43,8 +45,12 @@ sed -i -e 's,"file:///.*docbookx\.dtd","/usr/share/sgml/docbook/dtd/4.4/docbookx
 
 %install
 %makeinstall_std
-# man1dir/ts.1.* conflicts with openssl :
+# ts conflicts with openssl :
 mv %buildroot%_man1dir/ts.1 %buildroot%_man1dir/%{name}_ts.1
+mv %buildroot%_bindir/ts %buildroot%_bindir/%{name}_ts
+# parallel conflicts with gnu parallel:
+mv %buildroot%_man1dir/parallel.1 %buildroot%_man1dir/%{name}_parallel.1
+mv %buildroot%_bindir/parallel %buildroot%_bindir/%{name}_parallel
 
 %files
 %_bindir/chronic
@@ -55,10 +61,10 @@ mv %buildroot%_man1dir/ts.1 %buildroot%_man1dir/%{name}_ts.1
 %_bindir/isutf8
 %_bindir/lckdo
 %_bindir/mispipe
-%_bindir/parallel
+%_bindir/%{name}_parallel
 %_bindir/pee
 %_bindir/sponge
-%_bindir/ts
+%_bindir/%{name}_ts
 %_bindir/vidir
 %_bindir/vipe
 %_bindir/zrun
@@ -70,7 +76,7 @@ mv %buildroot%_man1dir/ts.1 %buildroot%_man1dir/%{name}_ts.1
 %_man1dir/isutf8.1*
 %_man1dir/lckdo.1*
 %_man1dir/mispipe.1*
-%_man1dir/parallel.1*
+%_man1dir/%{name}_parallel.1*
 %_man1dir/pee.1*
 %_man1dir/sponge.1*
 %_man1dir/%{name}_ts.1*
@@ -80,5 +86,8 @@ mv %buildroot%_man1dir/ts.1 %buildroot%_man1dir/%{name}_ts.1
 %doc README
 
 %changelog
+* Mon Oct  7 2013 Terechkov Evgenii <evg@altlinux.org> 0.50-alt2
+- parallel -> moreutils_parallel due to conflict with gnu parallel (tnx to mike@)
+
 * Sat Oct  5 2013 Terechkov Evgenii <evg@altlinux.org> 0.50-alt1
 - Initial build for ALT Linux Sisyphus (based on PLD spec)
