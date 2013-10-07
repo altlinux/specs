@@ -1,6 +1,7 @@
 %define dist Devel-GlobalDestruction
 Name: perl-%dist
-Version: 0.011
+Serial: 1
+Version: 0.11
 Release: alt1
 
 Summary: Expose the flag which marks global destruction
@@ -8,7 +9,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/H/HA/HAARG/Devel-GlobalDestruction-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -43,6 +44,9 @@ destruction is in effect.
 %perl_vendor_privlib/Devel
 
 %changelog
+* Mon Oct 07 2013 Igor Vlasenko <viy@altlinux.ru> 1:0.11-alt1
+- automated CPAN update
+
 * Thu Jun 13 2013 Vladimir Lettiev <crux@altlinux.ru> 0.011-alt1
 - 0.009 -> 0.011
 
