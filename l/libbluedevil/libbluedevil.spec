@@ -2,7 +2,7 @@
 %define libbluedevil libbluedevil%bluedevil_major
 
 Name: libbluedevil
-Version: 1.9.3
+Version: 1.9.4
 Release: alt1
 
 Group: Graphical desktop/KDE
@@ -56,6 +56,9 @@ based on %name .
 %_pkgconfigdir/bluedevil.pc
 
 %changelog
+* Mon Oct 07 2013 Sergey V Turchin <zerg@altlinux.org> 1.9.4-alt1
+- new version
+
 * Tue May 21 2013 Sergey V Turchin <zerg@altlinux.org> 1.9.3-alt1
 - new version
 
