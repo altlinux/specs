@@ -1,22 +1,33 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(DateTime/Set.pm) perl(DateTime/Span.pm) perl(DateTime/SpanSet.pm) perl(Params/Validate.pm) perl-devel perl-podlators
+BuildRequires: perl(Exporter.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-DateTime-Event-ICal
 Version:        0.11
-Release:        alt1
+Release:        alt1_1
 Summary:        Perl DateTime extension for computing rfc2445 recurrences
 License:        GPL+ or Artistic
 Group:          Development/Perl
 URL:            http://search.cpan.org/dist/DateTime-Event-ICal/
-Source:        http://www.cpan.org/authors/id/F/FG/FGLOCK/DateTime-Event-ICal-%{version}.tar.gz
+Source0:        http://www.cpan.org/authors/id/F/FG/FGLOCK/DateTime-Event-ICal-%{version}.tar.gz
 BuildArch:      noarch
-BuildRequires:  perl(Class/ISA.pm)
+# Build
+BuildRequires:  perl(ExtUtils/MakeMaker.pm)
+# Runtime
+BuildRequires:  perl(Carp.pm)
+BuildRequires:  perl(constant.pm)
 BuildRequires:  perl(DateTime.pm)
 BuildRequires:  perl(DateTime/Event/Recurrence.pm)
-BuildRequires:  perl(ExtUtils/MakeMaker.pm)
+BuildRequires:  perl(DateTime/Set.pm)
+BuildRequires:  perl(DateTime/Span.pm)
+BuildRequires:  perl(DateTime/SpanSet.pm)
+BuildRequires:  perl(Params/Validate.pm)
+BuildRequires:  perl(strict.pm)
+BuildRequires:  perl(vars.pm)
+# Test suite
 BuildRequires:  perl(Test/More.pm)
 Source44: import.info
+# Runtime
 
 %description
 This module provides convenience methods that let you easily create
@@ -26,25 +37,25 @@ DateTime::Set objects for rfc2445 style recurrences.
 %setup -q -n DateTime-Event-ICal-%{version}
 
 %build
-%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
+perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
 make %{?_smp_mflags}
 
 %install
-
 make pure_install DESTDIR=$RPM_BUILD_ROOT
-
 find $RPM_BUILD_ROOT -type f -name .packlist -exec rm -f {} \;
-find $RPM_BUILD_ROOT -depth -type d -exec rmdir {} 2>/dev/null \;
-
+# %{_fixperms} $RPM_BUILD_ROOT
 
 %check
 make test
 
 %files
 %doc Changes LICENSE README TODO
-%{perl_vendor_privlib}/*
+%{perl_vendor_privlib}/DateTime/
 
 %changelog
+* Mon Oct 07 2013 Igor Vlasenko <viy@altlinux.ru> 0.11-alt1_1
+- update to new release by fcimport
+
 * Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 0.11-alt1
 - automated CPAN update
 
