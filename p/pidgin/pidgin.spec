@@ -33,7 +33,7 @@
 
 Name: pidgin
 Version: 2.10.7
-Release: alt2
+Release: alt3
 
 Summary: A GTK+ based multiprotocol instant messaging client
 License: GPL
@@ -446,6 +446,9 @@ fi
 %endif
 
 %changelog
+* Mon Oct 07 2013 Alexey Shabalin <shaba@altlinux.ru> 2.10.7-alt3
+- rebuild with new libsasl2-3
+
 * Wed Mar 06 2013 Alexey Shabalin <shaba@altlinux.ru> 2.10.7-alt2
 - disable build cap plugin
 
