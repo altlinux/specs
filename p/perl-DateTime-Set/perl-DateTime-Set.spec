@@ -1,31 +1,39 @@
-%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(DateTime/Duration.pm) perl(DateTime/Infinite.pm) perl(Params/Validate.pm) perl-devel perl-podlators
+BuildRequires: perl(ExtUtils/MakeMaker.pm) perl-Module-Build perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-DateTime-Set
 Version:        0.32
-Release:        alt1
+Release:        alt1_1
 Summary:        Datetime sets and set math
 License:        GPL+ or Artistic
 Group:          Development/Perl
 URL:            http://search.cpan.org/dist/DateTime-Set/
-Source:        http://www.cpan.org/authors/id/F/FG/FGLOCK/DateTime-Set-%{version}.tar.gz
+Source0:        http://www.cpan.org/authors/id/F/FG/FGLOCK/DateTime-Set-%{version}.tar.gz
+Patch0:         DateTime-Set-0.32-version.patch
 BuildArch:      noarch
-BuildRequires:  perl(DateTime.pm)
-# introduces circular dependency
-#BuildRequires:  perl(DateTime::Event::Recurrence)
+# Build
 BuildRequires:  perl(Module/Build.pm)
+# Runtime
+BuildRequires:  perl(Carp.pm)
+BuildRequires:  perl(constant.pm)
+BuildRequires:  perl(DateTime/Duration.pm)
+BuildRequires:  perl(DateTime/Infinite.pm)
+BuildRequires:  perl(Params/Validate.pm)
 BuildRequires:  perl(Set/Infinite.pm)
+BuildRequires:  perl(strict.pm)
+BuildRequires:  perl(vars.pm)
+# Test Suite
+BuildRequires:  perl(DateTime.pm)
 BuildRequires:  perl(Test/More.pm)
-
-%{echo 
-%filter_from_requires /perl.Set.Infinite.pm. >= 0.5502/d
-
-}
-
+BuildRequires:  perl(warnings.pm)
+# Optional Tests
+# DateTime::Event::Recurrence requires DateTime::Set itself
+%if 0%{!?perl_bootstrap:1}
+BuildRequires:  perl(DateTime/Event/Recurrence.pm)
+%endif
 Source44: import.info
-
+# Runtime
 
 %description
 DateTime::Set is a module for datetime sets. It can be used to handle two
@@ -42,24 +50,29 @@ time", or "every Wednesday between 2003-03-05 and 2004-01-07".
 %prep
 %setup -q -n DateTime-Set-%{version}
 
+# Make perl/rpm version comparisons work the same way
+%patch0
+
 %build
-%{__perl} Build.PL --install_path bindoc=%_man1dir installdirs=vendor
+perl Build.PL --install_path bindoc=%_man1dir installdirs=vendor
 ./Build
 
 %install
-
 ./Build install destdir=$RPM_BUILD_ROOT create_packlist=0
-find $RPM_BUILD_ROOT -depth -type d -exec rmdir {} 2>/dev/null \;
-
+# %{_fixperms} $RPM_BUILD_ROOT
 
 %check
 ./Build test
 
 %files
 %doc Changes LICENSE README TODO
-%{perl_vendor_privlib}/*
+%{perl_vendor_privlib}/DateTime/
+%{perl_vendor_privlib}/Set/
 
 %changelog
+* Mon Oct 07 2013 Igor Vlasenko <viy@altlinux.ru> 0.32-alt1_1
+- update to new release by fcimport
+
 * Mon Sep 16 2013 Igor Vlasenko <viy@altlinux.ru> 0.32-alt1
 - automated CPAN update
 
