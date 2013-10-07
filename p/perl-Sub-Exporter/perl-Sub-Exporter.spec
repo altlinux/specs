@@ -14,8 +14,8 @@
 %define _enable_test 1
 
 Name: perl-Sub-Exporter
-Version: 0.982
-Release: alt2.1
+Version: 0.986
+Release: alt1
 
 Summary: a sophisticated exporter for custom-built routines
 
@@ -26,7 +26,7 @@ Url: %CPAN %m_distro
 Packager: Mikhail Pokidko <pma@altlinux.org>
 
 BuildArch: noarch
-Source: %name-%version-%release.tar
+Source: http://www.cpan.org/authors/id/R/RJ/RJBS/Sub-Exporter-%{version}.tar.gz
 
 # Automatically added by buildreq on Wed May 14 2008
 BuildRequires: perl-Data-OptList perl-Module-Install perl-Package-Generator
@@ -35,7 +35,7 @@ BuildRequires: perl-Data-OptList perl-Module-Install perl-Package-Generator
 None.
 
 %prep
-%setup -q -n %name-%version
+%setup -q -n %module-%version
 %build
 %perl_vendor_build
 
@@ -47,6 +47,9 @@ None.
 %exclude %perl_vendor_archlib
 
 %changelog
+* Mon Oct 07 2013 Igor Vlasenko <viy@altlinux.ru> 0.986-alt1
+- automated CPAN update
+
 * Mon Nov 22 2010 Igor Vlasenko <viy@altlinux.ru> 0.982-alt2.1
 - repair after perl 5.12 upgrade using girar-nmu
 
