@@ -4,7 +4,7 @@
 
 Name: ruby-%pkgname
 Version: 1.10.0
-Release: alt4.1
+Release: alt4.2
 
 Summary: ruby bindings for cairo
 Group: Development/Ruby
@@ -23,6 +23,7 @@ BuildRequires: libcairo-devel ruby-pkg-config libruby-devel
 
 # buildreq misses a lot this time
 BuildRequires: glib2-devel libpixman-devel xorg-glproto-devel xorg-dri2proto-devel libXau-devel libXdmcp-devel libXext-devel libXdamage-devel libXxf86vm-devel
+BuildRequires: pkgconfig(expat)
 
 %description
 Ruby bindings for cairo // cairo extension for Ruby.
@@ -64,6 +65,9 @@ export RUBYOPT=-rvendor-specific
 %_includedir/*
 
 %changelog
+* Mon Oct 07 2013 Led <led@altlinux.ru> 1.10.0-alt4.2
+- fixed BuildRequires
+
 * Tue Dec 04 2012 Led <led@altlinux.ru> 1.10.0-alt4.1
 - Rebuilt with ruby-1.9.3-alt1
 - updated BuildRequires
