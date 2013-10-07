@@ -1,5 +1,5 @@
-%define lvm2version 2.02.99
-%define dmversion 1.02.78
+%define lvm2version 2.02.103
+%define dmversion 1.02.82
 
 %def_disable cluster
 %def_enable selinux
@@ -399,6 +399,9 @@ install -m 0755 %SOURCE5 %buildroot%_initdir/blk-availability
 %_pkgconfigdir/devmapper-event.pc
 
 %changelog
+* Mon Oct 07 2013 Alexey Shabalin <shaba@altlinux.ru> 2.02.103-alt1
+- 2.02.103
+
 * Mon Jul 29 2013 Alexey Shabalin <shaba@altlinux.ru> 2.02.99-alt1
 - 2.02.99
 

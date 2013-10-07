@@ -1,6 +1,6 @@
 Name: mdadm
-Version: 3.2.6
-Release: alt3
+Version: 3.3
+Release: alt1
 
 Summary: A tool for managing Soft RAID under Linux
 License: GPLv2+
@@ -33,7 +33,7 @@ some common tasks).
 bzip2 -9fk ChangeLog
 
 %install
-%makeinstall_std MANDIR=%_mandir BINDIR=/sbin
+%makeinstall_std install-systemd MANDIR=%_mandir BINDIR=/sbin SYSTEMD_DIR=%_unitdir
 install -pD -m755 alt/mdadm.init %buildroot%_initdir/mdadm
 install -pD -m755 misc/syslog-events %buildroot/sbin/mdadm-syslog-events
 install -pD -m600 alt/mdadm.conf %buildroot%_sysconfdir/mdadm.conf
@@ -52,7 +52,8 @@ install -pD -m644 alt/mdadm.crond %buildroot%_sysconfdir/cron.d/mdadm
 
 %files
 /sbin/md*
-/lib/udev/rules.d/64-md-raid.rules
+/lib/udev/rules.d/63-md-raid-arrays.rules
+/lib/udev/rules.d/64-md-raid-assembly.rules
 %config(noreplace,missingok) %_sysconfdir/mdadm.conf
 %config(noreplace) %_sysconfdir/sysconfig/mdadm
 %_sysconfdir/cron.d/mdadm
@@ -63,6 +64,9 @@ install -pD -m644 alt/mdadm.crond %buildroot%_sysconfdir/cron.d/mdadm
 %doc TODO ChangeLog.bz2 mdadm.conf-example ANNOUNCE-%version alt/README*
 
 %changelog
+* Mon Oct 07 2013 Alexey Shabalin <shaba@altlinux.ru> 3.3-alt1
+- 3.3
+
 * Mon May 13 2013 Alexey Shabalin <shaba@altlinux.ru> 3.2.6-alt3
 - modernize udev rules
 
