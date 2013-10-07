@@ -1,17 +1,18 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/gtkdocize /usr/bin/pkg-config /usr/bin/vala-gen-introspect /usr/bin/vapigen libavahi-devel pkgconfig(avahi-client) pkgconfig(check) pkgconfig(gee-0.8) pkgconfig(gnome-vfs-2.0) pkgconfig(gnome-vfs-module-2.0) pkgconfig(gtk+-2.0) zlib-devel
+BuildRequires: /usr/bin/gtkdocize /usr/bin/pkg-config /usr/bin/vala-gen-introspect /usr/bin/vapigen libavahi-devel pkgconfig(check) pkgconfig(gee-0.8) pkgconfig(gnome-vfs-2.0) pkgconfig(gnome-vfs-module-2.0) pkgconfig(gtk+-2.0) zlib-devel
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
 Name: libdmapsharing
 Version: 2.9.18
-Release: alt1_2
+Release: alt1_3
 License: LGPLv2+
 Source: http://www.flyn.org/projects/libdmapsharing/%{name}-%{version}.tar.gz
 URL: http://www.flyn.org/projects/libdmapsharing/
 Summary: A DMAP client and server library
 Group: Development/C
 BuildRequires: glib2-devel libsoup-devel >= 2.32
-BuildRequires: libavahi-glib-devel libgdk-pixbuf-devel gst-plugins1.0-devel
+BuildRequires: libgdk-pixbuf-devel gst-plugins1.0-devel
+BuildRequires: pkgconfig(avahi-client) pkgconfig(avahi-glib)
 Source44: import.info
 
 %description 
@@ -51,6 +52,9 @@ make install DESTDIR=$RPM_BUILD_ROOT INSTALL="install -p"
 rm -f ${RPM_BUILD_ROOT}%{_libdir}/libdmapsharing-3.0.la
 
 %changelog
+* Mon Oct 07 2013 Igor Vlasenko <viy@altlinux.ru> 2.9.18-alt1_3
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 2.9.18-alt1_2
 - update to new release by fcimport
 
