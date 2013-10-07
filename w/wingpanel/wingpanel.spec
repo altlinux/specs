@@ -1,5 +1,5 @@
 Name: wingpanel
-Version: 0.2.3
+Version: 0.2.5
 Release: alt1
 
 Summary: A super sexy space-saving top panel
@@ -7,7 +7,7 @@ Group: Graphical desktop/Other
 License: GPLv3+
 Url: https://launchpad.net/wingpanel
 
-Source0: %name-%version.tar.gz
+Source0: %name-%version.tgz
 
 Packager: Igor Zubkov <icesik@altlinux.org>
 
@@ -50,6 +50,9 @@ Designed by elementary Project.
 %_datadir/icons/hicolor/scalable/apps/wingpanel.svg
 
 %changelog
+* Mon Oct 07 2013 Igor Zubkov <icesik@altlinux.org> 0.2.5-alt1
+- 0.2.3 -> 0.2.5
+
 * Sun Sep 15 2013 Igor Zubkov <icesik@altlinux.org> 0.2.3-alt1
 - build for Sisyphus
 
