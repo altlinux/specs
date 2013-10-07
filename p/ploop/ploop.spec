@@ -1,5 +1,5 @@
 Name: ploop
-Version: 1.8
+Version: 1.9
 Release: alt1
 Group: System/Base
 License: GNU GPL
@@ -50,7 +50,7 @@ make DESTDIR=%buildroot LIBDIR=%_libdir TMPFILESDIR=%_tmpfilesdir install
 %_man8dir/*
 
 %files -n lib%name
-%_libdir/libploop.so
+%_libdir/libploop.so.*
 %_lockdir/%name
 %_tmpfilesdir/*
 
@@ -58,9 +58,13 @@ make DESTDIR=%buildroot LIBDIR=%_libdir TMPFILESDIR=%_tmpfilesdir install
 %_libdir/libploop.a
 
 %files -n lib%name-devel
+%_libdir/libploop.so
 %_includedir/%name
 
 %changelog
+* Sun Oct 20 2013 Slava Dubrovskiy <dubrsl@altlinux.org> 1.9-alt1
+- New version
+
 * Mon Aug 05 2013 Slava Dubrovskiy <dubrsl@altlinux.org> 1.8-alt1
 - New version
 

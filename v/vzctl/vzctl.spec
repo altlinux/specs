@@ -1,5 +1,5 @@
 Name: vzctl
-Version: 4.1.2
+Version: 4.5.1
 Release: alt1
 
 Summary: OpenVZ Virtual Environments control utility
@@ -79,6 +79,19 @@ fi
 
 %post_service vzeventd
 
+if [ ! -e /etc/net/ifup-post-local ]; then
+	ln -sf %_sbindir/vzifup-post /etc/net/ifup-post-local
+elif readlink /etc/net/ifup-post-local | fgrep -q %_sbindir/vzifup-post; then
+        : # Nothing to do, symlink already points to our script
+else
+        echo " WARNING: file /etc/net/ifup-post-local is present!"
+        echo " You have to manually edit the above file so that"
+        echo " it calls %_sbindir/vzifup-post"
+fi
+
+# Some use /vz instead of /var/lib/vz; create a compatibility symlink
+test -a /vz || ln -s /var/lib/vz /vz
+
 # (Upgrading from <= vzctl-3.0.24)
 # If vz is running and vzeventd is not, start it
 if %_initddir/vz status >/dev/null 2>&1; then
@@ -91,6 +104,20 @@ exit 0
 %preun
 %preun_service vz
 %preun_service vzeventd
+
+if [ ! -e /etc/net/ifup-post-local ]; then
+        : # Nothing to do, no symlink
+elif readlink /etc/net/ifup-post-local | fgrep -q %_sbindir/vzifup-post; then
+	rm -f /etc/net/ifup-post-local
+else
+        echo " WARNING: file /etc/net/ifup-post-local is present!"
+        echo " You have to manually edit the above file so that"
+        echo " it STOP calls %_sbindir/vzifup-post"
+fi
+
+test -a /vz && rm -f /vz
+
+exit 0
 
 %files
 %doc ChangeLog
@@ -119,6 +146,11 @@ exit 0
 /var/lib/vz
 
 %changelog
+* Mon Oct 07 2013 Slava Dubrovskiy <dubrsl@altlinux.org> 4.5.1-alt1
+- Updated to vzctl-4.5.1
+- Add to postinstall script symlink - /var/lib/vz -> /vz
+- Add to postinstall script symlink - %_sbindir/vzifup-post -> /etc/net/ifup-post-local
+
 * Tue Jan 29 2013 Slava Dubrovskiy <dubrsl@altlinux.org> 4.1.2-alt1
 - Updated to vzctl-4.1.2
 
