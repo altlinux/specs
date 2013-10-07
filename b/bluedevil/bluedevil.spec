@@ -1,7 +1,7 @@
 %define _kde_alternate_placement 1
 
 Name: bluedevil
-Version: 1.3.1
+Version: 1.3.2
 Release: alt1
 
 Group: Graphical desktop/KDE
@@ -94,6 +94,9 @@ done
 %_K4includedir/bluedevil/
 
 %changelog
+* Mon Oct 07 2013 Sergey V Turchin <zerg@altlinux.org> 1.3.2-alt1
+- new version
+
 * Tue May 21 2013 Sergey V Turchin <zerg@altlinux.org> 1.3.1-alt1
 - new version
 
