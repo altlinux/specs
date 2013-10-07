@@ -3,7 +3,7 @@
 
 
 Name: perl-XML-Entities
-Version: 1.0000
+Version: 1.0001
 Release: alt1
 
 Packager: Pavel Zilke <zidex at altlinux dot org>
@@ -14,7 +14,7 @@ Group: Development/Perl
 URL: http://cpan.org/modules/by-module/%module_dir
 
 BuildArch: noarch
-Source0: %url/%real_name-%version.tar.gz
+Source: http://www.cpan.org/authors/id/S/SI/SIXTEASE/XML-Entities-%{version}.tar.gz
 
 AutoReqProv: perl, yes
 
@@ -46,6 +46,9 @@ numify( $entity_set, $string, ... )
 %perl_vendor_privlib/%module_dir/*
 
 %changelog
+* Mon Oct 07 2013 Igor Vlasenko <viy@altlinux.ru> 1.0001-alt1
+- automated CPAN update
+
 * Tue Jul 05 2011 Pavel Zilke <zidex at altlinux dot org> 1.0000-alt1
 - New version
 
