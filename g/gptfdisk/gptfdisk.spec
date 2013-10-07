@@ -1,13 +1,14 @@
 Name: gptfdisk
-Version: 0.8.6
-Release: alt1
+Version: 0.8.7
+Release: alt1.git.e3ee733f
 
 Summary: GPT partitioning and MBR repair software
 License: GPLv2
 Group: System/Configuration/Hardware
 
 Url: http://www.rodsbooks.com/gdisk
-Source: http://www.rodsbooks.com/gdisk/%name-%version.tar.gz
+Source: %name-%version.tar
+# GIT: git://git.code.sf.net/p/gptfdisk/code
 Packager: Slava Dubrovskiy <dubrsl@altlinux.ru>
 
 BuildRequires: gcc-c++ libuuid-devel libpopt-devel libicu-devel ncurses-devel
@@ -82,6 +83,9 @@ install -D fixparts.8 %buildroot%_man8dir/fixparts.8
 
 
 %changelog
+* Mon Oct 07 2013 Slava Dubrovskiy <dubrsl@altlinux.org> 0.8.7-alt1.git.e3ee733f
+- New version snapshot
+
 * Tue Feb 19 2013 Michael Shigorin <mike@altlinux.org> 0.8.6-alt1
 - New version
 
