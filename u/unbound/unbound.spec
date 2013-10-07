@@ -1,5 +1,5 @@
 Name: unbound
-Version: 1.4.20
+Version: 1.4.21
 Release: alt1
 License: BSD
 Url: http://unbound.net/
@@ -194,6 +194,9 @@ rm %buildroot%python_sitelibdir/*.la
 %endif
 
 %changelog
+* Mon Oct 07 2013 Slava Dubrovskiy <dubrsl@altlinux.org> 1.4.21-alt1
+- 1.4.21
+
 * Mon Aug 05 2013 Slava Dubrovskiy <dubrsl@altlinux.org> 1.4.20-alt1
 - 1.4.20
 - Add support for systemd. Fixed (ALT #26351) in case if started by systemd
