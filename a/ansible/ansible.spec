@@ -1,6 +1,6 @@
 Name: ansible
 Summary: SSH-based configuration management, deployment, and task execution system
-Version: 1.3.2
+Version: 1.3.3
 Release: alt1
 
 Group: System/Libraries
@@ -44,5 +44,8 @@ cp -va library/* %buildroot/%_datadir/%name/
 %doc README.md CONTRIBUTING.md CHANGELOG.md RELEASES.txt
 
 %changelog
+* Tue Oct  8 2013 Terechkov Evgenii <evg@altlinux.org> 1.3.3-alt1
+- 1.3.3
+
 * Sun Sep 29 2013 Terechkov Evgenii <evg@altlinux.org> 1.3.2-alt1
 - 1.3.2
