@@ -1,7 +1,9 @@
+%define _unpackaged_files_terminate_build 1
+
 %define ver_major 1.12
 %define api_ver 1.12
 %define goffice_api_ver 0.10
-%define _unpackaged_files_terminate_build 1
+
 %def_without gda
 %def_with python
 %def_with perl
@@ -9,8 +11,8 @@
 %def_disable check
 
 Name: gnumeric
-Version: %ver_major.7
-Release: alt2
+Version: %ver_major.8
+Release: alt1
 
 Summary: A full-featured spreadsheet for GNOME
 License: GPLv2+ GPLv3+
@@ -33,7 +35,7 @@ Provides: python%__python_version(Gnumeric)
 %define gsf_ver 1.14.27
 %define gda_ver 4.0
 %define desktop_file_utils_ver 0.10
-%define goffice_ver 0.10.5
+%define goffice_ver 0.10.8
 
 PreReq: scrollkeeper >= %scrollkeeper_ver
 Requires(post,postun): desktop-file-utils >= %desktop_file_utils_ver
@@ -162,6 +164,7 @@ gnome-doc-prepare --copy --force
 %config %_datadir/glib-2.0/schemas/org.gnome.gnumeric.dialogs.gschema.xml
 %config %_datadir/glib-2.0/schemas/org.gnome.gnumeric.gschema.xml
 %config %_datadir/glib-2.0/schemas/org.gnome.gnumeric.plugin.gschema.xml
+%_datadir/appdata/%name.appdata.xml
 
 %if_enabled introspection
 %files gir
@@ -179,6 +182,9 @@ gnome-doc-prepare --copy --force
 %_pkgconfigdir/*
 
 %changelog
+* Tue Oct 08 2013 Yuri N. Sedunov <aris@altlinux.org> 1.12.8-alt1
+- 1.12.8
+
 * Mon Sep 02 2013 Vladimir Lettiev <crux@altlinux.ru> 1.12.7-alt2
 - built for perl 5.18
 
