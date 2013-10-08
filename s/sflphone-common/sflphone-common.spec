@@ -2,7 +2,7 @@
 
 Name: sflphone-common
 Version: 1.2.3
-Release: alt1
+Release: alt2
 
 Group: System/Servers
 Summary: SIP and IAX2 compatible softphone - Core
@@ -75,6 +75,9 @@ popd
 %_mandir/man1/sflphoned.1*
 
 %changelog
+* Tue Oct 08 2013 Sergey V Turchin <zerg@altlinux.org> 1.2.3-alt2
+- rebuilt with new libav
+
 * Fri Aug 02 2013 Sergey V Turchin <zerg@altlinux.org> 1.2.3-alt1
 - new version
 
