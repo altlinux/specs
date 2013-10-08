@@ -1,7 +1,8 @@
 %set_verify_elf_method unresolved=relaxed
+%set_gcc_version 4.6
 
 Name: vcmi
-Version: 0.93
+Version: 0.94
 Release: alt1
 
 Summary: Open-source project aiming to reimplement HMM3:WoG game engine
@@ -13,9 +14,9 @@ Packager: Igor Zubkov <icesik@altlinux.org>
 
 Source0: %name-%version.tar.gz
 
-# Automatically added by buildreq on Sat Jun 22 2013
-# optimized out: boost-devel boost-intrusive-devel cmake cmake-modules libSDL-devel libavcodec-devel libavutil-devel libopencore-amrnb0 libopencore-amrwb0 libstdc++-devel pkg-config
-BuildRequires:  boost-asio-devel boost-devel-headers boost-filesystem-devel boost-interprocess-devel boost-program_options-devel ctest gcc-c++ libSDL_image-devel libSDL_mixer-devel libSDL_ttf-devel libavdevice-devel libavformat-devel libfreetype-devel libpostproc-devel libswscale-devel zlib-devel
+# Automatically added by buildreq on Thu Oct 10 2013
+# optimized out: boost-devel boost-intrusive-devel cmake-modules libSDL-devel libavcodec-devel libavutil-devel libopencore-amrnb0 libopencore-amrwb0 libstdc++-devel pkg-config
+BuildRequires: boost-asio-devel boost-devel-headers boost-filesystem-devel boost-interprocess-devel boost-program_options-devel cmake gcc4.6-c++ libSDL_image-devel libSDL_mixer-devel libSDL_ttf-devel libavdevice-devel libavformat-devel libfreetype-devel libpostproc-devel libswscale-devel zlib-devel
 
 %description
 The purpose of VCMI project is to rewrite entire HOMM 3: WoG engine from
@@ -35,7 +36,8 @@ You need to install WoG before running VCMI.
 
 %build
 %cmake_insource -DCMAKE_SKIP_RPATH=OFF
-%make_build
+sed -i -e "s/-O3/-O2/g" CMakeCache.txt
+%make_build VERBOSE=1
 
 %install
 %make_install DESTDIR=%buildroot install
@@ -49,6 +51,9 @@ You need to install WoG before running VCMI.
 %_datadir/icons/*/*/apps/vcmiclient.png
 
 %changelog
+* Tue Oct 08 2013 Igor Zubkov <icesik@altlinux.org> 0.94-alt1
+- 0.93 -> 0.94
+
 * Sat Jun 22 2013 Igor Zubkov <icesik@altlinux.org> 0.93-alt1
 - build for Sisyphus (closes #28586)
 
