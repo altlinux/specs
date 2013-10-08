@@ -2,7 +2,7 @@
 %define rname k9copy
 Name: kde4-%rname
 Version: 2.3.8
-Release: alt1
+Release: alt2
 
 Group: Video
 Summary: Copy, split and shrink DVDs
@@ -15,11 +15,20 @@ Provides: %rname = %version-%release
 Obsoletes: k9copy < %version-%release
 
 Source: %rname-%version.tar
+# Debian
+Patch1: fix-deprecated-func.patch
+Patch2: fix-ftbfs-kfreebsd.patch
+Patch3: german-spelling-error.patch
+Patch4: fix-desktop-files.patch
+Patch5: link_libav_directly.patch
+Patch6: link_libdvd_directly.patch
+# ALT
+Patch100: alt-libav9.patch
 
 # Automatically added by buildreq on Mon Jul 20 2009 (-bi)
 #BuildRequires: gcc-c++ kde4libs-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXdamage-devel libXdmcp-devel libXpm-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libavformat-devel libmpeg2-devel libqt3-devel libswscale-devel libxine-devel libxkbfile-devel xorg-xf86vidmodeproto-devel
 BuildRequires: kde4libs-devel
-BuildRequires: gcc-c++ libavformat-devel libmpeg2-devel libswscale-devel libxine-devel
+BuildRequires: gcc-c++ libavformat-devel libmpeg2-devel libswscale-devel libxine-devel libdvdread-devel libdvdnav-devel
 
 
 %description
@@ -51,7 +60,13 @@ K9Copy - маленькая программа для копирования DVD
 
 %prep
 %setup -q -n %rname-%version
-
+%patch1 -p1
+%patch2 -p1
+%patch3 -p1
+%patch4 -p1
+%patch5 -p1
+%patch6 -p1
+%patch100 -p1
 
 %build
 %K4build
@@ -71,6 +86,13 @@ K9Copy - маленькая программа для копирования DVD
 
 
 %changelog
+* Tue Oct 08 2013 Sergey V Turchin <zerg@altlinux.org> 2.3.8-alt2
+- fix to build with new libav
+- sync patches with Debian
+
+* Fri Jun 15 2012 Sergey V Turchin <zerg@altlinux.org> 2.3.8-alt0.M60P.1
+- built for M60P
+
 * Fri Jun 15 2012 Sergey V Turchin <zerg@altlinux.org> 2.3.8-alt1
 - new version
 
