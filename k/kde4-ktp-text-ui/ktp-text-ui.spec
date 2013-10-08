@@ -3,7 +3,7 @@
 
 %define rname ktp-text-ui
 Name: kde4-ktp-text-ui
-Version: 0.6.2.1
+Version: 0.6.3
 Release: alt1
 
 Group: Graphical desktop/KDE
@@ -61,8 +61,7 @@ Requires: libtelepathy-qt4-devel kde4-ktp-common-internals-devel
 
 %install
 %K4install
-%K4find_lang --with-kde %name
-#K4find_lang --with-kde --append --output=%rname.lang ktp-text-ui
+%K4find_lang --with-kde %rname
 find %buildroot/%_K4i18n -type f -name k\*.mo | sed "s|\.mo$||" | \
 while read f; do echo `basename "$f"`; done | sort -u | \
 while read n
@@ -105,6 +104,9 @@ done
 %_K4includedir/KTp/*
 
 %changelog
+* Tue Oct 08 2013 Sergey V Turchin <zerg@altlinux.org> 0.6.3-alt1
+- new version
+
 * Tue Jun 18 2013 Sergey V Turchin <zerg@altlinux.org> 0.6.2.1-alt1
 - new version
 
