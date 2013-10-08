@@ -10,7 +10,7 @@
 
 Name: ppp
 Version: 2.4.5
-Release: alt11
+Release: alt12
 
 Summary: The PPP daemon and documentation
 License: distributable
@@ -34,6 +34,7 @@ Obsoletes: ppp-extra
 
 BuildRequires: glibc-devel libatm-devel libpam-devel libpcap-devel libssl-devel perl-IPC-Signal perl-Proc-Daemon perl-Proc-WaitStat
 Requires: ppp-common libssl
+Requires: kmod >= 14
 
 %set_verify_elf_method relaxed
 %add_findprov_lib_path %_libdir/pppd/%version
@@ -232,6 +233,10 @@ touch %buildroot/lib/udev/devices/ppp
 %_libdir/pppd/%version/dhcpc.so
 
 %changelog
+* Tue Oct 08 2013 Alexey Shabalin <shaba@altlinux.ru> 2.4.5-alt12
+- don't need create /dev/ppp with kmod >= 14
+- ppp-2.4.5-eaptls-mppe-0.993.patch
+
 * Thu Sep 06 2012 Mikhail Efremov <sem@altlinux.org> 2.4.5-alt11
 - Enable IPv6 support (closes: #27707).
 
