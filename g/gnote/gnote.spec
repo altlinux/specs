@@ -1,7 +1,8 @@
 %define _libexecdir /usr/libexec
+%def_without x11_support
 
 Name: gnote
-Version: 3.8.1
+Version: 3.10.0
 Release: alt1
 Summary: Note-taking application
 Group: Graphical desktop/GNOME
@@ -13,12 +14,12 @@ Source0: http://ftp.gnome.org/pub/GNOME/sources/gnote/%version/%name-%version.ta
 
 %define gtk_ver 3.6
 %define gtkmm_ver 3.6
-%define glibmm_ver 2.28
+%define glibmm_ver 2.32
 %define gtkspell_ver 3.0.0
 %define libsecret_ver 0.8
 
 BuildRequires: gcc-c++ boost-devel
-BuildRequires: gnome-common yelp-tools intltool
+BuildRequires: yelp-tools intltool
 BuildRequires: pkgconfig(glibmm-2.4)  >= %glibmm_ver
 BuildRequires: pkgconfig(gtk+-3.0) >= %gtk_ver
 BuildRequires: pkgconfig(x11)
@@ -40,8 +41,11 @@ and consumes fewer resources.
 %setup -q
 
 %build
-NOCONFIGURE=1 ./autogen.sh
-%configure --disable-static
+# NOCONFIGURE=1 ./autogen.sh
+%autoreconf
+%configure \
+	%{?_with_x11_support:--with-x11-support} \
+	--disable-static
 
 %make_build
 
@@ -69,8 +73,13 @@ desktop-file-install \
 %exclude %_libdir/gnote/addins/*/*.la
 %_datadir/dbus-1/services/org.gnome.Gnote.service
 %_datadir/glib-2.0/schemas/*.xml
+%_datadir/appdata/gnote.appdata.xml
+%_datadir/gnome-shell/search-providers/gnote-search-provider.ini
 
 %changelog
+* Tue Oct 08 2013 Alexey Shabalin <shaba@altlinux.ru> 3.10.0-alt1
+- 3.10.0
+
 * Mon May 13 2013 Alexey Shabalin <shaba@altlinux.ru> 3.8.1-alt1
 - 3.8.1
 
