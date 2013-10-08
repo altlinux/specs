@@ -8,15 +8,15 @@
 %def_enable docs
 
 Name: %oname-%scalar_type
-Version: 3.3.1
-Release: alt2.hg20130514
+Version: 3.4
+Release: alt1.git20130829
 Summary: SLEPc for Python (%scalar_type scalars)
 License: Public
 Group: Sciences/Mathematics
-Url: http://slepc4py.googlecode.com/
+Url: https://bitbucket.org/slepc/slepc4py
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-# hg clone https://code.google.com/p/slepc4py/
+# https://bitbucket.org/slepc/slepc4py.git
 Source: %oname-%version.tar.gz
 
 Requires: python-module-%name = %version-%release
@@ -193,6 +193,9 @@ rm -f %ldir/python/%oname/lib/SLEPc.so
 %endif
 
 %changelog
+* Tue Oct 01 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.4-alt1.git20130829
+- Version 3.4
+
 * Wed Jul 10 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.3.1-alt2.hg20130514
 - New snapshot
 
@@ -289,3 +292,4 @@ rm -f %ldir/python/%oname/lib/SLEPc.so
 
 * Sat Jul 18 2009 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.0-alt1
 - Initial build for Sisyphus
+
