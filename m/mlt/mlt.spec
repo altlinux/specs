@@ -23,7 +23,7 @@
 
 Name: mlt
 Version: 0.8.8
-Release: alt2
+Release: alt3
 Summary: Multimedia framework designed for television broadcasting
 License: GPLv3
 Group: Video
@@ -171,6 +171,9 @@ install -pm 0755 src/swig/python/_%name.so %buildroot%python_sitelibdir/
 %python_sitelibdir/*
 
 %changelog
+* Tue Oct 08 2013 Sergey V Turchin <zerg@altlinux.org> 0.8.8-alt3
+- rebuilt with new libav
+
 * Thu May 23 2013 Sergey V Turchin <zerg@altlinux.org> 0.8.8-alt2
 - disable VDPAU by default ( http://www.kdenlive.org/mantis/view.php?id=3070 )
 
