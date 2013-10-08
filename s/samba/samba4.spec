@@ -25,7 +25,7 @@
 %endif
 
 Name: samba
-Version: 4.0.9
+Version: 4.0.10
 Release: alt1
 Group: System/Servers
 Summary: The Samba4 CIFS and AD client and server suite
@@ -1056,6 +1056,9 @@ TDB_NO_FSYNC=1 %make_build test
 %_man8dir/pam_winbind.8*
 
 %changelog
+* Tue Oct 08 2013 Alexey Shabalin <shaba@altlinux.ru> 4.0.10-alt1
+- 4.0.10
+
 * Mon Aug 26 2013 Alexey Shabalin <shaba@altlinux.ru> 4.0.9-alt1
 - 4.0.9
 - add -D options for default forking type start of services to sysV init and systemd
