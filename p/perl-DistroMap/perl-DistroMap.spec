@@ -2,7 +2,7 @@
 
 Name: perl-%module
 Version: 0.20
-Release: alt1
+Release: alt2
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
 
@@ -35,6 +35,9 @@ BuildRequires: perl-devel perl(Pod/Usage.pm)
 %_bindir/distrodb*
 
 %changelog
+* Tue Oct 08 2013 Igor Vlasenko <viy@altlinux.ru> 0.20-alt2
+- bugfix release
+
 * Mon Aug 19 2013 Igor Vlasenko <viy@altlinux.ru> 0.20-alt1
 - basic pld support
 
