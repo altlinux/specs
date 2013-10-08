@@ -3,7 +3,7 @@
 
 Name: open-%oname
 Version: 1.5.0
-Release: alt2.svn20121011
+Release: alt2.svn20130704
 
 Summary: OpenAxiom Computer Algebra System
 License: BSD-style
@@ -11,7 +11,7 @@ Group: Sciences/Mathematics
 Url: http://www.open-axiom.org/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-# https://open-axiom.svn.sf.net/svnroot/open-axiom/trunk
+# svn://svn.code.sf.net/p/open-axiom/code/trunk
 Source0: %name-%version.tar.bz2
 Source3: %oname-16.png
 Source4: %oname-32.png
@@ -110,6 +110,9 @@ install -D -m644 %SOURCE6 %buildroot%_desktopdir/%name.desktop
 %_docdir/%name
 
 %changelog
+* Tue Oct 08 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.5.0-alt2.svn20130704
+- New snapshot
+
 * Thu Mar 07 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.5.0-alt2.svn20121011
 - Rebuilt with sbcl 1.1.5
 
