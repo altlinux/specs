@@ -1,7 +1,7 @@
 %define dist Event-RPC
 Name: perl-%dist
-Version: 1.01
-Release: alt3
+Version: 1.03
+Release: alt1
 
 Summary: Event based transparent Client/Server RPC framework
 License: GPL or Artistic
@@ -14,7 +14,7 @@ Patch: perl-Event-RPC-ipv6.patch
 BuildArch: noarch
 
 # Automatically added by buildreq on Wed Apr 27 2011
-BuildRequires: perl-Event perl-Glib perl-IO-Socket-SSL perl-devel
+BuildRequires: perl-Event perl-AnyEvent perl-Glib perl-IO-Socket-SSL perl-devel
 
 %description
 Event::RPC supports you in developing Event based networking
@@ -25,7 +25,7 @@ an extensible API. Currently Event and Glib are implemented.
 
 %prep
 %setup -q -n %dist-%version
-%patch -p1
+#patch -p1
 
 %build
 %perl_vendor_build
@@ -38,6 +38,9 @@ an extensible API. Currently Event and Glib are implemented.
 %perl_vendor_privlib/Event
 
 %changelog
+* Tue Oct 08 2013 Ilya Mashkin <oddity@altlinux.ru> 1.03-alt1
+- 1.03
+
 * Wed Apr 27 2011 Alexey Tourbin <at@altlinux.ru> 1.01-alt3
 - fixed unpackaged directory
 
