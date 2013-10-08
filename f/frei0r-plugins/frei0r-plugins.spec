@@ -4,7 +4,7 @@
 
 Name: %bname-plugins
 Version: %major_ver.%minor_ver
-Release: alt1
+Release: alt2
 Summary: Frei0r - a minimalistic plugin API for video effects
 License: %lgpl2plus
 Group: Video
@@ -18,6 +18,7 @@ BuildRequires: gcc-c++
 BuildRequires: libgavl-devel >= 0.2.3
 BuildRequires: libopencv-devel
 BuildRequires: doxygen fonts-ttf-dejavu graphviz
+BuildRequires: libcairo-devel >= 1.0.0
 
 %description
 It is a minimalistic plugin API for video sources and filters. The behaviour of
@@ -55,11 +56,8 @@ Face detect plugin for %name
 %patch -p1
 
 %build
-%__aclocal
-%__autoheader
-%__libtoolize --automake -c
-%__automake --add-missing -c
-%__autoconf
+mkdir -p m4
+%autoreconf
 %configure --disable-static
 
 # workaround cvconfig.h
@@ -74,6 +72,7 @@ Face detect plugin for %name
 %dir %_libdir/%bname-%major_ver
 %_libdir/%bname-%major_ver/*.so
 %exclude %_libdir/%bname-%major_ver/facebl0r.so
+%exclude %_libdir/%bname-%major_ver/facedetect.so
 
 %files -n frei0r-devel
 %_includedir/frei0r.h
@@ -84,8 +83,13 @@ Face detect plugin for %name
 
 %files facedetect
 %_libdir/%bname-%major_ver/facebl0r.so
+%_libdir/%bname-%major_ver/facedetect.so
 
 %changelog
+* Tue Oct 08 2013 Alexey Shabalin <shaba@altlinux.ru> 1.4-alt2
+- build plugins cairogradient, cairoimagegrid, cairoaffineblend, cairoblend
+- fixed files for facedetect package
+
 * Fri Oct 04 2013 Alexey Shabalin <shaba@altlinux.ru> 1.4-alt1
 - 1.4
 
