@@ -1,13 +1,14 @@
 Name: yacas
-Version: 1.3.2
+Version: 1.3.3
 Release: alt1
 
 Summary: Yet Another Computer Algebra System
 License: GPL
 Group: Sciences/Mathematics
 
-URL: http://yacas.sourceforge.net
-Source: http://yacas.sourceforge.net/backups/%name-%version.tar.gz
+Url: http://yacas.sourceforge.net
+Source0: http://yacas.sourceforge.net/backups/%name-%version.tar.gz
+Source100: yacas.watch
 Packager: Michael Shigorin <mike@altlinux.org>
 
 # Automatically added by buildreq on Sun Dec 13 2009
@@ -41,7 +42,7 @@ CXXFLAGS="%optflags" %configure --enable-gmp
 %install
 %makeinstall_std
 # I can't see any use for these, no libs installed
-rm -rf %buildroot%_datadir/%name/include 
+rm -rf %buildroot%_datadir/%name/include
 
 %files
 %doc AUTHORS NEWS README TODO
@@ -60,6 +61,9 @@ rm -rf %buildroot%_datadir/%name/include
 # - JavaYacas?
 
 %changelog
+* Tue Oct 08 2013 Michael Shigorin <mike@altlinux.org> 1.3.3-alt1
+- new version (watch file uupdate)
+
 * Sun Apr 22 2012 Michael Shigorin <mike@altlinux.org> 1.3.2-alt1
 - 1.3.2
 - dropped patch (already there)
