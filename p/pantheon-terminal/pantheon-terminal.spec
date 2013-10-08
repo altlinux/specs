@@ -1,5 +1,5 @@
 Name: pantheon-terminal
-Version: 0.2.3
+Version: 0.2.4.1
 Release: alt1
 
 Summary: Pantheon Terminal
@@ -8,11 +8,9 @@ License: GPLv3
 
 Url: https://launchpad.net/pantheon-terminal
 
-Source0: %name-%version.tar.gz
+Source0: %name-%version.tgz
 
 Packager: Igor Zubkov <icesik@altlinux.org>
-
-#BuildRequires: cmake gcc-c++ libfreetype-devel libgranite-devel libgranite-vala libnotify-devel libvte3-devel
 
 BuildRequires: cmake gcc-c++ libnotify-devel libvte3-devel libgranite-devel libpixman-devel libXdmcp-devel vala libgranite-vala
 
@@ -36,11 +34,16 @@ It's just a terminal, nothing more, nothing less.
 %find_lang %name
 
 %files -f %name.lang
+%doc AUTHORS HACKING INSTALL README
 %_bindir/*
-%_datadir/applications/pantheon-terminal.desktop
+%_desktopdir/pantheon-terminal.desktop
+%_desktopdir/open-pantheon-terminal-here.desktop
 %_datadir/glib-2.0/schemas/org.pantheon.terminal.gschema.xml
 
 %changelog
+* Tue Oct 08 2013 Igor Zubkov <icesik@altlinux.org> 0.2.4.1-alt1
+- 0.2.3 -> 0.2.4.1
+
 * Mon Aug 12 2013 Igor Zubkov <icesik@altlinux.org> 0.2.3-alt1
 - build for Sisyphus
 
