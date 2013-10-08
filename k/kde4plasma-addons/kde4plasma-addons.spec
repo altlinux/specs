@@ -13,7 +13,7 @@ Name: kde4plasma-addons
 %define minor 11
 %define bugfix 2
 Version: %major.%minor.%bugfix
-Release: alt1
+Release: alt2
 
 Group: Graphical desktop/KDE
 Summary: kdeplasma is a compilation of plasma items ( runners, applets, plasmoids ) for kde4
@@ -24,7 +24,8 @@ Source: ftp://ftp.kde.org/pub/kde/stable/%version/src/%rname-%version.tar
 Patch1: kdeplasma-addons-4.5.0-alt-lancelot-new-document.patch
 Patch2: kdeplasma-addons-4.5.0-alt-lancelot-services.patch
 Patch3: kdeplasma-addons-4.8.0-alt-news.patch
-
+Patch4: kdeplasma-addons-4.11.2-alt-disable-unity.patch
+Patch5: kdeplasma-addons-4.11.2-alt-disable-dockmanager.patch
 
 Requires: plasma-applet-blackboard = %version-%release
 Requires: plasma-applet-binaryclock = %version-%release
@@ -855,6 +856,8 @@ based on %name
 #%patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
+%patch5 -p1
 
 %if_disabled desktop
 sed -i 's|add_subdirectory(icontasks)|#add_subdirectory(icontasks)|' applets/CMakeLists.txt
@@ -1319,6 +1322,12 @@ mkdir -p %buildroot/%_K4apps/kdeplasma-addons/
 %_K4link/*.so
 
 %changelog
+* Tue Oct 08 2013 Sergey V Turchin <zerg@altlinux.org> 4.11.2-alt2
+- disable dockmanager and Unity support by default for IconTasks applet
+
+* Fri Oct 04 2013 Sergey V Turchin <zerg@altlinux.org> 4.11.2-alt0.M70P.1
+- built for M70P
+
 * Thu Oct 03 2013 Sergey V Turchin <zerg@altlinux.org> 4.11.2-alt1
 - new version
 
