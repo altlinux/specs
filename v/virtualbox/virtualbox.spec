@@ -57,7 +57,7 @@
 
 Name: virtualbox
 Version: 4.2.16
-Release: alt3
+Release: alt4
 
 Summary: VM VirtualBox OSE - Virtual Machine for x86 hardware
 License: GPL
@@ -121,8 +121,7 @@ BuildRequires: libpam-devel
 BuildRequires: texlive-latex-recommended
 %endif
 %if_with vnc
-BuildRequires: libvncserver-devel < 0.9.9
-%define libvncserver_version 98
+BuildRequires: libvncserver-devel
 %endif
 BuildRequires: rpm-build-xdg rpm-macros-pam
 BuildRequires: /proc
@@ -329,10 +328,6 @@ echo "VBOX_PATH_PACKAGE_DOCS     := \$(VBOX_PATH_APP_DOCS)" >> LocalConfig.kmk
 echo "VBOX_VENDOR                := ALT Linux Team" >> LocalConfig.kmk
 echo "VBOX_VENDOR_SHORT          := ALT" >> LocalConfig.kmk
 echo "VBOX_PRODUCT               := VM VirtualBox OSE" >> LocalConfig.kmk
-
-%if_with vnc
-echo "LIBVNCSERVER_VERSION_NR    := %libvncserver_version" >> LocalConfig.kmk
-%endif
 
 echo "VBOX_USE_SYSTEM_XORG_HEADERS := 1" >> LocalConfig.kmk
 
@@ -689,6 +684,9 @@ mountpoint -q /dev || {
 %endif
 
 %changelog
+* Tue Oct 08 2013 Gleb F-Malinovskiy <glebfm@altlinux.org> 4.2.16-alt4
+- Fix build with libvncserver >= 0.9.9.
+
 * Mon Sep 09 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 4.2.16-alt3
 - fix virtualbox-addition for build with kernel 3.11
 
