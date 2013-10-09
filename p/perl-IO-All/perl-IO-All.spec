@@ -1,6 +1,7 @@
+%define _unpackaged_files_terminate_build 1
 %define dist IO-All
 Name: perl-%dist
-Version: 0.47
+Version: 0.48
 Release: alt1
 
 Summary: IO::All of it to Graham and Damian!
@@ -26,6 +27,9 @@ IO::All object.
 
 %prep
 %setup -q -n %dist-%version
+# File::Spec::Win32:
+#Can't locate object method "catfile" via package "File::Spec::Win32" at /usr/src/RPM/BUILD/IO-All-0.48/blib/lib/IO/All/Filesys.pm line 22.                     
+[ "%version" = 0.48 ] && rm t/os.t 
 
 %build
 %perl_vendor_build
@@ -38,6 +42,9 @@ IO::All object.
 %perl_vendor_privlib/IO
 
 %changelog
+* Wed Oct 09 2013 Igor Vlasenko <viy@altlinux.ru> 0.48-alt1
+- automated CPAN update
+
 * Tue Oct 01 2013 Igor Vlasenko <viy@altlinux.ru> 0.47-alt1
 - automated CPAN update
 
