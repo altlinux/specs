@@ -12,8 +12,8 @@
 %def_enable ctpp2
 
 Name: nginx
-Version: 1.4.2
-Release: alt2
+Version: 1.4.3
+Release: alt1
 
 Summary: Fast HTTP server
 License: BSD
@@ -254,6 +254,9 @@ sed -i 's/\(types_hash_bucket_size[[:space:]]*\)[[:space:]]32[[:space:]]*;[[:spa
 %preun_service %name
 
 %changelog
+* Wed Oct 09 2013 Anton Farygin <rider@altlinux.ru> 1.4.3-alt1
+- new version
+
 * Thu Aug 29 2013 Vladimir Lettiev <crux@altlinux.ru> 1.4.2-alt2
 - built for perl 5.18
 
