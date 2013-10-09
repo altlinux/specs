@@ -25,7 +25,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.10.15
-Release: alt2
+Release: alt3
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -148,7 +148,7 @@ Release: alt2
 %Extra_modules vboxhost 4.2.18
 %Extra_modules vboxguest 4.2.18
 %Extra_modules knem 1.1.0
-%Extra_modules exfat 1.1.5
+%Extra_modules exfat 1.2.6
 #Extra_modules netatop 0.2
 #Extra_modules omnibook 20110911
 
@@ -241,6 +241,10 @@ ExcludeArch: i386
 %if_without tools
 %set_without perf
 %set_without lkvm
+%endif
+
+%if "%sub_flavour" != "ws"
+%set_disable bootsplash
 %endif
 
 %if "%sub_flavour" == "vs"
@@ -1813,6 +1817,17 @@ done)
 
 
 %changelog
+* Tue Oct 08 2013 Led <led@altlinux.ru> 3.10.15-alt3
+- added:
+  + feat-drivers-block--abuse
+- exfat 1.2.6
+- disabled bootsplash for non-'ws' kernels
+- config (vs):
+  + IOSCHED_CFQ=y
+  + IOSCHED_SIO=m
+  + DEFAULT_CFQ=y
+  + DEFAULT_IOSCHED="cfq"
+
 * Mon Oct 07 2013 Led <led@altlinux.ru> 3.10.15-alt2
 - updated:
   + feat-drivers-video--bootsplash
