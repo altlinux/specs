@@ -1,18 +1,18 @@
 %define module_name Term-ProgressBar
 
 Name: perl-%module_name
-Version: 2.09
-Release: alt1.1
+Version: 2.14
+Release: alt1
 
 Summary: Provides a progress meter on a standard terminal
 Summary(ru_RU.UTF-8): Индикатор процесса в консоли.
 Group: Development/Perl
 URL: http://ftp.spbu.ru/CPAN/authors/id/F/FL/FLUFFY
 License: GPL or Artistic
-Source: http://search.cpan.org/CPAN/authors/id/F/FL/FLUFFY/Term-ProgressBar-2.09.tar.gz
+Source: http://www.cpan.org/authors/id/S/SZ/SZABGAB/Term-ProgressBar-%{version}.tar.gz
 Buildarch: noarch
 AutoReqProv: yes, perl
-BuildRequires: perl-Class-MethodMaker perl-Module-Build perl-Term-ReadKey perl-devel
+BuildRequires: perl-Class-MethodMaker perl-Module-Build perl-Term-ReadKey perl-devel perl(Test/Exception.pm) perl(Capture/Tiny.pm)
 BuildRequires: perl-autodie
 
 %description
@@ -39,6 +39,9 @@ has been done, and maybe an estimate at how long remains.
 %perl_vendorlib/Term/ProgressBar.pm
 
 %changelog
+* Wed Oct 09 2013 Igor Vlasenko <viy@altlinux.ru> 2.14-alt1
+- automated CPAN update
+
 * Thu Nov 25 2010 Igor Vlasenko <viy@altlinux.ru> 2.09-alt1.1
 - repair after perl 5.12 upgrade using girar-nmu
 
