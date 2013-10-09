@@ -4,7 +4,7 @@
 
 Name: telepathy-qt4
 Version: 0.9.3
-Release: alt5
+Release: alt6
 
 Summary: Telepathy framework - Qt4 connection manager library 
 License: GPLv2
@@ -78,6 +78,9 @@ popd
 %_includedir/telepathy-qt4
 
 %changelog
+* Wed Oct 09 2013 Sergey V Turchin <zerg@altlinux.org> 0.9.3-alt6
+- enable accounts by default
+
 * Tue Jun 18 2013 Sergey V Turchin <zerg@altlinux.org> 0.9.3-alt5
 - connect automatically by default
 
