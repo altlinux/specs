@@ -1,5 +1,5 @@
 Name:    alt-test
-Version: 1.0.1
+Version: 1.0.2
 Release: alt1
 
 Summary: Test environment based on Tapper
@@ -34,6 +34,11 @@ cp -av tests/* %buildroot%_libexecdir/%name/
 %_libexecdir/%name
 
 %changelog
+* Wed Oct 09 2013 Andrey Cherepanov <cas@altlinux.org> 1.0.2-alt1
+- Add tests:
+  + process
+  + system-statistic
+
 * Tue Oct 08 2013 Andrey Cherepanov <cas@altlinux.org> 1.0.1-alt1
 - Support full path to test file
 - Add tests:
