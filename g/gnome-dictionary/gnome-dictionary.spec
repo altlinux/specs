@@ -1,4 +1,4 @@
-%define ver_major 3.8
+%define ver_major 3.10
 
 Name: gnome-dictionary
 Version: %ver_major.0
@@ -17,7 +17,7 @@ Requires: libgdict = %version-%release
 %define gtk_ver 3.0.0
 
 BuildPreReq: libgio-devel >= %glib_ver libgtk+3-devel >= %gtk_ver
-BuildRequires: rpm-build-gnome intltool gtk-doc yelp-tools itstool
+BuildRequires: rpm-build-gnome intltool gtk-doc yelp-tools
 
 %description
 GNOME Dictionary - look up an online dictionary for definitions and
@@ -91,6 +91,9 @@ Dictionary Library.
 %_datadir/gtk-doc/html/*
 
 %changelog
+* Wed Oct 09 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.0-alt1
+- 3.10.0
+
 * Sun Jul 21 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.0-alt1
 - 3.8.0
 
