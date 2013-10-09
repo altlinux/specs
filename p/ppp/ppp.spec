@@ -10,7 +10,7 @@
 
 Name: ppp
 Version: 2.4.5
-Release: alt12
+Release: alt13
 
 Summary: The PPP daemon and documentation
 License: distributable
@@ -35,6 +35,7 @@ Obsoletes: ppp-extra
 BuildRequires: glibc-devel libatm-devel libpam-devel libpcap-devel libssl-devel perl-IPC-Signal perl-Proc-Daemon perl-Proc-WaitStat
 Requires: ppp-common libssl
 Requires: kmod >= 14
+Requires: udev >= 204-alt2
 
 %set_verify_elf_method relaxed
 %add_findprov_lib_path %_libdir/pppd/%version
@@ -170,10 +171,6 @@ install -pDm644 %SOURCE5 %buildroot%_sysconfdir/logrotate.d/%name
 # Install EAP-TLS config examples
 install -pm600 etc.ppp/openssl.cnf %buildroot%_sysconfdir/%name/openssl.cnf
 
-#add device ppp for udev
-mkdir -p %buildroot/lib/udev/devices
-touch %buildroot/lib/udev/devices/ppp
-
 %pre
 %pre_control %name
 
@@ -208,7 +205,6 @@ touch %buildroot/lib/udev/devices/ppp
 %exclude %_man8dir/*rad*
 %exclude %_man8dir/pppoe-discovery*
 %doc PLUGINS SETUP FAQ README* scripts sample
-%attr(0600, root, root) %dev(c, 108, 0) /lib/udev/devices/ppp
 
 %files devel
 %_includedir/pppd
@@ -233,6 +229,9 @@ touch %buildroot/lib/udev/devices/ppp
 %_libdir/pppd/%version/dhcpc.so
 
 %changelog
+* Wed Oct 09 2013 Alexey Shabalin <shaba@altlinux.ru> 2.4.5-alt13
+- drop /lib/udev/devices/ppp
+
 * Tue Oct 08 2013 Alexey Shabalin <shaba@altlinux.ru> 2.4.5-alt12
 - don't need create /dev/ppp with kmod >= 14
 - ppp-2.4.5-eaptls-mppe-0.993.patch
