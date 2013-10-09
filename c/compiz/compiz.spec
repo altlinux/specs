@@ -3,7 +3,7 @@
 
 Name: compiz
 Version: 0.8.8
-Release: alt10
+Release: alt11
 Summary: OpenGL window and compositing manager
 License: MIT/X11 GPL
 Group: System/X11
@@ -179,6 +179,9 @@ fi
 %_rpmmacrosdir/%name-core
 
 %changelog
+* Wed Oct 09 2013 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.8.8-alt11
+- Fixed build with KDE-4.11.
+
 * Thu Feb 21 2013 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.8.8-alt10
 - disable mate too: it requires mateconf
 
