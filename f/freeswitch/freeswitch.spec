@@ -1,6 +1,6 @@
 Name: freeswitch
-Version: 1.2.3
-Release: alt2
+Version: 1.5.5
+Release: alt1
 
 Summary: FreeSWITCH open source telephony platform
 License: MPL
@@ -19,10 +19,13 @@ BuildRequires: libilbc1-devel libjs-devel libjson-devel flite-devel mongo-devel
 BuildRequires: libtiff-devel libldap-devel libsoundtouch-devel libldns-devel
 BuildRequires: libpcap-devel libvlc-devel perl-devel python-devel
 BuildRequires: libcelt-devel libmpg123-devel liblame-devel libshout2-devel
-BuildRequires: libisdn-devel libpri-devel libopenr2.3-devel libsangoma-devel
+BuildRequires: libisdn-devel libpri-devel libopenr2.3-devel
 BuildRequires: libnet-snmp-devel libnl-devel libsensors3-devel zlib-devel
 BuildRequires: erlang-devel postgresql-devel
-BuildRequires: java-common java-1.6.0-openjdk-devel /proc
+BuildRequires: java-common java-1.7.0-openjdk-devel /proc
+%ifarch %ix86 x86_64
+BuildRequires: libsangoma-devel
+%endif
 
 %description
 FreeSWITCH is an open source telephony platform designed to facilitate
@@ -73,6 +76,11 @@ Summary: English language dependand modules and sounds for the FreeSwitch
 Group: System/Servers
 Requires: %name-daemon = %version-%release
 
+%package lang-es
+Summary: Spanish language dependand modules and sounds for the FreeSwitch
+Group: System/Servers
+Requires: %name-daemon = %version-%release
+
 %package lang-fr
 Summary: French language dependand modules and sounds for the FreeSwitch
 Group: System/Servers
@@ -85,6 +93,11 @@ Requires: %name-daemon = %version-%release
 
 %package lang-ru
 Summary: Russian language dependand modules and sounds for the FreeSwitch
+Group: System/Servers
+Requires: %name-daemon = %version-%release
+
+%package lang-pt
+Summary: Portugal language dependand modules and sounds for the FreeSwitch
 Group: System/Servers
 Requires: %name-daemon = %version-%release
 
@@ -160,11 +173,17 @@ German language phrases module and directory structure for say module and voicem
 %description lang-en
 English language phrases module and directory structure for say module and voicemail
 
+%description lang-es
+Spanish language phrases module and directory structure for say module and voicemail
+
 %description lang-fr
 French language phrases module and directory structure for say module and voicemail
 
 %description lang-he
 Hebrew language phrases module and directory structure for say module and voicemail
+
+%description lang-pt
+Portugal language phrases module and directory structure for say module and voicemail
 
 %description lang-ru
 Russian language phrases module and directory structure for say module and voicemail
@@ -248,8 +267,10 @@ find %buildroot%_libdir/%name %buildroot%_libdir/freetdm -name \*.la -delete
 %_libdir/freetdm/ftmod_libpri.so
 %_libdir/freetdm/ftmod_r2.so
 %_libdir/freetdm/ftmod_skel.so
-%_libdir/freetdm/ftmod_wanpipe.so
 %_libdir/freetdm/ftmod_zt.so
+%ifarch %ix86 x86_64
+%_libdir/freetdm/ftmod_wanpipe.so
+%endif
 
 %files -n libfreetdm-devel
 %_includedir/freetdm
@@ -324,6 +345,7 @@ find %buildroot%_libdir/%name %buildroot%_libdir/freetdm -name \*.la -delete
 %config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/autoload_configs/switch.conf.xml
 %config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/autoload_configs/syslog.conf.xml
 %config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/autoload_configs/timezones.conf.xml
+%config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/autoload_configs/translate.conf.xml
 %config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/autoload_configs/tts_commandline.conf.xml
 %config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/autoload_configs/unicall.conf.xml
 %config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/autoload_configs/unimrcp.conf.xml
@@ -390,8 +412,9 @@ find %buildroot%_libdir/%name %buildroot%_libdir/freetdm -name \*.la -delete
 %_libdir/%name/mod_abstraction.so
 %_libdir/%name/mod_alsa.so
 %_libdir/%name/mod_avmd.so
-%_libdir/%name/mod_blacklist.so
 %_libdir/%name/mod_amr.so
+%_libdir/%name/mod_b64.so
+%_libdir/%name/mod_blacklist.so
 %_libdir/%name/mod_bv.so
 %_libdir/%name/mod_callcenter.so
 %_libdir/%name/mod_cidlookup.so
@@ -468,6 +491,7 @@ find %buildroot%_libdir/%name %buildroot%_libdir/freetdm -name \*.la -delete
 %_libdir/%name/mod_snom.so
 %_libdir/%name/mod_stress.so
 %_libdir/%name/mod_sofia.so
+%_libdir/%name/mod_sonar.so
 %_libdir/%name/mod_soundtouch.so
 %_libdir/%name/mod_spandsp.so
 %_libdir/%name/mod_speex.so
@@ -476,6 +500,7 @@ find %buildroot%_libdir/%name %buildroot%_libdir/freetdm -name \*.la -delete
 %_libdir/%name/mod_theora.so
 %_libdir/%name/mod_timerfd.so
 %_libdir/%name/mod_tone_stream.so
+%_libdir/%name/mod_translate.so
 %_libdir/%name/mod_tts_commandline.so
 %_libdir/%name/mod_unimrcp.so
 %_libdir/%name/mod_valet_parking.so
@@ -548,6 +573,19 @@ find %buildroot%_libdir/%name %buildroot%_libdir/freetdm -name \*.la -delete
 %config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/lang/de/vm/*.xml
 %_libdir/%name/mod_say_de.so*
 
+%files lang-es
+%dir %attr(0750, root, _pbx) %_sysconfdir/%name/lang/es
+%dir %attr(0750, root, _pbx) %_sysconfdir/%name/lang/es/demo
+%dir %attr(0750, root, _pbx) %_sysconfdir/%name/lang/es/dir
+#dir %attr(0750, root, _pbx) %_sysconfdir/%name/lang/es/ivr
+%dir %attr(0750, root, _pbx) %_sysconfdir/%name/lang/es/vm
+%config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/lang/es/*.xml
+%config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/lang/es/dir/*.xml
+%config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/lang/es/demo/*.xml
+#config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/lang/es/ivr/*.xml
+%config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/lang/es/vm/*.xml
+%_libdir/%name/mod_say_es.so*
+
 %files lang-en
 %dir %attr(0750, root, _pbx) %_sysconfdir/%name/lang/en
 %dir %attr(0750, root, _pbx) %_sysconfdir/%name/lang/en/demo
@@ -583,6 +621,19 @@ find %buildroot%_libdir/%name %buildroot%_libdir/freetdm -name \*.la -delete
 %config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/lang/he/vm/*.xml
 #_libdir/%name/mod_say_he.so*
 
+%files lang-pt
+%dir %attr(0750, root, _pbx) %_sysconfdir/%name/lang/pt
+%dir %attr(0750, root, _pbx) %_sysconfdir/%name/lang/pt/demo
+%dir %attr(0750, root, _pbx) %_sysconfdir/%name/lang/pt/dir
+#dir %attr(0750, root, _pbx) %_sysconfdir/%name/lang/pt/ivr
+%dir %attr(0750, root, _pbx) %_sysconfdir/%name/lang/pt/vm
+%config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/lang/pt/*.xml
+%config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/lang/pt/dir/*.xml
+%config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/lang/pt/demo/*.xml
+#config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/lang/pt/ivr/*.xml
+%config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/lang/pt/vm/*.xml
+%_libdir/%name/mod_say_pt.so*
+
 %files lang-ru
 %dir %attr(0750, root, _pbx) %_sysconfdir/%name/lang/ru
 %dir %attr(0750, root, _pbx) %_sysconfdir/%name/lang/ru/dir
@@ -595,6 +646,9 @@ find %buildroot%_libdir/%name %buildroot%_libdir/freetdm -name \*.la -delete
 %_libdir/%name/mod_say_ru.so*
 
 %changelog
+* Wed Oct 09 2013 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.5.5-alt1
+- 1.5.5 released
+
 * Fri Aug 30 2013 Vladimir Lettiev <crux@altlinux.ru> 1.2.3-alt2
 - built for perl 5.18
 
