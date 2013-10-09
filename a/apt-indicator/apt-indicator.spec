@@ -1,5 +1,5 @@
 Name: apt-indicator
-Version: 0.2.9
+Version: 0.2.10
 Release: alt1
 
 Summary: Applet for indication that newer packages are available
@@ -69,6 +69,9 @@ install -m644 pixmaps/* %buildroot/%_datadir/%name/pixmaps
 
 
 %changelog
+* Wed Oct 09 2013 Sergey V Turchin <zerg at altlinux dot org> 0.2.10-alt1
+- minimize checker process priority
+
 * Mon Apr 15 2013 Sergey V Turchin <zerg at altlinux dot org> 0.2.9-alt1
 - ionice checking process
 
