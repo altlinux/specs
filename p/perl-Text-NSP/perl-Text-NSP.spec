@@ -14,8 +14,8 @@
 %define _enable_test 1
 
 Name: perl-Text-NSP
-Version: 1.15
-Release: alt1.1
+Version: 1.27
+Release: alt1
 
 Summary: The Ngram Statistic Package allows a user to count sequences of words in large corpora of text, and measure their association
 
@@ -26,7 +26,7 @@ Url: %CPAN %m_distro
 Packager: Kirill Maslinsky <kirill@altlinux.org>
 
 BuildArch: noarch
-Source: %m_distro-%version.tar.gz
+Source: http://www.cpan.org/authors/id/T/TP/TPEDERSE/Text-NSP-%{version}.tar.gz
 
 # Automatically added by buildreq on Tue Jun 26 2007
 BuildRequires: perl-devel
@@ -83,6 +83,9 @@ Text::NSP::Measures).
 %perl_vendor_privlib/Text*
 
 %changelog
+* Wed Oct 09 2013 Igor Vlasenko <viy@altlinux.ru> 1.27-alt1
+- automated CPAN update
+
 * Mon Nov 22 2010 Igor Vlasenko <viy@altlinux.ru> 1.15-alt1.1
 - repair after perl 5.12 upgrade using girar-nmu
 
