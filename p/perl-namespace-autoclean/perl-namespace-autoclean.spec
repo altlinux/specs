@@ -1,19 +1,21 @@
+BuildRequires: perl(Module/Build/Tiny.pm)
+%define _unpackaged_files_terminate_build 1
 %define dist namespace-autoclean
 Name: perl-%dist
-Version: 0.13
-Release: alt2
+Version: 0.14
+Release: alt1
 
 Summary: Keep imports out of your namespace
 License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/E/ET/ETHER/namespace-autoclean-%{version}.tar.gz
 
 BuildArch: noarch
 
 # Automatically added by buildreq on Sat Nov 19 2011
-BuildRequires: perl-Moose perl-devel perl-namespace-clean
+BuildRequires: perl-Moose perl-devel perl-namespace-clean perl(Test/CheckDeps.pm)
 
 %description
 When you import a function into a Perl package, it will naturally also be
@@ -38,6 +40,9 @@ class or instances.
 %perl_vendor_privlib/namespace
 
 %changelog
+* Wed Oct 09 2013 Igor Vlasenko <viy@altlinux.ru> 0.14-alt1
+- automated CPAN update
+
 * Sat Nov 19 2011 Alexey Tourbin <at@altlinux.ru> 0.13-alt2
 - updated build dependencies
 
