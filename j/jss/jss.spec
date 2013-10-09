@@ -7,7 +7,7 @@ BuildRequires: jpackage-compat
 %define fedora 19
 Name:           jss
 Version:        4.2.6
-Release:        alt4_31jpp7
+Release:        alt5_31jpp7
 Summary:        Java Security Services (JSS)
 
 Group:          System/Libraries
@@ -144,6 +144,18 @@ for i in 0 3 4 5 6 7 8 9 10; do
 cp -p mozilla/security/coreconf/Linux3.1.mk mozilla/security/coreconf/Linux3.$i.mk
 sed -i -e 's;LINUX3_1;LINUX3_'$i';' mozilla/security/coreconf/Linux3.$i.mk
 done
+
+fix_kversion(){
+set -- $(uname -r | cut -d. -f 1-2 --output-delimiter=" ")
+local KMAJ=$1; shift
+local KMIN=$1; shift
+if [ ! -s "mozilla/security/coreconf/Linux$KMAJ.$KMIN.mk" ]; then
+  cp -p mozilla/security/coreconf/Linux3.1.mk mozilla/security/coreconf/Linux"$KMAJ.$KMIN".mk
+  sed -i -e "s;LINUX3_1;LINUX$KMAJ_$KMIN;" mozilla/security/coreconf/Linux"$KMAJ.$KMIN".mk
+fi
+}
+fix_kversion
+
 # The Makefile is not thread-safe
 make -C mozilla/security/coreconf
 make -C mozilla/security/jss
@@ -200,6 +212,9 @@ ln -s %_libdir/java/jss4.jar %buildroot%_javadir/jss4.jar
 
 
 %changelog
+* Wed Oct 09 2013 Igor Vlasenko <viy@altlinux.ru> 4.2.6-alt5_31jpp7
+- any-kernel patch thanks to gleb
+
 * Tue Sep 24 2013 Igor Vlasenko <viy@altlinux.ru> 4.2.6-alt4_31jpp7
 - new version (closes: 29317)
 
