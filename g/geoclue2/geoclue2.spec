@@ -1,11 +1,13 @@
 %define _name geoclue
+%define ver_major 2.0
 %define api_ver 2.0
 %define _libexecdir %_prefix/libexec
 
 %def_enable server
+%def_enable gtk_doc
 
 Name: %{_name}2
-Version: 1.99.4
+Version: %ver_major.0
 Release: alt1
 
 Summary: The Geoinformation Service
@@ -13,9 +15,9 @@ Group: System/Libraries
 License: LGPLv2
 Url: http://geoclue.freedesktop.org/
 
-Source: http://people.freedesktop.org/~hadess/%_name-%version.tar.xz
+Source: http://www.freedesktop.org/software/%_name/releases/%ver_major/%_name-%version.tar.xz
 
-BuildRequires: intltool yelp-tools libgio-devel >= 2.32.4 
+BuildRequires: intltool yelp-tools gtk-doc libgio-devel >= 2.32.4 
 BuildRequires: libjson-glib-devel libsoup-devel
 %{?_enable_server:BuildRequires: libGeoIP-devel}
 # for check
@@ -51,14 +53,16 @@ subst 's/\(libsoup\) /\1-2.4 /' src/%_name-%api_ver.pc.in
 %build
 %autoreconf
 %configure --disable-static \
-	%{?_enable_server:--enable-geoip-server=yes}
+	%{?_enable_server:--enable-geoip-server=yes} \
+	%{?_enable_gtk_doc:--enable-gtk-doc}
 %make_build
 
 %install
 %makeinstall_std
 
 %check
-#%%make check
+# https://bugs.freedesktop.org/show_bug.cgi?id=68395
+#%make check
 
 %files
 %_bindir/geoip-lookup
@@ -72,7 +76,15 @@ subst 's/\(libsoup\) /\1-2.4 /' src/%_name-%api_ver.pc.in
 %files devel
 %_libdir/pkgconfig/%_name-%api_ver.pc
 
+%files devel-doc
+%_datadir/gtk-doc/html/%_name/
+
+
 %changelog
+* Wed Oct 09 2013 Yuri N. Sedunov <aris@altlinux.org> 2.0.0-alt1
+- 2.0.0
+- new -devel-doc subpackage
+
 * Tue Sep 17 2013 Yuri N. Sedunov <aris@altlinux.org> 1.99.4-alt1
 - 1.99.4
 
