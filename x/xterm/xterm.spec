@@ -25,8 +25,8 @@
   --enable-toolbar
 
 Name: xterm
-Version: 296
-Release: alt1
+Version: 297
+Release: alt2
 
 Summary: A standard terminal emulator for the X Window System
 Summary(ru_RU.KOI8-R): Стандартный эмулятор терминала для X Window System
@@ -51,6 +51,7 @@ Patch0011: 0011-xterm-alt-back_old_behavior_for_modifyFunctionKeys.patch
 Patch0012: 0012-xterm-alt-appdef.patch
 Patch0013: 0013-xterm-alt-enable_utf8title.patch
 Patch0014: 0014-xterm-alt-man_suffix.patch
+Patch0015: 0015-xterm-alt-Shorten-passedPty-to-fit-PTYCHARLEN.patch
 
 Provides: xvt, %_bindir/xvt
 PreReq: libutempter >= 1.0.7, alternatives >= 0.3.5-alt1
@@ -98,6 +99,7 @@ install -pm755 %_sourcedir/uxterm .
 %patch0012 -p2
 %patch0013 -p2
 %patch0014 -p2
+%patch0015 -p2
 
 sed -i 's|^Exec=xterm|& -name XTerm|' %name.desktop
 sed -i 's|_48x48||' *.desktop
@@ -168,6 +170,12 @@ EOF
 %attr(2711,root,utempter) %_bindir/XTerm
 
 %changelog
+* Wed Oct 09 2013 Fr. Br. George <george@altlinux.ru> 297-alt2
+- Shorten passedPty to fit PTYCHARLEN (Closes: #29431)
+
+* Mon Oct 07 2013 Fr. Br. George <george@altlinux.ru> 297-alt1
+- Autobuild version bump to 297
+
 * Thu Aug 22 2013 Fr. Br. George <george@altlinux.ru> 296-alt1
 - Autobuild version bump to 296
 
