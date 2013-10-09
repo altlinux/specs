@@ -27,7 +27,7 @@
 %define rname kdebase-workspace
 Name: kde4base-workspace
 Version: %major.%minor.%bugfix
-Release: alt1
+Release: alt2
 
 Group: Graphical desktop/KDE
 Summary: K Desktop Environment - Workspace
@@ -101,7 +101,7 @@ Patch1037: kdebase-workspace-4.6.4-alt-hide-printer-config.patch
 Patch1038: kdebase-workspace-4.8.5-alt-session-exclude.patch
 Patch1039: kdebase-workspace-4.8.4-alt-digitalclock-compactdate.patch
 Patch1040: kdebase-workspace-4.7.4-alt-kxkb-indicator-uppercase.patch
-Patch1041: kdebase-workspace-4.11.1-alt-def-gllegacy.patch
+#
 Patch1042: kdebase-workspace-4.8.5-alt-netbook-def-menu-groups.patch
 Patch1043: kdebase-workspace-4.8.5-alt-def-plasma-netbook.patch
 Patch1044: kdebase-workspace-4.8.5-alt-workspaceoptions.patch
@@ -188,7 +188,7 @@ Requires: %name-common = %version-%release
 Provides: kdebase-wm = %version-%release
 Obsoletes: kdebase-wm < %version-%release
 %endif
-Requires: udev udisks2 upower media-player-info
+Requires: udev udisks2 upower media-player-info usbids
 Requires: kde4base-runtime >= %version
 Requires: kde4-icon-theme-oxygen kde4-kactivities kde4-nepomuk-core
 Requires: /usr/bin/qdbus dbus-tools-gui
@@ -559,7 +559,7 @@ rm -rf plasma/generic/scriptengines/google_gadgets
 %patch1038 -p1
 %patch1039 -p1
 %patch1040 -p1
-%patch1041 -p1
+#
 %patch1042 -p1
 %patch1043 -p1
 %patch1044 -p1
@@ -944,6 +944,12 @@ chmod 0755 %buildroot/%_sysconfdir/firsttime.d/kdm4
 %_K4dbus_interfaces/*
 
 %changelog
+* Wed Oct 09 2013 Sergey V Turchin <zerg@altlinux.org> 4.11.2-alt2
+- don't change gllegacy defaults to avoid wrong kwin compositing defaults
+
+* Fri Oct 04 2013 Sergey V Turchin <zerg@altlinux.org> 4.11.2-alt0.M70P.1
+- built for M70P
+
 * Wed Oct 02 2013 Sergey V Turchin <zerg@altlinux.org> 4.11.2-alt1
 - new version
 
