@@ -1,7 +1,7 @@
 Summary: Inotify cron system
 Name: incron
-Version: 0.5.9
-Release: alt1.1
+Version: 0.5.10
+Release: alt1
 
 Group: System/Base
 License: GPLv2
@@ -69,6 +69,9 @@ make install-man MANPATH="%buildroot%_mandir" INSTALL="install -D -p"
 %attr(700,root,root) %dir %_sysconfdir/%name.d
 
 %changelog
+* Wed Oct 09 2013 Anton Farygin <rider@altlinux.ru> 0.5.10-alt1
+- new version
+
 * Wed Dec 05 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.9-alt1.1
 - Fixed build with glibc 2.16
 
