@@ -1,5 +1,5 @@
 Name: audit
-Version: 2.3.1
+Version: 2.3.2
 Release: alt1
 
 Packager: Anton Farygin <rider@altlinux.com>
@@ -163,6 +163,9 @@ install -pD -m644 init.d/%{name}d.service %buildroot%_unitdir/%{name}d.service
 %python_sitelibdir/*
 
 %changelog
+* Mon Oct 07 2013 Anton Farygin <rider@altlinux.ru> 2.3.2-alt1
+- new version
+
 * Mon Jun 24 2013 Anton Farygin <rider@altlinux.ru> 2.3.1-alt1
 - new version
 
