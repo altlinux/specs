@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-selinux-users
-Version: 0.2.1
+Version: 0.2.3
 Release: alt1
 
 Packager: Andrey Kolotov <qwest@altlinux.org>
@@ -34,6 +34,13 @@ alterator module for administration users in SE Linux
 %_bindir/*
 
 %changelog
+* Wed Oct 09 2013 Andrey Kolotov <qwest@altlinux.org> 0.2.3-alt1
+- Fixed saving of the last category SE User.
+
+* Tue Oct 08 2013 Andrey Kolotov <qwest@altlinux.org> 0.2.2-alt1
+- can't change SE User if linux users tied it.
+- linux users always have minimal context SE User associated with it.
+
 * Thu Oct 03 2013 Andrey Kolotov <qwest@altlinux.org> 0.2.1-alt1
 - can't delete SE User if linux users tied it
 
