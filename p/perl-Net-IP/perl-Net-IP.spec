@@ -1,14 +1,14 @@
 %define module Net-IP
 Name: perl-%module
-Version: 1.25
-Release: alt3.1
+Version: 1.26
+Release: alt1
 
 Summary: Perl extension for manipulating IPv4/IPv6 addresses
 License: GPL or Artistic
 Group: Development/Perl
 
 Url: %CPAN %module
-Source: %url%module-%version.tar.gz
+Source: http://www.cpan.org/authors/id/M/MA/MANU/Net-IP-%{version}.tar.gz
 Patch0: %name-intip-0.patch
 
 BuildArch: noarch
@@ -42,6 +42,9 @@ in a prefix or all the prefixes contained in a given range.
 %exclude %perl_vendor_archlib
 
 %changelog
+* Wed Oct 09 2013 Igor Vlasenko <viy@altlinux.ru> 1.26-alt1
+- automated CPAN update
+
 * Sun Nov 21 2010 Sergey Kurakin <kurakin@altlinux.org> 1.25-alt3.1
 - fixed build with perl 5.12
 
