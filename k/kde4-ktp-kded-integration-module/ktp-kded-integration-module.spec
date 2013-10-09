@@ -4,7 +4,7 @@
 %define rname ktp-kded-integration-module
 Name: kde4-ktp-kded-integration-module
 Version: 0.6.3
-Release: alt1
+Release: alt2
 
 Group: Graphical desktop/KDE
 Summary: KDE integration for telepathy
@@ -68,6 +68,9 @@ Requires: libtelepathy-qt4-devel
 #%_K4includedir/KTp/
 
 %changelog
+* Wed Oct 09 2013 Sergey V Turchin <zerg@altlinux.org> 0.6.3-alt2
+- fix autoconnect
+
 * Tue Oct 08 2013 Sergey V Turchin <zerg@altlinux.org> 0.6.3-alt1
 - new version
 
