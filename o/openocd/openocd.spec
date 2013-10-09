@@ -1,6 +1,6 @@
 Name: openocd
-Version: 0.6.0
-Release: alt1.git74db7f9
+Version: 0.7.0
+Release: alt1.git1304b27
 Summary: Debugging, in-system programming and boundary-scan testing for embedded devices
 
 Group: Development/Tools
@@ -30,7 +30,7 @@ tar -xf %SOURCE11
 %autoreconf
 %configure \
   --enable-maintainer-mode \
-  --disable-werror \
+  --enable-werror \
   --enable-static \
   --disable-shared \
   --enable-dummy \
@@ -66,11 +66,14 @@ chrpath --delete %buildroot/%_bindir/openocd
 %doc %_datadir/%name/contrib
 %dir %_datadir/%name
 %_datadir/%name/scripts
+%_datadir/%name/OpenULINK
 %_bindir/%name
-%_libdir/%name
 %_infodir/%name.info*.gz
 %_mandir/man1/*
 
 %changelog
+* Sat Sep 21 2013 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.7.0-alt1.git1304b27
+- New version (1304b27).
+
 * Wed Apr 10 2013 Andrey Kotoff <kotbegemot@altlinux.org> 0.6.0-alt1.git74db7f9
-- Initial build
+- Initial build.
