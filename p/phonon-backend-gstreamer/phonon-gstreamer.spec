@@ -1,6 +1,10 @@
+%ifndef EVR
+%define EVR %{?epoch:%epoch:}%{version}-%{release}
+%endif
+
 Name: phonon-backend-gstreamer
 Version: 4.6.3
-Release: alt1
+Release: alt2
 
 Group: System/Libraries
 Summary: Gstreamer phonon backend
@@ -25,9 +29,9 @@ Gstreamer phonon backend
 Group: System/Libraries
 Summary: Gstreamer phonon backend
 Provides: phonon-backend = %{get_version phonon-devel}
-Provides: phonon-backend-gstreamer = %EVR
-Provides: phonon-gstreamer = %EVR
+Provides: phonon-backend-gstreamer = %EVR phonon-gstreamer = %EVR
 Obsoletes: phonon-gstreamer < %EVR
+Obsoletes: phonon-backend-xine < 4.5 phonon-xine < 4.5
 Requires: gst-plugins-base gst-plugins-good
 %description -n phonon-backend-5-gstreamer
 Gstreamer phonon backend
@@ -51,6 +55,12 @@ Gstreamer phonon backend
 %_iconsdir/hicolor/*/apps/phonon-gstreamer.*
 
 %changelog
+* Thu Oct 10 2013 Sergey V Turchin <zerg@altlinux.org> 4.6.3-alt2
+- obsolete phonon-xine
+
+* Mon Mar 04 2013 Sergey V Turchin <zerg@altlinux.org> 4.6.3-alt0.M60P.1
+- build for M60P
+
 * Fri Mar 01 2013 Sergey V Turchin <zerg@altlinux.org> 4.6.3-alt1
 - new version
 - sync patches with FC
