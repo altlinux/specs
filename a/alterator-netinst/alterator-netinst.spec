@@ -1,6 +1,6 @@
 Name: alterator-netinst
 Version: 1.9.0
-Release: alt1
+Release: alt2
 
 Source:%name-%version.tar
 
@@ -40,6 +40,9 @@ alterator module for network installations management
 %_bindir/alterator-netinst
 
 %changelog
+* Wed Oct 09 2013 Fr. Br. George <george@altlinux.ru> 1.9.0-alt2
+- Add translation anchors
+
 * Wed Oct 02 2013 Fr. Br. George <george@altlinux.ru> 1.9.0-alt1
 - Implement pxelinux.cfg/default label selection
 
