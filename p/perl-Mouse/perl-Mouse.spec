@@ -1,6 +1,7 @@
+%define _unpackaged_files_terminate_build 1
 %define dist Mouse
 Name: perl-%dist
-Version: 1.12
+Version: 1.13
 Release: alt1
 
 Summary: Moose minus the antlers
@@ -43,6 +44,9 @@ export XSUBPP_NO_STATIC_XS=1
 %perl_vendor_archlib/Test
 
 %changelog
+* Thu Oct 10 2013 Igor Vlasenko <viy@altlinux.ru> 1.13-alt1
+- automated CPAN update
+
 * Mon Sep 30 2013 Igor Vlasenko <viy@altlinux.ru> 1.12-alt1
 - automated CPAN update
 
