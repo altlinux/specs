@@ -1,6 +1,6 @@
 Name: emerald-themes
-Version: 0.5.2
-Release: alt2
+Version: 0.7.8
+Release: alt1
 
 Group: Graphical desktop/Other
 Summary: Themes for Emerald, the window decorator for Compiz
@@ -35,6 +35,9 @@ This package contains themes for emerald.
 %_datadir/emerald
 
 %changelog
+* Thu Oct 10 2013 Motsyo Gennadi <drool@altlinux.ru> 0.7.8-alt1
+- 0.7.8
+
 * Mon Sep 23 2013 Motsyo Gennadi <drool@altlinux.ru> 0.5.2-alt2
 - build for Sisyphus
 

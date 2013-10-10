@@ -1,5 +1,5 @@
 Name: emerald
-Version: 0.8.4
+Version: 0.8.99
 Release: alt2
 
 Group: Graphical desktop/Other
@@ -8,13 +8,11 @@ Url: http://www.compiz-fusion.org/
 License: GPL
 Packager: Motsyo Gennadi <drool@altlinux.ru>
 
-Requires: compiz >= %version
+Requires: compiz
 
 Source: %name-%version.tar.bz2
-Patch0: %name-no-gdk_display.patch
-Patch1: %name-0.8.4-gtk+-2.20-build.patch
 
-BuildPreReq: compiz-devel >= %version
+BuildPreReq: compiz-devel
 
 # Automatically added by buildreq on Wed Oct 31 2012 (-bi)
 # optimized out: compiz elfutils fontconfig fontconfig-devel glib2-devel gtk-update-icon-cache libX11-devel libXrender-devel libatk-devel libcairo-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgtk+2-devel libpango-devel libstartup-notification perl-XML-Parser pkg-config python-base shared-mime-info xorg-renderproto-devel xorg-xproto-devel
@@ -34,8 +32,6 @@ the themeable window decorator for compiz.
 
 %prep
 %setup -q
-%patch0 -p1
-%patch1 -p1
 
 %build
 %autoreconf
@@ -71,6 +67,12 @@ CFLAGS='-ldl'
 %_pkgconfigdir/*.pc
 
 %changelog
+* Thu Oct 10 2013 Motsyo Gennadi <drool@altlinux.ru> 0.8.99-alt2
+- fix Requires
+
+* Thu Oct 10 2013 Motsyo Gennadi <drool@altlinux.ru> 0.8.99-alt1
+- 0.8.99 git
+
 * Mon Sep 23 2013 Motsyo Gennadi <drool@altlinux.ru> 0.8.4-alt2
 - fix build for Sisyphus
 
