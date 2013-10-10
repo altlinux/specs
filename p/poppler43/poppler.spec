@@ -38,7 +38,7 @@
 %define somajor_glib 8
 %define major 0
 %define minor 24
-%define bugfix 1
+%define bugfix 2
 Name: %rname%somajor
 Version: %major.%minor.%bugfix
 Release: alt1
@@ -303,7 +303,7 @@ export QT4DIR=%_qt4dir
     --disable-poppler-qt4 \
 %endif
 %if_enabled qt5
-    --disable-poppler-qt5 \
+    --enable-poppler-qt5 \
 %else
     --disable-poppler-qt5 \
 %endif
@@ -404,6 +404,9 @@ export QT4DIR=%_qt4dir
 %endif
 
 %changelog
+* Thu Oct 10 2013 Sergey V Turchin <zerg@altlinux.org> 0.24.2-alt1
+- new version
+
 * Tue Sep 03 2013 Sergey V Turchin <zerg@altlinux.org> 0.24.1-alt1
 - new version
 
