@@ -1,4 +1,4 @@
-%define cat_ver 13.10-beta2
+%define cat_ver 13.11-beta1
 
 %ifarch %ix86
 %define archdir arch/x86
@@ -18,8 +18,8 @@
 Name: %{bname}_glx
 %define ksname %bname
 Epoch: 1
-Version: 13.20.11
-Release: alt3
+Version: 13.20.16
+Release: alt1
 %define EVR %{?epoch:%epoch:}%version-%release
 Summary: ATI/AMD Proprietary Linux Display Driver
 Group: System/Kernel and hardware
@@ -248,6 +248,7 @@ chrpath -d %buildroot{%_bindir/amdcccle,%_sbindir/amdnotifyui}
 %_bindir/*
 %_liconsdir/*
 %_desktopdir/*
+%dir %_datadir/ati
 %dir %_datadir/ati/amdcccle
 %_sysconfdir/acpi/*
 %_initrddir/*
@@ -266,6 +267,9 @@ chrpath -d %buildroot{%_bindir/amdcccle,%_sbindir/amdnotifyui}
 
 
 %changelog
+* Thu Oct 10 2013 Led <led@altlinux.ru> 1:13.20.16-alt1
+- 13.20.16 (Catalyst 13.11 beta1)
+
 * Wed Oct 02 2013 Led <led@altlinux.ru> 1:13.20.11-alt3
 - Catalyst 13.10 beta2
 
