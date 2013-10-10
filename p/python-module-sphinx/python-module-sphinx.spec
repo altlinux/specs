@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.1.3
-Release: alt5
+Release: alt6
 Epoch: 1
 
 Summary: Tool for producing documentation for Python projects
@@ -358,6 +358,9 @@ popd
 %endif
 
 %changelog
+* Thu Oct 10 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:1.1.3-alt6
+- Fixed build manpages (ALT #29450)
+
 * Mon Apr 15 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:1.1.3-alt5
 - Use 'find... -exec...' instead of 'for ... $(find...'
 
