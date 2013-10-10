@@ -1,9 +1,12 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires: /usr/bin/mkoctfile /usr/bin/rpcgen glibc-devel libtirpc-devel
+# END SourceDeps(oneline)
 %def_with _octave_arch
-%define octave_pkg_version 0.1.0
+%define octave_pkg_version 0.2.0
 %define octave_pkg_name instrument-control
 %define octave_descr_name instrument-control
 Name: octave-%octave_pkg_name
-Version: 0.1.0
+Version: 0.2.0
 Release: alt1
 Summary: Instrument Control Toolbox
 
@@ -29,10 +32,10 @@ Octave-Forge - Extra packages for GNU Octave.
 This package contains the %octave_descr_name GNU Octave extension.
 
 Extension Description:
-Low level I/O functions for serial, i2c and parallel interfaces.
+Low level I/O functions for serial, i2c, parallel, tcp, gpib, vxi11 and usbtmc interfaces.
 
 %prep
-%setup -n %octave_pkg_name
+%setup -T -c %name-%version
 
 %build
 octave -q -H --no-site-file --eval "pkg build -nodeps . %SOURCE0"
@@ -49,6 +52,9 @@ octave -q -H --no-site-file --eval "pkg prefix %buildroot%_datadir/octave/packag
 %endif
 
 %changelog
+* Thu Oct 10 2013 Paul Wolneykien <manowar@altlinux.ru> 0.2.0-alt1
+- updated by octave-package-builder
+
 * Tue Jan 08 2013 Paul Wolneykien <manowar@altlinux.ru> 0.1.0-alt1
 - updated by octave-package-builder
 

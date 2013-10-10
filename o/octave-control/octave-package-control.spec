@@ -1,10 +1,10 @@
 Serial: 1
 %def_with _octave_arch
-%define octave_pkg_version 2.4.1
+%define octave_pkg_version 2.4.5
 %define octave_pkg_name control
 %define octave_descr_name Control
 Name: octave-%octave_pkg_name
-Version: 2.4.1
+Version: 2.4.5
 Release: alt1
 Summary: Control Systems
 
@@ -33,7 +33,7 @@ Extension Description:
 Computer-Aided Control System Design (CACSD) Tools for GNU Octave, based on the proven SLICOT library
 
 %prep
-%setup -n %octave_pkg_name
+%setup -T -c %name-%version
 
 %build
 octave -q -H --no-site-file --eval "pkg build -nodeps . %SOURCE0"
@@ -50,6 +50,9 @@ octave -q -H --no-site-file --eval "pkg prefix %buildroot%_datadir/octave/packag
 %endif
 
 %changelog
+* Thu Oct 10 2013 Paul Wolneykien <manowar@altlinux.ru> 1:2.4.5-alt1
+- updated by octave-package-builder
+
 * Tue Jan 08 2013 Paul Wolneykien <manowar@altlinux.ru> 1:2.4.1-alt1
 - updated by octave-package-builder
 

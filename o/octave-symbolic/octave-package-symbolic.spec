@@ -1,17 +1,17 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/mkoctfile /usr/bin/octave
+BuildRequires: pkgconfig(ginac)
 # END SourceDeps(oneline)
 %def_with _octave_arch
-%define octave_pkg_version 0.8.4
-%define octave_pkg_name odepkg
-%define octave_descr_name OdePkg
+%define octave_pkg_version 1.1.0
+%define octave_pkg_name symbolic
+%define octave_descr_name Symbolic
 Name: octave-%octave_pkg_name
-Version: 0.8.4
+Version: 1.1.0
 Release: alt1
-Summary: OdePkg
+Summary: Symbolic Computations.
 
 Group: Sciences/Mathematics
-License: GPLv2+
+License: GPL version 2 or later
 URL: http://octave.sf.net
 
 Source0: %octave_pkg_name-%version.tar.gz
@@ -22,9 +22,12 @@ BuildRequires: gcc-c++ gcc-g77 libfftw3-devel libhdf5-devel liblapack-devel libn
 %else
 BuildArch: noarch
 %endif
-Provides: octave(odepkg) = %version
-# Depends: octave (>= 3.2.0)
-Requires: octave >= 3.2.0
+Provides: octave(symbolic) = %version
+
+# octave module BuildRequires: ginac-devel
+BuildRequires: libginac-devel
+# Depends: octave (>= 3.1.55)
+Requires: octave >= 3.1.55
 
 
 %description
@@ -32,7 +35,7 @@ Octave-Forge - Extra packages for GNU Octave.
 This package contains the %octave_descr_name GNU Octave extension.
 
 Extension Description:
-A package for solving ordinary differential equations and more.
+Symbolic toolbox based on GiNaC and CLN.
 
 %prep
 %setup -T -c %name-%version
@@ -52,9 +55,6 @@ octave -q -H --no-site-file --eval "pkg prefix %buildroot%_datadir/octave/packag
 %endif
 
 %changelog
-* Thu Oct 10 2013 Paul Wolneykien <manowar@altlinux.ru> 0.8.4-alt1
-- updated by octave-package-builder
-
-* Tue Jan 08 2013 Paul Wolneykien <manowar@altlinux.ru> 0.8.2-alt1
+* Thu Oct 10 2013 Paul Wolneykien <manowar@altlinux.ru> 1.1.0-alt1
 - updated by octave-package-builder
 

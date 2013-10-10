@@ -1,17 +1,17 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: gcc-fortran
+BuildRequires: /usr/bin/mkoctfile /usr/bin/octave gcc-fortran
 # END SourceDeps(oneline)
 %def_with _octave_arch
-%define octave_pkg_version 0.3.3
+%define octave_pkg_version 0.3.4
 %define octave_pkg_name optiminterp
 %define octave_descr_name optiminterp
 Name: octave-%octave_pkg_name
-Version: 0.3.3
+Version: 0.3.4
 Release: alt1
 Summary: optiminterp
 
 Group: Sciences/Mathematics
-License: GPL version 2 or later
+License: GPLv3+
 URL: http://octave.sf.net
 
 Source0: %octave_pkg_name-%version.tar.gz
@@ -35,7 +35,7 @@ Extension Description:
 An optimal interpolation toolbox for octave. This package provides functions to perform a n-dimensional optimal interpolations of arbitrarily distributed data points.
 
 %prep
-%setup -n %octave_pkg_name
+%setup -T -c %name-%version
 
 %build
 octave -q -H --no-site-file --eval "pkg build -nodeps . %SOURCE0"
@@ -52,6 +52,9 @@ octave -q -H --no-site-file --eval "pkg prefix %buildroot%_datadir/octave/packag
 %endif
 
 %changelog
+* Thu Oct 10 2013 Paul Wolneykien <manowar@altlinux.ru> 0.3.4-alt1
+- updated by octave-package-builder
+
 * Tue Jan 08 2013 Paul Wolneykien <manowar@altlinux.ru> 0.3.3-alt1
 - updated by octave-package-builder
 
