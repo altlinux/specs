@@ -13,7 +13,7 @@
 
 Name: nginx
 Version: 1.4.3
-Release: alt1
+Release: alt2
 
 Summary: Fast HTTP server
 License: BSD
@@ -254,6 +254,9 @@ sed -i 's/\(types_hash_bucket_size[[:space:]]*\)[[:space:]]32[[:space:]]*;[[:spa
 %preun_service %name
 
 %changelog
+* Thu Oct 10 2013 Anton Farygin <rider@altlinux.ru> 1.4.3-alt2
+- fixed mime-types conflict (closes: #28550)
+
 * Wed Oct 09 2013 Anton Farygin <rider@altlinux.ru> 1.4.3-alt1
 - new version
 
