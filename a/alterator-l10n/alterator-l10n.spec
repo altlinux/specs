@@ -1,6 +1,6 @@
 Name: alterator-l10n
 Version: 2.9
-Release: alt65
+Release: alt66
 
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
@@ -110,6 +110,9 @@ make check
 %lang(kk) %_datadir/locale/kk/LC_MESSAGES/*.mo
 
 %changelog
+* Wed Oct 09 2013 Fr. Br. George <george@altlinux.ru> 2.9-alt66
+- Add alterator-netinst 1.9.0 Russian translation
+
 * Mon Aug 12 2013 Andrey Cherepanov <cas@altlinux.org> 2.9-alt65
 - Update alterator-pkg Russian translation
 
