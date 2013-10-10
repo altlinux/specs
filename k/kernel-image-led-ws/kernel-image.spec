@@ -25,7 +25,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.10.15
-Release: alt3
+Release: alt4
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -144,7 +144,7 @@ Release: alt3
 %Extra_modules zfs 0.6.2
 #Extra_modules kvm 3.10.1
 #Extra_modules nvidia 319.32
-%Extra_modules fglrx 13.20.11
+%Extra_modules fglrx 13.20.16
 %Extra_modules vboxhost 4.2.18
 %Extra_modules vboxguest 4.2.18
 %Extra_modules knem 1.1.0
@@ -1817,6 +1817,11 @@ done)
 
 
 %changelog
+* Thu Oct 10 2013 Led <led@altlinux.ru> 3.10.15-alt4
+- added:
+  + fix-sound-pci-hda--snd-hda-codec-realtek
+- fglrx 13.20.16
+
 * Tue Oct 08 2013 Led <led@altlinux.ru> 3.10.15-alt3
 - added:
   + feat-drivers-block--abuse
