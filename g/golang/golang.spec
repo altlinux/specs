@@ -6,7 +6,7 @@
 %global __find_debuginfo_files /bin/true
 
 Name:		golang
-Version:	1.1
+Version:	1.1.2
 Release:	alt1
 Summary:	The Go Programming Language
 Group:		Development/C
@@ -18,6 +18,7 @@ Packager:	Alexey Gladkov <legion@altlinux.ru>
 Source0:	golang-%version.tar
 Patch0:		golang-1.1-verbose-build.patch
 Patch1:		golang-1.1-disable-multicast_test.patch
+Patch2:		golang-1.1.2-alt-certs-path.patch
 
 ExclusiveArch:	%ix86 x86_64
 
@@ -60,6 +61,7 @@ Go sources and documentation.
 # increase verbosity of build
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 
 # make a copy before building to let us avoid generated src files in docs
 cp -av -- src/pkg src/pkg-nogenerated
@@ -67,12 +69,12 @@ cp -av -- src/pkg src/pkg-nogenerated
 
 %build
 # create a gcc wrapper to allow us to build with our own flags
-cat >rpm/go-gcc<<-EOF
+cat >go-gcc<<-EOF
 	#!/bin/sh -e
 	gcc $RPM_OPT_FLAGS $RPM_LD_FLAGS "\$@"
 EOF
-chmod +x rpm/go-gcc
-export CC="$PWD/rpm/go-gcc"
+chmod +x go-gcc
+export CC="$PWD/go-gcc"
 
 # set up final install location
 export GOROOT_FINAL=%_libdir/%name
@@ -219,6 +221,10 @@ done
 %exclude %_datadir/%name/src/pkg/runtime/runtime-gdb.*
 
 %changelog
+* Thu Oct 10 2013 Alexey Gladkov <legion@altlinux.ru> 1.1.2-alt1
+- New version (1.1.2).
+- Fix ssl certs search path (ALT#29449).
+
 * Fri Jun 14 2013 Alexey Gladkov <legion@altlinux.ru> 1.1-alt1
 - First build for ALTLinux.
 
