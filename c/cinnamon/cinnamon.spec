@@ -1,6 +1,6 @@
 Name: cinnamon
-Version: 1.9.1
-Release: alt5
+Version: 2.0.2
+Release: alt1
 
 Summary: Window management and application launching for GNOME
 License: GPLv2+
@@ -223,6 +223,9 @@ desktop-file-install                                 \
 %doc NEWS README
 
 %changelog
+* Thu Oct 10 2013 Vladimir Didenko <cow@altlinux.org> 2.0.2-alt1
+- 2.0.2-2-g160b5fe
+
 * Wed Sep 25 2013 Yuri N. Sedunov <aris@altlinux.org> 1.9.1-alt5
 - rebuild for GNOME-3.10
 

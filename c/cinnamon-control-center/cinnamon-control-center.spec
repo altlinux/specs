@@ -1,4 +1,4 @@
-%define ver_major 1.8
+%define ver_major 2.0
 %define api_ver 1.0
 
 %def_disable debug
@@ -10,7 +10,7 @@
 
 Name: cinnamon-control-center
 Version: %ver_major.2
-Release: alt6
+Release: alt1
 
 Summary: Cinnamon Control Center
 License: GPLv2+
@@ -169,6 +169,9 @@ you'll want to install this package.
 
 
 %changelog
+* Thu Oct 10 2013 Vladimir Didenko <cow@altlinux.org> 2.0.2-alt1
+- 2.0.2
+
 * Wed Sep 25 2013 Yuri N. Sedunov <aris@altlinux.org> 1.8.2-alt6
 - rebuild for GNOME-3.10
 

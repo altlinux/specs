@@ -1,10 +1,10 @@
-%define ver_major 0.0
+%define ver_major 2.0
 %define _name cjs
 %define api_ver 1.0
 
 Name: lib%_name
-Version: %ver_major.1
-Release: alt2
+Version: %ver_major.0
+Release: alt1
 
 Summary: Javascript Bindings for GNOME
 Group: System/Libraries
@@ -83,6 +83,9 @@ Files for development with %name.
 %doc examples/*
 
 %changelog
+* Thu Oct 10 2013 Vladimir Didenko <cow@altlinux.org> 2.0.0-alt1
+- 2.0.0
+
 * Wed Sep 25 2013 Yuri N. Sedunov <aris@altlinux.org> 0.0.1-alt2
 - rebuild for GNOME-3.10
 

@@ -1,8 +1,8 @@
-%define ver_major 1.9
+%define ver_major 2.0
 
 Name: cinnamon-translations
-Version: %ver_major.0
-Release: alt2
+Version: %ver_major.1
+Release: alt1
 
 Summary: Translations for Cinnamon
 License: %gpl2plus
@@ -44,6 +44,14 @@ License: %lgpl2plus
 %description -n cinnamon-screensaver-translations
 Translations for cinnamon-screensaver
 
+%package -n cinnamon-bluetooth-translations
+Summary: Translations for cinnamon-bluetooth
+Group: Graphical desktop/GNOME
+License: %lgpl2plus
+
+%description -n cinnamon-bluetooth-translations
+Translations for cinnamon-bluetooth
+
 %prep
 %setup -q -n %name-%version
 
@@ -57,6 +65,7 @@ cp -Rp mo-export/* %{buildroot}%{_datadir}/cinnamon/locale/
 %find_lang nemo
 %find_lang cinnamon-control-center
 %find_lang cinnamon-screensaver
+%find_lang cinnamon-bluetooth
 
 %files -f cinnamon.lang
 %doc COPYING
@@ -67,7 +76,12 @@ cp -Rp mo-export/* %{buildroot}%{_datadir}/cinnamon/locale/
 
 %files -n cinnamon-screensaver-translations -f cinnamon-screensaver.lang
 
+%files -n cinnamon-bluetooth-translations -f cinnamon-bluetooth.lang
+
 %changelog
+* Thu Oct 10 2013 Vladimir Didenko <cow@altlinux.org> 2.0.1-alt1
+- 2.0.1
+
 * Wed Sep 25 2013 Yuri N. Sedunov <aris@altlinux.org> 1.9.0-alt2
 - rebuild for GNOME-3.10
 
