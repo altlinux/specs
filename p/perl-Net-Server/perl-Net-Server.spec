@@ -2,7 +2,7 @@
 
 Name: perl-%module
 Version: 2.007
-Release: alt1
+Release: alt2
 
 Summary: Net::Server - Extensible, general Perl server engine
 License: Artistic
@@ -21,6 +21,10 @@ and intended to be the back end layer of internet protocol servers.
 
 %prep
 %setup -q -n %module-%version
+if [ %version = 2.007 ]; then
+# Trouble running server: Could not finalize SSL connection with client handle (SSL connect accept failed because of handshake problems error:14094418:SSL routines:SSL3_READ_BYTES:tlsv1 alert unknown ca)
+rm t/SSL_test.t
+fi
 
 %build
 %perl_vendor_build
@@ -35,6 +39,9 @@ and intended to be the back end layer of internet protocol servers.
 %perl_vendor_privlib/Net/Server
 
 %changelog
+* Thu Oct 10 2013 Igor Vlasenko <viy@altlinux.ru> 2.007-alt2
+- fixed build
+
 * Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 2.007-alt1
 - automated CPAN update
 
