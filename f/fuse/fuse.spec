@@ -1,6 +1,6 @@
 Name: fuse
 Version: 2.9.3
-Release: alt1
+Release: alt2
 
 Summary: a tool for creating virtual filesystems
 License: GPL
@@ -10,6 +10,7 @@ Url: http://sourceforge.net/projects/fuse
 
 Source: %name-%version.tar
 Source1: fusermount-control
+Source2: cuse.conf
 
 Patch0: %name.Makefile.patch
 Patch1: %name.udev.patch
@@ -76,11 +77,12 @@ ln -sf ../../%_lib/lib%name.so.%version %buildroot%_libdir/lib%name.so
 install -pD %SOURCE1 %buildroot%_sysconfdir/control.d/facilities/fusermount
 rm -fr %buildroot%_sysconfdir/init.d
 
-mkdir -p %buildroot/lib/udev/devices
-touch %buildroot/lib/udev/devices/{f,c}use
 # sysconf/udev policy - /etc is for user
 mkdir -p %buildroot%_udevrulesdir/
 mv %buildroot%_sysconfdir/udev/rules.d/* %buildroot%_udevrulesdir/
+
+mkdir -p %buildroot/lib/tmpfiles.d
+cp %SOURCE2 %buildroot/lib/tmpfiles.d/cuse.conf
 
 %pre
 %_sbindir/groupadd -r -f fuse
@@ -92,13 +94,12 @@ mv %buildroot%_sysconfdir/udev/rules.d/* %buildroot%_udevrulesdir/
 
 %files
 %doc AUTHORS NEWS README Filesystems README.NFS
+/lib/tmpfiles.d/cuse.conf
 %_sysconfdir/control.d/facilities/fusermount
 %_udevrulesdir/*
 /sbin/mount.fuse
 %attr(4710,root,fuse) %_bindir/fusermount
 %_bindir/ulockmgr_server
-%attr(0660,root,fuse) %dev(c,10,229) /lib/udev/devices/fuse
-%attr(0660,root,cuse) %dev(c,10,59) /lib/udev/devices/cuse
 %_man1dir/*
 %_man8dir/*
 
@@ -112,6 +113,9 @@ mv %buildroot%_sysconfdir/udev/rules.d/* %buildroot%_udevrulesdir/
 %_pkgconfigdir/*.pc
 
 %changelog
+* Thu Oct 10 2013 Denis Smirnov <mithraen@altlinux.ru> 2.9.3-alt2
+- not use /lib/udev/devices (ALT#29444)
+
 * Mon Aug 05 2013 Denis Smirnov <mithraen@altlinux.ru> 2.9.3-alt1
 - 2.9.3
 
