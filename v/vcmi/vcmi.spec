@@ -1,9 +1,8 @@
 %set_verify_elf_method unresolved=relaxed
-%set_gcc_version 4.6
 
 Name: vcmi
 Version: 0.94
-Release: alt1
+Release: alt2
 
 Summary: Open-source project aiming to reimplement HMM3:WoG game engine
 License: GPLv2+
@@ -15,8 +14,7 @@ Packager: Igor Zubkov <icesik@altlinux.org>
 Source0: %name-%version.tar.gz
 
 # Automatically added by buildreq on Thu Oct 10 2013
-# optimized out: boost-devel boost-intrusive-devel cmake-modules libSDL-devel libavcodec-devel libavutil-devel libopencore-amrnb0 libopencore-amrwb0 libstdc++-devel pkg-config
-BuildRequires: boost-asio-devel boost-devel-headers boost-filesystem-devel boost-interprocess-devel boost-program_options-devel cmake gcc4.6-c++ libSDL_image-devel libSDL_mixer-devel libSDL_ttf-devel libavdevice-devel libavformat-devel libfreetype-devel libpostproc-devel libswscale-devel zlib-devel
+BuildRequires: boost-asio-devel boost-devel-headers boost-filesystem-devel boost-interprocess-devel boost-program_options-devel cmake gcc-c++ libSDL_image-devel libSDL_mixer-devel libSDL_ttf-devel libavdevice-devel libavformat-devel libfreetype-devel libpostproc-devel libswscale-devel zlib-devel
 
 %description
 The purpose of VCMI project is to rewrite entire HOMM 3: WoG engine from
@@ -51,6 +49,9 @@ sed -i -e "s/-O3/-O2/g" CMakeCache.txt
 %_datadir/icons/*/*/apps/vcmiclient.png
 
 %changelog
+* Thu Oct 10 2013 Igor Zubkov <icesik@altlinux.org> 0.94-alt2
+- rebuild with gcc 4.7
+
 * Tue Oct 08 2013 Igor Zubkov <icesik@altlinux.org> 0.94-alt1
 - 0.93 -> 0.94
 
