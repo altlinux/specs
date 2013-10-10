@@ -1,7 +1,7 @@
 # TODO: use special user
 Name: maldetect
 Version: 1.4.2
-Release: alt1
+Release: alt2
 
 Summary: inux Malware Detect (LMD) is a malware scanner for Linux 
 
@@ -67,10 +67,10 @@ cat <<EOF >%buildroot/etc/cron.daily/maldet
 MALDIR=%maldetdir
 
 # clear quarantine/session/tmp data every 14 days
-/usr/sbin/tmpwatch 336 $MALDIR/tmp >> /dev/null 2>&1
-/usr/sbin/tmpwatch 336 $MALDIR/sess >> /dev/null 2>&1
-/usr/sbin/tmpwatch 336 $MALDIR/quarantine >> /dev/null 2>&1
-/usr/sbin/tmpwatch 336 $MALDIR/pub/*/ >> /dev/null 2>&1
+/usr/sbin/tmpwatch 336 \$MALDIR/tmp >> /dev/null 2>&1
+/usr/sbin/tmpwatch 336 \$MALDIR/sess >> /dev/null 2>&1
+/usr/sbin/tmpwatch 336 \$MALDIR/quarantine >> /dev/null 2>&1
+/usr/sbin/tmpwatch 336 \$MALDIR/pub/*/ >> /dev/null 2>&1
 
 # check for new definition set
 #%_sbindir/maldet -u >> /dev/null 2>&1
@@ -89,6 +89,9 @@ EOF
 %maldetdir/
 
 %changelog
+* Thu Oct 10 2013 Vitaly Lipatov <lav@altlinux.ru> 1.4.2-alt2
+- fix tmpwatch dir
+
 * Tue Oct 08 2013 Vitaly Lipatov <lav@altlinux.ru> 1.4.2-alt1
 - new version 1.4.2 (with rpmrb script)
 
