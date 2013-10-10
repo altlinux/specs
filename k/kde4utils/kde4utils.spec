@@ -9,7 +9,7 @@ Name: kde4utils
 %define minor 11
 %define bugfix 2
 Version: %major.%minor.%bugfix
-Release: alt1
+Release: alt2
 
 Group: Graphical desktop/KDE
 Summary: K Desktop Environment
@@ -50,7 +50,8 @@ Patch4: kdeutils-4.3.0-alt-ark-kerfuffle-open.patch
 Patch5: kdeutils-4.6.0-alt-ark-rar-header-encrypted.patch
 Patch6: kdeutils-4.6.5-alt-ark-drop-to-desktop.patch
 Patch7: kdeutils-4.7.1-alt-fix-compile.patch
-# upstream
+# KDEBUG#179066
+Patch100: ark-preview-with.patch
 
 
 BuildRequires(pre): kde4base-workspace-devel kde4pimlibs-devel
@@ -267,6 +268,9 @@ done
 %patch5 -p1
 %patch6 -p1
 #%patch7 -p1
+pushd ark
+%patch100 -p1
+popd
 
 cat <<__EOF__ >CMakeLists.txt
 find_package(KDE4)
@@ -489,6 +493,12 @@ done
 
 
 %changelog
+* Thu Oct 10 2013 Sergey V Turchin <zerg@altlinux.org> 4.11.2-alt2
+- add patch for ark to preview with external app
+
+* Fri Oct 04 2013 Sergey V Turchin <zerg@altlinux.org> 4.11.2-alt0.M70P.1
+- built for M70P
+
 * Thu Oct 03 2013 Sergey V Turchin <zerg@altlinux.org> 4.11.2-alt1
 - new version
 
