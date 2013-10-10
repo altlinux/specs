@@ -1,7 +1,8 @@
+BuildRequires: perl-podlators
 %define _unpackaged_files_terminate_build 1
 %define dist File-MimeInfo
 Name: perl-%dist
-Version: 0.19
+Version: 0.20
 Release: alt1
 
 Summary: Determine file type
@@ -23,6 +24,15 @@ specification for using the shared mime-info database.  The package
 comes with a script called 'mimetype' that can be used as a file(1)
 work-alike.
 
+%package scripts
+Summary: %name scripts
+Group: Development/Perl
+Requires: %{?epoch:%epoch:}%name = %version-%release
+
+%description scripts
+scripts for %name
+
+
 %prep
 %setup -q -n %dist-%version
 
@@ -34,11 +44,16 @@ work-alike.
 
 %files
 %doc Changes README
-#%_bindir/mime*
-#%_man1dir/mime*
 %perl_vendor_privlib/File
 
+%files scripts
+%_bindir/*
+#%_man1dir/*
+
 %changelog
+* Thu Oct 10 2013 Igor Vlasenko <viy@altlinux.ru> 0.20-alt1
+- automated CPAN update
+
 * Sun Oct 06 2013 Igor Vlasenko <viy@altlinux.ru> 0.19-alt1
 - automated CPAN update
 - script installation is disabled by author.
