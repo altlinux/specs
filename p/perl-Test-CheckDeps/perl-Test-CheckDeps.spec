@@ -1,10 +1,9 @@
 %define _unpackaged_files_terminate_build 1
-%define _unpackaged_files_terminate_build 1
 BuildRequires: perl(Module/Build.pm)
 BuildRequires: perl(Module/Build/Tiny.pm)
 %define dist Test-CheckDeps
 Name: perl-%dist
-Version: 0.008
+Version: 0.010
 Release: alt1
 
 Summary: Check for presence of dependencies
@@ -37,6 +36,9 @@ properly.  If requested, it can bail out all testing on error.
 %perl_vendor_privlib/Test
 
 %changelog
+* Thu Oct 10 2013 Igor Vlasenko <viy@altlinux.ru> 0.010-alt1
+- automated CPAN update
+
 * Fri Sep 27 2013 Igor Vlasenko <viy@altlinux.ru> 0.008-alt1
 - automated CPAN update
 
