@@ -1,22 +1,18 @@
 Name: dosfstools
-Version: 3.0.11
+Version: 3.0.22
 Release: alt1
 
 Summary: Utilities to create and check MS-DOS FAT filesystems
 License: GPL
 Group: File tools
 
-Url: ftp://ftp.uni-erlangen.de/pub/Linux/LOCAL/dosfstools
-Source: %url/%name-%version.src.tar.gz
-Patch: %name-2.10-noumount-subfs.patch
-Patch1: %name-3.0.11-alt-extbootcode.patch
-Patch2: %name-2.11-alt-types.patch
-Patch3: %name-3.0.11-alt-fsck866.patch
-Packager: Michael Shigorin <mike@altlinux.org>
+Url: http://daniel-baumann.ch/software/dosfstools/
+Source: %name-%version.tar
+Patch0: %name-%version-%release.patch
 
 Obsoletes: mkdosfs-ygg
 
-Summary(ru_RU.KOI8-R): Утилиты для создания и проверки файловых систем MS-DOS FAT
+Summary(ru_RU.UTF-8): пёя┌п╦п╩п╦я┌я▀ п╢п╩я▐ я│п╬п╥п╢п╟п╫п╦я▐ п╦ п©я─п╬п╡п╣я─п╨п╦ я└п╟п╧п╩п╬п╡я▀я┘ я│п╦я│я┌п╣п╪ MS-DOS FAT
 
 %description
 Inside of this package there are two utilities to create and to
@@ -25,20 +21,17 @@ Linux.  This version uses the enhanced boot sector/superblock
 format of DOS 3.3+ as well as provides a default dummy boot sector
 code.
 
-%description -l ru_RU.KOI8-R
-В этом пакете содержатся две утилиты: mkdosfs для форматирования
-дискет и разделов форматов FAT и FAT32, принятых в MS-DOS и Windows,
-а также dosfsck для проверки таких дисков на логические ошибки.
+%description -l ru_RU.UTF-8
+п▓ я█я┌п╬п╪ п©п╟п╨п╣я┌п╣ я│п╬п╢п╣я─п╤п╟я┌я│я▐ п╢п╡п╣ я┐я┌п╦п╩п╦я┌я▀: mkdosfs п╢п╩я▐ я└п╬я─п╪п╟я┌п╦я─п╬п╡п╟п╫п╦я▐
+п╢п╦я│п╨п╣я┌ п╦ я─п╟п╥п╢п╣п╩п╬п╡ я└п╬я─п╪п╟я┌п╬п╡ FAT п╦ FAT32, п©я─п╦п╫я▐я┌я▀я┘ п╡ MS-DOS п╦ Windows,
+п╟ я┌п╟п╨п╤п╣ dosfsck п╢п╩я▐ п©я─п╬п╡п╣я─п╨п╦ я┌п╟п╨п╦я┘ п╢п╦я│п╨п╬п╡ п╫п╟ п╩п╬пЁп╦я┤п╣я│п╨п╦п╣ п╬я┬п╦п╠п╨п╦.
 
 %prep
 %setup -q
-%patch -p1
-%patch1 -b .bootcode
-# %patch2 -p1
-%patch3 -p1
+%patch0 -p1
 
 %build
-%make_build PREFIX=/ CFLAGS="%optflags `getconf LFS_CFLAGS`"
+%make_build PREFIX=/
 
 %install
 %makeinstall PREFIX=%buildroot MANDIR=%buildroot%_mandir
@@ -49,6 +42,11 @@ code.
 %doc doc/*
 
 %changelog
+* Fri Oct 11 2013 Anton Farygin <rider@altlinux.ru> 3.0.22-alt1
+- new version
+- build from upstream git
+- removed obsoleted and unused patched
+
 * Sat Oct 01 2011 Anton Farygin <rider@altlinux.ru> 3.0.11-alt1
 - new version
 
@@ -105,7 +103,7 @@ code.
 - new and shiny source.
 - put in correct optimizations.
 
-* Thu Jul 20 2000 FranГois Pons <fpons@mandrakesoft.com> 2.4-3mdk
+* Thu Jul 20 2000 Franп⌠ois Pons <fpons@mandrakesoft.com> 2.4-3mdk
 - further spec cleaning.
 
 * Mon Jul 17 2000 Thierry Vignaud <tvignaud@mandrakesoft.com> 2.4-2mdk
@@ -115,7 +113,7 @@ code.
 	* macroszifications
 	* added %clean
 
-* Fri Mar 31 2000 FranГois Pons <fpons@mandrakesoft.com> 2.4-1mdk
+* Fri Mar 31 2000 Franп⌠ois Pons <fpons@mandrakesoft.com> 2.4-1mdk
 - updated Group.
 - 2.4.
 
