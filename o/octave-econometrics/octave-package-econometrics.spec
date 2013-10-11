@@ -1,21 +1,21 @@
 %def_with _octave_arch
-%define octave_pkg_version 1.0.8
+%define octave_pkg_version 1.1.1
 %define octave_pkg_name econometrics
 %define octave_descr_name Econometrics
 Name: octave-%octave_pkg_name
-Version: 1.0.8
+Version: 1.1.1
 Release: alt1
 Summary: Econometrics.
 
 Group: Sciences/Mathematics
-License: GPL version 2 or later
+License: GPLv3+
 URL: http://octave.sf.net
 
 Source0: %octave_pkg_name-%version.tar.gz
 
 BuildRequires: octave-devel
 %if_with _octave_arch
-BuildRequires: gcc-c++ libfftw3-devel libhdf5-devel liblapack-devel libncurses-devel libreadline-devel octave-devel
+BuildRequires: gcc-c++ gcc-g77 libfftw3-devel libhdf5-devel liblapack-devel libncurses-devel libreadline-devel octave-devel
 %else
 BuildArch: noarch
 %endif
@@ -32,7 +32,7 @@ Extension Description:
 Econometrics functions including MLE and GMM based techniques.
 
 %prep
-%setup -n %octave_pkg_name-%version
+%setup -T -c %name-%version
 
 %build
 octave -q -H --no-site-file --eval "pkg build -nodeps . %SOURCE0"
@@ -49,6 +49,9 @@ octave -q -H --no-site-file --eval "pkg prefix %buildroot%_datadir/octave/packag
 %endif
 
 %changelog
+* Thu Oct 10 2013 Paul Wolneykien <manowar@altlinux.ru> 1.1.1-alt1
+- updated by octave-package-builder
+
 * Mon Nov 28 2011 Igor Vlasenko <viy@altlinux.ru> 1.0.8-alt1
 - initial import by octave-package-builder
 

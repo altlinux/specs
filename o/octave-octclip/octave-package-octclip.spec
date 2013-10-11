@@ -1,27 +1,27 @@
 %def_with _octave_arch
-%define octave_pkg_version 1.0.0
+%define octave_pkg_version 1.0.3
 %define octave_pkg_name octclip
 %define octave_descr_name OctCLIP
 Name: octave-%octave_pkg_name
-Version: 1.0.0
+Version: 1.0.3
 Release: alt1
 Summary: GNU Octave clipping polygons tool
 
 Group: Sciences/Mathematics
-License: GPL version 3 or later and BSD
+License: GPLv3+, modified BSD
 URL: http://davis.wpi.edu/~matt/courses/clipping/
 
 Source0: %octave_pkg_name-%version.tar.gz
 
 BuildRequires: octave-devel
 %if_with _octave_arch
-BuildRequires: gcc-c++ libfftw3-devel libhdf5-devel liblapack-devel libncurses-devel libreadline-devel octave-devel
+BuildRequires: gcc-c++ gcc-g77 libfftw3-devel libhdf5-devel liblapack-devel libncurses-devel libreadline-devel octave-devel
 %else
 BuildArch: noarch
 %endif
+Provides: octave(octclip) = %version
 # Depends: Octave (>= 2.9.7)
 Requires: octave >= 2.9.7
-Provides: octave(octclip) = 1.0.0
 
 
 %description
@@ -32,7 +32,7 @@ Extension Description:
 This package allows to do boolean operations with polygons using
 
 %prep
-%setup -n %octave_pkg_name
+%setup -T -c %name-%version
 
 %build
 octave -q -H --no-site-file --eval "pkg build -nodeps . %SOURCE0"
@@ -49,6 +49,9 @@ octave -q -H --no-site-file --eval "pkg prefix %buildroot%_datadir/octave/packag
 %endif
 
 %changelog
+* Thu Oct 10 2013 Paul Wolneykien <manowar@altlinux.ru> 1.0.3-alt1
+- updated by octave-package-builder
+
 * Fri Nov 18 2011 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt1
 - initial import by octave-package-builder
 

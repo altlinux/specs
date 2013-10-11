@@ -1,9 +1,9 @@
 Serial: 1
-%define octave_pkg_version 1.1.1
+%define octave_pkg_version 1.1.2
 %define octave_pkg_name bim
 %define octave_descr_name bim
 Name: octave-%octave_pkg_name
-Version: 1.1.1
+Version: 1.1.2
 Release: alt1
 Summary: PDE Solver using a Finite Element/Finite Volume approach
 
@@ -32,7 +32,7 @@ Extension Description:
 Package for solving Diffusion Advection Reaction (DAR) Partial Differential Equations
 
 %prep
-%setup -n %octave_pkg_name-%version
+%setup -T -c %name-%version
 
 %build
 octave -q -H --no-site-file --eval "pkg build -nodeps . %SOURCE0"
@@ -49,6 +49,9 @@ octave -q -H --no-site-file --eval "pkg prefix %buildroot%_datadir/octave/packag
 %endif
 
 %changelog
+* Thu Oct 10 2013 Paul Wolneykien <manowar@altlinux.ru> 1:1.1.2-alt1
+- updated by octave-package-builder
+
 * Tue Jan 08 2013 Paul Wolneykien <manowar@altlinux.ru> 1:1.1.1-alt1
 - updated by octave-package-builder
 

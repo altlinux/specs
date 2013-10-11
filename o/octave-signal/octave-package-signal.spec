@@ -1,10 +1,10 @@
 Serial: 2
 %def_with _octave_arch
-%define octave_pkg_version 1.2.0
+%define octave_pkg_version 1.2.2
 %define octave_pkg_name signal
 %define octave_descr_name Signal
 Name: octave-%octave_pkg_name
-Version: 1.2.0
+Version: 1.2.2
 Release: alt1
 Summary: Signal Processing.
 
@@ -21,8 +21,8 @@ BuildRequires: gcc-c++ gcc-g77 libfftw3-devel libhdf5-devel liblapack-devel libn
 BuildArch: noarch
 %endif
 Provides: octave(signal) = %version
-# Depends: octave (>= 3.6.0), optim (>= 1.0.0), specfun, control (>= 2.2.3), general (>= 1.3.2)
-Requires: octave >= 3.6.0 octave(optim) >= 1.0.0 octave(specfun) octave(control) >= 2.2.3 octave(general) >= 1.3.2
+# Depends: octave (>= 3.6.0), specfun, control (>= 2.2.3), general (>= 1.3.2)
+Requires: octave >= 3.6.0 octave(specfun) octave(control) >= 2.2.3 octave(general) >= 1.3.2
 
 
 %description
@@ -33,7 +33,7 @@ Extension Description:
 Signal processing tools, including filtering, windowing and display functions.
 
 %prep
-%setup -n %octave_pkg_name
+%setup -T -c %name-%version
 
 %build
 octave -q -H --no-site-file --eval "pkg build -nodeps . %SOURCE0"
@@ -50,6 +50,9 @@ octave -q -H --no-site-file --eval "pkg prefix %buildroot%_datadir/octave/packag
 %endif
 
 %changelog
+* Thu Oct 10 2013 Paul Wolneykien <manowar@altlinux.ru> 2:1.2.2-alt1
+- updated by octave-package-builder
+
 * Tue Jan 08 2013 Paul Wolneykien <manowar@altlinux.ru> 2:1.2.0-alt1
 - updated by octave-package-builder
 

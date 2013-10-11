@@ -1,9 +1,9 @@
 Serial: 1
-%define octave_pkg_version 1.1.2
+%define octave_pkg_version 1.2.4
 %define octave_pkg_name splines
 %define octave_descr_name splines
 Name: octave-%octave_pkg_name
-Version: 1.1.2
+Version: 1.2.4
 Release: alt1
 Summary: Splines.
 
@@ -29,10 +29,10 @@ Octave-Forge - Extra packages for GNU Octave.
 This package contains the %octave_descr_name GNU Octave extension.
 
 Extension Description:
-Additional Cubic spline functions.
+Additional spline functions.
 
 %prep
-%setup -n %octave_pkg_name
+%setup -T -c %name-%version
 
 %build
 octave -q -H --no-site-file --eval "pkg build -nodeps . %SOURCE0"
@@ -49,6 +49,9 @@ octave -q -H --no-site-file --eval "pkg prefix %buildroot%_datadir/octave/packag
 %endif
 
 %changelog
+* Thu Oct 10 2013 Paul Wolneykien <manowar@altlinux.ru> 1:1.2.4-alt1
+- updated by octave-package-builder
+
 * Tue Jan 08 2013 Paul Wolneykien <manowar@altlinux.ru> 1:1.1.2-alt1
 - updated by octave-package-builder
 

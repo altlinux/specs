@@ -1,26 +1,27 @@
 %def_with _octave_arch
+%define octave_pkg_version 2.0.0
 %define octave_pkg_name image
 %define octave_descr_name Image
 Name: octave-%octave_pkg_name
-Version: 1.0.15
+Version: 2.0.0
 Release: alt1
 Summary: Image Processing
 
 Group: Sciences/Mathematics
-License: GPL version 2 or later
+License: GPLv3+, MIT, FreeBSD
 URL: http://octave.sf.net
 
 Source0: %octave_pkg_name-%version.tar.gz
 
 BuildRequires: octave-devel
 %if_with _octave_arch
-BuildRequires: gcc-c++ libfftw3-devel libhdf5-devel liblapack-devel libncurses-devel libreadline-devel octave-devel
+BuildRequires: gcc-c++ gcc-g77 libfftw3-devel libhdf5-devel liblapack-devel libncurses-devel libreadline-devel octave-devel
 %else
 BuildArch: noarch
 %endif
-# Depends: octave (>= 3.2.0)
-Requires: octave >= 3.2.0
-Provides: octave(image) = 1.0.15
+Provides: octave(image) = %version
+# Depends: octave (>= 3.6.0), signal (>= 1.2.0)
+Requires: octave >= 3.6.0 octave(signal) >= 1.2.0
 
 
 %description
@@ -31,7 +32,7 @@ Extension Description:
 The Octave-forge Image package provides functions for
 
 %prep
-%setup -n %octave_pkg_name-%version
+%setup -T -c %name-%version
 
 %build
 octave -q -H --no-site-file --eval "pkg build -nodeps . %SOURCE0"
@@ -39,15 +40,18 @@ octave -q -H --no-site-file --eval "pkg build -nodeps . %SOURCE0"
 %install
 mkdir -p %buildroot%_datadir/octave/packages
 mkdir -p %buildroot%_libdir/octave/packages
-octave -q -H --no-site-file --eval "pkg prefix %buildroot%_datadir/octave/packages %buildroot%_libdir/octave/packages; pkg install -local -nodeps %octave_pkg_name-%version.tar.gz"
+octave -q -H --no-site-file --eval "pkg prefix %buildroot%_datadir/octave/packages %buildroot%_libdir/octave/packages; pkg install -local -nodeps %octave_pkg_name-%octave_pkg_version.tar.gz"
 
 %files
-%_datadir/octave/packages/%octave_pkg_name-%version
+%_datadir/octave/packages/%octave_pkg_name-%octave_pkg_version
 %if_with _octave_arch
-%_libdir/octave/packages/%octave_pkg_name-%version
+%_libdir/octave/packages/%octave_pkg_name-%octave_pkg_version
 %endif
 
 %changelog
+* Thu Oct 10 2013 Paul Wolneykien <manowar@altlinux.ru> 2.0.0-alt1
+- updated by octave-package-builder
+
 * Thu Nov 17 2011 Igor Vlasenko <viy@altlinux.ru> 1.0.15-alt1
 - initial import by octave-package-builder
 

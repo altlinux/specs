@@ -1,9 +1,12 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires: /usr/bin/mkoctfile /usr/bin/octave
+# END SourceDeps(oneline)
 %def_with _octave_arch
-%define octave_pkg_version 1.1.5
+%define octave_pkg_version 1.1.6
 %define octave_pkg_name octcdf
 %define octave_descr_name octcdf
 Name: octave-%octave_pkg_name
-Version: 1.1.5
+Version: 1.1.6
 Release: alt1
 Summary: octcdf
 
@@ -35,7 +38,7 @@ Extension Description:
 A NetCDF interface for octave
 
 %prep
-%setup -n %octave_pkg_name
+%setup -T -c %name-%version
 
 %build
 octave -q -H --no-site-file --eval "pkg build -nodeps . %SOURCE0"
@@ -52,6 +55,9 @@ octave -q -H --no-site-file --eval "pkg prefix %buildroot%_datadir/octave/packag
 %endif
 
 %changelog
+* Thu Oct 10 2013 Paul Wolneykien <manowar@altlinux.ru> 1.1.6-alt1
+- updated by octave-package-builder
+
 * Tue Jan 08 2013 Paul Wolneykien <manowar@altlinux.ru> 1.1.5-alt1
 - updated by octave-package-builder
 
