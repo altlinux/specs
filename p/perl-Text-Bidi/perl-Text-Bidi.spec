@@ -1,7 +1,7 @@
 %define dist Text-Bidi
 Name: perl-%dist
-Version: 0.03
-Release: alt6
+Version: 2.02
+Release: alt1
 
 Summary: Unicode bidi algorithm for Perl using libfribidi
 License: GPL or Artistic
@@ -9,7 +9,6 @@ Group: Development/Perl
 
 URL: %CPAN %dist
 Source: %dist-%version.tar.gz
-Patch: perl-Text-Bidi-0.03-deb-fribidi_new.patch
 
 # Automatically added by buildreq on Wed Oct 19 2011
 BuildRequires: libfribidi-devel perl-Test-Pod
@@ -22,7 +21,6 @@ written languages.
 
 %prep
 %setup -n %dist-%version
-%patch -p1
 
 %build
 %perl_vendor_build
@@ -36,6 +34,9 @@ written languages.
 %perl_vendor_autolib/Text
 
 %changelog
+* Fri Oct 11 2013 Anton Farygin <rider@altlinux.ru> 2.02-alt1
+- new version
+
 * Thu Aug 29 2013 Vladimir Lettiev <crux@altlinux.ru> 0.03-alt6
 - built for perl 5.18
 
