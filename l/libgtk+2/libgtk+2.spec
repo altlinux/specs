@@ -17,7 +17,7 @@
 %def_enable introspection
 
 Name: libgtk+2
-Version: %ver_major.21
+Version: %ver_major.22
 Release: alt1
 
 Summary: The GIMP ToolKit (GTK+), a library for creating GUIs
@@ -302,6 +302,7 @@ install -pD -m 755 filetrigger %buildroot%_rpmlibdir/gtk-%api_ver-immodules-cach
 %_datadir/themes/Default
 %_datadir/themes/Emacs
 %_datadir/themes/Raleigh
+%dir %_datadir/gtk-%api_ver
 %dir %_sysconfdir/gtk-%api_ver
 %config(noreplace) %_sysconfdir/gtk-%api_ver/gtkrc
 %config(noreplace) %_sysconfdir/gtk-%api_ver/im-multipress.conf
@@ -343,7 +344,6 @@ install -pD -m 755 filetrigger %buildroot%_rpmlibdir/gtk-%api_ver-immodules-cach
 
 %files -n gtk-demo
 %_bindir/gtk-demo
-%dir %_datadir/gtk-%api_ver
 %dir %_datadir/gtk-%api_ver/demo
 %_datadir/gtk-%api_ver/demo/*
 
@@ -375,6 +375,9 @@ install -pD -m 755 filetrigger %buildroot%_rpmlibdir/gtk-%api_ver-immodules-cach
 %_datadir/gir-1.0/*
 
 %changelog
+* Fri Oct 11 2013 Yuri N. Sedunov <aris@altlinux.org> 2.24.22-alt1
+- 2.24.22
+
 * Tue Sep 17 2013 Yuri N. Sedunov <aris@altlinux.org> 2.24.21-alt1
 - 2.24.21
 
