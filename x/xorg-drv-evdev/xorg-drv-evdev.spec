@@ -1,7 +1,7 @@
 %define _xconfdir %_sysconfdir/X11/xorg.conf.d
 
 Name: xorg-drv-evdev
-Version: 2.8.1
+Version: 2.8.2
 Release: alt1
 Epoch: 2
 Summary: Generic Linux input driver
@@ -63,6 +63,9 @@ install -pD -m644 99-x11-keyboard.rules %buildroot%_sysconfdir/udev/rules.d/99-x
 %_pkgconfigdir/*.pc
 
 %changelog
+* Fri Oct 11 2013 Valery Inozemtsev <shrek@altlinux.ru> 2:2.8.2-alt1
+- 2.8.2
+
 * Mon Aug 19 2013 Valery Inozemtsev <shrek@altlinux.ru> 2:2.8.1-alt1
 - 2.8.1
 
