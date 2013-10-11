@@ -1,7 +1,8 @@
+%define _unpackaged_files_terminate_build 1
 %define dist File-pushd
 Name: perl-%dist
-Version: 1.00
-Release: alt1.1
+Version: 1.005
+Release: alt1
 
 Summary: Change directory temporarily for a limited scope
 License: %asl
@@ -10,8 +11,8 @@ Packager: Artem Zolochevskiy <azol@altlinux.ru>
 
 URL: %CPAN %dist
 # http://search.cpan.org/CPAN/authors/id/D/DA/DAGOLDEN/File-pushd-1.00.tar.gz
-Source: %dist-%version.tar
-Patch: %name-%version-%release.patch
+Source: http://www.cpan.org/authors/id/D/DA/DAGOLDEN/File-pushd-%{version}.tar.gz
+Patch: %name-1.005.patch
 
 BuildArch: noarch
 
@@ -51,6 +52,10 @@ absolute pathname of the directory entered.
 %perl_vendor_privlib/File/
 
 %changelog
+* Fri Oct 11 2013 Igor Vlasenko <viy@altlinux.ru> 1.005-alt1
+- automated CPAN update
+- rediffed patch
+
 * Mon Nov 22 2010 Igor Vlasenko <viy@altlinux.ru> 1.00-alt1.1
 - repair after perl 5.12 upgrade using girar-nmu
 
