@@ -1,6 +1,6 @@
 Name: freeswitch
 Version: 1.5.5
-Release: alt1
+Release: alt2
 
 Summary: FreeSWITCH open source telephony platform
 License: MPL
@@ -9,7 +9,7 @@ Url: http://www.freeswitch.org/
 
 Source: %name-%version-%release.tar
 
-BuildRequires: gcc-c++ libalsa-devel
+BuildRequires: gcc-c++ gsmlib-devel libalsa-devel
 BuildRequires: libgnutls-devel libncurses-devel libssl-devel libunixODBC-devel
 BuildRequires: gdbm-devel db4-devel libldap-devel libcurl-devel libjpeg-devel
 BuildRequires: libspeex-devel libsqlite3-devel libX11-devel libmpeg4ip-devel
@@ -217,9 +217,12 @@ make
 %install
 %make_install sysconfdir=%_sysconfdir/freeswitch DESTDIR=%buildroot install
 (cd conf && find dialplan directory -type f | cpio -pmd %buildroot%_sysconfdir/%name)
+install -pm0644 src/mod/endpoints/mod_gsmopen/configs/gsmopen.conf.xml \
+	%buildroot%_sysconfdir/%name/autoload_configs/
 
 install -pm0755 -D freeswitch.init %buildroot%_initdir/freeswitch
 install -pm0644 -D freeswitch.sysconfig %buildroot%_sysconfdir/sysconfig/freeswitch
+install -pm0644 -D freeswitch.tmpfiles %buildroot%_tmpfilesdir/freeswitch.conf
 
 mkdir -p \
     %buildroot%_sbindir \
@@ -279,6 +282,7 @@ find %buildroot%_libdir/%name %buildroot%_libdir/freetdm -name \*.la -delete
 
 %files daemon
 %_initdir/freeswitch
+%_tmpfilesdir/freeswitch.conf
 
 %config(noreplace) %_sysconfdir/sysconfig/freeswitch
 
@@ -316,6 +320,7 @@ find %buildroot%_libdir/%name %buildroot%_libdir/freetdm -name \*.la -delete
 %config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/autoload_configs/erlang_event.conf.xml
 %config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/autoload_configs/fax.conf.xml
 %config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/autoload_configs/fifo.conf.xml
+%config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/autoload_configs/gsmopen.conf.xml
 %config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/autoload_configs/hash.conf.xml
 %config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/autoload_configs/httapi.conf.xml
 %config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/autoload_configs/http_cache.conf.xml
@@ -452,6 +457,7 @@ find %buildroot%_libdir/%name %buildroot%_libdir/freetdm -name \*.la -delete
 %_libdir/%name/mod_fsv.so
 %_libdir/%name/mod_g723_1.so
 %_libdir/%name/mod_g729.so
+%_libdir/%name/mod_gsmopen.so
 %_libdir/%name/mod_h26x.so
 %_libdir/%name/mod_hash.so
 %_libdir/%name/mod_httapi.so
@@ -646,6 +652,9 @@ find %buildroot%_libdir/%name %buildroot%_libdir/freetdm -name \*.la -delete
 %_libdir/%name/mod_say_ru.so*
 
 %changelog
+* Fri Oct 11 2013 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.5.5-alt2
+- built mod_gsmopen
+
 * Wed Oct 09 2013 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.5.5-alt1
 - 1.5.5 released
 
