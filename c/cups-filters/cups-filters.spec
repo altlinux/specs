@@ -2,8 +2,8 @@
 %define _cups_serverbin %_libexecdir/cups
 Summary: OpenPrinting CUPS filters and backends
 Name: cups-filters
-Version: 1.0.38
-Release: alt2
+Version: 1.0.39
+Release: alt1
 
 # For a breakdown of the licensing, see COPYING file
 # GPLv2:   filters: commandto*, imagetoraster, pdftops, rasterto*,
@@ -179,6 +179,9 @@ install -m 644 utils/cups-browsed.service %buildroot/%_unitdir/
 %_libdir/libfontembed.so
 
 %changelog
+* Fri Oct 11 2013 Anton Farygin <rider@altlinux.ru> 1.0.39-alt1
+- new version
+
 * Tue Sep 17 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1.0.38-alt2
 - conflict with ghostscript-cups resolved
 
