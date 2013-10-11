@@ -3,7 +3,7 @@
 %def_disable doc
 
 Name: wayland
-Version: 1.2.1
+Version: 1.3.0
 Release: alt1
 
 Summary: Wayland protocol libraries
@@ -13,10 +13,9 @@ Url: http://%name.freedesktop.org/
 
 # git://anongit.freedesktop.org/wayland/wayland
 Source: wayland-%version.tar
-#Patch: %name-%version-%release.patch
 
-BuildRequires: doxygen libexpat-devel libffi-devel xsltproc docbook-style-xsl
-%{?_enable_doc:BuildRequires: /proc publican bc}
+BuildRequires: /proc doxygen libexpat-devel libffi-devel xsltproc docbook-style-xsl
+%{?_enable_doc:BuildRequires: /proc publican >= 2.8 bc}
 
 %description
 Wayland is a project to define a protocol for a compositor to talk to
@@ -91,7 +90,6 @@ This package provides development files for Wayland cursor helper library.
 
 %prep
 %setup
-#%%patch -p1
 
 %build
 %autoreconf
@@ -106,6 +104,9 @@ This package provides development files for Wayland cursor helper library.
 #mkdir -p %buildroot%_docdir/%name-devel/
 #mv %buildroot%_docdir/%name/* %buildroot%_docdir/%name-devel/
 
+%check
+#%make check
+
 %files devel
 #%doc %_docdir/%name-devel
 %_bindir/%name-scanner
@@ -115,6 +116,7 @@ This package provides development files for Wayland cursor helper library.
 %_datadir/pkgconfig/%name-scanner.pc
 %dir %_datadir/%name
 %_datadir/%name/%name-scanner.mk
+%_datadir/%name/%name.xml
 
 %files -n lib%name-client
 %_libdir/lib%name-client.so.*
@@ -142,6 +144,9 @@ This package provides development files for Wayland cursor helper library.
 %_pkgconfigdir/%name-cursor.pc
 
 %changelog
+* Fri Oct 11 2013 Yuri N. Sedunov <aris@altlinux.org> 1.3.0-alt1
+- 1.3.0
+
 * Sun Aug 25 2013 Yuri N. Sedunov <aris@altlinux.org> 1.2.1-alt1
 - 1.2.1
 
