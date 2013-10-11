@@ -141,7 +141,7 @@
 # }}}
 
 Name: qemu
-Version: 1.6.0
+Version: 1.6.1
 Release: alt1
 
 Summary: QEMU CPU Emulator
@@ -152,11 +152,7 @@ Requires: %name-system = %version-%release, %name-user = %version-%release
 URL: http://www.nongnu.org/qemu/
 Source0: %name-%version.tar
 Source2: qemu-kvm.control.in
-Source3: qemu-kvm.init
 Source4: qemu-kvm.rules
-Source5: qemu-kvm.sysconfig
-Source6: qemu-kvm.service
-Source7: kvm-modules-load
 Source8: qemu-guest-agent.rules
 Source9: qemu-guest-agent.service
 
@@ -449,13 +445,9 @@ ln -s %_bindir/qemu-system-x86_64 %buildroot%_bindir/qemu-kvm
 rm -f %buildroot%_bindir/check-*
 rm -f %buildroot%_sysconfdir/udev/rules.d/*
 
-install -D -m 0755 %SOURCE3 %buildroot%_initdir/%name-kvm
-install -D -m 0644 %SOURCE5 %buildroot%_sysconfdir/sysconfig/%name-kvm
 install -D -m 0644 %SOURCE4 %buildroot%_sysconfdir/udev/rules.d/%rulenum-%name-kvm.rules
 install -D -m 0755 %name-kvm.control.in %buildroot%_controldir/kvm
 
-install -D -m 0644 %SOURCE6 %buildroot%_unitdir/%name-kvm.service
-install -D -m 0755 %SOURCE7 %buildroot/lib/systemd/kvm-modules-load
 install -D -m 0644 %SOURCE8 %buildroot/lib/udev/rules.d/%rulenum-%name-guest-agent.rules
 install -D -m 0644 %SOURCE9 %buildroot%_unitdir/%name-guest-agent.service
 
@@ -519,15 +511,11 @@ fi
 %_man1dir/qemu*
 %_man8dir/qemu*
 %_sysconfdir/udev/rules.d/%rulenum-%name-kvm.rules
-%_initdir/%name-kvm
-%config(noreplace) %_sysconfdir/sysconfig/*
 %_controldir/*
 %if_enabled vnc_sasl
 %config(noreplace) %_sysconfdir/sasl2/%name.conf
 %endif
 %_sysconfdir/%name
-%_unitdir/%name-kvm.service
-/lib/systemd/kvm-modules-load
 
 %files system -f %name.lang
 %_bindir/qemu
@@ -585,6 +573,10 @@ fi
 %_bindir/vscclient
 
 %changelog
+* Fri Oct 11 2013 Alexey Shabalin <shaba@altlinux.ru> 1.6.1-alt1
+- 1.6.1 (fixed CVE-2013-4344)
+- drop qemu-kvm service
+
 * Fri Aug 16 2013 Alexey Shabalin <shaba@altlinux.ru> 1.6.0-alt1
 - 1.6.0
 - build with rdma support
