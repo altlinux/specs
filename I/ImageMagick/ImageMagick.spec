@@ -1,6 +1,6 @@
 %define mversion	6
-%define dversion	%mversion.8.6
-%define drelease	10
+%define dversion	%mversion.8.7
+%define drelease	0
 %define qlev		Q16
 %define mgkdir		ImageMagick
 %define soname		4
@@ -222,6 +222,9 @@ mv %buildroot%_docdir/%name-6 %buildroot%_docdir/%name-%dversion
 %endif
 
 %changelog
+* Fri Oct 11 2013 Anton Farygin <rider@altlinux.ru> 6.8.7.0-alt1
+- new version
+
 * Thu Sep 26 2013 Anton Farygin <rider@altlinux.ru> 6.8.6.10-alt1
 - new version
 
