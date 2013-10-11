@@ -1,6 +1,6 @@
 Summary: Command-line tools and library for transforming PDF files
 Name: qpdf
-Version: 3.0.2
+Version: 5.0.0
 Release: alt1
 License: Artistic 2.0
 Group: System/Base
@@ -92,5 +92,8 @@ autoreconf --verbose --force --install
 %doc doc/qpdf-manual.html doc/stylesheet.css
 
 %changelog
+* Fri Oct 11 2013 Anton Farygin <rider@altlinux.ru> 5.0.0-alt1
+- new version
+
 * Tue Sep 18 2012 Anton Farygin <rider@altlinux.ru> 3.0.2-alt1
 - first build for Sisyphus
