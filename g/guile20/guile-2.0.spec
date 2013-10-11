@@ -5,7 +5,7 @@
 %def_disable static
 
 Name: %{_name}20
-Version: %api_ver.6
+Version: %api_ver.9
 Release: alt1
 
 Summary: A GNU implementation of Scheme (version 2.0)
@@ -149,6 +149,9 @@ mv %buildroot%_man1dir/%_name.1 %buildroot%_man1dir/%name.1
 #%dir %_datadir/%_name
 
 %changelog
+* Fri Oct 11 2013 Yuri N. Sedunov <aris@altlinux.org> 2.0.9-alt1
+- 2.0.9
+
 * Sat Sep 01 2012 Dmitry V. Levin <ldv@altlinux.org> 2.0.6-alt1
 - Updated to 2.0.6.
 
