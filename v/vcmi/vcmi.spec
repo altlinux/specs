@@ -2,7 +2,7 @@
 
 Name: vcmi
 Version: 0.94
-Release: alt2
+Release: alt3
 
 Summary: Open-source project aiming to reimplement HMM3:WoG game engine
 License: GPLv2+
@@ -34,7 +34,6 @@ You need to install WoG before running VCMI.
 
 %build
 %cmake_insource -DCMAKE_SKIP_RPATH=OFF
-sed -i -e "s/-O3/-O2/g" CMakeCache.txt
 %make_build VERBOSE=1
 
 %install
@@ -49,6 +48,9 @@ sed -i -e "s/-O3/-O2/g" CMakeCache.txt
 %_datadir/icons/*/*/apps/vcmiclient.png
 
 %changelog
+* Fri Oct 11 2013 Igor Zubkov <icesik@altlinux.org> 0.94-alt3
+- rebuild with -O3 optimization
+
 * Thu Oct 10 2013 Igor Zubkov <icesik@altlinux.org> 0.94-alt2
 - rebuild with gcc 4.7
 
