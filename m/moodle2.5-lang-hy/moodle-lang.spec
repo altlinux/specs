@@ -6,7 +6,7 @@
 %define packagetype lang
 %define packagename hy
 %define packagversion 2.5.0
-%define packagedate 201306140511
+%define packagedate 201310090849
 %define moodlebranch 2.5
 %define moodlepackagename %moodle_name%moodlebranch
 %define langname Armenian
@@ -57,6 +57,10 @@ cp -rp * %buildroot%moodle_langdir/
 %moodle_langdir/*
 
 %changelog
+* Fri Oct 11 2013 Cronbuild Service <cronbuild@altlinux.org> 2.5.0.201310090849-alt1
+- repocop cronbuild 20131011. At your service.
+- hy.zip build 2013-10-09 08:49 UTC
+
 * Sat Jun 15 2013 Cronbuild Service <cronbuild@altlinux.org> 2.5.0.201306140511-alt1
 - repocop cronbuild 20130615. At your service.
 - hy.zip build 2013-06-14 05:11 UTC
