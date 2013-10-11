@@ -1,4 +1,4 @@
-%define ver_major 1.8
+%define ver_major 2.0
 %define api_ver 3.0
 
 %def_enable exempi
@@ -8,8 +8,8 @@
 %def_enable selinux
 
 Name: nemo
-Version: %ver_major.5
-Release: alt4
+Version: %ver_major.0
+Release: alt1
 
 Summary: default file manager for Cinnamon
 License: GPLv2+
@@ -209,6 +209,9 @@ ln -sf %_licensedir/LGPL-2 COPYING
 
 
 %changelog
+* Thu Oct 10 2013 Vladimir Didenko <cow@altlinux.org> 2.0.0-alt1
+- 2.0.0
+
 * Wed Sep 25 2013 Yuri N. Sedunov <aris@altlinux.org> 1.8.5-alt4
 - rebuild for GNOME-3.10
 

@@ -1,4 +1,4 @@
-%define ver_major 1.8
+%define ver_major 2.0
 %def_disable static
 %def_disable docbook
 %def_enable consolekit
@@ -8,7 +8,7 @@
 
 Name: cinnamon-screensaver
 Version: %ver_major.0
-Release: alt3.1
+Release: alt1.1
 
 Summary: Cinnamon Screensaver
 License: GPLv2+
@@ -76,8 +76,6 @@ simple, sane, secure defaults and be well integrated with the Cinnamon desktop.
 %makeinstall_std
 
 %files 
-%exclude %_bindir/gnome-screensaver
-%exclude %_bindir/gnome-screensaver-command
 %_bindir/*
 %_datadir/dbus-1/services/org.cinnamon.ScreenSaver.service
 %attr(2711,root,chkpwd) %_libexecdir/%name-dialog
@@ -89,6 +87,12 @@ simple, sane, secure defaults and be well integrated with the Cinnamon desktop.
 %doc AUTHORS NEWS README
 
 %changelog
+* Thu Oct 10 2013 Vladimir Didenko <cow@altlinux.org> 2.0.0-alt1.1
+- fix build
+
+* Thu Oct 10 2013 Vladimir Didenko <cow@altlinux.org> 2.0.0-alt1
+- 2.0.0
+
 * Fri Sep 27 2013 Yuri N. Sedunov <aris@altlinux.org> 1.8.0-alt3.1
 - fixed build
 

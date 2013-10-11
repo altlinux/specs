@@ -1,8 +1,8 @@
-%define ver_major 1.9
+%define ver_major 2.0
 
 Name: cinnamon-meta
 Version: %ver_major.0
-Release: alt2
+Release: alt1
 
 Summary: Cinnamon desktop meta package
 License: %gpl2plus
@@ -42,7 +42,7 @@ Provides: cinnamon-full = %version-%release
 # Sound support
 Requires: pulseaudio-daemon alsa-plugins-pulse
 # Default file manager
-Requires: nemo
+Requires: nemo nemo-share
 # Control Center
 Requires: cinnamon-control-center
 # We still need gnome-control-center to configure keyboard layouts
@@ -126,6 +126,10 @@ of default applications.
 %files -n cinnamon-regular
 
 %changelog
+* Thu Oct 10 2013 Vladimir Didenko <cow@altlinux.org> 2.0.0-alt1
+- 2.0.0
+- added nemo-share
+
 * Wed Sep 25 2013 Yuri N. Sedunov <aris@altlinux.org> 1.9.0-alt2
 - rebuild for GNOME-3.10
 
