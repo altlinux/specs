@@ -9,7 +9,7 @@ Name: usbip
 %define lname lib%name
 Summary: Utility for manage %Name devices
 Version: 1.1.1
-Release: alt1
+Release: alt2
 License: GPLv2+
 Group: System/Configuration/Networking
 Source: %name-%version.tar
@@ -113,6 +113,9 @@ Requires: %lname-devel = %version-%release
 
 
 %changelog
+* Fri Oct 11 2013 Led <led@altlinux.ru> 1.1.1-alt2
+- updated from 3.12 kernel tree
+
 * Thu Aug 08 2013 Led <led@altlinux.ru> 1.1.1-alt1
 - 1.1.1
 - build from kernel source tree
