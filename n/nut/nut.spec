@@ -1,7 +1,7 @@
 # -*- rpm-spec -*-
 
 # for set release
-%define release_pre alt2
+%define release_pre alt3
 
 # for distr selected
 %def_without M24
@@ -692,6 +692,9 @@ fi
 %_man3dir/*
 
 %changelog
+* Fri Oct 11 2013 Anton Farygin <rider@altlinux.ru> 2.6.5-alt3
+- rebuild with new freeipmi
+
 * Mon Jul 15 2013 Anton Farygin <rider@altlinux.ru> 2.6.5-alt2
 - rebuild with new freeipmi
 
