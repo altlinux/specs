@@ -1,5 +1,5 @@
 Name: korinf
-Version: 2.0.3
+Version: 2.0.4
 Release: alt1
 
 Summary: Korinf multidistro build system
@@ -35,6 +35,7 @@ This package contains Korinf multidistro build system.
 %files
 %doc README TODO NEWS AUTHORS COPYING
 %_bindir/korinf
+%_bindir/korexec
 %_bindir/korlogin
 %dir %_sysconfdir/eterbuild/lists/
 %config(noreplace) %_sysconfdir/eterbuild/lists/*
@@ -44,6 +45,11 @@ This package contains Korinf multidistro build system.
 %_datadir/eterbuild/korinf/
 
 %changelog
+* Sat Oct 12 2013 Vitaly Lipatov <lav@altlinux.ru> 2.0.4-alt1
+- korexec, korlogin - add small support for ALT Linux
+- replace get_rpm_sources with get_sources_dir (rewrite), drop check_and_refresh_package_wine
+- add korexec install, fix korlogin install
+
 * Sat Aug 03 2013 Vitaly Lipatov <lav@altlinux.ru> 2.0.3-alt1
 - separate write alt deps to separate file
 - tools/publish: do not republish packages with the same name (see eterbug #8890)
