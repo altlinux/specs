@@ -1,7 +1,7 @@
 ## SPEC file for Perl module MooseX-OneArgNew
 
 Name: perl-MooseX-OneArgNew
-Version: 0.003
+Version: 0.004
 Release: alt1
 
 Summary: Perl module that teach ->new to accept single, non-hashref arguments
@@ -44,6 +44,9 @@ hashref.
 %perl_vendor_privlib/MooseX/OneArgNew*
 
 %changelog
+* Sat Oct 12 2013 Nikolay A. Fetisov <naf@altlinux.ru> 0.004-alt1
+- New version
+
 * Sun Apr 21 2013 Nikolay A. Fetisov <naf@altlinux.ru> 0.003-alt1
 - New version
 
