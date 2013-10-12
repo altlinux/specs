@@ -1,8 +1,8 @@
 %set_verify_elf_method textrel=relaxed 
-%define rev	252d7cbf
+%define rev	5390e6de
 Name:		deadbeef
 Version:	0.5.6
-Release:	alt3.%rev
+Release:	alt4.%rev
 Summary:	DeaDBeeF is an audio player
 Url:		http://deadbeef.sourceforge.net/
 Source0:	http://kent.dl.sourceforge.net/project/deadbeef/%name-%version.tar
@@ -22,6 +22,8 @@ Patch7:		deadbeef-0.5.6-alt-gdk-threads.patch
 BuildRequires: gcc-c++ intltool libalsa-devel libavformat-devel libcddb-devel libcdio-devel libcurl-devel libdbus-devel libfaad-devel libflac-devel libgtkglext-devel libjpeg-devel libmad-devel libpulseaudio-devel libsamplerate-devel libvorbis-devel libwavpack-devel yasm
 
 Requires:	%name-out-alsa %name-gtk2 %name-in-mpeg
+
+Obsoletes:	%name-medialib	
 
 %description
 DeaDBeeF is an audio player for GNU/Linux systems with
@@ -65,8 +67,8 @@ Requires: %name-in-mms %name-in-aac %name-in-alac %name-in-ao %name-in-dumb
 Requires: %name-in-shn
 
 # General
-Requires: %name-artwork %name-hotkeys %name-lastfm %name-notify %name-medialib
-Requires: %name-gtk2
+Requires: %name-artwork %name-hotkeys %name-lastfm %name-notify 
+Requires: %name-gtk2 %name-pltbrowser_gtk2
 Requires: %name-shellexec
 Requires: %name-m3u
 Requires: %name-dsp-supereq %name-dsp-libsrc %name-dsp-mono2stereo
@@ -434,14 +436,22 @@ Requires: %name = %version-%release
 %description -n %name-converter
 Allows file conversion between various containers and codecs.
 
-%package -n %name-medialib
-Summary: DeaDBeeF medialib plugin
+#package -n %name-medialib
+#Summary: DeaDBeeF medialib plugin
+#Group: Sound
+#Requires: %name = %version-%release
+
+#description -n %name-medialib
+#DeaDBeeF medialib Plugin
+#Scans disk for music files and manages them as database.
+
+%package -n %name-pltbrowser_gtk2
+Summary: Deadbeef plugin
 Group: Sound
 Requires: %name = %version-%release
 
-%description -n %name-medialib
-DeaDBeeF medialib Plugin
-Scans disk for music files and manages them as database.
+%description -n %name-pltbrowser_gtk2
+Playlist browser plugin.
 
 
 %prep
@@ -462,13 +472,13 @@ sed -i '/m4/ d' Makefile.am
 export CFLAGS="%optflags"
 export CXXFLAGS="%optflags"
 %autoreconf 
-%configure --enable-libnotify --docdir=%_docdir/%name-%version --disable-static \
+%configure --enable-notify --docdir=%_docdir/%name-%version --disable-static \
 		--enable-src=yes \
 		--enable-m3u=yes \
 		--enable-ffmpeg=yes \
 		--enable-gtk2=yes \
 		--enable-gtk3=no \
-		--enable-medialib=yes \
+		#--enable-medialib=yes \
 
 
 %make_build
@@ -608,8 +618,11 @@ rm -rf %buildroot/%_libdir/%name/*.la
 %_libdir/%name/converter_gtk*.so*
 %_libdir/%name/convpresets
 
-%files -n %name-medialib
-%_libdir/%name/medialib.*
+#files -n %name-medialib
+#_libdir/%name/medialib.*
+
+%files -n %name-pltbrowser_gtk2
+%_libdir/%name/pltbrowser_gtk2.*
 
 # Development
 %files -n %name-devel
@@ -621,6 +634,9 @@ rm -rf %buildroot/%_libdir/%name/*.la
 %files -n %name-incomplete
 
 %changelog
+* Sat Oct 12 2013 Andrew Clark <andyc@altlinux.org> 0.5.6-alt4.5390e6de
+- version update to 0.5.6-alt4.5390e6de
+
 * Mon May 27 2013 Andrew Clark <andyc@altlinux.org> 0.5.6-alt3.252d7cbf
 - version update to 0.5.6-alt3.252d7cbf
 
