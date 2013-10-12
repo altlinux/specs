@@ -4,12 +4,12 @@ BuildRequires: perl(Test/NoWarnings.pm) perl-Module-Build perl-devel perl-podlat
 # END SourceDeps(oneline)
 Name:		perl-Test-Warnings
 Version:	0.010
-Release:	alt1
+Release:	alt2_1
 Summary:	Test for warnings and the lack of them
 License:	GPL+ or Artistic
 Group:		Development/Perl
 URL:		http://search.cpan.org/dist/Test-Warnings
-Source:	http://www.cpan.org/authors/id/E/ET/ETHER/Test-Warnings-%{version}.tar.gz
+Source0:	http://search.cpan.org/CPAN/authors/id/E/ET/ETHER/Test-Warnings-%{version}.tar.gz
 BuildArch:	noarch
 # Build
 BuildRequires:	perl(Module/Build/Tiny.pm)
@@ -20,11 +20,13 @@ BuildRequires:	perl(parent.pm)
 BuildRequires:	perl(strict.pm)
 BuildRequires:	perl(warnings.pm)
 # Test Suite
-BuildRequires:	perl(CPAN/Meta/Check.pm)
+BuildRequires:	perl(ExtUtils/MakeMaker.pm)
 BuildRequires:	perl(File/Spec.pm)
+BuildRequires:	perl(File/Spec/Functions.pm)
 BuildRequires:	perl(if.pm)
 BuildRequires:	perl(IO/Handle.pm)
 BuildRequires:	perl(IPC/Open3.pm)
+BuildRequires:	perl(List/Util.pm)
 BuildRequires:	perl(Test/CheckDeps.pm)
 BuildRequires:	perl(Test/Deep.pm)
 BuildRequires:	perl(Test/More.pm)
@@ -68,10 +70,16 @@ perl Build.PL --install_path bindoc=%_man1dir --installdirs=vendor
 ./Build test
 
 %files
-%doc Changes LICENSE README
+%doc Changes LICENSE README examples/
 %{perl_vendor_privlib}/Test/
 
 %changelog
+* Sat Oct 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.010-alt2_1
+- bumped release to override the autoimports package
+
+* Thu Oct 10 2013 Igor Vlasenko <viy@altlinux.ru> 0.010-alt1_1
+- update to new release by fcimport
+
 * Wed Sep 25 2013 Igor Vlasenko <viy@altlinux.ru> 0.010-alt1
 - automated CPAN update
 
