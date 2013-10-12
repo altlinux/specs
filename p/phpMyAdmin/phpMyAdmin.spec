@@ -1,5 +1,5 @@
 Name: phpMyAdmin
-Version: 4.0.6
+Version: 4.0.8
 Release: alt1
 
 Summary: phpMyAdmin - web-based MySQL administration
@@ -192,6 +192,9 @@ replace *SECRET* `pwgen -0s1` -- %webserver_webappsdir/%name/config.inc.php
 %attr(755,root,root) %_controldir/%name-apache2
 
 %changelog
+* Sun Oct 13 2013 Vitaly Lipatov <lav@altlinux.ru> 4.0.8-alt1
+- new version 4.0.8 (with rpmrb script)
+
 * Sat Sep 07 2013 Vitaly Lipatov <lav@altlinux.ru> 4.0.6-alt1
 - new version 4.0.6 (with rpmrb script)
 
