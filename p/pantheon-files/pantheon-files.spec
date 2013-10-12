@@ -1,8 +1,8 @@
 # TODO: build with unity
 
 Name: pantheon-files
-Version: 0.1.4
-Release: alt2
+Version: 0.1.5
+Release: alt1
 
 Summary: The file manager of the Pantheon desktop
 License: GPLv3
@@ -93,6 +93,9 @@ mv %buildroot/usr/lib/* %buildroot%_libdir/
 %_datadir/vala/vapi/marlincore.vapi
 
 %changelog
+* Sat Oct 12 2013 Igor Zubkov <icesik@altlinux.org> 0.1.5-alt1
+- 0.1.4 -> 0.1.5
+
 * Sat Sep 14 2013 Igor Zubkov <icesik@altlinux.org> 0.1.4-alt2
 - Fix pkgconfig file
 
