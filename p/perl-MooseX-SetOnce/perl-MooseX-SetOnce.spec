@@ -1,7 +1,7 @@
 ## SPEC file for Perl module MooseX-SetOnce
 
 Name: perl-MooseX-SetOnce
-Version: 0.200001
+Version: 0.200002
 Release: alt1
 
 Summary: Perl module to write-once, read-many attributes for Moose
@@ -43,6 +43,9 @@ that are not lazy and not set, but that cannot be altered once set.
 %perl_vendor_privlib/MooseX/SetOnce*
 
 %changelog
+* Sat Oct 12 2013 Nikolay A. Fetisov <naf@altlinux.ru> 0.200002-alt1
+- New version
+
 * Sat Jan 28 2012 Nikolay A. Fetisov <naf@altlinux.ru> 0.200001-alt1
 - Initial build for ALT Linux Sisyphus
 
