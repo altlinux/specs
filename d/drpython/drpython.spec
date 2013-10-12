@@ -1,16 +1,17 @@
 Name: drpython
-Version: 3.11.0
-Release: alt1.1.qa2.1
+Version: 3.11.3
+Release: alt1
 Epoch: 1
 
 Summary: Python editor and development environment
-Summary(ru_RU.KOI8-R): Среда разработки и редактор для языка Python
+Summary(ru_RU.UTF-8): п║я─п╣п╢п╟ я─п╟п╥я─п╟п╠п╬я┌п╨п╦ п╦ я─п╣п╢п╟п╨я┌п╬я─ п╢п╩я▐ я▐п╥я▀п╨п╟ Python
 
 Url: http://drpython.sourceforge.net/
 License: GPL
 Group: Development/Python
 
-Source: http://prdownloads.sf.net/%name/%name-%version.tar.bz2
+# Source-url: http://prdownloads.sourceforge.net/drpython/%version/DrPython_%version.zip
+Source: %name-%version.tar
 Source1: %name.desktop
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
@@ -18,23 +19,27 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 BuildArch: noarch
 
 BuildPreReq: python-devel
+# Automatically added by buildreq on Sat Oct 12 2013
+# optimized out: fontconfig libgdk-pixbuf libwayland-client libwayland-server python-base python-devel python-module-distribute python-module-zope python-modules python-modules-compiler python-modules-email python3-base
+BuildRequires: python-module-cmd2 python-module-mwlib python-module-protobuf python-module-wx2.9
+
 BuildRequires: ImageMagick, rpm-build-compat >= 1.2
-Requires: python-module-wx >= 2.6
-Requires: webclient
 BuildRequires: desktop-file-utils
+
+Requires: webclient
 
 %description
 DrPython is a highly customizable, simple, and clean editing environment for
 developing Python programs. It is intended primarily for use in schools, and
 is a tribute to DrScheme.
 
-%description -l ru_RU.KOI8-R
-DrPython -- это хорошо настраиваемая простая среда для разработки программ
-на Python, первоначально предназначенная для использования в школах.
-Сделан он по подобию DrScheme.
+%description -l ru_RU.UTF-8
+DrPython -- я█я┌п╬ я┘п╬я─п╬я┬п╬ п╫п╟я│я┌я─п╟п╦п╡п╟п╣п╪п╟я▐ п©я─п╬я│я┌п╟я▐ я│я─п╣п╢п╟ п╢п╩я▐ я─п╟п╥я─п╟п╠п╬я┌п╨п╦ п©я─п╬пЁя─п╟п╪п╪
+п╫п╟ Python, п©п╣я─п╡п╬п╫п╟я┤п╟п╩я▄п╫п╬ п©я─п╣п╢п╫п╟п╥п╫п╟я┤п╣п╫п╫п╟я▐ п╢п╩я▐ п╦я│п©п╬п╩я▄п╥п╬п╡п╟п╫п╦я▐ п╡ я┬п╨п╬п╩п╟я┘.
+п║п╢п╣п╩п╟п╫ п╬п╫ п©п╬ п©п╬п╢п╬п╠п╦я▌ DrScheme.
 
 %prep
-%setup -q -n %name
+%setup
 chmod 644 %name.py
 
 # Fix default paths to docs
@@ -92,6 +97,10 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_miconsdir/%name.png
 
 %changelog
+* Sat Oct 12 2013 Vitaly Lipatov <lav@altlinux.ru> 1:3.11.3-alt1
+- new version (3.11.3) with rpmgs script
+- cleanup spec
+
 * Sat Oct 22 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 1:3.11.0-alt1.1.qa2.1
 - Rebuild with Python-2.7
 
