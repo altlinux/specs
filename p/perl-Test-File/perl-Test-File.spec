@@ -1,7 +1,7 @@
 ## SPEC file for Perl module Test::File
 
 Name: perl-Test-File
-Version: 1.34
+Version: 1.35
 Release: alt1
 
 Summary: Perl module to test file attributes
@@ -47,6 +47,9 @@ file attributes.
 
 
 %changelog
+* Sat Oct 12 2013 Nikolay A. Fetisov <naf@altlinux.ru> 1.35-alt1
+- New version
+
 * Sun Nov 04 2012 Nikolay A. Fetisov <naf@altlinux.ru> 1.34-alt1
 - Initial build for ALT Linux Sisyphus
 
