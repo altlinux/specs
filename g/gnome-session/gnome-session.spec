@@ -4,7 +4,7 @@
 %def_enable session_selector
 
 Name: gnome-session
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: The gnome session programs for the GNOME GUI desktop environment
@@ -78,6 +78,7 @@ This package permits to choose a saved GNOME session.
 %package wayland
 Summary: A Wayland session for the GNOME
 Group: Graphical desktop/GNOME
+BuildArch: noarch
 Requires: %name = %EVR
 #Requries: gnome-shell-wayland
 
@@ -230,6 +231,9 @@ install -pD -m644 %SOURCE1 %buildroot%_iconsdir/gnome.svg
 %_datadir/%name/sessions/gnome-wayland.session
 
 %changelog
+* Fri Oct 11 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.1-alt1
+- 3.10.1
+
 * Tue Sep 24 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.0-alt1
 - 3.10.0
 
