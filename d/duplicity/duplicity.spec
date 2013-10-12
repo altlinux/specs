@@ -1,5 +1,5 @@
 Name: duplicity
-Version: 0.6.21
+Version: 0.6.22
 Release: alt1
 
 Summary: Untrusted/encrypted backup using rsync algorithm
@@ -13,6 +13,9 @@ Source: http://savannah.nongnu.org/download/duplicity/%name-%version.tar
 # Automatically added by buildreq on Sat Nov 03 2007
 BuildRequires: librsync-devel python-devel python-modules-compiler
 BuildPreReq: rpm-build-compat >= 1.2
+
+# No required by default
+%add_python_req_skip dropbox
 
 %description
 Duplicity incrementally backs up files and directory by encrypting
@@ -45,6 +48,9 @@ hard links.
 %python_sitelibdir/duplicity-*.egg-info
 
 %changelog
+* Sat Oct 12 2013 Vitaly Lipatov <lav@altlinux.ru> 0.6.22-alt1
+- new version 0.6.22 (with rpmrb script) (ALT bug #28842)
+
 * Sat Aug 03 2013 Vitaly Lipatov <lav@altlinux.ru> 0.6.21-alt1
 - new version 0.6.21 (with rpmrb script)
 
