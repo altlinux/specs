@@ -1,9 +1,7 @@
 %define ShortName CharInsert
-%define major 1.15
-%define revision r47913
 
 Name: mediawiki-extensions-%ShortName
-Version: %major.%revision
+Version: 1.21
 Release: alt1
 
 BuildArch: noarch
@@ -18,9 +16,8 @@ License: GPL
 
 Requires: mediawiki-common >= 1.15.1-alt4
 
-# what with - in version?
-#Source0: http://upload.wikimedia.org/ext-dist/%ShortName-MW%major-%revision.tar
-Source0: %ShortName-%version.tar
+# Source-url: https://codeload.github.com/wikimedia/mediawiki-extensions-CharInsert/legacy.tar.gz/REL1_21
+Source: %ShortName-%version.tar
 
 %description
 CharInsert is an extension that creates JavaScript links that when
@@ -35,7 +32,7 @@ see Wikipedia:MediaWiki:Edittools).
 mkdir -p %buildroot%_datadir/mediawiki/extensions/%ShortName
 mkdir -p %buildroot%_datadir/mediawiki/config/LocalSettings.d
 rm -rf archives
-install -m 0644 * %buildroot%_datadir/mediawiki/extensions/%ShortName/ 
+install -m 0644 * %buildroot%_datadir/mediawiki/extensions/%ShortName/
 cat > %buildroot%_datadir/mediawiki/config/LocalSettings.d/50-%ShortName.php << EOF
 <?php
 
@@ -49,5 +46,8 @@ EOF
 %_datadir/mediawiki/config/LocalSettings.d/50-%ShortName.php
 
 %changelog
+* Sun Oct 13 2013 Vitaly Lipatov <lav@altlinux.ru> 1.21-alt1
+- new version (1.21) with rpmgs script
+
 * Mon Feb 01 2010 Vitaly Lipatov <lav@altlinux.ru> 1.15.r47913-alt1
 - initial build for ALT Linux Sisyphus
