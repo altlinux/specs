@@ -5,7 +5,7 @@
 
 Name: wget
 Version: 1.14
-Release: alt1
+Release: alt2
 
 Summary: An utility for retrieving files using the HTTP, HTTPS or FTP protocols
 License: GPLv3
@@ -16,6 +16,7 @@ Source: ftp://ftp.gnu.org/gnu/wget/%name-%version.tar
 Patch1: %name-1.14-alt-texinfo.patch
 Patch2: %name-1.6-mdk-passive_ftp.patch
 Patch3: %name-1.7-alt-locale.patch
+Patch4: wget-1.14-openwrt-pod2man.patch
 Patch10: wget-1.10.1-alt-ntlm-buffer.patch
 Packager: Michael Shigorin <mike@altlinux.org>
 
@@ -115,6 +116,7 @@ find doc -type f -print0 |
 	xargs -r0 sed -i 's,/usr/local/,/,g' --
 
 %patch1 -p2
+%patch4 -p1
 %patch10 -p1
 
 %build
@@ -141,6 +143,10 @@ find doc -type f -print0 |
 #   so far it's a bit too churny
 
 %changelog
+* Sun Oct 13 2013 Michael Shigorin <mike@altlinux.org> 1.14-alt2
+- added OpenWRT patch to fix FTBFS with pod2man from perl-5.18
+  (thx glebfm@ for bringing attention to this)
+
 * Mon Aug 06 2012 Michael Shigorin <mike@altlinux.org> 1.14-alt1
 - 1.14 (thx opennet.ru for heads-up)
 
