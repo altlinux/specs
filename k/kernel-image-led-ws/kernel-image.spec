@@ -25,7 +25,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.10.15
-Release: alt5
+Release: alt6
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -1817,6 +1817,9 @@ done)
 
 
 %changelog
+* Sun Oct 13 2013 Led <led@altlinux.ru> 3.10.15-alt6
+- disabled INTEL_MEI_ME
+
 * Fri Oct 11 2013 Led <led@altlinux.ru> 3.10.15-alt5
 - updated:
   + fix-drivers-gpu-drm--i915
