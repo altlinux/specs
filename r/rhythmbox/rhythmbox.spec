@@ -12,8 +12,8 @@
 %def_disable zeitgeist
 
 Name: rhythmbox
-Version: %ver_major
-Release: alt2%rev
+Version: %ver_major.1
+Release: alt1%rev
 
 Summary: Music Management Application
 License: GPL
@@ -24,8 +24,6 @@ Url: http://www.gnome.org/projects/rhythmbox/
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 #Source: %name-%version.tar
-
-Patch: %name-3.0-alt-zeitgeist_plugin_python3_syntax.patch
 
 %define dbus_ver 0.35
 %define glib_ver 2.32.0
@@ -39,6 +37,7 @@ Patch: %name-3.0-alt-zeitgeist_plugin_python3_syntax.patch
 %define gpod_ver 0.8
 %define mx_ver 1.0.1
 %define secret_ver 0.14
+%define dmapsharing_ver 2.9.19
 
 Requires: lib%name = %version-%release
 
@@ -87,7 +86,7 @@ BuildRequires: libjson-glib-devel libpng-devel
 BuildRequires: libpeas-devel libtdb-devel zlib-devel
 %{?_enable_grilo:BuildRequires: libgrilo-devel}
 BuildRequires: libavahi-glib-devel
-BuildRequires: libdmapsharing-devel
+BuildRequires: libdmapsharing-devel >= %dmapsharing_ver
 %{?_enable_visualizer:BuildRequires: libclutter-gtk3-devel libclutter-gst2.0-devel libmx-devel >= %mx_ver}
 %{?_with_hal:BuildRequires: libhal-devel}
 %{?_with_gudev:BuildRequires: libgudev-devel}
@@ -331,7 +330,6 @@ This virtual package installs all Rhythmbox plugins
 
 %prep
 %setup -n %name-%version
-%patch
 
 %build
 %autoreconf
@@ -483,6 +481,9 @@ ln -s %_licensedir/GPL-2 %buildroot%pkgdocdir/COPYING
 %exclude %_libdir/%name/sample-plugins/
 
 %changelog
+* Sun Oct 13 2013 Yuri N. Sedunov <aris@altlinux.org> 3.0.1-alt1
+- 3.0.1
+
 * Wed Sep 18 2013 Yuri N. Sedunov <aris@altlinux.org> 3.0-alt2
 - rebuild against libtotem-plparser.so.18
 - disabled obsolete zeitgeist plugin
