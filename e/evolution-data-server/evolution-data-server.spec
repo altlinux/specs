@@ -17,7 +17,7 @@
 %def_enable vala
 
 Name: evolution-data-server
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Evolution Data Server
@@ -254,6 +254,9 @@ rm -f %buildroot%_libdir/%name-%ver_lib/*/*.la
 
 
 %changelog
+* Sun Oct 13 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.1-alt1
+- 3.10.1
+
 * Sat Sep 21 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.0-alt1
 - 3.10.0
 

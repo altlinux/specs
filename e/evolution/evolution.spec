@@ -17,7 +17,7 @@
 %define strict_build_settings 1
 
 Name: evolution
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Integrated GNOME mail client, calendar and address book
@@ -60,6 +60,7 @@ Provides: camel
 
 Requires: %name-data = %version-%release
 Requires: evolution-data-server >= %eds_ver
+Requires: gnome-icon-theme
 Requires: gnome-settings-daemon
 Requires: highlight
 
@@ -315,6 +316,9 @@ export KILL_PROCESS_CMD=%_bindir/killall
 %_datadir/glib-2.0/schemas/org.gnome.evolution.spamassassin.gschema.xml
 
 %changelog
+* Sun Oct 13 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.1-alt1
+- 3.10.1
+
 * Sat Sep 21 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.0-alt1
 - 3.10.0
 
