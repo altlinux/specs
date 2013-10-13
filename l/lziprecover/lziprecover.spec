@@ -1,6 +1,6 @@
 Name: lziprecover
-Version: 1.13
-Release: alt2
+Version: 1.15
+Release: alt1
 
 Summary: LZMA compressed file recovery
 License: GPL v3+
@@ -37,6 +37,12 @@ make all info
 %_infodir/%name.info*
 
 %changelog
+* Sun Oct 13 2013 Michael Shigorin <mike@altlinux.org> 1.15-alt1
+- new version (watch file uupdate)
+
+* Thu Feb 28 2013 Michael Shigorin <mike@altlinux.org> 1.14-alt1
+- new version (watch file uupdate)
+
 * Wed May 09 2012 Michael Shigorin <mike@altlinux.org> 1.13-alt2
 - added watch file
 
