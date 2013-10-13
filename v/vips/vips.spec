@@ -1,7 +1,7 @@
 %def_disable static
 
 Name: vips
-Version: 7.34.1
+Version: 7.36.1
 Release: alt1
 %define majorver %(echo %version |cut -d. -f1,2)
 
@@ -112,6 +112,9 @@ find %buildroot \( -name '*.la' -o -name '*.a' \) -exec rm -f {} ';'
 # - package python bindings
 
 %changelog
+* Sun Oct 13 2013 Michael Shigorin <mike@altlinux.org> 7.36.1-alt1
+- new version (watch file uupdate)
+
 * Mon Jul 22 2013 Michael Shigorin <mike@altlinux.org> 7.34.1-alt1
 - new version (watch file uupdate)
 - get rid of %%_libdir in RPATH (kludge borrowed from fedora spec)
