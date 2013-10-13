@@ -1,6 +1,6 @@
 Name: tintii
-Version: 2.6.1
-Release: alt2
+Version: 2.8.0
+Release: alt1
 
 Summary: A photo editor for colour-select effects
 License: BSD (revised)
@@ -66,6 +66,9 @@ install -pDm644 %SOURCE3 %buildroot%_miconsdir/%name.png
 %doc README
 
 %changelog
+* Sun Oct 13 2013 Michael Shigorin <mike@altlinux.org> 2.8.0-alt1
+- new version (watch file uupdate)
+
 * Wed May 09 2012 Michael Shigorin <mike@altlinux.org> 2.6.1-alt2
 - added watch file
   + NB: 2.6.2 seems to be win32/osx-only release
