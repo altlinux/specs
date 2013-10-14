@@ -8,7 +8,7 @@
 
 Name: nagios-plugins
 Version: 1.4.15
-Release: alt1.2
+Release: alt2
 
 Summary: Host/service/network monitoring plug-ins for Nagios(R)
 Summary(ru_RU.UTF-8): Модули мониторинга (plug-ins) хостов/сервисов/сети для Nagios(R)
@@ -61,7 +61,8 @@ Requires: iputils procps
 BuildRequires: libMySQL-devel libldap-devel libradiusclient-ng-devel libpq-devel libssl-devel postgresql-devel zlib-devel perl-Math-BigInt perl-Net-SNMP
 
 # checked in configure checking
-BuildRequires: iputils procps fping qstat bind-utils net-snmp-clients openssh-clients sendmail-common glibc-utils samba-client
+BuildRequires: iputils procps fping qstat rpcbind bind-utils net-snmp-clients openssh-clients glibc-utils samba-client
+BuildRequires: sendmail-common MTA
 
 # for correct ps detection
 BuildRequires: /proc
@@ -197,11 +198,14 @@ are not installed on all systems.
 
 # fix ps checking
 %__subst "s|\[UCOMAND\]+|COMMAND|g" configure*
+# https://bbs.archlinux.org/viewtopic.php?id=145693
+sed -i -e '/gets is a security/d' gl/stdio.in.h
 
 %build
+%autoreconf
 # configure searches some root only commands
 PATH=$PATH:/usr/sbin
-export ac_cv_path_PATH_TO_FPING=/usr/sbin/fping
+export ac_cv_path_PATH_TO_FPING=%_sbindir/fping
 %configure \
 	--libexecdir=%nagios_plugdir \
 	--with-cgiurl=/nagios/cgi-bin \
@@ -214,6 +218,7 @@ export ac_cv_path_PATH_TO_FPING=/usr/sbin/fping
 	--with-libintl-prefix=/usr \
 	--without-ipv6 \
 	--with-ping-command='/bin/ping -n -U -w %%d -c %%d %%s' \
+	--with-fping-command='%_sbindir/fping' \
 	--with-proc-loadavg='/proc/loadavg' \
 	--with-proc-meminfo='/proc/meminfo' \
 	--disable-rpath \
@@ -372,6 +377,10 @@ install -pm644 %SOURCE2 %buildroot%_docdir/%name-%version/README.ALT.UTF-8
 %_docdir/%name-extra-%version/*
 
 %changelog
+* Mon Oct 14 2013 Vitaly Lipatov <lav@altlinux.ru> 1.4.15-alt2
+- add autoreconf, more clean build
+- (add missed rpcbind, mailq and some like that)
+
 * Mon Oct 07 2013 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.4.15-alt1.2
 - Fixed build with fping >= 3.4-alt2.
 
