@@ -7,20 +7,20 @@
 Summary: GNU Compiler for AVR (C language only).
 Name: %cross_arch-gcc
 Version: 4.7.2
-Release: alt2
+Release: alt3
 
 Copyright: GPL
 Group: Development/Other
 URL: http://gcc.gnu.org
 
-Source0: gcc-%version.tar.bz2
+Source0: avr-gcc-%version.tar.gz
 
 # Automatically added by buildreq on Thu Oct 24 2002
 BuildRequires: avr-binutils flex
 
-BuildRequires: avr-binutils >= 2.23.51.0.8-alt1
+BuildRequires: avr-binutils >= 2:2.23.1-alt1
 BuildRequires: zlib-devel libmpc-devel libmpfr-devel libgmp-devel
-Requires: avr-binutils >= 2.20-alt1
+Requires: avr-binutils >= 2:2.23.1-alt1
 
 %define libavrdir /usr/lib/gcc/%cross_arch
 %define libavrexecdir /usr/libexec/gcc/%cross_arch
@@ -50,6 +50,15 @@ contrib/gcc_update --touch
 #cd %_builddir/gcc-%version/gcc
 
 %build
+pushd gcc/config/avr/
+sh genopt.sh avr-mcus.def > avr-tables.opt
+cat avr-mcus.def | awk -f genmultilib.awk FORMAT="Makefile" > t-multilib
+popd
+%__subst 's/m4_copy(\[AC_PREREQ\]/m4_copy_force(\[AC_PREREQ\]/g' ./config/override.m4
+%__subst 's/m4_copy(\[_AC_PREREQ\]/m4_copy_force(\[_AC_PREREQ\]/g' ./config/override.m4
+%__subst 's/  \[m4_fatal(\[Please use exactly Autoconf \]/  \[m4_errprintn(\[Please use exactly Autoconf \]/g' ./config/override.m4
+%__autoconf
+
 echo "" > gcc/cp/g++.1
 %__mkdir obj-avr-%_target_platform
 cd obj-avr-%_target_platform
@@ -83,6 +92,7 @@ CC="%__cc $RPM_OPT_FLAGS" \
 		--with-ld=%_bindir/avr-ld \
 		--with-ar=%_bindir/avr-ar \
 		--with-nm=%_bindir/avr-nm \
+		--with-dwarf2
 
 #		--includedir=%includeavrdir \
 #		--exec-prefix=%_libdir \
@@ -162,6 +172,9 @@ rename avr-avr avr %buildroot%_man1dir/*
 %_man1dir/avr-g++.1*
 
 %changelog
+* Mon Oct 14 2013 Grigory Milev <week@altlinux.ru> 4.7.2-alt3
+- Updated version with Atmel patches
+
 * Fri Feb 01 2013 Grigory Milev <week@altlinux.ru> 4.7.2-alt2
 - rebuild with new binutils + new avr cpu's
 
