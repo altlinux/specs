@@ -24,13 +24,13 @@
 %define flavour %base_flavour-%sub_flavour
 
 Name: kernel-image-%flavour
-Version: 3.10.15
-Release: alt6
+Version: 3.10.16
+Release: alt2
 
 %define kernel_req %nil
 %define kernel_prov %nil
 %define kernel_branch 3.10
-%define kernel_stable_version 15
+%define kernel_stable_version 16
 %define kernel_extra_version .%kernel_stable_version
 #define kernel_extra_version %nil
 
@@ -53,6 +53,7 @@ Release: alt6
 %def_enable man
 %def_disable compat
 %def_enable x32
+%def_enable bld
 %def_enable debugfs
 %def_enable coredump
 %def_enable olpc
@@ -245,6 +246,7 @@ ExcludeArch: i386
 
 %if "%sub_flavour" != "ws"
 %set_disable bootsplash
+%set_disable bld
 %endif
 
 %if "%sub_flavour" == "vs"
@@ -1018,6 +1020,7 @@ config_disable \
 	%{?_disable_modversions:MODVERSIONS} \
 	%{?_disable_compat:SYSCTL_SYSCALL ACPI_PROC_EVENT COMPAT_VDSO I2C_COMPAT PROC_PID_CPUSET SYSFS_DEPRECATED USB_DEVICEFS USB_DEVICE_CLASS EDAC_LEGACY_SYSFS X86_ACPI_CPUFREQ_CPB} \
 	%{?_disable_x32:X86_X32} \
+	%{?_disable_bld:BLD} \
 	%{?_disable_coredump:COREDUMP} \
 	%{?_disable_olpc:OLPC} \
 	%{?_disable_numa:NUMA} \
@@ -1096,6 +1099,7 @@ config_enable \
 %endif
 	%{?_enable_debug_section_mismatch:DEBUG_SECTION_MISMATCH} \
 	%{?_enable_modversions:MODVERSIONS} \
+	%{?_enable_bld:BLD} \
 	%{?_enable_x86_extended_platform:X86_EXTENDED_PLATFORM} \
 	%{?_enable_ext4_for_ext2:EXT4_USE_FOR_EXT2} %{?_enable_ext4_for_ext3:EXT4_USE_FOR_EXT3} \
 	%{?_enable_mca:MCA} \
@@ -1817,6 +1821,23 @@ done)
 
 
 %changelog
+* Mon Oct 14 2013 Led <led@altlinux.ru> 3.10.16-alt2
+- updated:
+  + fix-net-mac80211--mac80211
+  + feat-kernel-sched--bld
+
+* Mon Oct 14 2013 Led <led@altlinux.ru> 3.10.16-alt1
+- 3.10.16
+- removed:
+  + fix-drivers-net--tun
+  + fix-net-sctp--sctp
+
+* Mon Oct 14 2013 Led <led@altlinux.ru> 3.10.15-alt7
+- added:
+  + feat-kernel-sched--bld
+- enabled (ws):
+  + bld
+
 * Sun Oct 13 2013 Led <led@altlinux.ru> 3.10.15-alt6
 - disabled INTEL_MEI_ME
 

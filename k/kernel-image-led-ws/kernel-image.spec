@@ -25,7 +25,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.10.16
-Release: alt1
+Release: alt2
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -1821,6 +1821,11 @@ done)
 
 
 %changelog
+* Mon Oct 14 2013 Led <led@altlinux.ru> 3.10.16-alt2
+- updated:
+  + fix-net-mac80211--mac80211
+  + feat-kernel-sched--bld
+
 * Mon Oct 14 2013 Led <led@altlinux.ru> 3.10.16-alt1
 - 3.10.16
 - removed:
