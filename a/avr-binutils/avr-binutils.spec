@@ -6,13 +6,13 @@
 
 Summary: A GNU collection of binary utilities.
 Name: %cross_arch-binutils
-Version: 2.23.51.0.8
+Version: 2.23.1
 Release: alt1
-Serial: 1
+Serial: 2
 Copyright: GPL
 Group: Development/Other
 URL: ftp://ftp.kernel.org/pub/linux/devel/binutils/
-Source: binutils-%version.tar.bz2
+Source: avr-binutils-%version.tar.gz
 Patch0: patch-coff-avr-2.20.51.0.9.patch
 Patch1: 30-binutils-2.20.1-avr-size.patch
 #Patch0: binutils-%version-info_fix.diff
@@ -38,11 +38,19 @@ This package is for cross-development of AVR programs.
 
 %prep
 %setup -n binutils-%version -q
-%patch1
+#%patch1
 #%patch0 -p1
 #%patch0 -p1 -b .avrinfo
 
 %build
+%__subst 's/AC_PREREQ(2.64)/AC_PREREQ(2.68)/g' ./configure.ac
+%__subst 's/AC_PREREQ(2.64)/AC_PREREQ(2.68)/g' ./libiberty/configure.ac
+%__subst 's/  \[m4_fatal(\[Please use exactly Autoconf \]/  \[m4_errprintn(\[Please use exactly Autoconf \]/g' ./config/override.m4
+%__autoconf
+pushd ld
+autoreconf
+popd
+
 # Binutils come with its own custom libtool
 %define __libtoolize echo
 ./configure \
@@ -55,8 +63,17 @@ This package is for cross-development of AVR programs.
 	--disable-nls \
 	--target=avr \
 	--program-prefix="avr-" \
-	--enable-languages="c,c++"
+	--enable-languages="c,c++" \
+	--disable-werror \
+	--enable-install-libiberty \
+	--enable-install-libbfd
+
+%make_build all-bfd TARGET-bfd=headers
+%__rm bfd/Makefile
+
+%make_build configure-host
 %make_build
+
 
 %install
 %__mkdir_p %buildroot{%libavrdir/bin,%includeavrdir,%_bindir}
@@ -67,6 +84,7 @@ This package is for cross-development of AVR programs.
 	libdir=%buildroot%libavrdir \
 	includedir=%buildroot%includeavrdir \
 	mandir=%buildroot%_mandir
+
 %__make install-info \
 	prefix=%buildroot%_prefix \
 	infodir=%buildroot%_infodir
@@ -93,14 +111,17 @@ done
 
 %files
 %doc README
-%includeavrdir
-%libavrdir
+%dir %libavrdir
+%dir %includeavrdir
 %_bindir/*
-%libavrdir/*
 %_prefix/%cross_arch
+%libavrdir/*
 %_man1dir/*
 
 %changelog
+* Mon Oct 14 2013 Grigory Milev <week@altlinux.ru> 2:2.23.1-alt1
+- Build last version from Atmel with most of 8 bits AVR controllers supported
+
 * Fri Feb 01 2013 Grigory Milev <week@altlinux.ru> 1:2.23.51.0.8-alt1
 - new version released
 - 30-binutils-2.20.1-avr-size.patch from fedore added
