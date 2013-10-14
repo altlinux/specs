@@ -1,15 +1,15 @@
-# 4.1.1.2
+# 4.1.2.3
 %define with_forky yes
 
 Name: LibreOffice4
 Version: 4.1
-%define urelease 1.2
+%define urelease 2.3
 %define uversion %version.%urelease
 %define oopfx lo4
 %define lodir %_libdir/%name
 %define uname libreoffice4
 %define conffile %_sysconfdir/sysconfig/%uname
-Release: alt4
+Release: alt5
 Summary: LibreOffice Productivity Suite
 License: LGPL
 Group: Office
@@ -184,10 +184,10 @@ echo Direct build
 %patch205 -p1
 %patch209 -p1
 %patch214 -p1
-%patch215 -p1
-%patch216 -p1
-%patch217 -p1
-%patch218 -p1
+#patch215 -p1
+#patch216 -p1
+#patch217 -p1
+#patch218 -p1
 
 %patch300 -p1
 %patch301 -p1
@@ -415,6 +415,9 @@ install -D libreoffice.config %buildroot%conffile
 %langpack -l kk -n Kazakh
 
 %changelog
+* Tue Oct 01 2013 Fr. Br. George <george@altlinux.ru> 4.1-alt5
+- Version up to 4.1.2.3
+
 * Fri Sep 27 2013 Yuri N. Sedunov <aris@altlinux.org> 4.1-alt4
 - rebuild against libharfbuzz-icu
 
