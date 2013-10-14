@@ -1,6 +1,6 @@
 Name: make-initrd-propagator
 Version: 0.21
-Release: alt1
+Release: alt2
 
 Summary: Put propagator into make-initrd generated image
 License: GPL
@@ -37,6 +37,9 @@ mkdir -p %buildroot%_datadir/make-initrd/features/propagator/data/image
 %_datadir/make-initrd/features/propagator
 
 %changelog
+* Mon Oct 14 2013 Fr. Br. George <george@altlinux.ru> 0.21-alt2
+- Use subdirectory when mounting profiled .iso patches
+
 * Mon Sep 30 2013 Fr. Br. George <george@altlinux.ru> 0.21-alt1
 - Fix non-posix invalid redirection
 - Show mounted overlays and mount status
