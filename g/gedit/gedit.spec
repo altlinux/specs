@@ -8,7 +8,7 @@
 %def_enable zeitgeist
 
 Name: gedit
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: gEdit is a small but powerful text editor for GNOME
@@ -30,7 +30,7 @@ AutoReqProv: nopython
 %set_girdir %pkgdatadir
 
 Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
-Patch: %name-3.6.0-alt-settings.patch
+Patch: %name-3.10.1-alt-settings.patch
 Patch1: %name-2.91.6-alt-link.patch
 
 # From configure.ac
@@ -214,6 +214,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %endif
 
 %changelog
+* Mon Oct 14 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.1-alt1
+- 3.10.1
+
 * Mon Sep 23 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.0-alt1
 - 3.10.0
 

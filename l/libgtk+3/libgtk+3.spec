@@ -1,3 +1,5 @@
+%def_disable snapshot
+
 %define _name gtk+
 %define ver_major 3.10
 %define api_ver 3.0
@@ -17,7 +19,7 @@
 %def_enable installed_tests
 
 Name: libgtk+3
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: The GIMP ToolKit (GTK+)
@@ -27,7 +29,11 @@ Url: http://www.gtk.org
 Icon: gtk+-logo.xpm
 Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 
+%if_enabled snapshot
+Source: %_name-%version.tar
+%else
 Source: %gnome_ftp/%_name/%ver_major/%_name-%version.tar.xz
+%endif
 Patch: gtk+-2.16.5-alt-stop-spam.patch
 
 %define glib_ver 2.37.7
@@ -200,13 +206,11 @@ the functionality of the installed GTK+3 packages.
 %setup -q -n %_name-%version
 %patch -p1
 
+%{?_enable_snapshot:touch README INSTALL}
+
 %build
 %{?_disable_static:export lt_cv_prog_cc_static_works=no}
 %{?_enable_static:export lt_cv_prog_cc_static_works=yes}
-
-export CFLAGS="$CFLAGS $(freetype-config --cflags)"
-export LDLIBS="$LDLIBS $(freetype-config --libs)"
-
 %autoreconf
 %configure \
     %{subst_enable static} \
@@ -215,6 +219,7 @@ export LDLIBS="$LDLIBS $(freetype-config --libs)"
     %{subst_enable xkb} \
     --disable-schemas-compile \
     %{?_enable_gtk_doc:--enable-gtk-doc} \
+    %{?_enable_snapshot:--enable-gtk-doc} \
     --enable-gtk2-dependency \
     %{subst_enable colord} \
     %{?_enable_wayland:--enable-wayland-backend} \
@@ -390,6 +395,12 @@ cp examples/*.c examples/Makefile* %buildroot/%_docdir/%name-devel-%version/exam
 %exclude %fulllibpath/*/*.la
 
 %changelog
+* Fri Oct 11 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.1-alt1
+- 3.10.1
+
+* Sun Sep 29 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.1-alt0.1
+- git snapshot (fixed BGO #702196)
+
 * Mon Sep 23 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.0-alt1
 - 3.10.0
 - optional -tests subpackage

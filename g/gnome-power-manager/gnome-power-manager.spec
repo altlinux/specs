@@ -1,7 +1,7 @@
 %define ver_major 3.10
 
 Name: gnome-power-manager
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: GNOME Power management tools
@@ -19,7 +19,6 @@ BuildPreReq: rpm-build-licenses
 
 # From configure.in
 BuildPreReq: intltool >= 0.35.0
-BuildPreReq: gnome-doc-utils >= 0.3.2
 BuildPreReq: glib2-devel >= 2.31.10
 BuildPreReq: libgtk+3-devel >= 3.3.8
 BuildPreReq: libupower-devel >= 0.9.1
@@ -72,6 +71,9 @@ ln -sf %_licensedir/GPL-2 COPYING
 
 
 %changelog
+* Mon Oct 14 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.1-alt1
+- 3.10.1
+
 * Tue Sep 24 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.0-alt1
 - 3.10.0
 

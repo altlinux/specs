@@ -1,7 +1,7 @@
 %define ver_major 3.10
 
 Name: gnome-photos
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Photos - access, organize and share your photos on GNOME
@@ -58,6 +58,9 @@ patterns and objectives.
 %doc ARTISTS AUTHORS NEWS README
 
 %changelog
+* Mon Oct 14 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.1-alt1
+- 3.10.1
+
 * Mon Sep 23 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.0-alt1
 - 3.10.0
 

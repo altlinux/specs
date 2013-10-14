@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define ver_base 3.2
 %define ver_major 3.2
@@ -11,8 +11,8 @@
 %def_disable libopenraw
 
 Name: gthumb
-Version: %ver_major.3
-Release: alt4
+Version: %ver_major.4
+Release: alt1
 
 Summary: An image file viewer and browser for GNOME
 Summary(ru_RU.UTF-8): Просмотрщик изображений и фотоальбом для GNOME
@@ -169,6 +169,9 @@ This package contains headers needed to build extensions for gThumb.
 %_libdir/pkgconfig/*
 
 %changelog
+* Mon Oct 14 2013 Yuri N. Sedunov <aris@altlinux.org> 3.2.4-alt1
+- 3.2.4
+
 * Sun Sep 29 2013 Yuri N. Sedunov <aris@altlinux.org> 3.2.3-alt4
 - updated to 3.2_f80e3ba (fixed BGO #708800)
 
