@@ -9,7 +9,7 @@
 
 Name: %_name-%abi_ver
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: Lean and fast full-featured word processor
 Group: Office
@@ -17,6 +17,8 @@ License: GPL
 Url: http://www.abisource.com/
 
 Source: http://www.abisource.com/downloads/abiword/%version/source/%_name-%version.tar.gz
+# http://bugzilla.abisource.com/show_bug.cgi?id=13564
+Patch: abiword-3.0-up-13564.patch
 
 Obsoletes: abisuite, abisuite-koi8, abisuite-cp1251, abisuite-iso8859-8
 Conflicts: %_name %_name-light
@@ -73,6 +75,7 @@ Conflicts: %_name-devel %_name-light-devel
 
 %prep
 %setup -n %_name-%version
+%patch -p1
 
 %build
 %autoreconf
@@ -112,6 +115,9 @@ Conflicts: %_name-devel %_name-light-devel
 %_pkgconfigdir/*
 
 %changelog
+* Fri Oct 18 2013 Yuri N. Sedunov <aris@altlinux.org> 3.0.0-alt2
+- fixed http://bugzilla.abisource.com/show_bug.cgi?id=13564
+
 * Mon Oct 14 2013 Yuri N. Sedunov <aris@altlinux.org> 3.0.0-alt1
 - 3.0.0
 
