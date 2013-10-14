@@ -1,7 +1,7 @@
 Summary: Visual brick construction tool for kids
 Summary (ru_RU.UTF-8): Детский конструктор, использующий блоки с шипами
 Name: leocad
-Version: 0.80
+Version: 0.80.1
 Release: alt1
 
 License: GPL
@@ -67,6 +67,9 @@ install -D docs/leocad.1 %buildroot%_man1dir/leocad.1
 %_xdgmimedir/packages/*
 
 %changelog
+* Mon Oct 14 2013 Fr. Br. George <george@altlinux.ru> 0.80.1-alt1
+- Autobuild version bump to 0.80.1
+
 * Mon Aug 26 2013 Fr. Br. George <george@altlinux.ru> 0.80-alt1
 - Autobuild version bump to 0.80
 - Fix build (upstream switched to Qt)
