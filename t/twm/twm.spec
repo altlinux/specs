@@ -1,5 +1,5 @@
 Name: twm
-Version: 1.0.7
+Version: 1.0.8
 Release: alt1
 Serial: 1
 Summary: Tab Window Manager for the X Window System
@@ -52,6 +52,9 @@ EOF
 %_x11x11dir/twm/*
 
 %changelog
+* Mon Oct 14 2013 Fr. Br. George <george@altlinux.ru> 1:1.0.8-alt1
+- Autobuild version bump to 1.0.8
+
 * Thu Jul 28 2011 Fr. Br. George <george@altlinux.ru> 1:1.0.7-alt1
 - Autobuild version bump to 1.0.7
 - System-wide config file added
