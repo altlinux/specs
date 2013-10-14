@@ -6,13 +6,14 @@
 Summary: AVR libc
 Name: avr-libc
 Version: 1.8.0
-Release: alt2
+Release: alt3
 Serial: 1
 License: GPL, LGPL, BSD, Public Domain
 Group: Development/Other
 URL: http://savannah.gnu.org/projects/avr-libc
 
-Source0: http://savannah.gnu.org/download/avr-libc/avr-libc-%version.tar.bz2
+Source0: http://savannah.gnu.org/download/avr-libc/avr-libc-%version.tar.gz
+Source1: avr-headers-6.1.3.1475.zip
 Patch0: 1.8.0.fix.patch
 
 # Automatically added by buildreq on Fri Feb 01 2013
@@ -25,13 +26,13 @@ BuildRequires: fonts-ttf-freefont fonts-ttf-georgian fonts-ttf-gost fonts-ttf-gw
 BuildRequires: fonts-ttf-kannada fonts-ttf-latex-xft fonts-ttf-liberation fonts-ttf-malayalam fonts-ttf-ms fonts-ttf-oldstandard
 BuildRequires: fonts-ttf-reduce fonts-ttf-sazanami-gothic fonts-ttf-sazanami-mincho fonts-ttf-sil-gentium fonts-ttf-syriac
 BuildRequires: fonts-ttf-tamil fonts-ttf-tempora fonts-ttf-urdu fonts-ttf-vera fonts-ttf-xorg fonts-ttf-znamen
-BuildRequires: fonts-type1-cm-super-pfb fonts-type1-dmtr40in fonts-type1-phonetic fonts-type1-xorg
+BuildRequires: fonts-type1-cm-super-pfb fonts-type1-dmtr40in fonts-type1-phonetic fonts-type1-xorg unzip
 
-BuildRequires: avr-binutils >= 2.23.51.0.8-alt1
+BuildRequires: avr-binutils >= 2.23.1-alt1
 BuildRequires: avr-gcc >= 4.7.2-alt2
 BuildRequires: avr-gcc-c++ >= 4.7.2-alt2
 
-Requires: avr-binutils >= 2.23.51.0.8-alt1
+Requires: avr-binutils >= 2.23.1-alt1
 Requires: avr-gcc >= 4.7.2-alt2
 Requires: avr-gcc-c++ >= 4.7.2-alt2
 
@@ -52,9 +53,14 @@ Documentation for avr-libc in html, postscript and pdf formats.
 
 %prep
 %setup -q -n %name-%version
-%patch0 -p1
+# patch0 -p1
+unzip %SOURCE1
+for i in avr-headers/io[0-9a-zA-Z]*.h; do
+	mv --verbose --force $i include/avr/
+done
 
 %build
+./bootstrap
 ./configure \
 	--host=avr \
 	--build=$(./config.guess) \
@@ -93,6 +99,10 @@ Documentation for avr-libc in html, postscript and pdf formats.
 %_datadir/doc/avr-libc/*
 
 %changelog
+* Mon Oct 14 2013 Grigory Milev <week@altlinux.ru> 1:1.8.0-alt3
+- last version from Atmel
+- build with new avr-binutils and avr-gcc
+
 * Fri Feb 01 2013 Grigory Milev <week@altlinux.ru> 1:1.8.0-alt2
 - rebuild with new avr-binutils and avr-gcc
 
