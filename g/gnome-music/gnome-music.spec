@@ -1,7 +1,7 @@
 %define ver_major 3.10
 
 Name: gnome-music
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Music playing application for GNOME3
@@ -56,6 +56,9 @@ Music playing application for GNOME3.
 %exclude %_libdir/%name/libgd.la
 
 %changelog
+* Mon Oct 14 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.1-alt1
+- 3.10.1
+
 * Mon Sep 23 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.0-alt1
 - 3.10.0
 
