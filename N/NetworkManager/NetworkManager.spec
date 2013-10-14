@@ -14,8 +14,8 @@
 %def_enable introspection
 
 Name: NetworkManager
-Version: 0.9.8.4
-Release: alt2%git_date
+Version: 0.9.8.8
+Release: alt1%git_date
 License: %gpl2plus
 Group: System/Configuration/Networking
 Summary: Network Link Manager and User Applications
@@ -182,6 +182,7 @@ sed -i 's;^SUBDIRS=\. tests;#SUBDIRS=. tests;' libnm-glib/Makefile.am
 	--disable-ifupdown \
 	--disable-ifnet \
 	--with-modem-manager-1 \
+	--enable-bluez4 \
 	--enable-introspection=auto \
 	--enable-more-warnings=error
 
@@ -330,6 +331,9 @@ fi
 %exclude %_libdir/pppd/%ppp_version/*.la
 
 %changelog
+* Mon Oct 14 2013 Mikhail Efremov <sem@altlinux.org> 0.9.8.8-alt1
+- Updated to 0.9.8.8.
+
 * Tue Sep 24 2013 Mikhail Efremov <sem@altlinux.org> 0.9.8.4-alt2
 - Patches from upstream git:
   + updated Japanese (ja) translation.
