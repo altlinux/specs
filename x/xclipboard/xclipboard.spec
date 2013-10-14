@@ -1,5 +1,5 @@
 Name: xclipboard
-Version: 1.1.2
+Version: 1.1.3
 Release: alt1
 Summary: X clipboard client
 Group: System/X11
@@ -43,6 +43,9 @@ window.
 %_mandir/man1/xcutsel.1.gz
 
 %changelog
+* Mon Oct 14 2013 Fr. Br. George <george@altlinux.ru> 1.1.3-alt1
+- Autobuild version bump to 1.1.3
+
 * Wed Feb 22 2012 Fr. Br. George <george@altlinux.ru> 1.1.2-alt1
 - Autobuild version bump to 1.1.2
 
