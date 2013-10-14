@@ -1,5 +1,5 @@
 Name: xkill
-Version: 1.0.3
+Version: 1.0.4
 Release: alt1
 
 Summary: kill a client by its X resource
@@ -48,6 +48,9 @@ its connection to the client that created the window.
 %_man1dir/*
 
 %changelog
+* Mon Oct 14 2013 Fr. Br. George <george@altlinux.ru> 1.0.4-alt1
+- Autobuild version bump to 1.0.4
+
 * Tue May 03 2011 Fr. Br. George <george@altlinux.ru> 1.0.3-alt1
 - Autobuild version bump to 1.0.3
 
