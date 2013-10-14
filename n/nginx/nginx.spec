@@ -3,6 +3,7 @@
 %def_with perl
 %def_with aio
 %def_with aio
+%def_with ipv6
 %def_without syslog
 %def_without image_filter
 %def_without xslt
@@ -13,7 +14,7 @@
 
 Name: nginx
 Version: 1.4.3
-Release: alt2
+Release: alt3
 
 Summary: Fast HTTP server
 License: BSD
@@ -118,6 +119,9 @@ CFLAGS="%optflags $CPU" ./configure \
 %if_with aio
 	--with-aio_module	\
 	--with-file-aio		\
+%endif
+%if_with ipv6
+        --with-ipv6 \
 %endif
 	--with-mail \
 	--with-mail_ssl_module \
@@ -254,6 +258,9 @@ sed -i 's/\(types_hash_bucket_size[[:space:]]*\)[[:space:]]32[[:space:]]*;[[:spa
 %preun_service %name
 
 %changelog
+* Mon Oct 14 2013 Denis Smirnov <mithraen@altlinux.ru> 1.4.3-alt3
+- add ipv6 support
+
 * Thu Oct 10 2013 Anton Farygin <rider@altlinux.ru> 1.4.3-alt2
 - fixed mime-types conflict (closes: #28550)
 
