@@ -1,5 +1,5 @@
 Name: upx
-Version: 3.09
+Version: 3.91
 Release: alt1
 
 Summary: The Ultimate Packer for eXecutables
@@ -40,6 +40,9 @@ install -pD -m644 doc/upx.1 %buildroot%_man1dir/upx.1
 %_man1dir/upx*
 
 %changelog
+* Tue Oct 01 2013 Fr. Br. George <george@altlinux.ru> 3.91-alt1
+- Autobuild version bump to 3.91
+
 * Sun Mar 31 2013 Fr. Br. George <george@altlinux.ru> 3.09-alt1
 - Autobuild version bump to 3.09
 
@@ -71,47 +74,37 @@ install -pD -m644 doc/upx.1 %buildroot%_man1dir/upx.1
 * Fri Oct 08 2004 Dmitry V. Levin <ldv@altlinux.org> 1.25-alt1
 - Specfile cleanup.
 
-* Wed Jun 30 2004 Götz Waschk <waschk@linux-mandrake.com> 1.25-2mdk
 - enable parallel build
 - fix used build flags
 - fix description (Stef)
 
-* Wed Jun 30 2004 Götz Waschk <waschk@linux-mandrake.com> 1.25-1mdk
 - requires new ucl
 - drop prefix
 - download URL
 - New release 1.25
 
-* Mon Jun  7 2004 Götz Waschk <waschk@linux-mandrake.com> 1.24-3mdk
 - rebuild for new g++
 
-* Sun Apr  6 2003 Götz Waschk <waschk@linux-mandrake.com> 1.24-2mdk
 - fix for new ucl header location
 
-* Wed Nov 13 2002 Götz Waschk <waschk@linux-mandrake.com> 1.24-1mdk
 - new version
 
-* Mon Oct 28 2002 Götz Waschk <waschk@linux-mandrake.com> 1.23-1mdk
 - new version
 
 * Thu Aug 15 2002 Laurent Culioli <laurent@pschit.net> 1.22-3mdk
 - Rebuild with gcc3.2
 
-* Mon Jul 29 2002 Götz Waschk <waschk@linux-mandrake.com> 1.22-2mdk
 - gcc 3.2 build
 
-* Fri Jun 28 2002 Götz Waschk <waschk@linux-mandrake.com> 1.22-1mdk
 - new version
 - minor spec file fixes
 
-* Fri Jun  7 2002 Götz Waschk <waschk@linux-mandrake.com> 1.21-1mdk
 - update URL
 - License instead of Copyright
 - fix build, link with g++
 - quiet tar
 - 1.21
 
-* Mon Jun 18 2001 HA Quôc-Viêt <viet@mandrakesoft.com> 1.20-1mdk
 - Ugly perl -pi -e to include the correct headers from ucl.
 - Ugly perl -pi -e to take care of a difficult Makefile.
 - Initial packaging.
