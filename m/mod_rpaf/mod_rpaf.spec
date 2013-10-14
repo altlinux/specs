@@ -1,16 +1,19 @@
-# This spec is backported to ALTLinux 5.1 automatically by rpmbph script. Do not edit it.
-#
 %define modname rpaf
+
 Name: mod_rpaf
 Version: 0.6
-Release: alt4.qa1
+Release: alt5
+
 Summary: Apache module for reverse proxy add forward
+
 License: GPL
-Url: http://stderr.net/apache/rpaf/
+Url: http://www.stderr.net/apache/rpaf/
 Group: System/Servers
+
 Packager: Boris Savelev <boris@altlinux.org>
 
-Source: %name-%version.tar.gz
+# Source-url: http://www.stderr.net/apache/rpaf/download/mod_rpaf-%version.tar.gz
+Source: %name-%version.tar
 Source1: apache2-%name-load.conf.in
 Source2: apache2-%name.conf
 
@@ -39,12 +42,12 @@ virtualhosts
 %package -n apache-%name
 Summary: Apache module for reverse proxy add forward
 Group: System/Servers
-PreReq: apache >= %apache_version-%apache_release
+PreReq: apache-base >= %apache_version-%apache_release
 
 %package -n apache2-%name
 Summary: Apache module for reverse proxy add forward
 Group: System/Servers
-PreReq: apache2 >= %apache2_version-%apache2_release
+PreReq: apache2-base >= %apache2_version-%apache2_release
 
 %description -n apache-%name
 rpaf changes the remote address of the client visible to other Apache modules
@@ -68,7 +71,7 @@ virtualhosts.
 Build for apache2.
 
 %prep
-%setup -q -n %name-%version
+%setup
 %patch0 -p0
 
 %patch40 -p1
@@ -97,6 +100,10 @@ install -D -p -m 0755 %name.so %buildroot%apache_moduledir/%name.so
 %apache2_moduledir/%name.so
 
 %changelog
+* Mon Oct 14 2013 Vitaly Lipatov <lav@altlinux.ru> 0.6-alt5
+- cleanup spec (fix source url, url)
+- change requires to apache-base (ALT bug #28906)
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.6-alt4.qa1
 - NMU: rebuilt for debuginfo.
 
