@@ -12,7 +12,7 @@
 Name: kde4-%rname
 %define beta %nil
 Version: 3.5.0
-Release: alt1
+Release: alt2
 
 Group: Graphics
 Summary: KDE image Interface Plugins
@@ -27,9 +27,6 @@ Source10: FindOpenCV.cmake
 Source11: FindKSane.cmake
 Source12: FindKipi.cmake
 Patch1: kipi-plugins-2.6.0-arm-cast-to-qreal.patch
-
-# VideoSlideshow plugin
-Requires: /usr/bin/convert
 
 Requires: %name-core = %version-%release
 %if_enabled expoblending
@@ -63,7 +60,7 @@ Conflicts: kde4-kipi-plugins <= 1.1.0-alt1
 Group: Graphics
 Summary: Core files for %name
 Requires: %name-common = %version-%release
-Requires: icc-profiles ImageMagick-tools
+Requires: icc-profiles /usr/bin/convert
 %description core
 Core files for %name
 
@@ -174,6 +171,9 @@ done
 %_K4libdir/libkipiplugins.so.%libsover.*
 
 %changelog
+* Mon Oct 14 2013 Sergey V Turchin <zerg@altlinux.org> 3.5.0-alt2
+- fix requires
+
 * Fri Oct 11 2013 Sergey V Turchin <zerg@altlinux.org> 3.5.0-alt1
 - new version
 
