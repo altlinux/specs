@@ -1,6 +1,6 @@
 Name: cups
 Version: 1.6.2
-Release: alt3
+Release: alt3.1
 
 Summary: Common Unix Printing System - server package
 License: GPL
@@ -27,7 +27,7 @@ Patch2: cups-1.6.1-alt-hardening.patch
 Patch3: cups-1.4.0-rh-lpr-help.patch
 Patch4: cups-1.4.3-rh-no-export-ssllibs.patch
 Patch5: cups-1.4.3-rh-driverd-timeout.patch
-Patch6: cups-1.6.1-rh-lspp.patch
+Patch6: cups-1.6.2-fc-lspp.patch
 Patch7: cups-1.4.6-alt-config-libs.patch
 Patch9: cups-1.6.1-rh-0755.patch
 Patch10: cups-1.6-rh-dnssd-deviceid.patch
@@ -162,10 +162,10 @@ tar xf %SOURCE114
 %patch32 -p1
 %patch31 -p1
 
+%build
 aclocal -I config-scripts
 autoconf -I config-scripts
 
-%build
 %configure \
    --enable-pie \
    --enable-relro \
@@ -183,10 +183,10 @@ autoconf -I config-scripts
 #    --with-remote_protocols='CUPS dnssd'
     #
 
-%make_build
+%make_build STRIPPROG=touch
 
 %install
-make BUILDROOT=%buildroot install
+make BUILDROOT=%buildroot STRIPPROG=touch install
 
 install -Dpm 755 %SOURCE100 %buildroot%_sysconfdir/control.d/facilities/%name
 install -Dpm 644 %SOURCE101 %buildroot%_sysconfdir/pam.d/%name
@@ -371,6 +371,10 @@ rm -f /var/cache/cups/ppds.dat
 %_man1dir/ipptool.1.gz
 
 %changelog
+* Mon Oct 14 2013 Fr. Br. George <george@altlinux.ru> 1.6.2-alt3.1
+- Freshen LSPP patch (closes: #29477)
+- Rebuild with debuginfo
+
 * Wed May 29 2013 Alexander Plehanov <tonik@altlinux.org> 1.6.2-alt3
 - Remove patches,which were applied in upstream version:
     cups-1.6.1-defconf.patch
