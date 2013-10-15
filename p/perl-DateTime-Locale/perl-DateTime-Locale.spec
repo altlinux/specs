@@ -1,7 +1,7 @@
 %define dist DateTime-Locale
 Name: perl-%dist
 Version: 0.45
-Release: alt2
+Release: alt3
 
 Summary: Localization support for DateTime.pm
 License: GPL or Artistic
@@ -13,8 +13,8 @@ Source: %dist-%version.tar.gz
 BuildArch: noarch
 
 # avoid rpmdb bloat
-%add_findreq_skiplist */DateTime/Locale/[a-z]*.pm
-%add_findprov_skiplist */DateTime/Locale/[a-z]*.pm
+%add_findreq_skiplist */DateTime/Locale/[a-qs-z]*.pm
+%add_findprov_skiplist */DateTime/Locale/[a-qs-z]*.pm
 
 # Automatically added by buildreq on Wed Oct 05 2011
 BuildRequires: perl-List-MoreUtils perl-Module-Build perl-Params-Validate perl-Test-Output
@@ -38,6 +38,9 @@ on available locales.
 %perl_vendor_privlib/DateTime
 
 %changelog
+* Tue Oct 15 2013 Igor Vlasenko <viy@altlinux.ru> 0.45-alt3
+- restored Provides: perl(DateTime/Locale/root.pm) for MouseX-Types-DateTime
+
 * Tue Oct 04 2011 Alexey Tourbin <at@altlinux.ru> 0.45-alt2
 - rebuilt as plain src.rpm
 
