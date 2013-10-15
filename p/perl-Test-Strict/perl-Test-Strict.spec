@@ -1,7 +1,7 @@
 %define m_distro Test-Strict
 Name: perl-Test-Strict
-Version: 0.14
-Release: alt2
+Version: 0.22
+Release: alt1
 Summary: Check syntax, presence of use strict; and test coverage
 
 Packager: Vladimir Lettiev <crux@altlinux.ru>
@@ -33,6 +33,9 @@ mkdir cover_db
 %doc Changes README 
 
 %changelog
+* Tue Oct 15 2013 Igor Vlasenko <viy@altlinux.ru> 0.22-alt1
+- automated CPAN update
+
 * Mon Nov 29 2010 Vladimir Lettiev <crux@altlinux.ru> 0.14-alt2
 - added perl-B-Debug to buildreq to fix build
 
