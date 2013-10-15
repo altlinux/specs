@@ -1,5 +1,5 @@
 Name: pyclewn
-Version: 1.10
+Version: 1.11
 Release: alt1
 License: GPLv2
 Summary: Using vim as a front end to a debugger (supports gdb and pdb)
@@ -36,6 +36,8 @@ Supplemental module for %name
 
 %prep
 %setup -n %name-%version.py2
+# hack out " (ALT Linux)" from gdb version
+sed -i 's@lines.next()@lines.next().replace(" (ALT Linux)","")@' clewn/gdb.py
 
 %build
 export EDITOR=/usr/bin/vim
@@ -55,6 +57,10 @@ export EDITOR=/usr/bin/vim
 %python_sitelibdir/*
 
 %changelog
+* Tue Oct 15 2013 Fr. Br. George <george@altlinux.ru> 1.11-alt1
+- Autobuild version bump to 1.11
+- Adapt for ALT gdb version
+
 * Thu Feb 14 2013 Fr. Br. George <george@altlinux.ru> 1.10-alt1
 - Autobuild version bump to 1.10
 - Package is binary now
