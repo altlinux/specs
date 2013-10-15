@@ -2,7 +2,7 @@
 %define _cups_serverbin %_libexecdir/cups
 Summary: OpenPrinting CUPS filters and backends
 Name: cups-filters
-Version: 1.0.39
+Version: 1.0.40
 Release: alt1
 
 # For a breakdown of the licensing, see COPYING file
@@ -179,6 +179,9 @@ install -m 644 utils/cups-browsed.service %buildroot/%_unitdir/
 %_libdir/libfontembed.so
 
 %changelog
+* Tue Oct 15 2013 Anton Farygin <rider@altlinux.ru> 1.0.40-alt1
+- new version
+
 * Fri Oct 11 2013 Anton Farygin <rider@altlinux.ru> 1.0.39-alt1
 - new version
 
