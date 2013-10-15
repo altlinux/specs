@@ -1,6 +1,6 @@
 %define m_distro Parse-ErrorString-Perl
 Name: perl-Parse-ErrorString-Perl
-Version: 0.15
+Version: 0.20
 Release: alt1
 Summary: parse error messages from the perl interpreter
 
@@ -30,9 +30,12 @@ BuildRequires: perl-devel perl-Class-XSAccessor perl-Test-Differences perl-Modul
 %_bindir/check_perldiag
 %perl_vendor_privlib/Parse/ErrorString/Perl*
 %_man1dir/check_perldiag.*
-%doc Changes README 
+%doc Changes
 
 %changelog
+* Tue Oct 15 2013 Igor Vlasenko <viy@altlinux.ru> 0.20-alt1
+- automated CPAN update
+
 * Mon Dec 13 2010 Vladimir Lettiev <crux@altlinux.ru> 0.15-alt1
 - New version 0.15
 
