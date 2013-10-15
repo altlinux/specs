@@ -1,6 +1,6 @@
 %define m_distro HTTP-Server-Simple-PSGI
 Name: perl-HTTP-Server-Simple-PSGI
-Version: 0.14
+Version: 0.16
 Release: alt1
 Summary: HTTP::Server::Simple::PSGI - PSGI handler for HTTP::Server::Simple
 
@@ -34,5 +34,8 @@ modules so it's best to be used as an embedded web server.
 %doc Changes README 
 
 %changelog
+* Tue Oct 15 2013 Igor Vlasenko <viy@altlinux.ru> 0.16-alt1
+- automated CPAN update
+
 * Sun Aug 29 2010 Vladimir Lettiev <crux@altlinux.ru> 0.14-alt1
 - initial build
