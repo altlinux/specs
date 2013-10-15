@@ -1,6 +1,6 @@
 %define m_distro Sys-Syscall
 Name: perl-%m_distro
-Version: 0.23
+Version: 0.25
 Release: alt1
 Summary: access system calls that Perl doesn't normally provide access to
 
@@ -32,6 +32,9 @@ syscalls/OSes planned for future.
 %doc CHANGES
 
 %changelog
+* Tue Oct 15 2013 Igor Vlasenko <viy@altlinux.ru> 0.25-alt1
+- automated CPAN update
+
 * Mon Apr 26 2010 Vladimir Lettiev <crux@altlinux.ru> 0.23-alt1
 - New version 0.23
 
