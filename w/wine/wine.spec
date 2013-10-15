@@ -12,8 +12,8 @@
 %define debug %nil
 
 Name: wine
-Version: 1.7.0
-Release: alt1
+Version: 1.7.4
+Release: alt2
 Epoch: 1
 
 Summary: Environment for running Windows applications (Etersoft edition)
@@ -72,7 +72,7 @@ BuildRequires: prelink
 # Actually for x86_32
 Requires: glibc-pthread glibc-nss
 # Runtime linked (via dl_open)
-Requires: libcups libncurses libssl libfontconfig libfreetype
+Requires: libcups libncurses libssl fontconfig libfreetype
 Requires: libXrender libXi libXext libX11 libICE
 
 # We have not to use it in production (used in winedbg)
@@ -93,7 +93,7 @@ Requires: fonts-ttf-core
 %endif
 
 # We need predownloaded Gecko engine
-Requires: wine-gecko = 2.21
+Requires: wine-gecko = 2.24
 
 Requires: lib%name = %epoch:%version-%release
 Provides: %name-utils
@@ -344,7 +344,6 @@ rm -rf %buildroot%_mandir/*.UTF-8
 %_libdir/wine/*.ocx.so
 %_libdir/wine/*.tlb.so
 %_libdir/wine/*.sys.so
-%_datadir/wine/generic.ppd
 %_datadir/wine/wine.inf
 %_datadir/wine/l_intl.nls
 %_datadir/wine/fonts/
@@ -423,6 +422,13 @@ rm -rf %buildroot%_mandir/*.UTF-8
 
 
 %changelog
+* Mon Oct 14 2013 Vitaly Lipatov <lav@altlinux.ru> 1:1.7.4-alt2
+- fix install /etc/udev files
+- fix libfontconfig requires
+
+* Mon Oct 14 2013 Vitaly Lipatov <lav@altlinux.ru> 1:1.7.4-alt1
+- release 1.7.4 (use wine-gecko 2.24)
+
 * Mon Sep 02 2013 Vitaly Lipatov <lav@altlinux.ru> 1:1.7.0-alt1
 - release 1.7.0
 
