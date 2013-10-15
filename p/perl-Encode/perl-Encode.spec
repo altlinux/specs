@@ -1,6 +1,6 @@
 %define dist Encode
 Name: perl-%dist
-Version: 2.52
+Version: 2.55
 Release: alt1
 
 Summary: Character encodings
@@ -12,7 +12,7 @@ Source: %dist-%version.tar
 Patch: %name-%version-%release.patch
 
 # Automatically added by buildreq on Thu Oct 06 2011
-BuildRequires: perl-Filter perl-devel perl-unicore
+BuildRequires: perl-Filter perl-devel perl-unicore perl-parent
 
 %description
 The Encode module provides the interfaces between Perl's strings
@@ -132,6 +132,9 @@ bzip2 -k Changes
 	%perl_vendor_archlib/Encode/MIME/Header/ISO_2022_JP.pm
 
 %changelog
+* Tue Oct 15 2013 Igor Vlasenko <viy@altlinux.ru> 2.55-alt1
+- 2.52 -> 2.55
+
 * Wed Aug 21 2013 Vladimir Lettiev <crux@altlinux.ru> 2.52-alt1
 - 2.49 -> 2.52
 
