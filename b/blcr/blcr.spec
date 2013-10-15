@@ -19,8 +19,8 @@
 Name: blcr
 %define Name BLCR
 %define lname lib%name
-Version: 0.8.3
-Release: alt2
+Version: 0.8.5
+Release: alt1
 Summary: Berkeley Lab Checkpoint/Restart for Linux
 Group: System/Base
 License: %gpl2plus
@@ -226,6 +226,9 @@ sed -i -e '3rinit.info' \
 
 
 %changelog
+* Tue Oct 15 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.5-alt1
+- Version 0.8.5
+
 * Tue Aug 28 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.3-alt2
 - Fixed build
 
