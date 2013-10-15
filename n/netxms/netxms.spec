@@ -1,5 +1,5 @@
 Name: netxms
-Version: 1.2.8
+Version: 1.2.9
 Release: alt1
 
 Summary: Open source network monitoring system
@@ -74,6 +74,8 @@ Group: System/Servers
 subst 's|$(DESTDIR)$(bindir)/nxmibc|LD_LIBRARY_PATH=%buildroot/%_libdir $(DESTDIR)$(bindir)/nxmibc|g' Makefile.am
 subst 's|/var/opt/netxms|/var/lib/netxms|g' src/agent/core/nxagentd.h
 ./reconf
+export CC=gcc
+export CXX=g++
 %configure      \
   --with-server \
   --with-snmp   \
@@ -225,6 +227,9 @@ mkdir -p %buildroot/%_localstatedir/%name/agent
 %_libdir/%name/dbdrv/odbc.ddr
 
 %changelog
+* Tue Oct 15 2013 Eugene Prokopiev <enp@altlinux.ru> 1.2.9-alt1
+- new version
+
 * Tue Aug 13 2013 Eugene Prokopiev <enp@altlinux.ru> 1.2.8-alt1
 - new version
 
