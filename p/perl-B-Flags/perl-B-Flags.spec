@@ -1,6 +1,6 @@
 Name: perl-B-Flags
-Version: 0.06
-Release: alt3
+Version: 0.10
+Release: alt1
 
 Summary: B::Flags - Friendlier flags for B
 License: Perl
@@ -30,6 +30,9 @@ BuildRequires: perl-devel
 %perl_vendor_autolib/B/Flags
 
 %changelog
+* Tue Oct 15 2013 Vladimir Lettiev <crux@altlinux.ru> 0.10-alt1
+- 0.06 -> 0.10
+
 * Thu Aug 29 2013 Vladimir Lettiev <crux@altlinux.ru> 0.06-alt3
 - built for perl 5.18
 
