@@ -1,8 +1,8 @@
 Name: erc
-Version: 0.4
+Version: 0.5
 Release: alt1
 
-Summary: Etersoft Archiver
+Summary: Universal Archive Tool
 
 License: AGPLv3
 Group: System/Configuration/Packaging
@@ -19,8 +19,8 @@ BuildArchitectures: noarch
 Requires: patool >= 1.1
 
 %description
-Etersoft Arhiver is the archive manager for any format
-It provides universal interface to any archive manager.
+Etersoft Universal Archive Tool is the archive manager for any format.
+It provides universal command line interface to any archive manager.
 Patool is used for real work with archives.
 
 See detailed russian description here: http://wiki.etersoft.ru/ERC
@@ -47,6 +47,10 @@ See detailed russian description here: http://wiki.etersoft.ru/ERC
 #%_sysconfdir/bash_completion.d/erc
 
 %changelog
+* Tue Oct 15 2013 Vitaly Lipatov <lav@altlinux.ru> 0.5-alt1
+- erc-archive: fix basename issues
+- use bash for all scripts (welcome to debug with dash!)
+
 * Tue Sep 03 2013 Vitaly Lipatov <lav@altlinux.ru> 0.4-alt1
 - ercat: add support for plain text files too
 - update README, add man pages
