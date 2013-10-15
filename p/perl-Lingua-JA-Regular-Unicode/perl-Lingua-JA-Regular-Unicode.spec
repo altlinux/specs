@@ -1,5 +1,5 @@
 Name: perl-Lingua-JA-Regular-Unicode
-Version: 0.09
+Version: 0.12
 Release: alt1
 
 Summary: Lingua::JA::Regular::Unicode - convert japanese chars
@@ -11,7 +11,7 @@ Url: %CPAN Lingua-JA-Regular-Unicode
 Source: %name-%version.tar
 
 BuildArch: noarch
-BuildRequires: perl-devel perl-Module-Build perl-Test-Base perl-Test-Perl-Critic
+BuildRequires: perl-devel perl-Module-Build perl-Test-Base perl-Test-Perl-Critic perl-Text-TestBase
 
 %description
 %summary
@@ -30,6 +30,9 @@ BuildRequires: perl-devel perl-Module-Build perl-Test-Base perl-Test-Perl-Critic
 %doc Changes LICENSE
 
 %changelog
+* Tue Oct 15 2013 Vladimir Lettiev <crux@altlinux.ru> 0.12-alt1
+- 0.09 -> 0.12
+
 * Sat Sep 29 2012 Vladimir Lettiev <crux@altlinux.ru> 0.09-alt1
 - 0.07 -> 0.09
 
