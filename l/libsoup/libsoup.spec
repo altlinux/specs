@@ -1,3 +1,5 @@
+%def_disable snapshot
+
 %define api_ver 2.4
 %define ver_major 2.44
 %def_disable static
@@ -6,7 +8,7 @@
 %def_enable introspection
 
 Name: libsoup
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: HTTP client/server library for GNOME
@@ -15,8 +17,11 @@ License: LGPLv2+
 Url: https://live.gnome.org/LibSoup
 Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 
-#Source: %name-%version.tar
+%if_enabled snapshot
+Source: %name-%version.tar
+%else
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+%endif
 
 Source1: %name-compat.map
 Source2: %name-compat.lds
@@ -163,6 +168,7 @@ install -p -m644 %_sourcedir/%name-{,gnome-}compat.{map,lds} %name/
     %{subst_enable static} \
     %{subst_with gnome} \
     %{?_enable_gtk_doc:--enable-gtk-doc} \
+    %{?_enable_snapshot:--enable-gtk-doc} \
     %{subst_enable introspection}
 
 %make_build
@@ -216,6 +222,9 @@ install -p -m644 %_sourcedir/%name-{,gnome-}compat.{map,lds} %name/
 %endif
 
 %changelog
+* Tue Oct 15 2013 Yuri N. Sedunov <aris@altlinux.org> 2.44.1-alt1
+- 2.44.1
+
 * Tue Sep 24 2013 Yuri N. Sedunov <aris@altlinux.org> 2.44.0-alt1
 - 2.44.0
 - libsoup-compat.lds: removed symbols:
