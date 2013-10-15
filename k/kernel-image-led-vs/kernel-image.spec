@@ -25,7 +25,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.10.16
-Release: alt2
+Release: alt3
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -150,6 +150,7 @@ Release: alt2
 %Extra_modules vboxguest 4.2.18
 %Extra_modules knem 1.1.0
 %Extra_modules exfat 1.2.6
+%Extra_modules ipt_NETFLOW 1.8.2
 #Extra_modules netatop 0.2
 #Extra_modules omnibook 20110911
 
@@ -1821,6 +1822,14 @@ done)
 
 
 %changelog
+* Mon Oct 14 2013 Led <led@altlinux.ru> 3.10.16-alt3
+- disabled:
+  + feat-net-ipv4-netfilter--ipt_NETFLOW
+- added:
+  + fix-crypto--sha256-ssse3
+- added external modules:
+  + ipt_NETFLOW
+
 * Mon Oct 14 2013 Led <led@altlinux.ru> 3.10.16-alt2
 - updated:
   + fix-net-mac80211--mac80211
