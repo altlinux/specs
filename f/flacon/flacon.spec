@@ -1,21 +1,20 @@
 Name: flacon
-Version: 0.8.0
+Version: 0.9.1
 Release: alt1
 
 Summary: Audio File Encoder
 Summary(ru_RU.UTF-8): Конвертер аудиофайлов
-License: GPLv3+
+License: LGPLv2.1
 Group: Sound
 
 URL: http://kde-apps.org/content/show.php?content=113388
 Packager: Nazarov Denis <nenderus@altlinux.org>
-BuildArch: noarch
 
-Source0: http://flacon.googlecode.com/files/%name-%version.tgz
+Source0: %name-%version.tar.gz
 
 Requires: shntool
 
-BuildRequires: python-modules-compiler python-modules-encodings rpm-build-gir
+BuildRequires: cmake gcc-c++ libuchardet-devel phonon-devel
 
 %description
 Extracts audio tracks from audio CD image to separate tracks.
@@ -27,20 +26,34 @@ Extracts audio tracks from audio CD image to separate tracks.
 %setup
 
 %build
-%make_build
+%__mkdir_p %_target_platform
+pushd %_target_platform
 
+cmake .. \
+	-DCMAKE_INSTALL_PREFIX:PATH=%prefix \
+	-DCMAKE_CXX_FLAGS:STRING='%optflags' \
+
+popd
+
+%make_build -C %_target_platform	
+	
 %install
-%make DESTDIR=%buildroot install
+%makeinstall_std -C %_target_platform
 
 %files
+%doc LICENSE README.md
 %_bindir/%name
 %_desktopdir/%name.desktop
 %_miconsdir/%name.png
 %_liconsdir/%name.png
 %_niconsdir/%name.png
 %_datadir/%name
+%_man1dir/%name.1.gz
 
 %changelog
+* Tue Oct 15 2013 Nazarov Denis <nenderus@altlinux.org> 0.9.1-alt1
+- Version 0.9.1 (ALT #29478)
+
 * Sat May 25 2013 Nazarov Denis <nenderus@altlinux.org> 0.8.0-alt1
 - Version 0.8.0
 
