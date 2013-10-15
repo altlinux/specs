@@ -1,5 +1,5 @@
 Name: perl-Sub-Exporter-Progressive
-Version: 0.001006
+Version: 0.001010
 Release: alt1
 
 Summary: Sub::Exporter::Progressive - Only use Sub::Exporter if you need it
@@ -7,7 +7,7 @@ Group: Development/Perl
 License: Perl
 
 Url: %CPAN Sub-Exporter-Progressive
-Source: %name-%version.tar
+Source: Sub-Exporter-Progressive-%version.tar.gz
 
 BuildArch: noarch
 BuildRequires: perl-devel
@@ -16,7 +16,7 @@ BuildRequires: perl-devel
 %summary
 
 %prep
-%setup -q
+%setup -q -n Sub-Exporter-Progressive-%version
 
 %build
 %perl_vendor_build
@@ -29,5 +29,8 @@ BuildRequires: perl-devel
 %doc Changes README 
 
 %changelog
+* Tue Oct 15 2013 Vladimir Lettiev <crux@altlinux.ru> 0.001010-alt1
+- 0.001006 -> 0.001010
+
 * Sat Sep 01 2012 Vladimir Lettiev <crux@altlinux.ru> 0.001006-alt1
 - initial build
