@@ -1,6 +1,6 @@
 %define m_distro Net-FastCGI
 Name: perl-Net-FastCGI
-Version: 0.13
+Version: 0.14
 Release: alt1
 Summary: Net::FastCGI - FastCGI Toolkit
 
@@ -36,6 +36,9 @@ for debugging and interoperability testing.
 %doc Changes README 
 
 %changelog
+* Tue Oct 15 2013 Igor Vlasenko <viy@altlinux.ru> 0.14-alt1
+- automated CPAN update
+
 * Thu Mar 03 2011 Vladimir Lettiev <crux@altlinux.ru> 0.13-alt1
 - New version 0.13
 
