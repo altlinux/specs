@@ -1,5 +1,5 @@
 Name: perl-AnyEvent-HTTP
-Version: 2.14
+Version: 2.15
 Release: alt1
 Summary: AnyEvent::HTTP - simple but non-blocking HTTP/HTTPS client
 
@@ -30,6 +30,9 @@ BuildRequires: perl-AnyEvent perl-common-sense perl-devel
 %doc Changes README
 
 %changelog
+* Tue Oct 15 2013 Igor Vlasenko <viy@altlinux.ru> 2.15-alt1
+- new version 2.15
+
 * Thu May 31 2012 Vladimir Lettiev <crux@altlinux.ru> 2.14-alt1
 - 2.13 -> 2.14
 
