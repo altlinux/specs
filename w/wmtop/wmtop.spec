@@ -1,6 +1,6 @@
 Name: wmtop
 Version: 0.84
-Release: alt5.qa1
+Release: alt6
 
 Packager: Victor Forsyuk <force@altlinux.org>
 
@@ -27,8 +27,8 @@ displaying the amount of CPU used as a horizontal bar. It's a kind of mini
 %make_build CC="gcc %optflags" linux
 
 %install
-install -p -D -m755 wmtop %buildroot%_bindir/wmtop
-install -p -D -m644 %SOURCE1 %buildroot%_menudir/wmtop
+install -pDm755 wmtop %buildroot%_bindir/wmtop
+install -pDm644 %SOURCE1 %buildroot%_menudir/wmtop
 
 %files
 %doc README CHANGES
@@ -36,6 +36,9 @@ install -p -D -m644 %SOURCE1 %buildroot%_menudir/wmtop
 %_menudir/*
 
 %changelog
+* Tue Oct 15 2013 Michael Shigorin <mike@altlinux.org> 0.84-alt6
+- fixed menu file
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.84-alt5.qa1
 - NMU: rebuilt for debuginfo.
 
