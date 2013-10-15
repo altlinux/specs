@@ -5,17 +5,20 @@
 
 Summary: AVRDUDE is software for programming Atmel AVR Microcontrollers.
 Name: avrdude
-Version: 5.11.1
+Version: 6.0.1
 Release: alt1
 License: GPL
 Group: Development/Other
 URL: http://savannah.nongnu.org/projects/avrdude
 Source0: %name-%version.tar.gz
 
+BuildRequires: gnu-config libtinfo-devel libusb-compat libusb-compat-devel libusb-devel ruby
+BuildRequires: flex libelf-devel libftdi-devel libftdi1-devel libncurses-devel libreadline-devel ruby-stdlibs
+
 BuildRequires: flex libncurses-devel libreadline-devel libusb-compat-devel
 
 %if_enabled doc
-BuildRequires: tetex-core tetex-dvips tetex-latex
+BuildRequires: tex-common texlive-base texlive-base-bin texlive-common texlive-generic-recommended texlive-latex-base texi2html
 %endif
 
 %package docs
@@ -33,7 +36,7 @@ Documentation for avrdude in html, postscript and pdf formats.
 %setup -q
 
 %build
-%configure %{subst_enable doc} --enable-parport
+%configure %{subst_enable doc} --enable-parport --enable-linuxgpio
 %make
 
 %install
@@ -59,6 +62,9 @@ Documentation for avrdude in html, postscript and pdf formats.
 %endif
 
 %changelog
+* Tue Oct 15 2013 Grigory Milev <week@altlinux.ru> 6.0.1-alt1
+- new version released
+
 * Mon Dec 05 2011 Grigory Milev <week@altlinux.ru> 5.11.1-alt1
 - new vrsion release, see ChangeLog in docs for detales
 
