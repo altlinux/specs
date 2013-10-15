@@ -1,5 +1,5 @@
 Name: klavaro
-Version: 1.9.6
+Version: 2.00
 Release: alt1
 
 Summary: Yet another touch typing tutor
@@ -38,6 +38,9 @@ subst 's/Education/Education;Science;ComputerScience/' data/klavaro.desktop.in
 %_iconsdir/hicolor/*/apps/klavaro.png
 
 %changelog
+* Tue Oct 15 2013 Yuri N. Sedunov <aris@altlinux.org> 2.00-alt1
+- 2.0.0
+
 * Tue Dec 04 2012 Yuri N. Sedunov <aris@altlinux.org> 1.9.6-alt1
 - 1.9.6
 - built against libgtkdatabox-0.9.2.so.0
