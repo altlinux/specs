@@ -1,10 +1,9 @@
 Name: 0install
-Version: 2.3.3
+Version: 2.4.1
 Release: alt1
 Summary: Decentralised cross-distribution software installation system
 Group: System/Configuration/Packaging
 Source: %name-%version.tar.bz2
-Patch: 0install-2.3-man1dir.patch
 Url: http://0install.net/
 License: LGPLv2
 BuildArch: noarch
@@ -57,18 +56,33 @@ Summary: Bash completion for %name
 %description -n bash-completion-%name
 Bash completion for %name
 
+%package -n fish-completion-%name
+Group: Shells
+Summary: Fish completion for %name
+%description -n fish-completion-%name
+Fish completion for %name
+
 %prep
 %setup
-%patch
 
 %build
 %python_build
+# hack crappy installer
+sed '
+/^cd .*\/files/d
+/^\.\/0install/d
+/^DOCS=/cDOCS="README.md COPYING"
+/^ZSHFUNCTIONS=/s@.*@ZSHFUNCTIONS="share/zsh/Completion/Linux"@
+' < install.sh.src > install.sh
+ln -s 0install-python-fallback 0install
 
 %install
-%python_install
+#python_install
+sh install.sh %buildroot%_prefix
 %find_lang zero-install
 
 %files
+%doc %_defaultdocdir/%name
 %_bindir/*
 %_man1dir/*
 %_desktopdir/*
@@ -79,12 +93,19 @@ Bash completion for %name
 %python_sitelibdir/zeroinstall*
 
 %files -n zsh-completion-%name
-%_datadir/zsh/Completion/Linux/_0install
+%_datadir/zsh/Completion/Linux/*
 
 %files -n bash-completion-%name
-%_datadir/bash-completion/completions/0install
+%_datadir/bash-completion/completions/*
+
+%files -n fish-completion-%name
+%_datadir/fish/completions/*
 
 %changelog
+* Tue Oct 15 2013 Fr. Br. George <george@altlinux.ru> 2.4.1-alt1
+- Autobuild version bump to 2.4.1
+- Force not to use ocaml due to incomplete requirements
+
 * Thu Aug 22 2013 Fr. Br. George <george@altlinux.ru> 2.3.3-alt1
 - Autobuild version bump to 2.3.3
 - Drop newly introduced ocaml bindings
