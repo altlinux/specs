@@ -1,7 +1,7 @@
 
 Name: sdlscav
-Version: 144
-Release: alt4
+Version: 145.1_2010_11_5
+Release: alt1
 
 Group: Games/Arcade
 Summary: Cool arcade/thinking game very much like Lode Runner
@@ -11,12 +11,12 @@ License: GPL
 # Automatically added by buildreq on Mon Mar 28 2011 (-bi)
 BuildRequires: libSDL-devel
 
-Source: http://www.xdr.com/dash/%name-%version.tar.bz2
+Source: http://prdownloads.sourceforge.net/sdlscavenger/sdlscav-145.1_2010_11_5.tar
 Source10: %name.16.xpm
 Source11: %name.32.xpm
 Source12: %name.48.xpm
 
-Patch1: sdlscav-144-datapath.patch
+Patch1: sdlscav-145-datapath.patch
 
 %description
 SDL Scavenger is a cool arcade/thinking game very much like Lode Runner.
@@ -26,17 +26,17 @@ addictive game and some of the levels are devilishly (cruelly) complicated
 to solve.
 
 %prep
-%setup -q
-%patch1 -p1
+%setup
+%patch1 -p2
 [ -f data/regulargui.lbm -a ! -f data/regularguy.lbm ] ||
     mv data/regularguy.lbm data/regulargui.lbm
 
 %build
-%make_build CFLAGS="%optflags `sdl-config --cflags`" -C src
+%make_build CFLAGS="%optflags `sdl-config --cflags`"
 
 %install
 mkdir -p %buildroot%_gamesbindir %buildroot%_gamesdatadir/%name
-install -m 0755 src/%name %buildroot%_gamesbindir/
+install -m 0755 %name %buildroot%_gamesbindir/
 for f in data/*
 do
     install -m 0644 $f %buildroot%_gamesdatadir/%name/
@@ -74,6 +74,10 @@ install -m 0644 %SOURCE12 %buildroot%_liconsdir/%name.xpm
 %_liconsdir/%name.xpm
 
 %changelog
+* Mon Oct 14 2013 Vitaly Lipatov <lav@altlinux.ru> 145.1_2010_11_5-alt1
+- new version (145.1_2010_11_5) with rpmgs script (ALT bug #25200)
+- cleanup spec
+
 * Mon Mar 28 2011 Sergey V Turchin <zerg@altlinux.org> 144-alt4
 - add freedesktop menu entry
 
