@@ -1,5 +1,5 @@
 Name: libgtest
-Version: 1.6.0
+Version: 1.7.0
 Release: alt1
 Summary: Google's framework for writing C++ tests
 Group: Development/C++
@@ -70,6 +70,9 @@ install -D scripts/gtest-config %buildroot%_bindir/gtest-config
 %_libdir/*.a
 
 %changelog
+* Tue Oct 15 2013 Fr. Br. George <george@altlinux.ru> 1.7.0-alt1
+- Autobuild version bump to 1.7.0
+
 * Tue Jul 05 2011 Fr. Br. George <george@altlinux.ru> 1.6.0-alt1
 - Autobuild version bump to 1.6.0
 - Rename spec and directory to confirm project name
