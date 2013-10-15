@@ -16,7 +16,7 @@
 %endif
 
 Name: glib2
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: A library of handy utility functions
@@ -69,10 +69,8 @@ BuildPreReq: pcre-config(utf8) pcre-config(unicode-properties)
 %endif
 
 BuildRequires(pre): rpm-build-licenses
-BuildPreReq: gtk-doc >= 1.8
-
-BuildRequires: gtk-doc indent libdbus-devel libpcre-devel
-BuildRequires: libffi-devel  zlib-devel libelf-devel
+BuildRequires: gnome-common intltool gtk-doc indent
+BuildRequires: libdbus-devel libpcre-devel libffi-devel zlib-devel libelf-devel
 BuildRequires: rpm-build-python python-devel
 #BuildRequires: rpm-build-python3 python3-devel
 %{?_enable_selinux:BuildRequires: libselinux-devel}
@@ -402,6 +400,9 @@ install -pD -m 755 filetrigger %buildroot%_rpmlibdir/gsettings.filetrigger
 %endif
 
 %changelog
+* Wed Oct 16 2013 Yuri N. Sedunov <aris@altlinux.org> 2.38.1-alt1
+- 2.38.1
+
 * Tue Sep 24 2013 Yuri N. Sedunov <aris@altlinux.org> 2.38.0-alt1
 - 2.38.0
 - optional systemtap support

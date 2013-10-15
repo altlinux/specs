@@ -4,8 +4,8 @@
 %def_enable gnome_bluetooth
 
 Name: gnome-shell
-Version: %ver_major.0.1
-Release: alt2
+Version: %ver_major.1
+Release: alt1
 
 Summary: Window management and application launching for GNOME
 Group: Graphical desktop/GNOME
@@ -13,8 +13,8 @@ License: GPLv2+
 Url: https://live.gnome.org/GnomeShell
 Packager: GNOME Maintainers Team <gnome at packages.altlinux.org>
 
-Source: %name-%version.tar
-#Source: http://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+#Source: %name-%version.tar
+Source: http://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 Patch1: %name-3.7.92-alt-gir.patch
 Patch3: %name-3.8.4-alt-invalid_user_shell.patch
 Patch4: gnome-shell-3.9.92-alt-makefile.patch
@@ -23,7 +23,7 @@ Obsoletes: gnome-shell-extension-per-window-input-source
 
 
 %define clutter_ver 1.13.6
-%define gjs_ver 1.33.2
+%define gjs_ver 1.38.0
 %define mutter_ver 3.9.91
 %define gtk_ver 3.7.9
 %define gio_ver 2.37.0
@@ -182,6 +182,9 @@ rm -f %buildroot%_libdir/%name/*.la
 %_datadir/gtk-doc/html/st/
 
 %changelog
+* Tue Oct 15 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.1-alt1
+- 3.10.1
+
 * Fri Oct 04 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.0.1-alt2
 - updated to 56c4873 (fixed BGO ## 702309, 709043, 709286,
   709248(ALT #29410))
