@@ -1,6 +1,6 @@
 %define m_distro File-chmod
 Name: perl-File-chmod
-Version: 0.32
+Version: 0.39
 Release: alt1
 Summary: File::chmod - Implements symbolic and ls chmod modes
 
@@ -31,5 +31,8 @@ BuildRequires: perl-devel
 %doc Changes 
 
 %changelog
+* Tue Oct 15 2013 Igor Vlasenko <viy@altlinux.ru> 0.39-alt1
+- automated CPAN update
+
 * Thu Jan 28 2010 Vladimir Lettiev <crux@altlinux.ru> 0.32-alt1
 - initial build
