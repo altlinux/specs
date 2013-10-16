@@ -1,6 +1,6 @@
 Name: xorg-glamor
 Version: 0.5.1
-Release: alt1
+Release: alt2
 Summary: X.Org glamor library
 License: MIT
 Group: System/Libraries
@@ -14,7 +14,7 @@ Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
 BuildRequires(Pre): xorg-sdk
-BuildRequires: libGLES-devel libdrm-devel libgbm-devel libpixman-devel xorg-resourceproto-devel xorg-scrnsaverproto-devel
+BuildRequires: libEGL-devel libGL-devel libdrm-devel libgbm-devel libpixman-devel xorg-resourceproto-devel xorg-scrnsaverproto-devel
 
 %description
 Open-source X.org graphics common driver based on GL library
@@ -39,7 +39,6 @@ develop programs which make use of %name
 %configure \
 	--disable-static \
 	--enable-glx-tls \
-	--enable-glamor-gles2 \
 	--enable-xv \
 	--with-xorg-module-dir=%_xorgmoduledir
 
@@ -60,6 +59,9 @@ develop programs which make use of %name
 
 
 %changelog
+* Wed Oct 16 2013 Valery Inozemtsev <shrek@altlinux.ru> 0.5.1-alt2
+- disable GLES (closes: #28857)
+
 * Tue Oct 15 2013 Valery Inozemtsev <shrek@altlinux.ru> 0.5.1-alt1
 - 0.5.1
 
