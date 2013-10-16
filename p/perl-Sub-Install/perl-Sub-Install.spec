@@ -14,7 +14,7 @@
 %define _enable_test 1
 
 Name: perl-Sub-Install
-Version: 0.926
+Version: 0.927
 Release: alt1
 
 Summary: install subroutines into packages easily
@@ -26,7 +26,7 @@ Url: http://www.cpan.org
 Packager: Mikhail Pokidko <pma@altlinux.org>
 
 BuildArch: noarch
-Source: http://search.cpan.org//CPAN/authors/id/R/RJ/RJBS/%m_distro-%version.tar.gz
+Source: http://www.cpan.org/authors/id/R/RJ/RJBS/Sub-Install-%{version}.tar.gz
 
 # Automatically added by buildreq on Wed Apr 21 2010
 BuildRequires: perl-Test-Output perl-Test-Pod perl-Test-Pod-Coverage
@@ -49,6 +49,9 @@ see them.
 %perl_vendor_privlib/Sub*
 
 %changelog
+* Wed Oct 16 2013 Igor Vlasenko <viy@altlinux.ru> 0.927-alt1
+- automated CPAN update
+
 * Tue Sep 11 2012 Vladimir Lettiev <crux@altlinux.ru> 0.926-alt1
 - 0.925 -> 0.926
 - fixed build with Carp >= 1.25
