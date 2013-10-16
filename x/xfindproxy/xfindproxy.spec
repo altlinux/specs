@@ -1,6 +1,6 @@
 Name: xfindproxy
-Version: 1.0.2
-Release: alt3
+Version: 1.0.3
+Release: alt1
 
 Summary: locate proxy services
 License: MIT/X11
@@ -8,13 +8,12 @@ Group: System/X11
 
 Url: http://xorg.freedesktop.org
 Source: %name-%version.tar.bz2
-Patch:	xfindproxy-alt-lvalue.patch
 
 # Automatically added by buildreq on Mon Mar 11 2013
 # optimized out: libICE-devel libX11-devel pkg-config xorg-xproto-devel
 BuildRequires: libXt-devel xorg-pmproto-devel
 
-BuildRequires:  xorg-util-macros
+BuildRequires: xorg-util-macros
 
 %description
 xfindproxy is a program used to locate available  proxy  services.   It
@@ -25,7 +24,6 @@ shared whenever possible.
 
 %prep
 %setup
-%patch
 
 %build
 %autoreconf
@@ -41,6 +39,10 @@ shared whenever possible.
 %_man1dir/*
 
 %changelog
+* Wed Oct 16 2013 Fr. Br. George <george@altlinux.ru> 1.0.3-alt1
+- Autobuild version bump to 1.0.3
+- Drop inactual patch
+
 * Mon Mar 11 2013 Fr. Br. George <george@altlinux.ru> 1.0.2-alt3
 - Rebuild with new buildreq
 
