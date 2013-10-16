@@ -1,18 +1,20 @@
 Name: docker-io
 Version: 0.7
-Release: alt1.rc3
+Release: alt2.rc3
 Summary: Automates deployment of containerized applications
 License: ASL 2.0
 Group: System/Configuration/Other
 
 Patch0: docker-0.7-remove-dotcloud-tar.patch
 Url: http://www.docker.io
+# only x86_64 for now: https://github.com/dotcloud/docker/issues/136
+ExclusiveArch: x86_64
 
 Source0: %name-%version.tar
 Source1: docker.service
 Source2: docker.init
 
-BuildRequires: gcc golang golang-docs golang-godoc systemd-devel libdevmapper-event-devel libsqlite3-devel
+BuildRequires: gcc golang golang-docs golang-godoc systemd-devel libdevmapper-devel-static libsqlite3-devel-static
 BuildRequires: python-module-sphinx-devel python-module-sphinxcontrib-httpdomain
 BuildRequires: golang("github.com/gorilla/mux") golang("github.com/kr/pty") golang("code.google.com/p/go.net/websocket") golang("code.google.com/p/gosqlite/sqlite3")
 
@@ -44,8 +46,12 @@ pushd _build
 mkdir -p src/github.com/dotcloud
 ln -s $(dirs +1 -l) src/github.com/dotcloud/docker
 export GOPATH=$(pwd):%gopath
+
 go build -v github.com/dotcloud/docker/docker
-go build -v github.com/dotcloud/docker/docker-init
+#Fix https://github.com/dotcloud/docker/issues/2203
+export LDFLAGS='-X main.GITCOMMIT "'%version-%release'" -X main.VERSION "'%version'" -w -linkmode external -extldflags "-lpthread -ldl -static -Wl,--unresolved-symbols=ignore-in-shared-libs"'
+export BUILDFLAGS='-tags netgo '
+go build -v -ldflags "$LDFLAGS" $BUILDFLAGS github.com/dotcloud/docker/docker-init
 
 popd
 
@@ -112,5 +118,10 @@ exit 0
 %dir %_sharedstatedir/docker
 
 %changelog
+* Fri Oct 11 2013 Slava Dubrovskiy <dubrsl@altlinux.org> 0.7-alt2.rc3
+- Update up to upstream/v0.7-rc3 branch
+- Add ExclusiveArch: x86_64
+- Build docker-init statically
+
 * Wed Oct 09 2013 Slava Dubrovskiy <dubrsl@altlinux.org> 0.7-alt1.rc3
 - Build for ALT
