@@ -1,5 +1,5 @@
 Name: parole
-Version: 0.5.2
+Version: 0.5.3
 Release: alt1
 
 # '1' for gstreamer-1.0
@@ -95,6 +95,9 @@ mkdir m4
 %doc %_datadir/gtk-doc/html/*
 
 %changelog
+* Wed Oct 16 2013 Mikhail Efremov <sem@altlinux.org> 0.5.3-alt1
+- Updated to 0.5.3.
+
 * Thu Jul 25 2013 Mikhail Efremov <sem@altlinux.org> 0.5.2-alt1
 - Require gst-plugins-base and gst-plugins-good.
 - Require gstreamer.
