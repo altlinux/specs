@@ -6,7 +6,7 @@
 Summary: AVR libc
 Name: avr-libc
 Version: 1.8.0
-Release: alt3
+Release: alt4
 Serial: 1
 License: GPL, LGPL, BSD, Public Domain
 Group: Development/Other
@@ -28,13 +28,13 @@ BuildRequires: fonts-ttf-reduce fonts-ttf-sazanami-gothic fonts-ttf-sazanami-min
 BuildRequires: fonts-ttf-tamil fonts-ttf-tempora fonts-ttf-urdu fonts-ttf-vera fonts-ttf-xorg fonts-ttf-znamen
 BuildRequires: fonts-type1-cm-super-pfb fonts-type1-dmtr40in fonts-type1-phonetic fonts-type1-xorg unzip
 
-BuildRequires: avr-binutils >= 2.23.1-alt1
-BuildRequires: avr-gcc >= 4.7.2-alt2
-BuildRequires: avr-gcc-c++ >= 4.7.2-alt2
+BuildRequires: avr-binutils >= 2:2.23.1-alt1
+BuildRequires: avr-gcc >= 4.7.2-alt3
+BuildRequires: avr-gcc-c++ >= 4.7.2-alt3
 
-Requires: avr-binutils >= 2.23.1-alt1
-Requires: avr-gcc >= 4.7.2-alt2
-Requires: avr-gcc-c++ >= 4.7.2-alt2
+Requires: avr-binutils >= 2:2.23.1-alt1
+Requires: avr-gcc >= 4.7.2-alt3
+Requires: avr-gcc-c++ >= 4.7.2-alt3
 
 %define libavrdir %_libdir/%cross_arch
 %define includeavrdir %_includedir/%cross_arch
@@ -99,6 +99,9 @@ done
 %_datadir/doc/avr-libc/*
 
 %changelog
+* Wed Oct 16 2013 Grigory Milev <week@altlinux.ru> 1:1.8.0-alt4
+- must be rebuilded with new avr-gcc
+
 * Mon Oct 14 2013 Grigory Milev <week@altlinux.ru> 1:1.8.0-alt3
 - last version from Atmel
 - build with new avr-binutils and avr-gcc
