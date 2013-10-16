@@ -9,7 +9,7 @@
 Name: %{bname}_%ver
 Version: %ver.23
 %define langpack_ver 20121005
-Release: alt6
+Release: alt6.1
 Summary: The Squid proxy caching server
 License: GPLv2
 Group: System/Servers
@@ -271,6 +271,9 @@ chown -R %bname:%bname %_spooldir/%bname >/dev/null 2>&1 ||:
 
 
 %changelog
+* Wed Oct 16 2013 Sergey Y. Afonin <asy@altlinux.ru> 3.1.23-alt6.1
+- NMU: rebuilt with cyrus-sasl 2.1.26
+
 * Fri Jul 12 2013 Led <led@altlinux.ru> 3.1.23-alt6
 - Protect against buffer overrun in DNS query generation
 
