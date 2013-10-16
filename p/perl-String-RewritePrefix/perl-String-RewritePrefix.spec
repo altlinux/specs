@@ -1,6 +1,6 @@
 %define dist String-RewritePrefix
 Name: perl-%dist
-Version: 0.006
+Version: 0.007
 Release: alt1
 
 Summary: Rewrite strings based on a set of known prefixes
@@ -8,7 +8,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/R/RJ/RJBS/String-RewritePrefix-0.006.tar.gz
+Source: http://www.cpan.org/authors/id/R/RJ/RJBS/String-RewritePrefix-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -32,6 +32,9 @@ BuildRequires: perl-Sub-Exporter perl-devel
 %perl_vendor_privlib/String*
 
 %changelog
+* Wed Oct 16 2013 Igor Vlasenko <viy@altlinux.ru> 0.007-alt1
+- automated CPAN update
+
 * Mon Sep 19 2011 Igor Vlasenko <viy@altlinux.ru> 0.006-alt1
 - automated CPAN update
 
