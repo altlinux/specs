@@ -1,7 +1,7 @@
 
 Name: akonadi
 Version: 1.10.3
-Release: alt1
+Release: alt2
 
 Group: Databases
 Summary: An extensible cross-desktop storage service for PIM
@@ -89,17 +89,19 @@ Obsoletes: akonadi-database2 < %EVR
 %description database-5-postgresql
 %name postgresql database
 
-%package database-7-mysql
+%package database-8-mysql
 Group: Databases
 Summary: %name mysql database
 BuildArch: noarch
 Requires: %name-common = %EVR
-Requires: libqt4-sql-mysql mysql-server mysql-client
+Requires: libqt4-sql-mysql mariadb-server mariadb-client
 Provides: %name-database = %EVR
 Provides: %name-database-mysql = %EVR
 Provides: akonadi-database3 = %EVR
 Obsoletes: akonadi-database3 < %EVR
-%description database-7-mysql
+Provides: akonadi-database-7-mysql = %EVR
+Obsoletes: akonadi-database-7-mysql < %EVR
+%description database-8-mysql
 %name mysql database
 
 %package -n libakonadiprotocolinternals
@@ -179,7 +181,7 @@ install -m 0755 %SOURCE10 %buildroot/%_bindir/akonadi_mysql_install_db
 %files database-1-sqlite
 %files database-3-sqlite3
 %files database-5-postgresql
-%files database-7-mysql
+%files database-8-mysql
 %_bindir/akonadi_mysql_install_db
 
 %files common
@@ -201,6 +203,12 @@ install -m 0755 %SOURCE10 %buildroot/%_bindir/akonadi_mysql_install_db
 %_libdir/pkgconfig/*
 
 %changelog
+* Thu Oct 17 2013 Sergey V Turchin <zerg at altlinux dot org> 1.10.3-alt2
+- require mariadb directly
+
+* Wed Oct 09 2013 Sergey V Turchin <zerg@altlinux.org> 1.10.3-alt0.M70P.1
+- built for M70P
+
 * Mon Oct 07 2013 Sergey V Turchin <zerg@altlinux.org> 1.10.3-alt1
 - new version
 
