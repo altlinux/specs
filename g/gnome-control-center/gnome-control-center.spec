@@ -11,7 +11,7 @@
 %def_with cheese
 
 Name: gnome-control-center
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: GNOME Control Center
@@ -27,6 +27,7 @@ Source: %name-%version.tar
 Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 %endif
 Patch: %name-3.8.3-alt-lfs.patch
+Patch1: %name-3.10.1-alt-background_build.patch
 
 # From configure.ac
 %define gtk_ver 3.5.13
@@ -125,6 +126,7 @@ you'll want to install this package.
 %prep
 %setup
 %patch -p1 -b .lfs
+%patch1
 
 %build
 %if_enabled snapshot
@@ -176,6 +178,9 @@ NOCONFIGURE=1 ./autogen.sh
 %_datadir/pkgconfig/gnome-keybindings.pc
 
 %changelog
+* Wed Oct 16 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.1-alt1
+- 3.10.1
+
 * Tue Sep 24 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.0-alt1
 - 3.10.0
 
