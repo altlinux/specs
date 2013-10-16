@@ -1,6 +1,6 @@
 Name: ziproxy
 Version: 3.2.0
-Release: alt1.1
+Release: alt1.2
 
 Summary: Ziproxy is a forwarding (non-caching) compressing HTTP proxy server. 
 
@@ -37,6 +37,9 @@ preemptive hostname resolution, transparent proxying, IP ToS marking
 %_man1dir/*
 
 %changelog
+* Wed Oct 16 2013 Sergey Y. Afonin <asy@altlinux.ru> 3.2.0-alt1.2
+- NMU: rebuilt with cyrus-sasl 2.1.26
+
 * Thu Oct 11 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.2.0-alt1.1
 - Rebuilt with libpng15
 
