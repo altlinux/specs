@@ -63,7 +63,7 @@
 
 Name:           pine
 Version:        %{fullversion}
-Release:        alt8
+Release:        alt8.1
 License:        Other License(s), see package, FSR
 Group: Networking/Mail
 Summary: %mainsummary
@@ -908,6 +908,9 @@ done
 #------------ end ALT part --------------------
 
 %changelog -n pine
+* Wed Oct 16 2013 Sergey Y. Afonin <asy@altlinux.ru> 4.64L-alt8.1
+- NMU: rebuilt with cyrus-sasl 2.1.26
+
 * Mon Apr 25 2011 Igor Vlasenko <viy@altlinux.ru> 4.64L-alt8
 - desktop: updated categories (added ConsoleOnly).
 
