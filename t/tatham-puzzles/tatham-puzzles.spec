@@ -1,5 +1,5 @@
 Name: tatham-puzzles
-Version: 9976
+Version: 10051
 Release: alt1
 License: MIT
 Group: Games/Puzzles
@@ -111,6 +111,9 @@ install *.info* %buildroot%_infodir/
 %_infodir/*%{name}*
 
 %changelog
+* Mon Oct 14 2013 Fr. Br. George <george@altlinux.ru> 10051-alt1
+- Autobuild version bump to 10051
+
 * Fri Aug 23 2013 Fr. Br. George <george@altlinux.ru> 9976-alt1
 - Autobuild version bump to 9976
 - Fix build
