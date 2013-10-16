@@ -1,15 +1,16 @@
 Name: installer-feature-powerbutton-stage3
-Version: 0.2
+Version: 0.2.1
 Release: alt1
 
 Summary: Arrange for power button to work as expected
 License: GPL
 Group: System/Configuration/Other
+
 Url: http://www.altlinux.org/Installer/beans
-Packager: Michael Shigorin <mike@altlinux.org>
-BuildArch: noarch
 Source: %name-%version.tar
-Requires: installer-common-stage3
+Packager: Michael Shigorin <mike@altlinux.org>
+
+BuildArch: noarch
 
 %description
 This package sets up APM or ACPI power button actions
@@ -27,6 +28,10 @@ install -pm755 08-powerbutton %buildroot%hookdir/
 %hookdir/*
 
 %changelog
+* Wed Oct 16 2013 Michael Shigorin <mike@altlinux.org> 0.2.1-alt1
+- installer-common-stage3 is really not needed here
+  (it pulls alterator-browser-qt with friends too)
+
 * Fri Apr 10 2009 Dmitry V. Levin <ldv@altlinux.org> 0.2-alt1
 - Ported from stage2 to stage3.
 
