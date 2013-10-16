@@ -1,5 +1,5 @@
 Name: xman
-Version: 1.1.2
+Version: 1.1.3
 Release: alt1
 Summary: Manual page display program for the X Window System
 Group: System/X11
@@ -32,9 +32,13 @@ Xman is a manual page display program for the X Window System.
 %_bindir/xman
 %_datadir/X11/xman.help
 %_x11appconfdir/Xman
-%_mandir/man1/xman.1.gz
+%_mandir/man1/xman.*
 
 %changelog
+* Wed Oct 16 2013 Fr. Br. George <george@altlinux.ru> 1.1.3-alt1
+- Autobuild version bump to 1.1.3
+- Fix build
+
 * Fri Jul 01 2011 Fr. Br. George <george@altlinux.ru> 1.1.2-alt1
 - Autobuild version bump to 1.1.2
 
