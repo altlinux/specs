@@ -1,5 +1,5 @@
 Name: stone_soup
-Version: 0.12.1
+Version: 0.12.3
 Release: alt1
 %define Sum Roguelike with tiled and ascii interfaces
 Summary: %Sum
@@ -106,6 +106,9 @@ install ../crawl %buildroot/%_bindir/crawl
 %_bindir/crawl
 
 %changelog
+* Wed Oct 16 2013 Fr. Br. George <george@altlinux.ru> 0.12.3-alt1
+- Autobuild version bump to 0.12.3
+
 * Mon Jun 10 2013 Fr. Br. George <george@altlinux.ru> 0.12.1-alt1
 - Autobuild version bump to 0.12.1
 - Fix build
