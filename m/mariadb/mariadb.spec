@@ -4,7 +4,7 @@
 
 Name: mariadb
 Version: 5.5.33a
-Release: alt2
+Release: alt3
 
 Summary: A very fast and reliable SQL database engine
 License: GPLv2 with exceptions
@@ -45,7 +45,7 @@ Patch103: mariadb-5.5-mysql_upgrade-exit-status.patch
 Patch106: mariadb-5.5-hotcopy.patch
 Patch107: mariadb-5.5-mysql_install_db-quiet.alt.patch
 
-Requires: %name-server = %version-%release %name-client = %version-%release
+Requires: %name-server = %EVR %name-client = %EVR
 
 BuildRequires: gcc-c++ libncursesw-devel libreadline-devel libssl-devel perl-DBI zlib-devel libpam0-devel libevent-devel cmake ctest bison doxygen groff-base groff-ps dos2unix xsltproc
 BuildRequires: libaio-devel libjemalloc-devel libwrap-devel boost-devel libedit-devel perl-GD perl-threads perl-Memoize perl-devel
@@ -89,7 +89,8 @@ mariadb-obsolete package:
 %package server
 Summary: A very fast and reliable MariaDB database server
 Group: System/Servers
-Requires: lib%name = %version-%release %name-client = %version-%release
+Requires: lib%name = %EVR %name-client = %EVR
+Requires: %name-common = %EVR
 Provides: mysql-server = %version-%release
 Conflicts: MySQL-server
 
@@ -101,7 +102,7 @@ package 'mariadb'.
 %package engine-tokudb
 Summary: MariaDB tokudb storage engines
 Group: System/Servers
-Requires: %name-server = %version-%release
+Requires: %name-server = %EVR
 
 %description engine-tokudb
 MariaDB tokudb storage engine.
@@ -110,7 +111,7 @@ MariaDB tokudb storage engine.
 %package engine-extra
 Summary: MariaDB extra storage engines
 Group: System/Servers
-Requires: %name-server = %version-%release
+Requires: %name-server = %EVR
 
 %description engine-extra
 MariaDB oqgraph and sphinx storage engines.
@@ -118,7 +119,7 @@ MariaDB oqgraph and sphinx storage engines.
 %package engine-obsolete
 Summary: MariaDB obsolete storage engines
 Group: System/Servers
-Requires: %name-server = %version-%release
+Requires: %name-server = %EVR
 
 %description engine-obsolete
 MariaDB obsolete storage engines. InnoDB and Federated are being replaced
@@ -128,7 +129,7 @@ are provided in case you need the vanilla mysql storage engines.
 %package client
 Summary: Client
 Group: Databases
-Requires: lib%name = %version-%release %name-common = %version-%release
+Requires: lib%name = %EVR %name-common = %EVR
 Provides: mysql-client = %version-%release
 Conflicts: MySQL-client
 
@@ -140,7 +141,7 @@ Summary: Common files used in client and servers
 Group: Databases
 BuildArch: noarch
 Conflicts: MySQL-server
-Obsoletes: %name-server < 5.5.33a
+#Conflicts: %name-server < 5.5.33a
 
 %description common
 This package contains the common files for MariaDB client and servers.
@@ -149,7 +150,7 @@ This package contains the common files for MariaDB client and servers.
 %package bench
 Summary: Benchmarks and test system
 Group: System/Servers
-Requires: %name-client = %version-%release
+Requires: %name-client = %EVR
 Provides: mysql-bench = %version-%release
 Conflicts: MySQL-bench
 
@@ -160,8 +161,8 @@ This package contains MariaDB benchmark scripts and data.
 %package -n libmysqlclient%soname
 Summary: Shared libraries
 Group: System/Libraries
-Provides: lib%name = %version-%release
-Obsoletes: lib%name < 5.5.30
+Provides: lib%name = %EVR
+Obsoletes: lib%name < %EVR
 
 %description -n	libmysqlclient%soname
 This package contains the shared libraries (*.so*) which certain languages
@@ -172,12 +173,12 @@ Summary: Development header files and libraries
 Group: Development/Other
 # see also #28676
 Requires: libssl-devel zlib-devel
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 Provides: mysql-devel = %version
 Provides: MySQL-devel = %version
 Provides: libMySQL-devel = %version
 Provides: lib%name-devel = %version-%release
-Obsoletes: lib%name-devel < 5.5.30
+Obsoletes: lib%name-devel < %EVR
 
 %description -n	libmysqlclient-devel
 This package contains the development header files and libraries necessary
@@ -186,7 +187,7 @@ to develop MariaDB/MySQL client applications.
 %package -n libmariadbembedded
 Summary: MariaDB as an embeddable library
 Group: System/Libraries
-Requires: %name-common = %version-%release
+Requires: %name-common = %EVR
 
 %description -n libmariadbembedded
 MariaDB is a multi-user, multi-threaded SQL database server. This
@@ -199,7 +200,7 @@ and the client/server version.
 %package -n libmariadbembedded-devel
 Summary: Development files for MySQL as an embeddable library
 Group: Development/Other
-Requires: libmariadbembedded = %version-%release lib%name-devel = %version-%release
+Requires: libmariadbembedded = %EVR lib%name-devel = %EVR
 
 %description -n libmariadbembedded-devel
 MariaDB is a multi-user, multi-threaded SQL database server. This
@@ -660,6 +661,9 @@ fi
 %_libdir/libmysqld.so
 
 %changelog
+* Wed Oct 16 2013 Sergey V Turchin <zerg at altlinux dot org> 5.5.33a-alt3
+- fix depends (ALT#29415)
+
 * Tue Oct 01 2013 Slava Dubrovskiy <dubrsl@altlinux.org> 5.5.33a-alt2
 - Fix (ALT#29415)
 
