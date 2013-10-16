@@ -1,5 +1,5 @@
 Name: pymunk
-Version: 3.0.0
+Version: 4.0.0
 Release: alt1
 %setup_python_module %name
 Summary: Example files for %packagename
@@ -8,7 +8,6 @@ License: MIT
 BuildArch: noarch
 Source: %name-%version.zip
 Source1: libload.py
-Patch: pymunk-3.0.0-add_cpBBClampVect.patch
 
 %add_python_req_skip py2exe ctypeslib
 
@@ -29,11 +28,9 @@ engine. It aims to be easy to use, "Pythonic", and non-intrusive.
 
 %prep
 %setup
-%patch -p1
 cp %SOURCE1 pymunk/
 
 %build
-
 %install
 mkdir -p %buildroot%python_sitelibdir_noarch/%modulename %buildroot%_datadir/%name
 install pymunk/*.py %buildroot%python_sitelibdir_noarch/%modulename/
@@ -49,6 +46,10 @@ cp -a examples tests tools %buildroot%_datadir/%name/
 %python_sitelibdir_noarch/pymunkoptions
 
 %changelog
+* Wed Oct 16 2013 Fr. Br. George <george@altlinux.ru> 4.0.0-alt1
+- Autobuild version bump to 4.0.0
+- Drop inactual patch
+
 * Sun Mar 03 2013 Fr. Br. George <george@altlinux.ru> 3.0.0-alt1
 - Autobuild version bump to 3.0.0
 - Provide clean version of libload.py
