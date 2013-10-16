@@ -1,5 +1,5 @@
 Name: xlsclients
-Version: 1.1.2
+Version: 1.1.3
 Release: alt1
 Summary: List client applications running on a display
 Group: System/X11
@@ -32,6 +32,9 @@ Xlsclients is a utility for listing information about the client appli- cations 
 %_man1dir/*
 
 %changelog
+* Mon Oct 14 2013 Fr. Br. George <george@altlinux.ru> 1.1.3-alt1
+- Autobuild version bump to 1.1.3
+
 * Tue May 03 2011 Fr. Br. George <george@altlinux.ru> 1.1.2-alt1
 - Autobuild version bump to 1.1.2
 
