@@ -1,5 +1,5 @@
 Name: hyperrogue
-Version: 38
+Version: 40t
 Release: alt1
 Source: %name-%version.zip
 Url: http://www.roguetemple.com/z/hyper.php
@@ -11,9 +11,9 @@ BuildPreReq: rpm-macros-fonts
 
 Requires: fonts-ttf-vera
 
-# Automatically added by buildreq on Thu Jul 11 2013
+# Automatically added by buildreq on Tue Oct 15 2013
 # optimized out: fontconfig libSDL-devel libstdc++-devel
-BuildRequires: ImageMagick-tools gcc-c++ libSDL_gfx-devel libSDL_ttf-devel unzip
+BuildRequires: ImageMagick-tools gcc-c++ libSDL_gfx-devel libSDL_mixer-devel libSDL_ttf-devel unzip
 
 %description
 You are a lone outsider in a strange, non-Euclidean world. You can move
@@ -73,6 +73,10 @@ install -D %name.desktop %buildroot%_desktopdir/%name.desktop
 %_desktopdir/%name.desktop
 
 %changelog
+* Tue Oct 15 2013 Fr. Br. George <george@altlinux.ru> 40t-alt1
+- Autobuild version bump to 40t
+- Fix build requirements
+
 * Thu Aug 22 2013 Fr. Br. George <george@altlinux.ru> 38-alt1
 - Autobuild version bump to 38
 
