@@ -24,8 +24,8 @@
 %define topsover %topsomver.0.0
 
 Name: %oname-%scalar_type
-Version: 3.4.2
-Release: alt3
+Version: 3.4.3
+Release: alt1
 Summary: Portable, Extensible Toolkit for Scientific Computation (%scalar_type scalars)
 License: BSD
 Group: Sciences/Mathematics
@@ -790,6 +790,9 @@ sed -i 's|\(\-lpetsc\)|-L%ldir/lib \1|' \
 %ldir/sources
 
 %changelog
+* Wed Oct 16 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.4.3-alt1
+- Version 3.4.3
+
 * Tue Sep 03 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.4.2-alt3
 - Rebuilt with Trilinos 11.4.1
 
