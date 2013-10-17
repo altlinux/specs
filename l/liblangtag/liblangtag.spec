@@ -1,24 +1,21 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/gtkdocize gobject-introspection-devel pkgconfig(check) pkgconfig(gobject-2.0)
-# END SourceDeps(oneline)
-%add_optflags %optflags_shared
 Name: liblangtag
 Version: 0.5.2
-Release: alt1_1
+Release: alt2
 Summary: An interface library to access tags for identifying languages
 
 Group: System/Libraries
 License: (LGPLv3+ or MPLv2.0) and UCD
-URL: http://tagoh.bitbucket.org/liblangtag/
-Source0: https://bitbucket.org/tagoh/%{name}/downloads/%{name}-%{version}.tar.bz2
+Url: http://tagoh.bitbucket.org/liblangtag/
+Source0: https://bitbucket.org/tagoh/%name/downloads/%name-%version.tar.bz2
 
-BuildRequires: gtk-doc
-BuildRequires: libtool
-BuildRequires: libxml2-devel
-Source44: import.info
+# Automatically added by buildreq on Sun Jul 28 2013
+# optimized out: gnu-config pkg-config
+BuildRequires: gtk-doc libxml2-devel
+
+BuildRequires: glib2-devel
 
 %description
-%{name} is an interface library to access tags for identifying
+%name is an interface library to access tags for identifying
 languages.
 
 Features:
@@ -37,26 +34,16 @@ Features:
   - canonicalizing
 
 %package devel
-Summary: Development files for %{name}
+Summary: Development files for %name
 Group: Development/C
-Requires: %{name}%{?_isa} = %{version}-%{release}
+Requires: %name%{?_isa} = %version-%release
 
 %description devel
-The %{name}-devel package contains libraries and header files for
-developing applications that use %{name}.
-
-%package doc
-Summary: Documentation of %{name} API
-Group: Documentation
-BuildArch: noarch
-
-%description doc
-The %{name}-doc package contains documentation files for %{name}.
-
+The %name-devel package contains libraries and header files for
+developing applications that use %name.
 
 %prep
-%setup -q
-
+%setup
 
 %build
 %configure --disable-static --enable-shared --disable-introspection
@@ -67,38 +54,52 @@ sed -i \
 make %{?_smp_mflags} V=1 \
     LD_LIBRARY_PATH=`pwd`/liblangtag/.libs${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}
 
-
 %install
-make install DESTDIR=%{buildroot}
-rm -f %{buildroot}/%{_libdir}/*.la %{buildroot}/%{_libdir}/%{name}/*.la
-
+make install DESTDIR=%buildroot
 
 %files
 %doc AUTHORS COPYING NEWS README
-%{_libdir}/%{name}.so.*
-%{_libdir}/%{name}/*.so
-%{_datadir}/%{name}
+%_libdir/%name.so.*
+%_libdir/%name/*.so
+%_datadir/%name
 
 %files devel
-%{_includedir}/%{name}
-%{_libdir}/%{name}.so
-%{_libdir}/pkgconfig/%{name}.pc
-
-%files doc
 %doc COPYING
-%{_datadir}/gtk-doc/html/%{name}
-
+%_includedir/%name
+%_libdir/%name.so
+%_libdir/pkgconfig/%name.pc
+%_datadir/gtk-doc/html/%name
 
 %changelog
+* Thu Oct 17 2013 Fr. Br. George <george@altlinux.ru> 0.5.2-alt2
+- Override fcimport release
+
+* Mon Oct 14 2013 Fr. Br. George <george@altlinux.ru> 0.5.2-alt1
+- Autobuild version bump to 0.5.2
+
 * Sun Sep 15 2013 Igor Vlasenko <viy@altlinux.ru> 0.5.2-alt1_1
 - update to new release by fcimport
 
-* Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.5.1-alt1_3
-- update to new release by fcimport
+* Sun Jul 28 2013 Fr. Br. George <george@altlinux.ru> 0.5.1-alt1
+- Initial build from FC git
 
-* Sat May 04 2013 Igor Vlasenko <viy@altlinux.ru> 0.5.1-alt1_1
-- update to new release by fcimport
+* Thu May 16 2013 Eike Rathke <erack@redhat.com> - 0.5.1-2-UNBUILT
+- updated .spec with MPLv2.0 and UCD licenses
 
-* Thu Apr 25 2013 Igor Vlasenko <viy@altlinux.ru> 0.4.0-alt1_3
-- initial fc import
+* Tue Apr 30 2013 David Tardon <dtardon@redhat.com> - 0.5.1-1
+- fix ABI breakage
 
+* Mon Apr 29 2013 David Tardon <dtardon@redhat.com> - 0.5.0-1
+- new release
+
+* Thu Feb 14 2013 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 0.4.0-3
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_19_Mass_Rebuild
+
+* Sat Dec 01 2012 David Tardon <dtardon@redhat.com> - 0.4.0-2
+- fix build on ppc
+
+* Sun Nov 25 2012 David Tardon <dtardon@redhat.com> - 0.4.0-1
+- new upstream release
+
+* Sun Sep 09 2012 David Tardon <dtardon@redhat.com> - 0.3-1
+- initial import
