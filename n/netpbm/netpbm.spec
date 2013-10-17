@@ -1,7 +1,7 @@
 # NB: we track "superstable" upstream releases, see Url:
 
 Name: netpbm
-Version: 10.35.89
+Version: 10.35.90
 Release: alt1
 
 Summary: Tools for manipulating graphics files in netpbm supported formats
@@ -181,6 +181,11 @@ rm -v converter/other/jbig/{jbig.c,jbig_tab.c,jbig.h}
 rm -rv converter/other/jpeg2000/libjasper/
 sed -i '/^SUBDIRS = libjasper$/d' converter/other/jpeg2000/Makefile
 
+# strict podlator syntax hacks
+sed -r -i '/id="seealso"/i</dl>' userguide/pamtohtmltbl.html
+sed -r -i '/-Cut here-/,/EndEntry/s/&nbsp;/ /g' userguide/pbmtoppa.html
+sed -r -i 's/^<dt>([0-9]+)$/<dt>=\1/' userguide/pnmtojbig.html
+
 %build
 cat <<__EOF__ >lib/compile.h
 #define COMPILE_TIME "$(LC_ALL=C date '+%%a %%b %%d %%Y')"
@@ -307,6 +312,10 @@ cp -a userguide %buildroot%pkgdocdir/html
 %endif
 
 %changelog
+* Tue Oct 15 2013 Fr. Br. George <george@altlinux.ru> 10.35.90-alt1
+- Autobuild version bump to 10.35.90
+- Fix documentation for stronger PODlation
+
 * Mon May 20 2013 Fr. Br. George <george@altlinux.ru> 10.35.89-alt1
 - Autobuild version bump to 10.35.89
 
