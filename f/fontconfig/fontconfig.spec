@@ -1,6 +1,6 @@
 Name: fontconfig
 Version: 2.10.95
-Release: alt2
+Release: alt3
 
 Summary: Font configuration and customization library and utilities
 Group: System/Configuration/Other
@@ -40,6 +40,7 @@ documentation required for development of fontconfig-based software.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
 %autoreconf
 
 %build
@@ -115,6 +116,9 @@ find -L %_sysconfdir/fonts/conf.d -type l -delete
 %docdir/%name-devel*
 
 %changelog
+* Thu Oct 17 2013 Sergey V Turchin <zerg@altlinux.org> 2.10.95-alt3
+- fix apply patch for ALT#26768
+
 * Mon Sep 23 2013 Sergey V Turchin <zerg@altlinux.org> 2.10.95-alt2
 - disable PostScript aliases by default (ALT#26768)
 
