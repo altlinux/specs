@@ -1,10 +1,11 @@
 Name: devscripts
 Version: 2.12.6
-Release: alt1
+Release: alt2
 Source: %{name}_%version.tar.gz
 # XXX We have awfully old po4a
 Source1: devscripts-po4a.conf
 Patch: devscripts-uscan-no_ssl_namecheck.patch
+Patch2: devscripts-2.12.6-alt-fix-pod.patch
 License: GPLv2
 Group: Development/Other
 Url: http://packages.debian.org/devscripts
@@ -55,6 +56,7 @@ It is the part of the Debian devscripts package.
 %prep
 %setup
 %patch -p0
+%patch2 -p2
 sed -i 's/^[.]TQ/.TP/' scripts/diff2patches.1
 grep -rl /usr/share/sgml/docbook/stylesheet/xsl/nwalsh/manpages/docbook.xsl . |
 	while read N; do
@@ -107,6 +109,9 @@ touch %buildroot%_sysconfdir/cvsdeb.conf
 %python_sitelibdir_noarch/*
 
 %changelog
+* Wed Oct 16 2013 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.12.6-alt2
+- Fix build with new pod2man.
+
 * Thu Dec 13 2012 Fr. Br. George <george@altlinux.ru> 2.12.6-alt1
 - Autobuild version bump to 2.12.6
 
