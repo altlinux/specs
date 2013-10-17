@@ -1,6 +1,6 @@
 Name: clementine
-Version: 1.1.1
-Release: alt4
+Version: 1.2.0
+Release: alt1
 Summary: A music player and library organiser
 
 Group: Sound
@@ -10,14 +10,12 @@ Packager: Pavel Maleev <rolland@altlinux.org>
 
 Source0: %name-%version.tar.gz
 Source1: clementine_48.png
-Patch: %name-1.1.1-alt-desktop.patch
+Patch: %name-1.2.0-alt-desktop.patch
+Patch1: %name-1.2.0-chromaprint-avcodec.patch
 Patch2: clementine-0.6-alt-install-icons.patch
-# fc
-Patch3: clementine-1.1.1-libimobiledevice-fix.patch
-Patch4: clementine-1.1.1-fix-build-libav.patch
 
 BuildRequires(pre): rpm-build-licenses
-BuildRequires: boost-devel-headers cmake gcc-c++ gstreamer-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdmcp-devel libXft-devel libXinerama-devel libXpm-devel libXrandr-devel libXt-devel libXtst-devel libXv-devel libgio-devel libglew-devel libgpod-devel libimobiledevice-devel liblastfm-devel libmtp-devel libqt4-opengl libqt4-sql libqt4-webkit libqt4-xmlpatterns libtag-devel libxkbfile-devel python-module-sip qt4-designer subversion
+BuildRequires: boost-devel-headers cmake gcc-c++ gstreamer-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdmcp-devel libXft-devel libXinerama-devel libXpm-devel libXrandr-devel libXt-devel libXtst-devel libXv-devel libgio-devel libglew-devel libgpod-devel liblastfm-devel libmtp-devel libqt4-opengl libqt4-sql libqt4-webkit libqt4-xmlpatterns libtag-devel libxkbfile-devel python-module-sip qt4-designer subversion
 
 BuildRequires: kde-common-devel libqt4-sql-sqlite gst-plugins-gio libqca2-devel protobuf-compiler
 # Enable Google Drive support
@@ -34,9 +32,8 @@ advantage of Qt4.
 %prep
 %setup
 %patch -p2
+%patch1 -p2
 %patch2 -p1
-%patch3 -p1
-%patch4 -p2
 
 %build
 %K4build -DSTATIC_SQLITE=on -DBUILD_WERROR=off
@@ -50,9 +47,13 @@ advantage of Qt4.
 %_bindir/clementine-tagreader
 %_desktopdir/clementine.desktop
 %_iconsdir/hicolor/*/apps/application-x-clementine.*
-%_datadir/kde4/services
+%_datadir/kde4/services/*
+%_datadir/clementine
 
 %changelog
+* Wed Oct 17 2013 Vladimir Didenko <cow@altlinux.org> 1.2.0-alt1
+- Version 1.2.0
+
 * Wed Oct 16 2013 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.1.1-alt4
 - Fixed build with new libav.
 
