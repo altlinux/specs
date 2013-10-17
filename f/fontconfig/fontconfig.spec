@@ -1,6 +1,6 @@
 Name: fontconfig
-Version: 2.10.95
-Release: alt3
+Version: 2.11.0
+Release: alt1
 
 Summary: Font configuration and customization library and utilities
 Group: System/Configuration/Other
@@ -116,6 +116,9 @@ find -L %_sysconfdir/fonts/conf.d -type l -delete
 %docdir/%name-devel*
 
 %changelog
+* Thu Oct 17 2013 Sergey V Turchin <zerg@altlinux.org> 2.11.0-alt1
+- new version
+
 * Thu Oct 17 2013 Sergey V Turchin <zerg@altlinux.org> 2.10.95-alt3
 - fix apply patch for ALT#26768
 
