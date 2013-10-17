@@ -1,6 +1,6 @@
 Name: libchipmunk
-Version: 6.1.5
-Release: alt1
+Version: 6.2.1
+Release: alt2
 Summary: Physics engine for 2D games
 
 Group: System/Libraries
@@ -11,7 +11,7 @@ Patch: Chipmunk-6.1.5-alt-build-shared-demos.patch
 
 # Automatically added by buildreq on Sun Mar 03 2013
 # optimized out: cmake-modules libGL-devel libGLU-devel libICE-devel libSM-devel libX11-devel libXau-devel libXext-devel libXfixes-devel libXi-devel libXrender-devel libXt-devel libstdc++-devel xorg-kbproto-devel xorg-xproto-devel
-BuildRequires: cmake gcc-c++ libGLUT-devel libXScrnSaver-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXft-devel libXinerama-devel libXmu-devel libXpm-devel libXrandr-devel libXres-devel libXtst-devel libXv-devel libXxf86vm-devel libxkbfile-devel xorg-xf86miscproto-devel
+BuildRequires: cmake gcc-c++ libGLUT-devel libXScrnSaver-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXft-devel libXinerama-devel libXmu-devel libXpm-devel libXrandr-devel libXres-devel libXtst-devel libXv-devel libXxf86vm-devel libxkbfile-devel xorg-xf86miscproto-devel libglew-devel libglfw-devel
 
 %description
 Chipmunk is a 2D rigid body physics library distributed under the MIT
@@ -41,7 +41,7 @@ Demo binary and source for %name
 
 %prep
 %setup -n Chipmunk-%version
-%patch -p1
+#patch -p1
 
 %build
 %add_optflags -DCHIPMUNK_FFI
@@ -71,6 +71,13 @@ target_link_libraries(chipmunk -lm)
 %_bindir/*
 
 %changelog
+* Thu Oct 17 2013 Fr. Br. George <george@altlinux.ru> 6.2.1-alt2
+- Resurrect lost index.html
+
+* Wed Oct 16 2013 Fr. Br. George <george@altlinux.ru> 6.2.1-alt1
+- Autobuild version bump to 6.2.1
+- Fix build
+
 * Mon Jun 10 2013 Fr. Br. George <george@altlinux.ru> 6.1.5-alt1
 - Autobuild version bump to 6.1.5
 - Fix patches
