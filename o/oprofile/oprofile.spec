@@ -9,14 +9,14 @@
 Name: oprofile
 %define lname lib%name
 Summary: System wide profiler
-Version: 0.9.8
+Version: 0.9.9
 Release: alt1
 License: GPLv2+
 Group: Development/Tools
 URL: http://%name.sourceforge.net
 Source: %name-%version.tar
 Patch0: %name-%version-%release.patch
-Patch1: %name-0.9.7-xen.patch
+Patch1: %name-0.9.9-xen.patch
 ExclusiveArch: %ix86 ia64 %x86_64 ppc ppc64 s390 s390x alpha alphaev6 sparcv9 sparc64
 
 BuildRequires: docbook-style-xsl gcc-c++ libiberty-devel libpopt-devel xorg-cf-files xsltproc
@@ -176,6 +176,9 @@ useradd -r -g _%name -d %_localstatedir/%name -r -u 16 -s /sbin/nologin \
 
 
 %changelog
+* Fri Oct 18 2013 Led <led@altlinux.ru> 0.9.9-alt1
+- 0.9.9
+
 * Mon Nov 05 2012 Led <led@altlinux.ru> 0.9.8-alt1
 - 0.9.8
 
