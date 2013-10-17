@@ -1,5 +1,5 @@
 %define bname librsvg
-%define ver_major 2.36
+%define ver_major 2.40
 %define api_ver 2.0
 %define gtk_api_ver 2.0
 %define gtk3_api_ver 3.0
@@ -12,8 +12,8 @@
 %def_enable vala
 
 Name: %bname
-Version: %ver_major.4
-Release: alt2
+Version: %ver_major.0
+Release: alt1
 Epoch: 1
 
 Summary: An SVG library based on libart
@@ -24,31 +24,23 @@ Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%bname/%ver_major/%bname-%version.tar.xz
 
 # From configure.in
-%define fontconfig_ver 1.0.1
-%define glib_ver 2.12.0
+%define glib_ver 2.24.0
 %define gio_ver 2.24.0
-%define gtk_ver 2.22.0
-%define gtk3_ver 3.0.0
+%define gtk3_ver 3.2.0
 %define libxml2_ver 2.7.0
 %define cairo_ver 1.2.0
-%define pango_ver 1.32.6
-%define libgsf_ver 1.6.0
 %define croco_ver 0.6.7
 %define vala_ver 0.17.1.26
 
 PreReq: libcroco >= %croco_ver
 
 # From configure.in
-BuildPreReq: libgtk+2-devel >= %gtk_ver
 BuildPreReq: libgtk+3-devel >= %gtk3_ver
 BuildPreReq: glib2-devel >= %glib_ver
 BuildPreReq: libgio-devel >= %gio_ver
 BuildPreReq: libxml2-devel >= %libxml2_ver
-BuildPreReq: libpango-devel >= %pango_ver
 BuildPreReq: libcairo-devel >= %cairo_ver
-BuildPreReq: fontconfig-devel freetype2-devel
 BuildPreReq: libcroco-devel >= %croco_ver
-BuildPreReq: libgsf-devel >= %libgsf_ver
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel libgdk-pixbuf-gir-devel}
 BuildPreReq: libX11-devel libXt-devel
 BuildRequires: gcc-c++ gtk-doc sgml-common zlib-devel
@@ -152,7 +144,6 @@ GObject introspection devel data for the %name library
 %files
 %_libdir/*.so.*
 %{?_enable_pixbuf_loader:%_libdir/gdk-pixbuf-%gtk_api_ver/*/loaders/*.so}
-%{?_enable_pixbuf_loader:%_datadir/themes/*/gtk-%gtk_api_ver/*}
 %doc AUTHORS NEWS README TODO
 
 %files devel
@@ -178,9 +169,6 @@ GObject introspection devel data for the %name library
 %files utils-gtk3
 %_bindir/rsvg-view-3
 
-%files -n libgtk-engine-svg
-%_libdir/gtk-%gtk_api_ver/*/engines/libsvg.so
-
 %if_enabled introspection
 %files gir
 %_typelibdir/Rsvg-%api_ver.typelib
@@ -189,10 +177,12 @@ GObject introspection devel data for the %name library
 %_girdir/Rsvg-%api_ver.gir
 %endif
 
-%exclude %_libdir/gtk-%gtk_api_ver/*/*/*.la
 %{?_enable_pixbuf_loader:%exclude %_libdir/gdk-pixbuf-%gtk_api_ver/*/loaders/*.la}
 
 %changelog
+* Thu Oct 17 2013 Yuri N. Sedunov <aris@altlinux.org> 1:2.40.0-alt1
+- 2.40.0
+
 * Fri Aug 23 2013 Yuri N. Sedunov <aris@altlinux.org> 1:2.36.4-alt2
 - back to 2.36.4
 
