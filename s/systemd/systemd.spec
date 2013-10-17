@@ -26,7 +26,7 @@
 
 Name: systemd
 Version: 208
-Release: alt1
+Release: alt2
 Summary: A System and Session Manager
 Url: http://www.freedesktop.org/wiki/Software/systemd
 Group: System/Configuration/Boot and Init
@@ -1222,6 +1222,9 @@ update_chrooted all
 /lib/udev/write_net_rules
 
 %changelog
+* Thu Oct 17 2013 Alexey Shabalin <shaba@altlinux.ru> 208-alt2
+- update udev.init for create static inodes for SysV
+
 * Wed Oct 02 2013 Alexey Shabalin <shaba@altlinux.ru> 208-alt1
 - 208
 
