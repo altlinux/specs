@@ -6,7 +6,7 @@
 %def_enable introspection
 
 Name: libcryptui
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 Summary: Library for OpenPGP prompts
 
@@ -127,6 +127,9 @@ xvfb-run %make check
 %endif
 
 %changelog
+* Thu Oct 17 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.1-alt1
+- 3.10.1
+
 * Mon Sep 23 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.0-alt1
 - 3.10.0
 

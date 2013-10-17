@@ -7,7 +7,7 @@
 %def_enable selinux
 
 Name: gnome-keyring
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: %name is a password keeper for GNOME
@@ -17,7 +17,7 @@ Url: http://www.gnome.org
 Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
-Patch: gnome-keyring-3.6.3-alt-lfs.patch
+Patch: gnome-keyring-3.10.1-alt-lfs.patch
 
 %define glib_ver 2.32.0
 %define dbus_ver 1.0
@@ -30,7 +30,7 @@ Requires: libp11-kit >= %p11kit_ver
 
 # From configure.in
 BuildPreReq: gnome-common libgio-devel >= %glib_ver
-BuildPreReq: intltool >= 0.35.0 gtk-doc
+BuildPreReq: intltool >= 0.35.0 gtk-doc xsltproc
 BuildPreReq: libdbus-devel >= %dbus_ver
 BuildPreReq: libgcrypt-devel >= %gcrypt_ver
 BuildPreReq: libtasn1-devel >= %tasn1_ver libtasn1-utils libcap-ng-devel libp11-kit-devel >= %p11kit_ver
@@ -94,20 +94,23 @@ and start the keyring daemon.
 %_datadir/p11-kit/modules/gnome-keyring.module
 %_libdir/gnome-keyring
 %_libdir/pkcs11
-
-%exclude %_libdir/pkcs11/gnome-keyring-pkcs11.la
-%exclude %_libdir/gnome-keyring/*/*.la
-
-%doc README AUTHORS NEWS
+%_man1dir/%name-daemon.1.*
 
 %if_enabled pam
 %files -n pam_%name
 /%_lib/security/*
 %endif
 
+%doc README AUTHORS NEWS
+
+%exclude %_libdir/pkcs11/gnome-keyring-pkcs11.la
+%exclude %_libdir/gnome-keyring/*/*.la
 %exclude /%_lib/security/*.la
 
 %changelog
+* Thu Oct 17 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.1-alt1
+- 3.10.1
+
 * Mon Sep 23 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.0-alt1
 - 3.10.0
 
