@@ -25,7 +25,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.10.16
-Release: alt3
+Release: alt4
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -339,7 +339,7 @@ BuildRequires: patch >= 2.6.1-alt1
 
 %{?_enable_htmldocs:BuildRequires: xmlto transfig ghostscript}
 %{?_enable_man:BuildRequires: xmlto}
-%{?_with_perf:BuildRequires: binutils-devel libelf-devel asciidoc elfutils-devel >= 0.138 pkgconfig(gtk+-2.0) libnewt-devel python-dev libunwind-devel libaudit-devel}
+%{?_with_perf:BuildRequires: binutils-devel libelf-devel asciidoc elfutils-devel >= 0.138 pkgconfig(gtk+-2.0) libnewt-devel python-dev libunwind-devel libaudit-devel libnuma-devel}
 %{?_with_lkvm:BuildRequires: binutils-devel libvncserver-devel libSDL-devel zlib-devel libaio-devel libgtk+3-devel}
 
 Requires: bootloader-utils >= 0.4.21
@@ -1822,6 +1822,13 @@ done)
 
 
 %changelog
+* Thu Oct 17 2013 Led <led@altlinux.ru> 3.10.16-alt4
+- updated:
+  + fix-drivers-misc-mei--mei
+  + fix-include-linux
+  + fix-tools--perf
+- updated BuildRequires for perf
+
 * Mon Oct 14 2013 Led <led@altlinux.ru> 3.10.16-alt3
 - disabled:
   + feat-net-ipv4-netfilter--ipt_NETFLOW
