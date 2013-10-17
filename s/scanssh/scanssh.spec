@@ -1,14 +1,14 @@
 Name: scanssh
-Version: 2.1
-Release: alt3
+Version: 2.1.1
+Release: alt1
 Epoch: 1
 
 Summary: Network scaner for SSH servers and open proxies
 License: BSD-style
 Group: Monitoring
-Url: http://www.monkey.org/~provos/scanssh/
+Url: https://github.com/ofalk/scanssh/wiki
 
-# http://www.monkey.org/~provos/scanssh-%version.tar.gz
+# https://github.com/ofalk/scanssh/archive/%name-%version.tar.gz
 Source: scanssh-%version.tar
 Source1: scanssh.control
 Patch1: scanssh-2.0-alt-configure.patch
@@ -53,7 +53,6 @@ ScanSSH сканирует сеть по заданным адресам, выв
 %make_build
 
 %install
-mkdir -p %buildroot{%_bindir,%_man1dir}
 %makeinstall_std
 chmod 700 %buildroot%_bindir/scanssh
 install -pD -m755 %_sourcedir/scanssh.control %buildroot%_controldir/scanssh
@@ -69,9 +68,12 @@ install -pD -m755 %_sourcedir/scanssh.control %buildroot%_controldir/scanssh
 %config %_controldir/scanssh
 %_bindir/*
 %_mandir/man?/*
-%doc README
+%doc README.md
 
 %changelog
+* Thu Oct 17 2013 Dmitry V. Levin <ldv@altlinux.org> 1:2.1.1-alt1
+- Updated to 2.1.1.
+
 * Wed Jun 15 2011 Dmitry V. Levin <ldv@altlinux.org> 1:2.1-alt3
 - Fixed %%post script.
 - Rebuilt with libevent2.
