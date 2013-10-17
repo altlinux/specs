@@ -4,7 +4,7 @@
 %define fsname f2fs
 Name: %fsname-tools
 Version: 1.1.0
-Release: alt4
+Release: alt5
 Summary: Tools for Flash-Friendly File System (F2FS)
 License: GPLv2
 Group: System/Kernel and hardware
@@ -57,6 +57,9 @@ Currently, the tools include mkfs.%fsname, fsck.%fsname and dump.%fsname.
 
 
 %changelog
+* Fri Oct 18 2013 Led <led@altlinux.ru> 1.1.0-alt5
+- upstream updates
+
 * Sat Aug 31 2013 Led <led@altlinux.ru> 1.1.0-alt4
 - upstream updates
 
