@@ -6,7 +6,7 @@
 
 Name: branding-%brand-%smalltheme
 Version: 7.0.0
-Release: alt13
+Release: alt14
 BuildArch: noarch
 
 %define theme %name
@@ -31,7 +31,7 @@ BuildRequires: ImageMagick fontconfig bc libGConf-devel
 %define Brand_ru Альт Линукс
 %define status_en %nil
 %define status %nil
-%define variants altlinux-desktop altlinux-office-desktop altlinux-office-server altlinux-lite altlinux-workbench school-master altlinux-gnome-desktop
+%define variants altlinux-desktop altlinux-office-desktop altlinux-office-server altlinux-lite altlinux-workbench school-master altlinux-gnome-desktop sisyphus-server-light
 
 Source: %name.tar
 
@@ -455,6 +455,9 @@ fi
 %_datadir/kde4/apps/kio_desktop/DesktopLinks/indexhtml.desktop
 
 %changelog
+* Fri Oct 18 2013 Sergey V Turchin <zerg at altlinux dot org> 7.0.0-alt14
+- add conflict with sisyphus-server-light
+
 * Fri Jul 19 2013 Sergey V Turchin <zerg at altlinux dot org> 7.0.0-alt13
 - fix gfxboot background gamma
 - decrease plymouth backgrounds size
