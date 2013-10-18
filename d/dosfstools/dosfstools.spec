@@ -1,6 +1,6 @@
 Name: dosfstools
-Version: 3.0.22
-Release: alt2
+Version: 3.0.23
+Release: alt1
 
 Summary: Utilities to create and check MS-DOS FAT filesystems
 License: GPL
@@ -42,6 +42,9 @@ code.
 %doc doc/*
 
 %changelog
+* Fri Oct 18 2013 Anton Farygin <rider@altlinux.ru> 3.0.23-alt1
+- new version
+
 * Tue Oct 15 2013 Michael Shigorin <mike@altlinux.org> 3.0.22-alt2
 - fixed small FAT32 filesystem cluster size to avoid confusing
   UEFI firmware into ignoring the resulting ESP (closes: #29476)
