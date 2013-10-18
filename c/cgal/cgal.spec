@@ -1,7 +1,7 @@
 %define somver 9
 %define sover %somver.0.0
 Name: cgal
-Version: 4.2
+Version: 4.3
 Release: alt1
 Summary: Easy access to efficient and reliable geometric algorithms
 License: Free for non-commertial using
@@ -10,7 +10,7 @@ Url: http://www.cgal.org/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: CGAL-%version.tar.gz
-Source1: https://gforge.inria.fr/frs/download.php/32364/CGAL-4.2-doc_html.tar.gz
+Source1: https://gforge.inria.fr/frs/download.php/32999/CGAL-4.3-doc_html.tar.gz
 Source2: https://gforge.inria.fr/frs/download.php/32357/cgal_manual.pdf
 Source4: cmk.txt
 Source5: %name.pc
@@ -181,6 +181,9 @@ install -p -m644 %name.pc %buildroot%_pkgconfigdir
 %doc %_docdir/%{name}*
 
 %changelog
+* Fri Oct 18 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.3-alt1
+- Version 4.3
+
 * Fri Apr 12 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.2-alt1
 - Version 4.2
 
