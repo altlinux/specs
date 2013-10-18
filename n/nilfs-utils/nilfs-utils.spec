@@ -8,7 +8,7 @@
 %define lname lib%bname
 Name: %bname-utils
 Version: 2.1.5
-Release: alt1
+Release: alt2
 Summary: Utilities for managing NILFS v2 filesystems
 License: GPLv2+
 Group: System/Kernel and hardware
@@ -118,6 +118,9 @@ done
 
 
 %changelog
+* Fri Oct 18 2013 Led <led@altlinux.ru> 2.1.5-alt2
+- cleanerd: fix wrong cleaner speed of manual clean mode
+
 * Sun Jul 14 2013 Led <led@altlinux.ru> 2.1.5-alt1
 - 2.1.5
 
