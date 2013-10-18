@@ -1,6 +1,6 @@
 Name: installer-feature-network-shares-client
 Version: 0.9
-Release: alt2
+Release: alt3
 
 %define hookdir %_datadir/install2/postinstall.d
 
@@ -38,6 +38,9 @@ install -pm755 *.sh %buildroot/%hookdir/
 %hookdir/*
 
 %changelog
+* Fri Oct 18 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.9-alt3
+- usage of unexistent umount.cifs removed 
+
 * Fri Nov 30 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.9-alt2
 - add 'auth..pam_mount' also to krb5_ccreds
 
