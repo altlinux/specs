@@ -5,7 +5,7 @@
 Summary:	Mozilla LDAP C SDK
 Name:		mozldap
 Version:	6.0.7
-Release:	alt1
+Release:	alt3
 License:	MPL/GPL/LGPL
 URL:		https://wiki.mozilla.org/LDAP_C_SDK
 Group:		System/Libraries
@@ -18,6 +18,7 @@ Patch2:		ldapcsdk-5.1.7-alt-rpath-link.patch
 Patch3:		mozldap-alt-allow-x86_64-host-build.patch
 Patch5:		mozldap-alt-pc-fix.patch
 Patch6:		mozldap-fix-pthread-link.patch
+Patch7:		mozldap-alt-fix-ldap_str2charray.patch
 
 # Automatically added by buildreq on Mon Feb 26 2007 (-bi)
 BuildRequires: chrpath gcc-c++ libsasl2-devel libsvrcore-devel nss-utils python-base
@@ -60,6 +61,7 @@ cd mozldap
 %patch3 -p0 -b .fix3
 %patch5 -p0 -b .fix5
 %patch6 -p0 -b .fix6
+%patch7 -p2 -b .fix7
 
 %build
 cd mozldap/c-sdk
@@ -177,6 +179,12 @@ done
 %_datadir/%name
 
 %changelog
+* Fri Oct 18 2013 Alexey Gladkov <legion@altlinux.ru> 6.0.7-alt3
+- Rebuilt with libsasl2.
+
+* Tue May 08 2012 Alexey Gladkov <legion@altlinux.ru> 6.0.7-alt2
+- Fix ldap str2charray (Vitaly Kuznetsov).
+
 * Thu Mar 10 2011 Alexey Gladkov <legion@altlinux.ru> 6.0.7-alt1
 - New version (6.0.7).
 

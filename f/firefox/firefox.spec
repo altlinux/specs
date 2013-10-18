@@ -8,7 +8,7 @@ Summary:              The Mozilla Firefox project is a redesign of Mozilla's bro
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox
-Version:        23.0
+Version:        24.0
 Release:        alt1
 License:        MPL/GPL/LGPL
 Group:          Networking/WWW
@@ -51,6 +51,7 @@ BuildRequires: libgio-devel
 BuildRequires: libfreetype-devel fontconfig-devel
 BuildRequires: libstartup-notification-devel
 BuildRequires: rpm-macros-alternatives
+BuildRequires: gstreamer-devel gst-plugins-devel
 
 # Python requires
 BuildRequires: python-module-distribute
@@ -252,6 +253,28 @@ done
 %_rpmmacrosdir/firefox
 
 %changelog
+* Tue Oct 01 2013 Alexey Gladkov <legion@altlinux.ru> 24.0-alt1
+- New release (24.0).
+- Add gstreamer support (ALT#29454).
+- Fixed:
+  + MFSA 2013-92 GC hazard with default compartments and frame chain restoration
+  + MFSA 2013-91 User-defined properties on DOM proxies get the wrong "this" object
+  + MFSA 2013-90 Memory corruption involving scrolling
+  + MFSA 2013-89 Buffer overflow with multi-column, lists, and floats
+  + MFSA 2013-88 compartment mismatch re-attaching XBL-backed nodes
+  + MFSA 2013-87 Shared object library loading from writable location
+  + MFSA 2013-86 WebGL Information disclosure through OS X NVIDIA graphic drivers
+  + MFSA 2013-85 Uninitialized data in IonMonkey
+  + MFSA 2013-84 Same-origin bypass through symbolic links
+  + MFSA 2013-83 Mozilla Updater does not lock MAR file after signature verification
+  + MFSA 2013-82 Calling scope for new Javascript objects can lead to memory corruption
+  + MFSA 2013-81 Use-after-free with select element
+  + MFSA 2013-80 NativeKey continues handling key messages after widget is destroyed
+  + MFSA 2013-79 Use-after-free in Animation Manager during stylesheet cloning
+  + MFSA 2013-78 Integer overflow in ANGLE library
+  + MFSA 2013-77 Improper state in HTML5 Tree Builder with templates
+  + MFSA 2013-76 Miscellaneous memory safety hazards (rv:24.0 / rv:17.0.9)
+
 * Mon Aug 12 2013 Alexey Gladkov <legion@altlinux.ru> 23.0-alt1
 - New release (23.0).
 - Fixed:
