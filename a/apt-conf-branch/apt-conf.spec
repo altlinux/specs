@@ -4,7 +4,7 @@
 
 Name: %base_name-%distro
 Version: 7.0.0
-Release: alt3
+Release: alt4
 
 Summary: A set of apt configuration files for %distribution %Distro
 License: GPL
@@ -46,6 +46,9 @@ fi
 %config(noreplace) %_sysconfdir/apt
 
 %changelog
+* Fri Oct 18 2013 Gleb F-Malinovskiy <glebfm@altlinux.org> 7.0.0-alt4
+- Bump release.
+
 * Mon Jun 03 2013 Gleb F-Malinovskiy <glebfm@altlinux.org> 7.0.0-alt3
 - move desktop files to altlinux-repos package
 
