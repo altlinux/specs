@@ -1,5 +1,5 @@
 %define branch 0.8
-%define svn svn3746
+%define svn svn3815
 
 Version: %branch.0
 Epoch: 1
@@ -559,6 +559,14 @@ Requires: qmmp = %version-%release
 %description -n %name-trackchange
 This plugin executes external command when current track is changed
 
+%package -n %name-rgscan
+Summary: ReplayGain Scanner Plugin for Qmmp
+Group: Sound
+Requires: qmmp = %version-%release
+
+%description -n %name-rgscan
+This plugin scans audio files and gives information for volume normalization
+
 %package -n lib%name-devel
 Summary: Qmmp header files
 Group: Development/C++
@@ -581,7 +589,7 @@ Requires: qmmp-in-musepack qmmp-statusicon qmmp-in-sndfile qmmp-in-cue
 Requires: qmmp-vis-analyzer qmmp-scrobbler qmmp-hal qmmp-hotkey
 Requires: qmmp-eff-bs2b qmmp-vis-projectm qmmp-fileops qmmp-converter
 Requires: qmmp-out-jack qmmp-out-oss qmmp-out-null qmmp-http qmmp-mms
-Requires: qmmp-kdenotify qmmp-eff-ladspa qmmp-covermanager
+Requires: qmmp-kdenotify qmmp-eff-ladspa qmmp-covermanager qmmp-rgscan
 Requires: qmmp-eff-crossfade qmmp-udisks qmmp-in-gme qmmp-in-sid
 Requires: qmmp-streambrowser qmmp-trackchange qmmp-copypaste qmmp-eff-extrastereo
 
@@ -786,6 +794,9 @@ mkdir -p %buildroot/{%_miconsdir,%_niconsdir,%_liconsdir}
 %files -n %name-copypaste
 %_libdir/%name/General/libcopypaste*
 
+%files -n %name-rgscan
+%_libdir/%name/General/librgscan*
+
 %files -n lib%name-devel
 %dir %_includedir/%name
 %dir %_includedir/%{name}ui
@@ -800,6 +811,9 @@ mkdir -p %buildroot/{%_miconsdir,%_niconsdir,%_liconsdir}
 %files -n %name-full
 
 %changelog
+* Fri Oct 18 2013 Motsyo Gennadi <drool@altlinux.ru> 1:0.8.0-alt2.svn3815
+- 0.8.0 svn3815 version
+
 * Fri Oct 04 2013 Motsyo Gennadi <drool@altlinux.ru> 1:0.8.0-alt2.svn3746
 - 0.8.0 svn3746 version
 
