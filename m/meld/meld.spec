@@ -1,7 +1,7 @@
 %define ver_major 1.8
 
 Name: meld
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: Meld Diff Viewer
@@ -66,6 +66,9 @@ subst s'|/usr/local|/usr|' INSTALL
 %doc NEWS
 
 %changelog
+* Fri Oct 18 2013 Yuri N. Sedunov <aris@altlinux.org> 1.8.2-alt1
+- 1.8.2
+
 * Sun Sep 22 2013 Yuri N. Sedunov <aris@altlinux.org> 1.8.1-alt1
 - 1.8.1
 
