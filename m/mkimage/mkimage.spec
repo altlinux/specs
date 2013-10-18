@@ -1,6 +1,6 @@
 Name: mkimage
 Version: 0.2.9
-Release: alt2
+Release: alt3
 
 Summary: Simple image creator
 License: GPL3
@@ -58,12 +58,12 @@ mkdir -p %buildroot%sysctldir
 echo "fs.protected_hardlinks = 0" > %buildroot%sysctldir/%name.conf
 
 %post
-if [ -f %procfile ] && [ "`cat %procfile`" = 1 ]; then
-	echo "warning: see %name-preinstall" >&2
+if grep -Fqsx 1 "%procfile"; then
+	echo "warning: mkimage won't work, see %name-preinstall" >&2
 fi
 
 %post preinstall
-if [ -f %procfile ] && [ "`cat %procfile`" = 1 ]; then
+if grep -Fqsx 1 "%procfile"; then
 	echo "%name-preinstall: allowing to hardlink non-owned files..." >&2
 	echo 0 > %procfile
 fi
@@ -81,6 +81,9 @@ fi
 # - maybe Require: %%name-preinstall in the main package sometime later
 
 %changelog
+* Fri Oct 18 2013 Michael Shigorin <mike@altlinux.org> 0.2.9-alt3
+- %%post scriptlet simplification (thx ldv@)
+
 * Fri Oct 18 2013 Michael Shigorin <mike@altlinux.org> 0.2.9-alt2
 - fixed eval-order-thinko in %%post scriptlet, sorry
 
