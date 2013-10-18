@@ -25,7 +25,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.10.16
-Release: alt4
+Release: alt5
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -1822,6 +1822,12 @@ done)
 
 
 %changelog
+* Thu Oct 17 2013 Led <led@altlinux.ru> 3.10.16-alt5
+- updated:
+  + fix-drivers-usb-core
+  + fix-lib
+  + feat-drivers-block--btier
+
 * Thu Oct 17 2013 Led <led@altlinux.ru> 3.10.16-alt4
 - updated:
   + fix-drivers-misc-mei--mei
