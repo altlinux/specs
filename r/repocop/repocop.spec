@@ -1,6 +1,6 @@
 Name: repocop
 Version: 0.68
-Release: alt1
+Release: alt2
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
 
@@ -90,8 +90,10 @@ install -m755 common/* $RPM_BUILD_ROOT%_datadir/repocop/common/
 mkdir -p $RPM_BUILD_ROOT%_datadir/repocop/html/
 install -m644 img/* $RPM_BUILD_ROOT%_datadir/repocop/html/
 
-mkdir -p %buildroot%_prefix/libexec/repocop/backends/fsprefix
-cp -a libexec/backends/fsprefix/repocop-test-* %buildroot%_prefix/libexec/repocop/backends/fsprefix/
+for backend in fsprefix fsmd5prefix ; do
+    mkdir -p %buildroot%_prefix/libexec/repocop/backends/$backend
+    cp -a libexec/backends/$backend/repocop-test-* %buildroot%_prefix/libexec/repocop/backends/$backend/
+done
 
 %files
 #doc README ChangeLog
@@ -132,6 +134,9 @@ cp -a libexec/backends/fsprefix/repocop-test-* %buildroot%_prefix/libexec/repoco
 %_datadir/repocop/html
 
 %changelog
+* Sun Oct 20 2013 Igor Vlasenko <viy@altlinux.ru> 0.68-alt2
+- added fsmd5prefix backend
+
 * Sun Oct 20 2013 Igor Vlasenko <viy@altlinux.ru> 0.68-alt1
 - initial support for multiple backends
 
