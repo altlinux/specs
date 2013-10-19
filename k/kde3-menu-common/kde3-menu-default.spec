@@ -2,12 +2,12 @@
 %def_with original
 Name: kde3-menu-common
 Version: 0.05
-Release: alt2
+Release: alt2.1
 License: BSD
 
 URL: http://altlinux.org/
 Source: %name-%version.tar
-Packager: Igor Vlasenko <viy@altlinux.org>
+Packager: Roman Savochenko <rom_as@altlinux.org>
 BuildArch: noarch
 
 #package -n kde3-menu-common
@@ -75,6 +75,9 @@ mv usr etc %buildroot/
 
 
 %changelog
+* Sat Oct 19 2013 Roman Savochenko <rom_as@altlinux.org> 0.05-alt2.1
+- bind kdeinfo subtree to Kcontrol Peripherals
+
 * Sat Jun 16 2012 Igor Vlasenko <viy@altlinux.ru> 0.05-alt2
 - disabled kde3-menu-original
 
