@@ -3,8 +3,8 @@
 %def_enable wayland_egl
 
 Name: Mesa
-Version: 9.2.1
-Release: alt2
+Version: 9.2.2
+Release: alt1
 Epoch: 4
 License: MIT
 Summary: OpenGL compatible 3D graphics library
@@ -357,6 +357,9 @@ ln -sf ../..%_sysconfdir/X11/%_lib/libGLESv2.so.2 %_libdir/
 %_bindir/glxgears
 
 %changelog
+* Sat Oct 19 2013 Valery Inozemtsev <shrek@altlinux.ru> 4:9.2.2-alt1
+- 9.2.2
+
 * Sun Oct 13 2013 Valery Inozemtsev <shrek@altlinux.ru> 4:9.2.1-alt2
 - enabled vdpau (closes: #29338)
 - enabled XvMC
