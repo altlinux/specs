@@ -25,7 +25,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.10.16
-Release: alt5
+Release: alt6
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -1822,6 +1822,15 @@ done)
 
 
 %changelog
+* Fri Oct 18 2013 Led <led@altlinux.ru> 3.10.16-alt6
+- updated:
+  + fix-drivers-cpufreq--acpi-cpufreq
+  + fix-net-ipv6
+- added:
+  + fix-drivers-cpufreq--cpufreq
+  + fix-drivers-cpufreq--cpufreq_conservative
+  + fix-drivers-cpufreq--cpufreq_ondemand
+
 * Thu Oct 17 2013 Led <led@altlinux.ru> 3.10.16-alt5
 - updated:
   + fix-drivers-usb-core
