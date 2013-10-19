@@ -1,5 +1,5 @@
 Name: autorepo-altnode-config
-Version: 0.08
+Version: 0.09
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -52,7 +52,7 @@ if ! grep '^\[pub\]' /etc/rsyncd.conf; then
 # altnode auto configuration
 [pub]
 path=/var/ftp/pub
-use chroot
+#use chroot
 read only
 list
 EOF
@@ -98,6 +98,9 @@ fi
 %config %_sysconfdir/monitrc.d/nginx.conf
 
 %changelog
+* Sat Oct 19 2013 Igor Vlasenko <viy@altlinux.ru> 0.09-alt1
+- rsync entry is adapted to common /space
+
 * Sat Jul 20 2013 Igor Vlasenko <viy@altlinux.ru> 0.08-alt1
 - p7 support
 
