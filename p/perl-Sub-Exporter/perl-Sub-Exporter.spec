@@ -14,7 +14,7 @@
 %define _enable_test 1
 
 Name: perl-Sub-Exporter
-Version: 0.986
+Version: 0.987
 Release: alt1
 
 Summary: a sophisticated exporter for custom-built routines
@@ -47,6 +47,9 @@ None.
 %exclude %perl_vendor_archlib
 
 %changelog
+* Sat Oct 19 2013 Igor Vlasenko <viy@altlinux.ru> 0.987-alt1
+- automated CPAN update
+
 * Mon Oct 07 2013 Igor Vlasenko <viy@altlinux.ru> 0.986-alt1
 - automated CPAN update
 
