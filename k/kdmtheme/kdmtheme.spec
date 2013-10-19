@@ -1,7 +1,9 @@
+%define qtdir %_qt3dir
+%define kdedir %_K3prefix
 
 Name:		kdmtheme
 Version:	1.2.2
-Release:	alt4
+Release:	alt5
 Summary:	Theme Manager for KDM
 
 License:	GPL
@@ -16,6 +18,8 @@ Patch1:		kdmtheme-1.2.2-alt-desktop-fix.patch
 Patch2:		kdmtheme-1.2.2-l10n-ru.patch
 Patch3:		kdmtheme-1.2.2-kubuntu_11_replace_qlist.patch
 Patch4:		kdmtheme-1.2.2-alt-info-update.patch
+Patch5:		tde-3.5.13-build-defdir-autotool.patch
+Patch6:		cvs-auto_version_check.patch
 
 BuildRequires: gcc-c++ kdelibs-devel, desktop-file-utils, kdebase-devel kdelibs-devel xmllint
 
@@ -29,14 +33,22 @@ any KDM theme you want.
 %patch0 -p1
 %patch1 -p2
 %patch2 -p1
-%patch3 -p1
+#patch3 -p1
 %patch4 -p1
+%patch5
+%patch6
+
+cp -Rp /usr/share/libtool/aclocal/libtool.m4 admin/libtool.m4.in
+cp -Rp /usr/share/libtool/config/ltmain.sh admin/ltmain.sh
+make -f admin/Makefile.common cvs ||:
 
 %build
-%set_automake_version 1.7
-%set_autoconf_version 2.5
-%add_optflags -I%_includedir/tqtinterface
-%configure --without-arts
+rm -rf %buildroot
+export QTDIR=%qtdir
+export KDEDIR=%kdedir
+
+export PATH=$QTDIR/bin:$KDEDIR/bin:$PATH
+%configure
 %make_build
 
 %install
@@ -51,6 +63,10 @@ any KDM theme you want.
 %_libdir/kde3/kcm_%name.la
 
 %changelog
+* Sat Oct 19 2013 Roman Savochenko <rom_as@altlinux.ru> 1.2.2-alt5
+- kdmtheme.desktop category set to Qt;KDE;System;X-KDE-settings-system;
+- Release TDE version 3.5.13.2
+
 * Tue Feb 01 2011 Andrey Cherepanov <cas@altlinux.org> 1.2.2-alt4
 - Disable aRts support, fix build
 
