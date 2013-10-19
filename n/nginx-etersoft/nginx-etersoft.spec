@@ -1,5 +1,5 @@
 Name: nginx-etersoft
-Version: 0.2.5
+Version: 0.2.6
 Release: alt1
 
 Summary: Additional Nginx templates and functions
@@ -58,6 +58,12 @@ install -m644 www/* %buildroot%webserver_htdocsdir/maintenance/
 %config(noreplace) %webserver_htdocsdir/maintenance/*
 
 %changelog
+* Sat Oct 19 2013 Vitaly Lipatov <lav@altlinux.ru> 0.2.6-alt1
+- use /var/lib/vz/private
+- fix expires
+- add mediateproxy, fix other configs
+- rewrite trans conf via main trans-proxy.inc
+
 * Sun Oct 06 2013 Vitaly Lipatov <lav@altlinux.ru> 0.2.5-alt1
 - rename config, add techalias
 - rewrite the rewrite checking code
