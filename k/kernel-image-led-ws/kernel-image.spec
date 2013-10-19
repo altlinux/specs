@@ -24,13 +24,13 @@
 %define flavour %base_flavour-%sub_flavour
 
 Name: kernel-image-%flavour
-Version: 3.10.16
-Release: alt6
+Version: 3.10.17
+Release: alt1
 
 %define kernel_req %nil
 %define kernel_prov %nil
 %define kernel_branch 3.10
-%define kernel_stable_version 16
+%define kernel_stable_version 17
 %define kernel_extra_version .%kernel_stable_version
 #define kernel_extra_version %nil
 
@@ -1822,6 +1822,14 @@ done)
 
 
 %changelog
+* Sat Oct 19 2013 Led <led@altlinux.ru> 3.10.17-alt1
+- 3.10.17
+- removed:
+  + fix-sound-pci-hda--snd-hda-codec-realtek
+- updated:
+  + fix-include-linux
+  + feat-kernel-vserver
+
 * Fri Oct 18 2013 Led <led@altlinux.ru> 3.10.16-alt6
 - updated:
   + fix-drivers-cpufreq--acpi-cpufreq
