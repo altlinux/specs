@@ -1,7 +1,7 @@
 %define ver_major 0.3
 
 Name: d-feet
-Version: %ver_major.7
+Version: %ver_major.8
 Release: alt1
 
 Summary: A powerful D-Bus Debugger
@@ -43,15 +43,19 @@ objects.
 %files -f %name.lang
 %_bindir/%name
 %python_sitelibdir_noarch/dfeet
-%_datadir/d-feet/
-%_datadir/applications/d-feet.desktop
-%_datadir/glib-2.0/schemas/org.gnome.d-feet.gschema.xml
+%_datadir/%name/
+%_datadir/applications/%name.desktop
+%_datadir/glib-2.0/schemas/org.gnome.%name.gschema.xml
 %_iconsdir/hicolor/*x*/apps/*.png
 %_iconsdir/hicolor/*/apps/*.svg
-%_iconsdir/HighContrast/scalable/apps/d-feet.svg
+%_iconsdir/HighContrast/scalable/apps/%name.svg
+%_datadir/appdata/%name.appdata.xml
 %doc AUTHORS README NEWS
 
 %changelog
+* Sat Oct 19 2013 Yuri N. Sedunov <aris@altlinux.org> 0.3.8-alt1
+- 0.3.8
+
 * Wed Sep 25 2013 Yuri N. Sedunov <aris@altlinux.org> 0.3.7-alt1
 - 0.3.7
 
