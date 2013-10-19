@@ -1,13 +1,13 @@
 %define oname QLiveBittorrent
 Name: qlivebittorrent
 Version: 0.0
-Release: alt0.1
+Release: alt0.2
 
 Summary: Bittorrent client with function reading files before they would be downloaded
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 Url: https://github.com/vtyulb/QLiveBittorrent
-License: GPL
+License: GPLv2+
 Group: File tools
 
 # https://github.com/vtyulb/QLiveBittorrent
@@ -30,7 +30,7 @@ See also http://habrahabr.ru/post/185770/
 
 %prep
 %setup
-%patch -p1
+#patch -p1
 %__subst "s|PORTABLE||g" src/QLiveBittorrent.pro
 
 %build
@@ -51,5 +51,8 @@ install -m 755 -D qlivebittorrent-driver %buildroot%_bindir/qlivebittorrent-driv
 %_bindir/qlivebittorrent-driver
 
 %changelog
+* Sat Oct 19 2013 Vitaly Lipatov <lav@altlinux.ru> 0.0-alt0.2
+- update the code to 4dbc6b1d31be4d14abdeae71ee76642e9ba116cc
+
 * Sun Jul 07 2013 Vitaly Lipatov <lav@altlinux.ru> 0.0-alt0.1
 - initial build for ALT Linux Sisyphus
