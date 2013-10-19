@@ -14,7 +14,7 @@
 %define _disable_test 1
 
 Name: perl-CPAN-Meta-Check
-Version: 0.007
+Version: 0.008
 Release: alt1
 
 Summary: Verify requirements in a CPAN::Meta object
@@ -46,6 +46,9 @@ None.
 %perl_vendor_privlib/CPAN/*
 
 %changelog
+* Sat Oct 19 2013 Igor Vlasenko <viy@altlinux.ru> 0.008-alt1
+- automated CPAN update
+
 * Fri Aug 02 2013 Igor Vlasenko <viy@altlinux.ru> 0.007-alt1
 - automated CPAN update
 
