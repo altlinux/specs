@@ -14,8 +14,8 @@
 %define _enable_test 1
 
 Name: perl-Archive-Any
-Version: 0.0932
-Release: alt2.1
+Version: 0.0940
+Release: alt1
 
 Summary: Single interface to deal with file archives.
 
@@ -26,7 +26,7 @@ Url: http://search.cpan.org/dist/Archive-Any/
 Packager: Michael Bochkaryov <misha@altlinux.ru>
 
 BuildArch: noarch
-Source: %m_distro-%version.tar.gz
+Source: http://www.cpan.org/authors/id/O/OA/OALDERS/Archive-Any-%{version}.tar.gz
 
 BuildPreReq: perl-Archive-Tar
 # Automatically added by buildreq on Wed Sep 03 2008 (-bi)
@@ -50,6 +50,9 @@ Tarballs, zip files, etc.
 %perl_vendor_privlib/Archive*
 
 %changelog
+* Sat Oct 19 2013 Igor Vlasenko <viy@altlinux.ru> 0.0940-alt1
+- automated CPAN update
+
 * Mon Nov 22 2010 Igor Vlasenko <viy@altlinux.ru> 0.0932-alt2.1
 - repair after perl 5.12 upgrade using girar-nmu
 
