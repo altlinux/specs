@@ -14,7 +14,7 @@
 %define _enable_test 1
 
 Name: perl-SRU
-Version: 1.00
+Version: 1.01
 Release: alt1
 
 Summary: Search and Retrieve URL Service
@@ -88,6 +88,9 @@ http://www.ockham.org.
 %perl_vendor_privlib/SRU.pm
 
 %changelog
+* Sat Oct 19 2013 Igor Vlasenko <viy@altlinux.ru> 1.01-alt1
+- automated CPAN update
+
 * Fri Jul 26 2013 Igor Vlasenko <viy@altlinux.ru> 1.00-alt1
 - automated CPAN update
 
