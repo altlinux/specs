@@ -1,6 +1,6 @@
 Name: repocop
-Version: 0.67
-Release: alt3
+Version: 0.68
+Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
 
@@ -90,6 +90,9 @@ install -m755 common/* $RPM_BUILD_ROOT%_datadir/repocop/common/
 mkdir -p $RPM_BUILD_ROOT%_datadir/repocop/html/
 install -m644 img/* $RPM_BUILD_ROOT%_datadir/repocop/html/
 
+mkdir -p %buildroot%_prefix/libexec/repocop/backends/fsprefix
+cp -a libexec/backends/fsprefix/repocop-test-* %buildroot%_prefix/libexec/repocop/backends/fsprefix/
+
 %files
 #doc README ChangeLog
 %_bindir/repocop-*
@@ -111,6 +114,7 @@ install -m644 img/* $RPM_BUILD_ROOT%_datadir/repocop/html/
 %perl_vendor_privlib/T*
 #perl_vendor_man3dir/*
 %_datadir/repocop/pkgcollectors/rpm
+%_prefix/libexec/repocop
 
 %files tools
 #doc fixscripts/*.pl
@@ -128,6 +132,9 @@ install -m644 img/* $RPM_BUILD_ROOT%_datadir/repocop/html/
 %_datadir/repocop/html
 
 %changelog
+* Sun Oct 20 2013 Igor Vlasenko <viy@altlinux.ru> 0.68-alt1
+- initial support for multiple backends
+
 * Thu Jul 25 2013 Igor Vlasenko <viy@altlinux.ru> 0.67-alt3
 - repocop-report-html fixes
 
