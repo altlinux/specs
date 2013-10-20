@@ -1,5 +1,5 @@
 Name: repocop-report-distrodb
-Version: 0.16
+Version: 0.17
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -9,7 +9,7 @@ Group: Development/Other
 License: GPL or Artistic
 Url: http://repocop.altlinux.org
 
-Requires: repocop > 0.54
+Requires: repocop > 0.67
 Obsoletes: repocop-report-distromap-db < 0.12
 
 BuildRequires: perl-devel perldoc
@@ -39,6 +39,9 @@ ln -s repocop-report-distrodb %buildroot/%_bindir/repocop-report-distromap-db
 #%_man1dir/repocop-report-prometeus-*
 
 %changelog
+* Sun Oct 20 2013 Igor Vlasenko <viy@altlinux.ru> 0.17-alt1
+- support for repocop > 0.67
+
 * Mon Sep 02 2013 Igor Vlasenko <viy@altlinux.ru> 0.16-alt1
 - added headers-rebased
 
