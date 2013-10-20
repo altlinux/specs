@@ -1,6 +1,6 @@
 Name: repocop-report-prometheus
-Version: 0.31
-Release: alt2
+Version: 0.32
+Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
 
@@ -9,7 +9,7 @@ Group: Development/Other
 License: GPL or Artistic
 Url: http://repocop.altlinux.org
 
-Requires: repocop > 0.15
+Requires: repocop > 0.68
 #Requires: perl-JSON-XS
 Obsoletes: repocop-prometeus < 0.22
 Obsoletes: repocop-report-prometeus < 0.31
@@ -55,6 +55,9 @@ install -m 755 repocop-report-prometheus* %buildroot/%_bindir/
 %_bindir/repocop-report-prometheus2*
 
 %changelog
+* Sun Oct 20 2013 Igor Vlasenko <viy@altlinux.ru> 0.32-alt1
+- support for TestDB
+
 * Tue Nov 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.31-alt2
 - added Obsoletes
 
