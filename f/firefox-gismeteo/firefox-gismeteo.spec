@@ -5,11 +5,11 @@
 Summary: Weather forecast extension for Firefox by Gismeteo.Ru
 Name:	firefox-%rname
 Version: 5.0.0.6
-Release: alt1
+Release: alt2
 Source0: %rname-%version.xpi
 License: Free
 Group: Networking/WWW
-URL: http://www.gismeteo.ru/
+URL: https://addons.mozilla.org/ru/firefox/addon/gismeteobar/
 
 BuildArch: noarch
 BuildRequires(pre): rpm-build-firefox
@@ -35,6 +35,9 @@ fi
 %ciddir
 
 %changelog
+* Sun Oct 20 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.0.0.6-alt2
+- Change URL
+
 * Sun Oct 20 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.0.0.6-alt1
 - Version 5.0.0.6
 
