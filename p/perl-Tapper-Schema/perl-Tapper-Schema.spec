@@ -8,7 +8,7 @@ BuildRequires: perl(DBD/SQLite.pm) perl(Hash/Merge/Simple.pm)
 
 Name:       perl-%{upstream_name}
 Version:    %{upstream_version}
-Release:    alt1_1
+Release:    alt1_2
 
 Summary:    Database schemas for Tapper
 License:    GPL+ or Artistic
@@ -72,6 +72,9 @@ Database schemas for Tapper.
 
 
 %changelog
+* Mon Oct 21 2013 Igor Vlasenko <viy@altlinux.ru> 4.1.3-alt1_2
+- update by mgaimport
+
 * Wed Aug 07 2013 Igor Vlasenko <viy@altlinux.ru> 4.1.3-alt1_1
 - update by mgaimport
 
