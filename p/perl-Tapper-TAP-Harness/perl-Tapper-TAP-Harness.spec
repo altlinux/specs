@@ -1,6 +1,6 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl-devel perl-podlators
+BuildRequires: perl(ExtUtils/MakeMaker.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 BuildRequires: perl(YAML/Syck.pm) perl(parent.pm)
 %define upstream_name    Tapper-TAP-Harness
@@ -8,7 +8,7 @@ BuildRequires: perl(YAML/Syck.pm) perl(parent.pm)
 
 Name:       perl-%{upstream_name}
 Version:    %{upstream_version}
-Release:    alt1_2
+Release:    alt1_3
 
 Summary:    Tapper - Tapper specific TAP handling
 License:    GPL+ or Artistic
@@ -61,6 +61,9 @@ This package provides a Tapper-specific TAP handling.
 
 
 %changelog
+* Mon Oct 21 2013 Igor Vlasenko <viy@altlinux.ru> 4.1.1-alt1_3
+- update by mgaimport
+
 * Wed Aug 07 2013 Igor Vlasenko <viy@altlinux.ru> 4.1.1-alt1_2
 - update by mgaimport
 
