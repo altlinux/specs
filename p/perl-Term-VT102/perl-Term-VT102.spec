@@ -1,6 +1,6 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(Exporter.pm) perl(IO/Handle.pm) perl(Net/Telnet.pm) perl-devel perl-podlators
+BuildRequires: perl(Exporter.pm) perl(ExtUtils/MakeMaker.pm) perl(IO/Handle.pm) perl(Net/Telnet.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 BuildRequires: perl(IO/Pty.pm)
 %define upstream_name    Term-VT102
@@ -8,7 +8,7 @@ BuildRequires: perl(IO/Pty.pm)
 
 Name:       perl-%{upstream_name}
 Version:    %{upstream_version}
-Release:    alt1_2
+Release:    alt1_3
 
 Summary:	Term::VT102 - a class to emulate a DEC VT102 terminal
 License:	GPL+ or Artistic
@@ -53,6 +53,9 @@ make test
 %{perl_vendor_privlib}/Term/VT102/examples/*
 
 %changelog
+* Mon Oct 21 2013 Igor Vlasenko <viy@altlinux.ru> 0.91-alt1_3
+- update by mgaimport
+
 * Tue Aug 06 2013 Igor Vlasenko <viy@altlinux.ru> 0.91-alt1_2
 - update by mgaimport
 
