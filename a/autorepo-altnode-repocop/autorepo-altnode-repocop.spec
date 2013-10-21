@@ -2,7 +2,7 @@
 
 #BuildRequires: 
 Name: autorepo-altnode-repocop
-Version: 0.14
+Version: 0.15
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -14,7 +14,7 @@ License: GPL2+
 Source: %name-%version.tar
 
 BuildRequires: repocop
-Requires: repocop > 0.65
+Requires: repocop > 0.67
 
 %description
 %summary
@@ -35,6 +35,9 @@ install -m 755 repocop-* $RPM_BUILD_ROOT%_bindir
 %_bindir/*
 
 %changelog
+* Mon Oct 21 2013 Igor Vlasenko <viy@altlinux.ru> 0.15-alt1
+- repocop TestDB interface support
+
 * Wed Jul 31 2013 Igor Vlasenko <viy@altlinux.ru> 0.14-alt1
 - dropped obsolete symlinks
 
