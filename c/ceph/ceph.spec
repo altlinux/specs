@@ -1,5 +1,5 @@
 Name: ceph
-Version: 0.66
+Version: 0.71
 Release: alt1
 Summary: User space components of the Ceph file system
 Group: System/Base
@@ -163,6 +163,8 @@ mkdir -p %buildroot%_sysconfdir/ceph/
 %_bindir/ceph-mon
 %_bindir/ceph-mds
 %_bindir/ceph-osd
+%_bindir/ceph-post-file
+%_bindir/ceph-rest-api
 %_bindir/ceph_filestore_dump
 %_bindir/ceph_mon_store_converter
 %_bindir/ceph-rbdnamer
@@ -212,6 +214,8 @@ mkdir -p %buildroot%_sysconfdir/ceph/
 %_mandir/man8/ceph-debugpack.8*
 %_mandir/man8/ceph-clsinfo.8.gz
 %_mandir/man8/librados-config.8.gz
+%_mandir/man8/ceph-post-file.8*
+%_mandir/man8/ceph-rest-api.8*
 %_localstatedir/ceph/
 /var/log/ceph/
 %_runtimedir/ceph/
@@ -257,6 +261,9 @@ mkdir -p %buildroot%_sysconfdir/ceph/
 %python_sitelibdir_noarch/*
 
 %changelog
+* Mon Oct 21 2013 Alexei Takaseev <taf@altlinux.org> 0.71-alt1
+- 0.71
+
 * Wed Jul 10 2013 Alexei Takaseev <taf@altlinux.org> 0.66-alt1
 - 0.66
 
