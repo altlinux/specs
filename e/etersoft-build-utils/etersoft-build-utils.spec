@@ -1,7 +1,7 @@
 # NOTE: do not use clean_spec or rpmcs for this spec
 
 Name: etersoft-build-utils
-Version: 2.0.28
+Version: 2.0.29
 Release: alt1
 
 Summary: A set of rpm build utilities from Etersoft
@@ -69,6 +69,12 @@ RECOMMENDED packages: gcc-c++ perl-libwww ccache elinks mutt hasher curl
 %config(noreplace) %_sysconfdir/eterbuild/repos/*
 
 %changelog
+* Mon Oct 21 2013 Vitaly Lipatov <lav@altlinux.ru> 2.0.29-alt1
+- gremote, rpmgp: use get_girar_repo func
+- rpmpub: add sources to target dir if missed
+- fix pkgrepls
+- girar: add workaround against ALT bug #22745
+
 * Sat Oct 12 2013 Vitaly Lipatov <lav@altlinux.ru> 2.0.28-alt1
 - replace tarball conversion code with erc calls
 - rpmgp: use -b for REPONAME set, use -i for install build requires
