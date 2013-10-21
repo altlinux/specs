@@ -1,6 +1,6 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(CPAN.pm) perl(Config.pm) perl(TAP/Parser.pm) perl(TAP/Parser/Aggregator.pm) perl-devel perl-podlators
+BuildRequires: perl(CPAN.pm) perl(Carp.pm) perl(Config.pm) perl(Cwd.pm) perl(Exporter.pm) perl(ExtUtils/MM_Unix.pm) perl(ExtUtils/Manifest.pm) perl(File/Basename.pm) perl(File/Find.pm) perl(File/Spec.pm) perl(FileHandle.pm) perl(JSON.pm) perl(LWP/Simple.pm) perl(Module/Build.pm) perl(Net/FTP.pm) perl(Parse/CPAN/Meta.pm) perl(Socket.pm) perl(TAP/Parser.pm) perl(TAP/Parser/Aggregator.pm) perl(YAML/Tiny.pm) perl(base.pm) perl(inc/Module/Install.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 %add_findreq_skiplist %perl_vendor_privlib/TAP/DOM.pm
 %define upstream_name    TAP-DOM
@@ -8,7 +8,7 @@ BuildRequires: perl(CPAN.pm) perl(Config.pm) perl(TAP/Parser.pm) perl(TAP/Parser
 
 Name:       perl-%{upstream_name}
 Version:    %{upstream_version}
-Release:    alt1_2
+Release:    alt1_3
 
 Summary:    Accessors for TAP::DOM summary part
 License:    GPL+ or Artistic
@@ -59,6 +59,9 @@ change, so your data tools can, well, rely on it.
 
 
 %changelog
+* Mon Oct 21 2013 Igor Vlasenko <viy@altlinux.ru> 0.10-alt1_3
+- update by mgaimport
+
 * Tue Aug 06 2013 Igor Vlasenko <viy@altlinux.ru> 0.10-alt1_2
 - update by mgaimport
 
