@@ -9,8 +9,8 @@
 %define _libexecdir %_prefix/libexec
 
 Name: cinnamon-settings-daemon
-Version: %ver_major.1
-Release: alt1
+Version: %ver_major.3
+Release: alt2
 
 Summary: A program that manages general Cinnamon settings
 License: GPLv2+
@@ -158,9 +158,8 @@ The %name-tests package provides programms for testing CSD plugins.
 %_datadir/%name
 %_iconsdir/hicolor/*/*/*.png
 %_iconsdir/hicolor/*/*/*.svg
-%_sysconfdir/xdg/autostart/%name.desktop
-%_sysconfdir/xdg/autostart/%{name}2d.desktop
-%_sysconfdir/xdg/autostart/cinnamon-fallback-mount-helper.desktop
+%_datadir/applications/%name.desktop
+%_datadir/applications/cinnamon-fallback-mount-helper.desktop
 %_sysconfdir/dbus-1/system.d/org.cinnamon.SettingsDaemon.DateTimeMechanism.conf
 
 
@@ -195,6 +194,12 @@ The %name-tests package provides programms for testing CSD plugins.
 %_libexecdir/csd-test-xsettings
 
 %changelog
+* Wed Oct 23 2013 Vladimir Didenko <cow@altlinux.org> 2.0.3-alt2
+- fix autostart in 2D session
+
+* Mon Oct 21 2013 Vladimir Didenko <cow@altlinux.org> 2.0.3-alt1
+- 2.0.3
+
 * Thu Oct 10 2013 Vladimir Didenko <cow@altlinux.org> 2.0.1-alt1
 - 2.0.1
 

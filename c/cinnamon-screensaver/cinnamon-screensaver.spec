@@ -7,8 +7,8 @@
 %define _libexecdir %_prefix/libexec
 
 Name: cinnamon-screensaver
-Version: %ver_major.0
-Release: alt1.1
+Version: %ver_major.1
+Release: alt1
 
 Summary: Cinnamon Screensaver
 License: GPLv2+
@@ -78,15 +78,16 @@ simple, sane, secure defaults and be well integrated with the Cinnamon desktop.
 %files 
 %_bindir/*
 %_datadir/dbus-1/services/org.cinnamon.ScreenSaver.service
+%_datadir/applications/%name.desktop
 %attr(2711,root,chkpwd) %_libexecdir/%name-dialog
 %_man1dir/*
-# Cinnamon uses own autostart files that start cinnamon-screensaver only 
-# in cinnamon session
-%exclude %_sysconfdir/xdg/autostart/cinnamon-screensaver.desktop
 %attr(640,root,chkpwd) %config(noreplace) %_sysconfdir/pam.d/*
 %doc AUTHORS NEWS README
 
 %changelog
+* Mon Oct 21 2013 Vladimir Didenko <cow@altlinux.org> 2.0.1-alt1
+- 2.0.1
+
 * Thu Oct 10 2013 Vladimir Didenko <cow@altlinux.org> 2.0.0-alt1.1
 - fix build
 
