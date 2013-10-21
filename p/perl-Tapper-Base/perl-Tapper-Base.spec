@@ -1,13 +1,13 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl-devel perl-podlators
+BuildRequires: perl(Devel/AssertOS.pm) perl(Devel/CheckOS.pm) perl(Exporter.pm) perl(ExtUtils/MakeMaker.pm) perl(File/Find/Rule.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 %define upstream_name    Tapper-Base
 %define upstream_version 4.1.4
 
 Name:       perl-%{upstream_name}
 Version:    %{upstream_version}
-Release:    alt1_2
+Release:    alt1_3
 
 Summary:    Require that we are running on a particular OS
 License:    GPL+ or Artistic
@@ -61,6 +61,9 @@ Linux, Solaris, AIX etc.
 
 
 %changelog
+* Mon Oct 21 2013 Igor Vlasenko <viy@altlinux.ru> 4.1.4-alt1_3
+- update by mgaimport
+
 * Wed Aug 07 2013 Igor Vlasenko <viy@altlinux.ru> 4.1.4-alt1_2
 - update by mgaimport
 
