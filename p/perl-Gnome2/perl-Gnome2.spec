@@ -1,7 +1,7 @@
 %define dist Gnome2
 
 Name: perl-%dist
-Version: 1.043
+Version: 1.044
 Release: alt1
 
 Summary: Gnome2 Perl module
@@ -10,7 +10,6 @@ Group: Development/Perl
 
 Url: %CPAN %dist
 Source: http://www.cpan.org/authors/id/X/XA/XAOC/Gnome2-%{version}.tar.gz
-Patch: Gnome2-1.043-bugfix.patch
 
 # Automatically added by buildreq on Tue Oct 11 2011
 BuildRequires: libgnomeui-devel perl-ExtUtils-Depends perl-ExtUtils-PkgConfig perl-Gnome2-Canvas-devel perl-Gnome2-VFS-devel perl-podlators zsh
@@ -46,7 +45,6 @@ for developers (overview of internals and internal API reference).
 
 %prep
 %setup -n %dist-%version
-%patch -p1
 
 %build
 %perl_vendor_build
@@ -68,6 +66,9 @@ for developers (overview of internals and internal API reference).
 %doc	%perl_vendor_archlib/Gnome2/Config
 
 %changelog
+* Mon Oct 21 2013 Igor Vlasenko <viy@altlinux.ru> 1.044-alt1
+- automated CPAN update
+
 * Mon Oct 07 2013 Igor Vlasenko <viy@altlinux.ru> 1.043-alt1
 - automated CPAN update
 
