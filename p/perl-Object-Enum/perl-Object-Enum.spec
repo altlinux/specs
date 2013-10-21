@@ -1,13 +1,13 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(CPAN.pm) perl(Config.pm) perl(overload.pm) perl-devel perl-podlators
+BuildRequires: perl(CPAN.pm) perl(Carp.pm) perl(Config.pm) perl(Cwd.pm) perl(ExtUtils/MM_Unix.pm) perl(ExtUtils/Manifest.pm) perl(File/Basename.pm) perl(File/Find.pm) perl(File/Spec.pm) perl(FileHandle.pm) perl(LWP/Simple.pm) perl(Module/Build.pm) perl(Net/FTP.pm) perl(Socket.pm) perl(YAML.pm) perl(base.pm) perl(inc/Module/Install.pm) perl(overload.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 %define upstream_name    Object-Enum
 %define upstream_version 0.072
 
 Name:       perl-%{upstream_name}
 Version:    %{upstream_version}
-Release:    alt1_3
+Release:    alt1_4
 
 Summary:    Perl Enum Replacement
 License:    GPL+ or Artistic
@@ -49,6 +49,9 @@ Implements enums in Perl in a robust manner.
 
 
 %changelog
+* Mon Oct 21 2013 Igor Vlasenko <viy@altlinux.ru> 0.072-alt1_4
+- update by mgaimport
+
 * Tue Aug 06 2013 Igor Vlasenko <viy@altlinux.ru> 0.072-alt1_3
 - update by mgaimport
 
