@@ -1,5 +1,6 @@
+%define _unpackaged_files_terminate_build 1
 Name: autorepo-altnode-config
-Version: 0.09
+Version: 0.10
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -90,7 +91,16 @@ fi
 %files
 %_sysconfdir/autorepo/apt/apt.conf.*
 %_sysconfdir/autorepo/apt/sources.list.*
-%config %_sysconfdir/monitrc.d/*.conf
+%config %_sysconfdir/monitrc.d/00base.conf
+%config %_sysconfdir/monitrc.d/10mail.conf
+%config %_sysconfdir/monitrc.d/20httpd.conf
+%config %_sysconfdir/monitrc.d/crond.conf
+%config %_sysconfdir/monitrc.d/filesystems.conf
+%config %_sysconfdir/monitrc.d/nginx.conf
+%config %_sysconfdir/monitrc.d/postfix.conf
+%config(noreplace) %_sysconfdir/monitrc.d/sshd.conf
+%config %_sysconfdir/monitrc.d/system.conf
+%config %_sysconfdir/monitrc.d/xinetd.conf
 %exclude %_sysconfdir/monitrc.d/nginx.conf
 
 %files nginx
@@ -98,6 +108,9 @@ fi
 %config %_sysconfdir/monitrc.d/nginx.conf
 
 %changelog
+* Mon Oct 21 2013 Igor Vlasenko <viy@altlinux.ru> 0.10-alt1
+- fixed port in monit for autoports (thanks to ldv@)
+
 * Sat Oct 19 2013 Igor Vlasenko <viy@altlinux.ru> 0.09-alt1
 - rsync entry is adapted to common /space
 
