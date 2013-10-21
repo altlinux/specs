@@ -1,6 +1,6 @@
 Name: repocop
-Version: 0.68
-Release: alt2
+Version: 0.69
+Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
 
@@ -134,6 +134,9 @@ done
 %_datadir/repocop/html
 
 %changelog
+* Mon Oct 21 2013 Igor Vlasenko <viy@altlinux.ru> 0.69-alt1
+- TestDB interface
+
 * Sun Oct 20 2013 Igor Vlasenko <viy@altlinux.ru> 0.68-alt2
 - added fsmd5prefix backend
 
