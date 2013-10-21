@@ -1,15 +1,13 @@
 Name: wmCalClock
 Version: 1.25
-Release: alt9
+Release: alt10
 
 Packager: Alexey Voinov <voins@altlinux.ru>
 
 Summary: wmCalClock is a simple Calendar Clock for Window Maker
 Summary(ru_RU.KOI8-R): Простенькие, но очень хорошие часы для Window Maker
 
-#Url: http://nis-www.lanl.gov/~mgh/WindowMaker/DockApps.shtml
-Url: http://dockapps.org/file.php/id/9
-
+Url: http://dockapps.windowmaker.org/file.php/id/9
 License: GPL
 Group: Graphical desktop/Window Maker
 
@@ -28,26 +26,28 @@ drop shadows. Doesnt do much except tell time...
 шрифтов и тени.
 
 %prep
-%setup -q
+%setup
 
 %build
 %make_build -C Src INCDIR= LIBDIR=
 
 %install
-mkdir -p $RPM_BUILD_ROOT{%_x11bindir,%_man1dir}
-
-#make -C Src install DESTDIR=$RPM_BUILD_ROOT%_prefix
-install -D -pm755 Src/%name $RPM_BUILD_ROOT%_x11bindir/%name
-install -D -pm644 Src/%name.1 $RPM_BUILD_ROOT%_man1dir/%name.1
-install -D -pm644 %SOURCE1 $RPM_BUILD_ROOT%_menudir/%name
+install -D -pm755 Src/%name %buildroot%_bindir/%name
+install -D -pm644 Src/%name.1 %buildroot%_man1dir/%name.1
+install -D -pm644 %SOURCE1 %buildroot%_menudir/%name
 
 %files
 %doc BUGS CHANGES HINTS INSTALL README TODO
-%_x11bindir/*
-%_x11mandir/man1/*
+%_bindir/*
+%_man1dir/*
 %_menudir/*
 
 %changelog
+* Tue Oct 15 2013 Michael Shigorin <mike@altlinux.org> 1.25-alt10
+- fixed menu file
+- minor spec cleanup
+- updated the Url: (dockapps.org is no more, hail d.w.o)
+
 * Mon Mar 25 2013 Michael Shigorin <mike@altlinux.org> 1.25-alt9
 - updated BR:
 
