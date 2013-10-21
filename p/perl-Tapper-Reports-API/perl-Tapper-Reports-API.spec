@@ -8,7 +8,7 @@ BuildRequires: perl(DBIx/Class/InflateColumn/Object/Enum.pm) perl(Hash/Merge/Sim
 
 Name:       perl-%{upstream_name}
 Version:    %{upstream_version}
-Release:    alt1_2
+Release:    alt1_3
 
 Summary:    Tapper - Remote network API for result evaluation
 License:    GPL+ or Artistic
@@ -70,6 +70,9 @@ This package provides Tapper's Remote network API for result evaluation.
 
 
 %changelog
+* Mon Oct 21 2013 Igor Vlasenko <viy@altlinux.ru> 4.1.2-alt1_3
+- update by mgaimport
+
 * Wed Aug 07 2013 Igor Vlasenko <viy@altlinux.ru> 4.1.2-alt1_2
 - update by mgaimport
 
