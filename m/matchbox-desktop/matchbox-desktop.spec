@@ -1,11 +1,11 @@
 %define name 	matchbox-desktop
 %define version 2.0
-%define release 7
+%define release 8
 
 Summary: 	Desktop for the Matchbox Desktop
 Name: 		%name
 Version: 	%version
-Release: 	alt1_7
+Release: 	alt1_8
 Url: 		http://matchbox-project.org/
 License: 	GPLv2+
 Group: 		Graphical desktop/Other
@@ -60,6 +60,9 @@ EOF
 
 
 %changelog
+* Mon Oct 21 2013 Igor Vlasenko <viy@altlinux.ru> 2.0-alt1_8
+- update by mgaimport
+
 * Wed Aug 07 2013 Igor Vlasenko <viy@altlinux.ru> 2.0-alt1_7
 - update by mgaimport
 
