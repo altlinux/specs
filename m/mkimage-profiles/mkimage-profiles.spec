@@ -1,5 +1,5 @@
 Name: mkimage-profiles
-Version: 1.1.11
+Version: 1.1.12
 Release: alt1
 
 Summary: ALT Linux based distribution metaprofile
@@ -17,6 +17,7 @@ BuildRequires: /proc
 Requires: rsync git-core
 Requires: time schedutils sfdisk
 Requires: mkimage >= 0.2.5
+Requires: mkimage-preinstall
 
 # Recommends: graphviz qemu-img
 
@@ -78,6 +79,9 @@ cp -a * %buildroot%mpdir
 %doc %docs/*
 
 %changelog
+* Mon Oct 21 2013 Michael Shigorin <mike@altlinux.org> 1.1.12-alt1
+- live-builder update
+
 * Mon Oct 14 2013 Michael Shigorin <mike@altlinux.org> 1.1.11-alt1
 - luks better
 
