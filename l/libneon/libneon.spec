@@ -1,6 +1,6 @@
 Name: libneon
-Version: 0.29.6
-Release: alt2
+Version: 0.30.0
+Release: alt1
 Summary: neon is an HTTP and WebDAV client library
 License: LGPLv2+
 Group: System/Libraries
@@ -72,6 +72,9 @@ install -pm644 AUTHORS BUGS NEWS README THANKS TODO doc/*.txt \
 %docdir/
 
 %changelog
+* Mon Oct 21 2013 Valery Inozemtsev <shrek@altlinux.ru> 0.30.0-alt1
+- 0.30.0
+
 * Wed Apr 17 2013 Dmitry V. Levin <ldv@altlinux.org> 0.29.6-alt2
 - Rebuilt with current libssl due to compile time OPENSSL_VERSION_NUMBER
   binding in ne_sock_connect_ssl (closes: #28862).
