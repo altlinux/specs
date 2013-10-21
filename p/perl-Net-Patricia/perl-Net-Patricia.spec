@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define module Net-Patricia
 Name: perl-%module
-Version: 1.21
+Version: 1.22
 Release: alt1
 
 Summary: Patricia Trie perl module for fast IP address lookups
@@ -34,6 +34,9 @@ IP subnet, network or routing table lookups.
 %perl_vendor_autolib/Net
 
 %changelog
+* Mon Oct 21 2013 Igor Vlasenko <viy@altlinux.ru> 1.22-alt1
+- automated CPAN update
+
 * Mon Sep 30 2013 Igor Vlasenko <viy@altlinux.ru> 1.21-alt1
 - automated CPAN update
 
