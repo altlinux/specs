@@ -1,11 +1,11 @@
 %define name 	matchbox-themes-extra
 %define version 0.3
-%define release 6
+%define release 7
 
 Summary: 	Themes for the Matchbox Desktop
 Name: 		%name
 Version: 	%version
-Release: 	alt1_6
+Release: 	alt1_7
 Url: 		http://matchbox-project.org
 License: 	GPLv2+
 Group: 		Graphical desktop/Other
@@ -35,6 +35,9 @@ Extra themes for the Matchbox Desktop
 
 
 %changelog
+* Mon Oct 21 2013 Igor Vlasenko <viy@altlinux.ru> 0.3-alt1_7
+- update by mgaimport
+
 * Tue Aug 06 2013 Igor Vlasenko <viy@altlinux.ru> 0.3-alt1_6
 - update by mgaimport
 
