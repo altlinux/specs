@@ -7,7 +7,7 @@ BuildRequires: perl(File/Path.pm) perl(Test/More.pm) perl-devel perl-podlators
 
 Name:       perl-%{upstream_name}
 Version:    %{upstream_version}
-Release:    alt1_1
+Release:    alt1_2
 
 Summary:    Haml Perl implementation
 License:    GPL+ or Artistic
@@ -54,6 +54,9 @@ features. Do not expect Ruby specific things to work.
 %perl_vendor_privlib/*
 
 %changelog
+* Mon Oct 21 2013 Igor Vlasenko <viy@altlinux.ru> 0.990109-alt1_2
+- update by mgaimport
+
 * Wed Sep 11 2013 Igor Vlasenko <viy@altlinux.ru> 0.990109-alt1_1
 - update by mgaimport
 
