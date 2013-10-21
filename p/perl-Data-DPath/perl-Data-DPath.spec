@@ -7,7 +7,7 @@ BuildRequires: perl-devel perl-podlators
 
 Name:       perl-%{upstream_name}
 Version:    %{upstream_version}
-Release:    alt1_2
+Release:    alt1_3
 
 Summary:    Magic functions available inside filter conditions
 License:    GPL+ or Artistic
@@ -59,6 +59,9 @@ no description found
 %perl_vendor_privlib/*
 
 %changelog
+* Mon Oct 21 2013 Igor Vlasenko <viy@altlinux.ru> 0.49-alt1_3
+- update by mgaimport
+
 * Tue Aug 06 2013 Igor Vlasenko <viy@altlinux.ru> 0.49-alt1_2
 - update by mgaimport
 
