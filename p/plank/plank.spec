@@ -1,13 +1,15 @@
+%set_verify_elf_method rpath=relaxed
+
 Name: plank
-Version: 0.3.0
-Release: alt1.bzr857
+Version: 0.4.0
+Release: alt1
 
 Summary: Elegant, simple, clean dock
 License: GPLv3+
 Group: Graphical desktop/Other
 Url: https://launchpad.net/plank
 
-Source0: %name.tar.xz
+Source0: %name-%version.tar.xz
 
 Packager: Igor Zubkov <icesik@altlinux.org>
 
@@ -60,10 +62,9 @@ Plank is a dock enabling you to start applications and manage your windows.
 This package contains the documentation.
 
 %prep
-%setup -q -n %name
+%setup -q
 
 %build
-./autogen.sh
 %configure
 #  --enable-docs
 %make_build V=1
@@ -97,6 +98,9 @@ This package contains the documentation.
 %files -n libplank-doc
 
 %changelog
+* Mon Oct 21 2013 Igor Zubkov <icesik@altlinux.org> 0.4.0-alt1
+- 0.4.0
+
 * Wed Oct 09 2013 Igor Zubkov <icesik@altlinux.org> 0.3.0-alt1.bzr857
 - build for Sisyphus
 
