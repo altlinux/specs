@@ -1,6 +1,6 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(Sub/Exporter/Util.pm) perl-devel perl-podlators
+BuildRequires: perl(ExtUtils/MakeMaker.pm) perl(Sub/Exporter/Util.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 BuildRequires: /proc
 %define upstream_name    Daemon-Daemonize
@@ -8,7 +8,7 @@ BuildRequires: /proc
 
 Name:       perl-%{upstream_name}
 Version:    %{upstream_version}
-Release:    alt1_2
+Release:    alt1_3
 
 Summary:    An easy-to-use daemon(izing) toolkit
 License:    GPL+ or Artistic
@@ -59,6 +59,9 @@ A note about the 'close' option
 
 
 %changelog
+* Mon Oct 21 2013 Igor Vlasenko <viy@altlinux.ru> 0.0052-alt1_3
+- update by mgaimport
+
 * Tue Aug 06 2013 Igor Vlasenko <viy@altlinux.ru> 0.0052-alt1_2
 - update by mgaimport
 
