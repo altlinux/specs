@@ -1,44 +1,53 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: perl(Exporter.pm) perl(ExtUtils/MakeMaker.pm) perl(Test/More.pm)
+BuildRequires(pre): rpm-build-perl
+BuildRequires: perl(Exporter.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
-%define module_version 0.34
-%define module_name Eval-LineNumbers
-%define _unpackaged_files_terminate_build 1
-BuildRequires: rpm-build-perl perl-devel perl-podlators
+Name:           perl-Eval-LineNumbers
+Version:        0.34
+Release:        alt1_1
+Summary:        Add line numbers to hereis blocks that contain perl source code
+License:        Artistic 2.0 or LGPLv2+
+Group:          Development/Perl
+URL:            http://search.cpan.org/dist/Eval-LineNumbers/
+Source0:        http://www.cpan.org/authors/id/M/MU/MUIR/modules/Eval-LineNumbers-%{version}.tar.gz
+BuildArch:      noarch
+BuildRequires:  perl(ExtUtils/MakeMaker.pm)
+BuildRequires:  perl(Test/More.pm)
 
-Name: perl-%module_name
-Version: 0.34
-Release: alt1
-Summary: Add line numbers to eval'ed heredoc blocks
-Group: Development/Perl
-License: perl
-Url: %CPAN %module_name
 
-Source0: http://cpan.org.ua/authors/id/M/MU/MUIR/modules/%module_name-%module_version.tar.gz
-BuildArch: noarch
+Source44: import.info
 
 %description
-Add a `#line "this-file" 392' comment to heredoc/hereis text that is going.to be eval'ed so that error messages will point back to the right place.
-
-Please note: when you embed `\n' in your code, it gets expanded in
-double-quote hereis documents so it will mess up your line numbering.
-Use `\\n' instead when you can.
-
+This module adds a line number to hereis text that is going to be
+eval'ed so that error messages will point back to the right place.
 
 %prep
-%setup -n %module_name-%module_version
+%setup -q -n Eval-LineNumbers-%{version}
+iconv --from=ISO-8859-1 --to=UTF-8 Changes > Changes.utf-8 && mv Changes.utf-8 Changes
 
 %build
-%perl_vendor_build
+%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
+make %{?_smp_mflags}
 
 %install
-%perl_vendor_install
+make pure_install PERL_INSTALL_ROOT=$RPM_BUILD_ROOT
+
+find $RPM_BUILD_ROOT -type f -name .packlist -exec rm -f {} \;
+find $RPM_BUILD_ROOT -depth -type d -exec rmdir {} 2>/dev/null \;
+
+# %{_fixperms} $RPM_BUILD_ROOT/*
+
+%check
+make test
 
 %files
-%doc README Changes
-%perl_vendor_privlib/E*
+%doc Changes README
+%{perl_vendor_privlib}/Eval
 
 %changelog
+* Tue Oct 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.34-alt1_1
+- update to new release by fcimport
+
 * Wed Oct 09 2013 Igor Vlasenko <viy@altlinux.ru> 0.34-alt1
 - build for Sisyphus
 
