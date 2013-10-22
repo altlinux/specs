@@ -3,12 +3,12 @@ BuildRequires: unzip
 # END SourceDeps(oneline)
 Name:           crystal-stacker
 Version:        1.5
-Release:        alt2_16
+Release:        alt2_17
 Summary:        Falling blocks, match 3 or more of the same color crystals
 Group:          Games/Other
 License:        Crystal Stacker
 URL:            http://www.t3-i.com/cstacker.htm
-Source0:        http://www.t3-i.com/ncdgames/cs15src.zip
+Source0:        http://www.t3-i.com/games/crystal_stacker/downloads/crystal_stacker-1.5-src.zip
 Source1:        %{name}.desktop
 Source2:        %{name}-theme-editor.desktop
 Patch0:         crystal-stacker-1.5-ImplicitDSOLinking.patch
@@ -83,6 +83,9 @@ install -p -m 644 %{name}.png %{name}-theme-editor.png \
 %{_datadir}/icons/hicolor/32x32/apps/%{name}-theme-editor.png
 
 %changelog
+* Tue Oct 22 2013 Igor Vlasenko <viy@altlinux.ru> 1.5-alt2_17
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 1.5-alt2_16
 - update to new release by fcimport
 
