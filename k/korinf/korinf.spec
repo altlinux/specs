@@ -1,5 +1,5 @@
 Name: korinf
-Version: 2.0.4
+Version: 2.0.5
 Release: alt1
 
 Summary: Korinf multidistro build system
@@ -38,6 +38,7 @@ This package contains Korinf multidistro build system.
 %_bindir/korexec
 %_bindir/korlogin
 %dir %_sysconfdir/eterbuild/lists/
+%dir %_sysconfdir/eterbuild/rpmopt/
 %config(noreplace) %_sysconfdir/eterbuild/lists/*
 %config(noreplace) %_sysconfdir/eterbuild/rpmopt/*
 %config(noreplace) %_sysconfdir/eterbuild/korinf
@@ -45,6 +46,10 @@ This package contains Korinf multidistro build system.
 %_datadir/eterbuild/korinf/
 
 %changelog
+* Tue Oct 22 2013 Vitaly Lipatov <lav@altlinux.ru> 2.0.5-alt1
+- korinf/mount: improve: make /tmp from tmpfs, fix devpts mount
+- korinf: fix options parsing (do options really unpositional)
+
 * Sat Oct 12 2013 Vitaly Lipatov <lav@altlinux.ru> 2.0.4-alt1
 - korexec, korlogin - add small support for ALT Linux
 - replace get_rpm_sources with get_sources_dir (rewrite), drop check_and_refresh_package_wine
