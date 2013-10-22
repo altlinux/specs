@@ -9,7 +9,7 @@
 %add_findreq_skiplist */POE/Test/Loops/wheel_curses.pm 
 
 Name: perl-POE-Test-Loops
-Version: 1.353
+Version: 1.354
 Release: alt1
 
 Summary: POE::Loop test suite
@@ -54,6 +54,9 @@ also documents the POE::Test::Loops system in more detail.
 %doc CHANGES README
 
 %changelog
+* Tue Oct 22 2013 Igor Vlasenko <viy@altlinux.ru> 1.354-alt1
+- automated CPAN update
+
 * Mon Sep 16 2013 Igor Vlasenko <viy@altlinux.ru> 1.353-alt1
 - automated CPAN update
 
