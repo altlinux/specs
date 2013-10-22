@@ -2,7 +2,7 @@
 
 Summary: A syslog data viewer for the web
 Name: LogAnalyzer
-Version: 3.6.4
+Version: 3.6.5
 Release: alt1
 License: GPLv3+
 Group: Monitoring
@@ -52,6 +52,9 @@ find $RPM_BUILD_ROOT \( -name 'Thumbs.db' -o -name 'Thumbs.db.gz' \) -print -del
 %wwwdir/*
 
 %changelog
+* Tue Oct 22 2013 Alexey Shabalin <shaba@altlinux.ru> 3.6.5-alt1
+- 3.6.5
+
 * Tue Sep 03 2013 Alexey Shabalin <shaba@altlinux.ru> 3.6.4-alt1
 - 3.6.4
 
