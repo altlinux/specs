@@ -1,19 +1,20 @@
+%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(File/Path.pm) perl(Test/More.pm) perl-devel perl-podlators
+BuildRequires: perl(File/Path.pm) perl(Test/More.pm) perl-devel perl-podlators perl(Data/Section/Simple.pm)
 # END SourceDeps(oneline)
 %define upstream_name    Text-Haml
-%define upstream_version 0.990109
+%define upstream_version 0.990110
 
 Name:       perl-%{upstream_name}
-Version:    %{upstream_version}
-Release:    alt1_2
+Version:    0.990110
+Release:    alt1
 
 Summary:    Haml Perl implementation
 License:    GPL+ or Artistic
 Group:      Development/Perl
 Url:        http://search.cpan.org/dist/%{upstream_name}
-Source0:    http://www.cpan.org/modules/by-module/Text/%{upstream_name}-%{upstream_version}.tar.gz
+Source:    http://www.cpan.org/authors/id/V/VT/VTI/Text-Haml-%{version}.tar.gz
 
 BuildRequires: perl(Carp.pm)
 BuildRequires: perl(Encode.pm)
@@ -54,6 +55,9 @@ features. Do not expect Ruby specific things to work.
 %perl_vendor_privlib/*
 
 %changelog
+* Tue Oct 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.990110-alt1
+- automated CPAN update
+
 * Mon Oct 21 2013 Igor Vlasenko <viy@altlinux.ru> 0.990109-alt1_2
 - update by mgaimport
 
