@@ -1,6 +1,6 @@
 Summary: Vargus - the video surveillance program
 Name: vargus
-Version: 0.9.5.1
+Version: 0.9.6
 Release: alt1
 License: %gpl2plus
 Group: Video
@@ -19,6 +19,7 @@ BuildPreReq: rpm-build-webserver-common
 BuildPreReq: perl-devel
 BuildPreReq: perl-Filesys-Df perl-Proc-Daemon perl-Privileges-Drop perl-DBI perl-Net-Telnet
 BuildPreReq: perl-Module-Load perl-Encode perl-File-Sync
+BuildPreReq: perl-libnet perl-URI
 Requires: MySQL-server avconv mediainfo perl-DBD-mysql xawtv4-common dbus-tools-gui
 Requires: vlc-plugin-v4l vlc-plugin-ts vlc-plugin-mpeg2 vlc-plugin-live555 vlc-plugin-h264 
 Requires: vlc-plugin-freetype vlc-plugin-ffmpeg vlc-plugin-dbus vlc-mini
@@ -53,7 +54,7 @@ Web interfaces for %name
 mkdir -p %buildroot%_bindir
 mkdir -p %buildroot%_sbindir
 mkdir -p %buildroot%_sysconfdir/vargus
-mkdir -p %buildroot%_initrddir
+mkdir -p %buildroot%_unitdir
 mkdir -p %buildroot%_runtimedir/vargus
 mkdir -p %buildroot%vargus_cache
 mkdir -p %buildroot%webappdir
@@ -62,13 +63,14 @@ mkdir -p %buildroot%perl_vendor_privlib
 
 
 install -m 0755 vargus.pl %buildroot%_bindir/vargus
+install -m 0755 vcodec_copy_helper.pl %buildroot%_bindir/vcodec_copy_helper
 install -m 0755 vargus-informer.pl %buildroot%_bindir/vargus-informer
 install -m 0755 vargus-get-archive.pl %buildroot%_bindir/vargus-get-archive
 install -m 0755 events-collector.pl %buildroot%_bindir/vargus-events
 install -m 0755 vargus-simple-setup.pl %buildroot%_sbindir/vargus-simple-setup
-install -m 0755 vargus.init %buildroot%_initrddir/vargus
-install -m 0755 vargus-informer.init %buildroot%_initrddir/vargus-informer
-install -m 0755 vargus-events.init %buildroot%_initrddir/vargus-events
+install -m 0755 vargus-early-recovery %buildroot%_sbindir/
+install -m 0755 vargus-systemd-starter %buildroot%_sbindir/
+install -m 0644 vargus*.service %buildroot%_unitdir/
 install -m 0644 docs/events-collector.cfg %buildroot%_sysconfdir/vargus/
 install -m 0644 docs/get-archive.cfg %buildroot%_sysconfdir/vargus/
 
@@ -92,6 +94,7 @@ popd
 %post_service vargus
 %post_service vargus-informer
 %post_service vargus-events
+%post_service vargus-early-recovery
 
 %post web
 %_sbindir/a2chkconfig >/dev/null
@@ -103,6 +106,7 @@ exit 0
 %preun_service vargus
 %preun_service vargus-informer
 %preun_service vargus-events
+%preun_service vargus-early-recovery
 
 %postun web
 %_sbindir/a2chkconfig >/dev/null
@@ -113,8 +117,9 @@ exit 0
 
 %files
 %_bindir/vargus*
+%_bindir/vcodec_copy_helper
 %_sbindir/vargus*
-%_initrddir/vargus*
+%_unitdir/vargus*
 %attr(0750,root,%vargus_group) %dir %_sysconfdir/vargus
 %config(noreplace) %_sysconfdir/vargus/*
 %attr(0755,%vargus_user,%vargus_group) %dir %_runtimedir/vargus
@@ -132,6 +137,32 @@ exit 0
 
 
 %changelog
+* Wed Oct 23 2013 Michael A. Kangin <prividen@altlinux.org> 0.9.6-alt1
+- systemd support
+- Multiserver configuration support
+- use-fqdn option in informer for full-form hostnames
+- Improved video fragments handling
+- small fixes
+
+* Thu May 05 2013 Michael A. Kangin <prividen@altlinux.org> 0.9.5.4-alt1
+- Events support for VargusViewer
+- Control channel
+- ability to restart object
+- Fix restore DB from file
+- Fix processing equal sign in the options
+- Preprocessor support engine
+- vcodec_copy_helper script
+- vargus-early-recovery script
+
+* Sat Oct 20 2012 Michael A. Kangin <prividen@altlinux.org> 0.9.5.3-alt1
+- Support for remote cameras queries
+- Support templates in camera objects
+- Fix recovery after incorrect server restart
+- Fix events output for cameras with non-standart names
+
+* Sun Sep 23 2012 Michael A. Kangin <prividen@altlinux.org> 0.9.5.2-alt1
+- (Re)start httpd daemon during simple setup
+
 * Fri Sep 21 2012 Michael A. Kangin <prividen@altlinux.org> 0.9.5.1-alt1
 - Some persistence fixes
 
