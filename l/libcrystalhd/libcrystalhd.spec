@@ -9,7 +9,7 @@ BuildRequires(pre): kernel-build-tools
 Summary:       Broadcom Crystal HD device interface library
 Name:          libcrystalhd
 Version:       3.10.0
-Release:       alt2_5
+Release:       alt2_6
 License:       LGPLv2
 Group:         System/Libraries
 URL:           http://www.broadcom.com/support/crystal_hd/
@@ -120,9 +120,9 @@ cp -p %{SOURCE2} $RPM_BUILD_ROOT/lib/firmware/
 cp -p %{SOURCE3} $RPM_BUILD_ROOT/lib/firmware/
 
 #Install udev rule
-mkdir -p $RPM_BUILD_ROOT%_udevrulesdir
+mkdir -p $RPM_BUILD_ROOT%{_prefix}/lib/udev/rules.d
 install -pm 0644 driver/linux/20-crystalhd.rules \
-  $RPM_BUILD_ROOT%_udevrulesdir
+  $RPM_BUILD_ROOT%{_prefix}/lib/udev/rules.d
 
 mv driver kernel-source-crystalhd-%version
 %__mkdir_p %kernel_srcdir/
@@ -141,7 +141,7 @@ mv driver kernel-source-crystalhd-%version
 
 %files -n firmware-crystalhd
 %doc LICENSE
-%config %_udevrulesdir/20-crystalhd.rules
+%{_prefix}/lib/udev/rules.d/20-crystalhd.rules
 /lib/firmware/bcm70012fw.bin
 /lib/firmware/bcm70015fw.bin
 
@@ -154,6 +154,9 @@ mv driver kernel-source-crystalhd-%version
 
 
 %changelog
+* Tue Oct 22 2013 Igor Vlasenko <viy@altlinux.ru> 3.10.0-alt2_6
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 3.10.0-alt2_5
 - update to new release by fcimport
 
