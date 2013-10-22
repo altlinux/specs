@@ -1,16 +1,15 @@
-%define module_version 1.11
-%define module_name Gearman-Server
 # BEGIN SourceDeps(oneline):
-BuildRequires: perl(Danga/Socket.pm) perl(Errno.pm) perl(FindBin.pm) perl(Gearman/Util.pm) perl(IO/Handle.pm) perl(IO/Socket/INET.pm) perl(Scalar/Util.pm) perl(Socket.pm) perl(Sys/Hostname.pm) perl(base.pm) perl(fields.pm) perl-devel
+BuildRequires(pre): rpm-build-perl
+BuildRequires: perl(Danga/Socket.pm) perl(Errno.pm) perl(FindBin.pm) perl(Gearman/Util.pm) perl(IO/Handle.pm) perl(IO/Socket/INET.pm) perl(Scalar/Util.pm) perl(Socket.pm) perl(Sys/Hostname.pm) perl(base.pm) perl(fields.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Gearman-Server
 Version:        1.11
-Release:        alt2
+Release:        alt2_10
 Summary:        Function call "router" and load balancer
-License:        perl
+License:        GPL+ or Artistic
 Group:          System/Servers
 URL:            http://search.cpan.org/dist/Gearman-Server/
-Source0:        http://cpan.org.ua/authors/id/D/DO/DORMANDO/%module_name-%module_version.tar.gz
+Source0:        http://search.cpan.org/CPAN/authors/id/D/DO/DORMANDO/Gearman-Server-%{version}.tar.gz
 BuildArch:      noarch
 
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
@@ -24,16 +23,8 @@ ability to do certain functions to all of them, and then clients (using
 Gearman::Client, Gearman::Client::Async, etc) request work to be done from
 one of the Gearman servers.
 
-%package scripts
-Summary: %module_name scripts
-Group: Development/Perl
-Requires: %{?epoch:%epoch:}%name = %version-%release
-
-%description scripts
-scripts for %module_name
-
 %prep
-%setup -n %module_name-%module_version
+%setup -q -n Gearman-Server-%{version}
 
 %build
 %{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
@@ -54,11 +45,12 @@ make test
 %doc CHANGES
 %{_bindir}/gearmand
 %{perl_vendor_privlib}/Gearman
-
-%files scripts
-%_bindir/*
+%{_mandir}/man1/gearmand.*
 
 %changelog
+* Tue Oct 22 2013 Igor Vlasenko <viy@altlinux.ru> 1.11-alt2_10
+- update to new release by fcimport
+
 * Wed Oct 16 2013 Igor Vlasenko <viy@altlinux.ru> 1.11-alt2
 - build for Sisyphus (required for perl update)
 
