@@ -1,12 +1,12 @@
 %define oldname adime
 Name:           libadime
 Version:        2.2.1
-Release:        alt2_15
+Release:        alt2_16
 Summary:        Allegro Dialogs Made Easy
 Group:          System/Libraries
 License:        zlib
 URL:            http://adime.sourceforge.net/
-Source0:        http://dl.sf.net/sourceforge/%{oldname}/%{oldname}-%{version}.tar.gz
+Source0:        http://downloads.sourceforge.net/%{oldname}/%{oldname}-%{version}.tar.gz
 Patch0:         adime-2.2.1-so-fixes.patch
 BuildRequires:  liballegro-devel texinfo
 Source44: import.info
@@ -67,6 +67,9 @@ ln -s libadime.so.0 $RPM_BUILD_ROOT%{_libdir}/libadime.so
 
 
 %changelog
+* Tue Oct 22 2013 Igor Vlasenko <viy@altlinux.ru> 2.2.1-alt2_16
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 2.2.1-alt2_15
 - update to new release by fcimport
 
