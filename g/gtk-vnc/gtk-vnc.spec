@@ -8,7 +8,7 @@
 
 Name: gtk-vnc
 Version: 0.5.3
-Release: alt1
+Release: alt2
 
 Summary: VNC viewer widget
 Group: System/Libraries
@@ -24,8 +24,8 @@ Requires: libgtkvnc = %version-%release
 %{?_with_gtk3:BuildRequires: libgtk+3-devel}
 # pod2man
 BuildRequires: perl-podlators
-BuildRequires: libgnutls-devel libgcrypt-devel libcairo-gobject-devel libsasl2-devel zlib-devel perl-Text-CSV intltool
-BuildRequires: libpulseaudio-devel
+BuildRequires: libgnutls-devel libgcrypt-devel libcairo-gobject-devel libsasl2-devel
+BuildRequires: libpulseaudio-devel zlib-devel perl-Text-CSV intltool
 %{?_enable_vala:BuildRequires: vala-tools}
 %{?_with_python:BuildRequires: python-module-pygobject-devel}
 %{?_with_gtk:%{?_with_python:BuildRequires: python-module-pygtk-devel}}
@@ -321,6 +321,9 @@ popd
 %endif
 
 %changelog
+* Tue Oct 22 2013 Yuri N. Sedunov <aris@altlinux.org> 0.5.3-alt2
+- rebuilt with libsasl2.so.3
+
 * Wed Sep 18 2013 Yuri N. Sedunov <aris@altlinux.org> 0.5.3-alt1
 - 0.5.3
 
