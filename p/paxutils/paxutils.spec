@@ -1,5 +1,5 @@
 Name: paxutils
-Version: 0.0.1.111.0b3d84a
+Version: 0.0.1.113.edfd8bc
 Release: alt1
 
 Summary: GNU pax library
@@ -7,6 +7,7 @@ License: GPLv3+
 Group: Development/C
 BuildArch: noarch
 Url: http://www.gnu.org/software/gnulib/
+# git://git.altlinux.org/gears/p/paxutils.git
 Source: %name-%version-%release.tar
 AutoReqProv: no
 
@@ -18,7 +19,7 @@ containing internal buffering support.
 %setup -n %name-%version-%release
 
 %install
-find -name DISTFILES -printf '%h\n' |
+find -name DISTFILES -printf '%%h\n' |
 while read srcdir; do
 	cd "$srcdir"
 	destdir="%buildroot%_datadir/%name/$srcdir"
@@ -32,5 +33,8 @@ ln gnulib.modules %buildroot%_datadir/%name/
 %_datadir/%name/
 
 %changelog
+* Tue Oct 22 2013 Dmitry V. Levin <ldv@altlinux.org> 0.0.1.113.edfd8bc-alt1
+- Updated to v0.0.1-113-gedfd8bc.
+
 * Tue Jan 15 2013 Dmitry V. Levin <ldv@altlinux.org> 0.0.1.111.0b3d84a-alt1
 - GNU paxutils snapshot v0.0.1-111-g0b3d84a with ALT fixes.
