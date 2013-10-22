@@ -1,16 +1,15 @@
-%define module_version 0.42
-%define module_name pod2pdf
 # BEGIN SourceDeps(oneline):
-BuildRequires: perl-devel
+BuildRequires(pre): rpm-build-perl
+BuildRequires: perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-pod2pdf
 Version:        0.42
-Release:        alt2
+Release:        alt2_6
 Summary:        Converts Pod to PDF format
-License:        perl
+License:        Artistic 2.0
 Group:          Development/Perl
 URL:            http://search.cpan.org/dist/pod2pdf/
-Source0:        http://cpan.org.ua/authors/id/J/JO/JONALLEN/%module_name-%module_version.tar.gz
+Source0:        http://www.cpan.org/authors/id/J/JO/JONALLEN/pod2pdf-%{version}.tar.gz
 BuildArch:      noarch
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
 BuildRequires:  perl(Carp.pm)
@@ -37,16 +36,8 @@ Source44: import.info
 pod2pdf converts documents written in Perl's POD (Plain Old Documentation)
 format to PDF files.
 
-%package scripts
-Summary: %module_name scripts
-Group: Development/Perl
-Requires: %{?epoch:%epoch:}%name = %version-%release
-
-%description scripts
-scripts for %module_name
-
 %prep
-%setup -n %module_name-%module_version
+%setup -q -n pod2pdf-%{version}
 
 %build
 %{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
@@ -65,15 +56,15 @@ find $RPM_BUILD_ROOT -depth -type d -exec rmdir {} 2>/dev/null \;
 make test
 
 %files
-%doc README Changes
+%doc artistic-2_0.txt Changes README
 %{perl_vendor_privlib}/*
 %{_mandir}/man1/*
 %{_bindir}/*
 
-%files scripts
-%_bindir/*
-
 %changelog
+* Tue Oct 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.42-alt2_6
+- update to new release by fcimport
+
 * Tue Oct 15 2013 Igor Vlasenko <viy@altlinux.ru> 0.42-alt2
 - build for Sisyphus
 
