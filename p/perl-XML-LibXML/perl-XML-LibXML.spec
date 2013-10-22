@@ -1,8 +1,8 @@
 %define dist XML-LibXML
 %def_without bootstrap
 Name: perl-%dist
-Version: 2.0103
-Release: alt2
+Version: 2.0106
+Release: alt1
 
 Summary: Perl binding for libxml2
 License: GPL or Artistic
@@ -59,6 +59,9 @@ mv t/14sax.t t/14sax.t.orig
 	%perl_vendor_autolib/XML
 
 %changelog
+* Tue Oct 22 2013 Igor Vlasenko <viy@altlinux.ru> 2.0106-alt1
+- 2.0103 -> 2.0106
+
 * Thu Sep 05 2013 Vladimir Lettiev <crux@altlinux.ru> 2.0103-alt2
 - enabled build dependency on XML::SAX
 
