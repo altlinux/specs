@@ -1,6 +1,6 @@
 %define dist HTML-Template
 Name: perl-%dist
-Version: 2.94
+Version: 2.95
 Release: alt1
 
 Summary: Perl module to use HTML Templates from CGI scripts
@@ -40,6 +40,9 @@ in the Perl script.
 %perl_vendor_privlib/HTML
 
 %changelog
+* Tue Oct 22 2013 Igor Vlasenko <viy@altlinux.ru> 2.95-alt1
+- automated CPAN update
+
 * Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 2.94-alt1
 - automated CPAN update
 
