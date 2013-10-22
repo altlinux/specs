@@ -1,17 +1,15 @@
-%filter_from_requires /^perl.Paper.Specs.Axxxx.pm./d
-%define module_version 0.10
-%define module_name Paper-Specs
 # BEGIN SourceDeps(oneline):
-BuildRequires: perl-devel
+BuildRequires(pre): rpm-build-perl
+BuildRequires: perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Paper-Specs
 Version:        0.10
-Release:        alt2
+Release:        alt2_6
 Summary:        Size and layout information for paper stock, forms, and labels
-License:        perl
+License:        GPL+ or Artistic
 Group:          Development/Perl
 URL:            http://search.cpan.org/dist/Paper-Specs/
-Source0:        http://cpan.org.ua/authors/id/J/JO/JONALLEN/%module_name-%module_version.tar.gz
+Source0:        http://www.cpan.org/authors/id/J/JO/JONALLEN/Paper-Specs-%{version}.tar.gz
 # https://rt.cpan.org/Public/Bug/Display.html?id=78027
 Patch0:         %{name}-0.10-fix_Avery_5393.patch
 BuildArch:      noarch
@@ -29,7 +27,7 @@ This package provides features such as:
 - Support page sizes you didn't know about
 
 %prep
-%setup -n %module_name-%module_version
+%setup -q -n Paper-Specs-%{version}
 %patch0 -p1 
 
 %build
@@ -52,6 +50,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Tue Oct 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.10-alt2_6
+- update to new release by fcimport
+
 * Wed Oct 16 2013 Igor Vlasenko <viy@altlinux.ru> 0.10-alt2
 - build for Sisyphus (required for perl update)
 
