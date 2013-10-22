@@ -4,15 +4,15 @@ BuildRequires: gcc-c++
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
 Name:           libvoikko
-Version:        3.6
-Release:        alt1_3
+Version:        3.6.1
+Release:        alt1_1
 Summary:        Voikko is a library for spellcheckers and hyphenators
 
 Group:          System/Libraries
 License:        GPLv2+
-URL:            http://voikko.sourceforge.net/
+URL:            http://voikko.puimula.org
 # The usual format of stable release URLs
-Source0:        http://downloads.sourceforge.net/voikko/%{name}-%{version}.tar.gz
+Source0:        http://www.puimula.org/voikko-sources/%{name}/%{name}-%{version}.tar.gz
 # The usual format of test release URLs
 #Source0:        http://www.puimula.org/htp/testing/%%{name}-%%{version}rc1.tar.gz
 
@@ -98,11 +98,9 @@ install -pm 0644 python/libvoikko.py $RPM_BUILD_ROOT%{python_sitelibdir_noarch}/
 %{_bindir}/voikkospell
 %{_bindir}/voikkohyphenate
 %{_bindir}/voikkogc
-%{_bindir}/voikkovfstc
 %{_mandir}/man1/voikkohyphenate.1*
 %{_mandir}/man1/voikkospell.1*
 %{_mandir}/man1/voikkogc.1*
-%{_mandir}/man1/voikkovfstc.1*
 
 %files devel
 %{_includedir}/*
@@ -113,6 +111,9 @@ install -pm 0644 python/libvoikko.py $RPM_BUILD_ROOT%{python_sitelibdir_noarch}/
 %{python_sitelibdir_noarch}/%{name}.py*
 
 %changelog
+* Tue Oct 22 2013 Igor Vlasenko <viy@altlinux.ru> 3.6.1-alt1_1
+- update to new release by fcimport
+
 * Wed Jul 31 2013 Igor Vlasenko <viy@altlinux.ru> 3.6-alt1_3
 - update to new release by fcimport
 
