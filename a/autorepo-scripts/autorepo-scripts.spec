@@ -2,7 +2,7 @@
 BuildRequires: perl(RPM/Header.pm) perl(Source/Repository/Mass/ALTLinuxBackport.pm) perl-devel perl-ALTLinux-ACL
 # END SourceDeps(oneline)
 Name: autorepo-scripts
-Version: 0.32
+Version: 0.33
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -78,6 +78,9 @@ install -m 755 *.template %buildroot%_datadir/%name/templates/
 %_bindir/autorepo-altnode-misc-statistics-wrapper
 
 %changelog
+* Tue Oct 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.33-alt1
+- new version
+
 * Sat Oct 19 2013 Igor Vlasenko <viy@altlinux.ru> 0.32-alt1
 - autorepo-check-health
 
