@@ -1,6 +1,6 @@
 Name:          archivemount
 Version:       0.8.1
-Release:       alt1_1
+Release:       alt1_2
 Summary:       FUSE based filesystem for mounting compressed archives
 
 Group:         System/Libraries
@@ -9,6 +9,7 @@ URL:           http://www.cybernoia.de/software/archivemount/
 Source0:       http://www.cybernoia.de/software/archivemount/%{name}-%{version}.tar.gz
 Patch0:        archivemount_force-single-threaded.patch
 Patch1:        fix-debuginfo.patch
+Patch2:        archivemount-0.8.1_skip-fuse_main.patch
 
 Requires:      fuse
 BuildRequires: libfuse-devel
@@ -24,6 +25,7 @@ and use it like an ordinary filesystem.
 %setup -q
 %patch0 -p1 -b .single-threaded
 %patch1 -p1 -b .fix-debuginfo
+%patch2 -p1 -b .fuse_main
 
 %build
 %configure
@@ -39,6 +41,9 @@ make install DESTDIR=$RPM_BUILD_ROOT
 %{_bindir}/archivemount
 
 %changelog
+* Tue Oct 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.8.1-alt1_2
+- update to new release by fcimport
+
 * Sun Sep 15 2013 Igor Vlasenko <viy@altlinux.ru> 0.8.1-alt1_1
 - update to new release by fcimport
 
