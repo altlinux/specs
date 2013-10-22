@@ -1,25 +1,21 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires: unzip
-# END SourceDeps(oneline)
 %define oldname aldusleaf-crimson-text-fonts
 %global fontname aldusleaf-crimson-text
 %global fontconf 62-%{fontname}.conf
 
 Name:           fonts-ttf-aldusleaf-crimson-text
-Version:        0.1
-Release:        alt3_0.7.20100628
+Version:        0.8
+Release:        alt1_0.2.20130806
 Summary:        A latin font for the production of technical books and papers
 
 Group:          System/Fonts/True type
 License:        OFL
-URL:            http://aldusleaf.org/
-Source0:        http://aldusleaf.org/crimson_text_100628.zip
+URL:            http://aldusleaf.org/0-crimson.html
+Source0:        https://github.com/skosch/Crimson/archive/webfonts-august2013-2.tar.gz
 Source1:        %{oldname}-fontconfig.conf
 Source2:        generate.pe
 
 BuildArch:      noarch
 BuildRequires:  fontpackages-devel fontforge
-Obsoletes:      crimson-text-fonts < 0-0.2.20100523
 Source44: import.info
 
 %description
@@ -28,17 +24,17 @@ papers, particularly technical ones.
 
 
 %prep
-%setup -q -n crimson_text
-cp -p %{SOURCE2} fontforge_sources
+%setup -q -n Crimson-webfonts-august2013-2
+cp -p %{SOURCE2} sfd
 
 %build
-pushd fontforge_sources
+pushd sfd
 ./generate.pe *.sfd
 popd
 
 %install
 install -m 0755 -d %{buildroot}%{_fontdir}
-install -m 0644 -p fontforge_sources/*.ttf %{buildroot}%{_fontdir}
+install -m 0644 -p sfd/*.ttf %{buildroot}%{_fontdir}
 
 install -m 0755 -d %{buildroot}%{_fontconfig_templatedir} \
                    %{buildroot}%{_fontconfig_confdir}
@@ -88,10 +84,13 @@ fi
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}
 %{_fontbasedir}/*/%{_fontstem}/*.ttf
 
-%doc README.txt 
+%doc
 
 
 %changelog
+* Tue Oct 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.8-alt1_0.2.20130806
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.1-alt3_0.7.20100628
 - update to new release by fcimport
 
