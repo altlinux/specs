@@ -3,8 +3,8 @@ BuildRequires: libexpat-devel
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
 Name:           libisds
-Version:        0.7
-Release:        alt1_4
+Version:        0.8
+Release:        alt1_1
 Summary:        Library for accessing the Czech Data Boxes
 Group:          System/Libraries
 License:        LGPLv3
@@ -19,8 +19,6 @@ BuildRequires:  expat-devel >= 2.0.0
 BuildRequires:  gnupg2
 # Tests:
 BuildRequires:  libgnutls-devel >= 2.12.0
-# Update config.sub to support aarch64, bug #925782
-BuildRequires:  autoconf automake gettext-devel libtool
 Requires:       gnupg2
 Source44: import.info
 
@@ -40,8 +38,6 @@ developing applications that use %{name}.
 
 %prep
 %setup -q
-# Update config.sub to support aarch64, bug #925782
-autoreconf -i -f
 
 %build
 %configure --disable-static \
@@ -71,6 +67,9 @@ rm -rf client/.deps
 %doc client specification
 
 %changelog
+* Tue Oct 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.8-alt1_1
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.7-alt1_4
 - update to new release by fcimport
 
