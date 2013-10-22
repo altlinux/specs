@@ -2,7 +2,7 @@
 %define cvs_date zero
 %undefine cvs_date
 %define snapshot 2012-10-12
-%define rel alt1.1
+%define rel alt2
 
 %def_disable static
 %def_with pam_helper
@@ -24,7 +24,8 @@ License: BSD
 Group: Graphical desktop/Enlightenment
 URL: http://www.enlightenment.org/
 
-Source: http://download.enlightenment.org/releases/%_name-%version.tar.bz2
+#Source: http://download.enlightenment.org/releases/%_name-%version.tar.bz2
+Source: %_name-%version.tar.xz
 
 Source1: E-17.xpm
 Source2: start%name
@@ -193,6 +194,9 @@ cp %SOURCE11 %buildroot%_sysconfdir/enlightenment/sysactions.conf
 %_datadir/gnome/wm-properties/*.desktop
 
 %changelog
+* Wed Oct 23 2013 Yuri N. Sedunov <aris@altlinux.org> 1:0.17.4-alt2
+- git snapshot (b23cebb26)
+
 * Fri Sep 06 2013 Yuri N. Sedunov <aris@altlinux.org> 1:0.17.4-alt1.1
 - sysactions.conf: don't use systemctl for poweroff and reboot
 
