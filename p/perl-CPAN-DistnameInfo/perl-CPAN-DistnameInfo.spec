@@ -1,16 +1,15 @@
-%define module_version 0.12
-%define module_name CPAN-DistnameInfo
 # BEGIN SourceDeps(oneline):
-BuildRequires: perl-devel
+BuildRequires(pre): rpm-build-perl
+BuildRequires: perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-CPAN-DistnameInfo
 Version:        0.12
-Release:        alt2
+Release:        alt2_1
 Summary:        Extract distribution name and version from a distribution filename
-License:        perl
+License:        GPL+ or Artistic
 Group:          Development/Perl
 URL:            http://search.cpan.org/dist/CPAN-DistnameInfo/
-Source0:        http://cpan.org.ua/authors/id/G/GB/GBARR/%module_name-%module_version.tar.gz
+Source0:        http://www.cpan.org/authors/id/G/GB/GBARR/CPAN-DistnameInfo-%{version}.tar.gz
 BuildArch:      noarch
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
 # Tests:
@@ -32,7 +31,7 @@ from filenames and also report if the version is to be treated as a
 developer release.
 
 %prep
-%setup -n %module_name-%module_version
+%setup -q -n CPAN-DistnameInfo-%{version}
 
 %build
 perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
@@ -47,10 +46,13 @@ find $RPM_BUILD_ROOT -type f -name .packlist -exec rm -f {} \;
 make test
 
 %files
-%doc README Changes
+%doc Changes README
 %{perl_vendor_privlib}/CPAN/
 
 %changelog
+* Tue Oct 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.12-alt2_1
+- update to new release by fcimport
+
 * Wed Oct 16 2013 Igor Vlasenko <viy@altlinux.ru> 0.12-alt2
 - build for Sisyphus (required for perl update)
 
