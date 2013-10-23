@@ -1,13 +1,13 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(Benchmark.pm) perl(Clone.pm) perl(Config.pm) perl(Exporter.pm) perl(File/Copy/Recursive.pm) perl(File/ShareDir.pm) perl(IO/Handle.pm) perl(IO/Select.pm) perl(Math/GMP.pm) perl(Math/MatrixReal.pm) perl(Moose.pm) perl(MooseX/Declare.pm) perl(Mouse.pm) perl(Storable.pm) perl(Time/HiRes.pm) perl(threads.pm) perl(threads/shared.pm) perl-devel perl-podlators
+BuildRequires: perl(Benchmark.pm) perl(Clone.pm) perl(Config.pm) perl(Exporter.pm) perl(ExtUtils/MakeMaker.pm) perl(File/Copy/Recursive.pm) perl(File/ShareDir.pm) perl(IO/Handle.pm) perl(IO/Select.pm) perl(Math/GMP.pm) perl(Math/MatrixReal.pm) perl(Moose.pm) perl(MooseX/Declare.pm) perl(Mouse.pm) perl(POSIX/Regex.pm) perl(Storable.pm) perl(Time/HiRes.pm) perl(threads.pm) perl(threads/shared.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 %define upstream_name    Benchmark-Perl-Formance
 %define upstream_version 0.33
 
 Name:       perl-%{upstream_name}
 Version:    %{upstream_version}
-Release:    alt1_3
+Release:    alt1_4
 
 Summary:    Benchmark Suite for Perl
 License:    GPL+ or Artistic
@@ -54,6 +54,9 @@ of Perl, modified compile parameter, or another set of dependent libraries.
 
 
 %changelog
+* Mon Oct 21 2013 Igor Vlasenko <viy@altlinux.ru> 0.33-alt1_4
+- update by mgaimport
+
 * Wed Aug 07 2013 Igor Vlasenko <viy@altlinux.ru> 0.33-alt1_3
 - update by mgaimport
 
