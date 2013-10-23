@@ -10,8 +10,8 @@ BuildRequires(pre): rpm-build-python
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.13.0
-Release: alt2.git20130614
+Version: 0.14.0
+Release: alt1.git20131020
 
 Summary: SciPy is the library of scientific codes
 
@@ -38,7 +38,7 @@ BuildPreReq: python-module-sphinx-devel
 BuildPreReq: python-module-Pygments
 BuildPreReq: python-module-matplotlib
 %if_enabled docs
-BuildPreReq: python-module-matplotlib-sphinxext
+BuildPreReq: python-module-matplotlib-sphinxext python-module-numpydoc
 BuildPreReq: %py_dependencies scikits.statsmodels.docs.sphinxext
 %endif
 
@@ -337,7 +337,7 @@ cp -fR doc/build/html %buildroot%_docdir/%name/
 #	%buildroot%_docdir/%name/pdf/
 #install -p -m644 doc/build/plot_directive/tutorial/*.pdf \
 #	%buildroot%_docdir/%name/pdf/tutorial
-install -p -m644 LICENSE.txt README.rst THANKS.txt TOCHANGE.txt LATEST.txt \
+install -p -m644 LICENSE.txt README.rst THANKS.txt HACKING.rst.txt \
 	%buildroot%_docdir/%name/
 
 # pickles
@@ -457,6 +457,9 @@ rm -f %buildroot%python_sitelibdir/scipy/pickle/generated/scipy-stats-rv_discret
 %endif
 
 %changelog
+* Wed Oct 23 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.14.0-alt1.git20131020
+- Version 0.14.0
+
 * Wed Jun 19 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.13.0-alt2.git20130614
 - Fixed build
 
