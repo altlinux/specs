@@ -1,16 +1,15 @@
-%define snapshot 20121006
 %define api_ver 1.0
 %define _libexecdir %_prefix/libexec
+%define ibus_xkb_ver 1.5.0
 
 %def_enable python
 %def_enable dconf
 %def_disable gconf
 %def_enable xkb
-# may to produce problem with applet in kde if enabled
-%def_enable libgnomekbd
+%def_enable wayland
 
 Name: ibus
-Version: 1.5.3
+Version: 1.5.4
 Release: alt1
 
 Summary: Intelligent Input Bus for Linux OS
@@ -20,12 +19,15 @@ Url: http://code.google.com/p/%name/
 
 Source: http://%name.googlecode.com/files/%name-%version.tar.gz
 Source1: ibus-xinput
+Source2: ibus-xkb-%ibus_xkb_ver.tar.gz
 
 # fedora's patches
 Patch1: ibus-810211-no-switch-by-no-trigger.patch
 Patch2: ibus-541492-xkb.patch
 Patch3: ibus-530711-preload-sys.patch
 Patch4: ibus-xx-setup-frequent-lang.patch
+
+Patch10: ibus-1.5.4-up.patch
 
 %define gtk2_binary_version %(pkg-config  --variable=gtk_binary_version gtk+-2.0)
 %define gtk3_binary_version %(pkg-config  --variable=gtk_binary_version gtk+-3.0)
@@ -59,7 +61,7 @@ BuildRequires: libnotify-devel
 BuildRequires: libGConf-devel
 %{?_enable_dconf:BuildRequires: libdconf-devel /proc dbus-tools-gui dconf}
 %{?_enable_xkb:BuildRequires: libxkbfile-devel}
-%{?_enable_libgnomekbd:BuildRequires: libgnomekbd-devel libgnomekbd-gir-devel}
+%{?_enable_wayland:BuildRequires: libwayland-client-devel libxkbcommon-devel}
 # gsettings-schema-convert
 BuildRequires: GConf
 
@@ -141,16 +143,21 @@ This package contains IBus im module for python.
 %endif
 
 %prep
-%setup
+%setup -a2
 %patch1 -p1 -b .noswitch
 
 %if_enabled xkb
 %patch2 -p1 -b .xkb
 rm -f bindings/vala/ibus-%api_ver.vapi
 rm -f data/dconf/00-upstream-settings
+# merge translations
+for po in $(basename -a $(ls ibus-xkb-%ibus_xkb_ver/po/*.po)); do
+    msgcat --use-first po/$po ibus-xkb-%ibus_xkb_ver/po/$po -o po/$po
+done
 %endif
 %patch3 -p1
 %patch4 -p1
+%patch10 -p1
 
 %build
 %autoreconf
@@ -165,14 +172,18 @@ rm -f data/dconf/00-upstream-settings
     %{?_enable_dconf:--disable-schemas-compile} \
     %{subst_enable gconf} \
     %{?_enable_gconf:--disable-schemas-install} \
-    %{subst_enable libgnomekbd} \
+    %{subst_enable wayland} \
     --enable-surrounding-text \
     --enable-introspection
+
+%if_enabled xkb
+make -C ui/gtk3 maintainer-clean-generic
+%endif
 
 %make_build
 
 %install
-%make DESTDIR=%buildroot install
+%makeinstall_std
 
 # install xinput config file
 install -pm 644 -D %SOURCE1 %buildroot%_xinputconf
@@ -196,17 +207,18 @@ fi
 %files -f %{name}10.lang
 %dir %_datadir/ibus/
 %_bindir/%name
-%_bindir/ibus-daemon
-%_bindir/ibus-setup
-%_datadir/ibus/*
+%_bindir/%name-daemon
+%_bindir/%name-setup
+%_datadir/%name/*
 %_desktopdir/*
 %_iconsdir/hicolor/*/apps/*
-%_libexecdir/ibus-ui-gtk3
-%_libexecdir/ibus-x11
+%_libexecdir/%name-ui-gtk3
+%_libexecdir/%name-x11
 %_libexecdir/%name-engine-simple
+%{?_enable_wayland:%_libexecdir/%name-wayland}
 
 %if_enabled gconf
-%_libexecdir/ibus-gconf
+%_libexecdir/%name-gconf
 %_sysconfdir/gconf/schemas/ibus.schemas
 %endif
 
@@ -228,7 +240,7 @@ fi
 %exclude %_datadir/bash-completion/completions/ibus.bash
 
 %files -n lib%name
-%_libdir/libibus-1.0.so.*
+%_libdir/lib%name-1.0.so.*
 
 %files -n lib%name-gir
 %_typelibdir/IBus-%api_ver.typelib
@@ -259,6 +271,10 @@ fi
 %_datadir/gtk-doc/html/*
 
 %changelog
+* Wed Oct 23 2013 Yuri N. Sedunov <aris@altlinux.org> 1.5.4-alt1
+- 1.5.4
+- updated fc patchset
+
 * Mon Sep 02 2013 Yuri N. Sedunov <aris@altlinux.org> 1.5.3-alt1
 - 1.5.3
 - updated fc patchset
