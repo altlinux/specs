@@ -14,7 +14,7 @@
 %define _enable_test 1
 
 Name: perl-MARC-Record
-Version: 2.0.5
+Version: 2.0.6
 Release: alt1
 
 Summary: Perl extension for handling MARC records
@@ -54,6 +54,9 @@ in MARC::File::*.
 
 
 %changelog
+* Wed Oct 23 2013 Igor Vlasenko <viy@altlinux.ru> 2.0.6-alt1
+- automated CPAN update
+
 * Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 2.0.5-alt1
 - automated CPAN update
 
