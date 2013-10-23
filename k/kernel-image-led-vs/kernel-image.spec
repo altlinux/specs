@@ -25,7 +25,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.10.17
-Release: alt1
+Release: alt2
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -1822,6 +1822,10 @@ done)
 
 
 %changelog
+* Wed Oct 23 2013 Led <led@altlinux.ru> 3.10.17-alt2
+- updated:
+  + fix-drivers-gpu-drm--nouveau
+
 * Sat Oct 19 2013 Led <led@altlinux.ru> 3.10.17-alt1
 - 3.10.17
 - removed:
