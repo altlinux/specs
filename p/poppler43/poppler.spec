@@ -9,7 +9,7 @@
 %def_enable static
 %def_enable cpp
 %def_enable glib
-%def_disable qt5
+%def_enable qt5
 %def_enable qt4
 %def_disable qt3
 %def_enable devel
@@ -41,7 +41,7 @@
 %define bugfix 2
 Name: %rname%somajor
 Version: %major.%minor.%bugfix
-Release: alt1
+Release: alt2
 
 %if_disabled compat
 %define poppler_devel_name lib%rname-devel
@@ -404,6 +404,9 @@ export QT4DIR=%_qt4dir
 %endif
 
 %changelog
+* Wed Oct 23 2013 Sergey V Turchin <zerg@altlinux.org> 0.24.2-alt2
+- built Qt5 backend
+
 * Thu Oct 10 2013 Sergey V Turchin <zerg@altlinux.org> 0.24.2-alt1
 - new version
 
