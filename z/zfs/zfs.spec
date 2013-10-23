@@ -5,7 +5,7 @@
 Name: zfs
 %define lname lib%name
 Version: 0.6.2
-Release: alt8
+Release: alt9
 Summary: ZFS on Linux
 License: GPLv2+
 Group: System/Kernel and hardware
@@ -116,13 +116,15 @@ tar -C .. \
 	%{subst_enable shared} \
 	%{subst_enable static} \
 	%{subst_with selinux} \
+	--with-udevdir=/lib/udev \
+	--with-dracutdir=/lib/dracut \
 	--with-gnu-ld
 %make_build
 
 
 %install
 install -pD -m 0644 {,%kernel_srcdir/}%name-%version.tar.xz
-%makeinstall_std DEFAULT_INIT_DIR=%_initddir udevdir=/lib/udev dracutdir=/lib/dracut
+%makeinstall_std DEFAULT_INIT_DIR=%_initddir
 
 
 %if_enabled shared
@@ -166,6 +168,9 @@ install -pD -m 0644 {,%kernel_srcdir/}%name-%version.tar.xz
 
 
 %changelog
+* Wed Oct 23 2013 Led <led@altlinux.ru> 0.6.2-alt9
+- fixed udevdir
+
 * Wed Oct 23 2013 Led <led@altlinux.ru> 0.6.2-alt8
 - upstream fixes
 
