@@ -9,7 +9,7 @@
 
 Name: python-module-%oname
 Version: %major.0
-Release: alt3.git20130611
+Release: alt3.git20131022
 
 Summary: Matlab(TM) style python plotting package
 
@@ -31,7 +31,7 @@ BuildRequires: dvipng gcc-c++ libgtk+2-devel python-module-PyQt4-devel
 BuildPreReq: python-module-ctypes python-module-pygtk_git-devel
 BuildPreReq: python-module-qt python-module-wx2.9 graphviz
 BuildPreReq: python-modules-encodings python-modules-tkinter
-BuildPreReq: rpm-build-java rpm-build-mono
+BuildPreReq: rpm-build-java rpm-build-mono libwxGTK2.9-devel
 BuildPreReq: texlive-latex-base tk-devel xorg-sdk xpdf
 BuildPreReq: libnumpy-devel latex2html texlive-latex-recommended
 BuildPreReq: linuxdoc-tools python-module-sphinx-devel
@@ -49,7 +49,7 @@ BuildPreReq: python3-module-scipy-devel python3-module-markupsafe
 BuildPreReq: python3-module-pytz python3-module-dateutil
 BuildPreReq: python3-module-PySide
 BuildPreReq: python3-module-pycairo python3-module-pygobject3-devel
-BuildPreReq: python3-module-pyparsing python3-modules-tkinter
+BuildPreReq: python3-module-pyparsing
 %endif
 
 #Requires: dvipng %name-gtk = %version-%release
@@ -161,6 +161,21 @@ Requires: python3-module-%oname = %version-%release
 
 %description -n python3-module-%oname-sphinxext
 sphinxext extension for %oname.
+
+%package -n python3-module-mpl_toolkits
+Summary: mpl_toolkits extension for %oname
+Group: Development/Python3
+
+%description -n python3-module-mpl_toolkits
+mpl_toolkits extension for %oname.
+
+%package -n python3-module-mpl_toolkits-tests
+Summary: Tests for mpl_toolkits
+Group: Development/Python3
+Requires: python3-module-mpl_toolkits
+
+%description -n python3-module-mpl_toolkits-tests
+Tests for mpl_toolkits.
 %endif
 
 %package tests
@@ -278,6 +293,21 @@ Requires: %name = %version-%release
 %description sphinxext
 sphinxext extension for %oname.
 
+%package -n python-module-mpl_toolkits
+Summary: mpl_toolkits extension for %oname
+Group: Development/Python
+
+%description -n python-module-mpl_toolkits
+mpl_toolkits extension for %oname.
+
+%package -n python-module-mpl_toolkits-tests
+Summary: Tests for mpl_toolkits
+Group: Development/Python
+Requires: python-module-mpl_toolkits
+
+%description -n python-module-mpl_toolkits-tests
+Tests for mpl_toolkits.
+
 
 %prep
 %setup
@@ -294,6 +324,8 @@ install -p -m644 %SOURCE1 .
 %if_with python3
 rm -rf ../python3
 cp -a . ../python3
+pushd ../python3
+find ./ -type f -name '*.py' -exec 2to3 -w -n '{}' + ||:
 %endif
 
 %build
@@ -307,6 +339,9 @@ do
 	sed -i 's|\(include.*numpy\)/|\1-py3/|' $i
 done
 sed -i 's|^\(gtkagg\).*|\1 = False|' setup.cfg
+sed -i 's|^\(gtk3agg\).*|\1 = False|' setup.cfg
+sed -i 's|^\(tkagg\).*|\1 = False|' setup.cfg
+sed -i 's|^\(wxagg\).*|\1 = False|' setup.cfg
 sed -i 's|import xlwt|import xlwt3|' lib/mpl_toolkits/exceltools.py
 export CC=g++
 %python3_build_debug
@@ -319,6 +354,8 @@ popd
 %if_with python3
 pushd ../python3
 %python3_install
+
+cp -fR lib/mpl_toolkits %buildroot%python3_sitelibdir/
 
 subst "s|WXAgg|GTK3Cairo|g" \
 	%buildroot%python3_sitelibdir/%oname/mpl-data/matplotlibrc
@@ -353,6 +390,8 @@ popd
 %endif
 
 %python_install
+
+cp -fR lib/mpl_toolkits %buildroot%python_sitelibdir/
 
 # Use gtk by default
 subst "s|WXAgg|GTK3Cairo|g" \
@@ -405,6 +444,9 @@ sed -i 's|^\(backend\).*|\1 : GTK3Cairo|' \
 #done
 #popd
 
+find %buildroot%python3_sitelibdir/ -type f -exec sed -i 's|%_bindir/python|%_bindir/python3|' -- '{}' +
+find %buildroot%python3_sitelibdir/ -type f -exec sed -i 's|%_bindir/env python|%_bindir/python3|' -- '{}' +
+
 %pre
 rm -f %python_sitelibdir/%oname/mpl-data/fonts/ttf/Vera*.ttf
 for i in %reduce_fonts
@@ -447,6 +489,7 @@ done
 %python_sitelibdir/matplotlib/backends/backend_cocoa*
 %python_sitelibdir/matplotlib/tri
 %python_sitelibdir/matplotlib/compat
+%python_sitelibdir/matplotlib/axes
 
 %files fltk
 #python_sitelibdir/matplotlib/backends/backend_fltk*
@@ -512,6 +555,13 @@ rm -fR %_docdir/%name/pdf
 %files sphinxext
 %python_sitelibdir/%oname/sphinxext
 
+%files -n python-module-mpl_toolkits
+%python_sitelibdir/mpl_toolkits
+%exclude %python_sitelibdir/mpl_toolkits/tests
+
+%files -n python-module-mpl_toolkits-tests
+%python_sitelibdir/mpl_toolkits/tests
+
 %if_with python3
 %files -n python3-module-%oname
 %doc LICENSE README.rst CHANGELOG INSTALL TODO
@@ -561,6 +611,7 @@ rm -fR %_docdir/%name/pdf
 %exclude %python3_sitelibdir/matplotlib/backends/__pycache__/windowing.*
 %python3_sitelibdir/matplotlib/tri
 %python3_sitelibdir/matplotlib/compat
+%python3_sitelibdir/matplotlib/axes
 
 #files -n python3-module-%oname-fltk
 #python3_sitelibdir/matplotlib/backends/backend_fltk*
@@ -585,7 +636,7 @@ rm -fR %_docdir/%name/pdf
 %python3_sitelibdir/matplotlib/backends/__pycache__/backend_tk*
 %python3_sitelibdir/matplotlib/backends/tk*
 %python3_sitelibdir/matplotlib/backends/__pycache__/tk*
-%python3_sitelibdir/matplotlib/backends/_tkagg*
+#python3_sitelibdir/matplotlib/backends/_tkagg*
 
 %files -n python3-module-%oname-qt4
 %python3_sitelibdir/matplotlib/backends/backend_qt4*
@@ -600,9 +651,19 @@ rm -fR %_docdir/%name/pdf
 
 %files -n python3-module-%oname-sphinxext
 %python3_sitelibdir/%oname/sphinxext
+
+%files -n python3-module-mpl_toolkits
+%python3_sitelibdir/mpl_toolkits
+%exclude %python3_sitelibdir/mpl_toolkits/tests
+
+%files -n python3-module-mpl_toolkits-tests
+%python3_sitelibdir/mpl_toolkits/tests
 %endif
 
 %changelog
+* Wed Oct 23 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4.0-alt3.git20131022
+- New snapshot
+
 * Wed Sep 25 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4.0-alt3.git20130611
 - Fixed build
 
