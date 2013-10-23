@@ -10,7 +10,7 @@
 
 Name: ejudge
 Version: 2.3.27
-Release: alt2
+Release: alt3
 
 
 Summary: Ejudge is a programming contest managment system
@@ -21,7 +21,7 @@ Group: System/Servers
 Url: http://www.ejudge.ru
 Packager: Denis Kirienko <dk@altlinux.ru>
 
-Source0: %name-svn7383.tar
+Source0: %name-svn7474.tar
 Source1: %name.rc
 Source2: %name.logrotate
 Source3: ejudge-install.sh
@@ -107,7 +107,7 @@ install -p -m644 -D %SOURCE2 %buildroot%{_logrotatedir}/%name
 install -d %buildroot%ejudge_home
 install -d %buildroot%ejudge_socket_dir
 install -d %buildroot%lang_config_dir
-%find_lang %name
+%find_lang --all-name %name
 
 %pre
 %{_sbindir}/groupadd -r -f %ejudge_group 2>/dev/null || :
@@ -135,6 +135,9 @@ install -d %buildroot%lang_config_dir
 %doc ejudge-*.pdf
 
 %changelog
+* Wed Oct 23 2013 Denis Kirienko <dk@altlinux.org> 2.3.27-alt3
+- SVN 7474
+
 * Fri Jun 21 2013 Denis Kirienko <dk@altlinux.org> 2.3.27-alt2
 - SVN 7383
 
