@@ -4,7 +4,7 @@
 
 Name: qt5-tools
 Version: 5.1.1
-Release: alt1
+Release: alt2
 
 Group: System/Libraries
 Summary: Qt5 - QtTool components
@@ -40,6 +40,14 @@ Summary: Development files for %name
 Requires: %name-common = %EVR
 Requires: qt5-base-devel
 %description devel
+%summary.
+
+%package devel-static
+Group: Development/KDE and QT
+Summary: Development files for %name
+Requires: %name-common = %EVR
+Requires: %name-devel
+%description devel-static
 %summary.
 
 %package -n qt5-assistant
@@ -194,10 +202,16 @@ done
 %_qt5_headerdir/QtUiTools/
 %_qt5_libdir/libQt*.prl
 %_qt5_libdir/libQt*.so
-%_qt5_libdir/pkgconfig/Qt*.pc
+%_qt5_libdir/pkgconfig/Qt*CLucene.pc
+%_qt5_libdir/pkgconfig/Qt*DesignerComponents.pc
+%_qt5_libdir/pkgconfig/Qt*Designer.pc
+%_qt5_libdir/pkgconfig/Qt*Help.pc
 %_qt5_archdatadir/mkspecs/modules/*.pri
 %_libdir/cmake/Qt*/
-%_qt5_libdir/libQt5UiTools.a
+
+%files devel-static
+%_qt5_libdir/libQt?*.a
+%_pkgconfigdir/Qt?UiTools.pc
 
 #%files -n libqt5-uitools
 #%_qt5_libdir/libQt5UiTools.so.*
@@ -212,6 +226,9 @@ done
 
 
 %changelog
+* Wed Oct 23 2013 Sergey V Turchin <zerg@altlinux.org> 5.1.1-alt2
+- move static libs to separate package
+
 * Mon Sep 30 2013 Sergey V Turchin <zerg@altlinux.org> 5.1.1-alt1
 - initial build
 
