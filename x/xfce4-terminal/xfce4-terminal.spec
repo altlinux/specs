@@ -1,6 +1,6 @@
 Name: xfce4-terminal
 Version: 0.6.2
-Release: alt1
+Release: alt2
 
 Summary: Terminal emulator application for Xfce
 Summary (ru_RU.UTF-8): Эмулятор терминала для Xfce
@@ -10,6 +10,8 @@ Url: http://www.xfce.org
 Packager: XFCE Team <xfce@packages.altlinux.org>
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
+# ALT bug #29513, from xfce bug #10395
+Patch1: fix-encoding.patch
 
 BuildRequires(pre): rpm-build-licenses
 
@@ -37,6 +39,7 @@ xfce4-terminal - легкий и удобный эмулятор термина�
 %prep
 %setup
 %patch -p1
+%patch1 -p1
 
 # Don't use git tag in version.
 %xfce4_drop_gitvtag terminal_version_tag configure.ac.in
@@ -65,6 +68,9 @@ sed -i '1i .\\" -*- mode: troff; coding: utf8 -*-' %buildroot%_mandir/*/man1/%na
 %_desktopdir/*
 
 %changelog
+* Wed Oct 23 2013 Mikhail Efremov <sem@altlinux.org> 0.6.2-alt2
+- Fix up the encoding menu creation (closes: #29513).
+
 * Mon May 06 2013 Mikhail Efremov <sem@altlinux.org> 0.6.2-alt1
 - Updated to 0.6.2.
 
