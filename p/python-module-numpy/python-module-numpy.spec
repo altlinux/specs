@@ -14,7 +14,7 @@
 
 Name: python-module-%oname
 Version: %majver.0.0
-Release: alt8.git20130613
+Release: alt8.git20131021
 
 Summary: NumPy: array processing for numbers, strings, records, and objects
 License: BSD
@@ -32,6 +32,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %oname-%version.tar
 Source1: %oname.pc
 Source2: site.cfg
+Source3: sphinx-theme.tar
 
 Requires: %name-testing = %version-%release
 Requires: lib%oname = %version-%release
@@ -43,7 +44,7 @@ BuildPreReq: /proc
 
 BuildPreReq: gcc-fortran liblapack-devel python-module-Pyrex
 BuildPreReq: python-modules-compiler python-modules-encodings
-BuildPreReq: libfftw3-devel scons gcc-c++
+BuildPreReq: libfftw3-devel scons gcc-c++ python-module-numpydoc
 BuildPreReq: libsuitesparse-devel swig python-module-distribute
 #BuildPreReq: python-module-scipy
 BuildPreReq: python-module-sphinx-devel python-module-Pygments
@@ -319,7 +320,7 @@ Summary: Development files of NumPy
 Group: Development/Python
 Requires: lib%oname = %version-%release
 Requires: %name = %version-%release
-Requires: python-module-numpydoc = %version-%release
+Requires: python-module-numpydoc
 Requires: %name-addons = %version-%release
 Requires: python-devel
 %py_requires SCons
@@ -394,6 +395,7 @@ This package contains documentation for NumPy in PDF format.
 %prep
 %setup
 install -m644 %SOURCE1 %SOURCE2 .
+tar xf %SOURCE3
 sed -i 's|@LIBDIR@|%_libdir|g' site.cfg
 sed -i 's|@PYVER@|%_python_version|g' site.cfg doc/Makefile
 
@@ -474,8 +476,8 @@ mv %buildroot%python3_sitelibdir/%oname/core/include/%oname \
 install -d %buildroot%python3_sitelibdir/%oname/core/include
 ln -s %_includedir/%oname-py3 \
 	%buildroot%python3_sitelibdir/%oname/core/include/
-cp -a %oname/numarray/include/%oname/*.h \
-	%buildroot%_includedir/%oname-py3/
+#cp -a %oname/numarray/include/%oname/*.h \
+#	%buildroot%_includedir/%oname-py3/
 cp build/src.*/%oname/core/include/%oname/{*.h,*.c} \
 	%buildroot%_includedir/%oname-py3/
 install -d %buildroot%python3_sitelibdir/%oname/core/lib/npy-pkg-config
@@ -530,8 +532,8 @@ mv %buildroot%python_sitelibdir/%oname/core/include/%oname \
 install -d %buildroot%python_sitelibdir/%oname/core/include
 ln -s %_includedir/%oname \
 	%buildroot%python_sitelibdir/%oname/core/include/
-cp -a %oname/numarray/include/%oname/*.h \
-	%buildroot%_includedir/%oname/
+#cp -a %oname/numarray/include/%oname/*.h \
+#	%buildroot%_includedir/%oname/
 cp build/src.*/%oname/core/include/%oname/{*.h,*.c} \
 	%buildroot%_includedir/%oname/
 install -d %buildroot%python_sitelibdir/%oname/core/lib/npy-pkg-config
@@ -571,17 +573,17 @@ export PYTHONPATH=%buildroot%python_sitelibdir
 %make -C doc html
 %endif
 
-pushd doc/sphinxext
-%python_build
-%python_install
-popd
-%if_with python3
-export PYTHONPATH=%buildroot%python3_sitelibdir
-pushd ../python3/doc/sphinxext
-%python3_build
-%python3_install
-popd
-%endif
+#pushd doc/sphinxext
+#python_build
+#python_install
+#popd
+#if_with python3
+#export PYTHONPATH=%buildroot%python3_sitelibdir
+#pushd ../python3/doc/sphinxext
+#python3_build
+#python3_install
+#popd
+#endif
 
 export PYTHONPATH=%buildroot%python_sitelibdir
 pushd doc
@@ -615,8 +617,8 @@ cp -fR doc/build/plot_directive/reference/generated/*.pdf \
 %if_with tests
 cp %oname/distutils/tests/swig_ext/src/example.i \
 	%buildroot%python_sitelibdir/%oname/distutils/tests/swig_ext/src/
-cp %oname/numarray/_capi.c \
-	%buildroot%python_sitelibdir/%oname/numarray/
+#cp %oname/numarray/_capi.c \
+#	%buildroot%python_sitelibdir/%oname/numarray/
 cp %oname/fft/*.c %oname/fft/*.h \
 	%buildroot%python_sitelibdir/%oname/fft/
 cp %oname/linalg/*.c \
@@ -641,8 +643,8 @@ done
 pushd ../python3
 cp %oname/distutils/tests/swig_ext/src/example.i \
 	%buildroot%python3_sitelibdir/%oname/distutils/tests/swig_ext/src/
-cp %oname/numarray/_capi.c \
-	%buildroot%python3_sitelibdir/%oname/numarray/
+#cp %oname/numarray/_capi.c \
+#	%buildroot%python3_sitelibdir/%oname/numarray/
 cp %oname/fft/*.c %oname/fft/*.h \
 	%buildroot%python3_sitelibdir/%oname/fft/
 cp %oname/linalg/*.c \
@@ -675,26 +677,24 @@ popd
 # addons
 
 %if_with doc
-%if_with python3
-pushd ../python3
-pushd doc
-export PYTHONPATH=%buildroot%python3_sitelibdir
-for i in sphinxext; do
-pushd $i
-%python3_build_debug
-%python3_install
-popd
-done
-#pushd %buildroot%_bindir
-#mv autosummary_generate py3_autosummary_generate
+#if_with python3
+#pushd ../python3
+#pushd doc
+#export PYTHONPATH=%buildroot%python3_sitelibdir
+#for i in sphinxext; do
+#pushd $i
+#python3_build_debug
+#python3_install
 #popd
-export PYTHONPATH=%buildroot%python_sitelibdir
-popd
-popd
-%endif
+#done
+#export PYTHONPATH=%buildroot%python_sitelibdir
+#popd
+#popd
+#endif
 
 pushd doc
-for i in pyrex newdtype_example sphinxext; do
+#for i in pyrex newdtype_example sphinxext; do
+for i in pyrex newdtype_example; do
 pushd $i
 %python_build_debug
 %python_install
@@ -797,10 +797,10 @@ fi
 %exclude %python_sitelibdir/%oname/f2py/docs
 #exclude %python_sitelibdir/%oname/lib/polynomial.py*
 %exclude %python_sitelibdir/%oname/core/include
-%exclude %python_sitelibdir/%oname/numarray/image.py*
-%exclude %python_sitelibdir/%oname/numarray/convolve.py*
-%exclude %python_sitelibdir/%oname/numarray/nd_image.py*
-%exclude %python_sitelibdir/%oname/numarray/include
+#exclude %python_sitelibdir/%oname/numarray/image.py*
+#exclude %python_sitelibdir/%oname/numarray/convolve.py*
+#exclude %python_sitelibdir/%oname/numarray/nd_image.py*
+#exclude %python_sitelibdir/%oname/numarray/include
 %exclude %python_sitelibdir/%oname/distutils/mingw
 %exclude %python_sitelibdir/%oname/f2py/src
 %if_with doc
@@ -810,7 +810,7 @@ fi
 %exclude %python_sitelibdir/%oname/random/mtrand/*.pxi
 %exclude %python_sitelibdir/%oname/random/mtrand/*.pyx
 %exclude %python_sitelibdir/%oname/core/src/multiarray/testcalcs.py*
-%exclude %python_sitelibdir/%oname/numarray/*.c
+#exclude %python_sitelibdir/%oname/numarray/*.c
 %exclude %python_sitelibdir/%oname/core/src/multiarray/*.h
 %exclude %python_sitelibdir/%oname/core/src/multiarray/*.c*
 %exclude %python_sitelibdir/%oname/core/src/npymath
@@ -845,10 +845,10 @@ fi
 %exclude %python3_sitelibdir/%oname/f2py/docs
 #exclude %python3_sitelibdir/%oname/lib/polynomial.py*
 %exclude %python3_sitelibdir/%oname/core/include
-%exclude %python3_sitelibdir/%oname/numarray/image.py*
-%exclude %python3_sitelibdir/%oname/numarray/convolve.py*
-%exclude %python3_sitelibdir/%oname/numarray/nd_image.py*
-%exclude %python3_sitelibdir/%oname/numarray/include
+#exclude %python3_sitelibdir/%oname/numarray/image.py*
+#exclude %python3_sitelibdir/%oname/numarray/convolve.py*
+#exclude %python3_sitelibdir/%oname/numarray/nd_image.py*
+#exclude %python3_sitelibdir/%oname/numarray/include
 %exclude %python3_sitelibdir/%oname/distutils/mingw
 %exclude %python3_sitelibdir/%oname/f2py/src
 %if_with doc
@@ -857,7 +857,7 @@ fi
 %exclude %python3_sitelibdir/%oname/random/mtrand/*.pxi
 %exclude %python3_sitelibdir/%oname/random/mtrand/*.pyx
 %exclude %python3_sitelibdir/%oname/core/src/multiarray/testcalcs.py*
-%exclude %python3_sitelibdir/%oname/numarray/*.c
+#exclude %python3_sitelibdir/%oname/numarray/*.c
 %exclude %python3_sitelibdir/%oname/core/src/multiarray/*.h
 %exclude %python3_sitelibdir/%oname/core/src/multiarray/*.c*
 %exclude %python3_sitelibdir/%oname/core/src/npymath
@@ -877,17 +877,15 @@ fi
 
 %if_with addons
 %files addons
-%python_sitelibdir/%oname/numarray/image.py*
-%python_sitelibdir/%oname/numarray/convolve.py*
-%python_sitelibdir/%oname/numarray/nd_image.py*
-#python_sitelibdir/%oname/lib/polynomial.py*
+#python_sitelibdir/%oname/numarray/image.py*
+#python_sitelibdir/%oname/numarray/convolve.py*
+#python_sitelibdir/%oname/numarray/nd_image.py*
 
 %if_with python3
 %files -n python3-module-%oname-addons
-%python3_sitelibdir/%oname/numarray/image.py*
-%python3_sitelibdir/%oname/numarray/convolve.py*
-%python3_sitelibdir/%oname/numarray/nd_image.py*
-#python3_sitelibdir/%oname/lib/polynomial.py*
+#python3_sitelibdir/%oname/numarray/image.py*
+#python3_sitelibdir/%oname/numarray/convolve.py*
+#python3_sitelibdir/%oname/numarray/nd_image.py*
 %endif
 
 %endif
@@ -958,7 +956,7 @@ fi
 %python_sitelibdir/%oname/random/mtrand/*.c
 %python_sitelibdir/%oname/random/mtrand/*.pxi
 %python_sitelibdir/%oname/random/mtrand/*.pyx
-%python_sitelibdir/%oname/numarray/*.c
+#python_sitelibdir/%oname/numarray/*.c
 %python_sitelibdir/%oname/core/src/multiarray/*.h
 %python_sitelibdir/%oname/core/src/multiarray/*.c*
 %python_sitelibdir/%oname/fft/*.c
@@ -972,7 +970,7 @@ fi
 #python_sitelibdir/%oname/linalg/*.h
 %endif
 %python_sitelibdir/%oname/core/include
-%python_sitelibdir/%oname/numarray/include
+#python_sitelibdir/%oname/numarray/include
 %python_sitelibdir/%oname/distutils/mingw
 %python_sitelibdir/%oname/f2py/src
 %python_sitelibdir/%oname/random/randomkit.h
@@ -990,7 +988,7 @@ fi
 %python3_sitelibdir/%oname/random/mtrand/*.c
 %python3_sitelibdir/%oname/random/mtrand/*.pxi
 %python3_sitelibdir/%oname/random/mtrand/*.pyx
-%python3_sitelibdir/%oname/numarray/*.c
+#python3_sitelibdir/%oname/numarray/*.c
 %python3_sitelibdir/%oname/core/src/multiarray/*.h
 %python3_sitelibdir/%oname/core/src/multiarray/*.c*
 %python3_sitelibdir/%oname/fft/*.c
@@ -1004,7 +1002,7 @@ fi
 #python3_sitelibdir/%oname/linalg/*.h
 %endif
 %python3_sitelibdir/%oname/core/include
-%python3_sitelibdir/%oname/numarray/include
+#python3_sitelibdir/%oname/numarray/include
 %python3_sitelibdir/%oname/distutils/mingw
 %python3_sitelibdir/%oname/f2py/src
 %python3_sitelibdir/%oname/random/randomkit.h
@@ -1038,15 +1036,15 @@ fi
 %endif
 
 %_python_set_noarch
-%pre -n python-module-numpydoc
-rm -fR %python_sitelibdir/numpydoc*.egg-info
+#pre -n python-module-numpydoc
+#rm -fR %python_sitelibdir/numpydoc*.egg-info
 
-%files -n python-module-numpydoc
-%python_sitelibdir/numpydoc*
-%exclude %python_sitelibdir/numpydoc/tests
+#files -n python-module-numpydoc
+#python_sitelibdir/numpydoc*
+#exclude %python_sitelibdir/numpydoc/tests
 
-%files -n python-module-numpydoc-tests
-%python_sitelibdir/numpydoc/tests
+#files -n python-module-numpydoc-tests
+#python_sitelibdir/numpydoc/tests
 
 #if_with python3
 #files -n python3-module-numpydoc
@@ -1056,6 +1054,9 @@ rm -fR %python_sitelibdir/numpydoc*.egg-info
 # TODO: restore requirement on scipy for tests
 
 %changelog
+* Tue Oct 22 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.0-alt8.git20131021
+- New snapshot
+
 * Fri Jun 14 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.0-alt8.git20130613
 - New snapshot
 
