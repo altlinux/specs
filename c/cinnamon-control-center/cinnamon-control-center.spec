@@ -9,7 +9,7 @@
 %def_enable ibus
 
 Name: cinnamon-control-center
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: Cinnamon Control Center
@@ -156,7 +156,7 @@ you'll want to install this package.
 %_desktopdir/*.desktop
 %_sysconfdir/xdg/menus/cinnamoncc.menu
 %_datadir/desktop-directories/*
-%_sysconfdir/xdg/autostart/cinnamon-sound-applet.desktop
+%exclude %_sysconfdir/xdg/autostart/cinnamon-sound-applet.desktop
 %_iconsdir/hicolor/*/*/*
 %_datadir/polkit-1/rules.d/cinnamon-control-center.rules
 %doc AUTHORS NEWS README
@@ -169,6 +169,9 @@ you'll want to install this package.
 
 
 %changelog
+* Mon Oct 21 2013 Vladimir Didenko <cow@altlinux.org> 2.0.3-alt1
+- 2.0.3-1-gc637556
+
 * Thu Oct 10 2013 Vladimir Didenko <cow@altlinux.org> 2.0.2-alt1
 - 2.0.2
 

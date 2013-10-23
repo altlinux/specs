@@ -5,7 +5,7 @@
 
 Name: %{_name}-session
 Version: %ver_major.1
-Release: alt1
+Release: alt2
 
 Summary: The cinnamon session programs for the Cinnamon GUI desktop environment
 License: GPLv2+
@@ -35,6 +35,7 @@ Requires: altlinux-freedesktop-menu-cinnamon
 Requires: gstreamer dbus-tools-gui
 Requires: gnome-filesystem
 Requires: cinnamon-settings-daemon
+Requires: nemo
 Requires: upower polkit-gnome gcr
 
 Requires: icon-theme-hicolor gnome-icon-theme-symbolic gnome-themes-standard
@@ -117,6 +118,9 @@ rm -f %buildroot%_docdir/%name/dbus/cinnamon-session.html
 %doc AUTHORS NEWS README
 
 %changelog
+* Mon Oct 21 2013 Vladimir Didenko <cow@altlinux.org> 2.0.1-alt2
+- add nemo and fallback-mount-helper as required components
+
 * Thu Oct 10 2013 Vladimir Didenko <cow@altlinux.org> 2.0.1-alt1
 - 2.0.1
 
