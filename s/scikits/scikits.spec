@@ -11,7 +11,7 @@ BuildRequires(pre): rpm-build-python
 %define dirs %dirs1 %dirs2 statsmodels
 
 %define docs_src0 audiolab/docs samplerate/docs talkbox/docs
-%define docs_src %docs_src0 statsmodels/scikits/statsmodels/docs
+%define docs_src %docs_src0
 
 %define longdesc SciKits (short for SciPy Toolkits), are add-on packages for SciPy, \
 hosted and developed separately from the main SciPy distribution. All \
@@ -20,7 +20,7 @@ under OSI-approved licenses.
 
 Name: %oname
 Version: 2267
-Release: alt10
+Release: alt11
 Summary: Add-on packages for SciPy
 License: OSI-approved licenses
 Group: Sciences/Other
@@ -40,6 +40,14 @@ Source4: site.cfg
 Source5: statsmodels.tar.gz
 # https://github.com/mbrucher/scikit-optimization.git
 Source6: optimization.tar.gz
+# https://github.com/pierregm/scikits.hydroclimpy.git
+Source7: hydroclimpy.tar.gz
+# https://github.com/bmcage/odes.git
+Source8: odes.tar.gz
+# https://github.com/pierregm/scikits.timeseries.git
+Source9: timeseries.tar.gz
+# https://github.com/stefanv/umfpack.git
+Source10: umfpack.tar.gz
 
 BuildPreReq: python-module-sphinx-devel /usr/bin/latex
 BuildPreReq: python-devel python-module-scipy swig gcc-c++ gcc-fortran
@@ -49,8 +57,8 @@ BuildPreReq: python-module-pyipopt python-module-pywrapper libopenblas-devel
 BuildPreReq: libsamplerate-devel python-module-Cython python-module-tables
 BuildPreReq: python-module-h5py python-module-BeautifulSoup libalsa-devel
 #BuildPreReq: python-module-pyproj python-module-rpy libnumpy-devel
-BuildPreReq: python-module-pyproj libnumpy-devel
-BuildPreReq: python-module-matplotlib-sphinxext
+BuildPreReq: python-module-pyproj libnumpy-devel python-module-pandas-tests
+BuildPreReq: python-module-matplotlib-sphinxext python-module-patsy
 #BuildPreReq: libsundials-devel python-module-pysundials
 
 %description
@@ -249,6 +257,7 @@ Summary: Vector fields plotting algorithms
 Group: Development/Python
 Requires: python-module-%name = %version-%release
 Conflicts: python-module-%name < %version-%release
+%add_python_req_skip lic_internal
 
 %description -n python-module-%name.vectorplot
 %longdesc
@@ -263,11 +272,11 @@ Requires: python-module-%name = %version-%release
 Conflicts: python-module-%name < %version-%release
 #py_requires scikits.learn.machine.manifold_learning.compression
 #py_requires scikits.learn.machine.svm
-%py_requires scikits.statsmodels.docs.sphinxext.docscrape
-%py_requires scikits.statsmodels.docs.sphinxext.docscrape_sphinx
 #py_requires scikits.openopt.solvers.optimizers
 %add_python_req_skip compression docscrape docscrape_sphinx
 %add_python_req_skip optimizers svm rpy
+%add_python_req_skip scikits.statsmodels.docs.sphinxext.docscrape
+%add_python_req_skip scikits.statsmodels.docs.sphinxext.docscrape_sphinx
 
 %description -n python-module-%name-examples
 %longdesc
@@ -282,8 +291,7 @@ Group: Development/Documentation
 BuildArch: noarch
 Requires: python-module-%name.audiolab-doc = %version-%release
 Requires: python-module-%name.samplerate-doc = %version-%release
-Requires: python-module-%name.statsmodels-doc = %version-%release
-Requires: python-module-%name.statsmodels-doc = %version-%release
+#Requires: python-module-%name.statsmodels-doc = %version-%release
 
 %description -n python-module-%name-doc
 %longdesc
@@ -391,9 +399,13 @@ in numpy arrays.
 tar -xzf %SOURCE1
 tar -xzf %SOURCE2
 tar -xzf %SOURCE3
-tar -xzf %SOURCE5
+#tar -xzf %SOURCE5
 rm -fR optimization
 tar -xzf %SOURCE6
+tar -xzf %SOURCE7
+#tar -xzf %SOURCE8
+tar -xzf %SOURCE9
+tar -xzf %SOURCE10
 
 install -p -m644 %SOURCE4 .
 %ifarch x86_64
@@ -403,7 +415,7 @@ sed -i "s|@SUFF@|$SUFF|" site.cfg
 
 %if_enabled docs
 %prepare_sphinx .
-ln -s $PWD/objects.inv statsmodels/scikits/statsmodels/docs/
+ln -s $PWD/objects.inv statsmodels/docs/
 %endif
 for i in umfpack audiolab samplerate
 do
@@ -459,13 +471,15 @@ mv %buildroot%python_noarch/%name.* \
 
 %if_enabled docs
 export PYTHONPATH=%buildroot%python_sitelibdir
+#for i in %docs_src statsmodels/docs; do
 for i in %docs_src; do
 	pushd $i
 	%make html
 	popd
 done
 
-for i in %docs_src statsmodels/%oname/statsmodels/docs
+#for i in %docs_src statsmodels/docs
+for i in %docs_src
 do
 	DIR=$(echo $i|sed 's|\([^/]*\).*|\1|')
 	install -d %buildroot%_docdir/%name/$DIR
@@ -513,12 +527,13 @@ done
 
 %files -n python-module-%name.audiolab
 %doc audiolab/COPYING.txt audiolab/NEWS audiolab/README.txt audiolab/TODO
-%python_sitelibdir/%name/audiolab
-%exclude %python_sitelibdir/%name/audiolab/tests
+%python_sitelibdir/audiolab
 %python_sitelibdir/%name.audiolab*
-%if_enabled docs
+%exclude %python_sitelibdir/audiolab/tests
 %exclude %python_sitelibdir/%name.audiolab/pickle
-%endif
+#if_enabled docs
+#exclude %python_sitelibdir/audiolab/pickle
+#endif
 
 %files -n python-module-%name.delaunay
 %python_sitelibdir/%name/delaunay
@@ -571,11 +586,10 @@ done
 
 %files -n python-module-%name.statsmodels
 %doc statsmodels/README.txt
-%python_sitelibdir/%name/statsmodels
-%exclude %python_sitelibdir/%name/statsmodels/tests
-%exclude %python_sitelibdir/%name/statsmodels/*/*/tests
-%exclude %python_sitelibdir/%name/statsmodels/examples
-%python_sitelibdir/%name.statsmodels*
+%python_sitelibdir/statsmodels*
+%exclude %python_sitelibdir/statsmodels/tests
+%exclude %python_sitelibdir/statsmodels/*/*/tests
+%exclude %python_sitelibdir/statsmodels/examples
 
 %files -n python-module-%name.talkbox
 %doc talkbox/README talkbox/LICENSE.txt talkbox/TODO
@@ -604,7 +618,7 @@ done
 %files -n python-module-%name-examples
 %python_sitelibdir/%name/*/tests
 %python_sitelibdir/%name/*/*/tests
-%python_sitelibdir/%name/*/*/*/tests
+#python_sitelibdir/%name/*/*/*/tests
 #python_sitelibdir/%name/*/*/*/*/tests
 %python_sitelibdir/%name/*/examples
 #python_sitelibdir/%name/*/*/*/examples
@@ -621,9 +635,9 @@ done
 %dir %_docdir/%name
 %_docdir/%name/samplerate
 
-%files -n python-module-%name.statsmodels-doc
-%dir %_docdir/%name
-%_docdir/%name/statsmodels
+#files -n python-module-%name.statsmodels-doc
+#dir %_docdir/%name
+#_docdir/%name/statsmodels
 
 %files -n python-module-%name.talkbox-doc
 %dir %_docdir/%name
@@ -644,6 +658,9 @@ done
 %endif
 
 %changelog
+* Thu Oct 24 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2267-alt11
+- New snapshot
+
 * Mon Jun 17 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2267-alt10
 - examples: don't require rpy
 
