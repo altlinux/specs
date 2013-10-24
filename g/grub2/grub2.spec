@@ -1,6 +1,6 @@
 Name: grub2
 Version: 2.00
-Release: alt14
+Release: alt15
 
 Summary: GRand Unified Bootloader
 License: GPL
@@ -382,6 +382,9 @@ grub-efi-autoupdate || {
 } >&2
 
 %changelog
+* Thu Oct 24 2013 Michael Shigorin <mike@altlinux.org> 2.00-alt15
+- 39_memtest: support separate /boot properly (closes: #29460)
+
 * Wed Jul 24 2013 Michael Shigorin <mike@altlinux.org> 2.00-alt14
 - efi: try loading efivars.ko just in case, no harm and no use otherwise
 
