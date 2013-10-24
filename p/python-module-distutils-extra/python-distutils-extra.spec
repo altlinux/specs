@@ -1,40 +1,71 @@
-Name:           python-module-distutils-extra
-Version:        2.29
-Release:        alt1.1
-Summary:        Integrate more support into Python's distutils
-Packager:       Paul Wolneykien <manowar@altlinux.ru>
+%define _name python-distutils-extra
+%define ver_major 2.38
 
-Group:          Development/Python
-License:        GPLv2+
-URL:            https://launchpad.net/python-distutils-extra
-Source0:        http://launchpad.net/%{name}/trunk/2.29/+download/%{name}-%{version}.tar.gz
+Name: python-module-distutils-extra
+Version: %ver_major
+Release: alt1
 
-BuildPreReq:    python-devel python-module-setuptools rpm-build-python
+Summary: Integrate more support into Python's distutils
+Group: Development/Python
+License: GPLv2+
+Url: https://launchpad.net/%_name
+Packager: Paul Wolneykien <manowar@altlinux.ru>
 
-BuildArch:      noarch
+Source: http://launchpad.net/%_name/trunk/%ver_major/+download/%_name-%version.tar.gz
+
+BuildArch: noarch
+
+BuildPreReq: python-devel python-module-setuptools rpm-build-python
+BuildPreReq: python3-devel python3-module-setuptools rpm-build-python3
 
 %description
 Enables you to easily integrate gettext support, themed icons and
-scrollkeeper based documentation into Python's distutils.
+documentation into Python's distutils.
+
+%package -n python3-module-distutils-extra
+Summary: Integrate more support into Python3 distutils
+Group: Development/Python3
+
+%description -n python3-module-distutils-extra
+Enables you to easily integrate gettext support, themed icons and
+documentation into Python3 distutils.
+
 
 %prep
-%setup -q
+%setup -n %_name-%version -a0
+mv %_name-%version py3build
 
 %build
 %python_build
+pushd py3build
+%python3_build
+popd
 
 %install
 %python_install
-chmod a+x %{buildroot}%{python_sitelibdir}/DistUtilsExtra/command/build_extra.py
+
+pushd py3build
+%python3_install
+popd
+
+chmod a+x %buildroot{%python_sitelibdir,%python3_sitelibdir}/DistUtilsExtra/command/build_extra.py
 
 %files
-%defattr(-,root,root,-)
-%doc LICENSE doc/*
-%{python_sitelibdir}/DistUtilsExtra/
-%{python_sitelibdir}/python_distutils_extra*.egg-info
+%doc doc/*
+%python_sitelibdir/DistUtilsExtra/
+%python_sitelibdir/python_distutils_extra*.egg-info
+
+%files -n python3-module-distutils-extra
+%doc doc/*
+%python3_sitelibdir/DistUtilsExtra/
+%python3_sitelibdir/python_distutils_extra*.egg-info
 
 
 %changelog
+* Thu Oct 24 2013 Yuri N. Sedunov <aris@altlinux.org> 2.38-alt1
+- 2.38
+- new python3 module
+
 * Mon Oct 24 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 2.29-alt1.1
 - Rebuild with Python-2.7
 
@@ -62,7 +93,7 @@ chmod a+x %{buildroot}%{python_sitelibdir}/DistUtilsExtra/command/build_extra.py
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_11_Mass_Rebuild
 
 * Sat Jan 24 2009 Fabian Affolter <fabian@bernewireless.net> - 1.91.2-2
-- Changed license to GPLv2+ 
+- Changed license to GPLv2+
 
 * Sat Nov 18 2008 Fabian Affolter <fabian@bernewireless.net> - 1.91.2-1
 - Initial package for Fedora
