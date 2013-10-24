@@ -1,6 +1,6 @@
 Name:           ffc
 Version:        1.2.0
-Release:        alt2.git20130429
+Release:        alt2.git20131007
 Epoch: 1
 Summary:        Compiler for finite element variational forms
 Group:          Development/Tools
@@ -88,6 +88,9 @@ install -p -m644 %SOURCE1 %buildroot%_docdir/%name
 %python_sitelibdir/*
 
 %changelog
+* Thu Oct 24 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:1.2.0-alt2.git20131007
+- New snapshot
+
 * Mon Jun 17 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:1.2.0-alt2.git20130429
 - Rebuilt with updated NumPy
 
