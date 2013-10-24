@@ -1,5 +1,6 @@
 
-#def_enable qtchooser 1
+#def_enable qtchooser
+%def_disable bootstrap
 %def_enable sql_pgsql
 %def_enable sql_odbc
 %def_enable sql_ibase
@@ -22,7 +23,7 @@
 %define bugfix 1
 Name: qt5-base
 Version: %major.%minor.%bugfix
-Release: alt1
+Release: alt2
 
 Group: System/Libraries
 Summary: Qt%major - QtBase components
@@ -72,6 +73,9 @@ BuildRequires: gst-plugins-devel libalsa-devel libpulseaudio-devel
 %{?_enable_sql_sqlite2:BuildRequires: libsqlite-devel}
 BuildRequires: libmysqlclient-devel
 BuildRequires: libsqlite3-devel
+%if_disabled bootstrap
+BuildRequires: qt5-base-devel qt5-tools
+%endif
 
 %description
 Qt is a software toolkit for developing applications.
@@ -126,7 +130,7 @@ BuildArch: noarch
 Summary: Document for developing apps which will use Qt%{major}
 Group: Development/KDE and QT
 Requires: %name-common = %EVR
-#Requires: %name-assistant = %version
+#Requires: %gname-assistant
 %description doc
 This package contains documentation and sources for example programs.
 
@@ -390,8 +394,9 @@ export QT_PLUGIN_PATH=$QT_DIR/plugins
     #
 
 %make_build
-#[ -d doc/qtcore ] \
-#    || %make docs
+%if_disabled bootstrap
+[ -d doc/qtcore ] || %make docs
+%endif
 
 %install
 # uninstall optflags
@@ -399,8 +404,9 @@ sed -i "s|^\s*QMAKE_CFLAGS_RELEASE\s*+=.*$|QMAKE_CFLAGS_RELEASE += |" mkspecs/co
 sed -i "s|^\s*QMAKE_CFLAGS_RELEASE_WITH_DEBUGINFO\s*+=.*$|QMAKE_CFLAGS_RELEASE_WITH_DEBUGINFO += -O2 -g|" mkspecs/common/g++-base.conf
 
 make install INSTALL_ROOT=%buildroot
-#! [ -d doc/qtcore ] \
-#    || %make INSTALL_ROOT=%buildroot install_docs
+%if_disabled bootstrap
+[ -d doc/qtcore ] && %make INSTALL_ROOT=%buildroot install_docs ||:
+%endif
 
 # remove .la files
 rm -rf %buildroot/%_qt5_libdir/*.la
@@ -544,12 +550,16 @@ done
 %dir %_qt5_plugindir/sqldrivers/
 
 %files doc
+%if_disabled bootstrap
 %doc %_qt5_docdir/*
+%exclude %_qt5_docdir/global/
+%endif
 
 %files -n rpm-macros-%gname
 %_rpmmacrosdir/%gname
 
 %files devel
+%_qt5_docdir/global/
 %dir %_qt5_bindir
 %_bindir/moc*
 %_qt5_bindir/moc*
@@ -690,5 +700,8 @@ done
 
 
 %changelog
+* Thu Oct 24 2013 Sergey V Turchin <zerg@altlinux.org> 5.1.1-alt2
+- build docs
+
 * Mon Sep 23 2013 Sergey V Turchin <zerg@altlinux.org> 5.1.1-alt1
 - initial build
