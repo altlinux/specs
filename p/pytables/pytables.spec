@@ -5,7 +5,7 @@
 
 Name: py%oname
 Version: 3.0.0
-Release: alt2.git20130601
+Release: alt3.git20130601
 Epoch: 1
 Summary: Managing hierarchical datasets
 License: MIT
@@ -252,7 +252,8 @@ done
 popd
 %endif
 
-%make_build -C doc all
+%make_build -C doc pickle
+%make_build -C doc html
 
 %install
 %if_with python3
@@ -275,8 +276,8 @@ install -d %buildroot%_docdir/%name/pdf
 install -p -m644 LICENSE.txt README.txt RELEASE_NOTES.txt THANKS \
 	%buildroot%_docdir/%name
 cp -fR LICENSES %buildroot%_docdir/%name
-install -p -m644 doc/build/latex/*.pdf %buildroot%_docdir/%name/pdf
-cp -fR doc/html %buildroot%_docdir/%name/
+#install -p -m644 doc/build/latex/*.pdf %buildroot%_docdir/%name/pdf
+cp -fR doc/build/html %buildroot%_docdir/%name/
 
 cp -fR examples %buildroot%python_sitelibdir/%oname/
 
@@ -327,6 +328,9 @@ cp -fR bench contrib %buildroot%python_sitelibdir/%oname/
 %_docdir/%name
 
 %changelog
+* Thu Oct 24 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:3.0.0-alt3.git20130601
+- Rebuilt with updated NumPy
+
 * Tue Jul 02 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:3.0.0-alt2.git20130601
 - Rebuilt with new libhdf5
 
