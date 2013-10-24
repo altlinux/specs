@@ -1,6 +1,6 @@
 Name: mediatomb
 Version: 0.12.1
-Release: alt10
+Release: alt11
 
 Summary: UPnP AV Mediaserver for Linux
 Group: System/Servers
@@ -70,6 +70,9 @@ install -pD -m0644 %SOURCE3 %buildroot%systemd_unitdir/mediatomb.service
 %attr(3770,root,_mediatomb) %dir %_localstatedir/%name
 
 %changelog
+* Thu Oct 24 2013 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.12.1-alt11
+- fixed segfault in metadata scanner (closes: #29511)
+
 * Sat Sep 21 2013 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.12.1-alt10
 - rebuilt with recent libav
 
