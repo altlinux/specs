@@ -2,7 +2,7 @@
 
 Name:           python-module-%origname
 Version:        2.2.0
-Release:        alt3.git20130501
+Release:        alt3.git20131011
 Summary:        Unified Form-assembly Code
 Group:          Development/Python
 License:        Public domain
@@ -134,6 +134,9 @@ install -p -m644 doc/manual/ufc-user-manual.pdf %buildroot%_docdir/%origname
 %python_sitelibdir_noarch/ufc_utils
 
 %changelog
+* Thu Oct 24 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.2.0-alt3.git20131011
+- New snapshot
+
 * Fri Jul 26 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.2.0-alt3.git20130501
 - Rebuilt with SWIG 2.0.10
 
