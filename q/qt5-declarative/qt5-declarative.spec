@@ -1,10 +1,11 @@
 
 %define qt_module qtdeclarative
 %define gname qt5
+%def_disable bootstrap
 
 Name: qt5-declarative
 Version: 5.1.1
-Release: alt1
+Release: alt2
 
 Group: System/Libraries
 Summary: Qt5 - QtDeclarative component
@@ -14,9 +15,19 @@ License: LGPLv2 / GPLv3
 Source: %qt_module-opensource-src-%version.tar
 
 BuildRequires: gcc-c++ glibc-devel qt5-base-devel qt5-jsbackend-devel
+%if_disabled bootstrap
+BuildRequires: qt5-tools
+%endif
 
 %description
 %summary
+
+%package common
+Summary: Common package for %name
+Group: System/Configuration/Other
+Requires: common-licenses
+%description common
+Common package for %name
 
 %package devel
 Group: Development/KDE and QT
@@ -34,12 +45,13 @@ Requires: %name-devel
 %description devel-static
 %summary.
 
-%package common
-Summary: Common package for %name
-Group: System/Configuration/Other
-Requires: common-licenses
-%description common
-Common package for %name
+%package doc
+BuildArch: noarch
+Summary: Document for developing apps which will use Qt5 %qt_module
+Group: Development/KDE and QT
+Requires: %name-common = %EVR
+%description doc
+This package contains documentation for Qt5 %qt_module
 
 %package -n libqt5-qml
 Group: System/Libraries
@@ -83,9 +95,17 @@ syncqt.pl-qt5 \
 %build
 %qmake_qt5
 %make_build
+%if_disabled bootstrap
+%make docs
+%endif
+
 
 %install
 %install_qt5
+%if_disabled bootstrap
+%make INSTALL_ROOT=%buildroot install_docs ||:
+%endif
+
 
 %files common
 %doc LGPL_EXCEPTION.txt
@@ -95,6 +115,9 @@ syncqt.pl-qt5 \
 %dir %_qt5_archdatadir/qml/Qt/labs/
 %dir %_qt5_archdatadir/qml/QtQml/
 %dir %_qt5_archdatadir/qml/QtQuick/
+
+%files doc
+%_qt5_docdir/*
 
 %files -n libqt5-qml
 %_qt5_libdir/libQt5Qml.so.*
@@ -137,5 +160,8 @@ syncqt.pl-qt5 \
 %_pkgconfigdir/Qt?QmlDevTools.pc
 
 %changelog
+* Thu Oct 24 2013 Sergey V Turchin <zerg@altlinux.org> 5.1.1-alt2
+- build docs
+
 * Thu Sep 26 2013 Sergey V Turchin <zerg@altlinux.org> 5.1.1-alt1
 - initial build
