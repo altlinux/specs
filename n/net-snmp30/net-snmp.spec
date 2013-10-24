@@ -8,7 +8,7 @@
 
 Name: %_name%abiversion
 Version: 5.7.2
-Release: alt4
+Release: alt5
 
 Summary: Tools and servers for the SNMP protocol
 License: BSD-like
@@ -441,7 +441,6 @@ echo "===== start test ====="
 %_man5dir/snmpd.conf.*
 %_man5dir/snmpd.examples.*
 %_man5dir/snmpd.internal*
-%_man5dir/snmp.conf.*
 %_man5dir/snmp_config.*
 %_man5dir/variables.*
 %_man8dir/snmpd.*
@@ -495,6 +494,7 @@ echo "===== start test ====="
 %_man1dir/snmpusm.*
 %_man1dir/snmpvacm.*
 %_man1dir/snmpwalk.*
+%_man5dir/snmp.conf.*
 
 %files -n %_name-utils
 %doc local/README.mib2c
@@ -585,6 +585,10 @@ echo "===== start test ====="
 %doc python/README
 
 %changelog
+* Thu Oct 24 2013 Slava Dubrovskiy <dubrsl@altlinux.org> 5.7.2-alt5
+- Update patches from V5-7-patches branch
+- Fix (ALT#29516) - move snmp.conf(5) to net-snmp-clients
+
 * Mon Sep 09 2013 Slava Dubrovskiy <dubrsl@altlinux.org> 5.7.2-alt4
 - Update patches from V5-7-patches branch
 - Fix (ALT #29319) - add README to python-module-netsnmp
