@@ -25,7 +25,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.10.17
-Release: alt2
+Release: alt3
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -64,6 +64,7 @@ Release: alt2
 %def_disable vme
 %def_disable mca
 %def_disable math_emu
+%def_disable pae
 %def_disable x86_extended_platform
 %def_enable pcmcia
 %def_enable isdn
@@ -248,6 +249,11 @@ ExcludeArch: i386
 %if "%sub_flavour" != "ws"
 %set_disable bootsplash
 %set_disable bld
+%ifarch %ix86
+%ifnarch i486 i586 pentium_m pentium pmmx pentium_mmx m1 6x86 crusoe m2 6x86mx mp6 k6_3 k6_2 k6 cyrix3 geode c3 nx586 gxm gx1 gx2 gx 55x 5x86 winchip winchip2
+%set_enable pae
+%endif
+%endif
 %endif
 
 %if "%sub_flavour" == "vs"
@@ -1021,6 +1027,7 @@ config_disable \
 	%{?_disable_modversions:MODVERSIONS} \
 	%{?_disable_compat:SYSCTL_SYSCALL ACPI_PROC_EVENT COMPAT_VDSO I2C_COMPAT PROC_PID_CPUSET SYSFS_DEPRECATED USB_DEVICEFS USB_DEVICE_CLASS EDAC_LEGACY_SYSFS X86_ACPI_CPUFREQ_CPB} \
 	%{?_disable_x32:X86_X32} \
+	%{?_disable_pae:HIGHMEM64G} %{?_enable_pae:HIGHMEM4G} \
 	%{?_disable_bld:BLD} \
 	%{?_disable_coredump:COREDUMP} \
 	%{?_disable_olpc:OLPC} \
@@ -1100,6 +1107,7 @@ config_enable \
 %endif
 	%{?_enable_debug_section_mismatch:DEBUG_SECTION_MISMATCH} \
 	%{?_enable_modversions:MODVERSIONS} \
+	%{?_enable_pae:HIGHMEM64G} \
 	%{?_enable_bld:BLD} \
 	%{?_enable_x86_extended_platform:X86_EXTENDED_PLATFORM} \
 	%{?_enable_ext4_for_ext2:EXT4_USE_FOR_EXT2} %{?_enable_ext4_for_ext3:EXT4_USE_FOR_EXT3} \
@@ -1822,6 +1830,11 @@ done)
 
 
 %changelog
+* Thu Oct 24 2013 Led <led@altlinux.ru> 3.10.17-alt3
+- added:
+  + fix-drivers-net-ethernet-mellanox-mlx4--mlx4_en
+- config: enabled HIGHMEM64G for non-ws kernels for x86 arches i686 and higher
+
 * Wed Oct 23 2013 Led <led@altlinux.ru> 3.10.17-alt2
 - updated:
   + fix-drivers-gpu-drm--nouveau
