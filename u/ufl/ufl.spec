@@ -1,6 +1,6 @@
 Name:           ufl
 Version:        1.2.0
-Release:        alt1.git20130429
+Release:        alt1.git20130904
 Summary:        Unified Form Language
 Group:          Development/Tools
 License:        LGPL v3+
@@ -59,6 +59,9 @@ install -p -m644 %SOURCE1 %buildroot%_docdir/%name
 %python_sitelibdir_noarch/*
 
 %changelog
+* Thu Oct 24 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.0-alt1.git20130904
+- New snapshot
+
 * Tue May 07 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.0-alt1.git20130429
 - Version 1.2.0
 
