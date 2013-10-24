@@ -9,7 +9,7 @@
 
 Name: python-module-%oname
 Version: %major.0
-Release: alt3.git20131022
+Release: alt4.git20131022
 
 Summary: Matlab(TM) style python plotting package
 
@@ -490,6 +490,7 @@ done
 %python_sitelibdir/matplotlib/tri
 %python_sitelibdir/matplotlib/compat
 %python_sitelibdir/matplotlib/axes
+%exclude %python_sitelibdir/mpl_toolkits
 
 %files fltk
 #python_sitelibdir/matplotlib/backends/backend_fltk*
@@ -612,6 +613,7 @@ rm -fR %_docdir/%name/pdf
 %python3_sitelibdir/matplotlib/tri
 %python3_sitelibdir/matplotlib/compat
 %python3_sitelibdir/matplotlib/axes
+%exclude %python3_sitelibdir/mpl_toolkits
 
 #files -n python3-module-%oname-fltk
 #python3_sitelibdir/matplotlib/backends/backend_fltk*
@@ -661,6 +663,9 @@ rm -fR %_docdir/%name/pdf
 %endif
 
 %changelog
+* Thu Oct 24 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4.0-alt4.git20131022
+- Removed mpl_toolkits from main package
+
 * Wed Oct 23 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4.0-alt3.git20131022
 - New snapshot
 
