@@ -1,12 +1,13 @@
 Name: ipmitool
 Summary: ipmitool - Utility for IPMI control
 Version: 1.8.13
-Release: alt1
+Release: alt2
 License: BSD
 URL: http://ipmitool.sourceforge.net/
 Group: System/Kernel and hardware
 Source: %name-%version.tar
 Patch: ipmitool-1.8.11-debian-CVE-2011-4339.patch
+Patch1: 0001-Bug-279-Fix-for-1.8.13.patch
 
 BuildRequires: libssl-devel readline-devel ncurses-devel libfreeipmi-devel
 
@@ -28,6 +29,7 @@ setting LAN configuration, and chassis power control.
 %prep
 %setup
 %patch -p1
+%patch1 -p1
 
 %build
 touch NEWS
@@ -52,6 +54,9 @@ install -pD -m755 contrib/bmclanconf %buildroot%_sbindir/
 %_datadir/%name
 
 %changelog
+* Thu Oct 24 2013 Anton Farygin <rider@altlinux.ru> 1.8.13-alt2
+- add patch from upstream bugzilla for fix sdr list on some HP servers (closes: #29491)
+
 * Fri Oct 11 2013 Anton Farygin <rider@altlinux.ru> 1.8.13-alt1
 - new version
 
