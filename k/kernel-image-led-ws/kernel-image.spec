@@ -25,7 +25,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.10.17
-Release: alt3
+Release: alt4
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -251,7 +251,7 @@ ExcludeArch: i386
 %set_disable bld
 %ifarch %ix86
 %ifnarch i486 i586 pentium_m pentium pmmx pentium_mmx m1 6x86 crusoe m2 6x86mx mp6 k6_3 k6_2 k6 cyrix3 geode c3 nx586 gxm gx1 gx2 gx 55x 5x86 winchip winchip2
-%set_enable pae
+#set_enable pae
 %endif
 %endif
 %endif
@@ -1830,6 +1830,16 @@ done)
 
 
 %changelog
+* Fri Oct 25 2013 Led <led@altlinux.ru> 3.10.17-alt4
+- updated:
+  + fix-fs-btrfs
+- added:
+  + fix-drivers--ssbi
+  + fix-drivers-net-wan--farsync
+  + fix-drivers-video--s3fb
+  + fix-sound-pci-lx6464es--snd-lx6464es
+- revert enabling HIGHMEM64G
+
 * Thu Oct 24 2013 Led <led@altlinux.ru> 3.10.17-alt3
 - added:
   + fix-drivers-net-ethernet-mellanox-mlx4--mlx4_en
