@@ -14,7 +14,7 @@
 %define _enable_test 1
 
 Name: perl-Return-Value
-Version: 1.666003
+Version: 1.666004
 Release: alt1
 
 Summary: Polymorphic Return Values
@@ -60,6 +60,9 @@ you're looking for in each contex a return value is used in.
 %perl_vendor_privlib/Return/
 
 %changelog
+* Fri Oct 25 2013 Igor Vlasenko <viy@altlinux.ru> 1.666004-alt1
+- automated CPAN update
+
 * Wed Oct 16 2013 Igor Vlasenko <viy@altlinux.ru> 1.666003-alt1
 - automated CPAN update
 
