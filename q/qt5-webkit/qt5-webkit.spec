@@ -2,10 +2,11 @@
 %add_verify_elf_skiplist %_qt5_libdir/libQt5WebKitWidgets.so.*
 
 %define qt_module qtwebkit
+%def_disable bootstrap
 
 Name: qt5-webkit
 Version: 5.1.1
-Release: alt1
+Release: alt2
 
 Group: System/Libraries
 Summary: Qt5 - QtWebKit components
@@ -30,9 +31,19 @@ BuildRequires: rpm-build-ruby
 BuildRequires: perl(Term/ANSIColor.pm) perl(Perl/Version.pm) perl(Digest/Perl/MD5.pm)
 BuildRequires: zlib-devel
 BuildRequires: qt5-base-devel qt5-declarative-devel
+%if_disabled bootstrap
+BuildRequires: qt5-tools
+%endif
 
 %description
 %summary
+
+%package common
+Summary: Common package for %name
+Group: System/Configuration/Other
+Requires: common-licenses
+%description common
+Common package for %name
 
 %package devel
 Group: Development/KDE and QT
@@ -43,12 +54,13 @@ Requires: qt5-declarative-devel
 %description devel
 %summary.
 
-%package common
-Summary: Common package for %name
-Group: System/Configuration/Other
-Requires: common-licenses
-%description common
-Common package for %name
+%package doc
+BuildArch: noarch
+Summary: Document for developing apps which will use Qt5 %qt_module
+Group: Development/KDE and QT
+Requires: %name-common = %EVR
+%description doc
+This package contains documentation for Qt5 %qt_module
 
 %package -n libqt5-webkit
 Group: System/Libraries
@@ -93,14 +105,23 @@ mv Source/ThirdParty/{glu/,gtest/,gyp/,mt19937ar.c,qunit/} \
 %build
 %qmake_qt5
 %make_build
+%if_disabled bootstrap
+%make docs
+%endif
 
 %install
 %install_qt5
+%if_disabled bootstrap
+%make INSTALL_ROOT=%buildroot install_docs ||:
+%endif
 
 
 %files common
 %doc Source/WebCore/LICENSE*
 %doc ChangeLog VERSION
+
+%files doc
+%_qt5_docdir/*
 
 %files -n libqt5-webkit
 %_qt5_libdir/libQt5WebKit.so.*
@@ -120,5 +141,8 @@ mv Source/ThirdParty/{glu/,gtest/,gyp/,mt19937ar.c,qunit/} \
 %_pkgconfigdir/Qt*.pc
 
 %changelog
+* Fri Oct 25 2013 Sergey V Turchin <zerg@altlinux.org> 5.1.1-alt2
+- build docs
+
 * Fri Sep 27 2013 Sergey V Turchin <zerg@altlinux.org> 5.1.1-alt1
 - initial build
