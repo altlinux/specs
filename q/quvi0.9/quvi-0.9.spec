@@ -2,7 +2,7 @@
 %define ver_major 0.9
 
 Name: %_name%ver_major
-Version: %ver_major.3.1
+Version: %ver_major.4
 Release: alt1
 
 Summary: Command line tool for parsing video download links
@@ -51,6 +51,9 @@ supports Youtube and other similar video websites.
 %doc AUTHORS NEWS README
 
 %changelog
+* Fri Oct 25 2013 Yuri N. Sedunov <aris@altlinux.org> 0.9.4-alt1
+- 0.9.4
+
 * Tue Sep 10 2013 Yuri N. Sedunov <aris@altlinux.org> 0.9.3.1-alt1
 - first build for Sisyphus
 
