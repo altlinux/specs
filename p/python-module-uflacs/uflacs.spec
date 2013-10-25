@@ -2,7 +2,7 @@
 
 Name: python-module-%oname
 Version: 0.2.0
-Release: alt2.git20130322
+Release: alt2.git20130926
 Summary: UFL Analyser and Compiler System
 Group: Development/Python
 License: LGPLv3
@@ -34,6 +34,9 @@ processing UFL code in various fashions.
 %python_sitelibdir/*
 
 %changelog
+* Fri Oct 25 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.0-alt2.git20130926
+- New snapshot
+
 * Tue May 07 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.0-alt2.git20130322
 - New snapshot
 
