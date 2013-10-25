@@ -1,6 +1,9 @@
+%define qtdir %_qt3dir
+%def_with libcap
+
 Name: pinentry
-Version: 0.8.2
-Release: alt2
+Version: 0.8.3
+Release: alt1
 
 Group: File tools
 Summary: Simple PIN or passphrase entry dialog
@@ -19,8 +22,6 @@ Patch4: 0004-Fix-qt4-pinentry-window-created-in-the-background.patch
 # ALT
 Patch100: pinentry-0.7.6-alt-system-assuan.patch
 
-%define qtdir %_qt3dir
-%def_with libcap
 
 # due to qt macros
 BuildRequires(pre): libqt3-devel libqt4-devel
@@ -122,7 +123,7 @@ export QTDIR=%qtdir
     --enable-pinentry-qt4 \
     --enable-pinentry-curses \
     %{subst_with libcap} \
-    --enable-fallback-curses
+    #
 
 %make_build
 
@@ -163,6 +164,9 @@ done
 %_infodir/*.info*
 
 %changelog
+* Fri Oct 25 2013 Sergey V Turchin <zerg@altlinux.org> 0.8.3-alt1
+- new version
+
 * Thu Dec 20 2012 Alexander Plehanov <tonik@altlinux.org> 0.8.2-alt2
 - fix text encoding
 
