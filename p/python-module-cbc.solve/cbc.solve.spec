@@ -2,7 +2,7 @@
 %define oname %pyname.solve
 Name: python-module-%oname
 Version: 0.1.0
-Release: alt1.bzr20120913
+Release: alt1.bzr20130314
 Summary: Collection of FEniCS/DOLFIN-based solvers
 Group: Development/Python
 License: GPL v3
@@ -80,6 +80,9 @@ done
 %python_sitelibdir/%pyname/test
 
 %changelog
+* Fri Oct 25 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.0-alt1.bzr20130314
+- New snapshot
+
 * Mon Oct 15 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.0-alt1.bzr20120913
 - New snapshot
 
