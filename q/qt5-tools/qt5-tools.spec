@@ -1,10 +1,11 @@
 
 %define qt_module qttools
 %define gname qt5
+%def_disable bootstrap
 
 Name: qt5-tools
 Version: 5.1.1
-Release: alt2
+Release: alt3
 
 Group: System/Libraries
 Summary: Qt5 - QtTool components
@@ -23,6 +24,9 @@ Source23: qdbusviewer.desktop
 #BuildRequires: desktop-file-utils gcc-c++ glibc-devel-static python-module-distribute qt5-webkit-devel rpm-build-python3 rpm-build-ruby
 BuildRequires: desktop-file-utils gcc-c++ glibc-devel
 BuildRequires: qt5-base-devel qt5-declarative-devel-static qt5-webkit-devel
+%if_disabled bootstrap
+BuildRequires: qt5-tools
+%endif
 
 %description
 %summary.
@@ -49,6 +53,14 @@ Requires: %name-common = %EVR
 Requires: %name-devel
 %description devel-static
 %summary.
+
+%package doc
+BuildArch: noarch
+Summary: Document for developing apps which will use Qt5 %qt_module
+Group: Development/KDE and QT
+Requires: %name-common = %EVR
+%description doc
+This package contains documentation for Qt5 %qt_module
 
 %package -n qt5-assistant
 Group: Text tools
@@ -126,10 +138,11 @@ syncqt.pl-qt5 \
 
 %build
 %make_build
-
+%make docs
 
 %install
 %install_qt5
+%make INSTALL_ROOT=%buildroot install_docs
 
 # Add desktop files
 desktop-file-install \
@@ -174,6 +187,10 @@ done
 %_qt5_bindir/assistant
 %_desktopdir/*assistant.desktop
 %_iconsdir/hicolor/*/apps/assistant*.*
+%if_disabled bootstrap
+%_qt5_docdir/qtassistant/
+%_qt5_docdir/qtassistant.qch
+%endif
 
 %files -n qt5-dbus
 %_bindir/qdbus-qt5
@@ -213,6 +230,13 @@ done
 %_qt5_libdir/libQt?*.a
 %_pkgconfigdir/Qt?UiTools.pc
 
+%files doc
+%if_disabled bootstrap
+%_qt5_docdir/*
+%exclude %_qt5_docdir/qtassistant/
+%exclude %_qt5_docdir/qtassistant.qch
+%endif
+
 #%files -n libqt5-uitools
 #%_qt5_libdir/libQt5UiTools.so.*
 %files -n libqt5-clucene
@@ -226,6 +250,9 @@ done
 
 
 %changelog
+* Fri Oct 25 2013 Sergey V Turchin <zerg@altlinux.org> 5.1.1-alt3
+- built docs
+
 * Wed Oct 23 2013 Sergey V Turchin <zerg@altlinux.org> 5.1.1-alt2
 - move static libs to separate package
 
