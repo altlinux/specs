@@ -4,10 +4,10 @@ BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(File/Path.pm) perl(Test/More.pm) perl-devel perl-podlators perl(Data/Section/Simple.pm)
 # END SourceDeps(oneline)
 %define upstream_name    Text-Haml
-%define upstream_version 0.990110
+%define upstream_version 0.990111
 
 Name:       perl-%{upstream_name}
-Version:    0.990110
+Version:    0.990111
 Release:    alt1
 
 Summary:    Haml Perl implementation
@@ -55,6 +55,9 @@ features. Do not expect Ruby specific things to work.
 %perl_vendor_privlib/*
 
 %changelog
+* Fri Oct 25 2013 Igor Vlasenko <viy@altlinux.ru> 0.990111-alt1
+- automated CPAN update
+
 * Tue Oct 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.990110-alt1
 - automated CPAN update
 
