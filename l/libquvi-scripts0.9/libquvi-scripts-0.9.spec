@@ -1,6 +1,6 @@
 %define _name libquvi-scripts
 %define ver_major 0.9
-%define snapshot 20130903
+%define snapshot 20131012
 
 Name: %_name%ver_major
 Version: %ver_major.%snapshot
@@ -16,7 +16,8 @@ Source: http://downloads.sourceforge.net/project/%_name/%ver_major/%_name-%versi
 Patch: %_name-0.9.20130903-alt-pkgconfig.patch
 
 BuildArch: noarch
-#BuildRequires: quvi%ver_major
+# for tests
+#BuildRequires: libquvi%ver_major-devel
 
 %description
 %name contains the embedded lua scripts that libquvi uses for parsing
@@ -59,6 +60,9 @@ subst 's@\(^pkgconfigdir[[:space:]]=[[:space:]]\$(\)libdir\()/pkgconfig\)@\1data
 %_datadir/pkgconfig/*.pc
 
 %changelog
+* Fri Oct 25 2013 Yuri N. Sedunov <aris@altlinux.org> 0.9.20131012-alt1
+- official snapshot
+
 * Tue Sep 10 2013 Yuri N. Sedunov <aris@altlinux.org> 0.9.20130903-alt1
 - first build for Sisyphus
 
