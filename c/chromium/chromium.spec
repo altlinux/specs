@@ -1,6 +1,6 @@
 %set_verify_elf_method textrel=relaxed
-%define v8_ver 3.19
-%define rev 223446
+%define v8_ver 3.20
+%define rev 229842
 
 %def_disable debug
 %def_disable nacl
@@ -12,8 +12,8 @@
 %endif
 
 Name:           chromium
-Version:        29.0.1547.76
-Release:        alt2.r%rev
+Version:        30.0.1599.114
+Release:        alt1.r%rev
 
 Summary:        An open source web browser developed by Google
 License:        BSD-3-Clause and LGPL-2.1+
@@ -255,7 +255,7 @@ done
 pushd src
 
 ./build/gyp_chromium -f make build/all.gyp \
-	-Dlinux_sandbox_path=%_libexecdir/chrome_sandbox \
+	-Dlinux_sandbox_path=%_libdir/chromium/chrome-sandbox \
 	-Dlinux_sandbox_chrome_path=%_libdir/chromium/chromium \
 	-Dbuild_ffmpegsumo=1 \
 	-Duse_system_bzip2=1 \
@@ -352,7 +352,7 @@ mkdir -p %buildroot%_mandir/man1/
 
 pushd src/out/%buildtype
 
-cp -a chrome_sandbox %buildroot%_libexecdir/chrome_sandbox
+cp -a chrome_sandbox %buildroot%_libdir/chromium/chrome-sandbox
 cp -a *.pak locales xdg-mime %buildroot%_libdir/chromium/
 cp -a chromedriver %buildroot%_libdir/chromium/
 
@@ -409,7 +409,7 @@ printf '%_bindir/%name\t%_libdir/%name/%name-gnome\t15\n' > %buildroot%_altdir/%
 %dir %_datadir/gnome-control-center/default-apps
 %config(noreplace) %_sysconfdir/%name/default
 %dir %_libdir/chromium/
-%attr(4711,root,root) %_libexecdir/chrome_sandbox
+%attr(4711,root,root) %_libdir/chromium/chrome-sandbox
 %_libdir/chromium/chromium
 %_libdir/chromium/chromedriver
 %_libdir/chromium/chromium-generic
@@ -439,6 +439,31 @@ printf '%_bindir/%name\t%_libdir/%name/%name-gnome\t15\n' > %buildroot%_altdir/%
 %_altdir/%name-gnome
 
 %changelog
+* Fri Oct 25 2013 Andrey Cherepanov <cas@altlinux.org> 30.0.1599.114-alt1.r229842
+- New version
+- Move chrome_sandbox to %%_libdir/chromium/chrome-sandbox
+
+* Fri Oct 11 2013 Andrey Cherepanov <cas@altlinux.org> 30.0.1599.66-alt1.r225456
+- New version
+- Security fixes:
+  - Medium CVE-2013-2906: Races in Web Audio.
+  - Medium CVE-2013-2907: Out of bounds read in Window.prototype object.
+  - Medium CVE-2013-2908: Address bar spoofing related to the "204 No Content" status code.
+  - High CVE-2013-2909: Use after free in inline-block rendering.
+  - Medium CVE-2013-2910: Use-after-free in Web Audio.
+  - High CVE-2013-2911: Use-after-free in XSLT.
+  - High CVE-2013-2912: Use-after-free in PPAPI.
+  - High CVE-2013-2913: Use-after-free in XML document parsing.
+  - Low CVE-2013-2915: Address bar spoofing via a malformed scheme.
+  - High CVE-2013-2916: Address bar spoofing related to the "204 No Content" status code.
+  - Medium CVE-2013-2917: Out of bounds read in Web Audio.
+  - High CVE-2013-2918: Use-after-free in DOM.
+  - High CVE-2013-2919: Memory corruption in V8.
+  - Medium CVE-2013-2920: Out of bounds read in URL parsing.
+  - High CVE-2013-2921: Use-after-free in resource loader.
+  - High CVE-2013-2922: Use-after-free in template element.
+  - CVE-2013-2923: Various fixes from internal audits, fuzzing and other initiatives.
+
 * Wed Sep 25 2013 Andrey Cherepanov <cas@altlinux.org> 29.0.1547.76-alt2.r223446
 - New version 29.0.1547.76
 
