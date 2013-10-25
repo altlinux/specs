@@ -4,7 +4,7 @@
 %define oname Scientific
 Name: python-module-%oname
 Version: 2.9.2
-Release: alt1
+Release: alt3
 Summary: Collection of Python modules for scientific computing
 License: CeCILL
 Group: Sciences/Mathematics
@@ -14,6 +14,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: ScientificPython-%version.tar
 
 BuildPreReq: libnumpy-devel libnetcdf-mpi-devel %mpiimpl-devel
+BuildPreReq: python-module-Numeric-devel
 
 %description
 ScientificPython is a collection of Python modules that are useful
@@ -106,7 +107,7 @@ sed -i 's|@PYPATH@|%python_sitelibdir|' \
 export NETCDF_PREFIX=%mpidir
 export OMPI_LDFLAGS="-Wl,--as-needed,-rpath=%mpidir/lib -L%mpidir/lib"
 
-%python_build_debug --numpy --netcdf_prefix=%mpidir
+%python_build_debug --numeric --netcdf_prefix=%mpidir
 
 %install
 CFLAGS="-I%mpidir/include/netcdf-3 -I%mpidir/include"
@@ -161,6 +162,9 @@ popd
 %python_sitelibdir/*/Examples
 
 %changelog
+* Fri Oct 25 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.9.2-alt3
+- Rebuilt with python-module-Numeric
+
 * Wed Feb 13 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.9.2-alt1
 - Version 2.9.2
 
