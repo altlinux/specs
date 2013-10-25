@@ -11,7 +11,7 @@ BuildRequires(pre): rpm-build-python
 
 Name: python-module-%oname
 Version: 0.14.0
-Release: alt2.git20131020
+Release: alt3.git20131020
 
 Summary: SciPy is the library of scientific codes
 
@@ -457,6 +457,9 @@ rm -f %buildroot%python_sitelibdir/scipy/pickle/generated/scipy-stats-rv_discret
 %endif
 
 %changelog
+* Fri Oct 25 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.14.0-alt3.git20131020
+- Fixed linking of qhull.so
+
 * Thu Oct 24 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.14.0-alt2.git20131020
 - Fixed linking
 
