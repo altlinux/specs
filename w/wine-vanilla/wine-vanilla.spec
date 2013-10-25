@@ -1,5 +1,5 @@
 Name: wine-vanilla
-Version: 1.7.4
+Version: 1.7.5
 Release: alt1
 
 Summary: Wine - environment for running Windows 16/32/64 bit applications
@@ -117,7 +117,7 @@ Requires: glibc-pthread glibc-nss
 Requires: libcups libncurses
 Requires: libXrender libXi libXext libX11 libICE
 Requires: libssl
-Requires: libfontconfig libfreetype
+Requires: fontconfig libfreetype
 
 %description -n lib%name
 This package contains the library needed to run programs dynamically
@@ -345,6 +345,9 @@ rm -rf %buildroot%_mandir/*.UTF-8
 %exclude %_libdir/wine/libwinecrt0.a
 
 %changelog
+* Sat Oct 26 2013 Vitaly Lipatov <lav@altlinux.ru> 1.7.5-alt1
+- new version 1.7.5
+
 * Mon Oct 14 2013 Vitaly Lipatov <lav@altlinux.ru> 1.7.4-alt1
 - new version 1.7.4
 
