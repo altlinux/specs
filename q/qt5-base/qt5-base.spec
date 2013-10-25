@@ -23,7 +23,7 @@
 %define bugfix 1
 Name: qt5-base
 Version: %major.%minor.%bugfix
-Release: alt2
+Release: alt3
 
 Group: System/Libraries
 Summary: Qt%major - QtBase components
@@ -37,6 +37,7 @@ Patch1: qtbase-opensource-src-5.0.2-lowmem.patch
 # upstream
 # ALT
 Patch1000: alt-sql-ibase-firebird.patch
+Patch1001: alt-enable-ft-lcdfilter.patch
 
 # macros
 %define _qt5 %gname
@@ -300,6 +301,7 @@ Widgets library for the Qt%major toolkit
 %setup -n %rname-opensource-src-%version
 %patch1 -p1 -b .lowmem
 %patch1000 -p1 -b .ibase
+%patch1001 -p1 -b .lcd
 bin/syncqt.pl -private \
     -module QtCore \
     -module QtGui \
@@ -700,6 +702,9 @@ done
 
 
 %changelog
+* Fri Oct 25 2013 Sergey V Turchin <zerg@altlinux.org> 5.1.1-alt3
+- turn on freetype lcdfilter
+
 * Thu Oct 24 2013 Sergey V Turchin <zerg@altlinux.org> 5.1.1-alt2
 - build docs
 
