@@ -1,7 +1,7 @@
 %define oname ascot
 Name: python-module-%oname
-Version: 0.8.0
-Release: alt1.bzr20120110
+Version: 1.2.0
+Release: alt1.bzr20130403
 Summary: Automated Stability Condition Tester
 Group: Development/Python
 License:GPL v3
@@ -32,6 +32,9 @@ discretizations for a given variational form.
 %python_sitelibdir/*
 
 %changelog
+* Fri Oct 25 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.0-alt1.bzr20130403
+- Version 1.2.0
+
 * Tue Jan 17 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.0-alt1.bzr20120110
 - New snapshot
 
