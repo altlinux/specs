@@ -20,7 +20,7 @@ under OSI-approved licenses.
 
 Name: %oname
 Version: 2267
-Release: alt11
+Release: alt12
 Summary: Add-on packages for SciPy
 License: OSI-approved licenses
 Group: Sciences/Other
@@ -212,6 +212,20 @@ Conflicts: python-module-%name < %version-%release
 Statsmodels is a python package that provides an interface to scipy for
 statistical computations including descriptive statistics and
 fitting statistical models.
+
+%package -n python-module-%name.statsmodels-tests
+Summary: Tests for %name.statsmodels
+Group: Development/Python
+Requires: python-module-%name.statsmodels = %version-%release
+
+%description -n python-module-%name.statsmodels-tests
+%longdesc
+
+Statsmodels is a python package that provides an interface to scipy for
+statistical computations including descriptive statistics and
+fitting statistical models.
+
+This package contains tests for %name.statsmodels.
 
 %package -n python-module-%name.talkbox
 Summary: Scikit for signal/speech processing
@@ -588,6 +602,7 @@ done
 %doc statsmodels/README.txt
 %python_sitelibdir/statsmodels*
 %exclude %python_sitelibdir/statsmodels/tests
+%exclude %python_sitelibdir/statsmodels/*/tests
 %exclude %python_sitelibdir/statsmodels/*/*/tests
 %exclude %python_sitelibdir/statsmodels/examples
 
@@ -658,6 +673,9 @@ done
 %endif
 
 %changelog
+* Sat Oct 26 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2267-alt12
+- scikits.statsmodels: removed all tests
+
 * Thu Oct 24 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2267-alt11
 - New snapshot
 
