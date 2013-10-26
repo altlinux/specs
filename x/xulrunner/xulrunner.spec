@@ -13,7 +13,7 @@
 
 Summary:	XUL Runner
 Name:		xulrunner
-Version:	23.0
+Version:	24.0
 Release:	alt1
 
 License:	MPL/GPL/LGPL
@@ -39,8 +39,8 @@ Patch100:	mozilla-192-path.patch
 Requires:	%name-libs = %version-%release
 
 Requires:	hunspell-en
-Requires:	libnspr       >= 4.9.5-alt1
-Requires:	libnss        >= 3.14.2-alt1
+Requires:	libnspr       >= 4.10.1-alt1
+Requires:	libnss        >= 3.15.2-alt1
 
 Obsoletes:	xulrunner-192
 Obsoletes:	xulrunner-2.0
@@ -70,7 +70,7 @@ BuildRequires: libgio-devel
 BuildRequires: libfreetype-devel fontconfig-devel
 BuildRequires: libstartup-notification-devel
 BuildRequires: libffi-devel
-#BuildRequires: gstreamer-devel gst-plugins-devel
+BuildRequires: gstreamer-devel gst-plugins-devel
 BuildRequires: libopus-devel
 
 # Python requires
@@ -81,8 +81,8 @@ BuildRequires: python-modules-sqlite3
 BuildRequires: python-modules-json
 
 # Mozilla requires
-BuildRequires: libnspr-devel >= 4.10.0-alt1
-BuildRequires: libnss-devel  >= 3.15.1-alt1
+BuildRequires: libnspr-devel >= 4.10.1-alt1
+BuildRequires: libnss-devel  >= 3.15.2-alt1
 
 BuildRequires: libnss-devel-static
 
@@ -358,6 +358,28 @@ ln -sf $(relative "%xulr_prefix/libmozalloc.so" "%xulr_develdir/sdk/lib/libmozal
 %_datadir/rpm-build-mozilla/mozilla-sh-functions
 
 %changelog
+* Thu Sep 26 2013 Alexey Gladkov <legion@altlinux.ru> 24.0-alt1
+- New release (24.0).
+- Add gstreamer support (ALT#29454).
+- Fixed:
+  + MFSA 2013-92 GC hazard with default compartments and frame chain restoration
+  + MFSA 2013-91 User-defined properties on DOM proxies get the wrong "this" object
+  + MFSA 2013-90 Memory corruption involving scrolling
+  + MFSA 2013-89 Buffer overflow with multi-column, lists, and floats
+  + MFSA 2013-88 compartment mismatch re-attaching XBL-backed nodes
+  + MFSA 2013-87 Shared object library loading from writable location
+  + MFSA 2013-86 WebGL Information disclosure through OS X NVIDIA graphic drivers
+  + MFSA 2013-85 Uninitialized data in IonMonkey
+  + MFSA 2013-84 Same-origin bypass through symbolic links
+  + MFSA 2013-83 Mozilla Updater does not lock MAR file after signature verification
+  + MFSA 2013-82 Calling scope for new Javascript objects can lead to memory corruption
+  + MFSA 2013-81 Use-after-free with select element
+  + MFSA 2013-80 NativeKey continues handling key messages after widget is destroyed
+  + MFSA 2013-79 Use-after-free in Animation Manager during stylesheet cloning
+  + MFSA 2013-78 Integer overflow in ANGLE library
+  + MFSA 2013-77 Improper state in HTML5 Tree Builder with templates
+  + MFSA 2013-76 Miscellaneous memory safety hazards (rv:24.0 / rv:17.0.9)
+
 * Thu Aug 08 2013 Alexey Gladkov <legion@altlinux.ru> 23.0-alt1
 - New release (23.0).
 - Fixed:

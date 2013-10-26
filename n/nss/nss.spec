@@ -1,6 +1,6 @@
 Summary:        Netscape Network Security Services(NSS)
 Name:           nss
-Version:        3.15.1
+Version:        3.15.2
 Release:       	alt1
 License:        MPL/GPL/LGPL
 Group:          System/Libraries
@@ -29,8 +29,8 @@ Patch10:	nss-enable-pem.patch
 Patch20:	0001-sync-up-with-upstream-softokn-changes.patch
 
 BuildRequires:	chrpath zlib-devel libsqlite3-devel
-BuildRequires:	libnspr-devel >= 4.10.0-alt1
-Requires:	libnspr       >= 4.10.0-alt1
+BuildRequires:	libnspr-devel >= 4.10.1-alt1
+Requires:	libnspr       >= 4.10.1-alt1
 
 %description
 Network Security Services (NSS) is a set of libraries designed
@@ -203,6 +203,10 @@ done
 install -p -m755 %SOURCE5 %buildroot/%_bindir/setup-nsssysinit.sh
 install -p -m644 %SOURCE6 %buildroot/%_sysconfdir/pki/nssdb/pkcs11.txt
 
+%post
+f="%_libdir/libnssckbi.so.alternatives_save"
+[ ! -e "$f" ] || rm -f -- "$f"
+
 %files -n %name-utils
 %_bindir/*
 %exclude %_bindir/setup-nsssysinit.sh
@@ -245,6 +249,9 @@ install -p -m644 %SOURCE6 %buildroot/%_sysconfdir/pki/nssdb/pkcs11.txt
 %_libdir/*.a
 
 %changelog
+* Thu Sep 26 2013 Alexey Gladkov <legion@altlinux.ru> 3.15.2-alt1
+- New version (3.15.2).
+
 * Fri Aug 09 2013 Alexey Gladkov <legion@altlinux.ru> 3.15.1-alt1
 - New version (3.15.1).
 

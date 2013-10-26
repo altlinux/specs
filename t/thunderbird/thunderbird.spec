@@ -3,7 +3,7 @@
 
 Summary:	Thunderbird is Mozilla's e-mail client
 Name:		thunderbird
-Version:	17.0.8
+Version:	24.0.1
 Release:	alt1
 License:	MPL/GPL
 Group:		Networking/Mail
@@ -18,20 +18,10 @@ Source3:	thunderbird.desktop
 Source4:	thunderbird-mozconfig
 Source5:	thunderbird-default-prefs.js
 
-Patch1:		xulrunner-gio-protocol-handler.patch
 Patch6:		01_locale.patch
 Patch7:		xulrunner-noarch-extensions.patch
+Patch8:		thunderbird-timezoes.patch
 Patch9:		thunderbird-install-paths.patch
-
-# https://bugzilla.mozilla.org/show_bug.cgi?id=537089
-Patch15:	thunderbird-with-system-mozldap.patch
-
-# https://bugzilla.mozilla.org/show_bug.cgi?id=296453
-#Patch16:	bug296453-fix-mfb-teardown-2.patch
-#Patch17:	bug296453-folder-binding-bugfixes-2.patch
-#Patch28:	thunderbird-use-mozsqlite.patch
-
-Patch30:	thunderbird-17-armh.patch
 
 BuildRequires(pre): mozilla-common-devel
 BuildRequires(pre): rpm-build-mozilla.org
@@ -55,18 +45,20 @@ BuildRequires: libgio-devel
 BuildRequires: libfreetype-devel fontconfig-devel
 BuildRequires: libstartup-notification-devel
 BuildRequires: libffi-devel
+BuildRequires: gstreamer-devel gst-plugins-devel
 
 # Python requires
 BuildRequires: python-module-distribute
 BuildRequires: python-modules-compiler
 BuildRequires: python-modules-logging
 BuildRequires: python-modules-sqlite3
+BuildRequires: python-modules-json
 
 # Mozilla requires
 BuildRequires:	libnspr-devel       >= 4.9.6-alt1
 BuildRequires:	libnss-devel        >= 3.14.3-alt1
 BuildRequires:	libnss-devel-static >= 3.14.3-alt1
-BuildRequires:	xulrunner-devel     >= 21.0-alt1
+BuildRequires:	xulrunner-devel     >= 24.0-alt1
 
 Provides:	mailclient
 Obsoletes:	thunderbird-calendar
@@ -98,12 +90,13 @@ organizational needs.
 
 %if_with enigmail
 %package enigmail
+%define engimail_version 1.6
 %define enigmail_ciddir %mozilla_arch_extdir/%tbird_cid/\{847b3a00-7ab1-11d4-8f02-006008948af5\}
 Summary: Enigmail - GPG support for Mozilla Thunderbird
 Group: Networking/Mail
 Url: http://enigmail.mozdev.org/
 
-Provides: %name-enigmail = 1.5.1
+Provides: %name-enigmail = %engimail_version
 Requires: %name = %version-%release
 
 Obsoletes: thunderbird-enigmail < 0.95.7-alt2
@@ -190,9 +183,8 @@ tar -xf %SOURCE2
 
 %patch6 -p1
 %patch7 -p1
+%patch8 -p2
 %patch9 -p1
-%patch15 -p1 -b .mozldap
-%patch30 -p1 -b .armh
 
 #echo %version > mail/config/version.txt
 
@@ -201,6 +193,8 @@ cp -f %SOURCE4 .mozconfig
 %if_with lightning
 echo 'ac_add_options --enable-calendar' >> .mozconfig
 %endif
+
+sed -i -e '\,hyphenation/,d' mail/installer/removed-files.in
 
 %build
 cd mozilla
@@ -232,6 +226,7 @@ export CFLAGS="$CFLAGS -DHAVE_USR_LIB64_DIR=1"
 %endif
 
 export PREFIX="%_prefix"
+export SHELL="/bin/sh"
 export LIBDIR="%_libdir"
 export XULSDK="%xulr_develdir"
 export srcdir="$PWD"
@@ -247,69 +242,31 @@ MOZ_SMP_FLAGS=-j1
 [ "%__nprocs" -ge 4 ] && MOZ_SMP_FLAGS=-j4
 %endif
 
-%make_build -f client.mk build \
+make -f client.mk build \
 	mozappdir=%tbird_prefix \
 	STRIP="/bin/true" \
 	MOZ_MAKE_FLAGS="$MOZ_SMP_FLAGS"
 
 %if_with enigmail
+dir="$PWD/objdir"
+
 cd mailnews/extensions/enigmail
 	./makemake -r
 cd -
-
-dir="$PWD/objdir"
-
 cd $dir/mailnews/extensions/enigmail
-	%make_build
-	%make_build xpi
-	mv -f -- \
-		$dir/mozilla/dist/bin/enigmail-*.xpi \
-		$dir/mozilla/dist/xpi-stage/enigmail.xpi
-	%make_build clean
+	make \
+		STRIP="/bin/true" \
+		MOZ_MAKE_FLAGS="$MOZ_SMP_FLAGS"
+	make xpi
+	mv -f -- $dir/mozilla/dist/bin/enigmail-*.xpi $dir/mozilla/dist/xpi-stage/
+	make clean
 cd -
-
-# everybody lie ... 'make clean' lie!
-(set +x
-	for f in \
-		components/enigprefs-service.js \
-		components/enigMsgCompFields.js \
-		components/enigmail.js \
-		components/enigmail.xpt \
-		components/ipc.xpt \
-		components/enigmime.xpt \
-		components/libipc.so \
-		components/libenigmime.so \
-		defaults/preferences/enigmail.js \
-		defaults/pref/enigmail.js \
-		chrome/enigmail.jar \
-		chrome/enigmail-skin.jar \
-		chrome/enigmail-en-US.jar \
-		chrome/enigmime.jar \
-		platform/*/components/libenigmime*.so \
-		platform/*/components/libipc*.so \
-		wrappers/gpg-wrapper.sh;
-	do
-		t="$dir/mozilla/dist/bin/$f"
-
-		[ -L "$t" -o -f "$t" ] || continue
-
-		rm -vf -- "$t"
-
-		t="${t%%/*}"
-		while [ "$t" != "$dir/mozilla/dist/bin" ]; do
-			rmdir -v -- "$t" ||:
-			t="${t%%/*}"
-		done
-	done
-)
 %endif
 
 %install
 cd mozilla
 
-dir="$PWD/objdir"
-
-%__mkdir_p \
+mkdir -p \
 	%buildroot/%_bindir \
 	%buildroot/%mozilla_arch_extdir/%tbird_cid \
 	%buildroot/%mozilla_noarch_extdir/%tbird_cid \
@@ -366,9 +323,10 @@ rm -rf -- \
 	#
 
 #ver=%version
-ver=23.0
+ver=24.0
 sed -i \
 	-e "s,^\\(MaxVersion\\)=.*,\\1=${ver%%.*}.*,g" \
+	-e "s,^\\(MinVersion\\)=.*,\\1=${ver%%.*}.0,g" \
 	%buildroot/%tbird_prefix/application.ini
 
 # desktop file
@@ -404,24 +362,26 @@ sed -i \
 	-e 's,@tbird_release@,%release,' \
 	%buildroot/%_sysconfdir/rpm/macros.d/%name
 
+dir="$PWD/objdir"
+
 %if_with enigmail
 mkdir -p %buildroot/%enigmail_ciddir
 unzip -q -u -d %buildroot/%enigmail_ciddir -- \
-	$dir/mozilla/dist/xpi-stage/enigmail.xpi
+	$dir/mozilla/dist/xpi-stage/enigmail*.xpi
 %endif
 
 %if_with lightning
 mkdir -p %buildroot/%lightning_ciddir
 unzip -q -u -d %buildroot/%lightning_ciddir -- \
-	$dir/mozilla/dist/xpi-stage/lightning.xpi
+	$dir/mozilla/dist/xpi-stage/lightning*.xpi
 
 mkdir -p %buildroot/%google_calendar_ciddir
 unzip -q -u -d %buildroot/%google_calendar_ciddir -- \
-	$dir/mozilla/dist/xpi-stage/gdata-provider.xpi
+	$dir/mozilla/dist/xpi-stage/gdata-provider*.xpi
 
 mkdir -p %buildroot/%calendar_timezones_ciddir
 unzip -q -u -d %buildroot/%calendar_timezones_ciddir -- \
-	$dir/mozilla/dist/xpi-stage/calendar-timezones.xpi
+	$dir/mozilla/dist/xpi-stage/calendar-timezones*.xpi
 
 rm -rf -- %buildroot/%tbird_prefix/extensions/calendar-timezones@mozilla.org
 rm -f -- %buildroot/%lightning_ciddir/application.ini
@@ -496,6 +456,24 @@ rm -f -- %buildroot/%lightning_ciddir/application.ini
 %_sysconfdir/rpm/macros.d/%name
 
 %changelog
+* Sun Oct 13 2013 Alexey Gladkov <legion@altlinux.ru> 24.0.1-alt1
+- New version (24.0.1).
+- Use internal mozldap.
+- Fixed:
+  + MFSA 2013-92 GC hazard with default compartments and frame chain restoration
+  + MFSA 2013-91 User-defined properties on DOM proxies get the wrong "this" object
+  + MFSA 2013-90 Memory corruption involving scrolling
+  + MFSA 2013-89 Buffer overflow with multi-column, lists, and floats
+  + MFSA 2013-88 compartment mismatch re-attaching XBL-backed nodes
+  + MFSA 2013-85 Uninitialized data in IonMonkey
+  + MFSA 2013-83 Mozilla Updater does not lock MAR file after signature verification
+  + MFSA 2013-82 Calling scope for new Javascript objects can lead to memory corruption
+  + MFSA 2013-81 Use-after-free with select element
+  + MFSA 2013-80 NativeKey continues handling key messages after widget is destroyed
+  + MFSA 2013-79 Use-after-free in Animation Manager during stylesheet cloning
+  + MFSA 2013-77 Improper state in HTML5 Tree Builder with templates
+  + MFSA 2013-76 Miscellaneous memory safety hazards (rv:24.0 / rv:17.0.9)
+
 * Tue Aug 13 2013 Alexey Gladkov <legion@altlinux.ru> 17.0.8-alt1
 - New version (17.0.8).
 - Fixed:
