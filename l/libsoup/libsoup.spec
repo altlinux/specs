@@ -9,7 +9,7 @@
 
 Name: libsoup
 Version: %ver_major.1
-Release: alt1
+Release: alt2
 
 Summary: HTTP client/server library for GNOME
 Group: System/Libraries
@@ -28,6 +28,9 @@ Source2: %name-compat.lds
 Source3: %name-gnome-compat.map
 Source4: %name-gnome-compat.lds
 Patch1: %name-2.41.3-alt-compat-map.patch
+
+Patch10: %name-2.44.1-up-201474b6.patch
+
 # time out test fails in build system not in local hasher
 Patch100: %name-2.32.2-no-timeout_test.patch
 
@@ -160,6 +163,7 @@ part of Soup library.
 %setup -q
 install -p -m644 %_sourcedir/%name-{,gnome-}compat.{map,lds} %name/
 %patch1 -p1
+%patch10 -p1
 #%%patch100 -b .notimeout_test
 
 %build
@@ -222,6 +226,9 @@ install -p -m644 %_sourcedir/%name-{,gnome-}compat.{map,lds} %name/
 %endif
 
 %changelog
+* Sat Oct 26 2013 Yuri N. Sedunov <aris@altlinux.org> 2.44.1-alt2
+- fixed BGO #695652 from upstream
+
 * Tue Oct 15 2013 Yuri N. Sedunov <aris@altlinux.org> 2.44.1-alt1
 - 2.44.1
 
