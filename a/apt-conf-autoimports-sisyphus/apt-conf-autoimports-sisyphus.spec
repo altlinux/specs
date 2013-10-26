@@ -1,9 +1,9 @@
-%define destbranch sisyphus
-Name: apt-conf-autoimports-%{destbranch}
+%define destbranch Sisyphus
+Name: apt-conf-autoimports-sisyphus
 Summary(ru_RU.UTF-8): Настройки для использования пакетов из репозитория Autoimports/%{destbranch}
 Summary: Autoimports repository for %{destbranch}
 Version: 1.0
-Release: alt1
+Release: alt2
 
 # branches conflicts with Sisyphus
 Conflicts: apt-conf-autoimports-p7
@@ -57,8 +57,8 @@ simple-key "cronport" {
 }
 EOF
 cat > %buildroot%_sysconfdir/apt/sources.list.d/autoimports-%{destbranch}.list <<'EOF'
-rpm [cronbuild] http://autoimports.altlinux.org/pub/ALTLinux/autoimports/%{destbranch}/ noarch autoimports
-rpm [cronbuild] http://autoimports.altlinux.org/pub/ALTLinux/autoimports/%{destbranch}/ %{_arch} autoimports
+rpm [cronbuild] ftp://ftp.altlinux.ru/pub/distributions/ALTLinux/autoimports/%{destbranch}/ noarch autoimports
+rpm [cronbuild] ftp://ftp.altlinux.ru/pub/distributions/ALTLinux/autoimports/%{destbranch}/ %{_arch} autoimports
 EOF
 
 %files
@@ -66,5 +66,8 @@ EOF
 %config %_sysconfdir/apt/sources.list.d/autoimports-%{destbranch}.list
 
 %changelog
+* Sat Oct 26 2013 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2
+- use official mirror on ftp.altlinux.ru
+
 * Sat Oct 26 2013 Igor Vlasenko <viy@altlinux.ru> 1.0-alt1
 - first build
