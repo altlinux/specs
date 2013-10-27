@@ -1,5 +1,5 @@
 Name: diffpdf
-Version: 2.1.2
+Version: 2.1.3
 Release: alt1
 License: GPLv2
 Summary: Visually compare two PDF files
@@ -50,6 +50,9 @@ install -D %name.1 %buildroot%_man1dir/%name.1
 %_man1dir/*
 
 %changelog
+* Sun Oct 27 2013 Fr. Br. George <george@altlinux.ru> 2.1.3-alt1
+- Autobuild version bump to 2.1.3
+
 * Wed Jan 16 2013 Fr. Br. George <george@altlinux.ru> 2.1.2-alt1
 - Autobuild version bump to 2.1.2
 
