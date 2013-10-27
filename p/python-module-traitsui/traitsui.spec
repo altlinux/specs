@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 4.3.0
-Release: alt1.git20130413
+Release: alt1.git20131022
 Summary: A set of user interface tools designed to complement Traits
 
 Group: Development/Python
@@ -160,6 +160,9 @@ cp -fR docs/build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Sun Oct 27 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.3.0-alt1.git20131022
+- New snapshot
+
 * Mon May 06 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.3.0-alt1.git20130413
 - Version 4.3.0
 
