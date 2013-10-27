@@ -1,6 +1,6 @@
 %define dist Term-Cap
 Name: perl-%dist
-Version: 1.12
+Version: 1.15
 Release: alt1
 
 Summary: Perl termcap interface
@@ -8,7 +8,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/J/JS/JSTOWE/Term-Cap-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -33,5 +33,8 @@ a terminal capability (termcap) database.
 %perl_vendor_privlib/Term
 
 %changelog
+* Sun Oct 27 2013 Igor Vlasenko <viy@altlinux.ru> 1.15-alt1
+- automated CPAN update
+
 * Tue Sep 21 2010 Alexey Tourbin <at@altlinux.ru> 1.12-alt1
 - initial revision, for perl-5.12
