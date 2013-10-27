@@ -3,8 +3,8 @@
 %define suff -2.60
 
 Name: %realname%dialect
-Version: 2.68
-Release: alt3
+Version: 2.69
+Release: alt1
 Epoch: 2
 
 Summary: A GNU tool for automatically configuring source code
@@ -126,6 +126,10 @@ done
 %doc AUTHORS NEWS README TODO
 
 %changelog
+* Sun Oct 27 2013 Dmitry V. Levin <ldv@altlinux.org> 2:2.69-alt1
+- Updated to v2.69.
+- Backported upstream documentation fixes.
+
 * Sat Nov 26 2011 Dmitry V. Levin <ldv@altlinux.org> 2:2.68-alt3
 - Backported upstream fix for regression in AC_REPLACE_FUNCS.
 
