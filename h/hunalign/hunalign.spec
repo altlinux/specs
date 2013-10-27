@@ -1,5 +1,5 @@
 Name: hunalign
-Version: 1.1
+Version: 1.2
 Release: alt1
 
 Summary: The hunalign sentence aligner
@@ -65,5 +65,8 @@ cp -a data/ %buildroot%_datadir/%name/
 %_datadir/%name/
 
 %changelog
+* Sun Oct 27 2013 Vitaly Lipatov <lav@altlinux.ru> 1.2-alt1
+- new version 1.2 (with rpmrb script)
+
 * Mon Apr 16 2012 Vitaly Lipatov <lav@altlinux.ru> 1.1-alt1
 - initial build for ALT Linux Sisyphus
