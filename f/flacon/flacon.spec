@@ -1,13 +1,14 @@
 Name: flacon
-Version: 0.9.1
+Version: 0.9.2
 Release: alt1
 
 Summary: Audio File Encoder
 Summary(ru_RU.UTF-8): Конвертер аудиофайлов
+Summary(uk_UA.UTF-8): Кодувальник аудіофайлів
 License: LGPLv2.1
 Group: Sound
 
-URL: http://kde-apps.org/content/show.php?content=113388
+Url: http://%name.github.io/
 Packager: Nazarov Denis <nenderus@altlinux.org>
 
 Source0: %name-%version.tar.gz
@@ -21,6 +22,9 @@ Extracts audio tracks from audio CD image to separate tracks.
 
 %description -l ru_RU.UTF-8
 Извлекает аудио треки из CD образа WAV, FLAC, APE в отдельные файлы.
+
+%description -l uk_UA.UTF-8
+Витягує доріжки з образу аудіо-CD.
 
 %prep
 %setup
@@ -51,6 +55,21 @@ popd
 %_man1dir/%name.1.gz
 
 %changelog
+* Sun Oct 27 2013 Nazarov Denis <nenderus@altlinux.org> 0.9.2-alt1
+- Version 0.9.2
+
+* Thu Oct 17 2013 Nazarov Denis <nenderus@altlinux.org> 0.9.1-alt0.M60P.1
+- Build for branch p6
+
+* Wed Oct 16 2013 Nazarov Denis <nenderus@altlinux.org> 0.9.1-alt0.M60T.1
+- Build for branch t6
+
+* Wed Oct 16 2013 Nazarov Denis <nenderus@altlinux.org> 0.9.1-alt0.M70P.1
+- Build for branch p7
+
+* Tue Oct 15 2013 Nazarov Denis <nenderus@altlinux.org> 0.9.1-alt0.M70T.1
+- Build for branch t7
+
 * Tue Oct 15 2013 Nazarov Denis <nenderus@altlinux.org> 0.9.1-alt1
 - Version 0.9.1 (ALT #29478)
 
