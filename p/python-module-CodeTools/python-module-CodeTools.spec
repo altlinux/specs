@@ -1,6 +1,6 @@
 Name: python-module-CodeTools
 Version: 4.1.0
-Release: alt2.git20130328
+Release: alt2.git20131020
 Summary: Code Analysis and Execution Tools
 
 Group:          Development/Python
@@ -73,6 +73,9 @@ sphinx-build -E -a -b html -c docs/source -d doctrees docs/source html
 %python_sitelibdir/*/*/*/tests
 
 %changelog
+* Sun Oct 27 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.1.0-alt2.git20131020
+- New snapshot
+
 * Mon May 06 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.1.0-alt2.git20130328
 - Don't skip requirement on concurrent
 
