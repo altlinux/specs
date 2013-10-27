@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.6.8
-Release: alt1.git20130304
+Release: alt1.git20130827
 Epoch: 1
 Summary: Enaml is not a Markup Language
 License: BSD
@@ -166,6 +166,9 @@ cp -fR docs/build/pickle %buildroot%python_sitelibdir/%oname
 %endif
 
 %changelog
+* Sun Oct 27 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:0.6.8-alt1.git20130827
+- New snapshot
+
 * Mon May 06 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:0.6.8-alt1.git20130304
 - Version 0.6.8
 
