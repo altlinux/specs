@@ -4,7 +4,7 @@
 
 Name:           python-module-%oname
 Version:        4.3.0
-Release:        alt2.git20130329
+Release:        alt2.git20131024
 Summary:        Explicitly typed attributes for Python
 
 Group:          Development/Python
@@ -139,19 +139,19 @@ popd
 %install
 %python_install
 
-rm %buildroot/%python_sitelibdir/traits/protocols/_speedups.c
-rm %buildroot/%python_sitelibdir/traits/ctraits.c
+rm -f %buildroot/%python_sitelibdir/traits/protocols/_speedups.c
+rm -f %buildroot/%python_sitelibdir/traits/ctraits.c
 
 # Prevents non standard permissions
-chmod 755 %buildroot/%python_sitelibdir/traits/protocols/_speedups.so
+#chmod 755 %buildroot/%python_sitelibdir/traits/protocols/_speedups.so
 chmod 755 %buildroot/%python_sitelibdir/traits/ctraits.so
 
 %if_with python3
 pushd ../python3
 %python3_install
 
-rm %buildroot/%python3_sitelibdir/traits/protocols/_speedups.c
-rm %buildroot/%python3_sitelibdir/traits/ctraits.c
+rm -f %buildroot/%python3_sitelibdir/traits/protocols/_speedups.c
+rm -f %buildroot/%python3_sitelibdir/traits/ctraits.c
 
 # Prevents non standard permissions
 #chmod 755 %buildroot/%python_sitelibdir/traits/protocols/_speedups.so
@@ -199,6 +199,9 @@ cp -fR pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Sun Oct 27 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.3.0-alt2.git20131024
+- New snapshot
+
 * Mon Jun 17 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.3.0-alt2.git20130329
 - Rebuilt with updated NumPy
 
