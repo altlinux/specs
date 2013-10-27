@@ -1,7 +1,7 @@
 %define oname encore
 Name: python-module-%oname
-Version: 0.3
-Release: alt1.git20130405
+Version: 0.4.0
+Release: alt1.git20131018
 Summary: A Collection of core-level utility modules for Enthought projects
 License: BSD
 Group: Development/Python
@@ -54,11 +54,12 @@ ln -s ../objects.inv docs/source
 %build
 %python_build_debug
 
-%make -C docs html
-%make -C docs pickle
-
 %install
 %python_install
+
+export PYTHONPATH=%buildroot%python_sitelibdir
+%make -C docs html
+%make -C docs pickle
 
 cp -fR docs/build/pickle %buildroot%python_sitelibdir/%oname/
 
@@ -67,13 +68,16 @@ cp -fR docs/build/pickle %buildroot%python_sitelibdir/%oname/
 %python_sitelibdir/*
 %exclude %python_sitelibdir/%oname/pickle
 
-%files docs
-%doc docs/build/html/*
+#files docs
+#doc docs/build/html/*
 
-%files pickles
-%python_sitelibdir/%oname/pickle
+#files pickles
+#python_sitelibdir/%oname/pickle
 
 %changelog
+* Sun Oct 27 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.0-alt1.git20131018
+- Version 0.4.0
+
 * Mon May 06 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3-alt1.git20130405
 - Version 0.3
 
