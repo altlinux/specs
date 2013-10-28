@@ -1,6 +1,6 @@
 Name: findutils
 Version: 4.5.12
-Release: alt1
+Release: alt2
 
 Summary: The GNU versions of find utilities (find and xargs)
 License: GPLv3+
@@ -12,7 +12,7 @@ Source: %name-%version-%release.tar
 
 %def_enable selinux
 
-BuildRequires: gnulib >= 0.0.7902.92f3a4c
+BuildRequires: gnulib >= 0.0.8061.5191b35
 BuildRequires: glibc-devel-static
 %{?_enable_selinux:BuildRequires: libselinux-devel}
 %{?!_without_check:%{?!_disable_check:BuildRequires: dejagnu}}
@@ -57,7 +57,7 @@ mkdir dynamic static
 pushd dynamic
 mkdir locate
 echo '@set LOCATE_DB /var/lib/locate/locatedb' >locate/dblocation.texi
-%configure --bindir=/bin %{subst_enable selinux}
+%configure --bindir=/bin
 make -C po update-po
 %make_build MAKEINFOFLAGS=--no-split
 popd
@@ -67,7 +67,7 @@ export	ac_cv_search_setfilecon=no \
 	ac_cv_header_selinux_context_h=no \
 	ac_cv_header_selinux_flask_h=no \
 	ac_cv_header_selinux_selinux_h=no
-%configure --disable-nls --disable-selinux
+%configure --disable-nls
 # Do not build xargs and doc.
 sed -i -e 's/ xargs / /' -e 's/ doc / /' Makefile*
 %make_build
@@ -106,6 +106,10 @@ install -pm755 static/find/find %buildroot%_bindir/find.static
 %_bindir/find.static
 
 %changelog
+* Mon Oct 28 2013 Dmitry V. Levin <ldv@altlinux.org> 4.5.12-alt2
+- Updated to v4.5.12-8-gbd0d840.
+- Built with gnulib v0.0-8061-g5191b35.
+
 * Mon Sep 23 2013 Dmitry V. Levin <ldv@altlinux.org> 4.5.12-alt1
 - Updated to v4.5.12.
 
