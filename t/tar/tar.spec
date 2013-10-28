@@ -1,5 +1,5 @@
 Name: tar
-Version: 1.26.90
+Version: 1.27
 Release: alt1
 
 Summary: A GNU file archiving program
@@ -14,7 +14,7 @@ Source: %srcname.tar
 %def_enable selinux
 BuildRequires: libacl-devel libattr-devel
 %{?_enable_selinux:BuildRequires: libselinux-devel}
-BuildRequires: gnulib >= 0.0.7696.fd9f1ac, paxutils >= 0.0.1.111.0b3d84a
+BuildRequires: gnulib >= 0.0.8061.5191b35, paxutils >= 0.0.1.111.0b3d84a
 
 %description
 The GNU tar program saves many files together into one archive and
@@ -59,6 +59,10 @@ install -pm644 doc/tar.1 %buildroot%_man1dir/
 %doc AUTHORS NEWS README THANKS TODO
 
 %changelog
+* Tue Oct 22 2013 Dmitry V. Levin <ldv@altlinux.org> 1.27-alt1
+- Updated to 1.27.
+- Built with gnulib v0.0-8061-g5191b35.
+
 * Tue Jan 15 2013 Dmitry V. Levin <ldv@altlinux.org> 1.26.90-alt1
 - Updated to git://git.sv.gnu.org/tar release_1_26-55-gcd7bdd4.
 - Enabled xattr, acl and selinux support.
