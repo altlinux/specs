@@ -4,7 +4,7 @@
 %define oname mayavi
 Name:           Mayavi
 Version:        4.3.0
-Release:        alt2.git20130807
+Release:        alt3.git20130807
 Summary:        Scientific data 3-dimensional visualizer
 
 Group:          Graphics
@@ -39,6 +39,7 @@ Requires:       python-module-wx
 #Requires:       python-module-TraitsGUI
 #Requires:       python-module-TraitsBackendQt
 Requires: python-module-mayavi = %EVR
+Requires: python-module-mayavi.tests = %EVR
 Requires: python-module-tvtk = %EVR
 
 %add_python_req_skip test tvtk_classes
@@ -183,6 +184,9 @@ ln -s %_liconsdir/mayavi2.png %buildroot%_niconsdir/
 %doc docs/*.txt docs/pdf examples docs/build/tvtk docs/build/mayavi
 
 %changelog
+* Mon Oct 28 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.3.0-alt3.git20130807
+- Added necessary requirement
+
 * Sun Oct 27 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.3.0-alt2.git20130807
 - New snapshot
 
