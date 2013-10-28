@@ -1,7 +1,7 @@
 %define _libname	enet
 
 Name: libenet
-Version: 1.3.9
+Version: 1.3.10
 Release: alt1
 Summary: Thin, simple and robust network layer on top of UDP
 Group: System/Libraries
@@ -66,6 +66,9 @@ install -m644 *.pc %buildroot%_pkgconfigdir
 %_pkgconfigdir/*
 
 %changelog
+* Sun Oct 27 2013 Fr. Br. George <george@altlinux.ru> 1.3.10-alt1
+- Autobuild version bump to 1.3.10
+
 * Thu Aug 22 2013 Fr. Br. George <george@altlinux.ru> 1.3.9-alt1
 - Autobuild version bump to 1.3.9
 
