@@ -5,7 +5,7 @@
 %def_disable demos
 
 Name: libgtkmm3
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: A C++ interface for GTK3 (a GUI library for X)
@@ -97,6 +97,9 @@ xvfb-run %make check
 %endif
 
 %changelog
+* Mon Oct 28 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.1-alt1
+- 3.10.1
+
 * Fri Oct 11 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.0-alt1
 - 3.10.0
 
