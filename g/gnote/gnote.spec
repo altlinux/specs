@@ -2,7 +2,7 @@
 %def_without x11_support
 
 Name: gnote
-Version: 3.10.0
+Version: 3.10.1
 Release: alt1
 Summary: Note-taking application
 Group: Graphical desktop/GNOME
@@ -77,6 +77,9 @@ desktop-file-install \
 %_datadir/gnome-shell/search-providers/gnote-search-provider.ini
 
 %changelog
+* Mon Oct 28 2013 Alexey Shabalin <shaba@altlinux.ru> 3.10.1-alt1
+- 3.10.1
+
 * Tue Oct 08 2013 Alexey Shabalin <shaba@altlinux.ru> 3.10.0-alt1
 - 3.10.0
 
