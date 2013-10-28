@@ -1,5 +1,5 @@
 Name: rocksndiamonds
-Version: 3.3.0.1
+Version: 3.3.1.0
 Release: alt1
 
 Summary: A boulderdash like game
@@ -77,6 +77,9 @@ install -m644 %SOURCE12 -D %buildroot/%_liconsdir/%name.png
 %_pkgdatadir
 
 %changelog
+* Sun Oct 27 2013 Fr. Br. George <george@altlinux.ru> 3.3.1.0-alt1
+- Autobuild version bump to 3.3.1.0
+
 * Sun Mar 13 2011 Fr. Br. George <george@altlinux.ru> 3.3.0.1-alt1
 - Autobuild version bump to 3.3.0.1
 
