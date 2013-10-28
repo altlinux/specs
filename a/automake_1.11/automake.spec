@@ -6,7 +6,7 @@
 
 Name: %realname%dialect
 Version: 1.11.6
-Release: alt3
+Release: alt5
 
 %define mydatadir %_datadir/%realname%suff
 %set_compress_method gzip
@@ -105,6 +105,12 @@ install -pm644 AUTHORS README THANKS NEWS.bz2 TODO.bz2 \
 %docdir
 
 %changelog
+* Mon Oct 28 2013 Dmitry V. Levin <ldv@altlinux.org> 1.11.6-alt5
+- tests: fixed build with autoconf 2.69.
+
+* Sun Oct 27 2013 Dmitry V. Levin <ldv@altlinux.org> 1.11.6-alt4
+- tests: fixed build with perl 5.18.x.
+
 * Mon Jun 03 2013 Dmitry V. Levin <ldv@altlinux.org> 1.11.6-alt3
 - Replaced config.* copies with symlinks to original files.
 
