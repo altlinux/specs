@@ -1,5 +1,5 @@
 Name:     atari800
-Version:  2.2.1
+Version:  3.0.0
 Release:  alt1
 
 Summary:  An emulator of 8-bit Atari personal computers.
@@ -59,7 +59,7 @@ is free now so download and unpack it to get the ROM files needed for Atari800 r
 %patch1 -p1
 
 %build
-%configure --target=sdl --enable-riodevice --enable-nonlinear_mixing --disable-readline --enable-monitorprofile --enable-monitortrace
+%configure --target=default --enable-riodevice --enable-nonlinear_mixing --enable-monitorprofile --enable-monitortrace
 %make_build
 
 %install
@@ -88,6 +88,9 @@ is free now so download and unpack it to get the ROM files needed for Atari800 r
 %_desktopdir/%name.desktop
 
 %changelog
+* Mon Oct 28 2013 Evgeny V Shishkov <shev@altlinux.org> 3.0.0-alt1
+- version 3.0.0
+
 * Mon May 30 2011 Evgeny V. Shishkov <shev@altlinux.org> 2.2.1-alt1
 - version 2.2.1 
 
