@@ -4,7 +4,7 @@
 
 Name:           python-module-%oname
 Version:        4.3.0
-Release:        alt2.git20131024
+Release:        alt3.git20131024
 Summary:        Explicitly typed attributes for Python
 
 Group:          Development/Python
@@ -171,11 +171,13 @@ cp -fR pickle %buildroot%python_sitelibdir/%oname/
 %doc *.txt
 %python_sitelibdir/*
 %exclude %python_sitelibdir/*/tests
+%exclude %python_sitelibdir/*/*/tests
 %exclude %python_sitelibdir/*/testing
 %exclude %python_sitelibdir/%oname/pickle
 
 %files tests
 %python_sitelibdir/*/tests
+%python_sitelibdir/*/*/tests
 %python_sitelibdir/*/testing
 
 %files doc
@@ -199,6 +201,9 @@ cp -fR pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Mon Oct 28 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.3.0-alt3.git20131024
+- Moved all tests into tests subpackage
+
 * Sun Oct 27 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.3.0-alt2.git20131024
 - New snapshot
 
