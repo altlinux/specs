@@ -1,5 +1,5 @@
 Name: xneur
-Version: 0.16.0
+Version: 0.17.0
 Release: alt1
 
 Summary: X Neural Switcher
@@ -8,8 +8,7 @@ License: GPL
 Group: Office
 Url: http://xneur.ru/
 
-Source: http://dists.xneur.ru/release-%version/tgz/%name-%version.tar
-Patch0: %name-0.15.0-alt-libX11.patch
+Source: %{name}_%version.orig.tar.gz
 
 # Automatically added by buildreq on Sun May 22 2011
 # optimized out: fontconfig glib2-devel libX11-devel libatk-devel libcairo-devel libdbus-glib libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgtk+2-devel libpango-devel libxml2-devel pkg-config xorg-kbproto-devel xorg-xproto-devel xz
@@ -41,8 +40,6 @@ applications which will use %name.
 
 %prep
 %setup
-%patch0 -p2
-sed -i "s|@libdir@/xneur|@libdir@|g" lib/config/Makefile.am
 
 %build
 %autoreconf
@@ -82,6 +79,10 @@ rm -f %buildroot%_libdir/%name/*.so %buildroot%_libdir/%name/*.la
 %_pkgconfigdir/*.pc
 
 %changelog
+* Mon Oct 28 2013 Fr. Br. George <george@altlinux.ru> 0.17.0-alt1
+- Autobuild version bump to 0.17.0
+- Drop inactual patches
+
 * Sun Aug 04 2013 Vitaly Lipatov <lav@altlinux.ru> 0.16.0-alt1
 - new version 0.16.0 (with rpmrb script)
 

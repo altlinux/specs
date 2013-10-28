@@ -2,8 +2,8 @@ BuildRequires: desktop-file-utils
 %define oname gXNeur
 
 Name: gxneur
-Version: 0.15.0
-Release: alt1.1.qa1
+Version: 0.17.0
+Release: alt1
 
 Summary: GTK frontend for X Neural Switcher
 
@@ -11,10 +11,8 @@ License: GPL
 Group: Office
 Url: http://xneur.ru/
 
-Source: %name-%version.tar.bz2
+Source: %{name}_%version.orig.tar.gz
 Source1: %name.png
-Patch0: %name-0.15.0-alt-libX11.patch
-Patch1: %name-0.15.0-alt-glib2.patch
 
 # Automatically added by buildreq on Sun May 22 2011
 # optimized out: fontconfig fontconfig-devel glib2-devel libX11-devel libaspell-devel libatk-devel libcairo-devel libdbus-glib libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgtk+2-devel libpango-devel libpcre-devel pkg-config xorg-kbproto-devel xorg-xproto-devel
@@ -28,8 +26,6 @@ functionality and features for configuring.
 
 %prep
 %setup
-%patch0 -p2
-%patch1 -p2
 
 %build
 # autoreconf breaks on ALT 4.1
@@ -73,6 +69,13 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_pixmapsdir/%name.png
 
 %changelog
+* Mon Oct 28 2013 Fr. Br. George <george@altlinux.ru> 0.17.0-alt1
+- Autobuild version bump to 0.17.0
+
+* Tue Nov 13 2012 Fr. Br. George <george@altlinux.ru> 0.16.0-alt1
+- Autobuild version bump to 0.16.0
+- Drop patches actualized by upstream
+
 * Tue Aug 28 2012 Repocop Q. A. Robot <repocop@altlinux.org> 0.15.0-alt1.1.qa1
 - NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
 - applied repocop fixes:
