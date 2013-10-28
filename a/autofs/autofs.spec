@@ -1,6 +1,6 @@
 Name: autofs
 Version: 5.0.7
-Release: alt2
+Release: alt3
 
 Summary: A tool for automatically mounting and unmounting filesystems
 License: GPL
@@ -116,6 +116,9 @@ fi
 %_libdir/%name/lookup_ldap.so
 
 %changelog
+* Mon Oct 28 2013 Sergey Bolshakov <sbolshakov@altlinux.ru> 5.0.7-alt3
+- rebuilt with recent sasl
+
 * Tue Apr 16 2013 Sergey Bolshakov <sbolshakov@altlinux.ru> 5.0.7-alt2
 - rebuilt without libtirpc (closes: #28356)
 - updated to git 9131ce60
