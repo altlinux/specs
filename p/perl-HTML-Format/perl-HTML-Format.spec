@@ -1,7 +1,7 @@
 BuildRequires: perl(Module/Build.pm)
 %define dist HTML-Format
 Name: perl-%dist
-Version: 2.10
+Version: 2.11
 Release: alt1
 
 Summary: Perl HTML formatters
@@ -35,6 +35,9 @@ syntax tree into various printable formats (plaintext, PostScript or RTF).
 %perl_vendor_privlib/HTML/Format*.pm
 
 %changelog
+* Mon Oct 28 2013 Igor Vlasenko <viy@altlinux.ru> 2.11-alt1
+- automated CPAN update
+
 * Sun Sep 25 2011 Igor Vlasenko <viy@altlinux.ru> 2.10-alt1
 - automated CPAN update
 
