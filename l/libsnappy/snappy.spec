@@ -1,5 +1,5 @@
 Name: libsnappy
-Version: 1.1.0
+Version: 1.1.1
 Release: alt1
 Summary: Google fast compression/decompression library
 Group: System/Libraries
@@ -57,6 +57,9 @@ rm -rf %buildroot/%_defaultdocdir/snappy
 %_libdir/*.a
 
 %changelog
+* Sun Oct 27 2013 Fr. Br. George <george@altlinux.ru> 1.1.1-alt1
+- Autobuild version bump to 1.1.1
+
 * Thu Feb 14 2013 Fr. Br. George <george@altlinux.ru> 1.1.0-alt1
 - Autobuild version bump to 1.1.0
 
