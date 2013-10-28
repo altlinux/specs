@@ -1,5 +1,5 @@
 Name: installer-distro-altlinux-server
-Version: 7.0.0
+Version: 7.0.1
 Release: alt1
 
 Summary: Installer configuration (server)
@@ -77,6 +77,10 @@ sed -i 's,^\(X-Alterator-URI=\).*$,\1/vm/ortodox,' \
 %files stage3
 
 %changelog
+* Mon Oct 28 2013 Michael Shigorin <mike@altlinux.org> 7.0.1-alt1
+- added a few more disk partitioning profiles (closes: #29483)
+- fixed silly typo in steps file (non-root user *is* added now)
+
 * Mon Jul 15 2013 Michael Shigorin <mike@altlinux.org> 7.0.0-alt1
 - initial release based on installer-distro-altlinux-generic 7.0.1-alt1
 - get things back somewhat closer to a useful (not test) distribution
