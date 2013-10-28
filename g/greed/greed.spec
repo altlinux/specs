@@ -1,5 +1,5 @@
 Name: greed
-Version: 3.8
+Version: 3.9
 Release: alt1
 Source: %name-%version.tar.gz
 License: BSD-like
@@ -31,6 +31,9 @@ install /dev/null %buildroot%_localstatedir/games/%name.hs
 %attr(2711,root,games) %_gamesbindir/%name
 
 %changelog
+* Sun Oct 27 2013 Fr. Br. George <george@altlinux.ru> 3.9-alt1
+- Autobuild version bump to 3.9
+
 * Sun Jan 22 2012 Fr. Br. George <george@altlinux.ru> 3.8-alt1
 - Autobuild version bump to 3.8
 
