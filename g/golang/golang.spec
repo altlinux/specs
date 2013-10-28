@@ -3,13 +3,17 @@
 #
 # also, debuginfo extraction currently fails with
 # "Failed to write file: invalid section alignment"
-%global __find_debuginfo_files /bin/true
+%global __find_debuginfo_files %nil
+
+# we are shipping the full contents of src in the data subpackage, which
+# contains binary-like things (ELF data for tests, etc)
+%global _unpackaged_files_terminate_build 1
 
 Name:		golang
 Version:	1.1.2
-Release:	alt1
+Release:	alt2
 Summary:	The Go Programming Language
-Group:		Development/C
+Group:		Development/Other
 License:	BSD
 URL:		http://golang.org/
 
@@ -19,21 +23,46 @@ Source0:	golang-%version.tar
 Patch0:		golang-1.1-verbose-build.patch
 Patch1:		golang-1.1-disable-multicast_test.patch
 Patch2:		golang-1.1.2-alt-certs-path.patch
+Patch3:		golang-1.1.2-long-links.patch
+Patch4:		golang-1.1.2-ustar-split.patch
 
-ExclusiveArch:	%ix86 x86_64
+ExclusiveArch:	%ix86 x86_64 %arm
 
-%add_verify_elf_skiplist %_libdir/golang/bin/go
-%add_verify_elf_skiplist %_libdir/golang/bin/gofmt
-%add_verify_elf_skiplist %_libdir/golang/bin/godoc
+%set_verify_elf_method unresolved=no
+%add_debuginfo_skiplist %_libdir/golang
+%brp_strip_none %_libdir/golang/bin/*
 
-# Tests
-BuildRequires: /proc
+AutoReq: nocpp
+
+# for test suite
+%{?!_without_check:%{?!_disable_check:BuildRequires: /proc}}
 
 %description
 Go is expressive, concise, clean, and efficient. Its concurrency mechanisms
 make it easy to write programs that get the most out of multicore and
 networked machines, while its novel type system enables flexible and
 modular program construction.
+
+
+%package gdb
+Summary: The Go Runtime support for GDB
+Group: Development/Other
+Requires:    %name = %version-%release
+BuildArch: noarch
+
+%description gdb
+The Go Runtime support for GDB.
+
+
+%package vim
+Summary: Vim plugins for Go
+Group:  Development/Other
+BuildArch: noarch
+
+Requires: vim-common
+
+%description vim
+Vim plugins for Go.
 
 
 %package godoc
@@ -62,9 +91,8 @@ Go sources and documentation.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
-
-# make a copy before building to let us avoid generated src files in docs
-cp -av -- src/pkg src/pkg-nogenerated
+%patch3 -p1
+%patch4 -p1
 
 
 %build
@@ -112,7 +140,7 @@ mkdir -p -- \
 	%buildroot/%_datadir/%name
 
 # install binaries and runtime files into libdir
-cp -av bin pkg \
+cp -av bin pkg src \
 	%buildroot/%_libdir/%name
 
 # install sources and other data in datadir
@@ -123,30 +151,22 @@ cp -av api doc include lib favicon.ico robots.txt \
 rm -rfv -- \
 	%buildroot/%_datadir/%name/lib/time
 
-# remove the doc Makefile
-rm -fv -- \
-	%buildroot/%_datadir/%name/doc/Makefile
-
-# install all non-generated sources, used by godoc
-mkdir -p -- %buildroot/%_datadir/%name/src/cmd
-mv -v -- src/pkg-nogenerated %buildroot/%_datadir/%name/src/pkg
-cp -va -- src/cmd/cgo        %buildroot/%_datadir/%name/src/cmd
-
-# remove testdata, tests, and non-go files: this is all we need for godoc
-find %buildroot/%_datadir/%name/src/pkg \
-		\( -type d -name 'testdata'  \) -o \
-		\( -type f -name '*_test.go' \) \
-		-print0 |
-	xargs -0 rm -rfv --
-
-find %buildroot/%_datadir/%name/src/pkg \
-		\( -type f \! -name '*.go' \) \
-		-print0 |
+find %buildroot/%_libdir/%name/src -maxdepth 1 -type f -print0 |
 	xargs -0 rm -fv --
 
-# restore the gdb debugging script, needed at runtime by gdb
-cp -av src/pkg/runtime/runtime-gdb.py \
-	%buildroot/%_datadir/%name/src/pkg/runtime
+# remove testdata, tests, and non-go files: this is all we need for godoc
+find \
+	%buildroot/%_libdir/%name/src \
+	%buildroot/%_datadir/%name/doc \
+	\( \
+		\( -type d -name 'testdata'  \) -o \
+		\( -type f -name 'Makefile'  \) -o \
+		\( -type f -name '*_test.go' \) -o \
+		\( -type f -name 'test_*'    \) -o \
+		\( -type f -name 'test.'     \) \
+	\) \
+		-print0 |
+	xargs -0 rm -rfv --
 
 # add symlinks for things in datadir
 for z in %buildroot/%_datadir/%name/*; do
@@ -155,25 +175,33 @@ for z in %buildroot/%_datadir/%name/*; do
 	ln -sv -- "$path" %buildroot/%_libdir/%name/$n
 done
 
-# add symlinks for binaries and strip binaries to avoid debuginfo collecting.
+# add symlinks for binaries.
 for z in %buildroot%_libdir/%name/bin/*; do
 	n="${z##*/}"
 	path="$(relative "$z" "%buildroot/%_bindir/$n")"
 	ln -sv -- "$path" %buildroot/%_bindir/$n
-
-	strip "$z"
 done
+
+# restore the gdb debugging script, needed at runtime by gdb
+mkdir -p -- %buildroot/%_datadir/%name/gdb
+mv -fv  \
+	%buildroot/%_libdir/%name/src/pkg/runtime/runtime-gdb.py \
+	%buildroot/%_datadir/%name/gdb
+
+# misc/vim
+mkdir -p -- %buildroot/%_datadir/vim/vimfiles
+rm -fv -- misc/vim/readme.txt
+cp -av misc/vim/* %buildroot/%_datadir/vim/vimfiles
 
 
 %files
-%doc AUTHORS CONTRIBUTORS LICENSE PATENTS VERSION
-
 # binaries
 %dir %_libdir/%name
 %dir %_libdir/%name/bin
 %_libdir/%name/bin/go
 %_libdir/%name/bin/gofmt
 %_libdir/%name/pkg
+%_libdir/%name/src
 
 # data
 %dir %_datadir/%name
@@ -185,13 +213,15 @@ done
 %_bindir/gofmt
 %_libdir/%name/api
 %_libdir/%name/include
-%_libdir/%name/src
 
+
+%files gdb
 # GDB script
-%dir %_datadir/%name/src
-%dir %_datadir/%name/src/pkg
-%dir %_datadir/%name/src/pkg/runtime
-%_datadir/%name/src/pkg/runtime/runtime-gdb.*
+%_datadir/%name/gdb
+
+
+%files vim
+%_datadir/vim/vimfiles/*
 
 
 %files godoc
@@ -215,12 +245,13 @@ done
 %_datadir/%name/favicon.ico
 %_datadir/%name/robots.txt
 %_datadir/%name/lib
-%_datadir/%name/src
 
-# exclude the GDB script
-%exclude %_datadir/%name/src/pkg/runtime/runtime-gdb.*
 
 %changelog
+* Mon Oct 28 2013 Alexey Gladkov <legion@altlinux.ru> 1.1.2-alt2
+- Add gdb and vim plugins.
+- Fix rebuild command (ALT#29508).
+
 * Thu Oct 10 2013 Alexey Gladkov <legion@altlinux.ru> 1.1.2-alt1
 - New version (1.1.2).
 - Fix ssl certs search path (ALT#29449).
