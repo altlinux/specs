@@ -3,8 +3,8 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-pkg
-Version: 2.6.11
-Release: alt2
+Version: 2.6.13
+Release: alt1
 
 %add_findreq_skiplist %_libexecdir/alterator/backend3/pkg-init
 %add_findreq_skiplist %_datadir/install2/initinstall.d/*
@@ -43,7 +43,7 @@ Obsoletes: %name-tools
 additional package installation
 
 %prep
-%setup -q
+%setup
 
 %build
 %make_build
@@ -61,6 +61,14 @@ additional package installation
 %_alterator_backend3dir/*
 
 %changelog
+* Tue Oct 29 2013 Michael Shigorin <mike@altlinux.org> 2.6.13-alt1
+- Create /media/cdrom and configure it for apt only when
+  installation is performed off CD/DVD media
+
+* Mon Aug 12 2013 Andrey Cherepanov <cas@altlinux.org> 2.6.12-alt1
+- Don't display text on progressbar
+- Add details pane in group selection
+
 * Tue Jun 18 2013 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.6.11-alt2
 - add R: altlinux-repos
 
