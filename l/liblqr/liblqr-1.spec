@@ -1,18 +1,17 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires: gcc-c++ pkgconfig(glib-2.0)
-# END SourceDeps(oneline)
-%add_optflags %optflags_shared
-%define oldname liblqr-1
-Name:           liblqr
-Version:        0.4.1
-Release:        alt2.1_2
-Summary:        LiquidRescale library
-Group:          System/Libraries
-License:        GPLv3
-URL:            http://liquidrescale.wikidot.com/
-Source0:        http://liblqr.wikidot.com/local--files/en:download-page/%{oldname}-%{version}.tar.bz2
-BuildRequires:  libglib2-devel
-Source44: import.info
+%define api_ver 1
+
+Name: liblqr
+Version: 0.4.2
+Release: alt1
+
+Summary: LiquidRescale library
+Group: System/Libraries
+License: GPLv3
+Url: http://liquidrescale.wikidot.com/
+
+Source: http://liblqr.wikidot.com/local--files/en:download-page/%name-%api_ver-%version.tar.bz2
+
+BuildRequires: gcc-c++ glib2-devel
 
 %description
 The LiquidRescale (lqr) library provides a C/C++ API for
@@ -20,46 +19,39 @@ performing non-uniform resizing of images by the seam-carving
 technique.
 
 %package devel
-Summary:        LiquidRescale library  development kit
-Group:          System/Libraries
-License:        GPLv3
-Requires:       liblqr = %{version}-%{release}
-Requires:       libglib2-devel pkgconfig
+Summary: LiquidRescale library  development kit
+Group: System/Libraries
+License: GPLv3
+Requires: %name = %version-%release
 
 %description devel
 The libqr-devel package contains the header files
 needed to develop applications with liblqr
 
-
 %prep
-%setup -q -n %{oldname}-%{version}
+%setup -n %name-%api_ver-%version
 
 %build
-export LDFLAGS="`pkg-config --libs glib-2.0` -lm"
 %configure
-%{__make} %{?_smp_mflags}
-
+%make_build
 
 %install
-%{__make} install DESTDIR=$RPM_BUILD_ROOT INSTALL="install -p"
+%makeinstall_std
 
-# remove .la files
-find $RPM_BUILD_ROOT -name \*.la -exec %{__rm} -f {} \;
-
-# Fedora MUST
-%files 
-%doc README ChangeLog COPYING
-%{_libdir}/liblqr-1.so.0.3.1
-%{_libdir}/liblqr-1.so.0
+%files
+%_libdir/%name-%api_ver.so.*
+%doc README ChangeLog
 
 %files devel
+%_libdir/%name-%api_ver.so
+%_includedir/lqr-%api_ver/
+%_libdir/pkgconfig/lqr-%api_ver.pc
 %doc docs/liblqr_manual.docbook
-%{_libdir}/liblqr-1.so
-%{_includedir}/lqr-1/
-%{_libdir}/pkgconfig/lqr-1.pc
-
 
 %changelog
+* Tue Oct 29 2013 Yuri N. Sedunov <aris@altlinux.org> 0.4.2-alt1
+- 0.4.2
+
 * Sat Dec 17 2011 Igor Vlasenko <viy@altlinux.ru> 0.4.1-alt2.1_2
 - initial import by fcimport
 
