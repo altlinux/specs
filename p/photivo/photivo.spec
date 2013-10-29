@@ -1,11 +1,11 @@
 %define gimpplugindir %(gimptool-2.0 --gimpplugindir)
 # /usr/bin/hg identify | cut -c -12
-%define rev 6256ff175312
+%define rev 99e7c7510b70
 %def_without gimp
 
 Name: photivo
 Version: 0
-Release: alt8.%{rev}
+Release: alt9.%{rev}
 
 Summary: Photivo photo processor
 Group: Graphics
@@ -111,6 +111,9 @@ find %buildroot%_datadir/%name -type f -print0|xargs -r0 chmod 644 --
 %endif
 
 %changelog
+* Tue Oct 29 2013 Yuri N. Sedunov <aris@altlinux.org> 0-alt9.99e7c7510b70
+- update to current snapshot
+
 * Fri Apr 12 2013 Yuri N. Sedunov <aris@altlinux.org> 0-alt8.6256ff175312
 - built current snapshot
 
