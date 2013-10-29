@@ -25,7 +25,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.10.17
-Release: alt5
+Release: alt6
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -1830,6 +1830,11 @@ done)
 
 
 %changelog
+* Tue Oct 29 2013 Led <led@altlinux.ru> 3.10.17-alt6
+- updated:
+  + fix-fs-cifs
+  + feat-tools--kvm
+
 * Tue Oct 29 2013 Led <led@altlinux.ru> 3.10.17-alt5
 - updated:
   + fix-sound-pci-lx6464es--snd-lx6464es
