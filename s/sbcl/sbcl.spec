@@ -1,5 +1,5 @@
 Name: sbcl
-Version: 1.1.11
+Version: 1.1.12
 Release: alt1
 
 Summary: Steel Bank Common ANSI Common Lisp
@@ -123,6 +123,9 @@ find $RPM_BUILD_ROOT -name '._*' -size 1 -print0 | xargs -0 grep -lZ 'Mac OS X' 
 
 
 %changelog
+* Wed Oct 30 2013 Ilya Mashkin <oddity@altlinux.ru> 1.1.12-alt1
+- 1.1.12
+
 * Wed Sep 04 2013 Ilya Mashkin <oddity@altlinux.ru> 1.1.11-alt1
 - 1.1.11
 
