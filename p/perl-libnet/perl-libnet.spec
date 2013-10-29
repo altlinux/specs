@@ -1,7 +1,7 @@
 %define dist libnet
 Name: perl-%dist
-Version: 1.22
-Release: alt2
+Version: 1.23
+Release: alt1
 Epoch: 1
 
 Summary: Collection of Network protocol modules for Perl
@@ -57,6 +57,9 @@ mv %buildroot{%perl_vendor_privlib,/etc/perl5}/Net/libnet.cfg
 	%perl_vendor_privlib/Net/FTP/*.pm
 
 %changelog
+* Tue Oct 29 2013 Igor Vlasenko <viy@altlinux.ru> 1:1.23-alt1
+- 1.22 -> 1.23
+
 * Sat Nov 19 2011 Alexey Tourbin <at@altlinux.ru> 1:1.22-alt2
 - rebuilt
 
