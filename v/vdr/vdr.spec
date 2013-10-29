@@ -1,5 +1,5 @@
 Name: vdr
-Version: 2.0.3
+Version: 2.0.4
 Release: alt1
 
 Summary: Digital satellite receiver box with advanced features
@@ -541,6 +541,9 @@ mkdir -p %buildroot%_runtimedir/vdr %buildroot%_cachedir/vdr
 %_libdir/xine/plugins/*/xineplug_inp_xvdr.so
 
 %changelog
+* Tue Oct 29 2013 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.0.4-alt1
+- 2.0.4 released
+
 * Fri Sep 13 2013 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.0.3-alt1
 - 2.0.3 released
 
