@@ -1,6 +1,6 @@
 %define dist DBI
 Name: perl-%dist
-Version: 1.628
+Version: 1.630
 Release: alt1
 
 Summary: Database independent interface for Perl
@@ -201,6 +201,9 @@ mv blib/lib/DBI/FAQ.{pm,pod}
 	%perl_vendor_archlib/DBD/Gofer*
 
 %changelog
+* Tue Oct 29 2013 Igor Vlasenko <viy@altlinux.ru> 1.630-alt1
+- 1.628 -> 1.630
+
 * Tue Aug 27 2013 Vladimir Lettiev <crux@altlinux.ru> 1.628-alt1
 - 1.622 -> 1.628
 
