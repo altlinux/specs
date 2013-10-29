@@ -5,7 +5,7 @@
 Name: zfs
 %define lname lib%name
 Version: 0.6.2
-Release: alt9
+Release: alt10
 Summary: ZFS on Linux
 License: GPLv2+
 Group: System/Kernel and hardware
@@ -168,6 +168,9 @@ install -pD -m 0644 {,%kernel_srcdir/}%name-%version.tar.xz
 
 
 %changelog
+* Tue Oct 29 2013 Led <led@altlinux.ru> 0.6.2-alt10
+- upstream updates and fixes
+
 * Wed Oct 23 2013 Led <led@altlinux.ru> 0.6.2-alt9
 - fixed udevdir
 
