@@ -1,5 +1,5 @@
 Name:     apt-repo
-Version:  1.1.5
+Version:  1.1.6
 Release:  alt1
 
 Summary:  Script for manipulation APT repository list
@@ -35,6 +35,9 @@ gzip %buildroot%_man8dir/%name.8
 %doc %_man8dir/%name.8.gz
 
 %changelog
+* Tue Oct 29 2013 Andrey Cherepanov <cas@altlinux.org> 1.1.6-alt1
+- Add task source with Arepo on x86_64
+
 * Fri Aug 30 2013 Andrey Cherepanov <cas@altlinux.org> 1.1.5-alt1
 - Add copy:// protocol support in sources (ALT #29071)
 - Fix man page:
