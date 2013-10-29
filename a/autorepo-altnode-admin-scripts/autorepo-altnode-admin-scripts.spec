@@ -1,5 +1,5 @@
 Name: autorepo-altnode-admin-scripts
-Version: 0.02
+Version: 0.03
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -32,6 +32,9 @@ install -m 755 autorepo-altnode-admin-delete-*node $RPM_BUILD_ROOT%_sbindir
 %_sbindir/*
 
 %changelog
+* Tue Oct 29 2013 Igor Vlasenko <viy@altlinux.ru> 0.03-alt1
+- bugfix release
+
 * Sun Oct 20 2013 Igor Vlasenko <viy@altlinux.ru> 0.02-alt1
 - support for common /space
 
