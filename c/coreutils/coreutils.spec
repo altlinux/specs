@@ -1,6 +1,6 @@
 Name: coreutils
 Version: 8.21
-Release: alt1
+Release: alt2
 %define srcname %name-%version-%release
 
 Summary: The GNU versions of common management utilities
@@ -50,7 +50,7 @@ Conflicts: rpm-utils < 0:0.7.6-alt1
 # due to hostname
 Conflicts: net-tools < 0:1.60-alt9
 
-BuildRequires: gnulib >= 0.0.7901.076ac82
+BuildRequires: gnulib >= 0.0.8061.5191b35
 
 # for ACL support in ls/dir/vdir, cp, mv and install utilities
 BuildRequires: libacl-devel
@@ -106,6 +106,10 @@ ls po/*.po 2>/dev/null |
 
 # Compress docs for packaging.
 bzip2 -9k NEWS THANKS
+
+# workarounds for bootstrap
+ln -s /bin/false build-aux/git-version-gen
+touch m4/cu-progs.m4
 
 %build
 ./bootstrap --skip-po --gnulib-srcdir=%_datadir/gnulib
@@ -205,6 +209,11 @@ install -pm644 %_sourcedir/{runas,usleep}.1 %buildroot%_man1dir/
 %doc AUTHORS NEWS.bz2 README THANKS.bz2 TODO
 
 %changelog
+* Tue Oct 29 2013 Dmitry V. Levin <ldv@altlinux.org> 8.21-alt2
+- Updated to v8.21-135-gc90b9e0.
+- Updated translations from translationproject.org.
+- Built with gnulib v0.0-8061-g5191b35.
+
 * Mon Apr 08 2013 Dmitry V. Levin <ldv@altlinux.org> 8.21-alt1
 - Updated to v8.21-32-gec02161.
 - Updated translations from translationproject.org.
