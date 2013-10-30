@@ -6,8 +6,8 @@
 %define ppp_version 2.4.5
 
 Name: NetworkManager-l2tp
-Version: 0.9.8
-Release: alt2%git_date
+Version: 0.9.8.5
+Release: alt1%git_date
 License: %gpl2plus
 Group: System/Configuration/Networking
 Summary:  NetworkManager VPN plugin for l2tp
@@ -24,7 +24,7 @@ BuildRequires: libgnome-keyring-devel
 BuildRequires: ppp-devel
 BuildRequires: rpm-build-licenses
 BuildRequires: NetworkManager-devel >= %nm_version
-BuildRequires: NetworkManager-glib-devel >= %nm_version
+BuildRequires: libnm-glib-vpn-devel >= %nm_version
 BuildRequires: libgtk+3-devel
 BuildRequires: libdbus-devel             >= 1.1
 BuildRequires: libGConf-devel
@@ -86,6 +86,10 @@ sed -i '/m4/ d' Makefile.am
 %exclude %_libdir/pppd/%ppp_version/*.la
 
 %changelog
+* Wed Oct 30 2013 Mikhail Efremov <sem@altlinux.org> 0.9.8.5-alt1
+- Updated BR: Use libnm-glib-vpn-devel.
+- Updated to 0.9.8.5.
+
 * Mon Sep 16 2013 Mikhail Efremov <sem@altlinux.org> 0.9.8-alt2
 - Don't reload DBUS configuration during install.
 - Rename 'gnome' subpackage to 'gtk'.
