@@ -1,7 +1,8 @@
-%define git_date .git20130814
+#define git_date .git20130814
+%define git_date %nil
 
 Name: xfce4-whiskermenu-plugin
-Version: 1.1.0
+Version: 1.2.0
 Release: alt1%git_date
 
 Summary: Alternate Xfce menu
@@ -20,7 +21,7 @@ BuildPreReq: rpm-build-xfce4 xfce4-dev-tools gcc-c++ rpm-macros-cmake cmake
 BuildRequires: libxfce4panel-devel libxfce4ui-devel libxfce4util-devel
 BuildRequires: libgarcon-devel libexo-devel
 BuildRequires: libpixman-devel libXdmcp-devel libXdamage-devel libXxf86vm-devel
-BuildRequires: libharfbuzz-devel libpng-devel
+BuildRequires: libharfbuzz-devel libpng-devel libexpat-devel
 
 Requires: xfce4-panel >= 4.8
 
@@ -49,8 +50,12 @@ keeps a list of the last ten applications that you've launched from it.
 %_libdir/xfce4/panel/plugins/*.so
 %_datadir/xfce4/panel/plugins/*.desktop
 %_iconsdir/hicolor/*/apps/*
+%_man1dir/*.1.*
 
 %changelog
+* Wed Oct 30 2013 Mikhail Efremov <sem@altlinux.org> 1.2.0-alt1
+- Updated to 1.2.0.
+
 * Tue Aug 20 2013 Mikhail Efremov <sem@altlinux.org> 1.1.0-alt1.git20130814
 - Upstream git snapshot (master branch).
 
