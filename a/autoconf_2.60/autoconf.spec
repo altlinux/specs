@@ -4,7 +4,7 @@
 
 Name: %realname%dialect
 Version: 2.69
-Release: alt1
+Release: alt2
 Epoch: 2
 
 Summary: A GNU tool for automatically configuring source code
@@ -126,6 +126,9 @@ done
 %doc AUTHORS NEWS README TODO
 
 %changelog
+* Thu Oct 31 2013 Dmitry V. Levin <ldv@altlinux.org> 2:2.69-alt2
+- Backported more upstream fixes.
+
 * Sun Oct 27 2013 Dmitry V. Levin <ldv@altlinux.org> 2:2.69-alt1
 - Updated to v2.69.
 - Backported upstream documentation fixes.

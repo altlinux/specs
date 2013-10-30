@@ -1,6 +1,6 @@
 Name: mutt
 Version: 1.4.2.3
-Release: alt6.1
+Release: alt7
 Epoch: 3
 
 %def_without dotlock
@@ -50,6 +50,7 @@ Patch35: mutt-1.4.2.1-owl-man.patch
 Patch36: mutt-1.4.2.1-owl-bound.patch
 Patch37: mutt-1.4.2.2i-alt-fixes.patch
 Patch38: mutt-1.4.2.3-alt-bound.patch
+Patch39: mutt-1.4.2.3-alt-automake.patch
 
 Requires: MTA, urlview, mailcap
 
@@ -91,6 +92,7 @@ install -pm755 %SOURCE10 .
 %patch36 -p1
 %patch37 -p1
 %patch38 -p1
+%patch39 -p1
 
 find -type f -name \*.orig -delete
 
@@ -170,6 +172,9 @@ rm %buildroot%_sysconfdir/mime.types
 %docdir
 
 %changelog
+* Wed Oct 30 2013 Dmitry V. Levin <ldv@altlinux.org> 3:1.4.2.3-alt7
+- Fixed build with new automake.
+
 * Mon May 13 2013 Fr. Br. George <george@altlinux.ru> 3:1.4.2.3-alt6.1
 - Rebuild with new linuxdoc-tools
 
