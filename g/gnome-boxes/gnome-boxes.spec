@@ -1,10 +1,10 @@
 %define _libexecdir %_prefix/libexec
-%def_enable ovirt
+%def_disable ovirt
 %def_enable usbredir
 %def_enable smartcard
 
 Name: gnome-boxes
-Version: 3.8.4
+Version: 3.10.0
 Release: alt1
 Summary: A simple GNOME 3 application to access remote or virtual systems
 Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
@@ -18,11 +18,11 @@ Source2: libgd.tar
 # From configure.ac
 %define clutter_gtk_ver 1.3.2
 %define clutter_ver 1.11.14
-%define govirt_ver 0.0.3
+%define govirt_ver 0.2.0
 %define glib_ver 2.32.0
-%define gtk_ver 3.5.5
+%define gtk_ver 3.9
 %define gtk_vnc_ver 0.4.4
-%define libvirt_glib_ver 0.1.6
+%define libvirt_glib_ver 0.1.7
 %define libxml2_ver 2.7.8
 %define spice_gtk_ver 0.15
 %define gudev_ver 165
@@ -34,7 +34,7 @@ Source2: libgd.tar
 BuildRequires: intltool >= 0.40.0
 BuildRequires: yelp-tools
 BuildRequires: gobject-introspection-devel >= 0.9.6
-BuildRequires: libvala-devel >= 0.17.3
+BuildRequires: libvala-devel >= 0.21.1
 BuildRequires: vala-tools
 BuildRequires: libclutter-gtk3-devel >= %clutter_gtk_ver
 BuildRequires: libclutter-devel >= %clutter_ver
@@ -101,8 +101,19 @@ intltoolize -f
 %_libexecdir/gnome-boxes-search-provider
 %_datadir/dbus-1/services/org.gnome.Boxes.SearchProvider.service
 %_datadir/gnome-shell/search-providers/gnome-boxes-search-provider.ini
+%_datadir/appdata/*.xml
 
 %changelog
+* Wed Oct 30 2013 Alexey Shabalin <shaba@altlinux.ru> 3.10.0-alt1
+- 3.10.0
+- disable govirt support
+
+* Thu Sep 19 2013 Alexey Shabalin <shaba@altlinux.ru> 3.9.92-alt1
+- 3.9.92
+
+* Tue Sep 03 2013 Alexey Shabalin <shaba@altlinux.ru> 3.9.91-alt1
+- 3.9.91
+
 * Tue Jul 30 2013 Alexey Shabalin <shaba@altlinux.ru> 3.8.4-alt1
 - 3.8.4
 
