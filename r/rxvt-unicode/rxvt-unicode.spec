@@ -1,6 +1,6 @@
 Name: rxvt-unicode
-Version: 9.15
-Release: alt3
+Version: 9.19
+Release: alt1
 
 Summary:  rxvt-unicode is a clone of the well known terminal emulator rxvt
 License: GPL
@@ -19,12 +19,12 @@ Source: http://dist.schmorp.de/%name/%name-%version.tar.bz2
 Source1: %name.alternatives
 Source2: %name.desktop
 
-Patch0:	rxvt-unicode-alt-remove-tic.patch
 Patch1:	rxvt-unicode-alt-change-cutchars.patch
 
 # Automatically added by buildreq on Mon May 14 2007
-BuildRequires: gcc-c++ imake libICE-devel libXft-devel libXpm-devel perl-devel xorg-cf-files
-BuildRequires: alternatives
+BuildRequires: gcc-c++ imake libICE-devel libXft-devel libXpm-devel xorg-cf-files
+BuildRequires: alternatives libgdk-pixbuf-devel libstartup-notification-devel
+BuildRequires: perl-devel perl-podlators
 
 %description
 rxvt-unicode is a clone of the well known terminal emulator rxvt, modified to
@@ -34,7 +34,6 @@ Xft fonts.
 
 %prep
 %setup -q
-%patch0 -p1
 %patch1 -p1
 
 %build
@@ -62,6 +61,10 @@ Xft fonts.
 %_libdir/urxvt/
 
 %changelog
+* Wed Oct 30 2013 Alexey Gladkov <legion@altlinux.ru> 9.19-alt1
+- New release (9.19).
+- Enable pixbuf support (ALT#29538).
+
 * Fri Aug 30 2013 Vladimir Lettiev <crux@altlinux.ru> 9.15-alt3
 - built for perl 5.18
 
