@@ -1,7 +1,7 @@
 %define dist Pod-Parser
 Name: perl-%dist
 Version: 1.61
-Release: alt1
+Release: alt2
 
 Summary: Modules for parsing/translating POD format documents
 License: GPL or Artistic
@@ -14,6 +14,10 @@ BuildArch: noarch
 
 # Automatically added by buildreq on Mon Feb 20 2012
 BuildRequires: perl-IO-String perl-devel perl-podlators
+
+# for compatibility: about 40 packages used to have indirect
+# dependency on perl-podlators through Pod-Parser
+Requires: perl-podlators
 
 %description
 B<Pod::Find> provides a set of functions to locate POD files.  Note that
@@ -35,6 +39,11 @@ so be sure to specify them in the B<use> statement if you need them:
 %perl_vendor_privlib/Pod
 
 %changelog
+* Wed Oct 30 2013 Igor Vlasenko <viy@altlinux.ru> 1.61-alt2
+- added Requires: perl-podlators for compatibility:
+  about 40 packages have indirect build dependency
+  on perl-podlators through Pod-Parser
+
 * Sun Oct 27 2013 Igor Vlasenko <viy@altlinux.ru> 1.61-alt1
 - automated CPAN update
 
