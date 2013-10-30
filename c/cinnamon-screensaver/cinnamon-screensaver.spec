@@ -7,7 +7,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: cinnamon-screensaver
-Version: %ver_major.1
+Version: %ver_major.3
 Release: alt1
 
 Summary: Cinnamon Screensaver
@@ -85,6 +85,9 @@ simple, sane, secure defaults and be well integrated with the Cinnamon desktop.
 %doc AUTHORS NEWS README
 
 %changelog
+* Tue Oct 29 2013 Vladimir Didenko <cow@altlinux.org> 2.0.3-alt1
+- 2.0.3
+
 * Mon Oct 21 2013 Vladimir Didenko <cow@altlinux.org> 2.0.1-alt1
 - 2.0.1
 
