@@ -5,7 +5,7 @@
 
 Name: NetworkManager-applet-gtk
 Version: 0.9.8.4
-Release: alt3%git_date
+Release: alt4%git_date
 License: %gpl2plus
 Group: Graphical desktop/GNOME
 Summary: Panel applet for use with NetworkManager
@@ -21,7 +21,9 @@ BuildPreReq: libdbus-devel libdbus-glib libGConf-devel libgtk+%gtkver-devel intl
 BuildRequires: libwireless-devel
 BuildRequires: libnotify-devel
 BuildRequires: NetworkManager-devel >= %nm_version
-BuildRequires: NetworkManager-glib-devel >= %nm_version
+BuildRequires: libnm-util-devel >= %nm_version
+BuildRequires: libnm-glib-devel >= %nm_version
+BuildRequires: libnm-glib-vpn-devel >= %nm_version
 BuildRequires: NetworkManager-glib-gir-devel >= %nm_version
 BuildRequires: libgnome-bluetooth-devel
 BuildRequires: iso-codes-devel
@@ -64,7 +66,9 @@ License: %gpl2plus
 Group: Development/GNOME and GTK+
 Summary: Private header files for NetworkManager GUI support
 Requires: libnm-gtk = %version-%release
-Requires: NetworkManager-glib-devel >= %nm_version
+Requires: libnm-util-devel >= %nm_version
+Requires: libnm-glib-devel >= %nm_version
+Requires: libnm-glib-vpn-devel >= %nm_version
 Requires: libgtk+%gtkver-devel
 
 %description -n libnm-gtk-devel
@@ -149,6 +153,9 @@ make check
 %_datadir/gir-1.0/NMGtk-1.0.gir
 
 %changelog
+* Wed Oct 30 2013 Mikhail Efremov <sem@altlinux.org> 0.9.8.4-alt4
+- Use libnm-* devel packages.
+
 * Thu Sep 26 2013 Mikhail Efremov <sem@altlinux.org> 0.9.8.4-alt3
 - Updated from upstream git:
   + Updtated translations.
