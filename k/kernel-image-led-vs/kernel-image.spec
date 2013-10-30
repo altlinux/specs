@@ -25,7 +25,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.10.17
-Release: alt6
+Release: alt7
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -759,6 +759,7 @@ and specify %kbuild_dir as the kernel source directory.
 Summary: Firmware for drivers from %name
 Group: System/Kernel and hardware
 License: GPLv2, Redistributable
+Requires: %name = %kversion-%release
 AutoProv: no
 AutoReq: no
 
@@ -1830,6 +1831,13 @@ done)
 
 
 %changelog
+* Wed Oct 30 2013 Led <led@altlinux.ru> 3.10.17-alt7
+- updated:
+  + fix-drivers-i2c-busses--i2c-ismt
+- added:
+  + fix-kernel--watchdog
+- firmware-kernel-* requires kernel-image-*
+
 * Tue Oct 29 2013 Led <led@altlinux.ru> 3.10.17-alt6
 - updated:
   + fix-fs-cifs
