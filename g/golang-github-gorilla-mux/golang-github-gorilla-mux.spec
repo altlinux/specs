@@ -3,7 +3,7 @@
 
 Name: golang-github-gorilla-mux
 Version: 0
-Release: alt1
+Release: alt2
 Summary: A powerful URL router and dispatcher for golang
 License: BSD
 Group: Development/Other
@@ -22,9 +22,9 @@ other conditions.
 %package devel
 Summary: A powerful URL router and dispatcher for golang
 Group: Development/Other
-Provides: golang("%import_path") = %version-%release
+Provides: golang(%import_path) = %version-%release
 Requires: golang
-Requires: golang("github.com/gorilla/context")
+Requires: golang(github.com/gorilla/context)
 
 %description devel
 Package gorilla/mux implements a request router and dispatcher.
@@ -55,5 +55,8 @@ cp -av *.go %buildroot/%gopath/src/%import_path
 %gopath/src/%import_path/*.go
 
 %changelog
+* Wed Oct 30 2013 Slava Dubrovskiy <dubrsl@altlinux.org> 0-alt2
+- Update spec
+
 * Wed Oct 09 2013 Slava Dubrovskiy <dubrsl@altlinux.org> 0-alt1
 - Build for ALT
