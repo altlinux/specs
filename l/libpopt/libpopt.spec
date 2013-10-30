@@ -1,6 +1,6 @@
 Name: libpopt
 Version: 1.14
-Release: alt8
+Release: alt9
 Epoch: 1
 
 %def_with apidocs
@@ -12,9 +12,9 @@ Url: http://www.rpm5.org/
 
 Source: popt.tar
 
-Patch1: popt-1.14-alt-alloc-checks.patch
-Patch2: popt-1.14-alt-context-checks.patch
-Patch3: popt-1.13-alt-x-alloc.patch
+Patch1: popt-1.14-alt-automake.patch
+Patch2: popt-1.14-alt-alloc-checks.patch
+Patch3: popt-1.14-alt-context-checks.patch
 Patch4: popt-1.14-alt-man.patch
 Patch5: popt-1.14-alt-poptBadOption.patch
 Patch6: popt-1.14-alt-doxygen.patch
@@ -72,10 +72,10 @@ statically linked popt-based software.
 This package contains developement documentation for libpopt.
 
 %prep
-%setup -q -n popt
-%patch1 -p2
+%setup -n popt
+%patch1 -p1
 %patch2 -p2
-#%patch3 -p2
+%patch3 -p2
 %patch4 -p2
 %patch5 -p2
 %patch6 -p2
@@ -134,6 +134,9 @@ bzip2 -9 %buildroot%docdir/*.ps
 %docdir/*.ps.bz2
 
 %changelog
+* Wed Oct 30 2013 Dmitry V. Levin <ldv@altlinux.org> 1:1.14-alt9
+- Fixed build with new automake.
+
 * Mon Apr 08 2013 Dmitry V. Levin <ldv@altlinux.org> 1:1.14-alt8
 - Fixed build with new gettext.
 
