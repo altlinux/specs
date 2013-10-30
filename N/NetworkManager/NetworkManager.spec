@@ -4,6 +4,13 @@
 %define dbus_version 1.2.12-alt2
 %define libdbus_glib_version 0.76
 
+%define nm_glib_sover 4
+%define libnm_glib libnm-glib%nm_glib_sover
+%define nm_glib_vpn_sover 1
+%define libnm_glib_vpn libnm-glib-vpn%nm_glib_vpn_sover
+%define nm_util_sover 2
+%define libnm_util libnm-util%nm_util_sover
+
 %define ppp_version 2.4.5
 %define wpa_supplicant_version 0.7.3-alt3
 %define dhcpcd_version 4.0.0
@@ -15,7 +22,7 @@
 
 Name: NetworkManager
 Version: 0.9.8.8
-Release: alt1%git_date
+Release: alt2%git_date
 License: %gpl2plus
 Group: System/Configuration/Networking
 Summary: Network Link Manager and User Applications
@@ -60,7 +67,6 @@ Requires: openresolv >= %openresolv_version
 Requires: openresolv-dnsmasq >= %openresolv_version
 Requires: libshell
 Requires: ModemManager >= 0.7
-Requires: NetworkManager-glib = %version-%release
 Requires: nm-dhcp-client
 
 Conflicts: NetworkManager-vpnc < 0.9.2
@@ -92,43 +98,104 @@ Requires: pkgconfig
 This package contains various headers accessing some NetworkManager
 functionality from applications.
 
-%package glib
+%package -n %libnm_glib
 License: %gpl2plus
-Summary: Libraries for adding NetworkManager support to applications that use glib
-Group: Development/GNOME and GTK+
+Summary: Library for adding NetworkManager support to applications that use glib
+Group: System/Libraries
 Requires: dbus >= %dbus_version
+Obsoletes: NetworkManager-glib <= 0.9.8.8-alt1
 
-%description glib
-This package contains the libraries that make it easier to use some
-Network Manager functionality from applications that use glib.
+%description -n %libnm_glib
+This package contains the library that applications can use to query
+connection status via NetworkManager.
+
+%package -n %libnm_glib_vpn
+License: %gpl2plus
+Summary: Library for creating VPN connections via NetworkManager
+Group: System/Libraries
+Requires: dbus >= %dbus_version
+Obsoletes: NetworkManager-glib <= 0.9.8.8-alt1
+
+%description -n %libnm_glib_vpn
+This package contains the library that applications can use for creating
+VPN connections via NetworkManager.
+
+%package -n %libnm_util
+License: %gpl2plus
+Summary: A convenience library to ease the access to NetworkManager.
+Group: System/Libraries
+Requires: dbus >= %dbus_version
+Obsoletes: NetworkManager-glib <= 0.9.8.8-alt1
+
+%description -n %libnm_util
+This package contains a convenience library to ease the access to
+NetworkManager.
 
 %package glib-devel
 Summary: Header files for adding NetworkManager support to applications that use glib.
 Group: Development/GNOME and GTK+
+Requires: libnm-glib-devel libnm-glib-vpn-devel libnm-util-devel
+
+%description glib-devel
+Virtual package for backward compatibility.
+Deprecated and will be removed soon.
+
+%package -n libnm-glib-devel
+Summary: Header files for adding NetworkManager support to applications that use glib.
+Group: Development/C
 Requires: %name-devel = %version-%release
-Requires: %name-glib = %version-%release
+Requires: libnm-util-devel = %version-%release
+Requires: glib2-devel
+Requires: pkgconfig
+Requires: libdbus-glib-devel >= %libdbus_glib_version
+Requires: %libnm_glib = %version-%release
+
+%description -n libnm-glib-devel
+This package contains the header and pkg-config files for development
+applications that can to query connection status via NetworkManager.
+
+%package -n libnm-glib-vpn-devel
+Summary: Header files for %libnm_glib_vpn
+Group: Development/C
+Requires: %name-devel = %version-%release
+Requires: libnm-glib-devel = %version-%release
+Requires: glib2-devel
+Requires: pkgconfig
+Requires: libdbus-glib-devel >= %libdbus_glib_version
+Requires: %libnm_glib_vpn = %version-%release
+
+%description -n libnm-glib-vpn-devel
+This package contains the header and pkg-config files for development
+applications that can to create VPN connections via NetworkManager.
+
+%package -n libnm-util-devel
+Summary: Header files for %libnm_util
+Group: Development/C
+Requires: %name-devel = %version-%release
+Requires: %libnm_util = %version-%release
 Requires: glib2-devel
 Requires: pkgconfig
 Requires: libdbus-glib-devel >= %libdbus_glib_version
 
-%description glib-devel
-This package contains the header and pkg-config files for development
-applications using NetworkManager functionality from applications
-that use glib.
+%description -n libnm-util-devel
+This package contains the header and pkg-config files
+for %libnm_util.
 
-%package glib-devel-doc
-Summary: Development documentation for %name-glib
-Group: Development/GNOME and GTK+
-Conflicts: %name-glib < %version
+%package %name-devel-doc
+Summary: Development documentation for %name
+Group: Development/Documentation
+Obsoletes: NetworkManager-glib-devel-doc <= 0.9.8.8-alt1
+Provides: NetworkManager-glib-devel-doc = %version-%release
 BuildArch: noarch
 
-%description glib-devel-doc
-This package contains development documentation for %name-glib
+%description %name-devel-doc
+This package contains development documentation for %name.
+Includes libnm-util and libnm-glib development documentation.
 
 %package glib-gir
 Summary: GObject introspection data for the NetworkManager
 Group: System/Libraries
-Requires: %name-glib = %version-%release
+Requires: %libnm_glib %libnm_glib_vpn %libnm_util
 
 %description glib-gir
 GObject introspection data for the NetworkManager.
@@ -138,7 +205,9 @@ Summary: GObject introspection devel data for the NetworkManager
 Group: System/Libraries
 BuildArch: noarch
 Requires: %name-glib-gir = %version-%release
-Requires: %name-glib-devel = %version-%release
+Requires: libnm-glib-devel = %version-%release
+Requires: libnm-glib-vpn-devel = %version-%release
+Requires: libnm-util-devel = %version-%release
 
 %description glib-gir-devel
 GObject introspection devel data for the NetworkManager.
@@ -286,36 +355,48 @@ fi
 %{?_enable_systemd:/lib/systemd/system/%name-dispatcher.service}
 
 %files devel
-%doc %_datadir/gtk-doc/html/%name
 %dir %_includedir/%name
 %_includedir/%name/%name.h
 %_includedir/%name/NetworkManagerVPN.h
 %_includedir/%name/nm-version.h
 %_pkgconfigdir/%name.pc
 
-%files glib
-%_libdir/libnm-glib.so.*
-%_libdir/libnm-glib-vpn.so.*
-%_libdir/libnm-util.so.*
+%files -n %libnm_glib
+%_libdir/libnm-glib.so.%nm_glib_sover
+%_libdir/libnm-glib.so.%nm_glib_sover.*
+
+%files -n %libnm_glib_vpn
+%_libdir/libnm-glib-vpn.so.%nm_glib_vpn_sover
+%_libdir/libnm-glib-vpn.so.%nm_glib_vpn_sover.*
+
+%files -n %libnm_util
+%_libdir/libnm-util.so.%nm_util_sover
+%_libdir/libnm-util.so.%nm_util_sover.*
 
 %files glib-devel
-%dir %_includedir/libnm-glib
-%_includedir/libnm-glib/*.h
+
+%files -n libnm-glib-devel
+%_includedir/libnm-glib
+%exclude %_includedir/libnm-glib/nm-vpn-*.h
+%_pkgconfigdir/libnm-glib.pc
+%_libdir/libnm-glib.so
+
+%files -n libnm-glib-vpn-devel
+%_includedir/libnm-glib/nm-vpn-*.h
+%_pkgconfigdir/libnm-glib-vpn.pc
+%_libdir/libnm-glib-vpn.so
+
+%files -n libnm-util-devel
 %_includedir/%name/nm-setting*.h
 %_includedir/%name/nm-connection.h
 %_includedir/%name/nm-utils*.h
-%_pkgconfigdir/libnm-glib.pc
-%_pkgconfigdir/libnm-glib-vpn.pc
 %_pkgconfigdir/libnm-util.pc
-%_libdir/libnm-glib.so
-%_libdir/libnm-glib-vpn.so
 %_libdir/libnm-util.so
 
-%files glib-devel-doc
-%dir %_datadir/gtk-doc/html/libnm-glib
-%_datadir/gtk-doc/html/libnm-glib/*
-%dir %_datadir/gtk-doc/html/libnm-util
-%_datadir/gtk-doc/html/libnm-util/*
+%files %name-devel-doc
+%doc %_datadir/gtk-doc/html/%name
+%doc %_datadir/gtk-doc/html/libnm-glib
+%doc %_datadir/gtk-doc/html/libnm-util
 
 %if_enabled introspection
 %files glib-gir
@@ -331,6 +412,11 @@ fi
 %exclude %_libdir/pppd/%ppp_version/*.la
 
 %changelog
+* Wed Oct 30 2013 Mikhail Efremov <sem@altlinux.org> 0.9.8.8-alt2
+- Move all development documentation to the devel-doc subpackage.
+- Split NetworkManager-glib-devel too.
+- Split NetworkManager-glib subpackage (by zerg@) (closes: #29535).
+
 * Mon Oct 14 2013 Mikhail Efremov <sem@altlinux.org> 0.9.8.8-alt1
 - Updated to 0.9.8.8.
 
