@@ -1,6 +1,6 @@
 Name: cups
 Version: 1.6.2
-Release: alt3.1
+Release: alt3.2
 
 Summary: Common Unix Printing System - server package
 License: GPL
@@ -39,6 +39,9 @@ Patch26: cups-1.6.1-ubuntu-cupsd-no-crash-on-avahi-threaded-poll-shutdown.patch
 Patch29: cups-1.4-ubuntu-default-error-policy-retry-job.patch
 Patch31: cups-1.6.1-alt-faq-localization.patch
 Patch32: cups-1.6.2-alt-makefile.patch
+Patch33: cups-1.6.1-fc-dbus-utf8.patch
+Patch34: cups-1.6.2-alt-lpd-utf8.patch
+
 Requires: printer-testpages bc cups-filters
 
 PreReq: lib%name = %version-%release, ghostscript-cups
@@ -161,6 +164,8 @@ tar xf %SOURCE114
 %patch29 -p1
 %patch32 -p1
 %patch31 -p1
+%patch33 -p1
+%patch34 -p1
 
 %build
 aclocal -I config-scripts
@@ -371,6 +376,10 @@ rm -f /var/cache/cups/ppds.dat
 %_man1dir/ipptool.1.gz
 
 %changelog
+* Wed Oct 30 2013 Fr. Br. George <george@altlinux.ru> 1.6.2-alt3.2
+- Apply FC dbus-utf8 patch
+- Reproduce this patch to cups-lpd (Closes: #25937)
+
 * Mon Oct 14 2013 Fr. Br. George <george@altlinux.ru> 1.6.2-alt3.1
 - Freshen LSPP patch (closes: #29477)
 - Rebuild with debuginfo
