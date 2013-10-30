@@ -1,6 +1,6 @@
 Name: conky
-Version: 1.8.1
-Release: alt3
+Version: 1.9.0
+Release: alt1
 
 %def_enable lua
 %def_enable ncurses
@@ -18,15 +18,15 @@ Release: alt3
 %def_enable lua_imlib2
 %def_enable lua_cairo
 
-%define subst_enable_to() %{expand:%%{?_enable_%{1}:--enable-%{2}}} %{expand:%%{?_disable_%{1}:--disable-%{2}}}
+%define subst_enable_to() %{expand:%%{?_enable_%1:--enable-%2}} %{expand:%%{?_disable_%1:--disable-%2}}
 
 Summary: lightweight graphical system monitor
 Summary(ru_RU.UTF-8): Легковесный графический системный монитор
 License: GPLv3 with various free software licenses (see COPYING)
 Group: Monitoring
-URL: http://conky.sourceforge.net/
+Url: http://conky.sourceforge.net/
 
-Source: %name-%version.tar
+Source: %name-%version.tar.bz2
 Source1: conky-dotfiles.tar.bz2
 
 # Automatically added by buildreq on Tue Jul 07 2009
@@ -145,6 +145,9 @@ install -p -m644 %SOURCE1 ./
 %config %_sysconfdir/%name/%{name}_no_x11.conf
 
 %changelog
+* Wed Oct 30 2013 Fr. Br. George <george@altlinux.ru> 1.9.0-alt1
+- Autobuild version bump to 1.9.0
+
 * Sun Jul 17 2011 Egor Vyscrebentsov <evyscr@altlinux.org> 1.8.1-alt3
 - dropped curl/types.h from headers includes
 - built with lua-cairo
