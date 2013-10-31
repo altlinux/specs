@@ -25,7 +25,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.10.17
-Release: alt7
+Release: alt9
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -1831,6 +1831,17 @@ done)
 
 
 %changelog
+* Thu Oct 31 2013 Led <led@altlinux.ru> 3.10.17-alt9
+- updated:
+  + fix-net-sunrpc
+
+* Thu Oct 31 2013 Led <led@altlinux.ru> 3.10.17-alt8
+- updated:
+  + fix-fs-btrfs
+- added:
+  + fix-drivers-md--dm-snapshot (CVE-2013-4299)
+  + fix-sound-pci-hda--snd-hda-codec-realtek
+
 * Wed Oct 30 2013 Led <led@altlinux.ru> 3.10.17-alt7
 - updated:
   + fix-drivers-i2c-busses--i2c-ismt
