@@ -18,7 +18,7 @@
 
 Name: openldap
 Version: %_sover.32
-Release: alt2
+Release: alt2.1
 
 Provides: openldap2.4 = %version-%release
 Obsoletes: openldap2.4 < %version-%release
@@ -697,6 +697,9 @@ rm -f /var/lib/ldap/%_lib/*.so*
 #[FR] Create chroot-scripts dynamic while build package 
 
 %changelog
+* Thu Oct 31 2013 Sergey Y. Afonin <asy@altlinux.ru> 2.4.32-alt2.1
+- NMU: rebuilt with cyrus-sasl 2.1.26 (ALT #29485)
+
 * Fri Aug 30 2013 Vladimir Lettiev <crux@altlinux.ru> 2.4.32-alt2
 - built for perl 5.18
 
