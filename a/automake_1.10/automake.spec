@@ -2,28 +2,29 @@
 %define dialect _1.10
 %define dialect_regex _1\\.10
 %define suff -1.10
-%define altver 1101
+%define altver 1103
+%define apiname %realname%suff
 
 Name: %realname%dialect
 Version: 1.10.3
-Release: alt2
+Release: alt3
 Epoch: 1
 
-%add_findreq_skiplist %_datadir/%realname%suff/config.guess
+%define mydatadir %_datadir/%apiname
 %set_compress_method gzip
-%define _perl_lib_path %perl_vendor_privlib:%_datadir/%realname%suff
+%define _perl_lib_path %perl_vendor_privlib:%mydatadir
 %{?filter_from_requires:%filter_from_requires /^perl(Automake/d}
-%{?filter_from_provides:%filter_from_provides /^perl(Automake/d}
+%{?filter_from_provides:%filter_from_provides /^perl(/d}
 
 Summary: A GNU tool for automatically creating Makefiles
-License: GPLv2+
+License: GPLv2+ and GFDLv1.3+
 Group: Development/Other
 Url: http://www.gnu.org/software/automake/
 BuildArch: noarch
 
 %define srcname %realname-%version-%release
 
-# ftp://ftp.gnu.org/gnu/%realname/%srcname.tar.bz2
+# git://git.altlinux.org/gears/a/%name.git
 Source: %srcname.tar
 
 Provides: %realname = %epoch:%version-%release
@@ -35,20 +36,17 @@ Requires: autoconf_2.60
 BuildPreReq: autoconf >= 2:2.58, texinfo >= 4.7
 
 %description
-Automake is a tool for automatically generating Makefiles compliant
-with the GNU Coding Standards.
-
-You should install Automake if you are developing software and would
-like to use its capabilities of automatically generating GNU standard
-Makefiles.  If you install Automake, you will also need to install
-GNU Autoconf package.
+Automake is a tool for automatically generating `Makefile.in'
+files compliant with the GNU Coding Standards.
 
 %prep
 %setup -n %srcname
-bzip2 -9fk ChangeLog NEWS TODO
+xz -k9 NEWS
 
 # patch texinfo file
-sed -i '/@direntry/,/@end direntry/ s/^\(\*[[:space:]]\+[[:alnum:].]\+\)\(:[[:space:]]\+\)(%realname)/\1%suff\2(%realname%suff)/' \
+sed -i \
+	-e '/@direntry/,/@end direntry/ s/^\(\*[[:space:]]\+[[:alnum:].-]\+\)\(:[[:space:]]\+\)(%realname)/\1\2(%apiname)/' \
+	-e '/^@\(setfilename\|settitle\)[[:space:]]\+%realname/ s//&%suff/' \
 	doc/automake.texi
 
 %build
@@ -56,13 +54,16 @@ sed -i '/@direntry/,/@end direntry/ s/^\(\*[[:space:]]\+[[:alnum:].]\+\)\(:[[:sp
 %configure --docdir=%docdir
 %make_build MAKEINFOFLAGS=--no-split
 
-%check
-%make_build -k check
-
 %install
 %makeinstall_std MAKEINFOFLAGS=--no-split
 
-mv %buildroot%_infodir/%realname.info %buildroot%_infodir/%realname%suff.info
+mv %buildroot%_infodir/%realname.info %buildroot%_infodir/%apiname.info
+
+# replace config.* copies with symlinks to original files
+for f in %_datadir/gnu-config/config.*; do
+	[ -f "$f" ] || continue
+	ln -frs %buildroot"$f" %buildroot%mydatadir/"${f##*/}"
+done
 
 mkdir -p %buildroot%_sysconfdir/buildreqs/files/ignore.d
 cat <<EOF >%buildroot%_sysconfdir/buildreqs/files/ignore.d/%name
@@ -74,14 +75,17 @@ echo %realname >%buildroot%_sysconfdir/buildreqs/packages/substitute.d/%name
 
 mkdir -p %buildroot%_altdir
 cat <<EOF >%buildroot%_altdir/%name
-%_bindir/%realname-default	%_bindir/%realname%suff	%altver
-%_bindir/aclocal-default	%_bindir/aclocal%suff	%_bindir/%realname%suff
-%_datadir/%realname	%_datadir/%realname%suff	%_bindir/%realname%suff
-%_infodir/%realname.info.gz	%_infodir/%realname%suff.info.gz	%_bindir/%realname%suff
+%_bindir/%realname-default	%_bindir/%apiname	%altver
+%_bindir/aclocal-default	%_bindir/aclocal%suff	%_bindir/%apiname
+%_datadir/%realname	%mydatadir	%_bindir/%apiname
+%_infodir/%realname.info.gz	%_infodir/%apiname.info.gz	%_bindir/%apiname
 EOF
 
-install -pm644 AUTHORS README THANKS ChangeLog.bz2 NEWS.bz2 TODO.bz2 \
+install -pm644 AUTHORS README THANKS NEWS.* \
 	%buildroot%docdir/
+
+%check
+%make_build -k check
 
 %files
 %config %_sysconfdir/buildreqs/packages/substitute.d/%name
@@ -89,11 +93,15 @@ install -pm644 AUTHORS README THANKS ChangeLog.bz2 NEWS.bz2 TODO.bz2 \
 %_altdir/%name
 %_bindir/*%suff
 %_datadir/aclocal%suff
-%_datadir/%realname%suff
+%mydatadir/
 %_infodir/*.info*
-%docdir
+%docdir/
 
 %changelog
+* Thu Oct 31 2013 Dmitry V. Levin <ldv@altlinux.org> 1:1.10.3-alt3
+- tests: backported upstream fix for autoconf 2.69.
+- spec: synced with 1.14.
+
 * Sun Sep 09 2012 Dmitry V. Levin <ldv@altlinux.org> 1:1.10.3-alt2
 - distdir.am (distcheck): backported upstream fix for CVE-2012-3386.
 - aclocal: backported upstream fix for perl 5.16.0.

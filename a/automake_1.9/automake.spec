@@ -2,19 +2,22 @@
 %define dialect _1.9
 %define dialect_regex _1\\.9
 %define suff -1.9
-%define altver 195
+%define altver 1096
+%define apiname %realname%suff
 
 Name: %realname%dialect
 Version: 1.9.6
-Release: alt4
+Release: alt5
 Epoch: 1
 
-%add_findreq_skiplist %_datadir/%realname%suff/config.guess
+%define mydatadir %_datadir/%apiname
 %set_compress_method gzip
-%define _perl_lib_path %perl_vendor_privlib:%_datadir/%realname%suff
+%define _perl_lib_path %perl_vendor_privlib:%mydatadir
+%{?filter_from_requires:%filter_from_requires /^perl(Automake/d}
+%{?filter_from_provides:%filter_from_provides /^perl(/d}
 
 Summary: A GNU tool for automatically creating Makefiles
-License: GPLv2+
+License: GPLv2+ and GFDLv1.3+
 Group: Development/Other
 Url: http://www.gnu.org/software/automake/
 BuildArch: noarch
@@ -31,6 +34,7 @@ Patch2: automake-1.9.5-alt-aclocal-libtool.patch
 Patch3: automake-1.9.5-cvs-20070722-tests.patch
 Patch4: automake-1.9.6-git-20091129.patch
 Patch5: automake-1.9.6-git-20091201.patch
+Patch6: automake-1.9.6-git-20110113.patch
 
 Provides: %realname = %epoch:%version-%release
 Provides: aclocal(libtool)
@@ -41,13 +45,8 @@ Requires: autoconf_2.5 >= 2:2.58
 BuildPreReq: autoconf >= 2:2.58, texinfo >= 4.7
 
 %description
-Automake is a tool for automatically generating Makefiles compliant
-with the GNU Coding Standards.
-
-You should install Automake if you are developing software and would
-like to use its capabilities of automatically generating GNU standard
-Makefiles.  If you install Automake, you will also need to install
-GNU Autoconf package.
+Automake is a tool for automatically generating `Makefile.in'
+files compliant with the GNU Coding Standards.
 
 %prep
 %setup -n %srcname
@@ -57,22 +56,31 @@ GNU Autoconf package.
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
+%patch6 -p1
 install -pm644 %SOURCE1 m4/objc.m4
-bzip2 -9fk ChangeLog NEWS TODO
+xz -k9 NEWS
+
+# patch texinfo file
+sed -i \
+	-e '/@direntry/,/@end direntry/ s/^\(\*[[:space:]]\+[[:alnum:].-]\+\)\(:[[:space:]]\+\)(%realname)/\1\2(%apiname)/' \
+	-e '/^@\(setfilename\|settitle\)[[:space:]]\+%realname/ s//&%suff/' \
+	doc/automake.texi
 
 %build
-# prevent very recent configure from running "config.sub noarch-alt-linux".
-%undefine _configure_target
-%configure
+%define docdir %_docdir/%realname-%version
+%configure --docdir=%docdir
 %make_build MAKEINFOFLAGS=--no-split
-
-%check
-%make_build -k check
 
 %install
 %makeinstall_std MAKEINFOFLAGS=--no-split
 
-mv %buildroot%_infodir/%realname.info %buildroot%_infodir/%realname%suff.info
+mv %buildroot%_infodir/%realname.info %buildroot%_infodir/%apiname.info
+
+# replace config.* copies with symlinks to original files
+for f in %_datadir/gnu-config/config.*; do
+	[ -f "$f" ] || continue
+	ln -frs %buildroot"$f" %buildroot%mydatadir/"${f##*/}"
+done
 
 mkdir -p %buildroot%_sysconfdir/buildreqs/files/ignore.d
 cat <<EOF >%buildroot%_sysconfdir/buildreqs/files/ignore.d/%name
@@ -84,11 +92,18 @@ echo %realname >%buildroot%_sysconfdir/buildreqs/packages/substitute.d/%name
 
 mkdir -p %buildroot%_altdir
 cat <<EOF >%buildroot%_altdir/%name
-%_bindir/%realname-default	%_bindir/%realname%suff	%altver
-%_bindir/aclocal-default	%_bindir/aclocal%suff	%_bindir/%realname%suff
-%_datadir/%realname	%_datadir/%realname%suff	%_bindir/%realname%suff
-%_infodir/%realname.info.gz	%_infodir/%realname%suff.info.gz	%_bindir/%realname%suff
+%_bindir/%realname-default	%_bindir/%apiname	%altver
+%_bindir/aclocal-default	%_bindir/aclocal%suff	%_bindir/%apiname
+%_datadir/%realname	%mydatadir	%_bindir/%apiname
+%_infodir/%realname.info.gz	%_infodir/%apiname.info.gz	%_bindir/%apiname
 EOF
+
+mkdir -p %buildroot%docdir
+install -pm644 AUTHORS README THANKS NEWS.* \
+	%buildroot%docdir/
+
+%check
+%make_build -k check
 
 %files
 %config %_sysconfdir/buildreqs/packages/substitute.d/%name
@@ -96,11 +111,15 @@ EOF
 %_altdir/%name
 %_bindir/*%suff
 %_datadir/aclocal%suff
-%_datadir/%realname%suff
+%mydatadir/
 %_infodir/*.info*
-%doc AUTHORS README THANKS ChangeLog.bz2 NEWS.bz2 TODO.bz2
+%docdir/
 
 %changelog
+* Thu Oct 31 2013 Dmitry V. Levin <ldv@altlinux.org> 1:1.9.6-alt5
+- tests: backported upstream fix for autoconf 2.69.
+- spec: synced with 1.14.
+
 * Mon Mar 07 2011 Dmitry V. Levin <ldv@altlinux.org> 1:1.9.6-alt4
 - Backported few upstream fixes.
 
