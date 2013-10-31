@@ -3,7 +3,7 @@
 %define rname kgamma
 Name: kde4-kgamma
 Version: 4.11.1
-Release: alt1
+Release: alt2
 
 Group: Graphical desktop/KDE
 Summary: Color profiling
@@ -14,6 +14,7 @@ Provides: kde4graphics-kgamma = %version-%release
 Obsoletes: kde4graphics-kgamma < %version-%release
 
 Source: %rname-%version.tar
+Patch1: alt-config-paths.patch
 
 # Automatically added by buildreq on Fri Sep 09 2011 (-bi)
 # optimized out: automoc cmake cmake-modules elfutils fontconfig fontconfig-devel glibc-devel-static kde4libs libICE-devel libSM-devel libX11-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXext-devel libXfixes-devel libXft-devel libXi-devel libXinerama-devel libXpm-devel libXrandr-devel libXrender-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel libdbus-devel libdbusmenu-qt2 libfreetype-devel libpng-devel libqt4-core libqt4-dbus libqt4-devel libqt4-gui libqt4-network libqt4-svg libqt4-xml libsoprano-devel libssl-devel libstdc++-devel libxkbfile-devel phonon-devel pkg-config python-base ruby xorg-kbproto-devel xorg-xf86miscproto-devel xorg-xproto-devel zlib-devel
@@ -31,7 +32,7 @@ Development files for %name
 
 %prep
 %setup -qn %rname-%version
-
+%patch1 -p1
 
 %build
 %K4build
@@ -56,6 +57,12 @@ Development files for %name
 
 
 %changelog
+* Thu Oct 31 2013 Sergey V Turchin <zerg@altlinux.org> 4.11.1-alt2
+- add /etc/X11/xorg.conf.d/10-monitor.conf to configs search list
+
+* Fri Oct 04 2013 Sergey V Turchin <zerg@altlinux.org> 4.11.1-alt0.M70P.1
+- built for M70P
+
 * Thu Sep 05 2013 Sergey V Turchin <zerg@altlinux.org> 4.11.1-alt1
 - new version
 
