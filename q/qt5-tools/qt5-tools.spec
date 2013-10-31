@@ -5,12 +5,14 @@
 
 Name: qt5-tools
 Version: 5.1.1
-Release: alt3
+Release: alt4
 
 Group: System/Libraries
 Summary: Qt5 - QtTool components
 Url: http://qt-project.org/
 License: LGPLv2 / GPLv3
+
+Requires: %name-common = %EVR
 
 Source: %qt_module-opensource-src-%version.tar
 
@@ -18,12 +20,16 @@ Source20: assistant.desktop
 Source21: designer.desktop
 Source22: linguist.desktop
 Source23: qdbusviewer.desktop
+Source24: qtconfig.desktop
+
+Patch1: alt-build-qtconfig.patch
 
 # Automatically added by buildreq on Tue Oct 01 2013 (-bi)
 # optimized out: elfutils libGL-devel libgst-plugins libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-opengl libqt5-printsupport libqt5-qml libqt5-quick libqt5-sql libqt5-v8 libqt5-webkit libqt5-webkitwidgets libqt5-widgets libqt5-xml libstdc++-devel pkg-config python-base python3 python3-base qt5-base-devel qt5-declarative-devel ruby ruby-stdlibs
 #BuildRequires: desktop-file-utils gcc-c++ glibc-devel-static python-module-distribute qt5-webkit-devel rpm-build-python3 rpm-build-ruby
-BuildRequires: desktop-file-utils gcc-c++ glibc-devel
+BuildRequires: desktop-file-utils gcc-c++ glibc-devel /usr/bin/convert
 BuildRequires: qt5-base-devel qt5-declarative-devel-static qt5-webkit-devel
+BuildRequires: gstreamer-devel gst-plugins-devel libXext-devel libX11-devel
 %if_disabled bootstrap
 BuildRequires: qt5-tools
 %endif
@@ -43,6 +49,7 @@ Group: Development/KDE and QT
 Summary: Development files for %name
 Requires: %name-common = %EVR
 Requires: qt5-base-devel
+Requires: %name
 %description devel
 %summary.
 
@@ -86,6 +93,13 @@ Requires: %name-common = %EVR
 %description -n qt5-dbus
 This package contains D-Bus utilities for Qt5.
 
+%package -n qt5-qtconfig
+Group: System/Configuration/Other
+Summary: A configuration tool for Qt5
+Requires: %name-common = %EVR
+%description -n qt5-qtconfig
+This package contains a configuration tool for Qt5.
+
 %package -n libqt5-uitools
 Group: System/Libraries
 Summary: Qt5 library
@@ -124,6 +138,7 @@ Requires: %name-common = %EVR
 
 %prep
 %setup -n %qt_module-opensource-src-%version
+%patch1 -p1
 syncqt.pl-qt5 \
     -version %version \
     -private \
@@ -148,7 +163,7 @@ syncqt.pl-qt5 \
 desktop-file-install \
   --dir=%buildroot/%_desktopdir \
   --vendor="qt5" \
-  %SOURCE20 %SOURCE21 %SOURCE22 %SOURCE23
+  %SOURCE20 %SOURCE21 %SOURCE22 %SOURCE23 %SOURCE24
 
 # icons
 install -m644 -p -D src/assistant/assistant/images/assistant.png %buildroot/%_iconsdir/hicolor/32x32/apps/assistant-qt5.png
@@ -156,6 +171,7 @@ install -m644 -p -D src/assistant/assistant/images/assistant-128.png %buildroot/
 install -m644 -p -D src/designer/src/designer/images/designer.png %buildroot/%_iconsdir/hicolor/32x32/apps/designer-qt5.png
 install -m644 -p -D src/qdbus/qdbusviewer/images/qdbusviewer.png %buildroot/%_iconsdir/hicolor/32x32/apps/qdbusviewer-qt5.png
 install -m644 -p -D src/qdbus/qdbusviewer/images/qdbusviewer-128.png %buildroot/%_iconsdir/hicolor/128x128/apps/qdbusviewer-qt5.png
+convert -resize 32x32 src/qtconfig/images/appicon.png %buildroot/%_iconsdir/hicolor/32x32/apps/qtconfig-qt5.png
 # linguist icons
 for icon in src/linguist/linguist/images/icons/linguist-*-32.png ; do
   size=$(echo $(basename ${icon}) | cut -d- -f2)
@@ -181,6 +197,12 @@ done
 %_qt5_bindir/qcollectiongenerator*
 %_qt5_bindir/qhelpconverter*
 %_qt5_bindir/qhelpgenerator*
+
+%files -n qt5-qtconfig
+%_bindir/qtconfig-qt5
+%_qt5_bindir/qtconfig
+%_desktopdir/*qtconfig.desktop
+%_iconsdir/hicolor/*/apps/qtconfig*.*
 
 %files -n qt5-assistant
 %_bindir/assistant-qt5
@@ -250,6 +272,9 @@ done
 
 
 %changelog
+* Thu Oct 31 2013 Sergey V Turchin <zerg@altlinux.org> 5.1.1-alt4
+- built qtconfig
+
 * Fri Oct 25 2013 Sergey V Turchin <zerg@altlinux.org> 5.1.1-alt3
 - built docs
 
