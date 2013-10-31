@@ -2,8 +2,8 @@
 %define _cups_serverbin %_libexecdir/cups
 Summary: OpenPrinting CUPS filters and backends
 Name: cups-filters
-Version: 1.0.40
-Release: alt1.1
+Version: 1.0.41
+Release: alt1
 
 # For a breakdown of the licensing, see COPYING file
 # GPLv2:   filters: commandto*, imagetoraster, pdftops, rasterto*,
@@ -179,6 +179,9 @@ install -m 644 utils/cups-browsed.service %buildroot/%_unitdir/
 %_libdir/libfontembed.so
 
 %changelog
+* Thu Oct 31 2013 Anton Farygin <rider@altlinux.ru> 1.0.41-alt1
+- new version
+
 * Tue Oct 29 2013 Fr. Br. George <george@altlinux.ru> 1.0.40-alt1.1
 - Make serial backend root-only (Closes: #24172)
 
