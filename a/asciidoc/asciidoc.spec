@@ -1,6 +1,6 @@
 Name: asciidoc
-Version: 8.6.3
-Release: alt1.1
+Version: 8.6.8
+Release: alt1
 
 Summary: asciidoc converts an AsciiDoc text file to DocBook, HTML or LinuxDoc
 Group: Text tools
@@ -104,6 +104,7 @@ install -pD -m644 COPYRIGHT  %buildroot%docdir/
 %config(noreplace) %_sysconfdir/%name/dblatex/
 %config(noreplace) %_sysconfdir/%name/filters/
 %_sysconfdir/%name/images
+%_sysconfdir/%name/themes
 %config(noreplace) %_sysconfdir/%name/javascripts/
 %config(noreplace) %_sysconfdir/%name/stylesheets/
 
@@ -132,6 +133,9 @@ install -pD -m644 COPYRIGHT  %buildroot%docdir/
 %vim_syntax_dir/*.vim
 
 %changelog
+* Thu Oct 31 2013  Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 8.6.8-alt1
+- Version 8.6.8 (ALT #29536)
+
 * Sat Oct 22 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 8.6.3-alt1.1
 - Rebuild with Python-2.7
 
