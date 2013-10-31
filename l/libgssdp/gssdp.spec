@@ -5,7 +5,7 @@
 %def_enable introspection
 
 Name: lib%_name
-Version: 0.14.5
+Version: 0.14.6
 Release: alt1
 
 Summary: Resource discovery and announcement over SSDP
@@ -17,7 +17,7 @@ Source: http://www.gupnp.org/sources/%_name/%_name-%version.tar.xz
 
 BuildRequires: gnome-common gtk-doc libsoup-devel >= 2.26.1 glib2-devel >= 2.22 libgio-devel >= 2.22
 BuildRequires: vala-tools rpm-build-vala libvala-devel
-%{?_enable_introspection:BuildPreReq: gobject-introspection-devel}
+%{?_enable_introspection:BuildPreReq: gobject-introspection-devel libsoup-gir-devel}
 
 %description
 GSSDP implements resource discovery and announcement over SSDP and is part
@@ -101,6 +101,9 @@ GObject introspection devel data for the GSSDP library
 
 
 %changelog
+* Thu Oct 31 2013 Yuri N. Sedunov <aris@altlinux.org> 0.14.6-alt1
+- 0.14.6
+
 * Tue Sep 03 2013 Yuri N. Sedunov <aris@altlinux.org> 0.14.5-alt1
 - 0.14.5
 
