@@ -1,6 +1,6 @@
 Name: cups
 Version: 1.6.2
-Release: alt3.2
+Release: alt4
 
 Summary: Common Unix Printing System - server package
 License: GPL
@@ -28,6 +28,7 @@ Patch3: cups-1.4.0-rh-lpr-help.patch
 Patch4: cups-1.4.3-rh-no-export-ssllibs.patch
 Patch5: cups-1.4.3-rh-driverd-timeout.patch
 Patch6: cups-1.6.2-fc-lspp.patch
+Patch66: cups-1.6.2-fc-lspp-alt.patch
 Patch7: cups-1.4.6-alt-config-libs.patch
 Patch9: cups-1.6.1-rh-0755.patch
 Patch10: cups-1.6-rh-dnssd-deviceid.patch
@@ -153,6 +154,7 @@ tar xf %SOURCE114
 %patch4 -p1
 %patch5 -p1
 %patch6 -p1
+%patch66 -p1
 %patch7 -p2
 %patch9 -p1
 %patch10 -p1
@@ -376,6 +378,9 @@ rm -f /var/cache/cups/ppds.dat
 %_man1dir/ipptool.1.gz
 
 %changelog
+* Thu Oct 31 2013 Andriy Stepanov <stanv@altlinux.ru> 1.6.2-alt4
+- Add patch: always pass SeLinux info
+
 * Wed Oct 30 2013 Fr. Br. George <george@altlinux.ru> 1.6.2-alt3.2
 - Apply FC dbus-utf8 patch
 - Reproduce this patch to cups-lpd (Closes: #25937)
