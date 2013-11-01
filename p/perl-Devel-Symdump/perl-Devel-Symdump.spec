@@ -1,6 +1,7 @@
+%define _unpackaged_files_terminate_build 1
 %define dist Devel-Symdump
 Name: perl-%dist
-Version: 2.10
+Version: 2.11
 Release: alt1
 
 Summary: Perl module for inspecting Perl's symbol table
@@ -33,6 +34,9 @@ perl's symbol table and the class hierarchie within a running program.
 %perl_vendor_privlib/Devel
 
 %changelog
+* Fri Nov 01 2013 Igor Vlasenko <viy@altlinux.ru> 2.11-alt1
+- automated CPAN update
+
 * Sat Jul 27 2013 Igor Vlasenko <viy@altlinux.ru> 2.10-alt1
 - automated CPAN update
 
