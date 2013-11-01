@@ -3,7 +3,7 @@
 
 %define rname ktp-common-internals
 Name: kde4-ktp-common-internals
-Version: 0.6.3
+Version: 0.7.0
 Release: alt1
 
 Group: Graphical desktop/KDE
@@ -19,7 +19,8 @@ Source0: %rname-%version.tar
 BuildRequires: gcc-c++ glib2-devel libdbus-glib-devel
 BuildRequires: libtelepathy-glib-devel libtelepathy-qt4-devel
 BuildRequires: libtelepathy-logger-devel telepathy-logger-qt4-devel
-BuildRequires: kde4libs-devel
+BuildRequires: kde4libs-devel libkpeople-devel
+BuildRequires: kde4-nepomuk-core-devel soprano-backend-redland soprano-backend-virtuoso soprano libsoprano-devel shared-desktop-ontologies-devel
 BuildRequires: kde-common-devel
 
 %description
@@ -37,6 +38,7 @@ Common files for %rname
 Summary: Core files for %name
 Group: System/Libraries
 Requires: %name-common = %version-%release
+Requires: libkpeople-core
 %description core
 Core files for %name
 
@@ -61,6 +63,12 @@ Requires: %name-common >= %version-%release
 %description -n libktpwidgetsprivate4
 %name library.
 
+%package -n libktploggerprivate4
+Summary: %name library
+Group: System/Libraries
+Requires: %name-common >= %version-%release
+%description -n libktploggerprivate4
+%name library.
 
 %package devel
 Group: Development/KDE and QT
@@ -80,15 +88,32 @@ Requires: libtelepathy-logger-devel telepathy-logger-qt4-devel
 %K4install
 %K4find_lang --with-kde %rname
 
+# fix paths in ontology descriptions
+find %buildroot/%_datadir/ontology -type f -name \*.ontology | \
+while read f
+do
+    sed -i 's|Path=.*/share/ontology/\(.*\.trig\)|Path=%_datadir/ontology/\1|' "$f"
+done
+
 
 %files common -f %rname.lang
 %_kde4_iconsdir/hicolor/*/actions/im-*.*
 %_kde4_iconsdir/hicolor/*/actions/sort-*.*
+%_kde4_iconsdir/hicolor/*/actions/show-offline.*
 %_kde4_iconsdir/hicolor/*/apps/telepathy-kde.*
 %_K4apps/ktelepathy/
+%dir %_datadir/ontology/telepathy/
+%_datadir/ontology/telepathy/*
 
 %files core
 %_K4lib/imports/org/kde/telepathy/
+%_K4lib/*plugin.so
+%_K4lib/ktploggerplugin_tplogger.so
+%_K4lib/nepomuktelepathyservice.so
+%_K4srv/*plugin.desktop
+%_K4srv/ktploggerplugin_tplogger.desktop
+%_K4srv/nepomuktelepathyservice.desktop
+%_K4srvtyp/ktp_logger_plugin.desktop
 
 %files  -n libktpcommoninternalsprivate4
 %_K4libdir/libktpcommoninternalsprivate.so.*
@@ -96,13 +121,22 @@ Requires: libtelepathy-logger-devel telepathy-logger-qt4-devel
 %_K4libdir/libktpmodelsprivate.so.*
 %files  -n libktpwidgetsprivate4
 %_K4libdir/libktpwidgetsprivate.so.*
+%files  -n libktploggerprivate4
+%_K4libdir/libktploggerprivate.so.*
 
 %files devel
+%_K4apps/katepart/syntax/*
 %_kde4_bindir/ktp-debugger
 %_K4link/lib*.so
 %_K4includedir/KTp/
 
 %changelog
+* Thu Oct 31 2013 Sergey V Turchin <zerg@altlinux.org> 0.7.0-alt1
+- new version
+
+* Wed Oct 09 2013 Sergey V Turchin <zerg@altlinux.org> 0.6.3-alt0.M70P.1
+- built for M70P
+
 * Tue Oct 08 2013 Sergey V Turchin <zerg@altlinux.org> 0.6.3-alt1
 - new version
 
