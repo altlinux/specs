@@ -1,12 +1,12 @@
 Name: SDL2_image
 Version: 2.0.0
-Release: alt1
+Release: alt2
 
 Summary: Simple DirectMedia Layer - Image library
 License: zlib
 Group: System/Libraries
 
-Url: http://www.libsdl.org/
+Url: http://www.libsdl.org/projects/SDL_image/
 Packager: Nazarov Denis <nenderus@altlinux.org>
 
 Source0: http://www.libsdl.org/projects/SDL_image/release/%name-%version.tar.gz
@@ -35,8 +35,8 @@ TGA, and TIFF formats.
 %package -n lib%name-devel
 Summary: Libraries, includes and more to develop SDL applications.
 Group: Development/C
-Requires: libSDL2-devel >= 2.0.1
 Requires: lib%name = %version-%release
+Requires: libSDL2-devel >= 2.0.1
 
 %description -n lib%name-devel
 This is a simple library to load images of various formats as SDL surfaces.
@@ -77,5 +77,8 @@ chrpath -d %buildroot%_libdir/lib%name-2.0.so.0.0.0
 %_libdir/lib%name.so
 
 %changelog
+* Fri Nov 01 2013 Nazarov Denis <nenderus@altlinux.org> 2.0.0-alt2
+- Fix url
+
 * Wed Oct 30 2013 Nazarov Denis <nenderus@altlinux.org> 2.0.0-alt1
 - Initial build for ALT Linux
