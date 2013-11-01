@@ -1,4 +1,4 @@
-%define svn_revision 399145
+%define svn_revision 402335
 Name: asterisk13
 Summary: Open source PBX
 Version: 13
@@ -66,7 +66,7 @@ BuildPreReq: libunixODBC-devel libltdl-devel
 BuildPreReq: liblua5-devel
 BuildPreReq: postgresql-devel libpq-devel
 BuildPreReq: librpm-devel libnet-snmp-devel libwrap-devel perl-devel
-%define svn_revision 399145
+%define svn_revision 402335
 %add_verify_elf_skiplist %_libdir/libasteriskssl13.so.1
 %def_with debug
 %def_enable debug
@@ -838,7 +838,6 @@ ln -sf libasteriskssl13.so.1 %buildroot%_libdir/libasteriskssl13.so
 %astmodule res_ari
 %astmodule app_agent_pool
 %astmodule chan_bridge_media
-%astsample stasis
 %astsample ari
 %astmodule res_statsd
 %astsample statsd
@@ -1277,6 +1276,12 @@ ln -sf libasteriskssl13.so.1 %buildroot%_libdir/libasteriskssl13.so
 %_libdir/libasteriskssl13.so.1
 
 %changelog
+* Fri Nov 01 2013 Denis Smirnov <mithraen@altlinux.ru> 13-alt0.402335
+- update from svn revision 402335
+
+* Mon Oct 28 2013 Denis Smirnov <mithraen@altlinux.ru> 13-alt0.402126
+- update from svn revision 402126
+
 * Sat Sep 14 2013 Denis Smirnov <mithraen@altlinux.ru> 13-alt0.399145
 - rename asterisk12->asterisk13
 
