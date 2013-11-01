@@ -1,6 +1,6 @@
 Name: libzio
-Version: 0.99
-Release: alt8
+Version: 1.02
+Release: alt1
 
 Summary: A library for accessing compressed text files
 License: GPLv2+
@@ -30,7 +30,7 @@ This package contains library and header files needed for
 building libzio-aware applications.
 
 %prep
-%setup -q
+%setup
 %patch -p1
 
 %build
@@ -91,6 +91,9 @@ done
 %_man3dir/*
 
 %changelog
+* Fri Nov 01 2013 Dmitry V. Levin <ldv@altlinux.org> 1.02-alt1
+- Updated to 1.02.
+
 * Sat Feb 19 2011 Alexey Tourbin <at@altlinux.ru> 0.99-alt8
 - Fixed support for write-mode compression levels.
 
