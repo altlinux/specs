@@ -9,7 +9,7 @@
 %def_enable GTL
 
 Name: calligra
-Version: 2.7.3
+Version: 2.7.4
 Release: alt1
 Epoch: 0
 %define libname lib%name
@@ -641,6 +641,9 @@ cp -ar %SOURCE1 cmake/modules/
 %_K4libdir/lib*.so.*
 
 %changelog
+* Fri Nov 01 2013 Sergey V Turchin <zerg@altlinux.org> 0:2.7.4-alt1
+- new version
+
 * Mon Sep 16 2013 Sergey V Turchin <zerg@altlinux.org> 0:2.7.3-alt1
 - new version
 
