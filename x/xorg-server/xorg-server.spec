@@ -1,4 +1,4 @@
-%define mesaversion 9.1
+%define mesaversion 9.2
 %define xorgversion 7.7.0
 
 %define _libexecdir /usr/libexec
@@ -18,7 +18,7 @@
 %endif
 
 Name: xorg-server
-Version: 1.14.3
+Version: 1.14.4
 Release: alt1
 Epoch: 2
 License: MIT/X11
@@ -298,23 +298,29 @@ install -pD -m644 xorg-sdk.rpmmacros %buildroot%_rpmmacrosdir/xorg-sdk
 %_rpmmacrosdir/xorg-sdk
 
 %changelog
+* Fri Nov 01 2013 Valery Inozemtsev <shrek@altlinux.ru> 2:1.14.4-alt1
+- 1.14.4
+
+* Wed Oct 30 2013 Valery Inozemtsev <shrek@altlinux.ru> 2:1.14.3.901-alt1
+- 1.14.4 RC1
+
 * Fri Sep 13 2013 Valery Inozemtsev <shrek@altlinux.ru> 2:1.14.3-alt1
-- 1.4.3
+- 1.14.3
 
 * Fri Aug 23 2013 Valery Inozemtsev <shrek@altlinux.ru> 2:1.14.2.902-alt1
-- 1.4.3 RC2
+- 1.14.3 RC2
 
 * Fri Jul 26 2013 Valery Inozemtsev <shrek@altlinux.ru> 2:1.14.2.901-alt1
-- 1.4.3 RC1
+- 1.14.3 RC1
 
 * Wed Jun 26 2013 Valery Inozemtsev <shrek@altlinux.ru> 2:1.14.2-alt1
-- 1.4.2
+- 1.14.2
 
 * Sat Jun 15 2013 Valery Inozemtsev <shrek@altlinux.ru> 2:1.14.1.902-alt1
-- 1.4.2 RC2
+- 1.14.2 RC2
 
 * Fri May 31 2013 Valery Inozemtsev <shrek@altlinux.ru> 2:1.14.1.901-alt1
-- 1.4.2 RC1
+- 1.14.2 RC1
 
 * Thu May 02 2013 Valery Inozemtsev <shrek@altlinux.ru> 2:1.14.1-alt2
 - fixed uninitialized variable in glxdri.c (closes #28782)
