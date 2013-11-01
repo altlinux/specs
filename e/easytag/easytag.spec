@@ -1,6 +1,6 @@
 Name: easytag
-Version: 2.1.6
-Release: alt7.qa1
+Version: 2.1.8
+Release: alt1
 
 Summary: Audio files tag viewer/editor
 Summary(ru_RU.UTF-8): Утилита для редактирования тегов звуковых файлов
@@ -10,15 +10,22 @@ Url: http://easytag.sourceforge.net
 Packager: Afanasov Dmitry <ender@altlinux.org>
 
 Source: http://download.sourceforge.net/%name/%name-%version.tar
-Source1: %name-48x48.xpm
-Source2: %name-32x32.xpm
-Source3: %name-16x16.xpm
+Source1: ru.po
+
+Patch0: easytag-2.1.8-alt-wavpack-declaration-after-statement-warn.patch
 
 Requires: id3lib >= 3.8.3-alt3
 BuildPreReq: id3lib-devel >= 3.8.3-alt3
 
-# Automatically added by buildreq on Sun Nov 09 2008
-BuildRequires: gcc-c++ libflac-devel libgtk+2-devel libid3tag-devel libmpeg4ip-devel libspeex-devel libvorbis-devel libwavpack-devel
+BuildRequires: gcc-c++ libflac-devel
+BuildRequires: libgtk+2-devel >= 2.24.0
+BuildRequires: libid3tag-devel
+BuildRequires: libtag-devel
+BuildRequires: libmpeg4ip-devel
+BuildRequires: libspeex-devel
+BuildRequires: libvorbis-devel
+BuildRequires: libwavpack-devel
+BuildRequires: intltool
 #BuildRequires: desktop-file-utils
 
 %description
@@ -32,26 +39,26 @@ EasyTAG - это утилита для просмотра и редактиро�
 
 %prep
 %setup -q
-
-sed -i 's/Icon=.*/Icon=easytag/' easytag.desktop
+%patch0 -p1
+install -p %SOURCE1 po/ru.po
 
 %build
-export CFLAGS="-I/usr/include/mpeg4"
+%autoreconf
 
-./autogen.sh
-
-%configure
+%configure \
+    --enable-mp3 \
+    --enable-id3v23 \
+    --enable-ogg \
+    --enable-flac \
+    --enable-speex \
+    --enable-mp4 \
+    --enable-wavpack \
+    #
 %make_build
 %make -C po update-po
 
 %install
 %makeinstall
-
-install -pD -m644 %SOURCE1 %buildroot%_liconsdir/%name.xpm
-install -pD -m644 %SOURCE2 %buildroot%_niconsdir/%name.xpm
-install -pD -m644 %SOURCE3 %buildroot%_miconsdir/%name.xpm
-
-mv %buildroot%_pixmapsdir/EasyTAG_icon.xpm %buildroot%_pixmapsdir/easytag.xpm
 
 %find_lang %name
 
@@ -62,15 +69,15 @@ mv %buildroot%_pixmapsdir/EasyTAG_icon.xpm %buildroot%_pixmapsdir/easytag.xpm
 %files -f %name.lang
 %_bindir/*
 %_mandir/man?/*
-%_datadir/%name
-%_liconsdir/*
-%_niconsdir/*
-%_miconsdir/*
-%_datadir/pixmaps/*
-%doc ChangeLog INSTALL README TODO THANKS USERS-GUIDE
+%_iconsdir/hicolor/*/apps/*
+%doc INSTALL README TODO THANKS
 %_datadir/applications/*
 
 %changelog
+* Fri Nov 01 2013 Afanasov Dmitry <ender@altlinux.org> 2.1.8-alt1
+- 2.1.8 release
+  + try to update ru translation
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.1.6-alt7.qa1
 - NMU: rebuilt for debuginfo.
 
