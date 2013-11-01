@@ -1,6 +1,6 @@
 Name: testdisk
-Version: 6.13
-Release: alt1.3
+Version: 6.14
+Release: alt1
 
 Summary: Tool to check and undelete partition
 License: GPLv2+
@@ -32,6 +32,9 @@ partitions:
  - UFS (Sun/BSD/...)
  - XFS, SGI's Journaled File System
 
+See online documentation at:
+http://www.cgsecurity.org/wiki/TestDisk
+
 %package -n photorec
 Summary: Data recovery software
 Group: File tools
@@ -45,19 +48,8 @@ PhotoRec ignores the filesystem and goes after the underlying data, so it
 will still work even if your media's filesystem has been severely damaged
 or re-formatted.
 
-%package doc
-Summary: TestDisk & PhotoRec documentation
-Group: Documentation
-Requires: testdisk = %version-%release
-
-BuildArch: noarch
-
-%description doc
-Tool to check and undelete partition. Works with FAT12, FAT16, FAT32,
-NTFS, EXT2, EXT3, BeFS, CramFS, HFS, JFS, Linux Raid, Linux Swap,
-LVM, LVM2, NSS, ReiserFS, UFS, XFS
-
-This package contains testdisk & photorec documentation.
+See online documentation at:
+http://www.cgsecurity.org/wiki/PhotoRec
 
 %prep
 %setup
@@ -80,10 +72,11 @@ This package contains testdisk & photorec documentation.
 %_bindir/photorec
 %_man8dir/photorec*
 
-%files doc
-%doc doc/*
-
 %changelog
+* Fri Nov 01 2013 Michael Shigorin <mike@altlinux.org> 6.14-alt1
+- 6.14
+- dropped doc subpackage (it's online, links moved to %%description)
+
 * Tue Jan 22 2013 Michael Shigorin <mike@altlinux.org> 6.13-alt1.3
 - rebuilt with libntfs-3g.so.84
 
