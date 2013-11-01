@@ -1,6 +1,6 @@
 Name: SDL2
 Version: 2.0.1
-Release: alt1
+Release: alt2
 
 Summary: Simple DirectMedia Layer
 License: zlib
@@ -58,12 +58,16 @@ to develop SDL applications.
 
 %files -n lib%name-devel
 %_bindir/sdl2-config
+%dir %_includedir/%name
 %_includedir/%name/*.h
 %_libdir/lib%name.so
 %_pkgconfigdir/sdl2.pc
 %_datadir/aclocal/sdl2.m4
 
 %changelog
+* Fri Nov 01 2013 Nazarov Denis <nenderus@altlinux.org> 2.0.1-alt2
+- Fix post-install unowned files
+
 * Wed Oct 30 2013 Nazarov Denis <nenderus@altlinux.org> 2.0.1-alt1
 - Initial build for ALT Linux
 

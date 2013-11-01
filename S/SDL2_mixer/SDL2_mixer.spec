@@ -1,6 +1,6 @@
 Name: SDL2_mixer
 Version: 2.0.0
-Release: alt1
+Release: alt2
 
 Summary: Simple DirectMedia Layer - Sample Mixer Library
 License: zlib
@@ -38,6 +38,7 @@ libraries.
 %package -n lib%name-devel
 Summary: Libraries, includes and more to develop SDL applications.
 Group: Development/C
+Requires: lib%name = %version-%release
 Requires: libSDL2-devel >= 2.0.1
 
 %description -n lib%name-devel
@@ -77,5 +78,8 @@ chrpath -d %buildroot%_libdir/lib%name-2.0.so.0.0.0
 %_libdir/lib%name.so
 
 %changelog
+* Fri Nov 01 2013 Nazarov Denis <nenderus@altlinux.org> 2.0.0-alt2
+- Add requires for lib%name-devel on lib%name
+
 * Thu Oct 31 2013 Nazarov Denis <nenderus@altlinux.org> 2.0.0-alt1
 - Initial build for ALT Linux

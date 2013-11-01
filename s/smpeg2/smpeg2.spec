@@ -1,6 +1,6 @@
 Name: smpeg2
 Version: 2.0.0
-Release: alt1
+Release: alt2
 
 Summary: SDL MPEG Player Library
 License: LGPLv2
@@ -12,6 +12,8 @@ Packager: Nazarov Denis <nenderus@altlinux.org>
 Source0: %name-%version.tar
 
 Requires: lib%name = %version-%release
+
+Conflicts: smpeg-player
 
 BuildRequires: chrpath
 BuildRequires: gcc-c++
@@ -34,6 +36,7 @@ linked with %name.
 %package -n lib%name-devel
 Summary: Headers for developing programs that will use %name
 Group: Development/C
+Requires: lib%name = %version-%release
 
 %description -n lib%name-devel
 This package contains the headers that programmers will need to develop
@@ -69,5 +72,9 @@ chrpath -d %buildroot%_libdir/lib%name-2.0.so.0.0.0
 %_aclocaldir/%name.m4
 
 %changelog
+* Fri Nov 01 2013 Nazarov Denis <nenderus@altlinux.org> 2.0.0-alt2
+- Add conflicts on smpeg-player
+- Add requires for lib%name-devel on lib%name
+
 * Thu Oct 31 2013 Nazarov Denis <nenderus@altlinux.org> 2.0.0-alt1
 - Initial build for ALT Linux
