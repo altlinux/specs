@@ -25,7 +25,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.10.17
-Release: alt9
+Release: alt10
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -1831,6 +1831,11 @@ done)
 
 
 %changelog
+* Sat Nov 02 2013 Led <led@altlinux.ru> 3.10.17-alt10
+- updated:
+  + feat-tools--kvm
+- Makefile.external: fixed build extmod ipt_NETFLOW
+
 * Thu Oct 31 2013 Led <led@altlinux.ru> 3.10.17-alt9
 - updated:
   + fix-net-sunrpc
