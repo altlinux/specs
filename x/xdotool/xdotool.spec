@@ -1,6 +1,6 @@
 Name:           xdotool
-Version:        20101012
-Release:        alt2
+Version:        20110530.1
+Release:        alt1
 Summary:        Fake keyboard/mouse input for X
 
 Group:          System/X11
@@ -9,6 +9,7 @@ URL:            http://www.semicomplete.com/projects/xdotool/
 Source0:        %{name}.tar
 
 BuildRequires:  libXtst-devel       
+BuildRequires:	libXinerama-devel
 BuildRequires:	perl-podlators
 
 %description
@@ -57,6 +58,9 @@ Development files.
 %_includedir/xdo.h
 
 %changelog
+* Sat Nov 02 2013 Afanasov Dmitry <ender@altlinux.org> 20110530.1-alt1
+- 2.20110530.1
+
 * Fri Feb 04 2011 Afanasov Dmitry <ender@altlinux.org> 20101012-alt2
 - fix mandir
 
