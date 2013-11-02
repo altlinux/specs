@@ -1,7 +1,7 @@
 # SPEC file for the DuckDuckGo Plus Firefox extension
 
 %define rname	duckduckgo_plus
-%define version 0.2.53
+%define version 0.3.8
 %define release alt1
 %define cid	jid1-ZAdIEUB7XOzOJw@jetpack
 %define ciddir	%firefox_noarch_extensionsdir/%cid
@@ -46,6 +46,9 @@ DuckDuckGo - поисковая система с открытым исходн�
 rm -rf -- ./*
 unzip -q %SOURCE0
 
+# Removing placeholder
+rm -f locale/.empty
+
 %install
 mkdir -p -- %buildroot/%ciddir
 cp -r -- * %buildroot/%ciddir
@@ -59,6 +62,9 @@ fi
 %ciddir
 
 %changelog
+* Sat Nov 02 2013 Nikolay A. Fetisov <naf@altlinux.ru> 0.3.8-alt1
+- New version (Closes: #29548)
+
 * Sun Oct 06 2013 Nikolay A. Fetisov <naf@altlinux.ru> 0.2.53-alt1
 - New version
 
