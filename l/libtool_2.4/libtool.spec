@@ -6,7 +6,7 @@
 
 Name: libtool_%ltversion
 Version: 2.4.2
-Release: alt2
+Release: alt3
 
 Summary: The GNU libtool, which simplifies the use of shared libraries
 License: GPLv2+
@@ -25,7 +25,7 @@ Requires: autoconf_2.60
 # git://git.altlinux.org/gears/l/%name.git
 Source: libtool-%version-%release.tar
 
-BuildRequires: gcc-c++ gcc-g77
+BuildRequires: gcc-c++ gcc-g77 help2man makeinfo
 # for tests/search-path.at
 BuildRequires: zlib-devel
 
@@ -188,6 +188,9 @@ done
 %ltdocdir/*demo*
 
 %changelog
+* Sat Nov 02 2013 Dmitry V. Levin <ldv@altlinux.org> 2.4.2-alt3
+- Updated build dependencies.
+
 * Fri Apr 13 2012 Dmitry V. Levin <ldv@altlinux.org> 2.4.2-alt2
 - libltdl/config/ltmain.m4sh (func_mode_install): Changed to
   normalize destination directory name, for better cooperation
