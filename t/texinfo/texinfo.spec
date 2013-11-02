@@ -1,14 +1,14 @@
 Name: texinfo
 Version: 4.13
-Release: alt8.qa1
+Release: alt9
 
 Summary: Tools needed to create Texinfo format documentation files
 License: GPLv3+
 Group: Publishing
 Url: http://www.gnu.org/software/texinfo/
-Packager: Dmitry V. Levin <ldv@altlinux.org>
 
-Source0: ftp://ftp.gnu.org/pub/gnu/texinfo/texinfo-%version.tar
+# ftp://ftp.gnu.org/gnu/texinfo/texinfo-%version.tar.xz
+Source0: texinfo-%version.tar
 Source1: update-info-dir
 Source2: update-info-dir.8
 Source3: info-dir.filetrigger
@@ -28,18 +28,27 @@ Patch6: texinfo-4.13-alt-tinfo.patch
 Patch7: texinfo-4.13-alt-install-info-rpm.patch
 Patch8: texinfo-4.11-alt-baroque-shells.patch
 Patch9: texinfo-4.13-alt-dvips.patch
+Patch10: texinfo-4.13-alt-texi2dvi-tex.patch
 Patch11: texinfo-4.13-deb-po.patch
-Patch12: texinfo-4.13-deb-alt-warn_missing_tex.patch
 
-PreReq: info-install = %version-%release
-Requires: rpm-macros-info-install = %version-%release
-Requires: mktemp >= 1:1.3.1
-# due to texi2pdf and %_texmfmain/tex/texinfo
-Conflicts: tetex-core <= 0:2.0-alt8
+Requires: makeinfo = %version-%release
+Requires: texi2dvi = %version-%release
 
 BuildRequires(pre): rpm-build-texmf
 BuildRequires: cvs bzlib-devel help2man libtinfo-devel libzio-devel zlib-devel
 %{?!_without_check:%{?!_disable_check:BuildRequires: gzip-utils}}
+
+%package -n makeinfo
+Summary: Utilities for translating texinfo source documentation to various other formats
+Group: Publishing
+Requires: rpm-macros-info-install = %version-%release
+
+%package -n texi2dvi
+Summary: Utilities for translating texinfo source documents to dvi, ps, and pdf
+Group: Publishing
+Requires: rpm-macros-info-install = %version-%release
+# due to texi2pdf and %_texmfmain/tex/texinfo
+Conflicts: tetex-core <= 0:2.0-alt8
 
 %package -n info-install
 Summary: A program to update the GNU texinfo config file
@@ -49,7 +58,7 @@ PreReq: libzio >= 0:0.1-alt4
 %package -n info
 Summary: A standalone tty-based reader for GNU texinfo documentation
 Group: System/Base
-PreReq: info-install = %version-%release
+Requires: info-install = %version-%release
 
 %package -n rpm-macros-info-install
 Summary: Set of RPM macros for packaging texinfo files
@@ -57,21 +66,27 @@ Group: System/Base
 BuildArch: noarch
 
 %description
-Texinfo is a documentation system that can produce both online information
-and printed output from a single source file.  Normally, you'd have to
-write two separate documents: one for online help or other online
-information and the other for a typeset manual or other printed work.
-Using Texinfo, you only need to write one source document.  Then when the
-work needs revision, you only have to revise one source document.  The GNU
-Project uses the Texinfo file format for most of its documentation.
+Texinfo is a documentation system that can produce both online
+information and printed output from a single source file.  Normally,
+you'd have to write two separate documents: one for online help or other
+online information and the other for a typeset manual or other printed
+work.  Using Texinfo, you only need to write one source document.
+Then when the work needs revision, you only have to revise one source
+document.  The GNU Project uses the Texinfo file format for most of its
+documentation.
+
+%description -n makeinfo
+This package contains makeinfo - a translator of texinfo source
+documentation to various other formats.
+
+%description -n texi2dvi
+This package contains texi2dvi and related utilities for translating
+texinfo source documents to dvi, ps, and pdf.
 
 %description -n info
-The GNU project uses the texinfo file format for much of its documentation.
-The info package provides a standalone tty-based browser program for
-viewing texinfo files.
-
-You should install info, because GNU's texinfo documentation is a valuable
-source of information about the software on your system.
+The GNU project uses the texinfo file format for much of its
+documentation.  The info package provides a standalone tty-based browser
+program for viewing texinfo files.
 
 %description -n info-install
 This packages contains install-info - a program to update menu entries
@@ -81,7 +96,7 @@ in the Info system config files.
 This packages contains new RPM macros for packaging texinfo files.
 
 %prep
-%setup -q
+%setup
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
@@ -92,36 +107,21 @@ This packages contains new RPM macros for packaging texinfo files.
 %patch7 -p1
 %patch8 -p1
 %patch9 -p1
+%patch10 -p1
 %patch11 -p1
-%patch12 -p1
 
 install -pm755 %_sourcedir/texi2pdf util/
+sed -i s/dist-lzma/dist-xz/ configure.ac
 
 %build
 rm po/*.gmo po/stamp*
-# some man scripts have been touch by the patches, so the builder
-# will try to rebuild the man page from texi2dvi but that
-# spits out only a warning that no tex system is installed
-touch doc/*texi2*.1
-
 %autoreconf
 %configure
-%make_build
-bzip2 -9k NEWS
-
-%check
-%make_build -k check
+%make_build MAKEINFOFLAGS=--no-split
+xz -k9 NEWS
 
 %install
-rln()
-{
-	local target=$1 && shift
-	local source=$1 && shift
-	target=`relative "$target" "$source"`
-	ln -snf "$target" "%buildroot$source"
-}
-
-%makeinstall_std install-tex TEXMF=%_texmfmain
+%makeinstall_std install-tex TEXMF=%_texmfmain MAKEINFOFLAGS=--no-split
 
 # generic/epsf/epsf.tex is packaged in tetex and texlive
 rm -r %buildroot%_texmfmain/tex/generic
@@ -129,7 +129,7 @@ rm -r %buildroot%_texmfmain/tex/generic
 # Install catalogue.
 mkdir -p %buildroot%_sysconfdir
 touch %buildroot%_sysconfdir/info-dir{,.old}
-rln %_sysconfdir/info-dir %_infodir/dir
+ln -fnrs %buildroot%_sysconfdir/info-dir %buildroot%_infodir/dir
 
 # Relocate install-info.
 mkdir -p %buildroot/sbin
@@ -151,17 +151,29 @@ install -pm755 %_sourcedir/update-info-dir %buildroot%_sbindir/
 mkdir -p %buildroot%_man8dir
 install -pm644 %_sourcedir/update-info-dir.8 %buildroot%_man8dir/
 
-%find_lang %name
+%find_lang texinfo
 
-%files -f %name.lang
+%check
+%make_build -k check
+
+%files -f texinfo.lang
+%doc AUTHORS NEWS.* README TODO
+
+%files -n makeinfo
 %_bindir/makeinfo
-%_bindir/*texi*
-%_infodir/*texi*
-%_mandir/man?/makeinfo.*
-%_mandir/man?/*texi*.*
-%_datadir/%name
-%_texmfmain/tex/texinfo
-%doc AUTHORS INTRODUCTION NEWS.bz2 README TODO
+%_man1dir/makeinfo.*
+%_man5dir/texinfo.*
+%_infodir/texinfo.*
+%_datadir/texinfo/
+
+%files -n texi2dvi
+%_bindir/*texi2dvi
+%_bindir/texi2pdf
+%_bindir/texindex
+%_man1dir/*texi2dvi.*
+%_man1dir/texi2pdf.*
+%_man1dir/texindex.*
+%_texmfmain/tex/texinfo/
 
 %files -n info
 %_bindir/info
@@ -183,6 +195,9 @@ install -pm644 %_sourcedir/update-info-dir.8 %buildroot%_man8dir/
 %_rpmmacrosdir/*
 
 %changelog
+* Sat Nov 02 2013 Dmitry V. Levin <ldv@altlinux.org> 4.13-alt9
+- Split texinfo into makeinfo and texi2dvi.
+
 * Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 4.13-alt8.qa1
 - NMU: rebuilt for debuginfo.
 
@@ -217,7 +232,7 @@ install -pm644 %_sourcedir/update-info-dir.8 %buildroot%_man8dir/
 - Packaged new RPM macros.
 
 * Sat Aug 30 2008 Dmitry V. Levin <ldv@altlinux.org> 4.11-alt4
-- Dropped obsolete %_sysconfdir/rpm/macros.d/%name file.
+- Dropped obsolete %_sysconfdir/rpm/macros.d/texinfo file.
 - Fixed build with fresh autoconf.
 
 * Fri Mar 21 2008 Dmitry V. Levin <ldv@altlinux.org> 4.11-alt3
@@ -269,7 +284,7 @@ install -pm644 %_sourcedir/update-info-dir.8 %buildroot%_man8dir/
 - info-install: added install_info and uninstall_info scripts.
 - texinfo:
   + updated texinfo.tex to version 2003-04-28.10;
-  + added %_sysconfdir/rpm/macros.d/%name with new macros.
+  + added %_sysconfdir/rpm/macros.d/texinfo with new macros.
 - Deal with info dir entries such that the menu looks pretty.
 
 * Wed Mar 05 2003 Dmitry V. Levin <ldv@altlinux.org> 4.5-alt1
