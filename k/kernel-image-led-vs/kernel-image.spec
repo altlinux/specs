@@ -25,7 +25,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.10.17
-Release: alt10
+Release: alt11
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -1831,6 +1831,9 @@ done)
 
 
 %changelog
+* Sat Nov 02 2013 Led <led@altlinux.ru> 3.10.17-alt11
+- build with fixed fglrx extmod
+
 * Sat Nov 02 2013 Led <led@altlinux.ru> 3.10.17-alt10
 - updated:
   + feat-tools--kvm
