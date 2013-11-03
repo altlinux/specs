@@ -6,16 +6,16 @@
 %def_enable introspection
 
 Name: lib%{_name}2
-Version: %ver_major.1
-Release: alt1.1
-Summary: A canvas widget for GTK+3 that uses cairo for drawing
+Version: %ver_major.2
+Release: alt1
 
+Summary: A canvas widget for GTK+3 that uses cairo for drawing
 Group: System/Libraries
 License: LGPLv2+
 Url: http://live.gnome.org/GooCanvas
 
-Source: %_name-%version.tar
-#Source: ftp://ftp.gnome.org/pub/sources/%_name/%ver_major/%_name-%version.tar.xz
+#Source: %_name-%version.tar
+Source: ftp://ftp.gnome.org/pub/sources/%_name/%ver_major/%_name-%version.tar.xz
 
 BuildPreReq: rpm-build-gnome
 # From configure.in
@@ -126,6 +126,9 @@ NOCONFIGURE=1 ./autogen.sh
 
 
 %changelog
+* Sun Nov 03 2013 Yuri N. Sedunov <aris@altlinux.org> 2.0.2-alt1
+- 2.0.2
+
 * Tue Apr 09 2013 Yuri N. Sedunov <aris@altlinux.org> 2.0.1-alt1.1
 - updated from upstream git
 
