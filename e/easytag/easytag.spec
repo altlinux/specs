@@ -1,6 +1,6 @@
 Name: easytag
 Version: 2.1.8
-Release: alt1
+Release: alt2
 
 Summary: Audio files tag viewer/editor
 Summary(ru_RU.UTF-8): Утилита для редактирования тегов звуковых файлов
@@ -21,7 +21,6 @@ BuildRequires: gcc-c++ libflac-devel
 BuildRequires: libgtk+2-devel >= 2.24.0
 BuildRequires: libid3tag-devel
 BuildRequires: libtag-devel
-BuildRequires: libmpeg4ip-devel
 BuildRequires: libspeex-devel
 BuildRequires: libvorbis-devel
 BuildRequires: libwavpack-devel
@@ -74,9 +73,13 @@ install -p %SOURCE1 po/ru.po
 %_datadir/applications/*
 
 %changelog
+* Sun Nov 03 2013 Afanasov Dmitry <ender@altlinux.org> 2.1.8-alt2
+- drop libmp4v2 buildreq
+
 * Fri Nov 01 2013 Afanasov Dmitry <ender@altlinux.org> 2.1.8-alt1
 - 2.1.8 release
   + try to update ru translation
+  + use TagLib for MP4 tag editing
 
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.1.6-alt7.qa1
 - NMU: rebuilt for debuginfo.
