@@ -8,7 +8,7 @@
 
 Name: musl
 Version: 0.9.14
-Release: alt15
+Release: alt16
 Group: System/Libraries
 Summary: musl libc - new standard library
 License: MIT
@@ -116,6 +116,9 @@ echo "%musl_dir/lib" > %buildroot%_sysconfdir/ld.so.conf.d/%name-%_lib.conf
 
 
 %changelog
+* Sun Nov 03 2013 Led <led@altlinux.ru> 0.9.14-alt16
+- fixes from upstream's SCM
+
 * Sat Nov 02 2013 Led <led@altlinux.ru> 0.9.14-alt15
 - fixes from upstream's SCM
 
