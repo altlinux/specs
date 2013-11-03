@@ -8,7 +8,7 @@
 
 Name: musl
 Version: 0.9.14
-Release: alt16
+Release: alt17
 Group: System/Libraries
 Summary: musl libc - new standard library
 License: MIT
@@ -65,7 +65,13 @@ sed -i 's|"/lib\(:/usr/local/lib:\)/usr/lib"|"/%_lib\1%_libdir"|' src/ldso/dynli
 	%{subst_enable static} \
 	%{subst_enable_to gcc_wrapper gcc-wrapper} \
 	--enable-warnings
+for d in linux asm asm-generic; do
+	[ -e include/$d ] || ln -s %_includedir/$d include/
+done
 %make_build
+for d in linux asm asm-generic; do
+	[ -h include/$d ] && rm -f include/$d
+done
 
 
 %install
@@ -73,7 +79,7 @@ sed -i 's|"/lib\(:/usr/local/lib:\)/usr/lib"|"/%_lib\1%_libdir"|' src/ldso/dynli
 %__make DESTDIR=%buildroot install
 rm -rf %buildroot%musl_dir/include/linux
 for d in linux asm asm-generic mtd; do
-	ln -sf %_includedir/$d %buildroot%musl_dir/include/
+	[ -e %buildroot%musl_dir/include/$d ] || ln -sf %_includedir/$d %buildroot%musl_dir/include/
 done
 
 install -d -m 0755 %buildroot%_docdir/%name-%version
@@ -116,6 +122,9 @@ echo "%musl_dir/lib" > %buildroot%_sysconfdir/ld.so.conf.d/%name-%_lib.conf
 
 
 %changelog
+* Sun Nov 03 2013 Led <led@altlinux.ru> 0.9.14-alt17
+- netinet/if_ether.h: removed definitions defined in linux/if_ether.h
+
 * Sun Nov 03 2013 Led <led@altlinux.ru> 0.9.14-alt16
 - fixes from upstream's SCM
 
