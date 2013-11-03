@@ -34,8 +34,8 @@
 
 # name-version-release
 %define rname licq
-%define ver 1.8
-%define rlz alt2
+%define ver 1.8.1
+%define rlz alt1
 
 Name: %rname
 Version: %ver
@@ -102,8 +102,7 @@ Patch22: licq-1.3.6-alt-qt4-yes-stl.patch
 Patch200: licq-1.2.7-remove-pidfile.patch
 
 #Errata
-Patch500: 07de72fedd7f57e77228d6ef9df4f3d002741a31.patch
-Patch501: 4de245241686732a7b78f056da2ac6de81abeb56.patch
+Patch500: f288367c758de16fc013c6f4c9851ca85813eb59.patch
 
 #package licq
 Group: Networking/Instant messaging
@@ -442,7 +441,6 @@ This version of licq has SSL support for those plugins that support it.
 
 #Errata
 %patch500 -p2
-%patch501 -p2
 
 pushd plugins
 %if %with_gtk
@@ -705,6 +703,9 @@ popd
 
 ########################################################
 %changelog
+* Sun Nov 03 2013 Sergey Y. Afonin <asy@altlinux.ru> 1.8.1-alt1
+- new version
+
 * Wed Oct 02 2013 Sergey Y. Afonin <asy@altlinux.ru> 1.8-alt2
 - added two upstream's patches:
    avoids confusion if multiple owners have the same alias
