@@ -6,7 +6,7 @@
 %define mciddir 	%tbird_noarch_extensionsdir/%mcid
 %define ver 3.8
 %define mver 1.2
-%define ft_release alt3.hg20130426
+%define ft_release alt3.hg20131013
 %define workdir %firefox_name-%vname-%ver
 %define mworkdir %tbird_name-%mname-%mver
 
@@ -68,8 +68,7 @@ help window back.
 %prep
 %setup
 tar -xjf %SOURCE1
-subst 's/maxVersion>15\.0/maxVersion>17.0.*/g' vimperator/install.rdf
-subst 's/maxVersion>12\.0a1/maxVersion>17.0.*/g' muttator/install.rdf
+subst 's/maxVersion>24\.0/maxVersion>24.*/g' muttator/install.rdf
 
 %build
 ln -s asciidoc.py asciidoc/asciidoc
@@ -114,6 +113,9 @@ install -m644 %mname/contrib/vim/ftdetect/%mname.vim\
 %vim_ftdetect_dir/%mname.vim
 
 %changelog
+* Tue Nov 05 2013 Andrey Cherepanov <cas@altlinux.org> 3.8-alt3.hg20131013
+- Vimperator 3.8 and Muttator 1.2
+
 * Sun Apr 28 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.8-alt3.hg20130426
 - Version 3.8
 

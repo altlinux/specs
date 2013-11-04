@@ -2,7 +2,7 @@
 
 %define rname	betterprivacy
 %define version	1.68
-%define release	alt1
+%define release	alt1.1
 %define cid	\{d40f5e7b-d2cf-4856-b441-cc613eeffbe3\}
 %define ciddir	%firefox_noarch_extensionsdir/%cid
 
@@ -49,6 +49,10 @@ LSO являются браузеро-независимыми, хранятся
 rm -rf -- ./*
 unzip -q %SOURCE0
 
+# Update maxVersion
+subst 's/11\.\*/24.*/' install.rdf
+subst 's/2\.6\.\*/2.22.*/' install.rdf
+
 %install
 mkdir -p -- %buildroot/%ciddir
 cp -r -- * %buildroot/%ciddir
@@ -62,5 +66,8 @@ fi
 %ciddir
 
 %changelog
+* Wed Oct 30 2013 Andrey Cherepanov <cas@altlinux.org> 1.68-alt1.1
+- Update maxVersion for Firefox 24.x and Seamonkey 2.22.x
+
 * Tue Jun 11 2013 Nikolay A. Fetisov <naf@altlinux.ru> 1.68-alt1
 - Initial build for ALT Linux Sisyphus

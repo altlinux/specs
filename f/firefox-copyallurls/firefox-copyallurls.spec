@@ -2,7 +2,7 @@
 
 %define rname	copyallurls
 %define version 0.9.8
-%define release alt1
+%define release alt2
 %define cid 	\{960BE052-4847-422b-9AD6-8631D3D0A607\}
 %define ciddir	%firefox_noarch_extensionsdir/%cid
 
@@ -42,7 +42,7 @@ stx - структурированный текст)  в буфер обмена
 
 %prep
 %setup -c
-subst 's/<em:maxVersion>12\.0\./<em:maxVersion>17.0./' install.rdf
+subst 's/<em:maxVersion>12\.0\./<em:maxVersion>24./' install.rdf
 
 %install
 mkdir -p -- %buildroot/%ciddir
@@ -58,6 +58,9 @@ fi
 %ciddir
 
 %changelog
+* Wed Oct 30 2013 Andrey Cherepanov <cas@altlinux.org> 0.9.8-alt2
+- Adapt for Firefox 24.x
+
 * Mon Dec 17 2012 Andrey Cherepanov <cas@altlinux.org> 0.9.8-alt1
 - New version 0.9.8
 - Adapt for Firefox 17.0

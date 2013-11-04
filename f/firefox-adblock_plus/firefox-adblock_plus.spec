@@ -1,5 +1,5 @@
 %define rname	adblock_plus
-%define version 2.2.1
+%define version 2.4
 %define release alt1
 %define cid 	\{d10d0bf8-f5b5-c8b4-a8b2-2b9879e08c5d\}
 %define ciddir	%firefox_noarch_extensionsdir/%cid
@@ -15,11 +15,11 @@ License:	GPL
 Group:		Networking/WWW
 URL:		http://adblockplus.mozdev.org/
 
-Source0:	http://releases.mozilla.org/pub/mozilla.org/extensions/adblock_plus/%{rname}-%{version}-sm+tb+an+fx.xpi
+Source0:	%{rname}-%{version}.tar
 
 BuildArch:	noarch
 
-BuildRequires(pre): rpm-build-firefox unzip
+BuildRequires(pre): rpm-build-firefox
 
 Packager: 	Andrey Cherepanov <cas@altlinux.org>
 
@@ -29,7 +29,7 @@ often take longer to download than everything else on the page? Install
 Adblock Plus now and get rid of them.
 
 %prep
-%setup -c
+%setup -n %rname-%version
 
 %install
 mkdir -p %buildroot/%ciddir
@@ -44,6 +44,9 @@ fi
 %ciddir
 
 %changelog
+* Fri Nov 01 2013 Andrey Cherepanov <cas@altlinux.org> 2.4-alt1
+- New version
+
 * Mon Dec 17 2012 Andrey Cherepanov <cas@altlinux.org> 2.2.1-alt1
 - New version 2.2.1
 

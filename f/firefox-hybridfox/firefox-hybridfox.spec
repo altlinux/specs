@@ -2,7 +2,7 @@
 
 %define rname	hybridfox
 %define version 1.7.000119
-%define release alt4
+%define release alt5
 %define cid 	\{2204c510-88f3-11db-b606-0800200c9a66\}
 %define ciddir	%firefox_noarch_extensionsdir/%cid
 
@@ -31,7 +31,7 @@ manage your "Cloud Computing" environment.
 
 %prep
 %setup -c
-subst 's/maxVersion>8.0/maxVersion>17.0.*/g' install.rdf
+subst 's/maxVersion>8\.0/maxVersion>24.*/' install.rdf
 
 %install
 mkdir -p -- %buildroot/%ciddir
@@ -46,6 +46,9 @@ fi
 %ciddir
 
 %changelog
+* Wed Oct 30 2013 Andrey Cherepanov <cas@altlinux.org> 1.7.000119-alt5
+- Adapt for Firefox 24.x
+
 * Wed Dec 19 2012 Andrey Cherepanov <cas@altlinux.org> 1.7.000119-alt4
 - Adapt for Firefox 17.0
 

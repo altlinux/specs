@@ -2,7 +2,7 @@
 
 %define rname	quicknote
 %define version 0.7.3
-%define release alt1
+%define release alt1.1
 %define cid 	\{C0CB8BA3-6C1B-47e8-A6AB-1FAB889562D9\}
 %define ciddir	%firefox_noarch_extensionsdir/%cid
 
@@ -35,11 +35,12 @@ QuickNote - расширение для Mozilla/Firefox/Thunderbird,
 
 %prep
 %setup -c
+subst 's/23\.0/24.*/g' install.rdf
+subst 's/2\.20/2.22.*/g' install.rdf
 
 %install
 mkdir -p -- %buildroot/%ciddir
 cp -r -- * %buildroot/%ciddir
-subst 's,<em:maxVersion>5\.\*</em:maxVersion>,<em:maxVersion>7\.\*</em:maxVersion>,g' %buildroot/%ciddir/install.rdf
 
 %postun
 if [ "$1" = 0 ]; then
@@ -50,6 +51,9 @@ fi
 %ciddir
 
 %changelog
+* Fri Nov 01 2013 Andrey Cherepanov <cas@altlinux.org> 0.7.3-alt1.1
+- Adapt for Firefox/Thunderbird 24.x and Seamonkey 2.22.x
+
 * Sun May 19 2013 Nikolay A. Fetisov <naf@altlinux.ru> 0.7.3-alt1
 - New version 0.7.3
 

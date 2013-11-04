@@ -5,7 +5,7 @@
 
 Name: firefox-kde4
 Version: 0.3.2
-Release: alt6
+Release: alt7
 
 Summary: Plasma Notifications for Firefox
 License: GPLv3
@@ -50,6 +50,9 @@ cp -r * %buildroot/%ciddir
 #%ciddir
 
 %changelog
+* Mon Nov 04 2013 Andrey Cherepanov <cas@altlinux.org> 0.3.2-alt7
+- Adapt for Firefox 24.x
+
 * Thu Dec 20 2012 Andrey Cherepanov <cas@altlinux.org> 0.3.2-alt6
 - Adapt for Firefox 17.0
 

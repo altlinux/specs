@@ -2,7 +2,7 @@
 
 %define rname	righttoclick
 %define version	2.9.5
-%define release	alt1
+%define release	alt1.1
 %define cid	\{cd617375-6743-4ee8-bac4-fbf10f35729e\}
 %define ciddir	%firefox_noarch_extensionsdir/%cid
 
@@ -41,6 +41,7 @@ Javascript.
 # RPM call unzip with -Lq keys, effectivly kills all mixed-case filenames in archive
 rm -rf -- ./*
 unzip -q %SOURCE0
+subst 's/23\./24./' install.rdf
 
 %install
 mkdir -p -- %buildroot/%ciddir
@@ -55,6 +56,9 @@ fi
 %ciddir
 
 %changelog
+* Sun Nov 03 2013 Andrey Cherepanov <cas@altlinux.org> 2.9.5-alt1.1
+- Adapt for Firefox 24.x
+
 * Sun Oct 06 2013 Nikolay A. Fetisov <naf@altlinux.ru> 2.9.5-alt1
 - New version
 

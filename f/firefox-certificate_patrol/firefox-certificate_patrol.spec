@@ -2,7 +2,7 @@
 
 %define rname	certificate_patrol
 %define version 2.0.14
-%define release alt2
+%define release alt2.1
 %define cid 	CertPatrol@PSYC.EU
 %define ciddir	%firefox_noarch_extensionsdir/%cid
 
@@ -63,6 +63,8 @@ so you can ensure it was a legitimate change.
 
 %prep
 %setup -c
+subst 's/10\.0a1/24.*/g' install.rdf
+subst 's/2\.7a1/2.22.*/g' install.rdf
 
 %install
 mkdir -p --  %buildroot/%ciddir
@@ -77,6 +79,9 @@ fi
 %ciddir
 
 %changelog
+* Wed Oct 30 2013 Andrey Cherepanov <cas@altlinux.org> 2.0.14-alt2.1
+- Update maxVersion for Firefox/Thunderbird 24.x and Seamonkey 2.22.x
+
 * Sun May 26 2013 Nikolay A. Fetisov <naf@altlinux.ru> 2.0.14-alt2
 - Fix extention CID
 

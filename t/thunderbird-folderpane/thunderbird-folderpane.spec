@@ -3,7 +3,7 @@
 
 Name:		%tbird_name-%rname
 Version:	0.6.1
-Release:	alt3
+Release:	alt4
 Summary:	The FolderPane extension for Thunderbird
 
 License:	GPL
@@ -23,7 +23,8 @@ Accounts can be rearranged and the startup folder can be chosen.
 
 %prep
 %setup -c
-subst 's/maxVersion>11\.0a1/maxVersion>17.0.*/g' install.rdf
+subst 's/maxVersion>11\.0a1/maxVersion>24.*/g' install.rdf
+subst 's/maxVersion>2\.5a1/maxVersion>2.22.*/g' install.rdf
 
 %install
 %__mkdir_p %buildroot/%ciddir
@@ -33,6 +34,9 @@ subst 's/maxVersion>11\.0a1/maxVersion>17.0.*/g' install.rdf
 %ciddir
 
 %changelog
+* Tue Nov 05 2013 Andrey Cherepanov <cas@altlinux.org> 0.6.1-alt4
+- Adapt for Thunderbird 24.x and Seamonkey 2.22.x
+
 * Thu Dec 20 2012 Andrey Cherepanov <cas@altlinux.org> 0.6.1-alt3
 - Adapt for Thunderbird 17.0
 

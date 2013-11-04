@@ -3,8 +3,8 @@
 
 Summary:	VkontakteToolbar extension for Firefox
 Name:		firefox-vkontaktetoolbar
-Version:	0.6.0
-Release:	alt3
+Version:	0.6.1
+Release:	alt1
 Source0:	vkontaktetoolbar-%version.xpi
 License:	GPL
 Group:		Networking/WWW
@@ -20,6 +20,7 @@ Toolbar for site vkontakte.ru
 
 %prep
 %setup -c
+subst 's/20\./24./' install.rdf
 
 %install
 %__mkdir_p %buildroot/%ciddir
@@ -34,6 +35,10 @@ fi
 %ciddir
 
 %changelog
+* Tue Nov 05 2013 Andrey Cherepanov <cas@altlinux.org> 0.6.1-alt1
+- New version
+- Adapt for Firefox 24.x
+
 * Mon Dec 17 2012 Andrey Cherepanov <cas@altlinux.org> 0.6.0-alt3
 - Build for Firefox 17.0
 
