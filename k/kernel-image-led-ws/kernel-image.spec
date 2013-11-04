@@ -24,13 +24,13 @@
 %define flavour %base_flavour-%sub_flavour
 
 Name: kernel-image-%flavour
-Version: 3.10.17
-Release: alt11
+Version: 3.10.18
+Release: alt1
 
 %define kernel_req %nil
 %define kernel_prov %nil
 %define kernel_branch 3.10
-%define kernel_stable_version 17
+%define kernel_stable_version 18
 %define kernel_extra_version .%kernel_stable_version
 #define kernel_extra_version %nil
 
@@ -1831,6 +1831,15 @@ done)
 
 
 %changelog
+* Mon Nov 02 2013 Led <led@altlinux.ru> 3.10.18-alt1
+- 3.10.18
+- removed:
+  + fix-drivers-md--dm-snapshot
+- updated:
+  + fix-drivers-i2c-busses--i2c-ismt
+- disabled:
+  + AUDIT_LOGINUID_IMMUTABLE
+
 * Sat Nov 02 2013 Led <led@altlinux.ru> 3.10.17-alt11
 - build with fixed fglrx extmod
 
