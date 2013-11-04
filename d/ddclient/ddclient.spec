@@ -5,8 +5,8 @@
 Summary: A client to update host entries on DynDNS like services
 Summary(ru_RU.UTF8): Клиент для обновления записей служб динамического DNS, подобных DynDNS
 Name: ddclient
-Version: 3.8.0
-Release: alt1.2
+Version: 3.8.1
+Release: alt1
 License: GPLv2
 Group: System/Configuration/Networking
 Packager: Motsyo Gennadi <drool@altlinux.ru>
@@ -15,7 +15,7 @@ Source0: http://prdownloads.sourceforge.net/ddclient/%name-%version.tar.bz2
 Source1: ddclientd
 Source2: README_SSL.ALT.txt
 Patch0: %name-3.7.1-piddir.diff
-Patch1: %name-3.8.0.fix_ssl_warning_altspecifics.diff
+Patch1: %name-3.8.1.fix_ssl_warning_altspecifics.diff
 BuildArch: noarch
 
 %description
@@ -93,6 +93,9 @@ install -p -m 0755 %SOURCE1 %buildroot%_initdir/ddclientd
 %dir %attr(2770,root,dyndns) /var/run/ddclient
 
 %changelog
+* Mon Nov 04 2013 Motsyo Gennadi <drool@altlinux.ru> 3.8.1-alt1
+- 3.8.1
+
 * Sun Nov 22 2009 Motsyo Gennadi <drool@altlinux.ru> 3.8.0-alt1.2
 - fixed russian locale for Summary
 
