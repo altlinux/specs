@@ -5,7 +5,7 @@
 
 Name: kde3-yakuake
 Version: 2.8.1
-Release: alt5
+Release: alt6
 
 Summary: Very powerful Quake style Konsole
 License: %gpl2plus
@@ -23,7 +23,7 @@ Patch2: yakuake-alt-DSO.patch
 
 BuildPreReq: rpm-build-licenses
 
-BuildPreReq: gcc4.5-c++ kdelibs-devel libtqt-devel
+BuildPreReq: gcc-c++ kdelibs-devel libtqt-devel
 %if_with arts
 BuildRequires:  libarts-devel
 %endif 
@@ -51,6 +51,7 @@ export PATH=$QTDIR/bin:$KDEDIR/bin:$PATH
 
 %K3configure \
 	%{subst_with arts} \
+	--disable-new-ldflags \
 	--enable-final
 
 %make_build
@@ -70,6 +71,11 @@ export PATH=$QTDIR/bin:$KDEDIR/bin:$PATH
 %_K3i18n/*/*/*.mo
 
 %changelog
+* Tue Nov 05 2013 Evgeny Sinelnikov <sin@altlinux.ru> 2.8.1-alt6
+- Rebuild with patch for automake-1.14 using
+- Rebuild with default gcc-4.7
+- Disable new ldflags at configure due exclude --as-needed
+
 * Sat Jun 04 2012 Roman Savochenko <rom_as@altlinux.ru> 2.8.1-alt5
 - Build for TDE 3.5.13 release.
 
