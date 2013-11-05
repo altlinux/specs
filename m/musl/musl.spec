@@ -8,7 +8,7 @@
 
 Name: musl
 Version: 0.9.14
-Release: alt17
+Release: alt18
 Group: System/Libraries
 Summary: musl libc - new standard library
 License: MIT
@@ -122,6 +122,9 @@ echo "%musl_dir/lib" > %buildroot%_sysconfdir/ld.so.conf.d/%name-%_lib.conf
 
 
 %changelog
+* Tue Nov 05 2013 Led <led@altlinux.ru> 0.9.14-alt18
+- fixes from upstream's SCM
+
 * Sun Nov 03 2013 Led <led@altlinux.ru> 0.9.14-alt17
 - netinet/if_ether.h: removed definitions defined in linux/if_ether.h
 
