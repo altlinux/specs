@@ -4,7 +4,7 @@
 
 Name: lib%_name
 Version: 4.10.0
-Release: alt3
+Release: alt4.git20130919
 
 Summary: Hierarchical configuration system for Xfce
 Summary (ru_RU.UTF-8): Система конфигурации Xfce
@@ -71,6 +71,8 @@ interact with xfconf using perl.
 %patch -p1
 
 %build
+# Don't use git tag in version.
+%xfce4_drop_gitvtag xfconf_version_tag configure.ac.in
 %xfce4reconf
 %configure \
 	--disable-static \
@@ -109,6 +111,9 @@ mkdir -p %buildroot/%_sysconfdir/xdg/xfce4/xfconf/xfce-perchannel-xml
 %endif
 
 %changelog
+* Tue Nov 05 2013 Mikhail Efremov <sem@altlinux.org> 4.10.0-alt4.git20130919
+- Upstream git snapshot.
+
 * Fri Aug 30 2013 Vladimir Lettiev <crux@altlinux.ru> 4.10.0-alt3
 - built for perl 5.18
 
