@@ -1,6 +1,6 @@
 Name: testdisk
 Version: 6.14
-Release: alt1
+Release: alt2
 
 Summary: Tool to check and undelete partition
 License: GPLv2+
@@ -12,6 +12,9 @@ Source: http://www.cgsecurity.org/%name-%version.tar.bz2
 # Automatically added by buildreq on Thu May 12 2011
 # optimized out: libcom_err-devel libncurses-devel libntfs-3g libtinfo-devel pkg-config
 BuildRequires: gcc-c++ glibc-devel libe2fs-devel libewf-devel libjpeg-devel libncursesw-devel libntfs-3g-devel libprogsreiserfs-devel libssl-devel libuuid-devel zlib-devel
+
+Provides: testdisk-doc = %name-%version
+Obsoletes: testdisk-doc < 6.14
 
 %description
 Tool to check and undelete partition. Works with the following
@@ -73,6 +76,9 @@ http://www.cgsecurity.org/wiki/PhotoRec
 %_man8dir/photorec*
 
 %changelog
+* Tue Nov 05 2013 Michael Shigorin <mike@altlinux.org> 6.14-alt2
+- added missing P:/O: for testdisk-doc subpackage, sorry
+
 * Fri Nov 01 2013 Michael Shigorin <mike@altlinux.org> 6.14-alt1
 - 6.14
 - dropped doc subpackage (it's online, links moved to %%description)
