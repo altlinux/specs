@@ -1,4 +1,4 @@
-BuildRequires: /proc
+BuildRequires: /proc perl(Pod/Text.pm)
 BuildRequires: jpackage-compat
 %define brand JBoss
 %define pub_name Publican
@@ -7,7 +7,7 @@ BuildRequires: jpackage-compat
 Name:		publican-jboss
 Summary:	Common documentation files for %{brand}
 Version:	2.6
-Release:	alt1_3jpp7
+Release:	alt2_3jpp7
 License:	CC-BY-SA
 Group:		Text tools
 # Limited to these arches on RHEL 6 due to PDF + Java limitations
@@ -44,6 +44,9 @@ publican install_brand --path=$RPM_BUILD_ROOT%{_datadir}/publican/Common_Content
 %{_datadir}/publican/Common_Content/%{brand}
 
 %changelog
+* Tue Nov 05 2013 Igor Vlasenko <viy@altlinux.ru> 2.6-alt2_3jpp7
+- NMU: added missing Pod dependencies
+
 * Thu Feb 07 2013 Igor Vlasenko <viy@altlinux.ru> 2.6-alt1_3jpp7
 - initial build
 
