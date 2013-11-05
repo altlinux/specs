@@ -2,7 +2,7 @@
 
 Name: perl-%module
 Version: 0.08
-Release: alt4
+Release: alt5
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
 
@@ -13,7 +13,7 @@ Source: http://www.cpan.org/modules/by-module/RPM/%module-%version.tar.gz
 Url: http://search.cpan.org/dist/%module
 
 # Automatically added by buildreq on Wed Nov 06 2002
-BuildRequires: perl-devel perl(Pod/Usage.pm) perl-RPM-Source-Editor > 0.73
+BuildRequires: perl-devel perl(Pod/Usage.pm) perl-RPM-Source-Editor > 0.73 perl(Pod/Text.pm)
 Requires: gear
 
 %description
@@ -35,6 +35,9 @@ Requires: gear
 %_bindir/*
 
 %changelog
+* Tue Nov 05 2013 Igor Vlasenko <viy@altlinux.ru> 0.08-alt5
+- NMU: added missing Pod dependencies
+
 * Sat Nov 26 2011 Igor Vlasenko <viy@altlinux.ru> 0.08-alt4
 - added --force to gear-rules-restore-branches
 
