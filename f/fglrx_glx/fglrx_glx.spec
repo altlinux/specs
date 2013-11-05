@@ -19,7 +19,7 @@ Name: %{bname}_glx
 %define ksname %bname
 Epoch: 1
 Version: 13.20.16
-Release: alt2
+Release: alt3
 %define EVR %{?epoch:%epoch:}%version-%release
 Summary: ATI/AMD Proprietary Linux Display Driver
 Group: System/Kernel and hardware
@@ -271,6 +271,9 @@ chrpath -d %buildroot{%_bindir/amdcccle,%_sbindir/amdnotifyui}
 
 
 %changelog
+* Tue Nov 05 2013 Led <led@altlinux.ru> 1:13.20.16-alt3
+- kernel module: fixed patch for new loglevel API
+
 * Sat Nov 02 2013 Led <led@altlinux.ru> 1:13.20.16-alt2
 - kernel module: fixed for new loglevel API
 
