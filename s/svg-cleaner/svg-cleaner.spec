@@ -1,6 +1,6 @@
 Name: svg-cleaner
 Version: 0.2
-Release: alt1
+Release: alt2
 
 Summary: Batch, tunable, crossplatform SVG cleaning program 
 
@@ -14,7 +14,7 @@ Source: %name-%version.tar
 
 # Automatically added by buildreq on Sat Jan 14 2012
 # optimized out: fontconfig libqt4-core libqt4-devel libqt4-gui libqt4-svg libqt4-xml libstdc++-devel
-BuildRequires: gcc-c++ glibc-devel phonon-devel
+BuildRequires: gcc-c++ glibc-devel phonon-devel perl(Term/ANSIColor.pm)
 
 BuildPreReq: perl-XML-Twig
 
@@ -41,5 +41,8 @@ make INSTALL_ROOT=%buildroot install
 %_iconsdir/hicolor/scalable/apps/svgcleaner.svg
 
 %changelog
+* Tue Nov 05 2013 Igor Vlasenko <viy@altlinux.ru> 0.2-alt2
+- NMU: added missing Pod dependencies
+
 * Sat Jan 14 2012 Vitaly Lipatov <lav@altlinux.ru> 0.2-alt1
 - initial build for ALT Linux Sisyphus
