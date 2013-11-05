@@ -1,6 +1,6 @@
 Name: xfdesktop
-Version: 4.11.0
-Release: alt2.git20131014
+Version: 4.11.1
+Release: alt1.git20131105
 
 Summary: Desktop manager for the XFce Desktop Environment
 Summary (ru_RU.UTF-8): Менеджер рабочего стола Xfce
@@ -61,6 +61,9 @@ BuildRequires: libICE-devel libnotify-devel libdbus-glib-devel
 %_datadir/backgrounds/xfce
 
 %changelog
+* Tue Nov 05 2013 Mikhail Efremov <sem@altlinux.org> 4.11.1-alt1.git20131105
+- Upstream git snapshot.
+
 * Thu Oct 17 2013 Mikhail Efremov <sem@altlinux.org> 4.11.0-alt2.git20131014
 - Upstream git snapshot.
 
