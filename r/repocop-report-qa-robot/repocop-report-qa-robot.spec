@@ -1,6 +1,6 @@
 Name: repocop-report-qa-robot
 Version: 0.35
-Release: alt1
+Release: alt2
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
 
@@ -13,7 +13,7 @@ Source: %name-%version.tar
 
 Conflicts: repocop < 0.34
 Requires: repocop > 0.68
-BuildRequires: repocop > 0.68
+BuildRequires: repocop > 0.68 perl(Pod/Text.pm)
 
 %description
 Repocop is a repository unit tests platform.
@@ -36,6 +36,9 @@ install -m755 bin/* $RPM_BUILD_ROOT%_datadir/repocop-report-email/bin/
 %_datadir/repocop-report-email
 
 %changelog
+* Tue Nov 05 2013 Igor Vlasenko <viy@altlinux.ru> 0.35-alt2
+- NMU: added missing Pod dependencies
+
 * Sun Oct 20 2013 Igor Vlasenko <viy@altlinux.ru> 0.35-alt1
 - support for TestDB interface
 
