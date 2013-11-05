@@ -2,7 +2,7 @@
 
 Name: perl-%module
 Version: 0.14
-Release: alt1
+Release: alt2
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
 
@@ -12,7 +12,7 @@ License: GPL or Artistic
 Source: http://www.cpan.org/modules/by-module/RPM/%module-%version.tar.gz
 Url: http://search.cpan.org/dist/%module
 
-BuildRequires: perl-devel perl(Pod/Usage.pm) perl-RPM perl-IPC-Run3 perl(Data/Array2ArrayMap/Hash/XSTree.pm)
+BuildRequires: perl-devel perl(Pod/Usage.pm) perl-RPM perl-IPC-Run3 perl(Data/Array2ArrayMap/Hash/XSTree.pm) perl(Pod/Text.pm)
 
 %description
 %summary
@@ -33,6 +33,9 @@ BuildRequires: perl-devel perl(Pod/Usage.pm) perl-RPM perl-IPC-Run3 perl(Data/Ar
 %_bindir/*
 
 %changelog
+* Tue Nov 05 2013 Igor Vlasenko <viy@altlinux.ru> 0.14-alt2
+- NMU: added missing Pod dependencies
+
 * Fri Aug 16 2013 Igor Vlasenko <viy@altlinux.ru> 0.14-alt1
 - added altlinux-acl-get-leader
 
