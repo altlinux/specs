@@ -1,14 +1,14 @@
 Name: pacemaker
 Summary: Scalable High-Availability cluster resource manager
 Version: 1.1.10
-Release: alt3
+Release: alt4
 License: GPLv2+ and LGPLv2+
 Url: http://www.clusterlabs.org
 Group: System/Servers
 Source: %name-%version.tar
 Patch: %name-%version-alt.patch
 
-BuildRequires: /proc glib2-devel libxml2-devel libxslt-devel libuuid-devel systemd-devel
+BuildRequires: /proc glib2-devel libxml2-devel libxslt-devel libuuid-devel systemd-devel perl(Pod/Text.pm)
 BuildRequires: pkgconfig python-devel gcc-c++ bzlib-devel libpam-devel
 BuildRequires: libqb-devel > 0.11.0 libgnutls-devel libltdl-devel libgio-devel
 BuildRequires: libncurses-devel libssl-devel libselinux-devel docbook-style-xsl
@@ -302,6 +302,9 @@ getent passwd %uname >/dev/null || useradd -r -g %gname -s /sbin/nologin -c "clu
 %doc COPYING.LIB AUTHORS
 
 %changelog
+* Tue Nov 05 2013 Igor Vlasenko <viy@altlinux.ru> 1.1.10-alt4
+- NMU: added missing Pod dependencies
+
 * Thu Aug 15 2013 Slava Dubrovskiy <dubrsl@altlinux.org> 1.1.10-alt3
 - Fix initscript
 
