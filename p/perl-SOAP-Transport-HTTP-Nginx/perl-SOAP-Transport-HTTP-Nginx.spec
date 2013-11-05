@@ -15,7 +15,7 @@
 
 Name: perl-SOAP-Transport-HTTP-Nginx
 Version: 0.01
-Release: alt1
+Release: alt2
 
 Summary: transport for nginx (http://nginx.net/) http server for SOAP::Lite module
 
@@ -30,7 +30,7 @@ Source: http://search.cpan.org//CPAN/authors/id/C/CY/CYGA/%m_distro-%version.tar
 
 # Automatically added by buildreq on Tue Aug 20 2013
 # optimized out: perl-Class-Inspector perl-Devel-Symdump perl-Pod-Coverage perl-Pod-Escapes perl-Pod-Parser perl-Pod-Simple perl-URI perl-devel
-BuildRequires: nginx perl-SOAP-Lite perl-Test-Pod perl-Test-Pod-Coverage
+BuildRequires: nginx perl-SOAP-Lite perl-Test-Pod perl-Test-Pod-Coverage perl(XMLRPC/Transport/HTTP.pm)
 
 %description
 Provide support for HTTP Nginx transport.
@@ -48,6 +48,9 @@ Provide support for HTTP Nginx transport.
 %perl_vendor_privlib/XMLRPC/Transport/HTTP/Nginx.pm
 
 %changelog
+* Tue Nov 05 2013 Igor Vlasenko <viy@altlinux.ru> 0.01-alt2
+- NMU: added missing Pod dependencies
+
 * Tue Aug 20 2013 Denis Smirnov <mithraen@altlinux.ru> 0.01-alt1
 - initial build for ALT Linux Sisyphus
 
