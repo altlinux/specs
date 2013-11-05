@@ -5,7 +5,7 @@
 
 Name: spamassassin
 Version: 3.3.2
-Release: alt2
+Release: alt3
 
 Summary: Spam filter for email written in perl
 License: Apache License v2.0
@@ -28,7 +28,7 @@ Patch10: spamassassin-3.2.1-debian-change_config_paths.patch
 
 # Automatically added by buildreq on Thu Jul 21 2011
 # optimized out: libcom_err-devel libkrb5-devel perl-Compress-Raw-Bzip2 perl-Compress-Raw-Zlib perl-Digest-SHA perl-Digest-SHA1 perl-Encode perl-Error perl-HTML-Parser perl-HTTP-Date perl-HTTP-Message perl-IO-Compress perl-IO-Socket-INET6 perl-IO-String perl-IO-Zlib perl-Net-DNS perl-Net-SSLeay perl-NetAddr-IP perl-Package-Constants perl-Pod-Escapes perl-Pod-Parser perl-Pod-Simple perl-Socket6 perl-URI perl-libnet perl-podlators
-BuildRequires: libssl-devel perl-Archive-Tar perl-DBI perl-DBM perl-Encode-Detect perl-IO-Socket-SSL perl-IP-Country perl-Mail-DKIM perl-Mail-SPF perl-Razor perl-devel perl-libwww zlib-devel
+BuildRequires: libssl-devel perl-Archive-Tar perl-DBI perl-DBM perl-Encode-Detect perl-IO-Socket-SSL perl-IP-Country perl-Mail-DKIM perl-Mail-SPF perl-Razor perl-devel perl-libwww zlib-devel perl(Pod/Man.pm)
 
 # Was needed by sa-stats from tools/ (currently not shipped in tarball so)
 BuildRequires: perl-Parse-Syslog
@@ -236,6 +236,9 @@ pod2man spamc/spamc.pod %buildroot%_man1dir/spamc.1
 #%_man3dir/*
 
 %changelog
+* Tue Nov 05 2013 Igor Vlasenko <viy@altlinux.ru> 3.3.2-alt3
+- NMU: added missing Pod dependencies
+
 * Wed Apr 03 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 3.3.2-alt2
 - hackaround build
 
