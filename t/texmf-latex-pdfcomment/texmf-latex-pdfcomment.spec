@@ -2,7 +2,7 @@
 
 Name: texmf-latex-%srcName
 Version: 1.5d
-Release: alt1
+Release: alt2
 Summary: A user-friendly interface to pdf annotations
 License: %lppl
 Group: Publishing
@@ -12,7 +12,7 @@ Packager: Kirill Maslinsky <kirill@altlinux.org>
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-texmf rpm-build-licenses
-BuildRequires: ctanify
+BuildRequires: ctanify perl(Pod/Text.pm)
 
 Source0: %srcName-%version.tar
 
@@ -51,6 +51,9 @@ ctanify --pkgname=%srcName --tdsdir=%buildroot/%_texmfmain "*" "doc/*.tex=doc/la
 %_texmfmain/doc/latex/*
 
 %changelog
+* Tue Nov 05 2013 Igor Vlasenko <viy@altlinux.ru> 1.5d-alt2
+- NMU: added missing Pod dependencies
+
 * Sun Apr 04 2010 Kirill Maslinsky <kirill@altlinux.org> 1.5d-alt1
 - Initial build for ALT Linux Sisyphus
 
