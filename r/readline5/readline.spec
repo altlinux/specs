@@ -1,11 +1,9 @@
-%define sover 6
-
-Name: readline
-%define rl_version 6.2
-%define rl_patch .4
+Name: readline5
+%define rl_version 5.2
+%define rl_patch 14
 %define srcname readline-%rl_version
-Version: %rl_version%rl_patch
-Release: alt1
+Version: %rl_version.%rl_patch
+Release: alt4
 
 Summary: A library for editing typed in command lines
 License: GPLv2+
@@ -21,17 +19,17 @@ Patch: readline-%version-%release.patch
 # Automatically added by buildreq on Mon Sep 02 2002
 BuildRequires: libtinfo-devel
 
-%package -n lib%name%sover
+%package -n lib%name
 Summary: A library for editing typed in command lines
-Group: System/Libraries
+Group: System/Legacy libraries
 Obsoletes: readline
 Provides: readline = %version-%release
+Obsoletes: libreadline < %version-%release
 Provides: libreadline = %version-%release
 
 %package -n lib%name-devel
 Summary: Files needed to develop programs which use the readline library
 Group: Development/C
-Provides: readline-devel = %version-%release
 Obsoletes: readline-devel
 PreReq: lib%name = %version-%release
 
@@ -44,7 +42,7 @@ Requires: lib%name-devel = %version-%release
 The readline library reads a line from the terminal and returns it,
 allowing the user to edit the line with standard emacs editing keys.
 
-%description -n lib%name%sover
+%description -n lib%name
 The readline library reads a line from the terminal and returns it,
 allowing the user to edit the line with standard emacs editing keys.
 
@@ -65,9 +63,8 @@ programs which use the readline library to provide an easy to use
 and more intuitive command line interface for users.
 
 %prep
-%setup -q
+%setup -q -n readline-%version
 %patch -p1
-rm examples/*.tar*
 
 %build
 # This is required to fix some "implicit declaration" warnings.
@@ -123,7 +120,7 @@ popd
 
 %set_verify_elf_method strict
 
-%files -n lib%name%sover
+%files -n lib%name
 /%_lib/*
 
 %files -n lib%name-devel
@@ -137,8 +134,8 @@ popd
 %_libdir/*.a
 
 %changelog
-* Tue Nov 05 2013 Gleb F-Malinovskiy <glebfm@altlinux.org> 6.2.4-alt1
-- Updated to 6.2 patchlevel 4.
+* Tue Nov 05 2013 Gleb F-Malinovskiy <glebfm@altlinux.org> 5.2.14-alt4
+- Packaged libreadline5 as a legacy library.
 
 * Thu Feb 10 2011 Dmitry V. Levin <ldv@altlinux.org> 5.2.14-alt3
 - Rebuilt for debuginfo.
@@ -262,7 +259,7 @@ popd
 - FHSification.
 
 * Tue Jun 13 2000 Dmitry V. Levin <ldv@fandra.org> 4.1-ipl7mdk
-* RE and Fandra adaptions.
+- RE and Fandra adaptions.
 
 * Mon Jun 12 2000 Pixel <pixel@mandrakesoft.com> 4.1-7mdk
 - add .so's in /usr/lib for -devel
