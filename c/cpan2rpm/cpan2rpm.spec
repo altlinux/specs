@@ -1,6 +1,6 @@
 Name: cpan2rpm
 Version: 2.028
-Release: alt3
+Release: alt4
 
 Summary: cpan2rpm - A Perl module packager
 
@@ -19,7 +19,7 @@ Patch3: cpan2rpm-2.028-alt-viy-fix-for-named-sourcedir.patch
 
 Requires: perl-Compress-Zlib perl-URI perl-devel perl-libwww sisyphus
 # Automatically added by buildreq on Sun Feb 27 2005
-BuildRequires: perl-Compress-Zlib perl-URI perl-devel perl-libwww
+BuildRequires: perl-Compress-Zlib perl-URI perl-devel perl-libwww perl(Pod/PlainText.pm)
 BuildRequires: perl-podlators
 
 %description
@@ -81,6 +81,9 @@ echo Skipping >cpan2rpm.spec.PL
 %doc README Changes
 
 %changelog
+* Tue Nov 05 2013 Igor Vlasenko <viy@altlinux.ru> 2.028-alt4
+- NMU: added missing Pod dependencies
+
 * Fri Nov 18 2011 Igor Vlasenko <viy@altlinux.ru> 2.028-alt3
 - bugfix: proper macro expansion in %_sourcedir
 
