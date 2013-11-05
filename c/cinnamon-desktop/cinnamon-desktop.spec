@@ -8,7 +8,7 @@
 %def_enable introspection
 
 Name: cinnamon-desktop
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: Library with common API for various Cinnamon modules
@@ -141,6 +141,9 @@ GObject introspection devel data for the %name library
 
 
 %changelog
+* Tue Nov 5 2013 Vladimir Didenko <cow@altlinux.org> 2.0.3-alt1
+- 2.0.3
+
 * Tue Oct 29 2013 Vladimir Didenko <cow@altlinux.org> 2.0.2-alt1
 - 2.0.2
 
