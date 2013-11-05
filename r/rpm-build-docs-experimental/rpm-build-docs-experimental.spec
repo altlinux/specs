@@ -6,7 +6,7 @@
 
 Name: rpm-build-docs-experimental
 Version: 0.4
-Release: alt2
+Release: alt3
 Packager: Artem Zolochevskiy <azol@altlinux.ru>
 
 Summary: RPM helper macros to rebuild documentation packages
@@ -26,7 +26,7 @@ Conflicts: rpm-build-docs
 Source: %name-%version.tar
 
 # Automatically added by buildreq on Sat Jun 04 2005 (-bi)
-BuildRequires: perl-Archive-Tar perl-Compress-Zlib perl-HTML-Parser perl-HTML-Tagset perl-HTML-Tree perl-IO-String perl-IO-Zlib perl-Template sgml-tools xsltproc
+BuildRequires: perl-Archive-Tar perl-Compress-Zlib perl-HTML-Parser perl-HTML-Tagset perl-HTML-Tree perl-IO-String perl-IO-Zlib perl-Template sgml-tools xsltproc perl(Pod/Text.pm)
 
 
 %description
@@ -61,6 +61,9 @@ cp -rf data/* %buildroot/%docsdatadir/
 %doc README.ru.txt examples/
 
 %changelog
+* Tue Nov 05 2013 Igor Vlasenko <viy@altlinux.ru> 0.4-alt3
+- NMU: added missing Pod dependencies
+
 * Thu Apr 21 2011 Dmitry V. Levin <ldv@altlinux.org> 0.4-alt2
 - Added docbook-dtds to requirements.
 
