@@ -6,7 +6,7 @@
 
 Name: rpm-build-docs
 Version: 0.4.5
-Release: alt11
+Release: alt12
 Packager: Kirill Maslinsky <kirill@altlinux.ru>
 
 Summary: RPM helper macros to rebuild documentation packages
@@ -24,7 +24,7 @@ Requires: enca
 Source0: %name-%version.tar.bz2
 
 # Automatically added by buildreq on Sat Jun 04 2005 (-bi)
-BuildRequires: perl-Archive-Tar perl-Compress-Zlib perl-HTML-Parser perl-HTML-Tagset perl-HTML-Tree perl-IO-String perl-IO-Zlib perl-Template sgml-tools xsltproc
+BuildRequires: perl-Archive-Tar perl-Compress-Zlib perl-HTML-Parser perl-HTML-Tagset perl-HTML-Tree perl-IO-String perl-IO-Zlib perl-Template sgml-tools xsltproc perl(Pod/Text.pm)
 
 
 %description
@@ -57,6 +57,9 @@ subst 's,%%_docsdatadir,%docsdatadir,g' bin/* data/docs_genspec/Heap/Config.pm d
 %doc README.ru.txt
 
 %changelog
+* Tue Nov 05 2013 Igor Vlasenko <viy@altlinux.ru> 0.4.5-alt12
+- NMU: added missing Pod dependencies
+
 * Thu May 17 2007 Vitaly A. Ostanin <vyt@altlinux.ru> 0.4.5-alt11
 - Added dirty hack for build m-k files in utf-8 encoding
 
