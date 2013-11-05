@@ -9,7 +9,7 @@ Name: dakota
 Version: 5.3
 %define somver 0
 %define sover %somver.0.0
-Release: alt1
+Release: alt2
 Epoch: 1
 Summary: Design Analysis Kit for Optimization and Terascale Applications
 License: LGPL v2.1
@@ -39,6 +39,7 @@ BuildPreReq: boost-program_options-devel libgsl-devel libXScrnSaver-devel
 BuildPreReq: libXcomposite-devel libXdamage-devel libXdmcp-devel
 BuildPreReq: libXxf86misc-devel libXxf86vm-devel libsuperlu-devel
 Requires: plplot-tk libnewmat
+BuildRequires: perl(Pod/Text.pm)
 
 %description
 A Multilevel Parallel Object-Oriented Framework for Design Optimization,
@@ -359,6 +360,9 @@ ln -s ../../macros.hpp \
 %_libdir/cmake
 
 %changelog
+* Tue Nov 05 2013 Igor Vlasenko <viy@altlinux.ru> 1:5.3-alt2
+- NMU: added missing Pod dependencies
+
 * Sat Apr 27 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:5.3-alt1
 - Version 5.3 (without MPI)
 
