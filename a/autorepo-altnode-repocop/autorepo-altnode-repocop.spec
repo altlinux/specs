@@ -3,7 +3,7 @@
 #BuildRequires: 
 Name: autorepo-altnode-repocop
 Version: 0.15
-Release: alt1
+Release: alt2
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
 
@@ -13,7 +13,7 @@ License: GPL2+
 #Url: 
 Source: %name-%version.tar
 
-BuildRequires: repocop
+BuildRequires: repocop perl(Pod/Text.pm)
 Requires: repocop > 0.67
 
 %description
@@ -35,6 +35,9 @@ install -m 755 repocop-* $RPM_BUILD_ROOT%_bindir
 %_bindir/*
 
 %changelog
+* Tue Nov 05 2013 Igor Vlasenko <viy@altlinux.ru> 0.15-alt2
+- NMU: added missing Pod dependencies
+
 * Mon Oct 21 2013 Igor Vlasenko <viy@altlinux.ru> 0.15-alt1
 - repocop TestDB interface support
 
