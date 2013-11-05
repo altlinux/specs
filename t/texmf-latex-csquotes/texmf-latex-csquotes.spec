@@ -2,7 +2,7 @@
 
 Name: texmf-latex-%srcName
 Version: 4.4d
-Release: alt1
+Release: alt2
 Summary: Context sensitive quotation facilities for LaTeX
 License: LPPL (LaTeX Project Public License)
 Group: Publishing
@@ -14,7 +14,7 @@ BuildArch: noarch
 Source0: %srcName-%version.tar
 
 BuildRequires(pre): rpm-build-texmf
-BuildRequires: ctanify
+BuildRequires: ctanify perl(Pod/Text.pm)
 
 Provides: tetex-latex-csquotes
 Obsoletes: tetex-latex-csquotes
@@ -48,6 +48,9 @@ ctanify --pkgname=%srcName --tdsdir=%buildroot/%_texmfmain "*" "tutorial.tex=doc
 %_texmfmain/doc/latex/%srcName
 
 %changelog
+* Tue Nov 05 2013 Igor Vlasenko <viy@altlinux.ru> 4.4d-alt2
+- NMU: added missing Pod dependencies
+
 * Sat Apr 10 2010 Kirill Maslinsky <kirill@altlinux.org> 4.4d-alt1
 - 4.4d
 - package renamed to texmf-latex-csquotes
