@@ -3,7 +3,7 @@
 Summary: OpenPrinting CUPS filters and backends
 Name: cups-filters
 Version: 1.0.41
-Release: alt1
+Release: alt2
 
 # For a breakdown of the licensing, see COPYING file
 # GPLv2:   filters: commandto*, imagetoraster, pdftops, rasterto*,
@@ -21,6 +21,9 @@ Patch0: %name-alt.patch
 Patch1: %name-alt-php-5.4.14-fix.patch
 Url: http://www.linuxfoundation.org/collaborate/workgroups/openprinting/pdf_as_standard_print_job_format
 Conflicts: cups < 1.6.1-alt1
+Conflicts: ghostscript-cups
+Obsoletes: ghostscript-cups
+Provides: ghostscript-cups
 
 BuildRequires: cups-devel
 # pdftopdf
@@ -142,8 +145,8 @@ install -m 644 utils/cups-browsed.service %buildroot/%_unitdir/
 %config(noreplace) %_sysconfdir/fonts/conf.d/99pdftoopvp.conf
 %config(noreplace) %_sysconfdir/cups/cups-browsed.conf
 %attr(0755,root,root) %_cups_serverbin/filter/*
-%exclude %_cups_serverbin/filter/gstopxl
-%exclude %_cups_serverbin/filter/gstoraster
+%_cups_serverbin/filter/gstopxl
+%_cups_serverbin/filter/gstoraster
 %attr(0755,root,root) %_cups_serverbin/backend/parallel
 %_datadir/cups/banners
 %_datadir/cups/charsets
@@ -179,6 +182,9 @@ install -m 644 utils/cups-browsed.service %buildroot/%_unitdir/
 %_libdir/libfontembed.so
 
 %changelog
+* Tue Nov 05 2013 Andriy Stepanov <stanv@altlinux.ru> 1.0.41-alt2
+- ghostsctip filters, add bannertopdf as PDF form
+
 * Thu Oct 31 2013 Anton Farygin <rider@altlinux.ru> 1.0.41-alt1
 - new version
 
