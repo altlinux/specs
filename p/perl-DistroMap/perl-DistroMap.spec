@@ -2,7 +2,7 @@
 
 Name: perl-%module
 Version: 0.20
-Release: alt2
+Release: alt3
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
 
@@ -13,7 +13,7 @@ Source: http://www.cpan.org/modules/by-module/DistroMap/%module-%version.tar.gz
 Url: http://search.cpan.org/dist/%module
 
 # Automatically added by buildreq on Wed Nov 06 2002
-BuildRequires: perl-devel perl(Pod/Usage.pm)
+BuildRequires: perl-devel perl(Pod/Usage.pm) perl(Pod/Text.pm)
 
 %description
 %summary
@@ -35,6 +35,9 @@ BuildRequires: perl-devel perl(Pod/Usage.pm)
 %_bindir/distrodb*
 
 %changelog
+* Tue Nov 05 2013 Igor Vlasenko <viy@altlinux.ru> 0.20-alt3
+- NMU: added missing Pod dependencies
+
 * Tue Oct 08 2013 Igor Vlasenko <viy@altlinux.ru> 0.20-alt2
 - bugfix release
 
