@@ -15,7 +15,7 @@
 
 Name: perl-Crypt-Random-Source
 Version: 0.07
-Release: alt1
+Release: alt2
 
 Summary: Get weak or strong random data from pluggable sources
 
@@ -30,7 +30,7 @@ Source: %m_distro-%version.tar.gz
 
 # Automatically added by buildreq on Mon May 02 2011 (-bi)
 # optimized out: perl-B-Hooks-EndOfScope perl-Data-OptList perl-Package-Stash perl-Params-Util perl-Sub-Exporter perl-Sub-Identify perl-Sub-Install perl-Sub-Name perl-Sub-Uplevel perl-Variable-Magic perl-devel
-BuildRequires: perl-Any-Moose perl-Capture-Tiny perl-Module-Find perl-Mouse perl-Test-Exception perl-Test-use-ok perl-namespace-clean
+BuildRequires: perl-Any-Moose perl-Capture-Tiny perl-Module-Find perl-Mouse perl-Test-Exception perl-Test-use-ok perl-namespace-clean perl(Sub/Exporter.pm)
 
 %description
 None.
@@ -48,6 +48,9 @@ None.
 %perl_vendor_privlib/Crypt/Random/Source.pm
 
 %changelog
+* Tue Nov 05 2013 Igor Vlasenko <viy@altlinux.ru> 0.07-alt2
+- NMU: added missing Pod dependencies
+
 * Mon May 02 2011 Denis Baranov <baraka@altlinux.ru> 0.07-alt1
 - initial build for ALT Linux Sisyphus
 
