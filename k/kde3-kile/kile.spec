@@ -9,7 +9,7 @@
 Name: kde3-kile
 Version: 2.0.3
 %define prerel %nil
-Release: alt2
+Release: alt3
 Summary: LaTeX source editor - TeX shell
 Group: Publishing
 License: %gpl2plus
@@ -85,6 +85,9 @@ install AUTHORS ChangeLog.* README README.cwl TODO %oname-remote-control.txt \
 
 
 %changelog
+* Tue Nov 05 2013 Evgeny Sinelnikov <sin@altlinux.ru> 2.0.3-alt3
+- Update automake higher check version for admin/cvs.sh to 1.14
+
 * Sun Jun 23 2013 Evgeny Sinelnikov <sin@altlinux.ru> 2.0.3-alt2
 - Build with Trinity libraries
 - Using with kdvi and libkbibtex for Qt3 and KDE3 build with Trinity
