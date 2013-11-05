@@ -1,5 +1,5 @@
 Name: ghostscript
-Version: 9.07
+Version: 9.10
 Release: alt1
 
 %define ijsver	0.35
@@ -17,7 +17,6 @@ Group: Publishing
 
 Source: %name-%version.tar.gz
 
-Patch1: ghostscript-rh-cups-filters.patch
 Patch2: ghostscript-rh-Fontmap.local.patch
 Patch3: ghostscript-rh-gdevcups-debug-uninit.patch
 Patch4: ghostscript-rh-iccprofiles-initdir.patch
@@ -28,7 +27,9 @@ Patch8: ghostscript-rh-scripts.patch
 Patch9: ghostscript-rh-icc-missing-check.patch
 
 Patch100: ghostscript-alt-ijs-version.patch
-Patch101: ghostscript-alt-gstoraster-avoid-buidroot.patch
+
+# Remove in futher version (should be part of next release)
+Patch200: ghostscript-alt-cups-banner.patch
 
 #compatibility requires
 Requires: %name-classic = %version-%release
@@ -101,14 +102,6 @@ Requires: libijs = %version-%release
 Provides: libespijs-devel = %version, libgnuijs-devel = %version
 Obsoletes: libgnuijs-devel, libespijs-devel
 
-%package cups
-Summary: CUPS specific files %name
-Version: %origver
-Group: Publishing
-Requires: %name = %version-%release
-Requires: bc
-Provides: %esp_name-cups = %version
-
 %description
 Ghostscript is a set of software that provides a PostScript(TM) interpreter,
 a set of C procedures (the Ghostscript library, which implements the
@@ -164,8 +157,6 @@ Classic edition of %name
 %description common
 Common files for the %name
 
-%description cups
-CUPS specific files %name
 
 %prep
 %setup
@@ -173,7 +164,6 @@ CUPS specific files %name
 # force system library usage
 rm -rf -- libpng zlib jpeg jasper freetype
 
-%patch1 -p1
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
@@ -183,7 +173,8 @@ rm -rf -- libpng zlib jpeg jasper freetype
 %patch8 -p1
 
 %patch100 -p1
-%patch101 -p2
+
+%patch200 -p2
 
 %build
 %autoreconf
@@ -194,7 +185,6 @@ export CFLAGS=-DA4
            --with-ijs \
 	   --with-drivers=ALL \
 	   --disable-compile-inits \
-	   --with-install-cups \
 	   --with-fontpath=/usr/share/fonts/default:\
 /usr/share/fonts/type1:\
 /usr/share/fonts/type1/urw:\
@@ -253,11 +243,6 @@ mkdir -p %buildroot/%_datadir/ghostscript/conf.d
 %_bindir/pdf2ps
 %_bindir/gsnd
 
-%files cups
-/usr/lib/cups/filter/*
-%_datadir/cups/model/*
-%_datadir/cups/mime/*
-
 %files classic
 %_bindir/gs
 
@@ -297,6 +282,9 @@ mkdir -p %buildroot/%_datadir/ghostscript/conf.d
 %_includedir/ijs
 
 %changelog
+* Fri Nov 01 2013 Andriy Stepanov <stanv@altlinux.ru> 9.10-alt1
+- New version
+
 * Mon Apr 22 2013 Fr. Br. George <george@altlinux.ru> 9.07-alt1
 - Autobuild version bump to 9.07
 - Update FC patchset
