@@ -1,7 +1,7 @@
 %define gcc_ver 4.7
 %define module_name	blcr
 %define module_version	0.8.5
-%define module_release	alt1
+%define module_release	alt2
 
 %define kversion	2.6.32
 %define krelease	alt25
@@ -79,8 +79,11 @@ done
 %module_dir/*
 
 %changelog
-* Tue Oct 15 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.5-alt1.132640.25
+* Wed Nov 06 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.5-alt2.132640.25
 - Build for kernel-image-hpc-skif-2.6.32-alt25.
+
+* Wed Nov 06 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.5-alt2
+- Release alt2
 
 * Tue Oct 15 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.5-alt1
 - Version 0.8.5
