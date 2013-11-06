@@ -1,3 +1,5 @@
+%set_automake_version 1.11
+
 %define _name totem-pl-parser
 %define ver_major 3.10
 %def_enable gtk_doc
@@ -5,7 +7,7 @@
 
 Name: lib%_name
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: Shared libraries of the Totem media player play list parser
 Group: System/Libraries
@@ -83,7 +85,7 @@ GObject introspection devel data for the Totem playlist parser library
 %make_build
 
 %install
-%makeinstall
+%makeinstall_std
 
 %find_lang --with-gnome --output=%name.lang %_name %_name-2.0
 
@@ -110,6 +112,9 @@ GObject introspection devel data for the Totem playlist parser library
 %endif
 
 %changelog
+* Wed Nov 06 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.0-alt2
+- use automake-1.11
+
 * Mon Sep 23 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.0-alt1
 - 3.10.0
 
