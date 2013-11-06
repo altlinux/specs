@@ -15,7 +15,7 @@
 %define nv_version 304
 %define nv_release 108
 %define nv_minor %nil
-%define pkg_rel alt112
+%define pkg_rel alt113
 %def_disable common
 %def_enable kernelsource
 
@@ -364,6 +364,9 @@ fi
 %endif
 
 %changelog
+* Wed Nov 06 2013 Sergey V Turchin <zerg@altlinux.org> 304.108-alt113
+- update patch for 3.11 kernel from upstream
+
 * Wed Sep 11 2013 Sergey V Turchin <zerg@altlinux.org> 304.108-alt112
 - add patch from Ubuntu against 3.11 kernel
 
