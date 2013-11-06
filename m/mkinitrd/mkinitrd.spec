@@ -1,5 +1,5 @@
 Name: mkinitrd
-Version: 3.0.22
+Version: 3.0.23
 Release: alt1
 Epoch: 1
 Summary: Creates an initial ramdisk image for preloading modules
@@ -70,6 +70,13 @@ install -p -m 0644 scripts/* %buildroot/lib/mkinitrd/initramfs-base/scripts/
 
 
 %changelog
+* Wed Nov 06 2013 Led <led@altlinux.ru> 1:3.0.23-alt1
+- 3.0.23:
+  + init: try mount devtmpfs to /dev before tmpfs
+  + udevadm wrapper: more compat to original udevadm
+  + findfs wrapper: add support -V/--version keys
+  + mkinitrd.sh: simplify CreateInitramfsConfigs()
+
 * Mon Aug 05 2013 Led <led@altlinux.ru> 1:3.0.22-alt1
 - 3.0.22:
   + init.sh scripts/*: fixes, cleanups, simplifications
