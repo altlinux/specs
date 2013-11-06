@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define m_distro Perl-Critic
 Name: perl-Perl-Critic
-Version: 1.120
+Version: 1.121
 Release: alt1
 
 Summary: Critique Perl source code for best-practices.  
@@ -53,6 +53,9 @@ code analysis.
 %exclude %perl_vendor_archlib
 
 %changelog
+* Wed Nov 06 2013 Igor Vlasenko <viy@altlinux.ru> 1.121-alt1
+- automated CPAN update
+
 * Sat Oct 26 2013 Igor Vlasenko <viy@altlinux.ru> 1.120-alt1
 - automated CPAN update
 
