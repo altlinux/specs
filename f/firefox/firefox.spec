@@ -8,7 +8,7 @@ Summary:              The Mozilla Firefox project is a redesign of Mozilla's bro
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox
-Version:        24.0
+Version:        25.0
 Release:        alt1
 License:        MPL/GPL/LGPL
 Group:          Networking/WWW
@@ -253,6 +253,20 @@ done
 %_rpmmacrosdir/firefox
 
 %changelog
+* Sun Nov 03 2013 Alexey Gladkov <legion@altlinux.ru> 25.0-alt1
+- New release (25.0).
+- Fixed:
+  + MFSA 2013-102 Use-after-free in HTML document templates
+  + MFSA 2013-101 Memory corruption in workers
+  + MFSA 2013-100 Miscellaneous use-after-free issues found through ASAN fuzzing
+  + MFSA 2013-99 Security bypass of PDF.js checks using iframes
+  + MFSA 2013-98 Use-after-free when updating offline cache
+  + MFSA 2013-97 Writing to cycle collected object during image decoding
+  + MFSA 2013-96 Improperly initialized memory and overflows in some JavaScript functions
+  + MFSA 2013-95 Access violation with XSLT and uninitialized data
+  + MFSA 2013-94 Spoofing addressbar though SELECT element
+  + MFSA 2013-93 Miscellaneous memory safety hazards (rv:25.0 / rv:24.1 / rv:17.0.10)
+
 * Tue Oct 01 2013 Alexey Gladkov <legion@altlinux.ru> 24.0-alt1
 - New release (24.0).
 - Add gstreamer support (ALT#29454).

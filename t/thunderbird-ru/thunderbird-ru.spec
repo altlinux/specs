@@ -1,7 +1,11 @@
-%define ciddir	%tbird_noarch_extensionsdir/langpack-ru@thunderbird.mozilla.org
+%define cid            langpack-ru@thunderbird.mozilla.org
+%define cid_dir        %tbird_noarch_extensionsdir/%cid
+
+%define cid_dict       ru@dictionaries.addons.mozilla.org
+%define cid_dict_dir   %tbird_noarch_extensionsdir/%cid_dict
 
 Name:		thunderbird-ru
-Version:	24.0.1
+Version:	24.1.0
 Release:	alt1
 Summary:	Russian (RU) Language Pack for Thunderbird
 
@@ -21,24 +25,53 @@ BuildRequires:		unzip
 %description
 The Mozilla Thunderbird in Russian.
 
+%prep
+%setup -c -n %name-%version/%cid
+
 %install
-%__mkdir_p %buildroot/%ciddir
-unzip -qq -d %buildroot/%ciddir %SOURCE0
+cd ..
 
-rm -rf -- %buildroot/%ciddir/dictionaries
-%__mkdir_p %buildroot/%ciddir/dictionaries
+mkdir -p -- \
+	%buildroot/%cid_dir \
+	%buildroot/%cid_dict_dir/dictionaries
 
-(set +x
-	for suf in aff dic; do
-		t="$(relative %_datadir/myspell/ru_RU.$suf %ciddir/dictionaries/)"
-		ln -vs "$t" %buildroot/%ciddir/dictionaries/ru.$suf
-	done
-)
+# Install translation
+cp -r -- %cid/* %buildroot/%cid_dir
+
+# Install dictionary
+cat > %buildroot/%cid_dict_dir/install.rdf <<-EOF
+	<?xml version="1.0"?>
+	<RDF xmlns="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+	     xmlns:em="http://www.mozilla.org/2004/em-rdf#">
+	  <Description about="urn:mozilla:install-manifest"
+	               em:id="%cid_dict"
+	               em:name="Russian (RU) Dictionary"
+	               em:version="%version"
+	               em:type="64"
+	               em:unpack="true"
+	               em:creator="Mozilla Russia">
+	    <em:targetApplication>
+	      <Description>
+	        <em:id>{3550f703-e582-4d05-9a08-453d09bdfdc6}</em:id>
+	        <em:minVersion>%version</em:minVersion>
+	        <em:maxVersion>%version.*</em:maxVersion>
+	      </Description>
+	    </em:targetApplication>
+	  </Description>
+	</RDF>
+EOF
+ln -s %_datadir/myspell/ru_RU.aff %buildroot/%cid_dict_dir/dictionaries/ru.aff
+ln -s %_datadir/myspell/ru_RU.dic %buildroot/%cid_dict_dir/dictionaries/ru.dic
 
 %files
-%ciddir
+%cid_dir
+%cid_dict_dir
 
 %changelog
+* Wed Nov 06 2013 Alexey Gladkov <legion@altlinux.ru> 24.1.0-alt1
+- New version (24.1.0).
+- Add dictionary extension.
+
 * Fri Oct 25 2013 Alexey Gladkov <legion@altlinux.ru> 24.0.1-alt1
 - New version (24.0.1).
 

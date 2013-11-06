@@ -3,7 +3,7 @@
 
 Summary:	Thunderbird is Mozilla's e-mail client
 Name:		thunderbird
-Version:	24.0.1
+Version:	24.1.0
 Release:	alt1
 License:	MPL/GPL
 Group:		Networking/Mail
@@ -323,10 +323,11 @@ rm -rf -- \
 	#
 
 #ver=%version
-ver=24.0
+minver=24.0
+maxver=25.*
 sed -i \
-	-e "s,^\\(MaxVersion\\)=.*,\\1=${ver%%.*}.*,g" \
-	-e "s,^\\(MinVersion\\)=.*,\\1=${ver%%.*}.0,g" \
+	-e "s,^\\(MaxVersion\\)=.*,\\1=$maxver,g" \
+	-e "s,^\\(MinVersion\\)=.*,\\1=$minver,g" \
 	%buildroot/%tbird_prefix/application.ini
 
 # desktop file
@@ -456,6 +457,19 @@ rm -f -- %buildroot/%lightning_ciddir/application.ini
 %_sysconfdir/rpm/macros.d/%name
 
 %changelog
+* Sun Nov 03 2013 Alexey Gladkov <legion@altlinux.ru> 24.1.0-alt1
+- New version (24.1.0).
+- Fixed:
+  + MFSA 2013-102 Use-after-free in HTML document templates
+  + MFSA 2013-101 Memory corruption in workers
+  + MFSA 2013-100 Miscellaneous use-after-free issues found through ASAN fuzzing
+  + MFSA 2013-98 Use-after-free when updating offline cache
+  + MFSA 2013-97 Writing to cycle collected object during image decoding
+  + MFSA 2013-96 Improperly initialized memory and overflows in some JavaScript functions
+  + MFSA 2013-95 Access violation with XSLT and uninitialized data
+  + MFSA 2013-94 Spoofing addressbar though SELECT element
+  + MFSA 2013-93 Miscellaneous memory safety hazards (rv:25.0 / rv:24.1 / rv:17.0.10)
+
 * Sun Oct 13 2013 Alexey Gladkov <legion@altlinux.ru> 24.0.1-alt1
 - New version (24.0.1).
 - Use internal mozldap.
