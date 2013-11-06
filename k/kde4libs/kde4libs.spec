@@ -13,11 +13,11 @@
 
 %define major 4
 %define minor 11
-%define bugfix 2
+%define bugfix 3
 %define rname kdelibs
 Name: kde4libs
 Version: %major.%minor.%bugfix
-Release: alt2
+Release: alt1
 
 %define conflictver %major.%minor-alt0.0.1
 %define conflictver_kdevelop 3.4.1-alt0.0.1
@@ -339,6 +339,12 @@ ln -sf `relative %buildroot/%_kde4_bindir/kde4-config %buildroot/%_K4bindir/kde4
 %_K4includedir/*
 
 %changelog
+* Tue Nov 05 2013 Sergey V Turchin <zerg@altlinux.org> 4.11.3-alt1
+- new version
+
+* Fri Oct 04 2013 Sergey V Turchin <zerg@altlinux.org> 4.11.2-alt1.M70P.1
+- built for M70P
+
 * Wed Oct 02 2013 Sergey V Turchin <zerg@altlinux.org> 4.11.2-alt2
 - don't revert code according kde-runtime changes
 

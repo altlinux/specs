@@ -23,11 +23,11 @@
 
 %define major 4
 %define minor 11
-%define bugfix 2
+%define bugfix 3
 %define rname kdebase-workspace
 Name: kde4base-workspace
 Version: %major.%minor.%bugfix
-Release: alt2
+Release: alt1
 
 Group: Graphical desktop/KDE
 Summary: K Desktop Environment - Workspace
@@ -56,6 +56,9 @@ Patch22: kde-workspace-4.9.90-plasma_konsole.patch
 Patch23: kde-workspace-4.7.80-no_HAL.patch
 Patch24: kdebase-workspace-4.11.1-no_HAL2.patch
 Patch25: kde-workspace-4.9.1-solid_krunner_disable.patch
+Patch26: kde-workspace-4.10.90-kde#171685.patch
+Patch27: kde-workspace-4.11.0-backlight_actual_brightness.patch
+Patch28: kde-workspace-4.11.1-kdm-logind-multiseat.patch
 # Ubuntu
 Patch850: kubuntu_11_fix_root_only_kcms.diff
 Patch851: kubuntu_always_show_kickoff_subtext.diff
@@ -138,6 +141,9 @@ BuildRequires: kde4pimlibs-devel akonadi-devel libraw1394-devel libpci-devel
 BuildRequires: python-module-PyQt4 python-module-sip python-devel
 BuildRequires: kde4-kactivities-devel kde4-nepomuk-core-devel
 BuildRequires: python-module-sip python-devel libselinux-devel
+%if_enabled systemd
+BuildRequires: libsystemd-login-devel libsystemd-journal-devel libsystemd-id128-devel libsystemd-daemon-devel systemd-devel
+%endif
 #BuildRequires: libwayland-client-devel libwayland-server-devel libwayland-egl-devel
 BuildRequires: kde4libs-devel >= %version
 
@@ -514,6 +520,11 @@ rm -rf plasma/generic/scriptengines/google_gadgets
 %patch23 -p1
 %patch24 -p1
 %patch25 -p1
+%patch26 -p1
+%patch27 -p1
+%if_enabled systemd
+%patch28 -p1
+%endif
 #
 %patch850 -p1
 %patch851 -p1
@@ -944,6 +955,13 @@ chmod 0755 %buildroot/%_sysconfdir/firsttime.d/kdm4
 %_K4dbus_interfaces/*
 
 %changelog
+* Wed Nov 06 2013 Sergey V Turchin <zerg@altlinux.org> 4.11.3-alt1
+- new version
+- add patch for KDM multiseat support
+
+* Wed Oct 09 2013 Sergey V Turchin <zerg@altlinux.org> 4.11.2-alt1.M70P.1
+- built for M70P
+
 * Wed Oct 09 2013 Sergey V Turchin <zerg@altlinux.org> 4.11.2-alt2
 - don't change gllegacy defaults to avoid wrong kwin compositing defaults
 
