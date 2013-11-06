@@ -1,6 +1,6 @@
 %define dist MIME-Lite
 Name: perl-MIME-Lite
-Version: 3.029
+Version: 3.030
 Release: alt1
 
 Summary: Low-calorie MIME generator
@@ -39,6 +39,9 @@ modules installed, but will work with them if they are.
 %perl_vendor_privlib/MIME
 
 %changelog
+* Wed Nov 06 2013 Igor Vlasenko <viy@altlinux.ru> 3.030-alt1
+- automated CPAN update
+
 * Wed Sep 26 2012 Igor Vlasenko <viy@altlinux.ru> 3.029-alt1
 - automated CPAN update
 
