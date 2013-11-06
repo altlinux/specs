@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20130904
+Version: 20131106
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -55,6 +55,9 @@ rm %buildroot/lib/firmware/{WHENCE,LICENCE.*}
 %exclude /lib/firmware/carl9170fw
 
 %changelog
+* Wed Nov 06 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 20131106-alt1
+- updated from git
+
 * Wed Sep 04 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 20130904-alt1
 - updated from git
 
