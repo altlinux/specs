@@ -25,7 +25,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.10.18
-Release: alt4
+Release: alt5
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -1831,6 +1831,21 @@ done)
 
 
 %changelog
+* Tue Nov 05 2013 Led <led@altlinux.ru> 3.10.18-alt5
+- updated:
+  + fix-drivers-cpufreq--intel_pstate
+  + fix-drivers-scsi--sd_mod
+  + fix-fs-jfs
+- added:
+  + fix-drivers-ata--libata
+  + fix-drivers-md--bcache
+  + fix-drivers-md--md-mod
+  + fix-drivers-net-wireless-ath-ath9k--ath9k
+  + fix-drivers-vhost--vhost_scsi
+  + fix-fs-ecryptfs
+  + fix-kernel--cgroup
+  + fix-kernel-time--clockevents
+
 * Tue Nov 05 2013 Led <led@altlinux.ru> 3.10.18-alt4
 - updated:
   + fix-drivers-usb-host--xhci-hcd
