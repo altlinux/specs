@@ -1,5 +1,5 @@
 Name: startup
-Version: 0.9.9.1
+Version: 0.9.9.2
 Release: alt1
 
 Summary: The system startup scripts
@@ -164,6 +164,10 @@ done
 %dir %_localstatedir/rsbac
 
 %changelog
+* Wed Nov 06 2013 Dmitry V. Levin <ldv@altlinux.org> 0.9.9.2-alt1
+- scripts/cleanup: pass --remove --exclude-prefix=/dev
+  to systemd-tmpfiles (closes: #29537).
+
 * Wed May 29 2013 Dmitry V. Levin <ldv@altlinux.org> 0.9.9.1-alt1
 - raidstop: skip root device in case of partitioned raid (closes: #29027).
 - scripts/cleanup: do not create x11 directories, rely on
