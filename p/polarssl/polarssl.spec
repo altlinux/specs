@@ -1,5 +1,5 @@
 Name: polarssl
-Version: 1.3.1
+Version: 1.3.2
 Release: alt1
 
 Summary: Light-weight cryptographic and SSL/TLS library
@@ -8,9 +8,7 @@ Group: System/Libraries
 
 Url: https://%name.org/
 Packager: Nazarov Denis <nenderus@altlinux.org>
-
 Source: https://%name.org/download/%name-%version-gpl.tgz
-Patch: %name-%version-alt-havege.patch
 
 BuildRequires: cmake
 BuildRequires: pkcs11-helper-devel
@@ -51,7 +49,6 @@ Cryptographic utilities based on PolarSSL.
 
 %prep
 %setup
-%patch0 -p1
 
 %build
 %__mkdir_p %_target_platform
@@ -90,5 +87,8 @@ popd
 %_libexecdir/%name/*
 
 %changelog
+* Wed Nov 06 2013 Nazarov Denis <nenderus@altlinux.org> 1.3.2-alt1
+- Version 1.3.2
+
 * Sun Nov 03 2013 Nazarov Denis <nenderus@altlinux.org> 1.3.1-alt1
 - Initial build for ALT Linux
