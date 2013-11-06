@@ -1,9 +1,11 @@
+%set_automake_version 1.11
+
 %define mpiimpl openmpi
 %define mpidir %_libdir/%mpiimpl
 
 Name: ngsolve
 Version: 5.1
-Release: alt2
+Release: alt3
 Summary: NGSolve Finite Element Library
 License: GPL or LGPL
 Group: Sciences/Mathematics
@@ -154,6 +156,9 @@ mv %buildroot%_includedir/*.h* %buildroot%_includedir/%name/
 #doc %_datadir/%name
 
 %changelog
+* Wed Nov 06 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.1-alt3
+- Fixed build
+
 * Thu Sep 12 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.1-alt2
 - 5.1 released
 
