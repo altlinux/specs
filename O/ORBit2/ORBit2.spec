@@ -3,8 +3,8 @@
 %def_enable gtk_doc
 
 Name: ORBit2
-Version: %ver_major.19
-Release: alt4
+Version: %ver_major.20
+Release: alt0.1
 
 Summary: A high-performance CORBA Object Request Broker
 Group: System/Libraries
@@ -13,11 +13,11 @@ Url: http://www.gnome.org/projects/%name
 
 Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 
-Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.bz2
+Source: %name-%version.tar
+#Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.bz2
 Patch: %name-2.7.3-alt-test_makefile.patch
 Patch1: %name-2.14.0-alt-shared_name-server.patch
 Patch2: %name-2.13.3-fix-link-as-needed.patch
-Patch3: ORBit2-fc-allow-deprecated.patch
 
 %define libIDL_ver 0.8.2
 %define glib_ver 2.8.0
@@ -112,11 +112,9 @@ This package contains static versions of libraries from ORBit2 package.
 %patch -p1
 %patch1 -p0
 %patch2 -p0
-%patch3 -p1
 
 %build
 %autoreconf
-
 %configure \
 	%{subst_enable static} \
 	%{?_enable_gtk_doc:--enable-gtk-doc}
@@ -124,11 +122,8 @@ This package contains static versions of libraries from ORBit2 package.
 # SMP-incompatible build
 %make
 
-%check
-%make check
-
 %install
-%makeinstall
+%makeinstall_std
 
 # system orbitrc file
 mkdir -p %buildroot%_sysconfdir
@@ -144,6 +139,9 @@ cat << EOF > %buildroot%_sysconfdir/orbitrc
 #ORBLocalOnly=1
 #ORBIIOPIPName=127.0.0.1
 EOF
+
+%check
+%make check
 
 %files
 %_bindir/typelib-dump
@@ -179,6 +177,9 @@ EOF
 %exclude %_libdir/*/*.la
 
 %changelog
+* Wed Nov 06 2013 Yuri N. Sedunov <aris@altlinux.org> 2.14.20-alt0.1
+- 2.14.20 snapshot
+
 * Sun Apr 07 2013 Yuri N. Sedunov <aris@altlinux.org> 2.14.19-alt4
 - fixed build with glib-2.36
 
