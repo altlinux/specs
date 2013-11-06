@@ -14,7 +14,7 @@
 %define _enable_test 1
 
 Name: perl-DBIx-DBSchema
-Version: 0.40
+Version: 0.43
 Release: alt1
 
 Summary: Database-independent schema objects
@@ -59,6 +59,9 @@ welcomed.  See DBIx::DBSchema::DBD, "Driver Writer's Guide and Base Class".
 %perl_vendor_privlib/DBIx/
 
 %changelog
+* Wed Nov 06 2013 Igor Vlasenko <viy@altlinux.ru> 0.43-alt1
+- automated CPAN update
+
 * Mon Sep 24 2012 Igor Vlasenko <viy@altlinux.ru> 0.40-alt1
 - automated CPAN update
 
