@@ -25,7 +25,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.10.18
-Release: alt1
+Release: alt4
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -1831,7 +1831,29 @@ done)
 
 
 %changelog
-* Mon Nov 02 2013 Led <led@altlinux.ru> 3.10.18-alt1
+* Tue Nov 05 2013 Led <led@altlinux.ru> 3.10.18-alt4
+- updated:
+  + fix-drivers-usb-host--xhci-hcd
+
+* Tue Nov 05 2013 Led <led@altlinux.ru> 3.10.18-alt3
+- updated:
+  + fix-drivers-usb-host--xhci-hcd
+- added:
+  + fix-drivers-pci
+  + fix-drivers-scsi-qla2xxx--qla2xxx
+  + fix-drivers-usb-host--ehci-pci
+
+* Tue Nov 05 2013 Led <led@altlinux.ru> 3.10.18-alt2
+- removed:
+  + fix-fs-btrfs
+- updated:
+  + fix-fs-proc
+  + feat-fs-aufs
+  + feat-kernel-power-tuxonice
+- added:
+  + fix-kernel--audit_tree
+
+* Mon Nov 04 2013 Led <led@altlinux.ru> 3.10.18-alt1
 - 3.10.18
 - removed:
   + fix-drivers-md--dm-snapshot
