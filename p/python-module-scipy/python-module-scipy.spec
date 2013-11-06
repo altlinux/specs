@@ -11,7 +11,7 @@ BuildRequires(pre): rpm-build-python
 
 Name: python-module-%oname
 Version: 0.14.0
-Release: alt3.git20131020
+Release: alt4.git20131020
 
 Summary: SciPy is the library of scientific codes
 
@@ -39,7 +39,7 @@ BuildPreReq: python-module-Pygments
 BuildPreReq: python-module-matplotlib
 %if_enabled docs
 BuildPreReq: python-module-matplotlib-sphinxext python-module-numpydoc
-BuildPreReq: %py_dependencies scikits.statsmodels.docs.sphinxext
+#BuildPreReq: %py_dependencies scikits.statsmodels.docs.sphinxext
 %endif
 
 BuildRequires: gcc-c++ gcc-fortran liblapack-devel python-module-Pyrex
@@ -457,6 +457,9 @@ rm -f %buildroot%python_sitelibdir/scipy/pickle/generated/scipy-stats-rv_discret
 %endif
 
 %changelog
+* Wed Nov 06 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.14.0-alt4.git20131020
+- Fixed build
+
 * Fri Oct 25 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.14.0-alt3.git20131020
 - Fixed linking of qhull.so
 
