@@ -8,7 +8,7 @@
 
 Name: fluidsynth
 Version: 1.1.6
-%define release alt1
+%define release alt2
 
 %ifdef cvs_date
 Release: %{release}cvs%cvs_date
@@ -184,6 +184,7 @@ install -m755 %SOURCE1 ./autogen.sh
 %ifdef cvs_date
 ./autogen.sh
 %endif
+libtoolize
 NOCONFIGURE=1 ./autogen.sh
 %configure \
 	%{subst_enable static} \
@@ -228,6 +229,9 @@ NOCONFIGURE=1 ./autogen.sh
 %endif
 
 %changelog
+* Wed Nov 06 2013 Yuri N. Sedunov <aris@altlinux.org> 1.1.6-alt2
+- fixed build
+
 * Mon Dec 24 2012 Yuri N. Sedunov <aris@altlinux.org> 1.1.6-alt1
 - 1.1.6
 
