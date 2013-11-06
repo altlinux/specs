@@ -25,7 +25,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.10.18
-Release: alt5
+Release: alt6
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -1831,6 +1831,13 @@ done)
 
 
 %changelog
+* Wed Nov 05 2013 Led <led@altlinux.ru> 3.10.18-alt6
+- updated:
+  + fix-virt-kvm--kvm
+- added:
+  + fix-arch-um
+  + fix-drivers-uio--uio (CVE-2013-4511)
+
 * Tue Nov 05 2013 Led <led@altlinux.ru> 3.10.18-alt5
 - updated:
   + fix-drivers-cpufreq--intel_pstate
