@@ -10,7 +10,7 @@
 
 Name: %oname-%scalar_type
 Version: 3.53.1
-Release: alt11
+Release: alt12
 Summary: A General Purpose, Parallel, Multi-Physics FEM Program (%scalar_type scalars)
 License: GPL v2+
 Group: Sciences/Mathematics
@@ -28,7 +28,7 @@ BuildPreReq: texlive-extra-utils svg2pdf latex2html doc++
 BuildPreReq: libhypre-devel-doc ghostscript-utils chrpath
 BuildPreReq: libtrilinos-devel libgaleri-devel c2html
 BuildPreReq: transfig tgif rpm-macros-make perl-devel
-BuildPreReq: libdakota-devel
+BuildPreReq: libdakota-devel perl-podlators
 
 Requires: lib%name = %version-%release
 
@@ -145,13 +145,16 @@ done
 %ldir/lib/*.so
 %ldir/include/*
 
-%if "%scalar_type" == "real"
-%files -n %oname-docs
+#if "%scalar_type" == "real"
+#files -n %oname-docs
 #doc doc/*.pdf doc/OBJ/*.pdf doc/manual/html
-%doc doc/OBJ/*.pdf
-%endif
+#doc doc/OBJ/*.pdf
+#endif
 
 %changelog
+* Wed Nov 06 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.53.1-alt12
+- Fixed build
+
 * Mon Jul 15 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.53.1-alt11
 - Version 3.53.1
 
@@ -205,3 +208,4 @@ done
 
 * Fri Dec 17 2010 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.53.1-alt1.beta
 - Initial build for Sisyphus
+
