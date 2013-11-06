@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.4.0
-Release: alt2.git20130903
+Release: alt2.git20131031
 Summary: The neuroimaging in python (NIPY) project
 License: MIT
 Group: Development/Python
@@ -23,6 +23,7 @@ BuildPreReq: dvipng libniftilib-devel
 BuildPreReq: python-module-nibabel python-module-Cython
 BuildPreReq: python-module-sphinx-devel python-module-Pygments
 BuildPreReq: graphviz ghostscript-utils
+BuildPreReq: %py_dependencies pl
 %setup_python_module %oname
 
 %description
@@ -167,6 +168,9 @@ rm -f %buildroot%python_sitelibdir/nipy/examples/ds105/parallel_run.py
 #python_sitelibdir/*/*/*/*/*/tests
 
 %changelog
+* Wed Nov 06 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.0-alt2.git20131031
+- New snapshot
+
 * Thu Sep 19 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.0-alt2.git20130903
 - Moved all tests into tests subpackage
 
