@@ -2,7 +2,7 @@
 %define oldver 2.0
 
 Name: gimp
-Version: %ver_major.6
+Version: %ver_major.8
 Release: alt1
 
 Summary: The GNU Image Manipulation Program
@@ -116,6 +116,9 @@ find %buildroot%_libdir/%name -name \*.la -delete
 %_datadir/aclocal/*
 
 %changelog
+* Wed Nov 06 2013 Valery Inozemtsev <shrek@altlinux.ru> 2.8.8-alt1
+- 2.8.8
+
 * Tue Jun 25 2013 Valery Inozemtsev <shrek@altlinux.ru> 2.8.6-alt1
 - 2.8.6
 
