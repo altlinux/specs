@@ -2,7 +2,7 @@
 
 Name: python-module-%oname
 Version: 0.12.0
-Release: alt1
+Release: alt2
 
 Summary: Python Data Analysis Library
 License: BSD
@@ -62,9 +62,9 @@ sed -i 's|@PYPATH@|%buildroot%python_sitelibdir|' doc/make.py
 %install
 %python_install
 
-pushd doc
-./make.py html
-popd
+#pushd doc
+#./make.py html
+#popd
 
 %files
 %doc README.rst RELEASE.md
@@ -77,10 +77,14 @@ popd
 %python_sitelibdir/*/*/test*
 
 %files docs
-%doc doc/build/html
+#doc doc/build/html
+%doc doc/source
 %doc examples
 
 %changelog
+* Wed Nov 06 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.12.0-alt2
+- Fixed build
+
 * Wed Sep 18 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.12.0-alt1
 - Version 0.12.0
 
