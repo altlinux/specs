@@ -3,7 +3,7 @@
 %def_enable shared
 %def_enable static
 %def_disable multilib
-%def_enable testsuite
+%def_disable testsuite
 %def_disable restore_ids
 %def_disable all_static
 %def_disable info
@@ -20,7 +20,7 @@ Name: blcr
 %define Name BLCR
 %define lname lib%name
 Version: 0.8.5
-Release: alt1
+Release: alt2
 Summary: Berkeley Lab Checkpoint/Restart for Linux
 Group: System/Base
 License: %gpl2plus
@@ -226,6 +226,9 @@ sed -i -e '3rinit.info' \
 
 
 %changelog
+* Wed Nov 06 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.5-alt2
+- Disabled testsuite
+
 * Tue Oct 15 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.5-alt1
 - Version 0.8.5
 
