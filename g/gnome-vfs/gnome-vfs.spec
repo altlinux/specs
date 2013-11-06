@@ -24,13 +24,14 @@
 %def_enable daemon
 
 %def_disable static
+%set_automake_version 1.11
 
 %define ver_major 2.24
 %define oldname gnome-vfs2
 
 Name: gnome-vfs
 Version: %ver_major.4
-Release: alt6
+Release: alt7
 Serial: 1
 
 Summary: The GNOME virtual file-system libraries
@@ -368,6 +369,9 @@ fi
 %exclude %vfsmodulesdir/*.la
 
 %changelog
+* Wed Nov 06 2013 Yuri N. Sedunov <aris@altlinux.org> 1:2.24.4-alt7
+- use automake_1.11
+
 * Tue Apr 09 2013 Yuri N. Sedunov <aris@altlinux.org> 1:2.24.4-alt6
 - fixed build with glib-2.36
 
