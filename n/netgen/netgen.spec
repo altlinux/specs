@@ -1,9 +1,11 @@
 %define mpiimpl openmpi
 %define mpidir %_libdir/%mpiimpl
 
+%set_automake_version 1.11
+
 Name: netgen
 Version: 5.2
-Release: alt2.svn20130902
+Release: alt3.svn20130902
 Summary: Automatic 3d tetrahedral mesh generator
 License: LGPL
 Group: Graphics
@@ -184,6 +186,9 @@ done
 %doc demoapp
 
 %changelog
+* Wed Nov 06 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.2-alt3.svn20130902
+- Fixed build
+
 * Wed Sep 25 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.2-alt2.svn20130902
 - Fixed build
 
