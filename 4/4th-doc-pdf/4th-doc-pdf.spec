@@ -1,15 +1,15 @@
 %define Name 4tH
 %define bname 4th
 Name: %bname-doc-pdf
-Version: 3.62.0
+Version: 3.62.2
 Release: alt1
 Summary: %Name manual in PDF format
 Summary(uk_UA.CP1251): Посібник для %Name у форматі PDF
 Summary(ru_RU.CP1251): Руководство для %Name в формате PDF
 License: GPLv3
 Group: Development/Documentation
-URL: http://hansoft.come.to/
-Source: http://www.xs4all.nl/~thebeez/%Name/%{Name}manual.pdf
+URL: http://thebeez.home.xs4all.nl/4tH
+Source: %url/%{Name}manual.pdf
 BuildArch: noarch
 Provides: %bname-doc = %version-%release
 Provides: %bname-manual = %version-%release
@@ -57,6 +57,10 @@ install -D -m 0644 %SOURCE0 %buildroot%_docdir/%bname-%version/manual.pdf
 
 
 %changelog
+* Wed Nov 06 2013 Led <led@altlinux.ru> 3.62.2-alt1
+- 3.62.2
+- fixed URL
+
 * Mon Dec 24 2012 Led <led@altlinux.ru> 3.62.0-alt1
 - 3.62.0
 
