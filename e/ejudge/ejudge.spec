@@ -1,4 +1,5 @@
 %define ejudge_user ejudge
+%def_enable  systemd
 %define ejudge_group judges
 %define ejudge_home /var/lib/ejudge
 %define cgi_bin_dir /var/www/cgi-bin
@@ -9,8 +10,8 @@
 
 
 Name: ejudge
-Version: 2.3.27
-Release: alt3
+Version: 2.3.28
+Release: alt1
 
 
 Summary: Ejudge is a programming contest managment system
@@ -21,13 +22,15 @@ Group: System/Servers
 Url: http://www.ejudge.ru
 Packager: Denis Kirienko <dk@altlinux.ru>
 
-Source0: %name-svn7474.tar
+Source0: %name-2.3.28.tar
 Source1: %name.rc
 Source2: %name.logrotate
 Source3: ejudge-install.sh
 Source4: ejudge-README-ALT.utf8
 Source5: ejudge-cntsguide.pdf
 Source6: ejudge-refmanual.pdf
+Source7: %name.service
+Source8: %name.conf
 
 Patch1: ejudge-stylecheck.patch
 Patch2: ejudge-tsc.c.patch
@@ -35,6 +38,9 @@ Patch3: ejudge-compilers.patch
 
 BuildPreReq: flex, sed, mktemp, libexpat-devel, zlib-devel, libzip-devel, libncursesw-devel, libMySQL-devel, libcurl-devel, autoconf
 BuildRequires: libzip-devel
+%if_enabled systemd
+BuildRequires: systemd
+%endif
 Requires: sharutils, apache2, iconv, gawk, a2ps
 
 Obsoletes: libreuse
@@ -85,7 +91,7 @@ bzip2 -9k ChangeLog NEWS NEWS.RUS
 --enable-super-serve-socket=%ejudge_socket_dir/super-serve-socket         \
 --enable-new-server-socket=%ejudge_socket_dir/new-server-socket           \
 --enable-contests-home-dir=%ejudge_home                                   \
---enable-local-dir=%ejudge_socket_dir                                     \
+--enable-local-dir=%ejudge_home/tmp                                       \
 --libexec=%{_libexecdir}                                                  \
 --enable-cgi-bin-dir=%{_libexecdir}/%name/cgi-bin                         \
 --enable-conf-dir=%{ejudge_home}/data                                     \
@@ -107,7 +113,13 @@ install -p -m644 -D %SOURCE2 %buildroot%{_logrotatedir}/%name
 install -d %buildroot%ejudge_home
 install -d %buildroot%ejudge_socket_dir
 install -d %buildroot%lang_config_dir
-%find_lang --all-name %name
+%find_lang ejudge ejudgecheckers
+cat ejudgecheckers.lang >> ejudge.lang
+
+%if_enabled systemd
+install -p -m644 -D %SOURCE7 %buildroot%{_unitdir}/%name.service
+install -p -m644 -D %SOURCE8 %buildroot%{_tmpfilesdir}/%name.conf
+%endif
 
 %pre
 %{_sbindir}/groupadd -r -f %ejudge_group 2>/dev/null || :
@@ -129,12 +141,23 @@ install -d %buildroot%lang_config_dir
 %{_libdir}/libchecker*
 %{_libexecdir}/%name
 %{_datadir}/%name
+%attr(755,%ejudge_user,root) %dir %ejudge_socket_dir
+
+%if_enabled systemd
+%{_unitdir}/%name.service
+%{_tmpfilesdir}/%name.conf
+%endif
+
 %doc AUTHORS ChangeLog.bz2 NEWS.bz2 NEWS.RUS.bz2 ejudge-install.sh ejudge-README-ALT.utf8
 
 %files doc
 %doc ejudge-*.pdf
 
 %changelog
+* Tue Nov 05 2013 Denis Kirienko <dk@altlinux.org> 2.3.28-alt1
+- Version 2.3.28 (SVN 7518)
+- Added systemd support
+
 * Wed Oct 23 2013 Denis Kirienko <dk@altlinux.org> 2.3.27-alt3
 - SVN 7474
 
