@@ -3,7 +3,7 @@
 
 Name: babel
 Version: 1.4.0
-Release: alt8.svn20090721
+Release: alt9.svn20090721
 Summary: Language tool for high-performance scientific computing community
  
 License: LGPL v2.1
@@ -272,6 +272,7 @@ export JAVACFLAGS="-classpath $CLASSPATH"
 export MPI_VENDOR=%mpiimpl
 source %mpidir/bin/mpivars.sh
 
+./autotool_rebuild.sh || automake --add-missing
 ./autotool_rebuild.sh
 %configure \
 	--with-gnu-ld \
@@ -386,6 +387,9 @@ done
 %_docdir/%name
 
 %changelog
+* Wed Nov 06 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4.0-alt9.svn20090721
+- Fixed build
+
 * Sun Jun 24 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4.0-alt8.svn20090721
 - Fixed RPATH
 
