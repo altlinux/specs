@@ -15,9 +15,9 @@
 %define nv_version 304
 %define nv_release 108
 %define nv_minor %nil
-%define pkg_rel alt113
+%define pkg_rel alt114
 %def_disable common
-%def_enable kernelsource
+%def_disable kernelsource
 
 %define tbver %{nv_version}.%{nv_release}.%{nv_minor}
 %if "%nv_minor" == "%nil"
@@ -364,6 +364,9 @@ fi
 %endif
 
 %changelog
+* Thu Nov 07 2013 Sergey V Turchin <zerg@altlinux.org> 304.108-alt114
+- don't package kernel module sources
+
 * Wed Nov 06 2013 Sergey V Turchin <zerg@altlinux.org> 304.108-alt113
 - update patch for 3.11 kernel from upstream
 
