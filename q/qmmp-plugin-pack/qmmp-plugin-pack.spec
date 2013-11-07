@@ -1,5 +1,5 @@
 %define		branch 0.8
-%define		svn svn3815
+%define		svn svn3880
 
 Version:	%branch.0
 Name:		qmmp-plugin-pack
@@ -121,6 +121,9 @@ qmake "QMAKE_CFLAGS+=%optflags" "QMAKE_CXXFLAGS+=%optflags" LIB_DIR=/%_lib %name
 %_libdir/qmmp/Ui/libqsui.so
 
 %changelog
+* Thu Nov 07 2013 Motsyo Gennadi <drool@altlinux.ru> 0.8.0-alt1.svn3880
+- build svn3880
+
 * Fri Oct 18 2013 Motsyo Gennadi <drool@altlinux.ru> 0.8.0-alt1.svn3815
 - build svn3815
 
