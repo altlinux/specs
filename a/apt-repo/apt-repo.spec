@@ -1,5 +1,5 @@
 Name:     apt-repo
-Version:  1.1.6
+Version:  1.2.0
 Release:  alt1
 
 Summary:  Script for manipulation APT repository list
@@ -12,6 +12,7 @@ BuildArch: noarch
 Source:   %name-%version.tar
 BuildRequires: gzip
 Requires:  apt
+Requires:  curl
 
 %description
 The apt-repo script allow to show, add and remove APT repositories specified
@@ -35,6 +36,12 @@ gzip %buildroot%_man8dir/%name.8
 %doc %_man8dir/%name.8.gz
 
 %changelog
+* Thu Nov 07 2013 Andrey Cherepanov <cas@altlinux.org> 1.2.0-alt1
+- Add `apt-repo test task <num>` for install all task packages
+  (except *-debuginfo)
+- Get package list from task
+- Add t7 and c7 in available repository list
+
 * Tue Oct 29 2013 Andrey Cherepanov <cas@altlinux.org> 1.1.6-alt1
 - Add task source with Arepo on x86_64
 
