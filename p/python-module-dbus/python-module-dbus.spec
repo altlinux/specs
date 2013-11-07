@@ -1,17 +1,19 @@
+%set_automake_version 1.11
+
 %define _name dbus-python
-%def_disable check
+%def_enable check
 
 Name: python-module-dbus
-Version: 1.1.1
-Release: alt4
+Version: 1.2.0
+Release: alt1
 
 Summary: Python bindings for D-BUS library
 License: AFL/GPL
 Group: Development/Python
 Url: http://www.freedesktop.org/wiki/Software/DBusBindings
 
-Source: dbus-python-%version.tar
-#Source: http://dbus.freedesktop.org/releases/dbus-python/dbus-python-%version.tar.gz
+##Source: dbus-python-%version.tar
+Source: http://dbus.freedesktop.org/releases/dbus-python/dbus-python-%version.tar.gz
 Patch: dbus-python-1.1.1-1-alt-link.patch
 Patch2: dbus-python-1.1.1-alt-usc4-impaired-python-hack2-around.patch
 
@@ -53,8 +55,7 @@ D-Bus python bindings for use with python programs.
 Development package.
 
 %prep
-%setup -n %_name-%version
-%setup -D -c -n %_name-%version
+%setup -n %_name-%version -a0
 mv %_name-%version py3build
 %patch -p1
 %patch2 -p1
@@ -109,6 +110,10 @@ done
 %exclude %_docdir/dbus-python
 
 %changelog
+* Thu Nov 07 2013 Yuri N. Sedunov <aris@altlinux.org> 1.2.0-alt1
+- 1.2.0
+- use automake_1.11
+
 * Sun Apr 14 2013 Yuri N. Sedunov <aris@altlinux.org> 1.1.1-alt4
 - rebuilt to remove separate python3-module-dbus from Sisyphus
 
