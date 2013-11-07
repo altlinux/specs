@@ -1,6 +1,6 @@
 %define dist Hash-Merge
 Name: perl-%dist
-Version: 0.12
+Version: 0.200
 Release: alt1
 
 Summary: Merges arbitrarily deep hashes into a single hash
@@ -8,7 +8,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/R/RE/REHSACK/Hash-Merge-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -38,5 +38,8 @@ hashes, or recursive references, are not handled well by this method.>
 %perl_vendor_privlib/Hash*
 
 %changelog
+* Wed Nov 06 2013 Igor Vlasenko <viy@altlinux.ru> 0.200-alt1
+- automated CPAN update
+
 * Tue Apr 13 2010 Alexey Tourbin <at@altlinux.ru> 0.12-alt1
 - initial revision, for DBIx::Class
