@@ -2,7 +2,7 @@
 
 Name: python-module-%oname
 Version: 0.12.0
-Release: alt2
+Release: alt3
 
 Summary: Python Data Analysis Library
 License: BSD
@@ -62,6 +62,12 @@ sed -i 's|@PYPATH@|%buildroot%python_sitelibdir|' doc/make.py
 %install
 %python_install
 
+# It is the file in the package whose name matches the format emacs or vim uses 
+# for backup and autosave files. It may have been installed by  accident.
+find $RPM_BUILD_ROOT \( -name '.*.swp' -o -name '#*#' -o -name '*~' \) -print -delete
+# failsafe cleanup if the file is declared as %%doc
+find . \( -name '.*.swp' -o -name '#*#' -o -name '*~' \) -print -delete
+
 #pushd doc
 #./make.py html
 #popd
@@ -82,6 +88,9 @@ sed -i 's|@PYPATH@|%buildroot%python_sitelibdir|' doc/make.py
 %doc examples
 
 %changelog
+* Thu Nov 07 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.12.0-alt3
+- Applied repocop patch
+
 * Wed Nov 06 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.12.0-alt2
 - Fixed build
 
