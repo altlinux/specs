@@ -1,6 +1,6 @@
 Name: shadow
 Version: 4.1.4.2
-Release: alt8
+Release: alt9
 Serial: 1
 
 Summary: Utilities for managing shadow password files and user/group accounts
@@ -365,6 +365,9 @@ fi
 %exclude %_man8dir/nologin.8.*
 
 %changelog
+* Thu Nov 07 2013 Mikhail Efremov <sem@altlinux.org> 1:4.1.4.2-alt9
+- Fix build: Remove deprecated AM_C_PROTOTYPES.
+
 * Thu Jun 21 2012 Mikhail Efremov <sem@altlinux.org> 1:4.1.4.2-alt8
 - Fixed groupmod.
 
