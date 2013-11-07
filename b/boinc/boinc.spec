@@ -1,5 +1,5 @@
 Name:		boinc
-Version: 7.2.27
+Version: 7.2.28
 Release: alt1
 Packager:	Paul Wolneykien <manowar@altlinux.ru>
 License:	GPLv3+/LGPLv3+
@@ -482,6 +482,9 @@ getent group boincadm >/dev/null || groupadd -r boincadm
 %{_libdir}/libsched.so
 
 %changelog
+* Thu Nov 07 2013 Cronbuild Service <cronbuild@altlinux.org> 7.2.28-alt1
+- Fresh up to v7.2.28 with the help of cronbuild and update-source-functions.
+
 * Tue Nov 05 2013 Cronbuild Service <cronbuild@altlinux.org> 7.2.27-alt1
 - Fresh up to v7.2.27 with the help of cronbuild and update-source-functions.
 
