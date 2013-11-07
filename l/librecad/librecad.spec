@@ -1,6 +1,6 @@
 Name: librecad
 Version: 2.0.0
-Release: alt0.alpha3
+Release: alt0.rc2
 
 Summary: Computer-aided design (CAD) system
 Packager: Vitaly Lipatov <lav@altlinux.ru>
@@ -94,9 +94,7 @@ cp -r unix/resources/library/* %buildroot%_datadir/%name/library/
 cp unix/resources/patterns/*.dxf %buildroot%_datadir/%name/patterns/
 cp unix/resources/qm/*.qm %buildroot%_datadir/%name/qm/
 cp unix/resources/plugins/* %buildroot%_libdir/%name/plugins/
-cp gpl-2.0.txt LICENSE
-chmod 644 LICENSE
-chmod 644 README
+cp -f gpl-2.0.txt LICENSE
 find %buildroot%_datadir/%name -type f -exec chmod 644 {} \;
 
 install -Dm 755 unix/%name %buildroot%_bindir/%name
@@ -105,7 +103,7 @@ install -Dm 644 desktop/%name.sharedmimeinfo %buildroot%_datadir/mime/packages/%
 install -Dm 644 desktop/graphics_icons_and_splash/Icon\ LibreCAD/Icon_Librecad.svg %buildroot%_iconsdir/hicolor/scalable/apps/%name.svg
 
 %files
-%doc LICENSE README
+%doc LICENSE README.md
 %_bindir/%name
 %_desktopdir/%name.desktop
 #%_iconsdir/hicolor/48x48/apps/%name.png
@@ -126,6 +124,9 @@ install -Dm 644 desktop/graphics_icons_and_splash/Icon\ LibreCAD/Icon_Librecad.s
 %_libdir/%name/plugins/
 
 %changelog
+* Tue Nov 05 2013 Andrey Cherepanov <cas@altlinux.org> 2.0.0-alt0.rc2
+- 2.0.0 rc2
+
 * Sat Jun 02 2012 Vitaly Lipatov <lav@altlinux.ru> 2.0.0-alt0.alpha3
 - build 2.0.0 alpha3
 
