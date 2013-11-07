@@ -15,8 +15,8 @@
 %define nv_version 319
 %define nv_release 60
 %define nv_minor %nil
-%define pkg_rel alt119
-%def_enable kernelsource
+%define pkg_rel alt120
+%def_disable kernelsource
 
 %define tbver %{nv_version}.%{nv_release}.%{nv_minor}
 %if "%nv_minor" == "%nil"
@@ -318,6 +318,9 @@ fi
 %endif
 
 %changelog
+* Thu Nov 07 2013 Sergey V Turchin <zerg@altlinux.org> 319.60-alt120
+- don't package kernel module sources
+
 * Tue Nov 05 2013 Sergey V Turchin <zerg@altlinux.org> 319.60-alt119
 - add patch for 3.12 kernel
 - update patch for 3.11 kernel from upstream
