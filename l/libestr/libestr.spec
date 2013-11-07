@@ -1,7 +1,7 @@
 %def_disable static
 
 Name: libestr
-Version: 0.1.8
+Version: 0.1.9
 Release: alt1
 
 Summary: Some Essentials for string processing
@@ -58,6 +58,9 @@ Static libs for building statically linked software that uses %name
 %endif
 
 %changelog
+* Thu Nov 07 2013 Alexey Shabalin <shaba@altlinux.ru> 0.1.9-alt1
+- 0.1.9
+
 * Tue Oct 22 2013 Alexey Shabalin <shaba@altlinux.ru> 0.1.8-alt1
 - 0.1.8
 
