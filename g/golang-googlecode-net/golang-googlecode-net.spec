@@ -3,7 +3,7 @@
 
 Name: golang-googlecode-net
 Version: 0
-Release: alt1
+Release: alt2
 Summary: Supplementary Go networking libraries
 License: BSD
 Group: Development/Other
@@ -18,17 +18,17 @@ BuildArch: noarch
 Summary: Supplementary Go networking libraries
 Group: Development/Other
 Requires: golang
-Provides: golang("%import_path") = %version-%release
-Provides: golang("%import_path/dict") = %version-%release
-Provides: golang("%import_path/html") = %version-%release
-Provides: golang("%import_path/html/atom") = %version-%release
-Provides: golang("%import_path/idna") = %version-%release
-Provides: golang("%import_path/ipv4") = %version-%release
-Provides: golang("%import_path/ipv6") = %version-%release
-Provides: golang("%import_path/proxy") = %version-%release
-Provides: golang("%import_path/publicsuffix") = %version-%release
-Provides: golang("%import_path/spdy") = %version-%release
-Provides: golang("%import_path/websocket") = %version-%release
+Provides: golang(%import_path) = %version-%release
+Provides: golang(%import_path/dict) = %version-%release
+Provides: golang(%import_path/html) = %version-%release
+Provides: golang(%import_path/html/atom) = %version-%release
+Provides: golang(%import_path/idna) = %version-%release
+Provides: golang(%import_path/ipv4) = %version-%release
+Provides: golang(%import_path/ipv6) = %version-%release
+Provides: golang(%import_path/proxy) = %version-%release
+Provides: golang(%import_path/publicsuffix) = %version-%release
+Provides: golang(%import_path/spdy) = %version-%release
+Provides: golang(%import_path/websocket) = %version-%release
 
 %description devel
 %summary
@@ -84,6 +84,9 @@ done
 %gopath/src/%import_path/websocket/*.go
 
 %changelog
+* Wed Oct 30 2013 Slava Dubrovskiy <dubrsl@altlinux.org> 0-alt2
+- Update spec
+
 * Wed Oct 09 2013 Slava Dubrovskiy <dubrsl@altlinux.org> 0-alt1
 - Build for ALT
 

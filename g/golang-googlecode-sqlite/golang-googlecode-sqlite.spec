@@ -3,7 +3,7 @@
 
 Name: golang-googlecode-sqlite
 Version: 0
-Release: alt1
+Release: alt3
 Summary: Trivial sqlite3 binding for Go
 License: BSD
 Group: Development/Other
@@ -21,10 +21,10 @@ database/SQL package.
 %package devel
 Summary: Trivial sqlite3 binding for Go
 Group: Development/Other
-Requires: golang libsqlite-devel
-Provides: golang("%import_path") = %version-%release
-Provides: golang("%import_path/sqlite") = %version-%release
-Provides: golang("%import_path/sqlite3") = %version-%release
+Requires: golang libsqlite3-devel
+Provides: golang(%import_path) = %version-%release
+Provides: golang(%import_path/sqlite) = %version-%release
+Provides: golang(%import_path/sqlite3) = %version-%release
 
 %description devel
 %summary
@@ -59,6 +59,12 @@ done
 %gopath/src/%import_path/sqlite3/*.go
 
 %changelog
+* Wed Oct 30 2013 Slava Dubrovskiy <dubrsl@altlinux.org> 0-alt3
+- Update spec
+
+* Fri Oct 11 2013 Slava Dubrovskiy <dubrsl@altlinux.org> 0-alt2
+- Fix libsqlite3-devel version
+
 * Wed Oct 09 2013 Slava Dubrovskiy <dubrsl@altlinux.org> 0-alt1
 - Build for ALT
 

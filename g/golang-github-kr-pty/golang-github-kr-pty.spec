@@ -3,7 +3,7 @@
 
 Name: golang-github-kr-pty
 Version: 0
-Release: alt1
+Release: alt2
 Summary: PTY interface for Go
 License: MIT
 Group: Development/Other
@@ -18,7 +18,7 @@ Pty is a Go package for using UNIX pseudo-terminals.
 Summary: PTY interface for Go
 Group: Development/Other
 Requires: golang
-Provides: golang("%import_path") = %version-%release
+Provides: golang(%import_path) = %version-%release
 
 %description devel
 Pty is a Go package for using UNIX pseudo-terminals.
@@ -44,5 +44,8 @@ cp -av *.go %buildroot/%gopath/src/%import_path
 %gopath/src/%import_path/*.go
 
 %changelog
+* Wed Oct 30 2013 Slava Dubrovskiy <dubrsl@altlinux.org> 0-alt2
+- Update spec
+
 * Wed Oct 09 2013 Slava Dubrovskiy <dubrsl@altlinux.org> 0-alt1
 - Build for ALT
