@@ -1,5 +1,5 @@
 Name: xorg-drv-nouveau
-Version: 1.0.9
+Version: 1.0.10
 Release: alt1
 Epoch: 2
 Summary: NVIDIA video driver
@@ -42,6 +42,9 @@ for these depths
 %_man4dir/*
 
 %changelog
+* Thu Nov 07 2013 Valery Inozemtsev <shrek@altlinux.ru> 2:1.0.10-alt1
+- 1.0.10
+
 * Sun Aug 04 2013 Valery Inozemtsev <shrek@altlinux.ru> 2:1.0.9-alt1
 - 1.0.9
 
