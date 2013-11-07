@@ -1,7 +1,9 @@
+%set_automake_version 1.11
+
 %define rname getfem
 Name: getfemxx
 Version: 4.2
-Release: alt1
+Release: alt2
 %setup_python_module getfem
 
 Group: Development/C++
@@ -91,6 +93,9 @@ mv %buildroot%python_sitelibdir_noarch/getfem/* \
 %python_sitelibdir/getfem
 
 %changelog
+* Thu Nov 07 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.2-alt2
+- Fixed build
+
 * Tue Oct 02 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.2-alt1
 - Version 4.2
 
