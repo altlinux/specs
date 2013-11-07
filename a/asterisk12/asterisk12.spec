@@ -1,4 +1,4 @@
-%define svn_revision 399145
+%define svn_revision 399145.1
 Name: asterisk12
 Summary: Open source PBX
 Version: 12
@@ -66,7 +66,7 @@ BuildPreReq: libunixODBC-devel libltdl-devel
 BuildPreReq: liblua5-devel
 BuildPreReq: postgresql-devel libpq-devel
 BuildPreReq: librpm-devel libnet-snmp-devel libwrap-devel perl-devel
-%define svn_revision 399145
+%define svn_revision 399145.1
 %add_verify_elf_skiplist %_libdir/libasteriskssl12.so.1
 %def_with debug
 %def_enable debug
@@ -701,6 +701,7 @@ mv %buildroot/var/lib/asterisk/documentation/*.xml %buildroot/usr/share/asterisk
 mv %buildroot/var/lib/asterisk/documentation/*.dtd %buildroot/usr/share/asterisk/documentation/12/
 mv %buildroot/var/lib/asterisk/documentation/*.xslt %buildroot/usr/share/asterisk/documentation/12/
 ln -sf libasteriskssl12.so.1 %buildroot%_libdir/libasteriskssl12.so
+mv %buildroot/var/lib/asterisk/rest-api  %buildroot/var/lib/asterisk/rest-api-%version
 
 %preun
 %preun_service asterisk
@@ -842,7 +843,7 @@ ln -sf libasteriskssl12.so.1 %buildroot%_libdir/libasteriskssl12.so
 %astsample ari
 %astmodule res_statsd
 %astsample statsd
-/var/lib/asterisk/rest-api/*.json
+/var/lib/asterisk/rest-api-%version
 %astmodule cdr_csv
 %astmodule cdr_custom
 %astmodule cdr_manager
@@ -1277,6 +1278,9 @@ ln -sf libasteriskssl12.so.1 %buildroot%_libdir/libasteriskssl12.so
 %_libdir/libasteriskssl12.so.1
 
 %changelog
+* Thu Nov 07 2013 Denis Smirnov <mithraen@altlinux.ru> 12-alt0.399145.1
+- move /var/lib/asterisk/rest-api to alternatives
+
 * Sat Sep 14 2013 Cronbuild Service <cronbuild@altlinux.org> 12-alt0.399145
 - update from svn revision 399145
 
