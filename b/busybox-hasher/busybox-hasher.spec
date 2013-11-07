@@ -1,11 +1,11 @@
-%define __cc musl-gcc
+#define __cc musl-gcc
 
 %define _libexecdir %_exec_prefix/libexec
 
 %define bname busybox
 Name: %bname-hasher
 Version: 1.21.1
-Release: alt4
+Release: alt5
 Summary: %bname's static utils for hasher
 License: GPLv2
 Group: System/Kernel and hardware
@@ -128,6 +128,9 @@ install -pD -m 0755 %bname %buildroot%_libexecdir/hasher/%bname
 
 
 %changelog
+* Thu Nov 07 2013 Led <led@altlinux.ru> 1.21.1-alt5
+- build with standard cc
+
 * Thu Nov 07 2013 Led <led@altlinux.ru> 1.21.1-alt4
 - 'find' applet with '-wholename' key support
 
