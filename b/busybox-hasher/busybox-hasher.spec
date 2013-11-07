@@ -5,7 +5,7 @@
 %define bname busybox
 Name: %bname-hasher
 Version: 1.21.1
-Release: alt3
+Release: alt4
 Summary: %bname's static utils for hasher
 License: GPLv2
 Group: System/Kernel and hardware
@@ -19,6 +19,8 @@ BuildRequires: %bname-source >= 1.21.0-alt1
 BuildRequires: %bname-source >= 1.21.0-alt6
 # for find with unspecified PATH
 BuildRequires: %bname-source >= 1.21.1-alt17
+# for find with '-wholename' support
+BuildRequires: %bname-source >= 1.21.1-alt18
 %if "%__cc" == "musl-gcc"
 BuildRequires: musl-devel
 %else
@@ -126,6 +128,9 @@ install -pD -m 0755 %bname %buildroot%_libexecdir/hasher/%bname
 
 
 %changelog
+* Thu Nov 07 2013 Led <led@altlinux.ru> 1.21.1-alt4
+- 'find' applet with '-wholename' key support
+
 * Thu Nov 07 2013 Led <led@altlinux.ru> 1.21.1-alt3
 - build with fixed 'find' applet
 
