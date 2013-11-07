@@ -13,8 +13,8 @@
 %define nv_version 173
 %define nv_release 14
 %define nv_minor 37
-%define pkg_rel alt67
-%def_enable kernelsource
+%define pkg_rel alt68
+%def_disable kernelsource
 
 %define tbver %{nv_version}.%{nv_release}.%{nv_minor}
 %if "%nv_minor" == "%nil"
@@ -408,6 +408,9 @@ fi
 %endif
 
 %changelog
+* Thu Nov 07 2013 Sergey V Turchin <zerg@altlinux.org> 173.14.37-alt68
+- don't package kernel module sources
+
 * Mon Sep 02 2013 Sergey V Turchin <zerg@altlinux.org> 173.14.37-alt67
 - add Ubuntu patches against 3.10 and 3.11 kernels
 
