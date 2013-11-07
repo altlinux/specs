@@ -2,7 +2,7 @@ BuildRequires: perl-podlators
 %define _unpackaged_files_terminate_build 1
 %define dist File-MimeInfo
 Name: perl-%dist
-Version: 0.20
+Version: 0.21
 Release: alt1
 
 Summary: Determine file type
@@ -51,6 +51,9 @@ scripts for %name
 #%_man1dir/*
 
 %changelog
+* Wed Nov 06 2013 Igor Vlasenko <viy@altlinux.ru> 0.21-alt1
+- automated CPAN update
+
 * Thu Oct 10 2013 Igor Vlasenko <viy@altlinux.ru> 0.20-alt1
 - automated CPAN update
 
