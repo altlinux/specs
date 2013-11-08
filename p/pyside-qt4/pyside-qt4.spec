@@ -1,6 +1,6 @@
 Name: pyside-qt4
-Version: 1.1.2
-Release: alt1.git20130522
+Version: 1.2.1
+Release: alt1.git20130724
 Summary: Python bindings for the Qt cross-platform application and UI framework
 License: LGPLv2.1
 Group: Development/Tools
@@ -140,6 +140,9 @@ popd
 %python_sitelibdir/*
 
 %changelog
+* Fri Nov 08 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.1-alt1.git20130724
+- Version 1.2.1
+
 * Mon Jun 17 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.2-alt1.git20130522
 - New snapshot
 
