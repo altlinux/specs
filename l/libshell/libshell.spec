@@ -1,5 +1,5 @@
 Name: libshell
-Version: 0.1.9
+Version: 0.2.0
 Release: alt1
 
 Summary: A library of shell functions
@@ -41,6 +41,10 @@ as single file.
 /bin/shell-lib
 
 %changelog
+* Fri Nov 08 2013 Alexey Gladkov <legion@altlinux.ru> 0.2.0-alt1
+- shell_var_trim: Check for empty string (ALT#29562).
+- Add missing sources.
+
 * Thu Nov 07 2013 Alexey Gladkov <legion@altlinux.ru> 0.1.9-alt1
 - Add functions to daemonize process.
 - Add logger support.
