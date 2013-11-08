@@ -1,5 +1,5 @@
 Name:    alt-test
-Version: 1.1.0
+Version: 1.1.1
 Release: alt1
 
 Summary: Test environment based on Tapper
@@ -36,6 +36,15 @@ cp -av tests/* %buildroot%_libexecdir/%name/
 %_libexecdir/%name
 
 %changelog
+* Fri Nov 08 2013 Andrey Cherepanov <cas@altlinux.org> 1.1.1-alt1
+- Put in result successful tests too
+- Put each test name in comment
+- Add Qt4 driver for PostgreSQL and APC UPS monitoring daemon for spt test
+- Add tests:
+  + for desktop file localization (desktop-l10n)
+  + for Mozilla extension versions (mozilla-extensions)
+  + for unwaned echo in tests (tests-extra-log)
+
 * Thu Oct 24 2013 Andrey Cherepanov <cas@altlinux.org> 1.1.0-alt1
 - Support -f option to show only failed tests
 - Support $TESTED_PACKAGE_SOURCE for ISO image for existing package checks
