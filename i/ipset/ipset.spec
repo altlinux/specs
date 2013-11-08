@@ -2,7 +2,7 @@
 %define exec_prefix /
 %define _prefix /
 Name: ipset
-Version: 6.19
+Version: 6.20.1
 Release: alt1
 
 Summary: Tools for managing sets of IP or ports with iptables
@@ -12,7 +12,7 @@ Url: http://ipset.netfilter.org/
 
 Source0: %name-%version.tar
 Patch0: %name-%version-%release.patch
-BuildRequires: libmnl-devel
+BuildRequires: libmnl-devel kernel-headers-modules-std-def kernel-headers-std-def
 
 %description
 IP sets are a framework inside the Linux kernel, which can be administered by 
@@ -95,6 +95,9 @@ tar -cjf %kernel_srcdir/kernel-source-%name-%version.tar.bz2 kernel-source-%name
 %attr(0644,root,root) %kernel_src/kernel-source-%name-%version.tar.bz2
 
 %changelog
+* Tue Nov 05 2013 Anton Farygin <rider@altlinux.ru> 6.20.1-alt1
+- new version
+
 * Tue Jun 25 2013 Anton Farygin <rider@altlinux.ru> 6.19-alt1
 - new version
 
