@@ -21,8 +21,8 @@
 
 %define rname kopete
 Name: kde4-kopete
-Version: 4.11.1
-Release: alt5
+Version: 4.11.3
+Release: alt1
 
 Group: Networking/Instant messaging
 Summary: Instant Messaging client
@@ -317,5 +317,11 @@ based on %name.
 %_K4dbus_interfaces/*
 
 %changelog
+* Fri Nov 08 2013 Sergey V Turchin <zerg@altlinux.org> 4.11.3-alt1
+- new version
+
+* Fri Oct 04 2013 Sergey V Turchin <zerg@altlinux.org> 4.11.1-alt4.M70P.1
+- built for M70P
+
 * Thu Sep 26 2013 Sergey V Turchin <zerg@altlinux.org> 4.11.1-alt5
 - split from kdenetwotk
