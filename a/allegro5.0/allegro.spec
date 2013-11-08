@@ -3,11 +3,11 @@
 
 %define major 5
 %define minor 0
-%define bugfix 8
+%define bugfix 10
 %define sover 5.0
 Name: %oname%sover
 Version: %major.%minor.%bugfix
-Release: alt2
+Release: alt1
 
 Group: System/Libraries
 Summary: Game programming library
@@ -101,6 +101,9 @@ gzip CHANGES*
 %_pkgconfigdir/*
 
 %changelog
+* Fri Nov 08 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.0.10-alt1
+- Version 5.0.10
+
 * Fri Feb 01 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.0.8-alt2
 - Version 5.0.8
 
