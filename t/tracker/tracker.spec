@@ -39,6 +39,7 @@
 %def_enable icon
 %def_enable artwork
 %def_enable libosinfo
+%def_enable playlist
 
 
 # Unicode support library? (libunistring|libicu)
@@ -47,8 +48,8 @@
 %define _libexecdir %_prefix/libexec
 
 Name: tracker
-Version: %ver_major.2
-Release: alt2
+Version: %ver_major.3
+Release: alt1
 
 Summary: Tracker is a powerfull desktop-oriented search tool and indexer
 License: GPLv2+
@@ -77,7 +78,7 @@ Requires: lib%name = %version-%release
 %define vorbis_ver 0.22
 %define flac_ver 1.2.1
 %define libexif_ver 0.6
-%define libgfs_ver 1.13
+%define libgfs_ver 1.14.24
 %define exempi_ver 2.1.0
 %define evo_ver 2.32.0
 %define eds_ver 2.32.0
@@ -135,6 +136,7 @@ BuildPreReq: libgee0.8-devel >= %gee_ver
 %{?_enable_libgif:BuildPreReq: libgif-devel}
 %{?_enable_libcue:BuildPreReq: libcue-devel}
 %{?_enable_libosinfo:BuildPreReq: libosinfo-devel >= %libosinfo_ver}
+%{?_enable_playlist:BuildPreReq: libtotem-pl-parser-devel}
 
 %description
 Tracker is a powerful desktop-neutral first class object
@@ -277,6 +279,7 @@ NOCONFIGURE=1 ./autogen.sh
 	%{subst_enable icon} \
 	%{subst_enable artwork} \
 	%{subst_enable libosinfo} \
+	%{subst_enable playlist} \
 	%{?_enable_gtk_doc:--enable-gtk-doc}
 
 #	--enable-guarantee-metadata \
@@ -380,6 +383,10 @@ find %{buildroot} -type f -name "*.la" -exec rm -f {} ';'
 %endif
 
 %changelog
+* Thu Nov 07 2013 Alexey Shabalin <shaba@altlinux.ru> 0.16.3-alt1
+- 0.16.3
+- enable playlist support
+
 * Tue Oct 01 2013 Alexey Shabalin <shaba@altlinux.ru> 0.16.2-alt2
 - upstream snapshot of branch tracker-0.16
 
