@@ -9,7 +9,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: cinnamon-settings-daemon
-Version: %ver_major.5
+Version: %ver_major.6
 Release: alt1
 
 Summary: A program that manages general Cinnamon settings
@@ -113,7 +113,6 @@ The %name-tests package provides programms for testing CSD plugins.
 %dir %_libdir/%name-%api_ver
 %_libdir/%name-%api_ver/a11y-keyboard.cinnamon-settings-plugin
 %_libdir/%name-%api_ver/a11y-settings.cinnamon-settings-plugin
-%_libdir/%name-%api_ver/background.cinnamon-settings-plugin
 %_libdir/%name-%api_ver/clipboard.cinnamon-settings-plugin
 %_libdir/%name-%api_ver/color.cinnamon-settings-plugin
 %_libdir/%name-%api_ver/cursor.cinnamon-settings-plugin
@@ -122,7 +121,6 @@ The %name-tests package provides programms for testing CSD plugins.
 %_libdir/%name-%api_ver/liba11y-keyboard.so
 %_libdir/%name-%api_ver/liba11y-settings.so
 %_libdir/%name-%api_ver/libcsd.so
-%_libdir/%name-%api_ver/libbackground.so
 %_libdir/%name-%api_ver/libclipboard.so
 %_libdir/%name-%api_ver/libcolor.so
 %_libdir/%name-%api_ver/libcursor.so
@@ -180,7 +178,6 @@ The %name-tests package provides programms for testing CSD plugins.
 %files tests
 %_libexecdir/csd-test-a11y-keyboard
 %_libexecdir/csd-test-a11y-settings
-%_libexecdir/csd-test-background
 %_libexecdir/csd-test-input-helper
 %_libexecdir/csd-test-keyboard
 %_libexecdir/csd-test-media-keys
@@ -194,6 +191,9 @@ The %name-tests package provides programms for testing CSD plugins.
 %_libexecdir/csd-test-xsettings
 
 %changelog
+* Tue Nov 5 2013 Vladimir Didenko <cow@altlinux.org> 2.0.6-alt1
+- 2.0.6
+
 * Tue Oct 29 2013 Vladimir Didenko <cow@altlinux.org> 2.0.5-alt1
 - 2.0.5
 
