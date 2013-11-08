@@ -25,7 +25,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.10.18
-Release: alt6
+Release: alt7
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -1831,6 +1831,12 @@ done)
 
 
 %changelog
+* Thu Nov 05 2013 Led <led@altlinux.ru> 3.10.18-alt7
+- updated:
+  + feat-fs-aufs
+  + feat-fs-dazukofs
+  + feat-fs-reiser4
+
 * Wed Nov 05 2013 Led <led@altlinux.ru> 3.10.18-alt6
 - updated:
   + fix-virt-kvm--kvm
