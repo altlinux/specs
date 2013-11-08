@@ -1,10 +1,10 @@
 %define mpiimpl openmpi
 %define mpidir %_libdir/%mpiimpl
-%define babelver 1.4.0
+%define babelver 2.0.0
 
 Name: cca-spec-neo
 Version: 0.2.8
-Release: alt11
+Release: alt12
 Summary: Neoclassic binding of the CCA specification and design pattern
 License: LGPL
 Group: Sciences/Mathematics
@@ -123,6 +123,9 @@ install doc/README.NEO %buildroot%_docdir/%name-%version
 %_docdir/*
 
 %changelog
+* Fri Nov 08 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.8-alt12
+- Rebuilt with new babel
+
 * Wed Jul 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.8-alt11
 - Rebuilt with OpenMPI 1.6
 

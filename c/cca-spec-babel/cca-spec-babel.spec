@@ -1,10 +1,10 @@
 %define mpiimpl openmpi
 %define mpidir %_libdir/%mpiimpl
-%define babelver 1.4.0
+%define babelver 2.0.0
 
 Name: cca-spec-babel
 Version: 0.8.6
-Release: alt6.svn20090721
+Release: alt7.svn20090721
 Summary: The Common Component Architecture Specification for Babel
 License: LGPL
 Group: Sciences/Mathematics
@@ -142,7 +142,7 @@ fi
 %ifarch x86_64
 install -d %buildroot%python_sitelibdir
 install -d %buildroot%_javadir
-mv *.so* *.a %buildroot%_libdir/
+mv *.so* %buildroot%_libdir/
 mv python%_python_version/site-packages/* \
 	%buildroot%python_sitelibdir/
 mv $(find $TOPDIR -name '*.jar') \
@@ -179,27 +179,14 @@ done
 
 %files -n lib%name
 %_libdir/*.so.*
-%dir %_libdir/%name-*
-%ifnarch x86_64
-%_libdir/%name-*/*.so.*
-%endif
 
 %files -n lib%name-devel
 %_libdir/*.so
-%ifnarch x86_64
-%_libdir/%name-*/*.so
-%endif
 %_includedir/*
-
-#files -n lib%name-devel-static
-#_libdir/*.a
-#ifnarch x86_64
-#_libdir/%name-*/*.a
-#endif
 
 %files -n python-module-%name
 %python_sitelibdir/*
-#_libdir/%name-*/python%_python_version
+%_libdir/%name-*/python%_python_version
 
 %files -n lib%name-j
 %_javadir/*.jar
@@ -208,6 +195,9 @@ done
 %_docdir/%name
 
 %changelog
+* Fri Nov 08 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.6-alt7.svn20090721
+- Rebuilt with new babel
+
 * Tue Sep 25 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.6-alt6.svn20090721
 - Fixed build with make 3.82
 

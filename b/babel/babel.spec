@@ -2,8 +2,8 @@
 %define mpidir %_libdir/%mpiimpl
 
 Name: babel
-Version: 1.4.0
-Release: alt9.svn20090721
+Version: 2.0.0
+Release: alt1
 Summary: Language tool for high-performance scientific computing community
  
 License: LGPL v2.1
@@ -95,29 +95,6 @@ to the package described by the SIDL file.  The languages currently
 supported by Babel are C, C++, F77, F90, Java and Python.  
 
 This package contains development files for Babel.
-
-%package -n lib%name-devel-static
-Summary: Static development files for Babel
-Group: Development/Other
-Requires: lib%name-devel = %version-%release
-
-%description -n lib%name-devel-static
-  Babel is a language interoperability tool intended for use by
-the high-performance scientific computing community.  Developed
-by the Components project (http://www.llnl.gov/CASC/components)
-at Lawrence Livermore National Laboratory, Babel supports the
-Scientific Interface Definition Language (SIDL) for the language-
-independent declaration of interfaces associated with scientific
-software packages.
-
-  The Babel tool, applied to a SIDL file, results in the automatic
-generation of the associated skeleton and stub source files.  The
-Babel user then need only add the necessary code to the _Impl source
-files to complete the provision of a language-independent interface
-to the package described by the SIDL file.  The languages currently
-supported by Babel are C, C++, F77, F90, Java and Python.  
-
-This package contains static development files for Babel.
 
 %package -n python-module-sidl
 Summary: Build Python support extension modules for sidl
@@ -272,9 +249,9 @@ export JAVACFLAGS="-classpath $CLASSPATH"
 export MPI_VENDOR=%mpiimpl
 source %mpidir/bin/mpivars.sh
 
-./autotool_rebuild.sh || automake --add-missing
-./autotool_rebuild.sh
 %configure \
+	--enable-pure-static-runtime=no \
+	--enable-static=no \
 	--with-gnu-ld \
 	--with-F90-vendor=GNU \
 	--with-libparsifal=%prefix \
@@ -346,20 +323,19 @@ done
 %files
 %doc ANNOUNCE BUGS CHANGES COPYRIGHT LICENSE README THANKS
 %_bindir/*
+%_man1dir/*
 
 %files -n lib%name
 %_libdir/*-%version.so
 
 %files -n lib%name-devel
-%doc DEVELOPER.README HOWTO_RELEASE_PATCH.html coding_standards.html
+#doc DEVELOPER.README HOWTO_RELEASE_PATCH.html coding_standards.html
 %_includedir/*
 %_libdir/*.so
 %exclude %_libdir/*-%version.so
 %_libdir/*.scl
 %_aclocaldir/*
-
-#files -n lib%name-devel-static
-#_libdir/*.a
+%_pkgconfigdir/*
 
 %files -n python-module-sidl
 %python_sitelibdir/llnl_babel-*
@@ -387,6 +363,9 @@ done
 %_docdir/%name
 
 %changelog
+* Fri Nov 08 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.0-alt1
+- Version 2.0.0
+
 * Wed Nov 06 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4.0-alt9.svn20090721
 - Fixed build
 
