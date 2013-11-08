@@ -1,12 +1,12 @@
 %define policy_name altlinux
-%define date 20130919
+%define date 20131108
 %define seconf %_sysconfdir/selinux/config
 %define default_mode permissive
 
 Summary: SELinux %policy_name policy
 Name: selinux-policy-altlinux
 Version: 0.0.2
-Release: alt7
+Release: alt8
 License: %distributable
 Group: System/Base
 Source: %name-%date.tar
@@ -136,6 +136,9 @@ fi
 %doc /usr/share/doc/selinux-policy-altlinux/README
 
 %changelog
+* Fri Nov 08 2013 Andriy Stepanov <stanv@altlinux.ru> 0.0.2-alt8
+- Build: 20131108
+
 * Thu Sep 19 2013 Andriy Stepanov <stanv@altlinux.ru> 0.0.2-alt7
 - Build: 20130919
 
