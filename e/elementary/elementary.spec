@@ -1,5 +1,5 @@
 Name: elementary
-Version: 1.7.8
+Version: 1.7.9
 Release: alt1
 
 Summary: Widget set based on the Enlightenment Foundation Libraries
@@ -96,6 +96,9 @@ developing applications that use Elementary libraries.
 %_pkgconfigdir/%{name}*.pc
 
 %changelog
+* Fri Nov 08 2013 Yuri N. Sedunov <aris@altlinux.org> 1.7.9-alt1
+- 1.7.9
+
 * Fri Aug 23 2013 Yuri N. Sedunov <aris@altlinux.org> 1.7.8-alt1
 - 1.7.8
 

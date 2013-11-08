@@ -2,7 +2,7 @@
 
 Name: e17-module-%_name
 Version: 0.0.1
-Release: alt5
+Release: alt6
 
 Summary: %_name module for the Enlightenment desktop
 License: BSD
@@ -37,6 +37,9 @@ A module for the Enlightenment to display fancy penguins on desktop.
 %doc AUTHORS ChangeLog COPYING* NEWS README
 
 %changelog
+* Fri Nov 08 2013 Yuri N. Sedunov <aris@altlinux.org> 0.0.1-alt6
+- rebuilt for e17-0.17.5
+
 * Fri Aug 23 2013 Yuri N. Sedunov <aris@altlinux.org> 0.0.1-alt5
 - rebuilt for e17-0.17.4
 

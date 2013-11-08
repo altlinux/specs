@@ -2,7 +2,7 @@
 
 Name: e17-module-%_name
 Version: 1.0.0
-Release: alt5
+Release: alt6
 
 Summary: %_name module for the Enlightenment desktop
 License: BSD
@@ -38,6 +38,9 @@ A dock that holds a taskbar and application launchers.
 %doc AUTHORS ChangeLog COPYING* NEWS README
 
 %changelog
+* Fri Nov 08 2013 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt6
+- rebuilt for e17-0.17.5
+
 * Fri Aug 23 2013 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt5
 - rebuilt for e17-0.17.4
 
