@@ -2,9 +2,12 @@
 %define __xargs		/bin/xargs
 
 %def_enable databasedesigner
+# gcrypt or openssl
+%def_without libgcrypt
+%def_with openssl
 
 Name: pgadmin3
-Version: 1.16.0
+Version: 1.18.1
 Release: alt1
 
 Summary: Powerful administration and development platform for PostgreSQL.
@@ -19,10 +22,12 @@ Source: %name-%version.tar
 
 Requires: %name-docs-en_US
 
-BuildRequires: gcc-c++ libssl-devel libxslt-devel postgresql-devel
+BuildRequires: gcc-c++ libxslt-devel postgresql-devel zlib-devel
 BuildRequires: libwxGTK-contrib-ogl-devel libwxGTK-contrib-stc-devel libwxGTK-devel
 BuildRequires: findutils ImageMagick-tools
 BuildRequires: python-module-sphinx
+%{?_with_libgcrypt:BuildRequires: libgcrypt-devel}
+%{?_with_openssl:BuildRequires: libssl-devel}
 
 %description
 pgAdmin III is a powerful administration and development platform for
@@ -56,7 +61,10 @@ All docs for %name.
 %build
 /bin/sh bootstrap
 %configure CPPFLAGS="-I./include" \
-	%{subst_enable databasedesigner}
+	%{subst_with openssl} \
+	%{subst_with libgcrypt} \
+	%{subst_enable databasedesigner} \
+	--with-libz
 
 %make_build
 
@@ -127,6 +135,9 @@ mv -f %buildroot%_datadir/%name/i18n/??_?? %buildroot%_datadir/locale
 %doc %_datadir/%name/docs/sl_SI
 
 %changelog
+* Fri Nov 08 2013 Alexey Shabalin <shaba@altlinux.ru> 1.18.1-alt1
+- git REL-1_18_0_PATCHES branch
+
 * Wed Sep 19 2012 Alexey Shabalin <shaba@altlinux.ru> 1.16.0-alt1
 - git REL-1_16_0_PATCHES branch
 
