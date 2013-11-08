@@ -4,8 +4,8 @@
 
 Summary:	Tab Mix Plus extensions for Firefox
 Name:		firefox-TabMixPlus
-Version:	0.4.0.4
-Release:	alt0.pre.120724a
+Version:	0.4.1.2.01
+Release:	alt1
 Source0:	%rname-%version.xpi
 License:	GPL
 Group:		Networking/WWW
@@ -36,6 +36,9 @@ fi
 %ciddir
 
 %changelog
+* Wed Oct 30 2013 Andrey Cherepanov <cas@altlinux.org> 0.4.1.2.01-alt1
+- New version
+
 * Tue Nov 27 2012 Alexey Shabalin <shaba@altlinux.ru> 0.4.0.4-alt0.pre.120724a
 - 0.4.0.4pre.120724a
 

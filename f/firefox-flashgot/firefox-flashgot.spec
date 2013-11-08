@@ -4,7 +4,7 @@
 
 Summary:	FlashGot extensions for Firefox
 Name:		%firefox_name-%rname
-Version:	1.5.1
+Version:	1.5.5.94
 Release:	alt1
 Source0:	https://secure.informaction.com/download/releases/%rname-%version.xpi
 License:	GPLv2
@@ -43,6 +43,9 @@ fi
 %ciddir
 
 %changelog
+* Wed Oct 30 2013 Andrey Cherepanov <cas@altlinux.org> 1.5.5.94-alt1
+- New version
+
 * Wed Dec 19 2012 Andrey Cherepanov <cas@altlinux.org> 1.5.1-alt1
 - New version 1.5.1
 

@@ -3,7 +3,7 @@
 %define ciddir 	%firefox_noarch_extensionsdir/%cid
 
 Name:		%firefox_name-%rname
-Version:	1.2.2
+Version:	1.2.5
 Release:	alt1
 Summary:	The Web Developer extension for Mozilla Firefox
 
@@ -25,14 +25,12 @@ adds a menu and a toolbar to the browser with various web developer tools.
 
 %prep
 %setup -c
+subst 's/22\./24./' install.rdf
+subst 's/2\.17\./2.22./' install.rdf
 
 %install
 %__mkdir_p %buildroot/%ciddir
 %__cp -r * %buildroot/%ciddir
-
-#sed -r -i \
-#    -e 's,<em:maxVersion>3\.5\.\*</em:maxVersion>,<em:maxVersion>3.6.*</em:maxVersion>,g' \
-#    %%buildroot/%%ciddir/install.rdf
 
 %postun
 if [ "$1" = 0 ]; then
@@ -43,6 +41,10 @@ fi
 %ciddir
 
 %changelog
+* Tue Nov 05 2013 Andrey Cherepanov <cas@altlinux.org> 1:1.2.5-alt1
+- New version
+- Adapt for Firefox 24.x and Seamonkey 2.22.x
+
 * Thu Dec 20 2012 Andrey Cherepanov <cas@altlinux.org> 1:1.2.2-alt1
 - New version 1.2.2
 

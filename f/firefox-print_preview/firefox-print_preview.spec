@@ -1,6 +1,6 @@
 %define rname	print_preview
 %define version 0.7.1.4
-%define release alt1
+%define release alt2
 %define cid 	\{a1f99b9c-30d3-4848-a646-afd282011a72\}
 %define ciddir	%firefox_noarch_extensionsdir/%cid
 
@@ -31,7 +31,7 @@ Creates a Print Preview toolbar button and context menu item.
 
 %prep
 %setup -c
-subst 's/maxVersion>3\.5\./maxVersion>17.0./g' install.rdf
+subst 's/maxVersion>3\.5\./maxVersion>24./g' install.rdf
 
 %install
 %__mkdir_p %buildroot/%ciddir
@@ -47,6 +47,9 @@ fi
 %ciddir
 
 %changelog
+* Wed Oct 30 2013 Andrey Cherepanov <cas@altlinux.org> 0.7.1.4-alt2
+- Adapt for Firefox 24.x
+
 * Wed Dec 19 2012 Andrey Cherepanov <cas@altlinux.org> 0.7.1.4-alt1
 - New version 0.7.1.4
 

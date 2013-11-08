@@ -1,6 +1,6 @@
 %define rname	yandexbar
-%define version 6.5
-%define release alt3
+%define version 7.9
+%define release alt1
 %define cid 	yasearch@yandex.ru
 %define ciddir	%firefox_noarch_extensionsdir/%cid
 
@@ -16,7 +16,9 @@ Group:		Networking/WWW
 URL:		http://bar.yandex.ru/firefox/
 BuildArch:	noarch
 
-Source0:	http://download.yandex.ru/bar/firefox/%rname-%version.xpi
+Provides:	firefox-yandexelement = %version-%release
+
+Source0:	YandexElement.xpi
 
 Packager:	Ilya Mashkin <oddity@altlinux.ru>
 
@@ -48,11 +50,11 @@ to easily use Yandex services.
 
 %prep
 %setup -c
+subst 's/14\./24./' install.rdf
 
 %install
-%__mkdir_p %buildroot/%ciddir
-unzip -qq -d %buildroot/%ciddir %SOURCE0
-subst 's/maxVersion>11\.\*/maxVersion>20.*/g' %buildroot/%ciddir/install.rdf
+mkdir -p %buildroot/%ciddir
+cp -a . %buildroot/%ciddir
 
 %postun
 if [ "$1" = 0 ]; then
@@ -63,6 +65,10 @@ fi
 %ciddir
 
 %changelog
+* Tue Nov 05 2013 Andrey Cherepanov <cas@altlinux.org> 7.9-alt1
+- New version named Yandex Element
+- Adapt for Firefox 24.x
+
 * Tue May 21 2013 Andrey Cherepanov <cas@altlinux.org> 6.5-alt3
 - Adapt for Firefox 20.0
 

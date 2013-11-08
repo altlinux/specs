@@ -3,7 +3,7 @@
 %define ociddir 	%firefox_noarch_extensionsdir/%ocid
 
 Name: firefox-%oname
-Version: 0.2.5
+Version: 0.2.6.1.1
 Release: alt1
 Summary: A simple morphological analyzer and dictionary for a latin language
 Group: Networking/WWW
@@ -21,6 +21,7 @@ used as web-service on http://diglossa.org
 
 %prep
 %setup
+subst 's/20\./24./' install.rdf
 
 %install
 install -d %buildroot%ociddir
@@ -30,6 +31,10 @@ cp -fR * %buildroot%ociddir/
 %ociddir
 
 %changelog
+* Sun Nov 03 2013 Andrey Cherepanov <cas@altlinux.org> 0.2.6.1.1-alt1
+- New version
+- Adapt for Firefox 24.x
+
 * Fri Jan 11 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.5-alt1
 - Initial build for Sisyphus
 

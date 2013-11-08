@@ -4,7 +4,7 @@
 
 Name:		firefox-exit_button
 Version:	0.4.3
-Release:	alt1
+Release:	alt2
 
 Summary:	Toolbar button to exit Firefox.
 
@@ -27,18 +27,19 @@ Exit Button Firefox plugin - adds a correspond button to Firefox toolbar.
 
 %prep
 %setup -c
+subst 's/17\./24./' install.rdf
 
 %install
-%__mkdir_p %buildroot/%ciddir
-%__cp -r * %buildroot/%ciddir
-#sed -r -i \
-#    -e 's,<em:maxVersion>3\.0b5pre</em:maxVersion>,<em:maxVersion>7\.\*</em:maxVersion>,g' \
-#    %%buildroot/%%ciddir/install.rdf
+mkdir -p %buildroot/%ciddir
+cp -r * %buildroot/%ciddir
 
 %files
 %ciddir
 
 %changelog
+* Wed Oct 30 2013 Andrey Cherepanov <cas@altlinux.org> 0.4.3-alt2
+- Adapt for Firefox 24.x
+
 * Tue Dec 18 2012 Andrey Cherepanov <cas@altlinux.org> 0.4.3-alt1
 - New version 0.4.3 compatible with Firefox 17.0
 

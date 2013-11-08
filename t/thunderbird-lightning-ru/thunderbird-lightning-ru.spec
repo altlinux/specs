@@ -3,9 +3,9 @@
 %define ciddir	%tbird_noarch_extensionsdir/%cid
 
 Name:		thunderbird-%rname
-Version:	1.0
-Release:	alt3
-Serial: 1
+Version:	2.6.2
+Release:	alt1
+Serial: 	1
 Summary:	Russian (RU) Language Pack for Lightning
 Packager:	Radik Usupov <radik@altlinux.org>
 
@@ -27,12 +27,14 @@ The Mozilla Lightning in Russian.
 %install
 %__mkdir_p %buildroot/%ciddir
 unzip -qq -d %buildroot/%ciddir %SOURCE0
-subst 's/8\.\*\.\*/17.0.*/' %buildroot/%ciddir/install.rdf
 
 %files
 %ciddir
 
 %changelog
+* Wed Nov 06 2013 Andrey Cherepanov <cas@altlinux.org> 1:2.6.2-alt1
+- New version
+
 * Thu Dec 20 2012 Andrey Cherepanov <cas@altlinux.org> 1:1.0-alt3
 - Update for thunderbird-lightning-17.0
 

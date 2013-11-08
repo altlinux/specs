@@ -2,7 +2,7 @@
 
 %define rname	duckduckgo_plus
 %define version 0.3.8
-%define release alt1
+%define release alt1.1
 %define cid	jid1-ZAdIEUB7XOzOJw@jetpack
 %define ciddir	%firefox_noarch_extensionsdir/%cid
 
@@ -45,6 +45,7 @@ DuckDuckGo - поисковая система с открытым исходн�
 # RPM call unzip with -Lq keys, effectivly kills all mixed-case filenames in archive
 rm -rf -- ./*
 unzip -q %SOURCE0
+subst 's/20\./24./' install.rdf
 
 # Removing placeholder
 rm -f locale/.empty
@@ -62,6 +63,9 @@ fi
 %ciddir
 
 %changelog
+* Tue Nov 05 2013 Andrey Cherepanov <cas@altlinux.org> 0.3.8-alt1.1
+- Adapt for Firefox 24.x
+
 * Sat Nov 02 2013 Nikolay A. Fetisov <naf@altlinux.ru> 0.3.8-alt1
 - New version (Closes: #29548)
 
