@@ -1,7 +1,7 @@
 %define somver 0
 %define sover %somver.0.0
 Name: arprec
-Version: 2.2.16
+Version: 2.2.17
 Release: alt1
 Summary: C++/Fortran-90 arbitrary precision package
 License: BSD
@@ -205,6 +205,9 @@ find . -name '._*' -size 1 -print0 | xargs -0 grep -lZ 'Mac OS X' -- | xargs -0 
 %_bindir/math*
 
 %changelog
+* Fri Nov 08 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.2.17-alt1
+- Version 2.2.17
+
 * Fri Feb 01 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.2.16-alt1
 - Version 2.2.16
 
