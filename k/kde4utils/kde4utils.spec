@@ -7,9 +7,9 @@
 Name: kde4utils
 %define major 4
 %define minor 11
-%define bugfix 2
+%define bugfix 3
 Version: %major.%minor.%bugfix
-Release: alt2
+Release: alt1
 
 Group: Graphical desktop/KDE
 Summary: K Desktop Environment
@@ -493,6 +493,12 @@ done
 
 
 %changelog
+* Fri Nov 08 2013 Sergey V Turchin <zerg@altlinux.org> 4.11.3-alt1
+- new version
+
+* Thu Oct 10 2013 Sergey V Turchin <zerg@altlinux.org> 4.11.2-alt1.M70P.1
+- built for M70P
+
 * Thu Oct 10 2013 Sergey V Turchin <zerg@altlinux.org> 4.11.2-alt2
 - add patch for ark to preview with external app
 
