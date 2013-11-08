@@ -1,6 +1,6 @@
 Name:    1c-preinstall
 Version: 8.3
-Release: alt5
+Release: alt6
 
 Summary: Set correct environment for 1C:Enterprise client
 License: GPL
@@ -40,6 +40,8 @@ cp -a %_libdir/libMagickWand-*.so.1.* %buildroot%_libdir/
 ln -rs %buildroot%_libdir/libMagickWand-*.so.1.* \
        %buildroot%_libdir/libWand.so.1
 install -m 0755 -D %SOURCE1 %buildroot%_x11sysconfdir/profile.d/xdg-current-desktop.sh
+mkdir -p %buildroot%_datadir/fonts/ttf/ms
+ln -rs %buildroot%_datadir/fonts/ttf/ms %buildroot%_datadir/fonts/msttcorefonts
 
 %files
 %_libdir/libWand.so.1
@@ -47,8 +49,13 @@ install -m 0755 -D %SOURCE1 %buildroot%_x11sysconfdir/profile.d/xdg-current-desk
 %_x11sysconfdir/profile.d/*.sh
 
 %files full
+%_datadir/fonts/msttcorefonts
+%exclude %_datadir/fonts/ttf/ms
 
 %changelog
+* Fri Nov 08 2013 Andrey Cherepanov <cas@altlinux.org> 8.3-alt6
+- Make system Microsoft TTF fonts available for 1C client (ALT #29560)
+
 * Thu Oct 03 2013 Andrey Cherepanov <cas@altlinux.org> 8.3-alt5
 - Set XDG_CURRENT_DESKTOP based on current DE (thanks sem@)
 - New metapackage 1c-preinstall-full with fonts-ttf-ms
