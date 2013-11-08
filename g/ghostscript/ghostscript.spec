@@ -1,6 +1,6 @@
 Name: ghostscript
 Version: 9.10
-Release: alt1
+Release: alt2
 
 %define ijsver	0.35
 %global origver %version
@@ -79,15 +79,6 @@ PreReq: %name-lib = %version-%release, %name-common = %version-%release
 Provides: %esp_name-gtk = %version, %gnu_name-gtk = %version
 Obsoletes: %gnu_name-gtk, %esp_name-gtk
 
-%package common
-Summary: Common files for the %name
-Group: Publishing
-Requires: urw-fonts >= 1.1
-Requires: %name-classic = %version-%release
-Provides: %esp_name-common = %version, %gnu_name-common = %version
-Obsoletes: %gnu_name-common, %esp_name-common
-BuildArch: noarch
-
 %package -n libijs
 Summary: Dynamic library for the IJS printer driver plug-in interface
 Version: %{ijsver}_%version
@@ -101,6 +92,16 @@ Group: Development/C
 Requires: libijs = %version-%release
 Provides: libespijs-devel = %version, libgnuijs-devel = %version
 Obsoletes: libgnuijs-devel, libespijs-devel
+
+%package common
+Version: %origver
+Summary: Common files for the %name
+Group: Publishing
+Requires: urw-fonts >= 1.1
+Requires: %name-classic = %version-%release
+Provides: %esp_name-common = %version, %gnu_name-common = %version
+Obsoletes: %gnu_name-common, %esp_name-common
+BuildArch: noarch
 
 %description
 Ghostscript is a set of software that provides a PostScript(TM) interpreter,
@@ -282,6 +283,9 @@ mkdir -p %buildroot/%_datadir/ghostscript/conf.d
 %_includedir/ijs
 
 %changelog
+* Fri Nov 08 2013 Andriy Stepanov <stanv@altlinux.ru> 9.10-alt2
+- Fix version definition
+
 * Fri Nov 01 2013 Andriy Stepanov <stanv@altlinux.ru> 9.10-alt1
 - New version
 
