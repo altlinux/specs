@@ -5,7 +5,7 @@
 Name: kde4accessibility
 %define major 4
 %define minor 11
-%define bugfix 2
+%define bugfix 3
 Version: %major.%minor.%bugfix
 Release: alt1
 
@@ -211,6 +211,12 @@ done
 #%_K4link/*.so
 
 %changelog
+* Fri Nov 08 2013 Sergey V Turchin <zerg@altlinux.org> 4.11.3-alt1
+- new version
+
+* Fri Oct 04 2013 Sergey V Turchin <zerg@altlinux.org> 4.11.2-alt0.M70P.1
+- built for M70P
+
 * Thu Oct 03 2013 Sergey V Turchin <zerg@altlinux.org> 4.11.2-alt1
 - new version
 
