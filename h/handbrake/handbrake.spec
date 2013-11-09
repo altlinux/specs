@@ -1,4 +1,4 @@
-%define svn svn5787
+%define svn svn5891
 
 Name: handbrake
 Version: 0.9.9
@@ -25,13 +25,13 @@ Source113: http://download.handbrake.fr/handbrake/contrib/libxml2-2.7.7.tar.gz
 Source114: http://download.handbrake.fr/handbrake/contrib/m4-1.4.16.tar.bz2
 Source115: http://download.handbrake.fr/handbrake/contrib/mp4v2-trunk-r355.tar.bz2
 Source116: http://download.handbrake.fr/handbrake/contrib/mpeg2dec-0.5.1.tar.gz
-Source117: http://download.handbrake.fr/handbrake/contrib/x264-r2345-f0c1c53.tar.gz
+Source117: http://download.handbrake.fr/handbrake/contrib/x264-r2377-1ca7bb9.tar.gz
 Source118: http://download.handbrake.fr/handbrake/contrib/yasm-1.2.0.tar.gz
 
 Source151: handbrake-ffmpeg_fix_missing_return_in_nonvoid_function.patch
 Source152: handbrake-svn5042-fix_libbluray_implicit_declaration_of_function_strdup.patch
 
-Patch200: handbrake-svn5693-fdk_aac-autoreconf.patch
+Patch200: handbrake-svn5891-fdk_aac-autoreconf.patch
 
 Url: http://handbrake.fr/
 Group: Video
@@ -116,6 +116,9 @@ popd #build
 %_datadir/icons/*/*/apps/hb-icon.png
 
 %changelog
+* Sat Nov 09 2013 Motsyo Gennadi <drool@altlinux.ru> 0.9.9-alt1.svn5891
+- build svn5891
+
 * Thu Sep 19 2013 Motsyo Gennadi <drool@altlinux.ru> 0.9.9-alt1.svn5787
 - build svn5787
 
