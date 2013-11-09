@@ -1,7 +1,7 @@
 %define python_noarch %_libexecdir/python%_python_version/site-packages
 Name: bocca
 Version: 0.5.7
-Release: alt1.1
+Release: alt2
 Summary: Component and Application Generator for CCA
 License: LGPL
 Group: Development/Tools
@@ -14,7 +14,7 @@ Requires: python-module-%name = %version-%release
 
 BuildRequires(pre): rpm-build-python rpm-build-java
 BuildPreReq: java-devel-default python-devel cca-spec-babel
-BuildPreReq: ccaffeine babel cca-tutorial-chasm-examples
+BuildPreReq: babel cca-tutorial-chasm-examples
 
 %description
 Bocca is a command line tool for creating and maintaining CCA components and
@@ -65,7 +65,6 @@ This package contains python module of Bocca.
 
 %build
 %configure \
-	--with-ccafe-config=%_bindir/ccafe-config \
 	--with-cca-spec-babel-config=%_bindir/cca-spec-babel-config \
 	--with-babel-config=%_bindir/babel-config \
 	--with-python=%_bindir/python \
@@ -86,6 +85,9 @@ install -d %buildroot%python_sitelibdir
 mv %buildroot%python_noarch/* %buildroot%python_sitelibdir/
 %endif
 
+sed -i 's|/usr/sbin/lsattr|lsattr|' \
+	%buildroot%python_sitelibdir/boccalib/templates/autotools/config/config.guess
+
 %files
 %_bindir/*
 
@@ -96,6 +98,9 @@ mv %buildroot%python_noarch/* %buildroot%python_sitelibdir/
 %_docdir/%name
 
 %changelog
+* Sat Nov 09 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.7-alt2
+- Fixed build
+
 * Sat Oct 22 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 0.5.7-alt1.1
 - Rebuild with Python-2.7
 
