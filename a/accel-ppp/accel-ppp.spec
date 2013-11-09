@@ -1,6 +1,6 @@
 Name: accel-ppp
 Version: 1.7.3
-Release: alt5
+Release: alt6
 Summary: High performance PPTP/L2TP/PPPoE server
 Group: System/Servers
 
@@ -38,21 +38,18 @@ Features:
 
 %build
 %cmake \
-      -DCMAKE_SKIP_RPATH=FALSE \
+      -DCMAKE_SKIP_INSTALL_RPATH:BOOL=FALSE \
       -DBUILD_DRIVER=FALSE \
       -DCMAKE_INSTALL_PREFIX=%prefix \
       -DRADIUS=TRUE \
       -DNETSNMP=TRUE \
       -DLOG_PGSQL=FALSE \
-      -DBUILD_INSTALL_PREFIX=%buildroot \
-      ..
+      -DBUILD_INSTALL_PREFIX=%buildroot
 
-%make_build -C BUILD
+%cmake_build
 
 %install
 make install/fast DESTDIR=%buildroot -C BUILD
-
-mkdir -p %buildroot%_sysconfdir/ld.so.conf.d
 
 install -Dpm 644 alt-linux/%name.tmpfiles %buildroot%_tmpfilesdir/%name.conf
 install -d %buildroot%_sysconfdir/{rc.d/init.d,sysconfig,logrotate.d}
@@ -85,6 +82,12 @@ echo "0" > %buildroot%_runtimedir/accel-ppp/seq
 %preun_service %name
 
 %changelog
+* Sat Nov 09 2013 Alexei Takaseev <taf@altlinux.org> 1.7.3-alt6
+- update upstream to git:da7bb06e70252ba11751f4e3a9f8b97144500d9e
+    * fixed sigsegv in 'shaper restore all'
+    * fixed socket leak
+    * fixed many race conditions
+
 * Sat Aug 10 2013 Alexei Takaseev <taf@altlinux.org> 1.7.3-alt5
 - auth_chap: fixed incorrect check for received buffer size
 - triton: Fix race upon termination
