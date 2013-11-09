@@ -2,7 +2,7 @@
 %define cvs_date zero
 %undefine cvs_date
 %define snapshot 2012-10-12
-%define rel alt2
+%define rel alt1
 
 %def_disable static
 %def_with pam_helper
@@ -10,7 +10,7 @@
 # TODO: pam CoreFoundation
 
 Name: e17
-Version: 0.17.4
+Version: 0.17.5
 
 %ifdef cvs_date
 Release: %rel.%cvs_date
@@ -59,9 +59,9 @@ Requires: wm-common-freedesktop
 Requires: altlinux-freedesktop-menu-%_name >= 0.55
 %{?_with_pam_helper:Requires: chkpwd-pam}
 
-BuildPreReq: libeet-devel >= 1.7.7
-BuildPreReq: libecore-devel >= 1.7.7
-BuildPreReq: libeio-devel >= 1.7.7
+BuildPreReq: libeet-devel >= 1.7.9
+BuildPreReq: libecore-devel >= 1.7.9
+BuildPreReq: libeio-devel >= 1.7.9
 BuildRequires: libpam-devel libX11-devel libevas-devel libecore-devel
 BuildRequires: edje libedje-devel libeet-devel libeet-utils libembryo-devel libefreet-devel
 BuildRequires: libXext-devel embryo_cc libdbus-devel libedbus-devel
@@ -194,6 +194,9 @@ cp %SOURCE11 %buildroot%_sysconfdir/enlightenment/sysactions.conf
 %_datadir/gnome/wm-properties/*.desktop
 
 %changelog
+* Fri Nov 08 2013 Yuri N. Sedunov <aris@altlinux.org> 1:0.17.5-alt1
+- 1.7.5
+
 * Wed Oct 23 2013 Yuri N. Sedunov <aris@altlinux.org> 1:0.17.4-alt2
 - git snapshot (b23cebb26)
 
