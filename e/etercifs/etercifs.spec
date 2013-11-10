@@ -40,9 +40,11 @@
 %define src_3_8_version 2.0
 %define src_3_9_version 2.0
 %define src_3_10_version 2.0
+%define src_3_11_version 2.01
+%define src_3_12_version 2.02
 
 Name: etercifs
-Version: 5.4.7
+Version: 5.4.8
 Release: alt1
 
 Summary: Advanced Common Internet File System for Linux with Etersoft extension
@@ -92,6 +94,8 @@ Source47: %src_package_name-3.7-%src_3_7_version.tar.bz2
 Source48: %src_package_name-3.8-%src_3_8_version.tar.bz2
 Source49: %src_package_name-3.9-%src_3_9_version.tar.bz2
 Source50: %src_package_name-3.10-%src_3_10_version.tar.bz2
+Source51: %src_package_name-3.11-%src_3_11_version.tar.bz2
+Source52: %src_package_name-3.12-%src_3_12_version.tar.bz2
 Source60: %src_package_name-centos60-%src_centos60_version.tar.bz2
 
 Conflicts: linux-cifs
@@ -123,6 +127,8 @@ Provides: %src_package_name-3.7 = %version-%release
 Provides: %src_package_name-3.8 = %version-%release
 Provides: %src_package_name-3.9 = %version-%release
 Provides: %src_package_name-3.10 = %version-%release
+Provides: %src_package_name-3.11 = %version-%release
+Provides: %src_package_name-3.12 = %version-%release
 
 Obsoletes: %src_package_name-2.6.24
 Obsoletes: %src_package_name-2.6.25
@@ -168,8 +174,8 @@ URL specification though.
 %setup
 
 %install
-mkdir -p %buildroot%_sysconfigdir/
-cat <<EOF >%buildroot%_sysconfigdir/%name.conf
+mkdir -p %buildroot%_sysconfdir/sysconfig/
+cat <<EOF >%buildroot%_sysconfdir/sysconfig/%name.conf
 # etercifs configuration file
 
 # this options useful only for wine share using and security=share setting in smb.conf
@@ -185,7 +191,7 @@ DEFAULT_MOUNTPOINT=/net/sharebase
 EOF
 
 %__subst "s|@DATADIR@|%_datadir/%name|g" functions.sh etercifs etermount etercifs-build
-%__subst "s|@SYSCONFIGDIR@|%_sysconfigdir|g" functions.sh etercifs etermount
+%__subst "s|@SYSCONFIGDIR@|%_sysconfdir/sysconfig|g" functions.sh etercifs etermount
 
 install -D -m644 buildmodule.sh %buildroot%_datadir/%name/buildmodule.sh
 install -D -m644 functions.sh %buildroot%_datadir/%name/functions.sh
@@ -257,6 +263,8 @@ cp %SOURCE47 %buildroot/%etercifs_src/
 cp %SOURCE48 %buildroot/%etercifs_src/
 cp %SOURCE49 %buildroot/%etercifs_src/
 cp %SOURCE50 %buildroot/%etercifs_src/
+cp %SOURCE51 %buildroot/%etercifs_src/
+cp %SOURCE52 %buildroot/%etercifs_src/
 
 # CentOS 6.x
 cp %SOURCE60 %buildroot/%etercifs_src/
@@ -325,6 +333,10 @@ ln -s ../../../../%etercifs_src/%src_package_name-3.9-%src_3_9_version.tar.bz2 \
     %buildroot%_usrsrc/kernel/sources/%src_package_name-3.9-%version.tar.bz2
 ln -s ../../../../%etercifs_src/%src_package_name-3.10-%src_3_10_version.tar.bz2 \
     %buildroot%_usrsrc/kernel/sources/%src_package_name-3.10-%version.tar.bz2
+ln -s ../../../../%etercifs_src/%src_package_name-3.11-%src_3_11_version.tar.bz2 \
+    %buildroot%_usrsrc/kernel/sources/%src_package_name-3.11-%version.tar.bz2
+ln -s ../../../../%etercifs_src/%src_package_name-3.12-%src_3_12_version.tar.bz2 \
+    %buildroot%_usrsrc/kernel/sources/%src_package_name-3.12-%version.tar.bz2
 
 # Special case for Fedora 15 v2.6.4x.* kernels
 ln -s ../../../../%etercifs_src/%src_package_name-3.0-%src_3_0_version.tar.bz2 \
@@ -347,13 +359,25 @@ ln -s ../../../../%etercifs_src/%src_package_name-3.3-%src_3_3_version.tar.bz2 \
 %_bindir/etermount
 %_initrddir/%name
 %_unitdir/%name.service
-%config %_sysconfigdir/%name.conf
+%config %_sysconfdir/sysconfig/%name.conf
 %config %_sysconfdir/modprobe.d/etersoft.conf
 %_datadir/%name/
 %_usrsrc/kernel/sources/%src_package_name-*-%version.tar.bz2
 %_sbindir/%name-build
 
 %changelog
+* Sun Nov 10 2013 Pavel Shilovsky <piastry@altlinux.org> 5.4.8-alt1
+- Add sources for 3.12 (v3.12)
+- Add sources for 3.11 (v3.11.7)
+- Fix STATUS_SHARING_VIOLATION error mapping for 3.9 and 3.10
+- Fix a selection of the latest supported kernel version
+- Fix a memory leak when a lease break comes for 3.8
+- Update 3.10 sources from stable (v3.10.18)
+- Update 3.9 sources from stable (v3.9.11)
+- Update 3.4 sources from stable (v3.4.68)
+- Update 3.2 sources from stable (v3.2.52)
+- Update 3.0 sources from stable (v3.0.101)
+
 * Thu Jun 27 2013 Pavel Shilovsky <piastry@altlinux.org> 5.4.7-alt1
 - Add sources for 3.10 (v3.10-rc5)
 - Add sources for 3.9 (v3.9.7)
