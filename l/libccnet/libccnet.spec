@@ -1,7 +1,7 @@
 %define oname ccnet
 Name: libccnet
-Version: 1.3.4
-Release: alt2
+Version: 1.3.6
+Release: alt1
 
 Summary: Networking library for Seafile
 
@@ -56,6 +56,9 @@ developing applications that use %name.
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Fri Nov 08 2013 Denis Baranov <baraka@altlinux.ru> 1.3.6-alt1
+- Update to 1.3.6
+
 * Fri Sep 06 2013 Denis Baranov <baraka@altlinux.ru> 1.3.4-alt2
 - Rename package to libccnet
 
