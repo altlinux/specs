@@ -1,6 +1,6 @@
 Name:         xfig
 Version:      3.2.5b
-Release:      alt8
+Release:      alt9
 
 Summary:      An X Window System tool for drawing basic vector graphics.
 Group:        Graphics
@@ -87,6 +87,9 @@ install -D -m 644 xfig.desktop %buildroot/%_desktopdir/xfig.desktop
 /usr/share/doc/xfig
 
 %changelog
+* Mon Nov 11 2013 Vladislav Zavjalov <slazav@altlinux.org> 3.2.5b-alt9
+- fix error with filled objects in new xlib
+
 * Wed May 29 2013 Vladislav Zavjalov <slazav@altlinux.org> 3.2.5b-alt8
 - Don't use local SimpleMenu.c with XAW3D1_5E (closes #26956)
 - add -DDXAW_INTERNATIONALIZATION for new libXaw3d-1.6.2
