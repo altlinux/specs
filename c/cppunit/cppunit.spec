@@ -2,13 +2,14 @@
 
 Name: cppunit
 Version: 1.12.1
-Release: alt2.svn20120901
+Release: alt2.svn20130422
 
 Summary: C++ port of the famous JUnit framework for unit testing
 License: LGPL
 Group: Development/C++
 Url: http://sourceforge.net/projects/cppunit
 
+# svn://svn.code.sf.net/p/cppunit/code/trunk
 Source: %name-%version.tar
 
 # Automatically added by buildreq on Thu Oct 05 2006
@@ -70,6 +71,9 @@ This package contains development documentation for CppUnit.
 %doc %_docdir/%name-%version/*
 
 %changelog
+* Mon Nov 11 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.12.1-alt2.svn20130422
+- New snapshot
+
 * Thu Dec 06 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.12.1-alt2.svn20120901
 - New snapshot
 - Extracted docs into separate package
