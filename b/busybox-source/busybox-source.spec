@@ -1,7 +1,7 @@
 %define bname busybox
 Name: %bname-source
 Version: 1.21.1
-Release: alt18
+Release: alt19
 Summary: Sources of %bname
 License: GPLv2
 Group: Development/Other
@@ -53,6 +53,9 @@ tar -chJf %buildroot%_usrsrc/%bname-%version.tar.xz .
 
 
 %changelog
+* Mon Nov 11 2013 Led <led@altlinux.ru> 1.21.1-alt19
+- upstream updates and fixes
+
 * Thu Nov 07 2013 Led <led@altlinux.ru> 1.21.1-alt18
 - find: made '-wholename' key don't depends on ENABLE_DESKTOP
 
