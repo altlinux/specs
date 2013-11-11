@@ -11,7 +11,7 @@
 %def_enable installed_tests
 
 Name: lib%_name
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: An image loading and rendering library for Gdk
@@ -214,6 +214,9 @@ touch %buildroot%_libdir/%_name-%api_ver/%binary_ver/loaders.cache
 
 
 %changelog
+* Mon Nov 11 2013 Yuri N. Sedunov <aris@altlinux.org> 2.30.1-alt1
+- 2.30.1
+
 * Mon Sep 23 2013 Yuri N. Sedunov <aris@altlinux.org> 2.30.0-alt1
 - 2.30.0
 

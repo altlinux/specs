@@ -7,7 +7,7 @@
 %def_enable introspection
 
 Name: evince
-Version: %ver_major.0
+Version: %ver_major.2
 Release: alt1
 
 Summary: A document viewer
@@ -168,6 +168,9 @@ subst '/NoDisplay/d' %buildroot%_desktopdir/%name.desktop
 %exclude %_libdir/nautilus/extensions-3.0/libevince-properties-page.la
 
 %changelog
+* Mon Nov 11 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.2-alt1
+- 3.10.2
+
 * Tue Sep 24 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.0-alt1
 - 3.10.0
 
