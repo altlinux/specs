@@ -1,6 +1,6 @@
 Name: libplist
 Version: 1.10
-Release: alt1
+Release: alt2
 
 Summary: Library for manipulating Apple Binary and XML Property Lists
 Group: System/Libraries
@@ -57,13 +57,11 @@ Python libraries and bindings for %name
 %patch -p1
 
 %build
-%cmake -DCMAKE_INSTALL_LIBDIR=%_lib
-pushd BUILD
-%make_build
+%cmake -DLIB_SUFFIX=%_lib -DCMAKE_SKIP_RPATH:BOOL=yes
+%cmake_build
 
 %install
-pushd BUILD
-%makeinstall_std
+%cmakeinstall_std
 
 %files
 %_bindir/plistutil
@@ -90,6 +88,9 @@ pushd BUILD
 %python_sitelibdir/plist.so
 
 %changelog
+* Mon Nov 11 2013 Yuri N. Sedunov <aris@altlinux.org> 1.10-alt2
+- fixed %%build for cmake-2.8.12.1-alt1
+
 * Thu Apr 11 2013 Yuri N. Sedunov <aris@altlinux.org> 1.10-alt1
 - 1.10
 
