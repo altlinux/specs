@@ -1,3 +1,5 @@
+%set_automake_version 1.11
+
 %define oname rarian
 %define major 0.8
 # The version of Scrollkeeper that Rarian obsoletes
@@ -7,7 +9,7 @@
 
 Name: librarian
 Version: %major.1
-Release: alt5
+Release: alt6
 
 Summary: A documentation meta-data library
 
@@ -130,6 +132,9 @@ install -pD -m 755 %SOURCE3 %buildroot%_rpmlibdir/scrollkeeper.filetrigger
 %endif
 
 %changelog
+* Mon Nov 11 2013 Yuri N. Sedunov <aris@altlinux.org> 0.8.1-alt6
+- used automake_1.11
+
 * Mon Jan 16 2012 Yuri N. Sedunov <aris@altlinux.org> 0.8.1-alt5
 - used %%autoreconf to fix RPATH problem
 
