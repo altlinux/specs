@@ -1,6 +1,6 @@
 Name: fontconfig
 Version: 2.11.0
-Release: alt1
+Release: alt2
 
 Summary: Font configuration and customization library and utilities
 Group: System/Configuration/Other
@@ -11,10 +11,11 @@ Packager: Valery Inozemtsev <shrek@altlinux.ru>
 Source: %name-%version.tar
 Source1: fontconfig-firsttime
 Source2: fontconfig.filetrigger
-Patch1: alt-symbols-map.patch
-Patch2: alt-config.patch
-Patch3: alt-fc-conf.patch
-Patch4: alt-disable-postscript-aliases.patch
+Patch1: fontconfig-sleep-less.patch
+Patch11: alt-symbols-map.patch
+Patch12: alt-config.patch
+Patch13: alt-fc-conf.patch
+Patch14: alt-disable-postscript-aliases.patch
 
 Provides: lib%name = %version
 Obsoletes: lib%name < %version
@@ -38,9 +39,10 @@ documentation required for development of fontconfig-based software.
 %prep
 %setup -q
 %patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
+%patch11 -p1
+%patch12 -p1
+%patch13 -p1
+%patch14 -p1
 %autoreconf
 
 %build
@@ -116,6 +118,12 @@ find -L %_sysconfdir/fonts/conf.d -type l -delete
 %docdir/%name-devel*
 
 %changelog
+* Mon Nov 11 2013 Sergey V Turchin <zerg@altlinux.org> 2.11.0-alt2
+- add patch from FC to decrease sleep in fc-cache
+
+* Wed Oct 23 2013 Sergey V Turchin <zerg@altlinux.org> 2.11.0-alt0.M70P.1
+- built for M70P
+
 * Thu Oct 17 2013 Sergey V Turchin <zerg@altlinux.org> 2.11.0-alt1
 - new version
 
