@@ -21,13 +21,13 @@ Practice.
 
 Name: %oname-%seqmpi
 Version: 3.2
-Release: alt2.svn20130201
+Release: alt2.svn20130919
 Summary: CFD General Notation System (%desc version)
 
 Group: Sciences/Mathematics
 License: Free (see license.txt)
 URL: http://cgns.sourceforge.net/
-# https://cgns.svn.sourceforge.net/svnroot/cgns
+# svn://svn.code.sf.net/p/cgns/code
 Source: %oname-%version.tar
 Source1: CMakeCache.txt
 Source2: CGNS_docs.tar
@@ -37,7 +37,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Provides: %oname = %version-%release
 Requires: lib%name = %version-%release
-Requires: %oname-data = %version-%release
+#Requires: %oname-data = %version-%release
 Conflicts: %altname
 
 BuildPreReq: cmake gcc-c++ gcc-fortran zlib-devel libGL-devel tk-devel
@@ -187,8 +187,8 @@ done
 
 install -p -m644 src/cgnsKeywords.h %buildroot%_includedir
 
-mv %buildroot%_bindir/cgnstools/* %buildroot%_bindir/
-rmdir %buildroot%_bindir/cgnstools
+#mv %buildroot%_bindir/cgnstools/* %buildroot%_bindir/
+#rmdir %buildroot%_bindir/cgnstools
 
 # The package contains a CVS/.svn/.git/.hg/.bzr/_MTN directory of revision control system.
 # It was most likely included by accident since CVS/.svn/.hg/... etc. directories 
@@ -210,8 +210,8 @@ find . -type d \( -name 'CVS' -o -name '.svn' -o -name '.git' -o -name '.hg' -o 
 %_includedir/*
 
 %if "%seqmpi" == "seq"
-%files -n %oname-data
-%_datadir/cgnstools
+#files -n %oname-data
+#_datadir/cgnstools
 
 %files -n %oname-devel-doc
 #doc doc/html/*
@@ -219,6 +219,9 @@ find . -type d \( -name 'CVS' -o -name '.svn' -o -name '.git' -o -name '.hg' -o 
 %endif
 
 %changelog
+* Mon Nov 11 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.2-alt2.svn20130919
+- New snapshot
+
 * Wed Jun 26 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.2-alt2.svn20130201
 - Rebuilt with new libhdf5
 
@@ -264,3 +267,4 @@ find . -type d \( -name 'CVS' -o -name '.svn' -o -name '.git' -o -name '.hg' -o 
 
 * Thu Oct 15 2009 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0.7-alt1.svn20091009
 - Initial build for Sisyphus
+
