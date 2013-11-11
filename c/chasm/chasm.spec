@@ -2,7 +2,7 @@
 %define sover %somver.4.0
 Name: chasm
 Version: 1.4.0
-Release: alt4.cvs20090407
+Release: alt4.cvs20131111
 Summary: Tool to improve C++ and Fortran 90 interoperability
 License: LANL
 Group: Development/Tools
@@ -228,6 +228,9 @@ popd
 %_datadir/%name-example-particle
 
 %changelog
+* Mon Nov 11 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4.0-alt4.cvs20131111
+- New snapshot
+
 * Sat Mar 31 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4.0-alt4.cvs20090407
 - Rebuilt with OpenPDT
 
