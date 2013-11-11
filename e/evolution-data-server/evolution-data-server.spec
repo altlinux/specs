@@ -17,7 +17,7 @@
 %def_enable vala
 
 Name: evolution-data-server
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: Evolution Data Server
@@ -42,6 +42,8 @@ Patch1: %name-1.4.2.1-debug-lock.patch
 %define gdata_ver 0.10
 %define goa_ver 3.8.0
 %define vala_ver 0.13.1
+
+Requires: dconf
 
 BuildPreReq: gcc-c++ rpm-build-gnome rpm-build-licenses intltool
 BuildPreReq: gtk-doc >= 1.0
@@ -254,6 +256,9 @@ rm -f %buildroot%_libdir/%name-%ver_lib/*/*.la
 
 
 %changelog
+* Mon Nov 11 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.2-alt1
+- 3.10.2
+
 * Sun Oct 13 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.1-alt1
 - 3.10.1
 
