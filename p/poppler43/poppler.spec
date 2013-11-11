@@ -38,10 +38,10 @@
 %define somajor_glib 8
 %define major 0
 %define minor 24
-%define bugfix 2
+%define bugfix 3
 Name: %rname%somajor
 Version: %major.%minor.%bugfix
-Release: alt2
+Release: alt1
 
 %if_disabled compat
 %define poppler_devel_name lib%rname-devel
@@ -404,6 +404,9 @@ export QT4DIR=%_qt4dir
 %endif
 
 %changelog
+* Mon Nov 11 2013 Sergey V Turchin <zerg@altlinux.org> 0.24.3-alt1
+- new version
+
 * Wed Oct 23 2013 Sergey V Turchin <zerg@altlinux.org> 0.24.2-alt2
 - built Qt5 backend
 
