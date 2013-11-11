@@ -17,7 +17,7 @@
 %def_enable webkit2
 
 Name: libwebkitgtk3
-Version: 2.2.1
+Version: 2.2.2
 Release: alt1
 
 Summary: Web browser engine
@@ -323,6 +323,9 @@ mkdir -p Programs/resources
 %endif
 
 %changelog
+* Mon Nov 11 2013 Yuri N. Sedunov <aris@altlinux.org> 2.2.2-alt1
+- 2.2.2
+
 * Wed Oct 16 2013 Yuri N. Sedunov <aris@altlinux.org> 2.2.1-alt1
 - 2.2.1
 
