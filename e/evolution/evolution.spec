@@ -7,7 +7,7 @@
 %def_with openldap
 %def_disable static_ldap
 %def_with krb5
-%def_disable map
+%def_enable map
 %def_disable image_inline
 
 # %define plugins experimental
@@ -17,7 +17,7 @@
 %define strict_build_settings 1
 
 Name: evolution
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: Integrated GNOME mail client, calendar and address book
@@ -56,7 +56,7 @@ Provides: camel
 %define champlain_ver 0.12
 %define pst_ver 0.6.54
 %define webkit_ver 1.10.0
-%define geocode_ver 0.99.0
+%define geocode_ver 3.10.0
 
 Requires: %name-data = %version-%release
 Requires: evolution-data-server >= %eds_ver
@@ -316,6 +316,9 @@ export KILL_PROCESS_CMD=%_bindir/killall
 %_datadir/glib-2.0/schemas/org.gnome.evolution.spamassassin.gschema.xml
 
 %changelog
+* Mon Nov 11 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.2-alt1
+- 3.10.2
+
 * Sun Oct 13 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.1-alt1
 - 3.10.1
 
