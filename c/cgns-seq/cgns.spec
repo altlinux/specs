@@ -21,7 +21,7 @@ Practice.
 
 Name: %oname-%seqmpi
 Version: 3.2
-Release: alt2.svn20130201
+Release: alt2.svn20130919
 Summary: CFD General Notation System (%desc version)
 
 Group: Sciences/Mathematics
@@ -37,7 +37,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Provides: %oname = %version-%release
 Requires: lib%name = %version-%release
-Requires: %oname-data = %version-%release
+#Requires: %oname-data = %version-%release
 Conflicts: %altname
 
 BuildPreReq: cmake gcc-c++ gcc-fortran zlib-devel libGL-devel tk-devel
@@ -181,8 +181,8 @@ done
 
 install -p -m644 src/cgnsKeywords.h %buildroot%_includedir
 
-mv %buildroot%_bindir/cgnstools/* %buildroot%_bindir/
-rmdir %buildroot%_bindir/cgnstools
+#mv %buildroot%_bindir/cgnstools/* %buildroot%_bindir/
+#rmdir %buildroot%_bindir/cgnstools
 
 # The package contains a CVS/.svn/.git/.hg/.bzr/_MTN directory of revision control system.
 # It was most likely included by accident since CVS/.svn/.hg/... etc. directories 
@@ -204,8 +204,8 @@ find . -type d \( -name 'CVS' -o -name '.svn' -o -name '.git' -o -name '.hg' -o 
 %_includedir/*
 
 %if "%seqmpi" == "seq"
-%files -n %oname-data
-%_datadir/cgnstools
+#files -n %oname-data
+#_datadir/cgnstools
 
 %files -n %oname-devel-doc
 #doc doc/html/*
@@ -213,6 +213,9 @@ find . -type d \( -name 'CVS' -o -name '.svn' -o -name '.git' -o -name '.hg' -o 
 %endif
 
 %changelog
+* Mon Nov 11 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.2-alt2.svn20130919
+- New snapshot
+
 * Wed Jun 26 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.2-alt2.svn20130201
 - Rebuilt with new libhdf5
 
