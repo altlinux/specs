@@ -10,7 +10,7 @@ Name: kde4edu
 %define minor 11
 %define bugfix 3
 Version: %major.%minor.%bugfix
-Release: alt1
+Release: alt2
 
 Packager: Sergey V Turchin <zerg at altlinux dot org>
 
@@ -58,7 +58,7 @@ Patch3: kdeedu-4.11.1-alt-fix-compile.patch
 #BuildRequires: boost-python-devel eigen facile gcc-c++ getfemxx indilib-devel kde4base-runtime-devel kde4base-workspace-devel libXScrnSaver-devel libXcomposite-devel libXft-devel libXpm-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libbfd-devel libcfitsio-devel libcln-devel libgmp-devel libgsl-devel libjpeg-devel libncurses-devel libnova-devel libopenbabel-devel libpth-devel libqalculate-devel libreadline-devel libusb-devel libxkbfile-devel libxslt-devel nvidia_glx_177.80 openbabel python-modules-encodings rpm-build-ruby subversion xorg-xf86vidmodeproto-devel xsltproc
 BuildRequires(pre): kde4base-workspace-devel
 BuildRequires: python-modules-encodings python-devel boost-devel boost-python-devel eigen2 facile gcc-c++ libindi-devel
-BuildRequires: libbfd-devel libcfitsio-devel libcln-devel libgmp-devel libgsl-devel libjpeg-devel libncurses-devel libnova-devel
+BuildRequires: libbfd-devel libcfitsio-devel wcslib-devel libcln-devel libgmp-devel libgsl-devel libjpeg-devel libncurses-devel libnova-devel
 BuildRequires: libpth-devel libqalculate-devel libreadline-devel libusb-devel
 BuildRequires: ocaml xplanet attica-devel libspectre-devel libgps-devel qt4-mobility-devel
 BuildRequires: libxslt-devel xsltproc libopenbabel-devel >= 2.2 openbabel avogadro-devel libglew-devel
@@ -1078,6 +1078,12 @@ mkdir -p %buildroot/%_K4apps/step/objinfo/l10n
 %_K4dbus_interfaces/*
 
 %changelog
+* Mon Nov 11 2013 Sergey V Turchin <zerg@altlinux.org> 4.11.3-alt2
+- build kstars with wcslib
+
+* Fri Nov 08 2013 Sergey V Turchin <zerg@altlinux.org> 4.11.3-alt0.M70P.1
+- built for M70P
+
 * Fri Nov 08 2013 Sergey V Turchin <zerg@altlinux.org> 4.11.3-alt1
 - new version
 
