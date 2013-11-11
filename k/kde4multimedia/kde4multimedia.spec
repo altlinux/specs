@@ -5,7 +5,7 @@
 Name: kde4multimedia
 %define major 4
 %define minor 11
-%define bugfix 1
+%define bugfix 3
 Version: %major.%minor.%bugfix
 Release: alt1
 
@@ -45,7 +45,7 @@ BuildRequires: libcanberra-devel
 BuildRequires: libavcodec-devel libavformat-devel libavutil-devel libavdevice-devel libswscale-devel libpostproc-devel
 #BuildRequires: libgstreamer-plugins-base-devel
 BuildRequires: kde4base-workspace-devel >= %version
-BuildRequires: libkcompactdisc4-devel libkcddb4-devel
+BuildRequires: libkcompactdisc4-devel libkcddb4-devel desktop-file-utils
 
 %description
 * kmix: the audio mixer as a standalone program and Kicker applet
@@ -188,6 +188,16 @@ pushd $d
 popd
 done
 
+# fix desktop files
+for app in kscd juk
+do
+    desktop-file-install \
+	--mode=0755 \
+	--dir %buildroot/%_K4xdg_apps \
+	--add-category=Audio \
+	--remove-category=AudioVideo \
+	%buildroot/%_K4xdg_apps/$app.desktop
+done
 
 %files
 %files common
@@ -267,6 +277,13 @@ done
 %_K4dbus_interfaces/*.xml
 
 %changelog
+* Mon Nov 11 2013 Sergey V Turchin <zerg@altlinux.org> 4.11.3-alt1
+- new version
+- fix desktop-files (ALT#29565)
+
+* Fri Oct 04 2013 Sergey V Turchin <zerg@altlinux.org> 4.11.1-alt0.M70P.1
+- built for M70P
+
 * Fri Sep 06 2013 Sergey V Turchin <zerg@altlinux.org> 4.11.1-alt1
 - new version
 
