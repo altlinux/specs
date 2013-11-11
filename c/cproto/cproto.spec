@@ -1,6 +1,6 @@
 Name: cproto
-Version: 4.7j
-Release: alt2
+Version: 4.7k
+Release: alt1
 Summary: Generating prototypes and declarations from C source code
 License: Public
 Group: Development/Tools
@@ -39,6 +39,9 @@ the input between braces, I avoided implementing the entire C language grammar.
 %_man1dir/*
 
 %changelog
+* Mon Nov 11 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.7k-alt1
+- Version 4.7k
+
 * Thu Dec 01 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.7j-alt2
 - Changed URL
 
