@@ -1,12 +1,15 @@
 Name: corosync2
 Summary: The Corosync Cluster Engine and Application Programming Interfaces
-Version: 2.3.1
+Version: 2.3.2
 Release: alt1
 License: BSD
 Group: System/Base
 Url: http://ftp.corosync.org
 
 Source0:%name-%version.tar
+Source1: corosync-init
+Source2: corosync-notifyd-init
+Patch: %name-%version-alt.patch
 
 Conflicts: corosync
 
@@ -53,6 +56,8 @@ the remaining acting as TTNs.
 
 %prep
 %setup
+%patch -p1
+
 echo %version > .version
 #if release version (= tarball)
 #in checked-out repository it uses git describe
@@ -68,7 +73,6 @@ export rdmacm_CFLAGS=-I/usr/include/rdma \
 export rdmacm_LIBS=-lrdmacm \
 
 %configure \
-	--enable-nss \
 	--enable-testagents \
 	--enable-watchdog \
 	--enable-monitoring \
@@ -89,8 +93,11 @@ export rdmacm_LIBS=-lrdmacm \
 
 cp %buildroot%_sysconfdir/corosync/corosync.conf.example %buildroot%_sysconfdir/corosync/corosync.conf
 
-mkdir -p -m 0700 %buildroot/%_sysconfdir/dbus-1/system.d
-install -m 644 %_builddir/%name-%version/conf/corosync-signals.conf %buildroot/%_sysconfdir/dbus-1/system.d/corosync-signals.conf
+install -p -D -m644 %_builddir/%name-%version/conf/corosync-signals.conf %buildroot/%_sysconfdir/dbus-1/system.d/corosync-signals.conf
+
+#Initscripts
+install -p -D -m755 %SOURCE1 %buildroot%_initdir/corosync
+install -p -D -m755 %SOURCE2 %buildroot%_initdir/corosync-notifyd
 
 mkdir -p %buildroot%_datadir/corosync/tests/cts
 cp cts/corolab.py %buildroot%_datadir/corosync/tests/cts
@@ -128,8 +135,7 @@ rm -rf %buildroot%_docdir/*
 %config(noreplace) %_sysconfdir/corosync/corosync.xml.example
 %systemd_unitdir/*
 %_sysconfdir/dbus-1/system.d/corosync-signals.conf
-%_initdir/corosync
-%_initdir/corosync-notifyd
+%_initdir/corosync*
 %_datadir/corosync
 %_datadir/snmp/mibs/COROSYNC-MIB.txt
 %_datadir/augeas/lenses/*
@@ -153,6 +159,9 @@ rm -rf %buildroot%_docdir/*
 %_datadir/corosync/tests
 
 %changelog
+* Mon Nov 11 2013 Slava Dubrovskiy <dubrsl@altlinux.org> 2.3.2-alt1
+- New version
+
 * Mon Aug 12 2013 Slava Dubrovskiy <dubrsl@altlinux.org> 2.3.1-alt1
 - New version
 
