@@ -2,7 +2,7 @@
 
 Name: libgranite
 Version: 0.2.2
-Release: alt5
+Release: alt6
 
 Summary: Extension of GTK+ libraries
 Group: System/Libraries
@@ -90,11 +90,6 @@ GObject introspection devel data for the granite library.
 %install
 %makeinstall_std
 
-%ifarch x86_64
-mkdir -p %buildroot%_libdir/
-mv %buildroot/usr/lib/* %buildroot%_libdir/
-%endif
-
 %find_lang %origname
 
 %files -f %origname.lang
@@ -122,6 +117,9 @@ mv %buildroot/usr/lib/* %buildroot%_libdir/
 %_datadir/vala/vapi/granite.vapi
 
 %changelog
+* Mon Nov 11 2013 Igor Zubkov <icesik@altlinux.org> 0.2.2-alt6
+- Fix FTBFS with new cmake
+
 * Mon Sep 16 2013 Igor Zubkov <icesik@altlinux.org> 0.2.2-alt5
 - Fix typo in spec file
 
