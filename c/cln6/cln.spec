@@ -3,8 +3,8 @@
 %define oname cln
 
 Name: %oname%abiversion
-Version: 1.3.2
-Release: alt3
+Version: 1.3.3
+Release: alt1
 
 Summary: CLN - Class Library for Numbers
 Group: System/Libraries
@@ -121,6 +121,9 @@ rm -f %buildroot%_libdir/*.a
 %_bindir/pi
 
 %changelog
+* Mon Nov 11 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.3-alt1
+- Version 1.3.3
+
 * Wed Sep 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.2-alt3
 - Moved %_bindir/pi into separate package (ALT #27724)
 
