@@ -14,7 +14,7 @@
 %def_enable gst_1
 
 Name: empathy
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: Instant Messaging Client for GNOME
@@ -156,7 +156,6 @@ NOCONFIGURE=1 ./autogen.sh
 # empathy-parser-test failed
 # xvfb-run %make check
 
-
 %files
 %_bindir/*
 %_libexecdir/empathy-auth-client
@@ -197,6 +196,7 @@ NOCONFIGURE=1 ./autogen.sh
 %_man1dir/*
 %config %_datadir/glib-2.0/schemas/*
 %_datadir/GConf/gsettings/%name.convert
+%_datadir/appdata/%name.appdata.xml
 %doc AUTHORS CONTRIBUTORS NEWS README TODO
 
 %if_enabled sendto
@@ -207,6 +207,9 @@ NOCONFIGURE=1 ./autogen.sh
 
 
 %changelog
+* Mon Nov 11 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.2-alt1
+- 3.10.2
+
 * Mon Oct 14 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.1-alt1
 - 3.10.1
 
