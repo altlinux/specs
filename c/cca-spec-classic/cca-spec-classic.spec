@@ -1,7 +1,7 @@
 %define _ver 0_5_7
 Name: cca-spec-classic
 Version: 0.5.7
-Release: alt7
+Release: alt8
 Summary: Classic Common Component Architecture Specification
 License: LGPL
 Group: Sciences/Mathematics
@@ -42,16 +42,6 @@ Requires: lib%name-j = %version-%release
 The Classic Common Component Architecture Specification.
 
 This package contains development files of Classic CCA Specification.
-
-%package -n lib%name-devel-static
-Summary: Static libraries of Classic CCA Specification
-Group: Development/Other
-Requires: lib%name-devel = %version-%release
-
-%description -n lib%name-devel-static
-The Classic Common Component Architecture Specification.
-
-This package contains static libraries of Classic CCA Specification.
 
 %package -n lib%name-j
 Summary: Java library of Classic CCA Specification
@@ -149,10 +139,6 @@ rm -fR %buildroot%_docdir/%name-%version/c++/man
 %_libdir/%name-%version/*.so
 %_includedir/*
 
-%files -n lib%name-devel-static
-%_libdir/*.a
-%_libdir/%name-%version/*.a
-
 %files -n lib%name-j
 %_javadir/*.jar
 
@@ -167,6 +153,9 @@ rm -fR %buildroot%_docdir/%name-%version/c++/man
 %_javadocdir/%name-%version
 
 %changelog
+* Tue Nov 12 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.7-alt8
+- Fixed build
+
 * Mon Feb 28 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.7-alt7
 - Rebuilt for debuginfo
 
