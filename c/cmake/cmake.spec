@@ -1,6 +1,6 @@
 Name: cmake
 Version: 2.8.12.1
-Release: alt1
+Release: alt2
 
 Summary: Cross-platform, open-source make system
 
@@ -238,6 +238,9 @@ popd
 
 
 %changelog
+* Tue Nov 12 2013 Slava Dubrovskiy <dubrsl@altlinux.org> 2.8.12.1-alt2
+- Revert changes in cmake.macros and add new macros %_cmake_skip_rpath -DCMAKE_SKIP_RPATH:BOOL=ON
+
 * Thu Nov 07 2013 Slava Dubrovskiy <dubrsl@altlinux.org> 2.8.12.1-alt1
 - 2.8.12.1
 - Added additional macros in cmake.macros (ALT#27879)
