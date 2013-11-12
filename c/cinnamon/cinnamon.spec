@@ -1,5 +1,5 @@
 Name: cinnamon
-Version: 2.0.10
+Version: 2.0.12
 Release: alt1
 
 Summary: Window management and application launching for GNOME
@@ -223,6 +223,9 @@ desktop-file-install                                 \
 %doc NEWS README
 
 %changelog
+* Tue Nov 12 2013 Vladimir Didenko <cow@altlinux.org> 2.0.12-alt1
+- 2.0.12
+
 * Tue Nov 5 2013 Vladimir Didenko <cow@altlinux.org> 2.0.10-alt1
 - 2.0.10
 
