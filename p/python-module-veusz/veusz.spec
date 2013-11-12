@@ -1,7 +1,7 @@
 %define oname veusz
 Name: python-module-%oname
 Version: 1.18
-Release: alt1
+Release: alt2
 Summary: A Scientific Plotting Package
 License: GPLv2+
 Group: Development/Python
@@ -12,7 +12,7 @@ Source: %oname-%version.tar
 
 BuildPreReq: python-devel libnumpy-devel python-module-PyQt4-devel
 BuildPreReq: libqt4-devel python-module-sip-devel python-module-pyemf
-BuildPreReq: python-module-stsci gcc-c++
+BuildPreReq: gcc-c++
 
 %description
 Veusz is a GUI scientific plotting and graphing package. It is designed
@@ -97,6 +97,9 @@ install -m644 Documents/*.1 %buildroot%_man1dir
 %_man1dir/*
 
 %changelog
+* Tue Nov 12 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.18-alt2
+- Fixed build
+
 * Thu Sep 19 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.18-alt1
 - Version 1.18
 
