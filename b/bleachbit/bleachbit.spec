@@ -1,6 +1,6 @@
 
 Name:           bleachbit
-Version:        0.9.5
+Version:        0.9.6
 Release:        alt1
 
 Summary:        Remove unnecessary files, free space, and maintain privacy
@@ -32,7 +32,7 @@ make -C po local
 %python_build
 
 %install
-make DESTDIR=%buildroot INSTALL="install -p" install prefix=%_prefix
+%makeinstall_std prefix=%_prefix
 
 sed -i -e '/^#!\//, 1d' %buildroot%_datadir/bleachbit/CLI.py
 sed -i -e '/^#!\//, 1d' %buildroot%_datadir/bleachbit/GUI.py
@@ -48,6 +48,9 @@ rm -f %buildroot%_datadir/%name/Windows.py*
 %_pixmapsdir/%name.png
 
 %changelog
+* Mon Nov 11 2013 Andrey Cherepanov <cas@altlinux.org> 0.9.6-alt1
+- New version
+
 * Tue Feb 05 2013 Andrey Cherepanov <cas@altlinux.org> 0.9.5-alt1
 - New version 0.9.5
 
