@@ -2,8 +2,8 @@
 %define gimpplugindir %(gimptool-2.0 --gimpplugindir)
 
 Name: gimp-plugin-lensfun
-Version: 0.2.2
-Release: alt2
+Version: 0.2.3
+Release: alt1
 
 Summary: lens distortion correction plugin for Gimp
 License: GPLv3
@@ -11,7 +11,7 @@ Group: Graphics
 
 Url: http://lensfun.sebastiankraft.net/
 Source: %url%_name-%version.tar.gz
-Patch: %_name-0.2.2-alt-makefile.patch
+Patch: %_name-0.2.3-alt-makefile.patch
 
 Requires: gimp >= 2.6
 BuildRequires: gcc-c++ libexiv2-devel libgimp-devel libgomp-devel liblensfun-devel
@@ -29,16 +29,19 @@ rm -rf bin
 %make
 
 %install
-install -pD %_name %buildroot%gimpplugindir/plug-ins/%_name
+install -pD gimp-lensfun %buildroot%gimpplugindir/plug-ins/gimp-lensfun
 
 #export DESTDIR=%buildroot
 #gimptool-2.0 --install-admin-bin %_name
 
 %files
-%gimpplugindir/plug-ins/%_name
+%gimpplugindir/plug-ins/gimp-lensfun
 %doc README.txt CHANGES.txt
 
 %changelog
+* Tue Nov 12 2013 Yuri N. Sedunov <aris@altlinux.org> 0.2.3-alt1
+- 0.2.3
+
 * Thu Jan 24 2013 Yuri N. Sedunov <aris@altlinux.org> 0.2.2-alt2
 - rebuilt against libexiv2.so.12
 
