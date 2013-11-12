@@ -25,7 +25,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.10.18
-Release: alt9
+Release: alt11
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -1836,6 +1836,14 @@ done)
 
 
 %changelog
+* Tue Nov 12 2013 Led <led@altlinux.ru> 3.10.18-alt11
+- updated:
+  + fix-drivers-pci
+
+* Tue Nov 12 2013 Led <led@altlinux.ru> 3.10.18-alt10
+- updated:
+  + feat-kernel-vserver
+
 * Mon Nov 11 2013 Led <led@altlinux.ru> 3.10.18-alt9
 - moved drivers/video/console to kernel-image-* subpackage
 
