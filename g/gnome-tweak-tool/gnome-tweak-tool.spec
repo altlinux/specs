@@ -1,10 +1,10 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define ver_major 3.10
 
 Name: gnome-tweak-tool
-Version: %ver_major.0
-Release: alt3
+Version: %ver_major.1
+Release: alt1
 
 Summary: A tool to customize advanced GNOME 3 options
 Group: Graphical desktop/GNOME
@@ -18,8 +18,6 @@ Source: %name-%version.tar
 Source: %name-%version.tar.xz
 %endif
 Patch: gnome-tweak-tool-3.8.0-alt-desktop.patch
-# https://bugzilla.gnome.org/show_bug.cgi?id=710275
-Patch1: gnome-tweak-tool-3.10.0-fc-fix_icon_themes_detection.patch
 
 BuildArch: noarch
 Requires: gnome-shell >= %ver_major
@@ -50,7 +48,6 @@ Features:
 %prep
 %setup
 %patch -b .desktop
-%patch1 -p1
 
 %build
 %{?_enable_snapshot:NOCONFIGURE=1 ./autogen.sh}
@@ -72,6 +69,9 @@ Features:
 %doc AUTHORS NEWS README
 
 %changelog
+* Wed Nov 13 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.1-alt1
+- 3.10.1
+
 * Sat Nov 02 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.0-alt3
 - updated to 3.10_5dce590 (fixed extension update checks)
 - fixed BGO #710275
