@@ -1,5 +1,5 @@
 Name: vlc
-Version: 2.1.0
+Version: 2.1.1
 Release: alt1
 
 Summary: VLC media player
@@ -29,7 +29,7 @@ BuildRequires: libtag-devel libfluidsynth-devel libnotify-devel libdbus-devel
 BuildRequires: libzvbi-devel libraw1394-devel libavc1394-devel libfribidi-devel
 BuildRequires: libass-devel libbluray-devel libpcre-devel libopus-devel
 BuildRequires: libkate-devel libv4l-devel libmtp-devel libshout2-devel
-BuildRequires: libtar-devel libva-devel 
+BuildRequires: libtar-devel libva-devel
 BuildRequires: libxcb-devel libxcbutil-devel libxcbutil-keysyms-devel
 BuildRequires: libEGL-devel libGL-devel libGLES-devel
 BuildRequires: libdc1394-devel libschroedinger-devel libsmbclient-devel
@@ -1306,6 +1306,9 @@ chmod 755 %buildroot%_libexecdir/rpm/vlc.filetrigger
 %files maxi
 
 %changelog
+* Tue Nov 12 2013 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.1.1-alt1
+- 2.1.1 released
+
 * Fri Sep 20 2013 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.1.0-alt1
 - 2.1.0 released
 
