@@ -2,7 +2,7 @@
 %define EVR %{?epoch:%epoch:}%version-%release
 
 Name: check
-Version: 0.9.9
+Version: 0.9.11
 Release: alt1
 Epoch: 20121107
 
@@ -97,6 +97,12 @@ rm -rf %buildroot/usr/share/doc/check/
 %endif
 
 %changelog
+* Tue Nov 12 2013 Michael Shigorin <mike@altlinux.org> 20121107:0.9.11-alt1
+- new version (watch file uupdate)
+
+* Mon Apr 22 2013 Michael Shigorin <mike@altlinux.org> 20121107:0.9.10-alt1
+- new version (watch file uupdate)
+
 * Tue Nov 06 2012 Michael Shigorin <mike@altlinux.org> 20121107:0.9.9-alt1
 - new version (watch file uupdate)
 - added checkmk(1) to the main package
