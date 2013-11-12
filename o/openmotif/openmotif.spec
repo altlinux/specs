@@ -1,10 +1,12 @@
+%set_automake_version 1.11
+
 %def_with demos
 %def_disable static
 %define soname 4
 
 Name: openmotif
 Version: 2.3.3
-Release: alt4
+Release: alt4.1
 
 Summary: The Open Motif
 License: Open Group Public License
@@ -157,6 +159,8 @@ done
 %{expand:%%add_optflags %(getconf LFS_CFLAGS)}
 %{?!_enable_static:export lt_cv_prog_cc_static_works=no}
 libtoolize --copy --force
+touch INSTALL NEWS AUTHORS
+%autoreconf
 %configure --enable-shared %{subst_enable static}
 
 make clean
@@ -236,6 +240,9 @@ rm -f %_x11includedir/{Mrm,Xm} >/dev/null 2>&1 ||:
 # - actually test mwm?
 
 %changelog
+* Tue Nov 12 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.3.3-alt4.1
+- Fixed build
+
 * Tue May 21 2013 Dmitry V. Levin <ldv@altlinux.org> 2.3.3-alt4
 - Fixed "find -perm" usage.
 
