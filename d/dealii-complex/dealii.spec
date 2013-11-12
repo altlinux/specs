@@ -6,8 +6,8 @@
 %define ldir %_libdir/petsc-%scalar_type
 
 Name: %oname-%scalar_type
-Version: 8.0
-Release: alt3.pre.svn20130617
+Version: 8.1
+Release: alt1.pre.svn20131111
 Summary: A Finite Element Differential Equations Analysis Library (%scalar_type scalars)
 License: QPL v1.0
 Group: Sciences/Mathematics
@@ -134,7 +134,7 @@ export MPIDIR=%mpidir
 
 INCS="-I%_includedir/hypre -I%_includedir/gsl -I%_includedir/tbb"
 DEFS="-DHAS_C99_TR1_CMATH -DDEAL_II_USE_EXTERNAL_BOOST"
-%add_optflags $INCS $DEFS -fno-strict-aliasing -std=gnu99 -fpermissive
+%add_optflags $INCS $DEFS -fno-strict-aliasing -std=gnu99 -fpermissive %optflags_shared
 
 cmake \
 	-DCMAKE_BUILD_TYPE:STRING=Release \
@@ -201,6 +201,9 @@ popd
 %endif
 
 %changelog
+* Mon Nov 11 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 8.1-alt1.pre.svn20131111
+- Version 8.1.pre
+
 * Thu Jul 11 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 8.0-alt3.pre.svn20130617
 - Rebuilt with new PETSc
 
@@ -291,3 +294,4 @@ popd
 
 * Sat Jan 01 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 6.4-alt1.pre.svn20101223
 - Initial build for Sisyphus
+
