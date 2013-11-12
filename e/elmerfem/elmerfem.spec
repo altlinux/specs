@@ -4,7 +4,7 @@
 %define somver 0
 %define sover %somver.0.0
 
-%define svn svn6034
+%define svn svn6424
 
 Name: elmerfem
 Version: 7.0
@@ -26,7 +26,7 @@ BuildRequires: gcc-fortran liblapack-devel libxblas-devel %mpiimpl-devel
 BuildRequires: libncurses-devel libreadline-devel libmetis0-devel
 BuildRequires: libopencascade-devel libftgl-devel R-devel
 BuildpreReq: libtetgen-devel libsuitesparse-devel libarpack-devel
-BuildPreReq: python-module-PyQt4 libqwt-devel libvtk-devel
+BuildPreReq: python-module-PyQt4 libqwt6-devel libvtk-devel
 BuildPreReq: libparpack-mpi-devel qt4-devel tcl-devel tk-devel
 BuildPreReq: libhypre-devel rpm-macros-make
 
@@ -351,6 +351,9 @@ rm -f %_datadir/fonts/ttf/freefont/Free*.ttf
 %_niconsdir/document-save-as.png
 
 %changelog
+* Tue Nov 12 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 7.0-alt2.svn6424
+- New snapshot
+
 * Mon Feb 04 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 7.0-alt2.svn6034
 - New snapshot
 
