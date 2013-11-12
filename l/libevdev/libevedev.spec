@@ -1,8 +1,8 @@
 %define api_ver 1.0
 
 Name: libevdev
-Version: 0.4
-Release: alt1.1
+Version: 0.4.1
+Release: alt1
 
 Summary: kernel evdev device wrapper library
 Group: System/Libraries
@@ -51,6 +51,9 @@ that are needed to write applications that use %name.
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Tue Nov 12 2013 Yuri N. Sedunov <aris@altlinux.org> 0.4.1-alt1
+- 0.4.1
+
 * Fri Sep 20 2013 Yuri N. Sedunov <aris@altlinux.org> 0.4-alt1.1
 - disable coverage testing
 
