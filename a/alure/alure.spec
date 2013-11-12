@@ -1,7 +1,7 @@
 Summary: ALURE is a utility library to help manage common tasks with OpenAL applications
 Name: alure
 Version: 1.2
-Release: alt1
+Release: alt2
 Source0: %name-%version.tar
 License: MIT
 Packager: Slava Dubrovskiy <dubrsl@altlinux.ru>
@@ -74,11 +74,6 @@ The %name-examples package contains example program for %name
 %install
 %cmakeinstall_std
 
-mkdir -p %buildroot/usr/bin
-cp BUILD/alurecdplay %buildroot/usr/bin/
-cp BUILD/alureplay %buildroot/usr/bin/
-cp BUILD/alurestream %buildroot/usr/bin/
-
 %files -n lib%name
 %_libdir/*.so.*
 
@@ -86,7 +81,6 @@ cp BUILD/alurestream %buildroot/usr/bin/
 %_includedir/*
 %_libdir/*.so
 %_libdir/pkgconfig/*
-#_libdir/GG/*.cmake
 
 %files -n lib%name-devel-doc
 %doc docs/*
@@ -95,6 +89,9 @@ cp BUILD/alurestream %buildroot/usr/bin/
 %_bindir/*
 
 %changelog
+* Tue Nov 12 2013 Slava Dubrovskiy <dubrsl@altlinux.org> 1.2-alt2
+- Fix build
+
 * Sat Oct 26 2013 Slava Dubrovskiy <dubrsl@altlinux.org> 1.2-alt1
 - New version. Fix (ALT#29525)
 
