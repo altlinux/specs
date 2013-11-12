@@ -1,7 +1,7 @@
 %def_disable static
 
 Name: vips
-Version: 7.36.1
+Version: 7.36.3
 Release: alt1
 %define majorver %(echo %version |cut -d. -f1,2)
 
@@ -112,6 +112,12 @@ find %buildroot \( -name '*.la' -o -name '*.a' \) -exec rm -f {} ';'
 # - package python bindings
 
 %changelog
+* Tue Nov 12 2013 Michael Shigorin <mike@altlinux.org> 7.36.3-alt1
+- new version (watch file uupdate)
+
+* Thu Oct 24 2013 Michael Shigorin <mike@altlinux.org> 7.36.2b-alt1
+- new version (watch file uupdate)
+
 * Sun Oct 13 2013 Michael Shigorin <mike@altlinux.org> 7.36.1-alt1
 - new version (watch file uupdate)
 
