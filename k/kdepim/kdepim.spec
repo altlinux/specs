@@ -20,7 +20,7 @@
 
 Name: kdepim
 Version: 3.5.13.2
-Release: alt4
+Release: alt4.1
 Serial: 1
 
 Group: Graphical desktop/KDE
@@ -999,6 +999,9 @@ done
 %_K3includedir/index
 
 %changelog
+* Tue Nov 12 2013 Sergey Y. Afonin <asy@altlinux.ru> 1:3.5.13.2-alt4.1
+- NMU: rebuilt with cyrus-sasl 2.1.26
+
 * Sat Jul 27 2013 Roman Savochenko <rom_as@altlinux.ru> 1:3.5.13.2-alt4
 - ARTS support enable.
 
