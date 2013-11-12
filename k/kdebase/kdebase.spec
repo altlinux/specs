@@ -35,7 +35,7 @@
 %define bugfix 13.2
 Name: kdebase
 Version: %major.%minor.%bugfix
-Release: alt5
+Release: alt5.1
 %define reqver %major.%minor
 
 Summary: Trinity Desktop Environment - Core files
@@ -1981,6 +1981,9 @@ test ! -L %x11confdir/kdm && rm -rf %x11confdir/kdm ||:
 
 
 %changelog
+* Tue Nov 12 2013 Sergey Y. Afonin <asy@altlinux.ru> 3.5.13.2-alt5.1
+- NMU: rebuilt with cyrus-sasl 2.1.26
+
 * Sat Aug 31 2013 Roman Savochenko <rom_as@altlinux.ru> 3.5.13.2-alt5
 - Kicker:systemtray: icon resize event force send on embeding,
   mostly for GTK3 applications prevent the icon default size 4x4.
