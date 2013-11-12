@@ -10,7 +10,7 @@ Name: kde4edu
 %define minor 11
 %define bugfix 3
 Version: %major.%minor.%bugfix
-Release: alt2
+Release: alt3
 
 Packager: Sergey V Turchin <zerg at altlinux dot org>
 
@@ -1078,6 +1078,12 @@ mkdir -p %buildroot/%_K4apps/step/objinfo/l10n
 %_K4dbus_interfaces/*
 
 %changelog
+* Tue Nov 12 2013 Sergey V Turchin <zerg@altlinux.org> 4.11.3-alt3
+- add fix for KDEBUG#327474 (ALT#29575)
+
+* Mon Nov 11 2013 Sergey V Turchin <zerg@altlinux.org> 4.11.3-alt1.M70P.1
+- new version
+
 * Mon Nov 11 2013 Sergey V Turchin <zerg@altlinux.org> 4.11.3-alt2
 - build kstars with wcslib
 
