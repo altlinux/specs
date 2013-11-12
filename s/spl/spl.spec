@@ -1,6 +1,6 @@
 Name: spl
 Version: 0.6.2
-Release: alt3
+Release: alt4
 Summary: Solaris Porting Layer (SPL)
 License: GPLv2+
 Group: System/Kernel and hardware
@@ -89,6 +89,9 @@ install -pD -m 0644 {,%kernel_srcdir/}%name-%version.tar.xz
 
 
 %changelog
+* Tue Nov 05 2013 Led <led@altlinux.ru> 0.6.2-alt4
+- upstream updates
+
 * Tue Oct 29 2013 Led <led@altlinux.ru> 0.6.2-alt3
 - upstream updates and fixes
 
