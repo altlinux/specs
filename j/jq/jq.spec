@@ -2,10 +2,11 @@
 
 Name: jq
 Version: 1.3
-Release: alt1
+Release: alt2
 Summary: Command-line JSON processor
 Group: Development/Other
 Source: %name-%version.tar
+Patch: %name-%version-%release.patch
 URL: http://stedolan.github.io/jq/
 License: BSD-style
 
@@ -17,6 +18,7 @@ BuildRequires: flex %{?!_disable_check:valgrind}
 
 %prep
 %setup -q
+%patch -p1
 
 
 %build
@@ -41,5 +43,8 @@ ln -sf README.md %buildroot%_docdir/%name-%version/README
 
 
 %changelog
+* Tue Nov 12 2013 Led <led@altlinux.ru> 1.3-alt2
+- fixed build with new automake
+
 * Fri Oct 11 2013 Led <led@altlinux.ru> 1.3-alt1
 - initial build
