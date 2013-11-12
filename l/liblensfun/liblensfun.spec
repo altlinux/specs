@@ -1,8 +1,6 @@
 Name: liblensfun
-Version: 0.2.6
+Version: 0.2.8
 Release: alt1
-
-Packager: Victor Forsiuk <force@altlinux.org>
 
 Summary: A library to rectifying the defects introduced by your photographic equipment
 License: LGPLv3 and CC-BY-SA
@@ -10,10 +8,8 @@ Group: Graphics
 
 Url: http://lensfun.berlios.de/
 Source: http://download.berlios.de/lensfun/lensfun-%version.tar.bz2
-Patch1: lensfun-0.2.5-lensdbadditions.patch
-Patch3: lensfun-0.2.5-alt-debuginfo.patch
-Patch4: lensfun-0.2.6-fc-cmake_LIB_SUFFIX.patch
-Patch5: lensfun-0.2.6-fc-cmake_pkgconfig.patch
+Patch: lensfun-0.2.5-lensdbadditions.patch
+Patch1: lensfun-0.2.8-alt-debuginfo.patch
 
 BuildRequires: cmake doxygen gcc-c++ glib2-devel libpng-devel python-modules
 
@@ -30,30 +26,30 @@ Development tools for programs which will use the lensfun library.
 
 %prep
 %setup -n lensfun-%version
+%patch -p1
 %patch1 -p1
-%patch3 -p2
-%patch4 -p1
-%patch5 -p1
 
 %build
 %cmake -DBUILD_TESTS:BOOL=OFF
-pushd BUILD
-%make_build
+%cmake_build
 
 %install
-pushd BUILD
-%makeinstall_std
+%cmakeinstall_std
 
 %files
-%_libdir/*.so.*
-%_datadir/lensfun
+%_libdir/%name.so.*
+%_datadir/lensfun/
 
 %files devel
-%_includedir/*
-%_libdir/*.so
-%_pkgconfigdir/*
+%_includedir/lensfun/
+%_libdir/%name.so
+%_pkgconfigdir/lensfun.pc
 
 %changelog
+* Tue Nov 12 2013 Yuri N. Sedunov <aris@altlinux.org> 0.2.8-alt1
+- 0.2.8
+- removed old patches
+
 * Fri Dec 07 2012 Yuri N. Sedunov <aris@altlinux.org> 0.2.6-alt1
 - 0.2.6 (ALT #28197)
 - removed obsolete (fixed by upstream) patches
