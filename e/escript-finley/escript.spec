@@ -2,8 +2,8 @@
 %define mpidir %_libdir/%mpiimpl
 
 Name: escript-finley
-Version: 3.3.1
-Release: alt3
+Version: 3.4
+Release: alt1
 Summary: Fast Finite Elements for Partial Differential Equations
 License: OSLv3.0
 Group: Sciences/Mathematics
@@ -131,9 +131,7 @@ install -p -m644 %SOURCE1 scons
 %ifarch x86_64
 LIB_SUFF=64
 %endif
-sed -i "s|@LIB_SUFF@|$LIB_SUFF|" SConstruct scons/shake34_options.py \
-	scons/shake59_options.py scons/guineapig_options.py \
-	scons/badger_options.py scons/localhost_options.py \
+sed -i "s|@LIB_SUFF@|$LIB_SUFF|" SConstruct scons/*.py \
 	site_scons/dependencies.py
 sed -i "s|@PYVER@|%_python_version|" SConstruct
 sed -i "s|@BUILDROOT@|%buildroot|" SConstruct scons/localhost_options.py
@@ -184,6 +182,9 @@ install -p -m644 doc/manpage/man1/* %buildroot%_man1dir
 %doc doc/examples
 
 %changelog
+* Tue Nov 12 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.4-alt1
+- Version 3.4
+
 * Thu Jul 04 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.3.1-alt3
 - Requires: libhdf5-8-mpi
 
