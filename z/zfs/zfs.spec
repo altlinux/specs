@@ -5,7 +5,7 @@
 Name: zfs
 %define lname lib%name
 Version: 0.6.2
-Release: alt15
+Release: alt16
 Summary: ZFS on Linux
 License: GPLv2+
 Group: System/Kernel and hardware
@@ -84,6 +84,7 @@ Group: Development/Kernel
 BuildArch: noarch
 Provides: kernel-src-%name = %version-%release
 Requires: kernel-source-spl = %version
+Requires: kernel-source-spl >= 0.6.2-alt4
 
 %description -n kernel-source-%name
 ZFS is an advanced file system and volume manager which was originally developed
@@ -168,6 +169,9 @@ install -pD -m 0644 {,%kernel_srcdir/}%name-%version.tar.xz
 
 
 %changelog
+* Tue Nov 12 2013 Led <led@altlinux.ru> 0.6.2-alt16
+- Updated kernel-source-spl requires
+
 * Tue Nov 12 2013 Led <led@altlinux.ru> 0.6.2-alt15
 - kernel modules: added missed includes
 
