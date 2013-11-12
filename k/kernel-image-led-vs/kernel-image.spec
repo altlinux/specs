@@ -25,7 +25,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.10.18
-Release: alt7
+Release: alt10
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -1376,8 +1376,13 @@ gen_rpmmodfile ipmi %buildroot%modules_dir/kernel/drivers/{acpi/acpi_ipmi,char/i
 %{?_enable_usb_gadget:gen_rpmmodlist %buildroot%modules_dir/kernel/drivers/usb/gadget/* | grep -xv '%modules_dir/kernel/drivers/usb/gadget/udc-core.ko' > usb-gadget.rpmmodlist}
 %{?_enable_watchdog:gen_rpmmodlist %buildroot%modules_dir/kernel/drivers/watchdog/* | grep -Ev '^%modules_dir/kernel/drivers/watchdog/(watch|soft)dog.ko$' > watchdog.rpmmodlist}
 %if_enabled video
-gen_rpmmodlist %buildroot%modules_dir/kernel/drivers/video/* | grep -xv '%modules_dir/kernel/drivers/video/uvesafb.ko' | grep -xv '%modules_dir/kernel/drivers/video/sis' | grep -xv '%modules_dir/kernel/drivers/video/backlight' | grep -v '^%modules_dir/kernel/drivers/video/.*sys.*\.ko$' > video.rpmmodlist
-gen_rpmmodlist %buildroot%modules_dir/kernel/drivers/video/backlight/* | grep -Ev '%modules_dir/kernel/drivers/video/backlight/(apple_bl|lcd).ko$' >> video.rpmmodlist
+gen_rpmmodlist %buildroot%modules_dir/kernel/drivers/video/* | \
+	grep -xv '%modules_dir/kernel/drivers/video/uvesafb.ko' | \
+	grep -xv '%modules_dir/kernel/drivers/video/console' | \
+	grep -xv '%modules_dir/kernel/drivers/video/sis' | \
+	grep -xv '%modules_dir/kernel/drivers/video/backlight' | \
+	grep -v '^%modules_dir/kernel/drivers/video/.*sys.*\.ko$' > video.rpmmodlist
+gen_rpmmodlist %buildroot%modules_dir/kernel/drivers/video/backlight/* | grep -Ev '%modules_dir/kernel/drivers/video/(backlight/(apple_bl|lcd).ko$)' >> video.rpmmodlist
 %endif
 %if_enabled media
 gen_rpmmodlist %buildroot%modules_dir/kernel/drivers/media/* | grep -xv '%modules_dir/kernel/drivers/media/media.ko' | grep -xv '%modules_dir/kernel/drivers/media/v4l2-core' > media.rpmmodlist
@@ -1831,13 +1836,32 @@ done)
 
 
 %changelog
-* Thu Nov 05 2013 Led <led@altlinux.ru> 3.10.18-alt7
+* Tue Nov 12 2013 Led <led@altlinux.ru> 3.10.18-alt10
+- updated:
+  + feat-kernel-vserver
+
+* Mon Nov 11 2013 Led <led@altlinux.ru> 3.10.18-alt9
+- moved drivers/video/console to kernel-image-* subpackage
+
+* Mon Nov 11 2013 Led <led@altlinux.ru> 3.10.18-alt8
+- added:
+  + fix-drivers-char--ttyprintk
+- disabled:
+  + DEVKMEM
+  + STALDRV
+  + LP_CONSOLE
+  + LEGACY_PTYS
+  + DEVPTS_MULTIPLE_INSTANCES (ws)
+- TTY_PRINTK=m
+- CONFIG_LEGACY_PTY_COUNT=32 (ws)
+
+* Thu Nov 07 2013 Led <led@altlinux.ru> 3.10.18-alt7
 - updated:
   + feat-fs-aufs
   + feat-fs-dazukofs
   + feat-fs-reiser4
 
-* Wed Nov 05 2013 Led <led@altlinux.ru> 3.10.18-alt6
+* Wed Nov 06 2013 Led <led@altlinux.ru> 3.10.18-alt6
 - updated:
   + fix-virt-kvm--kvm
 - added:
