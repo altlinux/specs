@@ -1,5 +1,5 @@
 Name: alt-gpgkeys
-Version: 0.7.75
+Version: 0.7.76
 Release: alt1
 
 Summary: ALT GnuPG keys
@@ -61,6 +61,10 @@ install -pm755 alt-gpgkey-check alt-gpgkey-strip \
 %_bindir/*
 
 %changelog
+* Tue Nov 12 2013 Dmitry V. Levin <ldv@altlinux.org> 0.7.76-alt1
+- Replaced key: asdus@ (ABE04615 -> 05DA4602).
+- Added key: barssc@ (62CFAFBE; closes: #29461).
+
 * Fri Sep 20 2013 Dmitry V. Levin <ldv@altlinux.org> 0.7.75-alt1
 - Added key: cronport@ (E2C322D8; closes: #29339).
 
