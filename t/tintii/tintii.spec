@@ -1,5 +1,5 @@
 Name: tintii
-Version: 2.8.0
+Version: 2.8.2
 Release: alt1
 
 Summary: A photo editor for colour-select effects
@@ -66,6 +66,9 @@ install -pDm644 %SOURCE3 %buildroot%_miconsdir/%name.png
 %doc README
 
 %changelog
+* Tue Nov 12 2013 Michael Shigorin <mike@altlinux.org> 2.8.2-alt1
+- new version (watch file uupdate)
+
 * Sun Oct 13 2013 Michael Shigorin <mike@altlinux.org> 2.8.0-alt1
 - new version (watch file uupdate)
 
