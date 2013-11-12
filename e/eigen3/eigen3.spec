@@ -1,6 +1,6 @@
 %define oname eigen
 Name: %{oname}3
-Version: 3.1.3
+Version: 3.2.0
 Release: alt1
 Summary: C++ template library for linear algebra
 License: LGPLv3+ or GPLv2+
@@ -98,6 +98,9 @@ install -m755 BUILD/doc/examples/* %buildroot%_bindir
 %doc BUILD/doc/html/*
 
 %changelog
+* Tue Nov 12 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.2.0-alt1
+- Version 3.2.0
+
 * Wed Jun 19 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.1.3-alt1
 - Version 3.1.3
 
