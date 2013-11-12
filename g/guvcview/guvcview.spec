@@ -1,14 +1,13 @@
 %def_enable pulse
 
 Name: guvcview
-Version: 1.6.1
+Version: 1.7.1
 Release: alt1
 
 Summary: A GTK UVC video viewer
 License: GPLv3+
 Group: Video
 Url: http://%name.sourceforge.net/
-Packager: Vladimir A. Svyatoshenko <svyt@altlinux.org>
 
 Source: http://prdownload.sourceforge.net/%name/%name-src-%version.tar.gz
 
@@ -58,6 +57,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %exclude %_datadir/doc/%name
 
 %changelog
+* Tue Nov 12 2013 Yuri N. Sedunov <aris@altlinux.org> 1.7.1-alt1
+- 1.7.1
+
 * Sun Nov 18 2012 Yuri N. Sedunov <aris@altlinux.org> 1.6.1-alt1
 - 1.6.1
 

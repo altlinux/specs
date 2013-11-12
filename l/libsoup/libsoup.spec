@@ -8,8 +8,8 @@
 %def_enable introspection
 
 Name: libsoup
-Version: %ver_major.1
-Release: alt2
+Version: %ver_major.2
+Release: alt1
 
 Summary: HTTP client/server library for GNOME
 Group: System/Libraries
@@ -29,12 +29,7 @@ Source3: %name-gnome-compat.map
 Source4: %name-gnome-compat.lds
 Patch1: %name-2.41.3-alt-compat-map.patch
 
-Patch10: %name-2.44.1-up-201474b6.patch
-
-# time out test fails in build system not in local hasher
-Patch100: %name-2.32.2-no-timeout_test.patch
-
-Requires: glib-networking >= 2.37.5
+Requires: glib-networking >= 2.38.2
 
 Provides: soup = %version libsoup%api_ver = %version
 Obsoletes: soup < %version libsoup%api_ver < %version
@@ -163,8 +158,6 @@ part of Soup library.
 %setup -q
 install -p -m644 %_sourcedir/%name-{,gnome-}compat.{map,lds} %name/
 %patch1 -p1
-%patch10 -p1
-#%%patch100 -b .notimeout_test
 
 %build
 %autoreconf
@@ -178,8 +171,8 @@ install -p -m644 %_sourcedir/%name-{,gnome-}compat.{map,lds} %name/
 %make_build
 
 %check
-# some tests failed in hasher
-#%make check
+# fails server-test in hasher
+#%%make check
 
 %install
 %makeinstall_std
@@ -226,6 +219,9 @@ install -p -m644 %_sourcedir/%name-{,gnome-}compat.{map,lds} %name/
 %endif
 
 %changelog
+* Tue Nov 12 2013 Yuri N. Sedunov <aris@altlinux.org> 2.44.2-alt1
+- 2.44.2
+
 * Sat Oct 26 2013 Yuri N. Sedunov <aris@altlinux.org> 2.44.1-alt2
 - fixed BGO #695652 from upstream
 
