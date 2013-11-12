@@ -1,5 +1,5 @@
 Name: ltris
-Version: 1.0.18
+Version: 1.0.19
 Release: alt1
 Serial: 1
 
@@ -68,6 +68,9 @@ sed -i -e 's,^Icon=.*,Icon=%name,' %buildroot%_desktopdir/%name.desktop
 %_liconsdir/%name.xpm
 
 %changelog
+* Tue Nov 12 2013 Ilya Mashkin <oddity@altlinux.ru> 1:1.0.19-alt1
+- 1.0.19
+
 * Sat Jun 30 2012 Ilya Mashkin <oddity@altlinux.ru> 1:1.0.18-alt1
 - 1.0.18
 
