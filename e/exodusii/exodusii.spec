@@ -5,7 +5,7 @@ Name: exodusii
 Version: 5.14.0
 %define somver 0
 %define sover %somver.%version
-Release: alt7.git20120917
+Release: alt7.git20130820
 Summary: A model developed to store and retrieve transient data for finite element analyses
 License: BSD
 Group: Sciences/Mathematics
@@ -144,6 +144,9 @@ mv nemesis/README README.Nemesis
 %doc exodus/html exodus/doc/*
 
 %changelog
+* Tue Nov 12 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.14.0-alt7.git20130820
+- New snapshot
+
 * Mon Feb 04 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.14.0-alt7.git20120917
 - New snapshot
 
