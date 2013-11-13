@@ -1,5 +1,5 @@
 Name: livecd-setlocale
-Version: 0.3.3
+Version: 0.3.4
 Release: alt1
 
 Summary: Automatically set locale from /proc/cmdline
@@ -31,6 +31,9 @@ install -pDm644 {livecd-setlocale,%buildroot%_unitdir}/livecd-setlocale.service
 %_unitdir/livecd-setlocale.service
 
 %changelog
+* Wed Nov 13 2013 Michael Shigorin <mike@altlinux.org> 0.3.4-alt1
+- ...cinnamon 1.x too...
+
 * Tue Oct 01 2013 Michael Shigorin <mike@altlinux.org> 0.3.3-alt1
 - handle cinnamon too
 
