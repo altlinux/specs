@@ -2,7 +2,7 @@
 %define major 1.3
 
 Name: %{oname}13
-Version: %major.0.r9945
+Version: %major.2.r10018
 Release: alt1
 
 Summary: Multiplatform C++ GUI Fast Light ToolKit
@@ -124,6 +124,9 @@ mv %buildroot%prefix/man/* %buildroot%_mandir/
 %exclude %_docdir/fltk-%version/README
 
 %changelog
+* Wed Nov 13 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.2.r10018-alt1
+- Version 1.3.2
+
 * Tue Jun 25 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.0.r9945-alt1
 - New snapshot
 
