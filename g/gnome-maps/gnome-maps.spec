@@ -2,7 +2,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-maps
-Version: %ver_major.0
+Version: %ver_major.2
 Release: alt1
 
 Summary: Maps is a map application for GNOME
@@ -56,6 +56,9 @@ in fall of 2013.
 %doc README NEWS
 
 %changelog
+* Wed Nov 13 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.2-alt1
+- 3.10.2
+
 * Mon Sep 23 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.0-alt1
 - 3.10.0
 
