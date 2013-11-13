@@ -1,6 +1,6 @@
 Name: geos
-Version: 3.4.0
-Release: alt1.svn20130612
+Version: 3.5.0
+Release: alt1.dev.svn20130913
 
 Summary: Geometry Engine - Open Source
 Group: Sciences/Geosciences
@@ -98,6 +98,9 @@ bzip2 ChangeLog
 %endif
 
 %changelog
+* Wed Nov 13 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.5.0-alt1.dev.svn20130913
+- Version 3.5.0dev
+
 * Fri Jun 21 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.4.0-alt1.svn20130612
 - New snapshot
 
