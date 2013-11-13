@@ -4,7 +4,7 @@
 
 Name: telepathy-qt4
 Version: 0.9.3
-Release: alt6
+Release: alt7
 
 Summary: Telepathy framework - Qt4 connection manager library 
 License: GPLv2
@@ -14,9 +14,12 @@ URL: http://telepathy.freedesktop.org/wiki/Telepathy%%20Qt
 Packager: Nazarov Denis <nenderus@altlinux.ru>
 
 Source0: http://telepathy.freedesktop.org/releases/telepathy-qt4/%name-%version.tar.gz
-Patch1: alt-fix-install.patch
-Patch2: alt-pkgconfig.patch
-Patch3: alt-autoconnect.patch
+# SuSE
+Patch1: compilation-on-new-versions-of-cmake.patch
+Patch2: fix-storing-avatars.patch
+# ALT
+Patch10: alt-fix-install.patch
+Patch11: alt-pkgconfig.patch
 
 # Automatically added by buildreq on Tue Apr 03 2012 (-bi)
 # optimized out: cmake-modules elfutils farstream farstream-devel fontconfig glib2-devel gstreamer-devel libdbus-devel libdbus-glib libdbus-glib-devel libgio-devel libqt4-clucene libqt4-core libqt4-dbus libqt4-devel libqt4-gui libqt4-help libqt4-network libqt4-opengl libqt4-qt3support libqt4-script libqt4-sql libqt4-sql-sqlite libqt4-svg libqt4-test libqt4-xml libstdc++-devel libtelepathy-farstream libtelepathy-glib libtelepathy-glib-devel libxml2-devel pkg-config python-base python-devel python-modules python-modules-compiler python-modules-email python-modules-encodings python-modules-logging python-modules-xml xml-utils
@@ -49,7 +52,8 @@ Development libraries and header files for %name.
 %setup
 %patch1 -p1
 %patch2 -p1
-%patch3 -p1
+%patch10 -p1
+%patch11 -p1
 
 %build
 export PATH=%_qt4dir/bin:$PATH
@@ -78,6 +82,13 @@ popd
 %_includedir/telepathy-qt4
 
 %changelog
+* Wed Nov 13 2013 Sergey V Turchin <zerg@altlinux.org> 0.9.3-alt7
+- fix to build with new cmake
+- fix storing avatars
+
+* Wed Oct 09 2013 Sergey V Turchin <zerg@altlinux.org> 0.9.3-alt5.M70P.1
+- built for M70P
+
 * Wed Oct 09 2013 Sergey V Turchin <zerg@altlinux.org> 0.9.3-alt6
 - enable accounts by default
 
