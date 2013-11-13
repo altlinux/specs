@@ -9,8 +9,8 @@
 %def_enable zeitgeist
 
 Name: gedit
-Version: %ver_major.1
-Release: alt2
+Version: %ver_major.2
+Release: alt1
 
 Summary: gEdit is a small but powerful text editor for GNOME
 License: GPLv2
@@ -215,6 +215,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %endif
 
 %changelog
+* Wed Nov 13 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.2-alt1
+- 3.10.2
+
 * Wed Nov 06 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.1-alt2
 - use automake_1.11
 
