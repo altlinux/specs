@@ -1,7 +1,8 @@
+%define _unpackaged_files_terminate_build 1
 %define module Spreadsheet-WriteExcel
 
 Name: perl-%module
-Version: 2.39
+Version: 2.40
 Release: alt1
 
 Packager: Victor Forsiuk <force@altlinux.org>
@@ -62,6 +63,9 @@ Access as well.
 %doc README Changes examples docs/*
 
 %changelog
+* Wed Nov 13 2013 Igor Vlasenko <viy@altlinux.ru> 2.40-alt1
+- automated CPAN update
+
 * Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 2.39-alt1
 - automated CPAN update
 
