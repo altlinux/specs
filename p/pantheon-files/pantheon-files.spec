@@ -2,7 +2,7 @@
 
 Name: pantheon-files
 Version: 0.1.5
-Release: alt1
+Release: alt2
 
 Summary: The file manager of the Pantheon desktop
 License: GPLv3
@@ -56,7 +56,7 @@ This package provides Vala language bindings for the pantheon-files.
 
 %build
 %cmake_insource
-%make_build
+%make_build VERBOSE=1
 
 %install
 %make_install DESTDIR=%buildroot install
@@ -93,6 +93,9 @@ mv %buildroot/usr/lib/* %buildroot%_libdir/
 %_datadir/vala/vapi/marlincore.vapi
 
 %changelog
+* Mon Nov 11 2013 Igor Zubkov <icesik@altlinux.org> 0.1.5-alt2
+- Make build more verbose
+
 * Sat Oct 12 2013 Igor Zubkov <icesik@altlinux.org> 0.1.5-alt1
 - 0.1.4 -> 0.1.5
 
