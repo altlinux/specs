@@ -1,8 +1,8 @@
 %define oname LabPlot
-%define pre .alpha2
+%define pre .beta1
 Name: labplot
 Version: 2.0.0
-Release: alt7.svn20090921
+Release: alt8%pre.svn20131107
 
 Summary: Function and Data Plotter
 
@@ -76,28 +76,28 @@ cmake -Wdev --debug-output -DCMAKE_INSTALL_PREFIX=%prefix .
 
 # build SciDAvis
 
-pushd src/qtfrontend
-qmake-qt4 QMAKE_CFLAGS_RELEASE="%optflags" \
-	QMAKE_CXXFLAGS_RELEASE="%optflags" scidavis.pro
-%make_build
-popd
+#pushd src/qtfrontend
+#qmake-qt4 QMAKE_CFLAGS_RELEASE="%optflags" \
+#	QMAKE_CXXFLAGS_RELEASE="%optflags" scidavis.pro
+#make_build
+#popd
 
 %install
 %makeinstall_std
 
 install -m644 -D %SOURCE1 %buildroot%_desktopdir/%name.desktop
 
-mv %buildroot%_bindir/%name %buildroot%_bindir/%oname
-ln -s %oname %buildroot%_bindir/%name
+mv %buildroot%_bindir/labplot2 %buildroot%_bindir/%oname
+ln -s %oname %buildroot%_bindir/labplot2
 
 # install SciDAvis
 
-pushd src/qtfrontend
-%make_install INSTALL_ROOT=%buildroot install
-install -d %buildroot%_libdir/scidavis
-mv %buildroot%_bindir/*.so %buildroot%_libdir/scidavis
-chrpath -r %_libdir/scidavis %buildroot%_bindir/scidavis
-popd
+#pushd src/qtfrontend
+#make_install INSTALL_ROOT=%buildroot install
+#install -d %buildroot%_libdir/scidavis
+#mv %buildroot%_bindir/*.so %buildroot%_libdir/scidavis
+#chrpath -r %_libdir/scidavis %buildroot%_bindir/scidavis
+#popd
 
 #
 
@@ -106,17 +106,20 @@ popd
 %files -f %oname.lang
 %doc AUTHORS README COPYING WISHLIST ChangeLog
 %_bindir/*
-%exclude %_bindir/scidavis
-%_libdir/*so.*
+#exclude %_bindir/scidavis
+#_libdir/*so.*
 %_datadir/apps/%oname/
 %_desktopdir/*
 
-%files scidavis
-%doc %_docdir/scidavis
-%_bindir/scidavis
-%_libdir/scidavis
+#files scidavis
+#doc %_docdir/scidavis
+#_bindir/scidavis
+#_libdir/scidavis
 
 %changelog
+* Wed Nov 13 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.0-alt8.beta1.svn20131107
+- Version 2.0.0.beta1
+
 * Tue Jul 02 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.0-alt7.svn20090921
 - Rebuilt with new libhdf5
 
