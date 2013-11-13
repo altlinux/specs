@@ -1,5 +1,5 @@
 Name: phpMyAdmin
-Version: 4.0.8
+Version: 4.0.9
 Release: alt1
 
 Summary: phpMyAdmin - web-based MySQL administration
@@ -192,6 +192,10 @@ replace *SECRET* `pwgen -0s1` -- %webserver_webappsdir/%name/config.inc.php
 %attr(755,root,root) %_controldir/%name-apache2
 
 %changelog
+* Wed Nov 13 2013 Vitaly Lipatov <lav@altlinux.ru> 4.0.9-alt1
+- new version 4.0.9 (with rpmrb script)
+- comment out memory_limit in .htaccess (ALT bug #29570)
+
 * Sun Oct 13 2013 Vitaly Lipatov <lav@altlinux.ru> 4.0.8-alt1
 - new version 4.0.8 (with rpmrb script)
 
