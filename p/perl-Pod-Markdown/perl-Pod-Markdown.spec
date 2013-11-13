@@ -1,9 +1,10 @@
+%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Pod-Markdown
-Version:        1.400
+Version:        1.401
 Release:        alt1
 Summary:        Convert POD to Markdown
 License:        GPL+ or Artistic
@@ -51,6 +52,9 @@ make test
 %{_bindir}/*
 
 %changelog
+* Wed Nov 13 2013 Igor Vlasenko <viy@altlinux.ru> 1.401-alt1
+- automated CPAN update
+
 * Wed Nov 06 2013 Igor Vlasenko <viy@altlinux.ru> 1.400-alt1
 - automated CPAN update
 
