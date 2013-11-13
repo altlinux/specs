@@ -6,7 +6,7 @@
 
 %define pname gasnet
 Name: GASNet
-Version: 1.20.2
+Version: 1.22.0
 Release: alt1
 Summary: Network- and language-independent high-performance communication
 License: MIT
@@ -128,8 +128,9 @@ export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib -L%mpidir/lib"
 	--enable-mpi \
 	--enable-ibv \
 	--with-max-pthreads-per-node=32 \
+	--with-mpi-cc=%mpidir/bin/mpicc \
 	--with-mpi-cflags="-I%mpidir/include %optflags_shared" \
-	--with-mpi-libs="-Wl,-R%mpidir/lib -lmpi_cxx" \
+	--with-mpi-libs="-Wl,-rpath,%mpidir/lib -lmpi_cxx" \
 	--with-target-cxxflags="%optflags_shared"
 sed -i '10a\#define GASNETI_BUG1389_WORKAROUND 1' gasnet_config.h
 
@@ -162,6 +163,9 @@ export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib -L%mpidir/lib"
 %_libdir/*.a
 
 %changelog
+* Wed Nov 13 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.22.0-alt1
+- Version 1.22.0
+
 * Fri Jun 14 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.20.2-alt1
 - Version 1.20.2
 
