@@ -1,10 +1,11 @@
+%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(Catalyst/Helper.pm) perl(Class/Accessor.pm) perl(Class/MOP/Object.pm) perl(Config.pm) perl(Devel/InnerPackage.pm) perl(Encode.pm) perl(Errno.pm) perl(Fcntl.pm) perl(File/Spec/Functions.pm) perl(File/Spec/Unix.pm) perl(FindBin.pm) perl(IO/File.pm) perl(IO/Handle.pm) perl(IO/Socket.pm) perl(IPC/Open3.pm) perl(LWP/Simple.pm) perl(List/Util.pm) perl(Module/Pluggable/Object.pm) perl(Moose/Meta/Class.pm) perl(Moose/Role.pm) perl(Moose/Util.pm) perl(Moose/Util/TypeConstraints.pm) perl(MooseX/MethodAttributes.pm) perl(MooseX/Role/Parameterized.pm) perl(Path/Class/Dir.pm) perl(Path/Class/File.pm) perl(Plack/Loader.pm) perl(Plack/Middleware/Conditional.pm) perl(Plack/Middleware/IIS6ScriptNameFix.pm) perl(Plack/Middleware/IIS7KeepAliveFix.pm) perl(Plack/Middleware/LighttpdScriptNameFix.pm) perl(Plack/Test.pm) perl(Pod/Usage.pm) perl(Term/Size/Any.pm) perl(Tree/Simple/Visitor/FindByUID.pm) perl(URI/QueryParam.pm) perl(URI/http.pm) perl(URI/https.pm) perl(attributes.pm) perl(overload.pm) perl-base perl-devel perl-pod perl-podlators perldoc perl(IO/Scalar.pm)
+BuildRequires: perl(Catalyst/Helper.pm) perl(Class/Accessor.pm) perl(Class/MOP/Object.pm) perl(Config.pm) perl(Devel/InnerPackage.pm) perl(Encode.pm) perl(Errno.pm) perl(Fcntl.pm) perl(File/Spec/Functions.pm) perl(File/Spec/Unix.pm) perl(FindBin.pm) perl(IO/File.pm) perl(IO/Handle.pm) perl(IO/Socket.pm) perl(IPC/Open3.pm) perl(LWP/Simple.pm) perl(List/Util.pm) perl(Module/Pluggable/Object.pm) perl(Moose/Meta/Class.pm) perl(Moose/Role.pm) perl(Moose/Util.pm) perl(Moose/Util/TypeConstraints.pm) perl(MooseX/MethodAttributes.pm) perl(MooseX/Role/Parameterized.pm) perl(Path/Class/Dir.pm) perl(Path/Class/File.pm) perl(Plack/Loader.pm) perl(Plack/Middleware/Conditional.pm) perl(Plack/Middleware/IIS6ScriptNameFix.pm) perl(Plack/Middleware/IIS7KeepAliveFix.pm) perl(Plack/Middleware/LighttpdScriptNameFix.pm) perl(Plack/Test.pm) perl(Pod/Usage.pm) perl(Term/Size/Any.pm) perl(Tree/Simple/Visitor/FindByUID.pm) perl(URI/QueryParam.pm) perl(URI/http.pm) perl(URI/https.pm) perl(attributes.pm) perl(overload.pm) perl-base perl-devel perl-pod perl-podlators perldoc perl(IO/Scalar.pm) perl(JSON/MaybeXS.pm) perl(Test/Fatal.pm) perl(CGI/Struct.pm)
 # END SourceDeps(oneline)
 Name:           perl-Catalyst-Runtime
 Summary:        Catalyst Framework Runtime
-Version:        5.90042
+Version:        5.90051
 Release:        alt1
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -179,6 +180,9 @@ make clean
 %{_mandir}/man1/*
 
 %changelog
+* Wed Nov 13 2013 Igor Vlasenko <viy@altlinux.ru> 5.90051-alt1
+- automated CPAN update
+
 * Tue Sep 24 2013 Igor Vlasenko <viy@altlinux.ru> 5.90042-alt1
 - automated CPAN update
 
