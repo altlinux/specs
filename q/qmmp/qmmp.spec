@@ -1,7 +1,7 @@
 %define branch 0.8
-%define svn svn3880
+%define svn svn3902
 
-Version: %branch.0
+Version: %branch.0.1
 Epoch: 1
 Name: qmmp
 Release: alt2.%svn
@@ -811,6 +811,9 @@ mkdir -p %buildroot/{%_miconsdir,%_niconsdir,%_liconsdir}
 %files -n %name-full
 
 %changelog
+* Wed Nov 13 2013 Motsyo Gennadi <drool@altlinux.ru> 1:0.8.0.1-alt2.svn3902
+- 0.8.0 svn3902 version
+
 * Thu Nov 07 2013 Motsyo Gennadi <drool@altlinux.ru> 1:0.8.0-alt2.svn3880
 - 0.8.0 svn3880 version
 
