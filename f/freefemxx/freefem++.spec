@@ -1,9 +1,9 @@
 %define mpiimpl openmpi
 %define mpidir %_libdir/%mpiimpl
 
-%define over 3.23
+%define over 3.25
 Name: freefemxx
-Version: 3.23
+Version: 3.25
 Release: alt1
 Summary: Implementation of a language dedicated to the finite element method
 License: LGPL v2.1+
@@ -22,6 +22,7 @@ BuildPreReq: libsuperlu-devel libblacs-devel libscalapack-devel
 BuildPreReq: libscotch-devel libparmetis-devel chrpath libXext-devel
 BuildPreReq: libsuperlu_dist-devel f2c libf2c-ng-devel libhypre-devel
 BuildPreReq: libparms-devel libpastix-devel libXxf86vm-devel
+BuildPreReq: mmg3d libmmg3d-devel
 
 Conflicts: bamg
 
@@ -88,7 +89,8 @@ export MPIDIR=%mpidir
 
 INCS="-I%_includedir/suitesparse -I%mpidir/include"
 INCS="$INCS -I%mpidir/include/metis -I%_includedir/fftw3-mpi"
-%add_optflags $INCS -fno-strict-aliasing
+INCS="$INCS -I%_includedir/openblas"
+%add_optflags $INCS -fno-strict-aliasing -fpermissive
 %autoreconf
 %configure \
 %ifarch x86_64
@@ -133,6 +135,9 @@ export MPIDIR=%mpidir
 %doc DOC/*.pdf
 
 %changelog
+* Wed Nov 13 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.25-alt1
+- Version 3.25
+
 * Fri Jun 21 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.23-alt1
 - Version 3.23
 
