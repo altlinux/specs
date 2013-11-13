@@ -1,14 +1,16 @@
+BuildRequires: perl-podlators
+%define _unpackaged_files_terminate_build 1
 %define dist Archive-Zip
 Name: perl-%dist
-Version: 1.30
-Release: alt2
+Version: 1.33
+Release: alt1
 
 Summary: Perl module for manipulating Zip archives
 License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/P/PH/PHRED/Archive-Zip-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -18,6 +20,15 @@ BuildRequires: perl-Compress-Raw-Zlib perl-devel
 %description
 The Archive::Zip module allows a Perl program to create, manipulate,
 read, and write Zip archive files.
+
+%package scripts
+Summary: %name scripts
+Group: Development/Perl
+Requires: %{?epoch:%epoch:}%name = %version-%release
+
+%description scripts
+scripts for %name
+
 
 %prep
 %setup -q -n %dist-%version
@@ -36,7 +47,15 @@ read, and write Zip archive files.
 	%perl_vendor_privlib/Archive/Zip/*.pm
 %doc	%perl_vendor_privlib/Archive/Zip/*.pod
 
+%files scripts
+%_bindir/*
+#%_man1dir/*
+
+
 %changelog
+* Wed Nov 13 2013 Igor Vlasenko <viy@altlinux.ru> 1.33-alt1
+- automated CPAN update
+
 * Mon Sep 26 2011 Alexey Tourbin <at@altlinux.ru> 1.30-alt2
 - rebuilt as plain src.rpm
 
