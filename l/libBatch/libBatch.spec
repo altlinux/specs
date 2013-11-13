@@ -1,6 +1,6 @@
 Name: libBatch
-Version: 1.6.0
-Release: alt2.git20130221
+Version: 2.0.0
+Release: alt1.git20131108
 Summary: Generic batch management library
 License: LGPLv2.1
 Group: System/Libraries
@@ -69,22 +69,31 @@ cmake \
 %install
 %makeinstall_std VERBOSE=1
 
+%ifarch x86_64
+install -d %buildroot%_libdir/python%_python_version
+mv %buildroot%_libexecdir/python%_python_version/* \
+	%buildroot%_libdir/python%_python_version/
+%endif
+
 %files
 %_libdir/*.so.*
 
 %files devel
 %_includedir/*
 %_libdir/*.so
-%_datadir/Batch
-%_libdir/cmake
+%_datadir/libbatch
+%_datadir/cmake
 
 %files -n python-module-%name
 %python_sitelibdir/*
 
-%files devel-doc-fr
-%_docdir/Batch
+#files devel-doc-fr
+#_docdir/Batch
 
 %changelog
+* Wed Nov 13 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.0-alt1.git20131108
+- Version 2.0.0
+
 * Tue Jun 25 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.6.0-alt2.git20130221
 - New snapshot
 
