@@ -5,7 +5,7 @@ BuildRequires(pre): rpm-build-firefox
 %define ciddir 	%firefox_noarch_extensionsdir/%cid
 
 Name:		%firefox_name-%rname
-Version:	7.3.1
+Version:	9.2.2
 Release:	alt1
 Summary:	Dark theme for Firefox
 
@@ -33,6 +33,9 @@ cp -fR * %buildroot/%ciddir
 %ciddir
 
 %changelog
+* Wed Nov 13 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 9.2.2-alt1
+- Version 9.2.2
+
 * Sat Aug 10 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 7.3.1-alt1
 - Version 7.3.1
 
