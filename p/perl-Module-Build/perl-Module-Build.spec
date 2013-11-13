@@ -1,6 +1,7 @@
+%define _unpackaged_files_terminate_build 1
 %define dist Module-Build
 Name: perl-%dist
-Version: 0.4007
+Version: 0.4200
 Release: alt1
 
 Summary: Build and install Perl modules
@@ -16,7 +17,7 @@ BuildArch: noarch
 Requires: perl-CPAN-Meta
 
 # Automatically added by buildreq on Tue Nov 15 2011
-BuildRequires: perl-Archive-Tar perl-Archive-Zip perl-CPAN-Meta perl-ExtUtils-CBuilder perl-File-ShareDir perl-Module-Metadata perl-PAR-Dist perl-Perl-OSType perl-Tie-IxHash
+BuildRequires: perl-Archive-Tar perl-Archive-Zip perl-CPAN-Meta perl-ExtUtils-CBuilder perl-File-ShareDir perl-Module-Metadata perl-PAR-Dist perl-Perl-OSType perl-Tie-IxHash perl(Pod/Man.pm) perl-podlators
 
 %description
 Module::Build is a Perl module to build and install Perl modules.
@@ -45,7 +46,20 @@ bzip2 -k Changes
 %dir	%perl_vendor_privlib/Module/Build/Platform
 	%perl_vendor_privlib/Module/Build/Platform/Unix.pm
 
+%exclude %perl_vendor_privlib/Module/Build/Platform/Default.pm
+%exclude %perl_vendor_privlib/Module/Build/Platform/MacOS.pm
+%exclude %perl_vendor_privlib/Module/Build/Platform/VMS.pm
+%exclude %perl_vendor_privlib/Module/Build/Platform/VOS.pm
+%exclude %perl_vendor_privlib/Module/Build/Platform/Windows.pm
+%exclude %perl_vendor_privlib/Module/Build/Platform/aix.pm
+%exclude %perl_vendor_privlib/Module/Build/Platform/cygwin.pm
+%exclude %perl_vendor_privlib/Module/Build/Platform/darwin.pm
+%exclude %perl_vendor_privlib/Module/Build/Platform/os2.pm
+
 %changelog
+* Wed Nov 13 2013 Igor Vlasenko <viy@altlinux.ru> 0.4200-alt1
+- automated CPAN update
+
 * Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 0.4007-alt1
 - automated CPAN update
 
