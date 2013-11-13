@@ -1,6 +1,8 @@
+BuildRequires: perl-podlators
+%define _unpackaged_files_terminate_build 1
 %define dist BerkeleyDB
 Name: perl-%dist
-Version: 0.53
+Version: 0.54
 Release: alt1
 
 Summary: Perl bindings to Berkeley DB version 2.x and greater
@@ -36,6 +38,9 @@ rm -rv t/Test/
 %install
 %perl_vendor_install
 
+rm %buildroot%perl_vendor_archlib/mkconsts.pl
+rm %buildroot%perl_vendor_archlib/scan.pl
+
 %files
 %doc	Changes README
 	%perl_vendor_archlib/BerkeleyDB.pm
@@ -44,6 +49,9 @@ rm -rv t/Test/
 	%perl_vendor_autolib/BerkeleyDB
 
 %changelog
+* Wed Nov 13 2013 Igor Vlasenko <viy@altlinux.ru> 0.54-alt1
+- automated CPAN update
+
 * Tue Aug 27 2013 Vladimir Lettiev <crux@altlinux.ru> 0.53-alt1
 - 0.52 -> 0.53
 
