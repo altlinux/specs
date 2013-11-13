@@ -1,6 +1,6 @@
 Name: icmake
-Version: 7.19.00
-Release: alt1.git20120722
+Version: 7.21.00
+Release: alt1.git20130802
 Summary: Hybrid between a 'make' utility and a 'shell script' language
 License: GPLv3
 Group: Development/Tools
@@ -62,6 +62,9 @@ popd
 %_docdir/%name
 
 %changelog
+* Wed Nov 13 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 7.21.00-alt1.git20130802
+- Version 7.21.00
+
 * Thu Sep 13 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 7.19.00-alt1.git20120722
 - Version 7.19.00
 
