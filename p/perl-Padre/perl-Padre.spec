@@ -1,6 +1,6 @@
 %define dist Padre
 Name: perl-Padre
-Version: 0.98
+Version: 1.00
 Release: alt1
 
 Summary: Padre - Perl Application Development and Refactoring Environment
@@ -28,11 +28,13 @@ Requires: perl-POD2-Base perl(CGI.pm) perl(CPAN.pm) perl(Capture/Tiny.pm) perl(C
 %prep
 %setup -q -n %dist-%version
 #temporary skip falling test
-rm t/12_mime.t
+#rm t/12_mime.t
 
 %build
 xvfb-run -a perl Makefile.PL PREFIX=/usr INSTALLDIRS=vendor
 make
+
+%check
 xvfb-run -a make test
 
 %install
@@ -57,6 +59,9 @@ cp %SOURCE1 %buildroot%_desktopdir
 %doc Changes README Artistic COPYING
 
 %changelog
+* Thu Nov 14 2013 Vladimir Lettiev <crux@altlinux.ru> 1.00-alt1
+- 1.00
+
 * Fri Jul 26 2013 Vladimir Lettiev <crux@altlinux.ru> 0.98-alt1
 - 0.98
 
