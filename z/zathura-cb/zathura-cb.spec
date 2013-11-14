@@ -1,5 +1,5 @@
 Name: zathura-cb
-Version: 0.1.1
+Version: 0.1.2
 Release: alt1
 
 Summary: Comic book support for zathura
@@ -39,6 +39,9 @@ export CFLAGS="%optflags"
 %_desktopdir/*.desktop
 
 %changelog
+* Thu Nov 14 2013 Mikhail Efremov <sem@altlinux.org> 0.1.2-alt1
+- Updated to 0.1.2.
+
 * Mon May 13 2013 Mikhail Efremov <sem@altlinux.org> 0.1.1-alt1
 - Package LICENSE.
 - Updated to 0.1.1.

@@ -1,7 +1,7 @@
 %define gtk_ver 2
 
 Name: zathura
-Version: 0.2.4
+Version: 0.2.5
 Release: alt1
 
 Summary: A lightweight document viewer
@@ -42,7 +42,7 @@ export CFLAGS="%optflags"
 %make VERBOSE=1 LIBDIR=%_libdir ZATHURA_GTK_VERSION=%gtk_ver SFLAGS='' RSTTOMAN=/usr/bin/rst2man.py
 
 %install
-%makeinstall_std PREFIX=%prefix LIBDIR=%_libdir RSTTOMAN=/usr/bin/rst2man.py
+%makeinstall_std PREFIX=%prefix LIBDIR=%_libdir ZATHURA_GTK_VERSION=%gtk_ver RSTTOMAN=/usr/bin/rst2man.py
 mkdir -p %buildroot%_libdir/zathura
 %find_lang %name
 
@@ -59,6 +59,9 @@ mkdir -p %buildroot%_libdir/zathura
 %_libdir/pkgconfig/*.pc
 
 %changelog
+* Thu Nov 14 2013 Mikhail Efremov <sem@altlinux.org> 0.2.5-alt1
+- Updated to 0.2.5.
+
 * Fri Aug 16 2013 Mikhail Efremov <sem@altlinux.org> 0.2.4-alt1
 - Updated to 0.2.4.
 
