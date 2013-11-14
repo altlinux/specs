@@ -1,5 +1,5 @@
 Name: steam
-Version: 1.0.0.43
+Version: 1.0.0.44
 Release: alt1
 
 Summary: Launcher for the Steam software distribution service
@@ -35,7 +35,7 @@ savegame and screenshot functionality, and many social features.
 %patch0 -p1
 
 %install
-%make DESTDIR=%buildroot install
+%makeinstall_std
 %__rm -rf %buildroot%_bindir/%{name}deps
 %__install -Dp -m0644 lib/udev/rules.d/99-%name-controller-perms.rules %buildroot%_udevrulesdir/99-%name-controller-perms.rules
 
@@ -55,6 +55,12 @@ savegame and screenshot functionality, and many social features.
 %config %_udevrulesdir/99-%name-controller-perms.rules
 
 %changelog 
+* Thu Nov 14 2013 Nazarov Denis <nenderus@altlinux.org> 1.0.0.44-alt1
+- Version 1.0.0.44
+
+* Thu Oct 10 2013 Nazarov Denis <nenderus@altlinux.org> 1.0.0.43-alt0.M70P.1
+- Build for branch p7
+
 * Thu Oct 10 2013 Nazarov Denis <nenderus@altlinux.org> 1.0.0.43-alt1
 - Version 1.0.0.43
 
