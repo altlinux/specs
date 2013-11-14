@@ -1,5 +1,5 @@
 Name: libsuitesparse
-Version: 4.0.2
+Version: 4.2.1
 Release: alt1
 
 Summary: Shared libraries for sparse matrix calculations
@@ -136,6 +136,9 @@ done
 %_libdir/%name/demos
 
 %changelog
+* Thu Nov 14 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.2.1-alt1
+- Version 4.2.1
+
 * Mon Sep 03 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.2-alt1
 - Version 4.0.2
 - Rebuilt with libmetis instead of libmetis0
