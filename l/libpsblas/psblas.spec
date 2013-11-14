@@ -4,7 +4,7 @@
 %define sover %somver.2.4
 
 Name: libpsblas
-Version: 3.0.2
+Version: 3.1.2
 Release: alt1
 Summary: Parallel Sparse Basic Linear Algebra Subroutines
 License: BSD
@@ -84,7 +84,7 @@ chmod +x autogen.sh
 %install
 %makeinstall_std
 
-mv %buildroot%prefix/Make.inc %buildroot%_includedir/
+#mv %buildroot%prefix/Make.inc %buildroot%_includedir/
 
 install -d %buildroot%_docdir/%name
 mv %buildroot%prefix/docs/* %buildroot%_docdir/%name/
@@ -112,9 +112,9 @@ popd
 rmdir tmp
 popd
 
-sed -i 's|%buildroot||g' %buildroot%_includedir/Make.inc
-sed -i 's|^\(INSTALL_DOCSDIR\).*|\1=%_docdir/%name|' \
-	%buildroot%_includedir/Make.inc
+#sed -i 's|%buildroot||g' %buildroot%_includedir/Make.inc
+#sed -i 's|^\(INSTALL_DOCSDIR\).*|\1=%_docdir/%name|' \
+#	%buildroot%_includedir/Make.inc
 
 %files
 %doc Changelog LICENSE README
@@ -129,6 +129,9 @@ sed -i 's|^\(INSTALL_DOCSDIR\).*|\1=%_docdir/%name|' \
 %doc test
 
 %changelog
+* Thu Nov 14 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.1.2-alt1
+- Version 3.1.2
+
 * Mon Sep 17 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0.2-alt1
 - Version 3.0-2
 
