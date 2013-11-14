@@ -8,7 +8,7 @@
 
 Name: musl
 Version: 0.9.14
-Release: alt21
+Release: alt22
 Group: System/Libraries
 Summary: musl libc - new standard library
 License: MIT
@@ -17,7 +17,7 @@ Source: %url/releases/%name-%version.tar
 Patch: %name-%version-%release.patch
 ExclusiveOS: Linux
 %define musl_dir %_libdir/%name
-%define soname libc-%name.so.1
+%define soname libc.so.1
 %define libname libc-%name-%version.so
 
 %{!?libc_dir:%define libc_dir %musl_dir/lib}
@@ -47,7 +47,7 @@ Development files and headers for %name.
 [ -x tools/install.sh ] || chmod a+x tools/install.sh
 sed -i '/--hash-style=both/d' configure
 sed -i 's/\(-soname=\)libc\.so/\1%soname/' Makefile
-sed -i 's/libc\.so/%libname/' Makefile
+sed -i 's|/libc\.so|/%libname|' Makefile
 %if "%_lib" != "lib"
 sed -i 's|"/lib\(:/usr/local/lib:\)/usr/lib"|"/%_lib\1%_libdir"|' src/ldso/dynlink.c
 %endif
@@ -122,6 +122,9 @@ echo "%musl_dir/lib" > %buildroot%_sysconfdir/ld.so.conf.d/%name-%_lib.conf
 
 
 %changelog
+* Thu Nov 14 2013 Led <led@altlinux.ru> 0.9.14-alt22
+- fixed soname
+
 * Wed Nov 13 2013 Led <led@altlinux.ru> 0.9.14-alt21
 - init '__environ' (ALT#29579)
 
