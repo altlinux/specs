@@ -4,7 +4,7 @@
 %define rname ktp-accounts-kcm
 Name: kde4-ktp-accounts-kcm
 Version: 0.7.0
-Release: alt1
+Release: alt2
 
 Group: Graphical desktop/KDE
 Summary: KDE Configuration Module for Telepathy Instant Messaging Accounts
@@ -12,6 +12,8 @@ Url: https://projects.kde.org/projects/extragear/network/telepathy/%rname
 License: LGPLv2+
 
 Source0: %rname-%version.tar
+
+Patch1: 0.7.0-alt-autoconnect.patch
 
 # Automatically added by buildreq on Mon Apr 16 2012 (-bi)
 # optimized out: automoc cmake cmake-modules elfutils fontconfig fontconfig-devel glibc-devel-static kde-common-devel kde4libs libICE-devel libSM-devel libX11-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXext-devel libXfixes-devel libXft-devel libXi-devel libXinerama-devel libXpm-devel libXrandr-devel libXrender-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel libdbus-devel libdbusmenu-qt2 libfreetype-devel libpng-devel libqt4-core libqt4-dbus libqt4-devel libqt4-gui libqt4-network libqt4-svg libqt4-xml libsoprano-devel libssl-devel libstdc++-devel libtelepathy-qt4 libtelepathy-qt4-devel libxkbfile-devel phonon-devel pkg-config python-base ruby xorg-kbproto-devel xorg-xf86miscproto-devel xorg-xproto-devel zlib-devel
@@ -48,6 +50,7 @@ Requires: libtelepathy-qt4-devel
 
 %prep
 %setup -qn %rname-%version
+%patch1 -p1
 
 %build
 %K4build
@@ -79,6 +82,9 @@ done
 #%_K4includedir/KTp/
 
 %changelog
+* Thu Nov 14 2013 Sergey V Turchin <zerg@altlinux.org> 0.7.0-alt2
+- turn on by default "ConnectAutomatically" during account creation
+
 * Fri Nov 01 2013 Sergey V Turchin <zerg@altlinux.org> 0.7.0-alt1
 - new version
 
