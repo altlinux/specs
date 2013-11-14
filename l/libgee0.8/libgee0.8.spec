@@ -1,10 +1,10 @@
 %define _name libgee
-%define ver_major 0.8
+%define ver_major 0.10
 %define api_ver 0.8
 %def_disable static
 
 Name: %_name%api_ver
-Version: %ver_major.8
+Version: %ver_major.5
 Release: alt1
 
 Summary: a collection library providing GObject-based interfaces
@@ -14,7 +14,7 @@ Url: http://live.gnome.org/Libgee
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%_name-%version.tar.xz
 
-BuildRequires: glib2-devel vala >= 0.17.5 gobject-introspection-devel
+BuildRequires: glib2-devel libvala-devel >= 0.21 vala-tools gobject-introspection-devel
 
 %description
 libgee is a collection library providing GObject-based interfaces and classes
@@ -76,18 +76,17 @@ applications with %name.
 
 %prep
 %setup -n %_name-%version
-echo "See changes in the GIT tree" > ChangeLog
 
 %build
 %autoreconf
 %configure %{subst_enable static}
 %make_build
 
+%install
+%makeinstall_std
+
 %check
 %make check
-
-%install
-%make DESTDIR=%buildroot install
 
 %files
 %_libdir/libgee-%api_ver.so.*
@@ -111,6 +110,9 @@ echo "See changes in the GIT tree" > ChangeLog
 %endif
 
 %changelog
+* Thu Nov 14 2013 Yuri N. Sedunov <aris@altlinux.org> 0.10.5-alt1
+- 0.10.5
+
 * Tue Sep 03 2013 Yuri N. Sedunov <aris@altlinux.org> 0.8.8-alt1
 - 0.8.8
 

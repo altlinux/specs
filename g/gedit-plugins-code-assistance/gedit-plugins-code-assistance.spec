@@ -1,13 +1,12 @@
 %define _name gedit-code-assistance
-%define ver_major 0.2
+%define ver_major 0.3
 %define gedit_pluginsdir %_libdir/gedit/plugins
-%set_typelibdir %gedit_pluginsdir/gcp/girepository-1.0
 
 Name: gedit-plugins-code-assistance
 Version: %ver_major.0
 Release: alt1
 
-Summary:  GEdit
+Summary: Code assistance plugin for gEdit
 License: GPL
 Group: Editors
 Url: http://gnome.org
@@ -15,32 +14,28 @@ Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 
 Source: %gnome_ftp/%name/%ver_major/%_name-%version.tar.xz
 
+Requires: gnome-code-assistance
+
 # From configure.in
 %define gedit_ver 3.8.0
-%define llvm_ver 2.8
+%define gee_ver 0.10
 
+Requires: gnome-code-assistance
 Requires: gedit >= %gedit_ver
 
-# use python3
-AutoReqProv: nopython
-%define __python %nil
-
 BuildPreReq: rpm-build-gnome
-
 # From configure.in
 BuildPreReq: gedit-devel >= %gedit_ver
-BuildPreReq: llvm-devel >= %llvm_ver
-BuildRequires: clang-devel libgio-devel libgee-devel vala-tools
-BuildRequires: rpm-build-python3 python3-module-pygobject3-devel
+BuildRequires: libgio-devel libgee0.8-devel >= %gee_ver vala-tools
 
 %description
 gEdit is a small but powerful text editor designed expressly for GNOME.
 
-%name is a plugin for gEdit which provides code assistance for C, C++ and
-Objective-C by utilizing clang.
+%name is a plugin for gEdit which provides code assistance supported by
+gnome-code-assistance service.
 
 %prep
-%setup -q -n %_name-%version
+%setup -n %_name-%version
 
 %build
 %configure \
@@ -49,24 +44,23 @@ Objective-C by utilizing clang.
 %make_build
 
 %install
-%make_install install DESTDIR=%buildroot
+%makeinstall_std
 
 %find_lang --with-gnome %_name
 
 
 %files -f %_name.lang
-%_includedir/gedit-3.0/gcp/
-%gedit_pluginsdir/gcp.plugin
-%gedit_pluginsdir/libgcp.so
-%gedit_pluginsdir/gcp/
-%_datadir/gedit/plugins/gcp/
-%exclude %_vapidir/gcp.deps
-%exclude %_vapidir/gcp.vapi
+%gedit_pluginsdir/codeassistance.plugin
+%gedit_pluginsdir/libcodeassistance.so
+%_datadir/gedit/plugins/codeassistance/
 
 %exclude %gedit_pluginsdir/*.la
-%exclude %gedit_pluginsdir/gcp/*/*.la
+
 
 %changelog
+* Thu Nov 14 2013 Yuri N. Sedunov <aris@altlinux.org> 0.3.0-alt1
+- 0.3.0
+
 * Tue Mar 26 2013 Yuri N. Sedunov <aris@altlinux.org> 0.2.0-alt1
 - 0.2.0
 
