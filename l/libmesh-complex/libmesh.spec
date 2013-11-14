@@ -5,10 +5,10 @@
 %define oname libmesh
 %define ldir %_libdir/petsc-%scalar_type
 Name: %oname-%scalar_type
-Version: 0.9.2
+Version: 0.9.3
 %define blibdir %_builddir/%name-%version/lib/%_arch-alt-linux-gnu_opt
 %define clibdir %_builddir/%name-%version/contrib/lib/%_arch-alt-linux-gnu_opt
-Release: alt2.rc1.git20130711
+Release: alt1.pre.git20131113
 Summary: Numerical simulation of partial differential equations
 License: LGPL v2.1
 Group: Sciences/Mathematics
@@ -457,6 +457,9 @@ popd
 %endif
 
 %changelog
+* Thu Nov 14 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.3-alt1.pre.git20131113
+- Version 0.9.3-pre
+
 * Tue Sep 03 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.2-alt2.rc1.git20130711
 - Rebuilt with Trilinos 11.4.1
 
@@ -593,4 +596,3 @@ popd
 
 * Thu Aug 27 2009 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.3_rc1-alt1
 - Initial build for Sisyphus
-
