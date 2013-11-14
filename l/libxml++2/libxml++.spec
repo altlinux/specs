@@ -1,9 +1,9 @@
-%define ver_major 2.36
+%define ver_major 2.37
 %define xml_ver 2.6
 %define _name libxml++
 
 Name: %{_name}2
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: C++ wrapper for the libxml2 XML parser library
@@ -68,6 +68,9 @@ sed -i 's|\(doctooldir\)\ glibmm\-2\.4|\1 mm-common-util|' configure
 %_docdir/%_name-%xml_ver/*
 
 %changelog
+* Thu Nov 14 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.37.1-alt1
+- Version 2.37.1
+
 * Wed Feb 06 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.36.0-alt1
 - Version 2.36.0
 
