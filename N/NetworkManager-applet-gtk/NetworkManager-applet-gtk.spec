@@ -4,8 +4,8 @@
 %define gtkver 3
 
 Name: NetworkManager-applet-gtk
-Version: 0.9.8.4
-Release: alt4%git_date
+Version: 0.9.8.8
+Release: alt1%git_date
 License: %gpl2plus
 Group: Graphical desktop/GNOME
 Summary: Panel applet for use with NetworkManager
@@ -153,6 +153,9 @@ make check
 %_datadir/gir-1.0/NMGtk-1.0.gir
 
 %changelog
+* Thu Nov 14 2013 Mikhail Efremov <sem@altlinux.org> 0.9.8.8-alt1
+- Updated to 0.9.8.8.
+
 * Wed Oct 30 2013 Mikhail Efremov <sem@altlinux.org> 0.9.8.4-alt4
 - Use libnm-* devel packages.
 
