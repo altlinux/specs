@@ -1,0 +1,73 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-perl
+BuildRequires: perl(CPAN.pm) perl(Cwd.pm) perl(ExtUtils/MakeMaker.pm) perl(File/Spec.pm) perl-Module-Build perl-devel perl-podlators
+# END SourceDeps(oneline)
+Name:           perl-Lexical-Var
+Version:        0.009
+Release:        alt2_1
+Summary:        Static variables without name space pollution
+License:        GPL+ or Artistic
+Group:          Development/Perl
+URL:            http://search.cpan.org/dist/Lexical-Var/
+Source0:        http://www.cpan.org/authors/id/Z/ZE/ZEFRAM/Lexical-Var-%{version}.tar.gz
+BuildRequires:  perl
+BuildRequires:  perl(Module/Build.pm)
+BuildRequires:  perl(strict.pm)
+BuildRequires:  perl(warnings.pm)
+# Run-Time
+BuildRequires:  perl(Lexical/SealRequireHints.pm)
+BuildRequires:  perl(XSLoader.pm)
+# Tests
+#BuildRequires:  perl(ExtUtils::CBuilder) >= 0.15
+BuildRequires:  perl(Test/More.pm)
+BuildRequires:  perl(Test/Pod.pm)
+BuildRequires:  perl(Test/Pod/Coverage.pm)
+Conflicts:      perl(B/Hooks/OP/Check.pm) < 0.19
+
+
+Source44: import.info
+
+%description
+This module implements lexical scoping of static variables and subroutines.
+Although it can be used directly, it is mainly intended to be
+infrastructure for modules that manage name spaces.
+
+%prep
+%setup -q -n Lexical-Var-%{version}
+
+%build
+perl Build.PL --install_path bindoc=%_man1dir installdirs=vendor optimize="$RPM_OPT_FLAGS"
+./Build
+
+%install
+./Build install destdir=$RPM_BUILD_ROOT create_packlist=0
+find $RPM_BUILD_ROOT -type f -name '*.bs' -size 0 -exec rm -f {} \;
+# %{_fixperms} $RPM_BUILD_ROOT/*
+
+%check
+./Build test
+
+%files
+%doc Changes README
+%{perl_vendor_archlib}/auto/*
+%{perl_vendor_archlib}/Lexical*
+
+%changelog
+* Thu Nov 14 2013 Igor Vlasenko <viy@altlinux.ru> 0.009-alt2_1
+- Sisyphus build
+
+* Sun Sep 15 2013 Igor Vlasenko <viy@altlinux.ru> 0.009-alt1_1
+- update to new release by fcimport
+
+* Thu Sep 05 2013 Cronbuild Service <cronbuild@altlinux.org> 0.008-alt2_1
+- rebuild to get rid of unmets
+
+* Tue Aug 27 2013 Igor Vlasenko <viy@altlinux.ru> 0.008-alt1_1
+- update to new release by fcimport
+
+* Mon Aug 05 2013 Igor Vlasenko <viy@altlinux.ru> 0.007-alt1_5
+- update to new release by fcimport
+
+* Fri Apr 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.007-alt1_4
+- update from fc import
+
