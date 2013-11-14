@@ -11,7 +11,7 @@
 %define sover %somver.3.3
 Name: mpip
 Version: 3.3
-Release: alt5.svn20130325
+Release: alt5.svn20130801
 Summary: Lightweight profiling library for MPI applications
 License: BSD
 Group: Development/Tools
@@ -170,6 +170,9 @@ install -m644 mpip_timers/linux_posix.h %buildroot%_includedir/mpip_timers
 %_libdir/libfarg.so
 
 %changelog
+* Thu Nov 14 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.3-alt5.svn20130801
+- New snapshot
+
 * Fri Jul 05 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.3-alt5.svn20130325
 - New snapshot
 
