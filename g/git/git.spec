@@ -1,5 +1,5 @@
 Name: git
-Version: 1.8.3.4
+Version: 1.8.4.3
 Release: alt1
 
 Summary: Git core and tools
@@ -246,12 +246,27 @@ This package contains Emacs modes for Git.
 
 %prep
 %setup -n %name-%version-%release
-%define params V=1 CFLAGS="%optflags" NO_GETTEXT=1 BLK_SHA1=1 ETC_GITCONFIG=/etc/gitconfig prefix=%_prefix libdir=%_libdir mandir=%_mandir htmldir=%pkgdocdir %{?_disable_curl:NO_CURL=1} %{?_disable_expat:NO_EXPAT=1} %{?_without_python:NO_PYTHON=1 PYMODULES= SCRIPT_PYTHON=}
+cat >config.mak <<'EOF'
+V = 1
+CFLAGS = %optflags
+NO_GETTEXT = 1
+BLK_SHA1 = 1
+GNU_ROFF = 1
+ETC_GITCONFIG = /etc/gitconfig
+prefix = %_prefix
+libdir = %_libdir
+mandir = %_mandir
+htmldir = %pkgdocdir
+%{?_disable_curl:NO_CURL = 1}
+%{?_disable_expat:NO_EXPAT = 1}
+%{?_without_python:NO_PYTHON = 1}
+%{?_without_python:SCRIPT_PYTHON_INS = }
+EOF
 
 %build
 touch git-gui/credits
-%make_build %params -C Documentation doc.dep
-%make_build %params all %{!?_without_doc:man html}
+%make_build -C Documentation doc.dep
+%make_build all %{!?_without_doc:man html}
 pushd perl
 rm Makefile
 ln -s perl.mak Makefile
@@ -260,10 +275,10 @@ popd
 %{!?_without_emacs:%make_build -C contrib/emacs EMACS=%__emacs}
 
 %check
-%make_build -k %params test
+%make_build -k test
 
 %install
-%makeinstall_std %params \
+%makeinstall_std \
 	install-lib install-include \
 	%{!?_without_doc:install-man install-html}
 find %buildroot%_includedir -type f -print0 |
@@ -465,6 +480,9 @@ popd
 %endif #emacs
 
 %changelog
+* Thu Nov 14 2013 Dmitry V. Levin <ldv@altlinux.org> 1.8.4.3-alt1
+- Updated to maint v1.8.4.3.
+
 * Tue Jul 23 2013 Dmitry V. Levin <ldv@altlinux.org> 1.8.3.4-alt1
 - Updated to maint v1.8.3.4.
 
