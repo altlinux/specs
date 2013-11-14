@@ -3,7 +3,7 @@
 %def_enable wayland_egl
 
 Name: Mesa
-Version: 9.2.2
+Version: 9.2.3
 Release: alt1
 Epoch: 4
 License: MIT
@@ -162,7 +162,7 @@ framerate information to stdout
 %set_verify_elf_method unresolved=relaxed
 
 %define dri_common	r200,radeon
-%define dri_ix86	%dri_common,i965,nouveau
+%define dri_ix86	%dri_common,i915,i965,nouveau
 %define dri_ppc		%dri_common,i915,i965
 
 %prep
@@ -193,7 +193,7 @@ framerate information to stdout
 %endif
 %endif
 %ifarch %ix86 x86_64
-	--with-gallium-drivers=swrast,r300,r600,nouveau,radeonsi,i915 \
+	--with-gallium-drivers=swrast,r300,r600,nouveau,radeonsi \
 	--enable-vdpau \
 	--enable-xvmc \
 %endif
@@ -357,6 +357,9 @@ ln -sf ../..%_sysconfdir/X11/%_lib/libGLESv2.so.2 %_libdir/
 %_bindir/glxgears
 
 %changelog
+* Thu Nov 14 2013 Valery Inozemtsev <shrek@altlinux.ru> 4:9.2.3-alt1
+- 9.2.3
+
 * Sat Oct 19 2013 Valery Inozemtsev <shrek@altlinux.ru> 4:9.2.2-alt1
 - 9.2.2
 
