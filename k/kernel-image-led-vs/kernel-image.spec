@@ -25,7 +25,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.10.19
-Release: alt1
+Release: alt2
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -1836,6 +1836,12 @@ done)
 
 
 %changelog
+* Thu Nov 14 2013 Led <led@altlinux.ru> 3.10.19-alt2
+- updated:
+  + fix-drivers-char--ttyprintk
+- added:
+  + fix-net-xfrm--xfrm_ipcomp
+
 * Wed Nov 13 2013 Led <led@altlinux.ru> 3.10.19-alt1
 - 3.10.19
 - removed:
