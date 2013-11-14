@@ -24,13 +24,13 @@
 %define flavour %base_flavour-%sub_flavour
 
 Name: kernel-image-%flavour
-Version: 3.10.18
-Release: alt11
+Version: 3.10.19
+Release: alt1
 
 %define kernel_req %nil
 %define kernel_prov %nil
 %define kernel_branch 3.10
-%define kernel_stable_version 18
+%define kernel_stable_version 19
 %define kernel_extra_version .%kernel_stable_version
 #define kernel_extra_version %nil
 
@@ -1836,6 +1836,26 @@ done)
 
 
 %changelog
+* Wed Nov 13 2013 Led <led@altlinux.ru> 3.10.19-alt1
+- 3.10.19
+- removed:
+  + fix-arch-um
+  + fix-drivers-ata--libata
+  + fix-drivers-md--bcache
+  + fix-drivers-md--md-mod
+  + fix-drivers-net-wireless-ath-ath9k--ath9k
+  + fix-drivers-uio--uio
+  + fix-drivers-vhost--vhost_scsi
+  + fix-fs-ecryptfs
+  + fix-kernel--cgroup
+  + fix-kernel-time--clockevents
+- updated:
+  + fix-drivers-cpufreq--intel_pstate
+  + fix-drivers-scsi--sd_mod
+  + fix-drivers-usb-core
+  + fix-fs-jfs
+  + fix-sound-pci-hda--snd-hda-codec-realtek
+
 * Tue Nov 12 2013 Led <led@altlinux.ru> 3.10.18-alt11
 - updated:
   + fix-drivers-pci
