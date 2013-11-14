@@ -1,5 +1,5 @@
 Name: gcc-common
-Version: 1.4.16
+Version: 1.4.17
 Release: alt1
 
 Summary: Common directories, symlinks and selection utility for the GNU Compiler Collection
@@ -108,7 +108,7 @@ install -p -m755 %SOURCE2 %SOURCE3 %SOURCE4 %SOURCE5 .
 %patch -p1
 
 %build
-gcc %optflags -Werror -D_GNU_SOURCE '-DBINDIR="%_bindir"' \
+gcc %optflags -Werror '-DBINDIR="%_bindir"' \
 	'-DTARGET="%_target_platform"' gcc_wrapper.c -o gcc_wrapper
 sed -i 's|@TARGET@|%_target_platform|g' select-gcc gccbug
 
@@ -204,6 +204,11 @@ EOF
 %_libdir/security
 
 %changelog
+* Thu Nov 14 2013 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.4.17-alt1
+- gcc_wrapper:
+  + cleanup (ldv@).
+  + support GCC_TARGET environment variable.
+
 * Wed Jan 09 2013 Dmitry V. Levin <ldv@altlinux.org> 1.4.16-alt1
 - libgcj-common: added /usr/share/java/ and /usr/share/java/gcj-endorsed/.
 - Packaged gcc-{c++,fortran,go,java,treelang}-common as noarch subpackages.
