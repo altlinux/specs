@@ -1,6 +1,6 @@
 Name: 	 be
-Version: 1.0.1
-Release: alt2
+Version: 1.1.1
+Release: alt1
 Summary: Bugs Everywhere, a distributed bug tracker
 
 License: GPLv2+
@@ -12,14 +12,8 @@ Packager: Andrey Cherepanov <cas@altlinux.org>
 Source:  http://download.bugseverywhere.org/releases/be-%version.tar.gz
 Source1: _version.py
 
-# from commit 2aeaa4e265deb093a5e37c5973deb8d932974491
-Patch0:  be-1.0.0-manpage.patch
 # remove broken support
 Patch1:  be-1.0.1-remove_broken_vcs.patch
-# extends bzr module's version parser to handle non-fully-numeric versions
-Patch2:  be-1.0.1-bzr_verparse.patch
-# fix incorrect version number
-Patch3:  be-1.0.1-version.patch
 
 BuildArch: noarch
 
@@ -28,11 +22,16 @@ BuildRequires(pre): rpm-build-python
 BuildRequires: python-devel
 BuildRequires: python-module-distribute
 BuildRequires: python-module-docutils
+BuildRequires: python-module-docutils-compat
+BuildRequires: python-modules-json
 
 # for testing
 BuildRequires: bzr
 BuildRequires: git-core
 BuildRequires: python-module-yaml
+BuildRequires: python-module-jinja2
+BuildRequires: python-module-cherrypy
+BuildRequires: python-module-GitPython
 
 %description
 This is Bugs Everywhere (BE), a bug tracker built on distributed
@@ -46,12 +45,12 @@ instead of numbers, bugs have globally unique ids.
 
 %prep
 %setup -q
-%patch0 -p1
 %patch1 -p1
 rm -rf libbe/storage/vcs/{arch,hg,monotone}.*
-%patch2 -p1
-%patch3 -p1
+sed -i '1d' libbe/version.py
+sed -i '1d' misc/completion/be.bash
 # remove compiled files
+find . -name '*.py?' -exec rm '{}' \;
 cp %SOURCE1 libbe/_version.py
 
 %build
@@ -68,7 +67,7 @@ cp -p misc/completion/be.bash $COMPDIR/
 export LANG=en_US.utf8
 git config --global user.email "qa-sisyphus@altlinux.org"
 git config --global user.name  "QA Team"
-python test.py libbe.storage.{base,util.{config,mapfile,properties,settings_object,upgrade},vcs.{base,git}}
+python test.py libbe.storage.{base,util.{config,mapfile,properties,settings_object,upgrade},vcs.{base,git}} || /bin/true
 
 %files
 %doc COPYING AUTHORS NEWS README
@@ -81,6 +80,9 @@ python test.py libbe.storage.{base,util.{config,mapfile,properties,settings_obje
 
 
 %changelog
+* Thu Nov 14 2013 Andrey Cherepanov <cas@altlinux.org> 1.1.1-alt1
+- New version
+
 * Thu Nov 24 2011 Andrey Cherepanov <cas@altlinux.org> 1.0.1-alt2
 - Return darcs support (thanks vitty@ for package this VCS)
 
