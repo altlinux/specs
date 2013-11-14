@@ -2,7 +2,7 @@
 %define gtk_ver 2
 
 Name: lib%_name
-Version: 0.1.7
+Version: 0.1.8
 Release: alt1
 
 Summary: GTK-based minimalistic user interface library
@@ -42,7 +42,7 @@ export CFLAGS="%optflags"
 %make_build VERBOSE=1 PREFIX=%prefix LIBDIR=%_libdir GIRARA_GTK_VERSION=%gtk_ver
 
 %install
-%makeinstall_std PREFIX=%prefix LIBDIR=%_libdir
+%makeinstall_std PREFIX=%prefix LIBDIR=%_libdir GIRARA_GTK_VERSION=%gtk_ver
 %find_lang %name-gtk%gtk_ver-1
 
 %files -f %name-gtk%gtk_ver-1.lang
@@ -57,6 +57,9 @@ export CFLAGS="%optflags"
 %exclude %_libdir/*.a
 
 %changelog
+* Thu Nov 14 2013 Mikhail Efremov <sem@altlinux.org> 0.1.8-alt1
+- Updated to 0.1.8.
+
 * Fri Aug 16 2013 Mikhail Efremov <sem@altlinux.org> 0.1.7-alt1
 - Updated to 0.1.7.
 
