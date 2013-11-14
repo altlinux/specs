@@ -1,11 +1,12 @@
 %define oname KOceanSaver
 
 Name: kde4-screensaver-koceansaver
-Version: 0.71
-Release: alt1
+Version: 0.8
+Release: alt3
+Epoch: 1
 
 Summary: An under water screen saver for KDE4
-Url: http://kde-apps.org/content/show.php/KOceanSaver?content=95863
+Url: http://sourceforge.net/projects/koceansaver/
 Group: Graphical desktop/KDE
 License: GPL2+
 Source0: %oname-%version.tar.gz
@@ -26,7 +27,7 @@ wrecked in the background.
 
 %build
 %cmake_insource
-%make_build
+%make_build VERBOSE=1
 
 %install
 %make_install DESTDIR=%buildroot install
@@ -40,6 +41,15 @@ wrecked in the background.
 %_man1dir/koceansaver.*
 
 %changelog
+* Thu Nov 14 2013 Igor Zubkov <icesik@altlinux.org> 1:0.8-alt3
+- Add epoch for correct update
+
+* Wed Nov 13 2013 Igor Zubkov <icesik@altlinux.org> 0.8-alt2
+- Make build more verbose
+
+* Wed Nov 13 2013 Igor Zubkov <icesik@altlinux.org> 0.8-alt1
+- 0.8
+
 * Mon May 13 2013 Igor Zubkov <icesik@altlinux.org> 0.71-alt1
 - build for Sisyphus
 
