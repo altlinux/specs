@@ -1,5 +1,5 @@
 Name: synfigstudio
-Version: 0.64.0
+Version: 0.64.1
 Release: alt1
 
 Summary: Synfig studio - animation program
@@ -17,6 +17,8 @@ BuildPreReq: fonts-ttf-liberation
 BuildRequires: gcc-c++ libgtkmm2-devel
 BuildRequires: libsynfig-devel >= %version
 BuildRequires: intltool
+BuildRequires: ImageMagick-tools
+BuildRequires: /proc
 
 BuildPreReq: libsynfig-devel = %version
 Requires: lib%name = %version-%release
@@ -70,6 +72,9 @@ Header files for Synfig studio.
 %_includedir/synfigapp*/
 
 %changelog
+* Fri Nov 15 2013 Andrey Cherepanov <cas@altlinux.org> 0.64.1-alt1
+- New version
+
 * Mon Jul 29 2013 Andrey Cherepanov <cas@altlinux.org> 0.64.0-alt1
 - New version
 

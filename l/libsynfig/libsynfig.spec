@@ -6,7 +6,7 @@
 %define oname synfig
 
 Name: libsynfig
-Version: 0.64.0
+Version: 0.64.1
 Release: alt1
 
 Summary: Vector-based 2D animation software package
@@ -72,6 +72,9 @@ autoreconf --install --force
 %_libdir/lib*.so
 
 %changelog
+* Fri Nov 15 2013 Andrey Cherepanov <cas@altlinux.org> 0.64.1-alt1
+- New version
+
 * Tue Jul 30 2013 Andrey Cherepanov <cas@altlinux.org> 0.64.0-alt1
 - New version
 
