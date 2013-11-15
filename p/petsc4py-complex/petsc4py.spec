@@ -14,16 +14,16 @@
 %define oname petsc4py
 %define ldir %_libdir/petsc-%scalar_type
 Name: %oname-%scalar_type
-Version: 3.3.1
+Version: 3.4
 %define exampledir %_docdir/%oname-%version/examples
-Release: alt2.hg20130619
+Release: alt1.git20131106
 Summary: PETSc for Python (%scalar_type scalars)
 License: Public
 Group: Sciences/Mathematics
-Url: http://code.google.com/p/petsc4py
+Url: https://bitbucket.org/petsc/petsc4py
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-# hg clone https://petsc4py.googlecode.com/hg/ petsc4py
+# https://bitbucket.org/petsc/petsc4py.git
 Source: %oname-%version.tar.gz
 
 Requires: python-module-%name = %version-%release
@@ -115,6 +115,8 @@ export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib -L%mpidir/lib"
 #sed -i "s|@MPILIBS@||g" conf/core/confcore.py
 %add_optflags %optflags_shared -fno-strict-aliasing
 %add_optflags -I%ldir/include -I%mpidir/include -include petscviewerhdf5.h
+%add_optflags -DKSPConvergedSkip=KSPSkipConverged
+%add_optflags -DSNESConvergedSkip=SNESSkipConverged
 #python_build
 export CC=g++
 %make_ext config
@@ -215,6 +217,12 @@ done
 %endif
 
 %changelog
+* Fri Nov 15 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.4-alt1.git20131106
+- New snapshot
+
+* Tue Oct 01 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.4-alt1.git20130929
+- Version 3.4
+
 * Tue Jul 09 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.3.1-alt2.hg20130619
 - New snapshot
 
@@ -325,3 +333,4 @@ done
 
 * Tue Jul 14 2009 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.2-alt1
 - Initial build for Sisyphus
+
