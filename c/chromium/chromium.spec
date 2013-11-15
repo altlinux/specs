@@ -1,6 +1,6 @@
 %set_verify_elf_method textrel=relaxed
-%define v8_ver 3.20
-%define rev 229842
+%define v8_ver 3.21
+%define rev 235101
 
 %def_disable debug
 %def_disable nacl
@@ -12,7 +12,7 @@
 %endif
 
 Name:           chromium
-Version:        30.0.1599.114
+Version:        31.0.1650.57
 Release:        alt1.r%rev
 
 Summary:        An open source web browser developed by Google
@@ -61,6 +61,8 @@ Patch67:        chromium_use_gold.patch
 Patch69:	chromium-alt-krb5-fix-path.patch
 # Set appropriate desktop file name for default browser check
 Patch71:	chromium-21.0.1158.0-set-desktop-file-name.patch
+# Upsteam patch for build chromedriver/embed_version_in_cpp.py (https://code.google.com/p/chromium/issues/detail?id=305371)
+Patch72:    chromium-31.0.1650.48-fix-chromedriver-build.patch
 
 # Patches from Debian
 Patch80:	nspr.patch
@@ -214,6 +216,7 @@ to Gnome's Keyring.
 #%%patch67 -p1
 %patch69 -p2
 %patch71 -p2
+%patch72 -p1
 
 %patch80 -p2
 %patch81 -p1
@@ -324,14 +327,17 @@ pushd src
 # Note: these are for ALT Linux use ONLY. For your own distribution,
 # please get your own set of keys.
 
+# Limit number of threads
+export NPROCS=6
+
 # Buld main program
-%make_build -r %{?_smp_mflags} chrome V=1 BUILDTYPE=%buildtype
+%make_build -r chrome V=1 BUILDTYPE=%buildtype
 
 # Build the required SUID_SANDBOX helper
-%make_build -r %{?_smp_mflags} chrome_sandbox V=1 BUILDTYPE=%buildtype
+%make_build -r chrome_sandbox V=1 BUILDTYPE=%buildtype
 
 # Build the ChromeDriver test suite
-%make_build -r %{?_smp_mflags} chromedriver V=1 BUILDTYPE=%buildtype
+%make_build -r chromedriver V=1 BUILDTYPE=%buildtype
 
 popd
 
@@ -439,6 +445,23 @@ printf '%_bindir/%name\t%_libdir/%name/%name-gnome\t15\n' > %buildroot%_altdir/%
 %_altdir/%name-gnome
 
 %changelog
+* Fri Nov 15 2013 Andrey Cherepanov <cas@altlinux.org> 31.0.1650.57-alt1.r235101
+- New version
+- Security fixes:
+  - Critical CVE-2013-6632: Multiple memory corruption issues
+
+* Wed Nov 13 2013 Andrey Cherepanov <cas@altlinux.org> 31.0.1650.48-alt1.r233213
+- New version
+- Security fixes:
+  - Medium CVE-2013-6621: Use after free related to speech input elements.
+  - High CVE-2013-6622: Use after free related to media elements.
+  - High CVE-2013-6623: Out of bounds read in SVG.
+  - High CVE-2013-6624: Use after free related to "id" attribute strings.
+  - High CVE-2013-6625: Use after free in DOM ranges.
+  - Low CVE-2013-6626: Address bar spoofing related to interstitial warnings.
+  - High CVE-2013-6627: Out of bounds read in HTTP parsing.
+  - Medium CVE-2013-6628: Issue with certificates not being checked during TLS renegotiation.
+
 * Fri Oct 25 2013 Andrey Cherepanov <cas@altlinux.org> 30.0.1599.114-alt1.r229842
 - New version
 - Move chrome_sandbox to %%_libdir/chromium/chrome-sandbox
