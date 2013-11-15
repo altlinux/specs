@@ -4,7 +4,7 @@ BuildRequires: gcc-c++
 Name:           bam
 Version:        0.4.0
 
-Release:        alt2_5
+Release:        alt2_6
 Summary:        A build-system
 
 Group:          Games/Other
@@ -15,12 +15,12 @@ Source44: import.info
 
 
 %description
-A tool that controls process of producing executables of 
+A tool that controls process of producing executables of
 software from its source code. Used to build the Teeworlds game.
 
 
 %prep
-%setup -q 
+%setup -q
 
 
 %build
@@ -28,7 +28,6 @@ sh -x make_unix.sh %{optflags}
 
 
 %install
-
 install -D -m 0755 %{name} \
         %{buildroot}%{_bindir}/%{name}
 
@@ -39,6 +38,9 @@ install -D -m 0755 %{name} \
 
 
 %changelog
+* Fri Nov 15 2013 Igor Vlasenko <viy@altlinux.ru> 0.4.0-alt2_6
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.4.0-alt2_5
 - update to new release by fcimport
 
