@@ -4,12 +4,12 @@ Name: otf2
 License: BSD
 Group: Development/Tools
 Summary: Open Trace Format 2 (OTF2)
-Version: 1.2
-Release: alt2
+Version: 1.2.1
+Release: alt1
 Url: http://www.vi-hps.org/projects/score-p/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-Source: http://www.vi-hps.org/upload/packages/otf2/otf2-1.2.tar.gz
+Source: http://www.vi-hps.org/upload/packages/otf2/otf2-1.2.1.tar.gz
 
 BuildPreReq: uncrustify doxygen graphviz texlive-base-bin
 BuildPreReq: gcc-c++
@@ -110,6 +110,9 @@ popd
 %_docdir/%name
 
 %changelog
+* Fri Nov 15 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.1-alt1
+- Version 1.2.1
+
 * Thu Sep 05 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2-alt2
 - Moved %name-config into lib%name-devel
 
