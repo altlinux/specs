@@ -40,7 +40,7 @@
 %define minor	8
 %define bugfix	5
 %define beta	%nil
-%define rlz alt1
+%define rlz alt2
 %define phonon_ver 4.4.0
 
 Name: %rname%major
@@ -73,7 +73,7 @@ Source21: qt4-assistant.desktop
 Source22: qt4-designer.desktop
 Source23: qt4-linguist.desktop
 Source24: qt4-qtconfig.desktop
-#Source25: qt4-qvfb.desktop
+Source25: qt4-qtdemo.desktop
 
 Source101: %rname.16.png
 Source102: %rname.32.png
@@ -96,6 +96,7 @@ Patch204: qt-everywhere-opensource-src-4.6.3-glib_eventloop_nullcheck.patch
 Patch205: qt-x11-opensource-src-4.5.1-enable_ft_lcdfilter.patch
 Patch206: qt-everywhere-opensource-src-4.8.3-qdbusconnection_no_debug.patch
 Patch207: qt-everywhere-opensource-src-4.8.1-icu_no_debug.patch
+Patch208: qt-cupsEnumDests.patch
 #
 Patch209: qt-everywhere-opensource-src-4.8.5-QTBUG-21900.patch
 Patch210: qt-everywhere-opensource-src-4.8.0-QTBUG-22037.patch
@@ -620,11 +621,31 @@ This package contains documentation in man format.
 
 ##############################################
 %package doc-examples
+BuildArch: noarch
 Summary: Examples for developing apps which will use Qt%{major}
 Group: Development/KDE and QT
 Requires: %name-common = %version-%release
+Requires: %name-doc-examples-src = %version-%release
+Requires: %name-doc-examples-bin = %version-%release
 %description doc-examples
-This package contains sources for example programs.
+This package contains example programs.
+
+##############################################
+%package doc-examples-src
+BuildArch: noarch
+Summary: Examples sources for developing apps which will use Qt%{major}
+Group: Development/KDE and QT
+Requires: %name-common = %version-%release
+%description doc-examples-src
+This package contains sources of example programs.
+
+##############################################
+%package doc-examples-bin
+Summary: Examples binaries for developing apps which will use Qt%{major}
+Group: Development/KDE and QT
+Requires: %name-common = %version-%release
+%description doc-examples-bin
+This package contains binaries of example programs.
 
 ##############################################
 %package assistant
@@ -731,6 +752,7 @@ Install this package if you want to create RPM packages that use %name
 %patch205 -p1
 %patch206 -p1
 %patch207 -p1
+%patch208 -p1
 #
 %patch209 -p1
 %patch210 -p1
@@ -819,8 +841,8 @@ CNFGR="\
 	-importdir %qtdir/imports \
 	-sysconfdir %_sysconfdir/xdg \
 	-datadir %_datadir/%name \
-	-examplesdir %qtdir/examples \
-	-demosdir %qtdir/demos \
+	-examplesdir %_datadir/%name/examples \
+	-demosdir %_datadir/%name/demos \
 	\
 	-platform %platform \
 	%{?_enable_debug:-debug}%{!?_enable_debug:-release} -verbose -no-separate-debug-info \
@@ -1096,39 +1118,36 @@ for i in %_builddir/%buildsubdir/src/*.pri; do
    install -m 0644 $i %buildroot/%qtdir/src/
 done
 
-# David - 3.0.0-0.11mdk - Provide a qmake.cache for examples
-cp -pf %_builddir/%buildsubdir/.qmake.cache %_builddir/%buildsubdir/.qmake.cache.tmp
-perl -pi -e "s|^QT_SOURCE_TREE.*|QT_SOURCE_TREE = %qtdir|" %_builddir/%buildsubdir/.qmake.cache.tmp
-perl -pi -e "s|^QT_BUILD_TREE.*|QT_BUILD_TREE = %qtdir|" %_builddir/%buildsubdir/.qmake.cache.tmp
-perl -pi -e "s|^QMAKE_MOC.*|QMAKE_MOC = %qtdir/bin/moc|" %_builddir/%buildsubdir/.qmake.cache.tmp
-perl -pi -e "s|^QMAKE_UIC.*|QMAKE_UIC = %qtdir/bin/uic -L $$QT_BUILD_TREE/plugins|" %_builddir/%buildsubdir/.qmake.cache.tmp
-perl -pi -e "s|^QMAKE_QMAKE.*|QMAKE_QMAKE = %qtdir/bin/qmake|" %_builddir/%buildsubdir/.qmake.cache.tmp
-perl -pi -e "s|^QMAKE_MOC_SRC.*|QMAKE_MOC_SRC = %qtdir/src/moc|" %_builddir/%buildsubdir/.qmake.cache.tmp
-perl -pi -e "s|^QMAKE_INCDIR_QT.*|QMAKE_INCDIR_QT = %qtdir/include|" %_builddir/%buildsubdir/.qmake.cache.tmp
-perl -pi -e "s|^QMAKE_LIBDIR_QT.*|QMAKE_LIBDIR_QT = %qtdir/lib|" %_builddir/%buildsubdir/.qmake.cache.tmp
-#perl -pi -e "s|^QMAKE_LIBDIR_FLAGS.*|QMAKE_LIBDIR_FLAGS += -lXinerama|" %_builddir/%buildsubdir/.qmake.cache.tmp
-
 # examples and demos
+> %_builddir/%buildsubdir/examples_bin_list
+> %_builddir/%buildsubdir/examples_bin_list_exclude
 for m in examples demos
 do
-    cp -ar %_builddir/%buildsubdir/$m %buildroot/%_docdir/qt-%version
-    pushd %buildroot/%_docdir/%rname-%version/$m
-	#cp -p %_builddir/%buildsubdir/.qmake.cache.tmp .qmake.cache
+    pushd %buildroot/%_datadir/%name
+	find $m -type d | while read d; do mkdir -p %buildroot/%qtdir/$d; done
+    popd
+    pushd %buildroot/%_datadir/%name/$m
 	find -type f -name Makefile | while read f; do rm -f "$f"; done
 	find -type f -name \*.o | while read f; do rm -f "$f"; done
-	cat README > README.tmp
-	echo "Before try to build one of these $m, you need to:" > README
-	echo "" >> README
-	echo "export QTDIR=\"%{qtdir}/\"" >> README
-	echo "" >> README
-	echo "" >> README
-	cat README.tmp >> README
-	rm -f README.tmp
-    popd
-    pushd %buildroot/%_docdir/%rname-%version/
-    tar jcf $m.tar.bz2 $m
-    #tar --owner=root --group=root --mode=u+w,go-w,go+rX -cjf $m.tar.bz2 $m
-    rm -rf $m
+	find -type f -name README | \
+	while read readme_file
+	do
+	    cat $readme_file >${readme_file}.tmp
+	    echo -e "Before try to build one of these $m, you need to:\n" > $readme_file
+	    echo "export QTDIR=\"%{qtdir}/\" PATH=\"%{qtdir}/bin:\$PATH\"" >> $readme_file
+	    echo -e "\n\n" >> $readme_file
+	    cat ${readme_file}.tmp >> $readme_file
+	    rm -f ${readme_file}.tmp
+	done
+	find ./ -type f -executable | sed "s|^\.||" | \
+	while read e
+	do
+	    echo "%_datadir/%name/$m/$e" >>%_builddir/%buildsubdir/examples_bin_list
+	    echo "%%exclude %_datadir/%name/$m/$e" >>%_builddir/%buildsubdir/examples_bin_list_exclude
+	    subdir=`dirname $e`
+	    mv ./$e %buildroot/%qtdir/$m/$subdir/
+	    ln -s `relative %qtdir/$m/$e %_datadir/%name/$m/$e` ./$e
+	done
     popd
 done
 
@@ -1140,12 +1159,12 @@ ln -sf %platform default
 popd
 
 # Install .desktop files
-install -d -m 0755 %buildroot/%_datadir/applications/
-install -m 0644 %SOURCE21 %buildroot/%_datadir/applications/%name-assistant.desktop
-install -m 0644 %SOURCE22 %buildroot/%_datadir/applications/%name-designer.desktop
-install -m 0644 %SOURCE23 %buildroot/%_datadir/applications/%name-linguist.desktop
-install -m 0644 %SOURCE24 %buildroot/%_datadir/applications/%name-qtconfig.desktop
-#install -m 0644 SOURCE25 %buildroot/%_datadir/applications/%name-qvfb.desktop
+install -d -m 0755 %buildroot/%_desktopdir/
+install -m 0644 %SOURCE21 %buildroot/%_desktopdir/%name-assistant.desktop
+install -m 0644 %SOURCE22 %buildroot/%_desktopdir/%name-designer.desktop
+install -m 0644 %SOURCE23 %buildroot/%_desktopdir/%name-linguist.desktop
+install -m 0644 %SOURCE24 %buildroot/%_desktopdir/%name-qtconfig.desktop
+install -m 0644 %SOURCE25 %buildroot/%_desktopdir/%name-qtdemo.desktop
 # Icons
 mkdir -p %buildroot/%_iconsdir/hicolor/{16x16,32x32,48x48,64x64}/apps
 install -m 644 %SOURCE101 %buildroot/%_iconsdir/hicolor/16x16/apps/%name.png
@@ -1206,7 +1225,7 @@ install -m 644 %SOURCE104 %buildroot/%_iconsdir/hicolor/64x64/apps/%name.png
 %qtdir/lib/libQt3Support.so.*
 %_libdir/libQt3Support.so.*
 %qtdir/plugins/accessible/libqtaccessiblecompatwidgets.*
-%_datadir/applications/%name-qtconfig.desktop
+%_desktopdir/%name-qtconfig.desktop
 
 %files -n lib%{name}-core
 %qtdir/lib/libQtCore.so.*
@@ -1427,8 +1446,8 @@ install -m 644 %SOURCE104 %buildroot/%_iconsdir/hicolor/64x64/apps/%name.png
 %qtdir/bin/designer*
 %qtdir/bin/linguist*
 #
-%_datadir/applications/%name-linguist.desktop
-%_datadir/applications/%name-designer.desktop
+%_desktopdir/%name-linguist.desktop
+%_desktopdir/%name-designer.desktop
 
 %if_enabled sql_odbc
 %files -n lib%name-sql-odbc
@@ -1464,12 +1483,12 @@ install -m 644 %SOURCE104 %buildroot/%_iconsdir/hicolor/64x64/apps/%name.png
 %files assistant -f assistant.lang
 %_bindir/assistant-%name
 %qtdir/bin/assistant
-%_datadir/applications/%name-assistant.desktop
+%_desktopdir/%name-assistant.desktop
 
 %files qvfb -f qvfb.lang
 %_bindir/qvfb-%name
 %qtdir/bin/qvfb
-#%_datadir/applications/%name-qvfb.desktop
+#%_desktopdir/%name-qvfb.desktop
 
 %if_enabled docs
 %files doc
@@ -1485,12 +1504,17 @@ install -m 644 %SOURCE104 %buildroot/%_iconsdir/hicolor/64x64/apps/%name.png
 %doc %_docdir/%rname-%version/qch/*
 
 %files doc-examples
+
+%files doc-examples-bin -f examples_bin_list
 %_bindir/qtdemo-%name
 %qtdir/bin/qtdemo
-%dir %_docdir/%rname-%version/
-%doc %_docdir/%rname-%version/*.bz2
-%exclude %qtdir/examples
-%exclude %qtdir/demos
+%_desktopdir/%name-qtdemo.desktop
+%qtdir/examples
+%qtdir/demos
+
+%files doc-examples-src -f examples_bin_list_exclude
+%_datadir/%name/examples
+%_datadir/%name/demos
 
 #%files doc-man
 #%doc %_mandir/man1/*
@@ -1525,6 +1549,13 @@ install -m 644 %SOURCE104 %buildroot/%_iconsdir/hicolor/64x64/apps/%name.png
 %endif
 
 %changelog
+* Fri Nov 15 2013 Sergey V Turchin <zerg@altlinux.org> 4.8.5-alt2
+- package examples unarchived to make in available in qtcreator
+- add patch for cups-1.6 printers discovery
+
+* Wed Jul 24 2013 Sergey V Turchin <zerg@altlinux.org> 4.8.5-alt0.M70P.1
+- built for M70P
+
 * Wed Jul 10 2013 Sergey V Turchin <zerg@altlinux.org> 4.8.5-alt1
 - new version
 
