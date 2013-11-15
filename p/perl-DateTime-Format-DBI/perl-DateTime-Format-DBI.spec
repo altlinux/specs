@@ -4,22 +4,26 @@ BuildRequires: perl(Module/Build.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-DateTime-Format-DBI
 Version:        0.041
-Release:        alt1
+Release:        alt1_1
 Summary:        Find a parser class for a database connection
 License:        GPL+ or Artistic 
 Group:          Development/Perl
 URL:            http://search.cpan.org/dist/DateTime-Format-DBI/
-Source:        http://www.cpan.org/authors/id/C/CF/CFAERBER/DateTime-Format-DBI-%{version}.tar.gz
+Source0:        http://www.cpan.org/authors/id/C/CF/CFAERBER/DateTime-Format-DBI-%{version}.tar.gz
 BuildArch:      noarch
+BuildRequires:  %{_bindir}/iconv
+BuildRequires:  perl
 BuildRequires:  perl(Carp.pm)
 BuildRequires:  perl(DateTime.pm)
 BuildRequires:  perl(DateTime/Format/SQLite.pm)
 BuildRequires:  perl(DBD/SQLite.pm)
 BuildRequires:  perl(DBI.pm)
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
-BuildRequires:  perl(Test/Database.pm)
+BuildRequires:  perl(strict.pm)
 BuildRequires:  perl(Test/More.pm)
 BuildRequires:  perl(Test/NoWarnings.pm)
+BuildRequires:  perl(vars.pm)
+BuildRequires:  perl(warnings.pm)
 # require the dbd-specific datetime formats, so this "just works" the way we
 # expect it to.
 Requires:       perl(DateTime/Format/MySQL.pm)
@@ -37,30 +41,30 @@ perl-DateTime-MySQL, perl-DateTime-Oracle, perl-DateTime-DB2, etc.
 
 %prep
 %setup -q -n DateTime-Format-DBI-%{version}
-for i in LICENSE README lib/DateTime/Format/DBI.pm ; do
-    # correct UTF-8 wonkiness
-    cat $i | iconv -f ISO-8859-1 -t UTF-8 > foo
-    mv foo $i
-done
+iconv -f ISO-8859-1 -t UTF-8 LICENSE > LICENSE.utf && \
+touch -r LICENSE LICENSE.utf && \
+mv -f LICENSE.utf LICENSE
 
 %build
-%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
+perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
 make %{?_smp_mflags}
 
 %install
-make pure_install PERL_INSTALL_ROOT=%{buildroot}
-find %{buildroot} -type f -name .packlist -exec rm -f {} \;
-find %{buildroot} -depth -type d -exec rmdir {} 2>/dev/null \;
+make pure_install DESTDIR=%{buildroot}
+find %{buildroot} -type f -name .packlist -exec rm -f {} +
 # %{_fixperms} %{buildroot}/*
 
 %check
 make test
 
 %files
-%doc Changes LICENSE README t/
+%doc Changes LICENSE README
 %{perl_vendor_privlib}/*
 
 %changelog
+* Fri Nov 15 2013 Igor Vlasenko <viy@altlinux.ru> 0.041-alt1_1
+- update to new release by fcimport
+
 * Wed Oct 23 2013 Igor Vlasenko <viy@altlinux.ru> 0.041-alt1
 - automated CPAN update
 
