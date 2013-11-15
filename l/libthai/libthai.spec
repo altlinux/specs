@@ -2,19 +2,18 @@
 BuildRequires: /usr/bin/doxygen
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
-%define datrie_version 0.2.3
+%define datrie_version 0.2.6
 
 Summary:  Thai language support routines
 Name: libthai
-Version: 0.1.14
-Release: alt3_7
+Version: 0.1.19
+Release: alt1_2
 License: LGPLv2+
 Group: System/Libraries
-Source: ftp://linux.thai.net/pub/thailinux/software/libthai/libthai-%{version}.tar.gz
-Source1: ftp://linux.thai.net/pub/thailinux/software/libthai/libdatrie-%{datrie_version}.tar.gz
+Source: ftp://linux.thai.net/pub/thailinux/software/libthai/libthai-%{version}.tar.xz
+Source1: ftp://linux.thai.net/pub/thailinux/software/libthai/libdatrie-%{datrie_version}.tar.xz
 Patch: libthai-libdatrie-static-build.patch
-Patch1: libthai-0.1.9-doxygen-segfault.patch
-Patch2: libthai-0.1.9-multilib.patch
+Patch1: libthai-0.1.9-multilib.patch
 URL: http://linux.thai.net
 
 BuildRequires: doxygen
@@ -46,8 +45,7 @@ libthai.
 %setup -q -n %{name}-%{version} -a 1
 mv libdatrie-%{datrie_version} libdatrie
 %patch -p1 -b .static-build
-%patch1 -p1 -b .doxygen-segfault
-%patch2 -p1 -b .multilib
+%patch1 -p1 -b .multilib
 
 %build
 
@@ -94,7 +92,7 @@ rmdir $RPM_BUILD_ROOT%{_docdir}/libthai
 rm $RPM_BUILD_ROOT%{_libdir}/*.la
 
 %files
-%doc README AUTHORS COPYING ChangeLog TODO
+%doc README AUTHORS COPYING ChangeLog
 %{_libdir}/lib*.so.*
 %{_datadir}/libthai
 
@@ -103,9 +101,11 @@ rm $RPM_BUILD_ROOT%{_libdir}/*.la
 %{_includedir}/thai
 %{_libdir}/lib*.so
 %{_libdir}/pkgconfig/*
-%{_mandir}/man3/*
 
 %changelog
+* Fri Nov 15 2013 Igor Vlasenko <viy@altlinux.ru> 0.1.19-alt1_2
+- update to new release by fcimport
+
 * Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.1.14-alt3_7
 - update to new release by fcimport
 
