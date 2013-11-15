@@ -8,7 +8,7 @@ BuildRequires: gcc-c++ libncurses-devel libreadline-devel
 
 Name:           afpfs-ng
 Version:        0.8.1
-Release:        alt3_12.3
+Release:        alt3_13.3
 Summary:        Apple Filing Protocol client
 
 Group:          System/Base
@@ -67,9 +67,9 @@ make %{?_smp_mflags}
 
 
 %install
-make install DESTDIR=$RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT%{_includedir}/afpfs-ng
-cp -p include/* $RPM_BUILD_ROOT%{_includedir}/afpfs-ng
+make install DESTDIR=%{buildroot}
+install -d %{buildroot}%{_includedir}/afpfs-ng
+cp -p include/* %{buildroot}%{_includedir}/afpfs-ng
 
 
 %files
@@ -100,6 +100,9 @@ cp -p include/* $RPM_BUILD_ROOT%{_includedir}/afpfs-ng
 
 
 %changelog
+* Fri Nov 15 2013 Igor Vlasenko <viy@altlinux.ru> 0.8.1-alt3_13.3
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.8.1-alt3_12.3
 - update to new release by fcimport
 
