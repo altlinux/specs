@@ -4,13 +4,15 @@ BuildRequires: pkgconfig(check) pkgconfig(libudev)
 Group: Other
 %add_optflags %optflags_shared
 Name:           libsigrok
-Version:        0.2.1
-Release:        alt1_2
+Version:        0.2.2
+Release:        alt1_1
 Summary:        Basic hardware access drivers for logic analyzers
 # Combined GPLv3+ and GPLv2+ and BSD
 License:        GPLv3+
 URL:            http://www.sigrok.org/
 Source0:        http://sigrok.org/download/source/libsigrok/%{name}-%{version}.tar.gz
+# http://sigrok.org/gitweb/?p=libsigrok.git;a=commit;h=8dce54f7aa9eed362f2c9e41412c6b71ba1a32b6
+Patch0:		%{name}-0.2.1-udev.patch
 
 BuildRequires:  glib2-devel
 BuildRequires:  libzip-devel
@@ -49,8 +51,10 @@ BuildArch:      noarch
 The %{name}-doc package contains documentation for developing software
 with %{name}.
 
+
 %prep
 %setup -q
+%patch0 -p1 -b .udev
 
 
 %build
@@ -66,7 +70,7 @@ doxygen Doxyfile
 %install
 %makeinstall_std
 # Install udev rules
-install -D -p -m 0644 contrib/z60_libsigrok.rules %{buildroot}/lib/udev/rules.d/60_libsigrok.rules
+install -D -p -m 0644 contrib/z60_libsigrok.rules %{buildroot}%{_udevrulesdir}/60-libsigrok.rules
 
 
 find %{buildroot} -name '*.la' -exec rm -f {} ';'
@@ -75,7 +79,7 @@ find %{buildroot} -name '*.la' -exec rm -f {} ';'
 %files
 %doc README README.devices NEWS COPYING
 %{_libdir}/libsigrok.so.1*
-/lib/udev/rules.d/60_libsigrok.rules
+%{_udevrulesdir}/60-libsigrok.rules
 
 %files devel
 %{_includedir}/libsigrok/
@@ -85,7 +89,11 @@ find %{buildroot} -name '*.la' -exec rm -f {} ';'
 %files doc
 %doc doxy/html-api/
 
+
 %changelog
+* Fri Nov 15 2013 Igor Vlasenko <viy@altlinux.ru> 0.2.2-alt1_1
+- update to new release by fcimport
+
 * Sun Sep 15 2013 Igor Vlasenko <viy@altlinux.ru> 0.2.1-alt1_2
 - update to new release by fcimport
 
