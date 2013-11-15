@@ -2,7 +2,7 @@
 %define mpidir %_libdir/%mpiimpl
 
 Name: p4est
-Version: 0.3.4.1
+Version: 0.3.4.2
 Release: alt1
 Summary: Parallel AMR on Forests of Octrees
 License: GPLv2+
@@ -111,6 +111,9 @@ chrpath -r %mpidir/lib %buildroot%_bindir/* ||:
 %doc _ex/*
 
 %changelog
+* Fri Nov 15 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.4.2-alt1
+- Version 0.3.4.2
+
 * Thu Jul 18 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.4.1-alt1
 - Version 0.3.4.1
 
