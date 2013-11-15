@@ -1,6 +1,6 @@
 Name: wcslib
 Version: 4.19
-Release: alt1
+Release: alt2
 
 Group: System/Libraries
 Summary: An implementation of the FITS World Coordinate System standard
@@ -76,5 +76,11 @@ rm -rf %buildroot/%_docdir/wcslib-*
 %_man1dir/*
 
 %changelog
+* Fri Nov 15 2013 Sergey V Turchin <zerg@altlinux.org> 4.19-alt2
+- bump release to prevent spam from autoimports robot
+
+* Mon Nov 11 2013 Sergey V Turchin <zerg@altlinux.org> 4.19-alt0.M70P.1
+- built for M70P
+
 * Mon Nov 11 2013 Sergey V Turchin <zerg@altlinux.org> 4.19-alt1
 - initial build
