@@ -3,7 +3,7 @@
 %define _prefix /
 Name: ipset
 Version: 6.20.1
-Release: alt2
+Release: alt3
 
 Summary: Tools for managing sets of IP or ports with iptables
 License: GPLv2
@@ -66,8 +66,6 @@ autoreconf -fisv
 %build
 %configure --without-kbuild --without-ksource
 %make_build LIBDIR=/%_lib/ BINDIR=/sbin/
-mv kernel kernel-source-%name-%version
-
 %install
 %makeinstall prefix=%buildroot/ exec_prefix=%buildroot/ sbindir=%buildroot/sbin libdir=%buildroot/%_lib
 mkdir -p $RPM_BUILD_ROOT/%_libdir
@@ -75,6 +73,9 @@ pushd $RPM_BUILD_ROOT/%_libdir
 LIBNAME=`basename \`ls $RPM_BUILD_ROOT/%{_lib}/libipset.so.3.*.*\``
 ln -s ../../%{_lib}/$LIBNAME libipset.so
 popd
+
+tar xvf %SOURCE0
+mv %name-%version kernel-source-%name-%version
 
 mkdir -p %kernel_srcdir
 tar -cjf %kernel_srcdir/kernel-source-%name-%version.tar.bz2 kernel-source-%name-%version
@@ -95,6 +96,9 @@ tar -cjf %kernel_srcdir/kernel-source-%name-%version.tar.bz2 kernel-source-%name
 %attr(0644,root,root) %kernel_src/kernel-source-%name-%version.tar.bz2
 
 %changelog
+* Fri Nov 15 2013 Anton Farygin <rider@altlinux.ru> 6.20.1-alt3
+- repack kernel-source-package for new ipset modules build scheme
+
 * Wed Nov 13 2013 Anton Farygin <rider@altlinux.ru> 6.20.1-alt2
 - fixed buildrequires
 
