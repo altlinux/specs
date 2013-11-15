@@ -3,8 +3,8 @@ BuildRequires: /usr/bin/dot /usr/bin/doxygen gcc-c++
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
 Name:           libpgf
-Version:        6.12.24
-Release:        alt1_5
+Version:        6.13.45
+Release:        alt1_0.1.svn123
 Summary:        PGF (Progressive Graphics File) library
 
 Group:          System/Libraries
@@ -41,6 +41,9 @@ sed -i 's|$(DESTDIR)$(datadir)/doc/$(DOC_MODULE)|$(RPM_BUILD_DIR)/libpgf|g' doc/
 %build
 sh autogen.sh
 
+export CFLAGS="%{optflags} -DLIBPGF_DISABLE_OPENMP"
+export CXXFLAGS="%{optflags} -DLIBPGF_DISABLE_OPENMP"
+
 %configure --disable-static
 make %{?_smp_mflags}
 
@@ -63,6 +66,9 @@ find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 
 
 %changelog
+* Fri Nov 15 2013 Igor Vlasenko <viy@altlinux.ru> 6.13.45-alt1_0.1.svn123
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 6.12.24-alt1_5
 - update to new release by fcimport
 
