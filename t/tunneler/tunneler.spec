@@ -1,7 +1,7 @@
 %define fedora 19
 Name:           tunneler
 Version:        1.1.1
-Release:        alt2_12
+Release:        alt2_13
 Summary:        Clone of legendary Tunneler game
 
 Group:          Games/Other
@@ -37,9 +37,9 @@ make %{?_smp_mflags}
 
 
 %install
-make install DESTDIR=$RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/scalable/apps/
-install -m 644 -p %{SOURCE1} $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/scalable/apps/
+make install DESTDIR=%{buildroot}
+install -d %{buildroot}%{_datadir}/icons/hicolor/scalable/apps/
+install -m 644 -p %{SOURCE1} %{buildroot}%{_datadir}/icons/hicolor/scalable/apps/
 desktop-file-install %{SOURCE2} \
 %if (0%{?fedora} && 0%{?fedora} < 19) || (0%{?rhel} && 0%{?rheld} < 7)
          \
@@ -55,6 +55,9 @@ desktop-file-install %{SOURCE2} \
 
 
 %changelog
+* Fri Nov 15 2013 Igor Vlasenko <viy@altlinux.ru> 1.1.1-alt2_13
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 1.1.1-alt2_12
 - update to new release by fcimport
 
