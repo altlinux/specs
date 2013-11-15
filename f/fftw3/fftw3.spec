@@ -1,6 +1,6 @@
 Name: fftw3
 Version: 3.3.3
-Release: alt1
+Release: alt2
 
 Summary: Library for computing Fast Fourier Transforms
 License: GPLv2+
@@ -13,6 +13,7 @@ Patch: fftw-alt-link.patch
 
 %def_enable check
 %def_disable bigcheck
+%def_disable quadcheck
 %def_disable static
 %def_enable openmp
 %def_enable sse
@@ -227,7 +228,7 @@ cp -a doc/html doc/FAQ/fftw-faq.html %buildroot%docdir/
 
 %check
 rm -f failed
-for d in single double long %{?_enable_quad:quad}; do
+for d in single double long %{?_enable_quadcheck:%{?_enable_quad:quad}}; do
 	make %{?_enable_bigcheck:big}check -C $d/tests ||
 		echo "$d failed" >> failed &
 done
@@ -279,6 +280,10 @@ fi
 %docdir/*.pdf
 
 %changelog
+* Fri Nov 15 2013 Dmitry V. Levin <ldv@altlinux.org> 3.3.3-alt2
+- %%check: disabled quad check by default,
+  it takes too much time to complete.
+
 * Mon Jan 21 2013 Dmitry V. Levin <ldv@altlinux.org> 3.3.3-alt1
 - Updated to 3.3.3.
 
