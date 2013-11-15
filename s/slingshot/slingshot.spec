@@ -1,14 +1,15 @@
 Name: slingshot
 Version:  0.8.1p
-Release:  alt4_10
+Release:  alt4_11
 Summary: A Newtonian strategy game
 
 Group: Games/Other
 License: GPLv2+        
-URL: http://www.slingshot-game.org/
+URL: http://slingshot.wikispot.org/
 Source0: http://downloads.sourceforge.net/slingshot-game/slingshot-%{version}.tar.gz
 Source1: slingshot.desktop
 Source2: slingshot
+Source3: slingshot.appdata.xml
 Patch0: slingshot-font-path.patch
 Patch1: slingshot-0.8.1p-type-mismatch.patch
 BuildArchitectures: noarch
@@ -53,14 +54,22 @@ mkdir -p $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/64x64/apps
 install -p -m 644 slingshot/data/slingshot.png \
   $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/64x64/apps
 
+#install appdata
+mkdir -p $RPM_BUILD_ROOT%{_datadir}/appdata
+install -p -m 664 %{SOURCE3} $RPM_BUILD_ROOT%{_datadir}/appdata
+
 %files
 %{_bindir}/slingshot
 %{_datadir}/slingshot/
 %doc Readme.txt slingshot/licence.txt
 %{_datadir}/applications/slingshot.desktop
 %{_datadir}/icons/hicolor/64x64/apps/slingshot.png
+%{_datadir}/appdata/slingshot.appdata.xml
 
 %changelog
+* Fri Nov 15 2013 Igor Vlasenko <viy@altlinux.ru> 0.8.1p-alt4_11
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.8.1p-alt4_10
 - update to new release by fcimport
 
