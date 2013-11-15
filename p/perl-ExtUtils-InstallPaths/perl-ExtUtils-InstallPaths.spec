@@ -1,16 +1,15 @@
-%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(Config.pm) perl-devel perl-podlators
+BuildRequires: perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:		perl-ExtUtils-InstallPaths
 Version:	0.010
-Release:	alt1
+Release:	alt1_1
 Summary:	Build.PL install path logic made easy
 Group:		Development/Perl
 License:	GPL+ or Artistic
 URL:		https://metacpan.org/release/ExtUtils-InstallPaths
-Source:	http://www.cpan.org/authors/id/L/LE/LEONT/ExtUtils-InstallPaths-%{version}.tar.gz
+Source0:	http://cpan.metacpan.org/authors/id/L/LE/LEONT/ExtUtils-InstallPaths-%{version}.tar.gz
 BuildArch:	noarch
 # Build
 BuildRequires:	perl(ExtUtils/MakeMaker.pm)
@@ -19,8 +18,11 @@ BuildRequires:	perl(Carp.pm)
 BuildRequires:	perl(ExtUtils/Config.pm)
 BuildRequires:	perl(File/Spec.pm)
 # Test Suite
+BuildRequires:	perl(Config.pm)
 BuildRequires:	perl(File/Spec/Functions.pm)
 BuildRequires:	perl(File/Temp.pm)
+BuildRequires:	perl(IO/Handle.pm)
+BuildRequires:	perl(IPC/Open3.pm)
 BuildRequires:	perl(Test/More.pm)
 # Release Tests
 # perl-Pod-Coverage-TrustPod -> perl-Pod-Eventual -> perl-Mixin-Linewise ->
@@ -65,6 +67,9 @@ make test RELEASE_TESTING=1
 %{perl_vendor_privlib}/ExtUtils/
 
 %changelog
+* Fri Nov 15 2013 Igor Vlasenko <viy@altlinux.ru> 0.010-alt1_1
+- update to new release by fcimport
+
 * Fri Nov 01 2013 Igor Vlasenko <viy@altlinux.ru> 0.010-alt1
 - automated CPAN update
 
