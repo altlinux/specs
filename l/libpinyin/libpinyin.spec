@@ -3,18 +3,18 @@ BuildRequires: gcc-c++
 # END SourceDeps(oneline)
 Group: Other
 %add_optflags %optflags_shared
-%global snapshot 1
+%global snapshot 0
 
 Name:           libpinyin
-Version:        0.9.93
-Release:        alt1_2
+Version:        0.9.94
+Release:        alt1_1
 Summary:        Library to deal with pinyin
 
 License:        GPLv2+
 URL:            https://github.com/libpinyin/libpinyin
 Source0:        http://downloads.sourceforge.net/libpinyin/libpinyin/%{name}-%{version}.tar.gz
 %if %snapshot
-Patch0:         libpinyin-0.10.x-head.patch
+Patch0:         libpinyin-1.0.x-head.patch
 %endif
 
 BuildRequires:  libdb4.8-devel glib2-devel
@@ -96,6 +96,9 @@ find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 %{_mandir}/man1/*.1.*
 
 %changelog
+* Fri Nov 15 2013 Igor Vlasenko <viy@altlinux.ru> 0.9.94-alt1_1
+- update to new release by fcimport
+
 * Wed Jul 31 2013 Igor Vlasenko <viy@altlinux.ru> 0.9.93-alt1_2
 - update to new release by fcimport
 
