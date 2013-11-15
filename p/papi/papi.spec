@@ -2,7 +2,7 @@ Name: papi
 License: BSD-like
 Group: Development/Tools
 Summary: Performance Application Programming Interface
-Version: 5.1.1
+Version: 5.2.0
 Release: alt1
 Url: http://icl.cs.utk.edu/papi/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
@@ -130,6 +130,9 @@ ln -s libpfm.so %buildroot%_libdir/libpfm64.so
 %_docdir/%name
 
 %changelog
+* Fri Nov 15 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.2.0-alt1
+- Version 5.2.0
+
 * Thu Jul 18 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.1.1-alt1
 - Version 5.1.1
 
