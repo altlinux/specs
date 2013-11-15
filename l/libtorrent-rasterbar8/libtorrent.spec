@@ -10,7 +10,7 @@
 Name: libtorrent-rasterbar%{abiversion}
 Version: 1.0.0
 Epoch: 2
-Release: alt2.svn8186
+Release: alt3.git20130318
 
 Summary: libTorrent is a BitTorrent library written in C++ for *nix
 Group: System/Libraries
@@ -18,6 +18,7 @@ License: GPL
 Url: http://www.rasterbar.com/products/libtorrent
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
+# https://code.google.com/p/libtorrent/
 Source: %name-%version.tar
 
 BuildRequires: libssl-devel
@@ -104,6 +105,7 @@ ln -s $(relative %_licensedir/GPL-2 %_docdir/%name/COPYING) COPYING
 %build
 export LDFLAGS="$LDFLAGS -L/%_lib -lrt"
 %autoreconf
+%add_optflags -DTORRENT_USE_WSTRING
 %configure %{subst_enable static} %{subst_enable debug} --with-boost-libdir=%_libdir \
 	--enable-python-binding
 %make_build V=1
@@ -136,6 +138,9 @@ rm -f %buildroot%_libdir/*.a
 %python_sitelibdir/*.egg-info
 
 %changelog
+* Thu Nov 14 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2:1.0.0-alt3.git20130318
+- New snapshot
+
 * Thu Jul 04 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2:1.0.0-alt2.svn8186
 - New snapshot
 
