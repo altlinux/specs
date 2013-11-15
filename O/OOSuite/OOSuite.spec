@@ -3,8 +3,8 @@ BuildRequires(pre): rpm-build-python
 %define dirs DerApproximator FuncDesigner OpenOpt SpaceFuncs
 
 Name: OOSuite
-Version: 0.45
-Release: alt1.svn20130609
+Version: 0.51
+Release: alt1.svn20131012
 Summary: OpenOpt Suite
 License: BSD
 Group: Sciences/Mathematics
@@ -51,7 +51,7 @@ Requires: python-module-scipy >= 0.8.0
 Requires: python-module-matplotlib
 %py_requires scipy setuptools matplotlib cvxopt
 %py_requires pswarm_py pyipopt pywrapper toms587
-%add_python_req_skip cplex
+%add_python_req_skip cplex knitro mlabwrap
 
 %description -n python-module-openopt
 OpenOpt is a free optimization framework that was created in June of
@@ -238,7 +238,7 @@ touch %buildroot%python_sitelibdir/SpaceFuncs/examples/__init__.py
 %python_sitelibdir/toms587.so
 
 %files -n python-module-openopt
-%doc OpenOpt/COPYING.txt OpenOpt/README.txt
+%doc OpenOpt/COPYING.txt OpenOpt/DOCUMENTATION.html
 %doc OpenOpt/openopt/doc/*
 %python_sitelibdir/openopt*
 %exclude %python_sitelibdir/openopt/tests
@@ -278,6 +278,9 @@ touch %buildroot%python_sitelibdir/SpaceFuncs/examples/__init__.py
 %python_sitelibdir/SpaceFuncs/examples
 
 %changelog
+* Fri Nov 15 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.51-alt1.svn20131012
+- Version 0.51
+
 * Fri Jun 14 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.45-alt1.svn20130609
 - Version 0.45
 
