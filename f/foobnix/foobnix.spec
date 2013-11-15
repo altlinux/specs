@@ -1,6 +1,8 @@
+%define branch 2.6.10
+
 Name: foobnix
-Version: 0.2.3.1
-Release: alt1.qa1.1
+Version: %{branch}q
+Release: alt1
 
 Summary: Music player written in Python, GTK+
 License: GPLv3
@@ -12,10 +14,15 @@ BuildArch: noarch
 
 Requires: python-module-keybinder
 
-Source: %name-%version.tar
+Source: %{name}_%{version}.tar.gz
+
+Patch0: foobnix_2.6.10-MO_DIR.diff
 
 BuildPreReq: %py_dependencies setuptools
-BuildRequires: desktop-file-utils
+
+# Automatically added by buildreq on Fri Nov 15 2013 (-bi)
+# optimized out: python-base python-devel python-modules python-modules-encodings
+BuildRequires: desktop-file-utils python-module-distribute rpm-build-gir
 
 %description
 Music player written in Python, GTK+
@@ -31,19 +38,14 @@ Support:
 More (see at %url )
 
 %prep
-%setup
+%setup -n %name
+%patch0 -p1
 
 %build
-pushd src
 %python_build
 
 %install
-pushd src
 python setup.py install --root=%{buildroot}
-desktop-file-install --dir %buildroot%_desktopdir \
-	--add-category=Audio \
-	--add-category=Player \
-	%buildroot%_desktopdir/foobnix.desktop
 
 %files
 %_bindir/%name
@@ -56,6 +58,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %python_sitelibdir/*.egg-info
 
 %changelog
+* Fri Nov 15 2013 Motsyo Gennadi <drool@altlinux.ru> 2.6.10q-alt1
+- 2.6.10q
+
 * Sat Oct 22 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 0.2.3.1-alt1.qa1.1
 - Rebuild with Python-2.7
 
