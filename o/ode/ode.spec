@@ -1,6 +1,6 @@
 Name: ode
 Version: 0.12
-Release: alt3.svn20130306
+Release: alt3.svn20130810
 Summary: The Open Dynamics Engine (ODE)
 License: LGPLv2.1+
 Group: Graphics
@@ -93,8 +93,8 @@ This package contains demos of ODE.
 touch libccd/NEWS libccd/AUTHORS libccd/ChangeLog
 
 %build
-#./autogen.sh
-%autoreconf
+./bootstrap
+#autoreconf
 %add_optflags -fno-strict-aliasing
 %configure \
 	--enable-shared \
@@ -102,7 +102,8 @@ touch libccd/NEWS libccd/AUTHORS libccd/ChangeLog
 	--enable-double-precision \
 	--disable-asserts \
 	--disable-threading-intf \
-	--disable-ou \
+	--enable-builtin-threading-impl \
+	--enable-ou \
 	--with-drawstuff=X11 \
 	--with-x \
 	--enable-libccd \
@@ -111,6 +112,7 @@ touch libccd/NEWS libccd/AUTHORS libccd/ChangeLog
 	--with-convex-box=libccd \
 	--with-convex-capsule=libccd \
 	--with-convex-cylinder=libccd
+%make_build -C ou/src/ou
 %make_build
 
 %install
@@ -152,6 +154,9 @@ install -p -m644 %SOURCE1 %SOURCE2 \
 %_libdir/%name/
 
 %changelog
+* Fri Nov 15 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.12-alt3.svn20130810
+- New snapshot
+
 * Fri Jul 05 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.12-alt3.svn20130306
 - New snapshot
 
