@@ -1,16 +1,15 @@
-%define module_version 0.93
-%define module_name lib-abs
 # BEGIN SourceDeps(oneline):
-BuildRequires: perl(CPAN.pm) perl(Config.pm) perl(DynaLoader.pm) perl(ExtUtils/MM_Unix.pm) perl(ExtUtils/MakeMaker.pm) perl(ExtUtils/Manifest.pm) perl(Fcntl.pm) perl(File/Basename.pm) perl(File/Find.pm) perl(File/Temp.pm) perl(FileHandle.pm) perl(JSON.pm) perl(LWP/Simple.pm) perl(Module/Build.pm) perl(Net/FTP.pm) perl(Parse/CPAN/Meta.pm) perl(Socket.pm) perl(YAML/Tiny.pm) perl-devel
+BuildRequires(pre): rpm-build-perl
+BuildRequires: perl(CPAN.pm) perl(Config.pm) perl(DynaLoader.pm) perl(ExtUtils/MM_Unix.pm) perl(ExtUtils/MakeMaker.pm) perl(ExtUtils/Manifest.pm) perl(Fcntl.pm) perl(File/Basename.pm) perl(File/Find.pm) perl(File/Temp.pm) perl(FileHandle.pm) perl(JSON.pm) perl(LWP/Simple.pm) perl(Module/Build.pm) perl(Net/FTP.pm) perl(Parse/CPAN/Meta.pm) perl(Socket.pm) perl(YAML/Tiny.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-lib-abs
 Version:        0.93
-Release:        alt2
+Release:        alt2_1
 Summary:        Module lib that makes relative path absolute to caller
-License:        perl
+License:        GPL+ or Artistic
 Group:          Development/Perl
 URL:            http://search.cpan.org/dist/lib-abs/
-Source0:        http://cpan.org.ua/authors/id/M/MO/MONS/%module_name-%module_version.tar.gz
+Source0:        http://www.cpan.org/authors/id/M/MO/MONS/lib-abs-%{version}.tar.gz
 BuildArch:      noarch
 BuildRequires:  perl
 BuildRequires:  perl(inc/Module/Install.pm)
@@ -45,7 +44,7 @@ statement is (caller file). When using common lib, relative paths stays
 relative to current working directory.
 
 %prep
-%setup -n %module_name-%module_version
+%setup -q -n lib-abs-%{version}
 
 %build
 perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
@@ -64,6 +63,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Fri Nov 15 2013 Igor Vlasenko <viy@altlinux.ru> 0.93-alt2_1
+- update to new release by fcimport
+
 * Thu Nov 14 2013 Igor Vlasenko <viy@altlinux.ru> 0.93-alt2
 - moved to Sisyphus (for Catalyst-Runtime update)
 
