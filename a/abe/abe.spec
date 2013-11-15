@@ -3,7 +3,7 @@ BuildRequires: gcc-c++ libICE-devel libSM-devel
 # END SourceDeps(oneline)
 Name:           abe
 Version:        1.1
-Release:        alt5_19
+Release:        alt5_20
 
 Summary:        Scrolling, platform-jumping, ancient pyramid exploring game
 Group:          Games/Other
@@ -11,6 +11,7 @@ License:        GPL+
 URL:            http://abe.sourceforge.net/
 Source0:        http://downloads.sourceforge.net/abe/%{name}-%{version}.tar.gz
 Source1:        %{name}.png
+Source2:        %{name}.appdata.xml
 # Enable changing the video settings.  Sent upstream 2 Apr 2006:
 # https://sourceforge.net/tracker/?func=detail&aid=1463202&group_id=70141&atid=526743
 Patch0:         %{name}-1.1-settings.patch
@@ -54,10 +55,12 @@ make DESTDIR=$RPM_BUILD_ROOT install
 
 # make install does not copy the game data files.
 mkdir -p $RPM_BUILD_ROOT/%{_datadir}/%{name}
+mkdir -p $RPM_BUILD_ROOT/%{_datadir}/appdata/
 mkdir -p $RPM_BUILD_ROOT/%{_datadir}/applications/
 mkdir -p $RPM_BUILD_ROOT/%{_datadir}/pixmaps/
 cp -p -r images maps sounds $RPM_BUILD_ROOT/%{_datadir}/%{name}
 install -p -m 644 %{SOURCE1} $RPM_BUILD_ROOT/%{_datadir}/pixmaps/
+install -p -m 644 %{SOURCE2} $RPM_BUILD_ROOT/%{_datadir}/appdata/
 
 cat << EOF > %{name}.desktop
 [Desktop Entry]
@@ -76,10 +79,14 @@ desktop-file-install --dir $RPM_BUILD_ROOT/%{_datadir}/applications/ %{name}.des
 %doc COPYING README
 %{_bindir}/*
 %{_datadir}/%{name}
+%{_datadir}/appdata/%{name}.appdata.xml
 %{_datadir}/applications/%{name}.desktop
 %{_datadir}/pixmaps/%{name}.png
 
 %changelog
+* Fri Nov 15 2013 Igor Vlasenko <viy@altlinux.ru> 1.1-alt5_20
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 1.1-alt5_19
 - update to new release by fcimport
 
