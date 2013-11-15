@@ -3,7 +3,7 @@ BuildRequires: desktop-file-utils
 
 Name:		fatrat
 Version:	1.1.3
-Release:	alt0.2.%git.qa8
+Release:	alt0.2.%git.qa9
 Summary:	FatRat is an open source download/upload manager
 License: 	GPLv2
 Group: 		Networking/File transfer
@@ -22,7 +22,7 @@ Requires:	libqt4-core
 BuildRequires: ImageMagick-tools cmake gcc-c++ libcurl-devel libgloox-devel libpion-net-devel libqt4-help libqt4-svg libqt4-webkit libqt4-xmlpatterns phonon-devel
 
 BuildRequires: /usr/bin/qcollectiongenerator-qt4
-BuildPreReq: libtorrent-rasterbar7-devel
+BuildPreReq: libtorrent-rasterbar-devel
 
 %description
 FatRat is an open source download manager for Linux
@@ -93,6 +93,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_includedir/%name
 
 %changelog
+* Fri Nov 15 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.3-alt0.2.20110222.qa9
+- Rebuilt with new libtorrent-rasterbar8
+
 * Thu Jul 04 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.3-alt0.2.20110222.qa8
 - Rebuilt with new libtorrent-rasterbar8
 
