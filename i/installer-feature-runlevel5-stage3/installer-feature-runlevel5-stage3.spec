@@ -1,5 +1,5 @@
 Name: installer-feature-runlevel5-stage3
-Version: 0.4
+Version: 0.4.1
 Release: alt1
 
 Summary: Provide a system with graphical boot
@@ -8,7 +8,7 @@ Group: System/Configuration/Other
 
 Url: http://www.altlinux.org/Installer/beans
 BuildArch: noarch
-Requires: /sbin/init
+Requires: /sbin/init startup
 
 %description
 %summary
@@ -26,6 +26,9 @@ rm -f /etc/systemd/system/default.target
 %files
 
 %changelog
+* Sat Nov 16 2013 Michael Shigorin <mike@altlinux.org> 0.4.1-alt1
+- ensure inittab is there (startup is required anyways)
+
 * Mon Nov 19 2012 Michael Shigorin <mike@altlinux.org> 0.4-alt1
 - systemd adaptation (that's called "intuitive" by now probably)
 
