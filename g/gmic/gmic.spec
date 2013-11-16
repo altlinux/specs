@@ -1,7 +1,7 @@
 %define gimpplugindir %(gimptool-2.0 --gimpplugindir)
 
 Name: gmic
-Version: 1.5.3.0
+Version: 1.5.7.2
 Release: alt1
 
 Summary: GREYC's Magic Image Converter
@@ -12,7 +12,7 @@ Url: http://gmic.sourceforge.net/
 
 Source: http://downloads.sourceforge.net/gmic/gmic_%version.tar.gz
 Patch1: gmic-1.4.8.1-bashcompletion.patch
-Patch2: gmic-1.5.3.0-alt-makefile.patch
+Patch2: gmic-1.5.7.2-alt-makefile.patch
 
 Requires: lib%name = %version-%release
 
@@ -74,7 +74,7 @@ multi-spectral image datasets.
 %prep
 %setup -n gmic-%version
 %patch1 -p1
-%patch2
+%patch2 -p1
 subst 's|\$(USR)/lib/|$(USR)/%_lib/|' src/Makefile
 
 %build
@@ -92,6 +92,7 @@ popd
 %files -f %name.lang
 %config /etc/bash_completion.d/*
 %_bindir/%name
+%_man1dir/%name.1.*
 %doc README COPYING
 
 %files -n lib%name
@@ -110,6 +111,9 @@ popd
 %gimpplugindir/plug-ins/*
 
 %changelog
+* Sat Nov 16 2013 Yuri N. Sedunov <aris@altlinux.org> 1.5.7.2-alt1
+- 1.5.7.2
+
 * Mon Jan 28 2013 Yuri N. Sedunov <aris@altlinux.org> 1.5.3.0-alt1
 - 1.5.3.0 (ALT #28117)
 
