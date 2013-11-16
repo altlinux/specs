@@ -1,20 +1,23 @@
 Name: libical
-Version: 0.47
+Version: 1.0
 Release: alt1
+
 Summary: An implementation of basic iCAL protocols
-License: LGPL/MPL
 Group: System/Libraries
+License: LGPL2.1+/MPL
 Url: http://sourceforge.net/projects/freeassociation/
 
 Source: http://ovh.dl.sourceforge.net/sourceforge/freeassociation/%name-%version.tar.gz
+# http://sourceforge.net/p/freeassociation/code/1150/
+Patch: libical-1.0-r1150.patch
 
 BuildRequires: cmake gcc-c++
 
 %description
-Libical is an Open Source implementation of the IETF's iCalendar Calendaring
-and Scheduling protocols (RFC 2445, 2446, and 2447). It parses iCal components
-and provides a C API for manipulating the component properties, parameters,
-and subcomponents
+Libical is an Open Source implementation of the IETF's iCalendar
+Calendaring and Scheduling protocols (RFC 2445, 2446, and 2447).
+It parses iCal components and provides a C API for manipulating the
+component properties, parameters, and subcomponents
 
 %package devel
 Summary: Files for developing applications that use libical
@@ -22,33 +25,23 @@ Requires: %name = %version-%release
 Group: Development/C
 
 %description devel
-The header files and libtool library  for developing applications that use libical
+The header files and libtool library  for developing applications that
+use libical.
 
 %prep
 %setup
+%patch -p1
 
 %build
-%define lib_suffix %nil
-%ifarch x86_64 ppc64
-%define lib_suffix 64
-%endif
-mkdir -p %_target_platform
-pushd %_target_platform
-cmake .. \
-    -DCMAKE_INSTALL_PREFIX:PATH=%prefix \
-    -DCMAKE_BUILD_TYPE:STRING=Release \
-    -DCMAKE_C_FLAGS_RELEASE:STRING='%optflags' \
-    -DCMAKE_CXX_FLAGS_RELEASE:STRING='%optflags' \
-    -DLIB_DESTINATION:PATH=%_lib \
-    -DLIB_SUFFIX=%lib_suffix
-popd
-%make -C %_target_platform
+%autoreconf
+%configure --disable-static
+%make_build
 
 %install
-%make -C %_target_platform DESTDIR=%buildroot install
+%makeinstall_std
 
 %files
-%doc TODO NEWS TEST THANKS
+%doc TODO TEST THANKS
 %_libdir/*.so.*
 
 %files devel
@@ -58,6 +51,9 @@ popd
 %_pkgconfigdir/*.pc
 
 %changelog
+* Sat Nov 16 2013 Yuri N. Sedunov <aris@altlinux.org> 1.0-alt1
+- 1.0
+
 * Sat Nov 12 2011 Valery Inozemtsev <shrek@altlinux.ru> 0.47-alt1
 - 0.47
 
