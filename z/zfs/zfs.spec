@@ -5,7 +5,7 @@
 Name: zfs
 %define lname lib%name
 Version: 0.6.2
-Release: alt16
+Release: alt17
 Summary: ZFS on Linux
 License: GPLv2+
 Group: System/Kernel and hardware
@@ -169,6 +169,9 @@ install -pD -m 0644 {,%kernel_srcdir/}%name-%version.tar.xz
 
 
 %changelog
+* Sat Nov 16 2013 Led <led@altlinux.ru> 0.6.2-alt17
+- upstream updates and fixes
+
 * Tue Nov 12 2013 Led <led@altlinux.ru> 0.6.2-alt16
 - Updated kernel-source-spl requires
 
