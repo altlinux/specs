@@ -1,5 +1,5 @@
 Name: TeXmacs
-Version: 1.0.7.20
+Version: 1.0.7.21
 Release: alt1
 
 Summary: A WYSIWYG mathematical text editor
@@ -142,6 +142,9 @@ install -D -m644 %SOURCE4 %buildroot%_desktopdir/%name.desktop
 
 
 %changelog
+* Sat Nov 15 2013 Ilya Mashkin <oddity@altlinux.ru> 1.0.7.21-alt1
+- 1.0.7.21
+
 * Thu Sep 26 2013 Ilya Mashkin <oddity@altlinux.ru> 1.0.7.20-alt1
 - 1.0.7.20
 
