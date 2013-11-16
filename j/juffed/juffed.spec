@@ -1,6 +1,6 @@
 Name:		juffed
 Version:	0.10
-Release:	alt1
+Release:	alt1.1
 License:	GPL
 Packager:	Andrey Cherepanov <cas@altlinux.org>
 Group:		Editors
@@ -58,6 +58,9 @@ mkdir -p %buildroot/%_libdir/%name/plugins
 %_includedir/%name
 
 %changelog
+* Sat Nov 16 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.10-alt1.1
+- Rebuilt with qscintilla2 2.8
+
 * Wed Jul 31 2013 Andrey Cherepanov <cas@altlinux.org> 0.10-alt1
 - New version
 - Main package includes juffed-plugins and therefore obsoletes separate package

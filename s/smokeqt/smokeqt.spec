@@ -2,7 +2,7 @@
 
 Name: smokeqt
 Version: 4.11.1
-Release: alt1
+Release: alt2
 
 Group: Development/KDE and QT
 Summary: Bindings for Qt libraries
@@ -355,6 +355,12 @@ Qt generic bindings library.
 
 
 %changelog
+* Mon Nov 18 2013 Sergey V Turchin <zerg@altlinux.org> 4.11.1-alt2
+- rebuilt with new libqscintilla2
+
+* Fri Oct 04 2013 Sergey V Turchin <zerg@altlinux.org> 4.11.1-alt0.M70P.1
+- built for M70P
+
 * Mon Sep 09 2013 Sergey V Turchin <zerg@altlinux.org> 4.11.1-alt1
 - new version
 

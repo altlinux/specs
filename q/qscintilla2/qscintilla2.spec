@@ -5,8 +5,8 @@
 
 Summary: QScintilla is a port to Qt of Neil Hodgson's Scintilla C++ editor class
 Name: qscintilla2
-Version: 2.7
-Release: alt3.1
+Version: 2.8
+Release: alt1
 License: GPL
 Group: Development/KDE and QT
 Source: qscintilla-gpl-%version.tar.gz
@@ -14,7 +14,7 @@ Patch: qscintilla-2.4-alt-allinone.patch
 
 Url: http://www.riverbankcomputing.co.uk/software/qscintilla/
 
-%define suff 8
+%define suff 11
 %define libname lib%{name}-%{suff}
 
 # Automatically added by buildreq on Sun Oct 12 2008
@@ -193,7 +193,7 @@ Documentation for %name
 
 %prep
 %setup -n QScintilla-gpl-%version
-%patch0 -p2
+#patch0 -p2
 ln -s Qt4Qt5 Qt4
 cp -a Python Python-qt4
 %if_with python3
@@ -237,7 +237,7 @@ forDebug
 popd
 
 # Designer for Qt4
-pushd designer-Qt4
+pushd designer-Qt4Qt5
 qmake-qt4 QMAKE_CFLAGS_RELEASE="%optflags" \
 	QMAKE_CXXFLAGS_RELEASE="%optflags" designer.pro
 forDebug
@@ -260,7 +260,8 @@ cp -fR Qt4Qt5 ../
 
 # Python bindings for PyQt4
 pushd Python-qt4
-python configure.py --debug -p 4 -n ../Qt4Qt5 -o ../Qt4Qt5
+python configure.py --debug -n ../Qt4Qt5 -o ../Qt4Qt5 \
+	--qmake=%_qt4dir/bin/qmake
 %make_build
 popd
 
@@ -269,7 +270,7 @@ pushd ../python3
 python3 configure.py \
 	--apidir=%_datadir/qt4/qsci3 \
 	--sipdir=%_datadir/sip3/PyQt4 \
-	--debug -p 4 -n ../Qt4Qt5 -o ../Qt4Qt5
+	--debug -n ../Qt4Qt5 -o ../Qt4Qt5
 sed -i \
 	's|-lpython%_python3_version|-lpython%{_python3_version}mu|g' \
 	Makefile
@@ -297,7 +298,7 @@ mkdir -p %buildroot%python3_sitelibdir/PyQt4
 popd
 %endif
 pushd Python-qt4
-%makeinstall_std
+%makeinstall_std INSTALL_ROOT=%buildroot
 popd
 %endif
 
@@ -325,9 +326,9 @@ popd
 install Qt4Qt5/lib%name.so.*.*.* %buildroot%_libdir
 install Qt4Qt5/*.qm %buildroot%_qt4dir/translations
 pushd %buildroot%_libdir
-ln -s lib%name.so.*.*.* `ls lib%name.so.*.*.* | sed s/\.[0-9]$//`
-ln -s lib%name.so.*.*.* `ls lib%name.so.*.*.* | sed s/\.[0-9]\.[0-9]$//`
-ln -s lib%name.so.*.*.* `ls lib%name.so.*.*.* | sed s/\.[0-9]\.[0-9]\.[0-9]$//`
+ln -s lib%name.so.*.*.* `ls lib%name.so.*.*.* | sed s/\.[0-9]*$//`
+ln -s lib%name.so.*.*.* `ls lib%name.so.*.*.* | sed s/\.[0-9]*\.[0-9]*$//`
+ln -s lib%name.so.*.*.* `ls lib%name.so.*.*.* | sed s/\.[0-9]*\.[0-9]*\.[0-9]*$//`
 popd
 pushd %buildroot%_qt4dir/lib
 for libname in ../../lib%name.*; do
@@ -341,7 +342,7 @@ install designer-Qt3/libqscintillaplugin.so %buildroot%_qt3dir/plugins/designer
 %endif
 
 # Qt4 designer
-install designer-Qt4/libqscintillaplugin.so %buildroot%_qt4dir/plugins/designer
+install designer-Qt4Qt5/libqscintillaplugin.so %buildroot%_qt4dir/plugins/designer
 
 # Qt3 headers
 %if_with qt3
@@ -406,7 +407,7 @@ chrpath -d %buildroot%python_sitelibdir/PyQt4/Qsci.so
 
 %files -n python-module-%name-qt4
 %python_sitelibdir/PyQt4/Qsci.so
-%_datadir/qt4/qsci/api/python/*.api
+%_datadir/qt4/api/python/*.api
 
 %files -n python-module-%name-qt4-devel
 %_datadir/sip/PyQt4/Qsci
@@ -426,6 +427,9 @@ chrpath -d %buildroot%python_sitelibdir/PyQt4/Qsci.so
 %_docdir/%libname-%version
 
 %changelog
+* Sat Nov 16 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.8-alt1
+- Version 2.8
+
 * Tue Apr 16 2013 Andrey Cherepanov <cas@altlinux.org> 2.7-alt3.1
 - Remove standard library path from RPATH
 
