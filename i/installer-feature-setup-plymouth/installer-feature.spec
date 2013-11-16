@@ -1,5 +1,5 @@
 Name: installer-feature-setup-plymouth
-Version: 0.5.1
+Version: 0.5.2
 Release: alt1
 
 Summary: Set up plymouth
@@ -24,6 +24,10 @@ install -pm755 *.sh %buildroot%hookdir/
 %hookdir/*
 
 %changelog
+* Sat Nov 16 2013 Michael Shigorin <mike@altlinux.org> 0.5.2-alt1
+- do use plymouth with sysvinit at least for m-p
+  (partially reverts 0.5-alt1)
+
 * Thu Apr 18 2013 Mikhail Efremov <sem@altlinux.org> 0.5.1-alt1
 - Disable plymouth if root on luks only.
 
