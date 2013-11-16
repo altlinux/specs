@@ -1,6 +1,7 @@
+%define _unpackaged_files_terminate_build 1
 %define dist IPC-Cmd
 Name: perl-%dist
-Version: 0.86
+Version: 0.88
 Release: alt1
 
 Summary: Finding and running system commands made easy
@@ -33,6 +34,9 @@ interactively if desired, but have them still work.
 %perl_vendor_privlib/IPC
 
 %changelog
+* Sat Nov 16 2013 Igor Vlasenko <viy@altlinux.ru> 0.88-alt1
+- automated CPAN update
+
 * Wed Nov 06 2013 Igor Vlasenko <viy@altlinux.ru> 0.86-alt1
 - automated CPAN update
 
