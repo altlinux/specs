@@ -3,8 +3,8 @@
 %define origname gimp-lqr-plugin
 
 Name: gimp-plugin-lqr
-Version: 0.7.0
-Release: alt1.qa1
+Version: 0.7.2
+Release: alt1
 
 Packager: Victor Forsiuk <force@altlinux.org>
 
@@ -15,18 +15,18 @@ Group: Graphics
 Url: http://liquidrescale.wikidot.com
 Source: %url/local--files/en:download-page-sources/%origname-%version.tar.bz2
 
-# Automatically added by buildreq on Mon Jul 13 2009
-BuildRequires: intltool libgimp-devel liblqr-devel
+%define gimp_ver 2.8
+%define lqr_ver 0.4.2
 
-BuildRequires: liblqr-devel >= 0.4.1
+Requires: gimp >= 2.8
 
-Requires: gimp
+BuildRequires: intltool libgimp-devel >= %gimp_ver liblqr-devel >= %lqr_ver
 
 %description
 Liquid Rescale GIMP plugin aims at resizing pictures non uniformly while
-preserving their features, i.e. avoiding distortion of the important parts. It
-supports manual feature selection, and can also be used to remove portions of
-the picture in a consistent way.
+preserving their features, i.e. avoiding distortion of the important
+parts. It supports manual feature selection, and can also be used to
+remove portions of the picture in a consistent way.
 
 %prep
 %setup -n %origname-%version
@@ -45,6 +45,9 @@ the picture in a consistent way.
 %gimpdatadir/scripts/*
 
 %changelog
+* Sat Nov 16 2013 Yuri N. Sedunov <aris@altlinux.org> 0.7.2-alt1
+- 0.7.2
+
 * Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.7.0-alt1.qa1
 - NMU: rebuilt for debuginfo.
 
