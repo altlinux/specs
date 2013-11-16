@@ -7,7 +7,7 @@
 %def_enable introspection
 
 Name: evince
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: A document viewer
@@ -131,7 +131,7 @@ subst '/NoDisplay/d' %buildroot%_desktopdir/%name.desktop
 %_desktopdir/%name-previewer.desktop
 
 %_datadir/dbus-1/services/org.gnome.evince.Daemon.service
-%_datadir/%name
+%_datadir/%name/
 %_datadir/GConf/gsettings/evince.convert
 %_datadir/glib-2.0/schemas/org.gnome.Evince.gschema.xml
 %_datadir/thumbnailers/evince.thumbnailer
@@ -168,6 +168,9 @@ subst '/NoDisplay/d' %buildroot%_desktopdir/%name.desktop
 %exclude %_libdir/nautilus/extensions-3.0/libevince-properties-page.la
 
 %changelog
+* Sat Nov 16 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.3-alt1
+- 3.10.3
+
 * Mon Nov 11 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.2-alt1
 - 3.10.2
 
