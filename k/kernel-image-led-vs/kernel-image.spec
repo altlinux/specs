@@ -25,7 +25,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.10.19
-Release: alt3
+Release: alt4
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -1836,6 +1836,10 @@ done)
 
 
 %changelog
+* Sat Nov 16 2013 Led <led@altlinux.ru> 3.10.19-alt4
+- updated:
+  + feat-drivers-block--btier
+
 * Thu Nov 14 2013 Led <led@altlinux.ru> 3.10.19-alt3
 - updated:
   + fix-drivers-char--ttyprintk
