@@ -1,6 +1,6 @@
 Name: grub2
 Version: 2.00
-Release: alt16
+Release: alt17
 
 Summary: GRand Unified Bootloader
 License: GPL
@@ -382,6 +382,9 @@ grub-efi-autoupdate || {
 } >&2
 
 %changelog
+* Sat Nov 16 2013 Michael Shigorin <mike@altlinux.org> 2.00-alt17
+- updated grub-2.00-os-alt.patch for 2.00 (closes: #29583)
+
 * Thu Oct 31 2013 Michael Shigorin <mike@altlinux.org> 2.00-alt16
 - 39_memtest: warning goes to stderr now and not into grub.cfg
 
