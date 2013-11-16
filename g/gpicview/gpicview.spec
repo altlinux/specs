@@ -1,5 +1,7 @@
+%def_disable gtk3
+
 Name: gpicview
-Version: 0.2.3
+Version: 0.2.4
 Release: alt1
 
 Summary: A simple and fast image viewer with low memory usage
@@ -14,6 +16,7 @@ Source: http://downloads.sourceforge.net/lxde/gpicview-%version.tar.gz
 Requires: xdg-utils
 
 BuildRequires: intltool libgtk+2-devel libjpeg-devel
+%{?_enable_gtk3:BuildRequires: libgtk+3-devel}
 
 %description
 GPicView is a simple and fast image viewer with low memory usage. It's aimed at
@@ -28,23 +31,25 @@ XP image viewer and gimmage.
 %setup
 
 %build
-%configure
+%configure %{subst_enable gtk3}
 %make_build
 
 %install
 %makeinstall_std
-install -pD -m644 gpicview.png %buildroot%_liconsdir/gpicview.png
+install -pD -m644 %name.png %buildroot%_liconsdir/%name.png
 
 %find_lang %name
 
 %files -f %name.lang
 %_bindir/*
-%_datadir/gpicview
-%_pixmapsdir/*
+%_datadir/gpicview/
 %_liconsdir/*
 %_desktopdir/*
 
 %changelog
+* Sat Nov 16 2013 Yuri N. Sedunov <aris@altlinux.org> 0.2.4-alt1
+- 0.2.4
+
 * Tue Dec 04 2012 Yuri N. Sedunov <aris@altlinux.org> 0.2.3-alt1
 - 0.2.3
 
