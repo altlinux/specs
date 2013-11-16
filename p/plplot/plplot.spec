@@ -3,8 +3,8 @@
 
 Name: plplot
 %define fmoddir %_libdir/fortran/modules/%name
-Version: 5.9.9
-Release: alt5.svn20130315
+Version: 5.9.10
+Release: alt1.svn20131115
 Summary: Scientific graphics plotting library, supporting multiple languages
 License: LGPL v2 or later
 Group: Graphics
@@ -31,7 +31,9 @@ BuildPreReq: liblua5-devel qt4-devel libcairo-devel
 BuildPreReq: python-module-PyQt4-devel sgml-common lua5 libpixman-devel
 BuildPreReq: OpenSP fonts-ttf-freefont libopal-devel
 BuildPreReq: python-module-sip-devel /proc glproto libXdmcp-devel
-BuildPreReq: libXdamage-devel libXxf86vm-devel
+BuildPreReq: libXdamage-devel libXxf86vm-devel libshape-devel
+BuildPreReq: libexpat-devel xmlto doxygen libharfbuzz-devel
+BuildPreReq: fonts-ttf-freefont
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel libnumpy-py3-devel python-tools-2to3
@@ -318,7 +320,6 @@ sed -i 's|@LIBDIR@|%buildroot%_libdir|' \
 rm -rf ../python3
 cp -a . ../python3
 %endif
-
 %build
 %if_with python3
 pushd ../python3
@@ -389,11 +390,6 @@ install -m755 scripts/plm2gif scripts/plpr \
 rm -fR %buildroot%_docdir/%name \
 	%buildroot%_datadir/%name%version/examples/test_octave_interactive.sh
 
-install -d %buildroot%_man3dir
-mv %buildroot%buildroot%_man3dir/* %buildroot%_man3dir/
-install -d %buildroot%_infodir
-mv %buildroot%buildroot%_infodir/* %buildroot%_infodir/
-
 %files
 %doc AUTHORS COPYING* ChangeLog* Copyright FAQ NEWS PROBLEMS
 %doc README* SERVICE ToDo
@@ -407,10 +403,10 @@ mv %buildroot%buildroot%_infodir/* %buildroot%_infodir/
 %_man1dir/plpr.1*
 %_infodir/*
 
-#%if_enabled docs
-#%files doc
-#%doc doc/doxygen/html/*
-#%endif
+%if_enabled docs
+%files doc
+%doc doc/doxygen/html/*
+%endif
 
 %files -n python-module-%name
 %python_sitelibdir/*
@@ -538,8 +534,10 @@ mv %buildroot%buildroot%_infodir/* %buildroot%_infodir/
 %_datadir/plplot%version/examples/tcl/
 %_datadir/plplot%version/examples/tk/
 %_datadir/plplot%version/tcl/
+%_datadir/plplot%version/*.tcl
+%_datadir/plplot%version/*.sh?
 %_datadir/plplot%version/*.fnt
-%_datadir/plplot%version/*.map
+#_datadir/plplot%version/*.map
 %_datadir/plplot%version/*.pal
 %_datadir/plplot%version/examples/lena.pgm
 %_datadir/plplot%version/examples/plplot-test.sh
@@ -577,6 +575,9 @@ mv %buildroot%buildroot%_infodir/* %buildroot%_infodir/
 %_pkgconfigdir/plplotd-wxwidgets.pc
 
 %changelog
+* Fri Nov 15 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.9.10-alt1.svn20131115
+- Version 5.9.10
+
 * Fri Jul 19 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.9.9-alt5.svn20130315
 - New snapshot
 
