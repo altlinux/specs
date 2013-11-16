@@ -1,16 +1,17 @@
+%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(Exporter.pm) perl(overload.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Set-Scalar
-Version:        1.25
-Release:        alt2_11
+Version:        1.26
+Release:        alt1
 Summary:        Basic set operations
 
 Group:          Development/Perl
 License:        GPL+ or Artistic
 URL:            http://search.cpan.org/dist/Set-Scalar/
-Source0:        http://www.cpan.org/authors/id/J/JH/JHI/Set-Scalar-%{version}.tar.gz
+Source:        http://www.cpan.org/authors/id/D/DA/DAVIDO/Set-Scalar-%{version}.tar.gz
 
 BuildArch:      noarch
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
@@ -46,6 +47,9 @@ make test
 
 
 %changelog
+* Sat Nov 16 2013 Igor Vlasenko <viy@altlinux.ru> 1.26-alt1
+- automated CPAN update
+
 * Thu Nov 14 2013 Igor Vlasenko <viy@altlinux.ru> 1.25-alt2_11
 - Sisyphus build
 
