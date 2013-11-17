@@ -1,5 +1,5 @@
 Name: tar
-Version: 1.27
+Version: 1.27.1
 Release: alt1
 
 Summary: A GNU file archiving program
@@ -59,6 +59,9 @@ install -pm644 doc/tar.1 %buildroot%_man1dir/
 %doc AUTHORS NEWS README THANKS TODO
 
 %changelog
+* Sun Nov 17 2013 Dmitry V. Levin <ldv@altlinux.org> 1.27.1-alt1
+- Updated to 1.27.1.
+
 * Tue Oct 22 2013 Dmitry V. Levin <ldv@altlinux.org> 1.27-alt1
 - Updated to 1.27.
 - Built with gnulib v0.0-8061-g5191b35.
