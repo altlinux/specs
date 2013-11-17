@@ -8,7 +8,7 @@
 
 Name: musl
 Version: 0.9.14
-Release: alt22
+Release: alt23
 Group: System/Libraries
 Summary: musl libc - new standard library
 License: MIT
@@ -122,6 +122,9 @@ echo "%musl_dir/lib" > %buildroot%_sysconfdir/ld.so.conf.d/%name-%_lib.conf
 
 
 %changelog
+* Sun Nov 17 2013 Led <led@altlinux.ru> 0.9.14-alt23
+- fixed getgrnam_r() and getgrgid_r()
+
 * Thu Nov 14 2013 Led <led@altlinux.ru> 0.9.14-alt22
 - fixed soname
 
