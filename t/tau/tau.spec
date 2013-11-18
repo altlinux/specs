@@ -2,8 +2,8 @@
 %define mpidir %_libdir/%mpiimpl
 
 Name: tau
-Version: 2.22.2
-Release: alt2
+Version: 2.23
+Release: alt1
 Summary: TAU Portable Profiling Package
 License: BSD-like
 Group: Development/Tools
@@ -26,7 +26,7 @@ BuildRequires(pre): rpm-build-java rpm-build-python
 BuildPreReq: java-devel-default libgmp-devel gcc-c++ gcc-fortran
 BuildPreReq: openpdt libopenpdt-devel libpapi-devel chrpath
 BuildPreReq: jflex postgresql-devel libscalasca-devel binutils-devel
-BuildPreReq: libgomp-devel libotf-devel zlib-devel google-gson
+BuildPreReq: libgomp-devel libotf2-devel zlib-devel google-gson
 BuildPreReq: libstdc++-devel python-devel mysql-connector-java
 BuildPreReq: jfreechart jcommon swing-layout postgresql-jdbc xerces-j2 junit
 BuildPreReq: libcube-devel opari2-devel
@@ -147,7 +147,6 @@ This package contains java libraries of TAU Portable Profiling Package.
 %prep
 %setup
 %ifarch x86_64
-sed -i -e 's/^BITS.*/BITS = 64/' src/Profile/Makefile
 sed -i 's|lib/libpdb\.a|lib64/libpdb.a|g' utils/Makefile
 %endif
 
@@ -176,8 +175,7 @@ export BUILDROOT=%buildroot
 	-CPUTIME -MULTIPLECOUNTERS \
 	-useropt="%optflags %optflags_shared -I$PWD/include -fno-strict-aliasing" \
 	-opari=%prefix -MPITRACE \
-	-openmp \
-	-extrashlibopts="-Wl,-rpath,%mpidir/lib -L%mpidir/lib -lmpi -lgomp"
+	-extrashlibopts="-Wl,-rpath,%mpidir/lib -L%mpidir/lib -lmpi"
 
 export BUILDROOTLIB=%buildroot%_libexecdir
 export BUILDROOT=%buildroot
@@ -209,8 +207,6 @@ install -d %buildroot%_libdir
 mv %buildroot%_libexecdir/* %buildroot%_libdir/
 %endif
 
-install -d %buildroot%_sysconfdir
-mv %buildroot%prefix/etc/* %buildroot%_sysconfdir/
 mv %buildroot%prefix/tools/src/perfdmf/etc/* %buildroot%_sysconfdir/
 rm -f %buildroot%_bindir/*.ini %buildroot%_includedir/Makefile \
 	%buildroot%_sysconfdir/*.py
@@ -305,8 +301,16 @@ sed -i 's|%buildroot||g' %buildroot%_includedir/*.h \
 for i in %buildroot%_libdir/*; do
 	chrpath -r %mpidir/lib $i || chrpath -d $i ||:
 done
+pushd %buildroot%_bindir
+for i in tau2otf2 tau_convert
+do
+	chrpath -d $i
+done
+popd
 rm -f %buildroot%_libdir/*/*.so %buildroot%_bindir/tau_ebs2otf.pl \
 	%buildroot%_bindir/opari2*
+rm -f %buildroot%_bindir/tau2otf
+ln -s %_bindir/tau2otf2 %buildroot%_bindir/tau2otf
 
 %files
 %doc README COPYRIGHT LICENSE CREDITS
@@ -395,6 +399,9 @@ rm -f %buildroot%_libdir/*/*.so %buildroot%_bindir/tau_ebs2otf.pl \
 %exclude %_javadir/jargs.jar
 
 %changelog
+* Mon Nov 18 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.23-alt1
+- Version 2.23
+
 * Tue Sep 10 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.22.2-alt2
 - Rebuilt with new scalasca
 
