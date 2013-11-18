@@ -1,6 +1,6 @@
 Name: hugs98
 Version: 20060921
-Release: alt5.qa1
+Release: alt5.qa2
 
 %define real_version Sep2006
 
@@ -111,6 +111,9 @@ __EOF__
 %_desktopdir/%name.desktop
 
 %changelog
+* Tue Nov 05 2013 Gleb F-Malinovskiy <glebfm@altlinux.org> 20060921-alt5.qa2
+- NMU: rebuilt with readline6.
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 20060921-alt5.qa1
 - NMU: rebuilt for debuginfo.
 
