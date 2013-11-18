@@ -1,6 +1,6 @@
 Name:           weston
-Version:        1.2.0
-Release:        alt2
+Version:        1.3.1
+Release:        alt1
 Summary:        Reference compositor for Wayland
 Group:          Graphical desktop/Other
 License:        BSD and CC-BY-SA
@@ -73,7 +73,7 @@ Header and Library files for doing development with the weston.
 	--enable-wayland-compositor \
 	--enable-headless-compositor \
 	--enable-fbdev-compositor \
-	--with-cairo-glesv2
+	--without-cairo-glesv2
 
 %make_build
 
@@ -109,6 +109,9 @@ find %buildroot -name \*.la | xargs rm -f
 %_pkgconfigdir/weston.pc
 
 %changelog
+* Mon Nov 18 2013 Alexey Gladkov <legion@altlinux.ru> 1.3.1-alt1
+- Version (1.3.1).
+
 * Wed Jul 17 2013 Alexey Gladkov <legion@altlinux.ru> 1.2.0-alt2
 - Add missing directory.
 - Remove unnecessary requires.
