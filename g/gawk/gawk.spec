@@ -1,6 +1,6 @@
 Name: gawk
 Version: 4.1.0
-Release: alt1
+Release: alt2
 
 %def_with doc
 %define _libexecdir %prefix/libexec
@@ -98,6 +98,9 @@ install -pm644 AUTHORS NEWS POSIX.STD README \
 %endif
 
 %changelog
+* Mon Nov 18 2013 Dmitry V. Levin <ldv@altlinux.org> 4.1.0-alt2
+- Rebuilt with libreadline.so.6.
+
 * Sun Nov 17 2013 Dmitry V. Levin <ldv@altlinux.org> 4.1.0-alt1
 - Updated to gawk-4.1.0-104-g733c869.
 
