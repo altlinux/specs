@@ -22,8 +22,8 @@
 %define kdevelop_other kdevelop%{pkg_sfx_other}
 
 Name: %kdevplatform
-Version: 1.5.1
-Release: alt1.git
+Version: 1.5.2
+Release: alt1
 Serial: 1
 
 Group: Development/Tools
@@ -60,7 +60,6 @@ like KDevelop or Quanta
 %package libs
 Summary: Commonly used KDevelop Platform libraries
 Group: Development/Tools
-Requires: kde4libs >= %{get_version kde4libs}
 
 Conflicts: %{kdevplatform_other}-libs
 # Only stable package replaces unstable counterpart
@@ -218,7 +217,8 @@ kdevexecute kdevexecutescript kdevfilemanager kdevgenericprojectmanager \
 kdevprojectdashboard kdevvcsprojectintegration kdevgrepview kdevkonsole \
 kdevpatchreview kdevplatform kdevproblemreporter kdevprojectmanagerview \
 kdevquickopen kdevsnippet kdevstandardoutputview kdevexternalscript \
-kdevcodeutils kdevopenwith kdevpastebin kdevreviewboard
+kdevcodeutils kdevopenwith kdevpastebin kdevreviewboard \
+kdevfiletemplates kdevswitchtobuddy kdevtemplates_config kdevtestview
 do
     %K4find_lang --output=%name.lang --with-kde --append $m
 done
@@ -233,7 +233,7 @@ done
 %exclude %_K4lib/kdevsubversion.so
 %exclude %_K4lib/kdevgit.so
 %exclude %_K4lib/kdevcvs.so
-%_libdir/grantlee/*/*.so
+%_K4plug/grantlee/*/*.so
 %_K4lib/imports/org/kde/kdevplatform
 %_K4apps/kdevcodeutils
 %_K4apps/kdevexternalscript
@@ -340,6 +340,14 @@ done
 %_K4link/lib*.so
 
 %changelog
+* Thu Nov 14 2013 Alexey Morozov <morozov@altlinux.org> 1:1.5.2-alt1
+- v1.5.2
+- Translations merged with upstream (A.Lakhin's translations)
+
+* Sat Jun 29 2013 Alexey Morozov <morozov@altlinux.org> 1:1.5.1-alt2.git
+- new git post-1.5.1 snapshot (a9dae127f922267bdbb062fd58b05c715906d9eb)
+- Removed versioned dependency on kdelibs as Repocop suggested
+
 * Thu Jun  6 2013 Alexey Morozov <morozov@altlinux.org> 1:1.5.1-alt1.git
 - new git post-1.5.1 snapshot (515fd3c06b26188a170ab6346c76ffd61c05fdb5,
   one commit after 1.5.1 release)

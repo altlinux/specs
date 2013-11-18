@@ -1,6 +1,6 @@
 %define _unpackaged_files_terminate_build 1
 %define unstable 0
-%define post_version 1
+%define post_version 0
 
 %define build_req_kde_ver 4.6.0
 %define build_req_kdevplatform_ver 1.5.0
@@ -27,8 +27,8 @@
 %define kdevelop_pg_qt kdevelop-pg-qt
 
 Name: %kdevelop-for-php
-Version: 1.5.1
-Release: alt1.git
+Version: 1.5.2
+Release: alt1
 Serial: 3
 
 Summary: PHP Language Plugin for KDevelop/Quanta.
@@ -86,6 +86,9 @@ EOF
 %install
 %K4install
 
+# remove all desktop_extragear-* translations, zerg@ told they aren't needed at all
+find %buildroot -name 'desktop_extragear*.mo' -exec rm {} \;
+
 %K4find_lang --output=%name.lang --with-kde          kdevphp
 %K4find_lang --output=%name.lang --with-kde --append kdevphpdocs
 
@@ -102,6 +105,9 @@ EOF
 %_K4srv/*
 
 %changelog
+* Fri Nov 15 2013 Alexey Morozov <morozov@altlinux.org> 3:1.5.2-alt1
+- v1.5.2
+
 * Fri Jun  7 2013 Alexey Morozov <morozov@altlinux.org> 3:1.5.1-alt1.git
 - v1.5.1 release
 

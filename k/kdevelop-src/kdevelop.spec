@@ -1,10 +1,10 @@
-Version: 4.5.1
-Release: alt1
+Version: 4.5.2
+Release: alt1.git
 Serial: 3
 
 %define _unpackaged_files_terminate_build 1
 %define unstable 0
-%define post_version 0
+%define post_version 1
 %define with_api_docs 0
 %def_enable okteta
 # from the Project's CMakeLists.txt
@@ -47,8 +47,9 @@ Also it has modules (packaged separately) for PHP, Python, Valgrind\
 and other programming languages and development tools.
 
 # this should be oneliner :/
-%define req_normal %kdevelop-mini = %serial:%version-%release %kdevelop-for-debug = %serial:%version-%release %kdevplatform-subversion >= %build_req_kdeplatform_min %kdevplatform-git >= %build_req_kdeplatform_min 
+%define req_normal %kdevelop-mini = %serial:%version-%release %kdevelop-for-debug = %serial:%version-%release %kdevplatform-subversion >= %build_req_kdeplatform_min %kdevplatform-git >= %build_req_kdeplatform_min %kdevelop-kde-integration = %serial:%version-%release
 %define req_normal_features \
+  * KDE Plasma integration \
   * debug module \
   * module for Subversion support \
   * module for Git support
@@ -144,7 +145,6 @@ Conflicts: kdevelop-unstable-common
 %package -n %kdevelop-mini
 Group: Development/Tools
 Summary:  A KDE-centric IDE - normal installation
-Requires: kde4libs >= %{get_version kde4libs}
 Requires: %kdevplatform >= %build_req_kdeplatform_min
 Requires: %kdevelop-libs = %serial:%version-%release
 Requires: gcc gcc-c++
@@ -172,7 +172,6 @@ It provides only basic set of features and extensions modules.
 %package -n %kdevelop-libs
 Group: Development/Other
 Summary: Base libraries for KDevelop
-Requires: kde4libs >= %{get_version kde4libs}
 Requires: kde-common >= 4
 Requires: %kdevplatform-libs >= %build_req_kdeplatform_min
 Conflicts: kdevelop <= 3.0.2-alt0.2
@@ -236,6 +235,16 @@ by depending on other KDevelop-related packages.
 Besides an usual KDevelop features it provides the following
 list of modules: %req_big_features
 
+%package -n %kdevelop-kde-integration
+Summary: A KDE-centric IDE - modules for Plasma
+Group: Development/Tools
+Conflicts: %{kdevelop_other}-kde-integration
+%description -n %kdevelop-kde-integration
+%desc_common
+
+This package provides modules to integrate KDevelop
+into KDE Plasma.
+
 %package -n %kdevelop-for-debug
 Group: Development/Debug
 Summary: KDevelop module for debugging
@@ -278,7 +287,6 @@ Requires: kde4sdk-kapptemplate
 Requires: kde4libs-devel kde4pimlibs-devel kde4base-runtime-devel kde4base-workspace-devel kde4base-devel
 Requires: kde4multimedia-devel kde4graphics-devel kde4network-devel
 BuildArch: noarch
-# kde4libs-apidocs kde4graphics-kiconedit
 
 Conflicts: %{kdevelop_other}-for-kde
 # Only stable package replaces unstable counterpart
@@ -365,14 +373,17 @@ chmod -x %buildroot%_K4xdg_apps/*
 # remove all desktop_extragear-* translations, zerg@ told they aren't needed at all
 find %buildroot -name 'desktop_extragear*.mo' -exec rm {} \;
 
-%K4find_lang --output=%name.lang --with-kde          kdevelop
+%K4find_lang --output=%name-mini.lang --with-kde          kdevelop
 for m in \
 kdevcmakebuilder kdevcmake kdevcpp kdevcustommake kdevformatters \
- kdevmakebuilder kdevelopsessions kdevmanpage plasma_runner_kdevelopsessions \
+ kdevmakebuilder kdevelopsessions kdevmanpage \
  kdevcustombuildsystem
 do
-    %K4find_lang --output=%name.lang --with-kde --append $m
+    %K4find_lang --output=%name-mini.lang --with-kde --append $m
 done
+
+%K4find_lang --output=%{name}-kde-integration.lang --with-kde  kdevexecuteplasmoid \
+	plasma_applet_kdevelopsessions plasma_runner_kdevelopsessions
 
 %if_enabled okteta
 %K4find_lang --output=kdevokteta.lang --with-kde kdevokteta
@@ -382,9 +393,20 @@ done
 
 %K4find_lang --output=kdevgdb.lang --with-kde kdevgdb
 
+%K4find_lang --output=kdevlibs.lang --with-kde kdevkdeprovider
+
 %files -n %kdevelop
 %files -n %kdevelop-maxi
 %files -n %kdevelop-big
+
+%files -n %kdevelop-kde-integration -f %name-kde-integration.lang
+%_K4apps/plasma
+%_K4lib/kdevexecuteplasmoid.so
+%_K4srv/kdevexecuteplasmoid.desktop
+%_K4lib/krunner_kdevelopsessions.so
+%_K4lib/plasma_engine_kdevelopsessions.so
+%_K4srv/plasma-*.desktop
+
 %files -n %kdevelop-for-debug -f kdevgdb.lang
 %_K4lib/kdevgdb.so
 %_K4apps/kdevgdb
@@ -404,7 +426,7 @@ done
 %_K4apps/kdevfiletemplates/templates/cpp_qtestlib_kdevelop.tar.bz2
 %_K4conf/kdevelop-qthelp.knsrc
 
-%files -n %kdevelop-mini -f %name.lang
+%files -n %kdevelop-mini -f %name-mini.lang
 %doc AUTHORS NEWS README HACKING TODO
 %_K4bindir/kdevelop
 %_K4bindir/kdevelop!
@@ -417,8 +439,6 @@ done
 %_K4lib/kcm_kdevcustombuildsystem.so
 %_K4lib/kdevcustombuildsystem.so
 
-%_K4lib/kdevexecuteplasmoid.so
-
 %_K4lib/kdevcpplanguagesupport.so
 %_K4lib/kdevcustommakemanager.so
 %_K4lib/kdevmakebuilder.so
@@ -426,21 +446,20 @@ done
 %_K4lib/kdevcustomscript.so
 %_K4lib/kdevmanpage.so
 %_K4lib/kdevcmakedocumentation.so
-%_K4lib/krunner_kdevelopsessions.so
-%_K4lib/plasma_engine_kdevelopsessions.so
 %_K4srv/*.desktop
 %exclude %_K4srv/kdevqthelp*.desktop
 %if_enabled okteta
 %exclude %_K4srv/kdevokteta*.desktop
 %endif
 %exclude %_K4srv/kdevgdb.desktop
+%exclude %_K4srv/kdevexecuteplasmoid.desktop
+%exclude %_K4srv/plasma-*.desktop
 
 %_K4apps/kdevcmakebuilder
 %_K4apps/kdevcmakemanager
 %_K4apps/kdevcustommakemanager
 %_K4apps/kdevelop
 %_K4apps/kdevcppsupport
-%_K4apps/plasma
 %dir %_K4apps/kdevappwizard
 %dir %_K4apps/kdevappwizard/templates
 %_K4apps/kdevappwizard/templates/cmake_plaincpp.tar.bz2
@@ -461,7 +480,7 @@ done
 %_K4iconsdir/hicolor/*/*/*.*
 %_K4xdg_mime/kdevelop.xml
 
-%files -n %kdevelop-libs
+%files -n %kdevelop-libs -f kdevlibs.lang
 %_K4lib/kdevkdeprovider.so
 %_K4libdir/libkdev4cmakecommon.so
 %_K4libdir/libkdev4cppduchain.so
@@ -487,6 +506,12 @@ done
 %_K4apps/kdevfiletemplates/templates/python_*.tar.bz2
 
 %changelog
+* Fri Nov 15 2013 Alexey Morozov <morozov@altlinux.org> 3:4.5.2-alt1.git
+- v4.5.2 release plus 39618b4daa45b9feed88a54789c301ae75f7bb63 commit
+- Translations merged and siglhtly modified
+- Spec is cleared from excessive versioned dependencies as Repocop suggests
+- Plasma-specific modules are packaged separately (in %kdevelop-kde-integration)
+
 * Fri Jun  7 2013 Alexey Morozov <morozov@altlinux.org> 3:4.5.1-alt1
 - v4.5.1 release
 
