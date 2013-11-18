@@ -3,7 +3,7 @@
 %def_disable snapshot
 
 Name: libglibmm
-Version: %major.0
+Version: %major.1
 Release: alt1
 
 Summary: C++ wrapper for GLib
@@ -95,6 +95,9 @@ mm-common-prepare --force --copy
 %_docdir/%rname-2.4
 
 %changelog
+* Mon Nov 18 2013 Yuri N. Sedunov <aris@altlinux.org> 2.38.1-alt1
+- 2.38.1
+
 * Fri Oct 11 2013 Yuri N. Sedunov <aris@altlinux.org> 2.38.0-alt1
 - 2.38.0
 
