@@ -1,7 +1,7 @@
 %define dist XML-SAX
 Name: perl-%dist
 Version: 0.99
-Release: alt1
+Release: alt2
 
 Summary: Simple API for XML
 License: GPL or Artistic
@@ -48,11 +48,14 @@ EOF
 %dir	%perl_vendor_privlib/XML/SAX
 	%perl_vendor_privlib/XML/SAX.pm
 	%perl_vendor_privlib/XML/SAX/*.pm
+	%perl_vendor_privlib/XML/SAX/PurePerl*
 %doc	%perl_vendor_privlib/XML/SAX/*.pod
-%exclude %perl_vendor_privlib/XML/SAX/PurePerl*
 %config	%perl_vendor_privlib/XML/SAX/ParserDetails.ini
 
 %changelog
+* Mon Nov 18 2013 Igor Vlasenko <viy@altlinux.ru> 0.99-alt2
+- returned XML/SAX/PurePerl* (required by other modules)
+
 * Thu Oct 06 2011 Alexey Tourbin <at@altlinux.ru> 0.99-alt1
 - 0.96 -> 0.99
 
