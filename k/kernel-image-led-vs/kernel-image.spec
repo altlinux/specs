@@ -25,7 +25,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.10.19
-Release: alt4
+Release: alt5
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -1836,6 +1836,13 @@ done)
 
 
 %changelog
+* Mon Nov 18 2013 Led <led@altlinux.ru> 3.10.19-alt5
+- updated:
+  + fix-fs-nfs
+  + fix-net-sunrpc
+- added:
+  + fix-security-keys
+
 * Sat Nov 16 2013 Led <led@altlinux.ru> 3.10.19-alt4
 - updated:
   + feat-drivers-block--btier
