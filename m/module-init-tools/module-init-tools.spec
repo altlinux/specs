@@ -1,6 +1,6 @@
 Name: module-init-tools
 Version: 3.16
-Release: alt11
+Release: alt12
 
 Summary: Kernel module management utilities
 License: GPL
@@ -78,6 +78,9 @@ install -pD -m 0755 {build,%buildroot/lib/mkinitrd/%name/sbin}/modprobe
 /lib/mkinitrd/%name
 
 %changelog
+* Mon Nov 18 2013 Led <led@altlinux.ru> 3.16-alt12
+- rebuild with klibc-2.0.2-alt4
+
 * Sat Dec 15 2012 Led <led@altlinux.ru> 3.16-alt11
 - rebuild with klibc-2.0.2-alt2
 - cleaned up spec

@@ -1,6 +1,6 @@
 Name: klibc
 Version: 2.0.2
-Release: alt2
+Release: alt4
 Summary: A minimal libc subset for use with initramfs
 License: BSD/GPL
 Group: System/Libraries
@@ -77,10 +77,6 @@ done
 install -p -m 0755 %{S:1} ./%name-find-provides
 install -p -m 0755 %{S:2} ./%name-find-requires
 
-# Assume that adjust_kernel_headers --first has been run.
-install -d -m 0755 linux
-ln -s "$(readlink -ev /usr/include/linux/../..)"/include linux/
-
 cat > defconfig <<__EOF__
 CONFIG_KLIBC=y
 # CONFIG_KLIBC_ERRLIST is not set
@@ -97,14 +93,18 @@ __EOF__
 
 %build
 %define optflags_debug %nil
-%make_build V=1 \
+%make_build \
 	KLIBCARCH=%base_arch prefix=%prefix bindir=%_bindir \
+	KLIBCKERNELSRC=$(readlink -ev %_includedir/linux/../..) \
 	SHLIBDIR=/%_lib \
-	INSTALLDIR=%klibcdir mandir=%_mandir INSTALLROOT=%buildroot
+	INSTALLDIR=%klibcdir mandir=%_mandir INSTALLROOT=%buildroot \
+	V=1
 
 
 %install
-%make_install KLIBCARCH=%base_arch prefix=%prefix bindir=%_bindir \
+%make_install \
+	KLIBCARCH=%base_arch prefix=%prefix bindir=%_bindir \
+	KLIBCKERNELSRC=$(readlink -ev %_includedir/linux/../..) \
 	SHLIBDIR=/%_lib \
 	INSTALLDIR=%klibcdir mandir=%_mandir INSTALLROOT=%buildroot \
 	install
@@ -125,7 +125,7 @@ klibc_soname=$(basename $(ls %buildroot/%_lib/%name-*.so))
 ln -s {,%buildroot/lib/mkinitrd/%name}/%_lib/$klibc_soname
 ln -sf {/%_lib,%buildroot%klibcdir/lib}/$klibc_soname
 install -p -m 0755 usr/dash/sh.shared %buildroot/lib/mkinitrd/%name/bin/sh
-install -p -m 0755 usr/utils/shared/{cat,false,kill,ln,mkdir,mknod,mount,nuke,readlink,sleep,true,umount} \
+install -p -m 0755 usr/utils/shared/{cat,false,kill,ln,mkdir,mknod,mount,nuke,sleep,true,umount} \
 	%buildroot/lib/mkinitrd/%name/bin/
 install -p -m 0755 usr/utils/shared/halt %buildroot/lib/mkinitrd/%name/sbin/
 for p in fstype ipconfig md_run nfsmount resume run-init; do
@@ -157,10 +157,6 @@ strip -g %buildroot%klibcdir/lib/libc.so
 %endif
 
 
-%check
-#make_build test
-
-
 %files
 /%_lib/%name-*.so
 
@@ -185,6 +181,14 @@ strip -g %buildroot%klibcdir/lib/libc.so
 
 
 %changelog
+* Mon Nov 18 2013 Led <led@altlinux.ru> 2.0.2-alt4
+- upstream fixes
+- removed unneeded 'readlink' from utils-initramfs subpackage
+
+* Fri Jan 04 2013 Led <led@altlinux.ru> 2.0.2-alt3
+- klibc: added popen() and pclose()
+- cleaned up spec
+
 * Sat Dec 15 2012 Led <led@altlinux.ru> 2.0.2-alt2
 - kinit: make initrd support optional
 - cleaned up spec
