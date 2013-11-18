@@ -1,5 +1,5 @@
 Name: xpa
-Version: 2.1.14
+Version: 2.1.15
 Release: alt1
 Summary: The XPA Messaging System
 License: LGPLv2.1
@@ -127,6 +127,9 @@ rm -f doc/Makefile
 %doc doc/*
 
 %changelog
+* Mon Nov 18 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.1.15-alt1
+- Version 2.1.15
+
 * Tue Aug 21 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.1.14-alt1
 - Version 2.1.14
 
