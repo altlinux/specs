@@ -1,6 +1,6 @@
 Name: pyside-qt4-py3
-Version: 1.1.2
-Release: alt2.git20130522
+Version: 1.2.1
+Release: alt1.git20130724
 Summary: Python bindings for the Qt cross-platform application and UI framework (Python 3)
 License: LGPLv2.1
 Group: Development/Tools
@@ -91,10 +91,10 @@ This package contains python module of PySide.
 %prepare_sphinx3 .
 ln -s ../objects.inv doc
 
+find -type f -name '*.py' -exec 2to3 -w -n '{}' +
 for i in $(find ./ -name '*.py'); do
 	sed -i 's|%_bindir/python|%_bindir/python3|' $i
 	sed -i 's|%_bindir/env python|%_bindir/env python3|' $i
-	2to3 -w -n $i
 done
 
 %build
@@ -149,6 +149,9 @@ rmdir %buildroot%python3_sitelibdir/PySide-*
 %python3_sitelibdir/*
 
 %changelog
+* Mon Nov 18 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.1-alt1.git20130724
+- Version 1.2.1
+
 * Mon Jun 17 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.2-alt2.git20130522
 - New snapshot
 
