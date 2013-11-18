@@ -1,7 +1,7 @@
 %define ver_major 3.10
 
 Name: devhelp
-Version: %ver_major.0
+Version: %ver_major.2
 Release: alt1
 
 Summary: Developer's help program
@@ -123,6 +123,9 @@ mkdir -p %buildroot%_devhelpdir/{specs,books}
 %gedit_pluginsdir/*
 
 %changelog
+* Mon Nov 18 2013 Alexey Shabalin <shaba@altlinux.ru> 3.10.2-alt1
+- 3.10.2
+
 * Tue Sep 24 2013 Alexey Shabalin <shaba@altlinux.ru> 3.10.0-alt1
 - 3.10.0
 

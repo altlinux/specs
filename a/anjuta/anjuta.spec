@@ -6,7 +6,7 @@
 %def_enable plugin_devhelp
 
 Name: anjuta
-Version: %ver_major.0
+Version: %ver_major.2
 Release: alt1
 Summary: GNOME IDE for C and C++
 Group: Development/GNOME and GTK+
@@ -223,6 +223,9 @@ NOCONFIGURE=1 ./autogen.sh
 %exclude %anjuta_pixmapsdir/*devhelp*
 
 %changelog
+* Mon Nov 18 2013 Alexey Shabalin <shaba@altlinux.ru> 3.10.2-alt1
+- 3.10.2
+
 * Tue Sep 24 2013 Alexey Shabalin <shaba@altlinux.ru> 3.10.0-alt1
 - 3.10.0
 
