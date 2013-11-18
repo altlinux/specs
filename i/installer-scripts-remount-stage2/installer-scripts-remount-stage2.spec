@@ -1,5 +1,5 @@
 Name: installer-scripts-remount-stage2
-Version: 0.4
+Version: 0.5
 Release: alt1
 
 Summary: Shared installer scripts: remount
@@ -23,17 +23,22 @@ that's close to the target system's one.
 %prep
 %setup
 
-%build
-
 %install
 # a single script is not worth two makefiles yet
 install -pDm755 scripts/install2-remount-functions \
 	%buildroot%_sbindir/install2-remount-functions
 
+install -pDm755 initinstall/stop-md-dm.sh \
+	%buildroot%_datadir/install2/initinstall.d/89-stop-md-dm.sh
+
 %files
 %_sbindir/*
+%_datadir/install2/initinstall.d/89-stop-md-dm.sh
 
 %changelog
+* Thu Nov 14 2013 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.5-alt1
+- Stop MD/DM devices in initinstall (ALT#29554).
+
 * Wed May 22 2013 Michael Shigorin <mike@altlinux.org> 0.4-alt1
 - prepare data for installer-feature-desktop-other-fs >= 0.7-alt1
   (see also #29005)
