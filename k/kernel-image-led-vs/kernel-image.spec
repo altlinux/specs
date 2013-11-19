@@ -25,7 +25,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.10.19
-Release: alt5
+Release: alt7
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -1836,6 +1836,16 @@ done)
 
 
 %changelog
+* Tue Nov 19 2013 Led <led@altlinux.ru> 3.10.19-alt7
+- added:
+  + fix-sound-pci-hda--snd-hda-codec-idt
+
+* Tue Nov 19 2013 Led <led@altlinux.ru> 3.10.19-alt6
+- updated:
+  + fix-drivers-net-ethernet-mellanox-mlx4--mlx4_en
+  + fix-drivers-usb-core
+  + fix-tools--perf
+
 * Mon Nov 18 2013 Led <led@altlinux.ru> 3.10.19-alt5
 - updated:
   + fix-fs-nfs
