@@ -19,9 +19,9 @@
 %define Name SLURM
 Name: slurm
 %define lname lib%name
-Version: 2.3.0
+Version: 2.6.4
 %define pre %nil
-Release: alt3.qa1
+Release: alt1
 Summary: Simple Linux Utility for Resource Management
 License: %gpl2plus
 Group: System/Base
@@ -416,6 +416,9 @@ chrpath -d %buildroot%_libdir/libpmi.so
 
 
 %changelog
+* Tue Nov 19 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.6.4-alt1
+- Version 2.6.4
+
 * Sun Apr 14 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.3.0-alt3.qa1
 - NMU: rebuilt with libmysqlclient.so.18.
 
