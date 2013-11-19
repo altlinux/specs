@@ -1,9 +1,10 @@
 %define oname libeatmydata
+%set_automake_version 1.11
 
 Summary: A small wrapper to disable fsync and related functions
 Name: eatmydata
 Version: 82
-Release: alt1
+Release: alt2
 Group: File tools
 License: GPLv3
 Url: https://launchpad.net/libeatmydata
@@ -57,6 +58,9 @@ make check
 %_libdir/*.so*
 
 %changelog
+* Mon Nov 18 2013 Gleb F-Malinovskiy <glebfm@altlinux.org> 82-alt2
+- Fix BFS (use old automake 1.11).
+
 * Wed Jul 31 2013 Gleb F-Malinovskiy <glebfm@altlinux.org> 82-alt1
 - new version (ALT#29248)
 
@@ -76,4 +80,3 @@ make check
 + Revision: 636355
 - added patch to use correct libdir
 - imported package eatmydata
-
