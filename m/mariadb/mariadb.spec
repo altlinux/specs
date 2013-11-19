@@ -4,7 +4,7 @@
 
 Name: mariadb
 Version: 5.5.33a
-Release: alt3
+Release: alt4
 
 Summary: A very fast and reliable SQL database engine
 License: GPLv2 with exceptions
@@ -92,6 +92,7 @@ Group: System/Servers
 Requires: lib%name = %EVR %name-client = %EVR
 Requires: %name-common = %EVR
 Provides: mysql-server = %version-%release
+Provides: mysql = %version
 Conflicts: MySQL-server
 
 %description server
@@ -661,6 +662,12 @@ fi
 %_libdir/libmysqld.so
 
 %changelog
+* Tue Nov 19 2013 Sergey V Turchin <zerg@altlinux.org> 5.5.33a-alt4
+- provide mysql virtual package (ALT#29595)
+
+* Wed Oct 16 2013 Sergey V Turchin <zerg at altlinux dot org> 5.5.33a-alt2.M70P.1
+- built for p7
+
 * Wed Oct 16 2013 Sergey V Turchin <zerg at altlinux dot org> 5.5.33a-alt3
 - fix depends (ALT#29415)
 
