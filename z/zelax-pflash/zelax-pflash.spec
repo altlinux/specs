@@ -2,7 +2,7 @@
 
 Name: zelax-pflash
 Version: 1.0.11
-Release: alt2.qa1
+Release: alt3
 Packager: Sergey Y. Afonin <asy@altlinux.ru>
 
 Summary: Utility for flash programming for Zelax modems.
@@ -36,7 +36,7 @@ M-1, M-30, M-30A and other. See full list on http://www.zelax.ru
 
 aclocal
 autoconf
-automake
+automake --add-missing
 
 libtoolize -i
 
@@ -62,12 +62,16 @@ libtoolize -i
 %doc README.alt README.alt.koi8-r NEWS AUTHORS
 
 %changelog
+* Tue Nov 19 2013 Sergey Y. Afonin <asy@altlinux.ru> 1.0.11-alt3
+- Fixed in spec:
+  added "--add-missing to automake" to fix build.
+
 * Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.0.11-alt2.qa1
 - NMU: rebuilt for debuginfo.
 
 * Tue Sep 29 2009 Sergey Y. Afonin <asy@altlinux.ru> 1.0.11-alt2
 - Fixed in spec:
-  Added "libtoolize -i" for building with libtool_2.2.
+  added "libtoolize -i" for building with libtool_2.2.
 - Removed Russian descriptions.
 - Fixed English descriptions.
 
@@ -79,4 +83,4 @@ libtoolize -i
 - Rebuilt with libreadline.so.5.
 
 * Wed Jun 01 2005 Sergey Y. Afonin <asy@altlinux.ru> 1.0.11-alt1
-- Initial build for AltLinux
+- Initial build for AltLinux.
