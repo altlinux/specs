@@ -3,12 +3,11 @@
 # Use "--disable ldap" for build without LDAP support
 %def_enable ldap
 
-%define gitdate 20130830
 %define abiversion 3
 
 Name: cyrus-sasl2
 Version: 2.1.26
-Release: alt2.git.%gitdate
+Release: alt3
 
 Summary: SASL2 is the Simple Authentication and Security Layer
 License: Freely Distributable
@@ -52,7 +51,7 @@ Summary: Librairies for SASL a the Simple Authentication and Security Layer
 Group: System/Libraries
 Requires: shadow-utils
 Provides: libsasl2 = %version-%release
-Conflicts: libsasl2 < 2.1.24-alt8
+Conflicts: libsasl2 < %version-%release
 
 %description -n libsasl2-%abiversion
 SASL is the Simple Authentication and Security Layer,
@@ -287,11 +286,17 @@ rm -f %buildroot%_libdir/sasl2/*.la
 %endif
 
 %changelog
+* Tue Nov 19 2013 Sergey Y. Afonin <asy@altlinux.ru> 2.1.26-alt3
+- Changed "Conflicts" to "libsasl2 < %%version-%%release" for libsasl2-3
+  (2.1.26 with old names in p7/t7 now)
+- Removed date of snapshot from name of package
+
 * Wed Sep 25 2013 Sergey Y. Afonin <asy@altlinux.ru> 2.1.26-alt2.git.20130830
 - Renamed libsasl2 for according SharedLibs Policy.
 
 * Fri Sep 13 2013 Sergey Y. Afonin <asy@altlinux.ru> 2.1.26-alt1.git.20130830
 - 2.1.26 (20130830 git snapshot; cmulocal from cyrus-sasl-2.1.26.tar.gz)
+- CVE-2013-4122 (NULL Pointer Dereference DoS Vulnerability with glibc 2.17 and later)
 - Removed conflicts with libsasl-devel (sasl 1.x is absent very long time)
 - Do not use version script introduced in 2.1.24-alt1.cvs.20090508 (soname is 3.0.0 now)
 
