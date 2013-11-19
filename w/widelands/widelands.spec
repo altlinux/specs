@@ -10,7 +10,7 @@ BuildRequires: gcc-c++ python-devel
 
 Name:           widelands
 Version:        0
-Release:        alt5_0.38.%{buildid}
+Release:        alt5_0.39.%{buildid}
 Summary:        Open source realtime-strategy game
 
 Group:          Games/Strategy
@@ -30,7 +30,7 @@ BuildRequires: libSDL_mixer-devel >= 1.2.6
 BuildRequires: libSDL_net-devel
 BuildRequires: SDL_sound-devel
 BuildRequires: libSDL_ttf-devel >= 2.0.0
-BuildRequires: boost-devel boost-filesystem-devel boost-wave-devel boost-graph-parallel-devel boost-math-devel boost-mpi-devel boost-program_options-devel boost-signals-devel boost-intrusive-devel boost-asio-devel
+BuildRequires: boost-devel >= 1.47.0
 BuildRequires: boost-devel-static >= 1.47.0
 BuildRequires: ctest cmake
 BuildRequires: ctags
@@ -147,6 +147,9 @@ EOF
 
 
 %changelog
+* Tue Nov 19 2013 Igor Vlasenko <viy@altlinux.ru> 1:0-alt5_0.39.build17
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 1:0-alt5_0.38.build17
 - update to new release by fcimport
 
