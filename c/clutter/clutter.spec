@@ -5,6 +5,7 @@
 %def_enable evdev_input
 %def_enable xinput
 %def_enable gdk_pixbuf
+%def_enable installed_tests
 
 # libcogl compiled with --enable-wayland-egl-platform required
 %def_enable wayland_backend
@@ -12,7 +13,7 @@
 %def_disable wayland_compositor
 
 Name: clutter
-Version: 1.16.0
+Version: 1.16.2
 Release: alt1
 Summary: Clutter Core Library
 License: LGPLv2+
@@ -110,6 +111,15 @@ Conflicts: lib%name < %version
 %description  -n lib%name-devel-doc
 Contains developer documentation for %name.
 
+%package -n lib%name-tests
+Summary: Tests for the lib%name package
+Group: Development/Other
+Requires: lib%name = %version-%release
+
+%description -n lib%name-tests
+This package provides tests programs that can be used to verify
+the functionality of the installed lib%name package.
+
 
 %prep
 %setup -q
@@ -130,7 +140,8 @@ gtkdocize
 	%{?_enable_xinput:--enable-xinput} \
 	%{?_enable_gdk_pixbuf:--enable-gdk-pixbuf} \
 	--enable-gtk-doc \
-	--enable-introspection
+	--enable-introspection \
+	%{?_enable_installed_tests:--enable-installed-tests}
 
 %make_build
 
@@ -159,8 +170,18 @@ gtkdocize
 %files -n lib%name-devel-doc
 %_datadir/gtk-doc/html/*
 
+%if_enabled installed_tests
+%files -n lib%name-tests
+%_libexecdir/installed-tests/%name/
+%_datadir/installed-tests/%name/
+%endif
+
 
 %changelog
+* Tue Nov 19 2013 Yuri N. Sedunov <aris@altlinux.org> 1.16.2-alt1
+- 1.16.2
+- new -tests subpackage
+
 * Tue Sep 24 2013 Yuri N. Sedunov <aris@altlinux.org> 1.16.0-alt1
 - 1.16.0
 
