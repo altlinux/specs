@@ -1,6 +1,6 @@
 Name: gdb
 Version: 7.5.0.20121002
-Release: alt3
+Release: alt4
 
 Summary: A GNU source-level debugger for C, C++ and other languages
 License: GPLv3+
@@ -484,10 +484,6 @@ mv readline/doc readline-doc
 %patch2 -p1
 %patch3 -p1
 
-# _rl_echoing_p is a private readline variable,
-# in older versions it was called readline_echoing_p.
-sed -i 's/\<_rl_echoing_p\>/readline_echoing_p/g' gdb/tui/tui-io.c
-
 # We don't need these subdirs.
 rm -r gdb/gdbserver readline
 
@@ -590,6 +586,9 @@ popd
 %_libdir/lib*.a
 
 %changelog
+* Tue Nov 19 2013 Gleb F-Malinovskiy <glebfm@altlinux.org> 7.5.0.20121002-alt4
+- Fixed build with readline6.
+
 * Fri Feb 15 2013 Dmitry V. Levin <ldv@altlinux.org> 7.5.0.20121002-alt3
 - Packaged a lightweigted build of gdb as %_bindir/gdb-light.
 
