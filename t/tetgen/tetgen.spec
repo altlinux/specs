@@ -1,13 +1,13 @@
 Name: tetgen
-Version: 1.4.3
-Release: alt5
+Version: 1.5.0
+Release: alt1
 Summary: Tetrahedral Mesh Generator and Three-Dimensional Delaunay Triangulator
 License: BSD-like
 Group: Sciences/Mathematics
 Url: http://tetgen.berlios.de/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-Source: http://www.wias-berlin.de/people/si/tetgen1.4.3.tar.gz
+Source: %name%version.tar.gz
 Source1: http://tetgen.berlios.de/files/tetgen-manual.pdf
 
 BuildPreReq: gcc-c++
@@ -97,7 +97,7 @@ install -d %buildroot%_libdir
 install -d %buildroot%_includedir
 install -d %buildroot%_docdir/%name
 install -m755 %name %buildroot%_bindir
-install -m644 *.so* *.a %buildroot%_libdir
+install -m644 *.so* %buildroot%_libdir
 ln -s lib%name.so.0 %buildroot%_libdir/lib%name.so
 install -m644 %name.h %buildroot%_includedir
 install -m644 %SOURCE1 %buildroot%_docdir/%name
@@ -113,13 +113,17 @@ install -m644 %SOURCE1 %buildroot%_docdir/%name
 %_libdir/*.so
 %_includedir/*
 
-%files -n lib%name-devel-static
-%_libdir/*.a
+#files -n lib%name-devel-static
+#_libdir/*.a
 
 %files -n lib%name-doc
 %_docdir/%name
 
 %changelog
+* Tue Nov 19 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.5.0-alt1
+- Version 1.5.0
+- Disabled devel-static subpackage
+
 * Sun May 08 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4.3-alt5
 - Upstream update on 2011/01/19
 
