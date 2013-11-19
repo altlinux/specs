@@ -18,7 +18,7 @@
 
 Name: evolution-data-server
 Version: %ver_major.2
-Release: alt1
+Release: alt2
 
 Summary: Evolution Data Server
 License: %lgpl2plus
@@ -256,6 +256,9 @@ rm -f %buildroot%_libdir/%name-%ver_lib/*/*.la
 
 
 %changelog
+* Tue Nov 19 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.2-alt2
+- rebuilt with libical-1.0
+
 * Mon Nov 11 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.2-alt1
 - 3.10.2
 
