@@ -1,5 +1,5 @@
 %define module_name	ipset
-%define module_version	6.19
+%define module_version	6.20.1
 %define module_release	alt1
 
 %define flavour		std-pae
@@ -17,13 +17,12 @@ Group: System/Kernel and hardware
 
 Packager: Kernel Maintainer Team <kernel@packages.altlinux.org>
 
-Patch0: kernel-source-ipset-6.19-alt-build.patch
-
 ExclusiveOS: Linux
 URL: http://ipset.netfilter.org/
 BuildRequires(pre): rpm-build-kernel
 BuildRequires: kernel-headers-modules-%flavour = %kversion-%krelease
 BuildRequires: kernel-source-%module_name = %module_version
+BuildRequires: libmnl-devel
 
 Provides:  kernel-modules-%module_name-%kversion-%flavour-%krelease = %version-%release
 Conflicts: kernel-modules-%module_name-%kversion-%flavour-%krelease < %version-%release
@@ -41,15 +40,16 @@ ipset kernel modules.
 rm -rf kernel-source-%module_name-%module_version
 tar -jxf %kernel_src/kernel-source-%module_name-%module_version.tar.bz2
 %setup -D -T -n kernel-source-%module_name-%module_version
-%patch -p1
+autoreconf -fisv
 
 %build
-%make_build -C %_usrsrc/linux-%kversion-%flavour modules SUBDIRS=`pwd`/net/netfilter IP_NF_SET_MAX=256 IP_NF_SET_HASHSIZE=1024
+%configure --with-kbuild=%_usrsrc/linux-%kversion-%flavour --with-ksource=%_usrsrc/linux-%kversion-%flavour
+make modules
 
 %install
 install -d %buildroot%module_dir
-install -p -m644 net/netfilter/ipset/*.ko %buildroot%module_dir
-install -p -m644 net/netfilter/*.ko %buildroot%module_dir
+install -p -m644 kernel/net/netfilter/ipset/*.ko %buildroot%module_dir
+install -p -m644 kernel/net/netfilter/*.ko %buildroot%module_dir
 
 
 %files
@@ -59,6 +59,9 @@ install -p -m644 net/netfilter/*.ko %buildroot%module_dir
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Fri Nov 15 2013 Anton Farygin <rider@altlinux.ru> 6.20.1-alt1
+- new version
 
 * Fri Jun 28 2013 Anton V. Boyarshinov <boyarsh@altlinux.org> 6.19-alt1
 - new version
