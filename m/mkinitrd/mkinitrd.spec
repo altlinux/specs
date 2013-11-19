@@ -1,5 +1,5 @@
 Name: mkinitrd
-Version: 3.0.24
+Version: 3.0.25
 Release: alt1
 Epoch: 1
 Summary: Creates an initial ramdisk image for preloading modules
@@ -70,6 +70,11 @@ install -p -m 0644 scripts/* %buildroot/lib/mkinitrd/initramfs-base/scripts/
 
 
 %changelog
+* Tue Nov 19 2013 Led <led@altlinux.ru> 1:3.0.25-alt1
+- 3.0.25:
+  + mkinitrd.sh: don't add builtin into /conf/modules
+  + mkinitrd.sh: prepare to recognize busybox's modprobe
+
 * Mon Nov 18 2013 Led <led@altlinux.ru> 1:3.0.24-alt1
 - 3.0.24:
   + mkinitrd.sh: clean ups
