@@ -18,7 +18,7 @@
 
 Name: evolution
 Version: %ver_major.2
-Release: alt1
+Release: alt2
 
 Summary: Integrated GNOME mail client, calendar and address book
 License: GPLv2+
@@ -248,7 +248,6 @@ export KILL_PROCESS_CMD=%_bindir/killall
     %{?_disable_image_inline:--disable-image-inline}
 
 %make_build
-#CFLAGS="$CFLAGS -UGNOME_DISABLE_DEPRECATED"
 
 %install
 %make DESTDIR=%buildroot install
@@ -316,6 +315,9 @@ export KILL_PROCESS_CMD=%_bindir/killall
 %_datadir/glib-2.0/schemas/org.gnome.evolution.spamassassin.gschema.xml
 
 %changelog
+* Tue Nov 19 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.2-alt2
+- rebuilt with libical-1.0
+
 * Mon Nov 11 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.2-alt1
 - 3.10.2
 
