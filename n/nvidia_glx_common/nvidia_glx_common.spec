@@ -10,11 +10,11 @@
 
 # version-release
 
-%define nv_version 319
-%define nv_release 72
+%define nv_version 331
+%define nv_release 20
 %define nv_minor %nil
-%define pkg_rel alt126
-%define set_gl_nvidia_ver 0.9.0
+%define pkg_rel alt127
+%define set_gl_nvidia_ver 0.10.0
 
 %define tbver %{nv_version}.%{nv_release}.%{nv_minor}
 %if "%nv_minor" == "%nil"
@@ -68,7 +68,7 @@ Version: %nv_version.%nv_release.%nv_minor
 %endif
 Release: %pkg_rel
 
-Source: set_gl_nvidia-%set_gl_nvidia_ver.tar.bz2
+Source: set_gl_nvidia-%set_gl_nvidia_ver.tar
 Source1: alternate-install-present
 Source2: nvidia-install-driver
 
@@ -108,7 +108,7 @@ This is common package for NVIDIA drivers.
 %setup -T -c -n %tbname-%tbver%dirsuffix
 cd %_builddir
 cd %tbname-%tbver%dirsuffix
-tar xvfj %SOURCE0
+tar xvf %SOURCE0
 pushd set_gl_nvidia*
 cp settings.h.in settings.h
 subst "s|@DEFAULT_VERSION@|%version|" settings.h
@@ -138,7 +138,7 @@ popd
 
 %build
 #make OPTFLAGS="%optflags -Wl,--hash-style=sysv" -C set_gl_nvidia*
-make OPTFLAGS="%optflags" -C set_gl_nvidia*
+make OPTFLAGS="%optflags" LDFLAGS="-L%_libdir" -C set_gl_nvidia*
 >nvidianull.c
 gcc %optflags -c nvidianull.c -o nvidianull.o
 #ld --hash-style=sysv --shared nvidianull.o -o libnvidianull.so
@@ -163,6 +163,7 @@ ld --shared nvidianull.o -o libnvidianull.so
 %__mkdir_p %buildroot/%xdrv_pre_d
 %__mkdir_p %buildroot/%xinf_dir
 %__mkdir_p %buildroot/%nv_workdirdir
+%__mkdir_p %buildroot/%_datadir/nvidia
 
 # prompt user to don't use nvidia-installer
 mkdir -p %buildroot/usr/lib/nvidia/
@@ -216,6 +217,7 @@ fi
 
 
 %files
+%dir %_datadir/nvidia/
 %ghost %_bindir/nvidia-bug-report.sh
 %xdrv_pre_d/nvidia
 %xdrv_d/nvidia
@@ -241,8 +243,11 @@ fi
 %_bindir/nvidia-install-driver
 /usr/lib/nvidia/alternate-install-present
 
-
 %changelog
+* Tue Nov 19 2013 Sergey V Turchin <zerg@altlinux.org> 331.20-alt127
+- switch new nvidia own libGLESv2 and libEGL
+- imply always have /etc/X11/lib64 on x86_64
+
 * Thu Nov 07 2013 Sergey V Turchin <zerg@altlinux.org> 319.72-alt126
 - bump version
 
