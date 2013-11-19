@@ -3,7 +3,7 @@
 %define _pseudouser_home     %_localstatedir/radvd
 
 Name: radvd
-Version: 1.9.5
+Version: 1.9.6
 Release: alt1
 
 Summary: A Router Advertisement daemon
@@ -79,6 +79,9 @@ install -Dm0644 %SOURCE4 %buildroot%systemd_unitdir/%name.service
 %_sbindir/radvdump
 
 %changelog
+* Tue Nov 19 2013 Mikhail Efremov <sem@altlinux.org> 1.9.6-alt1
+- Updated to 1.9.6.
+
 * Thu Oct 03 2013 Mikhail Efremov <sem@altlinux.org> 1.9.5-alt1
 - Updated to 1.9.5.
 
