@@ -15,7 +15,7 @@ interchanging, and provides a full-featured set of concrete classes that \
 implement all abstract interfaces.
 
 %define somver 10
-%define sover %somver.11.2
+%define sover %somver.11.4
 %define scalar_type real
 %define ldir %_libdir/petsc-%scalar_type
 
@@ -26,7 +26,7 @@ Name: %truename-docs
 %else
 Name: %truename
 %endif
-Version: 11.2.3
+Version: 11.4.2
 Release: alt1
 Summary: Solution of large-scale, complex multi-physics problems
 License: LGPL, BSD-style
@@ -51,7 +51,7 @@ BuildPreReq: gcc-fortran libgfortran-devel gcc-c++ libnumpy-devel
 BuildPreReq: liblapack-devel doxygen getfemxx binutils-devel
 BuildPreReq: openmpi-devel expat libexpat-devel swig graphviz
 BuildPreReq: libgmp_cxx-devel libgmp-devel libxml2-devel libmatio-devel
-BuildPreReq: boost-devel libsuperlu-devel libarprec-devel libqd-devel
+BuildPreReq: boost-devel libarprec-devel libqd-devel
 BuildPreReq: liby12m-devel libsuitesparse-devel libhdf5-mpi-devel
 BuildPreReq: libmtl4-devel libsundials-devel python-devel
 BuildPreReq: libscotch-devel libcheck-devel libblacs-devel
@@ -65,7 +65,7 @@ BuildPreReq: ghostscript-utils chrpath python-module-pyMPI
 BuildPreReq: libtbb-devel libqt4-devel boost-program_options-devel
 BuildPreReq: chaco libnetcdf-mpi-devel libexodusii-devel libnewmat-devel
 BuildPreReq: libsparskit-devel boost-signals-devel tinyxml-devel Xdmf-devel
-BuildPreReq: python-module-mpi4py-devel libparmetis-devel
+BuildPreReq: python-module-mpi4py-devel
 BuildPreReq: libnetcdff-mpi-devel libnetcdf_c++4-mpi-devel
 %if_with dakota
 BuildPreReq: libdakota-devel
@@ -2165,7 +2165,6 @@ popd
 
 %if_without docs
 for i in $(find %buildroot -name '*.so') \
-	 $(find %buildroot -name '*.so.%sover') \
 	 $(find %buildroot -name '*.exe') \
 	 %buildroot%_bindir/*
 do
@@ -2192,6 +2191,10 @@ done
 %ifarch x86_64
 mv %buildroot%_libexecdir/*.so* %buildroot%_libdir/
 %endif
+for i in %buildroot%_libdir/*.so; do
+	chrpath -r %mpidir/lib:%_libdir/oski $i || \
+		chrpath -r %mpidir/lib $i ||:
+done
 %endif
 
 # fix file conflict with libmesh-doc
@@ -2228,10 +2231,10 @@ popd
 %_libdir/libisorropia.so
 
 %files -n libamesos%somver
-%_libdir/libamesos.so.*
+%_libdir/libamesos*.so.*
 
 %files -n libamesos%somver-devel
-%_libdir/libamesos.so
+%_libdir/libamesos*.so
 
 %files -n libanasazi%somver
 %_libdir/libanasazi*.so.*
@@ -2598,6 +2601,16 @@ popd
 %endif
 
 %changelog
+* Tue Nov 19 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 11.4.2-alt1
+- Version 11.4.2
+
+* Mon Sep 02 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 11.4.1-alt1
+- Version 11.4.1
+- Disabled stk for PyTrilinos
+
+* Thu Jun 27 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 11.2.3-alt2
+- Rebuilt with new libhdf5
+
 * Tue Apr 30 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 11.2.3-alt1
 - Version 11.2.3 (without PySundance)
 
@@ -2621,3 +2634,4 @@ popd
 
 * Mon Aug 20 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 10.12.2-alt1
 - Version 10.12.2
+
