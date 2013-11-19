@@ -25,7 +25,7 @@ Name: %truename-docs
 %else
 Name: %truename
 %endif
-Version: 11.4.1
+Version: 11.4.2
 Release: alt1
 Summary: Solution of large-scale, complex multi-physics problems
 License: LGPL, BSD-style
@@ -2600,6 +2600,9 @@ popd
 %endif
 
 %changelog
+* Tue Nov 19 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 11.4.2-alt1
+- Version 11.4.2
+
 * Mon Sep 02 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 11.4.1-alt1
 - Version 11.4.1
 - Disabled stk for PyTrilinos
