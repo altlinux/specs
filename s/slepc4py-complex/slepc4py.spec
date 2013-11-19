@@ -9,7 +9,7 @@
 
 Name: %oname-%scalar_type
 Version: 3.4
-Release: alt1.git20130829
+Release: alt1.git20131112
 Summary: SLEPc for Python (%scalar_type scalars)
 License: Public
 Group: Sciences/Mathematics
@@ -193,6 +193,9 @@ rm -f %ldir/python/%oname/lib/SLEPc.so
 %endif
 
 %changelog
+* Tue Nov 19 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.4-alt1.git20131112
+- New snapshot
+
 * Tue Oct 01 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.4-alt1.git20130829
 - Version 3.4
 
@@ -292,4 +295,3 @@ rm -f %ldir/python/%oname/lib/SLEPc.so
 
 * Sat Jul 18 2009 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.0-alt1
 - Initial build for Sisyphus
-
