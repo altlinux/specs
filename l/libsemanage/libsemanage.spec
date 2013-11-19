@@ -2,8 +2,8 @@
 %def_with python
 
 Name: libsemanage
-Version: 2.1.10
-Release: alt2
+Version: 2.2
+Release: alt1
 Summary: Library, which provides an interface for SELinux management
 Group: System/Libraries
 License: LGPLv2.1+
@@ -12,7 +12,7 @@ Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
 %{?_with_python:BuildPreReq: rpm-build-python}
-BuildRequires: bzlib-devel flex libustr-devel libsepol-devel >= 2.1 libselinux-devel >= 2.1
+BuildRequires: bzlib-devel flex libustr-devel libsepol-devel >= 2.1 libselinux-devel >= 2.1 libaudit-devel
 %{?_with_python:BuildRequires: swig python-dev}
 %{!?_disable_check:BuildRequires: CUnit-devel libsepol-devel-static >= 2.1 libselinux-devel-static >= 2.1}
 
@@ -106,6 +106,9 @@ ln -sf /%_lib/libsemanage.so.1 %buildroot/%_libdir/libsemanage.so
 
 
 %changelog
+* Tue Nov 19 2013 Anton Farygin <rider@altlinux.ru> 2.2-alt1
+- New version
+
 * Wed Sep 18 2013 Andriy Stepanov <stanv@altlinux.ru> 2.1.10-alt2
 - pam_mktemp workaround
 

@@ -1,15 +1,14 @@
 %def_with python
 
 Name: libselinux
-Version: 2.1.13
-Release: alt3
+Version: 2.2.1
+Release: alt1
 Summary: SELinux library
 License: Public Domain
 Group: System/Libraries
 Url: http://userspace.selinuxproject.org/
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
-Patch1: 0006-introduce-selinux_current_policy_path-from-fedora-needed-by-policycoreutils.patch
 
 %{?_with_python:BuildPreReq: rpm-build-python}
 BuildRequires: libpcre-devel libsepol-devel >= 2.1.4
@@ -66,7 +65,6 @@ This package contains SELinux python bindings.
 %prep
 %setup -q
 %patch -p1
-%patch1 -p1
 
 %build
 %make_build CFLAGS="%optflags $(pkg-config libpcre --cflags)" LIBDIR=%_libdir all
@@ -118,6 +116,9 @@ fi
 
 
 %changelog
+* Tue Nov 19 2013 Anton Farygin <rider@altlinux.ru> 2.2.1-alt1
+- new version
+
 * Mon Jul 15 2013 Dmitry V. Levin <ldv@altlinux.org> 2.1.13-alt3
 - Reverted commit libselinux-2.1.12-57-g1d40332 because some vital
   PAM modules are linked with libselinux and therefore we cannot

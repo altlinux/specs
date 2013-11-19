@@ -1,7 +1,7 @@
 %def_disable check
 
 Epoch: 1
-Version: 1.1.9
+Version: 2.0.82
 Release: alt1
 %setup_python_module sepolgen
 Name: python-module-sepolgen
@@ -50,6 +50,9 @@ required access.
 
 
 %changelog
+* Tue Nov 19 2013 Anton Farygin <rider@altlinux.ru> 1:2.0.82-alt1
+- new version
+
 * Thu Jun 27 2013 Andriy Stepanov <stanv@altlinux.ru> 1:1.1.9-alt1
 - New version
 
