@@ -1,9 +1,14 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/glib-gettextize gcc-c++ libICE-devel libSM-devel
 # END SourceDeps(oneline)
+# %name or %version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+%define name flaw
+%define version 1.3.2a
+%{!?_pkgdocdir: %global _pkgdocdir %{_docdir}/%{name}-%{version}}
+
 Name:		flaw
 Version:	1.3.2a
-Release:	alt1_4
+Release:	alt1_5
 Summary:	Free top-down wizard battle game
 Group:		Games/Other
 License:	GPLv3+
@@ -31,7 +36,7 @@ chmod 644 src/*.cc
 chmod 644 src/*.h
 
 %build
-%configure --docdir=%{_docdir}/%{name}-%{version} --enable-fontpath=%{_datadir}/fonts/ttf/gnu-free/
+%configure --docdir=%{_pkgdocdir} --enable-fontpath=%{_datadir}/fonts/ttf/gnu-free/
 make %{?_smp_mflags}
 
 %install
@@ -44,10 +49,13 @@ desktop-file-validate $RPM_BUILD_ROOT%{_datadir}/applications/%{name}.desktop
 %{_datadir}/flaw
 %{_datadir}/pixmaps/flaw.png
 %{_datadir}/applications/flaw.desktop
-%exclude %{_docdir}/%{name}-%{version}/INSTALL
-%doc %{_docdir}/%{name}-%{version}
+%exclude %{_pkgdocdir}/INSTALL
+%doc %{_pkgdocdir}
 
 %changelog
+* Tue Nov 19 2013 Igor Vlasenko <viy@altlinux.ru> 1.3.2a-alt1_5
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 1.3.2a-alt1_4
 - update to new release by fcimport
 
