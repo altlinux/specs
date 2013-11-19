@@ -6,9 +6,10 @@
 %def_enable vala
 %def_disable libsocialweb
 %def_enable tracker
+%def_enable bluez
 
 Name: lib%_name
-Version: %ver_major.5
+Version: %ver_major.6
 Release: alt1
 
 Summary: GObject contact aggregation library
@@ -19,10 +20,10 @@ Url: http://telepathy.freedesktop.org/wiki/Folks
 Source: http://download.gnome.org/sources/%_name/%ver_major/%_name-%version.tar.xz
 #Source: %_name-%version.tar
 
-%define glib_ver 2.26.0
+%define glib_ver 2.38.2
 %define tp_glib_ver 0.19.0
-%define vala_ver 0.15.1
-%define eds_ver 3.9.1
+%define vala_ver 0.22.1
+%define eds_ver 3.10.1
 %define tracker_ver 0.15.2
 %define gee_ver 0.8.4
 %define zeitgeist_ver 0.9.14
@@ -31,7 +32,7 @@ BuildRequires: gnome-common intltool libgio-devel >= %glib_ver libdbus-glib-deve
 BuildRequires: libtelepathy-glib-devel >= %tp_glib_ver libgee0.8-devel >= %gee_ver
 BuildRequires: evolution-data-server-devel >= %eds_ver
 BuildRequires: libzeitgeist2.0-devel >= %zeitgeist_ver vala-tools
-%{?_enable_tracker:BuildRequires: tracker-devel >= %tracker_ver libtracker-gir-devel}
+%{?_enable_tracker:BuildRequires: tracker-devel >= %tracker_ver}
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel libgee-gir-devel libtelepathy-glib-gir-devel evolution-data-server-gir-devel libgee0.8-gir-devel}
 %{?_enable_vala:BuildRequires: vala >= %vala_ver vala-tools >= %vala_ver libtelepathy-glib-vala evolution-data-server-vala}
 %{?_enable_libsocialweb:BuildRequires: libsocialweb-devel libsocialweb-gir-devel %{?_enable_vala:libsocialweb-vala}}
@@ -87,22 +88,22 @@ This package provides vala language bindings for %_name library
 
 %build
 %autoreconf
-export PKG_CONFIG_PATH="%_builddir/%_name-%version/%_name"
 %configure \
 	%{subst_enable static} \
 	%{subst_enable vala} \
 	%{?_enable_eds:--enable-eds-backend} \
 	%{?_enable_tracker:--enable-tracker-backend} \
 	%{?_enable_libsocialweb:--enable-libsocialweb-backend=yes} \
+	%{?_enable_bluez:--enable-bluez-backend=yes} \
 	--disable-fatal-warnings
 
-%make_build
-
-%check
-#%make check
+%make_build V=1
 
 %install
 %makeinstall_std
+
+%check
+#%%make check
 
 %find_lang %_name
 
@@ -139,18 +140,19 @@ export PKG_CONFIG_PATH="%_builddir/%_name-%version/%_name"
 %_vapidir/folks.deps
 %_vapidir/folks-eds.deps
 %_vapidir/folks-eds.vapi
+%{?_enable_libsocialweb:%_vapidir/folks-libsocialweb.deps}
+%{?_enable_libsocialweb:%_vapidir/folks-libsocialweb.vapi}
 %_vapidir/folks-telepathy.deps
 %_vapidir/folks-telepathy.vapi
 %_vapidir/folks-tracker.deps
 %_vapidir/folks-tracker.vapi
 %_vapidir/folks.vapi
-%if_enabled libsocialweb
-%_vapidir/folks-libsocialweb.deps
-%_vapidir/folks-libsocialweb.vapi
-%endif
 %endif
 
 %changelog
+* Wed Nov 06 2013 Yuri N. Sedunov <aris@altlinux.org> 0.9.6-alt1
+- 0.9.6
+
 * Tue Aug 27 2013 Yuri N. Sedunov <aris@altlinux.org> 0.9.5-alt1
 - 0.9.5
 
