@@ -1,7 +1,7 @@
 # TODO: add gtk2 support
 
 Name: bamf
-Version: 0.2.126
+Version: 0.5.0
 Release: alt1
 
 Summary: BAMF Application Matching Framework
@@ -9,19 +9,19 @@ License: GPLv3/LGPLv3
 Group: Graphical desktop/Other
 Url: https://launchpad.net/bamf
 
-Source0: %{name}_%{version}.orig.tar.gz
-
-# Ubuntu
-Patch0: bamf_0.2.126-0ubuntu1.diff.gz
+Source0: %name-%version.tar.gz
 
 # ALT
-Patch1: bamf-0.2.126-alt-configure.patch
+Patch0: bamf-0.5.0-alt-configure.patch
+Patch1: bamf-0.5.0-alt-disable-werror.patch
 
 Packager: Igor Zubkov <icesik@altlinux.org>
 
 BuildRequires: libgtk+3-devel libgtk+2-devel gtk-doc gnome-common
 BuildRequires: libdbus-glib-devel libwnck3-devel libgtop-devel
-BuildRequires: gobject-introspection-devel
+BuildRequires: gobject-introspection-devel vala-tools
+BuildRequires: python-module-libxml2 python-module-libxslt
+BuildRequires: xvfb-run dbus-tools-gui
 
 #Build-Depends: debhelper (>= 8.1.2ubuntu2),
 #               cdbs (>= 0.4.90ubuntu9),
@@ -148,14 +148,19 @@ This package contains the documentation.
 
 %build
 %autoreconf
-%configure
-%make_build
+%configure \
+  --disable-webapps \
+  --enable-headless-tests
+%make_build V=1
+
+%check
+make check || exit 1
 
 %install
 %make_install DESTDIR=%buildroot install
 
 %files -n bamfdaemon
-%_libexecdir/bamfdaemon
+%_libexecdir/bamf/bamfdaemon
 %_datadir/dbus-1/services/org.ayatana.bamf.service
 
 %files -n libbamf0
@@ -175,7 +180,15 @@ This package contains the documentation.
 %files -n libbamf-doc
 %_datadir/gtk-doc/html/libbamf
 
+#    /usr/lib/girepository-1.0/Bamf-3.typelib
+#    /usr/share/gir-1.0/Bamf-3.gir
+#    /usr/share/vala/vapi/libbamf3.vapi
+
+
 %changelog
+* Wed Nov 20 2013 Igor Zubkov <icesik@altlinux.org> 0.5.0-alt1
+- 0.5.0
+
 * Tue Oct 08 2013 Igor Zubkov <icesik@altlinux.org> 0.2.126-alt1
 - build for Sisyphus
 
