@@ -1,5 +1,5 @@
 %define foomatic_version 4.0.3
-%define snapshot 20130926
+%define snapshot 20131120
 
 %def_disable foo2zjs
 
@@ -150,6 +150,9 @@ comm -23 foomatic-db-all.ls foomatic-db-foo2zjs.ls > foomatic-db-main.ls
 %doc README ChangeLog
 
 %changelog
+* Wed Nov 20 2013 Cronbuild Service <cronbuild@altlinux.org> 4.0.20131120-alt1
+- repocop cronbuild 20131120. At your service.
+
 * Thu Sep 26 2013 Cronbuild Service <cronbuild@altlinux.org> 4.0.20130926-alt1
 - repocop cronbuild 20130926. At your service.
 
