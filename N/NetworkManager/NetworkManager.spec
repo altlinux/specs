@@ -22,7 +22,7 @@
 
 Name: NetworkManager
 Version: 0.9.8.8
-Release: alt2%git_date
+Release: alt3%git_date
 License: %gpl2plus
 Group: System/Configuration/Networking
 Summary: Network Link Manager and User Applications
@@ -412,6 +412,13 @@ fi
 %exclude %_libdir/pppd/%ppp_version/*.la
 
 %changelog
+* Wed Nov 20 2013 Mikhail Efremov <sem@altlinux.org> 0.9.8.8-alt3
+- Fix path to the dhcpcd pid file.
+- Patches from upstream git:
+  + dispatcher: fix crash while logging from signal handler.
+  + core: fix segfault in NMAgentManager (rh #1031196).
+  + dhcp: print a warning when we can't get DHCP lease.
+
 * Wed Oct 30 2013 Mikhail Efremov <sem@altlinux.org> 0.9.8.8-alt2
 - Move all development documentation to the devel-doc subpackage.
 - Split NetworkManager-glib-devel too.
