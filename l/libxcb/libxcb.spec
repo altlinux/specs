@@ -1,6 +1,6 @@
 Name: libxcb
-Version: 1.9.1
-Release: alt2
+Version: 1.9.3
+Release: alt1
 Summary: The X C Binding (XCB) library
 License: MIT/X11
 Group: System/Libraries
@@ -66,6 +66,9 @@ develop programs which make use of %name
 %_man3dir/*.3*
 
 %changelog
+* Wed Nov 20 2013 Valery Inozemtsev <shrek@altlinux.ru> 1.9.3-alt1
+- 1.9.3
+
 * Sun Jul 21 2013 Valery Inozemtsev <shrek@altlinux.ru> 1.9.1-alt2
 - enabled XKB (closes: #29198)
 
