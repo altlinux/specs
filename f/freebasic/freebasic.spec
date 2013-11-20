@@ -1,7 +1,7 @@
 
 Name:		freebasic
 Version:	0.90.1
-Release:	alt5
+Release:	alt6
 
 Summary:	FreeBASIC language compiler
 License:	GPL
@@ -9,8 +9,6 @@ Group:		Education
 
 Source:		FreeBASIC-v%{version}-linux.tar.gz
 Source1:	FB-manual-%version-html.zip
-Source2:	%name.sh
-Source3:	%name.csh
 URL: 		http://freebasic.net
 
 Provides:	FreeBASIC = %version-%release
@@ -29,6 +27,8 @@ BuildRequires:  zlib-devel
 BuildRequires:  unzip
 ExclusiveArch:  %ix86
 
+Requires: 	gcc
+
 %description	
 FreeBASIC - is a completely free, open-source, 32-bit BASIC compiler,
 with syntax similar to MS-QuickBASIC, that adds new features such as
@@ -42,7 +42,7 @@ unzip -q %SOURCE1 -d doc/html
 ln -s 00index.html doc/html/index.html
 
 %build
-%make_build FBCFLAGS="-i /usr/include/freebasic" FBLFLAGS="-p %_libdir/freebasic -p $(find /usr/lib/gcc/i586-alt-linux/ -name libgcc_eh\* | xargs dirname) -prefix %_prefix"
+%make_build FBCFLAGS="-i /usr/include/freebasic" FBLFLAGS="-p %_libdir/freebasic -prefix %_prefix"
 
 %install
 mkdir -p %buildroot%_prefix
@@ -68,16 +68,11 @@ ln -s $(find /usr/lib/gcc/i586-alt-linux/ -name libgcc_eh.a|head -n1) %buildroot
 mkdir -p %buildroot%_docdir/freebasic
 cp -a doc/html/* %buildroot%_docdir/freebasic
 
-# Supress linking warnings on 64-bit systems
-install -D -m0755 %SOURCE2 %buildroot%_sysconfdir/profile.d/%name.sh
-install -D -m0755 %SOURCE3 %buildroot%_sysconfdir/profile.d/%name.csh
-
 %check
 make -C tests log-tests FB_LANG=fb || /bin/true
 
 %files
 %doc *.txt
-%_sysconfdir/profile.d/%name.*sh
 %_bindir/fbc
 %_libdir/freebasic/
 %_includedir/freebasic/
@@ -86,6 +81,10 @@ make -C tests log-tests FB_LANG=fb || /bin/true
 %doc %_man1dir/*
 
 %changelog
+* Wed Nov 20 2013 Andrey Cherepanov <cas@altlinux.org> 0.90.1-alt6
+- Simplify build parameters
+- Remove deprecated linker flags
+
 * Tue Nov 19 2013 Andrey Cherepanov <cas@altlinux.org> 0.90.1-alt5
 - Supress linking warnings on 64-bit systems
 - Fix strict version in library symlinks
