@@ -11,7 +11,7 @@ BuildRequires(pre): rpm-build-python
 
 Name: python-module-%oname
 Version: 0.14.0
-Release: alt4.git20131020
+Release: alt5.git20131020
 
 Summary: SciPy is the library of scientific codes
 
@@ -62,7 +62,7 @@ Summary: SciPy is the library of scientific codes (Python 3)
 Group: Development/Python3
 Requires: %python3_sitelibdir_noarch
 %add_python3_req_skip _min_spanning_tree _shortest_path _tools
-%add_python3_req_skip _traversal
+%add_python3_req_skip _traversal sympy
 
 %description -n python3-module-%oname
 SciPy is the library of scientific codes built on top of NumPy.
@@ -457,6 +457,9 @@ rm -f %buildroot%python_sitelibdir/scipy/pickle/generated/scipy-stats-rv_discret
 %endif
 
 %changelog
+* Wed Nov 20 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.14.0-alt5.git20131020
+- Don't require sympy for module for Python 3
+
 * Wed Nov 06 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.14.0-alt4.git20131020
 - Fixed build
 
