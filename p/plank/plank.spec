@@ -1,7 +1,7 @@
 %set_verify_elf_method rpath=relaxed
 
 Name: plank
-Version: 0.4.0
+Version: 0.5.0
 Release: alt1
 
 Summary: Elegant, simple, clean dock
@@ -98,6 +98,9 @@ This package contains the documentation.
 %files -n libplank-doc
 
 %changelog
+* Wed Nov 20 2013 Igor Zubkov <icesik@altlinux.org> 0.5.0-alt1
+- 0.5.0
+
 * Mon Oct 21 2013 Igor Zubkov <icesik@altlinux.org> 0.4.0-alt1
 - 0.4.0
 
