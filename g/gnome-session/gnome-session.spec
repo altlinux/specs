@@ -5,7 +5,7 @@
 
 Name: gnome-session
 Version: %ver_major.1
-Release: alt1
+Release: alt2
 
 Summary: The gnome session programs for the GNOME GUI desktop environment
 License: GPLv2+
@@ -13,8 +13,8 @@ Group: Graphical desktop/GNOME
 URL: ftp://ftp.gnome.org
 Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 
-Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
-#Source: %name-%version.tar
+#Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
+Source: %name-%version.tar
 Source1: gnome.svg
 
 Patch: %name-2.91.6-alt-autosave_session.patch
@@ -231,6 +231,9 @@ install -pD -m644 %SOURCE1 %buildroot%_iconsdir/gnome.svg
 %_datadir/%name/sessions/gnome-wayland.session
 
 %changelog
+* Wed Nov 20 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.1-alt2
+- 3.10.1 snapshot (3f3066f3), fixed BGO ##710582, 710480
+
 * Fri Oct 11 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.1-alt1
 - 3.10.1
 
