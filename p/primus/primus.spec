@@ -1,6 +1,6 @@
 Name: primus
-Version: 20131105
-Release: alt1
+Version: 20131119
+Release: alt2
 
 Summary: Faster OpenGL offloading for Bumblebee
 License: Freely distributable
@@ -39,10 +39,13 @@ install -pD -m644 lib/libGL.so.1 %buildroot%_libdir/%name/libGL.so.1
 install -pD -m755 %SOURCE1 %buildroot%_bindir/primusrun
 
 %files
-%doc LICENSE.txt README.md
+%doc LICENSE.txt README.md technotes.md
 %_libdir/%name/
 %_bindir/primusrun
 
 %changelog
+* Tue Nov 19 2013 barssc <barssc@altlinux.org> 20131119-alt2
+- add doc technotes.md
+
 * Tue Nov 05 2013 barssc <barssc@altlinux.org> 20131105-alt1
 - first test build for Sisyphus
