@@ -1,5 +1,7 @@
+%define sover 0
+
 Name: sexpr
-Version: 1.2.1
+Version: 1.3
 Release: alt1
 Summary: Small, fast s-expression library (sexpr)
 License: LGPLv2.1+
@@ -50,6 +52,7 @@ sexpr.
 %setup
 
 %build
+%add_optflags %optflags_shared
 %autoreconf
 %configure
 %make_build
@@ -60,10 +63,19 @@ doxygen
 %install
 %makeinstall_std LIBDIR=%_libdir
 
+pushd %buildroot%_libdir
+gcc -shared -Wl,-whole-archive libsexp.a -Wl,-no-whole-archive \
+	-Wl,-soname,libsexp.so.%sover -o libsexp.so.%sover
+ln -s libsexp.so.%sover libsexp.so
+popd
+
+install -d %buildroot%_man3dir
+install -m644 doxygen/man/man3/* %buildroot%_man3dir/
+
 rm -f examples/Makefile.in tests/Makefile.in
 
 %files -n lib%name
-%doc LICENSE* README.txt
+%doc COPYING README
 %_libdir/*.so.*
 
 %files -n lib%name-devel
@@ -75,6 +87,9 @@ rm -f examples/Makefile.in tests/Makefile.in
 %doc doxygen/html examples tests
 
 %changelog
+* Wed Nov 20 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3-alt1
+- Version 1.3
+
 * Fri Mar 30 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.1-alt1
 - Initial build for Sisyphus
 
