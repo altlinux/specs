@@ -1,6 +1,8 @@
+%define _cmake_skip_rpath -DCMAKE_SKIP_RPATH:BOOL=FALSE
+
 Name: accel-ppp
 Version: 1.7.3
-Release: alt6
+Release: alt7
 Summary: High performance PPTP/L2TP/PPPoE server
 Group: System/Servers
 
@@ -38,6 +40,7 @@ Features:
 
 %build
 %cmake \
+      -DCMAKE_SKIP_RPATH:BOOL=FALSE \
       -DCMAKE_SKIP_INSTALL_RPATH:BOOL=FALSE \
       -DBUILD_DRIVER=FALSE \
       -DCMAKE_INSTALL_PREFIX=%prefix \
@@ -82,6 +85,9 @@ echo "0" > %buildroot%_runtimedir/accel-ppp/seq
 %preun_service %name
 
 %changelog
+* Wed Nov 20 2013 Alexei Takaseev <taf@altlinux.org> 1.7.3-alt7
+- Fix rpath
+
 * Sat Nov 09 2013 Alexei Takaseev <taf@altlinux.org> 1.7.3-alt6
 - update upstream to git:da7bb06e70252ba11751f4e3a9f8b97144500d9e
     * fixed sigsegv in 'shaper restore all'
