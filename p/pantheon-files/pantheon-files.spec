@@ -1,8 +1,8 @@
 # TODO: build with unity
 
 Name: pantheon-files
-Version: 0.1.5
-Release: alt2
+Version: 0.1.5.1
+Release: alt1
 
 Summary: The file manager of the Pantheon desktop
 License: GPLv3
@@ -12,6 +12,7 @@ Url: https://launchpad.net/pantheon-files
 Source0: %name-%version.tgz
 
 Patch0: pantheon-files-0.1.4-alt-fix-pkgconfig-file.patch
+Patch1: pantheon-files-0.1.5.1-alt-fix-build.patch
 
 Packager: Igor Zubkov <icesik@altlinux.org>
 
@@ -53,6 +54,7 @@ This package provides Vala language bindings for the pantheon-files.
 %prep
 %setup -q
 %patch0 -p1
+%patch1 -p1
 
 %build
 %cmake_insource
@@ -93,6 +95,9 @@ mv %buildroot/usr/lib/* %buildroot%_libdir/
 %_datadir/vala/vapi/marlincore.vapi
 
 %changelog
+* Wed Nov 20 2013 Igor Zubkov <icesik@altlinux.org> 0.1.5.1-alt1
+- 0.1.5.1
+
 * Mon Nov 11 2013 Igor Zubkov <icesik@altlinux.org> 0.1.5-alt2
 - Make build more verbose
 
