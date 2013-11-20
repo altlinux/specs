@@ -3,7 +3,7 @@
 %define real_name               python
 Name: %real_name
 
-Version: 2.7.4
+Version: 2.7.6
 Release: alt1
 
 %define package_name		%real_name
@@ -622,7 +622,7 @@ tar -xf %SOURCE3
 
 rm -r Modules/expat
 
-%patch1 -p1
+%patch1 -p2
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
@@ -1044,6 +1044,9 @@ rm -f %buildroot%_man1dir/python2.1 %buildroot%_man1dir/python.1
 %python_libdir/lib-dynload/_tkinter.so
 
 %changelog
+* Wed Nov 20 2013 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.7.6-alt1
+- New version.
+
 * Tue Apr 09 2013 Fr. Br. George <george@altlinux.ru> 2.7.4-alt1
 - Version up
 - Fix patches
