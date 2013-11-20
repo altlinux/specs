@@ -1,5 +1,5 @@
 Name: qpdfview
-Version: 0.4.5
+Version: 0.4.6
 Release: alt1
 Summary: Tabbed PDF viewer using the poppler library
 License: GPLv2
@@ -23,7 +23,8 @@ qpdfview is a tabbed PDF viewer using the poppler library.
 
 %build
 export PATH=%_qt4dir/bin:$PATH
-qmake qpdfview.pro
+qmake QMAKE_CFLAGS_RELEASE="%optflags" \
+	QMAKE_CXXFLAGS_RELEASE="%optflags" qpdfview.pro
 %make_build
 
 %install
@@ -52,6 +53,9 @@ ln -s %_datadir/%name/%name.svg \
 %_libexecdir/%name
 
 %changelog
+* Wed Nov 20 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.6-alt1
+- Version 0.4.6
+
 * Tue Sep 10 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.5-alt1
 - Version 0.4.5
 
