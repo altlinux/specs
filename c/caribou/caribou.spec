@@ -5,7 +5,7 @@
 %def_enable gtk3_module
 
 Name: caribou
-Version: %ver_major.10
+Version: %ver_major.13
 Release: alt1
 
 Summary: A simplified in-place on-screen keyboard
@@ -25,7 +25,7 @@ Requires: lib%name-gir = %version-%release
 %define gee_ver 0.8
 
 %{?_enable_gtk2_module:BuildRequires: libgtk+2-devel}
-%{?_enable_gtk3_module:BuildRequires: libgtk+3-devel}
+%{?_enable_gtk3_module:BuildRequires: libgtk+3-devel libgtk+3-gir-devel}
 BuildPreReq: libgee-devel >= %gee_ver
 BuildRequires: libat-spi2-core-devel libclutter-devel libxklavier-devel libXtst-devel
 BuildRequires: gobject-introspection-devel python-module-pygobject3-devel libxml2-devel
@@ -131,6 +131,9 @@ make clean
 %_girdir/Caribou-1.0.gir
 
 %changelog
+* Wed Nov 20 2013 Paul Wolneykien <manowar@altlinux.org> 0.4.13-alt1
+- Fresh up to v0.4.13.
+
 * Tue Mar 19 2013 Yuri N. Sedunov <aris@altlinux.org> 0.4.10-alt1
 - 0.4.10
 
