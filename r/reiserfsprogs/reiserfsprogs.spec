@@ -2,7 +2,7 @@
 
 Name: reiserfsprogs
 Version: 3.6.24
-Release: alt1
+Release: alt2
 Summary: The utilities to create Reiserfs volume
 License: GPLv2 with "Anti-Plagiarism" modification
 Group: System/Kernel and hardware
@@ -24,7 +24,7 @@ Reiserfs.
 
 
 %prep
-%setup
+%setup -q
 %patch -p1
 
 
@@ -45,6 +45,9 @@ Reiserfs.
 
 
 %changelog
+* Wed Nov 20 2013 Led <led@altlinux.ru> 3.6.24-alt2
+- debugreiserfs: fix use after free while closing log
+
 * Sat Aug 31 2013 Led <led@altlinux.ru> 3.6.24-alt1
 - 3.6.24
 
