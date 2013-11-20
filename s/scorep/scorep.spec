@@ -4,7 +4,7 @@
 %define mpidir %_libdir/%mpiimpl
 
 Name: scorep
-Version: 1.2
+Version: 1.2.1
 Release: alt1
 Summary: Score-P (Scalable Performance Measurement Infrastructure for Parallel Codes)
 License: BSD
@@ -12,7 +12,7 @@ Group: Development/Tools
 Url: http://www.vi-hps.org/projects/score-p/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-Source: http://www.vi-hps.org/upload/packages/scorep/scorep-1.2.tar.gz
+Source: http://www.vi-hps.org/upload/packages/scorep/scorep-1.2.1.tar.gz
 
 BuildPreReq: %mpiimpl-devel libotf2-devel opari2-devel libcube-devel
 BuildPreReq: libbfd-devel uncrustify doxygen libpapi-devel flex
@@ -102,6 +102,9 @@ export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib -L%mpidir/lib"
 %_docdir/%name
 
 %changelog
+* Wed Nov 20 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.1-alt1
+- Version 1.2.1
+
 * Tue Sep 10 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2-alt1
 - Initial build for Sisyphus
 
