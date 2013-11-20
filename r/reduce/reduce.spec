@@ -7,7 +7,7 @@
 %define builddir %_arch-alt-linux-gnu-m%bits
 
 Name: reduce
-Version: 20130728
+Version: 20131115
 Release: alt1
 Summary: REDUCE algebra system, Open Source release
 License: BSD / GPL / LGPL
@@ -214,6 +214,9 @@ popd
 %files -n fonts-type1-%name -f %name.files
 
 %changelog
+* Wed Nov 20 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 20131115-alt1
+- New snapshot
+
 * Mon Jul 29 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 20130728-alt1
 - New snapshot
 
