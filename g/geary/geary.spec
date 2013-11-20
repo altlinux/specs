@@ -1,15 +1,13 @@
 Name: geary
-Version: 0.3.1
-Release: alt3
+Version: 0.4.1
+Release: alt1
 
 Summary: Email client
 License: LGPLv2.1+
 Group: Networking/Mail
 Url: http://www.yorba.org/projects/geary/
 
-Source0: %name-%version.tar.xz
-
-Patch0: geary-0.3.1-alt-desktop-file.patch
+Source0: %name.tar.xz
 
 Packager: Igor Zubkov <icesik@altlinux.org>
 
@@ -26,7 +24,8 @@ BuildRequires: at-spi2-atk-devel libxml2-devel libcanberra-vala
 BuildRequires: gobject-introspection-devel libatk-gir-devel
 BuildRequires: libgtk+3-gir-devel libgdk-pixbuf-gir-devel
 BuildRequires: libjavascriptcoregtk3-gir-devel libpango-gir-devel
-BuildRequires: libsoup-gir-devel 
+BuildRequires: libsoup-gir-devel libexpat-devel desktop-file-utils
+BuildRequires: libgee0.8-devel libsecret-devel libwebkitgtk3-gir-devel
 
 # TODO:
 # -- Unity indicate support: OFF
@@ -42,12 +41,11 @@ Visit http://www.yorba.org to read about the current state of.
 Geary's development.
 
 %prep
-%setup -q
-%patch0 -p1
+%setup -q -n %name
 
 %build
 ./configure --prefix=%_prefix
-%make_build
+%make_build VERBOSE=1
 
 %install
 %make_install DESTDIR=%buildroot install
@@ -64,8 +62,13 @@ Geary's development.
 %dir %_datadir/gnome/help/geary/C
 %_datadir/gnome/help/geary/C/
 %_iconsdir/*/*/apps/*
+%_datadir/appdata/geary.appdata.xml
+%_datadir/locale/es_419/LC_MESSAGES/geary.mo
 
 %changelog
+* Wed Nov 20 2013 Igor Zubkov <icesik@altlinux.org> 0.4.1-alt1
+- 0.4.1 trunk (r1119)
+
 * Mon Aug 26 2013 Igor Zubkov <icesik@altlinux.org> 0.3.1-alt3
 - Cleanup build requires
 
