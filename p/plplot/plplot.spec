@@ -4,7 +4,7 @@
 Name: plplot
 %define fmoddir %_libdir/fortran/modules/%name
 Version: 5.9.10
-Release: alt1.svn20131115
+Release: alt2.svn20131115
 Summary: Scientific graphics plotting library, supporting multiple languages
 License: LGPL v2 or later
 Group: Graphics
@@ -21,7 +21,7 @@ BuildPreReq: libncurses-devel libgd2-devel tcl-devel tk-devel
 BuildPreReq: python-module-pygtk-devel libnumpy-devel libgnomeui-devel
 BuildPreReq: python-module-pygnome-devel
 BuildPreReq: python-module-pygnome-canvas perl-XML-DOM liblasi-devel
-BuildPreReq: libwxGTK2.9-devel liblapack-devel dri2proto
+BuildPreReq: libwxGTK3.0-devel liblapack-devel dri2proto
 %if_enabled docs
 BuildPreReq: texinfo openjade docbook-dtds OpenSP
 BuildPreReq: docbook2X docbook-utils-print docbook-style-dsssl
@@ -575,6 +575,9 @@ rm -fR %buildroot%_docdir/%name \
 %_pkgconfigdir/plplotd-wxwidgets.pc
 
 %changelog
+* Wed Nov 20 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.9.10-alt2.svn20131115
+- Rebuilt with wxGTK3.0
+
 * Fri Nov 15 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.9.10-alt1.svn20131115
 - Version 5.9.10
 
