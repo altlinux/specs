@@ -6,7 +6,7 @@
 Summary: Tool for fitting and analyzing data
 Name: fityk
 Version: 1.2.1
-Release: alt1.git20130909
+Release: alt2.git20130909
 License: GPL
 Group: Sciences/Other
 Url: https://github.com/wojdyr/fityk
@@ -19,7 +19,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 # Automatically added by buildreq on Mon Aug 04 2008
 BuildRequires: gcc-c++ gcc-fortran libreadline-devel rpm-build-python
 
-BuildPreReq: boost-devel libxylib-devel libwxGTK2.9-devel zlib-devel
+BuildPreReq: boost-devel libxylib-devel libwxGTK3.0-devel zlib-devel
 BuildPreReq: liblua5-devel python-module-sphinx-devel swig dvipng
 BuildPreReq: libcmpfit-devel
 BuildPreReq: texlive-latex-recommended texmf-latex-preview gnuplot
@@ -200,6 +200,9 @@ popd
 %endif
 
 %changelog
+* Wed Nov 20 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.1-alt2.git20130909
+- Rebuilt with wxGTK3.0
+
 * Wed Nov 13 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.1-alt1.git20130909
 - New snapshot
 
