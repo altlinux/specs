@@ -1,5 +1,5 @@
 Name: samsung-tools
-Version: 2.2
+Version: 2.3
 Release: alt1
 
 Summary: Tools for Samsung netbooks
@@ -55,6 +55,9 @@ available).
 %_datadir/%name
 
 %changelog
+* Wed Nov 20 2013 Igor Zubkov <icesik@altlinux.org> 2.3-alt1
+- 2.3
+
 * Mon Sep 02 2013 Igor Zubkov <icesik@altlinux.org> 2.2-alt1
 - 2.1 -> 2.2
 - Add pm-utils to package requires
