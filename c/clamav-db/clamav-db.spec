@@ -2,15 +2,15 @@
 %define sys_clamav 	/var/lib/clamav
 %define sys_db		/var/lib/clamav-db
 
-Name: clamav-db
-Version: 20130616
+Name:    clamav-db
+Version: 20131121
 Release: alt1
 
 Summary: Antivirus database for ClamAV
 Summary(ru-RU.UTF-8): Антивирусная база для ClamAV
 License: distributable
-Group: File tools
-Url: http://www.clamav.net/
+Group:   File tools
+Url:     http://www.clamav.net/
 
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
@@ -54,6 +54,9 @@ done
 %attr(664,mail,root) %config(noreplace) /%dir/safebrowsing.cvd
 
 %changelog
+* Thu Nov 21 2013 Andrey Cherepanov <cas@altlinux.org> 20131121-alt1
+- Update database
+
 * Sun Jun 16 2013 Andrey Cherepanov <cas@altlinux.org> 20130616-alt1
 - Update database
 
