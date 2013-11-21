@@ -1,15 +1,16 @@
+%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(File/Spec/Functions.pm) perl(Scalar/Util.pm) perl(overload.pm) perl-Module-Build perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Math-MatrixReal
-Version:        2.09
-Release:        alt2_7
+Version:        2.10
+Release:        alt1
 Summary:        Manipulate matrix of reals
 License:        GPL+ or Artistic
 Group:          Development/Perl
 URL:            http://search.cpan.org/dist/Math-MatrixReal/
-Source0:        http://www.cpan.org/authors/id/L/LE/LETO/Math-MatrixReal-%{version}.tar.gz
+Source:        http://www.cpan.org/authors/id/L/LE/LETO/Math-MatrixReal-%{version}.tar.gz
 BuildArch:      noarch
 BuildRequires:  perl(Module/Build.pm)
 BuildRequires:  perl(File/Spec.pm)
@@ -56,6 +57,9 @@ find %{buildroot} -depth -type d -exec rmdir {} 2>/dev/null \;
 %{perl_vendor_privlib}/*
 
 %changelog
+* Thu Nov 21 2013 Igor Vlasenko <viy@altlinux.ru> 2.10-alt1
+- automated CPAN update
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 2.09-alt2_7
 - update to new release by fcimport
 
