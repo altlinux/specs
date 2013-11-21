@@ -3,9 +3,11 @@
 %def_enable ecap
 %def_enable esi
 
+%set_automake_version 1.11
+
 Name: squid
 Version: 3.2.13
-Release: alt6
+Release: alt7
 %define langpack_ver 20121005
 Summary: The Squid proxy caching server
 License: GPLv2
@@ -288,6 +290,9 @@ chown -R %name:%name %_spooldir/%name >/dev/null 2>&1 ||:
 
 
 %changelog
+* Thu Nov 21 2013 Led <led@altlinux.ru> 3.2.13-alt7
+- build with automake 1.11
+
 * Sun Oct 06 2013 Led <led@altlinux.ru> 3.2.13-alt6
 - enabled ecap (through fixed libecap-devel package)
 
