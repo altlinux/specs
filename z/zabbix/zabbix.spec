@@ -1,7 +1,7 @@
 %define zabbix_user	zabbix
 %define zabbix_group	zabbix
 %define zabbix_home	/dev/null
-%define svnrev 16759
+%define svnrev 39075
 
 %def_with pgsql
 
@@ -10,7 +10,7 @@
 %endif
 
 Name: zabbix
-Version: 2.0.9
+Version: 2.2.0
 Release: alt1
 
 Packager: Alexei Takaseev <taf@altlinux.ru>
@@ -204,7 +204,7 @@ zabbix web frontend, edition for php5
 
 %build
 # fix ZABBIX_REVISION
-sed -i -e "s,{ZABBIX_REVISION},%svnrev," include/common.h
+sed -i -e "s,{ZABBIX_REVISION},%svnrev," include/version.h
 
 %autoreconf
 
@@ -455,6 +455,9 @@ fi
 %doc misc/snmptrap/* migrate.sh
 
 %changelog
+* Thu Nov 21 2013 Alexei Takaseev <taf@altlinux.org> 1:2.2.0-alt1
+- 2.2.0 release
+
 * Wed Oct 09 2013 Alexei Takaseev <taf@altlinux.org> 1:2.0.9-alt1
 - 2.0.9 release
 
