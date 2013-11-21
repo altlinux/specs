@@ -12,7 +12,7 @@
 
 Name: kdegraphics
 Version: 3.5.13.2
-Release: alt2
+Release: alt3
 
 Group: Graphical desktop/KDE
 Summary: K Desktop Environment - Graphics
@@ -690,6 +690,9 @@ install -m 0644 %SOURCE1 %buildroot/%_K3conf/kghostviewrc
 
 
 %changelog
+* Thu Nov 21 2013 Sergey V Turchin <zerg@altlinux.org> 3.5.13.2-alt3
+- rebuilt with new poppler (ALT#29598)
+
 * Sat Jul 06 2013 Roman Savochenko <rom_as@altlinux.ru> 3.5.13.2-alt2
 - Backward rename home dir .trinity to .kde.
 
