@@ -8,7 +8,7 @@ Summary:              The Mozilla Firefox project is a redesign of Mozilla's bro
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox
-Version:        25.0
+Version:        25.0.1
 Release:        alt1
 License:        MPL/GPL/LGPL
 Group:          Networking/WWW
@@ -253,6 +253,11 @@ done
 %_rpmmacrosdir/firefox
 
 %changelog
+* Thu Nov 21 2013 Alexey Gladkov <legion@altlinux.ru> 25.0.1-alt1
+- New release (25.0.1).
+- Fixed:
+  + MFSA 2013-103 Miscellaneous Network Security Services (NSS) vulnerabilities
+
 * Sun Nov 03 2013 Alexey Gladkov <legion@altlinux.ru> 25.0-alt1
 - New release (25.0).
 - Fixed:

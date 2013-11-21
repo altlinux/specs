@@ -13,7 +13,7 @@
 
 Summary:	XUL Runner
 Name:		xulrunner
-Version:	25.0
+Version:	25.0.1
 Release:	alt1
 
 License:	MPL/GPL/LGPL
@@ -358,6 +358,11 @@ ln -sf $(relative "%xulr_prefix/libmozalloc.so" "%xulr_develdir/sdk/lib/libmozal
 %_datadir/rpm-build-mozilla/mozilla-sh-functions
 
 %changelog
+* Wed Nov 20 2013 Alexey Gladkov <legion@altlinux.ru> 25.0.1-alt1
+- New release (25.0.1).
+- Fixed:
+  + MFSA 2013-103 Miscellaneous Network Security Services (NSS) vulnerabilities
+
 * Fri Nov 01 2013 Alexey Gladkov <legion@altlinux.ru> 25.0-alt1
 - New release (25.0).
 - Fixed:
