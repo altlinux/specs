@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist DBIx-Class-Schema-Loader
 Name: perl-%dist
-Version: 0.07037
+Version: 0.07038
 Release: alt1
 
 Summary: Dynamic definition of a DBIx::Class::Schema
@@ -36,6 +36,9 @@ setting up the columns, primary keys, and relationships.
 %perl_vendor_privlib/DBIx
 
 %changelog
+* Thu Nov 21 2013 Igor Vlasenko <viy@altlinux.ru> 0.07038-alt1
+- automated CPAN update
+
 * Fri Nov 01 2013 Igor Vlasenko <viy@altlinux.ru> 0.07037-alt1
 - automated CPAN update
 
