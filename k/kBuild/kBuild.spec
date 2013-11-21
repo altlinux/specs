@@ -1,8 +1,9 @@
 %def_disable    bootstrap
 %define         short_version 0.1.9998
+%define         gcc_version 4.5
 
 Name:           kBuild
-Version:        %short_version.r2578
+Version:        %short_version.r2694
 Release:        alt1
 License:        %gpl3plus
 Group:          Development/Other
@@ -15,6 +16,7 @@ Patch:          kBuild-0.1.9-strlcpy-linux.patch
 Patch1:         kBuild-0.1.5-dprintf.patch
 Patch2:         kBuild-0.1.3-escape.patch
 
+BuildPreReq: gcc%gcc_version
 BuildRequires(pre): rpm-build-licenses
 BuildRequires:  cvs flex libacl-devel
 BuildRequires: perl-podlators
@@ -55,6 +57,8 @@ chmod a+x kBuild/env.sh
 chmod a+x src/sed/configure
 
 %build
+export GCC_VERSION=%gcc_version
+
 %define bootstrap_mflags %_smp_mflags   \\\
         CFLAGS="%optflags"              \\\
         KBUILD_VERBOSE=1
@@ -85,6 +89,10 @@ chmod a-x %buildroot%_datadir/%name/*/*kmk
 %_datadir/%name
 
 %changelog
+* Wed Nov 20 2013 Evgeny Sinelnikov <sin@altlinux.ru> 0.1.9998.r2694-alt1
+- Update to last unstable release from svn trunk (r2694)
+- Build with gcc-4.5 due kmk_sed support
+
 * Thu Aug 09 2012 Evgeny Sinelnikov <sin@altlinux.ru> 0.1.9998.r2578-alt1
 - Update to last unstable release from svn trunk (r2578)
 - Build without bootstrap
