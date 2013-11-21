@@ -1,4 +1,5 @@
 # BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: gcc-c++
@@ -9,7 +10,7 @@ BuildRequires: jpackage-compat
 Summary:        The PDF Tool Kit
 Name:           pdftk
 Version:        1.44
-Release:        alt2_10jpp7
+Release:        alt2_11jpp7
 License:        GPLv2+
 URL:            http://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/
 Source0:        http://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/%{name}-%{version}-src.zip
@@ -90,6 +91,9 @@ install -m 0644 pdftk.1 $RPM_BUILD_ROOT/%{_mandir}/man1/pdftk.1
 %{_mandir}/man1/%{name}*
 
 %changelog
+* Thu Nov 21 2013 Igor Vlasenko <viy@altlinux.ru> 1.44-alt2_11jpp7
+- new version
+
 * Tue Oct 02 2012 Igor Vlasenko <viy@altlinux.ru> 1.44-alt2_10jpp7
 - new fc release
 
