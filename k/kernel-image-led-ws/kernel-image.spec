@@ -24,13 +24,13 @@
 %define flavour %base_flavour-%sub_flavour
 
 Name: kernel-image-%flavour
-Version: 3.10.19
-Release: alt7
+Version: 3.10.20
+Release: alt1
 
 %define kernel_req %nil
 %define kernel_prov %nil
 %define kernel_branch 3.10
-%define kernel_stable_version 19
+%define kernel_stable_version 20
 %define kernel_extra_version .%kernel_stable_version
 #define kernel_extra_version %nil
 
@@ -1836,6 +1836,18 @@ done)
 
 
 %changelog
+* Wed Nov 20 2013 Led <led@altlinux.ru> 3.10.20-alt1
+- 3.10.20
+- updated:
+  + fix-drivers-acpi
+  + fix-drivers-cpufreq--intel_pstate
+  + fix-drivers-gpio--gpio-ucb1400
+  + fix-drivers-usb-core
+- added:
+  + fix-drivers-acpi--processor
+  + fix-drivers-iommu--irq_remapping
+  + fix-kernel-trace--blktrace
+
 * Tue Nov 19 2013 Led <led@altlinux.ru> 3.10.19-alt7
 - added:
   + fix-sound-pci-hda--snd-hda-codec-idt
