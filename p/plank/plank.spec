@@ -2,7 +2,7 @@
 
 Name: plank
 Version: 0.5.0
-Release: alt2
+Release: alt3
 
 Summary: Elegant, simple, clean dock
 License: GPLv3+
@@ -15,7 +15,7 @@ Packager: Igor Zubkov <icesik@altlinux.org>
 
 # Automatically added by buildreq on Thu Oct 10 2013
 BuildRequires: gnome-common intltool libbamf3-devel libgee0.8-devel vala-tools
-BuildRequires: xvfb-run dbus-tools-gui
+BuildRequires: xvfb-run dbus-tools-gui libgtk+3-devel libwnck3-devel
 
 %description
 Plank is a dock enabling you to start applications and manage your windows.
@@ -103,6 +103,9 @@ This package contains the documentation.
 %files -n libplank-doc
 
 %changelog
+* Thu Nov 21 2013 Igor Zubkov <icesik@altlinux.org> 0.5.0-alt3
+- Rebuilt with libbamf3.so.2
+
 * Wed Nov 20 2013 Igor Zubkov <icesik@altlinux.org> 0.5.0-alt2
 - Enable headless tests
 
