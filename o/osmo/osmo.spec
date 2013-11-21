@@ -1,10 +1,12 @@
+%set_automake_version 1.11
+
 %def_enable printing
 %def_enable backup
 %def_without libsyncml
 
 Name: osmo
 Version: 0.2.10
-Release: alt4
+Release: alt5
 
 Summary: Personal organizer
 License: GPLv2+
@@ -64,6 +66,10 @@ mv %buildroot%_datadir/pixmaps/%name.png \
 %doc AUTHORS ChangeLog README README.syncml TRANSLATORS
 
 %changelog
+* Wed Nov 20 2013 Yuri N. Sedunov <aris@altlinux.org> 0.2.10-alt5
+- rebuilt against libical.so.1
+- use automake-1.11
+
 * Tue Jun 07 2011 Yuri N. Sedunov <aris@altlinux.org> 0.2.10-alt4
 - fixed for libnotify-0.7
 

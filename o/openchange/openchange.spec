@@ -5,7 +5,7 @@
 
 Name: openchange
 Version: 2.0
-Release: alt1
+Release: alt2
 Group: Networking/Mail
 Summary: Provides access to Microsoft Exchange servers using native protocols
 License: GPLv3+ and Public Domain
@@ -238,6 +238,9 @@ rm -f %buildroot%_bindir/check_fasttransfer
 %endif
 
 %changelog
+* Wed Nov 20 2013 Alexey Shabalin <shaba@altlinux.ru> 2.0-alt2
+- rebuild with new libical
+
 * Fri Apr 05 2013 Alexey Shabalin <shaba@altlinux.ru> 2.0-alt1
 - 2.0
 

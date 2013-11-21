@@ -1,7 +1,7 @@
 
 Name:    kmymoney
-Version: 4.6.3
-Release: alt3
+Version: 4.6.4
+Release: alt1
 
 Summary: A Personal Finance Manager for KDE4
 Summary(ru_RU.UTF-8): Учёт финансов под KDE4
@@ -11,10 +11,9 @@ URL:     http://kmymoney2.sourceforge.net
 
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
-Source0: %name-%version.tar.bz2
+Source0: %name-%version.tar.xz
 Source2: %name.watch
 Patch0:  %name-fix-undeclared-geteuid.patch
-Patch1:  %name-4.6.3-gmp-5.1.0.patch
 
 AutoReq: yes, noperl
 
@@ -152,7 +151,6 @@ Internationalization and documentation for KMyMoney
 %prep
 %setup -q -n %name-%version
 %patch0 -p2
-%patch1 -p1
 
 %build
 %K4build -DCMAKE_SKIP_RPATH=1 -DUSE_HTML_HANDBOOK=1
@@ -233,6 +231,9 @@ Internationalization and documentation for KMyMoney
 
 
 %changelog
+* Thu Nov 21 2013 Andrey Cherepanov <cas@altlinux.org> 4.6.4-alt1
+- New version
+
 * Wed Apr 10 2013 Andrey Cherepanov <cas@altlinux.org> 4.6.3-alt3
 - Fix build with GMP 5.1.0
 - Support Nepomuk

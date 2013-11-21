@@ -2,7 +2,7 @@
 
 Name: gnokii
 Version: 0.6.29
-Release: alt2.qa1
+Release: alt3
 
 Summary: Unix tool suite for Nokia mobile phones
 Group: Communications
@@ -172,6 +172,9 @@ sed 's,/usr/local/sbin,%_sbindir,g' \
 %_libdir/smsd/libsmsd_sqlite.so
 
 %changelog
+* Wed Nov 20 2013 Yuri N. Sedunov <aris@altlinux.org> 0.6.29-alt3
+- rebuilt against libical.so.1
+
 * Sun Apr 14 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.6.29-alt2.qa1
 - NMU: rebuilt with libmysqlclient.so.18.
 

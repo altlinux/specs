@@ -1,66 +1,55 @@
-Name: libical
-Version: 1.0
+Name: libical0.47
+Version: 0.47
 Release: alt2
-
 Summary: An implementation of basic iCAL protocols
+License: LGPL/MPL
 Group: System/Libraries
-License: LGPL2.1+/MPL
 Url: http://sourceforge.net/projects/freeassociation/
 
-Source: http://ovh.dl.sourceforge.net/sourceforge/freeassociation/%name-%version.tar.gz
-# http://sourceforge.net/p/freeassociation/code/1150/
-Patch: libical-1.0-r1150.patch
+Source: http://ovh.dl.sourceforge.net/sourceforge/freeassociation/libical-%version.tar.gz
 
-BuildRequires: cmake gcc-c++ ctest
+BuildRequires: cmake gcc-c++
 
 %description
-Libical is an Open Source implementation of the IETF's iCalendar
-Calendaring and Scheduling protocols (RFC 2445, 2446, and 2447).
-It parses iCal components and provides a C API for manipulating the
-component properties, parameters, and subcomponents
-
-%package devel
-Summary: Files for developing applications that use libical
-Requires: %name = %version-%release
-Group: Development/C
-
-%description devel
-The header files and libtool library  for developing applications that
-use libical.
+Libical is an Open Source implementation of the IETF's iCalendar Calendaring
+and Scheduling protocols (RFC 2445, 2446, and 2447). It parses iCal components
+and provides a C API for manipulating the component properties, parameters,
+and subcomponents
 
 %prep
-%setup
-%patch -p1
+%setup -n libical-%version
 
 %build
-%cmake
-%cmake_build
+%define lib_suffix %nil
+%ifarch x86_64 ppc64
+%define lib_suffix 64
+%endif
+mkdir -p %_target_platform
+pushd %_target_platform
+cmake .. \
+    -DCMAKE_INSTALL_PREFIX:PATH=%prefix \
+    -DCMAKE_BUILD_TYPE:STRING=Release \
+    -DCMAKE_C_FLAGS_RELEASE:STRING='%optflags' \
+    -DCMAKE_CXX_FLAGS_RELEASE:STRING='%optflags' \
+    -DLIB_DESTINATION:PATH=%_lib \
+    -DLIB_SUFFIX=%lib_suffix
+popd
+%make -C %_target_platform
 
 %install
-%cmakeinstall_std
-
-%check
-LD_LIBRARY_PATH=%buildroot%_libdir %make test -C BUILD
+%make -C %_target_platform DESTDIR=%buildroot install
 
 %files
-%doc TODO TEST THANKS
 %_libdir/*.so.*
 
-%files devel
-%doc doc/UsingLibical*
-%_includedir/*
-%_libdir/*.so
-%_pkgconfigdir/*.pc
-
+%exclude %_includedir/*
+%exclude %_libdir/*.so
+%exclude %_pkgconfigdir/*.pc
 %exclude %_libdir/*.a
 
 %changelog
-* Wed Nov 20 2013 Yuri N. Sedunov <aris@altlinux.org> 1.0-alt2
-- soname bump
-- %%check section
-
-* Sat Nov 16 2013 Yuri N. Sedunov <aris@altlinux.org> 1.0-alt1
-- 1.0
+* Thu Nov 21 2013 Yuri N. Sedunov <aris@altlinux.org> 0.47-alt2
+- rename to libical0.47, remove devel subpackage
 
 * Sat Nov 12 2011 Valery Inozemtsev <shrek@altlinux.ru> 0.47-alt1
 - 0.47
