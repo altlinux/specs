@@ -4,7 +4,7 @@
 
 Name:		%firefox_name-%rname
 Version:	1.2.5
-Release:	alt1
+Release:	alt2
 Summary:	The Web Developer extension for Mozilla Firefox
 
 License:	GPLv3
@@ -25,7 +25,7 @@ adds a menu and a toolbar to the browser with various web developer tools.
 
 %prep
 %setup -c
-subst 's/22\./24./' install.rdf
+subst 's/22\./24.1./' install.rdf
 subst 's/2\.17\./2.22./' install.rdf
 
 %install
@@ -41,6 +41,9 @@ fi
 %ciddir
 
 %changelog
+* Thu Nov 21 2013 Andrey Cherepanov <cas@altlinux.org> 1:1.2.5-alt2
+- Adapt for Firefox 24.1.x
+
 * Tue Nov 05 2013 Andrey Cherepanov <cas@altlinux.org> 1:1.2.5-alt1
 - New version
 - Adapt for Firefox 24.x and Seamonkey 2.22.x
