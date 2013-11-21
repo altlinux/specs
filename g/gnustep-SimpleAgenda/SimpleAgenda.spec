@@ -2,7 +2,7 @@
 
 Name: gnustep-SimpleAgenda
 Version: 0.43
-Release: alt3
+Release: alt4
 Summary: Simple calendar and agenda application
 License: GPLv2+
 Group: Graphical desktop/GNUstep
@@ -54,6 +54,9 @@ install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
 %_menudir/*
 
 %changelog
+* Thu Nov 21 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.43-alt4
+- Rebuilt with new libical
+
 * Mon Mar 04 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.43-alt3
 - Added Requires: gnustep-dbuskit
 

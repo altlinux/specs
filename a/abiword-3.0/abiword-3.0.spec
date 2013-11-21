@@ -9,7 +9,7 @@
 
 Name: %_name-%abi_ver
 Version: %ver_major.0
-Release: alt2
+Release: alt3
 
 Summary: Lean and fast full-featured word processor
 Group: Office
@@ -115,6 +115,9 @@ Conflicts: %_name-devel %_name-light-devel
 %_pkgconfigdir/*
 
 %changelog
+* Wed Nov 20 2013 Yuri N. Sedunov <aris@altlinux.org> 3.0.0-alt3
+- rebuilt against libical.so.1
+
 * Fri Oct 18 2013 Yuri N. Sedunov <aris@altlinux.org> 3.0.0-alt2
 - fixed http://bugzilla.abisource.com/show_bug.cgi?id=13564
 
