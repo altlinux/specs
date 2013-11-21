@@ -56,8 +56,8 @@
 %define gcc_version 4.5
 
 Name: virtualbox
-Version: 4.2.16
-Release: alt4
+Version: 4.2.18
+Release: alt1
 
 Summary: VM VirtualBox OSE - Virtual Machine for x86 hardware
 License: GPL
@@ -92,7 +92,6 @@ Source99:	%vboxdbg.in
 %endif
 
 Patch0:		%name-%version-%release.patch
-Patch1:	virtualbox-addition-3.11.patch
 
 BuildPreReq: dev86 iasl gcc%gcc_version-c++ libstdc++%gcc_version-devel-static
 BuildPreReq: libIDL-devel libSDL-devel libpng-devel
@@ -282,7 +281,6 @@ This package contains VirtualBox SDK.
 %prep
 %setup -q -n %distarchive
 %patch -p1
-%patch1 -p2
 
 cp %SOURCE15 %SOURCE16 src/VBox/Frontends/VirtualBox/images
 
@@ -684,6 +682,9 @@ mountpoint -q /dev || {
 %endif
 
 %changelog
+* Wed Nov 20 2013 Evgeny Sinelnikov <sin@altlinux.ru> 4.2.18-alt1
+- Update to last release of stable branch 4.2
+
 * Tue Oct 08 2013 Gleb F-Malinovskiy <glebfm@altlinux.org> 4.2.16-alt4
 - Fix build with libvncserver >= 0.9.9.
 
