@@ -2,12 +2,12 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(Capture/Tiny.pm) perl(Config.pm) perl(Exporter.pm) perl(ExtUtils/Config.pm) perl(ExtUtils/MakeMaker.pm) perl(File/Spec/Functions.pm) perl(IPC/Open2.pm) perl(Test/More.pm)
 # END SourceDeps(oneline)
-%define module_version 0.010
+%define module_version 0.012
 %define module_name Devel-FindPerl
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.010
+Version: 0.012
 Release: alt1
 Summary: Find the path to your perl
 Group: Development/Perl
@@ -34,6 +34,9 @@ BuildArch: noarch
 %perl_vendor_privlib/D*
 
 %changelog
+* Thu Nov 21 2013 Igor Vlasenko <viy@altlinux.ru> 0.012-alt1
+- automated CPAN update
+
 * Sat Nov 16 2013 Igor Vlasenko <viy@altlinux.ru> 0.010-alt1
 - automated CPAN update
 
