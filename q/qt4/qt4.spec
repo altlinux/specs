@@ -40,7 +40,7 @@
 %define minor	8
 %define bugfix	5
 %define beta	%nil
-%define rlz alt2
+%define rlz alt3
 %define phonon_ver 4.4.0
 
 Name: %rname%major
@@ -833,7 +833,7 @@ CNFGR="\
 	-I/usr/X11R6/include/X11/Xft -I/usr/include/fontconfig \
         -prefix %qtdir \
 	-bindir %qtdir/bin \
-	-docdir %_datadir/%name/doc \
+	-docdir %_docdir/%name \
 	-headerdir %_includedir/%name \
 	-libdir %_libdir \
 	-translationdir %_datadir/%name/translations \
@@ -955,10 +955,10 @@ install -d -m 0755 %buildroot/%qtdir/plugins/styles/
 
 
 %if_enabled docs
-# move docs do _docdir
+# apply docs
 mkdir -p %buildroot/%_docdir/
-mv %buildroot/%_datadir/%name/doc %buildroot/%_docdir/%rname-%version
-ln -s ../../..%_docdir/%rname-%version %buildroot/%_datadir/%name/doc
+ln -s `relative %_docdir/%name %_datadir/%name/doc` %buildroot/%_datadir/%name/doc
+ln -s `relative %_docdir/%name %qtdir/doc` %buildroot/%qtdir/doc
 %endif
 
 # install rpm macros
@@ -1068,25 +1068,25 @@ subst "s|^\s*QMAKE_LIBDIR_QT\s*=.*$|QMAKE_LIBDIR_QT		= %qtdir/lib|" %buildroot/%
 
 
 # install documentation
-#install -d -m 0755 %buildroot/%_docdir/%rname-%version/doc/html
-#install -m 0644 doc/html/*.html %buildroot/%_docdir/%rname-%version/doc/html
-install -d -m 0755 %buildroot/%_docdir/%rname-%version/
-cat > %buildroot/%_docdir/%rname-%version/LICENSE.txt <<__EOF__
+#install -d -m 0755 %buildroot/%_docdir/%name/doc/html
+#install -m 0644 doc/html/*.html %buildroot/%_docdir/%name/doc/html
+install -d -m 0755 %buildroot/%_docdir/%name/
+cat > %buildroot/%_docdir/%name/LICENSE.txt <<__EOF__
 see %license in %_datadir/license
 __EOF__
 for f in LGPL_EXCEPTION.txt LICENSE.PREVIEW.COMMERCIAL
 do
     f2=`echo "$f"| sed 's|\.[Tt][Xx][Tt]$||'`
-    install -m 0644 $f %buildroot/%_docdir/%rname-%version/${f2}.txt
+    install -m 0644 $f %buildroot/%_docdir/%name/${f2}.txt
 done
 
 # Install a README
-install -m 0644 %SOURCE8 %buildroot/%_docdir/%rname-%version/README.ALT.txt
-sed -i 's|@QT@|%name|g' %buildroot/%_docdir/%rname-%version/README.ALT.txt
-sed -i 's|@QTDIR@|%qtdir|g' %buildroot/%_docdir/%rname-%version/README.ALT.txt
-sed -i 's|@QtVersion@|%version|g' %buildroot/%_docdir/%rname-%version/README.ALT.txt
-sed -i 's|@PackageVersion@|%version-%release|g' %buildroot/%_docdir/%rname-%version/README.ALT.txt
-sed -i 's|@QTHOME@|~/.config/|g' %buildroot/%_docdir/%rname-%version/README.ALT.txt
+install -m 0644 %SOURCE8 %buildroot/%_docdir/%name/README.ALT.txt
+sed -i 's|@QT@|%name|g' %buildroot/%_docdir/%name/README.ALT.txt
+sed -i 's|@QTDIR@|%qtdir|g' %buildroot/%_docdir/%name/README.ALT.txt
+sed -i 's|@QtVersion@|%version|g' %buildroot/%_docdir/%name/README.ALT.txt
+sed -i 's|@PackageVersion@|%version-%release|g' %buildroot/%_docdir/%name/README.ALT.txt
+sed -i 's|@QTHOME@|~/.config/|g' %buildroot/%_docdir/%name/README.ALT.txt
 
 # Install man pages
 #install -d -m 0755 %buildroot/%_mandir/man1/
@@ -1118,6 +1118,7 @@ for i in %_builddir/%buildsubdir/src/*.pri; do
    install -m 0644 $i %buildroot/%qtdir/src/
 done
 
+%if_enabled docs
 # examples and demos
 > %_builddir/%buildsubdir/examples_bin_list
 > %_builddir/%buildsubdir/examples_bin_list_exclude
@@ -1129,16 +1130,16 @@ do
     pushd %buildroot/%_datadir/%name/$m
 	find -type f -name Makefile | while read f; do rm -f "$f"; done
 	find -type f -name \*.o | while read f; do rm -f "$f"; done
-	find -type f -name README | \
-	while read readme_file
-	do
-	    cat $readme_file >${readme_file}.tmp
-	    echo -e "Before try to build one of these $m, you need to:\n" > $readme_file
-	    echo "export QTDIR=\"%{qtdir}/\" PATH=\"%{qtdir}/bin:\$PATH\"" >> $readme_file
-	    echo -e "\n\n" >> $readme_file
-	    cat ${readme_file}.tmp >> $readme_file
-	    rm -f ${readme_file}.tmp
-	done
+	#find -type f -name README | \
+	#while read readme_file
+	#do
+	#    cat $readme_file >${readme_file}.tmp
+	#    echo -e "Before try to build one of these $m, you need to:\n" > $readme_file
+	#    echo "export QTDIR=\"%{qtdir}/\" PATH=\"%{qtdir}/bin:\$PATH\"" >> $readme_file
+	#    echo -e "\n\n" >> $readme_file
+	#    cat ${readme_file}.tmp >> $readme_file
+	#    rm -f ${readme_file}.tmp
+	#done
 	find ./ -type f -executable | sed "s|^\.||" | \
 	while read e
 	do
@@ -1150,8 +1151,7 @@ do
 	done
     popd
 done
-
-ln -s ../../../%_docdir/qt-%version %buildroot/%qtdir/doc
+%endif
 
 pushd %buildroot/%_datadir/%name/mkspecs/
 rm -rf default
@@ -1211,7 +1211,7 @@ install -m 644 %SOURCE104 %buildroot/%_iconsdir/hicolor/64x64/apps/%name.png
 %qtdir/settings
 %_libdir/%rname-%version
 %_iconsdir/hicolor/*/apps/%name.png
-%dir %_docdir/%rname-%version/
+%dir %_docdir/%name/
 %qtdir/doc
 #
 %qtdir/mkspecs/
@@ -1355,8 +1355,7 @@ install -m 644 %SOURCE104 %buildroot/%_iconsdir/hicolor/64x64/apps/%name.png
 
 
 %files -n lib%name-devel
-%dir %_docdir/%rname-%version/
-%doc %_docdir/%rname-%version/*.txt
+%doc %_docdir/%name/*.txt
 #
 %_bindir/qmlplugindump-qt4
 %qtdir/bin/qmlplugindump
@@ -1495,13 +1494,13 @@ install -m 644 %SOURCE104 %buildroot/%_iconsdir/hicolor/64x64/apps/%name.png
 %exclude %_datadir/%name/mkspecs/*
 
 %files doc-html
-%dir %_docdir/%rname-%version/
-%dir %_docdir/%rname-%version/html/
-%doc %_docdir/%rname-%version/html/*
-%dir %_docdir/%rname-%version/src/
-%doc %_docdir/%rname-%version/src/*
-%dir %_docdir/%rname-%version/qch/
-%doc %_docdir/%rname-%version/qch/*
+%dir %_docdir/%name/
+%dir %_docdir/%name/html/
+%doc %_docdir/%name/html/*
+%dir %_docdir/%name/src/
+%doc %_docdir/%name/src/*
+%dir %_docdir/%name/qch/
+%doc %_docdir/%name/qch/*
 
 %files doc-examples
 
@@ -1549,6 +1548,12 @@ install -m 644 %SOURCE104 %buildroot/%_iconsdir/hicolor/64x64/apps/%name.png
 %endif
 
 %changelog
+* Fri Nov 22 2013 Sergey V Turchin <zerg@altlinux.org> 4.8.5-alt3
+- use constant docs dir
+
+* Sat Nov 16 2013 Sergey V Turchin <zerg@altlinux.org> 4.8.5-alt1.M70P.1
+- built for M70P
+
 * Fri Nov 15 2013 Sergey V Turchin <zerg@altlinux.org> 4.8.5-alt2
 - package examples unarchived to make in available in qtcreator
 - add patch for cups-1.6 printers discovery
