@@ -1,6 +1,6 @@
 Name: klibc
 Version: 2.0.2
-Release: alt4
+Release: alt5
 Summary: A minimal libc subset for use with initramfs
 License: BSD/GPL
 Group: System/Libraries
@@ -125,7 +125,8 @@ klibc_soname=$(basename $(ls %buildroot/%_lib/%name-*.so))
 ln -s {,%buildroot/lib/mkinitrd/%name}/%_lib/$klibc_soname
 ln -sf {/%_lib,%buildroot%klibcdir/lib}/$klibc_soname
 install -p -m 0755 usr/dash/sh.shared %buildroot/lib/mkinitrd/%name/bin/sh
-install -p -m 0755 usr/utils/shared/{cat,false,kill,ln,mkdir,mknod,mount,nuke,sleep,true,umount} \
+# sh builtin: false, true, kill
+install -p -m 0755 usr/utils/shared/{cat,ln,mkdir,mknod,mount,nuke,sleep,umount} \
 	%buildroot/lib/mkinitrd/%name/bin/
 install -p -m 0755 usr/utils/shared/halt %buildroot/lib/mkinitrd/%name/sbin/
 for p in fstype ipconfig md_run nfsmount resume run-init; do
@@ -181,6 +182,10 @@ strip -g %buildroot%klibcdir/lib/libc.so
 
 
 %changelog
+* Fri Nov 22 2013 Led <led@altlinux.ru> 2.0.2-alt5
+- removed unneeded 'false', 'true', 'kill' utils from utils-initramfs subpackage
+  (already sh builtin)
+
 * Mon Nov 18 2013 Led <led@altlinux.ru> 2.0.2-alt4
 - upstream fixes
 - removed unneeded 'readlink' from utils-initramfs subpackage
