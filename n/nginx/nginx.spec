@@ -13,8 +13,8 @@
 %def_enable ctpp2
 
 Name: nginx
-Version: 1.4.3
-Release: alt3
+Version: 1.4.4
+Release: alt1
 
 Summary: Fast HTTP server
 License: BSD
@@ -258,6 +258,10 @@ sed -i 's/\(types_hash_bucket_size[[:space:]]*\)[[:space:]]32[[:space:]]*;[[:spa
 %preun_service %name
 
 %changelog
+* Fri Nov 22 2013 Denis Smirnov <mithraen@altlinux.ru> 1.4.4-alt1
+- 1.4.4 (ALT #29604)
+- CVE-2013-4547
+
 * Mon Oct 14 2013 Denis Smirnov <mithraen@altlinux.ru> 1.4.3-alt3
 - add ipv6 support
 
