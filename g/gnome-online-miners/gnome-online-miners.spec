@@ -3,7 +3,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-online-miners
-Version: %ver_major.0
+Version: %ver_major.2
 Release: alt1
 
 Summary: A set of miners for online content
@@ -63,6 +63,9 @@ Flickr, Google, SkyDrive and ownCloud.
 %exclude %_datadir/doc/%name
 
 %changelog
+* Fri Nov 22 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.2-alt1
+- 3.10.2
+
 * Tue Sep 24 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.0-alt1
 - 3.10.0
 
