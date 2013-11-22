@@ -1,21 +1,28 @@
-%define theme junior
-%define Name School Junior
-%define codename none
-%define status %nil
-%define variants altlinux-office-desktop altlinux-office-server altlinux-desktop
 %define brand school
-%define distro_name Informika 6.0 School Junior
-%define distro_name_ru Информика 6.0 Школьный Юниор
+%define Brand School
+%define theme junior
+%define Theme Junior
+%define codename Parus major
+%define variants altlinux-backup-server altlinux-desktop altlinux-gnome-desktop altlinux-kdesktop altlinux-lite altlinux-lxdesktop altlinux-office-desktop altlinux-office-server altlinux-school-server altlinux-sisyphus altlinux-spt altlinux-tablet altlinux-workbench informika-schoolmaster ivk-chainmail lxde-desktop lxde-school-lite Platform6-server-light school-junior school-lite school-master school-server school-teacher school-terminal simply-linux sisyphus-server-light altlinux-centaurus
+%define status альфа
+%define status_en alpha
+%define distro_name ALT Linux 6.9.9 School Junior (alpha)
+%define distro_name_ru Альт Линукс 6.9.9 Школьный Юниор (альфа)
+
+%define design_graphics_abi_epoch 0
+%define design_graphics_abi_major 12
+%define design_graphics_abi_minor 0
+%define design_graphics_abi_bugfix 0
 
 Name: branding-%brand-%theme
-Version: 6.0.0
-Release: alt5
+Version: 6.9.9
+Release: alt1
 BuildArch: noarch
 
 BuildRequires: cpio gfxboot >= 4 fonts-ttf-dejavu fonts-ttf-droid
 BuildRequires: design-bootloader-source >= 5.0-alt2
 
-BuildRequires(pre): libqt4-core 
+BuildRequires(pre): libqt4-core
 BuildRequires: libalternatives-devel
 BuildRequires: libqt4-devel
 
@@ -25,7 +32,8 @@ Source: branding.tar
 
 Group: Graphics
 Summary: System/Base
-License: GPL
+License: GPLv2+
+
 
 %description
 Distro-specific packages with design and texts for %distro_name.
@@ -34,19 +42,18 @@ Distro-specific packages with design and texts for %distro_name.
 Пакеты оформления для дистрибутива %distro_name_ru.
 
 %package bootloader
-Group: System/Configuration/Boot and Init
+Group:   System/Configuration/Boot and Init
 Summary: Graphical boot logo for grub2, lilo and syslinux
 Summary(ru_RU.UTF-8): Тема для экрана выбора вариантов загрузки (lilo и syslinux) 
-License: GPL
+License: GPLv2+
 
-PreReq: coreutils
-Provides: design-bootloader-system-%theme design-bootloader-livecd-%theme design-bootloader-livecd-%theme design-bootloader-%theme branding-alt-%theme-bootloader
-
+PreReq:    coreutils
+Provides:  design-bootloader-system-%theme design-bootloader-livecd-%theme design-bootloader-livecd-%theme design-bootloader-%theme branding-alt-%theme-bootloader
 Obsoletes: design-bootloader-system-%theme design-bootloader-livecd-%theme design-bootloader-livecd-%theme design-bootloader-%theme branding-alt-%theme-bootloader
 Conflicts: %(for n in %variants ; do [ "$n" = %theme ] || echo -n "branding-$n-bootloader ";done )
 
-%define grub_normal dark-gray/white
-%define grub_high black/white
+%define grub_normal white/light-blue
+%define grub_high black/light-gray
 
 %description bootloader
 Here you find the graphical boot logo for %distro_name.
@@ -57,15 +64,17 @@ Suitable for both lilo and syslinux.
 для дистрибутива %distro_name_ru.
 
 %package bootsplash
-Summary: Theme for splash animations during bootup
-Summary(ru_RU.UTF-8): Тема для экрана загрузки для дистрибутива %distro_name_ru.
-License: Distributable
-Group:  System/Configuration/Boot and Init
+BuildArch: noarch
+Summary:  Theme for splash animations during bootup
+Summary(ru_RU.UTF-8): Тема для экрана загрузки для дистрибутива %distro_name_ru
+License:  Distributable
+Group:    System/Configuration/Boot and Init
 Provides: plymouth-theme-%theme
 Requires: plymouth-plugin-script
-PreReq: plymouth
+PreReq:   plymouth
 
-Conflicts: %(for n in %variants ; do [ "$n" = %theme ] || echo -n "branding-$n-bootsplash ";done )
+Conflicts: %(for n in %variants ; do [ "$n" = %brand-%theme ] || echo -n "branding-$n-bootsplash ";done )
+
 
 %description bootsplash
 This package contains graphics for boot process for %distro_name
@@ -82,9 +91,13 @@ License: GPL
 Group: System/Configuration/Other
 Provides: design-alterator-browser-%theme  branding-alt-%theme-browser-qt branding-altlinux-%theme-browser-qt
 Provides: alterator-icons design-alterator design-alterator-%theme
-Obsoletes:  branding-alt-%theme-browser-qt  branding-altlinux-%theme-browser-qt 
+Obsoletes:  branding-alt-%theme-browser-qt branding-altlinux-%theme-browser-qt 
 
-Conflicts: %(for n in %variants ; do [ "$n" = %theme ] || echo -n "branding-$n-browser-qt ";done )
+# lexicographically first of the village
+Conflicts: branding-sisyphus-server-light-alterator
+
+
+Conflicts: %(for n in %variants ; do [ "$n" = %brand-%theme ] || echo -n "branding-$n-alterator ";done )
 Obsoletes: design-alterator-server design-alterator-desktop design-altertor-browser-desktop  design-altertor-browser-server branding-altlinux-backup-server-alterator
 PreReq(post,preun): alternatives >= 0.2 alterator
 
@@ -103,10 +116,10 @@ Group: Graphics
 
 Provides: design-graphics-%theme  branding-alt-%theme-graphics
 Obsoletes:  branding-alt-%theme-graphics design-graphics-%theme
-Provides: design-graphics = 12.0.0
+Provides: design-graphics = %design_graphics_abi_major.%design_graphics_abi_minor.%design_graphics_abi_bugfix
 
 PreReq(post,preun): alternatives >= 0.2
-Conflicts: %(for n in %variants ; do [ "$n" = %theme ] || echo -n "branding-$n-graphics ";done )
+Conflicts: %(for n in %variants ; do [ "$n" = %brand-%theme ] || echo -n "branding-$n-graphics ";done )
 
 %description graphics
 This package contains some graphics for %distro_name design.
@@ -115,20 +128,20 @@ This package contains some graphics for %distro_name design.
 В данном пакете находится необходимые графические элементы для дистрибутива 
 %distro_name_ru.
 
-
 %define provide_list altlinux fedora redhat system altlinux
 %define obsolete_list altlinux-release fedora-release redhat-release
 %define conflicts_list altlinux-release-sisyphus altlinux-release-4.0 altlinux-release-5.0 altlinux-release-5.1 altlinux-release-junior altlinux-release-master altlinux-release-server altlinux-release-terminal altlinux-release-small_business
 %package release
 
-Summary: %distro_name release file
+Summary:  %distro_name release file
 Summary(ru_RU.UTF-8): Описание дистрибутива %distro_name_ru
-License: GPL
-Group: System/Configuration/Other
+License:  GPL
+Group:    System/Configuration/Other
 Provides: %(for n in %provide_list; do echo -n "$n-release = %version-%release "; done) altlinux-release-%theme  branding-alt-%theme-release
 Obsoletes: %obsolete_list  branding-alt-%theme-release
 Conflicts: %conflicts_list
-Conflicts: %(for n in %variants ; do [ "$n" = %theme ] || echo -n "branding-$n-release ";done )
+Conflicts: %(for n in %variants ; do [ "$n" = %brand-%theme ] || echo -n "branding-$n-release ";done )
+
 
 %description release
 %distro_name release file.
@@ -137,14 +150,15 @@ Conflicts: %(for n in %variants ; do [ "$n" = %theme ] || echo -n "branding-$n-r
 В данном пакете находится описание дистрибутива %distro_name_ru.
 
 %package notes
-Provides: alt-license-theme = %version alt-notes-%theme
-Obsoletes: alt-license-%theme alt-notes-%theme 
-Summary: Distribution license and release notes
+BuildArch: noarch
+Provides:  alt-license-theme = %version alt-notes-%theme
+Obsoletes: alt-license-%theme alt-notes-%theme
+Summary:   Distribution license and release notes
 Summary(ru_RU.UTF-8): Лицензия и дополнительные сведения для дистрибутива %distro_name_ru
-License: Distributable
-Group: Documentation
-Conflicts: alt-notes-children alt-notes-hpc alt-notes-junior alt-notes-junior-sj alt-notes-junior-sm alt-notes-school-server alt-notes-server-lite alt-notes-skif alt-notes-terminal alt-notes-desktop
-Conflicts: %(for n in %variants ; do [ "$n" = %theme ] || echo -n "branding-$n-notes ";done )
+License:   Distributable
+Group:     Documentation
+Conflicts: alt-notes-children alt-notes-hpc alt-notes-junior alt-notes-junior-sj alt-notes-junior-sm alt-notes-office-server alt-notes-server-lite alt-notes-skif alt-notes-terminal 
+Conflicts: %(for n in %variants ; do [ "$n" = %brand-%theme ] || echo -n "branding-$n-notes ";done )
 
 %description notes
 Distribution license and release notes
@@ -153,28 +167,66 @@ Distribution license and release notes
 В данном пакете находится лицензия и дополнительные сведения
 для дистрибутива %distro_name_ru.
 
-%package xfce-settings
+%package kde4-settings
+BuildArch: noarch
+Summary: KDE4 settings for %distro_name
+License: Distributable
+Group:   Graphical desktop/KDE
+Conflicts: %(for n in %variants ; do [ "$n" = %brand-%theme ] || echo -n "branding-$n-kde4-settings ";done )
+PreReq: %name-graphics
 
+%description kde4-settings
+KDE4 settings for %distro_name
+
+%package xfce-settings
 Summary: default settings for Xfce 4.6 for %distro_name
 License: Distributable
 Group: Graphical desktop/XFce
 Requires: PolicyKit-gnome
-Requires: etcskel gtk2-theme-simplicity
-Requires: gnome-icon-theme icon-theme-simple
-Requires: branding-simply-linux-graphics
+Requires: etcskel gtk3-theme-clearlooks-phenix
+Requires: gnome-icon-theme icon-theme-simple-sl
+Requires: branding-%brand-%theme-graphics
 Obsoletes: xfce-settings-lite xfce-settings-school-lite
-Conflicts: %(for n in %variants ; do [ "$n" = %theme ] || echo -n "branding-$n-xfce-settings ";done )
+Conflicts: %(for n in %variants ; do [ "$n" = %brand-%theme ] || echo -n "branding-$n-xfce-settings ";done )
 Conflicts: xfce-settings-simply-linux
 
 %description xfce-settings
-This package contains default settings for Xfce 4.6 for %distro_name.
+XFCE settings for %distro_name
+
+%package fvwm-settings
+BuildArch: noarch
+Summary: FVWM2 settings for %distro_name
+License: Distributable
+Group:   Graphical desktop/FVWM based
+Requires: altlinux-freedesktop-menu-gnomish-menu
+Conflicts: %(for n in %variants ; do [ "$n" = %brand-%theme ] || echo -n "branding-$n-fvwm-settings ";done )
+
+%description fvwm-settings
+FVWM2 settings for %distro_name
+
+%package mate-settings
+BuildArch: noarch
+Summary: MATE settings for %distro_name
+License: Distributable
+Group:   Graphical desktop/GNOME
+Requires: gksu
+Requires: dconf
+Requires: gtk3-theme-clearlooks-phenix
+Conflicts: %(for n in %variants ; do [ "$n" = %brand-%theme ] || echo -n "branding-$n-gnome-settings ";done )
+PreReq(post): lightdm-gtk-greeter
+PreReq(post): libgio
+
+%description mate-settings
+MATE settings for %distro_name
 
 %package slideshow
 Summary: Slideshow for %distro_name installer
 Summary(ru_RU.UTF-8): Изображения для организации "слайдшоу" в установщике дистрибутива %distro_name_ru
 License: Distributable
 Group: System/Configuration/Other 
-Conflicts: %(for n in %variants ; do [ "$n" = %theme ] || echo -n "branding-$n-slideshow ";done )
+Conflicts: %(for n in %variants ; do [ "$n" = %brand-%theme ] || echo -n "branding-$n-slideshow ";done )
+
+BuildArch: noarch
 
 %description slideshow
 Slideshow for %distro_name installer.
@@ -184,12 +236,14 @@ Slideshow for %distro_name installer.
 дистрибутива %distro_name_ru.
 
 %package indexhtml
-Summary: %distro_name welcome page
+BuildArch: noarch
+Summary:  HTML welcome page for %distro_name
 Summary(ru_RU.UTF-8): Стартовая страница для дистрибутива %distro_name_ru
-License: distributable
-Group: System/Base
+License:  distributable
+Group:    System/Base
 Provides: indexhtml indexhtml-%theme = %version indexhtml-Desktop = 1:5.0
 Obsoletes: indexhtml-desktop indexhtml-Desktop
+Conflicts: %(for n in %variants ; do [ "$n" = %brand-%theme ] || echo -n "branding-$n-indexhtml ";done )
 
 Conflicts: indexhtml-sisyphus
 Conflicts: indexhtml-school_junior
@@ -206,37 +260,49 @@ Requires: docs-linux_intro
 Requires(post): indexhtml-common
 
 %description indexhtml
-%distro_name index.html welcome page.
+%distro_name welcome page.
 
 %description indexhtml -l ru_RU.UTF-8
 В данном пакете содержится стартовая страница для дистрибутива
 %distro_name_ru.
 
 %package menu
-
 Summary: Menu for %distro_name
 License: Distributable
 Group: Graphical desktop/Other
 Requires(pre): altlinux-freedesktop-menu-common
 Requires: altlinux-freedesktop-menu-common
 
+
 %description menu
 Menu for %distro_name
 
+%package system-settings
+Summary: Some system settings for Simply Linux
+License: GPLv2+
+Group: System/Base
+# Really we need lightdm only, but it can pull another greeter.
+Requires: lightdm-gtk-greeter
+
+%description system-settings
+Some system settings for Simply Linux.
 
 %prep
 %setup -n branding
 
+%ifnarch %arm
+%define x86 boot
+%else
+%define x86 %nil
+%endif
 
 %build
 autoconf
-THEME=%theme NAME='%Name' STATUS=%status VERSION=%version ./configure 
+THEME=%theme NAME='%Brand %Theme' BRAND_FNAME='%brand' BRAND='%brand' STATUS_EN=%status_en STATUS=%status VERSION=%version PRODUCT_NAME_RU='%distro_name_ru' PRODUCT_NAME='%distro_name' CODENAME='%codename' X86='%x86' ./configure
 make
 
 %install
 %makeinstall
-make x86 DESTDIR=%buildroot datadir=%buildroot%_datadir sysconfdir=%buildroot%_sysconfdir
-
 
 #graphics
 mkdir -p %buildroot/%_datadir/design/{%theme,backgrounds}
@@ -251,46 +317,71 @@ pushd %buildroot/%_datadir/design/%theme
     popd
 popd
 
-
+GRAPHICS_ALTPRIO=`printf '%%.3d%%.3d%%.3d%%.3d\n' %design_graphics_abi_epoch %design_graphics_abi_major %design_graphics_abi_minor %design_graphics_abi_bugfix`
 install -d %buildroot//etc/alternatives/packages.d
 cat >%buildroot/etc/alternatives/packages.d/%name-graphics <<__EOF__
-%_datadir/artworks	%_datadir/design/%theme 10	
-%_datadir/design-current	%_datadir/design/%theme	10
-%_datadir/design/current	%_datadir/design/%theme	10
+%_datadir/design-current	%_datadir/design/%theme	$GRAPHICS_ALTPRIO
+%_datadir/design/current	%_datadir/design/%theme	$GRAPHICS_ALTPRIO
 __EOF__
 
+
 #release
+mkdir -p %buildroot%_sysconfdir/buildreqs/packages/ignore.d/
 install -pD -m644 /dev/null %buildroot%_sysconfdir/buildreqs/packages/ignore.d/%name-release
-echo "%Name %version %status (%codename)" >%buildroot%_sysconfdir/altlinux-release
+echo "%distro_name" >%buildroot%_sysconfdir/altlinux-release
 for n in fedora redhat system; do
 	ln -s altlinux-release %buildroot%_sysconfdir/$n-release
 done
+install -pD -m644 components/systemd/os-release %buildroot%_sysconfdir/os-release
 
 #notes
 pushd notes
 %makeinstall
 popd
 
-mkdir -p %buildroot/etc/skel/Документы/
+#kde4-settings
+pushd kde4-settings
+mkdir -p %buildroot%_sysconfdir/skel/.kde4
+cp -a kde4/* %buildroot%_sysconfdir/skel/.kde4/
+mkdir -p %buildroot%_sysconfdir/kde4/xdg/menus/applications-merged/
+install -m 0644 menu/*.menu %buildroot%_sysconfdir/kde4/xdg/menus/applications-merged/
+popd
+
+ln -s license.ru.html %buildroot%_datadir/alt-notes/license.uk.html
+
+#fwvm-settings
+mkdir -p %buildroot/etc/skel
+install -m 644 fvwm-settings/.fvwm2rc %buildroot/etc/skel/
+
+#mate-settings
+pushd mate-settings
+install -m 644 -D 50_mate-background.gschema.override '%buildroot%_datadir/glib-2.0/schemas/50_mate-background.gschema.override'
+install -m 644 -D 60_mate-theme.gschema.override '%buildroot%_datadir/glib-2.0/schemas/60_mate-theme.gschema.override'
+install -m 644 -D Trolltech.conf '%buildroot%_sysconfdir/skel/.config/Trolltech.conf'
+popd
+
+mkdir -p %buildroot/etc/skel/XDG-Templates.skel/
 
 cp -r xfce-settings/etcskel/* %buildroot/etc/skel/
 cp -r xfce-settings/etcskel/.config %buildroot/etc/skel/
+cp -r xfce-settings/etcskel/.local %buildroot/etc/skel/
 cp -r xfce-settings/etcskel/.gconf %buildroot/etc/skel/
+cp -r xfce-settings/etcskel/.vimrc %buildroot/etc/skel/
 
 install -m 644 xfce-settings/etcskel/.wm-select %buildroot/etc/skel/
-install -m 644 xfce-settings/etcskel/.fonts.conf %buildroot/etc/skel/
 
-mkdir -p %buildroot/usr/share/xfce4/backdrops/vladstudio.com/1600x1200
-mkdir -p %buildroot/usr/share/xfce4/backdrops/vladstudio.com/1680x1050
-cp -P xfce-settings/backgrounds/*.png %buildroot/usr/share/xfce4/backdrops/
-#popd
+mkdir -p %buildroot/usr/share/backgrounds/xfce/
+cp -P xfce-settings/backgrounds/*.{jpg,png} %buildroot/usr/share/backgrounds/xfce/
 
+install -pDm0755 xfce-settings/scripts/zdg-move-templates.sh %buildroot%_sysconfdir/X11/profile.d/zdg-move-templates.sh
 
 #slideshow
 mkdir -p %buildroot/usr/share/install2/slideshow
 mkdir -p %buildroot/etc/alterator
-install slideshow/slides/*  %buildroot/usr/share/install2/slideshow/
+cp -a slideshow/*  %buildroot/usr/share/install2/slideshow/
 install slideshow/slideshow.conf %buildroot/etc/alterator/
+# Set English slideshow as default
+#ln -s slides-en %buildroot/usr/share/install2/slideshow/slides
 
 #indexhtml
 %define _altdocsdir %_defaultdocdir/alt-docs
@@ -303,12 +394,15 @@ install components/indexhtml/images/* %buildroot%_defaultdocdir/indexhtml/images
 #menu
 mkdir -p %buildroot/usr/share/slinux-style/applications
 install menu/applications/* %buildroot/usr/share/slinux-style/applications/
-mkdir -p %buildroot/etc/xdg/menus/applications-merged
-cp menu/50-slinux-menu-style.menu %buildroot/etc/xdg/menus/applications-merged/
 mkdir -p %buildroot/etc/xdg/menus/xfce-applications-merged
 cp menu/50-xfce-applications.menu %buildroot/etc/xdg/menus/xfce-applications-merged/
 mkdir -p %buildroot/usr/share/desktop-directories
 cp menu/altlinux-wine.directory %buildroot/usr/share/desktop-directories/
+
+# system-settings
+mkdir -p %buildroot/%_sysconfdir/polkit-1/rules.d/
+cp -a system-settings/polkit-rules/*.rules %buildroot/%_sysconfdir/polkit-1/rules.d/
+install -Dm644 system-settings/ldm_pam_environment %buildroot%_localstatedir/ldm/.pam_environment
 
 #bootloader
 %pre bootloader
@@ -336,6 +430,13 @@ shell_config_set /etc/sysconfig/grub2 GRUB_COLOR_HIGHLIGHT %grub_high
 %post indexhtml
 %_sbindir/indexhtml-update
 
+%post system-settings
+chown _ldm:_ldm %_localstatedir/ldm/.pam_environment
+sed -i '/pam_env\.so/ {
+		/user_readenv/ b
+		s/pam_env\.so/pam_env.so user_readenv=1/ }
+' %_sysconfdir/pam.d/lightdm-greeter
+
 %files bootloader
 %_datadir/gfxboot/%theme
 /boot/splash/%theme
@@ -347,6 +448,10 @@ subst "s/Theme=.*/Theme=%theme/" /etc/plymouth/plymouthd.conf
 [ -f /etc/sysconfig/grub2 ] && \
       subst "s|GRUB_WALLPAPER=.*|GRUB_WALLPAPER=/usr/share/plymouth/themes/%theme/grub.jpg|" \
              /etc/sysconfig/grub2 ||:
+
+%post mate-settings
+subst 's/#theme-name=/theme-name=Clearlooks-Phenix/' /etc/lightdm/lightdm-gtk-greeter.conf ||:
+/usr/bin/glib-compile-schemas /usr/share/glib-2.0/schemas
 
 %files alterator
 %config %_altdir/*.rcc
@@ -361,21 +466,34 @@ subst "s/Theme=.*/Theme=%theme/" /etc/plymouth/plymouthd.conf
 
 %files bootsplash
 %_datadir/plymouth/themes/%theme/*
+%exclude %_datadir/plymouth/themes/%theme/*.in
 
 %files release
-%_sysconfdir/*-*
+%_sysconfdir/*-release
 %_sysconfdir/buildreqs/packages/ignore.d/*
 
 %files notes
 %_datadir/alt-notes/*
 
+%files kde4-settings
+%_sysconfdir/kde4/xdg/menus/applications-merged/*.menu
+%_sysconfdir/skel/.kde4
+
+%files fvwm-settings
+%_sysconfdir/skel/.fvwm2rc
+
+%files mate-settings
+%_datadir/glib-2.0/schemas/*.gschema.override
+
 %files xfce-settings
-/etc/skel/Документы
+%_sysconfdir/X11/profile.d/zdg-move-templates.sh
+/etc/skel/XDG-Templates.skel/
 /etc/skel/.wm-select
-/etc/skel/.fonts.conf
 /etc/skel/.config
+/etc/skel/.local
 /etc/skel/.gconf
-/usr/share/xfce4/backdrops
+/etc/skel/.vimrc
+/usr/share/backgrounds/xfce/*
 
 %files slideshow
 /etc/alterator/slideshow.conf
@@ -384,23 +502,24 @@ subst "s/Theme=.*/Theme=%theme/" /etc/plymouth/plymouthd.conf
 %define indexhtmldir %_defaultdocdir/indexhtml
 
 %files indexhtml
-#%%ghost %%_indexhtmldir/index.html
-#%%_indexhtmldir/*
-#%%_desktopdir/*
-
-%ghost %indexhtmldir/index.html
-%indexhtmldir/index-*.html
-%indexhtmldir/index.css
-%indexhtmldir/images
-%_desktopdir/indexhtml.desktop
+%ghost %_indexhtmldir/index.html
+%_indexhtmldir/*
+%_desktopdir/*
+%_datadir/kde4/apps/kio_desktop/DesktopLinks/indexhtml.desktop
 
 %files menu
 /usr/share/slinux-style
-/etc/xdg/menus/applications-merged/50-slinux-menu-style.menu
 /etc/xdg/menus/xfce-applications-merged/50-xfce-applications.menu
 /usr/share/desktop-directories/altlinux-wine.directory
 
+%files system-settings
+%config %_sysconfdir/polkit-1/rules.d/*.rules
+%config %_localstatedir/ldm/.pam_environment
+
 %changelog
+* Thu Nov 21 2013 Andrey Cherepanov <cas@altlinux.org> 6.9.9-alt1
+- Update branding for Seven platform
+
 * Wed Aug 29 2012 Andrey Cherepanov <cas@altlinux.org> 6.0.0-alt5
 - Set correct distribution name
 
@@ -637,16 +756,16 @@ subst "s/Theme=.*/Theme=%theme/" /etc/plymouth/plymouthd.conf
 - Added brand icon an Russian description for package.
 
 * Thu Aug 13 2009 Denis Koryavov <dkoryavov@altlinux.org> 5.0.0-alt2
-- Update for bootsplash. 
+- Update for bootsplash.
 
 * Sat Jun 13 2009 Denis Koryavov <dkoryavov@altlinux.org> 5.0.0-alt1
 - Fork from branding-altlinux-lite
 
 * Wed Apr 01 2009 Anton V. Boyarshinov <boyarsh@altlinux.ru> 5.0.0-alt5
-- logo in www design fixed 
+- logo in www design fixed
 
 * Tue Mar 31 2009 Anton V. Boyarshinov <boyarsh@altlinux.ru> 5.0.0-alt4
-- www design fixed 
+- www design fixed
 
 * Tue Mar 31 2009 Anton V. Boyarshinov <boyarsh@altlinux.ru> 5.0.0-alt3
 - conflicts for -alterator subpackages added
@@ -660,13 +779,13 @@ subst "s/Theme=.*/Theme=%theme/" /etc/plymouth/plymouthd.conf
 - images for verbose bootsplash mode from one source
 
 * Wed Mar 25 2009 Anton V. Boyarshinov <boyarsh@altlinux.ru> 5.0-alt24
-- added versioned provides for indexhtml 
+- added versioned provides for indexhtml
 
 * Tue Mar 24 2009 Anton V. Boyarshinov <boyarsh@altlinux.ru> 5.0-alt23
-- indexhtml subpackage added 
+- indexhtml subpackage added
 
 * Mon Mar 23 2009 Anton V. Boyarshinov <boyarsh@altlinux.ru> 5.0-alt22
-- Lite version 
+- Lite version
 
 * Wed Mar 18 2009 Anton V. Boyarshinov <boyarsh@altlinux.ru> 5.0-alt21
 - other images for browser-qt added
@@ -675,7 +794,7 @@ subst "s/Theme=.*/Theme=%theme/" /etc/plymouth/plymouthd.conf
 - conflicts bitween different brandings added
 
 * Thu Mar 05 2009 Anton V. Boyarshinov <boyarsh@altlinux.ru> 5.0-alt20
-- steps icons added 
+- steps icons added
 
 * Fri Feb 27 2009 Anton V. Boyarshinov <boyarsh@altlinux.ru> 5.0-alt19
 - sample slideshow added
@@ -685,56 +804,56 @@ subst "s/Theme=.*/Theme=%theme/" /etc/plymouth/plymouthd.conf
 - more transparent menu selection bar
 
 * Tue Feb 24 2009 Anton V. Boyarshinov <boyarsh@altlinux.ru> 5.0-alt17
-- 1024x768 added 
+- 1024x768 added
 - fonts changed
 
 * Thu Feb 19 2009 Anton V. Boyarshinov <boyarsh@altlinux.ru> 5.0-alt16
-- not setup language in bootloader during install (when it is 'C') 
+- not setup language in bootloader during install (when it is 'C')
 
 * Wed Feb 18 2009 Anton V. Boyarshinov <boyarsh@altlinux.ru> 5.0-alt15
-- rebuild with new bootloader-source with support of real language change 
+- rebuild with new bootloader-source with support of real language change
 
 * Tue Feb 17 2009 Anton V. Boyarshinov <boyarsh@altlinux.ru> 5.0-alt14
-- auto set default language for bootloader from /etc/sysconfig/i18n 
+- auto set default language for bootloader from /etc/sysconfig/i18n
 
 * Mon Feb 16 2009 Anton V. Boyarshinov <boyarsh@altlinux.ru> 5.0-alt13
-- rebuild for fix oversized /boot/splash/message 
+- rebuild for fix oversized /boot/splash/message
 
 * Fri Feb 13 2009 Anton V. Boyarshinov <boyarsh@altlinux.ru> 5.0-alt12
-- default language set to ru_RU for system boot 
+- default language set to ru_RU for system boot
 
 * Wed Feb 11 2009 Anton V. Boyarshinov <boyarsh@altlinux.ru> 5.0-alt11
-- fixed conflict of notes subpackage with itself 
+- fixed conflict of notes subpackage with itself
 
 * Tue Feb 10 2009 Anton V. Boyarshinov <boyarsh@altlinux.ru> 5.0-alt10
-- more kde4 settings from zerg@ 
+- more kde4 settings from zerg@
 - alternative and obsoletes for graphics added
 
 * Thu Feb 05 2009 Anton V. Boyarshinov <boyarsh@altlinux.ru> 5.0-alt9
-- rebuild with new translations 
+- rebuild with new translations
 
 * Thu Feb 05 2009 Anton V. Boyarshinov <boyarsh@altlinux.ru> 5.0-alt8
-- added kde4-settings subpackage 
+- added kde4-settings subpackage
 
 * Wed Feb 04 2009 Anton V. Boyarshinov <boyarsh@altlinux.ru> 5.0-alt7
-- added conflicts for notes 
+- added conflicts for notes
 
 * Mon Jan 26 2009 Anton V. Boyarshinov <boyarsh@altlinux.ru> 5.0-alt6
-- xdm background fixed 
+- xdm background fixed
 
 * Fri Jan 23 2009 Anton V. Boyarshinov <boyarsh@altlinux.ru> 5.0-alt5
-- added 'notes' subpackage 
+- added 'notes' subpackage
 
 * Thu Jan 15 2009 Anton V. Boyarshinov <boyarsh@altlinux.ru> 5.0-alt4
-- fixed problem with owerwritten alternative 
+- fixed problem with owerwritten alternative
 
 * Wed Jan 14 2009 Anton V. Boyarshinov <boyarsh@altlinux.ru> 5.0-alt3
-- release subpackage added 
+- release subpackage added
 
 * Fri Dec 26 2008 Anton V. Boyarshinov <boyarsh@altlinux.ru> 5.0-alt2
 - colors integration
 - graphics package added
 
 * Thu Dec 18 2008 Anton V. Boyarshinov <boyarsh@altlinux.ru> 5.0-alt1
-- initial sceleton 
+- initial sceleton
 
