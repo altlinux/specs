@@ -1,11 +1,12 @@
 %define setools_maj_ver 3.3
 %define setools_min_ver 8
+%define libsepol_ver 2.2
 
 %define autoconf_ver 2.59
 
 Name: setools
 Version: %setools_maj_ver.%setools_min_ver
-Release: alt3
+Release: alt4
 License: %gpl2plus
 URL: http://oss.tresys.com/projects/setools
 Source: %name-%version.tar
@@ -31,8 +32,8 @@ BuildRequires: glibc-devel libstdc++-devel gcc gcc-c++
 BuildRequires: libselinux-devel
 
 # In libsepol defined version: POLICYDB_VERSION_MAX, so rebuild libsepol first if available.
-BuildRequires: libsepol-devel >= 2.1.9
-BuildRequires: libsepol-devel-static >= 2.1.9
+BuildRequires: libsepol-devel >= %libsepol_ver
+BuildRequires: libsepol-devel-static >= %libsepol_ver
 BuildRequires: libsqlite3-devel libxml2-devel
 BuildRequires: autoconf >= %autoconf_ver automake
 #libsetools,libsetools-tcl
@@ -44,7 +45,7 @@ BuildRequires: python-devel bzlib-devel
 #libsetools-java
 BuildRequires: java-devel-default
 #gui
-BuildRequires: rpm-build-java
+BuildRequires: rpm-build-java libJLib-devel
 BuildRequires: libgtk+2-devel libglade-devel tk-devel
 BuildRequires: desktop-file-utils
 
@@ -59,7 +60,7 @@ SETools.
 License: %lgpl2plus
 Summary: Policy analysis support libraries for SELinux
 Group: System/Libraries
-Requires: libselinux libsepol sqlite3
+Requires: libselinux libsepol >= %libsepol_ver sqlite3
 
 %description -n lib%name
 SETools is a collection of graphical tools, command-line tools, and
@@ -333,6 +334,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_datadir/applications/*
 
 %changelog
+* Fri Nov 22 2013 Anton Farygin <rider@altlinux.ru> 3.3.8-alt4
+- Rebuild with new libsepol
+
 * Wed Jul 10 2013 Andriy Stepanov <stanv@altlinux.ru> 3.3.8-alt3
 - Rebuild with new libsepol
 

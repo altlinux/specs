@@ -1,9 +1,11 @@
+#TODO: systemd, polkit and system-config-selinux
+
 %def_with gui
 
 Summary: SELinux policy core utilities
 Name: policycoreutils
-Version: 2.1.14
-Release: alt4
+Version: 2.2.3
+Release: alt1
 License: GPLv2
 Group: System/Base
 Url: http://userspace.selinuxproject.org
@@ -215,9 +217,7 @@ cp -r mcstrans/share/* %buildroot%_datadir/mcstrans/
 %config(noreplace) %_sysconfdir/sestatus.conf
 %_libdir/python?.?/site-packages/seobject.py*
 %dir /var/lib/selinux
-%dir %_sysconfdir/bash_completion.d
-%config %_sysconfdir/bash_completion.d/*
-
+%_datadir/bash-completion/completions/*
 
 %files newrole
 %config(noreplace) %_sysconfdir/pam.d/newrole
@@ -287,6 +287,9 @@ cp -r mcstrans/share/* %buildroot%_datadir/mcstrans/
 
 
 %changelog
+* Tue Nov 19 2013 Anton Farygin <rider@altlinux.ru> 2.2.3-alt1
+- New version
+
 * Thu Jul 11 2013 Timur Aitov <timonbl4@altlinux.org> 2.1.14-alt4
 - fix mcstrans.service
 
