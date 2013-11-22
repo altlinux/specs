@@ -3,10 +3,10 @@
 %define popIF_ver_lt() %if "%(rpmvercmp '%2' '%1')" > "0"
 %define popIF_ver_lteq() %if "%(rpmvercmp '%2' '%1')" >= "0"
 
+%def_disable static
 %def_disable compat
 
 %if_disabled compat
-%def_enable static
 %def_enable cpp
 %def_enable glib
 %def_enable qt5
@@ -17,7 +17,6 @@
 %def_enable xpdfheaders
 %def_enable gir
 %else
-%def_disable static
 %def_disable cpp
 %def_disable glib
 %def_disable qt5
@@ -41,7 +40,7 @@
 %define bugfix 3
 Name: %rname%somajor
 Version: %major.%minor.%bugfix
-Release: alt1
+Release: alt2
 
 %if_disabled compat
 %define poppler_devel_name lib%rname-devel
@@ -67,7 +66,7 @@ Packager: Sergey V Turchin <zerg at altlinux dot org>
 
 Source: %rname-%version.tar
 # FC
-Patch10: poppler-0.12.1-objstream.patch
+Patch10: poppler-0.24.2-mocversiongrep.patch
 
 # Automatically added by buildreq on Fri Apr 01 2011 (-bi)
 #BuildRequires: gcc-c++ glib-networking glibc-devel-static gtk-doc gvfs imake libXt-devel libcurl-devel libgtk+2-devel libgtk+2-gir-devel libjpeg-devel liblcms-devel libopenjpeg-devel libqt3-devel libqt4-devel libqt4-gui libqt4-xml libxml2-devel python-modules-compiler python-modules-encodings time xorg-cf-files
@@ -270,7 +269,7 @@ statically linked libpoppler-based software
 
 %prep
 %setup -q -n %rname-%version
-#%patch10 -p1
+%patch10 -p1
 
 chmod a-x goo/GooTimer.h
 
@@ -288,11 +287,12 @@ export QT4DIR=%_qt4dir
     %{subst_enable static} \
     --enable-shared \
     --enable-compile-warnings=yes \
+    --enable-introspection=yes \
     --enable-libcurl \
+    --enable-zlib \
 %if_enabled xpdfheaders
     --enable-xpdf-headers \
 %endif
-    --enable-zlib \
 %if_disabled cpp
     --disable-poppler-cpp \
 %endif
@@ -307,8 +307,7 @@ export QT4DIR=%_qt4dir
 %else
     --disable-poppler-qt5 \
 %endif
-    --enable-compile-warnings=yes
-#    --disable-abiword-output \
+    #
 
 %make_build
 
@@ -404,6 +403,15 @@ export QT4DIR=%_qt4dir
 %endif
 
 %changelog
+* Fri Nov 22 2013 Sergey V Turchin <zerg@altlinux.org> 0.24.3-alt2
+- don't build static libs by default
+
+* Thu Nov 21 2013 Sergey V Turchin <zerg@altlinux.org> 0.24.3-alt0.M70P.2
+- disable qt5 for p7
+
+* Thu Nov 21 2013 Sergey V Turchin <zerg@altlinux.org> 0.24.3-alt0.M70P.1
+- built for M70P
+
 * Mon Nov 11 2013 Sergey V Turchin <zerg@altlinux.org> 0.24.3-alt1
 - new version
 
