@@ -4,7 +4,7 @@
 Name: %real_name
 
 Version: 2.7.6
-Release: alt1
+Release: alt2
 
 %define package_name		%real_name
 %define weight			1001
@@ -1044,6 +1044,9 @@ rm -f %buildroot%_man1dir/python2.1 %buildroot%_man1dir/python.1
 %python_libdir/lib-dynload/_tkinter.so
 
 %changelog
+* Fri Nov 22 2013 Dmitry V. Levin <ldv@altlinux.org> 2.7.6-alt2
+- Relocated _sysconfigdata (required by sysconfig) from -modules to -base.
+
 * Wed Nov 20 2013 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.7.6-alt1
 - New version.
 

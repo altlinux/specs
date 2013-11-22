@@ -1,5 +1,5 @@
 Name: lftp
-Version: 4.4.10
+Version: 4.4.11
 Release: alt1
 
 Summary: Sophisticated command line file transfer program
@@ -50,6 +50,7 @@ export CXX=%__cxx
 	%{subst_with openssl} \
 	%{subst_with modules} \
 	--with-pager='exec less' \
+	--enable-packager-mode \
 	#
 %make_build
 
@@ -84,6 +85,9 @@ desktop-file-install --dir %buildroot%_desktopdir %_sourcedir/lftp.desktop
 %doc AUTHORS README.* THANKS TODO lftp.lsm BUGS
 
 %changelog
+* Fri Nov 22 2013 Dmitry V. Levin <ldv@altlinux.org> 4.4.11-alt1
+- Updated to 4.4.11.
+
 * Wed Oct 16 2013 Dmitry V. Levin <ldv@altlinux.org> 4.4.10-alt1
 - Updated to 4.4.10.
 
