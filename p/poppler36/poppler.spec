@@ -37,7 +37,7 @@
 %define bugfix 3
 Name: %rname%somajor
 Version: %major.%minor.%bugfix
-Release: alt2
+Release: alt3
 %if_disabled compat
 %define poppler_devel_name lib%rname-devel
 %define poppler_cpp_devel_name lib%rname-cpp-devel
@@ -338,15 +338,15 @@ export QT4DIR=%_qt4dir
 
 %if_enabled devel
 %files -n %poppler_devel_name
-%dir %_includedir/poppler
-%_includedir/poppler/*.h
+#%dir %_includedir/poppler
+#%_includedir/poppler/*.h
 #%_includedir/poppler/Function.cc
-%_includedir/poppler/fofi
-%_includedir/poppler/splash/
-%_includedir/poppler/goo/
+#%_includedir/poppler/fofi
+#%_includedir/poppler/splash/
+#%_includedir/poppler/goo/
 %_libdir/libpoppler.so
-%_pkgconfigdir/poppler.pc
-%_pkgconfigdir/poppler-splash.pc
+#%_pkgconfigdir/poppler.pc
+#%_pkgconfigdir/poppler-splash.pc
 #%_datadir/gtk-doc/html/poppler
 
 %if_enabled static
@@ -356,6 +356,9 @@ export QT4DIR=%_qt4dir
 %endif
 
 %changelog
+* Fri Nov 22 2013 Sergey V Turchin <zerg@altlinux.org> 0.22.3-alt3
+- clear devel package
+
 * Wed Jul 24 2013 Sergey V Turchin <zerg@altlinux.org> 0.22.3-alt2
 - disable all except core library and core devel files
 
