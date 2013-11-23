@@ -1,7 +1,7 @@
 Name: resource-agents
 Summary: Open Source HA Reusable Cluster Resource Scripts
 Version: 3.9.5
-Release: alt2
+Release: alt3.git.7fac8c7e
 License: GPLv2+ and LGPLv2+
 Url: https://github.com/ClusterLabs/resource-agents
 Group: System/Base
@@ -233,7 +233,7 @@ mkdir -p %buildroot%_var/run/resource-agents
 
 %_includedir/heartbeat
 
-%_libdir/heartbeat
+%_libexecdir/heartbeat
 %_man7dir/*
 %_man8dir/ocf-tester.8*
 %_man8dir/sfex_init.8*
@@ -281,9 +281,9 @@ mkdir -p %buildroot%_var/run/resource-agents
 %exclude %_libexecdir/ocf/resource.d/heartbeat/Xen
 %exclude %_man7dir/*_Xen.*
 
-%exclude %_libexecdir/ocf/resource.d/heartbeat/drbd
+#exclude %_libexecdir/ocf/resource.d/heartbeat/drbd
 %exclude %_datadir/cluster/drbd*
-%exclude %_man7dir/*_drbd.*
+#exclude %_man7dir/*_drbd.*
 
 %exclude %_libexecdir/ocf/resource.d/heartbeat/LVM
 %exclude %_datadir/cluster/lvm*
@@ -335,10 +335,10 @@ mkdir -p %buildroot%_var/run/resource-agents
 %config(noreplace) %_libexecdir/ocf/resource.d/heartbeat/Xen
 %_man7dir/*_Xen.*
 
-%files drbd
-%config(noreplace) %_libexecdir/ocf/resource.d/heartbeat/drbd
-%_datadir/cluster/drbd*
-%_man7dir/*_drbd.*
+#files drbd
+#config(noreplace) %_libexecdir/ocf/resource.d/heartbeat/drbd
+#_datadir/cluster/drbd*
+#_man7dir/*_drbd.*
 
 %files lvm
 %config(noreplace) %_libexecdir/ocf/resource.d/heartbeat/LVM
@@ -361,6 +361,9 @@ mkdir -p %buildroot%_var/run/resource-agents
 %_mandir/man8/ldirectord.8*
 
 %changelog
+* Mon Nov 18 2013 Slava Dubrovskiy <dubrsl@altlinux.org> 3.9.5-alt3.git.7fac8c7e
+- Rebuild from git
+
 * Wed Aug 14 2013 Slava Dubrovskiy <dubrsl@altlinux.org> 3.9.5-alt2
 - Set correct /var
 
