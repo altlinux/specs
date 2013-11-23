@@ -1,7 +1,7 @@
 %define srcname kmatrix3d
 Name: kde-screensaver-%srcname
 Version: 0.1
-Release: alt2.6.1
+Release: alt2.6.2
 
 Summary: OpenGL Matrix-alike 3D Screensaver for KDE
 License: GPL
@@ -53,6 +53,9 @@ make -f admin/Makefile.common
 %_datadir/apps/%srcname
 
 %changelog
+* Sat Nov 23 2013 Motsyo Gennadi <drool@altlinux.ru> 0.1-alt2.6.2
+- fix build with automake 1.14
+
 * Thu Oct 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1-alt2.6.1
 - Rebuilt with libpng15
 
