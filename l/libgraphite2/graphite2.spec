@@ -3,7 +3,7 @@
 
 Name: lib%_name
 Version: 1.2.3
-Release: alt1
+Release: alt1.1
 
 Summary: Font rendering capabilities for complex non-Roman writing systems
 Group: System/Libraries
@@ -11,6 +11,9 @@ License: LGPLv2.1+ or MPL
 Url: http://sourceforge.net/projects/silgraphite/
 
 Source: http://downloads.sourceforge.net/silgraphite/%_name-%version.tgz
+
+Obsoletes: %_name
+Provides: %_name = %version-%release
 
 # fc patches
 Patch: graphite-arm-nodefaultlibs.patch
@@ -32,6 +35,7 @@ handles the "Rendering" aspect of writing system implementation.
 %package devel
 Summary: Files for developing with Graphite2
 Group: Development/C++
+Provides: %_name-devel = %version-%release
 Requires: %name = %version-%release
 
 %description devel
@@ -63,7 +67,7 @@ LD_LIBRARY_PATH=%buildroot%_libdir %make test -C BUILD
 
 %files devel
 %_bindir/gr2fonttest
-%_includedir/%_name
+%_includedir/%_name/
 %_libdir/%name.so
 %dir %_libdir/%_name/
 %_libdir/%_name/%_name-release.cmake
@@ -72,6 +76,9 @@ LD_LIBRARY_PATH=%buildroot%_libdir %make test -C BUILD
 %{?_enable_docs:%doc BUILD/doc/manual.html}
 
 %changelog
+* Sat Nov 23 2013 Yuri N. Sedunov <aris@altlinux.org> 1.2.3-alt1.1
+- obsoletes/provides graphite2 package
+
 * Tue Nov 19 2013 Yuri N. Sedunov <aris@altlinux.org> 1.2.3-alt1
 - first build for Sisyphus
 
