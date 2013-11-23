@@ -1,9 +1,8 @@
 %define _libexecdir %_prefix/libexec/upower
-%define systemdsystemunitdir /lib/systemd/system
 
 Name: upower
-Version: 0.9.20
-Release: alt2
+Version: 0.9.23
+Release: alt1
 Summary: Power Management Service
 License: GPLv2+
 Group: System/Libraries
@@ -12,6 +11,7 @@ Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
 Provides: DeviceKit-power = 016
 Obsoletes: DeviceKit-power < 016
+Requires: lib%name = %version-%release
 
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
@@ -74,8 +74,6 @@ rm -f acinclude.m4
 %autoreconf
 %configure \
 	--enable-gtk-doc \
-	--enable-systemd \
-	--with-systemdsystemunitdir=%systemdsystemunitdir \
 	--libexecdir=%_libexecdir \
 	--localstatedir=%_var \
 	--disable-static
@@ -92,7 +90,7 @@ rm -f acinclude.m4
 %dir %_sysconfdir/UPower
 %_sysconfdir/UPower/*.conf
 %_sysconfdir/dbus-1/system.d/*.conf
-%systemdsystemunitdir/*
+%_unitdir/*
 /lib/udev/rules.d/*.rules
 /lib/systemd/system-sleep/notify-upower.sh
 %_bindir/*
@@ -119,6 +117,9 @@ rm -f acinclude.m4
 %_datadir/gir-1.0/*.gir
 
 %changelog
+* Sat Nov 23 2013 Yuri N. Sedunov <aris@altlinux.org> 0.9.23-alt1
+- 0.9.23
+
 * Wed Apr 24 2013 Yuri N. Sedunov <aris@altlinux.org> 0.9.20-alt2
 - rebuilt against libimobiledevice.so.4
 
