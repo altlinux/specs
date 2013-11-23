@@ -1,6 +1,6 @@
 Name: elementary-os
 Version: 1
-Release: alt7
+Release: alt8
 
 Summary: Elementary OS
 Group: Graphical desktop/Other
@@ -51,6 +51,8 @@ Requires: wingpanel
 
 Requires: libpantheon
 
+Provides: elementary-os-regular
+
 %description
 Elementary OS.
 
@@ -59,6 +61,9 @@ Elementary OS.
 %files
 
 %changelog
+* Sat Nov 23 2013 Igor Zubkov <icesik@altlinux.org> 1-alt8
+- Add provides elementary-os-regular
+
 * Thu Nov 14 2013 Igor Zubkov <icesik@altlinux.org> 1-alt7
 - Add libpantheon to requires
 
