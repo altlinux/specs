@@ -1,5 +1,5 @@
 Name: geary
-Version: 0.4.1
+Version: 0.4.2
 Release: alt1
 
 Summary: Email client
@@ -7,7 +7,7 @@ License: LGPLv2.1+
 Group: Networking/Mail
 Url: http://www.yorba.org/projects/geary/
 
-Source0: %name.tar.xz
+Source0: %name-%version.tar.xz
 
 Packager: Igor Zubkov <icesik@altlinux.org>
 
@@ -41,7 +41,7 @@ Visit http://www.yorba.org to read about the current state of.
 Geary's development.
 
 %prep
-%setup -q -n %name
+%setup -q
 
 %build
 ./configure --prefix=%_prefix
@@ -66,6 +66,9 @@ Geary's development.
 %_datadir/locale/es_419/LC_MESSAGES/geary.mo
 
 %changelog
+* Sat Nov 23 2013 Igor Zubkov <icesik@altlinux.org> 0.4.2-alt1
+- 0.4.2
+
 * Wed Nov 20 2013 Igor Zubkov <icesik@altlinux.org> 0.4.1-alt1
 - 0.4.1 trunk (r1119)
 
