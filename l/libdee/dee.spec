@@ -7,14 +7,17 @@
 %define origname dee
 
 Name: lib%origname
-Version: 1.0.14
-Release: alt2
+Version: 1.2.7
+Release: alt1
 
 Summary: Library for creating Model-View-Controller programs across DBus
 Group: System/Libraries
 License: LGPLv3
 URL: https://launchpad.net/dee
+
 Source0: %origname-%version.tar.gz
+
+Patch0: dee-1.2.7-alt-build.patch
 
 Packager: Igor Zubkov <icesik@altlinux.org>
 
@@ -84,8 +87,10 @@ GObject introspection devel data for the dee library.
 
 %prep
 %setup -q -n %origname-%version
+%patch0 -p1
 
 %build
+%autoreconf
 %configure \
   --disable-static \
   --enable-gtk-doc
@@ -128,6 +133,9 @@ make check || exit 1
 %_girdir/Dee-1.0.gir
 
 %changelog
+* Sat Nov 23 2013 Igor Zubkov <icesik@altlinux.org> 1.2.7-alt1
+- 1.2.7
+
 * Mon Sep 23 2013 Igor Zubkov <icesik@altlinux.org> 1.0.14-alt2
 - Relax rpath check
 
