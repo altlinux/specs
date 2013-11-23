@@ -1,5 +1,5 @@
 Name: powertop
-Version: 2.4
+Version: 2.5
 Release: alt1
 
 Summary: Tool that helps you find what software is using the most power
@@ -45,6 +45,9 @@ install -d %buildroot%_cachedir/%name
 %dir %_cachedir/%name
 
 %changelog
+* Sat Nov 23 2013 Michael Shigorin <mike@altlinux.org> 2.5-alt1
+- new version (watch file uupdate)
+
 * Mon Jul 22 2013 Michael Shigorin <mike@altlinux.org> 2.4-alt1
 - new version (watch file uupdate)
 
