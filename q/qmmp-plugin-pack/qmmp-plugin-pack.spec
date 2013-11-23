@@ -1,7 +1,7 @@
 %define		branch 0.8
-%define		svn svn3880
+%define		svn svn3924
 
-Version:	%branch.0
+Version:	%branch.0.1
 Name:		qmmp-plugin-pack
 Release:	alt1.%svn
 Summary:	Plugin pack is a set of extra plugins for Qmmp.
@@ -14,7 +14,7 @@ Url:		http://qmmp.ylsoftware.com/plugins_en.php
 Source0:	%name-%branch-%svn.tar.bz2
 
 
-BuildRequires:	cmake >= 2.4.8 gcc-c++ libmpg123-devel libqmmp-devel >= %branch libtag-devel >= 1.6 yasm
+BuildRequires:	libqt4-devel gcc-c++ libmpg123-devel libqmmp-devel >= %branch libtag-devel >= 1.6 yasm
 
 %description
 Plugin pack is a set of extra plugins for Qmmp.
@@ -92,23 +92,11 @@ Qmmp Simple Ui - простий інтерфейс користувача з в�
 %setup -q -n %name-svn
 
 %build
-# # with CMake
-# #cmake \
-# #	-DCMAKE_INSTALL_PREFIX=%prefix \
-# #	-DCMAKE_CXX_FLAGS:STRING="%optflags -fPIC" \
-# #	-DCMAKE_C_FLAGS:STRING="%optflags -fPIC" \
-# #	-DLIB_DIR:STRING=%_lib
-
-# # with QMake
 export PATH=$PATH:%_qt4dir/bin
-qmake "QMAKE_CFLAGS+=%optflags" "QMAKE_CXXFLAGS+=%optflags" LIB_DIR=/%_lib %name.pro
+qmake-qt4 "QMAKE_CFLAGS+=%optflags" "QMAKE_CXXFLAGS+=%optflags" LIB_DIR=/%_lib %name.pro
 %make_build VERBOSE=1
 
 %install
-# # with CMake
-# #%make DESTDIR=%buildroot install
-
-# # with QMake
 %make INSTALL_ROOT=%buildroot%prefix install
 
 %files -n %name-in-mpg123
@@ -121,6 +109,12 @@ qmake "QMAKE_CFLAGS+=%optflags" "QMAKE_CXXFLAGS+=%optflags" LIB_DIR=/%_lib %name
 %_libdir/qmmp/Ui/libqsui.so
 
 %changelog
+* Sat Nov 23 2013 Motsyo Gennadi <drool@altlinux.ru> 0.8.0.1-alt1.svn3924
+- build svn3924
+
+* Thu Nov 14 2013 Motsyo Gennadi <drool@altlinux.ru> 0.8.0-alt1.svn3910
+- build svn3910
+
 * Thu Nov 07 2013 Motsyo Gennadi <drool@altlinux.ru> 0.8.0-alt1.svn3880
 - build svn3880
 
