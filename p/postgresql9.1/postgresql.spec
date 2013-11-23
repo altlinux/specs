@@ -4,7 +4,7 @@
 %define prog_name            postgresql
 %define postgresql_major     9
 %define postgresql_minor     1
-%define postgresql_subminor  9
+%define postgresql_subminor  10
 %define postgresql_altrel    1
 %define libpq_major          5
 %define libpq_minor          4
@@ -13,7 +13,7 @@
 
 Name: %prog_name%postgresql_major.%postgresql_minor
 Version: %postgresql_major.%postgresql_minor.%postgresql_subminor
-Release: alt2
+Release: alt%postgresql_altrel
 
 %define PGSQL pgsql
 %define ROOT %_localstatedir/%PGSQL-root
@@ -696,6 +696,9 @@ fi
 %_libdir/%PGSQL/plpython2.so
 
 %changelog
+* Sat Nov 23 2013 Alexei Takaseev <taf@altlinux.org> 9.1.10-alt1
+- 9.1.10
+
 * Fri Aug 30 2013 Vladimir Lettiev <crux@altlinux.ru> 9.1.9-alt2
 - built for perl 5.18
 
