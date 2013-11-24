@@ -2,7 +2,7 @@
 
 Name: bamf
 Version: 0.5.0
-Release: alt1
+Release: alt2
 
 Summary: BAMF Application Matching Framework
 License: GPLv3/LGPLv3
@@ -141,6 +141,34 @@ This package contains the documentation.
 # It can be used by packages using the GIRepository format to generate
 # dynamic bindings.
 
+
+%package -n libbamf3-vala
+Summary: Vala language bindings for bamf3 library
+Group: Development/Other
+BuildArch: noarch
+Requires: libbamf3-0 = %version-%release
+
+%description -n libbamf3-vala
+This package provides Vala language bindings for bamf3 library.
+
+%package -n libbamf3-gir
+Summary: GObject introspection data for bamf3 library
+Group: System/Libraries
+Requires: libbamf3-0 = %version-%release
+
+%description -n libbamf3-gir
+GObject introspection data for bamf3 library.
+
+%package -n libbamf3-gir-devel
+Summary: GObject introspection devel data for bamf3 library.
+Group: System/Libraries
+BuildArch: noarch
+Requires: libbamf3-gir = %version-%release
+
+%description -n libbamf3-gir-devel
+GObject introspection devel data for bamf3 library.
+
+
 %prep
 %setup -q
 %patch0 -p1
@@ -180,12 +208,19 @@ make check || exit 1
 %files -n libbamf-doc
 %_datadir/gtk-doc/html/libbamf
 
-#    /usr/lib/girepository-1.0/Bamf-3.typelib
-#    /usr/share/gir-1.0/Bamf-3.gir
-#    /usr/share/vala/vapi/libbamf3.vapi
+%files -n libbamf3-vala
+%_datadir/vala/vapi/libbamf3.vapi
 
+%files -n libbamf3-gir
+%_libdir/girepository-1.0/Bamf-3.typelib
+
+%files -n libbamf3-gir-devel
+%_datadir/gir-1.0/Bamf-3.gir
 
 %changelog
+* Sun Nov 24 2013 Igor Zubkov <icesik@altlinux.org> 0.5.0-alt2
+- Vala stuff
+
 * Wed Nov 20 2013 Igor Zubkov <icesik@altlinux.org> 0.5.0-alt1
 - 0.5.0
 

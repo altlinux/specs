@@ -2,7 +2,7 @@
 
 Name: plank
 Version: 0.5.0
-Release: alt3
+Release: alt4
 
 Summary: Elegant, simple, clean dock
 License: GPLv3+
@@ -62,6 +62,15 @@ Plank is a dock enabling you to start applications and manage your windows.
 
 This package contains the documentation.
 
+%package -n libplank-vala
+Summary: Vala language bindings for plank library
+Group: Development/Other
+BuildArch: noarch
+Requires: libplank0 = %version-%release
+
+%description -n libplank-vala
+This package provides Vala language bindings for plank library.
+
 %prep
 %setup -q
 
@@ -94,15 +103,20 @@ This package contains the documentation.
 %_libdir/libplank.so
 %_includedir/plank
 %_pkgconfigdir/plank.pc
-%exclude %_datadir/vala/vapi/plank.deps
-%exclude %_datadir/vala/vapi/plank.vapi
 
 %files -n libplank-common
 %_datadir/plank/themes
 
 %files -n libplank-doc
 
+%files -n libplank-vala
+%_datadir/vala/vapi/plank.deps
+%_datadir/vala/vapi/plank.vapi
+
 %changelog
+* Sat Nov 23 2013 Igor Zubkov <icesik@altlinux.org> 0.5.0-alt4
+- Add vala bindings
+
 * Thu Nov 21 2013 Igor Zubkov <icesik@altlinux.org> 0.5.0-alt3
 - Rebuilt with libbamf3.so.2
 
