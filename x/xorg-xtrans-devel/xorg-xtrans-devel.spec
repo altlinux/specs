@@ -1,6 +1,6 @@
 Name: xorg-xtrans-devel
-Version: 1.2.7
-Release: alt2
+Version: 1.3.2
+Release: alt1
 
 Summary: Abstract network code for X
 License: MIT/X11
@@ -51,6 +51,9 @@ autoconf m4 macro file with the flags needed to use it.
 %_datadir/aclocal/*.m4
 
 %changelog
+* Sun Nov 24 2013 Valery Inozemtsev <shrek@altlinux.ru> 1.3.2-alt1
+- 1.3.2
+
 * Wed Apr 10 2013 Valery Inozemtsev <shrek@altlinux.ru> 1.2.7-alt2
 - enabled abstract socket
 
