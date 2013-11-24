@@ -1,12 +1,9 @@
 ## SPEC file for Perl module Gtk2::Ex:PodViewer
 ## Used in PodBrowser
 
-%define version    0.18
-%define release    alt1
-
 Name: perl-Gtk2-Ex-PodViewer
-Version: %version
-Release: alt1.1
+Version: 0.18
+Release: alt2
 
 Summary: a Gtk2 widget for displaying POD documents
 
@@ -22,13 +19,14 @@ Source: http://search.cpan.org/CPAN/authors/id/G/GB/GBROWN/%real_name-%version.t
 Patch0: Gtk2-Ex-PodViewer-0.16-alt-Gtk2_init.patch
 
 AutoReqProv: perl, yes
-BuildRequires(pre): perl-devel fontconfig rpm-build-licenses
-BuildPreReq: perl-Gtk2 perl-IO-stringy perl-Locale-gettext perl-Pod-Simple
-BuildPreReq: perl-Gtk2-Ex-Simple-List
+BuildRequires(pre): fontconfig rpm-build-licenses
+BuildRequires(pre): perl-Locale-gettext perl-Gtk2-Ex-Simple-List
 
 # automatically added during perl 5.8 -> 5.12 upgrade.
 # perl-podlators is required for pod2man conversion.
-BuildRequires: perl-podlators
+# Automatically added by buildreq on Sun Nov 24 2013
+# optimized out: perl-Encode perl-Pod-Escapes perl-Pod-Simple perl-podlators
+BuildRequires: perl-Gtk2 perl-IO-stringy perl-Pod-Parser perl-devel
 
 %description
 Perl module Gtk2::Ex::PodViewer is a widget for rendering Perl 
@@ -54,6 +52,9 @@ uses Pod::Parser for manipulating POD data.
 %perl_vendor_privlib/Gtk2/Ex/PodViewer*
 
 %changelog
+* Sun Nov 24 2013 Nikolay A. Fetisov <naf@altlinux.ru> 0.18-alt2
+- Updating BuildRequires
+
 * Mon Nov 22 2010 Igor Vlasenko <viy@altlinux.ru> 0.18-alt1.1
 - repair after perl 5.12 upgrade using girar-nmu
 
