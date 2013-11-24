@@ -1,22 +1,23 @@
 Name: gtypist
-Version: 2.8.3
-Release: alt2.qa2
+Version: 2.9.3
+Release: alt1
 
 Summary: GNU Typist is a universal typing tutor
-Summary(ru_RU.KOI8-R): Клавиатурный тренажер для консоли
+Summary(ru_RU.UTF8): п п╩п╟п╡п╦п╟я┌я┐я─п╫я▀п╧ я┌я─п╣п╫п╟п╤п╣я─ п╢п╩я▐ п╨п╬п╫я│п╬п╩п╦
 Group: Education
 License: GPL
 Url: http://www.gnu.org/software/%name
 Packager: Ilya Mashkin <oddity@altlinux.ru>
+
 Source: ftp://ftp.gnu.org/gnu/%name/%name-%version.tar.bz2
 Source1: %name-48.png
 Source2: %name-32.png
 Source3: %name-16.png
 Source4: %name-64.png
-Source5: ru.po
 
-# Automatically added by buildreq on Tue Sep 30 2003
-BuildRequires: emacs-common emacs-leim libXaw3d libjpeg libncurses-devel libtiff libtinfo-devel libungif xpm
+BuildRequires: libncursesw-devel libtinfo-devel
+BuildRequires: emacs-common emacs-leim
+BuildRequires: help2man
 
 %description
 GNU Typist (or gtypist) is free software that assist you in learning
@@ -37,10 +38,10 @@ English, Finnish, French, German, Czech and Spanish.
 It has been compiled and used in Unix (GNU/Linux, Aix,
 Solaris, openBSD) and also in DOS/Windows (DOS 6.22, Windows 98).
 
-%description -l ru_RU.KOI8-R
-GNU Typist - клавиатурный тренажер для консоли, содержит несколько легко
-модифицируемых программ обучения для различных языков и клавиатурных
-раскладок.
+%description -l ru_RU.UTF8
+GNU Typist - п╨п╩п╟п╡п╦п╟я┌я┐я─п╫я▀п╧ я┌я─п╣п╫п╟п╤п╣я─ п╢п╩я▐ п╨п╬п╫я│п╬п╩п╦, я│п╬п╢п╣я─п╤п╦я┌ п╫п╣я│п╨п╬п╩я▄п╨п╬ п╩п╣пЁп╨п╬
+п╪п╬п╢п╦я└п╦я├п╦я─я┐п╣п╪я▀я┘ п©я─п╬пЁя─п╟п╪п╪ п╬п╠я┐я┤п╣п╫п╦я▐ п╢п╩я▐ я─п╟п╥п╩п╦я┤п╫я▀я┘ я▐п╥я▀п╨п╬п╡ п╦ п╨п╩п╟п╡п╦п╟я┌я┐я─п╫я▀я┘
+я─п╟я│п╨п╩п╟п╢п╬п╨.
 
 %package -n emacs-mode-%name
 Summary: Major mode for editing %name script-files (*.typ)
@@ -69,27 +70,24 @@ emacs-mode-%name code or see some Lisp examples.
 
 %prep
 %setup -q
-cp -f %SOURCE5 po/ru.po
 
 %build
 %configure
 %make_build
-make -C po update-gmo
 
 %install
-%makeinstall
+%makeinstall_std
 
 # Install menu
 mkdir -p %buildroot%_desktopdir
 cat > %buildroot%_desktopdir/%{name}.desktop <<EOF
 [Desktop Entry]
-Version=1.0
 Type=Application
 Name=GNU typist
 Comment=Typing tutor
 Icon=%name
 Exec=%name
-Terminal=false
+Terminal=true
 Categories=Education;ComputerScience;X-Typing;
 EOF
 
@@ -130,6 +128,11 @@ __INIT__
 %_emacslispdir/%name-mode.el
 
 %changelog
+* Sun Nov 24 2013 Yuri N. Sedunov <aris@altlinux.org> 2.9.3-alt1
+- 2.9.3
+- updated buildreqs
+- fixed desktop file
+
 * Fri Mar 29 2013 Andrey Cherepanov <cas@altlinux.org> 2.8.3-alt2.qa2
 - Fix build with new version of xorg
 
