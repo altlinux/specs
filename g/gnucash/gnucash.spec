@@ -1,5 +1,5 @@
 Name: gnucash
-Version: 2.4.10
+Version: 2.4.13
 Release: alt1
 
 Summary: GnuCash is an application to keep track of your finances
@@ -154,6 +154,10 @@ fi
 %files quotes
 
 %changelog
+* Sun Nov 24 2013 Andrey Cherepanov <cas@altlinux.org> 2.4.13-alt1
+- New version
+- Build with libofx-0.9.9
+
 * Sun Apr 08 2012 Alexey Morsov <swi@altlinux.ru> 2.4.10-alt1
 - new version
 

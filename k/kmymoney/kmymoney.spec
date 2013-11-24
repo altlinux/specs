@@ -1,7 +1,7 @@
 
 Name:    kmymoney
 Version: 4.6.4
-Release: alt1
+Release: alt2
 
 Summary: A Personal Finance Manager for KDE4
 Summary(ru_RU.UTF-8): Учёт финансов под KDE4
@@ -231,6 +231,9 @@ Internationalization and documentation for KMyMoney
 
 
 %changelog
+* Sun Nov 24 2013 Andrey Cherepanov <cas@altlinux.org> 4.6.4-alt2
+- Rebuild with libofx-0.9.9
+
 * Thu Nov 21 2013 Andrey Cherepanov <cas@altlinux.org> 4.6.4-alt1
 - New version
 

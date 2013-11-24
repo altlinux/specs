@@ -1,6 +1,6 @@
 Name:    libofx
-Version: 0.9.4
-Release: alt2.1
+Version: 0.9.9
+Release: alt1
 
 Summary: The OFX parser library
 Group:   System/Libraries
@@ -10,13 +10,13 @@ Packager: Andrey Cherepanov <cas@altlinux.ru>
 URL:      http://libofx.sourceforge.net
 Source:   http://download.sourceforge.net/libofx/%name-%version.tar.gz
 
-BuildRequires: libOpenSP-devel gcc-c++ libcurl-devel
+BuildRequires: libOpenSP-devel gcc-c++ libcurl-devel libxml++2-devel
 
 %description
-This is the LibOFX library.  It is a API designed to allow applications
+This is the LibOFX library. It is a API designed to allow applications
 to very easily support OFX command responses, usually provided by
-financial institutions. See http://www.ofx.net/ for details
-and specification.
+financial institutions. See http://www.ofx.net/ for details and
+specification.
 
 %package devel
 Summary: The OFX parser development library
@@ -43,32 +43,40 @@ a single include file.
 Headers, documentation and other files for development with libofx.
 
 %prep
-%setup -q
+%setup
 
 %build
-%configure
-sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' libtool
+%autoreconf
+%configure --disable-static
 %make_build
 
 %install
 %makeinstall_std
-rm -f %buildroot%_libdir/*.a
+
+%check
+%make check
 
 %files
-%_bindir/*
+%_bindir/ofxdump
+%_bindir/ofxconnect
+%_bindir/ofx2qif
 %_libdir/*.so.*
 %_datadir/%name
 %_man1dir/ofxdump.1.gz
+%_man1dir/ofxconnect.1.gz
 
 %files devel
-%doc AUTHORS COPYING INSTALL ChangeLog NEWS README totest.txt
+%doc AUTHORS NEWS README totest.txt
 %_libdir/*.so
 %_includedir/*
 %_pkgconfigdir/%name.pc
-%dir %_docdir/%name 
-%_docdir/%name/* 
+%_docdir/%name/
 
 %changelog
+* Sat Nov 23 2013 Yuri N. Sedunov <aris@altlinux.org> 0.9.9-alt1
+- 0.9.9
+- %%check section
+
 * Sat Feb 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.4-alt2.1
 - Removed bad RPATH
 

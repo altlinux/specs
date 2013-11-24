@@ -1,5 +1,5 @@
 Name: 		skrooge
-Version: 	1.7.1
+Version: 	1.8.0
 Release: 	alt1
 License: 	%gpl2plus
 Summary: 	Personal finances manager for KDE4
@@ -22,6 +22,7 @@ BuildRequires: libsqlite-devel
 BuildRequires: grantlee-devel
 BuildRequires: kde4pimlibs-devel
 BuildRequires: kde4-nepomuk-core-devel
+BuildRequires: qjson-devel
 BuildRequires: xsltproc
 
 %description
@@ -58,6 +59,10 @@ and intuitive.
 %_K4link/*.so
 
 %changelog
+* Sun Nov 24 2013 Andrey Cherepanov <cas@altlinux.org> 1.8.0-alt1
+- New version
+- Build with libofx-0.9.9
+
 * Mon Jul 29 2013 Andrey Cherepanov <cas@altlinux.org> 1.7.1-alt1
 - New version 1.7.1
 
