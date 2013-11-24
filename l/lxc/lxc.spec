@@ -24,7 +24,7 @@
 
 Name: lxc
 Version: 0.9.0
-Release: alt2
+Release: alt3
 Packager: Denis Pynkin <dans@altlinux.org>
 
 URL: http://lxc.sourceforge.net
@@ -113,6 +113,9 @@ mkdir -p %buildroot%_cachedir/%name
 %_libdir/*.so
 
 %changelog
+* Sun Nov 24 2013 Denis Pynkin <dans@altlinux.org> 0.9.0-alt3
+- Fixed rebuild problem
+
 * Mon Jul 01 2013 Denis Pynkin <dans@altlinux.org> 0.9.0-alt2
 - 0.9.0 release
 - fixed #29113, Thanks to legion@.
