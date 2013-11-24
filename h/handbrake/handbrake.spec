@@ -1,4 +1,4 @@
-%define svn svn5891
+%define svn svn5903
 
 Name: handbrake
 Version: 0.9.9
@@ -116,6 +116,9 @@ popd #build
 %_datadir/icons/*/*/apps/hb-icon.png
 
 %changelog
+* Sun Nov 24 2013 Motsyo Gennadi <drool@altlinux.ru> 0.9.9-alt1.svn5903
+- build svn5903
+
 * Sat Nov 09 2013 Motsyo Gennadi <drool@altlinux.ru> 0.9.9-alt1.svn5891
 - build svn5891
 
