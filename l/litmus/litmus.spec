@@ -2,7 +2,7 @@
 
 Name:    litmus
 Version: 0.13
-Release: alt1
+Release: alt2
 
 Summary: a WebDAV server test suite
 Summary(ru_RU.UTF-8): утилита тестирования серверов WebDAV
@@ -13,7 +13,8 @@ URL:     http://webdav.org/neon/litmus/
 
 Packager: Nikolay A. Fetisov <naf@altlinux.ru>
 
-Source0: %url/%name-%version.tar
+Source0: %name-%version.tar
+Patch0:  %name-0.13-alt-neon_0.30.patch
 
 BuildRequires(pre): rpm-build-licenses
 
@@ -36,6 +37,8 @@ digest and basic authentication, TLS/SSL, and proxy servers.
 
 %prep
 %setup
+%patch0
+
 mv -f -- COPYING COPYING.orig
 ln -s -- $(relative %_licensedir/GPL-2 %_docdir/%name/COPYING) COPYING
 
@@ -60,6 +63,9 @@ ln -s -- $(relative %_licensedir/GPL-2 %_docdir/%name/COPYING) COPYING
 %_datadir/%{name}*
 
 %changelog
+* Sun Nov 24 2013 Nikolay A. Fetisov <naf@altlinux.ru> 0.13-alt2
+- Rebuild with libneon 0.30
+
 * Sun Oct 14 2012 Nikolay A. Fetisov <naf@altlinux.ru> 0.13-alt1
 - New version
 
