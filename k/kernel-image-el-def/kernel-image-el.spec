@@ -7,8 +7,8 @@
 
 Name: kernel-image-%flavour
 Version: 2.6.32
-Release: alt12
-%define erelease 358.23.2.el6
+Release: alt13
+%define erelease 431.el6
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -548,6 +548,41 @@ tar	--transform='s/^\(linux-%kversion\)-%erelease/\1-%flavour-%krelease/' \
 
 
 %changelog
+* Sun Nov 24 2013 Led <led@altlinux.ru> 2.6.32-alt13
+- 2.6.32-431.el6:
+  + CVE-2013-0228
+  + CVE-2013-0268
+  + CVE-2013-0343
+  + CVE-2013-0349
+  + CVE-2013-0871
+  + CVE-2013-0913
+  + CVE-2013-1767
+  + CVE-2013-1773
+  + CVE-2013-1774
+  + CVE-2013-1792
+  + CVE-2013-1796
+  + CVE-2013-1797
+  + CVE-2013-1798
+  + CVE-2013-1826
+  + CVE-2013-1827
+  + CVE-2013-1928
+  + CVE-2013-2164
+  + CVE-2013-2234
+  + CVE-2013-2851
+  + CVE-2013-2888
+  + CVE-2013-2889
+  + CVE-2013-2892
+  + CVE-2013-3231
+  + CVE-2013-4345
+  + CVE-2013-4387
+  + CVE-2012-6537
+  + CVE-2012-6542
+  + CVE-2012-6545
+  + CVE-2012-6546
+  + CVE-2012-6547
+- updated:
+  + feat-drivers-gpu-drm--gma500
+
 * Thu Oct 17 2013 Led <led@altlinux.ru> 2.6.32-alt12
 - 2.6.32-358.23.2.el6:
   + CVE-2013-4162
