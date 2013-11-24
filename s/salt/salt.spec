@@ -1,6 +1,6 @@
 Summary: Tool to manage your infrastructure
 Name: salt
-Version: 0.17.0
+Version: 0.17.2
 Release: alt1
 Url: http://saltstack.org
 Source0: %name-%version.tar
@@ -152,6 +152,9 @@ install -D -m 0644 pkg/altlinux/minion.logrotate %buildroot%_sysconfdir/logrotat
 %_man1dir/salt-minion.1.*
 
 %changelog
+* Sun Nov 24 2013 Slava Dubrovskiy <dubrsl@altlinux.org> 0.17.2-alt1
+- New version
+
 * Sat Sep 28 2013 Slava Dubrovskiy <dubrsl@altlinux.org> 0.17.0-alt1
 - New version
 
