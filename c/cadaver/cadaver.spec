@@ -2,7 +2,7 @@
 
 Name:    cadaver
 Version: 0.23.3
-Release: alt2
+Release: alt3
 
 Summary: a command-line WebDAV client
 Summary(ru_RU.UTF-8): консольный клиент WebDAV
@@ -16,6 +16,7 @@ Packager: Nikolay A. Fetisov <naf@altlinux.ru>
 Source0: %url/%name-%version.tar
 Patch0:  %name-0.23.2-debian-manpage_hyphen.patch
 Patch1:  %name-0.23.3-alt-remote_glob.patch
+Patch2:  %name-0.23.3-alt-neon_0.30.patch
 
 BuildRequires(pre): rpm-build-licenses
 
@@ -32,6 +33,7 @@ operations.
 %setup
 %patch0 -p1
 %patch1
+%patch2
 
 mv -f -- COPYING COPYING.orig
 ln -s -- $(relative %_licensedir/GPL-2 %_docdir/%name/COPYING) COPYING
@@ -54,6 +56,9 @@ autoconf -f
 %_man1dir/%{name}*
 
 %changelog
+* Sun Nov 24 2013 Nikolay A. Fetisov <naf@altlinux.ru> 0.23.3-alt3
+- Rebuild with libneon 0.30
+
 * Thu Jan 05 2012 Nikolay A. Fetisov <naf@altlinux.ru> 0.23.3-alt2
 - Fix remote args globbing (Closes: #26649)
 
