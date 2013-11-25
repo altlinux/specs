@@ -1,5 +1,5 @@
 Name: iproute2
-Version: 3.10.0
+Version: 3.12.0
 Release: alt1
 
 Summary: Advanced IP routing and network devices configuration tools
@@ -63,7 +63,6 @@ This package contains libnetlink dynamic library headers.
 sed -i 's,/sbin/arping,/usr/sbin/arping,g' examples/dhcp-client-script
 
 %build
-%add_optflags -D_GNU_SOURCE
 %make_build DBM_INCLUDE=%_includedir/db4 LIBDIR=%_libdir CCOPTS='%optflags'
 %make_build -C doc
 %make_build -C doc pdf
@@ -120,6 +119,9 @@ done
 %_man3dir/*
 
 %changelog
+* Mon Nov 25 2013 Dmitry V. Levin <ldv@altlinux.org> 3.12.0-alt1
+- Updated to 3.12.0.
+
 * Mon Jul 22 2013 Dmitry V. Levin <ldv@altlinux.org> 3.10.0-alt1
 - Updated to 3.10.0.
 
