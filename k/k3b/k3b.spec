@@ -23,7 +23,7 @@
 
 Name: k3b
 Version: 1.0.5
-Release: alt13
+Release: alt13.1
 
 Group: Archiving/Cd burning
 Summary: The CD Kreator (Complete set)
@@ -41,6 +41,7 @@ Patch3: %name-1.0.4-disk_verify_fallback.patch
 Patch4: %name.desktop.patch
 
 Patch6: %name-1.0.5-fix-autoconf-2.64.patch
+Patch8: cvs-auto_version_check.patch
 Patch9: tde-3.5.13-build-defdir-autotool.patch
 
 Requires: %req_all
@@ -116,6 +117,7 @@ K3b - это мощная графическая оболочка для про�
 %patch4 -p0
 
 %patch6 -p1
+%patch8
 %patch9
 
 %__subst 's/\.la\>/.so/g' admin/acinclude.m4.in
@@ -186,6 +188,9 @@ export PATH=$QTDIR/bin:$KDEDIR/bin:$PATH
 %_K3includedir/*.h
 
 %changelog
+* Mon Nov 25 2013 Roman Savochenko <rom_as@altlinux.ru> 1.0.5-alt13.1
+- Build for Automake 1.13 and 1.14 is added.
+
 * Mon Oct 29 2012 Roman Savochenko <rom_as@altlinux.ru> 1.0.5-alt13
 - Release TDE version 3.5.13.1
 
