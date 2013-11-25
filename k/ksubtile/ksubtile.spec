@@ -1,6 +1,6 @@
 Name: ksubtile
 Version: 1.3
-Release: alt3
+Release: alt3.1
 
 Summary: KDE application for subtitles editing
 License: GPL
@@ -51,6 +51,9 @@ cp -Rp /usr/share/libtool/config/ltmain.sh admin/ltmain.sh
 /usr/share/kde/doc/HTML/en/ksubtile
 
 %changelog
+* Mon Nov 25 2013 Roman Savochenko <rom_as@altlinux.ru> 1.3-alt3.1
+- Build for Automake 1.13 and 1.14 is added.
+
 * Fri May 25 2012 Roman Savochenko <rom_as@altlinux.ru> 1.3-alt3
 - Build for TDE 3.5.13 release.
 - Curpos length activate and set realised.
