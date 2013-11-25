@@ -1,3 +1,4 @@
+%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-devel perl-podlators
@@ -6,13 +7,13 @@ BuildRequires: perl-devel perl-podlators
 %global debug_package %{nil}
 
 Name:		perl-Test-Version
-Version:	1.002003
-Release:	alt2_1
+Version:	1.002004
+Release:	alt1
 Summary:	Check to see that versions in modules are sane
 License:	Artistic 2.0
 Group:		Development/Perl
 URL:		http://search.cpan.org/dist/Test-Version/
-Source0:	http://search.cpan.org/CPAN/authors/id/X/XE/XENO/Test-Version-%{version}.tar.gz
+Source:	http://www.cpan.org/authors/id/X/XE/XENO/Test-Version-%{version}.tar.gz
 Patch1:		Test-Version-1.002003-pod-spell.patch
 BuildArch:	noarch
 # ===================================================================
@@ -105,6 +106,9 @@ make test %{!?perl_bootstrap:AUTHOR_TESTING=1 RELEASE_TESTING=1}
 %{perl_vendor_privlib}/Test/
 
 %changelog
+* Mon Nov 25 2013 Igor Vlasenko <viy@altlinux.ru> 1.002004-alt1
+- automated CPAN update
+
 * Thu Nov 14 2013 Igor Vlasenko <viy@altlinux.ru> 1.002003-alt2_1
 - Sisyphus build
 
