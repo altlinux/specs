@@ -1,14 +1,15 @@
+%define _unpackaged_files_terminate_build 1
 %define dist Class-XSAccessor
 Name: perl-%dist
-Version: 1.18
-Release: alt2
+Version: 1.19
+Release: alt1
 
 Summary: Generate fast XS accessors without runtime compilation
 License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar
+Source: http://www.cpan.org/authors/id/S/SM/SMUELLER/Class-XSAccessor-%{version}.tar.gz
 
 # Automatically added by buildreq on Fri Oct 07 2011
 BuildRequires: perl-devel perl-threads
@@ -36,6 +37,9 @@ that use arrays for their internal representation.
 %perl_vendor_autolib/Class/XSAccessor
 
 %changelog
+* Mon Nov 25 2013 Igor Vlasenko <viy@altlinux.ru> 1.19-alt1
+- automated CPAN update
+
 * Tue Aug 27 2013 Vladimir Lettiev <crux@altlinux.ru> 1.18-alt2
 - built for perl 5.18
 
