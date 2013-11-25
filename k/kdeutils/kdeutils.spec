@@ -1,3 +1,4 @@
+%set_automake_version 1.11
 %undefine __libtoolize
 %define _optlevel s
 %define unstable 0
@@ -13,7 +14,7 @@
 
 Name: kdeutils
 Version: 3.5.13.2
-Release: alt2
+Release: alt2.1
 
 Group: Graphical desktop/KDE
 Summary: K Desktop Environment - Utilities
@@ -57,6 +58,7 @@ Patch104: kdeutils-3.5.1-alt-ksim-configure_snmp.patch
 Patch105: kdeutils-3.5.13-Ark-Combained.patch
 Patch106: kdeutils-3.5.13.2-trinityHomeToKDE.patch
 Patch107: tde-3.5.13-build-defdir-autotool.patch
+Patch108: cvs-auto_version_check.patch
 
 # Automatically added by buildreq on Mon Apr 08 2002
 #BuildRequires: XFree86-devel XFree86-libs freetype2 gcc-c++ kde-common kdebase kdelibs-devel libarts-devel libjpeg-devel liblcms libmng libpng-devel libqt3-devel libstdc++-devel libtiff-devel zlib-devel
@@ -346,6 +348,7 @@ Development files for %name
 #%patch105
 %patch106 -p1
 %patch107
+%patch108
 
 sed -i '\|\${kdeinit}_LDFLAGS[[:space:]]=[[:space:]].*-no-undefined|s|-no-undefined|-no-undefined -Wl,--warn-unresolved-symbols|' admin/am_edit
 for f in `find $PWD -type f -name Makefile.am`
@@ -659,6 +662,9 @@ desktop-file-install --dir %buildroot%_K3xdg_apps --add-category=FileTools %buil
 %_includedir/*
 
 %changelog
+* Mon Nov 25 2013 Roman Savochenko <rom_as@altlinux.ru> 3.5.13.2-alt2.1
+- Build for Automake 1.13 and 1.14 is added.
+
 * Sat Jul 27 2013 Roman Savochenko <rom_as@altlinux.ru> 3.5.13.2-alt2
 - Switch to build from original autotools "admin".
 
