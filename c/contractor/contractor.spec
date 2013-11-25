@@ -1,6 +1,6 @@
 Name: contractor
 Version: 0.3
-Release: alt2.revno130
+Release: alt3.r131
 
 Summary: service for sharing data between apps
 License: GPLv3+
@@ -35,6 +35,9 @@ have the destination apps hard coded into them.
 %_datadir/dbus-1/services/org.elementary.contractor.service
 
 %changelog
+* Mon Nov 25 2013 Igor Zubkov <icesik@altlinux.org> 0.3-alt3.r131
+- r131
+
 * Mon Sep 16 2013 Igor Zubkov <icesik@altlinux.org> 0.3-alt2.revno130
 - Add docs
 - Make build verbose
