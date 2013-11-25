@@ -1,5 +1,5 @@
 %define version 1.90.0
-%define altrelease 13
+%define altrelease 13.1
 
 %define appname krusader
 %define srcname %appname-%{?cvs:cvs-%cvs}%{!?cvs:%version%{?pre:-%pre}}
@@ -88,6 +88,9 @@ cp %buildroot/%_kde3_iconsdir/locolor/16x16/apps/%appname.png %buildroot/%_kde3_
 # %_man1dir/*
 
 %changelog
+* Mon Nov 25 2013 Roman Savochenko <rom_as@altlinux.ru> 1.90.0-alt13.1
+- Build for Automake 1.13 and 1.14 is added.
+
 * Tue Oct 23 2012 Roman Savochenko <rom_as@altlinux.ru> 1.90.0-alt13
 - Rebuild for TDE-3.5.13.1.
 - kjsembed-devel depends changed to kdebindings-kjsembed-devel.
