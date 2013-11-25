@@ -9,7 +9,7 @@
 
 Name: kdetoys
 Version: 3.5.13.2
-Release: alt2
+Release: alt2.1
 
 Group: Graphical desktop/KDE
 Summary: K Desktop Environment - Toys and Amusements
@@ -20,6 +20,7 @@ Source: kdetoys-%version.tar
 #
 Patch10: kdetoys-3.1.0-kweather_start_hack.patch
 Patch11: tde-3.5.13-build-defdir-autotool.patch
+Patch12: cvs-auto_version_check.patch
 
 Requires: %name-amor = %version-%release
 Requires: %name-eyes = %version-%release
@@ -164,6 +165,7 @@ on the world globe
 ##cp -ar altlinux/admin ./
 #%patch10 -p1
 %patch11
+%patch12
 
 sed -i '\|\${kdeinit}_LDFLAGS[[:space:]]=[[:space:]].*-no-undefined|s|-no-undefined|-no-undefined -Wl,--warn-unresolved-symbols|' admin/am_edit
 for f in `find $PWD -type f -name Makefile.am`
@@ -294,6 +296,9 @@ sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' libtool
 
 
 %changelog
+* Mon Nov 25 2013 Roman Savochenko <rom_as@altlinux.ru> 3.5.13.2-alt2.1
+- Build for Automake 1.13 and 1.14 is added.
+
 * Sat Jul 27 2013 Roman Savochenko <rom_as@altlinux.ru> 3.5.13.2-alt2
 - Switch to build from original autotools "admin".
 
