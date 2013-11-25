@@ -1,5 +1,5 @@
 Name: iptables
-Version: 1.4.19.1
+Version: 1.4.21
 Release: alt1
 
 Summary: Tools for managing Linux kernel packet filtering capabilities
@@ -15,6 +15,10 @@ Requires: lib%name = %version-%release
 
 # for nfbpf_compile
 BuildRequires: libpcap-devel
+# for nfnl_osf
+BuildRequires: libnfnetlink-devel
+# for libxt_connlabel
+BuildRequires: libnetfilter_conntrack-devel
 
 %def_disable static
 
@@ -129,7 +133,7 @@ cat >%buildroot%_libdir/libiptc.so <<EOF
    GROUP ( AS_NEEDED ( -lip4tc -lip6tc ) )
 EOF
 
-install -pDm644 iptables/iptables.xslt %buildroot%_datadir/%name/iptables.xslt
+install -pDm644 iptables/iptables.xslt %buildroot%_datadir/iptables/iptables.xslt
 
 # Install ip*tables.h header files.
 mkdir -p %buildroot%_includedir/iptables
@@ -191,7 +195,8 @@ fi
 %_man1dir/*
 %_man8dir/*
 /%_lib/iptables/
-%_datadir/%name/
+%_datadir/iptables/
+%_datadir/xtables/
 # hack around arepo: we have to package something harmless just to trigger
 # arepoizer, to generate i586-iptables package required by several other
 # i586-* packages.
@@ -218,6 +223,9 @@ fi
 %endif
 
 %changelog
+* Mon Nov 25 2013 Dmitry V. Levin <ldv@altlinux.org> 1.4.21-alt1
+- Updated to v1.4.21-2-g73dcee3.
+
 * Mon Jul 22 2013 Dmitry V. Levin <ldv@altlinux.org> 1.4.19.1-alt1
 - Updated to stable v1.4.19.1-2-gc545933.
 
@@ -278,7 +286,7 @@ fi
 - Fixed build for enabling "%%set_verify_elf_method strict".
 - Imported manpage fixes from Debian 1.4.3.2-2 package.
 - Disabled devel-static packaging by default.
-- Packaged %_datadir/%name/iptables.xslt.
+- Packaged %_datadir/iptables/iptables.xslt.
 
 * Thu Nov 27 2008 Dmitry V. Levin <ldv@altlinux.org> 1.4.0-alt4
 - Removed obsolete %%post_ldconfig/%%postun_ldconfig calls.
