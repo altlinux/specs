@@ -1,28 +1,38 @@
 Name: docker-io
 Version: 0.7
-Release: alt2.rc3
+Release: alt3.rc7
 Summary: Automates deployment of containerized applications
 License: ASL 2.0
 Group: System/Configuration/Other
 
-Patch0: docker-0.7-remove-dotcloud-tar.patch
 Url: http://www.docker.io
 # only x86_64 for now: https://github.com/dotcloud/docker/issues/136
 ExclusiveArch: x86_64
 
+# https://github.com/crosbymichael/docker
 Source0: %name-%version.tar
 Source1: docker.service
 Source2: docker.init
 
-BuildRequires: gcc golang golang-docs golang-godoc systemd-devel libdevmapper-devel-static libsqlite3-devel-static
+Patch0: docker-0.7-remove-dotcloud-tar.patch
+Patch2: docker-bridge_flag.patch
+
+BuildRequires: /proc gcc golang systemd-devel libdevmapper-devel-static libsqlite3-devel-static
 BuildRequires: python-module-sphinx-devel python-module-sphinxcontrib-httpdomain
-BuildRequires: golang("github.com/gorilla/mux") golang("github.com/kr/pty") golang("code.google.com/p/go.net/websocket") golang("code.google.com/p/gosqlite/sqlite3")
+BuildRequires: golang(github.com/gorilla/mux) golang(github.com/kr/pty) golang(code.google.com/p/go.net/websocket) golang(code.google.com/p/gosqlite/sqlite3)
 
 Requires: tar lxc
 Provides: lxc-docker
 
-%global gopath          %_datadir/gocode
+%global commit      ea7811c83d913db91948cd4f696cf34b139da855
+%global shortcommit %(c=%{commit}; echo ${c:0:7})
 
+%global gopath          %_datadir/gocode
+%global __find_debuginfo_files /bin/true
+%add_verify_elf_skiplist /usr/bin/docker
+%add_verify_elf_skiplist %_usr/libexec/docker/dockerinit
+%brp_strip_none /usr/bin/*
+%brp_strip_none %_usr/libexec/docker/*
 
 %description
 Docker is an open-source engine that automates the deployment of any
@@ -38,6 +48,7 @@ servers, OpenStack clusters, public instances, or combinations of the above.
 %setup -q
 rm -rf vendor
 %patch0 -p1 -b docker-0.7-remove-dotcloud-tar.patch
+%patch2 -p1 -b none-bridge
 
 %build
 mkdir _build
@@ -47,25 +58,30 @@ mkdir -p src/github.com/dotcloud
 ln -s $(dirs +1 -l) src/github.com/dotcloud/docker
 export GOPATH=$(pwd):%gopath
 
-go build -v github.com/dotcloud/docker/docker
-#Fix https://github.com/dotcloud/docker/issues/2203
-export LDFLAGS='-X main.GITCOMMIT "'%version-%release'" -X main.VERSION "'%version'" -w -linkmode external -extldflags "-lpthread -ldl -static -Wl,--unresolved-symbols=ignore-in-shared-libs"'
-export BUILDFLAGS='-tags netgo '
-go build -v -ldflags "$LDFLAGS" $BUILDFLAGS github.com/dotcloud/docker/docker-init
+# passing version information build flags BZ #1017186
+export LDFLAGS="-X main.GITCOMMIT '%shortcommit/%release' -X main.VERSION '%version' -w"
+export BUILDFLAGS='-tags netgo'
+# dockerinit still needs to be a static binary, even if docker is dynamic
+CGO_ENABLED=0 go build -v -a -ldflags "$LDFLAGS -d" $BUILDFLAGS github.com/dotcloud/docker/dockerinit
+# sha1 our new dockerinit to ensure separate docker and dockerinit always run in a perfect pair compiled for one another
+export DOCKER_INITSHA1="$(sha1sum dockerinit | cut -d' ' -f1)"
+# exported so that "dyntest" can easily access it later without recalculating it
+go build -v -a -ldflags "$LDFLAGS -X github.com/dotcloud/docker/utils.INITSHA1 \"$DOCKER_INITSHA1\"" $BUILDFLAGS github.com/dotcloud/docker/docker
 
 popd
 
 make -C docs/ man
 
 %install
-install -d %buildroot%_bindir
 install -d -m 700 %buildroot%_sharedstatedir/docker
-install -p -m 755 _build/docker %buildroot%_bindir
-install -p -m 755 _build/docker-init %buildroot%_bindir
+install -p -D -m 755 _build/docker %buildroot%_bindir/docker
+install -p -D -m 755 _build/dockerinit %buildroot%_usr/libexec/docker/dockerinit
 install -d %buildroot%_mandir/man1
 install -p -m 644 docs/_build/man/docker.1 %buildroot%_man1dir/
 install -d %buildroot%_sysconfdir/bash_completion.d
-install -p -m 644 contrib/docker.bash %buildroot%_sysconfdir/bash_completion.d/
+install -p -m 644 contrib/completion/bash/docker %buildroot%_sysconfdir/bash_completion.d/docker.bash
+install -d %buildroot%_datadir/zsh/site-functions
+install -p -m 644 contrib/completion/zsh/_docker %buildroot%_datadir/zsh/site-functions
 install -d %buildroot%_unitdir
 install -p -m 644 %SOURCE1 %buildroot%_unitdir
 install -d %buildroot%_initdir
@@ -79,19 +95,25 @@ EOF
 
 install -d %buildroot%_sysconfdir/sysconfig
 cat > %buildroot%_sysconfdir/sysconfig/docker <<EOF
-# -D=false: Debug mode
-# -H=[unix:///var/run/docker.sock]: tcp://host:port to bind/connect to or unix://path/to/socket to use
-# -api-enable-cors=false: Enable CORS requests in the remote api.
-# -b="": Attach containers to a pre-existing network bridge. Use 'none' to disable container networking
-# -dns="": Set custom dns servers
-# -ip="0.0.0.0": Default ip address to use when binding a containers ports
-# -iptables=true: Disable iptables within docker
-# -r=true: Restart previously running containers
+#  -D=false: Enable debug mode
+#  -H=[unix:///var/run/docker.sock]: Multiple tcp://host:port or unix://path/to/socket to bind in daemon mode, single connection otherwise
+#  -api-enable-cors=false: Enable CORS headers in the remote API
+#  -b="": Attach containers to a pre-existing network bridge; use 'none' to disable container networking
+#  -d=false: Enable daemon mode
+#  -dns="": Force docker to use specific DNS servers
+#  -g="/var/lib/docker": Path to use as the root of the docker runtime
+#  -graph-driver="": Force docker runtime to use a specific graph driver
+#  -icc=true: Enable inter-container communication
+#  -ip="0.0.0.0": Default IP address to use when binding container ports
+#  -iptables=true: Disable docker's addition of iptables rules
+#  -p="/var/run/docker.pid": Path to use for daemon PID file
+#  -r=true: Restart previously running containers
+#  -v=false: Print version information and quit
 
 # Example
-#OPTIONS='-b="breth0" -dns="8.8.8.8"'
+#OPTIONS='-graph-driver=devicemapper -b="breth0" -dns="8.8.8.8"'
 
-OPTIONS=''
+OPTIONS='-graph-driver=devicemapper '
 
 EOF
 
@@ -110,14 +132,22 @@ exit 0
 %config(noreplace) %_sysconfdir/sysconfig/docker
 %_initdir/*
 %_bindir/*
+%_usr/libexec/docker
 %_unitdir/docker.service
 %_sysctldir/docker.conf
 %_man1dir/docker.1*
 %dir %_sysconfdir/bash_completion.d
 %_sysconfdir/bash_completion.d/docker.bash
+%_datadir/zsh/site-functions/_docker
 %dir %_sharedstatedir/docker
 
 %changelog
+* Mon Nov 25 2013 Slava Dubrovskiy <dubrsl@altlinux.org> 0.7-alt3.rc7
+- New RC
+
+* Sat Oct 19 2013 Slava Dubrovskiy <dubrsl@altlinux.org> 0.7-alt3.rc4
+- New RC
+
 * Fri Oct 11 2013 Slava Dubrovskiy <dubrsl@altlinux.org> 0.7-alt2.rc3
 - Update up to upstream/v0.7-rc3 branch
 - Add ExclusiveArch: x86_64
