@@ -17,7 +17,7 @@
 
 Name: kdeadmin
 Version: 3.5.13.2
-Release: alt2
+Release: alt2.1
 Serial: 1
 
 Group: Graphical desktop/KDE
@@ -38,6 +38,7 @@ Patch1000: kdeadmin-3.1.1-ksysv-alt.patch
 Patch1001: kdeadmin-3.5.13-kpackage-work-locale.patch
 Patch1002: kdeadmin-3.5.13.2-trinityHomeToKDE.patch
 Patch1003: tde-3.5.13-build-defdir-autotool.patch
+Patch1004: cvs-auto_version_check.patch
 
 Requires: %name-kcron = %version-%release
 Requires: %name-kdat = %version-%release
@@ -215,6 +216,7 @@ This tool allows you to manipulate the PAM configuration files for each
 %patch1001 -p1
 %patch1002 -p1
 %patch1003
+%patch1004
 
 sed -i '\|\${kdeinit}_LDFLAGS[[:space:]]=[[:space:]].*-no-undefined|s|-no-undefined|-no-undefined -Wl,--warn-unresolved-symbols|' admin/am_edit
 for f in `find $PWD -type f -name Makefile.am`
@@ -441,6 +443,9 @@ mv %buildroot/%_K3bindir/kwuftpd %buildroot/%_K3sbindir
 %_K3bindir/secpolicy
 
 %changelog
+* Mon Nov 25 2013 Roman Savochenko <rom_as@altlinux.ru> 1:3.5.13.2-alt2.1
+- Build for Automake 1.13 and 1.14 is added.
+
 * Sat Jul 27 2013 Roman Savochenko <rom_as@altlinux.ru> 1:3.5.13.2-alt2
 - Switch to build from original autotools "admin".
 
