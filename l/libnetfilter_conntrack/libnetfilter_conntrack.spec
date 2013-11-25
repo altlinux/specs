@@ -1,56 +1,55 @@
 Name: libnetfilter_conntrack
-Version: 1.0.3
+Version: 1.0.4
 Release: alt1
-Serial: 1
+Epoch: 1
 
-Summary: API to the in-kernel connection tracking state table.
-License: %gpl2plus
+Summary: Netfilter conntrack userspace library
+License: GPLv2+
 Group: System/Libraries
 Url: http://netfilter.org/projects/libnetfilter_conntrack/
-Packager: Avramenko Andrew <liks@altlinux.ru>
 
+# git://git.netfilter.org/%name
+# git://git.altlinux.org/gears/l/%name
 Source: %name-%version.tar
 
-Requires: libnfnetlink
-# Automatically added by buildreq on Sat Oct 30 2010
-BuildRequires: libnfnetlink-devel rpm-build-licenses libmnl-devel
+BuildRequires: libnfnetlink-devel libmnl-devel
 
 %description
 libnetfilter_conntrack is a userspace library providing a programming
-interface (API) to the in-kernel connection tracking state table
+interface (API) to the in-kernel connection tracking state table.
 
 %package devel
 Summary: Netfilter conntrack userspace library
 Group: Development/C
-Requires: %name = %{?epoch:%epoch:}%version-%release
+Requires: %name = %EVR
 
 %description devel
 libnetfilter_conntrack is a userspace library providing a programming
-interface (API) to the in-kernel connection tracking state table
+interface (API) to the in-kernel connection tracking state table.
 
 %prep
-%setup -q
+%setup
 
 %build
-%autoreconf -fisv
+%autoreconf
 %configure --disable-static
 %make_build
 
 %install
-%makeinstall
-rm -f %buildroot%_libdir/%name/*.la
+%makeinstall_std
 
 %files
-%doc COPYING
 %_libdir/*.so.*
 
 %files devel
 %_libdir/*.so
-%_includedir/%name
-%_libdir/pkgconfig/*.pc
-
+%_includedir/%name/
+%_pkgconfigdir/*.pc
 
 %changelog
+* Mon Nov 25 2013 Dmitry V. Levin <ldv@altlinux.org> 1:1.0.4-alt1
+- Updated to 1.0.4, required by iptables/libxt_connlabel.
+
 * Mon Jun 24 2013 Anton Farygin <rider@altlinux.ru> 1:1.0.3-alt1
 - New version
 
@@ -68,7 +67,7 @@ rm -f %buildroot%_libdir/%name/*.la
 - Fix repocop warnings
 
 * Sat Apr 19 2008 Avramenko Andrew <liks@altlinux.ru> 1:0.0.89-alt1
-- New version 
+- New version
 
 * Wed Nov 28 2007 Avramenko Andrew <liks@altlinux.ru> 1:0.0.82-alt1
 - New version
@@ -83,7 +82,7 @@ rm -f %buildroot%_libdir/%name/*.la
 - New version
 
 * Mon May 07 2007 Avramenko Andrew <liks@altlinux.ru> 20070410-alt3
-- BuildRequires changed from libnfnetlink to libnfnetlink-devel 
+- BuildRequires changed from libnfnetlink to libnfnetlink-devel
 
 * Thu Apr 13 2007 Avramenko Andrew <liks@altlinux.ru> 20070410-alt2
 - Add post/postun section
