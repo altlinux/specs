@@ -1,5 +1,5 @@
 %define _unpackaged_files_terminate_build 1
-%define module_version 1.000000
+%define module_version 1.000002
 %define module_name Path-IsDev
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(Carp.pm) perl(Class/Tiny.pm) perl(Data/Dump.pm) perl(FindBin.pm) perl(IO/Handle.pm) perl(IPC/Open3.pm) perl(Module/Build.pm) perl(Module/Runtime.pm) perl(Path/FindDev.pm) perl(Path/Tiny.pm) perl(Role/Tiny.pm) perl(Role/Tiny/With.pm) perl(Scalar/Util.pm) perl(Sub/Exporter.pm) perl(Test/Fatal.pm) perl(Test/More.pm) perl(YAML/Dumper.pm) perl(YAML/Loader.pm) perl(File/HomeDir.pm)
@@ -7,7 +7,7 @@ BuildRequires: perl(Carp.pm) perl(Class/Tiny.pm) perl(Data/Dump.pm) perl(FindBin
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 1.000000
+Version: 1.000002
 Release: alt1
 Summary: Determine if a given Path resembles a development source tree
 Group: Development/Perl
@@ -34,6 +34,9 @@ BuildArch: noarch
 %perl_vendor_privlib/P*
 
 %changelog
+* Mon Nov 25 2013 Igor Vlasenko <viy@altlinux.ru> 1.000002-alt1
+- automated CPAN update
+
 * Tue Oct 22 2013 Igor Vlasenko <viy@altlinux.ru> 1.000000-alt1
 - automated CPAN update
 
