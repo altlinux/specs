@@ -11,7 +11,7 @@
 
 Name: kdeaccessibility
 Version: 3.5.13.2
-Release: alt2
+Release: alt2.1
 
 Group: Graphical desktop/KDE
 Summary: K Desktop Environment - accessibility programs
@@ -30,6 +30,7 @@ Source: %name-%version.tar
 Patch0: kdeaccessibility-3.5.13.2-trinityHomeToKDE.patch
 Patch1: kdeaccessibility-3.5.13.2-build-plugin.patch
 Patch2: tde-3.5.13-build-defdir-autotool.patch
+Patch3: cvs-auto_version_check.patch
 
 # Automatically added by buildreq on Fri Mar 05 2004 (-bi)
 BuildRequires: gcc-c++
@@ -127,6 +128,7 @@ Panel applet that shows the state of the modifier keys
 %patch0 -p1
 %patch1 -p1
 %patch2
+%patch3
 
 ##cp -ar altlinux/admin ./
 
@@ -272,6 +274,9 @@ export PATH=%_bindir:$PATH
 %_K3apps/kicker/applets/kbstateapplet.desktop
 
 %changelog
+* Mon Nov 25 2013 Roman Savochenko <rom_as@altlinux.ru> 3.5.13.2-alt2.1
+- Build for Automake 1.13 and 1.14 is added.
+
 * Sat Jul 27 2013 Roman Savochenko <rom_as@altlinux.ru> 3.5.13.2-alt2
 - ARTS support enable.
 - Switch to build from original autotools "admin".
