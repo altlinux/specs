@@ -1,6 +1,6 @@
 Name: elementary
 Version: 1.7.9
-Release: alt1
+Release: alt2
 
 Summary: Widget set based on the Enlightenment Foundation Libraries
 Group: Graphical desktop/Enlightenment
@@ -17,7 +17,6 @@ BuildRequires: libevas-devel edje embryo_cc libeet-utils libeio-devel
 BuildRequires: libethumb-devel libedbus-devel libefreet-devel libemotion-devel
 BuildRequires: libSDL-devel
 BuildRequires: /proc dbus-tools-gui doxygen /usr/bin/convert
-
 
 %description
 Elementary is a widget set based on the Enlightenment Foundation
@@ -96,6 +95,9 @@ developing applications that use Elementary libraries.
 %_pkgconfigdir/%{name}*.pc
 
 %changelog
+* Mon Nov 25 2013 Yuri N. Sedunov <aris@altlinux.org> 1.7.9-alt2
+- rebuilt to remove poppler36 dependency
+
 * Fri Nov 08 2013 Yuri N. Sedunov <aris@altlinux.org> 1.7.9-alt1
 - 1.7.9
 
