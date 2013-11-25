@@ -1,5 +1,5 @@
 Name: mkimage-profiles
-Version: 1.1.13
+Version: 1.1.14
 Release: alt1
 
 Summary: ALT Linux based distribution metaprofile
@@ -79,6 +79,10 @@ cp -a * %buildroot%mpdir
 %doc %docs/*
 
 %changelog
+* Mon Nov 25 2013 Michael Shigorin <mike@altlinux.org> 1.1.14-alt1
+- important bugfix: THE_PACKAGES weren't getting through to .base
+- regular-sysv-tde related churn
+
 * Mon Nov 04 2013 Michael Shigorin <mike@altlinux.org> 1.1.13-alt1
 - rescue friday
 
