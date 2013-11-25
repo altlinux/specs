@@ -3,7 +3,7 @@
 
 Name: kpowersave
 Version: 0.7.3
-Release: alt7.1
+Release: alt8
 
 Group: Graphical desktop/KDE
 Summary: KDE Frontend to powersave Package, Battery Monitor and General Power Management Support
@@ -23,6 +23,10 @@ Patch0: kpowersave-0.7.2-alt-screenlock.patch
 Patch1: tde-3.5.13-build-defdir-autotool.patch
 Patch2: kpowersave-shutdown.patch
 Patch3: cvs-auto_version_check.patch
+Patch4: kpowersave-DebugComment.patch
+Patch5: kpowersave-transl.patch
+Patch6: kpowersave-DisplayPropEn.patch
+Patch7: kpowersave-TDEtoKDE.patch
 
 # Automatically added by buildreq on Tue May 13 2008
 BuildRequires: gcc-c++ imake kdelibs-devel libXScrnSaver-devel libXt-devel libXtst-devel libdbus-tqt-devel libhal-devel libjpeg-devel xml-utils
@@ -48,6 +52,11 @@ Authors:
 %patch1
 %patch2
 %patch3
+%patch4
+%patch5
+%patch6
+%patch7
+
 
 cp -Rp /usr/share/libtool/aclocal/libtool.m4 admin/libtool.m4.in
 cp -Rp /usr/share/libtool/config/ltmain.sh admin/ltmain.sh
@@ -82,7 +91,11 @@ export PATH=$QTDIR/bin:$KDEDIR/bin:$PATH
 %_K3i18n/*
 
 %changelog
-* Mon Nov 25 2013 Roman Savochenko <rom_as@altlinux.ru> 0.7.3-alt7.1
+* Mon Nov 25 2013 Roman Savochenko <rom_as@altlinux.ru> 0.7.3-alt8
+- Disable too noiseful debug messages.
+- Some translations to Ukrainian fix.
+- DPMS options enabling for the schemes change is fixed.
+- TDE_FULL_SESSION to KDE_FULL_SESSION back renamed for DPMS processing fix.
 - Build for Automake 1.13 and 1.14 is added.
 
 * Mon Oct 29 2012 Roman Savochenko <rom_as@altlinux.ru> 0.7.3-alt7
