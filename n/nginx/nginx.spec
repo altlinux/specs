@@ -14,7 +14,7 @@
 
 Name: nginx
 Version: 1.4.4
-Release: alt1
+Release: alt2
 
 Summary: Fast HTTP server
 License: BSD
@@ -210,7 +210,7 @@ rm -rf %buildroot/html/
 %dir %nginx_etc/conf-enabled.d
 %dir %nginx_etc/conf-available.d
 
-%dir %nginx_etc/sites-available.d/default.conf
+%config(noreplace) %nginx_etc/sites-available.d/default.conf
 
 # these are private; should also confirm to SPP (#12647)
 %attr(0700,root,root) %dir %_lockdir/%name
@@ -258,6 +258,9 @@ sed -i 's/\(types_hash_bucket_size[[:space:]]*\)[[:space:]]32[[:space:]]*;[[:spa
 %preun_service %name
 
 %changelog
+* Mon Nov 25 2013 Denis Smirnov <mithraen@altlinux.ru> 1.4.4-alt2
+- use config(noreplace) for sites-available.d/default.conf (closes: #29607)
+
 * Fri Nov 22 2013 Denis Smirnov <mithraen@altlinux.ru> 1.4.4-alt1
 - 1.4.4 (ALT #29604)
 - CVE-2013-4547
