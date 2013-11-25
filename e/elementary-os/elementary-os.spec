@@ -1,6 +1,6 @@
 Name: elementary-os
 Version: 1
-Release: alt8
+Release: alt9
 
 Summary: Elementary OS
 Group: Graphical desktop/Other
@@ -51,6 +51,9 @@ Requires: wingpanel
 
 Requires: libpantheon
 
+# wm
+Requires: gala
+
 Provides: elementary-os-regular
 
 %description
@@ -61,6 +64,9 @@ Elementary OS.
 %files
 
 %changelog
+* Mon Nov 25 2013 Igor Zubkov <icesik@altlinux.org> 1-alt9
+- Add gala to requires
+
 * Sat Nov 23 2013 Igor Zubkov <icesik@altlinux.org> 1-alt8
 - Add provides elementary-os-regular
 
