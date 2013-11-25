@@ -1,4 +1,4 @@
-%define ver_major 3.8
+%define ver_major 3.10
 %define brasero_api_ver 3
 %define nau_api_ver 3.0
 %define gst_api_ver 1.0
@@ -16,7 +16,7 @@
 
 Name: brasero
 Version: %ver_major.0
-Release: alt2
+Release: alt1
 
 Summary: CD/DVD burning tool for GNOME.
 Group: Archiving/Cd burning
@@ -230,6 +230,9 @@ GObject introspection devel data for the Brasero
 %exclude %_libdir/nautilus/extensions-%nau_api_ver/libnautilus-%name-extension.la
 
 %changelog
+* Mon Nov 25 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.0-alt1
+- 3.10.0
+
 * Wed Sep 18 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.0-alt2
 - rebuild against libtotem-plparser.so.18
 
