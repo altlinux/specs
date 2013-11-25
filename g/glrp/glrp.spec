@@ -1,6 +1,6 @@
 Name:		glrp
 Version:	1.4.5
-Release:	alt1
+Release:	alt2
 Summary:	Robust internet radio station streamer
 Url:		http://sourceforge.net/projects/glrp/?source=dlp
 License:	GPLv3+
@@ -11,7 +11,9 @@ Source1:	Ukrainian.lng
 Patch0:		greatlittleradioplayer_1.4.5_fix_phonon_includes.diff
 Patch1:		greatlittleradioplayer_1.4.5_fix_desktop.diff
 
-BuildRequires: gcc-c++ libqt4-devel
+BuildRequires:	gcc-c++ libqt4-devel
+
+Requires:	phonon-backend-5-gstreamer
 
 %description
 A robust internet radio station streamer. It connects to web sites
@@ -52,5 +54,8 @@ cp changelog.txt %buildroot%_datadir/glrp/
 %_iconsdir/hicolor/scalable/apps/
 
 %changelog
+* Mon Nov 25 2013 Motsyo Gennadi <drool@altlinux.ru> 1.4.5-alt2
+- fix Requires (phonon-backend-5-gstreamer)
+
 * Sat Nov 23 2013 Motsyo Gennadi <drool@altlinux.ru> 1.4.5-alt1
 - initial build for ALT Linux from PCLinuxOS package
