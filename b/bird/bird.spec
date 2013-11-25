@@ -1,5 +1,5 @@
 Name: bird
-Version: 1.3.9
+Version: 1.4.0
 Release: alt1
 Summary: BIRD Internet Routing Daemon
 
@@ -60,6 +60,7 @@ autoconf
 %make_build
 mv bird bird6
 mv birdc birdc6
+mv birdcl birdcl6
 %make clean
 ./configure --prefix=%_usr --sysconfdir=%_sysconfdir --localstatedir=%_var \
 	--with-protocols=all
@@ -80,6 +81,7 @@ popd
 install -d %buildroot%_sbindir
 install bird6 %buildroot%_sbindir
 install birdc6 %buildroot%_sbindir
+install birdcl6 %buildroot%_sbindir
 
 install -d %buildroot%_initdir
 install %SOURCE1 %buildroot%_initdir/%name
@@ -95,13 +97,19 @@ install %SOURCE1 %buildroot%_initdir/%name
 %config(noreplace) %_sysconfdir/%name.conf
 %_sbindir/%name
 %_sbindir/%{name}c
+%_sbindir/%{name}cl
 %doc NEWS README TODO doc/*.html
 
 %files -n bird6
 %_sbindir/%{name}6
 %_sbindir/%{name}c6
+%_sbindir/%{name}cl6
 
 %changelog
+* Mon Nov 25 2013 Vladimir Lettiev <crux@altlinux.ru> 1.4.0-alt1
+- New version 1.4.0
+- Packed light client birdcl{,6}
+
 * Sun Jan 13 2013 Vladimir Lettiev <crux@altlinux.ru> 1.3.9-alt1
 - New version 1.3.9
 
