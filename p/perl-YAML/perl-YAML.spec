@@ -1,6 +1,7 @@
+%define _unpackaged_files_terminate_build 1
 %define dist YAML
 Name: perl-%dist
-Version: 0.84
+Version: 0.85
 Release: alt1
 
 Summary: YAML Ain't Markup Language
@@ -8,7 +9,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/I/IN/INGY/YAML-%{version}.tar.gz
 Patch: YAML-0.77-alt-fixes.patch
 
 BuildArch: noarch
@@ -41,6 +42,9 @@ data structures of most modern programming languages (including Perl).
 %perl_vendor_privlib/YAML*
 
 %changelog
+* Mon Nov 25 2013 Igor Vlasenko <viy@altlinux.ru> 0.85-alt1
+- automated CPAN update
+
 * Mon Sep 10 2012 Vladimir Lettiev <crux@altlinux.ru> 0.84-alt1
 - 0.77 -> 0.84
 - fixed build with perl-5.16 (Closes: #27721)
