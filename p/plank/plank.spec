@@ -2,7 +2,7 @@
 
 Name: plank
 Version: 0.5.0
-Release: alt4
+Release: alt5
 
 Summary: Elegant, simple, clean dock
 License: GPLv3+
@@ -14,7 +14,7 @@ Source0: %name-%version.tar.xz
 Packager: Igor Zubkov <icesik@altlinux.org>
 
 # Automatically added by buildreq on Thu Oct 10 2013
-BuildRequires: gnome-common intltool libbamf3-devel libgee0.8-devel vala-tools
+BuildRequires: gnome-common intltool libbamf3-devel libgee-devel vala-tools
 BuildRequires: xvfb-run dbus-tools-gui libgtk+3-devel libwnck3-devel
 
 %description
@@ -76,7 +76,8 @@ This package provides Vala language bindings for plank library.
 
 %build
 %configure \
-  --enable-headless-tests
+  --enable-headless-tests \
+  --disable-gee-0.8
 #  --enable-docs
 %make_build V=1
 
@@ -114,6 +115,9 @@ This package provides Vala language bindings for plank library.
 %_datadir/vala/vapi/plank.vapi
 
 %changelog
+* Mon Nov 25 2013 Igor Zubkov <icesik@altlinux.org> 0.5.0-alt5
+- Built with --disable-gee-0.8
+
 * Sat Nov 23 2013 Igor Zubkov <icesik@altlinux.org> 0.5.0-alt4
 - Add vala bindings
 
