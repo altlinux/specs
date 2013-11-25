@@ -10,7 +10,7 @@
 Name: kaffeine
 Version: 0.8.8
 %define beta %nil
-Release: alt9
+Release: alt9.1
 
 Group: Video
 Summary: A Xine-based Media Player for KDE
@@ -163,16 +163,14 @@ export PATH=%qtdir/bin:%kdedir/bin:$PATH
 %endif
 
 %changelog
+* Mon Nov 25 2013 Roman Savochenko <rom_as@altlinux.ru> 0.8.8-alt9.1
+- Build for Automake 1.13 and 1.14 is added.
+
 * Sun Feb 17 2013 Roman Savochenko <rom_as@altlinux.ru> 0.8.8-alt9
 - Fix closing during saving session.
 
 * Sun Oct 14 2012 Roman Savochenko <rom_as@altlinux.ru> 0.8.8-alt8
-- Release TDE version 3.5.13.1
-
-* Tue Aug 21 2012 Repocop Q. A. Robot <repocop@altlinux.org> 0.8.8-alt7.qa1
-- NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
-- applied repocop fixes:
-  * specfile-macros-get_dep-is-deprecated for kaffeine
+- Build for TDE version 3.5.13.1
 
 * Thu Feb 23 2012 Roman Savochenko <rom_as@altlinux.ru> 0.8.8-alt7
 - Build for TDE 3.5.13 release
