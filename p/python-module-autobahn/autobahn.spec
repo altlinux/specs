@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.6.2
-Release: alt1.git20130826
+Version: 0.6.5
+Release: alt1.git20131123
 Summary: WebSocket & WAMP for Python/Twisted
 License: Apache License 2.0
 Group: Development/Python
@@ -103,7 +103,7 @@ popd
 %endif
 
 %files
-%doc README* CONTRIBUTORS
+%doc *.md
 %python_sitelibdir/*
 %exclude %python_sitelibdir/*/pickle
 
@@ -115,11 +115,14 @@ popd
 
 %if_with python3
 %files -n python3-module-%oname
-%doc README* CONTRIBUTORS
+%doc *.md
 %python3_sitelibdir/*
 %endif
 
 %changelog
+* Tue Nov 26 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.5-alt1.git20131123
+- Version 0.6.5
+
 * Mon Sep 16 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.2-alt1.git20130826
 - Version 0.6.2
 
