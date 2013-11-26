@@ -23,7 +23,7 @@
 %define bugfix 1
 Name: qt5-base
 Version: %major.%minor.%bugfix
-Release: alt3
+Release: alt4
 
 Group: System/Libraries
 Summary: Qt%major - QtBase components
@@ -35,6 +35,7 @@ Source1: rpm-macros-addon
 # FC
 Patch1: qtbase-opensource-src-5.0.2-lowmem.patch
 # upstream
+Patch10: xcb-1.9.3.patch
 # ALT
 Patch1000: alt-sql-ibase-firebird.patch
 Patch1001: alt-enable-ft-lcdfilter.patch
@@ -300,6 +301,7 @@ Widgets library for the Qt%major toolkit
 %prep
 %setup -n %rname-opensource-src-%version
 %patch1 -p1 -b .lowmem
+%patch10 -p1 -b .xcb
 %patch1000 -p1 -b .ibase
 %patch1001 -p1 -b .lcd
 bin/syncqt.pl -private \
@@ -408,6 +410,7 @@ sed -i "s|^\s*QMAKE_CFLAGS_RELEASE_WITH_DEBUGINFO\s*+=.*$|QMAKE_CFLAGS_RELEASE_W
 make install INSTALL_ROOT=%buildroot
 %if_disabled bootstrap
 [ -d doc/qtcore ] && %make INSTALL_ROOT=%buildroot install_docs ||:
+rm -rf %buildroot/%_qt5_docdir/qtwidgets/*tutorials-addressbook*
 %endif
 
 # remove .la files
@@ -702,6 +705,15 @@ done
 
 
 %changelog
+* Tue Nov 26 2013 Sergey V Turchin <zerg@altlinux.org> 5.1.1-alt4
+- fix crash whith xcb-1.9.3 ABI change (FDO#71507)
+
+* Tue Nov 26 2013 Sergey V Turchin <zerg@altlinux.org> 5.1.1-alt2.M70P.2
+- build docs
+
+* Mon Nov 25 2013 Sergey V Turchin <zerg@altlinux.org> 5.1.1-alt2.M70P.1
+- built for M70P
+
 * Fri Oct 25 2013 Sergey V Turchin <zerg@altlinux.org> 5.1.1-alt3
 - turn on freetype lcdfilter
 
