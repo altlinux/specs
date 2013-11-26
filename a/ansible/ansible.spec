@@ -1,11 +1,12 @@
 Name: ansible
 Summary: SSH-based configuration management, deployment, and task execution system
-Version: 1.3.4
+Version: 1.4.0
 Release: alt1
 
 Group: System/Libraries
 License: GPLv3
 Source0: http://ansibleworks.com/releases/%name-%version.tar
+Patch0:%name-%version-alt.patch
 Url: http://ansibleworks.com
 
 BuildArch: noarch
@@ -20,6 +21,7 @@ are transferred to managed machines automatically.
 
 %prep
 %setup
+%patch0 -p1
 
 %build
 %python_build
@@ -44,6 +46,9 @@ cp -va library/* %buildroot/%_datadir/%name/
 %doc README.md CONTRIBUTING.md CHANGELOG.md RELEASES.txt
 
 %changelog
+* Tue Nov 26 2013 Terechkov Evgenii <evg@altlinux.org> 1.4.0-alt1
+- 1.4.0
+
 * Mon Nov 11 2013 Terechkov Evgenii <evg@altlinux.org> 1.3.4-alt1
 - 1.3.4
 
