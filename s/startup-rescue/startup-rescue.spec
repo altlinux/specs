@@ -1,5 +1,5 @@
 Name: startup-rescue
-Version: 0.14
+Version: 0.15
 Release: alt1
 
 Summary: The system startup scripts for rescue disk
@@ -40,6 +40,10 @@ install -pDm755 sysreport.init %buildroot%_initdir/sysreport
 %_initdir/sysreport
 
 %changelog
+* Tue Nov 26 2013 Michael Shigorin <mike@altlinux.org> 0.15-alt1
+- avoid remounting sysfs
+- try activating lvm volumes before mounting filesystems (closes: #28631)
+
 * Wed Oct 17 2012 Michael Shigorin <mike@altlinux.org> 0.14-alt1
 - avoid aufs-over-aufs
 
