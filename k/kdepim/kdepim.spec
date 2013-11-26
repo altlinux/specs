@@ -20,7 +20,7 @@
 
 Name: kdepim
 Version: 3.5.13.2
-Release: alt4.1
+Release: alt4.2
 Serial: 1
 
 Group: Graphical desktop/KDE
@@ -999,6 +999,9 @@ done
 %_K3includedir/index
 
 %changelog
+* Wed Nov 27 2013 Sergey Y. Afonin <asy@altlinux.ru> 1:3.5.13.2-alt4.2
+- NMU: rebuilt with libical 1.0
+
 * Tue Nov 12 2013 Sergey Y. Afonin <asy@altlinux.ru> 1:3.5.13.2-alt4.1
 - NMU: rebuilt with cyrus-sasl 2.1.26
 
