@@ -25,7 +25,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.10.20
-Release: alt1
+Release: alt3
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -1836,6 +1836,20 @@ done)
 
 
 %changelog
+* Tue Nov 26 2013 Led <led@altlinux.ru> 3.10.20-alt3
+- updated:
+  + fix-arch-x86
+  + fix-drivers-net-ethernet-broadcom--bnx2x
+  + fix-drivers-pci
+  + fix-fs-cifs
+  + feat-fs-squashfs--write
+- added:
+  + fix-drivers-pci--quirks
+
+* Fri Nov 22 2013 Led <led@altlinux.ru> 3.10.20-alt2
+- added:
+  + fix-fs-squashfs
+
 * Wed Nov 20 2013 Led <led@altlinux.ru> 3.10.20-alt1
 - 3.10.20
 - updated:
