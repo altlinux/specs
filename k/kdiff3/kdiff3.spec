@@ -1,6 +1,6 @@
 Name: kdiff3
-Version: 0.9.95
-Release: alt2.qa1
+Version: 0.9.97
+Release: alt1.git
 
 Summary: Compares and merges 2 or 3 files or directories
 License: GPL
@@ -10,18 +10,8 @@ Packager: Ilya Mashkin <oddity at altlinux dot ru>
 
 Source0: %name-%version.tar.gz
 # Our patches
-Patch0:  kdiff3-0.9.95-localization.patch
-Patch1:  kdiff3-%version-%release-cumulative.patch
-Patch2: kdiff3-0.9.95-alt-docbook_version.patch
-# Patches from KDiff3 Tracker
-Patch10: kdiff3-0.9.95_log10.diff
-Patch11: kdiff3-0.9.95_mimatched_delete.diff
-Patch12: kdiff3-0.9.95_avoid_equal_files_dialog.diff
-Patch13: kdiff3-avoid-dirmerge-dialog.patch
-
-# Patches from Ubuntu package
-Patch20: create_qm_files.patch
-Patch21: kdiff3.pro.patch
+Patch0:  kdiff3-post-0.9.97.patch
+Patch1:  kdiff3-%version-%release-alt.patch
 
 
 BuildRequires: gcc-c++ kde4base-workspace-devel kde4base-devel cmake cmake-modules
@@ -38,17 +28,8 @@ KDiff3 is a program that
 %prep
 %setup -q
 
-%patch0 -p2
-%patch1 -p2
-%patch2 -p1
-
-%patch10 -p1
-%patch11 -p0
-%patch12 -p5
-%patch13 -p1
-
-%patch20 -p0
-%patch21 -p1
+%patch0 -p1
+%patch1 -p1
 
 %build
 %K4cmake
@@ -59,6 +40,7 @@ KDiff3 is a program that
 
 %K4find_lang --with-kde %name
 %K4find_lang --with-kde --append --output %name.lang %{name}plugin
+%K4find_lang --with-kde --append --output %name.lang %{name}fileitemactionplugin
 
 # Fix absolute links
 pushd %buildroot
@@ -73,14 +55,22 @@ done
 %files -f %name.lang
 %doc AUTHORS ChangeLog INSTALL NEWS README TODO
 %_bindir/%name
-%_K4lib/libkdiff3*.so
 %_K4apps/%name
+%_K4apps/kdiff3part
+%_K4lib/kdiff3*.so
 %_K4xdg_apps/%name.desktop
 %_K4srv/*.desktop
 
 %_iconsdir/*/*/apps/%name.png
 
 %changelog
+* Tue Nov 12 2013 Alexey Morozov <morozov@altlinux.org> 0.9.97-alt1.git
+- built new git snapshot (4d116d1cb7e5ca0ed69a4c8e272253198bfbbb91),
+  post-0.9.97.
+- build scheme changed to off-source build, patches are migrated
+  to the source tree.
+- Russian translation updated
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.9.95-alt2.qa1
 - NMU: rebuilt for debuginfo.
 
