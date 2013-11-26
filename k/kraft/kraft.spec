@@ -1,6 +1,6 @@
 
 Name:           kraft
-Version:        0.50
+Version:        0.53
 Release:        alt1
 
 Summary:        Kraft - Software for small business
@@ -49,6 +49,9 @@ sed -iorig 's|LIBRARY DESTINATION lib/kraft|LIBRARY DESTINATION ${LIB_INSTALL_DI
 
 
 %changelog 
+* Tue Nov 26 2013 Andrey Cherepanov <cas@altlinux.org> 0.53-alt1
+- new version 0.53
+
 * Wed Mar 06 2013 Andrey Cherepanov <cas@altlinux.org> 0.50-alt1
 - New version 0.50
 
