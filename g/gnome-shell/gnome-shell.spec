@@ -5,7 +5,7 @@
 
 Name: gnome-shell
 Version: %ver_major.2.1
-Release: alt1
+Release: alt2
 
 Summary: Window management and application launching for GNOME
 Group: Graphical desktop/GNOME
@@ -18,6 +18,8 @@ Source: %name-%version.tar
 Patch1: %name-3.7.92-alt-gir.patch
 Patch3: %name-3.8.4-alt-invalid_user_shell.patch
 Patch4: gnome-shell-3.9.92-alt-makefile.patch
+
+Patch10: gnome-shell-3.10.2.1-bgo-710456.patch
 
 Obsoletes: gnome-shell-extension-per-window-input-source
 
@@ -125,6 +127,7 @@ GNOME Shell.
 %patch1 -p1 -b .gir
 %patch3 -b .shells
 %patch4
+%patch10 -p1
 
 %build
 NOCONFIGURE=1 ./autogen.sh
@@ -181,6 +184,9 @@ rm -f %buildroot%_libdir/%name/*.la
 %_datadir/gtk-doc/html/st/
 
 %changelog
+* Tue Nov 26 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.2.1-alt2
+- fixed BGO #710456
+
 * Wed Nov 20 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.2.1-alt1
 - 3.10.2.1 snapshot (43f6739), fixed BGO #711694
 
