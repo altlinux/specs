@@ -1,6 +1,6 @@
 Name: docker-io
-Version: 0.7
-Release: alt3.rc7
+Version: 0.7.0
+Release: alt1
 Summary: Automates deployment of containerized applications
 License: ASL 2.0
 Group: System/Configuration/Other
@@ -15,7 +15,6 @@ Source1: docker.service
 Source2: docker.init
 
 Patch0: docker-0.7-remove-dotcloud-tar.patch
-Patch2: docker-bridge_flag.patch
 
 BuildRequires: /proc gcc golang systemd-devel libdevmapper-devel-static libsqlite3-devel-static
 BuildRequires: python-module-sphinx-devel python-module-sphinxcontrib-httpdomain
@@ -24,7 +23,7 @@ BuildRequires: golang(github.com/gorilla/mux) golang(github.com/kr/pty) golang(c
 Requires: tar lxc
 Provides: lxc-docker
 
-%global commit      ea7811c83d913db91948cd4f696cf34b139da855
+%global commit 0d078b65817fc91eba916652b3f087a6c2eef851
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
 
 %global gopath          %_datadir/gocode
@@ -48,7 +47,6 @@ servers, OpenStack clusters, public instances, or combinations of the above.
 %setup -q
 rm -rf vendor
 %patch0 -p1 -b docker-0.7-remove-dotcloud-tar.patch
-%patch2 -p1 -b none-bridge
 
 %build
 mkdir _build
@@ -95,25 +93,25 @@ EOF
 
 install -d %buildroot%_sysconfdir/sysconfig
 cat > %buildroot%_sysconfdir/sysconfig/docker <<EOF
+#Usage of docker:
 #  -D=false: Enable debug mode
 #  -H=[unix:///var/run/docker.sock]: Multiple tcp://host:port or unix://path/to/socket to bind in daemon mode, single connection otherwise
 #  -api-enable-cors=false: Enable CORS headers in the remote API
 #  -b="": Attach containers to a pre-existing network bridge; use 'none' to disable container networking
-#  -d=false: Enable daemon mode
 #  -dns="": Force docker to use specific DNS servers
 #  -g="/var/lib/docker": Path to use as the root of the docker runtime
-#  -graph-driver="": Force docker runtime to use a specific graph driver
 #  -icc=true: Enable inter-container communication
 #  -ip="0.0.0.0": Default IP address to use when binding container ports
 #  -iptables=true: Disable docker's addition of iptables rules
 #  -p="/var/run/docker.pid": Path to use for daemon PID file
 #  -r=true: Restart previously running containers
-#  -v=false: Print version information and quit
+#  -s="": Force the docker runtime to use a specific storage driver
+#  !!!WARNING!!! In case of a change the driver, data from the old driver will not be available
+#  List of drivers used in an order is: aufs, devicemapper, vfs
 
 # Example
-#OPTIONS='-graph-driver=devicemapper -b="breth0" -dns="8.8.8.8"'
-
-OPTIONS='-graph-driver=devicemapper '
+#OPTIONS='-r -s=devicemapper -b="breth0" -dns="8.8.8.8"'
+OPTIONS='-r -s=devicemapper -b="none"'
 
 EOF
 
@@ -142,6 +140,9 @@ exit 0
 %dir %_sharedstatedir/docker
 
 %changelog
+* Tue Nov 26 2013 Slava Dubrovskiy <dubrsl@altlinux.org> 0.7.0-alt1
+- Release
+
 * Mon Nov 25 2013 Slava Dubrovskiy <dubrsl@altlinux.org> 0.7-alt3.rc7
 - New RC
 
