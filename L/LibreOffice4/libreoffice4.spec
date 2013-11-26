@@ -1,15 +1,15 @@
-# 4.1.2.3
+# 4.1.3.2
 %define with_forky yes
 
 Name: LibreOffice4
 Version: 4.1
-%define urelease 2.3
+%define urelease 3.2
 %define uversion %version.%urelease
 %define oopfx lo4
 %define lodir %_libdir/%name
 %define uname libreoffice4
 %define conffile %_sysconfdir/sysconfig/%uname
-Release: alt5
+Release: alt6
 Summary: LibreOffice Productivity Suite
 License: LGPL
 Group: Office
@@ -27,8 +27,6 @@ Source:		libreoffice-%uversion.tar.xz
 Source1:	libreoffice-dictionaries-%uversion.tar.xz
 Source2:	libreoffice-help-%uversion.tar.xz
 Source3:	libreoffice-translations-%uversion.tar.xz
-#Source4:	sdremote-#sdversion-translations.tar.xz
-#Source5:	sdremote-#sdversion.tar.xz
 
 
 Source10:	libreoffice-ext_sources.%uversion.tar
@@ -39,18 +37,25 @@ Patch2: libreoffice-4-alt-drop-gnome-open.patch
 Patch3: alt-002-tmpdir.patch
 
 # FC patches
-Patch201:	0001-Related-rhbz-968892-discard-impossible-languages-for.patch
-Patch202:	0002-Related-rhbz-968892-discard-impossible-languages-for.patch
-Patch204:	0001-Resolves-fdo-48835-application-menu-for-LibreOffice.patch
-Patch205:	0001-Resolves-rhbz-968892-force-render-full-grapheme-with.patch
-Patch209:	0001-do-not-build-LibreOffice_Test.patch
-Patch214:	0001-temporarily-disable-failing-test.patch
-Patch215:	0001-Always-try-to-mount-in-gio-Content-getGFileInfo.patch
-Patch216:	0001-Resolves-rhbz-993963-NULL-m_pWindow-on-firefox-delet.patch
-Patch217:	0001-Resolves-rhbz-998046-store-last-size-position-of-the.patch
-Patch218:	0001-rhbz-1000150-Do-not-call-exit-upon-XIOError.patch
-#patch213 -p1
-#patch213 -p1
+Patch201: 0001-do-not-build-LibreOffice_Test.patch
+Patch202: 0001-Resolves-rhbz-968892-force-render-full-grapheme-with.patch
+Patch203: 0001-Related-rhbz-968892-discard-impossible-languages-for.patch
+Patch204: 0002-Related-rhbz-968892-discard-impossible-languages-for.patch
+Patch205: 0001-Resolves-fdo-48835-application-menu-for-LibreOffice.patch
+Patch206: 0001-Make-charmap.cxx-compile-with-icu-4.4.patch
+Patch207: 0001-select-sheet-menu-as-a-right-click-popup-to-the-prev.patch
+Patch208: 0001-Resolves-rhbz-1013480-crash-in-EditLineList-operator.patch
+Patch209: 0001-Resolves-rhbz-1015281-crash-on-clicking-custom-anima.patch
+Patch210: 0001-Resolves-rhbz-996162-apparent-NULL-bullet-font.patch
+Patch211: 0001-fdo-70201-sw-eliminate-no-extent-RSID-only-AUTOFMT-h.patch
+Patch212: 0001-WaE-Wstrict-overflow-assuming-signed-overflow-does-n.patch
+Patch213: 0001-Related-rhbz-1020712-wrong-default-font-shown-in-edi.patch
+Patch214: 0001-Related-rhbz-919070-display-1-means-span-all-display.patch
+Patch215: 0001-fdo-67725-unoidl-AggregatingCursor-must-wrap-modules.patch
+Patch216: 0001-Resolves-rhbz-1021915-force-menubar-menus-to-be-up-d.patch
+Patch217: 0001-fdo-70968-Incorrect-rendering-of-Devanagari-short-i-.patch
+Patch218: 0001-resolved-fdo-56209-reviving-FilterFormulaParser.patch
+Patch219: 0001-update-libmwaw-to-0.2.0.patch
 
 # Long-term FC patches
 Patch300: openoffice.org-2.0.2.rh188467.printingdefaults.patch
@@ -178,16 +183,25 @@ echo Direct build
 %patch3 -p2
 
 # FC (## -- unsuccsessful but seems meaningful)
-%patch201 -p1
-%patch202 -p1
-%patch204 -p1
-%patch205 -p1
-%patch209 -p1
-%patch214 -p1
-#patch215 -p1
-#patch216 -p1
-#patch217 -p1
-#patch218 -p1
+%patch201 -p1 -b .do-not-build-LibreOffice_Test.patch
+%patch202 -p1 -b .rhbz-968892-force-render-full-grapheme-with.patch
+%patch203 -p1 -b .rhbz-968892-discard-impossible-languages-for.patch
+%patch204 -p1 -b .rhbz-968892-discard-impossible-languages-for.patch
+%patch205 -p1 -b .fdo-48835-application-menu-for-LibreOffice.patch
+%patch206 -p1 -b .Make-charmap.cxx-compile-with-icu-4.4.patch
+%patch207 -p1 -b .select-sheet-menu-as-a-right-click-popup-to-the-prev.patch
+%patch208 -p1 -b .rhbz-1013480-crash-in-EditLineList-operator.patch
+%patch209 -p1 -b .rhbz-1015281-crash-on-clicking-custom-anima.patch
+%patch210 -p1 -b .rhbz-996162-apparent-NULL-bullet-font.patch
+%patch211 -p1 -b .fdo-70201-sw-eliminate-no-extent-RSID-only-AUTOFMT-h.patch
+%patch212 -p1 -b .WaE-Wstrict-overflow-assuming-signed-overflow-does-n.patch
+%patch213 -p1 -b .rhbz-1020712-wrong-default-font-shown-in-edi.patch
+%patch214 -p1 -b .rhbz-919070-display-1-means-span-all-display.patch
+%patch215 -p1 -b .fdo-67725-unoidl-AggregatingCursor-must-wrap-modules.patch
+%patch216 -p1 -b .rhbz-1021915-force-menubar-menus-to-be-up-d.patch
+%patch217 -p1 -b .fdo-70968-Incorrect-rendering-of-Devanagari-short-i-.patch
+%patch218 -p1 -b .resolved-fdo-56209-reviving-FilterFormulaParser.patch
+#patch219 -p1 -b .update-libmwaw-to-0.2.0.patch
 
 %patch300 -p1
 %patch301 -p1
@@ -281,20 +295,16 @@ gcc -g -DHAVE_CONFIG_H -shared -O3 -fomit-frame-pointer -fPIC forky.c -oforky.so
 %make bootstrap
 
 %ifdef with_forky
-# TODO calculate forky limits
+# TODO prefect forky_max tune
 echo Using forky
-export forky_max_procs=450
-%ifarch x86_64
-export forky_max_rss=16384000
-export forky_max_vsz=81920000
-%else
-export forky_max_rss=8192000
-export forky_max_vsz=16000000
-%endif
+export forky_max_procs=`awk '/^Max processes/{print int(9*$3/10)}' < /proc/self/limits`
+export forky_max_vsz=`awk '/^CommitLimit/{print int(5*$2/10)}' < /proc/meminfo`
+export forky_max_rss=$(($forky_max_vsz/3))
 export forky_verbose=1
 export LD_PRELOAD=`pwd`/forky.so
-touch $HOME/forky.log
-%make_build || { wc $HOME/forky.log; false; }
+echo "max_procs $forky_max_procs / max_vsz $forky_max_vsz / max_rss $forky_max_rss" | tee $HOME/forky.log
+
+%make_build || { tail -100 $HOME/forky.log; wc $HOME/forky.log; false; }
 test -r $HOME/forky.log && echo "Fork() was `wc -l $HOME/forky.log` times delayed" || :
 %else
 %make_build
@@ -415,6 +425,10 @@ install -D libreoffice.config %buildroot%conffile
 %langpack -l kk -n Kazakh
 
 %changelog
+* Mon Nov 25 2013 Fr. Br. George <george@altlinux.ru> 4.1-alt6
+- Version up to officially stable 4.1.3.2
+- More accurate forky utilization
+
 * Tue Oct 01 2013 Fr. Br. George <george@altlinux.ru> 4.1-alt5
 - Version up to 4.1.2.3
 
