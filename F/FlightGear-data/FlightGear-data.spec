@@ -1,5 +1,5 @@
 Name: FlightGear-data
-Version: 2.12.0
+Version: 2.12.1
 Release: alt1
 
 Summary: Data pack for FlightGear open-source flight simulator
@@ -70,6 +70,9 @@ find %buildroot -name 'Thumbs.db*' -print -delete
 %_docdir/FlightGear-%version
 
 %changelog
+* Tue Nov 26 2013 Michael Shigorin <mike@altlinux.org> 2.12.1-alt1
+- 2.12.1
+
 * Thu Sep 26 2013 Michael Shigorin <mike@altlinux.org> 2.12.0-alt1
 - 2.12.0
 
