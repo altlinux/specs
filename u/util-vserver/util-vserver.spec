@@ -5,6 +5,8 @@
 %def_without doc
 %def_without python
 
+%define _libexecdir %prefix/libexec
+
 %define confdir %_sysconfdir/vservers
 %define confdefaultdir %confdir/.defaults
 %define vrootdir %_localstatedir/vservers
@@ -12,8 +14,8 @@
 Name: util-vserver
 Summary: Linux-VServer utilities
 Version: 0.30.216
-%define pre -pre3038
-Release: alt0.3
+%define pre -pre3054
+Release: alt0.4
 License: GPLv2+
 Group: System/Base
 URL: http://savannah.nongnu.org/projects/%name/
@@ -84,9 +86,9 @@ install -d -m 0755 %buildroot%_sysconfdir/{default,sysconfig}
 :> %buildroot%_sysconfdir/sysconfig/vservers-default
 
 # add symlink for mageia support
-ln -s redhat %buildroot%_libdir/%name/distributions/mageia
+ln -s redhat %buildroot%_datadir/%name/distributions/mageia
 # add symlink for altlinux support
-ln -s redhat %buildroot%_libdir/%name/distributions/altlinux
+ln -s redhat %buildroot%_datadir/%name/distributions/altlinux
 
 %if "%vrootdir" != "/srv/vservers"
 install -d -m 0755 %buildroot/srv
@@ -98,13 +100,13 @@ ln -sf %vrootdir %buildroot%_var/
 
 rm -f %buildroot%_libdir/*.la
 
-rm -rf %buildroot%_libdir/%name/distributions/{centos4,etch,{f,rh,suse9}*}
-rm -rf %buildroot%_libdir/%name/distributions/legacy
-rm -rf %buildroot%_libdir/%name/legacy
+rm -rf %buildroot%_datadir/%name/distributions/{centos4,etch,{f,rh,suse9}*}
+rm -rf %buildroot%_datadir/%name/distributions/legacy
+rm -rf %buildroot%_libexecdir/%name/legacy
 rm -f %buildroot{%_initddir/*-legacy,%_sysconfdir/vservers.conf}
 rm -rf %buildroot%_sysconfdir/vservers/.distributions
 
-%add_findreq_skiplist %_libdir/%name/distributions/* %_libdir/%name/vserver-init.functions
+%add_findreq_skiplist %_datadir/%name/distributions/* %_datadir/%name/vserver-init.functions
 
 
 %check
@@ -131,9 +133,13 @@ rm -rf %buildroot%_sysconfdir/vservers/.distributions
 
 %postun
 %if "%vrootdir" != "/srv/vservers"
-[ -h /srv/vservers ] || rm -f /srv/vservers
+if [ -h /srv/vservers ]; then
+	rm -f /srv/vservers
+fi
 %if "%vrootdir" != "%_var/vservers"
-[ -h %_var/vservers ] || rm -f %_var/vservers
+if [ -h %_var/vservers ]; then
+	rm -f %_var/vservers
+fi
 %endif
 %endif
 
@@ -145,6 +151,8 @@ rm -rf %buildroot%_sysconfdir/vservers/.distributions
 %_sbindir/*
 %_libdir/*.so.*
 %_libdir/%name
+%_libexecdir/%name
+%_datadir/%name
 %_man8dir/*
 %attr(0000,root,root) %dir %vrootdir
 %attr(0755,root,root) %dir %vrootdir/.pkg
@@ -171,6 +179,9 @@ rm -rf %buildroot%_sysconfdir/vservers/.distributions
 
 
 %changelog
+* Tue Nov 26 2013 Led <led@altlinux.ru> 0.30.216-alt0.4
+- 0.30.216-pre3054
+
 * Mon Oct 21 2013 Led <led@altlinux.ru> 0.30.216-alt0.3
 - move %%vrootdir to %%_localstatedir/vservers
 
