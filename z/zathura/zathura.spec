@@ -1,7 +1,7 @@
 %define gtk_ver 2
 
 Name: zathura
-Version: 0.2.5
+Version: 0.2.6
 Release: alt1
 
 Summary: A lightweight document viewer
@@ -59,6 +59,9 @@ mkdir -p %buildroot%_libdir/zathura
 %_libdir/pkgconfig/*.pc
 
 %changelog
+* Tue Nov 26 2013 Mikhail Efremov <sem@altlinux.org> 0.2.6-alt1
+- Updated to 0.2.6.
+
 * Thu Nov 14 2013 Mikhail Efremov <sem@altlinux.org> 0.2.5-alt1
 - Updated to 0.2.5.
 
