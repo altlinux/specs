@@ -25,7 +25,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.10.20
-Release: alt3
+Release: alt4
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -53,6 +53,7 @@ Release: alt3
 %def_enable man
 %def_disable compat
 %def_enable x32
+%def_enable cr
 %def_enable bld
 %def_enable debugfs
 %def_enable coredump
@@ -1118,6 +1119,9 @@ config_enable \
 	%{?_enable_kvm_ext:KVM_EXTERNAL} \
 	%{?_enable_lnfs:NFS_V4_SECURITY_LABEL NFSD_V4_SECURITY_LABEL} \
 	%{?_enable_kallsyms:KALLSYMS} \
+%ifarch %x86_64
+	%{?_enable_cr:CHECKPOINT_RESTORE PROC_PAGE_MONITOR} \
+%endif
 	%{?allocator:%allocator}
 
 # arch-specific
@@ -1836,6 +1840,18 @@ done)
 
 
 %changelog
+* Tue Nov 26 2013 Led <led@altlinux.ru> 3.10.20-alt4
+- updated:
+  + fix-fs-proc
+  + fix-kernel
+  + fix-mm
+  + fix-mm--swap
+- added:
+  + fix-drivers-net--tun
+- disabled:
+  + KERNEL_DESKTOP (!ws)
+- enabled cr (checkpoint/restore) for x86_64
+
 * Tue Nov 26 2013 Led <led@altlinux.ru> 3.10.20-alt3
 - updated:
   + fix-arch-x86
