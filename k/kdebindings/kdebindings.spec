@@ -1,3 +1,4 @@
+%set_automake_version 1.11
 %define _keep_libtool_files 1
 %define ruby 0
 
@@ -13,7 +14,7 @@
 
 Name: kdebindings
 Version: 3.5.13.2
-Release: alt3
+Release: alt3.1
 
 Summary: bindings to KDE libraries for various programming languages 
 Group: Graphical desktop/KDE
@@ -39,6 +40,7 @@ Patch6: kdebindings-3.5.12-alt-ruby-paths.patch
 Patch7: kdebindings-3.5.10-alt-ruby-compile.patch
 Patch8: kdebindings-3.5.13.2-trinityHomeToKDE.patch
 Patch9: tde-3.5.13-build-defdir-autotool.patch
+Patch10: cvs-auto_version_check.patch
 
 BuildRequires(pre): kdelibs-devel gtk+-devel libgtk+2-devel
 BuildRequires: kdebase-devel libstdc++-devel gcc-c++ libjpeg-devel perl-devel libpng-devel
@@ -209,6 +211,7 @@ Gecko html/browser (the one of mozilla) available as a kpart.
 ##%endif
 %patch8 -p1
 %patch9
+%patch10
 
 sed -i '\|\${kdeinit}_LDFLAGS[[:space:]]=[[:space:]].*-no-undefined|s|-no-undefined|-no-undefined -Wl,--warn-unresolved-symbols|' admin/am_edit
 for f in `find $PWD -type f -name Makefile.am`
@@ -391,6 +394,9 @@ cp -pr korundum/rubylib/rbkconfig_compiler/{autoexample.rb,exampleprefs_base.kcf
 
 
 %changelog
+* Mon Nov 25 2013 Roman Savochenko <rom_as@altlinux.ru> 3.5.13.2-alt3.1
+- Build for Automake 1.13 and 1.14 is added.
+
 * Fri Aug 30 2013 Vladimir Lettiev <crux@altlinux.ru> 3.5.13.2-alt3
 - built for perl 5.18
 
