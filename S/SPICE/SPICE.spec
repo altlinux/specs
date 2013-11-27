@@ -1,6 +1,8 @@
+%set_automake_version 1.11
+
 Name: SPICE
 Version: 0.12.4
-Release: alt1.1
+Release: alt1.2
 Summary: Implements the SPICE protocol
 Group: Graphical desktop/Other
 License: LGPLv2+
@@ -105,6 +107,9 @@ rm -f %buildroot%_libdir/libspice-server.la
 %_pkgconfigdir/spice-server.pc
 
 %changelog
+* Wed Nov 27 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.12.4-alt1.2
+- Fixed build
+
 * Tue Sep 17 2013 Sergey Y. Afonin <asy@altlinux.ru> 0.12.4-alt1.1
 - NMU: rebuilt with cyrus-sasl 2.1.26
 
