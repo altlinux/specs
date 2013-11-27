@@ -2,7 +2,7 @@
 %global gitname celeron55
 
 Name:		minetest
-Version:	0.4.7
+Version:	0.4.8
 Release:	alt1
 Summary:	Multiplayer infinite-world block sandbox with survival mode
 
@@ -26,9 +26,6 @@ Source5:	%{name}.README
 Source6:	%{name}_game-%version.tar.gz
 Source7:	http://www.gnu.org/licenses/lgpl-2.1.txt
 
-# Fix to build with gcc-4.7.0
-Patch1:		%name-0.4.3-gcc.patch
-
 BuildRequires:	cmake >= 2.6.0
 BuildRequires:	gcc-c++
 BuildRequires:	libirrlicht-devel
@@ -43,7 +40,7 @@ Requires:	icon-theme-hicolor
 %description 
 Game of mining, crafting and building in the infinite world of cubic
 blocks with optional hostile creatures, features both single and the
-network multiplayer mode. There are no in-game sounds yet
+network multiplayer mode.
 
 %package	server
 Summary:	Minetest multiplayer server
@@ -57,7 +54,6 @@ System.
 
 %prep
 %setup -q -n %gitname-%name
-%patch1 -p1
 
 pushd games
 tar xf %SOURCE6
@@ -155,6 +151,9 @@ fi
 
 
 %changelog
+* Wed Nov 27 2013 Andrey Cherepanov <cas@altlinux.org> 0.4.8-alt1
+- New version
+
 * Mon Jul 29 2013 Andrey Cherepanov <cas@altlinux.org> 0.4.7-alt1
 - Initial build in Sisyphus (thanks Fedora maintainers)
 
