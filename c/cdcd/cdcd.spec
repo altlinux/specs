@@ -1,6 +1,8 @@
+%set_automake_version 1.11
+
 Name: cdcd
 Version: 0.6.6
-Release: alt5.qa2
+Release: alt5.qa3
 Summary: Command Driven CD player
 License: %gpl2plus
 Group: Sound
@@ -70,6 +72,9 @@ __MENU__
 
 
 %changelog
+* Wed Nov 27 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.6-alt5.qa3
+- Fixed build
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.6.6-alt5.qa2
 - NMU: rebuilt for debuginfo.
 
