@@ -7,7 +7,7 @@
 
 Name: branding-%brand-%theme
 Version: 20130322
-Release: alt1
+Release: alt2
 BuildArch: noarch
 
 BuildRequires: cpio gfxboot >= 4 fonts-ttf-dejavu
@@ -23,7 +23,13 @@ BuildRequires: fribidi
 %define Theme Sisyphus
 %define status unstable
 %define status_en unstable
-%define variants altlinux-office-desktop altlinux-office-server altlinux-lite altlinux-workbench school-master school-junior school-lite school-server altlinux-gnome-desktop altlinux-kdesktop ivk-chainmail simply-linux sisyphus-server-light altlinux-sisyphus
+%define variants altlinux-office-desktop altlinux-office-server altlinux-lite altlinux-workbench school-master school-junior school-lite school-server altlinux-gnome-desktop altlinux-kdesktop ivk-chainmail simply-linux sisyphus-server-light altlinux-sisyphus informika-schoolmaster
+
+# argh
+%define design_graphics_abi_epoch 0
+%define design_graphics_abi_major 12
+%define design_graphics_abi_minor 0
+%define design_graphics_abi_bugfix 0
 
 Source: branding.tar
 
@@ -86,6 +92,7 @@ License: Different licenses
 Group: Graphics
 
 Provides: design-graphics-%theme branding-alt-%theme-graphics
+Provides: design-graphics = %design_graphics_abi_major.%design_graphics_abi_minor.%design_graphics_abi_bugfix
 Obsoletes: branding-alt-%theme-graphics design-graphics-%theme
 PreReq(post,preun): alternatives >= 0.2
 Conflicts: %(for n in %variants ; do [ "$n" = %brand-%theme ] || echo -n "branding-$n-graphics ";done )
@@ -93,7 +100,6 @@ Conflicts: design-graphics-default
 
 %description graphics
 This package contains some graphics for ALT design.
-
 
 %define provide_list altlinux fedora redhat system altlinux
 %define obsolete_list altlinux-release fedora-release redhat-release
@@ -440,6 +446,10 @@ cat /etc/sysconfig/xinitrc.xfce >> /etc/sysconfig/xinitrc
 
 
 %changelog
+* Wed Nov 27 2013 Michael Shigorin <mike@altlinux.org> 20130322-alt2
+- fixed graphics subpackage provides
+- added informika-schoolmaster to known variants
+
 * Fri Mar 22 2013 Michael Shigorin <mike@altlinux.org> 20130322-alt1
 - rebuilt upon d-b-s with Kazakh translation
 
