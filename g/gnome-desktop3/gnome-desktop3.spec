@@ -10,7 +10,7 @@
 
 Name: %{_name}3
 Version: %ver_major.2
-Release: alt1
+Release: alt2
 
 Summary: Library with common API for various GNOME 3 modules
 License: %gpl2plus, %fdl
@@ -23,11 +23,6 @@ Source1: gnome-about.png
 
 Obsoletes: %_name
 Provides: %_name = %version-%release
-
-Requires: lib%name = %version-%release
-Requires: icon-theme-hicolor
-# use pnp.ids from hwdatabase package
-Requires: hwdatabase >= 0.3.31-alt1
 
 BuildPreReq: rpm-build-licenses rpm-build-gnome
 
@@ -57,6 +52,9 @@ GNOME Desktop provides the core libraries for the gnome desktop.
 Summary: GNOME desktop core libraries
 Group: Graphical desktop/GNOME
 License: %lgpl2plus
+Requires: icon-theme-hicolor
+# use pnp.ids from hwdatabase package
+Requires: hwdatabase >= 0.3.31-alt1
 
 %description -n lib%name
 Gnome 3 desktop libraries.
@@ -159,6 +157,9 @@ GObject introspection devel data for the %_name library
 
 
 %changelog
+* Wed Nov 27 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.2-alt2
+- fixed reqs
+
 * Fri Nov 22 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.2-alt1
 - 3.10.2
 
