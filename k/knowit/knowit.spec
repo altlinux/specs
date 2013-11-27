@@ -3,7 +3,7 @@
 
 Name: knowit
 Version:0.10
-Release:alt11
+Release:alt11.1
 
 Summary: Knowledge management program for KDE
 License: GPL
@@ -14,6 +14,7 @@ Source0: %name-%version.tar.bz2
 Source1: %name.desktop
 
 Patch0: tde-3.5.13-build-defdir-autotool.patch
+Patch1: knowit-0.10-alt-automake.patch
 
 BuildRequires(pre): kdelibs-devel
 BuildRequires: gcc-c++ imake libXt-devel libjpeg-devel libqt3-devel xml-utils xorg-cf-files
@@ -31,6 +32,7 @@ language/charset.
 %prep
 %setup
 %patch0
+%patch1 -p2
 # sed -i "s/\.la\"/\.so\"/g" configure
 
 cp -Rp /usr/share/libtool/aclocal/libtool.m4 admin/libtool.m4.in
@@ -62,6 +64,9 @@ install -pD %SOURCE1 %buildroot/%_desktopdir/%name.desktop
 %_K3apps/%name
 
 %changelog
+* Wed Nov 27 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.10-alt11.1
+- Fixed build
+
 * Mon Oct 29 2012 Roman Savochenko <rom_as@altlinux.ru> 0.10-alt11
 - Release TDE version 3.5.13.1
 
