@@ -1,3 +1,5 @@
+%set_automake_version 1.11
+
 %define qtdir %_qt3dir
 %define kdedir %_K3prefix
 
@@ -6,7 +8,7 @@
 
 Name: amarok
 Version: 1.4.10
-Release: alt16
+Release: alt16.1
 
 Summary: Amarok is a music player for KDE.
 License: GPL
@@ -305,6 +307,9 @@ rm -fr %buildroot%_K3datadir/apps/%name/scripts/templates
 %_K3datadir/services/amarok_daap-mediadevice.desktop
 
 %changelog
+* Wed Nov 27 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4.10-alt16.1
+- Fixed build
+
 * Fri Aug 09 2013 Roman Savochenko <rom_as@altlinux.ru> 1.4.10-alt16
 - Update to current 3.5.13-sru branch by release TDE 3.5.13.2.
 - Add support for build from cmake.
