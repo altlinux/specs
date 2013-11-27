@@ -1,3 +1,5 @@
+%set_automake_version 1.11
+
 # Copyright (c) 2006-2008 oc2pus
 # This file and all modifications and additions to the pristine
 # package are under the same license as the package itself.
@@ -15,7 +17,7 @@ License: GPLv2+
 Group: Sound
 Summary: A free replacement of closed source software Buzz
 Version: 0.6.0
-Release: %prerel.svn20100715.qa1
+Release: %prerel.svn20100715.qa2
 Url: http://www.buzztard.org
 Packager: Egor Glukhov <kaman@altlinux.org>
 
@@ -475,6 +477,9 @@ popd
 %_xdgmimedir/audio/x-bm?.xml
 
 %changelog
+* Wed Nov 27 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.0-alt4.svn20100715.qa2
+- Fixed build
+
 * Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.6.0-alt4.svn20100715.qa1
 - NMU: rebuilt for updated dependencies.
 
