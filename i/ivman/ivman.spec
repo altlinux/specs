@@ -1,6 +1,8 @@
+%set_automake_version 1.11
+
 Name: ivman
 Version: 0.6.14
-Release: alt1.qa1
+Release: alt1.qa2
 
 Summary: Ivman is an extremely flexible desktop independent frontend to HAL
 License: QPL (TrollTech Q Public License)
@@ -60,6 +62,9 @@ cd %buildroot%_sysconfdir/%name
 %_mandir/man*/*
 
 %changelog
+* Wed Nov 27 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.14-alt1.qa2
+- Fixed build
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.6.14-alt1.qa1
 - NMU: rebuilt for debuginfo.
 
