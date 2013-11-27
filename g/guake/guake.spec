@@ -1,10 +1,12 @@
+%set_automake_version 1.11
+
 %define python_sitearch %(python -c "from distutils.sysconfig import get_python_lib; print get_python_lib(1)")
 
 Name: guake
 Summary: guake - a drop-down terminal
 Summary(ru.UTF-8):guake — выпадающий эмулятор терминала
 Version: 0.4.4
-Release: alt2
+Release: alt2.1
 License: GPL v2+
 Group: Terminals
 URL: http://guake.org/
@@ -90,6 +92,9 @@ fi
 %gnome_autostartdir/guake.desktop
 
 %changelog
+* Wed Nov 27 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.4-alt2.1
+- Fixed build
+
 * Thu Apr 25 2013 Dmitriy Kulik <lnkvisitor@altlinux.org> 0.4.4-alt2
 - Fix spec
 
