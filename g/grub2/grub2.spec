@@ -1,6 +1,6 @@
 Name: grub2
 Version: 2.00
-Release: alt17
+Release: alt18
 
 Summary: GRand Unified Bootloader
 License: GPL
@@ -27,6 +27,7 @@ Patch0: grub-2.00-gnulib-gets.patch
 Patch1: grub-2.00-os-alt.patch
 Patch2: grub-2.00-sysconfig-path-alt.patch
 Patch3: grub-2.00-altlinux-theme.patch
+Patch4: grub-2.00-debian-uefi-os-prober.patch
 Patch5: grub-2.00-os-alt-xen.patch
 Patch6: grub-1.99-debian-disable_floppies.patch
 Patch7: grub-2.00-grubinstall-evms-sync-alt.patch
@@ -173,6 +174,7 @@ Please note that this binary is *not* signed, just in case.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
 %patch5 -p1
 %patch6 -p1
 %patch7 -p1
@@ -382,6 +384,10 @@ grub-efi-autoupdate || {
 } >&2
 
 %changelog
+* Tue Nov 26 2013 Michael Shigorin <mike@altlinux.org> 2.00-alt18
+- adapted debian patch to accept os-prober output for EFI binaries
+  (see also RH#972355, RH#873207, deb#698914)
+
 * Sat Nov 16 2013 Michael Shigorin <mike@altlinux.org> 2.00-alt17
 - updated grub-2.00-os-alt.patch for 2.00 (closes: #29583)
 
