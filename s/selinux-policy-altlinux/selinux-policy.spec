@@ -6,7 +6,7 @@
 Summary: SELinux %policy_name policy
 Name: selinux-policy-altlinux
 Version: 0.0.3
-Release: alt1
+Release: alt2
 License: %distributable
 Group: System/Base
 Source: %name-%date.tar
@@ -40,60 +40,122 @@ SELinux %policy_name policy
 mkdir %buildroot
 cp -a * %buildroot
 
+# Ghost files. Do not actually pack them.
+tmpfile=$(mktemp)
+install -D -m0644 "$tmpfile" %buildroot/%policy_conf/contexts/files/file_contexts
+install -D -m0644 "$tmpfile" %buildroot/%policy_conf/contexts/files/file_contexts.bin
+install -D -m0644 "$tmpfile" %buildroot/%policy_conf/contexts/files/file_contexts.homedirs
+install -D -m0644 "$tmpfile" %buildroot/%policy_conf/contexts/files/file_contexts.local
+install -D -m0644 "$tmpfile" %buildroot/%policy_conf/contexts/netfilter_contexts
+install -D -m0644 "$tmpfile" %buildroot/%policy_conf/modules/semanage.read.LOCK
+install -D -m0644 "$tmpfile" %buildroot/%policy_conf/modules/semanage.trans.LOCK
+install -D -m0644 "$tmpfile" %buildroot/%policy_conf/seusers
+install -D -m0644 "$tmpfile" %buildroot/%policy_conf/setrans.conf
+install -D -m0644 "$tmpfile" %buildroot/%policy_conf/modules/policy/policy.28
+install -D -m0644 "$tmpfile" %buildroot/%policy_conf/modules/policy/policy.29
+
+#
+# %%post
+#
 %post
+
+# XXX bug in 'semodule'
+mkdir -p %policy_conf/contexts/files
+touch %policy_conf/contexts/files/file_contexts.local
+# XXX
+
+# Check SeLinux mode and status
+# Possible cases:
+# 1. SeLinux is enabled, Enforcing is On, current policy is active
+# 2. SeLinux is enabled, Enforcing if Off, current policy is active
+# 3. SeLinux is enabled, Enforcing is On, another policy is active
+# 4. SeLinux is enabled, Enforcing is Off, another policy is active
+# 5. SeLinux is disabled
+
+enforce_mode="$(getenforce)"
+echo -e "\tCurrent SeLinux enforce mode is: $enforce_mode"
+
+if ! selinuxenabled; then
+   echo -e "\tSeLinux is disabled."
+fi
+
+# Cleanup previous modules. Existing modules may be a problem to install base policy.
+modules="$(semodule -l -s %policy_name | sed -n -e '/[[:digit:]]\+\.[[:digit:]]\+\.[[:digit:]]\+/ s/[[:space:]].*$//p' | tr '\n' ' ' )"
+if [ -n "${modules// /}" ]; then
+    echo -e "\tRemove all current (even 3rd party) modules for '%policy_name' policy:"
+fi
+for i in $modules; do
+    echo -e "\t\t* Remove previous module '$i'"
+    semodule -n -s %policy_name -r $i
+done
+
 # Always install new policy
 semodule -n -s %policy_name -b %policy_data/base.pp
 
-# XXX
-mkdir -p /etc/selinux/altlinux/contexts/files
-touch /etc/selinux/altlinux/contexts/files/file_contexts.local
-# XXX
-
 # Always install all modules
+echo -e "\tActivate modules for '%policy_name' policy:"
 for i in %policy_data/modules/*.pp; do
-echo -e "\t\t* Install module $(basename "$i")" 
-semodule -n -s %policy_name -i "$i"
+    echo -e "\t\t* Install module '$(basename "$i")'" 
+    semodule -n -s %policy_name -i "$i"
 done
 
+policy_name_active="$(sestatus | sed -n -e '/policy name/ s/^.\+[[:space:]]//p')"
+# Upgrade
+if [ $1 -eq 2 ]; then
+    if [ "$policy_name_active" = "%policy_name" ]; then
+        echo -e "\tSeLinux policy has been updated. Please do a reboot."
+    fi
+fi
+
+# XXX: suppose there are no other working policy.
 # Install
 if [ $1 -eq 1 ]; then
     echo "Warning:"
-    echo -e "\tUpdate SeLinux config: %seconf"
+    echo -e "\tSeLinux config '%seconf' is updated with 'SELINUX=%default_mode'"
     ( . shell-config; shell_config_set "%seconf" "SELINUX" "%default_mode" )
     ( . shell-config; shell_config_set "%seconf" "SELINUXTYPE" "%policy_name" )
 
     # Relabel all FileSystem
-    echo -e "\tSeLinux Policy installed for the first time."
     echo -e "\tMake sure to:"
-    echo -e "\t\t * enable SeLinux in kernel."
-    echo -e "\t\t * configure PAM for SeLinux."
+    echo -e "\t\t * Enable SeLinux in kernel."
+    echo -e "\t\t * Configure PAM for SeLinux."
     echo -e "\tIt is necessary to relabel FS. Please do a reboot."
-    echo -e "\tDefault mode is: %default_mode."
     echo -e "\tFor more information visit: http://www.altlinux.org/sl"
-    # XXX: suppose there are no other working policy.
     touch /.autorelabel
 fi
 
-# Upgrade
-if [ $1 -eq 2 ]; then
-:
-fi
+exit 0 # End of %%post section
 
-
+#
+# %%postun
+#
 %postun
-# XXX: Actual policy still remains installed in /etc/selinux/
 
-# Uninstall RPM package
+policy_name_active="$(sestatus | sed -n -e '/policy name/ s/^.\+[[:space:]]//p')"
+
+# The last version of a package is erased
 if [ $1 = 0 ]; then
-    echo "Warning:"
-    echo -e "\tSet SeLinux enforcing mode to permissive."
-    selinuxenabled && setenforce 0
-    echo -e "\tDisable SeLinux in config: %seconf"
-    ( . shell-config; shell_config_set "%seconf" "SELINUX" "disabled" )
+    # Cleanup installed modules
+    modules="$(semodule -l -s %policy_name | sed -n -e '/[[:digit:]]\+\.[[:digit:]]\+\.[[:digit:]]\+/ s/[[:space:]].*$//p' | tr '\n' ' ' )"
+    if [ -n "${modules// /}" ]; then
+       echo -e "\tCleanup all installed (even 3rd party) modules for '%policy_name' policy:"
+    fi
+    for i in $modules; do
+       echo -e "\t\t* Cleanup module '$i'"
+        semodule -n -s %policy_name -r $i
+    done
+    if [ "$policy_name_active" = "%policy_name" ]; then
+        echo "Warning:"
+        echo -e "\tSeLinux is disabled in config: %seconf"
+        ( . shell-config; shell_config_set "%seconf" "SELINUX" "disabled" )
+        echo -e "\tSeLinux policy package '$policy_name_active' is uninstalled completely."
+        echo -e "\tPlease reboot computer as soon as possible."
+    fi
 fi
 
+exit 0 # End of %%postun section
 
-%files 
+%files
 %dir %policy_conf
 %dir %policy_conf/contexts
 %dir %policy_conf/contexts/users
@@ -101,6 +163,7 @@ fi
 %dir %policy_conf/modules
 %dir %policy_conf/modules/active
 %dir %policy_conf/modules/active/modules
+%dir %policy_conf/modules/policy
 %dir %policy_conf/policy
 %dir %policy_data
 %dir %policy_data/support
@@ -133,9 +196,28 @@ fi
 %_unitdir/selinux-autorelabel.service
 %_unitdir/sysinit.target.wants/selinux-autorelabel.service
 
-%doc /usr/share/doc/selinux-policy-altlinux/README
+#%%doc /usr/share/doc/selinux-policy-altlinux/README
+%doc %_docdir/%name
+
+# Files that are auto created at installation step.
+# Let's take care of them.
+# List them here, to be removed at rpm-remove stage.
+%ghost %policy_conf/contexts/files/file_contexts
+%ghost %policy_conf/contexts/files/file_contexts.bin
+%ghost %policy_conf/contexts/files/file_contexts.homedirs
+# Bug: %%ghost %%policy_conf/contexts/files/file_contexts.local
+%ghost %policy_conf/modules/semanage.read.LOCK
+%ghost %policy_conf/modules/semanage.trans.LOCK
+%ghost %policy_conf/seusers
+%ghost %policy_conf/contexts/netfilter_contexts
+%ghost %policy_conf/setrans.conf
+%ghost %policy_conf/modules/policy/policy.28
+%ghost %policy_conf/modules/policy/policy.29
 
 %changelog
+* Wed Nov 27 2013 Andriy Stepanov <stanv@altlinux.ru> 0.0.3-alt2
+- Update RPM spec
+
 * Mon Nov 25 2013 Andriy Stepanov <stanv@altlinux.ru> 0.0.3-alt1
 - Build: 20131125
 
