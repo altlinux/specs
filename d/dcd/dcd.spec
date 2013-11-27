@@ -1,8 +1,10 @@
+%set_automake_version 1.11
+
 %define user _dcd
 
 Name: dcd
 Version: 1.1.1
-Release: alt6.qa1
+Release: alt6.qa2
 Summary: DConnect Daemon - Hub D****ct Connect for Linux
 License: %gpl2only
 Group: Networking/File transfer
@@ -131,6 +133,9 @@ sed -i 's/listen_interface/bind_address/' %_sysconfdir/%name/%name.conf
 %doc AUTHORS BUGS FAQ NEWS README TODO USERCOMMANDS SYSLOG
 
 %changelog
+* Wed Nov 27 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.1-alt6.qa2
+- Fixed build
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.1.1-alt6.qa1
 - NMU: rebuilt for debuginfo.
 
