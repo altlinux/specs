@@ -1,6 +1,6 @@
 Name:		knetdockapp
 Version:	0.82.3
-Release:	alt3.1
+Release:	alt3.2
 Summary:	Network Monitor Systray Application
 Source:		http://www.kde-apps.org/CONTENT/content-files/29398-%name-%version.tar.bz2
 Patch0:		%name-0.82-alt_doc.diff
@@ -52,6 +52,9 @@ make -f admin/Makefile.common
 %_kde3_iconsdir/*/*/apps/%name.png
 
 %changelog
+* Wed Nov 27 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.82.3-alt3.2
+- Fixed build
+
 * Wed Jul 18 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.82.3-alt3.1
 - Fixed build
 
