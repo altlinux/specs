@@ -1,6 +1,6 @@
 Name:		dekorator 
 Version:	0.3
-Release:	alt1.6
+Release:	alt1.7
 Summary:	The deKorator kwin deco
 License:	GPLv2+
 Group:		Graphical desktop/KDE
@@ -45,6 +45,9 @@ mkdir -p %buildroot%_datadir/apps/deKorator/themes
 %dir %_datadir/apps/deKorator/themes
 
 %changelog
+* Wed Nov 27 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3-alt1.7
+- Fixed build
+
 * Fri Apr 27 2012 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.3-alt1.6
 - fix build with recent automake
 - restore build with rpm optflags
