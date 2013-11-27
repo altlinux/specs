@@ -25,7 +25,7 @@
 %endif
 
 Name: samba
-Version: 4.0.11
+Version: 4.0.12
 Release: alt1
 Group: System/Servers
 Summary: The Samba4 CIFS and AD client and server suite
@@ -1056,6 +1056,9 @@ TDB_NO_FSYNC=1 %make_build test
 %_man8dir/pam_winbind.8*
 
 %changelog
+* Wed Nov 27 2013 Alexey Shabalin <shaba@altlinux.ru> 4.0.12-alt1
+- 4.0.12
+
 * Tue Nov 12 2013 Alexey Shabalin <shaba@altlinux.ru> 4.0.11-alt1
 - 4.0.11
 - fixed CVE-2013-4475, CVE-2013-4476
