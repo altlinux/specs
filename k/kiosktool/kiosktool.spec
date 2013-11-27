@@ -3,7 +3,7 @@
 
 Name: kiosktool
 Version: 1.0
-Release: alt2
+Release: alt2.1
 
 Group: System/Configuration/Other
 Summary: KIOSK administration admin tool
@@ -11,10 +11,11 @@ License: GPL
 Url: http://extragear.kde.org/apps/kiosktool.php
 Packager: Roman Savochenko <rom_as@altlinux.ru>
 
-Requires: kdelibs >= %{get_version kdelibs}
+Requires: kdelibs
 
 Source: ftp://ftp.kde.org/pub/kde/stable/apps/KDE3.x/admin/kiosktool-%version.tar.gz
 Patch1: tde-3.5.13-build-defdir-autotool.patch
+Patch2: kiosktool-1.0-alt-automake.patch
 
 # Automatically added by buildreq on Fri Mar 24 2006
 #BuildRequires: doxygen fontconfig gcc-c++ gcc-g77 graphviz imake kdepim-devel kdepim-libs libjpeg-devel libpng-devel libXext-devel libXt-devel linux-libc-headers qt3-designer qt3-doc-html xml-utils xorg-cf-files
@@ -29,6 +30,7 @@ or otherwise preconfigure KDE for groups of users.
 %prep
 %setup -q
 %patch1
+%patch2 -p2
 
 cp -Rp /usr/share/libtool/aclocal/libtool.m4 admin/libtool.m4.in
 cp -Rp /usr/share/libtool/config/ltmain.sh admin/ltmain.sh
@@ -66,6 +68,9 @@ export PATH=$QTDIR/bin:$KDEDIR/bin:$PATH
 %_K3iconsdir/crystalsvg/*/apps/%name.*
 
 %changelog
+* Wed Nov 27 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0-alt2.1
+- Fixed build
+
 * Fri May 25 2012 Roman Savochenko <rom_as@altlinux.ru> 1.0-alt2
 - Build for TDE 3.5.13 release
 
