@@ -1,3 +1,5 @@
+%set_automake_version 1.11
+
 %define __libtoolize true
 %define unstable 0
 %define _optlevel s
@@ -25,7 +27,7 @@
 %define rname koffice
 Name: %{rname}16
 Version: 1.6.3
-%define rlz alt27
+%define rlz alt27.1
 %define beta %nil
 Serial: 4
 
@@ -906,6 +908,9 @@ mv %buildroot/%_iconsdir/crystalsvg %buildroot/%_kde3_iconsdir
 ###%endif
 
 %changelog
+* Wed Nov 27 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4:1.6.3-alt27.1
+- Fixed build
+
 * Fri Apr 05 2013 Roman Savochenko <rom_as@altlinux.ru> 4:1.6.3-alt27
 - MS Office import by library libwv2 disable by some headers broken.
 
