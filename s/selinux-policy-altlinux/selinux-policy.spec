@@ -6,7 +6,7 @@
 Summary: SELinux %policy_name policy
 Name: selinux-policy-altlinux
 Version: 0.0.3
-Release: alt2
+Release: alt3
 License: %distributable
 Group: System/Base
 Source: %name-%date.tar
@@ -45,7 +45,9 @@ tmpfile=$(mktemp)
 install -D -m0644 "$tmpfile" %buildroot/%policy_conf/contexts/files/file_contexts
 install -D -m0644 "$tmpfile" %buildroot/%policy_conf/contexts/files/file_contexts.bin
 install -D -m0644 "$tmpfile" %buildroot/%policy_conf/contexts/files/file_contexts.homedirs
+install -D -m0644 "$tmpfile" %buildroot/%policy_conf/contexts/files/file_contexts.homedirs.bin
 install -D -m0644 "$tmpfile" %buildroot/%policy_conf/contexts/files/file_contexts.local
+install -D -m0644 "$tmpfile" %buildroot/%policy_conf/contexts/files/file_contexts.local.bin
 install -D -m0644 "$tmpfile" %buildroot/%policy_conf/contexts/netfilter_contexts
 install -D -m0644 "$tmpfile" %buildroot/%policy_conf/modules/semanage.read.LOCK
 install -D -m0644 "$tmpfile" %buildroot/%policy_conf/modules/semanage.trans.LOCK
@@ -53,6 +55,24 @@ install -D -m0644 "$tmpfile" %buildroot/%policy_conf/seusers
 install -D -m0644 "$tmpfile" %buildroot/%policy_conf/setrans.conf
 install -D -m0644 "$tmpfile" %buildroot/%policy_conf/modules/policy/policy.28
 install -D -m0644 "$tmpfile" %buildroot/%policy_conf/modules/policy/policy.29
+install -D -m0644 "$tmpfile" %buildroot/%policy_conf/modules/active/base.pp
+install -D -m0644 "$tmpfile" %buildroot/%policy_conf/modules/active/commit_num
+install -D -m0644 "$tmpfile" %buildroot/%policy_conf/modules/active/file_contexts
+install -D -m0644 "$tmpfile" %buildroot/%policy_conf/modules/active/file_contexts.homedirs
+install -D -m0644 "$tmpfile" %buildroot/%policy_conf/modules/active/file_contexts.template
+install -D -m0644 "$tmpfile" %buildroot/%policy_conf/modules/active/homedir_template
+install -D -m0644 "$tmpfile" %buildroot/%policy_conf/modules/active/netfilter_contexts
+install -D -m0644 "$tmpfile" %buildroot/%policy_conf/modules/active/seusers
+install -D -m0644 "$tmpfile" %buildroot/%policy_conf/modules/active/policy.kern
+install -D -m0644 "$tmpfile" %buildroot/%policy_conf/modules/active/seusers.final
+install -D -m0644 "$tmpfile" %buildroot/%policy_conf/modules/active/users_extra
+install -D -m0644 "$tmpfile" %buildroot/%policy_conf/policy/policy.28
+install -D -m0644 "$tmpfile" %buildroot/%policy_conf/policy/policy.29
+
+# modules
+install -D -m0644 "$tmpfile" %buildroot/%policy_conf/modules/active/modules/dolphin.pp
+install -D -m0644 "$tmpfile" %buildroot/%policy_conf/modules/active/modules/xorg.pp
+
 
 #
 # %%post
@@ -127,9 +147,9 @@ fi
 exit 0 # End of %%post section
 
 #
-# %%postun
+# %%preun
 #
-%postun
+%preun
 
 policy_name_active="$(sestatus | sed -n -e '/policy name/ s/^.\+[[:space:]]//p')"
 
@@ -153,7 +173,7 @@ if [ $1 = 0 ]; then
     fi
 fi
 
-exit 0 # End of %%postun section
+exit 0 # End of %%preun section
 
 %files
 %dir %policy_conf
@@ -205,16 +225,38 @@ exit 0 # End of %%postun section
 %ghost %policy_conf/contexts/files/file_contexts
 %ghost %policy_conf/contexts/files/file_contexts.bin
 %ghost %policy_conf/contexts/files/file_contexts.homedirs
-# Bug: %%ghost %%policy_conf/contexts/files/file_contexts.local
+%ghost %policy_conf/contexts/files/file_contexts.homedirs.bin
+%ghost %policy_conf/contexts/files/file_contexts.local
+%ghost %policy_conf/contexts/files/file_contexts.local.bin
+%ghost %policy_conf/contexts/netfilter_contexts
 %ghost %policy_conf/modules/semanage.read.LOCK
 %ghost %policy_conf/modules/semanage.trans.LOCK
 %ghost %policy_conf/seusers
-%ghost %policy_conf/contexts/netfilter_contexts
 %ghost %policy_conf/setrans.conf
 %ghost %policy_conf/modules/policy/policy.28
 %ghost %policy_conf/modules/policy/policy.29
+%ghost %policy_conf/modules/active/base.pp
+%ghost %policy_conf/modules/active/commit_num
+%ghost %policy_conf/modules/active/file_contexts
+%ghost %policy_conf/modules/active/file_contexts.homedirs
+%ghost %policy_conf/modules/active/file_contexts.template
+%ghost %policy_conf/modules/active/homedir_template
+%ghost %policy_conf/modules/active/netfilter_contexts
+%ghost %policy_conf/modules/active/seusers
+%ghost %policy_conf/modules/active/policy.kern
+%ghost %policy_conf/modules/active/seusers.final
+%ghost %policy_conf/modules/active/users_extra
+%ghost %policy_conf/policy/policy.28
+%ghost %policy_conf/policy/policy.29
+
+# modules
+%ghost %policy_conf/modules/active/modules/dolphin.pp
+%ghost %policy_conf/modules/active/modules/xorg.pp
 
 %changelog
+* Wed Nov 27 2013 Andriy Stepanov <stanv@altlinux.ru> 0.0.3-alt3
+- Add more %%ghost files to RPM spec
+
 * Wed Nov 27 2013 Andriy Stepanov <stanv@altlinux.ru> 0.0.3-alt2
 - Update RPM spec
 
