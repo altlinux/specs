@@ -1,6 +1,8 @@
+%set_automake_version 1.11
+
 Name: mvapich2
 Version: 1.5.1
-Release: alt1.p1.1.1
+Release: alt1.p1.2
 
 %define mpi_prefix %_libexecdir/%name
 %define mpi_sysconfdir %_sysconfdir/%name
@@ -153,6 +155,9 @@ EOF
 %docdir
 
 %changelog
+* Wed Nov 27 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.5.1-alt1.p1.2
+- Fixed build
+
 * Sat Oct 22 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 1.5.1-alt1.p1.1.1
 - Rebuild with Python-2.7
 
