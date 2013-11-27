@@ -1,6 +1,6 @@
 Name: flpsed
 Version: 0.7.2
-Release: alt1
+Release: alt1.1
 Packager: Fr. Br. George <george@altlinux.ru>
 Summary: Add arbitrary text lines to existing PostScript document
 Summary(ru_RU.UTF-8): Добавление и редактирование текстовых полей в готовый PostScript-документ
@@ -13,6 +13,8 @@ Url: http://www.ecademix.com/JohannesHofmann/
 # Automatically added by buildreq on Fri Oct 07 2011
 # optimized out: fontconfig libX11-devel libstdc++-devel xorg-xproto-devel
 BuildRequires: gcc-c++ libXext-devel libXft-devel libXinerama-devel libcairo-devel libfltk-devel libpixman-devel
+
+BuildPreReq: libXfixes-devel
 
 %description
 flpsed is a WYSIWYG pseudo PostScript1 editor. "Pseudo", because you
@@ -63,6 +65,9 @@ install -D %name.desktop %buildroot%_desktopdir/%name.desktop
 %_man1dir/*
 
 %changelog
+* Wed Nov 27 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7.2-alt1.1
+- Fixed build
+
 * Mon Oct 14 2013 Fr. Br. George <george@altlinux.ru> 0.7.2-alt1
 - Autobuild version bump to 0.7.2
 
