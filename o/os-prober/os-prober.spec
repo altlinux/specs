@@ -1,8 +1,8 @@
 %filter_from_requires s,python-module-zope\.app\.appsetup,,
 
 Name: os-prober
-Version: 1.52
-Release: alt2
+Version: 1.61
+Release: alt1
 
 Summary: Operating systems detector
 License: GPLv2+
@@ -60,6 +60,9 @@ mkdir -p %buildroot%_localstatedir/%name
 %_localstatedir/%name
 
 %changelog
+* Thu May 23 2013 Mikhail Efremov <sem@altlinux.org> 1.61-alt1
+- 1.61
+
 * Thu May 23 2013 Michael Shigorin <mike@altlinux.org> 1.52-alt2
 - dropped evms related hack that is long irrelevant (see #28181)
 
