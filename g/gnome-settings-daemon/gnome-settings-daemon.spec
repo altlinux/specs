@@ -11,7 +11,7 @@
 
 Name: gnome-settings-daemon
 Version: %ver_major.2
-Release: alt1
+Release: alt2
 
 Summary: A program that manages general GNOME settings
 License: GPLv2+
@@ -21,6 +21,8 @@ Packager: GNOME Maintainers Team <gnome at packages.altlinux.org>
 Url: http://gnome.org
 Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 #Source: %name-%version.tar
+
+Patch: gnome-settings-daemon-3.10.2-rosa-non-eng-hotkeys.patch
 
 # From configure.ac
 %define glib2_ver 2.35.3
@@ -97,6 +99,7 @@ The %name-tests package provides programms for testing GSD plugins.
 
 %prep
 %setup
+%patch -p1
 
 %build
 %autoreconf
@@ -211,6 +214,9 @@ The %name-tests package provides programms for testing GSD plugins.
 
 
 %changelog
+* Wed Nov 27 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.2-alt2
+- try to fix hotkey in non-latin layout (rosa patch)
+
 * Wed Nov 13 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.2-alt1
 - 3.10.2
 
