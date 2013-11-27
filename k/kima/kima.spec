@@ -1,6 +1,6 @@
 Name:		kima
 Version:	0.7.4
-Release:	alt3.1
+Release:	alt3.2
 Summary:	A KDE3 Kicker Applet
 Source0:	%name-%version.tar.gz
 Url:		http://kima.sourceforge.net/
@@ -40,6 +40,9 @@ make -f admin/Makefile.common
 %_K3datadir/apps/kicker/applets/%name.desktop
 
 %changelog
+* Wed Nov 27 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7.4-alt3.2
+- Fixed build
+
 * Wed Dec  5 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7.4-alt3.1
 - Fixed build with glibc 2.16
 
