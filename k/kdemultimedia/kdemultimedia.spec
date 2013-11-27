@@ -26,7 +26,7 @@
 
 Name: kdemultimedia
 Version: 3.5.13.2
-Release: alt2
+Release: alt2.1
 
 Group: Graphical desktop/KDE
 Summary: K Desktop Environment - Multimedia
@@ -75,6 +75,7 @@ Patch115: mpg123_artsplugin-alt-fix-defines.patch
 Patch116: kdemultimedia-3.5.6-alt-desktop-categiries.patch
 Patch117: kscd-3.5.7-alt-digital-defaults.patch
 Patch118: tde-3.5.13-build-defdir-autotool.patch
+Patch119: cvs-auto_version_check.patch
 
 # Automatically added by buildreq on Mon Apr 12 2004 (-bi)
 #BuildRequires: XFree86-devel XFree86-libs cdparanoia fontconfig freetype2 gcc-c++ gcc-g77 glib2-devel kde-settings kdelibs-devel libalsa-devel libarts-devel libarts-qt-devel libaudiofile-devel libcdparanoia-devel libjpeg-devel liblame-devel libmusicbrainz-devel libogg-devel libpng-devel libqt3-devel libstdc++-devel libtag-devel libtiff-devel libvorbis-devel libxine-devel qt3-designer xml-utils zlib-devel
@@ -308,6 +309,7 @@ kdemultimedia-libs includes mpeglib.
 %patch116 -p1
 %patch117 -p1
 %patch118
+%patch119
 
 for f in `find -type f -name \*.mcopclass`
 do
@@ -660,6 +662,9 @@ install -m 0644 %buildroot/%_K3xdg_apps/kmix.desktop %buildroot/%_K3start/kmix.d
 %_K3includedir/mpeglib
 
 %changelog
+* Mon Nov 25 2013 Roman Savochenko <rom_as@altlinux.ru> 3.5.13.2-alt2.1
+- Build for Automake 1.13 and 1.14 is added.
+
 * Sat Jul 27 2013 Roman Savochenko <rom_as@altlinux.ru> 3.5.13.2-alt2
 - ARTS support enable.
 - Switch to build from original autotools "admin".
