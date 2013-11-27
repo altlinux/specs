@@ -1,6 +1,6 @@
 Name:		diskmonitor
 Version:	0.4.1
-Release:	alt1.9
+Release:	alt1.10
 Summary:	Disk Space Monitoring Applet for KDE
 Summary(ru_RU.UTF8): Апплет KDE для наблюдения за свободным местом на дисках
 Source0:	http://kde-apps.org/content/files/45015-%name-%version.tar.gz
@@ -56,6 +56,9 @@ convert -resize 48x48 %SOURCE1 %buildroot%_liconsdir/%name.png
 %_iconsdir/hicolor/*/apps/%name.png
 
 %changelog
+* Wed Nov 27 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.1-alt1.10
+- Fixed build
+
 * Thu May 17 2012 Motsyo Gennadi <drool@altlinux.ru> 0.4.1-alt1.9
 - fix build with recent automake
 
