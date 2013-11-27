@@ -3,7 +3,7 @@
 
 Name: kpowersave
 Version: 0.7.3
-Release: alt6
+Release: alt7.1
 
 Group: Graphical desktop/KDE
 Summary: KDE Frontend to powersave Package, Battery Monitor and General Power Management Support
@@ -82,6 +82,12 @@ export PATH=$QTDIR/bin:$KDEDIR/bin:$PATH
 %_K3i18n/*
 
 %changelog
+* Mon Nov 25 2013 Roman Savochenko <rom_as@altlinux.ru> 0.7.3-alt7.1
+- Build for Automake 1.13 and 1.14 is added.
+
+* Mon Oct 29 2012 Roman Savochenko <rom_as@altlinux.ru> 0.7.3-alt7
+- Release TDE version 3.5.13.1
+
 * Thu Apr 26 2012 Roman Savochenko <rom_as@altlinux.ru> 0.7.3-alt6
 - Automake version is fixed to 1.11.5 detect.
 - Shutdown is fixed by replace DCOP ksmserver command "logout 0 2 2" by "logout 0 2 -1".
