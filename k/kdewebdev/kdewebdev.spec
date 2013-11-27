@@ -14,7 +14,7 @@
 
 Name: kdewebdev
 Version: 3.5.13.2
-Release: alt2
+Release: alt2.1
 
 Group: Graphical desktop/KDE
 Summary: K Desktop Environment - web development programs
@@ -38,6 +38,7 @@ Patch4: quanta-3.5.0-fix-linking.patch
 Patch5: quanta-3.5.12-no-la.patch
 Patch6: kdewebdev-3.5.13.2-trinityHomeToKDE.patch
 Patch7: tde-3.5.13-build-defdir-autotool.patch
+Patch8: cvs-auto_version_check.patch
 
 # security
 # end security
@@ -141,6 +142,7 @@ recommendations.
 %patch5 -p1
 %patch6 -p1
 %patch7
+%patch8
 
 mkdir quanta-doc
 for f in altlinux/css altlinux/html altlinux/javascript altlinux/php altlinux/mysql altlinux/mysql5
@@ -308,6 +310,9 @@ rm -f %buildroot/%_K3apps/quanta/doc/install.sh
 %_K3xdg_apps/kfilereplace.desktop
 
 %changelog
+* Mon Nov 25 2013 Roman Savochenko <rom_as@altlinux.ru> 3.5.13.2-alt2.1
+- Build for Automake 1.13 and 1.14 is added.
+
 * Sat Jul 27 2013 Roman Savochenko <rom_as@altlinux.ru> 3.5.13.2-alt2
 - Switch to build from original autotools "admin".
 
