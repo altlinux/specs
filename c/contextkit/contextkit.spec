@@ -1,7 +1,9 @@
+%set_automake_version 1.11
+
 Name:       contextkit
 Summary:    Contextual information collection framework
 Version:    0.5.27
-Release:    alt1.427.2
+Release:    alt1.427.3
 Group:      System/Libraries
 License:    GPLv2
 URL:        http://maemo.gitorious.org/maemo-af/%{name}
@@ -197,6 +199,9 @@ mkdir -m0755 -p %{buildroot}%{_datadir}/%name/subscribers
 # << files tests
 
 %changelog
+* Wed Nov 27 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.27-alt1.427.3
+- Fixed build
+
 * Mon Dec 03 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.27-alt1.427.2
 - Fixed build with glibc 2.16
 
