@@ -1,13 +1,14 @@
 %define packagename cairo-dock
 
-Summary: Plugins for cairo-dock
 Name: cairo-dock-plugins
-Version: 3.1.0
+Version: 3.3.2
 Release: alt1
+
+Summary: Plugins for cairo-dock
 License: GPLv3+
 Group: Graphical desktop/Other
-Packager: Alexey Shabalin <shaba@altlinux.ru>
 Url: https://launchpad.net/cairo-dock-plug-ins
+Packager: Alexey Shabalin <shaba@altlinux.ru>
 
 Source: %name-%version.tar
 #.gz
@@ -15,11 +16,13 @@ Patch: %name-alt-deps.patch
 
 Requires: cairo-dock >= %version
 
-# Automatically added by buildreq on Thu Apr 12 2012
-# optimized out: cmake-modules fontconfig fontconfig-devel glib2-devel libGL-devel libGLU-devel libX11-devel libXrender-devel libatk-devel libcairo-devel libcairo-gobject libcairo-gobject-devel libdbus-devel libdbus-glib libdbus-glib-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgnome-menus2 libgnutls-devel libgtk+3-devel libjavascriptcoregtk3-devel libpango-devel librsvg-devel libsoup-devel libstdc++-devel libxml2-devel mono mono-mscorlib ndesk-dbus pkg-config python-base python-devel python-modules python-modules-compiler python-modules-email xorg-randrproto-devel xorg-renderproto-devel xorg-xf86vidmodeproto-devel xorg-xproto-devel
-BuildRequires: cairo-dock-devel cmake gcc-c++ libXrandr-devel libXxf86vm-devel libalsa-devel libetpan-devel libexif-devel libfftw3-devel libgnome-menus2-devel libgtk-sharp2 libical-devel libpulseaudio-devel libsensors3-devel libupower-devel libvte3-devel libwebkitgtk3-devel libxklavier-devel libzeitgeist-devel lsb-release mono-mcs ndesk-dbus-glib python-module-distribute ruby vala
-
 BuildRequires: cairo-dock-devel >= %version
+BuildRequires: cmake gcc-c++ libXrandr-devel libXxf86vm-devel libalsa-devel libetpan-devel
+BuildRequires: libexif-devel libfftw3-devel libgnome-menus-devel libgtk-sharp2 libical-devel libpulseaudio-devel
+BuildRequires: libsensors3-devel libupower-devel libvte3-devel libwebkitgtk3-devel libxklavier-devel libzeitgeist2.0-devel
+BuildRequires: lsb-release mono-mcs ndesk-dbus-glib python-module-distribute ruby vala
+BuildRequires: libpixman-devel libexpat-devel libXdmcp-devel libsystemd-login-devel
+
 Requires: %packagename-common
 Requires: %packagename-clock
 Requires: %packagename-composite-manager
@@ -67,6 +70,8 @@ Requires: %packagename-mail
 Requires: %packagename-dnd2share
 Requires: %packagename-rssreader
 Requires: %packagename-folders
+Requires: %packagename-screenshot
+Requires: %packagename-sound-effects
 
 %description
 cairo-dock uses cairo to render nice graphics, and Glitz to use hardware
@@ -79,17 +84,39 @@ This package contains various plugins for cairo-dock.
 
 #---------------------------------------------------------------------
 %package -n %packagename-common
-Summary: That common package provides lang files
+Summary: Common package for Cairo-Dock plugins
 Group: Graphical desktop/Other
 Requires: %packagename = %version
+Requires: %packagename-dbus = %version
 
 %description -n %packagename-common
-This plug-in provides many different animations for your icons.
+This packages provides shared files and common interfaces for Cairo-Dock
+plugins.
 
 %files -n %packagename-common -f %name.lang
 %dir %_datadir/%packagename/plug-ins
+%dir %_datadir/%packagename/gauges
 %_datadir/%packagename/plug-ins/shared-files
 %dir %_libdir/%packagename
+%_libdir/libCDApplet.so
+%python_sitelibdir_noarch/CDApplet*
+%python_sitelibdir_noarch/CDBashApplet*
+%python_sitelibdir_noarch/CairoDock.*
+%exclude %python_sitelibdir_noarch/*.egg-info
+
+#---------------------------------------------------------------------
+%package devel
+Summary: Development package for Cairo-Dock plugins
+Group: Graphical desktop/Other
+Requires: %packagename = %version
+
+%description devel
+This package provides files needed to develop Cairo-Dock plugins
+
+%files devel
+%_pkgconfigdir/CDApplet.pc
+%_vapidir/CDApplet.deps
+%_vapidir/CDApplet.vapi
 
 #---------------------------------------------------------------------
 %package -n %packagename-animated-icons
@@ -411,6 +438,8 @@ It works with ACPI and DBus.
 %files -n %packagename-powermanager
 %_datadir/%packagename/plug-ins/powermanager
 %_libdir/%packagename/libcd-powermanager.so
+%_datadir/%packagename/gauges/Battery-Mono/
+%_datadir/%packagename/gauges/Battery/
 
 #---------------------------------------------------------------------
 %package -n %packagename-shortcuts
@@ -523,6 +552,7 @@ the Alsa sound drivers.
 %files -n %packagename-alsamixer
 %_datadir/%packagename/plug-ins/AlsaMixer
 %_libdir/%packagename/libcd-AlsaMixer.so
+%_datadir/%packagename/gauges/Sound-Mono/
 
 #---------------------------------------------------------------------
 %package -n %packagename-cairo-penguin
@@ -584,7 +614,7 @@ the first active connection.
 %files -n %packagename-wifi
 %_datadir/%packagename/plug-ins/wifi
 %_libdir/%packagename/libcd-wifi.so
-
+%_datadir/%packagename/gauges/Wifi_default/
 
 #---------------------------------------------------------------------
 %package -n %packagename-tomboy
@@ -637,11 +667,11 @@ Requires: %packagename = %version
 Requires: %packagename-common
 
 %description -n %packagename-dbus
-This plug-in lets extern pllication interact on the dock.
+This plug-in lets extern apllication interact on the dock.
 The communication between both sides is based on Dbus.
 
 %files -n %packagename-dbus
-%_datadir/%packagename/plug-ins/Dbus
+%_datadir/%packagename/plug-ins/Dbus/
 %_libdir/%packagename/libcd-Dbus.so
 
 #---------------------------------------------------------------------
@@ -866,8 +896,6 @@ This plug-in lets you control your dock from the keyboard or even a remote contr
 %files -n %packagename-remote-control
 %_datadir/%packagename/plug-ins/Remote-Control
 %_libdir/%packagename/libcd-Remote-Control.so
-
-
 #---------------------------------------------------------------------
 
 %package -n %packagename-doncky
@@ -882,12 +910,36 @@ This applet allows you to write texts and monitor your system with a "text style
 %files -n %packagename-doncky
 %_datadir/%packagename/plug-ins/Doncky
 %_libdir/%packagename/libcd-doncky.so
+#--------------------------------------------------------------------
+%package -n %packagename-screenshot
+Summary: That package provides screenshot plugin
+Group: Graphical desktop/Other
+Requires: %packagename = %version
+Requires: %packagename-common
 
-#---------------------------------------------------------------------
+%description -n %packagename-screenshot
+This plug-in lets you take screenshots.
+
+%files -n %packagename-screenshot
+%_libdir/%packagename/libcd-Screenshot.so
+%_datadir/%packagename/plug-ins/Screenshot/
+#--------------------------------------------------------------------
+%package -n %packagename-sound-effects
+Summary: That package provides sound effects plugin
+Group: Graphical desktop/Other
+Requires: %packagename = %version
+Requires: %packagename-common
+
+%description -n %packagename-sound-effects
+This plug-in lets you play sounds on events
+
+%files -n %packagename-sound-effects
+%_libdir/%packagename/libcd-Sound-Effects.so
+%_datadir/%packagename/plug-ins/Sound-Effects/
 
 %prep
 %setup
-%patch -p1
+#%%patch -p1
 
 %build
 # Need dbusmenu-* for extra plugins
@@ -898,14 +950,18 @@ This applet allows you to write texts and monitor your system with a "text style
 	-Denable-old-gnome-integration=no \
 	-Denable-scooby-do=yes \
 
-%make_build -C BUILD
+%cmake_build
 
 %install
-%make_install DESTDIR=%buildroot install -C BUILD
+%cmakeinstall_std
 
 %find_lang %name
 
 %changelog
+* Thu Nov 28 2013 Yuri N. Sedunov <aris@altlinux.org> 3.3.2-alt1
+- 3.3.2
+- new screenshot, sound-effects plugins
+
 * Mon Apr 15 2013 Andrey Cherepanov <cas@altlinux.org> 3.1.0-alt1
 - New version 3.1.0
 
