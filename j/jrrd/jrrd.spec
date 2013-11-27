@@ -1,6 +1,8 @@
+%set_automake_version 1.11
+
 Name: jrrd
 Version: 1.0.5
-Release: alt1
+Release: alt1.1
 License: GPL
 Group: Databases
 Summary: Java interface to RRDTool
@@ -37,6 +39,9 @@ make
 %_datadir/java/*.jar
 
 %changelog
+* Wed Nov 27 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.5-alt1.1
+- Fixed build
+
 * Sat Dec 31 2011 Slava Dubrovskiy <dubrsl@altlinux.org> 1.0.5-alt1
 - New version
 
