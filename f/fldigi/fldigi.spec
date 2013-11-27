@@ -1,6 +1,6 @@
 Name: fldigi
 Version: 3.21.58
-Release: alt1.qa2
+Release: alt1.qa3
 Summary: Digital modem program
 License: GPL
 Group: Communications
@@ -10,6 +10,7 @@ Source0: %name-%version.tar
 BuildRequires: gcc-c++ libX11-devel libXext-devel libXft-devel libfltk-devel libjpeg-devel libpng-devel libsamplerate-devel
 
 BuildPreReq: libpixman-devel libcairo-devel libXinerama-devel
+BuildPreReq: libXfixes-devel
 
 %description
 Digital modem program
@@ -33,6 +34,9 @@ Digital modem program
 %_man1dir/*
 
 %changelog
+* Wed Nov 27 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.21.58-alt1.qa3
+- Fixed build
+
 * Wed Jun 26 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.21.58-alt1.qa2
 - Rebuilt with new libfltk
 
