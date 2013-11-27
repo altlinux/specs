@@ -1,7 +1,9 @@
+%set_automake_version 1.11
+
 Name: gsasl
 %define libname lib%name
 Version: 1.8.0
-Release: alt1
+Release: alt1.1
 
 Summary: GNU SASL implementation
 Group: System/Libraries
@@ -84,6 +86,9 @@ sed -i '/libgsasl\.mo/d' %name.lang
 %_man3dir/*
 
 %changelog
+* Wed Nov 27 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.8.0-alt1.1
+- Fixed build
+
 * Tue Apr 09 2013 Dmitry V. Levin <ldv@altlinux.org> 1.8.0-alt1
 - Updated to 1.8.0.
 
