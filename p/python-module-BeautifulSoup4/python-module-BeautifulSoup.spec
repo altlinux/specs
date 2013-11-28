@@ -6,7 +6,7 @@
 
 %define oname BeautifulSoup4
 Name: python-module-%oname
-Version: 4.3.1
+Version: 4.3.2
 Release: alt1
 
 Summary: HTML/XML parser for quick-turnaround applications like screen-scraping
@@ -115,6 +115,9 @@ python -m unittest discover -s bs4
 %endif
 
 %changelog
+* Thu Nov 28 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.3.2-alt1
+- Version 4.3.2
+
 * Mon Sep 16 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.3.1-alt1
 - Version 4.3.1
 
