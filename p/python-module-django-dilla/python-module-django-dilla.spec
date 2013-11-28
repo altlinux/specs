@@ -2,7 +2,7 @@
 
 Name: python-module-%module_name
 Version: 0.2
-Release: alt1.beta
+Release: alt1.beta.1
 
 Summary: Dilla is a multi-purpose general testing tool
 
@@ -11,6 +11,7 @@ Group: Development/Python
 Url: https://github.com/aerosol/django-dilla.git
 
 Source: %name-%version.tar
+Patch: dilla-0.2-alt-no-distribute.patch
 
 BuildArch: noarch
 
@@ -25,6 +26,7 @@ populating data within any number of internal applications.
 
 %prep
 %setup
+%patch -p1
 
 %build
 %python_build
@@ -38,5 +40,8 @@ populating data within any number of internal applications.
 %python_sitelibdir/django_dilla*
 
 %changelog
+* Thu Nov 28 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2-alt1.beta.1
+- Fixed build
+
 * Thu Apr 19 2012 Slava Dubrovskiy <dubrsl@altlinux.org> 0.2-alt1.beta
 - Initial build for ALT Linux
