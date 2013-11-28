@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 2013.1.2
-Release: alt1.git20130718
+Release: alt1.git20131126
 Summary: C metaprogramming toolkit for Python
 License: MIT
 Group: Development/Python
@@ -125,6 +125,9 @@ cp -fR doc/build/pickle \
 %endif
 
 %changelog
+* Thu Nov 28 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2013.1.2-alt1.git20131126
+- New snapshot
+
 * Mon Sep 16 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2013.1.2-alt1.git20130718
 - Version 2013.1.2
 
