@@ -5,7 +5,7 @@
 
 Name: python-module-%modulename
 Version: 1.9.1
-Release: alt1
+Release: alt1.1
 
 Summary: Virtual Python Environment builder
 License: MIT
@@ -14,10 +14,10 @@ Group: Development/Python
 Url: http://pypi.python.org/pypi/virtualenv
 BuildArch: noarch
 
-BuildRequires: python-module-setuptools
+BuildRequires: python-module-setuptools-tests
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-distribute
+BuildRequires: python3-devel python3-module-setuptools-tests
 %endif
 %if_with check
 BuildPreReq: python-module-mock
@@ -123,6 +123,9 @@ popd
 %endif
 
 %changelog
+* Thu Nov 28 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.9.1-alt1.1
+- Fixed build
+
 * Tue Apr 02 2013 Aleksey Avdeev <solo@altlinux.ru> 1.9.1-alt1
 - 1.9.1 (Closes: #28670)
 
