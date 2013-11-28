@@ -1,6 +1,8 @@
+%set_automake_version 1.11
+
 Name: libmng
 Version: 1.0.10
-Release: alt2.1
+Release: alt2.2
 
 Summary: A library for handling MNG files
 License: Distributable (see LICENSE)
@@ -101,6 +103,9 @@ popd
 %_bindir/*
 
 %changelog
+* Thu Nov 28 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.10-alt2.2
+- Fixed build
+
 * Thu Jul 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.10-alt2.1
 - Fixed build
 
