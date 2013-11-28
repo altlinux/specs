@@ -1,6 +1,6 @@
 Name: kssh
 Version: 0.7
-Release: alt9.1.qa1
+Release: alt9.1.qa2
 
 Summary: SSH frontend for KDE with many configurable options
 License: GPL
@@ -11,6 +11,7 @@ Packager: Repocop Q. A. Robot <repocop@altlinux.org>
 URL: http://sourceforge.net/projects/kssh
 
 Source0: %name-%version.tar.bz2
+Patch0: kssh-0.7-alt-automake.patch
 
 Requires: openssh-clients
 
@@ -23,6 +24,7 @@ any konsole "New Session" and then select "Secure Shell".
 
 %prep
 %setup -q
+%patch0 -p2
 
 make -f admin/Makefile.common cvs
 
@@ -51,6 +53,9 @@ echo 'Categories=Application;Network;' >> %buildroot/%_K3xdg_apps//%name.desktop
 %doc README AUTHORS
 
 %changelog
+* Thu Nov 28 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7-alt9.1.qa2
+- Fixed build
+
 * Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.7-alt9.1.qa1
 - NMU: rebuilt for updated dependencies.
 
