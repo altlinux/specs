@@ -7,7 +7,7 @@
 
 Name: soundkonverter
 Version: 0.3.9
-Release: alt8
+Release: alt8.1
 
 %define Name soundKonverter
 
@@ -98,6 +98,9 @@ mv %buildroot%_datadir/apps/%name/amarokscript/README{,.html}
 %_datadir/mimelnk/*/*
 
 %changelog
+* Thu Nov 28 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.9-alt8.1
+- Fixed build
+
 * Thu Apr 26 2012 Roman Savochenko <rom_as@altlinux.ru> 0.3.9-alt8
 - Automake version check for 1.11.5 fixed.
 
