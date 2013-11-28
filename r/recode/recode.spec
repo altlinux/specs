@@ -1,9 +1,11 @@
+%set_automake_version 1.11
+
 %define beta %nil
 %def_disable static
 
 Name: recode
 Version: 3.6
-Release: alt11
+Release: alt11.1
 
 Summary: The `recode' library converts files between character sets and usages
 License: GPL
@@ -102,6 +104,9 @@ chrpath -d %buildroot%_bindir/%name
 # - keep an eye on 3.7 (now in beta) and eventually 4.0
 
 %changelog
+* Thu Nov 28 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.6-alt11.1
+- Fixed build
+
 * Thu Dec 22 2011 Michael Shigorin <mike@altlinux.org> 3.6-alt11
 - drop vintage libtool (closes: #26740); thx ldv@
 
