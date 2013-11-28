@@ -1,3 +1,5 @@
+%set_automake_version 1.11
+
 %define lang_path 	./data/lang
 %define data_path 	./data
 %define ru_tips 	%lang_path/tips_RU.txt
@@ -6,7 +8,7 @@
 
 Name:    scorched3d
 Version: 43.3d
-Release: alt2.1
+Release: alt2.2
 License: GPL
 Group:   Games/Arcade
 
@@ -114,6 +116,9 @@ install -pD -m644 %SOURCE4 %buildroot%_liconsdir/%name.png
 %_gamesdatadir/*
 
 %changelog
+* Thu Nov 28 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 43.3d-alt2.2
+- Fixed build
+
 * Mon Oct 08 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 43.3d-alt2.1
 - Rebuilt with libpng15
 
