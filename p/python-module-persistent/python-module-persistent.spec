@@ -11,7 +11,7 @@
 
 Name: python-module-%modulename
 Version: 4.0.6
-Release: alt1
+Release: alt1.1
 
 %setup_python_module %modulename
 
@@ -30,6 +30,7 @@ Conflicts: python-module-ZODB3
 BuildPreReq: python-module-coverage
 BuildPreReq: python-module-nose
 BuildPreReq: python-module-zope.interface
+BuildPreReq: python-module-setuptools-tests
 
 %if_with python3
 BuildPreReq: rpm-build-python3
@@ -38,6 +39,7 @@ BuildPreReq: python3-module-coverage
 BuildPreReq: python3-module-distribute
 BuildPreReq: python3-module-nose
 BuildPreReq: python3-module-zope.interface
+BuildPreReq: python3-module-setuptools-tests
 %endif
 
 %description
@@ -131,5 +133,8 @@ popd
 %endif
 
 %changelog
+* Thu Nov 28 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.6-alt1.1
+- Fixed build
+
 * Wed Mar 13 2013 Aleksey Avdeev <solo@altlinux.ru> 4.0.6-alt1
 - Initial build for ALT Linux Sisyphus
