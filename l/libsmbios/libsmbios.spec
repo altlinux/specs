@@ -1,6 +1,8 @@
+%set_automake_version 1.11
+
 Name: libsmbios
 Version: 2.2.28
-Release: alt1.1
+Release: alt1.2
 License: GPLv2+ or OSL 2.1
 Summary: Libsmbios C/C++ shared libraries
 Group: System/Libraries
@@ -111,6 +113,9 @@ rm -rf %buildroot%_libdir/*.a
 %python_sitelibdir_noarch/*
 
 %changelog
+* Thu Nov 28 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.2.28-alt1.2
+- Fixed build
+
 * Fri Jul 20 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.2.28-alt1.1
 - Fixed build
 
