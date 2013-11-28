@@ -1,5 +1,5 @@
 Name: mkinitrd
-Version: 3.0.30
+Version: 3.0.31
 Release: alt1
 Epoch: 1
 Summary: Creates an initial ramdisk image for preloading modules
@@ -70,6 +70,13 @@ install -p -m 0644 scripts/* %buildroot/lib/mkinitrd/initramfs-base/scripts/
 
 
 %changelog
+* Thu Nov 28 2013 Led <led@altlinux.ru> 1:3.0.31-alt1
+- 3.0.31:
+  + scripts/functions: clean ups
+  + scripts/functions: panic(): load modules for USB keyboard too
+  + scripts/nbd_srp: fix searching ib device
+  + init.sh: clean ups
+
 * Thu Nov 28 2013 Led <led@altlinux.ru> 1:3.0.30-alt1
 - 3.0.30:
   + init.sh: fixed AddUdevRule()
