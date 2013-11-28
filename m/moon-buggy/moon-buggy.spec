@@ -1,10 +1,12 @@
+%set_automake_version 1.11
+
 # Enable oldstyle to have a nearly nothing requiring package after rebuilding
 %define oldstyle 0
 
 Summary:         Drive and jump with some kind of car across the moon
 Name:            moon-buggy
 Version:         1.0.51
-Release:         alt2_10
+Release:         alt2_10.1
 License:         GPL+
 Group:           Games/Other
 URL:             http://seehuhn.de/pages/%{name}
@@ -87,6 +89,9 @@ mv -f TODO.utf8 TODO
 %verify(not md5 size mtime) %config(noreplace) %attr(664,root,games) %{_var}/games/%{name}/mbscore
 
 %changelog
+* Thu Nov 28 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.51-alt2_10.1
+- Fixed build
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 1.0.51-alt2_10
 - update to new release by fcimport
 
