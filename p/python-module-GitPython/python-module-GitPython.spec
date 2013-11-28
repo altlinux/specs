@@ -2,7 +2,7 @@
 
 Name: python-module-GitPython
 Version: 0.3.2
-Release: alt1rc1.1
+Release: alt1rc1.2
 
 Summary: GitPython is a python library used to interact with Git repositories
 
@@ -16,7 +16,7 @@ BuildArch: noarch
 
 %setup_python_module %module_name
 
-BuildRequires: python-module-setuptools python-module-GitDB
+BuildRequires: python-module-setuptools-tests python-module-GitDB
 
 %description
 A simple, flexible, easy-to-use configfile and command-line parsing library
@@ -39,6 +39,9 @@ python setup.py test
 %exclude %python_sitelibdir/git/test
 
 %changelog
+* Thu Nov 28 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.2-alt1rc1.2
+- Fixed build
+
 * Mon Jul 16 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 0.3.2-alt1rc1.1
 - merge upstream/master
 
