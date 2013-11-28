@@ -1,10 +1,12 @@
+%set_automake_version 1.11
+
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/pkg-config gcc-c++
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
 Name:           libpolyxmass
 Version:        0.9.1
-Release:        alt3_11
+Release:        alt3_11.1
 Summary:        Polymer chemistry-related functionalities
 
 Group:          System/Libraries
@@ -72,6 +74,9 @@ find ${RPM_BUILD_ROOT} -type f -name "*.la" -exec rm -f {} ';'
 %{_libdir}/pkgconfig/libpolyxmass.pc
 
 %changelog
+* Thu Nov 28 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.1-alt3_11.1
+- Fixed build
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.9.1-alt3_11
 - update to new release by fcimport
 
