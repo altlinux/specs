@@ -1,7 +1,7 @@
 %define rel %nil
 Name: openerp-server
 Version: 5.0.14
-Release: alt2.1
+Release: alt2.2
 
 Summary: Open ERP server - free ERP and CRM software
 
@@ -24,7 +24,7 @@ BuildArch: noarch
 # Automatically added by buildreq on Tue Oct 05 2010
 BuildRequires: python-devel python-module-Reportlab python-module-lxml python-module-psycopg2 python-module-pychart python-module-pydot
 
-BuildPreReq: rpm-build-python
+BuildPreReq: rpm-build-python python-modules-json
 
 Requires: python-module-PyXML
 
@@ -71,6 +71,9 @@ install -pD %SOURCE2 %buildroot%_sysconfdir/openerp-server.cfg
 %_man5dir/*
 
 %changelog
+* Thu Nov 28 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.0.14-alt2.2
+- Fixed build
+
 * Sat Oct 22 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 5.0.14-alt2.1
 - Rebuild with Python-2.7
 
