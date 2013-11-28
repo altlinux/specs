@@ -1,6 +1,6 @@
 Name: cinnamon
-Version: 2.0.12
-Release: alt1
+Version: 2.0.13
+Release: alt2.1
 
 Summary: Window management and application launching for GNOME
 License: GPLv2+
@@ -11,6 +11,8 @@ Url: http://cinnamon.linuxmint.com
 # wget https://github.com/linuxmint/Cinnamon/tarball/1.6.4 -O cinnamon-1.6.4.tar.gz
 Source0: %name-%version.tar
 Source1: %name-menu.png
+Source2: org.%name.settings-users.policy
+Source3: polkit-%name-authentication-agent-1.desktop
 
 Patch: %name-%version-%release.patch
 
@@ -47,6 +49,7 @@ Requires: python-module-dbus
 Requires: python-module-pygnome-gconf
 Requires: python-modules-json
 Requires: python-module-lxml
+Requires: polkit-gnome
 
 BuildPreReq: rpm-build-gir >= 0.7.1-alt6
 BuildPreReq: libclutter-devel >= %clutter_ver
@@ -59,7 +62,7 @@ BuildPreReq: libgnome-bluetooth-devel >= %bt_ver
 #BuildPreReq: libtelepathy-logger-devel >= %tp_logger_ver
 #BuildPreReq: libfolks-devel >= %folks_ver
 BuildRequires: libcinnamon-desktop-devel libgnome-keyring-devel libgnome-menus-devel libstartup-notification-devel
-BuildRequires: libpolkit-devel libupower-devel libgudev-devel libsoup-devel NetworkManager-glib-devel
+BuildRequires: libpolkit-devel libupower-devel libgudev-devel libsoup-devel libnm-glib-devel
 BuildRequires: libcanberra-gtk3-devel libcroco-devel GConf libGConf-devel
 BuildRequires: gobject-introspection >= %gi_ver libupower-gir-devel libgudev-gir-devel libsoup-gir-devel libfolks-gir-devel
 BuildRequires: libtelepathy-glib-gir-devel libtelepathy-logger-gir-devel libgnome-menus-gir-devel NetworkManager-glib-gir-devel
@@ -188,6 +191,10 @@ desktop-file-install                                 \
  --dir=$RPM_BUILD_ROOT%_datadir/applications       \
  $RPM_BUILD_ROOT%_datadir/applications/cinnamon-settings.desktop
 
+#install polkit files
+install -m 0755 -d $RPM_BUILD_ROOT/%{_datadir}/polkit-1/actions/
+install -D -p -m 0644 %{SOURCE2} $RPM_BUILD_ROOT/%{_datadir}/polkit-1/actions/
+install -D -p -m 0644 %{SOURCE3} $RPM_BUILD_ROOT/%{_datadir}/applications/
 
 %files
 %exclude %_bindir/%{name}-launcher
@@ -206,8 +213,7 @@ desktop-file-install                                 \
 %_datadir/applications/cinnamon-add-panel-launcher.desktop
 %_datadir/applications/cinnamon-menu-editor.desktop
 %_datadir/applications/cinnamon-settings-users.desktop
-#%_sysconfdir/xdg/autostart/cinnamon-screensaver.desktop
-#%_sysconfdir/xdg/autostart/cinnamon2d-screensaver.desktop
+%_datadir/applications/polkit-cinnamon-authentication-agent-1.desktop
 %_datadir/xsessions/cinnamon2d.desktop
 %_datadir/cinnamon/
 %_datadir/cinnamon-menu-editor/
@@ -217,12 +223,22 @@ desktop-file-install                                 \
 %_datadir/cinnamon-settings-users/
 %_datadir/cinnamon-desktop-editor/
 %_datadir/cinnamon-json-makepot/
+%_datadir/polkit-1/actions/org.cinnamon.settings-users.policy
 
 %_datadir/dbus-1/services/org.Cinnamon.HotplugSniffer.service
 %_mandir/man1/*.1.*
 %doc NEWS README
 
 %changelog
+* Tue Nov 25 2013 Vladimir Didenko <cow@altlinux.org> 2.0.13-alt2.1
+- fix build requires
+
+* Tue Nov 25 2013 Vladimir Didenko <cow@altlinux.org> 2.0.13-alt2
+- add polkit agent
+
+* Mon Nov 25 2013 Vladimir Didenko <cow@altlinux.org> 2.0.13-alt1
+- 2.0.13-4-g5d393c2
+
 * Tue Nov 12 2013 Vladimir Didenko <cow@altlinux.org> 2.0.12-alt1
 - 2.0.12
 
