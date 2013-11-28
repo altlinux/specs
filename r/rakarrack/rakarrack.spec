@@ -1,6 +1,6 @@
 Name: rakarrack
 Version: 0.6.2
-Release: alt2.git.56026bac.1.qa3
+Release: alt2.git.56026bac.1.qa4
 Summary: Guitar effects for Linux
 License: GPLv2+
 Group: Sound
@@ -14,6 +14,7 @@ BuildRequires: libXpm-devel libalsa-devel libfltk-devel libjpeg-devel
 BuildRequires: libpng-devel libsamplerate-devel libsndfile-devel
 
 BuildPreReq: libpixman-devel libcairo-devel libXinerama-devel
+BuildPreReq: libXfixes-devel
 BuildRequires: desktop-file-utils
 
 %description
@@ -71,6 +72,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_datadir/doc/%name
 
 %changelog
+* Thu Nov 28 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.2-alt2.git.56026bac.1.qa4
+- Fixed build
+
 * Wed Jun 26 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.2-alt2.git.56026bac.1.qa3
 - Rebuilt with new FLTK
 
