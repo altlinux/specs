@@ -1,8 +1,10 @@
+%set_automake_version 1.11
+
 %def_disable static
 Summary: Varnish is a high-performance HTTP accelerator
 Name: varnish
 Version: 2.1.5
-Release: alt2
+Release: alt2.1
 License: BSD-like
 Group: System/Servers
 Packager: Ilya Mashkin <oddity@altlinux.ru>
@@ -132,6 +134,9 @@ mkdir -p %{buildroot}%{_logdir}/varnish
 %preun_service varnishlog
 
 %changelog
+* Thu Nov 28 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.1.5-alt2.1
+- Fixed build
+
 * Fri Dec 30 2011 Ilya Mashkin <oddity@altlinux.ru> 2.1.5-alt2
 - fix build
 
