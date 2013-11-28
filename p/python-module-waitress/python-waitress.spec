@@ -12,7 +12,7 @@
 
 Name: python-module-waitress
 Version: 0.8.2
-Release: alt2
+Release: alt2.1
 
 %setup_python_module %modulename
 
@@ -32,6 +32,7 @@ Source44: import.info
 BuildPreReq: python-module-nose
 BuildPreReq: python-module-coverage
 BuildPreReq: python-module-sphinx
+BuildPreReq: python-module-setuptools-tests
 
 %description
 Waitress is meant to be a production-quality pure-Python WSGI server with
@@ -65,6 +66,7 @@ BuildPreReq: python3-module-distribute
 BuildPreReq: python3-module-nose
 BuildPreReq: python3-module-coverage
 BuildPreReq: python3-module-sphinx
+BuildPreReq: python3-module-setuptools-tests
 
 %description -n %py3name
 Waitress is meant to be a production-quality pure-Python WSGI server with
@@ -154,6 +156,9 @@ popd
 %endif
 
 %changelog
+* Thu Nov 28 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.2-alt2.1
+- Fixed build
+
 * Wed Mar 06 2013 Aleksey Avdeev <solo@altlinux.ru> 0.8.2-alt2
 - Add python{,3}-module-waitress-test subpackages
 
