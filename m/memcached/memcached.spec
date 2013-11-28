@@ -1,6 +1,8 @@
+%set_automake_version 1.11
+
 Name: memcached
 Version: 1.4.13
-Release: alt3
+Release: alt3.1
 
 Summary: memcached - memory caching daemon
 License: BSD
@@ -91,6 +93,9 @@ fi
 %exclude %_datadir/%name/scripts/memcached.sysv
 
 %changelog
+* Thu Nov 28 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4.13-alt3.1
+- Fixed build
+
 * Tue May 15 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 1.4.13-alt3
 - Fix systemd unit file (ALT #27335)
 
