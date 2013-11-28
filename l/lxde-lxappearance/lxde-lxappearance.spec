@@ -1,7 +1,9 @@
+%set_automake_version 1.11
+
 %define upstreamname lxappearance
 Name: lxde-%upstreamname
 Version: 0.5.2
-Release: alt1
+Release: alt1.1
 
 Summary: %name is desktop-independent theme swither for GTK+.
 License: GPL
@@ -56,6 +58,9 @@ mkdir -p %buildroot%_libdir/%upstreamname/plugins
 %_pkgconfigdir/*.pc
 
 %changelog
+* Thu Nov 28 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.2-alt1.1
+- Fixed build
+
 * Thu May 24 2012 Radik Usupov <radik@altlinux.org> 0.5.2-alt1
 - New version (0.5.2)
 
