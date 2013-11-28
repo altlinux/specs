@@ -15,8 +15,8 @@
 %define nv_version 319
 %define nv_release 72
 %define nv_minor %nil
-%define pkg_rel alt120
-%def_enable kernelsource
+%define pkg_rel alt121
+%def_disable kernelsource
 
 %define tbver %{nv_version}.%{nv_release}.%{nv_minor}
 %if "%nv_minor" == "%nil"
@@ -313,6 +313,9 @@ fi
 %endif
 
 %changelog
+* Thu Nov 28 2013 Sergey V Turchin <zerg@altlinux.org> 319.72-alt121
+- don't package kernel module sources
+
 * Thu Nov 07 2013 Sergey V Turchin <zerg@altlinux.org> 319.72-alt120
 - new version
 
