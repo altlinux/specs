@@ -1,13 +1,13 @@
 Name: bind
 Version: 9.9.4
-Release: alt1
+Release: alt2
 
 Summary: ISC BIND - DNS server
 License: BSD-style
 Group: System/Servers
 Url: http://www.isc.org/products/BIND/
 
-%define vsuffix "P2"
+%define vsuffix "P1"
 # NOTE: vsuffix removed from Source0
 # ftp://ftp.isc.org/isc/bind9/%version%vsuffix/bind-%version%vsuffix.tar.gz
 Source0: %name-%version.tar
@@ -440,6 +440,10 @@ fi
 %exclude %docdir/COPYRIGHT
 
 %changelog
+* Thu Nov 28 2013 Fr. Br. George <george@altlinux.ru> 9.9.4-alt2
+- Update to ftp://ftp.isc.org/isc/bind9/9.9.4-P1/bind-9.9.4-P1.tar.gz
+- (CVE-2013-6230 is fixed in this version)
+
 * Tue Oct 01 2013 Fr. Br. George <george@altlinux.ru> 9.9.4-alt1
 - Update to ftp://ftp.isc.org/isc/bind9/9.9.4/bind-9.9.4.tar.gz
 
