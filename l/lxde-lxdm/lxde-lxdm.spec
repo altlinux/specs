@@ -1,9 +1,11 @@
+%set_automake_version 1.11
+
 %define upstreamname lxdm
 %define theme_name Industrial
 
 Name: lxde-%upstreamname
 Version: 0.3.0
-Release: alt2
+Release: alt2.1
 
 Summary: Lightweight X11 Display Manager
 License: GPL
@@ -72,6 +74,9 @@ install -m755 %SOURCE3 %{buildroot}%{_sysconfdir}/%{upstreamname}/Xsession
 %_datadir/%upstreamname
 
 %changelog
+* Thu Nov 28 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.0-alt2.1
+- Fixed build
+
 * Mon Feb 14 2011 Lenar Shakirov <snejok@altlinux.ru> 0.3.0-alt2
 - Packaging fixed: new rpm not prevent glob patter for libdir
 
