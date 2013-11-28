@@ -1,5 +1,5 @@
-Version: 4.2.3
-Release: alt4.svn20120223
+Version: 4.3.2
+Release: alt1.svn20131105
 %setup_python_module cx_Freeze
 %define origname cx-freeze
 
@@ -16,7 +16,7 @@ Group: Development/Python
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 BuildRequires(pre): rpm-build-python
-BuildPreReq: python-devel
+BuildPreReq: python-devel python-module-sphinx-devel
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python-tools-2to3
@@ -114,6 +114,8 @@ find -type f -name '*.py' -exec 2to3 -w '{}' +
 popd
 %endif
 
+%make -C doc html
+
 %install
 %if_with python3
 pushd ../python3
@@ -141,7 +143,7 @@ done
 rm -f $(find %buildroot -name 'windist*')
 
 %files
-%doc *.txt doc/*.html
+%doc *.txt doc/_build/html/*
 %_bindir/*
 %if_with python3
 %exclude %_bindir/py3_*
@@ -150,17 +152,20 @@ rm -f $(find %buildroot -name 'windist*')
 %exclude %python_sitelibdir/*/samples
 
 %files samples
-%doc samples
+%doc cx_Freeze/samples
 
 %if_with python3
 %files -n python3-module-%origname
-%doc *.txt doc/*.html
+%doc *.txt doc/_build/html/*
 %_bindir/py3_*
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*/samples
 %endif
 
 %changelog
+* Thu Nov 28 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.3.2-alt1.svn20131105
+- Version 4.3.2
+
 * Mon Apr 15 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.2.3-alt4.svn20120223
 - Use 'find... -exec...' instead of 'for ... $(find...'
 
