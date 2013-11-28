@@ -13,7 +13,7 @@ Url: http://www.tuxpaint.org/
 License: GPL v2 or later
 Group: Graphics
 Version: 0.0.12
-Release: alt1
+Release: alt1.1
 Requires: tuxpaint
 
 Source: %name-%version.tar.gz
@@ -23,7 +23,7 @@ Patch2: tuxpaint-config-desktop.patch
 # optimized out: fontconfig libX11-devel libXext-devel libstdc++-devel xorg-xproto-devel
 BuildRequires: gcc-c++ libXft-devel libXinerama-devel libcairo-devel libfltk-devel libpaper-devel libpixman-devel
 
-BuildRequires: desktop-file-utils
+BuildRequires: desktop-file-utils libXfixes-devel
 
 %description
 Tux Paint has a rich set of configuration options, controllable via
@@ -70,6 +70,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_desktopdir/*.desktop
 
 %changelog
+* Thu Nov 28 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.12-alt1.1
+- Fixed build
+
 * Wed Mar 20 2013 Fr. Br. George <george@altlinux.ru> 0.0.12-alt1
 - Version up
 
