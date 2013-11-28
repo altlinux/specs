@@ -3,7 +3,7 @@
 
 Name: python-module-%modname
 Version: 0.9
-Release: alt2
+Release: alt2.1
 Summary: A micro-framework for Python based on Werkzeug, Jinja 2 and good intentions
 
 Group: Development/Python
@@ -17,7 +17,7 @@ BuildArch: noarch
 Source: Flask-%version.tar
 Patch1: flask-0.9-alt-tests-in-usr-src.patch
 
-BuildRequires: python-module-setuptools
+BuildRequires: python-module-setuptools-tests
 BuildRequires: python-module-jinja2 python-module-werkzeug python-module-simplejson
 
 %description
@@ -49,6 +49,9 @@ technologies and more.
 %exclude %python_sitelibdir_noarch/flask/testsuite
 
 %changelog
+* Thu Nov 28 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9-alt2.1
+- Fixed build
+
 * Sun Jan 06 2013 Ivan A. Melnikov <iv@altlinux.org> 0.9-alt2
 - Don't package testsuite.
 
