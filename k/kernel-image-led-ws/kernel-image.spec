@@ -25,7 +25,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.10.20
-Release: alt5
+Release: alt6
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -1170,20 +1170,18 @@ config_disable \
 %if_enabled debug
 config_enable \
 	KALLSYMS_ALL \
-	KALLSYMS_EXTRA_PASS \
 	DEBUG_KERNEL \
-	DETECT_SOFTLOCKUP \
+	LOCKUP_DETECTOR \
 	BOOTPARAM_SOFTLOCKUP_PANIC_VALUE=0 \
 	DEBUG_MUTEXES \
 	DEBUG_SLAB DEBUG_SLAB_LEAK \
 	SLUB_DEBUG SLUB_STATS \
-	LOCKDEP \
-	DEBUG_LOCKDEP \
-	DEBUG_SPINLOCK_SLEEP \
+	LOCKDEP_SUPPORT LOCKDEP DEBUG_LOCKDEP \
 	DEBUG_BUGVERBOSE \
 	DEBUG_INFO \
 	DEBUG_WRITECOUNT \
-	FRAME_POINTER
+	CRASH_DUMP PROC_VMCORE \
+	KGDB
 %endif
 
 echo "Building kernel %kversion-%flavour-%krelease"
@@ -1840,6 +1838,11 @@ done)
 
 
 %changelog
+* Thu Nov 28 2013 Led <led@altlinux.ru> 3.10.20-alt6
+- updated:
+  + fix-drivers-usb-core
+  + feat-drivers-block--btier
+
 * Tue Nov 26 2013 Led <led@altlinux.ru> 3.10.20-alt5
 - updated:
   + fix-kernel
