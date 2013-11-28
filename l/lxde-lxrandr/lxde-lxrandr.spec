@@ -1,7 +1,9 @@
+%set_automake_version 1.11
+
 %define upstreamname lxrandr
 Name: lxde-%upstreamname
 Version: 0.1.2
-Release: alt2
+Release: alt2.1
 
 Summary: Easy-to-use XRandR GUI frontend for LXDE project
 License: GPL
@@ -36,6 +38,9 @@ BuildRequires: docbook-dtds docbook-style-xsl intltool libgtk+2-devel xsltproc
 %_man1dir/*
 
 %changelog
+* Thu Nov 28 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.2-alt2.1
+- Fixed build
+
 * Mon Jun 11 2012 Radik Usupov <radik@altlinux.org> 0.1.2-alt2
 - New upstream snapshot
 
