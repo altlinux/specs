@@ -3,13 +3,14 @@
 Summary: A graphical Turing machine implementation
 Name:    kturing
 Version: 0.4
-Release: alt7
+Release: alt7.1
 
 License: GPL
 Group:   Education
 Url:     http://kturing.sourceforge.net/
 Source:  http://prdownloads.sourceforge.net/%name/%name-%version.tar.gz
 Patch1:	 %name-gcc43.patch
+Patch2:  kturing-0.4-alt-automake.patch
 
 # Automatically added by buildreq on Tue Apr 05 2011
 # optimized out: fontconfig kdelibs kdelibs-devel libICE-devel libSM-devel libX11-devel libXext-devel libXt-devel libpng-devel libqt3-devel libqt3-settings libstdc++-devel libtqt-devel pkg-config xorg-xproto-devel zlib-devel
@@ -22,6 +23,7 @@ KDE-based version of graphical Turing machine implementation.
 %setup
 #rm -f admin/config.guess admin/config.sub admin/ltmain.sh kturing/TAGS kturing/*gui*.[ch]*
 %patch1 -p1
+%patch2 -p2
 touch kturing/*ui
 sed -i 's/automake\*1\.5/automake-1.5/g' admin/cvs.sh
 make -f admin/Makefile.common cvs
@@ -46,6 +48,9 @@ chrpath -d kturing/kturing
 %_iconsdir/*/*/apps/%name.*
 
 %changelog
+* Thu Nov 28 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4-alt7.1
+- Fixed build
+
 * Tue May 29 2012 Fr. Br. George <george@altlinux.ru> 0.4-alt7
 Silly automake check fix
 
