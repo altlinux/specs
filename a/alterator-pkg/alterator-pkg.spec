@@ -3,7 +3,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-pkg
-Version: 2.6.13
+Version: 2.6.14
 Release: alt1
 
 %add_findreq_skiplist %_libexecdir/alterator/backend3/pkg-init
@@ -61,6 +61,9 @@ additional package installation
 %_alterator_backend3dir/*
 
 %changelog
+* Thu Nov 28 2013 Michael Shigorin <mike@altlinux.org> 2.6.14-alt1
+- Fix cosmetic error in 2.6.13
+
 * Tue Oct 29 2013 Michael Shigorin <mike@altlinux.org> 2.6.13-alt1
 - Create /media/cdrom and configure it for apt only when
   installation is performed off CD/DVD media
