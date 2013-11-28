@@ -27,7 +27,7 @@
 %define rname kdebase-workspace
 Name: kde4base-workspace
 Version: %major.%minor.%bugfix
-Release: alt1
+Release: alt2
 
 Group: Graphical desktop/KDE
 Summary: K Desktop Environment - Workspace
@@ -955,6 +955,12 @@ chmod 0755 %buildroot/%_sysconfdir/firsttime.d/kdm4
 %_K4dbus_interfaces/*
 
 %changelog
+* Thu Nov 28 2013 Sergey V Turchin <zerg@altlinux.org> 4.11.3-alt2
+- don't disable kwin effects for fullscreen windows because black screen on nvidia
+
+* Thu Nov 07 2013 Sergey V Turchin <zerg@altlinux.org> 4.11.3-alt0.M70P.1
+- built for M70P
+
 * Wed Nov 06 2013 Sergey V Turchin <zerg@altlinux.org> 4.11.3-alt1
 - new version
 - add patch for KDM multiseat support
