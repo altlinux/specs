@@ -1,4 +1,4 @@
-%define gitdate git20130602
+%define gitdate git20131106
 
 Name: skippy-xd
 Version: 0.5
@@ -17,6 +17,7 @@ BuildRequires(pre): rpm-build-licenses rpm-build-xdg
 
 BuildRequires: libX11-devel libXcomposite-devel libXdamage-devel libXext-devel
 BuildRequires: libXfixes-devel libXft-devel libXinerama-devel libXrender-devel
+BuildRequires: libpng-devel zlib-devel libjpeg-devel libgif-devel
 
 %description
 Standalone composited window picker (displays all your windows at once,
@@ -40,6 +41,9 @@ export CFLAGS="%optflags"
 
 
 %changelog
+* Thu Nov 28 2013 Mikhail Efremov <sem@altlinux.org> 0.5-alt1.git20131106
+- Upstream git snapshot.
+
 * Wed Jun 19 2013 Mikhail Efremov <sem@altlinux.org> 0.5-alt1.git20130602
 - Initial build.
 
