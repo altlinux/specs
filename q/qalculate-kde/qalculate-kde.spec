@@ -2,7 +2,7 @@
 
 Name: qalculate-kde
 Version: 0.9.7
-Release: alt3.1
+Release: alt3.2
 
 Summary: A very versatile desktop calculator - KDE version.
 Group: Office
@@ -13,6 +13,7 @@ Requires: %shortname-common
 
 Source: %name-%version.tar
 Patch: qalculate-kde-0.9.7-alt-DSO.patch
+Patch1: qalculate-kde-0.9.7-alt-automake.patch
 
 %set_gcc_version 4.5
 BuildPreReq: gcc4.5-c++ libstdc++4.5-devel
@@ -27,6 +28,7 @@ KDE graphical interface for Qalculate!
 %prep
 %setup
 %patch -p0
+%patch1 -p0
 sed -i "s/\(Wl,--no-undefined\)/ -Wl,--allow-shlib-undefined \1/g" admin/acinclude.m4.in
 sed -i "s/\-lkdeui/-lkdeui -lpthread/g" admin/acinclude.m4.in
 sed -i "s/\.la/.so/g" admin/acinclude.m4.in
@@ -55,6 +57,9 @@ rm -rf %buildroot/%_datadir/locale
 %_K3doc/en/qalculate_kde
 
 %changelog
+* Thu Nov 28 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.7-alt3.2
+- Fixed build
+
 * Sun Jul 22 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.7-alt3.1
 - Fixed build
 
