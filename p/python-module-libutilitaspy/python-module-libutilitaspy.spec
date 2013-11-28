@@ -1,11 +1,12 @@
 Name: python-module-libutilitaspy
 Version: 0.1
-Release: alt1
+Release: alt1.1
 
 %setup_python_module libutilitaspy
 
 Summary: A general purpose library of data-structures, aspects, patterns and utilities for Python.
 Source: %modulename-%{version}dev.tar.gz
+Patch: libutilitaspy-0.1-alt-no-distribute.patch
 License: Apache License 2.0
 Group: Development/Python
 Url: https://sites.google.com/site/libutilitaspy/home
@@ -60,6 +61,7 @@ Documentation and example files for %name
 
 %prep
 %setup -n %modulename-%{version}dev
+%patch -p2
 
 %build
 %python_build
@@ -78,6 +80,9 @@ export PYTHONPATH=build/lib
 %_datadir/%modulename/[^c]*
 
 %changelog
+* Thu Nov 28 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1-alt1.1
+- Fixed build
+
 * Mon Jan 23 2012 Fr. Br. George <george@altlinux.ru> 0.1-alt1
 - Initial build
 
