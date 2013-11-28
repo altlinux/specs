@@ -1,7 +1,9 @@
+%set_automake_version 1.11
+
 Name: libfm
 Summary: core part of pcmanfm
 Version: 1.1.2
-Release: alt0.2
+Release: alt0.2.1
 License: GPL
 Group: File tools
 Url: http://pcmanfm.sourceforge.net/
@@ -79,6 +81,9 @@ rm -f %buildroot%_pkgconfigdir/libfm-gtk3.pc
 %_libdir/*.a
 
 %changelog
+* Thu Nov 28 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.2-alt0.2.1
+- Fixed build
+
 * Fri Aug 16 2013 Mykola Grechukh <gns@altlinux.ru> 1.1.2-alt0.2
 - new version (1.1.2)
 
