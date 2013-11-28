@@ -1,6 +1,8 @@
+%set_automake_version 1.11
+
 Name: xrandr-daemon
 Version: 0.1.0
-Release: alt2
+Release: alt2.1
 Summary: X session daemon that controls screen orientation listening to ContextKit and DBus events
 License: GPL v2.1
 Group: System/X11
@@ -35,6 +37,9 @@ ContextKit and DBus events.
 %_sysconfdir/xdg/autostart/*.desktop
 
 %changelog
+* Thu Nov 28 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.0-alt2.1
+- Fixed build
+
 * Fri Apr 27 2012 Paul Wolneykien <manowar@altlinux.ru> 0.1.0-alt2
 - Add the *.desktop file for autostart.
 
