@@ -2,7 +2,7 @@
 
 Name: python-module-%module_name
 Version: 2.5.3
-Release: alt1
+Release: alt1.1
 Group: System/Base
 License: BSD License
 Summary: Celery is an open source asynchronous task queue/job queue based on distributed message passing
@@ -10,7 +10,7 @@ URL: http://github.com/ask/celery/
 Packager: Viacheslav Dubrovskyi <dubrsl@altlinux.org>
 Source: %name-%version.tar
 
-BuildRequires: python-module-distribute
+BuildRequires: python-module-setuptools-tests
 
 %description
 Celery is an open source asynchronous task queue/job queue based on
@@ -42,5 +42,8 @@ mv %buildroot%_target_libdir_noarch %buildroot%_libdir
 %python_sitelibdir/celery*
 
 %changelog
+* Thu Nov 28 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.5.3-alt1.1
+- Fixed build
+
 * Thu May 03 2012 Slava Dubrovskiy <dubrsl@altlinux.org> 2.5.3-alt1
 - build for ALT
