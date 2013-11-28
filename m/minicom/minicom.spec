@@ -1,9 +1,11 @@
+%set_automake_version 1.11
+
 %define my_lockdir /var/lock/serial
 %define my_group uucp
 
 Name: minicom
 Version: 2.5
-Release: alt1.hg.qa1
+Release: alt1.hg.qa2
 
 Group: Communications
 Summary: A text-menu-driven modem control and terminal emulation program
@@ -121,6 +123,9 @@ EOF
 %lang(ru) %doc %name.FAQ.ru
 
 %changelog
+* Thu Nov 28 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.5-alt1.hg.qa2
+- Fixed build
+
 * Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.5-alt1.hg.qa1
 - NMU: rebuilt for updated dependencies.
 
