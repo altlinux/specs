@@ -1,6 +1,8 @@
+%set_automake_version 1.11
+
 Name: lldpd
 Version: 0.6.1
-Release: alt2
+Release: alt2.1
 Summary: Link Layer Discovery Protocol Daemon
 Source: %name-%version.tar
 Group: Networking/Other
@@ -112,6 +114,9 @@ fi
 %_pkgconfigdir/*
 
 %changelog
+* Thu Nov 28 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.1-alt2.1
+- Fixed build
+
 * Fri Nov 02 2012 Afanasov Dmitry <ender@altlinux.org> 0.6.1-alt2
 - add init scripts
 
