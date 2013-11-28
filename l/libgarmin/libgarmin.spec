@@ -1,8 +1,10 @@
+%set_automake_version 1.11
+
 %define svn_ver svn20081215
 
 Name: libgarmin
 Version: 0.1.0
-Release: alt2
+Release: alt2.1
 Summary: Libgarmin is an open source (GPLv2) for Garmin image format maps.
 License: GPL2
 Group: Sciences/Geosciences
@@ -64,6 +66,9 @@ svn upgrade
 #%_man7dir/*
 
 %changelog
+* Thu Nov 28 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.0-alt2.1
+- Fixed build
+
 * Tue Apr 02 2013 Andrey Cherepanov <cas@altlinux.org> 0.1.0-alt2
 - Fix build with new Subversion
 
