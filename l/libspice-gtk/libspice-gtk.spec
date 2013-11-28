@@ -1,3 +1,5 @@
+%set_automake_version 1.11
+
 %define _libexecdir %_prefix/libexec
 %define _name spice-gtk
 %def_enable introspection
@@ -12,7 +14,7 @@
 
 Name: libspice-gtk
 Version: 0.20
-Release: alt1.1
+Release: alt1.2
 Summary: A GTK widget for SPICE clients
 
 Group: System/Libraries
@@ -339,6 +341,9 @@ cd ..
 %endif
 
 %changelog
+* Thu Nov 28 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.20-alt1.2
+- Fixed build
+
 * Tue Sep 17 2013 Sergey Y. Afonin <asy@altlinux.ru> 0.20-alt1.1
 - NMU: rebuilt with cyrus-sasl 2.1.26
 
