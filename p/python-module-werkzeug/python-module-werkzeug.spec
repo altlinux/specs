@@ -1,5 +1,5 @@
 %define version 0.8.3
-%define release alt1
+%define release alt1.1
 %setup_python_module werkzeug
 
 Summary: Werkzeug is one of the most advanced WSGI utility modules
@@ -12,7 +12,7 @@ Group: Development/Python
 BuildArch: noarch
 URL: http://werkzeug.pocoo.org/
 
-BuildRequires: python-module-setuptools python-modules-json
+BuildRequires: python-module-setuptools-tests python-modules-json
 
 %description
 Werkzeug started as a simple collection of various utilities for WSGI
@@ -42,6 +42,9 @@ handling requests and leaves all that up to the developer.
 %doc AUTHORS CHANGES LICENSE
 
 %changelog
+* Thu Nov 28 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.3-alt1.1
+- Fixed build
+
 * Sun Jan 06 2013 Ivan A. Melnikov <iv@altlinux.org> 0.8.3-alt1
 - 0.8.3 (ALT #28297);
 - minor packaging improvements.
