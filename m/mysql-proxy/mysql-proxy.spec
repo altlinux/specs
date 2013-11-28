@@ -1,8 +1,10 @@
+%set_automake_version 1.11
+
 %define username _mysqlproxy
 
 Name: mysql-proxy
 Version: 0.8.2
-Release: alt1.1
+Release: alt1.2
 
 Summary: MySQL Proxy
 License: GPLv2
@@ -95,6 +97,9 @@ rm -rf %buildroot%_pkgconfigdir
 %attr(750,root,%username) %dir /var/log/mysql-proxy
 
 %changelog
+* Thu Nov 28 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.2-alt1.2
+- Fixed build
+
 * Thu Jul 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.2-alt1.1
 - Fixed build
 
