@@ -1,6 +1,8 @@
+%set_automake_version 1.11
+
 Name: smbnetfs
 Version: 0.5.3a
-Release: alt2
+Release: alt2.1
 
 Summary: SMB filesystem using FUSE - mount network neighbourhood
 Group: System/Kernel and hardware
@@ -35,6 +37,9 @@ CFLAGS="$RPM_OPT_FLAGS" %configure --with-gnome-keyring=no
 %_bindir/*
 
 %changelog
+* Thu Nov 28 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.3a-alt2.1
+- Fixed build
+
 * Tue Apr 02 2013 Andrey Cherepanov <cas@altlinux.org> 0.5.3a-alt2
 - Fix build with new Samba
 
