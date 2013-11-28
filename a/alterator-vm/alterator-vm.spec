@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-vm
-Version: 0.4.3
+Version: 0.4.4
 Release: alt1
 
 Summary: Alterator module for volume management
@@ -42,6 +42,9 @@ install -pD -m0644 profile.scm %buildroot%_cachedir/alterator/vm-profile.scm
 %_cachedir/alterator/vm-profile.scm
 
 %changelog
+* Thu Nov 28 2013 Michael Shigorin <mike@altlinux.org> 0.4.4-alt1
+- drop vista horror messages (but not expand and shrink!)
+
 * Fri Mar 15 2013 Timur Aitov <timonbl4@altlinux.org> 0.4.3-alt1
 - disable edit mount point for swap
 
