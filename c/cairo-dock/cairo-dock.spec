@@ -1,24 +1,31 @@
+%def_disable session
+
 Name: cairo-dock
-Version: 3.1.0
-Release: alt1.r33
+Version: 3.3.2
+Release: alt1
+
 Summary: A light and eye-candy dock to launch your programs easily
 License: GPLv3+
 Group: Graphical desktop/Other
+# http://glx-dock.org
 Url: https://launchpad.net/cairo-dock-core
 
 Source: %name-%version.tar
 
-# Automatically added by buildreq on Thu Apr 12 2012 (-bi)
-# optimized out: GraphicsMagick GraphicsMagick-common cmake-modules elfutils fontconfig fontconfig-devel glib2-devel libGL-devel libX11-devel libXext-devel libXfixes-devel libXi-devel libXrender-devel libatk-devel libcairo-devel libcairo-gobject libcairo-gobject-devel libdbus-devel libdbus-glib libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libpango-devel libstdc++-devel libwayland-client libwayland-server pkg-config python-base xorg-compositeproto-devel xorg-fixesproto-devel xorg-inputproto-devel xorg-renderproto-devel xorg-xextproto-devel xorg-xproto-devel
-BuildRequires: GConf apt cmake desktop-file-utils gcc-c++ libGLU-devel libXcomposite-devel libXinerama-devel libXtst-devel libcurl-devel libdbus-glib-devel libgtk+3-devel librsvg-devel libxml2-devel wget
+%define gtk3_ver 3.8
 
-# removing GraphicsMagick-ImageMagick-compat and adding
-#FIXME: BuildRequires: /usr/bin/convert
+# main build dependencies
+BuildRequires: cmake gcc-c++ desktop-file-utils
+BuildRequires: glib2-devel libcairo-devel librsvg-devel libdbus-devel
+BuildRequires: libdbus-glib-devel libxml2-devel libGL-devel libGLU-devel libcurl-devel
+# GTK+3 by dfault
+BuildRequires: libgtk+3-devel >= %gtk3_ver
+# X dependencies (enable-x11-support by default)
+BuildRequires: libX11-devel libXext-devel libXinerama-devel
+## X extensions (with_xentend)
+BuildRequires: libXtst-devel libXcomposite-devel libXrandr-devel libXrender-devel
+
 BuildRequires: ImageMagick-tools
-BuildPreReq: libXdmcp-devel libpixman-devel libpangox-compat-devel
-BuildPreReq: libpng-devel libharfbuzz-devel libXcursor-devel
-BuildPreReq: at-spi2-atk-devel
-BuildPreReq: pkgconfig(xdamage) pkgconfig(xxf86vm) pkgconfig(xrandr)
 
 %description
 cairo-dock uses cairo to render nice graphics, and Glitz to use hardware
@@ -41,11 +48,11 @@ This package provides the include files and library for cairo-dock functions.
 %setup -n %name-%version
 
 %build
-%cmake
-%make_build -C BUILD
+%cmake %{?_enable_session:-Denable-desktop-manager=ON}
+%cmake_build
 
 %install
-%make_install DESTDIR=%buildroot install -C BUILD
+%cmakeinstall_std
 
 %find_lang %name
 
@@ -63,15 +70,22 @@ desktop-file-install --dir %buildroot%_desktopdir \
 	%buildroot%_desktopdir/cairo-dock-cairo.desktop
 
 %files -f %name.lang
-%_bindir/*
+%_bindir/%name
 %_libdir/*.so.*
-%_man1dir/*.1.*
+%_libdir/%name/libcd-Help.so
 %_datadir/%name
 %_desktopdir/*.desktop
 %_pixmapsdir/*.svg
 %_niconsdir/%name.png
 %_miconsdir/%name.png
 %_liconsdir/%name.png
+%_man1dir/*.1.*
+
+%if_enabled session
+%_bindir/%name-session
+%_datadir/gnome-session/sessions/cairo-dock.session
+%exclude %_datadir/xsessions/cairo-dock.desktop
+%endif
 
 %files devel
 %_includedir/%name
@@ -79,6 +93,10 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_pkgconfigdir/*.pc
 
 %changelog
+* Wed Nov 27 2013 Yuri N. Sedunov <aris@altlinux.org> 3.3.2-alt1
+- 3.3.2
+- updated buildreqs
+
 * Mon Apr 15 2013 Andrey Cherepanov <cas@altlinux.org> 3.1.0-alt1.r33
 - New version 3.1.0-r33
 
