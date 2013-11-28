@@ -1,6 +1,6 @@
 Name: ooo2txt
 Version: 0.0.6
-Release: alt2
+Release: alt2.1
 
 Summary: Convert OpenOffice documents to simple text
 Group: Text tools
@@ -22,6 +22,8 @@ Packager: Igor Zubkov <icesik@altlinux.org>
 
 # Automatically added by buildreq on Sat Jan 13 2007 (-bi)
 BuildRequires: perl-Archive-Zip perl-XML-Twig
+
+BuildPreReq: perl-podlators
 
 %description
 ooo2txt converts OpenOffice documents to simple text.
@@ -46,6 +48,9 @@ install -m644 ooo2txt.1 %buildroot%_man1dir/
 %_man1dir/ooo2txt.*
 
 %changelog
+* Thu Nov 28 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.6-alt2.1
+- Fixed build
+
 * Mon Jul 26 2010 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.6-alt2
 - Removed packages-info-i18n-common from BuildRequires
 
