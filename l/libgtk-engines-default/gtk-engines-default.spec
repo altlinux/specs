@@ -1,3 +1,5 @@
+%set_automake_version 1.11
+
 %define ver_major 2.20
 %define _name gtk-engines
 %define engine_prefix libgtk-engine
@@ -12,7 +14,7 @@
 
 Name: %{engine_prefix}s-default
 Version: %ver_major.2
-Release: alt2.qa1
+Release: alt2.qa2
 Serial: 1
 
 Summary: Default GTK+2 theme engines
@@ -310,6 +312,9 @@ This package contains development files for %_name
 %exclude %engines_dir/*.la
 
 %changelog
+* Thu Nov 28 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:2.20.2-alt2.qa2
+- Fixed build
+
 * Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1:2.20.2-alt2.qa1
 - NMU: rebuilt for updated dependencies.
 
