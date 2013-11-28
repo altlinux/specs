@@ -3,7 +3,7 @@
 
 Name:		kvkbd
 Version:	0.5
-Release:	alt5
+Release:	alt5.1
 Summary:	Virtual Keyboard for KDE
 Source0:	http://www.kde-apps.org/CONTENT/content-files/56019-%name-%version.tar.bz2
 Source1:	hi48-app-%name.png
@@ -64,6 +64,9 @@ export PATH=$QTDIR/bin:$KDEDIR/bin:$PATH
 %_kde3_iconsdir/*/*/apps/%name.png
 
 %changelog
+* Thu Nov 28 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5-alt5.1
+- Fixed build
+
 * Mon Jul 30 2012 Roman Savochenko <rom_as@altlinux.ru> 0.5-alt5
 - Real version 0.5 build.
 
