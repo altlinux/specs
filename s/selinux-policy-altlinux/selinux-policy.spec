@@ -1,12 +1,12 @@
 %define policy_name altlinux
-%define date 20131125
+%define date 20131128
 %define seconf %_sysconfdir/selinux/config
 %define default_mode permissive
 
 Summary: SELinux %policy_name policy
 Name: selinux-policy-altlinux
 Version: 0.0.3
-Release: alt3
+Release: alt4
 License: %distributable
 Group: System/Base
 Source: %name-%date.tar
@@ -197,6 +197,8 @@ exit 0 # End of %%preun section
 %policy_conf/contexts/netfilter_contexts
 %policy_conf/contexts/securetty_types
 
+%policy_conf/contexts/users/*
+
 %policy_data/*.pp
 %policy_data/modules/*.pp
 %policy_data/*.if
@@ -254,6 +256,9 @@ exit 0 # End of %%preun section
 %ghost %policy_conf/modules/active/modules/xorg.pp
 
 %changelog
+* Thu Nov 28 2013 Andriy Stepanov <stanv@altlinux.ru> 0.0.3-alt4
+- Build: 20131128
+
 * Wed Nov 27 2013 Andriy Stepanov <stanv@altlinux.ru> 0.0.3-alt3
 - Add more %%ghost files to RPM spec
 
