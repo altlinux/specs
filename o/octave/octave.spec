@@ -1,6 +1,6 @@
 Name: octave
 Version: 3.6.4
-Release: alt4
+Release: alt4.1
 
 %define docdir %_defaultdocdir/%name-%version
 
@@ -20,6 +20,7 @@ BuildRequires: texlive-base-bin texlive-generic-recommended
 BuildPreReq: libqhull-devel fontconfig-devel libfltk-devel
 BuildPreReq: libqrupdate-devel libsuitesparse-devel gperf libXft-devel
 BuildPreReq: libpixman-devel libcairo-devel libXinerama-devel
+BuildPreReq: libXfixes-devel
 
 Source0: %name-%version-%release.tar
 Source1: octave.filetrigger
@@ -151,6 +152,9 @@ install -pm0755 -D %SOURCE1 %buildroot%_rpmlibdir/%name.filetrigger
 %docdir/liboctave
 
 %changelog
+* Thu Nov 28 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.6.4-alt4.1
+- Fixed build
+
 * Tue Jul 02 2013 Paul Wolneykien <manowar@altlinux.org> 3.6.4-alt4
 - Rebuild with a new version of libhdf5.
 
