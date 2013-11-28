@@ -1,7 +1,9 @@
+%set_automake_version 1.11
+
 %define oname comedilib
 Name: libcomedi
 Version: 0.10.0
-Release: alt1
+Release: alt1.1
 
 Summary: Data Acquisition library for the Comedi DAQ driver
 Summary(ru_RU.UTF-8): Библиотека получения данных для драйвера Comedi DAQ.
@@ -132,6 +134,9 @@ for developing applications with %name
 %_libdir/%name.a
 
 %changelog
+* Thu Nov 28 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.10.0-alt1.1
+- Fixed build
+
 * Thu Aug 23 2012 Roman Savochenko <rom_as@altlinux.ru> 0.10.0-alt1
 - new version 0.10.0
 - all available files included
