@@ -1,5 +1,7 @@
 # vim: set ft=spec: -*- rpm-spec -*-
 
+%set_automake_version 1.11
+
 %def_disable debug
 #def_enable Werror
 
@@ -7,7 +9,7 @@
 %define branch 1.5
 Name: %oname%branch
 Version: 1.5.21
-Release: alt2.qa1.1
+Release: alt2.qa2
 Serial: 3
 
 %def_without dotlock
@@ -153,6 +155,9 @@ EOF
 %docdir
 
 %changelog
+* Thu Nov 28 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3:1.5.21-alt2.qa2
+- Fixed build
+
 * Tue Sep 24 2013 Sergey Y. Afonin <asy@altlinux.ru> 3:1.5.21-alt2.qa1.1
 - NMU: rebuilt with cyrus-sasl 2.1.26
 
