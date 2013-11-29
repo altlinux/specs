@@ -40,7 +40,7 @@
 %define minor	8
 %define bugfix	5
 %define beta	%nil
-%define rlz alt3
+%define rlz alt4
 %define phonon_ver 4.4.0
 
 Name: %rname%major
@@ -752,7 +752,7 @@ Install this package if you want to create RPM packages that use %name
 %patch205 -p1
 %patch206 -p1
 %patch207 -p1
-%patch208 -p1
+#%patch208 -p1
 #
 %patch209 -p1
 %patch210 -p1
@@ -958,8 +958,8 @@ install -d -m 0755 %buildroot/%qtdir/plugins/styles/
 # apply docs
 mkdir -p %buildroot/%_docdir/
 ln -s `relative %_docdir/%name %_datadir/%name/doc` %buildroot/%_datadir/%name/doc
-ln -s `relative %_docdir/%name %qtdir/doc` %buildroot/%qtdir/doc
 %endif
+ln -s `relative %_docdir/%name %qtdir/doc` %buildroot/%qtdir/doc
 
 # install rpm macros
 install -d -m 0755 %buildroot/%_rpmmacrosdir/
@@ -1548,6 +1548,9 @@ install -m 644 %SOURCE104 %buildroot/%_iconsdir/hicolor/64x64/apps/%name.png
 %endif
 
 %changelog
+* Fri Nov 29 2013 Sergey V Turchin <zerg@altlinux.org> 4.8.5-alt4
+- don't apply patch for cups-1.6 printers discovery (ALT#29609)
+
 * Fri Nov 22 2013 Sergey V Turchin <zerg@altlinux.org> 4.8.5-alt3
 - use constant docs dir
 
