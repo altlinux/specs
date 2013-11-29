@@ -1,6 +1,6 @@
 %define oname fipy
 Name: python-module-%oname
-Version: 3.0
+Version: 3.1
 Release: alt1
 Summary: Partial differential equation (PDE) solver
 License: Public
@@ -104,6 +104,9 @@ cp -fR documentation/* %buildroot%_docdir/%name/
 %_docdir/%name
 
 %changelog
+* Fri Nov 29 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.1-alt1
+- Version 3.1
+
 * Thu Feb 14 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0-alt1
 - Version 3.0
 
