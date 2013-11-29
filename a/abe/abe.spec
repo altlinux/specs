@@ -3,7 +3,7 @@ BuildRequires: gcc-c++ libICE-devel libSM-devel
 # END SourceDeps(oneline)
 Name:           abe
 Version:        1.1
-Release:        alt5_20
+Release:        alt5_21
 
 Summary:        Scrolling, platform-jumping, ancient pyramid exploring game
 Group:          Games/Other
@@ -24,6 +24,8 @@ Patch2:         %{name}-1.1-format.patch
 # Add support for aarch64.  Sent upstream 25 Mar 2013:
 # https://sourceforge.net/tracker/?func=detail&aid=3609029&group_id=70141&atid=526743
 Patch3:         %{name}-1.1-aarch64.patch
+# Fix build failure with -Werror=format-security
+Patch4:         %{name}-1.1-format-security.patch
 
 BuildRequires:  libSDL-devel >= 1.2.3 libSDL_mixer-devel >= 1.2.3
 BuildRequires:  libXmu-devel libXi-devel
@@ -39,6 +41,8 @@ vaguely in the style of similar games for the Commodore+4.
 %patch0
 %patch1
 %patch2
+%patch3
+%patch4
 
 # Fix the FSF's address
 sed 's/59 Temple Place, Suite 330, Boston, MA  02111-1307/51 Franklin Street, Suite 500, Boston, MA  02110-1335/' COPYING > COPYING.new
@@ -84,6 +88,9 @@ desktop-file-install --dir $RPM_BUILD_ROOT/%{_datadir}/applications/ %{name}.des
 %{_datadir}/pixmaps/%{name}.png
 
 %changelog
+* Fri Nov 29 2013 Igor Vlasenko <viy@altlinux.ru> 1.1-alt5_21
+- update to new release by fcimport
+
 * Fri Nov 15 2013 Igor Vlasenko <viy@altlinux.ru> 1.1-alt5_20
 - update to new release by fcimport
 
