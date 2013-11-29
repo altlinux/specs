@@ -1,7 +1,7 @@
 %define oname oct2py
 
 Name: python-module-%oname
-Version: 1.1.0
+Version: 1.1.1
 Release: alt1
 
 Summary: Python to GNU Octave bridge --> run m-files from python
@@ -59,6 +59,9 @@ This package contains tests for %oname.
 %python_sitelibdir/*/tests
 
 %changelog
+* Fri Nov 29 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.1-alt1
+- Version 1.1.1
+
 * Fri Nov 15 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.0-alt1
 - Initial build for Sisyphus
 
