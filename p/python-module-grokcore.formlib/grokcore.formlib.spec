@@ -1,7 +1,7 @@
 %define oname grokcore.formlib
 Name: python-module-%oname
-Version: 1.9
-Release: alt1
+Version: 1.10
+Release: alt1.a1
 Summary: Grok-like configuration for zope.formlib components
 License: ZPL
 Group: Development/Python
@@ -57,6 +57,9 @@ mv %buildroot%python_sitelibdir_noarch/* \
 %python_sitelibdir/*/*/*test*
 
 %changelog
+* Fri Nov 29 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.10-alt1.a1
+- Version 1.10a1
+
 * Fri Feb 22 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.9-alt1
 - Version 1.9
 
