@@ -5,7 +5,7 @@
 
 Name:           python-module-%oname
 Version:        1.9
-Release:        alt1.git20130915
+Release:        alt1.git20131127
 Summary:        Creates and Manipulates Graphs and Networks
 Group:          Development/Python
 License:        LGPLv2+
@@ -196,6 +196,9 @@ cp -fR doc/build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Fri Nov 29 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.9-alt1.git20131127
+- New snapshot
+
 * Wed Sep 18 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.9-alt1.git20130915
 - Version 1.9
 
