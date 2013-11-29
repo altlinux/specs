@@ -1,5 +1,5 @@
-%define version 2.2.1
-%define release alt1
+%define version 2.4.0
+%define release alt1.alpha
 %define modulename markdown
 
 %def_with python3
@@ -103,6 +103,9 @@ ln -s %{modulename}_py %buildroot%_bindir/%modulename
 %endif
 
 %changelog
+* Fri Nov 29 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.4.0-alt1.alpha
+- Version 2.4.0.alpha
+
 * Sat Mar 02 2013 Aleksey Avdeev <solo@altlinux.ru> 2.2.1-alt1
 - Version 2.2.1
 
