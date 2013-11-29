@@ -1,7 +1,7 @@
 %define oname PyDSTool
 Name: python-module-%oname
-Version: 0.88
-Release: alt1.svn20100720.2.1
+Version: 0.88.121202
+Release: alt1.bzr20130716
 Summary: Integrated simulation, modeling and analysis package for dynamical systems
 License: BSD
 Group: Development/Python
@@ -29,6 +29,7 @@ dynamical systems, written in Python.
 install -d %buildroot%python_sitelibdir
 pushd %buildroot%python_sitelibdir
 tar -xzf %SOURCE0
+rm -fR .gear
 install -p -m644 %SOURCE1 .
 popd
 
@@ -36,6 +37,9 @@ popd
 %python_sitelibdir/*
 
 %changelog
+* Fri Nov 29 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.88.121202-alt1.bzr20130716
+- Version 0.88.121202
+
 * Sun Oct 30 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 0.88-alt1.svn20100720.2.1
 - Rebuild with Python-2.7
 
