@@ -11,7 +11,7 @@
 
 Name: haspd
 Version: 3.3
-Release: alt6
+Release: alt7
 
 Summary: HASP drivers and license managers
 
@@ -107,6 +107,8 @@ MODULEVERSION=%version MAN_DIR=%buildroot%_mandir/ INIT_DIR=%buildroot%_initdir/
     SBIN_DIR=%buildroot%_sbindir/ INSTALL_MOD_PATH=%buildroot%module_dir \
     LIB_DIR=%buildroot%_libdir/ \
         etersoft/build.sh %_lib
+# Install udev rules
+install -m0644 -D aksusbd/udev/rules.d/80-hasp.rules %buildroot%_udevrulesdir/80-hasp.rules
 
 %post
 %post_service %name
@@ -134,6 +136,8 @@ MODULEVERSION=%version MAN_DIR=%buildroot%_mandir/ INIT_DIR=%buildroot%_initdir/
 %_sbindir/usbkeytest
 %dir %_sysconfdir/haspd/
 %_sysconfdir/haspd/hasplm.conf
+
+%_udevrulesdir/80-hasp.rules
 
 # not for MCBC
 %if %_vendor != "RPM"
@@ -167,6 +171,10 @@ MODULEVERSION=%version MAN_DIR=%buildroot%_mandir/ INIT_DIR=%buildroot%_initdir/
 #module_dir/2*
 
 %changelog
+* Fri Nov 29 2013 Andrey Cherepanov <cas@altlinux.org> 3.3-alt7
+- Add udev rules to use 1C hasp key if plugged without haspd restart
+  (see eterbug #9425)
+
 * Thu Nov 28 2013 Vitaly Lipatov <lav@altlinux.ru> 3.3-alt6
 - build for ALT Linux Sisyphus
 
