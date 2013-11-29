@@ -2,7 +2,7 @@
 
 Name: python-module-%oname
 Version: 0.11
-Release: alt2.git20130917
+Release: alt2.git20131120
 Summary: NumPy aware dynamic compiler for Python
 License: BSD-like
 Group: Development/Python
@@ -12,7 +12,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python
-BuildPreReq: libnumpy-devel python-module-Cython
+BuildPreReq: libnumpy-devel python-module-Cython python-module-llvmmath
 
 %description
 numba is a NumPy aware dynamic compiler for Python. It creates LLVM
@@ -71,6 +71,9 @@ This package contains documentation for numba.
 %doc docs/*.pdf docs/*.txt docs/ams_presentation/*.pdf
 
 %changelog
+* Fri Nov 29 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.11-alt2.git20131120
+- New snapshot
+
 * Thu Sep 19 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.11-alt2.git20130917
 - Excluded tests
 
