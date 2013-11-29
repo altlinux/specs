@@ -1,7 +1,7 @@
 %define oname pyfits
 
 Name: python-module-%oname
-Version: 3.1.2
+Version: 3.2
 Release: alt1
 
 Summary: Reads FITS images and tables into numpy arrays and manipulates FITS headers
@@ -92,6 +92,9 @@ cp -fR docs/build/pickle %buildroot%python_sitelibdir/%oname/
 %doc docs/build/html/*
 
 %changelog
+* Fri Nov 29 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.2-alt1
+- Version 3.2
+
 * Wed Nov 06 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.1.2-alt1
 - Initial build for Sisyphus
 
