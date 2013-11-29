@@ -25,7 +25,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.10.20
-Release: alt10
+Release: alt11
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -1782,6 +1782,14 @@ done)
 
 
 %changelog
+* Fri Nov 29 2013 Led <led@altlinux.ru> 3.10.20-alt11
+- updated:
+  + fix-drivers-usb-core
+  + fix-drivers-usb-host--xhci-hcd
+  + fix-kernel (CVE-2013-2929)
+- added:
+  + fix-kernel-trace--trace_event_perf (CVE-2013-2930)
+
 * Fri Nov 29 2013 Led <led@altlinux.ru> 3.10.20-alt10
 - added:
   + fix-drivers-watchdog
