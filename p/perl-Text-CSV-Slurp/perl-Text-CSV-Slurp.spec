@@ -7,7 +7,7 @@ BuildRequires: perl(Test/More.pm) perl-devel perl-podlators
 
 Name:       perl-%{upstream_name}
 Version:    %{upstream_version}
-Release:    alt1_1
+Release:    alt1_2
 
 Summary:    Convert CSV into an array of hashes, or an array of hashes into CSV
 License:    GPL+ or Artistic
@@ -43,6 +43,9 @@ Convert CSV into an array of hashes, or an array of hashes into CSV.
 %perl_vendor_privlib/*
 
 %changelog
+* Fri Nov 29 2013 Igor Vlasenko <viy@altlinux.ru> 1.01-alt1_2
+- update by mgaimport
+
 * Mon Oct 21 2013 Igor Vlasenko <viy@altlinux.ru> 1.01-alt1_1
 - update by mgaimport
 
