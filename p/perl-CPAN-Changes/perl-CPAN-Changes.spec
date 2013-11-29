@@ -1,4 +1,3 @@
-%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(CPAN.pm) perl(Config.pm) perl(ExtUtils/Command.pm) perl(ExtUtils/MM_Unix.pm) perl(ExtUtils/Manifest.pm) perl(Fcntl.pm) perl(File/Basename.pm) perl(File/Find.pm) perl(File/Spec.pm) perl(File/Temp.pm) perl(FileHandle.pm) perl(JSON.pm) perl(LWP/Simple.pm) perl(Module/Build.pm) perl(Net/FTP.pm) perl(Parse/CPAN/Meta.pm) perl(Socket.pm) perl(YAML/Tiny.pm) perl(inc/Module/Install.pm) perl-devel perl-podlators
@@ -6,11 +5,11 @@ BuildRequires: perl(CPAN.pm) perl(Config.pm) perl(ExtUtils/Command.pm) perl(ExtU
 Name:		perl-CPAN-Changes
 Summary:	Read and write Changes files
 Version:	0.26
-Release:	alt1
+Release:	alt1_1
 License:	GPL+ or Artistic
 Group:		Development/Perl
 URL:		http://search.cpan.org/dist/CPAN-Changes/
-Source:	http://www.cpan.org/authors/id/B/BR/BRICAS/CPAN-Changes-%{version}.tar.gz
+Source0:	http://search.cpan.org/CPAN/authors/id/B/BR/BRICAS/CPAN-Changes-%{version}.tar.gz
 BuildArch:	noarch
 BuildRequires:	perl
 BuildRequires:	perl(Cwd.pm)
@@ -62,6 +61,9 @@ make test TEST_FILES="$(echo $(find xt/ -name '*.t'))"
 %{_mandir}/man1/tidy_changelog.1*
 
 %changelog
+* Fri Nov 29 2013 Igor Vlasenko <viy@altlinux.ru> 0.26-alt1_1
+- update to new release by fcimport
+
 * Mon Nov 25 2013 Igor Vlasenko <viy@altlinux.ru> 0.26-alt1
 - automated CPAN update
 
