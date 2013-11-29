@@ -1,26 +1,38 @@
-%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(File/Spec/Functions.pm) perl(Scalar/Util.pm) perl(overload.pm) perl-Module-Build perl-devel perl-podlators
+BuildRequires: perl(ExtUtils/MakeMaker.pm) perl-Module-Build perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Math-MatrixReal
 Version:        2.10
-Release:        alt1
+Release:        alt1_1
 Summary:        Manipulate matrix of reals
 License:        GPL+ or Artistic
 Group:          Development/Perl
 URL:            http://search.cpan.org/dist/Math-MatrixReal/
-Source:        http://www.cpan.org/authors/id/L/LE/LETO/Math-MatrixReal-%{version}.tar.gz
+Source0:        http://www.cpan.org/authors/id/L/LE/LETO/Math-MatrixReal-%{version}.tar.gz
 BuildArch:      noarch
+BuildRequires:  perl
 BuildRequires:  perl(Module/Build.pm)
-BuildRequires:  perl(File/Spec.pm)
-BuildRequires:  perl(Benchmark.pm)
-BuildRequires:  perl(Math/Complex.pm)
+BuildRequires:  perl(strict.pm)
+BuildRequires:  perl(warnings.pm)
+# Run-time:
+BuildRequires:  perl(Carp.pm)
 BuildRequires:  perl(Data/Dumper.pm)
-BuildRequires:  perl(Test/Simple.pm)
+BuildRequires:  perl(Exporter.pm)
+BuildRequires:  perl(overload.pm)
+BuildRequires:  perl(Scalar/Util.pm)
+BuildRequires:  perl(vars.pm)
+# Tests:
+BuildRequires:  perl(base.pm)
+BuildRequires:  perl(Benchmark.pm)
+BuildRequires:  perl(File/Spec.pm)
+BuildRequires:  perl(File/Spec/Functions.pm)
+BuildRequires:  perl(lib.pm)
+BuildRequires:  perl(Math/Complex.pm)
 BuildRequires:  perl(Test/More.pm)
 BuildRequires:  perl(Test/Most.pm)
-Requires:       perl(Exporter.pm)
+BuildRequires:  perl(Test/Simple.pm)
+Requires:       perl(overload.pm)
 Source44: import.info
 
 %description
@@ -41,12 +53,11 @@ does what you would like it to do.
 %setup -q -n Math-MatrixReal-%{version}
 
 %build
-%{__perl} Build.PL --install_path bindoc=%_man1dir installdirs=vendor
+perl Build.PL --install_path bindoc=%_man1dir installdirs=vendor
 ./Build
 
 %install
 ./Build install destdir=%{buildroot} create_packlist=0
-find %{buildroot} -depth -type d -exec rmdir {} 2>/dev/null \;
 # %{_fixperms} %{buildroot}/*
 
 %check
@@ -57,6 +68,9 @@ find %{buildroot} -depth -type d -exec rmdir {} 2>/dev/null \;
 %{perl_vendor_privlib}/*
 
 %changelog
+* Fri Nov 29 2013 Igor Vlasenko <viy@altlinux.ru> 2.10-alt1_1
+- update to new release by fcimport
+
 * Thu Nov 21 2013 Igor Vlasenko <viy@altlinux.ru> 2.10-alt1
 - automated CPAN update
 
