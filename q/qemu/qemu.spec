@@ -52,6 +52,7 @@
 %def_enable gtk
 %def_enable tpm
 %def_enable libssh2
+%def_enable vhdx
 %def_enable rdma
 
 %define audio_drv_list %{?_enable_oss:oss} %{?_enable_alsa:alsa} %{?_enable_sdl:sdl} %{?_enable_esound:esd} %{?_enable_pulseaudio:pa}
@@ -141,7 +142,7 @@
 # }}}
 
 Name: qemu
-Version: 1.6.1
+Version: 1.7.0
 Release: alt1
 
 Summary: QEMU CPU Emulator
@@ -165,6 +166,7 @@ BuildRequires: texinfo perl-podlators libattr-devel libcap-devel libcap-ng-devel
 BuildRequires: zlib-devel libcurl-devel libpci-devel glibc-kernheaders
 BuildRequires: ipxe-roms-qemu >= 1.0.0-alt3.git55201e2 seavgabios seabios >= 1.7.3-alt2 libfdt-devel
 BuildRequires: libpixman-devel >= 0.18.4
+BuildRequires: iasl
 %{?_enable_sdl:BuildRequires: libSDL-devel libX11-devel }
 %{?_enable_curses:BuildRequires: libncurses-devel}
 %{?_enable_bluez:BuildRequires: libbluez-devel}
@@ -402,7 +404,6 @@ sed -i '/cpu_model =/ s,arm926,any,' linux-user/main.c
 	--disable-sparse \
 	--disable-strip \
 	--audio-drv-list="%audio_drv_list" \
-	--enable-mixemu \
 	--disable-xen \
 	--disable-brlapi \
 	--enable-curl \
@@ -417,6 +418,7 @@ sed -i '/cpu_model =/ s,arm926,any,' linux-user/main.c
 	%{subst_enable glx} \
 	%{subst_enable libiscsi} \
 	%{subst_enable libssh2} \
+	%{subst_enable vhdx} \
 	%{subst_enable rdma} \
 	%{?_disable_guest_agent:--disable-guest-agent} \
 	%{subst_enable tools} \
@@ -573,6 +575,9 @@ fi
 %_bindir/vscclient
 
 %changelog
+* Thu Nov 28 2013 Alexey Shabalin <shaba@altlinux.ru> 1.7.0-alt1
+- 1.7.0
+
 * Fri Oct 11 2013 Alexey Shabalin <shaba@altlinux.ru> 1.6.1-alt1
 - 1.6.1 (fixed CVE-2013-4344)
 - drop qemu-kvm service
