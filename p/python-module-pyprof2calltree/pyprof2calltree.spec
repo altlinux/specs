@@ -1,7 +1,7 @@
 %define oname pyprof2calltree
 Name: python-module-%oname
-Version: 1.1.0
-Release: alt1.1
+Version: 1.3.1
+Release: alt1
 Summary: Help visualize profiling data from cProfile with kcachegrind
 License: BSD
 Group: Development/Python
@@ -40,6 +40,9 @@ kdesdk package.
 %python_sitelibdir/*
 
 %changelog
+* Fri Nov 29 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.1-alt1
+- Version 1.3.1
+
 * Thu Oct 20 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 1.1.0-alt1.1
 - Rebuild with Python-2.7
 
