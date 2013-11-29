@@ -1,5 +1,5 @@
 Name: installer
-Version: 1.8.19
+Version: 1.8.20
 Release: alt1
 
 Summary: Installer common parts
@@ -105,6 +105,9 @@ This package contains common installer stage3 files and dependencies.
 %_datadir/install2/preinstall.d/30-setup-network.sh
 
 %changelog
+* Fri Nov 29 2013 Mikhail Efremov <sem@altlinux.org> 1.8.20-alt1
+- Fix 10-xorg.sh preinstall script.
+
 * Wed Sep 25 2013 Michael Shigorin <mike@altlinux.org> 1.8.19-alt1
 - Fix initinstall scripts (the noise was annoying enough already).
 
