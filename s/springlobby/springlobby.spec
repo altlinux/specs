@@ -6,10 +6,10 @@ BuildRequires: gcc-c++ libSDL_sound-devel libgcrypt-devel libgnutls-devel libgpg
 # those are from static libUtil, in main binary
 %set_verify_elf_method unresolved=relaxed
 BuildRequires: boost-devel boost-filesystem-devel boost-signals-devel libpng-devel
-%define fedora 19
+%define fedora 20
 Name:			springlobby
 Version:		0.169
-Release:		alt1_5
+Release:		alt1_7
 Summary:		A lobby client for the spring RTS game engine
 
 Group:			Games/Other
@@ -17,7 +17,6 @@ Group:			Games/Other
 License:		GPLv2
 URL:			http://springlobby.info
 Source0:		http://www.springlobby.info/tarballs/springlobby-%{version}.tar.bz2
-#Patch0:			springlobby-gtkfix.patch
 
 BuildRequires: ctest cmake
 BuildRequires:	wxGTK-devel libtorrent-rasterbar-devel
@@ -25,15 +24,15 @@ BuildRequires:	libSDL-devel SDL_sound-devel libSDL_mixer-devel
 BuildRequires:	desktop-file-utils gettext
 BuildRequires:	libopenal-devel libcurl-devel
 BuildRequires:	libalure-devel
+BuildRequires:	libfluidsynth-devel
+BuildRequires:	dumb-devel
 
 # There are other "lobbies" for spring, make a virtual-provides
 Provides:		spring-lobby = %{version}-%{release}
 
 Requires:		icon-theme-hicolor
-# Springlobby is completely useless without the spring package
 Requires:		springrts
-# Spring does not build on PPC, exclude it here too
-ExcludeArch:	ppc ppc64
+ExclusiveArch:	x86_64 i386
 Source44: import.info
 Patch33: springlobby-0.169-alt-linkage.patch
 
@@ -90,6 +89,9 @@ desktop-file-install	\
 %{_datadir}/icons/hicolor/scalable/apps/*.svg
 
 %changelog
+* Fri Nov 29 2013 Igor Vlasenko <viy@altlinux.ru> 0.169-alt1_7
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.169-alt1_5
 - update to new release by fcimport
 
