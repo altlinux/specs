@@ -1,5 +1,5 @@
 Name: hwdatabase
-Version: 0.3.31
+Version: 0.3.32
 Release: alt1
 Summary: Hardware list for the detections tools
 Summary(ru_RU.UTF-8): База данных оборудования для утилит определения
@@ -32,6 +32,9 @@ table to get hardware autodetection.
 %_datadir/pci.ids
 
 %changelog
+* Fri Nov 29 2013 Alexey Shabalin <shaba@altlinux.ru> 0.3.32-alt1
+- update pnp.ids from http://git.fedorahosted.org/git/hwdata.git
+
 * Tue May 10 2011 Alexey Shabalin <shaba@altlinux.ru> 0.3.31-alt1
 - add pnp.ids from http://git.fedorahosted.org/git/hwdata.git
 - delete old pnp.ids from pcmcia-cs
