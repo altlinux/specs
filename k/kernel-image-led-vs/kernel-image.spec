@@ -25,7 +25,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.10.20
-Release: alt7
+Release: alt8
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -1838,6 +1838,10 @@ done)
 
 
 %changelog
+* Thu Nov 28 2013 Led <led@altlinux.ru> 3.10.20-alt8
+- DEFAULT_YEAH=y (ws)
+- DEFAULT_TCP_CONG="yeah" (ws)
+
 * Thu Nov 28 2013 Led <led@altlinux.ru> 3.10.20-alt7
 - KEYBOARD_ATKBD=m
 - disabled USB_MOUSE
