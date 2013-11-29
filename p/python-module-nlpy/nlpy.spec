@@ -1,14 +1,15 @@
 %define oname nlpy
 Name: python-module-%oname
-Version: 20090325
-Release: alt7
+Epoch: 1
+Version: 0.2.0
+Release: alt1.git20110908
 Summary: Python package for numerical optimization
 License: LGPL v2.1 or later
 Group: Development/Python
 Url: http://nlpy.sourceforge.net/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-# https://nlpy.svn.sourceforge.net/svnroot/nlpy
+# git://git.code.sf.net/p/nlpy/git
 Source: %oname-%version.tar.gz
 Source1: makedefs-path
 
@@ -51,8 +52,8 @@ Thuente linesearch ensuring satisfaction of the strong Wolfe conditions.
 %package -n libmcsrch-devel
 Summary: Shared library of Jorge Nocedal's safeguarded modification of CSRCH
 Group: System/Libraries
-Requires: libmcsrch = %version-%release
-Requires: %name = %version-%release
+Requires: libmcsrch = %EVR
+Requires: %name = %EVR
 
 %description -n libmcsrch-devel
 MCSRCH is Jorge Nocedal's safeguarded modification of the More and
@@ -109,6 +110,9 @@ popd
 %_libdir/*.so
 
 %changelog
+* Fri Nov 29 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:0.2.0-alt1.git20110908
+- Version 0.2.0
+
 * Sun Aug 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 20090325-alt7
 - Built with OpenBLAS instead of GotoBLAS2
 
