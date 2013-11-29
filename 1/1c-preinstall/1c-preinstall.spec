@@ -1,6 +1,6 @@
 Name:    1c-preinstall
 Version: 8.3
-Release: alt6
+Release: alt7
 
 Summary: Set correct environment for 1C:Enterprise client
 License: GPL
@@ -26,25 +26,30 @@ Tested with 1C:Enterprise client version 8.3.3.641
 %package full
 Summary:  Set correct environment for 1C:Enterprise client with Microsoft (tm) fonts
 Group:    System/Libraries
+BuildArch: noarch
 Requires: %name
 Requires: fonts-ttf-ms
 
 %description full
 This metapackage is intend to deploy correct environment for
-1C:Enterprise client installation. This package also install 
-Microsoft (tm) fonts are needed by 1C:Enterprise client.
+1C:Enterprise client installation. This package also install
+Microsoft (tm) fonts are needed by 1C:Enterprise client and haspd
+for HASP key support.
 
 %install
 mkdir -p %buildroot%_libdir
 cp -a %_libdir/libMagickWand-*.so.1.* %buildroot%_libdir/
 ln -rs %buildroot%_libdir/libMagickWand-*.so.1.* \
        %buildroot%_libdir/libWand.so.1
+ln -rs %buildroot%_libdir/libMagickWand-*.so.1.* \
+       %buildroot%_libdir/libWand.so
 install -m 0755 -D %SOURCE1 %buildroot%_x11sysconfdir/profile.d/xdg-current-desktop.sh
 mkdir -p %buildroot%_datadir/fonts/ttf/ms
 ln -rs %buildroot%_datadir/fonts/ttf/ms %buildroot%_datadir/fonts/msttcorefonts
 
 %files
 %_libdir/libWand.so.1
+%_libdir/libWand.so
 %exclude %_libdir/libMagickWand*
 %_x11sysconfdir/profile.d/*.sh
 
@@ -53,6 +58,9 @@ ln -rs %buildroot%_datadir/fonts/ttf/ms %buildroot%_datadir/fonts/msttcorefonts
 %exclude %_datadir/fonts/ttf/ms
 
 %changelog
+* Fri Nov 29 2013 Andrey Cherepanov <cas@altlinux.org> 8.3-alt7
+- New version of 1C:Enterprise wants libWand.so
+
 * Fri Nov 08 2013 Andrey Cherepanov <cas@altlinux.org> 8.3-alt6
 - Make system Microsoft TTF fonts available for 1C client (ALT #29560)
 
