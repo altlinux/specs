@@ -16,7 +16,7 @@ BuildRequires: chrpath
 
 Name:		libhocr
 Version:	0.10.17
-Release:	alt2_15
+Release:	alt2_16
 Summary:	A Hebrew optical character recognition library
 
 Group:		System/Libraries
@@ -28,6 +28,9 @@ Patch0:		libhocr-missing-incl.patch
 # Fix fedora bugs #574259, #577657, #574631
 # Sent upstream (private mail, the project has no mailing list)
 Patch1:		libhocr-no-scanner.patch
+# On Fedora-20: packages compiled with '-Werror=format-security' by default.
+# Upstream isn't responsive for years, so we maintain our own patches.
+Patch2:		format-security.patch
 
 BuildRequires:	libfftw3-devel libhspell-devel libtiffxx-devel libtiff-devel
 BuildRequires:	desktop-file-utils
@@ -82,6 +85,7 @@ The %{name}-python package contains python binding for %{name}.
 %setup -q
 %patch0
 %patch1
+%patch2
 
 # Fix #925761 -- update configure for aarm64
 autoreconf --install --force
@@ -170,6 +174,9 @@ done
 
 
 %changelog
+* Fri Nov 29 2013 Igor Vlasenko <viy@altlinux.ru> 0.10.17-alt2_16
+- update to new release by fcimport
+
 * Wed Jul 31 2013 Igor Vlasenko <viy@altlinux.ru> 0.10.17-alt2_15
 - update to new release by fcimport
 
