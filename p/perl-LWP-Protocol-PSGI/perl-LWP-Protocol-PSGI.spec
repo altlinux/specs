@@ -7,7 +7,7 @@ BuildRequires: perl(LWP/Simple.pm) perl(LWP/UserAgent.pm) perl-Module-Build perl
 
 Name:       perl-%{upstream_name}
 Version:    %{upstream_version}
-Release:    alt2_1
+Release:    alt2_2
 
 Summary:    Override LWP's HTTP/HTTPS backend with your own PSGI applciation
 License:    GPL+ or Artistic
@@ -58,6 +58,9 @@ without modifying the calling code or its internals.
 
 
 %changelog
+* Fri Nov 29 2013 Igor Vlasenko <viy@altlinux.ru> 0.06-alt2_2
+- update by mgaimport
+
 * Wed Oct 16 2013 Igor Vlasenko <viy@altlinux.ru> 0.06-alt2_1
 - build for Sisyphus
 
