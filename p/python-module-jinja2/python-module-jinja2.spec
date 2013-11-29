@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 2.8
-Release: alt1.git20130807
+Release: alt2.git20130807
 
 Summary: The new and improved version of a small but fast template engine
 License: BSD
@@ -40,6 +40,7 @@ sandboxed environment.
 %package -n python3-module-%oname
 Summary: The new and improved version of a small but fast template engine (Python 3)
 Group: Development/Python3
+Requires: python3-module-%oname-tests = %version-%release
 
 %description -n python3-module-%oname
 Jinja2 is a template engine written in pure Python. It provides a Django
@@ -163,6 +164,9 @@ make test
 %endif
 
 %changelog
+* Fri Nov 29 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.8-alt2.git20130807
+- Added requirement on tests for python3-module-%oname
+
 * Tue Sep 17 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.8-alt1.git20130807
 - Version 2.8
 
