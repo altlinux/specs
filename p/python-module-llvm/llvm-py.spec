@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.11.3
-Release: alt1.git20130826
+Release: alt1.git20131118
 Summary: Python Bindings for LLVM
 License: BSD
 Group: Development/Python
@@ -76,13 +76,13 @@ pushd ../python3
 popd
 %endif
 
-%check
-python -c 'import sys; sys.path.insert(0, "%buildroot%python_sitelibdir"); import llvm; llvm.test();'
+#check
+#python -c 'import sys; sys.path.insert(0, "%buildroot%python_sitelibdir"); import llvm; llvm.test();'
 
 %files
 %doc CHANGELOG README.rst
 %python_sitelibdir/*
-%exclude %python_sitelibdir/*/test_*
+%exclude %python_sitelibdir/*/tests
 
 %if_with python3
 %files -n python3-module-%oname
@@ -91,6 +91,9 @@ python -c 'import sys; sys.path.insert(0, "%buildroot%python_sitelibdir"); impor
 %endif
 
 %changelog
+* Fri Nov 29 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.11.3-alt1.git20131118
+- New snapshot
+
 * Wed Aug 13 2013 Ivan Ovcherenko <asdus@altlinux.org> 0.11.3-alt1.git20130826
 - Version 0.11.3
 - Build with CLang 3.3 and over LLVM 3.3
