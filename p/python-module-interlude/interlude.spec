@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.1.1
-Release: alt2.1
+Version: 1.2
+Release: alt1
 Summary: Interlude for Doctests provides an Interactive Console
 License: LGPL
 Group: Development/Python
@@ -74,6 +74,9 @@ popd
 %endif
 
 %changelog
+* Fri Nov 29 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2-alt1
+- Version 1.2
+
 * Fri Mar 22 2013 Aleksey Avdeev <solo@altlinux.ru> 1.1.1-alt2.1
 - Rebuild with Python-3.3
 
