@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.4.0
-Release: alt1.alpha0.hg20130417
+Version: 0.9.0
+Release: alt1.hg20131128
 Summary: Websocket handler for the gevent pywsgi server, a Python network library
 License: BSD
 Group: Development/Python
@@ -66,16 +66,19 @@ popd
 %endif
 
 %files
-%doc LICENSE README.rst AUTHORS CHANGELOG
+%doc LICENSE README.rst AUTHORS
 %python_sitelibdir/*
 
 %if_with python3
 %files -n python3-module-%oname
-%doc LICENSE README.rst AUTHORS CHANGELOG
+%doc LICENSE README.rst AUTHORS
 %python3_sitelibdir/*
 %endif
 
 %changelog
+* Fri Nov 29 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.0-alt1.hg20131128
+- Version 0.9.0
+
 * Tue Sep 17 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.0-alt1.alpha0.hg20130417
 - Version 0.4.0-alpha0
 
