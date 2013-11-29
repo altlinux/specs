@@ -1,6 +1,6 @@
 %define oname pyramid_rpc
 Name: python-module-%oname
-Version: 0.5.1
+Version: 0.5.2
 Release: alt1
 Summary: RPC support for the Pyramid web framework
 License: BSD
@@ -48,6 +48,9 @@ This package contains tests for pyramid_rpc.
 %python_sitelibdir/*/tests
 
 %changelog
+* Fri Nov 29 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.2-alt1
+- Version 0.5.2
+
 * Tue Apr 02 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.1-alt1
 - Version 0.5.1
 
