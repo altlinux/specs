@@ -1,12 +1,12 @@
 %define policy_name altlinux
-%define date 20131128
+%define date 20131129
 %define seconf %_sysconfdir/selinux/config
 %define default_mode permissive
 
 Summary: SELinux %policy_name policy
 Name: selinux-policy-altlinux
 Version: 0.0.3
-Release: alt4
+Release: alt5
 License: %distributable
 Group: System/Base
 Source: %name-%date.tar
@@ -256,6 +256,9 @@ exit 0 # End of %%preun section
 %ghost %policy_conf/modules/active/modules/xorg.pp
 
 %changelog
+* Fri Nov 29 2013 Andriy Stepanov <stanv@altlinux.ru> 0.0.3-alt5
+- Build: 20131129
+
 * Thu Nov 28 2013 Andriy Stepanov <stanv@altlinux.ru> 0.0.3-alt4
 - Build: 20131128
 
