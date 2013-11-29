@@ -1,7 +1,7 @@
 %define oname pycmd
 Name: python-module-%oname
 Version: 1.0.a2dev1
-Release: alt1.hg20121007
+Release: alt1.hg20130918
 Summary: Command line tools for helping with Python development
 License: MIT
 Group: Development/Python
@@ -36,6 +36,9 @@ Collection of command line tools for dealing with python files
 %python_sitelibdir/*
 
 %changelog
+* Fri Nov 29 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.a2dev1-alt1.hg20130918
+- New snapshot
+
 * Tue Apr 02 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.a2dev1-alt1.hg20121007
 - Version 1.0.a2dev1
 
