@@ -24,13 +24,13 @@
 %define flavour %base_flavour-%sub_flavour
 
 Name: kernel-image-%flavour
-Version: 3.10.20
-Release: alt11
+Version: 3.10.21
+Release: alt1
 
 %define kernel_req %nil
 %define kernel_prov %nil
 %define kernel_branch 3.10
-%define kernel_stable_version 20
+%define kernel_stable_version 21
 %define kernel_extra_version .%kernel_stable_version
 #define kernel_extra_version %nil
 
@@ -1782,6 +1782,20 @@ done)
 
 
 %changelog
+* Sat Nov 30 2013 Led <led@altlinux.ru> 3.10.21-alt1
+- 3.10.21
+- removed:
+  + fix-kernel-trace--trace_event_perf
+- updated:
+  + fix-kernel
+  + fix-tools--perf
+  + feat-kernel-vserver
+- added:
+  + fix-drivers-net-wireless--vt6656
+  + fix-fs-devpts
+  + fix-kernel-time
+  + fix-mm--zsmalloc
+
 * Fri Nov 29 2013 Led <led@altlinux.ru> 3.10.20-alt11
 - updated:
   + fix-drivers-usb-core
