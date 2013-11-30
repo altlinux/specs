@@ -25,7 +25,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.10.20
-Release: alt8
+Release: alt10
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -480,50 +480,17 @@ This package contains Video graphics modules for the Linux kernel package
 %endif
 
 
-%if_enabled irda
-%package -n kernel-modules-irda-%flavour
-Summary: Linux IrDA (TM) protocols and device drivers modules
-%kernel_modules_package_std_body irda
+%package -n kernel-modules-input-extra-%flavour
+Summary: Linux extra input drivers modules
+%kernel_modules_package_std_body input-extra
+%{?_enable_joystick:%kernel_modules_package_add_provides joystick}
+%{?_enable_joystick:%kernel_modules_package_add_provides gamepad}
+%{?_enable_tablet:%kernel_modules_package_add_provides tablet}
+%{?_enable_touchscreen:%kernel_modules_package_add_provides touchscreen}
 
-%description -n kernel-modules-irda-%flavour
-This package contains IrDA (TM) protocols and device drivers modules for
-the Linux kernel package %name-%version-%release.
-%endif
-
-
-%if_enabled joystick
-%package -n kernel-modules-joystick-%flavour
-Summary: Linux joystick/gamepad driver modules
-%kernel_modules_package_std_body joystick
-%kernel_modules_package_add_provides gamepad
-
-%description -n kernel-modules-joystick-%flavour
-This package contains Linux joystick, 6dof controller, gamepad,
-steering wheel, weapon control system or something like driver modules
-for the kernel package %name-%version-%release.
-%endif
-
-
-%if_enabled tablet
-%package -n kernel-modules-tablet-%flavour
-Summary: Linux tablets driver modules
-%kernel_modules_package_std_body tablet
-
-%description -n kernel-modules-tablet-%flavour
-This package contains Linux tablets driver modules for the kernel package
-%name-%version-%release.
-%endif
-
-
-%if_enabled touchscreen
-%package -n kernel-modules-touchscreen-%flavour
-Summary: Linux touchscreens driver modules
-%kernel_modules_package_std_body touchscreen
-
-%description -n kernel-modules-touchscreen-%flavour
-This package contains Linux touchscreens driver modules for the kernel
-package %name-%version-%release.
-%endif
+%description -n kernel-modules-input-extra-%flavour
+This package contains extra input drivers modules modules for the Linux
+kernel package %name-%version-%release.
 
 
 %if_enabled usb_gadget
@@ -535,31 +502,6 @@ Summary: Linux USB Gadget driver modules
 USB Gadget support on a system involves a peripheral controller,
 and the gadget driver using it.
 This package contains Linux USB Gadget driver modules for the kernel
-package %name-%version-%release.
-%endif
-
-
-%if_enabled atm
-%package -n kernel-modules-atm-%flavour
-Summary: Linux ATM driver modules
-%kernel_modules_package_std_body atm
-
-%description -n kernel-modules-atm-%flavour
-ATM is a high-speed networking technology for Local Area Networks and
-Wide Area Networks. It uses a fixed packet size and is connection
-oriented, allowing for the negotiation of minimum bandwidth requirements.
-This package contains ATM driver modules for the Linux kernel package
-%name-%version-%release.
-%endif
-
-
-%if_enabled hamradio
-%package -n kernel-modules-hamradio-%flavour
-Summary: Linux Amateur Radio driver modules
-%kernel_modules_package_std_body hamradio
-
-%description -n kernel-modules-hamradio-%flavour
-This package contains Amateur Radio driver modules for the Linux kernel
 package %name-%version-%release.
 %endif
 
@@ -600,6 +542,10 @@ Linux kernel package %name-%version-%release.
 %package -n kernel-modules-net-extra-%flavour
 Summary: Linux extra net drivers modules
 %kernel_modules_package_std_body net-extra
+%{?_enable_atm:%kernel_modules_package_add_provides atm}
+%{?_enable_hamradio:%kernel_modules_package_add_provides hamradio}
+%{?_enable_irda:%kernel_modules_package_add_provides irda}
+%{?_enable_isdn:%kernel_modules_package_add_provides isdn}
 
 %description -n kernel-modules-net-extra-%flavour
 This package contains extra net drivers modules modules for the Linux
@@ -673,25 +619,6 @@ Requires: kernel-modules-alsa-%flavour = %kversion-%release
 V4L kernel modules support for video capture and overlay devices,
 webcams and AM/FM radio cards.
 DVB kernel modules for DVB/ATSC device handling, software fallbacks etc.
-%endif
-
-
-%if_enabled isdn
-%package -n kernel-modules-isdn-%flavour
-Summary: The Integrated Services Digital Networks (ISDN) modules
-%kernel_modules_package_std_body isdn
-
-%description -n kernel-modules-isdn-%flavour
-ISDN ("Integrated Services Digital Networks", called RNIS in France) is
-a special type of fully digital telephone service; it's mostly used to
-connect to your Internet service provider (with SLIP or PPP). The main
-advantage is that the speed is higher than ordinary modem/telephone
-connections, and that you can have voice conversations while
-downloading stuff. It only works if your computer is equipped with an
-ISDN card and both you and your service provider purchased an ISDN line
-from the phone company. For details, read
-http://www.alumni.caltech.edu/~dank/isdn/ on the WWW.
-These are ISDN modules for your Linux system.
 %endif
 
 
@@ -1369,12 +1296,8 @@ gen_rpmmodlist %buildroot%modules_dir/kernel/drivers/{message/fusion,scsi{,/devi
 mv scsi-base.rpmmodlist scsi-base.rpmmodlist~
 gen_rpmmodfile infiniband %buildroot%modules_dir/kernel/{drivers/{infiniband,scsi/scsi_transport_srp.ko},net/{9p/9pnet_rdma.ko,rds,sunrpc/xprtrdma}}
 gen_rpmmodfile ipmi %buildroot%modules_dir/kernel/drivers/{acpi/acpi_ipmi,char/ipmi,{acpi/acpi_ipmi,hwmon/i{bm,pmi}*}.ko}
-%{?_enable_atm:gen_rpmmodfile atm %buildroot%modules_dir/kernel/{drivers{,/usb},net}/atm}
 %{?_enable_drm:gen_rpmmodfile drm %buildroot%modules_dir/kernel/drivers/gpu}
 %{?_enable_fddi:gen_rpmmodfile fddi %buildroot%modules_dir/kernel/{drivers/net,net/802}/fddi*}
-%{?_enable_hamradio:gen_rpmmodfile hamradio %buildroot%modules_dir/kernel/{drivers/net/hamradio,net/{netrom,rose,ax25}}}
-%{?_enable_irda:gen_rpmmodfile irda %buildroot%modules_dir/kernel/{,drivers/}net/irda}
-%{?_enable_isdn:gen_rpmmodfile isdn %buildroot%modules_dir/kernel/{drivers/isdn,net/bluetooth/cmtp}}
 %{?_enable_usb_gadget:gen_rpmmodlist %buildroot%modules_dir/kernel/drivers/usb/gadget/* | grep -xv '%modules_dir/kernel/drivers/usb/gadget/udc-core.ko' > usb-gadget.rpmmodlist}
 %{?_enable_watchdog:gen_rpmmodlist %buildroot%modules_dir/kernel/drivers/watchdog/* | grep -Ev '^%modules_dir/kernel/drivers/watchdog/(watch|soft)dog.ko$' > watchdog.rpmmodlist}
 %if_enabled video
@@ -1395,9 +1318,10 @@ gen_rpmmodlist %buildroot%modules_dir/kernel/drivers/hid/hid-picolcd.ko >> media
 for i in %{?_enable_edac:edac} %{?_enable_mtd:mtd}; do
 	gen_rpmmodfile $i %buildroot%modules_dir/kernel/drivers/$i
 done
-for i in %{?_enable_joystick:joystick} %{?_enable_tablet:tablet} %{?_enable_touchscreen:touchscreen}; do
-	gen_rpmmodfile $i %buildroot%modules_dir/kernel/drivers/input/$i
-done
+gen_rpmmodfile input-extra \
+	%{?_enable_joystick:%buildroot%modules_dir/kernel/drivers/input/joystick} \
+	%{?_enable_tablet:%buildroot%modules_dir/kernel/drivers/input/tablet} \
+	%{?_enable_touchscreen:%buildroot%modules_dir/kernel/drivers/input/touchscreen}
 %if "%sub_flavour" != "guest"
 %{?_enable_guest:gen_rpmmodfile guest %buildroot%modules_dir/kernel/{drivers/{virtio/virtio_{balloon,mmio,pci}.ko,{char{,/hw_random},net,block,scsi}/virtio*%{?_enable_drm:,gpu/drm/{cirrus,qxl,vmwgfx}}%{?_enable_hypervisor_guest:,misc/vmw_balloon.ko}%{?_enable_hyperv:,hv,input/serio/hyperv-*,hid/hid-hyperv.ko,net/hyperv,scsi/hv_storvsc.ko},platform/x86/pvpanic.ko},net/{9p/*_virtio.ko,vmw*}}}
 %{?_enable_drm:grep -F -f drm.rpmmodlist guest.rpmmodlist | sed 's/^/%%exclude &/' >> drm.rpmmodlist}
@@ -1435,25 +1359,15 @@ sed 's/^/%%exclude &/' *.rpmmodlist > exclude-drivers.rpmmodlist
 
 %{?_enable_video:%kernel_modules_package_post video}
 
-%{?_enable_irda:%kernel_modules_package_post irda}
-
-%{?_enable_joystick:%kernel_modules_package_post joystick}
-
-%{?_enable_tablet:%kernel_modules_package_post tablet}
-
-%{?_enable_touchscreen:%kernel_modules_package_post touchscreen}
-
 %{?_enable_usb_gadget:%kernel_modules_package_post usb-gadget}
-
-%{?_enable_atm:%kernel_modules_package_post atm}
-
-%{?_enable_hamradio:%kernel_modules_package_post hamradio}
 
 %{?_enable_watchdog:%kernel_modules_package_post watchdog}
 
 %{?_enable_mtd:%kernel_modules_package_post mtd}
 
 %kernel_modules_package_post fs-extra
+
+%kernel_modules_package_post input-extra
 
 %kernel_modules_package_post net-extra
 
@@ -1466,8 +1380,6 @@ sed 's/^/%%exclude &/' *.rpmmodlist > exclude-drivers.rpmmodlist
 %{?_enable_media:%kernel_modules_package_post media}
 
 %{?_enable_alsa:%kernel_modules_package_post sound}
-
-%{?_enable_isdn:%kernel_modules_package_post isdn}
 
 %if "%sub_flavour" != "guest"
 %{?_enable_guest:%kernel_modules_package_post guest}
@@ -1548,22 +1460,43 @@ done)
 %endif
 # extra net
 %exclude %modules_dir/kernel/net/802/p8023.ko
+%{?_enable_arcnet:%exclude %modules_dir/kernel/drivers/net/arcnet}
 %exclude %modules_dir/kernel/net/appletalk
 %exclude %modules_dir/kernel/drivers/net/appletalk
-%{?_enable_arcnet:%exclude %modules_dir/kernel/drivers/net/arcnet}
+%if_enabled atm
+%exclude %modules_dir/kernel/net/atm
+%exclude %modules_dir/kernel/drivers/atm
+%exclude %modules_dir/kernel/drivers/usb/atm
+%endif
 %{?_enable_can:%exclude %modules_dir/kernel/net/can}
 %{?_enable_can:%exclude %modules_dir/kernel/drivers/net/can}
 %exclude %modules_dir/kernel/net/batman-adv
 %{?_enable_caif:%exclude %modules_dir/kernel/net/caif}
 %{?_enable_caif:%exclude %modules_dir/kernel/drivers/net/caif}
+%if_enabled hamradio
+%exclude %modules_dir/kernel/net/ax25
+%exclude %modules_dir/kernel/net/netrom
+%exclude %modules_dir/kernel/net/rose
+%exclude %modules_dir/kernel/drivers/net/hamradio
+%endif
 %{?_enable_hippi:%exclude %modules_dir/kernel/drivers/net/hippi}
+%exclude %modules_dir/kernel/drivers/net/dsa
 %exclude %modules_dir/kernel/drivers/net/ieee802154
 %exclude %modules_dir/kernel/drivers/net/plip
 %exclude %modules_dir/kernel/drivers/net/slip/slip.ko
 %exclude %modules_dir/kernel/net/dccp
 %exclude %modules_dir/kernel/net/decnet
+%exclude %modules_dir/kernel/net/dsa
 %exclude %modules_dir/kernel/net/ieee802154
 %exclude %modules_dir/kernel/net/ipx
+%if_enabled irda
+%exclude %modules_dir/kernel/net/irda
+%exclude %modules_dir/kernel/drivers/net/irda
+%endif
+%if_enabled isdn
+%exclude %modules_dir/kernel/net/bluetooth/cmtp
+%exclude %modules_dir/kernel/drivers/isdn
+%endif
 %exclude %modules_dir/kernel/net/lapb
 %exclude %modules_dir/kernel/net/llc/llc2.ko
 %exclude %modules_dir/kernel/net/mac802154
@@ -1586,23 +1519,13 @@ done)
 
 %kernel_modules_package_files ipmi
 
+%kernel_modules_package_files input-extra
+
 %{?_enable_edac:%kernel_modules_package_files edac}
 
 %{?_enable_video:%kernel_modules_package_files video}
 
-%{?_enable_irda:%kernel_modules_package_files irda}
-
-%{?_enable_joystick:%kernel_modules_package_files joystick}
-
-%{?_enable_tablet:%kernel_modules_package_files tablet}
-
-%{?_enable_touchscreen:%kernel_modules_package_files touchscreen}
-
 %{?_enable_usb_gadget:%kernel_modules_package_files usb-gadget}
-
-%{?_enable_atm:%kernel_modules_package_files atm}
-
-%{?_enable_hamradio:%kernel_modules_package_files hamradio}
 
 %{?_enable_mtd:%kernel_modules_package_files mtd}
 
@@ -1639,29 +1562,52 @@ done)
 
 %files -n kernel-modules-net-extra-%flavour
 %modules_dir/kernel/net/802/p8023.ko
+%{?_enable_arcnet:%modules_dir/kernel/drivers/net/arcnet}
 %modules_dir/kernel/net/appletalk
 %modules_dir/kernel/drivers/net/appletalk
-%{?_enable_arcnet:%modules_dir/kernel/drivers/net/arcnet}
+%modules_dir/kernel/net/batman-adv
+%if_enabled atm
+%modules_dir/kernel/net/atm
+%modules_dir/kernel/drivers/atm
+%modules_dir/kernel/drivers/usb/atm
+%endif
+%if_enabled caif
+%modules_dir/kernel/net/caif
+%modules_dir/kernel/drivers/net/caif
+%endif
 %if_enabled can
 %modules_dir/kernel/net/can
 %modules_dir/kernel/drivers/net/can
 %endif
 %if_enabled fddi
-%modules_dir/kernel/drivers/net/fddi
 %modules_dir/kernel/net/802/fddi.ko
+%modules_dir/kernel/drivers/net/fddi
 %endif
-%modules_dir/kernel/net/batman-adv
-%{?_enable_caif:%modules_dir/kernel/net/caif}
-%{?_enable_caif:%modules_dir/kernel/drivers/net/caif}
+%if_enabled hamradio
+%modules_dir/kernel/net/ax25
+%modules_dir/kernel/net/netrom
+%modules_dir/kernel/net/rose
+%modules_dir/kernel/drivers/net/hamradio
+%endif
 %{?_enable_hippi:%modules_dir/kernel/drivers/net/hippi}
+%modules_dir/kernel/drivers/net/dsa
 %modules_dir/kernel/drivers/net/ieee802154
 %modules_dir/kernel/drivers/net/plip
 %modules_dir/kernel/drivers/net/slip/slip.ko
 #modules_dir/kernel/net/ceph
 %modules_dir/kernel/net/dccp
 %modules_dir/kernel/net/decnet
+%modules_dir/kernel/net/dsa
 %modules_dir/kernel/net/ieee802154
 %modules_dir/kernel/net/ipx
+%if_enabled irda
+%modules_dir/kernel/net/irda
+%modules_dir/kernel/drivers/net/irda
+%endif
+%if_enabled isdn
+%modules_dir/kernel/net/bluetooth/cmtp
+%modules_dir/kernel/drivers/isdn
+%endif
 %modules_dir/kernel/net/lapb
 %modules_dir/kernel/net/llc/llc2.ko
 %modules_dir/kernel/net/mac802154
@@ -1716,8 +1662,6 @@ done)
 %{?_enable_drm:%kernel_modules_package_files drm}
 
 %{?_enable_media:%kernel_modules_package_files media}
-
-%{?_enable_isdn:%kernel_modules_package_files isdn}
 
 
 %if_enabled oprofile
@@ -1838,6 +1782,17 @@ done)
 
 
 %changelog
+* Fri Nov 29 2013 Led <led@altlinux.ru> 3.10.20-alt10
+- added:
+  + fix-drivers-watchdog
+- moved content of kernel-modules-{atm,hamradio,irda,isdn}-* to
+  kernel-modules-net-extra-* subpackage
+- moved content of kernel-modules-{joystick,tablet,touchscreen}-* to
+  kernel-modules-input-extra-* subpackage
+
+* Fri Nov 29 2013 Led <led@altlinux.ru> 3.10.20-alt9
+- moved dsa net drivers to kernel-net-extra-* subpackage
+
 * Thu Nov 28 2013 Led <led@altlinux.ru> 3.10.20-alt8
 - DEFAULT_YEAH=y (ws)
 - DEFAULT_TCP_CONG="yeah" (ws)
