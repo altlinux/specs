@@ -1,5 +1,5 @@
 %define ejudge_user ejudge
-%def_enable  systemd
+# %def_enable  systemd
 %define ejudge_group judges
 %define ejudge_home /var/lib/ejudge
 %define cgi_bin_dir /var/www/cgi-bin
@@ -11,7 +11,7 @@
 
 Name: ejudge
 Version: 2.3.28
-Release: alt1
+Release: alt2
 
 
 Summary: Ejudge is a programming contest managment system
@@ -154,6 +154,9 @@ install -p -m644 -D %SOURCE8 %buildroot%{_tmpfilesdir}/%name.conf
 %doc ejudge-*.pdf
 
 %changelog
+* Sat Nov 30 2013 Denis Kirienko <dk@altlinux.org> 2.3.28-alt2
+- Version 2.3.28.1
+
 * Tue Nov 05 2013 Denis Kirienko <dk@altlinux.org> 2.3.28-alt1
 - Version 2.3.28 (SVN 7518)
 - Added systemd support
