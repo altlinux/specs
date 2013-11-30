@@ -1,6 +1,6 @@
 Name: crtools
 Version: 1.0
-Release: alt2
+Release: alt3
 Summary: Utility to checkpoint/restore tasks
 License: GPLv2
 Group: System/Configuration/Other
@@ -37,6 +37,9 @@ export CFLAGS="%optflags"
 
 
 %changelog
+* Sun Dec 01 2013 Led <led@altlinux.ru> 1.0-alt3
+- upstream fixes
+
 * Tue Nov 26 2013 Led <led@altlinux.ru> 1.0-alt2
 - added TTY_MAJOR to known tty char devices group
 
