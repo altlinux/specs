@@ -25,7 +25,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.10.21
-Release: alt1
+Release: alt2
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -148,8 +148,8 @@ Release: alt1
 #Extra_modules kvm 3.10.1
 #Extra_modules nvidia 319.32
 %Extra_modules fglrx 13.20.16
-%Extra_modules vboxhost 4.2.18
-%Extra_modules vboxguest 4.2.18
+%Extra_modules vboxhost 4.2.20
+%Extra_modules vboxguest 4.2.20
 %Extra_modules knem 1.1.0
 %Extra_modules exfat 1.2.6
 %Extra_modules ipt_NETFLOW 1.8.2
@@ -1782,6 +1782,14 @@ done)
 
 
 %changelog
+* Sat Nov 30 2013 Led <led@altlinux.ru> 3.10.21-alt2
+- updated:
+  + fix-drivers-scsi-qla2xxx--qla2xxx
+- vboxguest 4.2.20
+- vboxhost 4.2.20
+- DEFAULT_YEAH=y (vs)
+- DEFAULT_TCP_CONG="yeah" (vs)
+
 * Sat Nov 30 2013 Led <led@altlinux.ru> 3.10.21-alt1
 - 3.10.21
 - removed:
