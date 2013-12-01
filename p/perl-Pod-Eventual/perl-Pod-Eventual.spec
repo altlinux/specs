@@ -1,7 +1,7 @@
 ## SPEC file for Perl module Pod-Eventual
 
 Name: perl-Pod-Eventual
-Version: 0.093330
+Version: 0.094001
 Release: alt1
 
 Summary: Perl module to read a POD document
@@ -20,9 +20,9 @@ AutoReqProv: perl, yes
 BuildRequires(pre): rpm-build-licenses perl-devel
 
 
-# Automatically added by buildreq on Sat Jan 28 2012
+# Automatically added by buildreq on Sun Dec 01 2013
 # optimized out: perl-Data-OptList perl-IO-String perl-Params-Util perl-Sub-Exporter perl-Sub-Install perl-devel
-BuildRequires: perl-Mixin-Linewise perl-Test-Deep
+BuildRequires: perl-Encode perl-Mixin-Linewise perl-Test-Deep
 
 %description
 Perl module Pod::Eventual reads line-based input and produces
@@ -50,6 +50,9 @@ will be called, and will raise an exception.
 %perl_vendor_privlib/Pod/Eventual*
 
 %changelog
+* Sun Dec 01 2013 Nikolay A. Fetisov <naf@altlinux.ru> 0.094001-alt1
+- New version
+
 * Sat Jan 28 2012 Nikolay A. Fetisov <naf@altlinux.ru> 0.093330-alt1
 - Initial build for ALT Linux Sisyphus
 
