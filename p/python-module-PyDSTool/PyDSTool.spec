@@ -1,11 +1,11 @@
 %define oname PyDSTool
 Name: python-module-%oname
 Version: 0.88.121202
-Release: alt1.bzr20130716
+Release: alt2.bzr20130716
 Summary: Integrated simulation, modeling and analysis package for dynamical systems
 License: BSD
 Group: Development/Python
-Url: http://www.cam.cornell.edu/~rclewley/cgi-bin/moin.cgi/
+Url: http://www.ni.gsu.edu/~rclewley/PyDSTool/FrontPage.html
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # http://jay.cam.cornell.edu/svn/PyDSTool
@@ -33,10 +33,19 @@ rm -fR .gear
 install -p -m644 %SOURCE1 .
 popd
 
+# There is a file in the package named .DS_Store or .DS_Store.gz, 
+# the file name used by Mac OS X to store folder attributes.  
+# Such files are generally useless in packages and were usually accidentally 
+# included by copying complete directories from the source tarball.
+find $RPM_BUILD_ROOT \( -name '*.DS_Store' -o -name '*.DS_Store.gz' \) -print -delete
+
 %files
 %python_sitelibdir/*
 
 %changelog
+* Sun Dec 01 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.88.121202-alt2.bzr20130716
+- Applied repocop patch
+
 * Fri Nov 29 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.88.121202-alt1.bzr20130716
 - Version 0.88.121202
 
