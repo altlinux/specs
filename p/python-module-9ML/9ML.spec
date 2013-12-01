@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.1.0
-Release: alt1
+Release: alt2
 
 Summary: A tool for reading, writing and generally working with 9ML files
 License: BSD
@@ -49,6 +49,20 @@ provides a Python library for reading, writing, validating and
 manipulating NineML models.
 
 This package contains tests for NineML.
+
+%package examples
+Summary: Examples for NineML
+Group: Development/Documentation
+Requires: %name = %EVR
+
+%description examples
+NineML (http://nineml.incf.org) is a simulator independent language
+which aims to provide unambiguous descriptions of neuronal network
+models for efficient model sharing and reusability. This package
+provides a Python library for reading, writing, validating and
+manipulating NineML models.
+
+This package contains examples for NineML.
 
 %package pickles
 Summary: Pickles for NineML
@@ -147,9 +161,13 @@ cp -fR doc/python_nineml_api/build/pickle \
 %python_sitelibdir/*
 %exclude %python_sitelibdir/*/*/testing_utils
 %exclude %python_sitelibdir/*/pickle
+%exclude %python_sitelibdir/*/examples
 
 %files tests
 %python_sitelibdir/*/*/testing_utils
+
+%files examples
+%python_sitelibdir/*/examples
 
 %files pickles
 %python_sitelibdir/*/pickle
@@ -168,6 +186,9 @@ cp -fR doc/python_nineml_api/build/pickle \
 %endif
 
 %changelog
+* Sun Dec 01 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.0-alt2
+- Extracted examples as separate package
+
 * Fri Nov 29 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.0-alt1
 - Initial build for Sisyphus
 
