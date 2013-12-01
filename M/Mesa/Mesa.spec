@@ -3,7 +3,7 @@
 %def_enable wayland_egl
 
 Name: Mesa
-Version: 9.2.4
+Version: 10.0
 Release: alt1
 Epoch: 4
 License: MIT
@@ -257,7 +257,6 @@ ln -sf ../..%_sysconfdir/X11/%_lib/libGLESv2.so.2 %_libdir/
 %ghost %_sysconfdir/X11/%_lib/libGL.so.1
 %_libdir/libGL.so.*
 %_libdir/libglapi.so.*
-%_libdir/libdricore*.so.*
 %dir %_libdir/X11
 %_libdir/X11/libGL.so.*
 %dir %_libdir/X11/modules
@@ -274,7 +273,6 @@ ln -sf ../..%_sysconfdir/X11/%_lib/libGLESv2.so.2 %_libdir/
 %_includedir/GL/glxext.h
 %_libdir/libGL.so
 %_libdir/libglapi.so
-%_libdir/libdricore*.so
 %_pkgconfigdir/gl.pc
 %_pkgconfigdir/dri.pc
 
@@ -324,10 +322,6 @@ ln -sf ../..%_sysconfdir/X11/%_lib/libGLESv2.so.2 %_libdir/
 
 %files -n xorg-dri-swrast
 %_libdir/X11/modules/dri/swrast*_dri.so
-%ifarch %ix86 x86_64
-%_libdir/vdpau/libvdpau_softpipe.so*
-%_libdir/libXvMCsoftpipe.so.*
-%endif
 
 %ifarch ppc %ix86 x86_64
 %files -n xorg-dri-intel
@@ -357,6 +351,12 @@ ln -sf ../..%_sysconfdir/X11/%_lib/libGLESv2.so.2 %_libdir/
 %_bindir/glxgears
 
 %changelog
+* Sun Dec 01 2013 Valery Inozemtsev <shrek@altlinux.ru> 4:10.0-alt1
+- 10.0 release
+
+* Thu Nov 28 2013 Valery Inozemtsev <shrek@altlinux.ru> 4:10.0-alt0.rc2
+- 10.0 RC2
+
 * Thu Nov 28 2013 Valery Inozemtsev <shrek@altlinux.ru> 4:9.2.4-alt1
 - 9.2.4
 
