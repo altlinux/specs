@@ -1,7 +1,7 @@
 # SPEC file for rex package
 
 Name:    rex
-Version: 0.41.3
+Version: 0.43.7
 Release: alt1
 
 Summary: (R)?ex - Remote Execution Framework
@@ -22,9 +22,13 @@ BuildArch: noarch
 
 BuildRequires(pre): rpm-build-licenses
 
-# Automatically added by buildreq on Sun Aug 12 2012
-# optimized out: perl-Encode perl-HTTP-Date perl-IO-Stty perl-IO-Tty perl-Term-ANSIColor perl-XML-LibXML perl-XML-SAX perl-XML-SAX-Base perl-YAML
-BuildRequires: perl-DBI perl-DBM perl-Digest-HMAC perl-Expect perl-JSON-XS perl-Net-SSH2 perl-XML-Simple perl-devel perl-libwww
+# Automatically added by buildreq on Sun Dec 01 2013
+# optimized out: perl-Digest-SHA perl-Encode perl-Encode-Locale perl-HTTP-Date perl-HTTP-Message perl-IO-Stty perl-IO-Tty perl-Term-ANSIColor perl-Types-Serialiser perl-URI perl-YAML perl-common-sense perl-libwww
+BuildRequires: perl-DBI perl-Digest-HMAC perl-Expect perl-JSON-XS perl-Net-SSH2 perl-String-Escape perl-XML-Simple perl-devel perl-Net-SFTP-Foreign subversion wget
+BuildRequires: perl-libwww perl-Net-OpenSSH
+
+# Template files does't contains a proper Perl code
+%add_findreq_skiplist */Commands/templates/*
 
 %description
 (R)?ex is a tool to ease the execution of commands on multiple
@@ -58,6 +62,9 @@ and software deployment.
 
 
 %changelog
+* Sun Dec 01 2013 Nikolay A. Fetisov <naf@altlinux.ru> 0.43.7-alt1
+- New version
+
 * Sun May 19 2013 Nikolay A. Fetisov <naf@altlinux.ru> 0.41.3-alt1
 - New version
 
