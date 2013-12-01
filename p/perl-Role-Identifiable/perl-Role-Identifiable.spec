@@ -1,7 +1,7 @@
 ## SPEC file for Perl module Role-Identifiable
 
 Name: perl-Role-Identifiable
-Version: 0.006
+Version: 0.007
 Release: alt1
 
 Summary: Perl module to provide a thing with an ident attribute
@@ -44,6 +44,9 @@ exceptions.
 %perl_vendor_privlib/Role/Identifiable*
 
 %changelog
+* Sun Dec 01 2013 Nikolay A. Fetisov <naf@altlinux.ru> 0.007-alt1
+- New version
+
 * Sun Oct 06 2013 Nikolay A. Fetisov <naf@altlinux.ru> 0.006-alt1
 - New version (ATTENTION: not quite backward compatible)
 
