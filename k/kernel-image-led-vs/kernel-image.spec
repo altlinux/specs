@@ -25,7 +25,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.10.21
-Release: alt2
+Release: alt4
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -147,7 +147,7 @@ Release: alt2
 %Extra_modules zfs 0.6.2
 #Extra_modules kvm 3.10.1
 #Extra_modules nvidia 319.32
-%Extra_modules fglrx 13.20.16
+%Extra_modules fglrx 13.25.18
 %Extra_modules vboxhost 4.2.20
 %Extra_modules vboxguest 4.2.20
 %Extra_modules knem 1.1.0
@@ -1782,6 +1782,13 @@ done)
 
 
 %changelog
+* Sun Dec 01 2013 Led <led@altlinux.ru> 3.10.21-alt4
+- fglrx 13.25.18
+
+* Sun Dec 01 2013 Led <led@altlinux.ru> 3.10.21-alt3
+- added:
+  + fix-drivers-firewire--firewire_ohci
+
 * Sat Nov 30 2013 Led <led@altlinux.ru> 3.10.21-alt2
 - updated:
   + fix-drivers-scsi-qla2xxx--qla2xxx

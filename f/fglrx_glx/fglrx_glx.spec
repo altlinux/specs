@@ -1,4 +1,4 @@
-%define cat_ver 13.11-beta1
+%define cat_ver 13.11-betaV9.4
 
 %ifarch %ix86
 %define archdir arch/x86
@@ -18,8 +18,8 @@
 Name: %{bname}_glx
 %define ksname %bname
 Epoch: 1
-Version: 13.20.16
-Release: alt3
+Version: 13.25.18
+Release: alt1
 %define EVR %{?epoch:%epoch:}%version-%release
 Summary: ATI/AMD Proprietary Linux Display Driver
 Group: System/Kernel and hardware
@@ -34,7 +34,7 @@ Source11: atieventsd.init
 Source12: aticonfig.1
 Source13: %{bname}_create.xinf
 Source14: xinf2fdi
-Patch: %bname-%version-printk-loglevel.patch
+Patch: %bname-13.20.16-printk-loglevel.patch
 %{?epoch:Provides: %{bname}_glx = %version-%release}
 Provides: %bname = %EVR
 %{?epoch:Provides: %bname = %version-%release}
@@ -271,6 +271,9 @@ chrpath -d %buildroot{%_bindir/amdcccle,%_sbindir/amdnotifyui}
 
 
 %changelog
+* Sun Dec 01 2013 Led <led@altlinux.ru> 1:13.25.18-alt1
+- 13.25.18 (Catalyst 13.11-beta V9.4)
+
 * Tue Nov 05 2013 Led <led@altlinux.ru> 1:13.20.16-alt3
 - kernel module: fixed patch for new loglevel API
 

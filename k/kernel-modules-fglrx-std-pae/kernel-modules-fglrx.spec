@@ -1,5 +1,5 @@
 %define module_name	fglrx
-%define module_version	13.20.16
+%define module_version	13.25.18
 %define module_release alt1
 
 %define flavour std-pae
@@ -66,6 +66,9 @@ install -pD -m 0644 {%ksname-%module_version/2.6.x,%buildroot%module_dir}/%modul
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %EVR
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Sun Dec 01 2013 Led <led@altlinux.ru> 1:13.25.18-alt1
+- 13.25.18 (Catalyst 13.11 beta V9.4)
 
 * Thu Oct 10 2013 Led <led@altlinux.ru> 1:13.20.16-alt1
 - 13.20.16 (Catalyst 13.11 beta1)
