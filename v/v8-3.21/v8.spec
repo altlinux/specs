@@ -1,13 +1,13 @@
 %define MAJOR_VERSION     3
 %define MINOR_VERSION     21
 %define BUILD_NUMBER      18
-%define PATCH_LEVEL       2
+%define PATCH_LEVEL       9
 %define soversion %MAJOR_VERSION.%MINOR_VERSION
 %define libname libv8
 
 Name:    v8-%MAJOR_VERSION.%MINOR_VERSION
 Version: %MAJOR_VERSION.%MINOR_VERSION.%BUILD_NUMBER.%PATCH_LEVEL
-Release: alt1.1
+Release: alt1
 
 Summary: V8 is Google's open source JavaScript engine.
 License: BSD
@@ -82,6 +82,9 @@ install -p -m644 include/*.h %buildroot%_includedir/
 %_bindir/*
 
 %changelog
+* Sun Dec 01 2013 Dmitriy Kulik <lnkvisitor@altlinux.org> 3.21.18.9-alt1
+- new version
+
 * Tue Oct 01 2013 Dmitriy Kulik <lnkvisitor@altlinux.org> 3.21.18.2-alt1.1
 - fix arm build (sbolshakov@altlinux.ru)
 
