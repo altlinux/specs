@@ -3,7 +3,7 @@
 %define real_name Moose-Autobox
 
 Name: perl-Moose-Autobox
-Version: 0.13
+Version: 0.15
 Release: alt1
 
 Summary: Autoboxed wrappers for Native Perl datatypes
@@ -46,6 +46,9 @@ hierarchy of roles in a manner similar to what Perl 6 might do.
 %perl_vendor_privlib/Moose/Autobox*
 
 %changelog
+* Sun Dec 01 2013 Nikolay A. Fetisov <naf@altlinux.ru> 0.15-alt1
+- New version
+
 * Sun Oct 06 2013 Nikolay A. Fetisov <naf@altlinux.ru> 0.13-alt1
 - New version
 
