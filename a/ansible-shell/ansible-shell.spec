@@ -1,7 +1,7 @@
 Name: ansible-shell
 Summary: Interactive shell for ansible
 Version: 0.0.1
-Release: alt1
+Release: alt2
 
 Group: System/Libraries
 License: Distributable
@@ -28,5 +28,8 @@ Interactive shell for ansible built-in tab completion for all the modules.
 %doc README.md
 
 %changelog
+* Mon Dec  2 2013 Terechkov Evgenii <evg@altlinux.org> 0.0.1-alt2
+- git-20131202
+
 * Tue Oct  8 2013 Terechkov Evgenii <evg@altlinux.org> 0.0.1-alt1
 - Initial build for ALT Linux Sisyphus
