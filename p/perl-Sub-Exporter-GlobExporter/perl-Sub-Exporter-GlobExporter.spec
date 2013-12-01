@@ -1,7 +1,7 @@
 ## SPEC file for Perl module Sub::Exporter::GlobExporter
 
 Name: perl-Sub-Exporter-GlobExporter
-Version: 0.003
+Version: 0.004
 Release: alt1
 
 Summary: export shared globs with Sub::Exporter collectors  
@@ -41,6 +41,9 @@ shared globs with Sub::Exporter collectors.
 %perl_vendor_privlib/Sub/Exporter/GlobExporter*
 
 %changelog
+* Sun Dec 01 2013 Nikolay A. Fetisov <naf@altlinux.ru> 0.004-alt1
+- New version
+
 * Wed Jun 12 2013 Nikolay A. Fetisov <naf@altlinux.ru> 0.003-alt1
 - New version
 
