@@ -1,7 +1,6 @@
 Name: dynamips
-Version: 0.2.8
-%define extra_ver RC3
-Release: alt2%extra_ver
+Version: 0.2.10
+Release: alt1
 
 Summary: Cisco 7200 Simulator
 License: GPLv2
@@ -9,8 +8,7 @@ Group: Emulators
 
 Url: http://www.gns3.net/
 
-Source: %name-%version-RC3-community.tar.gz
-Patch1: %name-0.2.8-RC3-make.patch
+Source: %name-%version.tar
 
 BuildRequires: libelf-devel libpcap-devel libuuid-devel
 
@@ -33,18 +31,17 @@ The goals of this emulator are mainly:
     * Check quickly configurations to be deployed later on real routers.
 
 %prep
-%setup -q -n %name-%version-%extra_ver-community
-%patch1 -p1
+%setup
 
 %build
 %make
 
 %install
-%makeinstall_std
+%make install DESTDIR=%buildroot%prefix
 install -d %buildroot%_localstatedir/%name/{labs,images}
 
 %files
-%doc COPYING README* TODO stable/ChangeLog
+%doc COPYING README* TODO ChangeLog RELEASE-NOTES
 %_man1dir/*
 %_man7dir/hypervisor_mode.7*
 %_bindir/*
@@ -52,6 +49,9 @@ install -d %buildroot%_localstatedir/%name/{labs,images}
 %dir %_localstatedir/%name/labs
 
 %changelog
+* Sun Dec 01 2013 Slava Dubrovskiy <dubrsl@altlinux.org> 0.2.10-alt1
+- 0.2.10
+
 * Sun Sep 23 2012 Slava Dubrovskiy <dubrsl@altlinux.org> 0.2.8-alt2RC3
 - 0.2.8-RC3-community
 - Update patch and spec

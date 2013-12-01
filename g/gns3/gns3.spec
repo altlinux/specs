@@ -1,6 +1,6 @@
 %define orig_name GNS3
 Name: gns3
-Version: 0.8.3.1
+Version: 0.8.6
 Release: alt1
 
 Summary: GNS-3  is a graphical network simulator
@@ -11,10 +11,8 @@ Url: http://www.gns3.net/
 
 Packager: Ilya Mashkin <oddity@altlinux.ru>
 
-Source0: http://downloads.sourceforge.net/gns-3/%orig_name-%version-src.tar.bz2
-Source1: GNS3-icons.tar.gz
-Source2: gns3.desktop
-Source3: virtualbox.pth
+Source0: %name-%version.tar
+Patch: %name-%version-alt.patch
 
 BuildArch: noarch
 Requires: python-module-sip dynamips
@@ -58,69 +56,40 @@ Requires: qemu-system
 Qemu guest support for GNS3
 
 %prep
-%setup -n %orig_name-%version-src
+%setup
+%patch -p1
+
+subst 's|/usr/local/share|/usr/share|g' setup.py
 
 %build
-python setup.py build
+%python_build
 
 %install
 python setup.py install --root %buildroot
-python setup.py install -O1 --root %buildroot
-pushd %buildroot/%_bindir
-popd
 mkdir -p %buildroot/%_man1dir
 install -m 0644 docs/man/gns3.1 %buildroot/%_man1dir
 
 #desktop
 install -d %buildroot/%_desktopdir
-install -m 0644 %SOURCE2 %buildroot/%_desktopdir/%name.desktop
+install -m 0644 %name.desktop %buildroot/%_desktopdir/%name.desktop
 
 # icons
 install -d %buildroot/%_miconsdir
 install -d %buildroot/%_niconsdir
 install -d %buildroot/%_liconsdir
-tar xvzf %SOURCE1 -C %buildroot/%_iconsdir
-mv %buildroot/%_iconsdir/mini/*.xpm %buildroot/%_miconsdir
-rmdir %buildroot/%_iconsdir/mini
-mv %buildroot/%_iconsdir/*.xpm %buildroot/%_niconsdir
-mv %buildroot/%_iconsdir/large/*.xpm %buildroot/%_liconsdir
-rmdir %buildroot/%_iconsdir/large
+cp icons/mini/*.xpm %buildroot/%_miconsdir
+cp icons/*.xpm %buildroot/%_niconsdir
+cp icons/large/*.xpm %buildroot/%_liconsdir
 
 # virtualbox
 install -d %buildroot/%python_sitelibdir
-install -m 0644 %SOURCE3 %buildroot/%python_sitelibdir/virtualbox.pth
+install -m 0644 virtualbox.pth %buildroot/%python_sitelibdir/virtualbox.pth
 
 %files
-%doc baseconfig*txt AUTHORS CHANGELOG README TODO
+%doc baseconfig*txt AUTHORS CHANGELOG README TODO COPYING
+%dir %_datadir/gns3
 %_bindir/gns3*
-
-%dir %python_sitelibdir/GNS3
-%dir %python_sitelibdir/GNS3/Config
-%dir %python_sitelibdir/GNS3/Defaults
-%dir %python_sitelibdir/GNS3/Dynagen
-%dir %python_sitelibdir/GNS3/External
-%dir %python_sitelibdir/GNS3/Globals
-%dir %python_sitelibdir/GNS3/Langs
-%dir %python_sitelibdir/GNS3/Link
-%dir %python_sitelibdir/GNS3/Node
-%dir %python_sitelibdir/GNS3/Ui
-%dir %python_sitelibdir/GNS3/Ui/ConfigurationPages
-
-%python_sitelibdir/GNS3/*.py
-%python_sitelibdir/GNS3/*/*.py
-%python_sitelibdir/GNS3/*/*/*.py
-%python_sitelibdir/GNS3/*.pyc
-%python_sitelibdir/GNS3/*/*.pyc
-%python_sitelibdir/GNS3/*/*/*.pyc
-
-%python_sitelibdir/GNS3/Dynagen/configspec
-%python_sitelibdir/GNS3/Langs/*.qm
-%python_sitelibdir/GNS3-*.egg-info
-
-%ghost %python_sitelibdir/GNS3/*.pyo
-%ghost %python_sitelibdir/GNS3/*/*.pyo
-%ghost %python_sitelibdir/GNS3/*/*/*.pyo
-
+%python_sitelibdir/GNS3*
 %_man1dir/*
 %_desktopdir/%name.desktop
 %_miconsdir/*.xpm
@@ -131,14 +100,17 @@ install -m 0644 %SOURCE3 %buildroot/%python_sitelibdir/virtualbox.pth
 %python_sitelibdir/virtualbox.pth
 
 %files virtualbox
-/usr/lib/gns3/vboxcontroller_4_1.py
-/usr/lib/gns3/vboxwrapper.py
-/usr/lib/gns3/tcp_pipe_proxy.py
+%_datadir/gns3/vboxcontroller_4_1.py
+%_datadir/gns3/vboxwrapper.py
+%_datadir/gns3/tcp_pipe_proxy.py
 
 %files qemu
-/usr/lib/gns3/qemuwrapper.py
+%_datadir/gns3/qemuwrapper.py
 
 %changelog
+* Sun Dec 01 2013 Slava Dubrovskiy <dubrsl@altlinux.org> 0.8.6-alt1
+- 0.8.6
+
 * Sat Oct 27 2012 Terechkov Evgenii <evg@altlinux.org> 0.8.3.1-alt1
 - 0.8.3.1
 
