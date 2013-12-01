@@ -1,7 +1,7 @@
 ## SPEC file for Perl module String-Formatter
 
 Name: perl-String-Formatter
-Version: 0.102082
+Version: 0.102084
 Release: alt1
 
 Summary: Perl module to build sprintf-like functions of your own
@@ -50,6 +50,9 @@ options built into String::Formatter.
 %exclude %perl_vendor_privlib/String/bench.pl
 
 %changelog
+* Sun Dec 01 2013 Nikolay A. Fetisov <naf@altlinux.ru> 0.102084-alt1
+- New version
+
 * Sat Jan 28 2012 Nikolay A. Fetisov <naf@altlinux.ru> 0.102082-alt1
 - Initial build for ALT Linux Sisyphus
 
