@@ -1,7 +1,7 @@
 ## SPEC file for Perl module Software::License
 
 Name: perl-Software-License
-Version: 0.103005
+Version: 0.103008
 Release: alt1
 
 Summary: Perl module that provide templated software licenses
@@ -19,9 +19,9 @@ Source: %real_name-%version.tar
 AutoReqProv: perl, yes
 BuildRequires(pre): rpm-build-licenses perl-devel
 
-# Automatically added by buildreq on Sat Jan 28 2012
+# Automatically added by buildreq on Sun Dec 01 2013
 # optimized out: perl-Data-OptList perl-MRO-Compat perl-Params-Util perl-Sub-Exporter perl-Sub-Install
-BuildRequires: perl-Data-Section perl-Text-Template perl-devel
+BuildRequires: perl-Data-Section perl-Module-Load perl-Sub-Name perl-Text-Template perl-Try-Tiny perl-devel perl-parent
 
 %description
 Perl module Software::License provides templated software licenses.
@@ -40,6 +40,9 @@ Perl module Software::License provides templated software licenses.
 %perl_vendor_privlib/Software/License*
 
 %changelog
+* Sun Dec 01 2013 Nikolay A. Fetisov <naf@altlinux.ru> 0.103008-alt1
+- New version
+
 * Mon Jan 07 2013 Nikolay A. Fetisov <naf@altlinux.ru> 0.103005-alt1
 - New version
 
