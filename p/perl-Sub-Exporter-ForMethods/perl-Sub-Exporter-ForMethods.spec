@@ -1,7 +1,7 @@
 ## SPEC file for Perl module Sub-Exporter-ForMethods
 
 Name: perl-Sub-Exporter-ForMethods
-Version: 0.100050
+Version: 0.100051
 Release: alt1
 
 Summary: Perl module with helper routines for using Sub::Exporter
@@ -43,6 +43,9 @@ for using Sub::Exporter to build methods.
 %perl_vendor_privlib/Sub/Exporter/ForMethods*
 
 %changelog
+* Sun Dec 01 2013 Nikolay A. Fetisov <naf@altlinux.ru> 0.100051-alt1
+- New version
+
 * Sat Jan 28 2012 Nikolay A. Fetisov <naf@altlinux.ru> 0.100050-alt1
 - Initial build for ALT Linux Sisyphus
 
