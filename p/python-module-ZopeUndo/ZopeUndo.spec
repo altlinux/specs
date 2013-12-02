@@ -1,7 +1,7 @@
 %define oname ZopeUndo
 Name: python-module-%oname
-Version: 2.12.0
-Release: alt1.1
+Version: 4.0
+Release: alt1
 Summary: ZODB undo support for Zope2
 License: ZPLv2.1
 Group: Development/Python
@@ -44,7 +44,7 @@ This package contains tests for ZopeUndo.
 %python_install
 
 %files
-%doc *.txt
+%doc *.txt *.rst
 %python_sitelibdir/*
 %exclude %python_sitelibdir/*/tests
 
@@ -52,6 +52,9 @@ This package contains tests for ZopeUndo.
 %python_sitelibdir/*/tests
 
 %changelog
+* Mon Dec 02 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0-alt1
+- Version 4.0
+
 * Thu Oct 20 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 2.12.0-alt1.1
 - Rebuild with Python-2.7
 
