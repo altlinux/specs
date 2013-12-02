@@ -1,7 +1,7 @@
 %define distro centaurus
 Name: installer-distro-%distro
 Version: 7.0
-Release: alt4
+Release: alt5
 
 Summary: Installer files for Centaurus distro 
 License: GPL
@@ -67,6 +67,10 @@ cp -a * %buildroot%install2dir/
 %files stage3
 
 %changelog
+* Sun Dec 01 2013 Andrey Cherepanov <cas@altlinux.org> 7.0-alt5
+- Move rare modules to expert list, hide unusable modules trust
+  and moodle-install
+
 * Wed Sep 11 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 7.0-alt4
 - postfix enabled in systemd
 
