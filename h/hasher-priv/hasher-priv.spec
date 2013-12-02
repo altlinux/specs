@@ -1,5 +1,5 @@
 Name: hasher-priv
-Version: 1.4.0
+Version: 1.5.0
 Release: alt1
 
 Summary: A privileged helper for the hasher project
@@ -59,6 +59,13 @@ groupadd -r -f hashman
 %doc DESIGN
 
 %changelog
+* Mon Dec 02 2013 Dmitry V. Levin <ldv@altlinux.org> 1.5.0-alt1
+- Made X11 forwarding work with network isolation enabled.
+- Allowed mount points to be owned by the first pseudouser
+  when mount namespace isolation is enabled.
+- Hardened default mount options for builtin mount points.
+- Fixed purging IPC objects created by the first pseudouser.
+
 * Tue Oct 16 2012 Dmitry V. Levin <ldv@altlinux.org> 1.4.0-alt1
 - Implemented mount namespace isolation.
 
