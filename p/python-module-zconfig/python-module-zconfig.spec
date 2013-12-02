@@ -4,7 +4,7 @@
 
 Name: python-module-%modulename
 Version: 3.0.4
-Release: alt2.git20130313
+Release: alt2.git20131015
 
 Summary: Python configuration module from Zope
 License: ZPL
@@ -157,6 +157,9 @@ popd
 %endif
 
 %changelog
+* Mon Dec 02 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0.4-alt2.git20131015
+- New snapshot
+
 * Mon Apr 15 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0.4-alt2.git20130313
 - Use 'find... -exec...' instead of 'for ... $(find...'
 
