@@ -1,7 +1,7 @@
 %define oname z3c.pt
 Name: python-module-%oname
 Version: 3.0.0
-Release: alt1.a1
+Release: alt1.a2.dev0.git20130313
 Summary: Python template compiler which supports ZPT
 License: ZPLv2.1
 Group: Development/Python
@@ -145,6 +145,9 @@ cp -fR docs/.build/pickle %buildroot%python_sitelibdir/%oname/
 %doc docs/.build/html/*
 
 %changelog
+* Mon Dec 02 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0.0-alt1.a2.dev0.git20130313
+- Version 3.0.0a2.dev0
+
 * Sat Mar 02 2013 Aleksey Avdeev <solo@altlinux.ru> 3.0.0-alt1.a1
 - Version 3.0.0a1
 
