@@ -1,10 +1,12 @@
 %define iname guile
 %define sversion 1.8
 
+%set_automake_version 1.11
+
 Summary: A GNU implementation of Scheme for application extensibility
 Name: %{iname}18
 Version: %sversion.7
-Release: alt2.4
+Release: alt2.5
 Serial: 1
 Url: http://www.gnu.org/software/guile/
 
@@ -124,6 +126,9 @@ make check
 %_libdir/lib*.a
 
 %changelog
+* Mon Dec 02 2013 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:1.8.7-alt2.5
+- Fix BFS (use old automake 1.11).
+
 * Thu Aug 30 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:1.8.7-alt2.4
 - Rebuilt with gmp 5.0.5
 
