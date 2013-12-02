@@ -3,8 +3,8 @@
 
 %define oname Vol
 Name: Coin%oname
-Version: 1.3.3
-Release: alt2.svn20130130
+Version: 1.4.3
+Release: alt1.svn20131122
 Summary: COIN-OR Volume Algorithm
 License: CPL v1.0
 Group: Sciences/Mathematics
@@ -133,6 +133,9 @@ rm -fR %buildroot%_docdir/coin \
 %doc %oname/examples/*
 
 %changelog
+* Mon Dec 02 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4.3-alt1.svn20131122
+- Version 1.4.3
+
 * Tue Feb 12 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.3-alt2.svn20130130
 - New snapshot
 
