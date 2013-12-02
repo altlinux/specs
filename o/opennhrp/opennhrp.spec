@@ -1,10 +1,10 @@
 Name: opennhrp
-Version: 0.13.1
+Version: 0.14.1
 Release: alt1
 Summary: NBMA Next Hop Resolution Protocol
 Source: %name-%version.tar
 Group: Networking/Other
-License: GPL
+License: MIT
 
 Source1: opennhrp.init
 
@@ -56,6 +56,10 @@ install -m755 -D %SOURCE1 %buildroot%_initdir/opennhrp
 %_man8dir/*
 
 %changelog
+* Mon Dec 02 2013 Afanasov Dmitry <ender@altlinux.org> 0.14.1-alt1
+- new version
+- change license
+
 * Fri Aug 10 2012 Afanasov Dmitry <ender@altlinux.org> 0.13.1-alt1
 - first build
 
