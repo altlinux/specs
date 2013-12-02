@@ -1,5 +1,5 @@
 Name: installer
-Version: 1.8.20
+Version: 1.8.21
 Release: alt1
 
 Summary: Installer common parts
@@ -105,6 +105,9 @@ This package contains common installer stage3 files and dependencies.
 %_datadir/install2/preinstall.d/30-setup-network.sh
 
 %changelog
+* Mon Dec 02 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1.8.21-alt1
+- set fallback lang to en_US from POSIX
+
 * Fri Nov 29 2013 Mikhail Efremov <sem@altlinux.org> 1.8.20-alt1
 - Fix 10-xorg.sh preinstall script.
 
