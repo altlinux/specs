@@ -25,7 +25,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.10.21
-Release: alt4
+Release: alt5
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -1782,6 +1782,11 @@ done)
 
 
 %changelog
+* Mon Dec 02 2013 Led <led@altlinux.ru> 3.10.21-alt5
+- updated:
+  + fix-drivers-firewire--firewire_ohci
+  + feat-kernel-vserver
+
 * Sun Dec 01 2013 Led <led@altlinux.ru> 3.10.21-alt4
 - fglrx 13.25.18
 
