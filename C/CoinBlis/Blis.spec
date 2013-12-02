@@ -3,8 +3,9 @@
 
 %define oname Blis
 Name: Coin%oname
-Version: 1.0.0
-Release: alt1.svn20130628
+Epoch: 1
+Version: 0.93.5
+Release: alt1.svn20131121
 Summary: BiCePS Linear Integer Solver
 License: CPL v1.0
 Group: Sciences/Mathematics
@@ -19,7 +20,7 @@ BuildPreReq: libCoinUtils-devel libCoinClp-devel libCoinCgl-devel
 BuildPreReq: libCoinOsi-devel libCoinAlps-devel libCoinBcps-devel
 BuildPreReq: liblapack-devel %mpiimpl-devel chrpath
 
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 %description
 BLIS (BiCePS Linear Integer Solver) is an application developed on top
@@ -40,7 +41,7 @@ This package contains shared libraries of BiCePS Linear Integer Solver.
 %package -n lib%name-devel
 Summary: Development files of BiCePS Linear Integer Solver
 Group: Development/C++
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 %description -n lib%name-devel
 BLIS (BiCePS Linear Integer Solver) is an application developed on top
@@ -125,6 +126,9 @@ done
 %doc %oname/examples/*
 
 %changelog
+* Mon Dec 02 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:0.93.5-alt1.svn20131121
+- Version 0.93.5
+
 * Tue Sep 10 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.0-alt1.svn20130628
 - Version 1.0.0
 

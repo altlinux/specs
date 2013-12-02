@@ -3,8 +3,8 @@
 
 %define oname Bcp
 Name: Coin%oname
-Version: 1.3.4
-Release: alt2.svn20130101
+Version: 1.3.7
+Release: alt1.svn20131124
 Summary: COIN-OR Branch-Cut-Price Framework
 License: CPL v1.0
 Group: Sciences/Mathematics
@@ -109,6 +109,9 @@ rm -fR %buildroot%_docdir/coin
 %doc %oname/examples
 
 %changelog
+* Mon Dec 02 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.7-alt1.svn20131124
+- Version 1.3.7
+
 * Tue Feb 12 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.4-alt2.svn20130101
 - New snapshot
 
