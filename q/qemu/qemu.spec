@@ -143,7 +143,7 @@
 
 Name: qemu
 Version: 1.7.0
-Release: alt1
+Release: alt2
 
 Summary: QEMU CPU Emulator
 License: GPL/LGPL/BSD
@@ -501,10 +501,6 @@ fi
 
 %post common
 %post_control -s vmusers kvm
-%post_service %name-kvm
-
-%preun common
-%preun_service %name-kvm
 
 %files
 
@@ -575,6 +571,9 @@ fi
 %_bindir/vscclient
 
 %changelog
+* Mon Dec 02 2013 Alexey Shabalin <shaba@altlinux.ru> 1.7.0-alt2
+- fixed %%post and %%preun common package
+
 * Thu Nov 28 2013 Alexey Shabalin <shaba@altlinux.ru> 1.7.0-alt1
 - 1.7.0
 
