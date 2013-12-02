@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 2.4.1
-Release: alt1
+Version: 2.6.0
+Release: alt1.hg20131128
 Summary: Fast pure-Python indexing and search library
 
 Group: Development/Python
@@ -14,11 +14,11 @@ URL: https://bitbucket.org/mchaput/whoosh/wiki/Home
 Source: %oname-%version.tar
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-BuildPreReq: python-module-distribute python-devel
+BuildPreReq: python-module-setuptools-tests python-devel
 BuildPreReq: python-module-sphinx-devel
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-distribute
+BuildRequires: python3-devel python3-module-setuptools-tests
 %endif
 BuildArch: noarch
 
@@ -131,11 +131,11 @@ cp -fR pickle %buildroot%python_sitelibdir/%oname/
 %doc *.txt
 %python_sitelibdir/*
 %exclude %python_sitelibdir/%oname/pickle
-%exclude %python_sitelibdir/%oname/support/testing.py*
+%exclude %python_sitelibdir/%oname/util/testing.py*
 
 %files tests
 %doc tests
-%python_sitelibdir/%oname/support/testing.py*
+%python_sitelibdir/%oname/util/testing.py*
 
 %files docs
 %doc html/*
@@ -147,14 +147,17 @@ cp -fR pickle %buildroot%python_sitelibdir/%oname/
 %files -n python3-module-%oname
 %doc *.txt
 %python3_sitelibdir/*
-%exclude %python3_sitelibdir/%oname/support/testing.py*
+%exclude %python3_sitelibdir/%oname/util/testing.py*
 
 %files -n python3-module-%oname-tests
 %doc tests
-%python3_sitelibdir/%oname/support/testing.py*
+%python3_sitelibdir/%oname/util/testing.py*
 %endif
 
 %changelog
+* Mon Dec 02 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.6.0-alt1.hg20131128
+- Version 2.6.0
+
 * Mon Feb 18 2013 Aleksey Avdeev <solo@altlinux.ru> 2.4.1-alt1
 - Version 2.4.1
 
