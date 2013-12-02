@@ -1,7 +1,7 @@
 %define oname zope.formlib
 Name: python-module-%oname
 Version: 4.3.0
-Release: alt1.a1
+Release: alt1.a2
 Summary: Form generation and validation library for Zope
 License: ZPLv2.1
 Group: Development/Python
@@ -60,6 +60,9 @@ mv %buildroot%python_sitelibdir_noarch/* \
 %python_sitelibdir/*/*/tests
 
 %changelog
+* Mon Dec 02 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.3.0-alt1.a2
+- Version 4.3.0a2
+
 * Tue Apr 09 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.3.0-alt1.a1
 - Version 4.3.0a1
 
