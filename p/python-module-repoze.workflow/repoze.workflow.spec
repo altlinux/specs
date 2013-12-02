@@ -1,7 +1,7 @@
 %define oname repoze.workflow
 Name: python-module-%oname
 Version: 0.7
-Release: alt1.git20130110
+Release: alt1.git20130926
 Summary: Declarative state machine for content-lifecycle workflows
 License: BSD
 Group: Development/Python
@@ -57,6 +57,9 @@ mv %buildroot%python_sitelibdir_noarch/* \
 %python_sitelibdir/*/*/test*
 
 %changelog
+* Mon Dec 02 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7-alt1.git20130926
+- New snapshot
+
 * Thu Apr 04 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7-alt1.git20130110
 - Version 0.7
 
