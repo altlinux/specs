@@ -1,7 +1,7 @@
 %define oname routes
 Name: python-module-%oname
-Version: 1.13
-Release: alt1.git20030523
+Version: 2.0
+Release: alt1.git20131120
 Summary: Routing Recognition and Generation Tools
 License: BSD
 Group: Development/Python
@@ -63,6 +63,9 @@ cp -fR docs/_build/html/* %buildroot%_docdir/%name/
 %_docdir/%name
 
 %changelog
+* Mon Dec 02 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0-alt1.git20131120
+- Version 2.0
+
 * Thu Sep 19 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.13-alt1.git20030523
 - Version 1.13
 
