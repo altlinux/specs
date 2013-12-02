@@ -1,6 +1,6 @@
 %define oname z3c.jsonrpc
 Name: python-module-%oname
-Version: 0.7.1
+Version: 0.7.2
 Release: alt1
 Summary: JSON RPC server and client implementation for Zope3
 License: ZPLv2.1
@@ -58,6 +58,9 @@ mv %buildroot%python_sitelibdir_noarch/* \
 %python_sitelibdir/*/*/test*
 
 %changelog
+* Mon Dec 02 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7.2-alt1
+- Version 0.7.2
+
 * Fri Apr 05 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7.1-alt1
 - Version 0.7.1
 
