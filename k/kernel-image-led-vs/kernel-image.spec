@@ -25,7 +25,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.10.21
-Release: alt5
+Release: alt6
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -1782,6 +1782,14 @@ done)
 
 
 %changelog
+* Mon Dec 02 2013 Led <led@altlinux.ru> 3.10.21-alt6
+- updated:
+  + fix-drivers-gpu-drm--nouveau
+  + fix-drivers-gpu-drm--radeon
+  + fix-drivers-gpu-drm--ttm
+  + fix-drivers-usb-core
+  + fix-drivers-usb-host--xhci-hcd
+
 * Mon Dec 02 2013 Led <led@altlinux.ru> 3.10.21-alt5
 - updated:
   + fix-drivers-firewire--firewire_ohci
