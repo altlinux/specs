@@ -1,7 +1,7 @@
 %define oname repoze.sendmail
 Name: python-module-%oname
 Version: 4.1
-Release: alt1.git20130722
+Release: alt1.git20131127
 Summary: Send e-mails transactionally (originally cloned from zope.sendmail)
 License: Repoze Public License
 Group: Development/Python
@@ -135,6 +135,9 @@ cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
 %doc docs/_build/html/*
 
 %changelog
+* Mon Dec 02 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.1-alt1.git20131127
+- New snapshot
+
 * Mon Sep 23 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.1-alt1.git20130722
 - Version 4.1
 
