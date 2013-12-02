@@ -3,7 +3,7 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.2.0
+Version: 1.4.1
 Release: alt1
 Summary: Python 2 and 3 compatibility utilities
 License: MIT
@@ -75,6 +75,9 @@ popd
 %endif
 
 %changelog
+* Mon Dec 02 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4.1-alt1
+- Version 1.4.1
+
 * Wed Mar 06 2013 Aleksey Avdeev <solo@altlinux.ru> 1.2.0-alt1
 - Version 1.2.0
 
