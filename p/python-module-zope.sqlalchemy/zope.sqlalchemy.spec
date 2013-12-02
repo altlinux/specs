@@ -1,6 +1,6 @@
 %define oname zope.sqlalchemy
 Name: python-module-%oname
-Version: 0.7.2
+Version: 0.7.3
 Release: alt1
 Summary: Minimal Zope/SQLAlchemy transaction integration
 License: ZPLv2.1
@@ -65,6 +65,9 @@ mv %buildroot%python_sitelibdir_noarch/* \
 %python_sitelibdir/*/*/tests.*
 
 %changelog
+* Mon Dec 02 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7.3-alt1
+- Version 0.7.3
+
 * Wed Apr 10 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7.2-alt1
 - Version 0.7.2
 
