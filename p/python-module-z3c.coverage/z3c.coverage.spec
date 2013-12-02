@@ -1,6 +1,6 @@
 %define oname z3c.coverage
 Name: python-module-%oname
-Version: 2.0.0
+Version: 2.0.2
 Release: alt1
 Summary: A script to visualize coverage reports via HTML
 License: ZPL
@@ -52,7 +52,7 @@ mv %buildroot%python_sitelibdir_noarch/* \
 %endif
 
 %files
-%doc *.txt
+%doc *.rst
 %_bindir/*
 %python_sitelibdir/*
 %exclude %python_sitelibdir/*.pth
@@ -62,6 +62,9 @@ mv %buildroot%python_sitelibdir_noarch/* \
 %python_sitelibdir/*/*/tests.*
 
 %changelog
+* Mon Dec 02 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.2-alt1
+- Version 2.0.2
+
 * Thu Apr 04 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.0-alt1
 - Version 2.0.0
 
