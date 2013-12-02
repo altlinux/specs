@@ -2,8 +2,8 @@
 %define mpidir %_libdir/%mpiimpl
 
 Name: CoinUtils
-Version: 2.9.4
-Release: alt1.svn20130909
+Version: 2.9.10
+Release: alt1.svn20131125
 Summary: Open-source collection of classes and functions for COIN-OR project
 License: CPL v1.0
 Group: Sciences/Mathematics
@@ -125,6 +125,12 @@ rm -fR %buildroot%_datadir/coin/doc \
 %doc %name/doxydoc/doxydoc/html/*
 
 %changelog
+* Mon Dec 02 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.9.10-alt1.svn20131125
+- Version 2.9.10
+
+* Wed Sep 11 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.9.4-alt2.svn20130909
+- Rebuilt with glpk 4.52
+
 * Tue Sep 10 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.9.4-alt1.svn20130909
 - Version 2.9.4
 
