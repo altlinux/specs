@@ -1,6 +1,6 @@
 %define oname rpy2
 Name: python-module-%oname
-Version: 2.3.7
+Version: 2.3.8
 Release: alt1
 Summary: A simple and efficient access to R from Python, version 2
 License: MPL/GPL/LGPL
@@ -139,6 +139,9 @@ EOF
 #_docdir/%oname
 
 %changelog
+* Mon Dec 02 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.3.8-alt1
+- Version 2.3.8
+
 * Thu Sep 19 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.3.7-alt1
 - Version 2.3.7
 
