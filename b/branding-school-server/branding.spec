@@ -11,7 +11,7 @@
 
 Name: branding-%brand-%theme
 Version: 6.9.9 
-Release: alt1
+Release: alt2
 BuildArch: noarch
 
 BuildRequires: cpio gfxboot >= 4 fonts-ttf-dejavu fonts-ttf-droid
@@ -499,6 +499,11 @@ subst 's/#theme-name=/theme-name=Clearlooks-Phenix/' /etc/lightdm/lightdm-gtk-gr
 %config %_localstatedir/ldm/.pam_environment
 
 %changelog
+* Mon Dec 02 2013 Andrey Cherepanov <cas@altlinux.org> 6.9.9-alt2
+- Fix selection color and note font in GRUB theme
+- Set more bright color for bootloader
+- Disable border around section and nice yellow captions for installer
+
 * Tue Sep 10 2013 Andrey Cherepanov <cas@altlinux.org> 6.9.9-alt1
 - Update branding for Seven platform
 
