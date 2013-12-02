@@ -1,6 +1,7 @@
+%define _unpackaged_files_terminate_build 1
 %define dist Test-Class
 Name: perl-%dist
-Version: 0.40
+Version: 0.41
 Release: alt1
 
 Summary: Easily create test classes in an xUnit/JUnit style
@@ -32,6 +33,9 @@ to test your code in an xUnit style.
 %perl_vendor_privlib/Test*
 
 %changelog
+* Mon Dec 02 2013 Igor Vlasenko <viy@altlinux.ru> 0.41-alt1
+- automated CPAN update
+
 * Wed Nov 06 2013 Igor Vlasenko <viy@altlinux.ru> 0.40-alt1
 - automated CPAN update
 
