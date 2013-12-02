@@ -1,7 +1,8 @@
 %define oname zope.publisher
 Name: python-module-%oname
-Version: 4.0.0
-Release: alt1.a4
+Epoch: 1
+Version: 3.13.4
+Release: alt1
 Summary: The Zope publisher publishes Python objects on the web
 License: Boost Software License, Version 1.0
 Group: Development/Python
@@ -26,7 +27,7 @@ The behaviour of the publisher is geared towards WSGI compatibility.
 %package tests
 Summary: Tests for zope.publisher
 Group: Development/Python
-Requires: %name = %version-%release
+Requires: %name = %EVR
 %py_requires zope.testing
 
 %description tests
@@ -63,6 +64,9 @@ mv %buildroot%python_sitelibdir_noarch/* \
 %python_sitelibdir/*/*/test*
 
 %changelog
+* Mon Dec 02 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:3.13.4-alt1
+- Version 3.13.4
+
 * Wed Apr 10 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.0-alt1.a4
 - Version 4.0.0a4
 
