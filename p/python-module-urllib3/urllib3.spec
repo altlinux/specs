@@ -1,7 +1,7 @@
 %define oname urllib3
 
 Name: python-module-%oname
-Version: 20130915
+Version: 20131126
 Release: alt1
 
 Summary: Library with thread-safe connection pooling, file post support, sanity friendly etc
@@ -92,6 +92,9 @@ cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
 %doc docs/_build/html/*
 
 %changelog
+* Mon Dec 02 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 20131126-alt1
+- New snapshot
+
 * Thu Sep 19 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 20130915-alt1
 - New snapshot
 
