@@ -1,6 +1,6 @@
 %define oname z3c.currency
 Name: python-module-%oname
-Version: 1.0.0
+Version: 1.1.0
 Release: alt1
 Summary: A currency field and support for ``z3c.form``.
 License: ZPLv2.1
@@ -55,6 +55,9 @@ mv %buildroot%python_sitelibdir_noarch/* \
 %python_sitelibdir/*/*/tests.*
 
 %changelog
+* Mon Dec 02 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.0-alt1
+- Version 1.1.0
+
 * Tue Sep 24 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.0-alt1
 - Version 1.0.0
 
