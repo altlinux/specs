@@ -1,8 +1,9 @@
+%define _unpackaged_files_terminate_build 1
 %define module_name Net-DNS-SEC
 
 Name: perl-%module_name
-Version: 0.16
-Release: alt1.1
+Version: 0.17
+Release: alt1
 
 Packager: Victor Forsiuk <force@altlinux.org>
 
@@ -11,7 +12,7 @@ License: Perl
 Group: Development/Perl
 
 Url: %CPAN %module_name
-Source: http://search.cpan.org/CPAN/authors/id/O/OL/OLAF/Net-DNS-SEC-%version.tar.gz
+Source: http://www.cpan.org/authors/id/N/NL/NLNETLABS/Net-DNS-SEC-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -36,6 +37,9 @@ DNSSEC extensions to Net::DNS.
 %perl_vendor_privlib/Net/DNS
 
 %changelog
+* Mon Dec 02 2013 Igor Vlasenko <viy@altlinux.ru> 0.17-alt1
+- automated CPAN update
+
 * Mon Nov 22 2010 Igor Vlasenko <viy@altlinux.ru> 0.16-alt1.1
 - repair after perl 5.12 upgrade using girar-nmu
 
