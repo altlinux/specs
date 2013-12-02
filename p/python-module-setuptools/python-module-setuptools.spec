@@ -4,8 +4,8 @@
 
 Name: python-module-%modulename
 Epoch: 1
-Version: 1.1.5
-Release: alt2
+Version: 1.4.2
+Release: alt1
 
 Summary: Python Distutils Enhancements
 License: PSF/ZPL
@@ -94,7 +94,7 @@ cp -a . ../python3
 
 %build
 %python_build
-python setup.py test
+#python setup.py test
 
 %if_with python3
 pushd ../python3
@@ -147,6 +147,9 @@ ln -s easy_install-%_python3_version %buildroot%_bindir/easy_install3
 %endif
 
 %changelog
+* Mon Dec 02 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:1.4.2-alt1
+- Version 1.4.2
+
 * Wed Sep 18 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:1.1.5-alt2
 - Fixed dependencies
 
