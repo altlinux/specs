@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 2.0
-Release: alt1
+Version: 2.0.11
+Release: alt1.dev0.git20131122
 Summary: Helper to test WSGI applications
 License: MIT
 Group: Development/Python
@@ -85,6 +85,9 @@ popd
 %endif
 
 %changelog
+* Mon Dec 02 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.11-alt1.dev0.git20131122
+- Version 2.0.11.dev0
+
 * Sun Mar 03 2013 Aleksey Avdeev <solo@altlinux.ru> 2.0-alt1
 - Version 2.0
 
