@@ -1,6 +1,6 @@
 %define oname z3c.recipe.i18n
 Name: python-module-%oname
-Version: 0.8.1
+Version: 0.9.0
 Release: alt1
 Summary: Zope3 egg based i18n locales extration recipes
 License: ZPLv2.1
@@ -60,6 +60,9 @@ mv %buildroot%python_sitelibdir_noarch/* \
 %python_sitelibdir/*/*/*/test*
 
 %changelog
+* Mon Dec 02 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.0-alt1
+- Version 0.9.0
+
 * Fri Apr 05 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.1-alt1
 - Version 0.8.1
 
