@@ -3,7 +3,7 @@
 %def_without python3
 
 Name: python-module-%oname
-Version: 0.3.4
+Version: 0.3.6
 Release: alt1
 
 Summary: distutils/packaging-related utilities used by some of STScI's packages
@@ -178,6 +178,9 @@ popd
 %endif
 
 %changelog
+* Mon Dec 02 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.6-alt1
+- Version 0.3.6
+
 * Wed Nov 06 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.4-alt1
 - Initial build for Sisyphus
 
