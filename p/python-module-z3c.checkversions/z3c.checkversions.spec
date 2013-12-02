@@ -1,7 +1,7 @@
 %define oname z3c.checkversions
 Name: python-module-%oname
-Version: 0.4.1
-Release: alt2.1
+Version: 0.4.2
+Release: alt1
 Summary: Find newer package versions on PyPI
 License: ZPLv2.1
 Group: Development/Python
@@ -46,7 +46,7 @@ mv %buildroot%python_sitelibdir_noarch/* \
 %endif
 
 %files
-%doc *.txt
+%doc *.rst
 %_bindir/*
 %python_sitelibdir/*
 %exclude %python_sitelibdir/*.pth
@@ -56,6 +56,9 @@ mv %buildroot%python_sitelibdir_noarch/* \
 %python_sitelibdir/*/*/test*
 
 %changelog
+* Mon Dec 02 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.2-alt1
+- Version 0.4.2
+
 * Thu Oct 20 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 0.4.1-alt2.1
 - Rebuild with Python-2.7
 
