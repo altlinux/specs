@@ -1,7 +1,7 @@
 %define oname sphinxjp.themes.basicstrap
 
 Name: python-module-%oname
-Version: 0.3.0
+Version: 0.3.1
 Release: alt1
 Summary: A sphinx theme for Basicstrap style
 License: MIT
@@ -55,6 +55,9 @@ export PYTHONPATH=%buildroot%python_sitelibdir
 %python_sitelibdir/sphinxjp/themes/__init__.py*
 
 %changelog
+* Mon Dec 02 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.1-alt1
+- Version 0.3.1
+
 * Wed Sep 18 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.0-alt1
 - Initial build for Sisyphus
 
