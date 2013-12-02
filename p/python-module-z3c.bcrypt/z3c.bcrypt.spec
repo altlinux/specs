@@ -1,7 +1,7 @@
 %define oname z3c.bcrypt
 Name: python-module-%oname
-Version: 1.1
-Release: alt2.1
+Version: 1.2
+Release: alt1
 Summary: Password manager utility using bcrypt or pbkdf2 encoding. Useful with zope.password
 License: ZPLv2.1
 Group: Development/Python
@@ -63,6 +63,9 @@ mv %buildroot%python_sitelibdir_noarch/* \
 %python_sitelibdir/*/*/tests.*
 
 %changelog
+* Mon Dec 02 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2-alt1
+- Version 1.2
+
 * Thu Oct 20 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 1.1-alt2.1
 - Rebuild with Python-2.7
 
