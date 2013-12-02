@@ -1,5 +1,5 @@
 Name: bootloader-utils
-Version: 0.4.22
+Version: 0.4.23.1
 Release: alt1
 
 Summary: Bootloader utilities
@@ -12,6 +12,10 @@ Source: %name-%version-%release.tar
 PreReq: getopt, make-initrd >= 0.4.3-alt2
 Conflicts: grub2 < 1.98-alt13
 Conflicts: lilo < 22.7.3-alt7
+
+%ifarch %arm
+PreReq: uboot-tools >= 2013.07
+%endif
 
 # Automatically added by buildreq on Thu Feb 22 2007
 BuildRequires: perl-devel
@@ -79,8 +83,15 @@ mv $f.install $f
 %_rpmlibdir/*.filetrigger
 
 %changelog
+* Fri Nov 22 2013 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.4.23.1-alt1
+- installkernel: use trap for temp files (tnx ldv@).
+- UBOOT_INITRD_LOAD_ADDRESS is optional.
+
+* Wed Nov 20 2013 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.4.23-alt1
+- installkernel: append dtb to multiplatform kernels.
+
 * Tue Jul 09 2013 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.4.22-alt1
-- add support of uboot
+- Add support of uboot.
 
 * Sun Apr 07 2013 Dmitry V. Levin <ldv@altlinux.org> 0.4.21-alt1
 - kernel.filetrigger: fixed handling of uninstalled kernels
