@@ -2,7 +2,7 @@
 
 Name: python-module-%oname
 Version: 0.6.0
-Release: alt1.rc3
+Release: alt1.rc5
 Summary: Optimizing compiler for evaluating mathematical expressions on CPUs and GPUs
 License: BSD
 Group: Development/Python
@@ -15,7 +15,7 @@ BuildArch: noarch
 BuildRequires(pre): rpm-build-python
 BuildPreReq: libnumpy-devel
 
-%add_python_req_skip lazylinker_ext pycuda scan_perform
+%add_python_req_skip lazylinker_ext pycuda scan_perform gnumpy pygpu
 
 %description
 Theano is a Python library that allows you to define, optimize, and
@@ -90,6 +90,9 @@ This package contains documentation for Theano.
 %doc doc/*
 
 %changelog
+* Mon Dec 02 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.0-alt1.rc5
+- Version 0.6.0rc5
+
 * Wed Mar 06 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.0-alt1.rc3
 - Initial build for Sisyphus
 
