@@ -1,3 +1,4 @@
+%set_automake_version 1.11
 %def_without milter
 
 %def_with ownconfdir
@@ -12,7 +13,7 @@
 
 Name: clamav
 Version: 0.98
-Release: alt1
+Release: alt2
 
 Packager: Victor Forsiuk <force@altlinux.org>
 
@@ -47,6 +48,8 @@ Source23: virusstat.cron.example
 
 Patch1: clamav-config.patch
 Patch2: freshclam-config.patch
+
+Patch10: clamav-0.98-alt-arm.patch
 
 Patch20: clamav-0.97.2-libs.private.patch
 
@@ -124,6 +127,8 @@ database automatically. It uses the freshclam(1) utility for this task.
 %setup %{?snap: -n clamav-devel-%snap} %{?rctag: -n clamav-%{version}%{rctag}}
 %patch1 -p1
 %patch2 -p1
+
+%patch10 -p1
 
 %patch20 -p1
 
@@ -302,6 +307,10 @@ subst s/^[0-9]*/$RNDM/ %_sysconfdir/cron.d/freshclam
 %endif
 
 %changelog
+* Mon Dec 02 2013 Sergey Y. Afonin <asy@altlinux.ru> 0.98-alt2
+- fixed build on ARM (thanks to sbolshakov@altlinux)
+- set automake 1.11 for build
+
 * Sun Sep 29 2013 Sergey Y. Afonin <asy@altlinux.ru> 0.98-alt1
 - 0.98
 
