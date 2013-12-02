@@ -50,6 +50,7 @@
 %def_with storage_disk
 %def_with storage_rbd
 %def_with storage_mpath
+%def_without storage_gluster
 %def_with numactl
 %def_with selinux
 
@@ -91,11 +92,10 @@
 %def_without dtrace
 
 # Non-server/HV driver defaults which are always enabled
-%def_with python
 %def_with sasl
 
 Name: libvirt
-Version: 1.1.4
+Version: 1.2.0
 Release: alt1
 Summary: Library providing a simple API virtualization
 License: LGPLv2+
@@ -133,6 +133,7 @@ Requires: libvirt-client = %version-%release
 %{?_with_storage_rbd:BuildRequires: ceph-devel}
 %{?_with_storage_iscsi:BuildRequires: open-iscsi}
 %{?_with_storage_mpath:BuildRequires: libdevmapper-devel}
+%{?_with_storage_gluster:BuildRequires: glusterfs3-devel >= 3.4.1}
 %{?_with_numactl:BuildRequires: libnuma-devel}
 %{?_with_capng:BuildRequires: libcap-ng-devel}
 %{?_with_phyp:BuildRequires: libssh2-devel}
@@ -149,7 +150,8 @@ BuildRequires: libtasn1-devel
 BuildRequires: libattr-devel attr
 BuildRequires: perl-Pod-Parser
 BuildRequires: libxml2-devel xml-utils xsltproc w3c-markup-validator-libs xhtml1-dtds
-BuildRequires: python-devel python-module-distribute
+BuildRequires: python
+BuildRequires: zlib-devel
 BuildRequires: iproute2 perl-Pod-Parser
 
 %description
@@ -489,20 +491,6 @@ Requires: %name-client = %version-%release
 Includes and documentations for the C library providing an API to use
 the virtualization capabilities of recent versions of Linux (and other OSes).
 
-%package -n python-module-%name
-Summary: Python bindings for the libvirt library
-Group: Development/Python
-Requires: %name-client = %version-%release
-
-Obsoletes: %name-python < %version-%release
-Provides: %name-python = %version-%release
-
-%description -n python-module-%name
-The libvirt-python package contains a module that permits applications
-written in the Python programming language to use the interface
-supplied by the libvirt library to use the virtualization capabilities
-of recent versions of Linux (and other OSes).
-
 %prep
 %setup -a1
 %patch1 -p1
@@ -545,6 +533,7 @@ sed -i 's/vircgrouptest //' tests/Makefile.am
 		%{?_with_storage_disk:--with-storage-disk} \
 		%{?_with_storage_rbd:--with-storage-rbd} \
 		%{?_with_storage_mpath:--with-storage-mpath} \
+		%{?_with_storage_gluster:--with-storage-gluster} \
 		%{subst_with numactl} \
 		%{subst_with selinux} \
 		%{subst_with netcf} \
@@ -561,7 +550,6 @@ sed -i 's/vircgrouptest //' tests/Makefile.am
 		%{subst_with audit} \
 		%{?_with_driver_modules:--with-driver-modules} \
 		%{subst_with dtrace} \
-		%{subst_with python} \
 		%{subst_with sasl}
 
 
@@ -571,7 +559,7 @@ gzip -9 ChangeLog
 %install
 %makeinstall_std
 
-for i in domain-events/events-c dominfo domsuspend hellolibvirt openauth python xml/nwfilter systemtap
+for i in domain-events/events-c dominfo domsuspend hellolibvirt openauth xml/nwfilter systemtap
 do
   (cd examples/$i ; make clean ; rm -rf .deps .libs Makefile Makefile.in)
 done
@@ -579,7 +567,6 @@ done
 install -d -m 0755 %buildroot%_localstatedir/run/libvirt/
 rm -f %buildroot%_libdir/*.{a,la}
 rm -f %buildroot%_libdir/%name/*/*.{a,la}
-rm -f %buildroot%_libdir/python*/site-packages/*.{a,la}
 
 %if_with network
 # We don't want to install /etc/libvirt/qemu/networks in the main %files list
@@ -907,11 +894,11 @@ fi
 %_datadir/libvirt/api/libvirt-qemu-api.xml
 %_datadir/libvirt/api/libvirt-lxc-api.xml
 
-%files -n python-module-%name
-%python_sitelibdir/libvirt*
-%doc examples/python
-
 %changelog
+* Mon Dec 02 2013 Alexey Shabalin <shaba@altlinux.ru> 1.2.0-alt1
+- 1.2.0
+- drop python module package
+
 * Wed Nov 06 2013 Alexey Shabalin <shaba@altlinux.ru> 1.1.4-alt1
 - 1.1.4
 - fixed CVE-2013-4400, CVE-2013-4401
