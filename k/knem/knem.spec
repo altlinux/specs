@@ -6,7 +6,7 @@
 Name: knem
 Summary: High-Performance Intra-Node MPI Communication
 Version: 1.1.0
-Release: alt5
+Release: alt6
 License: BSD
 Group: System/Kernel and hardware
 URL: http://runtime.bordeaux.inria.fr/%name
@@ -154,6 +154,9 @@ tar -cJhf %kernel_srcdir/%name-%version.tar.xz %name-%version
 
 
 %changelog
+* Tue Dec 03 2013 Led <led@altlinux.ru> 1.1.0-alt6
+- upstream updates
+
 * Tue Nov 26 2013 Led <led@altlinux.ru> 1.1.0-alt5
 - upstream fixes
 

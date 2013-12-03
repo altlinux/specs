@@ -25,7 +25,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.10.21
-Release: alt6
+Release: alt7
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -146,14 +146,14 @@ Release: alt6
 #Extra_modules spl 0.6.2
 %Extra_modules zfs 0.6.2
 #Extra_modules kvm 3.10.1
-#Extra_modules nvidia 319.32
+#Extra_modules nvidia 331.20
 %Extra_modules fglrx 13.25.18
 %Extra_modules vboxhost 4.2.20
 %Extra_modules vboxguest 4.2.20
 %Extra_modules knem 1.1.0
 %Extra_modules exfat 1.2.6
 %Extra_modules ipt_NETFLOW 1.8.2
-#Extra_modules netatop 0.2
+#Extra_modules netatop 0.3
 #Extra_modules omnibook 20110911
 
 %define strip_mod_opts --strip-unneeded -R .comment
@@ -1782,6 +1782,13 @@ done)
 
 
 %changelog
+* Thu Dec 03 2013 Led <led@altlinux.ru> 3.10.21-alt7
+- updated:
+  + fix-drivers-usb-host--xhci-hcd
+  + fix-fs-nfs
+- added:
+  + fix-drivers-scsi--st
+
 * Mon Dec 02 2013 Led <led@altlinux.ru> 3.10.21-alt6
 - updated:
   + fix-drivers-gpu-drm--nouveau
