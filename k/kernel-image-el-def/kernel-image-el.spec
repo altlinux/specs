@@ -7,7 +7,7 @@
 
 Name: kernel-image-%flavour
 Version: 2.6.32
-Release: alt14
+Release: alt15
 %define erelease 431.el6
 
 %define kernel_req %nil
@@ -548,6 +548,14 @@ tar	--transform='s/^\(linux-%kversion\)-%erelease/\1-%flavour-%krelease/' \
 
 
 %changelog
+* Tue Dec 03 2013 Led <led@altlinux.ru> 2.6.32-alt15
+- enabled:
+  + SCTP_COOKIE_HMAC_MD5
+  + SCTP_DEFAULT_COOKIE_HMAC_MD5
+  + ATH9K_HTC
+  + BCMA_DRIVER_GPIO
+  + CONFIG_EEEPC_LAPTOP
+
 * Fri Nov 29 2013 Led <led@altlinux.ru> 2.6.32-alt14
 - updated config
 
