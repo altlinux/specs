@@ -5,11 +5,15 @@ BuildRequires: waf
 BuildRequires: gcc-c++
 %add_optflags %optflags_shared
 %define oldname lilv
+# %oldname or %version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+%define name lilv
+%define version 0.16.0
+%{!?_pkgdocdir: %global _pkgdocdir %{_docdir}/%{oldname}-%{version}}
 %global maj 0
 
 Name:       liblilv
 Version:    0.16.0
-Release:    alt1_2
+Release:    alt1_3
 Summary:    An LV2 Resource Description Framework Library
 
 Group:      System/Libraries
@@ -70,7 +74,7 @@ sed -i -e "s|'-ftest-coverage'\]|\
 export CFLAGS="%{optflags}" CXXFLAGS="%{optflags}"
 ./waf configure -v --prefix=%{_prefix}\
  --libdir=%{_libdir} --configdir=%{_sysconfdir} --mandir=%{_mandir}\
- --docdir=%{_docdir}/%{oldname}-devel-%{version}\
+ --docdir=%{_pkgdocdir}\
  --docs --test --dyn-manifest --bindings 
 ./waf -v build %{?_smp_mflags}
 
@@ -83,6 +87,7 @@ chmod +x %{buildroot}%{_libdir}/lib%{oldname}-0.so.*
 
 %files
 %doc AUTHORS NEWS README COPYING
+%exclude %{_pkgdocdir}/%{oldname}-%{maj}/
 %{_libdir}/lib%{oldname}-%{maj}.so.*
 %{_bindir}/lilv-bench
 %{_bindir}/lv2info
@@ -96,7 +101,7 @@ chmod +x %{buildroot}%{_libdir}/lib%{oldname}-0.so.*
 %{_libdir}/lib%{oldname}-%{maj}.so
 %{_libdir}/pkgconfig/%{oldname}-%{maj}.pc
 %{_includedir}/%{oldname}-%{maj}/
-%{_docdir}/%{oldname}-devel-%{version}
+%{_pkgdocdir}/%{oldname}-%{maj}/
 %{_mandir}/man3/*
 
 %files -n python-module-lilv
@@ -104,6 +109,9 @@ chmod +x %{buildroot}%{_libdir}/lib%{oldname}-0.so.*
 %{python_sitelibdir}/_%{oldname}.so
 
 %changelog
+* Tue Dec 03 2013 Igor Vlasenko <viy@altlinux.ru> 0.16.0-alt1_3
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.16.0-alt1_2
 - update to new release by fcimport
 
