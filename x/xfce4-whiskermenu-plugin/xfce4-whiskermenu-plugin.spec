@@ -1,4 +1,4 @@
-%define git_date .git20131120
+%define git_date .git20131203
 #define git_date %nil
 
 Name: xfce4-whiskermenu-plugin
@@ -9,7 +9,7 @@ Summary: Alternate Xfce menu
 License: %gpl2plus
 Group: Graphical desktop/XFce
 Url: http://gottcode.org/xfce4-whiskermenu-plugin/
-Packager: XFCE Team <xfce@packages.altlinux.org>
+Packager: Xfce Team <xfce@packages.altlinux.org>
 
 # git://github.com/gottcode/xfce4-whiskermenu-plugin.git
 Source: %name-%version.tar
@@ -53,6 +53,10 @@ keeps a list of the last ten applications that you've launched from it.
 %_man1dir/*.1.*
 
 %changelog
+* Tue Dec 03 2013 Mikhail Efremov <sem@altlinux.org> 1.2.0-alt1.git20131203
+- Fix Xfce name (XFCE -> Xfce).
+- Upstream git snapshot (master branch).
+
 * Wed Nov 20 2013 Mikhail Efremov <sem@altlinux.org> 1.2.0-alt1.git20131120
 - Upstream git snapshot (master branch).
 
