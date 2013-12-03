@@ -1,6 +1,6 @@
 Name: kbd
 Serial: 0
-Version: 2.0.0
+Version: 2.0.1
 Release: alt1
 
 Group: Terminals
@@ -228,6 +228,11 @@ mv %buildroot/bin/kbdrate %buildroot/sbin/
 ln -s -- %_usr/lib/consolehelper/helper %buildroot/bin/kbdrate
 
 install -p -m640 src/vlock/vlock.pamd %buildroot/%_sysconfdir/pam.d/vlock
+sed -i \
+	-e 's/^account  include	system-auth$/account  required	pam_permit.so/' \
+	-e 's/^password include	system-auth$/password required	pam_permit.so/' \
+	%buildroot/%_sysconfdir/pam.d/vlock
+
 mv %buildroot/bin/vlock %buildroot/%_bindir/
 
 mv -f -- \
@@ -415,6 +420,9 @@ done
 %_man1dir/vlock.*
 
 %changelog
+* Tue Dec 03 2013 Alexey Gladkov <legion@altlinux.ru> 0:2.0.1-alt1
+- New release version (2.0.1).
+
 * Wed Aug 28 2013 Alexey Gladkov <legion@altlinux.ru> 0:2.0.0-alt1
 - New release version (2.0.0).
 - Add libkeymap subpackage.
