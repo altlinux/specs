@@ -2,8 +2,8 @@
 %define mpidir %_libdir/%mpiimpl
 
 Name: ipopt
-Version: 3.11.3
-Release: alt1.svn20130906
+Version: 3.11.6
+Release: alt1.svn20131202
 Summary: Large-Scale Nonlinear Optimization Solver (Interior Point OPTimizer)
 License: CPL 1.0
 Group: Sciences/Mathematics
@@ -183,6 +183,9 @@ rm -fR %buildroot%_datadir/coin/doc
 %_docdir/coin/Ipopt/examples
 
 %changelog
+* Tue Dec 03 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.11.6-alt1.svn20131202
+- Version 3.11.6
+
 * Wed Sep 11 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.11.3-alt1.svn20130906
 - Version 3.11.3
 
