@@ -3,8 +3,8 @@
 
 %define oname Clp
 Name: Coin%oname
-Version: 1.15.2
-Release: alt1.svn20130831
+Version: 1.15.5
+Release: alt1.svn20131130
 Summary: COIN-OR Linear Programming Solver
 License: CPL v1.0
 Group: Sciences/Mathematics
@@ -164,6 +164,9 @@ rm -fR %buildroot%_docdir/coin \
 #_bindir/*driver
 
 %changelog
+* Tue Dec 03 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.15.5-alt1.svn20131130
+- Version 1.15.5
+
 * Tue Sep 10 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.15.2-alt1.svn20130831
 - Version 1.15.2
 
