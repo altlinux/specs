@@ -11,7 +11,7 @@
 
 Name: branding-%brand-%theme
 Version: 6.9.9 
-Release: alt2
+Release: alt3
 BuildArch: noarch
 
 BuildRequires: cpio gfxboot >= 4 fonts-ttf-dejavu fonts-ttf-droid
@@ -499,6 +499,10 @@ subst 's/#theme-name=/theme-name=Clearlooks-Phenix/' /etc/lightdm/lightdm-gtk-gr
 %config %_localstatedir/ldm/.pam_environment
 
 %changelog
+* Tue Dec 03 2013 Andrey Cherepanov <cas@altlinux.org> 6.9.9-alt3
+- Fix black color for selection background in Qt theme for Alterator
+- Fix favicon and product logo width in ahttpd
+
 * Mon Dec 02 2013 Andrey Cherepanov <cas@altlinux.org> 6.9.9-alt2
 - Fix selection color and note font in GRUB theme
 - Set more bright color for bootloader
