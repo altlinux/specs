@@ -1,7 +1,7 @@
 %define _name luminance
 Name: %_name-hdr
-Version: 2.3.0
-Release: alt2
+Version: 2.3.1
+Release: alt1
 
 Summary: A graphical tool for creating and processing HDR images
 Group: Graphics
@@ -14,7 +14,7 @@ Source1: luminance-hdr_lang_ru.qm
 Obsoletes: qtpfsgui
 Provides: qtpfsgui = %version-%release
 
-BuildRequires: cmake gcc-c++ libgomp-devel libqt4-devel phonon-devel
+BuildRequires: cmake gcc-c++ boost-devel libgomp-devel libqt4-devel phonon-devel
 BuildRequires: openexr-devel libexiv2-devel libfftw3-devel liblcms2-devel
 BuildRequires: libraw-devel-static libjpeg-devel libtiff-devel libgsl-devel
 
@@ -36,15 +36,23 @@ pushd BUILD
 %install
 pushd BUILD
 %makeinstall_std
+popd
+%find_lang --with-qt --output=%name.lang lang qt
 
-%files
+%files -f %name.lang
 %_bindir/*
-%_datadir/%name
+%dir %_datadir/%name
+%dir %_datadir/%name/i18n
+%_datadir/%name/help/
 %_datadir/applications/*
 %_datadir/icons/hicolor/*/*/*
 %doc AUTHORS Changelog README TODO BUGS
 
 %changelog
+* Tue Dec 03 2013 Yuri N. Sedunov <aris@altlinux.org> 2.3.1-alt1
+- 2.3.1
+- built against libexiv2.so.13
+
 * Thu Jan 24 2013 Yuri N. Sedunov <aris@altlinux.org> 2.3.0-alt2
 - rebuilt against libexiv2.so.12
 

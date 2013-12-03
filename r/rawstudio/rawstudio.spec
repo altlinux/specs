@@ -1,6 +1,6 @@
 Name: rawstudio
 Version: 2.0
-Release: alt5
+Release: alt6
 
 Summary: Rawstudio is an open source raw-image converter written in GTK+
 License: GPLv2+
@@ -61,6 +61,9 @@ mv %buildroot%_datadir/rawstudio/plugins %buildroot%_libdir/rawstudio/
 %exclude %_pkgconfigdir
 
 %changelog
+* Tue Dec 03 2013 Yuri N. Sedunov <aris@altlinux.org> 2.0-alt6
+- rebuilt against libexiv2.so.13
+
 * Fri Jan 25 2013 Yuri N. Sedunov <aris@altlinux.org> 2.0-alt5
 - rebuilt against libexiv2.so.12
 - enabled lfs support
