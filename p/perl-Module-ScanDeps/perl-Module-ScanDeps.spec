@@ -1,6 +1,7 @@
+%define _unpackaged_files_terminate_build 1
 %define dist Module-ScanDeps
 Name: perl-%dist
-Version: 1.11
+Version: 1.12
 Release: alt1
 
 Summary: Recursively scan Perl programs for dependencies
@@ -13,7 +14,7 @@ Source: http://www.cpan.org/authors/id/R/RS/RSCHUPP/Module-ScanDeps-%{version}.t
 BuildArch: noarch
 
 # Automatically added by buildreq on Wed Nov 16 2011
-BuildRequires: perl-Module-Build perl-Module-Pluggable perl-Term-Cap perl-Test-Pod perl-parent perl-threads perl-unicore
+BuildRequires: perl-Module-Build perl-Module-Pluggable perl-Term-Cap perl-Test-Pod perl-parent perl-threads perl-unicore perl(Test/Requires.pm)
 
 %description
 An application of Module::ScanDeps is to generate executables from
@@ -35,6 +36,9 @@ such projects, PAR and App::Packer.
 %perl_vendor_privlib/Module
 
 %changelog
+* Tue Dec 03 2013 Igor Vlasenko <viy@altlinux.ru> 1.12-alt1
+- automated CPAN update
+
 * Mon Sep 30 2013 Igor Vlasenko <viy@altlinux.ru> 1.11-alt1
 - automated CPAN update
 
