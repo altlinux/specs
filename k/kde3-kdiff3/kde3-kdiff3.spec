@@ -5,7 +5,7 @@
 
 Name: kde3-kdiff3
 Version: 0.9.92
-Release: alt2
+Release: alt2.1
 
 Summary: Tool for Comparison and Merge of Files and Directories.
 License: GPL
@@ -70,6 +70,9 @@ export PATH=$QTDIR/bin:$KDEDIR/bin:$PATH
 %_kde3_iconsdir/*/*/apps/%origname.png
 
 %changelog
+* Tue Dec 03 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.92-alt2.1
+- Fixed build
+
 * Thu May 31 2012 Lenar Shakirov <snejok@altlinux.ru> 0.9.92-alt2
 - Build from TDE 3.5.13 release
 
