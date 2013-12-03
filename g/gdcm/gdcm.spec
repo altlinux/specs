@@ -1,14 +1,12 @@
 Name:           gdcm
-Version:        2.2.3
-Release: alt3
+Version:        2.4.0
+Release:        alt3
 Summary:        DiCoM is a C++ library for DICOM medical files
 Group:          System/Libraries
 License:        BSD
 URL:            http://sourceforge.net/projects/gdcm/
 Source:         %name-%version.tar
-
-Patch6: gdcm-2.0.17-install2libarch.patch
-Patch10: gdcm-2.0.17-no_versioned_dir.patch
+Patch0:         %name-%version-alt.patch
 
 BuildRequires: doxygen tetex-latex cmake gcc-c++ libvtk-devel libexpat-devel zlib-devel libuuid-devel libopenjpeg-devel libssl-devel libCharLS-devel libpoppler-devel
 BuildRequires: /proc java-1.6.0-sun-devel swig mono-mcs mono-devel vtk-python
@@ -68,10 +66,7 @@ VTK bindings to the GDCM DICOM library.
 
 %prep
 %setup -q
-%patch6 -p 1
-%patch10 -p 1
-
-sed -i '28,36d' CMakeLists.txt
+%patch -p 1
 
 %build
 %cmake \
@@ -101,10 +96,10 @@ sed -i '28,36d' CMakeLists.txt
 	-DGDCM_USE_JPEGLS=ON \
 	-DGMCS_EXECUTABLE=/usr/bin/gmcs
 
-%make_build -C BUILD
+%cmake_build
 
 %install
-%makeinstall_std -C BUILD
+%cmakeinstall_std
 
 %files
 %doc AUTHORS AUTHORS README.*
@@ -139,6 +134,9 @@ sed -i '28,36d' CMakeLists.txt
 
 
 %changelog
+* Sun Dec 01 2013 Slava Dubrovskiy <dubrsl@altlinux.org> 2.4.0-alt3
+- 2.4.0
+
 * Fri Aug 30 2013 Vladimir Lettiev <crux@altlinux.ru> 2.2.3-alt3
 - built for perl 5.18
 
