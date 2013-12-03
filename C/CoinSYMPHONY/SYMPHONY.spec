@@ -5,8 +5,8 @@
 %define somver 0
 %define sover %somver.0.0
 Name: Coin%oname
-Version: 5.5.1
-Release: alt1.svn20130819
+Version: 5.5.6
+Release: alt1.svn20131202
 Summary: Open-source solver for mixed-integer linear programs (MILPs) written in C
 License: CPL v1.o
 Group: Sciences/Mathematics
@@ -174,6 +174,9 @@ popd
 %doc %oname/Doc/*
 
 %changelog
+* Tue Dec 03 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.5.6-alt1.svn20131202
+- Version 5.5.6
+
 * Wed Sep 11 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.5.1-alt1.svn20130819
 - Version 5.5.1
 
