@@ -4,7 +4,7 @@
 
 Name: python-module-%modulename
 Version: 3.2.4
-Release: alt1.hg20130409
+Release: alt1.hg20131113
 
 %setup_python_module %modulename
 
@@ -117,6 +117,9 @@ mv %buildroot%_bindir/cherryd %buildroot%_bindir/cherryd3
 %endif
 
 %changelog
+* Tue Dec 03 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.2.4-alt1.hg20131113
+- New snapshot
+
 * Mon Apr 15 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.2.4-alt1.hg20130409
 - Version 3.2.4
 
