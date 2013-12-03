@@ -13,8 +13,8 @@
 %endif
 
 Name: libvpx
-Version: 1.2.0
-Release: alt2
+Version: 1.3.0
+Release: alt1
 Summary: VP8 video codec
 Group: Video
 License: BSD
@@ -55,12 +55,15 @@ sed -i -e 's,softfp,hard,' build/make/configure.sh
 %ifarch %ix86 x86_64 %arm
 export CFLAGS="$RPM_OPT_FLAGS -fPIC"
 %endif
+sed -i '/AVX/d' vp9/vp9_common.mk
 ./configure \
 	--prefix=%prefix \
 	--libdir=%_libdir \
 	--enable-pic \
 	--target=%platform \
-	--enable-shared
+	--enable-shared \
+	--disable-avx \
+	--disable-avx2
 %make_build
 
 %install
@@ -76,6 +79,9 @@ export CFLAGS="$RPM_OPT_FLAGS -fPIC"
 %_pkgconfigdir/*.pc
 
 %changelog
+* Tue Dec 03 2013 Valery Inozemtsev <shrek@altlinux.ru> 1.3.0-alt1
+- 1.3.0
+
 * Fri Mar 01 2013 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.2.0-alt2
 - fixed build on armh
 
