@@ -1,5 +1,5 @@
 Name: asciidoc
-Version: 8.6.8
+Version: 8.6.9
 Release: alt1
 
 Summary: asciidoc converts an AsciiDoc text file to DocBook, HTML or LinuxDoc
@@ -89,7 +89,7 @@ install -pD %buildroot%_sysconfdir/%name/dblatex/asciidoc-dblatex.sty \
 
 # install vim plugin
 install -d %buildroot{%vim_ftdetect_dir,%vim_syntax_dir}
-install -p -m644 vim/ftdetect/asciidoc_filetype.vim %buildroot%vim_ftdetect_dir/
+#install -p -m644 vim/ftdetect/asciidoc_filetype.vim %buildroot%vim_ftdetect_dir/
 install -p -m644 vim/syntax/asciidoc.vim %buildroot%vim_syntax_dir/
 
 # install extra docs for asciidoc package
@@ -129,10 +129,13 @@ install -pD -m644 COPYRIGHT  %buildroot%docdir/
 %exclude %docdir/README
 
 %files -n vim-plugin-asciidoc-syntax
-%vim_ftdetect_dir/*.vim
+#vim_ftdetect_dir/*.vim
 %vim_syntax_dir/*.vim
 
 %changelog
+* Tue Dec 03 2013  Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 8.6.9-alt1
+- Version 8.6.9
+
 * Thu Oct 31 2013  Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 8.6.8-alt1
 - Version 8.6.8 (ALT #29536)
 
