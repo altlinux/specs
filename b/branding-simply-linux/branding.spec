@@ -6,7 +6,7 @@
 %define brand simply
 
 Name: branding-simply-linux
-Version: 7.0.1
+Version: 7.0.2
 Release: alt1
 BuildArch: noarch
 
@@ -436,6 +436,10 @@ subst "s/Theme=.*/Theme=%theme/" /etc/plymouth/plymouthd.conf
 %config %_localstatedir/ldm/.pam_environment
 
 %changelog
+* Fri Nov 29 2013 Mikhail Efremov <sem@altlinux.org> 7.0.2-alt1
+- Bump version to 7.0.2.
+- indexhtml.desktop: Drop unneeded space.
+
 * Fri Jul 19 2013 Mikhail Efremov <sem@altlinux.org> 7.0.1-alt1
 - xfce settings: Set ristretto as default images viewer.
 - Replace gnome-mplayer with smplayer.
