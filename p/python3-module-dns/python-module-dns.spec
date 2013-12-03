@@ -4,14 +4,13 @@
 %def_without check
 
 Name: python3-module-%modulename
-Version: 1.10.0
-Release: alt2
+Version: 1.11.1
+Release: alt1.git20130902
 
 Summary: DNS toolkit (Python 3)
 License: BSD-like
 Group: Development/Python
 Url: http://www.dnspython.org
-Packager: Python Development Team <python at packages.altlinux.org>
 
 BuildArch: noarch
 
@@ -56,6 +55,9 @@ popd
 %python3_sitelibdir/*
 
 %changelog
+* Tue Dec 03 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.11.1-alt1.git20130902
+- Version 1.11.1
+
 * Fri Mar 22 2013 Aleksey Avdeev <solo@altlinux.ru> 1.10.0-alt2
 - Version 1.10.0 (py3)
 - Build for Python-3
