@@ -7,7 +7,7 @@
 %define variants docs-office-server docs-backup-server docs-desktop docs-school-master docs-school-junior docs-school-lite docs-school-server docs-kdesktop docs-school-terminal docs-school-newlite docs-centaurus docs-simply-linux docs-lxdesktop docs-lxdesktop-lite
 
 Name: docs-%variant
-Version: 6.0
+Version: 6.9
 Release: alt1
 
 Summary: %Variant documentation
@@ -42,6 +42,11 @@ ln -s $(relative %_docsinstalldir %_documentationdir) %buildroot%_documentationd
 %_documentationdir
 
 %changelog
+* Tue Dec 03 2013 Andrey Cherepanov <cas@altlinux.org> 6.9-alt1
+- Merge with ALT Linux 7.0 Centaurus manual
+- Update documentation and screenshots
+- Add note about web interface to server documentation
+
 * Sat Aug 18 2012 Artem Zolochevskiy <azol@altlinux.ru> 6.0-alt1
 - initial Informika 6.0 School Server version
 
