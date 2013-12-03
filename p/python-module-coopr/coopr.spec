@@ -1,7 +1,7 @@
 %define oname coopr
 Name: python-module-%oname
-Version: 3.4
-Release: alt1.svn20130911
+Version: 3.5
+Release: alt1.svn20131201
 Summary: COmmon Optimization Python Repository 
 License: BSD
 Group: Development/Python
@@ -492,6 +492,59 @@ software.
 This Python package provides Differential-Algebraic Equation (DAE)
 extensions to the Pyomo environment.
 
+%package solvers
+Summary: Python package includes solver plugins used within Coopr
+Group: Development/Python
+Requires: %name = %version-%release
+%add_python_req_skip gurobipy
+
+%description solvers
+Coopr is a collection of Python optimization-related packages. Coopr
+supports a diverse set of optimization capabilities that can be used to
+formulate and analyze optimization applications. In particular, it
+include Pyomo, a Python-based modeling tool that can model abstract
+linear and integer programs. Coopr strongly leverages a Python component
+architecture to support extensibility in a modular manner, and plug-ins
+for optimization solvers can be added without editing any Coopr
+software.
+
+This Python package includes solver plugins used within Coopr.
+
+%package environ
+Summary: A Coopr package that loads all Coopr plugins
+Group: Development/Python
+Requires: %name = %version-%release
+
+%description environ
+Coopr is a collection of Python optimization-related packages. Coopr
+supports a diverse set of optimization capabilities that can be used to
+formulate and analyze optimization applications. In particular, it
+include Pyomo, a Python-based modeling tool that can model abstract
+linear and integer programs. Coopr strongly leverages a Python component
+architecture to support extensibility in a modular manner, and plug-ins
+for optimization solvers can be added without editing any Coopr
+software.
+
+A Coopr package that loads all Coopr plugins.
+
+%package neos
+Summary: A Coopr plugin that creates NEOS solvers
+Group: Development/Python
+Requires: %name = %version-%release
+
+%description neos
+Coopr is a collection of Python optimization-related packages. Coopr
+supports a diverse set of optimization capabilities that can be used to
+formulate and analyze optimization applications. In particular, it
+include Pyomo, a Python-based modeling tool that can model abstract
+linear and integer programs. Coopr strongly leverages a Python component
+architecture to support extensibility in a modular manner, and plug-ins
+for optimization solvers can be added without editing any Coopr
+software.
+
+A Coopr plugin that creates NEOS solvers, as well as a solver manager
+that can employ these solvers.
+
 %package tests
 Summary: Tests for Coopr
 Group: Development/Python
@@ -509,6 +562,7 @@ Requires: %name-core = %version-%release
 Requires: %name-extras = %version-%release
 Requires: %name-openopt = %version-%release
 Requires: %name-dae = %version-%release
+Requires: %name-solvers = %version-%release
 #Requires: %name-os = %version-%release
 %py_requires pyutilib.dev.runtests pyutilib.th pyutilib.component.app
 %py_requires pyutilib.component.loader pyutilib.autotest
@@ -578,7 +632,8 @@ done
 
 rm -f \
 	%buildroot%python_sitelibdir/%oname/pyomo/tests/NL/CUTE/gigomez1_cute.py* \
-	%buildroot%python_sitelibdir/%oname/data/cute/hubfit_cute.py*
+	%buildroot%python_sitelibdir/%oname/data/cute/hubfit_cute.py* \
+	%buildroot%python_sitelibdir/coopr/core/plugin3.py*
 
 mv %buildroot%_bindir/OSSolverService \
 	%buildroot%_bindir/OSSolverService.%oname
@@ -638,7 +693,7 @@ mv %buildroot%_bindir/OSSolverService \
 %python_sitelibdir/%oname/fdt
 %exclude %python_sitelibdir/%oname/fdt/tests
 %exclude %python_sitelibdir/*.pth
-%_bindir/fdt
+#_bindir/fdt
 
 %files gui-%oname
 %doc ATTIC/%oname.gui.%oname/trunk/
@@ -680,18 +735,14 @@ mv %buildroot%_bindir/OSSolverService \
 %_bindir/results_schema
 
 %files plugins
-%doc %oname.plugins/trunk/*.txt
-%doc ATTIC/%oname.colin/trunk/doc/opt/*.pdf
-%python_sitelibdir/%oname.plugins*
+#doc %oname.plugins/trunk/*.txt
+#doc ATTIC/%oname.colin/trunk/doc/opt/*.pdf
+#python_sitelibdir/%oname.plugins*
 %python_sitelibdir/%oname/plugins
-%exclude %python_sitelibdir/%oname/plugins/test*
-#exclude %python_sitelibdir/%oname/plugins/skel/tests
-#exclude %python_sitelibdir/%oname/plugins/mip/GUROBI*
-%exclude %python_sitelibdir/%oname/plugins/solvers/GUROBI*
-#exclude %python_sitelibdir/%oname/plugins/mip/CPLEX*
-#exclude %python_sitelibdir/%oname/plugins/mip/ASL*
-%exclude %python_sitelibdir/%oname/plugins/converter/ampl.py*
-%exclude %python_sitelibdir/*.pth
+%exclude %python_sitelibdir/%oname/plugins/skel/tests
+#exclude %python_sitelibdir/%oname/plugins/solvers/GUROBI*
+#exclude %python_sitelibdir/%oname/plugins/converter/ampl.py*
+#exclude %python_sitelibdir/*.pth
 
 %files pyomo
 %doc %oname.pyomo/trunk/*.txt
@@ -709,7 +760,7 @@ mv %buildroot%_bindir/OSSolverService \
 %python_sitelibdir/%oname.pysos*
 %python_sitelibdir/%oname/pysos
 %exclude %python_sitelibdir/*.pth
-%_bindir/pysos*
+#_bindir/pysos*
 
 %files pysos-examples
 %doc %oname.pysos/trunk/examples/pysos
@@ -723,7 +774,7 @@ mv %buildroot%_bindir/OSSolverService \
 %exclude %python_sitelibdir/*.pth
 %_bindir/runph*
 %_bindir/computeconf*
-%_bindir/ph_test_client
+#_bindir/ph_test_client
 %_bindir/phsolverserver
 %_bindir/runef*
 
@@ -743,7 +794,7 @@ mv %buildroot%_bindir/OSSolverService \
 %python_sitelibdir/%oname/sucasa
 %exclude %python_sitelibdir/%oname/sucasa/tests
 %exclude %python_sitelibdir/*.pth
-%_bindir/sucasa
+#_bindir/sucasa
 
 %files sucasa-examples
 %doc %oname.sucasa/trunk/examples/sucasa/*
@@ -777,13 +828,29 @@ mv %buildroot%_bindir/OSSolverService \
 %exclude %python_sitelibdir/%oname/dae/tests
 %_bindir/rundph
 
+%files solvers
+%doc %oname.solvers/trunk/*.txt
+%python_sitelibdir/%oname.solvers*
+%python_sitelibdir/%oname/solvers
+%exclude %python_sitelibdir/%oname/solvers/tests
+
+%files environ
+%doc %oname.environ/trunk/*.txt
+%python_sitelibdir/%oname.environ*
+%python_sitelibdir/%oname/environ
+
+%files neos
+%doc %oname.environ/trunk/*.txt
+%python_sitelibdir/%oname.neos*
+%python_sitelibdir/%oname/neos
+
 %files tests
 %_bindir/test*
 %python_sitelibdir/%oname/colin/tests
 %python_sitelibdir/%oname/fdt/tests
 %python_sitelibdir/%oname/misc/runtests.py*
 %python_sitelibdir/%oname/opt/test*
-%python_sitelibdir/%oname/plugins/test*
+%python_sitelibdir/%oname/plugins/skel/tests
 #python_sitelibdir/%oname/plugins/skel/tests
 %python_sitelibdir/%oname/pyomo/tests
 %python_sitelibdir/%oname/pysp/tests
@@ -797,8 +864,12 @@ mv %buildroot%_bindir/OSSolverService \
 %python_sitelibdir/%oname/extras/test*
 %python_sitelibdir/%oname/openopt/test*
 %python_sitelibdir/%oname/dae/test*
+%python_sitelibdir/%oname/solvers/tests
 
 %changelog
+* Tue Dec 03 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.5-alt1.svn20131201
+- Version 3.5
+
 * Wed Sep 11 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.4-alt1.svn20130911
 - 3.4
 
