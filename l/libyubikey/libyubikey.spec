@@ -1,13 +1,13 @@
 %add_optflags %optflags_shared
 Name:           libyubikey
-Version:        1.10
-Release:        alt1_2
+Version:        1.11
+Release:        alt1_1
 Summary:        C library for decrypting and parsing Yubikey One-time passwords
 
 Group:          Development/C
 License:        BSD
-URL:            http://code.google.com/p/yubico-c/
-Source0:        http://yubico-c.googlecode.com/files/%{name}-%{version}.tar.gz
+URL:            http://opensource.yubico.com/yubico-c
+Source0:        http://opensource.yubico.com/yubico-c/releases/%{name}-%{version}.tar.gz
 Source44: import.info
 
 %description
@@ -46,13 +46,19 @@ export LD_LIBRARY_PATH=${RPM_BUILD_DIR}/%{name}-%{version}/.libs
 %{_bindir}/ykparse
 %{_bindir}/ykgenerate
 %{_libdir}/libyubikey.so.0
-%{_libdir}/libyubikey.so.0.1.4
+%{_libdir}/libyubikey.so.0.1.5
+%{_mandir}/man1/ykgenerate.1*
+%{_mandir}/man1/ykparse.1*
+%{_mandir}/man1/modhex.1*
 
 %files devel
 %{_includedir}/yubikey.h
 %{_libdir}/libyubikey.so
 
 %changelog
+* Tue Dec 03 2013 Igor Vlasenko <viy@altlinux.ru> 1.11-alt1_1
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 1.10-alt1_2
 - update to new release by fcimport
 
