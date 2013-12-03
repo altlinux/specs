@@ -3,8 +3,8 @@
 
 %define oname FlopCpp
 Name: Coin%oname
-Version: 1.1.2
-Release: alt2.svn20120128
+Version: 1.1.6
+Release: alt1.svn20131123
 Summary: Formulation of Linear Optimization Problems in C++
 License: CPL v1.0
 Group: Sciences/Mathematics
@@ -164,6 +164,9 @@ rm -fR %buildroot%_docdir/coin
 %doc %oname/examples
 
 %changelog
+* Tue Dec 03 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.6-alt1.svn20131123
+- Version 1.1.6
+
 * Mon Jul 09 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.2-alt2.svn20120128
 - Rebuilt with OpenMPI 1.6
 
