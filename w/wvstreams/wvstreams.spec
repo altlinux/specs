@@ -1,8 +1,8 @@
 Name: wvstreams
-Version: 4.5.1
-Release: alt4.git20090319.2
+Version: 4.6.1
+Release: alt1
 
-%define soffix .so.4.5
+%define soffix .so.4.6
 %def_disable kdoc
 %def_enable static
 
@@ -17,6 +17,18 @@ Source: %name-%version.tar.gz
 Source1: ChangeLog
 Patch: %name-%version-alt-paths_links_USBmodem.patch
 Patch1: %name-4.5.1-fix-build.patch
+#install-xplc target was missing
+Patch2: wvstreams-4.5-noxplctarget.patch
+#Fix parallel build
+Patch3: wvstreams-4.6.1-make.patch
+#sys/stat.h is missing some files in rawhide build
+Patch4: wvstreams-4.6.1-statinclude.patch
+#const X509V3_EXT_METHOD * -> X509V3_EXT_METHOD * conversion not allowed
+#by rawhide gcc
+Patch5: wvstreams-4.6.1-gcc.patch
+# fix missing unistd.h header for gcc 4.7
+Patch6: wvstreams-4.6.1-gcc47.patch
+Patch7: wvstreams-4.6.1-magic.patch
 
 BuildPreReq: gcc-c++
 BuildPreReq: OpenSP /proc
@@ -161,8 +173,14 @@ configuration back end for Qt and KDE.
 %setup -n %name-%version
 install -m644 %SOURCE1 .
 %__bzip2 -9fk ChangeLog
-%patch -p0
+%patch -p1
 %patch1 -p1
+%patch2 -p1
+%patch3 -p1
+%patch4 -p1
+%patch5 -p1
+%patch6 -p1
+%patch7 -p1
 
 %build
 %autoreconf
@@ -192,10 +210,11 @@ mv %buildroot%_localstatedir/lib/uniconf/uniconfd.ini \
 ######## wvstreams
 %files -n lib%name
 %_bindir/wsd
-%_bindir/wvtestrunner.pl
+%_bindir/wvtestrun
 %_libdir/libwvbase%soffix
 %_libdir/libwvutils%soffix
 %_libdir/lib%name%soffix
+%_libdir/libwvdbus%soffix
 %dir %pkgdocdir
 %pkgdocdir/README
 
@@ -208,6 +227,7 @@ mv %buildroot%_localstatedir/lib/uniconf/uniconfd.ini \
 %_libdir/libwvbase.so
 %_libdir/libwvutils.so
 %_libdir/lib%name.so
+%_libdir/libwvdbus.so
 %_pkgconfigdir/*.pc
 %exclude %_pkgconfigdir/libuniconf.pc
 %exclude %_pkgconfigdir/libwvqt.pc
@@ -256,6 +276,10 @@ mv %buildroot%_localstatedir/lib/uniconf/uniconfd.ini \
 %_libdir/pkgconfig/libwvqt.pc
 
 %changelog
+* Fri Nov 29 2013 Andrey Cherepanov <cas@altlinux.org> 4.6.1-alt1
+- New version
+- Apply Fedora patches
+
 * Tue Apr 02 2013 Andrey Cherepanov <cas@altlinux.org> 4.5.1-alt4.git20090319.2
 - Fix build
 
