@@ -16,7 +16,7 @@
 
 Name: kdeaddons
 Version: 3.5.13.2
-Release: alt2
+Release: alt2.1
 
 Group: Graphical desktop/KDE
 Summary: KDE addons
@@ -31,6 +31,7 @@ Patch102: 3.5.0-alt-noatun-plugins-fix-linking.patch
 Patch103: 3.5.10-alt-fix-compile.patch
 Patch104: kdeaddons-3.5.13.2-trinityHomeToKDE.patch
 Patch105: tde-3.5.13-build-defdir-autotool.patch
+Patch106: kdeaddons-3.5.13.2-alt-automake.patch
 
 Requires: %name-akregator = %version-%release
 %if_with atlantik
@@ -243,6 +244,7 @@ Plugins extending the functionality of the noatun media player
 # %patch103 -p1
 %patch104 -p1
 %patch105
+%patch106 -p1
 
 sed -i '\|\${kdeinit}_LDFLAGS[[:space:]]=[[:space:]].*-no-undefined|s|-no-undefined|-no-undefined -Wl,--warn-unresolved-symbols|' admin/am_edit
 for f in `find $PWD -type f -name Makefile.am`
@@ -514,6 +516,9 @@ sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' libtool
 %endif
 
 %changelog
+* Tue Dec 03 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.5.13.2-alt2.1
+- Fixed build
+
 * Sat Jul 27 2013 Roman Savochenko <rom_as@altlinux.ru> 3.5.13.2-alt2
 - ARTS support enable.
 - Switch to build from original autotools "admin".
