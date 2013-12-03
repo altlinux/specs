@@ -4,8 +4,8 @@
 %def_without check
 
 Name: python-module-%modulename
-Version: 1.10.0
-Release: alt2
+Version: 1.11.1
+Release: alt1.git20130921
 
 Summary: DNS toolkit
 License: BSD-like
@@ -59,6 +59,9 @@ popd
 %python_sitelibdir/*
 
 %changelog
+* Tue Dec 03 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.11.1-alt1.git20130921
+- Version 1.11.1
+
 * Fri Mar 22 2013 Aleksey Avdeev <solo@altlinux.ru> 1.10.0-alt2
 - Version 1.10.0
 - Obsoletes python-module-dnspython (ALT #28727)
