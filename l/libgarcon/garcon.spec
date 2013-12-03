@@ -4,17 +4,21 @@
 
 Name: lib%_name
 Version: 0.2.1
-Release: alt1
+Release: alt2
 
 Summary: Implementation of the freedesktop.org menu specification
 License: %lgpl2plus
 Group: System/Libraries
 URL: http://xfce.org/
-Packager: XFCE Team <xfce@packages.altlinux.org>
+Packager: Xfce Team <xfce@packages.altlinux.org>
 
 # Upstream: git://git.xfce.org/xfce/garcon
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
+
+# Fix crash with empty directory-files.
+# From https://bugzilla.xfce.org/show_bug.cgi?id=10381
+Patch1: 0001-Bail-out-of-creating-a-directory-menu-if-it-doesn-t.patch
 
 BuildRequires(pre): rpm-build-licenses
 
@@ -79,6 +83,7 @@ BuildArch: noarch
 %prep
 %setup
 %patch -p1
+%patch1 -p1
 
 %build
 %xfce4reconf
@@ -120,6 +125,10 @@ BuildArch: noarch
 %doc %_datadir/gtk-doc/html/%_name
 
 %changelog
+* Tue Dec 03 2013 Mikhail Efremov <sem@altlinux.org> 0.2.1-alt2
+- Fix crash with empty directory-files.
+- Fix Xfce name (XFCE -> Xfce).
+
 * Mon May 06 2013 Mikhail Efremov <sem@altlinux.org> 0.2.1-alt1
 - Updated to 0.2.1.
 
