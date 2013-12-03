@@ -4,7 +4,7 @@
 %define nvIF_ver_lteq() %if "%(rpmvercmp '%2' '%1')" >= "0"
 
 %define module_name	nvidia
-%define module_version	319.72
+%define module_version	331.20
 %define module_release	alt1
 %define flavour		un-def
 
@@ -115,8 +115,10 @@ do
     tar -jxvf %_usrsrc/kernel/sources/kernel-source-%module_name-$sffx.tar.bz2
 
     pushd kernel-source-%module_name-$sffx
-    rm -f makefile Makefile
-    ln -s Makefile.kbuild Makefile
+    if [ -f Makefile.kbuild ] ; then
+	rm -f makefile Makefile
+	ln -s Makefile.kbuild Makefile
+    fi
     popd
 done
 
@@ -187,6 +189,9 @@ fi
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Tue Nov 19 2013 Sergey V Turchin <zerg at altlinux dot org> 331.20-alt1..
+- new release (331.20)
 
 * Thu Nov 07 2013 Sergey V Turchin <zerg at altlinux dot org> 319.72-alt1..
 - new releases (319.72, 304.116, 173.14.38)
