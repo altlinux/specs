@@ -1,29 +1,25 @@
+%define rev r2704
+
 %def_disable demo
 %def_disable static
-%if "%_lib" == "lib64"
-%define LIB_SUFFIX="64"
-%else
-%define LIB_SUFFIX=""
-%endif
 
 Name: bullet
-Version: 2.77
-Release: alt1.2
-License: Zlib
-Summary: Professional 3D collision detection library
-Group: System/Libraries
-Packager: Slava Dubrovskiy <dubrsl@altlinux.ru>
-Url: http://www.bulletphysics.com
-Source: http://bullet.googlecode.com/files/%name-%version.tar
-Patch: %name-%version-alt-changes.patch
+Version: 2.82
+Release: alt1.%rev
 
-# Automatically added by buildreq on Fri Sep 18 2009
-BuildRequires: cmake gcc-c++ libGL-devel libfreeglut-devel xorg-xf86vidmodeproto-devel
+Summary: Professional 3D collision detection library
+License: Zlib
+Group: System/Libraries
+Url: http://www.bulletphysics.com
+Packager: Slava Dubrovskiy <dubrsl@altlinux.ru>
+
+Source: http://bullet.googlecode.com/files/%name-%version-%rev.tgz
+
+BuildRequires: cmake gcc-c++ libGL-devel libfreeglut-devel libICE-devel
 
 %description
-Bullet is a professional open source multi-threaded
-3D Collision Detection and Rigid Body Dynamics Library
-for games and animation.
+Bullet is a professional open source multi-threaded 3D Collision
+Detection and Rigid Body Dynamics Library for games and animation.
 
 %package demo
 Summary: A demo programs using bullet library
@@ -79,29 +75,24 @@ Group: Development/C
 Static library for bullet
 
 %prep
-%setup -q -n %name-%version
-%patch -p1
+%setup -n %name-%version-%rev
+subst 's/-L@LIB_DESTINATION@/-L@LIB_INSTALL_DIR@/' %name.pc.cmake
 
 %build
-%add_optflags -fpermissive
 %cmake \
-		-DCMAKE_VERBOSE_MAKEFILE:BOOL=ON \
-		-DCMAKE_C_FLAGS:STRING="%optflags" \
-		-DCMAKE_CXX_FLAGS:STRING="%optflags" \
+    -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON \
     -DINSTALL_LIBS=ON \
-    -DCMAKE_SKIP_RPATH:BOOL=yes \
-    -DCMAKE_SKIP_RPATH:BOOL=yes \
     -DBUILD_EXTRAS=OFF \
+    -DINCLUDE_INSTALL_DIR=%_includedir/%name \
     %{?_disable_demo:-DBUILD_DEMOS=OFF} \
     %{?_disable_static:-DBUILD_SHARED_LIBS=ON}
 
-%make_build -C BUILD
+%cmake_build
 
 %install
-%make install DESTDIR=%buildroot -C BUILD
+%cmakeinstall_std
 
 %if_enabled demo
-#BasicDemo TerrainDemo VehicleDemo CcdPhysicsDemo ColladaDemo SoftDemo AllBulletDemos MultiThreadedDemo
 demos=`ls -1 *Demo`
 for i in $demos AllBulletDemos ContinuousConvexCollision BulletDino Raytracer UserCollisionAlgorithm; do
     install -m 755 $i %buildroot%_bindir/bullet-$i
@@ -115,9 +106,10 @@ done
 %_libdir/*.so.*
 
 %files -n lib%name-devel
-%doc AUTHORS README LICENSE ChangeLog NEWS VERSION *.pdf
+%doc AUTHORS README COPYING ChangeLog NEWS VERSION *.pdf
 %_libdir/pkgconfig/%name.pc
 %_includedir/*
+%_libdir/cmake/%name/*.cmake
 %if_disabled static
 %_libdir/*.so
 %else
@@ -126,6 +118,9 @@ done
 %endif #static
 
 %changelog
+* Sun Dec 01 2013 Yuri N. Sedunov <aris@altlinux.org> 2.82-alt1.r2704
+- 2.82-r2704
+
 * Thu Jun 14 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.77-alt1.2
 - Fixed build
 
