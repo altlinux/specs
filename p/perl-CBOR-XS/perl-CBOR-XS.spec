@@ -1,20 +1,20 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires: perl(Exporter.pm) perl(ExtUtils/MakeMaker.pm) perl(Types/Serialiser.pm) perl(XSLoader.pm) perl(common/sense.pm)
-# END SourceDeps(oneline)
-%define module_version 0.08
-%define module_name CBOR-XS
 %define _unpackaged_files_terminate_build 1
+# BEGIN SourceDeps(oneline):
+BuildRequires: perl(Exporter.pm) perl(ExtUtils/MakeMaker.pm) perl(Types/Serialiser.pm) perl(XSLoader.pm) perl(common/sense.pm) perl(Math/BigFloat.pm) perl(Time/Piece.pm)
+# END SourceDeps(oneline)
+%define module_version 1.11
+%define module_name CBOR-XS
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.08
+Version: 1.11
 Release: alt1
 Summary: unknown
 Group: Development/Perl
 License: perl
 Url: %CPAN %module_name
 
-Source0: http://cpan.org.ua/authors/id/M/ML/MLEHMANN/%module_name-%module_version.tar.gz
+Source: http://www.cpan.org/authors/id/M/ML/MLEHMANN/CBOR-XS-%{version}.tar.gz
 
 %description
 WARNING! This module is very new, and not very well tested (that's up to
@@ -67,6 +67,9 @@ vice versa.
 %perl_vendor_autolib/*
 
 %changelog
+* Tue Dec 03 2013 Igor Vlasenko <viy@altlinux.ru> 1.11-alt1
+- automated CPAN update
+
 * Fri Nov 01 2013 Igor Vlasenko <viy@altlinux.ru> 0.08-alt1
 - initial import by package builder
 
