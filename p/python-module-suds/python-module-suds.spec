@@ -1,8 +1,8 @@
 %define module_name suds
 
 Name: python-module-%module_name
-Version: 0.3.9
-Release: alt1.1
+Version: 0.4
+Release: alt1
 
 Summary: Lightweight SOAP python client for consuming Web Services
 License: LGPLv3+
@@ -12,8 +12,6 @@ BuildArch: noarch
 
 Url: https://fedorahosted.org/suds/
 Source: %name-%version.tar
-
-Packager: Andrey Rahmatullin <wrar@altlinux.org>
 
 %setup_python_module %module_name
 
@@ -42,6 +40,9 @@ Supports pluggable soap bindings.
 %doc README
 
 %changelog
+* Wed Dec 04 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4-alt1
+- Version 0.4
+
 * Thu Oct 20 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 0.3.9-alt1.1
 - Rebuild with Python-2.7
 
