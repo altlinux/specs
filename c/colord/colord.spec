@@ -9,7 +9,7 @@
 %define _localstatedir %_var
 
 Name: colord
-Version: 1.0.4
+Version: 1.0.5
 Release: alt1
 
 Summary: Color daemon
@@ -259,6 +259,9 @@ touch %buildroot%_localstatedir/lib/%name/storage.db
 
 
 %changelog
+* Wed Dec 04 2013 Yuri N. Sedunov <aris@altlinux.org> 1.0.5-alt1
+- 1.0.5
+
 * Wed Oct 30 2013 Yuri N. Sedunov <aris@altlinux.org> 1.0.4-alt1
 - 1.0.4
 
