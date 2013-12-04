@@ -25,7 +25,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.10.21
-Release: alt8
+Release: alt9
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -58,7 +58,7 @@ Release: alt8
 %def_enable debugfs
 %def_enable coredump
 %def_enable olpc
-%def_disable numa
+%def_enable numa
 %def_disable hotplug_memory
 %def_enable acpi
 %def_enable pci
@@ -245,6 +245,10 @@ ExcludeArch: i386
 %if_without tools
 %set_without perf
 %set_without lkvm
+%endif
+
+%if "%sub_flavour" == "ws"
+%set_disable numa
 %endif
 
 %if "%sub_flavour" != "ws"
@@ -1782,6 +1786,18 @@ done)
 
 
 %changelog
+* Wed Dec 04 2013 Led <led@altlinux.ru> 3.10.21-alt9
+- updated:
+  + fix-fs-cifs
+  + fix-fs-nfs
+- added:
+  + fix-drivers-edac--amd64-edac_mod
+  + fix-drivers-usb-storage--usb-storage
+  + fix-fs-f2fs
+  + fix-fs-fat
+  + fix-fs-nilfs2
+- enabled numa (for non-ws x86_64 kernels)
+
 * Wed Dec 04 2013 Led <led@altlinux.ru> 3.10.21-alt8
 - updated:
   + fix-drivers-gpu-drm--drm
