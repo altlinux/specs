@@ -1,6 +1,6 @@
 # -*- mode: rpm-spec; coding: utf-8 -*-
 %define version 2.7
-%define release alt1.pre1.svn20120816
+%define release alt1.svn20131120
 %define source_version 2.7
 %define source_name pyserial
 %define oname serial
@@ -17,7 +17,7 @@ Release: %release
 Summary: Serial port access for python
 Summary(ru_RU.UTF-8): Доступ к последовательному порту из python
 Name: %packagename
-# https://pyserial.svn.sourceforge.net/svnroot/pyserial/trunk/pyserial
+# http://svn.code.sf.net/p/pyserial/code/trunk/pyserial/
 Source: %source_name-%source_version.tar
 License: Python
 Group: Development/Python
@@ -195,6 +195,9 @@ subst '/win32/d' INSTALLED_FILES
 %endif
 
 %changelog
+* Wed Dec 04 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.7-alt1.svn20131120
+- Version 2.7
+
 * Wed Apr 03 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.7-alt1.pre1.svn20120816
 - New snapshot
 
