@@ -25,7 +25,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.10.21
-Release: alt7
+Release: alt8
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -1782,6 +1782,22 @@ done)
 
 
 %changelog
+* Wed Dec 04 2013 Led <led@altlinux.ru> 3.10.21-alt8
+- updated:
+  + fix-drivers-gpu-drm--drm
+  + fix-drivers-gpu-drm--i915
+  + fix-drivers-gpu-drm--nouveau
+  + fix-drivers-gpu-drm--radeon
+  + fix-drivers-gpu-vga--vga_switcheroo
+  + fix-drivers-net-ethernet-realtek--r8169
+  + fix-mm
+- added:
+  + fix-sound-pci-hda--snd-hda-intel
+  + fix-mm--hugetlb
+  + fix-mm--mempolicy
+  + fix-mm--migrate
+  + feat-sound-pci-hda--hda_i915
+
 * Thu Dec 03 2013 Led <led@altlinux.ru> 3.10.21-alt7
 - updated:
   + fix-drivers-usb-host--xhci-hcd
