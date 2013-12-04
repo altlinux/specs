@@ -1,12 +1,6 @@
-%define module_name	virtualbox
+%define module_name	virtualbox-addition
 %define module_version	4.3.4
-
 %define module_release	alt1
-
-%define drv_module_name	vboxdrv
-%define pci_module_name	vboxpci
-%define net_module_name	vboxnetflt
-%define net_module_adaptor_name	vboxnetadp
 
 %define flavour		un-def
 BuildRequires(pre): rpm-build-kernel >= 0.100-alt1
@@ -15,6 +9,10 @@ BuildRequires(pre): kernel-headers-modules-un-def
 %setup_kernel_module %flavour
 
 %define module_dir /lib/modules/%kversion-%flavour-%krelease/misc
+
+%define guest_module_name	vboxguest
+%define vfs_module_name		vboxsf
+%define video_module_name	vboxvideo
 
 Summary: VirtualBox modules
 Name: kernel-modules-%module_name-%flavour
@@ -32,60 +30,63 @@ BuildPreReq: gcc-c++
 BuildRequires: perl
 BuildRequires: rpm >= 4.0.2-75
 BuildRequires: kernel-headers-modules-%flavour = %kepoch%kversion-%krelease
-BuildRequires: kernel-source-%drv_module_name = %module_version
-BuildRequires: kernel-source-%pci_module_name = %module_version
-BuildRequires: kernel-source-%net_module_name = %module_version
-BuildRequires: kernel-source-%net_module_adaptor_name = %module_version
+BuildRequires: kernel-source-%guest_module_name = %module_version
+BuildRequires: kernel-source-%vfs_module_name = %module_version
+BuildRequires: kernel-source-%video_module_name = %module_version
 
 Provides: kernel-modules-%module_name-%kversion-%flavour-%krelease = %version-%release
 Conflicts: kernel-modules-%module_name-%kversion-%flavour-%krelease < %version-%release
 Conflicts: kernel-modules-%module_name-%kversion-%flavour-%krelease > %version-%release
 
+Provides: kernel-modules-%guest_module_name-%kversion-%flavour-%krelease = %version-%release
+Provides: kernel-modules-%guest_module_name-%flavour = %version-%release
+
+Provides: kernel-modules-%video_module_name-%kversion-%flavour-%krelease = %version-%release
+Provides: kernel-modules-%video_module_name-%flavour = %version-%release
+
+Provides: kernel-modules-%vfs_module_name-%kversion-%flavour-%krelease = %version-%release
+Provides: kernel-modules-%vfs_module_name-%flavour = %version-%release
+Obsoletes: kernel-modules-%vfs_module_name-%flavour
+
 PreReq: kernel-image-%flavour = %kepoch%kversion-%krelease
 ExclusiveArch: %karch
 
-Requires: %module_name-common
+# %%if "%flavour" == "ovz-el"
+# #Patch1: ovz-el-fix-build.patch
+# %%endif
 
 %description
-This package contains VirtualBox modules (vboxdrv) that are needed
-for VirtualBox to run. Note that you have to compile these modules on the
-system with your VirtualBox version installed or you will have to specify
-your VirtualBox version as `version' parameter when loading these modules
-or in your /etc/modules.conf file.
+This package contains VirtualBox addition modules (vboxguest, vboxsf, vboxvideo)
+that are needed for additonal guests support for VirtualBox.
 
 %prep
 %setup -T -c -n kernel-source-%module_name-%module_version
-tar jxvf %kernel_src/kernel-source-%drv_module_name-%module_version.tar.bz2
-tar jxvf %kernel_src/kernel-source-%pci_module_name-%module_version.tar.bz2
-tar jxvf %kernel_src/kernel-source-%net_module_name-%module_version.tar.bz2
-tar jxvf %kernel_src/kernel-source-%net_module_adaptor_name-%module_version.tar.bz2
+tar jxvf %kernel_src/kernel-source-%guest_module_name-%module_version.tar.bz2
+tar jxvf %kernel_src/kernel-source-%vfs_module_name-%module_version.tar.bz2
+tar jxvf %kernel_src/kernel-source-%video_module_name-%module_version.tar.bz2
+
+# %%if "%flavour" == "ovz-el"
+# %%patch1 -p1
+# %%endif
 
 %build
 . %_usrsrc/linux-%kversion-%flavour/gcc_version.inc
-%make -C kernel-source-%drv_module_name-%module_version \
+%make -C kernel-source-%guest_module_name-%module_version \
     KERN_DIR=%_usrsrc/linux-%kversion-%flavour/
-cp kernel-source-%drv_module_name-%module_version/Module.symvers \
-    kernel-source-%pci_module_name-%module_version
-%make -C kernel-source-%pci_module_name-%module_version \
+cp kernel-source-%guest_module_name-%module_version/Module.symvers \
+    kernel-source-%vfs_module_name-%module_version
+%make -C kernel-source-%vfs_module_name-%module_version \
     KERN_DIR=%_usrsrc/linux-%kversion-%flavour/
-cp kernel-source-%drv_module_name-%module_version/Module.symvers \
-    kernel-source-%net_module_name-%module_version
-%make -C kernel-source-%net_module_name-%module_version \
-    KERN_DIR=%_usrsrc/linux-%kversion-%flavour/
-cp kernel-source-%drv_module_name-%module_version/Module.symvers \
-    kernel-source-%net_module_adaptor_name-%module_version
-%make -C kernel-source-%net_module_adaptor_name-%module_version \
+%make -C kernel-source-%video_module_name-%module_version \
     KERN_DIR=%_usrsrc/linux-%kversion-%flavour/
 
 %install
 mkdir -p %buildroot/%module_dir
-install -pD -m644 kernel-source-%drv_module_name-%module_version/vboxdrv.ko \
+install -pD -m644 kernel-source-%guest_module_name-%module_version/vboxguest.ko \
     %buildroot%module_dir/
-install -pD -m644 kernel-source-%pci_module_name-%module_version/vboxpci.ko \
+install -pD -m644 kernel-source-%vfs_module_name-%module_version/vboxsf.ko \
     %buildroot%module_dir/
-install -pD -m644 kernel-source-%net_module_name-%module_version/vboxnetflt.ko \
-    %buildroot%module_dir/
-install -pD -m644 kernel-source-%net_module_adaptor_name-%module_version/vboxnetadp.ko \
+install -pD -m644 kernel-source-%video_module_name-%module_version/vboxvideo.ko \
     %buildroot%module_dir/
 
 %files
@@ -96,8 +97,8 @@ install -pD -m644 kernel-source-%net_module_adaptor_name-%module_version/vboxnet
 * %(LC_TIME=C date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
 
-* Mon Mar 18 2013 Evgeny Sinelnikov <sin@altlinux.ru> 4.2.10-alt1
-- Update to new release
+* Tue Mar 19 2013 Evgeny Sinelnikov <sin@altlinux.ru> 4.2.10-alt1
+- Update to last stable version
 - Support specsubst for kflavour
 
 * Mon Dec 17 2012 Gleb F-Malinovskiy <glebfm@altlinux.org> 4.2.4-alt2
@@ -115,25 +116,22 @@ install -pD -m644 kernel-source-%net_module_adaptor_name-%module_version/vboxnet
 * Sun Jul 29 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 4.1.18-alt1
 - 4.1.18
 
-* Sat Jul 28 2012 Evgeny Sinelnikov <sin@altlinux.ru> 4.1.18-alt1
-- Update to new release
+* Sun Apr 15 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 4.1.12-alt4
+- 4.1.12
 
-* Fri Apr 06 2012 Anton Protopopov <aspsk@altlinux.org> 4.1.12-alt2
-- Technical
+* Mon Mar 26 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 4.1.6-alt4
+- fix to build with 3.3 kernel
 
-* Tue Apr 03 2012 Evgeny Sinelnikov <sin@altlinux.ru> 4.1.12-alt1
-- Update to new release
-
-* Sun Apr 01 2012 Evgeny Sinelnikov <sin@altlinux.ru> 4.1.10-alt1
-- Update to new release with 3.2 kernel support
-
-* Sat Jan 14 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 4.1.6-alt2
+* Sat Jan 14 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 4.1.6-alt3
 - fix to build with 3.2 kernel
+
+* Mon Dec 12 2011 Anton Protopopov <aspsk@altlinux.org> 4.1.6-alt2
+- Fix build with latest el-smp
 
 * Fri Dec 02 2011 Evgeny Sinelnikov <sin@altlinux.ru> 4.1.6-alt1
 - Update to new release
 
-* Sun Oct 30 2011 Evgeny Sinelnikov <sin@altlinux.ru> 4.1.4-alt1
+* Tue Nov 01 2011 Evgeny Sinelnikov <sin@altlinux.ru> 4.1.4-alt1
 - Update to new release
 
 * Wed Sep 21 2011 Anton Protopopov <aspsk@altlinux.org> 4.0.12-alt2
@@ -145,17 +143,8 @@ install -pD -m644 kernel-source-%net_module_adaptor_name-%module_version/vboxnet
 * Sun Feb 20 2011 Evgeny Sinelnikov <sin@altlinux.ru> 4.0.4-alt1
 - Update to new release
 
-* Sun Feb 06 2011 Evgeny Sinelnikov <sin@altlinux.ru> 4.0.2-alt1
-- Update to new release
-
 * Thu Jan 06 2011 Evgeny Sinelnikov <sin@altlinux.ru> 3.2.12-alt1
 - Update to new release
-
-* Thu Dec 09 2010 Anton Protopopov <aspsk@altlinux.org> 3.2.4-alt3
-- technical
-
-* Thu Dec 09 2010 Anton Protopopov <aspsk@altlinux.org> 3.2.4-alt2
-- technical
 
 * Thu Jun 10 2010 Evgeny Sinelnikov <sin@altlinux.ru> 3.2.4-alt1
 - Update to new release
@@ -166,61 +155,58 @@ install -pD -m644 kernel-source-%net_module_adaptor_name-%module_version/vboxnet
 * Sun Apr 04 2010 Evgeny Sinelnikov <sin@altlinux.ru> 3.1.6-alt1
 - Update to new release
 
-* Wed Mar 10 2010 Evgeny Sinelnikov <sin@altlinux.ru> 3.1.4-alt1
+* Thu Mar 11 2010 Evgeny Sinelnikov <sin@altlinux.ru> 3.1.4-alt1
 - Update to new release
 
 * Tue Nov 03 2009 Evgeny Sinelnikov <sin@altlinux.ru> 3.0.10-alt1
-- Updated to new release
+- Update to new release
 
 * Wed Oct 07 2009 Evgeny Sinelnikov <sin@altlinux.ru> 3.0.8-alt1
-- Updated to new release
+- Update to new release
 
 * Sun Sep 20 2009 Evgeny Sinelnikov <sin@altlinux.ru> 3.0.6-alt1
-- Updated to new release
+- Update to new release
 
 * Tue Aug 11 2009 Evgeny Sinelnikov <sin@altlinux.ru> 3.0.4-alt1
-- Updated to new release
+- Update to new release
 
 * Thu Jul 23 2009 Anton Protopopov <aspsk@altlinux.org> 3.0.2-alt2
 - Merge with sin@ to enforce inheritance
 
 * Mon Jul 13 2009 Evgeny Sinelnikov <sin@altlinux.ru> 3.0.2-alt1
-- Updated to new release
+- Update to new release
 
 * Sun Jul 12 2009 Evgeny Sinelnikov <sin@altlinux.ru> 3.0.0-alt2
-- Add vboxnetadp building
+- Merge vboxvfs module into common virtualbox-addition
+- Built new video module
 
 * Wed Jul 08 2009 Evgeny Sinelnikov <sin@altlinux.ru> 3.0.0-alt1
-- Updated to new release
+- Update to new release
 
-* Sat Jun 13 2009 Evgeny Sinelnikov <sin@altlinux.ru> 2.2.4-alt1
-- Updated to new release
+* Sun Jun 14 2009 Evgeny Sinelnikov <sin@altlinux.ru> 2.2.4-alt1
+- Update to new release
 
 * Tue May 12 2009 Evgeny Sinelnikov <sin@altlinux.ru> 2.2.2-alt1
-- Updated to new release
+- Update to new release
 
 * Wed Feb 25 2009 Evgeny Sinelnikov <sin@altlinux.ru> 2.1.4-alt1
-- Updated to new release
+- Update to new release
 
 * Fri Dec 19 2008 Evgeny Sinelnikov <sin@altlinux.ru> 2.1.0-alt1
-- Updated to new release
-- Built new netfilter module with vboxdrv Module.symvers
+- Update to new release
 
 * Sat Nov 08 2008 Evgeny Sinelnikov <sin@altlinux.ru> 2.0.4-alt1
-- Updated to new release
+- Update to new release
 
 * Thu Sep 04 2008 Evgeny Sinelnikov <sin@altlinux.ru> 1.6.6-alt1
-- Updated to last release
+- Update to last release
 
 * Sun Aug 31 2008 Evgeny Sinelnikov <sin@altlinux.ru> 1.6.4-alt1
-- Updated to last release
+- Update to last release
 
 * Sun Jun 08 2008 Evgeny Sinelnikov <sin@altlinux.ru> 1.6.2-alt1
-- Updated to last release
-
-* Fri Apr 18 2008 Evgeny Sinelnikov <sin@altlinux.ru> 1.5.6-alt2
-- Added requires for common package
+- Update to last release
 
 * Fri Mar 28 2008 Evgeny Sinelnikov <sin@altlinux.ru> 1.5.6-alt1
-- Initial virtualbox modules build
+- Initial virtualbox addition modules build
 
