@@ -4,19 +4,20 @@
 
 Name: python-module-yaml
 Version: 3.10
-Release: alt2.1
+Release: alt2.hg20121224
 
 Summary: PyYAML, a YAML parser and emitter for Python
 License: MIT/X Consortium
 Group: Development/Python
-Url: http://pyyaml.org/
+Url: https://bitbucket.org/xi/pyyaml
 #BuildArch: noarch
 
-Source: %project-%version.tar
+# hg clone https://bitbucket.org/xi/pyyaml
+Source: %name-%version.tar
 
-BuildRequires: python-devel libyaml-devel
+BuildRequires: python-devel libyaml-devel python-module-Cython
 %if_with python3
-BuildRequires(pre): rpm-build-python3
+BuildRequires(pre): rpm-build-python3 python3-module-Cython
 BuildRequires: python3-devel
 %endif
 
@@ -43,7 +44,7 @@ support, and relatively sensible error messages.
 %endif
 
 %prep
-%setup -n %project-%version
+%setup
 %if_with python3
 rm -rf ../python3
 cp -a . ../python3
@@ -78,6 +79,9 @@ popd
 %endif
 
 %changelog
+* Wed Dec 04 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.10-alt2.hg20121224
+- Snapshot from Mercurial
+
 * Fri Mar 22 2013 Aleksey Avdeev <solo@altlinux.ru> 3.10-alt2.1
 - Rebuild with Python-3.3
 
