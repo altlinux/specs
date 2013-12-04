@@ -1,6 +1,6 @@
 Name: virt-viewer
 Version: 0.5.7
-Release: alt1
+Release: alt1.1
 
 Summary: Virtual Machine Viewer
 Group: System/Configuration/Other
@@ -51,6 +51,9 @@ intltoolize --force
 %_iconsdir/hicolor/*/apps/%name.png
 
 %changelog
+* Wed Dec 04 2013 Igor Vlasenko <viy@altlinux.ru> 0.5.7-alt1.1
+- rebuild with new libgovirt
+
 * Wed Aug 07 2013 Alexey Shabalin <shaba@altlinux.ru> 0.5.7-alt1
 - 0.5.7
 
