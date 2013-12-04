@@ -1,7 +1,7 @@
 %def_disable deskbar
 
 Name: pinot
-Version: 1.05
+Version: 1.06
 Release: alt1
 
 Summary: Personal search and metasearch tool
@@ -91,6 +91,10 @@ subst 's/Settings;X/Settings;DesktopSettings;X/' pinot-prefs.desktop
 %_includedir/%name/
 
 %changelog
+* Tue Dec 03 2013 Yuri N. Sedunov <aris@altlinux.org> 1.06-alt1
+- 1.06
+- built against libexiv2.so.13
+
 * Sun Apr 07 2013 Yuri N. Sedunov <aris@altlinux.org> 1.05-alt1
 - 1.0.5
 - fixed build with glib-2.36

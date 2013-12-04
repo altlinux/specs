@@ -1,6 +1,6 @@
-Name: exiv2
-Version: 0.24
-Release: alt1
+Name: exiv2_12
+Version: 0.23
+Release: alt2
 
 Summary: Command line tool to access EXIF data in image files
 License: GPLv2+
@@ -8,9 +8,6 @@ Group: Graphics
 
 Url: http://www.exiv2.org
 Source: %url/exiv2-%version.tar.gz
-Patch: %name-0.23-alt-lfs.patch
-
-Requires: libexiv2 = %version-%release
 
 BuildRequires: gcc-c++ libexpat-devel zlib-devel
 BuildRequires: doxygen xsltproc graphviz
@@ -21,25 +18,15 @@ metadata. Exiv2 supports full read and write access to the EXIF and IPTC
 metadata, EXIF MakerNote support, extract and delete methods for EXIF
 thumbnails, classes to access IFD and so on.
 
-%package -n libexiv2
+%package -n libexiv2_12
 Summary: EXIF and IPTC metadata manipulation library
 Group: Graphics
 
-%description -n libexiv2
+%description -n libexiv2_12
 libexiv2 is a C++ library to access image metadata.
 
-%package -n libexiv2-devel
-Summary: Headers and links to compile against the exiv2 library
-Group: Development/C
-Requires: libexiv2 = %version-%release
-
-%description -n libexiv2-devel
-This package contains all files which one needs to compile programs using the
-exiv2 library.
-
 %prep
-%setup
-%patch -b .lfs
+%setup -n exiv2-%version
 
 %build
 %make -C config -f config.make
@@ -53,22 +40,19 @@ sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' libtool
 %makeinstall_std
 %find_lang exiv2
 
-%files -f exiv2.lang
-%_bindir/exiv2
-%_man1dir/*
-%doc README doc/ChangeLog
-
-%files -n libexiv2
+%files -n libexiv2_12
 %_libdir/libexiv2.so.*
 
-%files -n libexiv2-devel
-%_libdir/libexiv2.so
-%_includedir/*
-%_pkgconfigdir/*
+%exclude %_bindir/exiv2
+%exclude %_man1dir/*
+%exclude %_libdir/libexiv2.so
+%exclude %_includedir/*
+%exclude %_pkgconfigdir/*
+%exclude %_datadir/locale/*
 
 %changelog
-* Mon Dec 02 2013 Yuri N. Sedunov <aris@altlinux.org> 0.24-alt1
-- 0.24
+* Wed Dec 04 2013 Yuri N. Sedunov <aris@altlinux.org> 0.23-alt2
+- compat library without -devel subpackage
 
 * Sun May 13 2012 Yuri N. Sedunov <aris@altlinux.org> 0.23-alt1
 - 0.23

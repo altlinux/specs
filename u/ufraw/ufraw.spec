@@ -1,28 +1,25 @@
 %define gimpplugindir %(gimptool-2.0 --gimpplugindir)
 
 Name: ufraw
-Version: 0.18
-Release: alt4
+Version: 0.19.2
+Release: alt1
 
 Summary: UFRaw is a graphical utility for opening and converting RAW files from digital photo cameras
 License: GPLv2+
 Group: Graphics
 
 Url: http://ufraw.sourceforge.net/
-Source0: http://downloads.sourceforge.net/ufraw/ufraw-%version.tar.gz
+Source: http://downloads.sourceforge.net/ufraw/ufraw-%version.tar.gz
 # Default path to curves and color profiles
 Patch1: ufraw-0.16-defaults.patch
-# Fix crash when loading dark frame
-Patch2: ufraw-0.18-darkframe.patch
 
 BuildPreReq: liblcms-devel >= 1.14
-BuildPreReq: liblensfun-devel >= 0.2.3
-# Automatically added by buildreq on Thu Mar 24 2011
-BuildRequires: bzlib-devel gcc-c++ libexiv2-devel libgimp-devel libgomp-devel libgtkimageview-devel libjpeg-devel liblcms-devel liblensfun-devel libpng-devel libtiff-devel perl-podlators zlib-devel
-BuildRequires: libcfitsio-devel
-
-# helps to expel broken 0.2.3-alt3 build...
-Requires: liblensfun >= 0.2.3-alt4
+BuildPreReq: liblensfun-devel >= 0.2.5
+BuildPreReq: libexiv2-devel >= 0.20
+BuildRequires: gcc-c++ libgimp-devel libgomp-devel libgtkimageview-devel
+BuildRequires: libjpeg-devel liblcms-devel liblensfun-devel libpng-devel libtiff-devel
+BuildRequires: libcfitsio-devel zlib-devel bzlib-devel perl-podlators
+#BuildRequires: libjasper-devel
 
 %package -n gimp-plugin-ufraw
 Summary: GIMP plugin for opening and converting RAW files from digital photo cameras (part of UFRaw project)
@@ -42,7 +39,6 @@ GIMP plugin for opening and converting RAW files from digital photo cameras
 %prep
 %setup
 %patch1 -p1
-%patch2 -p1
 
 %build
 %configure --enable-contrast --enable-openmp
@@ -70,6 +66,10 @@ install -pD -m644 icons/ufraw.png %buildroot%_liconsdir/ufraw.png
 %gimpplugindir/plug-ins/*
 
 %changelog
+* Tue Dec 03 2013 Yuri N. Sedunov <aris@altlinux.org> 0.19.2-alt1
+- 0.19.2
+- built against libexiv2.so.13
+
 * Fri Jan 25 2013 Yuri N. Sedunov <aris@altlinux.org> 0.18-alt4
 - rebuilt against libexiv2.so.12
 - removed obsolete options for configure
