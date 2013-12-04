@@ -4,7 +4,7 @@
 
 Name: python-module-%modulename
 Version: 3.2.4
-Release: alt1.hg20131113
+Release: alt2.hg20131113
 
 %setup_python_module %modulename
 
@@ -39,6 +39,19 @@ Your CherryPy powered web applications are in fact stand-alone Python
 applications embedding their own multi-threaded web server. You can deploy
 them anywhere you can run Python applications. Apache is not required,
 but it's possible to run a CherryPy application behind it.
+
+%package tests
+Summary: Tests for CherryPy
+Group: Development/Python
+Requires: %name = %version-%release
+
+%description tests
+Your CherryPy powered web applications are in fact stand-alone Python
+applications embedding their own multi-threaded web server. You can deploy
+them anywhere you can run Python applications. Apache is not required,
+but it's possible to run a CherryPy application behind it.
+
+This package contains tests for CherryPy.
 
 %if_with python3
 %package -n python3-module-%modulename
@@ -104,6 +117,10 @@ mv %buildroot%_bindir/cherryd %buildroot%_bindir/cherryd3
 %_bindir/cherryd
 %python_sitelibdir/%modulename/
 %python_sitelibdir/*.egg-info
+%exclude %python_sitelibdir/*/test
+
+%files tests
+%python_sitelibdir/*/test
 
 %if_with python3
 %files -n python3-module-%modulename
@@ -117,6 +134,9 @@ mv %buildroot%_bindir/cherryd %buildroot%_bindir/cherryd3
 %endif
 
 %changelog
+* Wed Dec 04 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.2.4-alt2.hg20131113
+- Moved tests into separate package
+
 * Tue Dec 03 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.2.4-alt1.hg20131113
 - New snapshot
 
