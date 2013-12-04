@@ -1,6 +1,6 @@
 Name: mc
-Version: 4.8.8
-Release: alt3
+Version: 4.8.11
+Release: alt1
 
 License: %gpl3plus
 Summary: An user-friendly file manager and visual shell
@@ -34,12 +34,6 @@ Patch102: mc-4.8.8-alt-forceexec.patch
 
 # http://www.midnight-commander.org/ticket/34
 Patch103: mc-4.8.6-alt-extfs-udar.patch
-
-# http://www.midnight-commander.org/ticket/2812
-Patch104: mc-4.8.6-alt-extfs-rpm.patch
-
-# http://www.midnight-commander.org/ticket/3003
-Patch105: mc-5c22dc152480607eaca220284330f10a0864a492-man.patch
 
 BuildRequires(pre): rpm-build-licenses
 
@@ -91,11 +85,9 @@ needed for working all components (some vfs for example)
 %patch3 -p1
 
 # Misc
-%patch101 -p1
+#patch101 -p1
 %patch102 -p1
 %patch103 -p1
-%patch104 -p1
-%patch105 -p1
 
 cat <<EOF > version.h
 #ifndef MC_CURRENT_VERSION
@@ -182,6 +174,10 @@ install -pD -m644 %SOURCE5 %buildroot%_niconsdir/%name.png
 %files full
 
 %changelog
+* Wed Dec 04 2013 Sergey Y. Afonin <asy@altlinux.ru> 4.8.11-alt1
+- 4.8.11
+- diabled savannah-edit-homekey.patch (many changes in mcedit)
+
 * Tue Apr 09 2013 Sergey Y. Afonin <asy@altlinux.ru> 4.8.8-alt3
 - applied patch for mc ticket #3003 (ALT #28817)
 
