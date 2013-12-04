@@ -1,8 +1,8 @@
 %define _kde_alternate_placement 1
 %define rname kscreen
 Name: kde4-kscreen
-Version: 1.0.1
-Release: alt2
+Version: 1.0.2.1
+Release: alt1
 
 Group: Graphical desktop/KDE
 Summary: KDE Display Management software
@@ -55,6 +55,12 @@ KCM and KDED modules for managing displays in KDE.
 
 
 %changelog
+* Wed Dec 04 2013 Sergey V Turchin <zerg@altlinux.org> 1.0.2.1-alt1
+- new version
+
+* Fri Oct 04 2013 Sergey V Turchin <zerg@altlinux.org> 1.0.1-alt1.M70P.1
+- built for M70P
+
 * Mon Sep 16 2013 Sergey V Turchin <zerg@altlinux.org> 1.0.1-alt2
 - fix package name
 
