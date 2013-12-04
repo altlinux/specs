@@ -1,7 +1,7 @@
 
 Name: akonadi
-Version: 1.10.3
-Release: alt2
+Version: 1.11.0
+Release: alt1
 
 Group: Databases
 Summary: An extensible cross-desktop storage service for PIM
@@ -18,9 +18,8 @@ Patch10: akonadi-1.7.0-mysql_conf.patch
 # ALT
 Patch101: akonadi-1.1.1-alt-alt-kdebindir.patch
 Patch102: akonadi-1.3.81-alt-mysql-paths.patch
-Patch103: akonadi-1.4.1-alt-disable-mysql_install_db.patch
-Patch104: akonadi-1.6.2-alt-mysql-db-create.patch
-Patch105: akonadi-1.10.0-alt-start-mysqlcheck.patch
+#
+Patch105: akonadi-1.11.0-alt-start-mysqlcheck.patch
 Patch106: akonadi-1.6.2-alt-own-mysql_install_db.patch
 Patch107: akonadi-1.6.2-alt-check-nepomuk.patch
 
@@ -135,9 +134,8 @@ Development files for %name
 #
 %patch101 -p1
 %patch102 -p1
-#%patch103 -p1
-#%patch104 -p1
-%patch105 -p1
+#
+#%patch105 -p1
 %patch106 -p1
 %patch107 -p1
 
@@ -145,18 +143,13 @@ Development files for %name
 #export PATH=%_libdir/kde4bin:$PATH
 export CMAKE_LIBRARY_PATH=%_libdir
 %Kcmake \
+    -DAKONADI_BUILD_TESTS=OFF \
     -DBIN_INSTALL_DIR2=%_kde4_bindir \
     -DCONFIG_INSTALL_DIR=%_sysconfdir \
     -DINCLUDE_INSTALL_DIR=%_includedir \
     -DMYSQLD_EXECUTABLE:FILEPATH=%_sbindir/mysqld \
-    -DINSTALL_QSQLITE_IN_QT_PREFIX=ON
-#    -DAKONADI_BUILD_QSQLITE:BOOL=TRUE \
-#    -DINSTALL_QSQLITE_IN_QT_PREFIX:BOOL=TRUE \
-#    -DAUTOMOC4_EXECUTABLE:FILEPATH=%_libdir/kde4bin/kde4automoc
-#    -DBOOST_ROOT:STRING=%_prefix \
-#    -DBOOST_INCLUDEDIR:STRING=%_includedir/boost \
-#    -DBOOST_LIBRARYDIR:STRING=%_libdir \
-#    -DBoost_MINIMUM_VERSION=1.34 \
+    -DINSTALL_QSQLITE_IN_QT_PREFIX=ON \
+    #
 %Kmake
 
 
@@ -203,6 +196,13 @@ install -m 0755 %SOURCE10 %buildroot/%_bindir/akonadi_mysql_install_db
 %_libdir/pkgconfig/*
 
 %changelog
+* Wed Dec 04 2013 Sergey V Turchin <zerg@altlinux.org> 1.11.0-alt1
+- new version
+- don't start mysqlcheck detached
+
+* Thu Oct 17 2013 Sergey V Turchin <zerg at altlinux dot org> 1.10.3-alt1.M70P.1
+- built for M70P
+
 * Thu Oct 17 2013 Sergey V Turchin <zerg at altlinux dot org> 1.10.3-alt2
 - require mariadb directly
 
