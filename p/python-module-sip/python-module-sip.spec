@@ -4,7 +4,7 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 4.15.0
+Version: 4.15.3
 Release: alt1
 Summary: Python bindings generator for C++ class libraries
 License: PSF
@@ -12,7 +12,6 @@ Group: Development/Python
 
 %setup_python_module sip
 
-# hg clone http://www.riverbankcomputing.com/hg/sip
 Source0: %name-%version.tar
 
 URL: http://www.riverbankcomputing.com/software/sip/
@@ -72,8 +71,8 @@ Header files for sip
 %prep
 %setup
 # fix versions sets
-subst 's/version = (0, 1, 0)/version = (%pkg_version)/' build.py
-python build.py prepare
+#subst 's/version = (0, 1, 0)/version = (%pkg_version)/' build.py
+#python build.py prepare
 
 %if_with python3
 rm -rf ../python3
@@ -86,7 +85,7 @@ sed -i 's|^\(CPPFLAGS.*\)|\1 -g -I%python_includedir|' */Makefile
 %make
 
 # docs build
-python build.py doc
+#python build.py doc
 
 %if_with python3
 pushd ../python3
@@ -136,6 +135,9 @@ sed -i 's|%_bindir/sip|%_bindir/sip3|' \
 %endif
 
 %changelog
+* Wed Dec 04 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.15.3-alt1
+- Version 4.15.3
+
 * Sat Nov 16 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.15.0-alt1
 - Version 4.15.0 (ALT #29568)
 
