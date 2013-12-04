@@ -1,0 +1,110 @@
+%define module_version 0.35
+%define module_name Data-Printer
+# BEGIN SourceDeps(oneline):
+BuildRequires: perl(B.pm) perl(B/Deparse.pm) perl(Capture/Tiny.pm) perl(Carp.pm) perl(Clone/PP.pm) perl(DBIx/Class/Core.pm) perl(DBIx/Class/Schema.pm) perl(ExtUtils/MakeMaker.pm) perl(Fcntl.pm) perl(File/HomeDir.pm) perl(File/HomeDir/Test.pm) perl(File/Spec.pm) perl(File/Temp.pm) perl(MRO/Compat.pm) perl(Package/Stash.pm) perl(Scalar/Util.pm) perl(Sort/Naturally.pm) perl(Term/ANSIColor.pm) perl(Test/More.pm) perl(base.pm) perl(if.pm) perl(mro.pm) perl(version.pm)
+# END SourceDeps(oneline)
+%define _unpackaged_files_terminate_build 1
+BuildRequires: rpm-build-perl perl-devel perl-podlators
+
+Name: perl-%module_name
+Version: 0.35
+Release: alt2
+Summary: colored pretty-print of Perl data structures and objects
+Group: Development/Perl
+License: perl
+Url: %CPAN %module_name
+
+Source0: http://cpan.org.ua/authors/id/G/GA/GARU/%module_name-%module_version.tar.gz
+BuildArch: noarch
+BuildRequires: perl(DBD/DBM.pm)
+
+%description
+Want to see what's inside a variable in a complete, colored
+and human-friendly way?
+
+  use Data::Printer;   # or just "use DDP" for short
+  
+  p @array;            # no need to pass references
+
+Code above might output something like this (with colors!):
+
+   [
+       [0] "a",
+       [1] "b",
+       [2] undef,
+       [3] "c",
+   ]
+
+You can also inspect objects:
+
+    my $obj = SomeClass->new;
+
+    p($obj);
+
+Which might give you something like:
+
+  \ SomeClass  {
+      Parents       Moose::Object
+      Linear @ISA   SomeClass, Moose::Object
+      public methods (3) : bar, foo, meta
+      private methods (0)
+      internals: {
+         _something => 42,
+      }
+  }
+
+Data::Printer is fully customizable. If you want to change how things
+are displayed, or even its standard behavior. Take a look at the
+available customizations. Once you figure out
+your own preferences, create a
+configuration file for
+yourself and Data::Printer will automatically use it!
+
+That's about it! Feel free to stop reading now and start dumping
+your data structures! For more information, including feature set,
+how to create filters, and general tips, just keep reading :)
+
+Oh, if you are just experimenting and/or don't want to use a
+configuration file, you can set all options during initialization,
+including coloring, identation and filters!
+
+  use Data::Printer {
+      color => {
+         'regex' => 'blue',
+         'hash'  => 'yellow',
+      },
+      filters => {
+         'DateTime' => sub { $_[0]->ymd },
+         'SCALAR'   => sub { "oh noes, I found a scalar! $_[0]" },
+      },
+  };
+
+The first `{}' block is just syntax sugar, you can safely ommit it
+if it makes things easier to read:
+
+  use DDP colored => 1;
+
+  use Data::Printer  deparse => 1, sort_keys => 0;
+
+
+
+%prep
+%setup -n %module_name-%module_version
+
+%build
+%perl_vendor_build
+
+%install
+%perl_vendor_install
+
+%files
+%doc Changes README examples
+%perl_vendor_privlib/D*
+
+%changelog
+* Wed Dec 04 2013 Igor Vlasenko <viy@altlinux.ru> 0.35-alt2
+- uploaded to Sisyphus as Scalar-Does dependency
+
+* Mon Sep 30 2013 Igor Vlasenko <viy@altlinux.ru> 0.35-alt1
+- initial import by package builder
+
