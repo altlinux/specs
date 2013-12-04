@@ -2,7 +2,7 @@
 BuildRequires: librest-gir-devel pkgconfig(gio-2.0)
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
-%define fedora 19
+%define fedora 20
 # -*- rpm-spec -*-
 
 %global with_gir 0
@@ -13,11 +13,12 @@ BuildRequires: librest-gir-devel pkgconfig(gio-2.0)
 
 Summary: A GObject library for interacting with oVirt REST API
 Name: libgovirt
-Version: 0.1.0
-Release: alt1_2%{?extra_release}
+Version: 0.3.0
+Release: alt1_3
 License: LGPLv2+
 Group: Development/C
 Source: http://people.freedesktop.org/~teuf/govirt/%{name}-%{version}.tar.xz
+Patch0: 0001-Fix-memory-corruption-when-RestProxy-ssl-ca-file-doe.patch
 URL: http://people.freedesktop.org/~teuf/govirt/
 BuildRequires: glib2-devel
 BuildRequires: librest-devel >= 0.7.90
@@ -45,6 +46,7 @@ Libraries, includes, etc. to compile with the libgovirt library
 
 %prep
 %setup -q
+%patch0 -p1
 
 %build
 %if %{with_gir}
@@ -66,7 +68,7 @@ make check
 
 %files
 %doc AUTHORS COPYING MAINTAINERS README
-%{_libdir}/%{name}.so.1*
+%{_libdir}/%{name}.so.2*
 %if %{with_gir}
 %{_libdir}/girepository-1.0/GoVirt-1.0.typelib
 %endif
@@ -82,6 +84,9 @@ make check
 %endif
 
 %changelog
+* Tue Dec 03 2013 Igor Vlasenko <viy@altlinux.ru> 0.3.0-alt1_3
+- update to new release by fcimport
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.1.0-alt1_2
 - update to new release by fcimport
 
