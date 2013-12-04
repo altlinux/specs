@@ -2,7 +2,7 @@
 
 Name: gcc%gcc_branch
 Version: 4.4.7
-Release: alt2
+Release: alt3
 
 Summary: GNU Compiler Collection
 # libgcc, libgfortran, libmudflap, libgomp, libstdc++ and crtstuff have
@@ -44,6 +44,8 @@ Url: http://gcc.gnu.org/
 %set_verify_elf_method unresolved=relaxed
 # due to libtool.m4-gcj.patch
 %set_libtool_version 2.4
+# support for Cygnus-style trees has been removed in newer automake.
+%set_automake_version 1.11
 
 # Build parameters.
 %def_enable compat
@@ -117,6 +119,11 @@ Patch26: gcc44-rh-rh820281.patch
 Patch27: gcc44-rh-pr54858.patch
 Patch28: gcc44-rh-pr54487.patch
 Patch29: gcc44-rh-rh867878.patch
+Patch30: gcc44-rh-pr49146.patch
+Patch31: gcc44-rh-pr56403.patch
+Patch32: gcc44-rh-rh906234.patch
+Patch33: gcc44-rh-rh908025.patch
+Patch34: gcc44-rh-rh967003.patch
 
 # Debian patches.
 Patch301: gcc44-deb-gcc-textdomain.patch
@@ -175,6 +182,7 @@ Requires: %binutils_deps, glibc-devel
 
 BuildPreReq: rpm-build >= 4.0.4-alt39, %alternatives_deps, %binutils_deps
 BuildPreReq: coreutils, flex, libmpfr-devel
+BuildPreReq: makeinfo
 # due to manpages
 BuildPreReq: perl-Pod-Parser
 %{?_with_ada:BuildPreReq: gcc-gnat}
@@ -760,6 +768,11 @@ echo '%distribution %version-%release' >gcc/DEV-PHASE
 %patch27 -p0
 %patch28 -p0
 %patch29 -p0
+%patch30 -p0
+%patch31 -p0
+%patch32 -p0
+%patch33 -p0
+%patch34 -p0
 
 # Debian patches.
 %patch301 -p2
@@ -1628,6 +1641,9 @@ EOF
 %endif #with_pdf
 
 %changelog
+* Wed Dec 04 2013 Dmitry V. Levin <ldv@altlinux.org> 4.4.7-alt3
+- Synced with RH 4.4.7-4 (closes: #29624).
+
 * Tue Apr 02 2013 Dmitry V. Levin <ldv@altlinux.org> 4.4.7-alt2
 - Synced with RH 4.4.7-3 (closes: #28765).
 
