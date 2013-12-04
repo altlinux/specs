@@ -2,7 +2,7 @@
 
 Name: wxGTK3.0
 Version: %wxbranch.0
-Release: alt1.svn20131118
+Release: alt2.svn20131118
 
 Summary: The GTK+ port of the wxWidgets library
 License: wxWidgets License
@@ -108,6 +108,9 @@ cp -a demos samples %buildroot%_datadir/wx-%wxbranch/examples
 wx_config_filename=$(basename %buildroot%_libdir/wx/config/*-unicode-[0-9]*)
 ln -sf ../..%_libdir/wx/config/$wx_config_filename %buildroot%_bindir/wx-config
 
+cp -fR include/wx/private %buildroot%_includedir/wx-%wxbranch/wx/
+cp -fR include/wx/unix/private %buildroot%_includedir/wx-%wxbranch/wx/unix/
+
 %files -n lib%name
 %_libdir/*.so.*
 
@@ -128,6 +131,9 @@ ln -sf ../..%_libdir/wx/config/$wx_config_filename %buildroot%_bindir/wx-config
 %_datadir/wx-%wxbranch/examples
 
 %changelog
+* Wed Dec 04 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0.0-alt2.svn20131118
+- Added missing headers
+
 * Tue Nov 19 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0.0-alt1.svn20131118
 - Version 3.0.0
 
