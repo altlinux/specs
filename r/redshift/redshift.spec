@@ -1,47 +1,47 @@
-Name: redshift
-Version: 1.7
+Name: 	 redshift
+Version: 1.8
 Release: alt1
 
 Summary: Redshift adjusts the color temperature of your screen
-Summary(ru_RU.UTF-8): Redshift изменяет температуру цвета Вашего экрана для снижения утомляемости глаз
+Summary(ru_RU.UTF-8): Redshift изменяет температуру цвета вашего экрана для снижения утомляемости глаз
 
-License: GPLv3
-Group: Graphical desktop/GNOME
-Url: https://launchpad.net/redshift
+License: GPLv3+
+Group: 	 Graphical desktop/GNOME
+Url: 	 http://jonls.dk/redshift/
 
 Packager: Anton Chernyshov <ach@altlinux.org>
-Source0: %name-%version.tar.bz2
+Source0:  %name-%version.tar
 
-Patch0: %name-%version-alt-remove_la_files.patch
+Patch1:   %name-geoclue-provider.patch
 
 BuildPreReq: libGConf-devel
+BuildPreReq: libXrandr-devel
 BuildPreReq: libXxf86vm-devel
-BuildPreReq: libXext-devel
-BuildPreReq: libX11-devel
-BuildPreReq: libXxf86vm-devel 
-BuildPreReq: libX11-devel
-BuildPreReq: python-devel
-BuildPreReq: xorg-xf86vidmodeproto-devel
+BuildPreReq: libgeoclue-devel
+BuildPreReq: gettext-devel
+#BuildPreReq: xorg-xf86vidmodeproto-devel
 
 %description
 Redshift adjusts the color temperature of your screen according
 to your surroundings. This may help your eyes hurt less if you
-are working in front of the screen at night. The color temperature 
-is set according to the position of the sun. A different color temperature
-is set during night and daytime. During twilight and early morning,
-the color temperature transitions smoothly from night to daytime temperature
-to allow your eyes to slowly adapt.
+are working in front of the screen at night. The color temperature
+is set according to the position of the sun. A different color
+temperature is set during night and daytime. During twilight and early
+morning, the color temperature transitions smoothly from night
+to daytime temperature to allow your eyes to slowly adapt.
 
 %description -l ru_RU.UTF-8
 Redshift изменяет температуру цвета экрана вашего компьютера. Это может
 снизить утомляемость глаз, особенно если вы работаете за компьютером
 ночью. Температура цвета устанавливается в зависимости от позиции
-солнца на небе (определяется на основе географических координат) 
+солнца на небе (определяется на основе географических координат)
 и текущего времени суток. Изменение температуры цвета происходит
 плавно, давая Вашим глазам время на адаптацию.
 
 %prep
 %setup
+%patch1 -p1
+%autoreconf
 
 %build
 %configure \
@@ -60,7 +60,7 @@ test %_libdir = /usr/lib64 && mv %buildroot/%_libexecdir %buildroot/%_libdir
 
 %files -f %name.lang
 %_bindir/*
-%python_sitelibdir/gtk_%name/*
+%python_sitelibdir/%{name}_gtk/*
 %_desktopdir/*
 %doc ABOUT-NLS AUTHORS NEWS README
 %_iconsdir/hicolor/*
@@ -69,7 +69,6 @@ test %_libdir = /usr/lib64 && mv %buildroot/%_libexecdir %buildroot/%_libdir
 %post
 # If gnome-panel installed (i.e for GNOME users) - set program to autostart
 # KDE users must set redshift parameters manually
-
 if [ -e %_desktopdir/gnome-panel.desktop ]; then
 	cp %_desktopdir/gtk-redshift.desktop %_sysconfdir/xdg/autostart/
 fi
@@ -78,6 +77,9 @@ fi
 rm -f %_sysconfdir/xdg/autostart/gtk-redshift.desktop
 
 %changelog
+* Thu Dec 05 2013 Andrey Cherepanov <cas@altlinux.org> 1.8-alt1
+- New version
+
 * Wed Jul 31 2013 Andrey Cherepanov <cas@altlinux.org> 1.7-alt1
 - New version
 
