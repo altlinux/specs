@@ -1,6 +1,6 @@
 Name: cinnamon
-Version: 2.0.13
-Release: alt2.1
+Version: 2.0.14
+Release: alt1
 
 Summary: Window management and application launching for GNOME
 License: GPLv2+
@@ -130,6 +130,8 @@ sed -i -e 's@/usr/lib@/usr/share@g' files/usr/bin/cinnamon-json-makepot \
   files/usr/share/cinnamon-json-makepot/cinnamon-json-makepot.py
 # make changes for cinnamon-settings-users move to /usr/share
 mv files/usr/lib/cinnamon-settings-users files/usr/share
+sed -i -e 's@/usr/lib@/usr/share@g' files/usr/bin/cinnamon-settings-users \
+  files/usr/share/cinnamon-settings-users/cinnamon-settings-users.py
 # make changes for cinnamon-looking-glass move to /usr/share
 mv files/usr/lib/cinnamon-looking-glass files/usr/share
 sed -i -e 's@/usr/lib@/usr/share@g' files/usr/bin/cinnamon-looking-glass \
@@ -230,6 +232,10 @@ install -D -p -m 0644 %{SOURCE3} $RPM_BUILD_ROOT/%{_datadir}/applications/
 %doc NEWS README
 
 %changelog
+* Thu Dec 5 2013 Vladimir Didenko <cow@altlinux.org> 2.0.14-alt1
+- 2.0.14-2-gf297108
+- fix path to cinnamon-settings-users
+
 * Tue Nov 25 2013 Vladimir Didenko <cow@altlinux.org> 2.0.13-alt2.1
 - fix build requires
 
