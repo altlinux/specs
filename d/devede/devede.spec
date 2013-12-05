@@ -1,6 +1,8 @@
+%define git_rev .git58c9ac8e
+
 Name: devede
-Version: 3.21.0
-Release: alt1
+Version: 3.23.0
+Release: alt1%git_rev
 Summary: A program to create video DVDs and CDs (VCD, sVCD or CVD)
 
 License: GPLv3+
@@ -8,13 +10,8 @@ Group: Video
 Url: http://www.rastersoft.com/programas/devede.html
 Packager: Dmitriy Khanzhin <jinn@altlinux.ru>
 
-Source: http://www.rastersoft.com/descargas/%name-%version.tar.bz2
-Source1: devede-16.png
-Source2: devede-32.png
-Source3: devede-48.png
-Patch1: devede-decimal_point.patch
-Patch2: devede-desktop.patch
-Patch3: devede-defaults.patch
+Source: %name-%version.tar
+Patch: %name-%version-%release.patch
 
 BuildArch: noarch
 
@@ -38,13 +35,11 @@ and MKisofs (well, and Python 2.4, PyGTK and PyGlade), so its
 dependencies are really small.
 
 %prep
-%setup -n devede-%version
-%patch1 -p1 -b .point
-%patch2 -p1 -b .desk
-%patch3 -p1
+%setup
+%patch -p1
 
 # Fix devede module directory
-sed -i 's!/usr/lib/!%python_tooldir/!' devede.py
+sed -i 's!/usr/lib/!%python_sitelibdir/!' devede
 
 %build
 
@@ -54,7 +49,7 @@ sed -i 's!/usr/lib/!%python_tooldir/!' devede.py
   --targeted=yes \
   --DESTDIR=%buildroot \
   --prefix=%_prefix \
-  --libdir=%python_tooldir
+  --libdir=%python_sitelibdir
 
 # remove debian files from doc
 rm -f %buildroot%_docdir/%name/changelog.Debian
@@ -66,9 +61,9 @@ rm -f %buildroot%_datadir/%name/devedesans.ttf
 # fd.o icons
 mkdir -p %buildroot%_iconsdir/hicolor/{16x16,32x32,48x48,scalable}/apps
 cp %buildroot%_pixmapsdir/%name.svg %buildroot%_iconsdir/hicolor/scalable/apps/%name.svg
-install -m 644 %SOURCE1 %buildroot%_iconsdir/hicolor/16x16/apps/%name.png
-install -m 644 %SOURCE2 %buildroot%_iconsdir/hicolor/32x32/apps/%name.png
-install -m 644 %SOURCE3 %buildroot%_iconsdir/hicolor/48x48/apps/%name.png
+install -m 644 pixmaps/%name-16.png %buildroot%_iconsdir/hicolor/16x16/apps/%name.png
+install -m 644 pixmaps/%name-32.png %buildroot%_iconsdir/hicolor/32x32/apps/%name.png
+install -m 644 pixmaps/%name-48.png %buildroot%_iconsdir/hicolor/48x48/apps/%name.png
 
 %find_lang %name
 
@@ -87,15 +82,19 @@ ln -sf %_datadir/fonts/ttf/dejavu/DejaVuSans.ttf %_datadir/%name/devedesans.ttf
 %files -f %name.lang
 %_bindir/%name
 %_desktopdir/%name.desktop
-%dir %python_tooldir/%name
+%dir %python_sitelibdir/%name
 %defattr(0644,root,root,0755)
-%python_tooldir/%name/*
+%python_sitelibdir/%name/*
 %_datadir/%name
 %_pixmapsdir/*
 %_iconsdir/*/*/*/%name.*
 %doc %_docdir/%name
 
 %changelog
+* Thu Dec 05 2013 Dmitriy Khanzhin <jinn@altlinux.org> 3.23.0-alt1.git58c9ac8e
+- 3.23.0 git snapshot 58c9ac8e
+- program modules moved to %%python_sitelibdir
+
 * Wed Jan 18 2012 Dmitriy Khanzhin <jinn@altlinux.ru> 3.21.0-alt1
 - 3.21.0
 - default backend changed to mencoder
