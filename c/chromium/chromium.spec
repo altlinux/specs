@@ -1,6 +1,5 @@
 %set_verify_elf_method textrel=relaxed
 %define v8_ver 3.21
-%define rev 235101
 
 %def_disable debug
 %def_disable nacl
@@ -12,8 +11,8 @@
 %endif
 
 Name:           chromium
-Version:        31.0.1650.57
-Release:        alt1.r%rev
+Version:        31.0.1650.63
+Release:        alt1
 
 Summary:        An open source web browser developed by Google
 License:        BSD-3-Clause and LGPL-2.1+
@@ -233,13 +232,10 @@ subst 's,v8/tools/gyp/v8.gyp,build/linux/system.gyp,' `find . -type f -a -name *
 sed -i '/v8_shell#host/d' src/chrome/chrome_tests.gypi src/chrome/js_unittest_rules.gypi
 grep -Rl '^#include [<"]v8/include' * 2>/dev/null | while read f;do subst 's,^\(#include [<"]\)v8/include/,\1,' "$f";done
 
-echo "svn%rev" > src/build/LASTCHANGE.in
-
 # Make sure that the requires legal files can be found
 cp -a src/AUTHORS src/LICENSE .
 
 %build
-
 ## create make files
 
 PARSED_OPT_FLAGS=`echo \'%optflags -DUSE_SYSTEM_LIBEVENT -fPIC -fno-ipa-cp -fno-strict-aliasing \' | sed "s/ /',/g" | sed "s/',/', '/g"`
@@ -328,7 +324,7 @@ pushd src
 # please get your own set of keys.
 
 # Limit number of threads
-export NPROCS=6
+export NPROCS=1
 
 # Buld main program
 %make_build -r chrome V=1 BUILDTYPE=%buildtype
@@ -445,6 +441,15 @@ printf '%_bindir/%name\t%_libdir/%name/%name-gnome\t15\n' > %buildroot%_altdir/%
 %_altdir/%name-gnome
 
 %changelog
+* Thu Dec 05 2013 Andrey Cherepanov <cas@altlinux.org> 31.0.1650.63-alt1
+- New version
+- Security fixes:
+  - Medium CVE-2013-6634: Session fixation in sync related to 302 redirects.
+  - High CVE-2013-6635: Use-after-free in editing.
+  - Medium CVE-2013-6636: Address bar spoofing related to modal dialogs.
+- Increase default nproc limit from 1024 to 1536
+- Remove SVN commit from release number
+
 * Fri Nov 15 2013 Andrey Cherepanov <cas@altlinux.org> 31.0.1650.57-alt1.r235101
 - New version
 - Security fixes:
