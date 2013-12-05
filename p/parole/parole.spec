@@ -1,5 +1,5 @@
 Name: parole
-Version: 0.5.3
+Version: 0.5.4
 Release: alt1
 
 # '1' for gstreamer-1.0
@@ -18,7 +18,7 @@ URL: http://goodies.xfce.org/projects/applications/parole
 # git://git.xfce.org/apps/parole
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
-Packager: XFCE Team <xfce@packages.altlinux.org>
+Packager: Xfce Team <xfce@packages.altlinux.org>
 
 BuildRequires(pre): rpm-build-licenses
 
@@ -95,6 +95,10 @@ mkdir m4
 %doc %_datadir/gtk-doc/html/*
 
 %changelog
+* Thu Dec 05 2013 Mikhail Efremov <sem@altlinux.org> 0.5.4-alt1
+- Fix Xfce name (XFCE -> Xfce).
+- Updated to 0.5.4.
+
 * Wed Oct 16 2013 Mikhail Efremov <sem@altlinux.org> 0.5.3-alt1
 - Updated to 0.5.3.
 
