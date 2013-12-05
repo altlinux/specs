@@ -24,13 +24,13 @@
 %define flavour %base_flavour-%sub_flavour
 
 Name: kernel-image-%flavour
-Version: 3.10.21
-Release: alt9
+Version: 3.10.22
+Release: alt1
 
 %define kernel_req %nil
 %define kernel_prov %nil
 %define kernel_branch 3.10
-%define kernel_stable_version 21
+%define kernel_stable_version 22
 %define kernel_extra_version .%kernel_stable_version
 #define kernel_extra_version %nil
 
@@ -1786,6 +1786,22 @@ done)
 
 
 %changelog
+* Thu Dec 05 2013 Led <led@altlinux.ru> 3.10.22-alt1
+- 3.10.22
+- removed:
+  + fix-crypto-asymmetric_keys--x509_key_parser
+  + fix-drivers-net-wireless--vt6656
+  + fix-fs-devpts
+  + fix-kernel-time
+  + fix-mm--zsmalloc
+  + fix-net-netfilter
+- updated:
+  + fix-drivers-gpu-drm--nouveau
+  + fix-drivers-gpu-drm--radeon
+  + fix-drivers-gpu-drm--ttm
+  + fix-fs
+  + fix-tools--perf
+
 * Wed Dec 04 2013 Led <led@altlinux.ru> 3.10.21-alt9
 - updated:
   + fix-fs-cifs
