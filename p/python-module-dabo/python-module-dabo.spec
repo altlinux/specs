@@ -2,8 +2,8 @@
 %define module dabo
 
 Name: python-module-dabo
-Version: 0.8.4
-Release: alt2.1
+Version: 0.9.13
+Release: alt1
 
 Summary: true 3-tier desktop application framework
 
@@ -22,7 +22,7 @@ BuildArch: noarch
 # Automatically added by buildreq on Mon Dec 31 2007
 BuildRequires: libuuid python-module-MySQLdb python-module-PyXML python-module-Pyrex python-module-ctypes python-module-pysqlite2 python-module-setuptools
 
-BuildPreReq: rpm-build-compat
+BuildPreReq: python-modules-json
 
 %description
 Dabo is a Python module that provides a true 3-tier desktop application
@@ -31,8 +31,8 @@ access, user interface and business logic. You would typically use Dabo
 to develop graphical, data-aware desktop applications.
 
 %prep
-%setup -q -n %module
-%patch
+%setup -n %module
+#patch
 
 %build
 %python_build
@@ -45,13 +45,15 @@ mv %buildroot%_prefix/dabo/locale %buildroot%_datadir
 %find_lang %module
 
 %files -f %module.lang
-%doc AUTHORS ANNOUNCE ChangeLog dabo/LICENSE.TXT README TODO
+%doc AUTHORS ChangeLog README.md RELEASENOTES.md dabo/LICENSE.TXT
 %doc demo
-#%python_sitelibdir/Dabo-0.8.3-py2.4.egg-info/
-%python_sitelibdir/dabo/
+%python_sitelibdir/*
 
 
 %changelog
+* Thu Dec 05 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.13-alt1
+- Version 0.9.13
+
 * Thu Oct 27 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 0.8.4-alt2.1
 - Rebuild with Python-2.7
 
