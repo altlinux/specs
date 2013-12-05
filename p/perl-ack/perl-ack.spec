@@ -1,3 +1,4 @@
+%define _unpackaged_files_terminate_build 1
 # not implemented, just code stub. see Source.
 %filter_from_requires /^perl.App.Ack.Repository.Tar.pm./d
 
@@ -17,7 +18,7 @@
 %define _enable_test 1
 
 Name: perl-ack
-Version: 2.10
+Version: 2.12
 Release: alt1
 
 Summary: A grep-like program specifically for large source trees
@@ -63,6 +64,9 @@ export TMPDIR=/tmp
 %perl_vendor_privlib/App/
 
 %changelog
+* Thu Dec 05 2013 Igor Vlasenko <viy@altlinux.ru> 2.12-alt1
+- automated CPAN update
+
 * Wed Sep 25 2013 Igor Vlasenko <viy@altlinux.ru> 2.10-alt1
 - automated CPAN update
 
