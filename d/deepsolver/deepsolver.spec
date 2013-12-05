@@ -1,7 +1,7 @@
 
 Name: deepsolver
 Version: 0.3.4
-Release: alt1
+Release: alt2
 
 Packager: Michael Pozhidaev <msp@altlinux.ru>
 License: GPL v2+
@@ -116,6 +116,9 @@ make DESTDIR=%buildroot install
 %_bindir/ds-provides
 
 %changelog
+* Thu Dec 05 2013 Michael Pozhidaev <msp@altlinux.ru> 0.3.4-alt2
+- Fixed building bug with missed m4 directory
+
 * Thu Aug 01 2013 Michael Pozhidaev <msp@altlinux.ru> 0.3.4-alt1
 - New version 0.3.4
 - New utilities: ds-require and ds-snapshot
