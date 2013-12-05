@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist DBIx-Perlish
 Name: perl-%dist
-Version: 0.60
+Version: 0.61
 Release: alt1
 
 Summary: a perlish interface to SQL databases
@@ -53,6 +53,9 @@ transactions. All this is outside the scope of this module.
 %doc Changes README
 
 %changelog
+* Thu Dec 05 2013 Igor Vlasenko <viy@altlinux.ru> 0.61-alt1
+- automated CPAN update
+
 * Thu Sep 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.60-alt1
 - automated CPAN update
 
