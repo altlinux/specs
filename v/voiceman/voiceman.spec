@@ -1,6 +1,6 @@
 Name: voiceman
 Version: 1.5.0.2
-Release: alt1
+Release: alt2
 
 Packager: Michael Pozhidaev <msp@altlinux.ru>
 License: %gpl3plus
@@ -56,6 +56,7 @@ This package contains library used for static linking of libvmclient.
 %prep
 %setup -q
 %build
+%autoreconf
 %configure default_socket=/var/run/voiceman.socket
 %make_build
 
@@ -103,6 +104,9 @@ done
 %_libdir/libvmclient.a
 
 %changelog
+* Thu Dec 05 2013 Michael Pozhidaev <msp@altlinux.ru> 1.5.0.2-alt2
+- %autoreconf invocation added
+
 * Wed Dec 19 2012 Michael Pozhidaev <msp@altlinux.ru> 1.5.0.2-alt1
 - New version
 
