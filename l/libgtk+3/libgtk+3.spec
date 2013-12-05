@@ -19,7 +19,7 @@
 %def_enable installed_tests
 
 Name: libgtk+3
-Version: %ver_major.5
+Version: %ver_major.6
 Release: alt1
 
 Summary: The GIMP ToolKit (GTK+)
@@ -35,6 +35,7 @@ Source: %_name-%version.tar
 Source: %gnome_ftp/%_name/%ver_major/%_name-%version.tar.xz
 %endif
 Patch: gtk+-2.16.5-alt-stop-spam.patch
+Patch10: gtk+-3.10.6-up-fix.patch
 
 %define glib_ver 2.37.7
 %define cairo_ver 1.10
@@ -72,7 +73,7 @@ BuildRequires: libXrender-devel libXt-devel
 %{?_enable_wayland:BuildRequires: libwayland-client-devel libwayland-cursor-devel libEGL-devel libwayland-egl-devel libxkbcommon-devel}
 
 # for check
-BuildRequires: /proc dbus-tools-gui xvfb-run
+BuildRequires: /proc dbus-tools-gui xvfb-run icon-theme-hicolor gnome-icon-theme-symbolic
 
 %description
 GTK+ is a multi-platform toolkit for creating graphical user interfaces.
@@ -203,8 +204,11 @@ the functionality of the installed GTK+3 packages.
 %define fulllibpath %_libdir/gtk-%api_ver/%binary_ver
 
 %prep
-%setup -q -n %_name-%version
+%setup -n %_name-%version
 %patch -p1
+
+%patch10 -p1
+rm -f gdk/wayland/{gtk-shell-client-protocol.h,gtk-shell-protocol.c}
 
 %{?_enable_snapshot:touch README INSTALL}
 
@@ -234,26 +238,6 @@ install -d %buildroot{%_sysconfdir/gtk-%api_ver,%_libdir/gtk-%api_ver/%binary_ve
 
 touch %buildroot%_libdir/gtk-%api_ver/%binary_ver/immodules.cache
 
-# system wide gtkrc
-cat <<__RC__ > %buildroot%_sysconfdir/gtk-%api_ver/gtkrc
-# This enables editing of menu accelerators by pressing
-# an accelerator over the menu item.
-gtk-can-change-accels = 1
-__RC__
-
-cat <<__SH__ >%name.sh
-
-export GTK_PATH=\`getconf LIBDIR\`/gtk-%api_ver/%binary_ver
-__SH__
-
-cat <<__CSH__ >%name.csh
-
-setenv GTK_PATH \`getconf LIBDIR\`/gtk-%api_ver/%binary_ver
-__CSH__
-
-install -pD -m755 %name.sh %buildroot%_sysconfdir/profile.d/%name.sh
-install -pD -m755 %name.csh %buildroot%_sysconfdir/profile.d/%name.csh
-
 # posttransfiletrigger to update immodules cache
 cat <<EOF > filetrigger
 #!/bin/sh -e
@@ -263,6 +247,13 @@ grep -qs '^'\$dir'' && %_bindir/gtk-query-immodules-%api_ver --update-cache ||:
 EOF
 
 install -pD -m 755 filetrigger %buildroot%_rpmlibdir/gtk-%api_ver-immodules-cache.filetrigger
+
+# system wide gtkrc
+cat <<__RC__ > %buildroot%_sysconfdir/gtk-%api_ver/gtkrc
+# This enables editing of menu accelerators by pressing
+# an accelerator over the menu item.
+gtk-can-change-accels = 1
+__RC__
 
 # The license
 ln -sf %_licensedir/LGPL-2 COPYING
@@ -309,7 +300,6 @@ cp examples/*.c examples/Makefile* %buildroot/%_docdir/%name-devel-%version/exam
 %dir %_sysconfdir/gtk-%api_ver
 %config(noreplace) %_sysconfdir/gtk-%api_ver/gtkrc
 %config(noreplace) %_sysconfdir/gtk-%api_ver/im-multipress.conf
-#%config(noreplace) %_sysconfdir/profile.d/*
 %ghost %_libdir/gtk-%api_ver/%binary_ver/immodules.cache
 %{?_enable_broadway:%_man1dir/broadwayd.1.*}
 %_man1dir/gtk-query-immodules*
@@ -319,7 +309,6 @@ cp examples/*.c examples/Makefile* %buildroot/%_docdir/%name-devel-%version/exam
 %_rpmlibdir/gtk-%api_ver-immodules-cache.filetrigger
 %doc --no-dereference COPYING
 %doc AUTHORS NEWS.bz2 README
-
 
 %files devel
 %_includedir/gtk-%api_ver/
@@ -395,6 +384,9 @@ cp examples/*.c examples/Makefile* %buildroot/%_docdir/%name-devel-%version/exam
 %exclude %fulllibpath/*/*.la
 
 %changelog
+* Thu Dec 05 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.6-alt1
+- 3.10.6
+
 * Wed Nov 27 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.5-alt1
 - 3.10.5
 
