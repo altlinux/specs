@@ -2,7 +2,7 @@
 
 %define rname libkgapi
 Name: libkgapi
-Version: 2.0.1
+Version: 2.0.2
 Release: alt1
 
 Group: System/Libraries
@@ -87,6 +87,9 @@ Development files for %name
 
 
 %changelog
+* Thu Dec 05 2013 Sergey V Turchin <zerg@altlinux.org> 2.0.2-alt1
+- new version
+
 * Thu Jul 25 2013 Sergey V Turchin <zerg@altlinux.org> 2.0.1-alt1
 - new version (ALT#29228)
 
