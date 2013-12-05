@@ -10,8 +10,8 @@
 %def_enable	mongodb
 
 Name: syslog-ng
-Version: 3.4.3
-Release: alt2.git20130813
+Version: 3.4.6
+Release: alt1.git20131204
 
 Summary: syslog-ng daemon
 Group: System/Kernel and hardware
@@ -286,6 +286,9 @@ fi
 %_libdir/pkgconfig/%name.pc
 
 %changelog
+* Thu Dec 05 2013 Sergey Y. Afonin <asy@altlinux.ru> 3.4.6-alt1.git20131204
+- 3.4.6 (git20131204)
+
 * Wed Sep 11 2013 Sergey Y. Afonin <asy@altlinux.ru> 3.4.3-alt2.git20130813
 - changed default permissions (ALT #29312)
 
