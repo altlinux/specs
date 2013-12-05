@@ -1,29 +1,38 @@
-%define oname xapian-bindings
-
-Name: python-module-xapian
-Version: 1.2.14
+Name: xapian-bindings
+Version: 1.2.16
 Release: alt1
 
-Summary: Xapian search engine interface for Python
+Summary: Xapian search engine bindings
 License: GPL
-Group: Development/Python
+Group: Development/Other
 
 Url: http://www.xapian.org/
-Source: http://www.oligarchy.co.uk/xapian/%version/%oname-%version.tar
+Source: http://www.oligarchy.co.uk/xapian/%version/%name-%version.tar.xz
 Source100: xapian-bindings.watch
-Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-%setup_python_module %oname
+%setup_python_module %name
 
-# Automatically added by buildreq on Tue Nov 13 2007
-BuildRequires: gcc-c++ python-devel python-modules-compiler
+# Automatically added by buildreq on Thu Dec 05 2013
+# optimized out: elfutils gnu-config libncurses-devel libstdc++-devel libtinfo-devel pam0_userpass python-base python-modules python-modules-compiler ruby ruby-stdlibs xz
+BuildRequires: gcc-c++ libruby-devel libxapian-devel python-devel
 
 BuildPreReq: libxapian-devel = %version
 
+%description
+Xapian is an Open Source Probabilistic Information Retrieval framework.
+It offers a highly adaptable toolkit that allows developers to easily
+add advanced indexing and search facilities to applications.
+
+This package contains programming language bindings.
+
+%package -n python-module-xapian
+Summary: Python bindings for Xapian search engine
+License: GPL
+Group: Development/Python
 # force rebuild with libxapian
 Requires: libxapian = %version
 
-%description
+%description -n python-module-xapian
 Xapian is an Open Source Probabilistic Information Retrieval framework.
 It offers a highly adaptable toolkit that allows developers to easily
 add advanced indexing and search facilities to applications.
@@ -31,24 +40,53 @@ add advanced indexing and search facilities to applications.
 This package provides the files needed for developing Python scripts
 which use Xapian.
 
+%package -n ruby-xapian
+Summary: Ruby bindings for Xapian search engine
+License: GPL
+Group: Development/Ruby
+Requires: libxapian = %version
+
+%description -n ruby-xapian
+Xapian is an Open Source Probabilistic Information Retrieval framework.
+It offers a highly adaptable toolkit that allows developers to easily
+add advanced indexing and search facilities to applications.
+
+This package provides the files needed for developing Ruby scripts
+which use Xapian.
+
 %prep
-%setup -n %oname-%version
-# due to missing .la files
-sed -i "s|--ltlibs|--libs|g" configure
+%setup
 
 %build
-%configure --with-python
+%configure --with-python --with-ruby
 %make_build
+# FIXME: maybe we should drop %version there as well and get rid of this
 
 %install
 %makeinstall_std
-rm -rf %buildroot%_docdir/%oname/
+rm -rf %buildroot%_defaultdocdir/%name/
 
-%files
-%doc python/docs/index.html python/docs/examples
+%files -n python-module-xapian
+%doc README python/docs/*
 %python_sitelibdir/*
 
+%files -n ruby-xapian
+%doc README ruby/docs/*
+%ruby_sitearchdir/_xapian.so
+%ruby_sitelibdir/xapian.rb
+
+# TODO:
+# - package other bindings (perl, tcl...)
+# - package docs/examples properly
+
 %changelog
+* Thu Dec 05 2013 Michael Shigorin <mike@altlinux.org> 1.2.16-alt1
+- 1.2.16
+- merged standalone python-module-xapian and ruby-xapian packages
+  which used to build parts of xapian-bindings independently
+- dropped libtool related hacks (thanks upstream notice)
+- buildreq
+
 * Sat Mar 23 2013 Michael Shigorin <mike@altlinux.org> 1.2.14-alt1
 - 1.2.14
 

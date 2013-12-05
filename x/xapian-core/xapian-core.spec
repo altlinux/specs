@@ -1,7 +1,7 @@
 %def_disable static
 
 Name: xapian-core
-Version: 1.2.14
+Version: 1.2.16
 Release: alt1
 
 Summary: The Xapian Probabilistic Information Retrieval Library
@@ -9,9 +9,8 @@ License: GPL
 Group: Databases
 
 Url: http://www.xapian.org
-Source: http://www.oligarchy.co.uk/xapian/%version/%name-%version.tar.gz
+Source0: http://www.oligarchy.co.uk/xapian/%version/%{name}-%{version}.tar.xz
 Source100: %name.watch
-Patch: xapian-core-1.0.17-alt-libtool.patch
 Packager: Michael Shigorin <mike@altlinux.org>
 
 # Automatically added by buildreq on Wed May 05 2010
@@ -73,7 +72,6 @@ This package contains API reference in HTML and PostScript.
 
 %prep
 %setup
-%patch -p1
 
 %build
 %autoreconf
@@ -133,6 +131,13 @@ rm -f %buildroot%_libdir/libxapian.a
 %doc HACKING
 
 %changelog
+* Thu Dec 05 2013 Michael Shigorin <mike@altlinux.org> 1.2.16-alt1
+- new version (watch file uupdate)
+- dropped libtool patch, thanks upstream for the notice it's not needed
+
+* Mon Apr 22 2013 Michael Shigorin <mike@altlinux.org> 1.2.15-alt1
+- new version (watch file uupdate)
+
 * Fri Mar 22 2013 Michael Shigorin <mike@altlinux.org> 1.2.14-alt1
 - new version (watch file uupdate)
 
