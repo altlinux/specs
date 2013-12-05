@@ -1,6 +1,6 @@
 Name: libextractor
-Version: 1.0.1
-Release: alt3
+Version: 1.2
+Release: alt1
 
 Summary: libextractor is a simple library for keyword extraction
 
@@ -51,7 +51,9 @@ This package contains the files needed to build packages that depend on %name.
 
 %build
 %autoreconf
-%configure --disable-static
+%configure --disable-static \
+	--with-gtk-version=3 \
+	--disable-gtktest
 
 # SMP-incompatible build
 %make
@@ -66,9 +68,9 @@ rm -f %buildroot%_libdir/%name/*.la
 
 %check
 export LD_LIBRARY_PATH=%buildroot%_libdir
-export LIBEXTRACTOR_PREFIX=%buildroot%_libdir/%name
+export LIBEXTRACTOR_PREFIX=%buildroot%_libdir
 # some tests failed in hasher -- need to investigate
-#%make check
+#%%make check
 
 %files -f %name.lang
 %_libdir/*.so.*
@@ -88,6 +90,9 @@ export LIBEXTRACTOR_PREFIX=%buildroot%_libdir/%name
 %_man3dir/*
 
 %changelog
+* Thu Dec 05 2013 Yuri N. Sedunov <aris@altlinux.org> 1.2-alt1
+- 1.2
+
 * Tue Dec 03 2013 Yuri N. Sedunov <aris@altlinux.org> 1.0.1-alt3
 - rebuilt against libexiv2.so.13
 
