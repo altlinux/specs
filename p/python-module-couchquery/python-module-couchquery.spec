@@ -2,8 +2,9 @@
 
 Summary: Python library for simple and dynamic access to CouchDB
 Name: python-module-couchquery
-Version: 0.9
-Release: alt1.1
+Version: 0.10.0
+Release: alt1.git20131104
+# https://github.com/nicolaisi/couchquery.git
 Source0: %name-%version-%release.tar
 License: GPL
 Group: Development/Python
@@ -35,10 +36,13 @@ httplib.HTTPConnection
 %python_install
 
 %files
-%python_sitelibdir/%oname
-%python_sitelibdir/%oname-*.egg-info
+%doc README.md
+%python_sitelibdir/*
 
 %changelog
+* Thu Dec 05 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.10.0-alt1.git20131104
+- Version 0.10.0
+
 * Thu Oct 20 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 0.9-alt1.1
 - Rebuild with Python-2.7
 
