@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.8.3
-Release: alt1
+Release: alt2
 
 Summary: Python SQL toolkit and Object Relational Mapper
 License: MIT
@@ -107,21 +107,24 @@ popd
 %endif
 
 %files -f INSTALLED_FILES
-#exclude %python_sitelibdir/*/test
+%exclude %python_sitelibdir/*/testing
 
-#files tests
-#python_sitelibdir/*/test
+%files tests
+%python_sitelibdir/*/testing
 
 %if_with python3
 %files -n python3-module-%oname
 %python3_sitelibdir_noarch/*
-#exclude %python3_sitelibdir_noarch/*/test
+%exclude %python3_sitelibdir_noarch/*/testing
 
-#files -n python3-module-%oname-tests
-#python3_sitelibdir_noarch/*/test
+%files -n python3-module-%oname-tests
+%python3_sitelibdir_noarch/*/testing
 %endif
 
 %changelog
+* Thu Dec 05 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.3-alt2
+- Extracted tests into separated packages
+
 * Wed Dec 04 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.3-alt1
 - Version 0.8.3
 
