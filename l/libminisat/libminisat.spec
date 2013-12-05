@@ -1,7 +1,7 @@
 
 Name: libminisat
 Version: 2.2.0
-Release: alt4
+Release: alt5
 
 Packager: Michael Pozhidaev <msp@altlinux.ru>
 License: BSD style
@@ -57,6 +57,9 @@ make DESTDIR=%buildroot install
 %_libdir/%name.a
 
 %changelog
+* Thu Dec 05 2013 Michael Pozhidaev <msp@altlinux.ru> 2.2.0-alt5
+- Fixed building bug with missed m4 directory
+
 * Fri Mar 01 2013 Michael Pozhidaev <msp@altlinux.ru> 2.2.0-alt4
 - Proper collisions support
 - Assumptions support is removed
