@@ -1,6 +1,6 @@
 Name:    installer-distro-junior
 Version: 7.0
-Release: alt1
+Release: alt2
 
 Summary: Installer common files
 License: GPL
@@ -103,6 +103,9 @@ Installer stage3
 %_datadir/alterator/ui/simply-linux
 
 %changelog
+* Thu Dec 05 2013 Andrey Cherepanov <cas@altlinux.org> 7.0-alt2
+- Use icon-theme-simple-school
+
 * Tue Oct 01 2013 Andrey Cherepanov <cas@altlinux.org> 7.0-alt1
 - Prepare for Seven platform by merging with installer-distro-simply-linux
 - Use external package volumes-profile-lite for autopartition
