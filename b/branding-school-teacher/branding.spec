@@ -16,7 +16,7 @@
 
 Name: branding-%brand-%theme
 Version: 6.9.9
-Release: alt1
+Release: alt2
 BuildArch: noarch
 
 BuildRequires: cpio gfxboot >= 4 fonts-ttf-dejavu fonts-ttf-droid
@@ -180,7 +180,7 @@ License: Distributable
 Group: Graphical desktop/XFce
 Requires: PolicyKit-gnome
 Requires: etcskel gtk3-theme-clearlooks-phenix
-Requires: gnome-icon-theme icon-theme-simple-sl
+Requires: gnome-icon-theme icon-theme-simple-school
 Requires: branding-%brand-%theme-graphics
 Obsoletes: xfce-settings-lite xfce-settings-school-lite
 Conflicts: %(for n in %variants ; do [ "$n" = %brand-%theme ] || echo -n "branding-$n-xfce-settings ";done )
@@ -512,6 +512,16 @@ subst 's/#theme-name=/theme-name=Clearlooks-Phenix/' /etc/lightdm/lightdm-gtk-gr
 %config %_localstatedir/ldm/.pam_environment
 
 %changelog
+* Thu Dec 05 2013 Andrey Cherepanov <cas@altlinux.org> 6.9.9-alt2
+- Pack wide wallpaper and product logo
+- Fix favicon and logo width in Alterator web-interface
+- Fix bootloader colors
+- Hide section border, simplify tooltips, turn off checkbox and
+  radiobutton highlight in installer
+- Replace Simply Linux logo by Platform Seven logo
+- Simplify GRUB config
+- Use icon-theme-simple-school
+
 * Thu Nov 21 2013 Andrey Cherepanov <cas@altlinux.org> 6.9.9-alt1
 - Update branding for Seven platform
 
