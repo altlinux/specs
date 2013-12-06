@@ -1,5 +1,5 @@
 Name: nfdump
-Version: 1.6.9
+Version: 1.6.11
 Release: alt1
 Summary: collect and process netflow data
 
@@ -71,6 +71,9 @@ cp %SOURCE3 %buildroot%_sysconfdir/sysconfig/nfcapd
 %_man1dir/nfprofile.1.gz
 
 %changelog
+* Sat Dec 07 2013 Sergey Y. Afonin <asy@altlinux.ru> 1.6.11-alt1
+- New version 1.6.11
+
 * Sat Apr 06 2013 Sergey Y. Afonin <asy@altlinux.ru> 1.6.9-alt1
 - New version 1.6.9
 
