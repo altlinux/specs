@@ -1,7 +1,7 @@
 
 Name: strigi
 Version: 0.7.8
-Release: alt1
+Release: alt2
 
 Summary: The fastest and smallest desktop searching program
 License: LGPL2+
@@ -107,6 +107,9 @@ install -m0644 %SOURCE3 %buildroot/%_desktopdir/
 
 
 %changelog
+* Fri Dec 06 2013 Sergey V Turchin <zerg@altlinux.org> 0.7.8-alt2
+- rebuild with new exiv2
+
 * Tue May 07 2013 Sergey V Turchin <zerg@altlinux.org> 0.7.8-alt1
 - new version
 
