@@ -1,12 +1,12 @@
-%define version 2.0
-%define release alt2.beta7
+%define version 2.0.4
+%define release alt1
 
 %setup_python_module nltk
 
 Summary: Python modules for Natural Language Processing (NLP)
 Name: python-module-nltk
 Version: %version
-Release: %release.1
+Release: %release
 
 
 Packager: Kirill Maslinsky <kirill@altlinux.org>
@@ -40,7 +40,7 @@ rm -rvf nltk/yaml/
 
 tar xf %SOURCE1
 
-%patch0 -p2
+#patch0 -p2
 
 %build
 %python_build
@@ -55,6 +55,9 @@ tar xf %SOURCE1
 %doc README.txt LICENSE.txt
 
 %changelog
+* Fri Dec 06 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.4-alt1
+- Version 2.0.4
+
 * Mon Oct 24 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 2.0-alt2.beta7.1
 - Rebuild with Python-2.7
 
