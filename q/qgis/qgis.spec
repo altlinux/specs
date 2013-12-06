@@ -3,7 +3,7 @@
 
 Name: qgis
 Version: 1.8.0
-Release: alt1
+Release: alt1.1
 Summary: A user friendly Open Source Geographic Information System
 License: GPLv3+ with exceptions
 Group: Sciences/Geosciences
@@ -25,6 +25,9 @@ Patch1: %name-1.8.0-fedora-datasource-crash.patch
 # TODO: Upstream (fedora's)
 # Use system version of qextserialport library
 Patch2: %name-1.8.0-fedora-alt-qextserialport.patch
+
+#QGIS to compile with sip 4.15
+Patch3: %name-1.8.0-qgis-sip.patch
 
 # Fix unresolved symbols in grass based libs
 %set_verify_elf_method unresolved=relaxed
@@ -52,6 +55,7 @@ BuildRequires: libspatialite-devel
 BuildRequires: postgresql-devel
 BuildRequires: libproj-devel
 BuildRequires: python-module-PyQt4-devel
+BuildRequires: txt2tags
 # PyQwt-devel
 BuildRequires: python-devel
 BuildRequires: libqt4-devel
@@ -63,7 +67,7 @@ BuildRequires: libqt4-webkit
 BuildRequires: libqwt6-devel
 BuildRequires: qextserialport-devel
 BuildRequires: libqwtpolar-devel
-BuildRequires: python-module-sip-devel >= 4.10
+BuildRequires: python-module-sip-devel >= 4.15
 BuildRequires: spatialindex-devel
 BuildRequires: libsqlite3-devel
 
@@ -131,6 +135,7 @@ Please refer to %name-mapserver-README for details!
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 # Delete bundled libs
 rm -rf src/core/spatialite
@@ -292,6 +297,9 @@ mv %buildroot%_datadir/qgis/i18n/qgis_sr_CS-Latn.qm \
 %_libexecdir/%name
 
 %changelog
+* Fri Dec 06 2013 Andrey Kolotov <qwest@altlinux.org> 1.8.0-alt1.1
+- build fixed
+
 * Fri Jun 07 2013 Ivan Ovcherenko <asdus@altlinux.org> 1.8.0-alt1
 - New upstream release
 
