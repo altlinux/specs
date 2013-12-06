@@ -1,20 +1,18 @@
 %define prever %nil
 %define use_prever 0
-%define build_static 0
 %define build_recode 1
 %define build_recode 1
 %define build_id3v2 1
 %define new_vorbis 0
 
-%define use_rusxmms2 1
-%define rusxmms2_ver csa43
+%define rusxmms2_ver csa44
 
 Name: xmms
 Version: 1.2.11
-Release: alt10
-Epoch: 20100727
+Release: alt11
+Epoch: 20131206
 
-Summary: X Multimedia System - the player for you
+Summary: X Multimedia System - as it was back then
 License: GPL
 Group: Sound
 
@@ -37,12 +35,7 @@ Source11: xmms.32.xpm.bz2
 Source12: xmms.48.xpm.bz2
 Source13: xmms-1.2.10-gentoo-m4-1.1.tar.bz2
 
-# obsolete
-%define rusversion 1.2.10
-%define rusxmms_ver csa28
-Source70: http://heanet.dl.sourceforge.net/sourceforge/rusxmms/xmms-%rusversion-recode-%rusxmms_ver.tar.bz2
-
-Source270: http://heanet.dl.sourceforge.net/sourceforge/rusxmms/RusXMMS2-%{rusxmms2_ver}.tar.bz2
+Source70: http://heanet.dl.sourceforge.net/sourceforge/rusxmms/RusXMMS2-%{rusxmms2_ver}.tar.bz2
 Source71: xmms.rpm-macros
 Source72: xmms-cyr-setup.sh
 Source73: xmms-cyr-setup.menu
@@ -54,6 +47,8 @@ Source80: xmms-README.ALT
 Source81: #xmms-faq.html
 
 Source90: xmms.desktop
+
+# NB: some of the patches are kept as a historical reference
 
 Patch0: xmms-1.2.11-alt-ru.po.patch
 Patch1: xmms-1.2-audio-patch
@@ -85,7 +80,9 @@ Patch57: xmms-1.2.10-alt-skipwinlist.patch
 # id3v2 support - with eugvv@ fix of TYER frame write
 Patch60: xmms-1.2.10-yonas-id3v2.patch
 
-# advanced queue mgmt
+# subqueue management -- 1..9 keys set queue number,
+# Ctrl-1..9 exchange it with an existing one;
+# contact Boldin Pavel <ldavinchi inbox ru> for details
 Patch61: xmms-1.2.10-davinchi-queued.patch
 
 # patch after rusxmms-1.2.10-csa27.4 -- should fix one more segfault
@@ -133,7 +130,11 @@ Patch97: xmms-1.2.10-alt-media-cdrom.patch
 # suggested by slackwarists
 Patch98: xmms.gtk.doublesize.diff.gz
 
+# fix linking
 Patch99: xmms-1.2.11-alt-DSO.patch
+
+# bluewhite64
+Patch100: xmms.wmxmms_vis_depth_workaround.diff.gz
 
 Packager: Michael Shigorin <mike@altlinux.org>
 
@@ -146,25 +147,28 @@ Conflicts: xmms-out-crossfade < 0.3.10-alt1
 
 Requires: libxmms = %epoch:%version-%release
 
-%if %use_rusxmms2
-BuildPreReq: librcc-devel librcd-devel librcc-gtk
-%endif
+BuildRequires: librcc-devel librcd-devel librcc-gtk libguess-devel
 
 %{?!_desktopdir:%define _desktopdir %_datadir/applications}
 
 # Automatically added by buildreq on Sun Nov 25 2007
-BuildRequires: esound-devel gcc-c++ glibc-devel-static gtk+-devel imake libalsa-devel libmikmod-devel librcc-devel librcc-gtk libSM-devel libssl-devel libvorbis-devel ORBit-devel xorg-cf-files zlib-devel
+BuildRequires: esound-devel gcc-c++ gtk+-devel imake libalsa-devel libmikmod-devel librcc-devel librcc-gtk libSM-devel libssl-devel libvorbis-devel ORBit-devel xorg-cf-files zlib-devel
 
-BuildPreReq: libGL-devel libGLU-devel chrpath
+BuildRequires: libGL-devel libGLU-devel chrpath
 
 %set_autoconf_version 2.60
 %set_automake_version 1.9
 BuildRequires: desktop-file-utils
 
+Requires: xmms-out-alsa
+
 %description
 XMMS is a sound player written from scratch. Since it uses the WinAmp GUI, it
 can use WinAmp skins, and play mp3s, mods, s3ms, and other formats. It now has
 support for input, output, and general plugins, and has also been GPLd.
+
+This package has been built with rusxmms.sf.net patches, see also
+http://dside.dyndns.org/rusxmms/wiki/FAQ
 
 %description -l ru_RU.KOI8-R
 X MultiMedia System - некогда популярный медиа-проигрыватель для UNIX-систем.
@@ -172,11 +176,17 @@ X MultiMedia System - некогда популярный медиа-проигрыватель для UNIX-систем.
 Поддерживает существенное количество форматов и эффектов благодаря большому
 количеству модулей расширения, доступных в отдельных пакетах.
 
+Этот пакет собран с патчами rusxmms.sf.net, см. тж.
+http://dside.dyndns.org/rusxmms/wiki/FAQ
+
 %description -l uk_UA.KOI8-U
 X MultiMedia System - колись популярний мед╕а-програвач для UNIX-систем.
 
 П╕дтриму╓ величезну к╕льк╕сть формат╕в та ефект╕в завдяки велик╕й к╕лькост╕
 модул╕в розширення, що доступн╕ в окремих пакетах.
+
+Цей пакунок з╕браний з патчами rusxmms.sf.net, див. також
+http://dside.dyndns.org/rusxmms/wiki/FAQ
 
 %package -n libxmms
 Summary: Library needed for XMMS and its plugins
@@ -204,18 +214,6 @@ Requires: rpm-macros-%name = %epoch:%version-%release
 
 %description -n libxmms-devel
 Header files required for compiling xmms plugins.
-
-%if %build_static
-%package -n libxmms-devel-static
-Summary: Development package with static libs
-Group: Development/C
-Requires: libxmms-devel = %epoch:%version-%release
-Obsoletes: xmms-devel-static
-Provides: xmms-devel-static = %version-%release
-
-%description -n libxmms-devel-static
-Static libraries required for compiling xmms plugins.
-%endif
 
 %package in-mikmod
 Summary: Mikmod output plugin
@@ -341,7 +339,7 @@ Group: Graphical desktop/Window Maker
 Requires: %name = %epoch:%version-%release
 
 %description -n wmxmms
-XMMS applet for WindowMaker.  
+XMMS applet for WindowMaker.
 
 You might also want to take a look at wmusic.
 
@@ -361,7 +359,7 @@ Summary(ru_RU.KOI8-R): Скрипт для автонастройки XMMS под кириллицу
 Summary(uk_UA.KOI8-U): Скрипт для автоналаштування XMMS п╕д кирилицю
 Summary(be_BY.CP1251): яЖЩМЮП Ю╒РЮЛЮРШВМЮЕ МЮКЮДЙЁ ОПЮЖШ XMMS Г ЙЁПШКЁВМШЛЁ ЬПШТРЮЛЁ
 Requires: fonts-bitmap-cyr_rfx-koi8-u fonts-bitmap-cyr_rfx-cp1251
-Requires: fonts-bitmap-cyrillic fonts-bitmap-75dpi
+Requires: fonts-bitmap-cyrillic fonts-bitmap-75dpi fonts-ttf-dejavu
 Requires: xmms
 Group: Sound
 BuildArch: noarch
@@ -393,34 +391,16 @@ Set of RPM macros for packaging %name-based applications for ALT Linux.
 Install this package if you want to create RPM packages that use %name.
 
 %prep
-%if %use_prever
-%setup -n xmms-%version-%prever -q -a 70 -a 13
-%else
-%if %use_rusxmms2
-%setup -n xmms-%version -q -a 270 -a 13
-%else
-%setup -n xmms-%version -q -a 70 -a 13
-%endif
-%endif
+%setup -n xmms-%version -a 70 -a 13
 
 %patch1 -p1
 %patch4 -p1
-%if %use_rusxmms2
-## with this patch, rusxmms2 apply failed. check it later
-%else
-%patch5 -p1
-%endif
 %patch6 -p1
 
 %patch8 -p1
 
 %patch41 -p1
 %patch44 -p1
-#patch46 -p1
-#patch47 -p1
-
-#patch70 -p1
-#patch71 -p1
 
 # RH/ASP patches
 # Use RTLD_LAZY, not RTLD_NOW
@@ -428,54 +408,18 @@ Install this package if you want to create RPM packages that use %name.
 
 %patch56 -p1 -b .alsa
 
-#patch57 -p1 -b .winlist
-
-# id3v2
-%if %use_rusxmms2
-## with this patch, rusxmms2 apply failed. check it later
-%else
-%if %build_id3v2
-%patch60 -p1 -b .id3v2
-%endif
-%endif
-
 # ID3 recoding patch (rusxmms)
 %if %build_recode
-%if %use_rusxmms2
-# new shining rusxmms 2
 pushd RusXMMS2
-# NB: in csa40 version, there's single apply.sh
-#if %build_id3v2
-#./apply-id3v2.sh
-#else
 ./apply.sh
-#endif
 popd
-%else
-# ancient rusxmms
-%if %build_id3v2
-%patch -p1 -s < xmms_id3v2-ds-recode.patch
-%else
-%patch -p1 -s < xmms-ds-recode.patch
-%endif
-#patch62 -p1
-%endif
 %endif
 
 %if %new_vorbis
 %patch63 -p1 -b .new_vorbis
 %endif
 
-%if %use_rusxmms2
-%else
-# another 1.2.9 fix from ds
-%patch -p1 -s < recode.addons/xmms-ds-ctrl3.patch
-%endif
-
-#patch91 -p1
 %patch92 -p1
-#patch93 -p1
-#patch94 -p1
 
 %patch95 -p1
 %patch96 -p1
@@ -483,48 +427,33 @@ popd
 %patch97 -p1
 %patch98 -p0
 
-# subqueue management -- 1..9 keys set queue number,
-# Ctrl-1..9 exchange it with an existing one;
-# contact Boldin Pavel <ldavinchi inbox ru> for details
-#patch61 -p1
-
 %patch99 -p2
+%patch100 -p0
 
 msgfmt -c -o po/ru.gmo %SOURCE8
 
 %define _optlevel 3
 %add_optflags %optflags_notraceback -funroll-all-loops
-%add_optflags -fexpensive-optimizations -fomit-frame-pointer -fPIC -DPIC
-%set_verify_elf_method textrel=relaxed
-
-sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' \
-	ltmain.sh config.rpath *.m4 */*.m4
+%add_optflags -fexpensive-optimizations -fomit-frame-pointer
+%set_verify_elf_method textrel=relaxed unresolved=relaxed
 
 %build
-#libtoolize --copy --force
-#aclocal -I m4
-#autoconf
-#automake -a
-#%%autoreconf
-#pushd libxmms
-#aclocal -I ../m4
-#autoconf
-#%%autoreconf
-#popd
-
 FLAGS="`glib-config --cflags` -I%_x11includedir/GL"
 FLAGS="$FLAGS $(orbit-config --cflags client server)"
 %add_optflags $FLAGS
 
 export STRIP=echo
 aclocal && automake && autoconf
+# SIMD: http://lists.altlinux.org/pipermail/sisyphus/2005-July/283247.html
 %configure \
-%ifarch %ix86
+%ifarch i586
 	--enable-3dnow \
 	--enable-simd \
 %endif
 	--enable-recode \
-	--enable-texthack 
+	--enable-texthack \
+	--disable-static \
+	--disable-oss
 sed -i 's|^STRIP\=.*|STRIP=echo|' libtool libxmms/libtool
 sed -i 's|^\(old_striplib\).*|\1=echo|' libtool libxmms/libtool
 sed -i 's|^\(striplib\).*|\1=echo|' libtool libxmms/libtool
@@ -549,6 +478,8 @@ sed -i 's|^\(INSTALL_STRIP_PROGRAM.*\)\ \-s|\1|' Makefile \
 	libxmms/Makefile
 %make DESTDIR=%buildroot install
 
+chrpath -d %buildroot%_libdir/%name/{Input,Effect,General,Visualization,Output}/*.so %buildroot%_bindir/{wm,}xmms
+
 install -pD -m644 %SOURCE75 %buildroot%_datadir/mime-info/xmms.keys 
 
 # icons
@@ -560,15 +491,12 @@ bzcat %SOURCE10 > %buildroot%_miconsdir/%name.xpm
 bzcat %SOURCE11 > %buildroot%_niconsdir/%name.xpm
 bzcat %SOURCE12 > %buildroot%_liconsdir/%name.xpm
 
-install -m644 %SOURCE5 %buildroot%_menudir/%name
-install -m644 %SOURCE6 %buildroot%_menudir/wmxmms
 install -m644 %SOURCE7 %buildroot%_desktopdir/wmxmms.desktop
 
 install -pD -m644 %SOURCE71 %buildroot%_rpmmacrosdir/%name
 
 # cyr setup
 install -pD -m755 %SOURCE72 %buildroot%_bindir/xmms-cyr-setup.sh
-install -pD -m644 %SOURCE73 %buildroot%_menudir/xmms-cyr-setup
 install -pD -m644 %SOURCE76 %buildroot%_desktopdir/xmms-cyr-setup.desktop
 
 # wrapper
@@ -600,17 +528,8 @@ desktop-file-install --dir %buildroot%_desktopdir \
 	--add-category=Player \
 	%buildroot%_desktopdir/xmms-cyr-setup.desktop
 
-#for i in %buildroot%_bindir/* %buildroot%_libdir/%name/*/*
-#do
-#	chrpath -d $i ||:
-#done
-
 %files -f %name.lang 
 %doc AUTHORS ChangeLog.gz NEWS* README* TODO 
-%if %use_rusxmms2
-%else
-%doc recode.docs/README*.rus
-%endif
 %dir %_datadir/%name
 %dir %_libdir/%name/
 %dir %_libdir/%name/*
@@ -620,7 +539,7 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_libdir/%name/Input/libmpg123*
 %_libdir/%name/Input/libtonegen*
 %_libdir/%name/Input/libwav*
-%_libdir/%name/Output/libOSS*
+#_libdir/%name/Output/libOSS*
 %_libdir/%name/General/*
 %_libdir/%name/Effect/*
 %_libdir/%name/Visualization/libbscope*
@@ -642,11 +561,6 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_includedir/*
 %_datadir/aclocal/xmms.m4
 %_bindir/xmms-config
-
-%if %build_static
-%files -n libxmms-devel-static
-%_libdir/lib*.a
-%endif
 
 %files in-mikmod
 %_libdir/xmms/Input/libmikmod*
@@ -676,21 +590,32 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_bindir/xmms-cyr-setup.sh
 %_desktopdir/xmms-cyr-setup.desktop
 
-# TODO:
-# - re-check patch71 and especially patch93 (dmix pause)
-
 %files -n rpm-macros-%name
 %_rpmmacrosdir/*
 
 %changelog
+* Fri Dec 06 2013 Michael Shigorin <mike@altlinux.org> 20131206:1.2.11-alt11
+- re-merged the diverged alt10* specs
+- rebuilt with current librcc/librcd
+- added dejavu as default UTF-8 font
+- dropped oss (and require out-alsa)
+- dropped static subpackage
+
 * Thu Sep 06 2012 Michael Shigorin <mike@altlinux.org> 20100727:1.2.11-alt10
 - fixed outdated and misleading description translations
 
-* Sun Jun 03 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 20100727:1.2.11-alt9.6.qa3
+* Sun Jun 03 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 20100727:1
 - Fixed build
 
-* Wed Feb 01 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 20100727:1.2.11-alt9.6.qa2
+* Wed Feb 01 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 20100727:1
 - Removed bad RPATH
+
+* Thu Dec 15 2011 Michael Shigorin <mike@altlinux.org> 20111215:1.2.11-alt10a
+- updated rusxmms2 patches to csa44
+  + built with libguess as advised
+- added bluewhite64 wmxmms patch
+- drop RPATH on the floor
+- spec cleanup
 
 * Mon May 23 2011 Repocop Q. A. Robot <repocop@altlinux.org> 20100727:1.2.11-alt9.6.qa1
 - NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
