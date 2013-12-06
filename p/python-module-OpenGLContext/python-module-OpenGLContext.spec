@@ -1,7 +1,7 @@
 %define pre a2
 Name: python-module-OpenGLContext
-Version: 2.1.0
-Release: alt3.4.1
+Version: 2.2.0
+Release: alt1.a3
 
 Summary: Demonstration and testing contexts for PyOpenGL
 
@@ -64,17 +64,20 @@ This package contains tests for %name.
 %python_install
 
 %files
-%_bindir/vrml_view
-%_bindir/choosecontext
+#_bindir/vrml_view
+#_bindir/choosecontext
 %doc docs
 %python_sitelibdir/%modulename/
-%exclude %python_sitelibdir/%modulename/tests
+#exclude %python_sitelibdir/%modulename/tests
 %python_sitelibdir/*egg-info/
 
-%files tests
-%python_sitelibdir/%modulename/tests
+#files tests
+#python_sitelibdir/%modulename/tests
 
 %changelog
+* Fri Dec 06 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.2.0-alt1.a3
+- Version 2.2.0a3
+
 * Thu Oct 20 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 2.1.0-alt3.4.1
 - Rebuild with Python-2.7
 
