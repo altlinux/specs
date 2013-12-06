@@ -3,8 +3,8 @@
 
 Summary: mock object framework for Python
 Name: %packagename
-Version: 0.5.0
-Release: alt2.1.1
+Version: 0.5.3
+Release: alt1
 Source0: %origname-%version.tar.gz
 License: Apache License 2.0
 Group: Development/Python
@@ -37,6 +37,9 @@ You set up your mock objects expected behavior using a domain specific language 
 %python_sitelibdir/mox-*.egg-info
 
 %changelog
+* Fri Dec 06 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.3-alt1
+- Version 0.5.3
+
 * Thu Oct 20 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 0.5.0-alt2.1.1
 - Rebuild with Python-2.7
 
