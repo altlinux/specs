@@ -1,6 +1,6 @@
 Name: python-module-pexpect
-Version: 2.3
-Release: alt1.1.1
+Version: 3.0
+Release: alt1
 
 %setup_python_module pexpect
 
@@ -22,7 +22,7 @@ Provides: pexpect
 # Automatically added by buildreq on Mon Dec 29 2008
 BuildRequires: python-devel
 
-BuildPreReq: rpm-build-compat >= 1.2
+BuildPreReq: python-module-sphinx-devel
 
 %description
 Pexpect is a pure Python module for spawning child applications; controlling
@@ -30,20 +30,47 @@ them; and responding to expected patterns in their output. Pexpect works like
 Don Libes' Expect. Pexpect allows your script to spawn a child application and
 control it as if a human were typing commands.
 
+%package pickles
+Summary: Pickles for Pexpect
+Group: Development/Python
+
+%description pickles
+Pexpect is a pure Python module for spawning child applications; controlling
+them; and responding to expected patterns in their output. Pexpect works like
+Don Libes' Expect. Pexpect allows your script to spawn a child application and
+control it as if a human were typing commands.
+
+This package contains pickles for Pexpect.
+
 %prep
-%setup  -q -n %modulename-%version
+%setup -n %modulename-%version
+
+%prepare_sphinx .
+ln -s ../objects.inv doc/
 
 %build
 %python_build
 
+%make -C doc pickle
+%make -C doc html
+
 %install
 %python_install
 
+cp -fR doc/_build/pickle %buildroot%python_sitelibdir/pexpect/
+
 %files
-%doc README LICENSE doc/* examples
+%doc DEVELOPERS LICENSE README.rst doc/_build/html examples
 %python_sitelibdir/*
+%exclude %python_sitelibdir/*/pickle
+
+%files pickles
+%python_sitelibdir/*/pickle
 
 %changelog
+* Fri Dec 06 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0-alt1
+- Version 3.0
+
 * Wed Oct 26 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 2.3-alt1.1.1
 - Rebuild with Python-2.7
 
