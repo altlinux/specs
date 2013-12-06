@@ -1,7 +1,7 @@
 %define origname libgmail
 Name:           python-module-%origname
-Version:        0.1.9
-Release:        alt1.1.1
+Version:        0.1.11
+Release:        alt1
 Summary:        Library to provide access to Gmail via Python 
 Group:          Development/Python
 License:        GPLv2
@@ -10,8 +10,8 @@ URL:            http://%origname.sourceforge.net
 Source0:        %origname-%version.tar.gz 
 BuildArch:      noarch 
 # Automatically added by buildreq on Wed May 14 2008
-BuildRequires: python-devel python-module-ClientCookie python-modules-logging 
-Requires: python-module-ClientCookie
+BuildRequires: python-devel python-module-mechanize python-modules-logging 
+Requires: python-module-mechanize
 
 %description
 Library to provide access to Gmail via Python.
@@ -29,6 +29,9 @@ Library to provide access to Gmail via Python.
 %files -f INSTALLED_FILES
 
 %changelog
+* Fri Dec 06 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.11-alt1
+- Version 0.1.11
+
 * Wed Oct 26 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 0.1.9-alt1.1.1
 - Rebuild with Python-2.7
 
