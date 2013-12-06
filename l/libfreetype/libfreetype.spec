@@ -1,5 +1,5 @@
 Name: libfreetype
-Version: 2.5.0
+Version: 2.5.1
 Release: alt1
 
 Summary: A free and portable font rendering engine
@@ -15,15 +15,15 @@ Source3: ftconfig.h
 
 Patch5: freetype-2.4.10-osh.patch
 
-Patch1: freetype-2.4.10-alt-compat-version-script.patch
-Patch2: freetype-2.4.12-alt-freetype-config.patch
+Patch2: freetype-2.5.1-alt-freetype-config.patch
 Patch3: freetype-2.4.10-alt-fttrigon.patch
-Patch4: ft2demos-2.4.12-alt-drop-ftgrid.patch
+Patch4: freetype-2.5.1-alt-ft2demos-ftgrid.patch
+Patch6: ft2demos-2.5.1-alt-snprintf.patch
 
 Patch11: freetype-2.4.10-rh-enable-subpixel-rendering.patch
 Patch12: freetype-2.4.10-rh-enable-valid.patch
 Patch13: ft2demos-2.4.10-rh-more-demos.patch
-Patch14: freetype-2.4.12-rh-pkgconfig.patch
+Patch14: freetype-2.5.1-rh-pkgconfig.patch
 
 Patch21: ft2demos-2.4.10-deb-fixes.patch
 
@@ -87,10 +87,10 @@ ln -s ft2demos-%version ft2demos
 
 %patch5 -p1
 
-%patch1 -p1
 %patch2 -p1
 %patch3 -p1
-%patch4 -p0
+%patch4 -p1
+%patch6 -p1
 
 %patch11 -p1
 %patch12 -p1
@@ -118,9 +118,9 @@ done
 
 wordsize=$(echo -e '#include <bits/wordsize.h>\n__WORDSIZE' | cpp -P | sed '/^$/d')
 [ "$wordsize" -ge 32 ]
-mv %buildroot%_includedir/freetype2/freetype/config/ftconfig{,-$wordsize}.h
+mv %buildroot%_includedir/freetype2/config/ftconfig{,-$wordsize}.h
 install -pm644 %_sourcedir/ftconfig.h \
-	%buildroot%_includedir/freetype2/freetype/config/ftconfig.h
+	%buildroot%_includedir/freetype2/config/ftconfig.h
 
 %define docdir %_docdir/%name-%version
 %define develdocdir %_docdir/%name-devel-%version
@@ -156,6 +156,9 @@ mv %buildroot%develdocdir/{FTL.TXT,LICENSE.TXT,CHANGES.bz2} %buildroot%docdir/
 %_bindir/ft*
 
 %changelog
+* Thu Dec 05 2013 Valery Inozemtsev <shrek@altlinux.ru> 2.5.1-alt1
+- 2.5.1
+
 * Fri Aug 30 2013 Valery Inozemtsev <shrek@altlinux.ru> 2.5.0-alt1
 - 2.5.0
 
