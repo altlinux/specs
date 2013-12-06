@@ -25,7 +25,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.10.22
-Release: alt1
+Release: alt2
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -1786,6 +1786,17 @@ done)
 
 
 %changelog
+* Thu Dec 05 2013 Led <led@altlinux.ru> 3.10.22-alt2
+- updated:
+  + fix-drivers-pci
+  + fix-drivers-scsi--sd_mod
+  + fix-drivers-usb-core
+  + fix-fs
+  + feat-fs-reiser4
+- added:
+  + fix-drivers-bluetooth--ath3k
+  + fix-drivers-bluetooth--btusb
+
 * Thu Dec 05 2013 Led <led@altlinux.ru> 3.10.22-alt1
 - 3.10.22
 - removed:
