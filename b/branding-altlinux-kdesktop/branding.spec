@@ -5,8 +5,8 @@
 %define Brand ALT Linux
 
 Name: branding-%brand-%smalltheme
-Version: 7.0.0
-Release: alt14
+Version: 7.0.2
+Release: alt0.1
 BuildArch: noarch
 
 %define theme %name
@@ -29,8 +29,8 @@ BuildRequires: ImageMagick fontconfig bc libGConf-devel
 
 %define Theme_ru KDesktop
 %define Brand_ru Альт Линукс
-%define status_en %nil
-%define status %nil
+%define status_en BETA
+%define status БЕТА
 %define variants altlinux-desktop altlinux-office-desktop altlinux-office-server altlinux-lite altlinux-workbench school-master altlinux-gnome-desktop sisyphus-server-light
 
 Source: %name.tar
@@ -455,6 +455,9 @@ fi
 %_datadir/kde4/apps/kio_desktop/DesktopLinks/indexhtml.desktop
 
 %changelog
+* Fri Dec 06 2013 Sergey V Turchin <zerg at altlinux dot org> 7.0.2-alt0.1
+- bump version
+
 * Fri Oct 18 2013 Sergey V Turchin <zerg at altlinux dot org> 7.0.0-alt14
 - add conflict with sisyphus-server-light
 
