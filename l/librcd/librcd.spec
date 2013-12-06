@@ -1,12 +1,13 @@
 Name: librcd
-Version: 0.1.13
+Version: 0.1.14
 Release: alt1
 
 Summary: Russian Encoding Detection Library
 License: GPL
 Group: System/Libraries
+
+Url: http://rusxmms.sourceforge.net/
 Source: %name-%version.tar.bz2
-URL: http://rusxmms.sourceforge.net/
 Packager: Nick S. Grechukh <gns@altlinux.org>
 
 BuildRequires: gcc-c++
@@ -45,9 +46,14 @@ applications.
 
 %files devel
 %_includedir/*
+%_pkgconfigdir/*.pc
 %_libdir/lib*.so
 
 %changelog
+* Fri Dec 06 2013 Michael Shigorin <mike@altlinux.org> 0.1.14-alt1
+- 0.1.14
+- added pkgconfig file
+
 * Thu Dec 15 2011 Michael Shigorin <mike@altlinux.org> 0.1.13-alt1
 - 0.1.13
 

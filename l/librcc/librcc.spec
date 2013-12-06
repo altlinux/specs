@@ -1,14 +1,13 @@
-Summary: RusXMMS Charset Conversion Library
 Name: librcc
-Version: 0.2.9
-Release: alt1.3
+Version: 0.2.12
+Release: alt1
+
+Summary: RusXMMS Charset Conversion Library
 License: GPL
 Group: System/Libraries
-URL: http://rusxmms.sourceforge.net
-Source: %name-%version.tar.bz2
-Patch: librcc-0.2.9-alt-fixes.patch
-Patch1: librcc-0.2.9-alt-glib2-2.32.0.patch
-Patch2: librcc-0.2.9-alt-DSO.patch
+
+Url: http://rusxmms.sourceforge.net
+Source: %name-%version.tar
 Packager: Nick S. Grechukh <gns@altlinux.org>
 
 BuildRequires: gcc-c++ gtk+-devel libenca-devel libgtk+2-devel librcd-devel libxml2-devel
@@ -41,9 +40,6 @@ This package contains %name header files.
 
 %prep
 %setup
-%patch -p1
-%patch1 -p2
-%patch2 -p2
 
 %build
 %autoreconf
@@ -80,9 +76,18 @@ find %buildroot%_libdir/rcc/engines -depth -name \*.la -delete
 
 %files devel
 %_includedir/*
+%_pkgconfigdir/*.pc
 %_libdir/lib*.so
 
 %changelog
+* Fri Dec 06 2013 Michael Shigorin <mike@altlinux.org> 0.2.12-alt1
+- 0.2.12
+- dropped patches
+  + patch0 and patch1 merged upstream
+  + patch2 fails to apply now
+- added pkgconfig file
+- avoid needless compression
+
 * Wed Jun 06 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.9-alt1.3
 - Fixed build
 
