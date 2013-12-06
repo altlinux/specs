@@ -1,7 +1,7 @@
 %def_disable python3
 
 Name: cracklib
-Version: 2.9.0
+Version: 2.9.1
 Release: alt1
 
 Summary: A password-checking library.
@@ -122,7 +122,7 @@ cat > %name.filetrigger << _EOF_
 #!/bin/sh -e
 
 dir=%_datadir/%name
-grep -qs '^'\$dir'' && %_sbindir/%name-format \$dir/%{name}* | %_sbindir/%name-packer \$dir/pw_dict ||:
+grep -qs '^'\$dir'' && %_sbindir/%name-format \$dir/%{name}* | %_sbindir/%name-packer \$dir/pw_dict >/dev/null ||:
 _EOF_
 
 install -pD -m 755 %name.filetrigger %buildroot%_rpmlibdir/%name.filetrigger
@@ -153,6 +153,10 @@ install -pD -m 755 %name.filetrigger %buildroot%_rpmlibdir/%name.filetrigger
 %endif
 
 %changelog
+* Sat Dec 07 2013 Yuri N. Sedunov <aris@altlinux.org> 2.9.1-alt1
+- 2.9.1
+- fixed filetrigger (ALT #29637)
+
 * Thu Jun 13 2013 Yuri N. Sedunov <aris@altlinux.org> 2.9.0-alt1
 - 2.9.0
 
