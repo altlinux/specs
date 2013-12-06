@@ -1,6 +1,6 @@
 Name: picolisp
-Version: 3.1.0
-Release: alt2
+Version: 3.1.4
+Release: alt1
 
 Summary: Interpreted Lisp
 License: MIT
@@ -8,8 +8,9 @@ Group: Development/Lisp
 
 Url: http://picolisp.com
 Source: http://software-lab.de/picoLisp-%version.tgz
+Source100: picolisp.watch
 
-# *sigh*
+# 64-bit build bootstraps using 32-bit one or Java
 BuildRequires: java /proc
 
 # trickery inside
@@ -52,6 +53,10 @@ ln -s ../lib/%name %buildroot%_datadir/%name
 %_datadir/%name/
 
 %changelog
+* Fri Dec 06 2013 Michael Shigorin <mike@altlinux.org> 3.1.4-alt1
+- added watch file
+- new version (watch file uupdate)
+
 * Mon Nov 26 2012 Michael Shigorin <mike@altlinux.org> 3.1.0-alt2
 - actually working package for Sisyphus
 
