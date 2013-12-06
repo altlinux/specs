@@ -1,7 +1,6 @@
-%define pre c1
 Name: python-module-OpenGL
-Version: 3.0.1
-Release: alt1.1
+Version: 3.0.2
+Release: alt1
 
 Summary: A Python module for interfacing with the OpenGL library
 Summary(ru_RU.KOI8-R): Расширение языка Python для работы с библиотекой OpenGL
@@ -12,7 +11,7 @@ Url: http://pyopengl.sourceforge.net
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-Source: http://prdownloads.sf.net/pyopengl/PyOpenGL-%version%pre.tar.gz
+Source: PyOpenGL-%version.tar.gz
 Patch: PyOpenGL-swig.patch
 Patch1: %name.patch
 
@@ -54,7 +53,7 @@ Requires: %name = %version-%release
 PyOpenGL documentation
 
 %prep
-%setup -q -n PyOpenGL-%version%pre
+%setup -q -n PyOpenGL-%version
 #%patch1
 
 %build
@@ -83,6 +82,9 @@ cp -fR tests %buildroot/%python_sitelibdir/%modulename/
 #%python_sitelibdir/%modulename/doc
 
 %changelog
+* Fri Dec 06 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0.2-alt1
+- Version 3.0.2
+
 * Thu Oct 20 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 3.0.1-alt1.1
 - Rebuild with Python-2.7
 
