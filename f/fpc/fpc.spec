@@ -1,7 +1,7 @@
 Name: fpc
 Epoch: 2
 Version: 2.6.2
-Release: alt1
+Release: alt2
 
 Summary: Free Pascal Compiler -- Meta Package
 License: GPL
@@ -865,6 +865,10 @@ interfacing many popular open source libraries.
 %endif
 
 %changelog
+* Fri Dec 06 2013 Andrey Cherepanov <cas@altlinux.org> 2:2.6.2-alt2
+- Remove excess optimization on Pentium CPU that causes compile problem
+  on AMD CPU (ALT #29635)
+
 * Sun Mar 10 2013 Slava Dubrovskiy <dubrsl@altlinux.org> 2:2.6.2-alt1
 - New version (ALT #28639)
 - Add Requires libX11-devel libXext-devel libXrandr-devel libXxf86dga-devel libXxf86vm-devel svgalib-devel in units-gfx (ALT #26812)
