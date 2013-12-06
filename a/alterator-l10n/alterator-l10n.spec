@@ -1,6 +1,6 @@
 Name: alterator-l10n
 Version: 2.9
-Release: alt66
+Release: alt67
 
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
@@ -110,6 +110,12 @@ make check
 %lang(kk) %_datadir/locale/kk/LC_MESSAGES/*.mo
 
 %changelog
+* Fri Dec 06 2013 Andrey Cherepanov <cas@altlinux.org> 2.9-alt67
+- Remove warning about shrink Vista partition
+- Add warning about separate /usr patition on LUKS use
+- Update translation of alterator-postfix-dovecot, alterator-bacula and
+  alterator-bacula-client
+
 * Wed Oct 09 2013 Fr. Br. George <george@altlinux.ru> 2.9-alt66
 - Add alterator-netinst 1.9.0 Russian translation
 

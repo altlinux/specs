@@ -1,7 +1,7 @@
 %define distro school-server
 Name: installer-distro-%distro
 Version: 7.0
-Release: alt6
+Release: alt7
 
 Summary: Installer files for Centaurus distro 
 License: GPL
@@ -67,5 +67,8 @@ cp -a * %buildroot%install2dir/
 %files stage3
 
 %changelog
+* Fri Dec 06 2013 Andrey Cherepanov <cas@altlinux.org> 7.0-alt7
+- Turn off Rujel and Clamav services by default
+
 * Mon Dec 02 2013 Andrey Cherepanov <cas@altlinux.org> 7.0-alt6
 - Initial build installer-distro-school-server in Sisyphus
