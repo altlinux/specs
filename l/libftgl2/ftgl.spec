@@ -1,7 +1,7 @@
 %define oname libftgl
 Name: %{oname}2
 Version: 2.2.0
-Release: alt8.svn20110521
+Release: alt9.svn20110521
 Summary: OpenGL frontend to Freetype 2
 
 Group: System/Libraries
@@ -98,6 +98,9 @@ rm -rf %buildroot%_datadir/doc
 %doc __doc/*
 
 %changelog
+* Fri Dec 06 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.2.0-alt9.svn20110521
+- Fixed `pkg-config ftgl --cflags' (ALT #29634)
+
 * Mon May 21 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.2.0-alt8.svn20110521
 - Fixed build
 
