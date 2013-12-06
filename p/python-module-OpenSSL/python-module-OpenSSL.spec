@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
-%define version    0.13
-%define release    alt1.2
+%define version    0.13.1
+%define release    alt1
 
 %define source_version %version
 %define source_name pyOpenSSL
@@ -162,6 +162,9 @@ popd
 %endif
 
 %changelog
+* Fri Dec 06 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.13.1-alt1
+- Version 0.13.1
+
 * Fri Mar 22 2013 Aleksey Avdeev <solo@altlinux.ru> 0.13-alt1.2
 - Rebuild with Python-3.3
 
