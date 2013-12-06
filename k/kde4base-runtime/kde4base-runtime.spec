@@ -10,7 +10,7 @@
 %define bugfix 4
 Name: kde4base-runtime
 Version: %major.%minor.%bugfix
-Release: alt1
+Release: alt2
 %define libname lib%name
 
 Group: Graphical desktop/KDE
@@ -23,11 +23,12 @@ Requires: %name-core = %EVR
 Source0: ftp://ftp.kde.org/pub/kde/stable/%version/src/kdebase-runtime-%version.tar
 Source10: search-yandex.desktop
 Source11: search-altbugzilla.desktop
-# MDK
+# FC
+Patch1: kdebase-runtime-4.6.0-canberra.patch
 # ALT
 Patch1001: kdebase-runtime-4.3.2-alt-compiz.patch
 Patch1002: kdebase-runtime-4.8.0-alt-def-nepomuk.patch
-Patch1003: kdebase-runtime-4.6.0-alt-def-notify-volume.patch
+#
 Patch1004: kdebase-runtime-4.10.0-alt-def-trash.patch
 Patch1005: kdebase-runtime-4.8.0-alt-nepomuk-backup-on.patch
 Patch1006: kdebase-runtime-4.9.3-alt-multimedia-player-chooser.patch
@@ -98,9 +99,11 @@ Menu resources for the original KDE menu.
 %prep
 %setup -q -n %rname-%version
 #
+%patch1 -p1
+#
 %patch1001 -p1
 %patch1002 -p1
-%patch1003 -p1
+#
 %patch1004 -p1
 %patch1005 -p1
 %patch1006 -p1
@@ -228,6 +231,12 @@ ln -sf `relative %_kde4_bindir/kde4 %_K4bindir/kde4` %buildroot/%_K4bindir/kde4
 %_K4dbus_interfaces/*
 
 %changelog
+* Fri Dec 06 2013 Sergey V Turchin <zerg@altlinux.org> 4.11.4-alt2
+- add patch from Fedora to fix notifications volume
+
+* Wed Dec 04 2013 Sergey V Turchin <zerg@altlinux.org> 4.11.4-alt0.M70P.1
+- built for M70P
+
 * Wed Dec 04 2013 Sergey V Turchin <zerg@altlinux.org> 4.11.4-alt1
 - new version
 
