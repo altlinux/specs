@@ -6,7 +6,7 @@ Name: kde4-nepomuk-core
 %define minor  11
 %define bugfix 3
 Version: %major.%minor.%bugfix
-Release: alt1
+Release: alt2
 %define sover %major
 
 Group: Graphical desktop/KDE
@@ -141,6 +141,12 @@ done
 %_K4link/*.so
 
 %changelog
+* Fri Dec 06 2013 Sergey V Turchin <zerg@altlinux.org> 4.11.3-alt2
+- rebuild with new exiv2
+
+* Thu Nov 07 2013 Sergey V Turchin <zerg@altlinux.org> 4.11.3-alt0.M70P.1
+- built for M70P
+
 * Tue Nov 05 2013 Sergey V Turchin <zerg@altlinux.org> 4.11.3-alt1
 - new version
 
