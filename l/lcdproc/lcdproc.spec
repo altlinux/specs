@@ -1,8 +1,8 @@
 Name: lcdproc
 Version: 0.5.6
-Release: alt2
+Release: alt3
 
-Summary: Daemon capable of showing info on LCD displays
+Summary: Show info on LCD displays
 License: GPL
 Group: System/Kernel and hardware
 
@@ -13,11 +13,24 @@ Source100: lcdproc.watch
 Patch0: lcdproc-fix-return.diff
 Patch1: lcdproc-add-serdisplib.diff
 
-BuildRequires: liblirc-devel libncurses-devel
+BuildRequires: libfreetype-devel
+BuildRequires: libftdi-devel
+BuildRequires: libhid-devel
+BuildRequires: liblirc-devel
+BuildRequires: libncurses-devel
+BuildRequires: libpth-devel
+BuildRequires: libusb-devel
+BuildRequires: libX11-devel
 
 %description
-LCDproc is a piece of software that displays real-time system
-information from your Linux/*BSD box on a LCD.
+LCDproc is a client/server suite inclduding drivers for all
+kinds of nifty LCD displays. The server supports several
+serial devices: Matrix Orbital, Crystal Fontz, Bayrad, LB216,
+LCDM001 (kernelconcepts.de), Wirz-SLI and PIC-an-LCD; and some
+devices connected to the LPT port: HD44780, STV5730, T6963,
+SED1520 and SED1330. Various clients are available that display
+things like CPU load, system load, memory usage, uptime, and a lot more.
+See also %url.
 
 %prep
 %setup
@@ -55,6 +68,10 @@ install -pDm755 %SOURCE1 %buildroot%_initdir/%name
 %_initdir/*
 
 %changelog
+* Sat Dec 07 2013 Michael Shigorin <mike@altlinux.org> 0.5.6-alt3
+- improved summary/description
+- picked several more BR: from fedora spec
+
 * Sat Dec 07 2013 Michael Shigorin <mike@altlinux.org> 0.5.6-alt2
 - rebuilt to ensure safe upgrade from autoimports
 
