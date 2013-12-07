@@ -1,7 +1,7 @@
 %define pkgname unicorn
 
 Name: %pkgname
-Version: 4.6.2
+Version: 4.7.0
 Release: alt1
 Summary: Unicorn: Rack HTTP server for fast clients and Unix
 License: GPL2
@@ -51,6 +51,9 @@ Documentation files for %pkgname
 %ruby_ri_sitedir/Unicorn*
 
 %changelog
+* Sat Dec 07 2013 Anton Gorlov <stalker@altlinux.ru> 4.7.0-alt1
+- update to  new version 
+
 * Wed Apr 24 2013 Anton Gorlov <stalker@altlinux.ru> 4.6.2-alt1
 - update to  new version 
 
