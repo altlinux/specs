@@ -1,7 +1,7 @@
 
 Name: svox-pico
 Version: 20120212
-Release: alt1
+Release: alt2
 License: Apache License
 Group: Sound
 Summary: Text-To-Speech engine from Android project
@@ -38,6 +38,9 @@ cd ..
 %_datadir/pico
 
 %changelog
+* Sat Dec 07 2013 Michael Pozhidaev <msp@altlinux.ru> 20120212-alt2
+- m4 directory creation added to autogen.sh for compilation error fixing
+
 * Sun Feb 12 2012 Michael Pozhidaev <msp@altlinux.ru> 20120212-alt1
 - Initial ALT Linux release
 
