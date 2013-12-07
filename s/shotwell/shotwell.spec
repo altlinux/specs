@@ -1,17 +1,21 @@
 Name: shotwell
-Version: 0.14.1
+Version: 0.15.1
 Release: alt1
-Summary: digital photo organizer designed for the GNOME desktop environment
 
+Summary: digital photo organizer designed for the GNOME desktop environment
 Group: Graphics
 License: LGPL
 Url: http://www.yorba.org/shotwell/
 
 # Cloned from git://yorba.org/shotwell
-Source: %name-%version.tar
-Patch: %name-%version-%release.patch
+Source: %name-%version.tar.xz
+#Patch: %name-%version-%release.patch
 
-BuildRequires: gstreamer1.0-devel gst-plugins1.0-devel libGConf-devel libdconf-devel libdbus-glib-devel libgee-devel libgexiv2-devel libgphoto2-devel libgudev-devel libjson-glib-devel libraw-devel libsqlite3-devel libstdc++-devel libunique3-devel libwebkitgtk3-devel vala librest-devel
+BuildRequires: gstreamer1.0-devel gst-plugins1.0-devel libGConf-devel
+BuildRequires: libdconf-devel libdbus-glib-devel libgee-devel libgexiv2-devel
+BuildRequires: libgphoto2-devel libgudev-devel libjson-glib-devel libraw-devel
+BuildRequires: libsqlite3-devel libstdc++-devel libunique3-devel libwebkitgtk3-devel
+BuildRequires: vala librest-devel libgee0.8-devel desktop-file-utils
 
 Requires: dconf
 
@@ -21,9 +25,11 @@ environment.  It allows you to import photos from disk or camera,
 organize them in various ways, view them in full-window or fullscreen
 mode, and export them to share with others.
 
+%define _libexecdir %_prefix/libexec/%name
+
 %prep
 %setup -q
-%patch -p1
+#%%patch -p1
 
 %build
 ./configure --disable-icon-update --prefix=%_prefix --lib=%_lib
@@ -35,18 +41,23 @@ mode, and export them to share with others.
 
 %files -f %name.lang
 %_bindir/%name
-%_bindir/%name-video-thumbnailer
+%_libexecdir/%name-video-thumbnailer
 %_prefix/libexec/%name/%name-settings-migrator
 %_libdir/%name
 %_desktopdir/%{name}*
+%_iconsdir/hicolor/*x*/apps/%name.svg
 %_iconsdir/hicolor/scalable/apps/%name.svg
 %_datadir/%name
 %_datadir/gnome/help/shotwell
 %_datadir/GConf/gsettings/*
 %_datadir/glib-2.0/schemas/*
+%_datadir/appdata/%name.appdata.xml
 %doc AUTHORS COPYING NEWS README THANKS
 
 %changelog
+* Sat Dec 07 2013 Yuri N. Sedunov <aris@altlinux.org> 0.15.1-alt1
+- 0.15.1
+
 * Tue Apr 09 2013 Vladimir Lettiev <crux@altlinux.ru> 0.14.1-alt1
 - 0.14.1
 
