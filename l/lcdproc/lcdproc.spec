@@ -1,6 +1,6 @@
 Name: lcdproc
 Version: 0.5.6
-Release: alt1
+Release: alt2
 
 Summary: Daemon capable of showing info on LCD displays
 License: GPL
@@ -55,6 +55,9 @@ install -pDm755 %SOURCE1 %buildroot%_initdir/%name
 %_initdir/*
 
 %changelog
+* Sat Dec 07 2013 Michael Shigorin <mike@altlinux.org> 0.5.6-alt2
+- rebuilt to ensure safe upgrade from autoimports
+
 * Fri Dec 06 2013 Michael Shigorin <mike@altlinux.org> 0.5.6-alt1
 - added watch file
 - new version (watch file uupdate)
