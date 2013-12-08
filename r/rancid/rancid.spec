@@ -1,6 +1,6 @@
 Name: rancid
 Version: 2.3.8
-Release: alt1
+Release: alt2
 Summary: Really Awesome New Cisco confIg Differ
 
 Group: System/Configuration/Networking
@@ -9,9 +9,12 @@ Url: http://www.shrubbery.net/rancid/
 Source0: %name-%version.tar.gz
 Source1: %name.cron
 Source2: %name.logrotate
+Source3: csbrancid
+Source4: csblogin
 Patch0: rancid-2.3.2-Makefile.patch
 Patch1: rancid-2.3.8-alt-conf.patch
 Patch2: rancid-2.3.8-ping.patch
+Patch3: rancid-2.3.8-csb.patch
 
 BuildRequires: expect >= 5.40
 BuildRequires: iputils
@@ -33,6 +36,7 @@ including software and hardware (cards, serial numbers, etc) and uses CVS
 %patch0 -p0
 %patch1 -p0
 %patch2 -p1
+%patch3 -p1
 
 %build
 %configure --sysconfdir=%_sysconfdir/%name --bindir=%_libexecdir/%name --enable-conf-install
@@ -60,6 +64,10 @@ install -D -p -m 0755 %SOURCE1 %buildroot/%_sysconfdir/cron.d/%name
 sed -i 's|RANCIDBINDIR|%_libexecdir/%name|g' %buildroot/%_sysconfdir/cron.d/%name
 
 install -D -p -m 0644 %SOURCE2 %buildroot/%_sysconfdir/logrotate.d/%name
+
+# Cisco small business support:
+install -D -p -m 755 %SOURCE3 %buildroot/%_libexecdir/%name/csbrancid
+install -D -p -m 755 %SOURCE4 %buildroot/%_libexecdir/%name/csblogin
 
 mkdir docs
 mv %buildroot%_datadir/%name/* docs
@@ -93,5 +101,9 @@ mv %buildroot%_datadir/%name/* docs
 %doc docs/*
 
 %changelog
+* Sun Dec  8 2013 Terechkov Evgenii <evg@altlinux.org> 2.3.8-alt2
+- Crontab entry fixed
+- Cisco small business support from https://github.com/chrpinedo/rancid-cisco-sb
+
 * Tue Dec  3 2013 Terechkov Evgenii <evg@altlinux.org> 2.3.8-alt1
 - Initial build for ALT Linux Sisyphus
