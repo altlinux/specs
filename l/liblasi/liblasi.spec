@@ -2,7 +2,7 @@
 
 Name: liblasi
 Version: 1.1.1
-Release: alt3
+Release: alt4
 
 Summary: C++ stream output interface for creating Unicode PostScript documents
 License: LGPL
@@ -11,6 +11,7 @@ Group: System/Libraries
 Url: http://www.unifont.org/lasi
 Source: %origname-%version.tar.gz
 Source100: %name.watch
+Patch: libLASi-1.1.1-macports-freetype-2.5.1.patch
 Packager: Michael Shigorin <mike@altlinux.org>
 
 # Automatically added by buildreq on Sat Mar 29 2008
@@ -53,6 +54,7 @@ This is the development environment to compile libLASi apps.
 
 %prep
 %setup -n %origname-%version
+%patch -p0
 
 %build
 cmake \
@@ -82,6 +84,10 @@ mv %buildroot%_datadir/lasi%version/examples/ %buildroot%pkgdocdir/
 %pkgdocdir/examples/
 
 %changelog
+* Sun Dec 08 2013 Michael Shigorin <mike@altlinux.org> 1.1.1-alt4
+- added macports patch to FTBFS against freetype-2.5.1:
+  https://sourceforge.net/p/lasi/bugs/2/
+
 * Tue Jul 03 2012 Michael Shigorin <mike@altlinux.org> 1.1.1-alt3
 - added missed requires for devel subpackage of main lib package (led@)
 
