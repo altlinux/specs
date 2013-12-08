@@ -1,24 +1,26 @@
 Name: openmortal
-Version: 0.7
-Release: alt4
+Version: 0.7.1
+Release: alt1
 
 Summary: Parody of the original fighting game "Mortal Kombat"
 Group: Games/Arcade
-License: GPL
+License: GPLv2
 
 Url: http://openmortal.sourceforge.net/
 
-Source0: %name-%version-strip.tar.bz2
+Source0: %name-0.7-strip.tar.bz2
 
 # from gentoo
 Patch0: openmortal-0.7-gcc41.patch
 
-Packager: Igor Zubkov <icesik@altlinux.ru>
+Patch1: openmortal-0.7-alt-freetype2-2.5.1.patch
 
-Requires: openmortal-data
+Packager: Igor Zubkov <icesik@altlinux.org>
 
-# Automatically added by buildreq on Tue Oct 18 2011
-BuildRequires: gcc-c++ libSDL_image-devel libSDL_mixer-devel libSDL_net-devel libfreetype-devel perl-devel zlib-devel
+Requires: openmortal-data = %version
+
+# Automatically added by buildreq on Sun Dec 08 2013
+BuildRequires: gcc-c++ libSDL_image-devel libSDL_mixer-devel libSDL_net-devel libfreetype-devel perl-devel
 
 %description
 OpenMortal is a spoof of the original Mortal Kombat fighting game. The
@@ -28,8 +30,9 @@ It takes some work, but if you follow the Character Creation-HOWTO at
 http://openmortal.sourceforge.net/Character_HOWTO.html
 
 %prep
-%setup -q -n %name-%version
+%setup -q -n %name-0.7
 %patch0 -p0
+%patch1 -p1
 
 %build
 %autoreconf
@@ -40,9 +43,13 @@ http://openmortal.sourceforge.net/Character_HOWTO.html
 %make_install DESTDIR=%buildroot install
 
 %files
+%doc AUTHORS ChangeLog INSTALL PACKAGERS README TODO
 %_bindir/openmortal
 
 %changelog
+* Sun Dec 08 2013 Igor Zubkov <icesik@altlinux.org> 0.7.1-alt1
+- 0.7.1
+
 * Fri Aug 30 2013 Vladimir Lettiev <crux@altlinux.ru> 0.7-alt4
 - built for perl 5.18
 
