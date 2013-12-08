@@ -22,7 +22,7 @@
 %define major 3
 %define minor 5
 %define bugfix 13.2
-%define rel alt2
+%define rel alt3
 Name: kdelibs
 Version: %major.%minor.%bugfix
 Release: %rel
@@ -172,7 +172,8 @@ Patch5044: tdelibs-3.5.13-work-defdir.patch
 Patch5045: tde-3.5.13-trayIconScaleDis.patch
 Patch5046: tde-3.5.13-SpellDialogSavePersonal.patch
 Patch5047: tdelibs-3.5.13-CUPS_IPP-memoryleak.patch
-
+Patch5048: tdelibs-3.5.13-use-new-QT-hiden-items-icon-seach.patch
+Patch5049: tdelibs-3.5.13-KJobViewer-crash.patch
 # security patches
 # end security patches
 
@@ -315,6 +316,8 @@ subst "s|kde@MAJOR@rc|kde%{major}rc|" kdecore/kconfigbackend.cpp
 %patch5045
 %patch5046
 %patch5047
+%patch5048 -p1
+%patch5049 -p1
 
 # security
 # end security
@@ -655,6 +658,10 @@ done
 #%doc %_K3doc/en/%name-*-apidocs
 
 %changelog
+* Sun Dec 08 2013 Roman Savochenko <rom_as@altlinux.ru> 3.5.13.2-alt3
+- KJobViewer crash from system tray on exit is fixed.
+- Icons search crash fix.
+
 * Sat Jul 27 2013 Roman Savochenko <rom_as@altlinux.ru> 3.5.13.2-alt2
 - ARTS support enable.
 
