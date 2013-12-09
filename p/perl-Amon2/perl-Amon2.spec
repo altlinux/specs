@@ -1,5 +1,5 @@
 Name: perl-Amon2
-Version: 4.01
+Version: 6.00
 Release: alt1
 Summary: Amon2 - lightweight web application framework
 
@@ -9,7 +9,7 @@ Url: %CPAN Amon2
 
 BuildArch: noarch
 Source: %name-%version.tar
-BuildRequires: perl-Module-Install perl-Module-Install-Repository perl-Module-Install-AuthorTests perl-Test-Requires perl-Plack perl-Data-OptList perl-MRO-Compat perl-Text-Xslate perl-JSON perl-Module-Find perl-Mouse perl-Router-Simple perl-Router-Simple-Sinatraish perl-Class-Accessor perl-Text-Xslate-Bridge-TT2Like perl-Data-Section-Simple perl-Plack-Middleware-ReverseProxy perl-HTTP-Session perl-HTML-FillInForm-Lite perl-CGI perl-Encode-JP perl-Plack-Middleware-Session perl-AnyEvent perl-Protocol-WebSocket
+BuildRequires: perl-Module-Build perl-Module-CPANfile perl-Router-Boom perl-Test-Requires perl-Plack perl-Data-OptList perl-MRO-Compat perl-Text-Xslate perl-JSON perl-Module-Find perl-Mouse perl-Router-Simple perl-Router-Simple-Sinatraish perl-Class-Accessor perl-Text-Xslate-Bridge-TT2Like perl-Data-Section-Simple perl-Plack-Middleware-ReverseProxy perl-HTTP-Session perl-HTML-FillInForm-Lite perl-CGI perl-Encode-JP perl-Plack-Middleware-Session perl-AnyEvent perl-Protocol-WebSocket
 
 %description
 %summary
@@ -26,9 +26,13 @@ BuildRequires: perl-Module-Install perl-Module-Install-Repository perl-Module-In
 %files
 %_bindir/amon2-setup.pl
 %perl_vendor_privlib/Amon2*
+%perl_vendor_privlib/auto/share/dist/Amon2
 %doc TODO Changes
 
 %changelog
+* Mon Dec 09 2013 Vladimir Lettiev <crux@altlinux.ru> 6.00-alt1
+- 4.01 -> 6.00
+
 * Tue Sep 10 2013 Vladimir Lettiev <crux@altlinux.ru> 4.01-alt1
 - 3.53 -> 4.01
 
