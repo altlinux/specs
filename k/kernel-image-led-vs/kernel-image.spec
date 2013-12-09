@@ -24,13 +24,13 @@
 %define flavour %base_flavour-%sub_flavour
 
 Name: kernel-image-%flavour
-Version: 3.10.22
-Release: alt3
+Version: 3.10.23
+Release: alt2
 
 %define kernel_req %nil
 %define kernel_prov %nil
 %define kernel_branch 3.10
-%define kernel_stable_version 22
+%define kernel_stable_version 23
 %define kernel_extra_version .%kernel_stable_version
 #define kernel_extra_version %nil
 
@@ -1064,22 +1064,13 @@ config_enable CRYPTO_AES=m CRYPTO_TWOFISH=m CRYPTO_SALSA20=m
 %endif
 
 %ifarch %intel_64 %via_64 %via_32
-%if "%sub_flavour" == "ws"
-sed -i '/^CONFIG_USB_UHCI_HCD=/s/=m/=y/' .config
-%endif
 config_disable USB_OHCI_HCD
 %endif
 %ifarch K9 K10 barcelona phenom
-%if "%sub_flavour" == "ws"
-sed -i '/^CONFIG_USB_OHCI_HCD=/s/=m/=y/' .config
-%endif
 config_disable USB_UHCI_HCD
 %endif
 %ifarch %amd_64 %amd_32 %via_64 %via_32
 config_disable SCHED_SMT NET_DMA PCH_DMA
-%endif
-%ifarch %ix86
-config_disable SCHED_MC
 %endif
 
 # FIXME
@@ -1295,10 +1286,13 @@ gen_rpmmodfile scsi-base \
 %if "%sub_flavour" == "guest"
 	%buildroot%modules_dir/kernel/drivers/scsi/{virtio*,{,lib}iscsi*,scsi_transport_iscsi.ko} \
 %endif
-	%buildroot%modules_dir/kernel/drivers/{scsi/{{*_mod,scsi_{tgt,transport_srp},vhba}.ko,osd,device_handler{,/scsi_dh.ko}},target/target_core_mod.ko}
-gen_rpmmodlist %buildroot%modules_dir/kernel/drivers/{message/fusion,scsi{,/device_handler}/*,target} | grep -Fxv -f scsi-base.rpmmodlist | grep -v '^%modules_dir/kernel/drivers/scsi/virtio.*' > scsi.rpmmodlist
-mv scsi-base.rpmmodlist scsi-base.rpmmodlist~
+	%buildroot%modules_dir/kernel/drivers/{scsi/{{*_mod,scsi_{tgt,transport_srp},vhba}.ko,osd,device_handler{,/scsi_dh.ko}},target/{iscsi,target_core_mod.ko}}
 gen_rpmmodfile infiniband %buildroot%modules_dir/kernel/{drivers/{infiniband,scsi/scsi_transport_srp.ko},net/{9p/9pnet_rdma.ko,rds,sunrpc/xprtrdma}}
+gen_rpmmodlist %buildroot%modules_dir/kernel/drivers/{message/fusion,scsi{,/device_handler}/*,target/*,vhost/vhost_scsi.ko} | \
+	grep -Fxv -f scsi-base.rpmmodlist | \
+	grep -Fxv -f infiniband.rpmmodlist | \
+	grep -v '^%modules_dir/kernel/drivers/scsi/virtio.*' > scsi.rpmmodlist
+mv scsi-base.rpmmodlist scsi-base.rpmmodlist~
 gen_rpmmodfile ipmi %buildroot%modules_dir/kernel/drivers/{acpi/acpi_ipmi,char/ipmi,{acpi/acpi_ipmi,hwmon/i{bm,pmi}*}.ko}
 %{?_enable_drm:gen_rpmmodfile drm %buildroot%modules_dir/kernel/drivers/gpu}
 %{?_enable_fddi:gen_rpmmodfile fddi %buildroot%modules_dir/kernel/{drivers/net,net/802}/fddi*}
@@ -1319,9 +1313,8 @@ gen_rpmmodlist %buildroot%modules_dir/kernel/drivers/media/v4l2-core/* | grep -x
 gen_rpmmodlist %buildroot%modules_dir/kernel/drivers/hid/hid-picolcd.ko >> media.rpmmodlist
 %endif
 %{?_enable_ide:gen_rpmmodfile ide %buildroot%modules_dir/kernel/drivers/{ide,leds/ledtrig-ide-disk.ko}}
-for i in %{?_enable_edac:edac} %{?_enable_mtd:mtd}; do
-	gen_rpmmodfile $i %buildroot%modules_dir/kernel/drivers/$i
-done
+%{?_enable_edac:gen_rpmmodfile edac %buildroot%modules_dir/kernel/drivers/edac}
+%{?_enable_mtd:gen_rpmmodfile mtd %buildroot%modules_dir/kernel/{drivers/mtd,lib/bch.ko}}
 gen_rpmmodfile input-extra \
 	%{?_enable_joystick:%buildroot%modules_dir/kernel/drivers/input/joystick} \
 	%{?_enable_tablet:%buildroot%modules_dir/kernel/drivers/input/tablet} \
@@ -1330,7 +1323,7 @@ gen_rpmmodfile input-extra \
 %{?_enable_guest:gen_rpmmodfile guest %buildroot%modules_dir/kernel/{drivers/{virtio/virtio_{balloon,mmio,pci}.ko,{char{,/hw_random},net,block,scsi}/virtio*%{?_enable_drm:,gpu/drm/{cirrus,qxl,vmwgfx}}%{?_enable_hypervisor_guest:,misc/vmw_balloon.ko}%{?_enable_hyperv:,hv,input/serio/hyperv-*,hid/hid-hyperv.ko,net/hyperv,scsi/hv_storvsc.ko},platform/x86/pvpanic.ko},net/{9p/*_virtio.ko,vmw*}}}
 %{?_enable_drm:grep -F -f drm.rpmmodlist guest.rpmmodlist | sed 's/^/%%exclude &/' >> drm.rpmmodlist}
 %endif
-sed 's/^/%%exclude &/' *.rpmmodlist > exclude-drivers.rpmmodlist
+sed -n '/^\//s/^/%%exclude &/p' *.rpmmodlist > exclude-drivers.rpmmodlist
 
 %{?_enable_oprofile:%add_verify_elf_skiplist %modules_dir/vmlinux}
 
@@ -1406,15 +1399,14 @@ done)
 %files -f exclude-drivers.rpmmodlist
 /boot/*
 %dir %modules_dir
-%modules_dir/modules.alias*
-%modules_dir/modules.builtin
-%modules_dir/modules.dep*
 %modules_dir/modules.order
-%modules_dir/modules.symbols*
-#modules_dir/modules.*map
+%modules_dir/modules.builtin
+%modules_dir/modules.softdep
+%ghost %modules_dir/modules.alias*
+%ghost %modules_dir/modules.dep*
+%ghost %modules_dir/modules.symbols*
 %ghost %modules_dir/modules.builtin.bin
 %ghost %modules_dir/modules.devname
-%ghost %modules_dir/modules.softdep
 %dir %modules_dir/kernel
 %modules_dir/kernel/arch
 %modules_dir/kernel/block
@@ -1429,8 +1421,11 @@ done)
 %if_enabled sound
 %dir %modules_dir/kernel/sound
 %{?_enable_pci:%modules_dir/kernel/sound/ac97_bus.ko}
+%dir %modules_dir/kernel/sound/core
+%modules_dir/kernel/sound/core/snd.ko
 %modules_dir/kernel/sound/soundcore.ko
 %exclude %modules_dir/kernel/drivers/usb/misc/emi*
+%exclude %modules_dir/kernel/drivers/hid/hid-prodikeys.ko
 %endif
 %{?_enable_kvm:%exclude %modules_dir/kernel/arch/*/kvm}
 %if_enabled oprofile
@@ -1637,8 +1632,10 @@ done)
 %files -n kernel-modules-sound-%flavour
 %modules_dir/kernel/sound
 %modules_dir/kernel/drivers/usb/misc/emi*
+%modules_dir/kernel/drivers/hid/hid-prodikeys.ko
 %{?_enable_oss:%exclude %modules_dir/kernel/sound/oss}
 %exclude %modules_dir/kernel/sound/*.ko
+%exclude %modules_dir/kernel/sound/core/snd.ko
 %endif
 
 
@@ -1786,6 +1783,29 @@ done)
 
 
 %changelog
+* Mon Dec 09 2013 Led <led@altlinux.ru> 3.10.23-alt2
+- USB=m (ws)
+- USB_EHCI_HCD=m (x86_64)
+- disable USB_ANNOUNCE_NEW_DEVICES
+- generated modules.* files marked as %%ghost
+
+* Mon Dec 09 2013 Led <led@altlinux.ru> 3.10.23-alt1
+- 3.10.23
+- removed:
+  + fix-drivers-iommu--irq_remapping
+- updated:
+  + fix-drivers-pci
+  + fix-mm
+  + feat-lib--lz4
+  + feat-mm--uksm
+- added:
+  + fix-lib--textsearch
+  + fix-mm--slub
+- moved vhost_scsi.ko to kernel-modules-scsi-*
+- moved hid-prodikeys.ko to kernel-modules-sound-*
+- moved snd.ko, target_core_mod.ko, iscsi_target_mod.ko to kernel-image-*
+- moved bch.ko to kernel-modules-mtd-*
+
 * Fri Dec 06 2013 Led <led@altlinux.ru> 3.10.22-alt3
 - updated:
   + fix-drivers-gpu-drm--i915
