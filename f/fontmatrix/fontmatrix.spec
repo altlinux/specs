@@ -1,6 +1,6 @@
 Name:		fontmatrix
-Version:	0.6.0
-Release:	alt1.1.2.1
+Version:	0.9.99
+Release:	alt1
 Summary:	Is a font manager for Linux users
 Summary(ru_RU.UTF8): Менеджер шрифтов для пользователей Linux
 Url:		http://www.fontmatrix.net/
@@ -9,9 +9,11 @@ Packager:	Motsyo Gennadi <drool@altlinux.ru>
 Group:		Publishing
 License:	GPLv2
 Patch0:		%name-0.6.0-desktopmenu.diff
+Patch1:		bug_564904_fix-missing-DSO-icuuc.diff
+Patch2:		%name-0.9.99-arm.diff
 
-# Automatically added by buildreq on Sun Jan 13 2008 (-bi)
-BuildRequires: cmake gcc-c++ ImageMagick libqt4-devel libSM-devel libXcursor-devel libXi-devel libXinerama-devel libXrandr-devel
+BuildRequires: cmake gcc-c++ ImageMagick-tools libqt4-devel libSM-devel libXcursor-devel libXi-devel
+BuildRequires: libXinerama-devel libXrandr-devel libicu-devel
 
 %description
 Fontmatrix  is  a  font  manager  for  Linux users. I repeat, for
@@ -32,6 +34,8 @@ Fontmatrix выпускается под лицензией GPL. В некото
 %prep
 %setup -q -n %name-%version-Source
 %patch0 -p1
+%patch1 -p0
+%patch2 -p0
 
 %build
 cmake \
@@ -63,6 +67,10 @@ convert -resize 16x16 %name.png %buildroot%_miconsdir/%name.png
 %_datadir/%name
 
 %changelog
+* Mon Dec 09 2013 Motsyo Gennadi <drool@altlinux.ru> 0.9.99-alt1
+- 0.9.99
+- add patches NN 1 & 2 from FC
+
 * Sat Oct 22 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 0.6.0-alt1.1.2.1
 - Rebuild with Python-2.7
 
