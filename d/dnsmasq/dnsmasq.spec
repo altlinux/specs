@@ -1,5 +1,5 @@
 Name: dnsmasq
-Version: 2.67
+Version: 2.68
 
 Release: alt1
 Summary: A lightweight caching nameserver
@@ -96,6 +96,9 @@ fi
 %doc contrib/dnslist contrib/dynamic-dnsmasq
 
 %changelog
+* Mon Dec 09 2013 Mikhail Efremov <sem@altlinux.org> 2.68-alt1
+- Updated to 2.68.
+
 * Mon Oct 28 2013 Mikhail Efremov <sem@altlinux.org> 2.67-alt1
 - Updated to 2.67.
 
