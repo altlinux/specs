@@ -10,7 +10,7 @@
 
 Name: cinnamon-control-center
 Version: %ver_major.9
-Release: alt1
+Release: alt2
 
 Summary: Cinnamon Control Center
 License: GPLv2+
@@ -139,8 +139,7 @@ you'll want to install this package.
 %_libdir/%{name}-1/panels/libdisplay.so
 %_libdir/%{name}-1/panels/libnetwork.so
 %_libdir/%{name}-1/panels/libpower.so
-# region panel is not usable with keyboard patch for c-s-d. So g-c-c should be used until issue fixed. 
-%exclude %_libdir/%{name}-1/panels/libregion.so
+%_libdir/%{name}-1/panels/libregion.so
 %_libdir/%{name}-1/panels/libscreen.so
 %_libdir/%{name}-1/panels/libsoundnua.so
 %_libdir/%{name}-1/panels/libuniversal-access.so
@@ -169,6 +168,9 @@ you'll want to install this package.
 
 
 %changelog
+* Mon Dec 9 2013 Vladimir Didenko <cow@altlinux.org> 2.0.9-alt2
+- fix region panel using patch from Fedora
+
 * Mon Nov 25 2013 Vladimir Didenko <cow@altlinux.org> 2.0.9-alt1
 - 2.0.9
 
