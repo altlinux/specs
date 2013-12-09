@@ -25,7 +25,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.10.23
-Release: alt3
+Release: alt4
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -999,7 +999,6 @@ config_disable \
 	%{?_disable_rapidio:RAPIDIO} \
 	%{?_disable_media:MEDIA_SUPPORT} \
 	%{?_disable_mmc:MMC} \
-	%{?_disable_wireless:WLAN WIRELESS CFG80211 WIMAX} \
 	%{?_disable_isdn:ISDN} \
 	%{?_disable_telephony:PHONE} \
 	%{?_disable_taskstats:TASKSTATS} \
@@ -1496,6 +1495,8 @@ done)
 %exclude %modules_dir/kernel/net/bluetooth/cmtp
 %exclude %modules_dir/kernel/drivers/isdn
 %endif
+%exclude %modules_dir/kernel/net/wimax
+%exclude %modules_dir/kernel/drivers/net/wimax
 %exclude %modules_dir/kernel/net/lapb
 %exclude %modules_dir/kernel/net/llc/llc2.ko
 %exclude %modules_dir/kernel/net/mac802154
@@ -1607,6 +1608,8 @@ done)
 %modules_dir/kernel/net/bluetooth/cmtp
 %modules_dir/kernel/drivers/isdn
 %endif
+%modules_dir/kernel/net/wimax
+%modules_dir/kernel/drivers/net/wimax
 %modules_dir/kernel/net/lapb
 %modules_dir/kernel/net/llc/llc2.ko
 %modules_dir/kernel/net/mac802154
@@ -1783,6 +1786,11 @@ done)
 
 
 %changelog
+* Wed Dec 09 2013 Led <led@altlinux.ru> 3.10.23-alt4
+- updated:
+  + fix-drivers-usb-host--xhci-hcd
+- modev wimax drivers to kernel-modules-net-extra-*
+
 * Mon Dec 09 2013 Led <led@altlinux.ru> 3.10.23-alt3
 - added:
   + fix-drivers-target-iscsi--iscsi_target_mod
