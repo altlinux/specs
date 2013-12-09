@@ -17,8 +17,8 @@
 %define strict_build_settings 1
 
 Name: evolution
-Version: %ver_major.2
-Release: alt3
+Version: %ver_major.3
+Release: alt1
 
 Summary: Integrated GNOME mail client, calendar and address book
 License: GPLv2+
@@ -44,7 +44,7 @@ Provides: camel
 %define glib_ver 2.30.0
 %define gtk_ver 3.2
 %define clutter_gtk_ver 0.91.8
-%define eds_ver 3.9.92
+%define eds_ver 3.10.3
 %define gnome_icon_ver 3.0.0
 %define gnome_desktop_ver 2.91.6
 %define gtkhtml_ver 4.5.2
@@ -75,7 +75,6 @@ BuildPreReq: libgnome-desktop3-devel >= %gnome_desktop_ver
 BuildPreReq: libsoup-gnome-devel >= %libsoup_ver
 BuildPreReq: libnotify-devel >= %libnotify_ver
 BuildPreReq: libgweather-devel >= %gweather_ver
-BuildPreReq: NetworkManager-devel >= 0.8.997
 BuildPreReq: libical-devel >= %ical_ver
 BuildPreReq: libgdata-devel >= %gdata_ver
 BuildPreReq: libpst-devel >= %pst_ver
@@ -315,6 +314,9 @@ export KILL_PROCESS_CMD=%_bindir/killall
 %_datadir/glib-2.0/schemas/org.gnome.evolution.spamassassin.gschema.xml
 
 %changelog
+* Mon Dec 09 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.3-alt1
+- 3.10.3
+
 * Wed Nov 20 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.2-alt3
 - rebuilt against libical*.so.1
 
