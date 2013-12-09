@@ -1,13 +1,13 @@
 Name: orage
-Version: 4.8.4
-Release: alt2
+Version: 4.10.0
+Release: alt1
 
-Summary: Time-managing application for the XFce desktop environment
+Summary: Time-managing application for the Xfce desktop environment
 Summary (ru_RU.UTF-8): Календарь для окружения рабочего стола Xfce
 License: %gpl2plus
 Group: Graphical desktop/XFce
 Url: http://www.xfce.org/projects/orage/
-Packager: XFCE Team <xfce@packages.altlinux.org>
+Packager: Xfce Team <xfce@packages.altlinux.org>
 
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
@@ -22,7 +22,7 @@ Obsoletes: xfcalendar < 4.8.3
 Provides: xfcalendar = %version-%release
 
 %description
-%name is the time-managing application for the XFce desktop environment.
+%name is the time-managing application for the Xfce desktop environment.
 
 %description -l ru_RU.UTF-8
 Данный пакет содержит в себе календарь для окружения рабочего стола
@@ -60,6 +60,10 @@ Xfce.
 %_datadir/dbus-1/services/*.service
 
 %changelog
+* Mon Dec 09 2013 Mikhail Efremov <sem@altlinux.org> 4.10.0-alt1
+- Fix Xfce name (XFce,XFCE -> Xfce).
+- Updated to 4.10.0.
+
 * Wed Nov 20 2013 Mikhail Efremov <sem@altlinux.org> 4.8.4-alt2
 - Rebuid with libical-1.0-alt2.
 
