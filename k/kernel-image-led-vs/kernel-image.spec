@@ -25,7 +25,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.10.23
-Release: alt2
+Release: alt3
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -1783,6 +1783,10 @@ done)
 
 
 %changelog
+* Mon Dec 09 2013 Led <led@altlinux.ru> 3.10.23-alt3
+- added:
+  + fix-drivers-target-iscsi--iscsi_target_mod
+
 * Mon Dec 09 2013 Led <led@altlinux.ru> 3.10.23-alt2
 - USB=m (ws)
 - USB_EHCI_HCD=m (x86_64)
