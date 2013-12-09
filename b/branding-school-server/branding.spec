@@ -11,7 +11,7 @@
 
 Name: branding-%brand-%theme
 Version: 6.9.9 
-Release: alt3
+Release: alt4
 BuildArch: noarch
 
 BuildRequires: cpio gfxboot >= 4 fonts-ttf-dejavu fonts-ttf-droid
@@ -499,6 +499,15 @@ subst 's/#theme-name=/theme-name=Clearlooks-Phenix/' /etc/lightdm/lightdm-gtk-gr
 %config %_localstatedir/ldm/.pam_environment
 
 %changelog
+* Thu Dec 05 2013 Andrey Cherepanov <cas@altlinux.org> 6.9.9-alt4
+- Pack wide wallpaper and product logo
+- Fix favicon and logo width in Alterator web-interface
+- Fix bootloader colors
+- Hide section border, simplify tooltips, turn off checkbox and
+  radiobutton highlight in installer
+- Replace Simply Linux logo by Platform Seven logo
+- Simplify GRUB config
+
 * Tue Dec 03 2013 Andrey Cherepanov <cas@altlinux.org> 6.9.9-alt3
 - Fix black color for selection background in Qt theme for Alterator
 - Fix favicon and product logo width in ahttpd
