@@ -1,8 +1,8 @@
 %define abiversion 2
 
 Name: unixODBC
-Version: 2.3.1
-Release: alt4
+Version: 2.3.2
+Release: alt1
 
 Summary: Unix ODBC driver manager and database drivers
 Summary(ru_RU.UTF-8): Система управления драйверами ODBC для unix 
@@ -23,7 +23,6 @@ Patch1: %name-depcomp.patch
 Patch3: %name-2.2.11-export-symbols.patch
 Patch4: %name-2.2.11-symbols.patch
 # Patches from Fedora
-Patch10: coverity-fixes.patch
 Patch11: keep-typedefs.patch
 Patch12: so-version-bump.patch
 
@@ -46,12 +45,6 @@ ODBC представляет из себя открытую специфика�
 Summary: Shared libraries for ODBC
 Summary(ru_RU.UTF-8): Разделяемые библиотеки для ODBC
 Group: Development/Databases
-Conflicts: lib%{name}1 < 2.2.12-alt8
-%ifarch x86_64
-Provides: libodbc.so()(64bit) libodbcinst.so()(64bit)
-%else
-Provides: libodbc.so libodbcinst.so
-%endif
 
 %description -n lib%name%abiversion
 unixODBC aims to provide a complete ODBC solution for the Linux platform.
@@ -61,11 +54,27 @@ This package contains the shared libraries.
 unixODBC представляет из себя полную спецификацию ODBC для Linux платформы.
 Этот пакет содержит в себе раделяемые библиотеки.
 
+%package -n lib%name-devel-compat
+Summary: Compat libraries for Java build
+Group: Development/Databases
+Conflicts: lib%{name}1 < 2.2.12-alt8
+Provides:  lib%name = %version-%release
+Obsoletes: lib%name < %version-%release
+%ifarch x86_64
+Provides: libodbc.so()(64bit) libodbcinst.so()(64bit)
+%else
+Provides: libodbc.so libodbcinst.so
+%endif
+
+%description -n lib%name-devel-compat
+Compat libraries for Java build.
+
 %package -n lib%name-devel
 Summary: Includes for ODBC development
 Summary(ru_RU.UTF-8): Заголовочные файлы для разработки с использованием ODBC
 Group: Development/Databases
 Requires: lib%name%abiversion = %version-%release
+Requires: lib%name-devel-compat = %version-%release
 
 %description -n lib%name-devel
 unixODBC aims to provide a complete ODBC solution for the Linux platform.
@@ -77,11 +86,9 @@ unixODBC представляет из себя полную специфика�
 
 %prep
 %setup -q
-#rm -r libltdl
 %patch1 -p1
 %patch3 -p1
 %patch4 -p1
-%patch10 -p1
 %patch11 -p1
 %patch12 -p1
 
@@ -110,14 +117,14 @@ CXXFLAGS="$CFLAGS"
 export CFLAGS CXXFLAGS
 
 %configure \
-	--with-gnu-ld \
+--with-gnu-ld \
 :	--enable-threads \
-	--enable-gui \
-	--enable-drivers \
-	--enable-driverc \
-	--enable-ltdllib \
-	--with-qt-libraries=%_qt4dir/lib \
-	--disable-static
+--enable-gui \
+--enable-drivers \
+--enable-driverc \
+--enable-ltdllib \
+--with-qt-libraries=%_qt4dir/lib \
+--disable-static
 %make_build
 
 %install
@@ -135,14 +142,19 @@ find doc -name Makefile\* -delete
 %_bindir/isql
 %_bindir/iusql
 %_bindir/odbcinst
+%_bindir/slencheck
+%doc %_man1dir/*
+%doc %_man5dir/*
 
 %files -n lib%name%abiversion
 %_libdir/lib*.so.*
-%_libdir/libodbc.so
-%_libdir/libodbcinst.so
 %_libdir/libodbcpsql.so
 %_libdir/libodbcpsqlS.so
 %_libdir/libodbcmyS.so
+
+%files -n lib%name-devel-compat
+%_libdir/libodbc.so
+%_libdir/libodbcinst.so
 
 %files -n lib%name-devel
 %doc ChangeLog doc/ProgrammerManual doc/lst
@@ -156,6 +168,11 @@ find doc -name Makefile\* -delete
 %exclude %_libdir/libodbcmyS.so
 
 %changelog
+* Mon Dec 09 2013 Andrey Cherepanov <cas@altlinux.org> 2.3.2-alt1
+- New version
+- Exclude libunixodbc-devel-compat for Java build (ALT #29638)
+- Package man pages
+
 * Mon Jun 17 2013 Andrey Cherepanov <cas@altlinux.org> 2.3.1-alt4
 - Move provides hacks for java to appropriate package
 - Set conflict to old libunixODBC with duplicate files
@@ -224,7 +241,7 @@ find doc -name Makefile\* -delete
 
 * Thu May 13 2004 Anton Farygin <rider@altlinux.ru> 2.2.8-alt3
 - sync with RH: 
-    Backpatch fix for double-free error from upstream devel sources.
+Backpatch fix for double-free error from upstream devel sources.
 
 * Tue May 11 2004 Anton Farygin <rider@altlinux.ru> 2.2.8-alt2
 - packages conflict fixed (libltdl, bugzilla #4070)
