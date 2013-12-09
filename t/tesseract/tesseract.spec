@@ -1,8 +1,8 @@
 %set_verify_elf_method none
 
 Name:     tesseract
-Version:  3.02
-Release:  alt1.r723
+Version:  3.02.02
+Release:  alt1
 
 Summary:  Raw Open source OCR Engine
 
@@ -555,6 +555,9 @@ cp -v tessdata/*.traineddata %buildroot%_datadir/tessdata/
 
 
 %changelog
+* Mon Dec 09 2013 Andrey Cherepanov <cas@altlinux.org> 3.02.02-alt1
+- New version
+
 * Thu May 03 2012 Andrey Cherepanov <cas@altlinux.org> 3.02-alt1.r723
 - New version 3.02
 - Major changes:
