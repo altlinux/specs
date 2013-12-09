@@ -1,5 +1,5 @@
 Name: libfreetype
-Version: 2.5.1
+Version: 2.5.2
 Release: alt1
 
 Summary: A free and portable font rendering engine
@@ -17,7 +17,6 @@ Patch5: freetype-2.4.10-osh.patch
 
 Patch2: freetype-2.5.1-alt-freetype-config.patch
 Patch3: freetype-2.4.10-alt-fttrigon.patch
-Patch4: freetype-2.5.1-alt-ft2demos-ftgrid.patch
 Patch6: ft2demos-2.5.1-alt-snprintf.patch
 
 Patch11: freetype-2.4.10-rh-enable-subpixel-rendering.patch
@@ -89,7 +88,6 @@ ln -s ft2demos-%version ft2demos
 
 %patch2 -p1
 %patch3 -p1
-%patch4 -p1
 %patch6 -p1
 
 %patch11 -p1
@@ -116,6 +114,7 @@ for f in ft2demos-%version/bin/ft*; do
 	builds/unix/libtool --mode=install install -m755 $f %buildroot%_bindir/
 done
 
+ln -sf ../freetype2 %buildroot%_includedir/freetype2/freetype
 wordsize=$(echo -e '#include <bits/wordsize.h>\n__WORDSIZE' | cpp -P | sed '/^$/d')
 [ "$wordsize" -ge 32 ]
 mv %buildroot%_includedir/freetype2/config/ftconfig{,-$wordsize}.h
@@ -156,6 +155,9 @@ mv %buildroot%develdocdir/{FTL.TXT,LICENSE.TXT,CHANGES.bz2} %buildroot%docdir/
 %_bindir/ft*
 
 %changelog
+* Mon Dec 09 2013 Valery Inozemtsev <shrek@altlinux.ru> 2.5.2-alt1
+- 2.5.2
+
 * Thu Dec 05 2013 Valery Inozemtsev <shrek@altlinux.ru> 2.5.1-alt1
 - 2.5.1
 
