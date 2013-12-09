@@ -1,5 +1,5 @@
 Name: nvidia-xconfig
-Version: 319.60
+Version: 331.20
 Release: alt1
 
 Group: System/Configuration/Hardware
@@ -8,8 +8,6 @@ Url: ftp://download.nvidia.com/XFree86/nvidia-xconfig/
 License: GPLv2
 
 Source: %name-%version.tar.gz
-Patch1: nvidia-xconfig-1.0-alt-fix-linking.patch
-Patch2: flags.patch
 
 BuildRequires: glibc-devel-static
 
@@ -18,12 +16,10 @@ Command line tool for setup X11 for the NVIDIA driver
 
 %prep
 %setup -q
-#%patch1 -p1
-%patch2 -p1
 
 %build
 %add_optflags -I XF86Config-parser
-%make_build PREFIX=%prefix CC=gcc LOCAL_CFLAGS="%optflags" LOCAL_LDFLAGS="-L/usr/lib -L/usr/lib64"
+%make_build PREFIX=%prefix CC=gcc LOCAL_CFLAGS="%optflags" LDFLAGS="-L/usr/lib -L/usr/lib64"
 
 %install
 make install PREFIX=%buildroot/%prefix bindir=%buildroot/%_bindir mandir=%buildroot/%_man1dir
@@ -36,6 +32,9 @@ make install PREFIX=%buildroot/%prefix bindir=%buildroot/%_bindir mandir=%buildr
 
 
 %changelog
+* Mon Dec 09 2013 Sergey V Turchin <zerg@altlinux.org> 331.20-alt1
+- new version
+
 * Fri Oct 04 2013 Sergey V Turchin <zerg@altlinux.org> 319.60-alt1
 - new version
 
