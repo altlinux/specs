@@ -16,7 +16,7 @@
 
 Name: branding-%brand-%theme
 Version: 6.9.9
-Release: alt1
+Release: alt3
 BuildArch: noarch
 
 BuildRequires: cpio gfxboot >= 4 fonts-ttf-dejavu fonts-ttf-droid
@@ -33,7 +33,6 @@ Source: branding.tar
 Group: Graphics
 Summary: System/Base
 License: GPLv2+
-
 
 %description
 Distro-specific packages with design and texts for %distro_name.
@@ -75,7 +74,6 @@ PreReq:   plymouth
 
 Conflicts: %(for n in %variants ; do [ "$n" = %brand-%theme ] || echo -n "branding-$n-bootsplash ";done )
 
-
 %description bootsplash
 This package contains graphics for boot process for %distro_name
 (needs console splash screen enabled).
@@ -95,7 +93,6 @@ Obsoletes:  branding-alt-%theme-browser-qt branding-altlinux-%theme-browser-qt
 
 # lexicographically first of the village
 Conflicts: branding-sisyphus-server-light-alterator
-
 
 Conflicts: %(for n in %variants ; do [ "$n" = %brand-%theme ] || echo -n "branding-$n-alterator ";done )
 Obsoletes: design-alterator-server design-alterator-desktop design-altertor-browser-desktop  design-altertor-browser-server branding-altlinux-backup-server-alterator
@@ -142,7 +139,6 @@ Obsoletes: %obsolete_list  branding-alt-%theme-release
 Conflicts: %conflicts_list
 Conflicts: %(for n in %variants ; do [ "$n" = %brand-%theme ] || echo -n "branding-$n-release ";done )
 
-
 %description release
 %distro_name release file.
 
@@ -184,7 +180,7 @@ License: Distributable
 Group: Graphical desktop/XFce
 Requires: PolicyKit-gnome
 Requires: etcskel gtk3-theme-clearlooks-phenix
-Requires: gnome-icon-theme icon-theme-simple-sl
+Requires: gnome-icon-theme icon-theme-simple-school
 Requires: branding-%brand-%theme-graphics
 Obsoletes: xfce-settings-lite xfce-settings-school-lite
 Conflicts: %(for n in %variants ; do [ "$n" = %brand-%theme ] || echo -n "branding-$n-xfce-settings ";done )
@@ -272,7 +268,6 @@ License: Distributable
 Group: Graphical desktop/Other
 Requires(pre): altlinux-freedesktop-menu-common
 Requires: altlinux-freedesktop-menu-common
-
 
 %description menu
 Menu for %distro_name
@@ -517,6 +512,15 @@ subst 's/#theme-name=/theme-name=Clearlooks-Phenix/' /etc/lightdm/lightdm-gtk-gr
 %config %_localstatedir/ldm/.pam_environment
 
 %changelog
+* Mon Dec 09 2013 Andrey Cherepanov <cas@altlinux.org> 6.9.9-alt3
+- Pack wide wallpaper and product logo
+- Fix favicon and logo width in Alterator web-interface
+- Fix bootloader colors
+- Hide section border, simplify tooltips, turn off checkbox and
+  radiobutton highlight in installer
+- Replace Simply Linux logo by Platform Seven logo
+- Simplify GRUB config
+
 * Thu Nov 21 2013 Andrey Cherepanov <cas@altlinux.org> 6.9.9-alt1
 - Update branding for Seven platform
 
