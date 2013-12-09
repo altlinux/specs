@@ -17,8 +17,8 @@
 %def_enable vala
 
 Name: evolution-data-server
-Version: %ver_major.2
-Release: alt3
+Version: %ver_major.3
+Release: alt1
 
 Summary: Evolution Data Server
 License: %lgpl2plus
@@ -256,6 +256,9 @@ rm -f %buildroot%_libdir/%name-%ver_lib/*/*.la
 
 
 %changelog
+* Mon Dec 09 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.3-alt1
+- 3.10.3
+
 * Wed Nov 20 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.2-alt3
 - rebuilt against libical.so.1
 
