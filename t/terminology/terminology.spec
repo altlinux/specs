@@ -1,4 +1,4 @@
-%define ver_major 0.3
+%define ver_major 0.4
 
 Name: terminology
 Version: %ver_major.0
@@ -17,8 +17,11 @@ Requires: fonts-bitmap-terminus
 Provides: xvt
 
 BuildRequires: intltool
-BuildRequires: libevas-devel edje embryo_cc libedje-devel libemotion-devel
-BuildRequires: libethumb-devel libelementary-devel >= 1.7.3
+# BuildRequires: libevas-devel edje embryo_cc libedje-devel libemotion-devel libethumb-devel
+# for efl >= 1.8.0
+Conflicts: libelementary < 1.8.0
+BuildRequires: efl-libs-devel
+BuildRequires: libelementary-devel >= 1.8.0
 
 %description
 An EFL terminal emulator with some extra bells and whistles. It's brand
@@ -51,12 +54,15 @@ EOF
 %_bindir/*
 %_datadir/applications/*
 %_datadir/%name/
-#%%exclude %_datadir/%name/fonts
 %_altdir/%name
 %_iconsdir/%name.png
+%_man1dir/%name.1*
 %doc AUTHORS ChangeLog COPYING README
 
 %changelog
+* Sun Dec 08 2013 Yuri N. Sedunov <aris@altlinux.org> 0.4.0-alt1
+- 0.4.0 for E18
+
 * Tue Mar 26 2013 Yuri N. Sedunov <aris@altlinux.org> 0.3.0-alt1
 - 0.3.0
 

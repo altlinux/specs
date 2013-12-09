@@ -1,7 +1,7 @@
 %define _name elementary
 %define ver_major 1.8
 Name: %_name%ver_major
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Widget set based on the Enlightenment Foundation Libraries
@@ -37,8 +37,7 @@ This package contains shared libraries.
 Summary: noarch data for %name
 Group: Graphical desktop/Enlightenment
 BuildArch: noarch
-Conflicts: %_name-data < %ver_major
-#Obsoletes: %_name-data < %ver_major
+Obsoletes: %_name-data < %ver_major
 Provides: %_name-data = %version-%release
 
 %description data
@@ -49,8 +48,7 @@ Elementary.
 Summary: Development files for Elementary
 Group: Development/C
 Requires: lib%name = %version-%release
-Conflicts: lib%_name-devel < %ver_major
-#Obsoletes: lib%_name-devel < %ver_major
+Obsoletes: lib%_name-devel < %ver_major
 Provides: lib%_name-devel = %version-%release
 
 %description -n lib%name-devel
@@ -103,6 +101,10 @@ developing applications that use Elementary libraries.
 %_iconsdir/*.png
 
 %changelog
+* Tue Dec 10 2013 Yuri N. Sedunov <aris@altlinux.org> 1.8.1-alt1
+- 1.8.1
+- obsoletes/provides elementary < 1.8
+
 * Wed Dec 04 2013 Yuri N. Sedunov <aris@altlinux.org> 1.8.0-alt1
 - 1.8.0
 

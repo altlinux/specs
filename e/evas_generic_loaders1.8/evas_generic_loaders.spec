@@ -2,7 +2,7 @@
 %define ver_major 1.8
 
 Name: evas_generic_loaders%ver_major
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: A set of loaders for Evas
@@ -12,8 +12,7 @@ Url: http://www.enlightenment.org/
 
 Source: http://download.enlightenment.org/releases/%_name-%version.tar.bz2
 
-Conflicts: %_name < %version
-#Obsoletes: %_name < %version
+Obsoletes: %_name < %version
 Provides:  %_name = %version-%release
 
 # to skip libreoffice dependency
@@ -58,6 +57,10 @@ subst 's@/usr/lib@%_libdir@' src/bin/pdf/evas_generic_pdf_loader.libreoffice
 %doc AUTHORS COPYING README
 
 %changelog
+* Tue Dec 10 2013 Yuri N. Sedunov <aris@altlinux.org> 1.8.1-alt1
+- 1.8.1
+- obsoletes/provides evas_generic_loaders < 1.8
+
 * Wed Dec 04 2013 Yuri N. Sedunov <aris@altlinux.org> 1.8.0-alt1
 - 1.8.0 for E18
 
