@@ -1,7 +1,7 @@
 %define collectorname freedesktop-desktop
 
 Name: repocop-collector-%collectorname
-Version: 0.14
+Version: 0.15
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -26,16 +26,19 @@ Source0: %name-%version.tar
 
 %install
 mkdir -p $RPM_BUILD_ROOT%_datadir/repocop/pkgcollectors/%collectorname/
-%__install -m 755 %collectorname.test $RPM_BUILD_ROOT%_datadir/repocop/pkgcollectors/%collectorname/test
-%__install -m 644 %collectorname.sql $RPM_BUILD_ROOT%_datadir/repocop/pkgcollectors/%collectorname/init.sql.2
-%__install -m 644 %collectorname.purge.sql $RPM_BUILD_ROOT%_datadir/repocop/pkgcollectors/%collectorname/purge.sql
-%__install -m 644 %collectorname.filepattern $RPM_BUILD_ROOT%_datadir/repocop/pkgcollectors/%collectorname/filepattern
+install -m 755 %collectorname.test $RPM_BUILD_ROOT%_datadir/repocop/pkgcollectors/%collectorname/test
+install -m 644 %collectorname.sql $RPM_BUILD_ROOT%_datadir/repocop/pkgcollectors/%collectorname/init.sql.2
+install -m 644 %collectorname.purge.sql $RPM_BUILD_ROOT%_datadir/repocop/pkgcollectors/%collectorname/purge.sql
+install -m 644 %collectorname.filepattern $RPM_BUILD_ROOT%_datadir/repocop/pkgcollectors/%collectorname/filepattern
 
 %files
 #doc README ChangeLog
 %_datadir/repocop/pkgcollectors/%collectorname
 
 %changelog
+* Tue Dec 10 2013 Igor Vlasenko <viy@altlinux.ru> 0.15-alt1
+- libreoffice4.1 support
+
 * Thu Apr 18 2013 Igor Vlasenko <viy@altlinux.ru> 0.14-alt1
 - libreoffice4.0 support
 
