@@ -1,5 +1,5 @@
 Name: rdesktop
-Version: 1.7.1
+Version: 1.8.1
 Release: alt1
 
 Summary: A RDP client for accessing Windows Remote Desktop Services
@@ -8,14 +8,11 @@ Group: Networking/Remote access
 
 Url: http://www.rdesktop.org/
 Source0: %name-%version.tar
-Patch0: %{name}-pcsc.patch
-Patch1: %{name}-libao.patch
-Patch2: Raw-keyboard-patch-for-1.7.1.patch
+#Patch0: %{name}-pcsc.patch
+#Patch1: %{name}-libao.patch
+Patch2: Raw-keyboard-patch-for-1.8.1.patch
 
-BuildRequires:  libao-devel
-BuildRequires:  libX11-devel
-BuildRequires:  openssl-devel
-BuildRequires:  libpcsclite-devel
+BuildRequires:  libao-devel libX11-devel openssl-devel libpcsclite-devel libgssglue-devel libXrandr-devel libpcsclite-devel libalsa-devel libsamplerate-devel
 
 %description
 Rdesktop is an open source client for Windows Remote Desktop Services,
@@ -26,9 +23,7 @@ Vista, 2008, 7, and 2008 R2.
 
 %prep
 %setup -q
-#patch0 -p1
-%patch1 -p1
-%patch2 -p2
+%patch2 -p1
 
 %build
 %autoreconf
@@ -41,6 +36,8 @@ Vista, 2008, 7, and 2008 R2.
 %install
 %makeinstall
 
+sed -i 's/slash 0x56 altgr/#slash 0x56 altgr/' %buildroot%_datadir/%name/keymaps/ru
+
 %files
 %doc COPYING README doc/{AUTHORS,ChangeLog,HACKING,TODO,*.txt}
 %_bindir/%name
@@ -48,6 +45,12 @@ Vista, 2008, 7, and 2008 R2.
 %_man1dir/*
 
 %changelog
+* Tue Dec 10 2013 Slava Dubrovskiy <dubrsl@altlinux.org> 1.8.1-alt1
+- 1.8.1 (closes: #29643)
+- Update Raw-keyboard-patch-for-1.8.1.patch
+- Remove %{name}-libao.patch
+- Fix ru keymaps (closes: #20053)
+
 * Mon Aug 13 2012 Michael A. Kangin <prividen@altlinux.org> 1.7.1-alt1
 - 1.7.1
 
