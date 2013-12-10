@@ -1,7 +1,7 @@
 %define dist Gnome2
 
 Name: perl-%dist
-Version: 1.044
+Version: 1.045
 Release: alt1
 
 Summary: Gnome2 Perl module
@@ -66,6 +66,9 @@ for developers (overview of internals and internal API reference).
 %doc	%perl_vendor_archlib/Gnome2/Config
 
 %changelog
+* Tue Dec 10 2013 Igor Vlasenko <viy@altlinux.ru> 1.045-alt1
+- automated CPAN update
+
 * Mon Oct 21 2013 Igor Vlasenko <viy@altlinux.ru> 1.044-alt1
 - automated CPAN update
 
