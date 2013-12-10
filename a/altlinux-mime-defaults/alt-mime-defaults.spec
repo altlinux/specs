@@ -1,5 +1,5 @@
 Name: altlinux-mime-defaults
-Version: 0.26
+Version: 0.27
 Release: alt1
 
 Summary: System-wide MIME preferences.
@@ -39,6 +39,9 @@ touch %buildroot/%_desktopdir/defaults.list
 %_desktopdir/defaults.list
 
 %changelog
+* Wed Dec 11 2013 Igor Vlasenko <viy@altlinux.ru> 0.27-alt1
+- updated priorities; support for LibreOffice41; deadbeef (closes: 29263)
+
 * Tue Jul 16 2013 Igor Vlasenko <viy@altlinux.ru> 0.26-alt1
 - placed mplayer wrappers over mplayer (closes: 29068)
 
