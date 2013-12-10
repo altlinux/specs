@@ -4,7 +4,7 @@
 %define popIF_ver_lteq() %if "%(rpmvercmp '%2' '%1')" >= "0"
 
 %def_disable static
-%def_enable compat
+%def_disable compat
 
 %if_disabled compat
 %def_enable cpp
@@ -29,7 +29,7 @@
 %endif
 
 %define rname poppler
-%define somajor 43
+%define somajor 44
 %define somajor_cpp 0
 %define somajor_qt 3
 %define somajor_qt4 4
@@ -37,10 +37,10 @@
 %define somajor_glib 8
 %define major 0
 %define minor 24
-%define bugfix 3
+%define bugfix 4
 Name: %rname%somajor
 Version: %major.%minor.%bugfix
-Release: alt3
+Release: alt1
 
 %if_disabled compat
 %define poppler_devel_name lib%rname-devel
@@ -403,8 +403,8 @@ export QT4DIR=%_qt4dir
 %endif
 
 %changelog
-* Tue Dec 10 2013 Sergey V Turchin <zerg@altlinux.org> 0.24.3-alt3
-- built compat package
+* Tue Dec 10 2013 Sergey V Turchin <zerg@altlinux.org> 0.24.4-alt1
+- new version
 
 * Tue Nov 26 2013 Sergey V Turchin <zerg@altlinux.org> 0.24.3-alt1.M70P.1
 - built for M70P
