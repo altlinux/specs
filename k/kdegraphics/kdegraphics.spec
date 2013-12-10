@@ -12,7 +12,7 @@
 
 Name: kdegraphics
 Version: 3.5.13.2
-Release: alt3
+Release: alt4
 
 Group: Graphical desktop/KDE
 Summary: K Desktop Environment - Graphics
@@ -690,6 +690,12 @@ install -m 0644 %SOURCE1 %buildroot/%_K3conf/kghostviewrc
 
 
 %changelog
+* Tue Dec 10 2013 Sergey V Turchin <zerg@altlinux.org> 3.5.13.2-alt4
+- rebuilt with new poppler
+
+* Thu Nov 21 2013 Sergey V Turchin <zerg@altlinux.org> 3.5.13.2-alt2.M70P.1
+- built for M70P
+
 * Thu Nov 21 2013 Sergey V Turchin <zerg@altlinux.org> 3.5.13.2-alt3
 - rebuilt with new poppler (ALT#29598)
 
