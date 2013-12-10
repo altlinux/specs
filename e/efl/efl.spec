@@ -4,9 +4,11 @@
 %def_enable fb
 %def_enable multisense
 %def_disable tslib
+%def_disable egl
+%def_disable drm
 
 Name: efl
-Version: 1.8.1
+Version: 1.8.2
 Release: alt1
 
 Summary: Enlightenment Foundation Libraries
@@ -29,7 +31,8 @@ BuildRequires: libXfixes-devel libXinerama-devel libXrandr-devel libXrender-deve
 BuildRequires: libXtst-devel libXcursor-devel libXp-devel libXi-devel
 BuildRequires: libGL-devel
 %{?_enable_tslib:BuildRequires: libts-devel}
-%{?_enable_wayland:BuildRequires: libwayland-client-devel >= 1.3.0 libwayland-cursor-devel libxkbcommon-devel libwayland-egl-devel}
+%{?_enable_wayland:BuildRequires: libwayland-client-devel >= 1.3.0 libwayland-cursor-devel libxkbcommon-devel}
+%{?_enable_egl:BuildRequires: libEGL-devel libwayland-egl-devel}
 
 %description
 EFL is a collection of libraries for handling many common tasks a
@@ -47,36 +50,33 @@ http://www.enlightenment.org/p.php?p=docs
 %package -n %name-libs
 Summary: Enlightenment Foundation Libraries
 Group: System/Libraries
-Conflicts: libeina < %version
-#Obsoletes: libeina < %version
+Obsoletes: libeina < %version
 Provides: libeina = %version-%release
-Conflicts: libeet < %version
-#Obsoletes: libeet < %version
+Obsoletes: libeet < %version
 Provides: libeet = %version-%release
-Conflicts: libevas < %version
-#Obsoletes: libevas < %version
+Obsoletes: libevas < %version
 Provides: libevas = %version-%release
-Conflicts: libecore < %version
-#Obsoletes: libecore < %version
+Obsoletes: libecore < %version
 Provides: libecore = %version-%release
-Conflicts:  libembryo < %version
-#Obsoletes: libembryo < %version
+Obsoletes: libedje < %version
+Provides: libedje = %version-%release
+Obsoletes: libeeze < %version
+Provides: libeeze = %version-%release
+Obsoletes: eeze < %version
+Provides: eeze = %version-%release
+Obsoletes: libembryo < %version
 Provides: libembryo = %version-%release
-Conflicts:  libeio < %version
-#Obsoletes: libeio < %version
+Obsoletes: libeio < %version
 Provides: libeio = %version-%release
-Conflicts:  libefreet < %version
-#Obsoletes: libefreet < %version
+Obsoletes: libefreet < %version
 Provides: libefreet = %version-%release
-Conflicts:  libethumb < %version
-#Obsoletes: libethumb < %version
+Obsoletes: libethumb < %version
 Provides: libethumb = %version-%release
-Conflicts:  libemotion < %version
-#Obsoletes: libemotion < %version
+Obsoletes: libemotion < %version
 Provides: libemotion = %version-%release
-
 Provides: libeo = %version-%release
 Provides: libephysics = %version-%release
+Provides: libeldbus = %version-%release
 
 %description -n %name-libs
 This package contains shared EFL libraries.
@@ -85,36 +85,33 @@ This package contains shared EFL libraries.
 Summary: Enlightenment Foundation Libraries development files
 Group: Development/C
 Requires: %name-libs = %version-%release
-Conflicts: libeina-devel < %version
-#Obsoletes: libeina-devel < %version
+Obsoletes: libeina-devel < %version
 Provides: libeina-devel = %version-%release
-Conflicts: libeet-devel < %version
-#Obsoletes: libeet-devel < %version
+Obsoletes: libeet-devel < %version
 Provides: libeet-devel = %version-%release
-Conflicts: libevas-devel < %version
-#Obsoletes: libevas-devel < %version
+Obsoletes: libevas-devel < %version
 Provides: libevas-devel = %version-%release
-Conflicts:  ibecore-devel < %version
-#Obsoletes: libecore-devel < %version
+Obsoletes: libecore-devel < %version
 Provides: libecore-devel = %version-%release
-Conflicts: libembryo-devel < %version
-#Obsoletes: libembryo-devel < %version
+Obsoletes: libedje-devel < %version
+Provides: libedje-devel = %version-%release
+Obsoletes: libeeze-devel < %version
+Provides: libeeze-devel = %version-%release
+Obsoletes: libembryo-devel < %version
 Provides: libembryo-devel = %version-%release
-Conflicts: libeio-devel < %version
-#Obsoletes: libeio-devel < %version
+Obsoletes: libeio-devel < %version
 Provides: libeio-devel = %version-%release
-Conflicts:  libefreet-devel < %version
-#Obsoletes: libefreet-devel < %version
+Obsoletes: libefreet-devel < %version
 Provides: libefreet-devel = %version-%release
-Conflicts:  libethumb-devel < %version
-#Obsoletes: libethumb-devel < %version
+Obsoletes: libethumb-devel < %version
 Provides: libethumb-devel = %version-%release
-Conflicts:  libemotion-devel < %version
-#Obsoletes: libemotion-devel < %version
+Obsoletes: libemotion-devel < %version
 Provides: libemotion-devel = %version-%release
-
+Obsoletes: embryo_cc < %version
+Provides: embryo_cc = %version-%release
 Provides: libeo-devel = %version-%release
 Provides: libephysics-devel = %version-%release
+Provides: libeldbus-devel = %version-%release
 
 %description -n %name-libs-devel
 This package contains headers, development libraries, test programs and
@@ -134,8 +131,9 @@ documentation for EFL.
 	%{subst_enable multisense} \
 	%{subst_enable tslib} \
 	%{subst_enable wayland} \
-	%{subst_enable fb}
-
+	%{subst_enable fb} \
+	%{subst_enable egl} \
+	%{subst_enable drm}
 %make_build
 #%make doc
 
@@ -244,6 +242,10 @@ find %buildroot%_libdir -name "*.la" -delete
 
 
 %changelog
+* Tue Dec 10 2013 Yuri N. Sedunov <aris@altlinux.org> 1.8.2-alt1
+- 1.8.2
+- obsoletes/provides all EFL libraries < 1.8
+
 * Tue Dec 03 2013 Yuri N. Sedunov <aris@altlinux.org> 1.8.1-alt1
 - first build for Sisyphus
 

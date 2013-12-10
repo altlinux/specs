@@ -1,6 +1,6 @@
 %define _name enlightenment
 %define efl_ver_major 1.8
-%define cvs_date alpha4
+%define cvs_date rc1
 #%%undefine cvs_date
 %define snapshot 2012-10-12
 %define rel alt1
@@ -51,8 +51,10 @@ Patch5: e17-0.17.1-alt-e_sys_nosuid.patch
 Patch6: auto-ptrace-disable.patch
 Patch11: enlightenment-0.17.1-pam-helper.patch
 
-Conflicts: e17
+Obsoletes: e17
+Provides: %_name = %version-%release
 Provides: e18-default
+
 # default terminal
 #Requires: terminology
 Requires: evas_generic_loaders >= %efl_ver_major emotion_generic_players
@@ -68,7 +70,7 @@ BuildRequires: libpam-devel libalsa-devel libudev-devel libxcbutil-keysyms-devel
 BuildRequires: libdbus-devel libp11-kit-devel xorg-xproto-devel libxcbutil-keysyms-devel
 BuildRequires: doxygen pm-utils
 %{?_enable_bluetooth:BuildRequires: libbluez-devel}
-%{?_enable_wayland:BuildRequires: libwayland-server-devel >= 1.3.0 libpixman-devel libwayland-egl-devel}
+%{?_enable_wayland:BuildRequires: libwayland-server-devel >= 1.3.0 libpixman-devel libEGL-devel libwayland-egl-devel}
 %{?_enable_systemd:BuildRequires: systemd-devel}
 
 %description
@@ -178,6 +180,9 @@ cp %SOURCE11 %buildroot%_sysconfdir/enlightenment/sysactions.conf
 %_rpmmacrosdir/%name
 
 %changelog
+* Tue Dec 10 2013 Yuri N. Sedunov <aris@altlinux.org> 1:0.18.0-alt1.rc1
+- 0.18.0-rc1
+
 * Thu Dec 05 2013 Yuri N. Sedunov <aris@altlinux.org> 1:0.18.0-alt1.alpha4
 - post 0.18.0-alpha4 snapshot
 
