@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist POE
 Name: perl-%dist
-Version: 1.356
+Version: 1.358
 Release: alt1
 
 Summary: Portable multitasking and networking framework for any event loop
@@ -48,6 +48,9 @@ portability.
 %perl_vendor_privlib/POE*
 
 %changelog
+* Tue Dec 10 2013 Igor Vlasenko <viy@altlinux.ru> 1.358-alt1
+- automated CPAN update
+
 * Mon Sep 16 2013 Igor Vlasenko <viy@altlinux.ru> 1.356-alt1
 - automated CPAN update
 
