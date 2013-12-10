@@ -1,11 +1,11 @@
 %define policy_name altlinux
-%define date 20131129
+%define date 20131210
 %define seconf %_sysconfdir/selinux/config
 %define default_mode permissive
 
 Summary: SELinux %policy_name policy
 Name: selinux-policy-altlinux
-Version: 0.0.4
+Version: 0.0.5
 Release: alt1
 License: %distributable
 Group: System/Base
@@ -211,7 +211,8 @@ exit 0 # End of %%preun section
 %config(noreplace) %_sysconfdir/security/alt.newrole/dirs
 %config(noreplace) %_sysconfdir/security/alt.newrole/config
 
-%_bindir/kde4sl
+%_bindir/slrun
+%_bindir/slrun2
 
 /lib/systemd/selinux-autorelabel
 %_unitdir/selinux-autorelabel-mark.service
@@ -256,6 +257,9 @@ exit 0 # End of %%preun section
 %ghost %policy_conf/modules/active/modules/xorg.pp
 
 %changelog
+* Tue Dec 10 2013 Andriy Stepanov <stanv@altlinux.ru> 0.0.5-alt1
+- Build: 20131210
+
 * Fri Nov 29 2013 Andriy Stepanov <stanv@altlinux.ru> 0.0.4-alt1
 - Network stuff
 
