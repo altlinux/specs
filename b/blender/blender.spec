@@ -1,6 +1,6 @@
 Name: blender
-Version: 2.68a
-Release: alt3
+Version: 2.69
+Release: alt1
 
 Summary: 3D modeling, animation, rendering and post-production
 License: GPL
@@ -12,6 +12,7 @@ Source0: %name-%version.tar
 Source1: %name-wrapper
 Source2: %name.desktop
 Source3: %name-win.desktop
+Patch1: %name-2.68a-cmake_freetype251.patch
 Patch2: %name-2.47-alt-usertempdir.patch
 Patch3: %name-2.49b-alt-ld.patch
 Patch4: %name-2.49b-alt-qhull.patch
@@ -39,11 +40,14 @@ Provides: python%_python3_version(bpy)
 Provides: python%_python3_version(BPyMesh)
 Provides: python%_python3_version(bmesh)
 
-Conflicts: libopenCOLLADA <= 0-alt1_16.git9665d16
+Requires: libopenCOLLADA >= 0-alt3
+BuildRequires: libopenCOLLADA-devel >= 0-alt3
 
 # Automatically added by buildreq on Sun Sep 22 2013
+#  - libopenCOLLADA-devel - moved, with version
+#  + libexpat-devel
 # optimized out: boost-devel cmake cmake-modules fontconfig ilmbase-devel libGL-devel libGLU-devel libX11-devel libXau-devel libXext-devel libXfixes-devel libavcodec-devel libavutil-devel libdc1394-22 libfreetype-devel libopencore-amrnb0 libopencore-amrwb0 libraw1394-11 libstdc++-devel pkg-config python3 python3-base xorg-inputproto-devel xorg-kbproto-devel xorg-xproto-devel zlib-devel
-BuildRequires: boost-devel-headers boost-filesystem-devel boost-locale-devel ctest fontconfig-devel gcc-c++ libSDL-devel libXi-devel libavdevice-devel libavformat-devel libfftw3-devel libglew-devel libjack-devel libjpeg-devel libopenCOLLADA-devel libopenal-devel libopenjpeg-devel libpcre-devel libpng-devel libsndfile-devel libswscale-devel libtiff-devel libxml2-devel openexr-devel python3-dev tinyxml-devel
+BuildRequires: boost-devel-headers boost-filesystem-devel boost-locale-devel ctest fontconfig-devel gcc-c++ libSDL-devel libXi-devel libavdevice-devel libavformat-devel libfftw3-devel libglew-devel libjack-devel libjpeg-devel libopenal-devel libopenjpeg-devel libpcre-devel libpng-devel libsndfile-devel libswscale-devel libtiff-devel libxml2-devel openexr-devel python3-dev tinyxml-devel libexpat-devel
 
 %description
 Fully integrated creation suite, offering a broad range of essential
@@ -71,6 +75,7 @@ Languages support for blender
 
 %prep
 %setup -q -n %name-%version
+%patch1 -p1
 #patch2 -p1
 #patch3 -p2
 #patch4 -p2
@@ -174,6 +179,12 @@ install -pD -m644 release/datafiles/locale/languages %buildroot%_datadir/%name/l
 
 
 %changelog
+* Tue Dec 10 2013 Andrey Liakhovets <aoliakh@altlinux.org> 2.69-alt1
+- 2.69
+- buildreq adjusted for new fontconfig
+- temporary cmake patch to find freetype 2.5.1
+- 'Conflicts' with old Collada changed to 'Requires' new Collada
+
 * Mon Sep 23 2013 Andrey Liakhovets <aoliakh@altlinux.org> 2.68a-alt3
 - lost conflict with libopenCOLLADA <= 0-alt1_16.git9665d16 added
 
