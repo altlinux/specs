@@ -1,7 +1,5 @@
-%def_without devel
-
 Name: midori
-Version: 0.5.5
+Version: 0.5.6
 Release: alt1
 
 Summary: is a lightweight web browser
@@ -13,16 +11,11 @@ Url: http://www.midori-browser.org/
 Source: %name-%version.tar
 Patch0: %name-%version-%release.patch
 
-BuildPreReq: rpm-build-gnome gnome-common
-
-BuildRequires: libgio-devel libgtk+2-devel libgtksourceview2-devel libwebkitgtk2-devel libxml2-devel
-BuildRequires: libunique-devel intltool librsvg-utils python-modules-logging libsqlite3-devel
-BuildRequires: libsoup-gnome-devel libidn-devel python-module-docutils libnotify-devel
-BuildRequires: libXScrnSaver-devel vala libzeitgeist-devel
+BuildRequires: cmake libzeitgeist-devel gcr-libs-devel intltool libXScrnSaver-devel libgranite-devel libgranite-vala libnotify-devel librsvg-utils libsoup-gnome-devel libsqlite3-devel libwebkitgtk3-devel libxml2-devel
 
 %description
 Midori is a lightweight web browser.
- * Full integration with GTK+2
+ * Full integration with GTK+3
  * Fast rendering with WebKit
  * Tabs, windows and session management
  * Flexibly configurable Web Search
@@ -32,26 +25,16 @@ Midori is a lightweight web browser.
  * Extensions such as Adblock, form history, mouse gestures or
    cookie management
 
-%if_with devel
-%package devel
-Summary: Development files for 'External Applications' extension
-Group: Development/C
-Requires: %name = %version-%release
-
-%description devel
-%summary
-%endif
-
 %prep
 %setup
 %patch0 -p1
 
 %build
-./waf --nocache configure --prefix=%_prefix --libdir=%_libdir -j 1
-./waf --nocache build
+./configure --prefix=%_prefix --enable-granite
+make
 
 %install
-./waf --nocache install --destdir=%buildroot
+%makeinstall_std
 
 %find_lang --with-gnome %name
 
@@ -59,6 +42,8 @@ Requires: %name = %version-%release
 %_sysconfdir/xdg/%{name}*
 %_bindir/%name
 %_libdir/%name
+%_libdir/libmidori-core.so*
+%_datadir/appdata/midori.appdata.xml
 %_desktopdir/%name.desktop
 %_desktopdir/%name-private.desktop
 %_datadir/%name
@@ -67,14 +52,13 @@ Requires: %name = %version-%release
 %_iconsdir/hicolor/*/status/*
 %_docdir/%name
 
-%if_with devel
-%files devel
-%_includedir/%name-*
-%_datadir/vala/vapi/*.deps
-%_datadir/vala/vapi/*.vapi
-%endif
-
 %changelog
+* Mon Dec 09 2013 Vladimir Lettiev <crux@altlinux.ru> 0.5.6-alt1
+- 0.5.6
+- build with libgranite (Closes: #29341)
+- switch to Gtk3
+- added ALTLinux package search (Closes: #29342)
+
 * Tue Sep 10 2013 Vladimir Lettiev <crux@altlinux.ru> 0.5.5-alt1
 - 0.5.5 (Closes: #29301)
 
