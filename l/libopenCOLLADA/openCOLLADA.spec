@@ -13,14 +13,14 @@ Group: System/Libraries
 # and the soversion will be incremented.
 %global sover 0.1
 
-%global commit 828b60384552b83e55d2af7055f07d2c40b4d3f4
+%global commit 18da7f4109a8eafaa290a33f5550501cc4c8bae8
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
 %global upname OpenCOLLADA
 
 
 Name:           libopenCOLLADA
 Version:        0
-Release:        alt3.git%{shortcommit}
+Release:        alt4.git%{shortcommit}
 License:        MIT
 Summary:        Collada 3D import and export libraries
 Url:            https://collada.org/mediawiki/index.php/OpenCOLLADA
@@ -30,13 +30,8 @@ Source1:        Changelog
 
 Patch0:         openCOLLADA-svn863-cmake.patch
 Patch1:         openCOLLADA-svn863-libs.patch
-Patch2:         openCOLLADA-smp_build.patch
-Patch3:         openCOLLADA-svn871-memcpy.patch
-Patch4:         openCOLLADA-non-existant_includes.patch
 Patch5:         openCOLLADA-svn876-no_var_tracking_assigenments.patch
 
-#?BuildRequires:  libfftw3-devel
-#?BuildRequires:  zlib-devel
 Source44: import.info
 Provides: openCOLLADA = %{version}-%{release}
 
@@ -91,8 +86,6 @@ XML validator for COLLADA files, based on the COLLADASaxFrameworkLoader.
 %setup -q -n %{upname}-%{commit}
 %patch0 -p1 -b .cmake
 %patch1 -p1 -b .libs
-#patch2 -p1 -b .smp
-#patch4 -p1 -b .includes
 %patch5 -p1 -b .no_var_trk
 
 # Remove unused bundled libraries
@@ -150,7 +143,7 @@ cp -a Externals/MathMLSolver/include/* %{buildroot}%{_includedir}/MathMLSolver/
 %{_libdir}/lib*.so.%{sover}
 
 %files doc
-%doc htdocs/
+%doc htdocs/ README_OSX.rtf
 
 %files devel
 %{_libdir}/*.so
@@ -162,6 +155,9 @@ cp -a Externals/MathMLSolver/include/* %{buildroot}%{_includedir}/MathMLSolver/
 
 
 %changelog
+* Sun Dec 08 2013 Andrey Liakhovets <aoliakh@altlinux.org> 0-alt4.git18da7f4
+- Collada 18da7f4 for blender 2.69
+
 * Thu Sep 26 2013 Andrey Liakhovets <aoliakh@altlinux.org> 0-alt3.git828b603
 - revert previous erroneous update, now Collada and blender in sync again
 
