@@ -143,7 +143,7 @@
 
 Name: qemu
 Version: 1.7.0
-Release: alt2
+Release: alt3
 
 Summary: QEMU CPU Emulator
 License: GPL/LGPL/BSD
@@ -571,6 +571,9 @@ fi
 %_bindir/vscclient
 
 %changelog
+* Tue Dec 10 2013 Alexey Shabalin <shaba@altlinux.ru> 1.7.0-alt3
+- rebuild with new libiscsi
+
 * Mon Dec 02 2013 Alexey Shabalin <shaba@altlinux.ru> 1.7.0-alt2
 - fixed %%post and %%preun common package
 

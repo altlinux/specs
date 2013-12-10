@@ -1,5 +1,5 @@
 Name: libiscsi
-Version: 1.7.0
+Version: 1.10.0
 Release: alt1
 
 Summary: iSCSI client library
@@ -11,8 +11,9 @@ Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
 Packager: Michael Shigorin <mike@altlinux.org>
-
-BuildRequires: libpopt-devel
+BuildRequires: bc
+BuildRequires: libgcrypt-devel
+BuildRequires: docbook-style-xsl xsltproc
 
 %description
 libiscsi is a library for attaching to iSCSI resources
@@ -53,6 +54,7 @@ The libiscsi-devel package includes the header files for libiscsi.
 
 %files utils
 %_bindir/*
+%_man1dir/*
 
 %files devel
 %_includedir/*
@@ -60,6 +62,9 @@ The libiscsi-devel package includes the header files for libiscsi.
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Tue Dec 10 2013 Alexey Shabalin <shaba@altlinux.ru> 1.10.0-alt1
+- 1.10.0
+
 * Wed May 22 2013 Alexey Shabalin <shaba@altlinux.ru> 1.7.0-alt1
 - 1.7.0
 - add pkgconfig file to devel package
