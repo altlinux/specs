@@ -1,5 +1,5 @@
 Name: ulogd
-Version: 2.0.2
+Version: 2.0.3
 Release: alt1
 
 %def_disable nfacct
@@ -14,10 +14,6 @@ Source1: %name.init
 Source2: %name.logrotate
 Source3: %name.service
 Patch0: %name-%version-%release.patch
-
-# From Debian
-Patch1: ulogd-2.0.2-debian-write-pidfile.patch
-Patch2: ulogd-2.0.2-debian-improve-pid-file-handling.patch
 
 BuildRequires(pre): rpm-build-licenses
 BuildRequires: libpcap-devel zlib-devel libMySQL-devel postgresql-devel libsqlite3-devel libdbi-devel
@@ -72,9 +68,6 @@ firewall information through a libdbi interface.
 %prep
 %setup
 %patch0 -p1
-
-%patch1 -p1
-%patch2 -p1
 
 %build
 #export CFLAGS="$RPM_OPT_FLAGS -fPIC"
@@ -162,6 +155,10 @@ sed -i -r 's;^(plugin="%_libdir/ulogd/ulogd_inpflow_NFACCT\.so");#\1;' %buildroo
 %_libdir/%name/ulogd_output_DBI.so
 
 %changelog
+* Tue Nov 26 2013 Mikhail Efremov <sem@altlinux.org> 2.0.3-alt1
+- Drop obsoleted patches.
+- Updated to 2.0.3.
+
 * Thu Aug 22 2013 Mikhail Efremov <sem@altlinux.org> 2.0.2-alt1
 - Update ulogd.logrotate.
 - Run ulogd from user "ulogd".
