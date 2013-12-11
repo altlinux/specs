@@ -1,8 +1,8 @@
 
 Summary: Enlightenment Connection Manager
 Name: econnman
-Version: 1.0.0
-Release: alt2
+Version: 1.1
+Release: alt1
 License: BSD
 Group: Graphical desktop/Enlightenment
 URL: http://www.enlightenment.org/
@@ -10,7 +10,9 @@ Source: %name-%version.tar
 
 Requires: connman
 
-BuildRequires: python-module-elementary-devel, python-module-edbus-devel edje libedje-devel embryo_cc
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-base python3-devel
+BuildRequires: efl-libs-devel
 
 BuildArch: noarch
 
@@ -22,6 +24,7 @@ Enlightenment connection manager frontend.
 
 %build
 %autoreconf
+export PYTHON=/usr/bin/python3
 %configure
 %make_build V=1
 
@@ -36,6 +39,9 @@ Enlightenment connection manager frontend.
 %_datadir/%name
 
 %changelog
+* Wed Dec 11 2013 Paul Wolneykien <manowar@altlinux.ru> 1.1-alt1
+- Freshed up to v1.1 with the help of cronbuild and update-source-functions.
+
 * Tue Jan 22 2013 Paul Wolneykien <manowar@altlinux.ru> 1.0.0-alt2
 - Require connman explicitly.
 
