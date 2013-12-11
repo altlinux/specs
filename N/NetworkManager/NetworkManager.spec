@@ -19,10 +19,11 @@
 %def_enable systemd
 %def_disable wimax
 %def_enable introspection
+%def_enable bluez4
 
 Name: NetworkManager
 Version: 0.9.8.8
-Release: alt3%git_date
+Release: alt4%git_date
 License: %gpl2plus
 Group: System/Configuration/Networking
 Summary: Network Link Manager and User Applications
@@ -103,7 +104,7 @@ License: %gpl2plus
 Summary: Library for adding NetworkManager support to applications that use glib
 Group: System/Libraries
 Requires: dbus >= %dbus_version
-Obsoletes: NetworkManager-glib <= 0.9.8.8-alt1
+Obsoletes: NetworkManager-glib < 0.9.8.8-alt3
 
 %description -n %libnm_glib
 This package contains the library that applications can use to query
@@ -114,7 +115,7 @@ License: %gpl2plus
 Summary: Library for creating VPN connections via NetworkManager
 Group: System/Libraries
 Requires: dbus >= %dbus_version
-Obsoletes: NetworkManager-glib <= 0.9.8.8-alt1
+Obsoletes: NetworkManager-glib < 0.9.8.8-alt3
 
 %description -n %libnm_glib_vpn
 This package contains the library that applications can use for creating
@@ -125,7 +126,7 @@ License: %gpl2plus
 Summary: A convenience library to ease the access to NetworkManager.
 Group: System/Libraries
 Requires: dbus >= %dbus_version
-Obsoletes: NetworkManager-glib <= 0.9.8.8-alt1
+Obsoletes: NetworkManager-glib < 0.9.8.8-alt3
 
 %description -n %libnm_util
 This package contains a convenience library to ease the access to
@@ -184,7 +185,7 @@ for %libnm_util.
 %package %name-devel-doc
 Summary: Development documentation for %name
 Group: Development/Documentation
-Obsoletes: NetworkManager-glib-devel-doc <= 0.9.8.8-alt1
+Obsoletes: NetworkManager-glib-devel-doc < 0.9.8.8-alt3
 Provides: NetworkManager-glib-devel-doc = %version-%release
 BuildArch: noarch
 
@@ -251,7 +252,7 @@ sed -i 's;^SUBDIRS=\. tests;#SUBDIRS=. tests;' libnm-glib/Makefile.am
 	--disable-ifupdown \
 	--disable-ifnet \
 	--with-modem-manager-1 \
-	--enable-bluez4 \
+	%{subst_enable bluez4} \
 	--enable-introspection=auto \
 	--enable-more-warnings=error
 
@@ -412,6 +413,13 @@ fi
 %exclude %_libdir/pppd/%ppp_version/*.la
 
 %changelog
+* Wed Dec 11 2013 Mikhail Efremov <sem@altlinux.org> 0.9.8.8-alt4
+- Fix 'Obsoletes' tags (closes: #29535).
+- Support build with bluez5.
+- Patches from upstream git:
+  + agents: fix crash in nm_secret_agent_cancel_secrets() (rh #922855).
+  + agents: fix removing requests from hash table while iterating it.
+
 * Wed Nov 20 2013 Mikhail Efremov <sem@altlinux.org> 0.9.8.8-alt3
 - Fix path to the dhcpcd pid file.
 - Patches from upstream git:
