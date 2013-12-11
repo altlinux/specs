@@ -4,7 +4,7 @@
 
 Name: %{_name}2
 Version: %ver_major.0
-Release: alt4.1.1
+Release: alt5
 
 Summary: GNOME desktop menu
 License: GPLv2+
@@ -111,6 +111,9 @@ This package contains a simple GNOME menu editor.
 # Link with current python
 sed -i -e 's,^\(gmenu_la_LIBADD  = $(GLIB_LIBS) $(top_builddir)/libmenu/libgnome-menu.la\),\1 -lpython%__python_version,g' python/Makefile.am
 sed -i -e 's,^\(gmenu_la_LIBADD = $(GLIB_LIBS) $(top_builddir)/libmenu/libgnome-menu.la\),\1 -lpython%__python_version,g' python/Makefile.in
+# change to resolve conflict with other libgnome-menus
+subst 's@\(GETTEXT_PACKAGE.*gnome-menus\)@\12@' configure*
+
 %build
 %autoreconf
 %configure \
@@ -125,9 +128,9 @@ sed -i -e 's,^\(gmenu_la_LIBADD = $(GLIB_LIBS) $(top_builddir)/libmenu/libgnome-
 
 mv %buildroot%_xdgmenusdir/{,gnome3-}applications.menu
 
-%find_lang %_name
+%find_lang %name
 
-%files -n lib%name -f %_name.lang
+%files -n lib%name -f %name.lang
 %_libdir/*.so.*
 %doc AUTHORS NEWS README
 
@@ -167,6 +170,9 @@ mv %buildroot%_xdgmenusdir/{,gnome3-}applications.menu
 %endif
 
 %changelog
+* Wed Dec 11 2013 Yuri N. Sedunov <aris@altlinux.org> 3.0.0-alt5
+- resolved conflict with other libgnome-menus (ALT #29640)
+
 * Mon Apr 16 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 3.0.0-alt4.1.1
 - Rebuild to remove redundant libpython2.7 dependency
 
