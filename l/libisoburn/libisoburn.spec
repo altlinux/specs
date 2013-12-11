@@ -1,6 +1,6 @@
 Name: libisoburn
 Version: 1.2.6
-Release: alt1
+Release: alt2
 
 Summary: ISO9660 filesystem creation library
 License: GPLv2
@@ -69,6 +69,15 @@ A special property of xorriso is that it needs neither an external
 ISO 9660 formatter program nor an external burn program for CD
 or DVD but rather incorporates the libraries of libburnia-project.org .
 
+%package -n xorriso-x11
+Summary: Graphical utility to create ISO9660 image
+Group: Archiving/Cd burning
+Requires: xorriso = %version
+
+%description -n xorriso-x11
+This package contains GUI for xorriso, a program to create
+or extract ISO9660 images common for CD-ROM/DVD media.
+
 %prep
 %setup
 %patch -p1
@@ -104,11 +113,18 @@ fi
 %_pkgconfigdir/*.pc
 
 %files -n xorriso
-%_bindir/*
 %_man1dir/*
 %_infodir/*
+%_bindir/*
+%exclude %_bindir/xorriso-tcltk
+
+%files -n xorriso-x11
+%_bindir/xorriso-tcltk
 
 %changelog
+* Wed Dec 11 2013 Michael Shigorin <mike@altlinux.org> 1.2.6-alt2
+- xorriso-tcltk moved to xorriso-x11 subpackage, shame on slow me!
+
 * Sun Feb 24 2013 Michael Shigorin <mike@altlinux.org> 1.2.6-alt1
 - 1.2.6
 - minor spec cleanup according to policy recommendations
