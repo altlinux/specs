@@ -1,6 +1,6 @@
 Name: scribus
-Version: 1.4.1
-Release: alt5
+Version: 1.4.3
+Release: alt1
 Epoch: 1
 
 Summary: DeskTop Publishing application written in Qt
@@ -14,10 +14,8 @@ Packager: Paul Wolneykien <manowar@altlinux.ru>
 Source: http://downloads.sourceforge.net/%name/%name-%version.tar
 Source1: CMakeCache.txt
 
-Patch0: %name-%version-%release.patch.gz
-Patch1: %name-1.3.5-system-hyphen.patch
-#Patch2: scribus-1.3.5.1-localization-alt.patch
-Patch3: scribus-1.3.5.1-plugindir-alt.patch
+Patch0: scribus-1.3.5.1-plugindir-alt.patch
+Patch1: FindFreetype.cmake.diff
 
 # Automatically added by buildreq on Tue Aug 25 2009
 BuildRequires: boost-devel cmake gcc-c++ libXfixes-devel libcairo-devel
@@ -75,9 +73,8 @@ BuildArch: noarch
 %prep
 %setup -q -n %name-%version
 %patch0 -p1
-#patch1 -p1 -b .system-hyphen
-#patch2 -p1
-%patch3 -p1
+cp %_datadir/CMake/Modules/FindFreetype.cmake cmake/modules/
+%patch1 -p0
 
 # recode man page to UTF-8
 pushd scribus/manpages
@@ -97,9 +94,11 @@ cmake \
 %ifarch x86_64
 	-DWANT_LIB64=true \
 %endif
-	-D FONTCONFIG_CONFIG:FILEPATH=%_pkgconfigdir/fontconfig.pc \
-	-D QT_QTNSPLUGIN_LIBRARY_RELEASE:FILEPATH=%_K4lib/libnsplugin.so \
-	-D 2geom_LIB_DEPENDS:FILEPATH=%_libdir/lib2geom.so \
+	-DWANT_NORPATH=true \
+	-DWANT_DISTROBUILD=true \
+	-DFONTCONFIG_CONFIG:FILEPATH=%_pkgconfigdir/fontconfig.pc \
+	-DQT_QTNSPLUGIN_LIBRARY_RELEASE:FILEPATH=%_K4lib/libnsplugin.so \
+	-D2geom_LIB_DEPENDS:FILEPATH=%_libdir/lib2geom.so \
 	-DCMAKE_C_FLAGS:STRING="%optflags" \
 	-DCMAKE_CXX_FLAGS:STRING="%optflags" \
 	..
@@ -147,6 +146,8 @@ popd
 %_niconsdir/*
 %_libdir/%name
 %_man1dir/*
+%exclude %_mandir/de
+%exclude %_mandir/pl
 
 %files data
 %_datadir/%name
@@ -163,8 +164,13 @@ popd
 %_docdir/%name/LINKS
 %_docdir/%name/TRANSLATION
 %_docdir/%name/en
+%exclude %_docdir/%name/de
+%exclude %_docdir/%name/it
 
 %changelog
+* Tue Dec 10 2013 Paul Wolneykien <manowar@altlinux.ru> 1:1.4.3-alt1
+- Fresh up to v1.4.3 with the help of cronbuild and update-source-functions.
+
 * Sun Aug 04 2013 Vitaly Lipatov <lav@altlinux.ru> 1:1.4.1-alt5
 - rebuild with new libpodofo 0.9.1
 
