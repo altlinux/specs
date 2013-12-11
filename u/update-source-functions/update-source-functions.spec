@@ -1,5 +1,5 @@
 Name: update-source-functions
-Version: 0.1.5
+Version: 0.1.6
 Release: alt1
 
 Summary: A set of functions intended to help with updating a git repository from an upstream source
@@ -36,6 +36,9 @@ mkdir -p m4
 %_bindir/*.sh
 
 %changelog
+* Wed Dec 11 2013 Paul Wolneykien <manowar@altlinux.ru> 0.1.6-alt1
+- Add the set of standard file, spec and Git management functions.
+
 * Fri Oct 25 2013 Paul Wolneykien <manowar@altlinux.ru> 0.1.5-alt1
 - Fix directory listing in the pubdir proc.
 
