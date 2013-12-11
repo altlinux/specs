@@ -3,7 +3,7 @@
 %define ua_ver %ver_major
 
 Name: epiphany
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: Epiphany is a GNOME web browser.
@@ -98,6 +98,9 @@ This package contains common noarch files needed for Epiphany.
 %_datadir/appdata/epiphany.appdata.xml
 
 %changelog
+* Thu Dec 12 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.3-alt1
+- 3.10.3
+
 * Fri Nov 15 2013 Yuri N. Sedunov <aris@altlinux.org> 3.10.2-alt1
 - 3.10.2
 
