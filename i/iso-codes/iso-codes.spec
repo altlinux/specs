@@ -1,5 +1,5 @@
 Name: iso-codes
-Version: 3.41
+Version: 3.49
 Release: alt1
 
 Group: System/Internationalization
@@ -53,6 +53,9 @@ ln -sf %_licensedir/LGPL-2.1 LICENSE
 %_datadir/pkgconfig/iso-codes.pc
 
 %changelog
+* Wed Dec 11 2013 Vladimir Lettiev <crux@altlinux.ru> 3.49-alt1
+- New version 3.49
+
 * Tue Apr 09 2013 Vladimir Lettiev <crux@altlinux.ru> 3.41-alt1
 - New version 3.41
 
