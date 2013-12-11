@@ -21,15 +21,15 @@
 %def_enable xlib_egl
 
 Name: libcogl
-Version: 1.16.0
-Release: alt1
+Version: 1.16.1
+Release: alt0.1
 Summary: A library for using 3D graphics hardware to draw pretty pictures
 
 Group: System/Libraries
 License: LGPLv2+
 Url: http://www.clutter-project.org/
 
-Source: %oname-%version.tar.xz
+Source: %oname-%version.tar
 #Patch: %name-%version-%release.patch
 
 Conflicts: libclutter < 1.8.0
@@ -163,6 +163,9 @@ Contains developer documentation for %oname.
 %_datadir/gtk-doc/html/*
 
 %changelog
+* Wed Dec 11 2013 Yuri N. Sedunov <aris@altlinux.org> 1.16.1-alt0.1
+- 1.16.1 snapshot (7c7de71f)
+
 * Mon Sep 23 2013 Yuri N. Sedunov <aris@altlinux.org> 1.16.0-alt1
 - 1.16.0
 
