@@ -1,7 +1,7 @@
 %define brand school
 %define Brand School
 %define theme master
-%define Theme master
+%define Theme Master
 %define codename Phylloscopus inornatus
 %define variants altlinux-backup-server altlinux-desktop altlinux-gnome-desktop altlinux-kdesktop altlinux-lite altlinux-lxdesktop altlinux-office-desktop altlinux-office-server altlinux-school-server altlinux-sisyphus altlinux-spt altlinux-tablet altlinux-workbench informika-schoolmaster ivk-chainmail lxde-desktop lxde-school-lite Platform6-server-light school-junior school-lite school-master school-server school-teacher school-terminal simply-linux sisyphus-server-light altlinux-centaurus
 %define status альфа
@@ -16,13 +16,14 @@
 
 Name: branding-%brand-%theme
 Version: 6.9.9
-Release: alt1
+Release: alt2
 BuildArch: noarch
 
 BuildRequires: cpio gfxboot >= 4 fonts-ttf-dejavu fonts-ttf-droid
 BuildRequires: design-bootloader-source >= 5.0-alt2
 
 BuildRequires(pre): libqt4-core
+BuildRequires(pre): rpm-macros-kde-common-devel
 BuildRequires: libalternatives-devel
 BuildRequires: libqt4-devel
 
@@ -190,6 +191,7 @@ License: Distributable
 Group:   Graphical desktop/KDE
 Conflicts: %(for n in %variants ; do [ "$n" = %brand-%theme ] || echo -n "branding-$n-kde4-settings ";done )
 PreReq: %name-graphics
+Requires:  kde4-konsole-colorscheme-SolarizedPastel
 Provides:  branding-informika-schoolmaster-kde4-settings = %version-%release
 Obsoletes: branding-informika-schoolmaster-kde4-settings < %version-%release
 
@@ -202,7 +204,7 @@ License: Distributable
 Group: Graphical desktop/XFce
 Requires: PolicyKit-gnome
 Requires: etcskel gtk3-theme-clearlooks-phenix
-Requires: gnome-icon-theme icon-theme-simple-sl
+Requires: gnome-icon-theme icon-theme-simple-school
 Requires: branding-%brand-%theme-graphics
 Obsoletes: xfce-settings-lite xfce-settings-school-lite
 Conflicts: %(for n in %variants ; do [ "$n" = %brand-%theme ] || echo -n "branding-$n-xfce-settings ";done )
@@ -370,6 +372,9 @@ mkdir -p %buildroot%_sysconfdir/kde4/xdg/menus/applications-merged/
 install -m 0644 menu/*.menu %buildroot%_sysconfdir/kde4/xdg/menus/applications-merged/
 popd
 
+mkdir -p %buildroot%_K4datadir
+cp -a kde4/* %buildroot%_K4datadir/
+
 ln -s license.ru.html %buildroot%_datadir/alt-notes/license.uk.html
 
 #fwvm-settings
@@ -499,6 +504,7 @@ subst 's/#theme-name=/theme-name=Clearlooks-Phenix/' /etc/lightdm/lightdm-gtk-gr
 %files kde4-settings
 %_sysconfdir/kde4/xdg/menus/applications-merged/*.menu
 %_sysconfdir/skel/.kde4
+%_K4datadir/*
 
 %files fvwm-settings
 %_sysconfdir/skel/.fvwm2rc
@@ -538,6 +544,16 @@ subst 's/#theme-name=/theme-name=Clearlooks-Phenix/' /etc/lightdm/lightdm-gtk-gr
 %config %_localstatedir/ldm/.pam_environment
 
 %changelog
+* Wed Dec 11 2013 Andrey Cherepanov <cas@altlinux.org> 6.9.9-alt2
+- Pack wide wallpaper and product logo
+- Fix favicon and logo width in Alterator web-interface
+- Fix bootloader colors
+- Hide section border, simplify tooltips, turn off checkbox and
+  radiobutton highlight in installer
+- Simplify GRUB config
+- Use icon-theme-simple-school
+- Use SolarizedPastel color scheme for konsole
+
 * Wed Oct 16 2013 Andrey Cherepanov <cas@altlinux.org> 6.9.9-alt1
 - Update branding for Seven platform
 
