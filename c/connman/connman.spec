@@ -1,18 +1,24 @@
-
+%global _unpackaged_files_terminate_build 1
 %define _localstatedir %_var
 
 Name: connman
 Version: 1.20
-Release: alt1
+Release: alt2
 
 Summary: ConnMan is a daemon for managing internet connections.
 License: %gpl2only
 Group: Networking/Other
 Url: http://connman.net/
-#Packager: Serg A. Kotlyarov <shadowsbrother@gmail.com>
-Source: %name.tar
+
+Packager: Alexey Gladkov <legion@altlinux.ru>
+
+Source: %name-%version.tar
 Source1: connmand.init
+Source2: connmanctl.1
+
 Patch0: add-options-file.patch
+Patch1: connman-add-libs.patch
+Patch2: connman-main-conf.patch
 
 BuildRequires: rpm-build-licenses gcc-c++ glib2-devel iptables-devel libdbus-devel wpa_supplicant
 BuildRequires: gtk-doc libgnutls-devel libreadline-devel
@@ -51,49 +57,82 @@ internet connections within embedded devices running the Linux operating system.
 This package contains include files required for development %name-based software.
 
 %prep
-%setup -n %name
+%setup
 %patch0 -p2
+%patch1 -p2
+%patch2 -p2
 
 %build
 %autoreconf
 ./configure \
---prefix=%_usr \
---sysconfdir=%_sysconfdir \
---localstatedir=%_localstatedir \
---enable-client \
---enable-nmcompat \
---enable-polkit \
---enable-selinux \
---enable-openconnect \
---enable-openvpn \
---enable-vpnc \
---enable-l2tp \
---enable-pptp
+	--prefix=%_usr \
+	--sysconfdir=%_sysconfdir \
+	--localstatedir=%_localstatedir \
+	--enable-datafiles \
+	--enable-client \
+	--enable-nmcompat \
+	--enable-polkit \
+	--enable-selinux \
+	--enable-openconnect \
+	--enable-openvpn \
+	--enable-vpnc \
+	--enable-l2tp \
+	--enable-pptp \
+#
 %make_build
 
-# Compose the configuration file
-src/connmand --help | sed -e 's/^.*$/# &/' >src/connmand.conf
-echo 'CONNMAND_OPTS="-r"' >>src/connmand.conf
-
 %install
-%makeinstall dbusconfdir=%buildroot%_sysconfdir/dbus-1/system.d systemdunitdir=%buildroot%_unitdir
-install -pm0755 -D %SOURCE1 %buildroot%_initdir/connmand
-install -m0600 -D src/connmand.conf %buildroot%_sysconfdir/sysconfig/connman
+%makeinstall \
+	dbusconfdir=%buildroot%_sysconfdir/dbus-1/system.d \
+	systemdunitdir=%buildroot%_unitdir
+
+mkdir -p -- \
+	%buildroot%_initdir \
+	%buildroot%_sysconfdir/sysconfig \
+	%buildroot%_localstatedir/lib/%name \
+	%buildroot%_localstatedir/lib/%name-vpn \
+#
+
+echo 'CONNMAND_OPTS="-r"' > %buildroot%_sysconfdir/sysconfig/connman
+
+install -pm0755 -D %SOURCE1          %buildroot%_initdir/connmand
+install -pm0644 -D %SOURCE2          %buildroot%_man1dir/connmanctl.1
+install -pm0755 -D client/connmanctl %buildroot%_sbindir/connmanctl
+install -pm0644 -D src/main.conf     %buildroot%_sysconfdir/connman/main.conf
+
+find %buildroot%_libdir/%name -name '*.la' -delete
 
 %files
-%_sbindir/*
+%_sbindir/connmand
+%_sbindir/connman-vpnd
+%_sbindir/connmanctl
+
+%dir %_sysconfdir/connman
+%config(noreplace) %_sysconfdir/connman/main.conf
+%config(noreplace) %_sysconfdir/sysconfig/connman
+
 %_sysconfdir/dbus-1/system.d/*.conf
 %_datadir/dbus-1/system-services/*.service
+
 %_initdir/connmand
 %_unitdir/%{name}*
+
 %dir %_libdir/%name
 %dir %_libdir/%name/plugins*
 %_libdir/%name/plugins*/*.so
+
 %dir %_libdir/%name/scripts
 %_libdir/%name/scripts/*.so.*
 %_libdir/%name/scripts/*-script
+
 %_datadir/polkit-1/actions/*
-%config(noreplace) %_sysconfdir/sysconfig/connman
+
+%_localstatedir/lib/%name
+%_localstatedir/lib/%name-vpn
+
+%_man1dir/connmanctl.1*
+%_man5dir/connman.conf.5*
+%_man8dir/connman.8*
 
 %files -n %name-docs
 %doc AUTHORS README TODO README ChangeLog doc/*.txt
@@ -101,14 +140,19 @@ install -m0600 -D src/connmand.conf %buildroot%_sysconfdir/sysconfig/connman
 %files -n %name-devel
 %_pkgconfigdir/*.pc
 %_includedir/*
-%exclude %_libdir/%name/plugins*/*.la
 %_libdir/%name/scripts/*.so
-%exclude %_libdir/%name/scripts/*.la
-
 
 %changelog
+* Tue Dec 10 2013 Alexey Gladkov <legion@altlinux.ru> 1.20-alt2
+- Rebuilt with new version.
+
 * Thu Dec 05 2013 Cronbuild Service <cronbuild@altlinux.org> 1.20-alt1
 - Fresh up to v1.20 with the help of cronbuild and update-source-functions.
+
+* Tue Oct 29 2013 Alexey Gladkov <legion@altlinux.ru> 1.19-alt2
+- Add missing directories, manpages and config file.
+- Add connmanctl utility.
+- Fix sysvinit startup script.
 
 * Tue Oct 15 2013 Cronbuild Service <cronbuild@altlinux.org> 1.19-alt1
 - Fresh up to v1.19 with the help of cronbuild and update-source-functions.
