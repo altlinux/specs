@@ -1,5 +1,5 @@
 Name: rpmrebuild-pesign
-Version: 0.1
+Version: 0.1.1
 Release: alt1
 
 Summary: Signer for packages containing PE format files
@@ -27,6 +27,9 @@ install -m755 pesign.sh %buildroot%_libexecdir/rpmrebuild/plugins/
 %_libexecdir/rpmrebuild/plugins/pesign.*
 
 %changelog
+* Wed Dec 11 2013 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.1.1-alt1
+- Fixed work with pesign-client.
+
 * Thu Dec 05 2013 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.1-alt1
-- Initial build
+- Initial build.
 
