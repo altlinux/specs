@@ -1,5 +1,5 @@
 Name: update-source-functions
-Version: 0.1.6
+Version: 0.1.7
 Release: alt1
 
 Summary: A set of functions intended to help with updating a git repository from an upstream source
@@ -36,6 +36,10 @@ mkdir -p m4
 %_bindir/*.sh
 
 %changelog
+* Thu Dec 12 2013 Paul Wolneykien <manowar@altlinux.ru> 0.1.7-alt1
+- Use wget which handles SourceForge download URIs properly.
+- Make the tarname extraction more smart.
+
 * Wed Dec 11 2013 Paul Wolneykien <manowar@altlinux.ru> 0.1.6-alt1
 - Add the set of standard file, spec and Git management functions.
 
