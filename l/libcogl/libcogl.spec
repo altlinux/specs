@@ -2,8 +2,10 @@
 
 %ifarch %arm
 %def_enable gles2
+%def_disable gl
 %else
 %def_disable gles2
+%def_enable gl
 %endif
 
 
@@ -22,7 +24,7 @@
 
 Name: libcogl
 Version: 1.16.1
-Release: alt0.1
+Release: alt0.2
 Summary: A library for using 3D graphics hardware to draw pretty pictures
 
 Group: System/Libraries
@@ -30,7 +32,7 @@ License: LGPLv2+
 Url: http://www.clutter-project.org/
 
 Source: %oname-%version.tar
-#Patch: %name-%version-%release.patch
+Patch: cogl-1.16.1-alt-gles2.patch
 
 Conflicts: libclutter < 1.8.0
 
@@ -117,10 +119,9 @@ Contains developer documentation for %oname.
 
 %prep
 %setup -n %oname-%version
-#%%patch -p1
+%patch -p1
 
 %build
-#NOCONFIGURE=1 ./autogen.sh
 %autoreconf
 %configure  \
 	--disable-static \
@@ -131,6 +132,7 @@ Contains developer documentation for %oname.
 	%{?_enable_examples_install:--enable-examples-install} \
 	--enable-gtk-doc \
 	--enable-introspection \
+	%{subst_enable gl} \
 	%{subst_enable gles2} \
 	%{?_enable_kms_egl:--enable-kms-egl-platform } \
 	%{?_enable_wayland_egl:--enable-wayland-egl-platform} \
@@ -163,6 +165,9 @@ Contains developer documentation for %oname.
 %_datadir/gtk-doc/html/*
 
 %changelog
+* Thu Dec 12 2013 Yuri N. Sedunov <aris@altlinux.org> 1.16.1-alt0.2
+- sbolshakov@: fix for arm build
+
 * Wed Dec 11 2013 Yuri N. Sedunov <aris@altlinux.org> 1.16.1-alt0.1
 - 1.16.1 snapshot (7c7de71f)
 
