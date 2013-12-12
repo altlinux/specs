@@ -12,7 +12,7 @@
 
 Name: kdegraphics
 Version: 3.5.13.2
-Release: alt4
+Release: alt5
 
 Group: Graphical desktop/KDE
 Summary: K Desktop Environment - Graphics
@@ -65,6 +65,7 @@ Patch305: xpdf-3.02-CVE-2010-3704.patch
 Patch306: tde-3.5.13-build-defdir.patch
 Patch307: tde-3.5.13-build-poppler.patch
 Patch308: kdegraphics-3.5.13.2-trinityHomeToKDE.patch
+Patch309: kdegraphics-3.5.13.2-poppler-noversion.patch
 
 # Automatically added by buildreq on Tue Apr 13 2004 (-bi)
 BuildRequires(pre): cmake glibc-core kdelibs-devel
@@ -363,6 +364,7 @@ popd
 %patch306
 ###%patch307
 %patch308 -p1
+%patch309 -p1
 
 %if %cmake
 %else
@@ -690,6 +692,9 @@ install -m 0644 %SOURCE1 %buildroot/%_K3conf/kghostviewrc
 
 
 %changelog
+* Thu Dec 12 2013 Sergey V Turchin <zerg@altlinux.org> 3.5.13.2-alt5
+- don't require poppler version
+
 * Tue Dec 10 2013 Sergey V Turchin <zerg@altlinux.org> 3.5.13.2-alt4
 - rebuilt with new poppler
 
