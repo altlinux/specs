@@ -1,7 +1,7 @@
 %define bname busybox
 Name: %bname-source
 Version: 1.21.1
-Release: alt23
+Release: alt24
 Summary: Sources of %bname
 License: GPLv2
 Group: Development/Other
@@ -53,6 +53,9 @@ tar -chJf %buildroot%_usrsrc/%bname-%version.tar.xz .
 
 
 %changelog
+* Thu Dec 12 2013 Led <led@altlinux.ru> 1.21.1-alt24
+- upstream updates for ntpd applet
+
 * Sun Dec 01 2013 Led <led@altlinux.ru> 1.21.1-alt23
 - upstream updates and fixes
 
