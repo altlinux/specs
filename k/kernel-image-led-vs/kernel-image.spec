@@ -24,13 +24,13 @@
 %define flavour %base_flavour-%sub_flavour
 
 Name: kernel-image-%flavour
-Version: 3.10.23
-Release: alt5
+Version: 3.10.24
+Release: alt1
 
 %define kernel_req %nil
 %define kernel_prov %nil
 %define kernel_branch 3.10
-%define kernel_stable_version 23
+%define kernel_stable_version 24
 %define kernel_extra_version .%kernel_stable_version
 #define kernel_extra_version %nil
 
@@ -1786,6 +1786,9 @@ done)
 
 
 %changelog
+* Thu Dec 12 2013 Led <led@altlinux.ru> 3.10.24-alt1
+- 3.10.24
+
 * Thu Dec 12 2013 Led <led@altlinux.ru> 3.10.23-alt5
 - updated:
   + fix-fs-reiserfs
