@@ -1,6 +1,6 @@
 Name: audience
 Version: 0.1
-Release: alt1.r302
+Release: alt2.r302
 
 Summary: A modern media player
 License: GPLv3
@@ -26,7 +26,7 @@ hardware acceleration than most players out there.
 
 %build
 %cmake_insource
-%make_build
+%make_build VERBOSE=1
 
 %install
 %make_install DESTDIR=%buildroot install
@@ -40,6 +40,9 @@ hardware acceleration than most players out there.
 %_datadir/icons/hicolor/*/apps/audience.svg
 
 %changelog
+* Thu Dec 12 2013 Igor Zubkov <icesik@altlinux.org> 0.1-alt2.r302
+- Make build more verbose
+
 * Thu Dec 12 2013 Igor Zubkov <icesik@altlinux.org> 0.1-alt1.r302
 - r302
 
