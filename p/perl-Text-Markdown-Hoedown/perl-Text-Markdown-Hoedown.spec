@@ -1,5 +1,5 @@
 Name: perl-Text-Markdown-Hoedown
-Version: 0.07
+Version: 1.01
 Release: alt1
 
 Summary: hoedown for Perl5
@@ -29,6 +29,9 @@ BuildRequires: perl(parent.pm) perl(File/pushd.pm) perl-devel perl(CPAN/Meta.pm)
 %doc Changes LICENSE README.md
 
 %changelog
+* Thu Dec 12 2013 Vladimir Lettiev <crux@altlinux.ru> 1.01-alt1
+- 1.01
+
 * Wed Nov 06 2013 Vladimir Lettiev <crux@altlinux.ru> 0.07-alt1
 - initial build for ALTLinux
 
