@@ -1,5 +1,5 @@
 Name: alterator-bacula
-Version: 0.8
+Version: 0.9
 Release: alt2
 
 Source:%name-%version.tar
@@ -12,16 +12,26 @@ Summary: module for Bacula backup system
 License: GPL
 Group: System/Configuration/Other
 Requires(pre): shadow-utils
-Requires: bacula-storage bacula-storage bacula-client bacula-dir
+Requires: bacula-storage bacula-client bacula-dir
 # require console timeout feature
 Requires: bacula-console >= 3.0.2-alt6
 Requires: ntfs-3g
 Requires: alterator >= 4.10-alt5
 Requires: alterator-l10n >= 2.7-alt19
-Requires: alterator-bacula-functions
 Requires: alterator-sh-functions alterator-net-functions alterator-hw-functions >= 0.6-alt1
+Requires: passwdqc-utils
+Requires: MySQL-client bacula-director-mysql
 Conflicts: alterator-lookout < 2.1-alt1
 Conflicts: alterator-fbi < 5.20-alt1
+
+Provides:  alterator-bacula-functions = %version-%release
+Obsoletes: alterator-bacula-functions < %version-%release
+Provides:  alterator-backup-server = %version-%release
+Obsoletes: alterator-backup-server < %version-%release
+Provides:  alterator-distro-backup-server = %version-%release
+Obsoletes: alterator-distro-backup-server < %version-%release
+Provides:  alterator-bacula-server = %version-%release
+Obsoletes: alterator-bacula-server < %version-%release
 
 BuildArch: noarch
 
@@ -33,7 +43,6 @@ module for Bacula backup system
 %pre
 /usr/sbin/groupadd -r -f %backupadmin_group
 
-
 %prep
 %setup -q
 
@@ -42,6 +51,19 @@ module for Bacula backup system
 
 %install
 %makeinstall
+%define altdir %_datadir/alterator
+mkdir -p %buildroot/%altdir/{applications,desktop-directories}
+install -m644 desktop-directories/*.directory %buildroot/%altdir/desktop-directories/
+
+for n in archive settings clients schedule; do
+  sed 's/X-Backup-Server/X-Alterator-Backup/' \
+     applications/bacula-server-$n.desktop \
+     > %buildroot/%altdir/applications/bacula-$n.desktop
+done
+
+%define hookdir %_datadir/install2/postinstall.d
+mkdir -p %buildroot%hookdir
+install -pm755 postinstall.d/*.sh %buildroot%hookdir/
 
 %files
 %config(noreplace) %_sysconfdir/alterator/bacula
@@ -53,8 +75,45 @@ module for Bacula backup system
 %exclude %_datadir/alterator/applications/bacula-local-backup.desktop
 %_datadir/alterator/steps/*
 %_datadir/alterator/type/*
+%_bindir/*
+%hookdir/*
+%altdir/desktop-directories/*
 
 %changelog
+* Fri Dec 06 2013 Andrey Cherepanov <cas@altlinux.org> 0.9-alt2
+- Replace Conflicts by Provides/Obsoletes pairs
+
+* Sat Jun 29 2013 Andrey Kolotov <qwest@altlinux.org> 0.9-alt1
+- unification with package alterator-bacula-functions:
+  * moved bin files;
+  * changed Makefile.
+- unification with alterator-bacula-server:
+  * add postinstall.d/50-reset-bacula.sh;
+  * add desktop-directories/backup.directory.
+- add desktop files from alterator-backup-server
+- add functions in backend3/bacula-director:
+    - daemon_status()
+    - daemon_on()
+    - daemon_off()
+- add functions in bin/bacula-sh-functions:
+    - mysql_create_database_bacula()
+    - mysql_update_database_bacula()
+    - mysql_remove_database_bacula()
+    - bacula_storage_set_password()
+    - bacula_director_set_password()
+    - bacula_storage_get_password()
+    - bacula_director_get_password()
+- ui director html:
+  * new option with mysql database bacula:
+    - create, update and remove database;
+    - auto add new user 'bacula' in mysql;
+    - add generate password to bacula.
+  * add change password for director
+  * add change password fo storage
+  * add director server on/off
+  * add storage server on/off
+- new require passwdqc-utils for generate password
+
 * Sun Apr 21 2013 Michael Shigorin <mike@altlinux.org> 0.8-alt2
 - drop reportedly broken local-backup UI and desktop file (closes: #28854)
 
@@ -167,7 +226,7 @@ module for Bacula backup system
 
 * Tue Jun 09 2009 Stanislav Ievlev <inger@altlinux.org> 0.6-alt1
 - finish redesign of local backup functions to support multiple clients
-- add UI for backup server
+- add UIfunctions: for backup server
 
 * Tue Jun 02 2009 Stanislav Ievlev <inger@altlinux.org> 0.5-alt5
 - restore: add ability to select backup date
