@@ -25,7 +25,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.10.23
-Release: alt4
+Release: alt5
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -1786,7 +1786,13 @@ done)
 
 
 %changelog
-* Wed Dec 09 2013 Led <led@altlinux.ru> 3.10.23-alt4
+* Thu Dec 12 2013 Led <led@altlinux.ru> 3.10.23-alt5
+- updated:
+  + fix-fs-reiserfs
+- added:
+  + fix-fs-ramfs
+
+* Wed Dec 11 2013 Led <led@altlinux.ru> 3.10.23-alt4
 - updated:
   + fix-drivers-usb-host--xhci-hcd
 - modev wimax drivers to kernel-modules-net-extra-*
