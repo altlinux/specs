@@ -2,7 +2,7 @@
 Summary: Enlightenment Connection Manager
 Name: econnman
 Version: 1.1
-Release: alt1
+Release: alt2
 License: BSD
 Group: Graphical desktop/Enlightenment
 URL: http://www.enlightenment.org/
@@ -39,6 +39,9 @@ export PYTHON=/usr/bin/python3
 %_datadir/%name
 
 %changelog
+* Thu Dec 12 2013 Paul Wolneykien <manowar@altlinux.org> 1.1-alt2
+- Fix the version pattern in the cronbuild script.
+
 * Wed Dec 11 2013 Paul Wolneykien <manowar@altlinux.ru> 1.1-alt1
 - Freshed up to v1.1 with the help of cronbuild and update-source-functions.
 
