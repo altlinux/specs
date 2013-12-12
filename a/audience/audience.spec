@@ -1,6 +1,6 @@
 Name: audience
 Version: 0.1
-Release: alt1.r296
+Release: alt1.r302
 
 Summary: A modern media player
 License: GPLv3
@@ -40,6 +40,9 @@ hardware acceleration than most players out there.
 %_datadir/icons/hicolor/*/apps/audience.svg
 
 %changelog
+* Thu Dec 12 2013 Igor Zubkov <icesik@altlinux.org> 0.1-alt1.r302
+- r302
+
 * Sun Sep 22 2013 Igor Zubkov <icesik@altlinux.org> 0.1-alt1.r296
 - build for Sisyphus
 
