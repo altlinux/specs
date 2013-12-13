@@ -1,6 +1,6 @@
 %define _name enlightenment
 %define efl_ver_major 1.8
-%define cvs_date rc1
+%define cvs_date rc2
 #%%undefine cvs_date
 %define snapshot 2012-10-12
 %define rel alt1
@@ -180,6 +180,9 @@ cp %SOURCE11 %buildroot%_sysconfdir/enlightenment/sysactions.conf
 %_rpmmacrosdir/%name
 
 %changelog
+* Fri Dec 13 2013 Yuri N. Sedunov <aris@altlinux.org> 1:0.18.0-alt1.rc2
+- 0.18.0-rc2
+
 * Tue Dec 10 2013 Yuri N. Sedunov <aris@altlinux.org> 1:0.18.0-alt1.rc1
 - 0.18.0-rc1
 
