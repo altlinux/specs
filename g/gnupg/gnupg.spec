@@ -1,5 +1,5 @@
 Name: gnupg
-Version: 1.4.15
+Version: 1.4.16
 Release: alt1
 
 Summary: The GNU Privacy Guard
@@ -14,7 +14,7 @@ Source1: pgp2gnupg.html
 Source2: gpg-convert-from-106.1
 Source3: gpgsplit.1
 Source4: lspgpot.1
-Source5: ftp://ftp.gnupg.org/gcrypt/gnupg/GnuPG-FAQ.txt
+Source5: ftp://ftp.gnupg.org/gcrypt/gnupg/GnuPG-FAQ.new.txt
 
 Patch: gnupg-%version-%release.patch
 
@@ -55,7 +55,7 @@ for the GNU Privacy Guard.
 %setup
 %patch -p1
 rm po/ru.gmo
-install -pm644 %_sourcedir/GnuPG-FAQ.txt doc/FAQ
+install -pm644 %_sourcedir/GnuPG-FAQ.new.txt doc/FAQ
 
 iconv -f iso-8859-15 -t utf8 < THANKS > THANKS.utf8
 mv THANKS.utf8 THANKS
@@ -136,6 +136,9 @@ rm -rv %buildroot%_datadir/%name
 %endif #enabled ldap
 
 %changelog
+* Fri Dec 13 2013 Dmitry V. Levin <ldv@altlinux.org> 1.4.16-alt1
+- Updated to 1.4.16 (fixes CVE-2013-4576).
+
 * Sat Oct 05 2013 Dmitry V. Levin <ldv@altlinux.org> 1.4.15-alt1
 - Updated to 1.4.15 (fixes CVE-2013-4402).
 
