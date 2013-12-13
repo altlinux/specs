@@ -1,8 +1,8 @@
 %global upstreamname scratch
 
 Name: scratch-text-editor
-Version: 2.0.1
-Release: alt2
+Version: 2.0.2
+Release: alt1
 
 Summary: The text editor that works
 License: GPLv3
@@ -12,7 +12,7 @@ Url: https://launchpad.net/scratch
 
 Packager: Igor Zubkov <icesik@altlinux.org>
 
-Source0: %upstreamname-%version.tar.gz
+Source0: %upstreamname-%version.tgz
 
 BuildRequires: libpng-devel cmake gcc-c++ vala libwebkitgtk3-devel
 BuildRequires: libvte3-devel libpixman-devel gobject-introspection-devel
@@ -74,7 +74,7 @@ Requires: %name = %version-%release
 This package provides Vala language bindings for the scratch text editor.
 
 %prep
-%setup -q -n %upstreamname
+%setup -q -n %upstreamname-%version
 
 %build
 %cmake_insource
@@ -112,6 +112,9 @@ mv %buildroot/usr/lib/* %buildroot%_libdir/
 %_datadir/vala/vapi/scratchcore.vapi
 
 %changelog
+* Fri Dec 13 2013 Igor Zubkov <icesik@altlinux.org> 2.0.2-alt1
+- 2.0.2
+
 * Tue Oct 01 2013 Igor Zubkov <icesik@altlinux.org> 2.0.1-alt2
 - back to Sisyphus
 
