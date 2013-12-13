@@ -1,0 +1,50 @@
+%define modulename ulib
+
+Name: python3-module-%modulename
+Version: 0.10
+Release: alt1
+
+Summary: ulib: Useful python library
+
+Group: Development/Python
+License: GPLv3+
+Url: https://pypi.python.org/pypi/ulib
+
+Packager: Vitaly Lipatov <lav@altlinux.ru>
+
+# Source-git: https://github.com/mdevaev/ulib.git
+Source: %name-%version.tar
+
+BuildArch: noarch
+
+#setup_python3_module %modulename
+
+BuildRequires(pre): rpm-build-python3
+
+BuildRequires: python3-module-setuptools
+
+%description
+Useful python3 library.
+
+%prep
+%setup
+
+%build
+%python3_build
+
+%install
+%python3_install
+
+%files
+%python3_sitelibdir/%modulename/
+%python3_sitelibdir/%modulename-%version-*.egg-info
+
+%changelog
+* Fri Dec 13 2013 Vitaly Lipatov <lav@altlinux.ru> 0.10-alt1
+- build 0.10, python3 only
+
+* Sat Oct 19 2013 Vitaly Lipatov <lav@altlinux.ru> 0.4-alt1
+- initial build for ALT Linux Sisyphus
+
+* Mon Oct 07 2013 Vitaly Lipatov <lav@altlinux.ru> 0.1-alt1
+- initial build for ALT Linux Sisyphus
