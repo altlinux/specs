@@ -1,5 +1,5 @@
 Name: perl-Mojolicious
-Version: 4.16
+Version: 4.60
 Release: alt1
 Summary: Real-time web framework
 
@@ -63,6 +63,9 @@ cp %SOURCE2 %buildroot/%_sysconfdir/sysconfig/hypnotoad
 %doc LICENSE Changes
 
 %changelog
+* Fri Dec 13 2013 Vladimir Lettiev <crux@altlinux.ru> 4.60-alt1
+- 4.16 -> 4.60
+
 * Wed Jun 26 2013 Eugene Prokopiev <enp@altlinux.ru> 4.16-alt1
 - 3.57 -> 4.16
 - Add simple initscript for hypnotoad
