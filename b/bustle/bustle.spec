@@ -1,5 +1,5 @@
 Name: bustle
-Version: 0.4.2
+Version: 0.4.3
 Release: alt1
 
 Summary: D-Bus activity visualiser
@@ -51,6 +51,9 @@ ghc -package Cabal Setup.hs -o setup
 %_man1dir/bustle-pcap.*
 
 %changelog
+* Fri Dec 13 2013 Igor Zubkov <icesik@altlinux.org> 0.4.3-alt1
+- 0.4.3
+
 * Wed Sep 04 2013 Igor Zubkov <icesik@altlinux.org> 0.4.2-alt1
 - build for Sisyphus
 
