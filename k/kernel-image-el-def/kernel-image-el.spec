@@ -7,8 +7,8 @@
 
 Name: kernel-image-%flavour
 Version: 2.6.32
-Release: alt15
-%define erelease 431.el6
+Release: alt16
+%define erelease 431.1.2.el6
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -548,6 +548,13 @@ tar	--transform='s/^\(linux-%kversion\)-%erelease/\1-%flavour-%krelease/' \
 
 
 %changelog
+* Sat Dec 14 2013 Led <led@altlinux.ru> 2.6.32-alt16
+- 2.6.32-431.1.2.el6:
+  + CVE-2013-2141
+  + CVE-2013-4470
+  + CVE-2013-6367
+  + CVE-2013-6368
+
 * Tue Dec 03 2013 Led <led@altlinux.ru> 2.6.32-alt15
 - enabled:
   + SCTP_COOKIE_HMAC_MD5
