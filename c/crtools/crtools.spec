@@ -1,6 +1,6 @@
 Name: crtools
 Version: 1.0
-Release: alt4
+Release: alt5
 Summary: Utility to checkpoint/restore tasks
 License: GPLv2
 Group: System/Configuration/Other
@@ -27,16 +27,20 @@ export CFLAGS="%optflags"
 
 
 %install
-%makeinstall_std PREFIX=%prefix
+%makeinstall_std PREFIX=%prefix SYSTEMDUNITDIR=%_unitdir
 
 
 %files
 %doc README
 %_sbindir/*
 %_man8dir/*
+%_unitdir/*
 
 
 %changelog
+* Sat Dec 14 2013 Led <led@altlinux.ru> 1.0-alt5
+- upstream fixes
+
 * Sat Dec 07 2013 Led <led@altlinux.ru> 1.0-alt4
 - upstream fixes
 
