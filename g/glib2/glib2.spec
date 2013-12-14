@@ -1,13 +1,17 @@
-%def_disable snapshot
-
+%define _libexecdir %_prefix/libexec
 %define ver_major 2.38
 %define pcre_ver 8.11
-%define _libexecdir %_prefix/libexec
+
+%def_disable snapshot
+%set_verify_elf_method strict
+%add_verify_elf_skiplist %_libexecdir/installed-tests/glib/*
+
 %def_without sys_pcre
 %def_enable selinux
 %def_disable fam
 %def_disable systemtap
-%def_disable installed_tests
+%def_enable installed_tests
+
 
 %if_enabled snapshot
 %def_enable gtk_doc
@@ -17,7 +21,7 @@
 
 Name: glib2
 Version: %ver_major.2
-Release: alt1
+Release: alt2
 
 Summary: A library of handy utility functions
 License: %lgpl2plus
@@ -44,6 +48,7 @@ Patch: glib-2.35.9-alt-compat-version-script.patch
 # stop spam about deprecated paths in schemas
 Patch1: glib-2.36.1-alt-deprecated_paths-nowarning.patch
 Patch2: glib-2.36-add-xvt.patch
+Patch3: glib-2.38.2-alt-lfs.patch
 
 %def_with locales
 %if_with locales
@@ -70,15 +75,15 @@ BuildPreReq: pcre-config(utf8) pcre-config(unicode-properties)
 
 BuildRequires(pre): rpm-build-licenses
 BuildRequires: gnome-common intltool gtk-doc indent
-BuildRequires: libdbus-devel libpcre-devel libffi-devel zlib-devel libelf-devel
+BuildRequires: glibc-kernheaders libdbus-devel libpcre-devel libffi-devel zlib-devel libelf-devel
 BuildRequires: rpm-build-python python-devel
 #BuildRequires: rpm-build-python3 python3-devel
 %{?_enable_selinux:BuildRequires: libselinux-devel}
 %{?_enable_fam:BuildRequires: libgamin-devel}
 %{?_enable_systemtap:BuildRequires: libsystemtap-sdt-devel}
 
-# for check
-BuildRequires: /proc dbus-tools-gui desktop-file-utils
+# for check  & tests
+BuildRequires: /proc dbus-tools-gui desktop-file-utils chrpath
 
 %description
 GLib is the low-level core library that forms the basis for projects
@@ -208,6 +213,7 @@ the functionality of the installed glib2/libgio packages.
 %patch
 %patch1
 %patch2 -p2
+%patch3 -p1
 
 %if_with sys_pcre
 rm glib/pcre/*.[ch]
@@ -244,7 +250,7 @@ NOCONFIGURE=1 ./autogen.sh
 %make_build
 
 %install
-%make_install install DESTDIR=%buildroot
+%makeinstall_std
 
 # Relocate libgilb-2.0.so.0 to /%_lib.
 mkdir -p %buildroot/%_lib
@@ -279,9 +285,7 @@ EOF
 
 install -pD -m 755 filetrigger %buildroot%_rpmlibdir/gsettings.filetrigger
 
-
 %find_lang glib20
-%set_verify_elf_method strict
 
 %check
 # g_mapped_file_new fails on /dev/null in hasher
@@ -400,6 +404,10 @@ install -pD -m 755 filetrigger %buildroot%_rpmlibdir/gsettings.filetrigger
 %endif
 
 %changelog
+* Thu Dec 12 2013 Yuri N. Sedunov <aris@altlinux.org> 2.38.2-alt2
+- added glibc-kernheaders to buildreqs
+- installed tests
+
 * Tue Nov 12 2013 Yuri N. Sedunov <aris@altlinux.org> 2.38.2-alt1
 - 2.38.2
 
