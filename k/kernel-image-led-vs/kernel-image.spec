@@ -25,7 +25,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.10.24
-Release: alt1
+Release: alt3
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -239,6 +239,10 @@ ExcludeArch: i386
 %{!?allocator:#define allocator SLAB}
 
 %if "%sub_flavour" != "%default_sub_flavour"
+%set_without tools
+%endif
+
+%ifnarch %base_arch
 %set_without tools
 %endif
 
@@ -1402,10 +1406,12 @@ done)
 %modules_dir/modules.builtin
 %modules_dir/modules.softdep
 %ghost %modules_dir/modules.alias*
-%ghost %modules_dir/modules.dep*
+%ghost %modules_dir/modules.dep
+%ghost %modules_dir/modules.dep.bin
 %ghost %modules_dir/modules.symbols*
 %ghost %modules_dir/modules.builtin.bin
 %ghost %modules_dir/modules.devname
+%modules_dir/modules.dep.inkernel
 %dir %modules_dir/kernel
 %modules_dir/kernel/arch
 %modules_dir/kernel/block
@@ -1786,6 +1792,14 @@ done)
 
 
 %changelog
+* Sat Dec 14 2013 Led <led@altlinux.ru> 3.10.24-alt3
+- updated:
+  + feat-mm--uksm
+
+* Fri Dec 13 2013 Led <led@altlinux.ru> 3.10.24-alt2
+- updated:
+  + feat-mm--uksm
+
 * Thu Dec 12 2013 Led <led@altlinux.ru> 3.10.24-alt1
 - 3.10.24
 
