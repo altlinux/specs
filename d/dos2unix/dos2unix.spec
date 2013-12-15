@@ -1,53 +1,48 @@
-Summary: Text file format converter
 Name: dos2unix
-Version: 3.1
-Release: alt1.qa1
+Version: 6.0.3
+Release: alt1
+
+Summary: Text file format converter
 Group: Text tools
 License: Freely distributable
-Source: %name-%version.tar.bz2
-Patch0: %name-%version.patch
-Patch1: %name-%version-segfault.patch
-Patch2: %name-%version-safeconv.patch
-Patch3: %name-%version-manpage-update-57507.patch
-Patch4: %name-%version-preserve-file-modes.patch
-Patch5: %name-%version-tmppath.patch
+URL: http://waterlan.home.xs4all.nl/dos2unix.html
+
+Source: http://waterlan.home.xs4all.nl/dos2unix/%name-%version.tar.gz
+
+Obsoletes: unix2dos
+Provides: unix2dos = %version-%release
+
+BuildRequires: perl-HTML-Parser perl-Pod-Parser perl-Pod-Checker perl-podlators perl-devel
 
 %description
-%name converts DOS or MAC text files to UNIX format.
+%name - DOS/Mac to Unix and vice versa text file format converter.
 
 %prep
-%setup -q
-%patch0 -p1 -b .orig
-%patch1 -p1 -b .segfault
-%patch2 -p1 -b .safeconv
-%patch3 -p1 -b .manpage-update-57507
-%patch4 -p1 -b .preserve-file-modes
-%patch5 -p1 -b .tmppath
-
-for I in *.[ch]; do
-    %__subst -p 's,#endif.*,#endif,g' $I
-    %__subst -p 's,#else.*,#else,g' $I
-done
+%setup
+# podchecker reports Non-ASCII characters
+rm -rf man/{es,nl}
 
 %build
-%make clean
 %make_build CFLAGS="$RPM_OPT_FLAGS -D_LARGEFILE_SOURCE $(getconf LFS_CFLAGS)"
-%make link
 
 %install
-%__mkdir_p %buildroot/{%_bindir,%_man1dir}
-%__install -m755 %name %buildroot/%_bindir
-%__install -m755 mac2unix %buildroot/%_bindir
-%__install -m444 %name.1 %buildroot/%_man1dir
-%__install -m444 mac2unix.1 %buildroot/%_man1dir
+%makeinstall_std
 
-%files
-%doc COPYRIGHT
+%find_lang --with-man --output=%name.lang %name mac2unix unix2dos unix2mac
+
+%files -f %name.lang
 %_bindir/%name
 %_bindir/mac2unix
+%_bindir/unix2dos
+%_bindir/unix2mac
 %_man1dir/*
+%doc *.txt
 
 %changelog
+* Sat Dec 14 2013 Yuri N. Sedunov <aris@altlinux.org> 6.0.3-alt1
+- 6.0.3
+- removed obsolete patches
+
 * Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 3.1-alt1.qa1
 - NMU: rebuilt for debuginfo.
 
