@@ -4,10 +4,10 @@
 %define _documentationdir %_defaultdocdir/documentation
 %define _docsinstalldir %_defaultdocdir/%variant
 
-%define variants docs-office-server docs-backup-server docs-desktop docs-school-master docs-school-junior docs-school-lite docs-school-server docs-kdesktop docs-school-terminal docs-school-newlite docs-centaurus docs-simply-linux docs-lxdesktop docs-lxdesktop-lite
+%define variants docs-office-server docs-backup-server docs-desktop docs-school-master docs-school-junior docs-school-lite docs-school-server docs-kdesktop docs-school-terminal docs-school-newlite docs-centaurus docs-simply-linux docs-lxdesktop docs-lxdesktop-lite docs-school-teacher
 
 Name: docs-%variant
-Version: 6.9
+Version: 7.0
 Release: alt1
 
 Summary: %Variant documentation
@@ -42,6 +42,9 @@ ln -s $(relative %_docsinstalldir %_documentationdir) %buildroot%_documentationd
 %_documentationdir
 
 %changelog
+* Sun Dec 15 2013 Artem Zolochevskiy <azol@altlinux.ru> 7.0-alt1
+- Update documentation and screenshots
+
 * Tue Dec 03 2013 Andrey Cherepanov <cas@altlinux.org> 6.9-alt1
 - Merge with ALT Linux 7.0 Centaurus manual
 - Update documentation and screenshots
