@@ -1,14 +1,16 @@
-Summary: Signing tool for PE-COFF binaries
 Name: pesign
 Version: 0.109
-Release: alt1
-Group: Development/Other
-License: GPLv2
-Url: https://github.com/vathpela/pesign
-BuildRequires: libnss-devel libpopt-devel
+Release: alt2
 
+Summary: Signing tool for PE-COFF binaries
+License: GPLv2
+Group: Development/Other
+
+Url: https://github.com/vathpela/pesign
 # git://git.altlinux.org/gears/p/pesign.git
 Source: %name-%version-%release.tar
+
+BuildRequires: libnss-devel libpopt-devel
 
 %description
 This package contains the pesign utility for signing UEFI binaries
@@ -71,5 +73,8 @@ fi
 %ghost %_runtimedir/pesign.pid
 
 %changelog
+* Mon Dec 16 2013 Michael Shigorin <mike@altlinux.org> 0.109-alt2
+- Fixed my typo in macro file
+
 * Mon Dec 02 2013 Dmitry V. Levin <ldv@altlinux.org> 0.109-alt1
 - Initial revision, based on specs from mike@ and Fedora.
