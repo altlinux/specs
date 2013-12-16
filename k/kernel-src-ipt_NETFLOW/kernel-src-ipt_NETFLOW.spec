@@ -1,7 +1,7 @@
 %define mname ipt_NETFLOW
 Name: kernel-src-%mname
 Version: 1.8.2
-Release: alt7
+Release: alt8
 Summary: Netflow iptables module for Linux kernel
 Group: Development/Kernel
 BuildArch: noarch
@@ -41,6 +41,9 @@ tar -chJf %buildroot%kernel_src/%mname-%version.tar.xz %mname-%version
 
 
 %changelog
+* Mon Dec 16 2013 Led <led@altlinux.ru> 1.8.2-alt8
+- upstream fixes
+
 * Sat Nov 30 2013 Led <led@altlinux.ru> 1.8.2-alt7
 - upstream fixes
 
