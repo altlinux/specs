@@ -1,6 +1,6 @@
 Name: orage
 Version: 4.10.0
-Release: alt1
+Release: alt2
 
 Summary: Time-managing application for the Xfce desktop environment
 Summary (ru_RU.UTF-8): Календарь для окружения рабочего стола Xfce
@@ -18,6 +18,8 @@ BuildPreReq: rpm-build-xfce4 xfce4-dev-tools
 BuildPreReq: libxfce4panel-devel libxfce4util-devel
 BuildRequires: flex intltool libnotify-devel libical-devel libpopt-devel libdbus-glib-devel
 
+Requires: xfce4-common
+
 Obsoletes: xfcalendar < 4.8.3
 Provides: xfcalendar = %version-%release
 
@@ -31,6 +33,9 @@ Xfce.
 %prep
 %setup
 %patch -p1
+# Set 4.10.0: there is only translations updated, so no need to bump version.
+# Should be dropped when version will actually changed.
+sed -i 's;^m4_define(\[orage_version\], \[4\.11\.0-git\]);m4_define([orage_version], [4.10.0]);' configure.in.in
 
 %build
 %xfce4reconf
@@ -60,6 +65,10 @@ Xfce.
 %_datadir/dbus-1/services/*.service
 
 %changelog
+* Mon Dec 16 2013 Mikhail Efremov <sem@altlinux.org> 4.10.0-alt2
+- Update translations from upstream git.
+- Require xfce4-common.
+
 * Mon Dec 09 2013 Mikhail Efremov <sem@altlinux.org> 4.10.0-alt1
 - Fix Xfce name (XFce,XFCE -> Xfce).
 - Updated to 4.10.0.
