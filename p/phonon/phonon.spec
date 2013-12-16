@@ -1,8 +1,8 @@
 %def_disable zeitgeist
 
 Name: phonon
-Version: 4.6.0
-Release: alt3
+Version: 4.7.1
+Release: alt1
 
 Group: Graphical desktop/KDE
 Summary: KDE4 Multimedia Framework
@@ -12,10 +12,10 @@ License: LGPLv2+
 #Source: ftp://ftp.kde.org/pub/kde/stable/%name/%version/%name-%version.tar.bz2
 Source: %name-%version.tar.bz2
 # FC
-Patch1: phonon-4.4.4-no_rpath.patch
 Patch2: phonon-4.6.0-phonon-allow-stop-empty-source.patch
 # ALT
-Patch100: phonon-4.6.0-alt-fix-install.patch
+Patch100: alt-no-rpath.patch
+Patch101: alt-fix-install.patch
 
 #BuildRequires: glib2-devel gstreamer-devel gst-plugins-devel
 #BuildRequires: libbfd-devel libxml2-devel
@@ -60,16 +60,18 @@ browsing.
 
 %prep
 %setup -q
-%patch1 -p1
 %patch2 -p1
 #
 %patch100 -p1
+%patch101 -p1
 
 
 %build
 %Kcmake \
     -DINCLUDE_INSTALL_DIR:PATH=%_K4includedir \
-    -DPLUGIN_INSTALL_DIR:PATH=%_qt4dir
+    -DPLUGIN_INSTALL_DIR:PATH=%_qt4dir \
+    -DPHONON_INSTALL_QT_EXTENSIONS_INTO_SYSTEM_QT=TRUE \
+    #
 %Kmake
 
 %install
@@ -93,12 +95,15 @@ mkdir -p %buildroot/%_qt4dir/plugins/phonon_backend
 %dir %_datadir/phonon/
 %_datadir/phonon/buildsystem/
 %_libdir/cmake/phonon/
-#%_qt4dir/plugins/designer/libphononwidgets.so
+%_qt4dir/plugins/designer/libphononwidgets.so
 %_datadir/qt4/mkspecs/modules/qt_phonon.pri
 %_pkgconfigdir/phonon.pc
 %_K4dbus_interfaces/org.kde.Phonon.AudioOutput.xml
 
 %changelog
+* Mon Dec 16 2013 Sergey V Turchin <zerg@altlinux.org> 4.7.1-alt1
+- new version
+
 * Fri Jul 05 2013 Sergey V Turchin <zerg@altlinux.org> 4.6.0-alt3
 - rebuild
 
