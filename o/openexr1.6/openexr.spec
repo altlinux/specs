@@ -1,37 +1,35 @@
-%define libsover 21
+%define _optlevel s
+%define beta %nil
+%define libsover 6
 
-%define rname OpenEXR
-Name: openexr
-Version: 2.1.0
-Release: alt1
+%define rname OpenEXR 
+Name: openexr1.6
+Version: 1.6.1
+Release: alt8
 
-%define common %name%libsover-common
-%define libilmimf libilmimf%libsover
+%define common openexr%libsover-common
 
 Group: System/Libraries
 Summary: A high-dynamic-range image file library
-License: BSD
+License: Modified BSD
 URL: http://www.openexr.org/
 
-Requires: %libilmimf = %version-%release
+Requires: libilmimf%libsover = %version-%release
 Provides: %rname = %version-%release
 Obsoletes: %rname < %version-%release
 Provides: %name-utils = %version-%release
 Obsoletes: %name-utils < %version-%release
 
-Source: %name-%version.tar
-# FC
-Patch1: openexr-2.1.0-bigendian.patch
-# ALT
-Patch10: openexr-2.1.0-alt-build.patch
-Patch11: openexr-2.1.0-alt-libdir.patch
-Patch12: openexr-2.1.0-alt-pkgconfig.patch
+Source: openexr-%version%beta.tar
+Patch1: OpenEXR-1.2.2-zlib.patch
+Patch2: OpenEXR-1.2.2-forwardfriend.patch
+Patch3: openexr-1.4.0-alt-fix-linking.patch
+Patch4: openexr-1.6.1-alt-gcc43.patch
 
 # Automatically added by buildreq on Thu Apr 21 2011 (-bi)
 # optimized out: elfutils libstdc++-devel pkg-config
 #BuildRequires: gcc-c++ glibc-devel-static ilmbase-devel zlib-devel
-BuildRequires: gcc-c++ glibc-devel ilmbase-devel zlib-devel
-BuildRequires: cmake kde-common-devel
+BuildRequires: gcc-c++ glibc-devel ilmbase1.0-devel zlib-devel
 
 %description
 OpenEXR is an image file format and library developed by Industrial Light
@@ -46,12 +44,12 @@ Summary: Common empty package for %name
 %description -n %common
 Common empty package for %name
 
-%package -n %libilmimf
+%package -n libilmimf%libsover
 Group: System/Libraries
 Summary: libIlmImf %rname library
 Requires: %common = %version-%release
 Conflicts: openexr <= 1.6.1-alt1
-%description -n %libilmimf
+%description -n libilmimf%libsover
 libIlmImf %rname library
 
 %package devel
@@ -65,54 +63,47 @@ This package contains the static libraries and header files needed for
 developing applications with %rname
 
 %prep
-%setup -q -n %name-%version
-%patch1 -p1
-%patch10 -p1
-%patch11 -p1
-%patch12 -p1
+%setup -q -n openexr-%version
+#%patch1 -p1
+#%patch2 -p1
+#%patch3 -p1
+%patch4 -p1
+
+#autoreconf
+./bootstrap ||:
+
 
 %build
-%Kcmake
-%Kmake
+%configure \
+  --enable-shared \
+  --disable-static \
+  --enable-dependency-tracking \
+  --enable-imfexamples \
+  --disable-ilmbasetest
+
+%make_build
+
 
 %install
-%Kinstall
+%make DESTDIR=%buildroot install
+rm -rf ./installed-docs
+ln -sf %buildroot/%_docdir/%rname-%version ./installed-docs
 
-# create compatibility symlinks
-for f in %buildroot/%_libdir/lib*.so ; do
-    fname=`basename $f`
-    newname=`echo $fname | sed 's|-.*|.so|'`
-    [ "$fname" == "$newname" ] \
-	|| ln -s $fname %buildroot/%_libdir/$newname
-done
 
-mv %buildroot/%_docdir/%rname-%version %buildroot/%_docdir/%name-%version
-install -m 0644 AUTHORS %buildroot/%_docdir/%name-%version/
-install -m 0644 ChangeLog %buildroot/%_docdir/%name-%version/
-install -m 0644 COPYING %buildroot/%_docdir/%name-%version/
-install -m 0644 NEWS %buildroot/%_docdir/%name-%version/
-install -m 0644 README %buildroot/%_docdir/%name-%version/
 
 %files -n %common
 
 %files
+%doc AUTHORS ChangeLog COPYING NEWS README
 %_bindir/*
 
-%files -n %libilmimf
-%_libdir/libIlmImf-*.so.%libsover
-%_libdir/libIlmImf-*.so.%libsover.*
-
-%files devel
-%doc %_docdir/%name-%version/
-%_includedir/%rname
-%_libdir/lib*.so
-%_libdir/pkgconfig/*
-#%_datadir/aclocal/%name.m4
+%files -n libilmimf%libsover
+%_libdir/libIlmImf.so.*
 
 
 %changelog
-* Thu Dec 12 2013 Sergey V Turchin <zerg@altlinux.org> 2.1.0-alt1
-- new version
+* Mon Dec 16 2013 Sergey V Turchin <zerg@altlinux.org> 1.6.1-alt8
+- create compatibility package
 
 * Thu Apr 21 2011 Sergey V Turchin <zerg@altlinux.org> 1.6.1-alt7
 - fix build requires
