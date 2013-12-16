@@ -3,8 +3,8 @@
 %endif
 
 Name: phonon-backend-gstreamer
-Version: 4.6.3
-Release: alt3
+Version: 4.7.1
+Release: alt1
 
 Group: System/Libraries
 Summary: Gstreamer phonon backend
@@ -12,8 +12,6 @@ License: LGPLv2+
 Url: http://phonon.kde.org/
 
 Source: %name-%version.tar
-# FC
-Patch1: phonon-backend-4.6.2-xvimagesink_sync.patch
 
 # Automatically added by buildreq on Wed Apr 20 2011 (-bi)
 # optimized out: cmake-modules elfutils fontconfig glib2-devel gstreamer-devel libGL-devel libGLU-devel libICE-devel libSM-devel libX11-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXext-devel libXfixes-devel libXft-devel libXi-devel libXinerama-devel libXpm-devel libXrandr-devel libXrender-devel libXt-devel libXtst-devel libXv-devel libXxf86vm-devel libgst-plugins libqt4-core libqt4-dbus libqt4-devel libqt4-gui libqt4-xml libstdc++-devel libxkbfile-devel libxml2-devel pkg-config python-base ruby xml-utils xorg-kbproto-devel xorg-xf86miscproto-devel xorg-xproto-devel
@@ -38,7 +36,6 @@ Gstreamer phonon backend
 
 %prep
 %setup -q
-%patch1 -p1
 
 %build
 %K4cmake \
@@ -55,6 +52,12 @@ Gstreamer phonon backend
 %_iconsdir/hicolor/*/apps/phonon-gstreamer.*
 
 %changelog
+* Mon Dec 16 2013 Sergey V Turchin <zerg@altlinux.org> 4.7.1-alt1
+- new version
+
+* Thu Oct 17 2013 Sergey V Turchin <zerg@altlinux.org> 4.6.3-alt2.M70P.1
+- built for M70P
+
 * Thu Oct 10 2013 Sergey V Turchin <zerg@altlinux.org> 4.6.3-alt3
 - obsolete phonon-backend-0-xine
 
