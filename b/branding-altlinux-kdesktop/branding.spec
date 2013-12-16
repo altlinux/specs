@@ -6,7 +6,7 @@
 
 Name: branding-%brand-%smalltheme
 Version: 7.0.2
-Release: alt0.1
+Release: alt1
 BuildArch: noarch
 
 %define theme %name
@@ -29,8 +29,8 @@ BuildRequires: ImageMagick fontconfig bc libGConf-devel
 
 %define Theme_ru KDesktop
 %define Brand_ru Альт Линукс
-%define status_en BETA
-%define status БЕТА
+%define status_en %nil
+%define status %nil
 %define variants altlinux-desktop altlinux-office-desktop altlinux-office-server altlinux-lite altlinux-workbench school-master altlinux-gnome-desktop sisyphus-server-light
 
 Source: %name.tar
@@ -455,6 +455,9 @@ fi
 %_datadir/kde4/apps/kio_desktop/DesktopLinks/indexhtml.desktop
 
 %changelog
+* Mon Dec 16 2013 Sergey V Turchin <zerg at altlinux dot org> 7.0.2-alt1
+- 7.0.2 release
+
 * Fri Dec 06 2013 Sergey V Turchin <zerg at altlinux dot org> 7.0.2-alt0.1
 - bump version
 
