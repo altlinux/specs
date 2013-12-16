@@ -7,7 +7,7 @@
 
 Name: branding-simply-linux
 Version: 7.0.2
-Release: alt1
+Release: alt2
 BuildArch: noarch
 
 BuildRequires: cpio gfxboot >= 4 fonts-ttf-dejavu fonts-ttf-droid
@@ -157,7 +157,7 @@ Distribution license and release notes
 
 %package xfce-settings
 
-Summary: default settings for Xfce 4.6 for Simply linux distribution
+Summary: default settings for Xfce for Simply linux distribution
 License: Distributable
 Group: Graphical desktop/XFce
 Requires: PolicyKit-gnome
@@ -169,7 +169,7 @@ Conflicts: %(for n in %variants ; do [ "$n" = %theme ] || echo -n "branding-$n-x
 Conflicts: xfce-settings-simply-linux
 
 %description xfce-settings
-This package contains default settings for Xfce 4.6 for Simply linux distribution.
+This package contains default settings for Xfce for Simply linux distribution.
 
 %package slideshow
 Summary: Slideshow for Simply Linux %version installer.
@@ -436,6 +436,10 @@ subst "s/Theme=.*/Theme=%theme/" /etc/plymouth/plymouthd.conf
 %config %_localstatedir/ldm/.pam_environment
 
 %changelog
+* Mon Dec 16 2013 Mikhail Efremov <sem@altlinux.org> 7.0.2-alt2
+- xfce-settings: Fix summary and description.
+- Package old SL New Year wallpapers.
+
 * Fri Nov 29 2013 Mikhail Efremov <sem@altlinux.org> 7.0.2-alt1
 - Bump version to 7.0.2.
 - indexhtml.desktop: Drop unneeded space.
