@@ -1,6 +1,6 @@
 Name: pesign
 Version: 0.109
-Release: alt2
+Release: alt3
 
 Summary: Signing tool for PE-COFF binaries
 License: GPLv2
@@ -50,7 +50,6 @@ getent passwd pesign >/dev/null ||
 
 %post
 %post_service %name
-systemd-tmpfiles --create %_tmpfilesdir/pesign.conf ||:
 # handle hasher
 if [ $1 = 1 -a -d /.host -a -d /.in -a -d /.out ]; then
 	chmod a+rX %_runtimedir/pesign/
@@ -73,6 +72,9 @@ fi
 %ghost %_runtimedir/pesign.pid
 
 %changelog
+* Mon Dec 16 2013 Dmitry V. Levin <ldv@altlinux.org> 0.109-alt3
+- %%post: removed redundant systemd-tmpfiles invocation.
+
 * Mon Dec 16 2013 Michael Shigorin <mike@altlinux.org> 0.109-alt2
 - Fixed my typo in macro file
 
