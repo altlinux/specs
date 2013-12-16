@@ -1,5 +1,5 @@
 Name: exaile
-Version: 3.3.1
+Version: 3.3.2
 Release: alt1
 
 Summary: a music player aiming to be similar to KDE's Amarok, but for GTK+ and written in Python
@@ -83,6 +83,9 @@ cp %buildroot%_datadir/%name/data/images/48x48/%name.png %buildroot%_liconsdir/
 %_datadir/%name/plugins/exfalso
 
 %changelog
+* Mon Dec 16 2013 Vladimir Lettiev <crux@altlinux.ru> 3.3.2-alt1
+- New version 3.3.2
+
 * Tue Apr 09 2013 Vladimir Lettiev <crux@altlinux.ru> 3.3.1-alt1
 - New version 3.3.1
 
