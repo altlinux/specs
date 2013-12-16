@@ -1,8 +1,8 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-bacula-client
-Version: 0.2
-Release: alt2
+Version: 0.3
+Release: alt1
 
 Packager: Alexandra Panyukova <mex3@altlinux.ru>
 
@@ -43,6 +43,9 @@ Alterator module for Bacula client configuration
 %_alterator_backend3dir/*
 
 %changelog
+* Mon Dec 16 2013 Andrey Kolotov <qwest@altlinux.org> 0.3-alt1
+- client password not displayed
+
 * Fri Sep 27 2013 Andrey Cherepanov <cas@altlinux.org> 0.2-alt2
 - Do not condrestart Alterator services
 - Fix summary and dectription
