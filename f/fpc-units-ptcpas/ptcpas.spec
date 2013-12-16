@@ -1,14 +1,15 @@
 %define self ptcpas
-Name:		fpc-units-%self
+Name: fpc-units-%self
 # svn info -r HEAD https://ptcpas.svn.sourceforge.net/svnroot/ptcpas/trunk | grep Revision
-Version:	447
-Release:	alt2
-Group:		Development/Other
-License:	Modified LGPL
-Summary:	A free, portable framebuffer library, written in Free Pascal
+Version: 0.99.13
+Epoch: 1
+Release: alt1
+Group: Development/Other
+License: Modified LGPL
+Summary: A free, portable framebuffer library, written in Free Pascal
 # svn co https://ptcpas.svn.sourceforge.net/svnroot/ptcpas/trunk ptcpas-402
-Source:		%self-%version.tar
-URL:		http://ptcpas.sourceforge.net/
+Source: ptcpas-%version.tar.bz2
+Url: http://ptcpas.sourceforge.net/
 
 # Automatically added by buildreq on Mon Sep 06 2010
 BuildRequires: fpc-units-gtk2 fpc-utils libX11-devel libXext-devel libXrandr-devel libXxf86dga-devel libXxf86vm-devel
@@ -23,9 +24,9 @@ fakemodes. It has been tested on Windows (all versions since Windows 95;
 on i386 and x86_64), Linux (i386, x86_64 and ppc), FreeBSD and DOS.
 
 %package demos
-Group:		Development/Other
-Summary:	Demo applications for %name
-Requires:	fpc-utils fpc %name
+Group: Development/Other
+Summary: Demo applications for %name
+Requires: fpc-utils fpc %name
 %description demos
 %summary
 
@@ -69,6 +70,9 @@ install -D ptcpas.cfg %buildroot%_sysconfdir/%self.conf
 %_libdir/%name-demos
 
 %changelog
+* Mon Dec 16 2013 Fr. Br. George <george@altlinux.ru> 1:0.99.13-alt1
+- Autobuild version bump to 0.99.13
+
 * Fri Dec 17 2010 Fr. Br. George <george@altlinux.ru> 447-alt2
 - Demos package now depends on build environment
 
