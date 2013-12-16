@@ -1,43 +1,33 @@
-%define libsover 11
+%define _optlevel s
+%define beta %nil
+%define libsover 6
 %define rname IlmBase
 
-Name: ilmbase
-Version: 2.1.0
-Release: alt1
+Name: ilmbase1.0
+Version: 1.0.1
+Release: alt7
 
-%define common %name%libsover-common
-%define libhalf libhalf%libsover
-%define libiex libiex%libsover
-%define libilmthread libilmthread%libsover
-%define libimath libimath%libsover
-%define libiexmath libiexmath%libsover
+%define common ilmbase%libsover-common
 
 Group: System/Libraries
 Summary: A high-dynamic-range image file library
 License: Modified BSD
 URL: http://www.openexr.org/
 
-Requires: %libhalf
-Requires: %libiex
-Requires: %libilmthread
-Requires: %libimath
-Requires: %libiexmath
+Requires: libhalf%libsover = %version-%release
+Requires: libiex%libsover = %version-%release
+Requires: libilmthread%libsover = %version-%release
+Requires: libimath%libsover = %version-%release
 Provides: %rname = %version-%release
 Obsoletes: %rname < %version-%release
 
-Source: %name-%version.tar
-# FC
-Patch1: ilmbase-1.0.3-pkgconfig.patch
-Patch2: ilmbase-2.0-1-arm.patch
-# ALT
-Patch10: ilmbase-2.1.0-alt-linking.patch
-Patch11: ilmbase-2.1.0-alt-cmakefiles.patch
+Source: ilmbase-%version%beta.tar
+Patch1: ilmbase-1.0.1-alt-fix-linking.patch
 
 # Automatically added by buildreq on Wed Apr 20 2011 (-bi)
 # optimized out: elfutils libGL-devel libstdc++-devel pkg-config
 #BuildRequires: gcc-c++ glibc-devel libGLU-devel libstdc++-devel
 BuildRequires: gcc-c++ glibc-devel libGLU-devel zlib-devel
-BuildRequires: cmake kde-common-devel
 
 %description
 Half is a class that encapsulates our 16-bit floating-point format.
@@ -57,46 +47,38 @@ Summary: Common empty package for %name
 %description -n %common
 Common empty package for %name
 
-%package -n %libhalf
+%package -n libhalf%libsover
 Group: System/Libraries
 Summary: %rname library
 Requires: %common = %version-%release
 Conflicts: ilmbase <= 1.0.1-alt1
-%description -n %libhalf
+%description -n libhalf%libsover
 Half is a class that encapsulates our 16-bit floating-point format.
 
-%package -n %libiex
+%package -n libiex%libsover
 Group: System/Libraries
 Summary: %rname library
 Requires: %common = %version-%release
 Conflicts: ilmbase <= 1.0.1-alt1
-%description -n %libiex
+%description -n libiex%libsover
 Iex is an exception-handling library.
 
-%package -n %libilmthread
+%package -n libilmthread%libsover
 Group: System/Libraries
 Summary: %rname library
 Requires: %common = %version-%release
 Conflicts: ilmbase <= 1.0.1-alt1
-%description -n %libilmthread
+%description -n libilmthread%libsover
 IlmThread is a thread abstraction library for use with OpenEXR
 and other software packages.  It currently supports pthreads and
 Windows threads.
 
-%package -n %libimath
+%package -n libimath%libsover
 Group: System/Libraries
 Summary: %rname library
 Requires: %common = %version-%release
 Conflicts: ilmbase <= 1.0.1-alt1
-%description -n %libimath
-Imath implements 2D and 3D vectors, 3x3 and 4x4 matrices, quaternions
-and other useful 2D and 3D math functions.
-
-%package -n %libiexmath
-Group: System/Libraries
-Summary: %rname library
-Requires: %common = %version-%release
-%description -n %libiexmath
+%description -n libimath%libsover
 Imath implements 2D and 3D vectors, 3x3 and 4x4 matrices, quaternions
 and other useful 2D and 3D math functions.
 
@@ -105,58 +87,51 @@ Summary: Headers for developing programs that will use %name
 Group: Development/Other
 Requires: %common = %version-%release
 Conflicts: openexr-devel < 1.6
+Conflicts: ilmbase-devel
 %description devel
 This package contains the static libraries and header files needed for
 developing applications with %name
 
 
 %prep
-%setup -q -n %name-%version
+%setup -q -n ilmbase-%version
 %patch1 -p1
-%patch2 -p1
-%patch10 -p1
-%patch11 -p1
+
+#autoreconf
+./bootstrap ||:
 
 
 %build
-%Kcmake
-%Kmake
+%configure \
+  --enable-shared \
+  --disable-static \
+  --enable-dependency-tracking \
+  --enable-threading
+
+%make_build
+
 
 %install
-%Kinstall
+%make DESTDIR=%buildroot install
 
-# create compatibility symlinks
-for f in %buildroot/%_libdir/lib*.so ; do
-    fname=`basename $f`
-    newname=`echo $fname | sed 's|-.*|.so|'`
-    [ "$fname" == "$newname" ] \
-	|| ln -s $fname %buildroot/%_libdir/$newname
-done
+
 
 %files -n %common
 
 %files
 %doc AUTHORS ChangeLog COPYING LICENSE NEWS README
 
-%files -n %libhalf
-%_libdir/libHalf.so.%libsover
-%_libdir/libHalf.so.%libsover.*
+%files -n libhalf%libsover
+%_libdir/libHalf.so.*
 
-%files -n %libiex
-%_libdir/libIex-*.so.%libsover
-%_libdir/libIex-*.so.%libsover.*
+%files -n libiex%libsover
+%_libdir/libIex.so.*
 
-%files -n %libilmthread
-%_libdir/libIlmThread-*.%libsover
-%_libdir/libIlmThread-*.so.%libsover.*
+%files -n libilmthread%libsover
+%_libdir/libIlmThread.so.*
 
-%files -n %libimath
-%_libdir/libImath-*.so.%libsover
-%_libdir/libImath-*.so.%libsover.*
-
-%files -n %libiexmath
-%_libdir/libIexMath-*.so.%libsover
-%_libdir/libIexMath-*.so.%libsover.*
+%files -n libimath%libsover
+%_libdir/libImath.so.*
 
 %files devel
 %doc AUTHORS ChangeLog COPYING LICENSE NEWS README
@@ -164,10 +139,9 @@ done
 %_libdir/*.so
 %_libdir/pkgconfig/*
 
-
 %changelog
-* Thu Dec 12 2013 Sergey V Turchin <zerg@altlinux.org> 2.1.0-alt1
-- new version
+* Mon Dec 16 2013 Sergey V Turchin <zerg@altlinux.org> 1.0.1-alt7
+- create compatibility package
 
 * Wed Apr 20 2011 Sergey V Turchin <zerg@altlinux.org> 1.0.1-alt6
 - fix build requires
