@@ -1,6 +1,6 @@
 Name: alterator-bacula
-Version: 0.9
-Release: alt2
+Version: 1.0
+Release: alt1
 
 Source:%name-%version.tar
 
@@ -20,7 +20,9 @@ Requires: alterator >= 4.10-alt5
 Requires: alterator-l10n >= 2.7-alt19
 Requires: alterator-sh-functions alterator-net-functions alterator-hw-functions >= 0.6-alt1
 Requires: passwdqc-utils
-Requires: MySQL-client bacula-director-mysql
+Requires: bacula-director-mysql
+Requires: MySQL-server-control
+Requires: mysql-server
 Conflicts: alterator-lookout < 2.1-alt1
 Conflicts: alterator-fbi < 5.20-alt1
 
@@ -65,6 +67,10 @@ done
 mkdir -p %buildroot%hookdir
 install -pm755 postinstall.d/*.sh %buildroot%hookdir/
 
+%post
+/etc/init.d/alteratord restart
+alterator-cmdline /bacula-director action init
+
 %files
 %config(noreplace) %_sysconfdir/alterator/bacula
 %_datadir/alterator/ui/*
@@ -80,6 +86,10 @@ install -pm755 postinstall.d/*.sh %buildroot%hookdir/
 %altdir/desktop-directories/*
 
 %changelog
+* Mon Dec 16 2013 Andrey Kolotov <qwest@altlinux.org> 1.0-alt1
+- Remove options with mysql database bacula
+- Create mysql database after install package
+
 * Fri Dec 06 2013 Andrey Cherepanov <cas@altlinux.org> 0.9-alt2
 - Replace Conflicts by Provides/Obsoletes pairs
 
