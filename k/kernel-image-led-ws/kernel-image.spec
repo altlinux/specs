@@ -25,7 +25,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.10.24
-Release: alt4
+Release: alt5
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -1792,6 +1792,10 @@ done)
 
 
 %changelog
+* Mon Dec 16 2013 Led <led@altlinux.ru> 3.10.24-alt5
+- updated:
+  + feat-mm--uksm
+
 * Sat Dec 14 2013 Led <led@altlinux.ru> 3.10.24-alt4
 - updated:
   + fix-fs-ramfs
