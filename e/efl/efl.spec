@@ -9,14 +9,15 @@
 
 Name: efl
 Version: 1.8.2
-Release: alt1
+Release: alt2
 
 Summary: Enlightenment Foundation Libraries
 License: BSD/LGPLv2.1+
 Group: System/Libraries
 Url: http://www.enlightenment.org/
 
-Source: http://download.enlightenment.org/rel/libs/%name/%name-%version.tar.bz2
+#Source: http://download.enlightenment.org/rel/libs/%name/%name-%version.tar.bz2
+Source: %name-%version.tar
 
 %{?_enable_static:BuildPreReq: glibc-devel-static}
 BuildRequires: gcc-c++ glibc-kernheaders glib2-devel libcheck-devel lcov doxygen
@@ -58,6 +59,8 @@ Obsoletes: libevas < %version
 Provides: libevas = %version-%release
 Obsoletes: libecore < %version
 Provides: libecore = %version-%release
+Obsoletes: edje < %version
+Provides: edje = %version-%release
 Obsoletes: libedje < %version
 Provides: libedje = %version-%release
 Obsoletes: libeeze < %version
@@ -242,6 +245,10 @@ find %buildroot%_libdir -name "*.la" -delete
 
 
 %changelog
+* Tue Dec 17 2013 Yuri N. Sedunov <aris@altlinux.org> 1.8.2-alt2
+- 1.8.2 snapshot (3b57d1f)
+- obsoletes/provides edje
+
 * Tue Dec 10 2013 Yuri N. Sedunov <aris@altlinux.org> 1.8.2-alt1
 - 1.8.2
 - obsoletes/provides all EFL libraries < 1.8
