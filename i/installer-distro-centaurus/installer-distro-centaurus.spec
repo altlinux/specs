@@ -1,7 +1,7 @@
 %define distro centaurus
 Name: installer-distro-%distro
 Version: 7.0
-Release: alt5
+Release: alt6
 
 Summary: Installer files for Centaurus distro 
 License: GPL
@@ -67,6 +67,9 @@ cp -a * %buildroot%install2dir/
 %files stage3
 
 %changelog
+* Tue Dec 17 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 7.0-alt6
+- dm changed to prefdm in systemd-enabled
+
 * Sun Dec 01 2013 Andrey Cherepanov <cas@altlinux.org> 7.0-alt5
 - Move rare modules to expert list, hide unusable modules trust
   and moodle-install
