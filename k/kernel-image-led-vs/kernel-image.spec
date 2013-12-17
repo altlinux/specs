@@ -25,7 +25,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.10.24
-Release: alt5
+Release: alt7
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -1792,6 +1792,14 @@ done)
 
 
 %changelog
+* Tue Dec 17 2013 Led <led@altlinux.ru> 3.10.24-alt7
+- added:
+  + fix-drivers-video--fb
+
+* Mon Dec 16 2013 Led <led@altlinux.ru> 3.10.24-alt6
+- updated:
+  + feat-mm--uksm
+
 * Mon Dec 16 2013 Led <led@altlinux.ru> 3.10.24-alt5
 - updated:
   + feat-mm--uksm
