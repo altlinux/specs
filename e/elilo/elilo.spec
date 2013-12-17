@@ -1,6 +1,6 @@
 Name: elilo
 Version: 3.14
-Release: alt1.592
+Release: alt1.5926535
 
 Summary: EFI Linux Loader
 License: GPL v2+
@@ -11,15 +11,16 @@ Source0: http://downloads.sourceforge.net/elilo/%name-%version-all.tar.gz
 Source1: debian.eliloalt.man8
 Source2: elilo.conf.man5
 
-BuildRequires: gnu-efi >= 3.0d
 BuildRequires: rpm-macros-uefi
+BuildRequires: pesign >= 0.109-alt4
+BuildRequires: gnu-efi = 3.0r
+BuildRequires: gnu-efi >= 3.0d
+BuildConflicts: gnu-efi = 3.0s
+BuildConflicts: gnu-efi = 3.0t
 
-# archdep BRs aren't straightforward at all but can be avoided here
 ExclusiveArch: x86_64
 
-%ifarch x86_64
-BuildRequires: sbsigntools alt-uefi-keys-private
-%endif
+Obsoletes: elilo-signed
 
 Summary(pl.UTF-8): Linuksowy bootloader dla platform EFI
 
@@ -27,19 +28,12 @@ Summary(pl.UTF-8): Linuksowy bootloader dla platform EFI
 ELILO is an EFI Linux boot loader for IA-64 (IPF), IA-32 (x86)
 and x86_64 EFI-based platforms.
 
+This package might hold pre-signed ELILO binary
+to cope with UEFI SecureBoot (rather Restricted Boot).
+
 %description -l pl.UTF-8
 ELILO to linuksowy bootloader dla platform IA-64 (IPF), IA-32 (x86)
 oraz x86_64 opartych na EFI.
-
-%package signed
-Summary: EFI Linux Loader (pre-signed binary)
-License: GPL v2+
-Group: System/Kernel and hardware
-Requires: %name = %version-%release
-
-%description signed
-This package holds the pre-signed binary of ELILO
-to cope with UEFI SecureBoot (rather Restricted Boot).
 
 %prep
 %setup -c
@@ -60,8 +54,7 @@ install -pDm644 %SOURCE1 %buildroot%_man8dir/eliloalt.8
 install -pDm644 %SOURCE2 %buildroot%_man5dir/elilo.conf.5
 
 %ifarch x86_64
-# autocreates signed.manifest
-%_efi_sign %buildroot%_efi_bindir/elilo.efi
+%pesign -s -i %buildroot%_efi_bindir/elilo.efi
 %endif
 
 %files
@@ -72,11 +65,21 @@ install -pDm644 %SOURCE2 %buildroot%_man5dir/elilo.conf.5
 %_man8dir/eliloalt.8*
 %_man5dir/elilo.conf.5*
 
-%ifarch x86_64
-%files -f signed.manifest signed
-%endif
-
 %changelog
+* Tue Dec 17 2013 Michael Shigorin <mike@altlinux.org> 3.14-alt1.5926535
+- build with gnu-efi 3.0r to be sure
+- prepare for production signing
+
+* Wed Nov 20 2013 Michael Shigorin <mike@altlinux.org> 3.14-alt1.592653
+- build with current gnu-efi
+- pesign with ALT key
+
+* Mon Jul 29 2013 Michael Shigorin <mike@altlinux.org> 3.14-alt1.59265
+- built with gnu-efi 3.0u
+
+* Thu Feb 28 2013 Michael Shigorin <mike@altlinux.org> 3.14-alt1.5926
+- built with gnu-efi 3.0t
+
 * Thu Jan 10 2013 Michael Shigorin <mike@altlinux.org> 3.14-alt1.592
 - signing is only relevant for x86_64 (just as ALT ELILO)
 

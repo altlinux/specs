@@ -1,6 +1,6 @@
 Name: refind
 Version: 0.6.12
-Release: alt1
+Release: alt3
 
 Summary: EFI boot manager software
 License: GPLv3
@@ -8,25 +8,23 @@ Group: System/Base
 
 Url: http://www.rodsbooks.com/refind/
 Source: refind-src-%version.zip
+Source1: altlinux_altinst.icns
+Source2: altlinux_live.icns
+Source3: altlinux_rescue.icns
+Patch: 0001-Support-for-memtest86-as-a-second-row-item.patch
 Packager: Michael Shigorin <mike@altlinux.org>
 
-BuildRequires: gnu-efi unzip
-BuildRequires: rpm-macros-uefi sbsigntools alt-uefi-keys-private
+BuildRequires: gnu-efi-3.0r
+BuildRequires: unzip
+BuildRequires: rpm-macros-uefi
+BuildRequires: pesign >= 0.109-alt4
 Requires: efibootmgr
-Provides: refind-signed
+Obsoletes: refind-signed
 
-# FIXME: 32-bit build needs a %%_libdir related fixup
 ExclusiveArch: x86_64
 
 %define refind_lib %_efi_bindir
 %define refind_data %_datadir/%name
-
-%ifarch x86_64
-%define _efi_arch x64
-%endif
-%ifarch %ix86
-%define _efi_arch ia32
-%endif
 
 %description
 A graphical boot manager for EFI- and UEFI-based computers, such as all
@@ -41,8 +39,14 @@ rEFInd to read boot loaders from these filesystems, too. rEFInd's ability
 to detect boot loaders at runtime makes it very easy to use, particularly
 when paired with Linux kernels that provide EFI stub support.
 
+Please note that the official build is signed; this shouldn't
+intervene in any way but rather provides means to cope with
+UEFI SecureBoot (better described as Restricted Boot) firmware
+when one can't disable it easily, doesn't want to, or needs not to.
+
 %prep
 %setup
+%patch -p1
 
 %build
 make gnuefi
@@ -52,22 +56,19 @@ make fs_gnuefi
 mkdir -p %buildroot{%refind_lib{,/drivers_%_efi_arch},%refind_data}
 
 %ifarch x86_64
-for file in refind/refind*.efi; do
-	sbsign --key %_efi_keydir/altlinux.key --cert %_efi_keydir/altlinux.crt \
-		--output %buildroot%_efi_bindir/"`basename "$file"`" "$file"
-done
-for file in drivers_%_efi_arch/*_x64.efi; do
-	sbsign --key %_efi_keydir/altlinux.key --cert %_efi_keydir/altlinux.crt \
-		--output %buildroot%refind_lib/"$file" "$file"
+# don't feed macros with complicated expressions, esp. in the loop
+for i in refind/refind*.efi drivers_%_efi_arch/*_x64.efi; do
+	%pesign -s -i $i
 done
 %endif
 
-%ifarch %ix86
 install -pm644 refind/refind*.efi %buildroot%refind_lib/
 cp -a drivers_%_efi_arch/*.efi %buildroot%refind_lib/drivers_%_efi_arch/
-%endif
 
 cp -a icons/ %buildroot%refind_data/
+install -pDm644 %SOURCE1 %buildroot%refind_data/icons/altlinux/altinst.icns
+install -pDm644 %SOURCE2 %buildroot%refind_data/icons/altlinux/live.icns
+install -pDm644 %SOURCE3 %buildroot%refind_data/icons/altlinux/rescue.icns
 
 %files
 %doc docs/*
@@ -76,13 +77,17 @@ cp -a icons/ %buildroot%refind_data/
 %refind_lib
 %refind_data
 
-# TODO:
-# - create separate signing helper
-# - move off hardwired sbsign to that
-# NB:
-# - macros get expanded too early for shell loops
-
 %changelog
+* Tue Dec 17 2013 Michael Shigorin <mike@altlinux.org> 0.6.12-alt3
+- built with gnu-efi 3.0r to be sure
+- memtest86 support backported from 0.7.4
+- added ALT-specific boot action icons
+- updated pesign macros use, reworked binaries installation
+- prepare for production signing
+
+* Mon Jul 29 2013 Michael Shigorin <mike@altlinux.org> 0.6.12-alt2
+- built with gnu-efi 3.0u
+
 * Wed Jul 03 2013 Michael Shigorin <mike@altlinux.org> 0.6.12-alt1
 - 0.6.12
 
