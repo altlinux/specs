@@ -1,5 +1,5 @@
 Name: perl-FormValidator-Lite
-Version: 0.29
+Version: 0.37
 Release: alt1
 
 Summary: FormValidator::Lite perl module
@@ -7,11 +7,11 @@ Group: Development/Perl
 License: Perl
 
 Url: %CPAN FormValidator-Lite
-# Cloned from git git://github.com/tokuhirom/formvalidator-lite.git
+# Cloned from git git://github.com/tokuhirom/FormValidator-Lite.git
 Source: %name-%version.tar
 
 BuildArch: noarch
-BuildRequires: perl-devel perl-Class-Load perl-Test-Requires perl-CGI perl-Class-Accessor-Lite perl-YAML perl-Module-Build perl-Test-Base perl-unicore perl-Email-Valid-Loose
+BuildRequires: perl-devel perl-Class-Load perl-Test-Requires perl-CGI perl-Class-Accessor-Lite perl-YAML perl-Module-Build perl-unicore perl-Email-Valid-Loose perl-Text-TestBase
 
 %description
 %summary
@@ -30,6 +30,9 @@ BuildRequires: perl-devel perl-Class-Load perl-Test-Requires perl-CGI perl-Class
 %doc TODO Changes
 
 %changelog
+* Tue Dec 17 2013 Vladimir Lettiev <crux@altlinux.ru> 0.37-alt1
+- New version 0.37
+
 * Wed Apr 11 2012 Vladimir Lettiev <crux@altlinux.ru> 0.29-alt1
 - New version 0.29
 
