@@ -1,4 +1,3 @@
-#define rev 2459
 %define oldmodname kernel-source-virtualbox
 %define oldmodnamenetflt kernel-source-virtualbox-netfilter
 %define oldmodnamenetadp kernel-source-virtualbox-netadaptor
@@ -26,6 +25,7 @@
 %def_without java
 %def_with vnc
 %def_with vde
+%def_with libvpx
 %def_with python
 
 %ifarch %ix86
@@ -56,7 +56,7 @@
 %define gcc_version 4.5
 
 Name: virtualbox
-Version: 4.2.18
+Version: 4.3.4
 Release: alt1
 
 Summary: VM VirtualBox OSE - Virtual Machine for x86 hardware
@@ -108,7 +108,7 @@ BuildRequires: libXdamage-devel libXcomposite-devel
 BuildRequires: xorg-xf86driproto-devel xorg-glproto-devel
 BuildRequires: xorg-resourceproto-devel xorg-scrnsaverproto-devel
 BuildRequires(pre): xorg-sdk
-BuildPreReq: yasm kBuild >= 0.1.999
+BuildPreReq: yasm kBuild >= 0.1.9998.r2689
 %if_with webservice
 BuildRequires: libgsoap-devel-static
 %endif
@@ -121,6 +121,9 @@ BuildRequires: texlive-latex-recommended
 %endif
 %if_with vnc
 BuildRequires: libvncserver-devel
+%endif
+%if_with libvpx
+BuildRequires: libvpx-devel
 %endif
 BuildRequires: rpm-build-xdg rpm-macros-pam
 BuildRequires: /proc
@@ -303,6 +306,9 @@ export GCC_VERSION=%gcc_version
 %if_with vde
     --enable-vde \
 %endif
+%if_without libvpx
+    --disable-libvpx \
+%endif
 %if_without manual
     --disable-docs \
 %endif
@@ -376,18 +382,22 @@ cd out/%vbox_platform/release/bin
 #    SUPUninstall \
 #    EfiThunk \
 cp -a \
-    VBoxBFE \
+    VBoxAutostart \
+    VBoxBalloonCtrl \
     VBoxExtPackHelperApp \
     VBoxHeadless \
     VBoxManage \
+    VBoxNetNAT \
     VBoxNetAdpCtl \
     VBoxNetDHCP \
     VBoxSDL \
     VBoxSVC \
     VBoxTestOGL \
     VBoxTunctl \
+    VBoxVolInfo \
     VBoxXPCOMIPCD \
     VirtualBox \
+    iPxeBaseBin \
     xpidl \
     *.gc \
     *.r0 \
@@ -413,10 +423,12 @@ cp -a \
     %buildroot%vboxdatadir
 
 # create links
-for n in VBoxBFE \
+for n in VBoxAutostart \
+         VBoxBalloonCtrl \
          VBoxManage \
          VBoxSDL \
          VBoxTunctl \
+         VBoxVolInfo \
          VirtualBox \
 %if_with webservice
          vboxwebsrv \
@@ -586,8 +598,10 @@ mountpoint -q /dev || {
 %dir %vboxdir/ExtensionPacks
 %attr(4710,root,vboxusers) %vboxdir/VBoxHeadless
 %attr(4710,root,vboxusers) %vboxdir/VBoxNetDHCP
+%attr(4710,root,vboxusers) %vboxdir/VBoxNetNAT
 %attr(4710,root,vboxusers) %vboxdir/VBoxNetAdpCtl
 %attr(4710,root,vboxusers) %vboxdir/VBoxSDL
+%attr(4710,root,vboxusers) %vboxdir/VBoxVolInfo
 %attr(4710,root,vboxusers) %vboxdir/VirtualBox
 %exclude %vboxdir/sdk
 %exclude %vboxdir/xpidl
@@ -682,6 +696,12 @@ mountpoint -q /dev || {
 %endif
 
 %changelog
+* Wed Dec 04 2013 Evgeny Sinelnikov <sin@altlinux.ru> 4.3.4-alt1
+- Update to new release
+
+* Thu Nov 21 2013 Evgeny Sinelnikov <sin@altlinux.ru> 4.3.2-alt1
+- Update to new release of stable branch 4.3
+
 * Wed Nov 20 2013 Evgeny Sinelnikov <sin@altlinux.ru> 4.2.18-alt1
 - Update to last release of stable branch 4.2
 

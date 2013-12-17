@@ -8,9 +8,9 @@
 %define net_module_name	vboxnetflt
 %define net_module_adaptor_name	vboxnetadp
 
-%define flavour		un-def
+%define flavour		led-ws
 BuildRequires(pre): rpm-build-kernel >= 0.100-alt1
-BuildRequires(pre): kernel-headers-modules-un-def
+BuildRequires(pre): kernel-headers-modules-led-ws
 
 %setup_kernel_module %flavour
 
