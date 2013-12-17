@@ -3,7 +3,7 @@ Name: readline5
 %define rl_patch 14
 %define srcname readline-%rl_version
 Version: %rl_version.%rl_patch
-Release: alt4
+Release: alt5
 
 Summary: A library for editing typed in command lines
 License: GPLv2+
@@ -134,6 +134,11 @@ popd
 %_libdir/*.a
 
 %changelog
+* Tue Dec 17 2013 Dmitry V. Levin <ldv@altlinux.org> 5.2.14-alt5
+- Converted internal sh_* functions into weak aliases,
+  to fix the problem described by Sergey Vlasov in
+  http://lists.altlinux.org/pipermail/sisyphus/2013-December/361840.html
+
 * Tue Nov 05 2013 Gleb F-Malinovskiy <glebfm@altlinux.org> 5.2.14-alt4
 - Packaged libreadline5 as a legacy library.
 
