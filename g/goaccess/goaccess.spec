@@ -1,14 +1,14 @@
 Summary: Is an open source real-time web log analyzer
 Name: goaccess
-Version: 0.6.1
-Release: alt1
+Version: 0.6.2
+Release: alt2
 Url: http://goaccess.prosoftcorp.com/
 Source: %name-%version.tar
 Packager: Valentin Rosavitskiy <valintinr@altlinux.org>
 License: GPLv2
 Group: Other
 
-BuildRequires: glib2-devel
+BuildRequires: glib2-devel libncurses-devel libGeoIP-devel
 
 %description
 GoAccess is an open source real-time web log analyzer
@@ -22,7 +22,7 @@ report on the fly.
 
 %build
 %autoreconf
-%configure
+%configure --enable-geoip
 %make
 
 %install
@@ -36,6 +36,12 @@ install -D -m 644 goaccess.1 %buildroot%_man1dir/goaccess.1
 %doc AUTHORS ChangeLog NEWS COPYING README TODO
 
 %changelog
+* Tue Dec 17 2013 Valentin Rosavitskiy <valintinr@altlinux.org> 0.6.2-alt2
+- Builded with geoip support
+
+* Fri Nov 08 2013 Valentin Rosavitskiy <valintinr@altlinux.org> 0.6.2-alt1
+- Builded for t6
+
 * Fri Aug 09 2013 Valentin Rosavitskiy <valintinr@altlinux.org> 0.6.1-alt1
 - New version
 
