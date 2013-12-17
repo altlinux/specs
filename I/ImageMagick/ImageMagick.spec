@@ -1,6 +1,6 @@
 %define mversion	6
 %define dversion	%mversion.8.7
-%define drelease	0
+%define drelease	10
 %define qlev		Q16
 %define mgkdir		ImageMagick
 %define soname		4
@@ -117,7 +117,7 @@ Documentation for %name
 
 %prep
 %setup -q -n %name-%dversion-%drelease
-%patch1 -p2
+#patch1 -p2
 touch config.rpath
 
 # XXX tests fail
@@ -222,6 +222,9 @@ mv %buildroot%_docdir/%name-6 %buildroot%_docdir/%name-%dversion
 %endif
 
 %changelog
+* Tue Dec 17 2013 Anton Farygin <rider@altlinux.ru> 6.8.7.10-alt1
+- new version
+
 * Fri Oct 11 2013 Anton Farygin <rider@altlinux.ru> 6.8.7.0-alt1
 - new version
 
