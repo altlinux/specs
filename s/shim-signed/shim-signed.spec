@@ -1,6 +1,6 @@
 Name: shim-signed
-Version: 0.2
-Release: alt2
+Version: 0.4
+Release: alt3
 
 Summary: UEFI RestrictedBoot shim signed by Microsoft
 License: BSD
@@ -33,9 +33,19 @@ mkdir -p %buildroot%_efi_bindir
 install -p *.efi %buildroot%_efi_bindir/
 
 %files
-%_efi_bindir/*.efi
+%attr(0644,root,root) %_efi_bindir/*.efi
 
 %changelog
+* Tue Dec 10 2013 Michael Shigorin <mike@altlinux.org> 0.4-alt3
+- added ALT signature
+
+* Fri Nov 22 2013 Michael Shigorin <mike@altlinux.org> 0.4-alt2
+- added fallback.efi
+- signed supplementary binaries with ALT key for versatility
+
+* Tue Nov 19 2013 Michael Shigorin <mike@altlinux.org> 0.4-alt1
+- ALT build
+
 * Thu Jan 10 2013 Michael Shigorin <mike@altlinux.org> 0.2-alt2
 - only makes sense for x86_64
 
