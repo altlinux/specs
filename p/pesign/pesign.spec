@@ -1,6 +1,6 @@
 Name: pesign
 Version: 0.109
-Release: alt3
+Release: alt4
 
 Summary: Signing tool for PE-COFF binaries
 License: GPLv2
@@ -72,6 +72,9 @@ fi
 %ghost %_runtimedir/pesign.pid
 
 %changelog
+* Mon Dec 16 2013 Michael Shigorin <mike@altlinux.org> 0.109-alt4
+- macros.pesign: implement in-place signing
+
 * Mon Dec 16 2013 Dmitry V. Levin <ldv@altlinux.org> 0.109-alt3
 - %%post: removed redundant systemd-tmpfiles invocation.
 
