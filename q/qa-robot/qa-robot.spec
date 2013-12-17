@@ -1,5 +1,5 @@
 Name: qa-robot
-Version: 0.3.5
+Version: 0.3.6
 Release: alt1
 
 Summary: Simple notification system
@@ -34,6 +34,11 @@ and (possibly) updated entries.  See qa-robot(1) for details.
 %_man1dir/*.*
 
 %changelog
+* Tue Dec 17 2013 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.3.6-alt1
+- rpmsodiff:
+  + Return 1 if packages differ (RH#1004450).
+  + Treat "A", "B", "V", and "i" symbols as "defs".
+
 * Fri Sep 13 2013 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.3.5-alt1
 - packages: canonicalize rpms directory and %%packager.
 - buildlog_deps: trim very long lines
