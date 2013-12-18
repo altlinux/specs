@@ -1,7 +1,7 @@
 
 Name: akonadi
 Version: 1.11.0
-Release: alt2
+Release: alt3
 
 Group: Databases
 Summary: An extensible cross-desktop storage service for PIM
@@ -196,6 +196,12 @@ install -m 0755 %SOURCE10 %buildroot/%_bindir/akonadi_mysql_install_db
 %_libdir/pkgconfig/*
 
 %changelog
+* Wed Dec 18 2013 Sergey V Turchin <zerg@altlinux.org> 1.11.0-alt3
+- update from 1.11 branch
+
+* Fri Dec 06 2013 Sergey V Turchin <zerg@altlinux.org> 1.11.0-alt1.M70P.1
+- built for M70P
+
 * Fri Dec 06 2013 Sergey V Turchin <zerg@altlinux.org> 1.11.0-alt2
 - don't start mysqlcheck detached only first time
 - update from 1.11 branch
