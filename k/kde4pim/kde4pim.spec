@@ -19,7 +19,7 @@
 %define bugfix 4
 Name: kde4pim
 Version: %major.%minor.%bugfix
-Release: alt1
+Release: alt2
 
 Group: Graphical desktop/KDE
 Summary: K Desktop Environment
@@ -1633,6 +1633,12 @@ based on kdepim.
 
 
 %changelog
+* Wed Dec 18 2013 Sergey V Turchin <zerg@altlinux.org> 4.11.4-alt2
+- update from 4.11 branch
+
+* Thu Dec 05 2013 Sergey V Turchin <zerg@altlinux.org> 4.11.4-alt0.M70P.1
+- built for M70P
+
 * Thu Dec 05 2013 Sergey V Turchin <zerg@altlinux.org> 4.11.4-alt1
 - new version
 
