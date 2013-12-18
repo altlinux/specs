@@ -1,7 +1,7 @@
 %define _name libqmi
 
 Name: %_name-glib
-Version: 1.6.0
+Version: 1.8.0
 Release: alt1
 
 Summary: QMI modem protocol helper library
@@ -20,7 +20,8 @@ BuildRequires: python-modules-json
 BuildRequires: gtk-doc help2man
 
 %description
-QMI modem protocol helper library
+libqmi is a glib-based library for talking to WWAN modems and devices
+which speak the Qualcomm MSM Interface (QMI) protocol.
 
 %package utils
 Summary: QMI command line utilities
@@ -74,10 +75,12 @@ make check
 
 %files
 %_libdir/*.so.*
+%_libexecdir/qmi-proxy
 
 %files utils
 %_bindir/*
-%_man1dir/qmicli.1.*
+%_man1dir/qmicli.1*
+%_man1dir/qmi-network.1*
 
 %files devel
 %_includedir/*
@@ -89,6 +92,10 @@ make check
 
 
 %changelog
+* Wed Dec 18 2013 Mikhail Efremov <sem@altlinux.org> 1.8.0-alt1
+- Update description.
+- Updated to 1.8.0.
+
 * Fri Sep 06 2013 Mikhail Efremov <sem@altlinux.org> 1.6.0-alt1
 - Build and package manpage for qmicli.
 - Updated to 1.6.0.
