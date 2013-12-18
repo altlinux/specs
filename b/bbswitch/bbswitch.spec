@@ -1,9 +1,9 @@
 Name: bbswitch
-Version: 0.7
+Version: 0.8
 Release: alt1
 
 Summary: kernel support for power management of nVidia GPU on Optimus enabled laptops.
-License: GPL
+License: GPL2+
 Group: System/Kernel and hardware
 
 URL: https://github.com/Bumblebee-Project/bbswitch.git
@@ -49,6 +49,9 @@ tar -cjf %kernel_srcdir/%name-%version.tar.bz2 %name-%version
 %doc NEWS README.md
 
 %changelog
+* Wed Dec 18 2013 Yuri N. Sedunov <aris@altlinux.org> 0.8-alt1
+- 0.8
+
 * Fri Jul 05 2013 Yuri N. Sedunov <aris@altlinux.org> 0.7-alt1
 - updated to v0.7 tag
 
