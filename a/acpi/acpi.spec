@@ -1,5 +1,5 @@
 Name: acpi
-Version: 1.6
+Version: 1.7
 Release: alt1
 
 Summary: Command-line ACPI Client
@@ -29,6 +29,9 @@ suspending, only displays information about ACPI devices.
 %_man1dir/*
 
 %changelog
+* Wed Dec 18 2013 Yuri N. Sedunov <aris@altlinux.org> 1.7-alt1
+- 1.7
+
 * Sun Jan 15 2012 Victor Forsiuk <force@altlinux.org> 1.6-alt1
 - 1.6
 
