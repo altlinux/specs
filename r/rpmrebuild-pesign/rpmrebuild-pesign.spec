@@ -1,5 +1,5 @@
 Name: rpmrebuild-pesign
-Version: 0.2
+Version: 0.2.1
 Release: alt1
 
 Summary: Signer for packages containing PE format files
@@ -29,6 +29,9 @@ install -pm755 pesign-change-{files,spec}.sh \
 %_libexecdir/rpmrebuild/plugins/pesign*
 
 %changelog
+* Thu Dec 19 2013 Dmitry V. Levin <ldv@altlinux.org> 0.2.1-alt1
+- Fixed a typo in the latest fix.
+
 * Wed Dec 18 2013 Dmitry V. Levin <ldv@altlinux.org> 0.2-alt1
 - Fixed %%sourcerpm tag clobbering problem.
 
