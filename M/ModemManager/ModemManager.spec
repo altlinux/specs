@@ -7,16 +7,18 @@
 
 %def_with qmi
 %def_with mbim
+%def_enable introspection
+%def_disable vala
 
 Name: ModemManager
-Version: 1.0.0
-Release: alt2%git_date
+Version: 1.1.900
+Release: alt1%git_date
 License: %gpl2plus
 Group: System/Configuration/Networking
 Summary: Mobile broadband modem management service
-Url: http://gitorious.org/projects/modemmanager
+Url: http://cgit.freedesktop.org/ModemManager/ModemManager/
 Source: %name-%version.tar
-Patch0: %name-%version-%release.patch
+Patch: %name-%version-%release.patch
 
 Requires: dbus >= %dbus_version
 
@@ -26,10 +28,12 @@ BuildRequires: libdbus-glib-devel
 BuildRequires: libgudev-devel >= %libgudev_version
 %{?_with_qmi:BuildRequires: libqmi-glib-devel}
 %{?_with_mbim:BuildRequires: libmbim-glib-devel}
+%{?_enable_introspection:BuildRequires: gobject-introspection-devel}
+%{?_enable_vala:BuildRequires: vala-tools}
 BuildRequires: intltool
 BuildRequires: ppp-devel
 BuildRequires: libpolkit-devel
-BuildRequires: gtk-doc dia
+BuildRequires: gtk-doc
 
 # For tests
 BuildRequires: /dev/pts
@@ -84,9 +88,36 @@ BuildArch: noarch
 %description -n libmm-glib-devel-doc
 %summary
 
+%package -n libmm-glib-gir
+Summary: GObject introspection data for the ModemManager
+Group: System/Libraries
+Requires: libmm-glib = %version-%release
+
+%description -n libmm-glib-gir
+%summary
+
+%package -n libmm-glib-gir-devel
+Summary: GObject introspection devel data for the ModemManager
+Group: System/Libraries
+BuildArch: noarch
+Requires: libmm-glib-gir = %version-%release
+Requires: libmm-glib-devel = %version-%release
+
+%description -n libmm-glib-gir-devel
+%summary
+
+%package -n libmm-glib-vala
+Summary: Vala bindings for the ModemManager
+Group: Development/Other
+BuildArch: noarch
+Requires: libmm-glib-devel = %version-%release
+
+%description -n libmm-glib-vala
+%summary
+
 %prep
 %setup -n %name-%version
-%patch0 -p1
+%patch -p1
 
 %build
 %autoreconf
@@ -97,8 +128,9 @@ BuildArch: noarch
 	--with-systemdsystemunitdir=%_unitdir \
 	%{subst_with qmi} \
 	%{subst_with mbim} \
-	--enable-gtk-doc \
-	--with-tests
+	%{subst_enable introspection} \
+	%{subst_enable vala} \
+	--enable-gtk-doc
 
 %make_build
 
@@ -162,7 +194,31 @@ fi
 %files -n libmm-glib-devel-doc
 %doc %_datadir/gtk-doc/html/libmm-glib
 
+%if_enabled introspection
+%files -n libmm-glib-gir
+%_libdir/girepository-1.0/ModemManager-1.0.typelib
+
+%files -n libmm-glib-gir-devel
+%_datadir/gir-1.0/ModemManager-1.0.gir
+%endif
+
+%if_enabled vala
+%files -n libmm-glib-vala
+%_datadir/vala/vapi/*
+%endif
+
 %changelog
+* Wed Dec 18 2013 Mikhail Efremov <sem@altlinux.org> 1.1.900-alt1
+- Fixes from upstream git:
+  + iface-modem: fix crash in
+    wait_for_final_state_context_complete_and_free.
+  + broadband-modem-qmi: fix segfault when using AT-fallback mode
+    for messaging.
+- Enable gobject-introspection.
+- Drop dia from BR.
+- Fix URL.
+- Updated to 1.1.900 (1.2-rc1).
+
 * Fri Sep 06 2013 Mikhail Efremov <sem@altlinux.org> 1.0.0-alt2
 - Rebuild with libqmi-glib-1.6.0.
 
