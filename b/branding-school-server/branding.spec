@@ -4,14 +4,19 @@
 %define Theme Server
 %define codename Aquila chrysaetos
 %define variants altlinux-backup-server altlinux-desktop altlinux-gnome-desktop altlinux-kdesktop altlinux-lite altlinux-lxdesktop altlinux-office-desktop altlinux-office-server altlinux-school-server altlinux-sisyphus altlinux-spt altlinux-tablet altlinux-workbench informika-schoolmaster ivk-chainmail lxde-desktop lxde-school-lite Platform6-server-light school-junior school-lite school-master school-server school-teacher school-terminal simply-linux sisyphus-server-light altlinux-centaurus
-%define status альфа
-%define status_en alpha
-%define distro_name ALT Linux 6.9.9 School Server (alpha)
-%define distro_name_ru Альт Линукс 6.9.9 Школьный Сервер (альфа)
+%define status бета
+%define status_en beta
+%define distro_name ALT Linux 7.0.2%status_en School Server
+%define distro_name_ru Альт Линукс 7.0.2%status Школьный Сервер
+
+%define design_graphics_abi_epoch 0
+%define design_graphics_abi_major 12
+%define design_graphics_abi_minor 0
+%define design_graphics_abi_bugfix 0
 
 Name: branding-%brand-%theme
 Version: 6.9.9 
-Release: alt4
+Release: alt5
 BuildArch: noarch
 
 BuildRequires: cpio gfxboot >= 4 fonts-ttf-dejavu fonts-ttf-droid
@@ -246,6 +251,7 @@ Conflicts: indexhtml-school-server
 Conflicts: branding-altlinux-backup-server-indexhtml
 
 Requires: xdg-utils 
+Requires: docs-school-server
 Requires(post): indexhtml-common
 
 %description indexhtml
@@ -499,6 +505,10 @@ subst 's/#theme-name=/theme-name=Clearlooks-Phenix/' /etc/lightdm/lightdm-gtk-gr
 %config %_localstatedir/ldm/.pam_environment
 
 %changelog
+* Tue Dec 17 2013 Andrey Cherepanov <cas@altlinux.org> 6.9.9-alt5
+- indexhtml requires docs-school-server
+- beta version
+
 * Thu Dec 05 2013 Andrey Cherepanov <cas@altlinux.org> 6.9.9-alt4
 - Pack wide wallpaper and product logo
 - Fix favicon and logo width in Alterator web-interface
