@@ -1,7 +1,7 @@
 %define _name libmbim
 
 Name: %_name-glib
-Version: 1.4.0
+Version: 1.6.0
 Release: alt1
 
 Summary: MBIM modem protocol helper library
@@ -17,7 +17,7 @@ BuildRequires(pre): rpm-build-licenses
 
 BuildRequires: glib2-devel libgio-devel libgudev-devel
 BuildRequires: python-modules-json
-BuildRequires: gtk-doc
+BuildRequires: gtk-doc help2man
 
 %description
 The Mobile Broadband Interface Model (MBIM) is a new standard
@@ -61,6 +61,7 @@ This package contains development documentation for %name
 %patch -p1
 touch README ChangeLog
 
+
 %build
 %autoreconf
 %configure \
@@ -68,6 +69,9 @@ touch README ChangeLog
 	--enable-gtk-doc \
 	--with-tests
 %make_build
+
+# Fix mbimcli name in the man page
+sed -i 's;lt\\-mbimcli;mbimcli;' docs/man/mbimcli.1
 
 %install
 %makeinstall_std
@@ -80,6 +84,7 @@ make check
 
 %files utils
 %_bindir/*
+%_man1dir/*
 
 %files devel
 %_includedir/*
@@ -91,6 +96,9 @@ make check
 
 
 %changelog
+* Wed Dec 18 2013 Mikhail Efremov <sem@altlinux.org> 1.6.0-alt1
+- Updated to 1.6.0.
+
 * Wed Jul 03 2013 Mikhail Efremov <sem@altlinux.org> 1.4.0-alt1
 - Updated to 1.4.0.
 
