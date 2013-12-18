@@ -3,7 +3,7 @@
 
 Name: ilmbase
 Version: 2.1.0
-Release: alt1
+Release: alt2
 
 %define common %name%libsover-common
 %define libhalf libhalf%libsover
@@ -27,11 +27,11 @@ Obsoletes: %rname < %version-%release
 
 Source: %name-%version.tar
 # FC
-Patch1: ilmbase-1.0.3-pkgconfig.patch
-Patch2: ilmbase-2.0-1-arm.patch
+Patch1: ilmbase-2.0-1-arm.patch
 # ALT
 Patch10: ilmbase-2.1.0-alt-linking.patch
 Patch11: ilmbase-2.1.0-alt-cmakefiles.patch
+Patch12: ilmbase-2.1.0-alt-pkgconfig.patch
 
 # Automatically added by buildreq on Wed Apr 20 2011 (-bi)
 # optimized out: elfutils libGL-devel libstdc++-devel pkg-config
@@ -113,9 +113,9 @@ developing applications with %name
 %prep
 %setup -q -n %name-%version
 %patch1 -p1
-%patch2 -p1
 %patch10 -p1
 %patch11 -p1
+%patch12 -p1
 
 
 %build
@@ -166,6 +166,9 @@ done
 
 
 %changelog
+* Wed Dec 18 2013 Sergey V Turchin <zerg@altlinux.org> 2.1.0-alt2
+- fix pkgconfig file
+
 * Thu Dec 12 2013 Sergey V Turchin <zerg@altlinux.org> 2.1.0-alt1
 - new version
 
