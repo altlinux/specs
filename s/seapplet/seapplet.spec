@@ -1,6 +1,6 @@
 Name: seapplet
-Version: 0.2.0
-Release: alt1
+Version: 0.3.3
+Release: alt1.1
 
 Summary: Applet for selinux
 License: GPL
@@ -43,6 +43,31 @@ install -m644 %name.desktop %buildroot/%_sysconfdir/xdg/autostart/%name.desktop
 
 
 %changelog
+* Wed Dec 18 2013 Timur Aitov <timonbl4@altlinux.org> 0.3.3-alt1.1
+- send to build
+
+* Fri Sep 20 2013 Andrey Kolotov <qwest@altlinux.org> 0.3.3-alt1
+- lowlevel category print and check in tray by default
+
+* Tue Sep 18 2013 Andrey Kolotov <qwest@altlinux.org> 0.3.2-alt1
+- by default lowlevel range instead of s0
+
+* Fri Sep 13 2013 Andrey Kolotov <qwest@altlinux.org> 0.3.1-alt1
+- fix bug number in pid file
+
+* Thu Sep 12 2013 Andrey Kolotov <qwest@altlinux.org> 0.3.0-alt1
+- new algorithm based on shmget().
+- not used files in /dev/shm/
+- used pid files in /tmp/secure/
+- rewritten function:
+  * Tray::SaveTip()
+  * Tray::SaveTip_destroy()
+  * SaveTip_destroy()
+  * Policity_read()
+- new function:
+  * Pidfile_create()
+  * Pidfile_get()
+
 * Wed Jun 19 2013 Timur Aitov <timonbl4@altlinux.org> 0.2.0-alt1
 - print color code
 
