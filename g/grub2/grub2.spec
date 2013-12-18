@@ -1,6 +1,6 @@
 Name: grub2
 Version: 2.00
-Release: alt18
+Release: alt20
 
 Summary: GRand Unified Bootloader
 License: GPL
@@ -42,6 +42,7 @@ Packager: Michael Shigorin <mike@altlinux.org>
 BuildRequires: flex fonts-bitmap-misc fonts-ttf-dejavu libfreetype-devel python-modules ruby autogen
 BuildRequires: liblzma-devel help2man zlib-devel
 BuildRequires: libdevmapper-devel
+BuildRequires: pesign >= 0.109-alt4
 BuildRequires: rpm-macros-uefi
 
 # fonts: choose one
@@ -71,9 +72,6 @@ Requires: gettext
 %if ! 0%{?efi}
 %define efi %ix86 x86_64 ia64
 %endif
-
-# actually ifarch x86_64
-BuildRequires: sbsigntools alt-uefi-keys-private
 
 %ifarch %ix86
 %global grubefiarch i386-efi
@@ -109,19 +107,12 @@ Provides: grub2 = %version-%release
 Obsoletes: grub2 < %version-%release
 
 %package efi
-Summary: GRand Unified Bootloader (signed EFI variant)
+Summary: GRand Unified Bootloader (UEFI variant)
 Group: System/Kernel and hardware
 Requires: %name-common = %version-%release
 %ifarch x86_64
 Requires: efibootmgr
-Provides: %name-efi-signed = %version-%release
-%endif
-
-%ifarch x86_64
-%package efi-unsigned
-Summary: GRand Unified Bootloader (non-signed UEFI variant)
-Group: System/Kernel and hardware
-Requires: %name-efi = %version-%release
+Obsoletes: %name-efi-unsigned
 %endif
 
 %define desc_generic \
@@ -151,24 +142,14 @@ This package provides PC BIOS support.
 %description efi
 %desc_generic
 
-This package provides EFI systems support.
+This package provides UEFI systems support.
 
-Please note that the default binary is signed; this shouldn't
+Please note that the official build is signed; this shouldn't
 intervene in any way but rather provides means to cope with
 UEFI SecureBoot (better described as Restricted Boot) firmware
 when one can't disable it easily, doesn't want to, or needs not to.
 
-%ifarch x86_64
-%description efi-unsigned
-%desc_generic
-
-This package provides EFI systems support.
-
-Please note that this binary is *not* signed, just in case.
-%endif
-
 %prep
-#setup
 %setup -b 5
 %patch0 -p1
 %patch1 -p1
@@ -274,13 +255,9 @@ cd ../%name-efi-%version
 install -pDm644 grub.efi %buildroot%_efi_bindir/grub.efi
 cd -
 
-# NB: UEFI GRUB2 image is signed by default to avoid install hassle;
-# non-signed PE is put alongside for those who like it that way
+# NB: UEFI GRUB2 image gets signed when build environment is set up that way
 %ifarch x86_64
-cp -a %buildroot%_efi_bindir/grub{,-unsigned}.efi
-# autocreates signed.manifest
-%_efi_sign %buildroot%_efi_bindir/grub.efi
-cp -a %buildroot%_efi_bindir/grub{-signed,}.efi
+%pesign -s -i %buildroot%_efi_bindir/grub.efi
 %endif
 
 # Remove headers
@@ -343,18 +320,14 @@ rm -f %buildroot%_libdir/grub-efi/*/*.h
 
 %ifarch %efi
 %ifarch x86_64
-%files -f signed.manifest efi
+%files efi
+%_efi_bindir/grub.efi
 %else
 %files efi
 %endif
 %_efi_bindir/grub.efi
 %_libdir/grub/%grubefiarch
 %_sbindir/grub-efi-autoupdate
-
-%ifarch x86_64
-%files efi-unsigned
-%_efi_bindir/grub-unsigned.efi
-%endif
 %endif
 
 # see #27935: grub1 would have /usr/lib/grub -> /boot/grub symlink
@@ -384,6 +357,14 @@ grub-efi-autoupdate || {
 } >&2
 
 %changelog
+* Tue Dec 17 2013 Michael Shigorin <mike@altlinux.org> 2.00-alt20
+- updated pesign macros use, reworked binaries installation
+- prepare for production signing
+
+* Wed Nov 27 2013 Michael Shigorin <mike@altlinux.org> 2.00-alt19
+- rebuilt with current gnu-efi
+- pesign with ALT key
+
 * Tue Nov 26 2013 Michael Shigorin <mike@altlinux.org> 2.00-alt18
 - adapted debian patch to accept os-prober output for EFI binaries
   (see also RH#972355, RH#873207, deb#698914)
