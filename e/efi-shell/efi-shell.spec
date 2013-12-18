@@ -1,6 +1,6 @@
 Name: efi-shell
 Version: 2.0
-Release: alt2
+Release: alt4
 
 Summary: Native UDK implementations of UEFI Shell 2.0
 License: BSD-like
@@ -18,35 +18,30 @@ Packager: Michael Shigorin <mike@altlinux.org>
 ExclusiveArch: x86_64
 
 BuildRequires: rpm-macros-uefi
-BuildRequires: sbsigntools alt-uefi-keys-private
+BuildRequires: pesign >= 0.109-alt4
+
+Obsoletes: efi-shell-signed
+
+AutoReqProv: no
 
 Summary(pl.UTF-8): Natywne implementacje UDK powłoki UEFI Shell 2.0
 
 %description
 Native UDK implementations of UEFI Shell 2.0 prebuilt binaries.
 
+Please note that the official build is signed; this shouldn't
+intervene in any way but rather provides means to cope with
+UEFI SecureBoot (better described as Restricted Boot) firmware
+when one can't disable it easily, doesn't want to, or needs not to.
+
 %description -l pl.UTF-8
 Natywne implementacje UDK powłoki UEFI Shell 2.0.
-
-%package signed
-Summary: Native UDK implementations of UEFI Shell 2.0 (signed variant)
-Group: System/Kernel and hardware
-Requires: %name = %version-%release
-
-%description signed
-Native UDK implementations of UEFI Shell 2.0 prebuilt binaries.
-
-This package provides means to cope with UEFI SecureBoot
-(better described as Restricted Boot) firmware when one
-can't disable it easily, doesn't want to, or needs not to.
 
 %prep
 
 %install
 install -pDm644 %SOURCE0 %buildroot%_efi_bindir/shell.efi
-
-# autocreates signed.manifest
-%_efi_sign %buildroot%_efi_bindir/shell.efi
+%pesign -s -i %buildroot%_efi_bindir/shell.efi
 
 install %SOURCE1 %SOURCE2 %SOURCE3 .
 
@@ -54,12 +49,18 @@ install %SOURCE1 %SOURCE2 %SOURCE3 .
 %doc License.txt ReadMe.txt Contributions.txt
 %_efi_bindir/shell.efi
 
-%files -f signed.manifest signed
-
 # TODO:
 # - native EDK build, anyone?
 
 %changelog
+* Tue Dec 17 2013 Michael Shigorin <mike@altlinux.org> 2.0-alt4
+- updated pesign macros use, reworked binaries installation
+- prepare for production signing
+
+* Fri Nov 22 2013 Michael Shigorin <mike@altlinux.org> 2.0-alt3
+- pesign with ALT key
+- turn automated R:/P: search off as there are none
+
 * Sun Jan 20 2013 Michael Shigorin <mike@altlinux.org> 2.0-alt2
 - added signed subpackage
 - dropped ia32
