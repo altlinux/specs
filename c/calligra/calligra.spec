@@ -10,7 +10,7 @@
 
 Name: calligra
 Version: 2.7.5
-Release: alt1
+Release: alt2
 Epoch: 0
 %define libname lib%name
 
@@ -338,6 +338,8 @@ cp -ar %SOURCE1 cmake/modules/
 %_K4lib/webshape.so
 %_K4lib/calligraimagethumbnail.so
 #%_K4lib/threedshape.so
+%_K4lib/powerpointimport.*
+%_K4lib/pptximport.*
 %_K4apps/calligra/
 %_K4apps/koproperty/
 %_K4xdg_mime/msooxml-all.xml
@@ -362,6 +364,8 @@ cp -ar %SOURCE1 cmake/modules/
 %_K4srv/textvariables.desktop
 %_K4srv/thesaurustool.desktop
 %_K4srv/calligra_odg_thumbnail.desktop
+%_K4srv/kpresenter_powerpoint_import.desktop
+%_K4srv/kpresenter_pptx_import.desktop
 #%_K4srv/threedshape.desktop
 %_K4srvtyp/calligradb_driver.desktop
 %_K4srvtyp/calligra_application.desktop
@@ -472,13 +476,12 @@ cp -ar %SOURCE1 cmake/modules/
 %_K4lib/kpr_pageeffect_*.so
 %_K4lib/kpr_shapeanimation_*.so
 #%_K4lib/Filterkpr2odf.so
-%_K4lib/powerpointimport.*
-%_K4lib/pptximport.*
 %_K4apps/stage/
 %_K4conf/stagerc
 %_K4doc/en/stage/
-%_K4srv/kpr*.desktop
-%_K4srvtyp/kpr*.desktop
+%_K4srv/kpr_*.desktop
+%_K4srv/kprvariables.desktop
+%_K4srvtyp/kpr_*.desktop
 %_K4srvtyp/presentationeventaction.desktop
 %_K4srvtyp/scripteventaction.desktop
 %_K4tmpl/Presentation.*
@@ -641,6 +644,9 @@ cp -ar %SOURCE1 cmake/modules/
 %_K4libdir/lib*.so.*
 
 %changelog
+* Thu Dec 19 2013 Sergey V Turchin <zerg@altlinux.org> 0:2.7.5-alt2
+- move ppt import modules into core subpackage
+
 * Mon Dec 09 2013 Sergey V Turchin <zerg@altlinux.org> 0:2.7.5-alt1
 - new version
 
