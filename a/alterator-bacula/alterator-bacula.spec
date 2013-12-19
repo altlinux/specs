@@ -1,5 +1,5 @@
 Name: alterator-bacula
-Version: 1.0
+Version: 1.1
 Release: alt1
 
 Source:%name-%version.tar
@@ -23,6 +23,7 @@ Requires: passwdqc-utils
 Requires: bacula-director-mysql
 Requires: MySQL-server-control
 Requires: mysql-server
+Requires: mysql-client
 Conflicts: alterator-lookout < 2.1-alt1
 Conflicts: alterator-fbi < 5.20-alt1
 
@@ -68,24 +69,34 @@ mkdir -p %buildroot%hookdir
 install -pm755 postinstall.d/*.sh %buildroot%hookdir/
 
 %post
+mkdir -m 0750 /srv/backup
+chown -R bacula:bacula /srv/backup
 /etc/init.d/alteratord restart
 alterator-cmdline /bacula-director action init
 
 %files
 %config(noreplace) %_sysconfdir/alterator/bacula
 %_datadir/alterator/ui/*
-%exclude %_datadir/alterator/ui/bacula/local-backup/
+%_datadir/alterator/ui/bacula/local-backup/
 %_alterator_backend3dir/*
-%exclude %_alterator_backend3dir/bacula-local-backup
+%_alterator_backend3dir/bacula-local-backup
 %_datadir/alterator/applications/*
-%exclude %_datadir/alterator/applications/bacula-local-backup.desktop
+%_datadir/alterator/applications/bacula-local-backup.desktop
 %_datadir/alterator/steps/*
 %_datadir/alterator/type/*
 %_bindir/*
+%_sbindir/*
 %hookdir/*
 %altdir/desktop-directories/*
 
 %changelog
+* Thu Dec 19 2013 Andrey Kolotov <qwest@altlinux.org> 1.1-alt1
+- Recovered local backup.
+
+* Wed Dec 18 2013 Andrey Kolotov <qwest@altlinux.org> 1.0-alt2
+- Added script from package alterator-distro-backup-server:
+  * in sbin/bacula-reset-settings.
+
 * Mon Dec 16 2013 Andrey Kolotov <qwest@altlinux.org> 1.0-alt1
 - Remove options with mysql database bacula
 - Create mysql database after install package
