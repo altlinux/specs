@@ -3,7 +3,7 @@
 %{!?x86_64:%define x86_64 x86_64}
 
 Name: kernel-src-%mname
-Version: 4.2.20
+Version: 4.3.6
 Release: alt1
 Summary: Linux VirtualBox guest modules sources
 License: GPLv2
@@ -35,6 +35,9 @@ tar -C .. -cJf %kernel_srcdir/%mname-%version.tar.xz %mname-%version
 
 
 %changelog
+* Thu Dec 19 2013 Led <led@altlinux.ru> 4.3.6-alt1
+- 4.3.6
+
 * Sat Nov 30 2013 Led <led@altlinux.ru> 4.2.20-alt1
 - 4.2.20
 

@@ -25,7 +25,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.10.24
-Release: alt8
+Release: alt9
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -148,8 +148,8 @@ Release: alt8
 #Extra_modules kvm 3.10.1
 #Extra_modules nvidia 331.20
 %Extra_modules fglrx 13.25.18
-%Extra_modules vboxhost 4.2.20
-%Extra_modules vboxguest 4.2.20
+%Extra_modules vboxhost 4.3.6
+%Extra_modules vboxguest 4.3.6
 %Extra_modules knem 1.1.0
 %Extra_modules exfat 1.2.6
 %Extra_modules ipt_NETFLOW 1.8.2
@@ -1792,6 +1792,10 @@ done)
 
 
 %changelog
+* Thu Dec 19 2013 Led <led@altlinux.ru> 3.10.24-alt9
+- vboxguest 4.3.6
+- vboxhost 4.3.6
+
 * Thu Dec 19 2013 Led <led@altlinux.ru> 3.10.24-alt8
 - updated:
   + fix-virt-kvm--kvm (CVE-2013-4587, CVE-2013-6367, CVE-2013-6368, CVE-2013-6376)
