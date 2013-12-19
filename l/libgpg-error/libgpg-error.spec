@@ -1,7 +1,7 @@
 %def_enable static
 
 Name: libgpg-error
-Version: 1.11
+Version: 1.12
 Release: alt1
 
 Group: System/Libraries
@@ -83,6 +83,9 @@ install -m 0644 %SOURCE2 src/
 %endif
 
 %changelog
+* Thu Dec 19 2013 Sergey V Turchin <zerg@altlinux.org> 1.12-alt1
+- new version
+
 * Mon Feb 25 2013 Sergey V Turchin <zerg@altlinux.org> 1.11-alt1
 - new version
 
