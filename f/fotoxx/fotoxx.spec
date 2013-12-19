@@ -1,32 +1,37 @@
 Name: fotoxx
-Version: 12.04
-Release: alt1.1
+Version: 13.12
+Release: alt1
 
 Summary: Software for digital image editing, HDR composites, and panoramas
 License: GPLv3+
 Group: Graphics
 
-Url: http://kornelix.squarespace.com/fotoxx
-Source: http://kornelix.squarespace.com/storage/downloads/fotoxx-%version.tar.gz
+Url: http://www.kornelix.com/fotoxx.html
+Source: fotoxx-%version.tar.gz
 Source1: fotoxx.desktop
 Source2: fotoxx16.png
 Source3: fotoxx32.png
-Patch1: fotoxx-11.11.1-install.patch
+Patch1: fotoxx-13.12-install.patch
 Patch2: fotoxx-12.01-helpdir.patch
 
-# Automatically added by buildreq on Sat Mar 17 2012
-BuildRequires: gcc-c++ libgtk+3-devel libtiff-devel perl-Image-ExifTool ufraw xdg-utils
+Requires: %name-data = %version-%release
 
 # fotoxx is able to use exiftool and ufraw to extend functionality
-Requires: exiftool ufraw
+Requires: exiftool ufraw dcraw
 
 # fotoxx uses exiv2 executable to read EXIF data:
 Requires: exiv2
 # fotoxx uses xdg-open executable to launch HTML docs viewer:
 Requires: xdg-utils
 
+# needed to write images to CD/DVD
+Requires: brasero
+
 Provides: fotox
 Obsoletes: fotox
+
+BuildRequires: gcc-c++ libgtk+3-devel libtiff-devel liblcms2-devel
+BuildRequires: perl-Image-ExifTool ufraw xdg-utils
 
 %description
 Fotox is a program for improving digital photos. Navigate through large image
@@ -38,9 +43,17 @@ underlying brightness levels. Reduce fog or haze by removing "whiteness" and
 intensifying colors. Rotate an image (level a tilted image or turn 90 degrees).
 Remove the red-eye effect from electronic flash photos. Resize or crop an image.
 
+%package data
+Summary: Arch independent files for Fotox
+Group: Graphics
+BuildArch: noarch
+
+%description data
+This package provides noarch data needed for Fotox to work.
+
 %prep
 %setup
-%patch1 -p1
+%patch1
 %patch2 -p1
 
 %build
@@ -62,15 +75,25 @@ install -pD %_sourcedir/fotoxx32.png %buildroot%_niconsdir/fotoxx.png
 install -pD %_sourcedir/fotoxx16.png %buildroot%_miconsdir/fotoxx.png
 
 %files
-%_bindir/*
+%_bindir/%name
+
+%files data
 %_desktopdir/*
 %_miconsdir/*
 %_niconsdir/*
 %_liconsdir/*
-%_datadir/fotoxx
+%_datadir/fotoxx/
 %_man1dir/*
 
 %changelog
+* Thu Dec 19 2013 Yuri N. Sedunov <aris@altlinux.org> 13.12-alt1
+- 13.12
+
+* Sun Apr 21 2013 Yuri N. Sedunov <aris@altlinux.org> 13.04.1-alt1
+- 13.04.1
+- updated buildreqs
+- arch independent data moved to separate subpackage
+
 * Thu Oct 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 12.04-alt1.1
 - Rebuilt with libtiff5
 
