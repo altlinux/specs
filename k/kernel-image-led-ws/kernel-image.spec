@@ -25,7 +25,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.10.24
-Release: alt7
+Release: alt8
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -1792,6 +1792,10 @@ done)
 
 
 %changelog
+* Thu Dec 19 2013 Led <led@altlinux.ru> 3.10.24-alt8
+- updated:
+  + fix-virt-kvm--kvm (CVE-2013-4587, CVE-2013-6367, CVE-2013-6368, CVE-2013-6376)
+
 * Tue Dec 17 2013 Led <led@altlinux.ru> 3.10.24-alt7
 - added:
   + fix-drivers-video--fb
