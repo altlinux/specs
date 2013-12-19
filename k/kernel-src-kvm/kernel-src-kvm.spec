@@ -1,7 +1,7 @@
 %define mname kvm
 Name: kernel-src-%mname
-Version: 3.10.1
-Release: alt3
+Version: 3.10.21
+Release: alt1
 Summary: KVM modules sources for Linux kernel
 Group: Development/Kernel
 BuildArch: noarch
@@ -33,6 +33,14 @@ tar -C .. --transform "s/^$D/%mname-%version/" -cJf %buildroot%kernel_src/%mname
 
 
 %changelog
+* Thu Dec 19 2013 Led <led@altlinux.ru> 3.10.21-alt1
+- 3.10.21
+- updates from linux-3.10.25:
+  + CVE-2013-4587
+  + CVE-2013-6367
+  + CVE-2013-6368
+  + CVE-2013-6376
+
 * Mon Dec 02 2013 Led <led@altlinux.ru> 3.10.1-alt3
 - x86: fix emulation of "movzbl %%bpl, %%eax"
 - IOMMU: hva align mapping page size
