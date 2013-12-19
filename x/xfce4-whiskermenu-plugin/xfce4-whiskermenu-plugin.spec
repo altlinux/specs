@@ -1,4 +1,4 @@
-%define git_date .git20131203
+%define git_date .git20131219
 #define git_date %nil
 
 Name: xfce4-whiskermenu-plugin
@@ -53,6 +53,9 @@ keeps a list of the last ten applications that you've launched from it.
 %_man1dir/*.1.*
 
 %changelog
+* Thu Dec 19 2013 Mikhail Efremov <sem@altlinux.org> 1.2.0-alt1.git20131219
+- Upstream git snapshot (master branch).
+
 * Tue Dec 03 2013 Mikhail Efremov <sem@altlinux.org> 1.2.0-alt1.git20131203
 - Fix Xfce name (XFCE -> Xfce).
 - Upstream git snapshot (master branch).
