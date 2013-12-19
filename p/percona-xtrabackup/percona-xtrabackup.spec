@@ -2,15 +2,15 @@
 
 Summary: XtraBackup online backup for MySQL / InnoDB
 Name: percona-xtrabackup
-Version: 2.1.5
-Release: alt2
+Version: 2.1.6
+Release: alt1
 Group: Databases
 License: GPLv2
 Packager: Evgenii Terechkov <evg@altlinux.org>
 Url: http://www.percona.com/software/percona-xtrabackup/
 
 Source: %name-%version.tar.gz
-Source1: PerconaXtraBackup-2.1.5.pdf
+Source1: PerconaXtraBackup-2.1.6.pdf
 
 Patch1: percona-xtrabackup-2.1.5-srv_buf_size.patch
 
@@ -70,9 +70,12 @@ install -m 755 innobackupex.1 %buildroot%_man1dir
 %_bindir/xtrabackup_55
 %_bindir/xtrabackup_56
 %_man1dir/*.1.*
-%doc contrib/backup_mysql_cron.sh PerconaXtraBackup-2.1.5.pdf
+%doc contrib/backup_mysql_cron.sh PerconaXtraBackup-2.1.6.pdf
 
 %changelog
+* Wed Dec 18 2013 Terechkov Evgenii <evg@altlinux.org> 2.1.6-alt1
+- 2.1.6
+
 * Mon Dec 16 2013 Terechkov Evgenii <evg@altlinux.org> 2.1.5-alt2
 - perl-podlators required for innobackupex
 
