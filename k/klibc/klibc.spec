@@ -1,6 +1,6 @@
 Name: klibc
-Version: 2.0.2
-Release: alt5
+Version: 2.0.3
+Release: alt1
 Summary: A minimal libc subset for use with initramfs
 License: BSD/GPL
 Group: System/Libraries
@@ -182,6 +182,9 @@ strip -g %buildroot%klibcdir/lib/libc.so
 
 
 %changelog
+* Thu Dec 19 2013 Led <led@altlinux.ru> 2.0.3-alt1
+- 2.0.3
+
 * Fri Nov 22 2013 Led <led@altlinux.ru> 2.0.2-alt5
 - removed unneeded 'false', 'true', 'kill' utils from utils-initramfs subpackage
   (already sh builtin)
