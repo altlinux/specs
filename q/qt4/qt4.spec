@@ -40,7 +40,7 @@
 %define minor	8
 %define bugfix	5
 %define beta	%nil
-%define rlz alt4
+%define rlz alt5
 %define phonon_ver 4.4.0
 
 Name: %rname%major
@@ -114,6 +114,7 @@ Patch502: qt-4.7.2-alt-ca-certificates-path.patch
 Patch503: qt-4.7.3-alt-qt-config-add-webkit.patch
 Patch504: qt-4.7.0-alt-fix-gl-loading.patch
 Patch505: qt-4.0.1-alt-iso_c_extension.patch
+Patch506: qt-4.8.5-alt-disable-mnemonic-menu-shortcuts.patch
 #
 Patch508: qt-4.7.4-alt-buildkey.patch
 Patch509: qt-4.7.0-alt-qtconfig_add_translator.patch
@@ -739,7 +740,7 @@ Install this package if you want to create RPM packages that use %name
 # upstream
 # security
 # KDE-QT
-%patch101 -p0
+#%patch101 -p0
 %patch102 -p0
 %patch103 -p0
 %patch104 -p0
@@ -769,6 +770,7 @@ Install this package if you want to create RPM packages that use %name
 %patch503 -p1
 %patch504 -p1
 %patch505 -p1
+%patch506 -p1
 #
 %patch508 -p1
 ###%patch509 -p1
@@ -1548,6 +1550,12 @@ install -m 644 %SOURCE104 %buildroot/%_iconsdir/hicolor/64x64/apps/%name.png
 %endif
 
 %changelog
+* Thu Dec 19 2013 Sergey V Turchin <zerg@altlinux.org> 4.8.5-alt5
+- disable mnemonic shortcuts in menus
+
+* Mon Dec 02 2013 Sergey V Turchin <zerg@altlinux.org> 4.8.5-alt3.M70P.2
+- built for M70P
+
 * Fri Nov 29 2013 Sergey V Turchin <zerg@altlinux.org> 4.8.5-alt4
 - don't apply patch for cups-1.6 printers discovery (ALT#29609)
 
