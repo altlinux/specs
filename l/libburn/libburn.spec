@@ -1,12 +1,12 @@
 Name: libburn
-Version: 1.2.6
+Version: 1.3.4
 Release: alt1
 
 Summary: CD/DVD-R/RW disc reading/writing library
 License: %gpl2plus
 Group: System/Libraries
 
-Url: http://libburnia.pykix.org/
+Url: http://libburnia-project.org
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
@@ -105,6 +105,10 @@ runs, though.
 %_man1dir/*
 
 %changelog
+* Fri Dec 20 2013 Michael Shigorin <mike@altlinux.org> 1.3.4-alt1
+- 1.3.4
+- updated Url:
+
 * Sun Feb 24 2013 Michael Shigorin <mike@altlinux.org> 1.2.6-alt1
 - 1.2.6
 - minor spec cleanup according to policy recommendations
