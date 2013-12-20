@@ -1,11 +1,11 @@
 %define policy_name altlinux
-%define date 20131211
+%define date 20131220
 %define seconf %_sysconfdir/selinux/config
 %define default_mode permissive
 
 Summary: SELinux %policy_name policy
 Name: selinux-policy-altlinux
-Version: 0.0.6
+Version: 0.0.7
 Release: alt1
 License: %distributable
 Group: System/Base
@@ -257,6 +257,9 @@ exit 0 # End of %%preun section
 %ghost %policy_conf/modules/active/modules/xorg.pp
 
 %changelog
+* Fri Dec 20 2013 Andriy Stepanov <stanv@altlinux.ru> 0.0.7-alt1
+- Build: 20131220
+
 * Wed Dec 11 2013 Andriy Stepanov <stanv@altlinux.ru> 0.0.6-alt1
 - Build: 20131211
 
