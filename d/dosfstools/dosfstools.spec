@@ -1,6 +1,6 @@
 Name: dosfstools
 Version: 3.0.24
-Release: alt1
+Release: alt2
 
 Summary: Utilities to create and check MS-DOS FAT filesystems
 License: GPL
@@ -8,7 +8,7 @@ Group: File tools
 
 Url: http://daniel-baumann.ch/software/dosfstools/
 Source: %name-%version.tar
-Patch0: %name-%version-%release.patch
+Patch: %name-%version-%release.patch
 
 Obsoletes: mkdosfs-ygg
 
@@ -27,11 +27,16 @@ code.
 а также dosfsck для проверки таких дисков на логические ошибки.
 
 %prep
-%setup -q
-%patch0 -p1
+%setup
+%patch -p1
 
 %build
-%make_build PREFIX=/
+%make_build \
+	PREFIX=/ \
+	CFLAGS="%optflags\
+		-D_LARGEFILE_SOURCE \
+		-D_FILE_OFFSET_BITS=64 \
+		-fno-strict-aliasing"
 
 %install
 %makeinstall PREFIX=%buildroot MANDIR=%buildroot%_mandir
@@ -42,6 +47,9 @@ code.
 %doc doc/*
 
 %changelog
+* Fri Dec 20 2013 Michael Shigorin <mike@altlinux.org> 3.0.24-alt2
+- synced build options with fedora (thx aen@)
+
 * Fri Dec 20 2013 Anton Farygin <rider@altlinux.ru> 3.0.24-alt1
 - new version
 
