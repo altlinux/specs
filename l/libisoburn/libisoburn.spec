@@ -1,12 +1,12 @@
 Name: libisoburn
-Version: 1.2.6
-Release: alt2
+Version: 1.3.4
+Release: alt1
 
 Summary: ISO9660 filesystem creation library
 License: GPLv2
 Group: System/Libraries
 
-Url: http://libburnia.pykix.org/
+Url: http://libburnia-project.org
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
@@ -122,6 +122,10 @@ fi
 %_bindir/xorriso-tcltk
 
 %changelog
+* Fri Dec 20 2013 Michael Shigorin <mike@altlinux.org> 1.3.4-alt1
+- 1.3.4
+- updated Url:
+
 * Wed Dec 11 2013 Michael Shigorin <mike@altlinux.org> 1.2.6-alt2
 - xorriso-tcltk moved to xorriso-x11 subpackage, shame on slow me!
 

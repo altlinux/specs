@@ -1,12 +1,12 @@
 Name: libisofs
-Version: 1.2.6
+Version: 1.3.4
 Release: alt1
 
 Summary: ISO9660 filesystem creation library
 License: %gpl2plus
 Group: System/Libraries
 
-Url: http://libburnia.pykix.org/
+Url: http://libburnia-project.org
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
@@ -56,6 +56,10 @@ libisofs is to be the foundation of our upcoming mkisofs emulation.
 %_pkgconfigdir/*.pc
 
 %changelog
+* Fri Dec 20 2013 Michael Shigorin <mike@altlinux.org> 1.3.4-alt1
+- 1.3.4
+- updated Url:
+
 * Sun Feb 24 2013 Michael Shigorin <mike@altlinux.org> 1.2.6-alt1
 - 1.2.6
 
