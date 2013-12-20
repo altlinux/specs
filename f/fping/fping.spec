@@ -1,6 +1,6 @@
 Name: fping
-Version: 3.4
-Release: alt2
+Version: 3.8
+Release: alt1
 
 Summary: %name - A tool to quickly ping N number of hosts to determine their reachability
 Summary(ru_RU.UTF-8): аналог ping для использования в скриптах.
@@ -61,6 +61,9 @@ chmod +x %buildroot%_controldir/fping*
 %doc README doc/README.1992 INSTALL ChangeLog COPYING
 
 %changelog
+* Fri Dec 20 2013 Sergey Y. Afonin <asy@altlinux.ru> 3.8-alt1
+- 3.8 (ALT 29657)
+
 * Fri May 17 2013 Sergey Y. Afonin <asy@altlinux.ru> 3.4-alt2
 - added "netadmin" facility for control(8), switched to "restricted"
   by default (ALT 22846#c1)
