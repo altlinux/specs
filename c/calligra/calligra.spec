@@ -10,7 +10,7 @@
 
 Name: calligra
 Version: 2.7.5
-Release: alt2
+Release: alt3
 Epoch: 0
 %define libname lib%name
 
@@ -147,7 +147,6 @@ Group: Office
 Summary: A full-featured presentation program
 Provides: koffice-kpresenter = %koffice_ver
 Obsoletes: koffice-kpresenter < %koffice_ver
-Requires: %name-okular-odp = %EVR
 Requires: %name-core = %EVR
 Requires: %libname = %EVR
 %description stage
@@ -250,8 +249,8 @@ Group: Graphics
 Summary: OpenDocument presenter support for okular
 Provides: koffice-okular-odp = %koffice_ver
 Obsoletes: koffice-okular-odp < %koffice_ver
-Requires: %name-core = %EVR
 Requires: %libname = %EVR
+Requires: %name-stage = %EVR
 Requires: kde4-okular
 %description okular-odp
 %summary.
@@ -338,8 +337,6 @@ cp -ar %SOURCE1 cmake/modules/
 %_K4lib/webshape.so
 %_K4lib/calligraimagethumbnail.so
 #%_K4lib/threedshape.so
-%_K4lib/powerpointimport.*
-%_K4lib/pptximport.*
 %_K4apps/calligra/
 %_K4apps/koproperty/
 %_K4xdg_mime/msooxml-all.xml
@@ -364,8 +361,6 @@ cp -ar %SOURCE1 cmake/modules/
 %_K4srv/textvariables.desktop
 %_K4srv/thesaurustool.desktop
 %_K4srv/calligra_odg_thumbnail.desktop
-%_K4srv/kpresenter_powerpoint_import.desktop
-%_K4srv/kpresenter_pptx_import.desktop
 #%_K4srv/threedshape.desktop
 %_K4srvtyp/calligradb_driver.desktop
 %_K4srvtyp/calligra_application.desktop
@@ -476,12 +471,13 @@ cp -ar %SOURCE1 cmake/modules/
 %_K4lib/kpr_pageeffect_*.so
 %_K4lib/kpr_shapeanimation_*.so
 #%_K4lib/Filterkpr2odf.so
+%_K4lib/powerpointimport.*
+%_K4lib/pptximport.*
 %_K4apps/stage/
 %_K4conf/stagerc
 %_K4doc/en/stage/
-%_K4srv/kpr_*.desktop
-%_K4srv/kprvariables.desktop
-%_K4srvtyp/kpr_*.desktop
+%_K4srv/kpr*.desktop
+%_K4srvtyp/kpr*.desktop
 %_K4srvtyp/presentationeventaction.desktop
 %_K4srvtyp/scripteventaction.desktop
 %_K4tmpl/Presentation.*
@@ -644,6 +640,9 @@ cp -ar %SOURCE1 cmake/modules/
 %_K4libdir/lib*.so.*
 
 %changelog
+* Fri Dec 20 2013 Sergey V Turchin <zerg@altlinux.org> 0:2.7.5-alt3
+- require stage for okular odp
+
 * Thu Dec 19 2013 Sergey V Turchin <zerg@altlinux.org> 0:2.7.5-alt2
 - move ppt import modules into core subpackage
 
