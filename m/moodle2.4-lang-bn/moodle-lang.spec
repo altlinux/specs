@@ -6,7 +6,7 @@
 %define packagetype lang
 %define packagename bn
 %define packagversion 2.4.0
-%define packagedate 201311141332
+%define packagedate 201312130546
 %define moodlebranch 2.4
 %define moodlepackagename %moodle_name%moodlebranch
 %define langname Bangla
@@ -57,6 +57,10 @@ cp -rp * %buildroot%moodle_langdir/
 %moodle_langdir/*
 
 %changelog
+* Fri Dec 20 2013 Cronbuild Service <cronbuild@altlinux.org> 2.4.0.201312130546-alt1
+- repocop cronbuild 20131220. At your service.
+- bn.zip build 2013-12-13 05:46 UTC
+
 * Fri Nov 15 2013 Cronbuild Service <cronbuild@altlinux.org> 2.4.0.201311141332-alt1
 - repocop cronbuild 20131115. At your service.
 - bn.zip build 2013-11-14 13:32 UTC
