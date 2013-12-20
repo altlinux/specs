@@ -1,6 +1,6 @@
 Name: libfreetype
 Version: 2.5.2
-Release: alt2
+Release: alt3
 
 Summary: A free and portable font rendering engine
 License: FTL or GPLv2+
@@ -134,8 +134,9 @@ mv %buildroot%develdocdir/{FTL.TXT,LICENSE.TXT,CHANGES.bz2} %buildroot%docdir/
 
 %set_verify_elf_method strict
 
-%triggerpostun devel -- %name-devel < 2.5.2-alt1
-rm -fr %_includedir/freetype2/freetype
+%triggerin devel -- %name-devel < 2.5.2-alt2
+[ ! -d %_includedir/freetype2/freetype ] || \
+	rm -fr %_includedir/freetype2/freetype
 
 %files
 %docdir
@@ -158,6 +159,9 @@ rm -fr %_includedir/freetype2/freetype
 %_bindir/ft*
 
 %changelog
+* Fri Dec 20 2013 Valery Inozemtsev <shrek@altlinux.ru> 2.5.2-alt3
+- %name-devel: real fixed problem upgrading
+
 * Wed Dec 11 2013 Valery Inozemtsev <shrek@altlinux.ru> 2.5.2-alt2
 - %name-devel: Fixed problem upgrading from 2.5.2 less (closes: #29648)
 
