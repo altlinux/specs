@@ -24,13 +24,13 @@
 %define flavour %base_flavour-%sub_flavour
 
 Name: kernel-image-%flavour
-Version: 3.10.24
-Release: alt10
+Version: 3.10.25
+Release: alt1
 
 %define kernel_req %nil
 %define kernel_prov %nil
 %define kernel_branch 3.10
-%define kernel_stable_version 24
+%define kernel_stable_version 25
 %define kernel_extra_version .%kernel_stable_version
 #define kernel_extra_version %nil
 
@@ -1792,6 +1792,11 @@ done)
 
 
 %changelog
+* Fri Dec 20 2013 Led <led@altlinux.ru> 3.10.25-alt1
+- 3.10.25
+- updated:
+  + fix-virt-kvm--kvm
+
 * Thu Dec 19 2013 Led <led@altlinux.ru> 3.10.24-alt10
 - removed:
   + feat-drivers-usb-usbip
