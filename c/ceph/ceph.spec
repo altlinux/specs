@@ -1,5 +1,5 @@
 Name: ceph
-Version: 0.71
+Version: 0.73
 Release: alt1
 Summary: User space components of the Ceph file system
 Group: System/Base
@@ -158,6 +158,8 @@ mkdir -p %buildroot%_sysconfdir/ceph/
 %_bindir/monmaptool
 %_bindir/osdmaptool
 %_bindir/ceph-authtool
+%_bindir/ceph-crush-location
+%_bindir/ceph_filestore_tool
 %_bindir/ceph-syn
 %_bindir/ceph-run
 %_bindir/ceph-mon
@@ -261,6 +263,12 @@ mkdir -p %buildroot%_sysconfdir/ceph/
 %python_sitelibdir_noarch/*
 
 %changelog
+* Fri Dec 20 2013 Alexei Takaseev <taf@altlinux.org> 0.73-alt1
+- 0.73
+
+* Fri Nov 08 2013 Alexei Takaseev <taf@altlinux.org> 0.72-alt1
+- 0.72
+
 * Mon Oct 21 2013 Alexei Takaseev <taf@altlinux.org> 0.71-alt1
 - 0.71
 
