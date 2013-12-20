@@ -1,8 +1,8 @@
 %def_disable gtk
 
 Name: libiodbc
-Version: 3.52.7
-Release: alt3
+Version: 3.52.8
+Release: alt1
 
 Group: System/Libraries
 Summary: The iODBC Driver Manager
@@ -137,7 +137,7 @@ currently maintained by OpenLink Software under a LGPL or BSD license
 find %buildroot/%_libdir -type f -name \*.so.\* | \
 while read l; do chrpath -d $l; done
 find %buildroot/%_bindir -type f -perm /0111 | \
-while read b; do chrpath -d $b; done
+while read b; do chrpath -d $b || : ; done
 
 
 %files
@@ -174,6 +174,9 @@ while read b; do chrpath -d $b; done
 
 
 %changelog
+* Fri Dec 20 2013 Sergey V Turchin <zerg@altlinux.org> 3.52.8-alt1
+- new version
+
 * Fri Jun 15 2012 Sergey V Turchin <zerg@altlinux.org> 3.52.7-alt3
 - rebuilt for debuginfo
 
