@@ -25,7 +25,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.10.24
-Release: alt9
+Release: alt10
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -1792,6 +1792,14 @@ done)
 
 
 %changelog
+* Thu Dec 19 2013 Led <led@altlinux.ru> 3.10.24-alt10
+- removed:
+  + feat-drivers-usb-usbip
+- added:
+  + fix-fs-btrfs
+  + feat-drivers-usb-host--ozwpan
+  + feat-drivers-usb-host-usbip
+
 * Thu Dec 19 2013 Led <led@altlinux.ru> 3.10.24-alt9
 - vboxguest 4.3.6
 - vboxhost 4.3.6
