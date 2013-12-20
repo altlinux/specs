@@ -6,7 +6,7 @@
 
 Name: paraview
 Version: 4.0.1
-Release: alt1
+Release: alt2
 Summary: Parallel visualization application
 License: BSD
 Group: Sciences/Other
@@ -123,6 +123,7 @@ sed -i 's|@CXX@|g++|' CMakeCache.txt
 sed -i 's|@CC@|gcc|' CMakeCache.txt
 %remove_optflags -O2
 %add_optflags -O1 -I%_libdir/hdf5-seq/include/netcdf
+%add_optflags -I%_includedir/freetype2
 FLAGS="%optflags -fno-strict-aliasing"
 cmake .. \
 				-DPARAVIEW_USE_MPI:BOOL=OFF \
@@ -205,6 +206,9 @@ rm -f %buildroot%_libdir/paraview/*.a
 %doc Documentation/*
 
 %changelog
+* Fri Dec 20 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.1-alt2
+- Fixed build
+
 * Thu Oct 03 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.1-alt1
 - Version 4.0.1 (without MPI)
 
