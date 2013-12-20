@@ -6,7 +6,7 @@
 %define packagetype lang
 %define packagename pt_br
 %define packagversion 2.1.0
-%define packagedate 201312051738
+%define packagedate 201312161654
 %define moodlebranch 2.1
 %define moodlepackagename %moodle_name%moodlebranch
 %define langname Portuguese (Brazil)
@@ -57,6 +57,10 @@ cp -rp * %buildroot%moodle_langdir/
 %moodle_langdir/*
 
 %changelog
+* Fri Dec 20 2013 Cronbuild Service <cronbuild@altlinux.org> 2.1.0.201312161654-alt1
+- repocop cronbuild 20131220. At your service.
+- pt_br.zip build 2013-12-16 16:54 UTC
+
 * Fri Dec 06 2013 Cronbuild Service <cronbuild@altlinux.org> 2.1.0.201312051738-alt1
 - repocop cronbuild 20131206. At your service.
 - pt_br.zip build 2013-12-05 17:38 UTC
