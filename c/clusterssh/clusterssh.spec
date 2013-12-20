@@ -1,6 +1,6 @@
 Name: clusterssh
-Version: 3.24
-Release: alt2.1
+Version: 3.28
+Release: alt1
 
 Summary: Run commands on multiple servers over ssh
 Group: Networking/Remote access
@@ -18,7 +18,7 @@ BuildPreReq: perl(POSIX.pm), perl(Sys/Hostname.pm), perl(Term/Cap.pm), perl(Tk.p
 BuildPreReq: perl(Tk/Dialog.pm), perl(Tk/LabEntry.pm), perl-X11-Protocol
 
 BuildArch: noarch
-BuildRequires: perl-Pod-Parser
+BuildRequires: perl-Pod-Parser perl-Pod-Checker
 
 %description
 ClusterSSH controls a number of xterm windows via
@@ -56,6 +56,10 @@ done
 %_datadir/applications/%name.desktop
 
 %changelog
+* Fri Dec 20 2013 Sergey Y. Afonin <asy@altlinux.ru> 3.28-alt1
+- 3.28 release.
+- Added perl-Pod-Checker to BuildRequires
+
 * Wed Nov 24 2010 Igor Vlasenko <viy@altlinux.ru> 3.24-alt2.1
 - repair after perl 5.12 upgrade using girar-nmu
 
