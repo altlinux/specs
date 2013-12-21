@@ -1,5 +1,5 @@
 Name: awesome
-Version: 3.5.1
+Version: 3.5.2
 Release: alt1
 Group: Graphical desktop/Other
 License: GPL2+
@@ -17,11 +17,11 @@ BuildRequires: ImageMagick-tools asciidoc cmake gcc-c++ gperf
 BuildRequires: imlib2-devel libdbus-devel libev-devel liblua5-devel
 BuildRequires: libncurses-devel libpango-devel libreadline-devel xmlto
 BuildRequires: libxdg-basedir-devel libstartup-notification-devel
-BuildRequires: libXdmcp-devel libXcursor-devel libgdk-pixbuf-devel lgi
+BuildRequires: libXdmcp-devel libgdk-pixbuf-devel lgi
 BuildRequires: lua libpango-gir
 
 BuildPreReq: libxcbutil-devel >= 0.3.8 libxcbutil-keysyms-devel >= 0.3.8
-BuildPreReq: libxcbutil-icccm-devel >= 0.3.8 libxcbutil-image-devel >= 0.3.8
+BuildPreReq: libxcbutil-icccm-devel >= 0.3.8 libxcbutil-cursor-devel
 
 Requires: libstartup-notification >= 0.10-alt1
 Requires: design-graphics
@@ -90,6 +90,9 @@ install -D -m 755 %SOURCE2 %buildroot%_sysconfdir/menu-methods/%name
 %doc AUTHORS LICENSE README BUGS PATCHES STYLE
 
 %changelog
+* Fri Nov 15 2013 Terechkov Evgenii <evg@altlinux.org> 3.5.2-alt1
+- 3.5.2 (The Fox)
+
 * Wed Apr 10 2013 Terechkov Evgenii <evg@altlinux.org> 3.5.1-alt1
 - 3.5.1 (Ruby Tuesday)
 
