@@ -8,16 +8,18 @@
 %def_disable drm
 
 Name: efl
-Version: 1.8.2
-Release: alt2
+Version: 1.8.3
+Release: alt1
 
 Summary: Enlightenment Foundation Libraries
 License: BSD/LGPLv2.1+
 Group: System/Libraries
 Url: http://www.enlightenment.org/
 
-#Source: http://download.enlightenment.org/rel/libs/%name/%name-%version.tar.bz2
-Source: %name-%version.tar
+Source: http://download.enlightenment.org/rel/libs/%name/%name-%version.tar.bz2
+#Source: %name-%version.tar
+# from master
+#Patch: efl-1.8.2-up-0947bae12627aa819ff81845b10fcf0af5e924be.patch
 
 %{?_enable_static:BuildPreReq: glibc-devel-static}
 BuildRequires: gcc-c++ glibc-kernheaders glib2-devel libcheck-devel lcov doxygen
@@ -122,6 +124,7 @@ documentation for EFL.
 
 %prep
 %setup
+#%%patch -p1
 
 %build
 %autoreconf
@@ -245,6 +248,9 @@ find %buildroot%_libdir -name "*.la" -delete
 
 
 %changelog
+* Sat Dec 21 2013 Yuri N. Sedunov <aris@altlinux.org> 1.8.3-alt1
+- 1.8.3
+
 * Tue Dec 17 2013 Yuri N. Sedunov <aris@altlinux.org> 1.8.2-alt2
 - 1.8.2 snapshot (3b57d1f)
 - obsoletes/provides edje
