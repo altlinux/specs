@@ -2,8 +2,8 @@
 %define module_version	13.251
 %define module_release alt1
 
-%define flavour el-def
-BuildRequires(pre): kernel-headers-modules-el-def
+%define flavour un-def
+BuildRequires(pre): kernel-headers-modules-un-def
 
 %setup_kernel_module %flavour
 

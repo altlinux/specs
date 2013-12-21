@@ -1,4 +1,4 @@
-%define cat_ver 13.11-betaV9.4
+%define cat_ver 13.12
 
 %ifarch %ix86
 %define archdir arch/x86
@@ -18,7 +18,7 @@
 Name: %{bname}_glx
 %define ksname %bname
 Epoch: 1
-Version: 13.25.18
+Version: 13.251
 Release: alt1
 %define EVR %{?epoch:%epoch:}%version-%release
 Summary: ATI/AMD Proprietary Linux Display Driver
@@ -34,7 +34,9 @@ Source11: atieventsd.init
 Source12: aticonfig.1
 Source13: %{bname}_create.xinf
 Source14: xinf2fdi
-Patch: %bname-13.20.16-printk-loglevel.patch
+Patch0: %bname-13.20.16-printk-loglevel.patch
+Patch1: %bname-13.251-kernel-3.9.patch
+Patch2: %bname-13.251-kernel-3.12.patch
 %{?epoch:Provides: %{bname}_glx = %version-%release}
 Provides: %bname = %EVR
 %{?epoch:Provides: %bname = %version-%release}
@@ -109,7 +111,9 @@ ATI/AMD %bname (Radeon video card driver) module sources for Linux kernel.
 %setup -T -c
 sh %SOURCE0 --extract .
 cd common/lib/modules/%bname/build_mod
-%patch -p1
+%patch0 -p1
+%patch1 -p1
+%patch2 -p1
 cd -
 sed -i '1s|/bash$|/sh|' %archdir/usr/%_lib/%bname/*
 for d in {common,%archdir}/lib/modules/%bname/build_mod; do
@@ -271,6 +275,9 @@ chrpath -d %buildroot{%_bindir/amdcccle,%_sbindir/amdnotifyui}
 
 
 %changelog
+* Fri Dec 20 2013 Led <led@altlinux.ru> 1:13.251-alt1
+- 13.251 (Catalyst 13.12)
+
 * Sun Dec 01 2013 Led <led@altlinux.ru> 1:13.25.18-alt1
 - 13.25.18 (Catalyst 13.11-beta V9.4)
 

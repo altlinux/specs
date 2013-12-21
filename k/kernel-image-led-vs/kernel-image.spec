@@ -25,7 +25,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.10.25
-Release: alt1
+Release: alt2
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -147,7 +147,7 @@ Release: alt1
 %Extra_modules zfs 0.6.2
 #Extra_modules kvm 3.10.1
 #Extra_modules nvidia 331.20
-%Extra_modules fglrx 13.25.18
+%Extra_modules fglrx 13.251
 %Extra_modules vboxhost 4.3.6
 %Extra_modules vboxguest 4.3.6
 %Extra_modules knem 1.1.0
@@ -1792,6 +1792,9 @@ done)
 
 
 %changelog
+* Sat Dec 21 2013 Led <led@altlinux.ru> 3.10.25-alt2
+- fglrx 13.251
+
 * Fri Dec 20 2013 Led <led@altlinux.ru> 3.10.25-alt1
 - 3.10.25
 - updated:
