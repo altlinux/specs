@@ -10,8 +10,8 @@
 %global _unpackaged_files_terminate_build 1
 
 Name:		golang
-Version:	1.1.2
-Release:	alt2
+Version:	1.2
+Release:	alt1
 Summary:	The Go Programming Language
 Group:		Development/Other
 License:	BSD
@@ -20,11 +20,9 @@ URL:		http://golang.org/
 Packager:	Alexey Gladkov <legion@altlinux.ru>
 
 Source0:	golang-%version.tar
-Patch0:		golang-1.1-verbose-build.patch
+Patch0:		golang-1.2-verbose-build.patch
 Patch1:		golang-1.1-disable-multicast_test.patch
-Patch2:		golang-1.1.2-alt-certs-path.patch
-Patch3:		golang-1.1.2-long-links.patch
-Patch4:		golang-1.1.2-ustar-split.patch
+Patch2:		golang-1.2-alt-certs-path.patch
 
 ExclusiveArch:	%ix86 x86_64 %arm
 
@@ -91,20 +89,10 @@ Go sources and documentation.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
-%patch3 -p1
-%patch4 -p1
 
 
 %build
-# create a gcc wrapper to allow us to build with our own flags
-cat >go-gcc<<-EOF
-	#!/bin/sh -e
-	gcc $RPM_OPT_FLAGS $RPM_LD_FLAGS "\$@"
-EOF
-chmod +x go-gcc
-export CC="$PWD/go-gcc"
-
-# set up final install location
+export PATH="$GOROOT/bin:$PATH"
 export GOROOT_FINAL=%_libdir/%name
 
 # TODO use the system linker to get the system link flags and build-id
@@ -114,19 +102,11 @@ export GOROOT_FINAL=%_libdir/%name
 # build
 cd src
 ./make.bash
-cd ..
-
-# build static version of documentation
-export GOROOT=$PWD
-export PATH="$PATH":"$GOROOT"/bin
-cd doc
-make
-cd ..
 
 
 %check
 export GOROOT=$PWD
-export PATH="$PATH":"$GOROOT"/bin
+export PATH="$GOROOT/bin:$PATH"
 
 cd src
 ./run.bash --no-rebuild
@@ -225,11 +205,6 @@ cp -av misc/vim/* %buildroot/%_datadir/vim/vimfiles
 
 
 %files godoc
-# binaries
-%_libdir/%name/bin/godoc
-
-# symlinks
-%_bindir/godoc
 %_libdir/%name/doc
 %_libdir/%name/favicon.ico
 %_libdir/%name/lib
@@ -248,6 +223,9 @@ cp -av misc/vim/* %buildroot/%_datadir/vim/vimfiles
 
 
 %changelog
+* Tue Dec 10 2013 Alexey Gladkov <legion@altlinux.ru> 1.2-alt1
+- New version (1.2).
+
 * Mon Oct 28 2013 Alexey Gladkov <legion@altlinux.ru> 1.1.2-alt2
 - Add gdb and vim plugins.
 - Fix rebuild command (ALT#29508).
