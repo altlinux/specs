@@ -1,7 +1,7 @@
 %define origname mysql++
 
 Name: lib%origname
-Version: 3.2.0
+Version: 3.2.1
 Release: alt1
 
 Summary: C++ API for MySQL
@@ -19,25 +19,25 @@ Packager: Michael Shigorin <mike@altlinux.ru>
 # Automatically added by buildreq on Sat Mar 29 2008
 BuildRequires: gcc-c++ libMySQL-devel zlib-devel
 
-Summary(ru_RU.KOI8-R): C++ API для MySQL
-Summary(uk_UA.KOI8-U): C++ API для MySQL
+Summary(ru_RU.UTF-8): C++ API п╢п╩я▐ MySQL
+Summary(uk_UA.UTF-8): C++ API п╢п╩я▐ MySQL
 
 %description
 The goal of this API is to make working with queries as easy
 as working with other STL Containers.
 
-%description -l ru_RU.KOI8-R
-Целью этого API является возможность работы с запросами
-как с обычными контейнерами STL.
+%description -l ru_RU.UTF-8
+п╕п╣п╩я▄я▌ я█я┌п╬пЁп╬ API я▐п╡п╩я▐п╣я┌я│я▐ п╡п╬п╥п╪п╬п╤п╫п╬я│я┌я▄ я─п╟п╠п╬я┌я▀ я│ п╥п╟п©я─п╬я│п╟п╪п╦
+п╨п╟п╨ я│ п╬п╠я▀я┤п╫я▀п╪п╦ п╨п╬п╫я┌п╣п╧п╫п╣я─п╟п╪п╦ STL.
 
-%description -l uk_UA.KOI8-U
-Метою цього API ╓ можлив╕сть роботи ╕з запитами як ╕з звичайними
-контейнерами STL.
+%description -l uk_UA.UTF-8
+п°п╣я┌п╬я▌ я├я▄п╬пЁп╬ API я■ п╪п╬п╤п╩п╦п╡я√я│я┌я▄ я─п╬п╠п╬я┌п╦ я√п╥ п╥п╟п©п╦я┌п╟п╪п╦ я▐п╨ я√п╥ п╥п╡п╦я┤п╟п╧п╫п╦п╪п╦
+п╨п╬п╫я┌п╣п╧п╫п╣я─п╟п╪п╦ STL.
 
 %package devel
 Summary: C++ API for MySQL - development part
-Summary(ru_RU.KOI8-R): C++ API для MySQL - для разработчика
-Summary(uk_UA.KOI8-U): C++ API для MySQL - для розробника
+Summary(ru_RU.UTF-8): C++ API п╢п╩я▐ MySQL - п╢п╩я▐ я─п╟п╥я─п╟п╠п╬я┌я┤п╦п╨п╟
+Summary(uk_UA.UTF-8): C++ API п╢п╩я▐ MySQL - п╢п╩я▐ я─п╬п╥я─п╬п╠п╫п╦п╨п╟
 Group: Development/C++
 Requires: %name = %version-%release
 
@@ -48,25 +48,25 @@ working with other STL Containers.
 This package contains files needed to compile software
 using %name as a share library.
 
-%description devel -l ru_RU.KOI8-R
-Целью этого API является возможность работы с запросами
-как с обычными контейнерами STL.
+%description devel -l ru_RU.UTF-8
+п╕п╣п╩я▄я▌ я█я┌п╬пЁп╬ API я▐п╡п╩я▐п╣я┌я│я▐ п╡п╬п╥п╪п╬п╤п╫п╬я│я┌я▄ я─п╟п╠п╬я┌я▀ я│ п╥п╟п©я─п╬я│п╟п╪п╦
+п╨п╟п╨ я│ п╬п╠я▀я┤п╫я▀п╪п╦ п╨п╬п╫я┌п╣п╧п╫п╣я─п╟п╪п╦ STL.
 
-Этот пакет содержит файлы, которые нужны для компиляции программ,
-которые используют %name как разделяемую библиотеку.
+п╜я┌п╬я┌ п©п╟п╨п╣я┌ я│п╬п╢п╣я─п╤п╦я┌ я└п╟п╧п╩я▀, п╨п╬я┌п╬я─я▀п╣ п╫я┐п╤п╫я▀ п╢п╩я▐ п╨п╬п╪п©п╦п╩я▐я├п╦п╦ п©я─п╬пЁя─п╟п╪п╪,
+п╨п╬я┌п╬я─я▀п╣ п╦я│п©п╬п╩я▄п╥я┐я▌я┌ %name п╨п╟п╨ я─п╟п╥п╢п╣п╩я▐п╣п╪я┐я▌ п╠п╦п╠п╩п╦п╬я┌п╣п╨я┐.
 
-%description devel -l uk_UA.KOI8-U
-Метою цього API ╓ можлив╕сть роботи ╕з запитами як ╕з звичайними
-контейнерами STL.
+%description devel -l uk_UA.UTF-8
+п°п╣я┌п╬я▌ я├я▄п╬пЁп╬ API я■ п╪п╬п╤п╩п╦п╡я√я│я┌я▄ я─п╬п╠п╬я┌п╦ я√п╥ п╥п╟п©п╦я┌п╟п╪п╦ я▐п╨ я√п╥ п╥п╡п╦я┤п╟п╧п╫п╦п╪п╦
+п╨п╬п╫я┌п╣п╧п╫п╣я─п╟п╪п╦ STL.
 
-Цей пакунок м╕стить файли, що потр╕бн╕ для комп╕ляц╕╖ програм,
-як╕ використовують %name як колективну б╕бл╕отеку.
+п╕п╣п╧ п©п╟п╨я┐п╫п╬п╨ п╪я√я│я┌п╦я┌я▄ я└п╟п╧п╩п╦, я┴п╬ п©п╬я┌я─я√п╠п╫я√ п╢п╩я▐ п╨п╬п╪п©я√п╩я▐я├я√я≈ п©я─п╬пЁя─п╟п╪,
+я▐п╨я√ п╡п╦п╨п╬я─п╦я│я┌п╬п╡я┐я▌я┌я▄ %name я▐п╨ п╨п╬п╩п╣п╨я┌п╦п╡п╫я┐ п╠я√п╠п╩я√п╬я┌п╣п╨я┐.
 
 %if_enabled static
 %package devel-static
 Summary: C++ API for MySQL - static development library
-Summary(ru_RU.KOI8-R): C++ API для MySQL - для разработчика (статическая часть)
-Summary(uk_UA.KOI8-U): C++ API для MySQL - для розробника (статична частина)
+Summary(ru_RU.UTF-8): C++ API п╢п╩я▐ MySQL - п╢п╩я▐ я─п╟п╥я─п╟п╠п╬я┌я┤п╦п╨п╟ (я│я┌п╟я┌п╦я┤п╣я│п╨п╟я▐ я┤п╟я│я┌я▄)
+Summary(uk_UA.UTF-8): C++ API п╢п╩я▐ MySQL - п╢п╩я▐ я─п╬п╥я─п╬п╠п╫п╦п╨п╟ (я│я┌п╟я┌п╦я┤п╫п╟ я┤п╟я│я┌п╦п╫п╟)
 Group: Development/C++
 Requires: %name-devel = %version-%release
 
@@ -77,26 +77,25 @@ as working with other STL Containers.
 This package contains files needed to compile software
 using %name in a statically-linked form.
 
-%description devel-static -l ru_RU.KOI8-R
-Целью этого API является возможность работы с запросами
-как с обычными контейнерами STL.
+%description devel-static -l ru_RU.UTF-8
+п╕п╣п╩я▄я▌ я█я┌п╬пЁп╬ API я▐п╡п╩я▐п╣я┌я│я▐ п╡п╬п╥п╪п╬п╤п╫п╬я│я┌я▄ я─п╟п╠п╬я┌я▀ я│ п╥п╟п©я─п╬я│п╟п╪п╦
+п╨п╟п╨ я│ п╬п╠я▀я┤п╫я▀п╪п╦ п╨п╬п╫я┌п╣п╧п╫п╣я─п╟п╪п╦ STL.
 
-Этот пакет содержит файлы, которые нужны для компиляции программ,
-которые компонуются с %name статически.
+п╜я┌п╬я┌ п©п╟п╨п╣я┌ я│п╬п╢п╣я─п╤п╦я┌ я└п╟п╧п╩я▀, п╨п╬я┌п╬я─я▀п╣ п╫я┐п╤п╫я▀ п╢п╩я▐ п╨п╬п╪п©п╦п╩я▐я├п╦п╦ п©я─п╬пЁя─п╟п╪п╪,
+п╨п╬я┌п╬я─я▀п╣ п╨п╬п╪п©п╬п╫я┐я▌я┌я│я▐ я│ %name я│я┌п╟я┌п╦я┤п╣я│п╨п╦.
 
-%description devel-static -l uk_UA.KOI8-U
-Метою цього API ╓ можлив╕сть роботи ╕з запитами як ╕з звичайними
-контейнерами STL.
+%description devel-static -l uk_UA.UTF-8
+п°п╣я┌п╬я▌ я├я▄п╬пЁп╬ API я■ п╪п╬п╤п╩п╦п╡я√я│я┌я▄ я─п╬п╠п╬я┌п╦ я√п╥ п╥п╟п©п╦я┌п╟п╪п╦ я▐п╨ я√п╥ п╥п╡п╦я┤п╟п╧п╫п╦п╪п╦
+п╨п╬п╫я┌п╣п╧п╫п╣я─п╟п╪п╦ STL.
 
-Цей пакунок м╕стить файли, що потр╕бн╕ для комп╕ляц╕╖ програм,
-як╕ зкомпоновано ╕з %name статично.
+п╕п╣п╧ п©п╟п╨я┐п╫п╬п╨ п╪я√я│я┌п╦я┌я▄ я└п╟п╧п╩п╦, я┴п╬ п©п╬я┌я─я√п╠п╫я√ п╢п╩я▐ п╨п╬п╪п©я√п╩я▐я├я√я≈ п©я─п╬пЁя─п╟п╪,
+я▐п╨я√ п╥п╨п╬п╪п©п╬п╫п╬п╡п╟п╫п╬ я√п╥ %name я│я┌п╟я┌п╦я┤п╫п╬.
 
 %endif
 
 %prep
 %setup -n %origname-%version
 %patch0 -p1
-#patch1 -p1
 
 %build
 # FIXME: see http://lists.mysql.com/plusplus/9118
@@ -122,6 +121,10 @@ export LDFLAGS="$LDFLAGS -Wl,--no-as-needed"
 # TODO: have a closer look at fedora spec
 
 %changelog
+* Sun Dec 22 2013 Michael Shigorin <mike@altlinux.org> 3.2.1-alt1
+- new version (watch file uupdate)
+- descriptions converted to utf8
+
 * Wed Aug 07 2013 Michael Shigorin <mike@altlinux.org> 3.2.0-alt1
 - new version (watch file uupdate)
 
