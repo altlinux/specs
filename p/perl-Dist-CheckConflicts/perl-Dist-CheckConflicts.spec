@@ -14,7 +14,7 @@
 %define _enable_test 1
 
 Name: perl-Dist-CheckConflicts
-Version: 0.09
+Version: 0.10
 Release: alt1
 
 Summary: declare version conflicts for your dist
@@ -45,6 +45,9 @@ Dist::CheckConflicts declare version conflicts for your dist.
 %perl_vendor_privlib/Dist/*
 
 %changelog
+* Sun Dec 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.10-alt1
+- automated CPAN update
+
 * Sat Jul 27 2013 Igor Vlasenko <viy@altlinux.ru> 0.09-alt1
 - automated CPAN update
 
