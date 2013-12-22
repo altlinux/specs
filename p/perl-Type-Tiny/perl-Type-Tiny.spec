@@ -1,4 +1,4 @@
-%define module_version 0.034
+%define module_version 0.036
 %define module_name Type-Tiny
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(B.pm) perl(B/Deparse.pm) perl(Benchmark.pm) perl(CPAN/Meta/Requirements.pm) perl(Carp.pm) perl(Class/ISA.pm) perl(Class/InsideOut.pm) perl(Data/Dumper.pm) perl(Data/Validator.pm) perl(DateTime.pm) perl(DateTime/Duration.pm) perl(Devel/StackTrace.pm) perl(Encode.pm) perl(Exporter.pm) perl(Exporter/Tiny.pm) perl(ExtUtils/MakeMaker.pm) perl(Function/Parameters.pm) perl(IO/File.pm) perl(IO/Handle.pm) perl(JSON/PP.pm) perl(Math/BigFloat.pm) perl(Method/Generate/Accessor.pm) perl(Moo.pm) perl(Moo/Role.pm) perl(MooX/Types/MooseLike/Base.pm) perl(Moose.pm) perl(Moose/Meta/TypeCoercion.pm) perl(Moose/Meta/TypeConstraint.pm) perl(Moose/Meta/TypeConstraint/Class.pm) perl(Moose/Meta/TypeConstraint/DuckType.pm) perl(Moose/Meta/TypeConstraint/Enum.pm) perl(Moose/Meta/TypeConstraint/Union.pm) perl(Moose/Role.pm) perl(Moose/Util/TypeConstraints.pm) perl(MooseX/Types.pm) perl(MooseX/Types/Moose.pm) perl(Mouse.pm) perl(Mouse/Meta/TypeConstraint.pm) perl(Mouse/Util.pm) perl(Mouse/Util/TypeConstraints.pm) perl(MouseX/Types.pm) perl(MouseX/Types/Moose.pm) perl(Object/Accessor.pm) perl(Params/Check.pm) perl(Params/Validate.pm) perl(Reply/Plugin.pm) perl(Role/Tiny.pm) perl(Role/Tiny/With.pm) perl(Scalar/Util.pm) perl(Sub/Exporter/Lexical.pm) perl(Sub/Quote.pm) perl(Term/ANSIColor.pm) perl(Test/Builder.pm) perl(Test/Builder/Module.pm) perl(Test/LeakTrace.pm) perl(Test/More.pm) perl(Text/Balanced.pm) perl(Tie/Array.pm) perl(Tie/Hash.pm) perl(Tie/Scalar.pm) perl(Type/Tie.pm) perl(Validation/Class/Simple.pm) perl(base.pm) perl(overload.pm)
@@ -7,7 +7,7 @@ BuildRequires: perl(B.pm) perl(B/Deparse.pm) perl(Benchmark.pm) perl(CPAN/Meta/R
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.034
+Version: 0.036
 Release: alt1
 Summary: tiny, yet Moo(se)-compatible type constraint
 Group: Development/Perl
@@ -37,6 +37,9 @@ BuildArch: noarch
 %perl_vendor_privlib/E*
 
 %changelog
+* Sun Dec 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.036-alt1
+- automated CPAN update
+
 * Tue Dec 10 2013 Igor Vlasenko <viy@altlinux.ru> 0.034-alt1
 - automated CPAN update
 
