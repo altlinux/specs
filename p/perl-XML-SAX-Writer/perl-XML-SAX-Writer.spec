@@ -1,14 +1,14 @@
 %define dist XML-SAX-Writer
 Name: perl-%dist
-Version: 0.53
-Release: alt2
+Version: 0.54
+Release: alt1
 
 Summary: SAX2 XML Writer
 License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/P/PE/PERIGRIN/XML-SAX-Writer-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -32,6 +32,9 @@ Yet Another SAX2 XML Writer.
 %perl_vendor_privlib/XML
 
 %changelog
+* Sun Dec 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.54-alt1
+- automated CPAN update
+
 * Wed Nov 16 2011 Alexey Tourbin <at@altlinux.ru> 0.53-alt2
 - disabled build dependency on perl-Module-Install
 
