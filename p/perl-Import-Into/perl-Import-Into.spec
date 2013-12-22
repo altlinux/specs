@@ -14,7 +14,7 @@
 %define _enable_test 1
 
 Name: perl-Import-Into
-Version: 1.001001
+Version: 1.002000
 Release: alt1
 
 Summary: import packages into other packages
@@ -26,7 +26,7 @@ Url: http://search.cpan.org/CPAN/authors/id/http://search.cpan.org/CPAN/authors/
 Packager: Igor Vlasenko <viy@altlinux.ru>
 
 BuildArch: noarch
-Source: http://www.cpan.org/authors/id/E/ET/ETHER/Import-Into-%{version}.tar.gz
+Source: http://www.cpan.org/authors/id/H/HA/HAARG/Import-Into-%{version}.tar.gz
 
 # Automatically added by buildreq on Thu Oct 18 2012
 BuildRequires: perl-devel
@@ -142,6 +142,9 @@ And that's it.
 %perl_vendor_privlib/Import/*
 
 %changelog
+* Sun Dec 22 2013 Igor Vlasenko <viy@altlinux.ru> 1.002000-alt1
+- automated CPAN update
+
 * Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 1.001001-alt1
 - automated CPAN update
 
