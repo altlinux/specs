@@ -1,7 +1,7 @@
 
 Name: akonadi
 Version: 1.11.0
-Release: alt3
+Release: alt4
 
 Group: Databases
 Summary: An extensible cross-desktop storage service for PIM
@@ -18,6 +18,7 @@ Patch10: akonadi-1.7.0-mysql_conf.patch
 # ALT
 Patch101: akonadi-1.1.1-alt-alt-kdebindir.patch
 Patch102: akonadi-1.3.81-alt-mysql-paths.patch
+Patch103: akonadi-1.11.0-alt-pluginsdir.patch
 #
 Patch105: akonadi-1.11.0-alt-start-mysqlcheck.patch
 Patch106: akonadi-1.6.2-alt-own-mysql_install_db.patch
@@ -134,6 +135,7 @@ Development files for %name
 #
 %patch101 -p1
 %patch102 -p1
+%patch103 -p1
 #
 %patch105 -p1
 %patch106 -p1
@@ -196,6 +198,12 @@ install -m 0755 %SOURCE10 %buildroot/%_bindir/akonadi_mysql_install_db
 %_libdir/pkgconfig/*
 
 %changelog
+* Sun Dec 22 2013 Sergey V Turchin <zerg@altlinux.org> 1.11.0-alt4
+- fix find plugins
+
+* Wed Dec 18 2013 Sergey V Turchin <zerg@altlinux.org> 1.11.0-alt2.M70P.1
+- built for M70P
+
 * Wed Dec 18 2013 Sergey V Turchin <zerg@altlinux.org> 1.11.0-alt3
 - update from 1.11 branch
 
