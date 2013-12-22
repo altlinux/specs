@@ -14,7 +14,7 @@
 %define _enable_test 1
 
 Name: perl-Class-Accessor-Class
-Version: 0.502
+Version: 0.503
 Release: alt1
 
 Summary: simple class variable accessors
@@ -55,6 +55,9 @@ and can use its methods.
 %doc Changes LICENSE README
 
 %changelog
+* Sun Dec 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.503-alt1
+- automated CPAN update
+
 * Fri Jul 26 2013 Igor Vlasenko <viy@altlinux.ru> 0.502-alt1
 - automated CPAN update
 
