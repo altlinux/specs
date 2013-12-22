@@ -1,7 +1,7 @@
 %define dist Set-Object
 Name: perl-%dist
-Version: 1.31
-Release: alt2
+Version: 1.32
+Release: alt1
 
 Summary: Unordered collections (sets) of Perl Objects
 License: GPL or Artistic
@@ -32,6 +32,9 @@ collection of objects without duplication.
 %perl_vendor_autolib/Set
 
 %changelog
+* Sun Dec 22 2013 Igor Vlasenko <viy@altlinux.ru> 1.32-alt1
+- automated CPAN update
+
 * Wed Aug 28 2013 Vladimir Lettiev <crux@altlinux.ru> 1.31-alt2
 - built for perl 5.18
 
