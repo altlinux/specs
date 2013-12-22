@@ -1,9 +1,10 @@
 
 %def_disable wbxml
+%def_disable iodbc_ext
 
 Name: virtuoso-opensource
-Version: 6.1.6
-Release: alt2
+Version: 6.1.8
+Release: alt1
 Serial: 2
 
 Group: Databases
@@ -18,10 +19,13 @@ Requires: %name-applications = %version-%release
 Source0: %name-%version.tar
 # FC
 Patch1: virtuoso-opensource-6.1.6-extern-iodbc.patch
-Patch2: virtuoso-opensource-6.1.0-nodemos_buildfix.patch
+Patch2: virtuoso-opensource-6.1.8-nodemos_buildfix.patch
 Patch3: virtuoso-opensource-6.1.4-no_strip.patch
 
-BuildRequires: glibc-devel libssl-devel bison flex gperf libxml2-devel libiodbc-devel libldap-devel /usr/bin/openssl libexpat-devel zlib-devel
+BuildRequires: glibc-devel libssl-devel bison flex gperf libxml2-devel libldap-devel /usr/bin/openssl libexpat-devel zlib-devel
+%if_enabled iodbc_ext
+BuildRequires: libiodbc-devel
+%endif
 %if_enabled wbxml
 BuildRequires: libwbxml2-devel
 %endif
@@ -73,11 +77,15 @@ functionality.
 
 %prep
 %setup -q -n %name-%version
+%if_enabled iodbc_ext
 %patch1 -p0 -b .iodbc
+%endif
 %patch2 -p0
 %patch3 -p1
+%if_enabled iodbc_ext
 rm -rf libsrc/odbcsdk/*
 >libsrc/odbcsdk/Makefile.am
+%endif
 %autoreconf
 
 
@@ -87,7 +95,9 @@ rm -rf libsrc/odbcsdk/*
     --disable-static \
     --enable-shared \
     --localstatedir=/var \
+%if_enabled iodbc_ext
     --with-iodbc=%prefix \
+%endif
     --without-internal-zlib \
     --enable-openssl \
     --disable-imagemagick \
@@ -146,6 +156,9 @@ mv %buildroot%_var/lib/virtuoso/db/virtuoso.ini %buildroot%_sysconfdir/virtuoso/
 %_libdir/hibernate/virt_dialect.jar
 
 %changelog
+* Sun Dec 22 2013 Sergey V Turchin <zerg@altlinux.org> 2:6.1.8-alt1
+- new version
+
 * Fri Mar 22 2013 Sergey V Turchin <zerg@altlinux.org> 2:6.1.6-alt2
 - built without wbxml support
 
