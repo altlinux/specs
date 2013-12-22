@@ -1,9 +1,9 @@
 %define _name enlightenment
 %define efl_ver_major 1.8
 %define cvs_date rc2
-#%%undefine cvs_date
+%undefine cvs_date
 %define snapshot 2012-10-12
-%define rel alt1
+%define rel alt2
 
 %def_disable static
 # only bluez4 supported
@@ -27,10 +27,10 @@ License: BSD
 Group: Graphical desktop/Enlightenment
 URL: http://www.enlightenment.org/
 
-#Source: http://download.enlightenment.org/releases/%_name-%version.tar.bz2
 %ifdef cvs_date
 Source: %_name-%version-%cvs_date.tar.xz
 %else
+#Source: http://download.enlightenment.org/releases/%_name-%version.tar.bz2
 Source: %_name-%version.tar.xz
 %endif
 
@@ -63,9 +63,10 @@ Requires: evas_generic_loaders >= %efl_ver_major emotion_generic_players
 Requires: gnome-icon-theme
 Requires: wm-common-freedesktop
 Requires: altlinux-freedesktop-menu-%_name >= 0.55
+Requires: udisks2
 %{?_with_pam_helper:Requires: chkpwd-pam}
 
-BuildRequires: efl-libs-devel libelementary-devel >= 1.8.0
+BuildRequires: efl-libs-devel libelementary-devel >= 1.8.2
 BuildRequires: libpam-devel libalsa-devel libudev-devel libxcbutil-keysyms-devel
 BuildRequires: libdbus-devel libp11-kit-devel xorg-xproto-devel libxcbutil-keysyms-devel
 BuildRequires: doxygen pm-utils
@@ -89,7 +90,7 @@ Development headers for Enlightenment.
 %ifdef cvs_date
 %setup -n %_name-%version-%cvs_date
 %else
-%setup n %_name-%version
+%setup -n %_name-%version
 %endif
 #%%patch0 -p2
 #%patch1 -p2
@@ -180,6 +181,9 @@ cp %SOURCE11 %buildroot%_sysconfdir/enlightenment/sysactions.conf
 %_rpmmacrosdir/%name
 
 %changelog
+* Sun Dec 22 2013 Yuri N. Sedunov <aris@altlinux.org> 1:0.18.0-alt2
+- 0.18 release
+
 * Fri Dec 13 2013 Yuri N. Sedunov <aris@altlinux.org> 1:0.18.0-alt1.rc2
 - 0.18.0-rc2
 
