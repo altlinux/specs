@@ -2,7 +2,7 @@
 %define module Net-Nslookup
 
 Name: perl-Net-Nslookup
-Version: 2.03
+Version: 2.04
 Release: alt1
 
 Summary: Provide nslookup(1)-like capabilities
@@ -39,6 +39,9 @@ Net::Nslookup exports a single function, called "nslookup".
 %perl_vendor_privlib/Net/*
 
 %changelog
+* Sun Dec 22 2013 Igor Vlasenko <viy@altlinux.ru> 2.04-alt1
+- automated CPAN update
+
 * Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 2.03-alt1
 - automated CPAN update
 
