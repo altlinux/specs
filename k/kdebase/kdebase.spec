@@ -35,7 +35,7 @@
 %define bugfix 13.2
 Name: kdebase
 Version: %major.%minor.%bugfix
-Release: alt5.1
+Release: alt6
 %define reqver %major.%minor
 
 Summary: Trinity Desktop Environment - Core files
@@ -231,6 +231,8 @@ Patch1082: tdebase-3.5.13-work-defdir.patch
 Patch1083: kdm-3.5.13-KsplashBlack.patch
 Patch1084: kdebase-3.5.13.2-desktop-translate.patch
 Patch1085: kdebase-3.5.13.2-kicker-systemtray-gtk3-size.patch
+Patch1086: kdebase-3.5.13.2-desktop-fixes.patch
+Patch1087: tdebase-3.5.13-KJobViewer-crash.patch
 
 # Sergey A. Sukiyazov <corwin@micom.don.ru>
 Patch2000: kdebase-3.5.0-man_recode.patch
@@ -651,6 +653,8 @@ Menu resources for the original KDE menu.
 %patch1083 -p1
 %patch1084 -p1
 %patch1085 -p1
+%patch1086 -p1
+%patch1087 -p1
 
 # Sergey A. Sukiyazov <corwin@micom.don.ru>
 ###%patch2000 -p1
@@ -1981,6 +1985,12 @@ test ! -L %x11confdir/kdm && rm -rf %x11confdir/kdm ||:
 
 
 %changelog
+* Sun Dec 22 2013 Roman Savochenko <rom_as@altlinux.ru> 3.5.13.2-alt6
+- KJobViewer crash from system tray on exit is fixed.
+- kde-settings-information.directory added for bind kdeinfo subtree to Kcontrol Peripherals.
+- konquerorsu and konsolesu moved to category Qt;KDE;System;
+- kdm.desktop and clock.desktop category set to Qt;KDE;System;X-KDE-settings-system;
+
 * Tue Nov 12 2013 Sergey Y. Afonin <asy@altlinux.ru> 3.5.13.2-alt5.1
 - NMU: rebuilt with cyrus-sasl 2.1.26
 
