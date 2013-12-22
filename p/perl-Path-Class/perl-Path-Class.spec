@@ -11,7 +11,7 @@
 %def_enable test
 
 Name: perl-Path-Class
-Version: 0.32
+Version: 0.33
 Release: alt1
 
 Summary: Cross-platform path specification manipulation
@@ -58,6 +58,9 @@ rm t/02-foreign.t
 %perl_vendor_privlib/Path*
 
 %changelog
+* Sun Dec 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.33-alt1
+- automated CPAN update
+
 * Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 0.32-alt1
 - automated CPAN update
 
