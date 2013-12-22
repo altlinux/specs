@@ -1,5 +1,5 @@
 Name: nip2
-Version: 7.36.4
+Version: 7.36.5
 Release: alt1
 
 Packager: Victor Forsiuk <force@altlinux.org>
@@ -69,6 +69,9 @@ cp -a doc/html doc/pdf %buildroot%_docdir/%name/
 # - look into uninstalled /usr/share/mime/*
 
 %changelog
+* Sun Dec 22 2013 Michael Shigorin <mike@altlinux.org> 7.36.5-alt1
+- new version (watch file uupdate)
+
 * Tue Nov 12 2013 Michael Shigorin <mike@altlinux.org> 7.36.4-alt1
 - new version (watch file uupdate)
 - disabled autoreconf (breaks with new and shiny autocrap)
