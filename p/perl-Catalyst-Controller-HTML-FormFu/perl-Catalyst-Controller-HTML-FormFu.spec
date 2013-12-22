@@ -1,16 +1,17 @@
+%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(CPAN.pm) perl(Catalyst.pm) perl(Catalyst/Action.pm) perl(Config.pm) perl(Fcntl.pm) perl(FindBin.pm) perl(HTML/FormFu/Deploy.pm) perl(HTML/FormFu/MultiForm.pm) perl(HTML/FormFu/Util.pm) perl(MRO/Compat.pm) perl(Scalar/Util.pm) perl(Test/More.pm) perl-devel perl-podlators
+BuildRequires: perl(CPAN.pm) perl(Catalyst.pm) perl(Catalyst/Action.pm) perl(Config.pm) perl(Fcntl.pm) perl(FindBin.pm) perl(HTML/FormFu/Deploy.pm) perl(HTML/FormFu/MultiForm.pm) perl(HTML/FormFu/Util.pm) perl(MRO/Compat.pm) perl(Scalar/Util.pm) perl(Test/More.pm) perl-devel perl-podlators perl(Test/Aggregate/Nested.pm)
 # END SourceDeps(oneline)
 BuildRequires: perl(Locale/Maketext.pm)
 Name:           perl-Catalyst-Controller-HTML-FormFu
-Version:        0.09004
-Release:        alt2_4
+Version:        1.00
+Release:        alt1
 Summary:        HTML::FormFu controller for Catalyst
 License:        GPL+ or Artistic
 Group:          Development/Perl
 URL:            http://search.cpan.org/dist/Catalyst-Controller-HTML-FormFu/
-Source0:        http://search.cpan.org/CPAN/authors/id/C/CF/CFRANKS/Catalyst-Controller-HTML-FormFu-%{version}.tar.gz
+Source:        http://www.cpan.org/authors/id/C/CF/CFRANKS/Catalyst-Controller-HTML-FormFu-%{version}.tar.gz
 BuildArch:      noarch
 BuildRequires:  perl(Catalyst/Action/RenderView.pm)
 BuildRequires:  perl(Catalyst/Component/InstancePerContext.pm)
@@ -62,6 +63,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Sun Dec 22 2013 Igor Vlasenko <viy@altlinux.ru> 1.00-alt1
+- automated CPAN update
+
 * Mon Aug 12 2013 Igor Vlasenko <viy@altlinux.ru> 0.09004-alt2_4
 - update to new release by fcimport
 
