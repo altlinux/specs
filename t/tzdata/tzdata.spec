@@ -1,5 +1,5 @@
 Name: tzdata
-Version: 2013h
+Version: 2013i
 Release: alt1
 
 Summary: Timezone data
@@ -46,7 +46,7 @@ grep -Fv tz-art.htm tz-link.htm > tz-link.html
 %if_with java
 gij -jar %_datadir/java/javazic.jar -V %version -d zoneinfo/javazi \
   africa antarctica asia australasia europe northamerica pacificnew \
-  southamerica backward etcetera solar87 solar88 solar89 systemv \
+  southamerica backward etcetera systemv \
   %_datadir/javazic/tzdata_jdk/gmt \
   %_datadir/javazic/tzdata_jdk/jdk11_backward
 %endif #with java
@@ -85,6 +85,9 @@ make -k check_tables
 %endif #with java
 
 %changelog
+* Thu Dec 19 2013 Dmitry V. Levin <ldv@altlinux.org> 2013i-alt1
+- Updated to 2013i.
+
 * Mon Oct 28 2013 Dmitry V. Levin <ldv@altlinux.org> 2013h-alt1
 - Updated to 2013h.
 
