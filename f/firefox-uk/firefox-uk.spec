@@ -5,7 +5,7 @@
 %define cid_dict_dir   %firefox_noarch_extensionsdir/%cid_dict
 
 Name: firefox-uk
-Version: 25.0
+Version: 26.0
 Release: alt1
 
 Summary: Ukrainian (UA) Language Pack for Firefox
@@ -70,6 +70,9 @@ ln -s %_datadir/myspell/uk_UA.dic %buildroot/%cid_dict_dir/dictionaries/uk.dic
 %cid_dict_dir
 
 %changelog
+* Sat Dec 28 2013 Alexey Gladkov <legion@altlinux.ru> 26.0-alt1
+- New version (26.0).
+
 * Wed Nov 06 2013 Alexey Gladkov <legion@altlinux.ru> 25.0-alt1
 - New version (25.0).
 

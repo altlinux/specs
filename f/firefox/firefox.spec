@@ -8,7 +8,7 @@ Summary:              The Mozilla Firefox project is a redesign of Mozilla's bro
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox
-Version:        25.0.1
+Version:        26.0
 Release:        alt1
 License:        MPL/GPL/LGPL
 Group:          Networking/WWW
@@ -28,6 +28,7 @@ Patch6:		firefox3-alt-disable-werror.patch
 Patch14:	firefox-fix-install.patch
 Patch16:	firefox-cross-desktop.patch
 #Patch17:	firefox-disable-installer.patch
+Patch20:	mozilla-938730.patch
 
 BuildRequires(pre): mozilla-common-devel
 BuildRequires(pre): rpm-build-mozilla.org
@@ -110,8 +111,9 @@ tar -xf %SOURCE2
 %patch14 -p1
 %patch16 -p1
 #patch17 -p1
+%patch20 -p1 -b .938730
 
-#echo %firefox_version > browser/config/version.txt
+#echo firefox_version > browser/config/version.txt
 
 cp -f %SOURCE4 .mozconfig
 
@@ -158,8 +160,10 @@ MOZ_SMP_FLAGS=-j1
 
 make -f client.mk \
 	MAKENSISU= \
-	build STRIP="/bin/true" \
-	MOZ_MAKE_FLAGS="$MOZ_SMP_FLAGS"
+	STRIP="/bin/true" \
+	MOZ_MAKE_FLAGS="$MOZ_SMP_FLAGS" \
+	mozappdir=%buildroot/%firefox_prefix \
+	build
 
 %__cc %optflags \
 	-Wall -Wextra \
@@ -176,9 +180,11 @@ cd mozilla
 	%buildroot/%mozilla_noarch_extdir/%firefox_cid \
 	#
 
-%makeinstall \
-    mozappdir=%buildroot/%firefox_prefix \
-    #
+make -C objdir \
+    DESTDIR=%buildroot \
+    INSTALL="/bin/install -p" \
+    mozappdir=%firefox_prefix \
+    install
 
 # install altlinux-specific configuration
 install -D -m 644 %SOURCE8 %buildroot/%firefox_prefix/browser/defaults/preferences/all-altlinux.js
@@ -253,6 +259,24 @@ done
 %_rpmmacrosdir/firefox
 
 %changelog
+* Mon Dec 23 2013 Alexey Gladkov <legion@altlinux.ru> 26.0-alt1
+- New release (26.0).
+- Fixed:
+  + MFSA 2013-117 Mis-issued ANSSI/DCSSI certificate
+  + MFSA 2013-116 JPEG information leak
+  + MFSA 2013-115 GetElementIC typed array stubs can be generated outside observed typesets
+  + MFSA 2013-114 Use-after-free in synthetic mouse movement
+  + MFSA 2013-113 Trust settings for built-in roots ignored during EV certificate validation
+  + MFSA 2013-112 Linux clipboard information disclosure though selection paste
+  + MFSA 2013-111 Segmentation violation when replacing ordered list elements
+  + MFSA 2013-110 Potential overflow in JavaScript binary search algorithms
+  + MFSA 2013-109 Use-after-free during Table Editing
+  + MFSA 2013-108 Use-after-free in event listeners
+  + MFSA 2013-107 Sandbox restrictions not applied to nested object elements
+  + MFSA 2013-106 Character encoding cross-origin XSS attack
+  + MFSA 2013-105 Application Installation doorhanger persists on navigation
+  + MFSA 2013-104 Miscellaneous memory safety hazards (rv:26.0 / rv:24.2)
+
 * Thu Nov 21 2013 Alexey Gladkov <legion@altlinux.ru> 25.0.1-alt1
 - New release (25.0.1).
 - Fixed:

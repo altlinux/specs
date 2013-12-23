@@ -3,7 +3,7 @@
 
 Summary:	Thunderbird is Mozilla's e-mail client
 Name:		thunderbird
-Version:	24.1.0
+Version:	24.2.0
 Release:	alt1
 License:	MPL/GPL
 Group:		Networking/Mail
@@ -55,10 +55,10 @@ BuildRequires: python-modules-sqlite3
 BuildRequires: python-modules-json
 
 # Mozilla requires
-BuildRequires:	libnspr-devel       >= 4.9.6-alt1
-BuildRequires:	libnss-devel        >= 3.14.3-alt1
-BuildRequires:	libnss-devel-static >= 3.14.3-alt1
-BuildRequires:	xulrunner-devel     >= 24.0-alt1
+BuildRequires:	libnspr-devel
+BuildRequires:	libnss-devel
+BuildRequires:	libnss-devel-static
+BuildRequires:	xulrunner-devel
 
 Provides:	mailclient
 Obsoletes:	thunderbird-calendar
@@ -323,8 +323,9 @@ rm -rf -- \
 	#
 
 #ver=%version
-minver=24.0
-maxver=25.*
+minver='24.0'
+maxver='%xulr_version'
+maxver="${maxver%%.*}.*"
 sed -i \
 	-e "s,^\\(MaxVersion\\)=.*,\\1=$maxver,g" \
 	-e "s,^\\(MinVersion\\)=.*,\\1=$minver,g" \
@@ -457,6 +458,24 @@ rm -f -- %buildroot/%lightning_ciddir/application.ini
 %_sysconfdir/rpm/macros.d/%name
 
 %changelog
+* Tue Dec 24 2013 Alexey Gladkov <legion@altlinux.ru> 24.2.0-alt1
+- New version (24.2.0).
+- Fixed:
+  + MFSA 2013-117 Mis-issued ANSSI/DCSSI certificate
+  + MFSA 2013-116 JPEG information leak
+  + MFSA 2013-115 GetElementIC typed array stubs can be generated outside observed typesets
+  + MFSA 2013-114 Use-after-free in synthetic mouse movement
+  + MFSA 2013-113 Trust settings for built-in roots ignored during EV certificate validation
+  + MFSA 2013-111 Segmentation violation when replacing ordered list elements
+  + MFSA 2013-109 Use-after-free during Table Editing
+  + MFSA 2013-108 Use-after-free in event listeners
+  + MFSA 2013-104 Miscellaneous memory safety hazards (rv:26.0 / rv:24.2)
+
+* Thu Nov 21 2013 Alexey Gladkov <legion@altlinux.ru> 24.1.1-alt1
+- New version (24.1.1).
+- Fixed:
+  + MFSA 2013-103 Miscellaneous Network Security Services (NSS) vulnerabilities
+
 * Sun Nov 03 2013 Alexey Gladkov <legion@altlinux.ru> 24.1.0-alt1
 - New version (24.1.0).
 - Fixed:
