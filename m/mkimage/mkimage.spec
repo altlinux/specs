@@ -1,5 +1,5 @@
 Name: mkimage
-Version: 0.2.10
+Version: 0.2.12
 Release: alt1
 
 Summary: Simple image creator
@@ -12,6 +12,7 @@ BuildArch: noarch
 Requires: libshell >= 0.0.2
 Requires: hasher >= 1.3.7-alt1
 
+Url: http://altlinux.org/mkimage
 Source: %name-%version.tar
 
 %define sysctldir %_sysconfdir/sysctl.d
@@ -81,6 +82,18 @@ fi
 # - maybe Require: %%name-preinstall in the main package sometime later
 
 %changelog
+* Sun Dec 22 2013 Michael Shigorin <mike@altlinux.org> 0.2.12-alt1
+- mki-copy-efiboot: further refactoring and fixups
+  + hardlink image contents
+  + added efi-memtest86 support
+  + reworked refind installation
+- added Url:
+
+* Wed Dec 18 2013 Michael Shigorin <mike@altlinux.org> 0.2.11-alt1
+- mki-copy-efiboot: refactored EFI support
+  + drop -signed subpackages as irrelevant
+  + added multiple stage2, refind branding support
+
 * Thu Nov 07 2013 Michael Shigorin <mike@altlinux.org> 0.2.10-alt1
 - mki-image-prepare: fixed the change made in 0.2.9 (ldv@) (ALT#29558)
 
