@@ -1,5 +1,5 @@
 %define module_name bbswitch
-%define module_version 0.7
+%define module_version 0.8
 
 %define module_release alt1
 
@@ -76,6 +76,9 @@ install -pD -m644 %module_name.ko \
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Mon Dec 23 2013 Anton V. Boyarshinov <boyarsh@altlinux.org> 0.7-alt1
+- 0.8
 
 * Wed Jul 10 2013 Anton V. Boyarshinov <boyarsh@altlinux.org> 0.7-alt1
 - 0.7
