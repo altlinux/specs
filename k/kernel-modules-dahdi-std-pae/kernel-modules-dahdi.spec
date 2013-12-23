@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build	1
 
 %define module_name	dahdi
-%define module_version	2.7.0
+%define module_version	2.7.0.2
 %define module_release alt1
 
 %define flavour	std-pae
@@ -53,8 +53,6 @@ Patch2: dahdi-remove-spinlock_unlocked.patch
 Patch3: dahdi-build-3.2.patch
 %endif
 
-Patch4: dahdi-2.7.0-fix.patch
-
 %description
 dahdi modules, that needed for all Digium hardware, and some compatible
 devices for telephony.
@@ -76,7 +74,6 @@ rm -rf kernel-source-%module_name-%module_version
 tar -jxvf %kernel_src/kernel-source-%module_name-%module_version.tar.bz2
 
 %setup -D -T -n kernel-source-%module_name-%module_version
-%patch4
 
 %build
 pushd dahdi
@@ -148,6 +145,9 @@ popd
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Mon Dec 23 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 2.7.0.2-alt1
+- new version
 
 * Thu Jul  4 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 2.7.0-alt1
 - new version
