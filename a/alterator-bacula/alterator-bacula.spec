@@ -1,6 +1,6 @@
 Name: alterator-bacula
 Version: 1.1
-Release: alt1
+Release: alt2
 
 Source:%name-%version.tar
 
@@ -90,6 +90,9 @@ alterator-cmdline /bacula-director action init
 %altdir/desktop-directories/*
 
 %changelog
+* Tue Dec 24 2013 Andrey Kolotov <qwest@altlinux.org> 1.1-alt2
+- Deleted the asterisk symbol in ui/settings.
+
 * Thu Dec 19 2013 Andrey Kolotov <qwest@altlinux.org> 1.1-alt1
 - Recovered local backup.
 
