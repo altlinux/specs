@@ -1,5 +1,5 @@
 Name: miniupnpc
-Version: 1.8.20131007
+Version: 1.8.20131209
 Release: alt1
 
 Summary: UPnP client library
@@ -75,5 +75,8 @@ popd
 %_man3dir/%name.3.gz
 
 %changelog
+* Tue Dec 24 2013 Nazarov Denis <nenderus@altlinux.org> 1.8.20131209-alt1
+- Version 1.8.20131209
+
 * Sun Nov 03 2013 Nazarov Denis <nenderus@altlinux.org> 1.8.20131007-alt1
 - Initial build for ALT Linux
