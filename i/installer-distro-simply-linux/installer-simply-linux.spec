@@ -1,6 +1,6 @@
 Name: installer-distro-simply-linux
 Version: 7.0
-Release: alt8
+Release: alt9
 
 Summary: Installer common files
 Summary(ru_RU.UTF-8): Общие пакеты для установки дистрибутива "Simply linux"
@@ -115,6 +115,9 @@ Installer stage3
 %_datadir/alterator/ui/simply-linux
 
 %changelog
+* Tue Dec 24 2013 Mikhail Efremov <sem@altlinux.org> 7.0-alt9
+- Disbale clamd.service by default.
+
 * Fri Jun 21 2013 Mikhail Efremov <sem@altlinux.org> 7.0-alt8
 - Drop installer-feature-cpufreq-stage3.
 
