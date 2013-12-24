@@ -20,7 +20,7 @@
 
 Name: kdepim
 Version: 3.5.13.2
-Release: alt4.2
+Release: alt5
 Serial: 1
 
 Group: Graphical desktop/KDE
@@ -496,8 +496,8 @@ mv %buildroot/%_iconsdir/locolor %buildroot/%_kde3_iconsdir/locolor/
 install -dm 0755 %buildroot/%_K3applnk/.hidden/
 install -dm 0755 %buildroot/%_K3applnk/Applications/
 install -dm 0755 %buildroot/%_K3applnk/Utilities/
-install -m 0644 kalarm/*.desktop %buildroot/%_K3applnk/.hidden/
-install -m 0644 kalarm/*.desktop %buildroot/%_K3applnk/Applications/
+#install -m 0644 kalarm/*.desktop %buildroot/%_K3applnk/.hidden/
+#install -m 0644 kalarm/*.desktop %buildroot/%_K3applnk/Applications/
 install -m 0644 kandy/src/*.desktop %buildroot/%_K3applnk/Utilities/
 install -m 0644 karm/support/*.desktop %buildroot/%_K3applnk/Utilities/
 
@@ -892,8 +892,8 @@ done
 #%_K3apps/knewstuff/
 %_K3apps/korgac/
 #%_K3applnk/Settings/System/alarmdaemon*
-%_K3applnk/.hidden/kalarm*
-%_K3applnk/Applications/kalarm*
+#%_K3applnk/.hidden/kalarm*
+#%_K3applnk/Applications/kalarm*
 %_K3xdg_apps/kalarm*
 %_K3xdg_apps/korganizer*
 %_K3xdg_apps/konsolekalendar*
@@ -999,6 +999,10 @@ done
 %_K3includedir/index
 
 %changelog
+* Mon Dec 23 2013 Roman Savochenko <rom_as@altlinux.ru> 1:3.5.13.2-alt5
+- kalarm.desktop category set to Qt;KDE;Utility;X-KDE-Utilities-PIM;Office;ProjectManagement;
+- Remove applnk/Applications/kalarm*
+
 * Wed Nov 27 2013 Sergey Y. Afonin <asy@altlinux.ru> 1:3.5.13.2-alt4.2
 - NMU: rebuilt with libical 1.0
 
