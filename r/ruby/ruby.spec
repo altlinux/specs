@@ -11,9 +11,9 @@ Name: ruby
 %define lname lib%name
 %define branch 1.9
 %define ver_teeny 3
-%define _pl p483
+%define _pl p488
 Version: %branch.%ver_teeny
-Release: alt35
+Release: alt36
 Summary: An Interpreted Object-Oriented Scripting Language
 License: BSD (revised) or Ruby
 Group: Development/Ruby
@@ -101,7 +101,7 @@ Obsoletes: %name-minitest
 #Obsoletes: %name-module-test-unit
 Provides: %name-racc-runtime = 1.4.6
 #Obsoletes: %name-racc-runtime
-Provides: %{name}gems = 1.8.23
+Provides: %{name}gems = 1.8.23.2
 %mobsolete English bigdecimal cgi curses date-time dbm debug digest dl drb e2mmap
 %mobsolete erb etc fcntl fileutils gdbm iconv math misc net nkf open3 openssl
 %mobsolete optparse patterns pty readline rexml rss sdbm shell socket stringio
@@ -151,7 +151,7 @@ Summary: Ruby tools
 Group: Development/Ruby
 BuildArch: noarch
 Requires: %name-stdlibs = %version
-Provides: gem = 1.8.23
+Provides: gem = 1.8.23.2
 #Provides: testrb
 Provides: %name-rake = 0.9.2.2
 Provides: rake = 0.9.2.2
@@ -350,6 +350,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 
 
 %changelog
+* Tue Dec 24 2013 Led <led@altlinux.ru> 1.9.3-alt36
+- p488 upstream patchlevel
+
 * Sun Nov 24 2013 Led <led@altlinux.ru> 1.9.3-alt35
 - p483 upstream patchlevel
 
