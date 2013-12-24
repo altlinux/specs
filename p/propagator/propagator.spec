@@ -2,8 +2,8 @@
 %def_with splash
 
 Name: propagator
-Version: 20130821
-Release: alt1
+Version: 20130822
+Release: alt2
 
 Summary: 'Early userspace' set of binaries
 License: GPL
@@ -22,7 +22,7 @@ including init and various helpers for hw probing and bootstrapping.
 %setup
 
 %build
-make \
+%make_build \
 	%{?_with_shell:WITH_SHELL=t} \
 	%{?_with_splash:WITH_SPLASH=t} \
 	version=%version-%release \
@@ -37,6 +37,14 @@ make \
 %_sbindir/propagator
 
 %changelog
+* Wed Nov 06 2013 Michael Shigorin <mike@altlinux.org> 20130822-alt2
+- rebuilt for Sisyphus
+
+* Thu Aug 22 2013 Led <led@altlinux.ru> 20130822-alt1
+- don't panic of mkdir(2) if directory already exist
+- init: fix trying mount devtmpfs into /dev
+- support build with MUSL
+
 * Wed Aug 21 2013 Fr. Br. George <george@altlinux.ru> 20130821-alt1
 - switch back to nfsmount (mount.nfs fails on NFSv3)
 
