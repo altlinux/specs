@@ -2,11 +2,11 @@
 %define dialect _1.14
 %define dialect_regex _1\\.14
 %define suff -1.14
-%define altver 1140
+%define altver 1141
 %define apiname %realname%suff
 
 Name: %realname%dialect
-Version: 1.14
+Version: 1.14.1
 Release: alt1
 
 %define mydatadir %_datadir/%apiname
@@ -32,7 +32,7 @@ Obsoletes: %realname
 PreReq: automake-common, alternatives >= 0:0.4
 Requires: autoconf >= 2:2.65
 
-BuildPreReq: autoconf >= 2:2.65, texinfo >= 4.7, gnu-config, help2man, perl-threads
+BuildPreReq: autoconf >= 2:2.65, gnu-config, help2man, makeinfo, perl-threads
 BuildPreReq: perl(TAP/Parser.pm)
 %{!?__buildreqs:%{!?_without_check:%{!?_disable_check:BuildRequires: dejagnu expect flex gcc-c++ gcc-fortran makedepend}}}
 
@@ -105,11 +105,14 @@ install -pm644 AUTHORS README THANKS NEWS.* \
 %_bindir/*%suff
 %_man1dir/*%suff.1.gz
 %_datadir/aclocal%suff
-%mydatadir
+%mydatadir/
 %_infodir/*.info*
-%docdir
+%docdir/
 
 %changelog
+* Tue Dec 24 2013 Dmitry V. Levin <ldv@altlinux.org> 1.14.1-alt1
+- Updated to v1.14.1.
+
 * Sun Oct 27 2013 Dmitry V. Levin <ldv@altlinux.org> 1.14-alt1
 - Updated to v1.14.
 
