@@ -1,6 +1,6 @@
 Name: update-source-functions
-Version: 0.1.7
-Release: alt2
+Version: 0.1.8
+Release: alt1
 
 Summary: A set of functions intended to help with updating a git repository from an upstream source
 License: GPLv3
@@ -36,6 +36,9 @@ mkdir -p m4
 %_bindir/*.sh
 
 %changelog
+* Wed Dec 25 2013 Paul Wolneykien <manowar@altlinux.ru> 0.1.8-alt1
+- Fix/improve: delete the non-numeric tag prefix by default (GitHub).
+
 * Wed Dec 25 2013 Paul Wolneykien <manowar@altlinux.ru> 0.1.7-alt2
 - Use simplejson instead of json for compatibility with older
   Python versions.
