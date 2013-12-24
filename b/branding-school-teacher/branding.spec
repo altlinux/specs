@@ -4,8 +4,8 @@
 %define Theme Teacher
 %define codename Turdus pilaris
 %define variants altlinux-backup-server altlinux-desktop altlinux-gnome-desktop altlinux-kdesktop altlinux-lite altlinux-lxdesktop altlinux-office-desktop altlinux-office-server altlinux-school-server altlinux-sisyphus altlinux-spt altlinux-tablet altlinux-workbench informika-schoolmaster ivk-chainmail lxde-desktop lxde-school-lite Platform6-server-light school-junior school-lite school-master school-server school-teacher school-terminal simply-linux sisyphus-server-light altlinux-centaurus
-%define status бета
-%define status_en beta
+%define status %nil
+%define status_en %nil
 %define distro_name ALT Linux 7.0.2%status_en School Teacher
 %define distro_name_ru Альт Линукс 7.0.2%status Школьный Учитель
 
@@ -15,8 +15,8 @@
 %define design_graphics_abi_bugfix 0
 
 Name: branding-%brand-%theme
-Version: 6.9.9
-Release: alt3
+Version: 7.0.2
+Release: alt1
 BuildArch: noarch
 
 BuildRequires: cpio gfxboot >= 4 fonts-ttf-dejavu fonts-ttf-droid
@@ -512,6 +512,9 @@ subst 's/#theme-name=/theme-name=Clearlooks-Phenix/' /etc/lightdm/lightdm-gtk-gr
 %config %_localstatedir/ldm/.pam_environment
 
 %changelog
+* Tue Dec 24 2013 Andrey Cherepanov <cas@altlinux.org> 7.0.2-alt1
+- Release 7.0.2
+
 * Tue Dec 17 2013 Andrey Cherepanov <cas@altlinux.org> 6.9.9-alt3
 - indexhtml requires docs-school-teacher
 - beta version
