@@ -25,7 +25,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.10.25
-Release: alt2
+Release: alt3
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -1792,6 +1792,13 @@ done)
 
 
 %changelog
+* Tue Dec 24 2013 Led <led@altlinux.ru> 3.10.25-alt3
+- updated:
+  + fix-mm
+  + feat-fs-aufs
+- added:
+  + fix-drivers-gpu-drm
+
 * Sat Dec 21 2013 Led <led@altlinux.ru> 3.10.25-alt2
 - fglrx 13.251
 
