@@ -1,15 +1,15 @@
-# 4.1.3.2
-%define with_forky yes
+# 4.1.4.2
+%define with_forky no
 
 Name: LibreOffice4
 Version: 4.1
-%define urelease 3.2
+%define urelease 4.2
 %define uversion %version.%urelease
 %define oopfx lo4
 %define lodir %_libdir/%name
 %define uname libreoffice4
 %define conffile %_sysconfdir/sysconfig/%uname
-Release: alt6
+Release: alt7
 Summary: LibreOffice Productivity Suite
 License: LGPL
 Group: Office
@@ -56,6 +56,8 @@ Patch216: 0001-Resolves-rhbz-1021915-force-menubar-menus-to-be-up-d.patch
 Patch217: 0001-fdo-70968-Incorrect-rendering-of-Devanagari-short-i-.patch
 Patch218: 0001-resolved-fdo-56209-reviving-FilterFormulaParser.patch
 Patch219: 0001-update-libmwaw-to-0.2.0.patch
+Patch220: 0001-rhbz-1031989-Accept-pt-in-addition-to-deprecated-pt.patch
+Patch221: 0001-Related-rhbz-1014990-valgrind-reports-uninitialized-.patch
 
 # Long-term FC patches
 Patch300: openoffice.org-2.0.2.rh188467.printingdefaults.patch
@@ -184,24 +186,26 @@ echo Direct build
 
 # FC (## -- unsuccsessful but seems meaningful)
 %patch201 -p1 -b .do-not-build-LibreOffice_Test.patch
-%patch202 -p1 -b .rhbz-968892-force-render-full-grapheme-with.patch
-%patch203 -p1 -b .rhbz-968892-discard-impossible-languages-for.patch
-%patch204 -p1 -b .rhbz-968892-discard-impossible-languages-for.patch
+#patch202 -p1 -b .rhbz-968892-force-render-full-grapheme-with.patch
+#patch203 -p1 -b .rhbz-968892-discard-impossible-languages-for.patch
+#patch204 -p1 -b .rhbz-968892-discard-impossible-languages-for.patch
 %patch205 -p1 -b .fdo-48835-application-menu-for-LibreOffice.patch
 %patch206 -p1 -b .Make-charmap.cxx-compile-with-icu-4.4.patch
 %patch207 -p1 -b .select-sheet-menu-as-a-right-click-popup-to-the-prev.patch
 %patch208 -p1 -b .rhbz-1013480-crash-in-EditLineList-operator.patch
 %patch209 -p1 -b .rhbz-1015281-crash-on-clicking-custom-anima.patch
-%patch210 -p1 -b .rhbz-996162-apparent-NULL-bullet-font.patch
-%patch211 -p1 -b .fdo-70201-sw-eliminate-no-extent-RSID-only-AUTOFMT-h.patch
-%patch212 -p1 -b .WaE-Wstrict-overflow-assuming-signed-overflow-does-n.patch
-%patch213 -p1 -b .rhbz-1020712-wrong-default-font-shown-in-edi.patch
+#patch210 -p1 -b .rhbz-996162-apparent-NULL-bullet-font.patch
+#patch211 -p1 -b .fdo-70201-sw-eliminate-no-extent-RSID-only-AUTOFMT-h.patch
+#patch212 -p1 -b .WaE-Wstrict-overflow-assuming-signed-overflow-does-n.patch
+#patch213 -p1 -b .rhbz-1020712-wrong-default-font-shown-in-edi.patch
 %patch214 -p1 -b .rhbz-919070-display-1-means-span-all-display.patch
-%patch215 -p1 -b .fdo-67725-unoidl-AggregatingCursor-must-wrap-modules.patch
+#patch215 -p1 -b .fdo-67725-unoidl-AggregatingCursor-must-wrap-modules.patch
 %patch216 -p1 -b .rhbz-1021915-force-menubar-menus-to-be-up-d.patch
-%patch217 -p1 -b .fdo-70968-Incorrect-rendering-of-Devanagari-short-i-.patch
-%patch218 -p1 -b .resolved-fdo-56209-reviving-FilterFormulaParser.patch
+#patch217 -p1 -b .fdo-70968-Incorrect-rendering-of-Devanagari-short-i-.patch
+#patch218 -p1 -b .resolved-fdo-56209-reviving-FilterFormulaParser.patch
 #patch219 -p1 -b .update-libmwaw-to-0.2.0.patch
+#patch220 -p1 -b .rhbz-1031989-Accept-pt-in-addition-to-deprecated-pt.patch
+#patch221 -p1 -b .rhbz-1014990-valgrind-reports-uninitialized-.patch
 
 %patch300 -p1
 %patch301 -p1
@@ -288,6 +292,9 @@ test -r %conffile && . %conffile ||:
 	--disable-gstreamer-0-10 \
 	--disable-fetch-external
 
+# Far TODO --with-branding
+# --with-extra-buildid="Tinderbox: Win-x86@6, Branch:master, Date:2012-11-26_00.29.34"
+# --with-build-version="Built by Jim"
 
 # Make forky
 gcc -g -DHAVE_CONFIG_H -shared -O3 -fomit-frame-pointer -fPIC forky.c -oforky.so -ldl
@@ -425,6 +432,10 @@ install -D libreoffice.config %buildroot%conffile
 %langpack -l kk -n Kazakh
 
 %changelog
+* Thu Dec 19 2013 Fr. Br. George <george@altlinux.ru> 4.1-alt7
+- Version up to officially corporative stable 4.1.4.2
+- Disable applied patches
+
 * Mon Nov 25 2013 Fr. Br. George <george@altlinux.ru> 4.1-alt6
 - Version up to officially stable 4.1.3.2
 - More accurate forky utilization
